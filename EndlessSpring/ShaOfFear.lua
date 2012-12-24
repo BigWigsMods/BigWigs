@@ -97,7 +97,7 @@ function mod:OnBossEnable()
 	self:Log("SWING_MISSED", "Swing", "*")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Transitions", "boss1")
 
 	self:Death("Deaths", 60999, 61003)
 end
@@ -263,8 +263,7 @@ function mod:NakedAndAfraid(player, spellId, _, _, spellName)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
-	if unit ~= "boss1" then return end
+function mod:Transitions(unit, spellName, _, _, spellId)
 	if spellId == 114936 then -- Heroic Transition
 		phase = 2
 		self:CloseProximity()
@@ -275,7 +274,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
 		swingCounter = 0
 
 		-- start Submerge timer using the current power and the new regen rate
-		local left = 1 - (UnitPower("boss1") / UnitPowerMax("boss1")) * 52
+		local left = 1 - (UnitPower(unit) / UnitPowerMax(unit)) * 52
 		self:Bar(120455, ("%s (%d)"):format(self:SpellName(120455), 1), left, 120455)
 	elseif spellId == 62535 then -- 2nd phase Berserk for that 1 sec accuraccy
 		self:Berserk(900)
@@ -383,7 +382,7 @@ end
 
 function mod:Fearless(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
-		self:UnregisterEvent("UNIT_HEALTH_FREQUENT") -- just have it here for now
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "target") -- just have it here for now
 		self:Bar(119414, self:SpellName(119414), nextFear - GetTime(), 119414)
 		self:OpenProximity(5) -- might be less
 		atSha = true
@@ -413,7 +412,7 @@ end
 
 function mod:OminousCackleRemoved(player) -- set it here, because at this point we are surely out of range of the other platforms
 	if UnitIsUnit("player", player) then
-		self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "BlossomPreWarn", "target")
 		atSha = nil
 	end
 end
@@ -438,7 +437,7 @@ do
 	end
 end
 
-function mod:UNIT_HEALTH_FREQUENT(_, unitId)
+function mod:BlossomPreWarn(unitId)
 	if not atSha then -- just to be safe
 		local mobId = self:GetCID(UnitGUID(unitId))
 		if mobId == 61046 or mobId == 61038 or mobId == 61042 then
@@ -447,7 +446,7 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 				self:Message(119888, CL["soon"]:format(self:SpellName(119888)), "Attention", 119888) -- Death Blossom
 				-- lets assume for now if the mob gets healed up by the orbs from below 20% then it can not cast death blossom again, if that is not the case
 				-- then comment out this UnregisterEvent and uncomment the UnregisterEvent from :Fearless
-				self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
+				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "target")
 			end
 		end
 	end

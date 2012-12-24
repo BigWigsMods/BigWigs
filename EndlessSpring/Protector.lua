@@ -76,7 +76,7 @@ function mod:OnEngage()
 	self:Berserk(self:LFR() and 660 or 490)
 
 	if self:Tank() then
-		self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- Cleansing Waters target
+		self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "CleansingWatersTank", "target") -- Cleansing Waters target
 	end
 end
 
@@ -207,8 +207,8 @@ do
 	end
 
 	-- Tank warning
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, _, _, _, spellId)
-		if spellId == 122851 and unitId == "target" and UnitIsUnit(unitId, getKillTarget()) then -- Raid Warning: I'm Standing In Cleansing Waters
+	function mod:CleansingWatersTank(unitId, _, _, _, spellId)
+		if spellId == 122851 and UnitIsUnit(unitId, getKillTarget()) then -- Raid Warning: I'm Standing In Cleansing Waters
 			local bossName = UnitName(unitId)
 			self:LocalMessage(117309, L["under"]:format(self:SpellName(117309), bossName), "Urgent", 117309, "Alert")
 		end

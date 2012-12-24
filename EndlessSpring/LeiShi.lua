@@ -57,14 +57,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ScaryFog", 123705)
 	self:Log("SPELL_AURA_REMOVED", "ScaryFogRemoved", 123705)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck") -- use this to detect him coming out of hide
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Kill", "boss1")
 end
 
 function mod:OnEngage(diff)
 	hiding = nil
 	nextProtectWarning = 85
 	self:Bar("special", "~"..L["special"], 33, 123263)
-	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "HealthCheck", "boss1")
 	self:Berserk(self:Heroic() and 420 or 600)
 	if self:Tank() then
 		self:OpenProximity(3)
@@ -139,25 +139,23 @@ do
 
 	local prev = 0
 	local lastHpToGo
-	function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-		if unitId == "boss1" then
-			local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-			if hp < nextProtectWarning then
-				self:Message(123250, CL["soon"]:format(self:SpellName(123250)), "Positive", 123250) -- Protect
-				nextProtectWarning = hp - 20
-				if nextProtectWarning < 20 then
-					nextProtectWarning = 0
-				end
+	function mod:HealthCheck(unitId)
+		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+		if hp < nextProtectWarning then
+			self:Message(123250, CL["soon"]:format(self:SpellName(123250)), "Positive", 123250) -- Protect
+			nextProtectWarning = hp - 20
+			if nextProtectWarning < 20 then
+				nextProtectWarning = 0
 			end
-			if getAwayStartHP then
-				local t = GetTime()
-				if t-prev > 3 then -- warn max once every 3 sec
-					prev = t
-					local hpToGo = math.ceil(4 - (getAwayStartHP - hp))
-					if lastHpToGo ~= hpToGo and hpToGo > 0 then
-						lastHpToGo = hpToGo
-						self:Message(123461, L["hp_to_go"]:format(hpToGo), "Positive", 123461)
-					end
+		end
+		if getAwayStartHP then
+			local t = GetTime()
+			if t-prev > 3 then -- warn max once every 3 sec
+				prev = t
+				local hpToGo = math.ceil(4 - (getAwayStartHP - hp))
+				if lastHpToGo ~= hpToGo and hpToGo > 0 then
+					lastHpToGo = hpToGo
+					self:Message(123461, L["hp_to_go"]:format(hpToGo), "Positive", 123461)
 				end
 			end
 		end
@@ -168,8 +166,8 @@ function mod:Protect(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Important", spellId, "Alarm")
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, _, _, _, spellId)
-	if spellId == 127524 and unitId == "boss1" then -- Transform
+function mod:Kill(unitId, _, _, _, spellId)
+	if spellId == 127524 then -- Transform
 		self:Win()
 	end
 end

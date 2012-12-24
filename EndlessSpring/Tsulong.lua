@@ -71,7 +71,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DreadShadows", 122768)
 	self:Log("SPELL_AURA_APPLIED", "Sunbeam", 122789)
 	self:Emote("SunbeamSpawn", "122789")
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "target", "boss1", "boss2", "boss3")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck")
 
 	self:Yell("Win", L["kill_yell"])
@@ -146,7 +146,7 @@ do
 		end
 	end
 	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		if spellId == 124176 then
 			self:Win() -- Gold Active
 		elseif unitId:find("boss", nil, true) then
