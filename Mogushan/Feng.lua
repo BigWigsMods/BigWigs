@@ -71,7 +71,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	self:Log("SPELL_CAST_START", "LightningFists", 116157)
 	self:Log("SPELL_CAST_START", "Epicenter", 116018)
@@ -110,7 +110,7 @@ end
 function mod:OnEngage()
 	p2, p3 = nil, nil
 	counter = 1
-	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", self:Heroic() and "PhaseChangeHC" or "PhaseChange", "boss1")
 	self:Berserk(600)
 end
 
@@ -161,28 +161,30 @@ do
 	end
 end
 
-function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-	if unitId == "boss1" then
-		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		--a 5% warning is like forever away from the actual transition (especially in LFR, lol)
-		if not self:Heroic() then
-			if (hp < 68 and not p2) or (hp < 35) then --66/33
-				self:Message("stages", L["phase_message"], "Positive", nil, "Info")
-				if not p2 then
-					p2 = true
-				else
-					self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
-				end
-			end
-		elseif (hp < 77 and not p2) or (hp < 52 and not p3) or (hp < 27) then --75/50/25
-			self:Message("stages", L["phase_message"], "Positive", nil, "Info")
-			if not p2 then
-				p2 = true
-			elseif not p3 then
-				p3 = true
-			else
-				self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
-			end
+function mod:PhaseChange(unitId)
+	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+	--a 5% warning is like forever away from the actual transition (especially in LFR, lol)
+	if (hp < 68 and not p2) or (hp < 35) then --66/33
+		self:Message("stages", L["phase_message"], "Positive", nil, "Info")
+		if not p2 then
+			p2 = true
+		else
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
+		end
+	end
+end
+
+function mod:PhaseChangeHC(unitId)
+	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+	--a 5% warning is like forever away from the actual transition (especially in LFR, lol)
+	if (hp < 77 and not p2) or (hp < 52 and not p3) or (hp < 27) then --75/50/25
+		self:Message("stages", L["phase_message"], "Positive", nil, "Info")
+		if not p2 then
+			p2 = true
+		elseif not p3 then
+			p3 = true
+		else
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 		end
 	end
 end
@@ -308,9 +310,7 @@ function mod:ShadowPhase()
 	self:Bar(118071, "~"..("%s (%d)"):format(self:SpellName(118071), counter), 4, 118071) -- Siphoning Shield
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
-	if unit ~= "boss1" then return end
-
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 117203 then -- Siphoning Shield
 		self:Message(118071, ("%s (%d)"):format(spellName, counter), "Important", 118071, "Alarm")
 		counter = counter + 1

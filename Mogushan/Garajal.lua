@@ -65,7 +65,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Death("Win", 60143)
 end
 
@@ -86,20 +86,18 @@ function mod:OnEngage(diff)
 	if self:Heroic() then
 		self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 6.7, 117222)
 	end
-	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "FrenzyCheck", "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, _, _, spellId)
-	if unit == "boss1" then
-		if spellId == 116964 then
-			self:Sync("Totem") -- LFR only, no combat log event for some reason
-		elseif (spellId == 117215 or spellId == 117218 or spellId == 117219 or spellId == 117222) and self:Heroic() then
-			self:Sync("Shadowy")
-		end
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+	if spellId == 116964 then
+		self:Sync("Totem") -- LFR only, no combat log event for some reason
+	elseif (spellId == 117215 or spellId == 117218 or spellId == 117219 or spellId == 117222) and self:Heroic() then
+		self:Sync("Shadowy")
 	end
 end
 
@@ -120,6 +118,7 @@ do
 			shadowCounter = shadowCounter + 1
 			self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 8.3, L["shadowy_icon"])
 		elseif sync == "Frenzy" then
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 			self:Message("frenzy", CL["phase"]:format(2) ..": ".. L["frenzy"], "Positive", L["frenzy_icon"], "Long")
 			if not self:LFR() then
 				self:StopBar(L["totem"]:format(totemCounter))
@@ -196,13 +195,11 @@ function mod:SoulSeverRemoved(player)
 	end
 end
 
-function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-	if unitId == "boss1" then
-		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		if hp < 25 then -- phase starts at 20
-			self:Message("frenzy", CL["soon"]:format(L["frenzy"]), "Positive", L["frenzy_icon"], "Info")
-			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
-		end
+function mod:FrenzyCheck(unitId)
+	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+	if hp < 25 then -- phase starts at 20
+		self:Message("frenzy", CL["soon"]:format(L["frenzy"]), "Positive", L["frenzy_icon"], "Info")
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
 end
 

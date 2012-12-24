@@ -89,7 +89,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "CowardiceRemoved", 117756)
 	self:Log("SPELL_AURA_APPLIED", "Delirious", 117837)
 
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck")
 
 	self:Death("Win", 60701, 60708, 60709, 60710)
@@ -100,7 +100,7 @@ function mod:OnEngage()
 	wipe(bossActivated)
 	if self:Heroic() then
 		self:Bar(117961, 117961, 40, 117961) -- Impervious Shield
-		self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "BossSwap", "boss1", "boss2", "boss3", "boss4")
 		bossWarned = 0
 	end
 	self:Bar(119521, 119521, 10, 119521) -- Annihilate
@@ -130,15 +130,14 @@ do
 	local prevPower = 0
 	function mod:CowardiceApplied()
 		prevPower = 0
-		self:RegisterEvent("UNIT_POWER_FREQUENT")
+		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "SpellReflectWarn", "boss1", "boss2", "boss3", "boss4")
 	end
 	function mod:CowardiceRemoved(_, spellId)
-		self:UnregisterEvent("UNIT_POWER_FREQUENT")
+		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2", "boss3", "boss4")
 		prevPower = 0
 		self:Message("cowardice", CL["over"]:format(spellReflect), "Positive", spellId)
 	end
-	function mod:UNIT_POWER_FREQUENT(_, unitId)
-		if not unitId:find("boss", nil, true) then return end
+	function mod:SpellReflectWarn(unitId)
 		local id = self:GetCID(UnitGUID(unitId))
 		if id == 60708 or id == 61429 then
 			local power = UnitPower(unitId)
@@ -296,55 +295,52 @@ function mod:EngageCheck()
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
-	if unitId:find("boss", nil, true) then
-		if spellId == 118205 then -- Inactive Visual
-			local id = self:GetCID(UnitGUID(unitId))
-			if (id == 60709 or id == 61423) then -- Qiang
-				self:StopBar(119521) -- Annihilate
-				self:StopBar(117961) -- Impervious Shield
-				self:StopBar(117921) -- Massive Attack
-				self:Bar(117910, 117910, 30, 117910) -- Flanking Orders
-			elseif (id == 60701 or id == 61421) then -- Zian
-				self:StopBar(117697) -- Shield of Darkness
-				if not isBossActiveById(60710, 61427) then -- don't close if Subetai is active
-					self:CloseProximity()
-				end
-			elseif (id == 60710 or id == 61427) then -- Subetai
-				self:StopBar(118162) -- Sleight of Hand
-				self:StopBar(118094) -- Volley
-				self:StopBar(self:Heroic() and 118122 or ("~"..self:SpellName(118122))) -- Rain of Arrows
-				self:StopBar("~"..self:SpellName(118047)) -- Pillage
-				self:Bar(118047, 118047, 30, 118047) -- Pillage
-				if not isBossActiveById(60701, 61421) then -- don't close if Zian is active
-					self:CloseProximity()
-				end
-			elseif (id == 60708 or id == 61429) then -- Meng
-				self:StopBar(117837)
-				self:Bar(117708, "~"..self:SpellName(117708), 30, 117708) -- Maddening Shout
+function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
+	if spellId == 118205 then -- Inactive Visual
+		local id = self:GetCID(UnitGUID(unitId))
+		if (id == 60709 or id == 61423) then -- Qiang
+			self:StopBar(119521) -- Annihilate
+			self:StopBar(117961) -- Impervious Shield
+			self:StopBar(117921) -- Massive Attack
+			self:Bar(117910, 117910, 30, 117910) -- Flanking Orders
+		elseif (id == 60701 or id == 61421) then -- Zian
+			self:StopBar(117697) -- Shield of Darkness
+			if not isBossActiveById(60710, 61427) then -- don't close if Subetai is active
+				self:CloseProximity()
 			end
-		elseif spellId == 118121 then -- Rain of Arrows for Pinned Down
-			local hc = self:Heroic()
-			self:Bar(118122, hc and 118122 or ("~"..self:SpellName(118122)), hc and 41 or 51, 118122) -- Rain of Arrows, exact on heroic, 50-60 on norm
+		elseif (id == 60710 or id == 61427) then -- Subetai
+			self:StopBar(118162) -- Sleight of Hand
+			self:StopBar(118094) -- Volley
+			self:StopBar(self:Heroic() and 118122 or ("~"..self:SpellName(118122))) -- Rain of Arrows
+			self:StopBar("~"..self:SpellName(118047)) -- Pillage
+			self:Bar(118047, 118047, 30, 118047) -- Pillage
+			if not isBossActiveById(60701, 61421) then -- don't close if Zian is active
+				self:CloseProximity()
+			end
+		elseif (id == 60708 or id == 61429) then -- Meng
+			self:StopBar(117837)
+			self:Bar(117708, "~"..self:SpellName(117708), 30, 117708) -- Maddening Shout
 		end
+	elseif spellId == 118121 then -- Rain of Arrows for Pinned Down
+		local hc = self:Heroic()
+		self:Bar(118122, hc and 118122 or ("~"..self:SpellName(118122)), hc and 41 or 51, 118122) -- Rain of Arrows, exact on heroic, 50-60 on norm
 	end
 end
 
-function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-	if unitId:find("boss", nil, true) then
-		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		if hp < 38 then -- next boss at 30% (Qiang -> Subetai -> Zian -> Meng)
-			local id = self:GetCID(UnitGUID(unitId))
-			if bossWarned == 0 and (id == 60709 or id == 61423) then -- Qiang
-				self:Message("ej:5846", CL["soon"]:format(subetai), "Positive", nil, "Info")
-				bossWarned = 1
-			elseif bossWarned == 1 and (id == 60710 or id == 61427) then -- Subetai
-				self:Message("ej:5852", CL["soon"]:format(zian), "Positive", nil, "Info")
-				bossWarned = 2
-			elseif bossWarned == 2 and (id == 60701 or id == 61421) then -- Zian
-				self:Message("ej:5835", CL["soon"]:format(meng), "Positive", nil, "Info")
-				self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
-			end
+function mod:BossSwap(unitId)
+	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+	if hp < 38 then -- next boss at 30% (Qiang -> Subetai -> Zian -> Meng)
+		local id = self:GetCID(UnitGUID(unitId))
+		if bossWarned == 0 and (id == 60709 or id == 61423) then -- Qiang
+			self:Message("ej:5846", CL["soon"]:format(subetai), "Positive", nil, "Info")
+			bossWarned = 1
+		elseif bossWarned == 1 and (id == 60710 or id == 61427) then -- Subetai
+			self:Message("ej:5852", CL["soon"]:format(zian), "Positive", nil, "Info")
+			bossWarned = 2
+		elseif bossWarned == 2 and (id == 60701 or id == 61421) then -- Zian
+			self:Message("ej:5835", CL["soon"]:format(meng), "Positive", nil, "Info")
+			bossWarned = 3
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3", "boss4")
 		end
 	end
 end

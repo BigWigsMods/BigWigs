@@ -12,7 +12,7 @@ mod:RegisterEnableMob(60410)
 --
 
 local drawPowerCounter, annihilateCounter = 0, 0
-local phase2SoonWarned, phase2SoonWarned2ndTime = nil, nil
+local phaseCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -68,7 +68,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "StabilityFluxDamage", 117912)
 	self:Log("SPELL_MISSED", "StabilityFluxDamage", 117912)
 
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "FloorRemoved", "boss1")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 60410)
@@ -79,17 +79,17 @@ function mod:OnEngage()
 	self:Bar("adds", CL["next_add"], 12, 117954)
 	self:Berserk(570)
 	drawPowerCounter, annihilateCounter = 0, 0
-	phase2SoonWarned, phase2SoonWarned2ndTime = nil, nil
-	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	phaseCount = 0
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "PhaseWarn", "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, _, _, spellId)
+function mod:FloorRemoved(_, _, _, _, spellId)
 	-- Trigger Phase A when the spark hits the conduit
-	if spellId == 118189 and unit == "boss1" then
+	if spellId == 118189 then
 		self:Bar("floor", L["floor"], 6, L.floor_icon)
 		self:Message("floor", L["floor_message"], "Personal", L.floor_icon, "Alarm")
 		self:FlashShake("floor")
@@ -153,28 +153,26 @@ function mod:MaterializeProtector(_, spellId, _, _, spellName)
 end
 
 function mod:UnstableEnergyRemoved()
-	if phase2SoonWarned2ndTime then
+	if phaseCount == 2 then
 		self:Message("stages", L["last_phase"], "Positive")
 	else
 		drawPowerCounter, annihilateCounter = 0, 0
 		self:Message("stages", CL["phase"]:format(1), "Positive")
 		self:Bar("adds", CL["next_add"], 15, 117954)
-		self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end
 
-function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-	if unitId == "boss1" then
-		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		if hp < 88 and not phase2SoonWarned then -- phase starts at 85
-			self:Message(119360, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 119360, "Info")
-			phase2SoonWarned = true
-			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
-		elseif hp < 53 and not phase2SoonWarned2ndTime then
-			self:Message(119360, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 119360, "Info")
-			phase2SoonWarned2ndTime = true
-			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
-		end
+function mod:PhaseWarn(unitId)
+	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+	if hp < 88 and phaseCount == 0 then -- phase starts at 85
+		self:Message(119360, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 119360, "Info")
+		phaseCount = 1
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
+	elseif hp < 53 and phaseCount == 1 then
+		self:Message(119360, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 119360, "Info")
+		phaseCount = 2
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
 end
 

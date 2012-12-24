@@ -45,7 +45,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Petrifications", "boss1", "boss2", "boss3", "boss4")
 	self:Log("SPELL_AURA_APPLIED", "JasperChainsApplied", 130395)
 	self:Log("SPELL_AURA_REMOVED", "JasperChainsRemoved", 130395)
 	self:Log("SPELL_CAST_SUCCESS", "AmethystPool", 130774)
@@ -109,8 +109,7 @@ do
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
-	if not unitId:match("boss") then return end
+function mod:Petrifications(_, spellName, _, _, spellId)
 	-- we could be using the same colors as blizzard but they are too "faint" imo
 	if spellId == 115852 then -- cobalt
 		self:Message("petrifications", ("|c001E90FF%s|r"):format(spellName), nil, spellId, "Alert") -- blue

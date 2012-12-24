@@ -114,7 +114,7 @@ function mod:OnBossEnable()
 
 	-- Bosses
 	self:Emote("Bosses", L["bosses_trigger"])
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "ArcCombo", "boss1", "boss2")
 
 	--Titan Gas
 	self:Emote("TitanGas", L["gas_trigger"])
@@ -208,9 +208,7 @@ do
 	local comboCounter = {boss1 = 0, boss2 = 0}
 	local energizePrev = {boss1 = 0, boss2 = 0}
 
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
-		if not unitId:find("boss", nil, true) then return end
-
+	function mod:ArcCombo(unitId, spellName, _, _, spellId)
 		-- Don't check for target until later so our counter is always correct for each boss, covers target swapping
 		if arcs[spellId] then
 			comboCounter[unitId] = comboCounter[unitId] + 1
