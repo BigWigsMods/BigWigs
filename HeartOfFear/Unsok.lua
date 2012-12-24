@@ -12,7 +12,7 @@ mod:RegisterEnableMob(62511)
 --
 
 local reshapeLife, explosion = mod:SpellName(122784), mod:SpellName(122398) --106966
-local phase, phase2warned, primaryIcon = 1, nil, nil
+local phase, primaryIcon = 1, nil
 local reshapeLifeCounter = 1
 
 --------------------------------------------------------------------------------
@@ -95,9 +95,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "BurningAmber", 122504)
 	self:Log("SPELL_MISSED", "BurningAmber", 122504)
 
-	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-	self:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
-	self:RegisterEvent("UNIT_SPELLCAST_STOP")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "BreakFreeHP", "player")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "MonstrosityInc", "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_INTERRUPTED", "Interrupt", "player", "focus")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_STOP", "MonstrosityStopCast", "boss1", "boss2")
+
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 62511)
@@ -110,7 +112,6 @@ function mod:OnEngage(diff)
 	self:Berserk(540) -- assume
 
 	phase = 1
-	phase2warned = nil
 	primaryIcon = nil
 end
 
@@ -196,7 +197,7 @@ function mod:ReshapeLife(player, spellId, _, _, spellName)
 
 	if UnitIsUnit("player", player) then
 		self:Bar("explosion_by_you", CL["you"]:format(explosion), 15, 122398)
-		self:RegisterEvent("UNIT_POWER_FREQUENT")
+		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "MyWillpower", "player")
 	elseif UnitIsUnit("focus", player) then
 		self:Bar("explosion_by_other", CL["other"]:format(player, explosion), 15, 122398)
 	end
@@ -204,7 +205,7 @@ end
 
 function mod:BreakFree(_, _, source)
 	if UnitIsUnit("player", source) then
-		self:UnregisterEvent("UNIT_POWER_FREQUENT")
+		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "player")
 		self:StopBar(CL["cast"]:format(CL["you"]:format(explosion)))
 		self:StopBar(CL["you"]:format(explosion))
 	elseif UnitIsUnit("focus", source) then
@@ -239,13 +240,14 @@ do
 	end
 end
 
-function mod:UNIT_SPELLCAST_INTERRUPTED(_, unitId, spellName, _, _, spellId)
+function mod:Interrupt(unitId, spellName, _, _, spellId)
 	--Mutated Construct's Struggle for Control doesn't fire a SPELL_INTERRUPT
 	if spellId == 122398 then
 		if unitId == "player" then
 			self:StopBar(CL["cast"]:format(CL["you"]:format(spellName)))
 		elseif unitId == "focus" then
-			local player = UnitName(unitId)
+			local player, server = UnitName(unitId)
+			if server then player = player.."-"..server end
 			self:StopBar(CL["cast"]:format(CL["other"]:format(player, spellName)))
 		end
 	end
@@ -254,11 +256,11 @@ end
 --Willpower
 do
 	local prev = 0
-	function mod:UNIT_POWER_FREQUENT(_, unitId, powerType)
-		if unitId == "player" and powerType == "ALTERNATE" then
+	function mod:MyWillpower(unitId, powerType)
+		if powerType == "ALTERNATE" then
 			local t = GetTime()
 			if t-prev > 1 then
-				local willpower = UnitPower("player", 10)
+				local willpower = UnitPower(unitId, 10)
 				if willpower < 20 and willpower > 0 then
 					prev = t
 					self:LocalMessage("willpower", L["willpower_message"]:format(willpower), "Personal", 124824)
@@ -268,19 +270,21 @@ do
 	end
 end
 
+function mod:MonstrosityInc(unitId)
+	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+	if hp < 75 then -- phase starts at 70
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
+		self:Message("monstrosity", CL["soon"]:format(L["monstrosity"]), "Positive", 122540, "Long")
+	end
+end
+
 do
 	local prev = 0
-	function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-		if unitId == "boss1" and not phase2warned then
-			local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-			if hp < 75 then -- phase starts at 70
-				phase2warned = true
-				self:Message("monstrosity", CL["soon"]:format(L["monstrosity"]), "Positive", 122540, "Long")
-			end
-		elseif unitId == "player" and UnitDebuff("player", reshapeLife) then --Break Free Warning
+	function mod:BreakFreeHP(unitId)
+		if UnitDebuff(unitId, reshapeLife) then --Break Free Warning
 			local t = GetTime()
 			if t-prev > 1 then
-				local hp = UnitHealth("player") / UnitHealthMax("player") * 100
+				local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 				if hp < 21 then
 					prev = t
 					self:LocalMessage(123060, L["break_free_message"]:format(hp), "Personal", 123060)
@@ -326,7 +330,7 @@ do
 end
 
 --Monstrosity's Amber Explosion
-function mod:UNIT_SPELLCAST_STOP(_, _, _, _, _, spellId)
+function mod:MonstrosityStopCast(_, _, _, _, spellId)
 	if spellId == 122402 then
 		self:StopBar(L["boss_is_casting"])
 	end

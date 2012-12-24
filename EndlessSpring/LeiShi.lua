@@ -166,7 +166,7 @@ function mod:Protect(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Important", spellId, "Alarm")
 end
 
-function mod:Kill(unitId, _, _, _, spellId)
+function mod:Kill(_, _, _, _, spellId)
 	if spellId == 127524 then -- Transform
 		self:Win()
 	end

@@ -55,7 +55,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "TayakCasts", "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "InstructorUnseenStrike", "target")
 
 	self:Log("SPELL_CAST_START", "BladeTempest", 125310)
 	self:Log("SPELL_CAST_SUCCESS", "WindStep", 123175)
@@ -81,9 +82,12 @@ function mod:OnEngage()
 		self:Bar("assault", L["assault_message"], 15, 123474)
 	end
 	self:OpenProximity(8, 123175)
-	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	self:Berserk(self:LFR() and 600 or 490)
 	phase = 1
+
+	-- Engaging the boss means the Instructor is dead, so unregister this
+	self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "target")
 end
 
 --------------------------------------------------------------------------------
@@ -139,28 +143,30 @@ do
 			mod:PrimaryIcon("unseenstrike", name)
 		end
 	end
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
-		if unit == "boss1" then
-			if spellId == 122949 then --Unseen Strike
-				self:Bar("unseenstrike", "~"..spellName, 53, L.unseenstrike_icon) -- 53-60
-				self:DelayedMessage("unseenstrike", 48, L["unseenstrike_soon"], "Attention", L.unseenstrike_icon, "Alarm")
-				if not timer then
-					timer = self:ScheduleRepeatingTimer(warnStrike, 0.05) -- ~1s faster than boss emote
-				end
-				self:ScheduleTimer(removeIcon, 6.2)
-			elseif spellId == 122839 then --Tempest Slash
-				self:Bar(122842, "~"..spellName, self:LFR() and 20.5 or 15.6, 122842)
-			elseif spellId == 123814 then --Storm Unleashed (Phase 2)
-				self:Message("storm", "20% - "..CL["phase"]:format(2), "Positive", L.storm_icon, "Long")
-				self:StopBar(125310) --Blade Tempest
-				self:StopBar("~"..L["assault_message"])
-				self:StopBar("~"..self:SpellName(122839)) --Tempest Slash
-				self:StopBar("~"..self:SpellName(122949)) --Unseen Strike
-				self:CancelDelayedMessage(L["unseenstrike_soon"])
-				self:StopBar("~"..self:SpellName(123175)) --Wind Step
-				self:CloseProximity(123175)
+	function mod:TayakCasts(_, spellName, _, _, spellId)
+		if spellId == 122949 then --Unseen Strike
+			self:Bar("unseenstrike", "~"..spellName, 53, L.unseenstrike_icon) -- 53-60
+			self:DelayedMessage("unseenstrike", 48, L["unseenstrike_soon"], "Attention", L.unseenstrike_icon, "Alarm")
+			if not timer then
+				timer = self:ScheduleRepeatingTimer(warnStrike, 0.05) -- ~1s faster than boss emote
 			end
-		elseif spellId == 122949 and unit == "target" and self:GetCID(UnitGUID("target")) == 64340 then
+			self:ScheduleTimer(removeIcon, 6.2)
+		elseif spellId == 122839 then --Tempest Slash
+			self:Bar(122842, "~"..spellName, self:LFR() and 20.5 or 15.6, 122842)
+		elseif spellId == 123814 then --Storm Unleashed (Phase 2)
+			self:Message("storm", "20% - "..CL["phase"]:format(2), "Positive", L.storm_icon, "Long")
+			self:StopBar(125310) --Blade Tempest
+			self:StopBar("~"..L["assault_message"])
+			self:StopBar("~"..self:SpellName(122839)) --Tempest Slash
+			self:StopBar("~"..self:SpellName(122949)) --Unseen Strike
+			self:CancelDelayedMessage(L["unseenstrike_soon"])
+			self:StopBar("~"..self:SpellName(123175)) --Wind Step
+			self:CloseProximity(123175)
+		end
+	end
+
+	function mod:InstructorUnseenStrike(_, _, _, _, spellId)
+		if spellId == 122949 and self:GetCID(UnitGUID("target")) == 64340 then
 			self:Sync("Strike") -- Instructor Maltik
 		end
 	end
@@ -189,16 +195,14 @@ function mod:AssaultCast(_, spellId)
 	end
 end
 
-function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-	if unitId == "boss1" then
-		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		if hp < 25 and phase == 1 then -- phase starts at 20
-			self:Message("storm", CL["soon"]:format(CL["phase"]:format(2)), "Positive", L.storm_icon, "Long")
-			phase = 2
-		elseif hp < 14 and phase == 2 then
-			self:Message("storm", CL["soon"]:format(L["side_swap"]), "Positive", L.storm_icon, "Long")
-			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
-		end
+function mod:UNIT_HEALTH_FREQUENT(unitId)
+	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+	if hp < 25 and phase == 1 then -- phase starts at 20
+		self:Message("storm", CL["soon"]:format(CL["phase"]:format(2)), "Positive", L.storm_icon, "Long")
+		phase = 2
+	elseif hp < 14 and phase == 2 then
+		self:Message("storm", CL["soon"]:format(L["side_swap"]), "Positive", L.storm_icon, "Long")
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
 end
 

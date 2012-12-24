@@ -78,8 +78,8 @@ function mod:OnEngage(diff)
 	self:OpenProximity(5)
 	self:Berserk(900)
 	self:Bar("ej:6325", 123627, 20, 123627) --Dissonance Field
-	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-	self:RegisterEvent("UNIT_POWER_FREQUENT", "PoorMansDissonanceTimers")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phase3Warn", "boss1")
+	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PoorMansDissonanceTimers", "boss1")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe") -- XXX Check ENGAGE results
 end
 
@@ -193,23 +193,21 @@ function mod:Resin(player, spellId, _, _, spellName)
 	end
 end
 
-function mod:PoorMansDissonanceTimers(_, unitId)
-	if unitId == "boss1" then
-		local power = UnitPower("boss1")
-		if power == 149 then
-			self:OpenProximity(5)
-			self:Bar("ej:6325", 123627, 19, 128353) --Dissonance Field
-			self:Bar("phases", CL["phase"]:format(2), 149, L.phases_icon)
-			self:StopBar(CL["phase"]:format(1))
-		elseif power == 130 then
-			self:Bar("ej:6325", 123627, 65, 128353)
-			self:Message("ej:6325", 123627, "Attention", 128353)
-		elseif power == 65 then
-			self:Message("ej:6325", 123627, "Attention", 128353)
-		elseif power == 2 then
-			self:CloseProximity()
-			self:Bar("phases", CL["phase"]:format(1), 158, L.phases_icon)
-		end
+function mod:PoorMansDissonanceTimers(unitId)
+	local power = UnitPower(unitId)
+	if power == 149 then
+		self:OpenProximity(5)
+		self:Bar("ej:6325", 123627, 19, 128353) --Dissonance Field
+		self:Bar("phases", CL["phase"]:format(2), 149, L.phases_icon)
+		self:StopBar(CL["phase"]:format(1))
+	elseif power == 130 then
+		self:Bar("ej:6325", 123627, 65, 128353)
+		self:Message("ej:6325", 123627, "Attention", 128353)
+	elseif power == 65 then
+		self:Message("ej:6325", 123627, "Attention", 128353)
+	elseif power == 2 then
+		self:CloseProximity()
+		self:Bar("phases", CL["phase"]:format(1), 158, L.phases_icon)
 	end
 end
 
@@ -228,13 +226,11 @@ function mod:UltimateCorruption(_, spellId)
 	self:CloseProximity()
 end
 
-function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-	if unitId == "boss1" then
-		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		if hp < 35 then -- phase starts at 30
-			self:Message("phases", CL["soon"]:format(CL["phase"]:format(3)), "Positive", L.phases_icon, "Info")
-			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
-		end
+function mod:Phase3Warn(unitId)
+	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+	if hp < 35 then -- phase starts at 30
+		self:Message("phases", CL["soon"]:format(CL["phase"]:format(3)), "Positive", L.phases_icon, "Info")
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
 end
 

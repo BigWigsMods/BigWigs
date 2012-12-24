@@ -54,7 +54,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- Force and Verse pre-warn
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "PreForceAndVerse", "boss1")
 	self:Log("SPELL_CAST_START", "Attenuation", 122496, 122497, 122474, 122479, 123721, 123722)
 	self:Log("SPELL_AURA_APPLIED", "Convert", 122740)
 	self:Log("SPELL_AURA_APPLIED", "Exhale", 122761)
@@ -69,7 +69,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	forceCount, platform, danceTracker = 0, 0, true
 	self:Berserk(self:Heroic() and 720 or 600) -- Verify
 end
@@ -128,8 +128,8 @@ function mod:Attenuation(_, spellId, source, _, spellName)
 	self:FlashShake("attenuation")
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
-	if spellId == 122933 and unit == "boss1" then -- Clear Throat
+function mod:PreForceAndVerse(_, _, _, _, spellId)
+	if spellId == 122933 then -- Clear Throat
 		self:Message("force", CL["soon"]:format(L["force_message"]), "Important", L.force_icon, "Long")
 	end
 end
@@ -141,20 +141,18 @@ function mod:ForceAndVerse(_, spellId, _, _, spellName)
 	self:FlashShake("force")
 end
 
-function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-	if unitId == "boss1" then
-		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		if platform == 0 and hp < 83 then
-			self:Message("stages", CL["soon"]:format(L["platform_message"]), "Positive", "ability_vehicle_launchplayer", "Info")
-			platform = 1
-		elseif platform == 1 and hp < 63 then
-			self:Message("stages", CL["soon"]:format(L["platform_message"]), "Positive", "ability_vehicle_launchplayer", "Info")
-			platform = 2
-		elseif platform == 2 and ((self:Heroic() and hp < 47) or hp < 43) then
-			self:Message("stages", CL["soon"]:format(CL["phase"]:format(2)), "Positive", "ability_vehicle_launchplayer", "Info")
-			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
-			platform = 3
-		end
+function mod:UNIT_HEALTH_FREQUENT(unitId)
+	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+	if platform == 0 and hp < 83 then
+		self:Message("stages", CL["soon"]:format(L["platform_message"]), "Positive", "ability_vehicle_launchplayer", "Info")
+		platform = 1
+	elseif platform == 1 and hp < 63 then
+		self:Message("stages", CL["soon"]:format(L["platform_message"]), "Positive", "ability_vehicle_launchplayer", "Info")
+		platform = 2
+	elseif platform == 2 and ((self:Heroic() and hp < 47) or hp < 43) then
+		self:Message("stages", CL["soon"]:format(CL["phase"]:format(2)), "Positive", "ability_vehicle_launchplayer", "Info")
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
+		platform = 3
 	end
 end
 

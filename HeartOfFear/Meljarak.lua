@@ -93,7 +93,7 @@ function mod:OnEngage(diff)
 	firstKorthikStrikeDone = nil
 
 	self:RegisterEvent("UNIT_AURA")
-	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "PhaseChange", "boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -269,25 +269,23 @@ function mod:ImpalingSpearRemoved(_, spellId, source, _, spellName)
 	end
 end
 
-function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-	if unitId == "boss1" then -- hopefully always the boss
-		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		if hp < 78 and not phase then -- phase starts at 75
-			self:Message(131830, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 131830, "Info") -- should it maybe have it's own option key?
-			phase = 1
-		elseif hp < 75 then
-			self:Message(131830, "75% - "..CL["phase"]:format(2), "Positive", 131830, "Info")
-			self:Bar(121896, "~"..self:SpellName(121896), 45, 121896) -- Whirling Blade (reset cd)
-			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
-			phase = 2
-			for i = 2, 5 do
-				local guid = UnitGUID(("boss%d"):format(i))
-				if guid and self:GetCID(guid) == 62451 then -- The Sra'thik
-					return
-				end
+function mod:PhaseChange(unitId)
+	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+	if hp < 78 and not phase then -- phase starts at 75
+		self:Message(131830, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 131830, "Info") -- should it maybe have it's own option key?
+		phase = 1
+	elseif hp < 75 then
+		self:Message(131830, "75% - "..CL["phase"]:format(2), "Positive", 131830, "Info")
+		self:Bar(121896, "~"..self:SpellName(121896), 45, 121896) -- Whirling Blade (reset cd)
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
+		phase = 2
+		for i = 2, 5 do
+			local guid = UnitGUID(("boss%d"):format(i))
+			if guid and self:GetCID(guid) == 62451 then -- The Sra'thik
+				return
 			end
-			self:OpenProximity(5, 131830) -- Wind Bomb
 		end
+		self:OpenProximity(5, 131830) -- Wind Bomb
 	end
 end
 

@@ -446,7 +446,7 @@ function mod:BlossomPreWarn(unitId)
 				self:Message(119888, CL["soon"]:format(self:SpellName(119888)), "Attention", 119888) -- Death Blossom
 				-- lets assume for now if the mob gets healed up by the orbs from below 20% then it can not cast death blossom again, if that is not the case
 				-- then comment out this UnregisterEvent and uncomment the UnregisterEvent from :Fearless
-				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "target")
+				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 			end
 		end
 	end
