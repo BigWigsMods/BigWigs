@@ -345,6 +345,7 @@ do
 			"mouseover", "mouseovertarget"
 		}
 		for i = 1, 25 do t[#t+1] = format("raid%dtarget", i) end
+		buildTable = nil
 	end
 	local function findTargetByGUID(id)
 		if not t then buildTable() end

@@ -41,7 +41,8 @@ end
 local function shouldReallyEnable(unit, moduleName)
 	local module = addon.bossCore:GetModule(moduleName)
 	if not module or module:IsEnabled() then return end
-	if not module.VerifyEnable or module:VerifyEnable(unit) then
+	-- If we pass the Verify Enable func (or it doesn't exist) and it's been > 3 seconds since the module was disabled, then enable it.
+	if (not module.VerifyEnable or module:VerifyEnable(unit)) and (not mod.lastKill or (GetTime() - mod.lastKill) > 3) then
 		enableBossModule(module)
 	end
 end
@@ -230,6 +231,7 @@ local function coreSync(sync, moduleName, sender)
 		if mod and mod:IsEnabled() then
 			mod:Message("bosskill", L["%s has been defeated"]:format(mod.displayName), "Positive", nil, "Victory")
 			if mod.OnWin then mod:OnWin() end
+			mod.lastKill = GetTime() -- Add the kill time for the enable check.
 			mod:Disable()
 		end
 	end
