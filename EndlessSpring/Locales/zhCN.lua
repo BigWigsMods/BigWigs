@@ -8,8 +8,8 @@ end
 
 L = BigWigs:NewBossLocale("Tsulong", "zhCN")
 if L then
-	L.engage_yell = "You do not belong here! The waters must be protected... I will cast you out, or slay you!"
-	L.kill_yell = "I thank you, strangers. I have been freed."
+	L.engage_yell = "你不属于这里！我必须保护水流……我要驱逐李，要不就杀死你！"
+	L.kill_yell = "谢谢你，陌生人。我自由了。"
 
 	L.phases = "阶段转换"
 	L.phases_desc = "阶段转换时报警。"
