@@ -376,7 +376,7 @@ end
 -- Proximity Updater
 --
 
-local updater = nil
+local updater, updaterFrame = nil, nil
 local normalProximity, reverseTargetProximity, targetProximity, testDots
 do
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
@@ -561,7 +561,8 @@ do
 		end
 	end
 
-	updater = CreateFrame("Frame"):CreateAnimationGroup()
+	updaterFrame = CreateFrame("Frame")
+	updater = updaterFrame:CreateAnimationGroup()
 	updater:SetLooping("REPEAT")
 	local anim = updater:CreateAnimation()
 	anim:SetDuration(0.05)
@@ -753,6 +754,14 @@ function plugin:OnPluginEnable()
 			blipList[n] = anchor:CreateTexture(nil, "OVERLAY")
 			blipList[n]:SetSize(16, 16)
 			blipList[n]:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
+		end
+
+		updaterFrame:SetScript("OnEvent", function(_, event)
+			if event == "GROUP_ROSTER_CHANGED" then
+				updateBlipColors()
+			else
+				updateBlipIcons()
+			end
 		end
 	end
 
@@ -969,6 +978,9 @@ end
 function plugin:Close()
 	updater:Stop()
 
+	updaterFrame:UnregisterEvent("GROUP_ROSTER_CHANGED")
+	updaterFrame:UnregisterEvent("RAID_TARGET_UPDATE")
+
 	for i = 1, 40 do
 		if blipList[raidList[i]].isShown then
 			blipList[raidList[i]].isShown = nil
@@ -1021,8 +1033,8 @@ function plugin:Open(range, module, key, player, isReverse)
 	end
 	activeRange = range
 
-	self:RegisterEvent("GROUP_ROSTER_CHANGED", updateBlipColors)
-	self:RegisterEvent("RAID_TARGET_UPDATE", updateBlipIcons)
+	updaterFrame:RegisterEvent("GROUP_ROSTER_CHANGED")
+	updaterFrame:RegisterEvent("RAID_TARGET_UPDATE")
 	updateBlipColors()
 	updateBlipIcons()
 
