@@ -762,7 +762,7 @@ function plugin:OnPluginEnable()
 			else
 				updateBlipIcons()
 			end
-		end
+		end)
 	end
 
 	self:RegisterMessage("BigWigs_ShowProximity")
