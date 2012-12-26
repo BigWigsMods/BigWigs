@@ -89,6 +89,11 @@ function boss:OnDisable()
 		end
 	end
 
+	-- No enabled modules? Unregister the combat log!
+	if #enabledModules == 0 then
+		bwUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	end
+
 	-- Empty the event map for this module
 	for _,v in pairs(eventMap[self]) do
 		wipe(v)
@@ -104,11 +109,6 @@ function boss:OnDisable()
 	end
 	wipe(unitEventMap[self])
 	unitEventMap[self] = nil
-
-	-- No enabled modules? Unregister the combat log!
-	if #enabledModules == 0 then
-		bwUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-	end
 
 	self.isEngaged = nil
 	self:SendMessage("BigWigs_OnBossDisable", self)
