@@ -159,7 +159,7 @@ function mod:UnstableEnergyRemoved()
 		drawPowerCounter, annihilateCounter = 0, 0
 		self:Message("stages", CL["phase"]:format(1), "Positive")
 		self:Bar("adds", CL["next_add"], 15, 117954)
-		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
+		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "PhaseWarn", "boss1")
 	end
 end
 
