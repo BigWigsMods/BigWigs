@@ -17,7 +17,7 @@ L["Allows bars to be click-through unless the specified modifier key is held dow
 
 L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "Временное Супер Увеличение полосы и всех сообщений, связанных с ним, в течение всего срока действия."
 L["Report"] = "Сообщить"
---L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."] = "Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."
+L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."] = "Сообщает текущий статус полосы в активный групповой чат; будь то чат подземелья, рейда, группы или гильдии."
 L["Remove"] = "Убрать"
 L["Temporarily removes the bar and all associated messages."] = "Временно убирает полосу и все связанные с ней сообщения."
 L["Remove other"] = "Убрать другие"
