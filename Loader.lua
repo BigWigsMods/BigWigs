@@ -45,14 +45,6 @@ end
 
 local loader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader", "AceEvent-3.0")
 
-local LOCALE = GetLocale()
-if LOCALE == "enGB" then
-	LOCALE = "enUS"
-end
--- uncomment next line to debug Foreign Loading
--- LOCALE = "Foreignese"
-loader.LOCALE = LOCALE
-
 -----------------------------------------------------------------------
 -- Locals
 --
@@ -85,7 +77,6 @@ local warnedOutOfDate = nil
 
 -- Loading
 local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-Zone directive. Filled in OnInitialize, garbagecollected in OnEnable.
-local BB -- BabbleBoss-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBB-3.0
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the core is loaded
@@ -286,20 +277,7 @@ function loader:OnInitialize()
 end
 
 function loader:OnEnable()
-	if LOCALE ~= "enUS" and not BB then
-		if not LibStub("LibBabble-Boss-3.0", true) then
-			load(nil, "BigWigs_Foreign")
-		end
-		-- check again and error if you can't find
-		if not LibStub("LibBabble-Boss-3.0", true) then
-			sysprint("Error retrieving LibBabble-Boss-3.0, please reinstall Big Wigs.")
-		else
-			BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
-		end
-	end
-
 	if loadOnZoneAddons then
-		-- From this point onward BB should be available for non-english locales
 		for i, name in next, loadOnZoneAddons do
 			local menu = tonumber(GetAddOnMetadata(name, "X-BigWigs-Menu"))
 			if menu then

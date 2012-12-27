@@ -3,10 +3,6 @@ local addon = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceEvent-3.0")
 addon:SetEnabledState(false)
 addon:SetDefaultModuleState(false)
 
--- locale stuff for BB conditionals
-local LOCALE = BigWigsLoader.LOCALE
-local BB
-
 local GetSpellInfo = GetSpellInfo
 
 local C -- = BigWigs.C, set from Constants.lua
@@ -325,12 +321,6 @@ function addon:OnInitialize()
 	db.RegisterCallback(self, "OnProfileReset", profileUpdate)
 	self.db = db
 
-	-- check for and load the babbles early if available, used for packed versions of bigwigs
-	if LOCALE ~= "enUS" and not BB then
-		local lbb = LibStub("LibBabble-Boss-3.0", true)
-		if lbb then BB = lbb:GetUnstrictLookupTable() end
-	end
-
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
 	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"], nil, 26662)
 	self:RegisterBossOption("stages", L["stages"], L["stages_desc"])
@@ -342,10 +332,6 @@ function addon:OnInitialize()
 end
 
 function addon:OnEnable()
-	-- load the babbles, used for unpacked versions of bigwigs.
-	if LOCALE ~= "enUS" and not BB then
-		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
-	end
 	self:RegisterMessage("BigWigs_AddonMessage", chatMsgAddon)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
 
@@ -375,8 +361,8 @@ end
 -- Well .. except the module API, obviously.
 --
 
+-- XXX Defunct
 function addon:Translate(boss)
-	if LOCALE ~= "enUS" and BB and BB[boss] then return BB[boss] end
 	return boss
 end
 
@@ -457,9 +443,7 @@ do
 		if module.optionHeaders then
 			for k, v in pairs(module.optionHeaders) do
 				if type(v) == "string" then
-					if LOCALE ~= "enUS" and BB and BB[v] then
-						module.optionHeaders[k] = BB[v]
-					elseif CL[v] then
+					if CL[v] then
 						module.optionHeaders[k] = CL[v]
 					else
 						local ej = v:match("^ej:(%d+)$")
@@ -514,8 +498,6 @@ do
 		if not module.displayName then module.displayName = module.moduleName end
 		if module.encounterId then
 			module.displayName = EJ_GetEncounterInfo(module.encounterId)
-		elseif LOCALE ~= "enUS" and BB and module.displayName and BB[module.displayName] then
-			module.displayName = BB[module.displayName]
 		end
 		if not enablezones[module.zoneId] then
 			enablezones[module.zoneId] = true

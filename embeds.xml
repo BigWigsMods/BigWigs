@@ -15,7 +15,6 @@
 
 <!--@debug@-->
 <Include file="Core\libs.xml"/>
-<Include file="Foreign\libs.xml"/>
 <Include file="Options\libs.xml"/>
 <!--@end-debug@-->
 </Ui>
