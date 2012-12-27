@@ -76,7 +76,7 @@ function boss:OnEnable()
 	UpdateDispelStatus()
 
 	-- Update enabled modules list
-	for i = 1, #enabledModules do
+	for i = #enabledModules, 1, -1 do
 		local module = enabledModules[i]
 		if module == self then return end
 	end
@@ -87,7 +87,7 @@ function boss:OnDisable()
 	if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 
 	-- Update enabled modules list
-	for i = 1, #enabledModules do
+	for i = #enabledModules, 1, -1 do
 		if self == enabledModules[i] then
 			tremove(enabledModules, i)
 		end
@@ -189,11 +189,11 @@ do
 	end
 
 	bwUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sGUID, source, sFlags, _, dGUID, player, dFlags, _, spellId, spellName, _, secSpellId, buffStack)
-		for i = 1, #enabledModules do
+		for i = #enabledModules, 1, -1 do
 			local self = enabledModules[i]
 			if event == "UNIT_DIED" then
 				local numericId = tonumber(dGUID:sub(6, 10), 16)
-				local m = eventMap[self] and eventMap[self][event]
+				local m = eventMap[self][event]
 				if m and m[numericId] then
 					local func = m[numericId]
 					if type(func) == "function" then
@@ -203,7 +203,7 @@ do
 					end
 				end
 			else
-				local m = eventMap[self] and eventMap[self][event]
+				local m = eventMap[self][event]
 				if m and (m[spellId] or m["*"]) then
 					local func = m[spellId] or m["*"]
 					if type(func) == "function" then
@@ -251,7 +251,7 @@ do
 
 	local frameTbl = {}
 	local eventFunc = function(_, event, unit, ...)
-		for i = 1, #enabledModules do
+		for i = #enabledModules, 1, -1 do
 			local self = enabledModules[i]
 			local m = unitEventMap[self] and unitEventMap[self][event]
 			if m and m[unit] then
@@ -283,7 +283,7 @@ do
 			local unit = select(i, ...)
 			unitEventMap[self][event][unit] = nil
 			local keepRegistered
-			for i = 1, #enabledModules do
+			for i = #enabledModules, 1, -1 do
 				local m = unitEventMap[enabledModules[i]][event]
 				if m and m[unit] then
 					keepRegistered = true
