@@ -103,6 +103,7 @@ function boss:OnDisable()
 		wipe(v)
 	end
 	wipe(eventMap[self])
+	eventMap[self] = nil
 
 	-- Remove the Unit Events for this module
 	for a,b in pairs(unitEventMap[self]) do
@@ -111,6 +112,7 @@ function boss:OnDisable()
 		end
 	end
 	wipe(unitEventMap[self])
+	unitEventMap[self] = nil
 
 	self.isEngaged = nil
 	self:SendMessage("BigWigs_OnBossDisable", self)
@@ -191,7 +193,7 @@ do
 			local self = enabledModules[i]
 			if event == "UNIT_DIED" then
 				local numericId = tonumber(dGUID:sub(6, 10), 16)
-				local m = eventMap[self][event]
+				local m = eventMap[self] and eventMap[self][event]
 				if m and m[numericId] then
 					local func = m[numericId]
 					if type(func) == "function" then
@@ -201,7 +203,7 @@ do
 					end
 				end
 			else
-				local m = eventMap[self][event]
+				local m = eventMap[self] and eventMap[self][event]
 				if m and (m[spellId] or m["*"]) then
 					local func = m[spellId] or m["*"]
 					if type(func) == "function" then
@@ -251,7 +253,7 @@ do
 	local eventFunc = function(_, event, unit, ...)
 		for i = 1, #enabledModules do
 			local self = enabledModules[i]
-			local m = unitEventMap[self][event]
+			local m = unitEventMap[self] and unitEventMap[self][event]
 			if m and m[unit] then
 				self[m[unit]](self, unit, ...)
 			end
