@@ -459,7 +459,7 @@ do
 		end
 	end
 	function loader:GROUP_ROSTER_UPDATE()
-		local groupType = (IsPartyLFG() and 3) or (IsInRaid() and 2) or (IsInGroup() and 1)
+		local groupType = (IsPartyLFG() and 3) or (IsInRaid() and 2) or (IsInGroup() and 1) or nil
 		if (not grouped and groupType) or (grouped and grouped ~= groupType) then
 			grouped = groupType
 			self:ZONE_CHANGED_NEW_AREA()
