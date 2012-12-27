@@ -68,15 +68,19 @@ function boss:OnEnable()
 	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 	self:SendMessage("BigWigs_OnBossEnable", self)
 
-	-- Update enabled modules list
-	enabledModules[#enabledModules+1] = self
-
 	-- Update Difficulty
 	local _, _, diff = GetInstanceInfo()
 	difficulty = diff
 
 	-- Update Dispel Status
 	UpdateDispelStatus()
+
+	-- Update enabled modules list
+	for i = 1, #enabledModules do
+		local module = enabledModules[i]
+		if module == self then return end
+	end
+	enabledModules[#enabledModules+1] = self
 end
 function boss:OnDisable()
 	if debug then dbg(self, "OnDisable()") end
@@ -99,7 +103,6 @@ function boss:OnDisable()
 		wipe(v)
 	end
 	wipe(eventMap[self])
-	eventMap[self] = nil
 
 	-- Remove the Unit Events for this module
 	for a,b in pairs(unitEventMap[self]) do
@@ -108,7 +111,6 @@ function boss:OnDisable()
 		end
 	end
 	wipe(unitEventMap[self])
-	unitEventMap[self] = nil
 
 	self.isEngaged = nil
 	self:SendMessage("BigWigs_OnBossDisable", self)

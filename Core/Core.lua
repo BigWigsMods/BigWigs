@@ -581,6 +581,11 @@ function pluginCore:OnEnable()
 		mod:Enable()
 	end
 end
+function pluginCore:OnDisable()
+	for name, mod in self:IterateModules() do
+		mod:Disable()
+	end
+end
 
 BigWigs = addon -- Set global
 

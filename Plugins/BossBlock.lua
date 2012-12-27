@@ -5,16 +5,17 @@
 local plugin = BigWigs:NewPlugin("BossBlock")
 if not plugin then return end
 
+local BigWigs = BigWigs
+
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
 
 local function filter(_, _, msg)
-	if plugin:IsSpam(msg) then return true end
+	if plugin:IsEnabled() and plugin:IsSpam(msg) then return true end
 end
 
 function plugin:OnRegister()
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", filter)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_WARNING", filter)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", filter)
@@ -28,10 +29,12 @@ do
 		if not oldAddMessage then
 			oldAddMessage = RaidNotice_AddMessage
 			function RaidNotice_AddMessage(frame, msg, ...)
-				if frame == rwf and self:IsSpam(msg) then
-					return
-				elseif frame == rbe and not BigWigs.db.profile.showBlizzardWarnings then
-					return
+				if self:IsEnabled() then
+					if frame == rwf and self:IsSpam(msg) then
+						return
+					elseif frame == rbe and not BigWigs.db.profile.showBlizzardWarnings then
+						return
+					end
 				end
 				oldAddMessage(frame, msg, ...)
 			end
