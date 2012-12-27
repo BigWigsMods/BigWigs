@@ -296,7 +296,7 @@ local clickOptions = {
 	report = {
 		type = "toggle",
 		name = colorize[L["Report"]],
-		desc = L["Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate."],
+		desc = L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."],
 		descStyle = "inline",
 		order = 2,
 	},
@@ -1020,16 +1020,8 @@ do
 		end
 	end
 	clickHandlers.report = function(bar)
-		local channel = "SAY"
-		if UnitInBattleground("player") then
-			channel = "BATTLEGROUND"
-		elseif UnitInRaid("player") then
-			channel = "RAID"
-		elseif GetNumSubgroupMembers() > 1 then
-			channel = "PARTY"
-		end
 		local text = ("%s: %s"):format(bar.candyBarLabel:GetText(), timeDetails(bar.remaining))
-		SendChatMessage(text, channel)
+		SendChatMessage(text, (IsPartyLFG() and "INSTANCE_CHAT") or (IsInRaid() and "RAID") or (IsInGroup() and "PARTY") or "SAY")
 	end
 end
 

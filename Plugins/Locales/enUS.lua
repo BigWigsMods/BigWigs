@@ -17,7 +17,7 @@ L["Allows bars to be click-through unless the specified modifier key is held dow
 
 L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = true
 L["Report"] = true
-L["Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate."] = true
+L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."] = true
 L["Remove"] = true
 L["Temporarily removes the bar and all associated messages."] = true
 L["Remove other"] = true

@@ -19,7 +19,7 @@ L["Allows bars to be click-through unless the specified modifier key is held dow
 
 L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "临时超级醒目计时条及任何讯息的持续时间。"
 L["Report"] = "报告"
-L["Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate."] = "报告当前计时条状态到适当的队伍聊天；无论战场，团队，队伍或公会。 "
+--L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."] = "Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."
 L["Remove"] = "移除"
 L["Temporarily removes the bar and all associated messages."] = "临时移除计时条和全部相关信息。"
 L["Remove other"] = "移除其它"

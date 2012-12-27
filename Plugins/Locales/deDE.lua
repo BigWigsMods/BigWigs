@@ -19,7 +19,7 @@ L["Allows bars to be click-through unless the specified modifier key is held dow
 
 L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "Hebt zeitweilig Leisten und zugehörige Nachrichten stark hervor."
 L["Report"] = "Berichten"
-L["Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate."] = "Gibt den aktuellen Status der Leiste in den aktiven Chat aus: Entweder Schlachtzugs-, Schlachtfeld-, Gruppen- oder Gildenchat."
+--L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."] = "Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."
 L["Remove"] = "Entfernen"
 L["Temporarily removes the bar and all associated messages."] = "Entfernt zeitweilig die Leiste und alle zugehörigen Nachrichten aus der Anzeige."
 L["Remove other"] = "Andere entfernen"
