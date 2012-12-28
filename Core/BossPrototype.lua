@@ -146,7 +146,7 @@ do
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
 	local invalidId = "Module %q tried to register an invalid spell id (%d) to event %q."
 
-	function boss:RAID_BOSS_EMOTE(event, msg, ...)
+	function boss:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, ...)
 		if eventMap[self][event][msg] then
 			self[eventMap[self][event][msg]](self, msg, ...)
 		else
@@ -160,11 +160,11 @@ do
 	function boss:Emote(func, ...)
 		if not func then error(format(missingArgument, self.moduleName)) end
 		if not self[func] then error(format(missingFunction, self.moduleName, func)) end
-		if not eventMap[self].RAID_BOSS_EMOTE then eventMap[self].RAID_BOSS_EMOTE = {} end
+		if not eventMap[self].CHAT_MSG_RAID_BOSS_EMOTE then eventMap[self].CHAT_MSG_RAID_BOSS_EMOTE = {} end
 		for i = 1, select("#", ...) do
-			eventMap[self]["RAID_BOSS_EMOTE"][(select(i, ...))] = func
+			eventMap[self]["CHAT_MSG_RAID_BOSS_EMOTE"][(select(i, ...))] = func
 		end
-		self:RegisterEvent("RAID_BOSS_EMOTE")
+		self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	end
 
 	function boss:CHAT_MSG_MONSTER_YELL(event, msg, ...)
