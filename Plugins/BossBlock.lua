@@ -5,46 +5,51 @@
 local plugin = BigWigs:NewPlugin("BossBlock")
 if not plugin then return end
 
-local BigWigs = BigWigs
-
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-local function filter(_, _, msg)
-	if plugin:IsEnabled() and plugin:IsSpam(msg) then return true end
-end
-
-function plugin:OnRegister()
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", filter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_WARNING", filter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", filter)
-end
-
-do
-	local rwf = RaidWarningFrame
-	local rbe = RaidBossEmoteFrame
-	local oldAddMessage = nil
-	function plugin:OnPluginEnable()
-		if not oldAddMessage then
-			oldAddMessage = RaidNotice_AddMessage
-			function RaidNotice_AddMessage(frame, msg, ...)
-				if self:IsEnabled() then
-					if frame == rwf and self:IsSpam(msg) then
-						return
-					elseif frame == rbe and not BigWigs.db.profile.showBlizzardWarnings then
-						return
-					end
-				end
-				oldAddMessage(frame, msg, ...)
-			end
-		end
+local function IsSpam(_, _, msg)
+	if msg:find("***", nil, true) then
+		return true
 	end
 end
 
-function plugin:IsSpam(text)
-	if not BigWigs.db.profile.showBossmodChat and type(text) == "string" and text:find("***", nil, true) then
-		return true
+local rwf = RaidWarningFrame
+local RaidWarningFrame_OnEvent = RaidWarningFrame_OnEvent
+local handler = CreateFrame("Frame")
+handler:SetScript("OnEvent", function(_, event, msg, ...)
+	if not IsSpam(nil, nil, msg) then
+		RaidWarningFrame_OnEvent(rwf, event, msg, ...)
+	end
+end)
+
+function plugin:OnPluginEnable()
+	if not BigWigs.db.profile.showBlizzardWarnings then
+		RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_EMOTE")
+	end
+
+	if not BigWigs.db.profile.showBossmodChat then
+		RaidWarningFrame:UnregisterEvent("CHAT_MSG_RAID_WARNING")
+		handler:RegisterEvent("CHAT_MSG_RAID_WARNING")
+
+		ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", IsSpam)
+		ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_WARNING", IsSpam)
+		ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", IsSpam)
+	end
+end
+
+function plugin:OnPluginDisable()
+	if not BigWigs.db.profile.showBlizzardWarnings then
+		RaidBossEmoteFrame:RegisterEvent("RAID_BOSS_EMOTE")
+	end
+	if not BigWigs.db.profile.showBossmodChat then
+		RaidWarningFrame:RegisterEvent("CHAT_MSG_RAID_WARNING")
+		handler:UnregisterEvent("CHAT_MSG_RAID_WARNING")
+
+		ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID", IsSpam)
+		ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID_WARNING", IsSpam)
+		ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID_LEADER", IsSpam)
 	end
 end
 

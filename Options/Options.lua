@@ -142,12 +142,28 @@ local acOptions = {
 			type = "toggle",
 			name = L["Show Blizzard warnings"],
 			desc = L.blizzardDesc,
+			set = function(info, value)
+				local key = info[#info]
+				local plugin = BigWigs:GetPlugin("BossBlock")
+				plugin:Disable()
+				BigWigs.db.profile[key] = value
+				options:SendMessage("BigWigs_CoreOptionToggled", key, value)
+				plugin:Enable()
+			end,
 			order = 31,
 			width = "full",
 		},
 		showBossmodChat = {
 			type = "toggle",
 			name = L["Show addon warnings"],
+			set = function(info, value)
+				local key = info[#info]
+				local plugin = BigWigs:GetPlugin("BossBlock")
+				plugin:Disable()
+				BigWigs.db.profile[key] = value
+				options:SendMessage("BigWigs_CoreOptionToggled", key, value)
+				plugin:Enable()
+			end,
 			desc = L.addonwarningDesc,
 			order = 32,
 			width = "full",
