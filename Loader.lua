@@ -459,8 +459,8 @@ do
 		end
 	end
 	function loader:GROUP_ROSTER_UPDATE()
-		local groupType = (IsPartyLFG() and 3) or (IsInRaid() and 2) or (IsInGroup() and 1) or nil
-		if (not grouped and groupType) or (grouped and grouped ~= groupType) then
+		local groupType = (IsPartyLFG() and 3) or (IsInRaid() and 2) or (IsInGroup() and 1)
+		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
 			self:ZONE_CHANGED_NEW_AREA()
 			SendAddonMessage("BigWigs", "VQ:"..BIGWIGS_RELEASE_REVISION, groupType == 3 and "INSTANCE_CHAT" or "RAID")
