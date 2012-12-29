@@ -9,20 +9,22 @@ if not plugin then return end
 -- Event Handlers
 --
 
-local function IsSpam(_, _, msg)
+local function chatFilter(_, _, msg)
 	if msg:find("***", nil, true) then
 		return true
 	end
 end
 
-local rwf = RaidWarningFrame
-local RaidWarningFrame_OnEvent = RaidWarningFrame_OnEvent
 local handler = CreateFrame("Frame")
-handler:SetScript("OnEvent", function(_, event, msg, ...)
-	if not IsSpam(nil, nil, msg) then
-		RaidWarningFrame_OnEvent(rwf, event, msg, ...)
-	end
-end)
+do
+	local RaidWarningFrame = RaidWarningFrame
+	local RaidWarningFrame_OnEvent = RaidWarningFrame_OnEvent
+	handler:SetScript("OnEvent", function(_, event, msg, ...)
+		if not msg:find("***", nil, true) then
+			RaidWarningFrame_OnEvent(RaidWarningFrame, event, msg, ...)
+		end
+	end)
+end
 
 function plugin:OnPluginEnable()
 	if not BigWigs.db.profile.showBlizzardWarnings then
@@ -33,9 +35,9 @@ function plugin:OnPluginEnable()
 		RaidWarningFrame:UnregisterEvent("CHAT_MSG_RAID_WARNING")
 		handler:RegisterEvent("CHAT_MSG_RAID_WARNING")
 
-		ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", IsSpam)
-		ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_WARNING", IsSpam)
-		ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", IsSpam)
+		ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", chatFilter)
+		ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_WARNING", chatFilter)
+		ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", chatFilter)
 	end
 end
 
@@ -47,9 +49,9 @@ function plugin:OnPluginDisable()
 		RaidWarningFrame:RegisterEvent("CHAT_MSG_RAID_WARNING")
 		handler:UnregisterEvent("CHAT_MSG_RAID_WARNING")
 
-		ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID", IsSpam)
-		ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID_WARNING", IsSpam)
-		ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID_LEADER", IsSpam)
+		ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID", chatFilter)
+		ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID_WARNING", chatFilter)
+		ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID_LEADER", chatFilter)
 	end
 end
 
