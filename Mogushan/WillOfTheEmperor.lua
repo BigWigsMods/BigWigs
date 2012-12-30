@@ -176,7 +176,7 @@ function mod:Bosses()
 	self:Bar("bosses", L["bosses"], 13, L.bosses_icon)
 	self:DelayedMessage("bosses", 13, L["bosses"], "Attention", L.bosses_icon)
 	if not self:Heroic() then
-		self:Bar("gas", "~"..L["gas"], 120, L.gas_icon)
+		self:Bar("gas", "~"..L["gas"], 123, L.gas_icon)
 	end
 end
 
