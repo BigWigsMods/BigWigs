@@ -29,6 +29,7 @@ end
 function plugin:OnPluginEnable()
 	if not BigWigs.db.profile.showBlizzardWarnings then
 		RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_EMOTE")
+		RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_WHISPER")
 	end
 
 	if not BigWigs.db.profile.showBossmodChat then
@@ -44,6 +45,7 @@ end
 function plugin:OnPluginDisable()
 	if not BigWigs.db.profile.showBlizzardWarnings then
 		RaidBossEmoteFrame:RegisterEvent("RAID_BOSS_EMOTE")
+		RaidBossEmoteFrame:RegisterEvent("RAID_BOSS_WHISPER")
 	end
 	if not BigWigs.db.profile.showBossmodChat then
 		RaidWarningFrame:RegisterEvent("CHAT_MSG_RAID_WARNING")
