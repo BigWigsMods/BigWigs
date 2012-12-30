@@ -30,16 +30,18 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		122774, 122735, 122754, {122835, "ICON"}, 123120, 123081, 123495, "ej:6294",
-		"berserk", "bosskill",
+		122735, 122754,
+		122774, 123495, {122835, "ICON"}, 123120, 123081, 128555, "bosskill",
+		"ej:6294",
 	}, {
+		[122735] = INLINE_TANK_ICON..TANK,
 		[122774] = "general",
+		["ej:6294"] = "heroic",
 	}
 end
 
 function mod:OnBossEnable()
 	self:Emote("Crush", "spell:122774")
-	self:Emote("MassiveCrush", "spell:128555")
 
 	self:Log("SPELL_AURA_APPLIED", "PheromonesApplied", 122835)
 	self:Log("SPELL_AURA_REMOVED", "PheromonesRemoved", 122835)
@@ -61,7 +63,7 @@ end
 function mod:OnEngage(diff)
 	legCounter, mendLegTimerRunning = 4, nil
 	crushCounter = 0
-	self:Berserk(self:LFR() and 720 or 420)
+	self:Berserk(self:LFR() and 720 or 420, nil, nil, 128555)
 	self:Bar(122735, 122735, 11, 122735) --Furious Swipe
 	if self:Heroic() then
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "PrePhase2", "boss1", "boss2", "boss3", "boss4", "boss5")
@@ -94,10 +96,6 @@ function mod:Crush()
 	end
 
 	self:Bar(122735, 122735, 9, 122735) --Furious Swipe
-end
-
-function mod:MassiveCrush()
-	self:Bar("berserk", CL["cast"]:format(self:SpellName(128555)), 3.6, 128555) --Massive Crush (no message, happens at berserk)
 end
 
 function mod:Fury(_, spellId, _, _, spellName, buffStack, _, _, _, dGUID)
