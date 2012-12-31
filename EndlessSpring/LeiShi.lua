@@ -21,7 +21,6 @@ local nextProtectWarning = 85
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.hp_to_go = "%d%% to go"
-	L.end_hide = "Hiding ended"
 
 	L.special = "Next special ability"
 	L.special_desc = "Warning for next special ability"
@@ -52,18 +51,20 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GetAwayApplied", 123461)
 	self:Log("SPELL_AURA_REMOVED", "GetAwayRemoved", 123461)
 	self:Log("SPELL_AURA_APPLIED", "Protect", 123250)
+	self:Log("SPELL_AURA_REMOVED", "ProtectRemoved", 123250)
 	self:Log("SPELL_CAST_START", "Hide", 123244)
 	self:Log("SPELL_AURA_APPLIED", "ScaryFog", 123705)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ScaryFog", 123705)
 	self:Log("SPELL_AURA_REMOVED", "ScaryFogRemoved", 123705)
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck") -- use this to detect him coming out of hide
+
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck") -- to detect her coming out of hide
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Kill", "boss1")
 end
 
 function mod:OnEngage(diff)
 	hiding = nil
 	nextProtectWarning = 85
-	self:Bar("special", "~"..L["special"], 33, 123263)
+	self:Bar("special", "~"..L["special"], 32, 123263)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "HealthCheck", "boss1")
 	self:Berserk(self:Heroic() and 420 or 600)
 	if self:Tank() then
@@ -81,8 +82,8 @@ function mod:EngageCheck()
 	self:CheckBossStatus()
 	if hiding then
 		hiding = nil
-		self:Bar("special", "~"..L["special"], 20, 123263)
-		self:Message(123244, L["end_hide"], "Attention", 123244)
+		self:Message(123244, CL["over"]:format(self:SpellName(123244)), "Attention", 123244)
+		self:Bar("special", "~"..L["special"], 32, 123263)
 	end
 end
 
@@ -98,7 +99,8 @@ do
 				highestStackPlayer = unit
 			end
 		end
-		mod:TargetMessage(123705, ("%s (%d)"):format(spellName, highestStack), (UnitName(highestStackPlayer)), "Attention", 123705)
+		local player = UnitName(highestStacksPlayer)
+		mod:TargetMessage(123705, ("%s (%d)"):format(spellName, highestStack), player, "Attention", 123705)
 		scheduled = nil
 	end
 
@@ -134,36 +136,41 @@ do
 	end
 	function mod:GetAwayRemoved()
 		getAwayStartHP = nil
-		self:Bar("special", "~"..L["special"], 30, 123263)
+		self:Bar("special", "~"..L["special"], 32, 123263)
 	end
 
 	local prev = 0
 	local lastHpToGo
 	function mod:HealthCheck(unitId)
-		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		if hp < nextProtectWarning then
-			self:Message(123250, CL["soon"]:format(self:SpellName(123250)), "Positive", 123250) -- Protect
-			nextProtectWarning = hp - 20
-			if nextProtectWarning < 20 then
-				nextProtectWarning = 0
+			local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+			if hp < nextProtectWarning then
+				self:Message(123250, CL["soon"]:format(self:SpellName(123250)), "Positive", 123250) -- Protect
+				nextProtectWarning = hp - 20
+				if nextProtectWarning < 20 then
+					nextProtectWarning = 0
+				end
 			end
-		end
-		if getAwayStartHP then
-			local t = GetTime()
-			if t-prev > 3 then -- warn max once every 3 sec
-				prev = t
-				local hpToGo = math.ceil(4 - (getAwayStartHP - hp))
-				if lastHpToGo ~= hpToGo and hpToGo > 0 then
-					lastHpToGo = hpToGo
-					self:Message(123461, L["hp_to_go"]:format(hpToGo), "Positive", 123461)
+			if getAwayStartHP then
+				local t = GetTime()
+				if t-prev > 3 then -- warn max once every 3 sec
+					prev = t
+					local hpToGo = math.ceil(4 - (getAwayStartHP - hp))
+					if lastHpToGo ~= hpToGo and hpToGo > 0 then
+						lastHpToGo = hpToGo
+						self:Message(123461, L["hp_to_go"]:format(hpToGo), "Positive", 123461)
+					end
 				end
 			end
 		end
 	end
-end
 
 function mod:Protect(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Important", spellId, "Alarm")
+	self:StopBar("~"..L["special"])
+end
+
+function mod:ProtectRemoved()
+	self:Message("special", CL["soon"]:format(L["special"]), "Attention", 123263)
 end
 
 function mod:Kill(_, _, _, _, spellId)
