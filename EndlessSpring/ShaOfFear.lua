@@ -107,8 +107,7 @@ function mod:OnEngage(diff)
 	cackleCounter = 1
 	self:Bar(119414, 119414, 33, 119414) -- Breath of Fear
 	self:Bar(129147, ("%s (%d)"):format(self:SpellName(129147), cackleCounter), (diff == 4 or diff == 6) and 25 or 41, 129147) -- Ominous Cackle
-	self:Bar("ej:6699", 131996, 10, 131996) -- Thrash
-	--self:Berserk(900) -- we start in UNIT_SPELLCAST_SUCCEEDED need to check if commenting it out here does not brake non heroic
+	--self:Berserk(900) -- we start in UNIT_SPELLCAST_SUCCEEDED
 	swingCounter, thrashCounter, thrashNext = 0, 0, nil
 	self:OpenProximity(5) -- might be less
 	atSha = true
@@ -145,7 +144,7 @@ do
 			mod:Bar("ability_cd", L["huddle_or_strike"], 10, 120458)
 		end
 	end
-	local function warnhuddle(spellName)
+	local function warnHuddle(spellName)
 		mod:TargetMessage(120629, spellName, huddleList, "Important", 120629, "Alert")
 		scheduled = nil
 	end
@@ -157,7 +156,7 @@ do
 			self:SaySelf(spellId, spellName)
 		end
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnhuddle, 0.3, spellName)
+			scheduled = self:ScheduleTimer(warnHuddle, 0.3, spellName)
 		end
 	end
 	function mod:Waterspout(_, spellId, _, _, spellName)
@@ -272,12 +271,15 @@ function mod:Transitions(unit, spellName, _, _, spellId)
 		self:StopBar(("%s (%d)"):format(self:SpellName(129147), cackleCounter)) -- Ominous Cackle
 		self:StopBar(131996) -- Thrash
 		swingCounter = 0
-
-		-- start Submerge timer using the current power and the new regen rate
-		local left = 1 - (UnitPower(unit) / UnitPowerMax(unit)) * 52
-		self:Bar(120455, ("%s (%d)"):format(self:SpellName(120455), 1), left, 120455)
-	elseif spellId == 62535 then -- 2nd phase Berserk for that 1 sec accuraccy
-		self:Berserk(900)
+	elseif spellId == 62535 then -- Berserk for that 1 sec accuracy
+		self:Berserk(900, phase == 2)
+		if phase == 2 then
+			-- Phase 2 - Berserk in 15 min!
+			self:Message("berserk", CL["phase"]:format(2).." - "..CL["custom_min"]:format(spellName, 15), "Attention")
+			-- start Submerge timer using the current power and the new regen rate
+			local left = 1 - (UnitPower("boss1") / UnitPowerMax("boss1")) * 52
+			self:Bar(120455, ("%s (%d)"):format(self:SpellName(120455), 1), left, 120455)
+		end
 	end
 end
 
@@ -383,12 +385,18 @@ end
 function mod:Fearless(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "target") -- just have it here for now
-		self:Bar(119414, self:SpellName(119414), nextFear - GetTime(), 119414)
 		self:OpenProximity(5) -- might be less
 		atSha = true
 		self:CancelDelayedMessage(CL["soon"]:format(self:SpellName(119888))) -- Death Blossom
 		self:Bar(spellId, spellName, 30, spellId)
 		self:DelayedMessage(spellId, 22, L["fading_soon"]:format(spellName), "Attention", spellId)
+
+		-- resume Breath of Fear bar/message
+		local left = nextFear - GetTime()
+		self:Bar(119414, 119414, left, 119414)
+		if left > 10 then
+			self:DelayedMessage(119414, left-8, CL["soon"]:format(self:SpellName(119414)), "Attention", 119414)
+		end
 	end
 end
 
@@ -413,7 +421,6 @@ end
 function mod:OminousCackleRemoved(player) -- set it here, because at this point we are surely out of range of the other platforms
 	if UnitIsUnit("player", player) then
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "BlossomPreWarn", "target")
-		atSha = nil
 	end
 end
 
@@ -426,6 +433,7 @@ do
 	function mod:OminousCackleApplied(player, spellId)
 		cackleTargets[#cackleTargets + 1] = player
 		if UnitIsUnit("player", player) then
+			atSha = nil
 			self:CloseProximity()
 			self:StopBar(131996) -- Thrash
 			self:StopBar(119414) -- Breath of Fear
@@ -438,16 +446,12 @@ do
 end
 
 function mod:BlossomPreWarn(unitId)
-	if not atSha then -- just to be safe
-		local mobId = self:GetCID(UnitGUID(unitId))
-		if mobId == 61046 or mobId == 61038 or mobId == 61042 then
-			local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-			if hp < 30 then
-				self:Message(119888, CL["soon"]:format(self:SpellName(119888)), "Attention", 119888) -- Death Blossom
-				-- lets assume for now if the mob gets healed up by the orbs from below 20% then it can not cast death blossom again, if that is not the case
-				-- then comment out this UnregisterEvent and uncomment the UnregisterEvent from :Fearless
-				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
-			end
+	local mobId = self:GetCID(UnitGUID(unitId))
+	if mobId == 61046 or mobId == 61038 or mobId == 61042 then
+		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+		if hp < 30 then
+			self:Message(119888, CL["soon"]:format(self:SpellName(119888)), "Attention", 119888) -- Death Blossom
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 		end
 	end
 end
