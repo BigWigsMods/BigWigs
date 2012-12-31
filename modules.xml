@@ -7,6 +7,9 @@
 <Include file="Plugins\locales.xml"/>
 <Include file="Plugins\modules.xml"/>
 
+<Include file="Pandaria\locales.xml"/>
+<Include file="Pandaria\modules.xml"/>
+
 <Include file="Mogushan\locales.xml"/>
 <Include file="Mogushan\modules.xml"/>
 

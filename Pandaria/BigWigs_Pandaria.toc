@@ -2,12 +2,8 @@
 
 ## Title: Big Wigs [|cffeda55fPandaria|r]
 ## Title-frFR: Big Wigs [|cffeda55fPandarie|r]
-## Title-zhCN: Big Wigs [|cffeda55f潘达利亚|r]
-## Title-zhTW: Big Wigs [|cffeda55f潘達利亞|r]
 ## Notes: Big Wigs Pandaria Modules
 ## Notes-frFR: Modules Big Wigs concernant la Pandarie.
-## Notes-zhCN: Big Wigs 潘达利亚模块
-## Notes-zhTW: Big Wigs 潘達利亞模組
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
