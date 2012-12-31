@@ -69,14 +69,9 @@ do
 	end
 end
 
-local first, last = nil, 0
 do
 	local prev = 0
 	function mod:GrowingAngerApplied(player, spellId, _, _, spellName)
-		local t = GetTime()
-		if not first then first = t
-		else last = t end
-
 		if UnitIsUnit(player, "player") then
 			self:OpenProximity(5, spellId)
 			self:FlashShake(spellId)
@@ -101,8 +96,6 @@ do
 	local function warnAggressiveBehavior(spellId)
 		mod:TargetMessage(spellId, spellId, aggressiveTargets, "Urgent", spellId)
 		scheduled = nil
-		print("! time diff", (last-first))
-		first, last = nil, 0
 	end
 	function mod:AggressiveBehavior(player, spellId, _, _, spellName)
 		aggressiveTargets[#aggressiveTargets + 1] = player
