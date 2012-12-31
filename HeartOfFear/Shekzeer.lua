@@ -73,7 +73,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "HeartOfFearApplied", 123845)
 	self:Log("SPELL_AURA_REMOVED", "HeartOfFearRemoved", 123845)
 
-	self:RegisterUnitEvent("UNIT_POWER", "PoorMansDissonanceTimers", "boss1") --_FREQUENT fires twice per gain? the ~250ms normal event is fine
+	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PoorMansDissonanceTimers", "boss1")
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phase3Warn", "boss1")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -208,21 +208,26 @@ function mod:AmberTrap(_, spellId, _, _, spellName, buffStack)
 	end
 end
 
-function mod:PoorMansDissonanceTimers(unitId)
-	local power = UnitPower(unitId)
-	if power == 149 then
-		self:OpenProximity(5)
-		self:Bar("ej:6325", 123627, 19, 128353) --Dissonance Field
-		self:Bar("phases", CL["phase"]:format(2), 149, L.phases_icon)
-		self:StopBar(CL["phase"]:format(1))
-	elseif power == 130 then
-		self:Bar("ej:6325", 123627, 65, 128353)
-		self:Message("ej:6325", 123627, "Attention", 128353)
-	elseif power == 65 then
-		self:Message("ej:6325", 123627, "Attention", 128353)
-	elseif power == 2 then
-		self:CloseProximity()
-		self:Bar("phases", CL["phase"]:format(1), 158, L.phases_icon)
+do
+	local warned = 0
+	function mod:PoorMansDissonanceTimers(unitId)
+		local power = UnitPower(unitId)
+		if warned == power then return end
+		warned = power
+		if power == 149 then
+			self:OpenProximity(5)
+			self:Bar("ej:6325", 123627, 19, 128353) --Dissonance Field
+			self:Bar("phases", CL["phase"]:format(2), 149, L.phases_icon)
+			self:StopBar(CL["phase"]:format(1))
+		elseif power == 130 then
+			self:Bar("ej:6325", 123627, 65, 128353)
+			self:Message("ej:6325", 123627, "Attention", 128353)
+		elseif power == 65 then
+			self:Message("ej:6325", 123627, "Attention", 128353)
+		elseif power == 2 then
+			self:CloseProximity()
+			self:Bar("phases", CL["phase"]:format(1), 158, L.phases_icon)
+		end
 	end
 end
 
