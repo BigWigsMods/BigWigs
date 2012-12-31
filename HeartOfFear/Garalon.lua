@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Garalon", 897, 713)
 if not mod then return end
-mod:RegisterEnableMob(62164, 63191, 63053) -- 62164 casts all the abilities, 63191 you interact with, 63053 the legs
+mod:RegisterEnableMob(63191, 63053) -- Garalon, Garalon's Leg
 
 -----------------------------------------------------------------------------------------
 -- Locals
@@ -20,6 +20,8 @@ local crushCounter = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.phase2_trigger = "Garalon's massive armor plating begins to crack and split!"
+
 	L.removed = "%s removed!"
 end
 L = mod:GetLocale()
@@ -42,6 +44,7 @@ end
 
 function mod:OnBossEnable()
 	self:Emote("Crush", "spell:122774")
+	self:Emote("Phase2", L["phase2_trigger"])
 
 	self:Log("SPELL_AURA_APPLIED", "PheromonesApplied", 122835)
 	self:Log("SPELL_AURA_REMOVED", "PheromonesRemoved", 122835)
@@ -57,16 +60,16 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Death("Win", 62164, 63191)
+	self:Death("Win", 63191)
 end
 
 function mod:OnEngage(diff)
 	legCounter, mendLegTimerRunning = 4, nil
 	crushCounter = 0
 	self:Berserk(self:LFR() and 720 or 420, nil, nil, 128555)
-	self:Bar(122735, 122735, 11, 122735) --Furious Swipe
+	self:Bar(122735, 122735, 11, 122735) -- Furious Swipe
 	if self:Heroic() then
-		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "PrePhase2", "boss1", "boss2", "boss3", "boss4", "boss5")
+		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "PrePhase2", "boss1", "boss2", "boss3", "boss4", "boss5", "target", "focus")
 		self:Bar(122774, ("%s (%d)"):format(self:SpellName(122774), 1), 28, 122082) -- Crush
 	end
 end
@@ -87,21 +90,25 @@ do
 	end
 end
 
-function mod:Crush()
-	crushCounter = crushCounter + 1
-	self:Message(122774, CL["soon"]:format(("%s (%d)"):format(self:SpellName(122774), crushCounter)), "Important", 122774, "Alarm") -- Crush
-	self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 3.6, 122774) --Crush
-	if self:Heroic() then
-		self:Bar(122774, ("%s (%d)"):format(self:SpellName(122774), crushCounter+1), 36, 122082) -- crush
+function mod:Crush(message, sender, _, _, target)
+	if sender ~= target then -- someone running underneath (don't inc counter or start new bars)
+		self:Message(122774, CL["soon"]:format(self:SpellName(122774)), "Important", 122774, "Alarm") -- Crush
+		self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 3.6, 122774) -- Crush
+		return
 	end
 
+	crushCounter = crushCounter + 1
+	self:Message(122774, CL["soon"]:format(("%s (%d)"):format(self:SpellName(122774), crushCounter)), "Important", 122774, "Alarm") -- Crush
+	self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 3.6, 122774) -- Crush
+	if self:Heroic() then
+		self:Bar(122774, ("%s (%d)"):format(self:SpellName(122774), crushCounter+1), 36, 122082) -- Crush
+	end
 	self:Bar(122735, 122735, 9, 122735) --Furious Swipe
 end
 
 function mod:Fury(_, spellId, _, _, spellName, buffStack, _, _, _, dGUID)
-	--Garalon-62164 gains the buff, then casts Fury, which gives the buff to Garalon-63191
-	if self:GetCID(dGUID) == 62164 then
-		self:Bar(spellId, spellName, self:LFR() and 15 or 30, 119622) --Rage like icon (swipe and fury have the same)
+	if self:GetCID(dGUID) == 63191 then -- only fire once
+		self:Bar(spellId, spellName, self:LFR() and 15 or 30, 119622) -- Rage like icon (swipe and fury have the same)
 		self:Message(spellId, ("%s (%d)"):format(spellName, buffStack or 1), "Urgent", 119622)
 	end
 end
@@ -144,30 +151,33 @@ function mod:BrokenLeg()
 	legCounter = legCounter - 1
 	-- this is just a way to start the bar after 1st legs death
 	if not mendLegTimerRunning then
-		self:Bar(123495, "~"..self:SpellName(123495), 30, 123495) --Mend Leg
+		self:Bar(123495, "~"..self:SpellName(123495), 30, 123495) -- Mend Leg
 		mendLegTimerRunning = true
 	end
 end
 
 do
-	--Furious Swipe's cast time is 2.5ish seconds, with 8s between SPELL_CAST_STARTs
+	-- Furious Swipe's cast time is 2.5ish seconds, with 8s between SPELL_CAST_STARTs
 	local function nextSwipe(spellId)
 		mod:Bar(spellId, spellId, 8, spellId)
 	end
 	function mod:FuriousSwipe(_, spellId)
-		--delay the bar so it ends when the damage occurs
+		-- delay the bar so it ends when the damage occurs
 		self:ScheduleTimer(nextSwipe, 2.5, spellId)
 	end
 end
 
 function mod:PrePhase2(unitId)
-	local id = self:GetCID(UnitGUID(unitId))
-	if id == 62164 or id == 63191 then
+	if self:GetCID(UnitGUID(unitId)) == 63191 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 38 then -- phase starts at 33
 			self:Message("ej:6294", CL["soon"]:format(CL["phase"]:format(2)), "Positive", 108201, "Long") -- the correct icon
-			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3", "boss4", "boss5")
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3", "boss4", "boss5", "target", "focus")
 		end
 	end
+end
+
+function mod:Phase2()
+	self:Message("ej:6294", "33% - "..CL["phase"]:format(2), "Positive", 108201, "Info")
 end
 
