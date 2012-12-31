@@ -37,7 +37,7 @@ function mod:GetOptions()
 	return {
 		{123845, "FLASHSHAKE", "ICON", "SAY"},
 		"ej:6325", "eyes", {123788, "FLASHSHAKE", "ICON"}, "proximity", 123735,
-		{125390, "FLASHSHAKE"}, 124097, 124827, {124077, "FLASHSHAKE"},
+		{125390, "FLASHSHAKE"}, 124097, 125826, 124827, {124077, "FLASHSHAKE"},
 		{124862, "FLASHSHAKE", "SAY", "PROXIMITY"}, { 124849, "FLASHSHAKE" },
 		"phases", "berserk", "bosskill",
 	}, {
@@ -50,27 +50,34 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "HeartOfFearApplied", 123845)
-	self:Log("SPELL_AURA_REMOVED", "HeartOfFearRemoved", 123845)
 	self:Log("SPELL_AURA_APPLIED", "Eyes", 123707)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Eyes", 123707)
-	self:Log("SPELL_AURA_APPLIED", "Fixate", 125390)
-	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 125390)
-	self:Log("SPELL_AURA_APPLIED", "Resin", 124097)
-	self:Log("SPELL_AURA_APPLIED", "Visions", 124862)
-	self:Log("SPELL_AURA_REMOVED", "VisionsRemoved", 124862)
-	self:Log("SPELL_AURA_APPLIED", "VisionsDispel", 124868)
-	self:Log("SPELL_AURA_APPLIED", "Poison", 124827)
-	self:Log("SPELL_AURA_REFRESH", "Poison", 124827)
+	self:Log("SPELL_CAST_SUCCESS", "DreadScreech", 123735)
 	self:Log("SPELL_AURA_APPLIED", "CryOfTerror", 123788)
 	self:Log("SPELL_AURA_REMOVED", "CryOfTerrorRemoved", 123788)
-	self:Log("SPELL_CAST_START", "ConsumingTerror", 124849)
+
+	self:Log("SPELL_AURA_APPLIED", "Poison", 124827)
+	self:Log("SPELL_AURA_REFRESH", "Poison", 124827)
+	self:Log("SPELL_AURA_APPLIED", "Fixate", 125390)
+	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 125390)
 	self:Log("SPELL_AURA_APPLIED", "Dispatch", 124077)
-	self:Log("SPELL_CAST_SUCCESS", "DreadScreech", 123735)
+	self:Log("SPELL_AURA_APPLIED", "Resin", 124097)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "AmberTrap", 124748)
+
 	self:Log("SPELL_AURA_APPLIED", "UltimateCorruption", 125451)
+	self:Log("SPELL_AURA_REMOVED", "VisionsRemoved", 124862)
+	self:Log("SPELL_AURA_APPLIED", "VisionsDispel", 124868)
+	self:Log("SPELL_AURA_APPLIED", "Visions", 124862)
+	self:Log("SPELL_CAST_START", "ConsumingTerror", 124849)
 
-	self:Yell("OnEngage", L["engage_trigger"]) -- XXX Check ENGAGE results
+	self:Log("SPELL_AURA_APPLIED", "HeartOfFearApplied", 123845)
+	self:Log("SPELL_AURA_REMOVED", "HeartOfFearRemoved", 123845)
 
+	self:RegisterUnitEvent("UNIT_POWER", "PoorMansDissonanceTimers", "boss1") --_FREQUENT fires twice per gain? the ~250ms normal event is fine
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phase3Warn", "boss1")
+
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 62837)
 end
 
@@ -78,9 +85,6 @@ function mod:OnEngage(diff)
 	self:OpenProximity(5)
 	self:Berserk(900)
 	self:Bar("ej:6325", 123627, 20, 123627) --Dissonance Field
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phase3Warn", "boss1")
-	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PoorMansDissonanceTimers", "boss1")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe") -- XXX Check ENGAGE results
 end
 
 --------------------------------------------------------------------------------
@@ -100,8 +104,9 @@ function mod:HeartOfFearApplied(player, spellId, _, _, spellName)
 	end
 end
 
-function mod:Dispatch(_, spellId, _, _, spellName) -- this is for interrupting, maybe check if the person can interrupt
-	if UnitBuff("target", spellName) or UnitBuff("focus", spellName) then
+function mod:Dispatch(_, spellId, _, _, spellName, _, _, _, _, _, sGUID)
+	-- this is for interrupting, maybe check if the person can interrupt
+	if UnitGUID("target") == sGUID or UnitGUID("focus") == sGUID then
 		self:LocalMessage(spellId, CL["cast"]:format(spellName), "Personal", spellId, "Long")
 		self:FlashShake(spellId)
 	end
@@ -119,7 +124,7 @@ end
 
 function mod:ConsumingTerror(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Important", spellId, "Alert")
-	self:Bar(spellId, "~"..spellName, 32, spellId)
+	self:Bar(spellId, "~"..spellName, 31, spellId) -- 31.3-37.7
 	self:FlashShake(spellId)
 end
 
@@ -166,6 +171,7 @@ do
 			self:FlashShake(spellId)
 			self:OpenProximity(8, spellId)
 		end
+		--self:Bar(spellId, "~"..spellName, 19, spellId) -- 19.3-27.7 (ew)
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnVisions, 0.1, spellId)
 		end
@@ -190,6 +196,15 @@ end
 function mod:Resin(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Info")
+	end
+end
+
+function mod:AmberTrap(_, spellId, _, _, spellName, buffStack)
+	buffStack = buffStack or 1
+	if buffStack < 5 then
+		self:Message(125826, ("%s (%d)"):format(spellName, buffStack), "Attention", 125826) --Sticky Resin (124748)
+	else
+		self:Message(125826, 125826, "Attention", 125826) --Amber Trap
 	end
 end
 
@@ -221,9 +236,12 @@ function mod:Eyes(player, spellId, _, _, _, buffStack)
 end
 
 function mod:UltimateCorruption(_, spellId)
-	self:Message("phases", CL["phase"]:format(3), "Positive", spellId, "Info")
+	self:Message("phases", "30% - "..CL["phase"]:format(3), "Positive", spellId, "Info")
 	self:StopBar(CL["phase"]:format(2))
+	self:StopBar(123627) -- Dissonance Field
 	self:CloseProximity()
+	--self:Bar(124862, "~"..mod:SpellName(124862), 6, 124862) -- Visions of Demise
+	self:Bar(124849, "~"..mod:SpellName(124849), 10, 124849) -- Consuming Terror
 end
 
 function mod:Phase3Warn(unitId)
