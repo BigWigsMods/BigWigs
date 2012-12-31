@@ -69,7 +69,7 @@ function mod:OnEngage(diff)
 	self:Berserk(self:LFR() and 720 or 420, nil, nil, 128555)
 	self:Bar(122735, 122735, 11, 122735) -- Furious Swipe
 	if self:Heroic() then
-		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "PrePhase2", "boss1", "boss2", "boss3", "boss4", "boss5", "target", "focus")
+		self:RegisterEvent("UNIT_HEALTH_FREQUENT", "PrePhase2")
 		self:Bar(122774, ("%s (%d)"):format(self:SpellName(122774), 1), 28, 122082) -- Crush
 	end
 end
@@ -167,12 +167,13 @@ do
 	end
 end
 
-function mod:PrePhase2(unitId)
+function mod:PrePhase2(_, unitId)
+	if not unitId:find("boss", nil, true) then return end
 	if self:GetCID(UnitGUID(unitId)) == 63191 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 38 then -- phase starts at 33
 			self:Message("ej:6294", CL["soon"]:format(CL["phase"]:format(2)), "Positive", 108201, "Long") -- the correct icon
-			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3", "boss4", "boss5", "target", "focus")
+			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 		end
 	end
 end
