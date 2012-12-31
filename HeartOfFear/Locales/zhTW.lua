@@ -32,6 +32,8 @@ end
 
 L = BigWigs:NewBossLocale("Garalon", "zhTW")
 if L then
+	L.phase2_trigger = "Garalon's massive armor plating begins to crack and split!"
+
 	L.removed = "%s 已去除！"
 end
 
