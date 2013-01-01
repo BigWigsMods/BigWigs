@@ -91,7 +91,7 @@ do
 end
 
 function mod:Crush(message, sender, _, _, target)
-	if sender ~= target then -- someone running underneath (don't inc counter or start new bars)
+	if self:Heroic() and sender ~= target then -- someone running underneath (don't inc counter or start new bars)
 		self:Message(122774, CL["soon"]:format(self:SpellName(122774)), "Important", 122774, "Alarm") -- Crush
 		self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 3.6, 122774) -- Crush
 		return
@@ -180,5 +180,6 @@ end
 
 function mod:Phase2()
 	self:Message("ej:6294", "33% - "..CL["phase"]:format(2), "Positive", 108201, "Info")
+	self:UnregisterEvent("UNIT_HEALTH_FREQUENT") -- just in case >.>
 end
 
