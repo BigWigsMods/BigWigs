@@ -91,17 +91,16 @@ do
 end
 
 function mod:Crush(message, sender, _, _, target)
-	if self:Heroic() and sender ~= target then -- someone running underneath (don't inc counter or start new bars)
+	if self:Heroic() and sender ~= target then -- someone running underneath (don't start new bars in heroic)
 		self:Message(122774, CL["soon"]:format(self:SpellName(122774)), "Important", 122774, "Alarm") -- Crush
 		self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 3.6, 122774) -- Crush
-		return
-	end
-
-	crushCounter = crushCounter + 1
-	self:Message(122774, CL["soon"]:format(("%s (%d)"):format(self:SpellName(122774), crushCounter)), "Important", 122774, "Alarm") -- Crush
-	self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 3.6, 122774) -- Crush
-	if self:Heroic() then
-		self:Bar(122774, ("%s (%d)"):format(self:SpellName(122774), crushCounter+1), 36, 122082) -- Crush
+	else
+		crushCounter = crushCounter + 1
+		self:Message(122774, CL["soon"]:format(("%s (%d)"):format(self:SpellName(122774), crushCounter)), "Important", 122774, "Alarm") -- Crush
+		self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 3.6, 122774) -- Crush
+		if self:Heroic() then
+			self:Bar(122774, ("%s (%d)"):format(self:SpellName(122774), crushCounter+1), 36, 122082) -- Crush
+		end
 	end
 	self:Bar(122735, 122735, 9, 122735) --Furious Swipe
 end
