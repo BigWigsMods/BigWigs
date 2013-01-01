@@ -33,7 +33,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		122735, 122754,
-		122774, 123495, {122835, "ICON"}, 123120, 123081, 128555, "bosskill",
+		122774, 123495, {122835, "ICON"}, 123120, 123081, "berserk", "bosskill",
 		"ej:6294",
 	}, {
 		[122735] = INLINE_TANK_ICON..TANK,
@@ -66,7 +66,7 @@ end
 function mod:OnEngage(diff)
 	legCounter, mendLegTimerRunning = 4, nil
 	crushCounter = 0
-	self:Berserk(self:LFR() and 720 or 420, nil, nil, 128555)
+	self:Berserk(self:LFR() and 720 or 420)
 	self:Bar(122735, 122735, 11, 122735) -- Furious Swipe
 	if self:Heroic() then
 		self:RegisterEvent("UNIT_HEALTH_FREQUENT", "PrePhase2")
