@@ -31,8 +31,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Emote("spell:121600", "CannonBarrage")
-	self:Emote("spell:121787", "Stomp")
+	self:Emote("CannonBarrage", "spell:121600")
+	self:Emote("Stomp", "spell:121787")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -40,22 +40,22 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(121600, 121600, 24, spellId) -- Cannon Barrage
-	self:Bar(121787, 121787, 50, spellId) -- Stomp
+	self:Bar(121600, 121600, 24, 121600) -- Cannon Barrage
+	self:Bar(121787, 121787, 50, 121787) -- Stomp
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:CannonBarrage(_, spellId, _, _, spellName)
-	self:Message(spellId, CL["soon"]:format(spellName), "Important", spellId, self:Tank() and "Info" or nil)
-	self:Bar(spellId, spellName, 60, spellId)
+function mod:CannonBarrage()
+	self:Message(121600, CL["soon"]:format(self:SpellName(121600)), "Urgent", 121600) -- Cannon Barrage
+	self:Bar(121600, 121600, 60, 121600) -- Cannon Barrage
 end
 
-function mod:Stomp(_, spellId, _, _, spellName)
-	self:Message(spellId, CL["soon"]:format(spellName), "Important", spellId, "Alarm")
-	self:Bar(spellId, spellName, 60, spellId)
+function mod:Stomp()
+	self:Message(121787, CL["soon"]:format(self:SpellName(121787)), "Important", 121787, "Alarm") -- Stomp
+	self:Bar(121787, 121787, 60, 121787) -- Stomp
 	self:DelayedMessage("adds", 10, L["adds"], "Attention", L.adds_icon)
 end
 
