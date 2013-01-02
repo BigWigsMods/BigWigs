@@ -78,6 +78,7 @@ do
 			self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Alert")
 			self:Bar(spellId, CL["you"]:format(spellName), 6, spellId)
 		else
+			local t = GetTime()
 			if t-prev > 6 then
 				prev = t
 				self:Message(119626, CL["soon"]:format(self:SpellName(119626)), "Attention", 119626, "Alarm") -- Aggressive Behavior
