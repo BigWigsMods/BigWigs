@@ -99,7 +99,7 @@ do
 				highestStackPlayer = unit
 			end
 		end
-		local player = UnitName(highestStacksPlayer)
+		local player = UnitName(highestStackPlayer)
 		mod:TargetMessage(123705, ("%s (%d)"):format(spellName, highestStack), player, "Attention", 123705)
 		scheduled = nil
 	end
