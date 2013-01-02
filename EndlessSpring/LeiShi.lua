@@ -93,8 +93,8 @@ do
 		local highestStack, highestStackPlayer = 0
 		for i=1, GetNumGroupMembers() do
 			local unit = ("raid%d"):format(i)
-			local _, _, _, stack = UnitDebuff(unit, spellName)
-			if stack and stack > highestStack then
+			local _, _, _, stack, _, duration = UnitDebuff(unit, spellName)
+			if stack and stack > highestStack and duration > 0 then
 				highestStack = stack
 				highestStackPlayer = unit
 			end
