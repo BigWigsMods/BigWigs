@@ -2,9 +2,13 @@
 local BIGWIGS_AUTHORS = "7destiny, pettigrow, ananhaid, mojosdojo, tekkub, fenlis, jongt23, StingerSoft, shyva, cwdg, gamefaq, yoshimo, sayclub, saroz, nevcairiel, s8095324, Wetxius, handdol, scorpio0920, chuanhsing, kebinusan, durcyn, flyflame, onyxmaster, grimwald, zhTW, lcf_hell, chinkuwaila, wetxius, next96, arrowmaster, starinnia, moonsorrow, Leialyn, ackis, xinsonic, fryguy, jerry, beerke, tsigo, hk2717, ulic, mecdemort, pigmonkey, Carlos, cremor, a9012456, stanzilla, cronan, Dynaletik, mysticalos, Cybersea, hyperactiveChipmunk, darchon, nirek, neriak, darkwings, tnt2ray, gnarfoz, hshh, mikk, dynaletik, otravi, yhpdoit, kergoth, AnarkiQ3, kjheng, dessa, erwanoops, Gothwin, Swix, kyahx, phyber, oxman, profalbert, oojoo, nymbia, lucen, ckknight, Adam77, tain, zealotonastick, Anadale, 8timer, kemayo, archarodim, silverwind, thiana, coalado, Traeumer, tazmanyak, Zidomo."
 
 local BigWigs = BigWigs
-BigWigsOptions = BigWigs:NewModule("Options", "AceEvent-3.0")
-local options = BigWigsOptions
+local options = BigWigs:NewModule("Options")
 options:SetEnabledState(true)
+
+-- Embed callback handler
+options.RegisterMessage = BigWigs.RegisterMessage
+options.UnregisterMessage = BigWigs.UnregisterMessage
+options.SendMessage = BigWigs.SendMessage
 
 local colorize = nil
 do
@@ -938,4 +942,6 @@ do
 		end
 	end
 end
+
+BigWigsOptions = options -- Set global
 

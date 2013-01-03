@@ -12,7 +12,7 @@ local type = type
 local core = BigWigs
 local C = core.C
 local pName = UnitName("player")
-local bwUtilityFrame = CreateFrame("Frame")
+local bossUtilityFrame = CreateFrame("Frame")
 local enabledModules = {}
 local difficulty = 3
 local UpdateDispelStatus = nil
@@ -95,7 +95,7 @@ function boss:OnDisable()
 
 	-- No enabled modules? Unregister the combat log!
 	if #enabledModules == 0 then
-		bwUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		bossUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 
 	-- Empty the event map for this module
@@ -188,7 +188,7 @@ do
 		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	end
 
-	bwUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sGUID, source, sFlags, _, dGUID, player, dFlags, _, spellId, spellName, _, secSpellId, buffStack)
+	bossUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sGUID, source, sFlags, _, dGUID, player, dFlags, _, spellId, spellName, _, secSpellId, buffStack)
 		for i = #enabledModules, 1, -1 do
 			local self = enabledModules[i]
 			if event == "UNIT_DIED" then
@@ -227,7 +227,7 @@ do
 				print(format(invalidId, self.moduleName, id, event))
 			end
 		end
-		bwUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		bossUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 	function boss:Death(func, ...)
 		if not func then error(format(missingArgument, self.moduleName)) end
@@ -236,7 +236,7 @@ do
 		for i = 1, select("#", ...) do
 			eventMap[self]["UNIT_DIED"][(select(i, ...))] = func
 		end
-		bwUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		bossUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 end
 
@@ -587,17 +587,15 @@ end
 
 local silencedOptions = {}
 do
-	bwUtilityFrame:Hide()
-	local dummyMod = {}
-	LibStub("AceEvent-3.0"):Embed(dummyMod)
-	dummyMod:RegisterMessage("BigWigs_SilenceOption", function(event, key, time)
+	bossUtilityFrame:Hide()
+	BigWigsLoader:RegisterMessage("BigWigs_SilenceOption", function(event, key, time)
 		if key ~= nil then -- custom bars have a nil key
 			silencedOptions[key] = time
-			bwUtilityFrame:Show()
+			bossUtilityFrame:Show()
 		end
 	end)
 	local total = 0
-	bwUtilityFrame:SetScript("OnUpdate", function(self, elapsed)
+	bossUtilityFrame:SetScript("OnUpdate", function(self, elapsed)
 		total = total + elapsed
 		if total >= 0.5 then
 			for k, t in pairs(silencedOptions) do

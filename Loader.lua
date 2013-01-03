@@ -43,16 +43,17 @@ do
 	-- END: MAGIC WOWACE VOODOO VERSION STUFF
 end
 
-local loader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader", "AceEvent-3.0")
+local loader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader")
 
 -----------------------------------------------------------------------
 -- Locals
 --
 
 local ldb = nil
-local pName = UnitName("player")
-
 local tooltipFunctions = {}
+local pName = UnitName("player")
+local pairs = pairs
+local loaderUtilityFrame = CreateFrame("Frame")
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
 local GetCurrentMapAreaID = GetCurrentMapAreaID
@@ -83,7 +84,6 @@ local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the cor
 -- XXX shouldn't really be named "menus", it's actually panels in interface options now
 local menus = {} -- contains the main menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
-local loaderUtilityFrame = CreateFrame("Frame")
 
 -----------------------------------------------------------------------
 -- Utility
@@ -329,6 +329,51 @@ function loader:OnEnable()
 
 	self:GROUP_ROSTER_UPDATE()
 	self:ZONE_CHANGED_NEW_AREA()
+end
+
+-----------------------------------------------------------------------
+-- Callback handler
+--
+
+do
+	local callbackMap = {}
+	function loader:RegisterMessage(msg, func)
+		if type(msg) ~= "string" then error(":RegisterMessage(message, function) attempted to register invalid message, must be a string!") end
+		if not callbackMap[msg] then callbackMap[msg] = {} end
+		callbackMap[msg][self] = func or msg
+	end
+	function loader:UnregisterMessage(msg)
+		if type(msg) ~= "string" then error(":UnregisterMessage(message) attempted to unregister an invalid message, must be a string!") end
+		if not callbackMap[msg] then return end
+		callbackMap[msg][self] = nil
+		if not next(callbackMap[msg]) then
+			eventMap[msg] = nil
+		end
+	end
+
+	function loader:SendMessage(msg, ...)
+		if callbackMap[msg] then
+			for k,v in pairs(callbackMap[msg]) do
+				if type(v) == "function" then
+					v(msg, ...)
+				else
+					k[v](k, msg, ...)
+				end
+			end
+		end
+	end
+
+	local function UnregisterAllMessages(_, module)
+		for k,v in pairs(callbackMap) do
+			for j in pairs(v) do
+				if j == module then
+					module:UnregisterEvent(k)
+				end
+			end
+		end
+	end
+	loader:RegisterMessage("BigWigs_OnBossDisable", UnregisterAllMessages)
+	loader:RegisterMessage("BigWigs_OnPluginDisable", UnregisterAllMessages)
 end
 
 -----------------------------------------------------------------------

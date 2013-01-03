@@ -1,7 +1,12 @@
 
-local addon = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceEvent-3.0")
+local addon = LibStub("AceAddon-3.0"):NewAddon("BigWigs")
 addon:SetEnabledState(false)
 addon:SetDefaultModuleState(false)
+
+-- Embed callback handler
+addon.RegisterMessage = BigWigsLoader.RegisterMessage
+addon.UnregisterMessage = BigWigsLoader.UnregisterMessage
+addon.SendMessage = BigWigsLoader.SendMessage
 
 local GetSpellInfo = GetSpellInfo
 
@@ -12,10 +17,63 @@ local CL = AL:GetLocale("Big Wigs: Common")
 
 local customBossOptions = {}
 local pName = UnitName("player")
+local bwUtilityFrame = CreateFrame("Frame")
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
 local GetCurrentMapAreaID = BigWigsLoader.GetCurrentMapAreaID
 local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
+
+-- Upvalues
+local pairs, type = pairs, type
+
+-------------------------------------------------------------------------------
+-- Event handling
+--
+
+do
+	local noEvent = "Module %q tried to register/unregister an event without specifying which event."
+	local noFunc = "Module %q tried to register an event with the function '%s' which doesn't exist in the module."
+
+	local eventMap = {}
+	bwUtilityFrame:SetScript("OnEvent", function(_, event, ...)
+		for k,v in pairs(eventMap[event]) do
+			if type(v) == "function" then
+				v(event, ...)
+			else
+				k[v](k, event, ...)
+			end
+		end
+	end)
+
+	function addon:RegisterEvent(event, func)
+		if type(event) ~= "string" then error(format(noEvent, self.moduleName)) end
+		if (not func and not self[event]) or (type(func) == "string" and not self[func]) then error(format(noFunc, self.moduleName, func or event)) end
+		if not eventMap[event] then eventMap[event] = {} end
+		eventMap[event][self] = func or event
+		bwUtilityFrame:RegisterEvent(event)
+	end
+	function addon:UnregisterEvent(event)
+		if type(event) ~= "string" then error(format(noEvent, self.moduleName)) end
+		if not eventMap[event] then return end
+		eventMap[event][self] = nil
+		if not next(eventMap[event]) then
+			bwUtilityFrame:UnregisterEvent(event)
+			eventMap[event] = nil
+		end
+	end
+
+	local function UnregisterAllEvents(_, module)
+		for k,v in pairs(eventMap) do
+			for j in pairs(v) do
+				if j == module then
+					module:UnregisterEvent(k)
+				end
+			end
+		end
+	end
+	addon:RegisterMessage("BigWigs_OnBossDisable", UnregisterAllEvents)
+	addon:RegisterMessage("BigWigs_OnPluginDisable", UnregisterAllEvents)
+end
 
 -------------------------------------------------------------------------------
 -- Target monitoring
@@ -343,6 +401,9 @@ function addon:OnEnable()
 end
 
 function addon:OnDisable()
+	zoneChanged()
+	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
+	self:UnregisterMessage("BigWigs_AddonMessage")
 	self:SendMessage("BigWigs_CoreDisabled")
 	self.pluginCore:Disable()
 	self.bossCore:Disable()
@@ -405,6 +466,16 @@ do
 				return
 			end
 			local m = core:NewModule(module, ...)
+
+			-- Embed callback handler
+			m.RegisterMessage = addon.RegisterMessage
+			m.UnregisterMessage = addon.UnregisterMessage
+			m.SendMessage = addon.SendMessage
+
+			-- Embed event handler
+			m.RegisterEvent = addon.RegisterEvent
+			m.UnregisterEvent = addon.UnregisterEvent
+
 			m.zoneId = zone
 			m.encounterId = encounterId
 			return m, CL
@@ -546,7 +617,7 @@ end
 
 local bossCore = addon:NewModule("Bosses")
 addon.bossCore = bossCore
-bossCore:SetDefaultModuleLibraries("AceEvent-3.0", "AceTimer-3.0")
+bossCore:SetDefaultModuleLibraries("AceTimer-3.0")
 bossCore:SetDefaultModuleState(false)
 function bossCore:OnDisable()
 	for name, mod in self:IterateModules() do
@@ -556,7 +627,7 @@ end
 
 local pluginCore = addon:NewModule("Plugins")
 addon.pluginCore = pluginCore
-pluginCore:SetDefaultModuleLibraries("AceEvent-3.0", "AceTimer-3.0")
+pluginCore:SetDefaultModuleLibraries("AceTimer-3.0")
 pluginCore:SetDefaultModuleState(false)
 function pluginCore:OnEnable()
 	for name, mod in self:IterateModules() do
