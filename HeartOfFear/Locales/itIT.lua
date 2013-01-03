@@ -5,16 +5,16 @@ if L then
 
 	L.force_message = "AoE Pulse"
 
-	L.attenuation = EJ_GetSectionInfo(6426) .. " (Discs)"
+	L.attenuation = EJ_GetSectionInfo(6426) .. " (Dischi)"
 	L.attenuation_bar = "Dischi... Corri!"
 	L.attenuation_message = "%s Dancing %s"
-	L.echo = "|c001cc986Echo|r"
+	L.echo = "|c001cc986Eco|r"
 	L.zorlok = "|c00ed1ffaZor'lok|r"
-	L.left = "|c00008000<- Left <-|r"
-	L.right = "|c00FF0000-> Right ->|r"
+	L.left = "|c00008000<- Sinistra <-|r"
+	L.right = "|c00FF0000-> Destra ->|r"
 
-	L.platform_emote = "piattaforme" -- Imperial Vizier Zor'lok flies to one of his platforms!
-	L.platform_emote_final = "inala"-- Imperial Vizier Zor'lok inhales the Pheromones of Zeal!
+	L.platform_emote = "Piattaforme" -- Imperial Vizier Zor'lok flies to one of his platforms!
+	L.platform_emote_final = "Inala"-- Imperial Vizier Zor'lok inhales the Pheromones of Zeal!
 	L.platform_message = "Cambio Piattaforma"
 end
 
@@ -41,7 +41,7 @@ if L then
 	L.next_pack = "Prossima Ondata"
 	L.next_pack_desc = "Avvertimento per l'arrivo di una nuova ondata dopo aver ucciso un gruppo di Add."
 
-	L.spear_removed = "La tua lancia impalante e' stata rimossa!"
+	L.spear_removed = "La tua lancia impalante è stata rimossa!"
 	L.residue_removed = "%s Rimosso!"
 end
 
@@ -77,7 +77,7 @@ if L then
 	L.phases_icon = "achievement_raid_mantidraid07"
 
 	L.eyes = "Occhi dell'Imperatrice"
-	L.eyes_desc = "Conta le stack di Occhi dell'Imeratrice e mostra una barra di durata."
+	L.eyes_desc = "Conta le stack di Occhi dell'Imperatrice e mostra una barra di durata."
 	L.eyes_message = "%2$dx Occhi su %1$s"
 
 	L.fumes_bar = "Your fumes buff"

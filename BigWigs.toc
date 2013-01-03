@@ -10,6 +10,7 @@
 ## Notes-frFR: Approche modulaire, légère et non-intrusive des alertes des rencontres de boss.
 ## Notes-esES: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Notes-esMX: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
+## Notes-itIT: Un approccio modulare, leggero e non intrusivo per gli avvisi ai combattimenti con i boss.
 ## Author: Ammo, Funkydude, Maat, Nebula169, Rabbit
 ## Version: 3.900
 ## X-Category: Raid

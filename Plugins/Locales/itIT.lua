@@ -5,25 +5,25 @@ if not L then return end
 --
 
 L["Style"] = "Stile"
-L.bigWigsBarStyleName_Default = "Default"
+L.bigWigsBarStyleName_Default = "Predefinito"
 
 L["Clickable Bars"] = "Barre Cliccabili"
-L.clickableBarsDesc = "Le barre di Big Wigs non sono cliccabili di default. In questo modo puoi targettare o lanciare le magie anche dietro le barre, cambiare l'angolo della telecamera, e cosi' via, mentre il cursore e' su una barra.|cffff4411Se abiliti le Barre Cliccabili, questo non funzionera' piu'.|r Le barre intercetteranno i click del mouse.\n"
+L.clickableBarsDesc = "Le barre di Big Wigs non sono cliccabili di default. In questo modo puoi targettare o lanciare le magie anche dietro le barre, cambiare l'angolo della telecamera, e così via, mentre il cursore è su una barra.|cffff4411Se abiliti le Barre Cliccabili, questo non funzionerà più.|r Le barre intercetteranno i click del mouse.\n"
 L["Enables bars to receive mouse clicks."] = "Abilita le barre ad intercettare i Click del Mouse"
 L["Modifier"] = "Modificatore"
 L["Hold down the selected modifier key to enable click actions on the timer bars."] = "Premi il modificatore selezionato per abilitare i click sulle barre dei timer."
 L["Only with modifier key"] = "Solo con il tasto modificatore"
-L["Allows bars to be click-through unless the specified modifier key is held down, at which point the mouse actions described below will be available."] = "Lascia le barre non cliccabili a meno che non sia premuto il tasto modificatore, a questo punto l'azione descritta sotto sara' disponibile."
+L["Allows bars to be click-through unless the specified modifier key is held down, at which point the mouse actions described below will be available."] = "Lascia le barre non cliccabili a meno che non sia premuto il tasto modificatore, a questo punto l'azione descritta sotto sarà disponibile."
 
 L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "SUPER ENFATIZZA temporaneamente la barra ed ogni messaggio associato alla sua durata."
 L["Report"] = "Riporta"
---L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."] = "Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."
+--L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."] = "Riporta lo status della barra attuale nella finestra attiva di chat; che sia la chat dell'incirsione, dell'istanza, del gruppo o del canale Parla, il più appropriato."
 L["Remove"] = "Rimuovi"
 L["Temporarily removes the bar and all associated messages."] = "Rimuove temporaneamente la barra e tutti i messaggi ad essa associati."
 L["Remove other"] = "Rimuovi le Altre"
 L["Temporarily removes all other bars (except this one) and associated messages."] = "Rimuove temporaneamente tutte le altre barra (tranne questa) e i messaggi ad esse associati."
 L["Disable"] = "Disabilita"
-L["Permanently disables the boss encounter ability option that spawned this bar."] = "Disabilita in modo permanente l'abilita' del boss che ha generato questa barra."
+L["Permanently disables the boss encounter ability option that spawned this bar."] = "Disabilita in modo permanente l'abilità del boss che ha generato questa barra."
 
 L["Scale"] = "Scala"
 L["Grow upwards"] = "Cresci verso l'altro"
@@ -32,9 +32,9 @@ L["Texture"] = "Texture"
 L["Emphasize"] = "Enfatizza"
 L["Enable"] = "Attiva"
 L["Move"] = "Muovi"
-L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "Muovi le barre enfatizzate verso l'Ancora Enfatizzata. Se quest'opzione è disattiva, le barre enfatizzate cambieranno semplicemente dimensione e colore, e forse lampeggieranno."
+L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "Muovi le barre enfatizzate verso l'Ancora Enfatizzata. Se questa opzione è disattiva, le barre enfatizzate cambieranno semplicemente dimensione e colore, e forse lampeggieranno."
 L["Flash"] = "Lampeggia"
-L["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Fa lampeggiare lo sfondo delle barre Enfatizzate, per renderle piu' visibili."
+L["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Fa lampeggiare lo sfondo delle barre Enfatizzate, per renderle più visibili."
 L["Regular bars"] = "Barre Normali"
 L["Emphasized bars"] = "Barre Enfatizzate"
 L["Align"] = "Allineamento"
@@ -53,7 +53,7 @@ L["Fills the bars up instead of draining them."] = "Riempi le barre invece di sv
 
 L["Local"] = "Locale"
 L["%s: Timer [%s] finished."] = "%s: Timer [%s] Finito."
-L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Tempo non Valido (|cffff0000%q|r) o testo mancante in una barra customizzata avviata da |cffd9d919%s|r. <time> puo' essere o un numero di secondi, una coppia M:S , oppure Mm. As esempio 5, 1:20 o 2m."
+L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Tempo non Valido (|cffff0000%q|r) o testo mancante in una barra customizzata avviata da |cffd9d919%s|r. <time> può essere o un numero di secondi, una coppia M:S , oppure Mm. As esempio 5, 1:20 o 2m."
 
 -----------------------------------------------------------------------
 -- Colors.lua
@@ -72,7 +72,7 @@ L["Emphasized"] = "Enfatizzato"
 L["Reset"] = "Reimposta"
 L["Resets the above colors to their defaults."] = "Reimposta i colori qui sopra ai parametri originali."
 L["Reset all"] = "Reimposta tutto"
-L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "Se hai modificato qualsiasi parametro dei combattimenti, questo bottone riportera' TUTTO alle impostazioni originali."
+L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "Se hai modificato qualsiasi parametro dei combattimenti, questo bottone riporterò TUTTO alle impostazioni originali."
 
 L["Important"] = "Importante"
 L["Personal"] = "Personale"
@@ -84,7 +84,7 @@ L["Positive"] = "Positivo"
 -- Messages.lua
 --
 
-L.sinkDescription = "Indirizza l'uscita dei messaggi sul visualizzatore di Messaggi Normali di Big Wigs. Questa visualizzazione supporta icone, colori e puo' visualizzare fino a 4 messaggi sullo schermo. I messaggi piu' nuovi cresceranno in dimensioni per avvertire l'utente."
+L.sinkDescription = "Indirizza l'uscita dei messaggi sul visualizzatore di Messaggi Normali di Big Wigs. Questa visualizzazione supporta icone, colori e può visualizzare fino a 4 messaggi sullo schermo. I messaggi più nuovi cresceranno in dimensioni per avvertire l'utente."
 L.emphasizedSinkDescription = "Indirizza l'uscita dei messaggi attraverso il visualizzatore di Messaggi ENFATIZZATI di Big Wigs. Questo metodo supporta testi, colori e puo' visualizzare un solo messaggio per volta."
 
 L["Messages"] = "Messaggi"
@@ -143,7 +143,7 @@ L["|cffff0000Disable|r"] = "|cffff0000Disabilitata|r"
 -- Sound.lua
 --
 
-L.soundDefaultDescription = "Con questa opzione, Big Wigs usera' solo i suoni di default Blizzard che indicano un avviso. Ricorda che solo alcuni messaggi utilizzeranno i suoni durante un combattimento."
+L.soundDefaultDescription = "Con questa opzione, Big Wigs userà solo i suoni di default Blizzard che indicano un avviso. Ricorda che solo alcuni messaggi utilizzeranno i suoni durante un combattimento."
 
 L["Sounds"] = "Suoni"
 
@@ -163,19 +163,19 @@ L["Default only"] = "Solo Suoni Standard"
 L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|tNome Abilita'"
 L["Custom range indicator"] = "Indicatore di Distanza Personalizzato"
 L["%d yards"] = "%d metri"
-L["Proximity"] = "Prossimita'"
+L["Proximity"] = "Prossimità"
 L["Sound"] = "Suono"
 L["Disabled"] = "Disabilitato"
-L["Disable the proximity display for all modules that use it."] = "Disabilita il modulo di prossimita' per tutti i moduli che lo usano."
-L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "Il display di prossimita' verra' visualizzzato la prossima volta. Per disabilitarlo completamente per questo combattimento, devi disabilitarlo nelle opzioni del combattimento."
+L["Disable the proximity display for all modules that use it."] = "Disabilita il modulo di prossimità per tutti i moduli che lo usano."
+L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "Il display di prossimità verrà visualizzzato la prossima volta. Per disabilitarlo completamente per questo combattimento, devi disabilitarlo nelle opzioni del combattimento."
 L["Sound delay"] = "Ritardo del Suono"
 L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "Specifica per quanto tempo Big Wigs dovrebbe aspettare per ripetere il suono quando qualcuno e' vicino a te."
 
-L.proximity = "Display di Prossimita'"
-L.proximity_desc = "Visualizza la finestra di prossimita' al momento opportuno durante il combattimento, con i giocatori che stanno troppo vicino a te."
+L.proximity = "Display di Prossimità"
+L.proximity_desc = "Visualizza la finestra di prossimità' al momento opportuno durante il combattimento, con i giocatori che stanno troppo vicino a te."
 
 L["Close"] = "Chiudi"
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Chiude il Display di prossimita'.\n\nPer disabilitarlo completamente per tutti gli incontri, devi andare nelle impostazioni dei singoli combattimenti e disabilitare l'opzione 'Prossimita''"
+L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Chiude il Display di prossimità.\n\nPer disabilitarlo completamente per tutti gli incontri, devi andare nelle impostazioni dei singoli combattimenti e disabilitare l'opzione 'Prossimità'"
 L["Lock"] = "Blocca"
 L["Locks the display in place, preventing moving and resizing."] = "Blocca il Display, impedendo che venga spostato e ridimensionato."
 L["Title"] = "Titolo"
@@ -183,16 +183,16 @@ L["Shows or hides the title."] = "Visualizza o nasconde il titolo"
 L["Background"] = "Sfondo"
 L["Shows or hides the background."] = "Visualizza o nasconde il titolo"
 L["Toggle sound"] = "Abilita Suono"
-L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Abilita quando il monitor di prossimita' deve emettere un suono se sei troppo vicino ad altri giocatori."
+L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Abilita quando il monitor di prossimità deve emettere un suono se sei troppo vicino ad altri giocatori."
 L["Sound button"] = "Bottone del Suono"
 L["Shows or hides the sound button."] = "Visualizza o nasconde il bottone del Suono"
 L["Close button"] = "Bottone di Chiusura"
 L["Shows or hides the close button."] = "Visualizza o nasconde il bottone di Chiusura"
 L["Show/hide"] = "Visaulizza/Nascondi"
-L["Ability name"] = "Nome dell'Abilita'"
-L["Shows or hides the ability name above the window."] = "Visualizza o nasconde il nome dell'abilita' sopra la finestra"
+L["Ability name"] = "Nome dell'Abilità"
+L["Shows or hides the ability name above the window."] = "Visualizza o nasconde il nome dell'abilità sopra la finestra"
 L["Tooltip"] = "ToolTip"
-L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Visualizza o nasconde il tooltip dell'abilita' nel display di prossimita' ed e' strettamente legato all'abilita' del boss."
+L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Visualizza o nasconde il tooltip dell'abilità nel display di prossimità ed è strettamente legato all'abilità del boss."
 
 -----------------------------------------------------------------------
 -- Tips.lua
@@ -207,9 +207,9 @@ L["If you don't want to see any tips, ever, you can toggle them off here. Tips s
 L["Automatic tips"] = "Suggerimenti Automatici"
 L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "Se non vuoi vedere i magnifici suggerimenti che abbiamo, forniti dai migliori giocatori PVE al mondo, puoi disabilitare quest'opzione."
 L["Manual tips"] = "Suggerimenti Manuali"
-L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Gli ufficiali di Incursione hanno l'abilita' usare il /sendtip. Se hai un Ufficiale che spamma queste cose, o per qualche ragione non vuoi vedere i suggerimenti, puoi disabilitarli con questa opzione."
+L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Gli ufficiali di Incursione hanno l'abilità usare il /sendtip. Se hai un Ufficiale che spamma queste cose, o per qualche ragione non vuoi vedere i suggerimenti, puoi disabilitarli con questa opzione."
 L["Output to chat frame"] = "Visualizza in Chat"
-L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "Di default, i Suggerimenti verranno visualizzati nel loro popup in centro allo schermo. Se abiliti quest'opzione, verranno visualizzati SOLO in chat, e la finestra non ti disturbera' piu'"
+L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "Di default, i Suggerimenti verranno visualizzati nel loro popup in centro allo schermo. Se abiliti quest'opzione, verranno visualizzati SOLO in chat, e la finestra non ti disturberà più"
 L["Usage: /sendtip <index|\"Custom tip\">"] = "Utilizzo: /sendtip <index|\"Suggerimento personalizzato\">"
 L["You must be an officer in the raid to broadcast a tip."] = "Devi essere un Ufficiale di Incursione per inviare un suggerimento."
 L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "L'indice dei suggerimenti hanno un range accettato da 1 a %d"
@@ -219,13 +219,13 @@ L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "L'indice d
 --
 
 L["Super Emphasize"] = "SUPER ENFATIZZAZIONE"
-L.superEmphasizeDesc = "Aumenta la visualizzazione di un messaggio o di un timer di un'abilita' speciale di un boss..\n\n Qui puoi configurare esattamente cosa deve accadere quando abiliti la SUPER ENFATIZZAZIONE nelle opzioni di una spell di un boss.\n\n|cffff4411Attenzione la SUPER ENFATIZZAZIONE e' disattivata di default per tutte le abilita'.|r\n"
+L.superEmphasizeDesc = "Aumenta la visualizzazione di un messaggio o di un timer di un'abilità speciale di un boss..\n\n Qui puoi configurare esattamente cosa deve accadere quando abiliti la SUPER ENFATIZZAZIONE nelle opzioni di una spell di un boss.\n\n|cffff4411Attenzione la SUPER ENFATIZZAZIONE è disattivata di default per tutte le abilità.|r\n"
 L["UPPERCASE"] = "TUTTO MAIUSCOLO"
 L["Uppercases all messages related to a super emphasized option."] = "Converte in Maiuscolo tutto il messaggio"
 L["Double size"] = "Raddoppia la Dimensione"
 L["Doubles the size of super emphasized bars and messages."] = "Raddoppa la dimensione della barra e del messaggio"
 L["Countdown"] = "Conto alla Rovescia"
-L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "Se un timer e' maggiore di 5 secondi, un avviso vocale e un conto alla rovescia verrranno aggiunti negli ultimi 5 secondi. Immagina qualcuno che conta \'5... 4... 3... 2... 1... ABILITA'!\' e dei grandi numeri in mezzo al tuo schermo."
+L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "Se un timer è maggiore di 5 secondi, un avviso vocale e un conto alla rovescia verrranno aggiunti negli ultimi 5 secondi. Immagina qualcuno che conta \'5... 4... 3... 2... 1... ABILITÀ!\' e dei grandi numeri in mezzo al tuo schermo."
 L["Flash"] = "Lampeggia"
 L["Flashes the screen red during the last 3 seconds of any related timer."] = "Fa lampeggiare tutto lo schermo di rosso durante gli ultimi 3 secondi di un timer."
 
