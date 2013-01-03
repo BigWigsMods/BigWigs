@@ -32,17 +32,18 @@ end
 L = BigWigs:NewBossLocale("Garalon", "itIT")
 if L then
 	L.phase2_trigger = "Garalon's massive armor plating begins to crack and split!"
-	
+
 	L.removed = "%s Rimosso!"
 end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "itIT")
 if L then
-	L.next_pack = "Prossima Ondata"
-	L.next_pack_desc = "Avvertimento per l'arrivo di una nuova ondata dopo aver ucciso un gruppo di Add."
-
 	L.spear_removed = "La tua lancia impalante è stata rimossa!"
 	L.residue_removed = "%s Rimosso!"
+
+	L.mending_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Zar'thik Battle-Menders have separate heal cooldowns.|r "
+	L.mending_warning = "Your focus is casting Mending!"
+	L.mending_bar = "Focus: Mending"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "itIT")

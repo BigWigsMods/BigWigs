@@ -46,6 +46,6 @@ if L then
 	L.huddle_or_spout = "Recroquevillement ou Geysérit"
 	L.huddle_or_strike = "Recroquevillement ou Frappe"
 	L.strike_or_spout = "Frappe ou Geysérit"
-	L.huddle_or_spout_or_strike =  "Recroquevillement ou Geysérit ou Frappe"
+	L.huddle_or_spout_or_strike = "Recroquevillement ou Geysérit ou Frappe"
 end
 

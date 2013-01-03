@@ -41,6 +41,10 @@ L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "zhTW")
 if L then
 	L.spear_removed = "你的穿刺之矛被移除了！"
 	L.residue_removed = "%s 已移除！"
+
+	L.mending_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Zar'thik Battle-Menders have separate heal cooldowns.|r "
+	L.mending_warning = "Your focus is casting Mending!"
+	L.mending_bar = "Focus: Mending"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "zhTW")

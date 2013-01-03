@@ -46,6 +46,6 @@ if L then
 	L.huddle_or_spout = "畏縮或水魄"
 	L.huddle_or_strike = "畏縮或襲擊"
 	L.strike_or_spout = "襲擊或水魄"
-	L.huddle_or_spout_or_strike =  "畏縮或水魄或襲擊"
+	L.huddle_or_spout_or_strike = "畏縮或水魄或襲擊"
 end
 

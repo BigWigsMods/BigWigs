@@ -38,11 +38,12 @@ end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "deDE")
 if L then
-	L.next_pack = "Nächste Gruppe (heroisch)"
-	L.next_pack_desc = "Warnung, wann eine neue Gruppe landen wird, nachdem ihr eine Gruppe getötet habt."
-
 	L.spear_removed = "Dein durchbohrender Speer wurde entfernt!"
 	L.residue_removed = "%s entfernt!"
+
+	L.mending_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Zar'thik Battle-Menders have separate heal cooldowns.|r "
+	L.mending_warning = "Your focus is casting Mending!"
+	L.mending_bar = "Focus: Mending"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "deDE")

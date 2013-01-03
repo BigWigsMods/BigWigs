@@ -44,7 +44,7 @@ if L then
 	L.huddle_or_spout = "Huddle or Spout"
 	L.huddle_or_strike = "Huddle or Strike"
 	L.strike_or_spout = "Strike or Spout"
-	L.huddle_or_spout_or_strike =  "Huddle or Spout or Strike"
+	L.huddle_or_spout_or_strike = "Huddle or Spout or Strike"
 end
 L = mod:GetLocale()
 --L.swing = L.swing.." "..INLINE_TANK_ICON -- the string is used in messages so ;[

@@ -664,7 +664,7 @@ do
 		end
 		local good = {} -- highest release users
 		local ugly = {} -- old version users
-		local bad  = {} -- non-bw users
+		local bad = {} -- non-bw users
 		for i, player in next, m do
 			if usersRelease[player] then
 				if usersRelease[player] < highestReleaseRevision then

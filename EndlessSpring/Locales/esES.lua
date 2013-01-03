@@ -49,6 +49,6 @@ if L then
 	L.huddle_or_spout = "Encogeros o Aspersor"
 	L.huddle_or_strike = "Encogeros o Golpe"
 	L.strike_or_spout = "Golpe o Aspersor"
-	L.huddle_or_spout_or_strike =  "Encogeros o Aspersor o Golpe"
+	L.huddle_or_spout_or_strike = "Encogeros o Aspersor o Golpe"
 end
 

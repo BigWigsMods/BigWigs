@@ -8,19 +8,19 @@ end
 
 L = BigWigs:NewBossLocale("Tsulong", "itIT")
 if L then
-    L.engage_yell = " Questo non è il vostro posto! Le acque devono essere protette... vi allontanerò... o vi ucciderò!"
+	L.engage_yell = " Questo non è il vostro posto! Le acque devono essere protette... vi allontanerò... o vi ucciderò!"
 	L.kill_yell = "Grazie, stranieri. Sono stato liberato."
 
 	L.phases = "Fasi"
 	L.phases_desc = "Avviso per cambio di fase."
-	
+
 	L.sunbeam_spawn = "Nuovo Raggio di Sole!"
 end
 
 L = BigWigs:NewBossLocale("Lei Shi", "itIT")
 if L then
 	L.hp_to_go = "%d%% alla fine"
-    
+
 	L.special = "Prossima abilità speciale"
 	L.special_desc = "Avviso per prossima abilità speciale"
 end
@@ -45,6 +45,6 @@ if L then
 	L.huddle_or_spout = "Ammasso o Manifestazione"
 	L.huddle_or_strike = "Ammasso o Assalto"
 	L.strike_or_spout = "Assalto o Manifestazione"
-	L.huddle_or_spout_or_strike =  "Ammasso o Manifestazione o Assalto"
+	L.huddle_or_spout_or_strike = "Ammasso o Manifestazione o Assalto"
 end
 

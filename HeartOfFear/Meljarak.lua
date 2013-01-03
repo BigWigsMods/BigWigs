@@ -31,10 +31,17 @@ if L then
 
 	L.spear_removed = "Your Impaling Spear was removed!"
 	L.residue_removed = "%s removed!"
+
+	L.mending = EJ_GetSectionInfo(6306)
+	L.mending_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Zar'thik Battle-Menders have separate heal cooldowns.|r "
+	L.mending_warning = "Your focus is casting Mending!"
+	L.mending_bar = "Focus: Mending"
+	L.mending_icon = 122193
 end
 L = mod:GetLocale()
 --same spell name with different EJ entries for normal/heroic
 L.recklessness_desc = ("%s\n\n(%s) %s"):format(L.recklessness_desc, CL.heroic, select(2, EJ_GetSectionInfo(6555)))
+L.mending_desc = L.mending_desc .. select(2, EJ_GetSectionInfo(6306))
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -44,7 +51,7 @@ function mod:GetOptions()
 	return {
 		"next_pack", {122064, "FLASHSHAKE", "SAY"}, {122125, "FLASHSHAKE"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
 		{122409},
-		122149, 122193,
+		122149, "mending",
 		122406, {122224, "FLASHSHAKE"}, {121896, "FLASHSHAKE"}, {131830, "SAY", "FLASHSHAKE", "PROXIMITY"}, "recklessness",
 		"berserk", "bosskill",
 	}, {
@@ -200,10 +207,10 @@ do
 	end
 end
 
-function mod:Mending(_, spellId, source, _, spellName, _, _, _, _, _, sGUID)
+function mod:Mending(_, spellId, _, _, _, _, _, _, _, _, sGUID)
 	if UnitGUID("focus") == sGUID then
-		self:LocalMessage(spellId, CL["cast"]:format(spellName), "Personal", spellId, "Alert")
-		self:Bar(spellId, spellName, 37, spellId)
+		self:LocalMessage("mending", L["mending_warning"], "Personal", spellId, "Alert")
+		self:Bar("mending", L["mending_bar"], 37, spellId)
 	end
 end
 

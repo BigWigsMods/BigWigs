@@ -46,6 +46,6 @@ if L then
 	L.huddle_or_spout = "Оцепенение или Изводень"
 	L.huddle_or_strike = "Оцепенение или Удар"
 	L.strike_or_spout = "Удар или Изводень"
-	L.huddle_or_spout_or_strike =  "Оцепенение или Изводень или Удар"
+	L.huddle_or_spout_or_strike = "Оцепенение или Изводень или Удар"
 end
 
