@@ -43,9 +43,9 @@ L.recklessness_desc = ("%s\n\n(%s) %s"):format(L.recklessness_desc, CL.heroic, s
 function mod:GetOptions()
 	return {
 		"next_pack", {122064, "FLASHSHAKE", "SAY"}, {122125, "FLASHSHAKE"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
-		{ 122409 },
+		{122409},
 		122149, 122193,
-		122406, {122224, "FLASHSHAKE"}, { 121896, "FLASHSHAKE" }, { 131830, "SAY", "FLASHSHAKE", "PROXIMITY" }, "recklessness",
+		122406, {122224, "FLASHSHAKE"}, {121896, "FLASHSHAKE"}, {131830, "SAY", "FLASHSHAKE", "PROXIMITY"}, "recklessness",
 		"berserk", "bosskill",
 	}, {
 		["next_pack"] = "heroic",
@@ -160,10 +160,10 @@ do
 		end
 		prisonList[#prisonList + 1] = player
 		if not primaryAmberIcon then
-			self:SecondaryIcon(spellId, player)
+			self:PrimaryIcon(spellId, player)
 			primaryAmberIcon = player
 		elseif not secondaryAmberIcon then -- leave the icon on the second person hit
-			self:PrimaryIcon(spellId, player)
+			self:SecondaryIcon(spellId, player)
 			secondaryAmberIcon = player
 		end
 		if not scheduled then
@@ -174,10 +174,10 @@ end
 
 function mod:AmberPrisonRemoved(player, spellId)
 	if player == primaryAmberIcon then
-		self:SecondaryIcon(spellId)
+		self:PrimaryIcon(spellId)
 		primaryAmberIcon = nil
 	elseif player == secondaryAmberIcon then
-		self:PrimaryIcon(spellId)
+		self:SecondaryIcon(spellId)
 		secondaryAmberIcon = nil
 	end
 end
