@@ -4,10 +4,10 @@ if not L then return end
 L.you = "%s su di TE!"
 L.underyou = "%s sotto di TE!"
 L.other = "%s: %s"
-L.onboss = "%s on BOSS!"
+L.onboss = "%s sul BOSS!"
 L.say = "%s su di ME!"
-L.on = "%s on %s"
-L.stack = "%2$dx %3$s on %1$s"
+L.on = "%s su %s"
+L.stack = "%2$dx %3$s su %1$s"
 L.cast = "<Esecuzione di %s>"
 L.soon = "%s tra poco!"
 
@@ -17,11 +17,11 @@ L.heroic = "Modalità Eroica"
 L.hard = "Modalità Hard"
 L.general = "Generali" -- General settings, i.e. things that apply to both normal and hard mode.
 
-L.duration = "%s for %s sec"
-L.over = "%s Over!"
+L.duration = "%s per %s sec"
+L.over = "%s Terminato!"
 
-L.add_spawned = "Add Spawned!"
-L.next_add = "Next Add"
+L.add_spawned = "Add Apparso!"
+L.next_add = "Prossimo Add"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
@@ -31,7 +31,7 @@ L.custom_end = "%s va %s!"
 L.custom_min = "%s in %d min"
 L.custom_sec = "%s in %d sec!"
 
-L.tank = "Tank alerts only. "
-L.healer = "Healer alerts only. "
-L.tankhealer = "Tank & Healer alerts only. "
+L.tank = "Messaggio solo per Difensori. "
+L.healer = "Messaggio solo per Guaritori. "
+L.tankhealer = "Messaggio per Difensori e Guaritori. "
 
