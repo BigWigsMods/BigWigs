@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Super Emphasize", "AceTimer-3.0")
+local plugin = BigWigs:NewPlugin("Super Emphasize")
 if not plugin then return end
 
 -------------------------------------------------------------------------------

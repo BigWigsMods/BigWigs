@@ -15,17 +15,6 @@ local function chatFilter(_, _, msg)
 	end
 end
 
-local handler = CreateFrame("Frame")
-do
-	local RaidWarningFrame = RaidWarningFrame
-	local RaidWarningFrame_OnEvent = RaidWarningFrame_OnEvent
-	handler:SetScript("OnEvent", function(_, event, msg, ...)
-		if not msg:find("***", nil, true) then
-			RaidWarningFrame_OnEvent(RaidWarningFrame, event, msg, ...)
-		end
-	end)
-end
-
 function plugin:OnPluginEnable()
 	if not BigWigs.db.profile.showBlizzardWarnings then
 		RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_EMOTE")
@@ -34,7 +23,7 @@ function plugin:OnPluginEnable()
 
 	if not BigWigs.db.profile.showBossmodChat then
 		RaidWarningFrame:UnregisterEvent("CHAT_MSG_RAID_WARNING")
-		handler:RegisterEvent("CHAT_MSG_RAID_WARNING")
+		self:RegisterEvent("CHAT_MSG_RAID_WARNING")
 
 		ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", chatFilter)
 		ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_WARNING", chatFilter)
@@ -49,11 +38,20 @@ function plugin:OnPluginDisable()
 	end
 	if not BigWigs.db.profile.showBossmodChat then
 		RaidWarningFrame:RegisterEvent("CHAT_MSG_RAID_WARNING")
-		handler:UnregisterEvent("CHAT_MSG_RAID_WARNING")
 
 		ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID", chatFilter)
 		ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID_WARNING", chatFilter)
 		ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID_LEADER", chatFilter)
 	end
+end
+
+do
+	local RaidWarningFrame = RaidWarningFrame
+	local RaidWarningFrame_OnEvent = RaidWarningFrame_OnEvent
+	function plugin:CHAT_MSG_RAID_WARNING(_, msg)
+		if not msg:find("***", nil, true) then
+			RaidWarningFrame_OnEvent(RaidWarningFrame, event, msg, ...)
+		end
+	end)
 end
 
