@@ -1,20 +1,20 @@
 local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "itIT")
 if not L then return end
 if L then
-	L.engage_yell = "The Divine chose us to give mortal voice to Her divine will. We are but the vessel that enacts Her will."
+	L.engage_yell = "Siamo stati scelti per essere la voce mortale del Suo divino potere. Siamo solo uno strumento sotto il Suo controllo."
 
 	L.force_message = "AoE Pulse"
 
 	L.attenuation = EJ_GetSectionInfo(6426) .. " (Dischi)"
 	L.attenuation_bar = "Dischi... Corri!"
-	L.attenuation_message = "%s Dancing %s"
+	L.attenuation_message = "%s Si balla %s"
 	L.echo = "|c001cc986Eco|r"
 	L.zorlok = "|c00ed1ffaZor'lok|r"
 	L.left = "|c00008000<- Sinistra <-|r"
 	L.right = "|c00FF0000-> Destra ->|r"
 
-	L.platform_emote = "Piattaforme" -- Imperial Vizier Zor'lok flies to one of his platforms!
-	L.platform_emote_final = "Inala"-- Imperial Vizier Zor'lok inhales the Pheromones of Zeal!
+	L.platform_emote = "Piattaforme" -- Visir Imperiale Zor'lok vola su una delle sue piattaforme!
+	L.platform_emote_final = "Inala"-- Visir Imperiale Zor'lok inala i Feromoni dello Zelo!
 	L.platform_message = "Cambio Piattaforma"
 end
 
@@ -22,11 +22,11 @@ L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "itIT")
 if L then
 	L.engage_yell = "On your guard, invaders. I, Ta'yak, Lord of Blades, will be your opponent."
 
-	L.unseenstrike_inc = "Incoming Strike!"
-	L.unseenstrike_soon = "Strike in ~5-10 sec!"
+	L.unseenstrike_inc = "Assalto Invisibile tra poco!"
+	L.unseenstrike_soon = "Assalto tra ~5-10 sec!"
 
 	L.assault_message = "Assalto"
-	L.side_swap = "Side Swap"
+	L.side_swap = "Cambio Lato"
 end
 
 L = BigWigs:NewBossLocale("Garalon", "itIT")
@@ -41,34 +41,34 @@ if L then
 	L.spear_removed = "La tua lancia impalante è stata rimossa!"
 	L.residue_removed = "%s Rimosso!"
 
-	L.mending_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Zar'thik Battle-Menders have separate heal cooldowns.|r "
-	L.mending_warning = "Your focus is casting Mending!"
-	L.mending_bar = "Focus: Mending"
+	L.mending_desc = "|cFFFF0000AVVISO: viene visualizzato solo il timer del tuo bersaglio 'focus' perché tutte i Guaritori da Barttaglia Zar'thik hanno tempi di lancio e di recupero separati per le cure.|r "
+	L.mending_warning = "Il tuo focus sta lanciando Guarigione!"
+	L.mending_bar = "Focus: Guarigione"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "itIT")
 if L then
-	L.explosion_by_other = "Amber Explosion on others"
-	L.explosion_by_other_desc = "Cooldown warning for Amber Explosions cast by Amber Monstrosity or your focus target."
+	L.explosion_by_other = "Esplosionoe d'Ambra su altri"
+	L.explosion_by_other_desc = "Avviso recupero per Esplosione d'Ambra lanciato da Mostruosità d'Ambra sul tuo bersaglio focus."
 
-	L.explosion_casting_by_other = "Amber Explosion cast by others"
-	L.explosion_casting_by_other_desc = "Casting warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_other = "Esplosione d'Ambra lanciata da altri"
+	L.explosion_casting_by_other_desc = "Visualizza avvisi per i lanci di Esplosione d'Ambra della Mostruosità d'Ambra sul tuo bersaglio focus. È caldamente raccomandato di enfatizzare questi messaggi!"
 
-	L.explosion_by_you = "Amber Explosion on you"
-	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
+	L.explosion_by_you = "Esplosione d'Ambra su di te"
+	L.explosion_by_you_desc = "Avviso recupero mancante per la tua Esplosione d'Ambra."
 
-	L.explosion_casting_by_you = "Amber Explosion cast by you"
-	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_you = "Esplosione d'Ambra lanciata da te"
+	L.explosion_casting_by_you_desc = "Visualizza avvisi per Esplosione d'Ambra lanciati da te. È caldamente raccomandato di enfatizzare questo messaggio"
 
 	L.willpower = "Volontà"
-	L.willpower_message = "La tua Volonta' e' %d"
+	L.willpower_message = "La tua Volontà è %d"
 
-	L.break_free_message = "Health at %d%%!"
-	L.fling_message = "Getting tossed!"
-	L.parasite = "Parasite"
+	L.break_free_message = "Salute al %d%%!"
+	L.fling_message = "Lanciato!"
+	L.parasite = "Parassita"
 
-	L.boss_is_casting = "BOSS is casting!"
-	L.you_are_casting = "YOU are casting!"
+	L.boss_is_casting = "BOSS sta lanciando!"
+	L.you_are_casting = "TU stai lanciando!"
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "itIT")
@@ -81,6 +81,6 @@ if L then
 	L.eyes_desc = "Conta le stack di Occhi dell'Imperatrice e mostra una barra di durata."
 	L.eyes_message = "%2$dx Occhi su %1$s"
 
-	L.fumes_bar = "Your fumes buff"
+	L.fumes_bar = "Il tuo beneficio dei fumi"
 end
 
