@@ -22,19 +22,19 @@ if L then
 	L.phase_arcane = "Fase Arcana!"
 	L.phase_shadow = "Fase Ombra!"
 
-	L.phase_message = "New phase soon!"
+	L.phase_message = "Nuova fase tra poco!"
 	L.shroud_message = "%2$s attiva Manto su %1$s"
-	L.shroud_can_interrupt = "%s can interrupt %s!"
+	L.shroud_can_interrupt = "%s può interrompere %s!"
 	L.barrier_message = "Barriera Attiva!"
-	L.barrier_cooldown = "Barrier cooldown"
+	L.barrier_cooldown = "Barriera in recupero"
 
 	-- Tanks
-	L.tank = "Tank Alerts"
-	L.tank_desc = "Count the stacks of Lightning Lash, Flaming Spear, Arcane Shock & Shadowburn (Heroic)."
-	L.lash_message = "%2$dx Lash on %1$s"
-	L.spear_message = "%2$dx Spear on %1$s"
-	L.shock_message = "%2$dx Shock on %1$s"
-	L.burn_message = "%2$dx Burn on %1$s"
+	L.tank = "Messaggio solo per Difensori."
+	L.tank_desc = "Conta gli stacks di Sferzata Fulminante, Lancia Fiammeggiante, Folgore Arcana & Combustione dell'Ombra (Eroico)."
+	L.lash_message = "%2$dx Sferzata su %1$s"
+	L.spear_message = "%2$dx Lancia su %1$s"
+	L.shock_message = "%2$dx Folgore su %1$s"
+	L.burn_message = "%2$dx Combustione su %1$s"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "itIT")
@@ -42,8 +42,8 @@ if L then
 	L.engage_yell = "È giunta l'ora di schiattare!" -- From ChatLog
 
 	L.totem = "Totem (%d)"
-	L.shadowy_message = "Attack (%d)"
-	L.banish_message = "Tank Banished"
+	L.shadowy_message = "Attacco (%d)"
+	L.banish_message = "Difensore Esiliato"
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "itIT")
@@ -60,7 +60,7 @@ if L then
 	L.floor_message = "Il Pavimento sta Scomparendo!"
 
 	L.adds = "Adds"
-	L.adds_desc = "Warnings for when a Celestial Protector is about to spawn."
+	L.adds_desc = "Avvisi per quando sta per apparire un Protettore Celestiale."
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "itIT")
@@ -77,7 +77,7 @@ if L then
 	L.gas_trigger = "La Macchina Antica dei Mogu si rompe!"
 	L.gas_overdrive_trigger = "La Macchina Antica dei Mogu va in sovraccarico!"
 
-	L.target_only = "|cFFFF0000Questo messaggio verra' visualizzato solo per il boss che stai targettando.|r "
+	L.target_only = "|cFFFF0000Questo messaggio verrà visualizzato solo per il boss che stai targettando.|r "
 	L.combo_message = "%s: Combo in ARRIVO!"
 end
 
