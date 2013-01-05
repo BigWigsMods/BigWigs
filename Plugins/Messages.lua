@@ -20,6 +20,7 @@ local colorModule = nil
 
 local normalAnchor = nil
 local emphasizeAnchor = nil
+local emphasizeCountdownAnchor = nil
 
 local db = nil
 
@@ -34,6 +35,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 local defaultPositions = {
 	BWMessageAnchor = {"CENTER"},
 	BWEmphasizeMessageAnchor = {"TOP", "RaidWarningFrame", "BOTTOM", 0, 45},
+	BWEmphasizeCountdownMessageAnchor = {"TOP", "RaidWarningFrame", "BOTTOM", 0, -150},
 }
 
 local function onDragStart(self) self:StartMoving() end
@@ -51,8 +53,8 @@ local function createAnchor(frameName, title)
 	display:SetClampedToScreen(true)
 	display:SetMovable(true)
 	display:RegisterForDrag("LeftButton")
-	display:SetWidth(200)
-	display:SetHeight(20)
+	display:SetWidth((frameName == "BWEmphasizeCountdownMessageAnchor") and 40 or 200)
+	display:SetHeight((frameName == "BWEmphasizeCountdownMessageAnchor") and 40 or 20)
 	local bg = display:CreateTexture(nil, "BACKGROUND")
 	bg:SetAllPoints(display)
 	bg:SetBlendMode("BLEND")
@@ -60,14 +62,28 @@ local function createAnchor(frameName, title)
 	display.background = bg
 	local header = display:CreateFontString(nil, "ARTWORK", "GameFontNormal")
 	header:SetText(title)
-	header:SetAllPoints(display)
+	if frameName == "BWEmphasizeCountdownMessageAnchor" then
+		header:SetPoint("BOTTOM", display, "TOP", 0, 5)
+		header:SetJustifyV("TOP")
+		seModule.anchorEmphasizedCountdownText = display:CreateFontString(nil, "OVERLAY")
+		seModule.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, seModule.db.profile.outline)
+		seModule.anchorEmphasizedCountdownText:SetPoint("CENTER")
+		seModule.anchorEmphasizedCountdownText:SetText("5")
+		seModule.anchorEmphasizedCountdownText:SetTextColor(seModule.db.profile.fontColor.r, seModule.db.profile.fontColor.g, seModule.db.profile.fontColor.b)
+	else
+		header:SetAllPoints(display)
+		header:SetJustifyV("MIDDLE")
+	end
 	header:SetJustifyH("CENTER")
-	header:SetJustifyV("MIDDLE")
 	display:SetScript("OnDragStart", onDragStart)
 	display:SetScript("OnDragStop", onDragStop)
 	display:SetScript("OnMouseUp", function(self, button)
 		if button ~= "LeftButton" then return end
-		plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
+		if self:GetName() == "BWEmphasizeCountdownMessageAnchor" then
+			seModule:SendMessage("BigWigs_SetConfigureTarget", seModule)
+		else
+			plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
+		end
 	end)
 	display.Reset = function(self)
 		db[self.x] = nil
@@ -91,6 +107,7 @@ end
 local function createAnchors()
 	normalAnchor = createAnchor("BWMessageAnchor", L["Messages"])
 	emphasizeAnchor = createAnchor("BWEmphasizeMessageAnchor", L["Emphasized messages"])
+	emphasizeCountdownAnchor = createAnchor("BWEmphasizeCountdownMessageAnchor", L["Emphasized countdown"])
 
 	createAnchors = nil
 	createAnchor = nil
@@ -100,16 +117,20 @@ local function showAnchors()
 	if createAnchors then createAnchors() end
 	normalAnchor:Show()
 	emphasizeAnchor:Show()
+	emphasizeCountdownAnchor:Show()
+	seModule.anchorEmphasizedCountdownText:Show()
 end
 
 local function hideAnchors()
 	normalAnchor:Hide()
 	emphasizeAnchor:Hide()
+	emphasizeCountdownAnchor:Hide()
 end
 
 local function resetAnchors()
 	normalAnchor:Reset()
 	emphasizeAnchor:Reset()
+	emphasizeCountdownAnchor:Reset()
 end
 
 --------------------------------------------------------------------------------
@@ -156,6 +177,7 @@ local function updateProfile()
 	if normalAnchor then
 		normalAnchor:RefixPosition()
 		emphasizeAnchor:RefixPosition()
+		emphasizeCountdownAnchor:RefixPosition()
 	end
 end
 
@@ -186,6 +208,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_EmphasizedMessage")
+	self:RegisterMessage("BigWigs_EmphasizedCountdownMessage")
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
 
@@ -199,9 +222,15 @@ function plugin:BigWigs_SetConfigureTarget(event, module)
 	if module == self then
 		normalAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
 		emphasizeAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
+		emphasizeCountdownAnchor.background:SetTexture(0, 0, 0, 0.3)
+	elseif module == seModule then
+		normalAnchor.background:SetTexture(0, 0, 0, 0.3)
+		emphasizeAnchor.background:SetTexture(0, 0, 0, 0.3)
+		emphasizeCountdownAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
 	else
 		normalAnchor.background:SetTexture(0, 0, 0, 0.3)
 		emphasizeAnchor.background:SetTexture(0, 0, 0, 0.3)
+		emphasizeCountdownAnchor.background:SetTexture(0, 0, 0, 0.3)
 	end
 end
 
@@ -211,37 +240,25 @@ do
 		if not pluginOptions then
 			pluginOptions = {
 				type = "group",
-				get = function(info)
-					local key = info[#info]
-					if key == "font" then
-						for i, v in next, media:List("font") do
-							if v == db.font then return i end
-						end
-					elseif key == "outline" then
-						return db.outline or "NONE"
-					end
-					return plugin.db.profile[key]
-				end,
-				set = function(info, value)
-					local key = info[#info]
-					if key == "font" then
-						local list = media:List("font")
-						db.font = list[value]
-					elseif key == "outline" then
-						if value == "NONE" then value = nil end
-						plugin.db.profile[key] = value
-					else
-						plugin.db.profile[key] = value
-					end
-				end,
+				get = function(info) return plugin.db.profile[info[#info]] end,
+				set = function(info, value) plugin.db.profile[info[#info]] = value end,
 				args = {
 					font = {
 						type = "select",
 						name = L["Font"],
 						order = 1,
 						values = media:List("font"),
-						width = "full",
-						itemControl = "DDI-Font",
+						--width = "half",
+						--itemControl = "DDI-Font",
+						get = function()
+							for i, v in next, media:List("font") do
+								if v == plugin.db.profile.font then return i end
+							end
+						end,
+						set = function(info, value)
+							local list = media:List("font")
+							plugin.db.profile.font = list[value]
+						end,
 					},
 					outline = {
 						type = "select",
@@ -252,7 +269,14 @@ do
 							OUTLINE = L["Thin"],
 							THICKOUTLINE = L["Thick"],
 						},
-						width = "full",
+						--width = "half",
+						get = function()
+							return plugin.db.profile.outline or "NONE"
+						end,
+						set = function(info, value)
+							if value == "NONE" then value = nil end
+							plugin.db.profile[info[#info]] = value
+						end,
 					},
 					fontSize = {
 						type = "range",
@@ -293,6 +317,11 @@ do
 						desc = L["Show icons next to messages, only works for Raid Warning."],
 						order = 8,
 					},
+					newline1 = {
+						type = "description",
+						name = "\n",
+						order = 9,
+					},
 					displaytime = {
 						type = "range",
 						name = L["Display time"],
@@ -300,7 +329,7 @@ do
 						min=1,
 						max=30,
 						step=0.5,
-						order=9
+						order=10,
 					},
 					fadetime = {
 						type = "range",
@@ -309,7 +338,7 @@ do
 						min=1,
 						max=30,
 						step=0.5,
-						order=10
+						order=11,
 					},
 				},
 			}
@@ -477,6 +506,40 @@ do
 	end
 	function plugin:BigWigs_EmphasizedMessage(event, ...)
 		fakeEmphasizeMessageAddon:Pour(...)
+	end
+end
+do
+	local emphasizedCountdownText, updater, frame = nil, nil, nil
+	function plugin:EmphasizedCountdownPrint(text)
+		if createAnchors then createAnchors() end
+		if not updater then
+			if seModule.anchorEmphasizedCountdownText then seModule.anchorEmphasizedCountdownText:Hide() end
+			frame = CreateFrame("Frame", "BWEmphasizeCountdownMessageFrame", UIParent)
+			frame:SetFrameStrata("HIGH")
+			frame:SetPoint("CENTER", emphasizeCountdownAnchor, "CENTER")
+			frame:SetWidth(80)
+			frame:SetHeight(80)
+
+			emphasizedCountdownText = frame:CreateFontString(nil, "OVERLAY")
+			emphasizedCountdownText:SetPoint("CENTER")
+
+			updater = frame:CreateAnimationGroup()
+			updater:SetScript("OnFinished", function() frame:Hide() end)
+
+			local anim = updater:CreateAnimation("Alpha")
+			anim:SetChange(-1)
+			anim:SetDuration(3.5)
+			anim:SetStartDelay(1.5)
+		end
+		emphasizedCountdownText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, seModule.db.profile.outline)
+		emphasizedCountdownText:SetText(text)
+		emphasizedCountdownText:SetTextColor(seModule.db.profile.fontColor.r, seModule.db.profile.fontColor.g, seModule.db.profile.fontColor.b)
+		updater:Stop()
+		frame:Show()
+		updater:Play()
+	end
+	function plugin:BigWigs_EmphasizedCountdownMessage(event, ...)
+		plugin:EmphasizedCountdownPrint(...)
 	end
 end
 

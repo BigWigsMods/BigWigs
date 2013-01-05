@@ -88,11 +88,13 @@ L["Positive"] = "Positiv"
 
 L.sinkDescription = "Tunnelt die Big Wigs Ausgabe durch die normale Big Wigs Nachrichtenanzeige. Diese Anzeige unterstützt Symbole, Farben und kann 4 Nachrichten gleichzeitig anzeigen. Neuere Nachrichten werden größer und schrumpfen dann wieder schnell, um die Aufmerksamkeit dementsprechend zu lenken."
 L.emphasizedSinkDescription = "Tunnelt die Big Wigs Ausgabe durch Big Wigs 'stark hervorgehobene' Nachrichtenanzeige. Diese Anzeige unterstützt Text und Farbe und kann nur eine Nachricht gleichzeitig anzeigen."
+L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
 
 L["Messages"] = "Nachrichten"
 L["Normal messages"] = "Normale Nachrichten"
 L["Emphasized messages"] = "Hervorgehobene Nachrichten"
 L["Output"] = "Ausgabe"
+L["Emphasized countdown"] = "Emphasized countdown"
 
 L["Use colors"] = "Farben verwenden"
 L["Toggles white only messages ignoring coloring."] = "Wählt, ob Nachrichten farbig oder weiß angezeigt werden."
@@ -118,6 +120,7 @@ L["Display time"] = "Anzeigedauer"
 L["How long to display a message, in seconds"] = "Bestimmt, wie lange (in Sekunden) Nachrichten angezeigt werden."
 L["Fade time"] = "Ausblendedauer"
 L["How long to fade out a message, in seconds"] = "Bestimmt, wie lange (in Sekunden) das Ausblenden der Nachrichten dauert."
+L["Font color"] = "Font color"
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

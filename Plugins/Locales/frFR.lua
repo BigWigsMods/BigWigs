@@ -86,11 +86,13 @@ L["Positive"] = "Positif"
 
 L.sinkDescription = "Transmet la sortie de cet addon via l'affichage des messages de Big Wigs. Cet affichage supporte les icônes, les couleurs et peut afficher jusqu'à 4 messages à l'écran en même temps. Les messages récemment insérés grandiront et reviendront rapidement à leur taille initiale afin de bien capter l'attention du joueur."
 L.emphasizedSinkDescription = "Transmet la sortie de cet addon via l'affichage des messages mis en évidence de Big Wigs. Cet affichage supporte le texte et les couleurs, et ne peut afficher qu'un message à la fois."
+L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
 
 L["Messages"] = "Messages"
 L["Normal messages"] = "Messages normaux"
 L["Emphasized messages"] = "Messages en évidence"
 L["Output"] = "Sortie"
+L["Emphasized countdown"] = "Emphasized countdown"
 
 L["Use colors"] = "Utiliser des couleurs"
 L["Toggles white only messages ignoring coloring."] = "Utilise ou non des couleurs dans les messages à la place du blanc unique."
@@ -116,6 +118,7 @@ L["Display time"] = "Durée d'affichage"
 L["How long to display a message, in seconds"] = "Définit pendant combien de temps un message doit rester affiché (en secondes)."
 L["Fade time"] = "Durée d'estompe"
 L["How long to fade out a message, in seconds"] = "Définit pendant combien de temps un message doit s'estomper (en secondes)."
+L["Font color"] = "Font color"
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

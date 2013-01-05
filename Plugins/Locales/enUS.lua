@@ -86,11 +86,13 @@ L["Positive"] = true
 
 L.sinkDescription = "Route output from this addon through the Big Wigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
 L.emphasizedSinkDescription = "Route output from this addon through the Big Wigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
+L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
 
 L["Messages"] = true
 L["Normal messages"] = true
 L["Emphasized messages"] = true
 L["Output"] = true
+L["Emphasized countdown"] = true
 
 L["Use colors"] = true
 L["Toggles white only messages ignoring coloring."] = true
@@ -111,6 +113,7 @@ L["Thick"] = true
 L["Outline"] = true
 L["Monochrome"] = true
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = true
+L["Font color"] = true
 
 L["Display time"] = true
 L["How long to display a message, in seconds"] = true
@@ -228,4 +231,3 @@ L["Countdown"] = true
 L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = true
 L["Flash"] = true
 L["Flashes the screen red during the last 3 seconds of any related timer."] = true
-

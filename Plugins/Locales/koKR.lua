@@ -89,11 +89,13 @@ L["Positive"] = "제안"
 
 L.sinkDescription = "Big Wigs 메세지 표시를 통해 이 애드온의 메세지를 출력합니다. 이것은 디스플레이와 색상, 아이콘을 지원하는 메시지가 화면에 한 번에 최대 4개로 표시됩니다."
 L.emphasizedSinkDescription = "Big Wigs Emphasized 메세지 표시를 통해 이 애드온의 메세지를 출력합니다. 이것은 텍스트와 색상을 지원하는 메세지가 화면에 한번에 하나만 표시됩니다."
+L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
 
 L["Messages"] = "메세지"
 L["Normal messages"] = "일반 메세지"
 L["Emphasized messages"] = "강조 메세지"
 L["Output"] = "출력"
+L["Emphasized countdown"] = "Emphasized countdown"
 
 L["Use colors"] = "색상 사용"
 L["Toggles white only messages ignoring coloring."] = "메세지에 색상 사용을 설정합니다."
@@ -114,6 +116,7 @@ L["Thick"] = "두겁게"
 L["Outline"] = "외곽선"
 L["Monochrome"] = "단색"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "글꼴 가장자리의 스무딩을 제거하여 모든 메세지를 단색으로 전환합니다."
+L["Font color"] = "Font color"
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

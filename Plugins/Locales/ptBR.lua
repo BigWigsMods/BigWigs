@@ -87,11 +87,13 @@ L["Positive"] = "Positivo"
 
 L.sinkDescription = "Seguir o padrão do addon deixando as mensagens serem mostradas do jeito padrão do Big Wigs. Isto suporta icones, cores e podem mostrar até 4 mensagens na tela de uma vez. Após inserir as mensagens crescerão de tamanho e encolherão de novo rápidamente para notificar o usuario."
 L.emphasizedSinkDescription = "Seguir o padrão de mensagens enfatizadas do Big Wigs. Isto suporta texto e cores, e só podem aparecer uma vez."
+L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
 
 L["Messages"] = "Mensagens"
 L["Normal messages"] = "Mensagens normais"
 L["Emphasized messages"] = "Mensagens enfatizadas"
 L["Output"] = "Saida"
+L["Emphasized countdown"] = "Emphasized countdown"
 
 L["Use colors"] = "Usar cores"
 L["Toggles white only messages ignoring coloring."] = "Mensagens somente de cor branca, ignorando as cores."
@@ -112,6 +114,7 @@ L["Thick"] = "Grosso"
 L["Outline"] = "Contorno"
 L["Monochrome"] = "Monocromo"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "Troca o indicador monocromo de todas as mensagens, removendo qualquer embelezamento das fontes."
+L["Font color"] = "Font color"
 -----------------------------------------------------------------------
 -- RaidIcon.lua
 --

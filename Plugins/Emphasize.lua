@@ -9,6 +9,7 @@ if not plugin then return end
 -- Locals
 --
 
+local media = LibStub("LibSharedMedia-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
 local temporaryEmphasizes = {}
@@ -35,6 +36,10 @@ plugin.defaultDB = {
 	size = true,
 	countdown = true,
 	flash = false,
+	font = 16, --"Friz Quadrata TT"
+	outline = "THICKOUTLINE",
+	fontSize = 32,
+	fontColor = { r = 1, g = 0, b = 0 },
 }
 
 plugin.subPanelOptions = {
@@ -92,6 +97,96 @@ plugin.subPanelOptions = {
 	},
 }
 
+do
+	local pluginOptions = nil
+	function plugin:GetPluginConfig()
+		if not pluginOptions then
+			pluginOptions = {
+				type = "group",
+				get = function(info) return plugin.db.profile[info[#info]] end,
+				set = function(info, value)
+					plugin.db.profile[info[#info]] = value
+					if plugin.anchorEmphasizedCountdownText then
+						plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline)
+					end
+				end,
+				args = {
+					font = {
+						type = "select",
+						name = L["Font"],
+						order = 1,
+						values = media:List("font"),
+						--width = "half",
+						--itemControl = "DDI-Font",
+						get = function()
+							for i, v in next, media:List("font") do
+								if v == plugin.db.profile.font then return i end
+							end
+						end,
+						set = function(info, value)
+							local list = media:List("font")
+							plugin.db.profile.font = list[value]
+							if plugin.anchorEmphasizedCountdownText then
+								plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline)
+							end
+						end,
+					},
+					outline = {
+						type = "select",
+						name = L["Outline"],
+						order = 2,
+						values = {
+							NONE = L["None"],
+							OUTLINE = L["Thin"],
+							THICKOUTLINE = L["Thick"],
+						},
+						--width = "half",
+						get = function()
+							return plugin.db.profile.outline or "NONE"
+						end,
+						set = function(info, value)
+							if value == "NONE" then value = nil end
+							plugin.db.profile[info[#info]] = value
+							if plugin.anchorEmphasizedCountdownText then
+								plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline)
+							end
+						end,
+					},
+					fontSize = {
+						type = "range",
+						name = L["Font size"],
+						order = 3,
+						max = 40,
+						min = 8,
+						step = 1,
+						width = "full",
+					},
+					fontColor = {
+						order = 4,
+						type = "color",
+						name = L["Font color"],
+						get = function(info)
+							return plugin.db.profile[info[#info]].r, plugin.db.profile[info[#info]].g, plugin.db.profile[info[#info]].b
+						end,
+						set = function(info, r, g, b)
+							plugin.db.profile[info[#info]].r, plugin.db.profile[info[#info]].g, plugin.db.profile[info[#info]].b = r, g, b
+							if plugin.anchorEmphasizedCountdownText then
+								plugin.anchorEmphasizedCountdownText:SetTextColor(r, g, b)
+							end
+						end,
+					},
+					monochrome = {
+						type = "toggle",
+						name = L["Monochrome"],
+						desc = L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."],
+						order = 5,
+					},
+				},
+			}
+		end
+		return pluginOptions
+	end
+end
 -------------------------------------------------------------------------------
 -- Initialization
 --

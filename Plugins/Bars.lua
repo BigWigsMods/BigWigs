@@ -446,40 +446,41 @@ do
 					end
 				end,
 				args = {
-					texture = {
-						type = "select",
-						name = L["Texture"],
-						order = 1,
-						values = media:List("statusbar"),
-						width = "full",
-						itemControl = "DDI-Statusbar",
-					},
 					font = {
 						type = "select",
 						name = L["Font"],
-						order = 2,
+						order = 1,
 						values = media:List("font"),
-						width = "full",
+						--width = "full",
 						itemControl = "DDI-Font",
 					},
 					outline = {
 						type = "select",
 						name = L["Outline"],
-						order = 2.1,
+						order = 2,
 						values = {
 							NONE = L["None"],
 							OUTLINE = L["Thin"],
 							THICKOUTLINE = L["Thick"],
 						},
-						width = "full",
+						--width = "full",
+					},
+					texture = {
+						type = "select",
+						name = L["Texture"],
+						order = 2.1,
+						values = media:List("statusbar"),
+						--width = "full",
+						itemControl = "DDI-Statusbar",
 					},
 					barStyle = {
 						type = "select",
 						name = L["Style"],
 						order = 2.2,
 						values = barStyleRegister,
-						width = "full",
+						--width = "full",
 					},
+
 					align = {
 						type = "select",
 						name = L["Align"],
@@ -1096,7 +1097,7 @@ local function countdown(bar)
 		if bar.remaining < 6 then
 			PlaySoundFile("Interface\\AddOns\\BigWigs\\Sounds\\"..floor(count)..".mp3", "Master")
 			if count > 0.9 then
-				plugin:SendMessage("BigWigs_EmphasizedMessage", floor(count), 1, 0, 0)
+				plugin:SendMessage("BigWigs_EmphasizedCountdownMessage", floor(count))
 			end
 		end
 	end

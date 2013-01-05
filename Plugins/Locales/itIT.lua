@@ -86,11 +86,13 @@ L["Positive"] = "Positivo"
 
 L.sinkDescription = "Indirizza l'uscita dei messaggi sul visualizzatore di Messaggi Normali di Big Wigs. Questa visualizzazione supporta icone, colori e può visualizzare fino a 4 messaggi sullo schermo. I messaggi più nuovi cresceranno in dimensioni per avvertire l'utente."
 L.emphasizedSinkDescription = "Indirizza l'uscita dei messaggi attraverso il visualizzatore di Messaggi ENFATIZZATI di Big Wigs. Questo metodo supporta testi, colori e puo' visualizzare un solo messaggio per volta."
+L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
 
 L["Messages"] = "Messaggi"
 L["Normal messages"] = "Messaggi Normali"
 L["Emphasized messages"] = "Messaggi Enfatizzati"
 L["Output"] = "Uscita"
+L["Emphasized countdown"] = "Emphasized countdown"
 
 L["Use colors"] = "Usa Colori"
 L["Toggles white only messages ignoring coloring."] = "Abilita solo messaggi bianchi ignorando i colori"
@@ -116,6 +118,7 @@ L["Display time"] = "Tempo di Visualizzazione"
 L["How long to display a message, in seconds"] = "Per quanto tempo deve essere visualizzato il messaggio, in secondi"
 L["Fade time"] = "Tempo di Scomparsa"
 L["How long to fade out a message, in seconds"] = "Dopo quanti secondi il messaggio deve scomparire"
+L["Font color"] = "Font color"
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

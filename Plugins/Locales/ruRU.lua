@@ -86,11 +86,13 @@ L["Positive"] = "Положительные"
 
 L.sinkDescription = "Пути вывода сообщений. Отображение поддерживает иконки, цвета и позволяет вывести до 4х сообщений на экран. Новые сообщения будут расти в размерах, и вновь сокращатся, чтобы уведомить игрока."
 L.emphasizedSinkDescription = "Пути вывода увеличенных сообщений. Отображение поддерживает текст и цвета, и позволяет вывести одно сообщение за один раз."
+L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
 
 L["Messages"] = "Сообщения"
 L["Normal messages"] = "Обычные сообщения"
 L["Emphasized messages"] = "Увеличенные сообщения"
 L["Output"] = "Вывод"
+L["Emphasized countdown"] = "Emphasized countdown"
 
 L["Use colors"] = "Использовать цвета"
 L["Toggles white only messages ignoring coloring."] = "Не раскрашивать сообщения (белый текст)."
@@ -111,6 +113,7 @@ L["Thick"] = "Толстый"
 L["Outline"] = "Контур"
 L["Monochrome"] = "Монохромный"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "Переключение монохромного флага на всех сообщениях, удаляя все сглаживание краев шрифта."
+L["Font color"] = "Font color"
 
 L["Display time"] = "Время отображения"
 L["How long to display a message, in seconds"] = "Сколько секунд будет показываться сообщение"

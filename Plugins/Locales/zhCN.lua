@@ -88,11 +88,13 @@ L["Positive"] = "醒目"
 
 L.sinkDescription = "向外通过 Big Wigs 插件信息显示。这些包含了图标，颜色和在同一时间在屏幕上的显示4条信息。新的信息将再一次快速的放大和缩小来提醒用户。新插入的信息将增大并立即缩小提醒用户注意。"
 L.emphasizedSinkDescription = "通过此插件输出到 Big Wigs 醒目信息显示。此显示支持文本和颜色，每次只可显示一条信息。"
+L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
 
 L["Messages"] = "信息"
 L["Normal messages"] = "一般信息"
 L["Emphasized messages"] = "醒目信息"
 L["Output"] = "输出"
+L["Emphasized countdown"] = "Emphasized countdown"
 
 L["Use colors"] = "使用彩色信息"
 L["Toggles white only messages ignoring coloring."] = "选择是否只发送单色信息。"
@@ -113,6 +115,7 @@ L["Thick"] = "粗"
 L["Outline"] = "轮廓"
 L["Monochrome"] = "单一颜色"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "在全部信息切换为单一颜色，移除全部字体边缘平滑。"
+L["Font color"] = "Font color"
 
 L["Display time"] = "显示时间"
 L["How long to display a message, in seconds"] = "以秒计信息显示时间。"
