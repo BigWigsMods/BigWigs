@@ -41,9 +41,9 @@ if L then
 	L.spear_removed = "Ваше Пронзающее копье снялось!"
 	L.residue_removed = "%s снялся!"
 
-	L.mending_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Zar'thik Battle-Menders have separate heal cooldowns.|r "
-	L.mending_warning = "Your focus is casting Mending!"
-	L.mending_bar = "Focus: Mending"
+	L.mending_desc = "|cFFFF0000ВНИМАНИЕ: Будет показываться таймер только для вашего 'фокуса', так как все Зар'тики - боевые лекари имеют разное время восстановления способности.|r "
+	L.mending_warning = "Ваш фокус произносит Лечение!"
+	L.mending_bar = "Фокус: Лечение"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "ruRU")
