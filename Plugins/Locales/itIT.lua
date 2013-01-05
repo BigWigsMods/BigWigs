@@ -17,7 +17,7 @@ L["Allows bars to be click-through unless the specified modifier key is held dow
 
 L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "SUPER ENFATIZZA temporaneamente la barra ed ogni messaggio associato alla sua durata."
 L["Report"] = "Riporta"
---L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."] = "Riporta lo status della barra attuale nella finestra attiva di chat; che sia la chat dell'incirsione, dell'istanza, del gruppo o del canale Parla, il più appropriato."
+L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."] = "Riporta lo status della barra attuale nella finestra attiva di chat; che sia la chat dell'incursione, dell'istanza, del gruppo o del canale Parla, il più appropriato."
 L["Remove"] = "Rimuovi"
 L["Temporarily removes the bar and all associated messages."] = "Rimuove temporaneamente la barra e tutti i messaggi ad essa associati."
 L["Remove other"] = "Rimuovi le Altre"
@@ -86,13 +86,13 @@ L["Positive"] = "Positivo"
 
 L.sinkDescription = "Indirizza l'uscita dei messaggi sul visualizzatore di Messaggi Normali di Big Wigs. Questa visualizzazione supporta icone, colori e può visualizzare fino a 4 messaggi sullo schermo. I messaggi più nuovi cresceranno in dimensioni per avvertire l'utente."
 L.emphasizedSinkDescription = "Indirizza l'uscita dei messaggi attraverso il visualizzatore di Messaggi ENFATIZZATI di Big Wigs. Questo metodo supporta testi, colori e puo' visualizzare un solo messaggio per volta."
-L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
+L.emphasizedCountdownSinkDescription = "Indirizza l'uscita da questo addon verso la visualizzazione del Recupero Messaggi Enfatizzati. Questa visualizzazione supporta testi e colori, e può visualizzare solo un messaggio alla volta."
 
 L["Messages"] = "Messaggi"
 L["Normal messages"] = "Messaggi Normali"
 L["Emphasized messages"] = "Messaggi Enfatizzati"
 L["Output"] = "Uscita"
-L["Emphasized countdown"] = "Emphasized countdown"
+L["Emphasized countdown"] = "Recupero Messaggi Enfatizzati"
 
 L["Use colors"] = "Usa Colori"
 L["Toggles white only messages ignoring coloring."] = "Abilita solo messaggi bianchi ignorando i colori"
@@ -178,7 +178,7 @@ L.proximity = "Display di Prossimità"
 L.proximity_desc = "Visualizza la finestra di prossimità' al momento opportuno durante il combattimento, con i giocatori che stanno troppo vicino a te."
 
 L["Close"] = "Chiudi"
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Chiude il Display di prossimità.\n\nPer disabilitarlo completamente per tutti gli incontri, devi andare nelle impostazioni dei singoli combattimenti e disabilitare l'opzione 'Prossimità'"
+L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Chiude il Display di prossimità.\n\nPer disabilitarlo completamente per tutti gli incontri, devi andare nelle impostazioni dei singoli combattimenti e disabilitare l'opzione 'Prossimità"
 L["Lock"] = "Blocca"
 L["Locks the display in place, preventing moving and resizing."] = "Blocca il Display, impedendo che venga spostato e ridimensionato."
 L["Title"] = "Titolo"
