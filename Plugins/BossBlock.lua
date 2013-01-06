@@ -48,7 +48,7 @@ end
 do
 	local RaidWarningFrame = RaidWarningFrame
 	local RaidWarningFrame_OnEvent = RaidWarningFrame_OnEvent
-	function plugin:CHAT_MSG_RAID_WARNING(_, msg, ...)
+	function plugin:CHAT_MSG_RAID_WARNING(event, msg, ...)
 		if not msg:find("***", nil, true) then
 			RaidWarningFrame_OnEvent(RaidWarningFrame, event, msg, ...)
 		end
