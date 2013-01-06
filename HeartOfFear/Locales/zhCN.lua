@@ -54,7 +54,7 @@ if L then
 	L.willpower = "意志力"
 	L.willpower_message = "意志力：%d！"
 
-	L.break_free_message = "血量：%d%%！w"
+	L.break_free_message = "血量：%d%%！"
 	L.fling_message = "快吸水！"
 	L.parasite = "寄生生长"
 
