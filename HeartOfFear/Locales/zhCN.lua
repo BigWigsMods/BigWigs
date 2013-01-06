@@ -39,7 +39,27 @@ end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "zhCN")
 if L then
+	L.explosion_by_other = "其它人施放琥珀爆炸"
+	L.explosion_by_other_desc = "Cooldown warning for Amber Explosions cast by Amber Monstrosity or your focus target."
 
+	L.explosion_casting_by_other = "其它人施放琥珀爆炸"
+	L.explosion_casting_by_other_desc = "Casting warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
+
+	L.explosion_by_you = "你的琥珀爆炸"
+	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
+
+	L.explosion_casting_by_you = "你正在施法琥珀爆炸"
+	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
+
+	L.willpower = "意志力"
+	L.willpower_message = "意志力：%d！"
+
+	L.break_free_message = "血量：%d%%！w"
+	L.fling_message = "快吸水！"
+	L.parasite = "寄生生长"
+
+	L.boss_is_casting = "»首领«在施法！"
+	L.you_are_casting = "»你«在施法！"
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "zhCN")
