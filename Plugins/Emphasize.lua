@@ -36,7 +36,7 @@ plugin.defaultDB = {
 	size = true,
 	countdown = true,
 	flash = false,
-	font = 16, --"Friz Quadrata TT"
+	font = "Friz Quadrata TT",
 	outline = "THICKOUTLINE",
 	fontSize = 32,
 	fontColor = { r = 1, g = 0, b = 0 },
