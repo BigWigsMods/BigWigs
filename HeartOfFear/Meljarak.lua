@@ -14,7 +14,7 @@ mod:RegisterEnableMob(
 --
 
 local korthikStrikeWarned = {}
-local primaryAmberIcon, secondaryAmberIcon, phase = nil, nil, nil
+local primaryAmberIcon, secondaryAmberIcon, phase = nil, nil, 0
 local firstKorthikStrikeDone = nil
 
 --------------------------------------------------------------------------------
@@ -96,11 +96,11 @@ function mod:OnEngage(diff)
 	self:Bar(122409, "~"..self:SpellName(122409), 19, 122409) -- Korthik Strike
 	self:Berserk(self:LFR() and 600 or 480)
 	wipe(korthikStrikeWarned)
-	primaryAmberIcon, secondaryAmberIcon, phase = nil, nil, nil
+	primaryAmberIcon, secondaryAmberIcon, phase = nil, nil, 0
 	firstKorthikStrikeDone = nil
 
 	self:RegisterEvent("UNIT_AURA")
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "PhaseChange", "boss1")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "PhaseChange", "boss1", "boss2", "boss3", "boss4")
 end
 
 --------------------------------------------------------------------------------
@@ -191,7 +191,7 @@ end
 
 function mod:RainOfBlades(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Important", spellId, "Alert")
-	self:Bar(spellId, "~"..spellName, 60, spellId)
+	self:Bar(spellId, "~"..spellName, phase == 2 and 48 or 60, spellId)
 end
 
 do
@@ -216,7 +216,7 @@ end
 
 function mod:WhirlingBlade(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Urgent", spellId, "Alarm")
-	self:Bar(spellId, "~"..spellName, 45, spellId)
+	self:Bar(spellId, "~"..spellName, phase == 2 and 30 or 45, spellId)
 	if not self:LFR() then
 		self:FlashShake(spellId)
 	end
@@ -277,22 +277,25 @@ function mod:ImpalingSpearRemoved(_, spellId, source, _, spellName)
 end
 
 function mod:PhaseChange(unitId)
-	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-	if hp < 78 and not phase then -- phase starts at 75
-		self:Message(131830, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 131830, "Info") -- should it maybe have it's own option key?
-		phase = 1
-	elseif hp < 75 then
-		self:Message(131830, "75% - "..CL["phase"]:format(2), "Positive", 131830, "Info")
-		self:Bar(121896, "~"..self:SpellName(121896), 45, 121896) -- Whirling Blade (reset cd)
-		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
-		phase = 2
-		for i = 2, 5 do
-			local guid = UnitGUID(("boss%d"):format(i))
-			if guid and self:GetCID(guid) == 62451 then -- The Sra'thik
-				return
+	if self:GetCID(UnitGUID(unitId)) == 62397 then
+		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+		if hp < 79 and phase == 0 then -- phase starts at 75
+			self:Message(131830, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 131830, "Info") -- should it maybe have it's own option key?
+			phase = 1
+		elseif hp < 75 and phase ~= 2 then
+			phase = 2
+			self:Message(131830, "75% - "..CL["phase"]:format(2), "Positive", 131830, "Info")
+			self:Bar(121896, "~"..self:SpellName(121896), 30, 121896) -- Whirling Blade (reset cd)
+			self:StopBar("~"..self:SpellName(122406)) -- Rain of Blades, first after p2 seems random
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3", "boss4")
+			for i = 1, 5 do
+				local guid = UnitGUID(("boss%d"):format(i))
+				if guid and self:GetCID(guid) == 62451 then -- The Sra'thik
+					return
+				end
 			end
+			self:OpenProximity(5, 131830) -- Wind Bomb
 		end
-		self:OpenProximity(5, 131830) -- Wind Bomb
 	end
 end
 
@@ -306,7 +309,7 @@ function mod:Deaths(mobId)
 			self:CloseProximity(121881)
 		end
 	elseif mobId == 62452 then -- The Zar'thik
-		self:StopBar(122193) -- Mending
+		self:StopBar(L["mending_bar"])
 	elseif mobId == 62447 then -- The Kor'thik
 		self:StopBar("~"..self:SpellName(122409)) -- Kor'thik Strike
 	end
