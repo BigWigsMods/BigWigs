@@ -79,7 +79,7 @@ local function createAnchor(frameName, title)
 	display:SetScript("OnDragStop", onDragStop)
 	display:SetScript("OnMouseUp", function(self, button)
 		if button ~= "LeftButton" then return end
-		if self:GetName() == "BWEmphasizeCountdownMessageAnchor" then
+		if self:GetName() == "BWEmphasizeCountdownMessageAnchor" or self:GetName() == "BWEmphasizeMessageAnchor" then
 			seModule:SendMessage("BigWigs_SetConfigureTarget", seModule)
 		else
 			plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
@@ -221,11 +221,11 @@ end
 function plugin:BigWigs_SetConfigureTarget(event, module)
 	if module == self then
 		normalAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
-		emphasizeAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
+		emphasizeAnchor.background:SetTexture(0, 0, 0, 0.3)
 		emphasizeCountdownAnchor.background:SetTexture(0, 0, 0, 0.3)
 	elseif module == seModule then
 		normalAnchor.background:SetTexture(0, 0, 0, 0.3)
-		emphasizeAnchor.background:SetTexture(0, 0, 0, 0.3)
+		emphasizeAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
 		emphasizeCountdownAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
 	else
 		normalAnchor.background:SetTexture(0, 0, 0, 0.3)
@@ -498,6 +498,7 @@ do
 			anim:SetDuration(3.5)
 			anim:SetStartDelay(1.5)
 		end
+		emphasizedText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, seModule.db.profile.outline)
 		emphasizedText:SetText(text)
 		emphasizedText:SetTextColor(r, g, b)
 		updater:Stop()
