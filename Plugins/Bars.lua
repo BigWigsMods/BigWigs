@@ -915,7 +915,7 @@ end
 local function stopBars(bars, module, text)
 	local dirty = nil
 	for k in pairs(bars) do
-		if k:Get("bigwigs:module") == module and (not text or k.candyBarLabel:GetText() == text) then
+		if k:Get("bigwigs:module") == module and (k.candyBarLabel:GetText() == text) then
 			k:Stop()
 			dirty = true
 		end
@@ -1136,6 +1136,7 @@ end
 
 function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	if createAnchors then createAnchors() end
+	if not text then text = "" end
 	stop(module, text)
 	local bar = candy:New(media:Fetch("statusbar", db.texture), 200, 14)
 	normalAnchor.bars[bar] = true
