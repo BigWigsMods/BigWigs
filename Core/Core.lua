@@ -214,11 +214,9 @@ end
 
 do
 	local callbackRegistered = nil
-	local spells = nil
 	local messages = {}
 	local colors = {"Important", "Personal", "Urgent", "Attention", "Positive"}
 	local sounds = {"Long", "Info", "Alert", "Alarm", "Victory", false, false, false, false, false, false}
-	local messageFormat = "%s: %s %s"
 
 	local function barStopped(event, bar)
 		local a = bar:Get("bigwigs:anchor")
@@ -226,7 +224,7 @@ do
 		if a and messages[key] then
 			local color = colors[math.random(1, #colors)]
 			local sound = sounds[math.random(1, #sounds)]
-			local formatted = messageFormat:format(color, key, sound and "("..sound..")" or "")
+			local formatted = color..": "..key.." "..(sound and "("..sound..")" or "")
 			addon:SendMessage("BigWigs_Message", addon, key, formatted, color, true, sound, nil, messages[key])
 			if math.random(1, 4) == 2 then addon:SendMessage("BigWigs_FlashShake") end
 			messages[key] = nil
@@ -234,35 +232,23 @@ do
 	end
 
 	function addon:Test()
-		if not spells then
-			spells = {}
-			for i = 1, GetNumSpellTabs() do
-				local _, _, offset, numSpells = GetSpellTabInfo(i)
-				for s = offset + 1, offset + numSpells do
-					local spell = GetSpellBookItemName(s, BOOKTYPE_SPELL)
-					local name = GetSpellInfo(spell .. "()")
-					if name then spells[#spells+1] = name end
-				end
-			end
-		end
 		if not callbackRegistered then
 			LibStub("LibCandyBar-3.0").RegisterCallback(self, "LibCandyBar_Stop", barStopped)
 			callbackRegistered = true
 		end
-		local spell = spells[math.random(1, #spells)]
-		-- Try not to run the same spell twice.
-		if messages[spell] then
-			for i = 1, #spells do
-				if not messages[spells[i]] then
-					spell = spells[i]
-					break
-				end
-			end
+
+		local spell, icon
+		local _, _, offset, numSpells = GetSpellTabInfo(2) -- Main spec
+		for i = offset + 1, offset + numSpells do
+			spell = GetSpellBookItemName(i, "spell")
+			icon = GetSpellBookItemTexture(i, "spell")
+			if not messages[spell] then break end
 		end
-		local name, rank, icon = GetSpellInfo(spell.."()")
-		local time = math.random(11, 45)
-		addon:SendMessage("BigWigs_StartBar", addon, name, name, time, icon)
+
+		local time = math.random(11, 30)
 		messages[spell] = icon
+
+		addon:SendMessage("BigWigs_StartBar", addon, spell, spell, time, icon)
 	end
 end
 
