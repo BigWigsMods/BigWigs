@@ -2,7 +2,7 @@
 local L = BigWigs:NewBossLocale("Protectors of the Endless", "zhCN")
 if not L then return end
 if L then
-	L.under = "%s under %s!"
+	L.under = "%s 在%s脚下！"
 	L.heal = "%s 开始治疗！"
 end
 
