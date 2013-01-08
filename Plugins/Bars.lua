@@ -829,6 +829,7 @@ function plugin:OnPluginEnable()
 
 	-- custom bars
 	BigWigs:AddSyncListener(self, "BWCustomBar")
+	BigWigs:AddSyncListener(self, "BWPull")
 
 	self:RefixClickIntercepts()
 	self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
@@ -1257,10 +1258,40 @@ local function startCustomBar(bar, nick, localOnly)
 	end
 end
 
+local startPull
+do
+	local timer, timeLeft = nil, 0
+	local function printPull()
+		timeLeft = timeLeft - 1
+		if timeLeft == 0 then
+			plugin:CancelTimer(timer)
+			timer = nil
+			plugin:SendMessage("BigWigs_Message", nil, nil, "Pulling!", "Attention", nil, "Alarm", nil, "Interface\\Icons\\achievement_bg_returnxflags_def_wsg")
+		else
+			plugin:SendMessage("BigWigs_Message", nil, nil, ("Pull in %d sec"):format(timeLeft), "Attention", nil, timeLeft < 4 and "Info")
+		end
+	end
+
+	function startPull(time, nick)
+		time = tonumber(time)
+		if not time or time < 1 or time > 10 then print"usage /pull <time, between 1 and 10>" return end
+		time = math.floor(time)
+		timeLeft = time
+		print("Pull started by:", nick)
+		if timer then plugin:CancelTimer(timer) end
+		timer = plugin:ScheduleRepeatingTimer(printPull, 1)
+		plugin:SendMessage("BigWigs_Message", nil, nil, ("Pull in %d sec"):format(timeLeft), "Attention")
+		plugin:SendMessage("BigWigs_StartBar", plugin, nil, "Pull", time, "Interface\\Icons\\achievement_bg_returnxflags_def_wsg")
+	end
+end
+
 function plugin:OnSync(sync, rest, nick)
-	if sync ~= "BWCustomBar" or not rest or not nick then return end
-	if UnitIsGroupLeader(nick) or UnitIsGroupAssistant(nick) then
-		startCustomBar(rest, nick, false)
+	if (sync == "BWCustomBar" or sync == "BWPull") and rest and nick and (UnitIsGroupLeader(nick) or UnitIsGroupAssistant(nick)) then
+		if sync == "BWCustomBar" then
+			startCustomBar(rest, nick, false)
+		else
+			startPull(rest, nick)
+		end
 	end
 end
 
@@ -1282,4 +1313,16 @@ _G["SlashCmdList"]["BWLCB_SHORTHAND"] = function(input)
 	startCustomBar(input, nil, true)
 end
 _G["SLASH_BWLCB_SHORTHAND1"] = "/bwlcb"
+
+_G["SlashCmdList"]["BIGWIGSPULL"] = function(input)
+	if not plugin:IsEnabled() then BigWigs:Enable() end
+	input = tonumber(input)
+	if not input or input < 1 or input > 10 then print"usage /pull <time, between 1 and 10>" return end
+	if UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then
+		BigWigs:Transmit("BWPull", input)
+	else
+		print"requires leader/assist"
+	end
+end
+_G["SLASH_BIGWIGSPULL1"] = "/pull"
 
