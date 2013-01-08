@@ -816,10 +816,10 @@ function plugin:OnPluginEnable()
 
 	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 	self:RegisterMessage("BigWigs_StartBar")
-	self:RegisterMessage("BigWigs_StopBar")
-	self:RegisterMessage("BigWigs_StopBars", "BigWigs_OnBossDisable")
-	self:RegisterMessage("BigWigs_OnBossDisable")
-	self:RegisterMessage("BigWigs_OnPluginDisable", "BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_StopBar", "StopSpecificBar")
+	self:RegisterMessage("BigWigs_StopBars", "StopModuleBars")
+	self:RegisterMessage("BigWigs_OnBossDisable", "StopModuleBars")
+	self:RegisterMessage("BigWigs_OnPluginDisable", "StopModuleBars")
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
@@ -913,27 +913,43 @@ end
 -- Stopping bars
 --
 
-local function stopBars(bars, module, text)
+function plugin:StopSpecificBar(_, module, text)
+	if not normalAnchor then return end
 	local dirty = nil
-	for k in pairs(bars) do
-		if k:Get("bigwigs:module") == module and (k.candyBarLabel:GetText() == text) then
+	for k in pairs(normalAnchor.bars) do
+		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
 			k:Stop()
 			dirty = true
 		end
 	end
-	return dirty
+	if dirty then rearrangeBars(normalAnchor) dirty = nil end
+	for k in pairs(emphasizeAnchor.bars) do
+		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
+			k:Stop()
+			dirty = true
+		end
+	end
+	if dirty then rearrangeBars(emphasizeAnchor) end
 end
 
-local function stop(module, text)
+function plugin:StopModuleBars(_, module)
 	if not normalAnchor then return end
-	local d = stopBars(normalAnchor.bars, module, text)
-	if d then rearrangeBars(normalAnchor) end
-	d = stopBars(emphasizeAnchor.bars, module, text)
-	if d then rearrangeBars(emphasizeAnchor) end
+	local dirty = nil
+	for k in pairs(normalAnchor.bars) do
+		if k:Get("bigwigs:module") == module then
+			k:Stop()
+			dirty = true
+		end
+	end
+	if dirty then rearrangeBars(normalAnchor) dirty = nil end
+	for k in pairs(emphasizeAnchor.bars) do
+		if k:Get("bigwigs:module") == module then
+			k:Stop()
+			dirty = true
+		end
+	end
+	if dirty then rearrangeBars(emphasizeAnchor) end
 end
-
-function plugin:BigWigs_OnBossDisable(message, module) stop(module) end
-function plugin:BigWigs_StopBar(message, module, text) stop(module, text) end
 
 --------------------------------------------------------------------------------
 -- Clickable bars
@@ -1138,7 +1154,7 @@ end
 function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	if createAnchors then createAnchors() end
 	if not text then text = "" end
-	stop(module, text)
+	self:StopSpecificBar(nil, module, text)
 	local bar = candy:New(media:Fetch("statusbar", db.texture), 200, 14)
 	normalAnchor.bars[bar] = true
 	bar.candyBarBackground:SetVertexColor(colors:GetColor("barBackground", module, key))
