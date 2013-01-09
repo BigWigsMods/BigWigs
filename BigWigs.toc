@@ -15,9 +15,6 @@
 ## Version: 3.900
 ## X-Category: Raid
 
-## LoadManagers: AddonLoader
-## X-LoadOn-Always: true
-
 ## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0
 
 ## SavedVariables: BigWigs3DB, BigWigs3IconDB

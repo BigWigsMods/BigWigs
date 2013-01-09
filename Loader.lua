@@ -717,9 +717,6 @@ do
 		loadCoreAndOpenOptions()
 	end)
 
-	if AddonLoader and AddonLoader.RemoveInterfaceOptions then
-		AddonLoader:RemoveInterfaceOptions("Big Wigs")
-	end
 	InterfaceOptions_AddCategory(frame)
 	loader.RemoveInterfaceOptions = removeFrame
 end
