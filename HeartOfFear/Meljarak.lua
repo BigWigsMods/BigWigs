@@ -166,6 +166,10 @@ do
 			self:SaySelf(spellId, spellName)
 		end
 		prisonList[#prisonList + 1] = player
+		if not scheduled then
+			scheduled = self:ScheduleTimer(prison, 0.1, spellId)
+		end
+		if self:LFR() then return end
 		if not primaryAmberIcon then
 			self:PrimaryIcon(spellId, player)
 			primaryAmberIcon = player
@@ -173,13 +177,11 @@ do
 			self:SecondaryIcon(spellId, player)
 			secondaryAmberIcon = player
 		end
-		if not scheduled then
-			scheduled = self:ScheduleTimer(prison, 0.1, spellId)
-		end
 	end
 end
 
 function mod:AmberPrisonRemoved(player, spellId)
+	if self:LFR() then return end
 	if player == primaryAmberIcon then
 		self:PrimaryIcon(spellId)
 		primaryAmberIcon = nil
