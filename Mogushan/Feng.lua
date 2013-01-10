@@ -73,7 +73,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
-	self:Log("SPELL_CAST_START", "LightningFists", 116157)
+	self:Log("SPELL_CAST_START", "LightningFists", 116157, 116295)
 	self:Log("SPELL_CAST_START", "Epicenter", 116018)
 
 	self:Log("SPELL_AURA_APPLIED", "WildfireSparkApplied", 116784)
@@ -201,7 +201,7 @@ end
 
 function mod:LightningFists(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Urgent", spellId)
-	self:Bar(spellId, "~"..spellName, 14, spellId)
+	self:Bar(spellId, "~"..spellName, 13, spellId)
 end
 
 function mod:Epicenter(_, spellId, _, _, spellName)
