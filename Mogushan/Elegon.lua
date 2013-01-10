@@ -108,7 +108,7 @@ function mod:DrawPower(_, _, _, _, spellName)
 	drawPowerCounter = drawPowerCounter + 1
 	self:Message(119360, ("%s (%d)"):format(spellName, drawPowerCounter), "Attention", 119360)
 	-- XXX need to check for another event that is also called Draw Power and cancell bars there, that should be better
-	self:StopBar(117954) -- Materialize Protector
+	self:StopBar(CL["next_add"]) -- Materialize Protector
 	self:StopBar(117960) -- Celestial Breath
 end
 
@@ -149,7 +149,7 @@ end
 
 function mod:MaterializeProtector(_, spellId, _, _, spellName)
 	self:Message("adds", CL["add_spawned"], "Attention", spellId)
-	self:Bar("adds", CL["next_add"], self:Heroic() and 26 or 36, spellId)
+	self:Bar("adds", CL["next_add"], self:Heroic() and 26 or 40, spellId)
 end
 
 function mod:UnstableEnergyRemoved()

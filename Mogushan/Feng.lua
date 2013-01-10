@@ -284,8 +284,7 @@ do
 			self:SaySelf(spellId, resonance)
 		end
 		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(warnResonance, 0.15, spellId)
+			scheduled = self:ScheduleTimer(warnResonance, 0.15, spellId)
 		end
 	end
 	function mod:ArcaneResonanceRemoved(player, spellId)
