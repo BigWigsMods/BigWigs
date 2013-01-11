@@ -39,7 +39,6 @@ local normalAnchor, emphasizeAnchor = nil, nil
 local empUpdate = nil -- emphasize updater frame
 
 --- custom bar locals
-local times = nil
 local messages = nil
 local timers = nil
 
@@ -807,7 +806,6 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
-	times = times or {}
 	messages = messages or {}
 	timers = timers or {}
 
@@ -1243,34 +1241,40 @@ local function parseTime(input)
 	end
 end
 
-local function sendCustomMessage(msg)
-	if not messages[msg] then return end
-	plugin:SendMessage("BigWigs_Message", nil, nil, unpack(messages[msg]))
-	wipe(messages[msg])
-	messages[msg] = nil
-end
-
-local function startCustomBar(bar, nick, localOnly)
-	local _, _, time, barText = bar:find("(%S+) (.*)")
-	local seconds = parseTime(time)
-	if type(seconds) ~= "number" or type(barText) ~= "string" then
-		print(L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]:format(tostring(time), nick or UnitName("player")))
-		return
+local startCustomBar
+do
+	local function sendCustomMessage(msg)
+		if not messages[msg] then return end
+		plugin:SendMessage("BigWigs_Message", nil, nil, unpack(messages[msg]))
+		wipe(messages[msg])
+		messages[msg] = nil
 	end
-
-	if not nick then nick = L["Local"] end
-	local id = "bwcb" .. nick .. barText
-	if seconds == 0 then
-		if timers[id] then
-			plugin:CancelTimer(timers[id], true)
-			wipe(messages[id])
-			timers[id] = nil
+	function startCustomBar(bar, nick, localOnly)
+		local time, barText
+		if localOnly then
+			time, barText, nick = bar, localOnly, L["Local"]
+		else
+			time, barText = bar:match("(%S+) (.*)")
+			time = parseTime(time)
+			if type(time) ~= "number" or type(barText) ~= "string" then
+				print(L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]:format(tostring(time), nick))
+				return
+			end
 		end
-		plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
-	else
-		messages[id] = { L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", localOnly, nil, nil, "Interface\\Icons\\INV_Misc_PocketWatch_01" }
-		timers[id] = plugin:ScheduleTimer(sendCustomMessage, seconds, id)
-		plugin:SendMessage("BigWigs_StartBar", plugin, nil, nick..": "..barText, seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+
+		local id = "bwcb" .. nick .. barText
+		if time == 0 then
+			if timers[id] then
+				plugin:CancelTimer(timers[id], true)
+				wipe(messages[id])
+				timers[id] = nil
+			end
+			plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
+		else
+			messages[id] = { L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", localOnly, nil, nil, "Interface\\Icons\\INV_Misc_PocketWatch_01" }
+			timers[id] = plugin:ScheduleTimer(sendCustomMessage, time, id)
+			plugin:SendMessage("BigWigs_StartBar", plugin, nil, nick..": "..barText, time, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+		end
 	end
 end
 
@@ -1287,7 +1291,6 @@ do
 			plugin:SendMessage("BigWigs_Message", nil, nil, ("Pull in %d sec"):format(timeLeft), "Attention", nil, timeLeft < 4 and "Info")
 		end
 	end
-
 	function startPull(time, nick)
 		time = tonumber(time)
 		if not time or time < 1 or time > 10 then print"usage /pull <time, between 1 and 10>" return end
@@ -1304,7 +1307,7 @@ end
 function plugin:OnSync(sync, rest, nick)
 	if (sync == "BWCustomBar" or sync == "BWPull") and rest and nick and (UnitIsGroupLeader(nick) or UnitIsGroupAssistant(nick)) then
 		if sync == "BWCustomBar" then
-			startCustomBar(rest, nick, false)
+			startCustomBar(rest, nick)
 		else
 			startPull(rest, nick)
 		end
@@ -1315,30 +1318,53 @@ end
 -- Slashcommand
 --
 
-_G["SlashCmdList"]["BWCB_SHORTHAND"] = function(input)
-	if not plugin:IsEnabled() then BigWigs:Enable() end
-	local t = GetTime()
-	if not times[input] or (times[input] and (times[input] + 2) < t) then
-		times[input] = t
-		BigWigs:Transmit("BWCustomBar", input)
-	end
-end
-_G["SLASH_BWCB_SHORTHAND1"] = "/bwcb"
-_G["SlashCmdList"]["BWLCB_SHORTHAND"] = function(input)
-	if not plugin:IsEnabled() then BigWigs:Enable() end
-	startCustomBar(input, nil, true)
-end
-_G["SLASH_BWLCB_SHORTHAND1"] = "/bwlcb"
+do
+	local times = {}
+	SlashCmdList.BWCB_SHORTHAND = function(input)
+		if not plugin:IsEnabled() then BigWigs:Enable() end
 
-_G["SlashCmdList"]["BIGWIGSPULL"] = function(input)
+		local time, barText = input:match("(%S+) (.*)")
+		if not time or not barText then print"incorrect format" return end
+
+		time = parseTime(time)
+		if not time then print"incorrect format" return end
+
+		local t = GetTime()
+		if not times[input] or (times[input] and (times[input] + 2) < t) then
+			times[input] = t
+			BigWigs:Transmit("BWCustomBar", time, barText)
+			SendAddonMessage("D4", ("U\t%d\t%s"):format(time, barText), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
+			print"Sending bar to BW and DBM users."
+		end
+	end
+	SLASH_BWCB_SHORTHAND1 = "/bwcb"
+end
+
+SlashCmdList.BWLCB_SHORTHAND = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
-	input = tonumber(input)
-	if not input or input < 1 or input > 10 then print"usage /pull <time, between 1 and 10>" return end
+
+	local time, barText = input:match("(%S+) (.*)")
+	if not time or not barText then print"incorrect format" return end
+
+	time = parseTime(time)
+	if not time then print"incorrect format" return end
+
+	startCustomBar(time, UnitName("player"), barText)
+end
+SLASH_BWLCB_SHORTHAND1 = "/bwlcb"
+
+SlashCmdList.BIGWIGSPULL = function(input)
+	if not plugin:IsEnabled() then BigWigs:Enable() end
+	local time = tonumber(input)
+	if not time or time < 1 or time > 10 then print"usage /pull <time, between 1 and 10>" return end
 	if UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then
 		BigWigs:Transmit("BWPull", input)
+		SendAddonMessage("D4", "U\t".. input .."\t".. "Pull", IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
+		SendAddonMessage("D4", "PT\t".. input, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
+		print"Sending bar to BW and DBM users."
 	else
 		print"requires leader/assist"
 	end
 end
-_G["SLASH_BIGWIGSPULL1"] = "/pull"
+SLASH_BIGWIGSPULL1 = "/pull"
 
