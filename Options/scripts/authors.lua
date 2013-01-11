@@ -46,9 +46,12 @@ numberOfCommits.rabbit = nil
 numberOfCommits.ammo = nil
 numberOfCommits.funkydude = nil
 numberOfCommits.nebula169 = nil
--- Maat uses two logins, wtf?
+-- Maat uses two logins
 numberOfCommits.Maat = nil
 numberOfCommits.maat = nil
+-- Wetxius has two logins
+numberOfCommits.Wetxius = numberOfCommits.Wetxius + numberOfCommits.wetxius
+numberOfCommits.wetxius = nil
 
 local sorted = {}
 for k, v in pairs(numberOfCommits) do
