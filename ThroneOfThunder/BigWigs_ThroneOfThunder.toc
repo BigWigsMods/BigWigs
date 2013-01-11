@@ -2,12 +2,12 @@
 
 ## Title: Big Wigs [|cffeda55fThrone of Thunder|r]
 ## Title-frFR: Big Wigs [|cffeda55fThrone of Thunder|r]
-## Title-ruRU: Big Wigs [|cffeda55fThrone of Thunderа|r]
+## Title-ruRU: Big Wigs [|cffeda55fПрестол Гроз|r]
 ## Title-zhCN: Big Wigs [|cffeda55fThrone of Thunder|r]
 ## Title-zhTW: Big Wigs [|cffeda55fThrone of Thunder|r]
 ## Notes: Big Wigs Modules for the Throne of Thunder.
 ## Notes-frFR: Big Wigs Modules for the Throne of Thunder.
-## Notes-ruRU: Big Wigs Modules for the Throne of Thunder.
+## Notes-ruRU: Модуль Big Wigs для Престола Гроз.
 ## Notes-zhCN: Big Wigs Modules for the Throne of Thunder.
 ## Notes-zhTW: Big Wigs Modules for the Throne of Thunder.
 
