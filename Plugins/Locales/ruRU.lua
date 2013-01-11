@@ -229,5 +229,4 @@ L["Double size"] = "Двойной размер"
 L["Doubles the size of super emphasized bars and messages."] = "Удвоит размер супер увеличенных полос и сообщений."
 L["Countdown"] = "Отсчет времени"
 L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "Если соответствующий таймер больше, чем 5 секунд, звуковой и визуальный отсчет времени будет добавлен в течение последних 5 секунд."
-L["Flash"] = "Мигание"
-L["Flashes the screen red during the last 3 seconds of any related timer."] = "Вспышки экрана красным в течение последних 3-х секунд любого связанного таймера."
+

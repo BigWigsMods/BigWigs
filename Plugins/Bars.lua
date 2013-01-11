@@ -1118,24 +1118,10 @@ local function countdown(bar)
 	end
 end
 
-local function flash(bar)
-	if bar.remaining <= bar:Get("bigwigs:flashcount") then
-		local count = bar:Get("bigwigs:flashcount")
-		bar:Set("bigwigs:flashcount", count - 1)
-		if bar.remaining < 4 then
-			plugin:SendMessage("BigWigs_FlashShake")
-		end
-	end
-end
-
 local function actuallyEmphasize(bar, t)
 	if superemp.db.profile.countdown then
 		bar:Set("bigwigs:count", math.min(t, floor(t)) + .3) -- sounds last approx .3 seconds this makes them right on the ball
 		bar:AddUpdateFunction(countdown)
-	end
-	if superemp.db.profile.flash then
-		bar:Set("bigwigs:flashcount", math.min(t, floor(t)) + .3)
-		bar:AddUpdateFunction(flash)
 	end
 end
 
@@ -1149,7 +1135,7 @@ end
 -- Start bars
 --
 
-function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
+function plugin:BigWigs_StartBar(_, module, key, text, time, icon)
 	if createAnchors then createAnchors() end
 	if not text then text = "" end
 	self:StopSpecificBar(nil, module, text)

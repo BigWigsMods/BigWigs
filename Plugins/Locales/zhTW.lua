@@ -231,6 +231,4 @@ L["Double size"] = "雙倍尺寸"
 L["Doubles the size of super emphasized bars and messages."] = "超級強調計時條和訊息雙倍尺寸。"
 L["Countdown"] = "冷卻"
 L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "如果相關的計時器的長度超過5秒，一個聲音與視覺將增加倒計時的最後5秒。想像某個倒計時\"5... 4... 3... 2... 1... 冷卻！\"和大個數字位於螢幕中間。"
-L["Flash"] = "閃爍"
-L["Flashes the screen red during the last 3 seconds of any related timer."] = "當任一相關計時器最後3秒時螢幕紅色閃爍。"
 

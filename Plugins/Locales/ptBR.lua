@@ -224,6 +224,4 @@ L["Double size"] = "Tamanho dobrado"
 L["Doubles the size of super emphasized bars and messages."] = "Dobra o tamanho das barras super enfatizadas e as mensagens"
 L["Countdown"] = "Contador"
 L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "Se um contador é relativamente maior que 5 segundos, uma conta vocal e visual será feita para os últimos 5 segundos. Imagine alguma contagem \"5... 4... 3... 2... 1... BOOM!\" e grandes números no meio da tela."
-L["Flash"] = "Piscar"
-L["Flashes the screen red during the last 3 seconds of any related timer."] = "Pisca a tela na cor roxa durante os últimos 3 segundos de um contador relacionado."
 

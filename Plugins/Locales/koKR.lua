@@ -227,6 +227,4 @@ L["Double size"] = "2배 크기"
 L["Doubles the size of super emphasized bars and messages."] = "특수 강보 바와 메세지의 크기를 2배로 합니다."
 L["Countdown"] = "카운트다운"
 L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "관련 타이머에 5 초 동안 카운트다운을 추가합니다. \"5... 4... 3... 2... 1... 카운트다운!\" 화면의 중앙에 큰 숫자를 표시합니다."
-L["Flash"] = "번쩍임"
-L["Flashes the screen red during the last 3 seconds of any related timer."] = "관련된 모든 타이머의 마지막 3 초 동안 화면에 번쩍임 효과를 줍니다."
 
