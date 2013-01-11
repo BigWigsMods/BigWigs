@@ -216,11 +216,13 @@ end
 local function translateZoneID(id)
 	if not id or type(id) ~= "number" then return end
 	local name
-	if id == 1000 then return "Throne of Thunder [Beta]" end
 	if id < 10 then
 		name = select(id, GetMapContinents())
 	else
 		name = GetMapNameByID(id)
+	end
+	if not name and id == 930 then
+		return "Throne of Thunder [beta]" -- XXX temp
 	end
 	if not name then
 		print(("Big Wigs: Tried to translate %q as a zone ID, but it could not be resolved into a name."):format(tostring(id)))
