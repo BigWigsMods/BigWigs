@@ -89,8 +89,9 @@ local enableZones = {} -- contains the zones in which BigWigs will enable
 -- Utility
 --
 
-local printFormat = "|cffffff00%s|r"
-local function sysprint(msg) print(printFormat:format(msg)) end
+local function sysprint(msg)
+	print("|cFF33FF99Big Wigs|r: |cffffff00"..msg.."|r")
+end
 
 local getGroupMembers = nil
 do
@@ -179,7 +180,7 @@ end
 
 local function loadCoreAndOpenOptions()
 	if not BigWigsOptions and (InCombatLockdown() or UnitAffectingCombat("player")) then
-		print("|cFF33FF99Big Wigs|r: ", ERR_NOT_IN_COMBAT)
+		sysprint(L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."])
 		return
 	end
 	loadAndEnableCore()
@@ -461,7 +462,7 @@ do
 	local queueLoad = {}
 	function loader:PLAYER_REGEN_ENABLED()
 		loaderUtilityFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		print("BigWigs: Loading Finished")
+		sysprint(L["Combat has ended, Big Wigs has now finished loading."])
 		if load(BigWigs, "BigWigs_Core") then
 			for k,v in pairs(queueLoad) do
 				if v == "unloaded" then
@@ -489,7 +490,7 @@ do
 				if not queueLoad[id] then
 					queueLoad[id] = "unloaded"
 					loaderUtilityFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-					print("BigWigs: Currently in combat, waiting until combat ends to finish loading due to Blizzard combat restrictions.")
+					sysprint(L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."])
 				end
 			else
 				queueLoad[id] = "loaded"

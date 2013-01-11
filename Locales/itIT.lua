@@ -29,6 +29,10 @@ L["Up to date:"] = "Aggiornati :"
 L["Out of date:"] = "Obsoleti :"
 L["No Big Wigs 3.x:"] = "Senza Big Wigs 3.x:"
 
+L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = "Waiting until combat ends to finish loading due to Blizzard combat restrictions."
+L["Combat has ended, Big Wigs has now finished loading."] = "Combat has ended, Big Wigs has now finished loading."
+L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."
+
 L.coreAddonDisabled = "Big Wigs non può funzionare correttamente perché l'addon %s e' disattivato. Puoi attivarlo nel pannello di controllo degli Addon nella schermata di login dei personaggi."
 
 -- Options.lua
