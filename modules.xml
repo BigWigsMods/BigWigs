@@ -18,6 +18,9 @@
 
 <Include file="EndlessSpring\locales.xml"/>
 <Include file="EndlessSpring\modules.xml"/>
+
+<Include file="ThroneOfThunder\locales.xml"/>
+<Include file="ThroneOfThunder\modules.xml"/>
 <!--@end-debug@-->
 </Ui>
 
