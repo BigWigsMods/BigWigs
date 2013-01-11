@@ -4,7 +4,7 @@ if select(4, GetBuildInfo()) < 50200 then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Boss", 930, 1000) -- module name, zone id, ej boss id
+local mod, CL = BigWigs:NewBoss("Dark Animus", 930, 824)
 if not mod then return end
 mod:RegisterEnableMob(100000)
 
