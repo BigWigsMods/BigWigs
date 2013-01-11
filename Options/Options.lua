@@ -216,6 +216,7 @@ end
 local function translateZoneID(id)
 	if not id or type(id) ~= "number" then return end
 	local name
+	if id == 1000 then return "Throne of Thunder [Beta]" end
 	if id < 10 then
 		name = select(id, GetMapContinents())
 	else
