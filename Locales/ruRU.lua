@@ -29,9 +29,9 @@ L["Up to date:"] = "Текущий:"
 L["Out of date:"] = "Устаревший:"
 L["No Big Wigs 3.x:"] = "Нет Big Wigs 3.x:"
 
-L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = "Waiting until combat ends to finish loading due to Blizzard combat restrictions."
-L["Combat has ended, Big Wigs has now finished loading."] = "Combat has ended, Big Wigs has now finished loading."
-L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."
+L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = "Подождите окончания боя для завершения загрузки, в связи с боевыми ограничениями Blizzard."
+L["Combat has ended, Big Wigs has now finished loading."] = "Бой окончен, Big Wigs окончательно загружен."
+L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "В связи с ограничениями Blizzard, настройка должна открываться вне боя, прежде чем будет применена."
 
 L.coreAddonDisabled = "Big Wigs не будет работать правильно, пока аддон %s выключен. Вы можете включить его из панели управления модификациями в окне выбора персонажа."
 
