@@ -1267,12 +1267,6 @@ do
 			plugin:SendMessage("BigWigs_StartBar", plugin, nil, nick..": "..barText, time, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 		end
 	end
-	function customDBMBars(_, sender, prefix, time, text)
-		if prefix == "U" and (UnitIsGroupLeader(sender) or UnitIsGroupAssistant(sender)) then
-			local bar = time.." "..text
-			startCustomBar(bar, sender)
-		end
-	end
 end
 
 local startPull
@@ -1298,6 +1292,22 @@ do
 		timer = plugin:ScheduleRepeatingTimer(printPull, 1)
 		plugin:SendMessage("BigWigs_Message", nil, nil, ("Pull in %d sec"):format(timeLeft), "Attention")
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, "Pull", time, "Interface\\Icons\\achievement_bg_returnxflags_def_wsg")
+	end
+end
+
+do
+	local prevBarText = nil
+	function customDBMBars(_, sender, prefix, time, text)
+		if prefix == "U" and (UnitIsGroupLeader(sender) or UnitIsGroupAssistant(sender)) then
+			local bar = time.." "..text
+			startCustomBar(bar, sender)
+			prevBarText = text
+		elseif prefix == "PT" and (UnitIsGroupLeader(sender) or UnitIsGroupAssistant(sender)) then
+			startPull(time, sender)
+			-- DBM sends 2 messages for pull timers, 1 for the countdown, 1 for the bar. Cancel the custom bar
+			-- or we will end up with a pull bar and a custom bar.
+			startCustomBar("0 "..prevBarText, sender)
+		end
 	end
 end
 
