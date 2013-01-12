@@ -31,7 +31,7 @@ end
 
 L = BigWigs:NewBossLocale("Garalon", "frFR")
 if L then
-	L.phase2_trigger = "Garalon's massive armor plating begins to crack and split!"
+	L.phase2_trigger = "L'armure de plaques massive de Garalon commence à se fendiller !" -- à vérifier
 
 	L.removed = "%s enlevé !"
 end
@@ -41,9 +41,9 @@ if L then
 	L.spear_removed = "Votre Lance de perforation a été enlevée !"
 	L.residue_removed = "%s enlevé !"
 
-	L.mending_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Zar'thik Battle-Menders have separate heal cooldowns.|r "
-	L.mending_warning = "Your focus is casting Mending!"
-	L.mending_bar = "Focus: Mending"
+	L.mending_desc = "|cFFFF0000AVERTISSEMENT : seul le délai de votre cible de focalisation sera affiché étant donné que les Soigneurs de bataille zar’thik ont des temps de recharge de soins différents.|r "
+	L.mending_warning = "Votre focalisation est en train d'incanter Guérison !"
+	L.mending_bar = "Focalisation : Guérison"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "frFR")

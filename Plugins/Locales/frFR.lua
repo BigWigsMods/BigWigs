@@ -17,7 +17,7 @@ L["Allows bars to be click-through unless the specified modifier key is held dow
 
 L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "Met temporairement en super mise en évidence la barre et ses messages associés pendant sa durée."
 L["Report"] = "Rapport"
---L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."] = "Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."
+L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."] = "Rapporte le statut des barres actuelles dans la discussion de groupe active : la discussion d'instance, de raid, de groupe ou juste le dire, selon ce qui est le plus approprié."
 L["Remove"] = "Enlever"
 L["Temporarily removes the bar and all associated messages."] = "Enlève temporairement la barre et les messages qui y sont associés."
 L["Remove other"] = "Enlever les autres"
@@ -92,7 +92,7 @@ L["Messages"] = "Messages"
 L["Normal messages"] = "Messages normaux"
 L["Emphasized messages"] = "Messages en évidence"
 L["Output"] = "Sortie"
-L["Emphasized countdown"] = "Emphasized countdown"
+L["Emphasized countdown"] = "Compte à rebours en évidence"
 
 L["Use colors"] = "Utiliser des couleurs"
 L["Toggles white only messages ignoring coloring."] = "Utilise ou non des couleurs dans les messages à la place du blanc unique."
@@ -118,7 +118,7 @@ L["Display time"] = "Durée d'affichage"
 L["How long to display a message, in seconds"] = "Définit pendant combien de temps un message doit rester affiché (en secondes)."
 L["Fade time"] = "Durée d'estompe"
 L["How long to fade out a message, in seconds"] = "Définit pendant combien de temps un message doit s'estomper (en secondes)."
-L["Font color"] = "Font color"
+L["Font color"] = "Couleur de police"
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
