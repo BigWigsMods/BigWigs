@@ -416,7 +416,7 @@ do
 		for k,v in pairs(callbackMap) do
 			for j in pairs(v) do
 				if j == module then
-					module:UnregisterEvent(k)
+					loader.UnregisterMessage(module, k)
 				end
 			end
 		end
