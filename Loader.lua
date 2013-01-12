@@ -275,6 +275,8 @@ function loader:OnInitialize()
 		icon:Register("BigWigs", ldb, BigWigs3IconDB)
 	end
 	self:RegisterTooltipInfo(versionTooltipFunc)
+
+	self.OnInitialize = nil
 end
 
 function loader:OnEnable()
@@ -330,6 +332,52 @@ function loader:OnEnable()
 
 	self:GROUP_ROSTER_UPDATE()
 	self:ZONE_CHANGED_NEW_AREA()
+
+	self:RegisterMessage("BigWigs_CoreOptionToggled", "UpdateDBMFaking")
+	local isFakingDBM = nil
+	-- Somewhat ugly, but saves loading AceDB with the loader instead of the the core for this 1 feature
+	if BigWigs3DB and BigWigs3DB.profileKeys and BigWigs3DB.profiles then
+		local name = UnitName("player")
+		local realm = GetRealmName()
+		if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
+			local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
+			isFakingDBM = key.fakeDBMVersion
+		end
+	end
+	self:UpdateDBMFaking(nil, "fakeDBMVersion", isFakingDBM)
+
+	self.OnEnable = nil
+end
+
+-----------------------------------------------------------------------
+-- DBM faking
+--
+
+do
+	local DBMdotRevision = "8421"
+	local DBMdotDisplayVersion = "5.1.0"
+	local function dbmFaker(_, _, prefix, revision, _, displayVersion)
+		if prefix == "H" then
+			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale(), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
+		elseif prefix == "V" then
+			-- If there are people with newer versions than us, suddenly we've upgraded!
+			if tonumber(revision) > tonumber(DBMdotRevision) then
+				DBMdotRevision = revision
+				DBMdotDisplayVersion = displayVersion
+				dbmFaker(nil, nil, "H") -- Re-send addon message.
+			end
+		end
+	end
+	function loader:UpdateDBMFaking(_, key, value)
+		if key == "fakeDBMVersion" then
+			if value then
+				RegisterAddonMessagePrefix("D4")
+				self:RegisterMessage("DBM_AddonMessage", dbmFaker)
+			else
+				self:UnregisterMessage("DBM_AddonMessage")
+			end
+		end
+	end
 end
 
 -----------------------------------------------------------------------
@@ -348,7 +396,7 @@ do
 		if not callbackMap[msg] then return end
 		callbackMap[msg][self] = nil
 		if not next(callbackMap[msg]) then
-			eventMap[msg] = nil
+			callbackMap[msg] = nil
 		end
 	end
 
@@ -386,10 +434,13 @@ loaderUtilityFrame:SetScript("OnEvent", function(_, event, ...)
 end)
 
 function loader:CHAT_MSG_ADDON(prefix, msg, _, sender)
-	if prefix ~= "BigWigs" then return end
-	local _, _, bwPrefix, bwMsg = msg:find("^(%u-):(.+)")
-	if bwPrefix then
-		self:SendMessage("BigWigs_AddonMessage", bwPrefix, bwMsg, sender)
+	if prefix == "BigWigs" then
+		local _, _, bwPrefix, bwMsg = msg:find("^(%u-):(.+)")
+		if bwPrefix then
+			self:SendMessage("BigWigs_AddonMessage", bwPrefix, bwMsg, sender)
+		end
+	elseif prefix == "D4" then
+		self:SendMessage("DBM_AddonMessage", sender, strsplit("\t", msg))
 	end
 end
 

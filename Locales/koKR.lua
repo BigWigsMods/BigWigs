@@ -75,6 +75,10 @@ L["After you've seen a boss movie once, Big Wigs will prevent it from playing ag
 L["Prevented boss movie '%d' from playing."] = "플레이도중에 나타나는 보스 영상 '%d' 차단합니다."
 L["Ignore my role"] = "자신의 전담 무시"
 L.ignoreroleDesc = "|cffff4411권장하지 않습니다.|r 자신의 전담(탱커 & 힐러)에 상관없이 경고합니다. 이것은 일부 보스에서 스팸이 될 수도 있습니다."
+L["Pretend I'm using DBM"] = "Pretend I'm using DBM"
+L.pretendDesc = "If a DBM user does a version check to see who's using DBM, they will see you on the list. Useful for guilds that force using DBM."
+L["Create custom DBM bars"] = "Create custom DBM bars"
+L.dbmBarDesc = "If a DBM user sends a pull timer or a custom 'pizza' bar, it will be shown in Big Wigs."
 
 L["BAR"] = "바"
 L["MESSAGE"] = "메세지"

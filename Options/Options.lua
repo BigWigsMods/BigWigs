@@ -80,7 +80,31 @@ local acOptions = {
 		separator = {
 			type = "description",
 			name = " ",
-			order = 20,
+			order = 12,
+			width = "full",
+		},
+		minimap = {
+			type = "toggle",
+			name = L["Minimap icon"],
+			desc = L["Toggle show/hide of the minimap icon."],
+			order = 13,
+			get = function() return not BigWigs3IconDB.hide end,
+			set = function(info, v)
+				if v then
+					BigWigs3IconDB.hide = nil
+					icon:Show("BigWigs")
+				else
+					BigWigs3IconDB.hide = true
+					icon:Hide("BigWigs")
+				end
+			end,
+			hidden = function() return not icon end,
+			width = "full",
+		},
+		separator2 = {
+			type = "description",
+			name = " ",
+			order = 14,
 			width = "full",
 		},
 		sound = {
@@ -129,7 +153,7 @@ local acOptions = {
 			desc = L.whisperDesc,
 			order = 27,
 		},
-		separator2 = {
+		separator3 = {
 			type = "description",
 			name = " ",
 			order = 30,
@@ -178,29 +202,23 @@ local acOptions = {
 			desc = L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."],
 			order = 33,
 		},
-		separator3 = {
+		separator4 = {
 			type = "description",
 			name = " ",
 			order = 40,
 			width = "full",
 		},
-		minimap = {
+		fakeDBMVersion = {
 			type = "toggle",
-			name = L["Minimap icon"],
-			desc = L["Toggle show/hide of the minimap icon."],
+			name = L["Pretend I'm using DBM"],
+			desc = L.pretendDesc,
 			order = 41,
-			get = function() return not BigWigs3IconDB.hide end,
-			set = function(info, v)
-				if v then
-					BigWigs3IconDB.hide = nil
-					icon:Show("BigWigs")
-				else
-					BigWigs3IconDB.hide = true
-					icon:Hide("BigWigs")
-				end
-			end,
-			hidden = function() return not icon end,
-			width = "full",
+		},
+		customDBMbars = {
+			type = "toggle",
+			name = L["Create custom DBM bars"],
+			desc = L.dbmBarDesc,
+			order = 42,
 		},
 	},
 }

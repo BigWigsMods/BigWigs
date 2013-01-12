@@ -73,6 +73,10 @@ L["After you've seen a boss movie once, Big Wigs will prevent it from playing ag
 L["Prevented boss movie '%d' from playing."] = "Bloccato il video '%d'."
 L["Ignore my role"] = "Ignora il mio ruolo"
 L.ignoreroleDesc = "|cffff4411Non Raccomandato.|r Abilitando quest'opzione tutti i messaggi verranno visualizzati indipendentemente dal tuo ruolo, e questo potrebbe generare molto Spam."
+L["Pretend I'm using DBM"] = "Pretend I'm using DBM"
+L.pretendDesc = "If a DBM user does a version check to see who's using DBM, they will see you on the list. Useful for guilds that force using DBM."
+L["Create custom DBM bars"] = "Create custom DBM bars"
+L.dbmBarDesc = "If a DBM user sends a pull timer or a custom 'pizza' bar, it will be shown in Big Wigs."
 
 L["BAR"] = "Barre"
 L["MESSAGE"] = "Messaggi"

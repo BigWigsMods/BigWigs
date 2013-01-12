@@ -41,6 +41,7 @@ local empUpdate = nil -- emphasize updater frame
 --- custom bar locals
 local messages = nil
 local timers = nil
+local customDBMBars = nil
 
 local clickHandlers = {}
 
@@ -828,6 +829,10 @@ function plugin:OnPluginEnable()
 	-- custom bars
 	BigWigs:AddSyncListener(self, "BWCustomBar")
 	BigWigs:AddSyncListener(self, "BWPull")
+	if BigWigs.db.profile.customDBMbars then
+		RegisterAddonMessagePrefix("D4")
+		self:RegisterMessage("DBM_AddonMessage", customDBMBars)
+	end
 
 	self:RefixClickIntercepts()
 	self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
@@ -1260,6 +1265,12 @@ do
 			messages[id] = { L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", localOnly, nil, nil, "Interface\\Icons\\INV_Misc_PocketWatch_01" }
 			timers[id] = plugin:ScheduleTimer(sendCustomMessage, time, id)
 			plugin:SendMessage("BigWigs_StartBar", plugin, nil, nick..": "..barText, time, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+		end
+	end
+	function customDBMBars(_, sender, prefix, time, text)
+		if prefix == "U" and (UnitIsGroupLeader(sender) or UnitIsGroupAssistant(sender)) then
+			local bar = time.." "..text
+			startCustomBar(bar, sender)
 		end
 	end
 end
