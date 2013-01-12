@@ -413,6 +413,7 @@ do
 
 	function boss:Engage()
 		if debug then dbg(self, ":Engage") end
+		self:SendMessage("BigWigs_OnBossEngage", self)
 
 		-- Update Difficulty
 		local _, _, diff = GetInstanceInfo()
