@@ -116,6 +116,11 @@ do
 						desc = L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."],
 						order = 5,
 					},
+					newline = {
+						type = "description",
+						name = "\n",
+						order = 5.5,
+					},
 					upper = {
 						type = "toggle",
 						name = L["UPPERCASE"],
