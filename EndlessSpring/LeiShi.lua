@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Lei Shi", 886, 729)
 if not mod then return end
-mod:RegisterEnableMob(62983)
+mod:RegisterEnableMob(62983, 63275) -- Lei Shi, Corrupted Protector
 
 --------------------------------------------------------------------------------
 -- Locals
