@@ -192,14 +192,14 @@ do
 	local origMovieHandler = MovieFrame:GetScript("OnEvent")
 	MovieFrame:SetScript("OnEvent", function(frame, event, id, ...)
 		if event == "PLAY_MOVIE" and knownMovies[id] and addon.db.profile.blockmovies then
-			if not addon.db.profile.seenmovies then
-				addon.db.profile.seenmovies = {}
+			if not addon.db.global.seenmovies then
+				addon.db.global.seenmovies = {}
 			end
-			if addon.db.profile.seenmovies[id] then
+			if addon.db.global.seenmovies[id] then
 				addon:Print(L["Prevented boss movie '%d' from playing."]:format(id)) -- XXX Temporary print or permanent?
 				return MovieFrame_OnMovieFinished(frame)
 			else
-				addon.db.profile.seenmovies[id] = true
+				addon.db.global.seenmovies[id] = true
 				return origMovieHandler(frame, event, id, ...)
 			end
 		else
