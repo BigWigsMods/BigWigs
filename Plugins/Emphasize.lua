@@ -154,17 +154,15 @@ function plugin:IsSuperEmphasized(module, key)
 	return module.db.profile[key] and bit.band(module.db.profile[key], emphasizeFlag) == emphasizeFlag or nil
 end
 
-local function endEmphasize(data)
-	local module, key = unpack(data)
+local function endEmphasize(module, key)
 	temporaryEmphasizes[key] = nil
 	plugin:SendMessage("BigWigs_SuperEmphasizeEnd", module, key)
-	wipe(data)
 end
 
 function plugin:Emphasize(module, key, timeSpan)
 	if not module or not key then return end
 	temporaryEmphasizes[key] = true
-	self:ScheduleTimer(endEmphasize, timeSpan, {module, key}) -- WTS one table per emphasize
+	self:ScheduleTimer(endEmphasize, timeSpan, module, key)
 	self:SendMessage("BigWigs_SuperEmphasizeStart", module, key, timeSpan)
 end
 

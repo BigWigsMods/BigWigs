@@ -38,9 +38,6 @@ local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
 local empUpdate = nil -- emphasize updater frame
 
---- custom bar locals
-local messages = nil
-local timers = nil
 local customDBMBars = nil
 
 local clickHandlers = {}
@@ -807,9 +804,6 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
-	messages = messages or {}
-	timers = timers or {}
-
 	colors = BigWigs:GetPlugin("Colors")
 	superemp = BigWigs:GetPlugin("Super Emphasize", true)
 
@@ -1234,12 +1228,7 @@ end
 
 local startCustomBar
 do
-	local function sendCustomMessage(msg)
-		if not messages[msg] then return end
-		plugin:SendMessage("BigWigs_Message", nil, nil, unpack(messages[msg]))
-		wipe(messages[msg])
-		messages[msg] = nil
-	end
+	local timers = {}
 	function startCustomBar(bar, nick, localOnly)
 		local time, barText
 		if localOnly then
@@ -1256,14 +1245,12 @@ do
 		local id = "bwcb" .. nick .. barText
 		if time == 0 then
 			if timers[id] then
-				plugin:CancelTimer(timers[id], true)
-				wipe(messages[id])
+				plugin:CancelTimer(timers[id])
 				timers[id] = nil
 			end
 			plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
 		else
-			messages[id] = { L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", localOnly, nil, nil, "Interface\\Icons\\INV_Misc_PocketWatch_01" }
-			timers[id] = plugin:ScheduleTimer(sendCustomMessage, time, id)
+			timers[id] = plugin:ScheduleTimer("SendMessage", time, "BigWigs_Message", nil, nil, L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", localOnly, nil, nil, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 			plugin:SendMessage("BigWigs_StartBar", plugin, nil, nick..": "..barText, time, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 		end
 	end

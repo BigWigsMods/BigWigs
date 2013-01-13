@@ -554,20 +554,11 @@ end
 
 do
 	local scheduledMessages = {}
-	local function wrapper(module, _, ...) module:Message(...) end -- Use a wrapper or select(), same thing but faster.
-	-- This should've been a local function, but if we do it this way then AceTimer passes in the correct module for us.
-	function boss:ProcessDelayedMessage(text)
-		wrapper(self, unpack(scheduledMessages[text]))
-		wipe(scheduledMessages[text])
-		scheduledMessages[text] = nil
-	end
 
 	function boss:CancelDelayedMessage(text)
 		if scheduledMessages[text] then
-			self:CancelTimer(scheduledMessages[text][1], true)
-			wipe(scheduledMessages[text])
+			self:CancelTimer(scheduledMessages[text])
 			scheduledMessages[text] = nil
-			return true
 		end
 	end
 
@@ -576,9 +567,7 @@ do
 		if type(delay) ~= "number" then error(format("Module '%s' tried to schedule a delayed message with delay as type %q, but it must be a number.", self.moduleName, type(delay))) end
 		self:CancelDelayedMessage(text)
 
-		local id = self:ScheduleTimer("ProcessDelayedMessage", delay, text)
-		scheduledMessages[text] = {id, key, text, ...}
-		return id
+		scheduledMessages[text] = self:ScheduleTimer("Message", delay, key, text, ...)
 	end
 end
 
