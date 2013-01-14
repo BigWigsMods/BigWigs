@@ -53,18 +53,18 @@ L["Fills the bars up instead of draining them."] = "Remplit les barres au lieu d
 
 L["Local"] = "Local"
 L["%s: Timer [%s] finished."] = "%s : Minuteur [%s] terminé."
-L["Custom bar '%s' started by %s user '%s'."] = "Custom bar '%s' started by %s user '%s'."
+L["Custom bar '%s' started by %s user '%s'."] = "Barre perso '%s' lancée par l'utilisateur de %s '%s'."
 
 L["Pull"] = "Pull"
-L["Pulling!"] = "Pulling!"
-L["Pull timer started by %s user '%s'."] = "Pull timer started by %s user '%s'."
-L["Pull in %d sec"] = "Pull in %d sec"
-L["Sending a pull timer to Big Wigs and DBM users."] = "Sending a pull timer to Big Wigs and DBM users."
-L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Sending custom bar '%s' to Big Wigs and DBM users."
-L["This function requires raid leader or raid assist."] = "This function requires raid leader or raid assist."
-L["Must be between 1 and 10. A correct example is: /pull 5"] = "Must be between 1 and 10. A correct example is: /pull 5"
-L["Incorrect format. A correct example is: /bwcb 20 text"] = "Incorrect format. A correct example is: /bwcb 20 text"
-L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."
+L["Pulling!"] = "Pull !"
+L["Pull timer started by %s user '%s'."] = "Délai de pull lancé par l'utilisateur de %s '%s'."
+L["Pull in %d sec"] = "Pull dans %d sec."
+L["Sending a pull timer to Big Wigs and DBM users."] = "Envoi d'un délai de pull aux utilisateurs de Big Wigs et DBM."
+L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Envoi d'une barre perso '%s' aux utilisateurs de Big Wigs et DBM."
+L["This function requires raid leader or raid assist."] = "Cette fonction nécessite d'être le chef du raid ou un de ses assistants."
+L["Must be between 1 and 10. A correct example is: /pull 5"] = "Doit être compris entre 1 et 10. Un exemple correct est le suivant : /pull 5"
+L["Incorrect format. A correct example is: /bwcb 20 text"] = "Format incorrect. Un exemple correct est le suivant : /bwcb 20 texte"
+L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Durée spécifiée incorrecte. <durée> peut être exprimée soit avec un nombre en secondes, avec une paire M:S ou avec Mm. Par exemple 5, 1:20 ou 2m."
 
 -----------------------------------------------------------------------
 -- Colors.lua
