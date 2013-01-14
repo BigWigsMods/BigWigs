@@ -98,20 +98,15 @@ function boss:OnDisable()
 		bossUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 
-	-- Empty the event map for this module
-	for _,v in pairs(eventMap[self]) do
-		wipe(v)
-	end
-	wipe(eventMap[self])
-	eventMap[self] = nil
-
-	-- Remove the Unit Events for this module
-	for a,b in pairs(unitEventMap[self]) do
+	-- Unregister the Unit Events for this module
+	for a, b in pairs(unitEventMap[self]) do
 		for k in pairs(b) do
 			self:UnregisterUnitEvent(a, k)
 		end
 	end
-	wipe(unitEventMap[self])
+
+	-- Empty the event maps for this module
+	eventMap[self] = nil
 	unitEventMap[self] = nil
 
 	self.isEngaged = nil

@@ -398,9 +398,6 @@ function options:OnEnable()
 		local zone = tmpZone[i]
 		self:GetZonePanel(tmp[zone])
 	end
-	wipe(tmp)
-	wipe(tmpZone)
-	tmp, tmpZone = nil, nil
 end
 
 function options:Open()
