@@ -38,8 +38,6 @@ local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
 local empUpdate = nil -- emphasize updater frame
 
-local customDBMBars = nil
-
 local clickHandlers = {}
 
 --------------------------------------------------------------------------------
@@ -825,7 +823,7 @@ function plugin:OnPluginEnable()
 	BigWigs:AddSyncListener(self, "BWPull")
 	if BigWigs.db.profile.customDBMbars then
 		RegisterAddonMessagePrefix("D4")
-		self:RegisterMessage("DBM_AddonMessage", customDBMBars)
+		self:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
 	end
 
 	self:RefixClickIntercepts()
@@ -1229,25 +1227,28 @@ end
 local startCustomBar
 do
 	local timers = {}
-	function startCustomBar(bar, nick, localOnly)
+	function startCustomBar(bar, nick, localOnly, isDBM)
 		local time, barText
 		if localOnly then
 			time, barText, nick = bar, localOnly, L["Local"]
 		else
+			if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) then return end
 			time, barText = bar:match("(%S+) (.*)")
 			time = parseTime(time)
-			if type(time) ~= "number" or type(barText) ~= "string" then
-				print(L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]:format(tostring(time), nick))
+			if type(time) ~= "number" or type(barText) ~= "string" or time < 0 then
 				return
 			end
+			BigWigs:Print(L["Custom bar '%s' started by %s user '%s'."]:format(barText, isDBM and "DBM" or "Big Wigs", nick))
 		end
 
 		local id = "bwcb" .. nick .. barText
+		if timers[id] then
+			plugin:CancelTimer(timers[id])
+			timers[id] = nil
+		end
+
+		nick = nick:gsub("%-.+", "*") -- Remove server name
 		if time == 0 then
-			if timers[id] then
-				plugin:CancelTimer(timers[id])
-				timers[id] = nil
-			end
 			plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
 		else
 			timers[id] = plugin:ScheduleTimer("SendMessage", time, "BigWigs_Message", nil, nil, L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", localOnly, nil, nil, "Interface\\Icons\\INV_Misc_PocketWatch_01")
@@ -1264,45 +1265,38 @@ do
 		if timeLeft == 0 then
 			plugin:CancelTimer(timer)
 			timer = nil
-			plugin:SendMessage("BigWigs_Message", nil, nil, "Pulling!", "Attention", nil, "Alarm", nil, "Interface\\Icons\\achievement_bg_returnxflags_def_wsg")
+			plugin:SendMessage("BigWigs_Message", nil, nil, L["Pulling!"], "Attention", nil, "Alarm", nil, "Interface\\Icons\\ability_warrior_charge")
 		else
-			plugin:SendMessage("BigWigs_Message", nil, nil, ("Pull in %d sec"):format(timeLeft), "Attention", nil, timeLeft < 4 and "Info")
+			plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention", nil, timeLeft < 4 and "Info")
 		end
 	end
-	function startPull(time, nick)
+	function startPull(time, nick, isDBM)
+		if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) then return end
 		time = tonumber(time)
-		if not time or time < 1 or time > 10 then print"usage /pull <time, between 1 and 10>" return end
+		if not time or time < 1 or time > 10 then return end
 		time = math.floor(time)
 		timeLeft = time
-		print("Pull started by:", nick)
+		BigWigs:Print(L["Pull timer started by %s user '%s'."]:format(isDBM and "DBM" or "Big Wigs", nick))
 		if timer then plugin:CancelTimer(timer) end
 		timer = plugin:ScheduleRepeatingTimer(printPull, 1)
-		plugin:SendMessage("BigWigs_Message", nil, nil, ("Pull in %d sec"):format(timeLeft), "Attention")
-		plugin:SendMessage("BigWigs_StartBar", plugin, nil, "Pull", time, "Interface\\Icons\\achievement_bg_returnxflags_def_wsg")
+		plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention")
+		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L["Pull"], time, "Interface\\Icons\\ability_warrior_charge")
 	end
 end
 
-do
-	local prevBarText = nil
-	function customDBMBars(_, sender, prefix, time, text)
-		if prefix == "U" and (UnitIsGroupLeader(sender) or UnitIsGroupAssistant(sender)) then
-			local bar = time.." "..text
-			startCustomBar(bar, sender)
-			prevBarText = text
-		elseif prefix == "PT" and (UnitIsGroupLeader(sender) or UnitIsGroupAssistant(sender)) then
-			startPull(time, sender)
-			-- DBM sends 2 messages for pull timers, 1 for the countdown, 1 for the bar. Cancel the custom bar
-			-- or we will end up with a pull bar and a custom bar.
-			startCustomBar("0 "..prevBarText, sender)
-		end
+function plugin:OnDBMSync(_, sender, prefix, time, text)
+	if prefix == "U" then
+		startCustomBar(time.." "..text, sender, nil, true)
+	elseif prefix == "PT" then
+		startPull(time, sender, true)
 	end
 end
 
 function plugin:OnSync(sync, rest, nick)
-	if (sync == "BWCustomBar" or sync == "BWPull") and rest and nick and (UnitIsGroupLeader(nick) or UnitIsGroupAssistant(nick)) then
+	if rest and nick then
 		if sync == "BWCustomBar" then
 			startCustomBar(rest, nick)
-		else
+		elseif sync == "BWPull" then
 			startPull(rest, nick)
 		end
 	end
@@ -1317,18 +1311,20 @@ do
 	SlashCmdList.BWCB_SHORTHAND = function(input)
 		if not plugin:IsEnabled() then BigWigs:Enable() end
 
+		if not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player") then BigWigs:Print(L["This function requires raid leader or raid assist."]) return end
+
 		local time, barText = input:match("(%S+) (.*)")
-		if not time or not barText then print"incorrect format" return end
+		if not time or not barText then BigWigs:Print(L["Incorrect format. A correct example is: /bwcb 20 text"]) return end
 
 		time = parseTime(time)
-		if not time then print"incorrect format" return end
+		if not time or time < 0 then BigWigs:Print(L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]) return end
 
 		local t = GetTime()
 		if not times[input] or (times[input] and (times[input] + 2) < t) then
 			times[input] = t
 			BigWigs:Transmit("BWCustomBar", time, barText)
-			SendAddonMessage("D4", ("U\t%d\t%s"):format(time, barText), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
-			print"Sending bar to BW and DBM users."
+			SendAddonMessage("D4", ("U\t%d\t%s"):format(time, barText), IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- DBM message
+			BigWigs:Print(L["Sending custom bar '%s' to Big Wigs and DBM users."]:format(barText))
 		end
 	end
 	SLASH_BWCB_SHORTHAND1 = "/bwcb"
@@ -1338,10 +1334,10 @@ SlashCmdList.BWLCB_SHORTHAND = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 
 	local time, barText = input:match("(%S+) (.*)")
-	if not time or not barText then print"incorrect format" return end
+	if not time or not barText then BigWigs:Print(L["Incorrect format. A correct example is: /bwcb 20 text"]:gsub("/bwcb", "/bwlcb")) return end
 
 	time = parseTime(time)
-	if not time then print"incorrect format" return end
+	if not time then BigWigs:Print(L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]) return end
 
 	startCustomBar(time, UnitName("player"), barText)
 end
@@ -1349,15 +1345,15 @@ SLASH_BWLCB_SHORTHAND1 = "/bwlcb"
 
 SlashCmdList.BIGWIGSPULL = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
-	local time = tonumber(input)
-	if not time or time < 1 or time > 10 then print"usage /pull <time, between 1 and 10>" return end
 	if UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then
+		local time = tonumber(input)
+		if not time or time < 1 or time > 10 then BigWigs:Print(L["Must be between 1 and 10. A correct example is: /pull 5"]) return end
+
 		BigWigs:Transmit("BWPull", input)
-		SendAddonMessage("D4", "U\t".. input .."\t".. "Pull", IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
-		SendAddonMessage("D4", "PT\t".. input, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
-		print"Sending bar to BW and DBM users."
+		SendAddonMessage("D4", "PT\t".. input, IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- DBM message
+		BigWigs:Print(L["Sending a pull timer to Big Wigs and DBM users."])
 	else
-		print"requires leader/assist"
+		BigWigs:Print(L["This function requires raid leader or raid assist."])
 	end
 end
 SLASH_BIGWIGSPULL1 = "/pull"

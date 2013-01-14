@@ -53,7 +53,18 @@ L["Fills the bars up instead of draining them."] = "Заполнение пол�
 
 L["Local"] = "Локальный"
 L["%s: Timer [%s] finished."] = "%s: Таймер [%s] готов."
-L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Неверное время (|cffff0000%q|r) или отсутствие текста в пользовательской полосе запущенной |cffd9d919%s|r. <время> может вводится цифрами в секундах, мин:сек, или Мин. К примеру 5, 1:20 или 2м."
+L["Custom bar '%s' started by %s user '%s'."] = "Custom bar '%s' started by %s user '%s'."
+
+L["Pull"] = "Pull"
+L["Pulling!"] = "Pulling!"
+L["Pull timer started by %s user '%s'."] = "Pull timer started by %s user '%s'."
+L["Pull in %d sec"] = "Pull in %d sec"
+L["Sending a pull timer to Big Wigs and DBM users."] = "Sending a pull timer to Big Wigs and DBM users."
+L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Sending custom bar '%s' to Big Wigs and DBM users."
+L["This function requires raid leader or raid assist."] = "This function requires raid leader or raid assist."
+L["Must be between 1 and 10. A correct example is: /pull 5"] = "Must be between 1 and 10. A correct example is: /pull 5"
+L["Incorrect format. A correct example is: /bwcb 20 text"] = "Incorrect format. A correct example is: /bwcb 20 text"
+L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."
 
 -----------------------------------------------------------------------
 -- Colors.lua

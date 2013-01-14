@@ -398,11 +398,8 @@ function addon:OnDisable()
 	monitoring = nil
 end
 
-do
-	local outputFormat = "|cffffff00%s|r"
-	function addon:Print(msg)
-		print("Big Wigs:", outputFormat:format(msg))
-	end
+function addon:Print(msg)
+	print("Big Wigs: |cffffff00"..msg.."|r")
 end
 
 -------------------------------------------------------------------------------
