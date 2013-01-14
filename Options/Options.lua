@@ -68,14 +68,21 @@ local acOptions = {
 			name = L["Configure ..."],
 			desc = L.configureDesc,
 			func = function()
-				HideUIPanel(InterfaceOptionsFrame)
-				HideUIPanel(GameMenuFrame)
+				InterfaceOptionsFrameOkay:Click()
 				if not BigWigs:IsEnabled() then BigWigs:Enable() end
 				options:SendMessage("BigWigs_StartConfigureMode")
 				options:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
 			end,
 			order = 11,
-			width = "full",
+			width = "double",
+		},
+		customize = {
+			type = "execute",
+			name = L["Customize ..."],
+			func = function()
+				InterfaceOptionsFrame_OpenToCategory(L["Customize ..."])
+			end,
+			order = 11.5,
 		},
 		separator = {
 			type = "description",
