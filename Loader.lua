@@ -118,7 +118,7 @@ do
 end
 
 local errorInvalidZoneID = "The zone ID %q from the addon %q was not parsable."
-local function iterateZones(addon, override, partyContent, ...)
+local function iterateZones(addon, override, ...)
 	for i = 1, select("#", ...) do
 		local rawZone = select(i, ...)
 		local zone = tonumber(rawZone:trim())
@@ -289,8 +289,7 @@ function loader:OnEnable()
 			end
 			local zones = GetAddOnMetadata(name, "X-BigWigs-LoadOn-ZoneId")
 			if zones then
-				local partyContent = GetAddOnMetadata(name, "X-BigWigs-PartyContent")
-				iterateZones(name, menu, partyContent, strsplit(",", zones))
+				iterateZones(name, menu, strsplit(",", zones))
 			end
 		end
 		loadOnZoneAddons = nil
@@ -741,8 +740,6 @@ do
 		if #good > 0 then print(L["Up to date:"], unpack(good)) end
 		if #ugly > 0 then print(L["Out of date:"], unpack(ugly)) end
 		if #bad > 0 then print(L["No Big Wigs 3.x:"], unpack(bad)) end
-		wipe(good) wipe(bad) wipe(ugly)
-		good, bad, ugly = nil, nil, nil
 	end
 
 	SLASH_BIGWIGSVERSION1 = "/bwv"
