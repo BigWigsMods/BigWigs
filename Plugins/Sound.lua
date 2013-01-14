@@ -92,6 +92,11 @@ function plugin:OnRegister()
 	media:Register(mType, "BigWigs: Victory", "Interface\\AddOns\\BigWigs\\Sounds\\Victory.mp3")
 	media:Register(mType, "BigWigs: Victory Long", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryLong.mp3")
 	media:Register(mType, "BigWigs: Victory Classic", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryClassic.mp3")
+	media:Register(mType, "BigWigs: 5", "Interface\\AddOns\\BigWigs\\Sounds\\5.mp3")
+	media:Register(mType, "BigWigs: 4", "Interface\\AddOns\\BigWigs\\Sounds\\4.mp3")
+	media:Register(mType, "BigWigs: 3", "Interface\\AddOns\\BigWigs\\Sounds\\3.mp3")
+	media:Register(mType, "BigWigs: 2", "Interface\\AddOns\\BigWigs\\Sounds\\2.mp3")
+	media:Register(mType, "BigWigs: 1", "Interface\\AddOns\\BigWigs\\Sounds\\1.mp3")
 
 	soundList = media:List(mType)
 
