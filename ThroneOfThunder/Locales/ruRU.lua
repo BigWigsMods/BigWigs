@@ -6,7 +6,14 @@ end
 
 L = BigWigs:NewBossLocale("Council of Elders", "ruRU")
 if L then
+	L.full_power = "Полная энергия"
 
+	L.assault_message = "Выпад"
+
+	L.loa_kills = "Убито Лоа: %s"
+	L.loa_spirit = "Дух Лоа"
+	L.loa_spirits = "Духи Лоа"
+	L.loa_spirits_desc = "Предупреждать о двух типах духов Лоа."
 end
 
 L = BigWigs:NewBossLocale("Tortos", "ruRU")
