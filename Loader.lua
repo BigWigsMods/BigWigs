@@ -372,6 +372,9 @@ do
 			if value then
 				RegisterAddonMessagePrefix("D4")
 				self:RegisterMessage("DBM_AddonMessage", dbmFaker)
+				if IsInRaid() or IsInGroup() then
+					dbmFaker(nil, nil, "H") -- Send addon message if feature is being turned on inside a raid/group.
+				end
 			else
 				self:UnregisterMessage("DBM_AddonMessage")
 			end
