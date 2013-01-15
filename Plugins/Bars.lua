@@ -1267,7 +1267,10 @@ do
 			timer = nil
 			plugin:SendMessage("BigWigs_Message", nil, nil, L["Pulling!"], "Attention", nil, "Alarm", nil, "Interface\\Icons\\ability_warrior_charge")
 		else
-			plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention", nil, timeLeft < 4 and "Info")
+			plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention")
+			if timeLeft < 6 and BigWigs.db.profile.sound then
+				PlaySoundFile("Interface\\AddOns\\BigWigs\\Sounds\\"..floor(timeLeft)..".mp3", "Master")
+			end
 		end
 	end
 	function startPull(time, nick, isDBM)
@@ -1279,7 +1282,7 @@ do
 		BigWigs:Print(L["Pull timer started by %s user '%s'."]:format(isDBM and "DBM" or "Big Wigs", nick))
 		if timer then plugin:CancelTimer(timer) end
 		timer = plugin:ScheduleRepeatingTimer(printPull, 1)
-		plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention")
+		plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention", nil, "Long")
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L["Pull"], time, "Interface\\Icons\\ability_warrior_charge")
 	end
 end
