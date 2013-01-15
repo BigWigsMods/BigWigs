@@ -108,9 +108,8 @@ do
 	local timer = nil
 	local strike = mod:SpellName(122949)
 	local function removeIcon(notBoss)
-		if notBoss then
-			mod:CloseProximity("unseenstrike") -- Close proximity for Instructor Maltik
-		else
+		mod:CloseProximity("unseenstrike")
+		if not notBoss then
 			mod:OpenProximity(8, 123175) -- Re-open normal proximity
 		end
 		mod:PrimaryIcon("unseenstrike")

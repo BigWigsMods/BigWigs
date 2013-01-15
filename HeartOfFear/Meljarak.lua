@@ -113,6 +113,9 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		-- Random spawn, check for unit
 		local guid = UnitGUID(("boss%d"):format(i))
 		if guid and self:GetCID(guid) == 62451 then -- The Sra'thik
+			if phase == 2 then
+				self:CloseProximity(131830)
+			end
 			self:OpenProximity(2, 121881)
 			break
 		end
@@ -305,10 +308,9 @@ function mod:Deaths(mobId)
 	if mobId == 62397 then -- boss
 		self:Win()
 	elseif mobId == 62451 then -- The Sra'thik
+		self:CloseProximity(121881)
 		if phase == 2 then
 			self:OpenProximity(5, 131830) -- if in phase 2 open the wind bomb proximity meter back up
-		else
-			self:CloseProximity(121881)
 		end
 	elseif mobId == 62452 then -- The Zar'thik
 		self:StopBar(L["mending_bar"])
