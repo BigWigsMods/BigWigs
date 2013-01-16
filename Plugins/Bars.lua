@@ -30,7 +30,6 @@ end
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
 local colors = nil
-local superemp = nil
 local candy = LibStub("LibCandyBar-3.0")
 local media = LibStub("LibSharedMedia-3.0")
 local pairs = pairs
@@ -803,7 +802,6 @@ end
 
 function plugin:OnPluginEnable()
 	colors = BigWigs:GetPlugin("Colors")
-	superemp = BigWigs:GetPlugin("Super Emphasize", true)
 
 	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 	self:RegisterMessage("BigWigs_StartBar")
@@ -816,7 +814,6 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	self:RegisterMessage("BigWigs_SuperEmphasizeStart")
 
 	-- custom bars
 	BigWigs:AddSyncListener(self, "BWCustomBar")
@@ -1006,10 +1003,8 @@ end
 
 -- Super Emphasize the clicked bar
 clickHandlers.emphasize = function(bar)
-	if superemp then
-		-- Add 0.2sec here to catch messages for this option triggered when the bar ends.
-		superemp:Emphasize(bar:Get("bigwigs:module"), bar:Get("bigwigs:option"), bar.remaining + 0.2)
-	end
+	-- Add 0.2sec here to catch messages for this option triggered when the bar ends.
+	plugin:SendMessage("BigWigs_TempSuperEmphasize", bar:Get("bigwigs:module"), bar:Get("bigwigs:option"), bar.candyBarLabel:GetText(), bar.remaining)
 end
 
 -- Report the bar status to the active group type (raid, party, solo)
@@ -1102,32 +1097,6 @@ do
 	anim:SetDuration(0.2)
 end
 
-local function countdown(bar)
-	if bar.remaining <= bar:Get("bigwigs:count") then
-		local count = bar:Get("bigwigs:count")
-		bar:Set("bigwigs:count", count - 1)
-		if bar.remaining < 6 then
-			PlaySoundFile("Interface\\AddOns\\BigWigs\\Sounds\\"..floor(count)..".mp3", "Master")
-			if count > 0.9 then
-				plugin:SendMessage("BigWigs_EmphasizedCountdownMessage", floor(count))
-			end
-		end
-	end
-end
-
-local function actuallyEmphasize(bar, t)
-	if superemp.db.profile.countdown then
-		bar:Set("bigwigs:count", math.min(t, floor(t)) + .3) -- sounds last approx .3 seconds this makes them right on the ball
-		bar:AddUpdateFunction(countdown)
-	end
-end
-
-function plugin:BigWigs_SuperEmphasizeStart(event, module, key, time)
-	local bar = findBar(module, key)
-	if not bar then return end
-	actuallyEmphasize(bar, time)
-end
-
 -----------------------------------------------------------------------
 -- Start bars
 --
@@ -1155,14 +1124,11 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon)
 	bar:SetIcon(db.icon and icon or nil)
 	bar:SetScale(db.scale)
 	bar:SetFill(db.fill)
-	if db.emphasize and time < 15 then
+	if db.emphasize and time < 12 then
 		self:EmphasizeBar(bar)
 	end
 	if db.interceptMouse and not db.onlyInterceptOnKeypress then
 		refixClickOnBar(true, bar)
-	end
-	if superemp and superemp:IsSuperEmphasized(module, key) then
-		actuallyEmphasize(bar, time)
 	end
 	currentBarStyler.ApplyStyle(bar)
 	bar:Start()
