@@ -1238,7 +1238,7 @@ do
 		else
 			plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention")
 			if timeLeft < 6 and BigWigs.db.profile.sound then
-				PlaySoundFile("Interface\\AddOns\\BigWigs\\Sounds\\"..floor(timeLeft)..".mp3", "Master")
+				PlaySoundFile(("Interface\\AddOns\\BigWigs\\Sounds\\%d.mp3"):format(timeLeft), "Master")
 			end
 		end
 	end
@@ -1246,7 +1246,7 @@ do
 		if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) then return end
 		time = tonumber(time)
 		if not time or time < 1 or time > 10 then return end
-		time = math.floor(time)
+		time = floor(time)
 		if timeLeft == time then return end -- Throttle
 		timeLeft = time
 		BigWigs:Print(L["Pull timer started by %s user '%s'."]:format(isDBM and "DBM" or "Big Wigs", nick))
@@ -1322,9 +1322,9 @@ SlashCmdList.BIGWIGSPULL = function(input)
 		local time = tonumber(input)
 		if not time or time < 1 or time > 10 then BigWigs:Print(L["Must be between 1 and 10. A correct example is: /pull 5"]) return end
 
+		BigWigs:Print(L["Sending a pull timer to Big Wigs and DBM users."])
 		BigWigs:Transmit("BWPull", input)
 		SendAddonMessage("D4", "PT\t".. input, IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- DBM message
-		BigWigs:Print(L["Sending a pull timer to Big Wigs and DBM users."])
 	else
 		BigWigs:Print(L["This function requires raid leader or raid assist."])
 	end

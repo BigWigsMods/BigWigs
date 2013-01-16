@@ -231,12 +231,17 @@ do
 	end
 end
 
-function mod:Eyes(player, spellId, _, _, _, buffStack)
-	if self:Tank() then
-		buffStack = buffStack or 1
-		self:StopBar(L["eyes_message"]:format(player, buffStack - 1))
-		self:Bar("eyes", L["eyes_message"]:format(player, buffStack), 30, spellId)
-		self:LocalMessage("eyes", L["eyes_message"], "Urgent", spellId, buffStack > 2 and "Info" or nil, player, buffStack)
+do
+	local eyesTbl = {}
+	function mod:Eyes(player, spellId, _, _, _, buffStack)
+		if self:Tank() then
+			buffStack = buffStack or 1
+			if eyesTbl[player] then self:StopBar(eyesTbl[player]) end
+			local text = L["eyes_message"]:format(player, buffStack)
+			eyesTbl[player] = text
+			self:Bar("eyes", text, 30, spellId)
+			self:LocalMessage("eyes", L["eyes_message"], "Urgent", spellId, buffStack > 2 and "Info" or nil, player, buffStack)
+		end
 	end
 end
 
