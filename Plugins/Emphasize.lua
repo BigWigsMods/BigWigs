@@ -159,8 +159,8 @@ do
 	function plugin:BigWigs_StartBar(_, module, key, text, time)
 		if self:IsSuperEmphasized(module, key) then
 			self:BigWigs_StopBar(nil, module, text)
-			timers[text] = {}
 			if time > 1.3 then
+				timers[text] = {}
 				timers[text][1] = module:ScheduleTimer(printEmph, time-1.3, 1)
 				if time > 2.3 then
 					timers[text][2] = module:ScheduleTimer(printEmph, time-2.3, 2)
