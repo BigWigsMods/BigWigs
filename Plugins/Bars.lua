@@ -1193,11 +1193,14 @@ end
 local startCustomBar
 do
 	local timers = {}
+	local prevBar, prevTime = "", 0
 	function startCustomBar(bar, nick, localOnly, isDBM)
 		local time, barText
 		if localOnly then
 			time, barText, nick = bar, localOnly, L["Local"]
 		else
+			if bar == prevBar and GetTime() - prevTime < 1 then return end -- Throttle
+			prevBar, prevTime = bar, GetTime()
 			if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) then return end
 			time, barText = bar:match("(%S+) (.*)")
 			time = parseTime(time)
@@ -1244,6 +1247,7 @@ do
 		time = tonumber(time)
 		if not time or time < 1 or time > 10 then return end
 		time = math.floor(time)
+		if timeLeft == time then return end -- Throttle
 		timeLeft = time
 		BigWigs:Print(L["Pull timer started by %s user '%s'."]:format(isDBM and "DBM" or "Big Wigs", nick))
 		if timer then plugin:CancelTimer(timer) end
@@ -1291,9 +1295,9 @@ do
 		local t = GetTime()
 		if not times[input] or (times[input] and (times[input] + 2) < t) then
 			times[input] = t
+			BigWigs:Print(L["Sending custom bar '%s' to Big Wigs and DBM users."]:format(barText))
 			BigWigs:Transmit("BWCustomBar", time, barText)
 			SendAddonMessage("D4", ("U\t%d\t%s"):format(time, barText), IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- DBM message
-			BigWigs:Print(L["Sending custom bar '%s' to Big Wigs and DBM users."]:format(barText))
 		end
 	end
 	SLASH_BWCB_SHORTHAND1 = "/bwcb"
