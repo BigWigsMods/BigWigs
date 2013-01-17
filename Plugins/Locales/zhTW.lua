@@ -55,18 +55,18 @@ L["Fills the bars up instead of draining them."] = "填充計時條而不是顯�
 
 L["Local"] = "區域"
 L["%s: Timer [%s] finished."] = "%s: 計時器 [%s] 終了。"
-L["Custom bar '%s' started by %s user '%s'."] = "Custom bar '%s' started by %s user '%s'."
+L["Custom bar '%s' started by %s user '%s'."] = "自訂計時條 '%s' 開始於 %s 使用者 '%s'."
 
-L["Pull"] = "Pull"
-L["Pulling!"] = "Pulling!"
-L["Pull timer started by %s user '%s'."] = "Pull timer started by %s user '%s'."
-L["Pull in %d sec"] = "Pull in %d sec"
-L["Sending a pull timer to Big Wigs and DBM users."] = "Sending a pull timer to Big Wigs and DBM users."
-L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Sending custom bar '%s' to Big Wigs and DBM users."
-L["This function requires raid leader or raid assist."] = "This function requires raid leader or raid assist."
-L["Must be between 1 and 10. A correct example is: /pull 5"] = "Must be between 1 and 10. A correct example is: /pull 5"
-L["Incorrect format. A correct example is: /bwcb 20 text"] = "Incorrect format. A correct example is: /bwcb 20 text"
-L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."
+L["Pull"] = "拉怪倒數"
+L["Pulling!"] = "拉怪中!"
+L["Pull timer started by %s user '%s'."] = "拉怪倒數計時開始於 %s 使用者 '%s'."
+L["Pull in %d sec"] = "拉怪於 %d 秒後"
+L["Sending a pull timer to Big Wigs and DBM users."] = "發送一個拉怪倒數計時到Big Wigs與DBM使用者."
+L["Sending custom bar '%s' to Big Wigs and DBM users."] = "發送自訂計時條 '%s' 到Big Wigs與DBM使用者."
+L["This function requires raid leader or raid assist."] = "這個功能需要團隊領隊或助理權限."
+L["Must be between 1 and 10. A correct example is: /pull 5"] = "必須在1跟10之間。一個正確的範例是: /pull 5"
+L["Incorrect format. A correct example is: /bwcb 20 text"] = "不正確的格式。一個正確的範例是: /bwcb 20 文字"
+L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "指定的時間無效。 <time> 可以為一個秒數，一個 分:秒，或是Mm。例如 5, 1:20 或 2m。"
 
 -----------------------------------------------------------------------
 -- Colors.lua

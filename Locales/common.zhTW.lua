@@ -1,13 +1,13 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "zhTW")
 if not L then return end
 -- Prototype.lua common words
-L.you = ">你< %s！"
-L.underyou = ">你<腳下：%s！"
+L.you = "»你« %s！"
+L.underyou = "»你«腳下：%s！"
 L.other = "%s：>%s<！"
-L.onboss = "%s on BOSS!"
-L.say = ">我< %s！"
-L.on = "%s on %s"
-L.stack = "%2$dx %3$s on %1$s"
+L.onboss = "%s 在 BOSS!"
+L.say = "»我« %s！"
+L.on = "%s 在 %s"
+L.stack = "%2$dx %3$s 在 %1$s"
 L.cast = "<正在施放：%s>"
 L.soon = "即將 >%s<！"
 
@@ -20,8 +20,8 @@ L.general = "通用" -- General settings, i.e. things that apply to both normal 
 L.duration = ">%s< %s秒"
 L.over = ">%s< 結束！"
 
-L.add_spawned = "Add Spawned!"
-L.next_add = "Next Add"
+L.add_spawned = "小怪出來了！"
+L.next_add = "下次小怪"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
@@ -33,5 +33,5 @@ L.custom_sec = ">%s<%d秒後！"
 
 L.tank = "只警報坦克。"
 L.healer = "只警報治療。"
-L.tankhealer = "Tank & Healer alerts only. "
+L.tankhealer = "只警報坦克&治療。"
 

@@ -31,9 +31,9 @@ L["Up to date:"] = "已更新："
 L["Out of date:"] = "過期："
 L["No Big Wigs 3.x:"] = "沒有 Big Wigs 3.x："
 
-L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = "Waiting until combat ends to finish loading due to Blizzard combat restrictions."
-L["Combat has ended, Big Wigs has now finished loading."] = "Combat has ended, Big Wigs has now finished loading."
-L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."
+L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = "由於暴雪的戰鬥限制需要等待戰鬥結束以完成載入。"
+L["Combat has ended, Big Wigs has now finished loading."] = "戰鬥已經結束，Big Wigs現在完成載入。"
+L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "由於暴雪的限制，要打開選項配置需要離開戰鬥，或是在戰鬥之前。"
 
 L.coreAddonDisabled = "當%s被禁用時，Big Wigs 將無法正常工作。你可以在角色選擇螢幕的插件控制面板開啟它們。"
 
@@ -75,10 +75,10 @@ L["After you've seen a boss movie once, Big Wigs will prevent it from playing ag
 L["Prevented boss movie '%d' from playing."] = "防止首領過場動畫“%d”被播放。"
 L["Ignore my role"] = "忽略職責"
 L.ignoreroleDesc = "|cffff4411不建議。|r 啟用此項將顯示每次的職責檢查，這會在有些首領戰中造成騷擾。"
-L["Pretend I'm using DBM"] = "Pretend I'm using DBM"
-L.pretendDesc = "If a DBM user does a version check to see who's using DBM, they will see you on the list. Useful for guilds that force using DBM."
-L["Create custom DBM bars"] = "Create custom DBM bars"
-L.dbmBarDesc = "If a DBM user sends a pull timer or a custom 'pizza' bar, it will be shown in Big Wigs."
+L["Pretend I'm using DBM"] = "假裝我是使用DBM"
+L.pretendDesc = "如果一個DBM使用者作版本檢查以確認哪些人用了DBM的時候，他們會看到你在名單之上。當你的公會強制要求使用DBM，這是很有用的。"
+L["Create custom DBM bars"] = "創建自訂的DBM計時條"
+L.dbmBarDesc = "如果DBM使用者發送一個倒數計時或一個自訂的圓環型計時條，他會顯示在Big Wigs。"
 
 L["BAR"] = "計時條"
 L["MESSAGE"] = "訊息"

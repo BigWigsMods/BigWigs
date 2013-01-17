@@ -4,8 +4,7 @@ if L then
 	L.engage_yell = "聖女皇選上我們將她神聖的意志傳達給凡人。我們只是實現她意志的軀殼。"
 
 	L.force_message = "力與魄(AoE)"
-
-	L.attenuation = EJ_GetSectionInfo(6426) .. " (定音區)"
+	
 	L.attenuation_bar = "定音區... 跳吧!"
 	L.attenuation_message = "%s 跳舞 %s"
 	L.echo = "|c001cc986回音|r"
@@ -42,9 +41,9 @@ if L then
 	L.spear_removed = "你的穿刺之矛被移除了！"
 	L.residue_removed = "%s 已移除！"
 
-	L.mending_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Zar'thik Battle-Menders have separate heal cooldowns.|r "
-	L.mending_warning = "Your focus is casting Mending!"
-	L.mending_bar = "Focus: Mending"
+	L.mending_desc = "|cFFFF0000注意: 只有你的'專注'目標的計時條會顯示，因為所有的Zar'thik Battle-Menders有分離的治療冷卻時間。|r "
+	L.mending_warning = "你的專注目標正在施放癒合！"
+	L.mending_bar = "專注目標: 癒合"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "zhTW")
@@ -68,8 +67,8 @@ if L then
 	L.fling_message = "快吸水！"
 	L.parasite = "寄生"
 
-	L.boss_is_casting = ">首領<在施法！"
-	L.you_are_casting = ">你<在施法！"
+	L.boss_is_casting = "»首領«在施法！"
+	L.you_are_casting = "»你«在施法！"
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "zhTW")
@@ -82,6 +81,6 @@ if L then
 	L.eyes_desc = "計算女皇之眼的堆疊與顯示持續時間條。"
 	L.eyes_message = "%2$dx 女皇之眼在 %1$s"
 
-	L.fumes_bar = "你的fumes增益"
+	L.fumes_bar = "你的毒氣增益"
 end
 

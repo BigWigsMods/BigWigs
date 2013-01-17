@@ -15,14 +15,14 @@ if L then
 	L.phase_lightning_trigger = "噢，偉大的靈魂!賜予我大地之力!"
 	L.phase_flame_trigger = "噢，至高的神啊!藉由我來融化他們的血肉吧!"
 	L.phase_arcane_trigger = "噢，上古的賢者!賜予我秘法的智慧!"
-	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!"
+	L.phase_shadow_trigger = "英雄之靈!以盾護我之身!"
 
-	L.phase_lightning = "雷震階段！"
+	L.phase_lightning = "雷霆階段！"
 	L.phase_flame = "火焰階段！"
 	L.phase_arcane = "祕法階段！"
 	L.phase_shadow = "暗影階段！(英雄)"
 
-	L.phase_message = "快要轉換階段!"
+	L.phase_message = "快要轉換階段！"
 	L.shroud_message = "%2$s 施放護罩在 %1$s"
 	L.shroud_can_interrupt = "%s 可以中斷 %s！"
 	L.barrier_message = "阻擋!"
@@ -43,7 +43,7 @@ if L then
 
 	L.totem = "靈魂圖騰 (%d)"
 	L.shadowy_message = "暗影攻擊 (%d)"
-	L.banish_message = "坦克被放逐"
+	L.banish_message = "放逐坦克"
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "zhTW")
@@ -55,7 +55,7 @@ end
 
 L = BigWigs:NewBossLocale("Elegon", "zhTW")
 if L then
-	L.engage_yell = "Entering defensive mode.  Disabling output failsafes."
+	L.engage_yell = "啟動防禦模式。關閉輸出保險設定。"
 
 	L.last_phase = "最後階段"
 	L.overcharged_total_annihilation = "超載 %d! 太多了喔?"
@@ -64,15 +64,15 @@ if L then
 	L.floor_desc = "警報當地板將要消失。"
 	L.floor_message = "地板要落下了！"
 
-	L.adds = "Adds"
-	L.adds_desc = "Warnings for when a Celestial Protector is about to spawn."
+	L.adds = "天體保護者出現"
+	L.adds_desc = "當天體保護者要出現時警告."
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "zhTW")
 if L then
 	L.enable_zone = "無盡熔爐"
 
-	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
+	L.heroic_start_trigger = "摧毀漏出[泰坦氣體]到房間裡的那些管子!" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
 	L.normal_start_trigger = "這台機器啟動了!" -- The machine hums to life!  Get to the lower level!
 
 	L.rage_trigger = "大帝之怒響徹群山。"
@@ -80,7 +80,7 @@ if L then
 	L.courage_trigger = "大帝之勇永久不滅。"
 	L.bosses_trigger = "無盡的大軍會碾碎大帝的敵人。"
 	L.gas_trigger = "古代魔古機器崩毀了!"
-	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
+	L.gas_overdrive_trigger = "大帝之息漸滅。"
 
 	L.target_only = "|cFFFF0000這個警告只會顯示你設為目標的首領。|r "
 	L.combo_message = "%s: 毀滅連擊快要來了!"
