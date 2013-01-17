@@ -258,7 +258,6 @@ plugin.defaultDB = {
 	fill = nil,
 	barStyle = "Default",
 	emphasize = true,
-	emphasizeFlash = true,
 	emphasizeMove = true,
 	emphasizeScale = 1.5,
 	emphasizeGrowup = nil,
@@ -542,13 +541,6 @@ do
 								type = "toggle",
 								name = L["Enable"],
 								order = 1,
-								width = "half",
-							},
-							emphasizeFlash = {
-								type = "toggle",
-								name = L["Flash"],
-								desc = L["Flashes the background of emphasized bars, which could make it easier for you to spot them."],
-								order = 2,
 								width = "half",
 							},
 							emphasizeMove = {
@@ -1139,18 +1131,6 @@ end
 -- Normal Emphasize
 --
 
-local function flash(self)
-	local r, g, b, a = self.candyBarBackground:GetVertexColor()
-	if self:Get("bigwigs:down") then
-		r = r - 0.05
-		if r <= 0 then self:Set("bigwigs:down", nil) end
-	else
-		r = r + 0.05
-		if r >= 1 then self:Set("bigwigs:down", true) end
-	end
-	self.candyBarBackground:SetVertexColor(r, g, b, a)
-end
-
 function plugin:EmphasizeBar(bar)
 	if db.emphasizeMove then
 		normalAnchor.bars[bar] = nil
@@ -1159,9 +1139,6 @@ function plugin:EmphasizeBar(bar)
 		if db.emphasizeRestart then
 			bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
 		end
-	end
-	if db.emphasizeFlash then
-		bar:AddUpdateFunction(flash)
 	end
 	local module = bar:Get("bigwigs:module")
 	local key = bar:Get("bigwigs:option")
