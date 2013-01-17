@@ -32,9 +32,7 @@ L["Texture"] = "Текстура"
 L["Emphasize"] = "Увеличение"
 L["Enable"] = "Включить"
 L["Move"] = "Перемещение"
-L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "Перемещение увеличенных полос. Если эта опция отключена, увеличенные полосы просто будут изменять масштаб, окраску, и возможно мигать."
-L["Flash"] = "Мигание"
-L["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Мигание фона увеличенных полос, которое поможет вам легче их увидеть."
+--L.moveDesc = "Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color."
 L["Regular bars"] = "Обычные полосы"
 L["Emphasized bars"] = "Увеличенные полосы"
 L["Align"] = "Выравнивание"
@@ -207,26 +205,6 @@ L["Ability name"] = "Название способности"
 L["Shows or hides the ability name above the window."] = "Показывает или скрывает название способности в верхней части окна."
 L["Tooltip"] = "Подсказка"
 L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Показывает или скрывает подсказку заклинания в окне близости, если эта способность связана боссом."
-
------------------------------------------------------------------------
--- Tips.lua
---
-
-L["|cff%s%s|r says:"] = "|cff%s%s|r говорит:"
-L["Cool!"] = "Класс!"
-L["Tips"] = "Советы"
-L["Tip of the Raid"] = "Советы рейда"
-L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with officers who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "Советы рейда будет показаны по умолчанию, когда вы входите в рейдовую зону, когда вы вне боя, и ваша рейд группа состоит более чем из 9 игроков. За сессию будет показан всего один совет.\n\nЗдесь вы можете настроить способ отображения советов, либо с помощью всплывающего окна (по умолчанию), либо выводить их в чате. Если офицеры рейда злоупотребляют командой |cffff4411/sendtip command|r, вы можете выводить советы в окно чата!"
-L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid officers will also be blocked by this, so be careful."] = "Если вы не хотите видеть какие-либо советы, здесь вы можете отключить их. Советы, присланные офицерами рейда также заблокируются, будьте осторожны."
-L["Automatic tips"] = "Авто-советы"
-L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "Если вы не хотите видеть потрясающие советы, которые всплывают при входе в рейд, предоставленные одними из лучших PvE игроков в мире, вы можете смело отключить эту опцию."
-L["Manual tips"] = "Советы вручную"
-L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Офицеры рейда имеют возможность показать игрокам в рейде свои советы командой /sendtip. Если ваш офицер использует данную команду и спамит советы, или вы по какой-то другой причине просто не хотите их видеть, вы можете отключить это с помощью этой опции."
-L["Output to chat frame"] = "Вывод в окно чата"
-L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "По умолчанию советы будут показаны в их собственном окно в центре экрана. Если вы переключите, советы будут отображаться только в чате как простой текст, и окно никогда не будет беспокоить вас снова."
-L["Usage: /sendtip <index|\"Custom tip\">"] = "Используйте: /sendtip <index|\"Свой совет\">"
-L["You must be an officer in the raid to broadcast a tip."] = "Вы должны быть офицером в рейде для передачи советов."
-L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "Индекс совета выходит за пределы поля, допустимый деапазон индекса от 1 до %d."
 
 -----------------------------------------------------------------------
 -- Emphasize.lua

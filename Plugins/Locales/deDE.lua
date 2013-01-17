@@ -34,9 +34,7 @@ L["Texture"] = "Textur"
 L["Emphasize"] = "Hervorheben"
 L["Enable"] = "Aktiviert"
 L["Move"] = "Bewegen"
-L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "Bewegt hervorgehobene Leisten zur Verankerung für hervorgehobene Leisten. Wenn diese Option deaktiviert ist, werden hervorgehobene Leisten nur ihre Größe und Farbe ändern und möglicherweise anfangen zu blinken."
-L["Flash"] = "Blinken"
-L["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Lässt den Hintergrund der hervorgehobenen Leisten blinken, um sie leichter zu erkennen."
+--L.moveDesc = "Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color."
 L["Regular bars"] = "Normale Leisten"
 L["Emphasized bars"] = "Hervorgehobene Leisten"
 L["Align"] = "Ausrichtung"
@@ -209,26 +207,6 @@ L["Ability name"] = "Fähigkeitsname"
 L["Shows or hides the ability name above the window."] = "Zeigt oder versteckt den Fähigkeitsnamen über dem Fenster."
 L["Tooltip"] = "Tooltip"
 L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Zeigt oder versteckt den Zaubertooltip, wenn die Näheanzeige direkt an eine Bossfähigkeit gebunden ist."
-
------------------------------------------------------------------------
--- Tips.lua
---
-
-L["|cff%s%s|r says:"] = "|cff%s%s|r sagt:"
-L["Cool!"] = "Cool!"
-L["Tips"] = "Tips"
-L["Tip of the Raid"] = "Tip des Tages"
-L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with officers who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "Der Tip des Tages wird normalerweise angezeigt, sobald du eine Raidinstanz betrittst, nicht im Kampf bist und dein Schlachtzug mehr als 9 Spieler hat. Nur ein Tip wird pro Sitzung angezeigt.\n\nHier kannst du einstellen, wie der Tip aussehen soll: Indem ein spezielles Fenster benutzt wird (voreingestellt) oder er in den Chat geschrieben wird. Falls du mit Schlachtzugsleitern spielst, die den |cffff4411/sendtip Befehl|r überstrapazieren, wirst du die Tips wahrscheinlich im Chatfenster unterbringen wollen!"
-L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid officers will also be blocked by this, so be careful."] = "Falls du keine Tips sehen möchtest, kannst du sie hier ausschalten. Tips, die von deinen Schlachtzugsleitern geschickt werden, werden ebenso geblockt, sei also vorsichtig."
-L["Automatic tips"] = "Automatische Tips"
-L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "Falls du wirklich keine der genialen Tips sehen möchtest, die von den weltweit besten PvE-Spielern beigesteuert wurden, kannst du die Funktion hier deaktivieren."
-L["Manual tips"] = "Manuelle Tips"
-L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Schlachtzugsleiter haben die Möglichkeit, den Spielern einen manuellen Tip via /sendtip anzuzeigen. Falls du Schlachtzugsleiter hast, der die Dinger spammen oder du sie aus anderen Gründen nicht mehr sehen willst, kannst du die Funktion hier deaktivieren."
-L["Output to chat frame"] = "Ausgabe ins Chatfenster"
-L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "Standardmäßig werden Tips in einem eigenen, genialen Fenster in der Bildschirmmitte angezeigt. Falls du diese Option aktivierst, werden die Tips NUR als Text in deinem Chatfenster angezeigt."
-L["Usage: /sendtip <index|\"Custom tip\">"] = "Verwendung: /sendtip <index|\"Neuer Tip\">"
-L["You must be an officer in the raid to broadcast a tip."] = "Du musst mindestens Assistent sein, um Tips zu versenden."
-L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "Tip Index verboten, akzeptierte Indizes rangieren von 1 bis %d."
 
 -----------------------------------------------------------------------
 -- Emphasize.lua

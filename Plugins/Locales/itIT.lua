@@ -32,9 +32,7 @@ L["Texture"] = "Texture"
 L["Emphasize"] = "Enfatizza"
 L["Enable"] = "Attiva"
 L["Move"] = "Muovi"
-L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "Muovi le barre enfatizzate verso l'Ancora Enfatizzata. Se questa opzione è disattiva, le barre enfatizzate cambieranno semplicemente dimensione e colore, e forse lampeggieranno."
-L["Flash"] = "Lampeggia"
-L["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Fa lampeggiare lo sfondo delle barre Enfatizzate, per renderle più visibili."
+--L.moveDesc = "Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color."
 L["Regular bars"] = "Barre Normali"
 L["Emphasized bars"] = "Barre Enfatizzate"
 L["Align"] = "Allineamento"
@@ -207,26 +205,6 @@ L["Ability name"] = "Nome dell'Abilità"
 L["Shows or hides the ability name above the window."] = "Visualizza o nasconde il nome dell'abilità sopra la finestra"
 L["Tooltip"] = "ToolTip"
 L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Visualizza o nasconde il tooltip dell'abilità nel display di prossimità ed è strettamente legato all'abilità del boss."
-
------------------------------------------------------------------------
--- Tips.lua
---
-
-L["|cff%s%s|r says:"] = "|cff%s%s|r dice:"
-L["Cool!"] = "Ottimo!"
-L["Tips"] = "Suggerimenti"
-L["Tip of the Raid"] = "Suggerimenti dell'Incursore"
-L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with officers who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "I suggerimenti dell'Incursione verrranno visualizzati quando entri in un'Incursione se non sei in combattimento e il tuo gruppo ha piu' di 9 giocatori. Verra' visualizzato un suggerimento per Incursione.\n\nQui puoi impostare come vengono visualizzati i suggerimenti; se con un popup (default) oppure in chat. Se giochi con ufficiali che ne abusano del |cffff4411comando /sendtip|r, potresti volerli visualizzare in chat!"
-L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid officers will also be blocked by this, so be careful."] = "Se non vuoi vedere nessun suggerimento, puoi disabilitarli qui. Anche i suggerimenti inviati dagli Ufficiali o dal Capo Incrusione verranno bloccati."
-L["Automatic tips"] = "Suggerimenti Automatici"
-L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "Se non vuoi vedere i magnifici suggerimenti che abbiamo, forniti dai migliori giocatori PVE al mondo, puoi disabilitare quest'opzione."
-L["Manual tips"] = "Suggerimenti Manuali"
-L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Gli ufficiali di Incursione hanno l'abilità usare il /sendtip. Se hai un Ufficiale che spamma queste cose, o per qualche ragione non vuoi vedere i suggerimenti, puoi disabilitarli con questa opzione."
-L["Output to chat frame"] = "Visualizza in Chat"
-L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "Di default, i Suggerimenti verranno visualizzati nel loro popup in centro allo schermo. Se abiliti quest'opzione, verranno visualizzati SOLO in chat, e la finestra non ti disturberà più"
-L["Usage: /sendtip <index|\"Custom tip\">"] = "Utilizzo: /sendtip <index|\"Suggerimento personalizzato\">"
-L["You must be an officer in the raid to broadcast a tip."] = "Devi essere un Ufficiale di Incursione per inviare un suggerimento."
-L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "L'indice dei suggerimenti hanno un range accettato da 1 a %d"
 
 -----------------------------------------------------------------------
 -- Emphasize.lua

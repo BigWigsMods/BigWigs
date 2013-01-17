@@ -546,7 +546,7 @@ do
 							emphasizeMove = {
 								type = "toggle",
 								name = L["Move"],
-								desc = L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."],
+								desc = L.moveDesc,
 								order = 3,
 								width = "half",
 							},

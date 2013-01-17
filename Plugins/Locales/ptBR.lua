@@ -33,9 +33,7 @@ L["Texture"] = "Textura"
 L["Emphasize"] = "Enfatizar"
 L["Enable"] = "Habilitar"
 L["Move"] = "Mover"
-L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "Move as barras enfatizadas aol encaixe de Enfatizar. Se esta opcção estiver desabilitada, as barras enfatizadas simplesmente mudarão a cor e a escala, e pode ser que comecem a piscar."
-L["Flash"] = "Piscada"
-L["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Pisca o fundo da barra enfatizada, fazendo-a mais facil de se ver"
+--L.moveDesc = "Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color."
 L["Regular bars"] = "Barras regulares"
 L["Emphasized bars"] = "Barras enfatizadas"
 L["Align"] = "Alinhação"
@@ -202,26 +200,6 @@ L["Ability name"] = "Nome da habilidade"
 L["Shows or hides the ability name above the window."] = "Mostra/oculta o nome da habilidade em cima da janela"
 L["Tooltip"] = "Tooltip"
 L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Mostra/oculta o tooltip do feitiço se a janela de aproximação estiver empatada com uma habilidade de chefe."
-
------------------------------------------------------------------------
--- Tips.lua
---
-
-L["|cff%s%s|r says:"] = "|cff%s%s|r disse:"
-L["Cool!"] = "Legal!"
-L["Tips"] = "Conselhos"
-L["Tip of the Raid"] = "Conselho de raide"
-L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with officers who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "Os conselhos de raide se mostrarão por padrão quando entrar em uma zona dentro de uma instancia de raide, se não estiver em combate, e seu grupo de raid tiver mais de 9 jogadores nele. Somente um conselho aparecerá por sessão, normalmente.\n\nAqui poderá descobrir como visualizar estes conselhos, ou usar a janela amigável (padrão), o visualizalos no chat. Se você joga com oficiais, queira usar o |cffff4411comando /sendtip |r, e poderá ver o que querem mostrando-o no chat ao envés da janela!."
-L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid officers will also be blocked by this, so be careful."] = "Se não quer ver nenhum conselho, sempre, poderá desativalo aqui. Os conselhos enviados por seus oficiais de raide tambem são bloqueados por isto, seja cuidadoso."
-L["Automatic tips"] = "Conselhos automáticos"
-L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "Se não quer ver os formidaveis conselhos que temos, contribuido por alguns dos melhores jogadores de PvE do mundo, em uma janela quando entrar em uma zona de raide, você pode desativar esta opção."
-L["Manual tips"] = "Conselhos manuais"
-L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Os oficiais de raid tem a habilidade de mostrar manualmente conselhos com o comando /sendtip. Se tem um oficial que spama isto, ou por outras razões que não queira ver, você pode desativar com esta opção."
-L["Output to chat frame"] = "Saida na janela de chat"
-L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "Por padrão os conselhos se mostrarão para todos, em uma formidavel janelainha no meio da tela. Se quer mudar isto, porem, os conselhos SÓ serão mostrados em seu chat como texto puro, e a janela nunca aparecerá novamente."
-L["Usage: /sendtip <index|\"Custom tip\">"] = "Use: /sendtip <index|\"Conselho personalizado\">"
-L["You must be an officer in the raid to broadcast a tip."] = "Você deve ser um oficial de raide para mandar um conselho"
-L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "índice de conselhos fora do límite, índices aceitados: 1 a %d."
 
 -----------------------------------------------------------------------
 -- Emphasize.lua

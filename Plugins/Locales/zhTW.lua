@@ -34,9 +34,7 @@ L["Texture"] = "材質"
 L["Emphasize"] = "強調"
 L["Enable"] = "啟用"
 L["Move"] = "移動"
-L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "移動強調計時條到強調錨點。如果此選項關閉，強調計時條將只改變縮放與顏色以及可能開始閃爍。"
-L["Flash"] = "閃爍"
-L["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "強調計時條背景閃爍，方便你留意它。"
+--L.moveDesc = "Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color."
 L["Regular bars"] = "常規計時條"
 L["Emphasized bars"] = "強調計時條"
 L["Align"] = "對齊"
@@ -209,26 +207,6 @@ L["Ability name"] = "技能名稱"
 L["Shows or hides the ability name above the window."] = "在視窗上面顯示或隱藏技能名稱。"
 L["Tooltip"] = "工具提示"
 L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "顯示或隱藏近距離顯示從首領戰鬥技能獲取的法術提示。"
-
------------------------------------------------------------------------
--- Tips.lua
---
-
-L["|cff%s%s|r says:"] = "|cff%s%s|r說："
-L["Cool!"] = "冷靜！"
-L["Tips"] = "提示"
-L["Tip of the Raid"] = "團隊提示"
-L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with officers who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "團隊提示根據預設顯示當你處于團隊副本，不能在戰鬥中以及你的團隊超過9個玩家。通常一個提示只會在進程中顯示一次。\n\n這裡可以調整提示顯示，或者使用我們的漂亮視窗（預設），或是輸出到聊天。如果團長過度使用 |cffff4411/sendtip command|r，反而會想在聊天視窗顯示它們！"
-L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid officers will also be blocked by this, so be careful."] = "如果不想要到任何提示，可以從這裡切換關閉它們。團長發送的提示也會被屏蔽，小心使用。"
-L["Automatic tips"] = "自動提示"
-L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "如果不想要到美妙的提示，成為世界上最好的 PvE 玩家，團隊副本時彈出視窗，你可以禁用這些選項。"
-L["Manual tips"] = "手動提示"
-L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "團長可以使用手動提示 /sendtip 命令顯示給在團隊中的玩家。如果有做這些惡心事的團長或其他理由不想看到它們，可以禁用這些選項。"
-L["Output to chat frame"] = "輸出到聊天視窗"
-L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "預設的提示將會單獨顯示一個美妙的視窗于螢幕中間。如果關閉這些，這些提示“只會”以純文本的形式顯示在聊天視窗且提示視窗將不會再打擾你。"
-L["Usage: /sendtip <index|\"Custom tip\">"] = "用法：/sendtip <index|\"自訂提示\">"
-L["You must be an officer in the raid to broadcast a tip."] = "你必須是團長才能廣播提示。"
-L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "提示索引超出範圍，接受索引範圍從1到%d。"
 
 -----------------------------------------------------------------------
 -- Emphasize.lua
