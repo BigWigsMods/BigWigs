@@ -719,7 +719,10 @@ end
 
 function boss:FlashShake(key, r, g, b)
 	if not checkFlag(self, key, C.FLASHSHAKE) then return end
-	self:SendMessage("BigWigs_FlashShake", self, key)
+	self:SendMessage("BigWigs_Flash", self, key)
+	if type(key) == "number" then
+		self:SendMessage("BigWigs_Pulse", self, key, icons[key]) -- XXX temp hack to evaluate user feedback
+	end
 end
 
 function boss:Say(key, msg)

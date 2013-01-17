@@ -9,12 +9,8 @@ if not mod then return end
 -- Locals
 --
 
-local flashFrame = nil
-
-local originalPoints = nil
-local flasher = nil
-local shaker = nil
-
+local flashFrame, pulseFrame = nil, nil
+local flasher, pulser = nil, nil
 local colors = nil
 
 -------------------------------------------------------------------------------
@@ -23,7 +19,8 @@ local colors = nil
 
 function mod:OnPluginEnable()
 	colors = BigWigs:GetPlugin("Colors")
-	self:RegisterMessage("BigWigs_FlashShake")
+	self:RegisterMessage("BigWigs_Flash")
+	self:RegisterMessage("BigWigs_Pulse")
 
 	if not flashFrame then
 		flashFrame = CreateFrame("Frame", nil, UIParent)
@@ -34,6 +31,8 @@ function mod:OnPluginEnable()
 		flashFrame:Hide()
 
 		flasher = flashFrame:CreateAnimationGroup()
+		flasher:SetScript("OnFinished", function() flashFrame:Hide() end)
+
 		local fade1 = flasher:CreateAnimation("Alpha")
 		fade1:SetDuration(0.2)
 		fade1:SetChange(1)
@@ -51,29 +50,26 @@ function mod:OnPluginEnable()
 		fade4:SetChange(-1)
 		fade4:SetOrder(4)
 
-		shaker = CreateFrame("Frame"):CreateAnimationGroup()
-		shaker:SetScript("OnLoop", function(frame)
-			local x, y = 0, 0
-			frame.count = frame.count + 1
-			if frame.count > 15 then
-				frame:Stop()
-				frame.count = nil
-			else
-				x, y = math.random(-10,10), math.random(-10,10)
-			end
-			WorldFrame:ClearAllPoints()
-			for i, v in next, originalPoints do
-				WorldFrame:SetPoint(v[1], v[2], v[3], v[4] + x, v[5] + y)
-			end
-		end)
-		shaker:SetLooping("REPEAT")
-		local timer = shaker:CreateAnimation()
-		timer:SetDuration(0.05)
+		pulseFrame = CreateFrame("Frame", nil, UIParent)
+		pulseFrame:SetPoint("CENTER", UIParent, "CENTER")
+		pulseFrame:SetSize(1,1)
+		pulseFrame:SetAlpha(0.6)
+		pulseFrame:Hide()
+		pulseFrame.tex = pulseFrame:CreateTexture(nil, "ARTWORK")
+		pulseFrame.tex:SetAllPoints(pulseFrame)
+		pulseFrame.tex:SetTexture("Interface\\Icons\\ability_warrior_charge")
 
-		originalPoints = {}
-		for i = 1, WorldFrame:GetNumPoints() do
-			originalPoints[i] = {WorldFrame:GetPoint(i)}
-		end
+		pulser = pulseFrame:CreateAnimationGroup()
+		pulser:SetScript("OnFinished", function() pulseFrame:Hide() end)
+
+		local pulse1 = pulser:CreateAnimation("Scale")
+		pulse1:SetDuration(0.4)
+		pulse1:SetScale(100,100)
+		pulse1:SetOrder(1)
+		local pulse2 = pulser:CreateAnimation("Scale")
+		pulse2:SetDuration(0.4)
+		pulse2:SetScale(0,0)
+		pulse2:SetOrder(2)
 	end
 end
 
@@ -81,7 +77,7 @@ end
 -- Event Handlers
 --
 
-function mod:BigWigs_FlashShake(event, module, key)
+function mod:BigWigs_Flash(event, module, key)
 	if BigWigs.db.profile.flash then
 		flasher:Stop()
 		local r, g, b = colors:GetColor("flashshake", module, key)
@@ -90,10 +86,14 @@ function mod:BigWigs_FlashShake(event, module, key)
 		flashFrame:Show()
 		flasher:Play()
 	end
-	if not WorldFrame:IsProtected() and BigWigs.db.profile.shake then
-		shaker:Stop()
-		shaker.count = 0
-		shaker:Play()
+end
+
+function mod:BigWigs_Pulse(event, module, key, icon)
+	if BigWigs.db.profile.shake then
+		pulser:Stop()
+		pulseFrame.tex:SetTexture(icon)
+		pulseFrame:Show()
+		pulser:Play()
 	end
 end
 

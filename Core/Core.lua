@@ -226,7 +226,10 @@ do
 			local sound = sounds[math.random(1, #sounds)]
 			local formatted = color..": "..key.." "..(sound and "("..sound..")" or "")
 			addon:SendMessage("BigWigs_Message", addon, key, formatted, color, true, sound, nil, messages[key])
-			if math.random(1, 4) == 2 then addon:SendMessage("BigWigs_FlashShake") end
+			if math.random(1, 4) == 2 then
+				addon:SendMessage("BigWigs_Flash", addon, key)
+				addon:SendMessage("BigWigs_Pulse", addon, key, messages[key])
+			end
 			messages[key] = nil
 		end
 	end
