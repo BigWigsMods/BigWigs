@@ -245,6 +245,8 @@ local reqFuncAddons = {
 }
 
 function loader:OnInitialize()
+	BigWigs3DB.namespaces["BigWigs_Plugins_Tip of the Raid"] = nil -- XXX temp
+
 	for i = 1, GetNumAddOns() do
 		local name, _, _, enabled = GetAddOnInfo(i)
 		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
@@ -312,11 +314,6 @@ function loader:OnEnable()
 				end
 			end
 		end
-	end
-
-	-- XXX Awful, awful hack to prevent the TotR from showing right after login in a LoD setup.
-	if not self.time then
-		self.time = GetTime()
 	end
 
 	loaderUtilityFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
