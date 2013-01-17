@@ -91,7 +91,7 @@ end
 function mod:OnEngage()
 	bossDead = 0
 	for _, v in pairs(lingeringTracker) do v = 0 end
-	self:OpenProximity(5)
+	self:OpenProximity(self:Heroic() and 7 or 5)
 	self:Bar("loa_spirits", "~"..L["loa_spirit"], 27, 137203)
 	self:Bar(136860, "~"..self:SpellName(136860), 7, 136860) -- Quicksand
 	self:Bar(136992, 136992, 60, 136992) -- Biting Cold -- not sure if 1 min is right feels too long
