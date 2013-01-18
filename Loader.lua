@@ -547,6 +547,7 @@ do
 				if load(BigWigs, "BigWigs_Core") then
 					if BigWigs:IsEnabled() and loadOnZone[id] then
 						loadZone(id)
+						sysprint("We've added a new 'pulse' feature which happens at the same time as flash. What do you think of it? How can it be improved or should it be removed? Let us know here: http://www.wowace.com/addons/big-wigs/tickets/527-new-pulse-feature/")
 					else
 						BigWigs:Enable()
 					end
