@@ -570,6 +570,28 @@ end
 -- Boss module APIs for messages, bars, icons, etc.
 --
 
+do
+	local icons = {
+		"6:21:7:27",		-- [0] tank
+		"39:55:7:27",		-- [1] damage
+		"70:86:7:27",		-- [2] healer
+		"102:118:7:27",		-- [3] heroic only
+		"133:153:7:27",		-- [4] deadly
+		"168:182:7:27",		-- [5] important
+		"198:214:7:27",		-- [6] interruptable
+		"229:247:7:27",		-- [7] magic
+		"6:21:40:58",		-- [8] curse
+		"39:55:40:58",		-- [9] poison
+		"70:86:40:58",		-- [10] disease
+		"102:118:40:58",	-- [11] enrage
+	}
+	-- XXX this can potentially be extended to get a whole description from EJ ID with description and flag icons
+	function boss:GetFlagIcon(flag)
+		flag = flag + 1
+		return "|TInterface\\EncounterJournal\\UI-EJ-Icons.blp:16:16:0:0:255:66:".. icons[flag] .."|t"
+	end
+end
+
 local silencedOptions = {}
 do
 	bossUtilityFrame:Hide()
