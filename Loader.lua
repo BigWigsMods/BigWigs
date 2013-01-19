@@ -526,6 +526,7 @@ do
 			end
 		end
 	end
+	local temp -- XXX
 	function loader:ZONE_CHANGED_NEW_AREA()
 		-- Hack to make the zone ID available when reloading/relogging inside an instance.
 		-- This was moved from OnEnable to here because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.
@@ -540,7 +541,10 @@ do
 				if not queueLoad[id] then
 					queueLoad[id] = "unloaded"
 					loaderUtilityFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-					sysprint(L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."])
+					if not temp then
+						temp = true
+						sysprint(L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."])
+					end
 				end
 			else
 				queueLoad[id] = "loaded"
