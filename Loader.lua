@@ -245,7 +245,9 @@ local reqFuncAddons = {
 }
 
 function loader:OnInitialize()
-	BigWigs3DB.namespaces["BigWigs_Plugins_Tip of the Raid"] = nil -- XXX temp
+	if BigWigs3DB and BigWigs3DB.namespaces then
+		BigWigs3DB.namespaces["BigWigs_Plugins_Tip of the Raid"] = nil -- XXX temp
+	end
 
 	for i = 1, GetNumAddOns() do
 		local name, _, _, enabled = GetAddOnInfo(i)
