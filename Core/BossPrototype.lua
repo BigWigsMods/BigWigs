@@ -117,6 +117,7 @@ function boss:GetOption(spellId)
 end
 function boss:Reboot()
 	if debug then dbg(self, ":Reboot()") end
+	self:SendMessage("BigWigs_OnBossReboot", self)
 	self:Disable()
 	self:Enable()
 end
@@ -429,6 +430,7 @@ do
 
 	function boss:Win()
 		if debug then dbg(self, ":Win") end
+		self:SendMessage("BigWigs_OnBossWin", self)
 		self:Sync("Death", self.moduleName)
 		wipe(icons) -- Wipe icon cache
 		wipe(spells)
