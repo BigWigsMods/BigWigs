@@ -240,7 +240,7 @@ local mapData = {
 	TerraceOfEndlessSpring = {
 		{ 702.083984375,468.75 },
 	},
-	ThroneOfThunder = {
+	ThunderKingRaid = {
 		{ 1285,856.6669921875 },
 		{ 1550.009765625,1033.33984375 },
 		{ 1030,686.6669921875 },

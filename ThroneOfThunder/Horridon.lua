@@ -125,6 +125,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:Berserk(600) -- assumed
 	self:Bar("ej:7086", (EJ_GetSectionInfo(7086)), 90, 138686) -- Dino Mancer spawn timer
 end
 
