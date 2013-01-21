@@ -528,7 +528,6 @@ do
 			end
 		end
 	end
-	local temp -- XXX
 	function loader:ZONE_CHANGED_NEW_AREA()
 		-- Hack to make the zone ID available when reloading/relogging inside an instance.
 		-- This was moved from OnEnable to here because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.
@@ -543,17 +542,13 @@ do
 				if not queueLoad[id] then
 					queueLoad[id] = "unloaded"
 					loaderUtilityFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-					if not temp then
-						temp = true
-						sysprint(L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."])
-					end
+					sysprint(L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."])
 				end
 			else
 				queueLoad[id] = "loaded"
 				if load(BigWigs, "BigWigs_Core") then
 					if BigWigs:IsEnabled() and loadOnZone[id] then
 						loadZone(id)
-						sysprint("We've added a new 'pulse' feature which happens at the same time as flash. What do you think of it? How can it be improved or should it be removed? Let us know here: http://www.wowace.com/addons/big-wigs/tickets/527-new-pulse-feature/")
 					else
 						BigWigs:Enable()
 					end
