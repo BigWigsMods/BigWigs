@@ -20,7 +20,7 @@ end
 
 L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "itIT")
 if L then
-	L.engage_yell = "On your guard, invaders. I, Ta'yak, Lord of Blades, will be your opponent."
+	L.engage_yell = "In guardia, invasori. Io, il Signore delle Lame, Ta'yak, sarò il vostro avversario."
 
 	L.unseenstrike_inc = "Assalto Invisibile tra poco!"
 	L.unseenstrike_soon = "Assalto tra ~5-10 sec!"
@@ -71,7 +71,7 @@ if L then
 	L.you_are_casting = "TU stai lanciando!"
 
 	L.unsok = "|cFFF20056Un'sok|r" -- Light Red
-	L.monstrosity = "|cFFFFBE00Monstrosity|r" -- Amber
+	L.monstrosity = "|cFFFFBE00Mostruosità|r" -- Amber
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "itIT")

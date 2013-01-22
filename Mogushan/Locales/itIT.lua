@@ -26,7 +26,7 @@ if L then
 	L.shroud_message = "%2$s attiva Manto su %1$s"
 	L.shroud_can_interrupt = "%s può interrompere %s!"
 	L.barrier_message = "Barriera Attiva!"
-	L.barrier_cooldown = "Barriera in recupero"
+	L.barrier_cooldown = "Recupero Barriera"
 
 	-- Tanks
 	L.tank = "Messaggio solo per Difensori."
@@ -49,14 +49,19 @@ end
 L = BigWigs:NewBossLocale("The Spirit Kings", "itIT")
 if L then
 	L.shield_removed = "Scudo Rimosso! (%s)"
+	L.casting_shields = "Lancio Scudo"
+	L.casting_shields_desc = "Avviso per quando viene lanciato lo Scudo per tutti i boss."
 end
 
 L = BigWigs:NewBossLocale("Elegon", "itIT")
 if L then
-	L.engage_yell = "Entering defensive mode.  Disabling output failsafes."
+	L.engage_yell = "Attivazione modalità difensiva. Disattivazione protezione in uscita."
 
+	L.last_phase = "Ultima Fase"
+	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
+	
 	L.floor = "Scomparsa del Pavimento"
-	L.floor_desc = "Avviso Speciale prima che il vortice svanisca."
+	L.floor_desc = "Avviso Speciale prima che il Vortice svanisca."
 	L.floor_message = "Il Pavimento sta Scomparendo!"
 
 	L.adds = "Adds"
