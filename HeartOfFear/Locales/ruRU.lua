@@ -70,8 +70,8 @@ if L then
 	L.boss_is_casting = "БОСС произносит!"
 	L.you_are_casting = "ВЫ произносите!"
 
-	L.unsok = "|cFFF20056Un'sok|r" -- Light Red
-	L.monstrosity = "|cFFFFBE00Monstrosity|r" -- Amber
+	L.unsok = "|cFFF20056Ун'сок|r" -- Light Red
+	L.monstrosity = "|cFFFFBE00Чудовище|r" -- Amber
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "ruRU")
@@ -82,7 +82,7 @@ if L then
 
 	L.eyes = "Взгляд императрицы"
 	L.eyes_desc = "Считает стаки Взгляда императрицы и показывает таймер."
-	L.eyes_message = "%2$dx Взгляд на |3-5(%1$s)"
+	L.eyes_message = "%2$dx Взгляд: %1$s"
 
 	L.fumes_bar = "Ваш эффект паров"
 end
