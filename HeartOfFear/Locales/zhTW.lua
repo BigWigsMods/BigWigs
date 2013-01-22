@@ -69,6 +69,9 @@ if L then
 
 	L.boss_is_casting = "»首領«在施法！"
 	L.you_are_casting = "»你«在施法！"
+
+	L.unsok = "|cFFF20056Un'sok|r" -- Light Red
+	L.monstrosity = "|cFFFFBE00Monstrosity|r" -- Amber
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "zhTW")

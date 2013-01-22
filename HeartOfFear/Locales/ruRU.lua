@@ -69,6 +69,9 @@ if L then
 
 	L.boss_is_casting = "БОСС произносит!"
 	L.you_are_casting = "ВЫ произносите!"
+
+	L.unsok = "|cFFF20056Un'sok|r" -- Light Red
+	L.monstrosity = "|cFFFFBE00Monstrosity|r" -- Amber
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "ruRU")

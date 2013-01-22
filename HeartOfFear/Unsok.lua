@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Amber-Shaper Un'sok", 897, 737)
 if not mod then return end
-mod:RegisterEnableMob(62511)
+mod:RegisterEnableMob(62511, 62711) -- Un'sok, Monstrosity
 
 --------------------------------------------------------------------------------
 -- Locales
@@ -51,6 +51,9 @@ if L then
 
 	L.boss_is_casting = "BOSS is casting!"
 	L.you_are_casting = "YOU are casting!"
+
+	L.unsok = "|cFFF20056Un'sok|r" -- Light Red
+	L.monstrosity = "|cFFFFBE00Monstrosity|r" -- Amber
 end
 L = mod:GetLocale()
 
@@ -214,8 +217,11 @@ function mod:BreakFree(_, _, source)
 	end
 end
 
-function mod:Destabilize(player, spellId, _, _, spellName)
-	self:Bar(spellId, CL["other"]:format(spellName, player), self:LFR() and 60 or 15, spellId)
+function mod:Destabilize(player, spellId, _, _, spellName, buffStack, _, _, _, dGUID)
+	local id = self:GetCID(dGUID)
+	if id == 62511 or id == 62711 then
+		self:Bar(spellId, ("%s [%d]: %s"):format(spellName, buffStack or 1, id == 62511 and L["unsok"] or L["monstrosity"]), self:LFR() and 60 or 15, spellId)
+	end
 end
 
 do
