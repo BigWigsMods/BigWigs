@@ -31,6 +31,7 @@ if L then
 
 	L.explosion_by_you = "Amber Explosion on you"
 	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
+	L.explosion_by_you_bar = "You start casting..."
 	L.explosion_by_you_icon = 122398
 
 	L.explosion_casting_by_you = "Amber Explosion cast by you"
@@ -199,7 +200,7 @@ function mod:ReshapeLife(player, spellId, _, _, spellName)
 	end
 
 	if UnitIsUnit("player", player) then
-		self:Bar("explosion_by_you", CL["you"]:format(explosion), 15, 122398)
+		self:Bar("explosion_by_you", L["explosion_by_you_bar"], 15, 122398)
 		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "MyWillpower", "player")
 	elseif UnitIsUnit("focus", player) then
 		self:Bar("explosion_by_other", CL["other"]:format(player, explosion), 15, 122398)
@@ -210,7 +211,7 @@ function mod:BreakFree(_, _, source)
 	if UnitIsUnit("player", source) then
 		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "player")
 		self:StopBar(CL["cast"]:format(CL["you"]:format(explosion)))
-		self:StopBar(CL["you"]:format(explosion))
+		self:StopBar(L["explosion_by_you_bar"])
 	elseif UnitIsUnit("focus", source) then
 		self:StopBar(CL["cast"]:format(CL["other"]:format(source, explosion)))
 		self:StopBar(CL["other"]:format(source, explosion))
@@ -236,7 +237,7 @@ do
 		if UnitIsUnit("player", player) then
 			self:FlashShake("explosion_casting_by_you")
 			self:Bar("explosion_casting_by_you", CL["cast"]:format(CL["you"]:format(spellName)), 2.5, spellId)
-			self:Bar("explosion_by_you", CL["you"]:format(spellName), 13, spellId) -- cooldown
+			self:Bar("explosion_by_you", L["explosion_by_you_bar"], 13, spellId) -- cooldown
 			warningSpam(spellName)
 		elseif UnitIsUnit("focus", player) then
 			self:FlashShake("explosion_casting_by_other")

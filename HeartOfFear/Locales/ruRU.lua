@@ -55,6 +55,7 @@ if L then
 	L.explosion_casting_by_other_desc = "Предупреждение о чтении Янтарного взрыва чудовищем или целью вашего фокуса. Крайне рекомендуется включить Увеличение!"
 
 	L.explosion_by_you = "Янтарный взрыв на вас"
+	L.explosion_by_you_bar = "You start casting..."
 	L.explosion_by_you_desc = "Предупреждение о восстановлении вашего Янтарного взрыва."
 
 	L.explosion_casting_by_you = "Ваше чтение Янтарного взрыва"

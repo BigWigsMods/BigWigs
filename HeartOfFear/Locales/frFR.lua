@@ -55,6 +55,7 @@ if L then
 	L.explosion_casting_by_other_desc = "Alertes d'incantation des Explosions d'ambre que la Monstruosité d'ambre ou que votre cible de focalisation lance. Mettre en évidence ceci est fortement recommandé !"
 
 	L.explosion_by_you = "Explosion d'ambre sur vous"
+	L.explosion_by_you_bar = "You start casting..."
 	L.explosion_by_you_desc = "Alerte de temps de recharge de vos Explosions d'ambre."
 
 	L.explosion_casting_by_you = "Explosion d'ambre incanté par vous"

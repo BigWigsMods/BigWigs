@@ -55,6 +55,7 @@ if L then
 	L.explosion_casting_by_other_desc = "Casting warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
 
 	L.explosion_by_you = "Amber Explosion on you"
+	L.explosion_by_you_bar = "You start casting..."
 	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
 
 	L.explosion_casting_by_you = "Amber Explosion cast by you"

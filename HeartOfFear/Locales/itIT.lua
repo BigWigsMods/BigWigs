@@ -55,6 +55,7 @@ if L then
 	L.explosion_casting_by_other_desc = "Visualizza avvisi per i lanci di Esplosione d'Ambra della Mostruosità d'Ambra sul tuo bersaglio focus. È caldamente raccomandato di enfatizzare questi messaggi!"
 
 	L.explosion_by_you = "Esplosione d'Ambra su di te"
+	L.explosion_by_you_bar = "You start casting..."
 	L.explosion_by_you_desc = "Avviso recupero mancante per la tua Esplosione d'Ambra."
 
 	L.explosion_casting_by_you = "Esplosione d'Ambra lanciata da te"

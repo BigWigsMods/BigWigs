@@ -55,6 +55,7 @@ if L then
 	L.explosion_casting_by_other_desc = "Casting warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
 
 	L.explosion_by_you = "你的琥珀爆炸"
+	L.explosion_by_you_bar = "You start casting..."
 	L.explosion_by_you_desc = "你的琥珀爆炸的冷卻警告。"
 
 	L.explosion_casting_by_you = "你施放琥珀爆炸"

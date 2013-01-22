@@ -55,6 +55,7 @@ if L then
 	L.explosion_casting_by_other_desc = "Deflagración de ámbar empezados por Monstruosidad de ámbar o tu foco si lo tienes marcado. ¡Es altamente recomendable enfatizar esto!"
 
 	L.explosion_by_you = "Deflagración de ámbar en ti"
+	L.explosion_by_you_bar = "You start casting..."
 	L.explosion_by_you_desc = "Deflagración de ámbar propia."
 
 	L.explosion_casting_by_you = "Deflagración de ámbar lanzado por ti"
