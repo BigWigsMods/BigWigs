@@ -64,7 +64,7 @@ if L then
 	L.fling_message = "快吸水！"
 	L.parasite = "寄生生长"
 
-	L.boss_is_casting = "»首领«在施法！"
+	L.monstrosity_is_casting = "Monstrosity: Explosion"
 	L.you_are_casting = "»你«在施法！"
 
 	L.unsok_short = "|cFFF20056Boss|r" -- Light Red

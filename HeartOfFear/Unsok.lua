@@ -8,10 +8,10 @@ if not mod then return end
 mod:RegisterEnableMob(62511, 62711) -- Un'sok, Monstrosity
 
 --------------------------------------------------------------------------------
--- Locales
+-- Locals
 --
 
-local reshapeLife, explosion = mod:SpellName(122784), mod:SpellName(122398) --106966
+local explosion = mod:SpellName(106966)
 local phase, primaryIcon = 1, nil
 local reshapeLifeCounter = 1
 
@@ -50,7 +50,7 @@ if L then
 	L.fling_message = "Getting tossed!"
 	L.parasite = "Parasite"
 
-	L.boss_is_casting = "BOSS is casting!"
+	L.monstrosity_is_casting = "Monstrosity: Explosion"
 	L.you_are_casting = "YOU are casting!"
 
 	L.unsok_short = "|cFFF20056Boss|r" -- Light Red
@@ -99,7 +99,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "BurningAmber", 122504)
 	self:Log("SPELL_MISSED", "BurningAmber", 122504)
 
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "BreakFreeHP", "player")
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "MonstrosityInc", "boss1")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_INTERRUPTED", "Interrupt", "player", "focus")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_STOP", "MonstrosityStopCast", "boss1", "boss2")
@@ -202,6 +201,7 @@ function mod:ReshapeLife(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		self:Bar("explosion_by_you", L["explosion_by_you_bar"], 15, 122398)
 		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "MyWillpower", "player")
+		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "BreakFreeHP", "player")
 	elseif UnitIsUnit("focus", player) then
 		self:Bar("explosion_by_other", CL["other"]:format(player, explosion), 15, 122398)
 	end
@@ -210,9 +210,11 @@ end
 function mod:BreakFree(_, _, source)
 	if UnitIsUnit("player", source) then
 		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "player")
-		self:StopBar(CL["cast"]:format(CL["you"]:format(explosion)))
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "player")
+		self:StopBar(CL["cast"]:format(explosion))
 		self:StopBar(L["explosion_by_you_bar"])
 	elseif UnitIsUnit("focus", source) then
+		source = source:gsub("%-.+", "*")
 		self:StopBar(CL["cast"]:format(CL["other"]:format(source, explosion)))
 		self:StopBar(CL["other"]:format(source, explosion))
 	end
@@ -236,27 +238,28 @@ do
 	function mod:AmberExplosion(_, spellId, player, _, spellName)
 		if UnitIsUnit("player", player) then
 			self:FlashShake("explosion_casting_by_you")
-			self:Bar("explosion_casting_by_you", CL["cast"]:format(CL["you"]:format(spellName)), 2.5, spellId)
+			self:Bar("explosion_casting_by_you", CL["cast"]:format(explosion), 2.5, spellId)
 			self:Bar("explosion_by_you", L["explosion_by_you_bar"], 13, spellId) -- cooldown
 			warningSpam(spellName)
 		elseif UnitIsUnit("focus", player) then
 			self:FlashShake("explosion_casting_by_other")
-			self:Bar("explosion_by_other", CL["other"]:format(player, spellName), 13, spellId) -- cooldown
-			self:Bar("explosion_casting_by_other", CL["cast"]:format(CL["other"]:format(player, spellName)), 2.5, spellId)
-			self:LocalMessage("explosion_casting_by_other", CL["other"]:format(player, spellName), "Important", spellId, "Alert") -- associate the message with the casting toggle option
+			player = player:gsub("%-.+", "*")
+			self:Bar("explosion_by_other", CL["other"]:format(player, explosion), 13, spellId) -- cooldown
+			self:Bar("explosion_casting_by_other", CL["cast"]:format(CL["other"]:format(player, explosion)), 2.5, spellId)
+			self:LocalMessage("explosion_casting_by_other", CL["other"]:format(player, explosion), "Important", spellId, "Alert") -- associate the message with the casting toggle option
 		end
 	end
 end
 
-function mod:Interrupt(unitId, spellName, _, _, spellId)
+function mod:Interrupt(unitId, _, _, _, spellId)
 	--Mutated Construct's Struggle for Control doesn't fire a SPELL_INTERRUPT
 	if spellId == 122398 then
 		if unitId == "player" then
-			self:StopBar(CL["cast"]:format(CL["you"]:format(spellName)))
+			self:StopBar(CL["cast"]:format(explosion))
 		elseif unitId == "focus" then
 			local player, server = UnitName(unitId)
-			if server then player = player.."-"..server end
-			self:StopBar(CL["cast"]:format(CL["other"]:format(player, spellName)))
+			if server then player = player.."*" end
+			self:StopBar(CL["cast"]:format(CL["other"]:format(player, explosion)))
 		end
 	end
 end
@@ -289,14 +292,12 @@ end
 do
 	local prev = 0
 	function mod:BreakFreeHP(unitId)
-		if UnitDebuff(unitId, reshapeLife) then --Break Free Warning
-			local t = GetTime()
-			if t-prev > 1 then
-				local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-				if hp < 21 then
-					prev = t
-					self:LocalMessage(123060, L["break_free_message"]:format(hp), "Personal", 123060)
-				end
+		local t = GetTime()
+		if t-prev > 1 then
+			local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+			if hp < 21 then
+				prev = t
+				self:LocalMessage(123060, L["break_free_message"]:format(hp), "Personal", 123060)
 			end
 		end
 	end
@@ -311,7 +312,7 @@ function mod:AmberCarapace(_, spellId)
 	self:DelayedMessage("explosion_by_other", 35, CL["custom_sec"]:format(explosion, 20), "Attention", 122402)
 	self:DelayedMessage("explosion_by_other", 40, CL["custom_sec"]:format(explosion, 15), "Attention", 122402)
 	self:DelayedMessage("explosion_by_other", 45, CL["custom_sec"]:format(explosion, 10), "Attention", 122402)
-	self:Bar("explosion_by_other", "~"..CL["onboss"]:format(explosion), 55, 122402) -- Monstrosity Explosion
+	self:Bar("explosion_by_other", "~"..L["monstrosity_is_casting"], 55, 122402) -- Monstrosity Explosion
 
 	self:Bar(122408, "~"..mod:SpellName(122408), 22, 122408) --Massive Stomp
 	self:Bar(122413, "~"..mod:SpellName(122413), 30, 122413) --Fling
@@ -319,8 +320,8 @@ end
 
 do
 	local function warningSpam(spellName)
-		if UnitCastingInfo("boss2") == spellName then
-			mod:LocalMessage("explosion_casting_by_other", L["boss_is_casting"], "Important", 122398, "Alert")
+		if UnitCastingInfo("boss1") == spellName or UnitCastingInfo("boss2") == spellName then
+			mod:LocalMessage("explosion_casting_by_other", L["monstrosity_is_casting"], "Important", 122398, "Alert")
 			mod:ScheduleTimer(warningSpam, 0.5, spellName)
 		end
 	end
@@ -328,9 +329,9 @@ do
 		self:DelayedMessage("explosion_by_other", 25, CL["custom_sec"]:format(spellName, 20), "Attention", spellId)
 		self:DelayedMessage("explosion_by_other", 30, CL["custom_sec"]:format(spellName, 15), "Attention", spellId)
 		self:DelayedMessage("explosion_by_other", 35, CL["custom_sec"]:format(spellName, 10), "Attention", spellId)
-		self:Bar("explosion_casting_by_other", L["boss_is_casting"], 2.5, 122398)
-		self:Bar("explosion_by_other", "~"..CL["onboss"]:format(spellName), 45, spellId) -- cooldown, don't move this
-		if UnitDebuff("player", reshapeLife) then
+		self:Bar("explosion_casting_by_other", L["monstrosity_is_casting"], 2.5, 122398)
+		self:Bar("explosion_by_other", "~"..L["monstrosity_is_casting"], 45, spellId) -- cooldown, don't move this
+		if UnitDebuff("player", self:SpellName(122784)) then -- Reshape Life
 			self:FlashShake("explosion_casting_by_other")
 			warningSpam(spellName)
 		end
@@ -340,7 +341,7 @@ end
 --Monstrosity's Amber Explosion
 function mod:MonstrosityStopCast(_, _, _, _, spellId)
 	if spellId == 122402 then
-		self:StopBar(L["boss_is_casting"])
+		self:StopBar(L["monstrosity_is_casting"])
 	end
 end
 
@@ -364,7 +365,7 @@ end
 -- Phase 3
 
 function mod:ConcentratedMutation(_, spellId, _, _, spellName)
-	self:StopBar("~"..CL["onboss"]:format(explosion))
+	self:StopBar("~"..L["monstrosity_is_casting"]))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 20))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 15))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 10))

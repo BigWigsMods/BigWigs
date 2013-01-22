@@ -68,7 +68,7 @@ if L then
 	L.fling_message = "Vous allez être jeté !"
 	L.parasite = "Parasite"
 
-	L.boss_is_casting = "Le BOSS est en train d'incanter !"
+	L.monstrosity_is_casting = "Monstrosity: Explosion"
 	L.you_are_casting = "VOUS êtes en train d'incanter !"
 
 	L.unsok_short = "|cFFF20056Boss|r" -- Light Red
