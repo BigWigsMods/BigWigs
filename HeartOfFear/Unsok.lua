@@ -52,8 +52,8 @@ if L then
 	L.boss_is_casting = "BOSS is casting!"
 	L.you_are_casting = "YOU are casting!"
 
-	L.unsok = "|cFFF20056Un'sok|r" -- Light Red
-	L.monstrosity = "|cFFFFBE00Monstrosity|r" -- Amber
+	L.unsok_short = "|cFFF20056Boss|r" -- Light Red
+	L.monstrosity_short = "|cFFFFBE00Add|r" -- Amber
 end
 L = mod:GetLocale()
 
@@ -220,7 +220,8 @@ end
 function mod:Destabilize(player, spellId, _, _, spellName, buffStack, _, _, _, dGUID)
 	local id = self:GetCID(dGUID)
 	if id == 62511 or id == 62711 then
-		self:Bar(spellId, ("%s [%d]: %s"):format(spellName, buffStack or 1, id == 62511 and L["unsok"] or L["monstrosity"]), self:LFR() and 60 or 15, spellId)
+		self:StopBar(("%s: [%d]%s"):format(id == 62511 and L["unsok_short"] or L["monstrosity_short"], (buffStack or 1)-1, spellName))
+		self:Bar(spellId, ("%s: [%d]%s"):format(id == 62511 and L["unsok_short"] or L["monstrosity_short"], buffStack or 1, spellName), self:LFR() and 60 or 15, spellId)
 	end
 end
 
