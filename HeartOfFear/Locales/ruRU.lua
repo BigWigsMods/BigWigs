@@ -55,8 +55,8 @@ if L then
 	L.explosion_casting_by_other_desc = "Предупреждение о чтении Янтарного взрыва чудовищем или целью вашего фокуса. Крайне рекомендуется включить Увеличение!"
 
 	L.explosion_by_you = "Янтарный взрыв на вас"
-	L.explosion_by_you_bar = "You start casting..."
 	L.explosion_by_you_desc = "Предупреждение о восстановлении вашего Янтарного взрыва."
+	L.explosion_by_you_bar = "Вы начинаете чтение..."
 
 	L.explosion_casting_by_you = "Ваше чтение Янтарного взрыва"
 	L.explosion_casting_by_you_desc = "Предупреждение о вашем чтении Янтарного взрыва. Крайне рекомендуется включить Увеличение!"
@@ -68,11 +68,11 @@ if L then
 	L.fling_message = "Бросок!"
 	L.parasite = "Паразит"
 
-	L.monstrosity_is_casting = "Monstrosity: Explosion"
+	L.monstrosity_is_casting = "Чудовище: Взрыв"
 	L.you_are_casting = "ВЫ произносите!"
 
-	L.unsok_short = "|cFFF20056Boss|r" -- Light Red
-	L.monstrosity_short = "|cFFFFBE00Add|r" -- Amber
+	L.unsok_short = "|cFFF20056Босс|r" -- Light Red
+	L.monstrosity_short = "|cFFFFBE00Адд|r" -- Amber
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "ruRU")
