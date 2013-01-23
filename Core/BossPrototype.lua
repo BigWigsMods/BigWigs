@@ -184,18 +184,18 @@ do
 		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	end
 
-	bossUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sGUID, source, sFlags, _, dGUID, player, dFlags, _, spellId, spellName, _, secSpellId, buffStack)
+	bossUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, spellSchool, extraSpellID, amount)
 		for i = #enabledModules, 1, -1 do
 			local self = enabledModules[i]
 			if event == "UNIT_DIED" then
-				local numericId = tonumber(dGUID:sub(6, 10), 16)
+				local numericId = tonumber(destGUID:sub(6, 10), 16)
 				local m = eventMap[self][event]
 				if m and m[numericId] then
 					local func = m[numericId]
 					if type(func) == "function" then
-						func(numericId, dGUID, player, dFlags)
+						func(numericId, destGUID, destName, destFlags)
 					else
-						self[func](self, numericId, dGUID, player, dFlags)
+						self[func](self, numericId, destGUID, destName, destFlags)
 					end
 				end
 			else
@@ -203,9 +203,9 @@ do
 				if m and (m[spellId] or m["*"]) then
 					local func = m[spellId] or m["*"]
 					if type(func) == "function" then
-						func(player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID, sGUID)
+						func(destName, spellId, sourceName, extraSpellID, spellName, amount, event, sourceFlags, destFlags, destGUID, sourceGUID)
 					else
-						self[func](self, player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID, sGUID)
+						self[func](self, destName, spellId, sourceName, extraSpellID, spellName, amount, event, sourceFlags, destFlags, destGUID, sourceGUID)
 						if debug then dbg(self, "Firing func: "..func) end
 					end
 				end
