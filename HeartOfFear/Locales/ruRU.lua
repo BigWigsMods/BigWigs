@@ -5,7 +5,7 @@ if L then
 
 	L.force_message = "AoE импульс"
 
-	L.attenuation = EJ_GetSectionInfo(6426) .. " (кольца)"
+	L.attenuation = EJ_GetSectionInfo(6426)
 	L.attenuation_bar = "Кольца... танцуем!"
 	L.attenuation_message = "%s Танцуем %s"
 	L.echo = "|c001cc986Эхо|r"
