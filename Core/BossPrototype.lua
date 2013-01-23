@@ -14,6 +14,7 @@ local C = core.C
 local pName = UnitName("player")
 local bossUtilityFrame = CreateFrame("Frame")
 local enabledModules = {}
+local allowedEvents = {}
 local difficulty = 3
 local UpdateDispelStatus = nil
 
@@ -108,6 +109,14 @@ function boss:OnDisable()
 	-- Empty the event maps for this module
 	eventMap[self] = nil
 	unitEventMap[self] = nil
+	wipe(allowedEvents)
+
+	-- Re-add allowed events if more than one module is enabled
+	for a, b in pairs(eventMap) do
+		for k in pairs(b) do
+			allowedEvents[k] = true
+		end
+	end
 
 	self.isEngaged = nil
 	self:SendMessage("BigWigs_OnBossDisable", self)
@@ -185,28 +194,33 @@ do
 	end
 
 	bossUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, spellSchool, extraSpellID, amount)
-		for i = #enabledModules, 1, -1 do
-			local self = enabledModules[i]
+		if allowedEvents[event] then
 			if event == "UNIT_DIED" then
 				local numericId = tonumber(destGUID:sub(6, 10), 16)
-				local m = eventMap[self][event]
-				if m and m[numericId] then
-					local func = m[numericId]
-					if type(func) == "function" then
-						func(numericId, destGUID, destName, destFlags)
-					else
-						self[func](self, numericId, destGUID, destName, destFlags)
+				for i = #enabledModules, 1, -1 do
+					local self = enabledModules[i]
+					local m = eventMap[self][event]
+					if m and m[numericId] then
+						local func = m[numericId]
+						if type(func) == "function" then
+							func(numericId, destGUID, destName, destFlags)
+						else
+							self[func](self, numericId, destGUID, destName, destFlags)
+						end
 					end
 				end
 			else
-				local m = eventMap[self][event]
-				if m and (m[spellId] or m["*"]) then
-					local func = m[spellId] or m["*"]
-					if type(func) == "function" then
-						func(destName, spellId, sourceName, extraSpellID, spellName, amount, event, sourceFlags, destFlags, destGUID, sourceGUID)
-					else
-						self[func](self, destName, spellId, sourceName, extraSpellID, spellName, amount, event, sourceFlags, destFlags, destGUID, sourceGUID)
-						if debug then dbg(self, "Firing func: "..func) end
+				for i = #enabledModules, 1, -1 do
+					local self = enabledModules[i]
+					local m = eventMap[self][event]
+					if m and (m[spellId] or m["*"]) then
+						local func = m[spellId] or m["*"]
+						if type(func) == "function" then
+							func(destName, spellId, sourceName, extraSpellID, spellName, amount, event, sourceFlags, destFlags, destGUID, sourceGUID)
+						else
+							self[func](self, destName, spellId, sourceName, extraSpellID, spellName, amount, event, sourceFlags, destFlags, destGUID, sourceGUID)
+							if debug then dbg(self, "Firing func: "..func) end
+						end
 					end
 				end
 			end
@@ -223,6 +237,7 @@ do
 				print(format(invalidId, self.moduleName, id, event))
 			end
 		end
+		allowedEvents[event] = true
 		bossUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 	function boss:Death(func, ...)
@@ -232,6 +247,7 @@ do
 		for i = 1, select("#", ...) do
 			eventMap[self]["UNIT_DIED"][(select(i, ...))] = func
 		end
+		allowedEvents.UNIT_DIED = true
 		bossUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 end
