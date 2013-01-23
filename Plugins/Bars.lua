@@ -249,6 +249,7 @@ end
 
 plugin.defaultDB = {
 	scale = 1.0,
+	fontSize = 10,
 	texture = "BantoBar",
 	font = nil,
 	growup = true,
@@ -458,10 +459,19 @@ do
 						},
 						--width = "full",
 					},
+					fontSize = {
+						type = "range",
+						name = L["Font size"],
+						order = 3,
+						max = 40,
+						min = 6,
+						step = 1,
+						width = "full",
+					},
 					texture = {
 						type = "select",
 						name = L["Texture"],
-						order = 2.1,
+						order = 4,
 						values = media:List("statusbar"),
 						--width = "full",
 						itemControl = "DDI-Statusbar",
@@ -469,11 +479,10 @@ do
 					barStyle = {
 						type = "select",
 						name = L["Style"],
-						order = 2.2,
+						order = 5,
 						values = barStyleRegister,
 						--width = "full",
 					},
-
 					align = {
 						type = "select",
 						name = L["Align"],
@@ -484,27 +493,27 @@ do
 						},
 						style = "radio",
 						width = "half",
-						order = 3,
+						order = 6,
 					},
 					icon = {
 						type = "toggle",
 						name = L["Icon"],
 						desc = L["Shows or hides the bar icons."],
-						order = 4,
+						order = 7,
 						width = "half",
 					},
 					time = {
 						type = "toggle",
 						name = L["Time"],
 						desc = L["Whether to show or hide the time left on the bars."],
-						order = 5,
+						order = 8,
 						width = "half",
 					},
 					fill = {
 						type = "toggle",
 						name = L["Fill"],
 						desc = L["Fills the bars up instead of draining them."],
-						order = 6,
+						order = 9,
 						width = "half",
 					},
 					normal = {
@@ -525,7 +534,7 @@ do
 								min = 0.2,
 								max = 2.0,
 								step = 0.1,
-								order = 3,
+								order = 2,
 								width = "full",
 							},
 						},
@@ -547,14 +556,14 @@ do
 								type = "toggle",
 								name = L["Move"],
 								desc = L.moveDesc,
-								order = 3,
+								order = 2,
 								width = "half",
 							},
 							emphasizeRestart = {
 								type = "toggle",
 								name = L["Restart"],
 								desc = L["Restarts emphasized bars so they start from the beginning and count from 10."],
-								order = 4,
+								order = 3,
 								width = "half",
 								disabled = function() return not db.emphasizeMove end,
 							},
@@ -562,19 +571,19 @@ do
 								type = "toggle",
 								name = L["Grow upwards"],
 								desc = L["Toggle bars grow upwards/downwards from anchor."],
-								order = 5,
+								order = 4,
 							},
 							emphasizeScale = {
 								type = "range",
 								name = L["Scale"],
-								order = 6,
+								order = 5,
 								min = 0.2,
 								max = 2.0,
 								step = 0.1,
 								width = "full",
 							},
 						},
-						order = 20,
+						order = 11,
 					},
 				},
 			}
@@ -1107,8 +1116,8 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon)
 	bar.candyBarLabel:SetTextColor(colors:GetColor("barText", module, key))
 	bar.candyBarLabel:SetJustifyH(db.align)
 	local f = media:Fetch("font", db.font)
-	bar.candyBarLabel:SetFont(f, 10, db.outline)
-	bar.candyBarDuration:SetFont(f, 10, db.outline)
+	bar.candyBarLabel:SetFont(f, db.fontSize, db.outline)
+	bar.candyBarDuration:SetFont(f, db.fontSize, db.outline)
 	bar:SetLabel(text)
 	bar:SetClampedToScreen(true)
 	bar:SetDuration(time)
