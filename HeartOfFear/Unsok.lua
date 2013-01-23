@@ -69,7 +69,7 @@ function mod:GetOptions()
 		"monstrosity", "explosion_by_other", { "explosion_casting_by_other", "FLASHSHAKE" }, 122413, 122408,
 		122556,
 		{121995, "FLASHSHAKE", "SAY"}, 123020, {121949, "FLASHSHAKE"},
-		"berserk", "bosskill", --"proximity",
+		"berserk", "bosskill",
 	}, {
 		["ej:6548"] = "heroic",
 		[122784] = "ej:6249",
@@ -365,7 +365,7 @@ end
 -- Phase 3
 
 function mod:ConcentratedMutation(_, spellId, _, _, spellName)
-	self:StopBar("~"..L["monstrosity_is_casting"]))
+	self:StopBar("~"..L["monstrosity_is_casting"])
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 20))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 15))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 10))
