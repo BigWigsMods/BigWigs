@@ -7,8 +7,8 @@ if L then
 
 	L.attenuation = EJ_GetSectionInfo(6426) .. " (anneaux)"
 	L.attenuation_bar = "Anneaux... dansez !"
-	L.attenuation_message = "%s Dancing %s"
-	L.echo = "|c001cc986Echo|r"
+	L.attenuation_message = "Danse |2 %s %s"
+	L.echo = "|c001cc986l'Echo|r"
 	L.zorlok = "|c00ed1ffaZor'lok|r"
 	L.left = "|c00008000<- Gauche <-|r"
 	L.right = "|c00FF0000-> Droite ->|r"
@@ -55,7 +55,7 @@ if L then
 	L.explosion_casting_by_other_desc = "Alertes d'incantation des Explosions d'ambre que la Monstruosité d'ambre ou que votre cible de focalisation lance. Mettre en évidence ceci est fortement recommandé !"
 
 	L.explosion_by_you = "Explosion d'ambre sur vous"
-	L.explosion_by_you_bar = "You start casting..."
+	L.explosion_by_you_bar = "Vous commencez à incanter..."
 	L.explosion_by_you_desc = "Alerte de temps de recharge de vos Explosions d'ambre."
 
 	L.explosion_casting_by_you = "Explosion d'ambre incanté par vous"
@@ -68,11 +68,11 @@ if L then
 	L.fling_message = "Vous allez être jeté !"
 	L.parasite = "Parasite"
 
-	L.monstrosity_is_casting = "Monstrosity: Explosion"
+	L.monstrosity_is_casting = "Monstruosité : Explosion"
 	L.you_are_casting = "VOUS êtes en train d'incanter !"
 
 	L.unsok_short = "|cFFF20056Boss|r" -- Light Red
-	L.monstrosity_short = "|cFFFFBE00Add|r" -- Amber
+	L.monstrosity_short = "|cFFFFBE00Monstruosité|r" -- Amber
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "frFR")
