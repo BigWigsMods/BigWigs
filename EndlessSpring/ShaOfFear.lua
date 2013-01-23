@@ -305,14 +305,14 @@ do -- COPY PASTE ACTION FROM COBALT MINE! see if this works
 				mod:SaySelf(119519, eerieSkull)
 				mod:FlashShake(119519)
 			end
-			mod:CancelTimer(timer, true)
+			mod:CancelTimer(timer)
 			timer = nil
 			return
 		end
 		-- 19 == 0.95sec
 		-- Safety check if the unit doesn't exist
 		if fired > 18 then
-			mod:CancelTimer(timer, true)
+			mod:CancelTimer(timer)
 			timer = nil
 		end
 	end

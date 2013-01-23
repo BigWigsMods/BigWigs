@@ -157,7 +157,7 @@ do
 		local player = UnitName("boss1targettarget") --Boss targets an invisible mob, which targets player. Calling boss1targettarget allows us to see it anyways
 		if player and not UnitIsUnit("boss1targettarget", "boss1") then --target target is himself, so he's not targeting off scalple mob yet
 			mod:TargetMessage(spellId, spellId, player, "Attention", spellId, "Long")
-			mod:CancelTimer(timer, true)
+			mod:CancelTimer(timer)
 			timer = nil
 			if UnitIsUnit("boss1targettarget", "player") then
 				mod:FlashShake(spellId)
@@ -168,7 +168,7 @@ do
 		-- 19 == 0.95sec
 		-- Safety check if the unit doesn't exist or boss never targets anything but himself
 		if fired > 18 then
-			mod:CancelTimer(timer, true)
+			mod:CancelTimer(timer)
 			timer = nil
 			mod:Message(spellId, spellId, "Attention", spellId) -- Give generic warning as a backup
 		end

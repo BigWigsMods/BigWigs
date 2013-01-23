@@ -114,7 +114,7 @@ do
 		end
 		mod:PrimaryIcon("unseenstrike")
 		if timer then
-			mod:CancelTimer(timer, true) -- Should never last this long, but no harm in it
+			mod:CancelTimer(timer) -- Should never last this long, but no harm in it
 			timer = nil
 		end
 	end
@@ -128,7 +128,7 @@ do
 			end
 		end
 		if player then
-			mod:CancelTimer(timer, true)
+			mod:CancelTimer(timer)
 			timer = nil
 			local name, server = UnitName(player)
 			if server then name = name .."-".. server end

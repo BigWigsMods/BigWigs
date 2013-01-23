@@ -195,7 +195,7 @@ do
 		if player and (not UnitDetailedThreatSituation("boss2target", "boss2") or fired > 13) then
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
 			mod:TargetMessage(spellId, spellId, player, "Urgent", spellId, "Alarm")
-			mod:CancelTimer(timer, true)
+			mod:CancelTimer(timer)
 			timer = nil
 			if UnitIsUnit("boss2target", "player") then
 				mod:FlashShake(spellId)
@@ -206,7 +206,7 @@ do
 		-- 19 == 0.95sec
 		-- Safety check if the unit doesn't exist
 		if fired > 18 then
-			mod:CancelTimer(timer, true)
+			mod:CancelTimer(timer)
 			timer = nil
 		end
 	end
