@@ -41,9 +41,9 @@ if L then
 	L.spear_removed = "¡Tu Lanza empaladora fue eliminada!"
 	L.residue_removed = "¡%s eliminado!"
 
-	L.mending_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Zar'thik Battle-Menders have separate heal cooldowns.|r "
-	L.mending_warning = "Your focus is casting Mending!"
-	L.mending_bar = "Focus: Mending"
+	L.mending_desc = "|cFFFF0000WARNING: Solo se mostrará el temporizador para tu 'focus' porque todos los Ensalmador de batalla Zar'thik tienen diferentes CDs de sanación.|r "
+	L.mending_warning = "¡Tu focus está casteando Aliviar!"
+	L.mending_bar = "Focus: Aliviar"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "esES") or BigWigs:NewBossLocale("Amber-Shaper Un'sok", "esMX")
@@ -55,7 +55,7 @@ if L then
 	L.explosion_casting_by_other_desc = "Deflagración de ámbar empezados por Monstruosidad de ámbar o tu foco si lo tienes marcado. ¡Es altamente recomendable enfatizar esto!"
 
 	L.explosion_by_you = "Deflagración de ámbar en ti"
-	L.explosion_by_you_bar = "You start casting..."
+	L.explosion_by_you_bar = "Empiezas a castear..."
 	L.explosion_by_you_desc = "Deflagración de ámbar propia."
 
 	L.explosion_casting_by_you = "Deflagración de ámbar lanzado por ti"
@@ -68,7 +68,7 @@ if L then
 	L.fling_message = "¡Vas a ser lanzado!"
 	L.parasite = "Parásito"
 
-	L.monstrosity_is_casting = "Monstrosity: Explosion"
+	L.monstrosity_is_casting = "Monstruosidad: Explosión"
 	L.you_are_casting = "¡ESTÁS casteando!"
 
 	L.unsok_short = "|cFFF20056Boss|r" -- Light Red
