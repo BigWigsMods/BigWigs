@@ -118,12 +118,12 @@ do
 			shadowCounter = shadowCounter + 1
 			self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 8.3, L["shadowy_icon"])
 		elseif sync == "Frenzy" then
-			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 			self:Message("frenzy", CL["phase"]:format(2) ..": ".. L["frenzy"], "Positive", L["frenzy_icon"], "Long")
 			if not self:LFR() then
 				self:StopBar(L["totem"]:format(totemCounter))
 				self:StopBar(L["banish_message"])
 			end
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 		elseif sync == "Banish" and rest then
 			self:Bar(116272, L["banish_message"], self:Heroic() and 70 or 65, 116272)
 			if self:Tank() then

@@ -67,7 +67,6 @@ function boss:OnEnable()
 	if debug then dbg(self, "OnEnable()") end
 	if self.SetupOptions then self:SetupOptions() end
 	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
-	self:SendMessage("BigWigs_OnBossEnable", self)
 
 	-- Update Difficulty
 	local _, _, diff = GetInstanceInfo()
@@ -82,6 +81,8 @@ function boss:OnEnable()
 		if module == self then return end
 	end
 	enabledModules[#enabledModules+1] = self
+
+	self:SendMessage("BigWigs_OnBossEnable", self)
 end
 function boss:OnDisable()
 	if debug then dbg(self, "OnDisable()") end
@@ -291,6 +292,7 @@ do
 	function boss:UnregisterUnitEvent(event, ...)
 		if type(event) ~= "string" then error(format(noEvent, self.moduleName)) end
 		if not ... then error(format(noUnit, self.moduleName)) end
+		if not unitEventMap[self][event] then return end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
 			unitEventMap[self][event][unit] = nil
@@ -425,7 +427,6 @@ do
 
 	function boss:Engage()
 		if debug then dbg(self, ":Engage") end
-		self:SendMessage("BigWigs_OnBossEngage", self)
 
 		-- Update Difficulty
 		local _, _, diff = GetInstanceInfo()
@@ -442,14 +443,16 @@ do
 
 		-- Update Dispel Status
 		UpdateDispelStatus()
+
+		self:SendMessage("BigWigs_OnBossEngage", self)
 	end
 
 	function boss:Win()
 		if debug then dbg(self, ":Win") end
-		self:SendMessage("BigWigs_OnBossWin", self)
 		self:Sync("Death", self.moduleName)
 		wipe(icons) -- Wipe icon cache
 		wipe(spells)
+		self:SendMessage("BigWigs_OnBossWin", self)
 	end
 end
 
