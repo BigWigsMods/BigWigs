@@ -7,6 +7,7 @@
 ## Title-frFR: Big Wigs [|cffeda55fNoyau|r]
 ## Title-zhCN: Big Wigs [|cffeda55f核心|r]
 ## Title-zhTW: Big Wigs [|cffeda55f核心|r]
+## Title-itIT: Big Wigs [|cffeda55fBase|r]
 ## Notes: Big Wigs Core
 ## Notes-deDE: Big Wigs Kern.
 ## Notes-esES: Núcleo de Big Wigs.
@@ -14,6 +15,7 @@
 ## Notes-frFR: Noyau de Big Wigs.
 ## Notes-zhCN: Big Wigs 核心模块
 ## Notes-zhTW: Big Wigs 核心模組
+## Notes-itIT: Big Wigs Base
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

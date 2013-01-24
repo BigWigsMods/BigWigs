@@ -3,9 +3,11 @@
 ## Title: Big Wigs [|cffeda55fPandaria|r]
 ## Title-frFR: Big Wigs [|cffeda55fPandarie|r]
 ## Title-ruRU: Big Wigs [|cffeda55fПандария|r]
+## Title-itIT: Big Wigs [|cffeda55fPandaria|r]
 ## Notes: Big Wigs Pandaria Modules
 ## Notes-frFR: Modules Big Wigs concernant la Pandarie.
 ## Notes-ruRU: Модуль Big Wigs для Пандарии.
+## Notes-itIT: Modulei Big Wigs per Pandaria
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
