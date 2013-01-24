@@ -160,7 +160,6 @@ do
 				self:Bar(122855, 122855, 32, 122855) -- Sun Breath
 				self:Bar("unstable_sha", 122953, 18, 122938)
 				self:Bar("embodied_terror", ("~%s (%d)"):format(L["embodied_terror"], 1), 11, L.embodied_terror_icon)
-				--self:Bar(123011, "~"..self:SpellName(123011), 16, 123011) -- Terrorize
 			elseif spellId == 122767 then -- Dread Shadows (start of night phase)
 				self:StopBar(122953) -- Summon Unstable Sha
 				self:StopBar(122855) -- Sun Breath
@@ -191,6 +190,6 @@ do
 end
 
 function mod:Deaths()
-	self:StopBar(123011) -- Terrorize, might be tricky if more than one add can be up
+	self:StopBar("~"..self:SpellName(123011)) -- Terrorize, might be tricky if more than one add can be up
 end
 
