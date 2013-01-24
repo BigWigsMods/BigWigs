@@ -289,6 +289,19 @@ function options:OnInitialize()
 		if p then InterfaceOptionsFrame_OpenToCategory(p.element.name) end
 	end)
 
+	local wotlkEntry = self:GetPanel("Big Wigs Wrath of the Lich King")
+	wotlkEntry:SetScript("OnShow", function(self)
+		BigWigs:Enable()
+		-- First we need to expand ourselves if collapsed.
+		local p = findPanel("Big Wigs Wrath of the Lich King")
+		if p and p.element.collapsed then OptionsListButtonToggle_OnClick(p.toggle) end
+		-- InterfaceOptionsFrameAddOns.buttons has changed here to include the zones
+		-- if we were collapsed.
+		-- So now we need to select the first zone.
+		p = findPanel(nil, "Big Wigs Wrath of the Lich King")
+		if p then InterfaceOptionsFrame_OpenToCategory(p.element.name) end
+	end)
+
 	local about = self:GetPanel(L["About"], "Big Wigs")
 	about:SetScript("OnShow", function(frame)
 		local fields = {
@@ -903,6 +916,8 @@ local function onZoneHide(frame)
 end
 
 do
+	local wotlkZones = {[604]=true, [543]=true, [535]=true, [529]=true, [527]=true, [532]=true, [531]=true, [609]=true, [718]=true}
+
 	local panels = {}
 	local noop = function() end
 	function options:GetPanel(zone, parent, zoneId)
@@ -926,7 +941,7 @@ do
 
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
-		local panel, created = self:GetPanel(zoneName, L["Big Wigs Encounters"], zoneId)
+		local panel, created = self:GetPanel(zoneName, wotlkZones[zoneId] and "Big Wigs Wrath of the Lich King" or L["Big Wigs Encounters"], zoneId)
 		if created then
 			panel:SetScript("OnShow", onZoneShow)
 			panel:SetScript("OnHide", onZoneHide)
