@@ -118,31 +118,31 @@ end
 -- Event Handlers
 --
 
-function mod:LightningFistsReversalOnBoss(_, spellId, source, _, spellName)
+function mod:LightningFistsReversalOnBoss(args)
 	if not self:LFR() then
-		self:StopBar(CL["other"]:format(source, spellName))
-		self:Message(115911, CL["onboss"]:format(spellName), "Urgent", spellId, "Info")
+		self:StopBar(CL["other"]:format(args.sourceName, args.spellName))
+		self:Message(115911, CL["onboss"]:format(args.spellName), "Urgent", args.spellId, "Info")
 	end
 end
 
-function mod:LightningFistsReversal(player, spellId, _, _, spellName)
+function mod:LightningFistsReversal(args)
 	if not self:LFR() then
-		self:Message(115911, L["shroud_can_interrupt"]:format(player, self:SpellName(116018)), "Urgent", spellId)
-		self:Bar(115911, CL["other"]:format(player, spellName), 20, spellId)
+		self:Message(115911, L["shroud_can_interrupt"]:format(args.destName, self:SpellName(116018)), "Urgent", args.spellId)
+		self:Bar(115911, CL["other"]:format(args.destName, args.spellName), 20, args.spellId)
 	end
 end
 
-function mod:Shroud(player, spellId, source)
+function mod:Shroud(args)
 	if not self:LFR() then
-		self:TargetMessage(spellId, L["shroud_message"], player, "Urgent", spellId, nil, source)
+		self:TargetMessage(args.spellId, L["shroud_message"], args.destName, "Urgent", args.spellId, nil, args.sourceName)
 	end
 end
 
-function mod:NullificationBarrier(_, spellId)
-	self:Message(spellId, L["barrier_message"], "Urgent", spellId, "Info")
-	self:Bar(spellId, L["barrier_message"], 6, spellId)
+function mod:NullificationBarrier(args)
+	self:Message(args.spellId, L["barrier_message"], "Urgent", args.spellId, "Info")
+	self:Bar(args.spellId, L["barrier_message"], 6, args.spellId)
 	if not self:LFR() then
-		self:Bar(spellId, L["barrier_cooldown"], 55, spellId)
+		self:Bar(args.spellId, L["barrier_cooldown"], 55, args.spellId)
 	end
 end
 
@@ -153,10 +153,10 @@ do
 		[131790] = L["shock_message"],
 		[131792] = L["burn_message"],
 	}
-	function mod:TankAlerts(player, spellId, _, _, _, stack)
+	function mod:TankAlerts(args)
 		if self:Tank() then
-			stack = stack or 1
-			self:LocalMessage("tank", msgTbl[spellId], "Urgent", spellId, stack > 1 and "Info", player, stack)
+			local stack = args.amount or 1
+			self:LocalMessage("tank", msgTbl[args.spellId], "Urgent", args.spellId, stack > 1 and "Info", args.destName, stack)
 		end
 	end
 end
@@ -199,15 +199,15 @@ function mod:LightningPhase()
 	self:Bar(116157, "~"..self:SpellName(116157), 12, 116157) -- Lightning Fists
 end
 
-function mod:LightningFists(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Urgent", spellId)
-	self:Bar(spellId, "~"..spellName, 13, spellId)
+function mod:LightningFists(args)
+	self:Message(args.spellId, args.spellName, "Urgent", args.spellId)
+	self:Bar(args.spellId, "~"..args.spellName, 13, args.spellId)
 end
 
-function mod:Epicenter(_, spellId, _, _, spellName)
-	self:Message(spellId, ("%s (%d)"):format(spellName, counter), "Important", spellId, "Alarm")
+function mod:Epicenter(args)
+	self:Message(args.spellId, ("%s (%d)"):format(args.spellName, counter), "Important", args.spellId, "Alarm")
 	counter = counter + 1
-	self:Bar(spellId, "~"..("%s (%d)"):format(spellName, counter), 30, spellId)
+	self:Bar(args.spellId, "~"..("%s (%d)"):format(args.spellName, counter), 30, args.spellId)
 end
 
 --------------------------------------------------------------------------------
@@ -221,23 +221,23 @@ end
 
 do
 	local wildfire = mod:SpellName(116793)
-	function mod:WildfireSparkApplied(player, spellId)
-		self:TargetMessage(spellId, wildfire, player, "Urgent", spellId, "Alert")
-		self:PrimaryIcon(spellId, player)
-		if UnitIsUnit("player", player) then
-			self:FlashShake(spellId)
-			self:Bar(spellId, CL["you"]:format(wildfire), 5, spellId)
-			self:SaySelf(spellId, wildfire)
+	function mod:WildfireSparkApplied(args)
+		self:TargetMessage(args.spellId, wildfire, args.destName, "Urgent", args.spellId, "Alert")
+		self:PrimaryIcon(args.spellId, args.destName)
+		if UnitIsUnit(args.destName, "player") then
+			self:FlashShake(args.spellId)
+			self:Bar(args.spellId, CL["you"]:format(wildfire), 5, args.spellId)
+			self:SaySelf(args.spellId, wildfire)
 		end
 	end
-	function mod:WildfireSparkRemoved(player, spellId)
-		self:PrimaryIcon(spellId)
+	function mod:WildfireSparkRemoved(args)
+		self:PrimaryIcon(args.spellId)
 	end
 
 	-- Standing on the Wildfire
 	local prev = 0
-	function mod:Wildfire(player)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:Wildfire(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -247,10 +247,10 @@ do
 	end
 end
 
-function mod:DrawFlame(_, spellId, _, _, spellName)
-	self:Message(spellId, ("%s (%d)"):format(spellName, counter), "Important", spellId, "Alarm")
+function mod:DrawFlame(args)
+	self:Message(args.spellId, ("%s (%d)"):format(args.spellName, counter), "Important", args.spellId, "Alarm")
 	counter = counter + 1
-	self:Bar(spellId, "~"..("%s (%d)"):format(spellName, counter), 35, spellId)
+	self:Bar(args.spellId, "~"..("%s (%d)"):format(args.spellName, counter), 35, args.spellId)
 end
 
 --------------------------------------------------------------------------------
@@ -275,30 +275,30 @@ do
 		mod:TargetMessage(spellId, resonance, resonanceTargets, "Urgent", spellId, "Alert")
 		wipe(resonanceMarkers)
 	end
-	function mod:ArcaneResonanceApplied(player, spellId)
-		self:Bar(spellId, "~"..resonance, 15.4, spellId) --15.4 - 21.5
-		resonanceMarkers[#resonanceMarkers+1] = player
-		if UnitIsUnit("player", player) then
-			self:FlashShake(spellId)
-			self:OpenProximity(6, spellId)
-			self:SaySelf(spellId, resonance)
+	function mod:ArcaneResonanceApplied(args)
+		self:Bar(args.spellId, "~"..resonance, 15.4, args.spellId) --15.4 - 21.5
+		resonanceMarkers[#resonanceMarkers+1] = args.destName
+		if UnitIsUnit(args.destName, "player") then
+			self:FlashShake(args.spellId)
+			self:OpenProximity(6, args.spellId)
+			self:SaySelf(args.spellId, resonance)
 		end
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnResonance, 0.15, spellId)
+			scheduled = self:ScheduleTimer(warnResonance, 0.15, args.spellId)
 		end
 	end
-	function mod:ArcaneResonanceRemoved(player, spellId)
-		if UnitIsUnit("player", player) then
-			self:CloseProximity(spellId)
+	function mod:ArcaneResonanceRemoved(args)
+		if UnitIsUnit(args.destName, "player") then
+			self:CloseProximity(args.spellId)
 		end
 	end
 end
 
-function mod:ArcaneVelocity(_, spellId, _, _, spellName)
-	self:Message(spellId, ("%s (%d)"):format(spellName, counter), "Important", spellId, "Alarm")
+function mod:ArcaneVelocity(args)
+	self:Message(args.spellId, ("%s (%d)"):format(args.spellName, counter), "Important", args.spellId, "Alarm")
 	counter = counter + 1
-	self:Bar(spellId, "~"..("%s (%d)"):format(spellName, counter), 28, spellId)
-	self:DelayedMessage(spellId, 25.5, CL["soon"]:format(("%s (%d)"):format(spellName, counter)), "Attention")
+	self:Bar(args.spellId, "~"..("%s (%d)"):format(args.spellName, counter), 28, args.spellId)
+	self:DelayedMessage(args.spellId, 25.5, CL["soon"]:format(("%s (%d)"):format(args.spellName, counter)), "Attention")
 end
 
 --------------------------------------------------------------------------------

@@ -73,54 +73,55 @@ end
 do
 	local jasperChainsTargets = mod:NewTargetList()
 	local prevPlayer = nil
-	function mod:JasperChainsApplied(player, spellId, _, _, spellName)
+	function mod:JasperChainsApplied(args)
 		if not prevPlayer then
-			prevPlayer = player
-			jasperChainsTargets[1] = player
+			prevPlayer = args.destName
+			jasperChainsTargets[1] = args.destName
 		elseif prevPlayer then
-			jasperChainsTargets[2] = player
-			if UnitIsUnit(player, "player") or UnitIsUnit(prevPlayer, "player") then
-				self:FlashShake(spellId)
-				self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId)
-				self:OpenProximity(10, spellId, UnitIsUnit(prevPlayer, "player") and player or prevPlayer, true)
+			jasperChainsTargets[2] = args.destName
+			if UnitIsUnit(args.destName, "player") or UnitIsUnit(prevPlayer, "player") then
+				self:FlashShake(args.spellId)
+				self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId)
+				self:OpenProximity(10, args.spellId, UnitIsUnit(prevPlayer, "player") and args.destName or prevPlayer, true)
 			else
-				self:TargetMessage(spellId, spellName, jasperChainsTargets, "Attention", spellId)
+				self:TargetMessage(args.spellId, args.spellName, jasperChainsTargets, "Attention", args.spellId)
 			end
 			prevPlayer = nil
 		end
 	end
-	function mod:JasperChainsRemoved(player, spellId, _, _, spellName)
-		if UnitIsUnit("player", player) then
-			self:LocalMessage(spellId, CL["over"]:format(spellName), "Personal", spellId)
-			self:CloseProximity(spellId)
+	function mod:JasperChainsRemoved(args)
+		if UnitIsUnit(args.destName, "player") then
+			self:LocalMessage(args.spellId, CL["over"]:format(args.spellName), "Personal", args.spellId)
+			self:CloseProximity(args.spellId)
 		end
 	end
 end
 
 do
 	local prev = 0
-	function mod:AmethystPool(player, spellId, _, _, spellName)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:AmethystPool(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Alarm")
+			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Alarm")
 		end
 	end
 end
 
-function mod:Petrifications(_, spellName, _, _, spellId)
+function mod:Petrifications(args)
+	
 	-- we could be using the same colors as blizzard but they are too "faint" imo
-	if spellId == 115852 then -- cobalt
-		self:Message("petrifications", ("|c001E90FF%s|r"):format(spellName), nil, spellId, "Alert") -- blue
-	elseif spellId == 116006 then -- jade
-		self:Message("petrifications", ("|c00008000%s|r"):format(spellName), nil, spellId, "Alert") -- green
-	elseif spellId == 116036 then -- jasper
-		self:Message("petrifications", ("|c00FF0000%s|r"):format(spellName), nil, spellId, "Alert") -- red
-	elseif spellId == 116057 then -- amethyst
-		self:Message("petrifications", ("|c00FF44FF%s|r"):format(spellName), nil, spellId, "Alert") -- purple
-	elseif spellId == 129424 then
-		self:Bar("ej:5772", spellName, cobaltTimer, spellId)
+	if args.spellId == 115852 then -- cobalt
+		self:Message("petrifications", ("|c001E90FF%s|r"):format(args.spellName), nil, args.spellId, "Alert") -- blue
+	elseif args.spellId == 116006 then -- jade
+		self:Message("petrifications", ("|c00008000%s|r"):format(args.spellName), nil, args.spellId, "Alert") -- green
+	elseif args.spellId == 116036 then -- jasper
+		self:Message("petrifications", ("|c00FF0000%s|r"):format(args.spellName), nil, args.spellId, "Alert") -- red
+	elseif args.spellId == 116057 then -- amethyst
+		self:Message("petrifications", ("|c00FF44FF%s|r"):format(args.spellName), nil, args.spellId, "Alert") -- purple
+	elseif args.spellId == 129424 then
+		self:Bar("ej:5772", args.spellName, cobaltTimer, args.spellId)
 	end
 end
 

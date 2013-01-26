@@ -132,10 +132,10 @@ do
 		prevPower = 0
 		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "SpellReflectWarn", "boss1", "boss2", "boss3", "boss4")
 	end
-	function mod:CowardiceRemoved(_, spellId)
+	function mod:CowardiceRemoved(args)
 		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2", "boss3", "boss4")
 		prevPower = 0
-		self:Message("cowardice", CL["over"]:format(spellReflect), "Positive", spellId)
+		self:Message("cowardice", CL["over"]:format(spellReflect), "Positive", args.spellId)
 	end
 	function mod:SpellReflectWarn(unitId)
 		local id = self:GetCID(UnitGUID(unitId))
@@ -161,19 +161,19 @@ do
 	end
 end
 
-function mod:MaddeningShout(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Urgent", spellId, "Alarm")
+function mod:MaddeningShout(args)
+	self:Message(args.spellId, args.spellName, "Urgent", args.spellId, "Alarm")
 	if isBossActiveById(60708, 61429) then
-		self:Bar(spellId, "~"..spellName, 46.7, spellId)
+		self:Bar(args.spellId, "~"..args.spellName, 46.7, args.spellId)
 	else
-		self:Bar(spellId, "~"..spellName, 76, spellId)
+		self:Bar(args.spellId, "~"..args.spellName, 76, args.spellId)
 	end
 end
 
-function mod:Delirious(_, spellId, _, _, spellName)
+function mod:Delirious(args)
 	if self:Dispeller("enrage", true) then
-		self:LocalMessage(spellId, spellName, "Urgent", spellId, "Alert")
-		self:Bar(spellId, spellName, 20, spellId)
+		self:LocalMessage(args.spellId, args.spellName, "Urgent", args.spellId, "Alert")
+		self:Bar(args.spellId, args.spellName, 20, args.spellId)
 	end
 end
 
@@ -184,79 +184,79 @@ do
 		mod:TargetMessage(118122, spellName, pinnedTargets, "Important", 118122, "Alarm")
 		scheduled = nil
 	end
-	function mod:PinnedDown(player, _, _, _, spellName)
-		pinnedTargets[#pinnedTargets + 1] = player
+	function mod:PinnedDown(args)
+		pinnedTargets[#pinnedTargets + 1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnPinned, 0.1, spellName)
+			scheduled = self:ScheduleTimer(warnPinned, 0.1, args.spellName)
 		end
 	end
 end
 
-function mod:Pillage(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Urgent", spellId, "Alarm")
+function mod:Pillage(args)
+	self:Message(args.spellId, args.spellName, "Urgent", args.spellId, "Alarm")
 	if isBossActiveById(60710, 61427) then
-		self:Bar(spellId, "~"..spellName, 40, spellId)
+		self:Bar(args.spellId, "~"..args.spellName, 40, args.spellId)
 	else
-		self:Bar(spellId, spellName, 75.5, spellId)
+		self:Bar(args.spellId, args.spellName, 75.5, args.spellId)
 	end
 end
 
-function mod:Volley(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Urgent", spellId)
-	self:Bar(spellId, spellName, 41, spellId)
+function mod:Volley(args)
+	self:Message(args.spellId, args.spellName, "Urgent", args.spellId)
+	self:Bar(args.spellId, args.spellName, 41, args.spellId)
 end
 
-function mod:SleightofHand(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, "Alert")
-	self:Bar(spellId, spellName, 42, spellId)
-	self:FlashShake(spellId)
+function mod:SleightofHand(args)
+	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alert")
+	self:Bar(args.spellId, args.spellName, 42, args.spellId)
+	self:FlashShake(args.spellId)
 end
 
 -- Zian
-function mod:Fixate(player, spellId, _, _, spellName)
-	self:PrimaryIcon(spellId, player)
-	if UnitIsUnit("player", player) then
-		self:LocalMessage(spellId, spellName, "Personal", spellId, "Info")
-		self:SaySelf(spellId, spellName)
+function mod:Fixate(args)
+	self:PrimaryIcon(args.spellId, args.destName)
+	if UnitIsUnit("player", args.destName) then
+		self:LocalMessage(args.spellId, args.spellName, "Personal", args.spellId, "Info")
+		self:SaySelf(args.spellId, args.spellName)
 	end
 end
 
-function mod:ShieldofDarkness(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, "Alert")
-	self:Bar(spellId, spellName, 42, spellId)
-	self:Bar("casting_shields", CL["cast"]:format(spellName), 2, spellId)
-	self:FlashShake(spellId)
+function mod:ShieldofDarkness(args)
+	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alert")
+	self:Bar(args.spellId, args.spellName, 42, args.spellId)
+	self:Bar("casting_shields", CL["cast"]:format(args.spellName), 2, args.spellId)
+	self:FlashShake(args.spellId)
 end
 
 -- Qiang
-function mod:FlankingOrders(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Attention", spellId, "Long")
+function mod:FlankingOrders(args)
+	self:Message(args.spellId, args.spellName, "Attention", args.spellId, "Long")
 	if isBossActiveById(60709, 61423) then
-		self:Bar(spellId, spellName, self:Heroic() and 45.7 or 41, spellId)
+		self:Bar(args.spellId, args.spellName, self:Heroic() and 45.7 or 41, args.spellId)
 	else
-		self:Bar(spellId, spellName, 75, spellId)
+		self:Bar(args.spellId, args.spellName, 75, args.spellId)
 	end
 end
 
-function mod:Annihilate(_, _, _, _, spellName)
-	self:Message(119521, spellName, "Urgent", 119521, "Alarm")
-	self:Bar(119521, spellName, self:Difficulty() == 6 and 32 or 39, 119521)
+function mod:Annihilate(args)
+	self:Message(119521, args.spellName, "Urgent", 119521, "Alarm")
+	self:Bar(119521, args.spellName, self:Difficulty() == 6 and 32 or 39, 119521)
 	self:Bar(117921, 117921, 8, 117921) -- Massive Attack
 end
 
-function mod:MassiveAttack(_, spellId, _, _, spellName)
-	self:Bar(spellId, spellName, 5, spellId)
+function mod:MassiveAttack(args)
+	self:Bar(args.spellId, args.spellName, 5, args.spellId)
 end
 
-function mod:ImperviousShield(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, "Alert")
-	self:Bar(spellId, spellName, self:Difficulty() == 5 and 62 or 42, spellId)
-	self:Bar("casting_shields", CL["cast"]:format(spellName), 2, spellId)
-	self:FlashShake(spellId)
+function mod:ImperviousShield(args)
+	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alert")
+	self:Bar(args.spellId, args.spellName, self:Difficulty() == 5 and 62 or 42, args.spellId)
+	self:Bar("casting_shields", CL["cast"]:format(args.spellName), 2, args.spellId)
+	self:FlashShake(args.spellId)
 end
 
-function mod:ShieldRemoved(_, spellId, _, _, spellName)
-	self:Message(spellId, L["shield_removed"]:format(spellName), "Positive", spellId, "Info")
+function mod:ShieldRemoved(args)
+	self:Message(args.spellId, L["shield_removed"]:format(args.spellName), "Positive", args.spellId, "Info")
 end
 
 function mod:EngageCheck()

@@ -66,7 +66,7 @@ L.arc_desc = L.target_only .. L.arc_desc
 
 function mod:GetOptions()
 	return {
-		{116829, "FLASHSHAKE", "SAY"},
+		116829,
 		"rage", {116525, "FLASHSHAKE"},
 		"strength",
 		"courage",
@@ -143,19 +143,15 @@ function mod:Rage()
 	self:DelayedMessage("rage", 13, L["rage"], "Attention", L.rage_icon)
 end
 
-function mod:FocusedAssault(player, spellId, _, _, spellName)
-	if UnitIsUnit("player", player) then
-		self:FlashShake(spellId)
-		self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Info")
+function mod:FocusedAssault(args)
+	if UnitIsUnit("player", args.destName) then
+		self:FlashShake(args.spellId)
+		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
 	end
 end
 
-function mod:FocusedEnergy(player, spellId, _, _, spellName)
-	if UnitIsUnit("player", player) then
-		self:FlashShake(spellId)
-		self:SaySelf(spellId, L["titan_spark"])
-	end
-	self:TargetMessage(spellId, spellName, player, "Attention", spellId, "Info")
+function mod:FocusedEnergy(args)
+	self:TargetMessage(args.spellId, args.spellName, args.destName, "Attention", args.spellId, "Info")
 end
 
 function mod:Strength()

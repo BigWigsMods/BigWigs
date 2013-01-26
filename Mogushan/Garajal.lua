@@ -141,8 +141,8 @@ do
 		wipe(listTbl)
 		scheduled = nil
 	end
-	function mod:VoodooDollsApplied(player)
-		listTbl[#listTbl+1] = player
+	function mod:VoodooDollsApplied(args)
+		listTbl[#listTbl+1] = args.destName
 		if not scheduled then
 			scheduled = self:ScheduleTimer(createList, 0.1)
 		end
@@ -157,24 +157,24 @@ do
 		wipe(listTbl)
 		scheduled = nil
 	end
-	function mod:VoodooDollsRemoved(player)
+	function mod:VoodooDollsRemoved(args)
 		-- Used in 3rd party modules
-		listTbl[#listTbl+1] = player
+		listTbl[#listTbl+1] = args.destName
 		if not scheduled then
 			scheduled = self:ScheduleTimer(createList, 0.1)
 		end
 	end
 end
 
-function mod:CrossedOver(player, spellId, _, _, spellName)
-	if UnitIsUnit("player", player) then
-		self:Bar(116161, spellName, 30, spellId)
+function mod:CrossedOver(args)
+	if UnitIsUnit("player", args.destName) then
+		self:Bar(116161, args.spellName, 30, args.spellId)
 	end
 end
 
-function mod:CrossedOverRemoved(player, spellId, _, _, spellName)
-	if UnitIsUnit("player", player) then
-		self:StopBar(spellName)
+function mod:CrossedOverRemoved(args)
+	if UnitIsUnit("player", args.destName) then
+		self:StopBar(args.spellName)
 	end
 end
 
@@ -182,16 +182,16 @@ function mod:SpiritTotem()
 	self:Sync("Totem")
 end
 
-function mod:Banishment(player, spellId, _, _, spellName)
-	if UnitIsUnit("player", player) then
-		self:Bar(spellId, CL["you"]:format(spellName), 30, spellId)
+function mod:Banishment(args)
+	if UnitIsUnit("player", args.destName) then
+		self:Bar(args.spellId, CL["you"]:format(args.spellName), 30, args.spellId)
 	end
-	self:Sync("Banish", player)
+	self:Sync("Banish", args.destName)
 end
 
-function mod:SoulSeverRemoved(player)
-	if UnitIsUnit("player", player) then
-		self:StopBar(116272, player) -- Banish
+function mod:SoulSeverRemoved(args)
+	if UnitIsUnit("player", args.destName) then
+		self:StopBar(116272, args.destName) -- Banish
 	end
 end
 

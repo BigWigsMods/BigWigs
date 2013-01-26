@@ -87,38 +87,38 @@ end
 -- Event Handlers
 --
 
-function mod:FloorRemoved(_, _, _, _, spellId)
+function mod:FloorRemoved(args)
 	-- Trigger Phase A when the spark hits the conduit
-	if spellId == 118189 then
+	if args.spellId == 118189 then
 		self:Bar("floor", L["floor"], 6, L.floor_icon)
 		self:Message("floor", L["floor_message"], "Personal", L.floor_icon, "Alarm")
 		self:FlashShake("floor")
 	end
 end
 
-function mod:Overcharged(player, spellId, _, _, spellName, buffStack)
-	if UnitIsUnit(player, "player") and InCombatLockdown() then
-		if (buffStack or 1) >= 6 and buffStack % 2 == 0 then
-			self:LocalMessage(spellId, ("%s (%d)"):format(spellName, buffStack), "Personal", spellId)
+function mod:Overcharged(args)
+	if UnitIsUnit(args.destName, "player") and InCombatLockdown() then
+		if (args.amount or 1) >= 6 and args.amount % 2 == 0 then
+			self:LocalMessage(args.spellId, ("%s (%d)"):format(args.spellName, args.amount), "Personal", args.spellId)
 		end
 	end
 end
 
-function mod:DrawPower(_, _, _, _, spellName)
+function mod:DrawPower(args)
 	drawPowerCounter = drawPowerCounter + 1
-	self:Message(119360, ("%s (%d)"):format(spellName, drawPowerCounter), "Attention", 119360)
+	self:Message(119360, ("%s (%d)"):format(args.spellName, drawPowerCounter), "Attention", 119360)
 	-- XXX need to check for another event that is also called Draw Power and cancell bars there, that should be better
 	self:StopBar(CL["next_add"]) -- Materialize Protector
 	self:StopBar(117960) -- Celestial Breath
 end
 
-function mod:CelestialBreath(_, spellId, _, _, spellName)
-	self:Bar(spellId, spellName, 18, spellId)
+function mod:CelestialBreath(args)
+	self:Bar(args.spellId, args.spellName, 18, args.spellId)
 end
 
 do
 	local overcharged = mod:SpellName(117878)
-	function mod:StabilityFlux(_, spellId, _, _, spellName)
+	function mod:StabilityFlux(args)
 		-- this gives an 1 sec warning before damage, might want to check hp for a
 		local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
 		if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
@@ -128,7 +128,7 @@ do
 	end
 	-- This will spam, but it is apparantly needed for some people
 	local prev = 0
-	function mod:StabilityFluxDamage(_, spellId, _, _, spellName)
+	function mod:StabilityFluxDamage(args)
 		local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
 		if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
 			local t = GetTime()
@@ -141,18 +141,18 @@ do
 	end
 end
 
-function mod:TotalAnnihilation(_, spellId, _, _, spellName)
+function mod:TotalAnnihilation(args)
 	annihilateCounter = annihilateCounter + 1
-	self:Message("ej:6186", ("%s (%d)"):format(spellName, annihilateCounter), "Important", spellId, "Alert")
-	self:Bar("ej:6186", CL["cast"]:format(spellName), 4, spellId)
+	self:Message("ej:6186", ("%s (%d)"):format(args.spellName, annihilateCounter), "Important", args.spellId, "Alert")
+	self:Bar("ej:6186", CL["cast"]:format(args.spellName), 4, args.spellId)
 end
 
-function mod:MaterializeProtector(_, spellId, _, _, spellName)
-	self:Message("adds", CL["add_spawned"], "Attention", spellId)
-	self:Bar("adds", CL["next_add"], self:Heroic() and 26 or 40, spellId)
+function mod:MaterializeProtector(args)
+	self:Message("adds", CL["add_spawned"], "Attention", args.spellId)
+	self:Bar("adds", CL["next_add"], self:Heroic() and 26 or 40, args.spellId)
 end
 
-function mod:UnstableEnergyRemoved()
+function mod:UnstableEnergyRemoved(args)
 	if phaseCount == 2 then
 		self:Message("stages", L["last_phase"], "Positive")
 	else
