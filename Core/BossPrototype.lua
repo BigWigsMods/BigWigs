@@ -194,19 +194,21 @@ do
 		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	end
 
-	bossUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, spellSchool, extraSpellID, amount)
+	local args = {}
+	bossUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, _, extraSpellID, amount)
 		if allowedEvents[event] then
 			if event == "UNIT_DIED" then
-				local numericId = tonumber(destGUID:sub(6, 10), 16)
+				local mobId = tonumber(destGUID:sub(6, 10), 16)
 				for i = #enabledModules, 1, -1 do
 					local self = enabledModules[i]
 					local m = eventMap[self][event]
-					if m and m[numericId] then
-						local func = m[numericId]
+					if m and m[mobId] then
+						local func = m[mobId]
+						args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags = mobId, destGUID, destName, destFlags, args.destRaidFlags
 						if type(func) == "function" then
-							func(numericId, destGUID, destName, destFlags)
+							func(args)
 						else
-							self[func](self, numericId, destGUID, destName, destFlags)
+							self[func](self, args)
 						end
 					end
 				end
@@ -216,10 +218,13 @@ do
 					local m = eventMap[self][event]
 					if m and (m[spellId] or m["*"]) then
 						local func = m[spellId] or m["*"]
+						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
+						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
+						args.spellId, args.spellName, args.extraSpellID, args.amount = spellId, spellName, extraSpellID, amount
 						if type(func) == "function" then
-							func(destName, spellId, sourceName, extraSpellID, spellName, amount, event, sourceFlags, destFlags, destGUID, sourceGUID)
+							func(args)
 						else
-							self[func](self, destName, spellId, sourceName, extraSpellID, spellName, amount, event, sourceFlags, destFlags, destGUID, sourceGUID)
+							self[func](self, args)
 							if debug then dbg(self, "Firing func: "..func) end
 						end
 					end
