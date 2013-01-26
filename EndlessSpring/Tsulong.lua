@@ -108,31 +108,31 @@ function mod:EngageCheck()
 	end
 end
 
-function mod:Terrorize(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, self:Dispeller("magic") and "Alert" or nil)
-	self:Bar(spellId, "~"..spellName, 41, spellId)
+function mod:Terrorize(args)
+	self:Message(args.spellId, args.spellName, "Important", args.spellId, self:Dispeller("magic") and "Alert" or nil)
+	self:Bar(args.spellId, "~"..args.spellName, 41, args.spellId)
 end
 
-function mod:DreadShadows(player, spellId, _, _, spellName, buffStack)
-	if UnitIsUnit("player", player) and buffStack > (self:Heroic() and 5 or 11) and buffStack % 3 == 0 then -- might need adjusting
-		self:LocalMessage(spellId, ("%s (%d)"):format(spellName, buffStack), "Personal", spellId, "Info")
+function mod:DreadShadows(args)
+	if UnitIsUnit("player", args.destName) and args.amount > (self:Heroic() and 5 or 11) and args.amount % 3 == 0 then -- might need adjusting
+		self:LocalMessage(args.spellId, ("%s (%d)"):format(args.spellName, args.amount), "Personal", args.spellId, "Info")
 	end
 end
 
-function mod:Sunbeam(player, spellId, _, _, spellName)
-	if UnitIsUnit("player", player) then
-		self:LocalMessage(spellId, spellName, "Positive", spellId)
+function mod:Sunbeam(args)
+	if UnitIsUnit("player", args.destName) then
+		self:LocalMessage(args.spellId, args.spellName, "Positive", args.spellId)
 	end
 end
 
-function mod:SunBreath(_, spellId, _, _, spellName)
-	self:Bar(spellId, spellName, 29, spellId)
-	self:Message(spellId, spellName, "Urgent", spellId)
+function mod:SunBreath(args)
+	self:Bar(args.spellId, args.spellName, 29, args.spellId)
+	self:Message(args.spellId, args.spellName, "Urgent", args.spellId)
 end
 
-function mod:ShadowBreath(player, spellId, _, _, spellName)
-	self:Bar("breath", "~"..spellName, 25, spellId)
-	self:Message("breath", spellName, "Urgent", spellId)
+function mod:ShadowBreath(args)
+	self:Bar("breath", "~"..args.spellName, 25, args.spellId)
+	self:Message("breath", args.spellName, "Urgent", args.spellId)
 end
 
 do

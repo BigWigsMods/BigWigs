@@ -86,8 +86,8 @@ end
 
 -- Sha Corruption "doses"
 
-function mod:ShaCorruptionFirst(_, spellId, source, _, spellName, _, _, _, _, dGUID)
-	local mobId = self:GetCID(dGUID)
+function mod:ShaCorruptionFirst(args)
+	local mobId = self:GetCID(args.destGUID)
 	if mobId == 60583 then -- Kaolan
 		self:Bar(117986, 117986, 11, 117986) -- Defiled Ground
 	elseif mobId == 60585 then -- Regail
@@ -98,12 +98,12 @@ function mod:ShaCorruptionFirst(_, spellId, source, _, spellName, _, _, _, _, dG
 
 	if not firstDeath then
 		firstDeath = true
-		self:Message(spellId, ("%s (%d)"):format(spellName, 1), "Attention", spellId, "Info")
+		self:Message(args.spellId, ("%s (%d)"):format(args.spellName, 1), "Attention", args.spellId, "Info")
 	end
 end
 
-function mod:ShaCorruptionSecond(_, spellId, source, _, spellName, _, _, _, _, dGUID)
-	local mobId = self:GetCID(dGUID)
+function mod:ShaCorruptionSecond(args)
+	local mobId = self:GetCID(args.destGUID)
 	if mobId == 60583 then -- Kaolan
 		self:Bar(117975, 117975, 6, 117975) -- Expel Corruption
 	elseif mobId == 60585 then -- Regail
@@ -112,29 +112,29 @@ function mod:ShaCorruptionSecond(_, spellId, source, _, spellName, _, _, _, _, d
 		self:Bar(117227, "~"..self:SpellName(117227), 15, 117227) -- Corrupted Waters
 	end
 
-	self:Message(spellId, ("%s (%d)"):format(spellName, 2), "Attention", spellId, "Info")
+	self:Message(args.spellId, ("%s (%d)"):format(args.spellName, 2), "Attention", args.spellId, "Info")
 end
 
 --Protector Kaolan
 
-function mod:ExpelCorruption(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Urgent", spellId)
-	self:Bar(spellId, spellName, 38, spellId)
+function mod:ExpelCorruption(args)
+	self:Message(args.spellId, args.spellName, "Urgent", args.spellId)
+	self:Bar(args.spellId, args.spellName, 38, args.spellId)
 	self:Bar(117986, 117986, 12, 117986) -- Defiled Ground
 end
 
-function mod:DefiledGround(_, spellId, _, _, spellName)
-	self:Bar(spellId, spellName, 16, spellId)
+function mod:DefiledGround(args)
+	self:Bar(args.spellId, args.spellName, 16, args.spellId)
 end
 
 do
 	local prev = 0
-	function mod:DefiledGroundDamage(player, _, _, _, spellName)
-		if UnitIsUnit(player, "player") then
+	function mod:DefiledGroundDamage(args)
+		if UnitIsUnit(args.destName, "player") then
 			local t = GetTime()
 			if t-prev > 1 then
 				prev = t
-				self:LocalMessage(117986, CL["underyou"]:format(spellName), "Personal", 117986, "Info")
+				self:LocalMessage(117986, CL["underyou"]:format(args.spellName), "Personal", 117986, "Info")
 				self:FlashShake(117986)
 			end
 		end
@@ -149,38 +149,38 @@ do
 		mod:TargetMessage(117436, spellName, lightningPrisonList, "Important", 117436, "Alert")
 		scheduled = nil
 	end
-	function mod:LightningPrisonApplied(player, _, _, _, spellName)
-		self:Bar(117436, "~"..spellName, 25, 117436)
-		lightningPrisonList[#lightningPrisonList + 1] = player
-		if UnitIsUnit(player, "player") then
+	function mod:LightningPrisonApplied(args)
+		self:Bar(117436, "~"..args.spellName, 25, 117436)
+		lightningPrisonList[#lightningPrisonList + 1] = args.destName
+		if UnitIsUnit(args.destName, "player") then
 			self:FlashShake(117436)
-			self:SaySelf(117436, spellName)
+			self:SaySelf(117436, args.spellName)
 			self:OpenProximity(7, 117436)
 		end
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnPrison, 0.2, spellName)
+			scheduled = self:ScheduleTimer(warnPrison, 0.2, args.spellName)
 		end
 	end
 end
 
-function mod:LightningPrisonRemoved(player)
-	if UnitIsUnit(player, "player") then
+function mod:LightningPrisonRemoved(args)
+	if UnitIsUnit(args.destName, "player") then
 		self:CloseProximity(117436)
 	end
 end
 
-function mod:LightningStorm(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Urgent", spellId, "Alarm")
-	self:Bar(spellId, "~"..spellName, bossDead < 3 and 42 or 32, spellId)
-	self:FlashShake(spellId)
+function mod:LightningStorm(args)
+	self:Message(args.spellId, args.spellName, "Urgent", args.spellId, "Alarm")
+	self:Bar(args.spellId, "~"..args.spellName, bossDead < 3 and 42 or 32, args.spellId)
+	self:FlashShake(args.spellId)
 end
 
 -- Elder Asani
 
-function mod:CleansingWaters(_, spellId, _, _, spellName)
-	self:Message(spellId, CL["soon"]:format(spellName), "Attention", spellId, self:Dispeller("magic", true) and "Alert" or nil)
-	self:Bar(spellId, L["heal"]:format(spellName), 6, 55888) -- orb hitting the ground (water orb icon)
-	self:Bar(spellId, "~"..spellName, 32, spellId)
+function mod:CleansingWaters(args)
+	self:Message(args.spellId, CL["soon"]:format(args.spellName), "Attention", args.spellId, self:Dispeller("magic", true) and "Alert" or nil)
+	self:Bar(args.spellId, L["heal"]:format(args.spellName), 6, 55888) -- orb hitting the ground (water orb icon)
+	self:Bar(args.spellId, "~"..args.spellName, 32, args.spellId)
 end
 
 do
@@ -199,35 +199,35 @@ do
 	end
 
 	-- Dispeller warning
-	function mod:CleansingWatersDispel(player, _, _, _, spellName, _, _, _, _, dGUID)
-		local mobId = self:GetCID(dGUID)
-		if self:Dispeller("magic", true) and (mobId == 60583 or mobId == 60585 or mobId == 60586) and dGUID == UnitGUID(getKillTarget()) then
-			self:LocalMessage(117309, CL["on"]:format(spellName, player), "Important", 117309, "Info") --onboss
+	function mod:CleansingWatersDispel(args)
+		local mobId = self:GetCID(args.destGUID)
+		if self:Dispeller("magic", true) and (mobId == 60583 or mobId == 60585 or mobId == 60586) and args.destGUID == UnitGUID(getKillTarget()) then
+			self:LocalMessage(117309, CL["on"]:format(args.spellName, args.destName), "Important", 117309, "Info") --onboss
 		end
 	end
 
 	-- Tank warning
-	function mod:CleansingWatersTank(unitId, _, _, _, spellId)
-		if spellId == 122851 and UnitIsUnit(unitId, getKillTarget()) then -- Raid Warning: I'm Standing In Cleansing Waters
+	function mod:CleansingWatersTank(args)
+		if args.spellId == 122851 and UnitIsUnit(unitId, getKillTarget()) then -- Raid Warning: I'm Standing In Cleansing Waters
 			local bossName = UnitName(unitId)
 			self:LocalMessage(117309, L["under"]:format(self:SpellName(117309), bossName), "Urgent", 117309, "Alert")
 		end
 	end
 end
 
-function mod:CorruptedWaters(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Attention", spellId)
-	self:Bar(spellId, "~"..spellName, 42, spellId)
+function mod:CorruptedWaters(args)
+	self:Message(args.spellId, args.spellName, "Attention", args.spellId)
+	self:Bar(args.spellId, "~"..args.spellName, 42, args.spellId)
 end
 
 
-function mod:Deaths(mobId)
-	if mobId == 60583 then --Kaolan
+function mod:Deaths(args)
+	if args.mobId == 60583 then --Kaolan
 		self:StopBar(117986) -- Defiled Ground
-	elseif mobId == 60585 then -- Regail
+	elseif args.mobId == 60585 then -- Regail
 		self:StopBar("~"..self:SpellName(111850)) -- Lightning Prison
 		self:StopBar("~"..self:SpellName(118077)) -- Lightning Storm
-	elseif mobId == 60586 then -- Asani
+	elseif args.mobId == 60586 then -- Asani
 		self:StopBar("~"..self:SpellName(117309)) -- Cleansing Waters
 		self:StopBar("~"..self:SpellName(117227)) -- Corrupted Waters
 	end

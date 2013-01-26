@@ -104,34 +104,34 @@ do
 		scheduled = nil
 	end
 
-	function mod:ScaryFog(player, spellId, _, _, spellName)
-		if UnitIsUnit("player", player) then
+	function mod:ScaryFog(args)
+		if UnitIsUnit("player", args.destName) then
 			self:OpenProximity(4) -- could be less than 4 but still experimenting
 		end
-		self:Bar(spellId, "~"..spellName, 19, spellId)
+		self:Bar(args.spellId, "~"..args.spellName, 19, args.spellId)
 		if not scheduled then
-			scheduled = self:ScheduleTimer(reportFog, 0.1, spellName)
+			scheduled = self:ScheduleTimer(reportFog, 0.1, args.spellName)
 		end
 	end
 end
 
-function mod:ScaryFogRemoved(player)
-	if UnitIsUnit("player", player) and not self:Tank() then
+function mod:ScaryFogRemoved(args)
+	if UnitIsUnit("player", args.destName) and not self:Tank() then
 		self:CloseProximity()
 	end
 end
 
-function mod:Hide(_, spellId, _, _, spellName)
+function mod:Hide(args)
 	hiding = true
-	self:Message(spellId, spellName, "Attention", spellId)
+	self:Message(args.spellId, args.spellName, "Attention", args.spellId)
 end
 
 do
 	local getAwayStartHP
-	function mod:GetAwayApplied(_, spellId, _, _, spellName)
+	function mod:GetAwayApplied(args)
 		if UnitHealthMax("boss1") > 0 then
 			getAwayStartHP = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
-			self:Message(spellId, spellName, "Important", spellId, "Alarm")
+			self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alarm")
 		end
 	end
 	function mod:GetAwayRemoved()
@@ -164,8 +164,8 @@ do
 		end
 	end
 
-function mod:Protect(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, "Alarm")
+function mod:Protect(args)
+	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alarm")
 	self:StopBar("~"..L["special"])
 end
 
