@@ -64,16 +64,16 @@ end
 -- Event Handlers
 --
 
-function mod:LightningStormDuration(_, spellId, _, _, spellName)
-	self:Bar("storm_duration", CL["cast"]:format(spellName), 15, spellId) -- help with organizing raid cooldowns
+function mod:LightningStormDuration(args)
+	self:Bar("storm_duration", CL["cast"]:format(args.spellName), 15, args.spellId) -- help with organizing raid cooldowns
 end
 
-function mod:LightningStorm(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, "Long")
-	self:Bar(spellId, spellName, 93, spellId)
+function mod:LightningStorm(args)
+	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Long")
+	self:Bar(args.spellId, args.spellName, 93, args.spellId)
 end
 
-function mod:ThunderingThrowRemoved(player, spellId)
+function mod:ThunderingThrowRemoved()
 	self:SecondaryIcon(137175)
 	if UnitDebuff("player", self:SpellName(137162)) then -- Focused Lightning
 		self:CloseProximity(137175)
@@ -95,13 +95,13 @@ end
 
 do
 	local prev = 0
-	function mod:LightningFissure(player, spellId, _, _, spellName)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:LightningFissure(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Info")
-			self:FlashShake(spellId)
+			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:FlashShake(args.spellId)
 		end
 	end
 end
@@ -114,45 +114,45 @@ function mod:FocusedLightningRemoved()
 	end
 end
 
-function mod:FocusedLightning(player, spellId, _, _, spellName)
-	self:Bar("ej:7741", "~"..spellName, 11, spellId) -- not sure if there is any point to have such a short bar for this
-	self:TargetMessage("ej:7741", spellName, player, "Urgent", spellId, "Alarm")
-	self:PrimaryIcon("ej:7741", player)
-	if UnitIsUnit(player, "player") then
+function mod:FocusedLightning(args)
+	self:Bar("ej:7741", "~"..args.spellName, 11, args.spellId) -- not sure if there is any point to have such a short bar for this
+	self:TargetMessage("ej:7741", args.spellName, args.destName, "Urgent", args.spellId, "Alarm")
+	self:PrimaryIcon("ej:7741", args.destName)
+	if UnitIsUnit(args.destName, "player") then
 		self:RegisterUnitEvent("UNIT_AURA", "FocusedLightningRemoved", "player") -- There is no APPLIED or REMOVED CLEU event for this yet and using the explosion damage to remove icon and close proximity could be innacurate
-		self:Say("ej:7741", CL["say"]:format(spellName))
+		self:Say("ej:7741", CL["say"]:format(args.spellName))
 		self:OpenProximity(5, "ej:7741")
 	end
 end
 
-function mod:StaticBurst(_, spellId, _, _, spellName)
+function mod:StaticBurst(args)
 	-- This is intentionally not a tank only warning!
-	self:Message(spellId, spellName, "Attention", spellId)
-	self:Bar(spellId, "~"..spellName, 23, spellId)
+	self:Message(args.spellId, args.spellName, "Attention", args.spellId)
+	self:Bar(args.spellId, "~"..args.spellName, 23, args.spellId)
 end
 
 do
 	local prev = 0
-	function mod:StaticWoundConduction(_, spellId, sourceName)
-		if not UnitIsUnit(sourceName, "player") then return end
+	function mod:StaticWoundConduction(args)
+		if not UnitIsUnit(args.sourceName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, L["in_water"], "Personal", spellId, "Info")
-			self:FlashShake(spellId)
+			self:LocalMessage(args.spellId, L["in_water"], "Personal", args.spellId, "Info")
+			self:FlashShake(args.spellId)
 		end
 	end
 end
 
 do
 	local prev = 0
-	function mod:ElectrifiedWaters(player, spellId, _, _, spellName)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:ElectrifiedWaters(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Info")
-			self:FlashShake(spellId)
+			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:FlashShake(args.spellId)
 		end
 	end
 end

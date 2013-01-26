@@ -10,6 +10,7 @@ mod:RegisterEnableMob(69132, 69131, 69134, 69078) -- High Priestess Mar'li, Fros
 --------------------------------------------------------------------------------
 -- Locals
 --
+local UnitIsUnit = UnitIsUnit
 local bossDead = 0
 local lingeringTracker = {
 	[69132] = 0,
@@ -103,70 +104,70 @@ end
 --
 
 -- High Priestess Mar'li
-function mod:MarkedSoul(player, spellId, _, _, spellName)
-	self:TargetMessage(spellId, spellName, player, "Urgent", spellId, "Alert")
-	self:Bar(spellId, L["loa_kills"]:format(player), 20, spellId)
-	if UnitIsUnit(player, "player") then
-		self:FlashShake(spellId)
+function mod:MarkedSoul(args)
+	self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId, "Alert")
+	self:Bar(args.spellId, L["loa_kills"]:format(args.destName), 20, args.spellId)
+	if UnitIsUnit(args.destName, "player") then
+		self:FlashShake(args.spellId)
 	end
 end
 
-function mod:LoaSpirit(_, spellId, _, _, spellName)
+function mod:LoaSpirit(args)
 	-- maybe make this a ranged dps only warning?
-	self:Message("loa_spirits", spellName, "Important", spellId, "Alarm")
-	self:Bar("loa_spirits", "~"..L["loa_spirit"], 33, spellId)
+	self:Message("loa_spirits", args.spellName, "Important", args.spellId, "Alarm")
+	self:Bar("loa_spirits", "~"..L["loa_spirit"], 33, args.spellId)
 	-- we use a localized string so we don't have to bother with stopping and restarting bars on posess, since Bless and Shadowed Loa spirits share cooldown
 end
 
 -- Sul the Sandcrawler
-function mod:Sandstorm(_, spellId, _, _, spellName)
+function mod:Sandstorm(args)
 	-- Ability is used about 1 sec after the boss gets possessed, so no point to makea bar
-	self:Message(spellId, spellName, "Urgent", spellId, "Alert")
+	self:Message(args.spellId, args.spellName, "Urgent", args.spellId, "Alert")
 end
 
-function mod:Entrapped(player, spellId, _, _, spellName)
-	if UnitIsUnit(player, "player") then
+function mod:Entrapped(args)
+	if UnitIsUnit(args.destName, "player") then
 		self:FlashShake(136857)
-		self:LocalMessage(136857, spellName, "Personal", spellId, "Info")
+		self:LocalMessage(136857, args.spellName, "Personal", args.spellId, "Info")
 	else
 		if self:Dispeller("magic") then
-			self:LocalMessage(136857, spellName, "Attention", spellId, nil, player)
+			self:LocalMessage(136857, args.spellName, "Attention", args.spellId, nil, args.destName)
 		end
 	end
 end
 
-function mod:Ensnared(player, spellId, _, _, spellName, stack)
-	stack = stack or 1
-	if UnitIsUnit(player, "player") then
-		self:LocalMessage(136878, ("%s (%d)"):format(spellName, stack), "Attention", spellId)
+function mod:Ensnared(args)
+	args.amount = args.amount or 1
+	if UnitIsUnit(args.destName, "player") then
+		self:LocalMessage(136878, ("%s (%d)"):format(args.spellName, args.amount), "Attention", args.spellId)
 		if self.db.profile[self:SpellName(136878)] == 0 then return end -- don't play sound if warning is turned off
-		local sound = ("BigWigs: %d"):format(5-stack)
+		local sound = ("BigWigs: %d"):format(5-args.amount)
 		self:PlaySound(136878, sound)
 	end
 end
 
-function mod:Quicksand(player, spellId, _, _, spellName)
-	self:Bar(spellId, "~"..spellName, 33, spellId)
-	if UnitIsUnit(player, "player") then
-		self:LocalMessage("ej:7062", CL["underyou"]:format(spellName), "Personal", spellId, "Info")
+function mod:Quicksand(args)
+	self:Bar(args.spellId, "~"..args.spellName, 33, args.spellId)
+	if UnitIsUnit(args.destName, "player") then
+		self:LocalMessage("ej:7062", CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
 		self:FlashShake("ej:7062")
 	end
 end
 
 -- Kazra'jin
-function mod:RecklessCharge(_, spellId, _, _, spellName)
+function mod:RecklessCharge(args)
 	-- Not sure how useful this is, might want to remove it later
-	self:Bar(spellId, spellName, 6, spellId)
+	self:Bar(args.spellId, args.spellName, 6, args.spellId)
 end
 
 do
 	local prev = 0
-	function mod:RecklessChargeDamage(player, spellId, _, _, spellName)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:RecklessChargeDamage(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(137122, CL["underyou"]:format(spellName), "Personal", spellId, "Info")
+			self:LocalMessage(137122, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
 			self:FlashShake(137122)
 		end
 	end
@@ -174,56 +175,56 @@ end
 
 --Frost King Malakk
 
-function mod:FrostbiteApplied(player, spellId, _, _, spellName)
-	self:TargetMessage(spellId, spellName, player, "Positive", spellId, "Info")
-	self:Bar(spellId, spellName, 45, spellId)
-	if UnitIsUnit(player, "player") then
-		self:SecondaryIcon(spellId, player)
+function mod:FrostbiteApplied(args)
+	self:TargetMessage(args.spellId, args.spellName, args.destName, "Positive", args.spellId, "Info")
+	self:Bar(args.spellId, args.spellName, 45, args.spellId)
+	if UnitIsUnit(args.destName, "player") then
+		self:SecondaryIcon(args.spellId, args.destName)
 	end
 end
 
-function mod:FrostbiteRemoved(player, spellId)
-	if UnitIsUnit(player, "player") then
-		self:PrimaryIcon(spellId)
+function mod:FrostbiteRemoved(args)
+	if UnitIsUnit(args.destName, "player") then
+		self:PrimaryIcon(args.spellId)
 	end
 end
 
-function mod:BitingColdApplied(player, spellId, _, _, spellName)
-	self:TargetMessage(spellId, spellName, player, "Urgent", spellId, "Alert")
-	self:Bar(spellId, spellName, 47, spellId)
-	if UnitIsUnit(player, "player") then
-		self:SaySelf(spellId, spellName)
-		self:OpenProximity(4, spellId)
-		self:PrimaryIcon(spellId, player)
+function mod:BitingColdApplied(args)
+	self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId, "Alert")
+	self:Bar(args.spellId, args.spellName, 47, args.spellId)
+	if UnitIsUnit(args.destName, "player") then
+		self:SaySelf(args.spellId, args.spellName)
+		self:OpenProximity(4, args.spellId)
+		self:PrimaryIcon(args.spellId, args.destName)
 	end
 end
 
-function mod:BitingColdRemoved(player, spellId)
-	if UnitIsUnit(player, "player") then
-		self:CloseProximity(spellId)
-		self:PrimaryIcon(spellId)
+function mod:BitingColdRemoved(args)
+	if UnitIsUnit(args.destName, "player") then
+		self:CloseProximity(args.spellId)
+		self:PrimaryIcon(args.spellId)
 	end
 end
 
 -- General
 
-function mod:Assault(player, spellId, _, _, _, stack)
+function mod:Assault(args)
 	if self:Tank() or self:Healer() then
-		stack = stack or 1
-		if stack % 5 == 0 or stack > 10 then -- don't spam on low stacks, but spam close to 15
-			self:LocalMessage("assault", CL["stack"], "Urgent", spellId, "Info", player, stack, L["assault_message"])
+		args.amount = args.amount or 1
+		if args.amount % 5 == 0 or args.amount > 10 then -- don't spam on low stacks, but spam close to 15
+			self:LocalMessage("assault", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["assault_message"])
 		end
 	end
 end
 
 do
 	local fullPower = 66 -- 66 seconds till full power without any lingering presences stacks
-	function mod:PossessedApplied(player, spellId, _, _, spellName, _, _, _, _, dGUID)
-		local mobId = self:GetCID(dGUID)
+	function mod:PossessedApplied(args)
+		local mobId = self:GetCID(args.destGUID)
 		local difficultyRegenMultiplier = self:Heroic() and 15 or self:LFR() and 5 or 10
 		local duration = lingeringTracker[mobId] == 0 and fullPower or fullPower*(100-lingeringTracker[mobId]*difficultyRegenMultiplier)/100
-		self:Message(spellId, ("%s (%s)"):format(spellName, player), "Attention", spellId, "Long")
-		self:Bar(spellId, L["full_power"], duration, spellId)
+		self:Message(args.spellId, ("%s (%s)"):format(args.spellName, args.destName), "Attention", args.spellId, "Long")
+		self:Bar(args.spellId, L["full_power"], duration, args.spellId)
 		-- leave in all the elseif statements to be ready in case they are needed on heroic
 		if mobId == 69132 then -- Priestess
 		elseif mobId == 69131 then -- Frost King
@@ -234,8 +235,8 @@ do
 	end
 end
 
-function mod:PossessedRemoved(_, _, _, _, _, _, _, _, _, dGUID)
-	local mobId = self:GetCID(dGUID)
+function mod:PossessedRemoved(args)
+	local mobId = self:GetCID(args.destGUID)
 	lingeringTracker[mobId] = lingeringTracker[mobId] + 1 -- this is needed because Lingering Presence have no CLEU event
 	-- leave in all the elseif statements to be ready in case they are needed on heroic
 	if mobId == 69132 then -- Priestess
@@ -246,15 +247,15 @@ function mod:PossessedRemoved(_, _, _, _, _, _, _, _, _, dGUID)
 	end
 end
 
-function mod:Deaths(mobId)
+function mod:Deaths(args)
 	-- stopbars
 	-- leave in all the elseif statements to be ready in case they are needed on heroic
-	if mobId == 69132 then -- Priestess
-	elseif mobId == 69131 then -- Frost King
+	if args.mobId == 69132 then -- Priestess
+	elseif args.mobId == 69131 then -- Frost King
 		self:StopBar(136992)
 		self:StopBar(136990)
-	elseif mobId == 69134 then -- Kazra'jin
-	elseif mobId == 69078 then -- Sandcrawler
+	elseif args.mobId == 69134 then -- Kazra'jin
+	elseif args.mobId == 69078 then -- Sandcrawler
 		self:StopBar("ej:7062")
 		self:CloseProximity(5)
 	end

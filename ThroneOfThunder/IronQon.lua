@@ -86,71 +86,71 @@ end
 
 do
 	local prev = 0
-	function mod:FrozenBlood(player, spellId, _, _, spellName)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:FrozenBlood(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Info")
-			self:FlashShake(spellId)
+			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:FlashShake(args.spellId)
 		end
 	end
 end
 
-function mod:DeadZone(_, spellId, _, _, spellName)
-	self:Message("ej:6914", spellName, "Attention", spellId)
-	self:Bar("ej:6914", spellName, 16, spellId)
+function mod:DeadZone(args)
+	self:Message("ej:6914", args.spellName, "Attention", args.spellId)
+	self:Bar("ej:6914", args.spellName, 16, args.spellId)
 end
 
 -- Quet'zal
 
-function mod:ArcingLightningApplied(player, spellId, _, _, spellName)
-	self:PrimaryIcon(spellId, player)
-	self:TargetMessage(spellId, spellName, player, "Urgent", spellId) -- no point for sound since the guy stunned can't do anything
-	self:Bar(spellId, spellName, 20, spellId)
+function mod:ArcingLightningApplied(args)
+	self:PrimaryIcon(args.spellId, args.destName)
+	self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId) -- no point for sound since the guy stunned can't do anything
+	self:Bar(args.spellId, args.spellName, 20, args.spellId)
 end
 
-function mod:ArcingLightningRemoved(spellId)
-	self:PrimaryIcon(spellId)
+function mod:ArcingLightningRemoved(args)
+	self:PrimaryIcon(args.spellId)
 end
 
 do
 	local prev = 0
-	function mod:StormCloud(player, spellId, _, _, spellName)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:StormCloud(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Info")
-			self:FlashShake(spellId)
+			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:FlashShake(args.spellId)
 		end
 	end
 end
 
-function mod:Windstorm(_, spellId, _, _, spellName)
-	self:Message("ej:6877", spellName, "Attention", spellId)
-	self:Bar("ej:6877", spellName, 90, spellId)
+function mod:Windstorm(args)
+	self:Message("ej:6877", args.spellName, "Attention", args.spellId)
+	self:Bar("ej:6877", args.spellName, 90, args.spellId)
 end
 
 -- Ro'shak
 
 do
 	local prev = 0
-	function mod:BurningCinders(player, spellId, _, _, spellName)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:BurningCinders(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Info")
-			self:FlashShake(spellId)
+			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:FlashShake(args.spellId)
 		end
 	end
 end
 
-function mod:Scorched(player, spellId, _, _, spellName, stack)
-	stack = stack or 1
-	if stack > 4 and UnitIsUnit(player, "player") then
-		self:LocalMessage("ej:6871", ("%s (%d)"):format(spellName, stack), "Important", spellId)
+function mod:Scorched(args)
+	args.amount = args.amount or 1
+	if args.amount > 4 and UnitIsUnit(args.destName, "player") then
+		self:LocalMessage("ej:6871", ("%s (%d)"):format(args.spellName, args.amount), "Important", args.spellId)
 	end
 	self:Bar("ej:6870", "~"..self:SpellName(134628), 6, 134628) -- Unleashed Flame - don't think there is any point to this, maybe coordinating personal cooldowns?
 end
@@ -180,9 +180,9 @@ do
 	end
 end
 
-function mod:MoltenOverloadApplied(_, spellId, _, _, spellName)
-	self:Message("overload_casting", spellName, "Important", spellId, "Alert")
-	self:Bar("overload_casting", CL["cast"]:format(spellName), 10, spellId) -- don't think there is any point to this, maybe coordinating raid cooldowns?
+function mod:MoltenOverloadApplied(args)
+	self:Message("overload_casting", args.spellName, "Important", args.spellId, "Alert")
+	self:Bar("overload_casting", CL["cast"]:format(args.spellName), 10, args.spellId) -- don't think there is any point to this, maybe coordinating raid cooldowns?
 	self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss2")
 end
 
@@ -210,18 +210,18 @@ do
 			timer = nil
 		end
 	end
-	function mod:ThrowSpear(_, spellId)
-		self:Bar(spellId, "~"..self:SpellName(spellId), 33, spellId)
+	function mod:ThrowSpear(args)
+		self:Bar(args.spellId, "~"..args.spellName, 33, args.spellId)
 		fired = 0
 		if not timer then
-			timer = self:ScheduleRepeatingTimer(spearWarn, 0.05, spellId)
+			timer = self:ScheduleRepeatingTimer(spearWarn, 0.05, args.spellId)
 		end
 	end
 end
 
 
-function mod:Deaths(mobId)
-	if mobId == 68079 then -- Ro'shak
+function mod:Deaths(args)
+	if args.mobId == 68079 then -- Ro'shak
 		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss2")
 		self:CloseProximity("ej:6870")
 		self:StopBar(137221) -- Molten Overload
@@ -229,14 +229,14 @@ function mod:Deaths(mobId)
 		self:Bar("ej:6877", 136577, 50, 136577) -- Windstorm
 		self:Bar(136192, 136192, 17, 136192) -- Arcing Lightning
 		self:OpenProximity(8, 136192) -- Arcing Lightning -- assume 8 yards
-	elseif mobId == 68080 then -- Quet'zal
+	elseif args.mobId == 68080 then -- Quet'zal
 		self:StopBar(136577) -- Windstorm
 		self:StopBar(136192) -- Arcing Lightning
 		self:CloseProximity(136192)
 		self:Bar("ej:6914", 137226, 7, 137226) -- Dead Zone
-	elseif mobId == 68081 then -- Dam'ren
+	elseif args.mobId == 68081 then -- Dam'ren
 		self:StopBar(137226) -- Dead zone
-	elseif mobId == 68078 then -- Iron Qon
+	elseif args.mobId == 68078 then -- Iron Qon
 		self:Win()
 	end
 end

@@ -135,22 +135,22 @@ end
 
 -- The Zandalari
 
-function mod:Rampage(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, "Long")
+function mod:Rampage(args)
+	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Long")
 end
 
-function mod:BestialCry(_, spellId, _, _, spellName)
-	self:Bar(spellId, spellName, 11, spellId) -- might help to pop personal cooldowns
+function mod:BestialCry(args)
+	self:Bar(args.spellId, args.spellName, 11, args.spellId) -- might help to pop personal cooldowns
 end
 
-function mod:CrackedShell(player, spellId, _, _, _, stack)
-	if stack == 4 then
+function mod:CrackedShell(args)
+	if args.amount == 4 then
 		self:Message("ej:7087", (EJ_GetSectionInfo(7087)), "Positive", 136821, "Info") -- War-God Jalak
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end
 
-function mod:LastPhase(unit)
+function mod:LastPhase(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 35 and select(4,UnitBuff(unitId, self:SpellName(137240))) ~= 4 then -- phase starts at 30
 		self:Message("ej:7087", CL["soon"]:format((EJ_GetSectionInfo(7087))), "Positive", 136821, "Info") -- War-God Jalak
@@ -170,49 +170,49 @@ function mod:DinoForm()
 	self:Message("ej:7092", L["orb_message"], "Positive", 137445) -- orb of control icon
 end
 
-function mod:DinoMending(_, spellId, _, _, spellName)
-	self:Message("ej:7090", spellName, "Important", spellId, "Long") -- maybe should give the interruptable icon to the options menu for this too
+function mod:DinoMending(args)
+	self:Message("ej:7090", args.spellName, "Important", args.spellId, "Long") -- maybe should give the interruptable icon to the options menu for this too
 end
 
 -- The Amani
 
 do
 	local prev = 0
-	function mod:LightningNova(player, spellId, _, _, spellName)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:LightningNova(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Info")
-			self:FlashShake(spellId)
+			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:FlashShake(args.spellId)
 		end
 	end
 end
 
-function mod:Hex(_, spellId, _, _, spellName)
+function mod:Hex(args)
 	if self:Dispeller("curse") then
-		self:LocalMessage("hex", spellName, "Important", spellId, "Alarm")
+		self:LocalMessage("hex", args.spellName, "Important", args.spellId, "Alarm")
 	end
 end
 
 do
 	local prev = 0
-	function mod:ChainLightning(_, spellId, _, _, _, _, _, _, _, _, sGUID)
+	function mod:ChainLightning(args)
 		local t = GetTime()
-		if t-prev > 3 and UnitGUID("focus") == sGUID then -- don't spam
+		if t-prev > 3 and UnitGUID("focus") == args.sourceGUID then -- don't spam
 			prev = t
-			self:LocalMessage("chain_lightning", L["chain_lightning_warning"], "Personal", spellId, "Alert")
+			self:LocalMessage("chain_lightning", L["chain_lightning_warning"], "Personal", args.spellId, "Alert")
 		end
 	end
 end
 
 do
 	local prev = 0
-	function mod:Fireball(_, spellId, _, _, _, _, _, _, _, _, sGUID)
+	function mod:Fireball(args)
 		local t = GetTime()
-		if t-prev > 3 and UnitGUID("focus") == sGUID then -- don't spam
+		if t-prev > 3 and UnitGUID("focus") == args.sourceGUID then -- don't spam
 			prev = t
-			self:LocalMessage("fireball", L["fireball_warning"], "Personal", spellId, "Alert")
+			self:LocalMessage("fireball", L["fireball_warning"], "Personal", args.spellId, "Alert")
 		end
 	end
 end
@@ -221,35 +221,35 @@ end
 
 do
 	local prev = 0
-	function mod:FrozenOrb(player, spellId, _, _, spellName)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:FrozenOrb(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Info") -- not exactly under you
-			self:FlashShake(spellId)
+			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info") -- not exactly under you
+			self:FlashShake(args.spellId)
 		end
 	end
 end
 
-function mod:MortalStrikeRemoved(player, spellId, _, _, spellName)
-	self:StopBar(("%s - %s"):format(spellName, player))
+function mod:MortalStrikeRemoved(args)
+	self:StopBar(("%s - %s"):format(args.spellName, args.destName))
 end
 
-function mod:MortalStrike(player, spellId, _, _, spellName)
+function mod:MortalStrike(args)
 	if self:Tank() or self:Healer() then
-		self:LocalMessage("mortal_strike", spellName, "Urgent", spellId, nil, player)
-		self:Bar("mortal_strike", ("%s - %s"):format(spellName, player), 8, spellId)
+		self:LocalMessage("mortal_strike", args.spellName, "Urgent", args.spellId, nil, args.destName)
+		self:Bar("mortal_strike", ("%s - %s"):format(args.spellName, args.destName), 8, args.spellId)
 	end
 end
 
 do
 	local prev = 0
-	function mod:DeadlyPlague(_, spellId, _, _, spellName)
+	function mod:DeadlyPlague(args)
 		local t = GetTime()
 		if t-prev > 3 and self:Dispeller("disease") then -- don't spam
 			prev = t
-			self:LocalMessage("deadly_plague", spellName, "Important", spellId, "Alarm")
+			self:LocalMessage("deadly_plague", args.spellName, "Important", args.spellId, "Alarm")
 		end
 	end
 end
@@ -258,32 +258,32 @@ end
 
 do
 	local prev = 0
-	function mod:LivingPoison(player, spellId, _, _, spellName)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:LivingPoison(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Info")
-			self:FlashShake(spellId)
+			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:FlashShake(args.spellId)
 		end
 	end
 end
 
 do
 	local prev = 0
-	function mod:VenomBoltVolleyDispell(_, spellId, _, _, spellName)
+	function mod:VenomBoltVolleyDispell(args)
 		local t = GetTime()
 		if t-prev > 3 and self:Dispeller("poison") then -- don't spam
 			prev = t
-			self:LocalMessage("venom_bolt_volley", spellName, "Important", spellId, "Alarm")
+			self:LocalMessage("venom_bolt_volley", args.spellName, "Important", args.spellId, "Alarm")
 		end
 	end
 end
 
-function mod:VenomBoltVolley(_, spellId, _, _, _, _, _, _, _, _, sGUID)
-	if UnitGUID("focus") == sGUID then
-		self:LocalMessage("venom_bolt_volley", L["venom_bolt_volley_warning"], "Personal", spellId, "Alert")
-		self:Bar("venom_bolt_volley", L["venom_bolt_volley_bar"], 16, spellId)
+function mod:VenomBoltVolley(args)
+	if UnitGUID("focus") == args.sourceGUID then
+		self:LocalMessage("venom_bolt_volley", L["venom_bolt_volley_warning"], "Personal", args.spellId, "Alert")
+		self:Bar("venom_bolt_volley", L["venom_bolt_volley_bar"], 16, args.spellId)
 	end
 end
 
@@ -291,24 +291,24 @@ end
 
 do
 	local prev = 0
-	function mod:SandTrap(player, spellId, _, _, spellName)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:SandTrap(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Info")
-			self:FlashShake(spellId)
+			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:FlashShake(args.spellId)
 		end
 	end
 end
 
 do
 	local prev = 0
-	function mod:BlazingSunlight(_, spellId, _, _, spellName)
+	function mod:BlazingSunlight(args)
 		local t = GetTime()
 		if t-prev > 3 and self:Dispeller("magic") then -- don't spam
 			prev = t
-			self:LocalMessage("blazingSunlight", spellName, "Important", spellId, "Alarm")
+			self:LocalMessage("blazingSunlight", args.spellName, "Important", args.spellId, "Alarm")
 		end
 	end
 end
@@ -330,14 +330,14 @@ function mod:Charge(unit)
 	end
 end
 
-function mod:Swipe(player, spellId, _, _, spellName)
-	self:Message(136741, spellName, "Urgent", spellId)
-	self:Bar(136741, "~"..spellName, 11, spellId)
+function mod:Swipe(args)
+	self:Message(136741, args.spellName, "Urgent", args.spellId)
+	self:Bar(136741, "~"..args.spellName, 11, args.spellId)
 end
 
-function mod:Puncture(player, spellId, _, _, _, stack)
+function mod:Puncture(args)
 	if self:Tank() or self:Healer() then
-		stack = stack or 1
-		self:LocalMessage("puncture", CL["stack"], "Urgent", spellId, "Info", player, stack, L["Puncture_message"])
+		args.amount = args.amount or 1
+		self:LocalMessage("puncture", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["Puncture_message"])
 	end
 end
