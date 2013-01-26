@@ -128,8 +128,8 @@ function mod:Attenuation(args)
 	self:FlashShake("attenuation")
 end
 
-function mod:PreForceAndVerse(args)
-	if args.spellId == 122933 then -- Clear Throat
+function mod:PreForceAndVerse(_, _, _, _, spellId)
+	if spellId == 122933 then -- Clear Throat
 		self:Message("force", CL["soon"]:format(L["force_message"]), "Important", L.force_icon, "Long")
 	end
 end
