@@ -71,12 +71,12 @@ end
 
 do
 	local prev = 0
-	function mod:GrowingAngerApplied(player, spellId, _, _, spellName)
-		if UnitIsUnit(player, "player") then
-			self:OpenProximity(5, spellId)
-			self:FlashShake(spellId)
-			self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Alert")
-			self:Bar(spellId, CL["you"]:format(spellName), 6, spellId)
+	function mod:GrowingAngerApplied(args)
+		if UnitIsUnit(args.destName, "player") then
+			self:OpenProximity(5, args.spellId)
+			self:FlashShake(args.spellId)
+			self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Alert")
+			self:Bar(args.spellId, CL["you"]:format(args.spellName), 6, args.spellId)
 		else
 			local t = GetTime()
 			if t-prev > 6 then
@@ -85,9 +85,9 @@ do
 			end
 		end
 	end
-	function mod:GrowingAngerRemoved(player, spellId)
-		if UnitIsUnit(player, "player") then
-			self:CloseProximity(spellId)
+	function mod:GrowingAngerRemoved(args)
+		if UnitIsUnit(args.destName, "player") then
+			self:CloseProximity(args.spellId)
 		end
 	end
 end
@@ -98,10 +98,10 @@ do
 		mod:TargetMessage(spellId, spellId, aggressiveTargets, "Urgent", spellId)
 		scheduled = nil
 	end
-	function mod:AggressiveBehavior(player, spellId, _, _, spellName)
-		aggressiveTargets[#aggressiveTargets + 1] = player
+	function mod:AggressiveBehavior(args)
+		aggressiveTargets[#aggressiveTargets + 1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnAggressiveBehavior, 2, spellId)
+			scheduled = self:ScheduleTimer(warnAggressiveBehavior, 2, args.spellId)
 		end
 	end
 end
