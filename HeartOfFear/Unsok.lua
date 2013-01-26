@@ -216,7 +216,7 @@ function mod:BreakFree(args)
 	elseif UnitIsUnit("focus", args.sourceName) then
 		local source = args.sourceName:gsub("%-.+", "*")
 		self:StopBar(CL["cast"]:format(CL["other"]:format(source, explosion)))
-		self:StopBar(CL["other"]:format(args.sourceName, explosion))
+		self:StopBar(CL["other"]:format(source, explosion))
 	end
 end
 
