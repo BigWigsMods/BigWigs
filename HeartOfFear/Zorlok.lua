@@ -84,16 +84,16 @@ do
 		mod:TargetMessage(spellId, spellId, convertList, "Attention", spellId)
 		scheduled = nil
 	end
-	function mod:Convert(player, spellId, _, _, spellName)
-		self:Bar(spellId, "~"..spellName, 36, spellId)
-		convertList[#convertList + 1] = player
+	function mod:Convert(args)
+		self:Bar(args.spellId, "~"..args.spellName, 36, args.spellId)
+		convertList[#convertList + 1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(convert, 0.1, spellId)
+			scheduled = self:ScheduleTimer(convert, 0.1, args.spellId)
 		end
 	end
 end
 
-function mod:Attenuation(_, spellId, source, _, spellName)
+function mod:Attenuation(args)
 	local target
 	if self:Heroic() then
 		if platform == 3 then -- this is code section is untested
@@ -119,25 +119,25 @@ function mod:Attenuation(_, spellId, source, _, spellName)
 	else
 		target = L["zorlok"]
 	end
-	if spellId == 122497 or spellId == 122479 or spellId == 123722 then -- right
+	if args.spellId == 122497 or args.spellId == 122479 or args.spellId == 123722 then -- right
 		self:Message("attenuation", L["attenuation_message"]:format(target, L["right"]), "Urgent", "misc_arrowright", "Alarm")
-	elseif spellId == 122496 or spellId == 122474 or spellId == 123721 then -- left
+	elseif args.spellId == 122496 or args.spellId == 122474 or args.spellId == 123721 then -- left
 		self:Message("attenuation", L["attenuation_message"]:format(target, L["left"]), "Attention", "misc_arrowleft", "Alert")
 	end
-	self:Bar("attenuation", L["attenuation_bar"], 14, spellId)
+	self:Bar("attenuation", L["attenuation_bar"], 14, args.spellId)
 	self:FlashShake("attenuation")
 end
 
-function mod:PreForceAndVerse(_, _, _, _, spellId)
-	if spellId == 122933 then -- Clear Throat
+function mod:PreForceAndVerse(args)
+	if args.spellId == 122933 then -- Clear Throat
 		self:Message("force", CL["soon"]:format(L["force_message"]), "Important", L.force_icon, "Long")
 	end
 end
 
-function mod:ForceAndVerse(_, spellId, _, _, spellName)
+function mod:ForceAndVerse(args)
 	forceCount = forceCount + 1
-	self:Message("force", ("%s (%d)"):format(L["force_message"], forceCount), "Urgent", spellId)
-	self:Bar("force", CL["cast"]:format(L["force_message"]), 12, spellId)
+	self:Message("force", ("%s (%d)"):format(L["force_message"], forceCount), "Urgent", args.spellId)
+	self:Bar("force", CL["cast"]:format(L["force_message"]), 12, args.spellId)
 	self:FlashShake("force")
 end
 
@@ -156,14 +156,14 @@ function mod:UNIT_HEALTH_FREQUENT(unitId)
 	end
 end
 
-function mod:Exhale(player, spellId, _, _, spellName)
-	self:TargetMessage(spellId, spellName, player, "Important", spellId)
-	self:TargetBar(spellId, spellName, player, 6, spellId)
-	self:PrimaryIcon(spellId, player)
+function mod:Exhale(args)
+	self:TargetMessage(args.spellId, args.spellName, args.destName, "Important", args.spellId)
+	self:TargetBar(args.spellId, args.spellName, args.destName, 6, args.spellId)
+	self:PrimaryIcon(args.spellId, args.destName)
 end
 
-function mod:ExhaleOver(_, spellId)
-	self:PrimaryIcon(spellId)
+function mod:ExhaleOver(args)
+	self:PrimaryIcon(args.spellId)
 end
 
 function mod:PlatformSwap()

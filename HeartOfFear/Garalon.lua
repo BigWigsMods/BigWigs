@@ -80,12 +80,12 @@ end
 
 do
 	local prev = 0
-	function mod:PheromoneTrail(player, spellId, _, _, spellName)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:PheromoneTrail(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Alert") -- even tho we usually use Alarm, Alarm has been sued too much in the module
+			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Alert") -- even tho we usually use Alarm, Alarm has been sued too much in the module
 		end
 	end
 end
@@ -105,41 +105,41 @@ function mod:Crush(message, sender, _, _, target)
 	self:Bar(122735, 122735, 9, 122735) --Furious Swipe
 end
 
-function mod:Fury(_, spellId, _, _, spellName, buffStack, _, _, _, dGUID)
-	if self:GetCID(dGUID) == 63191 then -- only fire once
-		self:Bar(spellId, spellName, self:LFR() and 15 or 30, 119622) -- Rage like icon (swipe and fury have the same)
-		self:Message(spellId, ("%s (%d)"):format(spellName, buffStack or 1), "Urgent", 119622)
+function mod:Fury(args)
+	if self:GetCID(args.destGUID) == 63191 then -- only fire once
+		self:Bar(args.spellId, args.spellName, self:LFR() and 15 or 30, 119622) -- Rage like icon (swipe and fury have the same)
+		self:Message(args.spellId, ("%s (%d)"):format(args.spellName, args.amount or 1), "Urgent", 119622)
 	end
 end
 
-function mod:PheromonesApplied(player, spellId, _, _, spellName)
-	self:PrimaryIcon(spellId, player)
-	if UnitIsUnit("player", player) then
+function mod:PheromonesApplied(args)
+	self:PrimaryIcon(args.spellId, args.destName)
+	if UnitIsUnit("player", args.destName) then
 		-- Local message with personal and info for when you gain the debuff, others don't care that you got it
-		self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Info")
+		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
 	elseif self:Healer() then
-		self:LocalMessage(spellId, spellName, "Attention", spellId, nil, player)
+		self:LocalMessage(args.spellId, args.spellName, "Attention", args.spellId, nil, args.destName)
 	end
 end
 
-function mod:PheromonesRemoved(player, spellId, _, _, spellName)
-	if UnitIsUnit("player", player) then
+function mod:PheromonesRemoved(args)
+	if UnitIsUnit("player", args.destName) then
 		-- Local message with important and alarm for when you loose the debuff, others don't care that you lost it
-		self:LocalMessage(spellId, L["removed"]:format(spellName), "Important", spellId, "Alarm")
+		self:LocalMessage(args.spellId, L["removed"]:format(args.spellName), "Important", args.spellId, "Alarm")
 	end
 end
 
-function mod:Pungency(player, spellId, _, _, spellName, buffStack)
-	if buffStack > ((self:LFR() and 13) or (self:Heroic() and 3) or 7) and buffStack % 2 == 0 then
-		self:TargetMessage(spellId, CL["stack"], player, "Attention", spellId, nil, buffStack, spellName)
+function mod:Pungency(args)
+	if args.amount > ((self:LFR() and 13) or (self:Heroic() and 3) or 7) and args.amount % 2 == 0 then
+		self:TargetMessage(args.spellId, CL["stack"], args.destName, "Attention", args.spellId, nil, args.amount, args.spellName)
 	end
 end
 
-function mod:MendLeg(_, spellId, _, _, spellName)
+function mod:MendLeg(args)
 	legCounter = legCounter + 1
 	if legCounter < 4 then -- don't start a timer if it has all 4 legs
-		self:Message(spellId, spellName, "Urgent", spellId)
-		self:Bar(spellId, "~"..spellName, 30, spellId)
+		self:Message(args.spellId, args.spellName, "Urgent", args.spellId)
+		self:Bar(args.spellId, "~"..args.spellName, 30, args.spellId)
 	else
 		-- all legs grew back, no need to start a bar, :BrokenLeg will start it
 		mendLegTimerRunning = nil
@@ -160,14 +160,14 @@ do
 	local function nextSwipe(spellId)
 		mod:Bar(spellId, spellId, 8, spellId)
 	end
-	function mod:FuriousSwipe(_, spellId)
+	function mod:FuriousSwipe(args)
 		-- delay the bar so it ends when the damage occurs
-		self:ScheduleTimer(nextSwipe, 2.5, spellId)
+		self:ScheduleTimer(nextSwipe, 2.5, args.spellId)
 	end
 end
 
 function mod:PrePhase2(_, unitId)
-	if not unitId:find("boss", nil, true) then return end
+	if not unitId:find("boss", nil, true) and unitId ~= "target" then return end
 	if self:GetCID(UnitGUID(unitId)) == 63191 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 38 then -- phase starts at 33

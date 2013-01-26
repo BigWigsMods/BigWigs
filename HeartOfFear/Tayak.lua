@@ -94,14 +94,14 @@ end
 -- Event Handlers
 --
 
-function mod:BladeTempest(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, "Alarm")
-	self:Bar(spellId, spellName, 60, spellId)
-	self:FlashShake(spellId)
+function mod:BladeTempest(args)
+	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alarm")
+	self:Bar(args.spellId, args.spellName, 60, args.spellId)
+	self:FlashShake(args.spellId)
 end
 
-function mod:WindStep(_, spellId, _, _, spellName)
-	self:Bar(spellId, "~"..spellName, 26.5, spellId) --26.5-30.2
+function mod:WindStep(args)
+	self:Bar(args.spellId, "~"..args.spellName, 26.5, args.spellId) --26.5-30.2
 end
 
 do
@@ -133,7 +133,7 @@ do
 			local name, server = UnitName(player)
 			if server then name = name .."-".. server end
 			if UnitIsUnit(player, "player") then
-				mod:SaySelf("unseenstrike", strike)
+				mod:Say("unseenstrike", strike)
 			else
 				mod:OpenProximity(5, "unseenstrike", name, true)
 			end
@@ -180,17 +180,16 @@ do
 	end
 end
 
-function mod:Assault(player, spellId, _, _, _, stack)
+function mod:Assault(args)
 	if self:Tank() or self:Healer() then
-		stack = stack or 1
-		self:LocalMessage("assault", CL["stack"], "Urgent", spellId, "Info", player, stack, L["assault_message"])
+		self:LocalMessage("assault", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount or 1, L["assault_message"])
 	end
 end
 
-function mod:AssaultCast(_, spellId)
+function mod:AssaultCast(args)
 	if self:Tank() or self:Healer() then
 		-- If a tank dies from an assault, it will never apply, and the CD bar won't show. Show it on cast instead.
-		self:Bar("assault", "~"..L["assault_message"], 20.4, spellId)
+		self:Bar("assault", "~"..L["assault_message"], 20.4, args.spellId)
 	end
 end
 

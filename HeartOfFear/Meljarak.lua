@@ -122,10 +122,10 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	end
 end
 
-function mod:WhirlingBladeDamage(player, spellId, _, _, spellName)
-	if not self:LFR() and UnitIsUnit("player", player) then
-		self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Info")
-		self:FlashShake(spellId) -- we FNS on cast too, but some more can't hurt
+function mod:WhirlingBladeDamage(args)
+	if not self:LFR() and UnitIsUnit("player", args.destName) then
+		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
+		self:FlashShake(args.spellId) -- we FNS on cast too, but some more can't hurt
 	end
 end
 
@@ -152,9 +152,9 @@ do
 	end
 end
 
-function mod:ResidueRemoved(player, _, _, _, spellName)
-	if UnitIsUnit("player", player) then
-		self:LocalMessage(122055, L["residue_removed"]:format(spellName), "Positive", 122055)
+function mod:ResidueRemoved(args)
+	if UnitIsUnit("player", args.destName) then
+		self:LocalMessage(122055, L["residue_removed"]:format(args.spellName), "Positive", 122055)
 	end
 end
 
@@ -164,120 +164,120 @@ do
 		mod:TargetMessage(spellId, spellId, prisonList, "Important", spellId, "Info")
 		scheduled = nil
 	end
-	function mod:AmberPrison(player, spellId, _, _, spellName)
-		if UnitIsUnit("player", player) then
-			self:SaySelf(spellId, spellName)
+	function mod:AmberPrison(args)
+		if UnitIsUnit("player", args.destName) then
+			self:Say(args.spellId, args.spellName)
 		end
-		prisonList[#prisonList + 1] = player
+		prisonList[#prisonList + 1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(prison, 0.1, spellId)
+			scheduled = self:ScheduleTimer(prison, 0.1, args.spellId)
 		end
 		if self:LFR() then return end
 		if not primaryAmberIcon then
-			self:PrimaryIcon(spellId, player)
-			primaryAmberIcon = player
+			self:PrimaryIcon(args.spellId, args.destName)
+			primaryAmberIcon = args.destName
 		elseif not secondaryAmberIcon then -- leave the icon on the second person hit
-			self:SecondaryIcon(spellId, player)
-			secondaryAmberIcon = player
+			self:SecondaryIcon(args.spellId, args.destName)
+			secondaryAmberIcon = args.destName
 		end
 	end
 end
 
-function mod:AmberPrisonRemoved(player, spellId)
+function mod:AmberPrisonRemoved(args)
 	if self:LFR() then return end
-	if player == primaryAmberIcon then
-		self:PrimaryIcon(spellId)
+	if args.destName == primaryAmberIcon then
+		self:PrimaryIcon(args.spellId)
 		primaryAmberIcon = nil
-	elseif player == secondaryAmberIcon then
-		self:SecondaryIcon(spellId)
+	elseif args.destName == secondaryAmberIcon then
+		self:SecondaryIcon(args.spellId)
 		secondaryAmberIcon = nil
 	end
 end
 
-function mod:RainOfBlades(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, "Alert")
-	self:Bar(spellId, "~"..spellName, phase == 2 and 48 or 60, spellId)
+function mod:RainOfBlades(args)
+	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alert")
+	self:Bar(args.spellId, "~"..args.spellName, phase == 2 and 48 or 60, args.spellId)
 end
 
 do
 	local prev = 0
-	function mod:Quickening(_, spellId, _, _, spellName) -- You really only care about this anyways when you can dispel
+	function mod:Quickening(args) -- You really only care about this anyways when you can dispel
 		if self:Dispeller("magic", true) then
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				self:LocalMessage(spellId, spellName, "Attention", spellId, "Alert")
+				self:LocalMessage(args.spellId, args.spellName, "Attention", args.spellId, "Alert")
 			end
 		end
 	end
 end
 
-function mod:Mending(_, spellId, _, _, _, _, _, _, _, _, sGUID)
-	if UnitGUID("focus") == sGUID then
-		self:LocalMessage("mending", L["mending_warning"], "Personal", spellId, "Alert")
-		self:Bar("mending", L["mending_bar"], 37, spellId)
+function mod:Mending(args)
+	if UnitGUID("focus") == args.sourceGUID then
+		self:LocalMessage("mending", L["mending_warning"], "Personal", args.spellId, "Alert")
+		self:Bar("mending", L["mending_bar"], 37, args.spellId)
 	end
 end
 
-function mod:WhirlingBlade(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Urgent", spellId, "Alarm")
-	self:Bar(spellId, "~"..spellName, phase == 2 and 30 or 45, spellId)
+function mod:WhirlingBlade(args)
+	self:Message(args.spellId, args.spellName, "Urgent", args.spellId, "Alarm")
+	self:Bar(args.spellId, "~"..args.spellName, phase == 2 and 30 or 45, args.spellId)
 	if not self:LFR() then
-		self:FlashShake(spellId)
+		self:FlashShake(args.spellId)
 	end
 end
 
-function mod:WindBomb(_, _, player, _, spellName)
-	self:TargetMessage(131830, spellName, player, "Urgent", 131830, "Alarm")
-	if UnitIsUnit("player", player) then
+function mod:WindBomb(args)
+	self:TargetMessage(131830, args.spellName, args.sourceName, "Urgent", 131830, "Alarm")
+	if UnitIsUnit("player", args.sourceName) then
 		self:FlashShake(131830)
-		self:SaySelf(131830, spellName)
+		self:Say(131830, args.spellName)
 	end
 end
 
-function mod:Recklessness(_, spellId, _, _, spellName, buffStacks)
-	self:Message("recklessness", ("%s (%d)"):format(spellName, buffStacks or 1), "Attention", spellId)
+function mod:Recklessness(args)
+	self:Message("recklessness", ("%s (%d)"):format(args.spellName, args.amount or 1), "Attention", args.spellId)
 end
 
-function mod:RecklessnessHeroic(_, spellId, _, _, spellName)
-	self:Message("recklessness", spellName, "Attention", spellId)
-	self:Bar("recklessness", spellName, 30, spellId)
+function mod:RecklessnessHeroic(args)
+	self:Message("recklessness", args.spellName, "Attention", args.spellId)
+	self:Bar("recklessness", args.spellName, 30, args.spellId)
 	self:Bar("next_pack", L["next_pack"], 50, L.next_pack_icon) --cd isn't 45 like the ej says?
 	self:DelayedMessage("next_pack", 50, L["next_pack"], "Attention", L.next_pack_icon)
 end
 
 do
 	local prev = 0
-	function mod:ResinPoolDamage(player, spellId, _, _, spellName)
-		if not UnitIsUnit(player, "player") then return end
+	function mod:ResinPoolDamage(args)
+		if not UnitIsUnit(args.destName, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Info")
-			self:FlashShake(spellId)
+			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:FlashShake(args.spellId)
 		end
 	end
 end
 
-function mod:Resin(player, spellId, _, _, spellName)
-	if UnitIsUnit("player", player) then
-		self:SaySelf(spellId, spellName)
-		self:FlashShake(spellId)
-		self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Info")
+function mod:Resin(args)
+	if UnitIsUnit("player", args.destName) then
+		self:Say(args.spellId, args.spellName)
+		self:FlashShake(args.spellId)
+		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
 	end
 end
 
-function mod:ImpalingSpear(_, spellId, source, _, spellName)
-	if UnitIsUnit(source, "player") then
-		self:Bar(spellId, spellName, 50, spellId)
+function mod:ImpalingSpear(args)
+	if UnitIsUnit(args.sourceName, "player") then
+		self:Bar(args.spellId, args.spellName, 50, args.spellId)
 	end
 end
 
-function mod:ImpalingSpearRemoved(_, spellId, source, _, spellName)
-	if UnitIsUnit(source, "player") then
-		self:StopBar(spellName)
-		self:LocalMessage(spellId, L["spear_removed"], "Personal", spellId, "Info")
-		self:FlashShake(spellId)
+function mod:ImpalingSpearRemoved(args)
+	if UnitIsUnit(args.sourceName, "player") then
+		self:StopBar(args.spellName)
+		self:LocalMessage(args.spellId, L["spear_removed"], "Personal", args.spellId, "Info")
+		self:FlashShake(args.spellId)
 	end
 end
 
@@ -304,17 +304,17 @@ function mod:PhaseChange(unitId)
 	end
 end
 
-function mod:Deaths(mobId)
-	if mobId == 62397 then -- boss
+function mod:Deaths(args)
+	if args.mobId == 62397 then -- boss
 		self:Win()
-	elseif mobId == 62451 then -- The Sra'thik
+	elseif args.mobId == 62451 then -- The Sra'thik
 		self:CloseProximity(121881)
 		if phase == 2 then
 			self:OpenProximity(5, 131830) -- if in phase 2 open the wind bomb proximity meter back up
 		end
-	elseif mobId == 62452 then -- The Zar'thik
+	elseif args.mobId == 62452 then -- The Zar'thik
 		self:StopBar(L["mending_bar"])
-	elseif mobId == 62447 then -- The Kor'thik
+	elseif args. mobId == 62447 then -- The Kor'thik
 		self:StopBar("~"..self:SpellName(122409)) -- Kor'thik Strike
 	end
 end
