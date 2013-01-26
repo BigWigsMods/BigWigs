@@ -193,7 +193,7 @@ function mod:BitingColdApplied(args)
 	self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId, "Alert")
 	self:Bar(args.spellId, args.spellName, 47, args.spellId)
 	if UnitIsUnit(args.destName, "player") then
-		self:SaySelf(args.spellId, args.spellName)
+		self:Say(args.spellId, args.spellName)
 		self:OpenProximity(4, args.spellId)
 		self:PrimaryIcon(args.spellId, args.destName)
 	end

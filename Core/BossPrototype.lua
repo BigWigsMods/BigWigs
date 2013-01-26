@@ -772,11 +772,6 @@ end
 
 function boss:Say(key, msg)
 	if not checkFlag(self, key, C.SAY) then return end
-	SendChatMessage(msg, "SAY")
-end
-
-function boss:SaySelf(key, msg)
-	if not checkFlag(self, key, C.SAY) then return end
 	SendChatMessage(L["on"]:format(msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "SAY")
 end
 

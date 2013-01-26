@@ -153,7 +153,7 @@ do
 		warnNext()
 		huddleList[#huddleList + 1] = args.destName
 		if UnitIsUnit(args.destName, "player") then
-			self:SaySelf(args.spellId, args.spellName)
+			self:Say(args.spellId, args.spellName)
 		end
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnHuddle, 0.3, args.spellName)
@@ -302,7 +302,7 @@ do -- COPY PASTE ACTION FROM COBALT MINE! see if this works
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
 			if UnitIsUnit("player", player) then
 				mod:LocalMessage(119519, CL["you"]:format(eerieSkull), "Urgent", 119519, "Alarm")
-				mod:SaySelf(119519, eerieSkull)
+				mod:Say(119519, eerieSkull)
 				mod:FlashShake(119519)
 			end
 			mod:CancelTimer(timer)

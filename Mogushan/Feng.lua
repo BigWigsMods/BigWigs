@@ -227,7 +227,7 @@ do
 		if UnitIsUnit(args.destName, "player") then
 			self:FlashShake(args.spellId)
 			self:Bar(args.spellId, CL["you"]:format(wildfire), 5, args.spellId)
-			self:SaySelf(args.spellId, wildfire)
+			self:Say(args.spellId, wildfire)
 		end
 	end
 	function mod:WildfireSparkRemoved(args)
@@ -281,7 +281,7 @@ do
 		if UnitIsUnit(args.destName, "player") then
 			self:FlashShake(args.spellId)
 			self:OpenProximity(6, args.spellId)
-			self:SaySelf(args.spellId, resonance)
+			self:Say(args.spellId, resonance)
 		end
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnResonance, 0.15, args.spellId)
