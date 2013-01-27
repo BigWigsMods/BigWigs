@@ -50,11 +50,11 @@ if L then
 	L.fling_message = "Getting tossed!"
 	L.parasite = "Parasite"
 
-	L.monstrosity_is_casting = "Monstrosity: Explosion"
+	L.monstrosity_is_casting = "Monster: Explosion"
 	L.you_are_casting = "YOU are casting!"
 
 	L.unsok_short = "|cFFF20056Boss|r" -- Light Red
-	L.monstrosity_short = "|cFFFFBE00Add|r" -- Amber
+	L.monstrosity_short = "|cFFFFBE00Monster|r" -- Amber
 end
 L = mod:GetLocale()
 
@@ -224,8 +224,8 @@ function mod:Destabilize(args)
 	local id = self:GetCID(args.destGUID)
 	if id == 62511 or id == 62711 then
 		local buffStack = args.amount or 1
-		self:StopBar(("%s: [%d]%s"):format(id == 62511 and L["unsok_short"] or L["monstrosity_short"], buffStack-1, args.spellName))
-		self:Bar(args.spellId, ("%s: [%d]%s"):format(id == 62511 and L["unsok_short"] or L["monstrosity_short"], buffStack, args.spellName), self:LFR() and 60 or 15, args.spellId)
+		self:StopBar(("%s: (%d)%s"):format(id == 62511 and L["unsok_short"] or L["monstrosity_short"], buffStack-1, args.spellName))
+		self:Bar(args.spellId, ("%s: (%d)%s"):format(id == 62511 and L["unsok_short"] or L["monstrosity_short"], buffStack, args.spellName), self:LFR() and 60 or 15, args.spellId)
 	end
 end
 
