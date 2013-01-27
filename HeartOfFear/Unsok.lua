@@ -21,20 +21,20 @@ local reshapeLifeCounter = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.explosion_by_other = "Amber Explosion on others"
-	L.explosion_by_other_desc = "Cooldown warning for Amber Explosions cast by Amber Monstrosity or your focus target."
+	L.explosion_by_other = "Amber Explosion cooldown bar by Monstrosity/Focus"
+	L.explosion_by_other_desc = "Cooldown warnings and bar for Amber Explosions cast by the Amber Monstrosity or your focus target."
 	L.explosion_by_other_icon = 122398
 
-	L.explosion_casting_by_other = "Amber Explosion cast by others"
-	L.explosion_casting_by_other_desc = "Casting warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_other = "Amber Explosion cast bar by Monstrosity/Focus"
+	L.explosion_casting_by_other_desc = "Cast warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
 	L.explosion_casting_by_other_icon = 122398
 
-	L.explosion_by_you = "Amber Explosion on you"
+	L.explosion_by_you = "Your Amber Explosion cooldown"
 	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
 	L.explosion_by_you_bar = "You start casting..."
 	L.explosion_by_you_icon = 122398
 
-	L.explosion_casting_by_you = "Amber Explosion cast by you"
+	L.explosion_casting_by_you = "Your Amber Explosion cast bar"
 	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
 	L.explosion_casting_by_you_icon = 122398
 
@@ -112,7 +112,7 @@ function mod:OnEngage(diff)
 	reshapeLifeCounter = 1
 	self:Bar(122784, ("%s (%d)"):format(self:SpellName(122784), reshapeLifeCounter), 20, 122784) --Reshape Life
 	self:Bar(121949, 121949, 24, 121949) --Parasitic Growth
-	self:Berserk(540) -- assume
+	self:Berserk(600) -- Does he even have one?
 
 	phase = 1
 	primaryIcon = nil
@@ -313,10 +313,11 @@ function mod:AmberCarapace(args)
 	self:DelayedMessage("explosion_by_other", 35, CL["custom_sec"]:format(explosion, 20), "Attention", 122402)
 	self:DelayedMessage("explosion_by_other", 40, CL["custom_sec"]:format(explosion, 15), "Attention", 122402)
 	self:DelayedMessage("explosion_by_other", 45, CL["custom_sec"]:format(explosion, 10), "Attention", 122402)
+	self:DelayedMessage("explosion_by_other", 50, CL["custom_sec"]:format(explosion, 5), "Attention", 122402)
 	self:Bar("explosion_by_other", "~"..L["monstrosity_is_casting"], 55, 122402) -- Monstrosity Explosion
 
-	self:Bar(122408, "~"..mod:SpellName(122408), 22, 122408) --Massive Stomp
-	self:Bar(122413, "~"..mod:SpellName(122413), 30, 122413) --Fling
+	self:Bar(122408, "~"..mod:SpellName(122408), 22, 122408) -- Massive Stomp
+	self:Bar(122413, "~"..mod:SpellName(122413), 30, 122413) -- Fling
 end
 
 do
@@ -327,9 +328,10 @@ do
 		end
 	end
 	function mod:AmberExplosionMonstrosity(args)
-		self:DelayedMessage("explosion_by_other", 25, CL["custom_sec"]:format(args.spellName, 20), "Attention", args.spellId)
-		self:DelayedMessage("explosion_by_other", 30, CL["custom_sec"]:format(args.spellName, 15), "Attention", args.spellId)
-		self:DelayedMessage("explosion_by_other", 35, CL["custom_sec"]:format(args.spellName, 10), "Attention", args.spellId)
+		self:DelayedMessage("explosion_by_other", 25, CL["custom_sec"]:format(explosion, 20), "Attention", args.spellId)
+		self:DelayedMessage("explosion_by_other", 30, CL["custom_sec"]:format(explosion, 15), "Attention", args.spellId)
+		self:DelayedMessage("explosion_by_other", 35, CL["custom_sec"]:format(explosion, 10), "Attention", args.spellId)
+		self:DelayedMessage("explosion_by_other", 40, CL["custom_sec"]:format(explosion, 5), "Attention", args.spellId)
 		self:Bar("explosion_casting_by_other", L["monstrosity_is_casting"], 2.5, 122398)
 		self:Bar("explosion_by_other", "~"..L["monstrosity_is_casting"], 45, args.spellId) -- cooldown, don't move this
 		if UnitDebuff("player", self:SpellName(122784)) then -- Reshape Life

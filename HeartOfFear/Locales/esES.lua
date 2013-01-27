@@ -48,18 +48,18 @@ end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "esES") or BigWigs:NewBossLocale("Amber-Shaper Un'sok", "esMX")
 if L then
-	L.explosion_by_other = "Deflagración de ámbar en otros"
-	L.explosion_by_other_desc = "Deflagración de ámbar lanzado por Monstruosidad de ámbar o tu foco si lo tienes marcado."
+	L.explosion_by_other = "Amber Explosion cooldown bar by Monstrosity/Focus"
+	L.explosion_by_other_desc = "Cooldown warnings and bar for Amber Explosions cast by the Amber Monstrosity or your focus target."
 
-	L.explosion_casting_by_other = "Deflagración de ámbar lanzado por otros"
-	L.explosion_casting_by_other_desc = "Deflagración de ámbar empezados por Monstruosidad de ámbar o tu foco si lo tienes marcado. ¡Es altamente recomendable enfatizar esto!"
+	L.explosion_casting_by_other = "Amber Explosion cast bar by Monstrosity/Focus"
+	L.explosion_casting_by_other_desc = "Cast warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
 
-	L.explosion_by_you = "Deflagración de ámbar en ti"
-	L.explosion_by_you_bar = "Empiezas a castear..."
-	L.explosion_by_you_desc = "Deflagración de ámbar propia."
+	L.explosion_by_you = "Your Amber Explosion cooldown"
+	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
+	L.explosion_by_you_bar = "You start casting..."
 
-	L.explosion_casting_by_you = "Deflagración de ámbar lanzado por ti"
-	L.explosion_casting_by_you_desc = "Deflagración de ámbar empezados por ti. ¡Es altamente recomendable enfatizar esto!"
+	L.explosion_casting_by_you = "Your Amber Explosion cast bar"
+	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
 
 	L.willpower = "Voluntad"
 	L.willpower_message = "¡Voluntad al %d!"
@@ -68,11 +68,11 @@ if L then
 	L.fling_message = "¡Vas a ser lanzado!"
 	L.parasite = "Parásito"
 
-	L.monstrosity_is_casting = "Monstruosidad: Explosión"
+	L.monstrosity_is_casting = "Monster: Explosion"
 	L.you_are_casting = "¡ESTÁS casteando!"
 
 	L.unsok_short = "|cFFF20056Boss|r" -- Light Red
-	L.monstrosity_short = "|cFFFFBE00Add|r" -- Amber
+	L.monstrosity_short = "|cFFFFBE00Monster|r" -- Amber
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "esES") or BigWigs:NewBossLocale("Grand Empress Shek'zeer", "esMX")

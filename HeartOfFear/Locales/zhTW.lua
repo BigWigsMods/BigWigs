@@ -4,7 +4,7 @@ if L then
 	L.engage_yell = "聖女皇選上我們將她神聖的意志傳達給凡人。我們只是實現她意志的軀殼。"
 
 	L.force_message = "力與魄(AoE)"
-	
+
 	L.attenuation_bar = "定音區... 跳吧!"
 	L.attenuation_message = "%s 跳舞 %s"
 	L.echo = "|c001cc986回音|r"
@@ -48,18 +48,18 @@ end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "zhTW")
 if L then
-	L.explosion_by_other = "其它人的琥珀爆炸"
-	L.explosion_by_other_desc = "Cooldown warning for Amber Explosions cast by Amber Monstrosity or your focus target."
+	L.explosion_by_other = "Amber Explosion cooldown bar by Monstrosity/Focus"
+	L.explosion_by_other_desc = "Cooldown warnings and bar for Amber Explosions cast by the Amber Monstrosity or your focus target."
 
-	L.explosion_casting_by_other = "其它人施放琥珀爆炸"
-	L.explosion_casting_by_other_desc = "Casting warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_other = "Amber Explosion cast bar by Monstrosity/Focus"
+	L.explosion_casting_by_other_desc = "Cast warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
 
-	L.explosion_by_you = "你的琥珀爆炸"
+	L.explosion_by_you = "Your Amber Explosion cooldown"
+	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
 	L.explosion_by_you_bar = "You start casting..."
-	L.explosion_by_you_desc = "你的琥珀爆炸的冷卻警告。"
 
-	L.explosion_casting_by_you = "你施放琥珀爆炸"
-	L.explosion_casting_by_you_desc = "你施放琥珀爆炸的警告。 高度建議強調！"
+	L.explosion_casting_by_you = "Your Amber Explosion cast bar"
+	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
 
 	L.willpower = "意志力"
 	L.willpower_message = "意志力為 %d!"
@@ -68,11 +68,11 @@ if L then
 	L.fling_message = "快吸水！"
 	L.parasite = "寄生"
 
-	L.monstrosity_is_casting = "Monstrosity: Explosion"
+	L.monstrosity_is_casting = "Monster: Explosion"
 	L.you_are_casting = "»你«在施法！"
 
 	L.unsok_short = "|cFFF20056Boss|r" -- Light Red
-	L.monstrosity_short = "|cFFFFBE00Add|r" -- Amber
+	L.monstrosity_short = "|cFFFFBE00Monster|r" -- Amber
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "zhTW")

@@ -48,17 +48,17 @@ end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "deDE")
 if L then
-	L.explosion_by_other = "Amber Explosion on others"
-	L.explosion_by_other_desc = "Cooldown warning for Amber Explosions cast by Amber Monstrosity or your focus target."
+	L.explosion_by_other = "Amber Explosion cooldown bar by Monstrosity/Focus"
+	L.explosion_by_other_desc = "Cooldown warnings and bar for Amber Explosions cast by the Amber Monstrosity or your focus target."
 
-	L.explosion_casting_by_other = "Amber Explosion cast by others"
-	L.explosion_casting_by_other_desc = "Casting warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_other = "Amber Explosion cast bar by Monstrosity/Focus"
+	L.explosion_casting_by_other_desc = "Cast warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
 
-	L.explosion_by_you = "Amber Explosion on you"
-	L.explosion_by_you_bar = "You start casting..."
+	L.explosion_by_you = "Your Amber Explosion cooldown"
 	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
+	L.explosion_by_you_bar = "You start casting..."
 
-	L.explosion_casting_by_you = "Amber Explosion cast by you"
+	L.explosion_casting_by_you = "Your Amber Explosion cast bar"
 	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
 
 	L.willpower = "Willenskraft"
@@ -68,11 +68,11 @@ if L then
 	L.fling_message = "Getting tossed!"
 	L.parasite = "Parasite"
 
-	L.monstrosity_is_casting = "Monstrosity: Explosion"
+	L.monstrosity_is_casting = "Monster: Explosion"
 	L.you_are_casting = "YOU are casting!"
 
 	L.unsok_short = "|cFFF20056Boss|r" -- Light Red
-	L.monstrosity_short = "|cFFFFBE00Add|r" -- Amber
+	L.monstrosity_short = "|cFFFFBE00Monster|r" -- Amber
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "deDE")
