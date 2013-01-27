@@ -444,7 +444,6 @@ end
 --
 
 do
-	local frame = nil
 	local plugins = {}
 	local tabs = nil
 	local tabSection = nil
@@ -463,57 +462,57 @@ do
 	end
 	local function onTestClick() BigWigs:Test() end
 	local function onResetClick() options:SendMessage("BigWigs_ResetPositions") end
-	local function createPluginFrame()
-		if frame then return end
-		frame = AceGUI:Create("Window")
-		frame:EnableResize(nil)
-		frame:SetWidth(410)
-		frame:SetHeight(515)
-		frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 12, -12)
-		frame:SetTitle(L["Configure"])
-		frame:SetCallback("OnClose", function(widget, callback)
-			options:SendMessage("BigWigs_StopConfigureMode")
-		end)
-		frame:SetLayout("Fill")
 
-		local scroll = AceGUI:Create("ScrollFrame")
-		scroll:SetLayout("Flow")
-		scroll:SetFullWidth(true)
+	local frame = AceGUI:Create("Window")
+	frame:Hide()
+	frame:EnableResize(nil)
+	frame:SetWidth(410)
+	frame:SetHeight(515)
+	frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 12, -12)
+	frame:SetTitle(L["Configure"])
+	frame:SetCallback("OnClose", function(widget, callback)
+		options:SendMessage("BigWigs_StopConfigureMode")
+	end)
+	frame:SetLayout("Fill")
 
-		local test = AceGUI:Create("Button")
-		test:SetText(L["Test"])
-		test:SetCallback("OnClick", onTestClick)
-		test:SetFullWidth(true)
+	local scroll = AceGUI:Create("ScrollFrame")
+	scroll:SetLayout("Flow")
+	scroll:SetFullWidth(true)
 
-		local reset = AceGUI:Create("Button")
-		reset:SetText(L["Reset positions"])
-		reset:SetCallback("OnClick", onResetClick)
-		reset:SetFullWidth(true)
+	local test = AceGUI:Create("Button")
+	test:SetText(L["Test"])
+	test:SetCallback("OnClick", onTestClick)
+	test:SetFullWidth(true)
 
-		scroll:AddChildren(test, reset)
-		for name, module in BigWigs:IteratePlugins() do
-			if module.GetPluginConfig then
-				plugins[#plugins + 1] = {
-					value = name,
-					text = name,
-				}
-				ac:RegisterOptionsTable(acId:format(name), module:GetPluginConfig())
-			end
+	local reset = AceGUI:Create("Button")
+	reset:SetText(L["Reset positions"])
+	reset:SetCallback("OnClick", onResetClick)
+	reset:SetFullWidth(true)
+
+	scroll:AddChildren(test, reset)
+	for name, module in BigWigs:IteratePlugins() do
+		if module.GetPluginConfig then
+			plugins[#plugins + 1] = {
+				value = name,
+				text = name,
+			}
+			ac:RegisterOptionsTable(acId:format(name), module:GetPluginConfig())
 		end
-		tabs = AceGUI:Create("TabGroup")
-		tabs:SetTabs(plugins)
-		tabs:SetCallback("OnGroupSelected", widgetSelect)
-		tabs:SetUserData("tab", "")
-		tabs:SetUserData("scroll", scroll)
-		tabs:SetFullWidth(true)
-
-		tabSection = AceGUI:Create("SimpleGroup")
-		tabSection:SetFullWidth(true)
-		tabs:AddChild(tabSection)
-
-		scroll:AddChild(tabs)
-		frame:AddChild(scroll)
 	end
+	tabs = AceGUI:Create("TabGroup")
+	tabs:SetTabs(plugins)
+	tabs:SetCallback("OnGroupSelected", widgetSelect)
+	tabs:SetUserData("tab", "")
+	tabs:SetUserData("scroll", scroll)
+	tabs:SetFullWidth(true)
+
+	tabSection = AceGUI:Create("SimpleGroup")
+	tabSection:SetFullWidth(true)
+	tabs:AddChild(tabSection)
+
+	scroll:AddChild(tabs)
+	frame:AddChild(scroll)
+
 	function options:BigWigs_SetConfigureTarget(event, module)
 		if frame then
 			tabs:SelectTab(module:GetName())
@@ -524,7 +523,6 @@ do
 	function options:BigWigs_StartConfigureMode(event, hideFrame)
 		configMode = true
 		if not hideFrame then
-			createPluginFrame()
 			frame:Show()
 			frame:PerformLayout()
 		end
