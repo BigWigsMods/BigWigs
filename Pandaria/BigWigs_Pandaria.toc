@@ -7,7 +7,7 @@
 ## Notes: Big Wigs Pandaria Modules
 ## Notes-frFR: Modules Big Wigs concernant la Pandarie.
 ## Notes-ruRU: Модуль Big Wigs для Пандарии.
-## Notes-itIT: Modulei Big Wigs per Pandaria
+## Notes-itIT: Moduli Big Wigs per Pandaria
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

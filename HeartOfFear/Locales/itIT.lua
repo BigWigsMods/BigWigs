@@ -48,18 +48,18 @@ end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "itIT")
 if L then
-	L.explosion_by_other = "Amber Explosion cooldown bar by Monstrosity/Focus"
-	L.explosion_by_other_desc = "Cooldown warnings and bar for Amber Explosions cast by the Amber Monstrosity or your focus target."
+	L.explosion_by_other = "Barra recupero Esplosione d'Ambra della Mostruosità/Focus"
+	L.explosion_by_other_desc = "Avvisi e barre di recupero per Esplosione d'Ambra lanciata da Mostruosità d'Ambra o dal tuo bersaglio focus."
 
-	L.explosion_casting_by_other = "Amber Explosion cast bar by Monstrosity/Focus"
-	L.explosion_casting_by_other_desc = "Cast warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_other = "Barra di lancio Esplosione d'Ambra della Mostruosità/Focus"
+	L.explosion_casting_by_other_desc = "Avviso di lancio per Esplosione d'Ambra eseguita o da Mostruosità d'Ambra o dal tuo bersaglio focus. È altamente consigliato enfatizzare questo avviso!"
 
-	L.explosion_by_you = "Your Amber Explosion cooldown"
-	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
-	L.explosion_by_you_bar = "You start casting..."
+	L.explosion_by_you = "Recupero Tua Esplosione d'Ambra"
+	L.explosion_by_you_desc = "Avviso recupero per tua Esplosione d'Ambra."
+	L.explosion_by_you_bar = "Inizi a lanciare..."
 
-	L.explosion_casting_by_you = "Your Amber Explosion cast bar"
-	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_you = "Barra di lancio Tua Esplosione d'Ambra"
+	L.explosion_casting_by_you_desc = "Avviso di lancio per Esplosione d'Ambra eseguita Te. È altamente consigliato enfatizzare questo avviso!"
 
 	L.willpower = "Volontà"
 	L.willpower_message = "La tua Volontà è %d"
@@ -68,11 +68,11 @@ if L then
 	L.fling_message = "Lanciato!"
 	L.parasite = "Parassita"
 
-	L.monstrosity_is_casting = "Monster: Explosion"
+	L.monstrosity_is_casting = "Mostruosità: Esplosione"
 	L.you_are_casting = "TU stai lanciando!"
 
 	L.unsok_short = "|cFFF20056Boss|r" -- Light Red
-	L.monstrosity_short = "|cFFFFBE00Monster|r" -- Amber
+	L.monstrosity_short = "|cFFFFBE00Mostruosità|r" -- Amber
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "itIT")
