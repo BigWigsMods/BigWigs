@@ -468,7 +468,6 @@ end
 function boss:Difficulty()
 	return difficulty
 end
-boss.GetInstanceDifficulty = boss.Difficulty
 
 function boss:LFR()
 	return difficulty == 7
