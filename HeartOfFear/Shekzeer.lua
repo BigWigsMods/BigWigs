@@ -130,7 +130,7 @@ end
 
 function mod:CryOfTerror(args)
 	self:TargetMessage(args.spellId, args.spellName, args.destName, "Attention", args.spellId, "Long")
-	self:PrimaryIcon(args.spellId, args.args.destName)
+	self:PrimaryIcon(args.spellId, args.destName)
 	self:Bar(args.spellId, args.spellName, 25, args.spellId)
 	if UnitIsUnit("player", args.destName) then
 		self:FlashShake(args.spellId)
