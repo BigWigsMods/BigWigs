@@ -242,8 +242,6 @@ end
 function mod:RecklessnessHeroic(args)
 	self:Message("recklessness", args.spellName, "Attention", args.spellId)
 	self:Bar("recklessness", args.spellName, 30, args.spellId)
-	self:Bar("next_pack", L["next_pack"], 50, L.next_pack_icon) --cd isn't 45 like the ej says?
-	self:DelayedMessage("next_pack", 50, L["next_pack"], "Attention", L.next_pack_icon)
 end
 
 do
@@ -307,15 +305,21 @@ end
 function mod:Deaths(args)
 	if args.mobId == 62397 then -- boss
 		self:Win()
-	elseif args.mobId == 62451 then -- The Sra'thik
-		self:CloseProximity(121881)
-		if phase == 2 then
-			self:OpenProximity(5, 131830) -- if in phase 2 open the wind bomb proximity meter back up
+	else
+		if args.mobId == 62451 then -- The Sra'thik
+			self:CloseProximity(121881)
+			if phase == 2 then
+				self:OpenProximity(5, 131830) -- if in phase 2 open the wind bomb proximity meter back up
+			end
+		elseif args.mobId == 62452 then -- The Zar'thik
+			self:StopBar(L["mending_bar"])
+		elseif args.mobId == 62447 then -- The Kor'thik
+			self:StopBar("~"..self:SpellName(122409)) -- Kor'thik Strike
 		end
-	elseif args.mobId == 62452 then -- The Zar'thik
-		self:StopBar(L["mending_bar"])
-	elseif args. mobId == 62447 then -- The Kor'thik
-		self:StopBar("~"..self:SpellName(122409)) -- Kor'thik Strike
+		if self:Heroic() then
+			self:Bar("next_pack", CL["other"]:format(L["next_pack"], args.destName), 50, L.next_pack_icon)
+			self:DelayedMessage("next_pack", 50, CL["other"]:format(L["next_pack"], args.destName), "Attention", L.next_pack_icon)
+		end
 	end
 end
 
