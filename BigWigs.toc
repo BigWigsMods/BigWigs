@@ -17,7 +17,7 @@
 
 ## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0
 
-## SavedVariables: BigWigs3DB, BigWigs3IconDB
+## SavedVariables: BigWigs3DB, BigWigs3IconDB, BigWigsDurationDB
 
 embeds.xml
 locales.xml
