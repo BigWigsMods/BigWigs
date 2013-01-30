@@ -31,9 +31,9 @@ L["Up to date:"] = "Aktuell:"
 L["Out of date:"] = "Veraltet:"
 L["No Big Wigs 3.x:"] = "Kein Big Wigs 3.x:"
 
-L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = "Waiting until combat ends to finish loading due to Blizzard combat restrictions."
-L["Combat has ended, Big Wigs has now finished loading."] = "Combat has ended, Big Wigs has now finished loading."
-L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."
+L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = "Warte bis zum Ende des Kampfes um BigWigs vollständig zu Laden.(Blizzard Kampf-Einschränkungen)."
+L["Combat has ended, Big Wigs has now finished loading."] = "Kampf ist vorbei, Big Wigs is nur vollständig geladen."
+L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "Aufgrund der Beschränkungen von Blizzard muss die Konfiguration zuerst ausserhalb des Kampfes geöffnet werden bevor dies im Kampf möglich ist."
 
 L.coreAddonDisabled = "Big Wigs wird nicht richtig funktionieren, da das Addon %s deaktiviert ist. Du kannst es über die Addonkonfiguration im Charakterauswahlmenü aktivieren."
 
@@ -75,10 +75,10 @@ L["After you've seen a boss movie once, Big Wigs will prevent it from playing ag
 L["Prevented boss movie '%d' from playing."] = "Videosequenz '%d' wurde blockiert."
 L["Ignore my role"] = "Rolle ignorieren"
 L.ignoreroleDesc = "|cffff4411Nicht empfohlen.|r Bei Aktivierung werden alle Warnungen ausgegeben, egal welche Rolle ihr einnehmt, was bei manchen Bossen unübersichtlich sein kann."
-L["Pretend I'm using DBM"] = "Pretend I'm using DBM"
-L.pretendDesc = "If a DBM user does a version check to see who's using DBM, they will see you on the list. Useful for guilds that force using DBM."
-L["Create custom DBM bars"] = "Create custom DBM bars"
-L.dbmBarDesc = "If a DBM user sends a pull timer or a custom 'pizza' bar, it will be shown in Big Wigs."
+L["Pretend I'm using DBM"] = "Täusche vor, dass ich DBM benutze"
+L.pretendDesc = "Wenn ein DBM-Nutzer eine Versionskontrolle ausführt erscheinst du in der Liste. Nützlich für Gilden die auf DBM bestehen."
+L["Create custom DBM bars"] = "Erstelle DBM Custombars"
+L.dbmBarDesc = "Sendet ein DBM-Nutzer einen Pizza-Timer oder Custombar wird diese in Big Wigs angezeigt."
 
 L["BAR"] = "Leisten"
 L["MESSAGE"] = "Nachrichten"

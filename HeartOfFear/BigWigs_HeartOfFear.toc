@@ -1,12 +1,14 @@
 ## Interface: 50100
 
 ## Title: Big Wigs [|cffeda55fHeart of Fear|r]
+## Title-deDE: Big Wigs [|cffeda55fHerz der Angst|r]
 ## Title-frFR: Big Wigs [|cffeda55fCœur de la Peur|r]
 ## Title-ruRU: Big Wigs [|cffeda55fСердце Страха|r]
 ## Title-zhCN: Big Wigs [|cffeda55f恐惧之心|r]
 ## Title-zhTW: Big Wigs [|cffeda55f恐懼之心|r]
 ## Title-itIT: Big Wigs [|cffeda55fCuore della Paura|r]
 ## Notes: Big Wigs Modules for the Heart of Fear.
+## Notes-deDE: Big Wigs Module für das Herz der Angst.
 ## Notes-frFR: Modules Big Wigs concernant le Cœur de la Peur.
 ## Notes-ruRU: Модуль Big Wigs для Сердца Страха.
 ## Notes-zhCN: Big Wigs 恐惧之心模块
