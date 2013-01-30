@@ -329,10 +329,12 @@ do
 		registered[sync][module] = true
 	end
 	function addon:Transmit(sync, ...)
-		if sync and (IsInRaid() or IsInGroup()) and (not times[sync] or GetTime() > (times[sync] + 2)) then
+		if sync and (not times[sync] or GetTime() > (times[sync] + 2)) then
 			times[sync] = GetTime()
-			SendAddonMessage("BigWigs", "T:"..strjoin(" ", sync, ...), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
 			onSync(sync, strjoin(" ", ...), pName)
+			if IsInRaid() or IsInGroup() then
+				SendAddonMessage("BigWigs", "T:"..strjoin(" ", sync, ...), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
+			end
 		end
 	end
 end
