@@ -1,12 +1,14 @@
 ## Interface: 50100
 
 ## Title: Big Wigs [|cffeda55fTerrace of Endless Spring|r]
+## Title-deDE: Big Wigs [|cffeda55fTerrasse des endlosen Frühlings|r]
 ## Title-frFR: Big Wigs [|cffeda55fTerrasse Printanière|r]
 ## Title-ruRU: Big Wigs [|cffeda55fТерраса Вечной Весны|r]
 ## Title-zhCN: Big Wigs [|cffeda55f永春台|r]
 ## Title-zhTW: Big Wigs [|cffeda55f豐泉台|r]
 ## Title-itIT: Big Wigs [|cffeda55fTerrazza dell'Eterna Primavera|r]
 ## Notes: Big Wigs Modules for the Terrace of Endless Spring.
+## Notes-deDE: Big Wigs Module für die Terrasse des endlosen Frühlings.
 ## Notes-frFR: Modules Big Wigs concernant la terrasse Printanière.
 ## Notes-ruRU: Модуль Big Wigs для Террасы Вечной Весны.
 ## Notes-zhCN: Big Wigs 永春台模块
