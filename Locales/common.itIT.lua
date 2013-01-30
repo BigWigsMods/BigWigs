@@ -22,6 +22,7 @@ L.over = "%s Terminato!"
 
 L.add_spawned = "Add Apparso!"
 L.next_add = "Prossimo Add"
+L.add_killed = "Add killed! (%d/%d)"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name

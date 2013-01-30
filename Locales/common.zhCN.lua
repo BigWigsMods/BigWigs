@@ -22,6 +22,7 @@ L.over = "%s 结束！"
 
 L.add_spawned = "小怪刷新!"
 L.next_add = "下一波小怪"
+L.add_killed = "Add killed! (%d/%d)"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name

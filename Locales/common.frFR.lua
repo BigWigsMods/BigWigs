@@ -22,6 +22,7 @@ L.over = "%s terminé !"
 
 L.add_spawned = "Add apparu !"
 L.next_add = "Prochain Add"
+L.add_killed = "Add killed! (%d/%d)"
 
 
 

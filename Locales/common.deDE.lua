@@ -22,6 +22,7 @@ L.over = "%s vorbei!"
 
 L.add_spawned = "Add gespawnt!"
 L.next_add = "Nächstes Add"
+L.add_killed = "Add killed! (%d/%d)"
 
 L.custom_start = "%s angegriffen - %s in %d Min"
 L.custom_start_s = "%s angegriffen - %s in %d Sek"
