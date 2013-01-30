@@ -220,7 +220,7 @@ do
 						local func = m[spellId] or m["*"]
 						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
 						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
-						args.spellId, args.spellName, args.extraSpellID, args.amount = spellId, spellName, extraSpellID, amount
+						args.spellId, args.spellName, args.extraSpellID, args.extraSpellName, args.amount = spellId, spellName, extraSpellID, amount, amount
 						if type(func) == "function" then
 							func(args)
 						else
