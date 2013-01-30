@@ -42,9 +42,9 @@ if L then
 	L.ability_cd = "Recharge des techniques"
 	L.ability_cd_desc = "Tente de deviner dans quel ordre les techniques seront utilisées après un Emerger."
 
-	L.huddle_or_spout = "Recroquevillement ou Geysérit"
-	L.huddle_or_strike = "Recroquevillement ou Frappe"
+	L.huddle_or_spout = "Recroq. ou Geysérit"
+	L.huddle_or_strike = "Recroq. ou Frappe"
 	L.strike_or_spout = "Frappe ou Geysérit"
-	L.huddle_or_spout_or_strike = "Recroquevillement ou Geysérit ou Frappe"
+	L.huddle_or_spout_or_strike = "Recroq. ou Geysérit ou Frappe"
 end
 

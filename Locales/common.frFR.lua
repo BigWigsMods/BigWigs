@@ -9,7 +9,7 @@ L.say = "%s sur MOI !"
 L.on = "%s sur %s"
 L.stack = "%2$dx %3$s sur %1$s"
 L.cast = "<%s en incant.>"
-L.soon = "%s imminent !"
+L.soon = "%s imminent(e) !"
 
 L.phase = "Phase %d"
 L.normal = "Mode normal"
@@ -22,7 +22,7 @@ L.over = "%s terminé !"
 
 L.add_spawned = "Add apparu !"
 L.next_add = "Prochain Add"
-L.add_killed = "Add killed! (%d/%d)"
+L.add_killed = "Add tué ! (%d/%d)"
 
 
 
