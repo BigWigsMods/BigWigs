@@ -11,8 +11,8 @@ mod:RegisterEnableMob(63191, 63053) -- Garalon, Garalon's Leg
 -- Locals
 --
 
-local legCounter, mendLegTimerRunning = 4, nil
-local crushCounter = 0
+local legCounter, crushCounter = 4, 0
+local healthCheck, mendLegTimerRunning = nil, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -64,12 +64,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	legCounter, mendLegTimerRunning = 4, nil
-	crushCounter = 0
+	legCounter, crushCounter = 4, 0
+	healthCheck, mendLegTimerRunning = nil, nil
+
 	self:Berserk(self:LFR() and 720 or 420)
 	self:Bar(122735, 122735, 11, 122735) -- Furious Swipe
 	if self:Heroic() then
-		self:RegisterEvent("UNIT_HEALTH_FREQUENT", "PrePhase2")
+		healthCheck = self:ScheduleRepeatingTimer("PrePhase2", 0.5) -- No boss5 support in health events
 		self:Bar(122774, ("%s (%d)"):format(self:SpellName(122774), 1), 28, 122082) -- Crush
 	end
 end
@@ -166,19 +167,15 @@ do
 	end
 end
 
-function mod:PrePhase2(_, unitId)
-	if not unitId:find("boss", nil, true) and unitId ~= "target" then return end
-	if self:GetCID(UnitGUID(unitId)) == 63191 then
-		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		if hp < 38 then -- phase starts at 33
-			self:Message("ej:6294", CL["soon"]:format(CL["phase"]:format(2)), "Positive", 108201, "Long") -- the correct icon
-			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
-		end
+function mod:PrePhase2()
+	local hp = UnitHealth("boss5") / UnitHealthMax("boss5") * 100
+	if hp < 38 then -- phase starts at 33
+		self:Message("ej:6294", CL["soon"]:format(CL["phase"]:format(2)), "Positive", 108201, "Long") -- the correct icon
+		self:CancelTimer(healthCheck)
 	end
 end
 
 function mod:Phase2()
 	self:Message("ej:6294", "33% - "..CL["phase"]:format(2), "Positive", 108201, "Info")
-	self:UnregisterEvent("UNIT_HEALTH_FREQUENT") -- just in case >.>
 end
 
