@@ -26,7 +26,7 @@ end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "deDE")
 if L then
-.fading_soon = "%s läuft bald ab"
+	fading_soon = "%s läuft bald ab"
 
 	L.swing = "Hauen"
 	L.swing_desc = "Zählt den den Schwüngen vorangehenden Thrash."

@@ -20,10 +20,9 @@ end
 L = BigWigs:NewBossLocale("Lei Shi", "esES") or BigWigs:NewBossLocale("Protector of the Endless", "esMX")
 if L then
 	L.hp_to_go = "%d%% para acabar"
-	L.end_hide = "Deja de ocultarse"
 
 	L.special = "Próxima habilidad especial"
-	L.special_desc = "Siguiente habilidad especial"
+	L.special_desc = "Siguiente habilidad especial."
 end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "esES") or BigWigs:NewBossLocale("Protector of the Endless", "esMX")

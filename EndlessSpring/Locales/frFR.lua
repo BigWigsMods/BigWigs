@@ -20,7 +20,6 @@ end
 L = BigWigs:NewBossLocale("Lei Shi", "frFR")
 if L then
 	L.hp_to_go = "%d%% à faire"
-	L.end_hide = "Se cacher a pris fin"
 
 	L.special = "Prochaine technique spéciale"
 	L.special_desc = "Prévient de l'arrivée de la prochaine technique spéciale."

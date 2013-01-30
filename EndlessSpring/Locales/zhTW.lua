@@ -20,7 +20,6 @@ end
 L = BigWigs:NewBossLocale("Lei Shi", "zhTW")
 if L then
 	L.hp_to_go = "還剩%d%%"
-	L.end_hide = "隱藏結束"
 
 	L.special = "下次特殊技能"
 	L.special_desc = "警告下次特殊技能"
