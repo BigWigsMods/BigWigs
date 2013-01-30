@@ -26,7 +26,7 @@ end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "deDE")
 if L then
-	fading_soon = "%s läuft bald ab"
+	L.fading_soon = "%s läuft bald ab"
 
 	L.swing = "Hauen"
 	L.swing_desc = "Zählt den den Schwüngen vorangehenden Thrash."
@@ -40,7 +40,7 @@ if L then
 
 	L.ability_cd = "Fähigkeiten-Abklingzeit"
 	L.ability_cd_desc = "Versuche die Reihenfolge der Fähigkeiten nach dem Auftauchen zu erraten"
-	
+
 	L.huddle_or_spout = "Kauern oder Fontane"
 	L.huddle_or_strike = "Kauern oder Stoß"
 	L.strike_or_spout = "Stoß oder Fontäne"
