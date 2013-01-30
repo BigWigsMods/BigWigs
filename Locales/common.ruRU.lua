@@ -22,7 +22,7 @@ L.over = "%s закончился!"
 
 L.add_spawned = "Помощник появился!"
 L.next_add = "Следующий помощник"
-L.add_killed = "Add killed! (%d/%d)"
+L.add_killed = "Помощник убит! (%d/%d)"
 
 L.custom_start = "%s вступает в бой - %s через %d мин"
 L.custom_start_s = "%s вступает в бой - %s через %d сек"

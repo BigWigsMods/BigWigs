@@ -48,18 +48,18 @@ end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "ruRU")
 if L then
-	L.explosion_by_other = "Amber Explosion cooldown bar by Monstrosity/Focus"
-	L.explosion_by_other_desc = "Cooldown warnings and bar for Amber Explosions cast by the Amber Monstrosity or your focus target."
+	L.explosion_by_other = "Восстановление Янтарного взрыва Чудовища/Фокуса"
+	L.explosion_by_other_desc = "Предупреждение о восстановлении Янтарного взрыва Чудовища или вашего фокуса."
 
-	L.explosion_casting_by_other = "Amber Explosion cast bar by Monstrosity/Focus"
-	L.explosion_casting_by_other_desc = "Cast warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_other = "Полоса чтения Янтарного взрыва от Чудовища/Фокуса"
+	L.explosion_casting_by_other_desc = "Предупреждение о чтении Янтарного взрыва Чудовищем или вашем фокусом. Крайне рекомендуется включить Увеличение!"
 
-	L.explosion_by_you = "Your Amber Explosion cooldown"
-	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
-	L.explosion_by_you_bar = "You start casting..."
+	L.explosion_by_you = "Восстановление вашего Янтарного взрыва"
+	L.explosion_by_you_desc = "Предупреждение о восстановлении вашего Янтарного взрыва."
+	L.explosion_by_you_bar = "Вы начинаете чтение..."
 
-	L.explosion_casting_by_you = "Your Amber Explosion cast bar"
-	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_you = "Ваша полоса чтения Янтарного взрыва"
+	L.explosion_casting_by_you_desc = "Предупреждение о вашем чтении Янтарного взрыва. Крайне рекомендуется включить Увеличение!"
 
 	L.willpower = "Сила воли"
 	L.willpower_message = "Ваша сила воли %d"
@@ -72,7 +72,7 @@ if L then
 	L.you_are_casting = "ВЫ произносите!"
 
 	L.unsok_short = "|cFFF20056Босс|r" -- Light Red
-	L.monstrosity_short = "|cFFFFBE00Monster|r" -- Amber
+	L.monstrosity_short = "|cFFFFBE00Чудище|r" -- Amber
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "ruRU")
