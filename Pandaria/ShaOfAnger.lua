@@ -49,20 +49,20 @@ end
 -- Event Handlers
 --
 
-function mod:UnleashedWrath(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId)
-	self:Bar(spellId, spellName, 25, spellId)
+function mod:UnleashedWrath(args)
+	self:Message(args.spellId, args.spellName, "Important", args.spellId)
+	self:Bar(args.spellId, args.spellName, 25, args.spellId)
 end
 
 do
 	local prev = 0
-	local spellName = mod:SpellName(119610)
+	local bitterThoughts = mod:SpellName(119610)
 	function mod:BitterThoughts()
-		if UnitDebuff("player", spellName) then
+		if UnitDebuff("player", bitterThoughts) then
 			local t = GetTime()
 			if t-prev > 2 then -- throttle so the timer can catch it sooner
 				prev = t
-				self:LocalMessage(119610, CL["underyou"]:format(spellName), "Personal", 119610, "Info")
+				self:LocalMessage(119610, CL["underyou"]:format(bitterThoughts), "Personal", 119610, "Info")
 				self:FlashShake(119610)
 			end
 		end
