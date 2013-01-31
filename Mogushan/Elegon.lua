@@ -107,7 +107,6 @@ end
 function mod:DrawPower(args)
 	drawPowerCounter = drawPowerCounter + 1
 	self:Message(119360, ("%s (%d)"):format(args.spellName, drawPowerCounter), "Attention", 119360)
-	-- XXX need to check for another event that is also called Draw Power and cancell bars there, that should be better
 	self:StopBar(CL["next_add"]) -- Materialize Protector
 	self:StopBar(117960) -- Celestial Breath
 end
