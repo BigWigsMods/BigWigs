@@ -53,7 +53,7 @@ function mod:GetOptions()
 		{122409},
 		122149, "mending",
 		122406, {122224, "FLASHSHAKE"}, {121896, "FLASHSHAKE"}, {131830, "SAY", "FLASHSHAKE", "PROXIMITY"}, "recklessness",
-		"berserk", "bosskill",
+		"stages", "berserk", "bosskill",
 	}, {
 		["next_pack"] = "heroic",
 		[122064] = "ej:6300",
@@ -283,11 +283,11 @@ function mod:PhaseChange(unitId)
 	if self:GetCID(UnitGUID(unitId)) == 62397 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 79 and phase == 0 then -- phase starts at 75
-			self:Message(131830, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 131830, "Info") -- should it maybe have it's own option key?
+			self:Message("stages", CL["soon"]:format(CL["phase"]:format(2)), "Positive", 131830, "Info")
 			phase = 1
 		elseif hp < 75 and phase ~= 2 then
 			phase = 2
-			self:Message(131830, "75% - "..CL["phase"]:format(2), "Positive", 131830, "Info")
+			self:Message("stages", "75% - "..CL["phase"]:format(2), "Positive", 131830, "Info")
 			self:Bar(121896, "~"..self:SpellName(121896), 30, 121896) -- Whirling Blade (reset cd)
 			self:StopBar("~"..self:SpellName(122406)) -- Rain of Blades, first after p2 seems random
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3", "boss4")
