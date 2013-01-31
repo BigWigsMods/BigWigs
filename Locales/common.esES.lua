@@ -22,7 +22,7 @@ L.over = "¡%s terminado!"
 
 L.add_spawned = "¡Add aparece!"
 L.next_add = "Siguiente Add"
-L.add_killed = "Add killed! (%d/%d)"
+L.add_killed = "¡Add muerto! (%d/%d)"
 
 L.custom_start = "%s iniciado - %s en %d min"
 L.custom_start_s = "%s iniciado - %s en %d seg"
