@@ -58,7 +58,7 @@ if L then
 	L.engage_yell = "Attivazione modalità difensiva. Disattivazione protezione in uscita."
 
 	L.last_phase = "Ultima Fase"
-	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
+	L.overcharged_total_annihilation = "Sovraccaricato %d! Un pò troppo?"
 	
 	L.floor = "Scomparsa del Pavimento"
 	L.floor_desc = "Avviso Speciale prima che il Vortice svanisca."
