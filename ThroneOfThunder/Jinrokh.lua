@@ -1,3 +1,10 @@
+--[[
+TODO:
+	Double check if proximity windows are opened and closed correctly
+	keep en eye out for focused lightning in 25 man in case there are 2, because of ICON usage
+	focused lightning removed is being kept track of with UNIT_AURA which is ugly expect CLEU events added for this ( not as of 10 N ptr )
+]]--
+
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -57,7 +64,7 @@ function mod:OnEngage()
 	self:Bar(137313, 137313, 93, 137313) -- Lightning Storm
 	self:Bar(137175, 137175, 30, 137175) -- Thundering Throw
 	self:Bar(137162, "~"..self:SpellName(137162), 7, 137162) -- Static Burst -- again, is there even a point for such a short bar?
-	self:Berserk(420) -- Soft enrage, at this point you should have 4 pools up leaving very little room for activities -- real Berserk is not yet confirmed
+	self:Berserk(420) -- XXX Soft enrage, at this point you should have 4 pools up leaving very little room for activities -- real Berserk is not yet confirmed
 end
 
 --------------------------------------------------------------------------------
@@ -108,14 +115,14 @@ end
 
 function mod:FocusedLightningRemoved()
 	if not UnitDebuff("player", self:SpellName(137162)) then
-		self:PrimaryIcon("ej:7741") -- Need to check if there can be 2 up in 25 man at same time
+		self:PrimaryIcon("ej:7741") -- XXX Need to check if there can be 2 up in 25 man at same time
 		self:CloseProximity("ej:7741")
 		self:UnregisterUnitEvent("UNIT_AURA", "player")
 	end
 end
 
 function mod:FocusedLightning(args)
-	self:Bar("ej:7741", "~"..args.spellName, 11, args.spellId) -- not sure if there is any point to have such a short bar for this
+	self:Bar("ej:7741", "~"..args.spellName, 11, args.spellId) -- XXX not sure if there is any point to have such a short bar for this
 	self:TargetMessage("ej:7741", args.spellName, args.destName, "Urgent", args.spellId, "Alarm")
 	self:PrimaryIcon("ej:7741", args.destName)
 	if UnitIsUnit(args.destName, "player") then

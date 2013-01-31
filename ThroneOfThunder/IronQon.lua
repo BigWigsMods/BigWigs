@@ -1,3 +1,9 @@
+--[[
+TODO:
+	bugged Arcing Lightning, expect a spellId or name change for this once they fix the ability ( not fixed in 10 N ptr )
+	windstorm needs a better trigger, no CLEU or anything as of 10 N ptr
+]]--
+
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -152,7 +158,7 @@ function mod:Scorched(args)
 	if args.amount > 4 and UnitIsUnit(args.destName, "player") then
 		self:LocalMessage("ej:6871", ("%s (%d)"):format(args.spellName, args.amount), "Important", args.spellId)
 	end
-	self:Bar("ej:6870", "~"..self:SpellName(134628), 6, 134628) -- Unleashed Flame - don't think there is any point to this, maybe coordinating personal cooldowns?
+	self:Bar("ej:6870", "~"..self:SpellName(134628), 6, 134628) -- XXX Unleashed Flame - don't think there is any point to this, maybe coordinating personal cooldowns?
 end
 
 do
@@ -182,7 +188,7 @@ end
 
 function mod:MoltenOverloadApplied(args)
 	self:Message("overload_casting", args.spellName, "Important", args.spellId, "Alert")
-	self:Bar("overload_casting", CL["cast"]:format(args.spellName), 10, args.spellId) -- don't think there is any point to this, maybe coordinating raid cooldowns?
+	self:Bar("overload_casting", CL["cast"]:format(args.spellName), 10, args.spellId) -- XXX don't think there is any point to this, maybe coordinating raid cooldowns?
 	self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss2")
 end
 

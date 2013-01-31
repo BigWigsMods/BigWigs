@@ -1,3 +1,8 @@
+--[[
+TODO:
+	look out for lingering presence CLEU in case it gets added by blizzard ( not yet in 10 N ptr )
+]]--
+
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -90,13 +95,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(600) -- assumed
+	self:Berserk(600) -- XXX assumed
 	bossDead = 0
 	for _, v in pairs(lingeringTracker) do v = 0 end
 	self:OpenProximity("proximity", self:Heroic() and 7 or 5)
 	self:Bar("loa_spirits", "~"..L["loa_spirit"], 27, 137203)
 	self:Bar(136860, "~"..self:SpellName(136860), 7, 136860) -- Quicksand
-	self:Bar(136992, 136992, 60, 136992) -- Biting Cold -- not sure if 1 min is right feels too long
+	self:Bar(136992, 136992, 60, 136992) -- Biting Cold -- XXX not sure if 1 min is right feels too long
 end
 
 --------------------------------------------------------------------------------
@@ -156,7 +161,7 @@ end
 
 -- Kazra'jin
 function mod:RecklessCharge(args)
-	-- Not sure how useful this is, might want to remove it later
+	-- XXX Not sure how useful this is, might want to remove it later
 	self:Bar(args.spellId, args.spellName, 6, args.spellId)
 end
 

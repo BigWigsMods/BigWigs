@@ -1,3 +1,8 @@
+--[[
+TODO:
+	figure out dino mancer spawn timer start trigger ( last checked in 10 N ptr
+]]--
+
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -125,7 +130,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(600) -- assumed
+	self:Berserk(600) -- XXX assumed
 	self:Bar("ej:7086", (EJ_GetSectionInfo(7086)), 90, 138686) -- Dino Mancer spawn timer
 end
 
@@ -161,7 +166,7 @@ end
 function mod:Headache()
 	-- Dino Mancer spawn timer
 	-- this is assumed in every aspect (timer might not start here, and might not be this long)
-	self:Bar("ej:7086", (EJ_GetSectionInfo(7086)), 90, 138686) -- dino looking like icon
+	self:Bar("ej:7086", (EJ_GetSectionInfo(7086)), 90, 138686) -- dino looking like icon -- dino mancer
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "LastPhase", "boss1") -- don't need to register this on engage
 end
 

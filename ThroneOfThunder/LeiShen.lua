@@ -1,3 +1,11 @@
+--[[
+TODO:
+	keep looking for events during intermission in case blizzaard fixes them
+	make sure proximity meters are currently shown
+	figure out if it is possible to keep track of how many bounces are left ( currently not according to 10 N ptr logs )
+	figure out the most accurate way of displaying conduit cooldowns
+]]--
+
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -88,6 +96,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:Berserk(600) -- XXX assumed
 	proximityOpen = false
 	phase = 1
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
@@ -235,7 +244,7 @@ end
 --
 
 function mod:Boss1Succeeded(unit, spellName, _, _, spellId)
-	if spellId == 136395 then -- Bouncing Bolt
+	if spellId == 136395 then -- Bouncing Bolt -- should somehow try and count how many more bounces are left
 		self:Bar("conduit_abilities", "~"..L["conduit_ability_meassage"], 40, 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		-- XXX add bar here
 		self:Message("ej:7242", spellName, "Important", 136361, "Long")
