@@ -32,10 +32,10 @@ if L then
 	L.swing = "Замах"
 	L.swing_desc = "Считает количество замахов перед Взбучкой."
 
-	L.throw = "Throw!"
-	L.ball_dropped = "Ball dropped!"
-	L.ball_you = "You have the ball!"
-	L.ball = "Ball"
+	L.throw = "Бросок!"
+	L.ball_dropped = "Мяч уронен!"
+	L.ball_you = "У вас мяч!"
+	L.ball = "Мяч"
 
 	L.cooldown_reset = "Ваши перезарядки сброшены!"
 
