@@ -269,6 +269,7 @@ end
 -- Display Window
 --
 
+local testDots
 local function onDragStart(self) self:StartMoving() end
 local function onDragStop(self)
 	self:StopMovingOrSizing()
@@ -387,7 +388,7 @@ end
 --
 
 local updater, updaterFrame = nil, nil
-local normalProximity, reverseTargetProximity, targetProximity, testDots
+local normalProximity, reverseTargetProximity, targetProximity
 do
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
 
