@@ -1073,32 +1073,6 @@ clickHandlers.disable = function(bar)
 end
 
 -----------------------------------------------------------------------
--- Super Emphasize
---
-
-do
-	local dirty = nil
-	empUpdate = CreateFrame("Frame"):CreateAnimationGroup()
-	empUpdate:SetScript("OnLoop", function()
-		for k in pairs(normalAnchor.bars) do
-			if k.remaining < 10 and not k:Get("bigwigs:emphasized") then
-				plugin:EmphasizeBar(k)
-				dirty = true
-			end
-		end
-		if dirty then
-			rearrangeBars(normalAnchor)
-			rearrangeBars(emphasizeAnchor)
-			dirty = nil
-		end
-	end)
-	empUpdate:SetLooping("REPEAT")
-
-	local anim = empUpdate:CreateAnimation()
-	anim:SetDuration(0.2)
-end
-
------------------------------------------------------------------------
 -- Start bars
 --
 
@@ -1137,8 +1111,30 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon)
 end
 
 --------------------------------------------------------------------------------
--- Normal Emphasize
+-- Emphasize
 --
+
+do
+	local dirty = nil
+	empUpdate = CreateFrame("Frame"):CreateAnimationGroup()
+	empUpdate:SetScript("OnLoop", function()
+		for k in pairs(normalAnchor.bars) do
+			if k.remaining < 10 and not k:Get("bigwigs:emphasized") then
+				plugin:EmphasizeBar(k)
+				dirty = true
+			end
+		end
+		if dirty then
+			rearrangeBars(normalAnchor)
+			rearrangeBars(emphasizeAnchor)
+			dirty = nil
+		end
+	end)
+	empUpdate:SetLooping("REPEAT")
+
+	local anim = empUpdate:CreateAnimation()
+	anim:SetDuration(0.2)
+end
 
 function plugin:EmphasizeBar(bar)
 	if db.emphasizeMove then

@@ -135,7 +135,7 @@ do
 			if t-prev > 1 then --getting like 30 messages a second was *glasses* a bit much
 				prev = t
 				self:FlashShake(117878)
-				self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(stack), "Personal", 117878, "Info") -- Does need the sound spam too!	
+				self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(stack), "Personal", 117878, "Info") -- Does need the sound spam too!
 			end
 		end
 	end
