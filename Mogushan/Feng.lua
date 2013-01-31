@@ -280,7 +280,7 @@ do
 		resonanceMarkers[#resonanceMarkers+1] = args.destName
 		if UnitIsUnit(args.destName, "player") then
 			self:FlashShake(args.spellId)
-			self:OpenProximity(6, args.spellId)
+			self:OpenProximity(args.spellId, 6)
 			self:Say(args.spellId, resonance)
 		end
 		if not scheduled then

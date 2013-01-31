@@ -68,7 +68,7 @@ function mod:OnEngage(diff)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "HealthCheck", "boss1")
 	self:Berserk(self:Heroic() and 420 or 600)
 	if self:Tank() then
-		self:OpenProximity(3)
+		self:OpenProximity("proximity", 3)
 	end
 end
 
@@ -106,7 +106,7 @@ do
 
 	function mod:ScaryFog(args)
 		if UnitIsUnit("player", args.destName) then
-			self:OpenProximity(4) -- could be less than 4 but still experimenting
+			self:OpenProximity("proximity", 4) -- could be less than 4 but still experimenting
 		end
 		self:Bar(args.spellId, "~"..args.spellName, 19, args.spellId)
 		if not scheduled then

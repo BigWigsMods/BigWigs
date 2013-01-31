@@ -77,7 +77,7 @@ function mod:ThunderingThrowRemoved()
 	self:SecondaryIcon(137175)
 	if UnitDebuff("player", self:SpellName(137162)) then -- Focused Lightning
 		self:CloseProximity(137175)
-		self:OpenProximity(5, "ej:7741")
+		self:OpenProximity("ej:7741", 5)
 	else
 		self:CloseProximity(137175)
 	end
@@ -89,7 +89,7 @@ function mod:ThunderingThrow(_, _, _, _, target)
 	self:SecondaryIcon(137175, target)
 	if not UnitIsUnit(target, "player") then -- no point opening proximity for the thrown tank
 		self:CloseProximity("ej:7741") -- close this before opening another ( in case it was open )
-		self:OpenProximity(14, 137175, target)
+		self:OpenProximity(137175, 14, target)
 	end
 end
 
@@ -121,7 +121,7 @@ function mod:FocusedLightning(args)
 	if UnitIsUnit(args.destName, "player") then
 		self:RegisterUnitEvent("UNIT_AURA", "FocusedLightningRemoved", "player") -- There is no APPLIED or REMOVED CLEU event for this yet and using the explosion damage to remove icon and close proximity could be innacurate
 		self:Say("ej:7741", CL["say"]:format(args.spellName))
-		self:OpenProximity(5, "ej:7741")
+		self:OpenProximity("ej:7741", 5)
 	end
 end
 

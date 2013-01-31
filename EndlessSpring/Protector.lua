@@ -155,7 +155,7 @@ do
 		if UnitIsUnit(args.destName, "player") then
 			self:FlashShake(117436)
 			self:Say(117436, args.spellName)
-			self:OpenProximity(7, 117436)
+			self:OpenProximity(117436, 7)
 		end
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnPrison, 0.2, args.spellName)

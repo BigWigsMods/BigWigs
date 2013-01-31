@@ -82,7 +82,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:OpenProximity(5)
+	self:OpenProximity("proximity", 5)
 	self:Berserk(900)
 	self:Bar("ej:6325", 123627, 20, 123627) --Dissonance Field
 end
@@ -169,7 +169,7 @@ do
 		if UnitIsUnit("player", args.destName) then
 			self:Say(args.spellId, args.spellName) -- not sure if this is needed, I think most people bunch up for healing, say bubble spam is not really helpful
 			self:FlashShake(args.spellId)
-			self:OpenProximity(8, args.spellId)
+			self:OpenProximity(args.spellId, 8)
 		end
 		--self:Bar(spellId, "~"..spellName, 19, spellId) -- 19.3-27.7 (ew)
 		if not scheduled then
@@ -215,7 +215,7 @@ do
 		if warned == power then return end
 		warned = power
 		if power == 149 then
-			self:OpenProximity(5)
+			self:OpenProximity("proximity", 5)
 			self:Bar("ej:6325", 123627, 19, 128353) --Dissonance Field
 			self:Bar("phases", CL["phase"]:format(2), 149, L.phases_icon)
 			self:StopBar(CL["phase"]:format(1))

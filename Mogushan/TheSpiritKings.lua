@@ -271,14 +271,14 @@ function mod:EngageCheck()
 				if self:Heroic() then
 					self:Bar(117697, 117697, 40, 117697) -- Shield of Darkness
 				end
-				self:OpenProximity(8)
+				self:OpenProximity("proximity", 8)
 				self:Message("ej:5852", zian, "Positive", 117628)
 			elseif (id == 60710 or id == 61427) and not bossActivated[60710] then -- Subetai
 				bossActivated[60710] = true
 				if self:Heroic() then
 					self:Bar(118162, 118162, 15, 118162) -- Sleight of Hand
 				end
-				self:OpenProximity(8)
+				self:OpenProximity("proximity", 8)
 				self:Bar(118094, 118094, 5, 118094) -- Volley
 				self:Bar(118047, 118047, 26, 118047) -- Pillage
 				self:Bar(118122, 118122, self:Heroic() and 40 or 15, 118122) -- Rain of Arrows

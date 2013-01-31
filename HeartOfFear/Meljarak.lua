@@ -116,7 +116,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			if phase == 2 then
 				self:CloseProximity(131830)
 			end
-			self:OpenProximity(2, 121881)
+			self:OpenProximity(121881, 2)
 			break
 		end
 	end
@@ -297,7 +297,7 @@ function mod:PhaseChange(unitId)
 					return
 				end
 			end
-			self:OpenProximity(5, 131830) -- Wind Bomb
+			self:OpenProximity(131830, 5) -- Wind Bomb
 		end
 	end
 end
@@ -309,7 +309,7 @@ function mod:Deaths(args)
 		if args.mobId == 62451 then -- The Sra'thik
 			self:CloseProximity(121881)
 			if phase == 2 then
-				self:OpenProximity(5, 131830) -- if in phase 2 open the wind bomb proximity meter back up
+				self:OpenProximity(131830, 5) -- if in phase 2 open the wind bomb proximity meter back up
 			end
 		elseif args.mobId == 62452 then -- The Zar'thik
 			self:StopBar(L["mending_bar"])

@@ -82,7 +82,7 @@ do
 			if UnitIsUnit(args.destName, "player") or UnitIsUnit(prevPlayer, "player") then
 				self:FlashShake(args.spellId)
 				self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId)
-				self:OpenProximity(10, args.spellId, UnitIsUnit(prevPlayer, "player") and args.destName or prevPlayer, true)
+				self:OpenProximity(args.spellId, 10, UnitIsUnit(prevPlayer, "player") and args.destName or prevPlayer, true)
 			else
 				self:TargetMessage(args.spellId, args.spellName, jasperChainsTargets, "Attention", args.spellId)
 			end

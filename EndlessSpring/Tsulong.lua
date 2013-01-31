@@ -79,7 +79,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:OpenProximity(8, 122777)
+	self:OpenProximity(122777, 8)
 	self:Berserk(self:LFR() and 900 or 490)
 	self:Bar("phases", L["day"], 121, 122789)
 	self:Bar(122777, 122777, 15.6, 122777) -- Nightmares
@@ -163,7 +163,7 @@ do
 			elseif spellId == 122767 then -- Dread Shadows (start of night phase)
 				self:StopBar(122953) -- Summon Unstable Sha
 				self:StopBar(122855) -- Sun Breath
-				self:OpenProximity(8, 122777)
+				self:OpenProximity(122777, 8)
 				self:Bar(122777, 122777, 15, 122777) -- Nightmares
 				self:Message("phases", L["night"], "Positive", 122768)
 				self:Bar("phases", L["day"], 121, 122789)

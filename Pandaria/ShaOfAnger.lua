@@ -73,7 +73,7 @@ do
 	local prev = 0
 	function mod:GrowingAngerApplied(args)
 		if UnitIsUnit(args.destName, "player") then
-			self:OpenProximity(5, args.spellId)
+			self:OpenProximity(args.spellId, 5)
 			self:FlashShake(args.spellId)
 			self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Alert")
 			self:Bar(args.spellId, CL["you"]:format(args.spellName), 6, args.spellId)

@@ -94,7 +94,7 @@ function mod:OnEngage()
 	wipe(staticShockList)
 	if self:Tank() then self:Bar(134916, "~"..self:SpellName(134916), 42, 134916) end -- Decapitate
 	self:Bar(135095, "~"..self:SpellName(135095), 25, 135095) -- Thunderstruck
-	if UnitBuff("boss1", self:SpellName(135681)) then self:OpenProximity(8, "ej:7239") end
+	if UnitBuff("boss1", self:SpellName(135681)) then self:OpenProximity("ej:7239", 8) end
 	self:Bar("conduit_abilities", "~"..L["conduit_ability_meassage"], 15, 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 end
 
@@ -116,7 +116,7 @@ do
 	local function warnBallsSoon(spellId)
 		mod:Message(spellId, CL["soon"]:format(mod:SpellName(spellId)), "Attention", spellId) -- should maybe shorten this
 		if proximityOpen ~= "Diffusion Chain" then -- Diffusion Chians has 8 yard, so don't make a 6 yard if that is open already
-			mod:OpenProximity(6, spellId)
+			mod:OpenProximity(spellId, 6)
 		end
 	end
 	function mod:SummonBallLightning(args)
@@ -156,7 +156,7 @@ function mod:OverloadedCircuits()
 	self:CancelAllTimers()
 	-- stage 2
 	if phase == 2 then
-		self:OpenProximity(6, 136543) -- Summon Ball Lightning
+		self:OpenProximity(136543, 6) -- Summon Ball Lightning
 		self:Bar(136478, "~"..self:SpellName(136478), 46, 136478) -- Fusion Slash
 	elseif phase == 3 then
 		self:Bar(135095, "~"..self:SpellName(135095), 28, 135095) -- Thunderstruck
@@ -278,7 +278,7 @@ end
 
 function mod:DiffusionChainApplied(args)
 	self:Message("ej:7239", L["diffusion_chain_message"], "Important", args.spellId, "Long")
-	self:OpenProximity(8, "ej:7239")
+	self:OpenProximity("ej:7239", 8)
 	proximityOpen = "Diffusion Chain"
 end
 
@@ -298,7 +298,7 @@ do
 		mod:Message(spellId, L["static_shock_message"], "Urgent", spellId, "Alarm")
 		scheduled = nil
 		table.sort(staticShockList, function(a,b) return a<b end) -- so targeted proximity opens to the same person for everyone
-		mod:OpenProximity(8, spellId, staticShockList[1], true)
+		mod:OpenProximity(spellId, 8, staticShockList[1], true)
 		proximityOpen = "Static Shock"
 		mod:PrimaryIcon(spellId, staticShockList[1]) -- not sure how helpful this is
 		wipe(staticShockList)

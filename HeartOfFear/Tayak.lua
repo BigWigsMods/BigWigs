@@ -81,7 +81,7 @@ function mod:OnEngage()
 	if self:Tank() or self:Healer() then
 		self:Bar("assault", L["assault_message"], 15, 123474)
 	end
-	self:OpenProximity(8, 123175)
+	self:OpenProximity(123175, 8)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	self:Berserk(self:LFR() and 600 or 490)
 	phase = 1
@@ -110,7 +110,7 @@ do
 	local function removeIcon(notBoss)
 		mod:CloseProximity("unseenstrike")
 		if not notBoss then
-			mod:OpenProximity(8, 123175) -- Re-open normal proximity
+			mod:OpenProximity(123175, 8) -- Re-open normal proximity
 		end
 		mod:PrimaryIcon("unseenstrike")
 		if timer then
@@ -135,7 +135,7 @@ do
 			if UnitIsUnit(player, "player") then
 				mod:Say("unseenstrike", strike)
 			else
-				mod:OpenProximity(5, "unseenstrike", name, true)
+				mod:OpenProximity("unseenstrike", 5, name, true)
 			end
 			mod:TargetMessage("unseenstrike", strike, name, "Urgent", L.unseenstrike_icon, "Alert")
 			mod:TargetBar("unseenstrike", strike, name, 5.6, L.unseenstrike_icon)

@@ -109,7 +109,7 @@ function mod:OnEngage(diff)
 	self:Bar(129147, ("%s (%d)"):format(self:SpellName(129147), cackleCounter), (diff == 4 or diff == 6) and 25 or 41, 129147) -- Ominous Cackle
 	--self:Berserk(900) -- we start in UNIT_SPELLCAST_SUCCEEDED
 	swingCounter, thrashCounter, thrashNext = 0, 0, nil
-	self:OpenProximity(5) -- might be less
+	self:OpenProximity("proximity", 5) -- might be less
 	atSha = true
 	nextFear = 0
 	submergeCounter = 0
@@ -250,7 +250,7 @@ do
 	end
 	function mod:ChampionOfTheLightRemoved(args)
 		self:ScheduleTimer(checkForDead, 0.1, args.destName)
-		--self:OpenProximity(40, args.spellId, args.destName, true) -- does not really work due to some map data issues in last phase -- uncomment when mapdata becomes available
+		--self:OpenProximity(args.spellId, 40, args.destName, true) -- does not really work due to some map data issues in last phase -- uncomment when mapdata becomes available
 	end
 end
 
@@ -385,7 +385,7 @@ end
 function mod:Fearless(args)
 	if UnitIsUnit("player", args.destName) then
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "target") -- just have it here for now
-		self:OpenProximity(5) -- might be less
+		self:OpenProximity("proximity", 5) -- might be less
 		atSha = true
 		self:CancelDelayedMessage(CL["soon"]:format(self:SpellName(119888))) -- Death Blossom
 		self:Bar(args.spellId, args.spellName, 30, args.spellId)

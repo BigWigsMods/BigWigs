@@ -74,7 +74,7 @@ end
 function mod:OnEngage()
 	self:Berserk(600) -- confirmed for 10 normal
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PowerWarn", "boss2")
-	self:OpenProximity(10, "ej:6870")
+	self:OpenProximity("ej:6870", 10)
 	self:Bar(134926, "~"..self:SpellName(134926), 33, 134926) -- Throw spear
 end
 
@@ -228,7 +228,7 @@ function mod:Deaths(args)
 		self:StopBar(134628) -- Unleashed Flame
 		self:Bar("ej:6877", 136577, 50, 136577) -- Windstorm
 		self:Bar(136192, 136192, 17, 136192) -- Arcing Lightning
-		self:OpenProximity(8, 136192) -- Arcing Lightning -- assume 8 yards
+		self:OpenProximity(136192, 8) -- Arcing Lightning -- assume 8 yards
 	elseif args.mobId == 68080 then -- Quet'zal
 		self:StopBar(136577) -- Windstorm
 		self:StopBar(136192) -- Arcing Lightning
