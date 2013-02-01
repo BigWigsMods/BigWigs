@@ -4,6 +4,11 @@ if L then
 
 end
 
+L = BigWigs:NewBossLocale("Horridon", "zhCN")
+if L then
+
+end
+
 L = BigWigs:NewBossLocale("Council of Elders", "zhCN")
 if L then
 

@@ -53,7 +53,7 @@ L["Fills the bars up instead of draining them."] = "Füllt die Leisten anstatt s
 
 L["Local"] = "Lokal"
 L["%s: Timer [%s] finished."] = "%s: Timer [%s] beendet."
-L["Custom bar '%s' started by %s user '%s'."] = "Custom bar '%s' started by %s user '%s'."
+L["Custom bar '%s' started by %s user '%s'."] = "Custombar '%s' wurde von gestartet von %s Nutzer '%s'."
 
 L["Pull"] = "Pull"
 L["Pulling!"] = "Pull!"
@@ -129,7 +129,7 @@ L["Display time"] = "Anzeigedauer"
 L["How long to display a message, in seconds"] = "Bestimmt, wie lange (in Sekunden) Nachrichten angezeigt werden."
 L["Fade time"] = "Ausblendedauer"
 L["How long to fade out a message, in seconds"] = "Bestimmt, wie lange (in Sekunden) das Ausblenden der Nachrichten dauert."
-L["Font color"] = "Font color"
+L["Font color"] = "Schriftfarbe"
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

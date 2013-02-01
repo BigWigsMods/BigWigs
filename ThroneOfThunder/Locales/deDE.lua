@@ -6,6 +6,23 @@ if L then
 	L.in_water = "Du stehst im Wasser!"
 end
 
+L = BigWigs:NewBossLocale("Horridon", "deDE")
+if L then
+	L.orb_message = "Kugel der Kontrolle gefallen!"
+
+	L.chain_lightning_warning = "Dein Fokus wirkt Kettenblitz!"
+	L.chain_lightning_bar = "Fokus: Kettenblitz"
+
+	L.fireball_warning = "Dein Fokus wirkt Feuerball!"
+	L.fireball_bar = "Fokus: Feuerball"
+
+	L.venom_bolt_volley_desc = "|cFFFF0000WARNUNG: Es wird nur der Timer für dein 'Fokus-Ziel' angezeigt da alle Salve-Caster seperate Abklingzeit haben. |r"
+	L.venom_bolt_volley_warning = "Dein Fokus wirkt Salve!"
+	L.venom_bolt_volley_bar = "Fokus: Salve"
+
+	L.puncture_message = "Dreifachstich"
+end
+
 L = BigWigs:NewBossLocale("Council of Elders", "deDE")
 if L then
 	L.full_power = "Volle Energie"

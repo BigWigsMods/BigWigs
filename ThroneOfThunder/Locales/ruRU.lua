@@ -4,6 +4,11 @@ if L then
 
 end
 
+L = BigWigs:NewBossLocale("Horridon", "ruRU")
+if L then
+
+end
+
 L = BigWigs:NewBossLocale("Council of Elders", "ruRU")
 if L then
 	L.full_power = "Полная энергия"
