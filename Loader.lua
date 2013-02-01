@@ -85,12 +85,29 @@ local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the cor
 local menus = {} -- contains the main menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
 
+do
+	local c = "BigWigs_Classic"
+	local bc = "BigWigs_BurningCrusade"
+	local wotlk = "BigWigs_WrathOfTheLichKing"
+	local cata = "BigWigs_Cataclysm"
+	local lw = "LittleWigs"
+
+	loader.zoneList = {
+		[696]=c,
+		[775]=bc, [780]=bc, [779]=bc, [776]=bc, [465]=bc, [473]=bc, [799]=bc, [782]=bc,
+		[604]=wotlk, [543]=wotlk, [535]=wotlk, [529]=wotlk, [527]=wotlk, [532]=wotlk, [531]=wotlk, [609]=wotlk, [718]=wotlk,
+		[752]=cata, [758]=cata, [754]=cata, [824]=cata, [800]=cata, [773]=cata,
+
+		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw,
+	}
+end
+
 -----------------------------------------------------------------------
 -- Utility
 --
 
 local function sysprint(msg)
-	print("|cFF33FF99Big Wigs|r: |cffffff00"..msg.."|r")
+	print("|cFF33FF99Big Wigs|r: "..msg)
 end
 
 local getGroupMembers = nil
@@ -512,6 +529,7 @@ end
 do
 	local grouped = nil
 	local queueLoad = {}
+	local warnZone = nil
 	function loader:PLAYER_REGEN_ENABLED()
 		loaderUtilityFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		sysprint(L["Combat has ended, Big Wigs has now finished loading."])
@@ -553,6 +571,14 @@ do
 						BigWigs:Enable()
 					end
 				end
+			end
+		end
+		local zoneAddon = loader.zoneList[id]
+		if zoneAddon and not select(4, GetAddOnInfo(zoneAddon)) then
+			if not warnZone then warnZone = {} end
+			if not warnZone[id] then
+				sysprint((L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."]):format(zoneAddon))
+				warnZone[id] = true
 			end
 		end
 	end

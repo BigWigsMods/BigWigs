@@ -33,10 +33,11 @@ L["Waiting until combat ends to finish loading due to Blizzard combat restrictio
 L["Combat has ended, Big Wigs has now finished loading."] = "Combattimento terminato, Big Wigs è stato caricato completamente."
 L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "A causa di restrizioni Blizzard, la configurazione deve essere aperta fuori combattimento, prima che possa essere usata in combattimento."
 
+L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."] = "Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."
+
 L.coreAddonDisabled = "Big Wigs non può funzionare correttamente perché l'addon %s è disattivato. Puoi attivarlo nel pannello di controllo degli Addon nella schermata di login dei personaggi."
 
 -- Options.lua
-L["Big Wigs Encounters"] = "Big Wigs Encounters"
 L["Customize ..."] = "Personalizza ..."
 L["Profiles"] = "Profili"
 L.introduction = "Benvenuto in Big Wigs, dove imposti i combattimenti dei boss. Allacciati le cinture, Prendi le patatine e goditi il viaggio. Non mangia i tuoi bambini, ma ti aiuta a preparare i nuovi boss in modo completo per le tue incursioni."

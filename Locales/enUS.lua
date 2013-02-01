@@ -33,10 +33,11 @@ L["Waiting until combat ends to finish loading due to Blizzard combat restrictio
 L["Combat has ended, Big Wigs has now finished loading."] = true
 L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = true
 
+L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."] = true
+
 L.coreAddonDisabled = "Big Wigs won't function properly since the addon %s is disabled. You can enable it from the addon control panel at the character selection screen."
 
 -- Options.lua
-L["Big Wigs Encounters"] = true
 L["Customize ..."] = true
 L["Profiles"] = true
 L.introduction = "Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group."

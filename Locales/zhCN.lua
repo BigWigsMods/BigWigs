@@ -35,10 +35,11 @@ L["Waiting until combat ends to finish loading due to Blizzard combat restrictio
 L["Combat has ended, Big Wigs has now finished loading."] = "Combat has ended, Big Wigs has now finished loading."
 L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."
 
+L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."] = "Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."
+
 L.coreAddonDisabled = "当%s被禁用时，Big Wigs 将无法正常工作。你可以在角色选择屏幕的插件控制面板开启它们。"
 
 -- Options.lua
-L["Big Wigs Encounters"] = "Big Wigs 战斗"
 L["Customize ..."] = "自定义…"
 L["Profiles"] = "配置文件"
 L.introduction = "欢迎使用 Big Wigs 戏弄各个首领。请系好安全带，吃吃花生并享受这次旅行。它不会吃了你的孩子，但会协助你的团队与新的首领进行战斗就如同享受饕餮大餐一样。"

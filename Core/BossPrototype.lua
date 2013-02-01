@@ -764,7 +764,7 @@ do
 	end
 end
 
-function boss:FlashShake(key, r, g, b)
+function boss:FlashShake(key)
 	if not checkFlag(self, key, C.FLASHSHAKE) then return end
 	self:SendMessage("BigWigs_Flash", self, key)
 end
