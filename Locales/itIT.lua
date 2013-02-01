@@ -33,7 +33,7 @@ L["Waiting until combat ends to finish loading due to Blizzard combat restrictio
 L["Combat has ended, Big Wigs has now finished loading."] = "Combattimento terminato, Big Wigs è stato caricato completamente."
 L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "A causa di restrizioni Blizzard, la configurazione deve essere aperta fuori combattimento, prima che possa essere usata in combattimento."
 
-L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."] = "Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."
+L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."] = "Per favore, prendi nota che questa zona richiede il plugin -[[|cFF436EEE%s|r]]- plugin per fare in modo di visualizzare barre e timers."
 
 L.coreAddonDisabled = "Big Wigs non può funzionare correttamente perché l'addon %s è disattivato. Puoi attivarlo nel pannello di controllo degli Addon nella schermata di login dei personaggi."
 
@@ -70,7 +70,7 @@ L["Colors"] = "Colori"
 L["Select encounter"] = "Seleziona il Combattimento"
 L["List abilities in group chat"] = "Elenca le Abilità nella Chat"
 L["Block boss movies"] = "Blocca i video dei Boss"
-L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = "Dopo aver visto un video la prima volta, Big Wigs impedira' di vederlo di nuovo."
+L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = "Dopo aver visto un video la prima volta, Big Wigs impedirà di vederlo di nuovo."
 L["Prevented boss movie '%d' from playing."] = "Bloccato il video '%d'."
 L["Ignore my role"] = "Ignora il mio ruolo"
 L.ignoreroleDesc = "|cffff4411Non Raccomandato.|r Abilitando quest'opzione tutti i messaggi verranno visualizzati indipendentemente dal tuo ruolo, e questo potrebbe generare molto Spam."
