@@ -60,7 +60,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Death("Win", 63191)
+	self:Death("Win", 62164, 63191)
 end
 
 function mod:OnEngage(diff)
