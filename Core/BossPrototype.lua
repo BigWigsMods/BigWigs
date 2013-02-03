@@ -218,6 +218,7 @@ do
 					local m = eventMap[self][event]
 					if m and (m[spellId] or m["*"]) then
 						local func = m[spellId] or m["*"]
+						-- DEVS! Please ask if you need args attached to the table that we've missed out!
 						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
 						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
 						args.spellId, args.spellName, args.extraSpellId, args.extraSpellName, args.amount = spellId, spellName, extraSpellId, amount, amount
@@ -576,6 +577,8 @@ do
 	local scheduledMessages = {}
 
 	function boss:CancelDelayedMessage(text)
+		if type(text) == "number" then text = spells[text] end
+
 		if scheduledMessages[text] then
 			self:CancelTimer(scheduledMessages[text])
 			scheduledMessages[text] = nil
@@ -585,8 +588,9 @@ do
 	-- ... = color, icon, sound, noraidsay, broadcastonly
 	function boss:DelayedMessage(key, delay, text, ...)
 		if type(delay) ~= "number" then error(format("Module '%s' tried to schedule a delayed message with delay as type %q, but it must be a number.", self.moduleName, type(delay))) end
-		self:CancelDelayedMessage(text)
+		if type(text) == "number" then text = spells[text] end
 
+		self:CancelDelayedMessage(text)
 		scheduledMessages[text] = self:ScheduleTimer("Message", delay, key, text, ...)
 	end
 end
