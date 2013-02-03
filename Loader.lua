@@ -529,7 +529,7 @@ end
 do
 	local grouped = nil
 	local queueLoad = {}
-	local warnZone = nil
+	local warnedThisZone = {[465]=true,[473]=true,[807]=true,[809]=true} -- World Bosses
 	function loader:PLAYER_REGEN_ENABLED()
 		loaderUtilityFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		sysprint(L["Combat has ended, Big Wigs has now finished loading."])
@@ -574,11 +574,11 @@ do
 			end
 		end
 		local zoneAddon = loader.zoneList[id]
-		if zoneAddon and not select(4, GetAddOnInfo(zoneAddon)) then
-			if not warnZone then warnZone = {} end
-			if not warnZone[id] then
+		if zoneAddon and not warnedThisZone[id] then
+			local _, _, _, enabled = GetAddOnInfo(zoneAddon))
+			if not enabled then
 				sysprint((L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."]):format(zoneAddon))
-				warnZone[id] = true
+				warnedThisZone[id] = true
 			end
 		end
 	end
