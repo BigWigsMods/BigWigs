@@ -332,7 +332,7 @@ do
 		self:DelayedMessage("explosion_by_other", 30, CL["custom_sec"]:format(explosion, 15), "Attention", args.spellId)
 		self:DelayedMessage("explosion_by_other", 35, CL["custom_sec"]:format(explosion, 10), "Attention", args.spellId)
 		self:DelayedMessage("explosion_by_other", 40, CL["custom_sec"]:format(explosion, 5), "Attention", args.spellId)
-		self:Bar("explosion_casting_by_other", L["monstrosity_is_casting"], 2.5, 122398)
+		self:Bar("explosion_casting_by_other", "<".. L["monstrosity_is_casting"] ..">", 2.5, 122398)
 		self:Bar("explosion_by_other", "~"..L["monstrosity_is_casting"], 45, args.spellId) -- cooldown, don't move this
 		if UnitDebuff("player", self:SpellName(122784)) then -- Reshape Life
 			self:FlashShake("explosion_casting_by_other")
