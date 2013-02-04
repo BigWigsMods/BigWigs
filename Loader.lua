@@ -575,7 +575,7 @@ do
 		end
 		local zoneAddon = loader.zoneList[id]
 		if zoneAddon and not warnedThisZone[id] then
-			local _, _, _, enabled = GetAddOnInfo(zoneAddon))
+			local _, _, _, enabled = GetAddOnInfo(zoneAddon)
 			if not enabled then
 				sysprint((L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."]):format(zoneAddon))
 				warnedThisZone[id] = true
