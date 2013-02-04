@@ -75,7 +75,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck")
 
 	self:Yell("Win", L["kill_yell"])
-	self:Death("Deaths", 62969)
+	self:Death("EmbodiedTerrorDeath", 62969)
 end
 
 function mod:OnEngage(diff)
@@ -189,7 +189,7 @@ do
 	end
 end
 
-function mod:Deaths()
+function mod:EmbodiedTerrorDeath()
 	self:StopBar("~"..self:SpellName(123011)) -- Terrorize, might be tricky if more than one add can be up
 end
 

@@ -87,7 +87,8 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 
-	self:Death("Deaths", 62397, 62452, 62447, 62451) -- Boss, The Zar'thik, The Kor'thik, The Sra'thik
+	self:Death("Win", 62397)
+	self:Death("AddDeaths", 62452, 62447, 62451) -- The Zar'thik, The Kor'thik, The Sra'thik
 end
 
 function mod:OnEngage(diff)
@@ -302,24 +303,20 @@ function mod:PhaseChange(unitId)
 	end
 end
 
-function mod:Deaths(args)
-	if args.mobId == 62397 then -- boss
-		self:Win()
-	else
-		if args.mobId == 62451 then -- The Sra'thik
-			self:CloseProximity(121881)
-			if phase == 2 then
-				self:OpenProximity(131830, 5) -- if in phase 2 open the wind bomb proximity meter back up
-			end
-		elseif args.mobId == 62452 then -- The Zar'thik
-			self:StopBar(L["mending_bar"])
-		elseif args.mobId == 62447 then -- The Kor'thik
-			self:StopBar("~"..self:SpellName(122409)) -- Kor'thik Strike
+function mod:AddDeaths(args)
+	if args.mobId == 62451 then -- The Sra'thik
+		self:CloseProximity(121881)
+		if phase == 2 then
+			self:OpenProximity(131830, 5) -- if in phase 2 open the wind bomb proximity meter back up
 		end
-		if self:Heroic() then
-			self:Bar("next_pack", CL["other"]:format(L["next_pack"], args.destName), 50, L.next_pack_icon)
-			self:DelayedMessage("next_pack", 50, CL["other"]:format(L["next_pack"], args.destName), "Attention", L.next_pack_icon)
-		end
+	elseif args.mobId == 62452 then -- The Zar'thik
+		self:StopBar(L["mending_bar"])
+	elseif args.mobId == 62447 then -- The Kor'thik
+		self:StopBar("~"..self:SpellName(122409)) -- Kor'thik Strike
+	end
+	if self:Heroic() then
+		self:Bar("next_pack", CL["other"]:format(L["next_pack"], args.destName), 50, L.next_pack_icon)
+		self:DelayedMessage("next_pack", 50, CL["other"]:format(L["next_pack"], args.destName), "Attention", L.next_pack_icon)
 	end
 end
 

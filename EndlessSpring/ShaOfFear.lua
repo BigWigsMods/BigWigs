@@ -99,7 +99,8 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Transitions", "boss1")
 
-	self:Death("Deaths", 60999, 61003)
+	self:Death("Win", 60999)
+	self:Death("DreadSpawnDeath", 61003)
 end
 
 
@@ -206,14 +207,10 @@ do
 			end
 		end
 	end
-	function mod:Deaths(args)
-		if args.mobId == 60999 then -- boss
-			self:Win()
-		elseif args.mobId == 61003 then -- dread spawn
-			dreadSpawns[args.destGUID] = nil
-			if not scheduled then
-				scheduled = self:ScheduleTimer(announceDreadSpawnCount, 0.2, args.destName)
-			end
+	function mod:DreadSpawnDeath(args)
+		dreadSpawns[args.destGUID] = nil
+		if not scheduled then
+			scheduled = self:ScheduleTimer(announceDreadSpawnCount, 0.2, args.destName)
 		end
 	end
 end

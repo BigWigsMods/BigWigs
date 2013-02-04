@@ -65,7 +65,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShaCorruptionSecond", 117052)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:Death("Deaths", 60583, 60585, 60586)
+	self:Death("BossDeaths", 60583, 60585, 60586)
 end
 
 function mod:OnEngage()
@@ -221,7 +221,7 @@ function mod:CorruptedWaters(args)
 end
 
 
-function mod:Deaths(args)
+function mod:BossDeaths(args)
 	if args.mobId == 60583 then --Kaolan
 		self:StopBar(117986) -- Defiled Ground
 	elseif args.mobId == 60585 then -- Regail
