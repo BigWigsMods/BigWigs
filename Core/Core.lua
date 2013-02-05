@@ -411,11 +411,6 @@ end
 -- Well .. except the module API, obviously.
 --
 
--- XXX Defunct
-function addon:Translate(boss)
-	return boss
-end
-
 function addon:RegisterBossOption(key, name, desc, func, icon)
 	if customBossOptions[key] then
 		error("The custom boss option %q has already been registered."):format(key)
