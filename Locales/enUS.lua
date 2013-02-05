@@ -97,8 +97,23 @@ L["PING_desc"] = "Sometimes locations can be important, Big Wigs will ping the m
 L["EMPHASIZE_desc"] = "Enabling this will SUPER EMPHASIZE any messages or bars associated with this encounter ability. Messages will be bigger, bars will flash and have a different color, sounds will be used to count down when the ability is imminent. Basically you will notice it."
 L["PROXIMITY"] = "Proximity display"
 L["PROXIMITY_desc"] = "Abilities will sometimes require you to spread out. The proximity display will be set up specifically for this ability so that you will be able to tell at-a-glance whether or not you are safe."
+L["TANK"] = "Tank Only"
+L["TANK_desc"] = "Some abilities are only important for tanks. If you want to see warnings for this ability regardless of your role, disable this option."
+L["HEALER"] = "Healer Only"
+L["HEALER_desc"] = "Some abilities are only important for healers. If you want to see warnings for this ability regardless of your role, disable this option."
+L["TANK_HEALER"] = "Tank & Healer Only"
+L["TANK_HEALER_desc"] = "Some abilities are only important for tanks and healers. If you want to see warnings for this ability regardless of your role, disable this option."
+L["DISPEL_MAGIC"] = "Magic Dispeller Only"
+L["DISPEL_MAGIC_desc"] = "If you want to see warnings for this ability even when you cannot dispel it, disable this option."
+L["DISPEL_ENRAGE"] = "Enrage Dispeller Only "
+L["DISPEL_ENRAGE_desc"] = "If you want to see warnings for this ability even when you cannot dispel it, disable this option."
 L["Advanced options"] = true
 L["<< Back"] = true
+
+L.tank = "Tank alerts only. "
+L.healer = "Healer alerts only. "
+L.tankhealer = "Tank & Healer alerts only. "
+L.dispeller = "Dispeller alerts only. "
 
 L["About"] = true
 L["Main Developers"] = true

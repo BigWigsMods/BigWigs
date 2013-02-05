@@ -32,13 +32,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		"ej:6294",
 		122735, 122754,
 		122774, 123495, {122835, "ICON"}, 123120, 123081, "berserk", "bosskill",
-		"ej:6294",
 	}, {
+		["ej:6294"] = "heroic",
 		[122735] = INLINE_TANK_ICON..TANK,
 		[122774] = "general",
-		["ej:6294"] = "heroic",
 	}
 end
 

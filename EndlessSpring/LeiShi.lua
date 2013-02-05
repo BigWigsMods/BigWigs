@@ -34,8 +34,10 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		123461, 123250, 123244, 123705, "special", "berserk", "proximity", "bosskill",
+		123705,
+		123461, 123250, 123244, "special", "berserk", "proximity", "bosskill",
 	}, {
+		[123705] = "heroic",
 		[123461] = "general",
 	}
 end
@@ -75,8 +77,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
--- NOTE: Any timer related to "special" is inaccurate, still need to figure out how they work
 
 function mod:EngageCheck()
 	self:CheckBossStatus()
@@ -142,31 +142,31 @@ do
 	local prev = 0
 	local lastHpToGo
 	function mod:HealthCheck(unitId)
-			local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-			if hp < nextProtectWarning then
-				self:Message(123250, CL["soon"]:format(self:SpellName(123250)), "Positive", 123250) -- Protect
-				nextProtectWarning = hp - 20
-				if nextProtectWarning < 20 then
-					nextProtectWarning = 0
-				end
+		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+		if hp < nextProtectWarning then
+			self:Message(123250, CL["soon"]:format(self:SpellName(123250)), "Positive", 123250) -- Protect
+			nextProtectWarning = hp - 20
+			if nextProtectWarning < 20 then
+				nextProtectWarning = 0
 			end
-			if getAwayStartHP then
-				local t = GetTime()
-				if t-prev > 3 then -- warn max once every 3 sec
-					prev = t
-					local hpToGo = math.ceil(4 - (getAwayStartHP - hp))
-					if lastHpToGo ~= hpToGo and hpToGo > 0 then
-						lastHpToGo = hpToGo
-						self:Message(123461, L["hp_to_go"]:format(hpToGo), "Positive", 123461)
-					end
+		end
+		if getAwayStartHP then
+			local t = GetTime()
+			if t-prev > 3 then -- warn max once every 3 sec
+				prev = t
+				local hpToGo = math.ceil(4 - (getAwayStartHP - hp))
+				if lastHpToGo ~= hpToGo and hpToGo > 0 then
+					lastHpToGo = hpToGo
+					self:Message(123461, L["hp_to_go"]:format(hpToGo), "Positive", 123461)
 				end
 			end
 		end
 	end
+end
 
 function mod:Protect(args)
 	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alarm")
-	self:StopBar("~"..L["special"])
+	self:StopBar("~"..L["special"]) --stop the bar since it's pretty likely the cd will expire during protect
 end
 
 function mod:ProtectRemoved()

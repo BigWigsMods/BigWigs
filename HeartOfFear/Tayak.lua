@@ -26,8 +26,6 @@ if L then
 	L.unseenstrike_inc = "Incoming Strike!"
 	L.unseenstrike_soon = "Strike in ~5-10 sec!"
 
-	L.assault, L.assault_desc = EJ_GetSectionInfo(6349)
-	L.assault_icon = 123474
 	L.assault_message = "Assault"
 
 	L.storm, L.storm_desc = EJ_GetSectionInfo(6350)
@@ -36,8 +34,6 @@ if L then
 	L.side_swap = "Side Swap"
 end
 L = mod:GetLocale()
-L.assault = L.assault.." "..INLINE_TANK_ICON..INLINE_HEALER_ICON
-L.assault_desc = CL.tankhealer..L.assault_desc
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -46,7 +42,7 @@ L.assault_desc = CL.tankhealer..L.assault_desc
 function mod:GetOptions()
 	return {
 		{125310, "FLASHSHAKE"},
-		122842, {"unseenstrike", "ICON", "SAY", "PROXIMITY"}, {123175, "PROXIMITY"}, "assault", "storm",
+		122842, {"unseenstrike", "ICON", "SAY", "PROXIMITY"}, {123175, "PROXIMITY"}, {123474, "TANK_HEALER"}, "storm",
 		"proximity", "berserk", "bosskill",
 	}, {
 		[125310] = "heroic",
@@ -78,9 +74,7 @@ function mod:OnEngage()
 	self:Bar(122842, "~"..self:SpellName(122842), 9.8, 122842) -- Tempest Slash
 	self:Bar(123175, "~"..self:SpellName(123175), 20.5, 123175) -- Wind Step
 	self:Bar("unseenstrike", 122994, 30, 122994) -- Unseen Strike
-	if self:Tank() or self:Healer() then
-		self:Bar("assault", L["assault_message"], 15, 123474)
-	end
+	self:Bar(123474, L["assault_message"], 15, 123474)
 	self:OpenProximity(123175, 8)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	self:Berserk(self:LFR() and 600 or 490)
@@ -181,16 +175,13 @@ do
 end
 
 function mod:Assault(args)
-	if self:Tank() or self:Healer() then
-		self:LocalMessage("assault", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount or 1, L["assault_message"])
-	end
+	self:LocalMessage(123474, CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount or 1, L["assault_message"])
 end
 
 function mod:AssaultCast(args)
-	if self:Tank() or self:Healer() then
-		-- If a tank dies from an assault, it will never apply, and the CD bar won't show. Show it on cast instead.
-		self:Bar("assault", "~"..L["assault_message"], 20.4, args.spellId)
-	end
+	-- If a tank dies from an assault, it will never apply, and the CD bar won't show. Show it on cast instead.
+	self:Bar(123474, "~"..L["assault_message"], 20.4, args.spellId)
+
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)

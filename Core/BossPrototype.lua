@@ -672,6 +672,11 @@ do
 			end
 			self.db.profile[key] = self.toggleDefaults[key]
 		end
+		if bit.band(self.db.profile[key], C.TANK) == C.TANK and not self:Tank() then return end
+		if bit.band(self.db.profile[key], C.HEALER) == C.HEALER and not self:Healer() then return end
+		if bit.band(self.db.profile[key], C.TANK_HEALER) == C.TANK_HEALER and not self:Tank() and not self:Healer() then return end
+		if bit.band(self.db.profile[key], C.DISPEL_MAGIC) == C.DISPEL_MAGIC and not self:Dispeller("magic", true) then return end
+		if bit.band(self.db.profile[key], C.DISPEL_ENRAGE) == C.DISPEL_ENRAGE and not self:Dispeller("enrage", true) then return end
 		return bit.band(self.db.profile[key], flag) == flag
 	end
 end

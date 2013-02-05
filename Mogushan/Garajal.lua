@@ -126,9 +126,7 @@ do
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 		elseif sync == "Banish" and rest then
 			self:Bar(116272, L["banish_message"], self:Heroic() and 70 or 65, 116272)
-			if self:Tank() then
-				self:LocalMessage(116272, L["banish_message"], "Urgent", 116272, "Alarm", rest)
-			end
+			self:LocalMessage(116272, L["banish_message"], "Urgent", 116272, self:Tank() and "Alarm" or nil, rest)
 		end
 	end
 end

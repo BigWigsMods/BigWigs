@@ -4,7 +4,7 @@ local names = {}
 local descriptions = {}
 
 -- Option bitflags
-local coreToggles = { "BAR", "MESSAGE", "ICON", "WHISPER", "SOUND", "SAY", "PROXIMITY", "FLASHSHAKE", "PING", "EMPHASIZE" }
+local coreToggles = { "BAR", "MESSAGE", "ICON", "WHISPER", "SOUND", "SAY", "PROXIMITY", "FLASHSHAKE", "PING", "EMPHASIZE", "TANK", "HEALER", "TANK_HEALER", "DISPEL_MAGIC", "DISPEL_ENRAGE" }
 for i, toggle in next, coreToggles do
 	C[toggle] = bit.lshift(1, i - 1)
 	if L[toggle] then
@@ -14,7 +14,7 @@ for i, toggle in next, coreToggles do
 end
 
 -- Toggles that should actually be shown in the interface options
-local listToggles = { "MESSAGE", "BAR", "FLASHSHAKE", "ICON", "WHISPER", "SAY", "PING", "PROXIMITY" }
+local listToggles = { "MESSAGE", "BAR", "FLASHSHAKE", "ICON", "WHISPER", "SAY", "PING", "PROXIMITY", "TANK", "HEALER", "TANK_HEALER", "DISPEL_MAGIC", "DISPEL_ENRAGE" }
 
 local used = nil
 function BigWigs:RegisterOption(key, name, desc)
@@ -100,17 +100,36 @@ do
 	end
 end
 
+--display role icon/message in the option
+local function getRoleStrings(module, key)
+	local option = module.toggleDefaults[key]
+	if bit.band(option, C.TANK_HEALER) == C.TANK_HEALER then
+		return " |TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:0:19:22:41|t|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:20:39:1:20|t", L.tankhealer
+	elseif bit.band(option, C.TANK) == C.TANK then
+		return " |TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:0:19:22:41|t", L.tank
+	elseif bit.band(option, C.HEALER) == C.HEALER then
+		return " |TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:20:39:1:20|t", L.healer
+	elseif bit.band(option, C.DISPEL_MAGIC) == C.DISPEL_MAGIC then
+		return " |TInterface\\EncounterJournal\\UI-EJ-Icons.blp:16:16:0:0:255:66:229:247:7:27|t", L.dispeller
+	elseif bit.band(option, C.DISPEL_ENRAGE) == C.DISPEL_ENRAGE then
+		return " |TInterface\\EncounterJournal\\UI-EJ-Icons.blp:16:16:0:0:255:66:102:118:40:58|t", L.dispeller
+	end
+	return "", ""
+end
+
 function BigWigs:GetBossOptionDetails(module, bossOption)
 	local customBossOptions = BigWigs:GetCustomBossOptions()
 	local option = bossOption
 	local t = type(option)
 	if t == "table" then option = option[1]; t = type(option) end
 	local bf = module.toggleDefaults[option]
+
 	if t == "string" then
 		if customBossOptions[option] then
 			local icon = customBossOptions[option][4] and select(3, GetSpellInfo(customBossOptions[option][4])) or nil
 			return option, customBossOptions[option][1], customBossOptions[option][2], icon
 		else
+			local roleIcon, roleDesc = getRoleStrings(module, option)
 			local ejID = option:match("^ej:(%d+)$")
 			if tonumber(ejID) then
 				-- This is an EncounterJournal ID
@@ -126,9 +145,12 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 					icon = abilityIcon
 				end
 				-- So the magic is the, if <icon> is a number, it should be a portrait.
-				return option, title, description, icon
+				return option, roleIcon..title, roleDesc..description, icon
 			else
 				local L = module:GetLocale(true)
+				local title, description = L[option], L[option .. "_desc"]
+				if title then title = roleIcon..title end
+				if description then description = roleDesc..L[option .. "_desc"] end
 				local icon = L[option .. "_icon"]
 				if icon == option .. "_icon" then icon = nil end
 				if type(icon) == "number" then
@@ -140,13 +162,14 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 				elseif type(icon) == "string" then
 					icon = "Interface\\Icons\\" .. icon
 				end
-				return option, L[option], L[option .. "_desc"], icon
+				return option, title, description, icon
 			end
 		end
 	elseif t == "number" then
 		local spellName, _, icon = GetSpellInfo(option)
 		if not spellName then error(("Invalid option %d in module %s."):format(option, module.name)) end
-		return spellName, spellName, getSpellDescription(option), icon
+		local roleIcon, roleDesc = getRoleStrings(module, spellName)
+		return spellName, roleIcon..spellName, roleDesc..getSpellDescription(option), icon
 	end
 end
 

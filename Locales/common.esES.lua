@@ -30,7 +30,3 @@ L.custom_end = "¡%s entra en %s!"
 L.custom_min = "¡%s en %d min"
 L.custom_sec = "¡%s en %d seg!"
 
-L.tank = "Solo alertas para tanques. "
-L.healer = "Solo alertas para sanadores. "
-L.tankhealer = " Solo alertas para tanque y sanador. "
-

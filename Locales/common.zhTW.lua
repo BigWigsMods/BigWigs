@@ -32,7 +32,3 @@ L.custom_end = ">%s<將%s！"
 L.custom_min = ">%s<%d分後！"
 L.custom_sec = ">%s<%d秒後！"
 
-L.tank = "只警報坦克。"
-L.healer = "只警報治療。"
-L.tankhealer = "只警報坦克&治療。"
-

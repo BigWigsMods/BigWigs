@@ -47,8 +47,6 @@ if L then
 	L.huddle_or_spout_or_strike = "Huddle or Spout or Strike"
 end
 L = mod:GetLocale()
---L.swing = L.swing.." "..INLINE_TANK_ICON -- the string is used in messages so ;[
-L.swing_desc = CL.tank..L.swing_desc
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -56,10 +54,10 @@ L.swing_desc = CL.tank..L.swing_desc
 
 function mod:GetOptions()
 	return {
-		"ej:6699", 119414, 129147, {119519, "FLASHSHAKE", "SAY"},
+		{"ej:6699", "TANK_HEALER"}, 119414, 129147, {119519, "FLASHSHAKE", "SAY"},
 		{ 119888, "FLASHSHAKE" }, 118977,
-		129378, "ej:6700", 120669, {120629, "SAY"}, {120519, "FLASHSHAKE"}, 120672, "ability_cd", 120455, {120268, "FLASHSHAKE", "PROXIMITY"}, {"ej:6109", "FLASHSHAKE"}, "ej:6107",
-		"swing", "berserk", "proximity", "bosskill",
+		129378, {"ej:6700", "TANK_HEALER"}, {120669, "TANK"}, {120629, "SAY"}, {120519, "FLASHSHAKE"}, 120672, "ability_cd", 120455, {120268, "FLASHSHAKE", "PROXIMITY"}, {"ej:6109", "FLASHSHAKE"}, "ej:6107",
+		{"swing", "TANK"}, "berserk", "proximity", "bosskill",
 	}, {
 		["ej:6699"] = "ej:6086",
 		[119888] = "ej:6089",
@@ -252,11 +250,9 @@ do
 end
 
 function mod:NakedAndAfraid(args)
-	if self:Tank() then
-		self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId)
-		self:PlaySound(args.spellId, "Info") -- use TargetMessage for name coloring and play the sound for all tanks
-		self:Bar(args.spellId, args.spellName, 31, args.spellId)
-	end
+	self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId)
+	self:PlaySound(args.spellId, "Info") -- use TargetMessage for name coloring and play the sound for all tanks
+	self:Bar(args.spellId, args.spellName, 31, args.spellId)
 end
 
 function mod:Transitions(unit, spellName, _, _, spellId)
@@ -322,7 +318,6 @@ do -- COPY PASTE ACTION FROM COBALT MINE! see if this works
 end
 
 function mod:Thrash(args)
-	if not self:Tank() and not self:Healer() then return end
 	thrashNext = 2
 	if phase == 2 then
 		thrashCounter = thrashCounter + 1
@@ -341,7 +336,6 @@ function mod:Thrash(args)
 end
 
 function mod:DreadThrash(args)
-	if not self:Tank() and not self:Healer() then return end
 	thrashCounter = 0
 	thrashNext = 5
 	self:Message("ej:6700", args.spellName, "Important", args.spellId, "Alarm")
@@ -351,7 +345,7 @@ end
 do
 	local thrashSwings = ""
 	function mod:Swing(args)
-		if not self:Tank() or self:GetCID(args.sourceGUID) ~= 60999 then return end
+		if self:GetCID(args.sourceGUID) ~= 60999 then return end
 
 		swingCounter = swingCounter + 1
 		local hitType = tonumber(args.spellId) and _G["DAMAGE"] or _G["MISS"] --or _G["ACTION_SPELL_MISSED_"..damage] --

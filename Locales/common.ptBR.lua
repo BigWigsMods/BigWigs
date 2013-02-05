@@ -30,7 +30,3 @@ L.custom_end = "%s começa em %s!"
 L.custom_min = "%s em %d min"
 L.custom_sec = "%s em %d seg!"
 
-L.tank = "Alertas somente de tanquers. "
-L.healer = "Alertas somente de curadores. "
-L.tankhealer = "Tank & Healer alerts only. "
-

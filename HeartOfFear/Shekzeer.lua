@@ -26,8 +26,6 @@ if L then
 	L.fumes_bar = "Your fumes buff"
 end
 L = mod:GetLocale()
-L.eyes = L.eyes.." "..INLINE_TANK_ICON
-L.eyes_desc = CL.tank..L.eyes_desc
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -36,7 +34,7 @@ L.eyes_desc = CL.tank..L.eyes_desc
 function mod:GetOptions()
 	return {
 		{123845, "FLASHSHAKE", "ICON", "SAY"},
-		"ej:6325", "eyes", {123788, "FLASHSHAKE", "ICON"}, "proximity", 123735,
+		"ej:6325", {"eyes", "TANK"}, {123788, "FLASHSHAKE", "ICON"}, "proximity", 123735,
 		{125390, "FLASHSHAKE"}, 124097, 125826, 124827, {124077, "FLASHSHAKE"},
 		{124862, "FLASHSHAKE", "SAY", "PROXIMITY"}, { 124849, "FLASHSHAKE" },
 		"phases", "berserk", "bosskill",
@@ -232,13 +230,11 @@ do
 end
 
 function mod:Eyes(args)
-	if self:Tank() then
-		local buffStack = args.amount or 1
-		local player = args.destName:gsub("%-.+", "*")
-		self:StopBar(L["eyes_message"]:format(player, buffStack - 1))
-		self:Bar("eyes", L["eyes_message"]:format(player, buffStack), 30, args.spellId)
-		self:LocalMessage("eyes", L["eyes_message"], "Urgent", args.spellId, buffStack > 2 and "Info" or nil, player, buffStack)
-	end
+	local buffStack = args.amount or 1
+	local player = args.destName:gsub("%-.+", "*")
+	self:StopBar(L["eyes_message"]:format(player, buffStack - 1))
+	self:Bar("eyes", L["eyes_message"]:format(player, buffStack), 30, args.spellId)
+	self:LocalMessage("eyes", L["eyes_message"], "Urgent", args.spellId, buffStack > 2 and "Info" or nil, player, buffStack)
 end
 
 function mod:UltimateCorruption(args)

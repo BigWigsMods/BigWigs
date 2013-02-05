@@ -51,7 +51,7 @@ function mod:GetOptions()
 	return {
 		"next_pack", {122064, "FLASHSHAKE", "SAY"}, {122125, "FLASHSHAKE"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
 		{122409},
-		122149, "mending",
+		{122149, "DISPEL_MAGIC"}, "mending",
 		122406, {122224, "FLASHSHAKE"}, {121896, "FLASHSHAKE"}, {131830, "SAY", "FLASHSHAKE", "PROXIMITY"}, "recklessness",
 		"stages", "berserk", "bosskill",
 	}, {
@@ -202,13 +202,11 @@ end
 
 do
 	local prev = 0
-	function mod:Quickening(args) -- You really only care about this anyways when you can dispel
-		if self:Dispeller("magic", true) then
-			local t = GetTime()
-			if t-prev > 2 then
-				prev = t
-				self:LocalMessage(args.spellId, args.spellName, "Attention", args.spellId, "Alert")
-			end
+	function mod:Quickening(args)
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:LocalMessage(args.spellId, args.spellName, "Attention", args.spellId, "Alert")
 		end
 	end
 end

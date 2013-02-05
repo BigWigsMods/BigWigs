@@ -47,8 +47,6 @@ if L then
 	L.burn_message = "%2$dx Burn on %1$s"
 end
 L = mod:GetLocale()
-L.tank = L.tank.." "..INLINE_TANK_ICON
-L.tank_desc = CL.tank..L.tank_desc
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -60,7 +58,7 @@ function mod:GetOptions()
 		{116784, "ICON", "FLASHSHAKE", "SAY"}, 116711,
 		{116417, "ICON", "SAY", "FLASHSHAKE", "PROXIMITY"}, 116364,
 		118071,
-		115817, 115911, "tank", "stages", "berserk", "bosskill",
+		115817, 115911, {"tank", "TANK"}, "stages", "berserk", "bosskill",
 	}, {
 		[116157] = L["phase_lightning"],
 		[116784] = L["phase_flame"],
@@ -154,10 +152,8 @@ do
 		[131792] = L["burn_message"],
 	}
 	function mod:TankAlerts(args)
-		if self:Tank() then
-			local stack = args.amount or 1
-			self:LocalMessage("tank", msgTbl[args.spellId], "Urgent", args.spellId, stack > 1 and "Info", args.destName, stack)
-		end
+		local stack = args.amount or 1
+		self:LocalMessage("tank", msgTbl[args.spellId], "Urgent", args.spellId, stack > 1 and "Info", args.destName, stack)
 	end
 end
 

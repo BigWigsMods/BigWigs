@@ -52,7 +52,7 @@ function mod:GetOptions()
 		"ej:5841", 117921, 119521, 117910, {117961, "FLASHSHAKE"}, -- Qiang
 		"ej:5852", {118303, "SAY", "ICON"}, {117697, "FLASHSHAKE"}, -- Zian
 		"ej:5846", 118047, 118122, 118094, {118162, "FLASHSHAKE"}, -- Subetai
-		"ej:5835", "cowardice", 117708, 117837, -- Meng
+		"ej:5835", "cowardice", 117708, {117837, "DISPEL_ENRAGE"}, -- Meng
 		"proximity", "casting_shields", "berserk", "bosskill",
 	}, {
 		["ej:5841"] = qiang,
@@ -171,10 +171,8 @@ function mod:MaddeningShout(args)
 end
 
 function mod:Delirious(args)
-	if self:Dispeller("enrage", true) then
-		self:LocalMessage(args.spellId, args.spellName, "Urgent", args.spellId, "Alert")
-		self:Bar(args.spellId, args.spellName, 20, args.spellId)
-	end
+	self:LocalMessage(args.spellId, args.spellName, "Urgent", args.spellId, "Alert")
+	self:Bar(args.spellId, args.spellName, 20, args.spellId)
 end
 
 -- Subetai
@@ -286,7 +284,7 @@ function mod:EngageCheck()
 			elseif (id == 60708 or id == 61429) and not bossActivated[60708] then -- Meng
 				bossActivated[60708] = true
 				self:Bar(117708, "~"..self:SpellName(117708), self:Heroic() and 40 or 21, 117708) -- Maddening Shout, on heroic: 44.2, 19.8, 48.7, 49.2, 40.2
-				if self:Heroic() and self:Dispeller("enrage", true) then
+				if self:Heroic() then
 					self:Bar(117837, 117837, 20, 117837) -- Delirious
 				end
 				self:Message("ej:5835", meng, "Positive", 117833)
