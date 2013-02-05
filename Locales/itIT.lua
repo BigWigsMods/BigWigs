@@ -50,7 +50,7 @@ L.blizzardDesc = "La Blizzard fornisce i propri messaggi per alcune abilità di 
 L["Show addon warnings"] = "Visualizza i messaggi degli Addons"
 L.addonwarningDesc = "Big Wigs e altri Addon BossMod possono inviare i loro messaggi sul canale di Avviso di Incursione. Questi messaggi tipicamente sono contrassegnati da 3 asterischi (***), che sono quelli che BigWigs intercetta per decidere cosa fare.\n\n|cffff4411Attivare questa opzione potrebbe generare uno spam elevato*.|r"
 --L["Flash Screen"] = "Flash Screen"
---L.flashDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."L["Raid icons"] = "團隊標記"
+--L.flashDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."
 L["Raid icons"] = "Icone dell'incursione"
 L.raidiconDesc = "Alcuni combattimenti richiedono di evidenziare alcuni giocatori di particolare interesse nell'incontro con dei simboli. Per esempio effetti di tipo 'bomba' o 'controllo della mente'. Se disattivi questa opzione, non metterai nessun marchio.\n\n|cffff4411Si applica solo quando sei il capogruppo della spedizione o sei stato promosso!|r"
 L["Whisper warnings"] = "Avvisi tramite sussurro"

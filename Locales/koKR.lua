@@ -52,7 +52,7 @@ L.blizzardDesc = "블리자드에서 보스에 대한 몇몇 중요 능력에 �
 L["Show addon warnings"] = "애드온 경고 표시"
 L.addonwarningDesc = "경보 알림을 통해 Big Wigs 와 다른 보스 교전 모듈 애드온에서 발생되는 메세지를 공격대 경보 채널로 그룹에 알립니다. 이러한 경보 채널 메시지는 일반적으로 3개의 별(***)이 앞뒤로 표시되며, Big Wigs 에서 메세지를 나타내는 이 메세지들을 사용하거나 차단합니다.\n\n|cffff4411이 옵션은 스팸 메세지가 많이 발생할 우려가 있으니 권장하지 않습니다.|r"
 --L["Flash Screen"] = "Flash Screen"
---L.flashDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."L["Raid icons"] = "團隊標記"
+--L.flashDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."
 L["Raid icons"] = "공격대 아이콘"
 L.raidiconDesc = "일부 '폭탄'과 같은 중요한 경고에 대하여 플레이어에게 공격대 전술을 지정합니다.\n\n|cffff4411오직 공격대장이나 승급된 사람만이 가능합니다!|r"
 L["Whisper warnings"] = "귓속말 경고"

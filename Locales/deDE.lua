@@ -52,7 +52,7 @@ L.blizzardDesc = "Blizzard stellt eigene Nachrichten für einige Fähigkeiten in
 L["Show addon warnings"] = "Addon Warnungen anzeigen"
 L.addonwarningDesc = "Big Wigs und andere Bossmods senden ihre Nachrichten über den Raidwarnungschat an die Gruppe. Diese Nachrichten sind normalerweise von jeweils drei Sternen eingeschlossen (***), nach welchen Big Wigs sucht, um zu entscheiden, ob und welche Nachrichten geblockt werden.\n\n|cffff4411Diese Option anzuschalten resultiert in viel Spam und wird nicht empfohlen.|r"
 --L["Flash Screen"] = "Flash Screen"
---L.flashDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."L["Raid icons"] = "團隊標記"
+--L.flashDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."
 L["Raid icons"] = "Schlachtzugs-Symbole"
 L.raidiconDesc = "Einige Bossmodule benutzen Schlachtzugs-Symbole, um Spieler zu markieren, die von speziellem Interesse für deine Gruppe sind. Beispiele wären 'Bomben'-Effekte und Gedankenkontrolle. Wenn du diese Option ausschaltest, markierst du niemanden mehr.\n\n|cffff4411Trifft nur zu, sofern du Schlachtzugsleiter oder Assistent bist.|r"
 L["Whisper warnings"] = "Warnungen flüstern"

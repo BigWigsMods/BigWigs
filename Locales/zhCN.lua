@@ -52,7 +52,7 @@ L.blizzardDesc = "暴雪提供了他们自己的警报信息。我们认为，�
 L["Show addon warnings"] = "显示插件警报"
 L.addonwarningDesc = "Big Wigs 与其它首领战斗插件可以使用团队警报频道广播信息。这些消息通常包含三星号（***），Big Wigs 以此查找和判断是否屏蔽此消息。\n\n|cffff4411开启此选项将造成大量的垃圾信息所以并不推荐。|r"
 --L["Flash Screen"] = "Flash Screen"
---L.flashDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."L["Raid icons"] = "團隊標記"
+--L.flashDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."
 L["Raid icons"] = "团队标记"
 L.raidiconDesc = "团队中有些首领模块使用团队标记来为某些中了特定技能的队员打上标记。例如类似“炸弹”类或心灵控制的技能。如果你关闭此功能，你将不会给队员打标记。\n\n|cffff4411只有团队领袖或被提升为助理时才可以这么做！|r"
 L["Whisper warnings"] = "密语警报"

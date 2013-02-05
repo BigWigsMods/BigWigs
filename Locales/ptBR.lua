@@ -50,7 +50,7 @@ L.blizzardDesc = "A Blizzard tem seus próprios sons e mensagens em alguns encon
 L["Show addon warnings"] = "Mostrar avisos do addon"
 L.addonwarningDesc = "Big Wigs e outros addons similares podem mostrar suas mensagens para o grupo pelo canal de raide. Estas mensagens são normalmente mostradas com três estrelas antes (***), essas são as que o BigWigs deve ou não bloquealas.\n\n|cffff4411Ativando esta opção poderá surgir muitos spams e não é recomendavel.|r"
 --L["Flash Screen"] = "Flash Screen"
---L.flashDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."L["Raid icons"] = "團隊標記"
+--L.flashDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."
 L["Raid icons"] = "Icones de Raide"
 L.raidiconDesc = "Alguns encontros usam os icones de raide para marcar jogadores que sao de interesse especial para seu grupo. Por exemplo os efeitos tipo 'bomba' e controlhe mental. Se estiver desativado, não marcará nada.\n\n|cffff4411Somente aplicará as marcas se for assistente ou lider!|r"
 L["Whisper warnings"] = "Avisos de susurros"

@@ -50,7 +50,7 @@ L.blizzardDesc = "Blizzard affiche ses propres messages pour certaines technique
 L["Show addon warnings"] = "Afficher les avertissements des addons"
 L.addonwarningDesc = "Big Wigs et les autres addons traitant des rencontres face aux boss peuvent diffuser leurs messages au groupe via le canal de l'Avertissement raid. Ces messages ont habituellement trois étoiles (***) comme préfixe et suffixe, ce que Big Wigs recherche lors qu'il détermine s'il faut bloquer un message ou non.\n\n|cffff4411L'activation de cette option peut conduire à l'affichage de nombreux messages en double (spam) et n'est donc pas recommandé.|r"
 --L["Flash Screen"] = "Flash Screen"
---L.flashDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."L["Raid icons"] = "團隊標記"
+--L.flashDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."
 L["Raid icons"] = "Icônes de raid"
 L.raidiconDesc = "Certains scripts de rencontre utilisent des icônes pour marquer les joueurs affectés par des techniques précises. Par exemple, les effets de type \"bombe\" et les contrôles mentaux. Si vous décochez ceci, vous ne marquerez personne.\n\n|cffff4411Ne fonctionne que si vous êtes soit le chef du groupe (de raid), soit un de ses assistants !|r"
 L["Whisper warnings"] = "Chuchoter alertes"
