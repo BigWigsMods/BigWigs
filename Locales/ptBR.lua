@@ -110,7 +110,7 @@ L["<< Back"] = "<< Voltar"
 
 L.tank = "Alertas somente de tanquers. "
 L.healer = "Alertas somente de curadores. "
---L.tankhealer = "Tank & Healer alerts only. "
+L.tankhealer = "Alerta somente para Tanques & Curadores. "
 --L.dispeller = "Dispeller alerts only. "
 
 L["About"] = "Sobre"

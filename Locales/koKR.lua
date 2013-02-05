@@ -110,9 +110,9 @@ L["PROXIMITY_desc"] = "스킬에 대한 거리 측정이 필요합니다. 근접
 L["Advanced options"] = "고급 옵션"
 L["<< Back"] = "<< 뒤로"
 
---L.tank = "Tank alerts only. "
+L.tank = "탱거만 경고. "
 --L.healer = "Healer alerts only. "
---L.tankhealer = "Tank & Healer alerts only. "
+L.tankhealer = "탱커 & 힐러만 경고합니다. "
 --L.dispeller = "Dispeller alerts only. "
 
 L["About"] = "정보"
