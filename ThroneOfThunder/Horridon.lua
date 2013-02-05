@@ -71,11 +71,11 @@ L.hex = L.hex .. " " ..mod:GetFlagIcon(8)
 function mod:GetOptions()
 	return {
 		"ej:7086", "ej:7090", "ej:7092", "ej:7087", 136817, 136821,
-		"fireball", "chain_lightning", "hex", {136490, "FLASHSHAKE"},
-		"deadly_plague", {"mortal_strike", "TANK_HEALER"}, {136573, "FLASHSHAKE"},
-		{"venom_bolt_volley", "FLASHSHAKE"}, {136646, "FLASHSHAKE"},
-		"blazingSunlight", {136723, "FLASHSHAKE"},
-		{"puncture", "TANK_HEALER"}, 136741, {"ej:7080", "FLASHSHAKE", "SAY", "ICON"},"berserk", "bosskill",
+		"fireball", "chain_lightning", "hex", {136490, "FLASH"},
+		"deadly_plague", {"mortal_strike", "TANK_HEALER"}, {136573, "FLASH"},
+		{"venom_bolt_volley", "FLASH"}, {136646, "FLASH"},
+		"blazingSunlight", {136723, "FLASH"},
+		{"puncture", "TANK_HEALER"}, 136741, {"ej:7080", "FLASH", "SAY", "ICON"},"berserk", "bosskill",
 	}, {
 		["ej:7086"] = "ej:7085",
 		["fireball"] = "ej:7084",
@@ -184,7 +184,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 		end
 	end
 end
@@ -227,7 +227,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info") -- not exactly under you
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 		end
 	end
 end
@@ -262,7 +262,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 		end
 	end
 end
@@ -295,7 +295,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 		end
 	end
 end
@@ -322,7 +322,7 @@ function mod:Charge(unit)
 	self:TargetMessage("ej:7080", self:SpellName(136769), target, "Attention", 136769, "Long")
 	self:Bar("ej:7080", "~"..self:SpellName(136769), 11, 136769)
 	if UnitIsUnit("player", target) then
-		self:FlashShake("ej:7080")
+		self:Flash("ej:7080")
 		self:Say("ej:7080", CL["say"]:format(self:SpellName(136769))) -- charge
 		self:PrimaryIcon("ej:7080", target)
 	end

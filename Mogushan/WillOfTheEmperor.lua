@@ -67,7 +67,7 @@ L.arc_desc = L.target_only .. L.arc_desc
 function mod:GetOptions()
 	return {
 		116829,
-		"rage", {116525, "FLASHSHAKE"},
+		"rage", {116525, "FLASH"},
 		"strength",
 		"courage",
 		"bosses", "combo", "arc",
@@ -144,7 +144,7 @@ end
 
 function mod:FocusedAssault(args)
 	if UnitIsUnit("player", args.destName) then
-		self:FlashShake(args.spellId)
+		self:Flash(args.spellId)
 		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
 	end
 end

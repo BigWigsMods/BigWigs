@@ -74,7 +74,7 @@ L["Messages"] = true
 L["Bars"] = true
 L["Background"] = true
 L["Text"] = true
-L["Flash and shake"] = true
+L["Flash"] = true
 L["Normal"] = true
 L["Emphasized"] = true
 

@@ -31,8 +31,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{117986, "FLASHSHAKE"}, 117975,
-		{117436, "SAY", "PROXIMITY", "FLASHSHAKE"} , {118077, "FLASHSHAKE"},
+		{117986, "FLASH"}, 117975,
+		{117436, "SAY", "PROXIMITY", "FLASH"} , {118077, "FLASH"},
 		117309, 117227,
 		117052, "berserk", "bosskill",
 	}, {
@@ -135,7 +135,7 @@ do
 			if t-prev > 1 then
 				prev = t
 				self:LocalMessage(117986, CL["underyou"]:format(args.spellName), "Personal", 117986, "Info")
-				self:FlashShake(117986)
+				self:Flash(117986)
 			end
 		end
 	end
@@ -153,7 +153,7 @@ do
 		self:Bar(117436, "~"..args.spellName, 25, 117436)
 		lightningPrisonList[#lightningPrisonList + 1] = args.destName
 		if UnitIsUnit(args.destName, "player") then
-			self:FlashShake(117436)
+			self:Flash(117436)
 			self:Say(117436, args.spellName)
 			self:OpenProximity(117436, 7)
 		end
@@ -172,7 +172,7 @@ end
 function mod:LightningStorm(args)
 	self:Message(args.spellId, args.spellName, "Urgent", args.spellId, "Alarm")
 	self:Bar(args.spellId, "~"..args.spellName, bossDead < 3 and 42 or 32, args.spellId)
-	self:FlashShake(args.spellId)
+	self:Flash(args.spellId)
 end
 
 -- Elder Asani

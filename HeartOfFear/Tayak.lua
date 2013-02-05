@@ -41,7 +41,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{125310, "FLASHSHAKE"},
+		{125310, "FLASH"},
 		122842, {"unseenstrike", "ICON", "SAY", "PROXIMITY"}, {123175, "PROXIMITY"}, {123474, "TANK_HEALER"}, "storm",
 		"proximity", "berserk", "bosskill",
 	}, {
@@ -91,7 +91,7 @@ end
 function mod:BladeTempest(args)
 	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alarm")
 	self:Bar(args.spellId, args.spellName, 60, args.spellId)
-	self:FlashShake(args.spellId)
+	self:Flash(args.spellId)
 end
 
 function mod:WindStep(args)
@@ -181,7 +181,6 @@ end
 function mod:AssaultCast(args)
 	-- If a tank dies from an assault, it will never apply, and the CD bar won't show. Show it on cast instead.
 	self:Bar(123474, "~"..L["assault_message"], 20.4, args.spellId)
-
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)

@@ -34,7 +34,7 @@ function mod:GetOptions()
 	return {
 		"ej:5772",
 		130774,
-		{130395, "FLASHSHAKE", "PROXIMITY"},
+		{130395, "FLASH", "PROXIMITY"},
 		"overload", "petrifications", "berserk", "bosskill",
 	}, {
 		["ej:5772"] = "ej:5771",
@@ -80,7 +80,7 @@ do
 		elseif prevPlayer then
 			jasperChainsTargets[2] = args.destName
 			if UnitIsUnit(args.destName, "player") or UnitIsUnit(prevPlayer, "player") then
-				self:FlashShake(args.spellId)
+				self:Flash(args.spellId)
 				self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId)
 				self:OpenProximity(args.spellId, 10, UnitIsUnit(prevPlayer, "player") and args.destName or prevPlayer, true)
 			else

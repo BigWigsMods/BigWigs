@@ -25,7 +25,7 @@ plugin.defaultDB = {
 	barColor = { ["*"] = { ["*"] = { 0.25, 0.33, 0.68, 1 } } },
 	barEmphasized = { ["*"] = { ["*"] = { 1, 0, 0, 1 } } },
 
-	flashshake = { ["*"] = { ["*"] = { 0, 0, 1 } } },
+	flash = { ["*"] = { ["*"] = { 0, 0, 1 } } },
 }
 
 local function copyTable(to, from)
@@ -151,14 +151,14 @@ local colorOptions = {
 				},
 			},
 		},
-		flashshake = {
+		flash = {
 			type = "group",
-			name = L["Flash and shake"],
+			name = L["Flash"],
 			inline = true,
 			order = 12,
 			args = {
-				flashshake = {
-					name = L["Flash and shake"],
+				flash = {
+					name = L["Flash"],
 					type = "color",
 					order = 11,
 				},
@@ -195,7 +195,7 @@ function plugin:SetColorOptions(name, key, flags)
 	local t = addKey(colorOptions, keyTable)
 	t.args.messages.hidden = nil
 	t.args.bars.hidden = nil
-	t.args.flashshake.hidden = nil
+	t.args.flash.hidden = nil
 	if flags then
 		if bit.band(flags, C.MESSAGE) ~= C.MESSAGE then
 			t.args.messages.hidden = true
@@ -203,8 +203,8 @@ function plugin:SetColorOptions(name, key, flags)
 		if bit.band(flags, C.BAR) ~= C.BAR then
 			t.args.bars.hidden = true
 		end
-		if bit.band(flags, C.FLASHSHAKE) ~= C.FLASHSHAKE then
-			t.args.flashshake.hidden = true
+		if bit.band(flags, C.FLASH) ~= C.FLASH then
+			t.args.flash.hidden = true
 		end
 	end
 	return t

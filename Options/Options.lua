@@ -123,16 +123,9 @@ local acOptions = {
 		},
 		flash = {
 			type = "toggle",
-			name = L["Flash"],
-			desc = L.fnsDesc,
+			name = L["Flash Screen"],
+			desc = L.flashDesc,
 			order = 22,
-			--width = "half",
-		},
-		shake = {
-			type = "toggle",
-			name = L["Shake"],
-			desc = L.fnsDesc,
-			order = 23,
 		},
 		raidicon = {
 			type = "toggle",

@@ -75,7 +75,7 @@ L["Messages"] = "Mensagens"
 L["Bars"] = "Barras"
 L["Background"] = "Fundo"
 L["Text"] = "Texto"
-L["Flash and shake"] = "Piscar e tremer"
+--L["Flash"] = "Flash"
 L["Normal"] = "Normal"
 L["Emphasized"] = "Enfatizado"
 

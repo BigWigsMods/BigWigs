@@ -48,7 +48,7 @@ L.force = L.force .." (".. L.force_message ..")"
 
 function mod:GetOptions()
 	return {
-		{"attenuation", "FLASHSHAKE"}, {"force", "FLASHSHAKE"}, 122740, {122761, "ICON"},
+		{"attenuation", "FLASH"}, {"force", "FLASH"}, 122740, {122761, "ICON"},
 		"stages", "berserk", "bosskill",
 	}
 end
@@ -125,7 +125,7 @@ function mod:Attenuation(args)
 		self:Message("attenuation", L["attenuation_message"]:format(target, L["left"]), "Attention", "misc_arrowleft", "Alert")
 	end
 	self:Bar("attenuation", L["attenuation_bar"], 14, args.spellId)
-	self:FlashShake("attenuation")
+	self:Flash("attenuation")
 end
 
 function mod:PreForceAndVerse(_, _, _, _, spellId)
@@ -138,7 +138,7 @@ function mod:ForceAndVerse(args)
 	forceCount = forceCount + 1
 	self:Message("force", ("%s (%d)"):format(L["force_message"], forceCount), "Urgent", args.spellId)
 	self:Bar("force", CL["cast"]:format(L["force_message"]), 12, args.spellId)
-	self:FlashShake("force")
+	self:Flash("force")
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)

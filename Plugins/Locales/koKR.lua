@@ -77,7 +77,7 @@ L["Messages"] = "메세지"
 L["Bars"] = "바"
 L["Background"] = "배경"
 L["Text"] = "글자"
-L["Flash and shake"] = "번쩍임과 진동"
+--L["Flash"] = "Flash"
 L["Normal"] = "일반"
 L["Emphasized"] = "강조"
 

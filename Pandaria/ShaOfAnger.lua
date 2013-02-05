@@ -24,7 +24,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{119622, "FLASHSHAKE", "PROXIMITY"}, 119626, 119488, {119610, "FLASHSHAKE"},
+		{119622, "FLASH", "PROXIMITY"}, 119626, 119488, {119610, "FLASH"},
 		"bosskill",
 	}
 end
@@ -63,7 +63,7 @@ do
 			if t-prev > 2 then -- throttle so the timer can catch it sooner
 				prev = t
 				self:LocalMessage(119610, CL["underyou"]:format(bitterThoughts), "Personal", 119610, "Info")
-				self:FlashShake(119610)
+				self:Flash(119610)
 			end
 		end
 	end
@@ -74,7 +74,7 @@ do
 	function mod:GrowingAngerApplied(args)
 		if UnitIsUnit(args.destName, "player") then
 			self:OpenProximity(args.spellId, 5)
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 			self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Alert")
 			self:Bar(args.spellId, CL["you"]:format(args.spellName), 6, args.spellId)
 		else

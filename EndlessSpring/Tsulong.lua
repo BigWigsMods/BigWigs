@@ -46,7 +46,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"ej:6550",
-		"breath", 122768, 122789, {122777, "PROXIMITY", "FLASHSHAKE", "SAY"},
+		"breath", 122768, 122789, {122777, "PROXIMITY", "FLASH", "SAY"},
 		122855, "unstable_sha", 123011, "embodied_terror",
 		"phases", "berserk", "bosskill",
 	}, {

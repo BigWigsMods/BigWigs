@@ -349,7 +349,6 @@ function addon:OnInitialize()
 			sound = true,
 			raidicon = true,
 			flash = true,
-			shake = true,
 			whisper = false,
 			raidwarning = false,
 			broadcast = false,

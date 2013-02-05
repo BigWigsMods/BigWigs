@@ -42,9 +42,9 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		117960, "adds", "ej:6186", {117878, "FLASHSHAKE"},
+		117960, "adds", "ej:6186", {117878, "FLASH"},
 		119360,
-		{"floor", "FLASHSHAKE"},
+		{"floor", "FLASH"},
 		"stages", "berserk", "bosskill",
 	}, {
 		[117960] = "ej:6174",
@@ -92,7 +92,7 @@ function mod:FloorRemoved(_, _, _, _, spellId)
 	if spellId == 118189 then
 		self:Bar("floor", L["floor"], 6, L.floor_icon)
 		self:Message("floor", L["floor_message"], "Personal", L.floor_icon, "Alarm")
-		self:FlashShake("floor")
+		self:Flash("floor")
 	end
 end
 
@@ -121,7 +121,7 @@ do
 		-- this gives an 1 sec warning before damage, might want to check hp for a
 		local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
 		if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
-			self:FlashShake(117878)
+			self:Flash(117878)
 			self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(stack), "Personal", 117878) -- needs no sound since total StabilityFlux has one already
 		end
 	end
@@ -133,7 +133,7 @@ do
 			local t = GetTime()
 			if t-prev > 1 then --getting like 30 messages a second was *glasses* a bit much
 				prev = t
-				self:FlashShake(117878)
+				self:Flash(117878)
 				self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(stack), "Personal", 117878, "Info") -- Does need the sound spam too!
 			end
 		end

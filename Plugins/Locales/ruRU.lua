@@ -74,7 +74,7 @@ L["Messages"] = "Сообщения"
 L["Bars"] = "Полосы"
 L["Background"] = "Фон"
 L["Text"] = "Текст"
-L["Flash and shake"] = "Мигание и тряска"
+--L["Flash"] = "Flash"
 L["Normal"] = "Обычные"
 L["Emphasized"] = "Увеличенные"
 

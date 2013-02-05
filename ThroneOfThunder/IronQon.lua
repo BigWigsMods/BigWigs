@@ -41,9 +41,9 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"ej:6914", 136520,
-		"ej:6877", {137669, "FLASHSHAKE"}, {136192, "ICON", "PROXIMITY"},
-		137221, "overload_casting", {"ej:6870", "PROXIMITY"}, "ej:6871", {137668, "FLASHSHAKE"},
-		{134926, "FLASHSHAKE", "SAY"}, "berserk", "bosskill",
+		"ej:6877", {137669, "FLASH"}, {136192, "ICON", "PROXIMITY"},
+		137221, "overload_casting", {"ej:6870", "PROXIMITY"}, "ej:6871", {137668, "FLASH"},
+		{134926, "FLASH", "SAY"}, "berserk", "bosskill",
 	}, {
 		["ej:6914"] = "ej:6867", -- Dam'ren
 		["ej:6877"] = "ej:6866", -- Quet'zal
@@ -98,7 +98,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 		end
 	end
 end
@@ -128,7 +128,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 		end
 	end
 end
@@ -148,7 +148,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 		end
 	end
 end
@@ -204,7 +204,7 @@ do
 			mod:CancelTimer(timer)
 			timer = nil
 			if UnitIsUnit("boss2target", "player") then
-				mod:FlashShake(spellId)
+				mod:Flash(spellId)
 				mod:Say(spellId, CL["say"]:format(mod:SpellName(spellId)))
 			end
 			return

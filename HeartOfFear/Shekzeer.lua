@@ -33,10 +33,10 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{123845, "FLASHSHAKE", "ICON", "SAY"},
-		"ej:6325", {"eyes", "TANK"}, {123788, "FLASHSHAKE", "ICON"}, "proximity", 123735,
-		{125390, "FLASHSHAKE"}, 124097, 125826, 124827, {124077, "FLASHSHAKE"},
-		{124862, "FLASHSHAKE", "SAY", "PROXIMITY"}, { 124849, "FLASHSHAKE" },
+		{123845, "FLASH", "ICON", "SAY"},
+		"ej:6325", {"eyes", "TANK"}, {123788, "FLASH", "ICON"}, "proximity", 123735,
+		{125390, "FLASH"}, 124097, 125826, 124827, {124077, "FLASH"},
+		{124862, "FLASH", "SAY", "PROXIMITY"}, { 124849, "FLASH" },
 		"phases", "berserk", "bosskill",
 	}, {
 		[123845] = "heroic",
@@ -97,7 +97,7 @@ function mod:HeartOfFearApplied(args)
 	self:TargetMessage(args.spellId, args.spellName, args.destName, "Important", args.spellId, "Info")
 	self:PrimaryIcon(args.spellId, args.destName)
 	if UnitIsUnit("player", args.destName) then
-		self:FlashShake(args.spellId)
+		self:Flash(args.spellId)
 		self:Say(args.spellId, args.spellName)
 	end
 end
@@ -106,7 +106,7 @@ function mod:Dispatch(args)
 	-- this is for interrupting, maybe check if the person can interrupt
 	if UnitGUID("target") == args.sourceGUID or UnitGUID("focus") == args.sourceGUID then
 		self:LocalMessage(args.spellId, CL["cast"]:format(args.spellName), "Personal", args.spellId, "Long")
-		self:FlashShake(args.spellId)
+		self:Flash(args.spellId)
 	end
 end
 
@@ -123,7 +123,7 @@ end
 function mod:ConsumingTerror(args)
 	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alert")
 	self:Bar(args.spellId, "~"..args.spellName, 31, args.spellId) -- 31.3-37.7
-	self:FlashShake(args.spellId)
+	self:Flash(args.spellId)
 end
 
 function mod:CryOfTerror(args)
@@ -131,7 +131,7 @@ function mod:CryOfTerror(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:Bar(args.spellId, args.spellName, 25, args.spellId)
 	if UnitIsUnit("player", args.destName) then
-		self:FlashShake(args.spellId)
+		self:Flash(args.spellId)
 	end
 end
 
@@ -166,7 +166,7 @@ do
 		visionsList[#visionsList + 1] = args.destName
 		if UnitIsUnit("player", args.destName) then
 			self:Say(args.spellId, args.spellName) -- not sure if this is needed, I think most people bunch up for healing, say bubble spam is not really helpful
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 			self:OpenProximity(args.spellId, 8)
 		end
 		--self:Bar(spellId, "~"..spellName, 19, spellId) -- 19.3-27.7 (ew)
@@ -179,7 +179,7 @@ end
 function mod:Fixate(args)
 	self:TargetMessage(args.spellId, args.spellName, args.destName, "Attention", args.spellId, "Info")
 	if UnitIsUnit("player", args.destName) then
-		self:FlashShake(args.spellId)
+		self:Flash(args.spellId)
 		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
 		self:TargetBar(args.spellId, args.spellName, args.destName, 20, args.spellId)
 	end

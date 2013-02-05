@@ -49,10 +49,10 @@ L.mending_desc = L.mending_desc .. select(2, EJ_GetSectionInfo(6306))
 
 function mod:GetOptions()
 	return {
-		"next_pack", {122064, "FLASHSHAKE", "SAY"}, {122125, "FLASHSHAKE"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
+		"next_pack", {122064, "FLASH", "SAY"}, {122125, "FLASH"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
 		{122409},
 		{122149, "DISPEL_MAGIC"}, "mending",
-		122406, {122224, "FLASHSHAKE"}, {121896, "FLASHSHAKE"}, {131830, "SAY", "FLASHSHAKE", "PROXIMITY"}, "recklessness",
+		122406, {122224, "FLASH"}, {121896, "FLASH"}, {131830, "SAY", "FLASH", "PROXIMITY"}, "recklessness",
 		"stages", "berserk", "bosskill",
 	}, {
 		["next_pack"] = "heroic",
@@ -126,7 +126,7 @@ end
 function mod:WhirlingBladeDamage(args)
 	if not self:LFR() and UnitIsUnit("player", args.destName) then
 		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
-		self:FlashShake(args.spellId) -- we FNS on cast too, but some more can't hurt
+		self:Flash(args.spellId) -- we flash on cast too, but some more can't hurt
 	end
 end
 
@@ -222,14 +222,14 @@ function mod:WhirlingBlade(args)
 	self:Message(args.spellId, args.spellName, "Urgent", args.spellId, "Alarm")
 	self:Bar(args.spellId, "~"..args.spellName, phase == 2 and 30 or 45, args.spellId)
 	if not self:LFR() then
-		self:FlashShake(args.spellId)
+		self:Flash(args.spellId)
 	end
 end
 
 function mod:WindBomb(args)
 	self:TargetMessage(131830, args.spellName, args.sourceName, "Urgent", 131830, "Alarm")
 	if UnitIsUnit("player", args.sourceName) then
-		self:FlashShake(131830)
+		self:Flash(131830)
 		self:Say(131830, args.spellName)
 	end
 end
@@ -251,7 +251,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 		end
 	end
 end
@@ -259,7 +259,7 @@ end
 function mod:Resin(args)
 	if UnitIsUnit("player", args.destName) then
 		self:Say(args.spellId, args.spellName)
-		self:FlashShake(args.spellId)
+		self:Flash(args.spellId)
 		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
 	end
 end
@@ -274,7 +274,7 @@ function mod:ImpalingSpearRemoved(args)
 	if UnitIsUnit(args.sourceName, "player") then
 		self:StopBar(args.spellName)
 		self:LocalMessage(args.spellId, L["spear_removed"], "Personal", args.spellId, "Info")
-		self:FlashShake(args.spellId)
+		self:Flash(args.spellId)
 	end
 end
 

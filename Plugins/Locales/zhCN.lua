@@ -76,7 +76,7 @@ L["Messages"] = "信息"
 L["Bars"] = "计时条"
 L["Background"] = "背景"
 L["Text"] = "文本"
-L["Flash and shake"] = "闪屏和震动"
+--L["Flash"] = "Flash"
 L["Normal"] = "标准"
 L["Emphasized"] = "醒目"
 

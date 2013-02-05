@@ -64,11 +64,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{"ej:6548", "FLASHSHAKE", "ICON", "SAY"},
-		122784, 123059, { "explosion_by_you" }, { "explosion_casting_by_you", "FLASHSHAKE" }, 123060, "willpower",
-		"monstrosity", "explosion_by_other", { "explosion_casting_by_other", "FLASHSHAKE" }, 122413, 122408,
+		{"ej:6548", "FLASH", "ICON", "SAY"},
+		122784, 123059, { "explosion_by_you" }, { "explosion_casting_by_you", "FLASH" }, 123060, "willpower",
+		"monstrosity", "explosion_by_other", { "explosion_casting_by_other", "FLASH" }, 122413, 122408,
 		122556,
-		{121995, "FLASHSHAKE", "SAY"}, 123020, {121949, "FLASHSHAKE"},
+		{121995, "FLASH", "SAY"}, 123020, {121949, "FLASH"},
 		"berserk", "bosskill",
 	}, {
 		["ej:6548"] = "heroic",
@@ -126,7 +126,7 @@ function mod:ParasiticGrowth(args)
 	self:Bar(args.spellId, args.spellName, 50, args.spellId)
 	self:TargetMessage(args.spellId, L["parasite"], args.destName, "Urgent", args.spellId, "Long")
 	if UnitIsUnit("player", args.destName) then
-		self:FlashShake(args.spellId)
+		self:Flash(args.spellId)
 	end
 	if self:Healer() then
 		self:TargetBar(args.spellId, L["parasite"], args.destName, 30, args.spellId)
@@ -160,7 +160,7 @@ do
 			mod:CancelTimer(timer)
 			timer = nil
 			if UnitIsUnit("boss1targettarget", "player") then
-				mod:FlashShake(spellId)
+				mod:Flash(spellId)
 				mod:Say(spellId)
 			end
 			return
@@ -238,12 +238,12 @@ do
 	end
 	function mod:AmberExplosion(args)
 		if UnitIsUnit("player", args.sourceName) then
-			self:FlashShake("explosion_casting_by_you")
+			self:Flash("explosion_casting_by_you")
 			self:Bar("explosion_casting_by_you", CL["cast"]:format(explosion), 2.5, args.spellId)
 			self:Bar("explosion_by_you", L["explosion_by_you_bar"], 13, args.spellId) -- cooldown
 			warningSpam(args.spellName)
 		elseif UnitIsUnit("focus", args.sourceName) then
-			self:FlashShake("explosion_casting_by_other")
+			self:Flash("explosion_casting_by_other")
 			local player = args.sourceName:gsub("%-.+", "*")
 			self:Bar("explosion_by_other", CL["other"]:format(player, explosion), 13, args.spellId) -- cooldown
 			self:Bar("explosion_casting_by_other", CL["cast"]:format(CL["other"]:format(player, explosion)), 2.5, args.spellId)
@@ -335,7 +335,7 @@ do
 		self:Bar("explosion_casting_by_other", "<".. L["monstrosity_is_casting"] ..">", 2.5, 122398)
 		self:Bar("explosion_by_other", "~"..L["monstrosity_is_casting"], 45, args.spellId) -- cooldown, don't move this
 		if UnitDebuff("player", self:SpellName(122784)) then -- Reshape Life
-			self:FlashShake("explosion_casting_by_other")
+			self:Flash("explosion_casting_by_other")
 			warningSpam(args.spellName)
 		end
 	end
@@ -379,7 +379,7 @@ end
 function mod:AmberGlobule(args)
 	self:TargetMessage("ej:6548", args.spellName, args.destName, "Important", args.spellId, "Alert")
 	if UnitIsUnit(args.destName, "player") then
-		self:FlashShake("ej:6548")
+		self:Flash("ej:6548")
 		self:Say("ej:6548", args.spellName)
 	end
 	if not primaryIcon then

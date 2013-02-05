@@ -39,7 +39,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		137313, "storm_duration", {137175, "PROXIMITY", "ICON"}, {139467, "FLASHSHAKE"},{"ej:7741", "PROXIMITY", "ICON", "SAY"}, 137162, {138375, "FLASHSHAKE"}, {138006, "FLASHSHAKE"}, "berserk", "bosskill",
+		137313, "storm_duration", {137175, "PROXIMITY", "ICON"}, {139467, "FLASH"},{"ej:7741", "PROXIMITY", "ICON", "SAY"}, 137162, {138375, "FLASH"}, {138006, "FLASH"}, "berserk", "bosskill",
 	}, {
 		[137313] = "general",
 	}
@@ -108,7 +108,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 		end
 	end
 end
@@ -146,7 +146,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(args.spellId, L["in_water"], "Personal", args.spellId, "Info")
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 		end
 	end
 end
@@ -159,7 +159,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 		end
 	end
 end

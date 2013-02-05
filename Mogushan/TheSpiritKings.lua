@@ -49,9 +49,9 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"ej:5841", 117921, 119521, 117910, {117961, "FLASHSHAKE"}, -- Qiang
-		"ej:5852", {118303, "SAY", "ICON"}, {117697, "FLASHSHAKE"}, -- Zian
-		"ej:5846", 118047, 118122, 118094, {118162, "FLASHSHAKE"}, -- Subetai
+		"ej:5841", 117921, 119521, 117910, {117961, "FLASH"}, -- Qiang
+		"ej:5852", {118303, "SAY", "ICON"}, {117697, "FLASH"}, -- Zian
+		"ej:5846", 118047, 118122, 118094, {118162, "FLASH"}, -- Subetai
 		"ej:5835", "cowardice", 117708, {117837, "DISPEL_ENRAGE"}, -- Meng
 		"proximity", "casting_shields", "berserk", "bosskill",
 	}, {
@@ -207,7 +207,7 @@ end
 function mod:SleightofHand(args)
 	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alert")
 	self:Bar(args.spellId, args.spellName, 42, args.spellId)
-	self:FlashShake(args.spellId)
+	self:Flash(args.spellId)
 end
 
 -- Zian
@@ -223,7 +223,7 @@ function mod:ShieldofDarkness(args)
 	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alert")
 	self:Bar(args.spellId, args.spellName, 42, args.spellId)
 	self:Bar("casting_shields", CL["cast"]:format(args.spellName), 2, args.spellId)
-	self:FlashShake(args.spellId)
+	self:Flash(args.spellId)
 end
 
 -- Qiang
@@ -250,7 +250,7 @@ function mod:ImperviousShield(args)
 	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alert")
 	self:Bar(args.spellId, args.spellName, self:Difficulty() == 5 and 62 or 42, args.spellId)
 	self:Bar("casting_shields", CL["cast"]:format(args.spellName), 2, args.spellId)
-	self:FlashShake(args.spellId)
+	self:Flash(args.spellId)
 end
 
 function mod:ShieldRemoved(args)

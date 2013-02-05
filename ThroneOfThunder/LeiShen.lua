@@ -57,7 +57,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{134916, "TANK", "FLASHSHAKE"}, 135095, {135150, "FLASHSHAKE"},
+		{134916, "TANK", "FLASH"}, 135095, {135150, "FLASH"},
 		{136478, "TANK"}, {136543, "PROXIMITY"}, 136850,
 		136889,
 		"stages", {135695, "PROXIMITY", "ICON"}, {"ej:7239", "PROXIMITY"}, 136295, "ej:7242", "conduit_abilities",
@@ -215,7 +215,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 		end
 	end
 end
@@ -229,7 +229,7 @@ function mod:Decapitate(args)
 	self:Bar(134916, "~"..args.spellName, 52, 134916)
 	self:TargetMessage(134916, args.spellName, args.destName, "Personal", 134916, "Info")
 	if UnitIsUnit(args.destName, "player") then
-		self:FlashShake(134916)
+		self:Flash(134916)
 	end
 end
 

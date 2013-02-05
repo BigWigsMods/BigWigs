@@ -54,9 +54,9 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{"ej:6699", "TANK_HEALER"}, 119414, 129147, {119519, "FLASHSHAKE", "SAY"},
-		{ 119888, "FLASHSHAKE" }, 118977,
-		129378, {"ej:6700", "TANK_HEALER"}, {120669, "TANK"}, {120629, "SAY"}, {120519, "FLASHSHAKE"}, 120672, "ability_cd", 120455, {120268, "FLASHSHAKE", "PROXIMITY"}, {"ej:6109", "FLASHSHAKE"}, "ej:6107",
+		{"ej:6699", "TANK_HEALER"}, 119414, 129147, {119519, "FLASH", "SAY"},
+		{ 119888, "FLASH" }, 118977,
+		129378, {"ej:6700", "TANK_HEALER"}, {120669, "TANK"}, {120629, "SAY"}, {120519, "FLASH"}, 120672, "ability_cd", 120455, {120268, "FLASH", "PROXIMITY"}, {"ej:6109", "FLASH"}, "ej:6107",
 		{"swing", "TANK"}, "berserk", "proximity", "bosskill",
 	}, {
 		["ej:6699"] = "ej:6086",
@@ -221,7 +221,7 @@ do
 			local t = GetTime()
 			if t-prev > 1 then
 				self:Message("ej:6109", L["throw"], "Personal", args.spellId, "Long")
-				self:FlashShake("ej:6109")
+				self:Flash("ej:6109")
 				prev = t
 			end
 		end
@@ -233,7 +233,7 @@ function mod:ChampionOfTheLight(args)
 	--self:CloseProximity(args.spellId) -- uncomment when mapdata becomes available for last phase
 	if UnitIsUnit("player", args.destName) then
 		--self:LocalMessage(args.spellId, L["ball_you"], "Personal", args.spellId, "Long") -- should maybe have a name like "Ball on you PASS IT!"
-		self:FlashShake(args.spellId)
+		self:Flash(args.spellId)
 	end
 end
 
@@ -280,7 +280,7 @@ end
 function mod:WaterspoutApplied(args)
 	if UnitIsUnit("player", args.destName) then
 		self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
-		self:FlashShake(args.spellId)
+		self:Flash(args.spellId)
 	end
 end
 
@@ -296,7 +296,7 @@ do -- COPY PASTE ACTION FROM COBALT MINE! see if this works
 			if UnitIsUnit("player", player) then
 				mod:LocalMessage(119519, CL["you"]:format(eerieSkull), "Urgent", 119519, "Alarm")
 				mod:Say(119519, eerieSkull)
-				mod:FlashShake(119519)
+				mod:Flash(119519)
 			end
 			mod:CancelTimer(timer)
 			timer = nil
@@ -367,7 +367,7 @@ end
 
 function mod:DeathBlossom(args)
 	if not atSha then
-		self:FlashShake(args.spellId)
+		self:Flash(args.spellId)
 		self:Bar(args.spellId, CL["cast"]:format(args.spellName), 2.25, args.spellId) -- so it can be emphasized for countdown
 		self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alert")
 	end

@@ -82,7 +82,7 @@ end
 function mod:BigWigs_Flash(event, module, key)
 	if BigWigs.db.profile.flash then
 		flasher:Stop()
-		local r, g, b = colors:GetColor("flashshake", module, key)
+		local r, g, b = colors:GetColor("flash", module, key)
 		flashFrame:SetBackdropColor(r, g, b, 0.8)
 		flashFrame:SetAlpha(0)
 		flashFrame:Show()
@@ -91,11 +91,11 @@ function mod:BigWigs_Flash(event, module, key)
 end
 
 function mod:BigWigs_Pulse(event, module, key, icon)
-	if BigWigs.db.profile.shake then
+	--[[if BigWigs.db.profile.shake then
 		pulser:Stop()
 		pulseFrame.tex:SetTexture(icon)
 		pulseFrame:Show()
 		pulser:Play()
-	end
+	end]]
 end
 

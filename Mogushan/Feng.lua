@@ -55,8 +55,8 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		116157, 116018,
-		{116784, "ICON", "FLASHSHAKE", "SAY"}, 116711,
-		{116417, "ICON", "SAY", "FLASHSHAKE", "PROXIMITY"}, 116364,
+		{116784, "ICON", "FLASH", "SAY"}, 116711,
+		{116417, "ICON", "SAY", "FLASH", "PROXIMITY"}, 116364,
 		118071,
 		115817, 115911, {"tank", "TANK"}, "stages", "berserk", "bosskill",
 	}, {
@@ -221,7 +221,7 @@ do
 		self:TargetMessage(args.spellId, wildfire, args.destName, "Urgent", args.spellId, "Alert")
 		self:PrimaryIcon(args.spellId, args.destName)
 		if UnitIsUnit(args.destName, "player") then
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 			self:Bar(args.spellId, CL["you"]:format(wildfire), 5, args.spellId)
 			self:Say(args.spellId, wildfire)
 		end
@@ -238,7 +238,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(116784, CL["underyou"]:format(wildfire), "Personal", 116784, "Info")
-			self:FlashShake(116784)
+			self:Flash(116784)
 		end
 	end
 end
@@ -275,7 +275,7 @@ do
 		self:Bar(args.spellId, "~"..resonance, 15.4, args.spellId) --15.4 - 21.5
 		resonanceMarkers[#resonanceMarkers+1] = args.destName
 		if UnitIsUnit(args.destName, "player") then
-			self:FlashShake(args.spellId)
+			self:Flash(args.spellId)
 			self:OpenProximity(args.spellId, 6)
 			self:Say(args.spellId, resonance)
 		end

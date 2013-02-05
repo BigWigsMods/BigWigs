@@ -50,9 +50,9 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"loa_spirits", {137359, "FLASHSHAKE"},
-		{"ej:7062", "FLASHSHAKE"}, 136878, {136857, "FLASHSHAKE"}, 136894,
-		{137122, "FLASHSHAKE"},
+		"loa_spirits", {137359, "FLASH"},
+		{"ej:7062", "FLASH"}, 136878, {136857, "FLASH"}, 136894,
+		{137122, "FLASH"},
 		{"assault", "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, {136990, "ICON"},
 		136442, "proximity", "berserk", "bosskill",
 	}, {
@@ -111,7 +111,7 @@ function mod:MarkedSoul(args)
 	self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId, "Alert")
 	self:Bar(args.spellId, L["loa_kills"]:format(args.destName), 20, args.spellId)
 	if UnitIsUnit(args.destName, "player") then
-		self:FlashShake(args.spellId)
+		self:Flash(args.spellId)
 	end
 end
 
@@ -130,7 +130,7 @@ end
 
 function mod:Entrapped(args)
 	if UnitIsUnit(args.destName, "player") then
-		self:FlashShake(136857)
+		self:Flash(136857)
 		self:LocalMessage(136857, args.spellName, "Personal", args.spellId, "Info")
 	elseif self:Dispeller("magic") then
 		self:LocalMessage(136857, args.spellName, "Attention", args.spellId, nil, args.destName)
@@ -151,7 +151,7 @@ function mod:Quicksand(args)
 	self:Bar(args.spellId, "~"..args.spellName, 33, args.spellId)
 	if UnitIsUnit(args.destName, "player") then
 		self:LocalMessage("ej:7062", CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
-		self:FlashShake("ej:7062")
+		self:Flash("ej:7062")
 	end
 end
 
@@ -169,7 +169,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:LocalMessage(137122, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
-			self:FlashShake(137122)
+			self:Flash(137122)
 		end
 	end
 end
