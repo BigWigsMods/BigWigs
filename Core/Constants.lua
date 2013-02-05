@@ -134,6 +134,8 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			if tonumber(ejID) then
 				-- This is an EncounterJournal ID
 				local title, description, _, abilityIcon, displayInfo = EJ_GetSectionInfo(tonumber(ejID))
+				if title then title = title..roleIcon end
+				if description then description = roleDesc..description end
 				local icon = nil
 				if displayInfo and displayInfo > 0 then
 					-- This is a creature, so we need to get the texture from SetPortraitTexture
@@ -145,12 +147,12 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 					icon = abilityIcon
 				end
 				-- So the magic is the, if <icon> is a number, it should be a portrait.
-				return option, roleIcon..title, roleDesc..description, icon
+				return option, title, description, icon
 			else
 				local L = module:GetLocale(true)
 				local title, description = L[option], L[option .. "_desc"]
-				if title then title = roleIcon..title end
-				if description then description = roleDesc..L[option .. "_desc"] end
+				if title then title = title..roleIcon end
+				if description then description = roleDesc..description end
 				local icon = L[option .. "_icon"]
 				if icon == option .. "_icon" then icon = nil end
 				if type(icon) == "number" then
@@ -169,7 +171,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 		local spellName, _, icon = GetSpellInfo(option)
 		if not spellName then error(("Invalid option %d in module %s."):format(option, module.name)) end
 		local roleIcon, roleDesc = getRoleStrings(module, spellName)
-		return spellName, roleIcon..spellName, roleDesc..getSpellDescription(option), icon
+		return spellName, spellName..roleIcon, roleDesc..getSpellDescription(option), icon
 	end
 end
 
