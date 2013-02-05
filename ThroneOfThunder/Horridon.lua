@@ -44,8 +44,8 @@ if L then
 	L.deadly_plague, L.deadly_plague_desc = EJ_GetSectionInfo(7119)
 	L.deadly_plague_icon = 136710
 
-	L.venom_bolt_volley = EJ_GetSectionInfo(7112) .. " " ..mod:GetFlagIcon(9)..mod:GetFlagIcon(6)
-	L.venom_bolt_volley_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Volley casters have separate cooldowns.|r "
+	L.venom_bolt_volley = EJ_GetSectionInfo(7112).." " ..mod:GetFlagIcon(9)..mod:GetFlagIcon(6)
+	L.venom_bolt_volley_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Volley casters have separate cooldowns.|r "..select(2, EJ_GetSectionInfo(7112))
 	L.venom_bolt_volley_warning = "Your focus is casting Volley!"
 	L.venom_bolt_volley_bar = "Focus: Volley"
 	L.venom_bolt_volley_icon = 136587
@@ -59,12 +59,7 @@ if L then
 end
 L = mod:GetLocale()
 L.blazingSunlight = L.blazingSunlight.." "..mod:GetFlagIcon(7)
-L.puncture = L.puncture.." "..INLINE_TANK_ICON..INLINE_HEALER_ICON
-L.puncture_desc = CL.tankhealer..L.puncture_desc
-L.venom_bolt_volley_desc = L.venom_bolt_volley_desc.." "..select(2, EJ_GetSectionInfo(7112))
 L.deadly_plague = L.deadly_plague.." "..mod:GetFlagIcon(10)
-L.mortal_strike = L.mortal_strike.." "..INLINE_TANK_ICON..INLINE_HEALER_ICON
-L.mortal_strike_desc = CL.tankhealer..L.mortal_strike_desc
 L.fireball = L.fireball .. " " .. mod:GetFlagIcon(6)
 L.chain_lightning = L.chain_lightning .. " " .. mod:GetFlagIcon(6)
 L.hex = L.hex .. " " ..mod:GetFlagIcon(8)
@@ -77,10 +72,10 @@ function mod:GetOptions()
 	return {
 		"ej:7086", "ej:7090", "ej:7092", "ej:7087", 136817, 136821,
 		"fireball", "chain_lightning", "hex", {136490, "FLASHSHAKE"},
-		"deadly_plague", "mortal_strike", {136573, "FLASHSHAKE"},
+		"deadly_plague", {"mortal_strike", "TANK_HEALER"}, {136573, "FLASHSHAKE"},
 		{"venom_bolt_volley", "FLASHSHAKE"}, {136646, "FLASHSHAKE"},
 		"blazingSunlight", {136723, "FLASHSHAKE"},
-		"puncture", 136741, {"ej:7080", "FLASHSHAKE", "SAY", "ICON"},"berserk", "bosskill",
+		{"puncture", "TANK_HEALER"}, 136741, {"ej:7080", "FLASHSHAKE", "SAY", "ICON"},"berserk", "bosskill",
 	}, {
 		["ej:7086"] = "ej:7085",
 		["fireball"] = "ej:7084",
@@ -242,10 +237,8 @@ function mod:MortalStrikeRemoved(args)
 end
 
 function mod:MortalStrike(args)
-	if self:Tank() or self:Healer() then
-		self:LocalMessage("mortal_strike", args.spellName, "Urgent", args.spellId, nil, args.destName)
-		self:Bar("mortal_strike", ("%s - %s"):format(args.spellName, args.destName), 8, args.spellId)
-	end
+	self:LocalMessage("mortal_strike", args.spellName, "Urgent", args.spellId, nil, args.destName)
+	self:Bar("mortal_strike", ("%s - %s"):format(args.spellName, args.destName), 8, args.spellId)
 end
 
 do
@@ -341,8 +334,6 @@ function mod:Swipe(args)
 end
 
 function mod:Puncture(args)
-	if self:Tank() or self:Healer() then
-		args.amount = args.amount or 1
-		self:LocalMessage("puncture", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["Puncture_message"])
-	end
+	args.amount = args.amount or 1
+	self:LocalMessage("puncture", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["Puncture_message"])
 end

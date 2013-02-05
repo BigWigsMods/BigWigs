@@ -57,8 +57,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{134916, "FLASHSHAKE"}, 135095, {135150, "FLASHSHAKE"},
-		136478, {136543, "PROXIMITY"}, 136850,
+		{134916, "TANK", "FLASHSHAKE"}, 135095, {135150, "FLASHSHAKE"},
+		{136478, "TANK"}, {136543, "PROXIMITY"}, 136850,
 		136889,
 		"stages", {135695, "PROXIMITY", "ICON"}, {"ej:7239", "PROXIMITY"}, 136295, "ej:7242", "conduit_abilities",
 		"berserk", "bosskill",
@@ -101,7 +101,7 @@ function mod:OnEngage()
 	phase = 1
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	wipe(staticShockList)
-	if self:Tank() then self:Bar(134916, "~"..self:SpellName(134916), 42, 134916) end -- Decapitate
+	self:Bar(134916, "~"..self:SpellName(134916), 42, 134916) -- Decapitate
 	self:Bar(135095, "~"..self:SpellName(135095), 25, 135095) -- Thunderstruck
 	if UnitBuff("boss1", self:SpellName(135681)) then self:OpenProximity("ej:7239", 8) end
 	self:Bar("conduit_abilities", "~"..L["conduit_ability_meassage"], 15, 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
@@ -143,11 +143,8 @@ do
 end
 
 function mod:FusionSlash(args)
-	if self:Tank() then
-		self:Bar(args.spellId, "~"..args.spellName, 52, args.spellId)
-		self:TargetMessage(args.spellId, args.spellName, args.destName, "Personal", args.spellId, "Info")
-		self:PlaySound(args.spellId, "Info") -- use TargetMessage for name coloring and play the sound for all tanks
-	end
+	self:Bar(args.spellId, "~"..args.spellName, 52, args.spellId)
+	self:TargetMessage(args.spellId, args.spellName, args.destName, "Personal", args.spellId, "Info")
 end
 
 --------------------------------------------------------------------------------
@@ -229,11 +226,8 @@ function mod:Thunderstruck(args)
 end
 
 function mod:Decapitate(args)
-	if self:Tank() then
-		self:Bar(134916, "~"..args.spellName, 52, 134916)
-		self:TargetMessage(134916, args.spellName, args.destName, "Personal", 134916, "Info")
-		self:PlaySound(134916, "Info") -- use TargetMessage for name coloring and play the sound for all tanks
-	end
+	self:Bar(134916, "~"..args.spellName, 52, 134916)
+	self:TargetMessage(134916, args.spellName, args.destName, "Personal", 134916, "Info")
 	if UnitIsUnit(args.destName, "player") then
 		self:FlashShake(134916)
 	end

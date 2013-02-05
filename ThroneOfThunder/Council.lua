@@ -43,8 +43,6 @@ if L then
 	L.loa_spirits_icon = 137203
 end
 L = mod:GetLocale()
-L.assault = L.assault.." "..INLINE_TANK_ICON..INLINE_HEALER_ICON
-L.assault_desc = CL.tankhealer..L.assault_desc
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -55,7 +53,7 @@ function mod:GetOptions()
 		"loa_spirits", {137359, "FLASHSHAKE"},
 		{"ej:7062", "FLASHSHAKE"}, 136878, {136857, "FLASHSHAKE"}, 136894,
 		{137122, "FLASHSHAKE"},
-		"assault", {136992, "ICON", "SAY", "PROXIMITY"}, {136990, "ICON"},
+		{"assault", "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, {136990, "ICON"},
 		136442, "proximity", "berserk", "bosskill",
 	}, {
 		["loa_spirits"] = "ej:7050",
@@ -134,10 +132,8 @@ function mod:Entrapped(args)
 	if UnitIsUnit(args.destName, "player") then
 		self:FlashShake(136857)
 		self:LocalMessage(136857, args.spellName, "Personal", args.spellId, "Info")
-	else
-		if self:Dispeller("magic") then
-			self:LocalMessage(136857, args.spellName, "Attention", args.spellId, nil, args.destName)
-		end
+	elseif self:Dispeller("magic") then
+		self:LocalMessage(136857, args.spellName, "Attention", args.spellId, nil, args.destName)
 	end
 end
 
@@ -214,11 +210,9 @@ end
 -- General
 
 function mod:Assault(args)
-	if self:Tank() or self:Healer() then
-		args.amount = args.amount or 1
-		if args.amount % 5 == 0 or args.amount > 10 then -- don't spam on low stacks, but spam close to 15
-			self:LocalMessage("assault", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["assault_message"])
-		end
+	args.amount = args.amount or 1
+	if args.amount % 5 == 0 or args.amount > 10 then -- don't spam on low stacks, but spam close to 15
+		self:LocalMessage("assault", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["assault_message"])
 	end
 end
 
