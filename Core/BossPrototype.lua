@@ -781,9 +781,13 @@ function boss:Flash(key)
 	self:SendMessage("BigWigs_Flash", self, key)
 end
 
-function boss:Say(key, msg)
+function boss:Say(key, msg, directPrint)
 	if not checkFlag(self, key, C.SAY) then return end
-	SendChatMessage(L["on"]:format(msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "SAY")
+	if directPrint then
+		SendChatMessage(msg, "SAY")
+	else
+		SendChatMessage(L["on"]:format(msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "SAY")
+	end
 end
 
 function boss:PlaySound(key, sound)
