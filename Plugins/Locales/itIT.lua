@@ -54,7 +54,7 @@ L["%s: Timer [%s] finished."] = "%s: Timer [%s] Finito."
 L["Custom bar '%s' started by %s user '%s'."] = "Barra personalizzata '%s' creata dall'utente '%s'."
 
 L["Pull"] = "Ingaggio"
-L["Pulling!"] = "ingaggio!"
+L["Pulling!"] = "Ingaggio!"
 L["Pull timer started by %s user '%s'."] = "Timer Ingaggio iniziato dall'utente '%s'."
 L["Pull in %d sec"] = "Ingaggio tra %d sec"
 L["Sending a pull timer to Big Wigs and DBM users."] = "Invio di un timer di Ingaggio agli utenti di Big Wigs e DBM."
@@ -74,7 +74,7 @@ L["Messages"] = "Messaggi"
 L["Bars"] = "Barre"
 L["Background"] = "Sfondo"
 L["Text"] = "Testo"
---L["Flash"] = "Flash"
+--L["Flash"] = "Lampeggio"
 L["Normal"] = "Normale"
 L["Emphasized"] = "Enfatizzato"
 
@@ -93,8 +93,8 @@ L["Positive"] = "Positivo"
 -- Messages.lua
 --
 
-L.sinkDescription = "Indirizza l'uscita dei messaggi sul visualizzatore di Messaggi Normali di Big Wigs. Questa visualizzazione supporta icone, colori e può visualizzare fino a 4 messaggi sullo schermo. I messaggi più nuovi cresceranno in dimensioni per avvertire l'utente."
-L.emphasizedSinkDescription = "Indirizza l'uscita dei messaggi attraverso il visualizzatore di Messaggi ENFATIZZATI di Big Wigs. Questo metodo supporta testi, colori e puo' visualizzare un solo messaggio per volta."
+L.sinkDescription = "Indirizza l'uscita dei messaggi sul visualizzatore di Messaggi Normali di Big Wigs. Questa visualizzazione supporta icone, colori e può visualizzare fino a 4 messaggi sullo schermo. I messaggi più recenti cresceranno in dimensioni per avvertire l'utente."
+L.emphasizedSinkDescription = "Indirizza l'uscita dei messaggi attraverso il visualizzatore di Messaggi ENFATIZZATI di Big Wigs. Questo metodo supporta testi, colori e può visualizzare un solo messaggio per volta."
 L.emphasizedCountdownSinkDescription = "Indirizza l'uscita da questo addon verso la visualizzazione del Recupero Messaggi Enfatizzati. Questa visualizzazione supporta testi e colori, e può visualizzare solo un messaggio alla volta."
 
 L["Messages"] = "Messaggi"
@@ -120,14 +120,14 @@ L["None"] = "Nessuno"
 L["Thin"] = "Fine"
 L["Thick"] = "Spesso"
 L["Outline"] = "Delineato"
-L["Monochrome"] = "MonoCromatico"
+L["Monochrome"] = "Monocromatico"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "Abilita il flag monocromatico su tutti i messaggi, rimuovendo ogni effetto di smussatura degli angoli dei caratteri"
 
 L["Display time"] = "Tempo di Visualizzazione"
 L["How long to display a message, in seconds"] = "Per quanto tempo deve essere visualizzato il messaggio, in secondi"
 L["Fade time"] = "Tempo di Scomparsa"
 L["How long to fade out a message, in seconds"] = "Dopo quanti secondi il messaggio deve scomparire"
-L["Font color"] = "Font color"
+L["Font color"] = "Colore carattere"
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -155,7 +155,7 @@ L["|cffff0000Disable|r"] = "|cffff0000Disabilitata|r"
 -- Sound.lua
 --
 
-L.soundDefaultDescription = "Con questa opzione, Big Wigs userà solo i suoni di default Blizzard che indicano un avviso. Ricorda che solo alcuni messaggi utilizzeranno i suoni durante un combattimento."
+L.soundDefaultDescription = "Con questa opzione, Big Wigs userà solo i suoni predefiniti Blizzard che indicano un avviso. Ricorda che solo alcuni messaggi utilizzeranno i suoni durante un combattimento."
 
 L["Sounds"] = "Suoni"
 
@@ -166,13 +166,13 @@ L["Long"] = "Lungo"
 L["Victory"] = "Vittoria"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Imposta il suono da usare per %q.\n\nCtrl-Click per ascoltare un suono."
-L["Default only"] = "Solo Suoni Standard"
+L["Default only"] = "Solo Suoni Predefiniti"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
 --
 
-L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|tNome Abilita'"
+L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|tNome Abilità"
 L["Custom range indicator"] = "Indicatore di Distanza Personalizzato"
 L["%d yards"] = "%d metri"
 L["Proximity"] = "Prossimità"
@@ -196,10 +196,10 @@ L["Background"] = "Sfondo"
 L["Shows or hides the background."] = "Visualizza o nasconde il titolo"
 L["Toggle sound"] = "Abilita Suono"
 L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Abilita quando il monitor di prossimità deve emettere un suono se sei troppo vicino ad altri giocatori."
-L["Sound button"] = "Bottone del Suono"
-L["Shows or hides the sound button."] = "Visualizza o nasconde il bottone del Suono"
-L["Close button"] = "Bottone di Chiusura"
-L["Shows or hides the close button."] = "Visualizza o nasconde il bottone di Chiusura"
+L["Sound button"] = "Pulsante del Suono"
+L["Shows or hides the sound button."] = "Visualizza o nasconde il pulsante del Suono"
+L["Close button"] = "Pulsante di Chiusura"
+L["Shows or hides the close button."] = "Visualizza o nasconde il pulsante di Chiusura"
 L["Show/hide"] = "Visaulizza/Nascondi"
 L["Ability name"] = "Nome dell'Abilità"
 L["Shows or hides the ability name above the window."] = "Visualizza o nasconde il nome dell'abilità sopra la finestra"

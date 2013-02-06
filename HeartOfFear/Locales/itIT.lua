@@ -38,7 +38,7 @@ end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "itIT")
 if L then
-	L.spear_removed = "La tua lancia impalante è stata rimossa!"
+	L.spear_removed = "La tua Lancia Impalante è stata rimossa!"
 	L.residue_removed = "%s Rimosso!"
 
 	L.mending_desc = "|cFFFF0000AVVISO: viene visualizzato solo il timer del tuo bersaglio 'focus' perché tutte i Guaritori da Barttaglia Zar'thik hanno tempi di lancio e di recupero separati per le cure.|r "
@@ -77,6 +77,7 @@ end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "itIT")
 if L then
+    L.engage_trigger = "Morte a tutti coloro che osano sfidare il mio impero!"
 	L.phases = "Fasi"
 	L.phases_desc = "Avviso per il cambiamento di Fasi."
 	L.phases_icon = "achievement_raid_mantidraid07"

@@ -2,7 +2,7 @@ local L = BigWigs:NewBossLocale("The Stone Guard", "itIT")
 if not L then return end
 if L then
 	L.petrifications = "Pietrificazione"
-	L.petrifications_desc = "Avvertimento quando il boss comincia la pietrificazione"
+	L.petrifications_desc = "Avvisa quando il boss comincia la pietrificazione"
 
 	L.overload = "Sovraccarico"
 	L.overload_desc = "Avviso per tutti i tipi di Sovraccarico."
@@ -20,7 +20,7 @@ if L then
 	L.phase_lightning = "Fase Fulmini!"
 	L.phase_flame = "Fase Fuoco!"
 	L.phase_arcane = "Fase Arcana!"
-	L.phase_shadow = "Fase Ombra!"
+	L.phase_shadow = "Fase Ombra! (Eroico)"
 
 	L.phase_message = "Nuova fase tra poco!"
 	L.shroud_message = "%2$s attiva Manto su %1$s"
