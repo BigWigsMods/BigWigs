@@ -74,7 +74,7 @@ if L then
 	L.heroic_start_trigger = "Трубы разрушены"
 	L.normal_start_trigger = "Машина гудит"
 
-	L.rage_trigger = "Ярость Императора эхом звучит среди холмов."
+	L.rage_trigger = "Ярость императора эхом звучит среди холмов."
 	L.strength_trigger = "В нишах появляется Сила императора!"
 	L.courage_trigger = "В нишах появляется Смелость императора!"
 	L.bosses_trigger = "В больших нишах появляются два голема!"
