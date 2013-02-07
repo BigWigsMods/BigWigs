@@ -59,7 +59,7 @@ if L then
 	L.explosion_by_you_bar = "Inizi a lanciare..."
 
 	L.explosion_casting_by_you = "Barra di lancio Tua Esplosione d'Ambra"
-	L.explosion_casting_by_you_desc = "Avviso di lancio per Esplosione d'Ambra eseguita Te. È altamente consigliato enfatizzare questo avviso!"
+	L.explosion_casting_by_you_desc = "Avviso di lancio per Esplosione d'Ambra eseguita da Te Stesso. È altamente consigliato enfatizzare questo avviso!"
 
 	L.willpower = "Volontà"
 	L.willpower_message = "La tua Volontà è %d"
