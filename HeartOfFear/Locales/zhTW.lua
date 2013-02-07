@@ -72,8 +72,8 @@ if L then
 	L.monstrosity_is_casting = "琥珀巨怪: 爆炸"
 	L.you_are_casting = "»你«在施法！"
 
-	L.unsok_short = "|cFFF20056首領|r" -- Light Red
-	L.monstrosity_short = "|cFFFFBE00琥珀巨怪|r" -- Amber
+	L.unsok_short = "首領"
+	L.monstrosity_short = "琥珀巨怪"
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "zhTW")

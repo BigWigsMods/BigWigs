@@ -71,8 +71,8 @@ if L then
 	L.monstrosity_is_casting = "Mostruosità: Esplosione"
 	L.you_are_casting = "TU stai lanciando!"
 
-	L.unsok_short = "|cFFF20056Boss|r" -- Light Red
-	L.monstrosity_short = "|cFFFFBE00Mostruosità|r" -- Amber
+	L.unsok_short = "Boss"
+	L.monstrosity_short = "Mostruosità"
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "itIT")
