@@ -255,12 +255,12 @@ do
 end
 
 function mod:MortalStrikeRemoved(args)
-	self:StopBar(("%s - %s"):format(args.spellName, args.destName))
+	self:StopBar(args.spellName, args.destName)
 end
 
 function mod:MortalStrike(args)
 	self:LocalMessage("mortal_strike", args.spellName, "Urgent", args.spellId, nil, args.destName)
-	self:Bar("mortal_strike", ("%s - %s"):format(args.spellName, args.destName), 8, args.spellId)
+	self:TargetBar("mortal_strike", args.spellName, args.destName, 8, args.spellId)
 end
 
 do
@@ -341,6 +341,10 @@ end
 
 function mod:Charge(unit)
 	local target = UnitName(unit.."target")
+	if not target then
+		print("Nil target for Horridon charge")
+		return
+	end
 	self:TargetMessage("ej:7080", self:SpellName(136769), target, "Attention", 136769, "Long")
 	self:Bar("ej:7080", "~"..self:SpellName(136769), 11, 136769)
 	if UnitIsUnit("player", target) then
@@ -359,3 +363,4 @@ function mod:Puncture(args)
 	args.amount = args.amount or 1
 	self:LocalMessage("puncture", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["puncture_message"])
 end
+
