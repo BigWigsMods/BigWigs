@@ -94,31 +94,7 @@ do
 end
 
 function mod:Attenuation(args)
-	local target
-	if self:Heroic() then
-		if platform == 3 then -- this is code section is untested
-			if danceTracker then
-				if type(danceTracker) == "number" then
-					danceTracker = danceTracker + 1
-					if danceTracker == 1 then -- there have been two dances from boss in start of p2
-						danceTracker = false -- it is now the echos turn then rotation starts
-					end
-				else
-					danceTracker = false
-				end
-			else -- assuming echo does not cast two dances in between the two dances of the boss
-				danceTracker = true
-			end
-		end
-		-- Figure out a way to do this that works for heroic
-		if danceTracker then
-			target = L["zorlok"]
-		else
-			target = L["echo"]
-		end
-	else
-		target = L["zorlok"]
-	end
+	local target = danceTracker and L["zorlok"] or L["echo"]
 	if args.spellId == 122497 or args.spellId == 122479 or args.spellId == 123722 then -- right
 		self:Message("attenuation", L["attenuation_message"]:format(target, L["right"]), "Urgent", "misc_arrowright", "Alarm")
 	elseif args.spellId == 122496 or args.spellId == 122474 or args.spellId == 123721 then -- left
@@ -126,6 +102,10 @@ function mod:Attenuation(args)
 	end
 	self:Bar("attenuation", L["attenuation_bar"], 14, args.spellId)
 	self:Flash("attenuation")
+
+	if platform == 3 and self:Heroic() then
+		danceTracker = not danceTracker
+	end
 end
 
 function mod:PreForceAndVerse(_, _, _, _, spellId)
@@ -174,7 +154,7 @@ function mod:PlatformSwap()
 	if platform == 3 then
 		self:Message("stages", CL["phase"]:format(2), "Positive", "ability_vehicle_launchplayer", "Info")
 		self:StopBar("~"..self:SpellName(122740)) -- Convert
-		danceTracker = 0 -- Start a counter here because there are 2 dances from boss before echo does one
+		danceTracker = true
 	else
 		self:Message("stages", L["platform_message"], "Positive", "ability_vehicle_launchplayer", "Info")
 	end
