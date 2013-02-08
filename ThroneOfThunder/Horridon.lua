@@ -345,7 +345,7 @@ function mod:Charge(unit)
 	self:Bar("ej:7080", "~"..self:SpellName(136769), 11, 136769)
 	if UnitIsUnit("player", target) then
 		self:Flash("ej:7080")
-		self:Say("ej:7080", CL["say"]:format(self:SpellName(136769))) -- charge
+		self:Say("ej:7080", 136769) -- charge
 		self:PrimaryIcon("ej:7080", target)
 	end
 end
@@ -357,5 +357,5 @@ end
 
 function mod:Puncture(args)
 	args.amount = args.amount or 1
-	self:LocalMessage("puncture", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["Puncture_message"])
+	self:LocalMessage("puncture", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["puncture_message"])
 end
