@@ -48,18 +48,18 @@ end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "frFR")
 if L then
-	L.explosion_by_other = "Amber Explosion cooldown bar by Monstrosity/Focus"
-	L.explosion_by_other_desc = "Cooldown warnings and bar for Amber Explosions cast by the Amber Monstrosity or your focus target."
+	L.explosion_by_other = "Barre de temps de recharge d'Explosion d'ambre de la Monstruosité/de la focalisation"
+	L.explosion_by_other_desc = "Alertes et barre de temps de recharge pour les Explosions d'ambre incantées par la Monstruosité d'ambre ou votre cible de focalisation."
 
-	L.explosion_casting_by_other = "Amber Explosion cast bar by Monstrosity/Focus"
-	L.explosion_casting_by_other_desc = "Cast warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_other = "Barre d'incantion d'Explosion d'ambre de la Monstruosité/de la focalisation"
+	L.explosion_casting_by_other_desc = "Alertes d'incantation pour les Explositions d'ambre initiés par la Monstruosité d'ambre ou votre cible de focalisation. Mettre en évidence ceci est fortement recommandé !"
 
-	L.explosion_by_you = "Your Amber Explosion cooldown"
-	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
-	L.explosion_by_you_bar = "You start casting..."
+	L.explosion_by_you = "Votre temps de recharge d'Explosion d'ambre"
+	L.explosion_by_you_desc = "Alerte de temps de recharge pour vos Explosions d'ambre."
+	L.explosion_by_you_bar = "Vous commencez à incanter..."
 
-	L.explosion_casting_by_you = "Your Amber Explosion cast bar"
-	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_you = "Votre barre d'incantation d'Explosion d'ambre"
+	L.explosion_casting_by_you_desc = "Alertes d'incantation pour les Explosions d'ambre que vous initiez. Mettre en évidence ceci est fortement recommandé !"
 
 	L.willpower = "Points de Volonté"
 	L.willpower_message = "Points de Volonté à %d !"
@@ -68,11 +68,11 @@ if L then
 	L.fling_message = "Vous allez être jeté !"
 	L.parasite = "Parasite"
 
-	L.monstrosity_is_casting = "Monster : Explosion"
+	L.monstrosity_is_casting = "Monstre : Explosion"
 	L.you_are_casting = "VOUS êtes en train d'incanter !"
 
 	L.unsok_short = "Boss"
-	L.monstrosity_short = "Monster"
+	L.monstrosity_short = "Monstre"
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "frFR")
