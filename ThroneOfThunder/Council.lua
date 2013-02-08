@@ -83,8 +83,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FrostbiteRemoved", 136990)
 	self:Log("SPELL_AURA_APPLIED", "BitingColdApplied", 136992)
 	self:Log("SPELL_AURA_REMOVED", "BitingColdRemoved", 136992)
-	self:Log("SPELL_AURA_APPLIED", "Assault", 136904)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Assault", 136904)
+	self:Log("SPELL_AURA_APPLIED", "Assault", 136903)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Assault", 136903)
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "PossessedApplied", 136442)
 	self:Log("SPELL_AURA_REMOVED", "PossessedRemoved", 136442)
@@ -138,12 +138,8 @@ function mod:Entrapped(args)
 end
 
 function mod:Ensnared(args)
-	args.amount = args.amount or 1
 	if UnitIsUnit(args.destName, "player") then
-		self:LocalMessage(136878, ("%s (%d)"):format(args.spellName, args.amount), "Attention", args.spellId)
-		if self.db.profile[self:SpellName(136878)] == 0 then return end -- don't play sound if warning is turned off
-		local sound = ("BigWigs: %d"):format(5-args.amount)
-		self:PlaySound(136878, sound)
+		self:LocalMessage(136878, ("%s (%d)"):format(args.spellName, args.amount or 1), "Attention", args.spellId)
 	end
 end
 
@@ -186,7 +182,7 @@ end
 
 function mod:FrostbiteRemoved(args)
 	if UnitIsUnit(args.destName, "player") then
-		self:PrimaryIcon(args.spellId)
+		self:SecondaryIcon(args.spellId)
 	end
 end
 
@@ -194,16 +190,16 @@ function mod:BitingColdApplied(args)
 	self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId, "Alert")
 	self:Bar(args.spellId, args.spellName, 47, args.spellId)
 	if UnitIsUnit(args.destName, "player") then
-		self:Say(args.spellId, args.spellName)
+		self:Say(args.spellId)
 		self:OpenProximity(args.spellId, 4)
-		self:PrimaryIcon(args.spellId, args.destName)
+		self:SecondaryIcon(args.spellId, args.destName)
 	end
 end
 
 function mod:BitingColdRemoved(args)
 	if UnitIsUnit(args.destName, "player") then
 		self:CloseProximity(args.spellId)
-		self:PrimaryIcon(args.spellId)
+		self:SecondaryIcon(args.spellId)
 	end
 end
 
@@ -219,6 +215,13 @@ end
 do
 	local fullPower = 66 -- 66 seconds till full power without any lingering presences stacks
 	function mod:PossessedApplied(args)
+		for i = 1, 5 do
+			local id = ("boss%d"):format(i)
+			local bossGUID = UnitGUID(id)
+			if bossGUID == args.destGUID then
+				SetRaidTarget(id, 8)
+			end
+		end
 		local mobId = self:GetCID(args.destGUID)
 		local difficultyRegenMultiplier = self:Heroic() and 15 or self:LFR() and 5 or 10
 		local duration = lingeringTracker[mobId] == 0 and fullPower or fullPower*(100-lingeringTracker[mobId]*difficultyRegenMultiplier)/100
@@ -255,8 +258,8 @@ function mod:Deaths(args)
 		self:StopBar(136990)
 	elseif args.mobId == 69134 then -- Kazra'jin
 	elseif args.mobId == 69078 then -- Sandcrawler
-		self:StopBar("ej:7062")
-		self:CloseProximity(5)
+		self:StopBar("~"..self:SpellName(136860)) -- Quicksand
+		self:CloseProximity()
 	end
 	bossDead = bossDead + 1
 	if bossDead > 4 then self:Win() end
