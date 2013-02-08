@@ -103,7 +103,7 @@ function mod:Attenuation(args)
 	self:Bar("attenuation", L["attenuation_bar"], 14, args.spellId)
 	self:Flash("attenuation")
 
-	if platform == 3 and self:Heroic() then
+	if platform == 3 and self:Heroic() and forceCount > 1 then
 		danceTracker = not danceTracker
 	end
 end
