@@ -98,7 +98,7 @@ function mod:OnEngage()
 	for _, v in pairs(lingeringTracker) do v = 0 end
 	self:OpenProximity("proximity", self:Heroic() and 7 or 5)
 	self:Bar("loa_spirits", "~"..L["loa_spirit"], 27, 137203)
-	self:Bar(136860, "~"..self:SpellName(136860), 7, 136860) -- Quicksand
+	self:Bar("ej:7062", "~"..self:SpellName(136860), 7, 136860) -- Quicksand
 	self:Bar(136992, 136992, 60, 136992) -- Biting Cold -- XXX not sure if 1 min is right feels too long
 end
 
@@ -148,7 +148,7 @@ function mod:Ensnared(args)
 end
 
 function mod:Quicksand(args)
-	self:Bar(args.spellId, "~"..args.spellName, 33, args.spellId)
+	self:Bar("ej:7062", "~"..args.spellName, 33, args.spellId)
 	if UnitIsUnit(args.destName, "player") then
 		self:LocalMessage("ej:7062", CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
 		self:Flash("ej:7062")
