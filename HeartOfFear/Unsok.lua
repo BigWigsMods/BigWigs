@@ -86,6 +86,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Destabilize", 123059)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Destabilize", 123059)
 	self:Log("SPELL_CAST_START", "AmberExplosion", 122398)
+	self:Log("SPELL_CAST_FAILED", "AmberExplosionPrevented", 122398)
 	self:Log("SPELL_CAST_START", "AmberExplosionMonstrosity", 122402)
 	self:Log("SPELL_CAST_SUCCESS", "AmberCarapace", 122540)
 	self:Log("SPELL_AURA_APPLIED", "ParasiticGrowth", 121949)
@@ -230,14 +231,23 @@ function mod:Destabilize(args)
 end
 
 do
+	local last = 0
 	local function warningSpam(spellName)
 		if UnitCastingInfo("player") == spellName then
 			mod:LocalMessage("explosion_casting_by_you", L["you_are_casting"], "Personal", 122398, "Info")
 			mod:ScheduleTimer(warningSpam, 0.5, spellName)
 		end
 	end
+	function mod:AmberExplosionPrevented(args) -- We stunned ourself before it started casting
+		local t = GetTime()
+		if last-t > 4 and UnitIsUnit("player", args.sourceName) then -- Use a throttle so that we don't confuse interrupting a cast (_FAILED) with preventing a cast (also _FAILED)
+			self:Bar("explosion_by_you", L["explosion_by_you_bar"], 13, args.spellId) -- cooldown
+			last = t
+		end
+	end
 	function mod:AmberExplosion(args)
 		if UnitIsUnit("player", args.sourceName) then
+			last = GetTime()
 			self:Flash("explosion_casting_by_you")
 			self:Bar("explosion_casting_by_you", CL["cast"]:format(explosion), 2.5, args.spellId)
 			self:Bar("explosion_by_you", L["explosion_by_you_bar"], 13, args.spellId) -- cooldown
