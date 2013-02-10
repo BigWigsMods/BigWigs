@@ -94,7 +94,7 @@ function mod:GetOptions()
 	return {
 		"ej:7086", "ej:7090", "ej:7092", "ej:7087", 136817, 136821,
 		"fireball", "chain_lightning", "hex", {136490, "FLASH"},
-		"deadly_plague", {"mortal_strike", "TANK_HEALER"}, {136573, "FLASH"},
+		"deadly_plague", {"mortal_strike", "HEALER"}, {136573, "FLASH"},
 		{"venom_bolt_volley", "FLASH"}, {136646, "FLASH"},
 		"blazingSunlight", {136723, "FLASH"},
 		{"puncture", "TANK_HEALER"}, 136741, {"ej:7080", "FLASH", "SAY", "ICON"},"berserk", "bosskill",
@@ -140,8 +140,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Puncture", 136767)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Puncture", 136767)
 	self:Log("SPELL_CAST_START", "Swipe", 136741, 136770) -- wouldn't hurt to figure out why there are two spellIds
-	self:RegisterUnitEvent("UNIT_SPELLCAST_START", "Charge", "boss1")
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "ChargeSucceeded", "boss1")
+
+	--Horridon sets his eyes on NAME and stamps his tail!
+	self:Emote("Charge", "sets his eyes")
 
 	self:Death("Win", 68476)
 end
@@ -149,6 +150,7 @@ end
 function mod:OnEngage()
 	self:Berserk(600) -- XXX assumed
 	self:Bar("ej:7086", (EJ_GetSectionInfo(7086)), 90, 138686) -- Dino Mancer spawn timer
+	self:Bar("ej:7086", "The Farraki", 25, 138686) -- sort of?
 end
 
 --------------------------------------------------------------------------------
@@ -335,28 +337,20 @@ end
 
 -- general
 
-function mod:ChargeSucceeded(unit)
-	self:PrimaryIcon("ej:7080")
-end
-
-function mod:Charge(unit)
-	local target = UnitName(unit.."target")
-	if not target then
-		print("Nil target for Horridon charge")
-		return
-	end
-	self:TargetMessage("ej:7080", self:SpellName(136769), target, "Attention", 136769, "Long")
+function mod:Charge(_,_,_,_,player)
+	self:TargetMessage("ej:7080", self:SpellName(136769), player, "Attention", 136769, "Long")
 	self:Bar("ej:7080", "~"..self:SpellName(136769), 11, 136769)
-	if UnitIsUnit("player", target) then
+	if UnitIsUnit("player", player) then
 		self:Flash("ej:7080")
 		self:Say("ej:7080", 136769) -- charge
-		self:PrimaryIcon("ej:7080", target)
+		self:PrimaryIcon("ej:7080", player)
 	end
+	self:ScheduleTimer("PrimaryIcon", 10) -- remove icon
 end
 
 function mod:Swipe(args)
 	self:Message(136741, args.spellName, "Urgent", args.spellId)
-	self:Bar(136741, "~"..args.spellName, 11, args.spellId)
+	self:Bar(136741, "~"..args.spellName, self:LFR() and 16 or 11, args.spellId)
 end
 
 function mod:Puncture(args)
