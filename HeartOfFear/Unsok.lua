@@ -135,7 +135,7 @@ end
 
 function mod:ParasiticGrowthRemoved(args)
 	--for bubble/ice block/cloak/etc
-	self:StopBar(args.spellName, args.destName)
+	self:StopBar(L["parasite"], args.destName)
 end
 
 do
