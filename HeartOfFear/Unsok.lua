@@ -88,7 +88,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "AmberExplosion", 122398)
 	self:Log("SPELL_CAST_START", "AmberExplosionMonstrosity", 122402)
 	self:Log("SPELL_CAST_SUCCESS", "AmberCarapace", 122540)
-	self:Log("SPELL_AURA_APPLIED", "ConcentratedMutation", 122556)
 	self:Log("SPELL_AURA_APPLIED", "ParasiticGrowth", 121949)
 	self:Log("SPELL_AURA_REMOVED", "ParasiticGrowthRemoved", 121949)
 	self:Log("SPELL_CAST_SUCCESS", "AmberGlobule", 125502)
@@ -106,6 +105,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 62511)
+	self:Death("MonsterDies", 62711)
 end
 
 function mod:OnEngage(diff)
@@ -344,7 +344,7 @@ end
 --Monstrosity's Amber Explosion
 function mod:MonstrosityStopCast(_, _, _, _, spellId)
 	if spellId == 122402 then
-		self:StopBar(L["monstrosity_is_casting"])
+		self:StopBar("<".. L["monstrosity_is_casting"] ..">")
 	end
 end
 
@@ -367,7 +367,7 @@ end
 ------------
 -- Phase 3
 
-function mod:ConcentratedMutation(args)
+function mod:MonsterDies()
 	self:StopBar("~"..L["monstrosity_is_casting"])
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 20))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 15))
