@@ -345,7 +345,7 @@ function mod:Charge(_,_,_,_,player)
 		self:Say("ej:7080", 136769) -- charge
 		self:PrimaryIcon("ej:7080", player)
 	end
-	self:ScheduleTimer("PrimaryIcon", 10) -- remove icon
+	self:ScheduleTimer("PrimaryIcon", 10, "ej:7080") -- remove icon
 end
 
 function mod:Swipe(args)
