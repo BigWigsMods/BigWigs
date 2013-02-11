@@ -377,11 +377,12 @@ end
 ------------
 -- Phase 3
 
-function mod:MonsterDies()
+function mod:MonsterDies(args)
 	self:StopBar("~"..L["monstrosity_is_casting"])
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 20))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 15))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 10))
+	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 5))
 	phase = 3
 	self:Message(args.spellId, args.spellName, "Attention", args.spellId)
 end
