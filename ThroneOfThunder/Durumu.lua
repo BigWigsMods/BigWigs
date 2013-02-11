@@ -6,6 +6,7 @@ TODO:
 	consider maybe if remaining red add is 0 don't announce it
 	somehow verify overall life drain duration
 	disintegration beam message might be too long, shorten it maybe?
+	figure out where to start ForceOfWill in the DisintegrationBeam phase
 ]]--
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------

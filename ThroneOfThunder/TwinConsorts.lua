@@ -21,7 +21,6 @@ local deadBosses = 0
 local icyShadowsTimer = nil
 local cosmicBarrage, iceComet, fanOfFlames = mod:SpellName(136752), mod:SpellName(137419), mod:SpellName(137408)
 
-
 --------------------------------------------------------------------------------
 -- Localization
 --

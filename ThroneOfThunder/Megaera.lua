@@ -53,13 +53,13 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	-- Poison
-		self:Log("SPELL_DAMAGE", "BreathDamage", 139839)
-		self:Log("SPELL_CAST_START", "RotArmor", 139838)
+	self:Log("SPELL_DAMAGE", "BreathDamage", 139839)
+	self:Log("SPELL_CAST_START", "RotArmor", 139838)
 	-- Frost
-		self:Log("SPELL_DAMAGE", "BreathDamage", 139842)
-		self:Log("SPELL_CAST_START", "ArcticFreeze", 139841)
-		self:Log("SPELL_PERIODIC_DAMAGE", "IcyGround", 139909)
-		self:RgisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- XXX Torrent of Ice needs to be switched to CLEU ASAP
+	self:Log("SPELL_DAMAGE", "BreathDamage", 139842)
+	self:Log("SPELL_CAST_START", "ArcticFreeze", 139841)
+	self:Log("SPELL_PERIODIC_DAMAGE", "IcyGround", 139909)
+	self:RgisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- XXX Torrent of Ice needs to be switched to CLEU ASAP
 	-- Fire
 	self:Log("SPELL_DAMAGE", "BreathDamage", 137730)
 	self:Log("SPELL_CAST_START", "IgniteFlesh", 137729)
@@ -165,7 +165,7 @@ do
 end
 
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
-	if msg:find("139866") then -- orrent of Ice
+	if msg:find("139866") then -- Torrent of Ice
 		-- XXX this should have an icon too, but lets not bother implementing it till CLEU is fixed for this event
 		self:Say(139866, CL["say"]:format(self:SpellName(139866)))
 		self:LocalMessage(139866, CL["you"]:format(self:SpellName(139866)), "Personal", 139866, "Info")
