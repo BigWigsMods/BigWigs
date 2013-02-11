@@ -377,14 +377,14 @@ end
 ------------
 -- Phase 3
 
-function mod:MonsterDies(args)
+function mod:MonsterDies()
 	self:StopBar("~"..L["monstrosity_is_casting"])
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 20))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 15))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 10))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 5))
 	phase = 3
-	self:Message(args.spellId, args.spellName, "Attention", args.spellId)
+	self:Message(122556, CL["soon"]:format(self:SpellName(122556)), "Attention", 122556) -- Concentrated Mutation
 end
 
 function mod:AmberGlobule(args)
