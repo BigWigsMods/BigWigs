@@ -11,7 +11,8 @@ if not plugin then return end
 -- Locals
 --
 
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
+--local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
+local SecondsToTime = SecondsToTime
 local lastTime = nil
 local curModule = nil
 
@@ -21,6 +22,9 @@ local curModule = nil
 
 local dev = true
 function plugin:OnPluginEnable()
+	if type(BigWigsDurationDB) ~= "table" then
+		BigWigsDurationDB = {}
+	end
 	if not dev then
 		self:RegisterMessage("BigWigs_OnBossEngage")
 		self:RegisterMessage("BigWigs_OnBossWin")
@@ -39,7 +43,7 @@ function plugin:BigWigs_OnBossEngage(event, module)
 	end
 end
 
-function plugin:BigWigs_OnBossEngage(event, module)
+function plugin:BigWigs_OnBossWin(event, module)
 	if lastTime and module.encounterId and module.moduleName == curModule then
 		print("Boss", module.moduleName, "defeated after", SecondsToTime(GetTime()-lastTime))
 		lastTime, curModule = nil, nil
