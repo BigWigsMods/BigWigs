@@ -240,7 +240,7 @@ do
 	end
 	function mod:AmberExplosionPrevented(args) -- We stunned ourself before it started casting
 		local t = GetTime()
-		if last-t > 4 and UnitIsUnit("player", args.sourceName) then -- Use a throttle so that we don't confuse interrupting a cast (_FAILED) with preventing a cast (also _FAILED)
+		if t-last > 4 and UnitIsUnit("player", args.sourceName) then -- Use a throttle so that we don't confuse interrupting a cast (_FAILED) with preventing a cast (also _FAILED)
 			self:Bar("explosion_by_you", L["explosion_by_you_bar"], 13, args.spellId) -- cooldown
 			last = t
 		end
