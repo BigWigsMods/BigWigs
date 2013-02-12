@@ -75,11 +75,12 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phase3Warn", "boss1")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "WipeCheck")
 	self:Death("Win", 62837)
 end
 
 function mod:OnEngage(diff)
+	self:UnregisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:OpenProximity("proximity", 5)
 	self:Berserk(900)
 	self:Bar("ej:6325", 123627, 20, 123627) --Dissonance Field

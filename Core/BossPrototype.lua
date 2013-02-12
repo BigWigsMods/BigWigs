@@ -357,6 +357,9 @@ do
 		end
 		if debug then dbg(self, ":CheckBossStatus called with no result. Engaged = "..tostring(self.isEngaged).." hasBoss = "..tostring(hasBoss)) end
 	end
+	function boss:WipeCheck(module)
+		self:ScheduleRepeatingTimer(wipeCheck, 1, self)
+	end
 end
 
 do

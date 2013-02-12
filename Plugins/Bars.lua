@@ -1099,7 +1099,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon)
 	bar:SetIcon(db.icon and icon or nil)
 	bar:SetScale(db.scale)
 	bar:SetFill(db.fill)
-	if db.emphasize and time < 12 then
+	if db.emphasize and time < 10.5 then
 		self:EmphasizeBar(bar)
 	end
 	if db.interceptMouse and not db.onlyInterceptOnKeypress then

@@ -13,8 +13,7 @@ if not plugin then return end
 
 --local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 local SecondsToTime = SecondsToTime
-local lastTime = nil
-local curModule = nil
+local activeDurations = nil
 
 -------------------------------------------------------------------------------
 -- Initialization
@@ -22,9 +21,14 @@ local curModule = nil
 
 local dev = true
 function plugin:OnPluginEnable()
-	if type(BigWigsDurationDB) ~= "table" then
+	if not BigWigsDurationDB then
 		BigWigsDurationDB = {}
 	end
+
+	if not activeDurations then
+		activeDurations = {}
+	end
+
 	if not dev then
 		self:RegisterMessage("BigWigs_OnBossEngage")
 		self:RegisterMessage("BigWigs_OnBossWin")
@@ -37,23 +41,23 @@ end
 --
 
 function plugin:BigWigs_OnBossEngage(event, module)
-	if not lastTime and module.encounterId then
-		curModule = module.moduleName
-		lastTime = GetTime()
+	if module.encounterId then
+		BigWigs:Print("Boss", module.moduleName, "engaged.")
+		activeDurations[module.encounterId] = GetTime()
 	end
 end
 
 function plugin:BigWigs_OnBossWin(event, module)
-	if lastTime and module.encounterId and module.moduleName == curModule then
-		print("Boss", module.moduleName, "defeated after", SecondsToTime(GetTime()-lastTime))
-		lastTime, curModule = nil, nil
+	if module.encounterId and activeDurations[module.encounterId] then
+		BigWigs:Print("Boss", module.moduleName, "defeated after", SecondsToTime(GetTime()-lastTime))
+		activeDurations[module.encounterId] = nil
 	end
 end
 
 function plugin:BigWigs_OnBossReboot(event, module)
-	if lastTime and module.encounterId and module.moduleName == curModule then
-		print("Boss", module.moduleName, "wiped after", SecondsToTime(GetTime()-lastTime))
-		lastTime, curModule = nil, nil
+	if module.encounterId and activeDurations[module.encounterId] then
+		BigWigs:Print("Boss", module.moduleName, "wiped after", SecondsToTime(GetTime()-lastTime))
+		activeDurations[module.encounterId] = nil
 	end
 end
 
