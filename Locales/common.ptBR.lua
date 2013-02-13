@@ -4,25 +4,25 @@ if not L then return end
 L.you = "%s em VOCÊ"
 L.underyou = "%s debaixo de VOCÊ!"
 L.other = "%s: %s"
-L.onboss = "%s on BOSS!"
+L.onboss = "%s no CHEFE!"
 L.say = "%s em MIM!"
-L.on = "%s on %s"
-L.stack = "%2$dx %3$s on %1$s"
+L.on = "%s em %s"
+L.stack = "%2$dx %3$s em %1$s"
 L.cast = "<Conjurando %s>"
 L.soon = "%s iminente!"
 
 L.phase = "Fase %d"
 L.normal = "Modo normal"
 L.heroic = "Modo heróico"
-L.hard = "Modo HardCore"
+L.hard = "Modo Hardcore"
 L.general = "Geral" -- General settings, i.e. things that apply to both normal and hard mode.
 
 L.duration = "%s durante %s seg"
 L.over = "%s Acabou!"
 
-L.add_spawned = "Add Spawned!"
-L.next_add = "Next Add"
-L.add_killed = "Add killed! (%d/%d)"
+L.add_spawned = "Adicional surgiu!"
+L.next_add = "Próximo adicional"
+L.add_killed = "Adicional morto! (%d/%d)"
 
 L.custom_start = "%s iniciado - %s em %d min"
 L.custom_start_s = "%s iniciado - %s em %d seg"
