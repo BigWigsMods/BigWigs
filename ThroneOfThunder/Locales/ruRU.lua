@@ -31,9 +31,10 @@ if L then
 	L.assault_message = "Выпад"
 
 	L.loa_kills = "Убито Лоа: %s"
-	L.loa_spirit = "Дух Лоа"
-	L.loa_spirits = "Духи Лоа"
-	L.loa_spirits_desc = "Предупреждать о двух типах духов Лоа."
+	L.priestess_add = "Помощник Жрицы"
+	L.priestess_adds = "Помощники Жрицы"
+	L.priestess_adds_desc = "Предупреждать о всех типах помощников Мар'ли верховной жрице."
+	L.hp_to_go_power = "HP осталось: %d%% - Энергия: %d"
 end
 
 L = BigWigs:NewBossLocale("Tortos", "ruRU")
@@ -53,7 +54,7 @@ end
 L = BigWigs:NewBossLocale("Ji-Kun", "ruRU")
 if L then
 	L.flight_over = "Облет"
-	-- L.young_egg_hatching = "Young egg hatching"
+	L.young_egg_hatching = "Молодое инкубационное яйцо"
 	-- L.lower_hatch_trigger = "The eggs in one of the lower nests begin to hatch!"
 	-- L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch!"
 	L.upper_nest = "|c00008000Верхние|r гнезда"
@@ -80,7 +81,8 @@ end
 
 L = BigWigs:NewBossLocale("Primordius", "ruRU")
 if L then
-
+	L.stream_of_blobs = "Потомк каплей"
+	L.mutations = "Мутации"
 end
 
 L = BigWigs:NewBossLocale("Dark Animus", "ruRU")
