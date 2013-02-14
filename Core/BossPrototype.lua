@@ -730,14 +730,14 @@ do
 		return setmetatable({}, mt)
 	end
 
-	function boss:StackMessage(key, color, sound, player, stack, text, icon)
+	function boss:StackMessage(key, player, stack, color, sound, text, icon)
 		if checkFlag(self, key, C.MESSAGE) then
 			local textType = type(text)
-			self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack, textType == "string" and text or spells[text or key], coloredNames[player]), color, true, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], coloredNames[player]), color, true, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
 		end
 	end
 
-	function boss:TargetMessage(key, color, sound, player, text, icon, localOnly)
+	function boss:TargetMessage(key, player, color, sound, text, icon, localOnly)
 		if not checkFlag(self, key, C.MESSAGE) then return end
 		local textType = type(text)
 		if type(player) == "table" then
@@ -753,8 +753,8 @@ do
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, player), nil, nil, nil, true)
 				end
 			else
-				-- Change color and remove sound when warning about effects on other players
-				self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], coloredNames[player]), color == "Personal" and "Important" or color, localOnly, nil, nil, icon ~= false and icons[icon or textType == "number" and text or key])
+				-- Change color and remove sound (if not local only) when warning about effects on other players
+				self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], coloredNames[player]), color == "Personal" and "Important" or color, localOnly, localOnly and sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
 			end
 		end
 	end
