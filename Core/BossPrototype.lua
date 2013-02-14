@@ -684,7 +684,7 @@ function boss:Message(key, color, sound, text, icon)
 		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, nil, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
 	end
 end
-
+--[[
 function boss:CountMessage(key, color, sound, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
 		local textType, countArg = type(text), text or key
@@ -694,7 +694,7 @@ function boss:CountMessage(key, color, sound, text, icon)
 		self:SendMessage("BigWigs_Message", self, key, format(L.count, textType == "string" and text or spells[text or key], self.counts[countArg]), color, nil, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
 	end
 end
-
+]]
 -- Outputs a local message only, no raid warning.
 function boss:LocalMessage(key, color, sound, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
@@ -761,10 +761,17 @@ do
 end
 
 -- BARS
-function boss:Bar(key, length, isApprox, text, icon)
+function boss:Bar(key, length, text, icon)
 	if checkFlag(self, key, C.BAR) then
 		local textType = type(text)
-		self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key], isApprox)
+		self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key])
+	end
+end
+
+function boss:CDBar(key, length, text, icon)
+	if checkFlag(self, key, C.BAR) then
+		local textType = type(text)
+		self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key], true)
 	end
 end
 
