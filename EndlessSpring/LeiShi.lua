@@ -66,7 +66,7 @@ end
 function mod:OnEngage(diff)
 	hiding = nil
 	nextProtectWarning = 85
-	self:Bar("special", "~"..L["special"], 32, 123263)
+	self:CDBar("special", 32, L["special"], 123263)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "HealthCheck", "boss1")
 	self:Berserk(self:Heroic() and 420 or 600)
 	if self:Tank() then
@@ -82,8 +82,8 @@ function mod:EngageCheck()
 	self:CheckBossStatus()
 	if hiding then
 		hiding = nil
-		self:Message(123244, CL["over"]:format(self:SpellName(123244)), "Attention", 123244)
-		self:Bar("special", "~"..L["special"], 32, 123263)
+		self:Message(123244, "Attention", nil, CL["over"]:format(self:SpellName(123244)))
+		self:CDBar("special", 32, L["special"], 123263)
 	end
 end
 
@@ -100,7 +100,7 @@ do
 			end
 		end
 		local player = UnitName(highestStackPlayer)
-		mod:TargetMessage(123705, ("%s (%d)"):format(spellName, highestStack), player, "Attention", 123705)
+		mod:StackMessage(123705, player, highestStack, "Attention")
 		scheduled = nil
 	end
 
@@ -108,7 +108,7 @@ do
 		if UnitIsUnit("player", args.destName) then
 			self:OpenProximity("proximity", 4) -- could be less than 4 but still experimenting
 		end
-		self:Bar(args.spellId, "~"..args.spellName, 19, args.spellId)
+		self:CDBar(args.spellId, 19)
 		if not scheduled then
 			scheduled = self:ScheduleTimer(reportFog, 0.1, args.spellName)
 		end
@@ -123,7 +123,7 @@ end
 
 function mod:Hide(args)
 	hiding = true
-	self:Message(args.spellId, args.spellName, "Attention", args.spellId)
+	self:Message(args.spellId, "Attention")
 end
 
 do
@@ -131,12 +131,12 @@ do
 	function mod:GetAwayApplied(args)
 		if UnitHealthMax("boss1") > 0 then
 			getAwayStartHP = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
-			self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alarm")
+			self:Message(args.spellId, "Important", "Alarm")
 		end
 	end
 	function mod:GetAwayRemoved()
 		getAwayStartHP = nil
-		self:Bar("special", "~"..L["special"], 32, 123263)
+		self:Bar("special", 32, L["special"], 123263)
 	end
 
 	local prev = 0
@@ -144,7 +144,7 @@ do
 	function mod:HealthCheck(unitId)
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < nextProtectWarning then
-			self:Message(123250, CL["soon"]:format(self:SpellName(123250)), "Positive", 123250) -- Protect
+			self:Message(123250, "Positive", nil, CL["soon"]:format(self:SpellName(123250))) -- Protect
 			nextProtectWarning = hp - 20
 			if nextProtectWarning < 20 then
 				nextProtectWarning = 0
@@ -157,7 +157,7 @@ do
 				local hpToGo = math.ceil(4 - (getAwayStartHP - hp))
 				if lastHpToGo ~= hpToGo and hpToGo > 0 then
 					lastHpToGo = hpToGo
-					self:Message(123461, L["hp_to_go"]:format(hpToGo), "Positive", 123461)
+					self:Message(123461, "Positive", nil, L["hp_to_go"]:format(hpToGo))
 				end
 			end
 		end
@@ -165,12 +165,12 @@ do
 end
 
 function mod:Protect(args)
-	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alarm")
-	self:StopBar("~"..L["special"]) --stop the bar since it's pretty likely the cd will expire during protect
+	self:Message(args.spellId, "Important", "Alarm")
+	self:StopBar(L["special"]) --stop the bar since it's pretty likely the cd will expire during protect
 end
 
 function mod:ProtectRemoved()
-	self:Message("special", CL["soon"]:format(L["special"]), "Attention", 123263)
+	self:Message("special", "Attention", nil, CL["soon"]:format(L["special"]), 123263)
 end
 
 function mod:Kill(_, _, _, _, spellId)

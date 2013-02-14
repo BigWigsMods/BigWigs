@@ -104,8 +104,8 @@ end
 
 function mod:OnEngage(diff)
 	cackleCounter = 1
-	self:Bar(119414, 119414, 33, 119414) -- Breath of Fear
-	self:Bar(129147, ("%s (%d)"):format(self:SpellName(129147), cackleCounter), (diff == 4 or diff == 6) and 25 or 41, 129147) -- Ominous Cackle
+	self:Bar(119414, 33) -- Breath of Fear
+	self:Bar(129147, (diff == 4 or diff == 6) and 25 or 41, ("%s (%d)"):format(self:SpellName(129147), cackleCounter)) -- Ominous Cackle
 	--self:Berserk(900) -- we start in UNIT_SPELLCAST_SUCCEEDED
 	swingCounter, thrashCounter, thrashNext = 0, 0, nil
 	self:OpenProximity("proximity", 5) -- might be less
@@ -130,21 +130,21 @@ do
 	local huddleList, scheduled = mod:NewTargetList(), nil
 	local function warnNext()
 		if huddleUsed and spoutUsed and not strikeUsed then
-			mod:Bar(120672, 120672, 10, 120672) -- strike
+			mod:Bar(120672, 10) -- strike
 		elseif strikeUsed and spoutUsed and not huddleUsed then
-			mod:Bar(120629, 120629, 10, 120629) -- huddle
+			mod:Bar(120629, 10) -- huddle
 		elseif huddleUsed and strikeUsed and not spoutUsed then
-			mod:Bar(120519, 120519, 10, 120519) -- spout
+			mod:Bar(120519, 10) -- spout
 		elseif huddleUsed and not strikeUsed and not spoutUsed then
-			mod:Bar("ability_cd", L["strike_or_spout"], 10, 120458)
+			mod:Bar("ability_cd", 10, L["strike_or_spout"], 120458)
 		elseif strikeUsed and not huddleUsed and not spoutUsed then
-			mod:Bar("ability_cd", L["huddle_or_spout"], 10, 120458)
+			mod:Bar("ability_cd", 10, L["huddle_or_spout"], 120458)
 		elseif spoutUsed and not huddleUsed and not strikeUsed then
-			mod:Bar("ability_cd", L["huddle_or_strike"], 10, 120458)
+			mod:Bar("ability_cd", 10, L["huddle_or_strike"], 120458)
 		end
 	end
-	local function warnHuddle(spellName)
-		mod:TargetMessage(120629, spellName, huddleList, "Important", 120629, "Alert")
+	local function warnHuddle(spellId)
+		mod:TargetMessage(spellId, huddleList, "Important", "Alert")
 		scheduled = nil
 	end
 	function mod:HuddleInTerror(args)
@@ -152,38 +152,37 @@ do
 		warnNext()
 		huddleList[#huddleList + 1] = args.destName
 		if UnitIsUnit(args.destName, "player") then
-			self:Say(args.spellId, args.spellName)
+			self:Say(args.spellId)
 		end
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnHuddle, 0.3, args.spellName)
+			scheduled = self:ScheduleTimer(warnHuddle, 0.3, args.spellId)
 		end
 	end
 	function mod:Waterspout(args)
 		spoutUsed = true
 		warnNext()
-		self:Message(args.spellId, args.spellName, "Urgent", args.spellId)
+		self:Message(args.spellId, "Urgent")
 	end
 	function mod:ImplacableStrike(args)
 		strikeUsed = true
 		warnNext()
-		self:Message(args.spellId, args.spellName, "Attention", args.spellId, "Alarm")
+		self:Message(args.spellId, "Attention", "Alarm")
 	end
 	function mod:Emerge(args)
 		huddleUsed, strikeUsed, spoutUsed = nil, nil, nil
-		self:Bar("ability_cd", L["huddle_or_spout_or_strike"], 10, args.spellId)
+		self:Bar("ability_cd", 10, L["huddle_or_spout_or_strike"], args.spellId)
 	end
 end
 
 function mod:Submerge(args)
 	submergeCounter = submergeCounter + 1
-	self:Message(args.spellId, ("%s (%d)"):format(args.spellName, submergeCounter), "Attention", args.spellId)
-	self:Bar(args.spellId, ("%s (%d)"):format(args.spellName, submergeCounter+1), 52, args.spellId)
-	--self:Bar(args.spellId, 120458, 6, args.spellId) -- Emerge
+	self:Message(args.spellId, "Attention", nil, ("%s (%d)"):format(args.spellName, submergeCounter))
+	self:Bar(args.spellId, 52, ("%s (%d)"):format(args.spellName, submergeCounter+1))
 end
 
 function mod:FadingLight(args)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(129378, L["cooldown_reset"], "Positive", args.spellId, "Long")
+		self:LocalMessage(args.spellId, "Positive", "Long", L["cooldown_reset"])
 	end
 end
 
@@ -194,7 +193,7 @@ do
 		for guid in next, dreadSpawns do
 			dreadSpawnCounter = dreadSpawnCounter + 1
 		end
-		mod:Message("ej:6107", ("%s (%d)"):format(source, dreadSpawnCounter), "Positive", 128419) -- positive, tho we are not really happy about it (gathering speed the adds ability icon)
+		mod:Message("ej:6107", "Positive", nil, ("%s (%d)"):format(source, dreadSpawnCounter), 128419) -- positive, tho we are not really happy about it (gathering speed the adds ability icon)
 		scheduled = nil
 	end
 	function mod:DreadSpawnSingleCast(args)
@@ -220,7 +219,7 @@ do
 		if UnitBuff("player", champion) then
 			local t = GetTime()
 			if t-prev > 1 then
-				self:Message("ej:6109", L["throw"], "Personal", args.spellId, "Long")
+				self:Message("ej:6109", "Personal", "Long", L["throw"], args.spellId)
 				self:Flash("ej:6109")
 				prev = t
 			end
@@ -229,7 +228,7 @@ do
 end
 
 function mod:ChampionOfTheLight(args)
-	self:TargetMessage(args.spellId, L["ball"], args.destName, "Positive", args.spellId, "Long")
+	self:TargetMessage(args.spellId, args.destName, "Positive", "Long", L["ball"])
 	--self:CloseProximity(args.spellId) -- uncomment when mapdata becomes available for last phase
 	if UnitIsUnit("player", args.destName) then
 		--self:LocalMessage(args.spellId, L["ball_you"], "Personal", args.spellId, "Long") -- should maybe have a name like "Ball on you PASS IT!"
@@ -240,7 +239,7 @@ end
 do
 	local function checkForDead(player)
 		if UnitIsDead(player) then
-			mod:Message(120669, L["ball_dropped"], "Important", 120669)
+			mod:Message(120669, "Important", nil, L["ball_dropped"])
 		end
 	end
 	function mod:ChampionOfTheLightRemoved(args)
@@ -250,9 +249,8 @@ do
 end
 
 function mod:NakedAndAfraid(args)
-	self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId)
-	self:PlaySound(args.spellId, "Info") -- use TargetMessage for name coloring and play the sound for all tanks
-	self:Bar(args.spellId, args.spellName, 31, args.spellId)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, true)
+	self:Bar(args.spellId, 31)
 end
 
 function mod:Transitions(unit, spellName, _, _, spellId)
@@ -441,7 +439,7 @@ function mod:BlossomPreWarn(unitId)
 	if mobId == 61046 or mobId == 61038 or mobId == 61042 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 30 then
-			self:Message(119888, CL["soon"]:format(self:SpellName(119888)), "Attention", 119888) -- Death Blossom
+			self:Message(119888, "Attention", nil, CL["soon"]:format(self:SpellName(119888))) -- Death Blossom
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 		end
 	end

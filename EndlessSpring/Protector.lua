@@ -146,7 +146,7 @@ end
 do
 	local lightningPrisonList, scheduled = mod:NewTargetList(), nil
 	local function warnPrison()
-		mod:TargetMessage(117436, "Important", "Alert", lightningPrisonList)
+		mod:TargetMessage(117436, lightningPrisonList, "Important", "Alert")
 		scheduled = nil
 	end
 	function mod:LightningPrisonApplied(args)
