@@ -38,9 +38,6 @@ if L then
 	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
 	L.explosion_casting_by_you_icon = 122398
 
-	L.monstrosity, L.monstrosity_desc = EJ_GetSectionInfo(6254)
-	L.monstrosity_icon = 122540 -- somewhat relevant icon
-
 	L.willpower = "Willpower"
 	L.willpower_desc = select(2, EJ_GetSectionInfo(6249)) --"When Willpower runs out, the player dies and the Mutated Construct continues to act, uncontrolled."
 	L.willpower_icon = 124824
@@ -65,16 +62,14 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{"ej:6548", "FLASH", "ICON", "SAY"},
-		122784, 123059, { "explosion_by_you" }, { "explosion_casting_by_you", "FLASH" }, 123060, "willpower",
-		"monstrosity", "explosion_by_other", { "explosion_casting_by_other", "FLASH" }, 122413, 122408,
-		122556,
+		122784, 123059, "explosion_by_you", {"explosion_casting_by_you", "FLASH"}, 123060, "willpower",
+		"explosion_by_other", {"explosion_casting_by_other", "FLASH"}, 122413, 122408,
 		{121995, "FLASH", "SAY"}, 123020, {121949, "FLASH"},
-		"berserk", "bosskill",
+		"stages", "berserk", "bosskill",
 	}, {
 		["ej:6548"] = "heroic",
 		[122784] = "ej:6249",
-		monstrosity = "ej:6246",
-		[122556] = "ej:6247",
+		explosion_by_other = "ej:6246",
 		[121995] = "general",
 	}
 end
@@ -82,7 +77,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ReshapeLife", 122784)
 	self:Log("SPELL_CAST_SUCCESS", "BreakFree", 123060)
-	self:Log("SPELL_CAST_SUCCESS", "Beam", 121994)
+	self:Log("SPELL_CAST_SUCCESS", "AmberScalpel", 121994)
 	self:Log("SPELL_AURA_APPLIED", "Destabilize", 123059)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Destabilize", 123059)
 	self:Log("SPELL_CAST_START", "AmberExplosion", 122398)
@@ -113,6 +108,7 @@ function mod:OnEngage(diff)
 	reshapeLifeCounter = 1
 	self:Bar(122784, ("%s (%d)"):format(self:SpellName(122784), reshapeLifeCounter), 20, 122784) --Reshape Life
 	self:Bar(121949, 121949, 24, 121949) --Parasitic Growth
+	self:Bar(121994, 121994, 10, 121994) -- Amber Scalpel
 	self:Berserk(600) -- Does he even have one?
 
 	phase = 1
@@ -174,7 +170,8 @@ do
 			mod:Message(spellId, spellId, "Attention", spellId) -- Give generic warning as a backup
 		end
 	end
-	function mod:Beam(args)
+	function mod:AmberScalpel(args)
+		self:Bar(args.spellId, args.spellName, 50, args.spellId)
 		fired = 0
 		if not timer then
 			timer = self:ScheduleRepeatingTimer(beamWarn, 0.05, args.spellId)
@@ -296,7 +293,7 @@ function mod:MonstrosityInc(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 75 then -- phase starts at 70
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
-		self:Message("monstrosity", CL["soon"]:format(L["monstrosity"]), "Positive", 122540, "Long")
+		self:Message("stages", CL["soon"]:format(EJ_GetSectionInfo(6254)), "Positive", nil, "Long") -- Monstrosity
 	end
 end
 
@@ -319,7 +316,7 @@ end
 
 function mod:AmberCarapace(args)
 	phase = 2
-	self:Message("monstrosity", L["monstrosity"], "Attention", args.spellId)
+	self:Message("stages", EJ_GetSectionInfo(6254), "Attention", "spell_nature_shamanrage") -- Monstrosity
 	self:DelayedMessage("explosion_by_other", 35, CL["custom_sec"]:format(explosion, 20), "Attention", 122402)
 	self:DelayedMessage("explosion_by_other", 40, CL["custom_sec"]:format(explosion, 15), "Attention", 122402)
 	self:DelayedMessage("explosion_by_other", 45, CL["custom_sec"]:format(explosion, 10), "Attention", 122402)
@@ -384,7 +381,7 @@ function mod:MonsterDies()
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 10))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 5))
 	phase = 3
-	self:Message(122556, CL["soon"]:format(self:SpellName(122556)), "Attention", 122556) -- Concentrated Mutation
+	self:Message("stages", CL["phase"]:format(3), "Attention", 122556) -- Concentrated Mutation
 end
 
 function mod:AmberGlobule(args)
