@@ -69,8 +69,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(117309, "~"..self:SpellName(117309), 11, 117309) -- Cleansing Waters
-	self:Bar(111850, "~"..self:SpellName(111850), 15, 111850) -- Lightning Prison
+	self:CDBar(117309, 11) -- Cleansing Waters
+	self:CDBar(111850, 15) -- Lightning Prison
 	bossDead = 0
 	firstDeath = nil
 	self:Berserk(self:LFR() and 660 or 490)
@@ -89,42 +89,42 @@ end
 function mod:ShaCorruptionFirst(args)
 	local mobId = self:GetCID(args.destGUID)
 	if mobId == 60583 then -- Kaolan
-		self:Bar(117986, 117986, 11, 117986) -- Defiled Ground
+		self:Bar(117986, 11) -- Defiled Ground
 	elseif mobId == 60585 then -- Regail
-		self:Bar(118077, "~"..self:SpellName(118077), 26, 118077) -- Lightning Storm
+		self:CDBar(118077, 26) -- Lightning Storm
 	elseif mobId == 60586 then -- Asani
-		self:Bar(117227, "~"..self:SpellName(117227), 11, 117227) -- Corrupted Waters
+		self:CDBar(117227, 11) -- Corrupted Waters
 	end
 
 	if not firstDeath then
 		firstDeath = true
-		self:Message(args.spellId, ("%s (%d)"):format(args.spellName, 1), "Attention", args.spellId, "Info")
+		self:Message(args.spellId, "Attention", "Info", ("%s (%d)"):format(args.spellName, 1), args.spellId)
 	end
 end
 
 function mod:ShaCorruptionSecond(args)
 	local mobId = self:GetCID(args.destGUID)
 	if mobId == 60583 then -- Kaolan
-		self:Bar(117975, 117975, 6, 117975) -- Expel Corruption
+		self:Bar(117975, 6) -- Expel Corruption
 	elseif mobId == 60585 then -- Regail
-		self:Bar(118077, "~"..self:SpellName(118077), 11, 118077) -- Lightning Storm
+		self:Bar(118077, 11) -- Lightning Storm
 	elseif mobId == 60586 then -- Asani
-		self:Bar(117227, "~"..self:SpellName(117227), 15, 117227) -- Corrupted Waters
+		self:Bar(117227, 15) -- Corrupted Waters
 	end
 
-	self:Message(args.spellId, ("%s (%d)"):format(args.spellName, 2), "Attention", args.spellId, "Info")
+	self:Message(args.spellId, "Attention", "Info", ("%s (%d)"):format(args.spellName, 2))
 end
 
 --Protector Kaolan
 
 function mod:ExpelCorruption(args)
-	self:Message(args.spellId, args.spellName, "Urgent", args.spellId)
-	self:Bar(args.spellId, args.spellName, 38, args.spellId)
-	self:Bar(117986, 117986, 12, 117986) -- Defiled Ground
+	self:Message(args.spellId, "Urgent")
+	self:Bar(args.spellId, 38)
+	self:Bar(117986, 12) -- Defiled Ground
 end
 
 function mod:DefiledGround(args)
-	self:Bar(args.spellId, args.spellName, 16, args.spellId)
+	self:Bar(args.spellId, 16)
 end
 
 do
@@ -134,7 +134,7 @@ do
 			local t = GetTime()
 			if t-prev > 1 then
 				prev = t
-				self:LocalMessage(117986, CL["underyou"]:format(args.spellName), "Personal", 117986, "Info")
+				self:LocalMessage(117986, "Personal", "Info", CL["underyou"]:format(args.spellName))
 				self:Flash(117986)
 			end
 		end
@@ -145,20 +145,20 @@ end
 
 do
 	local lightningPrisonList, scheduled = mod:NewTargetList(), nil
-	local function warnPrison(spellName)
-		mod:TargetMessage(117436, spellName, lightningPrisonList, "Important", 117436, "Alert")
+	local function warnPrison()
+		mod:TargetMessage(117436, "Important", "Alert", lightningPrisonList)
 		scheduled = nil
 	end
 	function mod:LightningPrisonApplied(args)
-		self:Bar(117436, "~"..args.spellName, 25, 117436)
+		self:CDBar(117436, 25)
 		lightningPrisonList[#lightningPrisonList + 1] = args.destName
 		if UnitIsUnit(args.destName, "player") then
 			self:Flash(117436)
-			self:Say(117436, args.spellName)
+			self:Say(117436)
 			self:OpenProximity(117436, 7)
 		end
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnPrison, 0.2, args.spellName)
+			scheduled = self:ScheduleTimer(warnPrison, 0.2)
 		end
 	end
 end
@@ -170,17 +170,17 @@ function mod:LightningPrisonRemoved(args)
 end
 
 function mod:LightningStorm(args)
-	self:Message(args.spellId, args.spellName, "Urgent", args.spellId, "Alarm")
-	self:Bar(args.spellId, "~"..args.spellName, bossDead < 3 and 42 or 32, args.spellId)
+	self:Message(args.spellId, "Urgent", "Alarm")
+	self:CDBar(args.spellId, bossDead < 3 and 42 or 32)
 	self:Flash(args.spellId)
 end
 
 -- Elder Asani
 
 function mod:CleansingWaters(args)
-	self:Message(args.spellId, CL["soon"]:format(args.spellName), "Attention", args.spellId, self:Dispeller("magic", true) and "Alert" or nil)
-	self:Bar(args.spellId, L["heal"]:format(args.spellName), 6, 55888) -- orb hitting the ground (water orb icon)
-	self:Bar(args.spellId, "~"..args.spellName, 32, args.spellId)
+	self:Message(args.spellId, "Attention", self:Dispeller("magic", true) and "Alert", CL["soon"]:format(args.spellName))
+	self:Bar(args.spellId, 6, L["heal"]:format(args.spellName), 55888) -- orb hitting the ground (water orb icon)
+	self:CDBar(args.spellId, 32)
 end
 
 do
@@ -202,7 +202,7 @@ do
 	function mod:CleansingWatersDispel(args)
 		local mobId = self:GetCID(args.destGUID)
 		if self:Dispeller("magic", true) and (mobId == 60583 or mobId == 60585 or mobId == 60586) and args.destGUID == UnitGUID(getKillTarget()) then
-			self:LocalMessage(117309, CL["on"]:format(args.spellName, args.destName), "Important", 117309, "Info") --onboss
+			self:LocalMessage(117309, "Important", "Info", CL["on"]:format(args.spellName, args.destName)) --onboss
 		end
 	end
 
@@ -210,14 +210,14 @@ do
 	function mod:CleansingWatersTank(args)
 		if args.spellId == 122851 and UnitIsUnit(unitId, getKillTarget()) then -- Raid Warning: I'm Standing In Cleansing Waters
 			local bossName = UnitName(unitId)
-			self:LocalMessage(117309, L["under"]:format(self:SpellName(117309), bossName), "Urgent", 117309, "Alert")
+			self:LocalMessage(117309, "Urgent", "Alert", L["under"]:format(self:SpellName(117309), bossName))
 		end
 	end
 end
 
 function mod:CorruptedWaters(args)
-	self:Message(args.spellId, args.spellName, "Attention", args.spellId)
-	self:Bar(args.spellId, "~"..args.spellName, 42, args.spellId)
+	self:Message(args.spellId, "Attention")
+	self:CDBar(args.spellId, 42)
 end
 
 
@@ -225,11 +225,11 @@ function mod:BossDeaths(args)
 	if args.mobId == 60583 then --Kaolan
 		self:StopBar(117986) -- Defiled Ground
 	elseif args.mobId == 60585 then -- Regail
-		self:StopBar("~"..self:SpellName(111850)) -- Lightning Prison
-		self:StopBar("~"..self:SpellName(118077)) -- Lightning Storm
+		self:StopBar(111850) -- Lightning Prison
+		self:StopBar(118077) -- Lightning Storm
 	elseif args.mobId == 60586 then -- Asani
-		self:StopBar("~"..self:SpellName(117309)) -- Cleansing Waters
-		self:StopBar("~"..self:SpellName(117227)) -- Corrupted Waters
+		self:StopBar(117309) -- Cleansing Waters
+		self:StopBar(117227) -- Corrupted Waters
 	end
 
 	bossDead = bossDead + 1

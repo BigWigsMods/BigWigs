@@ -81,9 +81,9 @@ end
 function mod:OnEngage(diff)
 	self:OpenProximity(122777, 8)
 	self:Berserk(self:LFR() and 900 or 490)
-	self:Bar("phases", L["day"], 121, 122789)
-	self:Bar(122777, 122777, 15.6, 122777) -- Nightmares
-	self:Bar("breath", 122752, 10, 122752) -- Shadow Breath
+	self:Bar("phases", 121, L["day"], 122789)
+	self:Bar(122777, 15.6) -- Nightmares
+	self:Bar("breath", 10, 122752) -- Shadow Breath
 	bigAddCounter = 0
 end
 
@@ -92,8 +92,8 @@ end
 --
 
 function mod:SunbeamSpawn()
-	self:Message(122789, L["sunbeam_spawn"], "Positive", 122789)
-	self:Bar(122789, 122789, 42, 122789)
+	self:Message(122789, "Positive", nil, L["sunbeam_spawn"])
+	self:Bar(122789, 42)
 end
 
 function mod:EngageCheck()
@@ -101,38 +101,38 @@ function mod:EngageCheck()
 	if UnitExists("boss2") and self:GetCID(UnitGUID("boss2")) == 62969 then
 		bigAddCounter = bigAddCounter + 1
 		if bigAddCounter < 3 then
-			self:Bar("embodied_terror", ("~%s (%d)"):format(L["embodied_terror"], bigAddCounter+1), 40, L.embodied_terror_icon)
+			self:CDBar("embodied_terror", 40, ("%s (%d)"):format(L["embodied_terror"], bigAddCounter+1), L.embodied_terror_icon)
 		end
-		self:Message("embodied_terror", ("%s (%d)"):format(L["embodied_terror"], bigAddCounter), "Attention", L.embodied_terror_icon)
-		self:Bar(123011, "~"..self:SpellName(123011), 5, 123011) -- Terrorize (overwrites the previous bar)
+		self:Message("embodied_terror", "Attention", nil, ("%s (%d)"):format(L["embodied_terror"], bigAddCounter), L.embodied_terror_icon)
+		self:CDBar(123011, 5) -- Terrorize (overwrites the previous bar)
 	end
 end
 
 function mod:Terrorize(args)
-	self:Message(args.spellId, args.spellName, "Important", args.spellId, self:Dispeller("magic") and "Alert" or nil)
-	self:Bar(args.spellId, "~"..args.spellName, 41, args.spellId)
+	self:Message(args.spellId, "Important", self:Dispeller("magic") and "Alert")
+	self:CDBar(args.spellId, 41)
 end
 
 function mod:DreadShadows(args)
 	if UnitIsUnit("player", args.destName) and args.amount > (self:Heroic() and 5 or 11) and args.amount % 3 == 0 then -- might need adjusting
-		self:LocalMessage(args.spellId, ("%s (%d)"):format(args.spellName, args.amount), "Personal", args.spellId, "Info")
+		self:LocalMessage(args.spellId, "Personal", "Info", ("%s (%d)"):format(args.spellName, args.amount))
 	end
 end
 
 function mod:Sunbeam(args)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, args.spellName, "Positive", args.spellId)
+		self:LocalMessage(args.spellId, "Positive")
 	end
 end
 
 function mod:SunBreath(args)
-	self:Bar(args.spellId, args.spellName, 29, args.spellId)
-	self:Message(args.spellId, args.spellName, "Urgent", args.spellId)
+	self:Bar(args.spellId, 29)
+	self:Message(args.spellId, "Urgent")
 end
 
 function mod:ShadowBreath(args)
-	self:Bar("breath", "~"..args.spellName, 25, args.spellId)
-	self:Message("breath", args.spellName, "Urgent", args.spellId)
+	self:CDBar("breath", 25, args.spellId)
+	self:Message("breath", "Urgent", nil, args.spellId)
 end
 
 do
@@ -140,7 +140,7 @@ do
 		for i=1, 40 do
 			local name, _, _, _, buffType, _, _, _, _, _, spellId = UnitBuff("boss1", i)
 			if name and buffType == "Magic" then
-				mod:LocalMessage("phases", ("%s - %s"):format((UnitName("boss1")), name), "Attention", spellId, "Alert") -- maybe should not be tied to "phases" option
+				mod:LocalMessage("phases", "Attention", "Alert", ("%s - %s"):format((UnitName("boss1")), name), spellId) -- maybe should not be tied to "phases" option
 				break
 			end
 		end
@@ -154,20 +154,20 @@ do
 				bigAddCounter = 0
 				self:CloseProximity(122777)
 				self:StopBar(122777) -- Nightmares
-				self:StopBar("~"..self:SpellName(122752)) -- Shadow Breath
-				self:Message("phases", L["day"], "Positive", 122789)
-				self:Bar("phases", L["night"], 121, 122768)
-				self:Bar(122855, 122855, 32, 122855) -- Sun Breath
-				self:Bar("unstable_sha", 122953, 18, 122938)
-				self:Bar("embodied_terror", ("~%s (%d)"):format(L["embodied_terror"], 1), 11, L.embodied_terror_icon)
+				self:StopBar(122752) -- Shadow Breath
+				self:Message("phases", "Positive", nil, L["day"], 122789)
+				self:Bar("phases", 121, L["night"], 122768)
+				self:Bar(122855, 32) -- Sun Breath
+				self:Bar("unstable_sha", 18, 122953, 122938)
+				self:Bar("embodied_terror", 11, ("~%s (%d)"):format(L["embodied_terror"], 1), L.embodied_terror_icon)
 			elseif spellId == 122767 then -- Dread Shadows (start of night phase)
 				self:StopBar(122953) -- Summon Unstable Sha
 				self:StopBar(122855) -- Sun Breath
 				self:OpenProximity(122777, 8)
-				self:Bar(122777, 122777, 15, 122777) -- Nightmares
-				self:Message("phases", L["night"], "Positive", 122768)
-				self:Bar("phases", L["day"], 121, 122789)
-				self:Bar("breath", 122752, 10, 122752) -- Shadow Breath
+				self:Bar(122777, 15) -- Nightmares
+				self:Message("phases", "Positive", nil, L["night"], 122768)
+				self:Bar("phases", 121, L["day"], 122789)
+				self:Bar("breath", 10, 122752) -- Shadow Breath
 				if self:Dispeller("magic", true) then
 					checkForHoTs()
 				end
@@ -175,21 +175,21 @@ do
 				local t = GetTime()
 				if t-prev > 2 then
 					prev = t
-					self:Message("unstable_sha", spellName, "Important", 122938, "Alert")
-					self:Bar("unstable_sha", spellName, 18, 122938)
+					self:Message("unstable_sha", "Important", "Alert", spellName, 122938)
+					self:Bar("unstable_sha", 18, spellName, 122938)
 				end
 			elseif spellId == 122775 then -- Nightmares
-				self:Bar(122777, spellName, 15, 122777)
-				self:Message(122777, spellName, "Attention", 122777)
+				self:Bar(122777, 15)
+				self:Message(122777, "Attention")
 			elseif spellId == 123813 then -- The Dark of Night (heroic)
-				self:Bar("ej:6550", spellName, 30, 130013)
-				self:Message("ej:6550", spellName, "Urgent", 130013, "Alarm")
+				self:Bar("ej:6550", 30, 130013)
+				self:Message("ej:6550", "Urgent", "Alarm", 130013)
 			end
 		end
 	end
 end
 
 function mod:EmbodiedTerrorDeath()
-	self:StopBar("~"..self:SpellName(123011)) -- Terrorize, might be tricky if more than one add can be up
+	self:StopBar(123011) -- Terrorize, might be tricky if more than one add can be up
 end
 
