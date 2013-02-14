@@ -1076,7 +1076,7 @@ end
 -- Start bars
 --
 
-function plugin:BigWigs_StartBar(_, module, key, text, time, icon)
+function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	if createAnchors then createAnchors() end
 	if not text then text = "" end
 	self:StopSpecificBar(nil, module, text)
@@ -1094,7 +1094,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon)
 	bar.candyBarDuration:SetFont(f, db.fontSize, db.outline)
 	bar:SetLabel(text)
 	bar:SetClampedToScreen(true)
-	bar:SetDuration(time)
+	bar:SetDuration(time, isApprox)
 	bar:SetTimeVisibility(db.time)
 	bar:SetIcon(db.icon and icon or nil)
 	bar:SetScale(db.scale)

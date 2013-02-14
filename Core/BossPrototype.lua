@@ -120,6 +120,9 @@ function boss:OnDisable()
 		end
 	end
 
+	-- Clear any counted messages
+	self.counts = nil
+
 	self.isEngaged = nil
 	self:SendMessage("BigWigs_OnBossDisable", self)
 end
@@ -574,33 +577,7 @@ do
 end
 
 -------------------------------------------------------------------------------
--- Delayed message handling
---
-
-do
-	local scheduledMessages = {}
-
-	function boss:CancelDelayedMessage(text)
-		if type(text) == "number" then text = spells[text] end
-
-		if scheduledMessages[text] then
-			self:CancelTimer(scheduledMessages[text])
-			scheduledMessages[text] = nil
-		end
-	end
-
-	-- ... = color, icon, sound, noraidsay, broadcastonly
-	function boss:DelayedMessage(key, delay, text, ...)
-		if type(delay) ~= "number" then error(format("Module '%s' tried to schedule a delayed message with delay as type %q, but it must be a number.", self.moduleName, type(delay))) end
-		if type(text) == "number" then text = spells[text] end
-
-		self:CancelDelayedMessage(text)
-		scheduledMessages[text] = self:ScheduleTimer("Message", delay, key, text, ...)
-	end
-end
-
--------------------------------------------------------------------------------
--- Boss module APIs for messages, bars, icons, etc.
+-- Option silencer
 --
 
 local silencedOptions = {}
@@ -631,6 +608,10 @@ do
 		end
 	end)
 end
+
+-------------------------------------------------------------------------------
+-- Boss module APIs for messages, bars, icons, etc.
+--
 
 local checkFlag = nil
 do
@@ -665,20 +646,61 @@ do
 	end
 end
 
--- XXX the monitor should probably also get a button to turn off the proximity bitflag
--- XXX for the given key.
+-- PROXIMITY
 function boss:OpenProximity(key, range, player, isReverse)
-	if not checkFlag(self, key, C.PROXIMITY) then return end
-	self:SendMessage("BigWigs_ShowProximity", self, range, key, player, isReverse)
-end
-function boss:CloseProximity(key)
-	if not checkFlag(self, key or "proximity", C.PROXIMITY) then return end
-	self:SendMessage("BigWigs_HideProximity", self, key or "proximity")
+	if checkFlag(self, key, C.PROXIMITY) then
+		self:SendMessage("BigWigs_ShowProximity", self, range, key, player, isReverse)
+	end
 end
 
-function boss:Message(key, text, color, icon, sound, noraidsay, broadcastonly)
-	if not checkFlag(self, key, C.MESSAGE) then return end
-	self:SendMessage("BigWigs_Message", self, key, type(text) == "number" and spells[text] or text, color, noraidsay, sound, broadcastonly, icon and icons[icon])
+function boss:CloseProximity(key)
+	if checkFlag(self, key or "proximity", C.PROXIMITY) then
+		self:SendMessage("BigWigs_HideProximity", self, key or "proximity")
+	end
+end
+
+-- MESSAGES
+do
+	local scheduledMessages = {}
+
+	function boss:CancelDelayedMessage(text)
+		if scheduledMessages[text] then
+			self:CancelTimer(scheduledMessages[text])
+			scheduledMessages[text] = nil
+		end
+	end
+
+	function boss:DelayedMessage(key, delay, color, sound, text, icon)
+		if checkFlag(self, key, C.MESSAGE) then
+			self:CancelDelayedMessage(text or key)
+			scheduledMessages[text or key] = self:ScheduleTimer("Message", delay, key, color, sound, text, icon)
+		end
+	end
+end
+
+function boss:Message(key, color, sound, text, icon)
+	if checkFlag(self, key, C.MESSAGE) then
+		local textType = type(text)
+		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, nil, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
+	end
+end
+
+function boss:CountMessage(key, color, sound, text, icon)
+	if checkFlag(self, key, C.MESSAGE) then
+		local textType, countArg = type(text), text or key
+		if not self.counts then self.counts = {} end
+		if not self.counts[countArg] then self.counts[countArg] = 0 end
+		self.counts[countArg] = self.counts[countArg] + 1
+		self:SendMessage("BigWigs_Message", self, key, format(L.count, textType == "string" and text or spells[text or key], self.counts[countArg]), color, nil, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
+	end
+end
+
+-- Outputs a local message only, no raid warning.
+function boss:LocalMessage(key, color, sound, text, icon)
+	if checkFlag(self, key, C.MESSAGE) then
+		local textType = type(text)
+		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, true, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
+	end
 end
 
 do
@@ -708,87 +730,51 @@ do
 		return setmetatable({}, mt)
 	end
 
-	-- Outputs a local message only, no raid warning.
-	function boss:LocalMessage(key, text, color, icon, sound, player, ...)
-		if not checkFlag(self, key, C.MESSAGE) then return end
-		if player then
-			if ... then
-				text = format(text, coloredNames[player], ...)
-			else
-				text = format(L["other"], text, coloredNames[player])
-			end
-		elseif type(text) == "number" then
-			text = spells[text]
+	function boss:StackMessage(key, color, sound, player, stack, text, icon)
+		if checkFlag(self, key, C.MESSAGE) then
+			local textType = type(text)
+			self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack, textType == "string" and text or spells[text or key], coloredNames[player]), color, true, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
 		end
-		self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icon and icons[icon])
 	end
 
-	function boss:TargetMessage(key, spellName, player, color, icon, sound, ...)
+	function boss:TargetMessage(key, color, sound, player, text, icon, localOnly)
 		if not checkFlag(self, key, C.MESSAGE) then return end
-		if type(spellName) == "number" then spellName = spells[spellName] end
+		local textType = type(text)
 		if type(player) == "table" then
 			local list = table.concat(player, ", ")
 			wipe(player)
 			if not list:find(pName) then sound = nil end
-			local text = format(L["other"], spellName, list)
-			self:SendMessage("BigWigs_Message", self, key, text, color, nil, sound, nil, icon and icons[icon])
+			self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], list), color, nil, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
 		else
 			if UnitIsUnit(player, "player") then
-				if ... then
-					local text = format(spellName, coloredNames[player], ...)
-					self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icon and icons[icon])
-					self:SendMessage("BigWigs_Message", self, key, text, nil, nil, nil, true)
-				else
-					self:SendMessage("BigWigs_Message", self, key, format(L["you"], spellName), "Personal", true, sound, nil, icon and icons[icon])
-					self:SendMessage("BigWigs_Message", self, key, format(L["other"], spellName, player), nil, nil, nil, true)
+				local msg = textType == "string" and text or spells[text or key]
+				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", true, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
+				if not localOnly then
+					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, player), nil, nil, nil, true)
 				end
 			else
 				-- Change color and remove sound when warning about effects on other players
-				if color == "Personal" then color = "Important" end
-				local text = nil
-				if ... then
-					text = format(spellName, coloredNames[player], ...)
-				else
-					text = format(L["other"], spellName, coloredNames[player])
-				end
-				self:SendMessage("BigWigs_Message", self, key, text, color, nil, nil, nil, icon and icons[icon])
+				self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], coloredNames[player]), color == "Personal" and "Important" or color, localOnly, nil, nil, icon ~= false and icons[icon or textType == "number" and text or key])
 			end
 		end
 	end
 end
 
-function boss:Flash(key)
-	if not checkFlag(self, key, C.FLASH) then return end
-	self:SendMessage("BigWigs_Flash", self, key)
-end
-
-function boss:Say(key, msg, directPrint)
-	if not checkFlag(self, key, C.SAY) then return end
-	if directPrint then
-		SendChatMessage(msg, "SAY")
-	else
-		SendChatMessage(L["on"]:format(msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "SAY")
+-- BARS
+function boss:Bar(key, length, isApprox, text, icon)
+	if checkFlag(self, key, C.BAR) then
+		local textType = type(text)
+		self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key], isApprox)
 	end
 end
 
-function boss:PlaySound(key, sound)
-	if not checkFlag(self, key, C.MESSAGE) then return end
-	self:SendMessage("BigWigs_Sound", sound)
-end
-
-
-function boss:Bar(key, text, length, icon)
+function boss:TargetBar(key, length, player, text, icon)
 	if checkFlag(self, key, C.BAR) then
-		self:SendMessage("BigWigs_StartBar", self, key, type(text) == "number" and spells[text] or text, length, icon and icons[icon])
-	end
-end
-
-function boss:TargetBar(key, text, player, length, icon)
-	if checkFlag(self, key, C.BAR) then
+		local textType = type(text)
 		if UnitIsUnit(player, "player") then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L["you"], type(text) == "number" and spells[text] or text), length, icon and icons[icon])
+			self:SendMessage("BigWigs_StartBar", self, key, format(L.you, textType == "string" and text or spells[text or key]), length, icons[icon or textType == "number" and text or key])
 		else
-			self:SendMessage("BigWigs_StartBar", self, key, format(L["other"], type(text) == "number" and spells[text] or text, player:gsub("%-.+", "*")), length, icon and icons[icon])
+			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], player:gsub("%-.+", "*")), length, icons[icon or textType == "number" and text or key])
 		end
 	end
 end
@@ -796,37 +782,16 @@ end
 function boss:StopBar(text, player)
 	if player then
 		if UnitIsUnit(player, "player") then
-			self:SendMessage("BigWigs_StopBar", self, format(L["you"], type(text) == "number" and spells[text] or text))
+			self:SendMessage("BigWigs_StopBar", self, format(L.you, type(text) == "number" and spells[text] or text))
 		else
-			self:SendMessage("BigWigs_StopBar", self, format(L["other"], type(text) == "number" and spells[text] or text, player:gsub("%-.+", "*")))
+			self:SendMessage("BigWigs_StopBar", self, format(L.other, type(text) == "number" and spells[text] or text, player:gsub("%-.+", "*")))
 		end
 	else
 		self:SendMessage("BigWigs_StopBar", self, type(text) == "number" and spells[text] or text)
 	end
 end
 
--- Examples of API use in a module:
--- self:Sync("abilityPrefix", playerName)
--- self:Sync("ability")
-function boss:Sync(...) core:Transmit(...) end
-
-do
-	local sentWhispers = {}
-	local function filter(self, event, msg) if sentWhispers[msg] or msg:find("^<BW>") or msg:find("^<DBM>") then return true end end
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
-
-	function boss:Whisper(key, player, spellName, noName)
-		self:SendMessage("BigWigs_Whisper", self, key, player, spellName, noName)
-		if not checkFlag(self, key, C.WHISPER) then return end
-		local msg = noName and spellName or format(L["you"], spellName)
-		sentWhispers[msg] = true
-		if UnitIsUnit(player, "player") or not UnitIsPlayer(player) or not core.db.profile.whisper then return end
-		if UnitInRaid("player") and not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player") then return end
-		SendChatMessage("<BW> " .. msg, "WHISPER", nil, player)
-	end
-end
-
+-- ICONS
 function boss:PrimaryIcon(key, player)
 	if key and not checkFlag(self, key, C.ICON) then return end
 	if not player then
@@ -844,6 +809,48 @@ function boss:SecondaryIcon(key, player)
 		self:SendMessage("BigWigs_SetRaidIcon", player, 2)
 	end
 end
+
+-- MISC
+function boss:Flash(key)
+	if not checkFlag(self, key, C.FLASH) then return end
+	self:SendMessage("BigWigs_Flash", self, key)
+end
+
+function boss:Say(key, msg, directPrint)
+	if not checkFlag(self, key, C.SAY) then return end
+	if directPrint then
+		SendChatMessage(msg, "SAY")
+	else
+		SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "SAY")
+	end
+end
+
+function boss:PlaySound(key, sound)
+	if not checkFlag(self, key, C.MESSAGE) then return end
+	self:SendMessage("BigWigs_Sound", sound)
+end
+
+do
+	local sentWhispers = {}
+	local function filter(self, event, msg) if sentWhispers[msg] or msg:find("^<BW>") or msg:find("^<DBM>") then return true end end
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
+
+	function boss:Whisper(key, player, spellName, noName)
+		self:SendMessage("BigWigs_Whisper", self, key, player, spellName, noName)
+		if not checkFlag(self, key, C.WHISPER) then return end
+		local msg = noName and spellName or format(L.you, spellName)
+		sentWhispers[msg] = true
+		if UnitIsUnit(player, "player") or not UnitIsPlayer(player) or not core.db.profile.whisper then return end
+		if UnitInRaid("player") and not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player") then return end
+		SendChatMessage("<BW> " .. msg, "WHISPER", nil, player)
+	end
+end
+
+-- Examples of API use in a module:
+-- self:Sync("abilityPrefix", playerName)
+-- self:Sync("ability")
+function boss:Sync(...) core:Transmit(...) end
 
 function boss:AddSyncListener(sync)
 	core:AddSyncListener(self, sync)
@@ -867,20 +874,20 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk)
 
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
-		self:Message(key, format(L["custom_start"], boss, berserk, seconds / 60), "Attention")
+		self:Message(key, format(L.custom_start, boss, berserk, seconds / 60), "Attention")
 	end
 
 	-- Half-way to enrage warning.
 	local half = seconds / 2
 	local m = half % 60
 	local halfMin = (half - m) / 60
-	self:DelayedMessage(key, half + m, format(L["custom_min"], berserk, halfMin), "Positive")
+	self:DelayedMessage(key, half + m, format(L.custom_min, berserk, halfMin), "Positive")
 
-	self:DelayedMessage(key, seconds - 60, format(L["custom_min"], berserk, 1), "Positive")
-	self:DelayedMessage(key, seconds - 30, format(L["custom_sec"], berserk, 30), "Urgent")
-	self:DelayedMessage(key, seconds - 10, format(L["custom_sec"], berserk, 10), "Urgent")
-	self:DelayedMessage(key, seconds - 5, format(L["custom_sec"], berserk, 5), "Important")
-	self:DelayedMessage(key, seconds, format(L["custom_end"], boss, berserk), "Important", icon, "Alarm")
+	self:DelayedMessage(key, seconds - 60, format(L.custom_min, berserk, 1), "Positive")
+	self:DelayedMessage(key, seconds - 30, format(L.custom_sec, berserk, 30), "Urgent")
+	self:DelayedMessage(key, seconds - 10, format(L.custom_sec, berserk, 10), "Urgent")
+	self:DelayedMessage(key, seconds - 5, format(L.custom_sec, berserk, 5), "Important")
+	self:DelayedMessage(key, seconds, format(L.custom_end, boss, berserk), "Important", icon, "Alarm")
 
 	self:Bar(key, berserk, seconds, icon)
 end

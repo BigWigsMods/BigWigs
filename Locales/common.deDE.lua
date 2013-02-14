@@ -7,7 +7,7 @@ L.other = "%s: %s"
 L.onboss = "%s on BOSS!"
 L.say = "%s auf MIR!"
 L.on = "%s on %s"
-L.stack = "%2$dx %3$s auf %1$s"
+L.stack = "%dx %s auf %s"
 L.cast = "<Wirkt %s>"
 L.soon = "%s bald!"
 

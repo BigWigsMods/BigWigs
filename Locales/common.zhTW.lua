@@ -7,7 +7,7 @@ L.other = "%s：>%s<！"
 L.onboss = "%s 在 BOSS!"
 L.say = "»我« %s！"
 L.on = "%s 在 %s"
-L.stack = "%2$dx %3$s 在 %1$s"
+L.stack = "%dx %s 在 %s"
 L.cast = "<正在施放：%s>"
 L.soon = "即將 >%s<！"
 
