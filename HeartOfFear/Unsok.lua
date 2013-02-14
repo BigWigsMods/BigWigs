@@ -14,6 +14,7 @@ mod:RegisterEnableMob(62511, 62711) -- Un'sok, Monstrosity
 local explosion = mod:SpellName(106966)
 local phase, primaryIcon = 1, nil
 local reshapeLifeCounter = 1
+local monsterDestabilizeStacks = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -106,6 +107,7 @@ end
 
 function mod:OnEngage(diff)
 	reshapeLifeCounter = 1
+	monsterDestabilizeStacks = 1
 	self:Bar(122784, ("%s (%d)"):format(self:SpellName(122784), reshapeLifeCounter), 20, 122784) --Reshape Life
 	self:Bar(121949, 121949, 24, 121949) --Parasitic Growth
 	self:Bar(121994, 121994, 10, 121994) -- Amber Scalpel
@@ -222,6 +224,7 @@ function mod:Destabilize(args)
 	local id = self:GetCID(args.destGUID)
 	if id == 62511 or id == 62711 then
 		local buffStack = args.amount or 1
+		monsterDestabilizeStacks = id == 62711 and buffStack or monsterDestabilizeStacks
 		self:StopBar(("%s: (%d)%s"):format(id == 62511 and L["unsok_short"] or L["monstrosity_short"], buffStack-1, args.spellName))
 		self:Bar(args.spellId, ("%s: (%d)%s"):format(id == 62511 and L["unsok_short"] or L["monstrosity_short"], buffStack, args.spellName), self:LFR() and 60 or 15, args.spellId)
 	end
@@ -316,7 +319,7 @@ end
 
 function mod:AmberCarapace(args)
 	phase = 2
-	self:Message("stages", EJ_GetSectionInfo(6254), "Attention", "spell_nature_shamanrage") -- Monstrosity
+	self:Message("stages", CL["phase"]:format(2)..": "..EJ_GetSectionInfo(6254), "Attention", "spell_nature_shamanrage") -- Monstrosity
 	self:DelayedMessage("explosion_by_other", 35, CL["custom_sec"]:format(explosion, 20), "Attention", 122402)
 	self:DelayedMessage("explosion_by_other", 40, CL["custom_sec"]:format(explosion, 15), "Attention", 122402)
 	self:DelayedMessage("explosion_by_other", 45, CL["custom_sec"]:format(explosion, 10), "Attention", 122402)
@@ -381,6 +384,7 @@ function mod:MonsterDies()
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 10))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 5))
 	phase = 3
+	self:StopBar(("%s: (%d)%s"):format(L["monstrosity_short"], monsterDestabilizeStacks, self:SpellName(123059)))
 	self:Message("stages", CL["phase"]:format(3), "Attention", 122556) -- Concentrated Mutation
 end
 
