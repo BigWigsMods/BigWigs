@@ -881,21 +881,21 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk)
 
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
-		self:Message(key, format(L.custom_start, boss, berserk, seconds / 60), "Attention")
+		self:Message(key, "Attention", nil, format(L.custom_start, boss, berserk, seconds / 60))
 	end
 
 	-- Half-way to enrage warning.
 	local half = seconds / 2
 	local m = half % 60
 	local halfMin = (half - m) / 60
-	self:DelayedMessage(key, half + m, format(L.custom_min, berserk, halfMin), "Positive")
+	self:DelayedMessage(key, half + m, "Positive", nil, format(L.custom_min, berserk, halfMin))
 
-	self:DelayedMessage(key, seconds - 60, format(L.custom_min, berserk, 1), "Positive")
-	self:DelayedMessage(key, seconds - 30, format(L.custom_sec, berserk, 30), "Urgent")
-	self:DelayedMessage(key, seconds - 10, format(L.custom_sec, berserk, 10), "Urgent")
-	self:DelayedMessage(key, seconds - 5, format(L.custom_sec, berserk, 5), "Important")
-	self:DelayedMessage(key, seconds, format(L.custom_end, boss, berserk), "Important", icon, "Alarm")
+	self:DelayedMessage(key, seconds - 60, "Positive", nil, format(L.custom_min, berserk, 1))
+	self:DelayedMessage(key, seconds - 30, "Urgent", nil, format(L.custom_sec, berserk, 30))
+	self:DelayedMessage(key, seconds - 10, "Urgent", nil, format(L.custom_sec, berserk, 10))
+	self:DelayedMessage(key, seconds - 5, "Important", nil, format(L.custom_sec, berserk, 5))
+	self:DelayedMessage(key, seconds, "Important", "Alarm", format(L.custom_end, boss, berserk), icon)
 
-	self:Bar(key, berserk, seconds, icon)
+	self:Bar(key, seconds, berserk, icon)
 end
 
