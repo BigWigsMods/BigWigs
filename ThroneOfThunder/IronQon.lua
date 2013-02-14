@@ -81,7 +81,7 @@ function mod:OnEngage()
 	self:Berserk(600) -- confirmed for 10 normal
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PowerWarn", "boss2")
 	self:OpenProximity("ej:6870", 10)
-	self:Bar(134926, "~"..self:SpellName(134926), 33, 134926) -- Throw spear
+	self:CDBar(134926, 33) -- Throw spear
 end
 
 --------------------------------------------------------------------------------
@@ -97,23 +97,23 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
 end
 
 function mod:DeadZone(args)
-	self:Message("ej:6914", args.spellName, "Attention", args.spellId)
-	self:Bar("ej:6914", args.spellName, 16, args.spellId)
+	self:Message("ej:6914", "Attention", nil, args.spellId)
+	self:Bar("ej:6914", 16, args.spellId)
 end
 
 -- Quet'zal
 
 function mod:ArcingLightningApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
-	self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId) -- no point for sound since the guy stunned can't do anything
-	self:Bar(args.spellId, args.spellName, 20, args.spellId)
+	self:TargetMessage(args.spellId, args.destName, "Urgent") -- no point for sound since the guy stunned can't do anything
+	self:Bar(args.spellId, 20)
 end
 
 function mod:ArcingLightningRemoved(args)
@@ -127,15 +127,15 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
 end
 
 function mod:Windstorm(args)
-	self:Message("ej:6877", args.spellName, "Attention", args.spellId)
-	self:Bar("ej:6877", args.spellName, 90, args.spellId)
+	self:Message("ej:6877", "Attention", nil, args.spellId)
+	self:Bar("ej:6877", 90, args.spellId)
 end
 
 -- Ro'shak
@@ -147,7 +147,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -156,9 +156,9 @@ end
 function mod:Scorched(args)
 	args.amount = args.amount or 1
 	if args.amount > 4 and UnitIsUnit(args.destName, "player") then
-		self:LocalMessage("ej:6871", ("%s (%d)"):format(args.spellName, args.amount), "Important", args.spellId)
+		self:LocalMessage("ej:6871", "Important", nil, ("%s (%d)"):format(args.spellName, args.amount), args.spellId)
 	end
-	self:Bar("ej:6870", "~"..self:SpellName(134628), 6, 134628) -- XXX Unleashed Flame - don't think there is any point to this, maybe coordinating personal cooldowns?
+	self:CDBar("ej:6870", 6, 134628) -- XXX Unleashed Flame - don't think there is any point to this, maybe coordinating personal cooldowns?
 end
 
 do
@@ -172,23 +172,23 @@ do
 		local power = UnitPower(unitId)
 		if power > 64 and prevPower == 0 then
 			prevPower = 65
-			self:Message("molten_energy", ("%s (%d%%)"):format(L["molten_energy"], power), "Attention", 137221)
+			self:Message("molten_energy", "Attention", nil, ("%s (%d%%)"):format(L["molten_energy"], power), 137221)
 		elseif power > 74 and prevPower == 65 then
 			prevPower = 75
-			self:Message("molten_energy", ("%s (%d%%)"):format(L["molten_energy"], power), "Urgent", 137221)
+			self:Message("molten_energy", "Urgent", nil, ("%s (%d%%)"):format(L["molten_energy"], power), 137221)
 		elseif power > 84 and prevPower == 75 then
 			prevPower = 85
-			self:Message("molten_energy", ("%s (%d%%)"):format(L["molten_energy"], power), "Important", 137221)
+			self:Message("molten_energy", "Important", nil, ("%s (%d%%)"):format(L["molten_energy"], power), 137221)
 		elseif power > 94 and prevPower == 85 then
 			prevPower = 95
-			self:Message("molten_energy", ("%s (%d%%)"):format(L["molten_energy"], power), "Important", 137221)
+			self:Message("molten_energy", "Important", nil, ("%s (%d%%)"):format(L["molten_energy"], power), 137221)
 		end
 	end
 end
 
 function mod:MoltenOverloadApplied(args)
-	self:Message("overload_casting", args.spellName, "Important", args.spellId, "Alert")
-	self:Bar("overload_casting", CL["cast"]:format(args.spellName), 10, args.spellId) -- XXX don't think there is any point to this, maybe coordinating raid cooldowns?
+	self:Message("overload_casting", "Important", "Alert", args.spellId)
+	self:Bar("overload_casting", 10, CL["cast"]:format(args.spellName), args.spellId) -- XXX don't think there is any point to this, maybe coordinating raid cooldowns?
 	self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss2")
 end
 
@@ -200,7 +200,7 @@ do
 		local player = UnitName("boss2target")
 		if player and (not UnitDetailedThreatSituation("boss2target", "boss2") or fired > 13) then
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
-			mod:TargetMessage(spellId, spellId, player, "Urgent", spellId, "Alarm")
+			mod:TargetMessage(spellId, player, "Urgent", "Alarm")
 			mod:CancelTimer(timer)
 			timer = nil
 			if UnitIsUnit("boss2target", "player") then
@@ -217,7 +217,7 @@ do
 		end
 	end
 	function mod:ThrowSpear(args)
-		self:Bar(args.spellId, "~"..args.spellName, 33, args.spellId)
+		self:CDBar(args.spellId, 33)
 		fired = 0
 		if not timer then
 			timer = self:ScheduleRepeatingTimer(spearWarn, 0.05, args.spellId)
@@ -232,14 +232,14 @@ function mod:Deaths(args)
 		self:CloseProximity("ej:6870")
 		self:StopBar(137221) -- Molten Overload
 		self:StopBar(134628) -- Unleashed Flame
-		self:Bar("ej:6877", 136577, 50, 136577) -- Windstorm
-		self:Bar(136192, 136192, 17, 136192) -- Arcing Lightning
+		self:Bar("ej:6877", 50, 136577) -- Windstorm
+		self:Bar(136192, 17, 136192) -- Arcing Lightning
 		self:OpenProximity(136192, 8) -- Arcing Lightning -- assume 8 yards
 	elseif args.mobId == 68080 then -- Quet'zal
 		self:StopBar(136577) -- Windstorm
 		self:StopBar(136192) -- Arcing Lightning
 		self:CloseProximity(136192)
-		self:Bar("ej:6914", 137226, 7, 137226) -- Dead Zone
+		self:Bar("ej:6914", 7, 137226) -- Dead Zone
 	elseif args.mobId == 68081 then -- Dam'ren
 		self:StopBar(137226) -- Dead zone
 	elseif args.mobId == 68078 then -- Iron Qon

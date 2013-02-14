@@ -61,9 +61,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(137313, 137313, 93, 137313) -- Lightning Storm
-	self:Bar(137175, 137175, 30, 137175) -- Thundering Throw
-	self:Bar(137162, "~"..self:SpellName(137162), 7, 137162) -- Static Burst -- again, is there even a point for such a short bar?
+	self:Bar(137313, 93) -- Lightning Storm
+	self:Bar(137175, 30) -- Thundering Throw
+	self:CDBar(137162, 7) -- Static Burst -- again, is there even a point for such a short bar?
 	self:Berserk(420) -- XXX Soft enrage, at this point you should have 4 pools up leaving very little room for activities -- real Berserk is not yet confirmed
 end
 
@@ -72,12 +72,12 @@ end
 --
 
 function mod:LightningStormDuration(args)
-	self:Bar("storm_duration", CL["cast"]:format(args.spellName), 15, args.spellId) -- help with organizing raid cooldowns
+	self:Bar("storm_duration", 15, CL["cast"]:format(args.spellName), args.spellId) -- help with organizing raid cooldowns
 end
 
 function mod:LightningStorm(args)
-	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Long")
-	self:Bar(args.spellId, args.spellName, 93, args.spellId)
+	self:Message(args.spellId, "Important", "Long")
+	self:Bar(args.spellId, 93)
 end
 
 function mod:ThunderingThrowRemoved()
@@ -91,8 +91,8 @@ function mod:ThunderingThrowRemoved()
 end
 
 function mod:ThunderingThrow(_, _, _, _, target)
-	self:Message(137175, self:SpellName(137175), "Attention", 137175, "Alert")
-	self:Bar(137175, self:SpellName(137175), 90, 137175)
+	self:Message(137175, "Attention", "Alert")
+	self:Bar(137175, 90)
 	self:SecondaryIcon(137175, target)
 	if not UnitIsUnit(target, "player") then -- no point opening proximity for the thrown tank
 		self:CloseProximity("ej:7741") -- close this before opening another ( in case it was open )
@@ -107,7 +107,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -122,8 +122,8 @@ function mod:FocusedLightningRemoved()
 end
 
 function mod:FocusedLightning(args)
-	self:Bar("ej:7741", "~"..args.spellName, 11, args.spellId) -- XXX not sure if there is any point to have such a short bar for this
-	self:TargetMessage("ej:7741", args.spellName, args.destName, "Urgent", args.spellId, "Alarm")
+	self:CDBar("ej:7741", 11, args.spellId) -- XXX not sure if there is any point to have such a short bar for this
+	self:TargetMessage("ej:7741", args.destName, "Urgent", "Alarm", args.spellId)
 	self:PrimaryIcon("ej:7741", args.destName)
 	if UnitIsUnit(args.destName, "player") then
 		self:RegisterUnitEvent("UNIT_AURA", "FocusedLightningRemoved", "player") -- There is no APPLIED or REMOVED CLEU event for this yet and using the explosion damage to remove icon and close proximity could be innacurate
@@ -134,8 +134,8 @@ end
 
 function mod:StaticBurst(args)
 	-- This is intentionally not a tank only warning!
-	self:Message(args.spellId, args.spellName, "Attention", args.spellId)
-	self:Bar(args.spellId, "~"..args.spellName, 23, args.spellId)
+	self:Message(args.spellId, "Attention")
+	self:CDBar(args.spellId, 23)
 end
 
 do
@@ -145,7 +145,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, L["in_water"], "Personal", args.spellId, "Info")
+			self:LocalMessage(args.spellId, "Personal", "Info", L["in_water"])
 			self:Flash(args.spellId)
 		end
 	end
@@ -158,7 +158,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end

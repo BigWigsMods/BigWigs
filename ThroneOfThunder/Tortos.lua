@@ -66,8 +66,8 @@ end
 --
 
 function mod:QuakeStomp(args)
-	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alert")
-	self:Bar(args.spellId, args.spellName, 47, args.spellId)
+	self:Message(args.spellId, "Important", "Alert")
+	self:Bar(args.spellId, 47, args.spellId)
 end
 
 do
@@ -77,34 +77,32 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info") -- it is probably over you not under you
+			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName)) -- it is probably over you not under you
 			self:Flash(args.spellId)
 		end
 	end
 end
 
 function mod:FuriousStoneBreath(args)
-	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Long")
-	self:Bar(args.spellId, args.spellName, 46, args.spellId)
+	self:Message(args.spellId, "Important", "Long")
+	self:Bar(args.spellId, 46, args.spellId)
 end
 
 do
 	local function announceKickable()
-		mod:Message("kick", L["kickable_turtles"], "Attention", 1766)
+		mod:Message("kick", L["kickable_turtles"]:format(announceKickable), "Attention", 1766)
 	end
 	function mod:ShellBlock()
 		kickable = kickable + 1
 		self:ScheduleTimer(announceKickable, 2)
 	end
-	function mod:ShellBlock()
+	function mod:ShellConcussion()
 		kickable = kickable - 1
 		self:ScheduleTimer(announceKickable, 2)
 	end
 end
 
 function mod:CallOfTortos(args)
-	self:Message(args.spellId, args.spellName, "Urgent", args.spellId)
-	self:Bar(args.spellId, args.spellName, 60, args.spellId)
+	self:Message(args.spellId, "Urgent")
+	self:Bar(args.spellId, 60)
 end
-
-

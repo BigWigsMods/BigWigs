@@ -84,13 +84,13 @@ end
 
 function mod:OnEngage()
 	self:Berserk(720) -- XXX assumed
-	self:Bar("stages", CL["phase"]:format(2), 184, 137440)
+	self:Bar("stages", 184, CL["phase"]:format(2), 137440)
 	deadBosses = 0
 	icyShadowsTimer = nil
 	self:OpenProximity("proximity", 8)
-	self:Bar("ej:7631", "~"..cosmicBarrage, 14, 136752)
-	self:Bar("ej:7643", "~"..self:SpellName(137404), 22, 137404) -- Tears of the Sun
-	if self:Tank() or self:Healer() then self:Bar("ej:7643", "~"..self:SpellName(137375), 50, 137375) end -- Beast of Nightmares
+	self:CDBar("ej:7631", 14, cosmicBarrage, 136752)
+	self:CDBar("ej:7643", 22, self:SpellName(137404), 137404) -- Tears of the Sun
+	if self:Tank() or self:Healer() then self:CDBar("ej:7643", 50, self:SpellName(137375), 137375) end -- Beast of Nightmares
 
 end
 
@@ -104,8 +104,8 @@ end
 
 -- Maybe should merge soem of these into 1 function?
 function mod:Tiger(args)
-	self:Message("ej:7664", args.spellName, "Positive", args.spellId)
-	self:Bar("ej:7664", args.spellName, 15, args.spellId)
+	self:Message("ej:7664", "Positive", nil, args.spellId)
+	self:Bar("ej:7664", 15, args.spellId)
 end
 
 do
@@ -113,8 +113,8 @@ do
 	function mod:Serpent(args)
 		local t = GetTime()
 		if t-prev > 2 then
-			self:Message("ej:7659", args.spellName, "Positive", args.spellId)
-			self:Bar("ej:7659", args.spellName, 15, args.spellId)
+			self:Message("ej:7659", "Positive", nil, args.spellId)
+			self:Bar("ej:7659", 15, args.spellId)
 			prev = t
 		end
 	end
@@ -125,7 +125,7 @@ do
 	function mod:Crane(args)
 		local t = GetTime()
 		if t-prev > 2 then
-			self:Message("ej:7658", args.spellName, "Positive", args.spellId)
+			self:Message("ej:7658", "Positive", nil, args.spellId)
 			prev = t
 		end
 	end
@@ -136,8 +136,8 @@ do
 	function mod:Ox(args)
 		local t = GetTime()
 		if t-prev > 2 then
-			self:Message("ej:7657", args.spellName, "Positive", args.spellId)
-			self:Bar("ej:7657", args.spellName, 15, args.spellId)
+			self:Message("ej:7657", "Positive", nil, args.spellId)
+			self:Bar("ej:7657", 15, args.spellId)
 			prev = t
 		end
 	end
@@ -156,7 +156,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage("ej:7638", CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:LocalMessage("ej:7638", "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
 			self:Flash("ej:7638")
 		end
 	end
@@ -164,19 +164,19 @@ end
 
 function mod:FanOfFlames(args)
 	args.amount = args.amount or 1
-	self:LocalMessage(args.spellId, CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, args.spellName)
-	self:Bar(args.spellId, "~"..args.spellName, 11, args.spellId)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Info")
+	self:CDBar(args.spellId, 11)
 end
 
 -- Phase 1
 
 function mod:TearsOfTheSunRemoved(args)
-	self:Message("ej:7643", args.spellName, "Attention", args.spellId)
+	self:Message("ej:7643", "Attention", nil, args.spellId)
 end
 
 function mod:TearsOfTheSunApplied(args)
-	self:Message("ej:7643", CL["over"]:format(args.spellName), "Positive", args.spellId)
-	self:Bar("ej:7643", args.spellName, 41, args.spellId)
+	self:Message("ej:7643", "Positive", nil, CL["over"]:format(args.spellName), args.spellId)
+	self:Bar("ej:7643", 41, args.spellId)
 end
 
 --------------------------------------------------------------------------------
@@ -189,7 +189,7 @@ do
 	local icyShadows = mod:SpellName(137440)
 	local function spamIcyShadows(spellId)
 		if UnitDebuff("player", icyShadows) then
-			mod:LocalMessage(spellId, CL["underyou"]:format(icyShadows), "Personal", spellId, "Info")
+			mod:LocalMessage(spellId, "Personal", "Info", CL["underyou"]:format(icyShadows))
 		else
 			mod:CancelTimer(icyShadowsTimer)
 			icyShadowsTimer = nil
@@ -197,7 +197,7 @@ do
 	end
 	function mod:IcyShadows(args)
 		if UnitIsUnit("player", args.destName) then
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			if not icyShadowsTimer then
 				icyShadowsTimer = self:ScheduleRepeatingTimer(spamIcyShadows, 2, args.spellId)
 			end
@@ -206,19 +206,19 @@ do
 end
 
 function mod:IceComet(args)
-	self:Message("ej:7649", args.spellName, "Positive", args.spellId)
-	self:Bar("ej:7649", "~"..args.spellName, 23, args.spellId)
+	self:Message("ej:7649", "Positive", nil, args.spellId)
+	self:CDBar("ej:7649", 23, args.spellId)
 end
 
 -- Phase 1
 
 function mod:BeastOfNightmares(args)
 	if UnitIsUnit("player", destName) or self:Tank() then -- this is for tank
-		self:LocalMessage("ej:7634", CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
-		self:Bar("ej:7634", args.spellName, 51, args.spellId)
+		self:LocalMessage("ej:7634", "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
+		self:Bar("ej:7634", 51, args.spellId)
 	elseif self:Healer() then
-		self:LocalMessage("ej:7634", args.spellName, "Attention", args.spellId, nil, args.destName)
-		self:Bar("ej:7634", args.spellName, 51, args.spellId)
+		self:TargetMessage("ej:7634", args.destName, "Attention", nil, args.spellId, nil, true)
+		self:Bar("ej:7634", 51, args.spellId)
 	end
 end
 
@@ -231,23 +231,23 @@ function mod:Phases()
 	-- XXX could probably use some other event instead like: "<2319.7 01:50:18> [UNIT_SPELLCAST_SUCCEEDED] Lu'lin [[boss1:Dissipate::0:137187]]", -- [589]
 	-- if last phase has something like that too, probably should use those instead
 	if 68904 == self:GetCID(UnitGUID("boss1")) and not UnitExists("boss2") then -- 2nd phase
-		self:Bar("stages", CL["phase"]:format(3), 184, 138688)
-		self:Message("stages", CL["phase"]:format(2), "Positive", 137401, "Long")
+		self:Bar("stages", 184, CL["phase"]:format(3), 138688)
+		self:Message("stages", "Positive", "Long", CL["phase"]:format(2), 137401)
 		self:StopBar(137404) -- Tears of the Sun
 		self:StopBar(137375) -- Beast of Nightmares
-		self:StopBar("~"..cosmicBarrage)
-		self:Bar("ej:7649", "~"..iceComet, 23, 137419)
+		self:StopBar(cosmicBarrage)
+		self:CDBar("ej:7649", 23, iceComet, 137419)
 	elseif 68904 == self:GetCID(UnitGUID("boss1")) and 68905 == self:GetCID(UnitGUID("boss2")) then -- do it like this in case modules stays enabled, so we don't randomly do stuff when other encounter is engaged
-		self:Message("stages", CL["phase"]:format(3), "Positive", 137401, "Long")
-		self:StopBar("~"..iceComet)
-		self:StopBar("~"..fanOfFlames)
+		self:Message("stages", "Positive", "Long", CL["phase"]:format(3), 137401)
+		self:StopBar(iceComet)
+		self:StopBar(fanOfFlames)
 	end
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 136752 then -- channel start of Cosmic Barrage
-		self:Message("ej:7631", spellName, "Urgent", spellId, "Alarm")
-		self:Bar("ej:7631", "~"..spellName, 20, spellId)
+		self:Message("ej:7631", "Urgent", "Alarm", spellId)
+		self:CDBar("ej:7631", 20, spellId)
 	end
 end
 

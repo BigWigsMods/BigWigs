@@ -89,8 +89,8 @@ end
 
 function mod:OnEngage()
 	self:Berserk(600) -- XXX Assumed
-	self:Bar(138467, "~"..self:SpellName(138467), 15, 138467) -- Lingering Gaze
-	self:Bar(136932, forceOfWill, 31, 136932)
+	self:CDBar(138467, 15) -- Lingering Gaze
+	self:Bar(136932, 31, forceOfWill)
 	blueRayController, redRayController = nil, nil
 	redAddLeft = 3
 	lifedranJumps = 0
@@ -107,7 +107,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -115,9 +115,9 @@ end
 
 function mod:DisintegrationBeam(_, spellName, _, _, spellId)
 	if spellId == 136316 then -- clokwise
-		self:Message("ej:6892", ("%s - %s"):format(spellName, L["clockwise"]), "Attention", 133778)
+		self:Message("ej:6892", "Attention", nil, ("%s - %s"):format(spellName, L["clockwise"]), 133778)
 	elseif spellId == 133775 then -- counter clokwise
-		self:Message("ej:6892", ("%s - %s"):format(spellName, L["counter_clockwise"]), "Attention", 133778)
+		self:Message("ej:6892", "Attention", nil, ("%s - %s"):format(spellName, L["counter_clockwise"]), 133778)
 	end
 end
 
@@ -128,17 +128,17 @@ end
 function mod:LifeDrainApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	lifedranJumps = lifedranJumps + 1
-	self:TargetMessage(args.spellId, ("%s - %d%%"):format(args.spellName, lifedranJumps*60), args.destName, "Important", args.spellId, "Alert") -- maybe this should just be the amount of jumps
+	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", ("%s - %d%%"):format(args.spellName, lifedranJumps*60)) -- maybe this should just be the amount of jumps
 end
 
 function mod:HungryEyeStart(_, _, _, _, target)
-	self:TargetMessage(133798, 133798, target, "Important", 133798, "Alert")
-	self:Bar(133798, CL["cast"]:format(self:SpellName(133798)), 15, 133798) -- XXX somehow verify overall 15 sec duration
+	self:TargetMessage(133798, target, "Important", "Alert")
+	self:Bar(133798, 15, CL["cast"]:format(self:SpellName(133798))) -- XXX somehow verify overall 15 sec duration
 	self:PrimaryIcon(133798, target)
 end
 
 local function annonunceRemainingAdds()
-	mod:Message("ej:6892", ("%s (%d)"):format(L["red_add"], redAddLeft), "Urgent", 136154)
+	mod:Message("ej:6892", "Urgent", nil, ("%s (%d)"):format(L["red_add"], redAddLeft), 136154)
 end
 
 function mod:CrimsonBloom(args)
@@ -147,11 +147,11 @@ function mod:CrimsonBloom(args)
 end
 
 function mod:RedAdd(_, sender)
-	self:Message("ej:6892", L["red_add"], "Urgent", 136154)
+	self:Message("ej:6892", "Urgent", nil, L["red_add"], 136154)
 end
 
 function mod:BlueAdd(_, sender)
-	self:Message("ej:6898",L["blue_add"], "Urgent", 136177)
+	self:Message("ej:6898", "Urgent", nil, L["blue_add"], 136177)
 end
 
 function mod:RedRayController(args)
@@ -165,7 +165,7 @@ function mod:RedRayController(args)
 	end
 	if amount == 3 and redRayController ~= pName then -- try not warn if we know already that we are the controller
 		redRayController = pName
-		self:LocalMessage("ray_controller", L["red_ray_controller"], "Attention", args.spellId, "Long") -- can't be "Personal" cuz that'd make it too blue
+		self:LocalMessage("ray_controller", "Attention", "Long", L["red_ray_controller"], args.spellId) -- can't be "Personal" cuz that'd make it too blue
 	elseif amount ~= 3 then
 		redRayController = nil -- we are not the ray controller
 	end
@@ -182,7 +182,7 @@ function mod:BlueRayController(args)
 	end
 	if amount == 3 and blueRayController ~= pName then -- try not warn if we know already that we are the controller
 		blueRayController = pName
-		self:LocalMessage("ray_controller", L["blue_ray_controller"], "Attention", args.spellId, "Long") -- can't be "Personal" cuz that'd make it too blue
+		self:LocalMessage("ray_controller", "Attention", "Long", L["blue_ray_controller"], args.spellId) -- can't be "Personal" cuz that'd make it too blue
 	elseif amount ~= 3 then
 		blueRayController = nil -- we are not the ray controller
 	end
@@ -192,30 +192,30 @@ function mod:YellowRay(_, sender, _, _, target)
 	self:StopBar(136932) -- Force of Will -- XXX double check if this is not too early to stop the bar
 	self:Bar("ej:6891", L["rays_spawn"], 10, "inv_misc_gem_variety_02") -- only spawn this bar in one of the functions
 	if UnitIsUnit("player", target) then
-		self:LocalMessage("ej:6891", CL["you"]:format("|c00FFFF00"..sender.."|r"), "Positive", 134124, "Alert")
+		self:LocalMessage("ej:6891", "Positive", "Alert", CL["you"]:format("|c00FFFF00"..sender.."|r"), 134124)
 	end
 end
 
 function mod:RedRay(_, sender, _, _, target)
 	if UnitIsUnit("player", target) then
-		self:LocalMessage("ej:6891", CL["you"]:format("|c00FF0000"..sender.."|r"), "Positive", 134123, "Alert")
+		self:LocalMessage("ej:6891", "Positive", "Alert", CL["you"]:format("|c00FF0000"..sender.."|r"), 134123)
 	end
 end
 
 function mod:BlueRay(_, sender, _, _, target)
 	if UnitIsUnit("player", target) then
-		self:LocalMessage("ej:6891", CL["you"]:format("|c000000FF"..sender.."|r"), "Positive", 134122, "Alert")
+		self:LocalMessage("ej:6891", "Positive", "Alert", CL["you"]:format("|c000000FF"..sender.."|r"), 134122)
 	end
 end
 
 
 function mod:ForceOfWill(args)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Long")
+		self:LocalMessage(args.spellId, "Personal", "Long", CL["you"]:format(args.spellName))
 	else
-		self:Message(args.spellId, args.spellName, "Attention", args.spellId)
+		self:Message(args.spellId, "Attention")
 	end
-	self:Bar(args.spellId, args.spellName, 20, args.spellId)
+	self:Bar(args.spellId, 20)
 end
 
 do
@@ -225,7 +225,7 @@ do
 		local t = GetTime()
 		if t-prev > 1 then -- use 1 sec instead of the usual 2, getting out this fast matters
 			prev = t
-			self:LocalMessage(138467, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:LocalMessage(138467, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(138467)
 		end
 	end
@@ -236,20 +236,20 @@ do
 		mod:CloseProximity(spellId)
 	end
 	function mod:LingeringGaze(args)
-		self:Message(args.spellId, args.spellName, "Urgent", args.spellId, "Alarm")
-		self:Bar(args.spellId, "~"..args.spellName, 25, args.spellId)
+		self:Message(args.spellId, "Urgent", "Alarm")
+		self:CDBar(args.spellId, 25)
 		self:OpenProximity(args.spellId, 8) -- EJ says 15 but looks lot less
 		self:ScheduleTimer(closeLingeringProximity, 3, args.spellId) -- cast is 2 sec according to tooltip, but lets add an extra sec for travel time
 	end
 end
 
 function mod:HardStare(args)
-	self:Bar(args.spellId, args.spellName, 12, args.spellId)
+	self:Bar(args.spellId, 12)
 end
 
 function mod:SeriousWound(args)
 	args.amount = args.amount or 1
-	self:LocalMessage(args.spellId, CL["stack"], "Attention", args.spellId, "Info", args.destName, args.amount, args.spellName)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
 end
 
 function mod:Deaths(args)

@@ -101,10 +101,10 @@ function mod:OnEngage()
 	phase = 1
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	wipe(staticShockList)
-	self:Bar(134916, "~"..self:SpellName(134916), 42, 134916) -- Decapitate
-	self:Bar(135095, "~"..self:SpellName(135095), 25, 135095) -- Thunderstruck
+	self:CDBar(134916, 42) -- Decapitate
+	self:CDBar(135095, 25) -- Thunderstruck
 	if UnitBuff("boss1", self:SpellName(135681)) then self:OpenProximity("ej:7239", 8) end
-	self:Bar("conduit_abilities", "~"..L["conduit_ability_meassage"], 15, 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+	self:CDBar("conduit_abilities", 15, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 end
 
 --------------------------------------------------------------------------------
@@ -116,14 +116,14 @@ end
 --
 
 function mod:LightningWhip(args)
-	self:Bar(args.spellId, args.spellName, 46, args.spellId)
-	self:Message(args.spellId, args.spellName, "Attention", args.spellId, "Alert")
+	self:Bar(args.spellId, 46)
+	self:Message(args.spellId, "Attention", "Alert")
 end
 
 do
 	local prev = 0
 	local function warnBallsSoon(spellId)
-		mod:Message(spellId, CL["soon"]:format(mod:SpellName(spellId)), "Attention", spellId) -- should maybe shorten this
+		mod:Message(spellId, "Attention", nil, CL["soon"]:format(mod:SpellName(spellId))) -- should maybe shorten this
 		if proximityOpen ~= "Diffusion Chain" then -- Diffusion Chians has 8 yard, so don't make a 6 yard if that is open already
 			mod:OpenProximity(spellId, 6)
 		end
@@ -136,15 +136,15 @@ do
 				self:CloseProximity(args.spellId)
 			end
 			self:ScheduleTimer(warnBallsSoon, 41, args.spellId)-- reopen it when new balls are about to come
-			self:Bar(args.spellId, args.spellName, 46, args.spellId)
-			self:Message(args.spellId, args.spellName, "Attention", args.spellId)
+			self:Bar(args.spellId, 46)
+			self:Message(args.spellId, "Attention")
 		end
 	end
 end
 
 function mod:FusionSlash(args)
-	self:Bar(args.spellId, "~"..args.spellName, 52, args.spellId)
-	self:TargetMessage(args.spellId, args.spellName, args.destName, "Personal", args.spellId, "Info")
+	self:CDBar(args.spellId, 52)
+	self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
 end
 
 --------------------------------------------------------------------------------
@@ -152,52 +152,52 @@ end
 --
 
 local function warnSmallAdds()
-	mod:Message("ej:7239", CL["soon"]:format(L["diffusion_chain_message"]), "Important", 136295)
+	mod:Message("ej:7239", "Important", nil, CL["soon"]:format(L["diffusion_chain_message"]), 136295)
 end
 
 function mod:OverloadedCircuits()
-	self:Message("stages", CL["phase"]:format(phase), "Positive", 137176, "Info")
+	self:Message("stages", "Positive", "Info", CL["phase"]:format(phase), 137176)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1") -- just to be efficient
-	self:StopBar("~"..self:SpellName(136295)) -- Overcharged
+	self:StopBar(136295) -- Overcharged
 	self:CancelAllTimers()
 	-- stage 2
 	if phase == 2 then
 		self:OpenProximity(136543, 6) -- Summon Ball Lightning
-		self:Bar(136478, "~"..self:SpellName(136478), 46, 136478) -- Fusion Slash
+		self:CDBar(136478, 46) -- Fusion Slash
 	elseif phase == 3 then
-		self:Bar(135095, "~"..self:SpellName(135095), 28, 135095) -- Thunderstruck
-		self:Bar(136889, "~"..self:SpellName(136889), 20, 136889) -- Violent Gale Winds
+		self:CDBar(135095, 28) -- Thunderstruck
+		self:CDBar(136889, 20) -- Violent Gale Winds
 	end
-	self:Bar(136850, "~"..self:SpellName(136850), (phase == 2) and 30 or 15, 136850) -- Lightning Whip
-	self:Bar(136543, "~"..self:SpellName(136543), 19, 136543) -- Summon Ball Lightning
+	self:CDBar(136850, (phase == 2) and 30 or 15) -- Lightning Whip
+	self:CDBar(136543, 19) -- Summon Ball Lightning
 end
 
 function mod:Intermission(args)
 	self:CancelAllTimers()
-	self:StopBar("~"..self:SpellName(134916))  -- Decapitate
-	self:StopBar("~"..self:SpellName(135095))  -- Thunderstruck
+	self:StopBar(134916)  -- Decapitate
+	self:StopBar(135095)  -- Thunderstruck
 	self:StopBar(136850) -- Lightning Whip
 	self:StopBar(136543) -- Summon Ball Lightning
-	self:StopBar("~"..self:SpellName(136478))  -- Furious Slash
+	self:StopBar(136478)  -- Furious Slash
 	self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1") -- just to be efficient
-	self:Message("stages", L["intermission"], "Positive", args.spellId, "Info")
-	self:Bar("stages", L["intermission"], 45, args.spellId)
+	self:Message("stages", "Positive", "Info", L["intermission"], args.spellId)
+	self:Bar("stages", 45, L["intermission"], args.spellId)
 	if isConduitAlive(68696) then
 		self:ScheduleTimer(warnSmallAdds, 1) -- so we don't instantly overwrite previous message
 		self:ScheduleTimer(warnSmallAdds, 35)
 	end
-	if isConduitAlive(68398) then self:Bar(135695, "~"..self:SpellName(135695), 6, 135695) end -- Static Shock
-	if isConduitAlive(68697) then self:Bar(136295, "~"..self:SpellName(136295), 15, 136295) end -- Overcharged
-	if isConduitAlive(68698) then self:Bar("ej:7242", "~"..self:SpellName(136361), 30, 136361) end -- Bouncing Bolt
+	if isConduitAlive(68398) then self:CDBar(135695, 6) end -- Static Shock
+	if isConduitAlive(68697) then self:CDBar(136295, 15) end -- Overcharged
+	if isConduitAlive(68698) then self:CDBar("ej:7242", 30, 136361) end -- Bouncing Bolt
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if phase == 1 and hp < 73 then
-		self:Message("stages", CL["soon"]:format(L["intermission"]), "Positive", "ability_vehicle_launchplayer", "Info")
+		self:Message("stages", "Positive", "Info", CL["soon"]:format(L["intermission"]), "ability_vehicle_launchplayer")
 		phase = 2
 	elseif phase == 2 and hp < 33 then
-		self:Message("stages", CL["soon"]:format(L["intermission"]), "Positive", "ability_vehicle_launchplayer", "Info")
+		self:Message("stages", "Positive", "Info", CL["soon"]:format(L["intermission"]), "ability_vehicle_launchplayer")
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 		phase = 3
 	end
@@ -214,20 +214,20 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
 			self:Flash(args.spellId)
 		end
 	end
 end
 
 function mod:Thunderstruck(args)
-	self:Message(args.spellId, args.spellName, "Attention", args.spellId, "Alert")
-	self:Bar(args.spellId, "~"..args.spellName, 46, args.spellId)
+	self:Message(args.spellId, "Attention", "Alert")
+	self:CDBar(args.spellId, 46)
 end
 
 function mod:Decapitate(args)
-	self:Bar(134916, "~"..args.spellName, 52, 134916)
-	self:TargetMessage(134916, args.spellName, args.destName, "Personal", 134916, "Info")
+	self:CDBar(134916, 52)
+	self:TargetMessage(134916, args.destName, "Personal", "Info")
 	if UnitIsUnit(args.destName, "player") then
 		self:Flash(134916)
 	end
@@ -239,16 +239,16 @@ end
 
 function mod:Boss1Succeeded(unit, spellName, _, _, spellId)
 	if spellId == 136395 then -- Bouncing Bolt -- should somehow try and count how many more bounces are left
-		self:Bar("conduit_abilities", "~"..L["conduit_ability_meassage"], 40, 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+		self:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		-- XXX add bar here
-		self:Message("ej:7242", spellName, "Important", 136361, "Long")
+		self:Message("ej:7242", "Important", "Long", 136361)
 	elseif spellId == 135991 then -- Small Adds
-		self:Bar("conduit_abilities", "~"..L["conduit_ability_meassage"], 40, 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+		self:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		-- XXX add bar here
-		self:Message("ej:7239", L["diffusion_add_message"], "Important", 135681, "Long")
+		self:Message("ej:7239", "Important", "Long", L["diffusion_add_message"], 135681)
 	elseif spellId == 136869 then -- Violent Gale Winds
-		self:Message(136889, spellName, "Important", 136889, "Long")
-		self:Bar(136889, 136889, 30, 136889)
+		self:Message(136889, "Important", "Long")
+		self:Bar(136889, 30)
 	end
 end
 
@@ -260,10 +260,10 @@ do
 				mod:ScheduleTimer(warnSmallAdds, 2) -- so we don't instantly overwrite previous message
 			end
 		else
-			mod:Bar("conduit_abilities", "~"..L["conduit_ability_meassage"], 40, 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+			mod:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		end
 		-- XXX add bar here
-		mod:TargetMessage(spellId, L["overchargerd_message"], overchargedList, "Urgent", spellId, "Alarm")
+		mod:TargetMessage(spellId, overchargedList, "Urgent", "Alarm", L["overchargerd_message"])
 		scheduled = nil
 	end
 	function mod:Overcharged(args)
@@ -280,7 +280,7 @@ function mod:DiffusionChainRemoved()
 end
 
 function mod:DiffusionChainApplied(args)
-	self:Message("ej:7239", L["diffusion_chain_message"], "Important", args.spellId, "Long")
+	self:Message("ej:7239", "Important", "Long", L["diffusion_chain_message"], args.spellId)
 	self:OpenProximity("ej:7239", 8)
 	proximityOpen = "Diffusion Chain"
 end
@@ -295,10 +295,10 @@ do
 	local scheduled = nil
 	local function warnStaticShock(spellId)
 		if UnitExists("boss1") then -- poor mans intermission check
-			mod:Bar("conduit_abilities", "~"..L["conduit_ability_meassage"], 40, 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+			mod:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		end
 		-- XXX add bar here
-		mod:Message(spellId, L["static_shock_message"], "Urgent", spellId, "Alarm")
+		mod:Message(spellId, "Urgent", "Alarm", L["static_shock_message"])
 		scheduled = nil
 		table.sort(staticShockList, function(a,b) return a<b end) -- so targeted proximity opens to the same person for everyone
 		mod:OpenProximity(spellId, 8, staticShockList[1], true)

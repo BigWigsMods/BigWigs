@@ -3,6 +3,7 @@ TODO:
 	look out for lingering presence CLEU in case it gets added by blizzard ( not yet in 10 N ptr )
 	watch out in case Chilled to the Bone gets CLEU
 	full power bar needs heavy testing
+	verify if biting cold and frostbite shares cooldown and handle them appropriately ( right now we handle them as if they had seperate cooldown )
 ]]--
 
 if select(4, GetBuildInfo()) < 50200 then return end
@@ -101,9 +102,9 @@ function mod:OnEngage()
 	bossDead = 0
 	for _, v in pairs(lingeringTracker) do v = 0 end
 	self:OpenProximity("proximity", self:Heroic() and 7 or 5)
-	self:Bar("priestess_adds", "~"..L["priestess_add"], 27, 137203)
-	self:Bar("ej:7062", "~"..self:SpellName(136860), 7, 136860) -- Quicksand
-	self:Bar(136992, 136992, 60, 136992) -- Biting Cold -- XXX not sure if 1 min is right feels too long
+	self:CDBar("priestess_adds", 27, L["priestess_add"], 137203)
+	self:CDBar("ej:7062", 7, 136860) -- Quicksand
+	self:Bar(136992, 60) -- Biting Cold -- XXX not sure if 1 min is right feels too long
 	hasChilledToTheBone = false
 end
 
@@ -113,44 +114,44 @@ end
 
 -- High Priestess Mar'li
 function mod:MarkedSoul(args)
-	self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId, "Alert")
-	self:Bar(args.spellId, L["loa_kills"]:format(args.destName), 20, args.spellId)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert")
+	self:Bar(args.spellId, 20, L["loa_kills"]:format(args.destName))
 	if UnitIsUnit(args.destName, "player") then
 		self:Flash(args.spellId)
 	end
 end
 
 function mod:PriestessAdds(args)
-	self:Message("priestess_adds", args.spellName, "Important", args.spellId, "Alarm")
-	self:Bar("priestess_adds", "~"..L["priestess_add"], 33, args.spellId)
+	self:Message("priestess_adds", "Important", "Alarm", args.spellId)
+	self:CDBar("priestess_adds", 33, L["priestess_add"], args.spellId)
 	-- we use a localized string so we don't have to bother with stopping and restarting bars on posess, since priestess adds share cooldown
 end
 
 -- Sul the Sandcrawler
 function mod:Sandstorm(args)
 	-- Ability is used about 1 sec after the boss gets possessed, so no point to makea bar
-	self:Message(args.spellId, args.spellName, "Urgent", args.spellId, "Alert")
+	self:Message(args.spellId, "Urgent", "Alert")
 end
 
 function mod:Entrapped(args)
 	if UnitIsUnit(args.destName, "player") then
 		self:Flash(136857)
-		self:LocalMessage(136857, args.spellName, "Personal", args.spellId, "Info")
+		self:LocalMessage(136857, "Personal", "Info")
 	elseif self:Dispeller("magic") or ((select(2, UnitClass("player")) == "HUNTER") and (GetSpellCooldown(self:SpellName(53271)) == 0))then -- Master's call works on it too
-		self:LocalMessage(136857, args.spellName, "Attention", args.spellId, nil, args.destName)
+		self:TargetMessage(136857, args.destName, "Attention", nil, nil, nil, true)
 	end
 end
 
 function mod:Ensnared(args)
 	if UnitIsUnit(args.destName, "player") then
-		self:LocalMessage(136878, ("%s (%d)"):format(args.spellName, args.amount or 1), "Attention", args.spellId)
+		self:LocalMessage(136878, "Attention", nil, ("%s (%d)"):format(args.spellName, args.amount or 1))
 	end
 end
 
 function mod:Quicksand(args)
-	self:Bar("ej:7062", "~"..args.spellName, 33, args.spellId)
+	self:CDBar("ej:7062", 33, args.spellId)
 	if UnitIsUnit(args.destName, "player") then
-		self:LocalMessage("ej:7062", CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+		self:LocalMessage("ej:7062", "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
 		self:Flash("ej:7062")
 	end
 end
@@ -158,7 +159,7 @@ end
 -- Kazra'jin
 function mod:RecklessCharge(args)
 	-- XXX Not sure how useful this is, might want to remove it later
-	self:Bar(args.spellId, args.spellName, 6, args.spellId)
+	self:Bar(args.spellId, 6)
 end
 
 do
@@ -168,7 +169,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(137122, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:LocalMessage(137122, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(137122)
 		end
 	end
@@ -178,13 +179,13 @@ end
 
 -- We only use Icon on Biting cold, so people know that if someone has icon over their head, you need to stay away
 function mod:FrostbiteApplied(args)
-	self:TargetMessage(136990, args.spellName, args.destName, "Positive", args.spellId, "Info")
-	self:Bar(136990, args.spellName, 45, args.spellId)
+	self:TargetMessage(136990, args.destName, "Positive", "Info")
+	self:Bar(136990, 45)
 end
 
 function mod:BitingColdApplied(args)
-	self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId, "Alert")
-	self:Bar(args.spellId, args.spellName, 47, args.spellId)
+	self:TargetMessage(args.spellId, args.destName, "Urgent",  "Alert")
+	self:Bar(args.spellId, 47)
 	self:SecondaryIcon(args.spellId, args.destName)
 	if UnitIsUnit(args.destName, "player") then
 		self:Say(args.spellId)
@@ -201,7 +202,7 @@ end
 
 function mod:ChilledToTheBone()
 	if not hasChilledToTheBone and UnitDebuff("player", self:SpellName(137085)) then
-		self:LocalMessage(137085, 137085, "Personal", 137085, "Info")
+		self:LocalMessage(137085, "Personal", "Info")
 		self:Flash(137085)
 		hasChilledToTheBone = true
 	elseif not UnitDebuff("player", self:SpellName(137085)) then
@@ -214,7 +215,7 @@ end
 function mod:Assault(args)
 	args.amount = args.amount or 1
 	if args.amount % 5 == 0 or args.amount > 10 then -- don't spam on low stacks, but spam close to 15
-		self:LocalMessage("assault", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["assault_message"])
+		self:StackMessage("assault", args.destName, args.amount, "Urgent", "Info", L["assault_message"], args.spellId)
 	end
 end
 
@@ -227,19 +228,19 @@ do
 		local power = UnitPower(unitId)
 		if power > 32 and prevPower == 0 then
 			prevPower = 33
-			self:Message(136442, L["hp_to_go_power"]:format(percHPToGo, power), "Attention", 136442)
+			self:Message(136442, "Attention", nil, L["hp_to_go_power"]:format(percHPToGo, power))
 		elseif power > 49 and prevPower == 33 then
 			prevPower = 50
-			self:Message(136442, L["hp_to_go_power"]:format(percHPToGo, power), "Attention", 136442)
+			self:Message(136442, "Attention", nil, L["hp_to_go_power"]:format(percHPToGo, power))
 		elseif power > 69 and prevPower == 50 then
 			prevPower = 70
-			self:Message(136442, L["hp_to_go_power"]:format(percHPToGo, power), "Urgent", 136442)
+			self:Message(136442, "Urgent", nil, L["hp_to_go_power"]:format(percHPToGo, power))
 		elseif power > 79 and prevPower == 70 then
 			prevPower = 80
-			self:Message(136442, L["hp_to_go_power"]:format(percHPToGo, power), "Important", 136442)
+			self:Message(136442, "Important", nil, L["hp_to_go_power"]:format(percHPToGo, power))
 		elseif power > 89 and prevPower == 80 then
 			prevPower = 90
-			self:Message(136442, L["hp_to_go_power"]:format(percHPToGo, power), "Important", 136442)
+			self:Message(136442, "Important", nil, L["hp_to_go_power"]:format(percHPToGo, power))
 		end
 	end
 	local fullPower = 66 -- 66 seconds till full power without any lingering presences stacks
@@ -257,12 +258,12 @@ do
 		local mobId = self:GetCID(args.destGUID)
 		local difficultyRegenMultiplier = self:Heroic() and 15 or self:LFR() and 5 or 10
 		local duration = (lingeringTracker[mobId] == 0) and fullPower or (fullPower*(100-lingeringTracker[mobId]*difficultyRegenMultiplier)/100)
-		self:Message(args.spellId, ("%s (%s)"):format(args.spellName, args.destName), "Attention", args.spellId, "Long")
-		self:Bar(args.spellId, L["full_power"], duration, args.spellId)
+		self:Message(args.spellId, "Attention", "Long", ("%s (%s)"):format(args.spellName, args.destName))
+		self:Bar(args.spellId, duration, L["full_power"])
 		-- leave in all the elseif statements to be ready in case they are needed on heroic
 		if mobId == 69132 then -- Priestess
 		elseif mobId == 69131 then -- Frost King
-			self:Bar(136990, 136990, 9.7, 136990) -- Frostbite -- might be 7.5?
+			self:Bar(136990, 9.7) -- Frostbite -- might be 7.5?
 			if self:Heroic() then self:RegisterUnitEvent("UNIT_AURA", "ChilledToTheBone", "player") end
 		elseif mobId == 69134 then -- Kazra'jin
 		elseif mobId == 69078 then -- Sandcrawler
@@ -300,7 +301,7 @@ function mod:Deaths(args)
 		self:StopBar(136990)
 	elseif args.mobId == 69134 then -- Kazra'jin
 	elseif args.mobId == 69078 then -- Sandcrawler
-		self:StopBar("~"..self:SpellName(136860)) -- Quicksand
+		self:StopBar(136860) -- Quicksand
 		self:CloseProximity()
 	end
 	bossDead = bossDead + 1

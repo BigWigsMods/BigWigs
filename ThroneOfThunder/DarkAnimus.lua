@@ -89,7 +89,7 @@ end
 --
 
 function mod:FullPower(args)
-	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Long")
+	self:Message(args.spellId, "Important", "Long")
 	self:Flash(args.spellId)
 end
 
@@ -106,35 +106,35 @@ do
 		local caster = isCaster()
 		local color = caster and "Personal" or "Attention"
 		local sound = caster and "Long" or nil
-		self:Message(args.spellId, args.spellName, color, args.spellId, sound)
+		self:Message(args.spellId, color, sound)
 		if caster then self:Flash(args.spellId) end
 	end
 end
 
 function mod:Empower(args)
-	self:Message(138780, args.spellName, "Attention", args.spellId)
-	self:Bar(138780, "~"..args.spellName, 30, args.spellId)
+	self:Message(138780, "Attention")
+	self:CDBar(138780, 30)
 end
 
 function mod:AnimaFont(args)
-	self:Message(args.spellId, args.spellName, "Urgent", args.spellId, "Alarm")
-	self:Bar(args.spellId, CL["cast"]:format(args.spellName), 30, args.spellId) -- this is duration, cooldowns seems to be 33-46
+	self:Message(args.spellId, "Urgent", "Alarm")
+	self:Bar(args.spellId, 30, CL["cast"]:format(args.spellName)) -- this is duration, cooldowns seems to be 33-46
 end
 
 function mod:AnimaRing(args)
-	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alert")
-	self:Bar(args.spellId, "~"..args.spellName, 22, args.spellId)
+	self:Message(args.spellId, "Important", "Alert")
+	self:CDBar(args.spellId, 22)
 end
 
 function mod:SiphonAnima(args)
-	self:Message(args.spellId, args.spellName, "Attention", args.spellId)
-	self:Bar(args.spellId, args.spellName, 30, args.spellId)
+	self:Message(args.spellId, "Attention")
+	self:Bar(args.spellId, 30)
 end
 
 function mod:BossEngage()
 	if not self.isEngaged then return end -- XXX is this even needed?
 	if 69427 == self:GetCID(UnitGUID("boss1")) then
-		self:Bar(138644, 138644, 30, 138644) -- Siphon Anima
+		self:Bar(138644, 30) -- Siphon Anima
 	end
 end
 
@@ -144,10 +144,10 @@ end
 
 function mod:ExplosiveSlam(args)
 	args.amount = args.amount or 1
-	self:LocalMessage("slam", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["slam_message"])
+	self:LocalMessage("slam", args.destName, args.amount, "Urgent", "Info", L["slam_message"], args.spellId)
 	-- not sure if bars are needed
 	self:StopBar(("%s: %s (%d)"):format(L["slam_message"], args.destName, args.amount-1))
-	self:Bar("slam", ("%s: %s (%d)"):format(L["slam_message"], args.destName, args.amount), 25, args.spellId)
+	self:Bar("slam", 25, ("%s: %s (%d)"):format(L["slam_message"], args.destName, args.amount), args.spellId)
 end
 
 function mod:MatterSwapRemoved(args)
@@ -158,11 +158,11 @@ end
 function mod:MatterSwapApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
+		self:LocalMessage(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:Flash(args.spellId)
 	elseif self:Dispeller("magic") then
-		self:LocalMessage(args.spellId, args.spellName, "Important", args.spellId, "Alarm", args.destName)
-		self:Bar(args.spellId, CL["other"]:format(args.spellName, args.destName), 12, args.spellId)
+		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", nil, nil, true)
+		self:Bar(args.spellId, 12, CL["other"]:format(args.spellName, args.destName))
 	end
 end
 
@@ -177,7 +177,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -186,11 +186,9 @@ end
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg, sender)
 	if sender == crimsonWake then -- Crimson Wake
 		self:Say(138485, CL["say"]:format(crimsonWake))
-		self:Bar(138485, CL["you"]:format(crimsonWake), 30, 138485)
-		self:DelayedMessage(138485, 30, CL["over"]:format(crimsonWake), "Positive", 138485)
-		self:LocalMessage(138485, CL["you"]:format(crimsonWake), "Urgent", 138485, "Alarm")
+		self:Bar(138485, 30, CL["you"]:format(crimsonWake))
+		self:DelayedMessage(138485, 30, "Positive", nil, CL["over"]:format(crimsonWake))
+		self:LocalMessage(138485, "Urgent", "Alarm", CL["you"]:format(crimsonWake))
 		self:Flash(138485)
 	end
 end
-
-

@@ -75,8 +75,8 @@ end
 function mod:OnEngage()
 	self:OpenProximity("proximity", 8)
 	self:Berserk(600) -- XXX assumed
-	self:Bar(134380, 134380, 48, 134380) -- Quills
-	self:Bar(134370, 134370, 93, 134370) -- Down Draft
+	self:Bar(134380, 48) -- Quills
+	self:Bar(134370, 93) -- Down Draft
 	nestCounter = 0
 	feedingAllowed = false
 end
@@ -87,7 +87,7 @@ end
 
 function mod:FeedYoung(args)
 	if not feedingAllowed then return end
-	self:Message("nest", args.spellName, "Positive", args.spellId) -- Positive because it is green!
+	self:Message("nest", "Positive", nil, args.spellId) -- Positive because it is green!
 	feedingAllowed = false
 end
 
@@ -101,31 +101,31 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message("nest", L["young_egg_hatching"], "Attention", args.spellId) -- this might be redundant, if we use the emote to warn for hatching nests
-			self:Bar("nest", L["young_egg_hatching"], 10, args.spellId) -- this is not redundant, keep this!
+			self:Message("nest", "Attention", nil, L["young_egg_hatching"], args.spellId) -- this might be redundant, if we use the emote to warn for hatching nests
+			self:Bar("nest", 10, L["young_egg_hatching"], args.spellId) -- this is not redundant, keep this!
 		end
 	end
 end
 
 function mod:HatchUpperNest()
 	nestCounter = nestCounter + 1
-	self:Message("nest", L["upper_nest"], "Attention", "misc_arrowlup", "Alert")
-	self:Bar("nest", L["lower_nest"], 30, "misc_arrowdown")
+	self:Message("nest", "Attention", "Alert", L["upper_nest"], "misc_arrowlup")
+	self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
 end
 
 function mod:HatchLowerNest()
 	nestCounter = nestCounter + 1
-	self:Message("nest", L["lower_nest"], "Attention", "misc_arrowdown", "Alert")
+	self:Message("nest", "Attention", "Alert", L["lower_nest"], "misc_arrowdown")
 	if nestCounter % 3 == 0 then -- XXX assume every 4th is upper nest
-		self:Bar("nest", L["upper_nest"], 30, "misc_arrowlup")
+		self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
 	else
-		self:Bar("nest", L["lower_nest"], 30, "misc_arrowdown")
+		self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
 	end
 end
 
 do
 	local function flightMessage(remainingTime)
-		mod:LocalMessage("ej:7360", CL["custom_sec"]:format(L["flight_over"], remainingTime), "Personal", 133755, (remainingTime<5) and "Info" or nil)
+		mod:LocalMessage("ej:7360", "Personal", (remainingTime<5) and "Info" or nil, CL["custom_sec"]:format(L["flight_over"], remainingTime), 133755)
 	end
 	local function flightFlash()
 		mod:Flash("ej:7360")
@@ -135,30 +135,30 @@ do
 		self:ScheduleTimer(flightMessage, 5, 5)
 		self:ScheduleTimer(flightMessage, 8, 2)
 		self:ScheduleTimer(flightMessage, 9, 1) -- A bit of spam, but it is necessary!
-		self:Bar("ej:7360", args.spellName, 10, args.spellId)
+		self:Bar("ej:7360", 10, args.spellId)
 		self:ScheduleTimer(flightFlash, 8)
 	end
 end
 
 function mod:DownDraft(args)
-	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Long")
-	self:Bar(args.spellId, args.spellName, 93, args.spellId)
+	self:Message(args.spellId, "Important", "Long")
+	self:Bar(args.spellId, 93)
 end
 
 function mod:Quills(args)
 	self:Flash(args.spellId)
-	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Long")
-	self:Bar(args.spellId, args.spellName, 63, args.spellId)
+	self:Message(args.spellId, "Important", "Long")
+	self:Bar(args.spellId, 63)
 end
 
 function mod:TalonRake(args)
 	args.amount = args.amount or 1
-	self:LocalMessage(args.spellId, CL["stack"], "Attention", args.spellId, "Info", args.destName, args.amount, args.spellName)
-	self:Bar(args.spellId, "~"..args.spellName, 15, args.spellId)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
+	self:CDBar(args.spellId, 15)
 end
 
 function mod:InfectedTalons(args)
 	if args.amount % 2 ~= 0 then return end
-	self:LocalMessage(args.spellId, CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, args.spellName)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Info")
 end
 
