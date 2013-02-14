@@ -39,7 +39,6 @@ end
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "ruRU")
 if L then
 	L.spear_removed = "Ваше Пронзающее копье снялось!"
-	L.residue_removed = "%s снялся!"
 
 	L.mending_desc = "|cFFFF0000ВНИМАНИЕ: Будет показываться таймер только для вашего 'фокуса', так как все Зар'тики - боевые лекари имеют разное время восстановления способности.|r "
 	L.mending_warning = "Ваш фокус произносит Лечение!"

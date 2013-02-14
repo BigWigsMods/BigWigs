@@ -81,11 +81,11 @@ end
 do
 	local convertList, scheduled = mod:NewTargetList(), nil
 	local function convert(spellId)
-		mod:TargetMessage(spellId, spellId, convertList, "Attention", spellId)
+		mod:TargetMessage(spellId, convertList, "Attention")
 		scheduled = nil
 	end
 	function mod:Convert(args)
-		self:Bar(args.spellId, "~"..args.spellName, 36, args.spellId)
+		self:CDBar(args.spellId, 36)
 		convertList[#convertList + 1] = args.destName
 		if not scheduled then
 			scheduled = self:ScheduleTimer(convert, 0.1, args.spellId)
@@ -96,11 +96,11 @@ end
 function mod:Attenuation(args)
 	local target = danceTracker and L["zorlok"] or L["echo"]
 	if args.spellId == 122497 or args.spellId == 122479 or args.spellId == 123722 then -- right
-		self:Message("attenuation", L["attenuation_message"]:format(target, L["right"]), "Urgent", "misc_arrowright", "Alarm")
+		self:Message("attenuation", "Urgent", "Alarm", L["attenuation_message"]:format(target, L["right"]), "misc_arrowright")
 	elseif args.spellId == 122496 or args.spellId == 122474 or args.spellId == 123721 then -- left
-		self:Message("attenuation", L["attenuation_message"]:format(target, L["left"]), "Attention", "misc_arrowleft", "Alert")
+		self:Message("attenuation", "Attention", "Alert", L["attenuation_message"]:format(target, L["left"]), "misc_arrowleft")
 	end
-	self:Bar("attenuation", L["attenuation_bar"], 14, args.spellId)
+	self:Bar("attenuation", 14, L["attenuation_bar"], args.spellId)
 	self:Flash("attenuation")
 
 	if platform == 3 and self:Heroic() and forceCount > 0 then
@@ -110,35 +110,35 @@ end
 
 function mod:PreForceAndVerse(_, _, _, _, spellId)
 	if spellId == 122933 then -- Clear Throat
-		self:Message("force", CL["soon"]:format(L["force_message"]), "Important", L.force_icon, "Long")
+		self:Message("force", "Important", "Long", CL["soon"]:format(L["force_message"]), L.force_icon)
 	end
 end
 
 function mod:ForceAndVerse(args)
 	forceCount = forceCount + 1
-	self:Message("force", ("%s (%d)"):format(L["force_message"], forceCount), "Urgent", args.spellId)
-	self:Bar("force", CL["cast"]:format(L["force_message"]), 12, args.spellId)
+	self:Message("force", "Urgent", nil, ("%s (%d)"):format(L["force_message"], forceCount), args.spellId)
+	self:Bar("force", 12, CL["cast"]:format(L["force_message"]), args.spellId)
 	self:Flash("force")
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if platform == 0 and hp < 83 then
-		self:Message("stages", CL["soon"]:format(L["platform_message"]), "Positive", "ability_vehicle_launchplayer", "Info")
+		self:Message("stages", "Positive", "Info", CL["soon"]:format(L["platform_message"]), "ability_vehicle_launchplayer")
 		platform = 1
 	elseif platform == 1 and hp < 63 then
-		self:Message("stages", CL["soon"]:format(L["platform_message"]), "Positive", "ability_vehicle_launchplayer", "Info")
+		self:Message("stages", "Positive", "Info", CL["soon"]:format(L["platform_message"]), "ability_vehicle_launchplayer")
 		platform = 2
 	elseif platform == 2 and ((self:Heroic() and hp < 47) or hp < 43) then
-		self:Message("stages", CL["soon"]:format(CL["phase"]:format(2)), "Positive", "ability_vehicle_launchplayer", "Info")
+		self:Message("stages", "Positive", "Info", CL["soon"]:format(CL["phase"]:format(2)), "ability_vehicle_launchplayer")
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 		platform = 3
 	end
 end
 
 function mod:Exhale(args)
-	self:TargetMessage(args.spellId, args.spellName, args.destName, "Important", args.spellId)
-	self:TargetBar(args.spellId, args.spellName, args.destName, 6, args.spellId)
+	self:TargetMessage(args.spellId, args.destName, "Important")
+	self:TargetBar(args.spellId, 6, args.destName)
 	self:PrimaryIcon(args.spellId, args.destName)
 end
 
@@ -152,11 +152,11 @@ function mod:PlatformSwap()
 		danceTracker = false
 	end
 	if platform == 3 then
-		self:Message("stages", CL["phase"]:format(2), "Positive", "ability_vehicle_launchplayer", "Info")
-		self:StopBar("~"..self:SpellName(122740)) -- Convert
+		self:Message("stages", "Positive", "Info", CL["phase"]:format(2), "ability_vehicle_launchplayer")
+		self:StopBar(122740) -- Convert
 		danceTracker = true
 	else
-		self:Message("stages", L["platform_message"], "Positive", "ability_vehicle_launchplayer", "Info")
+		self:Message("stages", "Positive", "Info", L["platform_message"], "ability_vehicle_launchplayer")
 	end
 end
 

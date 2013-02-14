@@ -39,7 +39,6 @@ end
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "frFR")
 if L then
 	L.spear_removed = "Votre Lance de perforation a été enlevée !"
-	L.residue_removed = "%s enlevé !"
 
 	L.mending_desc = "|cFFFF0000AVERTISSEMENT : seul le délai de votre cible de focalisation sera affiché étant donné que les Soigneurs de bataille zar’thik ont des temps de recharge de soins différents.|r "
 	L.mending_warning = "Votre focalisation est en train d'incanter Guérison !"

@@ -39,7 +39,6 @@ end
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "zhTW")
 if L then
 	L.spear_removed = "你的穿刺之矛被移除了！"
-	L.residue_removed = "%s 已移除！"
 
 	L.mending_desc = "|cFFFF0000注意: 只有你的'專注'目標的計時條會顯示，因為所有的Zar'thik Battle-Menders有分離的治療冷卻時間。|r "
 	L.mending_warning = "你的專注目標正在施放癒合！"

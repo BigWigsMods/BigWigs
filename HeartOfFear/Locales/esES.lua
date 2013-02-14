@@ -39,7 +39,6 @@ end
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "esES") or BigWigs:NewBossLocale("Wind Lord Mel'jarak", "esMX")
 if L then
 	L.spear_removed = "¡Tu Lanza empaladora fue eliminada!"
-	L.residue_removed = "¡%s eliminado!"
 
 	L.mending_desc = "|cFFFF0000WARNING: Solo se mostrará el temporizador para tu 'focus' porque todos los Ensalmador de batalla Zar'thik tienen diferentes CDs de sanación.|r "
 	L.mending_warning = "¡Tu focus está casteando Aliviar!"

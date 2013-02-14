@@ -39,7 +39,6 @@ end
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "deDE")
 if L then
 	L.spear_removed = "Dein durchbohrender Speer wurde entfernt!"
-	L.residue_removed = "%s entfernt!"
 
 	L.mending_desc = "|cFFFF0000WARNUNG: Nur der Timer für dein 'Focusziel' wird angezeigt, da alle Schlachtheiler der Zar'thik einen seperaten Heilungs-Cooldown haben.|r "
 	L.mending_warning = "Dein Focusziel wirkt Besserung!"

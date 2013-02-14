@@ -37,7 +37,6 @@ end
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "zhCN")
 if L then
 	L.spear_removed = "你的穿刺之矛被移除了！"
-	L.residue_removed = "%s 已移除！"
 
 	L.mending_desc = "|cFFFF0000警告: 计时条仅对你的焦点作用|r "
 	L.mending_warning = "你的焦点正在治疗！"

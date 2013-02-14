@@ -39,7 +39,6 @@ end
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "itIT")
 if L then
 	L.spear_removed = "La tua Lancia Impalante è stata rimossa!"
-	L.residue_removed = "%s Rimosso!"
 
 	L.mending_desc = "|cFFFF0000AVVISO: viene visualizzato solo il timer del tuo bersaglio 'focus' perché tutte i Guaritori da Barttaglia Zar'thik hanno tempi di lancio e di recupero separati per le cure.|r "
 	L.mending_warning = "Il tuo focus sta lanciando Guarigione!"

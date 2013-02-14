@@ -71,10 +71,10 @@ function mod:OnEngage()
 	if self:Heroic() then
 		self:Bar(125310, 125310, 60, 125310) -- Blade Tempest
 	end
-	self:Bar(122842, "~"..self:SpellName(122842), 9.8, 122842) -- Tempest Slash
-	self:Bar(123175, "~"..self:SpellName(123175), 20.5, 123175) -- Wind Step
-	self:Bar("unseenstrike", 122994, 30, 122994) -- Unseen Strike
-	self:Bar(123474, L["assault_message"], 15, 123474)
+	self:CDBar(122842, 9.8) -- Tempest Slash
+	self:CDBar(123175, 20.5) -- Wind Step
+	self:Bar("unseenstrike", 30, 122994) -- Unseen Strike
+	self:Bar(123474, 15, L["assault_message"])
 	self:OpenProximity(123175, 8)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	self:Berserk(self:LFR() and 600 or 490)
@@ -89,18 +89,18 @@ end
 --
 
 function mod:BladeTempest(args)
-	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alarm")
-	self:Bar(args.spellId, args.spellName, 60, args.spellId)
+	self:Message(args.spellId, "Important", "Alarm")
+	self:Bar(args.spellId, 60)
 	self:Flash(args.spellId)
 end
 
 function mod:WindStep(args)
-	self:Bar(args.spellId, "~"..args.spellName, 26.5, args.spellId) --26.5-30.2
+	self:CDBar(args.spellId, 26.5) --26.5-30.2
 end
 
 do
 	local timer = nil
-	local strike = mod:SpellName(122949)
+	local strike = mod:SpellName(122994)
 	local function removeIcon(notBoss)
 		mod:CloseProximity("unseenstrike")
 		if not notBoss then
@@ -112,7 +112,7 @@ do
 			timer = nil
 		end
 	end
-	local function warnStrike()
+	local function warnStrike(spellId)
 		local player = UnitDebuff("boss1target", strike) and "boss1target"
 		if not player then -- Most of the time this won't run as boss1target works
 			for i=1, GetNumGroupMembers() do
@@ -127,33 +127,33 @@ do
 			local name, server = UnitName(player)
 			if server then name = name .."-".. server end
 			if UnitIsUnit(player, "player") then
-				mod:Say("unseenstrike", strike)
+				mod:Say("unseenstrike", spellId)
 			else
 				mod:OpenProximity("unseenstrike", 5, name, true)
 			end
-			mod:TargetMessage("unseenstrike", strike, name, "Urgent", L.unseenstrike_icon, "Alert")
-			mod:TargetBar("unseenstrike", strike, name, 5.6, L.unseenstrike_icon)
+			mod:TargetMessage("unseenstrike", name, "Urgent", "Alert", spellId)
+			mod:TargetBar("unseenstrike", 5.6, name, spellId)
 			mod:PrimaryIcon("unseenstrike", name)
 		end
 	end
 	function mod:TayakCasts(_, spellName, _, _, spellId)
 		if spellId == 122949 then --Unseen Strike
-			self:Bar("unseenstrike", "~"..spellName, 53, L.unseenstrike_icon) -- 53-60
-			self:DelayedMessage("unseenstrike", 48, L["unseenstrike_soon"], "Attention", L.unseenstrike_icon, "Alarm")
+			self:CDBar("unseenstrike", 53, L.unseenstrike_icon) -- 53-60
+			self:DelayedMessage("unseenstrike", 48, "Attention", "Alarm", L["unseenstrike_soon"], L.unseenstrike_icon)
 			if not timer then
-				timer = self:ScheduleRepeatingTimer(warnStrike, 0.05) -- ~1s faster than boss emote
+				timer = self:ScheduleRepeatingTimer(warnStrike, 0.05, L.unseenstrike_icon) -- ~1s faster than boss emote
 			end
 			self:ScheduleTimer(removeIcon, 6.2)
 		elseif spellId == 122839 then --Tempest Slash
-			self:Bar(122842, "~"..spellName, self:LFR() and 20.5 or 15.6, 122842)
+			self:CDBar(122842, self:LFR() and 20.5 or 15.6)
 		elseif spellId == 123814 then --Storm Unleashed (Phase 2)
-			self:Message("storm", "20% - "..CL["phase"]:format(2), "Positive", L.storm_icon, "Long")
+			self:Message("storm", "Positive", "Long", "20% - "..CL["phase"]:format(2), L.storm_icon)
 			self:StopBar(125310) --Blade Tempest
-			self:StopBar("~"..L["assault_message"])
-			self:StopBar("~"..self:SpellName(122839)) --Tempest Slash
-			self:StopBar("~"..self:SpellName(122949)) --Unseen Strike
+			self:StopBar(L["assault_message"])
+			self:StopBar(122839) --Tempest Slash
+			self:StopBar(122949) --Unseen Strike
 			self:CancelDelayedMessage(L["unseenstrike_soon"])
-			self:StopBar("~"..self:SpellName(123175)) --Wind Step
+			self:StopBar(123175) --Wind Step
 			self:CloseProximity(123175)
 		end
 	end
@@ -165,9 +165,8 @@ do
 	end
 	function mod:OnSync(sync)
 		if sync == "Strike" then
-			self:Bar("unseenstrike", L["unseenstrike_inc"], 6, L.unseenstrike_icon)
 			if not timer then
-				timer = self:ScheduleRepeatingTimer(warnStrike, 0.05)
+				timer = self:ScheduleRepeatingTimer(warnStrike, 0.05, L.unseenstrike_icon)
 			end
 			self:ScheduleTimer(removeIcon, 6.2, "notboss")
 		end
@@ -175,21 +174,21 @@ do
 end
 
 function mod:Assault(args)
-	self:LocalMessage(123474, CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount or 1, L["assault_message"])
+	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Info", L["assault_message"])
 end
 
 function mod:AssaultCast(args)
 	-- If a tank dies from an assault, it will never apply, and the CD bar won't show. Show it on cast instead.
-	self:Bar(123474, "~"..L["assault_message"], 20.4, args.spellId)
+	self:CDBar(args.spellId, 20.4, L["assault_message"])
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 25 and phase == 1 then -- phase starts at 20
-		self:Message("storm", CL["soon"]:format(CL["phase"]:format(2)), "Positive", L.storm_icon, "Long")
+		self:Message("storm", "Positive", "Long", CL["soon"]:format(CL["phase"]:format(2)), L.storm_icon)
 		phase = 2
 	elseif hp < 14 and phase == 2 then
-		self:Message("storm", CL["soon"]:format(L["side_swap"]), "Positive", L.storm_icon, "Long")
+		self:Message("storm", "Positive", "Long", CL["soon"]:format(L["side_swap"]), L.storm_icon)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
 end
