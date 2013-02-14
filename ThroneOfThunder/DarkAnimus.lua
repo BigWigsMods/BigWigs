@@ -133,7 +133,7 @@ end
 
 function mod:BossEngage()
 	if not self.isEngaged then return end -- XXX is this even needed?
-	if 69427 == self:GetCID(UnitGUID("boss1")) then
+	if 69427 == self:MobId(UnitGUID("boss1")) then
 		self:Bar(138644, 30) -- Siphon Anima
 	end
 end

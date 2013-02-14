@@ -230,14 +230,14 @@ function mod:Phases()
 	self:CheckBossStatus()
 	-- XXX could probably use some other event instead like: "<2319.7 01:50:18> [UNIT_SPELLCAST_SUCCEEDED] Lu'lin [[boss1:Dissipate::0:137187]]", -- [589]
 	-- if last phase has something like that too, probably should use those instead
-	if 68904 == self:GetCID(UnitGUID("boss1")) and not UnitExists("boss2") then -- 2nd phase
+	if 68904 == self:MobId(UnitGUID("boss1")) and not UnitExists("boss2") then -- 2nd phase
 		self:Bar("stages", 184, CL["phase"]:format(3), 138688)
 		self:Message("stages", "Positive", "Long", CL["phase"]:format(2), 137401)
 		self:StopBar(137404) -- Tears of the Sun
 		self:StopBar(137375) -- Beast of Nightmares
 		self:StopBar(cosmicBarrage)
 		self:CDBar("ej:7649", 23, iceComet, 137419)
-	elseif 68904 == self:GetCID(UnitGUID("boss1")) and 68905 == self:GetCID(UnitGUID("boss2")) then -- do it like this in case modules stays enabled, so we don't randomly do stuff when other encounter is engaged
+	elseif 68904 == self:MobId(UnitGUID("boss1")) and 68905 == self:MobId(UnitGUID("boss2")) then -- do it like this in case modules stays enabled, so we don't randomly do stuff when other encounter is engaged
 		self:Message("stages", "Positive", "Long", CL["phase"]:format(3), 137401)
 		self:StopBar(iceComet)
 		self:StopBar(fanOfFlames)

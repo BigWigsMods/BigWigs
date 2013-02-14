@@ -343,7 +343,7 @@ end
 do
 	local thrashSwings = ""
 	function mod:Swing(args)
-		if self:GetCID(args.sourceGUID) ~= 60999 then return end
+		if self:MobId(args.sourceGUID) ~= 60999 then return end
 
 		swingCounter = swingCounter + 1
 		local hitType = tonumber(args.spellId) and _G["DAMAGE"] or _G["MISS"] --or _G["ACTION_SPELL_MISSED_"..damage] --
@@ -435,7 +435,7 @@ do
 end
 
 function mod:BlossomPreWarn(unitId)
-	local mobId = self:GetCID(UnitGUID(unitId))
+	local mobId = self:MobId(UnitGUID(unitId))
 	if mobId == 61046 or mobId == 61038 or mobId == 61042 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 30 then

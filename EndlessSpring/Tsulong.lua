@@ -98,7 +98,7 @@ end
 
 function mod:EngageCheck()
 	self:CheckBossStatus()
-	if UnitExists("boss2") and self:GetCID(UnitGUID("boss2")) == 62969 then
+	if UnitExists("boss2") and self:MobId(UnitGUID("boss2")) == 62969 then
 		bigAddCounter = bigAddCounter + 1
 		if bigAddCounter < 3 then
 			self:CDBar("embodied_terror", 40, ("%s (%d)"):format(L["embodied_terror"], bigAddCounter+1), L.embodied_terror_icon)

@@ -255,7 +255,7 @@ do
 			end
 		end
 		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PossessedHPToGo", "boss1", "boss2", "boss3", "boss4", "boss5") -- need to register all, because they jump around like crazy during the encounter
-		local mobId = self:GetCID(args.destGUID)
+		local mobId = self:MobId(args.destGUID)
 		local difficultyRegenMultiplier = self:Heroic() and 15 or self:LFR() and 5 or 10
 		local duration = (lingeringTracker[mobId] == 0) and fullPower or (fullPower*(100-lingeringTracker[mobId]*difficultyRegenMultiplier)/100)
 		self:Message(args.spellId, "Attention", "Long", ("%s (%s)"):format(args.spellName, args.destName))
@@ -273,7 +273,7 @@ end
 
 function mod:PossessedRemoved(args)
 	self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2", "boss3", "boss4", "boss5") -- for a little bit of performance increase
-	local mobId = self:GetCID(args.destGUID)
+	local mobId = self:MobId(args.destGUID)
 	for i = 1, 5 do
 		local id = ("boss%d"):format(i)
 		local bossGUID = UnitGUID(id)

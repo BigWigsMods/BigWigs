@@ -485,7 +485,7 @@ function boss:Heroic()
 	return difficulty == 5 or difficulty == 6
 end
 
-function boss:GetCID(guid)
+function boss:MobId(guid)
 	if not guid then return -1 end
 	local creatureId = tonumber(guid:sub(6, 10), 16)
 	return creatureId

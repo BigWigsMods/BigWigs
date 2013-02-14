@@ -87,7 +87,7 @@ end
 -- Sha Corruption "doses"
 
 function mod:ShaCorruptionFirst(args)
-	local mobId = self:GetCID(args.destGUID)
+	local mobId = self:MobId(args.destGUID)
 	if mobId == 60583 then -- Kaolan
 		self:Bar(117986, 11) -- Defiled Ground
 	elseif mobId == 60585 then -- Regail
@@ -103,7 +103,7 @@ function mod:ShaCorruptionFirst(args)
 end
 
 function mod:ShaCorruptionSecond(args)
-	local mobId = self:GetCID(args.destGUID)
+	local mobId = self:MobId(args.destGUID)
 	if mobId == 60583 then -- Kaolan
 		self:Bar(117975, 6) -- Expel Corruption
 	elseif mobId == 60585 then -- Regail
@@ -200,7 +200,7 @@ do
 
 	-- Dispeller warning
 	function mod:CleansingWatersDispel(args)
-		local mobId = self:GetCID(args.destGUID)
+		local mobId = self:MobId(args.destGUID)
 		if self:Dispeller("magic", true) and (mobId == 60583 or mobId == 60585 or mobId == 60586) and args.destGUID == UnitGUID(getKillTarget()) then
 			self:LocalMessage(117309, "Important", "Info", CL["on"]:format(args.spellName, args.destName)) --onboss
 		end

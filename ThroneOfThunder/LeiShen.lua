@@ -26,7 +26,7 @@ local proximityOpen = false
 local function isConduitAlive(mobId)
 	local boss = "boss%d"
 	for i=1, 5 do
-		if mobId == mod:GetCID(boss:format(i)) then
+		if mobId == mod:MobId(boss:format(i)) then
 			return boss:format(i)
 		end
 	end

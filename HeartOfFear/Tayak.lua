@@ -159,7 +159,7 @@ do
 	end
 
 	function mod:InstructorUnseenStrike(_, _, _, _, spellId)
-		if spellId == 122949 and self:GetCID(UnitGUID("target")) == 64340 then
+		if spellId == 122949 and self:MobId(UnitGUID("target")) == 64340 then
 			self:Sync("Strike") -- Instructor Maltik
 		end
 	end

@@ -107,7 +107,7 @@ function mod:Crush(message, sender, _, _, target)
 end
 
 function mod:Fury(args)
-	if self:GetCID(args.destGUID) == 63191 then -- only fire once
+	if self:MobId(args.destGUID) == 63191 then -- only fire once
 		self:Bar(args.spellId, args.spellName, self:LFR() and 15 or 30, 119622) -- Rage like icon (swipe and fury have the same)
 		self:Message(args.spellId, ("%s (%d)"):format(args.spellName, args.amount or 1), "Urgent", 119622)
 	end

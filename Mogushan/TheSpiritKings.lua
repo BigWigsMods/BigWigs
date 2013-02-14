@@ -116,7 +116,7 @@ local function isBossActiveById(bossId, bossIdTwo)
 	for i=1, 5 do
 		local unitId = ("boss%d"):format(i)
 		if UnitExists(unitId) then
-			local id = mod:GetCID(UnitGUID(unitId))
+			local id = mod:MobId(UnitGUID(unitId))
 			if id == bossId or id == bossIdTwo then
 				return true
 			end
@@ -138,7 +138,7 @@ do
 		self:Message("cowardice", CL["over"]:format(spellReflect), "Positive", args.spellId)
 	end
 	function mod:SpellReflectWarn(unitId)
-		local id = self:GetCID(UnitGUID(unitId))
+		local id = self:MobId(UnitGUID(unitId))
 		if id == 60708 or id == 61429 then
 			local power = UnitPower(unitId)
 			if power > 74 and prevPower == 0 then
@@ -262,7 +262,7 @@ function mod:EngageCheck()
 	for i=1, 5 do
 		local unitId = ("boss%d"):format(i)
 		if UnitExists(unitId) then
-			local id = self:GetCID(UnitGUID(unitId))
+			local id = self:MobId(UnitGUID(unitId))
 			-- this is needed because of heroic
 			if (id == 60701 or id == 61421) and not bossActivated[60701] then -- Zian
 				bossActivated[60701] = true
@@ -295,7 +295,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 	if spellId == 118205 then -- Inactive Visual
-		local id = self:GetCID(UnitGUID(unitId))
+		local id = self:MobId(UnitGUID(unitId))
 		if (id == 60709 or id == 61423) then -- Qiang
 			self:StopBar(119521) -- Annihilate
 			self:StopBar(117961) -- Impervious Shield
@@ -328,7 +328,7 @@ end
 function mod:BossSwap(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 38 then -- next boss at 30% (Qiang -> Subetai -> Zian -> Meng)
-		local id = self:GetCID(UnitGUID(unitId))
+		local id = self:MobId(UnitGUID(unitId))
 		if bossWarned == 0 and (id == 60709 or id == 61423) then -- Qiang
 			self:Message("ej:5846", CL["soon"]:format(subetai), "Positive", nil, "Info")
 			bossWarned = 1

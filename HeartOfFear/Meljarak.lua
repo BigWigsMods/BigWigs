@@ -113,7 +113,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	for i = 1, 5 do
 		-- Random spawn, check for unit
 		local guid = UnitGUID(("boss%d"):format(i))
-		if guid and self:GetCID(guid) == 62451 then -- The Sra'thik
+		if guid and self:MobId(guid) == 62451 then -- The Sra'thik
 			if phase == 2 then
 				self:CloseProximity(131830)
 			end
@@ -279,7 +279,7 @@ function mod:ImpalingSpearRemoved(args)
 end
 
 function mod:PhaseChange(unitId)
-	if self:GetCID(UnitGUID(unitId)) == 62397 then
+	if self:MobId(UnitGUID(unitId)) == 62397 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 79 and phase == 0 then -- phase starts at 75
 			self:Message("stages", CL["soon"]:format(CL["phase"]:format(2)), "Positive", 131830, "Info")
@@ -292,7 +292,7 @@ function mod:PhaseChange(unitId)
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3", "boss4")
 			for i = 1, 5 do
 				local guid = UnitGUID(("boss%d"):format(i))
-				if guid and self:GetCID(guid) == 62451 then -- The Sra'thik
+				if guid and self:MobId(guid) == 62451 then -- The Sra'thik
 					return
 				end
 			end

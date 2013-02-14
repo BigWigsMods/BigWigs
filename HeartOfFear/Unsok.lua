@@ -221,7 +221,7 @@ function mod:BreakFree(args)
 end
 
 function mod:Destabilize(args)
-	local id = self:GetCID(args.destGUID)
+	local id = self:MobId(args.destGUID)
 	if id == 62511 or id == 62711 then
 		local buffStack = args.amount or 1
 		monsterDestabilizeStacks = id == 62711 and buffStack or monsterDestabilizeStacks
