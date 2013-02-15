@@ -45,14 +45,14 @@ local icons = setmetatable({}, {__index =
 			value = "Interface\\Icons\\" .. key
 		end
 		self[key] = value
-		return self[key]
+		return value
 	end
 })
 local spells = setmetatable({}, {__index =
 	function(self, key)
 		local value = GetSpellInfo(key)
 		self[key] = value
-		return self[key]
+		return value
 	end
 })
 
