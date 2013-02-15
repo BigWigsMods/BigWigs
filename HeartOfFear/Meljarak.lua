@@ -234,7 +234,7 @@ function mod:WindBomb(args)
 end
 
 function mod:Recklessness(args)
-	self:Message("recklessness", "Attention", nil, ("%s (%d)"):format(args.spellName, args.amount or 1), args.spellId)
+	self:Message("recklessness", "Attention", nil, CL["count"]:format(args.spellName, args.amount or 1), args.spellId)
 end
 
 function mod:RecklessnessHeroic(args)

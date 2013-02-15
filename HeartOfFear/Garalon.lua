@@ -71,7 +71,7 @@ function mod:OnEngage(diff)
 	self:Bar(122735, 11) -- Furious Swipe
 	if self:Heroic() then
 		healthCheck = self:ScheduleRepeatingTimer("PrePhase2", 0.5) -- No boss5 support in health events
-		self:Bar(122774, 28, ("%s (%d)"):format(self:SpellName(122774), 1), 122082) -- Crush
+		self:Bar(122774, 28, CL["count"]:format(self:SpellName(122774), 1), 122082) -- Crush
 	end
 end
 
@@ -97,10 +97,10 @@ function mod:Crush(message, sender, _, _, target)
 		self:Bar(122774, 3.6, CL["cast"]:format(self:SpellName(122774))) -- Crush
 	else
 		crushCounter = crushCounter + 1
-		self:Message(122774, "Important", "Alarm", CL["soon"]:format(("%s (%d)"):format(self:SpellName(122774), crushCounter))) -- Crush
+		self:Message(122774, "Important", "Alarm", CL["soon"]:format(CL["count"]:format(self:SpellName(122774), crushCounter))) -- Crush
 		self:Bar(122774, 3.6, CL["cast"]:format(self:SpellName(122774))) -- Crush
 		if self:Heroic() then
-			self:Bar(122774, 36, ("%s (%d)"):format(self:SpellName(122774), crushCounter+1), 122082) -- Crush
+			self:Bar(122774, 36, CL["count"]:format(self:SpellName(122774), crushCounter+1), 122082) -- Crush
 		end
 	end
 	self:Bar(122735, 9) --Furious Swipe
@@ -109,7 +109,7 @@ end
 function mod:Fury(args)
 	if self:MobId(args.destGUID) == 63191 then -- only fire once
 		self:Bar(args.spellId, self:LFR() and 15 or 30, nil, 119622) -- Rage like icon (swipe and fury have the same)
-		self:Message(args.spellId, "Urgent", nil, ("%s (%d)"):format(args.spellName, args.amount or 1), 119622)
+		self:Message(args.spellId, "Urgent", nil, CL["count"]:format(args.spellName, args.amount or 1), 119622)
 	end
 end
 

@@ -108,7 +108,7 @@ end
 function mod:OnEngage(diff)
 	reshapeLifeCounter = 1
 	monsterDestabilizeStacks = 1
-	self:Bar(122784, 20, ("%s (%d)"):format(self:SpellName(122784), reshapeLifeCounter)) --Reshape Life
+	self:Bar(122784, 20, CL["count"]:format(self:SpellName(122784), reshapeLifeCounter)) --Reshape Life
 	self:Bar(121949, 24) --Parasitic Growth
 	self:Bar(121994, 10) -- Amber Scalpel
 	self:Berserk(600) -- Does he even have one?
@@ -151,7 +151,7 @@ end
 
 do
 	local timer, fired = nil, 0
-	local function beamWarn(spellId)
+	local function warnBeam(spellId)
 		fired = fired + 1
 		local player = UnitName("boss1targettarget") --Boss targets an invisible mob, which targets player. Calling boss1targettarget allows us to see it anyways
 		if player and not UnitIsUnit("boss1targettarget", "boss1") then --target target is himself, so he's not targeting off scalple mob yet
@@ -176,7 +176,7 @@ do
 		self:Bar(args.spellId, 50)
 		fired = 0
 		if not timer then
-			timer = self:ScheduleRepeatingTimer(beamWarn, 0.05, args.spellId)
+			timer = self:ScheduleRepeatingTimer(warnBeam, 0.05, args.spellId)
 		end
 	end
 end
@@ -187,9 +187,9 @@ end
 
 function mod:ReshapeLife(args)
 	if phase < 2 then
-		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", ("%s (%d)"):format(args.spellName, reshapeLifeCounter))
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", CL["count"]:format(args.spellName, reshapeLifeCounter))
 		reshapeLifeCounter = reshapeLifeCounter + 1
-		self:Bar(args.spellId, 50, ("%s (%d)"):format(args.spellName, reshapeLifeCounter))
+		self:Bar(args.spellId, 50, CL["count"]:format(args.spellName, reshapeLifeCounter))
 	elseif phase < 3 then
 		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
 		self:Bar(args.spellId, 50)
@@ -230,7 +230,6 @@ function mod:Destabilize(args)
 end
 
 do
-	local last = 0
 	local function warningSpam(spellName)
 		if UnitCastingInfo("player") == spellName then
 			mod:LocalMessage("explosion_casting_by_you", "Personal", "Info", L["you_are_casting"], 122398)
@@ -238,15 +237,12 @@ do
 		end
 	end
 	function mod:AmberExplosionPrevented(args) -- We stunned ourself before it started casting
-		local t = GetTime()
-		if t-last > 4 and UnitIsUnit("player", args.sourceName) then -- Use a throttle so that we don't confuse interrupting a cast (_FAILED) with preventing a cast (also _FAILED)
+		if args.amount == SPELL_FAILED_STUNNED and UnitIsUnit("player", args.sourceName) then
 			self:Bar("explosion_by_you", 13, L["explosion_by_you_bar"], args.spellId) -- cooldown
-			last = t
 		end
 	end
 	function mod:AmberExplosion(args)
 		if UnitIsUnit("player", args.sourceName) then
-			last = GetTime()
 			self:Flash("explosion_casting_by_you")
 			self:Bar("explosion_casting_by_you", 2.5, CL["cast"]:format(explosion), args.spellId)
 			self:Bar("explosion_by_you", 13, L["explosion_by_you_bar"], args.spellId) -- cooldown

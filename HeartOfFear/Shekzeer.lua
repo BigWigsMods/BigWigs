@@ -201,7 +201,7 @@ end
 function mod:AmberTrap(args)
 	local buffStack = args.amount or 1
 	if buffStack < 5 then
-		self:Message(125826, "Attention", nil, ("%s (%d)"):format(args.spellName, buffStack)) --Sticky Resin (124748)
+		self:Message(125826, "Attention", nil, CL["count"]:format(args.spellName, buffStack)) --Sticky Resin (124748)
 	else
 		self:Message(125826, "Attention") --Amber Trap
 	end
