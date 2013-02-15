@@ -132,7 +132,7 @@ end
 
 function mod:Shroud(args)
 	if not self:LFR() then
-		self:TargetMessage(args.spellId, args.destName, "Urgent", nil, L["shroud_message"]))
+		self:TargetMessage(args.spellId, args.destName, "Urgent", nil, L["shroud_message"])
 	end
 end
 
