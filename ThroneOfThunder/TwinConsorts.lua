@@ -213,7 +213,7 @@ end
 -- Phase 1
 
 function mod:BeastOfNightmares(args)
-	if UnitIsUnit("player", destName) or self:Tank() then -- this is for tank
+	if UnitIsUnit("player", args.destName) or self:Tank() then -- this is for tank
 		self:LocalMessage("ej:7634", "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
 		self:Bar("ej:7634", 51, args.spellId)
 	elseif self:Healer() then

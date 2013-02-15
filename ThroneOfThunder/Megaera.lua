@@ -59,7 +59,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "BreathDamage", 139842)
 	self:Log("SPELL_CAST_START", "ArcticFreeze", 139841)
 	self:Log("SPELL_PERIODIC_DAMAGE", "IcyGround", 139909)
-	self:RgisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- XXX Torrent of Ice needs to be switched to CLEU ASAP
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- XXX Torrent of Ice needs to be switched to CLEU ASAP
 	-- Fire
 	self:Log("SPELL_DAMAGE", "BreathDamage", 137730)
 	self:Log("SPELL_CAST_START", "IgniteFlesh", 137729)
