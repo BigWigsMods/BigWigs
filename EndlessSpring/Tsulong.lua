@@ -101,9 +101,9 @@ function mod:EngageCheck()
 	if UnitExists("boss2") and self:MobId(UnitGUID("boss2")) == 62969 then
 		bigAddCounter = bigAddCounter + 1
 		if bigAddCounter < 3 then
-			self:CDBar("embodied_terror", 40, ("%s (%d)"):format(L["embodied_terror"], bigAddCounter+1), L.embodied_terror_icon)
+			self:CDBar("embodied_terror", 40, CL["count"]:format(L["embodied_terror"], bigAddCounter+1), L.embodied_terror_icon)
 		end
-		self:Message("embodied_terror", "Attention", nil, ("%s (%d)"):format(L["embodied_terror"], bigAddCounter), L.embodied_terror_icon)
+		self:Message("embodied_terror", "Attention", nil, CL["count"]:format(L["embodied_terror"], bigAddCounter), L.embodied_terror_icon)
 		self:CDBar(123011, 5) -- Terrorize (overwrites the previous bar)
 	end
 end
@@ -115,7 +115,7 @@ end
 
 function mod:DreadShadows(args)
 	if UnitIsUnit("player", args.destName) and args.amount > (self:Heroic() and 5 or 11) and args.amount % 3 == 0 then -- might need adjusting
-		self:LocalMessage(args.spellId, "Personal", "Info", ("%s (%d)"):format(args.spellName, args.amount))
+		self:LocalMessage(args.spellId, "Personal", "Info", CL["count"]:format(args.spellName, args.amount))
 	end
 end
 

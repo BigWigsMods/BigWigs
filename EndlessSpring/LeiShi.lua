@@ -13,6 +13,7 @@ mod:RegisterEnableMob(62983, 63275) -- Lei Shi, Corrupted Protector
 
 local hiding = nil
 local nextProtectWarning = 85
+local nextSpecial = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -34,11 +35,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		123705,
-		123461, 123250, 123244, "special", "berserk", "proximity", "bosskill",
+		{123705, "PROXIMITY"},
+		{123121, "PROXIMITY", "TANK"}, 123461, 123250, 123244, "special", "berserk", "bosskill",
 	}, {
 		[123705] = "heroic",
-		[123461] = "general",
+		[123121] = "general",
 	}
 end
 
@@ -55,6 +56,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Protect", 123250)
 	self:Log("SPELL_AURA_REMOVED", "ProtectRemoved", 123250)
 	self:Log("SPELL_CAST_START", "Hide", 123244)
+	self:Log("SPELL_AURA_APPLIED", "Spray", 123121)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Spray", 123121)
 	self:Log("SPELL_AURA_APPLIED", "ScaryFog", 123705)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ScaryFog", 123705)
 	self:Log("SPELL_AURA_REMOVED", "ScaryFogRemoved", 123705)
@@ -66,12 +69,10 @@ end
 function mod:OnEngage(diff)
 	hiding = nil
 	nextProtectWarning = 85
-	self:CDBar("special", 32, L["special"], 123263)
+	self:CDBar("special", 32, L["special"], L.special_icon)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "HealthCheck", "boss1")
 	self:Berserk(self:Heroic() and 420 or 600)
-	if self:Tank() then
-		self:OpenProximity("proximity", 3)
-	end
+	self:OpenProximity(123121, 4)
 end
 
 --------------------------------------------------------------------------------
@@ -82,8 +83,9 @@ function mod:EngageCheck()
 	self:CheckBossStatus()
 	if hiding then
 		hiding = nil
-		self:Message(123244, "Attention", nil, CL["over"]:format(self:SpellName(123244)))
-		self:CDBar("special", 32, L["special"], 123263)
+		self:Message(123244, "Attention", nil, CL["over"]:format(self:SpellName(123244))) -- Hide
+		self:CDBar("special", 32, L["special"], L.special_icon)
+		nextSpecial = GetTime() + 32
 	end
 end
 
@@ -105,19 +107,25 @@ do
 	end
 
 	function mod:ScaryFog(args)
-		if UnitIsUnit("player", args.destName) then
-			self:OpenProximity("proximity", 4) -- could be less than 4 but still experimenting
+		if UnitIsUnit("player", args.destName) and not self:Tank() then
+			self:OpenProximity(args.spellId, 4)
 		end
 		self:CDBar(args.spellId, 19)
 		if not scheduled then
-			scheduled = self:ScheduleTimer(reportFog, 0.1, args.spellName)
+			scheduled = self:ScheduleTimer(reportFog, 0.2, args.spellName)
 		end
 	end
 end
 
 function mod:ScaryFogRemoved(args)
 	if UnitIsUnit("player", args.destName) and not self:Tank() then
-		self:CloseProximity()
+		self:CloseProximity(123705)
+	end
+end
+
+function mod:Spray(args)
+	if UnitIsPlayer(args.destName) and (args.amount or 1) > 9 and args.amount % 2 == 0 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Info")
 	end
 end
 
@@ -136,7 +144,8 @@ do
 	end
 	function mod:GetAwayRemoved()
 		getAwayStartHP = nil
-		self:Bar("special", 32, L["special"], 123263)
+		self:CDBar("special", 32, L["special"], L.special_icon)
+		nextSpecial = GetTime() + 32
 	end
 
 	local prev = 0
@@ -171,6 +180,12 @@ end
 
 function mod:ProtectRemoved()
 	self:Message("special", "Attention", nil, CL["soon"]:format(L["special"]), 123263)
+	local left = nextSpecial - GetTime()
+	if left > 4 then -- restart the bar if there are more than a few seconds left on the special's cd
+		self:CDBar("special", left, L["special"], L.special_icon)
+	else
+		self:Message("special", "Attention", nil, CL["soon"]:format(L["special"]), L.special_icon)
+	end
 end
 
 function mod:Kill(_, _, _, _, spellId)

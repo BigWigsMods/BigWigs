@@ -105,7 +105,7 @@ end
 function mod:OnEngage(diff)
 	cackleCounter = 1
 	self:Bar(119414, 33) -- Breath of Fear
-	self:Bar(129147, (diff == 4 or diff == 6) and 25 or 41, ("%s (%d)"):format(self:SpellName(129147), cackleCounter)) -- Ominous Cackle
+	self:Bar(129147, (diff == 4 or diff == 6) and 25 or 41, CL["count"]:format(self:SpellName(129147), cackleCounter)) -- Ominous Cackle
 	--self:Berserk(900) -- we start in UNIT_SPELLCAST_SUCCEEDED
 	swingCounter, thrashCounter, thrashNext = 0, 0, nil
 	self:OpenProximity("proximity", 5) -- might be less
@@ -129,18 +129,14 @@ do
 	local huddleUsed, strikeUsed, spoutUsed = nil, nil, nil
 	local huddleList, scheduled = mod:NewTargetList(), nil
 	local function warnNext()
-		if huddleUsed and spoutUsed and not strikeUsed then
-			mod:Bar(120672, 10) -- strike
-		elseif strikeUsed and spoutUsed and not huddleUsed then
+		if huddleUsed and not strikeUsed and not spoutUsed then
+			mod:Bar("ability_cd", 10, L["strike_or_spout"], L.ability_cd_icon)
+		elseif not huddleUsed and (spoutUsed or strikeUsed) then
 			mod:Bar(120629, 10) -- huddle
-		elseif huddleUsed and strikeUsed and not spoutUsed then
+		elseif huddleUsed and spoutUsed then
+			mod:Bar(120672, 10) -- strike
+		elseif huddleUsed and strikeUsed then
 			mod:Bar(120519, 10) -- spout
-		elseif huddleUsed and not strikeUsed and not spoutUsed then
-			mod:Bar("ability_cd", 10, L["strike_or_spout"], 120458)
-		elseif strikeUsed and not huddleUsed and not spoutUsed then
-			mod:Bar("ability_cd", 10, L["huddle_or_spout"], 120458)
-		elseif spoutUsed and not huddleUsed and not strikeUsed then
-			mod:Bar("ability_cd", 10, L["huddle_or_strike"], 120458)
 		end
 	end
 	local function warnHuddle(spellId)
@@ -176,8 +172,8 @@ end
 
 function mod:Submerge(args)
 	submergeCounter = submergeCounter + 1
-	self:Message(args.spellId, "Attention", nil, ("%s (%d)"):format(args.spellName, submergeCounter))
-	self:Bar(args.spellId, 52, ("%s (%d)"):format(args.spellName, submergeCounter+1))
+	self:Message(args.spellId, "Attention", nil, CL["count"]:format(args.spellName, submergeCounter))
+	self:Bar(args.spellId, 52, CL["count"]:format(args.spellName, submergeCounter+1))
 end
 
 function mod:FadingLight(args)
@@ -193,7 +189,7 @@ do
 		for guid in next, dreadSpawns do
 			dreadSpawnCounter = dreadSpawnCounter + 1
 		end
-		mod:Message("ej:6107", "Positive", nil, ("%s (%d)"):format(source, dreadSpawnCounter), 128419) -- positive, tho we are not really happy about it (gathering speed the adds ability icon)
+		mod:Message("ej:6107", "Positive", nil, CL["count"]:format(source, dreadSpawnCounter), 128419) -- positive, tho we are not really happy about it (gathering speed the adds ability icon)
 		scheduled = nil
 	end
 	function mod:DreadSpawnSingleCast(args)
@@ -259,17 +255,17 @@ function mod:Transitions(unit, spellName, _, _, spellId)
 		self:CloseProximity()
 		self:StopBar(119414) -- Breath of Fear
 		self:CancelDelayedMessage(CL["soon"]:format(self:SpellName(119414))) -- Breath of Fear
-		self:StopBar(("%s (%d)"):format(self:SpellName(129147), cackleCounter)) -- Ominous Cackle
+		self:StopBar(CL["count"]:format(self:SpellName(129147), cackleCounter)) -- Ominous Cackle
 		self:StopBar(131996) -- Thrash
 		swingCounter = 0
 	elseif spellId == 62535 then -- Berserk for that 1 sec accuracy
 		self:Berserk(900, phase == 2)
 		if phase == 2 then
 			-- Phase 2 - Berserk in 15 min!
-			self:Message("berserk", CL["phase"]:format(2).." - "..CL["custom_min"]:format(spellName, 15), "Attention")
+			self:Message("berserk", "Attention", nil, CL["phase"]:format(2).." - "..CL["custom_min"]:format(spellName, 15))
 			-- start Submerge timer using the current power and the new regen rate
 			local left = 1 - (UnitPower("boss1") / UnitPowerMax("boss1")) * 52
-			self:Bar(120455, ("%s (%d)"):format(self:SpellName(120455), 1), left, 120455)
+			self:Bar(120455, left, CL["count"]:format(self:SpellName(120455), 1))
 		end
 	end
 end
@@ -277,7 +273,7 @@ end
 
 function mod:WaterspoutApplied(args)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+		self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 		self:Flash(args.spellId)
 	end
 end
@@ -292,7 +288,7 @@ do -- COPY PASTE ACTION FROM COBALT MINE! see if this works
 		if player and (not UnitDetailedThreatSituation(unitIdTarget, unitId) or fired > 13) then
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
 			if UnitIsUnit("player", player) then
-				mod:LocalMessage(119519, CL["you"]:format(eerieSkull), "Urgent", 119519, "Alarm")
+				mod:LocalMessage(119519, "Urgent", "Alarm", CL["you"]:format(eerieSkull))
 				mod:Say(119519, eerieSkull)
 				mod:Flash(119519)
 			end
@@ -319,45 +315,41 @@ function mod:Thrash(args)
 	thrashNext = 2
 	if phase == 2 then
 		thrashCounter = thrashCounter + 1
-		self:Message("ej:6699", ("%s (%d)"):format(args.spellName, thrashCounter), "Urgent", args.spellId)
+		self:Message("ej:6699", "Urgent", nil, CL["count"]:format(args.spellName, thrashCounter), args.spellId)
 		if thrashCounter == 3 then
-			local dreadThrash = self:SpellName(132007)
-			--self:DelayedMessage("ej:6700", 4, CL["soon"]:format(dreadThrash), "Attention", 132007)
-			self:Bar("ej:6700", dreadThrash, 10, 132007)
+			--self:DelayedMessage("ej:6700", 4, "Attention", nil, CL["soon"]:format(self:SpellName(132007)), 132007) -- Dread Thrash
+			self:Bar("ej:6700", 10, self:SpellName(132007), 132007) -- Dread Thrash
 		else
-			self:Bar("ej:6699", ("%s (%d)"):format(args.spellName, thrashCounter + 1), 10, args.spellId)
+			self:Bar("ej:6699", 10, CL["count"]:format(args.spellName, thrashCounter + 1), args.spellId)
 		end
 	elseif atSha then
-		self:Message("ej:6699", args.spellName, "Important", args.spellId)
-		self:Bar("ej:6699", args.spellName, 10, args.spellId)
+		self:Message("ej:6699", "Important", nil, args.spellName, args.spellId)
+		self:Bar("ej:6699", 10, args.spellName, args.spellId)
 	end
 end
 
 function mod:DreadThrash(args)
 	thrashCounter = 0
 	thrashNext = 5
-	self:Message("ej:6700", args.spellName, "Important", args.spellId, "Alarm")
-	self:Bar("ej:6699", ("%s (%d)"):format(self:SpellName(131996), thrashCounter + 1), 10, 131996) -- Thrash
+	self:Message("ej:6700", "Important", "Alarm", args.spellName, args.spellId)
+	self:Bar("ej:6699", 10, CL["count"]:format(self:SpellName(131996), thrashCounter + 1), 131996) -- Thrash
 end
 
 do
-	local thrashSwings = ""
+	local thrashSwing
 	function mod:Swing(args)
 		if self:MobId(args.sourceGUID) ~= 60999 then return end
 
 		swingCounter = swingCounter + 1
-		local hitType = tonumber(args.spellId) and _G["DAMAGE"] or _G["MISS"] --or _G["ACTION_SPELL_MISSED_"..damage] --
 		if thrashNext then -- thrash triggering swing
-			thrashSwings = ("%s (%d){%s}"):format(L["swing"], swingCounter, hitType)
+			thrashSwing = swingCounter
 			swingCounter = -thrashNext
 			thrashNext = nil
 		elseif UnitIsUnit("player", args.destName) then --just the current tank
 			if swingCounter > 0 then -- normal swing
-				self:Message("swing", ("%s (%d){%s}"):format(L["swing"], swingCounter, hitType), "Positive", 5547) -- hammer icon (meeeeh)
-			elseif swingCounter < 0 then -- extra swing
-				thrashSwings = ("%s{%s}"):format(thrashSwings, hitType)
-			else -- (swingCounter==0) last extra swing
-				self:Message("swing", ("%s{%s}"):format(thrashSwings, hitType), "Positive", 12972) -- thrashy icon
+				self:Message("swing", "Positive", nil, CL["count"]:format(L["swing"], swingCounter), 5547) -- hammer icon (meeeeh)
+			elseif swingCounter == 0 then -- last extra swing
+				self:Message("swing", "Positive", nil, CL["other"]:format(CL["count"]:format(L["swing"], thrashSwing), self:SpellName(131996)), 12972) -- Swing (4): Thrash (thrashy icon)
 			end
 		end
 	end
@@ -366,8 +358,8 @@ end
 function mod:DeathBlossom(args)
 	if not atSha then
 		self:Flash(args.spellId)
-		self:Bar(args.spellId, CL["cast"]:format(args.spellName), 2.25, args.spellId) -- so it can be emphasized for countdown
-		self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alert")
+		self:Bar(args.spellId, 2.25, CL["cast"]:format(args.spellName)) -- so it can be emphasized for countdown
+		self:Message(args.spellId, "Important", "Alert")
 	end
 end
 
@@ -377,14 +369,14 @@ function mod:Fearless(args)
 		self:OpenProximity("proximity", 5) -- might be less
 		atSha = true
 		self:CancelDelayedMessage(CL["soon"]:format(self:SpellName(119888))) -- Death Blossom
-		self:Bar(args.spellId, args.spellName, 30, args.spellId)
-		self:DelayedMessage(args.spellId, 22, L["fading_soon"]:format(args.spellName), "Attention", args.spellId)
+		self:Bar(args.spellId, 30)
+		self:DelayedMessage(args.spellId, 22, "Attention", nil, L["fading_soon"]:format(args.spellName))
 
 		-- resume Breath of Fear bar/message
 		local left = nextFear - GetTime()
-		self:Bar(119414, 119414, left, 119414)
+		self:Bar(119414, left)
 		if left > 10 then
-			self:DelayedMessage(119414, left-8, CL["soon"]:format(self:SpellName(119414)), "Attention", 119414)
+			self:DelayedMessage(119414, left-8, "Attention", nil, CL["soon"]:format(self:SpellName(119414)))
 		end
 	end
 end
@@ -396,15 +388,15 @@ end
 function mod:BreathOfFear(args)
 	nextFear = GetTime() + 33.3
 	if atSha then -- Don't care about Sha while at a shrine and you have Fearless when you come back
-		self:Bar(args.spellId, args.spellName, 33.3, args.spellId)
-		self:DelayedMessage(args.spellId, 25, CL["soon"]:format(args.spellName), "Attention", args.spellId)
+		self:Bar(args.spellId, 33.3)
+		self:DelayedMessage(args.spellId, 25, "Attention", nil, CL["soon"]:format(args.spellName))
 	end
 end
 
 function mod:OminousCackle(args)
 	cackleCounter = cackleCounter + 1
 	local diff = self:Difficulty()
-	self:Bar(args.spellId, ("%s (%d)"):format(args.spellName, cackleCounter), (diff == 4 or diff == 6) and 45 or 90, args.spellId)
+	self:Bar(args.spellId, (diff == 4 or diff == 6) and 45 or 90, CL["count"]:format(args.spellName, cackleCounter))
 end
 
 function mod:OminousCackleRemoved(args) -- set it here, because at this point we are surely out of range of the other platforms

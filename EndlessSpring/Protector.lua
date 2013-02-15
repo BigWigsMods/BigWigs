@@ -98,7 +98,7 @@ function mod:ShaCorruptionFirst(args)
 
 	if not firstDeath then
 		firstDeath = true
-		self:Message(args.spellId, "Attention", "Info", ("%s (%d)"):format(args.spellName, 1), args.spellId)
+		self:Message(args.spellId, "Attention", "Info", CL["count"]:format(args.spellName, 1), args.spellId)
 	end
 end
 
@@ -112,7 +112,7 @@ function mod:ShaCorruptionSecond(args)
 		self:Bar(117227, 15) -- Corrupted Waters
 	end
 
-	self:Message(args.spellId, "Attention", "Info", ("%s (%d)"):format(args.spellName, 2))
+	self:Message(args.spellId, "Attention", "Info", CL["count"]:format(args.spellName, 2))
 end
 
 --Protector Kaolan
