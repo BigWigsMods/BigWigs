@@ -50,7 +50,7 @@ L = BigWigs:NewBossLocale("The Spirit Kings", "itIT")
 if L then
 	L.shield_removed = "Scudo Rimosso! (%s)"
 	L.casting_shields = "Lancio Scudo"
-	L.casting_shields_desc = "Avviso per quando viene lanciato lo Scudo per tutti i boss."
+	L.casting_shields_desc = "Avvisa quando viene lanciato lo Scudo per tutti i boss."
 end
 
 L = BigWigs:NewBossLocale("Elegon", "itIT")
@@ -65,7 +65,7 @@ if L then
 	L.floor_message = "Il Pavimento sta Scomparendo!"
 
 	L.adds = "Adds"
-	L.adds_desc = "Avvisi per quando sta per apparire un Protettore Celestiale."
+	L.adds_desc = "Avvisa quando sta per apparire un Protettore Celestiale."
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "itIT")
