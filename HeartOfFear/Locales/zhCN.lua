@@ -15,7 +15,6 @@ if L then
 	L.platform_emote = "朝他其中一个平台飞去了！" -- Imperial Vizier Zor'lok flies to one of his platforms!
 	L.platform_emote_final = "皇家宰相佐尔洛克吸入狂热信息素！"-- Imperial Vizier Zor'lok inhales the Pheromones of Zeal!
 	L.platform_message = "换平台"
-
 end
 
 

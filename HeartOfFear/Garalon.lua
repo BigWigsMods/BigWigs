@@ -68,10 +68,10 @@ function mod:OnEngage(diff)
 	healthCheck, mendLegTimerRunning = nil, nil
 
 	self:Berserk(self:LFR() and 720 or 420)
-	self:Bar(122735, 122735, 11, 122735) -- Furious Swipe
+	self:Bar(122735, 11) -- Furious Swipe
 	if self:Heroic() then
 		healthCheck = self:ScheduleRepeatingTimer("PrePhase2", 0.5) -- No boss5 support in health events
-		self:Bar(122774, ("%s (%d)"):format(self:SpellName(122774), 1), 28, 122082) -- Crush
+		self:Bar(122774, 28, ("%s (%d)"):format(self:SpellName(122774), 1), 122082) -- Crush
 	end
 end
 
@@ -86,30 +86,30 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Alert") -- even tho we usually use Alarm, Alarm has been sued too much in the module
+			self:LocalMessage(args.spellId, "Personal", "Alert", CL["underyou"]:format(args.spellName)) -- even tho we usually use Alarm, Alarm has been sued too much in the module
 		end
 	end
 end
 
 function mod:Crush(message, sender, _, _, target)
 	if self:Heroic() and sender ~= target then -- someone running underneath (don't start new bars in heroic)
-		self:Message(122774, CL["soon"]:format(self:SpellName(122774)), "Important", 122774, "Alarm") -- Crush
-		self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 3.6, 122774) -- Crush
+		self:Message(122774, "Important", "Alarm", CL["soon"]:format(self:SpellName(122774))) -- Crush
+		self:Bar(122774, 3.6, CL["cast"]:format(self:SpellName(122774))) -- Crush
 	else
 		crushCounter = crushCounter + 1
-		self:Message(122774, CL["soon"]:format(("%s (%d)"):format(self:SpellName(122774), crushCounter)), "Important", 122774, "Alarm") -- Crush
-		self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 3.6, 122774) -- Crush
+		self:Message(122774, "Important", "Alarm", CL["soon"]:format(("%s (%d)"):format(self:SpellName(122774), crushCounter))) -- Crush
+		self:Bar(122774, 3.6, CL["cast"]:format(self:SpellName(122774))) -- Crush
 		if self:Heroic() then
-			self:Bar(122774, ("%s (%d)"):format(self:SpellName(122774), crushCounter+1), 36, 122082) -- Crush
+			self:Bar(122774, 36, ("%s (%d)"):format(self:SpellName(122774), crushCounter+1), 122082) -- Crush
 		end
 	end
-	self:Bar(122735, 122735, 9, 122735) --Furious Swipe
+	self:Bar(122735, 9) --Furious Swipe
 end
 
 function mod:Fury(args)
 	if self:MobId(args.destGUID) == 63191 then -- only fire once
-		self:Bar(args.spellId, args.spellName, self:LFR() and 15 or 30, 119622) -- Rage like icon (swipe and fury have the same)
-		self:Message(args.spellId, ("%s (%d)"):format(args.spellName, args.amount or 1), "Urgent", 119622)
+		self:Bar(args.spellId, self:LFR() and 15 or 30, nil, 119622) -- Rage like icon (swipe and fury have the same)
+		self:Message(args.spellId, "Urgent", nil, ("%s (%d)"):format(args.spellName, args.amount or 1), 119622)
 	end
 end
 
@@ -117,30 +117,30 @@ function mod:PheromonesApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	if UnitIsUnit("player", args.destName) then
 		-- Local message with personal and info for when you gain the debuff, others don't care that you got it
-		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
+		self:LocalMessage(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 	elseif self:Healer() then
-		self:LocalMessage(args.spellId, args.spellName, "Attention", args.spellId, nil, args.destName)
+		self:TargetMessage(args.spellId, args.destName, "Attention", nil, nil, nil, true)
 	end
 end
 
 function mod:PheromonesRemoved(args)
 	if UnitIsUnit("player", args.destName) then
 		-- Local message with important and alarm for when you loose the debuff, others don't care that you lost it
-		self:LocalMessage(args.spellId, L["removed"]:format(args.spellName), "Important", args.spellId, "Alarm")
+		self:LocalMessage(args.spellId, "Important", "Alarm", L["removed"]:format(args.spellName))
 	end
 end
 
 function mod:Pungency(args)
 	if args.amount > ((self:LFR() and 13) or (self:Heroic() and 3) or 7) and args.amount % 2 == 0 then
-		self:TargetMessage(args.spellId, CL["stack"], args.destName, "Attention", args.spellId, nil, args.amount, args.spellName)
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
 	end
 end
 
 function mod:MendLeg(args)
 	legCounter = legCounter + 1
 	if legCounter < 4 then -- don't start a timer if it has all 4 legs
-		self:Message(args.spellId, args.spellName, "Urgent", args.spellId)
-		self:Bar(args.spellId, "~"..args.spellName, 30, args.spellId)
+		self:Message(args.spellId, "Urgent")
+		self:CDBar(args.spellId, 30)
 	else
 		-- all legs grew back, no need to start a bar, :BrokenLeg will start it
 		mendLegTimerRunning = nil
@@ -151,31 +151,26 @@ function mod:BrokenLeg()
 	legCounter = legCounter - 1
 	-- this is just a way to start the bar after 1st legs death
 	if not mendLegTimerRunning then
-		self:Bar(123495, "~"..self:SpellName(123495), 30, 123495) -- Mend Leg
+		self:CDBar(123495, 30) -- Mend Leg
 		mendLegTimerRunning = true
 	end
 end
 
-do
+function mod:FuriousSwipe(args)
+	-- delay the bar so it ends when the damage occurs
 	-- Furious Swipe's cast time is 2.5ish seconds, with 8s between SPELL_CAST_STARTs
-	local function nextSwipe(spellId)
-		mod:Bar(spellId, spellId, 8, spellId)
-	end
-	function mod:FuriousSwipe(args)
-		-- delay the bar so it ends when the damage occurs
-		self:ScheduleTimer(nextSwipe, 2.5, args.spellId)
-	end
+	self:ScheduleTimer("Bar", 2.5, args.spellId, 8)
 end
 
 function mod:PrePhase2()
 	local hp = UnitHealth("boss5") / UnitHealthMax("boss5") * 100
 	if hp < 38 then -- phase starts at 33
-		self:Message("ej:6294", CL["soon"]:format(CL["phase"]:format(2)), "Positive", 108201, "Long") -- the correct icon
+		self:Message("ej:6294", "Positive", "Long", CL["soon"]:format(CL["phase"]:format(2)), 108201) -- the correct icon
 		self:CancelTimer(healthCheck)
 	end
 end
 
 function mod:Phase2()
-	self:Message("ej:6294", "33% - "..CL["phase"]:format(2), "Positive", 108201, "Info")
+	self:Message("ej:6294", "Positive", "Info", "33% - "..CL["phase"]:format(2), 108201)
 end
 

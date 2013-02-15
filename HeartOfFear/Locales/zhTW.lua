@@ -83,8 +83,9 @@ if L then
 
 	L.eyes = "女皇之眼"
 	L.eyes_desc = "計算女皇之眼的堆疊與顯示持續時間條。"
-	L.eyes_message = "%2$dx 女皇之眼在 %1$s"
+	L.eyes_message = "女皇之眼在"
 
+	L.visions_message = "Visions"
 	L.fumes_bar = "你的毒氣增益"
 end
 

@@ -77,7 +77,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ReshapeLife", 122784)
-	self:Log("SPELL_CAST_SUCCESS", "BreakFree", 123060)
+	self:Log("SPELL_CAST_REMOVED", "ReshapeLifeRemoved", 122370)
 	self:Log("SPELL_CAST_SUCCESS", "AmberScalpel", 121994)
 	self:Log("SPELL_AURA_APPLIED", "Destabilize", 123059)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Destabilize", 123059)
@@ -108,9 +108,9 @@ end
 function mod:OnEngage(diff)
 	reshapeLifeCounter = 1
 	monsterDestabilizeStacks = 1
-	self:Bar(122784, ("%s (%d)"):format(self:SpellName(122784), reshapeLifeCounter), 20, 122784) --Reshape Life
-	self:Bar(121949, 121949, 24, 121949) --Parasitic Growth
-	self:Bar(121994, 121994, 10, 121994) -- Amber Scalpel
+	self:Bar(122784, 20, ("%s (%d)"):format(self:SpellName(122784), reshapeLifeCounter)) --Reshape Life
+	self:Bar(121949, 24) --Parasitic Growth
+	self:Bar(121994, 10) -- Amber Scalpel
 	self:Berserk(600) -- Does he even have one?
 
 	phase = 1
@@ -122,13 +122,13 @@ end
 --
 
 function mod:ParasiticGrowth(args)
-	self:Bar(args.spellId, args.spellName, 50, args.spellId)
-	self:TargetMessage(args.spellId, L["parasite"], args.destName, "Urgent", args.spellId, "Long")
+	self:Bar(args.spellId, 50)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Long", L["parasite"])
 	if UnitIsUnit("player", args.destName) then
 		self:Flash(args.spellId)
 	end
 	if self:Healer() then
-		self:TargetBar(args.spellId, L["parasite"], args.destName, 30, args.spellId)
+		self:TargetBar(args.spellId, 30, args.destName, L["parasite"])
 	end
 end
 
@@ -144,7 +144,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(123020, CL["underyou"]:format(args.spellName), "Personal", 123020, "Alarm")
+			self:LocalMessage(123020, "Personal", "Alarm", CL["underyou"]:format(args.spellName))
 		end
 	end
 end
@@ -155,7 +155,7 @@ do
 		fired = fired + 1
 		local player = UnitName("boss1targettarget") --Boss targets an invisible mob, which targets player. Calling boss1targettarget allows us to see it anyways
 		if player and not UnitIsUnit("boss1targettarget", "boss1") then --target target is himself, so he's not targeting off scalple mob yet
-			mod:TargetMessage(spellId, spellId, player, "Attention", spellId, "Long")
+			mod:TargetMessage(spellId, player, "Attention", "Long")
 			mod:CancelTimer(timer)
 			timer = nil
 			if UnitIsUnit("boss1targettarget", "player") then
@@ -169,11 +169,11 @@ do
 		if fired > 18 then
 			mod:CancelTimer(timer)
 			timer = nil
-			mod:Message(spellId, spellId, "Attention", spellId) -- Give generic warning as a backup
+			mod:Message(spellId, "Attention") -- Give generic warning as a backup
 		end
 	end
 	function mod:AmberScalpel(args)
-		self:Bar(args.spellId, args.spellName, 50, args.spellId)
+		self:Bar(args.spellId, 50)
 		fired = 0
 		if not timer then
 			timer = self:ScheduleRepeatingTimer(beamWarn, 0.05, args.spellId)
@@ -187,36 +187,35 @@ end
 
 function mod:ReshapeLife(args)
 	if phase < 2 then
-		self:TargetMessage(args.spellId, ("%s (%d)"):format(args.spellName, reshapeLifeCounter), args.destName, "Urgent", args.spellId, "Alarm")
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", ("%s (%d)"):format(args.spellName, reshapeLifeCounter))
 		reshapeLifeCounter = reshapeLifeCounter + 1
-		self:Bar(args.spellId, ("%s (%d)"):format(args.spellName, reshapeLifeCounter), 50, args.spellId)
+		self:Bar(args.spellId, 50, ("%s (%d)"):format(args.spellName, reshapeLifeCounter))
 	elseif phase < 3 then
-		self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId, "Alarm")
-		self:Bar(args.spellId, args.spellName, 50, args.spellId)
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+		self:Bar(args.spellId, 50)
 	else
-		self:TargetMessage(args.spellId, args.spellName, args.destName, "Urgent", args.spellId, "Alarm")
-		self:Bar(args.spellId, args.spellName, 15, args.spellId) -- might be too short for a bar
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+		self:Bar(args.spellId, 15) -- might be too short for a bar
 	end
 
 	if UnitIsUnit("player", args.destName) then
-		self:Bar("explosion_by_you", L["explosion_by_you_bar"], 15, 122398)
+		self:Bar("explosion_by_you", 15, L["explosion_by_you_bar"], 122398)
 		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "MyWillpower", "player")
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "BreakFreeHP", "player")
 	elseif UnitIsUnit("focus", args.destName) then
-		self:Bar("explosion_by_other", CL["other"]:format(args.destName, explosion), 15, 122398)
+		self:TargetBar("explosion_by_other", 15, args.destName, explosion, 122398)
 	end
 end
 
-function mod:BreakFree(args)
-	if UnitIsUnit("player", args.sourceName) then
+function mod:ReshapeLifeRemoved(args)
+	if UnitIsUnit("player", args.destName) then
 		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "player")
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "player")
 		self:StopBar(CL["cast"]:format(explosion))
 		self:StopBar(L["explosion_by_you_bar"])
-	elseif UnitIsUnit("focus", args.sourceName) then
-		local source = args.sourceName:gsub("%-.+", "*")
-		self:StopBar(CL["cast"]:format(CL["other"]:format(source, explosion)))
-		self:StopBar(CL["other"]:format(source, explosion))
+	elseif UnitIsUnit("focus", args.destName) then
+		self:StopBar(CL["cast"]:format(CL["other"]:format(args.sourceName:gsub("%-.+", "*"), explosion)))
+		self:StopBar(args.destName, explosion)
 	end
 end
 
@@ -226,7 +225,7 @@ function mod:Destabilize(args)
 		local buffStack = args.amount or 1
 		monsterDestabilizeStacks = id == 62711 and buffStack or monsterDestabilizeStacks
 		self:StopBar(("%s: (%d)%s"):format(id == 62511 and L["unsok_short"] or L["monstrosity_short"], buffStack-1, args.spellName))
-		self:Bar(args.spellId, ("%s: (%d)%s"):format(id == 62511 and L["unsok_short"] or L["monstrosity_short"], buffStack, args.spellName), self:LFR() and 60 or 15, args.spellId)
+		self:Bar(args.spellId, self:LFR() and 60 or 15, ("%s: (%d)%s"):format(id == 62511 and L["unsok_short"] or L["monstrosity_short"], buffStack, args.spellName))
 	end
 end
 
@@ -234,14 +233,14 @@ do
 	local last = 0
 	local function warningSpam(spellName)
 		if UnitCastingInfo("player") == spellName then
-			mod:LocalMessage("explosion_casting_by_you", L["you_are_casting"], "Personal", 122398, "Info")
+			mod:LocalMessage("explosion_casting_by_you", "Personal", "Info", L["you_are_casting"], 122398)
 			mod:ScheduleTimer(warningSpam, 0.5, spellName)
 		end
 	end
 	function mod:AmberExplosionPrevented(args) -- We stunned ourself before it started casting
 		local t = GetTime()
 		if t-last > 4 and UnitIsUnit("player", args.sourceName) then -- Use a throttle so that we don't confuse interrupting a cast (_FAILED) with preventing a cast (also _FAILED)
-			self:Bar("explosion_by_you", L["explosion_by_you_bar"], 13, args.spellId) -- cooldown
+			self:Bar("explosion_by_you", 13, L["explosion_by_you_bar"], args.spellId) -- cooldown
 			last = t
 		end
 	end
@@ -249,15 +248,14 @@ do
 		if UnitIsUnit("player", args.sourceName) then
 			last = GetTime()
 			self:Flash("explosion_casting_by_you")
-			self:Bar("explosion_casting_by_you", CL["cast"]:format(explosion), 2.5, args.spellId)
-			self:Bar("explosion_by_you", L["explosion_by_you_bar"], 13, args.spellId) -- cooldown
+			self:Bar("explosion_casting_by_you", 2.5, CL["cast"]:format(explosion), args.spellId)
+			self:Bar("explosion_by_you", 13, L["explosion_by_you_bar"], args.spellId) -- cooldown
 			warningSpam(args.spellName)
 		elseif UnitIsUnit("focus", args.sourceName) then
 			self:Flash("explosion_casting_by_other")
-			local player = args.sourceName:gsub("%-.+", "*")
-			self:Bar("explosion_by_other", CL["other"]:format(player, explosion), 13, args.spellId) -- cooldown
-			self:Bar("explosion_casting_by_other", CL["cast"]:format(CL["other"]:format(player, explosion)), 2.5, args.spellId)
-			self:LocalMessage("explosion_casting_by_other", CL["other"]:format(player, explosion), "Important", args.spellId, "Alert") -- associate the message with the casting toggle option
+			self:TargetBar("explosion_by_other", 13, args.sourceName, explosion, args.spellId) -- cooldown
+			self:Bar("explosion_casting_by_other", 2.5, CL["cast"]:format(CL["other"]:format(args.sourceName:gsub("%-.+", "*"), explosion)), args.spellId)
+			self:TargetMessage("explosion_casting_by_other", args.sourceName, "Important", "Alert", explosion, args.spellId, true) -- associate the message with the casting toggle option
 		end
 	end
 end
@@ -285,7 +283,7 @@ do
 				local willpower = UnitPower(unitId, 10)
 				if willpower < 20 and willpower > 0 then
 					prev = t
-					self:LocalMessage("willpower", L["willpower_message"]:format(willpower), "Personal", 124824)
+					self:LocalMessage("willpower", "Personal", nil, L["willpower_message"]:format(willpower), 124824)
 				end
 			end
 		end
@@ -296,7 +294,7 @@ function mod:MonstrosityInc(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 75 then -- phase starts at 70
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
-		self:Message("stages", CL["soon"]:format(EJ_GetSectionInfo(6254)), "Positive", nil, "Long") -- Monstrosity
+		self:Message("stages", "Positive", "Long", CL["soon"]:format(EJ_GetSectionInfo(6254)), false) -- Monstrosity
 	end
 end
 
@@ -308,7 +306,7 @@ do
 			local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 			if hp < 21 then
 				prev = t
-				self:LocalMessage(123060, L["break_free_message"]:format(hp), "Personal", 123060)
+				self:LocalMessage(123060, "Personal", nil, L["break_free_message"]:format(hp))
 			end
 		end
 	end
@@ -319,31 +317,31 @@ end
 
 function mod:AmberCarapace(args)
 	phase = 2
-	self:Message("stages", CL["phase"]:format(2)..": "..EJ_GetSectionInfo(6254), "Attention", "spell_nature_shamanrage") -- Monstrosity
-	self:DelayedMessage("explosion_by_other", 35, CL["custom_sec"]:format(explosion, 20), "Attention", 122402)
-	self:DelayedMessage("explosion_by_other", 40, CL["custom_sec"]:format(explosion, 15), "Attention", 122402)
-	self:DelayedMessage("explosion_by_other", 45, CL["custom_sec"]:format(explosion, 10), "Attention", 122402)
-	self:DelayedMessage("explosion_by_other", 50, CL["custom_sec"]:format(explosion, 5), "Attention", 122402)
-	self:Bar("explosion_by_other", "~"..L["monstrosity_is_casting"], 55, 122402) -- Monstrosity Explosion
+	self:Message("stages", "Attention", nil, CL["phase"]:format(2)..": "..EJ_GetSectionInfo(6254), "spell_nature_shamanrage") -- Monstrosity
+	self:DelayedMessage("explosion_by_other", 35, "Attention", nil, CL["custom_sec"]:format(explosion, 20), 122402)
+	self:DelayedMessage("explosion_by_other", 40, "Attention", nil, CL["custom_sec"]:format(explosion, 15), 122402)
+	self:DelayedMessage("explosion_by_other", 45, "Attention", nil, CL["custom_sec"]:format(explosion, 10), 122402)
+	self:DelayedMessage("explosion_by_other", 50, "Attention", nil, CL["custom_sec"]:format(explosion, 5), 122402)
+	self:CDBar("explosion_by_other", 55, L["monstrosity_is_casting"], 122402) -- Monstrosity Explosion
 
-	self:Bar(122408, "~"..mod:SpellName(122408), 22, 122408) -- Massive Stomp
-	self:Bar(122413, "~"..mod:SpellName(122413), 30, 122413) -- Fling
+	self:CDBar(122408, 22) -- Massive Stomp
+	self:CDBar(122413, 30) -- Fling
 end
 
 do
 	local function warningSpam(spellName)
 		if UnitCastingInfo("boss1") == spellName or UnitCastingInfo("boss2") == spellName then
-			mod:LocalMessage("explosion_casting_by_other", L["monstrosity_is_casting"], "Important", 122398, "Alert")
+			mod:LocalMessage("explosion_casting_by_other", "Important", "Alert", L["monstrosity_is_casting"], 122398)
 			mod:ScheduleTimer(warningSpam, 0.5, spellName)
 		end
 	end
 	function mod:AmberExplosionMonstrosity(args)
-		self:DelayedMessage("explosion_by_other", 25, CL["custom_sec"]:format(explosion, 20), "Attention", args.spellId)
-		self:DelayedMessage("explosion_by_other", 30, CL["custom_sec"]:format(explosion, 15), "Attention", args.spellId)
-		self:DelayedMessage("explosion_by_other", 35, CL["custom_sec"]:format(explosion, 10), "Attention", args.spellId)
-		self:DelayedMessage("explosion_by_other", 40, CL["custom_sec"]:format(explosion, 5), "Attention", args.spellId)
-		self:Bar("explosion_casting_by_other", "<".. L["monstrosity_is_casting"] ..">", 2.5, 122398)
-		self:Bar("explosion_by_other", "~"..L["monstrosity_is_casting"], 45, args.spellId) -- cooldown, don't move this
+		self:DelayedMessage("explosion_by_other", 25, "Attention", nil, CL["custom_sec"]:format(explosion, 20), args.spellId)
+		self:DelayedMessage("explosion_by_other", 30, "Attention", nil, CL["custom_sec"]:format(explosion, 15), args.spellId)
+		self:DelayedMessage("explosion_by_other", 35, "Attention", nil, CL["custom_sec"]:format(explosion, 10), args.spellId)
+		self:DelayedMessage("explosion_by_other", 40, "Attention", nil, CL["custom_sec"]:format(explosion, 5), args.spellId)
+		self:Bar("explosion_casting_by_other", 2.5, "<".. L["monstrosity_is_casting"] ..">", 122398)
+		self:CDBar("explosion_by_other", 45, L["monstrosity_is_casting"], args.spellId) -- cooldown, don't move this
 		if UnitDebuff("player", self:SpellName(122784)) then -- Reshape Life
 			self:Flash("explosion_casting_by_other")
 			warningSpam(args.spellName)
@@ -361,16 +359,16 @@ end
 function mod:Fling(args)
 	--(0) Grab -> (2.4-4.4) Fling -> (5.7) Rough Landing -> (6.1) damage/stun -> (8.7) stun off
 	if UnitIsUnit("player", args.destName) then
-		self:Bar(122413, L["fling_message"], 6, 68659)
+		self:Bar(122413, 6, L["fling_message"], 68659)
 	end
 	--cd is usually 35, but can be 27.8 (cast early when explosion is near the same time normally?)
-	self:Bar(122413, "~"..mod:SpellName(122413), 35, 122413) --Fling
-	self:TargetMessage(122413, mod:SpellName(122413), args.destName, "Urgent", 122413, "Alarm") --Fling
+	self:CDBar(122413, 35) --Fling
+	self:TargetMessage(122413, args.destName, "Urgent", "Alarm") --Fling
 end
 
 function mod:MassiveStomp(args)
-	self:Message(args.spellId, args.spellName, "Urgent", args.spellId, "Alarm")
-	self:Bar(args.spellId, "~"..args.spellName, 18, args.spellId) -- 18-29, 24.4 average
+	self:Message(args.spellId, "Urgent", "Alarm")
+	self:CDBar(args.spellId, 18) -- 18-29, 24.4 average
 end
 
 
@@ -378,18 +376,18 @@ end
 -- Phase 3
 
 function mod:MonsterDies()
-	self:StopBar("~"..L["monstrosity_is_casting"])
+	self:StopBar(L["monstrosity_is_casting"])
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 20))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 15))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 10))
 	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 5))
 	phase = 3
 	self:StopBar(("%s: (%d)%s"):format(L["monstrosity_short"], monsterDestabilizeStacks, self:SpellName(123059)))
-	self:Message("stages", CL["phase"]:format(3), "Attention", 122556) -- Concentrated Mutation
+	self:Message("stages", "Attention", nil, CL["phase"]:format(3), 122556) -- Concentrated Mutation
 end
 
 function mod:AmberGlobule(args)
-	self:TargetMessage("ej:6548", args.spellName, args.destName, "Important", args.spellId, "Alert")
+	self:TargetMessage("ej:6548", args.destName, "Important", "Alert", args.spellId)
 	if UnitIsUnit(args.destName, "player") then
 		self:Flash("ej:6548")
 		self:Say("ej:6548", args.spellName)

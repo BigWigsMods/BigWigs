@@ -82,8 +82,9 @@ if L then
 
 	L.eyes = "Взгляд императрицы"
 	L.eyes_desc = "Считает стаки Взгляда императрицы и показывает таймер."
-	L.eyes_message = "%2$dx Взгляд: %1$s"
+	L.eyes_message = "Взгляд"
 
+	L.visions_message = "Visions"
 	L.fumes_bar = "Ваш эффект паров"
 end
 

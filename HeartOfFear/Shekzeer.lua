@@ -21,8 +21,9 @@ if L then
 	L.eyes = "Eyes of the Empress"
 	L.eyes_desc = "Count the stacks and show a duration bar for Eyes of the Empress."
 	L.eyes_icon = 123707
-	L.eyes_message = "%2$dx Eyes on %1$s"
+	L.eyes_message = "Eyes"
 
+	L.visions_message = "Visions"
 	L.fumes_bar = "Your fumes buff"
 end
 L = mod:GetLocale()
@@ -83,7 +84,7 @@ function mod:OnEngage(diff)
 	self:UnregisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:OpenProximity("proximity", 5)
 	self:Berserk(900)
-	self:Bar("ej:6325", 123627, 20, 123627) --Dissonance Field
+	self:Bar("ej:6325", 20, 123627) --Dissonance Field
 end
 
 --------------------------------------------------------------------------------
@@ -95,42 +96,42 @@ function mod:HeartOfFearRemoved(args)
 end
 
 function mod:HeartOfFearApplied(args)
-	self:TargetMessage(args.spellId, args.spellName, args.destName, "Important", args.spellId, "Info")
+	self:TargetMessage(args.spellId, args.destName, "Important", "Info")
 	self:PrimaryIcon(args.spellId, args.destName)
 	if UnitIsUnit("player", args.destName) then
 		self:Flash(args.spellId)
-		self:Say(args.spellId, args.spellName)
+		self:Say(args.spellId)
 	end
 end
 
 function mod:Dispatch(args)
 	-- this is for interrupting, maybe check if the person can interrupt
 	if UnitGUID("target") == args.sourceGUID or UnitGUID("focus") == args.sourceGUID then
-		self:LocalMessage(args.spellId, CL["cast"]:format(args.spellName), "Personal", args.spellId, "Long")
+		self:LocalMessage(args.spellId, "Personal", "Long", CL["cast"]:format(args.spellName))
 		self:Flash(args.spellId)
 	end
 end
 
 function mod:Poison(args)
 	if UnitIsUnit("player", args.destName) then
-		self:Bar(args.spellId, L["fumes_bar"], 30, args.spellId)
+		self:Bar(args.spellId, 30,  L["fumes_bar"])
 	end
 end
 
 function mod:DreadScreech(args)
-	self:Bar(args.spellId, "~"..args.spellName, 6, args.spellId) -- healers wanted it, think it is useless
+	self:CDBar(args.spellId, 6) -- healers wanted it, think it is useless
 end
 
 function mod:ConsumingTerror(args)
-	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Alert")
-	self:Bar(args.spellId, "~"..args.spellName, 31, args.spellId) -- 31.3-37.7
+	self:Message(args.spellId, "Important", "Alert")
+	self:CDBar(args.spellId, 31) -- 31.3-37.7
 	self:Flash(args.spellId)
 end
 
 function mod:CryOfTerror(args)
-	self:TargetMessage(args.spellId, args.spellName, args.destName, "Attention", args.spellId, "Long")
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Long")
 	self:PrimaryIcon(args.spellId, args.destName)
-	self:Bar(args.spellId, args.spellName, 25, args.spellId)
+	self:Bar(args.spellId, 25)
 	if UnitIsUnit("player", args.destName) then
 		self:Flash(args.spellId)
 	end
@@ -147,7 +148,7 @@ do
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				self:LocalMessage(124862, args.spellName, "Attention", args.spellId, "Alert")
+				self:LocalMessage(124862, "Attention", "Alert", args.spellId)
 			end
 		end
 	end
@@ -160,17 +161,16 @@ end
 do
 	local visionsList, scheduled = mod:NewTargetList(), nil
 	local function warnVisions(spellId)
-		mod:TargetMessage(spellId, spellId, visionsList, "Important", spellId, "Alarm")
+		mod:TargetMessage(spellId, visionsList, "Important", "Alarm")
 		scheduled = nil
 	end
 	function mod:Visions(args)
 		visionsList[#visionsList + 1] = args.destName
 		if UnitIsUnit("player", args.destName) then
-			self:Say(args.spellId, args.spellName) -- not sure if this is needed, I think most people bunch up for healing, say bubble spam is not really helpful
+			self:Say(args.spellId, L["visions_message"]) -- not sure if this is needed, I think most people bunch up for healing, say bubble spam is not really helpful
 			self:Flash(args.spellId)
 			self:OpenProximity(args.spellId, 8)
 		end
-		--self:Bar(spellId, "~"..spellName, 19, spellId) -- 19.3-27.7 (ew)
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnVisions, 0.1, args.spellId)
 		end
@@ -178,32 +178,32 @@ do
 end
 
 function mod:Fixate(args)
-	self:TargetMessage(args.spellId, args.spellName, args.destName, "Attention", args.spellId, "Info")
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
 	if UnitIsUnit("player", args.destName) then
 		self:Flash(args.spellId)
-		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
-		self:TargetBar(args.spellId, args.spellName, args.destName, 20, args.spellId)
+		self:LocalMessage(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+		self:TargetBar(args.spellId, 20, args.destName)
 	end
 end
 
 function mod:FixateRemoved(args)
 	if UnitIsUnit("player", args.destName) then
-		self:StopBar(CL["you"]:format(args.spellName))
+		self:StopBar(args.spellName, args.destName)
 	end
 end
 
 function mod:Resin(args)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
+		self:LocalMessage(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 	end
 end
 
 function mod:AmberTrap(args)
 	local buffStack = args.amount or 1
 	if buffStack < 5 then
-		self:Message(125826, ("%s (%d)"):format(args.spellName, buffStack), "Attention", 125826) --Sticky Resin (124748)
+		self:Message(125826, "Attention", nil, ("%s (%d)"):format(args.spellName, buffStack)) --Sticky Resin (124748)
 	else
-		self:Message(125826, 125826, "Attention", 125826) --Amber Trap
+		self:Message(125826, "Attention") --Amber Trap
 	end
 end
 
@@ -215,42 +215,39 @@ do
 		warned = power
 		if power == 149 then
 			self:OpenProximity("proximity", 5)
-			self:Bar("ej:6325", 123627, 19, 128353) --Dissonance Field
-			self:Bar("phases", CL["phase"]:format(2), 149, L.phases_icon)
+			self:Bar("ej:6325", 19, 128353) --Dissonance Field
+			self:Bar("phases", 149, CL["phase"]:format(2), L.phases_icon)
 			self:StopBar(CL["phase"]:format(1))
 		elseif power == 130 then
-			self:Bar("ej:6325", 123627, 65, 128353)
-			self:Message("ej:6325", 123627, "Attention", 128353)
+			self:Bar("ej:6325", 65, 128353)
+			self:Message("ej:6325", "Attention", nil, 128353)
 		elseif power == 65 then
-			self:Message("ej:6325", 123627, "Attention", 128353)
+			self:Message("ej:6325", "Attention", nil, 128353)
 		elseif power == 2 then
 			self:CloseProximity()
-			self:Bar("phases", CL["phase"]:format(1), 158, L.phases_icon)
+			self:Bar("phases", 158, CL["phase"]:format(1), L.phases_icon)
 		end
 	end
 end
 
 function mod:Eyes(args)
 	local buffStack = args.amount or 1
-	local player = args.destName:gsub("%-.+", "*")
-	self:StopBar(L["eyes_message"]:format(player, buffStack - 1))
-	self:Bar("eyes", L["eyes_message"]:format(player, buffStack), 30, args.spellId)
-	self:LocalMessage("eyes", L["eyes_message"], "Urgent", args.spellId, buffStack > 2 and "Info" or nil, player, buffStack)
+	self:TargetBar("eyes", 30, player, L["eyes_message"], args.spellId)
+	self:StackMessage("eyes", player, buffStack, "Urgent", buffStack > 2 and "Info", L["eyes_message"], args.spellId)
 end
 
 function mod:UltimateCorruption(args)
-	self:Message("phases", "30% - "..CL["phase"]:format(3), "Positive", args.spellId, "Info")
+	self:Message("phases", "Positive", "Info", "30% - "..CL["phase"]:format(3), args.spellId)
 	self:StopBar(CL["phase"]:format(2))
 	self:StopBar(123627) -- Dissonance Field
 	self:CloseProximity()
-	--self:Bar(124862, "~"..mod:SpellName(124862), 6, 124862) -- Visions of Demise
-	self:Bar(124849, "~"..mod:SpellName(124849), 10, 124849) -- Consuming Terror
+	self:Bar(124849, 10) -- Consuming Terror
 end
 
 function mod:Phase3Warn(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 35 then -- phase starts at 30
-		self:Message("phases", CL["soon"]:format(CL["phase"]:format(3)), "Positive", L.phases_icon, "Info")
+		self:Message("phases", "Positive", "Info", CL["soon"]:format(CL["phase"]:format(3)), L.phases_icon)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
 end
