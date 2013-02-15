@@ -1,7 +1,6 @@
 --[[
 TODO:
-	-- need transcriptor log ( mainly to get timers after engage )
-	-- vampiric cave bat spawn timer
+	-- consider handling growing fury to adjust ston breath bar
 ]]--
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
@@ -28,6 +27,8 @@ if L then
 	L.kick_desc = "Keep track of how many turtles can be kicked"
 	L.kick_icon = 1766
 	L.kickable_turtles = "Kickable turtles: %d"
+	L.crystal_shell_removed = "Crystal Shell removed!"
+	L.no_crystal_shell = "NO Crystal Shell"
 end
 L = mod:GetLocale()
 
@@ -37,9 +38,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		136294, "kick", 133939, {134539, "FLASH"}, 134920,
+		{137633, "FLASH"},
+		136294, "kick", 133939, {134539, "FLASH"}, 134920, "ej:7140",
 		"berserk", "bosskill",
 	}, {
+		[137633] = "heroic",
 		[136294] = "general",
 	}
 end
@@ -47,7 +50,11 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Log("SPELL_CAST_START", "QuakeStomp", 133939)
+	-- Heroic
+	self:Log("SPELL_AURA_REMOVED", "CrystalShellRemoved", 137633)
+	-- Normal
+	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "SummonBats", "boss1")
+	self:Log("SPELL_CAST_START", "QuakeStomp", 134920)
 	self:Log("SPELL_DAMAGE", "Rockfall", 134539)
 	self:Log("SPELL_CAST_START", "FuriousStoneBreath", 133939)
 	self:Log("SPELL_AURA_APPLIED", "ShellConcussion", 134092)
@@ -59,15 +66,46 @@ end
 
 function mod:OnEngage()
 	kickable = 0
+	self:Bar("ej:7140", 46, 136685) -- Summon Bats
+	self:Bar(133939, 46) -- Furious Stone Breath
+	self:Bar(136294, 21) -- Call of Tortos
+	self:Bar(134920, 30) -- Quake Stomp
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+do
+	local timer = nil
+	local function warnCrystalShell(spellId)
+		if UnitDebuff("player", mod:SpellName(spellId)) or UnitIsDeadOrGhost("player") then
+			mod:CancelTimer(timer)
+			timer = nil
+			return
+		end
+		mod:LocalMessage(spellId, "Personal", "Info", L["no_crystal_shell"])
+	end
+	function mod:CrystalShellRemoved(args)
+		if not UnitIsUnit("player", args.destName) or self:Tank() then return end
+		self:Flash(args.spellId)
+		self:LocalMessage(args.spellId, "Urgent", "Alarm", L["crystal_shell_removed"]) -- I think this should stay Urgent Alarm
+		if not timer then
+			timer = self:ScheduleRepeatingTimer(warnCrystalShell, 3, args.spellId)
+		end
+	end
+end
+
+function mod:SummonBats(_, _, _, _, spellId)
+	if spellId == 136685 then
+		self:Message("ej:7140", "Urgen", nil, spellId)
+		self:Bar("ej:7140", 46, spellId)
+	end
+end
+
 function mod:QuakeStomp(args)
 	self:Message(args.spellId, "Important", "Alert")
-	self:Bar(args.spellId, 47, args.spellId)
+	self:Bar(args.spellId, 47)
 end
 
 do
@@ -85,12 +123,12 @@ end
 
 function mod:FuriousStoneBreath(args)
 	self:Message(args.spellId, "Important", "Long")
-	self:Bar(args.spellId, 46, args.spellId)
+	self:Bar(args.spellId, 46)
 end
 
 do
 	local function announceKickable()
-		mod:Message("kick", L["kickable_turtles"]:format(announceKickable), "Attention", 1766)
+		mod:Message("kick", L["kickable_turtles"]:format(kickable), "Attention", 1766)
 	end
 	function mod:ShellBlock()
 		kickable = kickable + 1
