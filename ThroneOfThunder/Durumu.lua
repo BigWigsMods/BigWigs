@@ -3,9 +3,7 @@ TODO:
 	figure out/verify real lingering gaze range
 	there are no CLEU events for blue and red ray controllers as of 10 N PTR, so keep an eye out for these
 	verify that red ray controller gets 3 debuffs too with same names
-	consider maybe if remaining red add is 0 don't announce it
 	somehow verify overall life drain duration
-	disintegration beam message might be too long, shorten it maybe?
 	figure out where to start ForceOfWill in the DisintegrationBeam phase
 ]]--
 if select(4, GetBuildInfo()) < 50200 then return end
@@ -44,6 +42,7 @@ if L then
 	L.blue_add = "|c000000FFBlue|r add"
 	L.clockwise = "Clockwise"
 	L.counter_clockwise = "Counter clockwise"
+	L.death_beam = "Death beam"
 end
 L = mod:GetLocale()
 
@@ -68,16 +67,10 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "DisintegrationBeam", "boss1")
 	self:Log("SPELL_AURA_REMOVED", "LifeDrainRemoved", 133798)
 	self:Log("SPELL_AURA_APPLIED", "LifeDrainApplied", 133798)
-	self:Emote("HungryEyeStart", "133795") -- this is faster than CLEU
-	self:Log("SPELL_CAST_SUCCESS", "CrimsonBloom", 136122)
-	self:Emote("RedAdd", L["red_spawn_trigger"])
-	self:Emote("BlueAdd", L["blue_spawn_trigger"])
 	self:Log("SPELL_AURA_APPLIED", "RedRayController", 133732) -- this is the stacking debuff, because there is no similar CLEU like the for blue
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RedRayController", 133732)
 	self:Log("SPELL_AURA_APPLIED", "BlueRayController", 133675) -- this is the one that keept racks of you being in ray
-	self:Emote("BlueRay", "134122")
-	self:Emote("RedRay", "134123")
-	self:Emote("YellowRay", "134124")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:Log("SPELL_CAST_SUCCESS", "ForceOfWill", 136932)
 	self:Log("SPELL_DAMAGE", "LingeringGazeDamage", 134044)
 	self:Log("SPELL_CAST_START", "LingeringGaze", 138467)
@@ -115,9 +108,9 @@ end
 
 function mod:DisintegrationBeam(_, spellName, _, _, spellId)
 	if spellId == 136316 then -- clokwise
-		self:Message("ej:6892", "Attention", nil, ("%s - %s"):format(spellName, L["clockwise"]), 133778)
+		self:Message("ej:6892", "Attention", nil, ("%s - |c00008000%s|r"):format(L["death_beam"], L["clockwise"]), 133778)
 	elseif spellId == 133775 then -- counter clokwise
-		self:Message("ej:6892", "Attention", nil, ("%s - %s"):format(spellName, L["counter_clockwise"]), 133778)
+		self:Message("ej:6892", "Attention", nil, ("%s - |c00FF0000%s|r"):format(L["death_beam"], L["counter_clockwise"]), 133778)
 	end
 end
 
@@ -129,29 +122,6 @@ function mod:LifeDrainApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	lifedranJumps = lifedranJumps + 1
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", ("%s - %d%%"):format(args.spellName, lifedranJumps*60)) -- maybe this should just be the amount of jumps
-end
-
-function mod:HungryEyeStart(_, _, _, _, target)
-	self:TargetMessage(133798, target, "Important", "Alert")
-	self:Bar(133798, 15, CL["cast"]:format(self:SpellName(133798))) -- XXX somehow verify overall 15 sec duration
-	self:PrimaryIcon(133798, target)
-end
-
-local function annonunceRemainingAdds()
-	mod:Message("ej:6892", "Urgent", nil, ("%s (%d)"):format(L["red_add"], redAddLeft), 136154)
-end
-
-function mod:CrimsonBloom(args)
-	redAddLeft = redAddLeft - 1
-	annonunceRemainingAdds()
-end
-
-function mod:RedAdd(_, sender)
-	self:Message("ej:6892", "Urgent", nil, L["red_add"], 136154)
-end
-
-function mod:BlueAdd(_, sender)
-	self:Message("ej:6898", "Urgent", nil, L["blue_add"], 136177)
 end
 
 function mod:RedRayController(args)
@@ -188,23 +158,29 @@ function mod:BlueRayController(args)
 	end
 end
 
-function mod:YellowRay(_, sender, _, _, target)
-	self:StopBar(136932) -- Force of Will -- XXX double check if this is not too early to stop the bar
-	self:Bar("ej:6891", L["rays_spawn"], 10, "inv_misc_gem_variety_02") -- only spawn this bar in one of the functions
-	if UnitIsUnit("player", target) then
-		self:LocalMessage("ej:6891", "Positive", "Alert", CL["you"]:format("|c00FFFF00"..sender.."|r"), 134124)
-	end
-end
-
-function mod:RedRay(_, sender, _, _, target)
-	if UnitIsUnit("player", target) then
-		self:LocalMessage("ej:6891", "Positive", "Alert", CL["you"]:format("|c00FF0000"..sender.."|r"), 134123)
-	end
-end
-
-function mod:BlueRay(_, sender, _, _, target)
-	if UnitIsUnit("player", target) then
-		self:LocalMessage("ej:6891", "Positive", "Alert", CL["you"]:format("|c000000FF"..sender.."|r"), 134122)
+function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
+	if msg:find("134124") then -- Yellow
+		self:StopBar(136932) -- Force of Will -- XXX double check if this is not too early to stop the bar
+		self:Bar("ej:6891", L["rays_spawn"], 10, "inv_misc_gem_variety_02") -- only spawn this bar in one of the functions
+		if UnitIsUnit("player", target) then
+			self:LocalMessage("ej:6891", "Positive", "Alert", CL["you"]:format("|c00FFFF00"..sender.."|r"), 134124)
+		end
+	elseif msg:find("134123") then -- Red
+		if UnitIsUnit("player", target) then
+			self:LocalMessage("ej:6891", "Positive", "Alert", CL["you"]:format("|c00FF0000"..sender.."|r"), 134123)
+		end
+	elseif msg:find("134122") then -- Red
+		if UnitIsUnit("player", target) then
+			self:LocalMessage("ej:6891", "Positive", "Alert", CL["you"]:format("|c000000FF"..sender.."|r"), 134122)
+		end
+	elseif msg:find("133795") then -- HungryEyeStart this is faster than CLEU
+		self:TargetMessage(133798, target, "Important", "Alert")
+		self:Bar(133798, 15, CL["cast"]:format(self:SpellName(133798))) -- XXX somehow verify overall 15 sec duration
+		self:PrimaryIcon(133798, target)
+	elseif msg:find(L["red_spawn_trigger"]) then
+		self:Message("ej:6892", "Urgent", nil, L["red_add"], 136154)
+	elseif msg:find(L["blue_spawn_trigger"]) then
+		self:Message("ej:6898", "Urgent", nil, L["blue_add"], 136177)
 	end
 end
 
@@ -257,6 +233,10 @@ function mod:Deaths(args)
 		self:Win()
 	elseif args.mobId == 69050 then -- Red add
 		redAddLeft = redAddLeft - 1
-		annonunceRemainingAdds()
+		if redAddLeft == 0 then
+			self:Bar("ej:6892", 27, L["death_beam"], 133778)
+		else
+			self:Message("ej:6892", "Urgent", nil, ("%s (%d)"):format(L["red_add"], redAddLeft), 136154)
+		end
 	end
 end
