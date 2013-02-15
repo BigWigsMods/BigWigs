@@ -23,17 +23,17 @@ if L then
 	L.phase_shadow = "Фаза тьмы"
 
 	L.phase_message = "Новая фаза скоро!"
-	L.shroud_message = "%2$s вешает Покров на %1$s"
+	L.shroud_message = "Покров"
 	L.shroud_can_interrupt = "%s может прервать %s!"
 	L.barrier_message = "Барьер АКТИВЕН!"
 	L.barrier_cooldown = "Перезарядка барьера"
 
 	L.tank = "Предупреждения для танков"
 	L.tank_desc = "Считает стаки: Искрящаяся плеть, Пылающее копье, Чародейское потрясение и Ожог Тьмы (Героик)."
-	L.lash_message = "%2$dx Плеть на |3-5(%1$s)"
-	L.spear_message = "%2$dx Копье на |3-5(%1$s)"
-	L.shock_message = "%2$dx Потрясение на |3-5(%1$s)"
-	L.burn_message = "%2$dx Ожог на |3-5(%1$s)"
+	L.lash_message = "Плеть"
+	L.spear_message = "Копье"
+	L.shock_message = "Потрясение"
+	L.burn_message = "Ожог"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "ruRU")

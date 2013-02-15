@@ -18,7 +18,7 @@ if L then
 	L.phase_shadow_trigger = "Grande alma dos antigos campeões! Leve-me ao seu escudo!"
 
 	L.phase_message = "New phase soon!"
-	L.shroud_message = "%2$s conjurou mortalha em %1$s"
+	L.shroud_message = "Mortalha"
 	L.shroud_can_interrupt = "%s can interrupt %s!"
 	L.barrier_message = "Barreira ATIVADA!"
 	L.barrier_cooldown = "Barrier cooldown"
@@ -31,10 +31,10 @@ if L then
 	-- Tanks
 	L.tank = "Alertas de tanquers"
 	L.tank_desc = "Conta as pilhas de Açoite de raios, Lança flamejante, Choque arcano e Sombra Ardente (Heróico)."
-	L.lash_message = "%2$dx Açoite em %1$s"
-	L.spear_message = "%2$dx Lança em %1$s"
-	L.shock_message = "%2$dx Choque em %1$s"
-	L.burn_message = "%2$dx Sombra Ardente em %1$s"
+	L.lash_message = "Açoite"
+	L.spear_message = "Lança"
+	L.shock_message = "Choque"
+	L.burn_message = "Sombra Ardente"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "ptBR")

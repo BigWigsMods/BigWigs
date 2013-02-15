@@ -32,11 +32,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		116529,
 		"ej:5772",
 		130774,
 		{130395, "FLASH", "PROXIMITY"},
 		"overload", "petrifications", "berserk", "bosskill",
 	}, {
+		[116529] = "heroic",
 		["ej:5772"] = "ej:5771",
 		[130774] = "ej:5691",
 		[130395] = "ej:5774",
@@ -49,6 +51,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "JasperChainsApplied", 130395)
 	self:Log("SPELL_AURA_REMOVED", "JasperChainsRemoved", 130395)
 	self:Log("SPELL_CAST_SUCCESS", "AmethystPool", 130774)
+	self:Emote("PowerDown", "spell:116529")
 	self:Emote("Overload", L["overload"])
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -66,8 +69,12 @@ end
 -- Event Handlers
 --
 
+function mod:PowerDown()
+	self:Message(116529, "Urgent", "Info", self:SpellName(116529))
+end
+
 function mod:Overload(msg, boss)
-	self:Message("overload", msg:format(boss), "Important", L["overload_icon"], "Long")
+	self:Message("overload", "Important", "Long", msg:format(boss), L["overload_icon"])
 end
 
 do
@@ -81,17 +88,17 @@ do
 			jasperChainsTargets[2] = args.destName
 			if UnitIsUnit(args.destName, "player") or UnitIsUnit(prevPlayer, "player") then
 				self:Flash(args.spellId)
-				self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId)
+				self:LocalMessage(args.spellId, "Personal", nil, CL["you"]:format(args.spellName))
 				self:OpenProximity(args.spellId, 10, UnitIsUnit(prevPlayer, "player") and args.destName or prevPlayer, true)
 			else
-				self:TargetMessage(args.spellId, args.spellName, jasperChainsTargets, "Attention", args.spellId)
+				self:TargetMessage(args.spellId, jasperChainsTargets, "Attention")
 			end
 			prevPlayer = nil
 		end
 	end
 	function mod:JasperChainsRemoved(args)
 		if UnitIsUnit(args.destName, "player") then
-			self:LocalMessage(args.spellId, CL["over"]:format(args.spellName), "Personal", args.spellId)
+			self:LocalMessage(args.spellId, "Personal", nil, CL["over"]:format(args.spellName))
 			self:CloseProximity(args.spellId)
 		end
 	end
@@ -104,7 +111,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Alarm")
+			self:LocalMessage(args.spellId, "Personal", "Alarm", CL["underyou"]:format(args.spellName))
 		end
 	end
 end
@@ -112,15 +119,15 @@ end
 function mod:Petrifications(_, spellName, _, _, spellId)
 	-- we could be using the same colors as blizzard but they are too "faint" imo
 	if spellId == 115852 then -- cobalt
-		self:Message("petrifications", ("|c001E90FF%s|r"):format(spellName), nil, spellId, "Alert") -- blue
+		self:Message("petrifications", nil, "Alert", ("|c001E90FF%s|r"):format(spellName), spellId) -- blue
 	elseif spellId == 116006 then -- jade
-		self:Message("petrifications", ("|c00008000%s|r"):format(spellName), nil, spellId, "Alert") -- green
+		self:Message("petrifications", nil, "Alert", ("|c00008000%s|r"):format(spellName), spellId) -- green
 	elseif spellId == 116036 then -- jasper
-		self:Message("petrifications", ("|c00FF0000%s|r"):format(spellName), nil, spellId, "Alert") -- red
+		self:Message("petrifications", nil, "Alert", ("|c00FF0000%s|r"):format(spellName), spellId) -- red
 	elseif spellId == 116057 then -- amethyst
-		self:Message("petrifications", ("|c00FF44FF%s|r"):format(spellName), nil, spellId, "Alert") -- purple
+		self:Message("petrifications", nil, "Alert", ("|c00FF44FF%s|r"):format(spellName), spellId) -- purple
 	elseif spellId == 129424 then
-		self:Bar("ej:5772", spellName, cobaltTimer, spellId)
+		self:Bar("ej:5772", cobaltTimer, spellName, spellId)
 	end
 end
 

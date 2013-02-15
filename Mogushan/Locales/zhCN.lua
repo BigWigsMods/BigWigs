@@ -23,7 +23,7 @@ if L then
 	L.phase_shadow = "（英雄模式）暗影阶段！"
 
 	L.phase_message = "即将下一阶段！"
-	L.shroud_message = "%2$s 对 %1$s 施放反射罩"
+	L.shroud_message = "反射罩"
 	L.shroud_can_interrupt = "%s 可打断 %s！"
 	L.barrier_message = "废灵壁垒！"
 	L.barrier_cooldown = "废灵壁垒冷却"
@@ -31,10 +31,10 @@ if L then
 	-- Tanks
 	L.tank = "坦克警报"
 	L.tank_desc = "闪电之拳、野性火花、奥术震击、暗影灼烧（英雄模式）的计数"
-	L.lash_message = "%2$dx 闪电之拳 %1$s"
-	L.spear_message = "%2$dx 野性火花 %1$s"
-	L.shock_message = "%2$dx 奥术震击 %1$s"
-	L.burn_message = "%2$dx 暗影灼烧 %1$s"
+	L.lash_message = "闪电之拳"
+	L.spear_message = "野性火花"
+	L.shock_message = "奥术震击"
+	L.burn_message = "暗影灼烧"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "zhCN")

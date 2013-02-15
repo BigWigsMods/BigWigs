@@ -78,13 +78,13 @@ function mod:OnEngage(diff)
 	elseif diff == 7 then
 		totemTime = 30 -- LFR
 	end
-	self:Bar(116174, L["totem"]:format(totemCounter), totemTime, 116174)
-	self:Bar(116272, L["banish_message"], self:Heroic() and 71 or 65, 116272)
+	self:Bar(116174, totemTime, L["totem"]:format(totemCounter))
+	self:Bar(116272, self:Heroic() and 71 or 65, L["banish_message"])
 	if not self:LFR() then
 		self:Berserk(360)
 	end
 	if self:Heroic() then
-		self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 6.7, 117222)
+		self:Bar("shadowy", 6.7, L["shadowy_message"]:format(shadowCounter), 117222)
 	end
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "FrenzyCheck", "boss1")
 end
@@ -102,31 +102,30 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 end
 
 do
-	local voodooDoll = GetSpellInfo(122151)
 	local voodooDollList = mod:NewTargetList()
 	function mod:OnSync(sync, rest)
 		if sync == "DollsApplied" and rest then
 			for player in string.gmatch(rest, "%S+") do
 				voodooDollList[#voodooDollList+1] = player
 			end
-			self:TargetMessage(122151, voodooDoll, voodooDollList, "Important", 122151)
+			self:TargetMessage(122151, voodooDollList, "Important")
 		elseif sync == "Totem" then
-			self:Message(116174, L["totem"]:format(totemCounter), "Attention", 116174)
+			self:Message(116174, "Attention", nil, L["totem"]:format(totemCounter))
 			totemCounter = totemCounter + 1
-			self:Bar(116174, L["totem"]:format(totemCounter), totemTime, 116174)
+			self:Bar(116174, totemTime, L["totem"]:format(totemCounter))
 		elseif sync == "Shadowy" then
 			shadowCounter = shadowCounter + 1
-			self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 8.3, L["shadowy_icon"])
+			self:Bar("shadowy", 8.3, L["shadowy_message"]:format(shadowCounter), L.shadowy_icon)
 		elseif sync == "Frenzy" then
-			self:Message("frenzy", CL["phase"]:format(2) ..": ".. L["frenzy"], "Positive", L["frenzy_icon"], "Long")
+			self:Message("frenzy", "Positive", "Long", CL["other"]:format(CL["phase"]:format(2),L["frenzy"]), L.frenzy_icon)
 			if not self:LFR() then
 				self:StopBar(L["totem"]:format(totemCounter))
 				self:StopBar(L["banish_message"])
 			end
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 		elseif sync == "Banish" and rest then
-			self:Bar(116272, L["banish_message"], self:Heroic() and 70 or 65, 116272)
-			self:LocalMessage(116272, L["banish_message"], "Urgent", 116272, self:Tank() and "Alarm" or nil, rest)
+			self:Bar(116272, self:Heroic() and 70 or 65, L["banish_message"])
+			self:LocalMessage(116272, "Urgent", self:Tank() and "Alarm" or nil, L["banish_message"])
 		end
 	end
 end
@@ -166,7 +165,7 @@ end
 
 function mod:CrossedOver(args)
 	if UnitIsUnit("player", args.destName) then
-		self:Bar(116161, args.spellName, 30, args.spellId)
+		self:Bar(116161, 30)
 	end
 end
 
@@ -182,21 +181,21 @@ end
 
 function mod:Banishment(args)
 	if UnitIsUnit("player", args.destName) then
-		self:Bar(args.spellId, CL["you"]:format(args.spellName), 30, args.spellId)
+		self:Bar(args.spellId, 30, CL["you"]:format(args.spellName))
 	end
 	self:Sync("Banish", args.destName)
 end
 
 function mod:SoulSeverRemoved(args)
 	if UnitIsUnit("player", args.destName) then
-		self:StopBar(116272, args.destName) -- Banish
+		self:StopBar(116272, CL["you"]:format(self:SpellName(116272))) -- Banish
 	end
 end
 
 function mod:FrenzyCheck(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 25 then -- phase starts at 20
-		self:Message("frenzy", CL["soon"]:format(L["frenzy"]), "Positive", L["frenzy_icon"], "Info")
+		self:Message("frenzy", "Positive", "Info", CL["soon"]:format(L["frenzy"]), L.frenzy_icon)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
 end

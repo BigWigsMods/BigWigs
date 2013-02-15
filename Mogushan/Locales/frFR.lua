@@ -23,7 +23,7 @@ if L then
 	L.phase_shadow = "Phase d'Ombre (héroïque) !"
 
 	L.phase_message = "Nouvelle phase imminente !"
-	L.shroud_message = "%2$s incante Voile sur %1$s"
+	L.shroud_message = "Voile"
 	L.shroud_can_interrupt = "%s peut interrompre %s !"
 	L.barrier_message = "Barrière EN PLACE !"
 	L.barrier_cooldown = "Recharge Barrière"
@@ -31,10 +31,10 @@ if L then
 	-- Tanks
 	L.tank = "Alertes tank"
 	L.tank_desc = "Compte les cumuls de Fouet foudroyant, Lance enflammée, Horion des Arcanes & Brûlure de l'ombre (héroïque)."
-	L.lash_message = "%2$dx Fouet(s) sur %1$s"
-	L.spear_message = "%2$dx Lance(s) sur %1$s"
-	L.shock_message = "%2$dx Horion(s) sur %1$s"
-	L.burn_message = "%2$dx Brûlure(s) sur %1$s"
+	L.lash_message = "Fouet(s)"
+	L.spear_message = "Lance(s)"
+	L.shock_message = "Horion(s)"
+	L.burn_message = "Brûlure(s)"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "frFR")

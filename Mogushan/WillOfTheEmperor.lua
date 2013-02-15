@@ -137,58 +137,58 @@ end
 --
 
 function mod:Rage()
-	self:Message("rage", CL["custom_sec"]:format(L["rage"], 13), "Attention", L.rage_icon)
-	self:Bar("rage", L["rage"], 13, L.rage_icon)
-	self:DelayedMessage("rage", 13, L["rage"], "Attention", L.rage_icon)
+	self:Message("rage", "Attention", nil, CL["custom_sec"]:format(L["rage"], 13), L.rage_icon)
+	self:Bar("rage", 13, L["rage"], L.rage_icon)
+	self:DelayedMessage("rage", 13, "Attention", nil, L["rage"], L.rage_icon)
 end
 
 function mod:FocusedAssault(args)
 	if UnitIsUnit("player", args.destName) then
 		self:Flash(args.spellId)
-		self:LocalMessage(args.spellId, CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
+		self:LocalMessage(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 	end
 end
 
 function mod:FocusedEnergy(args)
-	self:TargetMessage(args.spellId, args.spellName, args.destName, "Attention", args.spellId, "Info")
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
 end
 
 function mod:Strength()
 	strengthCounter = strengthCounter + 1
-	self:Message("strength", CL["custom_sec"]:format(L["strength"], 8), "Attention", L.strength_icon)
-	self:Bar("strength", ("%s (%d)"):format(L["strength"], strengthCounter), 8, L.strength_icon)
-	self:DelayedMessage("strength", 8, ("%s (%d)"):format(L["strength"], strengthCounter), "Attention", L.strength_icon)
+	self:Message("strength", "Attention", nil, CL["custom_sec"]:format(L["strength"], 8), L.strength_icon)
+	self:Bar("strength", 8, CL["count"]:format(L["strength"], strengthCounter), L.strength_icon)
+	self:DelayedMessage("strength", 8, "Attention", nil, CL["count"]:format(L["strength"], strengthCounter), L.strength_icon)
 end
 
 function mod:Courage()
-	self:Message("courage", CL["custom_sec"]:format(L["courage"], 11), "Attention", L.courage_icon)
-	self:Bar("courage", L["courage"], 11, L.courage_icon) -- shield like icon
-	self:DelayedMessage("courage", 11, L["courage"], "Attention", L.courage_icon)
+	self:Message("courage", "Attention", nil, CL["custom_sec"]:format(L["courage"], 11), L.courage_icon)
+	self:Bar("courage", 11, L["courage"], L.courage_icon) -- shield like icon
+	self:DelayedMessage("courage", 11, "Attention", nil, L["courage"], L.courage_icon)
 end
 
 function mod:Bosses()
-	self:Message("bosses", CL["custom_sec"]:format(L["bosses"], 13), "Attention", L.bosses_icon)
-	self:Bar("bosses", L["bosses"], 13, L.bosses_icon)
-	self:DelayedMessage("bosses", 13, L["bosses"], "Attention", L.bosses_icon)
+	self:Message("bosses", "Attention", nil, CL["custom_sec"]:format(L["bosses"], 13), L.bosses_icon)
+	self:Bar("bosses", 13, L["bosses"], L.bosses_icon)
+	self:DelayedMessage("bosses", 13, "Attention", nil, L["bosses"], L.bosses_icon)
 	if not self:Heroic() then
-		self:Bar("gas", "~"..L["gas"], 123, L.gas_icon)
+		self:CDBar("gas", 123, L["gas"], L.gas_icon)
 	end
 end
 
 do
 	local function fireNext()
-		mod:Bar("gas", "~"..L["gas"], 120, L.gas_icon)
+		mod:CDBar("gas", 120, L["gas"], L.gas_icon)
 	end
 	function mod:TitanGas()
 		gasCounter = gasCounter + 1
 		self:ScheduleTimer(fireNext, 30)
-		self:Bar("gas", L["gas"], 30, L.gas_icon)
-		self:Message("gas", ("%s (%d)"):format(L["gas"], gasCounter), "Attention", L.gas_icon)
+		self:Bar("gas", 30, L["gas"], L.gas_icon)
+		self:Message("gas", "Attention", nil, CL["count"]:format(L["gas"], gasCounter), L.gas_icon)
 	end
 end
 
 function mod:TitanGasOverdrive()
-	self:Message("gas", ("%s (%s)"):format(L["gas"], self:SpellName(26662)), "Important", L.gas_icon, "Alarm") --Berserk
+	self:Message("gas", "Important", "Alarm", ("%s (%s)"):format(L["gas"], self:SpellName(26662)), L.gas_icon) --Berserk
 end
 
 do
@@ -210,7 +210,7 @@ do
 
 			if UnitIsUnit("target", unitId) then
 				local boss = UnitName(unitId)
-				self:LocalMessage("arc", ("%s: %s (%d)"):format(boss, spellName, comboCounter[unitId]), "Urgent", arcs[spellId])
+				self:LocalMessage("arc", "Urgent", nil, ("%s: %s (%d)"):format(boss, spellName, comboCounter[unitId]), arcs[spellId])
 			end
 		elseif spellId == 118365 then -- Energize
 			local t = GetTime()
@@ -220,8 +220,8 @@ do
 
 				if UnitIsUnit("target", unitId) or self:Healer() then
 					local boss = UnitName(unitId)
-					self:Bar("combo", CL["other"]:format(boss, L["combo"]), 20, spellId)
-					self:DelayedMessage("combo", 17, L["combo_message"]:format(boss), "Personal", L.arc_icon, "Long", true) -- Local only
+					self:Bar("combo", 20, CL["other"]:format(boss, L["combo"]), spellId)
+					self:DelayedMessage("combo", 17, "Personal", "Long", L["combo_message"]:format(boss), L.arc_icon) -- Local only
 				end
 			end
 		end

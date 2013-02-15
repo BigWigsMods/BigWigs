@@ -75,8 +75,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(117960, 117960, 8.5, 117960) -- Celestial Breath
-	self:Bar("adds", CL["next_add"], 12, 117954)
+	self:Bar(117960, 8.5) -- Celestial Breath
+	self:Bar("adds", 12, CL["next_add"])
 	self:Berserk(570)
 	drawPowerCounter, annihilateCounter = 0, 0
 	phaseCount = 0
@@ -90,8 +90,8 @@ end
 function mod:FloorRemoved(_, _, _, _, spellId)
 	-- Trigger Phase A when the spark hits the conduit
 	if spellId == 118189 then
-		self:Bar("floor", L["floor"], 6, L.floor_icon)
-		self:Message("floor", L["floor_message"], "Personal", L.floor_icon, "Alarm")
+		self:Bar("floor", 6, L["floor"], L.floor_icon)
+		self:Message("floor", "Personal", "Alarm", L["floor_message"], L.floor_icon)
 		self:Flash("floor")
 	end
 end
@@ -99,20 +99,20 @@ end
 function mod:Overcharged(args)
 	if UnitIsUnit(args.destName, "player") and InCombatLockdown() then
 		if (args.amount or 1) >= 6 and args.amount % 2 == 0 then
-			self:LocalMessage(args.spellId, ("%s (%d)"):format(args.spellName, args.amount), "Personal", args.spellId)
+			self:LocalMessage(args.spellId, "Personal", nil, CL["count"]:format(args.spellName, args.amount))
 		end
 	end
 end
 
 function mod:DrawPower(args)
 	drawPowerCounter = drawPowerCounter + 1
-	self:Message(119360, ("%s (%d)"):format(args.spellName, drawPowerCounter), "Attention", 119360)
+	self:Message(119360, "Attention", nil, CL["count"]:format(args.spellName, drawPowerCounter))
 	self:StopBar(CL["next_add"]) -- Materialize Protector
 	self:StopBar(117960) -- Celestial Breath
 end
 
 function mod:CelestialBreath(args)
-	self:Bar(args.spellId, args.spellName, 18, args.spellId)
+	self:Bar(args.spellId, 18)
 end
 
 do
@@ -122,7 +122,7 @@ do
 		local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
 		if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
 			self:Flash(117878)
-			self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(stack), "Personal", 117878) -- needs no sound since total StabilityFlux has one already
+			self:LocalMessage(117878, "Personal", nil, L["overcharged_total_annihilation"]:format(stack)) -- needs no sound since total StabilityFlux has one already
 		end
 	end
 	-- This will spam, but it is apparantly needed for some people
@@ -134,7 +134,7 @@ do
 			if t-prev > 1 then --getting like 30 messages a second was *glasses* a bit much
 				prev = t
 				self:Flash(117878)
-				self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(stack), "Personal", 117878, "Info") -- Does need the sound spam too!
+				self:LocalMessage(117878, "Personal", "Info", L["overcharged_total_annihilation"]:format(stack)) -- Does need the sound spam too!
 			end
 		end
 	end
@@ -142,22 +142,22 @@ end
 
 function mod:TotalAnnihilation(args)
 	annihilateCounter = annihilateCounter + 1
-	self:Message("ej:6186", ("%s (%d)"):format(args.spellName, annihilateCounter), "Important", args.spellId, "Alert")
-	self:Bar("ej:6186", CL["cast"]:format(args.spellName), 4, args.spellId)
+	self:Message("ej:6186", "Important", "Alert", CL["count"]:format(args.spellName, annihilateCounter))
+	self:Bar("ej:6186", 4, CL["cast"]:format(args.spellName), args.spellId)
 end
 
 function mod:MaterializeProtector(args)
-	self:Message("adds", CL["add_spawned"], "Attention", args.spellId)
-	self:Bar("adds", CL["next_add"], self:Heroic() and 26 or 40, args.spellId)
+	self:Message("adds", "Attention", nil, CL["add_spawned"], args.spellId)
+	self:Bar("adds", self:Heroic() and 26 or 40, CL["next_add"], args.spellId)
 end
 
 function mod:UnstableEnergyRemoved(args)
 	if phaseCount == 2 then
-		self:Message("stages", L["last_phase"], "Positive")
+		self:Message("stages", "Positive", nil, L["last_phase"])
 	else
 		drawPowerCounter, annihilateCounter = 0, 0
-		self:Message("stages", CL["phase"]:format(1), "Positive")
-		self:Bar("adds", CL["next_add"], 15, 117954)
+		self:Message("stages", "Positive", nil, CL["phase"]:format(1))
+		self:Bar("adds", 15, CL["next_add"], 117954)
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "PhaseWarn", "boss1")
 	end
 end
@@ -165,11 +165,11 @@ end
 function mod:PhaseWarn(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 88 and phaseCount == 0 then -- phase starts at 85
-		self:Message(119360, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 119360, "Info")
+		self:Message(119360, "Positive", "Info", CL["soon"]:format(CL["phase"]:format(2)))
 		phaseCount = 1
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	elseif hp < 53 and phaseCount == 1 then
-		self:Message(119360, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 119360, "Info")
+		self:Message(119360, "Positive", "Info", CL["soon"]:format(CL["phase"]:format(2)))
 		phaseCount = 2
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end

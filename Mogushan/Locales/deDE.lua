@@ -23,7 +23,7 @@ if L then
 	L.phase_shadow = "(Heroisch) Schattenphase!"
 
 	L.phase_message = "Neue Phase bald!"
-	L.shroud_message = "%2$s wirkt Wolke der Umkehrung auf %1$s"
+	L.shroud_message = "Wolke der Umkehrung"
 	L.shroud_can_interrupt = "%s kann %s unterbrechen!"
 	L.barrier_message = "Nullifikationsbarriere AN!"
 	L.barrier_cooldown = "Barriere bereit"
@@ -31,10 +31,10 @@ if L then
 	-- Tanks
 	L.tank = "Tankwarnungen"
 	L.tank_desc = "Zählt die Stapel von Blitzpeitsche, Flammender Speer, Arkanschock und Schattenbrand (heroisch)."
-	L.lash_message = "%2$dx Blitzpeitsche auf %1$s"
-	L.spear_message = "%2$dx Flammender Speer auf %1$s"
-	L.shock_message = "%2$dx Arkanschock auf %1$s"
-	L.burn_message = "%2$dx Schattenbrand auf %1$s"
+	L.lash_message = "Blitzpeitsche"
+	L.spear_message = "Flammender Speer"
+	L.shock_message = "Arkanschock"
+	L.burn_message = "Schattenbrand"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "deDE")

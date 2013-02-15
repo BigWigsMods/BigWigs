@@ -881,7 +881,7 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk)
 
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
-		self:Message(key, "Attention", nil, format(L.custom_start, boss, berserk, seconds / 60))
+		self:Message(key, "Attention", nil, format(L.custom_start, boss, berserk, seconds / 60), false)
 	end
 
 	-- Half-way to enrage warning.

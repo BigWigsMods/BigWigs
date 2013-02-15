@@ -23,7 +23,7 @@ if L then
 	L.phase_shadow = "暗影階段！(英雄)"
 
 	L.phase_message = "快要轉換階段！"
-	L.shroud_message = "%2$s 施放護罩在 %1$s"
+	L.shroud_message = "Shroud"
 	L.shroud_can_interrupt = "%s 可以中斷 %s！"
 	L.barrier_message = "阻擋!"
 	L.barrier_cooldown = "屏障冷卻中"
@@ -31,10 +31,10 @@ if L then
 	-- Tanks
 	L.tank = "坦克警報"
 	L.tank_desc = "計數堆疊閃電鞭笞，火焰長矛，奧術衝擊與暗影灼燒（英雄）。"
-	L.lash_message = "%2$dx 鞭笞在 %1$s"
-	L.spear_message = "%2$dx 長矛在 %1$s"
-	L.shock_message = "%2$dx 衝擊在 %1$s"
-	L.burn_message = "%2$dx 灼燒在 %1$s"
+	L.lash_message = "鞭笞"
+	L.spear_message = "長矛"
+	L.shock_message = "衝擊"
+	L.burn_message = "衝擊"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "zhTW")

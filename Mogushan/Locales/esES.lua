@@ -23,7 +23,7 @@ if L then
 	L.phase_shadow = "(Heroico) ¡Fase de sombras!"
 
 	L.phase_message = "¡Nueva fase pronto!"
-	L.shroud_message = "%2$s castea Embozo en %1$s"
+	L.shroud_message = "Embozo"
 	L.shroud_can_interrupt = "¡%s se puede interrumpir %s!"
 	L.barrier_message = "¡Barrera Activa!"
 	L.barrier_cooldown = "Barrera disponible"
@@ -31,10 +31,10 @@ if L then
 	-- Tanks
 	L.tank = "Alertas de tanques"
 	L.tank_desc = "Cuenta los stacs de Latigazo de relámpagos, Lanza flamígera, Choque arcano y Quemadura de las sombras (Heroico)."
-	L.lash_message = "%2$dx Latigazo en %1$s"
-	L.spear_message = "%2$dx Lanza en %1$s"
-	L.shock_message = "%2$dx Choque en %1$s"
-	L.burn_message = "%2$dx Quemadura en %1$s"
+	L.lash_message = "Latigazo"
+	L.spear_message = "Lanza"
+	L.shock_message = "Choque"
+	L.burn_message = "Quemadura"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "esES") or BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "esMX")

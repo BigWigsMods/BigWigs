@@ -23,7 +23,7 @@ if L then
 	L.phase_shadow = "Fase Ombra! (Eroico)"
 
 	L.phase_message = "Nuova fase tra poco!"
-	L.shroud_message = "%2$s attiva Manto su %1$s"
+	L.shroud_message = "Manto"
 	L.shroud_can_interrupt = "%s può interrompere %s!"
 	L.barrier_message = "Barriera Attiva!"
 	L.barrier_cooldown = "Recupero Barriera"
@@ -31,10 +31,10 @@ if L then
 	-- Tanks
 	L.tank = "Messaggio solo per Difensori."
 	L.tank_desc = "Conta gli stacks di Sferzata Fulminante, Lancia Fiammeggiante, Folgore Arcana & Combustione dell'Ombra (Eroico)."
-	L.lash_message = "%2$dx Sferzata su %1$s"
-	L.spear_message = "%2$dx Lancia su %1$s"
-	L.shock_message = "%2$dx Folgore su %1$s"
-	L.burn_message = "%2$dx Combustione su %1$s"
+	L.lash_message = "Sferzata"
+	L.spear_message = "Lancia"
+	L.shock_message = "Folgore"
+	L.burn_message = "Combustione"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "itIT")
