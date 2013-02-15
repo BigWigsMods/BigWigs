@@ -3,6 +3,8 @@
 
 <Script file="Salyis.lua" />
 <Script file="ShaOfAnger.lua" />
+<Script file="Nalak.lua" />
+<Script file="Oondasta.lua" />
 
 </Ui>
 
