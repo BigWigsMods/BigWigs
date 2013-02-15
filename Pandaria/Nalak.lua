@@ -6,6 +6,7 @@ if select(4, GetBuildInfo()) < 50200 then return end
 local mod, CL = BigWigs:NewBoss("Nalak", 928, 814)
 if not mod then return end
 mod:RegisterEnableMob(69099)
+mod.otherMenu = 6
 
 --------------------------------------------------------------------------------
 -- Locals

@@ -64,6 +64,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "UnstableEnergyRemoved", 116994)
 	self:Log("SPELL_AURA_APPLIED", "DrawPower", 119387)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DrawPower", 119387)
+	self:Log("SPELL_CAST_SUCCESS", "Phase2", 124967)
 
 	self:Log("SPELL_DAMAGE", "StabilityFluxDamage", 117912)
 	self:Log("SPELL_MISSED", "StabilityFluxDamage", 117912)
@@ -107,8 +108,12 @@ end
 function mod:DrawPower(args)
 	drawPowerCounter = drawPowerCounter + 1
 	self:Message(119360, "Attention", nil, CL["count"]:format(args.spellName, drawPowerCounter))
+end
+
+function mod:Phase2()
 	self:StopBar(CL["next_add"]) -- Materialize Protector
 	self:StopBar(117960) -- Celestial Breath
+	self:Message("stages", "Positive", nil, CL["phase"]:format(2))
 end
 
 function mod:CelestialBreath(args)
@@ -165,11 +170,11 @@ end
 function mod:PhaseWarn(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 88 and phaseCount == 0 then -- phase starts at 85
-		self:Message(119360, "Positive", "Info", CL["soon"]:format(CL["phase"]:format(2)))
+		self:Message("stages", "Positive", "Info", CL["soon"]:format(CL["phase"]:format(2)))
 		phaseCount = 1
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	elseif hp < 53 and phaseCount == 1 then
-		self:Message(119360, "Positive", "Info", CL["soon"]:format(CL["phase"]:format(2)))
+		self:Message("stages", "Positive", "Info", CL["soon"]:format(CL["phase"]:format(2)))
 		phaseCount = 2
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end

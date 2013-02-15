@@ -529,7 +529,8 @@ end
 do
 	local grouped = nil
 	local queueLoad = {}
-	local warnedThisZone = {[465]=true,[473]=true,[807]=true,[809]=true} -- World Bosses
+	-- Kazzak, Doomwalker, Salyis's Warband, Sha of Anger, Nalak, Oondasta
+	local warnedThisZone = {[465]=true,[473]=true,[807]=true,[809]=true,[928]=true,[929]=true} -- World Bosses
 	function loader:PLAYER_REGEN_ENABLED()
 		loaderUtilityFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		sysprint(L["Combat has ended, Big Wigs has now finished loading."])
