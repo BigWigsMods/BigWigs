@@ -72,7 +72,7 @@ end
 function mod:OnEngage()
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	forceCount, platform, danceTracker = 0, 0, true
-	self:Berserk(self:Heroic() and 720 or 600) -- Verify
+	self:Berserk(self:Heroic() and 660 or 600)
 end
 
 --------------------------------------------------------------------------------

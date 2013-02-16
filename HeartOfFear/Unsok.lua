@@ -111,7 +111,7 @@ function mod:OnEngage(diff)
 	self:Bar(122784, 20, CL["count"]:format(self:SpellName(122784), reshapeLifeCounter)) --Reshape Life
 	self:Bar(121949, 24) --Parasitic Growth
 	self:Bar(121994, 10) -- Amber Scalpel
-	self:Berserk(600) -- Does he even have one?
+	self:Berserk(600)
 
 	phase = 1
 	primaryIcon = nil
