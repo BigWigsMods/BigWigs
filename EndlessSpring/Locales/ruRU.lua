@@ -33,7 +33,7 @@ if L then
 	L.swing_desc = "Считает количество замахов перед Взбучкой."
 
 	L.throw = "Бросок!"
-	L.ball_dropped = "Мяч уронен!"
+	L.ball_dropped = "Мяч упал!"
 	L.ball_you = "У вас мяч!"
 	L.ball = "Мяч"
 

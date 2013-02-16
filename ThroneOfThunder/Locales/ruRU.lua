@@ -68,13 +68,13 @@ L = BigWigs:NewBossLocale("Durumu the Forgotten", "ruRU")
 if L then
 	L.rays_spawn = "Появляются лучи"
 	L.ray_controller = "Оператор луча"
-	-- L.ray_controller_desc = "Announce the ray direction controllers for the red and blue rays."
-	-- L.red_ray_controller = "You are the |c000000FFBlue|r ray controller"
-	-- L.blue_ray_controller = "You are the |c00FF0000Red|r ray controller"
+	L.ray_controller_desc = "Объявлять операторов направления красного и синего луча."
+	L.red_ray_controller = "Вы оператор |c000000FFСинего|r луча"
+	L.blue_ray_controller = "Вы оператор |c00FF0000Красного|r луча"
 	-- L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
 	-- L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
-	-- L.red_add = "|c00FF0000Red|r add"
-	-- L.blue_add = "|c000000FFBlue|r add"
+	L.red_add = "|c00FF0000Красный|r помощник"
+	L.blue_add = "|c000000FFСиний|r помощник"
 	L.clockwise = "По часовой стрелке"
 	L.counter_clockwise = "Отсчет часовой стрелки"
 end
@@ -103,9 +103,9 @@ if L then
 end
 L = BigWigs:NewBossLocale("Lei Shen", "ruRU")
 if L then
-	-- L.conduit_abilities = "Conduit Abilities"
-	-- L.conduit_abilities_desc = "Approximate cooldown bars for the conduit specific abilities"
-	-- L.conduit_ability_meassage = "Next conduit ability"
+	L.conduit_abilities = "Способности проводника"
+	L.conduit_abilities_desc = "Полосы приблизительного восстановления способностей проводника."
+	L.conduit_ability_meassage = "След. способность проводника"
 	L.intermission = "Перерыв"
 	L.overchargerd_message = "Оглушающий AoE импульс"
 	L.static_shock_message = "Делящийся AoE урон"
