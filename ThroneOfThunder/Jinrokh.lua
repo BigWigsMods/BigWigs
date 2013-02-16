@@ -2,7 +2,8 @@
 TODO:
 	Double check if proximity windows are opened and closed correctly
 	keep en eye out for focused lightning in 25 man in case there are 2, because of ICON usage
-	focused lightning removed is being kept track of with UNIT_AURA which is ugly expect CLEU events added for this ( not as of 10 N ptr )
+	focused lightning removed is being kept track of with UNIT_AURA which is ugly expect CLEU events added for this ( not as of 10 H ptr )
+	timers don't seem to be that inaccurate but it might worth checking if starting timers after lightning storm end might make them even more accurate
 ]]--
 
 if select(4, GetBuildInfo()) < 50200 then return end
@@ -39,20 +40,24 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		{138732, "PROXIMITY"},
 		137313, "storm_duration", {137175, "PROXIMITY", "ICON"}, {139467, "FLASH"},{"ej:7741", "PROXIMITY", "ICON", "SAY"}, 137162, {138375, "FLASH"}, {138006, "FLASH"}, "berserk", "bosskill",
 	}, {
+		[138732] = "heroic",
 		[137313] = "general",
 	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:Log("SPELL_AURA_REMOVED", "IonizationRemoved", 138732)
+	self:Log("SPELL_CAST_START", "Ionization", 138732)
 	self:Log("SPELL_CAST_SUCCESS", "LightningStormDuration", 137313)
 	self:Log("SPELL_CAST_START", "LightningStorm", 137313)
 	self:Log("SPELL_AURA_REMOVED", "ThunderingThrowRemoved", 137371)
 	self:Emote("ThunderingThrow", "137175") -- this seems to be the fastest way to determine which tank gets thrown, APPLIED is way too slow
 	self:Log("SPELL_DAMAGE", "LightningFissure", 139467)
-	self:Log("SPELL_CAST_SUCCESS", "FocusedLightning", 137399)
+	self:Log("SPELL_CAST_START", "FocusedLightning", 137399) -- SUCCESS has destName, but this is so much earlier, and "boss1target" should be reliable for it
 	self:Log("SPELL_CAST_SUCCESS", "StaticBurst", 137162)
 	self:Log("SPELL_DAMAGE", "StaticWoundConduction", 138375)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ElectrifiedWaters", 138006)
@@ -65,11 +70,28 @@ function mod:OnEngage()
 	self:Bar(137175, 30) -- Thundering Throw
 	self:CDBar(137162, 7) -- Static Burst -- again, is there even a point for such a short bar?
 	self:Berserk(420) -- XXX Soft enrage, at this point you should have 4 pools up leaving very little room for activities -- real Berserk is not yet confirmed
+	if self:Heroic() then self:Bar(138732, 60) end -- Ionization
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:IonizationRemoved(args)
+	-- we could make this a bit more complicated check, to help raid awareness, but lets just leave it simple as this and see if we need to complicate thigns in 25 H
+	if not UnitIsUnit("player", args.destName) then return end
+	self:CloseProximity(args.spellId)
+	if UnitDebuff("player", self:SpellName(137422)) then -- Focused Lightning
+		self:OpenProximity("ej:7741", 8) -- reopen it if we have lightning chasing us too
+	end
+end
+
+function mod:Ionization(args)
+	self:Message(args.spellId, "Important", "Long")
+	self:OpenProximity(args.spellId, 8)
+	self:Bar(args.spellId, 92)
+end
+
 
 function mod:LightningStormDuration(args)
 	self:Bar("storm_duration", 15, CL["cast"]:format(args.spellName), args.spellId) -- help with organizing raid cooldowns
@@ -82,11 +104,9 @@ end
 
 function mod:ThunderingThrowRemoved()
 	self:SecondaryIcon(137175)
+	self:CloseProximity(137175)
 	if UnitDebuff("player", self:SpellName(137162)) then -- Focused Lightning
-		self:CloseProximity(137175)
 		self:OpenProximity("ej:7741", 5)
-	else
-		self:CloseProximity(137175)
 	end
 end
 
@@ -114,7 +134,7 @@ do
 end
 
 function mod:FocusedLightningRemoved()
-	if not UnitDebuff("player", self:SpellName(137162)) then
+	if not UnitDebuff("player", self:SpellName(137422)) then
 		self:PrimaryIcon("ej:7741") -- XXX Need to check if there can be 2 up in 25 man at same time
 		self:CloseProximity("ej:7741")
 		self:UnregisterUnitEvent("UNIT_AURA", "player")
@@ -122,13 +142,15 @@ function mod:FocusedLightningRemoved()
 end
 
 function mod:FocusedLightning(args)
+	local target = UnitName("boss1target")
 	self:CDBar("ej:7741", 11, args.spellId) -- XXX not sure if there is any point to have such a short bar for this
-	self:TargetMessage("ej:7741", args.destName, "Urgent", "Alarm", args.spellId)
-	self:PrimaryIcon("ej:7741", args.destName)
-	if UnitIsUnit(args.destName, "player") then
+	self:TargetMessage("ej:7741", target, "Urgent", "Alarm", args.spellId)
+	if not target then return end -- so we don't throw errors in case target check fails ( we can just debug from :TargetMessage )
+	self:PrimaryIcon("ej:7741", target)
+	if UnitIsUnit(target, "player") then
 		self:RegisterUnitEvent("UNIT_AURA", "FocusedLightningRemoved", "player") -- There is no APPLIED or REMOVED CLEU event for this yet and using the explosion damage to remove icon and close proximity could be innacurate
 		self:Say("ej:7741", CL["say"]:format(args.spellName))
-		self:OpenProximity("ej:7741", 5)
+		self:OpenProximity("ej:7741", 8)
 	end
 end
 
