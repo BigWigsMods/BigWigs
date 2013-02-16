@@ -59,7 +59,6 @@ function mod:OnBossEnable()
 	-- Dark Animus
 	self:Log("SPELL_CAST_START", "FullPower", 138729)
 	self:Log("SPELL_CAST_START", "InterruptingJolt", 138763)
-	self:Log("SPELL_AURA_APPLIED", "Empower", 139430) -- Empower and Animate
 	self:Log("SPELL_CAST_SUCCESS", "Empower", 138780) -- Empower Golem
 	self:Log("SPELL_AURA_APPLIED", "AnimaFont", 138691)
 	self:Log("SPELL_CAST_START", "AnimaRing", 136954) -- this is 1 sec faster than SUCCESS but has no destName
@@ -71,7 +70,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "MatterSwapApplied", 138609)
 	-- Large Anima Golem
 	self:Log("SPELL_DAMAGE", "CrimsonWake", 138485)
-	self:RgisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- XXX Crimson Wake needs to be switched to CLEU ASAP
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- XXX Crimson Wake needs to be switched to CLEU ASAP
 
 	self:Death("Win", 69427)
 end
@@ -132,6 +131,7 @@ function mod:SiphonAnima(args)
 end
 
 function mod:BossEngage()
+	self:CheckBossStatus()
 	if not self.isEngaged then return end -- XXX is this even needed?
 	if 69427 == self:MobId(UnitGUID("boss1")) then
 		self:Bar(138644, 30) -- Siphon Anima

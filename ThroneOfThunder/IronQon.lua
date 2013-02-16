@@ -43,7 +43,7 @@ function mod:GetOptions()
 		"ej:6914", 136520,
 		"ej:6877", {137669, "FLASH"}, {136192, "ICON", "PROXIMITY"},
 		137221, "overload_casting", {"ej:6870", "PROXIMITY"}, "ej:6871", {137668, "FLASH"},
-		{134926, "FLASH", "SAY"}, "berserk", "bosskill",
+		{134926, "FLASH", "SAY"}, "molten_energy", "berserk", "bosskill",
 	}, {
 		["ej:6914"] = "ej:6867", -- Dam'ren
 		["ej:6877"] = "ej:6866", -- Quet'zal
@@ -134,6 +134,7 @@ do
 end
 
 function mod:Windstorm(args)
+	if not UnitIsUnit("player", args.destName) then return end
 	self:Message("ej:6877", "Attention", nil, args.spellId)
 	self:Bar("ej:6877", 90, args.spellId)
 end
