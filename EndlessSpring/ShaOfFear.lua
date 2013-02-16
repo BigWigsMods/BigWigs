@@ -37,12 +37,10 @@ if L then
 
 	L.cooldown_reset = "Your cooldowns have been reset!"
 
-	L.ability_cd = "Ability cooldown"
-	L.ability_cd_desc = "Try and guess in which order abilities will be used after an Emerge."
+	L.ability_cd = "Ability cooldown bar"
+	L.ability_cd_desc = "Show the next possible ability or abilities."
 	L.ability_cd_icon = 120458
 
-	L.huddle_or_spout = "Huddle or Spout"
-	L.huddle_or_strike = "Huddle or Strike"
 	L.strike_or_spout = "Strike or Spout"
 	L.huddle_or_spout_or_strike = "Huddle or Spout or Strike"
 end
@@ -56,7 +54,7 @@ function mod:GetOptions()
 	return {
 		{"ej:6699", "TANK_HEALER"}, 119414, 129147, {119519, "FLASH", "SAY"},
 		{ 119888, "FLASH" }, 118977,
-		129378, {"ej:6700", "TANK_HEALER"}, {120669, "TANK"}, {120629, "SAY"}, {120519, "FLASH"}, 120672, "ability_cd", 120455, {120268, "FLASH", "PROXIMITY"}, {"ej:6109", "FLASH"}, "ej:6107",
+		129378, {"ej:6700", "TANK_HEALER"}, {120669, "TANK"}, "ability_cd", {120629, "SAY"}, {120519, "FLASH"}, 120672, 120455, {120268, "FLASH", "PROXIMITY"}, {"ej:6109", "FLASH"}, "ej:6107",
 		{"swing", "TANK"}, "berserk", "proximity", "bosskill",
 	}, {
 		["ej:6699"] = "ej:6086",
@@ -129,14 +127,14 @@ do
 	local huddleUsed, strikeUsed, spoutUsed = nil, nil, nil
 	local huddleList, scheduled = mod:NewTargetList(), nil
 	local function warnNext()
-		if huddleUsed and not strikeUsed and not spoutUsed then
+		if not huddleUsed then -- huddle is always first or second
+			mod:Bar("ability_cd", 10, 120629) -- huddle
+		elseif not strikeUsed and not spoutUsed then -- huddle was first
 			mod:Bar("ability_cd", 10, L["strike_or_spout"], L.ability_cd_icon)
-		elseif not huddleUsed and (spoutUsed or strikeUsed) then
-			mod:Bar(120629, 10) -- huddle
-		elseif huddleUsed and spoutUsed then
-			mod:Bar(120672, 10) -- strike
-		elseif huddleUsed and strikeUsed then
-			mod:Bar(120519, 10) -- spout
+		elseif spoutUsed then
+			mod:Bar("ability_cd", 10, 120672) -- strike
+		elseif strikeUsed then
+			mod:Bar("ability_cd", 10, 120519) -- spout
 		end
 	end
 	local function warnHuddle(spellId)
@@ -166,7 +164,7 @@ do
 	end
 	function mod:Emerge(args)
 		huddleUsed, strikeUsed, spoutUsed = nil, nil, nil
-		self:Bar("ability_cd", 10, L["huddle_or_spout_or_strike"], args.spellId)
+		self:Bar("ability_cd", 10, L["huddle_or_spout_or_strike"], L.ability_cd_icon)
 	end
 end
 
