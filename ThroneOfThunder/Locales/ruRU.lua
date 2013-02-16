@@ -81,7 +81,7 @@ end
 
 L = BigWigs:NewBossLocale("Primordius", "ruRU")
 if L then
-	L.stream_of_blobs = "Потомк каплей"
+	L.stream_of_blobs = "Поток каплей"
 	L.mutations = "Мутации"
 end
 
@@ -109,8 +109,8 @@ if L then
 	L.intermission = "Перерыв"
 	L.overchargerd_message = "Оглушающий AoE импульс"
 	L.static_shock_message = "Делящийся AoE урон"
-	-- L.diffusion_add_message = "Diffusion adds"
-	-- L.diffusion_chain_message = "Diffusion adds soon - SPREAD!"
+	L.diffusion_add_message = "Рассеивающие помощники"
+	L.diffusion_chain_message = "Скоро рассеивающий помощник - Разбегитесь!"
 end
 L = BigWigs:NewBossLocale("Ra-den", "ruRU")
 if L then
