@@ -406,7 +406,7 @@ end
 do
 	local cackleTargets, scheduled = mod:NewTargetList(), nil
 	local function warnCackle(spellId)
-		mod:TargetMessage(spellId, spellId, cackleTargets, "Urgent", spellId)
+		mod:TargetMessage(spellId, cackleTargets, "Urgent")
 		scheduled = nil
 	end
 	function mod:OminousCackleApplied(args)

@@ -12,7 +12,6 @@ if not plugin then return end
 --
 
 --local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
-local SecondsToTime = SecondsToTime
 local activeDurations = nil
 
 -------------------------------------------------------------------------------
@@ -45,14 +44,14 @@ end
 
 function plugin:BigWigs_OnBossWin(event, module)
 	if module.encounterId and activeDurations[module.encounterId] then
-		BigWigs:Print("Big Wigs Experimental: " ..module.moduleName.. " defeated after " ..SecondsToTime(GetTime()-activeDurations[module.encounterId]))
+		BigWigs:Print(module.moduleName.. " defeated after " ..SecondsToTime(GetTime()-activeDurations[module.encounterId]))
 		activeDurations[module.encounterId] = nil
 	end
 end
 
 function plugin:BigWigs_OnBossReboot(event, module)
 	if module.encounterId and activeDurations[module.encounterId] then
-		BigWigs:Print("Big Wigs Experimental: " ..module.moduleName.. " wiped after " ..SecondsToTime(GetTime()-activeDurations[module.encounterId]))
+		BigWigs:Print(module.moduleName.. " wiped after " ..SecondsToTime(GetTime()-activeDurations[module.encounterId]))
 		activeDurations[module.encounterId] = nil
 	end
 end
