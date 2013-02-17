@@ -272,7 +272,7 @@ local function coreSync(sync, moduleName, sender)
 	elseif sync == "Death" then
 		local mod = addon:GetBossModule(moduleName, true)
 		if mod and mod:IsEnabled() then
-			mod:Message("bosskill", L["%s has been defeated"]:format(mod.displayName), "Positive", nil, "Victory")
+			mod:Message("bosskill", "Positive", "Victory", L["%s has been defeated"]:format(mod.displayName), false)
 			if mod.OnWin then mod:OnWin() end
 			mod.lastKill = GetTime() -- Add the kill time for the enable check.
 			mod:Disable()
