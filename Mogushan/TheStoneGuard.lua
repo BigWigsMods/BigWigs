@@ -74,7 +74,7 @@ function mod:PowerDown()
 end
 
 function mod:Overload(msg, boss)
-	self:Message("overload", "Important", "Long", msg:format(boss), L["overload_icon"])
+	self:Message("overload", "Important", "Long", msg:format(boss), L.overload_icon)
 end
 
 do

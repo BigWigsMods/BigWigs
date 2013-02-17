@@ -161,7 +161,7 @@ function mod:PhaseChange(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	--a 5% warning is like forever away from the actual transition (especially in LFR, lol)
 	if (hp < 68 and not p2) or (hp < 35) then --66/33
-		self:Message("stages", "Positive", "Info", L["phase_message"])
+		self:Message("stages", "Positive", "Info", L["phase_message"], false)
 		if not p2 then
 			p2 = true
 		else
@@ -174,7 +174,7 @@ function mod:PhaseChangeHC(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	--a 5% warning is like forever away from the actual transition (especially in LFR, lol)
 	if (hp < 77 and not p2) or (hp < 52 and not p3) or (hp < 27) then --75/50/25
-		self:Message("stages", "Positive", "Info", L["phase_message"])
+		self:Message("stages", "Positive", "Info", L["phase_message"], false)
 		if not p2 then
 			p2 = true
 		elseif not p3 then

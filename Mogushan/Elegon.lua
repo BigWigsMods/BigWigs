@@ -113,7 +113,7 @@ end
 function mod:Phase2()
 	self:StopBar(CL["next_add"]) -- Materialize Protector
 	self:StopBar(117960) -- Celestial Breath
-	self:Message("stages", "Positive", nil, CL["phase"]:format(2))
+	self:Message("stages", "Positive", nil, CL["phase"]:format(2), false)
 end
 
 function mod:CelestialBreath(args)
@@ -147,7 +147,7 @@ end
 
 function mod:TotalAnnihilation(args)
 	annihilateCounter = annihilateCounter + 1
-	self:Message("ej:6186", "Important", "Alert", CL["count"]:format(args.spellName, annihilateCounter))
+	self:Message("ej:6186", "Important", "Alert", CL["count"]:format(args.spellName, annihilateCounter), false)
 	self:Bar("ej:6186", 4, CL["cast"]:format(args.spellName), args.spellId)
 end
 
@@ -158,10 +158,10 @@ end
 
 function mod:UnstableEnergyRemoved(args)
 	if phaseCount == 2 then
-		self:Message("stages", "Positive", nil, L["last_phase"])
+		self:Message("stages", "Positive", nil, L["last_phase"], false)
 	else
 		drawPowerCounter, annihilateCounter = 0, 0
-		self:Message("stages", "Positive", nil, CL["phase"]:format(1))
+		self:Message("stages", "Positive", nil, CL["phase"]:format(1), false)
 		self:Bar("adds", 15, CL["next_add"], 117954)
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "PhaseWarn", "boss1")
 	end
@@ -170,11 +170,11 @@ end
 function mod:PhaseWarn(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 88 and phaseCount == 0 then -- phase starts at 85
-		self:Message("stages", "Positive", "Info", CL["soon"]:format(CL["phase"]:format(2)))
+		self:Message("stages", "Positive", "Info", CL["soon"]:format(CL["phase"]:format(2)), false)
 		phaseCount = 1
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	elseif hp < 53 and phaseCount == 1 then
-		self:Message("stages", "Positive", "Info", CL["soon"]:format(CL["phase"]:format(2)))
+		self:Message("stages", "Positive", "Info", CL["soon"]:format(CL["phase"]:format(2)), false)
 		phaseCount = 2
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end

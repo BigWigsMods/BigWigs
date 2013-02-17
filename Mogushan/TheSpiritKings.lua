@@ -135,7 +135,7 @@ do
 	function mod:CowardiceRemoved(args)
 		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2", "boss3", "boss4")
 		prevPower = 0
-		self:Message("cowardice", "Positive", nil, CL["over"]:format(spellReflect), args.spellId)
+		self:Message("cowardice", "Positive", nil, CL["over"]:format(spellReflect), L.cowardice_icon)
 	end
 	function mod:SpellReflectWarn(unitId)
 		local id = self:MobId(UnitGUID(unitId))
@@ -330,13 +330,13 @@ function mod:BossSwap(unitId)
 	if hp < 38 then -- next boss at 30% (Qiang -> Subetai -> Zian -> Meng)
 		local id = self:MobId(UnitGUID(unitId))
 		if bossWarned == 0 and (id == 60709 or id == 61423) then -- Qiang
-			self:Message("ej:5846", "Positive", "Info", CL["soon"]:format(subetai))
+			self:Message("ej:5846", "Positive", "Info", CL["soon"]:format(subetai), false)
 			bossWarned = 1
 		elseif bossWarned == 1 and (id == 60710 or id == 61427) then -- Subetai
-			self:Message("ej:5852", "Positive", "Info", CL["soon"]:format(zian))
+			self:Message("ej:5852", "Positive", "Info", CL["soon"]:format(zian), false)
 			bossWarned = 2
 		elseif bossWarned == 2 and (id == 60701 or id == 61421) then -- Zian
-			self:Message("ej:5835", "Positive", "Info", CL["soon"]:format(meng))
+			self:Message("ej:5835", "Positive", "Info", CL["soon"]:format(meng), false)
 			bossWarned = 3
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3", "boss4")
 		end
