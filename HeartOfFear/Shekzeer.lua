@@ -232,7 +232,7 @@ end
 
 function mod:Eyes(args)
 	local buffStack = args.amount or 1
-	self:TargetBar("eyes", 30, args.destName, L["eyes_message"], args.spellId)
+	self:CDBar("eyes", 10.5, L["eyes_message"], args.spellId)
 	self:StackMessage("eyes", args.destName, buffStack, "Urgent", buffStack > 2 and "Info", L["eyes_message"], args.spellId)
 end
 
