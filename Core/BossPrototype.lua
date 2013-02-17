@@ -42,7 +42,17 @@ local icons = setmetatable({}, {__index =
 				print(format("Big Wigs: An invalid spell id (%d) is being used in a bar/message.", key))
 			end
 		else
-			value = "Interface\\Icons\\" .. key
+			local ejID = tonumber(key:match("^ej:(%d+)$"))
+			if ejID then
+				local _, _, _, abilityIcon = EJ_GetSectionInfo(ejID)
+				if abilityIcon and abilityIcon:trim():len() > 0 then
+					value = abilityIcon
+				else -- empty string or add ability
+					value = false
+				end
+			else
+				value = "Interface\\Icons\\" .. key
+			end
 		end
 		self[key] = value
 		return value
