@@ -898,12 +898,12 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk)
 	local half = seconds / 2
 	local m = half % 60
 	local halfMin = (half - m) / 60
-	self:DelayedMessage(key, half + m, "Positive", nil, format(L.custom_min, berserk, halfMin))
+	self:DelayedMessage(key, half + m, "Positive", nil, format(L.custom_min, berserk, halfMin), false)
 
-	self:DelayedMessage(key, seconds - 60, "Positive", nil, format(L.custom_min, berserk, 1))
-	self:DelayedMessage(key, seconds - 30, "Urgent", nil, format(L.custom_sec, berserk, 30))
-	self:DelayedMessage(key, seconds - 10, "Urgent", nil, format(L.custom_sec, berserk, 10))
-	self:DelayedMessage(key, seconds - 5, "Important", nil, format(L.custom_sec, berserk, 5))
+	self:DelayedMessage(key, seconds - 60, "Positive", nil, format(L.custom_min, berserk, 1), false)
+	self:DelayedMessage(key, seconds - 30, "Urgent", nil, format(L.custom_sec, berserk, 30), false)
+	self:DelayedMessage(key, seconds - 10, "Urgent", nil, format(L.custom_sec, berserk, 10), false)
+	self:DelayedMessage(key, seconds - 5, "Important", nil, format(L.custom_sec, berserk, 5), false)
 	self:DelayedMessage(key, seconds, "Important", "Alarm", format(L.custom_end, boss, berserk), icon)
 
 	self:Bar(key, seconds, berserk, icon)
