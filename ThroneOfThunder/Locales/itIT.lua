@@ -33,13 +33,17 @@ if L then
 	L.loa_spirit = "Spirito Loa"
 	L.loa_spirits = "Spiriti Loa"
 	L.loa_spirits_desc = "Avviso per entrambi i tipi di Spiriti Loa"
-end
+	L.hp_to_go_power = "Punti Vita alla Fine: %d%% - Potere: %d"
+	end
 
 L = BigWigs:NewBossLocale("Tortos", "itIT")
 if L then
 	L.kick = "Calcio"
 	L.kick_desc = "Tieni il conto di quante tartarighe possono essere prese a calci"
-	L.kickable_turtles = "Tartarughe disponibili per essere calciate: %d"
+	L.kickable_turtles = "Tartarughe da calciare: %d"
+	L.crystal_shell_removed = "Scudo di Cristallo rimosso!"
+	L.no_crystal_shell = "Nessuno Scudo di Cristallo"
+	
 end
 
 L = BigWigs:NewBossLocale("Megaera", "itIT")
@@ -76,7 +80,8 @@ if L then
 	L.blue_add = "Add |c000000FFBlu|r"
 	L.clockwise = "Senso Orario"
 	L.counter_clockwise = "Senso Antiorario"
-end
+	L.death_beam = "Raggio Disintegratore"
+	end
 
 L = BigWigs:NewBossLocale("Primordius", "itIT")
 if L then
