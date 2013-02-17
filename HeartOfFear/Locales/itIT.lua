@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.engage_yell = "Siamo stati scelti per essere la voce mortale del Suo divino potere. Siamo solo uno strumento sotto il Suo controllo."
 
-	L.force_message = "AoE Pulse"
+	L.force_message = "Pulsazione ad Area"
 
 	L.attenuation = EJ_GetSectionInfo(6426) .. " (Dischi)"
 	L.attenuation_bar = "Dischi... Corri!"
