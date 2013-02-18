@@ -635,6 +635,16 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	check:SetCallback("OnValueChanged", masterOptionToggled)
 	check:SetValue(getMasterOption(check))
 
+	-- Create role-specific secondary checkbox
+	local roleRestrictionCheckbox = nil
+	for i, key in next, BigWigs:GetRoleOptions() do
+		local flag = C[key]
+		if bit.band(module.toggleDefaults[dbKey], flag) == flag then
+			local name, desc = BigWigs:GetOptionDetails(key)
+			roleRestrictionCheckbox = getSlaveToggle(name, desc, dbKey, module, flag, check)
+		end
+	end
+
 	local tabs = AceGUI:Create("TabGroup")
 	tabs:SetLayout("Flow")
 	tabs:SetTabs(advancedTabs)
@@ -647,7 +657,11 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	tabs:SetUserData("scrollFrame", scrollFrame)
 	tabs:SelectTab("options")
 
-	return back, check, tabs
+	if roleRestrictionCheckbox then
+		return back, check, roleRestrictionCheckbox, tabs
+	else
+		return back, check, tabs
+	end
 end
 
 local function buttonClicked(widget)
