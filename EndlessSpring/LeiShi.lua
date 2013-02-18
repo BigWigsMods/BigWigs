@@ -179,7 +179,6 @@ function mod:Protect(args)
 end
 
 function mod:ProtectRemoved()
-	self:Message("special", "Attention", nil, CL["soon"]:format(L["special"]), 123263)
 	local left = nextSpecial - GetTime()
 	if left > 4 then -- restart the bar if there are more than a few seconds left on the special's cd
 		self:CDBar("special", left, L["special"], L.special_icon)
