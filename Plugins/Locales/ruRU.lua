@@ -93,8 +93,8 @@ L["Positive"] = "Положительные"
 -- Duration.lua
 --
 
-L.bossKillDurationPrint = "Defeated '%s' after %s."
-L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+L.bossKillDurationPrint = "'%s' терпит поражение спустя %s."
+L.bossWipeDurationPrint = "'%s' побеждает спустя %s."
 
 -----------------------------------------------------------------------
 -- Messages.lua
