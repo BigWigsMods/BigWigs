@@ -93,6 +93,13 @@ L["Attention"] = "주의"
 L["Positive"] = "제안"
 
 -----------------------------------------------------------------------
+-- Duration.lua
+--
+
+L.bossKillDurationPrint = "Defeated '%s' after %s."
+L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+
+-----------------------------------------------------------------------
 -- Messages.lua
 --
 

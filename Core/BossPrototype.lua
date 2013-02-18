@@ -76,6 +76,11 @@ function boss:IsBossModule() return true end
 function boss:OnInitialize() core:RegisterBossModule(self) end
 function boss:OnEnable()
 	if debug then dbg(self, "OnEnable()") end
+
+	if IsEncounterInProgress() then
+		self:CheckBossStatus("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
+	end
+
 	if self.SetupOptions then self:SetupOptions() end
 	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 
@@ -342,7 +347,7 @@ do
 			module:Reboot()
 		end
 	end
-	function boss:CheckBossStatus()
+	function boss:CheckBossStatus(noEngage)
 		local hasBoss = UnitHealth("boss1") > 100 or UnitHealth("boss2") > 100 or UnitHealth("boss3") > 100 or UnitHealth("boss4") > 100 or UnitHealth("boss5") > 100
 		if not hasBoss and self.isEngaged then
 			if debug then dbg(self, ":CheckBossStatus wipeCheck scheduled.") end
@@ -354,14 +359,14 @@ do
 			local modType = type(module)
 			if modType == "string" then
 				if module == self.moduleName then
-					self:Engage()
+					self:Engage(noEngage == "NoEngage" and true)
 				else
 					self:Disable()
 				end
 			elseif modType == "table" then
 				for i = 1, #module do
 					if module[i] == self.moduleName then
-						self:Engage()
+						self:Engage(noEngage == "NoEngage" and true)
 						break
 					end
 				end
@@ -448,26 +453,29 @@ do
 		end
 	end
 
-	function boss:Engage()
-		if debug then dbg(self, ":Engage") end
-
-		-- Update Difficulty
-		local _, _, diff = GetInstanceInfo()
-		difficulty = diff
+	function boss:Engage(noEngage)
+		-- Engage
+		self.isEngaged = true
 
 		-- Prevent rare combat log bug
 		CombatLogClearEntries()
 
-		-- Engage
-		self.isEngaged = true
-		if self.OnEngage then
-			self:OnEngage(diff)
+		if debug then dbg(self, ":Engage") end
+
+		if not noEngage then
+			-- Update Difficulty
+			local _, _, diff = GetInstanceInfo()
+			difficulty = diff
+
+			-- Update Dispel Status
+			UpdateDispelStatus()
+
+			if self.OnEngage then
+				self:OnEngage(diff)
+			end
+
+			self:SendMessage("BigWigs_OnBossEngage", self)
 		end
-
-		-- Update Dispel Status
-		UpdateDispelStatus()
-
-		self:SendMessage("BigWigs_OnBossEngage", self)
 	end
 
 	function boss:Win()

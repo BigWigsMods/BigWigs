@@ -90,6 +90,13 @@ L["Attention"] = "Внимание"
 L["Positive"] = "Положительные"
 
 -----------------------------------------------------------------------
+-- Duration.lua
+--
+
+L.bossKillDurationPrint = "Defeated '%s' after %s."
+L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+
+-----------------------------------------------------------------------
 -- Messages.lua
 --
 

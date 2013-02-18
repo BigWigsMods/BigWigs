@@ -74,7 +74,7 @@ L["Messages"] = "Messaggi"
 L["Bars"] = "Barre"
 L["Background"] = "Sfondo"
 L["Text"] = "Testo"
---L["Flash"] = "Lampeggio"
+L["Flash"] = "Lampeggio"
 L["Normal"] = "Normale"
 L["Emphasized"] = "Enfatizzato"
 
@@ -88,6 +88,13 @@ L["Personal"] = "Personale"
 L["Urgent"] = "Urgente"
 L["Attention"] = "Attenzione"
 L["Positive"] = "Positivo"
+
+-----------------------------------------------------------------------
+-- Duration.lua
+--
+
+L.bossKillDurationPrint = "Defeated '%s' after %s."
+L.bossWipeDurationPrint = "Wiped on '%s' after %s."
 
 -----------------------------------------------------------------------
 -- Messages.lua
