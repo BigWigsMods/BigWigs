@@ -10,6 +10,7 @@ L.on = "%s on %s"
 L.stack = "%dx %s auf %s"
 L.cast = "<Wirkt %s>"
 L.soon = "%s bald!"
+L.count = "%s (%d)"
 
 L.phase = "Phase %d"
 L.normal = "Normaler Modus"
@@ -24,6 +25,8 @@ L.add_spawned = "Add gespawnt!"
 L.next_add = "Nächstes Add"
 L.add_killed = "Add getötet! (%d/%d)"
 
+-- Localizers note:
+-- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
 L.custom_start = "%s angegriffen - %s in %d Min"
 L.custom_start_s = "%s angegriffen - %s in %d Sek"
 L.custom_end = "%s wird zum %s!"
