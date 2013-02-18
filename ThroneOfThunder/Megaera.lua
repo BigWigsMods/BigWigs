@@ -10,13 +10,14 @@ if select(4, GetBuildInfo()) < 50200 then return end
 
 local mod, CL = BigWigs:NewBoss("Megaera", 930, 821)
 if not mod then return end
-mod:RegisterEnableMob(70212, 70235, 70247, 68065) -- Flaming Head, Frozen Head, Venomous Head, Megaera
+mod:RegisterEnableMob(70248, 70212, 70235, 70247, 68065) -- Arcane Head, Flaming Head, Frozen Head, Venomous Head, Megaera
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 local frostOrFireDead = false
 local breathCounter = 0
+local firstHeadKilled = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -28,6 +29,7 @@ if L then
 	L.breaths_desc = "Warnings related to all the different types of breaths."
 	L.breaths_icon = 105050
 	L.rampage_over = "Rampage over!"
+	L.arcane_adds = "Arcane adds"
 end
 L = mod:GetLocale()
 
@@ -37,11 +39,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		140138, 140179,
 		{139822, "FLASH", "ICON"},
 		{139866, "FLASH", "SAY"}, {139909, "FLASH"},
 
 		139458, {"breaths", "FLASH"}, "proximity", "berserk", "bosskill",
 	}, {
+		[140138] = "ej:7005", -- Heroic only, Arcane Head
 		[139822] = "ej:6998", -- Fire Head
 		[139866] = "ej:7002", -- Frost Head
 		--[] = "ej:7004", -- Poison Head
@@ -52,6 +56,11 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
+	-- Arcane
+	self:Log("SPELL_AURA_APPLIED", "Suppression", 140179)
+	self:Log("SPELL_CAST_SUCCESS", "NetherTear", 140138)
+	self:Log("SPELL_DAMAGE", "BreathDamage", 139992)
+	self:Log("SPELL_CAST_START", "Diffusion", 139991)
 	-- Poison
 	self:Log("SPELL_DAMAGE", "BreathDamage", 139839)
 	self:Log("SPELL_CAST_START", "RotArmor", 139838)
@@ -69,12 +78,13 @@ function mod:OnBossEnable()
 	-- General
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Rampage", "boss1")
 
-	self:Death("Deaths", 70212, 70235, 70247, 68065)
+	self:Death("Deaths", 70248, 70212, 70235, 70247, 68065)
 end
 
 function mod:OnEngage()
 	frostOrFireDead = false
 	breathCounter = 0
+	firstHeadKilled = false
 end
 
 --------------------------------------------------------------------------------
@@ -115,23 +125,45 @@ do
 		if spellId == 139458 then
 			self:Bar("breaths", 30, L["breaths"], 105050) -- not sure if there is a point for this here, seeing it is as long as rampage duration
 			self:Message(spellId, "Important", "Long")
-			self:Bar(spellId, 30, CL["cast"]:format(spellName))
-			self:ScheduleTimer(rampageOver, 30, spellId)
-			self:CloseProximity("proximity")
+			self:Bar(spellId, 20, CL["cast"]:format(spellName))
+			self:ScheduleTimer(rampageOver, 20, spellId)
 			breathCounter = 0
 		end
 	end
 end
 
 function mod:Deaths(args)
+	if firstHeadKilled then -- don't warn for first head death
+		self:CloseProximity("proximity") -- this happens lot before rampage is applied, might as well do stuff here
+		self:Message(139458, "Attention", nil, CL["soon"]:format(self:SpellName(139458))) -- Rampage
+	end
+	firstHeadKilled = true
 	if args.mobId == 70212 then -- Fire
 		frostOrFireDead = true
 	elseif args.mobId == 70235 then -- Frost
 		frostOrFireDead = true
 	elseif args.mobId == 70247 then -- Poison
+	elseif args.mobId == 70248 then -- Arcane
 	elseif args.mobId == 68065 then -- Megaera
 		self:Win()
 	end
+end
+
+--------------------------------------------------------------------------------
+-- Arcane Head
+--
+
+function mod:NetherTear(args)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", nil)
+end
+
+function mod:NetherTear(args)
+	self:Message(args.spellId, "Urgent", "Alarm", L["arcane_adds"])
+	self:Bar(args.spellId, 6, CL["cast"]:format(L["arcane_adds"])) -- this is to help so you know when all the adds have spawned
+end
+
+function mod:Diffusion()
+	self:ScheduleTimer(breaths, 0.7)
 end
 
 --------------------------------------------------------------------------------
@@ -139,7 +171,7 @@ end
 --
 
 function mod:RotArmor()
-	self:ScheduleTimer(breaths, 0.5)
+	self:ScheduleTimer(breaths, 0.7)
 end
 
 --------------------------------------------------------------------------------
@@ -147,7 +179,7 @@ end
 --
 
 function mod:ArcticFreeze()
-	self:ScheduleTimer(breaths, 0.5)
+	self:ScheduleTimer(breaths, 0.7)
 end
 
 do
@@ -177,7 +209,7 @@ end
 --
 
 function mod:IgniteFlesh()
-	self:ScheduleTimer(breaths, 0.5)
+	self:ScheduleTimer(breaths, 0.7)
 end
 
 do
