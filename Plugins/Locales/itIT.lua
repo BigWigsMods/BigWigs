@@ -61,7 +61,7 @@ L["Sending a pull timer to Big Wigs and DBM users."] = "Invio di un timer di Ing
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Invio barra personalizzata '%s' agli utenti di Big Wigs e DBM."
 L["This function requires raid leader or raid assist."] = "Questa funzione richiede Capo Incursione o Assistente Incursione."
 L["Must be between 1 and 10. A correct example is: /pull 5"] = "Deve essere tra 1 e 10. Un'esempio corretto è: /pull 5"
-L["Incorrect format. A correct example is: /bwcb 20 text"] = "Formato non correttoIncorrect format. Un'esempio corretto è: /bwcb 20 testo"
+L["Incorrect format. A correct example is: /bwcb 20 text"] = "Formato non corretto. Un'esempio corretto è: /bwcb 20 testo"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Specificato tempo non valido. <time> può essere sia un numero in secondi, una coppia M:S , o Mm. Per esempio 5, 1:20 or 2m."
 
 -----------------------------------------------------------------------
@@ -119,14 +119,14 @@ L["Show icons next to messages, only works for Raid Warning."] = "Visualizza le 
 L["Class colors"] = "Colore delle Classi"
 L["Colors player names in messages by their class."] = "Colora i nomi dei giocatori con il colore della loro classe."
 
-L["Chat frame"] = "Frame della Chat"
+L["Chat frame"] = "Riquadro della Chat"
 L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Invia tutti i messaggi di Big Wigs alla chat oltre che nei settaggi di visualizzazione."
 
 L["Font size"] = "Dimensione Carattere"
 L["None"] = "Nessuno"
 L["Thin"] = "Fine"
 L["Thick"] = "Spesso"
-L["Outline"] = "Delineato"
+L["Outline"] = "Sottolineato"
 L["Monochrome"] = "Monocromatico"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "Abilita il flag monocromatico su tutti i messaggi, rimuovendo ogni effetto di smussatura degli angoli dei caratteri"
 
@@ -172,7 +172,7 @@ L["Alert"] = "Avvertimento"
 L["Long"] = "Lungo"
 L["Victory"] = "Vittoria"
 
-L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Imposta il suono da usare per %q.\n\nCtrl-Click per ascoltare un suono."
+L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Imposta il suono da usare per %q.\n\nCtrl-Clic per ascoltare un suono."
 L["Default only"] = "Solo Suoni Predefiniti"
 
 -----------------------------------------------------------------------
@@ -185,18 +185,18 @@ L["%d yards"] = "%d metri"
 L["Proximity"] = "Prossimità"
 L["Sound"] = "Suono"
 L["Disabled"] = "Disabilitato"
-L["Disable the proximity display for all modules that use it."] = "Disabilita il modulo di prossimità per tutti i moduli che lo usano."
-L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "Il display di prossimità verrà visualizzzato la prossima volta. Per disabilitarlo completamente per questo combattimento, devi disabilitarlo nelle opzioni del combattimento."
+L["Disable the proximity display for all modules that use it."] = "Disabilita il monitor di prossimità per tutti i moduli che lo usano."
+L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "Il monitor di prossimità verrà visualizzzato la prossima volta. Per disabilitarlo completamente per questo combattimento, devi disabilitarlo nelle opzioni del combattimento."
 L["Sound delay"] = "Ritardo del Suono"
 L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "Specifica per quanto tempo Big Wigs dovrebbe aspettare per ripetere il suono quando qualcuno è vicino a te."
 
-L.proximity = "Display di Prossimità"
-L.proximity_desc = "Visualizza la finestra di prossimità al momento opportuno durante il combattimento, con i giocatori che stanno troppo vicino a te."
+L.proximity = "Monitor di Prossimità"
+L.proximity_desc = "Visualizza il monitor di prossimità al momento opportuno durante il combattimento, con i giocatori che stanno troppo vicino a te."
 
 L["Close"] = "Chiudi"
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Chiude il Display di prossimità.\n\nPer disabilitarlo completamente per tutti gli incontri, devi andare nelle impostazioni dei singoli combattimenti e disabilitare l'opzione 'Prossimità"
+L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Chiude il Monitor di prossimità.\n\nPer disabilitarlo completamente per tutti gli incontri, devi andare nelle impostazioni dei singoli combattimenti e disabilitare l'opzione 'Prossimità"
 L["Lock"] = "Blocca"
-L["Locks the display in place, preventing moving and resizing."] = "Blocca il Display, impedendo che venga spostato e ridimensionato."
+L["Locks the display in place, preventing moving and resizing."] = "Blocca il Monitor, impedendo che venga spostato e ridimensionato."
 L["Title"] = "Titolo"
 L["Shows or hides the title."] = "Visualizza o nasconde il titolo"
 L["Background"] = "Sfondo"
@@ -207,7 +207,7 @@ L["Sound button"] = "Pulsante del Suono"
 L["Shows or hides the sound button."] = "Visualizza o nasconde il pulsante del Suono"
 L["Close button"] = "Pulsante di Chiusura"
 L["Shows or hides the close button."] = "Visualizza o nasconde il pulsante di Chiusura"
-L["Show/hide"] = "Visaulizza/Nascondi"
+L["Show/hide"] = "Visulizza/Nascondi"
 L["Ability name"] = "Nome dell'Abilità"
 L["Shows or hides the ability name above the window."] = "Visualizza o nasconde il nome dell'abilità sopra la finestra"
 L["Tooltip"] = "ToolTip"
@@ -218,7 +218,7 @@ L["Shows or hides a spell tooltip if the Proximity display is currently tied dir
 --
 
 L["Super Emphasize"] = "SUPER ENFATIZZAZIONE"
-L.superEmphasizeDesc = "Aumenta la visualizzazione di un messaggio o di un timer di un'abilità speciale di un boss..\n\n Qui puoi configurare esattamente cosa deve accadere quando abiliti la SUPER ENFATIZZAZIONE nelle opzioni di una spell di un boss.\n\n|cffff4411Attenzione la SUPER ENFATIZZAZIONE è disattivata di default per tutte le abilità.|r\n"
+L.superEmphasizeDesc = "Aumenta la visualizzazione di un messaggio o di un timer di un'abilità speciale di un boss..\n\n Qui puoi configurare esattamente cosa deve accadere quando abiliti la SUPER ENFATIZZAZIONE nelle opzioni di un'abilità di un boss.\n\n|cffff4411Attenzione la SUPER ENFATIZZAZIONE è disattivata di default per tutte le abilità.|r\n"
 L["UPPERCASE"] = "TUTTO MAIUSCOLO"
 L["Uppercases all messages related to a super emphasized option."] = "Converte in Maiuscolo tutto il messaggio"
 L["Double size"] = "Raddoppia la Dimensione"

@@ -30,9 +30,12 @@ if L then
 	L.assault_message = "Assalto"
 
 	L.loa_kills = "Spirito Loa ucciso: %s"
-	L.loa_spirit = "Spirito Loa"
-	L.loa_spirits = "Spiriti Loa"
-	L.loa_spirits_desc = "Avviso per entrambi i tipi di Spiriti Loa"
+	L.priestess_add = "Add Sacerdotessa"
+	L.priestess_adds = "Adds Sacerdotessa"
+	L.priestess_adds_desc = "Avviso per tutti i tipi di add della Gran Sacerdotessa Mar'li"
+	--L.loa_spirit = "Spirito Loa"
+	--L.loa_spirits = "Spiriti Loa"
+	--L.loa_spirits_desc = "Avviso per entrambi i tipi di Spiriti Loa"
 	L.hp_to_go_power = "Punti Vita alla Fine: %d%% - Potere: %d"
 	end
 
@@ -40,9 +43,9 @@ L = BigWigs:NewBossLocale("Tortos", "itIT")
 if L then
 	L.kick = "Calcio"
 	L.kick_desc = "Tieni il conto di quante tartarighe possono essere prese a calci"
-	L.kickable_turtles = "Tartarughe da calciare: %d"
+	L.kickable_turtles = "Tartarughe da Calciare: %d"
 	L.crystal_shell_removed = "Scudo di Cristallo rimosso!"
-	L.no_crystal_shell = "Nessuno Scudo di Cristallo"
+	L.no_crystal_shell = "NESSUNO Scudo di Cristallo"
 	
 end
 
@@ -51,6 +54,7 @@ if L then
 	L.breaths = "Soffi"
 	L.breaths_desc = "Avvisi relativi ad ogni tipo di soffio possibile."
 	L.rampage_over = "Furia Terminata!"
+	L.arcane_adds = "Testa Arcana"
 end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "itIT")
@@ -103,7 +107,7 @@ if L then
 end
 L = BigWigs:NewBossLocale("Twin Consorts", "itIT")
 if L then
-
+	L.barrage_fired = "Raffica Lanciata!"
 end
 L = BigWigs:NewBossLocale("Lei Shen", "itIT")
 if L then

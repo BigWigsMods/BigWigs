@@ -78,7 +78,7 @@ L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "itIT")
 if L then
     L.engage_trigger = "Morte a tutti coloro che osano sfidare il mio impero!"
 	L.phases = "Fasi"
-	L.phases_desc = "Avviso per il cambiamento di Fasi."
+	L.phases_desc = "Avviso per il cambiamento delle Fasi."
 	L.phases_icon = "achievement_raid_mantidraid07"
 
 	L.eyes = "Occhi dell'Imperatrice"
