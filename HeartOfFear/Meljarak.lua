@@ -71,6 +71,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Recklessness", 122354)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Recklessness", 122354)
 	self:Log("SPELL_AURA_APPLIED", "RecklessnessHeroic", 125873)
+	self:Log("SPELL_AURA_REMOVED", "RecklessnessHeroicRemoved", 125873)
 	self:Log("SPELL_SUMMON", "WindBomb", 131814)
 	self:Log("SPELL_CAST_START", "WhirlingBlade", 121896)
 	self:Log("SPELL_AURA_APPLIED", "Quickening", 122149)
@@ -160,7 +161,7 @@ end
 
 do
 	local prisonList, scheduled = mod:NewTargetList(), nil
-	local function prison(spellId)
+	local function warnPrison(spellId)
 		mod:TargetMessage(spellId, prisonList, "Important", "Info")
 		scheduled = nil
 	end
@@ -170,7 +171,7 @@ do
 		end
 		prisonList[#prisonList + 1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(prison, 0.1, args.spellId)
+			scheduled = self:ScheduleTimer(warnPrison, 0.1, args.spellId)
 		end
 		if self:LFR() then return end
 		if not primaryAmberIcon then
@@ -242,6 +243,10 @@ function mod:RecklessnessHeroic(args)
 	self:Bar("recklessness", 30, args.spellId)
 end
 
+function mod:RecklessnessHeroicRemoved(args)
+	self:Message("recklessness", "Attention", "Info", CL["over"]:format(args.spellName))
+end
+
 do
 	local prev = 0
 	function mod:ResinPoolDamage(args)
@@ -281,7 +286,7 @@ function mod:PhaseChange(unitId)
 	if self:MobId(UnitGUID(unitId)) == 62397 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 79 and phase == 0 then -- phase starts at 75
-			self:Message("stages", "Positive", "Info", CL["soon"]:format(CL["phase"]:format(2)), 131830)
+			self:Message("stages", "Positive", nil, CL["soon"]:format(CL["phase"]:format(2)), 131830)
 			phase = 1
 		elseif hp < 75.1 and phase ~= 2 then
 			phase = 2
