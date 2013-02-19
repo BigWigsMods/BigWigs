@@ -226,5 +226,5 @@ L["Default only"] = "Solo Suoni Predefiniti"
 
 L.bossKillDurationPrint = "Sconfitto '%s' dopo %s."
 L.bossWipeDurationPrint = "Tentativo fallito su '%s' dopo %s."
-L.bossStatistics = "Boss Statistics"
+L.bossStatistics = "Statistiche del Boss"
 
