@@ -56,7 +56,7 @@ L["Custom bar '%s' started by %s user '%s'."] = "Custombar '%s' wurde von gestar
 
 L["Pull"] = "Pull"
 L["Pulling!"] = "Pull!"
-L["Pull timer started by %s user '%s'."] = "Pull timer started by %s user '%s'."
+L["Pull timer started by %s user '%s'."] = "Pull Timer wurde von %s gestartet '%s'."
 L["Pull in %d sec"] = "Pull in %d sec"
 L["Sending a pull timer to Big Wigs and DBM users."] = "Sende Pull-Timer an Big Wigs und DBM Nutzer."
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Sende Custombar '%s' an Big Wigs und DBM Nutzer."
@@ -64,7 +64,7 @@ L["This function requires raid leader or raid assist."] = "Diese Funktion benöt
 L["Must be between 1 and 10. A correct example is: /pull 5"] = "Muss zwischen 1 und 10 sein. Beispiel: /pull 5"
 L["Incorrect format. A correct example is: /bwcb 20 text"] = "Ungültiges Format. Beispiel: /bwcb 20 text"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Ungültige Zeitangabe. <time> kann eine Zahl in Sekunden, ein  M:S paarung, oder Mm sein. Beispiel: 5, 1:20 or 2m."
-L["This function can't be used during an encounter."] = "This function can't be used during an encounter."
+L["This function can't be used during an encounter."] = "Diese Funktion kann während des Bosskampfes nicht genutzt werden."
 
 -----------------------------------------------------------------------
 -- Colors.lua
@@ -108,9 +108,9 @@ L["If a related timer is longer than 5 seconds, a vocal and visual countdown wil
 -- Messages.lua
 --
 
-L.sinkDescription = "Tunnelt die Big Wigs Ausgabe durch die normale Big Wigs Nachrichtenanzeige. Diese Anzeige unterstützt Symbole, Farben und kann 4 Nachrichten gleichzeitig anzeigen. Neuere Nachrichten werden größer und schrumpfen dann wieder schnell, um die Aufmerksamkeit dementsprechend zu lenken."
-L.emphasizedSinkDescription = "Tunnelt die Big Wigs Ausgabe durch Big Wigs 'stark hervorgehobene' Nachrichtenanzeige. Diese Anzeige unterstützt Text und Farbe und kann nur eine Nachricht gleichzeitig anzeigen."
-L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
+L.sinkDescription = "Sendet die Big Wigs Ausgabe durch die normale Big Wigs Nachrichtenanzeige. Diese Anzeige unterstützt Symbole, Farben und kann 4 Nachrichten gleichzeitig anzeigen. Neuere Nachrichten werden größer und schrumpfen dann wieder schnell, um die Aufmerksamkeit dementsprechend zu lenken."
+L.emphasizedSinkDescription = "Sendet die Big Wigs Ausgabe durch Big Wigs 'stark hervorgehobene' Nachrichtenanzeige. Diese Anzeige unterstützt Text und Farbe und kann nur eine Nachricht gleichzeitig anzeigen."
+L.emphasizedCountdownSinkDescription = "Sendet Ausgaben dieses Addons durch Big Wigs 'stark hervorgehobene' Countdown Nachrichtenanzeige. Hierbei werden Text sowie Farben unterstützt und es wird immer nur eine Zeile gleichzeitig angezeigt."
 
 L["Messages"] = "Nachrichten"
 L["Normal messages"] = "Normale Nachrichten"
@@ -221,8 +221,8 @@ L["Victory"] = "Sieg"
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Legt den Sound fest, der für %q verwendet wird.\n\nStrg-Klicken, um reinzuhören."
 L["Default only"] = "Nur Standards"
 
-L.customSoundDesc = "Play the selected custom sound instead of the one supplied by the module"
-L.resetAllCustomSound = "If you've customized sounds for any boss encounter settings, this button will reset ALL of them so the sounds defined here will be used instead."
+L.customSoundDesc = "Den speziell gewählten Sound anstatt des vom Modul bereitgestellten abspielen"
+L.resetAllCustomSound = "Wenn Du die Sounds für Bossbegegnungen geändert hast, werden diese ALLE über diese Schaltfläche zurückgesetzt, sodass stattdessen die hier gewählten genutzt werden."
 
 -----------------------------------------------------------------------
 -- Statistics.lua
