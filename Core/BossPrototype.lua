@@ -691,7 +691,7 @@ do
 	function boss:DelayedMessage(key, delay, color, text, icon, sound)
 		if checkFlag(self, key, C.MESSAGE) then
 			self:CancelDelayedMessage(text or key)
-			scheduledMessages[text or key] = self:ScheduleTimer("Message", delay, key, color, sound, text, icon)
+			scheduledMessages[text or key] = self:ScheduleTimer("Message", delay, key, color, sound, text, icon or false)
 		end
 	end
 end
@@ -896,12 +896,12 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk)
 	local half = seconds / 2
 	local m = half % 60
 	local halfMin = (half - m) / 60
-	self:DelayedMessage(key, half + m, "Positive", format(L.custom_min, berserk, halfMin), false)
+	self:DelayedMessage(key, half + m, "Positive", format(L.custom_min, berserk, halfMin))
 
-	self:DelayedMessage(key, seconds - 60, "Positive", format(L.custom_min, berserk, 1), false)
-	self:DelayedMessage(key, seconds - 30, "Urgent", format(L.custom_sec, berserk, 30), false)
-	self:DelayedMessage(key, seconds - 10, "Urgent", format(L.custom_sec, berserk, 10), false)
-	self:DelayedMessage(key, seconds - 5, "Important", format(L.custom_sec, berserk, 5), false)
+	self:DelayedMessage(key, seconds - 60, "Positive", format(L.custom_min, berserk, 1))
+	self:DelayedMessage(key, seconds - 30, "Urgent", format(L.custom_sec, berserk, 30))
+	self:DelayedMessage(key, seconds - 10, "Urgent", format(L.custom_sec, berserk, 10))
+	self:DelayedMessage(key, seconds - 5, "Important", format(L.custom_sec, berserk, 5))
 	self:DelayedMessage(key, seconds, "Important", format(L.custom_end, boss, berserk), icon, "Alarm")
 
 	self:Bar(key, seconds, berserk, icon)
