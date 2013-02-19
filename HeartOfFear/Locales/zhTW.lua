@@ -22,9 +22,7 @@ L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "zhTW")
 if L then
 	L.engage_yell = "自求多福吧，入侵者。我，刀鋒領主塔亞克，將是你們的對手。"
 
-	L.unseenstrike_inc = "無形打擊要來了！"
-	L.unseenstrike_soon = "5-10秒後無形打擊！"
-
+	L.unseenstrike_soon = "5-10秒後無形打擊(%d)！"
 	L.assault_message = "壓倒性的襲擊"
 	L.side_swap = "換邊"
 end

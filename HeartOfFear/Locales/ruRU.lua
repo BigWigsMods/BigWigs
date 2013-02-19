@@ -22,9 +22,7 @@ L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "ruRU")
 if L then
 	L.engage_yell = "К бою, чужаки. Вам предстоит сразиться со мной, повелителем клинков Та'яком."
 
-	L.unseenstrike_inc = "Близится Удар!"
-	L.unseenstrike_soon = "Удар через ~5-10 сек!"
-
+	L.unseenstrike_soon = "Удар (%d) через ~5-10 сек!"
 	L.assault_message = "Выпад"
 	L.side_swap = "Смена стороны"
 end

@@ -22,9 +22,7 @@ L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "esES") or BigWigs:NewBossLocale(
 if L then
 	L.engage_yell = "¡En guardia, invasores! Yo, Ta'yak, Señor de las Espadas, seré vuestro contrincante."
 
-	L.unseenstrike_inc = "¡Golpe inminente!"
-	L.unseenstrike_soon = "¡Golpe en ~5-10 seg!"
-
+	L.unseenstrike_soon = "¡Golpe (%d) en ~5-10 seg!"
 	L.assault_message = "Asalto"
 	L.side_swap = "Cambia de lado"
 end

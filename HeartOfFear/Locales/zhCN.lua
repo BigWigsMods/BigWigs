@@ -20,10 +20,11 @@ end
 
 L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "zhCN")
 if L then
-	L.unseenstrike_inc = "即将无影击！"
-	L.unseenstrike_soon = "5-10秒后无影击！"
+	L.engage_yell = "On your guard, invaders. I, Ta'yak, Lord of Blades, will be your opponent."
+
+	L.unseenstrike_soon = "5-10秒后无影击(%d)！"
 	L.assault_message = "压制突袭"
-	L.side_swap = "风暴释放"	
+	L.side_swap = "风暴释放"
 end
 
 L = BigWigs:NewBossLocale("Garalon", "zhCN")

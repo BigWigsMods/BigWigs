@@ -22,9 +22,7 @@ L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "deDE")
 if L then
 	L.engage_yell = "Seid auf der Hut, Eindringlinge. Ich, Ta'yak, Klingenfürst, werde Euer Gegner sein."
 
-	L.unseenstrike_inc = "Unsichtbarer Stoß!"
-	L.unseenstrike_soon = "Stoß in ~5-10 sec!"
-
+	L.unseenstrike_soon = "Stoß (%d) in ~5-10 sec!"
 	L.assault_message = "Angriff"
 	L.side_swap = "Seitenwechsel"
 end
