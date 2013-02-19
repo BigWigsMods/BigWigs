@@ -474,7 +474,7 @@ do
 				self:OnEngage(diff)
 			end
 
-			self:SendMessage("BigWigs_OnBossEngage", self)
+			self:SendMessage("BigWigs_OnBossEngage", self, diff)
 		end
 	end
 

@@ -769,6 +769,8 @@ local function populateToggleOptions(widget, module)
 
 	local sDB = BigWigsStatisticsDB
 	if module.encounterId and module.zoneId and sDB and sDB[module.zoneId] and sDB[module.zoneId][module.encounterId] then
+		sDB = sDB[module.zoneId][module.encounterId]
+
 		-- Create statistics table
 		local statGroup = AceGUI:Create("InlineGroup")
 		statGroup:SetTitle("Statistics")
@@ -818,27 +820,27 @@ local function populateToggleOptions(widget, module)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("-")
+		statistics:SetText(sDB["25"] and sDB["25"].wipes or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("-")
+		statistics:SetText(sDB["25h"] and sDB["25h"].wipes or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("-")
+		statistics:SetText(sDB["10"] and sDB["10"].wipes or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("-")
+		statistics:SetText(sDB["10h"] and sDB["10h"].wipes or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("-")
+		statistics:SetText(sDB.lfr and sDB.lfr.wipes or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
@@ -853,27 +855,27 @@ local function populateToggleOptions(widget, module)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("-")
+		statistics:SetText(sDB["25"] and sDB["25"].kills or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("-")
+		statistics:SetText(sDB["25h"] and sDB["25h"].kills or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("-")
+		statistics:SetText(sDB["10"] and sDB["10"].kills or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("-")
+		statistics:SetText(sDB["10h"] and sDB["10h"].kills or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("-")
+		statistics:SetText(sDB.lfr and sDB.lfr.kills or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
@@ -888,27 +890,27 @@ local function populateToggleOptions(widget, module)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("--:--")
+		statistics:SetText(sDB["25"] and sDB["25"].best and SecondsToTime(sDB["25"].best) or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("--:--")
+		statistics:SetText(sDB["25h"] and sDB["25h"].best and SecondsToTime(sDB["25h"].best) or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("--:--")
+		statistics:SetText(sDB["10"] and sDB["10"].best and SecondsToTime(sDB["10"].best) or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("--:--")
+		statistics:SetText(sDB["10h"] and sDB["10h"].best and SecondsToTime(sDB["10h"].best) or "-")
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("--:--")
+		statistics:SetText(sDB.lfr and sDB.lfr.best and SecondsToTime(sDB.lfr.best) or "-")
 		statGroup:AddChild(statistics)
 		-- End statistics table
 	end
