@@ -138,7 +138,7 @@ do
 	function mod:TayakCasts(_, spellName, _, _, spellId)
 		if spellId == 122949 then --Unseen Strike
 			self:CDBar("ej:6346", 53, CL["count"]:format(strike, strikeCounter+1)) -- 53-60
-			self:DelayedMessage("ej:6346", 48, "Attention", "Alarm", L["unseenstrike_soon"]:format(strikeCounter+1))
+			self:DelayedMessage("ej:6346", 48, "Attention", L["unseenstrike_soon"]:format(strikeCounter+1), "Alarm")
 			if not timer then
 				timer = self:ScheduleRepeatingTimer(warnStrike, 0.05) -- ~1s faster than boss emote
 			end

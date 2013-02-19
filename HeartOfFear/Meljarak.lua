@@ -318,7 +318,7 @@ function mod:AddDeaths(args)
 	end
 	if self:Heroic() then
 		self:Bar("next_pack", 50, CL["other"]:format(L["next_pack"], args.destName), L.next_pack_icon)
-		self:DelayedMessage("next_pack", 50, "Attention", nil, CL["other"]:format(L["next_pack"], args.destName), L.next_pack_icon)
+		self:DelayedMessage("next_pack", 50, "Attention", CL["other"]:format(L["next_pack"], args.destName), L.next_pack_icon)
 	end
 end
 

@@ -315,7 +315,6 @@ function mod:Thrash(args)
 		thrashCounter = thrashCounter + 1
 		self:Message("ej:6699", "Urgent", nil, CL["count"]:format(args.spellName, thrashCounter), args.spellId)
 		if thrashCounter == 3 then
-			--self:DelayedMessage("ej:6700", 4, "Attention", nil, CL["soon"]:format(self:SpellName(132007)), 132007) -- Dread Thrash
 			self:Bar("ej:6700", 10, self:SpellName(132007), 132007) -- Dread Thrash
 		else
 			self:Bar("ej:6699", 10, CL["count"]:format(args.spellName, thrashCounter + 1), args.spellId)
@@ -368,13 +367,13 @@ function mod:Fearless(args)
 		atSha = true
 		self:CancelDelayedMessage(CL["soon"]:format(self:SpellName(119888))) -- Death Blossom
 		self:Bar(args.spellId, 30)
-		self:DelayedMessage(args.spellId, 22, "Attention", nil, L["fading_soon"]:format(args.spellName))
+		self:DelayedMessage(args.spellId, 22, "Attention", L["fading_soon"]:format(args.spellName))
 
 		-- resume Breath of Fear bar/message
 		local left = nextFear - GetTime()
 		self:Bar(119414, left)
 		if left > 10 then
-			self:DelayedMessage(119414, left-8, "Attention", nil, CL["soon"]:format(self:SpellName(119414)))
+			self:DelayedMessage(119414, left-8, "Attention", CL["soon"]:format(self:SpellName(119414)))
 		end
 	end
 end
@@ -387,7 +386,7 @@ function mod:BreathOfFear(args)
 	nextFear = GetTime() + 33.3
 	if atSha then -- Don't care about Sha while at a shrine and you have Fearless when you come back
 		self:Bar(args.spellId, 33.3)
-		self:DelayedMessage(args.spellId, 25, "Attention", nil, CL["soon"]:format(args.spellName))
+		self:DelayedMessage(args.spellId, 25, "Attention", CL["soon"]:format(args.spellName))
 	end
 end
 

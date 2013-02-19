@@ -255,7 +255,7 @@ end
 
 function mod:ArcanePhase()
 	self:Message("stages", "Positive", nil, L["phase_arcane"], 116363)
-	self:DelayedMessage(116364, 10, "Attention", nil, CL["soon"]:format(self:SpellName(116364))) -- Arcane Velocity
+	self:DelayedMessage(116364, 10, "Attention", CL["soon"]:format(self:SpellName(116364))) -- Arcane Velocity
 end
 
 do
@@ -294,7 +294,7 @@ function mod:ArcaneVelocity(args)
 	self:Message(args.spellId, "Important", "Alarm", CL["count"]:format(args.spellName, counter))
 	counter = counter + 1
 	self:CDBar(args.spellId, 28, CL["count"]:format(args.spellName, counter))
-	self:DelayedMessage(args.spellId, 25.5, "Attention", nil, CL["soon"]:format(CL["count"]:format(args.spellName, counter)))
+	self:DelayedMessage(args.spellId, 25.5, "Attention", CL["soon"]:format(CL["count"]:format(args.spellName, counter)))
 end
 
 --------------------------------------------------------------------------------

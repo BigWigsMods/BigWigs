@@ -314,10 +314,10 @@ end
 function mod:AmberCarapace(args)
 	phase = 2
 	self:Message("stages", "Attention", nil, CL["phase"]:format(2)..": "..EJ_GetSectionInfo(6254), "spell_nature_shamanrage") -- Monstrosity
-	self:DelayedMessage("explosion_by_other", 35, "Attention", nil, CL["custom_sec"]:format(explosion, 20), 122402)
-	self:DelayedMessage("explosion_by_other", 40, "Attention", nil, CL["custom_sec"]:format(explosion, 15), 122402)
-	self:DelayedMessage("explosion_by_other", 45, "Attention", nil, CL["custom_sec"]:format(explosion, 10), 122402)
-	self:DelayedMessage("explosion_by_other", 50, "Attention", nil, CL["custom_sec"]:format(explosion, 5), 122402)
+	self:DelayedMessage("explosion_by_other", 35, "Attention", CL["custom_sec"]:format(explosion, 20), 122402)
+	self:DelayedMessage("explosion_by_other", 40, "Attention", CL["custom_sec"]:format(explosion, 15), 122402)
+	self:DelayedMessage("explosion_by_other", 45, "Attention", CL["custom_sec"]:format(explosion, 10), 122402)
+	self:DelayedMessage("explosion_by_other", 50, "Attention", CL["custom_sec"]:format(explosion, 5), 122402)
 	self:CDBar("explosion_by_other", 55, L["monstrosity_is_casting"], 122402) -- Monstrosity Explosion
 
 	self:CDBar(122408, 22) -- Massive Stomp
@@ -332,10 +332,10 @@ do
 		end
 	end
 	function mod:AmberExplosionMonstrosity(args)
-		self:DelayedMessage("explosion_by_other", 25, "Attention", nil, CL["custom_sec"]:format(explosion, 20), args.spellId)
-		self:DelayedMessage("explosion_by_other", 30, "Attention", nil, CL["custom_sec"]:format(explosion, 15), args.spellId)
-		self:DelayedMessage("explosion_by_other", 35, "Attention", nil, CL["custom_sec"]:format(explosion, 10), args.spellId)
-		self:DelayedMessage("explosion_by_other", 40, "Attention", nil, CL["custom_sec"]:format(explosion, 5), args.spellId)
+		self:DelayedMessage("explosion_by_other", 25, "Attention", CL["custom_sec"]:format(explosion, 20), args.spellId)
+		self:DelayedMessage("explosion_by_other", 30, "Attention", CL["custom_sec"]:format(explosion, 15), args.spellId)
+		self:DelayedMessage("explosion_by_other", 35, "Attention", CL["custom_sec"]:format(explosion, 10), args.spellId)
+		self:DelayedMessage("explosion_by_other", 40, "Attention", CL["custom_sec"]:format(explosion, 5), args.spellId)
 		self:Bar("explosion_casting_by_other", 2.5, "<".. L["monstrosity_is_casting"] ..">", 122398)
 		self:CDBar("explosion_by_other", 45, L["monstrosity_is_casting"], args.spellId) -- cooldown, don't move this
 		if UnitDebuff("player", self:SpellName(122784)) then -- Reshape Life

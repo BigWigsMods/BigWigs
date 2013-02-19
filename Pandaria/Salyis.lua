@@ -56,6 +56,6 @@ end
 function mod:Stomp()
 	self:Message(121787, "Important", "Alarm", CL["soon"]:format(self:SpellName(121787))) -- Stomp
 	self:Bar(121787, 60) -- Stomp
-	self:DelayedMessage("adds", 10, "Attention", nil, L["adds"], L.adds_icon)
+	self:DelayedMessage("adds", 10, "Attention", L["adds"], L.adds_icon)
 end
 

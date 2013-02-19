@@ -192,7 +192,7 @@ function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg, sender)
 	if sender == crimsonWake then -- Crimson Wake
 		self:Say(138485, CL["say"]:format(crimsonWake))
 		self:Bar(138485, 30, CL["you"]:format(crimsonWake))
-		self:DelayedMessage(138485, 30, "Positive", nil, CL["over"]:format(crimsonWake))
+		self:DelayedMessage(138485, 30, "Positive", CL["over"]:format(crimsonWake))
 		self:LocalMessage(138485, "Urgent", "Alarm", CL["you"]:format(crimsonWake))
 		self:Flash(138485)
 	end

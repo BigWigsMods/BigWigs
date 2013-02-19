@@ -139,7 +139,7 @@ end
 function mod:Rage()
 	self:Message("rage", "Attention", nil, CL["custom_sec"]:format(L["rage"], 13), L.rage_icon)
 	self:Bar("rage", 13, L["rage"], L.rage_icon)
-	self:DelayedMessage("rage", 13, "Attention", nil, L["rage"], L.rage_icon)
+	self:DelayedMessage("rage", 13, "Attention", L["rage"], L.rage_icon)
 end
 
 function mod:FocusedAssault(args)
@@ -157,19 +157,19 @@ function mod:Strength()
 	strengthCounter = strengthCounter + 1
 	self:Message("strength", "Attention", nil, CL["custom_sec"]:format(L["strength"], 8), L.strength_icon)
 	self:Bar("strength", 8, CL["count"]:format(L["strength"], strengthCounter), L.strength_icon)
-	self:DelayedMessage("strength", 8, "Attention", nil, CL["count"]:format(L["strength"], strengthCounter), L.strength_icon)
+	self:DelayedMessage("strength", 8, "Attention", CL["count"]:format(L["strength"], strengthCounter), L.strength_icon)
 end
 
 function mod:Courage()
 	self:Message("courage", "Attention", nil, CL["custom_sec"]:format(L["courage"], 11), L.courage_icon)
 	self:Bar("courage", 11, L["courage"], L.courage_icon) -- shield like icon
-	self:DelayedMessage("courage", 11, "Attention", nil, L["courage"], L.courage_icon)
+	self:DelayedMessage("courage", 11, "Attention", L["courage"], L.courage_icon)
 end
 
 function mod:Bosses()
 	self:Message("bosses", "Attention", nil, CL["custom_sec"]:format(L["bosses"], 13), L.bosses_icon)
 	self:Bar("bosses", 13, L["bosses"], L.bosses_icon)
-	self:DelayedMessage("bosses", 13, "Attention", nil, L["bosses"], L.bosses_icon)
+	self:DelayedMessage("bosses", 13, "Attention", L["bosses"], L.bosses_icon)
 	if not self:Heroic() then
 		self:CDBar("gas", 123, L["gas"], L.gas_icon)
 	end
@@ -221,7 +221,7 @@ do
 				if UnitIsUnit("target", unitId) or self:Healer() then
 					local boss = UnitName(unitId)
 					self:Bar("combo", 20, CL["other"]:format(boss, L["combo"]), spellId)
-					self:DelayedMessage("combo", 17, "Personal", "Long", L["combo_message"]:format(boss), L.arc_icon) -- Local only
+					self:DelayedMessage("combo", 17, "Personal", L["combo_message"]:format(boss), L.arc_icon, "Long") -- Local only
 				end
 			end
 		end
