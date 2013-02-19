@@ -221,6 +221,9 @@ L["Victory"] = "Sieg"
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Legt den Sound fest, der für %q verwendet wird.\n\nStrg-Klicken, um reinzuhören."
 L["Default only"] = "Nur Standards"
 
+L.customSoundDesc = "Play the selected custom sound instead of the one supplied by the module"
+L.resetAllCustomSound = "If you've customized sounds for any boss encounter settings, this button will reset ALL of them so the sounds defined here will be used instead."
+
 -----------------------------------------------------------------------
 -- Statistics.lua
 --

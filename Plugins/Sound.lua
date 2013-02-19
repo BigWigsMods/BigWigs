@@ -38,6 +38,15 @@ end
 -- Options
 --
 
+local function resetAll()
+	plugin.db:ResetProfile()
+	for k in pairs(sounds) do
+		if k ~= "Victory" then
+			if not plugin.db.profile[k] then plugin.db.profile[k] = {} end
+		end
+	end
+end
+
 plugin.defaultDB = {
 	defaultonly = false,
 	media = {
@@ -75,8 +84,51 @@ plugin.pluginOptions = {
 			width = "full",
 			descStyle = "inline",
 		},
+		resetAll = {
+			type = "execute",
+			name = L["Reset all"],
+			desc = L.resetAllCustomSound,
+			func = resetAll,
+			order = 3,
+		},
 	}
 }
+
+local soundOptions = {
+	type = "group",
+	name = L["Sounds"],
+	handler = plugin,
+	inline = true,
+	args = {
+		customSoundDesc = {
+			name = L.customSoundDesc,
+			type = "description",
+			order = 1,
+			width = "full",
+		},
+	},
+}
+
+local function addKey(t, key)
+	if t.type and t.type == "select" then
+		t.arg = key
+	elseif t.args then
+		for k, v in pairs(t.args) do
+			t.args[k] = addKey(v, key)
+		end
+	end
+	return t
+end
+
+local keyTable = {}
+function plugin:SetSoundOptions(name, key, flags)
+	wipe(keyTable)
+	keyTable[1] = name
+	keyTable[2] = key
+	if type(key) == "number" then key = GetSpellInfo(key) end
+	local t = addKey(soundOptions, keyTable)
+	return t
+end
 
 -------------------------------------------------------------------------------
 -- Initialization
@@ -100,7 +152,7 @@ function plugin:OnRegister()
 
 	soundList = media:List(mType)
 
-	for k in pairs(sounds) do
+	for k, s in pairs(sounds) do
 		local n = L[k] or k
 		self.pluginOptions.args[k] = {
 			type = "select",
@@ -111,12 +163,54 @@ function plugin:OnRegister()
 			width = "full",
 			itemControl = "DDI-Sound",
 		}
+		if k ~= "Victory" then
+			soundOptions.args[k] = {
+				name = n,
+				get = function(info)
+					local name, key = unpack(info.arg)
+					if not plugin.db.profile[info[#info]][name] then
+						for i, v in next, soundList do
+							if v == s then
+								return i
+							end
+						end
+					elseif not plugin.db.profile[info[#info]][name][key] then
+						for i, v in next, soundList do
+							if v == s then
+								return i
+							end
+						end
+					else
+						for i, v in next, soundList do
+							if v == plugin.db.profile[info[#info]][name][key] then
+								return i
+							end
+						end
+					end
+				end,
+				set = function(info, value)
+					local name, key = unpack(info.arg)
+					if not plugin.db.profile[info[#info]][name] then plugin.db.profile[info[#info]][name] = {} end
+					plugin.db.profile[info[#info]][name][key] = soundList[value]
+				end,
+				type = "select",
+				values = soundList,
+				order = 2,
+				width = "full",
+				itemControl = "DDI-Sound",
+			}
+		end
 	end
 end
 
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_Sound")
+	for k in pairs(sounds) do
+		if k ~= "Victory" then
+			if not plugin.db.profile[k] then plugin.db.profile[k] = {} end
+		end
+	end
 end
 
 local function play(sound)
@@ -134,9 +228,22 @@ end
 -- Event Handlers
 --
 
+local function customSound(module, key, sound)
+	if not module or not key then return false end
+	if not plugin.db.profile[sound][module.name] then
+		return false
+	else
+		if plugin.db.profile[sound][module.name][key] == "None" then
+			return false
+		else
+			return plugin.db.profile[sound][module.name][key]
+		end
+	end
+end
+
 function plugin:BigWigs_Message(event, module, key, text, color, noraidsay, sound, broadcastonly)
 	if not text or not sound or broadcastonly or not BigWigs.db.profile.sound then return end
-	play(sound)
+	play(customSound(module, key, sound) or sound)
 end
 
 function plugin:BigWigs_Sound(event, sound)

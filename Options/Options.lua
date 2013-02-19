@@ -32,6 +32,7 @@ local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 
 local colorModule
+local soundModule
 
 local showToggleOptions = nil
 local advancedOptions = {}
@@ -345,7 +346,9 @@ function options:OnInitialize()
 	acd:AddToBlizOptions("Big Wigs: Profiles", L["Profiles"], "Big Wigs")
 
 	colorModule = BigWigs:GetPlugin("Colors")
+	soundModule = BigWigs:GetPlugin("Sounds")
 	ac:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"))
+	ac:RegisterOptionsTable("Big Wigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"))
 end
 
 function options:OnEnable()
@@ -590,6 +593,13 @@ local function advancedTabSelect(widget, callback, tab)
 
 	if tab == "options" then
 		widget:AddChildren(advancedToggles(key, module, master))
+	elseif tab == "sounds" then
+		wipe(advancedOptions)
+		local group = AceGUI:Create("SimpleGroup")
+		group:SetFullWidth(true)
+		widget:AddChild(group)
+		soundModule:SetSoundOptions(module.name, key, module.toggleDefaults[key])
+		acd:Open("Big Wigs: Sounds Override", group)
 	elseif tab == "colors" then
 		wipe(advancedOptions)
 		local group = AceGUI:Create("SimpleGroup")
@@ -611,6 +621,10 @@ local advancedTabs = {
 	{
 		text = L["Colors"],
 		value = "colors",
+	},
+	{
+		text = L["Sound"],
+		value = "sounds",
 	},
 }
 

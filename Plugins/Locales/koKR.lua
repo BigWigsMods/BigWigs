@@ -217,6 +217,9 @@ L["Victory"] = "승리"
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "%q에 사용할 효과음을 설정합니다.\n\n미리듣기는 CTRL-클릭하세요."
 L["Default only"] = "기본음"
 
+L.customSoundDesc = "Play the selected custom sound instead of the one supplied by the module"
+L.resetAllCustomSound = "If you've customized sounds for any boss encounter settings, this button will reset ALL of them so the sounds defined here will be used instead."
+
 -----------------------------------------------------------------------
 -- Statistics.lua
 --
