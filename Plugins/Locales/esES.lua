@@ -219,7 +219,7 @@ L["Default only"] = "Solo por defecto"
 -- Statistics.lua
 --
 
-L.bossKillDurationPrint = "Defeated '%s' after %s."
-L.bossWipeDurationPrint = "Wiped on '%s' after %s."
-L.bossStatistics = "Boss Statistics"
+L.bossKillDurationPrint = "Derrotado '%s' después de %s."
+L.bossWipeDurationPrint = "Wipe en '%s' después de %s."
+L.bossStatistics = "Estadísticas del Jefe"
 
