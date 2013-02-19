@@ -35,9 +35,9 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{123845, "FLASH", "ICON", "SAY"},
-		"ej:6325", {"eyes", "TANK"}, {123788, "FLASH", "ICON"}, "proximity", 123735,
+		"ej:6325", {"eyes", "TANK"}, {123788, "FLASH", "ICON"}, {123735, "HEALER"}, "proximity",
 		{125390, "FLASH"}, 124097, 125826, 124827, {124077, "FLASH"},
-		{124862, "FLASH", "SAY", "PROXIMITY"}, { 124849, "FLASH" },
+		{124862, "FLASH", "PROXIMITY"}, { 124849, "FLASH" },
 		"phases", "berserk", "bosskill",
 	}, {
 		[123845] = "heroic",
@@ -103,11 +103,10 @@ function mod:HeartOfFearApplied(args)
 end
 
 function mod:Dispatch(args)
-	-- this is for interrupting, maybe check if the person can interrupt
-	if UnitGUID("target") == args.sourceGUID or UnitGUID("focus") == args.sourceGUID then
-		self:LocalMessage(args.spellId, "Personal", "Long", CL["cast"]:format(args.spellName))
-		self:Flash(args.spellId)
-	end
+	local diff = self:Difficulty()
+	self:CDBar(124077, (diff == 3 or diff == 5) and 22 or 12)
+	self:Message(args.spellId, "Urgent", "Long", CL["cast"]:format(args.spellName))
+	self:Flash(args.spellId)
 end
 
 function mod:Poison(args)
@@ -117,7 +116,7 @@ function mod:Poison(args)
 end
 
 function mod:DreadScreech(args)
-	self:CDBar(args.spellId, 6) -- healers wanted it, think it is useless
+	self:CDBar(args.spellId, 6)
 end
 
 function mod:ConsumingTerror(args)
@@ -165,7 +164,6 @@ do
 	function mod:Visions(args)
 		visionsList[#visionsList + 1] = args.destName
 		if UnitIsUnit("player", args.destName) then
-			self:Say(args.spellId, L["visions_message"]) -- not sure if this is needed, I think most people bunch up for healing, say bubble spam is not really helpful
 			self:Flash(args.spellId)
 			self:OpenProximity(args.spellId, 8)
 		end
@@ -216,6 +214,7 @@ do
 			self:Bar("ej:6325", 19, 128353) --Dissonance Field
 			self:Bar("phases", 149, CL["phase"]:format(2), L.phases_icon)
 			self:StopBar(CL["phase"]:format(1))
+			self:StopBar(124077)
 		elseif power == 130 then
 			self:Bar("ej:6325", 65, 128353)
 			self:Message("ej:6325", "Attention", nil, 128353)
@@ -224,6 +223,7 @@ do
 		elseif power == 2 then
 			self:CloseProximity()
 			self:Bar("phases", 158, CL["phase"]:format(1), L.phases_icon)
+			self:StopBar(123735)
 		end
 	end
 end
