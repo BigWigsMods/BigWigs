@@ -51,6 +51,7 @@ if L then
 	L.breaths = "Atem"
 	L.breaths_desc = "Warnungen zu den verschiedenen Atem."
 	L.rampage_over = "Toben vorbei!"
+	L.arcane_adds = "Arkane Adds"
 end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "deDE")
@@ -104,7 +105,7 @@ end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "deDE")
 if L then
-
+	L.barrage_fired = "Beschuss abgefeuert!"
 end
 
 L = BigWigs:NewBossLocale("Lei Shen", "deDE")

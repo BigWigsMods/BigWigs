@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "deDE")
+﻿local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "deDE")
 if not L then return end
 if L then
 	L.engage_yell = "Die Göttliche erwählte uns als sterbliche Stimme für Ihren göttlichen Willen. Wir existieren, um Ihren Willen auszuführen"
@@ -38,18 +38,18 @@ L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "deDE")
 if L then
 	L.spear_removed = "Dein durchbohrender Speer wurde entfernt!"
 
-	L.mending_desc = "|cFFFF0000WARNUNG: Nur der Timer für dein 'Focusziel' wird angezeigt, da alle Schlachtheiler der Zar'thik einen seperaten Heilungs-Cooldown haben.|r "
-	L.mending_warning = "Dein Focusziel wirkt Besserung!"
-	L.mending_bar = "Focus: Besserung"
+	L.mending_desc = "|cFFFF0000WARNUNG: Nur der Timer für dein 'Fokusziel' wird angezeigt, da alle Schlachtheiler der Zar'thik einen seperaten Heilungs-Cooldown haben.|r "
+	L.mending_warning = "Dein Fokusziel wirkt Besserung!"
+	L.mending_bar = "Fokus: Besserung"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "deDE")
 if L then
-	L.explosion_by_other = "Bernexplosion Cooldownleiste der Monstrosität/Focus"
-	L.explosion_by_other_desc = "Cooldown Warnung und Zauberleiste für Amberexplosion der Bernmonstrosität oder deinem Focusziel."
+	L.explosion_by_other = "Bernexplosion Cooldownleiste der Monstrosität/Fokus"
+	L.explosion_by_other_desc = "Cooldown Warnung und Zauberleiste für Amberexplosion der Bernmonstrosität oder deinem Fokusziel."
 
-	L.explosion_casting_by_other = "Bernexplosion Zauberleiste der Monstrosität/Focus"
-	L.explosion_casting_by_other_desc = "Zauberwarnung für Bernexplosion der Bernmonstrosität oder deinem Focusziel. Stark Hervorheben wird empfohlen!"
+	L.explosion_casting_by_other = "Bernexplosion Zauberleiste der Monstrosität/Fokus"
+	L.explosion_casting_by_other_desc = "Zauberwarnung für Bernexplosion der Bernmonstrosität oder deinem Fokusziel. Stark Hervorheben wird empfohlen!"
 
 	L.explosion_by_you = "Dein Bernexplosions-Cooldown"
 	L.explosion_by_you_desc = "Cooldown Warnung für deine Berexplosion."
