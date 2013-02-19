@@ -1,9 +1,9 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "ptBR")
 if not L then return end
+
 -----------------------------------------------------------------------
 -- Bars.lua
 --
-
 
 L["Style"] = "Estilo"
 L.bigWigsBarStyleName_Default = "Padrão"
@@ -91,11 +91,17 @@ L["Attention"] = "Atenção"
 L["Positive"] = "Positivo"
 
 -----------------------------------------------------------------------
--- Duration.lua
+-- Emphasize.lua
 --
 
-L.bossKillDurationPrint = "Defeated '%s' after %s."
-L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+L["Super Emphasize"] = "Super Enfatizar"
+L.superEmphasizeDesc = "Da um aviso muito mais facil de se ver as mensagens ou barras relacionadas com uma habilidade de um encontro.\n\nAquí você configura exatamente o que deverá ocurrer quando trocar para ativado a opção de Super Enfatizar na sessão avançada para uma habilidade de um encontro de um chefe.\n\n|cffff4411Nota: Super Enfatizar está desabilitado por padrão para todas as habilidades.|r\n"
+L["UPPERCASE"] = "MAIÚSCULAS"
+L["Uppercases all messages related to a super emphasized option."] = "Maiúsculas emm todas as mensagens relacionadas com a opção super enfatizada."
+L["Double size"] = "Tamanho dobrado"
+L["Doubles the size of super emphasized bars and messages."] = "Dobra o tamanho das barras super enfatizadas e as mensagens"
+L["Countdown"] = "Contador"
+L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "Se um contador é relativamente maior que 5 segundos, uma conta vocal e visual será feita para os últimos 5 segundos. Imagine alguma contagem \"5... 4... 3... 2... 1... BOOM!\" e grandes números no meio da tela."
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -131,44 +137,6 @@ L["Outline"] = "Contorno"
 L["Monochrome"] = "Monocromo"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "Troca o indicador monocromo de todas as mensagens, removendo qualquer embelezamento das fontes."
 L["Font color"] = "Font color"
------------------------------------------------------------------------
--- RaidIcon.lua
---
-
-L["Icons"] = "Icones"
-
-L.raidIconDescription = "Elementos de tipo 'bomba' e similares em um jogador podem ser de interesse especial. Aqui você pode configurar como se deveria marcar com icones algunos personagens.\n\nSó se usa um icone para cada encontro se usará o primario, nunca se usará o mesmo icone para 2 habilidades distintas, para isto esta o icone secundario.\n\n|cffff4411Nota: Se um jogador foi marcado manualmente o Big Wigs nunca trocará seu icone.|r"
-L["Primary"] = "Primário"
-L["The first raid target icon that a encounter script should use."] = "O primeiro objetivo da raide, este icone será usado"
-L["Secondary"] = "Secundário"
-L["The second raid target icon that a encounter script should use."] = "O segundo objetivo da raide, este icone será usado"
-
-L["Star"] = "Estrela"
-L["Circle"] = "Círculo"
-L["Diamond"] = "Diamante"
-L["Triangle"] = "Triângulo"
-L["Moon"] = "Lua"
-L["Square"] = "Quadrado"
-L["Cross"] = "Cruz"
-L["Skull"] = "Caveira"
-L["|cffff0000Disable|r"] = "|cffff0000Desativar|r"
-
------------------------------------------------------------------------
--- Sound.lua
---
-
-L.soundDefaultDescription = "Com esta opção habilitada, Big Wigs usará somente o som padrão da Blizzard para os alertas de raide e para mensagens que chegão com um alerta de som. Nota: Somente algumas mensagens dos scripts de encontros usarão alerta de som."
-
-L["Sounds"] = "Sons"
-
-L["Alarm"] = "Alarme"
-L["Info"] = "Info"
-L["Alert"] = "Alerta"
-L["Long"] = "Longo"
-L["Victory"] = "Vitória"
-
-L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Ajuste o som a se usar para %q.\n\nCtrl-Clique em um som para previsualizar."
-L["Default only"] = "Somente padrões"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
@@ -209,15 +177,49 @@ L["Tooltip"] = "Tooltip"
 L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Mostra/oculta o tooltip do feitiço se a janela de aproximação estiver empatada com uma habilidade de chefe."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- RaidIcon.lua
 --
 
-L["Super Emphasize"] = "Super Enfatizar"
-L.superEmphasizeDesc = "Da um aviso muito mais facil de se ver as mensagens ou barras relacionadas com uma habilidade de um encontro.\n\nAquí você configura exatamente o que deverá ocurrer quando trocar para ativado a opção de Super Enfatizar na sessão avançada para uma habilidade de um encontro de um chefe.\n\n|cffff4411Nota: Super Enfatizar está desabilitado por padrão para todas as habilidades.|r\n"
-L["UPPERCASE"] = "MAIÚSCULAS"
-L["Uppercases all messages related to a super emphasized option."] = "Maiúsculas emm todas as mensagens relacionadas com a opção super enfatizada."
-L["Double size"] = "Tamanho dobrado"
-L["Doubles the size of super emphasized bars and messages."] = "Dobra o tamanho das barras super enfatizadas e as mensagens"
-L["Countdown"] = "Contador"
-L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "Se um contador é relativamente maior que 5 segundos, uma conta vocal e visual será feita para os últimos 5 segundos. Imagine alguma contagem \"5... 4... 3... 2... 1... BOOM!\" e grandes números no meio da tela."
+L["Icons"] = "Icones"
+
+L.raidIconDescription = "Elementos de tipo 'bomba' e similares em um jogador podem ser de interesse especial. Aqui você pode configurar como se deveria marcar com icones algunos personagens.\n\nSó se usa um icone para cada encontro se usará o primario, nunca se usará o mesmo icone para 2 habilidades distintas, para isto esta o icone secundario.\n\n|cffff4411Nota: Se um jogador foi marcado manualmente o Big Wigs nunca trocará seu icone.|r"
+L["Primary"] = "Primário"
+L["The first raid target icon that a encounter script should use."] = "O primeiro objetivo da raide, este icone será usado"
+L["Secondary"] = "Secundário"
+L["The second raid target icon that a encounter script should use."] = "O segundo objetivo da raide, este icone será usado"
+
+L["Star"] = "Estrela"
+L["Circle"] = "Círculo"
+L["Diamond"] = "Diamante"
+L["Triangle"] = "Triângulo"
+L["Moon"] = "Lua"
+L["Square"] = "Quadrado"
+L["Cross"] = "Cruz"
+L["Skull"] = "Caveira"
+L["|cffff0000Disable|r"] = "|cffff0000Desativar|r"
+
+-----------------------------------------------------------------------
+-- Sound.lua
+--
+
+L.soundDefaultDescription = "Com esta opção habilitada, Big Wigs usará somente o som padrão da Blizzard para os alertas de raide e para mensagens que chegão com um alerta de som. Nota: Somente algumas mensagens dos scripts de encontros usarão alerta de som."
+
+L["Sounds"] = "Sons"
+
+L["Alarm"] = "Alarme"
+L["Info"] = "Info"
+L["Alert"] = "Alerta"
+L["Long"] = "Longo"
+L["Victory"] = "Vitória"
+
+L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Ajuste o som a se usar para %q.\n\nCtrl-Clique em um som para previsualizar."
+L["Default only"] = "Somente padrões"
+
+-----------------------------------------------------------------------
+-- Statistics.lua
+--
+
+L.bossKillDurationPrint = "Defeated '%s' after %s."
+L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+L.bossStatistics = "Boss Statistics"
 

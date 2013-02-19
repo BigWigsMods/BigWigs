@@ -1,5 +1,6 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "frFR")
 if not L then return end
+
 -----------------------------------------------------------------------
 -- Bars.lua
 --
@@ -90,11 +91,17 @@ L["Attention"] = "Attention"
 L["Positive"] = "Positif"
 
 -----------------------------------------------------------------------
--- Duration.lua
+-- Emphasize.lua
 --
 
-L.bossKillDurationPrint = "Defeated '%s' after %s."
-L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+L["Super Emphasize"] = "Super mise en évidence"
+L.superEmphasizeDesc = "Ce module met fortement en évidence les barres ou messages relatifs à une technique de rencontre de boss.\n\nVous pouvez définir ici exactement ce qui doit arriver quand vous cochez une option de super mise en évidence dans la section avancée d'une technique de rencontre de boss.\n\n|cffff4411Notez que la super mise en évidence est désactivée par défaut pour toutes les techniques.|r\n"
+L["UPPERCASE"] = "MAJUSCULE"
+L["Uppercases all messages related to a super emphasized option."] = "Met entièrement en majuscules tous les messages relatifs à une option à mettre fortement en évidence."
+L["Double size"] = "Taille double"
+L["Doubles the size of super emphasized bars and messages."] = "Double la taille des barres et messages relatifs à une option à mettre fortement en évidence."
+L["Countdown"] = "Compte à rebours"
+L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "Si un minuteur relatif à une option à mettre fortement en évidence est plus long que 5 secondes, un compte à rebours visuel et vocal sera ajouté pour les 5 dernières secondes. Imaginez quelqu'un décompter \"5... 4... 3... 2... 1... COUNTDOWN!\" et de gros chiffres au milieu de votre écran."
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -137,6 +144,44 @@ L["How long to fade out a message, in seconds"] = "Définit pendant combien de t
 L["Font color"] = "Couleur de police"
 
 -----------------------------------------------------------------------
+-- Proximity.lua
+--
+
+L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|tNom technique"
+L["Custom range indicator"] = "Indicateur personnalisé de portée"
+L["%d yards"] = "%d mètres"
+L["Proximity"] = "Proximité"
+L["Sound"] = "Son"
+L["Disabled"] = "Désactivé"
+L["Disable the proximity display for all modules that use it."] = "Désactive l'affichage de proximité pour tous les modules l'utilisant."
+L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "L'affichage de proximité sera affiché la prochaine fois. Pour le désactiver complètement, rendez-vous dans les options du boss et décochez \"Proximité\"."
+L["Sound delay"] = "Délai du son"
+L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "Spécifie combien de temps Big Wigs doit attendre entre chaque répétition du son indiquant qu'au moins une personne est trop proche de vous."
+
+L.proximity = "Affichage de proximité"
+L.proximity_desc = "Affiche la fenêtre de proximité quand cela est approprié pour cette rencontre, indiquant la liste des joueurs qui se trouvent trop près de vous."
+
+L["Close"] = "Fermer"
+L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Ferme l'affichage de proximité.\nPour le désactiver complètement, rendez-vous dans les options du boss et décochez \"Proximité\"."
+L["Lock"] = "Verrouiller"
+L["Locks the display in place, preventing moving and resizing."] = "Verrouille l'affichage à sa place actuelle, empêchant tout déplacement ou redimensionnement."
+L["Title"] = "Titre"
+L["Shows or hides the title."] = "Affiche ou non le titre."
+L["Background"] = "Arrière-plan"
+L["Shows or hides the background."] = "Affiche ou non l'arrière-plan."
+L["Toggle sound"] = "Son"
+L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Fait ou non bipper la fenêtre de proximité quand vous êtes trop près d'un autre joueur."
+L["Sound button"] = "Bouton du son"
+L["Shows or hides the sound button."] = "Affiche ou non le bouton du son."
+L["Close button"] = "Bouton de fermeture"
+L["Shows or hides the close button."] = "Affiche ou non le bouton de fermeture."
+L["Show/hide"] = "Afficher/cacher"
+L["Ability name"] = "Nom de la technique"
+L["Shows or hides the ability name above the window."] = "Affiche ou non le nom de la technique au dessus de la fenêtre."
+L["Tooltip"] = "Bulle d'aide"
+L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Affiche ou non la bulle d'aide du sort si l'affichage de proximité est actuellement directement lié avec une technique de rencontre de boss."
+
+-----------------------------------------------------------------------
 -- RaidIcon.lua
 --
 
@@ -176,53 +221,10 @@ L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Détermin
 L["Default only"] = "Son par défaut uniquement"
 
 -----------------------------------------------------------------------
--- Proximity.lua
+-- Statistics.lua
 --
 
-L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|tNom technique"
-L["Custom range indicator"] = "Indicateur personnalisé de portée"
-L["%d yards"] = "%d mètres"
-L["Proximity"] = "Proximité"
-L["Sound"] = "Son"
-L["Disabled"] = "Désactivé"
-L["Disable the proximity display for all modules that use it."] = "Désactive l'affichage de proximité pour tous les modules l'utilisant."
-L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "L'affichage de proximité sera affiché la prochaine fois. Pour le désactiver complètement, rendez-vous dans les options du boss et décochez \"Proximité\"."
-L["Sound delay"] = "Délai du son"
-L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "Spécifie combien de temps Big Wigs doit attendre entre chaque répétition du son indiquant qu'au moins une personne est trop proche de vous."
-
-L.proximity = "Affichage de proximité"
-L.proximity_desc = "Affiche la fenêtre de proximité quand cela est approprié pour cette rencontre, indiquant la liste des joueurs qui se trouvent trop près de vous."
-
-L["Close"] = "Fermer"
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Ferme l'affichage de proximité.\nPour le désactiver complètement, rendez-vous dans les options du boss et décochez \"Proximité\"."
-L["Lock"] = "Verrouiller"
-L["Locks the display in place, preventing moving and resizing."] = "Verrouille l'affichage à sa place actuelle, empêchant tout déplacement ou redimensionnement."
-L["Title"] = "Titre"
-L["Shows or hides the title."] = "Affiche ou non le titre."
-L["Background"] = "Arrière-plan"
-L["Shows or hides the background."] = "Affiche ou non l'arrière-plan."
-L["Toggle sound"] = "Son"
-L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Fait ou non bipper la fenêtre de proximité quand vous êtes trop près d'un autre joueur."
-L["Sound button"] = "Bouton du son"
-L["Shows or hides the sound button."] = "Affiche ou non le bouton du son."
-L["Close button"] = "Bouton de fermeture"
-L["Shows or hides the close button."] = "Affiche ou non le bouton de fermeture."
-L["Show/hide"] = "Afficher/cacher"
-L["Ability name"] = "Nom de la technique"
-L["Shows or hides the ability name above the window."] = "Affiche ou non le nom de la technique au dessus de la fenêtre."
-L["Tooltip"] = "Bulle d'aide"
-L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Affiche ou non la bulle d'aide du sort si l'affichage de proximité est actuellement directement lié avec une technique de rencontre de boss."
-
------------------------------------------------------------------------
--- Emphasize.lua
---
-
-L["Super Emphasize"] = "Super mise en évidence"
-L.superEmphasizeDesc = "Ce module met fortement en évidence les barres ou messages relatifs à une technique de rencontre de boss.\n\nVous pouvez définir ici exactement ce qui doit arriver quand vous cochez une option de super mise en évidence dans la section avancée d'une technique de rencontre de boss.\n\n|cffff4411Notez que la super mise en évidence est désactivée par défaut pour toutes les techniques.|r\n"
-L["UPPERCASE"] = "MAJUSCULE"
-L["Uppercases all messages related to a super emphasized option."] = "Met entièrement en majuscules tous les messages relatifs à une option à mettre fortement en évidence."
-L["Double size"] = "Taille double"
-L["Doubles the size of super emphasized bars and messages."] = "Double la taille des barres et messages relatifs à une option à mettre fortement en évidence."
-L["Countdown"] = "Compte à rebours"
-L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "Si un minuteur relatif à une option à mettre fortement en évidence est plus long que 5 secondes, un compte à rebours visuel et vocal sera ajouté pour les 5 dernières secondes. Imaginez quelqu'un décompter \"5... 4... 3... 2... 1... COUNTDOWN!\" et de gros chiffres au milieu de votre écran."
+L.bossKillDurationPrint = "Defeated '%s' after %s."
+L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+L.bossStatistics = "Boss Statistics"
 

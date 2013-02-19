@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Duration")
+local plugin = BigWigs:NewPlugin("Statistics")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
@@ -13,17 +13,65 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 local activeDurations = {}
 
 -------------------------------------------------------------------------------
+-- Options
+--
+
+plugin.defaultDB = {
+	enabled = true,
+	--countKills = true,
+	--countWipes = true,
+	--printKills = true,
+	--printWipes = true,
+	--bestKillTime = true,
+}
+
+plugin.subPanelOptions = {
+	key = "Big Wigs: Boss Statistics",
+	name = L.bossStatistics,
+	options = {
+		name = L.bossStatistics,
+		type = "group",
+		--childGroups = "tab",
+		get = function(i) return plugin.db.profile[i[#i]] end,
+		set = function(i, value) plugin.db.profile[i[#i]] = value end,
+		args = {
+			heading = {
+				type = "description",
+				name = "Description",
+				order = 1,
+				width = "full",
+				fontSize = "medium",
+			},
+			--enabled = {
+			--	type = "toggle",
+			--	name = "Enable Statistics",
+			--	desc = "Enables stats.",
+			--	order = 2,
+			--	width = "full",
+			--	set = function(i, value)
+			--		plugin.db.profile[i[#i]] = value
+			--		plugin:Disable()
+			--		plugin:Enable()
+			--	end,
+			--},
+		},
+	},
+}
+
+-------------------------------------------------------------------------------
 -- Initialization
 --
 
 function plugin:OnPluginEnable()
-	if not BigWigsDurationDB then
-		BigWigsDurationDB = {}
+	if not BigWigsStatisticsDB then
+		BigWigsStatisticsDB = {}
 	end
 
-	self:RegisterMessage("BigWigs_OnBossEngage")
-	self:RegisterMessage("BigWigs_OnBossWin")
-	self:RegisterMessage("BigWigs_OnBossReboot")
+	if self.db.profile.enabled then
+		self:RegisterMessage("BigWigs_OnBossEngage")
+		self:RegisterMessage("BigWigs_OnBossWin")
+		self:RegisterMessage("BigWigs_OnBossReboot")
+	end
 end
 
 -------------------------------------------------------------------------------

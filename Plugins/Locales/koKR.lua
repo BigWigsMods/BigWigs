@@ -1,5 +1,4 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "koKR")
-
 if not L then return end
 
 -----------------------------------------------------------------------
@@ -93,11 +92,17 @@ L["Attention"] = "주의"
 L["Positive"] = "제안"
 
 -----------------------------------------------------------------------
--- Duration.lua
+-- Emphasize.lua
 --
 
-L.bossKillDurationPrint = "Defeated '%s' after %s."
-L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+L["Super Emphasize"] = "특수 강조바"
+L.superEmphasizeDesc = "특정 보스가 사용하는 스킬과 관련한 메세지와 바를 특징있게 나타냅니다.\n\n여기에서 보스가 사용하는 기술에 대하여 특수 강조 옵션을 구성합니다.\n\n|cffff4411체크를 해제하면 특수 강조의 모든 능력은 기본적으로 해제됩니다.|r\n"
+L["UPPERCASE"] = "대문자"
+L["Uppercases all messages related to a super emphasized option."] = "특수 강조의 모든 관련된 메세지를 대문자로 표시합니다."
+L["Double size"] = "2배 크기"
+L["Doubles the size of super emphasized bars and messages."] = "특수 강보 바와 메세지의 크기를 2배로 합니다."
+L["Countdown"] = "카운트다운"
+L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "관련 타이머에 5 초 동안 카운트다운을 추가합니다. \"5... 4... 3... 2... 1... 카운트다운!\" 화면의 중앙에 큰 숫자를 표시합니다."
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -133,6 +138,44 @@ L["Outline"] = "외곽선"
 L["Monochrome"] = "단색"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "글꼴 가장자리의 스무딩을 제거하여 모든 메세지를 단색으로 전환합니다."
 L["Font color"] = "Font color"
+
+-----------------------------------------------------------------------
+-- Proximity.lua
+--
+
+L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|t스킬 이름"
+L["Custom range indicator"] = "사용자 거리 지시기"
+L["%d yards"] = "%d 미터"
+L["Proximity"] = "근접"
+L["Sound"] = "효과음"
+L["Disabled"] = "미사용"
+L["Disable the proximity display for all modules that use it."] = "모든 모듈의 근접 표시를 비활성화 합니다."
+L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "다음 표시때 근접 표시를 표시하도록 합니다. 이것을 비활성화 하려면 옵션을 통해 전환하세요."
+L["Sound delay"] = "효과음 딜레이"
+L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "누군가가 근접해 있을때 나오는 효과음의 반복되는 사이의 딜레이를 설정합니다."
+
+L.proximity = "근접 표시"
+L.proximity_desc = "해당 보스전에서 필요 시 자신과 근접해 있는 플레이어 목록을 표시하는 근접 표시창을 표시합니다."
+
+L["Close"] = "닫기"
+L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "근접 표시를 닫습니다.\n\n완전히 비활성화기 위해서는 해당 보스 모듈에 있는 옵션의 근접 표시를 끄세요."
+L["Lock"] = "고정"
+L["Locks the display in place, preventing moving and resizing."] = "미리 이동 또는 크기 조절을 하고 표시할 장소에 고정합니다."
+L["Title"] = "제목"
+L["Shows or hides the title."] = "제목을 표시하거나 숨깁니다."
+L["Background"] = "배경"
+L["Shows or hides the background."] = "배경을 표시하거나 숨깁니다."
+L["Toggle sound"] = "소리 전환"
+L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "근접 창에 다른 플에이어와 가까이 있을 경에 알리는 경고음을 켜거나 끌수있게 합니다."
+L["Sound button"] = "소리 버튼"
+L["Shows or hides the sound button."] = "소리 버튼을 표시하거나 숨깁니다."
+L["Close button"] = "닫기 버튼"
+L["Shows or hides the close button."] = "닫기 버튼을 표시하거나 숨깁니다."
+L["Show/hide"] = "표시/숨김"
+L["Ability name"] = "스킬 이름"
+L["Shows or hides the ability name above the window."] = "스킬의 이름을 창위에 표시하거나 숨깁니다."
+L["Tooltip"] = "툴팁"
+L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "현재 보스 스킬에 직접 연결되어 자동으로 뜨는 근접 표시창에 대해 커서를 올릴시 툴팁을 표시하거나 숨깁니다."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -174,53 +217,10 @@ L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "%q에 사
 L["Default only"] = "기본음"
 
 -----------------------------------------------------------------------
--- Proximity.lua
+-- Statistics.lua
 --
 
-L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|t스킬 이름"
-L["Custom range indicator"] = "사용자 거리 지시기"
-L["%d yards"] = "%d 미터"
-L["Proximity"] = "근접"
-L["Sound"] = "효과음"
-L["Disabled"] = "미사용"
-L["Disable the proximity display for all modules that use it."] = "모든 모듈의 근접 표시를 비활성화 합니다."
-L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "다음 표시때 근접 표시를 표시하도록 합니다. 이것을 비활성화 하려면 옵션을 통해 전환하세요."
-L["Sound delay"] = "효과음 딜레이"
-L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "누군가가 근접해 있을때 나오는 효과음의 반복되는 사이의 딜레이를 설정합니다."
-
-L.proximity = "근접 표시"
-L.proximity_desc = "해당 보스전에서 필요 시 자신과 근접해 있는 플레이어 목록을 표시하는 근접 표시창을 표시합니다."
-
-L["Close"] = "닫기"
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "근접 표시를 닫습니다.\n\n완전히 비활성화기 위해서는 해당 보스 모듈에 있는 옵션의 근접 표시를 끄세요."
-L["Lock"] = "고정"
-L["Locks the display in place, preventing moving and resizing."] = "미리 이동 또는 크기 조절을 하고 표시할 장소에 고정합니다."
-L["Title"] = "제목"
-L["Shows or hides the title."] = "제목을 표시하거나 숨깁니다."
-L["Background"] = "배경"
-L["Shows or hides the background."] = "배경을 표시하거나 숨깁니다."
-L["Toggle sound"] = "소리 전환"
-L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "근접 창에 다른 플에이어와 가까이 있을 경에 알리는 경고음을 켜거나 끌수있게 합니다."
-L["Sound button"] = "소리 버튼"
-L["Shows or hides the sound button."] = "소리 버튼을 표시하거나 숨깁니다."
-L["Close button"] = "닫기 버튼"
-L["Shows or hides the close button."] = "닫기 버튼을 표시하거나 숨깁니다."
-L["Show/hide"] = "표시/숨김"
-L["Ability name"] = "스킬 이름"
-L["Shows or hides the ability name above the window."] = "스킬의 이름을 창위에 표시하거나 숨깁니다."
-L["Tooltip"] = "툴팁"
-L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "현재 보스 스킬에 직접 연결되어 자동으로 뜨는 근접 표시창에 대해 커서를 올릴시 툴팁을 표시하거나 숨깁니다."
-
------------------------------------------------------------------------
--- Emphasize.lua
---
-
-L["Super Emphasize"] = "특수 강조바"
-L.superEmphasizeDesc = "특정 보스가 사용하는 스킬과 관련한 메세지와 바를 특징있게 나타냅니다.\n\n여기에서 보스가 사용하는 기술에 대하여 특수 강조 옵션을 구성합니다.\n\n|cffff4411체크를 해제하면 특수 강조의 모든 능력은 기본적으로 해제됩니다.|r\n"
-L["UPPERCASE"] = "대문자"
-L["Uppercases all messages related to a super emphasized option."] = "특수 강조의 모든 관련된 메세지를 대문자로 표시합니다."
-L["Double size"] = "2배 크기"
-L["Doubles the size of super emphasized bars and messages."] = "특수 강보 바와 메세지의 크기를 2배로 합니다."
-L["Countdown"] = "카운트다운"
-L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "관련 타이머에 5 초 동안 카운트다운을 추가합니다. \"5... 4... 3... 2... 1... 카운트다운!\" 화면의 중앙에 큰 숫자를 표시합니다."
+L.bossKillDurationPrint = "Defeated '%s' after %s."
+L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+L.bossStatistics = "Boss Statistics"
 

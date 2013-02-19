@@ -90,11 +90,17 @@ L["Attention"] = true
 L["Positive"] = true
 
 -----------------------------------------------------------------------
--- Duration.lua
+-- Emphasize.lua
 --
 
-L.bossKillDurationPrint = "Defeated '%s' after %s."
-L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+L["Super Emphasize"] = true
+L.superEmphasizeDesc = "Boosts related messages or bars of a specific boss encounter ability.\n\nHere you configure exactly what should happen when you toggle on the Super Emphasize option in the advanced section for a boss encounter ability.\n\n|cffff4411Note that Super Emphasize is off by default for all abilities.|r\n"
+L["UPPERCASE"] = true
+L["Uppercases all messages related to a super emphasized option."] = true
+L["Double size"] = true
+L["Doubles the size of super emphasized bars and messages."] = true
+L["Countdown"] = true
+L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = true
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -137,6 +143,44 @@ L["Fade time"] = true
 L["How long to fade out a message, in seconds"] = true
 
 -----------------------------------------------------------------------
+-- Proximity.lua
+--
+
+L["|T%s:20:20:-5|tAbility name"] = true
+L["Custom range indicator"] = true
+L["%d yards"] = true
+L["Proximity"] = true
+L["Sound"] = true
+L["Disabled"] = true
+L["Disable the proximity display for all modules that use it."] = true
+L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = true
+L["Sound delay"] = true
+L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = true
+
+L.proximity = "Proximity display"
+L.proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you."
+
+L["Close"] = true
+L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = true
+L["Lock"] = true
+L["Locks the display in place, preventing moving and resizing."] = true
+L["Title"] = true
+L["Shows or hides the title."] = true
+L["Background"] = true
+L["Shows or hides the background."] = true
+L["Toggle sound"] = true
+L["Toggle whether or not the proximity window should beep when you're too close to another player."] = true
+L["Sound button"] = true
+L["Shows or hides the sound button."] = true
+L["Close button"] = true
+L["Shows or hides the close button."] = true
+L["Show/hide"] = true
+L["Ability name"] = true
+L["Shows or hides the ability name above the window."] = true
+L["Tooltip"] = true
+L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = true
+
+-----------------------------------------------------------------------
 -- RaidIcon.lua
 --
 
@@ -176,53 +220,10 @@ L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = true
 L["Default only"] = true
 
 -----------------------------------------------------------------------
--- Proximity.lua
+-- Statistics.lua
 --
 
-L["|T%s:20:20:-5|tAbility name"] = true
-L["Custom range indicator"] = true
-L["%d yards"] = true
-L["Proximity"] = true
-L["Sound"] = true
-L["Disabled"] = true
-L["Disable the proximity display for all modules that use it."] = true
-L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = true
-L["Sound delay"] = true
-L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = true
-
-L.proximity = "Proximity display"
-L.proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you."
-
-L["Close"] = true
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = true
-L["Lock"] = true
-L["Locks the display in place, preventing moving and resizing."] = true
-L["Title"] = true
-L["Shows or hides the title."] = true
-L["Background"] = true
-L["Shows or hides the background."] = true
-L["Toggle sound"] = true
-L["Toggle whether or not the proximity window should beep when you're too close to another player."] = true
-L["Sound button"] = true
-L["Shows or hides the sound button."] = true
-L["Close button"] = true
-L["Shows or hides the close button."] = true
-L["Show/hide"] = true
-L["Ability name"] = true
-L["Shows or hides the ability name above the window."] = true
-L["Tooltip"] = true
-L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = true
-
------------------------------------------------------------------------
--- Emphasize.lua
---
-
-L["Super Emphasize"] = true
-L.superEmphasizeDesc = "Boosts related messages or bars of a specific boss encounter ability.\n\nHere you configure exactly what should happen when you toggle on the Super Emphasize option in the advanced section for a boss encounter ability.\n\n|cffff4411Note that Super Emphasize is off by default for all abilities.|r\n"
-L["UPPERCASE"] = true
-L["Uppercases all messages related to a super emphasized option."] = true
-L["Double size"] = true
-L["Doubles the size of super emphasized bars and messages."] = true
-L["Countdown"] = true
-L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = true
+L.bossKillDurationPrint = "Defeated '%s' after %s."
+L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+L.bossStatistics = "Boss Statistics"
 

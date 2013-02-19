@@ -1,5 +1,4 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "zhTW")
-
 if not L then return end
 
 -----------------------------------------------------------------------
@@ -92,11 +91,17 @@ L["Attention"] = "注意"
 L["Positive"] = "積極"
 
 -----------------------------------------------------------------------
--- Duration.lua
+-- Emphasize.lua
 --
 
-L.bossKillDurationPrint = "Defeated '%s' after %s."
-L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+L["Super Emphasize"] = "超級強調"
+L.superEmphasizeDesc = "相關訊息或特定首領戰鬥技能計時條增強。\n\n在這裡設定當開啟超級強調位於首領戰鬥技能進階選項時所應該發生的事件。\n\n|cffff4411注意：超級強調功能預設情況下所有技能關閉。|r\n"
+L["UPPERCASE"] = "大寫"
+L["Uppercases all messages related to a super emphasized option."] = "所有超級強調選項相關訊息大寫。"
+L["Double size"] = "雙倍尺寸"
+L["Doubles the size of super emphasized bars and messages."] = "超級強調計時條和訊息雙倍尺寸。"
+L["Countdown"] = "冷卻"
+L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "如果相關的計時器的長度超過5秒，一個聲音與視覺將增加倒計時的最後5秒。想像某個倒計時\"5... 4... 3... 2... 1... 冷卻！\"和大個數字位於螢幕中間。"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -139,6 +144,44 @@ L["Fade time"] = "消退時間"
 L["How long to fade out a message, in seconds"] = "以秒計訊息消退時間。"
 
 -----------------------------------------------------------------------
+-- Proximity.lua
+--
+
+L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|t技能名稱"
+L["Custom range indicator"] = "自訂距離指示器"
+L["%d yards"] = "%d碼"
+L["Proximity"] = "近距離顯"
+L["Sound"] = "音效"
+L["Disabled"] = "禁用"
+L["Disable the proximity display for all modules that use it."] = "禁止所有首領模组使用近距離。"
+L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "近距離顯示將在下次顯示。要完全禁用此功能，需要關閉此功能選項。"
+L["Sound delay"] = "音效延遲"
+L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "當有人太靠近你時指定多長時間 Big Wigs 重複間隔等待指定的音效。"
+
+L.proximity = "近距離顯示"
+L.proximity_desc = "顯示近距離顯示視窗，列出距離你很近的玩家。"
+
+L["Close"] = "關閉"
+L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "關閉近距離顯示。\n\n要完全禁用此任一功能，需進入相對應首領模組選項關閉“近距離”功能。"
+L["Lock"] = "鎖定"
+L["Locks the display in place, preventing moving and resizing."] = "鎖定顯示視窗，防止被移動和縮放。"
+L["Title"] = "標題"
+L["Shows or hides the title."] = "顯示或隱藏標題。"
+L["Background"] = "背景"
+L["Shows or hides the background."] = "顯示或隱藏背景。"
+L["Toggle sound"] = "切換音效"
+L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "當近距離視窗有其他過近玩家時切換任一或關閉聲效。"
+L["Sound button"] = "音效按鈕"
+L["Shows or hides the sound button."] = "顯示或隱藏音效按鈕。"
+L["Close button"] = "關閉按鈕"
+L["Shows or hides the close button."] = "顯示或隱藏關閉按鈕。"
+L["Show/hide"] = "顯示/隱藏"
+L["Ability name"] = "技能名稱"
+L["Shows or hides the ability name above the window."] = "在視窗上面顯示或隱藏技能名稱。"
+L["Tooltip"] = "工具提示"
+L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "顯示或隱藏近距離顯示從首領戰鬥技能獲取的法術提示。"
+
+-----------------------------------------------------------------------
 -- RaidIcon.lua
 --
 
@@ -178,53 +221,10 @@ L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "設定使
 L["Default only"] = "僅用預設"
 
 -----------------------------------------------------------------------
--- Proximity.lua
+-- Statistics.lua
 --
 
-L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|t技能名稱"
-L["Custom range indicator"] = "自訂距離指示器"
-L["%d yards"] = "%d碼"
-L["Proximity"] = "近距離顯"
-L["Sound"] = "音效"
-L["Disabled"] = "禁用"
-L["Disable the proximity display for all modules that use it."] = "禁止所有首領模组使用近距離。"
-L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "近距離顯示將在下次顯示。要完全禁用此功能，需要關閉此功能選項。"
-L["Sound delay"] = "音效延遲"
-L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "當有人太靠近你時指定多長時間 Big Wigs 重複間隔等待指定的音效。"
-
-L.proximity = "近距離顯示"
-L.proximity_desc = "顯示近距離顯示視窗，列出距離你很近的玩家。"
-
-L["Close"] = "關閉"
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "關閉近距離顯示。\n\n要完全禁用此任一功能，需進入相對應首領模組選項關閉“近距離”功能。"
-L["Lock"] = "鎖定"
-L["Locks the display in place, preventing moving and resizing."] = "鎖定顯示視窗，防止被移動和縮放。"
-L["Title"] = "標題"
-L["Shows or hides the title."] = "顯示或隱藏標題。"
-L["Background"] = "背景"
-L["Shows or hides the background."] = "顯示或隱藏背景。"
-L["Toggle sound"] = "切換音效"
-L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "當近距離視窗有其他過近玩家時切換任一或關閉聲效。"
-L["Sound button"] = "音效按鈕"
-L["Shows or hides the sound button."] = "顯示或隱藏音效按鈕。"
-L["Close button"] = "關閉按鈕"
-L["Shows or hides the close button."] = "顯示或隱藏關閉按鈕。"
-L["Show/hide"] = "顯示/隱藏"
-L["Ability name"] = "技能名稱"
-L["Shows or hides the ability name above the window."] = "在視窗上面顯示或隱藏技能名稱。"
-L["Tooltip"] = "工具提示"
-L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "顯示或隱藏近距離顯示從首領戰鬥技能獲取的法術提示。"
-
------------------------------------------------------------------------
--- Emphasize.lua
---
-
-L["Super Emphasize"] = "超級強調"
-L.superEmphasizeDesc = "相關訊息或特定首領戰鬥技能計時條增強。\n\n在這裡設定當開啟超級強調位於首領戰鬥技能進階選項時所應該發生的事件。\n\n|cffff4411注意：超級強調功能預設情況下所有技能關閉。|r\n"
-L["UPPERCASE"] = "大寫"
-L["Uppercases all messages related to a super emphasized option."] = "所有超級強調選項相關訊息大寫。"
-L["Double size"] = "雙倍尺寸"
-L["Doubles the size of super emphasized bars and messages."] = "超級強調計時條和訊息雙倍尺寸。"
-L["Countdown"] = "冷卻"
-L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "如果相關的計時器的長度超過5秒，一個聲音與視覺將增加倒計時的最後5秒。想像某個倒計時\"5... 4... 3... 2... 1... 冷卻！\"和大個數字位於螢幕中間。"
+L.bossKillDurationPrint = "Defeated '%s' after %s."
+L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+L.bossStatistics = "Boss Statistics"
 

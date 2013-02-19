@@ -766,6 +766,153 @@ end
 local function populateToggleOptions(widget, module)
 	local scrollFrame = widget:GetUserData("parent")
 	scrollFrame:ReleaseChildren()
+
+	local sDB = BigWigsStatisticsDB
+	if module.encounterId and module.zoneId and sDB and sDB[module.zoneId] and sDB[module.zoneId][module.encounterId] then
+		-- Create statistics table
+		local statGroup = AceGUI:Create("InlineGroup")
+		statGroup:SetTitle("Statistics")
+		statGroup:SetLayout("Flow")
+		statGroup:SetFullWidth(true)
+		scrollFrame:AddChild(statGroup)
+
+		local statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("25")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("25h")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("10")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("10h")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("LFR")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetFullWidth(true)
+		statistics:SetText("")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("Wipes:")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("-")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("-")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("-")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("-")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("-")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetFullWidth(true)
+		statistics:SetText("")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("Kills:")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("-")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("-")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("-")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("-")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("-")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetFullWidth(true)
+		statistics:SetText("")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("Best Kill:")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("--:--")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("--:--")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("--:--")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("--:--")
+		statGroup:AddChild(statistics)
+
+		statistics = AceGUI:Create("Label")
+		statistics:SetWidth(90)
+		statistics:SetText("--:--")
+		statGroup:AddChild(statistics)
+		-- End statistics table
+	end
+
 	if module.SetupOptions then module:SetupOptions() end
 	for i, option in next, module.toggleOptions do
 		local o = option
