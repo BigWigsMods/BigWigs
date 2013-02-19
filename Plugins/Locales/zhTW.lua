@@ -64,6 +64,7 @@ L["This function requires raid leader or raid assist."] = "這個功能需要團
 L["Must be between 1 and 10. A correct example is: /pull 5"] = "必須在1跟10之間。一個正確的範例是: /pull 5"
 L["Incorrect format. A correct example is: /bwcb 20 text"] = "不正確的格式。一個正確的範例是: /bwcb 20 文字"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "指定的時間無效。 <time> 可以為一個秒數，一個 分:秒，或是Mm。例如 5, 1:20 或 2m。"
+L["This function can't be used during an encounter."] = "This function can't be used during an encounter."
 
 -----------------------------------------------------------------------
 -- Colors.lua

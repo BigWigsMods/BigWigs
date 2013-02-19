@@ -144,9 +144,9 @@ end
 function boss:GetOption(spellId)
 	return self.db.profile[spells[spellId]]
 end
-function boss:Reboot()
+function boss:Reboot(isWipe)
 	if debug then dbg(self, ":Reboot()") end
-	self:SendMessage("BigWigs_OnBossReboot", self)
+	self:SendMessage("BigWigs_OnBossReboot", self, isWipe)
 	self:Disable()
 	self:Enable()
 end
@@ -344,7 +344,7 @@ do
 	local function wipeCheck(module)
 		if not IsEncounterInProgress() then
 			if debug then dbg(module, "Wipe!") end
-			module:Reboot()
+			module:Reboot(true)
 		end
 	end
 	function boss:CheckBossStatus(noEngage)
@@ -445,7 +445,7 @@ do
 		local go = scan(self)
 		if not go then
 			if debug then dbg(self, "Wipe scan found no active boss entities, rebooting module.") end
-			self:Reboot()
+			self:Reboot(true)
 			if self.OnWipe then self:OnWipe() end
 		else
 			if debug then dbg(self, "Wipe scan found active boss entities (" .. tostring(go) .. "). Re-scheduling another wipe check in 2 seconds.") end
@@ -702,17 +702,7 @@ function boss:Message(key, color, sound, text, icon)
 		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, nil, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
 	end
 end
---[[
-function boss:CountMessage(key, color, sound, text, icon)
-	if checkFlag(self, key, C.MESSAGE) then
-		local textType, countArg = type(text), text or key
-		if not self.counts then self.counts = {} end
-		if not self.counts[countArg] then self.counts[countArg] = 0 end
-		self.counts[countArg] = self.counts[countArg] + 1
-		self:SendMessage("BigWigs_Message", self, key, format(L.count, textType == "string" and text or spells[text or key], self.counts[countArg]), color, nil, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
-	end
-end
-]]
+
 -- Outputs a local message only, no raid warning.
 function boss:LocalMessage(key, color, sound, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then

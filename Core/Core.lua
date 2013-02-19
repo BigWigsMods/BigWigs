@@ -133,7 +133,7 @@ end
 local function zoneChanged()
 	if not IsInInstance() then
 		for _, module in addon:IterateBossModules() do
-			if module.isEngaged then module:Reboot() end
+			if module.isEngaged then module:Reboot(true) end
 		end
 	else
 		SetMapToCurrentZone() -- Hack because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.

@@ -1300,6 +1300,7 @@ SLASH_BWLCB_SHORTHAND1 = "/bwlcb"
 
 SlashCmdList.BIGWIGSPULL = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
+	if IsEncounterInProgress() then BigWigs:Print(L["This function can't be used during an encounter."]) return end -- Doesn't make sense to allow this in combat
 	if UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then
 		local time = tonumber(input)
 		if not time or time < 1 or time > 10 then BigWigs:Print(L["Must be between 1 and 10. A correct example is: /pull 5"]) return end
