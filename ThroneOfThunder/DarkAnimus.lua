@@ -3,8 +3,10 @@ TODO:
 	Crimson Wake needs to be switched to CLEU ASAP
 	could be fun to place 2nd icon for furthest target for Matter Swap, not sure about usefullness, revisit during 25 man testing
 	could maybe used UNIT_POWER to warn SOON for abilities that only enable after a certain amount of power
-	does not seem possible right now ( 10 N PTR ) but would be nice if we could tell how many active golems are there when boss enters the fight
+	does not seem possible right now ( 10 H PTR ) but would be nice if we could tell accurately how many active golems are there when boss enters the fight
 		then we could try to estimate how soon it'll reach full power
+	add bar for interrupting jolt
+	check if interrupting jolt spellId changed, or there are just a new for heroic
 ]]--
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
@@ -58,7 +60,7 @@ function mod:OnBossEnable()
 
 	-- Dark Animus
 	self:Log("SPELL_CAST_START", "FullPower", 138729)
-	self:Log("SPELL_CAST_START", "InterruptingJolt", 138763)
+	self:Log("SPELL_CAST_START", "InterruptingJolt", 138763, 139867)
 	self:Log("SPELL_CAST_SUCCESS", "Empower", 138780) -- Empower Golem
 	self:Log("SPELL_AURA_APPLIED", "AnimaFont", 138691)
 	self:Log("SPELL_CAST_START", "AnimaRing", 136954) -- this is 1 sec faster than SUCCESS but has no destName
@@ -112,7 +114,7 @@ end
 
 function mod:Empower(args)
 	self:Message(138780, "Attention")
-	self:CDBar(138780, 30)
+	self:CDBar(138780, self:Heroic() and 17 or 30)
 end
 
 function mod:AnimaFont(args)
@@ -134,7 +136,10 @@ function mod:BossEngage()
 	self:CheckBossStatus()
 	if not self.isEngaged then return end -- XXX is this even needed?
 	if 69427 == self:MobId(UnitGUID("boss1")) then
-		self:Bar(138644, 30) -- Siphon Anima
+		self:Bar(138644, self:Heroic() and 120 or 30) -- Siphon Anima
+		if self:Heroic() then
+			self:Bar(138780, 7) -- Empower
+		end
 	end
 end
 
