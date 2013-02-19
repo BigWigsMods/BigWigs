@@ -224,7 +224,7 @@ L["Default only"] = "Nur Standards"
 -- Statistics.lua
 --
 
-L.bossKillDurationPrint = "Defeated '%s' after %s."
-L.bossWipeDurationPrint = "Wiped on '%s' after %s."
-L.bossStatistics = "Boss Statistics"
+L.bossKillDurationPrint = "'%s' wurde nach %s besiegt."
+L.bossWipeDurationPrint = "An '%s' nach %s gewiped."
+L.bossStatistics = "Boss-Statistiken"
 
