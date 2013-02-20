@@ -149,8 +149,8 @@ end
 
 function mod:OnEngage()
 	self:Berserk(600) -- XXX assumed
-	self:Bar("ej:7086", (EJ_GetSectionInfo(7086)), 90, 138686) -- Dino Mancer spawn timer
-	self:Bar("ej:7086", "The Farraki", 25, 138686) -- sort of?
+	self:Bar("ej:7086", 90, (EJ_GetSectionInfo(7086)), 138686) -- Dino Mancer spawn timer
+	self:Bar("ej:7086", 25, "The Farraki", 138686) -- sort of?
 end
 
 --------------------------------------------------------------------------------
@@ -160,16 +160,16 @@ end
 -- The Zandalari
 
 function mod:Rampage(args)
-	self:Message(args.spellId, args.spellName, "Important", args.spellId, "Long")
+	self:Message(args.spellId, "Important", "Long")
 end
 
 function mod:BestialCry(args)
-	self:Bar(args.spellId, args.spellName, 11, args.spellId) -- might help to pop personal cooldowns
+	self:Bar(args.spellId, 11) -- might help to pop personal cooldowns
 end
 
 function mod:CrackedShell(args)
 	if args.amount == 4 then
-		self:Message("ej:7087", (EJ_GetSectionInfo(7087)), "Positive", 136821, "Info") -- War-God Jalak
+		self:Message("ej:7087", "Positive", "Info", (EJ_GetSectionInfo(7087)), 136821) -- War-God Jalak
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end
@@ -177,7 +177,7 @@ end
 function mod:LastPhase(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 35 and select(4,UnitBuff(unitId, self:SpellName(137240))) ~= 4 then -- phase starts at 30
-		self:Message("ej:7087", CL["soon"]:format((EJ_GetSectionInfo(7087))), "Positive", 136821, "Info") -- War-God Jalak
+		self:Message("ej:7087", "Positive", "Info", CL["soon"]:format((EJ_GetSectionInfo(7087))), 136821) -- War-God Jalak
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
 end
@@ -185,17 +185,17 @@ end
 function mod:Headache()
 	-- Dino Mancer spawn timer
 	-- this is assumed in every aspect (timer might not start here, and might not be this long)
-	self:Bar("ej:7086", (EJ_GetSectionInfo(7086)), 90, 138686) -- dino looking like icon -- dino mancer
+	self:Bar("ej:7086", 90, (EJ_GetSectionInfo(7086)), 138686) -- dino looking like icon -- dino mancer
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "LastPhase", "boss1") -- don't need to register this on engage
 end
 
 function mod:DinoForm()
 	-- tie it to this event, this is when you can use the orb
-	self:Message("ej:7092", L["orb_message"], "Positive", 137445) -- orb of control icon
+	self:Message("ej:7092", "Positive", nil, L["orb_message"], 137445) -- orb of control icon
 end
 
 function mod:DinoMending(args)
-	self:Message("ej:7090", args.spellName, "Important", args.spellId, "Long") -- maybe should give the interruptable icon to the options menu for this too
+	self:Message("ej:7090", "Important", "Long", args.spellName, args.spellId) -- maybe should give the interruptable icon to the options menu for this too
 end
 
 -- The Amani
@@ -207,7 +207,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
 			self:Flash(args.spellId)
 		end
 	end
@@ -215,7 +215,7 @@ end
 
 function mod:Hex(args)
 	if self:Dispeller("curse") then
-		self:Message("hex", args.spellName, "Important", args.spellId, "Alarm")
+		self:Message("hex", "Important", "Alarm", args.spellName, args.spellId)
 	end
 end
 
@@ -225,7 +225,7 @@ do
 		local t = GetTime()
 		if t-prev > 3 and UnitGUID("focus") == args.sourceGUID then -- don't spam
 			prev = t
-			self:Message("chain_lightning", L["chain_lightning_warning"], "Personal", args.spellId, "Alert")
+			self:Message("chain_lightning", "Personal", "Alert", L["chain_lightning_warning"], args.spellId)
 		end
 	end
 end
@@ -236,7 +236,7 @@ do
 		local t = GetTime()
 		if t-prev > 3 and UnitGUID("focus") == args.sourceGUID then -- don't spam
 			prev = t
-			self:Message("fireball", L["fireball_warning"], "Personal", args.spellId, "Alert")
+			self:Message("fireball", "Personal", "Alert", L["fireball_warning"], args.spellId)
 		end
 	end
 end
@@ -250,7 +250,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info") -- not exactly under you
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId) -- not exactly under you
 			self:Flash(args.spellId)
 		end
 	end
@@ -261,8 +261,8 @@ function mod:MortalStrikeRemoved(args)
 end
 
 function mod:MortalStrike(args)
-	self:Message("mortal_strike", args.spellName, "Urgent", args.spellId, nil, args.destName)
-	self:TargetBar("mortal_strike", args.spellName, args.destName, 8, args.spellId)
+	self:Message("mortal_strike", "Urgent")
+	--self:TargetBar("mortal_strike", args.spellName, args.destName, 8, args.spellId)
 end
 
 do
@@ -271,7 +271,7 @@ do
 		local t = GetTime()
 		if t-prev > 3 and self:Dispeller("disease") then -- don't spam
 			prev = t
-			self:Message("deadly_plague", args.spellName, "Important", args.spellId, "Alarm")
+			self:Message("deadly_plague", "Important", "Alarm", args.spellName, args.spellId)
 		end
 	end
 end
@@ -285,7 +285,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -297,15 +297,15 @@ do
 		local t = GetTime()
 		if t-prev > 3 and self:Dispeller("poison") then -- don't spam
 			prev = t
-			self:Message("venom_bolt_volley", args.spellName, "Important", args.spellId, "Alarm")
+			self:Message("venom_bolt_volley", "Important", "Alarm", args.spellName, args.spellId)
 		end
 	end
 end
 
 function mod:VenomBoltVolley(args)
 	if UnitGUID("focus") == args.sourceGUID then
-		self:Message("venom_bolt_volley", L["venom_bolt_volley_warning"], "Personal", args.spellId, "Alert")
-		self:Bar("venom_bolt_volley", L["venom_bolt_volley_bar"], 16, args.spellId)
+		self:Message("venom_bolt_volley", "Personal", "Alert", L["venom_bolt_volley_warning"], args.spellId)
+		self:Bar("venom_bolt_volley", 16, L["venom_bolt_volley_bar"], args.spellId)
 	end
 end
 
@@ -318,7 +318,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
 			self:Flash(args.spellId)
 		end
 	end
@@ -330,16 +330,17 @@ do
 		local t = GetTime()
 		if t-prev > 3 and self:Dispeller("magic") then -- don't spam
 			prev = t
-			self:Message("blazingSunlight", args.spellName, "Important", args.spellId, "Alarm")
+			self:Message("blazingSunlight", "Important", "Alarm", args.spellName, args.spellId)
 		end
 	end
 end
 
 -- general
 
-function mod:Charge(_,_,_,_,player)
-	self:TargetMessage("ej:7080", self:SpellName(136769), player, "Attention", 136769, "Long")
-	self:Bar("ej:7080", "~"..self:SpellName(136769), 11, 136769)
+function mod:Charge(_, _, _, _, player)
+	print("charge", player)
+	self:TargetMessage("ej:7080", player, "Attention", "Long", self:SpellName(136769), 136769)
+	self:CDBar("ej:7080", 11, self:SpellName(136769), 136769)
 	if UnitIsUnit("player", player) then
 		self:Flash("ej:7080")
 		self:Say("ej:7080", 136769) -- charge
@@ -349,12 +350,12 @@ function mod:Charge(_,_,_,_,player)
 end
 
 function mod:Swipe(args)
-	self:Message(136741, args.spellName, "Urgent", args.spellId)
-	self:Bar(136741, "~"..args.spellName, self:LFR() and 16 or 11, args.spellId)
+	self:Message(136741, "Urgent")
+	self:CDBar(136741, self:LFR() and 16 or 11)
 end
 
 function mod:Puncture(args)
 	args.amount = args.amount or 1
-	self:Message("puncture", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["puncture_message"])
+	self:StackMessage("puncture", args.destName, args.amount, "Urgent",  "Info", L["puncture_message"])
 end
 
