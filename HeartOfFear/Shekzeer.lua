@@ -146,7 +146,7 @@ do
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				self:Message(124862, "Attention", "Alert", L["visions_dispel"])
+				self:Message(124862, "Attention", "Alert", L["visions_dispel"], args.spellId)
 			end
 		end
 	end
