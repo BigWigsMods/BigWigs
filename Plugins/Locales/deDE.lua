@@ -56,7 +56,7 @@ L["Custom bar '%s' started by %s user '%s'."] = "Custombar '%s' wurde von gestar
 
 L["Pull"] = "Pull"
 L["Pulling!"] = "Pull!"
-L["Pull timer started by %s user '%s'."] = "Pull Timer wurde von %s gestartet '%s'."
+L["Pull timer started by %s user '%s'."] = "Pull Timer wurde von %s-User '%s' gestartet."
 L["Pull in %d sec"] = "Pull in %d sec"
 L["Sending a pull timer to Big Wigs and DBM users."] = "Sende Pull-Timer an Big Wigs und DBM Nutzer."
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Sende Custombar '%s' an Big Wigs und DBM Nutzer."
