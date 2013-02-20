@@ -127,7 +127,6 @@ end
 
 function mod:OnEngage()
 	self:Berserk(785) -- this is from heroic trigger
-	-- On normal/LFR permanent gas is 4th, 672s, maybe make it the berserk?
 	strengthCounter = 0
 	gasCounter = 0
 end

@@ -65,7 +65,6 @@ do
 		scheduled = nil
 	end
 	function mod:LightningTether(args)
-		-- 3s cast, Tethers the target to Nalak, inflicting Nature damage every 1 sec. and increased Nature damage if the target is far away.
 		tetherTargets[#tetherTargets+1] = args.destName
 		if UnitIsUnit("player", args.destName) then
 			self:Bar(args.spellId, 15, CL["you"]:format(args.spellName))
