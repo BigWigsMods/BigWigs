@@ -23,9 +23,6 @@ local firstKorthikStrikeDone = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.next_pack, L.next_pack_desc = EJ_GetSectionInfo(6554) --reinforcements
-	L.next_pack_icon = "ACHIEVEMENT_RAID_MANTIDRAID04"
-
 	L.recklessness, L.recklessness_desc = EJ_GetSectionInfo(6331)
 	L.recklessness_icon = 125873
 
@@ -48,13 +45,13 @@ L.mending_desc = L.mending_desc .. select(2, EJ_GetSectionInfo(6306))
 
 function mod:GetOptions()
 	return {
-		"next_pack", {122064, "FLASH", "SAY"}, {122125, "FLASH"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
+		"ej:6554", {122064, "FLASH", "SAY"}, {122125, "FLASH"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
 		122409,
 		{122149, "DISPEL_MAGIC"}, "mending",
 		122406, {122224, "FLASH"}, {121896, "FLASH"}, {131830, "SAY", "FLASH", "PROXIMITY"}, "recklessness",
 		"stages", "berserk", "bosskill",
 	}, {
-		["next_pack"] = "heroic",
+		["ej:6554"] = "heroic",
 		[122064] = "ej:6300",
 		[122409] = "ej:6334",
 		[122149] = "ej:6305",
@@ -317,8 +314,8 @@ function mod:AddDeaths(args)
 		self:StopBar(122409) -- Kor'thik Strike
 	end
 	if self:Heroic() then
-		self:Bar("next_pack", 50, CL["other"]:format(L["next_pack"], args.destName), L.next_pack_icon)
-		self:DelayedMessage("next_pack", 50, "Attention", CL["other"]:format(L["next_pack"], args.destName), L.next_pack_icon)
+		self:Bar("ej:6554", 50, args.destName)
+		self:DelayedMessage("ej:6554", 50, "Attention", args.destName)
 	end
 end
 

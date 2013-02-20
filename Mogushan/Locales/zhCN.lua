@@ -48,9 +48,12 @@ end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "zhCN")
 if L then
+	L.bosses = "Bosses"
+	L.bosses_desc = "Warnings for when a boss becomes active."
+
 	L.shield_removed = "Shield removed! (%s)"
 	L.casting_shields = "Casting shields"
-	L.casting_shields_desc = "Warning for when shields are casted for all bosses"
+	L.casting_shields_desc = "Warning for when shields are casted for all bosses."
 end
 
 L = BigWigs:NewBossLocale("Elegon", "zhCN")

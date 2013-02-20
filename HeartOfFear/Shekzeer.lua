@@ -14,6 +14,7 @@ mod:RegisterEnableMob(62837)
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "Death to all who dare challenge my empire!"
+
 	L.phases = "Phases"
 	L.phases_desc = "Warning for phase changes."
 	L.phases_icon = "achievement_raid_mantidraid07"
@@ -83,7 +84,7 @@ end
 function mod:OnEngage(diff)
 	self:OpenProximity("proximity", 5)
 	self:Berserk(900)
-	self:Bar("ej:6325", 20, 123627) --Dissonance Field
+	self:Bar("ej:6325", 20) --Dissonance Field
 end
 
 --------------------------------------------------------------------------------
@@ -212,15 +213,15 @@ do
 		warned = power
 		if power == 149 then
 			self:OpenProximity("proximity", 5)
-			self:Bar("ej:6325", 19, 128353) --Dissonance Field
+			self:Bar("ej:6325", 19) --Dissonance Field
 			self:Bar("phases", 149, CL["phase"]:format(2), L.phases_icon)
 			self:StopBar(CL["phase"]:format(1))
 			self:StopBar(124077)
 		elseif power == 130 then
-			self:Bar("ej:6325", 65, 128353)
-			self:Message("ej:6325", "Attention", nil, 128353)
+			self:Bar("ej:6325", 65)
+			self:Message("ej:6325", "Attention")
 		elseif power == 65 then
-			self:Message("ej:6325", "Attention", nil, 128353)
+			self:Message("ej:6325", "Attention")
 		elseif power == 2 then
 			self:CloseProximity()
 			self:Bar("phases", 158, CL["phase"]:format(1), L.phases_icon)

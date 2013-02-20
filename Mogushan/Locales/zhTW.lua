@@ -48,6 +48,9 @@ end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "zhTW")
 if L then
+	L.bosses = "Bosses"
+	L.bosses_desc = "Warnings for when a boss becomes active."
+
 	L.shield_removed = "盾移除了! (%s)"
 	L.casting_shields = "施放護盾"
 	L.casting_shields_desc = "警報當每個首領施放護盾的時候"

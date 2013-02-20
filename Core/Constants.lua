@@ -138,7 +138,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			local ejID = option:match("^ej:(%d+)$")
 			if tonumber(ejID) then
 				-- This is an EncounterJournal ID
-				local title, description, _, abilityIcon, displayInfo = EJ_GetSectionInfo(tonumber(ejID))
+				local title, description, _, abilityIcon, displayInfo, _, nextChildID = EJ_GetSectionInfo(tonumber(ejID))
 				if title then title = title..roleIcon end
 				if description then description = roleDesc..description end
 				local icon = nil
@@ -147,6 +147,14 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 					-- Which is impossible; :GetTexture() just returns "Portrait1", for example.
 					-- So we need to just pass on the portrait ID and let the display handle it.
 					icon = displayInfo
+
+					-- Use the icon for the first spell the creature can use if available.
+					if nextChildID then
+						local _, _, _, abilityIcon = EJ_GetSectionInfo(nextChildID)
+						if abilityIcon and abilityIcon:trim():len() > 0 then
+							icon = abilityIcon
+						end
+					end
 				elseif abilityIcon and abilityIcon:trim():len() > 0 then
 					-- abilityIcon is always set but can be a zero-length string ("")
 					icon = abilityIcon

@@ -40,7 +40,7 @@ if L then
 	L.explosion_casting_by_you_icon = 122398
 
 	L.willpower = "Willpower"
-	L.willpower_desc = select(2, EJ_GetSectionInfo(6249)) --"When Willpower runs out, the player dies and the Mutated Construct continues to act, uncontrolled."
+	L.willpower_desc = select(2, EJ_GetSectionInfo(6249))
 	L.willpower_icon = 124824
 	L.willpower_message = "Willpower at %d!"
 
@@ -383,10 +383,10 @@ function mod:MonsterDies()
 end
 
 function mod:AmberGlobule(args)
-	self:TargetMessage("ej:6548", args.destName, "Important", "Alert", args.spellId)
+	self:TargetMessage("ej:6548", args.destName, "Important", "Alert")
 	if UnitIsUnit(args.destName, "player") then
 		self:Flash("ej:6548")
-		self:Say("ej:6548", args.spellName)
+		self:Say("ej:6548")
 	end
 	if not primaryIcon then
 		self:PrimaryIcon("ej:6548", args.destName)

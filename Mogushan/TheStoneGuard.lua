@@ -127,7 +127,7 @@ function mod:Petrifications(_, spellName, _, _, spellId)
 	elseif spellId == 116057 then -- amethyst
 		self:Message("petrifications", nil, "Alert", ("|c00FF44FF%s|r"):format(spellName), spellId) -- purple
 	elseif spellId == 129424 then
-		self:Bar("ej:5772", cobaltTimer, spellName, spellId)
+		self:Bar("ej:5772", cobaltTimer)
 	end
 end
 

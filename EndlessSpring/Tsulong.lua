@@ -24,12 +24,6 @@ if L then
 	L.phases = "Phases"
 	L.phases_desc = "Warning for phase changes."
 
-	L.unstable_sha, L.unstable_sha_desc = EJ_GetSectionInfo(6320)
-	L.unstable_sha_icon = 122938
-
-	L.breath, L.breath_desc = EJ_GetSectionInfo(6313)
-	L.breath_icon = 122752
-
 	L.embodied_terror, L.embodied_terror_desc = EJ_GetSectionInfo(6316)
 	L.embodied_terror_icon = 130142 -- white and black sha-y icon
 
@@ -46,12 +40,12 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"ej:6550",
-		"breath", 122768, 122789, {122777, "PROXIMITY", "FLASH", "SAY"},
-		122855, "unstable_sha", 123011, "embodied_terror",
+		122752, 122768, 122789, {122777, "PROXIMITY", "FLASH", "SAY"},
+		122855, "ej:6320", 123011, "embodied_terror",
 		"phases", "berserk", "bosskill",
 	}, {
 		["ej:6550"] = "heroic",
-		["breath"] = L["night"],
+		[122752] = L["night"],
 		[122855] = L["day"],
 		phases = "general",
 	}
@@ -83,7 +77,7 @@ function mod:OnEngage(diff)
 	self:Berserk(self:LFR() and 900 or 490)
 	self:Bar("phases", 121, L["day"], 122789)
 	self:Bar(122777, 15.6) -- Nightmares
-	self:Bar("breath", 10, 122752) -- Shadow Breath
+	self:Bar(122752, 10) -- Shadow Breath
 	bigAddCounter = 0
 end
 
@@ -131,8 +125,8 @@ function mod:SunBreath(args)
 end
 
 function mod:ShadowBreath(args)
-	self:CDBar("breath", 25, args.spellId)
-	self:Message("breath", "Urgent", nil, args.spellId)
+	self:CDBar(args.spellId, 25)
+	self:Message(args.spellId, "Urgent")
 end
 
 do
@@ -158,7 +152,7 @@ do
 				self:Message("phases", "Positive", nil, L["day"], 122789)
 				self:Bar("phases", 121, L["night"], 122768)
 				self:Bar(122855, 32) -- Sun Breath
-				self:Bar("unstable_sha", 18, 122953, 122938)
+				self:Bar("ej:6320", 18)
 				self:Bar("embodied_terror", 11, ("~%s (%d)"):format(L["embodied_terror"], 1), L.embodied_terror_icon)
 			elseif spellId == 122767 then -- Dread Shadows (start of night phase)
 				self:StopBar(122953) -- Summon Unstable Sha
@@ -167,7 +161,7 @@ do
 				self:Bar(122777, 15) -- Nightmares
 				self:Message("phases", "Positive", nil, L["night"], 122768)
 				self:Bar("phases", 121, L["day"], 122789)
-				self:Bar("breath", 10, 122752) -- Shadow Breath
+				self:Bar(122752, 10) -- Shadow Breath
 				if self:Dispeller("magic", true) then
 					checkForHoTs()
 				end
@@ -175,8 +169,8 @@ do
 				local t = GetTime()
 				if t-prev > 2 then
 					prev = t
-					self:Message("unstable_sha", "Important", "Alert", spellName, 122938)
-					self:Bar("unstable_sha", 18, spellName, 122938)
+					self:Message("ej:6320", "Important", "Alert", spellName)
+					self:Bar("ej:6320", 18)
 				end
 			elseif spellId == 122775 then -- Nightmares
 				self:Bar(122777, 15)

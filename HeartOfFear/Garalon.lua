@@ -165,12 +165,12 @@ end
 function mod:PrePhase2()
 	local hp = UnitHealth("boss5") / UnitHealthMax("boss5") * 100
 	if hp < 38 then -- phase starts at 33
-		self:Message("ej:6294", "Positive", "Long", CL["soon"]:format(CL["phase"]:format(2)), 108201) -- the correct icon
+		self:Message("ej:6294", "Positive", "Long", CL["soon"]:format(CL["phase"]:format(2)))
 		self:CancelTimer(healthCheck)
 	end
 end
 
 function mod:Phase2()
-	self:Message("ej:6294", "Positive", "Info", "33% - "..CL["phase"]:format(2), 108201)
+	self:Message("ej:6294", "Positive", "Info", "33% - "..CL["phase"]:format(2))
 end
 

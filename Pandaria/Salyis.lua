@@ -14,8 +14,7 @@ mod.otherMenu = 6
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.adds, L.adds_desc = EJ_GetSectionInfo(6200)
-	L.adds_icon = 121747
+
 end
 L = mod:GetLocale()
 
@@ -25,7 +24,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		121600, 121787, "adds",
+		121600, 121787, "ej:6200",
 		"bosskill",
 	}
 end
@@ -56,6 +55,6 @@ end
 function mod:Stomp()
 	self:Message(121787, "Important", "Alarm", CL["soon"]:format(self:SpellName(121787))) -- Stomp
 	self:Bar(121787, 60) -- Stomp
-	self:DelayedMessage("adds", 10, "Attention", L["adds"], L.adds_icon)
+	self:DelayedMessage("ej:6200", 10, "Attention", nil, 121747) -- Impaling Throw icon
 end
 

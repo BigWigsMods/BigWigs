@@ -213,7 +213,7 @@ do
 		if UnitBuff("player", champion) then
 			local t = GetTime()
 			if t-prev > 1 then
-				self:Message("ej:6109", "Personal", "Long", L["throw"], args.spellId)
+				self:Message("ej:6109", "Personal", "Long", L["throw"])
 				self:Flash("ej:6109")
 				prev = t
 			end
@@ -313,23 +313,23 @@ function mod:Thrash(args)
 	thrashNext = 2
 	if phase == 2 then
 		thrashCounter = thrashCounter + 1
-		self:Message("ej:6699", "Urgent", nil, CL["count"]:format(args.spellName, thrashCounter), args.spellId)
+		self:Message("ej:6699", "Urgent", nil, CL["count"]:format(args.spellName, thrashCounter))
 		if thrashCounter == 3 then
-			self:Bar("ej:6700", 10, self:SpellName(132007), 132007) -- Dread Thrash
+			self:Bar("ej:6700", 10) -- Dread Thrash
 		else
-			self:Bar("ej:6699", 10, CL["count"]:format(args.spellName, thrashCounter + 1), args.spellId)
+			self:Bar("ej:6699", 10, CL["count"]:format(args.spellName, thrashCounter + 1))
 		end
 	elseif atSha then
-		self:Message("ej:6699", "Important", nil, args.spellName, args.spellId)
-		self:Bar("ej:6699", 10, args.spellName, args.spellId)
+		self:Message("ej:6699", "Important")
+		self:Bar("ej:6699", 10)
 	end
 end
 
 function mod:DreadThrash(args)
 	thrashCounter = 0
 	thrashNext = 5
-	self:Message("ej:6700", "Important", "Alarm", args.spellName, args.spellId)
-	self:Bar("ej:6699", 10, CL["count"]:format(self:SpellName(131996), thrashCounter + 1), 131996) -- Thrash
+	self:Message("ej:6700", "Important", "Alarm")
+	self:Bar("ej:6699", 10, CL["count"]:format(self:SpellName(131996), thrashCounter + 1)) -- Thrash
 end
 
 do

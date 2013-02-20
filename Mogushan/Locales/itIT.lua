@@ -48,6 +48,9 @@ end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "itIT")
 if L then
+	L.bosses = "Bosses"
+	L.bosses_desc = "Warnings for when a boss becomes active."
+
 	L.shield_removed = "Scudo Rimosso! (%s)"
 	L.casting_shields = "Lancio Scudo"
 	L.casting_shields_desc = "Avvisa quando viene lanciato lo Scudo per tutti i boss."
@@ -59,7 +62,7 @@ if L then
 
 	L.last_phase = "Ultima Fase"
 	L.overcharged_total_annihilation = "Sovraccaricato %d! Un pò troppo?"
-	
+
 	L.floor = "Scomparsa del Pavimento"
 	L.floor_desc = "Avviso Speciale prima che il Vortice svanisca."
 	L.floor_message = "Il Pavimento sta Scomparendo!"

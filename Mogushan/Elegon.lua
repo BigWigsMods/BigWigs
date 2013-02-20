@@ -148,7 +148,7 @@ end
 function mod:TotalAnnihilation(args)
 	annihilateCounter = annihilateCounter + 1
 	self:Message("ej:6186", "Important", "Alert", CL["count"]:format(args.spellName, annihilateCounter), false)
-	self:Bar("ej:6186", 4, CL["cast"]:format(args.spellName), args.spellId)
+	self:Bar("ej:6186", 4, CL["cast"]:format(args.spellName))
 end
 
 function mod:MaterializeProtector(args)

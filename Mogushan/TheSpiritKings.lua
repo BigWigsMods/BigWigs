@@ -32,6 +32,9 @@ local bossWarned = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.bosses = "Bosses"
+	L.bosses_desc = "Warnings for when a boss becomes active."
+
 	L.shield_removed = "Shield removed! (%s)"
 	L.casting_shields = "Casting shields"
 	L.casting_shields_desc = "Warnings for when shields are casted for all bosses."
@@ -49,17 +52,17 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"ej:5841", 117921, 119521, 117910, {117961, "FLASH"}, -- Qiang
-		"ej:5852", {118303, "SAY", "ICON"}, {117697, "FLASH"}, -- Zian
-		"ej:5846", 118047, 118122, 118094, {118162, "FLASH"}, -- Subetai
-		"ej:5835", "cowardice", 117708, {117837, "DISPEL_ENRAGE"}, -- Meng
-		"proximity", "casting_shields", "berserk", "bosskill",
+		117921, 119521, 117910, {117961, "FLASH"}, -- Qiang
+		{118303, "SAY", "ICON"}, {117697, "FLASH"}, -- Zian
+		118047, 118122, 118094, {118162, "FLASH"}, -- Subetai
+		"cowardice", 117708, {117837, "DISPEL_ENRAGE"}, -- Meng
+		"bosses", "proximity", "casting_shields", "berserk", "bosskill",
 	}, {
-		["ej:5841"] = qiang,
-		["ej:5852"] = zian,
-		["ej:5846"] = subetai,
-		["ej:5835"] = meng,
-		proximity = "general",
+		[117921] = "ej:5841",
+		[118303] = "ej:5852",
+		[118047] = "ej:5846",
+		cowardice = "ej:5835",
+		bosses = "general",
 	}
 end
 
@@ -105,7 +108,7 @@ function mod:OnEngage()
 	end
 	self:Bar(119521, 10) -- Annihilate
 	self:Bar(117910, 25) -- Flanking Orders
-	self:Message("ej:5841", "Positive", nil, qiang, 117920)
+	self:Message("bosses", "Positive", nil, qiang, 117920) -- Massive Attack icon
 end
 
 --------------------------------------------------------------------------------
@@ -266,7 +269,7 @@ function mod:EngageCheck()
 					self:Bar(117697, 40) -- Shield of Darkness
 				end
 				self:OpenProximity("proximity", 8)
-				self:Message("ej:5852", "Positive", nil, zian, 117628)
+				self:Message("bosses", "Positive", nil, zian, 117628) -- Shadow Blast icon
 			elseif (id == 60710 or id == 61427) and not bossActivated[60710] then -- Subetai
 				bossActivated[60710] = true
 				if self:Heroic() then
@@ -276,14 +279,14 @@ function mod:EngageCheck()
 				self:Bar(118094, 5) -- Volley
 				self:Bar(118047, 26) -- Pillage
 				self:Bar(118122, self:Heroic() and 40 or 15) -- Rain of Arrows
-				self:Message("ej:5846", "Positive", nil, subetai, 118122)
+				self:Message("bosses", "Positive", nil, subetai, 118122) -- Rain of Arrows icon
 			elseif (id == 60708 or id == 61429) and not bossActivated[60708] then -- Meng
 				bossActivated[60708] = true
 				self:CDBar(117708, self:Heroic() and 40 or 21) -- Maddening Shout, on heroic: 44.2, 19.8, 48.7, 49.2, 40.2
 				if self:Heroic() then
 					self:Bar(117837, 20) -- Delirious
 				end
-				self:Message("ej:5835", "Positive", nil, meng, 117833)
+				self:Message("bosses", "Positive", nil, meng, 117833) -- Crazy Thought icon
 			end
 		end
 	end
@@ -330,13 +333,13 @@ function mod:BossSwap(unitId)
 	if hp < 38 then -- next boss at 30% (Qiang -> Subetai -> Zian -> Meng)
 		local id = self:MobId(UnitGUID(unitId))
 		if bossWarned == 0 and (id == 60709 or id == 61423) then -- Qiang
-			self:Message("ej:5846", "Positive", "Info", CL["soon"]:format(subetai), false)
+			self:Message("bosses", "Positive", "Info", CL["soon"]:format(subetai), false)
 			bossWarned = 1
 		elseif bossWarned == 1 and (id == 60710 or id == 61427) then -- Subetai
-			self:Message("ej:5852", "Positive", "Info", CL["soon"]:format(zian), false)
+			self:Message("bosses", "Positive", "Info", CL["soon"]:format(zian), false)
 			bossWarned = 2
 		elseif bossWarned == 2 and (id == 60701 or id == 61421) then -- Zian
-			self:Message("ej:5835", "Positive", "Info", CL["soon"]:format(meng), false)
+			self:Message("bosses", "Positive", "Info", CL["soon"]:format(meng), false)
 			bossWarned = 3
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3", "boss4")
 		end
