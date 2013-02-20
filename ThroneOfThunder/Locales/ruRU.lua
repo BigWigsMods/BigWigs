@@ -42,6 +42,8 @@ if L then
 	L.kick = "Пинок"
 	L.kick_desc = "Отслеживает, сколько черепах можно пнуть."
 	L.kickable_turtles = "Можно пнуть черепах: %d"
+	-- L.crystal_shell_removed = "Crystal Shell removed!"
+	-- L.no_crystal_shell = "NO Crystal Shell"
 end
 
 L = BigWigs:NewBossLocale("Megaera", "ruRU")
@@ -49,6 +51,7 @@ if L then
 	L.breaths = "Дыхание"
 	L.breaths_desc = "Предупреждения, связанные со всеми типами дыхания."
 	L.rampage_over = "Неистовство окончено!"
+	-- L.arcane_adds = "Arcane adds"
 end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "ruRU")
@@ -77,6 +80,7 @@ if L then
 	L.blue_add = "|c000000FFСиний|r помощник"
 	L.clockwise = "По часовой стрелке"
 	L.counter_clockwise = "Отсчет часовой стрелки"
+	-- L.death_beam = "Death beam"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "ruRU")
@@ -92,14 +96,14 @@ if L then
 end
 L = BigWigs:NewBossLocale("Iron Qon", "ruRU")
 if L then
-	L.molten_energy = "Огненная эгергия"
+	L.molten_energy = "Огненная энергия"
 
-	L.overload_casting = "Чтение Огненной перегрузка"
-	L.overload_casting_desc = "Предупрждение для чтения Огненной перегрузки"
+	L.overload_casting = "Чтение Огненной перегрузки"
+	L.overload_casting_desc = "Предупреждение для чтения Огненной перегрузки"
 end
 L = BigWigs:NewBossLocale("Twin Consorts", "ruRU")
 if L then
-
+	-- L.barrage_fired = "Barrage fired!"
 end
 L = BigWigs:NewBossLocale("Lei Shen", "ruRU")
 if L then

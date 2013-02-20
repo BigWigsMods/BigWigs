@@ -64,7 +64,7 @@ L["This function requires raid leader or raid assist."] = "Эта функция
 L["Must be between 1 and 10. A correct example is: /pull 5"] = "Должно быть между 1 и 10. Правильно будет: /pull 5"
 L["Incorrect format. A correct example is: /bwcb 20 text"] = "Неверный формат. Правильно будет: /bwcb 20 текст"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Неверно указанное время. <время> может быть числом в секундах, М:С парой, или Mm. Например, 5, 1:20 или 2m."
-L["This function can't be used during an encounter."] = "This function can't be used during an encounter."
+L["This function can't be used during an encounter."] = "Это функция не может быть использована во время битвы."
 
 -----------------------------------------------------------------------
 -- Colors.lua
@@ -221,8 +221,8 @@ L["Victory"] = "Победа"
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Установите звук для использования в %q.\n\n[Ctrl-Клик] для предварительного прослушивания звука."
 L["Default only"] = "Только стандартные"
 
-L.customSoundDesc = "Play the selected custom sound instead of the one supplied by the module"
-L.resetAllCustomSound = "If you've customized sounds for any boss encounter settings, this button will reset ALL of them so the sounds defined here will be used instead."
+L.customSoundDesc = "Воспроизводить пользовательский звук, вместо используемого в модуле"
+L.resetAllCustomSound = "Если вы используете свои звуки для какой-либо битвы, это кнопка спросит ВСЕ такие звуки на стандартные."
 
 -----------------------------------------------------------------------
 -- Statistics.lua
@@ -230,5 +230,5 @@ L.resetAllCustomSound = "If you've customized sounds for any boss encounter sett
 
 L.bossKillDurationPrint = "'%s' терпит поражение спустя %s."
 L.bossWipeDurationPrint = "'%s' побеждает спустя %s."
-L.bossStatistics = "Boss Statistics"
+L.bossStatistics = "Статистика боссов"
 

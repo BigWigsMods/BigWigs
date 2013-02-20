@@ -8,7 +8,7 @@ L.onboss = "%s на БОССЕ!"
 L.say = "%s на МНЕ!"
 L.on = "%s на %s"
 L.stack = "%dx %s на |3-5(%s)"
-L.cast = "<Каст %s>"
+L.cast = "<Чтение %s>"
 L.soon = "%s скоро!"
 L.count = "%s (%d)"
 
