@@ -229,7 +229,7 @@ end
 --
 
 local function customSound(module, key, sound)
-	if not module or not key then return false end
+	if not module or not key or sound == "Victory" then return false end
 	if not plugin.db.profile[sound][module.name] then
 		return false
 	else
