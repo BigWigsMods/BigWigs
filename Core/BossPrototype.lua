@@ -704,11 +704,8 @@ function boss:Message(key, color, sound, text, icon)
 end
 
 -- Outputs a local message only, no raid warning.
-function boss:LocalMessage(key, color, sound, text, icon)
-	if checkFlag(self, key, C.MESSAGE) then
-		local textType = type(text)
-		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, true, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
-	end
+function boss:LocalMessage(...)
+	self:Message(...)
 end
 
 do
@@ -745,7 +742,7 @@ do
 		end
 	end
 
-	function boss:TargetMessage(key, player, color, sound, text, icon, localOnly)
+	function boss:TargetMessage(key, player, color, sound, text, icon, alwaysPlaySound)
 		if not checkFlag(self, key, C.MESSAGE) then return end
 		local textType = type(text)
 		if type(player) == "table" then
@@ -757,12 +754,9 @@ do
 			if UnitIsUnit(player, "player") then
 				local msg = textType == "string" and text or spells[text or key]
 				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", true, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
-				if not localOnly then
-					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, player), nil, nil, nil, true)
-				end
 			else
 				-- Change color and remove sound (if not local only) when warning about effects on other players
-				self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], coloredNames[player]), color == "Personal" and "Important" or color, localOnly, localOnly and sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
+				self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], coloredNames[player]), color == "Personal" and "Important" or color, nil, alwaysPlaySound and sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
 			end
 		end
 	end

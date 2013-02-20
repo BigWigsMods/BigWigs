@@ -5,7 +5,6 @@
 <Script file="Sound.lua"/>
 <Script file="Messages.lua"/>
 <Script file="Bars.lua"/>
-<Script file="Broadcast.lua"/>
 <Script file="BossBlock.lua"/>
 <Script file="RaidIcon.lua"/>
 <Script file="Proximity.lua"/>
