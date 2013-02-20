@@ -103,9 +103,9 @@ do
 			end
 			self:TargetMessage(122151, voodooDollList, "Important")
 		elseif sync == "Totem" then
-			self:Message(116174, "Attention", nil, L["totem"]:format(totemCounter))
+			self:Message(116174, "Attention", nil, L["totem_message"]:format(totemCounter))
 			totemCounter = totemCounter + 1
-			self:Bar(116174, totemTime, L["totem"]:format(totemCounter))
+			self:Bar(116174, totemTime, L["totem_message"]:format(totemCounter))
 		elseif sync == "Shadowy" then
 			shadowCounter = shadowCounter + 1
 			self:Bar("ej:6698", 8.3, L["shadowy_message"]:format(shadowCounter), 117222)
