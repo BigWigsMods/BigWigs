@@ -83,6 +83,7 @@ if L then
 	L.eyes_message = "Взгляд"
 
 	L.visions_message = "Видения"
+	L.visions_dispel = "Players have been feared!"
 	L.fumes_bar = "Ваш эффект паров"
 end
 

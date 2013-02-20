@@ -74,6 +74,16 @@ end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "zhCN")
 if L then
+	L.engage_trigger = "Death to all who dare challenge my empire!"
+	L.phases = "Phases"
+	L.phases_desc = "Warning for phase changes."
 
+	L.eyes = "Eyes of the Empress"
+	L.eyes_desc = "Count the stacks and show a duration bar for Eyes of the Empress."
+	L.eyes_message = "Eyes"
+
+	L.visions_message = "Visions"
+	L.visions_dispel = "Players have been feared!"
+	L.fumes_bar = "Your fumes buff"
 end
 

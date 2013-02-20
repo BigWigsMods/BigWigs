@@ -84,6 +84,7 @@ if L then
 	L.eyes_message = "女皇之眼在"
 
 	L.visions_message = "Visions"
+	L.visions_dispel = "Players have been feared!"
 	L.fumes_bar = "你的毒氣增益"
 end
 

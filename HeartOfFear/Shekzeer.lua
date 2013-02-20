@@ -24,6 +24,7 @@ if L then
 	L.eyes_message = "Eyes"
 
 	L.visions_message = "Visions"
+	L.visions_dispel = "Players have been feared!"
 	L.fumes_bar = "Your fumes buff"
 end
 L = mod:GetLocale()
@@ -145,7 +146,7 @@ do
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				self:Message(124862, "Attention", "Alert", args.spellId)
+				self:Message(124862, "Attention", "Alert", L["visions_dispel"])
 			end
 		end
 	end
@@ -158,7 +159,7 @@ end
 do
 	local visionsList, scheduled = mod:NewTargetList(), nil
 	local function warnVisions(spellId)
-		mod:TargetMessage(spellId, visionsList, "Important", "Alarm")
+		mod:TargetMessage(spellId, visionsList, "Important", "Alarm", L["visions_message"])
 		scheduled = nil
 	end
 	function mod:Visions(args)

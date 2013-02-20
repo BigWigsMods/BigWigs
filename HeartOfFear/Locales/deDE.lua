@@ -82,6 +82,7 @@ if L then
 	L.eyes_message = "Augen"
 
 	L.visions_message = "Visions"
+	L.visions_dispel = "Players have been feared!"
 	L.fumes_bar = "Dein Giftschwaden-Buff"
 end
 
