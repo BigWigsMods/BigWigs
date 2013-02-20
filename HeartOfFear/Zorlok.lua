@@ -95,6 +95,7 @@ do
 end
 
 function mod:Attenuation(args)
+	if UnitCastingInfo("boss1") == self:GetSpellName(122713) then danceTracker = false end -- boss can't be casting Attenuation when it's casting Force and Verve
 	local target = danceTracker and L["zorlok"] or L["echo"]
 	if args.spellId == 122497 or args.spellId == 122479 or args.spellId == 123722 then -- right
 		self:Message("attenuation", "Urgent", "Alarm", L["attenuation_message"]:format(target, L["right"]), "misc_arrowright")

@@ -125,7 +125,8 @@ do
 	function mod:StabilityFlux(args)
 		-- this gives an 1 sec warning before damage
 		local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
-		if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
+		local hc = self:Heroic()
+		if playerOvercharged and ((hc and stack > 9) or (not hc and stack > 14)) then
 			self:Flash(117878)
 			self:Message(117878, "Personal", nil, L["overcharged_total_annihilation"]:format(stack)) -- needs no sound since total StabilityFlux has one already
 		end
@@ -134,7 +135,8 @@ do
 	local prev = 0
 	function mod:StabilityFluxDamage(args)
 		local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
-		if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
+		local hc = self:Heroic()
+		if playerOvercharged and ((hc and stack > 9) or (not hc and stack > 14)) then
 			local t = GetTime()
 			if t-prev > 1 then --getting like 30 messages a second was *glasses* a bit much
 				prev = t

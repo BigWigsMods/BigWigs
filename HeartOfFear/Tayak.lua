@@ -89,7 +89,7 @@ function mod:BladeTempest(args)
 end
 
 function mod:WindStep(args)
-	self:CDBar(args.spellId, 26.5) --26.5-30.2
+	self:CDBar(args.spellId, 26.5)
 end
 
 do

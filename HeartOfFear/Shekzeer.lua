@@ -123,7 +123,7 @@ end
 
 function mod:ConsumingTerror(args)
 	self:Message(args.spellId, "Important", "Alert")
-	self:CDBar(args.spellId, 31) -- 31.3-37.7
+	self:CDBar(args.spellId, 31)
 	self:Flash(args.spellId)
 end
 

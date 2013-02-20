@@ -86,7 +86,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL["underyou"]:format(args.spellName)) -- even tho we usually use Alarm, Alarm has been sued too much in the module
+			self:Message(args.spellId, "Personal", "Alert", CL["underyou"]:format(args.spellName)) -- even tho we usually use Alarm, Alarm has been used too much in the module
 		end
 	end
 end

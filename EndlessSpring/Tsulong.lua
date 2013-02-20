@@ -111,7 +111,7 @@ function mod:Terrorize(args)
 end
 
 function mod:DreadShadows(args)
-	if UnitIsUnit("player", args.destName) and args.amount > (self:Heroic() and 5 or 11) and args.amount % 3 == 0 then -- might need adjusting
+	if UnitIsUnit("player", args.destName) and args.amount > (self:Heroic() and 5 or 11) and args.amount % 3 == 0 then
 		self:Message(args.spellId, "Personal", "Info", CL["count"]:format(args.spellName, args.amount))
 	end
 end
@@ -137,7 +137,7 @@ do
 		for i=1, 40 do
 			local name, _, _, _, buffType, _, _, _, _, _, spellId = UnitBuff("boss1", i)
 			if name and buffType == "Magic" then
-				mod:Message("phases", "Attention", "Alert", ("%s - %s"):format((UnitName("boss1")), name), spellId) -- maybe should not be tied to "phases" option
+				mod:Message("phases", "Attention", "Alert", ("%s - %s"):format((UnitName("boss1")), name), spellId)
 				break
 			end
 		end
@@ -187,6 +187,6 @@ do
 end
 
 function mod:EmbodiedTerrorDeath()
-	self:StopBar(123011) -- Terrorize, might be tricky if more than one add can be up
+	self:StopBar(123011)
 end
 

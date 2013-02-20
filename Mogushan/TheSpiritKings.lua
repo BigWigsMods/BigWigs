@@ -282,7 +282,7 @@ function mod:EngageCheck()
 				self:Message("bosses", "Positive", nil, subetai, 118122) -- Rain of Arrows icon
 			elseif (id == 60708 or id == 61429) and not bossActivated[60708] then -- Meng
 				bossActivated[60708] = true
-				self:CDBar(117708, self:Heroic() and 40 or 21) -- Maddening Shout, on heroic: 44.2, 19.8, 48.7, 49.2, 40.2
+				self:CDBar(117708, self:Heroic() and 40 or 21) -- Maddening Shout
 				if self:Heroic() then
 					self:Bar(117837, 20) -- Delirious
 				end
@@ -319,11 +319,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 			self:CDBar(117708, 30) -- Maddening Shout
 		end
 	elseif spellId == 118121 then -- Rain of Arrows for Pinned Down
-		local hc = self:Heroic()
 		if self:Heroic() then
-			self:Bar(118122, 41) -- Rain of Arrows, exact on heroic, 50-60 on norm
+			self:Bar(118122, 41) -- Rain of Arrows
 		else
-			self:CDBar(118122, 51) -- Rain of Arrows, exact on heroic, 50-60 on norm
+			self:CDBar(118122, 51) -- Rain of Arrows
 		end
 	end
 end

@@ -272,7 +272,7 @@ do
 		wipe(resonanceMarkers)
 	end
 	function mod:ArcaneResonanceApplied(args)
-		self:CDBar(args.spellId, 15.4, resonance) --15.4 - 21.5
+		self:CDBar(args.spellId, 15.4, resonance)
 		resonanceMarkers[#resonanceMarkers+1] = args.destName
 		if UnitIsUnit(args.destName, "player") then
 			self:Flash(args.spellId)

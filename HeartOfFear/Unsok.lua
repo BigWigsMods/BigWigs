@@ -195,7 +195,6 @@ function mod:ReshapeLife(args)
 		self:Bar(args.spellId, 50)
 	else
 		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
-		self:Bar(args.spellId, 15) -- might be too short for a bar
 	end
 
 	if UnitIsUnit("player", args.destName) then
@@ -357,14 +356,13 @@ function mod:Fling(args)
 	if UnitIsUnit("player", args.destName) then
 		self:Bar(122413, 6, L["fling_message"], 68659)
 	end
-	--cd is usually 35, but can be 27.8 (cast early when explosion is near the same time normally?)
-	self:CDBar(122413, 35) --Fling
+	self:CDBar(122413, 28) --Fling
 	self:TargetMessage(122413, args.destName, "Urgent", "Alarm") --Fling
 end
 
 function mod:MassiveStomp(args)
 	self:Message(args.spellId, "Urgent", "Alarm")
-	self:CDBar(args.spellId, 18) -- 18-29, 24.4 average
+	self:CDBar(args.spellId, 18)
 end
 
 

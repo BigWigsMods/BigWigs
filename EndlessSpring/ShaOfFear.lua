@@ -104,9 +104,8 @@ function mod:OnEngage(diff)
 	cackleCounter = 1
 	self:Bar(119414, 33) -- Breath of Fear
 	self:Bar(129147, (diff == 4 or diff == 6) and 25 or 41, CL["count"]:format(self:SpellName(129147), cackleCounter)) -- Ominous Cackle
-	--self:Berserk(900) -- we start in UNIT_SPELLCAST_SUCCEEDED
 	swingCounter, thrashCounter, thrashNext = 0, 0, nil
-	self:OpenProximity("proximity", 5) -- might be less
+	self:OpenProximity("proximity", 4) -- for Penetrating Bolt
 	atSha = true
 	nextFear = 0
 	submergeCounter = 0
@@ -187,7 +186,7 @@ do
 		for guid in next, dreadSpawns do
 			dreadSpawnCounter = dreadSpawnCounter + 1
 		end
-		mod:Message("ej:6107", "Positive", nil, CL["count"]:format(source, dreadSpawnCounter), 128419) -- positive, tho we are not really happy about it (gathering speed the adds ability icon)
+		mod:Message("ej:6107", "Positive", nil, CL["count"]:format(source, dreadSpawnCounter), 128419)
 		scheduled = nil
 	end
 	function mod:DreadSpawnSingleCast(args)
@@ -225,7 +224,6 @@ function mod:ChampionOfTheLight(args)
 	self:TargetMessage(args.spellId, args.destName, "Positive", "Long", L["ball"])
 	--self:CloseProximity(args.spellId) -- uncomment when mapdata becomes available for last phase
 	if UnitIsUnit("player", args.destName) then
-		--self:Message(args.spellId, L["ball_you"], "Personal", args.spellId, "Long") -- should maybe have a name like "Ball on you PASS IT!"
 		self:Flash(args.spellId)
 	end
 end
@@ -276,7 +274,7 @@ function mod:WaterspoutApplied(args)
 	end
 end
 
-do -- COPY PASTE ACTION FROM COBALT MINE! see if this works
+do
 	local timer, fired = nil, 0
 	local eerieSkull = mod:SpellName(119519)
 	local function skullWarn(unitId)
@@ -363,7 +361,7 @@ end
 function mod:Fearless(args)
 	if UnitIsUnit("player", args.destName) then
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "target") -- just have it here for now
-		self:OpenProximity("proximity", 5) -- might be less
+		self:OpenProximity("proximity", 4) -- Penetrating Bolt
 		atSha = true
 		self:CancelDelayedMessage(CL["soon"]:format(self:SpellName(119888))) -- Death Blossom
 		self:Bar(args.spellId, 30)
