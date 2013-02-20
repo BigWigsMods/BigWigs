@@ -24,6 +24,9 @@ if L then
 	L.phases = "Phases"
 	L.phases_desc = "Warning for phase changes."
 
+	L.unstable_sha, L.unstable_sha_desc = EJ_GetSectionInfo(6320)
+	L.unstable_sha_icon = 122938
+
 	L.embodied_terror, L.embodied_terror_desc = EJ_GetSectionInfo(6316)
 	L.embodied_terror_icon = 130142 -- white and black sha-y icon
 
@@ -41,7 +44,7 @@ function mod:GetOptions()
 	return {
 		"ej:6550",
 		122752, 122768, 122789, {122777, "PROXIMITY", "FLASH", "SAY"},
-		122855, "ej:6320", 123011, "embodied_terror",
+		122855, "unstable_sha", 123011, "embodied_terror",
 		"phases", "berserk", "bosskill",
 	}, {
 		["ej:6550"] = "heroic",
@@ -152,7 +155,7 @@ do
 				self:Message("phases", "Positive", nil, L["day"], 122789)
 				self:Bar("phases", 121, L["night"], 122768)
 				self:Bar(122855, 32) -- Sun Breath
-				self:Bar("ej:6320", 18)
+				self:Bar("unstable_sha", 18, 122953, 122938)
 				self:Bar("embodied_terror", 11, ("~%s (%d)"):format(L["embodied_terror"], 1), L.embodied_terror_icon)
 			elseif spellId == 122767 then -- Dread Shadows (start of night phase)
 				self:StopBar(122953) -- Summon Unstable Sha
@@ -169,8 +172,8 @@ do
 				local t = GetTime()
 				if t-prev > 2 then
 					prev = t
-					self:Message("ej:6320", "Important", "Alert", spellName)
-					self:Bar("ej:6320", 18)
+					self:Message("unstable_sha", "Important", "Alert", spellName, 122938)
+					self:Bar("unstable_sha", 18, spellName, 122938)
 				end
 			elseif spellId == 122775 then -- Nightmares
 				self:Bar(122777, 15)

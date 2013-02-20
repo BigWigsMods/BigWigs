@@ -45,15 +45,9 @@ local icons = setmetatable({}, {__index =
 			local ejID = tonumber(key:match("^ej:(%d+)$"))
 			if ejID then
 				value = false
-				local _, _, _, abilityIcon, _, _, nextChildID = EJ_GetSectionInfo(ejID)
+				local _, _, _, abilityIcon = EJ_GetSectionInfo(ejID)
 				if abilityIcon and abilityIcon:trim():len() > 0 then
 					value = abilityIcon
-				elseif nextChildID then -- Empty string, but ability has child sections
-					-- Try and use the icon from the first child
-					local _, _, _, abilityIcon = EJ_GetSectionInfo(nextChildID)
-					if abilityIcon and abilityIcon:trim():len() > 0 then
-						value = abilityIcon
-					end
 				end
 			else
 				value = "Interface\\Icons\\" .. key
