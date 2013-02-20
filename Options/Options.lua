@@ -135,36 +135,10 @@ local acOptions = {
 			order = 24,
 			width = "full",
 		},
-		broadcast = {
-			type = "toggle",
-			name = L["Broadcast"],
-			desc = L.broadcastDesc,
-			order = 25,
-		},
-		useraidchannel = {
-			type = "toggle",
-			name = L["Raid channel"],
-			desc = L["Use the raid channel instead of raid warning for broadcasting messages."],
-			order = 26,
-			disabled = function() return not BigWigs.db.profile.broadcast end,
-		},
-		whisper = {
-			type = "toggle",
-			name = L["Whisper warnings"],
-			desc = L.whisperDesc,
-			order = 27,
-		},
 		separator3 = {
 			type = "description",
 			name = " ",
 			order = 30,
-			width = "full",
-		},
-		ignorerole = {
-			type = "toggle",
-			name = L["Ignore my role"],
-			desc = L.ignoreroleDesc,
-			order = 30.5,
 			width = "full",
 		},
 		showBlizzardWarnings = {
@@ -180,21 +154,6 @@ local acOptions = {
 				plugin:Enable()
 			end,
 			order = 31,
-			width = "full",
-		},
-		showBossmodChat = {
-			type = "toggle",
-			name = L["Show addon warnings"],
-			set = function(info, value)
-				local key = info[#info]
-				local plugin = BigWigs:GetPlugin("BossBlock")
-				plugin:Disable()
-				BigWigs.db.profile[key] = value
-				options:SendMessage("BigWigs_CoreOptionToggled", key, value)
-				plugin:Enable()
-			end,
-			desc = L.addonwarningDesc,
-			order = 32,
 			width = "full",
 		},
 		blockmovies = {

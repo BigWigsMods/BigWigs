@@ -518,14 +518,12 @@ end
 --
 
 function boss:Tank()
-	if core.db.profile.ignorerole then return true end
 	local tree = GetSpecialization()
 	local role = GetSpecializationRole(tree)
 	return role == "TANK"
 end
 
 function boss:Healer()
-	if core.db.profile.ignorerole then return true end
 	local tree = GetSpecialization()
 	local role = GetSpecializationRole(tree)
 	return role == "HEALER"
