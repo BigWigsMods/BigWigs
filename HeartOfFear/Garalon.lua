@@ -92,7 +92,7 @@ do
 end
 
 function mod:Crush(message, sender, _, _, target)
-	if self:LFR() or (self:Heroic() and sender ~= target) then -- someone running underneath: don't count / don't start a new bar in heroic
+	if self:Heroic() and sender ~= target then -- someone running underneath (don't start new bars in heroic)
 		self:Message(122774, "Important", "Alarm", CL["soon"]:format(self:SpellName(122774))) -- Crush
 		self:Bar(122774, 3.6, CL["cast"]:format(self:SpellName(122774))) -- Crush
 	else
