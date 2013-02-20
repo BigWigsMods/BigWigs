@@ -17,15 +17,8 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_yell = "It be dyin' time, now!"
 
-	L.totem = "Totem (%d)"
-
-	L.frenzy, L.frenzy_desc = EJ_GetSectionInfo(5759)
-	L.frenzy_icon = 117752
-
-	L.shadowy, L.shadowy_desc = EJ_GetSectionInfo(6698)
-	L.shadowy_icon = 117222
+	L.totem_message = "Totem (%d)"
 	L.shadowy_message = "Attack (%d)"
-
 	L.banish_message = "Tank Banished"
 end
 L = mod:GetLocale()
@@ -37,12 +30,12 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		122151, 116174, 116272, 116161,
-		"frenzy",
-		"shadowy", "berserk", "bosskill",
+		"ej:5759",
+		"ej:6698", "berserk", "bosskill",
 	}, {
 		[122151] = CL["phase"]:format(1),
-		frenzy = CL["phase"]:format(2),
-		shadowy = "general",
+		["ej:5759"] = CL["phase"]:format(2),
+		["ej:6698"] = "general",
 	}
 end
 
@@ -78,13 +71,13 @@ function mod:OnEngage(diff)
 	elseif diff == 7 then
 		totemTime = 30 -- LFR
 	end
-	self:Bar(116174, totemTime, L["totem"]:format(totemCounter))
+	self:Bar(116174, totemTime, L["totem_message"]:format(totemCounter))
 	self:Bar(116272, self:Heroic() and 71 or 65, L["banish_message"])
 	if not self:LFR() then
 		self:Berserk(360)
 	end
 	if self:Heroic() then
-		self:Bar("shadowy", 6.7, L["shadowy_message"]:format(shadowCounter), 117222)
+		self:Bar("ej:6698", 6.7, L["shadowy_message"]:format(shadowCounter), 117222)
 	end
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "FrenzyCheck", "boss1")
 end
@@ -115,11 +108,11 @@ do
 			self:Bar(116174, totemTime, L["totem"]:format(totemCounter))
 		elseif sync == "Shadowy" then
 			shadowCounter = shadowCounter + 1
-			self:Bar("shadowy", 8.3, L["shadowy_message"]:format(shadowCounter), L.shadowy_icon)
+			self:Bar("ej:6698", 8.3, L["shadowy_message"]:format(shadowCounter), 117222)
 		elseif sync == "Frenzy" then
-			self:Message("frenzy", "Positive", "Long", CL["other"]:format(CL["phase"]:format(2),L["frenzy"]), L.frenzy_icon)
+			self:Message("ej:5759", "Positive", "Long", CL["other"]:format(CL["phase"]:format(2), self:SpellName("ej:5759")))
 			if not self:LFR() then
-				self:StopBar(L["totem"]:format(totemCounter))
+				self:StopBar(L["totem_message"]:format(totemCounter))
 				self:StopBar(L["banish_message"])
 			end
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
@@ -195,7 +188,7 @@ end
 function mod:FrenzyCheck(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 25 then -- phase starts at 20
-		self:Message("frenzy", "Positive", "Info", CL["soon"]:format(L["frenzy"]), L.frenzy_icon)
+		self:Message("ej:5759", "Positive", "Info", CL["soon"]:format(self:SpellName("ej:5759")))
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
 end

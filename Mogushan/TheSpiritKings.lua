@@ -128,7 +128,7 @@ local function isBossActiveById(bossId, bossIdTwo)
 	return false
 end
 
--- meng
+-- Meng
 do
 	local prevPower = 0
 	function mod:CowardiceApplied()

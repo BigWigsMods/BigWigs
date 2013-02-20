@@ -41,7 +41,7 @@ L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "zhCN")
 if L then
 	L.engage_yell = "死亡时间到！"
 
-	L.totem = "图腾 (%d)"
+	L.totem_message = "图腾 (%d)"
 	L.shadowy_message = "暗影攻击 (%d)"
 	L.banish_message = "坦克已被放逐"
 end

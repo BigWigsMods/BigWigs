@@ -39,9 +39,6 @@ if L then
 	L.arc, L.arc_desc = EJ_GetSectionInfo(5673)
 	L.arc_icon = 116835
 
-	L.gas, L.gas_desc = EJ_GetSectionInfo(5670)
-	L.gas_icon = 118327
-
 	L.rage, L.rage_desc = EJ_GetSectionInfo(5678)
 	L.rage_icon = 38771 -- rage like icon
 
@@ -71,14 +68,14 @@ function mod:GetOptions()
 		"strength",
 		"courage",
 		"bosses", "combo", "arc",
-		"gas", "berserk", "bosskill",
+		"ej:5670", "berserk", "bosskill",
 	}, {
 		[116829] = ("%s (%s)"):format(L["titan_spark"], CL["heroic"]),
 		rage = L["rage"],
 		strength = L["strength"],
 		courage = L["courage"],
 		bosses = L["bosses"],
-		gas = "general",
+		["ej:5670"] = "general",
 	}
 end
 
@@ -170,24 +167,24 @@ function mod:Bosses()
 	self:Bar("bosses", 13, L["bosses"], L.bosses_icon)
 	self:DelayedMessage("bosses", 13, "Attention", L["bosses"], L.bosses_icon)
 	if not self:Heroic() then
-		self:CDBar("gas", 123, L["gas"], L.gas_icon)
+		self:CDBar("ej:5670", 123) -- Titan Gas
 	end
 end
 
 do
 	local function fireNext()
-		mod:CDBar("gas", 120, L["gas"], L.gas_icon)
+		mod:CDBar("ej:5670", 120)
 	end
 	function mod:TitanGas()
 		gasCounter = gasCounter + 1
 		self:ScheduleTimer(fireNext, 30)
-		self:Bar("gas", 30, L["gas"], L.gas_icon)
-		self:Message("gas", "Attention", nil, CL["count"]:format(L["gas"], gasCounter), L.gas_icon)
+		self:Bar("ej:5670", 30)
+		self:Message("ej:5670", "Attention", nil, CL["count"]:format(self:SpellName("ej:5670"), gasCounter))
 	end
 end
 
 function mod:TitanGasOverdrive()
-	self:Message("gas", "Important", "Alarm", ("%s (%s)"):format(L["gas"], self:SpellName(26662)), L.gas_icon) --Berserk
+	self:Message("ej:5670", "Important", "Alarm", ("%s (%s)"):format(self:SpellName("ej:5670"), self:SpellName(26662))) --Berserk
 end
 
 do
