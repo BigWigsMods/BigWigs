@@ -67,7 +67,7 @@ if L then
 	L.lower_nest = "Nido |c00FF0000Inferiore|r"
 	L.food_call_trigger = "Hatchling calls for food!"
 	L.nest = "Nidi"
-	L.nest_desc = "Avvisi rlativi ai nidi. |c00FF0000Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi!|r"
+	L.nest_desc = "Avvisi relativi ai nidi. |c00FF0000Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi!|r"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "itIT")
