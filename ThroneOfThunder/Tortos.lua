@@ -84,12 +84,12 @@ do
 			timer = nil
 			return
 		end
-		mod:LocalMessage(spellId, "Personal", "Info", L["no_crystal_shell"])
+		mod:Message(spellId, "Personal", "Info", L["no_crystal_shell"])
 	end
 	function mod:CrystalShellRemoved(args)
 		if not UnitIsUnit("player", args.destName) or self:Tank() then return end
 		self:Flash(args.spellId)
-		self:LocalMessage(args.spellId, "Urgent", "Alarm", L["crystal_shell_removed"]) -- I think this should stay Urgent Alarm
+		self:Message(args.spellId, "Urgent", "Alarm", L["crystal_shell_removed"]) -- I think this should stay Urgent Alarm
 		if not timer then
 			timer = self:ScheduleRepeatingTimer(warnCrystalShell, 3, args.spellId)
 		end
@@ -115,7 +115,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName)) -- it is probably over you not under you
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName)) -- it is probably over you not under you
 			self:Flash(args.spellId)
 		end
 	end

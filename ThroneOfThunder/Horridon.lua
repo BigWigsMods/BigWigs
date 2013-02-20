@@ -207,7 +207,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:Message(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
 			self:Flash(args.spellId)
 		end
 	end
@@ -215,7 +215,7 @@ end
 
 function mod:Hex(args)
 	if self:Dispeller("curse") then
-		self:LocalMessage("hex", args.spellName, "Important", args.spellId, "Alarm")
+		self:Message("hex", args.spellName, "Important", args.spellId, "Alarm")
 	end
 end
 
@@ -225,7 +225,7 @@ do
 		local t = GetTime()
 		if t-prev > 3 and UnitGUID("focus") == args.sourceGUID then -- don't spam
 			prev = t
-			self:LocalMessage("chain_lightning", L["chain_lightning_warning"], "Personal", args.spellId, "Alert")
+			self:Message("chain_lightning", L["chain_lightning_warning"], "Personal", args.spellId, "Alert")
 		end
 	end
 end
@@ -236,7 +236,7 @@ do
 		local t = GetTime()
 		if t-prev > 3 and UnitGUID("focus") == args.sourceGUID then -- don't spam
 			prev = t
-			self:LocalMessage("fireball", L["fireball_warning"], "Personal", args.spellId, "Alert")
+			self:Message("fireball", L["fireball_warning"], "Personal", args.spellId, "Alert")
 		end
 	end
 end
@@ -250,7 +250,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info") -- not exactly under you
+			self:Message(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info") -- not exactly under you
 			self:Flash(args.spellId)
 		end
 	end
@@ -261,7 +261,7 @@ function mod:MortalStrikeRemoved(args)
 end
 
 function mod:MortalStrike(args)
-	self:LocalMessage("mortal_strike", args.spellName, "Urgent", args.spellId, nil, args.destName)
+	self:Message("mortal_strike", args.spellName, "Urgent", args.spellId, nil, args.destName)
 	self:TargetBar("mortal_strike", args.spellName, args.destName, 8, args.spellId)
 end
 
@@ -271,7 +271,7 @@ do
 		local t = GetTime()
 		if t-prev > 3 and self:Dispeller("disease") then -- don't spam
 			prev = t
-			self:LocalMessage("deadly_plague", args.spellName, "Important", args.spellId, "Alarm")
+			self:Message("deadly_plague", args.spellName, "Important", args.spellId, "Alarm")
 		end
 	end
 end
@@ -285,7 +285,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:Message(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
 			self:Flash(args.spellId)
 		end
 	end
@@ -297,14 +297,14 @@ do
 		local t = GetTime()
 		if t-prev > 3 and self:Dispeller("poison") then -- don't spam
 			prev = t
-			self:LocalMessage("venom_bolt_volley", args.spellName, "Important", args.spellId, "Alarm")
+			self:Message("venom_bolt_volley", args.spellName, "Important", args.spellId, "Alarm")
 		end
 	end
 end
 
 function mod:VenomBoltVolley(args)
 	if UnitGUID("focus") == args.sourceGUID then
-		self:LocalMessage("venom_bolt_volley", L["venom_bolt_volley_warning"], "Personal", args.spellId, "Alert")
+		self:Message("venom_bolt_volley", L["venom_bolt_volley_warning"], "Personal", args.spellId, "Alert")
 		self:Bar("venom_bolt_volley", L["venom_bolt_volley_bar"], 16, args.spellId)
 	end
 end
@@ -318,7 +318,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
+			self:Message(args.spellId, CL["underyou"]:format(args.spellName), "Personal", args.spellId, "Info")
 			self:Flash(args.spellId)
 		end
 	end
@@ -330,7 +330,7 @@ do
 		local t = GetTime()
 		if t-prev > 3 and self:Dispeller("magic") then -- don't spam
 			prev = t
-			self:LocalMessage("blazingSunlight", args.spellName, "Important", args.spellId, "Alarm")
+			self:Message("blazingSunlight", args.spellName, "Important", args.spellId, "Alarm")
 		end
 	end
 end
@@ -355,6 +355,6 @@ end
 
 function mod:Puncture(args)
 	args.amount = args.amount or 1
-	self:LocalMessage("puncture", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["puncture_message"])
+	self:Message("puncture", CL["stack"], "Urgent", args.spellId, "Info", args.destName, args.amount, L["puncture_message"])
 end
 

@@ -86,7 +86,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Personal", "Alert", CL["underyou"]:format(args.spellName)) -- even tho we usually use Alarm, Alarm has been sued too much in the module
+			self:Message(args.spellId, "Personal", "Alert", CL["underyou"]:format(args.spellName)) -- even tho we usually use Alarm, Alarm has been sued too much in the module
 		end
 	end
 end
@@ -117,7 +117,7 @@ function mod:PheromonesApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	if UnitIsUnit("player", args.destName) then
 		-- Local message with personal and info for when you gain the debuff, others don't care that you got it
-		self:LocalMessage(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 	elseif self:Healer() then
 		self:TargetMessage(args.spellId, args.destName, "Attention", nil, nil, nil, true)
 	end
@@ -126,7 +126,7 @@ end
 function mod:PheromonesRemoved(args)
 	if UnitIsUnit("player", args.destName) then
 		-- Local message with important and alarm for when you loose the debuff, others don't care that you lost it
-		self:LocalMessage(args.spellId, "Important", "Alarm", L["removed"]:format(args.spellName))
+		self:Message(args.spellId, "Important", "Alarm", L["removed"]:format(args.spellName))
 	end
 end
 

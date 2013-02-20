@@ -145,7 +145,7 @@ end
 function mod:FocusedAssault(args)
 	if UnitIsUnit("player", args.destName) then
 		self:Flash(args.spellId)
-		self:LocalMessage(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 	end
 end
 
@@ -210,7 +210,7 @@ do
 
 			if UnitIsUnit("target", unitId) then
 				local boss = UnitName(unitId)
-				self:LocalMessage("arc", "Urgent", nil, ("%s: %s (%d)"):format(boss, spellName, comboCounter[unitId]), arcs[spellId])
+				self:Message("arc", "Urgent", nil, ("%s: %s (%d)"):format(boss, spellName, comboCounter[unitId]), arcs[spellId])
 			end
 		elseif spellId == 118365 then -- Energize
 			local t = GetTime()

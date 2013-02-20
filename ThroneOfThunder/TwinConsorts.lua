@@ -171,7 +171,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage("ej:7638", "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
+			self:Message("ej:7638", "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
 			self:Flash("ej:7638")
 		end
 	end
@@ -205,7 +205,7 @@ do
 	local function spamIcyShadows(spellId)
 		if UnitDebuff("player", icyShadows) then
 			if UnitCastingInfo("boss1") ~= mod:SpellName(137491) then -- nuclear inferno
-				mod:LocalMessage(spellId, "Personal", "Info", CL["underyou"]:format(icyShadows))
+				mod:Message(spellId, "Personal", "Info", CL["underyou"]:format(icyShadows))
 			end
 		else
 			mod:CancelTimer(icyShadowsTimer)
@@ -215,7 +215,7 @@ do
 	function mod:IcyShadows(args)
 		if UnitIsUnit("player", args.destName) then
 			if UnitCastingInfo("boss1") ~= self:SpellName(137491) then -- nuclear inferno
-				self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+				self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			end
 			if not icyShadowsTimer then
 				icyShadowsTimer = self:ScheduleRepeatingTimer(spamIcyShadows, 2, args.spellId)
@@ -233,7 +233,7 @@ end
 
 function mod:BeastOfNightmares(args)
 	if UnitIsUnit("player", args.destName) or self:Tank() then -- this is for tank
-		self:LocalMessage("ej:7634", "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
+		self:Message("ej:7634", "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
 		self:Bar("ej:7634", 51, args.spellId)
 	elseif self:Healer() then
 		self:TargetMessage("ej:7634", args.destName, "Attention", nil, args.spellId, nil, true)

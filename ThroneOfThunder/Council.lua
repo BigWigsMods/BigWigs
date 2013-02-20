@@ -136,7 +136,7 @@ end
 function mod:Entrapped(args)
 	if UnitIsUnit(args.destName, "player") then
 		self:Flash(136857)
-		self:LocalMessage(136857, "Personal", "Info")
+		self:Message(136857, "Personal", "Info")
 	elseif self:Dispeller("magic") or ((select(2, UnitClass("player")) == "HUNTER") and (GetSpellCooldown(self:SpellName(53271)) == 0))then -- Master's call works on it too
 		self:TargetMessage(136857, args.destName, "Attention", nil, nil, nil, true)
 	end
@@ -144,14 +144,14 @@ end
 
 function mod:Ensnared(args)
 	if UnitIsUnit(args.destName, "player") then
-		self:LocalMessage(136878, "Attention", nil, ("%s (%d)"):format(args.spellName, args.amount or 1))
+		self:Message(136878, "Attention", nil, ("%s (%d)"):format(args.spellName, args.amount or 1))
 	end
 end
 
 function mod:Quicksand(args)
 	self:CDBar("ej:7062", 33, args.spellId)
 	if UnitIsUnit(args.destName, "player") then
-		self:LocalMessage("ej:7062", "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
+		self:Message("ej:7062", "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
 		self:Flash("ej:7062")
 	end
 end
@@ -169,7 +169,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(137122, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(137122, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(137122)
 		end
 	end
@@ -202,7 +202,7 @@ end
 
 function mod:ChilledToTheBone()
 	if not hasChilledToTheBone and UnitDebuff("player", self:SpellName(137085)) then
-		self:LocalMessage(137085, "Personal", "Info")
+		self:Message(137085, "Personal", "Info")
 		self:Flash(137085)
 		hasChilledToTheBone = true
 	elseif not UnitDebuff("player", self:SpellName(137085)) then

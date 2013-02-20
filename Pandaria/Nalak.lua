@@ -82,7 +82,7 @@ end
 
 function mod:StormcloudDamage(args)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, "Personal", "Alarm", CL["under"]:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Alarm", CL["under"]:format(args.spellName))
 	end
 end
 

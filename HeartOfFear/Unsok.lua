@@ -144,7 +144,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(123020, "Personal", "Alarm", CL["underyou"]:format(args.spellName))
+			self:Message(123020, "Personal", "Alarm", CL["underyou"]:format(args.spellName))
 		end
 	end
 end
@@ -232,7 +232,7 @@ end
 do
 	local function warningSpam(spellName)
 		if UnitCastingInfo("player") == spellName then
-			mod:LocalMessage("explosion_casting_by_you", "Personal", "Info", L["you_are_casting"], 122398)
+			mod:Message("explosion_casting_by_you", "Personal", "Info", L["you_are_casting"], 122398)
 			mod:ScheduleTimer(warningSpam, 0.5, spellName)
 		end
 	end
@@ -279,7 +279,7 @@ do
 				local willpower = UnitPower(unitId, 10)
 				if willpower < 20 and willpower > 0 then
 					prev = t
-					self:LocalMessage("willpower", "Personal", nil, L["willpower_message"]:format(willpower), 124824)
+					self:Message("willpower", "Personal", nil, L["willpower_message"]:format(willpower), 124824)
 				end
 			end
 		end
@@ -302,7 +302,7 @@ do
 			local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 			if hp < 21 then
 				prev = t
-				self:LocalMessage(123060, "Personal", nil, L["break_free_message"]:format(hp))
+				self:Message(123060, "Personal", nil, L["break_free_message"]:format(hp))
 			end
 		end
 	end
@@ -327,7 +327,7 @@ end
 do
 	local function warningSpam(spellName)
 		if UnitCastingInfo("boss1") == spellName or UnitCastingInfo("boss2") == spellName then
-			mod:LocalMessage("explosion_casting_by_other", "Important", "Alert", L["monstrosity_is_casting"], 122398)
+			mod:Message("explosion_casting_by_other", "Important", "Alert", L["monstrosity_is_casting"], 122398)
 			mod:ScheduleTimer(warningSpam, 0.5, spellName)
 		end
 	end

@@ -115,13 +115,13 @@ end
 
 function mod:DreadShadows(args)
 	if UnitIsUnit("player", args.destName) and args.amount > (self:Heroic() and 5 or 11) and args.amount % 3 == 0 then -- might need adjusting
-		self:LocalMessage(args.spellId, "Personal", "Info", CL["count"]:format(args.spellName, args.amount))
+		self:Message(args.spellId, "Personal", "Info", CL["count"]:format(args.spellName, args.amount))
 	end
 end
 
 function mod:Sunbeam(args)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, "Positive")
+		self:Message(args.spellId, "Positive")
 	end
 end
 
@@ -140,7 +140,7 @@ do
 		for i=1, 40 do
 			local name, _, _, _, buffType, _, _, _, _, _, spellId = UnitBuff("boss1", i)
 			if name and buffType == "Magic" then
-				mod:LocalMessage("phases", "Attention", "Alert", ("%s - %s"):format((UnitName("boss1")), name), spellId) -- maybe should not be tied to "phases" option
+				mod:Message("phases", "Attention", "Alert", ("%s - %s"):format((UnitName("boss1")), name), spellId) -- maybe should not be tied to "phases" option
 				break
 			end
 		end

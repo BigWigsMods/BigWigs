@@ -101,7 +101,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -131,7 +131,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -151,7 +151,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -160,7 +160,7 @@ end
 function mod:Scorched(args)
 	args.amount = args.amount or 1
 	if args.amount > 4 and UnitIsUnit(args.destName, "player") then
-		self:LocalMessage("ej:6871", "Important", nil, ("%s (%d)"):format(args.spellName, args.amount), args.spellId)
+		self:Message("ej:6871", "Important", nil, ("%s (%d)"):format(args.spellName, args.amount), args.spellId)
 	end
 	if self:Heroic() and self:mobId(UnitGUID("boss4")) == 68081 then -- Dam'ren is active and heroic
 		self:Bar("ej:6870", 16, 134628) -- Unleashed Flame

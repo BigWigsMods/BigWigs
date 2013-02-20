@@ -125,7 +125,7 @@ end
 
 do
 	local function flightMessage(remainingTime)
-		mod:LocalMessage("ej:7360", "Personal", (remainingTime<5) and "Info" or nil, CL["custom_sec"]:format(L["flight_over"], remainingTime), 133755)
+		mod:Message("ej:7360", "Personal", (remainingTime<5) and "Info" or nil, CL["custom_sec"]:format(L["flight_over"], remainingTime), 133755)
 	end
 	local function flightFlash()
 		mod:Flash("ej:7360")

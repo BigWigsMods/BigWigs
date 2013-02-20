@@ -134,7 +134,7 @@ do
 			local t = GetTime()
 			if t-prev > 1 then
 				prev = t
-				self:LocalMessage(117986, "Personal", "Info", CL["underyou"]:format(args.spellName))
+				self:Message(117986, "Personal", "Info", CL["underyou"]:format(args.spellName))
 				self:Flash(117986)
 			end
 		end
@@ -202,7 +202,7 @@ do
 	function mod:CleansingWatersDispel(args)
 		local mobId = self:MobId(args.destGUID)
 		if self:Dispeller("magic", true) and (mobId == 60583 or mobId == 60585 or mobId == 60586) and args.destGUID == UnitGUID(getKillTarget()) then
-			self:LocalMessage(117309, "Important", "Info", CL["on"]:format(args.spellName, args.destName)) --onboss
+			self:Message(117309, "Important", "Info", CL["on"]:format(args.spellName, args.destName)) --onboss
 		end
 	end
 
@@ -210,7 +210,7 @@ do
 	function mod:CleansingWatersTank(args)
 		if args.spellId == 122851 and UnitIsUnit(unitId, getKillTarget()) then -- Raid Warning: I'm Standing In Cleansing Waters
 			local bossName = UnitName(unitId)
-			self:LocalMessage(117309, "Urgent", "Alert", L["under"]:format(self:SpellName(117309), bossName))
+			self:Message(117309, "Urgent", "Alert", L["under"]:format(self:SpellName(117309), bossName))
 		end
 	end
 end

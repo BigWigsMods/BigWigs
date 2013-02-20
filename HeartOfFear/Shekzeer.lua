@@ -145,7 +145,7 @@ do
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				self:LocalMessage(124862, "Attention", "Alert", args.spellId)
+				self:Message(124862, "Attention", "Alert", args.spellId)
 			end
 		end
 	end
@@ -177,7 +177,7 @@ function mod:Fixate(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
 	if UnitIsUnit("player", args.destName) then
 		self:Flash(args.spellId)
-		self:LocalMessage(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:TargetBar(args.spellId, 20, args.destName)
 	end
 end
@@ -190,7 +190,7 @@ end
 
 function mod:Resin(args)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 	end
 end
 

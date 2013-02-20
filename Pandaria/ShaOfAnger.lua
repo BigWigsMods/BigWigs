@@ -62,7 +62,7 @@ do
 			local t = GetTime()
 			if t-prev > 2 then -- throttle so the timer can catch it sooner
 				prev = t
-				self:LocalMessage(119610, "Personal", "Info", CL["underyou"]:format(bitterThoughts))
+				self:Message(119610, "Personal", "Info", CL["underyou"]:format(bitterThoughts))
 				self:Flash(119610)
 			end
 		end
@@ -75,7 +75,7 @@ do
 		if UnitIsUnit(args.destName, "player") then
 			self:OpenProximity(args.spellId, 5)
 			self:Flash(args.spellId)
-			self:LocalMessage(args.spellId, "Personal", "Alert", CL["you"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Alert", CL["you"]:format(args.spellName))
 			self:Bar(args.spellId, 6, CL["you"]:format(args.spellName))
 		else
 			local t = GetTime()

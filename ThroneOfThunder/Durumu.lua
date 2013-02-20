@@ -100,7 +100,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -135,7 +135,7 @@ function mod:RedRayController(args)
 	end
 	if amount == 3 and redRayController ~= pName then -- try not warn if we know already that we are the controller
 		redRayController = pName
-		self:LocalMessage("ray_controller", "Attention", "Long", L["red_ray_controller"], args.spellId) -- can't be "Personal" cuz that'd make it too blue
+		self:Message("ray_controller", "Attention", "Long", L["red_ray_controller"], args.spellId) -- can't be "Personal" cuz that'd make it too blue
 	elseif amount ~= 3 then
 		redRayController = nil -- we are not the ray controller
 	end
@@ -152,7 +152,7 @@ function mod:BlueRayController(args)
 	end
 	if amount == 3 and blueRayController ~= pName then -- try not warn if we know already that we are the controller
 		blueRayController = pName
-		self:LocalMessage("ray_controller", "Attention", "Long", L["blue_ray_controller"], args.spellId) -- can't be "Personal" cuz that'd make it too blue
+		self:Message("ray_controller", "Attention", "Long", L["blue_ray_controller"], args.spellId) -- can't be "Personal" cuz that'd make it too blue
 	elseif amount ~= 3 then
 		blueRayController = nil -- we are not the ray controller
 	end
@@ -163,15 +163,15 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
 		self:StopBar(136932) -- Force of Will -- XXX double check if this is not too early to stop the bar
 		self:Bar("ej:6891", L["rays_spawn"], 10, "inv_misc_gem_variety_02") -- only spawn this bar in one of the functions
 		if UnitIsUnit("player", target) then
-			self:LocalMessage("ej:6891", "Positive", "Alert", CL["you"]:format("|c00FFFF00"..sender.."|r"), 134124)
+			self:Message("ej:6891", "Positive", "Alert", CL["you"]:format("|c00FFFF00"..sender.."|r"), 134124)
 		end
 	elseif msg:find("134123") then -- Red
 		if UnitIsUnit("player", target) then
-			self:LocalMessage("ej:6891", "Positive", "Alert", CL["you"]:format("|c00FF0000"..sender.."|r"), 134123)
+			self:Message("ej:6891", "Positive", "Alert", CL["you"]:format("|c00FF0000"..sender.."|r"), 134123)
 		end
 	elseif msg:find("134122") then -- Red
 		if UnitIsUnit("player", target) then
-			self:LocalMessage("ej:6891", "Positive", "Alert", CL["you"]:format("|c000000FF"..sender.."|r"), 134122)
+			self:Message("ej:6891", "Positive", "Alert", CL["you"]:format("|c000000FF"..sender.."|r"), 134122)
 		end
 	elseif msg:find("133795") then -- HungryEyeStart this is faster than CLEU
 		self:TargetMessage(133798, target, "Important", "Alert")
@@ -187,7 +187,7 @@ end
 
 function mod:ForceOfWill(args)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, "Personal", "Long", CL["you"]:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Long", CL["you"]:format(args.spellName))
 	else
 		self:Message(args.spellId, "Attention")
 	end
@@ -201,7 +201,7 @@ do
 		local t = GetTime()
 		if t-prev > 1 then -- use 1 sec instead of the usual 2, getting out this fast matters
 			prev = t
-			self:LocalMessage(138467, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(138467, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(138467)
 		end
 	end

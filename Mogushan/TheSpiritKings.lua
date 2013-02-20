@@ -167,7 +167,7 @@ function mod:MaddeningShout(args)
 end
 
 function mod:Delirious(args)
-	self:LocalMessage(args.spellId, "Urgent", "Alert")
+	self:Message(args.spellId, "Urgent", "Alert")
 	self:Bar(args.spellId, 20)
 end
 
@@ -210,7 +210,7 @@ end
 function mod:Fixate(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, "Personal", "Info")
+		self:Message(args.spellId, "Personal", "Info")
 		self:Say(args.spellId, args.spellName)
 	end
 end

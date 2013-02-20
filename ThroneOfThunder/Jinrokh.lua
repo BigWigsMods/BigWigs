@@ -127,7 +127,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -167,7 +167,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Personal", "Info", L["in_water"])
+			self:Message(args.spellId, "Personal", "Info", L["in_water"])
 			self:Flash(args.spellId)
 		end
 	end
@@ -180,7 +180,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end

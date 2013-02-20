@@ -149,7 +149,7 @@ end
 
 function mod:ExplosiveSlam(args)
 	args.amount = args.amount or 1
-	self:LocalMessage("slam", args.destName, args.amount, "Urgent", "Info", L["slam_message"], args.spellId)
+	self:Message("slam", args.destName, args.amount, "Urgent", "Info", L["slam_message"], args.spellId)
 	-- not sure if bars are needed
 	self:StopBar(("%s: %s (%d)"):format(L["slam_message"], args.destName, args.amount-1))
 	self:Bar("slam", 25, ("%s: %s (%d)"):format(L["slam_message"], args.destName, args.amount), args.spellId)
@@ -163,7 +163,7 @@ end
 function mod:MatterSwapApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:Flash(args.spellId)
 	elseif self:Dispeller("magic") then
 		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", nil, nil, true)
@@ -182,7 +182,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -193,7 +193,7 @@ function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg, sender)
 		self:Say(138485, CL["say"]:format(crimsonWake))
 		self:Bar(138485, 30, CL["you"]:format(crimsonWake))
 		self:DelayedMessage(138485, 30, "Positive", CL["over"]:format(crimsonWake))
-		self:LocalMessage(138485, "Urgent", "Alarm", CL["you"]:format(crimsonWake))
+		self:Message(138485, "Urgent", "Alarm", CL["you"]:format(crimsonWake))
 		self:Flash(138485)
 	end
 end

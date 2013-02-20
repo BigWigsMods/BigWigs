@@ -85,7 +85,7 @@ do
 		local total = stats + mastery + haste + crit
 		if total == 5 then mod:Flash("ej:6960") end
 		local stacks = (total < 6) and " |c00008000(%d)|r" or " |c00FF0000(%d)|r" -- less than 6 stacks is a buff, more than that is a debuff, so color less than 6 green, more than that red
-		mod:LocalMessage("ej:6960", L["mutations"]..stacks, "Personal", args.spellId, "Info")
+		mod:Message("ej:6960", L["mutations"]..stacks, "Personal", args.spellId, "Info")
 	end
 	function mod:PlayerMutations(args)
 		if not UnitIsUnit("player", args.destName) then return end
@@ -96,13 +96,13 @@ end
 function mod:FullyMutatedRemoved(args)
 	if not UnitIsUnit("player", args.destName) then return end
 	self:StopBar(args.spellId)
-	self:LocalMessage("ej:7830", CL["over"]:format(args.spellName), "Personal", args.spellId, "Info")
+	self:Message("ej:7830", CL["over"]:format(args.spellName), "Personal", args.spellId, "Info")
 end
 
 function mod:FullyMutatedApplied(args)
 	if not UnitIsUnit("player", args.destName) then return end
 	self:Bar("ej:7830", args.spellName, 120, args.spellId)
-	self:LocalMessage("ej:7830", CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
+	self:Message("ej:7830", CL["you"]:format(args.spellName), "Personal", args.spellId, "Info")
 end
 
 function mod:EruptingPustulesRemoved(args)

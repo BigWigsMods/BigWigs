@@ -125,7 +125,7 @@ end
 
 function mod:WhirlingBladeDamage(args)
 	if not self:LFR() and UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:Flash(args.spellId) -- we flash on cast too, but some more can't hurt
 	end
 end
@@ -155,7 +155,7 @@ end
 
 function mod:ResidueRemoved(args)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, "Positive", nil, CL["over"]:format(args.spellName))
+		self:Message(args.spellId, "Positive", nil, CL["over"]:format(args.spellName))
 	end
 end
 
@@ -206,14 +206,14 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Attention", "Alert")
+			self:Message(args.spellId, "Attention", "Alert")
 		end
 	end
 end
 
 function mod:Mending(args)
 	if UnitGUID("focus") == args.sourceGUID then
-		self:LocalMessage("mending", "Personal", "Alert", L["mending_warning"], args.spellId)
+		self:Message("mending", "Personal", "Alert", L["mending_warning"], args.spellId)
 		self:Bar("mending", 37, L["mending_bar"], args.spellId)
 	end
 end
@@ -254,7 +254,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -264,7 +264,7 @@ function mod:Resin(args)
 	if UnitIsUnit("player", args.destName) then
 		self:Say(args.spellId)
 		self:Flash(args.spellId)
-		self:LocalMessage(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 	end
 end
 
@@ -277,7 +277,7 @@ end
 function mod:ImpalingSpearRemoved(args)
 	if UnitIsUnit(args.sourceName, "player") then
 		self:StopBar(args.spellName)
-		self:LocalMessage(args.spellId, "Personal", "Info", L["spear_removed"])
+		self:Message(args.spellId, "Personal", "Info", L["spear_removed"])
 		self:Flash(args.spellId)
 	end
 end

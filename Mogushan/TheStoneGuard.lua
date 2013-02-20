@@ -88,7 +88,7 @@ do
 			jasperChainsTargets[2] = args.destName
 			if UnitIsUnit(args.destName, "player") or UnitIsUnit(prevPlayer, "player") then
 				self:Flash(args.spellId)
-				self:LocalMessage(args.spellId, "Personal", nil, CL["you"]:format(args.spellName))
+				self:Message(args.spellId, "Personal", nil, CL["you"]:format(args.spellName))
 				self:OpenProximity(args.spellId, 10, UnitIsUnit(prevPlayer, "player") and args.destName or prevPlayer, true)
 			else
 				self:TargetMessage(args.spellId, jasperChainsTargets, "Attention")
@@ -98,7 +98,7 @@ do
 	end
 	function mod:JasperChainsRemoved(args)
 		if UnitIsUnit(args.destName, "player") then
-			self:LocalMessage(args.spellId, "Personal", nil, CL["over"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", nil, CL["over"]:format(args.spellName))
 			self:CloseProximity(args.spellId)
 		end
 	end
@@ -111,7 +111,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Personal", "Alarm", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Alarm", CL["underyou"]:format(args.spellName))
 		end
 	end
 end

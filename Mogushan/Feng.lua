@@ -237,7 +237,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(116784, "Personal", "Info", CL["underyou"]:format(wildfire))
+			self:Message(116784, "Personal", "Info", CL["underyou"]:format(wildfire))
 			self:Flash(116784)
 		end
 	end

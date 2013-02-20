@@ -100,7 +100,7 @@ end
 function mod:Overcharged(args)
 	if UnitIsUnit(args.destName, "player") and InCombatLockdown() then
 		if (args.amount or 1) >= 6 and args.amount % 2 == 0 then
-			self:LocalMessage(args.spellId, "Personal", nil, CL["count"]:format(args.spellName, args.amount))
+			self:Message(args.spellId, "Personal", nil, CL["count"]:format(args.spellName, args.amount))
 		end
 	end
 end
@@ -127,7 +127,7 @@ do
 		local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
 		if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
 			self:Flash(117878)
-			self:LocalMessage(117878, "Personal", nil, L["overcharged_total_annihilation"]:format(stack)) -- needs no sound since total StabilityFlux has one already
+			self:Message(117878, "Personal", nil, L["overcharged_total_annihilation"]:format(stack)) -- needs no sound since total StabilityFlux has one already
 		end
 	end
 	-- This will spam, but it is apparantly needed for some people
@@ -139,7 +139,7 @@ do
 			if t-prev > 1 then --getting like 30 messages a second was *glasses* a bit much
 				prev = t
 				self:Flash(117878)
-				self:LocalMessage(117878, "Personal", "Info", L["overcharged_total_annihilation"]:format(stack)) -- Does need the sound spam too!
+				self:Message(117878, "Personal", "Info", L["overcharged_total_annihilation"]:format(stack)) -- Does need the sound spam too!
 			end
 		end
 	end

@@ -176,7 +176,7 @@ end
 
 function mod:FadingLight(args)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, "Positive", "Long", L["cooldown_reset"])
+		self:Message(args.spellId, "Positive", "Long", L["cooldown_reset"])
 	end
 end
 
@@ -225,7 +225,7 @@ function mod:ChampionOfTheLight(args)
 	self:TargetMessage(args.spellId, args.destName, "Positive", "Long", L["ball"])
 	--self:CloseProximity(args.spellId) -- uncomment when mapdata becomes available for last phase
 	if UnitIsUnit("player", args.destName) then
-		--self:LocalMessage(args.spellId, L["ball_you"], "Personal", args.spellId, "Long") -- should maybe have a name like "Ball on you PASS IT!"
+		--self:Message(args.spellId, L["ball_you"], "Personal", args.spellId, "Long") -- should maybe have a name like "Ball on you PASS IT!"
 		self:Flash(args.spellId)
 	end
 end
@@ -271,7 +271,7 @@ end
 
 function mod:WaterspoutApplied(args)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 		self:Flash(args.spellId)
 	end
 end
@@ -286,7 +286,7 @@ do -- COPY PASTE ACTION FROM COBALT MINE! see if this works
 		if player and (not UnitDetailedThreatSituation(unitIdTarget, unitId) or fired > 13) then
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
 			if UnitIsUnit("player", player) then
-				mod:LocalMessage(119519, "Urgent", "Alarm", CL["you"]:format(eerieSkull))
+				mod:Message(119519, "Urgent", "Alarm", CL["you"]:format(eerieSkull))
 				mod:Say(119519, eerieSkull)
 				mod:Flash(119519)
 			end

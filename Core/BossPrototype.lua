@@ -703,11 +703,6 @@ function boss:Message(key, color, sound, text, icon)
 	end
 end
 
--- Outputs a local message only, no raid warning.
-function boss:LocalMessage(...)
-	self:Message(...)
-end
-
 do
 	local hexColors = {}
 	for k, v in pairs(CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS) do

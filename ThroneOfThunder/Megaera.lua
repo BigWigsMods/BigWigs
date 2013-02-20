@@ -108,7 +108,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage("breaths", "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
+			self:Message("breaths", "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
 			self:Flash("breaths")
 		end
 	end
@@ -189,7 +189,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -199,7 +199,7 @@ function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
 	if msg:find("139866") then -- Torrent of Ice
 		-- XXX this should have an icon too, but lets not bother implementing it till CLEU is fixed for this event
 		self:Say(139866, CL["say"]:format(self:SpellName(139866)))
-		self:LocalMessage(139866, "Personal", "Info", CL["you"]:format(self:SpellName(139866)))
+		self:Message(139866, "Personal", "Info", CL["you"]:format(self:SpellName(139866)))
 		self:Flash(139866)
 	end
 end
@@ -219,7 +219,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(139822, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(139822, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(139822)
 		end
 	end
@@ -232,7 +232,7 @@ end
 function mod:CindersApplied(args)
 	self:SecondaryIcon(args.spellId, args.destName)
 	if UnitIsUnit("player", args.destName) then
-		self:LocalMessage(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:Flash(args.spellId)
 	elseif self:Dispeller("magic") then
 		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", nil, nil, true )
