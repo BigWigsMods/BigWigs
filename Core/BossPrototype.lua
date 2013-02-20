@@ -699,7 +699,7 @@ end
 function boss:Message(key, color, sound, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
 		local textType = type(text)
-		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, nil, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
+		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, sound, icon ~= false and icons[icon or textType == "number" and text or key])
 	end
 end
 
@@ -738,7 +738,7 @@ do
 	function boss:StackMessage(key, player, stack, color, sound, text, icon)
 		if checkFlag(self, key, C.MESSAGE) then
 			local textType = type(text)
-			self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], coloredNames[player]), color, true, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], coloredNames[player]), color, sound, icon ~= false and icons[icon or textType == "number" and text or key])
 		end
 	end
 
@@ -748,15 +748,15 @@ do
 		if type(player) == "table" then
 			local list = table.concat(player, ", ")
 			wipe(player)
-			if not list:find(pName) then sound = nil end
-			self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], list), color, nil, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
+			if not list:find(pName) and not alwaysPlaySound then sound = nil end
+			self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], list), color, sound, icon ~= false and icons[icon or textType == "number" and text or key])
 		else
 			if UnitIsUnit(player, "player") then
 				local msg = textType == "string" and text or spells[text or key]
-				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", true, sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
+				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", sound, icon ~= false and icons[icon or textType == "number" and text or key])
 			else
 				-- Change color and remove sound (if not local only) when warning about effects on other players
-				self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], coloredNames[player]), color == "Personal" and "Important" or color, nil, alwaysPlaySound and sound, nil, icon ~= false and icons[icon or textType == "number" and text or key])
+				self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], coloredNames[player]), color == "Personal" and "Important" or color, alwaysPlaySound and sound, icon ~= false and icons[icon or textType == "number" and text or key])
 			end
 		end
 	end

@@ -241,8 +241,8 @@ local function customSound(module, key, sound)
 	end
 end
 
-function plugin:BigWigs_Message(event, module, key, text, color, noraidsay, sound, broadcastonly)
-	if not text or not sound or broadcastonly or not BigWigs.db.profile.sound then return end
+function plugin:BigWigs_Message(event, module, key, text, color, sound)
+	if not text or not sound or not BigWigs.db.profile.sound then return end
 	play(customSound(module, key, sound) or sound)
 end
 

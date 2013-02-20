@@ -1202,7 +1202,7 @@ do
 		if time == 0 then
 			plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
 		else
-			timers[id] = plugin:ScheduleTimer("SendMessage", time, "BigWigs_Message", false, false, L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", localOnly, false, false, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+			timers[id] = plugin:ScheduleTimer("SendMessage", time, "BigWigs_Message", false, false, L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", false, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 			plugin:SendMessage("BigWigs_StartBar", plugin, nil, nick..": "..barText, time, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 		end
 	end
@@ -1216,7 +1216,7 @@ do
 		if timeLeft == 0 then
 			plugin:CancelTimer(timer)
 			timer = nil
-			plugin:SendMessage("BigWigs_Message", nil, nil, L["Pulling!"], "Attention", nil, "Alarm", nil, "Interface\\Icons\\ability_warrior_charge")
+			plugin:SendMessage("BigWigs_Message", nil, nil, L["Pulling!"], "Attention", "Alarm", "Interface\\Icons\\ability_warrior_charge")
 		else
 			plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention")
 			if timeLeft < 6 and BigWigs.db.profile.sound then
@@ -1234,7 +1234,7 @@ do
 		BigWigs:Print(L["Pull timer started by %s user '%s'."]:format(isDBM and "DBM" or "Big Wigs", nick))
 		if timer then plugin:CancelTimer(timer) end
 		timer = plugin:ScheduleRepeatingTimer(printPull, 1)
-		plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention", nil, "Long")
+		plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention", "Long")
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L["Pull"], time, "Interface\\Icons\\ability_warrior_charge")
 	end
 end

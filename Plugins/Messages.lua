@@ -544,8 +544,8 @@ do
 	end
 end
 
-function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broadcastonly, icon)
-	if broadcastonly or not text then return end
+function plugin:BigWigs_Message(event, module, key, text, color, sound, icon)
+	if not text then return end
 
 	local r, g, b = 1, 1, 1 -- Default to white.
 	if db.usecolors then

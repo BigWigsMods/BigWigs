@@ -85,7 +85,6 @@ local monitoring = nil
 local function enableBossModule(module, noSync)
 	if not module:IsEnabled() then
 		module:Enable()
-		-- module:SendMessage("BigWigs_Message", module, "bosskill", string.format("%s enabled", module.displayName), "Core")
 		if not noSync then
 			module:Sync("EnableModule", module:GetName())
 		end
@@ -225,7 +224,7 @@ do
 			local color = colors[math.random(1, #colors)]
 			local sound = sounds[math.random(1, #sounds)]
 			local formatted = color..": "..key.." "..(sound and "("..sound..")" or "")
-			addon:SendMessage("BigWigs_Message", addon, key, formatted, color, true, sound, nil, messages[key])
+			addon:SendMessage("BigWigs_Message", addon, key, formatted, color, sound, messages[key])
 			if math.random(1, 4) == 2 then
 				addon:SendMessage("BigWigs_Flash", addon, key)
 				addon:SendMessage("BigWigs_Pulse", addon, key, messages[key])
