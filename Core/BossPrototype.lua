@@ -366,14 +366,14 @@ do
 			local modType = type(module)
 			if modType == "string" then
 				if module == self.moduleName then
-					self:Engage(noEngage == "NoEngage" and true)
+					self:Engage(noEngage == "NoEngage" and noEngage)
 				else
 					self:Disable()
 				end
 			elseif modType == "table" then
 				for i = 1, #module do
 					if module[i] == self.moduleName then
-						self:Engage(noEngage == "NoEngage" and true)
+						self:Engage(noEngage == "NoEngage" and noEngage)
 						break
 					end
 				end
@@ -469,7 +469,7 @@ do
 
 		if debug then dbg(self, ":Engage") end
 
-		if not noEngage then
+		if not noEngage or noEngage ~= "NoEngage" then
 			-- Update Difficulty
 			local _, _, diff = GetInstanceInfo()
 			difficulty = diff
