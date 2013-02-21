@@ -159,7 +159,7 @@ end
 
 function mod:BossEngage()
 	self:CheckBossStatus()
-	if self:mobId(UnitGUID("boss2")) == 69374 then -- War-God Jalak
+	if self:MobId(UnitGUID("boss2")) == 69374 then -- War-God Jalak
 		self:Message("ej:7087", "Positive", "Info", (EJ_GetSectionInfo(7087)), 136821) -- War-God Jalak
 		self:StopBar((EJ_GetSectionInfo(7087)))
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
