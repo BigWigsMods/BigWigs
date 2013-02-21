@@ -1,8 +1,9 @@
 --[[
 TODO:
-	assume every 4th is upper nest
+	on 10 H PTR - food_call_trigger was gone, could not find anything to replace it, rethink how the warning should work later
 	maybe message should be in :CallForFood not :FeedYoung, someone maybe should look into if it is safe to do so
 		as in: is the 10 sec ( the max flight time ) enough from :CallForFood to catch the slime?
+	people NOT on the main platform should have proximity closed
 ]]--
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
@@ -44,7 +45,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"nest", -- this controls a lot of things, so it is easier to turn off for people who don't handle the nests
-		{"ej:7360", "FLASH"},
+		{"ej:7360", "FLASH"}, 140741,
 		{140092, "TANK"}, {134366, "TANK"}, {134380, "FLASH"}, 134370,
 		"proximity", "berserk", "bosskill",
 	}, {
@@ -59,9 +60,9 @@ function mod:OnBossEnable()
 	-- eat for the hatchlings is intentionally not here, players can't do anything about it once it is casted, so we don't warn uselessly
 	self:Log("SPELL_AURA_APPLIED", "FeedYoung", 137528)
 	self:Emote("CallForFood", L["food_call_trigger"])
-	self:Log("SPELL_AURA_APPLIED", "YoungEgg", 134347)
-	self:Emote("HatchUpperNest", L["upper_hatch_trigger"])
-	self:Emote("HatchLowerNest", L["lower_hatch_trigger"])
+	self:Log("SPELL_AURA_APPLIED", "YoungEgg", 134347) -- XXX This is was not there on 10 H ptr, consider removing it
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+	self:Log("SPELL_AURA_APPLIED", "PrimalNutriment", 140741)
 	self:Log("SPELL_AURA_APPLIED", "Flight", 133755)
 	self:Log("SPELL_CAST_START", "DownDraft", 134370)
 	self:Log("SPELL_CAST_START", "Quills", 134380)
@@ -75,8 +76,8 @@ end
 function mod:OnEngage()
 	self:OpenProximity("proximity", 8)
 	self:Berserk(600) -- XXX assumed
-	self:Bar(134380, 48) -- Quills
-	self:Bar(134370, 93) -- Down Draft
+	self:Bar(134380, self:Heroic() and 63 or 48) -- Quills
+	self:Bar(134370, 90) -- Down Draft
 	nestCounter = 0
 	feedingAllowed = false
 end
@@ -107,28 +108,35 @@ do
 	end
 end
 
-function mod:HatchUpperNest()
-	nestCounter = nestCounter + 1
-	self:Message("nest", "Attention", "Alert", L["upper_nest"], "misc_arrowlup")
-	self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
+function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
+	if msg:find(L["upper_hatch_trigger"]) then
+		nestCounter = nestCounter + 1
+		self:Message("nest", "Attention", "Alert", L["upper_nest"], "misc_arrowlup")
+		if nestCounter % 6 > 3 or nestCounter % 6 == 0 then -- first 3 down, second 3 up
+			self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
+		else
+			self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
+		end
+	elseif msg:find(L["lower_hatch_trigger"]) then
+		nestCounter = nestCounter + 1
+		self:Message("nest", "Attention", "Alert", L["lower_nest"], "misc_arrowdown")
+		if nestCounter % 6 > 3 or nestCounter % 6 == 0  then -- first 3 down, second 3 up
+			self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
+		else
+			self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
+		end
+	end
 end
 
-function mod:HatchLowerNest()
-	nestCounter = nestCounter + 1
-	self:Message("nest", "Attention", "Alert", L["lower_nest"], "misc_arrowdown")
-	if nestCounter % 3 == 0 then -- XXX assume every 4th is upper nest
-		self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
-	else
-		self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
-	end
+function mod:PrimalNutriment(args)
+	if not UnitIsUnit("player", args.destName) then return end
+	self:Message(args.spellId, "Positive")
+	self:Bar(args.spellId, 30, CL["you"]:format(args.spellName))
 end
 
 do
 	local function flightMessage(remainingTime)
 		mod:Message("ej:7360", "Personal", (remainingTime<5) and "Info" or nil, CL["custom_sec"]:format(L["flight_over"], remainingTime), 133755)
-	end
-	local function flightFlash()
-		mod:Flash("ej:7360")
 	end
 	function mod:Flight(args)
 		if not UnitIsUnit("player", args.destName) then return end
@@ -136,7 +144,7 @@ do
 		self:ScheduleTimer(flightMessage, 8, 2)
 		self:ScheduleTimer(flightMessage, 9, 1) -- A bit of spam, but it is necessary!
 		self:Bar("ej:7360", 10, args.spellId)
-		self:ScheduleTimer(flightFlash, 8)
+		self:ScheduleTimer("Flash", 8, "ej:7360")
 	end
 end
 
