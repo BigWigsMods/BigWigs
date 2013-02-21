@@ -178,7 +178,9 @@ end
 -- Elder Asani
 
 function mod:CleansingWaters(args)
-	self:Message(args.spellId, "Attention", self:Dispeller("magic", true) and "Alert", CL["soon"]:format(args.spellName))
+	if not self:Tank() then
+		self:Message(args.spellId, "Attention", self:Dispeller("magic", true) and "Alert", CL["soon"]:format(args.spellName))
+	end
 	self:Bar(args.spellId, 6, L["heal"]:format(args.spellName), 55888) -- orb hitting the ground (water orb icon)
 	self:CDBar(args.spellId, 32)
 end
@@ -188,7 +190,7 @@ do
 	local function getKillTarget()
 		local lowest, lowestHP = nil, 100
 		for i=1,3 do
-			local unit = "boss"..i
+			local unit = ("boss%d"):format(i)
 			local hp = UnitHealth(unit) / UnitHealthMax(unit)
 			if hp < lowestHP then
 				lowestHP = hp
@@ -207,8 +209,8 @@ do
 	end
 
 	-- Tank warning
-	function mod:CleansingWatersTank(args)
-		if args.spellId == 122851 and UnitIsUnit(unitId, getKillTarget()) then -- Raid Warning: I'm Standing In Cleansing Waters
+	function mod:CleansingWatersTank(unitId, _, _, _, spellId)
+		if spellId == 122851 and self:Tank() and UnitIsUnit(unitId, getKillTarget()) then
 			local bossName = UnitName(unitId)
 			self:Message(117309, "Urgent", "Alert", L["under"]:format(self:SpellName(117309), bossName))
 		end
