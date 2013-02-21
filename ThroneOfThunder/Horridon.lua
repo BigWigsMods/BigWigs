@@ -346,15 +346,18 @@ end
 
 function mod:Charge(args)
 	local target = UnitExists("boss1target") and UnitName("boss1target") or nil
-	self:TargetMessage(args.spellId, target, "Attention", "Long")
 	self:CDBar(args.spellId, 50)
-	if not target then return end
-	if UnitIsUnit("player", target) then
-		self:Flash(args.spellId)
-		self:Say(args.spellId)
-		self:PrimaryIcon(args.spellId, target)
+	if target then
+		self:TargetMessage(args.spellId, target, "Attention", "Long")
+		if UnitIsUnit("player", target) then
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+			self:PrimaryIcon(args.spellId, target)
+		end
+		self:ScheduleTimer("PrimaryIcon", 10, args.spellId) -- remove icon
+	else
+		self:Message(args.spellId, "Attention", "Long")
 	end
-	self:ScheduleTimer("PrimaryIcon", 10, args.spellId) -- remove icon
 end
 
 function mod:Swipe(args)
