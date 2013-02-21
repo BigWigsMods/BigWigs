@@ -39,7 +39,7 @@ function mod:GetOptions()
 		{123845, "FLASH", "ICON", "SAY"},
 		"ej:6325", {"eyes", "TANK"}, {123788, "FLASH", "ICON"}, {123735, "HEALER"}, "proximity",
 		{125390, "FLASH"}, 124097, 125826, 124827, {124077, "FLASH"},
-		{124862, "FLASH", "PROXIMITY"}, { 124849, "FLASH" },
+		{124862, "FLASH", "PROXIMITY", "SAY"}, { 124849, "FLASH" },
 		"phases", "berserk", "bosskill",
 	}, {
 		[123845] = "heroic",
@@ -166,6 +166,7 @@ do
 	function mod:Visions(args)
 		visionsList[#visionsList + 1] = args.destName
 		if UnitIsUnit("player", args.destName) then
+			self:Say(args.spellId, L["visions_message"])
 			self:Flash(args.spellId)
 			self:OpenProximity(args.spellId, 8)
 		end
