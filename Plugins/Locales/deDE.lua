@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "deDE")
+﻿local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "deDE")
 if not L then return end
 
 -----------------------------------------------------------------------
@@ -230,8 +230,8 @@ L.resetAllCustomSound = "Wenn Du die Sounds für Bossbegegnungen geändert hast,
 
 L.bossKillDurationPrint = "'%s' wurde nach %s besiegt."
 L.bossWipeDurationPrint = "An '%s' nach %s gewiped."
-L.newBestKill = "New best kill!"
+L.newBestKill = "Neue Rekordzeit!"
 L.bossStatistics = "Boss-Statistiken"
-L.bossStatsDescription = "Recording of various boss-related statistics such as kills, wipes, best kills and combat duration."
-L.enableStats = "Enable Statistics"
+L.bossStatsDescription = "Zeichnet verschiedene Statistiken der Bossbegegnungen wie Kills, Wipes, Rekordzeiten und Kampfdauer auf."
+L.enableStats = "Statistiken aktivieren"
 

@@ -22,6 +22,8 @@ if L then
 	L.venom_bolt_volley_bar = "Fokus: Salve"
 
 	L.puncture_message = "Dreifachstich"
+
+	L.charge_trigger = "richtet seinen Blick"
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "deDE")
