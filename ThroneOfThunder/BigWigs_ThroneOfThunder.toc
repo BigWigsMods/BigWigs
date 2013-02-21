@@ -2,14 +2,14 @@
 
 ## Title: Big Wigs [|cffeda55fThrone of Thunder|r]
 ## Title-deDE: Big Wigs [|cffeda55fThron des Donners|r]
-## Title-frFR: Big Wigs [|cffeda55fThrone of Thunder|r]
+## Title-frFR: Big Wigs [|cffeda55fTrône du tonnerre|r]
 ## Title-ruRU: Big Wigs [|cffeda55fПрестол Гроз|r]
 ## Title-zhCN: Big Wigs [|cffeda55fThrone of Thunder|r]
 ## Title-zhTW: Big Wigs [|cffeda55fThrone of Thunder|r]
 ## Title-itIT: Big Wigs [|cffeda55fRegno del Tuono|r]
 ## Notes: Big Wigs Modules for the Throne of Thunder.
 ## Notes-deDE: Big Wigs Module für den Thron des Donners.
-## Notes-frFR: Big Wigs Modules for the Throne of Thunder.
+## Notes-frFR: Modules Big Wigs concernant le Trône du tonnerre.
 ## Notes-ruRU: Модуль Big Wigs для Престола Гроз.
 ## Notes-zhCN: Big Wigs Modules for the Throne of Thunder.
 ## Notes-zhTW: Big Wigs Modules for the Throne of Thunder.

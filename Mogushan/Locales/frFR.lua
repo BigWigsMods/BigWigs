@@ -31,10 +31,10 @@ if L then
 	-- Tanks
 	L.tank = "Alertes tank"
 	L.tank_desc = "Compte les cumuls de Fouet foudroyant, Lance enflammée, Horion des Arcanes & Brûlure de l'ombre (héroïque)."
-	L.lash_message = "Fouet(s)"
-	L.spear_message = "Lance(s)"
-	L.shock_message = "Horion(s)"
-	L.burn_message = "Brûlure(s)"
+	L.lash_message = "Fouet"
+	L.spear_message = "Lance"
+	L.shock_message = "Horion"
+	L.burn_message = "Brûlure"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "frFR")
