@@ -20,6 +20,8 @@ L.general = "通用" -- General settings, i.e. things that apply to both normal 
 
 L.duration = ">%s< %s秒"
 L.over = ">%s< 結束！"
+L.removed = "%s Removed"
+L.incoming = "%s Incoming!"
 
 L.add_spawned = "小怪出來了！"
 L.next_add = "下次小怪"

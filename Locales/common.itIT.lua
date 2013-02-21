@@ -20,6 +20,8 @@ L.general = "Generali" -- General settings, i.e. things that apply to both norma
 
 L.duration = "%s per %s sec"
 L.over = "%s Terminato!"
+L.removed = "%s Removed"
+L.incoming = "%s Incoming!"
 
 L.add_spawned = "Add Apparso!"
 L.next_add = "Prossimo Add"

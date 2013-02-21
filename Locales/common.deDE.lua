@@ -20,6 +20,8 @@ L.general = "Allgemein"
 
 L.duration = "%s für %s sec"
 L.over = "%s vorbei!"
+L.removed = "%s Removed"
+L.incoming = "%s Incoming!"
 
 L.add_spawned = "Add gespawnt!"
 L.next_add = "Nächstes Add"

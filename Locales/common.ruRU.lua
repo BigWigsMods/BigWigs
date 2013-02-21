@@ -20,6 +20,8 @@ L.general = "Общее"
 
 L.duration = "%s для %s сек"
 L.over = "%s закончился!"
+L.removed = "%s Removed"
+L.incoming = "%s Incoming!"
 
 L.add_spawned = "Помощник появился!"
 L.next_add = "Следующий помощник"

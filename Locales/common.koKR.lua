@@ -20,6 +20,8 @@ L.general = "일반 경고" -- General settings, i.e. things that apply to both 
 
 L.duration = "%s for %s sec"
 L.over = "%s Over!"
+L.removed = "%s Removed"
+L.incoming = "%s Incoming!"
 
 L.add_spawned = "Add Spawned!"
 L.next_add = "Next Add"

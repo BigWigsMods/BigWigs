@@ -20,6 +20,8 @@ L.general = "Général" -- General settings, i.e. things that apply to both norm
 
 L.duration = "%s pendant %s sec."
 L.over = "%s terminé !"
+L.removed = "%s Removed"
+L.incoming = "%s Incoming!"
 
 L.add_spawned = "Add apparu !"
 L.next_add = "Prochain Add"
