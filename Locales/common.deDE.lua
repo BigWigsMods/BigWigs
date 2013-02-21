@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "deDE")
+﻿local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "deDE")
 if not L then return end
 -- Prototype.lua common words
 L.you = "%s auf DIR!"
@@ -20,8 +20,8 @@ L.general = "Allgemein"
 
 L.duration = "%s für %s sec"
 L.over = "%s vorbei!"
-L.removed = "%s Removed"
-L.incoming = "%s Incoming!"
+L.removed = "%s entfernt"
+L.incoming = "%s bevorstehend!"
 
 L.add_spawned = "Add gespawnt!"
 L.next_add = "Nächstes Add"
