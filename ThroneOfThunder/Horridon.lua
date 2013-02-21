@@ -1,6 +1,6 @@
 --[[
 TODO:
-	figure out dino mancer spawn timer start trigger ( last checked in 10 N ptr
+	figure out dino mancer spawn timer start trigger ( last checked in 10 H ptr and still sometimes 10 sec off )
 ]]--
 
 if select(4, GetBuildInfo()) < 50200 then return end
@@ -10,7 +10,7 @@ if select(4, GetBuildInfo()) < 50200 then return end
 
 local mod, CL = BigWigs:NewBoss("Horridon", 930, 819)
 if not mod then return end
-mod:RegisterEnableMob(68476)
+mod:RegisterEnableMob(68476, 69374) -- Horridon, War-God Jalak
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -97,7 +97,7 @@ function mod:GetOptions()
 		"deadly_plague", {"mortal_strike", "HEALER"}, {136573, "FLASH"},
 		{"venom_bolt_volley", "FLASH"}, {136646, "FLASH"},
 		"blazingSunlight", {136723, "FLASH"},
-		{"puncture", "TANK_HEALER"}, 136741, {"ej:7080", "FLASH", "SAY", "ICON"},"berserk", "bosskill",
+		{"puncture", "TANK_HEALER"}, 136741, {136769, "FLASH", "SAY", "ICON"},"berserk", "bosskill",
 	}, {
 		["ej:7086"] = "ej:7085",
 		["fireball"] = "ej:7084",
@@ -109,7 +109,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "BossEngage")
 	-- The Zandalari
 	self:Log("SPELL_AURA_APPLIED", "Rampage", 136821)
 	self:Log("SPELL_CAST_SUCCESS", "BestialCry", 136817)
@@ -139,17 +139,15 @@ function mod:OnBossEnable()
 	-- general
 	self:Log("SPELL_AURA_APPLIED", "Puncture", 136767)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Puncture", 136767)
-	self:Log("SPELL_CAST_START", "Swipe", 136741, 136770) -- wouldn't hurt to figure out why there are two spellIds
-
-	--Horridon sets his eyes on NAME and stamps his tail!
-	self:Emote("Charge", "sets his eyes")
+	self:Log("SPELL_CAST_START", "Swipe", 136741, 136770) -- 136770 is only after charge
+	self:Log("SPELL_AURA_APPLIED", "Charge", 136769)
 
 	self:Death("Win", 68476)
 end
 
 function mod:OnEngage()
 	self:Berserk(600) -- XXX assumed
-	self:Bar("ej:7086", 90, (EJ_GetSectionInfo(7086)), 138686) -- Dino Mancer spawn timer
+	self:Bar("ej:7086", self:Heroic() and 75 or 90, (EJ_GetSectionInfo(7086)), 138686) -- Dino Mancer spawn timer
 	self:Bar("ej:7086", 25, "The Farraki", 138686) -- sort of?
 end
 
@@ -158,6 +156,15 @@ end
 --
 
 -- The Zandalari
+
+function mod:BossEngage()
+	self:CheckBossStatus()
+	if self:mobId(UnitGUID("boss2")) == 69374 then -- War-God Jalak
+		self:Message("ej:7087", "Positive", "Info", (EJ_GetSectionInfo(7087)), 136821) -- War-God Jalak
+		self:StopBar((EJ_GetSectionInfo(7087)))
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
+	end
+end
 
 function mod:Rampage(args)
 	self:Message(args.spellId, "Important", "Long")
@@ -169,14 +176,13 @@ end
 
 function mod:CrackedShell(args)
 	if args.amount == 4 then
-		self:Message("ej:7087", "Positive", "Info", (EJ_GetSectionInfo(7087)), 136821) -- War-God Jalak
-		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
+		self:Bar("ej:7087", 45, (EJ_GetSectionInfo(7087)), 136821) -- War-God Jalak
 	end
 end
 
 function mod:LastPhase(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-	if hp < 35 and select(4,UnitBuff(unitId, self:SpellName(137240))) ~= 4 then -- phase starts at 30
+	if hp < 35 and not UnitExists("boss2") then -- phase starts at 30, except if the boss is already there
 		self:Message("ej:7087", "Positive", "Info", CL["soon"]:format((EJ_GetSectionInfo(7087))), 136821) -- War-God Jalak
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
@@ -195,7 +201,8 @@ function mod:DinoForm()
 end
 
 function mod:DinoMending(args)
-	self:Message("ej:7090", "Important", "Long", args.spellName, args.spellId) -- maybe should give the interruptable icon to the options menu for this too
+	self:Message("ej:7090", "Important", "Long", args.spellId) -- maybe should give the interruptable icon to the options menu for this too
+	self:CDBar("ej:7090", 8, args.spellId) -- to help interrupters keep track
 end
 
 -- The Amani
@@ -262,7 +269,7 @@ end
 
 function mod:MortalStrike(args)
 	self:Message("mortal_strike", "Urgent")
-	--self:TargetBar("mortal_strike", args.spellName, args.destName, 8, args.spellId)
+	self:TargetBar("mortal_strike", args.destName, 8, args.spellId)
 end
 
 do
@@ -337,21 +344,22 @@ end
 
 -- general
 
-function mod:Charge(_, _, _, _, player)
-	print("charge", player)
-	self:TargetMessage("ej:7080", player, "Attention", "Long", self:SpellName(136769), 136769)
-	self:CDBar("ej:7080", 11, self:SpellName(136769), 136769)
-	if UnitIsUnit("player", player) then
-		self:Flash("ej:7080")
-		self:Say("ej:7080", 136769) -- charge
-		self:PrimaryIcon("ej:7080", player)
+function mod:Charge(args)
+	local target = UnitExists("boss1target")
+	self:TargetMessage(args.spellId, target, "Attention", "Long")
+	self:CDBar(args.spellId, 50)
+	if UnitIsUnit("player", target) then
+		self:Flash(args.spellId)
+		self:Say(args.spellId)
+		self:PrimaryIcon(args.spellId, target)
 	end
-	self:ScheduleTimer("PrimaryIcon", 10, "ej:7080") -- remove icon
+	self:ScheduleTimer("PrimaryIcon", 10, args.spellId) -- remove icon
 end
 
 function mod:Swipe(args)
 	self:Message(136741, "Urgent")
-	self:CDBar(136741, self:LFR() and 16 or 11)
+	local timer = (args.spellID == 136770) and 11 or 19 -- after charge swipe is ~10 sec, then ~19 till next charge ( 10 H ptr )
+	self:CDBar(136741, self:LFR() and 16 or timer) -- someone needs to verify LFR timer
 end
 
 function mod:Puncture(args)
