@@ -128,7 +128,7 @@ end
 
 do
 	local function announceKickable()
-		mod:Message("kick", L["kickable_turtles"]:format(kickable), "Attention", 1766)
+		mod:Message("kick", "Attention", nil, L["kickable_turtles"]:format(kickable), 1766)
 	end
 	function mod:ShellBlock()
 		kickable = kickable + 1
