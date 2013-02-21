@@ -78,14 +78,14 @@ end
 
 do
 	local function warnPlayerMutations()
-		local stats = select(4, UnitDebuff("player", self:SpellName(136184))) or 0   -- Thick Bones
-		local mastery = select(4, UnitDebuff("player", self:SpellName(136186))) or 0 -- Clear Mind
-		local haste = select(4, UnitDebuff("player", self:SpellName(136182))) or 0   -- Improved Synampes
-		local crit  = select(4, UnitDebuff("player", self:SpellName(136180))) or 0   -- Keen Eyesight
+		local stats = select(4, UnitDebuff("player", mod:SpellName(136184))) or 0   -- Thick Bones
+		local mastery = select(4, UnitDebuff("player", mod:SpellName(136186))) or 0 -- Clear Mind
+		local haste = select(4, UnitDebuff("player", mod:SpellName(136182))) or 0   -- Improved Synampes
+		local crit  = select(4, UnitDebuff("player", mod:SpellName(136180))) or 0   -- Keen Eyesight
 		local total = stats + mastery + haste + crit
 		if total == 5 then mod:Flash("ej:6960") end
-		local stacks = (total < 6) and " |c00008000(%d)|r" or " |c00FF0000(%d)|r" -- less than 6 stacks is a buff, more than that is a debuff, so color less than 6 green, more than that red
-		mod:Message("ej:6960", "Personal", "Info", L["mutations"]..stacks, args.spellId)
+		local stacks = (total < 6) and (" |c00008000(%d)|r"):format(total) or (" |c00FF0000(%d)|r"):format(total) -- less than 6 stacks is a buff, more than that is a debuff, so color less than 6 green, more than that red
+		mod:Message("ej:6960", "Personal", (total > 3) and "Info" or nil, L["mutations"]..stacks, 136184)
 	end
 	function mod:PlayerMutations(args)
 		if not UnitIsUnit("player", args.destName) then return end
@@ -115,7 +115,7 @@ function mod:EruptingPustulesApplied(args)
 	if not UnitBuff("boss1", self:SpellName(136218)) then -- the 5 yard spread AcidicSpines
 		self:OpenProximity(args.spellId, 2)
 	end
-	self:Message(args.spellId, "Attention", args.spellName..MB)
+	self:Message(args.spellId, "Attention", nil, args.spellName..MB)
 end
 
 function mod:MetabolicBoost(args)
@@ -153,12 +153,12 @@ function mod:AcidicSpinesApplied(args)
 end
 
 function mod:CausticGas(args)
-	self:Message(args.spellId, "Urgent", args.spellName..MB)
+	self:Message(args.spellId, "Urgent", nil, args.spellName..MB)
 	self:CDBar(args.spellId, 12)
 end
 
 function mod:PrimordialStrike(args)
-	self:Message(args.spellId, "Attention", args.spellName..MB)
+	self:Message(args.spellId, "Attention", nil, args.spellName..MB)
 	self:CDBar(args.spellId, 19)
 end
 
