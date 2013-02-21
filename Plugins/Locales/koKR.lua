@@ -226,5 +226,8 @@ L.resetAllCustomSound = "If you've customized sounds for any boss encounter sett
 
 L.bossKillDurationPrint = "Defeated '%s' after %s."
 L.bossWipeDurationPrint = "Wiped on '%s' after %s."
+L.newBestKill = "New best kill!"
 L.bossStatistics = "Boss Statistics"
+L.bossStatsDescription = "Recording of various boss-related statistics such as kills, wipes, best kills and combat duration."
+L.enableStats = "Enable Statistics"
 

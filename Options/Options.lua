@@ -741,7 +741,7 @@ local function populateToggleOptions(widget, module)
 	scrollFrame:ReleaseChildren()
 
 	local sDB = BigWigsStatisticsDB
-	if module.encounterId and module.zoneId and sDB and sDB[module.zoneId] and sDB[module.zoneId][module.encounterId] then
+	if module.encounterId and module.zoneId and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[module.zoneId] and sDB[module.zoneId][module.encounterId] then
 		sDB = sDB[module.zoneId][module.encounterId]
 
 		-- Create statistics table

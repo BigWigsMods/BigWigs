@@ -230,5 +230,8 @@ L.resetAllCustomSound = "Если вы используете свои звук�
 
 L.bossKillDurationPrint = "'%s' терпит поражение спустя %s."
 L.bossWipeDurationPrint = "'%s' побеждает спустя %s."
+L.newBestKill = "New best kill!"
 L.bossStatistics = "Статистика боссов"
+L.bossStatsDescription = "Recording of various boss-related statistics such as kills, wipes, best kills and combat duration."
+L.enableStats = "Enable Statistics"
 
