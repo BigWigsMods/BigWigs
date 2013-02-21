@@ -78,6 +78,8 @@ if L then
 	L.puncture, L.puncture_desc = EJ_GetSectionInfo(7078)
 	L.puncture_icon = 136767
 	L.puncture_message = "Puncture"
+
+	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
 end
 L = mod:GetLocale()
 L.blazingSunlight = L.blazingSunlight.." "..mod:GetFlagIcon(7)
@@ -140,7 +142,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Puncture", 136767)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Puncture", 136767)
 	self:Log("SPELL_CAST_START", "Swipe", 136741, 136770) -- 136770 is only after charge
-	self:Log("SPELL_AURA_APPLIED", "Charge", 136769)
+	self:Emote("Charge", L["charge_trigger"])
 
 	self:Death("Win", 68476)
 end
@@ -344,20 +346,15 @@ end
 
 -- general
 
-function mod:Charge(args)
-	local target = UnitExists("boss1target") and UnitName("boss1target") or nil
-	self:CDBar(args.spellId, 50)
-	if target then
-		self:TargetMessage(args.spellId, target, "Attention", "Long")
-		if UnitIsUnit("player", target) then
-			self:Flash(args.spellId)
-			self:Say(args.spellId)
-			self:PrimaryIcon(args.spellId, target)
-		end
-		self:ScheduleTimer("PrimaryIcon", 10, args.spellId) -- remove icon
-	else
-		self:Message(args.spellId, "Attention", "Long")
+function mod:Charge(_, _, _, _, player)
+	self:TargetMessage("ej:7080", player, "Attention", "Long", 136769)
+	self:CDBar("ej:7080", 11, 136769)
+	if UnitIsUnit("player", player) then
+		self:Flash("ej:7080")
+		self:Say("ej:7080", 136769) -- charge
+		self:PrimaryIcon("ej:7080", player)
 	end
+	self:ScheduleTimer("PrimaryIcon", 10, "ej:7080") -- remove icon
 end
 
 function mod:Swipe(args)

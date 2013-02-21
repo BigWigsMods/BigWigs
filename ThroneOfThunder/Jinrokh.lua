@@ -1,8 +1,7 @@
 --[[
 TODO:
 	Double check if proximity windows are opened and closed correctly
-	keep en eye out for focused lightning in 25 man in case there are 2, because of ICON usage
-	focused lightning removed is being kept track of with UNIT_AURA which is ugly expect CLEU events added for this ( not as of 10 H ptr )
+	focused lightning removed is being kept track of with UNIT_AURA which is ugly expect CLEU events added for this ( not as of 25 N ptr )
 	timers don't seem to be that inaccurate but it might worth checking if starting timers after lightning storm end might make them even more accurate
 ]]--
 
@@ -18,7 +17,6 @@ mod:RegisterEnableMob(69465)
 --------------------------------------------------------------------------------
 -- Locals
 --
-
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -141,16 +139,21 @@ function mod:FocusedLightningRemoved()
 	end
 end
 
-function mod:FocusedLightning(args)
-	local target = UnitName("boss1target")
-	self:CDBar("ej:7741", 11, args.spellId) -- XXX not sure if there is any point to have such a short bar for this
-	self:TargetMessage("ej:7741", target, "Urgent", "Alarm", args.spellId)
-	if not target then return end -- so we don't throw errors in case target check fails ( we can just debug from :TargetMessage )
-	self:PrimaryIcon("ej:7741", target)
-	if UnitIsUnit(target, "player") then
-		self:RegisterUnitEvent("UNIT_AURA", "FocusedLightningRemoved", "player") -- There is no APPLIED or REMOVED CLEU event for this yet and using the explosion damage to remove icon and close proximity could be innacurate
-		self:Say("ej:7741", CL["say"]:format(args.spellName))
-		self:OpenProximity("ej:7741", 8)
+do
+	local function warnFocusedLightning(spellId)
+		local target = UnitName("boss1target")
+		if not target then return end
+		mod:TargetMessage("ej:7741", target, "Urgent", "Alarm", spellId)
+		mod:PrimaryIcon("ej:7741", target)
+		if UnitIsUnit(target, "player") then
+			mod:RegisterUnitEvent("UNIT_AURA", "FocusedLightningRemoved", "player") -- There is no APPLIED or REMOVED CLEU event for this yet and using the explosion damage to remove icon and close proximity could be innacurate
+			mod:Say("ej:7741", spellId)
+			mod:OpenProximity("ej:7741", 8)
+		end
+	end
+	function mod:FocusedLightning(args)
+		self:CDBar("ej:7741", 11, args.spellId) -- XXX not sure if there is any point to have such a short bar for this
+		self:ScheduleTimer(warnFocusedLightning, 0.2, args.spellId) -- if reliable enough this is lot faster then the next reliable event (cast is 1 sec so with 0.2 we gain 0.8 sec)
 	end
 end
 
