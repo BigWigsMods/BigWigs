@@ -345,9 +345,10 @@ end
 -- general
 
 function mod:Charge(args)
-	local target = UnitExists("boss1target")
+	local target = UnitExists("boss1target") and UnitName("boss1target") or nil
 	self:TargetMessage(args.spellId, target, "Attention", "Long")
 	self:CDBar(args.spellId, 50)
+	if not target then return end
 	if UnitIsUnit("player", target) then
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
