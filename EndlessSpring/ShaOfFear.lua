@@ -52,13 +52,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{"ej:6699", "TANK_HEALER"}, 119414, 129147, {119519, "FLASH", "SAY"},
+		{-6699, "TANK_HEALER"}, 119414, 129147, {119519, "FLASH", "SAY"},
 		{ 119888, "FLASH" }, 118977,
-		129378, {"ej:6700", "TANK_HEALER"}, {120669, "TANK"}, "ability_cd", {120629, "SAY"}, {120519, "FLASH"}, 120672, 120455, {120268, "FLASH", "PROXIMITY"}, {"ej:6109", "FLASH"}, "ej:6107",
+		129378, {-6700, "TANK_HEALER"}, {120669, "TANK"}, "ability_cd", {120629, "SAY"}, {120519, "FLASH"}, 120672, 120455, {120268, "FLASH", "PROXIMITY"}, {-6109, "FLASH"}, -6107,
 		{"swing", "TANK"}, "berserk", "proximity", "bosskill",
 	}, {
-		["ej:6699"] = "ej:6086",
-		[119888] = "ej:6089",
+		[-6699] = -6086,
+		[119888] = -6089,
 		[129378] = ("%s (%s)"):format(self:SpellName(120289), CL["heroic"]),
 		swing = "general",
 	}
@@ -186,7 +186,7 @@ do
 		for guid in next, dreadSpawns do
 			dreadSpawnCounter = dreadSpawnCounter + 1
 		end
-		mod:Message("ej:6107", "Positive", nil, CL["count"]:format(source, dreadSpawnCounter), 128419)
+		mod:Message(-6107, "Positive", nil, CL["count"]:format(source, dreadSpawnCounter), 128419)
 		scheduled = nil
 	end
 	function mod:DreadSpawnSingleCast(args)
@@ -212,8 +212,8 @@ do
 		if UnitBuff("player", champion) then
 			local t = GetTime()
 			if t-prev > 1 then
-				self:Message("ej:6109", "Personal", "Long", L["throw"])
-				self:Flash("ej:6109")
+				self:Message(-6109, "Personal", "Long", L["throw"])
+				self:Flash(-6109)
 				prev = t
 			end
 		end
@@ -311,23 +311,23 @@ function mod:Thrash(args)
 	thrashNext = 2
 	if phase == 2 then
 		thrashCounter = thrashCounter + 1
-		self:Message("ej:6699", "Urgent", nil, CL["count"]:format(args.spellName, thrashCounter))
+		self:Message(-6699, "Urgent", nil, CL["count"]:format(args.spellName, thrashCounter))
 		if thrashCounter == 3 then
-			self:Bar("ej:6700", 10) -- Dread Thrash
+			self:Bar(-6700, 10) -- Dread Thrash
 		else
-			self:Bar("ej:6699", 10, CL["count"]:format(args.spellName, thrashCounter + 1))
+			self:Bar(-6699, 10, CL["count"]:format(args.spellName, thrashCounter + 1))
 		end
 	elseif atSha then
-		self:Message("ej:6699", "Important")
-		self:Bar("ej:6699", 10)
+		self:Message(-6699, "Important")
+		self:Bar(-6699, 10)
 	end
 end
 
 function mod:DreadThrash(args)
 	thrashCounter = 0
 	thrashNext = 5
-	self:Message("ej:6700", "Important", "Alarm")
-	self:Bar("ej:6699", 10, CL["count"]:format(self:SpellName(131996), thrashCounter + 1)) -- Thrash
+	self:Message(-6700, "Important", "Alarm")
+	self:Bar(-6699, 10, CL["count"]:format(self:SpellName(131996), thrashCounter + 1)) -- Thrash
 end
 
 do

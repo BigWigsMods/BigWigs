@@ -55,7 +55,8 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "PreForceAndVerse", "boss1")
-	self:Log("SPELL_CAST_START", "Attenuation", 122496, 122497, 122474, 122479, 123721, 123722) --127834 echo's cast (0.5s after boss triggers it)
+	self:Log("SPELL_CAST_START", "Attenuation", 122496, 122497, 122474, 122479, 123721, 123722)
+	--self:Log("SPELL_CAST_START", "AttenuationEcho", 127834) --echo's cast (0.5s after boss triggers it)
 	self:Log("SPELL_AURA_APPLIED", "Convert", 122740)
 	self:Log("SPELL_AURA_APPLIED", "Exhale", 122761)
 	self:Log("SPELL_AURA_REMOVED", "ExhaleOver", 122761)
@@ -106,6 +107,7 @@ function mod:Attenuation(args)
 	self:Flash("attenuation")
 
 	--p2 heroic initial order: boss dance, force and verve, boss dance, echo dance, force and verve
+	--this still gets messed up, not sure if its a range issue or just gets out of sync after a few minutes
 	if platform == 3 and self:Heroic() and forceCount > 0 then
 		danceTracker = not danceTracker
 	end
@@ -153,7 +155,6 @@ function mod:ExhaleOver(args)
 end
 
 function mod:PlatformSwap()
-	forceCount = 0
 	if platform == 2 then
 		danceTracker = false
 	end

@@ -62,15 +62,15 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{"ej:6548", "FLASH", "ICON", "SAY"},
+		{-6548, "FLASH", "ICON", "SAY"},
 		122784, 123059, "explosion_by_you", {"explosion_casting_by_you", "FLASH"}, 123060, "willpower",
 		"explosion_by_other", {"explosion_casting_by_other", "FLASH"}, 122413, 122408,
 		{121995, "FLASH", "SAY"}, 123020, {121949, "FLASH"},
 		"stages", "berserk", "bosskill",
 	}, {
-		["ej:6548"] = "heroic",
-		[122784] = "ej:6249",
-		explosion_by_other = "ej:6246",
+		[-6548] = "heroic",
+		[122784] = -6249,
+		explosion_by_other = -6246,
 		[121995] = "general",
 	}
 end
@@ -381,25 +381,25 @@ function mod:MonsterDies()
 end
 
 function mod:AmberGlobule(args)
-	self:TargetMessage("ej:6548", args.destName, "Important", "Alert")
+	self:TargetMessage(-6548, args.destName, "Important", "Alert")
 	if UnitIsUnit(args.destName, "player") then
-		self:Flash("ej:6548")
-		self:Say("ej:6548")
+		self:Flash(-6548)
+		self:Say(-6548)
 	end
 	if not primaryIcon then
-		self:PrimaryIcon("ej:6548", args.destName)
+		self:PrimaryIcon(-6548, args.destName)
 		primaryIcon = args.destName
 	else
-		self:SecondaryIcon("ej:6548", args.destName)
+		self:SecondaryIcon(-6548, args.destName)
 	end
 end
 
 function mod:AmberGlobuleRemoved(args)
 	if primaryIcon == args.destName then
-		self:PrimaryIcon("ej:6548")
+		self:PrimaryIcon(-6548)
 		primaryIcon = nil
 	else
-		self:SecondaryIcon("ej:6548")
+		self:SecondaryIcon(-6548)
 	end
 end
 

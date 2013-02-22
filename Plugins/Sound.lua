@@ -125,7 +125,7 @@ function plugin:SetSoundOptions(name, key, flags)
 	wipe(keyTable)
 	keyTable[1] = name
 	keyTable[2] = key
-	if type(key) == "number" then key = GetSpellInfo(key) end
+	if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end
 	local t = addKey(soundOptions, keyTable)
 	return t
 end

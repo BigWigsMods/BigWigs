@@ -68,14 +68,14 @@ function mod:GetOptions()
 		"strength",
 		"courage",
 		"bosses", "combo", "arc",
-		"ej:5670", "berserk", "bosskill",
+		-5670, "berserk", "bosskill",
 	}, {
 		[116829] = ("%s (%s)"):format(L["titan_spark"], CL["heroic"]),
 		rage = L["rage"],
 		strength = L["strength"],
 		courage = L["courage"],
 		bosses = L["bosses"],
-		["ej:5670"] = "general",
+		[-5670] = "general",
 	}
 end
 
@@ -167,24 +167,24 @@ function mod:Bosses()
 	self:Bar("bosses", 13, L["bosses"], L.bosses_icon)
 	self:DelayedMessage("bosses", 13, "Attention", L["bosses"], L.bosses_icon)
 	if not self:Heroic() then
-		self:CDBar("ej:5670", 123) -- Titan Gas
+		self:CDBar(-5670, 123) -- Titan Gas
 	end
 end
 
 do
 	local function fireNext()
-		mod:CDBar("ej:5670", 120)
+		mod:CDBar(-5670, 120)
 	end
 	function mod:TitanGas()
 		gasCounter = gasCounter + 1
 		self:ScheduleTimer(fireNext, 30)
-		self:Bar("ej:5670", 30)
-		self:Message("ej:5670", "Attention", nil, CL["count"]:format(self:SpellName("ej:5670"), gasCounter))
+		self:Bar(-5670, 30)
+		self:Message(-5670, "Attention", nil, CL["count"]:format(self:SpellName(-5670), gasCounter))
 	end
 end
 
 function mod:TitanGasOverdrive()
-	self:Message("ej:5670", "Important", "Alarm", ("%s (%s)"):format(self:SpellName("ej:5670"), self:SpellName(26662))) --Berserk
+	self:Message(-5670, "Important", "Alarm", ("%s (%s)"):format(self:SpellName(-5670), self:SpellName(26662))) --Berserk
 end
 
 do

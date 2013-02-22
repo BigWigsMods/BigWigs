@@ -58,10 +58,10 @@ function mod:GetOptions()
 		"cowardice", 117708, {117837, "DISPEL_ENRAGE"}, -- Meng
 		"bosses", "proximity", "casting_shields", "berserk", "bosskill",
 	}, {
-		[117921] = "ej:5841",
-		[118303] = "ej:5852",
-		[118047] = "ej:5846",
-		cowardice = "ej:5835",
+		[117921] = -5841,
+		[118303] = -5852,
+		[118047] = -5846,
+		cowardice = -5835,
 		bosses = "general",
 	}
 end

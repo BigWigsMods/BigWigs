@@ -42,14 +42,14 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		117960, "adds", "ej:6186", {117878, "FLASH"},
+		117960, "adds", -6186, {117878, "FLASH"},
 		119360,
 		{"floor", "FLASH"},
 		"stages", "berserk", "bosskill",
 	}, {
-		[117960] = "ej:6174",
-		[119360] = "ej:6175",
-		["floor"] = "ej:6176",
+		[117960] = -6174,
+		[119360] = -6175,
+		["floor"] = -6176,
 		stages = "general",
 	}
 end
@@ -149,8 +149,8 @@ end
 
 function mod:TotalAnnihilation(args)
 	annihilateCounter = annihilateCounter + 1
-	self:Message("ej:6186", "Important", "Alert", CL["count"]:format(args.spellName, annihilateCounter), false)
-	self:Bar("ej:6186", 4, CL["cast"]:format(args.spellName))
+	self:Message(-6186, "Important", "Alert", CL["count"]:format(args.spellName, annihilateCounter), false)
+	self:Bar(-6186, 4, CL["cast"]:format(args.spellName))
 end
 
 function mod:MaterializeProtector(args)

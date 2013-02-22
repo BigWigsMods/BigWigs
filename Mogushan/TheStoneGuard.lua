@@ -33,15 +33,15 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		116529,
-		"ej:5772",
+		-5772,
 		130774,
 		{130395, "FLASH", "PROXIMITY"},
 		"overload", "petrifications", "berserk", "bosskill",
 	}, {
 		[116529] = "heroic",
-		["ej:5772"] = "ej:5771",
-		[130774] = "ej:5691",
-		[130395] = "ej:5774",
+		[-5772] = -5771,
+		[130774] = -5691,
+		[130395] = -5774,
 		overload = "general",
 	}
 end
@@ -127,7 +127,7 @@ function mod:Petrifications(_, spellName, _, _, spellId)
 	elseif spellId == 116057 then -- amethyst
 		self:Message("petrifications", nil, "Alert", ("|c00FF44FF%s|r"):format(spellName), spellId) -- purple
 	elseif spellId == 129424 then
-		self:Bar("ej:5772", cobaltTimer)
+		self:Bar(-5772, cobaltTimer)
 	end
 end
 

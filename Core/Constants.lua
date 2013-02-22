@@ -127,7 +127,6 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 	local option = bossOption
 	local t = type(option)
 	if t == "table" then option = option[1]; t = type(option) end
-	local bf = module.toggleDefaults[option]
 
 	if t == "string" then
 		if customBossOptions[option] then
@@ -135,48 +134,48 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			return option, customBossOptions[option][1], customBossOptions[option][2], icon
 		else
 			local roleIcon, roleDesc = getRoleStrings(module, option)
-			local ejID = option:match("^ej:(%d+)$")
-			if tonumber(ejID) then
-				-- This is an EncounterJournal ID
-				local title, description, _, abilityIcon, displayInfo, _, nextChildID = EJ_GetSectionInfo(tonumber(ejID))
-				if title then title = title..roleIcon end
-				if description then description = roleDesc..description end
-				local icon = nil
-				if displayInfo and displayInfo > 0 then
-					-- This is a creature, so we need to get the texture from SetPortraitTexture
-					-- Which is impossible; :GetTexture() just returns "Portrait1", for example.
-					-- So we need to just pass on the portrait ID and let the display handle it.
-					icon = displayInfo
-				elseif abilityIcon and abilityIcon:trim():len() > 0 then
-					-- abilityIcon is always set but can be a zero-length string ("")
-					icon = abilityIcon
+
+			local L = module:GetLocale(true)
+			local title, description = L[option], L[option .. "_desc"]
+			if title then title = title..roleIcon end
+			if description then description = roleDesc..description end
+			local icon = L[option .. "_icon"]
+			if icon == option .. "_icon" then icon = nil end
+			if type(icon) == "number" then
+				local _
+				_, _, icon = GetSpellInfo(icon)
+				if not icon then
+					print("|cFF33FF99BigWigs|r:", "No icon found for", module, L[option .. "_icon"])
 				end
-				-- So the magic is the, if <icon> is a number, it should be a portrait.
-				return option, title, description, icon
-			else
-				local L = module:GetLocale(true)
-				local title, description = L[option], L[option .. "_desc"]
-				if title then title = title..roleIcon end
-				if description then description = roleDesc..description end
-				local icon = L[option .. "_icon"]
-				if icon == option .. "_icon" then icon = nil end
-				if type(icon) == "number" then
-					local _
-					_, _, icon = GetSpellInfo(icon)
-					if not icon then
-						print("|cFF33FF99BigWigs|r:", "No icon found for", module, L[option .. "_icon"])
-					end
-				elseif type(icon) == "string" then
-					icon = "Interface\\Icons\\" .. icon
-				end
-				return option, title, description, icon
+			elseif type(icon) == "string" then
+				icon = "Interface\\Icons\\" .. icon
 			end
+			return option, title, description, icon
 		end
 	elseif t == "number" then
-		local spellName, _, icon = GetSpellInfo(option)
-		if not spellName then error(("Invalid option %d in module %s."):format(option, module.name)) end
-		local roleIcon, roleDesc = getRoleStrings(module, spellName)
-		return spellName, spellName..roleIcon, roleDesc..getSpellDescription(option), icon
+		if option > 0 then
+			local spellName, _, icon = GetSpellInfo(option)
+			if not spellName then error(("Invalid option %d in module %s."):format(option, module.name)) end
+			local roleIcon, roleDesc = getRoleStrings(module, spellName)
+			return spellName, spellName..roleIcon, roleDesc..getSpellDescription(option), icon
+		else
+			-- This is an EncounterJournal ID
+			local title, description, _, abilityIcon, displayInfo = EJ_GetSectionInfo(-option)
+			if not title then error(("Invalid option %d in module %s."):format(option, module.name)) end
+			local icon = nil
+			if displayInfo and displayInfo > 0 then
+				-- This is a creature, so we need to get the texture from SetPortraitTexture
+				-- Which is impossible; :GetTexture() just returns "Portrait1", for example.
+				-- So we need to just pass on the portrait ID and let the display handle it.
+				icon = displayInfo
+			elseif abilityIcon and abilityIcon:trim():len() > 0 then
+				-- abilityIcon is always set but can be a zero-length string ("")
+				icon = abilityIcon
+			end
+			-- So the magic is the, if <icon> is a number, it should be a portrait.
+			local roleIcon, roleDesc = getRoleStrings(module, option)
+			return option, title..roleIcon, roleDesc..description, icon
+		end
 	end
 end
 

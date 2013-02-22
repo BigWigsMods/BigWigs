@@ -37,15 +37,15 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{123845, "FLASH", "ICON", "SAY"},
-		"ej:6325", {"eyes", "TANK"}, {123788, "FLASH", "ICON"}, {123735, "HEALER"}, "proximity",
+		-6325, {"eyes", "TANK"}, {123788, "FLASH", "ICON"}, {123735, "HEALER"}, "proximity",
 		{125390, "FLASH"}, 124097, 125826, 124827, {124077, "FLASH"},
 		{124862, "FLASH", "PROXIMITY", "SAY"}, { 124849, "FLASH" },
 		"phases", "berserk", "bosskill",
 	}, {
 		[123845] = "heroic",
-		["ej:6325"] = "ej:6336",
-		[125390] = "ej:6340",
-		[124862] = "ej:6341",
+		[-6325] = -6336,
+		[125390] = -6340,
+		[124862] = -6341,
 		phases = "general",
 	}
 end
@@ -84,7 +84,7 @@ end
 function mod:OnEngage(diff)
 	self:OpenProximity("proximity", 5)
 	self:Berserk(900)
-	self:Bar("ej:6325", 20) --Dissonance Field
+	self:Bar(-6325, 20) --Dissonance Field
 end
 
 --------------------------------------------------------------------------------
@@ -214,15 +214,15 @@ do
 		warned = power
 		if power == 149 then
 			self:OpenProximity("proximity", 5)
-			self:Bar("ej:6325", 19) --Dissonance Field
+			self:Bar(-6325, 19) --Dissonance Field
 			self:Bar("phases", 149, CL["phase"]:format(2), L.phases_icon)
 			self:StopBar(CL["phase"]:format(1))
 			self:StopBar(124077)
 		elseif power == 130 then
-			self:Bar("ej:6325", 65)
-			self:Message("ej:6325", "Attention")
+			self:Bar(-6325, 65)
+			self:Message(-6325, "Attention")
 		elseif power == 65 then
-			self:Message("ej:6325", "Attention")
+			self:Message(-6325, "Attention")
 		elseif power == 2 then
 			self:CloseProximity()
 			self:Bar("phases", 158, CL["phase"]:format(1), L.phases_icon)

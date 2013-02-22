@@ -32,11 +32,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"ej:6294",
+		-6294,
 		122735, 122754,
 		122774, 123495, {122835, "ICON"}, 123120, 123081, "berserk", "bosskill",
 	}, {
-		["ej:6294"] = "heroic",
+		[-6294] = "heroic",
 		[122735] = INLINE_TANK_ICON..TANK,
 		[122774] = "general",
 	}
@@ -165,12 +165,12 @@ end
 function mod:PrePhase2()
 	local hp = UnitHealth("boss5") / UnitHealthMax("boss5") * 100
 	if hp < 38 then -- phase starts at 33
-		self:Message("ej:6294", "Positive", "Long", CL["soon"]:format(CL["phase"]:format(2)))
+		self:Message(-6294, "Positive", "Long", CL["soon"]:format(CL["phase"]:format(2)))
 		self:CancelTimer(healthCheck)
 	end
 end
 
 function mod:Phase2()
-	self:Message("ej:6294", "Positive", "Info", "33% - "..CL["phase"]:format(2))
+	self:Message(-6294, "Positive", "Info", "33% - "..CL["phase"]:format(2))
 end
 

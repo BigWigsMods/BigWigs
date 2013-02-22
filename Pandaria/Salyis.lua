@@ -24,7 +24,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		121600, 121787, "ej:6200",
+		121600, 121787, -6200,
 		"bosskill",
 	}
 end
@@ -55,6 +55,6 @@ end
 function mod:Stomp()
 	self:Message(121787, "Important", "Alarm", CL["soon"]:format(self:SpellName(121787))) -- Stomp
 	self:Bar(121787, 60) -- Stomp
-	self:DelayedMessage("ej:6200", 10, "Attention", nil, 121747) -- Impaling Throw icon
+	self:DelayedMessage(-6200, 10, "Attention", nil, nil, 121747) -- Impaling Throw icon
 end
 

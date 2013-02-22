@@ -42,12 +42,12 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"ej:6550",
+		-6550,
 		122752, 122768, 122789, {122777, "PROXIMITY", "FLASH", "SAY"},
 		122855, "unstable_sha", 123011, "embodied_terror",
 		"phases", "berserk", "bosskill",
 	}, {
-		["ej:6550"] = "heroic",
+		[-6550] = "heroic",
 		[122752] = L["night"],
 		[122855] = L["day"],
 		phases = "general",
@@ -179,8 +179,8 @@ do
 				self:Bar(122777, 15)
 				self:Message(122777, "Attention")
 			elseif spellId == 123813 then -- The Dark of Night (heroic)
-				self:Bar("ej:6550", 30, 130013)
-				self:Message("ej:6550", "Urgent", "Alarm", 130013)
+				self:Bar(-6550, 30, 130013)
+				self:Message(-6550, "Urgent", "Alarm", 130013)
 			end
 		end
 	end

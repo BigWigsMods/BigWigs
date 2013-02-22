@@ -495,14 +495,13 @@ do
 				if type(v) == "string" then
 					if CL[v] then
 						module.optionHeaders[k] = CL[v]
-					else
-						local ej = v:match("^ej:(%d+)$")
-						if tonumber(ej) then
-							module.optionHeaders[k] = EJ_GetSectionInfo(tonumber(ej))
-						end
 					end
 				elseif type(v) == "number" then
-					module.optionHeaders[k] = GetSpellInfo(v)
+					if v > 0 then
+						module.optionHeaders[k] = GetSpellInfo(v)
+					else
+						module.optionHeaders[k] = EJ_GetSectionInfo(-v)
+					end
 				end
 			end
 		end
@@ -534,10 +533,16 @@ do
 				end
 				if t == "string" then
 					module.toggleDefaults[v] = bitflags
-				elseif t == "number" and v > 1 then
-					local n = GetSpellInfo(v)
-					if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
-					module.toggleDefaults[n] = bitflags
+				elseif t == "number" then
+					if v > 0 then
+						local n = GetSpellInfo(v)
+						if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
+						module.toggleDefaults[n] = bitflags
+					else
+						local n = EJ_GetSectionInfo(-v)
+						if not n then error(("Invalid ej ID %d in the toggleOptions for module %s."):format(-v, module.name)) end
+						module.toggleDefaults[v] = bitflags
+					end
 				end
 			end
 			module.db = addon.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })

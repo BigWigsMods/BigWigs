@@ -45,16 +45,16 @@ L.mending_desc = L.mending_desc .. select(2, EJ_GetSectionInfo(6306))
 
 function mod:GetOptions()
 	return {
-		"ej:6554", {122064, "FLASH", "SAY"}, {122125, "FLASH"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
+		-6554, {122064, "FLASH", "SAY"}, {122125, "FLASH"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
 		122409,
 		{122149, "DISPEL_MAGIC"}, "mending",
 		122406, {122224, "FLASH"}, {121896, "FLASH"}, {131830, "SAY", "FLASH", "PROXIMITY"}, "recklessness",
 		"stages", "berserk", "bosskill",
 	}, {
-		["ej:6554"] = "heroic",
-		[122064] = "ej:6300",
-		[122409] = "ej:6334",
-		[122149] = "ej:6305",
+		[-6554] = "heroic",
+		[122064] = -6300,
+		[122409] = -6334,
+		[122149] = -6305,
 		[122406] = "general",
 	}
 end
@@ -314,8 +314,8 @@ function mod:AddDeaths(args)
 		self:StopBar(122409) -- Kor'thik Strike
 	end
 	if self:Heroic() then
-		self:Bar("ej:6554", 50, args.destName)
-		self:DelayedMessage("ej:6554", 50, "Attention", args.destName)
+		self:Bar(-6554, 50, CL["other"]:format(self:SpellName(-6554), args.destName))
+		self:DelayedMessage(-6554, 50, "Attention", CL["other"]:format(self:SpellName(-6554), args.destName))
 	end
 end
 

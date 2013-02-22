@@ -1066,7 +1066,7 @@ function plugin:Open(range, module, key, player, isReverse)
 	else
 		anchor.ability:SetText(L["Custom range indicator"])
 	end
-	if type(key) == "number" then
+	if type(key) == "number" and key > 0 then -- GameTooltip doesn't do "journal" hyperlinks
 		activeSpellID = key
 	else
 		activeSpellID = nil

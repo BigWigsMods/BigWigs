@@ -127,6 +127,7 @@ local acOptions = {
 			name = L["Flash Screen"],
 			desc = L.flashDesc,
 			order = 22,
+			width = "full",
 		},
 		raidicon = {
 			type = "toggle",
@@ -161,6 +162,7 @@ local acOptions = {
 			name = L["Block boss movies"],
 			desc = L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."],
 			order = 33,
+			width = "full",
 		},
 		separator4 = {
 			type = "description",
@@ -173,12 +175,14 @@ local acOptions = {
 			name = L["Pretend I'm using DBM"],
 			desc = L.pretendDesc,
 			order = 41,
+			width = "full",
 		},
 		customDBMbars = {
 			type = "toggle",
 			name = L["Create custom DBM bars"],
 			desc = L.dbmBarDesc,
 			order = 42,
+			width = "full",
 		},
 	},
 }
@@ -710,18 +714,17 @@ do
 				currentSize = #header
 			end
 			if type(o) == "number" then
-				local l = GetSpellLink(o)
-				if currentSize + #l + 1 > 255 then
-					printList(channel, header, abilities)
-					wipe(abilities)
-					currentSize = 0
-				end
-				abilities[#abilities + 1] = l
-				currentSize = currentSize + #l + 1
-			elseif type(o) == "string" then
-				local ejID = o:match("^ej:(%d+)$")
-				if tonumber(ejID) then
-					local l = select(9, EJ_GetSectionInfo(tonumber(ejID)))
+				if o > 0 then
+					local l = GetSpellLink(o)
+					if currentSize + #l + 1 > 255 then
+						printList(channel, header, abilities)
+						wipe(abilities)
+						currentSize = 0
+					end
+					abilities[#abilities + 1] = l
+					currentSize = currentSize + #l + 1
+				else
+					local l = select(9, EJ_GetSectionInfo(-o))
 					if currentSize + #l + 1 > 255 then
 						printList(channel, header, abilities)
 						wipe(abilities)

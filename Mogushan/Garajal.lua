@@ -30,12 +30,12 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		122151, 116174, 116272, 116161,
-		"ej:5759",
-		"ej:6698", "berserk", "bosskill",
+		-5759,
+		-6698, "berserk", "bosskill",
 	}, {
 		[122151] = CL["phase"]:format(1),
-		["ej:5759"] = CL["phase"]:format(2),
-		["ej:6698"] = "general",
+		[-5759] = CL["phase"]:format(2),
+		[-6698] = "general",
 	}
 end
 
@@ -77,7 +77,7 @@ function mod:OnEngage(diff)
 		self:Berserk(360)
 	end
 	if self:Heroic() then
-		self:Bar("ej:6698", 6.7, L["shadowy_message"]:format(shadowCounter), 117222)
+		self:Bar(-6698, 6.7, L["shadowy_message"]:format(shadowCounter), 117222)
 	end
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "FrenzyCheck", "boss1")
 end
@@ -108,9 +108,9 @@ do
 			self:Bar(116174, totemTime, L["totem_message"]:format(totemCounter))
 		elseif sync == "Shadowy" then
 			shadowCounter = shadowCounter + 1
-			self:Bar("ej:6698", 8.3, L["shadowy_message"]:format(shadowCounter), 117222)
+			self:Bar(-6698, 8.3, L["shadowy_message"]:format(shadowCounter), 117222)
 		elseif sync == "Frenzy" then
-			self:Message("ej:5759", "Positive", "Long", CL["other"]:format(CL["phase"]:format(2), self:SpellName("ej:5759")))
+			self:Message(-5759, "Positive", "Long", CL["other"]:format(CL["phase"]:format(2), self:SpellName(-5759)))
 			if not self:LFR() then
 				self:StopBar(L["totem_message"]:format(totemCounter))
 				self:StopBar(L["banish_message"])
@@ -188,7 +188,7 @@ end
 function mod:FrenzyCheck(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 25 then -- phase starts at 20
-		self:Message("ej:5759", "Positive", "Info", CL["soon"]:format(self:SpellName("ej:5759")))
+		self:Message(-5759, "Positive", "Info", CL["soon"]:format(self:SpellName(-5759)))
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
 end

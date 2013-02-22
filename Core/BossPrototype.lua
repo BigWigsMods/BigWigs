@@ -37,21 +37,21 @@ local icons = setmetatable({}, {__index =
 	function(self, key)
 		local _, value
 		if type(key) == "number" then
-			_, _, value = GetSpellInfo(key)
-			if not value then
-				print(format("Big Wigs: An invalid spell id (%d) is being used in a bar/message.", key))
-			end
-		else
-			local ejID = tonumber(key:match("^ej:(%d+)$"))
-			if ejID then
-				value = false
-				local _, _, _, abilityIcon = EJ_GetSectionInfo(ejID)
-				if abilityIcon and abilityIcon:trim():len() > 0 then
-					value = abilityIcon
+			if key > 0 then
+				_, _, value = GetSpellInfo(key)
+				if not value then
+					print(format("Big Wigs: An invalid spell id (%d) is being used in a bar/message.", key))
 				end
 			else
-				value = "Interface\\Icons\\" .. key
+				local _, _, _, abilityIcon = EJ_GetSectionInfo(-key)
+				if abilityIcon and abilityIcon:trim():len() > 0 then
+					value = abilityIcon
+				else
+					value = false
+				end
 			end
+		else
+			value = "Interface\\Icons\\" .. key
 		end
 		self[key] = value
 		return value
@@ -60,13 +60,10 @@ local icons = setmetatable({}, {__index =
 local spells = setmetatable({}, {__index =
 	function(self, key)
 		local value
-		if type(key) == "number" then
+		if key > 0 then
 			value = GetSpellInfo(key)
 		else
-			local ejID = tonumber(key:match("^ej:(%d+)$"))
-			if ejID then
-				value = EJ_GetSectionInfo(ejID)
-			end
+			value = EJ_GetSectionInfo(-key)
 		end
 		self[key] = value
 		return value
@@ -791,12 +788,12 @@ end
 function boss:StopBar(text, player)
 	if player then
 		if UnitIsUnit(player, "player") then
-			self:SendMessage("BigWigs_StopBar", self, format(L.you, spells[text] or text))
+			self:SendMessage("BigWigs_StopBar", self, format(L.you, type(text) == "number" and spells[text] or text))
 		else
-			self:SendMessage("BigWigs_StopBar", self, format(L.other, spells[text] or text, player:gsub("%-.+", "*")))
+			self:SendMessage("BigWigs_StopBar", self, format(L.other, type(text) == "number" and spells[text] or text, player:gsub("%-.+", "*")))
 		end
 	else
-		self:SendMessage("BigWigs_StopBar", self, spells[text] or text)
+		self:SendMessage("BigWigs_StopBar", self, type(text) == "number" and spells[text] or text)
 	end
 end
 
