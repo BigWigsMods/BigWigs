@@ -24,7 +24,7 @@ mod:RegisterEnableMob(69465)
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.storm_duration = "Lightning Storm duration"
-	L.storm_duration_desc = "A separate bar warning for the duration of the Lightning Storm cast"
+	L.storm_duration_desc = "A separate bar warning for the duration of the Lightning Storm cast."
 	L.storm_duration_icon = 137313
 
 	L.in_water = "You are in water!"
@@ -38,7 +38,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{138732, "PROXIMITY"},
-		137313, "storm_duration", {137175, "PROXIMITY", "ICON"}, {139467, "FLASH"},{-7741, "PROXIMITY", "ICON", "SAY"}, 137162, {138375, "FLASH"}, {138006, "FLASH"}, "berserk", "bosskill",
+		137313, "storm_duration", {137175, "PROXIMITY", "ICON"}, {139467, "FLASH"}, {-7741, "PROXIMITY", "ICON", "SAY"}, 137162, {138375, "FLASH"}, {138006, "FLASH"}, "berserk", "bosskill",
 	}, {
 		[138732] = "heroic",
 		[137313] = "general",
@@ -66,8 +66,10 @@ function mod:OnEngage()
 	self:Bar(137313, 93) -- Lightning Storm
 	self:Bar(137175, 30) -- Thundering Throw
 	self:CDBar(137162, 7) -- Static Burst -- again, is there even a point for such a short bar?
-	self:Berserk(420) -- XXX Soft enrage, at this point you should have 4 pools up leaving very little room for activities -- real Berserk is not yet confirmed
-	if self:Heroic() then self:Bar(138732, 60) end -- Ionization
+	--self:Berserk(420) -- XXX Soft enrage, at this point you should have 4 pools up leaving very little room for activities -- real Berserk is not yet confirmed
+	if self:Heroic() then -- Ionization
+		self:Bar(138732, 60)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -91,13 +93,13 @@ end
 
 
 function mod:LightningStormDuration(args)
-	self:Bar("storm_duration", 15, CL["cast"]:format(args.spellName), args.spellId) -- help with organizing raid cooldowns
+	self:Bar("storm_duration", 15, CL["cast"]:format(args.spellName), L.storm_duration_icon) -- help with organizing raid cooldowns
 end
 
 function mod:LightningStorm(args)
 	self:Message(args.spellId, "Important", "Long")
 	self:Bar(args.spellId, 93)
-	self:Bar(-7741, 26, 137399) -- Focused Lightning
+	self:Bar(-7741, 26) -- Focused Lightning
 	self:Bar(137162, 20) -- Static Burst
 	self:Bar(137175, 30) -- Thundering Throw
 end
@@ -189,3 +191,4 @@ do
 		end
 	end
 end
+

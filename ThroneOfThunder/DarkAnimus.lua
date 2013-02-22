@@ -145,7 +145,7 @@ end
 
 function mod:ExplosiveSlam(args)
 	args.amount = args.amount or 1
-	self:Message(-7770, args.destName, args.amount, "Urgent", "Info", L["slam_message"])
+	self:StackMessage(-7770, args.destName, args.amount, "Urgent", "Info", L["slam_message"])
 	-- not sure if bars are needed
 	self:StopBar(("%s: %s (%d)"):format(L["slam_message"], args.destName, args.amount-1))
 	self:Bar(-7770, 25, ("%s: %s (%d)"):format(L["slam_message"], args.destName, args.amount))

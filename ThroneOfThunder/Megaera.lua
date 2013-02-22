@@ -28,7 +28,7 @@ if L then
 	L.breaths = "Breaths"
 	L.breaths_desc = "Warnings related to all the different types of breaths."
 	L.breaths_icon = 105050
-	L.rampage_over = "Rampage over!"
+
 	L.arcane_adds = "Arcane adds"
 end
 L = mod:GetLocale()
@@ -97,8 +97,8 @@ end
 
 local function breaths()
 	breathCounter = breathCounter + 1
-	mod:Message("breaths", "Attention", nil, CL["count"]:format(L["breaths"], breathCounter), 105050) -- neutral breath icon
-	mod:Bar("breaths", 16.5, L["breaths"], 105050)
+	mod:Message("breaths", "Attention", nil, CL["count"]:format(L["breaths"], breathCounter), L.breaths_icon) -- neutral breath icon
+	mod:Bar("breaths", 16.5, L["breaths"], L.breaths_icon)
 end
 
 do
@@ -115,18 +115,18 @@ do
 end
 
 do
-	local function rampageOver(spellId)
-		mod:Message(spellId, "Positive", nil, L["rampage_over"])
+	local function rampageOver(spellId, spellName)
+		mod:Message(spellId, "Positive", nil, CL["over"]:format(spellName))
 		if frostOrFireDead then
 			mod:OpenProximity("proximity", 5)
 		end
 	end
 	function mod:Rampage(unit, spellName, _, _, spellId)
 		if spellId == 139458 then
-			self:Bar("breaths", 30, L["breaths"], 105050) -- not sure if there is a point for this here, seeing it is as long as rampage duration
+			self:Bar("breaths", 30, L["breaths"], L.breaths_icon) -- not sure if there is a point for this here, seeing it is as long as rampage duration
 			self:Message(spellId, "Important", "Long")
 			self:Bar(spellId, 20, CL["cast"]:format(spellName))
-			self:ScheduleTimer(rampageOver, 20, spellId)
+			self:ScheduleTimer(rampageOver, 20, spellId, spellName)
 			breathCounter = 0
 		end
 	end
@@ -154,7 +154,7 @@ end
 --
 
 function mod:NetherTear(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", nil)
+	self:TargetMessage(args.spellId, args.destName, "Urgent")
 end
 
 function mod:NetherTear(args)
@@ -198,7 +198,7 @@ end
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
 	if msg:find("139866") then -- Torrent of Ice
 		-- XXX this should have an icon too, but lets not bother implementing it till CLEU is fixed for this event
-		self:Say(139866, CL["say"]:format(self:SpellName(139866)))
+		self:Say(139866)
 		self:Message(139866, "Personal", "Info", CL["you"]:format(self:SpellName(139866)))
 		self:Flash(139866)
 	end
@@ -238,5 +238,4 @@ function mod:CindersApplied(args)
 		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", nil, nil, true )
 	end
 end
-
 

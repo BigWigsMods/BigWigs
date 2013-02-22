@@ -158,7 +158,7 @@ do
 		self:ScheduleTimer(flightMessage, 5, 5)
 		self:ScheduleTimer(flightMessage, 8, 2)
 		self:ScheduleTimer(flightMessage, 9, 1) -- A bit of spam, but it is necessary!
-		self:Bar(-7360, 10, args.spellId)
+		self:Bar(-7360, 10)
 		self:ScheduleTimer("Flash", 8, -7360)
 	end
 end

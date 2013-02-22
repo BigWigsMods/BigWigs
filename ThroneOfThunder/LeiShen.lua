@@ -20,7 +20,6 @@ mod:RegisterEnableMob(68397, 68398, 68696, 68697, 68698) -- Lei Shen, Static Sho
 --
 
 local phase = 1
-local staticShockList = {}
 local proximityOpen = nil
 
 local function isConduitAlive(mobId)
@@ -39,9 +38,9 @@ end
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.conduit_abilities = "Conduit Abilities"
-	L.conduit_abilities_desc = "Approximate cooldown bars for the conduit specific abilities"
+	L.conduit_abilities_desc = "Approximate cooldown bars for the conduit specific abilities."
 	L.conduit_abilities_icon = 139271
-	L.conduit_ability_meassage = "Next conduit ability"
+	L.conduit_abilities_message = "Next conduit ability"
 
 	L.intermission = "Intermission"
 	L.overchargerd_message = "Stunning AoE pulse"
@@ -100,13 +99,12 @@ function mod:OnEngage()
 	proximityOpen = nil
 	phase = 1
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
-	wipe(staticShockList)
 	self:CDBar(134916, 42) -- Decapitate
 	self:CDBar(135095, 25) -- Thunderstruck
 	if UnitBuff("boss1", self:SpellName(135681)) then
-		self:OpenProximity(-7239, 8)
+		self:OpenProximity(-7239, 8) -- Diffusion Chain
 	end
-	self:CDBar("conduit_abilities", 15, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+	self:CDBar("conduit_abilities", 15, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 end
 
 --------------------------------------------------------------------------------
@@ -124,8 +122,8 @@ end
 
 do
 	local prev = 0
-	local function warnBallsSoon(spellId)
-		mod:Message(spellId, "Attention", nil, CL["soon"]:format(mod:SpellName(spellId))) -- should maybe shorten this
+	local function warnBallsSoon(spellId, spellName)
+		mod:Message(spellId, "Attention", nil, CL["soon"]:format(spellName)) -- should maybe shorten this
 		if proximityOpen ~= "Diffusion Chain" then -- Diffusion Chians has 8 yard, so don't make a 6 yard if that is open already
 			mod:OpenProximity(spellId, 6)
 		end
@@ -137,7 +135,7 @@ do
 			if not proximityOpen then -- Only close the proximity display if something else have not made it be open
 				self:CloseProximity(args.spellId)
 			end
-			self:ScheduleTimer(warnBallsSoon, 41, args.spellId)-- reopen it when new balls are about to come
+			self:ScheduleTimer(warnBallsSoon, 41, args.spellId, args.spellName)-- reopen it when new balls are about to come
 			self:Bar(args.spellId, 46)
 			self:Message(args.spellId, "Attention")
 		end
@@ -190,7 +188,7 @@ function mod:Intermission(args)
 	end
 	if isConduitAlive(68398) then self:CDBar(135695, 6) end -- Static Shock
 	if isConduitAlive(68697) then self:CDBar(136295, 15) end -- Overcharged
-	if isConduitAlive(68698) then self:CDBar(-7242, 30, 136361) end -- Bouncing Bolt
+	if isConduitAlive(68698) then self:CDBar(-7242, 30) end -- Bouncing Bolt
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
@@ -239,13 +237,13 @@ end
 -- Conduits
 --
 
-function mod:Boss1Succeeded(unit, spellName, _, _, spellId)
+function mod:Boss1Succeeded(unitId, spellName, _, _, spellId)
 	if spellId == 136395 then -- Bouncing Bolt -- should somehow try and count how many more bounces are left
-		self:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+		self:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		-- XXX add bar here
 		self:Message(-7242, "Important", "Long")
 	elseif spellId == 135991 then -- Small Adds
-		self:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+		self:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		-- XXX add bar here
 		self:Message(-7239, "Important", "Long", L["diffusion_add_message"])
 	elseif spellId == 136869 then -- Violent Gale Winds
@@ -262,7 +260,7 @@ do
 				mod:ScheduleTimer(warnSmallAdds, 2) -- so we don't instantly overwrite previous message
 			end
 		else
-			mod:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+			mod:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		end
 		-- XXX add bar here
 		mod:TargetMessage(spellId, overchargedList, "Urgent", "Alarm", L["overchargerd_message"])
@@ -278,7 +276,7 @@ end
 
 function mod:DiffusionChainRemoved()
 	self:CloseProximity(-7239)
-	proximityOpen = false
+	proximityOpen = nil
 end
 
 function mod:DiffusionChainApplied(args)
@@ -289,29 +287,30 @@ end
 
 function mod:StaticShockRemoved(args)
 	self:CloseProximity(args.spellId)
-	proximityOpen = false
+	proximityOpen = nil
 	self:PrimaryIcon(args.spellId)
 end
 
 do
-	local scheduled = nil
+	local staticShockList, scheduled = {}, nil
 	local function warnStaticShock(spellId)
 		if UnitExists("boss1") then -- poor mans intermission check
-			mod:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+			mod:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		end
 		-- XXX add bar here
 		mod:Message(spellId, "Urgent", "Alarm", L["static_shock_message"])
-		scheduled = nil
-		table.sort(staticShockList, function(a,b) return a<b end) -- so targeted proximity opens to the same person for everyone
+		sort(staticShockList) -- so targeted proximity opens to the same person for everyone
 		mod:OpenProximity(spellId, 8, staticShockList[1], true)
 		proximityOpen = "Static Shock"
 		mod:PrimaryIcon(spellId, staticShockList[1]) -- not sure how helpful this is
-		wipe(staticShockList)
+		scheduled = nil
 	end
 	function mod:StaticShockApplied(args)
+		wipe(staticShockList)
 		staticShockList[#staticShockList+1] = args.destName
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnStaticShock, 0.1, args.spellId)
 		end
 	end
 end
+

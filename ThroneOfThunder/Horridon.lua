@@ -211,7 +211,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -254,7 +254,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId) -- not exactly under you
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName)) -- not exactly under you
 			self:Flash(args.spellId)
 		end
 	end

@@ -35,14 +35,14 @@ local lingeringTracker = {
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.priestess_adds = "Priestess adds"
+	L.priestess_adds_desc = "Warning for all kinds of adds from High Priestess Mar'li."
+	L.priestess_adds_icon = 137203
+	L.priestess_adds_message = "Priestess add"
+
 	L.full_power = "Full power"
 	L.assault_message = "Assault"
-
 	L.loa_kills = "Loa kills: %s"
-	L.priestess_add = "Priestess add"
-	L.priestess_adds = "Priestess adds"
-	L.priestess_adds_desc = "Warning for all kinds of adds from High Priestess Mar'li"
-	L.priestess_adds_icon = 137203
 	L.hp_to_go_power = "HP to go: %d%% - Power: %d"
 end
 L = mod:GetLocale()
@@ -99,7 +99,7 @@ function mod:OnEngage()
 	bossDead = 0
 	for _, v in pairs(lingeringTracker) do v = 0 end
 	self:OpenProximity("proximity", self:Heroic() and 7 or 5)
-	self:CDBar("priestess_adds", 27, L["priestess_add"], L.priestess_adds_icon)
+	self:CDBar("priestess_adds", 27, L["priestess_adds_message"], , L.priestess_adds_icon)
 	self:CDBar(-7062, 7) -- Quicksand
 	self:Bar(136992, 60) -- Biting Cold -- XXX not sure if 1 min is right feels too long
 	hasChilledToTheBone = nil
@@ -120,7 +120,7 @@ end
 
 function mod:PriestessAdds(args)
 	self:Message("priestess_adds", "Important", "Alarm", L.priestess_adds_icon)
-	self:CDBar("priestess_adds", 33, L["priestess_add"], L.priestess_adds_icon)
+	self:CDBar("priestess_adds", 33, L["priestess_adds_message"], L.priestess_adds_icon)
 	-- we use a localized string so we don't have to bother with stopping and restarting bars on posess, since priestess adds share cooldown
 end
 

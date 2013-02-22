@@ -24,9 +24,10 @@ local kickable = 0
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.kick = "Kick"
-	L.kick_desc = "Keep track of how many turtles can be kicked"
+	L.kick_desc = "Keep track of how many turtles can be kicked."
 	L.kick_icon = 1766
-	L.kickable_turtles = "Kickable turtles: %d"
+	L.kick_message = "Kickable turtles: %d"
+
 	L.crystal_shell_removed = "Crystal Shell removed!"
 	L.no_crystal_shell = "NO Crystal Shell"
 end
@@ -79,28 +80,28 @@ end
 
 do
 	local timer = nil
-	local function warnCrystalShell(spellId)
-		if UnitDebuff("player", mod:SpellName(spellId)) or UnitIsDeadOrGhost("player") then
+	local function warnCrystalShell(spellId, spellName)
+		if UnitDebuff("player", spellName) or UnitIsDeadOrGhost("player") then
 			mod:CancelTimer(timer)
 			timer = nil
-			return
+		else
+			mod:Message(spellId, "Personal", "Info", L["no_crystal_shell"])
 		end
-		mod:Message(spellId, "Personal", "Info", L["no_crystal_shell"])
 	end
 	function mod:CrystalShellRemoved(args)
 		if not UnitIsUnit("player", args.destName) or self:Tank() then return end
 		self:Flash(args.spellId)
 		self:Message(args.spellId, "Urgent", "Alarm", L["crystal_shell_removed"]) -- I think this should stay Urgent Alarm
 		if not timer then
-			timer = self:ScheduleRepeatingTimer(warnCrystalShell, 3, args.spellId)
+			timer = self:ScheduleRepeatingTimer(warnCrystalShell, 3, args.spellId, args.spellName)
 		end
 	end
 end
 
-function mod:SummonBats(_, _, _, _, spellId)
+function mod:SummonBats(_, spellName, _, _, spellId)
 	if spellId == 136685 then
-		self:Message(-7140, "Urgen", nil, spellId)
-		self:Bar(-7140, 46, spellId)
+		self:Message(-7140, "Urgent", nil, spellName)
+		self:Bar(-7140, 46, spellName)
 	end
 end
 
@@ -129,7 +130,7 @@ end
 
 do
 	local function announceKickable()
-		mod:Message("kick", "Attention", nil, L["kickable_turtles"]:format(kickable), 1766)
+		mod:Message("kick", "Attention", nil, L[["kick_message"]:format(kickable), 1766)
 	end
 	function mod:ShellBlock()
 		kickable = kickable + 1
@@ -145,3 +146,4 @@ function mod:CallOfTortos(args)
 	self:Message(args.spellId, "Urgent")
 	self:Bar(args.spellId, 60)
 end
+

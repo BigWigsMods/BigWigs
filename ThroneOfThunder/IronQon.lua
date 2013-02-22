@@ -180,16 +180,16 @@ do
 		local power = UnitPower(unitId)
 		if power > 64 and prevPower == 0 then
 			prevPower = 65
-			self:Message("molten_energy", "Attention", nil, ("%s (%d%%)"):format(L["molten_energy"], power), 137221)
+			self:Message("molten_energy", "Attention", nil, ("%s (%d%%)"):format(L["molten_energy"], power), L.molten_energy_icon)
 		elseif power > 74 and prevPower == 65 then
 			prevPower = 75
-			self:Message("molten_energy", "Urgent", nil, ("%s (%d%%)"):format(L["molten_energy"], power), 137221)
+			self:Message("molten_energy", "Urgent", nil, ("%s (%d%%)"):format(L["molten_energy"], power), L.molten_energy_icon)
 		elseif power > 84 and prevPower == 75 then
 			prevPower = 85
-			self:Message("molten_energy", "Important", nil, ("%s (%d%%)"):format(L["molten_energy"], power), 137221)
+			self:Message("molten_energy", "Important", nil, ("%s (%d%%)"):format(L["molten_energy"], power), L.molten_energy_icon)
 		elseif power > 94 and prevPower == 85 then
 			prevPower = 95
-			self:Message("molten_energy", "Important", nil, ("%s (%d%%)"):format(L["molten_energy"], power), 137221)
+			self:Message("molten_energy", "Important", nil, ("%s (%d%%)"):format(L["molten_energy"], power), L.molten_energy_icon)
 		end
 	end
 end
@@ -223,16 +223,16 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:OpenProximity(136192, 8) -- Arcing Lightning -- assume 8 yards
 			self:StopBar(77333) -- Whirling Wind
 		elseif unit == "boss3" then
-			self:StopBar(136577) -- Windstorm
+			self:StopBar(-6877) -- Windstorm
 			self:StopBar(136192) -- Arcing Lightning
 			self:CloseProximity(136192)
 			self:OpenProximity(-6870, 10)
-			self:Bar(-6914, 7, 137226) -- Dead Zone
+			self:Bar(-6914, 7) -- Dead Zone
 			self:StopBar(139180) -- Frost Spike
 			self:CDBar(-6870, 17)
 		elseif unit == "boss4" then
 			self:StopBar(134628) -- Unleashed Flame
-			self:StopBar(137226) -- Dead zone
+			self:StopBar(-6914) -- Dead zone
 			self:OpenProximity(136192, 8) -- Arcing Lightning -- assume 8 yards
 		end
 	end
@@ -281,13 +281,13 @@ function mod:Deaths(args)
 		self:OpenProximity(136192, 8) -- Arcing Lightning -- assume 8 yards
 	elseif args.mobId == 68080 then -- Quet'zal
 		if not self:Heroic() then
-			self:StopBar(136577) -- Windstorm
+			self:StopBar(-6877) -- Windstorm
 			self:StopBar(136192) -- Arcing Lightning
 			self:Bar(-6914, 7) -- Dead Zone
 		end
 		self:CloseProximity(136192)
 	elseif args.mobId == 68081 then -- Dam'ren
-		self:StopBar(137226) -- Dead zone
+		self:StopBar(-6914) -- Dead zone
 	elseif args.mobId == 68078 then -- Iron Qon
 		self:Win()
 	end

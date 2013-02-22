@@ -90,7 +90,7 @@ function mod:OnEngage()
 	self:CDBar(-7631, 14) -- Cosmic Barrage
 	self:CDBar(-7643, 22) -- Tears of the Sun
 	if self:Tank() or self:Healer() then
-		self:CDBar(-7643, 50) -- Beast of Nightmares
+		self:CDBar(-7634, 50) -- Beast of Nightmares
 	end
 end
 
@@ -149,17 +149,13 @@ end
 
 -- Phase 2
 
-do
-	local function infernoOver(spellId)
-		mod:Message(spellId, "Positive", nil, CL["over"]:format(mod:SpellName(spellId)))
-	end
-	function mod:NuclearInferno(args)
-		self:Message(args.spellId, "Important", "Alert")
-		self:Flash(args.spellId)
-		self:Bar(args.spellId, 55)
-		self:Bar(args.spellId, 12, CL["cast"]:format(args.spellName))
-		self:ScheduleTimer(infernoOver, 12, args.spellId)
-	end
+
+function mod:NuclearInferno(args)
+	self:Message(args.spellId, "Important", "Alert")
+	self:Flash(args.spellId)
+	self:Bar(args.spellId, 55)
+	self:Bar(args.spellId, 12, CL["cast"]:format(args.spellName))
+	self:ScheduleTimer("Message", 12, args.spellId, "Positive", nil, CL["over"]:format(args.spellName))
 end
 
 do
@@ -197,27 +193,10 @@ end
 
 -- Phase 2
 
-do
-	local timer = nil
-	local function spamIcyShadows(spellId, spellName)
-		if UnitDebuff("player", spellName) then
-			if UnitCastingInfo("boss1") ~= mod:SpellName(137491) then -- nuclear inferno
-				mod:Message(spellId, "Personal", "Info", CL["underyou"]:format(spellName))
-			end
-		else
-			mod:CancelTimer(timer)
-			timer = nil
-		end
-	end
-	function mod:IcyShadows(args)
-		if UnitIsUnit("player", args.destName) then
-			if UnitCastingInfo("boss1") ~= self:SpellName(137491) then -- nuclear inferno
-				self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
-			end
-			if not timer then
-				timer = self:ScheduleRepeatingTimer(spamIcyShadows, 2, args.spellId, args.spellName)
-			end
-		end
+function mod:IcyShadows(args)
+	if UnitDebuff("player", self:SpellName(137440)) and UnitCastingInfo("boss1") ~= self:SpellName(137491) then -- Nuclear Inferno
+		self:Message(137440, "Personal", "Info", CL["underyou"]:format(self:SpellName(137440)))
+		self:ScheduleTimer("IcyShadows", 2)
 	end
 end
 
@@ -233,7 +212,7 @@ function mod:BeastOfNightmares(args)
 		self:Message(-7634, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:Bar(-7634, 51)
 	elseif self:Healer() then
-		self:TargetMessage(-7634, args.destName, "Attention", nil, args.spellId, nil, true)
+		self:TargetMessage(-7634, args.destName, "Attention", nil, nil, nil, true)
 		self:Bar(-7634, 51)
 	end
 end
@@ -251,15 +230,15 @@ function mod:Phases()
 		self:Message("stages", "Positive", "Long", CL["phase"]:format(2), 137401)
 		self:StopBar(137404) -- Tears of the Sun
 		self:StopBar(-7634) -- Beast of Nightmares
-		self:StopBar(-7631)
-		self:CDBar(-7649, 23)
+		self:StopBar(-7631) -- Cosmic Barrage
+		self:CDBar(-7649, 23) -- IceComet
 		if self:Heroic() then
 			self:Bar(137491, 50) -- Nuclear Inferno
 		end
 	elseif 68904 == self:MobId(UnitGUID("boss1")) and 68905 == self:MobId(UnitGUID("boss2")) then -- do it like this in case modules stays enabled, so we don't randomly do stuff when other encounter is engaged
 		self:Message("stages", "Positive", "Long", CL["phase"]:format(3), 137401)
-		self:StopBar(137419)
-		self:StopBar(137408)
+		self:StopBar(-7649) -- Ice Comet
+		self:StopBar(137408) -- Fan of Flames
 	end
 end
 
