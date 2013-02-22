@@ -3,14 +3,14 @@ if not L then return end
 -- Prototype.lua common words
 L.you = ">你< %s！"
 L.underyou = ">你<脚下：%s！"
-L.other = "%s：>%s<！"
-L.onboss = "%s on BOSS!"
+L.other = "%s：>%s<"
+L.onboss = ">首领< %s！"
 L.say = ">我< %s！"
-L.on = "%s on %s"
-L.stack = "%dx %s on %s"
+L.on = ">%s< %s"
+L.stack = "%d层%s >%s<"
 L.cast = "<正在施放：%s>"
 L.soon = "即将 >%s<！"
-L.count = "%s (%d)"
+L.count = "%s（%d）"
 
 L.phase = "阶段%d"
 L.normal = "普通模式"
@@ -20,12 +20,12 @@ L.general = "通用" -- General settings, i.e. things that apply to both normal 
 
 L.duration = ">%s< %s秒"
 L.over = "%s 结束！"
-L.removed = "%s Removed"
-L.incoming = "%s Incoming!"
+L.removed = "%s移除"
+L.incoming = "即将%s！"
 
 L.add_spawned = "小怪刷新!"
 L.next_add = "下一波小怪"
-L.add_killed = "Add killed! (%d/%d)"
+L.add_killed = "小怪已击杀！（%d/%d）"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
