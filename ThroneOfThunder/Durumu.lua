@@ -53,8 +53,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{133767, "TANK"}, {133765, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {136932, "FLASH", "SAY"}, {"ej:6891", "FLASH"}, "ej:6898", "ej:6892",
-		{133798, "ICON"}, "ej:6882", 140502,
+		{133767, "TANK"}, {133765, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {136932, "FLASH", "SAY"}, {-6891, "FLASH"}, -6898, -6892,
+		{133798, "ICON"}, -6882, 140502,
 		"berserk", "bosskill",
 	}, {
 		[133767] = "general",
@@ -112,9 +112,9 @@ function mod:DisintegrationBeam(_, _, _, _, spellId)
 		self:CDBar(134626, 76) -- Lingering Gaze
 		self:CDBar(136932, 78) -- Force of Will
 		redAddLeft = 0
-		self:Bar("ej:6892", 60, CL["cast"]:format(L["death_beam"]), 133778) -- Exactly 60 sec, a good place to start other timers
+		self:Bar(-6892, 60, CL["cast"]:format(L["death_beam"]), 133778) -- Exactly 60 sec, a good place to start other timers
 		local text = (spellId == 136316) and " - |c00008000%s|r" or " - |c00FF0000%s|r"
-		self:Message("ej:6892", "Attention", nil, L["death_beam"]..(text):format((spellId == 136316) and L["clockwise"] or L["counter_clockwise"]), 133778)
+		self:Message(-6892, "Attention", nil, L["death_beam"]..(text):format((spellId == 136316) and L["clockwise"] or L["counter_clockwise"]), 133778)
 	end
 end
 
@@ -166,17 +166,17 @@ end
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
 	if msg:find("134124") then -- Yellow
 		self:StopBar(136932) -- Force of Will -- XXX double check if this is not too early to stop the bar
-		self:Bar("ej:6891", 10, L["rays_spawn"], "inv_misc_gem_variety_02") -- only spawn this bar in one of the functions
+		self:Bar(-6891, 10, L["rays_spawn"], "inv_misc_gem_variety_02") -- only spawn this bar in one of the functions
 		if UnitIsUnit("player", target) then
-			self:Message("ej:6891", "Positive", "Alert", CL["you"]:format("|c00FFFF00"..sender.."|r"), 134124)
+			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c00FFFF00"..sender.."|r"), 134124)
 		end
 	elseif msg:find("134123") then -- Red
 		if UnitIsUnit("player", target) then
-			self:Message("ej:6891", "Positive", "Alert", CL["you"]:format("|c00FF0000"..sender.."|r"), 134123)
+			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c00FF0000"..sender.."|r"), 134123)
 		end
 	elseif msg:find("134122") then -- Red
 		if UnitIsUnit("player", target) then
-			self:Message("ej:6891", "Positive", "Alert", CL["you"]:format("|c000000FF"..sender.."|r"), 134122)
+			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c000000FF"..sender.."|r"), 134122)
 		end
 	elseif msg:find("133795") then -- HungryEyeStart this is faster than CLEU
 		self:TargetMessage(133798, target, "Important", "Alert")
@@ -184,9 +184,9 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
 		self:PrimaryIcon(133798, target)
 		lifedranJumps = 0
 	elseif msg:find(L["red_spawn_trigger"]) then
-		self:Message("ej:6892", "Urgent", nil, L["red_add"], 136154)
+		self:Message(-6892, "Urgent", nil, L["red_add"], 136154)
 	elseif msg:find(L["blue_spawn_trigger"]) then
-		self:Message("ej:6898", "Urgent", nil, L["blue_add"], 136177)
+		self:Message(-6898, "Urgent", nil, L["blue_add"], 136177)
 	elseif msg:find("136932") then -- Force of Will -- XXX no other event on 25 N
 		local onPlayer = UnitIsUnit("player", target)
 		self:Message(136932, "Attention", onPlayer and "Long", onPlayer and CL["you"]:format(args.spellName))
@@ -242,9 +242,9 @@ function mod:Deaths(args)
 		redAddLeft = redAddLeft - 1
 		if redAddLeft == 0 then
 			self:CDBar(136932, 20) -- Force of Will
-			self:Bar("ej:6892", 27, L["death_beam"], 133778)
+			self:Bar(-6892, 27, L["death_beam"], 133778)
 		else
-			self:Message("ej:6892", "Urgent", nil, ("%s (%d)"):format(L["red_add"], redAddLeft), 136154)
+			self:Message(-6892, "Urgent", nil, ("%s (%d)"):format(L["red_add"], redAddLeft), 136154)
 		end
 	end
 end

@@ -57,15 +57,15 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"priestess_adds", {137359, "FLASH"}, -- High Priestess Mar'li
-		{"ej:7062", "FLASH"}, 136878, {136857, "FLASH"}, 136894, -- Sul the Sandcrawler
+		{-7062, "FLASH"}, 136878, {136857, "FLASH"}, 136894, -- Sul the Sandcrawler
 		{137122, "FLASH"}, -- Kazra'jin
 		{"assault", "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, 136990, {137085, "FLASH"}, --Frost King Malakk
 		136442, "proximity", "berserk", "bosskill",
 	}, {
-		["priestess_adds"] = "ej:7050",
-		["ej:7062"] = "ej:7049",
-		[137122] = "ej:7048",
-		["assault"] = "ej:7047",
+		["priestess_adds"] = -7050,
+		[-7062] = -7049,
+		[137122] = -7048,
+		["assault"] = -7047,
 		[136442] = "general",
 	}
 end
@@ -103,7 +103,7 @@ function mod:OnEngage()
 	for _, v in pairs(lingeringTracker) do v = 0 end
 	self:OpenProximity("proximity", self:Heroic() and 7 or 5)
 	self:CDBar("priestess_adds", 27, L["priestess_add"], 137203)
-	self:CDBar("ej:7062", 7, 136860) -- Quicksand
+	self:CDBar(-7062, 7, 136860) -- Quicksand
 	self:Bar(136992, 60) -- Biting Cold -- XXX not sure if 1 min is right feels too long
 	hasChilledToTheBone = false
 end
@@ -149,10 +149,10 @@ function mod:Ensnared(args)
 end
 
 function mod:Quicksand(args)
-	self:CDBar("ej:7062", 33, args.spellId)
+	self:CDBar(-7062, 33, args.spellId)
 	if UnitIsUnit(args.destName, "player") then
-		self:Message("ej:7062", "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
-		self:Flash("ej:7062")
+		self:Message(-7062, "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
+		self:Flash(-7062)
 	end
 end
 

@@ -60,12 +60,12 @@ function mod:GetOptions()
 		{134916, "TANK", "FLASH"}, 135095, {135150, "FLASH"},
 		{136478, "TANK"}, {136543, "PROXIMITY"}, 136850,
 		136889,
-		"stages", {135695, "PROXIMITY", "ICON"}, {"ej:7239", "PROXIMITY"}, 136295, "ej:7242", "conduit_abilities",
+		"stages", {135695, "PROXIMITY", "ICON"}, {-7239, "PROXIMITY"}, 136295, -7242, "conduit_abilities",
 		"berserk", "bosskill",
 	}, {
-		[134916] = "ej:7178",
-		[136478] = "ej:7192",
-		[136889] = "ej:7209",
+		[134916] = -7178,
+		[136478] = -7192,
+		[136889] = -7209,
 		["stages"] = "general",
 	}
 end
@@ -103,7 +103,7 @@ function mod:OnEngage()
 	wipe(staticShockList)
 	self:CDBar(134916, 42) -- Decapitate
 	self:CDBar(135095, 25) -- Thunderstruck
-	if UnitBuff("boss1", self:SpellName(135681)) then self:OpenProximity("ej:7239", 8) end
+	if UnitBuff("boss1", self:SpellName(135681)) then self:OpenProximity(-7239, 8) end
 	self:CDBar("conduit_abilities", 15, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 end
 
@@ -152,7 +152,7 @@ end
 --
 
 local function warnSmallAdds()
-	mod:Message("ej:7239", "Important", nil, CL["soon"]:format(L["diffusion_chain_message"]), 136295)
+	mod:Message(-7239, "Important", nil, CL["soon"]:format(L["diffusion_chain_message"]), 136295)
 end
 
 function mod:OverloadedCircuits()
@@ -188,7 +188,7 @@ function mod:Intermission(args)
 	end
 	if isConduitAlive(68398) then self:CDBar(135695, 6) end -- Static Shock
 	if isConduitAlive(68697) then self:CDBar(136295, 15) end -- Overcharged
-	if isConduitAlive(68698) then self:CDBar("ej:7242", 30, 136361) end -- Bouncing Bolt
+	if isConduitAlive(68698) then self:CDBar(-7242, 30, 136361) end -- Bouncing Bolt
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
@@ -241,11 +241,11 @@ function mod:Boss1Succeeded(unit, spellName, _, _, spellId)
 	if spellId == 136395 then -- Bouncing Bolt -- should somehow try and count how many more bounces are left
 		self:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		-- XXX add bar here
-		self:Message("ej:7242", "Important", "Long", 136361)
+		self:Message(-7242, "Important", "Long", 136361)
 	elseif spellId == 135991 then -- Small Adds
 		self:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		-- XXX add bar here
-		self:Message("ej:7239", "Important", "Long", L["diffusion_add_message"], 135681)
+		self:Message(-7239, "Important", "Long", L["diffusion_add_message"], 135681)
 	elseif spellId == 136869 then -- Violent Gale Winds
 		self:Message(136889, "Important", "Long")
 		self:Bar(136889, 30)
@@ -275,13 +275,13 @@ do
 end
 
 function mod:DiffusionChainRemoved()
-	self:CloseProximity("ej:7239")
+	self:CloseProximity(-7239)
 	proximityOpen = false
 end
 
 function mod:DiffusionChainApplied(args)
-	self:Message("ej:7239", "Important", "Long", L["diffusion_chain_message"], args.spellId)
-	self:OpenProximity("ej:7239", 8)
+	self:Message(-7239, "Important", "Long", L["diffusion_chain_message"], args.spellId)
+	self:OpenProximity(-7239, 8)
 	proximityOpen = "Diffusion Chain"
 end
 

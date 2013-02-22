@@ -35,7 +35,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		136037, 136216, {136218, "PROXIMITY"}, {136228, "ICON"}, 136245, {136246, "PROXIMITY"}, "ej:7830", {"ej:6960", "FLASH"},
+		136037, 136216, {136218, "PROXIMITY"}, {136228, "ICON"}, 136245, {136246, "PROXIMITY"}, -7830, {-6960, "FLASH"},
 		"berserk", "bosskill",
 	}, {
 		[136037] = "general",
@@ -84,9 +84,9 @@ do
 		local crit  = select(4, UnitDebuff("player", mod:SpellName(136180))) or 0   -- Keen Eyesight
 		local total = stats + mastery + haste + crit
 		if total == 0 then return end
-		if total == 5 then mod:Flash("ej:6960") end
+		if total == 5 then mod:Flash(-6960) end
 		local stacks = (total < 6) and (" |c00008000(%d)|r"):format(total) or (" |c00FF0000(%d)|r"):format(total) -- less than 6 stacks is a buff, more than that is a debuff, so color less than 6 green, more than that red
-		mod:Message("ej:6960", "Personal", (total > 3) and "Info" or nil, L["mutations"]..stacks, 136184)
+		mod:Message(-6960, "Personal", (total > 3) and "Info" or nil, L["mutations"]..stacks, 136184)
 	end
 	function mod:PlayerMutations(args)
 		if not UnitIsUnit("player", args.destName) then return end
@@ -97,13 +97,13 @@ end
 function mod:FullyMutatedRemoved(args)
 	if not UnitIsUnit("player", args.destName) then return end
 	self:StopBar(args.spellId)
-	self:Message("ej:7830", "Personal", "Info", CL["over"]:format(args.spellName), args.spellId)
+	self:Message(-7830, "Personal", "Info", CL["over"]:format(args.spellName), args.spellId)
 end
 
 function mod:FullyMutatedApplied(args)
 	if not UnitIsUnit("player", args.destName) then return end
-	self:Bar("ej:7830", 120, args.spellId)
-	self:Message("ej:7830", "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
+	self:Bar(-7830, 120, args.spellId)
+	self:Message(-7830, "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
 end
 
 function mod:EruptingPustulesRemoved(args)

@@ -39,7 +39,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{137633, "FLASH"},
-		136294, "kick", 133939, {134539, "FLASH"}, 134920, "ej:7140",
+		136294, "kick", 133939, {134539, "FLASH"}, 134920, -7140,
 		"berserk", "bosskill",
 	}, {
 		[137633] = "heroic",
@@ -67,7 +67,7 @@ end
 function mod:OnEngage()
 	kickable = 0
 	self:Berserk(300) -- XXX ASSUMED
-	self:Bar("ej:7140", 46, 136685) -- Summon Bats
+	self:Bar(-7140, 46, 136685) -- Summon Bats
 	self:Bar(133939, 46) -- Furious Stone Breath
 	self:Bar(136294, 21) -- Call of Tortos
 	self:Bar(134920, 30) -- Quake Stomp
@@ -99,8 +99,8 @@ end
 
 function mod:SummonBats(_, _, _, _, spellId)
 	if spellId == 136685 then
-		self:Message("ej:7140", "Urgen", nil, spellId)
-		self:Bar("ej:7140", 46, spellId)
+		self:Message(-7140, "Urgen", nil, spellId)
+		self:Bar(-7140, 46, spellId)
 	end
 end
 

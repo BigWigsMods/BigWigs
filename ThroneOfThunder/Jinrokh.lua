@@ -38,7 +38,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{138732, "PROXIMITY"},
-		137313, "storm_duration", {137175, "PROXIMITY", "ICON"}, {139467, "FLASH"},{"ej:7741", "PROXIMITY", "ICON", "SAY"}, 137162, {138375, "FLASH"}, {138006, "FLASH"}, "berserk", "bosskill",
+		137313, "storm_duration", {137175, "PROXIMITY", "ICON"}, {139467, "FLASH"},{-7741, "PROXIMITY", "ICON", "SAY"}, 137162, {138375, "FLASH"}, {138006, "FLASH"}, "berserk", "bosskill",
 	}, {
 		[138732] = "heroic",
 		[137313] = "general",
@@ -79,7 +79,7 @@ function mod:IonizationRemoved(args)
 	if not UnitIsUnit("player", args.destName) then return end
 	self:CloseProximity(args.spellId)
 	if UnitDebuff("player", self:SpellName(137422)) then -- Focused Lightning
-		self:OpenProximity("ej:7741", 8) -- reopen it if we have lightning chasing us too
+		self:OpenProximity(-7741, 8) -- reopen it if we have lightning chasing us too
 	end
 end
 
@@ -97,7 +97,7 @@ end
 function mod:LightningStorm(args)
 	self:Message(args.spellId, "Important", "Long")
 	self:Bar(args.spellId, 93)
-	self:Bar("ej:7741", 26, 137399) -- Focused Lightning
+	self:Bar(-7741, 26, 137399) -- Focused Lightning
 	self:Bar(137162, 20) -- Static Burst
 	self:Bar(137175, 30) -- Thundering Throw
 end
@@ -106,7 +106,7 @@ function mod:ThunderingThrowSafe()
 	self:SecondaryIcon(137175)
 	self:CloseProximity(137175)
 	if UnitDebuff("player", self:SpellName(137162)) then -- Focused Lightning
-		self:OpenProximity("ej:7741", 5)
+		self:OpenProximity(-7741, 5)
 	end
 end
 
@@ -114,7 +114,7 @@ function mod:ThunderingThrow(_, _, _, _, target)
 	self:Message(137175, "Attention", "Alert")
 	self:SecondaryIcon(137175, target)
 	if not UnitIsUnit(target, "player") then -- no point opening proximity for the thrown tank
-		self:CloseProximity("ej:7741") -- close this before opening another ( in case it was open )
+		self:CloseProximity(-7741) -- close this before opening another ( in case it was open )
 		self:OpenProximity(137175, 14, target)
 	end
 end
@@ -134,8 +134,8 @@ end
 
 function mod:FocusedLightningRemoved()
 	if not UnitDebuff("player", self:SpellName(137422)) then
-		self:PrimaryIcon("ej:7741") -- XXX Need to check if there can be 2 up in 25 man at same time
-		self:CloseProximity("ej:7741")
+		self:PrimaryIcon(-7741) -- XXX Need to check if there can be 2 up in 25 man at same time
+		self:CloseProximity(-7741)
 		self:UnregisterUnitEvent("UNIT_AURA", "player")
 	end
 end
@@ -144,16 +144,16 @@ do
 	local function warnFocusedLightning(spellId)
 		local target = UnitName("boss1target")
 		if not target then return end
-		mod:TargetMessage("ej:7741", target, "Urgent", "Alarm", spellId)
-		mod:PrimaryIcon("ej:7741", target)
+		mod:TargetMessage(-7741, target, "Urgent", "Alarm", spellId)
+		mod:PrimaryIcon(-7741, target)
 		if UnitIsUnit(target, "player") then
 			mod:RegisterUnitEvent("UNIT_AURA", "FocusedLightningRemoved", "player") -- There is no APPLIED or REMOVED CLEU event for this yet and using the explosion damage to remove icon and close proximity could be innacurate
-			mod:Say("ej:7741", spellId)
-			mod:OpenProximity("ej:7741", 8)
+			mod:Say(-7741, spellId)
+			mod:OpenProximity(-7741, 8)
 		end
 	end
 	function mod:FocusedLightning(args)
-		self:CDBar("ej:7741", 11, args.spellId) -- XXX not sure if there is any point to have such a short bar for this
+		self:CDBar(-7741, 11, args.spellId) -- XXX not sure if there is any point to have such a short bar for this
 		self:ScheduleTimer(warnFocusedLightning, 0.2, args.spellId) -- if reliable enough this is lot faster then the next reliable event (cast is 1 sec so with 0.2 we gain 0.8 sec)
 	end
 end

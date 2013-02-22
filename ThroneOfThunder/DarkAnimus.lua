@@ -47,9 +47,9 @@ function mod:GetOptions()
 		138644, {136954, "TANK"}, 138691, 138780, {138763, "FLASH"}, {138729, "FLASH"},
 		"berserk", "bosskill",
 	}, {
-		[138485] = "ej:7759", -- Large Anima Golem
-		[138609] = "ej:7760", -- Massive Anima Golem
-		[138644] = "ej:7762", -- Dark Animus
+		[138485] = -7759, -- Large Anima Golem
+		[138609] = -7760, -- Massive Anima Golem
+		[138644] = -7762, -- Dark Animus
 		["berserk"] = "general",
 	}
 end

@@ -45,10 +45,10 @@ function mod:GetOptions()
 
 		139458, {"breaths", "FLASH"}, "proximity", "berserk", "bosskill",
 	}, {
-		[140138] = "ej:7005", -- Heroic only, Arcane Head
-		[139822] = "ej:6998", -- Fire Head
-		[139866] = "ej:7002", -- Frost Head
-		--[] = "ej:7004", -- Poison Head
+		[140138] = -7005, -- Heroic only, Arcane Head
+		[139822] = -6998, -- Fire Head
+		[139866] = -7002, -- Frost Head
+		--[] = -7004, -- Poison Head
 		[139458] = "general",
 	}
 end

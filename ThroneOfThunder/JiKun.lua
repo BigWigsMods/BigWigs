@@ -47,11 +47,11 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"nest", -- this controls a lot of things, so it is easier to turn off for people who don't handle the nests
-		{"ej:7360", "FLASH"}, 140741,
+		{-7360, "FLASH"}, 140741,
 		{140092, "TANK"}, {134366, "TANK"}, {134380, "FLASH"}, 134370,
 		"proximity", "berserk", "bosskill",
 	}, {
-		["nest"] = "ej:7348",
+		["nest"] = -7348,
 		[140092] = "general",
 	}
 end
@@ -151,15 +151,15 @@ end
 
 do
 	local function flightMessage(remainingTime)
-		mod:Message("ej:7360", "Personal", (remainingTime<5) and "Info" or nil, CL["custom_sec"]:format(L["flight_over"], remainingTime), 133755)
+		mod:Message(-7360, "Personal", (remainingTime<5) and "Info" or nil, CL["custom_sec"]:format(L["flight_over"], remainingTime), 133755)
 	end
 	function mod:Flight(args)
 		if not UnitIsUnit("player", args.destName) then return end
 		self:ScheduleTimer(flightMessage, 5, 5)
 		self:ScheduleTimer(flightMessage, 8, 2)
 		self:ScheduleTimer(flightMessage, 9, 1) -- A bit of spam, but it is necessary!
-		self:Bar("ej:7360", 10, args.spellId)
-		self:ScheduleTimer("Flash", 8, "ej:7360")
+		self:Bar(-7360, 10, args.spellId)
+		self:ScheduleTimer("Flash", 8, -7360)
 	end
 end
 
