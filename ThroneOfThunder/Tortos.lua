@@ -129,16 +129,18 @@ function mod:FuriousStoneBreath(args)
 end
 
 do
+	local scheduled = nil
 	local function announceKickable()
 		mod:Message("kick", "Attention", nil, L["kick_message"]:format(kickable), 1766)
+		scheduled = nil
 	end
 	function mod:ShellBlock()
 		kickable = kickable + 1
-		self:ScheduleTimer(announceKickable, 2)
+		if not scheduled then scheduled = self:ScheduleTimer(announceKickable, 2) end
 	end
 	function mod:ShellConcussion()
 		kickable = kickable - 1
-		self:ScheduleTimer(announceKickable, 2)
+		if not scheduled then scheduled = self:ScheduleTimer(announceKickable, 2) end
 	end
 end
 

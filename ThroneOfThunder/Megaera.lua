@@ -18,6 +18,7 @@ mod:RegisterEnableMob(70248, 70212, 70235, 70247, 68065) -- Arcane Head, Flaming
 local frostOrFireDead = nil
 local breathCounter = 0
 local firstHeadKilled = nil
+local breathTimerHandle = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -85,6 +86,7 @@ function mod:OnEngage()
 	frostOrFireDead = nil
 	breathCounter = 0
 	firstHeadKilled = nil
+	breathTimerHandle = nil
 end
 
 --------------------------------------------------------------------------------
@@ -99,6 +101,7 @@ local function breaths()
 	breathCounter = breathCounter + 1
 	mod:Message("breaths", "Attention", nil, CL["count"]:format(L["breaths"], breathCounter), L.breaths_icon) -- neutral breath icon
 	mod:Bar("breaths", 16.5, L["breaths"], L.breaths_icon)
+	breathTimerHandle = nil
 end
 
 do
@@ -163,7 +166,8 @@ function mod:NetherTear(args)
 end
 
 function mod:Diffusion()
-	self:ScheduleTimer(breaths, 0.7)
+	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 0.7) end
+
 end
 
 --------------------------------------------------------------------------------
@@ -171,7 +175,7 @@ end
 --
 
 function mod:RotArmor()
-	self:ScheduleTimer(breaths, 0.7)
+	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 0.7) end
 end
 
 --------------------------------------------------------------------------------
@@ -179,7 +183,7 @@ end
 --
 
 function mod:ArcticFreeze()
-	self:ScheduleTimer(breaths, 0.7)
+	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 0.7) end
 end
 
 do
@@ -209,7 +213,7 @@ end
 --
 
 function mod:IgniteFlesh()
-	self:ScheduleTimer(breaths, 0.7)
+	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 0.7) end
 end
 
 do
