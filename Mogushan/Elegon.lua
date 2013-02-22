@@ -77,7 +77,7 @@ end
 
 function mod:OnEngage()
 	self:Bar(117960, 8.5) -- Celestial Breath
-	self:Bar("adds", 12, CL["next_add"])
+	self:Bar("adds", 12, CL["next_add"], L.adds_icon)
 	self:Berserk(570)
 	drawPowerCounter, annihilateCounter = 0, 0
 	phaseCount = 0
