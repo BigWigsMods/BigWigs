@@ -153,7 +153,7 @@ end
 -- Arcane Head
 --
 
-function mod:NetherTear(args)
+function mod:Suppression(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent")
 end
 
