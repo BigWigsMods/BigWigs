@@ -99,7 +99,7 @@ function mod:OnEngage()
 	bossDead = 0
 	for _, v in pairs(lingeringTracker) do v = 0 end
 	self:OpenProximity("proximity", self:Heroic() and 7 or 5)
-	self:CDBar("priestess_adds", 27, L["priestess_adds_message"], , L.priestess_adds_icon)
+	self:CDBar("priestess_adds", 27, L["priestess_adds_message"], L.priestess_adds_icon)
 	self:CDBar(-7062, 7) -- Quicksand
 	self:Bar(136992, 60) -- Biting Cold -- XXX not sure if 1 min is right feels too long
 	hasChilledToTheBone = nil

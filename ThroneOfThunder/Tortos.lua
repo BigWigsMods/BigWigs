@@ -130,7 +130,7 @@ end
 
 do
 	local function announceKickable()
-		mod:Message("kick", "Attention", nil, L[["kick_message"]:format(kickable), 1766)
+		mod:Message("kick", "Attention", nil, L["kick_message"]:format(kickable), 1766)
 	end
 	function mod:ShellBlock()
 		kickable = kickable + 1
