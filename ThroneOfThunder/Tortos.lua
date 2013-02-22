@@ -53,7 +53,7 @@ function mod:OnBossEnable()
 	-- Heroic
 	self:Log("SPELL_AURA_REMOVED", "CrystalShellRemoved", 137633)
 	-- Normal
-	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "SummonBats", "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "SummonBats", "boss1")
 	self:Log("SPELL_CAST_START", "QuakeStomp", 134920)
 	self:Log("SPELL_DAMAGE", "Rockfall", 134539)
 	self:Log("SPELL_CAST_START", "FuriousStoneBreath", 133939)
@@ -66,6 +66,7 @@ end
 
 function mod:OnEngage()
 	kickable = 0
+	self:Berserk(300) -- XXX ASSUMED
 	self:Bar("ej:7140", 46, 136685) -- Summon Bats
 	self:Bar(133939, 46) -- Furious Stone Breath
 	self:Bar(136294, 21) -- Call of Tortos
