@@ -161,7 +161,7 @@ end
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
 	if msg:find("134124") then -- Yellow
 		self:StopBar(136932) -- Force of Will -- XXX double check if this is not too early to stop the bar
-		self:Bar("ej:6891", L["rays_spawn"], 10, "inv_misc_gem_variety_02") -- only spawn this bar in one of the functions
+		self:Bar("ej:6891", 10, L["rays_spawn"], "inv_misc_gem_variety_02") -- only spawn this bar in one of the functions
 		if UnitIsUnit("player", target) then
 			self:Message("ej:6891", "Positive", "Alert", CL["you"]:format("|c00FFFF00"..sender.."|r"), 134124)
 		end
