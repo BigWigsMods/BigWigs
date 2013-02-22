@@ -182,7 +182,7 @@ function mod:CleansingWaters(args)
 		self:Message(args.spellId, "Attention", self:Dispeller("magic", true) and "Alert", CL["soon"]:format(args.spellName))
 	end
 	self:Bar(args.spellId, 6, L["heal"]:format(args.spellName), 55888) -- orb hitting the ground (water orb icon)
-	self:CDBar(args.spellId, 32)
+	self:CDBar(args.spellId, bossDead > 0 and 42 or 32)
 end
 
 do
@@ -224,15 +224,15 @@ end
 
 
 function mod:BossDeaths(args)
-	if args.mobId == 60583 then --Kaolan
+	if args.mobId == 60583 then -- Kaolan
 		self:StopBar(117986) -- Defiled Ground
 	elseif args.mobId == 60585 then -- Regail
 		self:StopBar(111850) -- Lightning Prison
 		self:StopBar(118077) -- Lightning Storm
 	elseif args.mobId == 60586 then -- Asani
-		self:StopBar(117309) -- Cleansing Waters
 		self:StopBar(117227) -- Corrupted Waters
 	end
+	self:StopBar(117309) -- Cleansing Waters, CD goes wack after kill
 
 	bossDead = bossDead + 1
 	if bossDead > 2 then

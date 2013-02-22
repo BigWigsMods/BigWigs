@@ -258,7 +258,7 @@ function mod:Transitions(unit, spellName, _, _, spellId)
 		self:Berserk(900, phase == 2)
 		if phase == 2 then
 			-- Phase 2 - Berserk in 15 min!
-			self:Message("berserk", "Attention", nil, CL["phase"]:format(2).." - "..CL["custom_min"]:format(spellName, 15))
+			self:Message("berserk", "Attention", nil, CL["phase"]:format(2).." - "..CL["custom_min"]:format(spellName, 15), 26662)
 			-- start Submerge timer using the current power and the new regen rate
 			local left = 1 - (UnitPower("boss1") / UnitPowerMax("boss1")) * 52
 			self:Bar(120455, left, CL["count"]:format(self:SpellName(120455), 1))
