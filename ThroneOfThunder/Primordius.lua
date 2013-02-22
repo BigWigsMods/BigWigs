@@ -151,7 +151,7 @@ function mod:AcidicSpinesRemoved(args)
 end
 
 function mod:AcidicSpinesApplied(args)
-	self:OpenProximity(args.spellid, 5)
+	self:OpenProximity(args.spellId, 5)
 	self:Message(args.spellId, "Important", "Long", args.spellName..MB) -- this maybe should say: Splash attack - SPREAD! ?
 end
 
