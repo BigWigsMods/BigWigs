@@ -32,12 +32,14 @@ plugin.subPanelOptions = {
 	options = {
 		name = L.bossStatistics,
 		type = "group",
+		childGroups = "tab",
 		get = function(i) return plugin.db.profile[i[#i]] end,
 		set = function(i, value) plugin.db.profile[i[#i]] = value end,
+		disabled = function() return true end,
 		args = {
 			heading = {
 				type = "description",
-				name = L.bossStatsDescription,
+				name = L.bossStatsDescription.."\n\n",
 				order = 1,
 				width = "full",
 				fontSize = "medium",
@@ -52,6 +54,47 @@ plugin.subPanelOptions = {
 					plugin:Disable()
 					plugin:Enable()
 				end,
+			},
+			printGroup = {
+				type = "group",
+				name = "Chat Messages",
+				order = 3,
+				inline = true,
+				args = {
+					bestKill = {
+						type = "toggle",
+						name = "best kill",
+						order = 1,
+					},
+					wipe = {
+						type = "toggle",
+						name = "wipe",
+						order = 2,
+					},
+					kill = {
+						type = "toggle",
+						name = "kill",
+						order = 3,
+					},
+				},
+			},
+			test = {
+				type = "toggle",
+				name = "Kill Count",
+				order = 4,
+				width = "full",
+			},
+			test2 = {
+				type = "toggle",
+				name = "Wipe Count",
+				order = 5,
+				width = "full",
+			},
+			test3 = {
+				type = "toggle",
+				name = "Best Kill Log",
+				order = 6,
+				width = "full",
 			},
 		},
 	},

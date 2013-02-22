@@ -1,4 +1,4 @@
-﻿local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "deDE")
+local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "deDE")
 if not L then return end
 if L then
 	L.engage_yell = "Die Göttliche erwählte uns als sterbliche Stimme für Ihren göttlichen Willen. Wir existieren, um Ihren Willen auszuführen"
