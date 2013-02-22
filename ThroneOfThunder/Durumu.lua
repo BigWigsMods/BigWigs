@@ -2,9 +2,10 @@
 TODO:
 	figure out/verify real lingering gaze range
 	there are no CLEU events for blue and red ray controllers as of 10 N PTR, so keep an eye out for these
+		as of 25 N ptr you can't even control who gets the controller
 	verify that red ray controller gets 3 debuffs too with same names
-	somehow verify overall life drain duration
 	figure out where to start ForceOfWill in the DisintegrationBeam phase
+		as of 25 N ptr there is no force of will during DisintegrationBeam phase
 ]]--
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
@@ -52,7 +53,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{133767, "TANK"}, {133765, "TANK_HEALER"}, {138467, "PROXIMITY", "FLASH"}, {136932, "FLASH"}, {"ej:6891", "FLASH"}, "ej:6898", "ej:6892",
+		{133767, "TANK"}, {133765, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {136932, "FLASH", "SAY"}, {"ej:6891", "FLASH"}, "ej:6898", "ej:6892",
 		{133798, "ICON"}, "ej:6882", 140502,
 		"berserk", "bosskill",
 	}, {
@@ -71,9 +72,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RedRayController", 133732)
 	self:Log("SPELL_AURA_APPLIED", "BlueRayController", 133675) -- this is the one that keept racks of you being in ray
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:Log("SPELL_CAST_SUCCESS", "ForceOfWill", 136932)
 	self:Log("SPELL_DAMAGE", "LingeringGazeDamage", 134044)
-	self:Log("SPELL_CAST_START", "LingeringGaze", 138467)
+	self:Log("SPELL_AURA_REMOVED", "LingeringGazeRemoved", 134626)
+	self:Log("SPELL_AURA_APPLIED", "LingeringGazeApplied", 134626)
 	self:Log("SPELL_CAST_START", "HardStare", 133765) -- the reason we have this too is to help healers pre shield, and if shield fully absorbs, Serious Wound does not happen
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SeriousWound", 133767) -- this is for the tanks
 	self:Log("SPELL_AURA_APPLIED", "SeriousWound", 133767)
@@ -81,9 +82,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(600) -- XXX Assumed
-	self:CDBar(138467, 15) -- Lingering Gaze
-	self:Bar(136932, 31, forceOfWill)
+	self:Berserk(600) -- Confirmed 25N
+	self:CDBar(134626, 15) -- Lingering Gaze
+	self:Bar(136932, 33, forceOfWill)
 	blueRayController, redRayController = nil, nil
 	redAddLeft = 3
 	lifedranJumps = 0
@@ -106,11 +107,14 @@ do
 	end
 end
 
-function mod:DisintegrationBeam(_, spellName, _, _, spellId)
-	if spellId == 136316 then -- clokwise
-		self:Message("ej:6892", "Attention", nil, ("%s - |c00008000%s|r"):format(L["death_beam"], L["clockwise"]), 133778)
-	elseif spellId == 133775 then -- counter clokwise
-		self:Message("ej:6892", "Attention", nil, ("%s - |c00FF0000%s|r"):format(L["death_beam"], L["counter_clockwise"]), 133778)
+function mod:DisintegrationBeam(_, _, _, _, spellId)
+	if spellId == 136316 or spellId == 133775 then
+		self:CDBar(134626, 76) -- Lingering Gaze
+		self:CDBar(136932, 78) -- Force of Will
+		redAddLeft = 0
+		self:Bar("ej:6892", 60, CL["cast"]:format(L["death_beam"]), 133778) -- Exactly 60 sec, a good place to start other timers
+		local text = (spellId == 136316) and " - |c00008000%s|r" or " - |c00FF0000%s|r"
+		self:Message("ej:6892", "Attention", nil, L["death_beam"]..(text):format((spellId == 136316) and L["clockwise"] or L["counter_clockwise"]), 133778)
 	end
 end
 
@@ -124,6 +128,7 @@ function mod:LifeDrainApplied(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", ("%s - %d%%"):format(args.spellName, lifedranJumps*60)) -- maybe this should just be the amount of jumps
 end
 
+-- XXX you could no longer control the cones in 25 N PTR consider removing these function if they are uncontrollable later on too
 function mod:RedRayController(args)
 	-- since CLEUs are messed up, we count the amount of debuffs with same name to determine the ray controller
 	-- 3 debuffs with same name means you are the controller
@@ -175,23 +180,22 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
 		end
 	elseif msg:find("133795") then -- HungryEyeStart this is faster than CLEU
 		self:TargetMessage(133798, target, "Important", "Alert")
-		self:Bar(133798, 15, CL["cast"]:format(self:SpellName(133798))) -- XXX somehow verify overall 15 sec duration
+		self:Bar(133798, 20, CL["cast"]:format(self:SpellName(133798)))
 		self:PrimaryIcon(133798, target)
+		lifedranJumps = 0
 	elseif msg:find(L["red_spawn_trigger"]) then
 		self:Message("ej:6892", "Urgent", nil, L["red_add"], 136154)
 	elseif msg:find(L["blue_spawn_trigger"]) then
 		self:Message("ej:6898", "Urgent", nil, L["blue_add"], 136177)
+	elseif msg:find("136932") then -- Force of Will -- XXX no other event on 25 N
+		local onPlayer = UnitIsUnit("player", target)
+		self:Message(136932, "Attention", onPlayer and "Long", onPlayer and CL["you"]:format(args.spellName))
+		self:CDBar(136932, 20)
+		if onPlayer then
+			self:Flash(136932)
+			self:Say(136932)
+		end
 	end
-end
-
-
-function mod:ForceOfWill(args)
-	if UnitIsUnit("player", args.destName) then
-		self:Message(args.spellId, "Personal", "Long", CL["you"]:format(args.spellName))
-	else
-		self:Message(args.spellId, "Attention")
-	end
-	self:Bar(args.spellId, 20)
 end
 
 do
@@ -201,21 +205,24 @@ do
 		local t = GetTime()
 		if t-prev > 1 then -- use 1 sec instead of the usual 2, getting out this fast matters
 			prev = t
-			self:Message(138467, "Personal", "Info", CL["underyou"]:format(args.spellName))
-			self:Flash(138467)
+			self:Message(134626, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Flash(134626)
 		end
 	end
 end
 
-do
-	local function closeLingeringProximity(spellId)
-		mod:CloseProximity(spellId)
+function mod:LingeringGazeRemoved(args)
+	if UnitIsUnit("player", args.destName) then
+		self:CloseProximity(args.spellId)
 	end
-	function mod:LingeringGaze(args)
-		self:Message(args.spellId, "Urgent", "Alarm")
-		self:CDBar(args.spellId, 25)
-		self:OpenProximity(args.spellId, 8) -- EJ says 15 but looks lot less
-		self:ScheduleTimer(closeLingeringProximity, 3, args.spellId) -- cast is 2 sec according to tooltip, but lets add an extra sec for travel time
+end
+
+function mod:LingeringGazeApplied(args)
+	self:CDBar(args.spellId, 25)
+	if UnitIsUnit("player", args.destName) then
+		self:Flash(args.spellId)
+		self:Message(args.spellId, "Urgent", "Alarm", CL["you"]:format(args.spellName))
+		self:OpenProximity(args.spellId, 8) -- XXX EJ says 15 but looks lot less - VERIFY!
 	end
 end
 
@@ -234,6 +241,7 @@ function mod:Deaths(args)
 	elseif args.mobId == 69050 then -- Red add
 		redAddLeft = redAddLeft - 1
 		if redAddLeft == 0 then
+			self:CDBar(136932, 20) -- Force of Will
 			self:Bar("ej:6892", 27, L["death_beam"], 133778)
 		else
 			self:Message("ej:6892", "Urgent", nil, ("%s (%d)"):format(L["red_add"], redAddLeft), 136154)
