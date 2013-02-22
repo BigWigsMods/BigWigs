@@ -15,9 +15,9 @@ mod:RegisterEnableMob(70248, 70212, 70235, 70247, 68065) -- Arcane Head, Flaming
 --------------------------------------------------------------------------------
 -- Locals
 --
-local frostOrFireDead = false
+local frostOrFireDead = nil
 local breathCounter = 0
-local firstHeadKilled = false
+local firstHeadKilled = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -82,9 +82,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	frostOrFireDead = false
+	frostOrFireDead = nil
 	breathCounter = 0
-	firstHeadKilled = false
+	firstHeadKilled = nil
 end
 
 --------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ end
 
 local function breaths()
 	breathCounter = breathCounter + 1
-	mod:Message("breaths", "Attention", nil, ("%s (%d)"):format(L["breaths"], breathCounter), 105050) -- neutral breath icon
+	mod:Message("breaths", "Attention", nil, CL["count"]:format(L["breaths"], breathCounter), 105050) -- neutral breath icon
 	mod:Bar("breaths", 16.5, L["breaths"], 105050)
 end
 

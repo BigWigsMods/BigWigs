@@ -141,20 +141,20 @@ function mod:FocusedLightningRemoved()
 end
 
 do
-	local function warnFocusedLightning(spellId)
+	local function warnFocusedLightning()
 		local target = UnitName("boss1target")
 		if not target then return end
-		mod:TargetMessage(-7741, target, "Urgent", "Alarm", spellId)
+		mod:TargetMessage(-7741, target, "Urgent", "Alarm")
 		mod:PrimaryIcon(-7741, target)
-		if UnitIsUnit(target, "player") then
+		if UnitIsUnit("boss1target", "player") then
 			mod:RegisterUnitEvent("UNIT_AURA", "FocusedLightningRemoved", "player") -- There is no APPLIED or REMOVED CLEU event for this yet and using the explosion damage to remove icon and close proximity could be innacurate
-			mod:Say(-7741, spellId)
+			mod:Say(-7741)
 			mod:OpenProximity(-7741, 8)
 		end
 	end
 	function mod:FocusedLightning(args)
-		self:CDBar(-7741, 11, args.spellId) -- XXX not sure if there is any point to have such a short bar for this
-		self:ScheduleTimer(warnFocusedLightning, 0.2, args.spellId) -- if reliable enough this is lot faster then the next reliable event (cast is 1 sec so with 0.2 we gain 0.8 sec)
+		self:CDBar(-7741, 11) -- XXX not sure if there is any point to have such a short bar for this
+		self:ScheduleTimer(warnFocusedLightning, 0.2) -- if reliable enough this is lot faster then the next reliable event (cast is 1 sec so with 0.2 we gain 0.8 sec)
 	end
 end
 

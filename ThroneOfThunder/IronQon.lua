@@ -108,8 +108,8 @@ do
 end
 
 function mod:DeadZone(args)
-	self:Message(-6914, "Attention", nil, args.spellId)
-	self:Bar(-6914, 16, args.spellId)
+	self:Message(-6914, "Attention")
+	self:Bar(-6914, 16)
 end
 
 -- Quet'zal
@@ -117,7 +117,7 @@ end
 function mod:ArcingLightningApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent") -- no point for sound since the guy stunned can't do anything
-	self:Bar(args.spellId, (self:mobId(UnitGUID("boss2")) == 68079) and 40 or 20) -- Ro'shak is there aka Heroic p1 then 40 else 20
+	self:Bar(args.spellId, self:MobId(UnitGUID("boss2")) == 68079 and 40 or 20) -- Ro'shak is there aka Heroic p1 then 40 else 20
 end
 
 function mod:ArcingLightningRemoved(args)
@@ -139,7 +139,7 @@ end
 
 function mod:Windstorm(args)
 	if not UnitIsUnit("player", args.destName) then return end
-	self:Message(-6877, "Attention", nil, args.spellId) -- lets leave it here to warn people who fail and step back into the windstorm
+	self:Message(-6877, "Attention") -- lets leave it here to warn people who fail and step back into the windstorm
 end
 
 -- Ro'shak
@@ -160,12 +160,12 @@ end
 function mod:Scorched(args)
 	args.amount = args.amount or 1
 	if args.amount > 4 and UnitIsUnit(args.destName, "player") then
-		self:Message(-6871, "Important", nil, ("%s (%d)"):format(args.spellName, args.amount), args.spellId)
+		self:Message(-6871, "Important", nil, CL["count"]:format(args.spellName, args.amount))
 	end
 	if self:Heroic() and self:mobId(UnitGUID("boss4")) == 68081 then -- Dam'ren is active and heroic
-		self:Bar(-6870, 16, 134628) -- Unleashed Flame
+		self:Bar(-6870, 16) -- Unleashed Flame
 	else
-		self:CDBar(-6870, 6, 134628) -- XXX Unleashed Flame - don't think there is any point to this, maybe coordinating personal cooldowns?
+		self:CDBar(-6870, 6) -- XXX Unleashed Flame - don't think there is any point to this, maybe coordinating personal cooldowns?
 	end
 end
 
@@ -211,14 +211,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(139180, 13)
 	elseif spellId == 137656 then -- Rushing Winds - start Wind Storm bar here, should be more accurate then unitaura on player
 		self:Message(-6877, "Positive", nil, CL["over"]:format(self:SpellName(136577)), 136577) -- Wind Storm
-		self:Bar(-6877, 70, 136577) -- Wind Storm
+		self:Bar(-6877, 70) -- Wind Storm
 	elseif spellId == 50630 then -- Eject All Passangers aka heroic phase change
 		if unit == "boss2" then -- Ro'shak
 			self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss2")
 			self:CloseProximity(-6870)
 			self:StopBar(137221) -- Molten Overload
 			self:StopBar(134628) -- Unleashed Flame
-			self:Bar(-6877, 50, 136577) -- Windstorm
+			self:Bar(-6877, 50) -- Windstorm
 			self:Bar(136192, 17) -- Arcing Lightning -- XXX not sure if it has to be restarted here for heroic
 			self:OpenProximity(136192, 8) -- Arcing Lightning -- assume 8 yards
 			self:StopBar(77333) -- Whirling Wind
@@ -229,7 +229,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:OpenProximity(-6870, 10)
 			self:Bar(-6914, 7, 137226) -- Dead Zone
 			self:StopBar(139180) -- Frost Spike
-			self:CDBar(-6870, 17, 134628)
+			self:CDBar(-6870, 17)
 		elseif unit == "boss4" then
 			self:StopBar(134628) -- Unleashed Flame
 			self:StopBar(137226) -- Dead zone
@@ -240,7 +240,7 @@ end
 
 do
 	local timer, fired = nil, 0
-	local function spearWarn(spellId)
+	local function warnSpear(spellId)
 		fired = fired + 1
 		local player = UnitName("boss2target")
 		if player and (not UnitDetailedThreatSituation("boss2target", "boss2") or fired > 13) then
@@ -250,7 +250,7 @@ do
 			timer = nil
 			if UnitIsUnit("boss2target", "player") then
 				mod:Flash(spellId)
-				mod:Say(spellId, CL["say"]:format(mod:SpellName(spellId)))
+				mod:Say(spellId)
 			end
 			return
 		end
@@ -265,7 +265,7 @@ do
 		self:CDBar(args.spellId, 33)
 		fired = 0
 		if not timer then
-			timer = self:ScheduleRepeatingTimer(spearWarn, 0.05, args.spellId)
+			timer = self:ScheduleRepeatingTimer(warnSpear, 0.05, args.spellId)
 		end
 	end
 end
@@ -276,14 +276,14 @@ function mod:Deaths(args)
 		self:CloseProximity(-6870)
 		self:StopBar(137221) -- Molten Overload
 		self:StopBar(134628) -- Unleashed Flame
-		self:Bar(-6877, 50, 136577) -- Windstorm
-		self:Bar(136192, 17, 136192) -- Arcing Lightning
+		self:Bar(-6877, 50) -- Windstorm
+		self:Bar(136192, 17) -- Arcing Lightning
 		self:OpenProximity(136192, 8) -- Arcing Lightning -- assume 8 yards
 	elseif args.mobId == 68080 then -- Quet'zal
 		if not self:Heroic() then
 			self:StopBar(136577) -- Windstorm
 			self:StopBar(136192) -- Arcing Lightning
-			self:Bar(-6914, 7, 137226) -- Dead Zone
+			self:Bar(-6914, 7) -- Dead Zone
 		end
 		self:CloseProximity(136192)
 	elseif args.mobId == 68081 then -- Dam'ren

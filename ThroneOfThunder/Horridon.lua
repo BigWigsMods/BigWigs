@@ -60,9 +60,6 @@ if L then
 	L.fireball_warning = "Your focus is casting Fireball!"
 	L.fireball_bar = "Focus: Fireball"
 
-	L.mortal_strike, L.mortal_strike_desc = EJ_GetSectionInfo(7120)
-	L.mortal_strike_icon = 136670
-
 	L.deadly_plague, L.deadly_plague_desc = EJ_GetSectionInfo(7119)
 	L.deadly_plague_icon = 136710
 
@@ -75,8 +72,6 @@ if L then
 	L.blazingSunlight, L.blazingSunlight_desc = EJ_GetSectionInfo(7109)
 	L.blazingSunlight_icon = 136719
 
-	L.puncture, L.puncture_desc = EJ_GetSectionInfo(7078)
-	L.puncture_icon = 136767
 	L.puncture_message = "Puncture"
 
 	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
@@ -96,17 +91,17 @@ function mod:GetOptions()
 	return {
 		-7086, -7090, -7092, -7087, 136817, 136821,
 		"fireball", "chain_lightning", "hex", {136490, "FLASH"},
-		"deadly_plague", {"mortal_strike", "HEALER"}, {136573, "FLASH"},
+		"deadly_plague", {-7120, "HEALER"}, {136573, "FLASH"},
 		{"venom_bolt_volley", "FLASH"}, {136646, "FLASH"},
 		"blazingSunlight", {136723, "FLASH"},
-		{"puncture", "TANK_HEALER"}, 136741, {136769, "FLASH", "SAY", "ICON"},"berserk", "bosskill",
+		{-7078, "TANK_HEALER"}, 136741, {136769, "FLASH", "SAY", "ICON"},"berserk", "bosskill",
 	}, {
 		[-7086] = -7085,
 		["fireball"] = -7084,
 		["deadly_plague"] = -7083,
 		["venom_bolt_volley"] = -7082,
 		["blazingSunlight"] = -7081,
-		["puncture"] = "general",
+		[-7078] = "general",
 	}
 end
 
@@ -149,7 +144,7 @@ end
 
 function mod:OnEngage()
 	self:Berserk(600) -- XXX assumed
-	self:Bar(-7086, self:Heroic() and 75 or 90, (EJ_GetSectionInfo(7086)), 138686) -- Dino Mancer spawn timer
+	self:Bar(-7086, self:Heroic() and 75 or 90, nil, 138686) -- Dino Mancer spawn timer
 	self:Bar(-7086, 25, "The Farraki", 138686) -- sort of?
 end
 
@@ -162,8 +157,8 @@ end
 function mod:BossEngage()
 	self:CheckBossStatus()
 	if self:MobId(UnitGUID("boss2")) == 69374 then -- War-God Jalak
-		self:Message(-7087, "Positive", "Info", (EJ_GetSectionInfo(7087)), 136821) -- War-God Jalak
-		self:StopBar((EJ_GetSectionInfo(7087)))
+		self:Message(-7087, "Positive", "Info") -- War-God Jalak
+		self:StopBar(-7087)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end
@@ -178,14 +173,14 @@ end
 
 function mod:CrackedShell(args)
 	if args.amount == 4 then
-		self:Bar(-7087, 45, (EJ_GetSectionInfo(7087)), 136821) -- War-God Jalak
+		self:Bar(-7087, 45) -- War-God Jalak
 	end
 end
 
 function mod:LastPhase(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 35 and not UnitExists("boss2") then -- phase starts at 30, except if the boss is already there
-		self:Message(-7087, "Positive", "Info", CL["soon"]:format((EJ_GetSectionInfo(7087))), 136821) -- War-God Jalak
+		self:Message(-7087, "Positive", "Info", CL["soon"]:format(self:SpellName(-7087))) -- War-God Jalak
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
 end
@@ -193,7 +188,7 @@ end
 function mod:Headache()
 	-- Dino Mancer spawn timer
 	-- this is assumed in every aspect (timer might not start here, and might not be this long)
-	self:Bar(-7086, 90, (EJ_GetSectionInfo(7086)), 138686) -- dino looking like icon -- dino mancer
+	self:Bar(-7086, 90, nil, 138686) -- dino looking like icon -- dino mancer
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "LastPhase", "boss1") -- don't need to register this on engage
 end
 
@@ -203,8 +198,8 @@ function mod:DinoForm()
 end
 
 function mod:DinoMending(args)
-	self:Message(-7090, "Important", "Long", args.spellId) -- maybe should give the interruptable icon to the options menu for this too
-	self:CDBar(-7090, 8, args.spellId) -- to help interrupters keep track
+	self:Message(-7090, "Important", "Long") -- maybe should give the interruptable icon to the options menu for this too
+	self:CDBar(-7090, 8) -- to help interrupters keep track
 end
 
 -- The Amani
@@ -270,8 +265,8 @@ function mod:MortalStrikeRemoved(args)
 end
 
 function mod:MortalStrike(args)
-	self:Message("mortal_strike", "Urgent")
-	self:TargetBar("mortal_strike", args.destName, 8, args.spellId)
+	self:Message(-7120, "Urgent")
+	self:TargetBar(-7120, args.destName, 8, args.spellId)
 end
 
 do
@@ -347,11 +342,11 @@ end
 -- general
 
 function mod:Charge(_, _, _, _, player)
-	self:TargetMessage(-7080, player, "Attention", "Long", 136769)
-	self:CDBar(-7080, 11, 136769)
+	self:TargetMessage(-7080, player, "Attention", "Long")
+	self:CDBar(-7080, 11)
 	if UnitIsUnit("player", player) then
 		self:Flash(-7080)
-		self:Say(-7080, 136769) -- charge
+		self:Say(-7080)
 		self:PrimaryIcon(-7080, player)
 	end
 	self:ScheduleTimer("PrimaryIcon", 10, -7080) -- remove icon
@@ -364,7 +359,6 @@ function mod:Swipe(args)
 end
 
 function mod:Puncture(args)
-	args.amount = args.amount or 1
-	self:StackMessage("puncture", args.destName, args.amount, "Urgent",  "Info", L["puncture_message"])
+	self:StackMessage(-7078, args.destName, args.amount, "Urgent",  "Info", L["puncture_message"])
 end
 

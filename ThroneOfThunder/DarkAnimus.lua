@@ -21,8 +21,6 @@ mod:RegisterEnableMob(69701, 69700, 69699, 69427) -- Anima Golem, Large Anima Go
 -- Locals
 --
 
-local crimsonWake = mod:SpellName(138485)
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -30,8 +28,6 @@ local crimsonWake = mod:SpellName(138485)
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "The orb explodes!"
-	L.slam, L.slam_desc = EJ_GetSectionInfo(7770)
-	L.slam_icon = 138569
 	L.slam_message = "Slam"
 end
 L = mod:GetLocale()
@@ -43,7 +39,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{138485, "FLASH", "SAY"},
-		{138609, "FLASH", "ICON"}, {"slam", "TANK"},
+		{138609, "FLASH", "ICON"}, {-7770, "TANK"},
 		138644, {136954, "TANK"}, 138691, 138780, {138763, "FLASH"}, {138729, "FLASH"},
 		"berserk", "bosskill",
 	}, {
@@ -149,10 +145,10 @@ end
 
 function mod:ExplosiveSlam(args)
 	args.amount = args.amount or 1
-	self:Message("slam", args.destName, args.amount, "Urgent", "Info", L["slam_message"], args.spellId)
+	self:Message(-7770, args.destName, args.amount, "Urgent", "Info", L["slam_message"])
 	-- not sure if bars are needed
 	self:StopBar(("%s: %s (%d)"):format(L["slam_message"], args.destName, args.amount-1))
-	self:Bar("slam", 25, ("%s: %s (%d)"):format(L["slam_message"], args.destName, args.amount), args.spellId)
+	self:Bar(-7770, 25, ("%s: %s (%d)"):format(L["slam_message"], args.destName, args.amount))
 end
 
 function mod:MatterSwapRemoved(args)
@@ -189,11 +185,11 @@ do
 end
 
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg, sender)
-	if sender == crimsonWake then -- Crimson Wake
-		self:Say(138485, CL["say"]:format(crimsonWake))
-		self:Bar(138485, 30, CL["you"]:format(crimsonWake))
-		self:DelayedMessage(138485, 30, "Positive", CL["over"]:format(crimsonWake))
-		self:Message(138485, "Urgent", "Alarm", CL["you"]:format(crimsonWake))
+	if sender == mod:SpellName(138485) then -- Crimson Wake
+		self:Say(138485)
+		self:Bar(138485, 30, CL["you"]:format(sender))
+		self:DelayedMessage(138485, 30, "Positive", CL["over"]:format(sender))
+		self:Message(138485, "Urgent", "Alarm", CL["you"]:format(sender))
 		self:Flash(138485)
 	end
 end

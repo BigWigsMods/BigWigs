@@ -18,7 +18,7 @@ mod:RegisterEnableMob(69132, 69131, 69134, 69078) -- High Priestess Mar'li, Fros
 --------------------------------------------------------------------------------
 -- Locals
 --
-local hasChilledToTheBone = false
+local hasChilledToTheBone = nil
 local UnitIsUnit = UnitIsUnit
 local bossDead = 0
 local posessHPStart = 0
@@ -36,9 +36,6 @@ local lingeringTracker = {
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.full_power = "Full power"
-
-	L.assault, L.assault_desc = EJ_GetSectionInfo(7054)
-	L.assault_icon = 136904
 	L.assault_message = "Assault"
 
 	L.loa_kills = "Loa kills: %s"
@@ -59,13 +56,13 @@ function mod:GetOptions()
 		"priestess_adds", {137359, "FLASH"}, -- High Priestess Mar'li
 		{-7062, "FLASH"}, 136878, {136857, "FLASH"}, 136894, -- Sul the Sandcrawler
 		{137122, "FLASH"}, -- Kazra'jin
-		{"assault", "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, 136990, {137085, "FLASH"}, --Frost King Malakk
+		{-7054, "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, 136990, {137085, "FLASH"}, --Frost King Malakk
 		136442, "proximity", "berserk", "bosskill",
 	}, {
 		["priestess_adds"] = -7050,
 		[-7062] = -7049,
 		[137122] = -7048,
-		["assault"] = -7047,
+		[-7054] = -7047,
 		[136442] = "general",
 	}
 end
@@ -102,10 +99,10 @@ function mod:OnEngage()
 	bossDead = 0
 	for _, v in pairs(lingeringTracker) do v = 0 end
 	self:OpenProximity("proximity", self:Heroic() and 7 or 5)
-	self:CDBar("priestess_adds", 27, L["priestess_add"], 137203)
-	self:CDBar(-7062, 7, 136860) -- Quicksand
+	self:CDBar("priestess_adds", 27, L["priestess_add"], L.priestess_adds_icon)
+	self:CDBar(-7062, 7) -- Quicksand
 	self:Bar(136992, 60) -- Biting Cold -- XXX not sure if 1 min is right feels too long
-	hasChilledToTheBone = false
+	hasChilledToTheBone = nil
 end
 
 --------------------------------------------------------------------------------
@@ -122,8 +119,8 @@ function mod:MarkedSoul(args)
 end
 
 function mod:PriestessAdds(args)
-	self:Message("priestess_adds", "Important", "Alarm", args.spellId)
-	self:CDBar("priestess_adds", 33, L["priestess_add"], args.spellId)
+	self:Message("priestess_adds", "Important", "Alarm", L.priestess_adds_icon)
+	self:CDBar("priestess_adds", 33, L["priestess_add"], L.priestess_adds_icon)
 	-- we use a localized string so we don't have to bother with stopping and restarting bars on posess, since priestess adds share cooldown
 end
 
@@ -144,14 +141,14 @@ end
 
 function mod:Ensnared(args)
 	if UnitIsUnit(args.destName, "player") then
-		self:Message(136878, "Attention", nil, ("%s (%d)"):format(args.spellName, args.amount or 1))
+		self:Message(136878, "Attention", nil, CL["count"]:format(args.spellName, args.amount or 1))
 	end
 end
 
 function mod:Quicksand(args)
 	self:CDBar(-7062, 33, args.spellId)
 	if UnitIsUnit(args.destName, "player") then
-		self:Message(-7062, "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
+		self:Message(-7062, "Personal", "Info", CL["underyou"]:format(args.spellName))
 		self:Flash(-7062)
 	end
 end
@@ -206,7 +203,7 @@ function mod:ChilledToTheBone()
 		self:Flash(137085)
 		hasChilledToTheBone = true
 	elseif not UnitDebuff("player", self:SpellName(137085)) then
-		hasChilledToTheBone = false
+		hasChilledToTheBone = nil
 	end
 end
 
@@ -215,7 +212,7 @@ end
 function mod:Assault(args)
 	args.amount = args.amount or 1
 	if args.amount % 5 == 0 or args.amount > 10 then -- don't spam on low stacks, but spam close to 15
-		self:StackMessage("assault", args.destName, args.amount, "Urgent", "Info", L["assault_message"], args.spellId)
+		self:StackMessage(-7054, args.destName, args.amount, "Urgent", "Info", L["assault_message"])
 	end
 end
 

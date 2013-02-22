@@ -19,7 +19,6 @@ mod:RegisterEnableMob(68036)
 --------------------------------------------------------------------------------
 -- Locals
 --
-local forceOfWill = mod:SpellName(136932)
 local blueRayController, redRayController = nil, nil
 local pName = UnitName("player")
 local redAddLeft = 3
@@ -84,7 +83,7 @@ end
 function mod:OnEngage()
 	self:Berserk(600) -- Confirmed 25N
 	self:CDBar(134626, 15) -- Lingering Gaze
-	self:Bar(136932, 33, forceOfWill)
+	self:Bar(136932, 33) -- Force of Will
 	blueRayController, redRayController = nil, nil
 	redAddLeft = 3
 	lifedranJumps = 0
@@ -112,9 +111,9 @@ function mod:DisintegrationBeam(_, _, _, _, spellId)
 		self:CDBar(134626, 76) -- Lingering Gaze
 		self:CDBar(136932, 78) -- Force of Will
 		redAddLeft = 0
-		self:Bar(-6892, 60, CL["cast"]:format(L["death_beam"]), 133778) -- Exactly 60 sec, a good place to start other timers
+		self:Bar(-6892, 60, CL["cast"]:format(L["death_beam"])) -- Exactly 60 sec, a good place to start other timers
 		local text = (spellId == 136316) and " - |c00008000%s|r" or " - |c00FF0000%s|r"
-		self:Message(-6892, "Attention", nil, L["death_beam"]..(text):format((spellId == 136316) and L["clockwise"] or L["counter_clockwise"]), 133778)
+		self:Message(-6892, "Attention", nil, L["death_beam"]..(text):format((spellId == 136316) and L["clockwise"] or L["counter_clockwise"]))
 	end
 end
 
@@ -231,7 +230,6 @@ function mod:HardStare(args)
 end
 
 function mod:SeriousWound(args)
-	args.amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
 end
 
@@ -242,9 +240,9 @@ function mod:Deaths(args)
 		redAddLeft = redAddLeft - 1
 		if redAddLeft == 0 then
 			self:CDBar(136932, 20) -- Force of Will
-			self:Bar(-6892, 27, L["death_beam"], 133778)
+			self:Bar(-6892, 27, L["death_beam"])
 		else
-			self:Message(-6892, "Urgent", nil, ("%s (%d)"):format(L["red_add"], redAddLeft), 136154)
+			self:Message(-6892, "Urgent", nil, CL["count"]:format(L["red_add"], redAddLeft))
 		end
 	end
 end

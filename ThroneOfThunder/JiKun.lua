@@ -19,7 +19,7 @@ mod:RegisterEnableMob(69712) -- Ji-Kun
 -- Locals
 --
 local nestCounter = 0
-local feedingAllowed = false
+local feedingAllowed = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -81,7 +81,7 @@ function mod:OnEngage()
 	self:Bar(134380, self:Heroic() and 63 or 48) -- Quills
 	self:Bar(134370, 90) -- Down Draft
 	nestCounter = 0
-	feedingAllowed = false
+	feedingAllowed = nil
 end
 
 --------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ end
 function mod:FeedYoung(args)
 	if not feedingAllowed then return end
 	self:Message("nest", "Positive", nil, args.spellId) -- Positive because it is green!
-	feedingAllowed = false
+	feedingAllowed = nil
 end
 
 function mod:CallForFood()
@@ -151,7 +151,7 @@ end
 
 do
 	local function flightMessage(remainingTime)
-		mod:Message(-7360, "Personal", (remainingTime<5) and "Info" or nil, CL["custom_sec"]:format(L["flight_over"], remainingTime), 133755)
+		mod:Message(-7360, "Personal", (remainingTime<5) and "Info", CL["custom_sec"]:format(L["flight_over"], remainingTime), 133755)
 	end
 	function mod:Flight(args)
 		if not UnitIsUnit("player", args.destName) then return end
@@ -175,13 +175,13 @@ function mod:Quills(args)
 end
 
 function mod:TalonRake(args)
-	args.amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
 	self:CDBar(args.spellId, 15)
 end
 
 function mod:InfectedTalons(args)
-	if args.amount % 2 ~= 0 then return end
-	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Info")
+	if args.amount % 2 == 0 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Info")
+	end
 end
 

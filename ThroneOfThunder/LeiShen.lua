@@ -21,16 +21,15 @@ mod:RegisterEnableMob(68397, 68398, 68696, 68697, 68698) -- Lei Shen, Static Sho
 
 local phase = 1
 local staticShockList = {}
-local proximityOpen = false
+local proximityOpen = nil
 
 local function isConduitAlive(mobId)
-	local boss = "boss%d"
 	for i=1, 5 do
-		if mobId == mod:MobId(boss:format(i)) then
-			return boss:format(i)
+		local boss = ("boss%d"):format(i)
+		if mobId == mod:MobId(boss) then
+			return boss
 		end
 	end
-	return false
 end
 
 --------------------------------------------------------------------------------
@@ -43,6 +42,7 @@ if L then
 	L.conduit_abilities_desc = "Approximate cooldown bars for the conduit specific abilities"
 	L.conduit_abilities_icon = 139271
 	L.conduit_ability_meassage = "Next conduit ability"
+
 	L.intermission = "Intermission"
 	L.overchargerd_message = "Stunning AoE pulse"
 	L.static_shock_message = "Splitting AoE damege"
@@ -97,13 +97,15 @@ end
 
 function mod:OnEngage()
 	self:Berserk(600) -- XXX assumed
-	proximityOpen = false
+	proximityOpen = nil
 	phase = 1
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	wipe(staticShockList)
 	self:CDBar(134916, 42) -- Decapitate
 	self:CDBar(135095, 25) -- Thunderstruck
-	if UnitBuff("boss1", self:SpellName(135681)) then self:OpenProximity(-7239, 8) end
+	if UnitBuff("boss1", self:SpellName(135681)) then
+		self:OpenProximity(-7239, 8)
+	end
 	self:CDBar("conduit_abilities", 15, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 end
 
@@ -152,7 +154,7 @@ end
 --
 
 local function warnSmallAdds()
-	mod:Message(-7239, "Important", nil, CL["soon"]:format(L["diffusion_chain_message"]), 136295)
+	mod:Message(-7239, "Important", nil, CL["soon"]:format(L["diffusion_chain_message"]))
 end
 
 function mod:OverloadedCircuits()
@@ -214,7 +216,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -239,13 +241,13 @@ end
 
 function mod:Boss1Succeeded(unit, spellName, _, _, spellId)
 	if spellId == 136395 then -- Bouncing Bolt -- should somehow try and count how many more bounces are left
-		self:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+		self:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		-- XXX add bar here
-		self:Message(-7242, "Important", "Long", 136361)
+		self:Message(-7242, "Important", "Long")
 	elseif spellId == 135991 then -- Small Adds
-		self:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+		self:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		-- XXX add bar here
-		self:Message(-7239, "Important", "Long", L["diffusion_add_message"], 135681)
+		self:Message(-7239, "Important", "Long", L["diffusion_add_message"])
 	elseif spellId == 136869 then -- Violent Gale Winds
 		self:Message(136889, "Important", "Long")
 		self:Bar(136889, 30)
@@ -260,7 +262,7 @@ do
 				mod:ScheduleTimer(warnSmallAdds, 2) -- so we don't instantly overwrite previous message
 			end
 		else
-			mod:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+			mod:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		end
 		-- XXX add bar here
 		mod:TargetMessage(spellId, overchargedList, "Urgent", "Alarm", L["overchargerd_message"])
@@ -280,7 +282,7 @@ function mod:DiffusionChainRemoved()
 end
 
 function mod:DiffusionChainApplied(args)
-	self:Message(-7239, "Important", "Long", L["diffusion_chain_message"], args.spellId)
+	self:Message(-7239, "Important", "Long", L["diffusion_chain_message"])
 	self:OpenProximity(-7239, 8)
 	proximityOpen = "Diffusion Chain"
 end
@@ -295,7 +297,7 @@ do
 	local scheduled = nil
 	local function warnStaticShock(spellId)
 		if UnitExists("boss1") then -- poor mans intermission check
-			mod:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], 139271) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+			mod:CDBar("conduit_abilities", 40, L["conduit_ability_meassage"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		end
 		-- XXX add bar here
 		mod:Message(spellId, "Urgent", "Alarm", L["static_shock_message"])

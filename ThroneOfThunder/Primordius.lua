@@ -122,7 +122,7 @@ end
 function mod:MetabolicBoost(args)
 	local MBStacks = select(4, UnitBuff("boss1", self:SpellName(136245))) or 0
 	MB = ("<MB:%d>"):format(MBStacks)
-	self:Message(args.spellId, "Attention", nil, ("%s (%d)"):format(args.spellName, MBStacks))
+	self:Message(args.spellId, "Attention", nil, CL["count"]:format(args.spellName, MBStacks))
 end
 
 function mod:VolatilePathogenRemoved(args)
