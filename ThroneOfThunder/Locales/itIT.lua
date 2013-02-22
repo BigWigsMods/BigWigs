@@ -21,6 +21,7 @@ if L then
 	L.venom_bolt_volley_warning = "Il tuo Focus sta lanciando Raffica Venefica!"
 	L.venom_bolt_volley_bar = "Focus: Raffica Venefica"
 	L.puncture_message = "Perforazione Tripla"
+    L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!	
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "itIT")
@@ -42,9 +43,9 @@ if L then
 L = BigWigs:NewBossLocale("Tortos", "itIT")
 if L then
 	L.kick = "Calcio"
-	L.kick_desc = "Tieni il conto di quante tartarighe possono essere prese a calci"
+	L.kick_desc = "Tieni il conto di quante tartarughe possono essere prese a calci"
 	L.kickable_turtles = "Tartarughe da Calciare: %d"
-	L.crystal_shell_removed = "Scudo di Cristallo rimosso!"
+	L.crystal_shell_removed = "Scudo di Cristallo RIMOSSO!"
 	L.no_crystal_shell = "NESSUNO Scudo di Cristallo"
 	
 end
@@ -54,7 +55,7 @@ if L then
 	L.breaths = "Soffi"
 	L.breaths_desc = "Avvisi relativi ad ogni tipo di soffio possibile."
 	L.rampage_over = "Furia Terminata!"
-	L.arcane_adds = "Testa Arcana"
+	L.arcane_adds = "Teste Arcane"
 end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "itIT")
