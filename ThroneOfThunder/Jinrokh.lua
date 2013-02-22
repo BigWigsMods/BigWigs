@@ -2,7 +2,6 @@
 TODO:
 	Double check if proximity windows are opened and closed correctly
 	focused lightning removed is being kept track of with UNIT_AURA which is ugly expect CLEU events added for this ( not as of 25 N ptr )
-	timers don't seem to be that inaccurate but it might worth checking if starting timers after lightning storm end might make them even more accurate
 ]]--
 
 if select(4, GetBuildInfo()) < 50200 then return end
@@ -52,7 +51,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Ionization", 138732)
 	self:Log("SPELL_CAST_SUCCESS", "LightningStormDuration", 137313)
 	self:Log("SPELL_CAST_START", "LightningStorm", 137313)
-	self:Log("SPELL_AURA_REMOVED", "ThunderingThrowRemoved", 137371)
+	self:Log("SPELL_DAMAGE", "ThunderingThrowSafe", 137370) -- This spellId is the damage done to the tank ONLY
 	self:Emote("ThunderingThrow", "137175") -- this seems to be the fastest way to determine which tank gets thrown, APPLIED is way too slow
 	self:Log("SPELL_DAMAGE", "LightningFissure", 139467)
 	self:Log("SPELL_CAST_START", "FocusedLightning", 137399) -- SUCCESS has destName, but this is so much earlier, and "boss1target" should be reliable for it
@@ -98,9 +97,12 @@ end
 function mod:LightningStorm(args)
 	self:Message(args.spellId, "Important", "Long")
 	self:Bar(args.spellId, 93)
+	self:Bar("ej:7741", 26, 137399) -- Focused Lightning
+	self:Bar(137162, 20) -- Static Burst
+	self:Bar(137175, 30) -- Thundering Throw
 end
 
-function mod:ThunderingThrowRemoved()
+function mod:ThunderingThrowSafe()
 	self:SecondaryIcon(137175)
 	self:CloseProximity(137175)
 	if UnitDebuff("player", self:SpellName(137162)) then -- Focused Lightning
@@ -110,7 +112,6 @@ end
 
 function mod:ThunderingThrow(_, _, _, _, target)
 	self:Message(137175, "Attention", "Alert")
-	self:Bar(137175, 90)
 	self:SecondaryIcon(137175, target)
 	if not UnitIsUnit(target, "player") then -- no point opening proximity for the thrown tank
 		self:CloseProximity("ej:7741") -- close this before opening another ( in case it was open )
