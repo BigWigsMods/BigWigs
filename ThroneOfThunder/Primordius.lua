@@ -77,6 +77,7 @@ end
 --
 
 do
+	local scheduled = nil
 	local function warnPlayerMutations()
 		local stats = select(4, UnitDebuff("player", mod:SpellName(136184))) or 0   -- Thick Bones
 		local mastery = select(4, UnitDebuff("player", mod:SpellName(136186))) or 0 -- Clear Mind
@@ -87,10 +88,11 @@ do
 		if total == 5 then mod:Flash(-6960) end
 		local stacks = (total < 6) and (" |c00008000(%d)|r"):format(total) or (" |c00FF0000(%d)|r"):format(total) -- less than 6 stacks is a buff, more than that is a debuff, so color less than 6 green, more than that red
 		mod:Message(-6960, "Personal", (total > 3) and "Info" or nil, L["mutations"]..stacks, 136184)
+		scheduled = nil
 	end
 	function mod:PlayerMutations(args)
 		if not UnitIsUnit("player", args.destName) then return end
-		self:ScheduleTimer(warnPlayerMutations, 1)
+		if not scheduled then scheduled = self:ScheduleTimer(warnPlayerMutations, 1) end
 	end
 end
 
