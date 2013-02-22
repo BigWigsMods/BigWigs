@@ -232,6 +232,6 @@ L.bossKillDurationPrint = "'%s' wurde nach %s besiegt."
 L.bossWipeDurationPrint = "An '%s' nach %s gewiped."
 L.newBestKill = "Neue Rekordzeit!"
 L.bossStatistics = "Boss-Statistiken"
-L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times a boss had been killed, the amount of wipes, total time that combat lasted, or the fastest boss kill. These statistics can be viewed on each boss's configuration screen, but will be hidden for bosses that have no recorded statistics."
+L.bossStatsDescription = "Zeichnet verschiedene Statistiken der Bossbegegnungen wie die Anzahl der Kills und Wipes, sowie die Kampfdauer oder die Rekordzeiten auf. Diese Statistiken können, falls vorhanden, in der Konfiguration der einzelnen Bosse eingesehen werden. Andernfalls werden diese ausgeblendet."
 L.enableStats = "Statistiken aktivieren"
 
