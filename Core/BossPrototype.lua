@@ -644,7 +644,7 @@ do
 		if type(key) == "nil" then error(format(nilKeyError, self.name)) end
 		if type(flag) ~= "number" then error(format(invalidFlagError, self.name, type(flag), tostring(flag))) end
 		if silencedOptions[key] then return end
-		if type(key) == "number" then key = spells[key] end
+		if type(key) == "number" and key > 0 then key = spells[key] end
 		if type(self.db) ~= "table" then error(format(noDBError, self.name)) end
 		if type(self.db.profile[key]) ~= "number" then
 			if not self.toggleDefaults[key] then
