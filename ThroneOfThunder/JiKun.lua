@@ -1,9 +1,10 @@
 --[[
 TODO:
-	on 10 H PTR - food_call_trigger was gone, could not find anything to replace it, rethink how the warning should work later
+	on 10 H/25N PTR - food_call_trigger was gone, could not find anything to replace it, rethink how the warning should work later
 	maybe message should be in :CallForFood not :FeedYoung, someone maybe should look into if it is safe to do so
 		as in: is the 10 sec ( the max flight time ) enough from :CallForFood to catch the slime?
 	people NOT on the main platform should have proximity closed
+	need lots of TRANSCRIPTOR logs to figure out nest orders
 ]]--
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
@@ -32,6 +33,7 @@ if L then
 	L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch!"
 	L.upper_nest = "|c00008000Upper|r nest"
 	L.lower_nest = "|c00FF0000Lower|r nest"
+	L.lower_upper_nest = "|c00FF0000Lower|r + |c00008000Upper|r nest"
 	L.food_call_trigger = "Hatchling calls for food!"
 	L.nest = "Nests"
 	L.nest_desc = "Warnings related to the nests. |c00FF0000Untoggle this to turn off warnings, if you are not assigned to handle the nests!|r"
@@ -108,22 +110,35 @@ do
 	end
 end
 
+-- lower, lower, lower, upper, upper, upper, -- 10 N/H
+-- lower, lower, lower, lower, {lower, upper}, upper, upper, {lower, upper}, {lower, upper}, lower, upper, upper, {lower, upper} -- 25 N
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
-	if msg:find(L["upper_hatch_trigger"]) then
+	local diff = self:Difficulty()
+	if msg:find(L["upper_hatch_trigger"]) or msg:find(L["lower_hatch_trigger"]) then
 		nestCounter = nestCounter + 1
-		self:Message("nest", "Attention", "Alert", L["upper_nest"], "misc_arrowlup")
-		if nestCounter % 6 > 3 or nestCounter % 6 == 0 then -- first 3 down, second 3 up
-			self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
+		local text = (msg:find(L["upper_hatch_trigger"])) and L["upper_nest"] or L["lower_nest"]
+		local icon = (msg:find(L["upper_hatch_trigger"])) and "misc_arrowlup" or "misc_arrowdown"
+		if diff == 3 or diff == 5 then -- 10 man N/H
+			if nestCounter % 6 > 2 then -- first 3 down, second 3 up
+				self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
+			else
+				self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
+			end
+			self:Message("nest", "Attention", "Alert", text, icon)
 		else
-			self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
-		end
-	elseif msg:find(L["lower_hatch_trigger"]) then
-		nestCounter = nestCounter + 1
-		self:Message("nest", "Attention", "Alert", L["lower_nest"], "misc_arrowdown")
-		if nestCounter % 6 > 3 or nestCounter % 6 == 0  then -- first 3 down, second 3 up
-			self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
-		else
-			self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
+			-- XXX figure out order in LFR
+			-- XXX this is correct for 25 N (up to 17, need trascriptor logs for better logic)
+			if nestCounter % 17 < 4 or nestCounter % 17 == 12 then
+				self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
+				self:Message("nest", "Attention", "Alert", text, icon)
+			elseif nestCounter % 17 == 4 or nestCounter % 17 == 8 or nestCounter % 17 == 10 or nestCounter % 17 == 15 then -- up and down at same time
+				text, icon = L["lower_upper_nest"], 134347 -- egg icon
+				self:Bar("nest", 30, text, icon)
+				self:Message("nest", "Attention", "Alert", text, icon)
+			elseif nestCounter % 17 == 6 or nestCounter % 12 == 7 or nestCounter % 12 == 13 or nestCounter % 12 == 14 then
+				self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
+				self:Message("nest", "Attention", "Alert", text, icon)
+			end
 		end
 	end
 end
