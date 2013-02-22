@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Jin'rokh the Breaker", "deDE")
+﻿local L = BigWigs:NewBossLocale("Jin'rokh the Breaker", "deDE")
 if not L then return end
 if L then
 	L.storm_duration = "Gewittersturm Dauer"
@@ -64,6 +64,7 @@ if L then
 	L.upper_hatch_trigger = "Die Eier in einem der oberen Nester beginnen, aufzubrechen!"
 	L.upper_nest = "|c00008000Oberes|r Nest"
 	L.lower_nest = "|c00FF0000Unteres|r Nest"
+	L.lower_upper_nest = "|c00FF0000Unteres|r + |c00008000Oberes|r Nest"
 	L.food_call_trigger = "Küken ruft nach Futter!"
 	L.nest = "Nester"
 	L.nest_desc = "Warnungen für die Nester. |c00FF0000Schalte diese Warnungen aus, wenn Du nicht für die Nester eingeteilt bist!|r"
