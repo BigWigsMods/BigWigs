@@ -16,7 +16,8 @@ mod:RegisterEnableMob(69017)
 -- Locals
 --
 local MB = "<MB:0>" -- MetabolicBoost
-
+local UnitDebuff = UnitDebuff
+local select = select
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -44,10 +45,9 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
-	self:Log("SPELL_AURA_REMOVED", "PlayerMutations", 136184, 136186, 136182, 136180) -- Thick Bones, Clear Mind, Improved Synampes, Keen Eyesight
-	self:Log("SPELL_AURA_APPLIED_DOSE", "PlayerMutations", 136184, 136186, 136182, 136180) -- Thick Bones, Clear Mind, Improved Synampes, Keen Eyesight
-	self:Log("SPELL_AURA_APPLIED", "PlayerMutations", 136184, 136186, 136182, 136180) -- Thick Bones, Clear Mind, Improved Synampes, Keen Eyesight
+	self:Log("SPELL_AURA_REMOVED", "PlayerMutations", 136184, 136186, 136182, 136180, 136185, 136187, 136183, 136181)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "PlayerMutations", 136184, 136186, 136182, 136180, 136185, 136187, 136183, 136181)
+	self:Log("SPELL_AURA_APPLIED", "PlayerMutations", 136184, 136186, 136182, 136180, 136185, 136187, 136183, 136181)
 	self:Log("SPELL_AURA_REMOVED", "FullyMutatedRemoved", 140546)
 	self:Log("SPELL_AURA_APPLIED", "FullyMutatedApplied", 140546)
 	self:Log("SPELL_AURA_REMOVED", "EruptingPustulesRemoved", 136246)
@@ -79,15 +79,21 @@ end
 do
 	local scheduled = nil
 	local function warnPlayerMutations()
-		local stats = select(4, UnitDebuff("player", mod:SpellName(136184))) or 0   -- Thick Bones
-		local mastery = select(4, UnitDebuff("player", mod:SpellName(136186))) or 0 -- Clear Mind
-		local haste = select(4, UnitDebuff("player", mod:SpellName(136182))) or 0   -- Improved Synampes
-		local crit  = select(4, UnitDebuff("player", mod:SpellName(136180))) or 0   -- Keen Eyesight
-		local total = stats + mastery + haste + crit
-		if total == 0 then return end
-		if total == 5 then mod:Flash(-6960) end
-		local stacks = (total < 6) and (" |c00008000(%d)|r"):format(total) or (" |c00FF0000(%d)|r"):format(total) -- less than 6 stacks is a buff, more than that is a debuff, so color less than 6 green, more than that red
-		mod:Message(-6960, "Personal", (total > 3) and "Info" or nil, L["mutations"]..stacks, 136184)
+		-- Positive
+		local statsP = select(4, UnitDebuff("player", mod:SpellName(136184))) or 0   -- Thick Bones
+		local masteryP = select(4, UnitDebuff("player", mod:SpellName(136186))) or 0 -- Clear Mind
+		local hasteP = select(4, UnitDebuff("player", mod:SpellName(136182))) or 0   -- Improved Synampes
+		local critP  = select(4, UnitDebuff("player", mod:SpellName(136180))) or 0   -- Keen Eyesight
+		local totalP = statsP + masteryP + hasteP + critP
+		-- Negative
+		local statsN = select(4, UnitDebuff("player", mod:SpellName(136185))) or 0
+		local masteryN = select(4, UnitDebuff("player", mod:SpellName(136187))) or 0
+		local hasteN = select(4, UnitDebuff("player", mod:SpellName(136183))) or 0
+		local critN  = select(4, UnitDebuff("player", mod:SpellName(136181))) or 0
+		local totalN = statsN + masteryN + hasteN + critN
+		if totalP == 5 then mod:Flash(-6960) end
+		local stacks = (" |c00008000(%d)|r |c00FF0000(%d)|r"):format(totalP, totalN)
+		mod:Message(-6960, "Personal", ((totalP > 3) or (totalN > 0)) and "Info" or nil, L["mutations"]..stacks, 136184)
 		scheduled = nil
 	end
 	function mod:PlayerMutations(args)
