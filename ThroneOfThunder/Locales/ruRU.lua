@@ -42,8 +42,8 @@ if L then
 	L.kick = "Пинок"
 	L.kick_desc = "Отслеживает, сколько черепах можно пнуть."
 	L.kickable_turtles = "Можно пнуть черепах: %d"
-	-- L.crystal_shell_removed = "Crystal Shell removed!"
-	-- L.no_crystal_shell = "NO Crystal Shell"
+	L.crystal_shell_removed = "Защитный панцирь снят!"
+	L.no_crystal_shell = "НЕТ Защитного панциря"
 end
 
 L = BigWigs:NewBossLocale("Megaera", "ruRU")
