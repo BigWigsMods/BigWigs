@@ -84,6 +84,7 @@ function mod:OnEngage()
 	self:Berserk(600) -- Confirmed 25N
 	self:CDBar(134626, 15) -- Lingering Gaze
 	self:Bar(136932, 33) -- Force of Will
+	self:Bar(-6892, 135, L["death_beam"])
 	blueRayController, redRayController = nil, nil
 	redAddLeft = 3
 	lifedranJumps = 0
@@ -112,6 +113,7 @@ function mod:DisintegrationBeam(_, _, _, _, spellId)
 		self:CDBar(136932, 78) -- Force of Will
 		redAddLeft = 0
 		self:Bar(-6892, 60, CL["cast"]:format(L["death_beam"])) -- Exactly 60 sec, a good place to start other timers
+		self:Bar(-6892, 191, L["death_beam"])
 		local text = (spellId == 136316) and " - |c00008000%s|r" or " - |c00FF0000%s|r"
 		self:Message(-6892, "Attention", nil, L["death_beam"]..(text):format((spellId == 136316) and L["clockwise"] or L["counter_clockwise"]))
 	end
@@ -165,7 +167,7 @@ end
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
 	if msg:find("134124") then -- Yellow
 		self:StopBar(136932) -- Force of Will -- XXX double check if this is not too early to stop the bar
-		self:Bar(-6891, 10, L["rays_spawn"], "inv_misc_gem_variety_02") -- only spawn this bar in one of the functions
+		self:Bar(-6891, 10, L["rays_spawn"], "inv_misc_gem_variety_02") -- only spawn this bar in one of the if statements
 		if UnitIsUnit("player", target) then
 			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c00FFFF00"..sender.."|r"), 134124)
 		end
@@ -240,7 +242,6 @@ function mod:Deaths(args)
 		redAddLeft = redAddLeft - 1
 		if redAddLeft == 0 then
 			self:CDBar(136932, 20) -- Force of Will
-			self:Bar(-6892, 27, L["death_beam"])
 		else
 			self:Message(-6892, "Urgent", nil, CL["count"]:format(L["red_add"], redAddLeft))
 		end
