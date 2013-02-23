@@ -17,7 +17,6 @@ mod:RegisterEnableMob(70248, 70212, 70235, 70247, 68065) -- Arcane Head, Flaming
 --
 local frostOrFireDead = nil
 local breathCounter = 0
-local firstHeadKilled = nil
 local breathTimerHandle = nil
 
 --------------------------------------------------------------------------------
@@ -85,7 +84,6 @@ end
 function mod:OnEngage()
 	frostOrFireDead = nil
 	breathCounter = 0
-	firstHeadKilled = nil
 	breathTimerHandle = nil
 end
 
@@ -136,11 +134,8 @@ do
 end
 
 function mod:Deaths(args)
-	if firstHeadKilled then -- don't warn for first head death
-		self:CloseProximity("proximity") -- this happens lot before rampage is applied, might as well do stuff here
-		self:Message(139458, "Attention", nil, CL["soon"]:format(self:SpellName(139458))) -- Rampage
-	end
-	firstHeadKilled = true
+	self:CloseProximity("proximity") -- this happens lot before rampage is applied, might as well do stuff here
+	self:Message(139458, "Attention", nil, CL["soon"]:format(self:SpellName(139458))) -- Rampage
 	if args.mobId == 70212 then -- Fire
 		frostOrFireDead = true
 	elseif args.mobId == 70235 then -- Frost
