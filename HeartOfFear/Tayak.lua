@@ -35,7 +35,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{125310, "FLASH"},
-		122842, {"ej:6346", "ICON", "SAY", "PROXIMITY"}, {123175, "PROXIMITY"}, {123474, "TANK_HEALER"}, "ej:6350",
+		122842, {-6346, "ICON", "SAY", "PROXIMITY"}, {123175, "PROXIMITY"}, {123474, "TANK_HEALER"}, -6350,
 		"proximity", "berserk", "bosskill",
 	}, {
 		[125310] = "heroic",
@@ -66,7 +66,7 @@ function mod:OnEngage()
 	end
 	self:CDBar(122842, 9.8) -- Tempest Slash
 	self:CDBar(123175, 20.5) -- Wind Step
-	self:Bar("ej:6346", 30, CL["count"]:format(self:SpellName(122994), 1)) -- Unseen Strike
+	self:Bar(-6346, 30, CL["count"]:format(self:SpellName(122994), 1)) -- Unseen Strike
 	self:Bar(123474, 15, L["assault_message"])
 	self:OpenProximity(123175, 8)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
@@ -96,11 +96,11 @@ do
 	local timer = nil
 	local strike = mod:SpellName(122994)
 	local function removeIcon(notBoss)
-		mod:CloseProximity("ej:6346")
+		mod:CloseProximity(-6346)
 		if not notBoss then
 			mod:OpenProximity(123175, 8) -- Re-open normal proximity
 		end
-		mod:PrimaryIcon("ej:6346")
+		mod:PrimaryIcon(-6346)
 		if timer then
 			mod:CancelTimer(timer) -- Should never last this long, but no harm in it
 			timer = nil
@@ -121,24 +121,24 @@ do
 			local name, server = UnitName(player)
 			if server then name = name .."-".. server end
 			if UnitIsUnit(player, "player") then
-				mod:Say("ej:6346", strike)
+				mod:Say(-6346)
 			else
-				mod:OpenProximity("ej:6346", 5, name, true)
+				mod:OpenProximity(-6346, 5, name, true)
 			end
 			if not notBoss then
-				mod:TargetMessage("ej:6346", name, "Urgent", "Alert", CL["count"]:format(strike, strikeCounter))
+				mod:TargetMessage(-6346, name, "Urgent", "Alert", CL["count"]:format(strike, strikeCounter))
 				strikeCounter = strikeCounter + 1
 			else
-				mod:TargetMessage("ej:6346", name, "Urgent", "Alert", strike)
+				mod:TargetMessage(-6346, name, "Urgent", "Alert")
 			end
-			mod:TargetBar("ej:6346", 5.6, name, strike)
-			mod:PrimaryIcon("ej:6346", name)
+			mod:TargetBar(-6346, 5.6, name)
+			mod:PrimaryIcon(-6346, name)
 		end
 	end
 	function mod:TayakCasts(_, spellName, _, _, spellId)
 		if spellId == 122949 then --Unseen Strike
-			self:CDBar("ej:6346", 53, CL["count"]:format(strike, strikeCounter+1)) -- 53-60
-			self:DelayedMessage("ej:6346", 48, "Attention", L["unseenstrike_soon"]:format(strikeCounter+1), false, "Alarm")
+			self:CDBar(-6346, 53, CL["count"]:format(strike, strikeCounter+1)) -- 53-60
+			self:DelayedMessage(-6346, 48, "Attention", L["unseenstrike_soon"]:format(strikeCounter+1), false, "Alarm")
 			if not timer then
 				timer = self:ScheduleRepeatingTimer(warnStrike, 0.05) -- ~1s faster than boss emote
 			end
@@ -146,7 +146,7 @@ do
 		elseif spellId == 122839 then --Tempest Slash
 			self:CDBar(122842, self:LFR() and 20.5 or 15.6)
 		elseif spellId == 123814 then --Storm Unleashed (Phase 2)
-			self:Message("ej:6350", "Positive", "Long", "20% - "..CL["phase"]:format(2))
+			self:Message(-6350, "Positive", "Long", "20% - "..CL["phase"]:format(2))
 			self:StopBar(125310) --Blade Tempest
 			self:StopBar(L["assault_message"])
 			self:StopBar(122839) --Tempest Slash
@@ -184,10 +184,10 @@ end
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 25 and phase == 1 then -- phase starts at 20
-		self:Message("ej:6350", "Positive", "Long", CL["soon"]:format(CL["phase"]:format(2)))
+		self:Message(-6350, "Positive", "Long", CL["soon"]:format(CL["phase"]:format(2)))
 		phase = 2
 	elseif hp < 14 and phase == 2 then
-		self:Message("ej:6350", "Positive", "Long", CL["soon"]:format(L["side_swap"]))
+		self:Message(-6350, "Positive", "Long", CL["soon"]:format(L["side_swap"]))
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
 end
