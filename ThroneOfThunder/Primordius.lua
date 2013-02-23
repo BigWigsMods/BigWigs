@@ -128,11 +128,11 @@ function mod:MetabolicBoost(args)
 end
 
 function mod:VolatilePathogenRemoved(args)
-	self:PrimariyIcon(args.spellId)
+	self:PrimaryIcon(args.spellId)
 end
 
 function mod:VolatilePathogen(args)
-	self:PrimariyIcon(args.spellId, args.destName)
+	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", L["Stream of blobs"]..MB)
 	self:CDBar(args.spellId, 27, L["Stream of blobs"])
 end
