@@ -62,7 +62,7 @@ end
 
 function mod:OnEngage()
 	if self:Heroic() then
-		self:Bar(125310, 125310, 60, 125310) -- Blade Tempest
+		self:Bar(125310, 60) -- Blade Tempest
 	end
 	self:CDBar(122842, 9.8) -- Tempest Slash
 	self:CDBar(123175, 20.5) -- Wind Step
