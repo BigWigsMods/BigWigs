@@ -133,8 +133,8 @@ end
 
 function mod:VolatilePathogen(args)
 	self:PrimaryIcon(args.spellId, args.destName)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", L["Stream of blobs"]..MB)
-	self:CDBar(args.spellId, 27, L["Stream of blobs"])
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", L["stream_of_blobs"]..MB)
+	self:CDBar(args.spellId, 27, L["stream_of_blobs"])
 end
 
 function mod:PathogenGlands(args)
