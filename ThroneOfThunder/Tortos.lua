@@ -89,7 +89,7 @@ do
 		end
 	end
 	function mod:CrystalShellRemoved(args)
-		if not UnitIsUnit("player", args.destName) or self:Tank() then return end
+		if not self:Me(args.destGUID) or self:Tank() then return end
 		self:Flash(args.spellId)
 		self:Message(args.spellId, "Urgent", "Alarm", L["crystal_shell_removed"]) -- I think this should stay Urgent Alarm
 		if not timer then
@@ -113,7 +113,7 @@ end
 do
 	local prev = 0
 	function mod:Rockfall(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t

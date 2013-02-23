@@ -220,7 +220,7 @@ do
 	function mod:WildfireSparkApplied(args)
 		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert", wildfire)
 		self:PrimaryIcon(args.spellId, args.destName)
-		if UnitIsUnit(args.destName, "player") then
+		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Bar(args.spellId, 5, CL["you"]:format(wildfire))
 			self:Say(args.spellId, wildfire)
@@ -233,7 +233,7 @@ do
 	-- Standing on the Wildfire
 	local prev = 0
 	function mod:Wildfire(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -274,7 +274,7 @@ do
 	function mod:ArcaneResonanceApplied(args)
 		self:CDBar(args.spellId, 15.4, resonance)
 		resonanceMarkers[#resonanceMarkers+1] = args.destName
-		if UnitIsUnit(args.destName, "player") then
+		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:OpenProximity(args.spellId, 6)
 			self:Say(args.spellId, resonance)
@@ -284,7 +284,7 @@ do
 		end
 	end
 	function mod:ArcaneResonanceRemoved(args)
-		if UnitIsUnit(args.destName, "player") then
+		if self:Me(args.destGUID) then
 			self:CloseProximity(args.spellId)
 		end
 	end

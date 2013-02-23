@@ -91,19 +91,19 @@ do
 		scheduled = nil
 	end
 	function mod:PlayerMutations(args)
-		if not UnitIsUnit("player", args.destName) then return end
+		if not self:Me(args.destGUID) then return end
 		if not scheduled then scheduled = self:ScheduleTimer(warnPlayerMutations, 1) end
 	end
 end
 
 function mod:FullyMutatedRemoved(args)
-	if not UnitIsUnit("player", args.destName) then return end
+	if not self:Me(args.destGUID) then return end
 	self:StopBar(args.spellId)
 	self:Message(-7830, "Personal", "Info", CL["over"]:format(args.spellName), args.spellId)
 end
 
 function mod:FullyMutatedApplied(args)
-	if not UnitIsUnit("player", args.destName) then return end
+	if not self:Me(args.destGUID) then return end
 	self:Bar(-7830, 120, args.spellId)
 	self:Message(-7830, "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
 end

@@ -158,7 +158,7 @@ end
 
 function mod:MatterSwapApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:Flash(args.spellId)
 	elseif self:Dispeller("magic") then
@@ -174,7 +174,7 @@ end
 do
 	local prev = 0
 	function mod:CrimsonWake(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t

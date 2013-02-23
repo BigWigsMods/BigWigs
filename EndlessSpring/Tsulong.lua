@@ -111,13 +111,13 @@ function mod:Terrorize(args)
 end
 
 function mod:DreadShadows(args)
-	if UnitIsUnit("player", args.destName) and args.amount > (self:Heroic() and 5 or 11) and args.amount % 3 == 0 then
+	if self:Me(args.destGUID) and args.amount > (self:Heroic() and 5 or 11) and args.amount % 3 == 0 then
 		self:Message(args.spellId, "Personal", "Info", CL["count"]:format(args.spellName, args.amount))
 	end
 end
 
 function mod:Sunbeam(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Positive")
 	end
 end

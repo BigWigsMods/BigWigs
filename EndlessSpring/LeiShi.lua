@@ -107,7 +107,7 @@ do
 	end
 
 	function mod:ScaryFog(args)
-		if UnitIsUnit("player", args.destName) and not self:Tank() then
+		if self:Me(args.destGUID) and not self:Tank() then
 			self:OpenProximity(args.spellId, 4)
 		end
 		self:CDBar(args.spellId, 19)
@@ -118,7 +118,7 @@ do
 end
 
 function mod:ScaryFogRemoved(args)
-	if UnitIsUnit("player", args.destName) and not self:Tank() then
+	if self:Me(args.destGUID) and not self:Tank() then
 		self:CloseProximity(123705)
 	end
 end

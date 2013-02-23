@@ -19,7 +19,6 @@ mod:RegisterEnableMob(69132, 69131, 69134, 69078) -- High Priestess Mar'li, Fros
 -- Locals
 --
 local hasChilledToTheBone = nil
-local UnitIsUnit = UnitIsUnit
 local bossDead = 0
 local posessHPStart = 0
 local lingeringTracker = {
@@ -113,7 +112,7 @@ end
 function mod:MarkedSoul(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert")
 	self:Bar(args.spellId, 20, L["loa_kills"]:format(args.destName))
-	if UnitIsUnit(args.destName, "player") then
+	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 	end
 end
@@ -131,7 +130,7 @@ function mod:Sandstorm(args)
 end
 
 function mod:Entrapped(args)
-	if UnitIsUnit(args.destName, "player") then
+	if self:Me(args.destGUID) then
 		self:Flash(136857)
 		self:Message(136857, "Personal", "Info")
 	elseif self:Dispeller("magic") or ((select(2, UnitClass("player")) == "HUNTER") and (GetSpellCooldown(self:SpellName(53271)) == 0))then -- Master's call works on it too
@@ -140,14 +139,14 @@ function mod:Entrapped(args)
 end
 
 function mod:Ensnared(args)
-	if UnitIsUnit(args.destName, "player") then
+	if self:Me(args.destGUID) then
 		self:Message(136878, "Attention", nil, CL["count"]:format(args.spellName, args.amount or 1))
 	end
 end
 
 function mod:Quicksand(args)
 	self:CDBar(-7062, 33, args.spellId)
-	if UnitIsUnit(args.destName, "player") then
+	if self:Me(args.destGUID) then
 		self:Message(-7062, "Personal", "Info", CL["underyou"]:format(args.spellName))
 		self:Flash(-7062)
 	end
@@ -162,7 +161,7 @@ end
 do
 	local prev = 0
 	function mod:RecklessChargeDamage(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -184,7 +183,7 @@ function mod:BitingColdApplied(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent",  "Alert")
 	self:Bar(args.spellId, 47)
 	self:SecondaryIcon(args.spellId, args.destName)
-	if UnitIsUnit(args.destName, "player") then
+	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:OpenProximity(args.spellId, 4)
 	end
@@ -192,7 +191,7 @@ end
 
 function mod:BitingColdRemoved(args)
 	self:SecondaryIcon(args.spellId)
-	if UnitIsUnit(args.destName, "player") then
+	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
 	end
 end

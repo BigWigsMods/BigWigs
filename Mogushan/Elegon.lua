@@ -98,7 +98,7 @@ function mod:FloorRemoved(_, _, _, _, spellId)
 end
 
 function mod:Overcharged(args)
-	if UnitIsUnit(args.destName, "player") and InCombatLockdown() then
+	if self:Me(args.destGUID) and InCombatLockdown() then
 		if (args.amount or 1) >= 6 and args.amount % 2 == 0 then
 			self:Message(args.spellId, "Personal", nil, CL["count"]:format(args.spellName, args.amount))
 		end

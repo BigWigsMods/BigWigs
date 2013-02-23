@@ -139,7 +139,7 @@ function mod:Rage()
 end
 
 function mod:FocusedAssault(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 	end

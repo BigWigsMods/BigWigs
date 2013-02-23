@@ -130,7 +130,7 @@ end
 do
 	local prev = 0
 	function mod:DefiledGroundDamage(args)
-		if UnitIsUnit(args.destName, "player") then
+		if self:Me(args.destGUID) then
 			local t = GetTime()
 			if t-prev > 1 then
 				prev = t
@@ -152,7 +152,7 @@ do
 	function mod:LightningPrisonApplied(args)
 		self:CDBar(117436, 25)
 		lightningPrisonList[#lightningPrisonList + 1] = args.destName
-		if UnitIsUnit(args.destName, "player") then
+		if self:Me(args.destGUID) then
 			self:Flash(117436)
 			self:Say(117436)
 			self:OpenProximity(117436, 7)
@@ -164,7 +164,7 @@ do
 end
 
 function mod:LightningPrisonRemoved(args)
-	if UnitIsUnit(args.destName, "player") then
+	if self:Me(args.destGUID) then
 		self:CloseProximity(117436)
 	end
 end

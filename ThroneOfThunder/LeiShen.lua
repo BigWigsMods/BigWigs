@@ -210,7 +210,7 @@ end
 do
 	local prev = 0
 	function mod:CrashingThunder(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -228,7 +228,7 @@ end
 function mod:Decapitate(args)
 	self:CDBar(134916, 52)
 	self:TargetMessage(134916, args.destName, "Personal", "Info")
-	if UnitIsUnit(args.destName, "player") then
+	if self:Me(args.destGUID) then
 		self:Flash(134916)
 	end
 end

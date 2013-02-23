@@ -66,7 +66,7 @@ do
 	end
 	function mod:LightningTether(args)
 		tetherTargets[#tetherTargets+1] = args.destName
-		if UnitIsUnit("player", args.destName) then
+		if self:Me(args.destGUID) then
 			self:Bar(args.spellId, 15, CL["you"]:format(args.spellName))
 		end
 		if not scheduled then
@@ -80,7 +80,7 @@ function mod:Stormcloud(args)
 end
 
 function mod:StormcloudDamage(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Alarm", CL["under"]:format(args.spellName))
 	end
 end

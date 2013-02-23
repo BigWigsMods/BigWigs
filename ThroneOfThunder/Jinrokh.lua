@@ -78,7 +78,7 @@ end
 
 function mod:IonizationRemoved(args)
 	-- we could make this a bit more complicated check, to help raid awareness, but lets just leave it simple as this and see if we need to complicate thigns in 25 H
-	if not UnitIsUnit("player", args.destName) then return end
+	if not self:Me(args.destGUID) then return end
 	self:CloseProximity(args.spellId)
 	if UnitDebuff("player", self:SpellName(137422)) then -- Focused Lightning
 		self:OpenProximity(-7741, 8) -- reopen it if we have lightning chasing us too
@@ -124,7 +124,7 @@ end
 do
 	local prev = 0
 	function mod:LightningFissure(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -169,7 +169,7 @@ end
 do
 	local prev = 0
 	function mod:StaticWoundConduction(args)
-		if not UnitIsUnit(args.sourceName, "player") then return end
+		if not self:Me(args.sourceGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -182,7 +182,7 @@ end
 do
 	local prev = 0
 	function mod:ElectrifiedWaters(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t

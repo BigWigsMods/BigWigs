@@ -97,7 +97,7 @@ end
 do
 	local prev = 0
 	function mod:FrozenBlood(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -127,7 +127,7 @@ end
 do
 	local prev = 0
 	function mod:StormCloud(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -138,7 +138,7 @@ do
 end
 
 function mod:Windstorm(args)
-	if not UnitIsUnit("player", args.destName) then return end
+	if not self:Me(args.destGUID) then return end
 	self:Message(-6877, "Attention") -- lets leave it here to warn people who fail and step back into the windstorm
 end
 
@@ -147,7 +147,7 @@ end
 do
 	local prev = 0
 	function mod:BurningCinders(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -159,7 +159,7 @@ end
 
 function mod:Scorched(args)
 	args.amount = args.amount or 1
-	if args.amount > 4 and UnitIsUnit(args.destName, "player") then
+	if args.amount > 4 and self:Me(args.destGUID) then
 		self:Message(-6871, "Important", nil, CL["count"]:format(args.spellName, args.amount))
 	end
 	if self:Heroic() and self:mobId(UnitGUID("boss4")) == 68081 then -- Dam'ren is active and heroic

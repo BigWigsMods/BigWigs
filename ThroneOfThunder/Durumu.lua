@@ -96,7 +96,7 @@ end
 do
 	local prev = 0
 	function mod:EyeSore(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -200,7 +200,7 @@ end
 do
 	local prev = 0
 	function mod:LingeringGazeDamage(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 1 then -- use 1 sec instead of the usual 2, getting out this fast matters
 			prev = t
@@ -211,14 +211,14 @@ do
 end
 
 function mod:LingeringGazeRemoved(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
 	end
 end
 
 function mod:LingeringGazeApplied(args)
 	self:CDBar(args.spellId, 25)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Message(args.spellId, "Urgent", "Alarm", CL["you"]:format(args.spellName))
 		self:OpenProximity(args.spellId, 8) -- XXX EJ says 15 but looks lot less - VERIFY!

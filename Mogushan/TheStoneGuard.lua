@@ -86,7 +86,7 @@ do
 			jasperChainsTargets[1] = args.destName
 		elseif prevPlayer then
 			jasperChainsTargets[2] = args.destName
-			if UnitIsUnit(args.destName, "player") or UnitIsUnit(prevPlayer, "player") then
+			if self:Me(args.destGUID) or UnitIsUnit(prevPlayer, "player") then
 				self:Flash(args.spellId)
 				self:Message(args.spellId, "Personal", nil, CL["you"]:format(args.spellName))
 				self:OpenProximity(args.spellId, 10, UnitIsUnit(prevPlayer, "player") and args.destName or prevPlayer, true)
@@ -97,7 +97,7 @@ do
 		end
 	end
 	function mod:JasperChainsRemoved(args)
-		if UnitIsUnit(args.destName, "player") then
+		if self:Me(args.destGUID) then
 			self:Message(args.spellId, "Personal", nil, CL["over"]:format(args.spellName))
 			self:CloseProximity(args.spellId)
 		end
@@ -107,7 +107,7 @@ end
 do
 	local prev = 0
 	function mod:AmethystPool(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t

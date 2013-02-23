@@ -212,7 +212,7 @@ end
 -- Zian
 function mod:Fixate(args)
 	self:PrimaryIcon(args.spellId, args.destName)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Info")
 		self:Say(args.spellId, args.spellName)
 	end

@@ -72,7 +72,7 @@ end
 do
 	local prev = 0
 	function mod:GrowingAngerApplied(args)
-		if UnitIsUnit(args.destName, "player") then
+		if self:Me(args.destGUID) then
 			self:OpenProximity(args.spellId, 5)
 			self:Flash(args.spellId)
 			self:Message(args.spellId, "Personal", "Alert", CL["you"]:format(args.spellName))
@@ -86,7 +86,7 @@ do
 		end
 	end
 	function mod:GrowingAngerRemoved(args)
-		if UnitIsUnit(args.destName, "player") then
+		if self:Me(args.destGUID) then
 			self:CloseProximity(args.spellId)
 		end
 	end

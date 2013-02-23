@@ -121,7 +121,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 end
 
 function mod:WhirlingBladeDamage(args)
-	if not self:LFR() and UnitIsUnit("player", args.destName) then
+	if not self:LFR() and self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:Flash(args.spellId) -- we flash on cast too, but some more can't hurt
 	end
@@ -151,7 +151,7 @@ do
 end
 
 function mod:ResidueRemoved(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Positive", nil, CL["over"]:format(args.spellName))
 	end
 end
@@ -163,7 +163,7 @@ do
 		scheduled = nil
 	end
 	function mod:AmberPrison(args)
-		if UnitIsUnit("player", args.destName) then
+		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 		end
 		prisonList[#prisonList + 1] = args.destName
@@ -225,7 +225,7 @@ end
 
 function mod:WindBomb(args)
 	self:TargetMessage(131830, args.sourceName, "Urgent", "Alarm")
-	if UnitIsUnit("player", args.sourceName) then
+	if self:Me(args.sourceGUID) then
 		self:Flash(131830)
 		self:Say(131830)
 	end
@@ -247,7 +247,7 @@ end
 do
 	local prev = 0
 	function mod:ResinPoolDamage(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -258,7 +258,7 @@ do
 end
 
 function mod:Resin(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:Flash(args.spellId)
 		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
@@ -266,13 +266,13 @@ function mod:Resin(args)
 end
 
 function mod:ImpalingSpear(args)
-	if UnitIsUnit(args.sourceName, "player") then
+	if self:Me(args.sourceGUID) then
 		self:Bar(args.spellId, 50)
 	end
 end
 
 function mod:ImpalingSpearRemoved(args)
-	if UnitIsUnit(args.sourceName, "player") then
+	if self:Me(args.sourceGUID) then
 		self:StopBar(args.spellName)
 		self:Message(args.spellId, "Personal", "Info", L["spear_removed"])
 		self:Flash(args.spellId)

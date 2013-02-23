@@ -107,7 +107,7 @@ end
 do
 	local prev = 0
 	function mod:BreathDamage(args)
-		if not UnitIsUnit(args.destName, "player") or self:Tank() then return end
+		if not self:Me(args.destGUID) or self:Tank() then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -189,7 +189,7 @@ end
 do
 	local prev = 0
 	function mod:IcyGround(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -219,7 +219,7 @@ end
 do
 	local prev = 0
 	function mod:Cinders(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -235,7 +235,7 @@ end
 
 function mod:CindersApplied(args)
 	self:SecondaryIcon(args.spellId, args.destName)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:Flash(args.spellId)
 	elseif self:Dispeller("magic") then

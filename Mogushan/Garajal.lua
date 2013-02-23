@@ -157,13 +157,13 @@ do
 end
 
 function mod:CrossedOver(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Bar(116161, 30)
 	end
 end
 
 function mod:CrossedOverRemoved(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:StopBar(args.spellName)
 	end
 end
@@ -173,14 +173,14 @@ function mod:SpiritTotem()
 end
 
 function mod:Banishment(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Bar(args.spellId, 30, CL["you"]:format(args.spellName))
 	end
 	self:Sync("Banish", args.destName)
 end
 
 function mod:SoulSeverRemoved(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:StopBar(116272, CL["you"]:format(self:SpellName(116272))) -- Banish
 	end
 end

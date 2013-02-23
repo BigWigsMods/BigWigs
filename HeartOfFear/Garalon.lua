@@ -82,7 +82,7 @@ end
 do
 	local prev = 0
 	function mod:PheromoneTrail(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -115,7 +115,7 @@ end
 
 function mod:PheromonesApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		-- Local message with personal and info for when you gain the debuff, others don't care that you got it
 		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 	elseif self:Healer() then
@@ -124,7 +124,7 @@ function mod:PheromonesApplied(args)
 end
 
 function mod:PheromonesRemoved(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		-- Local message with important and alarm for when you loose the debuff, others don't care that you lost it
 		self:Message(args.spellId, "Important", "Alarm", L["removed"]:format(args.spellName))
 	end

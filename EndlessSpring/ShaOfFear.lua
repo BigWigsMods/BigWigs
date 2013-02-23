@@ -144,7 +144,7 @@ do
 		huddleUsed = true
 		warnNext()
 		huddleList[#huddleList + 1] = args.destName
-		if UnitIsUnit(args.destName, "player") then
+		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 		end
 		if not scheduled then
@@ -174,7 +174,7 @@ function mod:Submerge(args)
 end
 
 function mod:FadingLight(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Positive", "Long", L["cooldown_reset"])
 	end
 end
@@ -223,7 +223,7 @@ end
 function mod:ChampionOfTheLight(args)
 	self:TargetMessage(args.spellId, args.destName, "Positive", "Long", L["ball"])
 	--self:CloseProximity(args.spellId) -- uncomment when mapdata becomes available for last phase
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 	end
 end
@@ -268,7 +268,7 @@ end
 
 
 function mod:WaterspoutApplied(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 		self:Flash(args.spellId)
 	end
@@ -340,7 +340,7 @@ do
 			thrashSwing = swingCounter
 			swingCounter = -thrashNext
 			thrashNext = nil
-		elseif UnitIsUnit("player", args.destName) then --just the current tank
+		elseif self:Me(args.destGUID) then --just the current tank
 			if swingCounter > 0 then -- normal swing
 				self:Message("swing", "Positive", nil, CL["count"]:format(L["swing"], swingCounter), 5547) -- hammer icon (meeeeh)
 			elseif swingCounter == 0 then -- last extra swing
@@ -359,7 +359,7 @@ function mod:DeathBlossom(args)
 end
 
 function mod:Fearless(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "target") -- just have it here for now
 		self:OpenProximity("proximity", 4) -- Penetrating Bolt
 		atSha = true
@@ -395,7 +395,7 @@ function mod:OminousCackle(args)
 end
 
 function mod:OminousCackleRemoved(args) -- set it here, because at this point we are surely out of range of the other platforms
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "BlossomPreWarn", "target")
 	end
 end
@@ -408,7 +408,7 @@ do
 	end
 	function mod:OminousCackleApplied(args)
 		cackleTargets[#cackleTargets + 1] = args.destName
-		if UnitIsUnit("player", args.destName) then
+		if self:Me(args.destGUID) then
 			atSha = nil
 			self:CloseProximity()
 			self:StopBar(131996) -- Thrash

@@ -98,7 +98,7 @@ end
 function mod:HeartOfFearApplied(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Info")
 	self:PrimaryIcon(args.spellId, args.destName)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
 	end
@@ -112,7 +112,7 @@ function mod:Dispatch(args)
 end
 
 function mod:Poison(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Bar(args.spellId, 30,  L["fumes_bar"])
 	end
 end
@@ -131,7 +131,7 @@ function mod:CryOfTerror(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Long")
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:Bar(args.spellId, 25)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 	end
 end
@@ -165,7 +165,7 @@ do
 	end
 	function mod:Visions(args)
 		visionsList[#visionsList + 1] = args.destName
-		if UnitIsUnit("player", args.destName) then
+		if self:Me(args.destGUID) then
 			self:Say(args.spellId, L["visions_message"])
 			self:Flash(args.spellId)
 			self:OpenProximity(args.spellId, 8)
@@ -178,7 +178,7 @@ end
 
 function mod:Fixate(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:TargetBar(args.spellId, 20, args.destName)
@@ -186,13 +186,13 @@ function mod:Fixate(args)
 end
 
 function mod:FixateRemoved(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:StopBar(args.spellName, args.destName)
 	end
 end
 
 function mod:Resin(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 	end
 end

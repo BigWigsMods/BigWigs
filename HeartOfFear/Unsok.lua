@@ -124,7 +124,7 @@ end
 function mod:ParasiticGrowth(args)
 	self:Bar(args.spellId, 50)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Long", L["parasite"])
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 	end
 	if self:Healer() then
@@ -140,7 +140,7 @@ end
 do
 	local prev = 0
 	function mod:BurningAmber(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -197,7 +197,7 @@ function mod:ReshapeLife(args)
 		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
 	end
 
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Bar("explosion_by_you", 15, L["explosion_by_you_bar"], 122398)
 		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "MyWillpower", "player")
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "BreakFreeHP", "player")
@@ -207,7 +207,7 @@ function mod:ReshapeLife(args)
 end
 
 function mod:ReshapeLifeRemoved(args)
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "player")
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "player")
 		self:StopBar(CL["cast"]:format(explosion))
@@ -236,12 +236,12 @@ do
 		end
 	end
 	function mod:AmberExplosionPrevented(args) -- We stunned ourself before it started casting
-		if args.amount == SPELL_FAILED_STUNNED and UnitIsUnit("player", args.sourceName) then
+		if args.amount == SPELL_FAILED_STUNNED and self:Me(args.sourceGUID) then
 			self:Bar("explosion_by_you", 13, L["explosion_by_you_bar"], args.spellId) -- cooldown
 		end
 	end
 	function mod:AmberExplosion(args)
-		if UnitIsUnit("player", args.sourceName) then
+		if self:Me(args.sourceGUID) then
 			self:Flash("explosion_casting_by_you")
 			self:Bar("explosion_casting_by_you", 2.5, CL["cast"]:format(explosion), args.spellId)
 			self:Bar("explosion_by_you", 13, L["explosion_by_you_bar"], args.spellId) -- cooldown
@@ -353,7 +353,7 @@ end
 
 function mod:Fling(args)
 	--(0) Grab -> (2.4-4.4) Fling -> (5.7) Rough Landing -> (6.1) damage/stun -> (8.7) stun off
-	if UnitIsUnit("player", args.destName) then
+	if self:Me(args.destGUID) then
 		self:Bar(122413, 6, L["fling_message"], 68659)
 	end
 	self:CDBar(122413, 28) --Fling
@@ -382,7 +382,7 @@ end
 
 function mod:AmberGlobule(args)
 	self:TargetMessage(-6548, args.destName, "Important", "Alert")
-	if UnitIsUnit(args.destName, "player") then
+	if self:Me(args.destGUID) then
 		self:Flash(-6548)
 		self:Say(-6548)
 	end

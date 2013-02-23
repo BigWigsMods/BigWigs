@@ -144,7 +144,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 end
 
 function mod:PrimalNutriment(args)
-	if not UnitIsUnit("player", args.destName) then return end
+	if not self:Me(args.destGUID) then return end
 	self:Message(args.spellId, "Positive")
 	self:Bar(args.spellId, 30, CL["you"]:format(args.spellName))
 end
@@ -154,7 +154,7 @@ do
 		mod:Message(-7360, "Personal", (remainingTime<5) and "Info", CL["custom_sec"]:format(L["flight_over"], remainingTime), 133755)
 	end
 	function mod:Flight(args)
-		if not UnitIsUnit("player", args.destName) then return end
+		if not self:Me(args.destGUID) then return end
 		self:ScheduleTimer(flightMessage, 5, 5)
 		self:ScheduleTimer(flightMessage, 8, 2)
 		self:ScheduleTimer(flightMessage, 9, 1) -- A bit of spam, but it is necessary!

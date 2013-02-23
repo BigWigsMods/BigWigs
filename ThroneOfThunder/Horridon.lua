@@ -207,7 +207,7 @@ end
 do
 	local prev = 0
 	function mod:LightningNova(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -250,7 +250,7 @@ end
 do
 	local prev = 0
 	function mod:FrozenOrb(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -285,7 +285,7 @@ end
 do
 	local prev = 0
 	function mod:LivingPoison(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -318,7 +318,7 @@ end
 do
 	local prev = 0
 	function mod:SandTrap(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t

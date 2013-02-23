@@ -161,7 +161,7 @@ end
 do
 	local prev = 0
 	function mod:FlamesOfPassion(args)
-		if not UnitIsUnit(args.destName, "player") then return end
+		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -208,7 +208,7 @@ end
 -- Phase 1
 
 function mod:BeastOfNightmares(args)
-	if UnitIsUnit("player", args.destName) or self:Tank() then -- this is for tank
+	if self:Me(args.destGUID) or self:Tank() then -- this is for tank
 		self:Message(-7634, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:Bar(-7634, 51)
 	elseif self:Healer() then
