@@ -517,6 +517,13 @@ function boss:SpellName(spellId)
 	return spells[spellId]
 end
 
+do
+	local myGUID = UnitGUID("player")
+	function boss:Me(guid)
+		return myGUID == guid
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Role checking
 --
