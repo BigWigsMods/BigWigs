@@ -5,8 +5,6 @@ TODO:
 	could maybe used UNIT_POWER to warn SOON for abilities that only enable after a certain amount of power
 	does not seem possible right now ( 10 H PTR ) but would be nice if we could tell accurately how many active golems are there when boss enters the fight
 		then we could try to estimate how soon it'll reach full power
-	add bar for interrupting jolt
-	check if interrupting jolt spellId changed, or there are just a new for heroic
 ]]--
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
@@ -104,6 +102,7 @@ do
 		local color = caster and "Personal" or "Attention"
 		local sound = caster and "Long" or nil
 		self:Message(args.spellId, color, sound)
+		self:CDBar(args.spellId, 18)
 		if caster then self:Flash(args.spellId) end
 	end
 end
@@ -125,7 +124,7 @@ end
 
 function mod:SiphonAnima(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 30)
+	self:Bar(args.spellId, self:Heroic() and 30 or 6)
 end
 
 function mod:BossEngage()
@@ -185,7 +184,7 @@ do
 end
 
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg, sender)
-	if sender == mod:SpellName(138485) then -- Crimson Wake
+	if sender == self:SpellName(138485) then -- Crimson Wake
 		self:Say(138485)
 		self:Bar(138485, 30, CL["you"]:format(sender))
 		self:DelayedMessage(138485, 30, "Positive", CL["over"]:format(sender))
