@@ -3,7 +3,6 @@ TODO:
 	look out for lingering presence CLEU in case it gets added by blizzard ( not yet in 10 N ptr )
 	watch out in case Chilled to the Bone gets CLEU
 	full power bar needs heavy testing
-	verify if biting cold and frostbite shares cooldown and handle them appropriately ( right now we handle them as if they had seperate cooldown )
 ]]--
 
 if select(4, GetBuildInfo()) < 50200 then return end
@@ -27,6 +26,7 @@ local lingeringTracker = {
 	[69134] = 0,
 	[69078] = 0,
 }
+local frostBiteStart, bitingColdStart = nil, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -100,8 +100,9 @@ function mod:OnEngage()
 	self:OpenProximity("proximity", self:Heroic() and 7 or 5)
 	self:CDBar("priestess_adds", 27, L["priestess_adds_message"], L.priestess_adds_icon)
 	self:CDBar(-7062, 7) -- Quicksand
-	self:Bar(136992, 60) -- Biting Cold -- XXX not sure if 1 min is right feels too long
+	self:Bar(136990, 9.7) -- Frostbite -- might be 7.5?
 	hasChilledToTheBone = nil
+	frostBiteStart, bitingColdStart = nil, nil
 end
 
 --------------------------------------------------------------------------------
@@ -125,7 +126,7 @@ end
 
 -- Sul the Sandcrawler
 function mod:Sandstorm(args)
-	-- Ability is used about 1 sec after the boss gets possessed, so no point to makea bar
+	-- Ability is used about 1 sec after the boss gets possessed, so no point to make a bar
 	self:Message(args.spellId, "Urgent", "Alert")
 end
 
@@ -177,16 +178,18 @@ end
 function mod:FrostbiteApplied(args)
 	self:TargetMessage(136990, args.destName, "Positive", "Info")
 	self:Bar(136990, 45)
+	frostBiteStart = GetTime()
 end
 
 function mod:BitingColdApplied(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent",  "Alert")
-	self:Bar(args.spellId, 47)
+	self:Bar(args.spellId, 45)
 	self:SecondaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:OpenProximity(args.spellId, 4)
 	end
+	bitingColdStart = GetTime()
 end
 
 function mod:BitingColdRemoved(args)
@@ -259,7 +262,8 @@ do
 		-- leave in all the elseif statements to be ready in case they are needed on heroic
 		if mobId == 69132 then -- Priestess
 		elseif mobId == 69131 then -- Frost King
-			self:Bar(136990, 9.7) -- Frostbite -- might be 7.5?
+			self:StopBar(136992) -- Biting Cold
+			self:CDBar(136990, 45-(GetTime()-bitingColdStart))-- Frostbite -- CD bar because of Possessed buff travel time
 			if self:Heroic() then self:RegisterUnitEvent("UNIT_AURA", "ChilledToTheBone", "player") end
 		elseif mobId == 69134 then -- Kazra'jin
 		elseif mobId == 69078 then -- Sandcrawler
@@ -282,6 +286,7 @@ function mod:PossessedRemoved(args)
 	if mobId == 69132 then -- Priestess
 	elseif mobId == 69131 then -- Frost King
 		self:StopBar(136990) -- Frostbite
+		self:Bar(136992, 45-(GetTime()-frostBiteStart)) -- Biting Cold
 		if self:Heroic() then self:UnregisterUnitEvent("UNIT_AURA", "player") end
 	elseif mobId == 69134 then -- Kazra'jin
 	elseif mobId == 69078 then -- Sandcrawler
