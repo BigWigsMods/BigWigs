@@ -30,7 +30,6 @@ if L then
 
 	L.assault_message = "Выпад"
 
-	L.loa_kills = "Убито Лоа: %s"
 	L.priestess_add = "Помощник Жрицы"
 	L.priestess_adds = "Помощники Жрицы"
 	L.priestess_adds_desc = "Предупреждать о всех типах помощников Мар'ли верховной жрице."

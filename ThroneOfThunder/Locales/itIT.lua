@@ -30,7 +30,6 @@ if L then
 
 	L.assault_message = "Assalto"
 
-	L.loa_kills = "Spirito Loa ucciso: %s"
 	L.priestess_add = "Add Sacerdotessa"
 	L.priestess_adds = "Adds Sacerdotessa"
 	L.priestess_adds_desc = "Avviso per tutti i tipi di add della Gran Sacerdotessa Mar'li"

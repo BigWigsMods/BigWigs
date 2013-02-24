@@ -41,7 +41,6 @@ if L then
 
 	L.full_power = "Full power"
 	L.assault_message = "Assault"
-	L.loa_kills = "Loa kills: %s"
 	L.hp_to_go_power = "HP to go: %d%% - Power: %d"
 end
 L = mod:GetLocale()
@@ -94,7 +93,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(600) -- XXX assumed
+	self:Berserk(self:LFR() and 720 or 600) -- XXX assumed. 12 min or higher on LFR, prob 15
 	bossDead = 0
 	for _, v in pairs(lingeringTracker) do v = 0 end
 	self:OpenProximity("proximity", self:Heroic() and 7 or 5)
@@ -111,8 +110,8 @@ end
 
 -- High Priestess Mar'li
 function mod:MarkedSoul(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert")
-	self:Bar(args.spellId, 20, L["loa_kills"]:format(args.destName))
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert", 40415, args.spellId)
+	self:TargetBar(args.spellId, 20, args.destName, 40415, args.spellId) -- 40415 = Fixated
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 	end
@@ -263,7 +262,9 @@ do
 		if mobId == 69132 then -- Priestess
 		elseif mobId == 69131 then -- Frost King
 			self:StopBar(136992) -- Biting Cold
-			self:CDBar(136990, 45-(GetTime()-bitingColdStart))-- Frostbite -- CD bar because of Possessed buff travel time
+			if bitingColdStart then -- XXX fix me
+				self:CDBar(136990, 45-(GetTime()-bitingColdStart))-- Frostbite -- CD bar because of Possessed buff travel time
+			end
 			if self:Heroic() then self:RegisterUnitEvent("UNIT_AURA", "ChilledToTheBone", "player") end
 		elseif mobId == 69134 then -- Kazra'jin
 		elseif mobId == 69078 then -- Sandcrawler

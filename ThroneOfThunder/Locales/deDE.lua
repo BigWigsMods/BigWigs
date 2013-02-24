@@ -32,7 +32,6 @@ if L then
 
 	L.assault_message = "Kalte Angriffe"
 
-	L.loa_kills = "Loa kills: %s"
 	L.priestess_add = "Priesterin Add"
 	L.priestess_adds = "Priesterin Adds"
 	L.priestess_adds_desc = "Warnung für alle möglichen Adds von Hohepriesterin Mar'li"

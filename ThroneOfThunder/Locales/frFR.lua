@@ -30,7 +30,6 @@ if L then
 
 	L.assault_message = "Assaut"
 
-	L.loa_kills = "Loa kills : %s"
 	L.priestess_add = "Priestess add"
 	L.priestess_adds = "Priestess adds"
 	L.priestess_adds_desc = "Warning for all kinds of adds from High Priestess Mar'li"

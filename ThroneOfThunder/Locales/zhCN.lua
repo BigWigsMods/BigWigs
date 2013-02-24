@@ -32,7 +32,6 @@ if L then
 
 	L.assault_message = "冰寒突击！"
 
-	L.loa_kills = "击杀神灵：>%s<"
 	L.priestess_add = "神灵增援"
 	L.priestess_adds = "神灵增援"
 	L.priestess_adds_desc = "当击杀全部高阶祭司玛尔里的增援时发出警报。"
