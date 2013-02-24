@@ -115,13 +115,13 @@ L["irc.freenode.net in the #wowace channel"] = "irc.freenode.net sur le canal #w
 L["Thanks to the following for all their help in various fields of development"] = "Merci aux personnes suivantes pour leur aide :"
 
 -- Statistics
-L.statistics = "Statistics"
+L.statistics = "Statistiques"
 L.norm25 = "25"
 L.heroic25 = "25h"
 L.norm10 = "10"
 L.heroic10 = "10h"
-L.lfr = "LFR"
-L.wipes = "Wipes:"
-L.kills = "Kills:"
-L.bestkill = "Best Kill:"
+L.lfr = "RdR"
+L.wipes = "Échecs :"
+L.kills = "Victoires :"
+L.bestkill = "Meilleure fois :"
 
