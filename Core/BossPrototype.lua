@@ -139,8 +139,7 @@ function boss:OnDisable()
 		end
 	end
 
-	-- Clear any counted messages
-	self.counts = nil
+	self.scheduledMessages = nil
 
 	self.isEngaged = nil
 	self:SendMessage("BigWigs_OnBossDisable", self)
@@ -687,21 +686,18 @@ function boss:CloseProximity(key)
 end
 
 -- MESSAGES
-do
-	local scheduledMessages = {}
-
-	function boss:CancelDelayedMessage(text)
-		if scheduledMessages[text] then
-			self:CancelTimer(scheduledMessages[text])
-			scheduledMessages[text] = nil
-		end
+function boss:CancelDelayedMessage(text)
+	if self.scheduledMessages and self.scheduledMessages[text] then
+		self:CancelTimer(self.scheduledMessages[text])
+		self.scheduledMessages[text] = nil
 	end
+end
 
-	function boss:DelayedMessage(key, delay, color, text, icon, sound)
-		if checkFlag(self, key, C.MESSAGE) then
-			self:CancelDelayedMessage(text or key)
-			scheduledMessages[text or key] = self:ScheduleTimer("Message", delay, key, color, sound, text, icon or false)
-		end
+function boss:DelayedMessage(key, delay, color, text, icon, sound)
+	if checkFlag(self, key, C.MESSAGE) then
+		self:CancelDelayedMessage(text or key)
+		if not self.scheduledMessages then self.scheduledMessages = {} end
+		self.scheduledMessages[text or key] = self:ScheduleTimer("Message", delay, key, color, sound, text, icon or false)
 	end
 end
 
