@@ -236,12 +236,12 @@ function mod:Recklessness(args)
 end
 
 function mod:RecklessnessHeroic(args)
-	self:Message("recklessness", "Attention", nil, args.spellId)
-	self:Bar("recklessness", 30, args.spellId)
+	self:Message("recklessness", "Attention", nil, args.spellName, args.spellId)
+	self:Bar("recklessness", 30, args.spellName, args.spellId)
 end
 
 function mod:RecklessnessHeroicRemoved(args)
-	self:Message("recklessness", "Attention", "Info", CL["over"]:format(args.spellName))
+	self:Message("recklessness", "Attention", "Info", CL["over"]:format(args.spellName), args.spellId)
 end
 
 do
