@@ -78,7 +78,7 @@ end
 function mod:OnEngage(diff)
 	self:OpenProximity(122777, 8)
 	self:Berserk(self:LFR() and 900 or 490)
-	self:Bar("phases", 121, L["day"], 122789)
+	self:Bar("phases", 121, L["day"], "spell_holy_circleofrenewal")
 	self:Bar(122777, 15.6) -- Nightmares
 	self:Bar(122752, 10) -- Shadow Breath
 	bigAddCounter = 0
@@ -111,7 +111,7 @@ function mod:Terrorize(args)
 end
 
 function mod:DreadShadows(args)
-	if self:Me(args.destGUID) and args.amount > (self:Heroic() and 5 or 11) and args.amount % 3 == 0 then
+	if self:Me(args.destGUID) and args.amount > (self:Heroic() and 5 or self:LFR() and 13 or 9) and args.amount % 2 == 0 then
 		self:Message(args.spellId, "Personal", "Info", CL["count"]:format(args.spellName, args.amount))
 	end
 end
@@ -152,7 +152,7 @@ do
 				self:CloseProximity(122777)
 				self:StopBar(122777) -- Nightmares
 				self:StopBar(122752) -- Shadow Breath
-				self:Message("phases", "Positive", nil, L["day"], 122789)
+				self:Message("phases", "Positive", nil, L["day"], "spell_holy_circleofrenewal")
 				self:Bar("phases", 121, L["night"], 122768)
 				self:Bar(122855, 32) -- Sun Breath
 				self:Bar("unstable_sha", 18, 122953, 122938)
@@ -163,7 +163,7 @@ do
 				self:OpenProximity(122777, 8)
 				self:Bar(122777, 15) -- Nightmares
 				self:Message("phases", "Positive", nil, L["night"], 122768)
-				self:Bar("phases", 121, L["day"], 122789)
+				self:Bar("phases", 121, L["day"], "spell_holy_circleofrenewal")
 				self:Bar(122752, 10) -- Shadow Breath
 				if self:Dispeller("magic", true) then
 					checkForHoTs()
