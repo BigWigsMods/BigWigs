@@ -22,17 +22,18 @@ if L then
 	L.venom_bolt_volley_bar = "Фокус: Залп"
 
 	L.puncture_message = "Прокол"
+
+	-- L.charge_trigger = "sets his eyes"
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "ruRU")
 if L then
-	L.full_power = "Полная энергия"
-
-	L.assault_message = "Выпад"
-
-	L.priestess_add = "Помощник Жрицы"
 	L.priestess_adds = "Помощники Жрицы"
 	L.priestess_adds_desc = "Предупреждать о всех типах помощников Мар'ли верховной жрице."
+	L.priestess_adds_message = "Помощник Жрицы"
+
+	L.full_power = "Полная энергия"
+	L.assault_message = "Выпад"
 	L.hp_to_go_power = "HP осталось: %d%% - Энергия: %d"
 end
 
@@ -40,7 +41,8 @@ L = BigWigs:NewBossLocale("Tortos", "ruRU")
 if L then
 	L.kick = "Пинок"
 	L.kick_desc = "Отслеживает, сколько черепах можно пнуть."
-	L.kickable_turtles = "Можно пнуть черепах: %d"
+	L.kick_message = "Можно пнуть черепах: %d"
+
 	L.crystal_shell_removed = "Защитный панцирь снят!"
 	L.no_crystal_shell = "НЕТ Защитного панциря"
 end
@@ -49,7 +51,7 @@ L = BigWigs:NewBossLocale("Megaera", "ruRU")
 if L then
 	L.breaths = "Дыхание"
 	L.breaths_desc = "Предупреждения, связанные со всеми типами дыхания."
-	L.rampage_over = "Неистовство окончено!"
+
 	-- L.arcane_adds = "Arcane adds"
 end
 
@@ -61,6 +63,7 @@ if L then
 	-- L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch!"
 	L.upper_nest = "|c00008000Верхние|r гнезда"
 	L.lower_nest = "|c00FF0000Нижние|r гнезда"
+	L.lower_upper_nest = "|c00FF0000Нижние|r + |c00008000Верхние|r гнезда"
 	-- L.food_call_trigger = "Hatchling calls for food!"
 	L.nest = "Гнезда"
 	L.nest_desc = "Предупреждения, связанные с гнездами. |c00FF0000Снимите галочку, чтобы отключить предупреждения, если вы не назначены на гнезда!|r"
@@ -79,7 +82,7 @@ if L then
 	L.blue_add = "|c000000FFСиний|r помощник"
 	L.clockwise = "По часовой стрелке"
 	L.counter_clockwise = "Отсчет часовой стрелки"
-	-- L.death_beam = "Death beam"
+	L.death_beam = "Смертельный луч"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "ruRU")
@@ -109,6 +112,7 @@ if L then
 	L.conduit_abilities = "Способности проводника"
 	L.conduit_abilities_desc = "Полосы приблизительного восстановления способностей проводника."
 	L.conduit_ability_meassage = "След. способность проводника"
+
 	L.intermission = "Перерыв"
 	L.overchargerd_message = "Оглушающий AoE импульс"
 	L.static_shock_message = "Делящийся AoE урон"
