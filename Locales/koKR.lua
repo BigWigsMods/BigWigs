@@ -116,3 +116,14 @@ L["See license.txt in the main Big Wigs folder."] = "메인 Big Wigs 폴더의 l
 L["irc.freenode.net in the #wowace channel"] = "irc.freenode.net의 #wowace 채널"
 L["Thanks to the following for all their help in various fields of development"] = "다양한 분야에서 개발을 위해 다음과 같은 사람들의 도움이 있었습니다."
 
+-- Statistics
+L.statistics = "Statistics"
+L.norm25 = "25"
+L.heroic25 = "25h"
+L.norm10 = "10"
+L.heroic10 = "10h"
+L.lfr = "LFR"
+L.wipes = "Wipes:"
+L.kills = "Kills:"
+L.bestkill = "Best Kill:"
+

@@ -114,3 +114,14 @@ L["See license.txt in the main Big Wigs folder."] = true
 L["irc.freenode.net in the #wowace channel"] = true
 L["Thanks to the following for all their help in various fields of development"] = true
 
+-- Statistics
+L.statistics = "Statistics"
+L.norm25 = "25"
+L.heroic25 = "25h"
+L.norm10 = "10"
+L.heroic10 = "10h"
+L.lfr = "LFR"
+L.wipes = "Wipes:"
+L.kills = "Kills:"
+L.bestkill = "Best Kill:"
+

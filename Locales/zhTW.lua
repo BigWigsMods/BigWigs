@@ -116,3 +116,14 @@ L["See license.txt in the main Big Wigs folder."] = "查看 license.txt 位於 B
 L["irc.freenode.net in the #wowace channel"] = "#wowace 頻道位於 irc.freenode.net"
 L["Thanks to the following for all their help in various fields of development"] = "感謝他們在各個領域的開發與幫助"
 
+-- Statistics
+L.statistics = "Statistics"
+L.norm25 = "25"
+L.heroic25 = "25h"
+L.norm10 = "10"
+L.heroic10 = "10h"
+L.lfr = "LFR"
+L.wipes = "Wipes:"
+L.kills = "Kills:"
+L.bestkill = "Best Kill:"
+

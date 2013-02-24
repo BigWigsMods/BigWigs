@@ -749,7 +749,7 @@ local function populateToggleOptions(widget, module)
 
 		-- Create statistics table
 		local statGroup = AceGUI:Create("InlineGroup")
-		statGroup:SetTitle("Statistics")
+		statGroup:SetTitle(L.statistics)
 		statGroup:SetLayout("Flow")
 		statGroup:SetFullWidth(true)
 		scrollFrame:AddChild(statGroup)
@@ -761,27 +761,27 @@ local function populateToggleOptions(widget, module)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("25")
+		statistics:SetText(L.norm25)
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("25h")
+		statistics:SetText(L.heroic25)
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("10")
+		statistics:SetText(L.norm10)
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("10h")
+		statistics:SetText(L.heroic10)
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("LFR")
+		statistics:SetText(L.lfr)
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
@@ -791,7 +791,7 @@ local function populateToggleOptions(widget, module)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("Wipes:")
+		statistics:SetText(L.wipes)
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
@@ -826,7 +826,7 @@ local function populateToggleOptions(widget, module)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("Kills:")
+		statistics:SetText(L.kills)
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
@@ -861,7 +861,7 @@ local function populateToggleOptions(widget, module)
 
 		statistics = AceGUI:Create("Label")
 		statistics:SetWidth(90)
-		statistics:SetText("Best Kill:")
+		statistics:SetText(L.bestkill)
 		statGroup:AddChild(statistics)
 
 		statistics = AceGUI:Create("Label")
