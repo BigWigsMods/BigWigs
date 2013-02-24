@@ -287,7 +287,9 @@ function mod:PossessedRemoved(args)
 	if mobId == 69132 then -- Priestess
 	elseif mobId == 69131 then -- Frost King
 		self:StopBar(136990) -- Frostbite
-		self:Bar(136992, 45-(GetTime()-frostBiteStart)) -- Biting Cold
+		if frostBiteStart then
+			self:Bar(136992, 45-(GetTime()-frostBiteStart)) -- Biting Cold
+		end
 		if self:Heroic() then self:UnregisterUnitEvent("UNIT_AURA", "player") end
 	elseif mobId == 69134 then -- Kazra'jin
 	elseif mobId == 69078 then -- Sandcrawler
