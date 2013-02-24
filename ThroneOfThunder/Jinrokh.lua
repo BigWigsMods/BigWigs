@@ -113,7 +113,7 @@ function mod:ThunderingThrowSafe()
 end
 
 function mod:ThunderingThrow(_, _, _, _, target)
-	self:Message(137175, "Attention", "Alert")
+	self:TargetMessage(137175, target, "Attention", "Alert")
 	self:SecondaryIcon(137175, target)
 	if not UnitIsUnit(target, "player") then -- no point opening proximity for the thrown tank
 		self:CloseProximity(-7741) -- close this before opening another ( in case it was open )
