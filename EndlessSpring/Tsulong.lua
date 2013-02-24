@@ -118,7 +118,7 @@ end
 
 function mod:Sunbeam(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Positive")
+		self:Message(args.spellId, "Positive", nil, CL["removed"]:format(self:SpellName(122768)))
 	end
 end
 
@@ -142,6 +142,30 @@ do
 			end
 		end
 	end
+
+	--[[local fired, timer = 0, nil
+	local function getNightmaresTarget(spellId)
+		fired = fired + 1
+		local player = UnitName("boss1target")
+		if player and (not UnitDetailedThreatSituation("boss1target", "boss1") or fired > 13) then
+			-- If we've done 10 (0.5s) checks and still not passing the threat check, it's probably being cast on the tank
+			mod:CancelTimer(timer)
+			timer = nil
+			mod:TargetMessage(spellId, player, "Important", "Alert")
+			if UnitIsUnit(player, "player") then
+				mod:FlashShake(spellId)
+				mod:Say(spellId)
+			end
+			return
+		end
+		-- 19 == 0.95sec
+		-- Safety check if the unit doesn't exist
+		if fired > 18 then
+			mod:CancelTimer(timer)
+			timer = nil
+		end
+	end]]
+
 	local prev = 0
 	function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		if spellId == 124176 then
@@ -177,7 +201,14 @@ do
 				end
 			elseif spellId == 122775 then -- Nightmares
 				self:Bar(122777, 15)
-				self:Message(122777, "Attention")
+				--if self:Difficulty() == 3 or self:Difficulty() == 5 then
+				--	fired = 0
+				--	if not timer then
+				--		timer = self:ScheduleRepeatingTimer(getNightmaresTarget, 0.05, 122777)
+				--	end
+				--else
+					self:Message(122777, "Attention")
+				--end
 			elseif spellId == 123813 then -- The Dark of Night (heroic)
 				self:Bar(-6550, 30, 130013)
 				self:Message(-6550, "Urgent", "Alarm", 130013)
