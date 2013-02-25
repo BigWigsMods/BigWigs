@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "deDE")
+﻿local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "deDE")
 if not L then return end
 
 -----------------------------------------------------------------------
@@ -234,11 +234,11 @@ L.newBestKill = "Neue Rekordzeit!"
 L.bossStatistics = "Boss-Statistiken"
 L.bossStatsDescription = "Zeichnet verschiedene Statistiken der Bossbegegnungen wie die Anzahl der Kills und Wipes, sowie die Kampfdauer oder die Rekordzeiten auf. Diese Statistiken können, falls vorhanden, in der Konfiguration der einzelnen Bosse eingesehen werden. Andernfalls werden diese ausgeblendet."
 L.enableStats = "Statistiken aktivieren"
-L.chatMessages = "Chat Messages"
-L.printBestKillOption = "Best Kill Notification"
-L.printKillOption = "Kill Time"
-L.printWipeOption = "Wipe Time"
-L.countKills = "Count Kills"
-L.countWipes = "Count Wipes"
-L.recordBestKills = "Remember Best Kills"
+L.chatMessages = "Chatnachrichten"
+L.printBestKillOption = "Benachrichtigung über besten Kill"
+L.printKillOption = "Killzeit"
+L.printWipeOption = "Wipezeit"
+L.countKills = "Kills zählen"
+L.countWipes = "Wipes zählen"
+L.recordBestKills = "Beste Kills speichern"
 
