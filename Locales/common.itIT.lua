@@ -31,7 +31,7 @@ L.add_killed = "Add ucciso! (%d/%d)"
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
 L.custom_start = "Combattimento con %s cominciato - %s in %d min"
 L.custom_start_s = "Combattimento con %s cominciato - %s in %d sec"
-L.custom_end = "%s va %s!"
+L.custom_end = "%s diventa %s!"
 L.custom_min = "%s in %d min"
 L.custom_sec = "%s in %d sec!"
 

@@ -80,7 +80,7 @@ if L then
 	L.phases_icon = "achievement_raid_mantidraid07"
 
 	L.eyes = "Occhi dell'Imperatrice"
-	L.eyes_desc = "Conta le stack di Occhi dell'Imperatrice e mostra una barra di durata."
+	L.eyes_desc = "Conta gli accumuli di Occhi dell'Imperatrice e mostra una barra di durata."
 	L.eyes_message = "Occhi"
 
 	L.visions_message = "Visioni"

@@ -25,7 +25,7 @@ if L then
 	L.phase_message = "Nuova fase tra poco!"
 	L.shroud_message = "Manto"
 	L.shroud_can_interrupt = "%s può interrompere %s!"
-	L.barrier_message = "Barriera Attiva!"
+	L.barrier_message = "Barriera ATTIVA!"
 	L.barrier_cooldown = "Recupero Barriera"
 
 	-- Tanks
@@ -48,8 +48,8 @@ end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "itIT")
 if L then
-	L.bosses = "Bosses"
-	L.bosses_desc = "Warnings for when a boss becomes active."
+	L.bosses = "Imperatori"
+	L.bosses_desc = "Avvisa quando uno dei Boss diventa attivo."
 
 	L.shield_removed = "Scudo Rimosso! (%s)"
 	L.casting_shields = "Lancio Scudo"
@@ -85,7 +85,7 @@ if L then
 	L.gas_trigger = "La Macchina Antica dei Mogu si rompe!"
 	L.gas_overdrive_trigger = "La Macchina Antica dei Mogu va in sovraccarico!"
 
-	L.target_only = "|cFFFF0000Questo messaggio verrà visualizzato solo per il boss che stai targettando.|r "
-	L.combo_message = "%s: Combo in ARRIVO!"
+	L.target_only = "|cFFFF0000Questo messaggio verrà visualizzato solo per il boss che stai selezionando.|r "
+	L.combo_message = "%s: Combo IN ARRIVO!"
 end
 

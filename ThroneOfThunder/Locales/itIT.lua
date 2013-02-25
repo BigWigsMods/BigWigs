@@ -57,7 +57,7 @@ L = BigWigs:NewBossLocale("Megaera", "itIT")
 if L then
 	L.breaths = "Soffi"
 	L.breaths_desc = "Avvisi relativi ad ogni tipo di soffio possibile."
-	L.rampage_over = "Furia Terminata!"
+	--L.rampage_over = "Furia Terminata!"
 	L.arcane_adds = "Teste Arcane"
 end
 
@@ -65,12 +65,12 @@ L = BigWigs:NewBossLocale("Ji-Kun", "itIT")
 if L then
 	L.flight_over = "Termine del Volo"
 	L.young_egg_hatching = "Schiusura Uova Giovani"
-	L.lower_hatch_trigger = "Le uova in uno dei nidi più bassi iniziano a schiudersi!"
-	L.upper_hatch_trigger = "Le uova in uno dei nidi più alti iniziano a schiudersi!"
+	L.lower_hatch_trigger = "Le uova in uno dei nidi più bassi iniziano a schiudersi!" --da controllare
+	L.upper_hatch_trigger = "Le uova in uno dei nidi più alti iniziano a schiudersi!" -- da controllare
 	L.upper_nest = "Nido |c00008000Superiore|r"
 	L.lower_nest = "Nido |c00FF0000Inferiore|r"
 	L.lower_upper_nest = "Nido |c00FF0000Inferiore|r + |c00008000Superiore|r"
-	L.food_call_trigger = "Hatchling calls for food!"
+	L.food_call_trigger = "Hatchling calls for food!" --da tradurre
 	L.nest = "Nidi"
 	L.nest_desc = "Avvisi relativi ai nidi. |c00FF0000Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi!|r"
 end
