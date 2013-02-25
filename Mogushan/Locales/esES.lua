@@ -48,8 +48,8 @@ end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "esES") or BigWigs:NewBossLocale("The Spirit Kings", "esMX")
 if L then
-	L.bosses = "Bosses"
-	L.bosses_desc = "Warnings for when a boss becomes active."
+	L.bosses = "Jefes"
+	L.bosses_desc = "Avisa cuando un jefe se activa."
 
 	L.shield_removed = "¡Escudo eliminado! (%s)"
 	L.casting_shields = "Casteando escudos"
