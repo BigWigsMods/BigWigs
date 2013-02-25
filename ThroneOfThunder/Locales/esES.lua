@@ -11,7 +11,13 @@ end
 
 L = BigWigs:NewBossLocale("Council of Elders", "esES")
 if L then
+	L.priestess_adds = "Priestess adds"
+	L.priestess_adds_desc = "Warning for all kinds of adds from High Priestess Mar'li."
+	L.priestess_adds_message = "Priestess add"
 
+	L.full_power = "Full power"
+	L.assault_message = "Assault"
+	L.hp_to_go_power = "HP to go: %d%% - Power: %d"
 end
 
 L = BigWigs:NewBossLocale("Tortos", "esES")
