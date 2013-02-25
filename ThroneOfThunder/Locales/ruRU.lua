@@ -20,18 +20,18 @@ if L then
 	L.venom_bolt_volley_message = "Ваш фокус читает Залп!"
 	L.venom_bolt_volley_bar = "Фокус: Залп"
 
-	L.adds = "Adds spawning"
-	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
+	L.adds = "Появление помощников"
+	L.adds_desc = "Предупреждать о появлении Фарраки, Гурубаши, Драккари, Амани и Бога Войны Джалака."
 
 	L.puncture_message = "Прокол"
 	L.orb_message = "Сфера контроля упала!"
-	L.focus_only = "|cffff0000Focus target alerts only.|r "
+	L.focus_only = "|cffff0000Оповещения только для фокуса.|r "
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "ruRU")
 if L then
 	L.priestess_adds = "Помощники Жрицы"
-	L.priestess_adds_desc = "Предупреждать о всех типах помощников Мар'ли верховной жрице."
+	L.priestess_adds_desc = "Предупреждать о всех типах помощников верховной жрицы Мар'ли."
 	L.priestess_adds_message = "Помощник Жрицы"
 
 	L.full_power = "Полная энергия"
@@ -54,7 +54,7 @@ if L then
 	L.breaths = "Дыхание"
 	L.breaths_desc = "Предупреждения, связанные со всеми типами дыхания."
 
-	-- L.arcane_adds = "Arcane adds"
+	L.arcane_adds = "Тайные помощники"
 end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "ruRU")
