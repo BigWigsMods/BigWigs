@@ -9,21 +9,23 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "zhCN")
 if L then
-	L.orb_message = "控制之球掉落！"
+	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
 
-	L.chain_lightning_warning = "焦点：>闪电链<！"
+	L.chain_lightning_message = "焦点：>闪电链<！"
 	L.chain_lightning_bar = "焦点：闪电链"
 
-	L.fireball_warning = "焦点：>火球术<！"
+	L.fireball_message = "焦点：>火球术<！"
 	L.fireball_bar = "焦点：火球术"
 
-	L.venom_bolt_volley_desc = "|cFFFF0000注意：只有显示“焦点”目标时计时条才会被显示因为每个毒箭之雨施放者都有不同的冷却时间。|r "..select(2, EJ_GetSectionInfo(7112))
-	L.venom_bolt_volley_warning = "焦点：>毒箭之雨<！"
+	L.venom_bolt_volley_message = "焦点：>毒箭之雨<！"
 	L.venom_bolt_volley_bar = "焦点：毒箭之雨"
 
-	L.puncture_message = "三重穿刺！"
+	L.adds = "Adds spawning"
+	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
 
-	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
+	L.orb_message = "控制之球掉落！"
+	L.puncture_message = "三重穿刺！"
+	L.focus_only = "|cffff0000Focus target alerts only.|r "
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "zhCN")

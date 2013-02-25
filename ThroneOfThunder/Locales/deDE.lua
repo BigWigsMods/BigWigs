@@ -9,21 +9,23 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "deDE")
 if L then
-	L.orb_message = "Kugel der Kontrolle gefallen!"
+	L.charge_trigger = "richtet seinen Blick"
 
-	L.chain_lightning_warning = "Dein Fokus wirkt Kettenblitzschlag!"
+	L.chain_lightning_message = "Dein Fokus wirkt Kettenblitzschlag!"
 	L.chain_lightning_bar = "Fokus: Kettenblitzschlag"
 
-	L.fireball_warning = "Dein Fokus wirkt Feuerball!"
+	L.fireball_message = "Dein Fokus wirkt Feuerball!"
 	L.fireball_bar = "Fokus: Feuerball"
 
-	L.venom_bolt_volley_desc = "|cFFFF0000WARNUNG: Es wird nur der Timer für dein 'Fokus-Ziel' angezeigt da alle Salve-Caster separate Abklingzeiten haben. |r"
-	L.venom_bolt_volley_warning = "Dein Fokus wirkt Salve!"
+	L.venom_bolt_volley_message = "Dein Fokus wirkt Salve!"
 	L.venom_bolt_volley_bar = "Fokus: Salve"
 
-	L.puncture_message = "Dreifachstich"
+	L.adds = "Adds spawning"
+	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
 
-	L.charge_trigger = "richtet seinen Blick"
+	L.puncture_message = "Dreifachstich"
+	L.orb_message = "Kugel der Kontrolle gefallen!"
+	L.focus_only = "|cffff0000Focus target alerts only.|r "
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "deDE")

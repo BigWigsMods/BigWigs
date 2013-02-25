@@ -9,19 +9,23 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "frFR")
 if L then
-	L.orb_message = "Orbe de contrôle lâchée !"
+	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
 
-	L.chain_lightning_warning = "Votre focalisation est entrain d'incanter Chaîne d'éclairs !"
+	L.chain_lightning_message = "Votre focalisation est entrain d'incanter Chaîne d'éclairs !"
 	L.chain_lightning_bar = "Focalisation : Chaîne d'éclairs"
 
-	L.fireball_warning = "Votre focalisation est en train d'incanter Boule de feu !"
+	L.fireball_message = "Votre focalisation est en train d'incanter Boule de feu !"
 	L.fireball_bar = "Focalisation : Boule de feu"
 
-	L.venom_bolt_volley_desc = "|cFFFF0000ATTENION : seul le délai de votre cible de 'focalisation' sera affiché car tous les incantateurs de Salve ont des temps de recharge distincts.|r "..select(2, EJ_GetSectionInfo(7112))
-	L.venom_bolt_volley_warning = "Votre focalisation est en train d'incanter Salve !"
+	L.venom_bolt_volley_message = "Votre focalisation est en train d'incanter Salve !"
 	L.venom_bolt_volley_bar = "Focalisation : Salve"
 
+	L.adds = "Adds spawning"
+	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
+
 	L.puncture_message = "Perforation"
+	L.orb_message = "Orbe de contrôle lâchée !"
+	L.focus_only = "|cffff0000Focus target alerts only.|r "
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "frFR")

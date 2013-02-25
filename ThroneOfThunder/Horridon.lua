@@ -16,26 +16,26 @@ mod:RegisterEnableMob(68476, 69374) -- Horridon, War-God Jalak
 -- Locals
 --
 
+local currentDoor = ""
+
 -- XXX Fix this
 do
 	local icons = {
-		"6:21:7:27",		-- [0] tank
-		"39:55:7:27",		-- [1] damage
-		"70:86:7:27",		-- [2] healer
-		"102:118:7:27",		-- [3] heroic only
-		"133:153:7:27",		-- [4] deadly
-		"168:182:7:27",		-- [5] important
-		"198:214:7:27",		-- [6] interruptable
-		"229:247:7:27",		-- [7] magic
-		"6:21:40:58",		-- [8] curse
-		"39:55:40:58",		-- [9] poison
-		"70:86:40:58",		-- [10] disease
-		"102:118:40:58",	-- [11] enrage
+		[0] = "6:21:7:27", -- [0] tank
+		"39:55:7:27",      -- [1] damage
+		"70:86:7:27",      -- [2] healer
+		"102:118:7:27",    -- [3] heroic only
+		"133:153:7:27",    -- [4] deadly
+		"168:182:7:27",    -- [5] important
+		"198:214:7:27",    -- [6] interruptable
+		"229:247:7:27",    -- [7] magic
+		"6:21:40:58",      -- [8] curse
+		"39:55:40:58",     -- [9] poison
+		"70:86:40:58",     -- [10] disease
+		"102:118:40:58",   -- [11] enrage
 	}
-	-- XXX this can potentially be extended to get a whole description from EJ ID with description and flag icons
-	function mod:GetFlagIcon(flag)
-		flag = flag + 1
-		return "|TInterface\\EncounterJournal\\UI-EJ-Icons.blp:16:16:0:0:255:66:".. icons[flag] .."|t"
+	function mod:GetFlagIcon(index)
+		return ("|TInterface\\EncounterJournal\\UI-EJ-Icons.blp:16:16:0:0:255:66:%s|t"):format(icons[index])
 	end
 end
 
@@ -45,42 +45,49 @@ end
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.orb_message = "Orb of Control dropped!"
+	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
 
 	L.hex, L.hex_desc = EJ_GetSectionInfo(7125)
 	L.hex_icon = 136512
 
 	L.chain_lightning, L.chain_lightning_desc = EJ_GetSectionInfo(7124)
 	L.chain_lightning_icon = 136480
-	L.chain_lightning_warning = "Your focus is casting Chain Lightning!"
+	L.chain_lightning_message = "Your focus is casting Chain Lightning!"
 	L.chain_lightning_bar = "Focus: Chain Lightning"
 
 	L.fireball, L.fireball_desc = EJ_GetSectionInfo(7122)
 	L.fireball_icon = 136465
-	L.fireball_warning = "Your focus is casting Fireball!"
+	L.fireball_message = "Your focus is casting Fireball!"
 	L.fireball_bar = "Focus: Fireball"
 
 	L.deadly_plague, L.deadly_plague_desc = EJ_GetSectionInfo(7119)
 	L.deadly_plague_icon = 136710
 
-	L.venom_bolt_volley = EJ_GetSectionInfo(7112).." " ..mod:GetFlagIcon(9)..mod:GetFlagIcon(6)
-	L.venom_bolt_volley_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Volley casters have separate cooldowns.|r "..select(2, EJ_GetSectionInfo(7112))
-	L.venom_bolt_volley_warning = "Your focus is casting Volley!"
-	L.venom_bolt_volley_bar = "Focus: Volley"
+	L.venom_bolt_volley, L.venom_bolt_volley_desc = EJ_GetSectionInfo(7112)
 	L.venom_bolt_volley_icon = 136587
+	L.venom_bolt_volley_message = "Your focus is casting Volley!"
+	L.venom_bolt_volley_bar = "Focus: Volley"
 
-	L.blazingSunlight, L.blazingSunlight_desc = EJ_GetSectionInfo(7109)
-	L.blazingSunlight_icon = 136719
+	L.blazing_sunlight, L.blazing_sunlight_desc = EJ_GetSectionInfo(7109)
+	L.blazing_sunlight_icon = 136719
 
-	L.puncture_message = "Puncture"
+	L.adds = "Adds spawning"
+	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
+	L.adds_icon = "inv_misc_head_troll_01"
 
-	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
+	L.orb_message = "Orb of Control dropped!"
+
+	L.focus_only = "|cffff0000Focus target alerts only.|r "
 end
 L = mod:GetLocale()
-L.blazingSunlight = L.blazingSunlight.." "..mod:GetFlagIcon(7)
+L.venom_bolt_volley = L.venom_bolt_volley.." " ..mod:GetFlagIcon(9)..mod:GetFlagIcon(6)
+L.venom_bolt_volley_desc = L.focus_only..L.venom_bolt_volley_desc
+L.blazing_sunlight = L.blazing_sunlight.." "..mod:GetFlagIcon(7)
 L.deadly_plague = L.deadly_plague.." "..mod:GetFlagIcon(10)
 L.fireball = L.fireball .. " " .. mod:GetFlagIcon(6)
+L.fireball_desc = L.focus_only..L.fireball_desc
 L.chain_lightning = L.chain_lightning .. " " .. mod:GetFlagIcon(6)
+L.chain_lightning_desc = L.focus_only..L.chain_lightning_desc
 L.hex = L.hex .. " " ..mod:GetFlagIcon(8)
 
 --------------------------------------------------------------------------------
@@ -89,18 +96,20 @@ L.hex = L.hex .. " " ..mod:GetFlagIcon(8)
 
 function mod:GetOptions()
 	return {
-		-7086, -7090, -7092, -7087, 136817, 136821,
-		"fireball", "chain_lightning", "hex", {136490, "FLASH"},
-		"deadly_plague", {-7120, "HEALER"}, {136573, "FLASH"},
-		{"venom_bolt_volley", "FLASH"}, {136646, "FLASH"},
-		"blazingSunlight", {136723, "FLASH"},
-		{-7078, "TANK_HEALER"}, 136741, {136769, "FLASH", "SAY", "ICON"},"berserk", "bosskill",
+		-7086, -7090, -7092,
+		"blazing_sunlight", {136723, "FLASH"}, -- Farraki
+		{"venom_bolt_volley", "FLASH"}, {136646, "FLASH"}, -- Gurubashi
+		"deadly_plague", {-7120, "HEALER"}, {136573, "FLASH"}, -- Drakkari
+		"fireball", "chain_lightning", "hex", {136490, "FLASH"}, -- Amani
+		136817, 136821, -- War-God Jalak
+		{-7078, "TANK_HEALER"}, 136741, {136769, "FLASH", "SAY", "ICON"}, 137240, "adds", "berserk", "bosskill",
 	}, {
-		[-7086] = -7085,
-		["fireball"] = -7084,
-		["deadly_plague"] = -7083,
+		[-7086] = -7086,
+		["blazing_sunlight"] = -7081,
 		["venom_bolt_volley"] = -7082,
-		["blazingSunlight"] = -7081,
+		["deadly_plague"] = -7083,
+		["fireball"] = -7084,
+		[136817] = -7087,
 		[-7078] = "general",
 	}
 end
@@ -110,8 +119,8 @@ function mod:OnBossEnable()
 	-- The Zandalari
 	self:Log("SPELL_AURA_APPLIED", "Rampage", 136821)
 	self:Log("SPELL_CAST_SUCCESS", "BestialCry", 136817)
+	self:Log("SPELL_AURA_APPLIED", "CrackedShell", 137240)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrackedShell", 137240)
-	self:Log("SPELL_AURA_APPLIED", "Headache", 137294)
 	self:Log("SPELL_AURA_APPLIED", "DinoForm", 137237)
 	self:Log("SPELL_CAST_SUCCESS", "DinoMending", 136797)
 	-- The Amani
@@ -133,7 +142,7 @@ function mod:OnBossEnable()
 	-- The Farraki
 	self:Log("SPELL_DAMAGE", "SandTrap", 136723)
 	self:Log("SPELL_CAST_START", "BlazingSunlight", 136719)
-	-- general
+	-- General
 	self:Log("SPELL_AURA_APPLIED", "Puncture", 136767)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Puncture", 136767)
 	self:Log("SPELL_CAST_START", "Swipe", 136741, 136770) -- 136770 is only after charge
@@ -144,8 +153,10 @@ end
 
 function mod:OnEngage()
 	self:Berserk(600) -- XXX assumed
-	self:Bar(-7086, self:Heroic() and 75 or 90, nil, 138686) -- Dino Mancer spawn timer
-	self:Bar(-7086, 25, "The Farraki", 138686) -- sort of?
+	self:Bar(-7086, self:Heroic() and 75 or 90, nil, "ability_hunter_beastwithin") -- Zandalari Dinomancer (Dino Form icon)
+	self:Bar("adds", 25, -7081, L.adds_icon) -- The Farraki
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "LastPhase", "boss1")
+	currentDoor = -7081
 end
 
 --------------------------------------------------------------------------------
@@ -157,8 +168,8 @@ end
 function mod:BossEngage()
 	self:CheckBossStatus()
 	if self:MobId(UnitGUID("boss2")) == 69374 then -- War-God Jalak
-		self:Message(-7087, "Positive", "Info") -- War-God Jalak
-		self:StopBar(-7087)
+		self:Message("adds", "Attention", "Info", -7087) -- War-God Jalak
+		self:StopBar(currentDoor)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end
@@ -172,29 +183,29 @@ function mod:BestialCry(args)
 end
 
 function mod:CrackedShell(args)
+	self:Message(args.spellId, "Positive", nil, args.spellName) -- 10s stun timer, too, maybe?
 	if args.amount == 4 then
-		self:Bar(-7087, 45) -- War-God Jalak
+		currentDoor = -7087
+		self:Bar("adds", 45, -7087, L.adds_icon)
+	else
+		currentDoor = (args.amount == 3 and -7084) or (args.amount == 2 and -7083) or -7082
+		self:Bar("adds", 25, currentDoor, L.adds_icon)
+		-- Dino Mancer spawn timer
+		-- this is assumed in every aspect (timer might not start here, and might not be this long)
+		self:CDBar(-7086, 75, nil, "ability_hunter_beastwithin") -- Zandalari Dinomancer (Dino Form icon)
 	end
 end
 
 function mod:LastPhase(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-	if hp < 35 and not UnitExists("boss2") then -- phase starts at 30, except if the boss is already there
+	if hp < 35 then -- phase starts at 30, except if the boss is already there
 		self:Message(-7087, "Positive", "Info", CL["soon"]:format(self:SpellName(-7087))) -- War-God Jalak
-		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 	end
 end
 
-function mod:Headache()
-	-- Dino Mancer spawn timer
-	-- this is assumed in every aspect (timer might not start here, and might not be this long)
-	self:Bar(-7086, 90, nil, 138686) -- dino looking like icon -- dino mancer
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "LastPhase", "boss1") -- don't need to register this on engage
-end
-
-function mod:DinoForm()
+function mod:DinoForm(args)
 	-- tie it to this event, this is when you can use the orb
-	self:Message(-7092, "Positive", nil, L["orb_message"], 137445) -- orb of control icon
+	self:Message(-7092, "Positive", nil, L["orb_message"])
 end
 
 function mod:DinoMending(args)
@@ -229,7 +240,7 @@ do
 		local t = GetTime()
 		if t-prev > 3 and UnitGUID("focus") == args.sourceGUID then -- don't spam
 			prev = t
-			self:Message("chain_lightning", "Personal", "Alert", L["chain_lightning_warning"], args.spellId)
+			self:Message("chain_lightning", "Personal", "Alert", L["chain_lightning_message"], args.spellId)
 		end
 	end
 end
@@ -240,7 +251,7 @@ do
 		local t = GetTime()
 		if t-prev > 3 and UnitGUID("focus") == args.sourceGUID then -- don't spam
 			prev = t
-			self:Message("fireball", "Personal", "Alert", L["fireball_warning"], args.spellId)
+			self:Message("fireball", "Personal", "Alert", L["fireball_message"], args.spellId)
 		end
 	end
 end
@@ -260,13 +271,13 @@ do
 	end
 end
 
-function mod:MortalStrikeRemoved(args)
-	self:StopBar(args.spellName, args.destName)
-end
-
 function mod:MortalStrike(args)
 	self:Message(-7120, "Urgent")
-	self:TargetBar(-7120, args.destName, 8, args.spellId)
+	self:TargetBar(-7120, args.destName, 8)
+end
+
+function mod:MortalStrikeRemoved(args)
+	self:StopBar(-7120, args.destName)
 end
 
 do
@@ -308,7 +319,7 @@ end
 
 function mod:VenomBoltVolley(args)
 	if UnitGUID("focus") == args.sourceGUID then
-		self:Message("venom_bolt_volley", "Personal", "Alert", L["venom_bolt_volley_warning"], args.spellId)
+		self:Message("venom_bolt_volley", "Personal", "Alert", L["venom_bolt_volley_message"], args.spellId)
 		self:Bar("venom_bolt_volley", 16, L["venom_bolt_volley_bar"], args.spellId)
 	end
 end
@@ -334,7 +345,7 @@ do
 		local t = GetTime()
 		if t-prev > 3 and self:Dispeller("magic") then -- don't spam
 			prev = t
-			self:Message("blazingSunlight", "Important", "Alarm", args.spellName, args.spellId)
+			self:Message("blazing_sunlight", "Important", "Alarm", args.spellName, args.spellId)
 		end
 	end
 end
@@ -359,6 +370,6 @@ function mod:Swipe(args)
 end
 
 function mod:Puncture(args)
-	self:StackMessage(-7078, args.destName, args.amount, "Urgent",  "Info", L["puncture_message"])
+	self:StackMessage(-7078, args.destName, args.amount, "Urgent",  "Info")
 end
 

@@ -9,21 +9,23 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "ruRU")
 if L then
-	L.orb_message = "Сфера контроля упала!"
+	L.charge_trigger = "sets his eyes"
 
-	L.chain_lightning_warning = "Ваш фокус читает Цепную молнию!"
+	L.chain_lightning_message = "Ваш фокус читает Цепную молнию!"
 	L.chain_lightning_bar = "Фокус: Цепная молния"
 
-	L.fireball_warning = "Ваш фокус читает Огненный шар!"
+	L.fireball_message = "Ваш фокус читает Огненный шар!"
 	L.fireball_bar = "Фокус: Огненный шар"
 
-	L.venom_bolt_volley_desc = "|cFFFF0000WARNING: Таймер показывается только для вашего 'фокуса', так как заклинатели имеют разное время восстановление способностей.|r "..select(2, EJ_GetSectionInfo(7112))
-	L.venom_bolt_volley_warning = "Ваш фокус читает Залп!"
+	L.venom_bolt_volley_message = "Ваш фокус читает Залп!"
 	L.venom_bolt_volley_bar = "Фокус: Залп"
 
-	L.puncture_message = "Прокол"
+	L.adds = "Adds spawning"
+	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
 
-	-- L.charge_trigger = "sets his eyes"
+	L.puncture_message = "Прокол"
+	L.orb_message = "Сфера контроля упала!"
+	L.focus_only = "|cffff0000Focus target alerts only.|r "
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "ruRU")

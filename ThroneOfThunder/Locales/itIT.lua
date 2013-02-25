@@ -9,19 +9,23 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "itIT")
 if L then
-	L.orb_message = "Globo del Controllo a terra!"
+	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
 
-	L.chain_lightning_warning = "Il tuo focus sta lanciando Catena di Fulmini!"
+	L.chain_lightning_message = "Il tuo focus sta lanciando Catena di Fulmini!"
 	L.chain_lightning_bar = "Focus: Catena di Fulmini"
 
-	L.fireball_warning = "Il tuo focus sta lanciando Palla di Fuoco!"
+	L.fireball_message = "Il tuo focus sta lanciando Palla di Fuoco!"
 	L.fireball_bar = "Focus: Palla di Fuoco"
 
-	L.venom_bolt_volley_desc = "|cFFFF0000ATTENZIONE: Viene mostrato solo il timer del tuo bersaglio 'focus' perché tutti i lanciatori di Raffica hanno tempi di recupero diversi.|r "
-	L.venom_bolt_volley_warning = "Il tuo Focus sta lanciando Raffica Venefica!"
+	L.venom_bolt_volley_message = "Il tuo Focus sta lanciando Raffica Venefica!"
 	L.venom_bolt_volley_bar = "Focus: Raffica Venefica"
+
+	L.adds = "Adds spawning"
+	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
+
 	L.puncture_message = "Perforazione Tripla"
-    L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!	
+	L.orb_message = "Globo del Controllo a terra!"
+	L.focus_only = "|cffff0000Focus target alerts only.|r "
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "itIT")
@@ -46,7 +50,7 @@ if L then
 	L.kickable_turtles = "Tartarughe da Calciare: %d"
 	L.crystal_shell_removed = "Scudo di Cristallo RIMOSSO!"
 	L.no_crystal_shell = "NESSUNO Scudo di Cristallo"
-	
+
 end
 
 L = BigWigs:NewBossLocale("Megaera", "itIT")
@@ -65,7 +69,7 @@ if L then
 	L.upper_hatch_trigger = "Le uova in uno dei nidi più alti iniziano a schiudersi!"
 	L.upper_nest = "Nido |c00008000Superiore|r"
 	L.lower_nest = "Nido |c00FF0000Inferiore|r"
-	L.lower_upper_nest = "Nido |c00FF0000Inferiore|r + |c00008000Superiore|r"	
+	L.lower_upper_nest = "Nido |c00FF0000Inferiore|r + |c00008000Superiore|r"
 	L.food_call_trigger = "Hatchling calls for food!"
 	L.nest = "Nidi"
 	L.nest_desc = "Avvisi relativi ai nidi. |c00FF0000Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi!|r"
