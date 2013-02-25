@@ -315,7 +315,7 @@ function mod:AddDeaths(args)
 	end
 	if self:Heroic() then
 		self:Bar(-6554, 50, CL["other"]:format(self:SpellName(-6554), args.destName))
-		self:DelayedMessage(-6554, 50, "Attention", CL["other"]:format(self:SpellName(-6554), args.destName))
+		self:DelayedMessage(-6554, 50, "Attention", CL["other"]:format(self:SpellName(-6554), args.destName), -6554)
 	end
 end
 
