@@ -226,7 +226,7 @@ L.resetAllCustomSound = "If you've customized sounds for any boss encounter sett
 L.bossKillDurationPrint = "Derrotado '%s' después de %s."
 L.bossWipeDurationPrint = "Wipe en '%s' después de %s."
 L.newBestKill = "¡Nueva muerte más rápida!"
-L.bossStatistics = "Estadísticas del Jefe"
+L.bossStatistics = "Estadísticas de Jefe"
 L.bossStatsDescription = "Registro de estadísticas de Jefes como el número de veces que ha sido derrotado, canditad de wipes, tiempo total que duró el combate, o la muerte más rápida. Estas estadísticas se pueden ver en la ventana de configuración de cada jefe, pero permanecerán ocultas en los jefes que no tengan todavía registro de estadísticas."
 L.enableStats = "Activar estadísticas"
 

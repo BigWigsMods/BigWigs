@@ -104,7 +104,7 @@ L.tankhealer = " Solo alertas para tanque y sanador. "
 L.dispeller = "Alertas para dispelear únicamente."
 
 L["About"] = "Acerca de"
-L["Main Developers"] = "Desarrolladores principales"
+L["Main Developers"] = "Principales desarrolladores"
 L["Developers"] = "Desarrolladores"
 L["Maintainers"] = "Mantenedores"
 L["License"] = "Licencia"
@@ -115,13 +115,13 @@ L["irc.freenode.net in the #wowace channel"] = "irc.freenode.net en el canal #wo
 L["Thanks to the following for all their help in various fields of development"] = "Gracias a las siguientes personas por su ayuda en varias partes del desarrollo"
 
 -- Statistics
-L.statistics = "Statistics"
+L.statistics = "Estadísticas"
 L.norm25 = "25"
 L.heroic25 = "25h"
 L.norm10 = "10"
 L.heroic10 = "10h"
 L.lfr = "LFR"
 L.wipes = "Wipes:"
-L.kills = "Kills:"
-L.bestkill = "Best Kill:"
+L.kills = "Muertes:"
+L.bestkill = "Mejor muerte:"
 
