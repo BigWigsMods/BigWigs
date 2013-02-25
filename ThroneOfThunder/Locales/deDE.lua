@@ -20,12 +20,12 @@ if L then
 	L.venom_bolt_volley_message = "Dein Fokus wirkt Salve!"
 	L.venom_bolt_volley_bar = "Fokus: Salve"
 
-	L.adds = "Adds spawning"
-	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
+	L.adds = "Adds erscheinen"
+	L.adds_desc = "Warnungen für das Erscheinen der Farraki, Gurubashi, Drakkari, Amani und des Kriegsgottes Jalak."
 
-	L.puncture_message = "Dreifachstich"
 	L.orb_message = "Kugel der Kontrolle gefallen!"
-	L.focus_only = "|cffff0000Focus target alerts only.|r "
+
+	L.focus_only = "|cffff0000Nur Meldungen für Fokusziele.|r "
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "deDE")
@@ -73,7 +73,7 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "deDE")
 if L then
-	L.rays_spawn = "Lichtstrahlen spawnen"
+	L.rays_spawn = "Lichtstrahlen erscheinen"
 	L.ray_controller = "Kontrolleure der Lichtstrahlen"
 	L.ray_controller_desc = "Teile die Kontrolleure für die Richtung der roten und blauen Lichtstrahlen mit."
 	L.red_ray_controller = "Du kontrollierst den |c000000FFblauen|r Lichtstrahl"
