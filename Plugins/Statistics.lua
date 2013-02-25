@@ -19,13 +19,15 @@ local difficultyTable = {"5", "5h", "10", "25", "10h", "25h", "lfr"}
 
 plugin.defaultDB = {
 	enabled = true,
-	--countKills = true,
-	--countWipes = true,
-	--printKills = true,
-	--printWipes = true,
-	--bestKillTime = true,
+	saveKills = true,
+	saveWipes = true,
+	saveBestKill = true,
+	printKills = true,
+	printWipes = true,
+	printNewBestKill = true,
 }
 
+local function checkDisabled() return not plugin.db.profile.enabled end
 plugin.subPanelOptions = {
 	key = "Big Wigs: Boss Statistics",
 	name = L.bossStatistics,
@@ -35,7 +37,6 @@ plugin.subPanelOptions = {
 		childGroups = "tab",
 		get = function(i) return plugin.db.profile[i[#i]] end,
 		set = function(i, value) plugin.db.profile[i[#i]] = value end,
-		disabled = function() return true end,
 		args = {
 			heading = {
 				type = "description",
@@ -57,43 +58,48 @@ plugin.subPanelOptions = {
 			},
 			printGroup = {
 				type = "group",
-				name = "Chat Messages",
+				name = L.chatMessages,
 				order = 3,
+				disabled = checkDisabled,
 				inline = true,
 				args = {
-					bestKill = {
+					printWipes = {
 						type = "toggle",
-						name = "best kill",
+						name = L.printWipeOption,
 						order = 1,
 					},
-					wipe = {
+					printKills = {
 						type = "toggle",
-						name = "wipe",
+						name = L.printKillOption,
 						order = 2,
 					},
-					kill = {
+					printNewBestKill = {
 						type = "toggle",
-						name = "kill",
+						name = L.printBestKillOption,
 						order = 3,
+						disabled = function() return not plugin.db.profile.saveBestKill or not plugin.db.profile.enabled end,
 					},
 				},
 			},
-			test = {
+			saveKills = {
 				type = "toggle",
-				name = "Kill Count",
+				name = L.countKills,
 				order = 4,
+				disabled = checkDisabled,
 				width = "full",
 			},
-			test2 = {
+			saveWipes = {
 				type = "toggle",
-				name = "Wipe Count",
+				name = L.countWipes,
 				order = 5,
+				disabled = checkDisabled,
 				width = "full",
 			},
-			test3 = {
+			saveBestKill = {
 				type = "toggle",
-				name = "Best Kill Log",
+				name = L.recordBestKills,
 				order = 6,
+				disabled = checkDisabled,
 				width = "full",
 			},
 		},
@@ -124,24 +130,34 @@ function plugin:BigWigs_OnBossEngage(event, module, diff)
 	if module.encounterId and diff and diff > 2 and diff < 8 then -- Raid restricted for now
 		activeDurations[module.encounterId] = GetTime()
 
-		--local sDB = BigWigsStatisticsDB
-		--if not sDB[module.zoneId] then sDB[module.zoneId] = {} end
-		--if not sDB[module.zoneId][module.encounterId] then sDB[module.zoneId][module.encounterId] = {} end
-		--sDB = sDB[module.zoneId][module.encounterId]
-		--if not sDB[difficultyTable[diff]] then sDB[difficultyTable[diff]] = {} end
+		local sDB = BigWigsStatisticsDB
+		if not sDB[module.zoneId] then sDB[module.zoneId] = {} end
+		if not sDB[module.zoneId][module.encounterId] then sDB[module.zoneId][module.encounterId] = {} end
+		sDB = sDB[module.zoneId][module.encounterId]
+		if not sDB[difficultyTable[diff]] then sDB[difficultyTable[diff]] = {} end
 	end
 end
 
 function plugin:BigWigs_OnBossWin(event, module)
 	if module.encounterId and activeDurations[module.encounterId] then
 		local elapsed = GetTime()-activeDurations[module.encounterId]
-		BigWigs:Print(L.bossKillDurationPrint:format(module.moduleName, SecondsToTime(elapsed)))
-		--local sDB = BigWigsStatisticsDB[module.zoneId][module.encounterId][difficultyTable[module:Difficulty()]]
-		--sDB.kills = sDB.kills and sDB.kills + 1 or 1
-		--if not sDB.best or (sDB.best and elapsed < sDB.best) then
-		--	sDB.best = elapsed
-		--	BigWigs:Print(L.newBestKill)
-		--end
+		local sDB = BigWigsStatisticsDB[module.zoneId][module.encounterId][difficultyTable[module:Difficulty()]]
+
+		if self.db.profile.printKills then
+			BigWigs:Print(L.bossKillDurationPrint:format(module.moduleName, SecondsToTime(elapsed)))
+		end
+
+		if self.db.profile.saveKills then
+			sDB.kills = sDB.kills and sDB.kills + 1 or 1
+		end
+
+		if self.db.profile.saveBestKill and (not sDB.best or elapsed < sDB.best) then
+			sDB.best = elapsed
+			if self.db.profile.printNewBestKill then
+				BigWigs:Print(L.newBestKill)
+			end
+		end
+
 		activeDurations[module.encounterId] = nil
 	end
 end
@@ -149,9 +165,18 @@ end
 function plugin:BigWigs_OnBossReboot(event, module, isWipe)
 	if isWipe and module.encounterId and activeDurations[module.encounterId] then
 		local elapsed = GetTime()-activeDurations[module.encounterId]
-		BigWigs:Print(L.bossWipeDurationPrint:format(module.moduleName, SecondsToTime(elapsed)))
-		--local sDB = BigWigsStatisticsDB[module.zoneId][module.encounterId][difficultyTable[module:Difficulty()]]
-		--sDB.wipes = sDB.wipes and sDB.wipes + 1 or 1
+
+		if elapsed > 30 then -- Fight must last longer than 30 seconds to be an actual wipe worth noting
+			if self.db.profile.printWipes then
+				BigWigs:Print(L.bossWipeDurationPrint:format(module.moduleName, SecondsToTime(elapsed)))
+			end
+
+			if self.db.profile.saveWipes then
+				local sDB = BigWigsStatisticsDB[module.zoneId][module.encounterId][difficultyTable[module:Difficulty()]]
+				sDB.wipes = sDB.wipes and sDB.wipes + 1 or 1
+			end
+		end
+
 		activeDurations[module.encounterId] = nil
 	end
 end

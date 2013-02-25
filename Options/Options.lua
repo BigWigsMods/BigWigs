@@ -701,7 +701,7 @@ do
 		elseif GetNumSubgroupMembers() > 0 then channel = "PARTY" end
 		local abilities = {}
 		local header = nil
-		output(channel, module.displayName or module.moduleName or module.name)
+		output(channel, "Big Wigs: ", module.displayName or module.moduleName or module.name)
 		local currentSize = 0
 		for i, option in next, module.toggleOptions do
 			local o = option
