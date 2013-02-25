@@ -217,7 +217,7 @@ do
 				if UnitIsUnit("target", unitId) or self:Healer() then
 					local boss = UnitName(unitId)
 					self:Bar("combo", 20, CL["other"]:format(boss, L["combo"]), spellId)
-					self:DelayedMessage("combo", 17, "Personal", L["combo_message"]:format(boss), L.arc_icon, "Long") -- Local only
+					self:DelayedMessage("combo", 17, "Personal", L["combo_message"]:format(boss), L.arc_icon, "Long")
 				end
 			end
 		end
