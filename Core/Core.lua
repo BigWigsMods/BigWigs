@@ -380,21 +380,21 @@ function addon:OnEnable()
 	self:RegisterMessage("BigWigs_AddonMessage", chatMsgAddon)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
 
-	self:SendMessage("BigWigs_CoreEnabled")
 	self.pluginCore:Enable()
 	self.bossCore:Enable()
 
 	zoneChanged()
+	self:SendMessage("BigWigs_CoreEnabled")
 end
 
 function addon:OnDisable()
-	zoneChanged()
 	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:UnregisterMessage("BigWigs_AddonMessage")
-	self:SendMessage("BigWigs_CoreDisabled")
-	self.pluginCore:Disable()
+	zoneChanged() -- Unregister zone events
 	self.bossCore:Disable()
+	self.pluginCore:Disable()
 	monitoring = nil
+	self:SendMessage("BigWigs_CoreDisabled")
 end
 
 function addon:Print(msg)
