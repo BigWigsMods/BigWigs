@@ -229,6 +229,7 @@ function mod:Destabilize(args)
 end
 
 do
+	local last = 0
 	local function warningSpam(spellName)
 		if UnitCastingInfo("player") == spellName then
 			mod:Message("explosion_casting_by_you", "Personal", "Info", L["you_are_casting"], 122398)
@@ -236,12 +237,15 @@ do
 		end
 	end
 	function mod:AmberExplosionPrevented(args) -- We stunned ourself before it started casting
-		if args.amount == SPELL_FAILED_STUNNED and self:Me(args.sourceGUID) then
+		local t = GetTime()
+		if t-last > 4 and self:Me(args.sourceGUID) then -- Use a throttle so that we don't confuse interrupting a cast (_FAILED) with preventing a cast (also _FAILED)
 			self:Bar("explosion_by_you", 13, L["explosion_by_you_bar"], args.spellId) -- cooldown
+			last = t
 		end
 	end
 	function mod:AmberExplosion(args)
 		if self:Me(args.sourceGUID) then
+			last = GetTime()
 			self:Flash("explosion_casting_by_you")
 			self:Bar("explosion_casting_by_you", 2.5, CL["cast"]:format(explosion), args.spellId)
 			self:Bar("explosion_by_you", 13, L["explosion_by_you_bar"], args.spellId) -- cooldown
