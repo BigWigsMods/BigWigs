@@ -18,6 +18,7 @@ local enabledModules = {}
 local allowedEvents = {}
 local difficulty = 3
 local UpdateDispelStatus = nil
+local myGUID = nil
 
 -------------------------------------------------------------------------------
 -- Debug
@@ -80,6 +81,8 @@ function boss:IsBossModule() return true end
 function boss:OnInitialize() core:RegisterBossModule(self) end
 function boss:OnEnable()
 	if debug then dbg(self, "OnEnable()") end
+
+	myGUID = UnitGUID("player")
 
 	if IsEncounterInProgress() then
 		self:CheckBossStatus("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
@@ -466,6 +469,8 @@ do
 		if debug then dbg(self, ":Engage") end
 
 		if not noEngage or noEngage ~= "NoEngage" then
+			myGUID = UnitGUID("player")
+
 			-- Update Difficulty
 			local _, _, diff = GetInstanceInfo()
 			difficulty = diff
@@ -516,11 +521,8 @@ function boss:SpellName(spellId)
 	return spells[spellId]
 end
 
-do
-	local myGUID = UnitGUID("player")
-	function boss:Me(guid)
-		return myGUID == guid
-	end
+function boss:Me(guid)
+	return myGUID == guid
 end
 
 -------------------------------------------------------------------------------
