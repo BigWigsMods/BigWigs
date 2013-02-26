@@ -26,6 +26,10 @@ if L then
 	L.orb_message = "Kugel der Kontrolle gefallen!"
 
 	L.focus_only = "|cffff0000Nur Meldungen für Fokusziele.|r "
+
+	L.door_opened = "Tor geöffnet!"
+	L.door_bar = "Nächstes Tor (%d)"
+	L.balcony_adds = "Adds von oben"
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "deDE")
@@ -105,6 +109,8 @@ if L then
 
 	L.overload_casting = "Wirkt Geschmolzene Überladung"
 	L.overload_casting_desc = "Warnung für das Wirken von Geschmolzene Überladung"
+
+	L.arcing_lightning_cleared = "Kein Überspringender Blitz mehr"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "deDE")
