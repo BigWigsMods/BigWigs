@@ -480,8 +480,9 @@ do
 			if not message then return end
 			usersRelease[sender] = message
 			usersAlpha[sender] = nil
-			if BIGWIGS_RELEASE_REVISION ~= -1 and message > BIGWIGS_RELEASE_REVISION and BIGWIGS_RELEASE_TYPE == RELEASE and not warnedOutOfDate then
+			if BIGWIGS_RELEASE_TYPE == RELEASE and BIGWIGS_RELEASE_REVISION ~= -1 and message > BIGWIGS_RELEASE_REVISION and not warnedOutOfDate then
 				sysprint(L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
+				warnedOutOfDate = true
 			end
 		elseif prefix == "VRA" or prefix == "VQA" then
 			if prefix == "VQA" then
@@ -492,8 +493,9 @@ do
 			if not message then return end
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
-			if BIGWIGS_RELEASE_REVISION ~= -1 and (message-10) > BIGWIGS_RELEASE_REVISION and BIGWIGS_RELEASE_TYPE == ALPHA and not warnedOutOfDate then
+			if BIGWIGS_RELEASE_TYPE == ALPHA and BIGWIGS_RELEASE_REVISION ~= -1 and (message-10) > BIGWIGS_RELEASE_REVISION and not warnedOutOfDate then
 				sysprint(L["Your alpha version of Big Wigs is out of date (/bwv)."])
+				warnedOutOfDate = true
 			end
 		end
 	end
