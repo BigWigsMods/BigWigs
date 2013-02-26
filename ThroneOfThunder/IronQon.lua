@@ -1,6 +1,6 @@
 --[[
 TODO:
-	bugged Arcing Lightning, expect a spellId or name change for this once they fix the ability ( not fixed in 10 N ptr )
+
 ]]--
 
 if select(4, GetBuildInfo()) < 50200 then return end
@@ -15,7 +15,7 @@ mod:RegisterEnableMob(68078, 68079, 68080, 68081) -- Iron Qon, Ro'shak, Quet'zal
 --------------------------------------------------------------------------------
 -- Locals
 --
-
+local UnitDebuff = UnitDebuff
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -30,6 +30,8 @@ if L then
 	L.overload_casting = "Molten Overload casting"
 	L.overload_casting_desc = "Warning for when Molten Overload is casting"
 	L.overload_casting_icon = 137221
+
+	L.arcing_lightning_cleared = "Raid is clear of Arcing Lightning"
 end
 L = mod:GetLocale()
 
@@ -42,7 +44,7 @@ function mod:GetOptions()
 		-6914, 136520, 139180,
 		-6877, {137669, "FLASH"}, {136192, "ICON", "PROXIMITY"}, 77333,
 		137221, "overload_casting", {-6870, "PROXIMITY"}, -6871, {137668, "FLASH"},
-		{134926, "FLASH", "SAY"}, "molten_energy", "berserk", "bosskill",
+		{134926, "FLASH", "SAY"}, "molten_energy", -6917, "berserk", "bosskill",
 	}, {
 		[-6914] = -6867, -- Dam'ren
 		[-6877] = -6866, -- Quet'zal
@@ -56,10 +58,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "FrozenBlood", 136520)
 	self:Log("SPELL_CAST_SUCCESS", "DeadZone", 137226, 137227, 137228, 137229, 137230, 137231) -- figure out why it has so many spellIds
 	-- Quet'zal
--- the bugged Arcing Lightning, expect a spellId or name change for this once they fix the ability
---1/18 02:39:13.776  SPELL_AURA_APPLIED,0xF15109F000002837,"Quet'zal",0x10a48,0x0,0x02000000000038DB,"Calebh",0x511,0x80,136192,"Lightning Storm",0x8,DEBUFF
-	self:Log("SPELL_AURA_APPLIED", "ArcingLightningApplied", 136192)
-	self:Log("SPELL_AURA_REMOVED", "ArcingLightningRemoved", 136192)
+	self:Log("SPELL_AURA_REMOVED", "ArcingLightningRemoved", 136193)
+	self:Log("SPELL_AURA_APPLIED", "LightningStormApplied", 136192)
+	self:Log("SPELL_AURA_REMOVED", "LightningStormRemoved", 136192)
 	self:Log("SPELL_DAMAGE", "StormCloud", 137669)
 	self:Log("SPELL_AURA_APPLIED", "Windstorm", 136577)
 	-- Ro'shak
@@ -92,6 +93,15 @@ end
 -- Event Handlers
 --
 
+local function closeLightningStormProximity()
+	for i=1, GetNumGroupMembers() do
+		local name = GetRaidRosterInfo(i)
+		if UnitDebuff(name, mod:SpellName(136193)) then return end -- If someone in raid still can spread the debuff, then don't close the proximity
+	end
+	mod:CloseProximity(136192)
+	mod:Message(136192, "Positive", nil, L["arcing_lightning_cleared"])
+end
+
 -- Dam'ren
 
 do
@@ -114,13 +124,17 @@ end
 
 -- Quet'zal
 
-function mod:ArcingLightningApplied(args)
+function mod:ArcingLightningRemoved(args)
+	closeLightningStormProximity()
+end
+
+function mod:LightningStormApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent") -- no point for sound since the guy stunned can't do anything
 	self:Bar(args.spellId, self:MobId(UnitGUID("boss2")) == 68079 and 40 or 20) -- Ro'shak is there aka Heroic p1 then 40 else 20
 end
 
-function mod:ArcingLightningRemoved(args)
+function mod:LightningStormRemoved(args)
 	self:PrimaryIcon(args.spellId)
 end
 
@@ -220,12 +234,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:StopBar(134628) -- Unleashed Flame
 			self:Bar(-6877, 50) -- Windstorm
 			self:Bar(136192, 17) -- Arcing Lightning -- XXX not sure if it has to be restarted here for heroic
-			self:OpenProximity(136192, 8) -- Arcing Lightning -- assume 8 yards
+			self:OpenProximity(136192, 10) -- Lightning Storm -- assume 10 (greater than 8 for sure)
 			self:StopBar(77333) -- Whirling Wind
 		elseif unit == "boss3" then
 			self:StopBar(-6877) -- Windstorm
 			self:StopBar(136192) -- Arcing Lightning
-			self:CloseProximity(136192)
+			closeLightningStormProximity()
 			self:OpenProximity(-6870, 10)
 			self:Bar(-6914, 7) -- Dead Zone
 			self:StopBar(139180) -- Frost Spike
@@ -233,8 +247,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		elseif unit == "boss4" then
 			self:StopBar(134628) -- Unleashed Flame
 			self:StopBar(-6914) -- Dead zone
-			self:OpenProximity(136192, 8) -- Arcing Lightning -- assume 8 yards
+			self:OpenProximity(136192, 10) -- Lightning Storm -- assume 10 (greater than 8 for sure)
+			self:Bar(-6917, 30) -- Fist Smash
 		end
+	elseif spellId == 136146 then -- Fist Smash
+		self:Message(-6917, "Urgent", "Alarm")
+		self:Bar(-6917, 7.5, CL["cast"]:format(spellName))
+		self:Bar(-6917, 20)
 	end
 end
 
@@ -278,16 +297,17 @@ function mod:Deaths(args)
 		self:StopBar(134628) -- Unleashed Flame
 		self:Bar(-6877, 50) -- Windstorm
 		self:Bar(136192, 17) -- Arcing Lightning
-		self:OpenProximity(136192, 8) -- Arcing Lightning -- assume 8 yards
+		self:OpenProximity(136192, 10) -- Lightning Storm -- assume 10 (greater than 8 for sure)
 	elseif args.mobId == 68080 then -- Quet'zal
 		if not self:Heroic() then
 			self:StopBar(-6877) -- Windstorm
 			self:StopBar(136192) -- Arcing Lightning
 			self:Bar(-6914, 7) -- Dead Zone
 		end
-		self:CloseProximity(136192)
+		closeLightningStormProximity()
 	elseif args.mobId == 68081 then -- Dam'ren
 		self:StopBar(-6914) -- Dead zone
+		self:Bar(-6917, 30) -- Fist Smash
 	elseif args.mobId == 68078 then -- Iron Qon
 		self:Win()
 	end
