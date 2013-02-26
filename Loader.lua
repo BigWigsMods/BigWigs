@@ -492,7 +492,7 @@ do
 			if not message then return end
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
-			if BIGWIGS_RELEASE_REVISION ~= -1 and message > BIGWIGS_RELEASE_REVISION and BIGWIGS_RELEASE_TYPE == ALPHA and not warnedOutOfDate then
+			if BIGWIGS_RELEASE_REVISION ~= -1 and (message-10) > BIGWIGS_RELEASE_REVISION and BIGWIGS_RELEASE_TYPE == ALPHA and not warnedOutOfDate then
 				sysprint(L["Your alpha version of Big Wigs is out of date (/bwv)."])
 			end
 		end
