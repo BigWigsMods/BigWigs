@@ -476,7 +476,6 @@ do
 				loaderUtilityFrame.elapsed = 0
 				loaderUtilityFrame:Show()
 			end
-			print(prefix, message, tonumber(message))
 			message = tonumber(message)
 			if not message then return end
 			usersRelease[sender] = message
@@ -489,7 +488,6 @@ do
 				loaderUtilityFrame.elapsed = 0
 				loaderUtilityFrame:Show()
 			end
-			print(prefix, message, tonumber(message))
 			message = tonumber(message)
 			if not message then return end
 			usersAlpha[sender] = message
