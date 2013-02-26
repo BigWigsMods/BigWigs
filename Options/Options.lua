@@ -261,7 +261,7 @@ function options:OnInitialize()
 		local noteKey = "Notes"
 		if GetAddOnMetadata("BigWigs", "Notes-" .. GetLocale()) then noteKey = "Notes-" .. GetLocale() end
 		local notes = GetAddOnMetadata("BigWigs", noteKey)
-		subtitle:SetText(notes .. " |cff44ff44" .. BIGWIGS_RELEASE_STRING .. "|r")
+		subtitle:SetText(notes .. " |cff44ff44" .. BigWigsLoader.BIGWIGS_RELEASE_STRING .. "|r")
 
 		local anchor = nil
 		for i, field in next, fields do

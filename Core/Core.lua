@@ -316,7 +316,7 @@ do
 
 	function chatMsgAddon(event, prefix, message, sender)
 		if prefix ~= "T" then return end
-		local _, _, sync, rest = message:find("(%S+)%s*(.*)$")
+		local sync, rest = message:match("(%S+)%s*(.*)$")
 		if sync and (not times[sync] or GetTime() > (times[sync] + 2)) then
 			times[sync] = GetTime()
 			onSync(sync, rest, sender)

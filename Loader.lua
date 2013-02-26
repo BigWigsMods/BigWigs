@@ -1,4 +1,6 @@
+
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
+local loader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader")
 
 -----------------------------------------------------------------------
 -- Generate our version variables
@@ -8,6 +10,7 @@ local REPO = "REPO"
 local ALPHA = "ALPHA"
 local RELEASE = "RELEASE"
 local UNKNOWN = "UNKNOWN"
+local BIGWIGS_RELEASE_TYPE, BIGWIGS_RELEASE_REVISION
 
 do
 	-- START: MAGIC WOWACE VOODOO VERSION STUFF
@@ -37,13 +40,11 @@ do
 	elseif releaseType == ALPHA then
 		releaseString = L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"]:format(majorVersion, releaseRevision)
 	end
-	_G.BIGWIGS_RELEASE_TYPE = releaseType
-	_G.BIGWIGS_RELEASE_REVISION = releaseRevision
-	_G.BIGWIGS_RELEASE_STRING = releaseString
+	BIGWIGS_RELEASE_TYPE = releaseType
+	BIGWIGS_RELEASE_REVISION = releaseRevision
+	loader.BIGWIGS_RELEASE_STRING = releaseString
 	-- END: MAGIC WOWACE VOODOO VERSION STUFF
 end
-
-local loader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader")
 
 -----------------------------------------------------------------------
 -- Locals
@@ -64,7 +65,6 @@ loader.SetMapToCurrentZone = SetMapToCurrentZone
 -- Version
 local usersAlpha = {}
 local usersRelease = {}
-local usersUnknown = {}
 -- Only set highestReleaseRevision if we're actually using a release of BigWigs.
 -- If we set this as an alpha user we will alert release users with out-of-date warnings
 -- and class them as out-of-date in /bwv (if our alpha version is higher). But they may be
@@ -74,7 +74,6 @@ local usersUnknown = {}
 local highestReleaseRevision = _G.BIGWIGS_RELEASE_TYPE == RELEASE and _G.BIGWIGS_RELEASE_REVISION or -1
 -- The highestAlphaRevision is so we can alert old alpha users (we didn't previously)
 local highestAlphaRevision = _G.BIGWIGS_RELEASE_TYPE == ALPHA and _G.BIGWIGS_RELEASE_REVISION or -1
-local warnedOutOfDate = nil
 
 -- Loading
 local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-Zone directive. Filled in OnInitialize, garbagecollected in OnEnable.
@@ -231,9 +230,6 @@ local function versionTooltipFunc(tt)
 				break
 			end
 		end
-	end
-	if not add and next(usersUnknown) then
-		add = true
 	end
 	if not add then
 		local m = getGroupMembers()
@@ -453,7 +449,7 @@ end)
 
 function loader:CHAT_MSG_ADDON(prefix, msg, _, sender)
 	if prefix == "BigWigs" then
-		local _, _, bwPrefix, bwMsg = msg:find("^(%u-):(.+)")
+		local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
 		if bwPrefix then
 			self:SendMessage("BigWigs_AddonMessage", bwPrefix, bwMsg, sender)
 		end
@@ -463,64 +459,43 @@ function loader:CHAT_MSG_ADDON(prefix, msg, _, sender)
 end
 
 do
+	local warnedOutOfDate = nil
+
 	loaderUtilityFrame:Hide()
 	loaderUtilityFrame:SetScript("OnUpdate", function(self, elapsed)
 		self.elapsed = self.elapsed + elapsed
 		if self.elapsed > 5 then
 			self:Hide()
-			if BIGWIGS_RELEASE_TYPE == RELEASE then
-				SendAddonMessage("BigWigs", "VR:"..BIGWIGS_RELEASE_REVISION, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
-			else
-				SendAddonMessage("BigWigs", "VRA:"..BIGWIGS_RELEASE_REVISION, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
-			end
+			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:" or "VRA:")..BIGWIGS_RELEASE_REVISION, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
 		end
 	end)
 
 	function loader:BigWigs_AddonMessage(event, prefix, message, sender)
-		if prefix == "VQ" then
-			if not usersRelease[sender] and not usersAlpha[sender] then
-				usersUnknown[sender] = true
+		if prefix == "VR" or prefix == "VQ" then
+			if prefix == "VQ" then
+				loaderUtilityFrame.elapsed = 0
+				loaderUtilityFrame:Show()
 			end
-			loaderUtilityFrame.elapsed = 0
-			loaderUtilityFrame:Show()
-		elseif prefix == "OOD" then
-			if not tonumber(message) or warnedOutOfDate then return end
-			if tonumber(message) > BIGWIGS_RELEASE_REVISION then
-				warnedOutOfDate = true
-				-- Adapt the out-of-date nag according to release type
-				if BIGWIGS_RELEASE_TYPE == RELEASE then
-					sysprint(L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
-				elseif BIGWIGS_RELEASE_TYPE == ALPHA then
-					sysprint(L["Your alpha version of Big Wigs is out of date (/bwv)."])
-				end
-			end
-		elseif prefix == "VR" then
+			print(prefix, message, tonumber(message))
 			message = tonumber(message)
 			if not message then return end
 			usersRelease[sender] = message
 			usersAlpha[sender] = nil
-			usersUnknown[sender] = nil
-			-- Harvest the highest release version we can find then use that
-			-- to make sure others are up-to-date. Since releases are generally
-			-- many revisions apart, we just warn anyone under the highest revision found
-			-- instead of leaving any leeway (e.g. 10 revisions for alpha)
-			if message > highestReleaseRevision then highestReleaseRevision = message end
-			if sender ~= pName and highestReleaseRevision > message then
-				SendAddonMessage("BigWigs", "OOD:"..highestReleaseRevision, "WHISPER", sender)
+			if BIGWIGS_RELEASE_REVISION ~= -1 and message > BIGWIGS_RELEASE_REVISION and BIGWIGS_RELEASE_TYPE == RELEASE and not warnedOutOfDate then
+				sysprint(L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
 			end
-		elseif prefix == "VRA" then
+		elseif prefix == "VRA" or prefix == "VQA" then
+			if prefix == "VQA" then
+				loaderUtilityFrame.elapsed = 0
+				loaderUtilityFrame:Show()
+			end
+			print(prefix, message, tonumber(message))
 			message = tonumber(message)
 			if not message then return end
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
-			usersUnknown[sender] = nil
-			-- Harvest the highest alpha version we can find then use that to make sure
-			-- others are up-to-date. We allow upto a 10 revision leeway before sending a nag
-			-- Also compare that alpha version against the highest release version for a situation
-			-- where there is only 1 alpha in the raid and it is majorly out-of-date
-			if message > highestAlphaRevision then highestAlphaRevision = message end
-			if sender ~= pName and message ~= -1 and ((highestAlphaRevision - 10) > message or (highestReleaseRevision - 10) > message) then
-				SendAddonMessage("BigWigs", "OOD:"..highestAlphaRevision, "WHISPER", sender)
+			if BIGWIGS_RELEASE_REVISION ~= -1 and message > BIGWIGS_RELEASE_REVISION and BIGWIGS_RELEASE_TYPE == ALPHA and not warnedOutOfDate then
+				sysprint(L["Your alpha version of Big Wigs is out of date (/bwv)."])
 			end
 		end
 	end
@@ -548,13 +523,20 @@ do
 		end
 	end
 	function loader:ZONE_CHANGED_NEW_AREA()
-		-- Hack to make the zone ID available when reloading/relogging inside an instance.
-		-- This was moved from OnEnable to here because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.
+		-- Zone checking
 		local inside = IsInInstance()
-		if inside then
+		local id
+		if not inside and WorldMapFrame:IsShown() then
+			local prevId = GetCurrentMapAreaID()
 			SetMapToCurrentZone()
+			id = GetCurrentMapAreaID()
+			SetMapByID(prevId)
+		else
+			SetMapToCurrentZone()
+			id = GetCurrentMapAreaID()
 		end
-		local id = GetCurrentMapAreaID()
+
+		-- Module loading
 		-- Always load content in an instance, otherwise require a group (world bosses)
 		if enableZones[id] and (inside or grouped) then
 			if not IsEncounterInProgress() and (InCombatLockdown() or UnitAffectingCombat("player")) then
@@ -574,6 +556,13 @@ do
 				end
 			end
 		end
+
+		-- Disabling
+		if not enableZones[id] and not UnitIsDeadOrGhost("player") and BigWigs then
+			BigWigs:Disable()
+		end
+
+		-- Lacking zone modules
 		local zoneAddon = loader.zoneList[id]
 		if zoneAddon and not warnedThisZone[id] then
 			local _, _, _, enabled = GetAddOnInfo(zoneAddon)
@@ -588,16 +577,12 @@ do
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
 			self:ZONE_CHANGED_NEW_AREA()
-			SendAddonMessage("BigWigs", "VQ:"..BIGWIGS_RELEASE_REVISION, groupType == 3 and "INSTANCE_CHAT" or "RAID")
+			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:" or "VQA:")..BIGWIGS_RELEASE_REVISION, groupType == 3 and "INSTANCE_CHAT" or "RAID")
 		elseif grouped and not groupType then
 			grouped = nil
 			wipe(usersRelease)
 			wipe(usersAlpha)
-			wipe(usersUnknown)
-			-- BigWigs might not have loaded yet, fringe case, but better prevent errors
-			if BigWigs then
-				BigWigs:Disable()
-			end
+			self:ZONE_CHANGED_NEW_AREA()
 		end
 	end
 end
@@ -752,8 +737,6 @@ do
 				else
 					good[#good + 1] = coloredNameVersion(player, usersRelease[player])
 				end
-			elseif usersUnknown[player] then
-				ugly[#ugly + 1] = coloredNames[player]
 			elseif usersAlpha[player] then
 				-- If this person's alpha version isn't SVN (-1) and it's higher or the same as the highest found release version minus 1 because
 				-- of tagging, or it's higher or the same as the highest found alpha version (with a 10 revision leeway) then that person's good
