@@ -1,6 +1,6 @@
 --[[
 TODO:
-	figure out dino mancer spawn timer start trigger ( last checked in 10 H ptr and still sometimes 10 sec off )
+	I assume pushing horridon below 30% before all doors open does not actually prevent new doors from opening
 ]]--
 
 if select(4, GetBuildInfo()) < 50200 then return end
@@ -16,7 +16,10 @@ mod:RegisterEnableMob(68476, 69374) -- Horridon, War-God Jalak
 -- Locals
 --
 
-local currentDoor = ""
+local doorCounter = 1
+-- assume this is the exact same that is used for the sender in:
+--"<28.5 20:33:29> [CHAT_MSG_RAID_BOSS_EMOTE] CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#745#nil#0#false#false", -- [10]
+local war_god_jalak = EJ_GetSectionInfo(7087)
 
 -- XXX Fix this
 do
@@ -78,6 +81,10 @@ if L then
 	L.orb_message = "Orb of Control dropped!"
 
 	L.focus_only = "|cffff0000Focus target alerts only.|r "
+
+	L.door_opened = "Door opened!"
+	L.door_bar = "Next door (%d)"
+	L.balcony_adds = "Balcony adds"
 end
 L = mod:GetLocale()
 L.venom_bolt_volley = L.venom_bolt_volley.." " ..mod:GetFlagIcon(9)..mod:GetFlagIcon(6)
@@ -102,7 +109,7 @@ function mod:GetOptions()
 		"deadly_plague", {-7120, "HEALER"}, {136573, "FLASH"}, -- Drakkari
 		"fireball", "chain_lightning", "hex", {136490, "FLASH"}, -- Amani
 		136817, 136821, -- War-God Jalak
-		{-7078, "TANK_HEALER"}, 136741, {136769, "FLASH", "SAY", "ICON"}, 137240, "adds", "berserk", "bosskill",
+		{-7078, "TANK_HEALER"}, 136741, {-7080, "FLASH", "SAY", "ICON"}, 137240, "adds", "berserk", "bosskill",
 	}, {
 		[-7086] = -7086,
 		["blazing_sunlight"] = -7081,
@@ -146,17 +153,16 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Puncture", 136767)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Puncture", 136767)
 	self:Log("SPELL_CAST_START", "Swipe", 136741, 136770) -- 136770 is only after charge
-	self:Emote("Charge", L["charge_trigger"])
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE", "Charge")
 
 	self:Death("Win", 68476)
 end
 
 function mod:OnEngage()
-	self:Berserk(600) -- XXX assumed
-	self:Bar(-7086, self:Heroic() and 75 or 90, nil, "ability_hunter_beastwithin") -- Zandalari Dinomancer (Dino Form icon)
-	self:Bar("adds", 25, -7081, L.adds_icon) -- The Farraki
+	doorCounter = 1
+	self:Berserk(720) -- XXX assumed ( more than 660 on 25 N ptr )
+	self:Bar("adds", 15, L["door_bar"]:format(doorCounter), "inv_shield_11")
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "LastPhase", "boss1")
-	currentDoor = -7081
 end
 
 --------------------------------------------------------------------------------
@@ -169,7 +175,6 @@ function mod:BossEngage()
 	self:CheckBossStatus()
 	if self:MobId(UnitGUID("boss2")) == 69374 then -- War-God Jalak
 		self:Message("adds", "Attention", "Info", -7087) -- War-God Jalak
-		self:StopBar(currentDoor)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end
@@ -184,16 +189,6 @@ end
 
 function mod:CrackedShell(args)
 	self:Message(args.spellId, "Positive", nil, args.spellName) -- 10s stun timer, too, maybe?
-	if args.amount == 4 then
-		currentDoor = -7087
-		self:Bar("adds", 45, -7087, L.adds_icon)
-	else
-		currentDoor = (args.amount == 3 and -7084) or (args.amount == 2 and -7083) or -7082
-		self:Bar("adds", 25, currentDoor, L.adds_icon)
-		-- Dino Mancer spawn timer
-		-- this is assumed in every aspect (timer might not start here, and might not be this long)
-		self:CDBar(-7086, 75, nil, "ability_hunter_beastwithin") -- Zandalari Dinomancer (Dino Form icon)
-	end
 end
 
 function mod:LastPhase(unitId)
@@ -352,15 +347,30 @@ end
 
 -- general
 
-function mod:Charge(_, _, _, _, player)
-	self:TargetMessage(-7080, player, "Attention", "Long")
-	self:CDBar(-7080, 11)
-	if UnitIsUnit("player", player) then
-		self:Flash(-7080)
-		self:Say(-7080)
+function mod:Charge(_, msg, sender, _, _, player)
+	if msg:find(L["charge_trigger"]) then
+		self:TargetMessage(-7080, player, "Attention", "Long")
+		self:CDBar(-7080, 11)
 		self:PrimaryIcon(-7080, player)
+		if UnitIsUnit("player", player) then
+			self:Flash(-7080)
+			self:Say(-7080)
+		end
+		self:ScheduleTimer("PrimaryIcon", 10, -7080) -- remove icon
+	elseif sender:find(war_god_jalak) and not msg:find("136821") then -- any emote from War-God Jalak except the one with 136821 in it is for opening a door
+		doorCounter = doorCounter + 1
+		-- next door
+		self:Bar("adds", 114, L["door_bar"]:format(doorCounter), "inv_shield_11") -- door like icon
+		-- 1st wave jumps down
+		self:Bar("adds", 20, L["balcony_adds"],  L.adds_icon)
+		self:DelayedMessage("adds", 20, L["balcony_adds"], L.adds_icon)
+		-- 2nd wave jumps down
+		self:ScheduleTimer("Bar", 20, "adds", 19, L["balcony_adds"],  L.adds_icon)
+		self:DelayedMessage("adds", 39, L["balcony_adds"], L.adds_icon)
+		-- dinomancer jumps down
+		self:Bar(-7086, 58, nil, "ability_hunter_beastwithin") -- Zandalari Dinomancer (Dino Form icon)
+		self:DelayedMessage(-7086, 58, nil, "ability_hunter_beastwithin")
 	end
-	self:ScheduleTimer("PrimaryIcon", 10, -7080) -- remove icon
 end
 
 function mod:Swipe(args)
