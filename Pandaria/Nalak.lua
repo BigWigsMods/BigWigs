@@ -20,7 +20,7 @@ mod.otherMenu = 6
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.ability = "Next ability"
-	L.ability_desc = "Timer bar for next ability"
+	L.ability_desc = "Timer bar for next ability."
 	L.ability_icon = "spell_nature_lightning" -- generic lightning icon
 end
 L = mod:GetLocale()
@@ -112,7 +112,7 @@ do
 		if self:Me(args.destGUID) and not self:Me(args.sourceGUID) then
 			local t = GetTime()
 			if t-prev > 2 then
-				self:Message(136345, "Personal", "Alarm", CL["under"]:format(args.spellName)) -- more over you, but whatever
+				self:Message(136340, "Personal", "Alarm", CL["under"]:format(args.spellName)) -- more over you, but whatever
 			end
 		end
 	end
