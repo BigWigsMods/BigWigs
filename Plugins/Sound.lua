@@ -230,7 +230,7 @@ end
 
 local function customSound(module, key, sound)
 	if not module or not key or sound == "Victory" then return false end
-	if sound and not plugin.db.profile[sound] then error(("Invalid sound: %s (module: %s, key: %s)"):format(sound, module.name, key)) return end
+	if not plugin.db.profile[sound] then error(("Invalid sound: %s (module: %s, key: %s)"):format(sound, module.name, key)) return end
 	if not plugin.db.profile[sound][module.name] then
 		return false
 	else
