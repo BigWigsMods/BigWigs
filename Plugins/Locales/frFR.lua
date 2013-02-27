@@ -64,7 +64,7 @@ L["This function requires raid leader or raid assist."] = "Cette fonction néces
 L["Must be between 1 and 10. A correct example is: /pull 5"] = "Doit être compris entre 1 et 10. Un exemple correct est le suivant : /pull 5"
 L["Incorrect format. A correct example is: /bwcb 20 text"] = "Format incorrect. Un exemple correct est le suivant : /bwcb 20 texte"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Durée spécifiée incorrecte. <durée> peut être exprimée soit avec un nombre en secondes, avec une paire M:S ou avec Mm. Par exemple 5, 1:20 ou 2m."
-L["This function can't be used during an encounter."] = "This function can't be used during an encounter."
+L["This function can't be used during an encounter."] = "Cette fonction ne peut pas être utilisée pendant une rencontre."
 
 -----------------------------------------------------------------------
 -- Colors.lua
@@ -230,15 +230,15 @@ L.resetAllCustomSound = "Si vous avez des sons personnalisés pour certains para
 
 L.bossKillDurationPrint = "Défaite de '%s' au bout de %s."
 L.bossWipeDurationPrint = "Wipe sur '%s' au bout de %s."
-L.newBestKill = "New best kill !"
+L.newBestKill = "Nouveau record !"
 L.bossStatistics = "Statistiques des boss"
-L.bossStatsDescription = "Enregistrement de diverses statitistiques relatives aux boss telles que le nombre de fois qu'un boss a été vaincu, le nombre de wipes, la durée totale de ce combat ou la victoire la plus rapide. Ces statistiques peuvent être visionnées sur l'écran de configuration de chaque boss, mais seront cachées pour les boss qui n'ont pas encore de statistiques enregistrées."
+L.bossStatsDescription = "Enregistrement de diverses statitistiques relatives aux boss telles que le nombre de fois qu'un boss a été vaincu, le nombre de wipes, la durée totale du combat ou la victoire la plus rapide. Ces statistiques peuvent être visionnées sur l'écran de configuration de chaque boss, mais seront cachées pour les boss qui n'ont pas encore de statistiques enregistrées."
 L.enableStats = "Activer les statistiques"
-L.chatMessages = "Chat Messages"
+L.chatMessages = "Messages de la fenêtre de discussion"
 L.printBestKillOption = "Best Kill Notification"
 L.printKillOption = "Kill Time"
 L.printWipeOption = "Wipe Time"
-L.countKills = "Count Kills"
-L.countWipes = "Count Wipes"
-L.recordBestKills = "Remember Best Kills"
+L.countKills = "Total des victoires"
+L.countWipes = "Total des échecs"
+L.recordBestKills = "Se souvenir des meilleurs temps"
 

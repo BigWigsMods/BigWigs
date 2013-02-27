@@ -123,5 +123,5 @@ L.heroic10 = "10h"
 L.lfr = "RdR"
 L.wipes = "Échecs :"
 L.kills = "Victoires :"
-L.bestkill = "Meilleure fois :"
+L.bestkill = "Meilleur temps :"
 
