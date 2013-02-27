@@ -95,7 +95,7 @@ function mod:FloorRemoved(_, _, _, _, spellId)
 		self:Message("floor", "Personal", "Alarm", L["floor_message"], L.floor_icon)
 		self:DelayedMessage("floor", 0.5, "Personal", L["floor_message"], L.floor_icon, "Alarm")
 		self:DelayedMessage("floor", 1, "Personal", L["floor_message"], L.floor_icon, "Alarm")
-		self:Flash("floor")
+		self:Flash("floor", L.floor_icon)
 	end
 end
 

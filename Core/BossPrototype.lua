@@ -824,12 +824,12 @@ function boss:SecondaryIcon(key, player)
 end
 
 -- MISC
-function boss:Flash(key)
+function boss:Flash(key, icon)
 	if checkFlag(self, key, C.FLASH) then
 		self:SendMessage("BigWigs_Flash", self, key)
 	end
-	if checkFlag(self, key, C.PULSE) and type(key) == "number" then
-		self:SendMessage("BigWigs_Pulse", self, key, spells[key])
+	if checkFlag(self, key, C.PULSE) then
+		self:SendMessage("BigWigs_Pulse", self, key, icons[icon or key])
 	end
 end
 

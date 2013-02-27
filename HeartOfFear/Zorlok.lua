@@ -104,7 +104,7 @@ function mod:Attenuation(args)
 		self:Message("attenuation", "Attention", "Alert", L["attenuation_message"]:format(target, L["left"]), "misc_arrowleft")
 	end
 	self:Bar("attenuation", 14, L["attenuation_bar"], args.spellId)
-	self:Flash("attenuation")
+	self:Flash("attenuation", args.spellId)
 
 	--p2 heroic initial order: boss dance, force and verve, boss dance, echo dance, force and verve
 	--this still gets messed up, not sure if its a range issue or just gets out of sync after a few minutes
@@ -123,7 +123,7 @@ function mod:ForceAndVerse(args)
 	forceCount = forceCount + 1
 	self:Message("force", "Urgent", nil, CL["count"]:format(L["force_message"], forceCount), args.spellId)
 	self:Bar("force", 12, CL["cast"]:format(L["force_message"]), args.spellId)
-	self:Flash("force")
+	self:Flash("force", args.spellId)
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)

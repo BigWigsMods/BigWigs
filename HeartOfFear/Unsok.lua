@@ -246,12 +246,12 @@ do
 	function mod:AmberExplosion(args)
 		if self:Me(args.sourceGUID) then
 			last = GetTime()
-			self:Flash("explosion_casting_by_you")
+			self:Flash("explosion_casting_by_you", args.spellId)
 			self:Bar("explosion_casting_by_you", 2.5, CL["cast"]:format(explosion), args.spellId)
 			self:Bar("explosion_by_you", 13, L["explosion_by_you_bar"], args.spellId) -- cooldown
 			warningSpam(args.spellName)
 		elseif UnitIsUnit("focus", args.sourceName) then
-			self:Flash("explosion_casting_by_other")
+			self:Flash("explosion_casting_by_other", args.spellId)
 			self:TargetBar("explosion_by_other", 13, args.sourceName, explosion, args.spellId) -- cooldown
 			self:Bar("explosion_casting_by_other", 2.5, CL["cast"]:format(CL["other"]:format(args.sourceName:gsub("%-.+", "*"), explosion)), args.spellId)
 			self:TargetMessage("explosion_casting_by_other", args.sourceName, "Important", "Alert", explosion, args.spellId, true) -- associate the message with the casting toggle option
@@ -342,7 +342,7 @@ do
 		self:Bar("explosion_casting_by_other", 2.5, "<".. L["monstrosity_is_casting"] ..">", 122398)
 		self:CDBar("explosion_by_other", 45, L["monstrosity_is_casting"], args.spellId) -- cooldown, don't move this
 		if UnitDebuff("player", self:SpellName(122784)) then -- Reshape Life
-			self:Flash("explosion_casting_by_other")
+			self:Flash("explosion_casting_by_other", args.spellId)
 			warningSpam(args.spellName)
 		end
 	end

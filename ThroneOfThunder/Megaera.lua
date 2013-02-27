@@ -110,7 +110,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:Message("breaths", "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
-			self:Flash("breaths")
+			self:Flash("breaths", args.spellId)
 		end
 	end
 end
