@@ -71,9 +71,9 @@ local usersRelease = {}
 -- using the latest available release version of BigWigs. This method ensures they are
 -- classed as up-to-date in /bwv if they use the latest available release of BigWigs
 -- even if our alpha is revisions ahead.
-local highestReleaseRevision = _G.BIGWIGS_RELEASE_TYPE == RELEASE and _G.BIGWIGS_RELEASE_REVISION or -1
+local highestReleaseRevision = BIGWIGS_RELEASE_TYPE == RELEASE and BIGWIGS_RELEASE_REVISION or -1
 -- The highestAlphaRevision is so we can alert old alpha users (we didn't previously)
-local highestAlphaRevision = _G.BIGWIGS_RELEASE_TYPE == ALPHA and _G.BIGWIGS_RELEASE_REVISION or -1
+local highestAlphaRevision = BIGWIGS_RELEASE_TYPE == ALPHA and BIGWIGS_RELEASE_REVISION or -1
 
 -- Loading
 local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-Zone directive. Filled in OnInitialize, garbagecollected in OnEnable.
@@ -480,6 +480,7 @@ do
 			if not message then return end
 			usersRelease[sender] = message
 			usersAlpha[sender] = nil
+			if message > highestReleaseRevision then highestReleaseRevision = message end
 			if BIGWIGS_RELEASE_TYPE == RELEASE and BIGWIGS_RELEASE_REVISION ~= -1 and message > BIGWIGS_RELEASE_REVISION and not warnedOutOfDate then
 				sysprint(L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
 				warnedOutOfDate = true
@@ -493,6 +494,7 @@ do
 			if not message then return end
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
+			if message > highestAlphaRevision then highestAlphaRevision = message end
 			if BIGWIGS_RELEASE_TYPE == ALPHA and BIGWIGS_RELEASE_REVISION ~= -1 and (message-10) > BIGWIGS_RELEASE_REVISION and not warnedOutOfDate then
 				sysprint(L["Your alpha version of Big Wigs is out of date (/bwv)."])
 				warnedOutOfDate = true
