@@ -19,7 +19,9 @@ mod.otherMenu = 6
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.ability = "Next ability"
+	L.ability_desc = "Timer bar for next ability"
+	L.ability_icon = "spell_nature_lightning" -- generic lightning icon
 end
 L = mod:GetLocale()
 
@@ -29,7 +31,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		136338, {136339, "FLASH"}, {136340, "SAY", "PROXIMITY"}, "bosskill",
+		136338, {136339, "FLASH"}, {136340, "SAY"}, --"ability",
+		"proximity", "bosskill",
 	}
 end
 
@@ -38,8 +41,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LightningTether", 136339)
 	self:Log("SPELL_CAST_START", "StormcloudCast", 136340)
 	self:Log("SPELL_AURA_APPLIED", "Stormcloud", 136340)
-	self:Log("SPELL_DAMAGE", "StormcloudDamage", 136340)
-	self:Log("SPELL_MISSED", "StormcloudDamage", 136340)
+	self:Log("SPELL_DAMAGE", "StormcloudDamage", 136345)
+	self:Log("SPELL_MISSED", "StormcloudDamage", 136345)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -47,7 +50,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-
+	--self:CDBar("ability", 12, L["ability"], L.ability_icon) -- 12-22s, subsequent timers are still a guess
+	self:OpenProximity("proximity", 10)
 end
 
 --------------------------------------------------------------------------------
@@ -55,13 +59,16 @@ end
 --
 
 function mod:ArcNova(args)
-	self:Message(args.spellId, "Important", "Alert")
+	self:Message(args.spellId, "Important", "Alarm")
+	self:Bar(args.spellId, 3, CL["cast"]:format(args.spellName))
+	--self:CDBar("ability", 30, L["ability"], L.ability_icon)
 end
 
 do
 	local targets, scheduled = mod:NewTargetList(), nil
 	local function warnTether(spellId)
-		mod:TargetMessage(spellId, targets, "Urgent")
+		mod:TargetMessage(spellId, targets, "Attention", "Alert")
+		--mod:CDBar("ability", 30, L["ability"], L.ability_icon)
 		scheduled = nil
 	end
 	function mod:LightningTether(args)
@@ -69,7 +76,7 @@ do
 		if self:Me(args.destGUID) then
 			self:Bar(args.spellId, 15, CL["you"]:format(args.spellName))
 			self:Flash(args.spellId)
-			--maybe use CheckInteractDistance("target/focus", 4) and spam when you're too far away?
+			--maybe use CheckInteractDistance("target/focus/raid target scan", 4) (28yd check) and spam when you're too far away?
 		end
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnTether, 0.2, args.spellId)
@@ -79,15 +86,13 @@ end
 
 function mod:StormcloudCast(args)
 	self:Message(args.spellId, "Attention", nil, CL["soon"]:format(args.spellName))
-	-- three seconds to spread out, maybe just put it in the Engage and always have it up? only happens every 30s or so
-	self:OpenProximity(136340, 10)
 end
 
 do
 	local targets, scheduled = mod:NewTargetList(), nil
 	local function warnStormcloud(spellId)
 		mod:TargetMessage(spellId, targets, "Urgent")
-		mod:CloseProximity(136340)
+		--mod:CDBar("ability", 30, L["ability"], L.ability_icon)
 		scheduled = nil
 	end
 	function mod:Stormcloud(args)
@@ -104,10 +109,10 @@ end
 do
 	local prev = 0
 	function mod:StormcloudDamage(args)
-		if self:Me(args.destGUID) then
+		if self:Me(args.destGUID) and not self:Me(args.sourceGUID) then
 			local t = GetTime()
 			if t-prev > 2 then
-				self:Message(args.spellId, "Personal", "Alarm", CL["under"]:format(args.spellName)) -- more over you, but whatever
+				self:Message(136345, "Personal", "Alarm", CL["under"]:format(args.spellName)) -- more over you, but whatever
 			end
 		end
 	end
