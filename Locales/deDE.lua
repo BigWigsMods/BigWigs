@@ -1,4 +1,4 @@
-﻿local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "deDE")
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "deDE")
 
 if not L then return end
 
@@ -77,6 +77,10 @@ L["SAY"] = "Sagen"
 L["FLASH"] = "Aufleuchten"
 L["PING"] = "Ping"
 L["EMPHASIZE"] = "Stark hervorheben"
+--L["ME_ONLY"] = "Only when on me"
+--L["ME_ONLY_desc"] = "When you enable this option messages for this ability will only be shown when they affect you. For example, 'Bomb: Player' will only be shown if it's on you."
+--L["PULSE"] = "Pulse"
+--L["PULSE_desc"] = "In addition to flashing the screen, you can also have an icon related to this specific ability momentarily shown in the middle of your screen to try grab your attention."
 L["MESSAGE_desc"] = "Für die meisten Bossfähigkeiten gibt es eine oder mehrere Nachrichten, die Big Wigs anzeigt. Wenn du diese Option deaktivierst, wird keine der zugehörigen Nachrichten angezeigt."
 L["BAR_desc"] = "Leisten werden für Bossfähigkeiten angezeigt, sofern sie sinnvoll sind. Falls diese Fähigkeit eine Leiste besitzt, die du verstecken möchtest, kannst du die Option deaktivieren."
 L["FLASH_desc"] = "Einige Fähigkeiten mögen wichtiger sein als andere. Wenn Du bei auftreten oder kurz vor dieser Fähigkeit den Bildschirm aufleuchten lassen möchtest, aktiviere diese Option."

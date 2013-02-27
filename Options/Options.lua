@@ -519,7 +519,11 @@ end
 local function getSlaveToggle(label, desc, key, module, flag, master)
 	local toggle = AceGUI:Create("CheckBox")
 	toggle:SetLabel(colorize[label])
-	toggle:SetFullWidth(true)
+	if flag == C.MESSAGE or flag == C.ME_ONLY or flag == C.FLASH or flag == C.PULSE then
+		toggle:SetRelativeWidth(0.5)
+	else
+		toggle:SetFullWidth(true)
+	end
 	toggle:SetDescription(desc)
 	toggle:SetUserData("key", key)
 	toggle:SetUserData("module", module)
@@ -536,8 +540,36 @@ local function advancedToggles(dbKey, module, check)
 	for i, key in next, BigWigs:GetOptions() do
 		local flag = C[key]
 		if bit.band(dbv, flag) == flag then
-			local name, desc = BigWigs:GetOptionDetails(key)
-			advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)
+			if key == "MESSAGE" then
+				local messageGroup = AceGUI:Create("InlineGroup")
+				messageGroup:SetLayout("Flow")
+				messageGroup:SetFullWidth(true)
+
+				local name, desc = BigWigs:GetOptionDetails(key)
+				local message = getSlaveToggle(name, desc, dbKey, module, flag, check)
+				messageGroup:AddChild(message)
+
+				local onMe = getSlaveToggle(L["ME_ONLY"], L["ME_ONLY_desc"], dbKey, module, C.ME_ONLY, check)
+				messageGroup:AddChild(onMe)
+
+				advancedOptions[#advancedOptions + 1] = messageGroup
+			elseif key == "FLASH" then
+				local flashGroup = AceGUI:Create("InlineGroup")
+				flashGroup:SetLayout("Flow")
+				flashGroup:SetFullWidth(true)
+
+				local name, desc = BigWigs:GetOptionDetails(key)
+				local flash = getSlaveToggle(name, desc, dbKey, module, flag, check)
+				flashGroup:AddChild(flash)
+
+				local pulse = getSlaveToggle(L["PULSE"], L["PULSE_desc"], dbKey, module, C.PULSE, check)
+				flashGroup:AddChild(pulse)
+
+				advancedOptions[#advancedOptions + 1] = flashGroup
+			else
+				local name, desc = BigWigs:GetOptionDetails(key)
+				advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)
+			end
 		end
 	end
 	advancedOptions[#advancedOptions + 1] = getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check)

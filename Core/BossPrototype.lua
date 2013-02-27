@@ -757,8 +757,10 @@ do
 				local msg = textType == "string" and text or spells[text or key]
 				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", sound, icon ~= false and icons[icon or textType == "number" and text or key])
 			else
-				-- Change color and remove sound (if not local only) when warning about effects on other players
-				self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], coloredNames[player]), color == "Personal" and "Important" or color, alwaysPlaySound and sound, icon ~= false and icons[icon or textType == "number" and text or key])
+				if not checkFlag(self, key, C.ME_ONLY) then
+					-- Change color and remove sound (if not local only) when warning about effects on other players
+					self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], coloredNames[player]), color == "Personal" and "Important" or color, alwaysPlaySound and sound, icon ~= false and icons[icon or textType == "number" and text or key])
+				end
 			end
 		end
 	end
@@ -823,8 +825,12 @@ end
 
 -- MISC
 function boss:Flash(key)
-	if not checkFlag(self, key, C.FLASH) then return end
-	self:SendMessage("BigWigs_Flash", self, key)
+	if checkFlag(self, key, C.FLASH) then
+		self:SendMessage("BigWigs_Flash", self, key)
+	end
+	if checkFlag(self, key, C.PULSE) and type(key) == "number" then
+		self:SendMessage("BigWigs_Pulse", self, key, spells[key])
+	end
 end
 
 function boss:Say(key, msg, directPrint)

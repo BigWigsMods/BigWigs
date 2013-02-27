@@ -91,11 +91,9 @@ function mod:BigWigs_Flash(event, module, key)
 end
 
 function mod:BigWigs_Pulse(event, module, key, icon)
-	--[[if BigWigs.db.profile.shake then
-		pulser:Stop()
-		pulseFrame.tex:SetTexture(icon)
-		pulseFrame:Show()
-		pulser:Play()
-	end]]
+	pulser:Stop()
+	pulseFrame.tex:SetTexture(icon)
+	pulseFrame:Show()
+	pulser:Play()
 end
 
