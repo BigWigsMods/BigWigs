@@ -229,16 +229,16 @@ L.resetAllCustomSound = "Wenn Du die Sounds für Bossbegegnungen geändert hast,
 --
 
 L.bossKillDurationPrint = "'%s' wurde nach %s besiegt."
-L.bossWipeDurationPrint = "An '%s' nach %s gewiped."
+L.bossWipeDurationPrint = "An '%s' nach %s gescheitert."
 L.newBestKill = "Neue Rekordzeit!"
 L.bossStatistics = "Boss-Statistiken"
-L.bossStatsDescription = "Zeichnet verschiedene Statistiken der Bossbegegnungen wie die Anzahl der Kills und Wipes, sowie die Kampfdauer oder die Rekordzeiten auf. Diese Statistiken können, falls vorhanden, in der Konfiguration der einzelnen Bosse eingesehen werden. Andernfalls werden diese ausgeblendet."
+L.bossStatsDescription = "Zeichnet verschiedene Statistiken der Bossbegegnungen wie die Anzahl der Siege und Niederlagen, sowie die Kampfdauer oder die Rekordzeiten auf. Diese Statistiken können, falls vorhanden, in der Konfiguration der einzelnen Bosse eingesehen werden. Andernfalls werden diese ausgeblendet."
 L.enableStats = "Statistiken aktivieren"
 L.chatMessages = "Chatnachrichten"
 L.printBestKillOption = "Benachrichtigung über besten Kill"
-L.printKillOption = "Killzeit"
-L.printWipeOption = "Wipezeit"
-L.countKills = "Kills zählen"
-L.countWipes = "Wipes zählen"
-L.recordBestKills = "Beste Kills speichern"
+L.printKillOption = "Siegesdauer"
+L.printWipeOption = "Niederlagendauer"
+L.countKills = "Siege zählen"
+L.countWipes = "Niederlagen zählen"
+L.recordBestKills = "Beste Siege speichern"
 
