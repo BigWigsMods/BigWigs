@@ -107,8 +107,10 @@ end
 function mod:Dispatch(args)
 	local diff = self:Difficulty()
 	self:CDBar(124077, (diff == 3 or diff == 5) and 22 or 12)
-	self:Message(args.spellId, "Urgent", "Long", CL["cast"]:format(args.spellName))
-	self:Flash(args.spellId)
+	self:Message(args.spellId, "Urgent", "Long")
+	if UnitGUID("target") == args.sourceGUID or UnitGUID("focus") == args.sourceGUID then
+		self:Flash(args.spellId)
+	end
 end
 
 function mod:Poison(args)
