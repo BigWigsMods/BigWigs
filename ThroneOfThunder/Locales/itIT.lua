@@ -20,8 +20,8 @@ if L then
 	L.venom_bolt_volley_message = "Il tuo Focus sta lanciando Raffica Venefica!"
 	L.venom_bolt_volley_bar = "Focus: Raffica Venefica"
 
-	L.adds = "Adds spawning"
-	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
+	L.adds = "Adds in arrivo"
+	L.adds_desc = "Avvisa quando sono in arrivo i vari add dei Farraki, dei Gurubashi, dei Drakkari, degli Amani, e il Dio della Guerra Jalak."
 
 	L.puncture_message = "Perforazione Tripla"
 	L.orb_message = "Globo del Controllo a terra!"
