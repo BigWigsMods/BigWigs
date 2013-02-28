@@ -93,8 +93,8 @@ function mod:FloorRemoved(_, _, _, _, spellId)
 	if spellId == 118189 then
 		self:Bar("floor", 6, L["floor"], L.floor_icon)
 		self:Message("floor", "Personal", "Alarm", L["floor_message"], L.floor_icon)
-		self:DelayedMessage("floor", 0.5, "Personal", L["floor_message"], L.floor_icon, "Alarm")
-		self:DelayedMessage("floor", 1, "Personal", L["floor_message"], L.floor_icon, "Alarm")
+		self:ScheduleTimer("Message", 0.5, "floor", "Personal", "Alarm", L["floor_message"], L.floor_icon)
+		self:ScheduleTimer("Message", 1, "floor", "Personal", "Alarm", L["floor_message"], L.floor_icon)
 		self:Flash("floor", L.floor_icon)
 	end
 end
