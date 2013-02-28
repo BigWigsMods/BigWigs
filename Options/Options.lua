@@ -329,12 +329,12 @@ function options:OnEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 
 	local tmp, tmpZone = {}, {}
-	for k in pairs(BigWigsLoader:GetZoneMenus()) do
+	for k in next, BigWigsLoader:GetZoneMenus() do
 		local zone = translateZoneID(k)
 		tmp[zone] = k
 		tmpZone[#tmpZone+1] = zone
 	end
-	for k in pairs(zoneModules) do
+	for k in next, zoneModules do
 		local zone = translateZoneID(k)
 		tmp[zone] = k
 		tmpZone[#tmpZone+1] = zone
@@ -992,7 +992,7 @@ do
 			-- Sort the encounters for this zone, so we don't have
 			-- to do it twice.
 			wipe(sorted)
-			for k, v in pairs(zoneModules[zone]) do
+			for k, v in next, zoneModules[zone] do
 				sorted[#sorted + 1] = k
 			end
 			table.sort(sorted)

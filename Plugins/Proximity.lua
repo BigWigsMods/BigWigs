@@ -365,7 +365,7 @@ end
 
 function plugin:RestyleWindow()
 	updateSoundButton()
-	for k, v in pairs(db.objects) do
+	for k, v in next, db.objects do
 		if anchor[k] then
 			if v then
 				anchor[k]:Show()

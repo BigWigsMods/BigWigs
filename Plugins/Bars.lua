@@ -32,7 +32,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 local colors = nil
 local candy = LibStub("LibCandyBar-3.0")
 local media = LibStub("LibSharedMedia-3.0")
-local pairs = pairs
+local next = next
 local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
 local empUpdate = nil -- emphasize updater frame
@@ -614,7 +614,7 @@ do
 		if not next(anchor.bars) then return end
 
 		wipe(tmp)
-		for bar in pairs(anchor.bars) do
+		for bar in next, anchor.bars do
 			tmp[#tmp + 1] = bar
 		end
 		table.sort(tmp, barSorter)
@@ -647,12 +647,12 @@ local function barStopped(event, bar)
 end
 
 local function findBar(module, key)
-	for k in pairs(normalAnchor.bars) do
+	for k in next, normalAnchor.bars do
 		if k:Get("bigwigs:module") == module and k:Get("bigwigs:option") == key then
 			return k
 		end
 	end
-	for k in pairs(emphasizeAnchor.bars) do
+	for k in next, emphasizeAnchor.bars do
 		if k:Get("bigwigs:module") == module and k:Get("bigwigs:option") == key then
 			return k
 		end
@@ -796,7 +796,7 @@ function plugin:OnRegister()
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 
-	for k, v in pairs(barStyles) do
+	for k, v in next, barStyles do
 		barStyleRegister[k] = v:GetStyleName()
 	end
 end
@@ -881,13 +881,13 @@ do
 		-- Iterate all running bars
 		if currentBarStyler then
 			if normalAnchor then
-				for bar in pairs(normalAnchor.bars) do
+				for bar in next, normalAnchor.bars do
 					currentBarStyler.BarStopped(bar)
 					newBarStyler.ApplyStyle(bar)
 				end
 			end
 			if emphasizeAnchor then
-				for bar in pairs(emphasizeAnchor.bars) do
+				for bar in next, emphasizeAnchor.bars do
 					currentBarStyler.BarStopped(bar)
 					newBarStyler.ApplyStyle(bar)
 				end
@@ -909,14 +909,14 @@ end
 function plugin:StopSpecificBar(_, module, text)
 	if not normalAnchor then return end
 	local dirty = nil
-	for k in pairs(normalAnchor.bars) do
+	for k in next, normalAnchor.bars do
 		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
 			k:Stop()
 			dirty = true
 		end
 	end
 	if dirty then rearrangeBars(normalAnchor) dirty = nil end
-	for k in pairs(emphasizeAnchor.bars) do
+	for k in next, emphasizeAnchor.bars do
 		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
 			k:Stop()
 			dirty = true
@@ -928,14 +928,14 @@ end
 function plugin:StopModuleBars(_, module)
 	if not normalAnchor then return end
 	local dirty = nil
-	for k in pairs(normalAnchor.bars) do
+	for k in next, normalAnchor.bars do
 		if k:Get("bigwigs:module") == module then
 			k:Stop()
 			dirty = true
 		end
 	end
 	if dirty then rearrangeBars(normalAnchor) dirty = nil end
-	for k in pairs(emphasizeAnchor.bars) do
+	for k in next, emphasizeAnchor.bars do
 		if k:Get("bigwigs:module") == module then
 			k:Stop()
 			dirty = true
@@ -949,7 +949,7 @@ end
 --
 
 local function barClicked(bar, button)
-	for action, enabled in pairs(plugin.db.profile[button]) do
+	for action, enabled in next, plugin.db.profile[button] do
 		if enabled then clickHandlers[action](bar) end
 	end
 end
@@ -979,7 +979,7 @@ local function refixClickOnBar(intercept, bar)
 	end
 end
 local function refixClickOnAnchor(intercept, anchor)
-	for bar in pairs(anchor.bars) do
+	for bar in next, anchor.bars do
 		refixClickOnBar(intercept, bar)
 	end
 end
@@ -1045,7 +1045,7 @@ end
 -- Removes all bars EXCEPT the clicked one
 clickHandlers.removeOther = function(bar)
 	if normalAnchor then
-		for k in pairs(normalAnchor.bars) do
+		for k in next, normalAnchor.bars do
 			if k ~= bar then
 				plugin:SendMessage("BigWigs_SilenceOption", k:Get("bigwigs:option"), k.remaining + 0.3)
 				k:Stop()
@@ -1054,7 +1054,7 @@ clickHandlers.removeOther = function(bar)
 		rearrangeBars(normalAnchor)
 	end
 	if emphasizeAnchor then
-		for k in pairs(emphasizeAnchor.bars) do
+		for k in next, emphasizeAnchor.bars do
 			if k ~= bar then
 				plugin:SendMessage("BigWigs_SilenceOption", k:Get("bigwigs:option"), k.remaining + 0.3)
 				k:Stop()
@@ -1118,7 +1118,7 @@ do
 	local dirty = nil
 	empUpdate = CreateFrame("Frame"):CreateAnimationGroup()
 	empUpdate:SetScript("OnLoop", function()
-		for k in pairs(normalAnchor.bars) do
+		for k in next, normalAnchor.bars do
 			if k.remaining < 10 and not k:Get("bigwigs:emphasized") then
 				plugin:EmphasizeBar(k)
 				dirty = true

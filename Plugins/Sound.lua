@@ -40,7 +40,7 @@ end
 
 local function resetAll()
 	plugin.db:ResetProfile()
-	for k in pairs(sounds) do
+	for k in next, sounds do
 		if k ~= "Victory" then
 			if not plugin.db.profile[k] then plugin.db.profile[k] = {} end
 		end
@@ -113,7 +113,7 @@ local function addKey(t, key)
 	if t.type and t.type == "select" then
 		t.arg = key
 	elseif t.args then
-		for k, v in pairs(t.args) do
+		for k, v in next, t.args do
 			t.args[k] = addKey(v, key)
 		end
 	end
@@ -152,7 +152,7 @@ function plugin:OnRegister()
 
 	soundList = media:List(mType)
 
-	for k, s in pairs(sounds) do
+	for k, s in next, sounds do
 		local n = L[k] or k
 		self.pluginOptions.args[k] = {
 			type = "select",
@@ -206,7 +206,7 @@ end
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_Sound")
-	for k in pairs(sounds) do
+	for k in next, sounds do
 		if k ~= "Victory" then
 			if not plugin.db.profile[k] then plugin.db.profile[k] = {} end
 		end

@@ -53,7 +53,7 @@ end
 local ldb = nil
 local tooltipFunctions = {}
 local pName = UnitName("player")
-local pairs = pairs
+local next = next
 local loaderUtilityFrame = CreateFrame("Frame")
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
@@ -215,14 +215,14 @@ local function versionTooltipFunc(tt)
 	-- whenever we receive a version reply from someone. That way we
 	-- reduce the processing required to open a simple tooltip.
 	local add = nil
-	for player, version in pairs(usersRelease) do
+	for player, version in next, usersRelease do
 		if version < highestReleaseRevision then
 			add = true
 			break
 		end
 	end
 	if not add then
-		for player, version in pairs(usersAlpha) do
+		for player, version in next, usersAlpha do
 			-- If this person's alpha version isn't SVN (-1) and it's lower than the highest found release version minus 1 because
 			-- of tagging, or it's lower than the highest found alpha version (with a 10 revision leeway) then that person is out-of-date
 			if version ~= -1 and (version < (highestReleaseRevision - 1) or version < (highestAlphaRevision - 10)) then
@@ -416,7 +416,7 @@ do
 
 	function loader:SendMessage(msg, ...)
 		if callbackMap[msg] then
-			for k,v in pairs(callbackMap[msg]) do
+			for k,v in next, callbackMap[msg] do
 				if type(v) == "function" then
 					v(msg, ...)
 				else
@@ -427,8 +427,8 @@ do
 	end
 
 	local function UnregisterAllMessages(_, module)
-		for k,v in pairs(callbackMap) do
-			for j in pairs(v) do
+		for k,v in next, callbackMap do
+			for j in next, v do
 				if j == module then
 					loader.UnregisterMessage(module, k)
 				end
@@ -495,7 +495,7 @@ do
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
 			if message > highestAlphaRevision then highestAlphaRevision = message end
-			if BIGWIGS_RELEASE_TYPE == ALPHA and BIGWIGS_RELEASE_REVISION ~= -1 and (message-10) > BIGWIGS_RELEASE_REVISION and not warnedOutOfDate then
+			if BIGWIGS_RELEASE_TYPE == ALPHA and BIGWIGS_RELEASE_REVISION ~= -1 and ((message-10) > BIGWIGS_RELEASE_REVISION or highestReleaseRevision > BIGWIGS_RELEASE_REVISION) and not warnedOutOfDate then
 				sysprint(L["Your alpha version of Big Wigs is out of date (/bwv)."])
 				warnedOutOfDate = true
 			end
@@ -512,7 +512,7 @@ do
 		loaderUtilityFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		sysprint(L["Combat has ended, Big Wigs has now finished loading."])
 		if load(BigWigs, "BigWigs_Core") then
-			for k,v in pairs(queueLoad) do
+			for k,v in next, queueLoad do
 				if v == "unloaded" then
 					queueLoad[k] = "loaded"
 					if BigWigs:IsEnabled() and loadOnZone[k] then
@@ -624,7 +624,7 @@ function loader:RegisterTooltipInfo(func)
 			error(("The function %q has already been registered."):format(func))
 		end
 	end
-	tinsert(tooltipFunctions, func)
+	tooltipFunctions[#tooltipFunctions+1] = func
 end
 
 function loader:GetZoneMenus()
@@ -718,15 +718,15 @@ do
 	})
 	local function coloredNameVersion(name, version, alpha)
 		if version == -1 then version = "svn" alpha = nil end
-		return string.format("%s|cffcccccc(%s%s)|r", coloredNames[name], version or "unknown", alpha and "-alpha" or "")
+		return ("%s|cffcccccc(%s%s)|r"):format(coloredNames[name], version or "unknown", alpha and "-alpha" or "")
 	end
 	local function showVersions()
 		local m = getGroupMembers()
 		if not m then return end
 		if not hexColors then
 			hexColors = {}
-			for k, v in pairs(CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS) do
-				hexColors[k] = "|cff" .. string.format("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
+			for k, v in next, (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS) do
+				hexColors[k] = "|cff" .. ("%02x%02x%02x"):format(v.r * 255, v.g * 255, v.b * 255)
 			end
 		end
 		local good = {} -- highest release users

@@ -24,7 +24,7 @@ function BigWigs:RegisterOption(key, name, desc)
 	-- Build a list of used shift indexes
 	if not used then
 		used = {}
-		for k, i in pairs(self.db.global.optionShiftIndexes) do
+		for k, i in next, self.db.global.optionShiftIndexes do
 			used[i] = k
 		end
 		for i, k in next, coreToggles do
@@ -48,7 +48,7 @@ function BigWigs:RegisterOption(key, name, desc)
 				break
 			end
 		end
-		for i, k in pairs(used) do
+		for i, k in next, used do
 			if k == key then
 				error("That's weird, we seem to have a stored shift index for this key already.")
 				break
@@ -130,7 +130,11 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 
 	if t == "string" then
 		if customBossOptions[option] then
-			local icon = customBossOptions[option][4] and select(3, GetSpellInfo(customBossOptions[option][4])) or nil
+			local icon = nil
+			if customBossOptions[option][4] then
+				local _
+				_, _, icon = GetSpellInfo(customBossOptions[option][4])
+			end
 			return option, customBossOptions[option][1], customBossOptions[option][2], icon
 		else
 			local roleIcon, roleDesc = getRoleStrings(module, option)

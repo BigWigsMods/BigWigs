@@ -54,7 +54,7 @@ numberOfCommits.Wetxius = numberOfCommits.Wetxius + numberOfCommits.wetxius
 numberOfCommits.wetxius = nil
 
 local sorted = {}
-for k, v in pairs(numberOfCommits) do
+for k, v in next, numberOfCommits do
 	if v > 2 then sorted[#sorted + 1] = k end
 end
 table.sort(sorted, function(a, b) return numberOfCommits[a] > numberOfCommits[b] end)

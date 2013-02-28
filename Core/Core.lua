@@ -24,7 +24,7 @@ local GetCurrentMapAreaID = BigWigsLoader.GetCurrentMapAreaID
 local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
 
 -- Upvalues
-local pairs, type = pairs, type
+local next, type = next, type
 
 -------------------------------------------------------------------------------
 -- Event handling
@@ -36,7 +36,7 @@ do
 
 	local eventMap = {}
 	bwUtilityFrame:SetScript("OnEvent", function(_, event, ...)
-		for k,v in pairs(eventMap[event]) do
+		for k,v in next, eventMap[event] do
 			if type(v) == "function" then
 				v(event, ...)
 			else
@@ -46,14 +46,14 @@ do
 	end)
 
 	function addon:RegisterEvent(event, func)
-		if type(event) ~= "string" then error(format(noEvent, self.moduleName)) end
-		if (not func and not self[event]) or (type(func) == "string" and not self[func]) then error(format(noFunc, self.moduleName, func or event)) end
+		if type(event) ~= "string" then error((noEvent):format(self.moduleName)) end
+		if (not func and not self[event]) or (type(func) == "string" and not self[func]) then error((noFunc):format(self.moduleName, func or event)) end
 		if not eventMap[event] then eventMap[event] = {} end
 		eventMap[event][self] = func or event
 		bwUtilityFrame:RegisterEvent(event)
 	end
 	function addon:UnregisterEvent(event)
-		if type(event) ~= "string" then error(format(noEvent, self.moduleName)) end
+		if type(event) ~= "string" then error((noEvent):format(self.moduleName)) end
 		if not eventMap[event] then return end
 		eventMap[event][self] = nil
 		if not next(eventMap[event]) then
@@ -63,8 +63,8 @@ do
 	end
 
 	local function UnregisterAllEvents(_, module)
-		for k,v in pairs(eventMap) do
-			for j in pairs(v) do
+		for k,v in next, eventMap do
+			for j in next, v do
 				if j == module then
 					module:UnregisterEvent(k)
 				end
@@ -118,7 +118,7 @@ local function targetCheck(unit)
 	end
 end
 local function chatMsgMonsterYell(event, msg)
-	for yell, mod in pairs(enableyells) do
+	for yell, mod in next, enableyells do
 		if yell == msg or msg:find(yell, nil, true) or msg:find(yell) then -- Preserve backwards compat by leaving in the 3rd check
 			targetSeen("player", mod)
 		end
@@ -195,7 +195,7 @@ do
 				addon.db.global.seenmovies = {}
 			end
 			if addon.db.global.seenmovies[id] then
-				addon:Print(L["Prevented boss movie '%d' from playing."]:format(id)) -- XXX Temporary print or permanent?
+				addon:Print(L["Prevented boss movie '%d' from playing."]:format(id))
 				return MovieFrame_OnMovieFinished(frame)
 			else
 				addon.db.global.seenmovies[id] = true
@@ -308,7 +308,7 @@ do
 		elseif sync == "EnableModule" or sync == "Death" then
 			coreSync(sync, rest, nick)
 		else
-			for m in pairs(registered[sync]) do
+			for m in next, registered[sync] do
 				m:OnSync(sync, rest, nick)
 			end
 		end
@@ -417,7 +417,7 @@ function addon:GetCustomBossOptions()
 	return customBossOptions
 end
 
-function addon:NewBossLocale(name, locale, default) return AL:NewLocale(string.format("%s_%s", self.bossCore.name, name), locale, default, true) end
+function addon:NewBossLocale(name, locale, default) return AL:NewLocale(("%s_%s"):format(self.bossCore.name, name), locale, default, true) end
 
 -------------------------------------------------------------------------------
 -- Module handling
@@ -491,7 +491,7 @@ do
 		end
 
 		if module.optionHeaders then
-			for k, v in pairs(module.optionHeaders) do
+			for k, v in next, module.optionHeaders do
 				if type(v) == "string" then
 					if CL[v] then
 						module.optionHeaders[k] = CL[v]
@@ -526,7 +526,7 @@ do
 				-- mix in default toggles for keys we know
 				-- this allows for mod.toggleOptions = {1234, {"bosskill", "bar"}}
 				-- while bosskill usually only has message
-				for _, b in pairs(C) do
+				for _, b in next, C do
 					if bit.band(defaultToggles[v], b) == b and bit.band(bitflags, b) ~= b then
 						bitflags = bitflags + b
 					end

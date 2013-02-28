@@ -95,7 +95,7 @@ end
 function mod:OnEngage()
 	self:Berserk(self:LFR() and 720 or 600) -- XXX assumed. 12 min or higher on LFR, prob 15
 	bossDead = 0
-	for k in pairs(lingeringTracker) do lingeringTracker[k] = 0 end
+	for k in next, lingeringTracker do lingeringTracker[k] = 0 end
 	self:OpenProximity("proximity", self:Heroic() and 7 or 5)
 	self:CDBar("priestess_adds", 27, L["priestess_adds_message"], L.priestess_adds_icon)
 	self:CDBar(-7062, 7) -- Quicksand

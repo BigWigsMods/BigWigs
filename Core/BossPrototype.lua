@@ -9,6 +9,7 @@ local UnitAffectingCombat = UnitAffectingCombat
 local GetSpellInfo = GetSpellInfo
 local format = string.format
 local type = type
+local next = next
 local core = BigWigs
 local C = core.C
 local band = bit.band
@@ -124,8 +125,8 @@ function boss:OnDisable()
 	end
 
 	-- Unregister the Unit Events for this module
-	for a, b in pairs(unitEventMap[self]) do
-		for k in pairs(b) do
+	for a, b in next, unitEventMap[self] do
+		for k in next, b do
 			self:UnregisterUnitEvent(a, k)
 		end
 	end
@@ -136,8 +137,8 @@ function boss:OnDisable()
 	wipe(allowedEvents)
 
 	-- Re-add allowed events if more than one module is enabled
-	for a, b in pairs(eventMap) do
-		for k in pairs(b) do
+	for a, b in next, eventMap do
+		for k in next, b do
 			allowedEvents[k] = true
 		end
 	end
@@ -181,7 +182,7 @@ do
 		if eventMap[self][event][msg] then
 			self[eventMap[self][event][msg]](self, msg, ...)
 		else
-			for emote, func in pairs(eventMap[self][event]) do
+			for emote, func in next, eventMap[self][event] do
 				if msg:find(emote, nil, true) or msg:find(emote) then -- Preserve backwards compat by leaving in the 2nd check
 					self[func](self, msg, ...)
 				end
@@ -202,7 +203,7 @@ do
 		if eventMap[self][event][msg] then
 			self[eventMap[self][event][msg]](self, msg, ...)
 		else
-			for yell, func in pairs(eventMap[self][event]) do
+			for yell, func in next, eventMap[self][event] do
 				if msg:find(yell, nil, true) or msg:find(yell) then -- Preserve backwards compat by leaving in the 2nd check
 					self[func](self, msg, ...)
 				end
@@ -412,7 +413,7 @@ do
 	function boss:GetUnitIdByGUID(id) return findTargetByGUID(id) end
 
 	local function scan(self)
-		for mobId, entry in pairs(core:GetEnableMobs()) do
+		for mobId, entry in next, core:GetEnableMobs() do
 			if type(entry) == "table" then
 				for i, module in next, entry do
 					if module == self.moduleName then
@@ -621,7 +622,7 @@ do
 	bossUtilityFrame:SetScript("OnUpdate", function(self, elapsed)
 		total = total + elapsed
 		if total >= 0.5 then
-			for k, t in pairs(silencedOptions) do
+			for k, t in next, silencedOptions do
 				local newT = t - total
 				if newT < 0 then
 					silencedOptions[k] = nil
@@ -712,7 +713,7 @@ end
 
 do
 	local hexColors = {}
-	for k, v in pairs(CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS) do
+	for k, v in next, (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS) do
 		hexColors[k] = "|cff" .. format("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
 	end
 	local coloredNames = setmetatable({}, {__index =
@@ -749,9 +750,12 @@ do
 		local textType = type(text)
 		if type(player) == "table" then
 			local list = table.concat(player, ", ")
-			wipe(player)
-			if not list:find(pName) and not alwaysPlaySound then sound = nil end
+			if not list:find(pName) then
+				if not checkFlag(self, key, C.ME_ONLY) then wipe(player) return end
+				if not alwaysPlaySound then sound = nil end
+			end
 			self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], list), color, sound, icon ~= false and icons[icon or textType == "number" and text or key])
+			wipe(player)
 		else
 			if UnitIsUnit(player, "player") then
 				local msg = textType == "string" and text or spells[text or key]

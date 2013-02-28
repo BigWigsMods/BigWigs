@@ -30,7 +30,7 @@ plugin.defaultDB = {
 
 local function copyTable(to, from)
 	setmetatable(to, nil)
-	for k,v in pairs(from) do
+	for k,v in next, from do
 		if type(k) == "table" then
 			k = copyTable({}, k)
 		end
@@ -45,10 +45,10 @@ end
 
 local function compareTable(a, b)
 	if type(a) ~= "table" or type(b) ~= "table" then return false end
-	for k, v in pairs(a) do
+	for k, v in next, a do
 		if not b[k] or b[k] ~= v then return false end
 	end
-	for k, v in pairs(b) do
+	for k, v in next, b do
 		if not a[k] or a[k] ~= v then return false end
 	end
 	return true
@@ -61,7 +61,7 @@ local function set(info, r, g, b, a)
 end
 local function reset(info)
 	local name, key = unpack(info.arg)
-	for k, v in pairs(plugin.db.profile) do
+	for k, v in next, plugin.db.profile do
 		plugin.db.profile[k][name][key] = nil
 	end
 end
@@ -179,7 +179,7 @@ local function addKey(t, key)
 	if t.type and ( t.type == "color" or t.type == "execute" ) then
 		t.arg = key
 	elseif t.args then
-		for k, v in pairs(t.args) do
+		for k, v in next, t.args do
 			t.args[k] = addKey(v, key)
 		end
 	end
