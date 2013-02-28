@@ -171,11 +171,12 @@ do
 		if spellId == 124176 then
 			self:Win() -- Gold Active
 		elseif unitId:find("boss", nil, true) then
-			if spellId == 123252 then -- Dread Shadows Cancel (end of night phase)
+			if spellId == 123252 then -- Dread Shadows Cancel (start of day phase)
 				bigAddCounter = 0
 				self:CloseProximity(122777)
 				self:StopBar(122777) -- Nightmares
 				self:StopBar(122752) -- Shadow Breath
+				self:StopBar(122789) -- Sunbeam
 				self:Message("phases", "Positive", nil, L["day"], "spell_holy_circleofrenewal")
 				self:Bar("phases", 121, L["night"], 122768)
 				self:Bar(122855, 32) -- Sun Breath
