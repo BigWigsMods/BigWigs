@@ -2,8 +2,7 @@
 TODO:
 	code abilities used in the last phase when both bosses are there ( need logs )
 	:OnEngage bar durations need to be double checked
-	probably shouldn't use INSTANCE_ENCOUNTER_ENGAGE_UNIT for phase tracking ( see XXX )
-	verify cosmic barrage fire timer
+	need to figure out a good way to warn for phase changes for those handling the constellations
 ]]--
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
@@ -27,6 +26,7 @@ local deadBosses = 0
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.barrage_fired = "Barrage fired!"
+	L.last_phase_yell_trigger = "Just this once..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
 end
 L = mod:GetLocale()
 
@@ -39,6 +39,7 @@ function mod:GetOptions()
 		-- Lu'lin
 		-7631, -7634, -- phase 1
 		-7649, {137440, "FLASH"}, -- phase 2
+		137531, --Phase 3
 		-- Suen
 		-7643, -- phase 1
 		{137408, "TANK"}, {-7638, "FLASH"}, {137491, "FLASH"}, -- phase 2
@@ -54,7 +55,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "Phases")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:Yell("LastPhase", L["last_phase_yell_trigger"])
 
 	-- Celestial Aid
 	self:Log("SPELL_AURA_APPLIED", "Tiger", 138645)
@@ -72,18 +74,20 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "TearsOfTheSunApplied", 137404)
 
 	-- Lu'lin
+		-- phase 3
+	self:Log("SPELL_CAST_START", "TidalForce", 137531)
 		-- phase 2
 	self:Log("SPELL_AURA_APPLIED", "IcyShadows", 137440)
 	self:Log("SPELL_SUMMON", "IceComet", 137419)
 		-- phase 1
 	self:Log("SPELL_CAST_SUCCESS", "BeastOfNightmares", 137375)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
 
 	self:Death("Deaths", 68905, 68904)
 end
 
 function mod:OnEngage()
-	self:Berserk(720) -- XXX assumed
+	self:Berserk(600) -- 25 N PTR Confirmed
 	self:Bar("stages", 184, CL["phase"]:format(2), 137440)
 	deadBosses = 0
 	self:OpenProximity("proximity", 8)
@@ -191,6 +195,13 @@ end
 -- Lu'lin
 --
 
+-- Phase 3
+
+function mod:TidalForce(args)
+	self:Message(args.spellId, "Urgent", "Alarm")
+	self:CDBar(args.spellId, 70) -- XXX need more logs for a better timer
+end
+
 -- Phase 2
 
 function mod:IcyShadows(args)
@@ -221,11 +232,19 @@ end
 -- General
 --
 
-function mod:Phases()
-	self:CheckBossStatus()
-	-- XXX could probably use some other event instead like: "<2319.7 01:50:18> [UNIT_SPELLCAST_SUCCEEDED] Lu'lin [[boss1:Dissipate::0:137187]]", -- [589]
-	-- if last phase has something like that too, probably should use those instead
-	if 68904 == self:MobId(UnitGUID("boss1")) and not UnitExists("boss2") then -- 2nd phase
+function mod:LastPhase()
+	self:Message("stages", "Positive", "Long", CL["phase"]:format(3), 137401)
+	self:StopBar(-7649) -- Ice Comet
+	self:StopBar(137408) -- Fan of Flames
+	self:Bar(137531, 34) -- Tidal Force
+end
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 136752 then -- channel start of Cosmic Barrage
+		self:Message(-7631, "Urgent", "Alarm")
+		self:CDBar(-7631, 20)
+		self:ScheduleTimer("Message", 5.5, -7631, "Urgent", "Alarm", L["barrage_fired"]) -- This is when the little orbs start to move
+	elseif spellId == 137187 then -- lu'lin Dissipate aka p2
 		self:Bar("stages", 184, CL["phase"]:format(3), 138688)
 		self:Message("stages", "Positive", "Long", CL["phase"]:format(2), 137401)
 		self:StopBar(137404) -- Tears of the Sun
@@ -235,22 +254,16 @@ function mod:Phases()
 		if self:Heroic() then
 			self:Bar(137491, 50) -- Nuclear Inferno
 		end
-	elseif 68904 == self:MobId(UnitGUID("boss1")) and 68905 == self:MobId(UnitGUID("boss2")) then -- do it like this in case modules stays enabled, so we don't randomly do stuff when other encounter is engaged
-		self:Message("stages", "Positive", "Long", CL["phase"]:format(3), 137401)
-		self:StopBar(-7649) -- Ice Comet
-		self:StopBar(137408) -- Fan of Flames
-	end
-end
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 136752 then -- channel start of Cosmic Barrage
-		self:Message(-7631, "Urgent", "Alarm")
-		self:CDBar(-7631, 20)
-		self:ScheduleTimer("Message", 5.5, -7631, "Urgent", "Alarm", L["barrage_fired"]) -- This is when the little orbs start to move ( might not be accurate yet )
 	end
 end
 
 function mod:Deaths(args)
+	if args.mobId == 68905 then -- Lu'lin
+		self:StopBar(-7631) -- Cosmic Barrage
+		self:StopBar(137531) -- Tidal Force
+	elseif args.mobId == 68904 then -- Suen
+		self:StopBar(137491) -- Nuclear Inferno
+	end
 	deadBosses = deadBosses + 1
 	if deadBosses == 2 then
 		self:Win()
