@@ -465,6 +465,9 @@ end
 local function getMasterOption(self)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
+	if type(key) == "string" and key:find("^custom_") then
+		return module.db.profile[key]
+	end
 	if type(module.db.profile[key]) ~= "number" then
 		module.db.profile[key] = module.toggleDefaults[key]
 	end
@@ -493,13 +496,17 @@ local function masterOptionToggled(self, event, value)
 	if value == nil then self:SetValue(false) end -- toggling the master toggles all (we just pretend to be a tristate)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
-	if value then
-		module.db.profile[key] = module.toggleDefaults[key]
+	if type(key) == "string" and key:find("^custom_") then
+		module.db.profile[key] = value
 	else
-		module.db.profile[key] = 0
-	end
-	for k, toggle in next, advancedOptions do
-		toggle:SetValue(getSlaveOption(toggle))
+		if value then
+			module.db.profile[key] = module.toggleDefaults[key]
+		else
+			module.db.profile[key] = 0
+		end
+		for k, toggle in next, advancedOptions do
+			toggle:SetValue(getSlaveOption(toggle))
+		end
 	end
 end
 
@@ -698,16 +705,20 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	check:SetValue(getMasterOption(check))
 	if type(icon) == "string" then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
 
-	local button = AceGUI:Create("Button")
-	button:SetText(">>")
-	button:SetRelativeWidth(0.15)
-	-- userdata baby
-	button:SetUserData("scrollFrame", scrollFrame)
-	button:SetUserData("dropdown", dropdown)
-	button:SetUserData("module", module)
-	button:SetUserData("bossOption", bossOption)
-	button:SetCallback("OnClick", buttonClicked)
-	return check, button
+	if type(dbKey) == "string" and dbKey:find("^custom_") then
+		return check
+	else
+		local button = AceGUI:Create("Button")
+		button:SetText(">>")
+		button:SetRelativeWidth(0.15)
+		-- userdata baby
+		button:SetUserData("scrollFrame", scrollFrame)
+		button:SetUserData("dropdown", dropdown)
+		button:SetUserData("module", module)
+		button:SetUserData("bossOption", bossOption)
+		button:SetCallback("OnClick", buttonClicked)
+		return check, button
+	end
 end
 
 local listAbilitiesInChat = nil

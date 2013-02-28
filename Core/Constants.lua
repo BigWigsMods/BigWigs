@@ -137,7 +137,12 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			end
 			return option, customBossOptions[option][1], customBossOptions[option][2], icon
 		else
-			local roleIcon, roleDesc = getRoleStrings(module, option)
+			local roleIcon, roleDesc
+			if option:find("^custom_") then
+				roleIcon, roleDesc = "", ""
+			else
+				roleIcon, roleDesc = getRoleStrings(module, option)
+			end
 
 			local L = module:GetLocale(true)
 			local title, description = L[option], L[option .. "_desc"]

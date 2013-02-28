@@ -532,7 +532,12 @@ do
 					end
 				end
 				if t == "string" then
-					module.toggleDefaults[v] = bitflags
+					local custom = v:match("^custom_(o[nf]f?)_.*")
+					if custom then
+						module.toggleDefaults[v] = custom == "on" and true or false
+					else
+						module.toggleDefaults[v] = bitflags
+					end
 				elseif t == "number" then
 					if v > 0 then
 						local n = GetSpellInfo(v)
