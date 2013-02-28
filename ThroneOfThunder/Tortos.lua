@@ -1,6 +1,6 @@
 --[[
 TODO:
-	-- consider handling growing fury to adjust ston breath bar
+	-- consider handling growing fury to adjust stone breath bar
 ]]--
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
@@ -10,12 +10,6 @@ if select(4, GetBuildInfo()) < 50200 then return end
 local mod, CL = BigWigs:NewBoss("Tortos", 930, 825)
 if not mod then return end
 mod:RegisterEnableMob(67977)
-
---------------------------------------------------------------------------------
--- Locals
---
-
-local kickable = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -34,13 +28,29 @@ end
 L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local kickable = 0
+local crystalTimer = nil
+local crystalShell = mod:SpellName(137633)
+local function warnCrystalShell()
+	if UnitDebuff("player", crystalShell) or UnitIsDeadOrGhost("player") then
+		mod:CancelTimer(crystalTimer)
+		crystalTimer = nil
+	else
+		mod:Message(137633, "Personal", "Info", L["no_crystal_shell"])
+	end
+end
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
 function mod:GetOptions()
 	return {
 		{137633, "FLASH"},
-		136294, "kick", 133939, {134539, "FLASH"}, 134920, -7140,
+		136294, "kick", 133939, {134539, "FLASH"}, 134920, -7140, {135251, "TANK"},
 		"berserk", "bosskill",
 	}, {
 		[137633] = "heroic",
@@ -54,6 +64,7 @@ function mod:OnBossEnable()
 	-- Heroic
 	self:Log("SPELL_AURA_REMOVED", "CrystalShellRemoved", 137633)
 	-- Normal
+	self:Log("SPELL_CAST_START", "SnappingBite", 135251)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "SummonBats", "boss1")
 	self:Log("SPELL_CAST_START", "QuakeStomp", 134920)
 	self:Log("SPELL_DAMAGE", "Rockfall", 134539)
@@ -72,36 +83,35 @@ function mod:OnEngage()
 	self:Bar(133939, 46) -- Furious Stone Breath
 	self:Bar(136294, 21) -- Call of Tortos
 	self:Bar(134920, 30) -- Quake Stomp
+	if self:Heroic() then
+		if not UnitDebuff("player", self:SpellName(137633)) then -- Crystal Shell -- Here we can warn tanks too
+			self:Message(137633, "Personal", "Info", L["no_crystal_shell"])
+			crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3)
+		end
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-do
-	local timer = nil
-	local function warnCrystalShell(spellId, spellName)
-		if UnitDebuff("player", spellName) or UnitIsDeadOrGhost("player") then
-			mod:CancelTimer(timer)
-			timer = nil
-		else
-			mod:Message(spellId, "Personal", "Info", L["no_crystal_shell"])
-		end
-	end
-	function mod:CrystalShellRemoved(args)
-		if not self:Me(args.destGUID) or self:Tank() then return end
-		self:Flash(args.spellId)
-		self:Message(args.spellId, "Urgent", "Alarm", L["crystal_shell_removed"]) -- I think this should stay Urgent Alarm
-		if not timer then
-			timer = self:ScheduleRepeatingTimer(warnCrystalShell, 3, args.spellId, args.spellName)
-		end
-	end
+
+function mod:CrystalShellRemoved(args)
+	if not self:Me(args.destGUID) or self:Tank() then return end
+	self:Flash(args.spellId)
+	self:Message(args.spellId, "Urgent", "Alarm", L["crystal_shell_removed"]) -- I think this should stay Urgent Alarm
+	crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3)
+end
+
+function mod:SnappingBite(args)
+	-- don't think there is a point to have an 8 sec CD bar for tanks
+	self:Message(args.spellId, "Attention")
 end
 
 function mod:SummonBats(_, spellName, _, _, spellId)
 	if spellId == 136685 then
-		self:Message(-7140, "Urgent", nil, spellName)
-		self:Bar(-7140, 46, spellName)
+		self:Message(-7140, "Urgent", nil, spellName, 24733) -- bat looking like icon
+		self:Bar(-7140, 46, spellName, 24733) -- bat looking like icon
 	end
 end
 
