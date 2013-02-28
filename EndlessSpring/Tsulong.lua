@@ -153,7 +153,7 @@ do
 			timer = nil
 			mod:TargetMessage(spellId, player, "Important", "Alert")
 			if UnitIsUnit("boss1target", "player") then
-				mod:FlashShake(spellId)
+				mod:Flash(spellId)
 				mod:Say(spellId)
 			end
 			return
