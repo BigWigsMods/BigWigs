@@ -19,7 +19,6 @@ mod:RegisterEnableMob(69712) -- Ji-Kun
 -- Locals
 --
 local nestCounter = 0
-local feedingAllowed = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -34,9 +33,9 @@ if L then
 	L.upper_nest = "|c00008000Upper|r nest"
 	L.lower_nest = "|c00FF0000Lower|r nest"
 	L.lower_upper_nest = "|c00FF0000Lower|r + |c00008000Upper|r nest"
-	L.food_call_trigger = "Hatchling calls for food!"
 	L.nest = "Nests"
 	L.nest_desc = "Warnings related to the nests. |c00FF0000Untoggle this to turn off warnings, if you are not assigned to handle the nests!|r"
+	L.big_add = "Big add at %s"
 end
 L = mod:GetLocale()
 
@@ -61,8 +60,7 @@ function mod:OnBossEnable()
 
 	-- eat for the hatchlings is intentionally not here, players can't do anything about it once it is casted, so we don't warn uselessly
 	self:Log("SPELL_AURA_APPLIED", "FeedYoung", 137528)
-	self:Emote("CallForFood", L["food_call_trigger"])
-	self:Log("SPELL_AURA_APPLIED", "YoungEgg", 134347) -- XXX This is was not there on 10 H ptr, consider removing it
+	self:Log("SPELL_AURA_APPLIED", "YoungEgg", 134347) -- XXX This was not there on 10 H or 25 H ptr, consider removing it
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:Log("SPELL_AURA_APPLIED", "PrimalNutriment", 140741)
 	self:Log("SPELL_AURA_APPLIED", "Flight", 133755)
@@ -81,7 +79,6 @@ function mod:OnEngage()
 	self:Bar(134380, self:Heroic() and 63 or 48) -- Quills
 	self:Bar(134370, 90) -- Down Draft
 	nestCounter = 0
-	feedingAllowed = nil
 end
 
 --------------------------------------------------------------------------------
@@ -89,13 +86,10 @@ end
 --
 
 function mod:FeedYoung(args)
-	if not feedingAllowed then return end
-	self:Message("nest", "Positive", nil, args.spellId) -- Positive because it is green!
-	feedingAllowed = nil
-end
-
-function mod:CallForFood()
-	feedingAllowed = true
+	-- only warn for people who can get Primal Nutriment
+	if not UnitBuff("player", self:SpellName(140741)) and UnitBuff("player", self:SpellName(134339)) then -- not Primal Nutriment and Daedalian Wings
+		self:Message("nest", "Positive", "Info", args.spellId) -- Positive because it is green!
+	end
 end
 
 do
@@ -112,6 +106,7 @@ end
 
 -- lower, lower, lower, upper, upper, upper, -- 10 N/H
 -- lower, lower, lower, lower, {lower, upper}, upper, upper, {lower, upper}, {lower, upper}, lower, upper, upper, {lower, upper} -- 25 N
+-- lower, lower, lower, {lower, upper}, {lower, uppern}, upper, {lower, upper} -- 25 H
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 	local diff = self:Difficulty()
 	if msg:find(L["upper_hatch_trigger"]) or msg:find(L["lower_hatch_trigger"]) then
@@ -119,27 +114,38 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		local text = (msg:find(L["upper_hatch_trigger"])) and L["upper_nest"] or L["lower_nest"]
 		local icon = (msg:find(L["upper_hatch_trigger"])) and "misc_arrowlup" or "misc_arrowdown"
 		if diff == 3 or diff == 5 then -- 10 man N/H
+			if diff == 5 and nestCounter % 2 == 0 then
+				text = L["big_add"]:format(text) -- since no double nest in 10 man, might as well not do 2 messages
+			end
 			if nestCounter % 6 > 2 then -- first 3 down, second 3 up
 				self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
 			else
 				self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
 			end
-			self:Message("nest", "Attention", "Alert", text, icon)
-		else
-			-- XXX figure out order in LFR
+		elseif diff == 4 then -- 25 N
 			-- XXX this is correct for 25 N (up to 17, need trascriptor logs for better logic)
 			if nestCounter % 17 < 4 or nestCounter % 17 == 12 then
 				self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
-				self:Message("nest", "Attention", "Alert", text, icon)
 			elseif nestCounter % 17 == 4 or nestCounter % 17 == 8 or nestCounter % 17 == 10 or nestCounter % 17 == 15 then -- up and down at same time
 				text, icon = L["lower_upper_nest"], 134347 -- egg icon
 				self:Bar("nest", 30, text, icon)
-				self:Message("nest", "Attention", "Alert", text, icon)
 			elseif nestCounter % 17 == 6 or nestCounter % 12 == 7 or nestCounter % 12 == 13 or nestCounter % 12 == 14 then
 				self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
-				self:Message("nest", "Attention", "Alert", text, icon)
+			end
+		elseif diff == 6 then -- 25 H
+			if nestCounter % 10 < 3 then
+				self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
+			elseif nestCounter % 10 == 3 or nestCounter % 10 == 5 or nestCounter % 10 == 8 then
+				text, icon = L["lower_upper_nest"], 134347 -- egg icon
+				self:Bar("nest", 30, text, icon)
+			elseif nestCounter % 10 == 7 then
+				self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
+			end
+			if nestCounter % 10 == 2 or nestCounter % 10 == 6 then
+				self:Message("nest", "Attention", "Alert", L["big_add"]:format(L["lower_nest"]), 134367)
 			end
 		end
+		self:Message("nest", "Attention", "Alert", text, icon)
 	end
 end
 
