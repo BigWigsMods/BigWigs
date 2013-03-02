@@ -20,7 +20,7 @@ mod.otherMenu = 6
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.ability = "Next ability"
-	L.ability_desc = "Timer bar for next ability."
+	L.ability_desc = "Cooldown timer for the next ability."
 	L.ability_icon = "spell_nature_lightning" -- generic lightning icon
 end
 L = mod:GetLocale()
@@ -31,8 +31,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		136338, {136339, "FLASH"}, {136340, "SAY"}, --"ability",
-		"proximity", "bosskill",
+		136338, {136339, "FLASH"}, {136340, "SAY"}, "ability", "proximity", "bosskill",
 	}
 end
 
@@ -50,7 +49,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	--self:CDBar("ability", 12, L["ability"], L.ability_icon) -- 12-22s, subsequent timers are still a guess
+	self:CDBar("ability", 12, L["ability"], L.ability_icon) -- 12-22s, seems to go out in a random order then stay in that order
 	self:OpenProximity("proximity", 10)
 end
 
@@ -61,14 +60,14 @@ end
 function mod:ArcNova(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	self:Bar(args.spellId, 3, CL["cast"]:format(args.spellName))
-	--self:CDBar("ability", 30, L["ability"], L.ability_icon)
+	self:CDBar("ability", 12, L["ability"], L.ability_icon)
 end
 
 do
 	local targets, scheduled = mod:NewTargetList(), nil
 	local function warnTether(spellId)
 		mod:TargetMessage(spellId, targets, "Attention", "Alert")
-		--mod:CDBar("ability", 30, L["ability"], L.ability_icon)
+		mod:CDBar("ability", 12, L["ability"], L.ability_icon)
 		scheduled = nil
 	end
 	function mod:LightningTether(args)
@@ -91,8 +90,8 @@ end
 do
 	local targets, scheduled = mod:NewTargetList(), nil
 	local function warnStormcloud(spellId)
-		mod:TargetMessage(spellId, targets, "Urgent")
-		--mod:CDBar("ability", 30, L["ability"], L.ability_icon)
+		mod:TargetMessage(spellId, targets, "Urgent", "Info") -- three targets
+		mod:CDBar("ability", 12, L["ability"], L.ability_icon)
 		scheduled = nil
 	end
 	function mod:Stormcloud(args)
@@ -111,8 +110,8 @@ do
 	function mod:StormcloudDamage(args)
 		if self:Me(args.destGUID) and not self:Me(args.sourceGUID) then
 			local t = GetTime()
-			if t-prev > 2 then
-				self:Message(136340, "Personal", "Alarm", CL["under"]:format(args.spellName)) -- more over you, but whatever
+			if t-prev > 3 then
+				self:Message(136340, "Personal", "Alarm", CL["under"]:format(args.spellName))
 			end
 		end
 	end
