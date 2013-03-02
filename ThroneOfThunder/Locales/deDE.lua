@@ -34,13 +34,12 @@ end
 
 L = BigWigs:NewBossLocale("Council of Elders", "deDE")
 if L then
-	L.full_power = "Volle Energie"
-
-	L.assault_message = "Kalte Angriffe"
-
-	L.priestess_add = "Priesterin Add"
 	L.priestess_adds = "Priesterin Adds"
 	L.priestess_adds_desc = "Warnung für alle möglichen Adds von Hohepriesterin Mar'li"
+	L.priestess_adds_message = "Priesterin Add"
+
+	L.full_power = "Volle Energie"
+	L.assault_message = "Kalte Angriffe"
 	L.hp_to_go_power = "Noch %d%% HP - Energie: %d"
 end
 
@@ -49,6 +48,7 @@ if L then
 	L.kick = "Unterbrechen"
 	L.kick_desc = "Anzeigen, wie viele Schildkröten unterbrochen werden können"
 	L.kickable_turtles = "Unterbrechbare Schildkröten: %d"
+
 	L.crystal_shell_removed = "Kristallpanzer entfernt!"
 	L.no_crystal_shell = "KEIN Kristallpanzer"
 end
@@ -57,7 +57,7 @@ L = BigWigs:NewBossLocale("Megaera", "deDE")
 if L then
 	L.breaths = "Atem"
 	L.breaths_desc = "Warnungen zu den verschiedenen Atem."
-	L.rampage_over = "Toben vorbei!"
+
 	L.arcane_adds = "Arkane Adds"
 end
 
@@ -78,10 +78,6 @@ end
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "deDE")
 if L then
 	L.rays_spawn = "Lichtstrahlen erscheinen"
-	L.ray_controller = "Kontrolleure der Lichtstrahlen"
-	L.ray_controller_desc = "Teile die Kontrolleure für die Richtung der roten und blauen Lichtstrahlen mit."
-	L.red_ray_controller = "Du kontrollierst den |c000000FFblauen|r Lichtstrahl"
-	L.blue_ray_controller = "Du kontrollierst den |c00FF0000roten|r Lichtstrahl"
 	L.red_spawn_trigger = "Das Infrarotlicht offenbart einen purpurroten Nebel!"
 	L.blue_spawn_trigger = "Der blaue Strahl offenbart einen azurblauen Nebel!"
 	L.red_add = "|c00FF0000Rotes|r Add"
@@ -123,6 +119,7 @@ if L then
 	L.conduit_abilities = "Leitungs-Fähigkeiten"
 	L.conduit_abilities_desc = "Ungefähre Cooldown-Leisten für die spezifischen Fähigkeiten der Leitungen"
 	L.conduit_ability_meassage = "Nächste Leitungs-Fähigkeit"
+
 	L.intermission = "Unterbrechung"
 	L.overchargerd_message = "Betäubender AoE Puls"
 	L.static_shock_message = "Aufteilender AoE Schaden"
