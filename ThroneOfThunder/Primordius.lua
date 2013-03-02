@@ -2,6 +2,7 @@
 TODO:
 	I have put metabolic boost stack count in every message, so it is easier to figure out what is affected by it and what is not from a transcriptor log
 		this should be removed once we figure things out
+	VolatilePathogen no longer seems to spawn adds (25 H PTR) need to confirm this on live
 ]]--
 if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
@@ -36,7 +37,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		136037, 136216, {136218, "PROXIMITY"}, {136228, "ICON"}, 136245, {136246, "PROXIMITY"}, -7830, {-6960, "FLASH"},
+		136037, 136216, {136218, "PROXIMITY"}, {136228, "ICON"}, 136245, {136246, "PROXIMITY"}, -7830, {-6960, "FLASH"}, -6969,
 		"berserk", "bosskill",
 	}, {
 		[136037] = "general",
@@ -66,10 +67,20 @@ function mod:OnBossEnable()
 	self:Death("Win", 69017)
 end
 
+local function warnHorror()
+	mod:Message(-6969, "Attention")
+	mod:Bar(-6969, 30)
+	mod:ScheduleTimer(warnHorror, 30)
+end
+
 function mod:OnEngage()
 	self:Berserk(600) -- XXX Assumed
 	self:Bar(136037, 18) -- Primordial Strike
 	MB = "<MB:0>"
+	if self:Heroic() then
+		self:Bar(-6969, 12)
+		self:ScheduleTimer(warnHorror, 12)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -128,7 +139,7 @@ function mod:EruptingPustulesApplied(args)
 end
 
 function mod:MetabolicBoost(args)
-	local MBStacks = select(4, UnitBuff("boss1", self:SpellName(136245))) or 0
+	local MBStacks = select(4, UnitBuff("boss1", self:SpellName(136245))) or (UnitBuff("boss1", self:SpellName(136245)) and 1 or 0)
 	MB = ("<MB:%d>"):format(MBStacks)
 	self:Message(args.spellId, "Attention", nil, CL["count"]:format(args.spellName, MBStacks))
 end
