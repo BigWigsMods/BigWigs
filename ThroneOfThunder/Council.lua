@@ -1,8 +1,9 @@
 --[[
 TODO:
-	look out for lingering presence CLEU in case it gets added by blizzard ( not yet in 10 N ptr )
+	look out for lingering presence CLEU in case it gets added by blizzard ( not yet in 25 H ptr )
 	watch out in case Chilled to the Bone gets CLEU
 	full power bar needs heavy testing
+	consider marking Twisted Fate targets
 ]]--
 
 if select(4, GetBuildInfo()) < 50200 then return end
@@ -27,6 +28,7 @@ local lingeringTracker = {
 	[69078] = 0,
 }
 local frostBiteStart, bitingColdStart = nil, nil
+local sandGuyDead = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -55,7 +57,7 @@ function mod:GetOptions()
 		{-7062, "FLASH"}, 136878, {136857, "FLASH"}, 136894, -- Sul the Sandcrawler
 		{137122, "FLASH"}, -- Kazra'jin
 		{-7054, "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, 136990, {137085, "FLASH"}, --Frost King Malakk
-		136442, "proximity", "berserk", "bosskill",
+		136442, {137650, "FLASH"}, "proximity", "berserk", "bosskill",
 	}, {
 		["priestess_adds"] = -7050,
 		[-7062] = -7049,
@@ -77,7 +79,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Entrapped", 136857)
 	self:Log("SPELL_CAST_START", "Sandstorm", 136894)
 	-- Kazra'jin
-	self:Log("SPELL_CAST_SUCCESS", "RecklessCharge", 137122)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "RecklessCharge", "boss1", "boss2", "boss3", "boss4", "boss5")
 	self:Log("SPELL_DAMAGE", "RecklessChargeDamage", 137133)
 	--Frost King Malakk
 	self:Log("SPELL_AURA_APPLIED", "FrostbiteApplied", 136990, 136922)
@@ -88,6 +90,7 @@ function mod:OnBossEnable()
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "PossessedApplied", 136442)
 	self:Log("SPELL_AURA_REMOVED", "PossessedRemoved", 136442)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowedSoul", 137650)
 
 	self:Death("Deaths", 69132, 69131, 69134, 69078)
 end
@@ -96,12 +99,13 @@ function mod:OnEngage()
 	self:Berserk(self:LFR() and 720 or 600) -- XXX assumed. 12 min or higher on LFR, prob 15
 	bossDead = 0
 	for k in next, lingeringTracker do lingeringTracker[k] = 0 end
-	self:OpenProximity("proximity", self:Heroic() and 7 or 5)
+	self:OpenProximity("proximity", 7) -- for Quicksand
 	self:CDBar("priestess_adds", 27, L["priestess_adds_message"], L.priestess_adds_icon)
 	self:CDBar(-7062, 7) -- Quicksand
 	self:Bar(136990, 9.7) -- Frostbite -- might be 7.5?
 	hasChilledToTheBone = nil
 	frostBiteStart, bitingColdStart = nil, nil
+	sandGuyDead = false
 end
 
 --------------------------------------------------------------------------------
@@ -118,14 +122,14 @@ function mod:MarkedSoul(args)
 end
 
 function mod:PriestessAdds(args)
-	self:Message("priestess_adds", "Important", "Alarm", L.priestess_adds_icon)
+	self:Message("priestess_adds", "Important", "Alarm", args.spellId)
 	self:CDBar("priestess_adds", 33, L["priestess_adds_message"], L.priestess_adds_icon)
 	-- we use a localized string so we don't have to bother with stopping and restarting bars on posess, since priestess adds share cooldown
 end
 
 -- Sul the Sandcrawler
 function mod:Sandstorm(args)
-	-- Ability is used about 1 sec after the boss gets possessed, so no point to make a bar
+	self:Bar(args.spellId, 38)
 	self:Message(args.spellId, "Urgent", "Alert")
 end
 
@@ -153,9 +157,14 @@ function mod:Quicksand(args)
 end
 
 -- Kazra'jin
-function mod:RecklessCharge(args)
-	-- XXX Not sure how useful this is, might want to remove it later
-	self:Bar(args.spellId, 6)
+function mod:RecklessCharge(unit, _, _, _, spellId)
+	if spellId == 137107 then
+		-- XXX Not sure how useful this is, might want to remove it later
+		self:Bar(137122, UnitBuff(unit, self:SpellName(136442)) and 21 or 6) -- CD is longer when posessed
+		if UnitExists(unit.."target") then
+			self:TargetMessage(137122, "Urgent", "Alarm") -- XXX not tested, iirc this didn't work on 10 N PTR, who knows maybe it works now, needs testing
+		end
+	end
 end
 
 do
@@ -186,14 +195,16 @@ function mod:BitingColdApplied(args)
 	self:SecondaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
-		self:OpenProximity(args.spellId, 4)
+		if sandGuyDead then
+			self:OpenProximity(args.spellId, 4)
+		end
 	end
 	bitingColdStart = GetTime()
 end
 
 function mod:BitingColdRemoved(args)
 	self:SecondaryIcon(args.spellId)
-	if self:Me(args.destGUID) then
+	if self:Me(args.destGUID) and sandGuyDead then
 		self:CloseProximity(args.spellId)
 	end
 end
@@ -209,6 +220,12 @@ function mod:ChilledToTheBone()
 end
 
 -- General
+
+function mod:ShadowedSoul(args)
+	if self:Me(args.destName) and UnitDebuff("player", self:SpellName(137641)) and args.amount > 9 then -- Soul Fragment on, aka gaining more stacks, 10 stacks = 20% extra damage taken
+		self:Message(args.spellId, "Personal", "Info", CL["count"]:format(args.spellName, args.amount))
+	end
+end
 
 function mod:Assault(args)
 	args.amount = args.amount or 1
@@ -239,6 +256,10 @@ do
 		elseif power > 89 and prevPower == 80 then
 			prevPower = 90
 			self:Message(136442, "Important", nil, L["hp_to_go_power"]:format(percHPToGo, power))
+		elseif power > 99 and prevPower == 90 then
+			prevPower = 100
+			self:Message(136442, "Important", nil, L["hp_to_go_power"]:format(percHPToGo, power).." "..L["full_power"]) -- could probably make thise be a less awkward message with some more localization
+			-- then might as well consider doing some scheduled warning till hp to go is less than 2%
 		end
 	end
 	local fullPower = 66 -- 66 seconds till full power without any lingering presences stacks
@@ -305,6 +326,7 @@ function mod:Deaths(args)
 		self:StopBar(136990)
 	elseif args.mobId == 69134 then -- Kazra'jin
 	elseif args.mobId == 69078 then -- Sandcrawler
+		sandGuyDead = true
 		self:StopBar(136860) -- Quicksand
 		self:CloseProximity()
 	end

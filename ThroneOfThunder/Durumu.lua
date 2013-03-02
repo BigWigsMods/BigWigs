@@ -76,7 +76,7 @@ function mod:OnEngage()
 	self:Bar(-6882, 135, L["death_beam"])
 	redAddLeft = 3
 	lifedranJumps = 0
-	if self:Heroic() then self:Bar(-6889, 127)
+	if self:Heroic() then self:Bar(-6889, 127) end
 	self:Bar(-6891, 41) -- Light Spectrum
 end
 
