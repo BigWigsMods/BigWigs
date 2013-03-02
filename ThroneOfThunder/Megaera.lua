@@ -161,8 +161,7 @@ function mod:NetherTear(args)
 end
 
 function mod:Diffusion()
-	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 0.7) end
-
+	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 1) end
 end
 
 --------------------------------------------------------------------------------
@@ -170,7 +169,7 @@ end
 --
 
 function mod:RotArmor()
-	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 0.7) end
+	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 1) end
 end
 
 --------------------------------------------------------------------------------
@@ -178,7 +177,7 @@ end
 --
 
 function mod:ArcticFreeze()
-	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 0.7) end
+	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 1) end
 end
 
 do
@@ -208,7 +207,7 @@ end
 --
 
 function mod:IgniteFlesh()
-	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 0.7) end
+	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 1) end
 end
 
 do
