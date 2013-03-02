@@ -11,8 +11,8 @@ end
 
 local L = BigWigs:NewBossLocale("Nalak", "ruRU")
 if L then
-	L.ability = "Next ability"
-	L.ability_desc = "Cooldown timer for the next ability."
+	L.ability = "Следующая способность"
+	L.ability_desc = "Таймер восстановления следующей способности."
 end
 
 local L = BigWigs:NewBossLocale("Oondasta", "ruRU")
