@@ -1,9 +1,6 @@
 --[[
 TODO:
 	figure out/verify real lingering gaze range
-	there are no CLEU events for blue and red ray controllers as of 10 N PTR, so keep an eye out for these
-		as of 25 N ptr you can't even control who gets the controller
-	verify that red ray controller gets 3 debuffs too with same names
 	figure out where to start ForceOfWill in the DisintegrationBeam phase
 		as of 25 N ptr there is no force of will during DisintegrationBeam phase
 ]]--
@@ -19,8 +16,6 @@ mod:RegisterEnableMob(68036)
 --------------------------------------------------------------------------------
 -- Locals
 --
-local blueRayController, redRayController = nil, nil
-local pName = UnitName("player")
 local redAddLeft = 3
 local lifedranJumps = 0
 
@@ -31,11 +26,6 @@ local lifedranJumps = 0
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.rays_spawn = "Rays spawn"
-	L.ray_controller = "Ray controller"
-	L.ray_controller_desc = "Announce the ray direction controllers for the red and blue rays."
-	L.ray_controller_icon = 22581 -- hopefully some fitting icon
-	L.red_ray_controller = "You are the |c000000FFBlue|r ray controller"
-	L.blue_ray_controller = "You are the |c00FF0000Red|r ray controller"
 	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
 	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
 	L.red_add = "|c00FF0000Red|r add"
@@ -53,7 +43,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{133767, "TANK"}, {133765, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {136932, "FLASH", "SAY"}, {-6891, "FLASH"}, -6898, -6892,
-		{133798, "ICON"}, -6882, 140502,
+		{133798, "ICON"}, -6882, 140502, -6889,
 		"berserk", "bosskill",
 	}, {
 		[133767] = "general",
@@ -63,13 +53,12 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
+	self:Log("SPELL_CAST_START", "IceWall", 134587)
 	self:Log("SPELL_PERIODIC_DAMAGE", "EyeSore", 140502)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "DisintegrationBeam", "boss1")
 	self:Log("SPELL_AURA_REMOVED", "LifeDrainRemoved", 133798)
 	self:Log("SPELL_AURA_APPLIED", "LifeDrainApplied", 133798)
 	self:Log("SPELL_AURA_APPLIED", "RedRayController", 133732) -- this is the stacking debuff, because there is no similar CLEU like the for blue
-	self:Log("SPELL_AURA_APPLIED_DOSE", "RedRayController", 133732)
-	self:Log("SPELL_AURA_APPLIED", "BlueRayController", 133675) -- this is the one that keept racks of you being in ray
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:Log("SPELL_DAMAGE", "LingeringGazeDamage", 134044)
 	self:Log("SPELL_AURA_REMOVED", "LingeringGazeRemoved", 134626)
@@ -84,15 +73,21 @@ function mod:OnEngage()
 	self:Berserk(600) -- Confirmed 25N
 	self:CDBar(134626, 15) -- Lingering Gaze
 	self:Bar(136932, 33) -- Force of Will
-	self:Bar(-6892, 135, L["death_beam"])
-	blueRayController, redRayController = nil, nil
+	self:Bar(-6882, 135, L["death_beam"])
 	redAddLeft = 3
 	lifedranJumps = 0
+	if self:Heroic() then self:Bar(-6889, 127)
+	self:Bar(-6891, 41) -- Light Spectrum
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:IceWall(args)
+	self:Message(-6889, "Urgent")
+	self:Bar(-6889, 95)
+end
 
 do
 	local prev = 0
@@ -111,11 +106,10 @@ function mod:DisintegrationBeam(_, _, _, _, spellId)
 	if spellId == 136316 or spellId == 133775 then
 		self:CDBar(134626, 76) -- Lingering Gaze
 		self:CDBar(136932, 78) -- Force of Will
-		redAddLeft = 0
-		self:Bar(-6892, 60, CL["cast"]:format(L["death_beam"])) -- Exactly 60 sec, a good place to start other timers
-		self:Bar(-6892, 191, L["death_beam"])
+		self:Bar(-6882, 60, CL["cast"]:format(L["death_beam"])) -- Exactly 60 sec, a good place to start other timers
+		self:Bar(-6882, 191, L["death_beam"])
 		local text = (spellId == 136316) and " - |c00008000%s|r" or " - |c00FF0000%s|r"
-		self:Message(-6892, "Attention", nil, L["death_beam"]..(text):format((spellId == 136316) and L["clockwise"] or L["counter_clockwise"]))
+		self:Message(-6882, "Attention", nil, L["death_beam"]..(text):format((spellId == 136316) and L["clockwise"] or L["counter_clockwise"]), (spellId == 136316) and "spell_chargepositive" or "spell_chargenegative")
 	end
 end
 
@@ -129,53 +123,24 @@ function mod:LifeDrainApplied(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", ("%s - %d%%"):format(args.spellName, lifedranJumps*60)) -- maybe this should just be the amount of jumps
 end
 
--- XXX you could no longer control the cones in 25 N PTR consider removing these function if they are uncontrollable later on too
-function mod:RedRayController(args)
-	-- since CLEUs are messed up, we count the amount of debuffs with same name to determine the ray controller
-	-- 3 debuffs with same name means you are the controller
-	local amount = 0
-	for i=1, 100 do
-		if UnitDebuff("player", i) == self:SpellName(133732) then -- XXX verify that the method used for blue works for red too
-			amount = amount + 1
-		end
-	end
-	if amount == 3 and redRayController ~= pName then -- try not warn if we know already that we are the controller
-		redRayController = pName
-		self:Message("ray_controller", "Attention", "Long", L["red_ray_controller"], args.spellId) -- can't be "Personal" cuz that'd make it too blue
-	elseif amount ~= 3 then
-		redRayController = nil -- we are not the ray controller
-	end
-end
-
-function mod:BlueRayController(args)
-	-- since CLEUs are messed up, we count the amount of debuffs with same name to determine the ray controller
-	-- 3 debuffs with same name means you are the controller
-	local amount = 0
-	for i=1, 100 do
-		if UnitDebuff("player", i) == self:SpellName(133675) then
-			amount = amount + 1
-		end
-	end
-	if amount == 3 and blueRayController ~= pName then -- try not warn if we know already that we are the controller
-		blueRayController = pName
-		self:Message("ray_controller", "Attention", "Long", L["blue_ray_controller"], args.spellId) -- can't be "Personal" cuz that'd make it too blue
-	elseif amount ~= 3 then
-		blueRayController = nil -- we are not the ray controller
-	end
-end
-
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
 	if msg:find("134124") then -- Yellow
+		redAddLeft = 0
+		if self:Heroic() then self:Bar(-6891, 80, 137747) end -- Obliterate
 		self:StopBar(136932) -- Force of Will -- XXX double check if this is not too early to stop the bar
-		self:Bar(-6891, 10, L["rays_spawn"], "inv_misc_gem_variety_02") -- only spawn this bar in one of the if statements
+		self:Bar(-6891, 10, L["rays_spawn"], "inv_misc_gem_variety_02") -- only spawn this bar in one of the if statements -- this should overwrites the general CD bar
+		self:ScheduleTimer("Bar", 10, -6891, 180) -- Light Spectrum
+		SetRaidTarget(target, 1)
 		if UnitIsUnit("player", target) then
 			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c00FFFF00"..sender.."|r"), 134124)
 		end
 	elseif msg:find("134123") then -- Red
+		SetRaidTarget(target, 7)
 		if UnitIsUnit("player", target) then
 			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c00FF0000"..sender.."|r"), 134123)
 		end
-	elseif msg:find("134122") then -- Red
+	elseif msg:find("134122") then -- Blue
+		SetRaidTarget(target, 6)
 		if UnitIsUnit("player", target) then
 			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c000000FF"..sender.."|r"), 134122)
 		end
@@ -188,9 +153,9 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
 		self:Message(-6892, "Urgent", nil, L["red_add"], 136154)
 	elseif msg:find(L["blue_spawn_trigger"]) then
 		self:Message(-6898, "Urgent", nil, L["blue_add"], 136177)
-	elseif msg:find("136932") then -- Force of Will -- XXX no other event on 25 N
+	elseif msg:find("136932") then -- Force of Will -- XXX no other event on 25 H PTR
 		local onPlayer = UnitIsUnit("player", target)
-		self:Message(136932, "Attention", onPlayer and "Long", onPlayer and CL["you"]:format(args.spellName))
+		self:Message(136932, "Attention", onPlayer and "Long", onPlayer and CL["you"]:format(self:SpellName(136932)))
 		self:CDBar(136932, 20)
 		if onPlayer then
 			self:Flash(136932)
@@ -204,7 +169,7 @@ do
 	function mod:LingeringGazeDamage(args)
 		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
-		if t-prev > 1 then -- use 1 sec instead of the usual 2, getting out this fast matters
+		if t-prev > 1 then -- use 1 sec instead of the usual 2, getting out this fast matters ( used to because of fast ticking damage, not it just slows? 25 N/H PTR )
 			prev = t
 			self:Message(134626, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(134626)
@@ -241,6 +206,7 @@ function mod:Deaths(args)
 	elseif args.mobId == 69050 then -- Red add
 		redAddLeft = redAddLeft - 1
 		if redAddLeft == 0 then
+			self:StopBar(137747)
 			self:CDBar(136932, 20) -- Force of Will
 		else
 			self:Message(-6892, "Urgent", nil, CL["count"]:format(L["red_add"], redAddLeft))
