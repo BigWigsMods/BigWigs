@@ -99,6 +99,9 @@ local function closeLightningStormProximity()
 		if UnitDebuff(name, mod:SpellName(136193)) then return end -- If someone in raid still can spread the debuff, then don't close the proximity
 	end
 	mod:CloseProximity(136192)
+	if (mod:MobId(UnitGUID("boss2")) == 68079) or (mod:Heroic() and (mod:MobId(UnitGUID("boss4")) == 68081)) then -- heroic p1 or heroic p3
+		mod:OpenProximity(-6870, 10)
+	end
 	mod:Message(136192, "Positive", nil, L["arcing_lightning_cleared"])
 end
 
@@ -173,10 +176,10 @@ end
 
 function mod:Scorched(args)
 	args.amount = args.amount or 1
-	if args.amount > 4 and self:Me(args.destGUID) then
+	if self:Me(args.destGUID) then
 		self:Message(-6871, "Important", nil, CL["count"]:format(args.spellName, args.amount))
 	end
-	if self:Heroic() and self:mobId(UnitGUID("boss4")) == 68081 then -- Dam'ren is active and heroic
+	if self:Heroic() and self:MobId(UnitGUID("boss4")) == 68081 then -- Dam'ren is active and heroic
 		self:Bar(-6870, 16) -- Unleashed Flame
 	else
 		self:CDBar(-6870, 6) -- XXX Unleashed Flame - don't think there is any point to this, maybe coordinating personal cooldowns?
@@ -234,7 +237,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:StopBar(134628) -- Unleashed Flame
 			self:Bar(-6877, 50) -- Windstorm
 			self:Bar(136192, 17) -- Arcing Lightning -- XXX not sure if it has to be restarted here for heroic
-			self:OpenProximity(136192, 10) -- Lightning Storm -- assume 10 (greater than 8 for sure)
+			self:OpenProximity(136192, 12) -- Lightning Storm -- assume 10 (use 12 to be safe)
 			self:StopBar(77333) -- Whirling Wind
 		elseif unit == "boss3" then
 			self:StopBar(-6877) -- Windstorm
@@ -247,7 +250,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		elseif unit == "boss4" then
 			self:StopBar(134628) -- Unleashed Flame
 			self:StopBar(-6914) -- Dead zone
-			self:OpenProximity(136192, 10) -- Lightning Storm -- assume 10 (greater than 8 for sure)
+			self:OpenProximity(136192, 12) -- Lightning Storm -- assume 10 (use 12 to be safe)
 			self:Bar(-6917, 30) -- Fist Smash
 		end
 	elseif spellId == 136146 then -- Fist Smash
@@ -261,13 +264,13 @@ do
 	local timer, fired = nil, 0
 	local function warnSpear(spellId)
 		fired = fired + 1
-		local player = UnitName("boss2target")
-		if player and (not UnitDetailedThreatSituation("boss2target", "boss2") or fired > 13) then
+		local player = UnitName("boss1target") -- this is boss1target intentionally, this one is the one that targets the spear target
+		if player and (not UnitDetailedThreatSituation("boss2target", "boss2") or fired > 13) then -- this is intentionally boss2 because these are the real tanks
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
 			mod:TargetMessage(spellId, player, "Urgent", "Alarm")
 			mod:CancelTimer(timer)
 			timer = nil
-			if UnitIsUnit("boss2target", "player") then
+			if UnitIsUnit("boss1target", "player") then -- this is boss1target intentionally, this one is the one that targets the spear target
 				mod:Flash(spellId)
 				mod:Say(spellId)
 			end
@@ -297,7 +300,7 @@ function mod:Deaths(args)
 		self:StopBar(134628) -- Unleashed Flame
 		self:Bar(-6877, 50) -- Windstorm
 		self:Bar(136192, 17) -- Arcing Lightning
-		self:OpenProximity(136192, 10) -- Lightning Storm -- assume 10 (greater than 8 for sure)
+		self:OpenProximity(136192, 12) -- Lightning Storm -- assume 10 (use 12 to be safe)
 	elseif args.mobId == 68080 then -- Quet'zal
 		if not self:Heroic() then
 			self:StopBar(-6877) -- Windstorm
