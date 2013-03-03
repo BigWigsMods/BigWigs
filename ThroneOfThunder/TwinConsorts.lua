@@ -243,7 +243,7 @@ function mod:LastPhase()
 	self:Message("stages", "Positive", "Long", CL["phase"]:format(3), 137401)
 	self:StopBar(-7649) -- Ice Comet
 	self:StopBar(137408) -- Fan of Flames
-	self:Bar(137531, 34) -- Tidal Force
+	self:Bar(137531, self:Heroic() and 19 or 34) -- Tidal Force
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
