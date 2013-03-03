@@ -1,6 +1,6 @@
 --[[
 TODO:
-
+	think about some more if we could use multi target proximity on heroic too
 ]]--
 
 if select(4, GetBuildInfo()) < 50200 then return end
@@ -16,6 +16,7 @@ mod:RegisterEnableMob(68078, 68079, 68080, 68081) -- Iron Qon, Ro'shak, Quet'zal
 -- Locals
 --
 local UnitDebuff = UnitDebuff
+local arcingLightning = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -59,6 +60,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DeadZone", 137226, 137227, 137228, 137229, 137230, 137231) -- figure out why it has so many spellIds
 	-- Quet'zal
 	self:Log("SPELL_AURA_REMOVED", "ArcingLightningRemoved", 136193)
+	self:Log("SPELL_AURA_APPLIED", "ArcingLightningApplied", 136193)
 	self:Log("SPELL_AURA_APPLIED", "LightningStormApplied", 136192)
 	self:Log("SPELL_AURA_REMOVED", "LightningStormRemoved", 136192)
 	self:Log("SPELL_DAMAGE", "StormCloud", 137669)
@@ -83,6 +85,7 @@ function mod:OnEngage()
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PowerWarn", "boss2")
 	self:OpenProximity(-6870, 10)
 	self:CDBar(134926, 33) -- Throw spear
+	wipe(arcingLightning)
 	if self:Heroic() then
 		self:Bar(77333, 17) -- Whirling Winds
 		self:Bar(136192, 20) -- Arcing Lightning
@@ -128,12 +131,23 @@ end
 -- Quet'zal
 
 function mod:ArcingLightningRemoved(args)
+	if not self:Heroic() then
+		for k, v in next, arcingLightning do if v == args.destName then table.remove(arcingLightning, k) end end
+		self:OpenProximity(136192, 12, arcingLightning)
+	end
 	closeLightningStormProximity()
+end
+
+function mod:ArcingLightningApplied(args)
+	if self:Heroic() then return end -- XXX don't forget to remove this if we decided to use multi target proximity on heroic too
+	arcingLightning[#arcingLightning+1] = args.destName
+	self:OpenProximity(136192, 12, arcingLightning)
 end
 
 function mod:LightningStormApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent") -- no point for sound since the guy stunned can't do anything
+	-- XXX we could potentially be intelligent when using a message here and only warn for the closet person to free the stormed guy, but we need :IsInRange for that
 	self:Bar(args.spellId, self:MobId(UnitGUID("boss2")) == 68079 and 40 or 20) -- Ro'shak is there aka Heroic p1 then 40 else 20
 end
 

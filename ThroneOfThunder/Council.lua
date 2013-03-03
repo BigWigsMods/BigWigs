@@ -198,13 +198,17 @@ function mod:BitingColdApplied(args)
 		if sandGuyDead then
 			self:OpenProximity(args.spellId, 4)
 		end
+	else
+		if sandGuyDead then
+			self:OpenProximity(args.spellId, 4, args.destName)
+		end
 	end
 	bitingColdStart = GetTime()
 end
 
 function mod:BitingColdRemoved(args)
 	self:SecondaryIcon(args.spellId)
-	if self:Me(args.destGUID) and sandGuyDead then
+	if sandGuyDead then
 		self:CloseProximity(args.spellId)
 	end
 end

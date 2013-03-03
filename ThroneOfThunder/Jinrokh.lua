@@ -16,6 +16,7 @@ mod:RegisterEnableMob(69465)
 --------------------------------------------------------------------------------
 -- Locals
 --
+local ionized = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -70,8 +71,9 @@ function mod:OnEngage()
 	self:Bar(137175, 30) -- Thundering Throw
 	self:CDBar(137162, 7) -- Static Burst -- again, is there even a point for such a short bar?
 	if self:Heroic() then -- Ionization
+		wipe(ionized)
 		self:Berserk(360) -- Real berserk confirmed 25 H PTR
-		self:Bar(138732, 60)
+		self:Bar(138732, 60) -- Ionization
 	end
 end
 
@@ -80,15 +82,22 @@ end
 --
 
 function mod:IonizationRemoved(args)
+	for k, v in next, ionized do if v == args.destName then table.remove(ionized, k) end end
+	if #ionized == 0 then
+		self:CloseProximity(args.spellId)
+		if UnitDebuff("player", self:SpellName(137422)) then -- Focused Lightning
+			self:OpenProximity(-7741, 8) -- reopen it if we have lightning chasing us too
+		end
+	else
+		self:OpenProximity(args.spellId, 8, ionized)
+	end
 	if not self:Me(args.destGUID) then return end
 	self:StopBar(CL["you"]:format(args.spellName))
-	self:CloseProximity(args.spellId)
-	if UnitDebuff("player", self:SpellName(137422)) then -- Focused Lightning
-		self:OpenProximity(-7741, 8) -- reopen it if we have lightning chasing us too
-	end
 end
 
 function mod:PersonalIonization(args)
+	ionized[#ionized+1] = args.destName
+	self:OpenProximity(args.spellId, 8, ionized)
 	if self:Me(args.destGUID) then
 		self:Bar(args.spellId, 24, CL["you"]:format(args.spellName))
 	end
@@ -97,7 +106,6 @@ end
 function mod:Ionization(args)
 	self:CDBar(-7741, 13) -- Focused Lightning
 	self:Message(args.spellId, "Important", "Long")
-	self:OpenProximity(args.spellId, 8)
 	self:Bar(args.spellId, 92)
 end
 
@@ -148,6 +156,9 @@ function mod:FocusedLightningRemoved()
 	self:PrimaryIcon(-7741)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(-7741)
+		if UnitDebuff("player", self:SpellName(138732)) then -- Ionization
+			self:OpenProximity(138732, 8, ionized)
+		end
 	end
 end
 
