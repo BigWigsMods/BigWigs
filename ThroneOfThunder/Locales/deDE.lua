@@ -30,6 +30,7 @@ if L then
 	L.door_opened = "Tor geöffnet!"
 	L.door_bar = "Nächstes Tor (%d)"
 	L.balcony_adds = "Adds von oben"
+	L.door_trigger = "stürmen"
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "deDE")
@@ -112,6 +113,7 @@ end
 L = BigWigs:NewBossLocale("Twin Consorts", "deDE")
 if L then
 	L.barrage_fired = "Beschuss abgefeuert!"
+	L.last_phase_yell_trigger = "Aber nur dieses eine Mal..."
 end
 
 L = BigWigs:NewBossLocale("Lei Shen", "deDE")
