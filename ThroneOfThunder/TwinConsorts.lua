@@ -18,6 +18,7 @@ mod:RegisterEnableMob(68905, 68904) -- Lu'lin, Suen
 --
 
 local deadBosses = 0
+local inferno = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -96,6 +97,7 @@ function mod:OnEngage()
 	if self:Tank() or self:Healer() then
 		self:CDBar(-7634, 50) -- Beast of Nightmares
 	end
+	inferno = false
 end
 
 --------------------------------------------------------------------------------
@@ -153,13 +155,19 @@ end
 
 -- Phase 2
 
-
-function mod:NuclearInferno(args)
-	self:Message(args.spellId, "Important", "Alert")
-	self:Flash(args.spellId)
-	self:Bar(args.spellId, 55)
-	self:Bar(args.spellId, 12, CL["cast"]:format(args.spellName))
-	self:ScheduleTimer("Message", 12, args.spellId, "Positive", nil, CL["over"]:format(args.spellName))
+do
+	local function infernoOver(spellId)
+		inferno = false
+		mod:Message(spellId, "Positive", nil, CL["over"]:format(mod:SpellName(spellId)))
+	end
+	function mod:NuclearInferno(args)
+		inferno = true
+		self:Message(args.spellId, "Important", "Alert")
+		self:Flash(args.spellId)
+		self:Bar(args.spellId, 55)
+		self:Bar(args.spellId, 12, CL["cast"]:format(args.spellName))
+		self:ScheduleTimer(infernoOver, 12, args.spellId)
+	end
 end
 
 do
@@ -205,9 +213,8 @@ end
 -- Phase 2
 
 function mod:IcyShadows(args)
-	if UnitDebuff("player", self:SpellName(137440)) and UnitCastingInfo("boss1") ~= self:SpellName(137491) then -- Nuclear Inferno
+	if UnitDebuff("player", self:SpellName(137440)) and not inferno then -- Nuclear Inferno
 		self:Message(137440, "Personal", "Info", CL["underyou"]:format(self:SpellName(137440)))
-		self:ScheduleTimer("IcyShadows", 2)
 	end
 end
 
