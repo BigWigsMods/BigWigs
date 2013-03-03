@@ -19,6 +19,7 @@ mod:RegisterEnableMob(68036)
 local redAddLeft = 3
 local lifedranJumps = 0
 local lingeringGaze = {}
+local openedForMe = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -80,6 +81,7 @@ function mod:OnEngage()
 	if self:Heroic() then self:Bar(-6889, 127) end
 	self:Bar(-6891, 41) -- Light Spectrum
 	wipe(lingeringGaze)
+	openedForMe = false
 end
 
 --------------------------------------------------------------------------------
@@ -180,6 +182,7 @@ do
 end
 
 function mod:LingeringGazeRemoved(args)
+	openedForMe = false
 	-- gotta do all this so in case you can bubble or cloak/etc the debuff then we don't close the display for everyone
 	for k, v in next, lingeringGaze do if v == args.destName then table.remove(lingeringGaze, k) end end
 	if #lingeringGaze == 0 then
@@ -196,8 +199,11 @@ function mod:LingeringGazeApplied(args)
 		self:Flash(args.spellId)
 		self:Message(args.spellId, "Urgent", "Alarm", CL["you"]:format(args.spellName))
 		self:OpenProximity(args.spellId, 8) -- XXX EJ says 15 but looks lot less - VERIFY!
+		openedForMe = true
 	else
-		self:OpenProximity(args.spellId, 8, lingeringGaze)
+		if not openedForMe then
+			self:OpenProximity(args.spellId, 8, lingeringGaze)
+		end
 	end
 end
 
