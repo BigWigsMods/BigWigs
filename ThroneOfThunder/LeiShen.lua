@@ -1,9 +1,7 @@
 --[[
 TODO:
-	keep looking for events during intermission in case blizzaard fixes them
 	make sure proximity meters are currently shown
 	figure out if it is possible to keep track of how many bounces are left ( currently not according to 10 N ptr logs )
-	figure out the most accurate way of displaying conduit cooldowns
 ]]--
 
 if select(4, GetBuildInfo()) < 50200 then return end
@@ -25,10 +23,11 @@ local proximityOpen = nil
 local function isConduitAlive(mobId)
 	for i=1, 5 do
 		local boss = ("boss%d"):format(i)
-		if mobId == mod:MobId(boss) then
+		if mobId == mod:MobId(UnitGUID(boss)) then
 			return boss
 		end
 	end
+	return false
 end
 
 --------------------------------------------------------------------------------
@@ -182,18 +181,30 @@ function mod:Intermission(args)
 	self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1") -- just to be efficient
 	self:Message("stages", "Positive", "Info", L["intermission"], args.spellId)
 	self:Bar("stages", 45, L["intermission"], args.spellId)
-	if isConduitAlive(68696) then
-		self:ScheduleTimer(warnSmallAdds, 1) -- so we don't instantly overwrite previous message
-		self:ScheduleTimer(warnSmallAdds, 35)
+	local diff = self:Difficulty()
+	if diff == 3 or diff == 5 or diff == 7 then -- 10 mans and assume LFR too
+		if isConduitAlive(68398) then self:CDBar(135695, 6) end -- Static Shock
+		if isConduitAlive(68697) then self:CDBar(136295, 15) end -- Overcharged
+		if isConduitAlive(68698) then self:CDBar(-7242, 30, 136395, "SPELL_SHAMAN_MEASUREDINSIGHT") end -- Bouncing Bolt
+		if isConduitAlive(68696) then
+			self:ScheduleTimer(warnSmallAdds, 1) -- so we don't instantly overwrite previous message
+			self:ScheduleTimer(warnSmallAdds, 35)
+		end
+	else -- 25 man
+		if isConduitAlive(68398) then self:CDBar(135695, 15) end -- Static Shock
+		if isConduitAlive(68697) then self:CDBar(136295, 7) end -- Overcharged
+		if isConduitAlive(68698) then self:CDBar(-7242, 10, 136395, "SPELL_SHAMAN_MEASUREDINSIGHT") end -- Bouncing Bolt
+		if isConduitAlive(68696) then
+			self:CDBar(-7239, 8, L["diffusion_chain_message"])
+			self:ScheduleTimer(warnSmallAdds, 6) -- so we don't instantly overwrite previous message
+			self:ScheduleTimer(warnSmallAdds, 31)
+		end
 	end
-	if isConduitAlive(68398) then self:CDBar(135695, 6) end -- Static Shock
-	if isConduitAlive(68697) then self:CDBar(136295, 15) end -- Overcharged
-	if isConduitAlive(68698) then self:CDBar(-7242, 30) end -- Bouncing Bolt
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-	if phase == 1 and hp < 73 then
+	if phase == 1 and hp < 68 then
 		self:Message("stages", "Positive", "Info", CL["soon"]:format(L["intermission"]), "ability_vehicle_launchplayer")
 		phase = 2
 	elseif phase == 2 and hp < 33 then
@@ -239,12 +250,18 @@ end
 
 function mod:Boss1Succeeded(unitId, spellName, _, _, spellId)
 	if spellId == 136395 then -- Bouncing Bolt -- should somehow try and count how many more bounces are left
-		self:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
-		-- XXX add bar here
-		self:Message(-7242, "Important", "Long")
+		if not UnitExists("boss1") then -- poor mans intermission check
+			self:Bar(-7242, 25, 136395, "SPELL_SHAMAN_MEASUREDINSIGHT")
+		else
+			self:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+		end
+		self:Message(-7242, "Important", "Long", 136395, "SPELL_SHAMAN_MEASUREDINSIGHT")
 	elseif spellId == 135991 then -- Small Adds
-		self:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
-		-- XXX add bar here
+		if not UnitExists("boss1") then -- poor mans intermission check
+			self:Bar(-7239, 25, L["diffusion_add_message"])
+		else
+			self:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+		end
 		self:Message(-7239, "Important", "Long", L["diffusion_add_message"])
 	elseif spellId == 136869 then -- Violent Gale Winds
 		self:Message(136889, "Important", "Long")
@@ -256,13 +273,10 @@ do
 	local overchargedList, scheduled = mod:NewTargetList(), nil
 	local function warnOvercharged(spellId)
 		if not UnitExists("boss1") then -- poor mans intermission check
-			if isConduitAlive(68696) then
-				mod:ScheduleTimer(warnSmallAdds, 2) -- so we don't instantly overwrite previous message
-			end
+			mod:Bar(spellId, 25, L["overchargerd_message"])
 		else
 			mod:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		end
-		-- XXX add bar here
 		mod:TargetMessage(spellId, overchargedList, "Urgent", "Alarm", L["overchargerd_message"])
 		scheduled = nil
 	end
@@ -294,19 +308,22 @@ end
 do
 	local staticShockList, scheduled = {}, nil
 	local function warnStaticShock(spellId)
-		if UnitExists("boss1") then -- poor mans intermission check
+		if not UnitExists("boss1") then -- poor mans intermission check
+			mod:Bar("conduit_abilities", 25, L["conduit_abilities_message"], L.conduit_abilities_icon)
+		else
 			mod:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		end
-		-- XXX add bar here
 		mod:Message(spellId, "Urgent", "Alarm", L["static_shock_message"])
 		sort(staticShockList) -- so targeted proximity opens to the same person for everyone
 		mod:OpenProximity(spellId, 8, staticShockList[1], true)
 		proximityOpen = "Static Shock"
-		mod:PrimaryIcon(spellId, staticShockList[1]) -- not sure how helpful this is
+		if #staticShockList == 1 then
+			mod:PrimaryIcon(spellId, staticShockList[1])
+		end
 		scheduled = nil
+		wipe(staticShockList)
 	end
 	function mod:StaticShockApplied(args)
-		wipe(staticShockList)
 		staticShockList[#staticShockList+1] = args.destName
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnStaticShock, 0.1, args.spellId)
