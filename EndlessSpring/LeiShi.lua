@@ -124,8 +124,9 @@ function mod:ScaryFogRemoved(args)
 end
 
 function mod:Spray(args)
-	if UnitIsPlayer(args.destName) and (args.amount or 1) > 9 and args.amount % 2 == 0 then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Info")
+	local amount = args.amount or 1
+	if UnitIsPlayer(args.destName) and amount > (self:LFR() and 11 or 5) and amount % 2 == 0 then
+		self:StackMessage(args.spellId, args.destName, amount, "Urgent", "Info")
 	end
 end
 
