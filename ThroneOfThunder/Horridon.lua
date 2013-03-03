@@ -17,9 +17,6 @@ mod:RegisterEnableMob(68476, 69374) -- Horridon, War-God Jalak
 --
 
 local doorCounter = 1
--- assume this is the exact same that is used for the sender in:
---"<28.5 20:33:29> [CHAT_MSG_RAID_BOSS_EMOTE] CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#745#nil#0#false#false", -- [10]
-local war_god_jalak = EJ_GetSectionInfo(7087)
 
 -- XXX Fix this
 do
@@ -85,6 +82,7 @@ if L then
 	L.door_opened = "Door opened!"
 	L.door_bar = "Next door (%d)"
 	L.balcony_adds = "Balcony adds"
+	L.door_trigger = "pour" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
 end
 L = mod:GetLocale()
 L.venom_bolt_volley = L.venom_bolt_volley.." " ..mod:GetFlagIcon(9)..mod:GetFlagIcon(6)
@@ -103,6 +101,7 @@ L.hex = L.hex .. " " ..mod:GetFlagIcon(8)
 
 function mod:GetOptions()
 	return {
+		137458,
 		-7086, -7090, -7092,
 		"blazing_sunlight", {136723, "FLASH"}, -- Farraki
 		{"venom_bolt_volley", "FLASH"}, {136646, "FLASH"}, -- Gurubashi
@@ -111,6 +110,7 @@ function mod:GetOptions()
 		136817, 136821, -- War-God Jalak
 		{-7078, "TANK_HEALER"}, 136741, {-7080, "FLASH", "SAY", "ICON"}, 137240, "adds", "berserk", "bosskill",
 	}, {
+		[140946] = "heroic",
 		[-7086] = -7086,
 		["blazing_sunlight"] = -7081,
 		["venom_bolt_volley"] = -7082,
@@ -132,7 +132,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DinoMending", 136797)
 	-- The Amani
 	self:Log("SPELL_DAMAGE", "LightningNova", 136490)
-	self:Log("SPELL_CAST_START", "Hex", 136512) -- Not sure if interruptable
+	self:Log("SPELL_CAST_START", "Hex", 136512)
 	self:Log("SPELL_CAST_START", "ChainLightning", 136480)
 	self:Log("SPELL_CAST_START", "Fireball", 136465)
 	-- The Drakkari
@@ -153,7 +153,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Puncture", 136767)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Puncture", 136767)
 	self:Log("SPELL_CAST_START", "Swipe", 136741, 136770) -- 136770 is only after charge
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE", "Charge")
+	self:Emote("Charge", L["charge_trigger"])
+	self:Emote("Doors", L["door_trigger"])
+	self:Log("SPELL_CAST_START", "DireCall", 137458)
+	self:Log("SPELL_AURA_APPLIED", "DireFixation", 140946)
 
 	self:Death("Win", 68476)
 end
@@ -176,6 +179,7 @@ function mod:BossEngage()
 	if self:MobId(UnitGUID("boss2")) == 69374 then -- War-God Jalak
 		self:Message("adds", "Attention", "Info", -7087) -- War-God Jalak
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
+		self:Bar(136817, 5) -- Bestial Cry
 	end
 end
 
@@ -347,30 +351,30 @@ end
 
 -- general
 
-function mod:Charge(_, msg, sender, _, _, player)
-	if msg:find(L["charge_trigger"]) then
-		self:TargetMessage(-7080, player, "Attention", "Long")
-		self:CDBar(-7080, 11)
-		self:PrimaryIcon(-7080, player)
-		if UnitIsUnit("player", player) then
-			self:Flash(-7080)
-			self:Say(-7080)
-		end
-		self:ScheduleTimer("PrimaryIcon", 10, -7080) -- remove icon
-	elseif sender:find(war_god_jalak) and not msg:find("136821") then -- any emote from War-God Jalak except the one with 136821 in it is for opening a door
-		doorCounter = doorCounter + 1
-		-- next door
-		self:Bar("adds", 114, L["door_bar"]:format(doorCounter), "inv_shield_11") -- door like icon
-		-- 1st wave jumps down
-		self:Bar("adds", 20, L["balcony_adds"],  L.adds_icon)
-		self:DelayedMessage("adds", 20, L["balcony_adds"], L.adds_icon)
-		-- 2nd wave jumps down
-		self:ScheduleTimer("Bar", 20, "adds", 19, L["balcony_adds"],  L.adds_icon)
-		self:DelayedMessage("adds", 39, L["balcony_adds"], L.adds_icon)
-		-- dinomancer jumps down
-		self:Bar(-7086, 58, nil, "ability_hunter_beastwithin") -- Zandalari Dinomancer (Dino Form icon)
-		self:DelayedMessage(-7086, 58, nil, "ability_hunter_beastwithin")
+function mod:Charge(msg, _, _, _, player)
+	self:TargetMessage(-7080, player, "Attention", "Long")
+	self:CDBar(-7080, 11)
+	self:PrimaryIcon(-7080, player)
+	if UnitIsUnit("player", player) then
+		self:Flash(-7080)
+		self:Say(-7080)
 	end
+	self:ScheduleTimer("PrimaryIcon", 10, -7080) -- remove icon
+end
+
+function mod:Doors(msg)
+	doorCounter = doorCounter + 1
+	-- next door
+	self:Bar("adds", 114, L["door_bar"]:format(doorCounter), "inv_shield_11") -- door like icon
+	-- 1st wave jumps down
+	self:Bar("adds", 20, L["balcony_adds"], L.adds_icon)
+	self:DelayedMessage("adds", 20, "Urgent", L["balcony_adds"], L.adds_icon)
+	-- 2nd wave jumps down
+	self:ScheduleTimer("Bar", 20, "adds", 19, L["balcony_adds"], L.adds_icon)
+	self:DelayedMessage("adds", 39, "Urgent", L["balcony_adds"], L.adds_icon)
+	-- dinomancer jumps down
+	self:Bar(-7086, 58, nil, "ability_hunter_beastwithin") -- Zandalari Dinomancer (Dino Form icon)
+	self:DelayedMessage(-7086, 58, "Important", nil, "ability_hunter_beastwithin")
 end
 
 function mod:Swipe(args)
@@ -383,3 +387,13 @@ function mod:Puncture(args)
 	self:StackMessage(-7078, args.destName, args.amount, "Urgent",  "Info")
 end
 
+function mod:DireCall(args)
+	self:Message(args.spellId, "Urgent")
+	self:Bar(args.spellId, 63)
+end
+
+function mod:DireFixation(args)
+	if self:Me(args.destGUID) then
+		self:Message(137458, "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
+	end
+end
