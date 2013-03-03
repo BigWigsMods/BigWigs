@@ -17,6 +17,7 @@ mod:RegisterEnableMob(69465)
 -- Locals
 --
 local ionized = {}
+local openedForMe = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -72,6 +73,7 @@ function mod:OnEngage()
 	self:CDBar(137162, 7) -- Static Burst -- again, is there even a point for such a short bar?
 	if self:Heroic() then -- Ionization
 		wipe(ionized)
+		openedForMe = false
 		self:Berserk(360) -- Real berserk confirmed 25 H PTR
 		self:Bar(138732, 60) -- Ionization
 	end
@@ -82,6 +84,10 @@ end
 --
 
 function mod:IonizationRemoved(args)
+	if self:Me(args.destGUID) then
+		openedForMe = false
+		self:StopBar(CL["you"]:format(args.spellName))
+	end
 	for k, v in next, ionized do if v == args.destName then table.remove(ionized, k) end end
 	if #ionized == 0 then
 		self:CloseProximity(args.spellId)
@@ -89,18 +95,18 @@ function mod:IonizationRemoved(args)
 			self:OpenProximity(-7741, 8) -- reopen it if we have lightning chasing us too
 		end
 	else
-		self:OpenProximity(args.spellId, 8, ionized)
+		if not openedForMe then self:OpenProximity(args.spellId, 8, ionized) end
 	end
-	if not self:Me(args.destGUID) then return end
-	self:StopBar(CL["you"]:format(args.spellName))
 end
 
 function mod:PersonalIonization(args)
 	ionized[#ionized+1] = args.destName
-	self:OpenProximity(args.spellId, 8, ionized)
 	if self:Me(args.destGUID) then
+		openedForMe = true
+		self:OpenProximity(args.spellId, 8)
 		self:Bar(args.spellId, 24, CL["you"]:format(args.spellName))
 	end
+	if not openedForMe then self:OpenProximity(args.spellId, 8, ionized) end
 end
 
 function mod:Ionization(args)
@@ -152,12 +158,12 @@ do
 	end
 end
 
-function mod:FocusedLightningRemoved()
+function mod:FocusedLightningRemoved(args)
 	self:PrimaryIcon(-7741)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(-7741)
 		if UnitDebuff("player", self:SpellName(138732)) then -- Ionization
-			self:OpenProximity(138732, 8, ionized)
+			self:OpenProximity(138732, 8)
 		end
 	end
 end

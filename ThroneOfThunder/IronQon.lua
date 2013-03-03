@@ -17,6 +17,7 @@ mod:RegisterEnableMob(68078, 68079, 68080, 68081) -- Iron Qon, Ro'shak, Quet'zal
 --
 local UnitDebuff = UnitDebuff
 local arcingLightning = {}
+local openedForMe = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -81,6 +82,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	openedForMe = false
 	self:Berserk(600) -- confirmed for 10 normal
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PowerWarn", "boss2")
 	self:OpenProximity(-6870, 10)
@@ -133,7 +135,8 @@ end
 function mod:ArcingLightningRemoved(args)
 	if not self:Heroic() then
 		for k, v in next, arcingLightning do if v == args.destName then table.remove(arcingLightning, k) end end
-		self:OpenProximity(136192, 12, arcingLightning)
+		if self:Me(args.destGUID) then openedForMe = false end
+		if not openedForMe then self:OpenProximity(136192, 12, arcingLightning) end
 	end
 	closeLightningStormProximity()
 end
@@ -141,7 +144,12 @@ end
 function mod:ArcingLightningApplied(args)
 	if self:Heroic() then return end -- XXX don't forget to remove this if we decided to use multi target proximity on heroic too
 	arcingLightning[#arcingLightning+1] = args.destName
-	self:OpenProximity(136192, 12, arcingLightning)
+	if self:Me(args.destGUID) then
+		openedForMe = true
+		self:OpenProximity(136192, 12)
+	else
+		if not openedForMe then self:OpenProximity(136192, 12, arcingLightning) end
+	end
 end
 
 function mod:LightningStormApplied(args)
