@@ -9,7 +9,7 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "itIT")
 if L then
-	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
+	--L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
 
 	L.chain_lightning_message = "Il tuo focus sta lanciando Catena di Fulmini!"
 	L.chain_lightning_bar = "Focus: Catena di Fulmini"
@@ -22,10 +22,14 @@ if L then
 
 	L.adds = "Adds in arrivo"
 	L.adds_desc = "Avvisa quando sono in arrivo i vari add dei Farraki, dei Gurubashi, dei Drakkari, degli Amani, e il Dio della Guerra Jalak."
-
+	L.orb_message = "Globo del Controllo a Terra!"
+	
 	L.puncture_message = "Perforazione Tripla"
-	L.orb_message = "Globo del Controllo a terra!"
-	L.focus_only = "|cffff0000Focus target alerts only.|r "
+	L.focus_only = "|cffff0000Avviso solo per il bersaglio Focus.|r "
+
+	L.door_opened = "Porta Aperta!"
+	L.door_bar = "Prossima porta (%d)"
+	L.balcony_adds = "Add dal Balcone"	
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "itIT")
@@ -109,10 +113,13 @@ if L then
 
 	L.overload_casting = "Lancio Sovraccarico Fuso"
 	L.overload_casting_desc = "Avvisa quando viene lanciato Sovraccarico Fuso"
+	L.arcing_lightning_cleared = "Fulmine Arcuato non più presente sull'Incursione"	
 end
 L = BigWigs:NewBossLocale("Twin Consorts", "itIT")
 if L then
 	L.barrage_fired = "Raffica Lanciata!"
+	L.last_phase_yell_trigger = "Just this once..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
+
 end
 L = BigWigs:NewBossLocale("Lei Shen", "itIT")
 if L then
