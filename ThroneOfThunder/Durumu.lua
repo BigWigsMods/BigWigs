@@ -182,13 +182,15 @@ do
 end
 
 function mod:LingeringGazeRemoved(args)
-	openedForMe = false
+	if self:Me(args.destGUID) then openedForMe = false end
 	-- gotta do all this so in case you can bubble or cloak/etc the debuff then we don't close the display for everyone
 	for k, v in next, lingeringGaze do if v == args.destName then table.remove(lingeringGaze, k) end end
 	if #lingeringGaze == 0 then
 		self:CloseProximity(args.spellId)
 	else
-		self:OpenProximity(args.spellId, 8, lingeringGaze)
+		if not openedForMe then
+			self:OpenProximity(args.spellId, 8, lingeringGaze)
+		end
 	end
 end
 
