@@ -46,6 +46,7 @@ local activeRange = nil
 local activeSpellID = nil
 local activeMap = nil
 local proximityPlayer = nil
+local proximityPlayerTable = {}
 local maxPlayers = 0
 local raidList = {}
 local blipList = {}
@@ -388,14 +389,14 @@ end
 --
 
 local updater, updaterFrame = nil, nil
-local normalProximity, reverseTargetProximity, targetProximity
+local normalProximity, reverseTargetProximity, targetProximity, multiTargetProximity
 do
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
 
 	-- dx and dy are in yards
 	-- class is player class
 	-- facing is radians with 0 being north, counting up clockwise
-	local setDot = function(dx, dy, n, blip)
+	local setDot = function(dx, dy, blip)
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local range = activeRange and activeRange or 10
 		-- range * 3, so we have 3x radius space
@@ -434,11 +435,11 @@ do
 			blipList[raidList[i]]:Hide()
 		end
 
-		setDot(10, 10, "raid1", blipList["raid1"])
-		setDot(5, 0, "raid2", blipList["raid2"])
-		setDot(3, 10, "raid3", blipList["raid3"])
-		setDot(-9, -7, "raid4", blipList["raid4"])
-		setDot(0, 10, "raid5", blipList["raid5"])
+		setDot(10, 10, blipList["raid1"])
+		setDot(5, 0, blipList["raid2"])
+		setDot(3, 10, blipList["raid3"])
+		setDot(-9, -7, blipList["raid4"])
+		setDot(0, 10, blipList["raid5"])
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local pixperyard = min(width, height) / 30
 		anchor.rangeCircle:SetSize(pixperyard * 20, pixperyard * 20)
@@ -474,7 +475,7 @@ do
 			local range = (dx * dx + dy * dy) ^ 0.5
 			if range < (activeRange * 1.5) then
 				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
-					setDot(dx, dy, n, blipList[n])
+					setDot(dx, dy, blipList[n])
 					if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
 						anyoneClose = true
 					end
@@ -523,7 +524,7 @@ do
 		local dx = (unitX - srcX) * id[1]
 		local dy = (unitY - srcY) * id[2]
 		local range = (dx * dx + dy * dy) ^ 0.5
-		setDot(dx, dy, proximityPlayer, blipList[proximityPlayer])
+		setDot(dx, dy, blipList[proximityPlayer])
 		if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
@@ -534,6 +535,44 @@ do
 		else
 			lastplayed = 0
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+		end
+	end
+
+	function multiTargetProximity()
+		local srcX, srcY = GetPlayerMapPosition("player")
+		if srcX == 0 and srcY == 0 then
+			SetMapToCurrentZone()
+			srcX, srcY = GetPlayerMapPosition("player")
+		end
+
+		local currentFloor = GetCurrentMapDungeonLevel()
+		if currentFloor == 0 then currentFloor = 1 end
+		local id = activeMap[currentFloor]
+
+		if not id then
+			print("No floor id, closing proximity.")
+			plugin:Close()
+			return
+		end
+
+		for i = 1, #proximityPlayerTable do
+			local player = proximityPlayerTable[i]
+			local unitX, unitY = GetPlayerMapPosition(player)
+			local dx = (unitX - srcX) * id[1]
+			local dy = (unitY - srcY) * id[2]
+			local range = (dx * dx + dy * dy) ^ 0.5
+			setDot(dx, dy, blipList[player])
+			if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
+				anchor.rangeCircle:SetVertexColor(1, 0, 0)
+				local t = GetTime()
+				if t > (lastplayed + 1) then
+					lastplayed = t
+					plugin:SendMessage("BigWigs_Sound", db.soundName)
+				end
+			else
+				lastplayed = 0
+				anchor.rangeCircle:SetVertexColor(0, 1, 0)
+			end
 		end
 	end
 
@@ -558,7 +597,7 @@ do
 		local dx = (unitX - srcX) * id[1]
 		local dy = (unitY - srcY) * id[2]
 		local range = (dx * dx + dy * dy) ^ 0.5
-		setDot(dx, dy, proximityPlayer, blipList[proximityPlayer])
+		setDot(dx, dy, blipList[proximityPlayer])
 		if range <= activeRange then
 			lastplayed = 0
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
@@ -1003,6 +1042,7 @@ function plugin:Close()
 	activeSpellID = nil
 	activeMap = nil
 	proximityPlayer = nil
+	wipe(proximityPlayerTable)
 
 	anchor.title:SetFormattedText(L["%d yards"], 0)
 	anchor.ability:SetFormattedText(L["|T%s:20:20:-5|tAbility name"], "Interface\\Icons\\spell_nature_chainlightning")
@@ -1027,16 +1067,29 @@ function plugin:Open(range, module, key, player, isReverse)
 		updater:SetScript("OnLoop", normalProximity)
 		makeThingsWork()
 	elseif player then
-		for i = 1, GetNumGroupMembers() do
-			if UnitIsUnit(player, raidList[i]) then
-				proximityPlayer = raidList[i]
-			end
-		end
 		breakThings()
-		if isReverse then
-			updater:SetScript("OnLoop", reverseTargetProximity)
+		if type(player) == "table" then
+			for i = 1, #player do
+				for j = 1, GetNumGroupMembers() do
+					if UnitIsUnit(player[i], raidList[j]) then
+						proximityPlayerTable[#proximityPlayerTable+1] = raidList[j]
+						break
+					end
+				end
+			end
+			updater:SetScript("OnLoop", multiTargetProximity)
 		else
-			updater:SetScript("OnLoop", targetProximity)
+			for i = 1, GetNumGroupMembers() do
+				if UnitIsUnit(player, raidList[i]) then
+					proximityPlayer = raidList[i]
+					break
+				end
+			end
+			if isReverse then
+				updater:SetScript("OnLoop", reverseTargetProximity)
+			else
+				updater:SetScript("OnLoop", targetProximity)
+			end
 		end
 	else
 		print("Current range functionality not implemented, aborting.")
