@@ -396,7 +396,7 @@ end
 
 function mod:OminousCackleRemoved(args) -- set it here, because at this point we are surely out of range of the other platforms
 	if self:Me(args.destGUID) then
-		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "BlossomPreWarn", "target")
+		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "BlossomPreWarn", "target", "focus")
 	end
 end
 
@@ -427,7 +427,7 @@ function mod:BlossomPreWarn(unitId)
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 30 then
 			self:Message(119888, "Attention", nil, CL["soon"]:format(self:SpellName(119888))) -- Death Blossom
-			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "target", "focus")
 		end
 	end
 end
