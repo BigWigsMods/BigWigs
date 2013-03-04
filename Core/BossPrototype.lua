@@ -900,23 +900,6 @@ function boss:PlaySound(key, sound)
 	self:SendMessage("BigWigs_Sound", sound)
 end
 
-do
-	local sentWhispers = {}
-	local function filter(self, event, msg) if sentWhispers[msg] or msg:find("^<BW>") or msg:find("^<DBM>") then return true end end
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
-
-	function boss:Whisper(key, player, spellName, noName)
-		self:SendMessage("BigWigs_Whisper", self, key, player, spellName, noName)
-		if not checkFlag(self, key, C.WHISPER) then return end
-		local msg = noName and spellName or format(L.you, spellName)
-		sentWhispers[msg] = true
-		if UnitIsUnit(player, "player") or not UnitIsPlayer(player) or not core.db.profile.whisper then return end
-		if UnitInRaid("player") and not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player") then return end
-		SendChatMessage("<BW> " .. msg, "WHISPER", nil, player)
-	end
-end
-
 -- Examples of API use in a module:
 -- self:Sync("abilityPrefix", playerName)
 -- self:Sync("ability")
