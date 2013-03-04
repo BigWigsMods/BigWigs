@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Oondasta", 929, 826)
 if not mod then return end
 mod:RegisterEnableMob(69161)
 mod.otherMenu = 6
+mod.worldBoss = true
 
 --------------------------------------------------------------------------------
 -- Locals

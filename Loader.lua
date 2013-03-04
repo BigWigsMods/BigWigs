@@ -80,9 +80,11 @@ local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWig
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the core is loaded
+local loadOnWorldBoss = {} -- Packs that should load when targetting a specific mob
 -- XXX shouldn't really be named "menus", it's actually panels in interface options now
 local menus = {} -- contains the main menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
+local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
 
 do
 	local c = "BigWigs_Classic"
@@ -130,29 +132,6 @@ do
 			end
 		end
 		return members
-	end
-end
-
-local errorInvalidZoneID = "The zone ID %q from the addon %q was not parsable."
-local function iterateZones(addon, override, ...)
-	for i = 1, select("#", ...) do
-		local rawZone = select(i, ...)
-		local zone = tonumber(rawZone:trim())
-		if zone then
-			-- register the zone for enabling.
-			enableZones[zone] = true
-
-			if not loadOnZone[zone] then loadOnZone[zone] = {} end
-			loadOnZone[zone][#loadOnZone[zone] + 1] = addon
-
-			if override then
-				loadOnZone[override][#loadOnZone[override] + 1] = addon
-			else
-				menus[zone] = true
-			end
-		else
-			sysprint(errorInvalidZoneID:format(tostring(rawZone), tostring(addon)))
-		end
 	end
 end
 
@@ -277,6 +256,10 @@ function loader:OnInitialize()
 			if meta then
 				loadOnZoneAddons[#loadOnZoneAddons + 1] = name
 			end
+			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-WorldBoss")
+			if meta then
+				loadOnWorldBoss[#loadOnWorldBoss + 1] = name
+			end
 		elseif not enabled and reqFuncAddons[name] then
 			sysprint(L["coreAddonDisabled"])
 		end
@@ -296,8 +279,60 @@ function loader:OnInitialize()
 	self.OnInitialize = nil
 end
 
-function loader:OnEnable()
-	if loadOnZoneAddons then
+do
+	local function iterateZones(addon, override, ...)
+		for i = 1, select("#", ...) do
+			local rawZone = select(i, ...)
+			local zone = tonumber(rawZone:trim())
+			if zone then
+				-- register the zone for enabling.
+				enableZones[zone] = true
+
+				if not loadOnZone[zone] then loadOnZone[zone] = {} end
+				loadOnZone[zone][#loadOnZone[zone] + 1] = addon
+
+				if override then
+					loadOnZone[override][#loadOnZone[override] + 1] = addon
+				else
+					menus[zone] = true
+				end
+			else
+				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZone), tostring(addon)))
+			end
+		end
+	end
+
+	local currentZone = nil
+	local function iterateWorldBosses(addon, override, ...)
+		for i = 1, select("#", ...) do
+			local rawZoneOrBoss = select(i, ...)
+			local zoneOrBoss = tonumber(rawZoneOrBoss:trim())
+			if zoneOrBoss then
+				if not currentZone then
+					-- register the zone for enabling.
+					enableZones[zoneOrBoss] = "world"
+
+					currentZone = zoneOrBoss
+
+					if not loadOnZone[zoneOrBoss] then loadOnZone[zoneOrBoss] = {} end
+					loadOnZone[zoneOrBoss][#loadOnZone[zoneOrBoss] + 1] = addon
+
+					if override then
+						loadOnZone[override][#loadOnZone[override] + 1] = addon
+					else
+						menus[zoneOrBoss] = true
+					end
+				else
+					worldBosses[zoneOrBoss] = currentZone
+					currentZone = nil
+				end
+			else
+				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZone), tostring(addon)))
+			end
+		end
+	end
+
+	function loader:OnEnable()
 		for i, name in next, loadOnZoneAddons do
 			local menu = tonumber(GetAddOnMetadata(name, "X-BigWigs-Menu"))
 			if menu then
@@ -309,55 +344,67 @@ function loader:OnEnable()
 				iterateZones(name, menu, strsplit(",", zones))
 			end
 		end
-		loadOnZoneAddons = nil
-	end
-
-	-- XXX hopefully remove this some day, try to teach people not to force load our modules.
-	for i = 1, GetNumAddOns() do
-		local name, _, _, enabled = GetAddOnInfo(i)
-		if enabled and not IsAddOnLoadOnDemand(i) then
-			for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
-				local meta = select(j, GetAddOnOptionalDependencies(i))
-				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
-					print("|cFF33FF99Big Wigs|r: The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
-				end
+		loadOnZoneAddons, iterateZones = nil, nil
+		for i, name in next, loadOnWorldBoss do
+			local menu = tonumber(GetAddOnMetadata(name, "X-BigWigs-Menu"))
+			if menu then
+				if not loadOnZone[menu] then loadOnZone[menu] = {} end
+				menus[menu] = true
 			end
-			for j = 1, select("#", GetAddOnDependencies(i)) do
-				local meta = select(j, GetAddOnDependencies(i))
-				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
-					print("|cFF33FF99Big Wigs|r: The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
+			local zones = GetAddOnMetadata(name, "X-BigWigs-LoadOn-WorldBoss")
+			if zones then
+				iterateWorldBosses(name, menu, strsplit(",", zones))
+			end
+		end
+		loadOnWorldBoss, iterateWorldBosses = nil, nil
+
+		-- XXX hopefully remove this some day, try to teach people not to force load our modules.
+		for i = 1, GetNumAddOns() do
+			local name, _, _, enabled = GetAddOnInfo(i)
+			if enabled and not IsAddOnLoadOnDemand(i) then
+				for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
+					local meta = select(j, GetAddOnOptionalDependencies(i))
+					if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
+						print("|cFF33FF99Big Wigs|r: The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
+					end
+				end
+				for j = 1, select("#", GetAddOnDependencies(i)) do
+					local meta = select(j, GetAddOnDependencies(i))
+					if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
+						print("|cFF33FF99Big Wigs|r: The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
+					end
 				end
 			end
 		end
-	end
 
-	loaderUtilityFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-	loaderUtilityFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+		loaderUtilityFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+		loaderUtilityFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 
-	loaderUtilityFrame:RegisterEvent("CHAT_MSG_ADDON")
-	self:RegisterMessage("BigWigs_AddonMessage")
-	RegisterAddonMessagePrefix("BigWigs")
+		loaderUtilityFrame:RegisterEvent("CHAT_MSG_ADDON")
+		self:RegisterMessage("BigWigs_AddonMessage")
+		RegisterAddonMessagePrefix("BigWigs")
 
-	self:RegisterMessage("BigWigs_CoreEnabled")
-	self:RegisterMessage("BigWigs_CoreDisabled")
+		self:RegisterMessage("BigWigs_CoreEnabled")
+		self:RegisterMessage("BigWigs_CoreDisabled")
 
-	self:GROUP_ROSTER_UPDATE()
-	self:ZONE_CHANGED_NEW_AREA()
+		self:GROUP_ROSTER_UPDATE()
+		self:ZONE_CHANGED_NEW_AREA()
 
-	self:RegisterMessage("BigWigs_CoreOptionToggled", "UpdateDBMFaking")
-	local isFakingDBM = nil
-	-- Somewhat ugly, but saves loading AceDB with the loader instead of the the core for this 1 feature
-	if BigWigs3DB and BigWigs3DB.profileKeys and BigWigs3DB.profiles then
-		local name = UnitName("player")
-		local realm = GetRealmName()
-		if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
-			local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
-			isFakingDBM = key.fakeDBMVersion
+		self:RegisterMessage("BigWigs_CoreOptionToggled", "UpdateDBMFaking")
+		local isFakingDBM = nil
+		-- Somewhat ugly, but saves loading AceDB with the loader instead of the the core for this 1 feature
+		if BigWigs3DB and BigWigs3DB.profileKeys and BigWigs3DB.profiles then
+			local name = UnitName("player")
+			local realm = GetRealmName()
+			if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
+				local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
+				isFakingDBM = key.fakeDBMVersion
+			end
 		end
-	end
-	self:UpdateDBMFaking(nil, "fakeDBMVersion", isFakingDBM)
+		self:UpdateDBMFaking(nil, "fakeDBMVersion", isFakingDBM)
 
-	self.OnEnable = nil
+		self.OnEnable = nil
+	end
 end
 
 -----------------------------------------------------------------------
@@ -504,7 +551,6 @@ do
 end
 
 do
-	local grouped = nil
 	local queueLoad = {}
 	-- Kazzak, Doomwalker, Salyis's Warband, Sha of Anger, Nalak, Oondasta
 	local warnedThisZone = {[465]=true,[473]=true,[807]=true,[809]=true,[928]=true,[929]=true} -- World Bosses
@@ -524,6 +570,33 @@ do
 			end
 		end
 	end
+
+	function loader:PLAYER_TARGET_CHANGED()
+		local guid = UnitGUID("target")
+		if guid then
+			local mobId = tonumber(guid:sub(6, 10), 16)
+			if worldBosses[mobId] then
+				local id = worldBosses[mobId]
+				if InCombatLockdown() or UnitAffectingCombat("player") then
+					if not queueLoad[id] then
+						queueLoad[id] = "unloaded"
+						loaderUtilityFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+						sysprint(L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."])
+					end
+				else
+					queueLoad[id] = "loaded"
+					if load(BigWigs, "BigWigs_Core") then
+						if BigWigs:IsEnabled() then
+							loadZone(id)
+						else
+							BigWigs:Enable()
+						end
+					end
+				end
+			end
+		end
+	end
+
 	function loader:ZONE_CHANGED_NEW_AREA()
 		-- Zone checking
 		local inside = IsInInstance()
@@ -539,24 +612,31 @@ do
 		end
 
 		-- Module loading
-		-- Always load content in an instance, otherwise require a group (world bosses)
-		if enableZones[id] and (inside or grouped) then
-			if not IsEncounterInProgress() and (InCombatLockdown() or UnitAffectingCombat("player")) then
-				if not queueLoad[id] then
-					queueLoad[id] = "unloaded"
-					loaderUtilityFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-					sysprint(L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."])
-				end
+		if enableZones[id] then
+			if enableZones[id] == "world" then
+				loaderUtilityFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+				self:PLAYER_TARGET_CHANGED()
 			else
-				queueLoad[id] = "loaded"
-				if load(BigWigs, "BigWigs_Core") then
-					if BigWigs:IsEnabled() and loadOnZone[id] then
-						loadZone(id)
-					else
-						BigWigs:Enable()
+				loaderUtilityFrame:UnregisterEvent("PLAYER_TARGET_CHANGED")
+				if not IsEncounterInProgress() and (InCombatLockdown() or UnitAffectingCombat("player")) then
+					if not queueLoad[id] then
+						queueLoad[id] = "unloaded"
+						loaderUtilityFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+						sysprint(L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."])
+					end
+				else
+					queueLoad[id] = "loaded"
+					if load(BigWigs, "BigWigs_Core") then
+						if BigWigs:IsEnabled() and loadOnZone[id] then
+							loadZone(id)
+						else
+							BigWigs:Enable()
+						end
 					end
 				end
 			end
+		else
+			loaderUtilityFrame:UnregisterEvent("PLAYER_TARGET_CHANGED")
 		end
 
 		-- Disabling
@@ -574,6 +654,10 @@ do
 			end
 		end
 	end
+end
+
+do
+	local grouped = nil
 	function loader:GROUP_ROSTER_UPDATE()
 		local groupType = (IsPartyLFG() and 3) or (IsInRaid() and 2) or (IsInGroup() and 1)
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
@@ -590,7 +674,7 @@ do
 end
 
 function loader:BigWigs_BossModuleRegistered(_, _, module)
-	enableZones[module.zoneId] = true
+	enableZones[module.zoneId] = module.worldBoss and "world" or true
 end
 
 function loader:BigWigs_CoreEnabled()

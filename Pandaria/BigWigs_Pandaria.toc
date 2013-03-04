@@ -16,7 +16,7 @@
 
 ## X-Category: Raid
 ## X-BigWigs-Menu: 6
-## X-BigWigs-LoadOn-ZoneId: 807, 809, 928, 929
+## X-BigWigs-LoadOn-WorldBoss: 807, 62346, 809, 60491, 928, 69099, 929, 69161
 
 locales.xml
 modules.xml

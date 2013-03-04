@@ -513,9 +513,7 @@ function boss:Heroic()
 end
 
 function boss:MobId(guid)
-	if not guid then return -1 end
-	local creatureId = tonumber(guid:sub(6, 10), 16)
-	return creatureId
+	return guid and tonumber(guid:sub(6, 10), 16) or -1
 end
 
 function boss:SpellName(spellId)
