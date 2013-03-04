@@ -11,7 +11,7 @@ L.stack = "%dx %s sur %s"
 L.cast = "<%s en incant.>"
 L.soon = "%s imminent(e) !"
 L.count = "%s (%d)"
-L.near = "%s near YOU!"
+L.near = "%s près de VOUS !"
 
 L.phase = "Phase %d"
 L.normal = "Mode normal"

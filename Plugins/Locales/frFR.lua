@@ -1,6 +1,5 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "frFR")
 if not L then return end
-
 -----------------------------------------------------------------------
 -- Bars.lua
 --
@@ -76,7 +75,7 @@ L["Messages"] = "Messages"
 L["Bars"] = "Barres"
 L["Background"] = "Fond"
 L["Text"] = "Texte"
---L["Flash"] = "Flash"
+L["Flash"] = "Flash"
 L["Normal"] = "Normal"
 L["Emphasized"] = "En évidence"
 

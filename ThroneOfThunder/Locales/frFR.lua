@@ -9,7 +9,7 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "frFR")
 if L then
-	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
+	L.charge_trigger = "pose ses yeux" -- Horridon sets his eyes on PLAYERNAME and stamps his tail! -- à vérifier
 
 	L.chain_lightning_message = "Votre focalisation est entrain d'incanter Chaîne d'éclairs !"
 	L.chain_lightning_bar = "Focalisation : Chaîne d'éclairs"
@@ -20,23 +20,25 @@ if L then
 	L.venom_bolt_volley_message = "Votre focalisation est en train d'incanter Salve !"
 	L.venom_bolt_volley_bar = "Focalisation : Salve"
 
-	L.adds = "Adds spawning"
-	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
+	L.adds = "Apparition des renforts"
+	L.adds_desc = "Prévient quand les Farraki, les Gurubashi, les Drakkari, les Amani et le Dieu-guerrier Jalak apparaissent."
 
-	L.puncture_message = "Perforation"
 	L.orb_message = "Orbe de contrôle lâchée !"
-	L.focus_only = "|cffff0000Focus target alerts only.|r "
+
+	L.door_opened = "Porte ouverte !"
+	L.door_bar = "Proch. porte (%d)"
+	L.balcony_adds = "Adds du balcon"
+	L.door_trigger = "pour" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "frFR")
 if L then
+	L.priestess_adds = "Adds de la prêtresse"
+	L.priestess_adds_desc = "Prévient de l'arrivée des différents genres de renforts de la Grande prêtresse Mar'li."
+	L.priestess_adds_message = "Add de la prêtresse"
+
 	L.full_power = "Puissance maximale"
-
 	L.assault_message = "Assaut"
-
-	L.priestess_add = "Priestess add"
-	L.priestess_adds = "Priestess adds"
-	L.priestess_adds_desc = "Warning for all kinds of adds from High Priestess Mar'li"
 	L.hp_to_go_power = "PV à faire : %d%% - Puissance : %d"
 end
 
@@ -45,6 +47,7 @@ if L then
 	L.kick = "Coup de pied"
 	L.kick_desc = "Effectue un suivi du nombre de tortues qui peuvent être bottées."
 	L.kickable_turtles = "Tortues à botter : %d"
+
 	L.crystal_shell_removed = "Carapace de cristal enlevé !"
 	L.no_crystal_shell = "PAS de Carapace de cristal"
 end
@@ -53,8 +56,8 @@ L = BigWigs:NewBossLocale("Megaera", "frFR")
 if L then
 	L.breaths = "Souffles"
 	L.breaths_desc = "Alertes relatives aux différents types de souffles."
-	L.rampage_over = "Saccager terminé !"
-	L.arcane_adds = "Arcane adds"
+
+	L.arcane_adds = "Wyrms du Néant"
 end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "frFR")
@@ -65,18 +68,15 @@ if L then
 	L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch !" -- à traduire
 	L.upper_nest = "Nid |c00008000supérieur|r"
 	L.lower_nest = "Nid |c00FF0000inférieur|r"
-	L.food_call_trigger = "Hatchling calls for food !" -- à traduire
+	L.lower_upper_nest = "Nid |c00FF0000inférieur|r + |c00008000supérieur|r"
 	L.nest = "Nids"
 	L.nest_desc = "Alertes relatives aux nids. |c00FF0000Décochez ceci pour désactiver les alertes si vous n'êtes pas assigné à la gestion des nids !|r"
+	L.big_add = "Gros add au %s"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "frFR")
 if L then
 	L.rays_spawn = "Apparition des rayons"
-	L.ray_controller = "Contrôleur de rayon"
-	L.ray_controller_desc = "Annonce les contrôleurs de la direction des rayons rouge et bleu."
-	L.red_ray_controller = "Vous êtes le contrôleur du rayon |c000000FFbleu|r"
-	L.blue_ray_controller = "Vous êtes le contrôleur du rayon |c00FF0000rouge|r"
 	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog !" -- à traduire
 	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye !" -- à traduire
 	L.red_add = "Add |c00FF0000rouge|r"
@@ -104,11 +104,14 @@ if L then
 
 	L.overload_casting = "Incantation de Surcharge de magma"
 	L.overload_casting_desc = "Prévient quand Surcharge de magma est incanté."
+
+	L.arcing_lightning_cleared = "Le raid est libéré de Foudre en arc" -- à traduire
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "frFR")
 if L then
-	L.barrage_fired = "Barrage fired!"
+	L.barrage_fired = "Barrage invoqué !"
+	L.last_phase_yell_trigger = "Just this once..." -- à traduire
 end
 
 L = BigWigs:NewBossLocale("Lei Shen", "frFR")
@@ -116,6 +119,7 @@ if L then
 	L.conduit_abilities = "Techniques du conduit"
 	L.conduit_abilities_desc = "Barres approximatives des temps de recharge des techniques spécifiques au conduit."
 	L.conduit_ability_meassage = "Proch. tech. du conduit"
+
 	L.intermission = "Entracte"
 	L.overchargerd_message = "Stunning AoE pulse"
 	L.static_shock_message = "Splitting AoE damege"
