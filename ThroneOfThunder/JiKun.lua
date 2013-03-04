@@ -47,7 +47,7 @@ function mod:GetOptions()
 	return {
 		"nest", -- this controls a lot of things, so it is easier to turn off for people who don't handle the nests
 		{-7360, "FLASH"}, 140741,
-		{140092, "TANK"}, {134366, "TANK"}, {134380, "FLASH"}, 134370,
+		{140092, "TANK"}, {134366, "TANK"}, {134380, "FLASH"}, 134370, 137528,
 		"proximity", "berserk", "bosskill",
 	}, {
 		["nest"] = -7348,
@@ -86,9 +86,10 @@ end
 --
 
 function mod:FeedYoung(args)
+	self:CDBar(args.spellId, 30)
 	-- only warn for people who can get Primal Nutriment
 	if not UnitBuff("player", self:SpellName(140741)) and UnitBuff("player", self:SpellName(134339)) then -- not Primal Nutriment and Daedalian Wings
-		self:Message("nest", "Positive", "Info", args.spellId) -- Positive because it is green!
+		self:Message(args.spellId, "Positive", "Info") -- Positive because it is green!
 	end
 end
 
@@ -99,7 +100,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:Message("nest", "Attention", nil, L["young_egg_hatching"], args.spellId) -- this might be redundant, if we use the emote to warn for hatching nests
-			self:Bar("nest", 10, L["young_egg_hatching"], args.spellId) -- this is not redundant, keep this!
+			self:Bar("nest", 10, L["young_egg_hatching"], args.spellId) -- XXX this is not redundant, keep this! (or maybe it is now that it is a fraction of the 10 sec it used to be need to check on normals again )
 		end
 	end
 end
