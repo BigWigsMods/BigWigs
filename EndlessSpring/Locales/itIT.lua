@@ -40,7 +40,7 @@ if L then
 	L.cooldown_reset = "I tempi di recupero delle tue abilità sono stati reimpostati!"
 
 	L.ability_cd = "Recupero delle abilità"
-	L.ability_cd_desc = "Cerca di indovinare l'ordine in cui verranno usate le abilità dopo l'Emersione."
+	L.ability_cd_desc = "Mostra la successiva possibile (o possibili) abilità."
 
 	--L.huddle_or_spout = "Ammasso o Manifestazione" There isnt anymore this entry into boss file, commented out
 	--L.huddle_or_strike = "Ammasso o Assalto" There isnt anymore this entry into boss file, commented out

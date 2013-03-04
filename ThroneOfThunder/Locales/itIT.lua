@@ -9,7 +9,7 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "itIT")
 if L then
-	--L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
+	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
 
 	L.chain_lightning_message = "Il tuo focus sta lanciando Catena di Fulmini!"
 	L.chain_lightning_bar = "Focus: Catena di Fulmini"
@@ -22,14 +22,16 @@ if L then
 
 	L.adds = "Adds in arrivo"
 	L.adds_desc = "Avvisa quando sono in arrivo i vari add dei Farraki, dei Gurubashi, dei Drakkari, degli Amani, e il Dio della Guerra Jalak."
+	
 	L.orb_message = "Globo del Controllo a Terra!"
 	
-	L.puncture_message = "Perforazione Tripla"
-	L.focus_only = "|cffff0000Avviso solo per il bersaglio Focus.|r "
+	--L.puncture_message = "Perforazione Tripla" Commented out since there isnt anymore into Locals, Keep it for lazyness.
+ 	L.focus_only = "|cffff0000Avviso solo per il bersaglio Focus.|r "
 
 	L.door_opened = "Porta Aperta!"
 	L.door_bar = "Prossima porta (%d)"
 	L.balcony_adds = "Add dal Balcone"	
+	L.door_trigger = "pour" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]	
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "itIT")
@@ -38,12 +40,14 @@ if L then
 
 	L.assault_message = "Assalto"
 
-	L.priestess_add = "Add Sacerdotessa"
-	L.priestess_adds = "Adds Sacerdotessa"
+	L.priestess_adds = "Add Sacerdotessa"
 	L.priestess_adds_desc = "Avviso per tutti i tipi di add della Gran Sacerdotessa Mar'li"
-	--L.loa_spirit = "Spirito Loa"
-	--L.loa_spirits = "Spiriti Loa"
-	--L.loa_spirits_desc = "Avviso per entrambi i tipi di Spiriti Loa"
+	L.priestess_adds_message = "Add Sacerdotessa"	
+	--L.loa_spirit = "Spirito Loa" Commented out since there isnt anymore into Locals, Keep it for lazyness.
+	--L.loa_spirits = "Spiriti Loa" Commented out since there isnt anymore into Locals, Keep it for lazyness.
+	--L.loa_spirits_desc = "Avviso per entrambi i tipi di Spiriti Loa" Commented out since there isnt anymore into Locals, Keep it for lazyness.
+	L.full_power = "Pieno Potere"
+	L.assault_message = "Assalto"
 	L.hp_to_go_power = "Punti Vita alla Fine: %d%% - Potere: %d"
 	end
 
@@ -51,7 +55,7 @@ L = BigWigs:NewBossLocale("Tortos", "itIT")
 if L then
 	L.kick = "Calcio"
 	L.kick_desc = "Tieni il conto di quante tartarughe possono essere prese a calci"
-	L.kickable_turtles = "Tartarughe da Calciare: %d"
+	L.kickable_turtles = "Tartarughe Calciabili: %d"
 	L.crystal_shell_removed = "Scudo di Cristallo RIMOSSO!"
 	L.no_crystal_shell = "NESSUNO Scudo di Cristallo"
 
@@ -61,7 +65,7 @@ L = BigWigs:NewBossLocale("Megaera", "itIT")
 if L then
 	L.breaths = "Soffi"
 	L.breaths_desc = "Avvisi relativi ad ogni tipo di soffio possibile."
-	--L.rampage_over = "Furia Terminata!"
+	--L.rampage_over = "Furia Terminata!" Commented out since there isnt anymore into Locals, Keep it for lazyness.
 	L.arcane_adds = "Teste Arcane"
 end
 
@@ -77,16 +81,17 @@ if L then
 	L.food_call_trigger = "Hatchling calls for food!" --da tradurre
 	L.nest = "Nidi"
 	L.nest_desc = "Avvisi relativi ai nidi. |c00FF0000Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi!|r"
+	L.big_add = "Add Grande su %s"	
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "itIT")
 if L then
 	L.rays_spawn = "Apparizione raggi"
-	L.ray_controller = "Controllore del Raggio"
-	L.ray_controller_desc = "Annuncia la direzione del raggio del controllore per il raggio blu e rosso."
+	--L.ray_controller = "Controllore del Raggio" Commented out since there isnt anymore into Locals, Keep it for lazyness.
+	--L.ray_controller_desc = "Annuncia la direzione del raggio del controllore per il raggio blu e rosso." Commented out since there isnt anymore into Locals, Keep it for lazyness.
 
-	L.red_ray_controller = "Sei il controllore del raggio |c000000FFBlu|r"
-	L.blue_ray_controller = "Sei il controllore del raggio |c00FF0000Rosso|r"
+	--L.red_ray_controller = "Sei il controllore del raggio |c000000FFBlu|r" Commented out since there isnt anymore into Locals, Keep it for lazyness.
+	--L.blue_ray_controller = "Sei il controllore del raggio |c00FF0000Rosso|r" Commented out since there isnt anymore into Locals, Keep it for lazyness.
 	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
 	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
 	L.red_add = "Add |c00FF0000Rosso|r"
@@ -127,7 +132,7 @@ if L then
 	L.conduit_abilities_desc = "Barre di recupero approssimative per le abilità specifiche dei condotti"
 	L.conduit_ability_meassage = "Abilità successiva del condotto"
 	L.intermission = "Intermezzo"
-	L.overchargerd_message = "Pulsazione ad Effetto Sotrdente"
+	L.overchargerd_message = "Pulsazione ad Effetto Stordente"
 	L.static_shock_message = "Danno ad Effetto da Suddividere"
 	L.diffusion_add_message = "Add di Diffusione"
 	L.diffusion_chain_message = "Add di Diffusione tra poco - ALLARGARSI!!!"

@@ -53,7 +53,7 @@ if L then
 
 	L.shield_removed = "Scudo Rimosso! (%s)"
 	L.casting_shields = "Lancio Scudo"
-	L.casting_shields_desc = "Avvisa quando viene lanciato lo Scudo per tutti i boss."
+	L.casting_shields_desc = "Avvisa quando viene lanciato lo Scudo per tutti gli Imperatori."
 end
 
 L = BigWigs:NewBossLocale("Elegon", "itIT")

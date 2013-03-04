@@ -14,7 +14,7 @@ if L then
 	L.right = "|c00FF0000-> Destra ->|r"
 
 	L.platform_emote = "Piattaforme" -- Visir Imperiale Zor'lok vola su una delle sue piattaforme!
-	L.platform_emote_final = "Inala"-- Visir Imperiale Zor'lok inala i Feromoni dello Zelo!
+	L.platform_emote_final = "Inalazione"-- Visir Imperiale Zor'lok inala i Feromoni dello Zelo!
 	L.platform_message = "Cambio Piattaforma"
 end
 
@@ -77,7 +77,6 @@ if L then
 	L.engage_trigger = "Morte a tutti coloro che osano sfidare il mio impero!"
 	L.phases = "Fasi"
 	L.phases_desc = "Avviso per il cambiamento delle Fasi."
-	L.phases_icon = "achievement_raid_mantidraid07"
 
 	L.eyes = "Occhi dell'Imperatrice"
 	L.eyes_desc = "Conta gli accumuli di Occhi dell'Imperatrice e mostra una barra di durata."
