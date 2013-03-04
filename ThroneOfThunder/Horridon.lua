@@ -18,27 +18,6 @@ mod:RegisterEnableMob(68476, 69374) -- Horridon, War-God Jalak
 
 local doorCounter = 1
 
--- XXX Fix this
-do
-	local icons = {
-		[0] = "6:21:7:27", -- [0] tank
-		"39:55:7:27",      -- [1] damage
-		"70:86:7:27",      -- [2] healer
-		"102:118:7:27",    -- [3] heroic only
-		"133:153:7:27",    -- [4] deadly
-		"168:182:7:27",    -- [5] important
-		"198:214:7:27",    -- [6] interruptable
-		"229:247:7:27",    -- [7] magic
-		"6:21:40:58",      -- [8] curse
-		"39:55:40:58",     -- [9] poison
-		"70:86:40:58",     -- [10] disease
-		"102:118:40:58",   -- [11] enrage
-	}
-	function mod:GetFlagIcon(index)
-		return ("|TInterface\\EncounterJournal\\UI-EJ-Icons.blp:16:16:0:0:255:66:%s|t"):format(icons[index])
-	end
-end
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -46,9 +25,6 @@ end
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
-
-	L.hex, L.hex_desc = EJ_GetSectionInfo(7125)
-	L.hex_icon = 136512
 
 	L.chain_lightning, L.chain_lightning_desc = EJ_GetSectionInfo(7124)
 	L.chain_lightning_icon = 136480
@@ -60,16 +36,10 @@ if L then
 	L.fireball_message = "Your focus is casting Fireball!"
 	L.fireball_bar = "Focus: Fireball"
 
-	L.deadly_plague, L.deadly_plague_desc = EJ_GetSectionInfo(7119)
-	L.deadly_plague_icon = 136710
-
 	L.venom_bolt_volley, L.venom_bolt_volley_desc = EJ_GetSectionInfo(7112)
 	L.venom_bolt_volley_icon = 136587
 	L.venom_bolt_volley_message = "Your focus is casting Volley!"
 	L.venom_bolt_volley_bar = "Focus: Volley"
-
-	L.blazing_sunlight, L.blazing_sunlight_desc = EJ_GetSectionInfo(7109)
-	L.blazing_sunlight_icon = 136719
 
 	L.adds = "Adds spawning"
 	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
@@ -85,15 +55,9 @@ if L then
 	L.door_trigger = "pour" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
 end
 L = mod:GetLocale()
-L.venom_bolt_volley = L.venom_bolt_volley.." " ..mod:GetFlagIcon(9)..mod:GetFlagIcon(6)
 L.venom_bolt_volley_desc = L.focus_only..L.venom_bolt_volley_desc
-L.blazing_sunlight = L.blazing_sunlight.." "..mod:GetFlagIcon(7)
-L.deadly_plague = L.deadly_plague.." "..mod:GetFlagIcon(10)
-L.fireball = L.fireball .. " " .. mod:GetFlagIcon(6)
 L.fireball_desc = L.focus_only..L.fireball_desc
-L.chain_lightning = L.chain_lightning .. " " .. mod:GetFlagIcon(6)
 L.chain_lightning_desc = L.focus_only..L.chain_lightning_desc
-L.hex = L.hex .. " " ..mod:GetFlagIcon(8)
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -103,18 +67,18 @@ function mod:GetOptions()
 	return {
 		137458,
 		-7086, -7090, -7092,
-		"blazing_sunlight", {136723, "FLASH"}, -- Farraki
+		{-7109, "DISPEL"}, {136723, "FLASH"}, -- Farraki
 		{"venom_bolt_volley", "FLASH"}, {136646, "FLASH"}, -- Gurubashi
-		"deadly_plague", {-7120, "HEALER"}, {136573, "FLASH"}, -- Drakkari
-		"fireball", "chain_lightning", "hex", {136490, "FLASH"}, -- Amani
+		{-7119, "DISPEL"}, {-7120, "HEALER"}, {136573, "FLASH"}, -- Drakkari
+		"fireball", "chain_lightning", {-7125, "DISPEL"}, {136490, "FLASH"}, -- Amani
 		136817, 136821, -- War-God Jalak
 		{-7078, "TANK_HEALER"}, 136741, {-7080, "FLASH", "SAY", "ICON"}, 137240, "adds", "berserk", "bosskill",
 	}, {
 		[140946] = "heroic",
 		[-7086] = -7086,
-		["blazing_sunlight"] = -7081,
+		[-7109] = -7081,
 		["venom_bolt_volley"] = -7082,
-		["deadly_plague"] = -7083,
+		[-7119] = -7083,
 		["fireball"] = -7084,
 		[136817] = -7087,
 		[-7078] = "general",
@@ -228,8 +192,8 @@ do
 end
 
 function mod:Hex(args)
-	if self:Dispeller("curse") then
-		self:Message("hex", "Important", "Alarm", args.spellName, args.spellId)
+	if self:Dispeller("curse", nil, -7125) then
+		self:Message(-7125, "Important", "Alarm", args.spellName, args.spellId)
 	end
 end
 
@@ -283,9 +247,9 @@ do
 	local prev = 0
 	function mod:DeadlyPlague(args)
 		local t = GetTime()
-		if t-prev > 3 and self:Dispeller("disease") then -- don't spam
+		if t-prev > 3 and self:Dispeller("disease", nil, -7119) then -- don't spam
 			prev = t
-			self:Message("deadly_plague", "Important", "Alarm", args.spellName, args.spellId)
+			self:Message(-7119, "Important", "Alarm", args.spellName, args.spellId)
 		end
 	end
 end
@@ -342,9 +306,9 @@ do
 	local prev = 0
 	function mod:BlazingSunlight(args)
 		local t = GetTime()
-		if t-prev > 3 and self:Dispeller("magic") then -- don't spam
+		if t-prev > 3 and self:Dispeller("magic", nil, -7109) then -- don't spam
 			prev = t
-			self:Message("blazing_sunlight", "Important", "Alarm", args.spellName, args.spellId)
+			self:Message(-7109, "Important", "Alarm", args.spellName, args.spellId)
 		end
 	end
 end
