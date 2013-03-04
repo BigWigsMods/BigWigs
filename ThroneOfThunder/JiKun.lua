@@ -106,13 +106,14 @@ end
 
 -- lower, lower, lower, upper, upper, upper, -- 10 N/H
 -- lower, lower, lower, lower, {lower, upper}, upper, upper, {lower, upper}, {lower, upper}, lower, upper, upper, {lower, upper} -- 25 N
--- lower, lower, lower, {lower, upper}, {lower, uppern}, upper, {lower, upper} -- 25 H
+-- lower, lower, lower, {lower, upper}, {lower, upper}, upper, {lower, upper}, {lower, upper}, lower, {upper, lower}, {upper, lower} -- 25 H
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 	local diff = self:Difficulty()
 	if msg:find(L["upper_hatch_trigger"]) or msg:find(L["lower_hatch_trigger"]) then
 		nestCounter = nestCounter + 1
 		local text = (msg:find(L["upper_hatch_trigger"])) and L["upper_nest"] or L["lower_nest"]
 		local icon = (msg:find(L["upper_hatch_trigger"])) and "misc_arrowlup" or "misc_arrowdown"
+		self:Message("nest", "Attention", "Alert", text, icon)
 		if diff == 3 or diff == 5 then -- 10 man N/H
 			if diff == 5 and nestCounter % 2 == 0 then
 				text = L["big_add"]:format(text) -- since no double nest in 10 man, might as well not do 2 messages
@@ -133,19 +134,19 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 				self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
 			end
 		elseif diff == 6 then -- 25 H
-			if nestCounter % 10 < 3 then
+			-- XXX this is correct for 25 H (up to 17, need trascriptor logs for better logic)
+			if nestCounter % 17 < 3 or nestCounter % 17 == 12 then
 				self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
-			elseif nestCounter % 10 == 3 or nestCounter % 10 == 5 or nestCounter % 10 == 8 then
+			elseif nestCounter % 17 == 3 or nestCounter % 17 == 5 or nestCounter % 17 == 8 or nestCounter % 17 == 10 or nestCounter % 17 == 13 or nestCounter % 17 == 15 then
 				text, icon = L["lower_upper_nest"], 134347 -- egg icon
 				self:Bar("nest", 30, text, icon)
-			elseif nestCounter % 10 == 7 then
+			elseif nestCounter % 17 == 7 then
 				self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
 			end
-			if nestCounter % 10 == 2 or nestCounter % 10 == 6 then
+			if nestCounter % 17 == 2 or nestCounter % 17 == 6 or nestCounter % 17 == 12 then
 				self:Message("nest", "Attention", "Alert", L["big_add"]:format(L["lower_nest"]), 134367)
 			end
 		end
-		self:Message("nest", "Attention", "Alert", text, icon)
 	end
 end
 
