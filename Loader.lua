@@ -327,7 +327,7 @@ do
 					currentZone = nil
 				end
 			else
-				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZone), tostring(addon)))
+				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZoneOrBoss), tostring(addon)))
 			end
 		end
 	end
