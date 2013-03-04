@@ -74,6 +74,8 @@ end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "deDE")
 if L then
+	L.engage_trigger = "Tod all jenen, die mein Reich herausfordern!"
+
 	L.phases = "Phasen"
 	L.phases_desc = "Warnung bei Phasenwechsel."
 

@@ -13,6 +13,7 @@ if L then
 
 	L.phases = "Phasen"
 	L.phases_desc = "Warnung für Phasenwechsel"
+
 	L.sunbeam_spawn = "Neuer Sonnestrahl!"
 end
 
@@ -39,11 +40,9 @@ if L then
 	L.cooldown_reset = "Deine Abklingzeiten wurden zurückgesetzt!"
 
 	L.ability_cd = "Fähigkeiten-Abklingzeit"
-	L.ability_cd_desc = "Versuche die Reihenfolge der Fähigkeiten nach dem Auftauchen zu erraten"
+	L.ability_cd_desc = "Zeigt die nächste(n) mögliche(n) Fähigkeit(en) an."
 
 	L.huddle_or_spout = "Kauern oder Fontane"
-	L.huddle_or_strike = "Kauern oder Stoß"
-	L.strike_or_spout = "Stoß oder Fontäne"
 	L.huddle_or_spout_or_strike = "Kauern oder Fontäne oder Stoß"
 end
 

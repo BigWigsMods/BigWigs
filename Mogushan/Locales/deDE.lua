@@ -75,7 +75,7 @@ L = BigWigs:NewBossLocale("Will of the Emperor", "deDE")
 if L then
 	L.enable_zone = "Schmiede des Unendlichen"
 
-	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
+	L.heroic_start_trigger = "Durch die Zerstörung der Rohre"
 	L.normal_start_trigger = "Die Maschine brummt und erwacht zu Leben! Geht zur unteren Ebene!"
 
 	L.rage_trigger = "Der Zorn des Kaisers schallt durch die Berge."
@@ -83,7 +83,7 @@ if L then
 	L.courage_trigger = "Der Mut des Kaisers erscheint in den Erkern!"
 	L.bosses_trigger = "In den riesigen Erkern erscheinen zwei Titanenkonstrukte!"
 	L.gas_trigger = "Die uralte Mogumaschine bricht zusammen!"
-	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
+	L.gas_overdrive_trigger = "Die uralte Mogumaschine schaltet in den Schnellgang!"
 
 	L.target_only = "|cFFFF0000Diese Warnung wird nur für den Boss angezeigt, welchen du anvisierst.|r "
 	L.combo_message = "%s: Combo bald!"
