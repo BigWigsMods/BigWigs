@@ -11,6 +11,7 @@ L.stack = "%dx %s on %s"
 L.cast = "<Casting %s>"
 L.soon = "%s soon!"
 L.count = "%s (%d)"
+L.near = "%s near YOU!"
 
 L.phase = "Phase %d"
 L.normal = "Normal mode"

@@ -11,6 +11,7 @@ L.stack = "%dx %s на |3-5(%s)"
 L.cast = "<Чтение %s>"
 L.soon = "%s скоро!"
 L.count = "%s (%d)"
+L.near = "%s near YOU!"
 
 L.phase = "Фаза %d"
 L.normal = "Обычный режим"

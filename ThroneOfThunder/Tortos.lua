@@ -146,11 +146,15 @@ do
 	end
 	function mod:ShellBlock()
 		kickable = kickable + 1
-		if not scheduled then scheduled = self:ScheduleTimer(announceKickable, 2) end
+		if not scheduled then
+			scheduled = self:ScheduleTimer(announceKickable, 2)
+		end
 	end
 	function mod:ShellConcussion()
 		kickable = kickable - 1
-		if not scheduled then scheduled = self:ScheduleTimer(announceKickable, 2) end
+		if not scheduled then
+			scheduled = self:ScheduleTimer(announceKickable, 2)
+		end
 	end
 end
 

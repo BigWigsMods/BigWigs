@@ -19,6 +19,7 @@ local enabledModules = {}
 local allowedEvents = {}
 local difficulty = 3
 local UpdateDispelStatus = nil
+local UpdateMapData = nil
 local myGUID = nil
 
 -------------------------------------------------------------------------------
@@ -479,6 +480,9 @@ do
 			-- Update Dispel Status
 			UpdateDispelStatus()
 
+			-- Update map size
+			UpdateMapData()
+
 			if self.OnEngage then
 				self:OnEngage(diff)
 			end
@@ -522,6 +526,44 @@ end
 
 function boss:Me(guid)
 	return myGUID == guid
+end
+
+do
+	local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
+	local GetPlayerMapPosition = GetPlayerMapPosition
+
+	local activeMap, mapWidth, mapHeight = nil, 0, 0
+
+	function UpdateMapData()
+		activeMap = nil
+		local mapName = GetMapInfo()
+		local mapData = core:GetPlugin("Proximity"):GetMapData()
+		if not mapData[mapName] then return end
+
+		local currentFloor = GetCurrentMapDungeonLevel()
+		if currentFloor == 0 then currentFloor = 1 end
+
+		local id = mapData[mapName][currentFloor]
+		if id then
+			activeMap = true
+			mapWidth, mapHeight = id[1], id[2]
+		end
+	end
+
+	function boss:Range(player)
+		if not activeMap then return 200 end
+
+		SetMapToCurrentZone()
+		local tx, ty = GetPlayerMapPosition(player)
+		if tx == 0 and ty == 0 then return 200 end -- position is unknown or unit is invalid
+		local px, py = GetPlayerMapPosition("player")
+
+		local dx = (tx - px) * mapWidth
+		local dy = (ty - py) * mapHeight
+		local distance = (dx * dx + dy * dy) ^ 0.5
+
+		return distance
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -707,6 +749,12 @@ function boss:Message(key, color, sound, text, icon)
 		local textType = type(text)
 		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, sound, icon ~= false and icons[icon or textType == "number" and text or key])
 	end
+end
+
+function boss:RangeMessage(key, color, sound, text, icon)
+	if not checkFlag(self, key, C.MESSAGE) then return end
+	local textType = type(text)
+	self:SendMessage("BigWigs_Message", self, key, format(L.near, textType == "string" and text or spells[text or key]), color == nil and "Personal" or color, sound == nil and "Alarm" or sound, icon ~= false and icons[icon or textType == "number" and text or key])
 end
 
 do

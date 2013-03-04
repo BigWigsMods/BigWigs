@@ -224,11 +224,15 @@ function mod:WhirlingBlade(args)
 end
 
 function mod:WindBomb(args)
-	self:TargetMessage(131830, args.sourceName, "Urgent", "Alarm")
 	if self:Me(args.sourceGUID) then
 		self:Flash(131830)
 		self:Say(131830)
+	elseif self:Range(args.sourceName) < 6 then
+		self:RangeMessage(131830)
+		self:Flash(131830)
+		return
 	end
+	self:TargetMessage(131830, args.sourceName, "Urgent", "Alarm")
 end
 
 function mod:Recklessness(args)

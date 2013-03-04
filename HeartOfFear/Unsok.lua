@@ -155,13 +155,17 @@ do
 		fired = fired + 1
 		local player = UnitName("boss1targettarget") --Boss targets an invisible mob, which targets player. Calling boss1targettarget allows us to see it anyways
 		if player and not UnitIsUnit("boss1targettarget", "boss1") then --target target is himself, so he's not targeting off scalple mob yet
-			mod:TargetMessage(spellId, player, "Attention", "Long")
 			mod:CancelTimer(timer)
 			timer = nil
 			if UnitIsUnit("boss1targettarget", "player") then
 				mod:Flash(spellId)
 				mod:Say(spellId)
+			elseif mod:Range("boss1targettarget") < 4 then
+				mod:RangeMessage(spellId)
+				mod:Flash(spellId)
+				return
 			end
+			mod:TargetMessage(spellId, player, "Attention", "Long")
 			return
 		end
 		-- 19 == 0.95sec
@@ -293,7 +297,7 @@ function mod:MonstrosityInc(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 75 then -- phase starts at 70
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
-		self:Message("stages", "Positive", "Long", CL["soon"]:format(EJ_GetSectionInfo(6254)), false) -- Monstrosity
+		self:Message("stages", "Positive", "Long", CL["soon"]:format(self:SpellName(-6254)), false) -- Monstrosity
 	end
 end
 
@@ -316,7 +320,7 @@ end
 
 function mod:AmberCarapace(args)
 	phase = 2
-	self:Message("stages", "Attention", nil, CL["phase"]:format(2)..": "..EJ_GetSectionInfo(6254), "spell_nature_shamanrage") -- Monstrosity
+	self:Message("stages", "Attention", nil, CL["other"]:format(CL["phase"]:format(2), self:SpellName(-6254)), "spell_nature_shamanrage") -- Monstrosity
 	self:DelayedMessage("explosion_by_other", 35, "Attention", CL["custom_sec"]:format(explosion, 20), 122402)
 	self:DelayedMessage("explosion_by_other", 40, "Attention", CL["custom_sec"]:format(explosion, 15), 122402)
 	self:DelayedMessage("explosion_by_other", 45, "Attention", CL["custom_sec"]:format(explosion, 10), 122402)

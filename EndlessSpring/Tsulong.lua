@@ -30,8 +30,6 @@ if L then
 	L.embodied_terror, L.embodied_terror_desc = EJ_GetSectionInfo(6316)
 	L.embodied_terror_icon = 130142 -- white and black sha-y icon
 
-	L.day = EJ_GetSectionInfo(6315)
-	L.night = EJ_GetSectionInfo(6310)
 	L.sunbeam_spawn = "New Sunbeam!"
 end
 L = mod:GetLocale()
@@ -48,8 +46,8 @@ function mod:GetOptions()
 		"phases", "berserk", "bosskill",
 	}, {
 		[-6550] = "heroic",
-		[122752] = L["night"],
-		[122855] = L["day"],
+		[122752] = -6310,
+		[122855] = -6315,
 		phases = "general",
 	}
 end
@@ -78,7 +76,7 @@ end
 function mod:OnEngage(diff)
 	self:OpenProximity(122777, 8)
 	self:Berserk(self:LFR() and 900 or 490)
-	self:Bar("phases", 121, L["day"], "spell_holy_circleofrenewal")
+	self:Bar("phases", 121, -6315, "spell_holy_circleofrenewal") -- The Day
 	self:Bar(122777, 15.6) -- Nightmares
 	self:Bar(122752, 10) -- Shadow Breath
 	bigAddCounter = 0
@@ -151,11 +149,15 @@ do
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
 			mod:CancelTimer(timer)
 			timer = nil
-			mod:TargetMessage(spellId, player, "Important", "Alert")
 			if UnitIsUnit("boss1target", "player") then
 				mod:Flash(spellId)
 				mod:Say(spellId)
+			elseif mod:Range("boss1target") < 9 then
+				mod:RangeMessage(spellId)
+				mod:Flash(spellId)
+				return
 			end
+			mod:TargetMessage(spellId, player, "Important", "Alert")
 			return
 		end
 		-- 19 == 0.95sec
@@ -177,8 +179,8 @@ do
 				self:StopBar(122777) -- Nightmares
 				self:StopBar(122752) -- Shadow Breath
 				self:StopBar(122789) -- Sunbeam
-				self:Message("phases", "Positive", nil, L["day"], "spell_holy_circleofrenewal")
-				self:Bar("phases", 121, L["night"], 122768)
+				self:Message("phases", "Positive", nil, -6315, "spell_holy_circleofrenewal") -- The Day
+				self:Bar("phases", 121, -6310, 122768) -- The Night
 				self:Bar(122855, 32) -- Sun Breath
 				self:Bar("unstable_sha", 18, 122953, 122938)
 				self:Bar("embodied_terror", 11, ("~%s (%d)"):format(L["embodied_terror"], 1), L.embodied_terror_icon)
@@ -187,8 +189,8 @@ do
 				self:StopBar(122855) -- Sun Breath
 				self:OpenProximity(122777, 8)
 				self:Bar(122777, 15) -- Nightmares
-				self:Message("phases", "Positive", nil, L["night"], 122768)
-				self:Bar("phases", 121, L["day"], "spell_holy_circleofrenewal")
+				self:Message("phases", "Positive", nil, -6310, 122768) -- The Night
+				self:Bar("phases", 121, -6315, "spell_holy_circleofrenewal") -- The Day
 				self:Bar(122752, 10) -- Shadow Breath
 				if self:Dispeller("magic", true) then
 					checkForHoTs()

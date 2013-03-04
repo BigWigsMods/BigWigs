@@ -11,6 +11,7 @@ L.stack = "%d層%s >%s<"
 L.cast = "<正在施放：%s>"
 L.soon = "即將 >%s<！"
 L.count = "%s（%d）"
+L.near = "%s near YOU!"
 
 L.phase = "階段%d"
 L.normal = "普通模式"

@@ -1025,6 +1025,10 @@ end
 -- API
 --
 
+function plugin:GetMapData()
+	return mapData
+end
+
 function plugin:Close()
 	updater:Stop()
 
