@@ -108,7 +108,6 @@ L.tankhealer = "Messaggio per Difensori e Guaritori. "
 L.dispeller = "Messaggio solo per Dissolutori Magici. "
 
 L["About"] = "Informazioni"
-L["Main Developers"] = "Sviluppatori principali"
 L["Developers"] = "Sviluppatori"
 L["Maintainers"] = "Assistenti"
 L["License"] = "Licenza"

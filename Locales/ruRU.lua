@@ -108,7 +108,6 @@ L.tankhealer = "Только для танков и лекарей. "
 L.dispeller = "Только для рассеивателей. "
 
 L["About"] = "О Big Wigs"
-L["Main Developers"] = "Основатели"
 L["Developers"] = "Разработчики"
 L["Maintainers"] = "Помощники"
 L["License"] = "Лицензия"

@@ -236,15 +236,13 @@ function options:OnInitialize()
 	local about = self:GetPanel(L["About"], "Big Wigs")
 	about:SetScript("OnShow", function(frame)
 		local fields = {
-			L["Main Developers"],
 			L["Developers"],
 			L["License"],
 			L["Website"],
 			L["Contact"],
 		}
 		local fieldData = {
-			"Ammo, Rabbit",
-			"Funkydude, Maat, Nebula169",
+			"Ammo, Funkydude, Maat, Nebula169, Rabbit",
 			L["See license.txt in the main Big Wigs folder."],
 			"http://www.wowace.com/addons/big-wigs/",
 			L["irc.freenode.net in the #wowace channel"],

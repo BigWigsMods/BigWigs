@@ -110,7 +110,6 @@ L.tankhealer = "只警报坦克和治疗。"
 L.dispeller = "只警报驱散和打断。"
 
 L["About"] = "关于"
-L["Main Developers"] = "主要开发者"
 L["Developers"] = "开发者"
 L["Maintainers"] = "维护"
 L["License"] = "许可"

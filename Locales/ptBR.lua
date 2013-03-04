@@ -108,7 +108,6 @@ L.tankhealer = "Alerta somente para Tanques & Curadores. "
 --L.dispeller = "Dispeller alerts only. "
 
 L["About"] = "Sobre"
-L["Main Developers"] = "Principais Desenvolvedores"
 L["Developers"] = "Desenvolvedores"
 L["Maintainers"] = "Mantenedores"
 L["License"] = "Licença"

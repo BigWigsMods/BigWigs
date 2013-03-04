@@ -108,7 +108,6 @@ L.tankhealer = "Tank & Healer alerts only. "
 L.dispeller = "Dispeller alerts only. "
 
 L["About"] = true
-L["Main Developers"] = true
 L["Developers"] = true
 L["Maintainers"] = true
 L["License"] = true

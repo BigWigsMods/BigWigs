@@ -108,7 +108,6 @@ L.tankhealer = " Solo alertas para tanque y sanador. "
 L.dispeller = "Alertas para dispelear únicamente."
 
 L["About"] = "Acerca de"
-L["Main Developers"] = "Principales desarrolladores"
 L["Developers"] = "Desarrolladores"
 L["Maintainers"] = "Mantenedores"
 L["License"] = "Licencia"

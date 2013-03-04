@@ -110,7 +110,6 @@ L.tankhealer = "Warnung nur für Tanks und Heiler. "
 L.dispeller = "Warnungen nur für Banner. "
 
 L["About"] = "Über"
-L["Main Developers"] = "Hauptentwickler"
 L["Developers"] = "Entwickler"
 L["Maintainers"] = "Wartung"
 L["License"] = "Lizenz"
