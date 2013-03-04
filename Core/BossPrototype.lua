@@ -633,7 +633,10 @@ do
 		end
 	end
 	function boss:Dispeller(dispelType, isOffensive, key)
-		if key and band(self.db.profile[key], C.DISPEL) ~= C.DISPEL then return true end
+		if key then
+			if type(key) == "number" and key > 0 then key = spells[key] end
+			if band(self.db.profile[key], C.DISPEL) ~= C.DISPEL then return true end
+		end
 		if isOffensive then
 			if offDispel:find(dispelType, nil, true) then
 				return true
