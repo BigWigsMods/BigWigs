@@ -1077,7 +1077,7 @@ do
 		BigWigs_BurningCrusade = "Big Wigs ".. EJ_GetTierInfo(2),
 		BigWigs_WrathOfTheLichKing = "Big Wigs ".. EJ_GetTierInfo(3),
 		BigWigs_Cataclysm = "Big Wigs ".. EJ_GetTierInfo(4),
-		BigWigs_MistsOfPandaria = "Big Wigs ".. EJ_GetTierInfo(5),
+		BigWigs_MistsOfPandaria = "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(5) .."|r",
 		LittleWigs = "Little Wigs",
 	}
 
