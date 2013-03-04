@@ -360,7 +360,7 @@ end
 
 function mod:Fearless(args)
 	if self:Me(args.destGUID) then
-		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "target") -- just have it here for now
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "target", "focus") -- backup
 		self:OpenProximity("proximity", 4) -- Penetrating Bolt
 		atSha = true
 		self:CancelDelayedMessage(CL["soon"]:format(self:SpellName(119888))) -- Death Blossom
