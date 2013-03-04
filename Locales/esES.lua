@@ -33,7 +33,7 @@ L["Waiting until combat ends to finish loading due to Blizzard combat restrictio
 L["Combat has ended, Big Wigs has now finished loading."] = "El combate ha terminado, Big Wigs ha terminado de cargar."
 L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "Debido a las restricciones de Blizzard la configuración debe abrirse primero fuera de combate, antes se podia acceder en combate."
 
-L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."] = "Tenga en cuenta que esta zona requiere el plugin  -[[|cFF436EEE%s|r]]- para que los contadores sean mostrados."
+L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."] = "Tenga en cuenta que esta zona requiere el plugin -[[|cFF436EEE%s|r]]- para que los contadores sean mostrados."
 
 L.coreAddonDisabled = "Big Wigs no puede funcionar debidamente ya que el addon %s está desactivado. Puedes activarlo desde el addon Control panel o en la pantalla de selección de personaje."
 
@@ -66,6 +66,8 @@ L["Pretend I'm using DBM"] = "Fingir que estoy usando DBM"
 L.pretendDesc = "Si un usuario de DBM hace un chequeo de versión para ver quien está usando DBM, ellos te verán a ti en la lista. Muy útil para guilds que forzan a usar DBM."
 L["Create custom DBM bars"] = "Crear barras personalizadas de DBM"
 L.dbmBarDesc = "Si un usuario de DBM envia un contador de Pull u otro personalizado tipo 'pizza' bar, este será mostrado en Big Wigs."
+L.chatMessages = "Chat frame messages"
+L.chatMessagesDesc = "Todos los mensajes de salida de Big Wigs a la ventana de chat por defecto en adición a los ajustes mostrados"
 
 L["BAR"] = "Barras"
 L["MESSAGE"] = "Mensajes"

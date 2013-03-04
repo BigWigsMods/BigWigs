@@ -127,9 +127,6 @@ L["Show icons next to messages, only works for Raid Warning."] = "Отображ
 L["Class colors"] = "Окраска по классу"
 L["Colors player names in messages by their class."] = "Окрашивает имя игрока в сообщениях в соответствии с его классом."
 
-L["Chat frame"] = "Окно чата"
-L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Выводить все сообщения BigWigs в стандартное окно чата в дополнение к настройкам отображения."
-
 L["Font size"] = "Размер шрифта"
 L["None"] = "Нет"
 L["Thin"] = "Тонкий"

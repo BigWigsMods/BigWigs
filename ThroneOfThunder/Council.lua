@@ -190,7 +190,7 @@ function mod:FrostbiteApplied(args)
 end
 
 function mod:BitingColdApplied(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent",  "Alert")
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert")
 	self:Bar(args.spellId, 45)
 	self:SecondaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then

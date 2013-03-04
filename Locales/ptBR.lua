@@ -66,6 +66,8 @@ L["Pretend I'm using DBM"] = "Fingir que estou usando DBM"
 L.pretendDesc = "Se um usuário do DBM fizer uma verificação de versão para ver quem está usando DBM, eles te verão na lista. Útil em guildas que obrigam o uso do DBM."
 L["Create custom DBM bars"] = "Mostar barras do DBM personalizadas"
 L.dbmBarDesc = "Se um usuário do DBM enviar um contador de puxe ou uma barra personalizada de 'pizza', será exibido no Big Wigs."
+L.chatMessages = "Chat frame messages"
+L.chatMessagesDesc = "Coloca todas as mensagens do BigWigs na janela de chat padrão, em adição da configuração de amostra"
 
 L["BAR"] = "Barras"
 L["MESSAGE"] = "Mensagens"

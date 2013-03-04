@@ -127,9 +127,6 @@ L["Show icons next to messages, only works for Raid Warning."] = "显示图标�
 L["Class colors"] = "职业颜色"
 L["Colors player names in messages by their class."] = "使用职业颜色来染色信息内玩家颜色。"
 
-L["Chat frame"] = "聊天框体"
-L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "除了显示设置，输出所有 Big Wigs 信息到默认聊天框体。"
-
 L["Font size"] = "字体大小"
 L["None"] = "无"
 L["Thin"] = "细"

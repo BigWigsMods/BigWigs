@@ -173,11 +173,11 @@ end
 
 function mod:Intermission(args)
 	self:CancelAllTimers()
-	self:StopBar(134916)  -- Decapitate
-	self:StopBar(135095)  -- Thunderstruck
+	self:StopBar(134916) -- Decapitate
+	self:StopBar(135095) -- Thunderstruck
 	self:StopBar(136850) -- Lightning Whip
 	self:StopBar(136543) -- Summon Ball Lightning
-	self:StopBar(136478)  -- Furious Slash
+	self:StopBar(136478) -- Furious Slash
 	self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1") -- just to be efficient
 	self:Message("stages", "Positive", "Info", L["intermission"], args.spellId)
 	self:Bar("stages", 45, L["intermission"], args.spellId)

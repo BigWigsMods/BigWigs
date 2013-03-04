@@ -115,7 +115,7 @@ end
 
 function mod:Poison(args)
 	if self:Me(args.destGUID) then
-		self:Bar(args.spellId, 30,  L["fumes_bar"])
+		self:Bar(args.spellId, 30, L["fumes_bar"])
 	end
 end
 

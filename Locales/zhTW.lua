@@ -68,6 +68,8 @@ L["Pretend I'm using DBM"] = "假裝我是使用 DBM"
 L.pretendDesc = "如果一個 DBM 使用者作版本檢查以確認哪些人用了 DBM 的時候，他們會看到你在名單之上。當你的公會強制要求使用DBM，這是很有用的。"
 L["Create custom DBM bars"] = "創建自訂的 DBM 計時條"
 L.dbmBarDesc = "如果 DBM 使用者發送一個倒數計時或一個自訂的圓環型計時條，他會顯示在 Big Wigs。"
+L.chatMessages = "Chat frame messages"
+L.chatMessagesDesc = "除了顯示設定，輸出所有 Big Wigs 訊息到預設聊天框體。"
 
 L["BAR"] = "計時條"
 L["MESSAGE"] = "訊息"

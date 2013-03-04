@@ -128,9 +128,6 @@ L["Show icons next to messages, only works for Raid Warning."] = "레이드 경�
 L["Class colors"] = "직업 색상"
 L["Colors player names in messages by their class."] = "메세지의 플레이어 이름에 직업 색상을 사용합니다."
 
-L["Chat frame"] = "대화창"
-L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "모든 BigWigs 메세지를 디스플레이 설정에 추가된 기본 대화창에 출력합니다."
-
 L["Font size"] = "글꼴 크기"
 L["None"] = "없음"
 L["Thin"] = "얇게"

@@ -126,9 +126,6 @@ L["Show icons next to messages, only works for Raid Warning."] = true
 L["Class colors"] = true
 L["Colors player names in messages by their class."] = true
 
-L["Chat frame"] = true
-L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = true
-
 L["Font size"] = true
 L["None"] = true
 L["Thin"] = true

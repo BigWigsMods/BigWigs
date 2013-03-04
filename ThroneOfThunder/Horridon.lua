@@ -384,7 +384,7 @@ function mod:Swipe(args)
 end
 
 function mod:Puncture(args)
-	self:StackMessage(-7078, args.destName, args.amount, "Urgent",  "Info")
+	self:StackMessage(-7078, args.destName, args.amount, "Urgent", "Info")
 end
 
 function mod:DireCall(args)

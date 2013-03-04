@@ -136,6 +136,15 @@ local acOptions = {
 			order = 24,
 			width = "full",
 		},
+		chat = {
+			type = "toggle",
+			name = L.chatMessages,
+			desc = L.chatMessagesDesc,
+			order = 25,
+			width = "full",
+			get = function() return BigWigs:GetPlugin("Messages").db.profile.chat end,
+			set = function(_, v) BigWigs:GetPlugin("Messages").db.profile.chat = v end,
+		},
 		separator3 = {
 			type = "description",
 			name = " ",

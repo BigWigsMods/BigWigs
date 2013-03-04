@@ -287,12 +287,6 @@ do
 						step = 1,
 						width = "full",
 					},
-					chat = {
-						type = "toggle",
-						name = L["Chat frame"],
-						desc = L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."],
-						order = 4,
-					},
 					usecolors = {
 						type = "toggle",
 						name = L["Use colors"],

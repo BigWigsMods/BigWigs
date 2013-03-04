@@ -91,16 +91,16 @@ do
 	local scheduled = nil
 	local function warnPlayerMutations()
 		-- Positive
-		local statsP = select(4, UnitDebuff("player", mod:SpellName(136184))) or 0   -- Thick Bones
+		local statsP = select(4, UnitDebuff("player", mod:SpellName(136184))) or 0 -- Thick Bones
 		local masteryP = select(4, UnitDebuff("player", mod:SpellName(136186))) or 0 -- Clear Mind
-		local hasteP = select(4, UnitDebuff("player", mod:SpellName(136182))) or 0   -- Improved Synampes
-		local critP  = select(4, UnitDebuff("player", mod:SpellName(136180))) or 0   -- Keen Eyesight
+		local hasteP = select(4, UnitDebuff("player", mod:SpellName(136182))) or 0 -- Improved Synampes
+		local critP = select(4, UnitDebuff("player", mod:SpellName(136180))) or 0 -- Keen Eyesight
 		local totalP = statsP + masteryP + hasteP + critP
 		-- Negative
 		local statsN = select(4, UnitDebuff("player", mod:SpellName(136185))) or 0
 		local masteryN = select(4, UnitDebuff("player", mod:SpellName(136187))) or 0
 		local hasteN = select(4, UnitDebuff("player", mod:SpellName(136183))) or 0
-		local critN  = select(4, UnitDebuff("player", mod:SpellName(136181))) or 0
+		local critN = select(4, UnitDebuff("player", mod:SpellName(136181))) or 0
 		local totalN = statsN + masteryN + hasteN + critN
 		if totalP == 5 then mod:Flash(-6960) end
 		local stacks = (" |c00008000(%d)|r |c00FF0000(%d)|r"):format(totalP, totalN)

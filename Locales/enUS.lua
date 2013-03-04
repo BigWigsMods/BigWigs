@@ -66,6 +66,8 @@ L["Pretend I'm using DBM"] = true
 L.pretendDesc = "If a DBM user does a version check to see who's using DBM, they will see you on the list. Useful for guilds that force using DBM."
 L["Create custom DBM bars"] = true
 L.dbmBarDesc = "If a DBM user sends a pull timer or a custom 'pizza' bar, it will be shown in Big Wigs."
+L.chatMessages = "Chat frame messages"
+L.chatMessagesDesc = "Outputs all BigWigs messages to the default chat frame in addition to the display setting."
 
 L["BAR"] = "Bars"
 L["MESSAGE"] = "Messages"

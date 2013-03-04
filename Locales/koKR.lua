@@ -68,6 +68,8 @@ L["Pretend I'm using DBM"] = "Pretend I'm using DBM"
 L.pretendDesc = "If a DBM user does a version check to see who's using DBM, they will see you on the list. Useful for guilds that force using DBM."
 L["Create custom DBM bars"] = "Create custom DBM bars"
 L.dbmBarDesc = "If a DBM user sends a pull timer or a custom 'pizza' bar, it will be shown in Big Wigs."
+L.chatMessages = "Chat frame messages"
+L.chatMessagesDesc = "모든 BigWigs 메세지를 디스플레이 설정에 추가된 기본 대화창에 출력합니다."
 
 L["BAR"] = "바"
 L["MESSAGE"] = "메세지"
