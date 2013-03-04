@@ -632,7 +632,8 @@ do
 			defDispel = defDispel .. "curse,"
 		end
 	end
-	function boss:Dispeller(dispelType, isOffensive)
+	function boss:Dispeller(dispelType, isOffensive, key)
+		if key and band(self.db.profile[key], C.DISPEL) ~= C.DISPEL then return true end
 		if isOffensive then
 			if offDispel:find(dispelType, nil, true) then
 				return true
@@ -709,8 +710,6 @@ do
 		if band(fullKey, C.TANK) == C.TANK and not self:Tank() then return end
 		if band(fullKey, C.HEALER) == C.HEALER and not self:Healer() then return end
 		if band(fullKey, C.TANK_HEALER) == C.TANK_HEALER and not self:Tank() and not self:Healer() then return end
-		if band(fullKey, C.DISPEL_MAGIC) == C.DISPEL_MAGIC and not self:Dispeller("magic", true) then return end
-		if band(fullKey, C.DISPEL_ENRAGE) == C.DISPEL_ENRAGE and not self:Dispeller("enrage", true) then return end
 		return band(fullKey, flag) == flag
 	end
 end

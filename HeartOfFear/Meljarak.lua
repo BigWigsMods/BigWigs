@@ -47,7 +47,7 @@ function mod:GetOptions()
 	return {
 		-6554, {122064, "FLASH", "SAY"}, {122125, "FLASH"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
 		122409,
-		{122149, "DISPEL_MAGIC"}, "mending",
+		{122149, "DISPEL"}, "mending",
 		122406, {122224, "FLASH"}, {121896, "FLASH"}, {131830, "SAY", "FLASH", "PROXIMITY"}, "recklessness",
 		"stages", "berserk", "bosskill",
 	}, {
@@ -203,7 +203,9 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Attention", "Alert")
+			if self:Dispeller("magic", true, args.spellId) then
+				self:Message(args.spellId, "Attention", "Alert")
+			end
 		end
 	end
 end

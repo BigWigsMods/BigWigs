@@ -55,7 +55,7 @@ function mod:GetOptions()
 		117921, 119521, 117910, {117961, "FLASH"}, -- Qiang
 		{118303, "SAY", "ICON"}, {117697, "FLASH"}, -- Zian
 		118047, 118122, 118094, {118162, "FLASH"}, -- Subetai
-		"cowardice", 117708, {117837, "DISPEL_ENRAGE"}, -- Meng
+		"cowardice", 117708, {117837, "DISPEL"}, -- Meng
 		"bosses", "proximity", "casting_shields", "berserk", "bosskill",
 	}, {
 		[117921] = -5841,
@@ -170,8 +170,10 @@ function mod:MaddeningShout(args)
 end
 
 function mod:Delirious(args)
-	self:Message(args.spellId, "Urgent", "Alert")
-	self:Bar(args.spellId, 20)
+	if self:Dispeller("enrage", true, args.spellId) then
+		self:Message(args.spellId, "Urgent", "Alert")
+		self:Bar(args.spellId, 20)
+	end
 end
 
 -- Subetai

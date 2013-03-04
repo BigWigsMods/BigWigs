@@ -4,7 +4,7 @@ local names = {}
 local descriptions = {}
 
 -- Option bitflags
-local coreToggles = { "BAR", "MESSAGE", "ICON", "WHISPER", "SOUND", "SAY", "PROXIMITY", "FLASH", "PING", "EMPHASIZE", "TANK", "HEALER", "TANK_HEALER", "DISPEL_MAGIC", "DISPEL_ENRAGE", "ME_ONLY", "PULSE" }
+local coreToggles = { "BAR", "MESSAGE", "ICON", "PULSE", "SOUND", "SAY", "PROXIMITY", "FLASH", "ME_ONLY", "EMPHASIZE", "TANK", "HEALER", "TANK_HEALER", "DISPEL" }
 for i, toggle in next, coreToggles do
 	C[toggle] = bit.lshift(1, i - 1)
 	if L[toggle] then
@@ -14,8 +14,8 @@ for i, toggle in next, coreToggles do
 end
 
 -- Toggles that should actually be shown in the interface options
-local listToggles = { "MESSAGE", "FLASH", "BAR", "ICON", "WHISPER", "SAY", "PING", "PROXIMITY" }
-local roleToggles = { "TANK", "HEALER", "TANK_HEALER", "DISPEL_MAGIC", "DISPEL_ENRAGE" }
+local listToggles = { "MESSAGE", "FLASH", "BAR", "ICON", "SAY", "PROXIMITY" }
+local roleToggles = { "TANK", "HEALER", "TANK_HEALER", "DISPEL" }
 
 local used = nil
 function BigWigs:RegisterOption(key, name, desc)
@@ -114,10 +114,8 @@ local function getRoleStrings(module, key)
 		return " |TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:0:19:22:41|t", L.tank
 	elseif bit.band(option, C.HEALER) == C.HEALER then
 		return " |TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:20:39:1:20|t", L.healer
-	elseif bit.band(option, C.DISPEL_MAGIC) == C.DISPEL_MAGIC then
+	elseif bit.band(option, C.DISPEL) == C.DISPEL then
 		return " |TInterface\\EncounterJournal\\UI-EJ-Icons.blp:16:16:0:0:255:66:229:247:7:27|t", L.dispeller
-	elseif bit.band(option, C.DISPEL_ENRAGE) == C.DISPEL_ENRAGE then
-		return " |TInterface\\EncounterJournal\\UI-EJ-Icons.blp:16:16:0:0:255:66:102:118:40:58|t", L.dispeller
 	end
 	return "", ""
 end
