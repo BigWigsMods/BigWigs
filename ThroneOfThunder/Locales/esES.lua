@@ -90,7 +90,8 @@ end
 
 L = BigWigs:NewBossLocale("Primordius", "esES")
 if L then
-
+	L.stream_of_blobs = "Stream of blobs"
+	L.mutations = "Mutaciones"
 end
 
 L = BigWigs:NewBossLocale("Dark Animus", "esES")
@@ -100,15 +101,29 @@ if L then
 end
 L = BigWigs:NewBossLocale("Iron Qon", "esES")
 if L then
+	L.molten_energy = "Energía de arrabio"
 
+	L.overload_casting = "Casteando Sobrecarga de arrabio"
+	L.overload_casting_desc = "Avisa cuando está casteando Sobrecarga de arrabio"
+
+	L.arcing_lightning_cleared = "Raid limpia de Arco de relámpagos"
 end
 L = BigWigs:NewBossLocale("Twin Consorts", "esES")
 if L then
-
+	L.barrage_fired = "¡Tromba disparada!"
+	L.last_phase_yell_trigger = "Just this once..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
 end
 L = BigWigs:NewBossLocale("Lei Shen", "esES")
 if L then
+	L.conduit_abilities = "Habilidades de conducto"
+	L.conduit_abilities_desc = "Barras para CD aproximado para las habilidades específicas de los conductos."
+	L.conduit_abilities_message = "Siguiente habilidad de conductoNext conduit ability"
 
+	L.intermission = "Intermedio"
+	L.overchargerd_message = "Impresionante pulso AoE"
+	L.static_shock_message = "Dividiendo el daño AoE"
+	L.diffusion_add_message = "Difusión de adds"
+	L.diffusion_chain_message = "Difusión de adds inminente - ¡DISPERSAOS!"
 end
 L = BigWigs:NewBossLocale("Ra-den", "esES")
 if L then
