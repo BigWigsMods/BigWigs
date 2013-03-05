@@ -412,8 +412,8 @@ end
 --
 
 do
-	local DBMdotRevision = "8421"
-	local DBMdotDisplayVersion = "5.1.0"
+	local DBMdotRevision = "8828"
+	local DBMdotDisplayVersion = "5.2.0"
 	local function dbmFaker(_, _, prefix, revision, _, displayVersion)
 		if prefix == "H" then
 			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale(), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
