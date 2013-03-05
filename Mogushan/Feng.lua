@@ -272,7 +272,6 @@ do
 		wipe(resonanceMarkers)
 	end
 	function mod:ArcaneResonanceApplied(args)
-		self:CDBar(args.spellId, 15.4, resonance)
 		resonanceMarkers[#resonanceMarkers+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
@@ -280,6 +279,7 @@ do
 			self:Say(args.spellId, resonance)
 		end
 		if not scheduled then
+			self:CDBar(args.spellId, 15.4, resonance)
 			scheduled = self:ScheduleTimer(warnResonance, 0.15, args.spellId)
 		end
 	end

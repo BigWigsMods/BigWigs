@@ -150,7 +150,6 @@ do
 		scheduled = nil
 	end
 	function mod:LightningPrisonApplied(args)
-		self:CDBar(117436, 25)
 		lightningPrisonList[#lightningPrisonList + 1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Flash(117436)
@@ -158,6 +157,7 @@ do
 			self:OpenProximity(117436, 7)
 		end
 		if not scheduled then
+			self:CDBar(117436, 25)
 			scheduled = self:ScheduleTimer(warnPrison, 0.2)
 		end
 	end

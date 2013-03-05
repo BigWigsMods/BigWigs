@@ -110,8 +110,8 @@ do
 		if self:Me(args.destGUID) and not self:Tank() then
 			self:OpenProximity(args.spellId, 4)
 		end
-		self:CDBar(args.spellId, 19)
 		if not scheduled then
+			self:CDBar(args.spellId, 19)
 			scheduled = self:ScheduleTimer(reportFog, 0.2, args.spellName)
 		end
 	end
