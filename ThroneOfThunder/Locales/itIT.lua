@@ -74,7 +74,7 @@ if L then
 	L.upper_nest = "Nido |c00008000Superiore|r"
 	L.lower_nest = "Nido |c00FF0000Inferiore|r"
 	L.lower_upper_nest = "Nido |c00FF0000Inferiore|r + |c00008000Superiore|r"
-	L.food_call_trigger = "Hatchling calls for food!" --da tradurre
+	--L.food_call_trigger = "Hatchling calls for food!" --da tradurre / Commented out since there isnt anymore into Locals, Keep it for lazyness.
 	L.nest = "Nidi"
 	L.nest_desc = "Avvisi relativi ai nidi. |c00FF0000Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi!|r"
 	L.big_add = "Add Grande su %s"	

@@ -9,7 +9,7 @@ L["Style"] = "Stile"
 L.bigWigsBarStyleName_Default = "Predefinito"
 
 L["Clickable Bars"] = "Barre Cliccabili"
-L.clickableBarsDesc = "Le barre di Big Wigs non sono cliccabili di default. In questo modo puoi selezionare o lanciare le magie anche dietro le barre, cambiare l'angolo della telecamera, e così via, mentre il cursore è su una barra.|cffff4411Se abiliti le Barre Cliccabili, questo non funzionerà più.|r Le barre intercetteranno i click del mouse.\n"
+L.clickableBarsDesc = "Le barre di Big Wigs non sono cliccabili di default. In questo modo puoi selezionare o lanciare le abilità anche dietro le barre, cambiare l'angolo della telecamera, e così via, mentre il cursore è su una barra.|cffff4411Se abiliti le Barre Cliccabili, questo non funzionerà più.|r Le barre intercetteranno i click del mouse.\n"
 L["Enables bars to receive mouse clicks."] = "Abilita le barre ad intercettare i Click del Mouse"
 L["Modifier"] = "Modificatore"
 L["Hold down the selected modifier key to enable click actions on the timer bars."] = "Premi il modificatore selezionato per abilitare i click sulle barre dei timer."
@@ -51,7 +51,7 @@ L["Fill"] = "Riempi"
 L["Fills the bars up instead of draining them."] = "Riempi le barre invece di svuotarle man mano che passano i secondi."
 
 L["Local"] = "Locale"
-L["%s: Timer [%s] finished."] = "%s: Timer [%s] Finito."
+L["%s: Timer [%s] finished."] = "%s: Timer [%s] Terminato."
 L["Custom bar '%s' started by %s user '%s'."] = "Barra personalizzata '%s' creata dall'utente '%s'."
 
 L["Pull"] = "Ingaggio"
@@ -112,7 +112,7 @@ L.sinkDescription = "Indirizza l'uscita dei messaggi sul visualizzatore di Messa
 L.emphasizedSinkDescription = "Indirizza l'uscita dei messaggi attraverso il visualizzatore di Messaggi ENFATIZZATI di Big Wigs. Questo metodo supporta testi, colori e può visualizzare un solo messaggio per volta."
 L.emphasizedCountdownSinkDescription = "Indirizza l'uscita da questo addon verso la visualizzazione del Recupero Messaggi Enfatizzati. Questa visualizzazione supporta testi e colori, e può visualizzare solo un messaggio alla volta."
 
---L["Big Wigs Emphasized"] = "Big Wigs Emphasized"
+L["Big Wigs Emphasized"] = "Big Wigs Enfatizzato"
 L["Messages"] = "Messaggi"
 L["Normal messages"] = "Messaggi Normali"
 L["Emphasized messages"] = "Messaggi Enfatizzati"
@@ -139,7 +139,7 @@ L["Toggles the monochrome flag on all messages, removing any smoothing of the fo
 L["Display time"] = "Tempo di Visualizzazione"
 L["How long to display a message, in seconds"] = "Per quanto tempo deve essere visualizzato il messaggio, in secondi"
 L["Fade time"] = "Tempo di Scomparsa"
-L["How long to fade out a message, in seconds"] = "Dopo quanti secondi il messaggio deve scomparire"
+L["How long to fade out a message, in seconds"] = "Dopo quanti secondi il messaggio deve scomparire, in secondi"
 L["Font color"] = "Colore carattere"
 
 -----------------------------------------------------------------------
@@ -161,7 +161,7 @@ L.proximity = "Monitor di Prossimità"
 L.proximity_desc = "Visualizza il monitor di prossimità al momento opportuno durante il combattimento, con i giocatori che stanno troppo vicino a te."
 
 L["Close"] = "Chiudi"
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Chiude il Monitor di prossimità.\n\nPer disabilitarlo completamente per tutti gli incontri, devi andare nelle impostazioni dei singoli combattimenti e disabilitare l'opzione 'Prossimità"
+L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Chiude il Monitor di Prossimità.\n\nPer disabilitarlo completamente per tutti gli incontri, devi andare nelle impostazioni dei singoli combattimenti e disabilitare l'opzione 'Prossimità"
 L["Lock"] = "Blocca"
 L["Locks the display in place, preventing moving and resizing."] = "Blocca il Monitor, impedendo che venga spostato e ridimensionato."
 L["Title"] = "Titolo"
