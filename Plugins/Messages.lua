@@ -189,7 +189,7 @@ function plugin:OnRegister()
 	db = self.db.profile
 
 	fakeEmphasizeMessageAddon:SetSinkStorage(db.emphasizedMessages)
-	self:RegisterSink("BigWigsEmphasized", "Big Wigs Emphasized", L.emphasizedSinkDescription, "EmphasizedPrint")
+	self:RegisterSink("BigWigsEmphasized", L["Big Wigs Emphasized"], L.emphasizedSinkDescription, "EmphasizedPrint")
 	self:SetSinkStorage(self.db.profile)
 	self:RegisterSink("BigWigs", "Big Wigs", L.sinkDescription, "Print")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)

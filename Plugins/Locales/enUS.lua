@@ -111,6 +111,7 @@ L.sinkDescription = "Route output from this addon through the Big Wigs message d
 L.emphasizedSinkDescription = "Route output from this addon through the Big Wigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
 L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
 
+L["Big Wigs Emphasized"] = true
 L["Messages"] = true
 L["Normal messages"] = true
 L["Emphasized messages"] = true

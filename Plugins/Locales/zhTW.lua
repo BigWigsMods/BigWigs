@@ -112,6 +112,7 @@ L.sinkDescription = "向外通過 Big Wigs 插件訊息顯示。這些包含了�
 L.emphasizedSinkDescription = "通過此插件輸出到 Big Wigs 強調訊息顯示。此顯示支持文字和顏色，每次只可顯示一條訊息。"
 L.emphasizedCountdownSinkDescription = "路線輸出從此插件通過 Big Wigs 強調冷卻訊息顯示。此顯示支持文本和顏色，一次只能顯示一個消息。"
 
+L["Big Wigs Emphasized"] = "Big Wigs 強調"
 L["Messages"] = "訊息"
 L["Normal messages"] = "一般訊息"
 L["Emphasized messages"] = "強調訊息"
@@ -219,7 +220,7 @@ L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "設定使
 L["Default only"] = "僅用預設"
 
 L.customSoundDesc = "播放選定的自訂的聲音，而不是由模塊提供的"
-L.resetAllCustomSound = "如果設置全部首領戰鬥自訂的聲音，此按鈕將重置"全部"以這裡自訂的聲音來代替。
+L.resetAllCustomSound = "如果設置全部首領戰鬥自訂的聲音，此按鈕將重置“全部”以這裡自訂的聲音來代替。"
 
 -----------------------------------------------------------------------
 -- Statistics.lua
