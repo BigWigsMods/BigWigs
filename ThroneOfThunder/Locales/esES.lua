@@ -35,33 +35,57 @@ end
 
 L = BigWigs:NewBossLocale("Council of Elders", "esES")
 if L then
-	L.priestess_adds = "Priestess adds"
-	L.priestess_adds_desc = "Warning for all kinds of adds from High Priestess Mar'li."
-	L.priestess_adds_message = "Priestess add"
+	L.priestess_adds = "Adds de la Sacerdotisa"
+	L.priestess_adds_desc = "Aviso para todo tipo de adds de la Suma Sacerdotisa Mar'li."
+	L.priestess_adds_message = "Add de la Sacerdotisa"
 
-	L.full_power = "Full power"
+	L.full_power = "Poder máximo"
 	L.assault_message = "Asalto"
-	L.hp_to_go_power = "HP to go: %d%% - Power: %d"
+	L.hp_to_go_power = "HP para acabar: %d%% - Poder: %d"
 end
 
 L = BigWigs:NewBossLocale("Tortos", "esES")
 if L then
+	L.kick = "Patear"
+	L.kick_desc = "Lleva la cuenta de cuantas tortugas pueden ser pateadas."
+	L.kick_message = "Tortugas pateables: %d"
 
+	L.crystal_shell_removed = "¡Caparazón de cristal eliminado!"
+	L.no_crystal_shell = "SIN Caparazón de cristal"
 end
 
 L = BigWigs:NewBossLocale("Megaera", "esES")
 if L then
+	L.breaths = "Alientos"
+	L.breaths_desc = "Avisos relacionados con los diferentes tipos de alientos."
 
+	L.arcane_adds = "Adds arcanos"
 end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "esES")
 if L then
-
+	L.flight_over = "Vuelo completado"
+	L.young_egg_hatching = "Huevos pequeños eclosionando"
+	L.lower_hatch_trigger = "The eggs in one of the lower nests begin to hatch!"
+	L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch!"
+	L.upper_nest = "Nido |c00008000superior|r"
+	L.lower_nest = "Nido |c00FF0000inferior|r"
+	L.lower_upper_nest = "Nido |c00FF0000inferior|r + |c00008000superior|r"
+	L.nest = "Nidos"
+	L.nest_desc = "Avisos relacionados con los nidos. |c00FF0000¡No cambies esto para desactivar los avisos, si no estás asignado para gestionar los nidos!|r"
+	L.big_add = "Add grande al %s"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "esES")
 if L then
-
+	L.rays_spawn = "Aparecen rayos"
+	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
+	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
+	L.red_add = "Add |c00FF0000rojo|r"
+	L.blue_add = "Add |c000000FFazul|r"
+	L.clockwise = "En sentido horario"
+	L.counter_clockwise = "Sentido antihorario"
+	L.death_beam = "Rayo mortal"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "esES")
