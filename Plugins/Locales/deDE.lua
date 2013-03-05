@@ -112,6 +112,7 @@ L.sinkDescription = "Sendet die Big Wigs Ausgabe durch die normale Big Wigs Nach
 L.emphasizedSinkDescription = "Sendet die Big Wigs Ausgabe durch Big Wigs 'stark hervorgehobene' Nachrichtenanzeige. Diese Anzeige unterstützt Text und Farbe und kann nur eine Nachricht gleichzeitig anzeigen."
 L.emphasizedCountdownSinkDescription = "Sendet Ausgaben dieses Addons durch Big Wigs 'stark hervorgehobene' Countdown Nachrichtenanzeige. Hierbei werden Text sowie Farben unterstützt und es wird immer nur eine Zeile gleichzeitig angezeigt."
 
+L["Big Wigs Emphasized"] = "Big Wigs-Hervorgehobene Einstellungen"
 L["Messages"] = "Nachrichten"
 L["Normal messages"] = "Normale Nachrichten"
 L["Emphasized messages"] = "Hervorgehobene Nachrichten"
