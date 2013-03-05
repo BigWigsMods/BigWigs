@@ -111,6 +111,7 @@ L.sinkDescription = "Transmet la sortie de cet addon via l'affichage des message
 L.emphasizedSinkDescription = "Transmet la sortie de cet addon via l'affichage des messages mis en évidence de Big Wigs. Cet affichage supporte le texte et les couleurs, et ne peut afficher qu'un message à la fois."
 L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
 
+--L["Big Wigs Emphasized"] = "Big Wigs Emphasized"
 L["Messages"] = "Messages"
 L["Normal messages"] = "Messages normaux"
 L["Emphasized messages"] = "Messages en évidence"

@@ -112,6 +112,7 @@ L.sinkDescription = "Indirizza l'uscita dei messaggi sul visualizzatore di Messa
 L.emphasizedSinkDescription = "Indirizza l'uscita dei messaggi attraverso il visualizzatore di Messaggi ENFATIZZATI di Big Wigs. Questo metodo supporta testi, colori e può visualizzare un solo messaggio per volta."
 L.emphasizedCountdownSinkDescription = "Indirizza l'uscita da questo addon verso la visualizzazione del Recupero Messaggi Enfatizzati. Questa visualizzazione supporta testi e colori, e può visualizzare solo un messaggio alla volta."
 
+--L["Big Wigs Emphasized"] = "Big Wigs Emphasized"
 L["Messages"] = "Messaggi"
 L["Normal messages"] = "Messaggi Normali"
 L["Emphasized messages"] = "Messaggi Enfatizzati"
