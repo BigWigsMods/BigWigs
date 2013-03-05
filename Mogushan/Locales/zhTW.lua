@@ -86,6 +86,7 @@ if L then
 	L.gas_overdrive_trigger = "大帝之息漸息。"
 
 	L.target_only = "|cFFFF0000這個警告只會顯示你設為目標的首領。|r "
+
 	L.combo_message = "%s: 毀滅連擊快要來了!"
 end
 

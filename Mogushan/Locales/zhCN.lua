@@ -75,7 +75,7 @@ L = BigWigs:NewBossLocale("Will of the Emperor", "zhCN")
 if L then
 	L.enable_zone = "无尽熔炉"
 
-	L.heroic_start_trigger = "摧毁" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
+	L.heroic_start_trigger = "管道被摧毁了" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
 	L.normal_start_trigger = "机器开始嗡嗡作响了！到下层去！" -- The machine hums to life!  Get to the lower level!
 
 	L.rage_trigger = "皇帝之怒响彻群山。"
