@@ -33,7 +33,7 @@ L["Texture"] = "材質"
 L["Emphasize"] = "強調"
 L["Enable"] = "啟用"
 L["Move"] = "移動"
---L.moveDesc = "Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color."
+L.moveDesc = "移動強調計時條到強調錨點。如此選項關閉，強調計時條將只簡單的改變縮放和顏色。"
 L["Regular bars"] = "常規計時條"
 L["Emphasized bars"] = "強調計時條"
 L["Align"] = "對齊"
@@ -51,20 +51,20 @@ L["Fill"] = "填充"
 L["Fills the bars up instead of draining them."] = "填充計時條而不是顯示為空。"
 
 L["Local"] = "區域"
-L["%s: Timer [%s] finished."] = "%s: 計時器 [%s] 終了。"
+L["%s: Timer [%s] finished."] = "%s：計時條[%s]到時間。"
 L["Custom bar '%s' started by %s user '%s'."] = "自訂計時條 '%s' 開始於 %s 使用者 '%s'."
 
 L["Pull"] = "拉怪倒數"
 L["Pulling!"] = "拉怪中!"
 L["Pull timer started by %s user '%s'."] = "拉怪倒數計時開始於 %s 使用者 '%s'."
-L["Pull in %d sec"] = "拉怪於 %d 秒後"
+L["Pull in %d sec"] = "%d秒後拉怪"
 L["Sending a pull timer to Big Wigs and DBM users."] = "發送一個拉怪倒數計時到Big Wigs與DBM使用者."
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "發送自訂計時條 '%s' 到Big Wigs與DBM使用者."
 L["This function requires raid leader or raid assist."] = "這個功能需要團隊領隊或助理權限."
 L["Must be between 1 and 10. A correct example is: /pull 5"] = "必須在1跟10之間。一個正確的範例是: /pull 5"
 L["Incorrect format. A correct example is: /bwcb 20 text"] = "不正確的格式。一個正確的範例是: /bwcb 20 文字"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "指定的時間無效。 <time> 可以為一個秒數，一個 分:秒，或是Mm。例如 5, 1:20 或 2m。"
-L["This function can't be used during an encounter."] = "This function can't be used during an encounter."
+L["This function can't be used during an encounter."] = "此功能在戰鬥中不能使用。"
 
 -----------------------------------------------------------------------
 -- Colors.lua
@@ -76,7 +76,7 @@ L["Messages"] = "訊息"
 L["Bars"] = "計時條"
 L["Background"] = "背景"
 L["Text"] = "文字"
---L["Flash"] = "Flash"
+L["Flash"] = "閃爍"
 L["Normal"] = "普通"
 L["Emphasized"] = "強調"
 
@@ -109,14 +109,14 @@ L["If a related timer is longer than 5 seconds, a vocal and visual countdown wil
 --
 
 L.sinkDescription = "向外通過 Big Wigs 插件訊息顯示。這些包含了圖示，顏色和在同一時間在螢幕上的顯示4個訊息。新的訊息將再一次快速的放大和縮小來提醒用戶。新插入的訊息將增大並立即縮小提醒用戶注意。"
-L.emphasizedSinkDescription = "通過此插件輸出到 Big Wigs 醒目訊息顯示。此顯示支持文字和顏色，每次只可顯示一條訊息。"
-L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
+L.emphasizedSinkDescription = "通過此插件輸出到 Big Wigs 強調訊息顯示。此顯示支持文字和顏色，每次只可顯示一條訊息。"
+L.emphasizedCountdownSinkDescription = "路線輸出從此插件通過 Big Wigs 強調冷卻訊息顯示。此顯示支持文本和顏色，一次只能顯示一個消息。"
 
 L["Messages"] = "訊息"
 L["Normal messages"] = "一般訊息"
 L["Emphasized messages"] = "強調訊息"
 L["Output"] = "輸出"
-L["Emphasized countdown"] = "Emphasized countdown"
+L["Emphasized countdown"] = "強調冷卻"
 
 L["Use colors"] = "使用彩色訊息"
 L["Toggles white only messages ignoring coloring."] = "切換是否只發送單色訊息。"
@@ -134,7 +134,7 @@ L["Thick"] = "粗"
 L["Outline"] = "輪廓"
 L["Monochrome"] = "單一顏色"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "在全部訊息切換為單一顏色，移除全部字型邊緣平滑。"
-L["Font color"] = "Font color"
+L["Font color"] = "字型顏色"
 
 L["Display time"] = "顯示時間"
 L["How long to display a message, in seconds"] = "以秒計訊息顯示時間。"
@@ -185,7 +185,7 @@ L["Shows or hides a spell tooltip if the Proximity display is currently tied dir
 
 L["Icons"] = "圖示"
 
-L.raidIconDescription = "可能遇到包含例如炸彈類型的技能指向特定的玩家，玩家被追，或是特定玩家可能有興趣在其他方面。這裡可以自定義團隊圖示來標記這些玩家。\n\n如果只遇到一種技能，很好，只有第一個圖示會被使用。在某些戰鬥中一個圖示不被使用在兩個不同的技能上，任何特定技能在下次總是使用相同圖示。\n\n|cffff4411注意：如果玩家已經被手動標記，Big Wigs 將不會改變他的圖示。|r"
+L.raidIconDescription = "可能遇到包含例如炸彈類型的技能指向特定的玩家，玩家被追，或是特定玩家可能有興趣在其他方面。這裡可以自訂團隊圖示來標記這些玩家。\n\n如果只遇到一種技能，很好，只有第一個圖示會被使用。在某些戰鬥中一個圖示不被使用在兩個不同的技能上，任何特定技能在下次總是使用相同圖示。\n\n|cffff4411注意：如果玩家已經被手動標記，Big Wigs 將不會改變他的圖示。|r"
 L["Primary"] = "主要"
 L["The first raid target icon that a encounter script should use."] = "戰鬥時使用的第一個團隊圖示。"
 L["Secondary"] = "次要"
@@ -218,24 +218,24 @@ L["Victory"] = "勝利"
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "設定使用%q音效（Ctrl-點擊可以預覽效果）。"
 L["Default only"] = "僅用預設"
 
-L.customSoundDesc = "Play the selected custom sound instead of the one supplied by the module"
-L.resetAllCustomSound = "If you've customized sounds for any boss encounter settings, this button will reset ALL of them so the sounds defined here will be used instead."
+L.customSoundDesc = "播放選定的自訂的聲音，而不是由模塊提供的"
+L.resetAllCustomSound = "如果設置全部首領戰鬥自訂的聲音，此按鈕將重置"全部"以這裡自訂的聲音來代替。
 
 -----------------------------------------------------------------------
 -- Statistics.lua
 --
 
-L.bossKillDurationPrint = "Defeated '%s' after %s."
-L.bossWipeDurationPrint = "Wiped on '%s' after %s."
-L.newBestKill = "New best kill!"
-L.bossStatistics = "Boss Statistics"
-L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times a boss had been killed, the amount of wipes, total time that combat lasted, or the fastest boss kill. These statistics can be viewed on each boss's configuration screen, but will be hidden for bosses that have no recorded statistics."
-L.enableStats = "Enable Statistics"
-L.chatMessages = "Chat Messages"
-L.printBestKillOption = "Best Kill Notification"
-L.printKillOption = "Kill Time"
-L.printWipeOption = "Wipe Time"
-L.countKills = "Count Kills"
-L.countWipes = "Count Wipes"
-L.recordBestKills = "Remember Best Kills"
+L.bossKillDurationPrint = "“%s”已被擊殺，用時%s。"
+L.bossWipeDurationPrint = "“%s”戰鬥團滅，用時%s。"
+L.newBestKill = "新的最快擊殺！"
+L.bossStatistics = "首領統計"
+L.bossStatsDescription = "首領戰鬥相關的統計數據，如首領被擊殺數量，團滅次數，戰鬥持續時間，最快的首領擊殺記錄。可以在配置屏幕上查看每個首領的統計數據，沒有首領記錄的統計數據會被隱藏。"
+L.enableStats = "啟用統計"
+L.chatMessages = "聊天訊息"
+L.printBestKillOption = "最快擊殺提醒"
+L.printKillOption = "擊殺時間"
+L.printWipeOption = "團滅時間"
+L.countKills = "擊殺次數"
+L.countWipes = "團滅次數"
+L.recordBestKills = "記憶最快擊殺"
 

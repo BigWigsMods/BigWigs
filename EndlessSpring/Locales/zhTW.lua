@@ -42,8 +42,6 @@ if L then
 	L.ability_cd = "技能冷卻"
 	L.ability_cd_desc = "嘗試與猜測在浮現之後技能的使用順序。"
 
-	L.huddle_or_spout = "畏縮或水魄"
-	L.huddle_or_strike = "畏縮或襲擊"
 	L.strike_or_spout = "襲擊或水魄"
 	L.huddle_or_spout_or_strike = "畏縮或水魄或襲擊"
 end
