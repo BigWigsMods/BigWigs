@@ -106,7 +106,7 @@ do
 end
 
 -- lower, lower, lower, upper, upper, upper, -- 10 N/H
--- lower, lower, lower, lower, {lower, upper}, upper, upper, {lower, upper}, {lower, upper}, lower, upper, upper, {lower, upper} -- 25 N
+-- lower, lower, lower, lower, {lower, upper}, upper, upper, {lower, upper}, {lower, upper}, lower, lower, {lower, upper}, upper, {lower, upper}, -- 25 N
 -- lower, lower, lower, {lower, upper}, {lower, upper}, upper, {lower, upper}, {lower, upper}, lower, {upper, lower}, {upper, lower} -- 25 H
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 	local diff = self:Difficulty()
@@ -126,12 +126,12 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 			end
 		elseif diff == 4 then -- 25 N
 			-- XXX this is correct for 25 N (up to 17, need trascriptor logs for better logic)
-			if nestCounter % 17 < 4 or nestCounter % 17 == 12 then
+			if nestCounter % 19 < 4 or nestCounter % 19 == 12 or nestCounter % 19 == 13 then
 				self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
-			elseif nestCounter % 17 == 4 or nestCounter % 17 == 8 or nestCounter % 17 == 10 or nestCounter % 17 == 15 then -- up and down at same time
+			elseif nestCounter % 19 == 4 or nestCounter % 19 == 8 or nestCounter % 19 == 10 or nestCounter % 19 == 14 or nestCounter % 19 == 17 then -- up and down at same time
 				text, icon = L["lower_upper_nest"], 134347 -- egg icon
 				self:Bar("nest", 30, text, icon)
-			elseif nestCounter % 17 == 6 or nestCounter % 12 == 7 or nestCounter % 12 == 13 or nestCounter % 12 == 14 then
+			elseif nestCounter % 19 == 6 or nestCounter % 19 == 7 or nestCounter % 19 == 16 then
 				self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
 			end
 		elseif diff == 6 then -- 25 H
