@@ -2,7 +2,7 @@ local L = BigWigs:NewBossLocale("Jin'rokh the Breaker", "zhCN")
 if not L then return end
 if L then
 	L.storm_duration = "闪电风暴持续"
-	L.storm_duration_desc = "当闪电风暴施放时显示分离警报条。"
+	L.storm_duration_desc = "当闪电风暴施放时显示分离持续警报条。"
 
 	L.in_water = ">你< 水中！"
 end
@@ -24,19 +24,23 @@ if L then
 	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
 
 	L.orb_message = "控制之球掉落！"
-	L.puncture_message = "三重穿刺！"
+
 	L.focus_only = "|cffff0000Focus target alerts only.|r "
+
+	L.door_opened = "Door opened!"
+	L.door_bar = "Next door (%d)"
+	L.balcony_adds = "Balcony adds"
+	L.door_trigger = "pour" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "zhCN")
 if L then
-	L.full_power = "全能量"
-
-	L.assault_message = "冰寒突击！"
-
-	L.priestess_add = "神灵增援"
 	L.priestess_adds = "神灵增援"
 	L.priestess_adds_desc = "当击杀全部高阶祭司玛尔里的增援时发出警报。"
+	L.priestess_adds_message = "神灵增援"
+
+	L.full_power = "全能量"
+	L.assault_message = "冰寒突击！"
 	L.hp_to_go_power = "生命：%d%% - 能量：%d"
 end
 
@@ -44,7 +48,8 @@ L = BigWigs:NewBossLocale("Tortos", "zhCN")
 if L then
 	L.kick = "脚踢"
 	L.kick_desc = "持续追踪可被脚踢乌龟的数量。"
-	L.kickable_turtles = "可脚踢乌龟：>%d<！"
+	L.kick_message = "可脚踢乌龟：>%d<！"
+
 	L.crystal_shell_removed = "晶化甲壳 移除！"
 	L.no_crystal_shell = "没有晶化甲壳"
 end
@@ -53,7 +58,7 @@ L = BigWigs:NewBossLocale("Megaera", "zhCN")
 if L then
 	L.breaths = "火息术"
 	L.breaths_desc = "全部不同类型的火息术警报。"
-	L.rampage_over = "狂暴结束！"
+
 	L.arcane_adds = "奥术之头"
 end
 
@@ -65,7 +70,7 @@ if L then
 	L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch!"
 	L.upper_nest = "|c00008000下层|r巢穴"
 	L.lower_nest = "|c00FF0000上层|r巢穴"
-	L.food_call_trigger = "Hatchling calls for food!"
+	L.lower_upper_nest = "|c00FF0000下层|r+|c00008000上层|r巢穴"
 	L.nest = "巢穴"
 	L.nest_desc = "警报依赖于巢穴。|c00FF0000如果你没有分配到处理巢穴请关闭该警报！|r"
 end
@@ -73,11 +78,6 @@ end
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "zhCN")
 if L then
 	L.rays_spawn = "Rays spawn"
-	L.ray_controller = "Ray controller"
-	L.ray_controller_desc = "Announce the ray direction controllers for the red and blue rays."
-	L.ray_controller_icon = 22581 -- hopefully some fitting icon
-	L.red_ray_controller = "You are the |c000000FFBlue|r ray controller"
-	L.blue_ray_controller = "You are the |c00FF0000Red|r ray controller"
 	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
 	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
 	L.red_add = "|c00FF0000Red|r add"
@@ -105,18 +105,22 @@ if L then
 
 	L.overload_casting = "正在施放 熔火过载"
 	L.overload_casting_desc = "当正在施放熔火过载时发出警报。"
+
+	L.arcing_lightning_cleared = "Raid is clear of Arcing Lightning"	
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "zhCN")
 if L then
 	L.barrage_fired = "Barrage fired!"
+	L.last_phase_yell_trigger = "Just this once..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
 end
 
 L = BigWigs:NewBossLocale("Lei Shen", "zhCN")
 if L then
 	L.conduit_abilities = "Conduit Abilities"
-	L.conduit_abilities_desc = "Approximate cooldown bars for the conduit specific abilities"
-	L.conduit_ability_meassage = "Next conduit ability"
+	L.conduit_abilities_desc = "Approximate cooldown bars for the conduit specific abilities."
+	L.conduit_abilities_message = "Next conduit ability"
+
 	L.intermission = "Intermission"
 	L.overchargerd_message = "Stunning AoE pulse"
 	L.static_shock_message = "Splitting AoE damege"

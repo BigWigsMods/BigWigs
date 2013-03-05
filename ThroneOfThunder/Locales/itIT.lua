@@ -22,24 +22,20 @@ if L then
 
 	L.adds = "Adds in arrivo"
 	L.adds_desc = "Avvisa quando sono in arrivo i vari add dei Farraki, dei Gurubashi, dei Drakkari, degli Amani, e il Dio della Guerra Jalak."
-	
+
 	L.orb_message = "Globo del Controllo a Terra!"
-	
+
 	--L.puncture_message = "Perforazione Tripla" Commented out since there isnt anymore into Locals, Keep it for lazyness.
  	L.focus_only = "|cffff0000Avviso solo per il bersaglio Focus.|r "
 
 	L.door_opened = "Porta Aperta!"
 	L.door_bar = "Prossima porta (%d)"
 	L.balcony_adds = "Add dal Balcone"	
-	L.door_trigger = "pour" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]	
+	L.door_trigger = "pour" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "itIT")
 if L then
-	L.full_power = "Pieno Potere"
-
-	L.assault_message = "Assalto"
-
 	L.priestess_adds = "Add Sacerdotessa"
 	L.priestess_adds_desc = "Avviso per tutti i tipi di add della Gran Sacerdotessa Mar'li"
 	L.priestess_adds_message = "Add Sacerdotessa"	
@@ -49,16 +45,16 @@ if L then
 	L.full_power = "Pieno Potere"
 	L.assault_message = "Assalto"
 	L.hp_to_go_power = "Punti Vita alla Fine: %d%% - Potere: %d"
-	end
+end
 
 L = BigWigs:NewBossLocale("Tortos", "itIT")
 if L then
 	L.kick = "Calcio"
 	L.kick_desc = "Tieni il conto di quante tartarughe possono essere prese a calci"
-	L.kickable_turtles = "Tartarughe Calciabili: %d"
+	L.kick_message = "Tartarughe Calciabili: %d"
+
 	L.crystal_shell_removed = "Scudo di Cristallo RIMOSSO!"
 	L.no_crystal_shell = "NESSUNO Scudo di Cristallo"
-
 end
 
 L = BigWigs:NewBossLocale("Megaera", "itIT")
@@ -99,7 +95,7 @@ if L then
 	L.clockwise = "Senso Orario"
 	L.counter_clockwise = "Senso Antiorario"
 	L.death_beam = "Raggio Disintegratore"
-	end
+end
 
 L = BigWigs:NewBossLocale("Primordius", "itIT")
 if L then
@@ -112,33 +108,37 @@ if L then
 	L.engage_trigger = "Il globo esplode!"
 	L.slam_message = "Colpo"
 end
+
 L = BigWigs:NewBossLocale("Iron Qon", "itIT")
 if L then
 	L.molten_energy = "Energia Fusa"
 
 	L.overload_casting = "Lancio Sovraccarico Fuso"
 	L.overload_casting_desc = "Avvisa quando viene lanciato Sovraccarico Fuso"
+
 	L.arcing_lightning_cleared = "Fulmine Arcuato non più presente sull'Incursione"	
 end
+
 L = BigWigs:NewBossLocale("Twin Consorts", "itIT")
 if L then
 	L.barrage_fired = "Raffica Lanciata!"
 	L.last_phase_yell_trigger = "Just this once..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
-
 end
+
 L = BigWigs:NewBossLocale("Lei Shen", "itIT")
 if L then
 	L.conduit_abilities = "Abilità dei Condotti"
 	L.conduit_abilities_desc = "Barre di recupero approssimative per le abilità specifiche dei condotti"
 	L.conduit_ability_meassage = "Abilità successiva del condotto"
+
 	L.intermission = "Intermezzo"
 	L.overchargerd_message = "Pulsazione ad Effetto Stordente"
 	L.static_shock_message = "Danno ad Effetto da Suddividere"
 	L.diffusion_add_message = "Add di Diffusione"
 	L.diffusion_chain_message = "Add di Diffusione tra poco - ALLARGARSI!!!"
 end
+
 L = BigWigs:NewBossLocale("Ra-den", "itIT")
 if L then
 
 end
-

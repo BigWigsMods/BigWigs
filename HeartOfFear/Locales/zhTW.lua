@@ -15,7 +15,6 @@ if L then
 	L.platform_emote = "女皇大臣索拉格飛向他的其中一個露臺!" -- Imperial Vizier Zor'lok flies to one of his platforms!
 	L.platform_emote_final = "吸氣"-- Imperial Vizier Zor'lok inhales the Pheromones of Zeal!
 	L.platform_message = "切換平台"
-
 end
 
 L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "zhTW")
@@ -49,11 +48,10 @@ if L then
 	L.explosion_by_other_desc = "突變傀儡或焦點的琥珀爆炸冷卻警告。"
 
 	L.explosion_casting_by_other = "突變傀儡/焦點施放琥珀爆炸"
-	L.explosion_casting_by_other_desc = "突變傀儡或焦點的琥珀爆炸施法警告。 高度建議強調！"
+	L.explosion_casting_by_other_desc = "突變傀儡或焦點的琥珀爆炸施法警告。高度建議強調！"
 
 	L.explosion_by_you = "你的琥珀爆炸冷卻"
 	L.explosion_by_you_desc = "你的琥珀爆炸的冷卻警告。"
-
 	L.explosion_by_you_bar = "你在施法中..."
 
 	L.explosion_casting_by_you = "你的琥珀爆炸施法條"
@@ -76,12 +74,13 @@ end
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "zhTW")
 if L then
 	L.engage_trigger = "殺死所有膽敢挑戰我帝國的人！"
+
 	L.phases = "階段"
 	L.phases_desc = "警告階段改變。"
 
 	L.eyes = "女皇之眼"
 	L.eyes_desc = "計算女皇之眼的堆疊與顯示持續時間條。"
-	L.eyes_message = "女皇之眼在"
+	L.eyes_message = "女皇之眼"
 
 	L.visions_message = "Visions"
 	L.visions_dispel = "Players have been feared!"
