@@ -54,6 +54,7 @@ local anchor = nil
 
 --Radial upvalues
 local GetPlayerMapPosition = GetPlayerMapPosition
+local GetCurrentMapDungeonLevel = GetCurrentMapDungeonLevel
 local GetPlayerFacing = GetPlayerFacing
 local format = string.format
 local GetRaidTargetIndex = GetRaidTargetIndex
