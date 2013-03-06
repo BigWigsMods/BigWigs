@@ -490,7 +490,6 @@ do
 		end
 
 		if not anyoneClose then
-			lastplayed = 0
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 		else
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
@@ -533,7 +532,6 @@ do
 				plugin:SendMessage("BigWigs_Sound", db.soundName)
 			end
 		else
-			lastplayed = 0
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 		end
 	end
@@ -570,7 +568,6 @@ do
 					plugin:SendMessage("BigWigs_Sound", db.soundName)
 				end
 			else
-				lastplayed = 0
 				anchor.rangeCircle:SetVertexColor(0, 1, 0)
 			end
 		end
@@ -599,7 +596,6 @@ do
 		local range = (dx * dx + dy * dy) ^ 0.5
 		setDot(dx, dy, blipList[proximityPlayer])
 		if range <= activeRange then
-			lastplayed = 0
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 		else
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
