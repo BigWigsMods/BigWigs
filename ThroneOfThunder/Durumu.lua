@@ -57,7 +57,6 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "IceWall", 134587)
 	self:Log("SPELL_PERIODIC_DAMAGE", "EyeSore", 140502)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "DisintegrationBeam", "boss1")
 	self:Log("SPELL_AURA_REMOVED", "LifeDrainRemoved", 133798)
 	self:Log("SPELL_AURA_APPLIED", "LifeDrainApplied", 133798)
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -102,17 +101,6 @@ do
 			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
-	end
-end
-
-function mod:DisintegrationBeam(_, _, _, _, spellId)
-	if spellId == 136316 or spellId == 133775 then
-		self:CDBar(134626, 76) -- Lingering Gaze
-		self:CDBar(136932, 78) -- Force of Will
-		self:Bar(-6882, 60, CL["cast"]:format(L["death_beam"])) -- Exactly 60 sec, a good place to start other timers
-		self:Bar(-6882, 191, L["death_beam"])
-		local text = (spellId == 136316) and " - |c00008000%s|r" or " - |c00FF0000%s|r"
-		self:Message(-6882, "Attention", nil, L["death_beam"]..(text):format((spellId == 136316) and L["clockwise"] or L["counter_clockwise"]), (spellId == 136316) and "spell_chargepositive" or "spell_chargenegative")
 	end
 end
 
@@ -164,6 +152,12 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
 			self:Flash(136932)
 			self:Say(136932)
 		end
+	elseif msg:find("134169") then -- Disintegration Beam
+		self:CDBar(134626, 76) -- Lingering Gaze
+		self:CDBar(136932, 78) -- Force of Will
+		self:Bar(-6882, 60, CL["cast"]:format(L["death_beam"])) -- Exactly 60 sec, a good place to start other timers
+		self:Bar(-6882, 191, L["death_beam"])
+		self:Message(-6882, "Attention", nil, L["death_beam"], 133778)
 	end
 end
 
