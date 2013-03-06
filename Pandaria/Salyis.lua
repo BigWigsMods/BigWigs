@@ -56,6 +56,6 @@ end
 function mod:Stomp()
 	self:Message(121787, "Important", "Alarm", CL["soon"]:format(self:SpellName(121787))) -- Stomp
 	self:Bar(121787, 60) -- Stomp
-	self:DelayedMessage(-6200, 10, "Attention", nil, nil, 121747) -- Impaling Throw icon
+	self:DelayedMessage(-6200, 10, "Attention", nil, 121747) -- Impaling Throw icon
 end
 
