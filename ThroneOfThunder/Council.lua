@@ -161,8 +161,9 @@ function mod:RecklessCharge(unit, _, _, _, spellId)
 	if spellId == 137107 then
 		-- XXX Not sure how useful this is, might want to remove it later
 		self:Bar(137122, UnitBuff(unit, self:SpellName(136442)) and 21 or 6) -- CD is longer when posessed
-		if UnitExists(unit.."target") then
-			self:TargetMessage(137122, "Urgent", "Alarm") -- XXX not tested, iirc this didn't work on 10 N PTR, who knows maybe it works now, needs testing
+		local target = unit.."target"
+		if UnitExists(target) then
+			self:TargetMessage(137122, UnitName(target), "Urgent", "Alarm")
 		end
 	end
 end
@@ -226,7 +227,7 @@ end
 -- General
 
 function mod:ShadowedSoul(args)
-	if self:Me(args.destName) and UnitDebuff("player", self:SpellName(137641)) and args.amount > 9 then -- Soul Fragment on, aka gaining more stacks, 10 stacks = 20% extra damage taken
+	if self:Me(args.destGUID) and UnitDebuff("player", self:SpellName(137641)) and args.amount > 9 then -- Soul Fragment on, aka gaining more stacks, 10 stacks = 20% extra damage taken
 		self:Message(args.spellId, "Personal", "Info", CL["count"]:format(args.spellName, args.amount))
 	end
 end
