@@ -50,7 +50,7 @@ end
 function mod:GetOptions()
 	return {
 		{137633, "FLASH"},
-		136294, "kick", 133939, {134539, "FLASH"}, 134920, -7140, {135251, "TANK"},
+		136294, -7134, "kick", 133939, {134539, "FLASH"}, 134920, -7140, {135251, "TANK"},
 		"berserk", "bosskill",
 	}, {
 		[137633] = "heroic",
@@ -151,7 +151,7 @@ do
 		end
 	end
 	function mod:ShellConcussion(args)
-		self:Bar(-7134, 15, args.spellName, args.spellId)
+		self:Bar(-7134, 15)
 		kickable = kickable - 1
 		if not scheduled then
 			scheduled = self:ScheduleTimer(announceKickable, 2)
