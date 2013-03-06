@@ -100,11 +100,12 @@ function mod:IonizationRemoved(args)
 end
 
 function mod:PersonalIonization(args)
-	ionized[#ionized+1] = args.destName
 	if self:Me(args.destGUID) then
 		openedForMe = true
 		self:OpenProximity(args.spellId, 8)
 		self:Bar(args.spellId, 24, CL["you"]:format(args.spellName))
+	else
+		ionized[#ionized+1] = args.destName
 	end
 	if not openedForMe then self:OpenProximity(args.spellId, 8, ionized) end
 end

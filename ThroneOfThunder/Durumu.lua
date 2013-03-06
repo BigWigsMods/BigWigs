@@ -194,7 +194,6 @@ function mod:LingeringGazeRemoved(args)
 end
 
 function mod:LingeringGazeApplied(args)
-	lingeringGaze[#lingeringGaze+1] = args.destName
 	self:CDBar(args.spellId, 25)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
@@ -202,6 +201,7 @@ function mod:LingeringGazeApplied(args)
 		self:OpenProximity(args.spellId, 8) -- XXX EJ says 15 but looks lot less - VERIFY!
 		openedForMe = true
 	else
+		lingeringGaze[#lingeringGaze+1] = args.destName
 		if not openedForMe then
 			self:OpenProximity(args.spellId, 8, lingeringGaze)
 		end

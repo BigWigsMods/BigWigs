@@ -106,13 +106,18 @@ do
 end
 
 -- lower, lower, lower, upper, upper, upper, -- 10 N/H
--- lower, lower, lower, lower, {lower, upper}, upper, upper, {lower, upper}, {lower, upper}, lower, lower, {lower, upper}, upper, {lower, upper}, -- 25 N
+
+-- 1 lower, 2 lower, 3 lower, 4 lower, 5 {lower, 6 upper}, 7 upper, 8 upper, 9 {lower, 10 upper}, 11 {lower, 12 upper}, 13 lower, 14 lower, 15 {lower, 16 upper},
+-- 17 upper, 18 {lower, 19 upper}, 20 {lower, 21 upper}, 22 {lower, 23 upper}, 24 lower, 25 {lower, 26 upper}, 27 {lower, 28 upper}, -- 25 N
+
 -- lower, lower, lower, {lower, upper}, {lower, upper}, upper, {lower, upper}, {lower, upper}, lower, {upper, lower}, {upper, lower} -- 25 H
+
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 	local diff = self:Difficulty()
 	if msg:find(L["upper_hatch_trigger"]) or msg:find(L["lower_hatch_trigger"]) then
 		nestCounter = nestCounter + 1
-		local text = (msg:find(L["upper_hatch_trigger"])) and L["upper_nest"] or L["lower_nest"]
+		local count = (" (%d)"):format(nestCounter) -- right now only print count to the message not the bars
+		local text = (msg:find(L["upper_hatch_trigger"])) and L["upper_nest"]..count or L["lower_nest"]..count
 		local icon = (msg:find(L["upper_hatch_trigger"])) and "misc_arrowlup" or "misc_arrowdown"
 		self:Message("nest", "Attention", "Alert", text, icon)
 		if diff == 3 or diff == 5 then -- 10 man N/H
@@ -126,12 +131,12 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 			end
 		elseif diff == 4 then -- 25 N
 			-- XXX this is correct for 25 N (up to 17, need trascriptor logs for better logic)
-			if nestCounter % 19 < 4 or nestCounter % 19 == 12 or nestCounter % 19 == 13 then
+			if nestCounter % 28 < 4 or nestCounter % 28 == 12 or nestCounter % 28 == 13 or nestCounter % 28 == 23 then
 				self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
-			elseif nestCounter % 19 == 4 or nestCounter % 19 == 8 or nestCounter % 19 == 10 or nestCounter % 19 == 14 or nestCounter % 19 == 17 then -- up and down at same time
+			elseif nestCounter % 28 == 4 or nestCounter % 28 == 8 or nestCounter % 28 == 10 or nestCounter % 28 == 14 or nestCounter % 28 == 17 or nestCounter % 28 == 19 or nestCounter % 28 == 21 or nestCounter % 28 == 24 or nestCounter % 28 == 26 then -- up and down at same time
 				text, icon = L["lower_upper_nest"], 134347 -- egg icon
 				self:Bar("nest", 30, text, icon)
-			elseif nestCounter % 19 == 6 or nestCounter % 19 == 7 or nestCounter % 19 == 16 then
+			elseif nestCounter % 28 == 6 or nestCounter % 28 == 7 or nestCounter % 28 == 16 then
 				self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
 			end
 		elseif diff == 6 then -- 25 H

@@ -143,11 +143,11 @@ end
 
 function mod:ArcingLightningApplied(args)
 	if self:Heroic() then return end -- XXX don't forget to remove this if we decided to use multi target proximity on heroic too
-	arcingLightning[#arcingLightning+1] = args.destName
 	if self:Me(args.destGUID) then
 		openedForMe = true
 		self:OpenProximity(136192, 12)
 	else
+		arcingLightning[#arcingLightning+1] = args.destName
 		if not openedForMe then self:OpenProximity(136192, 12, arcingLightning) end
 	end
 end
