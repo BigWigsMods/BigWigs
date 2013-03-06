@@ -157,7 +157,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
 		self:CDBar(136932, 78) -- Force of Will
 		self:Bar(-6882, 60, CL["cast"]:format(L["death_beam"])) -- Exactly 60 sec, a good place to start other timers
 		self:Bar(-6882, 191, L["death_beam"])
-		self:Message(-6882, "Attention", nil, L["death_beam"], 133778)
+		self:Message(-6882, "Attention", nil, L["death_beam"])
 	end
 end
 
