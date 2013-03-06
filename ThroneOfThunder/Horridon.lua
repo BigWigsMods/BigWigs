@@ -236,7 +236,7 @@ end
 
 function mod:MortalStrike(args)
 	self:Message(-7120, "Urgent")
-	self:TargetBar(-7120, args.destName, 8)
+	self:TargetBar(-7120, 8, args.destName)
 end
 
 function mod:MortalStrikeRemoved(args)
