@@ -60,7 +60,6 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "DisintegrationBeam", "boss1")
 	self:Log("SPELL_AURA_REMOVED", "LifeDrainRemoved", 133798)
 	self:Log("SPELL_AURA_APPLIED", "LifeDrainApplied", 133798)
-	self:Log("SPELL_AURA_APPLIED", "RedRayController", 133732) -- this is the stacking debuff, because there is no similar CLEU like the for blue
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:Log("SPELL_DAMAGE", "LingeringGazeDamage", 134044)
 	self:Log("SPELL_AURA_REMOVED", "LingeringGazeRemoved", 134626)
