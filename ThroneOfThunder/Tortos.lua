@@ -150,7 +150,8 @@ do
 			scheduled = self:ScheduleTimer(announceKickable, 2)
 		end
 	end
-	function mod:ShellConcussion()
+	function mod:ShellConcussion(args)
+		self:Bar(-7134, 15, args.spellName, args.spellId)
 		kickable = kickable - 1
 		if not scheduled then
 			scheduled = self:ScheduleTimer(announceKickable, 2)
