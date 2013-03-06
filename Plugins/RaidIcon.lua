@@ -81,9 +81,11 @@ plugin.pluginOptions = {
 --
 
 function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_SetRaidIcon")
-	self:RegisterMessage("BigWigs_RemoveRaidIcon")
-	self:RegisterMessage("BigWigs_OnBossDisable")
+	if BigWigs.db.profile.raidicon then
+		self:RegisterMessage("BigWigs_SetRaidIcon")
+		self:RegisterMessage("BigWigs_RemoveRaidIcon")
+		self:RegisterMessage("BigWigs_OnBossDisable")
+	end
 end
 
 function plugin:BigWigs_OnBossDisable()
@@ -102,15 +104,13 @@ end
 --
 
 function plugin:BigWigs_SetRaidIcon(message, player, icon)
-	if not BigWigs.db.profile.raidicon then return end
 	if not player then return end
+	local index = (not icon or icon == 1) and self.db.profile.icon or self.db.profile.secondIcon
+	if not index or index == 9 then return end
+
 	local oldIndex = GetRaidTargetIndex(player)
 	if not oldIndex then
-		local index = (not icon or icon == 1) and self.db.profile.icon or self.db.profile.secondIcon
-		if not index then return end
-		if index ~= oldIndex then
-			SetRaidTarget(player, index)
-		end
+		SetRaidTarget(player, index)
 		lastplayer[icon or 1] = player
 	end
 end

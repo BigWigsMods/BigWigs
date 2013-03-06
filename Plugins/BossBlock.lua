@@ -43,7 +43,7 @@ function plugin:OnPluginDisable()
 end
 
 do
-	-- XXX remove me in 5.2
+	-- We still need this to block DBM's stupid countdown broadcast
 	local RaidWarningFrame = RaidWarningFrame
 	local RaidWarningFrame_OnEvent = RaidWarningFrame_OnEvent
 	function plugin:CHAT_MSG_RAID_WARNING(event, msg, ...)
