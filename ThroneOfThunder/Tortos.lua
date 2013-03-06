@@ -78,7 +78,7 @@ end
 
 function mod:OnEngage()
 	kickable = 0
-	self:Berserk(300) -- XXX ASSUMED
+	self:Berserk(420) -- XXX ASSUMED
 	self:Bar(-7140, 46, 136685) -- Summon Bats
 	self:Bar(133939, 46) -- Furious Stone Breath
 	self:Bar(136294, 21) -- Call of Tortos
