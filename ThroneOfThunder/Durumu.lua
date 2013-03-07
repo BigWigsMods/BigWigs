@@ -36,8 +36,8 @@ if L then
 	L.counter_clockwise = "Counter clockwise"
 	L.death_beam = "Death beam"
 
-	L.custom_on_ray_controllers = "Ray controllers"
-	L.custom_on_ray_controllers_desc = "Use the |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15|t, |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15|t, |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15|t raid markers to mark people who will control the ray spawn positions and movement"
+	L.custom_off_ray_controllers = "Ray controllers"
+	L.custom_off_ray_controllers_desc = "Use the |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15|t, |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15|t, |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15|t raid markers to mark people who will control the ray spawn positions and movement"
 end
 L = mod:GetLocale()
 
@@ -47,7 +47,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{133767, "TANK"}, {133765, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {136932, "FLASH", "SAY"}, {-6891, "FLASH"}, "custom_on_ray_controllers", -6898, -6892,
+		{133767, "TANK"}, {133765, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {136932, "FLASH", "SAY"}, {-6891, "FLASH"}, "custom_off_ray_controllers", -6898, -6892,
 		{133798, "ICON"}, -6882, 140502, -6889,
 		"berserk", "bosskill",
 	}, {
@@ -92,7 +92,7 @@ end
 --
 
 local function mark(unit, mark)
-	if not unit or not mark or not mod.db.profile.custom_on_ray_controllers then return end
+	if not unit or not mark or not mod.db.profile.custom_off_ray_controllers then return end
 	SetRaidTarget(unit, mark)
 end
 
