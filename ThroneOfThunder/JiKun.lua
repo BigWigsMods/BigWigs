@@ -76,7 +76,7 @@ end
 function mod:OnEngage()
 	self:OpenProximity("proximity", 8)
 	self:Berserk(600) -- XXX assumed
-	self:Bar(134380, self:Heroic() and 63 or 48) -- Quills
+	self:Bar(134380, self:Heroic() and 63 or 43) -- Quills
 	self:Bar(134370, 90) -- Down Draft
 	nestCounter = 0
 end
@@ -189,7 +189,7 @@ end
 
 function mod:TalonRake(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
-	self:CDBar(args.spellId, 15)
+	self:CDBar(args.spellId, 22)
 end
 
 function mod:InfectedTalons(args)
