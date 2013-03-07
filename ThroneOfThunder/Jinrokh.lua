@@ -71,10 +71,10 @@ function mod:OnEngage()
 	self:Bar(137313, 93) -- Lightning Storm
 	self:Bar(137175, 30) -- Thundering Throw
 	self:CDBar(137162, 7) -- Static Burst -- again, is there even a point for such a short bar?
+	self:Berserk(self:Heroic() and 360 or 540)
 	if self:Heroic() then -- Ionization
 		wipe(ionized)
 		openedForMe = false
-		self:Berserk(360) -- Real berserk confirmed 25 H PTR
 		self:Bar(138732, 60) -- Ionization
 	end
 end
