@@ -47,10 +47,12 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{133767, "TANK"}, {133765, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {136932, "FLASH", "SAY"}, {-6891, "FLASH"}, "custom_off_ray_controllers", -6898, -6892,
+		"custom_off_ray_controllers",
+		{133767, "TANK"}, {133765, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {136932, "FLASH", "SAY"}, {-6891, "FLASH"}, -6898, -6892,
 		{133798, "ICON"}, -6882, 140502, -6889,
 		"berserk", "bosskill",
 	}, {
+		custom_off_ray_controllers = L.custom_off_ray_controllers,
 		[133767] = "general",
 	}
 end
@@ -125,17 +127,16 @@ function mod:LifeDrainApplied(args)
 end
 
 function mod:UNIT_AURA(unit)
-	local name, server = UnitName(unit)
-	if server then name = name..server end
-	if UnitDebuff(unit, blueRayTracking) and blueController ~= name then
-		blueController = name
-		if self:Me(UnitGUID(unit)) then
+	local unitGUID = UnitGUID(unit)
+	if UnitDebuff(unit, blueRayTracking) and blueController ~= unitGUID then
+		blueController = unitGUID
+		if self:Me(unitGUID) then
 			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c000000FF"..blueController.."|r"), 134122)
 		end
 		mark(unit, 6)
-	elseif UnitDebuff(unit, redRayTracking) and redController ~= name then
-		redController = name
-		if self:Me(UnitGUID(unit)) then
+	elseif UnitDebuff(unit, redRayTracking) and redController ~= unitGUID then
+		redController = unitGUID
+		if self:Me(unitGUID) then
 			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c00FF0000"..redController.."|r"), 134123)
 		end
 		mark(unit, 7)
