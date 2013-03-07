@@ -37,8 +37,8 @@ local sandGuyDead = false
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.priestess_adds = "Priestess adds"
-	L.priestess_adds_desc = "Warning for all kinds of adds from High Priestess Mar'li."
-	L.priestess_adds_icon = 137203
+	L.priestess_adds_desc = "Warnings for when High Priestess Mar'li starts to summon adds."
+	L.priestess_adds_icon = "inv_misc_tournaments_banner_troll" --137203
 	L.priestess_adds_message = "Priestess add"
 
 	L.full_power = "Full power"
@@ -53,11 +53,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"priestess_adds", {137359, "FLASH"}, -- High Priestess Mar'li
+		"priestess_adds", 137203, {137350, "FLASH"}, -- High Priestess Mar'li
 		{-7062, "FLASH"}, 136878, {136857, "FLASH"}, 136894, -- Sul the Sandcrawler
 		{137122, "FLASH"}, -- Kazra'jin
-		{-7054, "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, 136990, {137085, "FLASH"}, --Frost King Malakk
-		136442, {137650, "FLASH"}, "proximity", "berserk", "bosskill",
+		{-7054, "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, 136990, {137085, "FLASH"}, -- Frost King Malakk
+		{136442, "ICON"}, {137650, "FLASH"}, "proximity", "berserk", "bosskill",
 	}, {
 		["priestess_adds"] = -7050,
 		[-7062] = -7049,
@@ -70,8 +70,11 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	-- High Priestess Mar'li
-	self:Log("SPELL_CAST_START", "PriestessAdds", 137203, 137350, 137891) -- Blessed, Shadowed, Twisted Fate -- don't need different handlers
+	self:Log("SPELL_CAST_START", "PriestessAdds", 137350, 137891) -- Shadowed, Twisted Fate
+	self:Log("SPELL_CAST_START", "BlessedLoaSpirit", 137203)
+	self:Log("SPELL_HEAL", "BlessedGift", 137303) -- Loa hit the boss
 	self:Log("SPELL_AURA_APPLIED", "MarkedSoul", 137359)
+	self:Log("SPELL_AURA_REMOVED", "MarkedSoulRemoved", 137359)
 	-- Sul the Sandcrawler
 	self:Log("SPELL_AURA_APPLIED", "Quicksand", 136860)
 	self:Log("SPELL_AURA_APPLIED", "Ensnared", 136878)
@@ -85,14 +88,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FrostbiteApplied", 136990, 136922)
 	self:Log("SPELL_AURA_APPLIED", "BitingColdApplied", 136992)
 	self:Log("SPELL_AURA_REMOVED", "BitingColdRemoved", 136992)
-	self:Log("SPELL_AURA_APPLIED", "Assault", 136903)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Assault", 136903)
+	self:Log("SPELL_CAST_SUCCESS", "FrigidAssaultStart", 136904)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "FrigidAssault", 136903)
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "PossessedApplied", 136442)
 	self:Log("SPELL_AURA_REMOVED", "PossessedRemoved", 136442)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowedSoul", 137650)
 
-	self:Death("Deaths", 69132, 69131, 69134, 69078)
+	self:Death("Deaths", 69480, 69132, 69131, 69134, 69078) -- Blessed Loa Spirit, Bosses
 end
 
 function mod:OnEngage()
@@ -113,6 +116,7 @@ end
 --
 
 -- High Priestess Mar'li
+
 function mod:MarkedSoul(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert", 40415, args.spellId)
 	self:TargetBar(args.spellId, 20, args.destName, 40415, args.spellId) -- 40415 = Fixated
@@ -121,13 +125,39 @@ function mod:MarkedSoul(args)
 	end
 end
 
+function mod:MarkedSoulRemoved(args)
+	self:StopBar(40415, args.destName)
+end
+
+function mod:BlessedLoaSpirit(args)
+	local lowest, lowestHP = nil, 1
+	for i=1, 5 do
+		local boss = ("boss%d"):format(i)
+		print("hp", boss, UnitName(boss), UnitHealth(boss))
+		local mobId = self:MobId(UnitGUID(boss))
+		if mobId == 69134 or mobId == 69078 or mobId == 69131 then
+			local hp = UnitHealth(boss) / UnitHealthMax(boss)
+			if hp < lowestHP then
+				lowest = boss
+				lowestHP = hp
+			end
+		end
+	end
+	self:TargetMessage(args.spellId, UnitName(lowest), "Attention")
+	self:TargetBar(args.spellId, args.spellName, 22, 40415, args.spellId)
+end
+
+function mod:BlessedGift(args)
+	self:StopBar(40415, self:SpellName(137203))
+end
+
 function mod:PriestessAdds(args)
 	self:Message("priestess_adds", "Important", "Alarm", args.spellId)
 	self:CDBar("priestess_adds", 33, L["priestess_adds_message"], L.priestess_adds_icon)
-	-- we use a localized string so we don't have to bother with stopping and restarting bars on posess, since priestess adds share cooldown
 end
 
 -- Sul the Sandcrawler
+
 function mod:Sandstorm(args)
 	self:Bar(args.spellId, 38)
 	self:Message(args.spellId, "Urgent", "Alert")
@@ -157,13 +187,17 @@ function mod:Quicksand(args)
 end
 
 -- Kazra'jin
-function mod:RecklessCharge(unit, _, _, _, spellId)
+
+function mod:RecklessCharge(unit, spellName, _, _, spellId)
 	if spellId == 137107 then
-		-- XXX Not sure how useful this is, might want to remove it later
-		self:Bar(137122, UnitBuff(unit, self:SpellName(136442)) and 21 or 6) -- CD is longer when posessed
+		if UnitBuff(unit, self:SpellName(136442)) then -- Show timer when possessed
+			self:Bar(137122, 21)
+		end
 		local target = unit.."target"
-		if UnitExists(target) then
-			self:TargetMessage(137122, UnitName(target), "Urgent", "Alarm")
+		if UnitIsUnit(target, "player") then
+			self:Message(137122, "Urgent", "Alarm", CL["you"]:format(spellName))
+		elseif self:Range(target) < 6 then
+			self:RangeMessage(137122)
 		end
 	end
 end
@@ -224,18 +258,23 @@ function mod:ChilledToTheBone()
 	end
 end
 
+-- Tank alerts so you know when you should be watching for stacks (if you're not avoiding hits, it can stack really fast)
+function mod:FrigidAssaultStart(args)
+	self:Message(-7054, "Attention", "Alarm", args.spellName)
+	self:Bar(-7054, 30)
+end
+
+function mod:FrigidAssault(args)
+	if args.amount % 5 == 0 or args.amount > 10 then -- don't spam on low stacks, but spam close to 15 (spam so hard)
+		self:StackMessage(-7054, args.destName, args.amount, "Urgent", "Info", L["assault_message"])
+	end
+end
+
 -- General
 
 function mod:ShadowedSoul(args)
 	if self:Me(args.destGUID) and UnitDebuff("player", self:SpellName(137641)) and args.amount > 9 then -- Soul Fragment on, aka gaining more stacks, 10 stacks = 20% extra damage taken
 		self:Message(args.spellId, "Personal", "Info", CL["count"]:format(args.spellName, args.amount))
-	end
-end
-
-function mod:Assault(args)
-	args.amount = args.amount or 1
-	if args.amount % 5 == 0 or args.amount > 10 then -- don't spam on low stacks, but spam close to 15
-		self:StackMessage(-7054, args.destName, args.amount, "Urgent", "Info", L["assault_message"])
 	end
 end
 
@@ -267,23 +306,27 @@ do
 			-- then might as well consider doing some scheduled warning till hp to go is less than 2%
 		end
 	end
+
 	local fullPower = 66 -- 66 seconds till full power without any lingering presences stacks
 	function mod:PossessedApplied(args)
 		prevPower = 0
+		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PossessedHPToGo", "boss1", "boss2", "boss3", "boss4", "boss5") -- need to register all, because they jump around like crazy during the encounter
+
 		for i = 1, 5 do
-			local id = ("boss%d"):format(i)
-			local bossGUID = UnitGUID(id)
-			if bossGUID == args.destGUID then
-				posessHPStart = UnitHealth(id)
-				SetRaidTarget(id, 8)
+			local boss = ("boss%d"):format(i)
+			if UnitGUID(boss) == args.destGUID then
+				posessHPStart = UnitHealth(boss)
+				SetRaidIcon(boss, 8)
 			end
 		end
-		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PossessedHPToGo", "boss1", "boss2", "boss3", "boss4", "boss5") -- need to register all, because they jump around like crazy during the encounter
+
 		local mobId = self:MobId(args.destGUID)
+		local lingering = lingeringTracker[mobId]
 		local difficultyRegenMultiplier = self:Heroic() and 15 or self:LFR() and 5 or 10
-		local duration = (lingeringTracker[mobId] == 0) and fullPower or (fullPower*(100-lingeringTracker[mobId]*difficultyRegenMultiplier)/100)
+		local duration = (lingering == 0) and fullPower or (fullPower*(100-lingering*difficultyRegenMultiplier)/100)
 		self:Message(args.spellId, "Attention", "Long", ("%s (%s)"):format(args.spellName, args.destName))
 		self:Bar(args.spellId, duration, L["full_power"])
+
 		-- leave in all the elseif statements to be ready in case they are needed on heroic
 		if mobId == 69132 then -- Priestess
 		elseif mobId == 69131 then -- Frost King
@@ -291,7 +334,9 @@ do
 			if bitingColdStart then
 				self:CDBar(136990, 45-(GetTime()-bitingColdStart))-- Frostbite -- CD bar because of Possessed buff travel time
 			end
-			if self:Heroic() then self:RegisterUnitEvent("UNIT_AURA", "ChilledToTheBone", "player") end
+			if self:Heroic() then
+				self:RegisterUnitEvent("UNIT_AURA", "ChilledToTheBone", "player")
+			end
 		elseif mobId == 69134 then -- Kazra'jin
 		elseif mobId == 69078 then -- Sandcrawler
 		end
@@ -300,15 +345,16 @@ end
 
 function mod:PossessedRemoved(args)
 	self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2", "boss3", "boss4", "boss5") -- for a little bit of performance increase
-	local mobId = self:MobId(args.destGUID)
 	for i = 1, 5 do
-		local id = ("boss%d"):format(i)
-		local bossGUID = UnitGUID(id)
-		if bossGUID == args.destGUID then
-			SetRaidTarget(id, 0) -- clear the icon because posses have travel time, so people know when something is no longer possessed
+		local boss = ("boss%d"):format(i)
+		if UnitGUID(boss) == args.destGUID then
+			SetRaidIcon(boss, 0) -- clear the icon because posses have travel time, so people know when something is no longer possessed
 		end
 	end
+
+	local mobId = self:MobId(args.destGUID)
 	lingeringTracker[mobId] = lingeringTracker[mobId] + 1 -- this is needed because Lingering Presence have no CLEU event
+
 	-- leave in all the elseif statements to be ready in case they are needed on heroic
 	if mobId == 69132 then -- Priestess
 	elseif mobId == 69131 then -- Frost King
@@ -323,18 +369,24 @@ function mod:PossessedRemoved(args)
 end
 
 function mod:Deaths(args)
-	-- stopbars
 	-- leave in all the elseif statements to be ready in case they are needed on heroic
-	if args.mobId == 69132 then -- Priestess
+	if args.mobId == 69480 then -- Blessed Loa Spirit
+		self:StopBar(40415, self:SpellName(137203))
+		return
+	elseif args.mobId == 69132 then -- Priestess
 	elseif args.mobId == 69131 then -- Frost King
-		self:StopBar(136992)
-		self:StopBar(136990)
+		self:StopBar(136992) -- Frostbite
+		self:StopBar(136990) -- Biting Cold
 	elseif args.mobId == 69134 then -- Kazra'jin
 	elseif args.mobId == 69078 then -- Sandcrawler
 		sandGuyDead = true
-		self:StopBar(136860) -- Quicksand
+		self:StopBar(-7062) -- Quicksand
 		self:CloseProximity()
 	end
+
 	bossDead = bossDead + 1
-	if bossDead > 4 then self:Win() end
+	if bossDead > 4 then
+		self:Win()
+	end
 end
+
