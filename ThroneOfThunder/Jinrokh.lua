@@ -54,8 +54,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Ionization", 138732)
 	self:Log("SPELL_CAST_SUCCESS", "LightningStormDuration", 137313)
 	self:Log("SPELL_CAST_START", "LightningStorm", 137313)
-	self:Log("SPELL_DAMAGE", "ThunderingThrowSafe", 137370) -- This spellId is the damage done to the tank ONLY
-	self:Log("SPELL_MISS", "ThunderingThrowSafe", 137370) -- This spellId is the damage done to the tank ONLY
+	self:Log("SPELL_AURA_APPLIED", "ThunderingThrowSafe", 137371)
 	self:Emote("ThunderingThrow", "137175") -- this seems to be the fastest way to determine which tank gets thrown, APPLIED is way too slow
 	self:Log("SPELL_DAMAGE", "LightningFissure", 139467, 137485) -- 137485 is from 25 H PTR
 	self:Log("SPELL_AURA_REMOVED", "FocusedLightningRemoved", 137422)
@@ -70,7 +69,7 @@ end
 function mod:OnEngage()
 	self:Bar(137313, 93) -- Lightning Storm
 	self:Bar(137175, 30) -- Thundering Throw
-	self:CDBar(137162, 7) -- Static Burst -- again, is there even a point for such a short bar?
+	self:CDBar(137162, 13) -- Static Burst
 	self:Berserk(self:Heroic() and 360 or 540)
 	if self:Heroic() then -- Ionization
 		wipe(ionized)
