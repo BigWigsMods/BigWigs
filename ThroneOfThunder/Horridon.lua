@@ -25,6 +25,7 @@ local doorCounter = 1
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
+	L.door_trigger = "pour" -- "Farraki forces pour from the Farraki Tribal Door!
 
 	L.chain_lightning, L.chain_lightning_desc = EJ_GetSectionInfo(7124)
 	L.chain_lightning_icon = 136480
@@ -42,17 +43,15 @@ if L then
 	L.venom_bolt_volley_bar = "Focus: Volley"
 
 	L.adds = "Adds spawning"
-	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
+	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-God Jalak spawn."
 	L.adds_icon = "inv_misc_head_troll_01"
-
-	L.orb_message = "Orb of Control dropped!"
-
-	L.focus_only = "|cffff0000Focus target alerts only.|r "
 
 	L.door_opened = "Door opened!"
 	L.door_bar = "Next door (%d)"
 	L.balcony_adds = "Balcony adds"
-	L.door_trigger = "pour" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
+	L.orb_message = "Orb of Control dropped!"
+
+	L.focus_only = "|cffff0000Focus target alerts only.|r "
 end
 L = mod:GetLocale()
 L.venom_bolt_volley_desc = L.focus_only..L.venom_bolt_volley_desc
@@ -74,7 +73,7 @@ function mod:GetOptions()
 		136817, 136821, -- War-God Jalak
 		{-7078, "TANK_HEALER"}, 136741, {-7080, "FLASH", "SAY", "ICON"}, 137240, "adds", "berserk", "bosskill",
 	}, {
-		[140946] = "heroic",
+		[137458] = "heroic",
 		[-7086] = -7086,
 		[-7109] = -7081,
 		["venom_bolt_volley"] = -7082,
@@ -141,7 +140,8 @@ end
 function mod:BossEngage()
 	self:CheckBossStatus()
 	if self:MobId(UnitGUID("boss2")) == 69374 then -- War-God Jalak
-		self:Message("adds", "Attention", "Info", -7087) -- War-God Jalak
+		self:StopBar(-7087)
+		self:Message("adds", "Attention", "Info", -7087, false) -- War-God Jalak
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 		self:Bar(136817, 5) -- Bestial Cry
 	end
@@ -163,6 +163,7 @@ function mod:LastPhase(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 35 then -- phase starts at 30, except if the boss is already there
 		self:Message(-7087, "Positive", "Info", CL["soon"]:format(self:SpellName(-7087))) -- War-God Jalak
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end
 
@@ -172,7 +173,7 @@ function mod:DinoForm(args)
 end
 
 function mod:DinoMending(args)
-	self:Message(-7090, "Important", "Long") -- maybe should give the interruptable icon to the options menu for this too
+	self:Message(-7090, "Important", "Long")
 	self:CDBar(-7090, 8) -- to help interrupters keep track
 end
 
@@ -235,7 +236,7 @@ do
 end
 
 function mod:MortalStrike(args)
-	self:Message(-7120, "Urgent")
+	self:TargetMessage(-7120, args.destName, "Urgent")
 	self:TargetBar(-7120, 8, args.destName)
 end
 
@@ -313,7 +314,7 @@ do
 	end
 end
 
--- general
+-- General
 
 function mod:Charge(msg, _, _, _, player)
 	self:TargetMessage(-7080, player, "Attention", "Long")
@@ -329,13 +330,20 @@ end
 function mod:Doors(msg)
 	doorCounter = doorCounter + 1
 	-- next door
-	self:Bar("adds", 114, L["door_bar"]:format(doorCounter), "inv_shield_11") -- door like icon
+	if doorCounter < 5 then
+		self:Bar("adds", 114, L["door_bar"]:format(doorCounter), "inv_shield_11") -- door like icon
+	else
+		self:Bar("adds", 143, -7087, "achievement_boss_trollgore") -- War-God Jalak
+	end
+
 	-- 1st wave jumps down
 	self:Bar("adds", 20, L["balcony_adds"], L.adds_icon)
 	self:DelayedMessage("adds", 20, "Urgent", L["balcony_adds"], L.adds_icon)
+
 	-- 2nd wave jumps down
 	self:ScheduleTimer("Bar", 20, "adds", 19, L["balcony_adds"], L.adds_icon)
 	self:DelayedMessage("adds", 39, "Urgent", L["balcony_adds"], L.adds_icon)
+
 	-- dinomancer jumps down
 	self:Bar(-7086, 58, nil, "ability_hunter_beastwithin") -- Zandalari Dinomancer (Dino Form icon)
 	self:DelayedMessage(-7086, 58, "Important", nil, "ability_hunter_beastwithin")

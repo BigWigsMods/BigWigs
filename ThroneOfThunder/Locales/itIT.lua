@@ -30,7 +30,7 @@ if L then
 
 	L.door_opened = "Porta Aperta!"
 	L.door_bar = "Prossima porta (%d)"
-	L.balcony_adds = "Add dal Balcone"	
+	L.balcony_adds = "Add dal Balcone"
 	L.door_trigger = "pour" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
 end
 
@@ -38,7 +38,7 @@ L = BigWigs:NewBossLocale("Council of Elders", "itIT")
 if L then
 	L.priestess_adds = "Add Sacerdotessa"
 	L.priestess_adds_desc = "Avviso per tutti i tipi di add della Gran Sacerdotessa Mar'li"
-	L.priestess_adds_message = "Add Sacerdotessa"	
+	L.priestess_adds_message = "Add Sacerdotessa"
 	--L.loa_spirit = "Spirito Loa" Commented out since there isnt anymore into Locals, Keep it for lazyness.
 	--L.loa_spirits = "Spiriti Loa" Commented out since there isnt anymore into Locals, Keep it for lazyness.
 	--L.loa_spirits_desc = "Avviso per entrambi i tipi di Spiriti Loa" Commented out since there isnt anymore into Locals, Keep it for lazyness.
@@ -77,7 +77,7 @@ if L then
 	--L.food_call_trigger = "Hatchling calls for food!" --da tradurre / Commented out since there isnt anymore into Locals, Keep it for lazyness.
 	L.nest = "Nidi"
 	L.nest_desc = "Avvisi relativi ai nidi. |c00FF0000Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi!|r"
-	L.big_add = "Add Grande su %s"	
+	L.big_add = "Add Grande su %s"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "itIT")
@@ -116,7 +116,7 @@ if L then
 	L.overload_casting = "Lancio Sovraccarico Fuso"
 	L.overload_casting_desc = "Avvisa quando viene lanciato Sovraccarico Fuso"
 
-	L.arcing_lightning_cleared = "Fulmine Arcuato non più presente sull'Incursione"	
+	L.arcing_lightning_cleared = "Fulmine Arcuato non più presente sull'Incursione"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "itIT")

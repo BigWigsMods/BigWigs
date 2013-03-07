@@ -21,7 +21,7 @@ if L then
 	L.venom_bolt_volley_bar = "焦点：毒箭之雨"
 
 	L.adds = "Adds spawning"
-	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-Lord Jalak spawn."
+	L.adds_desc = "Warnings for when the Farraki, the Gurubashi, the Drakkari, the Amani, and War-God Jalak spawn."
 
 	L.orb_message = "控制之球掉落！"
 
