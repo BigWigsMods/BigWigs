@@ -9,7 +9,8 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "ruRU")
 if L then
-	L.charge_trigger = "sets his eyes"
+	L.charge_trigger = "останавливает свой взгляд"
+	L.door_trigger = "прибывают"
 
 	L.chain_lightning_message = "Ваш фокус читает Цепную молнию!"
 	L.chain_lightning_bar = "Фокус: Цепная молния"
@@ -23,8 +24,11 @@ if L then
 	L.adds = "Появление помощников"
 	L.adds_desc = "Предупреждать о появлении Фарраки, Гурубаши, Драккари, Амани и Бога Войны Джалака."
 
-	L.puncture_message = "Прокол"
+	L.door_opened = "Ворота открыты!"
+	L.door_bar = "След. ворота (%d)"
+	L.balcony_adds = "Подкрепление с балкона"
 	L.orb_message = "Сфера контроля упала!"
+
 	L.focus_only = "|cffff0000Оповещения только для фокуса.|r "
 end
 
