@@ -23,6 +23,7 @@ L.duration = "%s durante %s seg"
 L.over = "%s Acabou!"
 L.removed = "%s Removed"
 L.incoming = "%s Incoming!"
+L.interrupted = "%s Interrupted"
 
 L.add_spawned = "Adicional surgiu!"
 L.next_add = "Próximo adicional"

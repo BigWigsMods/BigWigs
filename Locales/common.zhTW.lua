@@ -23,6 +23,7 @@ L.duration = ">%s< %s秒"
 L.over = ">%s< 結束！"
 L.removed = "%s移除"
 L.incoming = "即將%s！"
+L.interrupted = "%s Interrupted"
 
 L.add_spawned = "小怪刷新！"
 L.next_add = "下一波小怪"

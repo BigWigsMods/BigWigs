@@ -23,6 +23,7 @@ L.duration = "%s для %s сек"
 L.over = "%s закончился!"
 L.removed = "%s Removed"
 L.incoming = "%s Incoming!"
+L.interrupted = "%s Interrupted"
 
 L.add_spawned = "Помощник появился!"
 L.next_add = "Следующий помощник"
