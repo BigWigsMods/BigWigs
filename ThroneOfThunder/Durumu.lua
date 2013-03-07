@@ -19,7 +19,7 @@ local lifedranJumps = 0
 local lingeringGaze = {}
 local openedForMe = false
 local blueRayTracking, redRayTracking = mod:SpellName(139202), mod:SpellName(139204)
-local blueControler, redControler, yellowSpawner
+local blueController, redController, yellowSpawner
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -84,7 +84,7 @@ function mod:OnEngage()
 	self:Bar(-6891, 41) -- Light Spectrum
 	wipe(lingeringGaze)
 	openedForMe = false
-	blueControler, redControler, yellowSpawner = nil, nil, nil
+	blueController, redController, yellowSpawner = nil, nil, nil
 end
 
 --------------------------------------------------------------------------------
@@ -127,16 +127,16 @@ end
 function mod:UNIT_AURA(unit)
 	-- XXX not sure how well this plays with LFR names
 	local name = UnitName(unit)
-	if UnitDebuff(unit, blueRayTracking) and blueControler ~= name then
-		blueControler = name
+	if UnitDebuff(unit, blueRayTracking) and blueController ~= name then
+		blueController = name
 		if self:Me(UnitGUID(unit)) then
-			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c000000FF"..blueControler.."|r"), 134122)
+			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c000000FF"..blueController.."|r"), 134122)
 		end
 		mark(unit, 6)
-	elseif UnitDebuff(unit, redRayTracking) and redControler ~= name then
-		redControler = name
+	elseif UnitDebuff(unit, redRayTracking) and redController ~= name then
+		redController = name
 		if self:Me(UnitGUID(unit)) then
-			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c00FF0000"..redControler.."|r"), 134123)
+			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c00FF0000"..redController.."|r"), 134123)
 		end
 		mark(unit, 7)
 	end
@@ -156,13 +156,13 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
 			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c00FFFF00"..sender.."|r"), 134124)
 		end
 	elseif msg:find("134123") then -- Red
-		redControler = target
+		redController = target
 		mark(target, 7)
 		if UnitIsUnit("player", target) then
 			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c00FF0000"..sender.."|r"), 134123)
 		end
 	elseif msg:find("134122") then -- Blue
-		blueControler = target
+		blueController = target
 		mark(target, 6)
 		if UnitIsUnit("player", target) then
 			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c000000FF"..sender.."|r"), 134122)
