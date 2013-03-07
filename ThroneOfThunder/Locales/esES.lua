@@ -29,7 +29,7 @@ if L then
 
 	L.door_opened = "¡Puerta abierta!"
 	L.door_bar = "Siguiente Puerta (%d)"
-	L.balcony_adds = "Balcony adds"
+	L.balcony_adds = "Adds de balcón"
 	L.door_trigger = "salen en tropel" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
 end
 
