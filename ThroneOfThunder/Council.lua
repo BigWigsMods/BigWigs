@@ -57,7 +57,7 @@ function mod:GetOptions()
 		{-7062, "FLASH"}, 136878, {136857, "FLASH"}, 136894, -- Sul the Sandcrawler
 		{137122, "FLASH"}, -- Kazra'jin
 		{-7054, "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, 136990, {137085, "FLASH"}, -- Frost King Malakk
-		{136442, "ICON"}, {137650, "FLASH"}, "proximity", "berserk", "bosskill",
+		136442, {137650, "FLASH"}, "proximity", "berserk", "bosskill",
 	}, {
 		["priestess_adds"] = -7050,
 		[-7062] = -7049,
@@ -70,9 +70,9 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	-- High Priestess Mar'li
-	self:Log("SPELL_CAST_START", "PriestessAdds", 137350, 137891) -- Shadowed, Twisted Fate
-	self:Log("SPELL_CAST_START", "BlessedLoaSpirit", 137203)
-	self:Log("SPELL_HEAL", "BlessedGift", 137303) -- Loa hit the boss
+	self:Log("SPELL_CAST_START", "PriestessAdds", 137203, 137350, 137891) -- Blessed, Shadowed, Twisted Fate
+	self:Log("SPELL_CAST_SUCCESS", "BlessedLoaSpirit", 137203)
+	self:Log("SPELL_CAST_SUCCESS", "BlessedGift", 137303) -- Loa hits a boss
 	self:Log("SPELL_AURA_APPLIED", "MarkedSoul", 137359)
 	self:Log("SPELL_AURA_REMOVED", "MarkedSoulRemoved", 137359)
 	-- Sul the Sandcrawler
@@ -133,7 +133,6 @@ function mod:BlessedLoaSpirit(args)
 	local lowest, lowestHP = nil, 1
 	for i=1, 5 do
 		local boss = ("boss%d"):format(i)
-		print("hp", boss, UnitName(boss), UnitHealth(boss))
 		local mobId = self:MobId(UnitGUID(boss))
 		if mobId == 69134 or mobId == 69078 or mobId == 69131 then
 			local hp = UnitHealth(boss) / UnitHealthMax(boss)
@@ -143,8 +142,8 @@ function mod:BlessedLoaSpirit(args)
 			end
 		end
 	end
-	self:TargetMessage(args.spellId, UnitName(lowest), "Attention")
-	self:TargetBar(args.spellId, args.spellName, 22, 40415, args.spellId)
+	self:TargetMessage(args.spellId, UnitName(lowest), "Attention", 40415, args.spellId) -- yellow text!
+	self:TargetBar(args.spellId, args.spellName, 20, 40415, args.spellId)
 end
 
 function mod:BlessedGift(args)
