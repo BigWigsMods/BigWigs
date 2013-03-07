@@ -37,9 +37,14 @@ if L then
 	L.death_beam = "Death beam"
 
 	L.custom_off_ray_controllers = "Ray controllers"
-	L.custom_off_ray_controllers_desc = "Use the |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15|t, |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15|t, |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15|t raid markers to mark people who will control the ray spawn positions and movement"
+	L.custom_off_ray_controllers_desc = "Use the %s, %s, %s raid markers to mark people who will control the ray spawn positions and movement."
 end
 L = mod:GetLocale()
+L.custom_off_ray_controllers_desc = L.custom_off_ray_controllers_desc:format(
+	"|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15|t",
+	"|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15|t",
+	"|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15|t"
+)
 
 --------------------------------------------------------------------------------
 -- Initialization

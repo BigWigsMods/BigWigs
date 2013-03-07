@@ -42,6 +42,9 @@ if L then
 	L.full_power = "Poder máximo"
 	L.assault_message = "Asalto"
 	L.hp_to_go_power = "HP para acabar: %d%% - Poder: %d"
+
+	L.custom_on_markpossessed = "Mark Possessed Boss"
+	L.custom_on_markpossessed_desc = "Mark the possessed boss with a skull."
 end
 
 L = BigWigs:NewBossLocale("Tortos", "esES")
@@ -86,6 +89,9 @@ if L then
 	L.clockwise = "En sentido horario"
 	L.counter_clockwise = "Sentido antihorario"
 	L.death_beam = "Rayo mortal"
+
+	L.custom_off_ray_controllers = "Ray controllers"
+	L.custom_off_ray_controllers_desc = "Use the %s, %s, %s raid markers to mark people who will control the ray spawn positions and movement."
 end
 
 L = BigWigs:NewBossLocale("Primordius", "esES")
@@ -99,6 +105,7 @@ if L then
 	L.engage_trigger = "The orb explodes!"
 	L.slam_message = "Slam"
 end
+
 L = BigWigs:NewBossLocale("Iron Qon", "esES")
 if L then
 	L.molten_energy = "Energía de arrabio"
@@ -108,11 +115,13 @@ if L then
 
 	L.arcing_lightning_cleared = "Raid limpia de Arco de relámpagos"
 end
+
 L = BigWigs:NewBossLocale("Twin Consorts", "esES")
 if L then
 	L.barrage_fired = "¡Tromba disparada!"
 	L.last_phase_yell_trigger = "Just this once..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
 end
+
 L = BigWigs:NewBossLocale("Lei Shen", "esES")
 if L then
 	L.conduit_abilities = "Habilidades de conducto"
@@ -125,6 +134,7 @@ if L then
 	L.diffusion_add_message = "Difusión de adds"
 	L.diffusion_chain_message = "Difusión de adds inminente - ¡DISPERSAOS!"
 end
+
 L = BigWigs:NewBossLocale("Ra-den", "esES")
 if L then
 

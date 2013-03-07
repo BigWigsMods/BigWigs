@@ -44,6 +44,10 @@ if L then
 	L.full_power = "Full power"
 	L.assault_message = "Assault"
 	L.hp_to_go_power = "HP to go: %d%% - Power: %d"
+
+	L.custom_on_markpossessed = "Mark Possessed Boss"
+	L.custom_on_markpossessed_desc = "Mark the possessed boss with a skull."
+	L.custom_on_markpossessed_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8"
 end
 L = mod:GetLocale()
 
@@ -57,7 +61,7 @@ function mod:GetOptions()
 		{-7062, "FLASH"}, 136878, {136857, "FLASH"}, 136894, -- Sul the Sandcrawler
 		{137122, "FLASH"}, -- Kazra'jin
 		{-7054, "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, 136990, {137085, "FLASH"}, -- Frost King Malakk
-		136442, {137650, "FLASH"}, "proximity", "berserk", "bosskill",
+		136442, "custom_on_markpossessed", {137650, "FLASH"}, "proximity", "berserk", "bosskill",
 	}, {
 		["priestess_adds"] = -7050,
 		[-7062] = -7049,
@@ -315,7 +319,9 @@ do
 			local boss = ("boss%d"):format(i)
 			if UnitGUID(boss) == args.destGUID then
 				posessHPStart = UnitHealth(boss)
-				SetRaidIcon(boss, 8)
+				if self.db.profile.custom_on_markpossessed then
+					SetRaidIcon(boss, 8)
+				end
 			end
 		end
 
@@ -344,10 +350,12 @@ end
 
 function mod:PossessedRemoved(args)
 	self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2", "boss3", "boss4", "boss5") -- for a little bit of performance increase
-	for i = 1, 5 do
-		local boss = ("boss%d"):format(i)
-		if UnitGUID(boss) == args.destGUID then
-			SetRaidIcon(boss, 0) -- clear the icon because posses have travel time, so people know when something is no longer possessed
+	if self.db.profile.custom_on_markpossessed then
+		for i = 1, 5 do
+			local boss = ("boss%d"):format(i)
+			if UnitGUID(boss) == args.destGUID then
+				SetRaidIcon(boss, 0) -- clear the icon because posses have travel time, so people know when something is no longer possessed
+			end
 		end
 	end
 

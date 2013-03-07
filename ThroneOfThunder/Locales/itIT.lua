@@ -45,6 +45,9 @@ if L then
 	L.full_power = "Pieno Potere"
 	L.assault_message = "Assalto"
 	L.hp_to_go_power = "Punti Vita alla Fine: %d%% - Potere: %d"
+
+	L.custom_on_markpossessed = "Mark Possessed Boss"
+	L.custom_on_markpossessed_desc = "Mark the possessed boss with a skull."
 end
 
 L = BigWigs:NewBossLocale("Tortos", "itIT")
@@ -95,6 +98,9 @@ if L then
 	L.clockwise = "Senso Orario"
 	L.counter_clockwise = "Senso Antiorario"
 	L.death_beam = "Raggio Disintegratore"
+
+	L.custom_off_ray_controllers = "Ray controllers"
+	L.custom_off_ray_controllers_desc = "Use the %s, %s, %s raid markers to mark people who will control the ray spawn positions and movement."
 end
 
 L = BigWigs:NewBossLocale("Primordius", "itIT")

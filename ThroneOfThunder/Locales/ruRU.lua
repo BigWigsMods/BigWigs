@@ -41,6 +41,9 @@ if L then
 	L.full_power = "Полная энергия"
 	L.assault_message = "Выпад"
 	L.hp_to_go_power = "HP осталось: %d%% - Энергия: %d"
+
+	L.custom_on_markpossessed = "Mark Possessed Boss"
+	L.custom_on_markpossessed_desc = "Mark the possessed boss with a skull."
 end
 
 L = BigWigs:NewBossLocale("Tortos", "ruRU")
@@ -89,6 +92,9 @@ if L then
 	L.clockwise = "По часовой стрелке"
 	L.counter_clockwise = "Отсчет часовой стрелки"
 	L.death_beam = "Смертельный луч"
+
+	L.custom_off_ray_controllers = "Ray controllers"
+	L.custom_off_ray_controllers_desc = "Use the %s, %s, %s raid markers to mark people who will control the ray spawn positions and movement."
 end
 
 L = BigWigs:NewBossLocale("Primordius", "ruRU")

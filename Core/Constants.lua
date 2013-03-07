@@ -154,7 +154,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 				if not icon then
 					print("|cFF33FF99BigWigs|r:", "No icon found for", module, L[option .. "_icon"])
 				end
-			elseif type(icon) == "string" then
+			elseif type(icon) == "string" and not icon:find("\\", nil, true) then
 				icon = "Interface\\Icons\\" .. icon
 			end
 			return option, title, description, icon

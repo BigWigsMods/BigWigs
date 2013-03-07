@@ -42,6 +42,9 @@ if L then
 	L.full_power = "全能量"
 	L.assault_message = "冰寒突击！"
 	L.hp_to_go_power = "生命：%d%% - 能量：%d"
+
+	L.custom_on_markpossessed = "Mark Possessed Boss"
+	L.custom_on_markpossessed_desc = "Mark the possessed boss with a skull."
 end
 
 L = BigWigs:NewBossLocale("Tortos", "zhCN")
@@ -85,6 +88,9 @@ if L then
 	L.clockwise = "Clockwise"
 	L.counter_clockwise = "Counter clockwise"
 	L.death_beam = "Death beam"
+
+	L.custom_off_ray_controllers = "Ray controllers"
+	L.custom_off_ray_controllers_desc = "Use the %s, %s, %s raid markers to mark people who will control the ray spawn positions and movement."
 end
 
 L = BigWigs:NewBossLocale("Primordius", "zhCN")
