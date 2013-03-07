@@ -73,6 +73,9 @@ if L then
 	L.nest = "Nester"
 	L.nest_desc = "Warnungen für die Nester. |c00FF0000Schalte diese Warnungen aus, wenn Du nicht für die Nester eingeteilt bist!|r"
 	L.big_add = "Großes Add in %s"
+
+	L.custom_off_ray_controllers = "Kontrollierer der Lichtstrahlen"
+	L.custom_off_ray_controllers_desc = "Verwenden der |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15|t, |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15|t, |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15|t Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "deDE")
