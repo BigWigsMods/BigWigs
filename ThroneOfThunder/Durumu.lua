@@ -125,8 +125,8 @@ function mod:LifeDrainApplied(args)
 end
 
 function mod:UNIT_AURA(unit)
-	-- XXX not sure how well this plays with LFR names
-	local name = UnitName(unit)
+	local name, server = UnitName(unit)
+	if server then name = name..server end
 	if UnitDebuff(unit, blueRayTracking) and blueController ~= name then
 		blueController = name
 		if self:Me(UnitGUID(unit)) then
