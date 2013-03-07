@@ -10,6 +10,7 @@ end
 L = BigWigs:NewBossLocale("Horridon", "deDE")
 if L then
 	L.charge_trigger = "richtet seinen Blick"
+	L.door_trigger = "stürmen"
 
 	L.chain_lightning_message = "Dein Fokus wirkt Kettenblitzschlag!"
 	L.chain_lightning_bar = "Fokus: Kettenblitzschlag"
@@ -23,14 +24,12 @@ if L then
 	L.adds = "Adds erscheinen"
 	L.adds_desc = "Warnungen für das Erscheinen der Farraki, Gurubashi, Drakkari, Amani und des Kriegsgottes Jalak."
 
-	L.orb_message = "Kugel der Kontrolle gefallen!"
-
-	L.focus_only = "|cffff0000Nur Meldungen für Fokusziele.|r "
-
 	L.door_opened = "Tor geöffnet!"
 	L.door_bar = "Nächstes Tor (%d)"
 	L.balcony_adds = "Adds von oben"
-	L.door_trigger = "stürmen"
+	L.orb_message = "Kugel der Kontrolle gefallen!"
+
+	L.focus_only = "|cffff0000Nur Meldungen für Fokusziele.|r "
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "deDE")
