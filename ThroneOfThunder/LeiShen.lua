@@ -183,12 +183,13 @@ function mod:Intermission(args)
 	self:Bar("stages", 45, L["intermission"], args.spellId)
 	local diff = self:Difficulty()
 	if diff == 3 or diff == 5 or diff == 7 then -- 10 mans and assume LFR too
-		if isConduitAlive(68398) then self:CDBar(135695, 6) end -- Static Shock
-		if isConduitAlive(68697) then self:CDBar(136295, 15) end -- Overcharged
-		if isConduitAlive(68698) then self:CDBar(-7242, 30, 136395, "SPELL_SHAMAN_MEASUREDINSIGHT") end -- Bouncing Bolt
+		if isConduitAlive(68398) then self:CDBar(135695, 18) end -- Static Shock
+		if isConduitAlive(68697) then self:CDBar(136295, 7) end -- Overcharged
+		if isConduitAlive(68698) then self:CDBar(-7242, 20, 136395, "SPELL_SHAMAN_MEASUREDINSIGHT") end -- Bouncing Bolt
 		if isConduitAlive(68696) then
-			self:ScheduleTimer(warnSmallAdds, 1) -- so we don't instantly overwrite previous message
-			self:ScheduleTimer(warnSmallAdds, 35)
+			self:ScheduleTimer(warnSmallAdds, 5) -- so we don't instantly overwrite previous message
+			self:ScheduleTimer(warnSmallAdds, 30)
+			self:CDBar(-7239, 7, L["diffusion_chain_message"])
 		end
 	else -- 25 man
 		if isConduitAlive(68398) then self:CDBar(135695, 15) end -- Static Shock
@@ -257,6 +258,7 @@ function mod:Boss1Succeeded(unitId, spellName, _, _, spellId)
 		end
 		self:Message(-7242, "Important", "Long", 136395, "SPELL_SHAMAN_MEASUREDINSIGHT")
 	elseif spellId == 135991 then -- Small Adds
+		-- XXX should probably handle proximity here for intermission
 		if not UnitExists("boss1") then -- poor mans intermission check
 			self:Bar(-7239, 25, L["diffusion_add_message"])
 		else
@@ -273,7 +275,7 @@ do
 	local overchargedList, scheduled = mod:NewTargetList(), nil
 	local function warnOvercharged(spellId)
 		if not UnitExists("boss1") then -- poor mans intermission check
-			mod:Bar(spellId, 25, L["overchargerd_message"])
+			mod:Bar(spellId, 23, L["overchargerd_message"])
 		else
 			mod:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		end
@@ -309,7 +311,7 @@ do
 	local staticShockList, scheduled = {}, nil
 	local function warnStaticShock(spellId)
 		if not UnitExists("boss1") then -- poor mans intermission check
-			mod:Bar("conduit_abilities", 25, L["conduit_abilities_message"], L.conduit_abilities_icon)
+			mod:Bar("conduit_abilities", 20, L["static_shock_message"], spellId)
 		else
 			mod:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		end
