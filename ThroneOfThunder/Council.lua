@@ -95,7 +95,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "PossessedRemoved", 136442)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowedSoul", 137650)
 
-	self:Death("Deaths", 69480, 69132, 69131, 69134, 69078) -- Blessed Loa Spirit, Bosses
+	self:Death("Deaths", 69480, 69132, 69131, 69134, 69078) -- Blessed Loa Spirit, Priestess, Frost King, Kazra'jin, Sandcrawler
 end
 
 function mod:OnEngage()
@@ -134,7 +134,7 @@ function mod:BlessedLoaSpirit(args)
 	for i=1, 5 do
 		local boss = ("boss%d"):format(i)
 		local mobId = self:MobId(UnitGUID(boss))
-		if mobId == 69134 or mobId == 69078 or mobId == 69131 then
+		if mobId == 69134 or mobId == 69078 or mobId == 69131 then -- Kazra'jin, Sandcrawler, Frost King
 			local hp = UnitHealth(boss) / UnitHealthMax(boss)
 			if hp < lowestHP then
 				lowest = boss
@@ -142,8 +142,8 @@ function mod:BlessedLoaSpirit(args)
 			end
 		end
 	end
-	self:TargetMessage(args.spellId, UnitName(lowest), "Attention", 40415, args.spellId) -- yellow text!
-	self:TargetBar(args.spellId, args.spellName, 20, 40415, args.spellId)
+	self:TargetMessage(args.spellId, UnitName(lowest), "Attention", "Alert", 40415, args.spellId) -- yellow text!
+	self:TargetBar(args.spellId, args.spellName, 20, 40415, args.spellId) -- 40415 = Fixated
 end
 
 function mod:BlessedGift(args)
