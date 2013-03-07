@@ -35,7 +35,7 @@ end
 L = BigWigs:NewBossLocale("Council of Elders", "deDE")
 if L then
 	L.priestess_adds = "Priesterin Adds"
-	L.priestess_adds_desc = "Warnung für alle möglichen Adds von Hohepriesterin Mar'li"
+	L.priestess_adds_desc = "Warnungen, wenn Hohepriesterin Mar'li beginnt, Adds zu beschwören."
 	L.priestess_adds_message = "Priesterin Add"
 
 	L.full_power = "Volle Energie"
