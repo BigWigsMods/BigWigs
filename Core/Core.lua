@@ -351,7 +351,7 @@ function addon:OnInitialize()
 			showBlizzardWarnings = false,
 			blockmovies = true,
 			fakeDBMVersion = false,
-			customDBMbars = false,
+			customDBMbars = true,
 		},
 		global = {
 			optionShiftIndexes = {},
