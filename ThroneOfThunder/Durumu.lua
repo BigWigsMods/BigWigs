@@ -1,10 +1,8 @@
 --[[
 TODO:
-	figure out/verify real lingering gaze range
 	figure out where to start ForceOfWill in the DisintegrationBeam phase
 		as of 25 N ptr there is no force of will during DisintegrationBeam phase
 ]]--
-if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -20,6 +18,8 @@ local redAddLeft = 3
 local lifedranJumps = 0
 local lingeringGaze = {}
 local openedForMe = false
+local blueRayTracking, redRayTracking = mod:SpellName(139202), mod:SpellName(139204)
+local blueControler, redControler, yellowSpawner
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -35,6 +35,9 @@ if L then
 	L.clockwise = "Clockwise"
 	L.counter_clockwise = "Counter clockwise"
 	L.death_beam = "Death beam"
+
+	L.custom_on_ray_controllers = "Ray controllers"
+	L.custom_on_ray_controllers_desc = "Use the |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15|t, |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15|t, |TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15|t raid markers to mark people who will control the ray spawn positions and movement"
 end
 L = mod:GetLocale()
 
@@ -44,7 +47,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{133767, "TANK"}, {133765, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {136932, "FLASH", "SAY"}, {-6891, "FLASH"}, -6898, -6892,
+		{133767, "TANK"}, {133765, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {136932, "FLASH", "SAY"}, {-6891, "FLASH"}, "custom_on_ray_controllers", -6898, -6892,
 		{133798, "ICON"}, -6882, 140502, -6889,
 		"berserk", "bosskill",
 	}, {
@@ -59,6 +62,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "EyeSore", 140502)
 	self:Log("SPELL_AURA_REMOVED", "LifeDrainRemoved", 133798)
 	self:Log("SPELL_AURA_APPLIED", "LifeDrainApplied", 133798)
+	self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:Log("SPELL_DAMAGE", "LingeringGazeDamage", 134044)
 	self:Log("SPELL_AURA_REMOVED", "LingeringGazeRemoved", 134626)
@@ -80,11 +84,17 @@ function mod:OnEngage()
 	self:Bar(-6891, 41) -- Light Spectrum
 	wipe(lingeringGaze)
 	openedForMe = false
+	blueControler, redControler, yellowSpawner = nil, nil, nil
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function mark(unit, mark)
+	if not unit or not mark or not mod.db.profile.custom_on_ray_controllers then return end
+	SetRaidTarget(unit, mark)
+end
 
 function mod:IceWall(args)
 	self:Message(-6889, "Urgent")
@@ -114,24 +124,46 @@ function mod:LifeDrainApplied(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", ("%s - %d%%"):format(args.spellName, lifedranJumps*60)) -- maybe this should just be the amount of jumps
 end
 
+function mod:UNIT_AURA(unit)
+	-- XXX not sure how well this plays with LFR names
+	local name = UnitName(unit)
+	if UnitDebuff(unit, blueRayTracking) and blueControler ~= name then
+		blueControler = name
+		if self:Me(UnitGUID(unit)) then
+			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c000000FF"..blueControler.."|r"), 134122)
+		end
+		mark(unit, 6)
+	elseif UnitDebuff(unit, redRayTracking) and redControler ~= name then
+		redControler = name
+		if self:Me(UnitGUID(unit)) then
+			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c00FF0000"..redControler.."|r"), 134123)
+		end
+		mark(unit, 7)
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
 	if msg:find("134124") then -- Yellow
-		redAddLeft = 0
+		redAddLeft = 3
+		yellowSpawner = target
 		if self:Heroic() then self:Bar(-6891, 80, 137747) end -- Obliterate
-		self:StopBar(136932) -- Force of Will -- XXX double check if this is not too early to stop the bar
+		self:StopBar(136932)
 		self:Bar(-6891, 10, L["rays_spawn"], "inv_misc_gem_variety_02") -- only spawn this bar in one of the if statements -- this should overwrites the general CD bar
 		self:ScheduleTimer("Bar", 10, -6891, 180) -- Light Spectrum
-		SetRaidTarget(target, 1)
+		mark(target, 1)
+		self:ScheduleTimer(mark, 10, yellowSpawner, 0)
 		if UnitIsUnit("player", target) then
 			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c00FFFF00"..sender.."|r"), 134124)
 		end
 	elseif msg:find("134123") then -- Red
-		SetRaidTarget(target, 7)
+		redControler = target
+		mark(target, 7)
 		if UnitIsUnit("player", target) then
 			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c00FF0000"..sender.."|r"), 134123)
 		end
 	elseif msg:find("134122") then -- Blue
-		SetRaidTarget(target, 6)
+		blueControler = target
+		mark(target, 6)
 		if UnitIsUnit("player", target) then
 			self:Message(-6891, "Positive", "Alert", CL["you"]:format("|c000000FF"..sender.."|r"), 134122)
 		end
@@ -144,7 +176,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, sender, _, _, target)
 		self:Message(-6892, "Urgent", nil, L["red_add"], 136154)
 	elseif msg:find(L["blue_spawn_trigger"]) then
 		self:Message(-6898, "Urgent", nil, L["blue_add"], 136177)
-	elseif msg:find("136932") then -- Force of Will -- XXX no other event on 25 H PTR
+	elseif msg:find("136932") then -- Force of Will
 		local onPlayer = UnitIsUnit("player", target)
 		self:Message(136932, "Attention", onPlayer and "Long", onPlayer and CL["you"]:format(self:SpellName(136932)))
 		self:CDBar(136932, 20)
@@ -166,7 +198,7 @@ do
 	function mod:LingeringGazeDamage(args)
 		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
-		if t-prev > 1 then -- use 1 sec instead of the usual 2, getting out this fast matters ( used to because of fast ticking damage, not it just slows? 25 N/H PTR )
+		if t-prev > 2 then
 			prev = t
 			self:Message(134626, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(134626)
@@ -182,7 +214,7 @@ function mod:LingeringGazeRemoved(args)
 		self:CloseProximity(args.spellId)
 	else
 		if not openedForMe then
-			self:OpenProximity(args.spellId, 8, lingeringGaze)
+			self:OpenProximity(args.spellId, 15, lingeringGaze)
 		end
 	end
 end
@@ -192,12 +224,12 @@ function mod:LingeringGazeApplied(args)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Message(args.spellId, "Urgent", "Alarm", CL["you"]:format(args.spellName))
-		self:OpenProximity(args.spellId, 8) -- XXX EJ says 15 but looks lot less - VERIFY!
+		self:OpenProximity(args.spellId, 15)
 		openedForMe = true
 	else
 		lingeringGaze[#lingeringGaze+1] = args.destName
 		if not openedForMe then
-			self:OpenProximity(args.spellId, 8, lingeringGaze)
+			self:OpenProximity(args.spellId, 15, lingeringGaze)
 		end
 	end
 end
@@ -218,6 +250,8 @@ function mod:Deaths(args)
 		if redAddLeft == 0 then
 			self:StopBar(137747)
 			self:CDBar(136932, 20) -- Force of Will
+			mark(blueController, 0)
+			mark(redController, 0)
 		else
 			self:Message(-6892, "Urgent", nil, CL["count"]:format(L["red_add"], redAddLeft))
 		end
