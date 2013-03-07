@@ -93,6 +93,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrackedShell", 137240)
 	self:Log("SPELL_AURA_APPLIED", "DinoForm", 137237)
 	self:Log("SPELL_CAST_SUCCESS", "DinoMending", 136797)
+	self:Log("SPELL_INTERRUPT", "DinoMendingInterrupt", "*")
 	-- The Amani
 	self:Log("SPELL_DAMAGE", "LightningNova", 136490)
 	self:Log("SPELL_CAST_START", "Hex", 136512)
@@ -177,8 +178,14 @@ function mod:DinoMending(args)
 	self:CDBar(-7090, 8) -- to help interrupters keep track
 end
 
--- The Amani
+function mod:DinoMendingInterrupt(args)
+	if args.extraSpellId == 136797 then
+		self:StopBar(-7090)
+		self:Message(-7090, "Important", nil, CL["interrupted"]:format(self:SpellName(-7090)))
+	end
+end
 
+-- The Amani
 do
 	local prev = 0
 	function mod:LightningNova(args)
@@ -317,7 +324,7 @@ end
 -- General
 
 function mod:Charge(msg, _, _, _, player)
-	self:TargetMessage(-7080, player, "Attention", "Long", nil, nil, true)
+	self:TargetMessage(-7080, player, "Attention", "Warning", nil, nil, true)
 	self:CDBar(-7080, 11)
 	self:PrimaryIcon(-7080, player)
 	if UnitIsUnit("player", player) then
