@@ -18,6 +18,7 @@ local sounds = {
 	Info = "BigWigs: Info",
 	Alert = "BigWigs: Alert",
 	Alarm = "BigWigs: Alarm",
+	Warning = "Raid Warning",
 	Victory = "BigWigs: Victory",
 }
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
@@ -54,6 +55,7 @@ plugin.defaultDB = {
 		Info = "BigWigs: Info",
 		Alert = "BigWigs: Alert",
 		Alarm = "BigWigs: Alarm",
+		Warning = "Raid Warning",
 		Victory = "BigWigs: Victory",
 	},
 }
@@ -141,6 +143,7 @@ function plugin:OnRegister()
 	media:Register(mType, "BigWigs: Info", "Interface\\AddOns\\BigWigs\\Sounds\\Info.mp3")
 	media:Register(mType, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Sounds\\Alert.mp3")
 	media:Register(mType, "BigWigs: Alarm", "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.mp3")
+	media:Register(mType, "Raid Warning", "Sound\\Interface\\RaidWarning.wav")
 	media:Register(mType, "BigWigs: Victory", "Interface\\AddOns\\BigWigs\\Sounds\\Victory.mp3")
 	media:Register(mType, "BigWigs: Victory Long", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryLong.mp3")
 	media:Register(mType, "BigWigs: Victory Classic", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryClassic.mp3")

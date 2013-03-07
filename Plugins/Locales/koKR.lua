@@ -204,13 +204,14 @@ L["|cffff0000Disable|r"] = "|cffff0000비활성화|r"
 
 L.soundDefaultDescription = "이 옵션을 세트로 Big Wigs 의 기본 소리 경고와 함께 메시지에 대한 블리자드의 공격대 경고 사운드를 사용합니다."
 
-L["Sounds"] = "효과음"
+L.Sounds = "효과음"
 
-L["Alarm"] = "경보"
-L["Info"] = "정보"
-L["Alert"] = "알림"
-L["Long"] = "장음"
-L["Victory"] = "승리"
+L.Alarm = "경보"
+L.Info = "정보"
+L.Alert = "알림"
+L.Long = "장음"
+--L.Warning = "Warning"
+L.Victory = "승리"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "%q에 사용할 효과음을 설정합니다.\n\n미리듣기는 CTRL-클릭하세요."
 L["Default only"] = "기본음"

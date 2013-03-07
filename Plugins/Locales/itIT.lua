@@ -208,13 +208,14 @@ L["|cffff0000Disable|r"] = "|cffff0000Disabilitato|r"
 
 L.soundDefaultDescription = "Con questa opzione, Big Wigs userà solo i suoni predefiniti Blizzard che indicano un avviso. Ricorda che solo alcuni messaggi utilizzeranno i suoni durante un combattimento."
 
-L["Sounds"] = "Suoni"
+L.Sounds = "Suoni"
 
-L["Alarm"] = "Allarme"
-L["Info"] = "Informazioni"
-L["Alert"] = "Avvertimento"
-L["Long"] = "Lungo"
-L["Victory"] = "Vittoria"
+L.Alarm = "Allarme"
+L.Info = "Informazioni"
+L.Alert = "Avvertimento"
+L.Long = "Lungo"
+--L.Warning = "Warning"
+L.Victory = "Vittoria"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Imposta il suono da usare per %q.\n\nCtrl-Clic per ascoltare un suono."
 L["Default only"] = "Solo Suoni Predefiniti"

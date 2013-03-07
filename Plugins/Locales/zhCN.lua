@@ -208,13 +208,14 @@ L["|cffff0000Disable|r"] = "|cffff0000禁用|r"
 
 L.soundDefaultDescription = "根据这些选项设置，Big Wigs 将只使用暴雪默认团队信息警报音效。注意：只有一些信息通过遇到脚本时才会出发音效警报。"
 
-L["Sounds"] = "音效"
+L.Sounds = "音效"
 
-L["Alarm"] = "警报"
-L["Info"] = "信息"
-L["Alert"] = "报警"
-L["Long"] = "长计时"
-L["Victory"] = "胜利"
+L.Alarm = "警报"
+L.Info = "信息"
+L.Alert = "报警"
+L.Long = "长计时"
+--L.Warning = "Warning"
+L.Victory = "胜利"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "设置使用%q音效（Ctrl-点击可以预览效果）。"
 L["Default only"] = "只用预设"

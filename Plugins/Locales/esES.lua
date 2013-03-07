@@ -203,13 +203,14 @@ L["|cffff0000Disable|r"] = "|cffff0000Desactivar|r"
 
 L.soundDefaultDescription = "Con esa opción puesta, Big Wigs solo usará el sonido por defecto de Blizzard para las alertas de raid y para mensajes que llegan con una alerta de sonido. Nota: Solo algunos mensajes de los scripts de encuentros usarán un gatillo como alerta de sonido."
 
-L["Sounds"] = "Sonidos"
+L.Sounds = "Sonidos"
 
-L["Alarm"] = "Alarma"
-L["Info"] = "Info"
-L["Alert"] = "Alerta"
-L["Long"] = "Largo"
-L["Victory"] = "Victoria"
+L.Alarm = "Alarma"
+L.Info = "Info"
+L.Alert = "Alerta"
+L.Long = "Largo"
+--L.Warning = "Warning"
+L.Victory = "Victoria"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Ajusta el sonido a usar para %q.\n\nCtrl-Clic un sonido a vista previa."
 L["Default only"] = "Solo por defecto"

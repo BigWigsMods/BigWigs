@@ -207,13 +207,14 @@ L["|cffff0000Disable|r"] = true
 
 L.soundDefaultDescription = "With this option set, Big Wigs will only use the default Blizzard raid warning sound for messages that come with a sound alert. Note that only some messages from encounter scripts will trigger a sound alert."
 
-L["Sounds"] = true
+L.Sounds = "Sounds"
 
-L["Alarm"] = true
-L["Info"] = true
-L["Alert"] = true
-L["Long"] = true
-L["Victory"] = true
+L.Alarm = "Alarm"
+L.Info = "Info"
+L.Alert = "Alert"
+L.Long = "Long"
+L.Warning = "Warning"
+L.Victory = "Victory"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = true
 L["Default only"] = true
