@@ -34,6 +34,7 @@ L = mod:GetLocale()
 local kickable = 0
 local crystalTimer = nil
 local crystalShell = mod:SpellName(137633)
+
 local function warnCrystalShell()
 	if UnitDebuff("player", crystalShell) or UnitIsDeadOrGhost("player") then
 		mod:CancelTimer(crystalTimer)
@@ -50,8 +51,8 @@ end
 function mod:GetOptions()
 	return {
 		{137633, "FLASH"},
-		136294, -7134, "kick", 133939, {134539, "FLASH"}, 134920, -7140, {135251, "TANK"},
-		"berserk", "bosskill",
+		136294, -7134, 133939, {134539, "FLASH"}, 134920, {135251, "TANK"}, -7140,
+		"kick", "berserk", "bosskill",
 	}, {
 		[137633] = "heroic",
 		[136294] = "general",
@@ -65,13 +66,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "CrystalShellRemoved", 137633)
 	-- Normal
 	self:Log("SPELL_CAST_START", "SnappingBite", 135251)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "SummonBats", "boss1")
 	self:Log("SPELL_CAST_START", "QuakeStomp", 134920)
 	self:Log("SPELL_DAMAGE", "Rockfall", 134539)
 	self:Log("SPELL_CAST_START", "FuriousStoneBreath", 133939)
-	self:Log("SPELL_AURA_APPLIED", "ShellConcussion", 134092)
-	self:Log("SPELL_AURA_APPLIED", "ShellBlock", 133971)
+	self:Log("SPELL_CAST_SUCCESS", "KickShell", 134031)
+	self:Log("SPELL_CAST_SUCCESS", "ShellBlock", 133971)
 	self:Log("SPELL_CAST_START", "CallOfTortos", 136294)
+
+	self:RegisterUnitEvent("UNIT_AURA", "ShellConcussion", "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "SummonBats", "boss1")
 
 	self:Death("Win", 67977)
 end
@@ -79,12 +82,12 @@ end
 function mod:OnEngage()
 	kickable = 0
 	self:Berserk(420) -- XXX ASSUMED
-	self:Bar(-7140, 46, 136685) -- Summon Bats
+	self:Bar(-7140, 46, 136686) -- Summon Bats
 	self:Bar(133939, 46) -- Furious Stone Breath
 	self:Bar(136294, 21) -- Call of Tortos
 	self:Bar(134920, 30) -- Quake Stomp
 	if self:Heroic() then
-		if not UnitDebuff("player", self:SpellName(137633)) then -- Crystal Shell -- Here we can warn tanks too
+		if not UnitDebuff("player", crystalShell) then -- Here we can warn tanks too
 			self:Message(137633, "Personal", "Info", L["no_crystal_shell"])
 			crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3)
 		end
@@ -108,10 +111,10 @@ function mod:SnappingBite(args)
 	self:Message(args.spellId, "Attention")
 end
 
-function mod:SummonBats(_, spellName, _, _, spellId)
+function mod:SummonBats(_, _, _, _, spellId)
 	if spellId == 136685 then
-		self:Message(-7140, "Urgent", nil, spellName, 24733) -- bat looking like icon
-		self:Bar(-7140, 46, spellName, 24733) -- bat looking like icon
+		self:Message(-7140, "Urgent", nil, 136686) -- Summon Bats
+		self:Bar(-7140, 46, 136686)
 	end
 end
 
@@ -150,11 +153,26 @@ do
 			scheduled = self:ScheduleTimer(announceKickable, 2)
 		end
 	end
-	function mod:ShellConcussion(args)
-		self:Bar(-7134, 15)
+	function mod:KickShell(args)
 		kickable = kickable - 1
 		if not scheduled then
 			scheduled = self:ScheduleTimer(announceKickable, 2)
+		end
+	end
+end
+
+do
+	local concussion = mod:SpellName(136431)
+	local prev = 0
+	local UnitDebuff = UnitDebuff
+	function mod:ShellConcussion(unit)
+		local _, _, _, _, _, duration, expires = UnitDebuff(unit, concussion)
+		if expires and expires ~= prev then
+			if expires-prev > 4 then -- don't spam the message
+				self:Message(-7134, "Positive", "Info")
+			end
+			self:Bar(-7134, duration)
+			prev = expires
 		end
 	end
 end
