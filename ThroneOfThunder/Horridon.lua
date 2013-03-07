@@ -317,7 +317,7 @@ end
 -- General
 
 function mod:Charge(msg, _, _, _, player)
-	self:TargetMessage(-7080, player, "Attention", "Long")
+	self:TargetMessage(-7080, player, "Attention", "Long", nil, nil, true)
 	self:CDBar(-7080, 11)
 	self:PrimaryIcon(-7080, player)
 	if UnitIsUnit("player", player) then
@@ -356,7 +356,7 @@ function mod:Swipe(args)
 end
 
 function mod:Puncture(args)
-	self:StackMessage(-7078, args.destName, args.amount, "Urgent", "Info")
+	self:StackMessage(-7078, args.destName, args.amount, "Urgent")
 end
 
 function mod:DireCall(args)
