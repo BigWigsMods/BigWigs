@@ -162,7 +162,7 @@ end
 function mod:LastPhase(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 35 then -- phase starts at 30, except if the boss is already there
-		self:Message(-7087, "Positive", "Info", CL["soon"]:format(self:SpellName(-7087))) -- War-God Jalak
+		self:Message("adds", "Positive", "Info", CL["soon"]:format(self:SpellName(-7087))) -- War-God Jalak
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end
