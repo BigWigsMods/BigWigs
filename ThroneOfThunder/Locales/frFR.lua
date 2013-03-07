@@ -9,7 +9,8 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "frFR")
 if L then
-	L.charge_trigger = "pose ses yeux" -- Horridon sets his eyes on PLAYERNAME and stamps his tail! -- à vérifier
+	L.charge_trigger = "pose les yeux sur"
+	L.door_trigger = "surgissent de la porte"
 
 	L.chain_lightning_message = "Votre focalisation est entrain d'incanter Chaîne d'éclairs !"
 	L.chain_lightning_bar = "Focalisation : Chaîne d'éclairs"
@@ -23,12 +24,12 @@ if L then
 	L.adds = "Apparition des renforts"
 	L.adds_desc = "Prévient quand les Farraki, les Gurubashi, les Drakkari, les Amani et le Dieu-guerrier Jalak apparaissent."
 
-	L.orb_message = "Orbe de contrôle lâchée !"
-
 	L.door_opened = "Porte ouverte !"
 	L.door_bar = "Proch. porte (%d)"
 	L.balcony_adds = "Adds du balcon"
-	L.door_trigger = "pour" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
+	L.orb_message = "Orbe de contrôle lâchée !"
+
+	L.focus_only = "|cffff0000Alertes de la cible de focalisation uniquement.|r "
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "frFR")
@@ -41,8 +42,8 @@ if L then
 	L.assault_message = "Assaut"
 	L.hp_to_go_power = "PV à faire : %d%% - Puissance : %d"
 
-	L.custom_on_markpossessed = "Mark Possessed Boss"
-	L.custom_on_markpossessed_desc = "Mark the possessed boss with a skull."
+	L.custom_on_markpossessed = "Marquage du boss possédé"
+	L.custom_on_markpossessed_desc = "Marque le boss possédé à l'aide d'une icône de crâne."
 end
 
 L = BigWigs:NewBossLocale("Tortos", "frFR")
@@ -88,8 +89,8 @@ if L then
 	L.counter_clockwise = "Sens anti-horaire"
 	L.death_beam = "Rayon mortel"
 
-	L.custom_off_ray_controllers = "Ray controllers"
-	L.custom_off_ray_controllers_desc = "Use the %s, %s, %s raid markers to mark people who will control the ray spawn positions and movement."
+	L.custom_off_ray_controllers = "Contrôleurs de rayon"
+	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s, %s, %s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements."
 end
 
 L = BigWigs:NewBossLocale("Primordius", "frFR")
