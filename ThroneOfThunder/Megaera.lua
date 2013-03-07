@@ -17,7 +17,6 @@ mod:RegisterEnableMob(70248, 70212, 70235, 70247, 68065) -- Arcane Head, Flaming
 --
 local frostOrFireDead = nil
 local breathCounter = 0
-local breathTimerHandle = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -59,23 +58,16 @@ function mod:OnBossEnable()
 	-- Arcane
 	self:Log("SPELL_AURA_APPLIED", "Suppression", 140179)
 	self:Log("SPELL_CAST_SUCCESS", "NetherTear", 140138)
-	self:Log("SPELL_DAMAGE", "BreathDamage", 139992)
-	self:Log("SPELL_CAST_START", "Diffusion", 139991)
-	-- Poison
-	self:Log("SPELL_DAMAGE", "BreathDamage", 139839)
-	self:Log("SPELL_CAST_START", "RotArmor", 139838)
 	-- Frost
-	self:Log("SPELL_DAMAGE", "BreathDamage", 139842)
-	self:Log("SPELL_CAST_START", "ArcticFreeze", 139841)
 	self:Log("SPELL_PERIODIC_DAMAGE", "IcyGround", 139909)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- XXX Torrent of Ice needs to be switched to CLEU ASAP
 	-- Fire
-	self:Log("SPELL_DAMAGE", "BreathDamage", 137730)
-	self:Log("SPELL_CAST_START", "IgniteFlesh", 137729)
 	self:Log("SPELL_DAMAGE", "Cinders", 139836)
 	self:Log("SPELL_AURA_APPLIED", "CindersApplied", 139822)
 	self:Log("SPELL_AURA_REMOVED", "CindersRemoved", 139822)
 	-- General
+	self:Log("SPELL_DAMAGE", "BreathDamage", 137730, 139842, 139839, 139992)
+	self:Log("SPELL_CAST_START", "Breaths", 137729, 139841, 139838, 139991)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Rampage", "boss1")
 
 	self:Death("Deaths", 70248, 70212, 70235, 70247, 68065)
@@ -84,7 +76,6 @@ end
 function mod:OnEngage()
 	frostOrFireDead = nil
 	breathCounter = 0
-	breathTimerHandle = nil
 end
 
 --------------------------------------------------------------------------------
@@ -95,11 +86,17 @@ end
 -- General
 --
 
-local function breaths()
-	breathCounter = breathCounter + 1
-	mod:Message("breaths", "Attention", nil, CL["count"]:format(L["breaths"], breathCounter), L.breaths_icon) -- neutral breath icon
-	mod:Bar("breaths", 16.5, L["breaths"], L.breaths_icon)
-	breathTimerHandle = nil
+do
+	local prev = 0
+	function mod:Breaths(args)
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			breathCounter = breathCounter + 1
+			self:Message("breaths", "Attention", nil, CL["count"]:format(L["breaths"], breathCounter), L.breaths_icon) -- neutral breath icon
+			self:Bar("breaths", 16.5, L["breaths"], L.breaths_icon)
+		end
+	end
 end
 
 do
@@ -160,25 +157,9 @@ function mod:NetherTear(args)
 	self:Bar(args.spellId, 6, CL["cast"]:format(L["arcane_adds"])) -- this is to help so you know when all the adds have spawned
 end
 
-function mod:Diffusion()
-	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 1) end
-end
-
---------------------------------------------------------------------------------
--- Poison Head
---
-
-function mod:RotArmor()
-	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 1) end
-end
-
 --------------------------------------------------------------------------------
 -- Frost Head
 --
-
-function mod:ArcticFreeze()
-	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 1) end
-end
 
 do
 	local prev = 0
@@ -205,10 +186,6 @@ end
 --------------------------------------------------------------------------------
 -- Fire Head
 --
-
-function mod:IgniteFlesh()
-	if not breathTimerHandle then breathTimerHandle = self:ScheduleTimer(breaths, 1) end
-end
 
 do
 	local prev = 0
