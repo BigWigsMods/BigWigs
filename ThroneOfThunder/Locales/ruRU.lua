@@ -68,8 +68,8 @@ L = BigWigs:NewBossLocale("Ji-Kun", "ruRU")
 if L then
 	L.flight_over = "Облет"
 	L.young_egg_hatching = "Молодое инкубационное яйцо"
-	-- L.lower_hatch_trigger = "The eggs in one of the lower nests begin to hatch!"
-	-- L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch!"
+	L.lower_hatch_trigger = "Яйца в одном из нижних гнезд начинают проклевываться!"
+	L.upper_hatch_trigger = "Яйца в одном из верхних гнезд начинают проклевываться!"
 	L.upper_nest = "|c00008000Верхние|r гнезда"
 	L.lower_nest = "|c00FF0000Нижние|r гнезда"
 	L.lower_upper_nest = "|c00FF0000Нижние|r + |c00008000Верхние|r гнезда"
@@ -82,7 +82,7 @@ end
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "ruRU")
 if L then
 	L.rays_spawn = "Появляются лучи"
-	-- L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
+	L.red_spawn_trigger = "Инфракрасный свет высвечивает багровый туман!"
 	-- L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
 	L.red_add = "|c00FF0000Красный|r помощник"
 	L.blue_add = "|c000000FFСиний|r помощник"
@@ -111,10 +111,13 @@ if L then
 
 	L.overload_casting = "Чтение Огненной перегрузки"
 	L.overload_casting_desc = "Предупреждение для чтения Огненной перегрузки"
+	
+	-- L.arcing_lightning_cleared = "Raid is clear of Arcing Lightning"
 end
 L = BigWigs:NewBossLocale("Twin Consorts", "ruRU")
 if L then
 	-- L.barrage_fired = "Barrage fired!"
+	-- L.last_phase_yell_trigger = "Just this once..."
 end
 L = BigWigs:NewBossLocale("Lei Shen", "ruRU")
 if L then
