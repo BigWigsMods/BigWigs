@@ -52,21 +52,21 @@ L["Fills the bars up instead of draining them."] = "Llena las barras o las drena
 
 L["Local"] = "Local"
 L["%s: Timer [%s] finished."] = "%s: Contador [%s] terminado."
-L["Custom bar '%s' started by %s user '%s'."] = "Custom bar '%s' started by %s user '%s'."
+L["Custom bar '%s' started by %s user '%s'."] = "Barra personal '%s' lanzada por el jugador %s '%s'."
 
 L["Pull"] = "Pull"
 L["Pulling!"] = "¡Puleando!"
-L["Pull timer started by %s user '%s'."] = "Contador para el Pull empezado por %s user '%s'."
+L["Pull timer started by %s user '%s'."] = "Cuenta atrás para el Pull lanzada por el jugador %s '%s'."
 L["Pull in %d sec"] = "Pull en %d seg"
-L["Sending a pull timer to Big Wigs and DBM users."] = "Enviando un contador para el Pull a usuarios de Big Wigs y DBM."
+L["Sending a pull timer to Big Wigs and DBM users."] = "Enviando una cuenta para el Pull a usuarios de Big Wigs y DBM."
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Enviando barra personalizada '%s' a usuarios de Big Wigs y DBM."
 L["This function requires raid leader or raid assist."] = "Esta función requiere raid leader o asistente."
 L["Must be between 1 and 10. A correct example is: /pull 5"] = "Debe ser entre 1 y 10. Un ejemplo sería: /pull 5"
 L["Incorrect format. A correct example is: /bar 20 text"] = "Formato incorrecto. Un ejemplo seria: /bar 20 text"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Tiempo especificado inválido. <time> puede ser bien un número en segundos, un par M:S, o Min. Por ejemplo 5, 1:20 o 2m."
-L["This function can't be used during an encounter."] = "This function can't be used during an encounter."
+L["This function can't be used during an encounter."] = "Esta función no se puede usar durante un encuentro."
 
-L.customBarSlashPrint = "This functionality has been renamed. Use /bar to send a custom bar to your raid or /localbar for a bar only you can see."
+L.customBarSlashPrint = "Esta funcionalidad ha sido renombrada. Usa /bar para enviar una barra personalizada a tu raid o /localbar para una barra que solo podrás ver tu."
 
 -----------------------------------------------------------------------
 -- Colors.lua
@@ -85,14 +85,14 @@ L.Emphasized = "Enfatizado"
 L.Reset = "Reiniciar"
 L["Resets the above colors to their defaults."] = "Reinicia los colores por defecto"
 L["Reset all"] = "Resetear todo"
-L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "Si has personallizado los colores y los ajustes de algun encuentro de jefe, este botón seiniciará TODO y se usarán los colores por defecto."
+L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "Si has personallizado los colores y los ajustes de algun encuentro, este botón seiniciará TODO y se usarán los colores por defecto."
 
 L.Important = "Importante"
 L.Personal = "Personal"
 L.Urgent = "Urgente"
 L.Attention = "Atención"
 L.Positive = "Positivo"
---L.Neutral = "Neutral"
+L.Neutral = "Neutral"
 
 -----------------------------------------------------------------------
 -- Emphasize.lua
@@ -212,7 +212,7 @@ L.Alarm = "Alarma"
 L.Info = "Info"
 L.Alert = "Alerta"
 L.Long = "Largo"
---L.Warning = "Warning"
+L.Warning = "Advertencia"
 L.Victory = "Victoria"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Ajusta el sonido a usar para %q.\n\nCtrl-Clic un sonido a vista previa."
