@@ -6,7 +6,7 @@ TODO:
 	people NOT on the main platform should have proximity closed
 	need lots of TRANSCRIPTOR logs to figure out nest orders
 ]]--
-if select(4, GetBuildInfo()) < 50200 then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

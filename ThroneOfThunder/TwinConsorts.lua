@@ -4,7 +4,7 @@ TODO:
 	:OnEngage bar durations need to be double checked
 	need to figure out a good way to warn for phase changes for those handling the constellations
 ]]--
-if select(4, GetBuildInfo()) < 50200 then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

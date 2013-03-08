@@ -269,9 +269,6 @@ local function translateZoneID(id)
 	else
 		name = GetMapNameByID(id)
 	end
-	if not name and id == 930 then
-		return "Throne of Thunder [beta]" -- XXX temp
-	end
 	if not name then
 		print(("Big Wigs: Tried to translate %q as a zone ID, but it could not be resolved into a name."):format(tostring(id)))
 	end

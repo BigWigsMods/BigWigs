@@ -3,7 +3,7 @@ TODO:
 	torrent of ice needs to be switched to CLEU events when they actually get added
 	maybe try and figure out if there is a system to how the fogged heads cast stuff
 ]]--
-if select(4, GetBuildInfo()) < 50200 then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

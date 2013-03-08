@@ -6,7 +6,6 @@ TODO:
 	consider marking Twisted Fate targets
 ]]--
 
-if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

@@ -4,7 +4,7 @@ TODO:
 	figure out if it is possible to keep track of how many bounces are left ( currently not according to 10 N ptr logs )
 ]]--
 
-if select(4, GetBuildInfo()) < 50200 then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

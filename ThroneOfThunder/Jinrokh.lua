@@ -1,10 +1,8 @@
 --[[
 TODO:
-	Double check if proximity windows are opened and closed correctly
-	Focused Lightning CD might be rested by Ionization ( or maybe its thundering throw too if the CDs are close enough )
+	Focused Lightning CD might be reset by Ionization ( or maybe its thundering throw too if the CDs are close enough )
 ]]--
 
-if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

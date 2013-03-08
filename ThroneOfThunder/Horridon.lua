@@ -3,7 +3,6 @@ TODO:
 	I assume pushing horridon below 30% before all doors open does not actually prevent new doors from opening
 ]]--
 
-if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

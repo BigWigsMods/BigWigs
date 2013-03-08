@@ -3,7 +3,6 @@ TODO:
 	think about some more if we could use multi target proximity on heroic too
 ]]--
 
-if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

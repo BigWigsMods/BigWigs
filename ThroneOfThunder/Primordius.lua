@@ -4,7 +4,7 @@ TODO:
 		this should be removed once we figure things out
 	VolatilePathogen no longer seems to spawn adds (25 H PTR) need to confirm this on live
 ]]--
-if select(4, GetBuildInfo()) < 50200 then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

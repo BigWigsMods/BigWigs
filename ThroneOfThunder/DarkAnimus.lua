@@ -6,7 +6,7 @@ TODO:
 	does not seem possible right now ( 10 H PTR ) but would be nice if we could tell accurately how many active golems are there when boss enters the fight
 		then we could try to estimate how soon it'll reach full power
 ]]--
-if select(4, GetBuildInfo()) < 50200 then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
