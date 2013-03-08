@@ -113,7 +113,7 @@ end
 
 function mod:SummonBats(_, _, _, _, spellId)
 	if spellId == 136685 then
-		self:Message(-7140, "Urgent", nil, 136686) -- Summon Bats
+		self:Message(-7140, "Urgent", self:Tank() and not UnitIsUnit("boss1target", "player") and "Warning", 136686) -- Summon Bats
 		self:Bar(-7140, 46, 136686)
 	end
 end
