@@ -76,7 +76,7 @@ if L then
 	L.lower_upper_nest = "Nido |c00FF0000inferior|r + |c00008000superior|r"
 	L.nest = "Nidos"
 	L.nest_desc = "Avisos relacionados con los nidos. |c00FF0000¡No cambies esto para desactivar los avisos, si no estás asignado para gestionar los nidos!|r"
-	L.big_add = "Add grande al %s"
+	L.big_add_message = "Add grande al %s"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "esES")

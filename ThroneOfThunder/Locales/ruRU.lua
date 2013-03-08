@@ -76,7 +76,7 @@ if L then
 	-- L.food_call_trigger = "Hatchling calls for food!"
 	L.nest = "Гнезда"
 	L.nest_desc = "Предупреждения, связанные с гнездами. |c00FF0000Снимите галочку, чтобы отключить предупреждения, если вы не назначены на гнезда!|r"
-	L.big_add = "Большой помощник: %s"
+	L.big_add_message = "Большой помощник: %s"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "ruRU")
@@ -111,7 +111,7 @@ if L then
 
 	L.overload_casting = "Чтение Огненной перегрузки"
 	L.overload_casting_desc = "Предупреждение для чтения Огненной перегрузки"
-	
+
 	-- L.arcing_lightning_cleared = "Raid is clear of Arcing Lightning"
 end
 L = BigWigs:NewBossLocale("Twin Consorts", "ruRU")

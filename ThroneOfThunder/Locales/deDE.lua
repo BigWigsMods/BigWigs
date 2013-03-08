@@ -75,7 +75,7 @@ if L then
 	L.lower_upper_nest = "|c00FF0000Unteres|r + |c00008000Oberes|r Nest"
 	L.nest = "Nester"
 	L.nest_desc = "Warnungen für die Nester. |c00FF0000Schalte diese Warnungen aus, wenn Du nicht für die Nester eingeteilt bist!|r"
-	L.big_add = "Großes Add in %s"
+	L.big_add_message = "Großes Add in %s"
 
 	L.custom_off_ray_controllers = "Kontrollierer der Lichtstrahlen"
 	L.custom_off_ray_controllers_desc = "Verwenden der %s, %s, %s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."

@@ -80,7 +80,7 @@ if L then
 	--L.food_call_trigger = "Hatchling calls for food!" --da tradurre / Commented out since there isnt anymore into Locals, Keep it for lazyness.
 	L.nest = "Nidi"
 	L.nest_desc = "Avvisi relativi ai nidi. |c00FF0000Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi!|r"
-	L.big_add = "Add Grande su %s"
+	L.big_add_message = "Add Grande su %s"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "itIT")
