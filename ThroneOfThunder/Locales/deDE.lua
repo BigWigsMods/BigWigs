@@ -72,13 +72,12 @@ if L then
 	L.upper_hatch_trigger = "Die Eier in einem der oberen Nester beginnen, aufzubrechen!"
 	L.upper_nest = "|c00008000Oberes|r Nest"
 	L.lower_nest = "|c00FF0000Unteres|r Nest"
-	L.lower_upper_nest = "|c00FF0000Unteres|r + |c00008000Oberes|r Nest"
 	L.nest = "Nester"
 	L.nest_desc = "Warnungen für die Nester. |c00FF0000Schalte diese Warnungen aus, wenn Du nicht für die Nester eingeteilt bist!|r"
 	L.big_add_message = "Großes Add in %s"
-
-	L.custom_off_ray_controllers = "Kontrollierer der Lichtstrahlen"
-	L.custom_off_ray_controllers_desc = "Verwenden der %s, %s, %s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."
+	L.upper = "|c00008000Oben|r"
+	L.lower = "|c00FF0000Unten|r"
+	L.add = "Add"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "deDE")
@@ -91,6 +90,9 @@ if L then
 	L.clockwise = "Im Uhrzeigersinn"
 	L.counter_clockwise = "Gegen den Uhrzeigersinn"
 	L.death_beam = "Desintegrationsstrahl"
+
+	L.custom_off_ray_controllers = "Kontrollierer der Lichtstrahlen"
+	L.custom_off_ray_controllers_desc = "Verwenden der %s, %s, %s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."	
 end
 
 L = BigWigs:NewBossLocale("Primordius", "deDE")
