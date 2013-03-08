@@ -43,8 +43,8 @@ if L then
 	L.assault_message = "Asalto"
 	L.hp_to_go_power = "HP para acabar: %d%% - Poder: %d"
 
-	L.custom_on_markpossessed = "Mark Possessed Boss"
-	L.custom_on_markpossessed_desc = "Mark the possessed boss with a skull."
+	L.custom_on_markpossessed = "Marcar jefe poseído"
+	L.custom_on_markpossessed_desc = "Marca al jefe poseído con una calavera."
 end
 
 L = BigWigs:NewBossLocale("Tortos", "esES")
@@ -90,8 +90,8 @@ if L then
 	L.counter_clockwise = "Sentido antihorario"
 	L.death_beam = "Rayo mortal"
 
-	L.custom_off_ray_controllers = "Ray controllers"
-	L.custom_off_ray_controllers_desc = "Use the %s, %s, %s raid markers to mark people who will control the ray spawn positions and movement."
+	L.custom_off_ray_controllers = "Controladores de rayo"
+	L.custom_off_ray_controllers_desc = "Usa las marcas de raid %s, %s, %s para marcar gente que controlará las posiciones y movimientos cuando aparecen los rayos."
 end
 
 L = BigWigs:NewBossLocale("Primordius", "esES")
