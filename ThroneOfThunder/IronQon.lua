@@ -82,7 +82,7 @@ end
 
 function mod:OnEngage()
 	openedForMe = false
-	self:Berserk(600) -- confirmed for 10 normal
+	self:Berserk(720) -- confirmed for on live
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PowerWarn", "boss2")
 	self:OpenProximity(-6870, 10)
 	self:CDBar(134926, 33) -- Throw spear
