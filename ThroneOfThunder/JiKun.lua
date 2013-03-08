@@ -35,7 +35,9 @@ if L then
 	L.nest = "Nests"
 	L.nest_desc = "Warnings related to the nests. |c00FF0000Untoggle this to turn off warnings, if you are not assigned to handle the nests!|r"
 	L.big_add_message = "Big add at %s"
-	L.big_add = "Big add"
+	L.upper = "|c00008000Upper|r"
+	L.lower = "|c00FF0000Lower|r"
+	L.add = "Add"
 end
 L = mod:GetLocale()
 
@@ -132,13 +134,13 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		elseif diff == 5 then -- 10 H
 			if nestCounter % 6 > 2 then -- first 3 down, second 3 up
 				if nestCounter % 2 == 1 then
-					self:Bar("nest", 30, ("%s (%s)"):format(L["upper_nest"], L["big_add"]), "misc_arrowlup")
+					self:Bar("nest", 30, ("%s (%s)"):format(L["upper"], L["add"]), "misc_arrowlup")
 				else
 					self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
 				end
 			else
 				if nestCounter % 2 == 1 then
-					self:Bar("nest", 30, ("%s (%s)"):format(L["lower_nest"], L["big_add"]), "misc_arrowdown")
+					self:Bar("nest", 30, ("%s (%s)"):format(L["lower"], L["add"]), "misc_arrowdown")
 				else
 					self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
 				end
@@ -147,8 +149,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 			if nestCounter % 28 < 4 or nestCounter % 28 == 12 or nestCounter % 28 == 13 or nestCounter % 28 == 23 then
 				self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
 			elseif nestCounter % 28 == 4 or nestCounter % 28 == 8 or nestCounter % 28 == 10 or nestCounter % 28 == 14 or nestCounter % 28 == 17 or nestCounter % 28 == 19 or nestCounter % 28 == 21 or nestCounter % 28 == 24 or nestCounter % 28 == 26 then -- up and down at same time
-				text, icon = ("%s + %s"):format(L["lower_nest"], L["upper_nest"]), 134347 -- egg icon
-				self:Bar("nest", 30, text, icon)
+				self:Bar("nest", 30, ("%s + %s"):format(L["lower"], L["upper"]), 134347)
 			elseif nestCounter % 28 == 6 or nestCounter % 28 == 7 or nestCounter % 28 == 16 then
 				self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
 			end
@@ -156,16 +157,15 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 			if nestCounter % 17 == 2 or nestCounter % 17 == 12 then
 				self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
 			elseif nestCounter % 17 == 3 or nestCounter % 17 == 8 or nestCounter % 17 == 13 or nestCounter % 17 == 15 then
-				text, icon = ("%s + %s"):format(L["lower_nest"], L["upper_nest"]), 134347 -- egg icon
-				self:Bar("nest", 30, text, icon)
+				self:Bar("nest", 30, ("%s + %s"):format(L["lower"], L["upper"]), 134347)
 			elseif nestCounter % 17 == 7 then
 				self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
 			elseif nestCounter % 17 == 1 then
-				self:Bar("nest", 30, ("%s (%s)"):format(L["lower_nest"], L["big_add"]), "misc_arrowdown")
+				self:Bar("nest", 30, ("%s (%s)"):format(L["lower"], L["add"]), "misc_arrowdown")
 			elseif nestCounter % 17 == 5 then
-				self:Bar("nest", 30, ("%s (%s) + %s"):format(L["lower_nest"], L["big_add"], L["upper_nest"]), 134347)
+				self:Bar("nest", 30, ("%s(%s)+%s"):format(L["lower"], L["add"], L["upper"]), 134347)
 			elseif nestCounter % 17 == 10 then
-				self:Bar("nest", 30, ("%s + %s (%s)"):format(L["lower_nest"], L["upper_nest"], L["big_add"]), 134347)
+				self:Bar("nest", 30, ("%s+%s(%s)"):format(L["lower"], L["upper"], L["add"]), 134347)
 			end
 			if nestCounter % 17 == 2 or nestCounter % 17 == 6 then
 				self:Message("nest", "Attention", "Alert", L["big_add_message"]:format(L["lower_nest"]), 134367)
