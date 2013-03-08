@@ -71,7 +71,7 @@ L.chatMessagesDesc = "Выводить все сообщения BigWigs в ст
 
 L.slashDescTitle = "|cFFFED000Быстрые команды:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Отправляет отсчет атаки в рейд."
-L.slashDescBar = "|cFFFED000/bar:|r Отправляет свою полосу в рейд."
+L.slashDescRaidBar = "|cFFFED000/raidbar:|r Отправляет свою полосу в рейд."
 L.slashDescLocalBar = "|cFFFED000/localbar:|r Создает таймер, видимый только вами."
 L.slashDescRange = "|cFFFED000/range:|r Открывает индикатор близости."
 L.slashDescVersion = "|cFFFED000/bwv:|r Выполняет проверку версий Big Wigs."

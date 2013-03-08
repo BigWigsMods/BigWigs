@@ -217,7 +217,7 @@ local acOptions = {
 		},
 		slashDescBar = {
 			type = "description",
-			name = "  ".. L.slashDescBar,
+			name = "  ".. L.slashDescRaidBar,
 			fontSize = "medium",
 			order = 45,
 			width = "full",

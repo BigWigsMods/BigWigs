@@ -1263,13 +1263,13 @@ end
 
 do
 	local times = {}
-	SlashCmdList.BIGWIGSBAR = function(input)
+	SlashCmdList.BIGWIGSRAIDBAR = function(input)
 		if not plugin:IsEnabled() then BigWigs:Enable() end
 
 		if not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player") then BigWigs:Print(L["This function requires raid leader or raid assist."]) return end
 
 		local time, barText = input:match("(%S+) (.*)")
-		if not time or not barText then BigWigs:Print(L["Incorrect format. A correct example is: /bar 20 text"]) return end
+		if not time or not barText then BigWigs:Print(L["Incorrect format. A correct example is: /raidbar 20 text"]) return end
 
 		time = parseTime(time)
 		if not time or time < 0 then BigWigs:Print(L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]) return end
@@ -1282,14 +1282,14 @@ do
 			SendAddonMessage("D4", ("U\t%d\t%s"):format(time, barText), IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	end
-	SLASH_BIGWIGSBAR = "/bar"
+	SLASH_BIGWIGSRAIDBAR = "/raidbar"
 end
 
 SlashCmdList.BIGWIGSLOCALBAR = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 
 	local time, barText = input:match("(%S+) (.*)")
-	if not time or not barText then BigWigs:Print(L["Incorrect format. A correct example is: /bar 20 text"]:gsub("/bar", "/localbar")) return end
+	if not time or not barText then BigWigs:Print(L["Incorrect format. A correct example is: /raidbar 20 text"]:gsub("/raidbar", "/localbar")) return end
 
 	time = parseTime(time)
 	if not time then BigWigs:Print(L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]) return end

@@ -73,7 +73,7 @@ L.chatMessagesDesc = "Gibt alle Big Wigs Nachrichten im Standard-Chatfenster aus
 
 L.slashDescTitle = "|cFFFED000Slash Befehle:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Sendet einen Countdown zum Pull an den Raid."
-L.slashDescBar = "|cFFFED000/bar:|r Sendet eine Custombar an den Raid."
+L.slashDescRaidBar = "|cFFFED000/raidbar:|r Sendet eine Custombar an den Raid."
 L.slashDescLocalBar = "|cFFFED000/localbar:|r Erstellt eine Custombar, welche nur Du sehen kannst."
 L.slashDescRange = "|cFFFED000/range:|r Öffnet die Reichweitenanzeige."
 L.slashDescVersion = "|cFFFED000/bwv:|r Führt einen Big Wigs Versionscheck durch."

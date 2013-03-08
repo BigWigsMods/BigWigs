@@ -73,7 +73,7 @@ L.chatMessagesDesc = "除了显示设置，输出所有 Big Wigs 信息到默认
 
 --L.slashDescTitle = "|cFFFED000Slash Commands:|r"
 --L.slashDescPull = "|cFFFED000/pull:|r Sends a pull countdown to your raid."
---L.slashDescBar = "|cFFFED000/bar:|r Sends a custom bar to your raid."
+--L.slashDescRaidBar = "|cFFFED000/raidbar:|r Sends a custom bar to your raid."
 --L.slashDescLocalBar = "|cFFFED000/localbar:|r Creates a custom bar only you can see."
 --L.slashDescRange = "|cFFFED000/range:|r Opens the range indicator."
 --L.slashDescVersion = "|cFFFED000/bwv:|r Performs a Big Wigs version check."

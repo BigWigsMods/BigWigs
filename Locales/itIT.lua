@@ -71,7 +71,7 @@ L.chatMessagesDesc = "Invia tutti i messaggi di Big Wigs alla chat oltre che nei
 
 L.slashDescTitle = "|cFFFED000Comandi Slash:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Invia un conto alla rovescia per l'ingaggio alla tua incursione."
-L.slashDescBar = "|cFFFED000/bar:|r Invia una barra personalizzata alla tua Incursione."
+L.slashDescRaidBar = "|cFFFED000/raidbar:|r Invia una barra personalizzata alla tua Incursione."
 L.slashDescLocalBar = "|cFFFED000/localbar:|r Crea una barra personale solo per te stesso."
 L.slashDescRange = "|cFFFED000/range:|r Apri l'indicatore di porossimità."
 L.slashDescVersion = "|cFFFED000/bwv:|r Esegui un controllo di versione di Big Wigs."
