@@ -50,7 +50,7 @@ L = BigWigs:NewBossLocale("Tortos", "deDE")
 if L then
 	L.kick = "Unterbrechen"
 	L.kick_desc = "Anzeigen, wie viele Schildkröten unterbrochen werden können"
-	L.kickable_turtles = "Unterbrechbare Schildkröten: %d"
+	L.kick_message = "Unterbrechbare Schildkröten: %d"
 
 	L.crystal_shell_removed = "Kristallpanzer entfernt!"
 	L.no_crystal_shell = "KEIN Kristallpanzer"

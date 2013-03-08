@@ -50,7 +50,7 @@ L = BigWigs:NewBossLocale("Tortos", "frFR")
 if L then
 	L.kick = "Coup de pied"
 	L.kick_desc = "Effectue un suivi du nombre de tortues qui peuvent être bottées."
-	L.kickable_turtles = "Tortues à botter : %d"
+	L.kick_message = "Tortues à botter : %d"
 
 	L.crystal_shell_removed = "Carapace de cristal enlevé !"
 	L.no_crystal_shell = "PAS de Carapace de cristal"
