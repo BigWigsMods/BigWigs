@@ -214,8 +214,8 @@ end
 do
 	local callbackRegistered = nil
 	local messages = {}
-	local colors = {"Important", "Personal", "Urgent", "Attention", "Positive"}
-	local sounds = {"Long", "Info", "Alert", "Alarm", "Victory", false, false, false, false, false, false}
+	local colors = {"Important", "Personal", "Urgent", "Attention", "Positive", "Neutral"}
+	local sounds = {"Long", "Info", "Alert", "Alarm", "Victory", "Warning", false, false, false, false, false}
 
 	local function barStopped(event, bar)
 		local a = bar:Get("bigwigs:anchor")

@@ -70,26 +70,27 @@ L["This function can't be used during an encounter."] = "此功能在战斗中�
 -- Colors.lua
 --
 
-L["Colors"] = "颜色"
+L.Colors = "颜色"
 
-L["Messages"] = "信息"
-L["Bars"] = "计时条"
-L["Background"] = "背景"
-L["Text"] = "文本"
-L["Flash"] = "闪烁"
-L["Normal"] = "标准"
-L["Emphasized"] = "醒目"
+L.Messages = "信息"
+L.Bars = "计时条"
+L.Background = "背景"
+L.Text = "文本"
+L.Flash = "闪烁"
+L.Normal = "标准"
+L.Emphasized = "醒目"
 
-L["Reset"] = "重置"
+L.Reset = "重置"
 L["Resets the above colors to their defaults."] = "重置以上颜色为默认。"
 L["Reset all"] = "重置所有"
 L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "如果为首领战斗自定义了颜色设置，这个按钮将重置替换“所有”颜色为默认。"
 
-L["Important"] = "重要"
-L["Personal"] = "个人"
-L["Urgent"] = "紧急"
-L["Attention"] = "注意"
-L["Positive"] = "积极"
+L.Important = "重要"
+L.Personal = "个人"
+L.Urgent = "紧急"
+L.Attention = "注意"
+L.Positive = "积极"
+--L.Neutral = "Neutral"
 
 -----------------------------------------------------------------------
 -- Emphasize.lua

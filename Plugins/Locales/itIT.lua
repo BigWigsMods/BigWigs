@@ -70,26 +70,27 @@ L["This function can't be used during an encounter."] = "Questa funzione non pu√
 -- Colors.lua
 --
 
-L["Colors"] = "Colori"
+L.Colors = "Colori"
 
-L["Messages"] = "Messaggi"
-L["Bars"] = "Barre"
-L["Background"] = "Sfondo"
-L["Text"] = "Testo"
-L["Flash"] = "Lampeggio"
-L["Normal"] = "Normale"
-L["Emphasized"] = "Enfatizzato"
+L.Messages = "Messaggi"
+L.Bars = "Barre"
+L.Background = "Sfondo"
+L.Text = "Testo"
+L.Flash = "Lampeggio"
+L.Normal = "Normale"
+L.Emphasized = "Enfatizzato"
 
-L["Reset"] = "Reimposta"
+L.Reset = "Reimposta"
 L["Resets the above colors to their defaults."] = "Reimposta i colori qui sopra ai parametri originali."
 L["Reset all"] = "Reimposta tutto"
 L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "Se hai modificato qualsiasi parametro dei combattimenti, questo pulsante riporter√† TUTTO alle impostazioni originali."
 
-L["Important"] = "Importante"
-L["Personal"] = "Personale"
-L["Urgent"] = "Urgente"
-L["Attention"] = "Attenzione"
-L["Positive"] = "Positivo"
+L.Important = "Importante"
+L.Personal = "Personale"
+L.Urgent = "Urgente"
+L.Attention = "Attenzione"
+L.Positive = "Positivo"
+--L.Neutral = "Neutral"
 
 -----------------------------------------------------------------------
 -- Emphasize.lua

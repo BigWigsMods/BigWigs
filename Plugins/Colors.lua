@@ -17,8 +17,7 @@ plugin.defaultDB = {
 	Urgent = { ["*"] = { ["*"] = { 1, 0.5, 0.1 } } }, -- Orange
 	Attention = { ["*"] = { ["*"] = { 1, 1, 0.1 } } }, -- Yellow
 	Positive = { ["*"] = { ["*"] = { 0.2, 1, 0.2 } } }, -- Green
-	Bosskill = { ["*"] = { ["*"] = { 0.2, 1, 0.2 } } }, -- Green
-	Core = { ["*"] = { ["*"] = { 0.2, 1, 1 } } }, -- Cyan
+	Neutral = { ["*"] = { ["*"] = { 0.2, 1, 1 } } }, -- Cyan
 
 	barBackground = { ["*"] = { ["*"] = { 0.5, 0.5, 0.5, 0.3 } } },
 	barText = { ["*"] = { ["*"] = { 1, 1, 1 } } },
@@ -87,29 +86,35 @@ local colorOptions = {
 				Important = {
 					name = L["Important"],
 					type = "color",
-					order = 2,
+					order = 1,
 					width = "half",
 				},
 				Personal = {
 					name = L["Personal"],
 					type = "color",
-					order = 3,
+					order = 2,
 					width = "half",
 				},
 				Urgent = {
 					name = L["Urgent"],
 					type = "color",
-					order = 4,
+					order = 3,
 					width = "half",
 				},
 				Attention = {
 					name = L["Attention"],
 					type = "color",
-					order = 5,
+					order = 4,
 					width = "half",
 				},
 				Positive = {
 					name = L["Positive"],
+					type = "color",
+					order = 5,
+					width = "half",
+				},
+				Neutral = {
+					name = L["Neutral"],
 					type = "color",
 					order = 6,
 					width = "half",
@@ -120,33 +125,31 @@ local colorOptions = {
 			type = "group",
 			name = L["Bars"],
 			inline = true,
-			order = 10,
+			order = 2,
 			args = {
-				barColor = {
-					name = L["Normal"],
-					type = "color",
-					hasAlpha = true,
-					order = 11,
-					width = "half",
-				},
 				barEmphasized = {
 					name = L["Emphasized"],
 					type = "color",
 					hasAlpha = true,
-					order = 11,
-					width = "half",
+					order = 1,
 				},
 				barBackground = {
 					name = L["Background"],
 					type = "color",
 					hasAlpha = true,
-					order = 13,
+					order = 2,
+				},
+				barColor = {
+					name = L["Normal"],
+					type = "color",
+					hasAlpha = true,
+					order = 3,
 					width = "half",
 				},
 				barText = {
 					name = L["Text"],
 					type = "color",
-					order = 14,
+					order = 4,
 					width = "half",
 				},
 			},
@@ -155,7 +158,7 @@ local colorOptions = {
 			type = "group",
 			name = L["Flash"],
 			inline = true,
-			order = 12,
+			order = 3,
 			args = {
 				flash = {
 					name = L["Flash"],
@@ -169,7 +172,7 @@ local colorOptions = {
 			name = L["Reset"],
 			desc = L["Resets the above colors to their defaults."],
 			func = reset,
-			order = 16,
+			order = 4,
 			width = "full",
 		},
 	},
@@ -221,7 +224,6 @@ plugin.pluginOptions.args.resetAll = {
 	desc = L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."],
 	func = resetAll,
 	order = 17,
-	--width = "half",
 }
 
 function plugin:OnRegister()

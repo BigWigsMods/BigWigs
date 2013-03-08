@@ -69,26 +69,27 @@ L["This function can't be used during an encounter."] = true
 -- Colors.lua
 --
 
-L["Colors"] = true
+L.Colors = "Colors"
 
-L["Messages"] = true
-L["Bars"] = true
-L["Background"] = true
-L["Text"] = true
-L["Flash"] = true
-L["Normal"] = true
-L["Emphasized"] = true
+L.Messages = "Messages"
+L.Bars = "Bars"
+L.Background = "Background"
+L.Text = "Text"
+L.Flash = "Flash"
+L.Normal = "Normal"
+L.Emphasized = "Emphasized"
 
-L["Reset"] = true
+L.Reset = "Reset"
 L["Resets the above colors to their defaults."] = true
 L["Reset all"] = true
 L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = true
 
-L["Important"] = true
-L["Personal"] = true
-L["Urgent"] = true
-L["Attention"] = true
-L["Positive"] = true
+L.Important = "Important"
+L.Personal = "Personal"
+L.Urgent = "Urgent"
+L.Attention = "Attention"
+L.Positive = "Positive"
+L.Neutral = "Neutral"
 
 -----------------------------------------------------------------------
 -- Emphasize.lua

@@ -69,26 +69,27 @@ L["This function can't be used during an encounter."] = "Cette fonction ne peut 
 -- Colors.lua
 --
 
-L["Colors"] = "Couleurs"
+L.Colors = "Couleurs"
 
-L["Messages"] = "Messages"
-L["Bars"] = "Barres"
-L["Background"] = "Fond"
-L["Text"] = "Texte"
-L["Flash"] = "Flash"
-L["Normal"] = "Normal"
-L["Emphasized"] = "En évidence"
+L.Messages = "Messages"
+L.Bars = "Barres"
+L.Background = "Fond"
+L.Text = "Texte"
+L.Flash = "Flash"
+L.Normal = "Normal"
+L.Emphasized = "En évidence"
 
-L["Reset"] = "Réinit."
+L.Reset = "Réinit."
 L["Resets the above colors to their defaults."] = "Réinitialise les couleurs ci-dessus à leurs valeurs par défaut."
 L["Reset all"] = "Tt réinit."
 L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "Si vous avez des couleurs personnalisées dans les paramètres des rencontres de boss, ce bouton les réinitialisera TOUTES et les couleurs définies ici seront utilisées à la place."
 
-L["Important"] = "Important"
-L["Personal"] = "Personnel"
-L["Urgent"] = "Urgent"
-L["Attention"] = "Attention"
-L["Positive"] = "Positif"
+L.Important = "Important"
+L.Personal = "Personnel"
+L.Urgent = "Urgent"
+L.Attention = "Attention"
+L.Positive = "Positif"
+--L.Neutral = "Neutral"
 
 -----------------------------------------------------------------------
 -- Emphasize.lua

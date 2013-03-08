@@ -71,26 +71,27 @@ L["This function can't be used during an encounter."] = "This function can't be 
 -- Colors.lua
 --
 
-L["Colors"] = "색상"
+L.Colors = "색상"
 
-L["Messages"] = "메세지"
-L["Bars"] = "바"
-L["Background"] = "배경"
-L["Text"] = "글자"
---L["Flash"] = "Flash"
-L["Normal"] = "일반"
-L["Emphasized"] = "강조"
+L.Messages = "메세지"
+L.Bars = "바"
+L.Background = "배경"
+L.Text = "글자"
+--L.Flash = "Flash"
+L.Normal = "일반"
+L.Emphasized = "강조"
 
-L["Reset"] = "초기화"
+L.Reset = "초기화"
 L["Resets the above colors to their defaults."] = "위의 색상을 모두 기본으로 초기화 합니다."
 L["Reset all"] = "모두 초기화"
 L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "보스 교전 모듈의 사용자가 지정한 색상이 있다면, 이 버튼으로 인해 모든 색상이 초기화되며 다시 설정이 가능합니다."
 
-L["Important"] = "중요"
-L["Personal"] = "개인"
-L["Urgent"] = "긴급"
-L["Attention"] = "주의"
-L["Positive"] = "제안"
+L.Important = "중요"
+L.Personal = "개인"
+L.Urgent = "긴급"
+L.Attention = "주의"
+L.Positive = "제안"
+--L.Neutral = "Neutral"
 
 -----------------------------------------------------------------------
 -- Emphasize.lua

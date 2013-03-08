@@ -70,26 +70,27 @@ L["This function can't be used during an encounter."] = "Это функция �
 -- Colors.lua
 --
 
-L["Colors"] = "Цвета"
+L.Colors = "Цвета"
 
-L["Messages"] = "Сообщения"
-L["Bars"] = "Полосы"
-L["Background"] = "Фон"
-L["Text"] = "Текст"
-L["Flash"] = "Мигание"
-L["Normal"] = "Обычные"
-L["Emphasized"] = "Увеличенные"
+L.Messages = "Сообщения"
+L.Bars = "Полосы"
+L.Background = "Фон"
+L.Text = "Текст"
+L.Flash = "Мигание"
+L.Normal = "Обычные"
+L.Emphasized = "Увеличенные"
 
-L["Reset"] = "Сброс"
+L.Reset = "Сброс"
 L["Resets the above colors to their defaults."] = "Сброс цветов на стандартные значения."
 L["Reset all"] = "Сбросить все"
 L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "Если вы настроили цвета для каких-либо событий боя с боссом, эта кнопка сбросит ВСЕ такие настройки."
 
-L["Important"] = "Важные"
-L["Personal"] = "Личные"
-L["Urgent"] = "Экстренные"
-L["Attention"] = "Внимание"
-L["Positive"] = "Положительные"
+L.Important = "Важные"
+L.Personal = "Личные"
+L.Urgent = "Экстренные"
+L.Attention = "Внимание"
+L.Positive = "Положительные"
+--L.Neutral = "Neutral"
 
 -----------------------------------------------------------------------
 -- Emphasize.lua
