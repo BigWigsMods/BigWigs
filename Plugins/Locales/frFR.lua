@@ -216,7 +216,7 @@ L.Alarm = "Alarme"
 L.Info = "Info"
 L.Alert = "Alerte"
 L.Long = "Long"
---L.Warning = "Warning"
+L.Warning = "Avertissement"
 L.Victory = "Victoire"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Détermine le son à utiliser pour %q (Ctrl-clic sur un son pour avoir un aperçu)."
