@@ -17,6 +17,7 @@ mod:RegisterEnableMob(70248, 70212, 70235, 70247, 68065) -- Arcane Head, Flaming
 --
 local frostOrFireDead = nil
 local breathCounter = 0
+local headCounter = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -76,6 +77,7 @@ end
 function mod:OnEngage()
 	frostOrFireDead = nil
 	breathCounter = 0
+	headCounter = 0
 end
 
 --------------------------------------------------------------------------------
@@ -122,7 +124,7 @@ do
 	function mod:Rampage(unit, spellName, _, _, spellId)
 		if spellId == 139458 then
 			self:Bar("breaths", 30, L["breaths"], L.breaths_icon) -- not sure if there is a point for this here, seeing it is as long as rampage duration
-			self:Message(spellId, "Important", "Long")
+			self:Message(spellId, "Important", "Long", CL["count"]:format(spellName, headCounter))
 			self:Bar(spellId, 20, CL["cast"]:format(spellName))
 			self:ScheduleTimer(rampageOver, 20, spellId, spellName)
 			breathCounter = 0
@@ -131,8 +133,6 @@ do
 end
 
 function mod:Deaths(args)
-	self:CloseProximity("proximity") -- this happens lot before rampage is applied, might as well do stuff here
-	self:Message(139458, "Attention", nil, CL["soon"]:format(self:SpellName(139458))) -- Rampage
 	if args.mobId == 70212 then -- Fire
 		frostOrFireDead = true
 	elseif args.mobId == 70235 then -- Frost
@@ -141,7 +141,12 @@ function mod:Deaths(args)
 	elseif args.mobId == 70248 then -- Arcane
 	elseif args.mobId == 68065 then -- Megaera
 		self:Win()
+		return
 	end
+
+	headCounter = headCounter + 1
+	self:CloseProximity("proximity") -- this happens lot before rampage is applied, might as well do stuff here
+	self:Message(139458, "Attention", nil, CL["soon"]:format(CL["count"]:format(self:SpellName(139458), headCounter))) -- Rampage
 end
 
 --------------------------------------------------------------------------------
@@ -200,10 +205,6 @@ do
 	end
 end
 
-function mod:CindersRemoved(args)
-	self:SecondaryIcon(args.spellId)
-end
-
 function mod:CindersApplied(args)
 	self:SecondaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
@@ -212,5 +213,9 @@ function mod:CindersApplied(args)
 	elseif self:Dispeller("magic") then
 		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", nil, nil, true )
 	end
+end
+
+function mod:CindersRemoved(args)
+	self:SecondaryIcon(args.spellId)
 end
 
