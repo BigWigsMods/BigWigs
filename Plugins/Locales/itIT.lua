@@ -66,7 +66,7 @@ L["Incorrect format. A correct example is: /bar 20 text"] = "Formato non corrett
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Specificato tempo non valido. <time> può essere sia un numero in secondi, una coppia M:S , o Mm. Per esempio 5, 1:20 or 2m."
 L["This function can't be used during an encounter."] = "Questa funzione non può essere usata durante uno scontro con un boss."
 
-L.customBarSlashPrint = "This functionality has been renamed. Use /bar to send a custom bar to your raid or /localbar for a bar only you can see."
+L.customBarSlashPrint = "Questa funzionalità è stata rinominata. Usa il comando /bar per inciare una barra personalizzata alla tua incursione oppure /localbar per una barra visibile solo a te stesso."
 
 -----------------------------------------------------------------------
 -- Colors.lua
@@ -92,7 +92,7 @@ L.Personal = "Personale"
 L.Urgent = "Urgente"
 L.Attention = "Attenzione"
 L.Positive = "Positivo"
---L.Neutral = "Neutral"
+L.Neutral = "Neutrale"
 
 -----------------------------------------------------------------------
 -- Emphasize.lua
@@ -217,7 +217,7 @@ L.Alarm = "Allarme"
 L.Info = "Informazioni"
 L.Alert = "Avvertimento"
 L.Long = "Lungo"
---L.Warning = "Warning"
+L.Warning = "Avviso"
 L.Victory = "Vittoria"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Imposta il suono da usare per %q.\n\nCtrl-Clic per ascoltare un suono."

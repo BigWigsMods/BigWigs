@@ -23,7 +23,7 @@ L.duration = "%s per %s sec"
 L.over = "%s Terminato!"
 L.removed = "%s Rimosso"
 L.incoming = "%s Tra Poco!"
-L.interrupted = "%s Interrupted"
+L.interrupted = "%s Interrotto!"
 
 L.add_spawned = "Add Apparso!"
 L.next_add = "Prossimo Add"
@@ -31,8 +31,8 @@ L.add_killed = "Add ucciso! (%d/%d)"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
-L.custom_start = "Combattimento con %s cominciato - %s in %d min"
-L.custom_start_s = "Combattimento con %s cominciato - %s in %d sec"
+L.custom_start = "Combattimento con %s iniziato - %s in %d min"
+L.custom_start_s = "Combattimento con %s iniziato - %s in %d sec"
 L.custom_end = "%s diventa %s!"
 L.custom_min = "%s in %d min"
 L.custom_sec = "%s in %d sec!"
