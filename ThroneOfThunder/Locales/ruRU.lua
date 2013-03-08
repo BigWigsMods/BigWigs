@@ -72,11 +72,12 @@ if L then
 	L.upper_hatch_trigger = "Яйца в одном из верхних гнезд начинают проклевываться!"
 	L.upper_nest = "|c00008000Верхние|r гнезда"
 	L.lower_nest = "|c00FF0000Нижние|r гнезда"
-	L.lower_upper_nest = "|c00FF0000Нижние|r + |c00008000Верхние|r гнезда"
-	-- L.food_call_trigger = "Hatchling calls for food!"
 	L.nest = "Гнезда"
 	L.nest_desc = "Предупреждения, связанные с гнездами. |c00FF0000Снимите галочку, чтобы отключить предупреждения, если вы не назначены на гнезда!|r"
 	L.big_add_message = "Большой помощник: %s"
+	L.upper = "|c00008000Верхние|r"
+	L.lower = "|c00FF0000Нижние|r"
+	L.add = "Помощник"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "ruRU")
