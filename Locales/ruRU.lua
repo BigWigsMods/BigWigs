@@ -69,6 +69,14 @@ L.dbmBarDesc = "Если пользователь DBM отправляет та�
 L.chatMessages = "Chat frame messages"
 L.chatMessagesDesc = "Выводить все сообщения BigWigs в стандартное окно чата в дополнение к настройкам отображения."
 
+--L.slashDescTitle = "|cFFFED000Slash Commands:|r"
+--L.slashDescPull = "|cFFFED000/pull:|r Sends a pull countdown to your raid."
+--L.slashDescBar = "|cFFFED000/bar:|r Sends a custom bar to your raid."
+--L.slashDescLocalBar = "|cFFFED000/localbar:|r Creates a custom bar only you can see."
+--L.slashDescRange = "|cFFFED000/range:|r Opens the range indicator."
+--L.slashDescVersion = "|cFFFED000/bwv:|r Performs a Big Wigs version check."
+--L.slashDescConfig = "|cFFFED000/bw:|r Opens the Big Wigs configuration."
+
 L.BAR = "Полосы"
 L.MESSAGE = "Сообщения"
 L.ICON = "Иконка"

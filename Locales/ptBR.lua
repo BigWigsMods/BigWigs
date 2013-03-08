@@ -69,6 +69,14 @@ L.dbmBarDesc = "Se um usuário do DBM enviar um contador de puxe ou uma barra pe
 L.chatMessages = "Chat frame messages"
 L.chatMessagesDesc = "Coloca todas as mensagens do BigWigs na janela de chat padrão, em adição da configuração de amostra"
 
+--L.slashDescTitle = "|cFFFED000Slash Commands:|r"
+--L.slashDescPull = "|cFFFED000/pull:|r Sends a pull countdown to your raid."
+--L.slashDescBar = "|cFFFED000/bar:|r Sends a custom bar to your raid."
+--L.slashDescLocalBar = "|cFFFED000/localbar:|r Creates a custom bar only you can see."
+--L.slashDescRange = "|cFFFED000/range:|r Opens the range indicator."
+--L.slashDescVersion = "|cFFFED000/bwv:|r Performs a Big Wigs version check."
+--L.slashDescConfig = "|cFFFED000/bw:|r Opens the Big Wigs configuration."
+
 L.BAR = "Barras"
 L.MESSAGE = "Mensagens"
 L.ICON = "Icone"

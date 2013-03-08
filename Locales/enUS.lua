@@ -69,6 +69,14 @@ L.dbmBarDesc = "If a DBM user sends a pull timer or a custom 'pizza' bar, it wil
 L.chatMessages = "Chat frame messages"
 L.chatMessagesDesc = "Outputs all BigWigs messages to the default chat frame in addition to the display setting."
 
+L.slashDescTitle = "|cFFFED000Slash Commands:|r"
+L.slashDescPull = "|cFFFED000/pull:|r Sends a pull countdown to your raid."
+L.slashDescBar = "|cFFFED000/bar:|r Sends a custom bar to your raid."
+L.slashDescLocalBar = "|cFFFED000/localbar:|r Creates a custom bar only you can see."
+L.slashDescRange = "|cFFFED000/range:|r Opens the range indicator."
+L.slashDescVersion = "|cFFFED000/bwv:|r Performs a Big Wigs version check."
+L.slashDescConfig = "|cFFFED000/bw:|r Opens the Big Wigs configuration."
+
 L.BAR = "Bars"
 L.MESSAGE = "Messages"
 L.ICON = "Icon"

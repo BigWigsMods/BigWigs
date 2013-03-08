@@ -71,6 +71,14 @@ L.dbmBarDesc = "如果 DBM 用户发送计时器或自定义“披萨”计时�
 L.chatMessages = "聊天框体信息"
 L.chatMessagesDesc = "除了显示设置，输出所有 Big Wigs 信息到默认聊天框体。"
 
+--L.slashDescTitle = "|cFFFED000Slash Commands:|r"
+--L.slashDescPull = "|cFFFED000/pull:|r Sends a pull countdown to your raid."
+--L.slashDescBar = "|cFFFED000/bar:|r Sends a custom bar to your raid."
+--L.slashDescLocalBar = "|cFFFED000/localbar:|r Creates a custom bar only you can see."
+--L.slashDescRange = "|cFFFED000/range:|r Opens the range indicator."
+--L.slashDescVersion = "|cFFFED000/bwv:|r Performs a Big Wigs version check."
+--L.slashDescConfig = "|cFFFED000/bw:|r Opens the Big Wigs configuration."
+
 L.BAR = "计时条"
 L.MESSAGE = "信息"
 L.ICON = "标记"

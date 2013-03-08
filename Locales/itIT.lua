@@ -69,6 +69,14 @@ L.dbmBarDesc = "Se un'utente DMB invia un timer di ingaggio o una barra 'pizza' 
 L.chatMessages = "Messaggi Riquadro Chat"
 L.chatMessagesDesc = "Invia tutti i messaggi di Big Wigs alla chat oltre che nei settaggi di visualizzazione."
 
+--L.slashDescTitle = "|cFFFED000Slash Commands:|r"
+--L.slashDescPull = "|cFFFED000/pull:|r Sends a pull countdown to your raid."
+--L.slashDescBar = "|cFFFED000/bar:|r Sends a custom bar to your raid."
+--L.slashDescLocalBar = "|cFFFED000/localbar:|r Creates a custom bar only you can see."
+--L.slashDescRange = "|cFFFED000/range:|r Opens the range indicator."
+--L.slashDescVersion = "|cFFFED000/bwv:|r Performs a Big Wigs version check."
+--L.slashDescConfig = "|cFFFED000/bw:|r Opens the Big Wigs configuration."
+
 L.BAR = "Barre"
 L.MESSAGE = "Messaggi"
 L.ICON = "Icona"
