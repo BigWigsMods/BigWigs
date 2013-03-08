@@ -61,9 +61,11 @@ L["Sending a pull timer to Big Wigs and DBM users."] = "Envoi d'un délai de pul
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Envoi d'une barre perso '%s' aux utilisateurs de Big Wigs et DBM."
 L["This function requires raid leader or raid assist."] = "Cette fonction nécessite d'être le chef du raid ou un de ses assistants."
 L["Must be between 1 and 10. A correct example is: /pull 5"] = "Doit être compris entre 1 et 10. Un exemple correct est le suivant : /pull 5"
-L["Incorrect format. A correct example is: /bwcb 20 text"] = "Format incorrect. Un exemple correct est le suivant : /bwcb 20 texte"
+L["Incorrect format. A correct example is: /bar 20 text"] = "Format incorrect. Un exemple correct est le suivant : /bar 20 texte"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Durée spécifiée incorrecte. <durée> peut être exprimée soit avec un nombre en secondes, avec une paire M:S ou avec Mm. Par exemple 5, 1:20 ou 2m."
 L["This function can't be used during an encounter."] = "Cette fonction ne peut pas être utilisée pendant une rencontre."
+
+L.customBarSlashPrint = "This functionality has been renamed. Use /bar to send a custom bar to your raid or /localbar for a bar only you can see."
 
 -----------------------------------------------------------------------
 -- Colors.lua

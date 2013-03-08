@@ -62,9 +62,11 @@ L["Sending a pull timer to Big Wigs and DBM users."] = "Отправка тай�
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Отправка таймера '%s' пользователям Big Wigs и DBM."
 L["This function requires raid leader or raid assist."] = "Эта функция требует быть лидером рейда или помощником."
 L["Must be between 1 and 10. A correct example is: /pull 5"] = "Должно быть между 1 и 10. Например: /pull 5"
-L["Incorrect format. A correct example is: /bwcb 20 text"] = "Неверный формат. Правильно будет: /bwcb 20 текст"
+L["Incorrect format. A correct example is: /bar 20 text"] = "Неверный формат. Правильно будет: /bar 20 текст"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Неверно указанное время. <время> может быть числом в секундах, М:С парой, или Mm. Например, 5, 1:20 или 2m."
 L["This function can't be used during an encounter."] = "Это функция не может быть использована во время битвы."
+
+L.customBarSlashPrint = "This functionality has been renamed. Use /bar to send a custom bar to your raid or /localbar for a bar only you can see."
 
 -----------------------------------------------------------------------
 -- Colors.lua
