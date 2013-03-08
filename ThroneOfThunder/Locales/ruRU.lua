@@ -42,8 +42,8 @@ if L then
 	L.assault_message = "Выпад"
 	L.hp_to_go_power = "HP осталось: %d%% - Энергия: %d"
 
-	L.custom_on_markpossessed = "Mark Possessed Boss"
-	L.custom_on_markpossessed_desc = "Mark the possessed boss with a skull."
+	L.custom_on_markpossessed = "Помечать одержимого босса"
+	L.custom_on_markpossessed_desc = "На одержимого босса ставится череп."
 end
 
 L = BigWigs:NewBossLocale("Tortos", "ruRU")
@@ -76,15 +76,12 @@ if L then
 	-- L.food_call_trigger = "Hatchling calls for food!"
 	L.nest = "Гнезда"
 	L.nest_desc = "Предупреждения, связанные с гнездами. |c00FF0000Снимите галочку, чтобы отключить предупреждения, если вы не назначены на гнезда!|r"
+	L.big_add = "Большой помощник: %s"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "ruRU")
 if L then
 	L.rays_spawn = "Появляются лучи"
-	L.ray_controller = "Оператор луча"
-	L.ray_controller_desc = "Объявлять операторов направления красного и синего луча."
-	L.red_ray_controller = "Вы оператор |c000000FFСинего|r луча"
-	L.blue_ray_controller = "Вы оператор |c00FF0000Красного|r луча"
 	-- L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
 	-- L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
 	L.red_add = "|c00FF0000Красный|r помощник"
@@ -93,8 +90,8 @@ if L then
 	L.counter_clockwise = "Отсчет часовой стрелки"
 	L.death_beam = "Смертельный луч"
 
-	L.custom_off_ray_controllers = "Ray controllers"
-	L.custom_off_ray_controllers_desc = "Use the %s, %s, %s raid markers to mark people who will control the ray spawn positions and movement."
+	L.custom_off_ray_controllers = "Операторы луча"
+	L.custom_off_ray_controllers_desc = "Использовать %s, %s, %s метки для обозначения людей, контроллирующих лучи."
 end
 
 L = BigWigs:NewBossLocale("Primordius", "ruRU")
