@@ -9,21 +9,6 @@ mod.otherMenu = 6
 mod.worldBoss = true
 
 --------------------------------------------------------------------------------
--- Locals
---
-
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:NewLocale("enUS", true)
-if L then
-
-end
-L = mod:GetLocale()
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -38,10 +23,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FrillBlast", 137505)
 
 	self:Death("Win", 69161)
-end
-
-function mod:OnEngage()
-	self:OpenProximity(137511, 10)
 end
 
 --------------------------------------------------------------------------------
