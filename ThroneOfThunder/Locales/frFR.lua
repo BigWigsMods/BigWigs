@@ -68,8 +68,8 @@ L = BigWigs:NewBossLocale("Ji-Kun", "frFR")
 if L then
 	L.flight_over = "Vol terminé"
 	L.young_egg_hatching = "Éclosion d'un jeune œuf"
-	L.lower_hatch_trigger = "The eggs in one of the lower nests begin to hatch !" -- à traduire
-	L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch !" -- à traduire
+	L.lower_hatch_trigger = "Les œufs de l'un des nids inférieurs commencent à éclore !" -- à vérifier
+	L.upper_hatch_trigger = "Les œufs de l'un des nids supérieurs commencent à éclore !" -- à vérifier
 	L.upper_nest = "Nid |c00008000supérieur|r"
 	L.lower_nest = "Nid |c00FF0000inférieur|r"
 	L.lower_upper_nest = "Nid |c00FF0000inférieur|r + |c00008000supérieur|r"
@@ -81,7 +81,7 @@ end
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "frFR")
 if L then
 	L.rays_spawn = "Apparition des rayons"
-	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog !" -- à traduire
+	L.red_spawn_trigger = "La Lumière infrarouge révèle une brume écarlate !" -- à vérifier
 	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye !" -- à traduire
 	L.red_add = "Add |c00FF0000rouge|r"
 	L.blue_add = "Add |c000000FFbleu|r"
