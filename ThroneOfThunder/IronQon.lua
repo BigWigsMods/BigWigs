@@ -283,7 +283,7 @@ end
 
 function mod:ThrowSpear(args)
 	self:CDBar(args.spellId, 33)
-	self:Message(spellId, player, "Urgent")
+	self:Message(args.spellId, "Urgent")
 end
 
 function mod:Deaths(args)
