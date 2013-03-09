@@ -281,36 +281,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	end
 end
 
-do
-	local timer, fired = nil, 0
-	local function warnSpear(spellId)
-		fired = fired + 1
-		local player = UnitName("boss1target") -- this is boss1target intentionally, this one is the one that targets the spear target
-		if player and (not UnitDetailedThreatSituation("boss2target", "boss2") or fired > 13) then -- this is intentionally boss2 because these are the real tanks
-			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
-			mod:TargetMessage(spellId, player, "Urgent", "Alarm")
-			mod:CancelTimer(timer)
-			timer = nil
-			if UnitIsUnit("boss1target", "player") then -- this is boss1target intentionally, this one is the one that targets the spear target
-				mod:Flash(spellId)
-				mod:Say(spellId)
-			end
-			return
-		end
-		-- 19 == 0.95sec
-		-- Safety check if the unit doesn't exist
-		if fired > 18 then
-			mod:CancelTimer(timer)
-			timer = nil
-		end
-	end
-	function mod:ThrowSpear(args)
-		self:CDBar(args.spellId, 33)
-		fired = 0
-		if not timer then
-			timer = self:ScheduleRepeatingTimer(warnSpear, 0.05, args.spellId)
-		end
-	end
+function mod:ThrowSpear(args)
+	self:CDBar(args.spellId, 33)
+	self:Message(spellId, player, "Urgent")
 end
 
 function mod:Deaths(args)
