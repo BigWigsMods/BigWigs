@@ -45,7 +45,7 @@ function mod:GetOptions()
 
 		139458, {"breaths", "FLASH"}, "proximity", "berserk", "bosskill",
 	}, {
-		[140138] = -7005, -- Heroic only, Arcane Head
+		[140138] = ("%s (%s)"):format(mod:SpellName(-7005), CL["heroic"]), -- Arcane Head
 		[139822] = -6998, -- Fire Head
 		[139866] = -7002, -- Frost Head
 		--[] = -7004, -- Poison Head
@@ -123,7 +123,7 @@ do
 	end
 	function mod:Rampage(unit, spellName, _, _, spellId)
 		if spellId == 139458 then
-			self:Bar("breaths", 30, L["breaths"], L.breaths_icon) -- not sure if there is a point for this here, seeing it is as long as rampage duration
+			self:Bar("breaths", 30, L["breaths"], L.breaths_icon)
 			self:Message(spellId, "Important", "Long", CL["count"]:format(spellName, headCounter))
 			self:Bar(spellId, 20, CL["cast"]:format(spellName))
 			self:ScheduleTimer(rampageOver, 20, spellId, spellName)
@@ -145,7 +145,7 @@ function mod:Deaths(args)
 	end
 
 	headCounter = headCounter + 1
-	self:CloseProximity("proximity") -- this happens lot before rampage is applied, might as well do stuff here
+	self:CloseProximity("proximity")
 	self:Message(139458, "Attention", nil, CL["soon"]:format(CL["count"]:format(self:SpellName(139458), headCounter))) -- Rampage
 end
 
