@@ -39,7 +39,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Crush", 137504)
 	self:Log("SPELL_CAST_START", "PiercingRoar", 137457)
 	self:Log("SPELL_CAST_START", "FrillBlast", 137505)
-	self:Log("SPELL_CAST_SUCCESS", "SpiritfireBeam", 137511)
+	--self:Log("SPELL_CAST_SUCCESS", "SpiritfireBeam", 137511)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
