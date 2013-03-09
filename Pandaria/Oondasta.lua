@@ -1,4 +1,3 @@
-if select(4, GetBuildInfo()) < 50200 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -29,9 +28,7 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
-	return {
-		{137504, "TANK_HEALER"}, 137457, 137505, {137511, "PROXIMITY"}, "bosskill",
-	}
+	return {{137504, "TANK_HEALER"}, 137457, 137505, "bosskill"}
 end
 
 function mod:OnBossEnable()
@@ -39,10 +36,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Crush", 137504)
 	self:Log("SPELL_CAST_START", "PiercingRoar", 137457)
 	self:Log("SPELL_CAST_START", "FrillBlast", 137505)
-	--self:Log("SPELL_CAST_SUCCESS", "SpiritfireBeam", 137511)
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 69161)
 end
 
