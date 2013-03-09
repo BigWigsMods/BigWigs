@@ -12,7 +12,7 @@ mod:RegisterEnableMob(63191, 63053) -- Garalon, Garalon's Leg
 --
 
 local legCounter, crushCounter = 4, 0
-local healthCheck, mendLegTimerRunning = nil, nil
+local mendLegTimerRunning = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -65,12 +65,12 @@ end
 
 function mod:OnEngage(diff)
 	legCounter, crushCounter = 4, 0
-	healthCheck, mendLegTimerRunning = nil, nil
+	mendLegTimerRunning = nil
 
 	self:Berserk(self:LFR() and 720 or 420)
 	self:Bar(122735, 11) -- Furious Swipe
 	if self:Heroic() then
-		healthCheck = self:ScheduleRepeatingTimer("PrePhase2", 0.5) -- No boss5 support in health events
+		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "PrePhase2", "boss1", "boss2", "boss3", "boss4", "boss5")
 		self:Bar(122774, 28, CL["count"]:format(self:SpellName(122774), 1), 122082) -- Crush
 	end
 end
@@ -86,7 +86,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL["underyou"]:format(args.spellName)) -- even tho we usually use Alarm, Alarm has been used too much in the module
+			self:Message(args.spellId, "Personal", not UnitBuff("player", self:SpellName(122835)) and "Alert", CL["underyou"]:format(args.spellName)) -- even tho we usually use Alarm, Alarm has been used too much in the module
 		end
 	end
 end
@@ -131,7 +131,7 @@ function mod:PheromonesRemoved(args)
 end
 
 function mod:Pungency(args)
-	if args.amount > ((self:LFR() and 13) or (self:Heroic() and 3) or 7) and args.amount % 2 == 0 then
+	if args.amount % 2 == 0 and args.amount > ((self:LFR() and 13) or (self:Heroic() and 3) or 7) then
 		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
 	end
 end
@@ -162,11 +162,14 @@ function mod:FuriousSwipe(args)
 	self:ScheduleTimer("Bar", 2.5, args.spellId, 8)
 end
 
-function mod:PrePhase2()
-	local hp = UnitHealth("boss5") / UnitHealthMax("boss5") * 100
-	if hp < 38 then -- phase starts at 33
-		self:Message(-6294, "Positive", "Long", CL["soon"]:format(CL["phase"]:format(2)))
-		self:CancelTimer(healthCheck)
+function mod:PrePhase2(unitId)
+	local id = self:MobId(UnitGUID(unitId))
+	if id == 62164 or id == 63191 then
+		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+		if hp < 38 then -- phase starts at 33
+			self:Message(-6294, "Positive", "Long", CL["soon"]:format(CL["phase"]:format(2)), false)
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3", "boss4", "boss5")
+		end
 	end
 end
 
