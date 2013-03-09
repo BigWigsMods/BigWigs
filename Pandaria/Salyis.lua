@@ -39,13 +39,13 @@ end
 --
 
 function mod:CannonBarrage()
-	self:Message(121600, "Urgent", nil, CL["soon"]:format(self:SpellName(121600))) -- Cannon Barrage
+	self:Message(121600, "Urgent", nil, CL["incoming"]:format(self:SpellName(121600))) -- Cannon Barrage
 	self:Bar(121600, 60) -- Cannon Barrage
 end
 
 function mod:Stomp()
-	self:Message(121787, "Important", "Alarm", CL["soon"]:format(self:SpellName(121787))) -- Stomp
+	self:Message(121787, "Important", "Alarm", CL["incoming"]:format(self:SpellName(121787))) -- Stomp
 	self:Bar(121787, 60) -- Stomp
-	self:DelayedMessage(-6200, 10, "Attention", nil, 121747) -- Impaling Throw icon
+	self:DelayedMessage(-6200, 10, "Attention", CL["incoming"]format(self:SpellName(-6200)), 121747) -- Impaling Throw icon
 end
 
