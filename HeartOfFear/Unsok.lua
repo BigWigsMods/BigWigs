@@ -77,7 +77,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ReshapeLife", 122784)
-	self:Log("SPELL_CAST_REMOVED", "ReshapeLifeRemoved", 122370)
+	self:Log("SPELL_AURA_REMOVED", "ReshapeLifeRemoved", 122370)
 	self:Log("SPELL_CAST_SUCCESS", "AmberScalpel", 121994)
 	self:Log("SPELL_AURA_APPLIED", "Destabilize", 123059)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Destabilize", 123059)
@@ -108,8 +108,8 @@ end
 function mod:OnEngage(diff)
 	reshapeLifeCounter = 1
 	monsterDestabilizeStacks = 1
-	self:Bar(122784, 20, CL["count"]:format(self:SpellName(122784), reshapeLifeCounter)) --Reshape Life
-	self:Bar(121949, 24) --Parasitic Growth
+	self:Bar(122784, 20, CL["count"]:format(self:SpellName(122784), reshapeLifeCounter)) -- Reshape Life
+	self:Bar(121949, 24) -- Parasitic Growth
 	self:Bar(121994, 10) -- Amber Scalpel
 	self:Berserk(600)
 
@@ -149,40 +149,9 @@ do
 	end
 end
 
-do
-	local timer, fired = nil, 0
-	local function warnBeam(spellId)
-		fired = fired + 1
-		local player = UnitName("boss1targettarget") --Boss targets an invisible mob, which targets player. Calling boss1targettarget allows us to see it anyways
-		if player and not UnitIsUnit("boss1targettarget", "boss1") then --target target is himself, so he's not targeting off scalple mob yet
-			mod:CancelTimer(timer)
-			timer = nil
-			if UnitIsUnit("boss1targettarget", "player") then
-				mod:Flash(spellId)
-				mod:Say(spellId)
-			elseif mod:Range("boss1targettarget") < 4 then
-				mod:RangeMessage(spellId)
-				mod:Flash(spellId)
-				return
-			end
-			mod:TargetMessage(spellId, player, "Attention", "Long")
-			return
-		end
-		-- 19 == 0.95sec
-		-- Safety check if the unit doesn't exist or boss never targets anything but himself
-		if fired > 18 then
-			mod:CancelTimer(timer)
-			timer = nil
-			mod:Message(spellId, "Attention") -- Give generic warning as a backup
-		end
-	end
-	function mod:AmberScalpel(args)
-		self:Bar(args.spellId, 50)
-		fired = 0
-		if not timer then
-			timer = self:ScheduleRepeatingTimer(warnBeam, 0.05, args.spellId)
-		end
-	end
+function mod:AmberScalpel(args)
+	self:Bar(args.spellId, 50)
+	self:Message(args.spellId, "Attention")
 end
 
 
