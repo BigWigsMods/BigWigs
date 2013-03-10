@@ -97,7 +97,6 @@ end
 
 L = BigWigs:NewBossLocale("Primordius", "deDE")
 if L then
-	L.stream_of_blobs = "Pathogendrüsen"
 	L.mutations = "Mutationen"
 end
 
