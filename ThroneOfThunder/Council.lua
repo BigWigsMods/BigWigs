@@ -20,6 +20,7 @@ local bossDead = 0
 local posessHPStart = 0
 local frostBiteStart, bitingColdStart = nil, nil
 local sandGuyDead = nil
+local fixated = mod:SpellName(40415)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -93,7 +94,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PossessedApplied", 136442)
 	self:Log("SPELL_AURA_REMOVED", "PossessedRemoved", 136442)
 
-	self:Death("Deaths", 69480, 69132, 69131, 69134, 69078) -- Blessed Loa Spirit, Priestess, Frost King, Kazra'jin, Sandcrawler
+	self:Death("BlessedGift", 69480) -- Blessed Loa Spirit
+	self:Death("Deaths", 69132, 69131, 69134, 69078) -- Priestess, Frost King, Kazra'jin, Sandcrawler
 end
 
 function mod:OnEngage()
@@ -115,15 +117,15 @@ end
 -- High Priestess Mar'li
 
 function mod:MarkedSoul(args)
-	self:TargetMessage(137350, args.destName, "Urgent", "Alert", 40415, args.spellId)
-	self:TargetBar(137350, 20, args.destName, 40415, args.spellId) -- 40415 = Fixated
+	self:TargetMessage(137350, args.destName, "Urgent", "Alert", fixated)
+	self:TargetBar(137350, 20, args.destName, fixated)
 	if self:Me(args.destGUID) then
 		self:Flash(137350)
 	end
 end
 
 function mod:MarkedSoulRemoved(args)
-	self:StopBar(40415, args.destName)
+	self:StopBar(fixated, args.destName)
 end
 
 function mod:BlessedLoaSpirit(args)
@@ -140,12 +142,12 @@ function mod:BlessedLoaSpirit(args)
 		end
 	end
 	if not lowest then return end -- just in case of weirdness if priestess is last
-	self:Message(args.spellId, "Attention", nil, CL["other"]:format(self:SpellName(40415), UnitName(lowest)))
-	self:TargetBar(args.spellId, args.spellName, 20, 40415, args.spellId) -- 40415 = Fixated
+	self:Message(args.spellId, "Attention", nil, CL["other"]:format(fixated, UnitName(lowest)))
+	self:Bar(args.spellId, 20, CL["other"]:format(fixated, args.spellName))
 end
 
-function mod:BlessedGift(args)
-	self:StopBar(40415, self:SpellName(137203))
+function mod:BlessedGift()
+	self:StopBar(CL["other"]:format(fixated, self:SpellName(137203)))
 end
 
 function mod:PriestessAdds(args)
@@ -371,10 +373,7 @@ end
 
 function mod:Deaths(args)
 	-- leave in all the elseif statements to be ready in case they are needed on heroic
-	if args.mobId == 69480 then -- Blessed Loa Spirit
-		self:StopBar(40415, self:SpellName(137203))
-		return
-	elseif args.mobId == 69132 then -- Priestess
+	if args.mobId == 69132 then -- Priestess
 	elseif args.mobId == 69131 then -- Frost King
 		self:StopBar(136992) -- Frostbite
 		self:StopBar(136990) -- Biting Cold
