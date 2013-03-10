@@ -40,7 +40,7 @@ if L then
 	L.priestess_adds_desc = "Avviso per tutti i tipi di add della Gran Sacerdotessa Mar'li"
 	L.priestess_adds_message = "Add Sacerdotessa"
 
-	L.assault_stun = "Tank Stunned!"
+	L.assault_stun = "Difensore Stordito!"
 	L.full_power = "Pieno Potere"
 	L.assault_message = "Assalto"
 	L.hp_to_go_power = "Punti Vita alla Fine: %d%% - Potere: %d"
