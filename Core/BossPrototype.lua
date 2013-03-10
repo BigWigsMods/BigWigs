@@ -154,7 +154,10 @@ function boss:GetOption(spellId)
 end
 function boss:Reboot(isWipe)
 	if debug then dbg(self, ":Reboot()") end
-	self:SendMessage("BigWigs_OnBossReboot", self, isWipe)
+	self:SendMessage("BigWigs_OnBossReboot", self)
+	if isWipe then
+		self:SendMessage("BigWigs_OnBossWipe", self)
+	end
 	self:Disable()
 	self:Enable()
 end
