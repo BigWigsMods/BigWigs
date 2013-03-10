@@ -80,7 +80,8 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Death("Deaths", 68078, 68079, 68080, 68081)
+	self:Death("Deaths", 68079, 68080, 68081) -- Ro'shak, Quet'zal, Dam'ren
+	self:Death("Win", 68078) -- Iron Qon
 end
 
 function mod:OnEngage()
@@ -313,7 +314,5 @@ function mod:Deaths(args)
 	elseif args.mobId == 68081 then -- Dam'ren
 		self:StopBar(-6914) -- Dead zone
 		self:Bar(-6917, 30) -- Fist Smash
-	elseif args.mobId == 68078 then -- Iron Qon
-		self:Win()
 	end
 end

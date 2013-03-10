@@ -77,7 +77,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "HardStare", 133765) -- the reason we have this too is to help healers pre shield, and if shield fully absorbs, Serious Wound does not happen
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SeriousWound", 133767) -- this is for the tanks
 	self:Log("SPELL_AURA_APPLIED", "SeriousWound", 133767)
-	self:Death("Deaths", 68036, 69052, 69050) -- Boss, Blue add, Red add
+	self:Death("Deaths", 69052, 69050) -- Blue add, Red add
+	self:Death("Win", 68036) -- Boss
 end
 
 function mod:OnEngage()
@@ -249,9 +250,7 @@ function mod:SeriousWound(args)
 end
 
 function mod:Deaths(args)
-	if args.mobId == 68036 then -- Boss
-		self:Win()
-	elseif args.mobId == 69050 then -- Red add
+	if args.mobId == 69050 then -- Red add
 		redAddLeft = redAddLeft - 1
 		if redAddLeft == 0 then
 			self:StopBar(137747)
@@ -263,3 +262,4 @@ function mod:Deaths(args)
 		end
 	end
 end
+
