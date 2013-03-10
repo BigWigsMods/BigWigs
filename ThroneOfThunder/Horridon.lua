@@ -127,7 +127,7 @@ end
 function mod:OnEngage()
 	doorCounter = 1
 	self:Berserk(720) -- XXX assumed ( more than 660 on 25 N ptr )
-	self:Bar("adds", 15, L["door_bar"]:format(doorCounter), "inv_shield_11")
+	self:CDBar("adds", 16, L["door_bar"]:format(doorCounter), "inv_shield_11")
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "LastPhase", "boss1")
 end
 
@@ -334,7 +334,7 @@ function mod:Charge(msg, _, _, _, player)
 end
 
 function mod:Doors(msg)
-	self:Message("adds", "Attention", nil, L["door_opened"], "inv_shield_11")
+	self:Message("adds", "Neutral", nil, L["door_opened"], "inv_shield_11")
 	doorCounter = doorCounter + 1
 	-- next door
 	if doorCounter < 5 then
@@ -345,19 +345,19 @@ function mod:Doors(msg)
 
 	-- 1st wave jumps down
 	self:Bar("adds", 20, L["balcony_adds"], L.adds_icon)
-	self:DelayedMessage("adds", 20, "Urgent", L["balcony_adds"], L.adds_icon)
+	self:DelayedMessage("adds", 20, "Neutral", L["balcony_adds"], L.adds_icon)
 
 	-- 2nd wave jumps down
 	self:ScheduleTimer("Bar", 20, "adds", 19, L["balcony_adds"], L.adds_icon)
-	self:DelayedMessage("adds", 39, "Urgent", L["balcony_adds"], L.adds_icon)
+	self:DelayedMessage("adds", 39, "Neutral", L["balcony_adds"], L.adds_icon)
 
 	-- dinomancer jumps down
 	self:Bar(-7086, 58, nil, "ability_hunter_beastwithin") -- Zandalari Dinomancer (Dino Form icon)
-	self:DelayedMessage(-7086, 58, "Important", nil, "ability_hunter_beastwithin")
+	self:DelayedMessage(-7086, 58, "Neutral", nil, "ability_hunter_beastwithin")
 end
 
 function mod:Swipe(args)
-	self:Message(136741, "Urgent")
+	self:Message(136741, "Urgent", "Long")
 	local timer = (args.spellID == 136770) and 11 or 19 -- after charge swipe is ~10 sec, then ~19 till next charge ( 10 H ptr )
 	self:CDBar(136741, self:LFR() and 16 or timer) -- someone needs to verify LFR timer
 end
