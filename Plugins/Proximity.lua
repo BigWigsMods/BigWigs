@@ -705,8 +705,8 @@ function plugin:OnRegister()
 	end
 end
 
-function plugin:OnPluginEnable()
-	if not anchor then
+do
+	local createAnchor = function()
 		anchor = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
 		anchor:SetWidth(db.width or plugin.defaultDB.width)
 		anchor:SetHeight(db.height or plugin.defaultDB.height)
@@ -791,7 +791,7 @@ function plugin:OnPluginEnable()
 			anchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
 		end
 
-		self:RestyleWindow()
+		plugin:RestyleWindow()
 
 		anchor:Hide()
 
@@ -812,15 +812,19 @@ function plugin:OnPluginEnable()
 		end)
 	end
 
-	self:RegisterMessage("BigWigs_ShowProximity")
-	self:RegisterMessage("BigWigs_HideProximity", "Close")
-	self:RegisterMessage("BigWigs_OnBossDisable")
+	function plugin:OnPluginEnable()
+		if createAnchor then createAnchor() createAnchor = nil end
 
-	self:RegisterMessage("BigWigs_StartConfigureMode")
-	self:RegisterMessage("BigWigs_StopConfigureMode")
-	self:RegisterMessage("BigWigs_SetConfigureTarget")
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
+		self:RegisterMessage("BigWigs_ShowProximity")
+		self:RegisterMessage("BigWigs_HideProximity", "Close")
+		self:RegisterMessage("BigWigs_OnBossDisable")
+
+		self:RegisterMessage("BigWigs_StartConfigureMode")
+		self:RegisterMessage("BigWigs_StopConfigureMode")
+		self:RegisterMessage("BigWigs_SetConfigureTarget")
+		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
+	end
 end
 
 function plugin:OnPluginDisable()
