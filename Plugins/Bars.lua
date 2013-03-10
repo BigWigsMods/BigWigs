@@ -1282,7 +1282,7 @@ do
 			SendAddonMessage("D4", ("U\t%d\t%s"):format(time, barText), IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	end
-	SLASH_BIGWIGSRAIDBAR = "/raidbar"
+	SLASH_BIGWIGSRAIDBAR1 = "/raidbar"
 end
 
 SlashCmdList.BIGWIGSLOCALBAR = function(input)
