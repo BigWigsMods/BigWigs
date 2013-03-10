@@ -51,6 +51,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "BossEngage") -- use it to detect when the actual boss enters the fight
 	self:Emote("Engage", L["engage_trigger"])
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe") -- this is needed mainly for normal, when you wipe before boss is engaged
 
 	-- Dark Animus
 	self:Log("SPELL_CAST_START", "FullPower", 138729)
