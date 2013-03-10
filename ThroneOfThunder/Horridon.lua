@@ -101,7 +101,7 @@ function mod:OnBossEnable()
 	-- The Drakkari
 	self:Log("SPELL_DAMAGE", "FrozenOrb", 136573)
 	self:Log("SPELL_AURA_REMOVED", "MortalStrikeRemoved", 136670)
-	self:Log("SPELL_CAST_SUCCESS", "MortalStrike", 136670)
+	self:Log("SPELL_AURA_APPLIED", "MortalStrike", 136670)
 	self:Log("SPELL_AURA_APPLIED", "DeadlyPlague", 136710)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DeadlyPlague", 136710)
 	-- The Gurubashi
