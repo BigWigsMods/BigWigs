@@ -1217,7 +1217,7 @@ do
 			plugin:CancelTimer(timer)
 			timer = nil
 			plugin:SendMessage("BigWigs_Message", nil, nil, L["Pulling!"], "Attention", "Alarm", "Interface\\Icons\\ability_warrior_charge")
-		else
+		elseif timeLeft < 11 then
 			plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention")
 			if timeLeft < 6 and BigWigs.db.profile.sound then
 				PlaySoundFile(("Interface\\AddOns\\BigWigs\\Sounds\\%d.mp3"):format(timeLeft), "Master")
@@ -1227,7 +1227,7 @@ do
 	function startPull(time, nick, isDBM)
 		if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) then return end
 		time = tonumber(time)
-		if not time or time < 1 or time > 10 then return end
+		if not time or time < 1 or time > 60 then return end
 		time = floor(time)
 		if timeLeft == time then return end -- Throttle
 		timeLeft = time
@@ -1303,7 +1303,7 @@ SlashCmdList.BIGWIGSPULL = function(input)
 	if IsEncounterInProgress() then BigWigs:Print(L["This function can't be used during an encounter."]) return end -- Doesn't make sense to allow this in combat
 	if UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then
 		local time = tonumber(input)
-		if not time or time < 1 or time > 10 then BigWigs:Print(L["Must be between 1 and 10. A correct example is: /pull 5"]) return end
+		if not time or time < 1 or time > 60 then BigWigs:Print(L["Must be between 1 and 60. A correct example is: /pull 5"]) return end
 
 		BigWigs:Print(L["Sending a pull timer to Big Wigs and DBM users."])
 		BigWigs:Transmit("BWPull", input)
