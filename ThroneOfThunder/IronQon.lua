@@ -1,6 +1,8 @@
 --[[
 TODO:
 	think about some more if we could use multi target proximity on heroic too
+	handle Windstorm over message on Quet'zal death
+	keep revisitng the idea of targeted spear warning
 ]]--
 
 --------------------------------------------------------------------------------
@@ -42,7 +44,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		-6914, 136520, 139180,
+		-6914, 136520, 139180, 135145,
 		-6877, {137669, "FLASH"}, {136192, "ICON", "PROXIMITY"}, 77333,
 		137221, "overload_casting", {-6870, "PROXIMITY"}, -6871, {137668, "FLASH"},
 		134926, "molten_energy", -6917, "berserk", "bosskill",
@@ -56,6 +58,7 @@ end
 
 function mod:OnBossEnable()
 	-- Dam'ren
+	self:Log("SPELL_AURA_APPLIED", "Freeze", 135145)
 	self:Log("SPELL_DAMAGE", "FrozenBlood", 136520)
 	self:Log("SPELL_CAST_SUCCESS", "DeadZone", 137226, 137227, 137228, 137229, 137230, 137231) -- figure out why it has so many spellIds
 	-- Quet'zal
@@ -110,6 +113,10 @@ local function closeLightningStormProximity()
 end
 
 -- Dam'ren
+
+function mod:Freeze(args)
+	self:Bar(args.spellId, select(6, UnitDebuff(args.destName, args.spellName))) -- so people can use personal cooldowns for when the damage happens
+end
 
 do
 	local prev = 0
@@ -203,7 +210,7 @@ function mod:Scorched(args)
 	if self:Heroic() and self:MobId(UnitGUID("boss4")) == 68081 then -- Dam'ren is active and heroic
 		self:Bar(-6870, 16) -- Unleashed Flame
 	else
-		self:CDBar(-6870, 6) -- XXX Unleashed Flame - don't think there is any point to this, maybe coordinating personal cooldowns?
+		self:CDBar(-6870, 6) -- this is good so people know how much time they have to gather/spread
 	end
 end
 
@@ -248,7 +255,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Message(139180, "Attention")
 		self:CDBar(139180, 13)
 	elseif spellId == 137656 then -- Rushing Winds - start Wind Storm bar here, should be more accurate then unitaura on player
-		self:Message(-6877, "Positive", nil, CL["over"]:format(self:SpellName(136577)), 136577) -- Wind Storm
+		self:Message(-6877, "Positive", nil, CL["over"]:format(self:SpellName(136577)), 136577) -- Wind Storm -- XXX This fires when Quet'zal dies, should maybe try prevent that, sadly this happens before UNIT_DIED or ENGAGE with nil
 		self:Bar(-6877, 70) -- Wind Storm
 	elseif spellId == 50630 then -- Eject All Passangers aka heroic phase change
 		if unit == "boss2" then -- Ro'shak
@@ -282,6 +289,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 function mod:ThrowSpear(args)
+	if UnitExists("boss1") then return end -- don't warn in last phase
 	self:CDBar(args.spellId, 33)
 	self:Message(args.spellId, "Urgent")
 end
