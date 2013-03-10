@@ -38,6 +38,7 @@ if L then
 	L.priestess_adds_desc = "Предупреждать о всех типах помощников верховной жрицы Мар'ли."
 	L.priestess_adds_message = "Помощник Жрицы"
 
+	L.assault_stun = "Tank Stunned!"
 	L.full_power = "Полная энергия"
 	L.assault_message = "Выпад"
 	L.hp_to_go_power = "HP осталось: %d%% - Энергия: %d"

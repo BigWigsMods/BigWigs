@@ -39,9 +39,8 @@ if L then
 	L.priestess_adds = "Add Sacerdotessa"
 	L.priestess_adds_desc = "Avviso per tutti i tipi di add della Gran Sacerdotessa Mar'li"
 	L.priestess_adds_message = "Add Sacerdotessa"
-	--L.loa_spirit = "Spirito Loa" Commented out since there isnt anymore into Locals, Keep it for lazyness.
-	--L.loa_spirits = "Spiriti Loa" Commented out since there isnt anymore into Locals, Keep it for lazyness.
-	--L.loa_spirits_desc = "Avviso per entrambi i tipi di Spiriti Loa" Commented out since there isnt anymore into Locals, Keep it for lazyness.
+
+	L.assault_stun = "Tank Stunned!"
 	L.full_power = "Pieno Potere"
 	L.assault_message = "Assalto"
 	L.hp_to_go_power = "Punti Vita alla Fine: %d%% - Potere: %d"

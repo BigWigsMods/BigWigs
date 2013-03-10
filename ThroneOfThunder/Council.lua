@@ -1,9 +1,7 @@
 --[[
 TODO:
-	look out for lingering presence CLEU in case it gets added by blizzard ( not yet in 25 H ptr )
 	watch out in case Chilled to the Bone gets CLEU
-	full power bar needs heavy testing
-	consider marking Twisted Fate targets
+	consider marking Twisted Fate targets or atleast announcing them
 ]]--
 
 --------------------------------------------------------------------------------
@@ -20,14 +18,8 @@ mod:RegisterEnableMob(69132, 69131, 69134, 69078) -- High Priestess Mar'li, Fros
 local hasChilledToTheBone = nil
 local bossDead = 0
 local posessHPStart = 0
-local lingeringTracker = {
-	[69132] = 0,
-	[69131] = 0,
-	[69134] = 0,
-	[69078] = 0,
-}
 local frostBiteStart, bitingColdStart = nil, nil
-local sandGuyDead = false
+local sandGuyDead = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -37,16 +29,17 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.priestess_adds = "Priestess adds"
 	L.priestess_adds_desc = "Warnings for when High Priestess Mar'li starts to summon adds."
-	L.priestess_adds_icon = "inv_misc_tournaments_banner_troll" --137203
+	L.priestess_adds_icon = "inv_misc_tournaments_banner_troll"
 	L.priestess_adds_message = "Priestess add"
-
-	L.full_power = "Full power"
-	L.assault_message = "Assault"
-	L.hp_to_go_power = "HP to go: %d%% - Power: %d"
 
 	L.custom_on_markpossessed = "Mark Possessed Boss"
 	L.custom_on_markpossessed_desc = "Mark the possessed boss with a skull."
 	L.custom_on_markpossessed_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8"
+
+	L.assault_stun = "Tank Stunned!"
+	L.assault_message = "Assault"
+	L.full_power = "Full power"
+	L.hp_to_go_power = "HP to go: %d%% - Power: %d"
 end
 L = mod:GetLocale()
 
@@ -72,10 +65,11 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+
 	-- High Priestess Mar'li
 	self:Log("SPELL_CAST_START", "PriestessAdds", 137203, 137350, 137891) -- Blessed, Shadowed, Twisted Fate
 	self:Log("SPELL_CAST_SUCCESS", "BlessedLoaSpirit", 137203)
-	self:Log("SPELL_CAST_SUCCESS", "BlessedGift", 137303) -- Loa hits a boss
+	self:Log("SPELL_CAST_SUCCESS", "BlessedGift", 137303) -- Spirit heals a boss
 	self:Log("SPELL_AURA_APPLIED", "MarkedSoul", 137359)
 	self:Log("SPELL_AURA_REMOVED", "MarkedSoulRemoved", 137359)
 	-- Sul the Sandcrawler
@@ -93,10 +87,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "BitingColdRemoved", 136992)
 	self:Log("SPELL_CAST_SUCCESS", "FrigidAssaultStart", 136904)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FrigidAssault", 136903)
+	self:Log("SPELL_AURA_APPLIED", "FrigidAssaultStun", 136910)
 	-- General
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowedSoul", 137650) -- Heroic
 	self:Log("SPELL_AURA_APPLIED", "PossessedApplied", 136442)
 	self:Log("SPELL_AURA_REMOVED", "PossessedRemoved", 136442)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowedSoul", 137650)
 
 	self:Death("Deaths", 69480, 69132, 69131, 69134, 69078) -- Blessed Loa Spirit, Priestess, Frost King, Kazra'jin, Sandcrawler
 end
@@ -104,14 +99,13 @@ end
 function mod:OnEngage()
 	self:Berserk(self:LFR() and 720 or 600) -- XXX assumed. 12 min or higher on LFR, prob 15
 	bossDead = 0
-	for k in next, lingeringTracker do lingeringTracker[k] = 0 end
 	self:OpenProximity("proximity", 7) -- for Quicksand
 	self:CDBar("priestess_adds", 27, L["priestess_adds_message"], L.priestess_adds_icon)
 	self:CDBar(-7062, 7) -- Quicksand
 	self:Bar(136990, 9.7) -- Frostbite -- might be 7.5?
 	hasChilledToTheBone = nil
 	frostBiteStart, bitingColdStart = nil, nil
-	sandGuyDead = false
+	sandGuyDead = nil
 end
 
 --------------------------------------------------------------------------------
@@ -134,7 +128,7 @@ end
 
 function mod:BlessedLoaSpirit(args)
 	local lowest, lowestHP = nil, 1
-	for i=1, 5 do
+	for i=1,5 do
 		local boss = ("boss%d"):format(i)
 		local mobId = self:MobId(UnitGUID(boss))
 		if mobId == 69134 or mobId == 69078 or mobId == 69131 then -- Kazra'jin, Sandcrawler, Frost King
@@ -145,6 +139,7 @@ function mod:BlessedLoaSpirit(args)
 			end
 		end
 	end
+	if not lowest then return end -- just in case of weirdness if priestess is last
 	self:Message(args.spellId, "Attention", nil, CL["other"]:format(self:SpellName(40415), UnitName(lowest)))
 	self:TargetBar(args.spellId, args.spellName, 20, 40415, args.spellId) -- 40415 = Fixated
 end
@@ -235,10 +230,8 @@ function mod:BitingColdApplied(args)
 		if sandGuyDead then
 			self:OpenProximity(args.spellId, 4)
 		end
-	else
-		if sandGuyDead then
-			self:OpenProximity(args.spellId, 4, args.destName)
-		end
+	elseif sandGuyDead then
+		self:OpenProximity(args.spellId, 4, args.destName)
 	end
 	bitingColdStart = GetTime()
 end
@@ -270,6 +263,10 @@ function mod:FrigidAssault(args)
 	if args.amount % 5 == 0 or args.amount > 10 then -- don't spam on low stacks, but spam close to 15 (spam so hard)
 		self:StackMessage(-7054, args.destName, args.amount, "Urgent", "Info", L["assault_message"])
 	end
+end
+
+function mod:FrigidAssaultStun(args)
+	self:Message(-7054, "Important", "Alarm", L["assault_stun"])
 end
 
 -- General
@@ -309,14 +306,15 @@ do
 		end
 	end
 
-	local fullPower = 66 -- 66 seconds till full power without any lingering presences stacks
 	function mod:PossessedApplied(args)
 		prevPower = 0
 		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PossessedHPToGo", "boss1", "boss2", "boss3", "boss4", "boss5") -- need to register all, because they jump around like crazy during the encounter
 
-		for i = 1, 5 do
+		local lingeringCount = 0
+		for i=1,5 do
 			local boss = ("boss%d"):format(i)
 			if UnitGUID(boss) == args.destGUID then
+				lingeringCount = select(4, UnitBuff(boss, self:SpellName(136467))) or 0
 				posessHPStart = UnitHealth(boss)
 				if self.db.profile.custom_on_markpossessed then
 					SetRaidTarget(boss, 8)
@@ -324,19 +322,18 @@ do
 			end
 		end
 
-		local mobId = self:MobId(args.destGUID)
-		local lingering = lingeringTracker[mobId]
-		local difficultyRegenMultiplier = self:Heroic() and 15 or self:LFR() and 5 or 10
-		local duration = (lingering == 0) and fullPower or (fullPower*(100-lingering*difficultyRegenMultiplier)/100)
-		self:Message(args.spellId, "Attention", "Long", ("%s (%s)"):format(args.spellName, args.destName))
+		local regenMultiplier = self:Heroic() and 15 or self:LFR() and 5 or 10
+		local duration = 66 * (100 - lingeringCount * regenMultiplier) / 100 -- 66 seconds till full power without any lingering presences stacks
+		self:Message(args.spellId, "Attention", "Long", CL["other"]:format(args.spellName, args.destName))
 		self:Bar(args.spellId, duration, L["full_power"])
 
 		-- leave in all the elseif statements to be ready in case they are needed on heroic
+		local mobId = self:MobId(args.destGUID)
 		if mobId == 69132 then -- Priestess
 		elseif mobId == 69131 then -- Frost King
 			self:StopBar(136992) -- Biting Cold
 			if bitingColdStart then
-				self:CDBar(136990, 45-(GetTime()-bitingColdStart))-- Frostbite -- CD bar because of Possessed buff travel time
+				self:CDBar(136990, 45 - (GetTime() - bitingColdStart)) -- Frostbite -- CD bar because of Possessed buff travel time
 			end
 			if self:Heroic() then
 				self:RegisterUnitEvent("UNIT_AURA", "ChilledToTheBone", "player")
@@ -350,7 +347,7 @@ end
 function mod:PossessedRemoved(args)
 	self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2", "boss3", "boss4", "boss5") -- for a little bit of performance increase
 	if self.db.profile.custom_on_markpossessed then
-		for i = 1, 5 do
+		for i=1,5 do
 			local boss = ("boss%d"):format(i)
 			if UnitGUID(boss) == args.destGUID then
 				SetRaidTarget(boss, 0) -- clear the icon because posses have travel time, so people know when something is no longer possessed
@@ -358,15 +355,13 @@ function mod:PossessedRemoved(args)
 		end
 	end
 
-	local mobId = self:MobId(args.destGUID)
-	lingeringTracker[mobId] = lingeringTracker[mobId] + 1 -- this is needed because Lingering Presence have no CLEU event
-
 	-- leave in all the elseif statements to be ready in case they are needed on heroic
+	local mobId = self:MobId(args.destGUID)
 	if mobId == 69132 then -- Priestess
 	elseif mobId == 69131 then -- Frost King
 		self:StopBar(136990) -- Frostbite
 		if frostBiteStart then
-			self:Bar(136992, 45-(GetTime()-frostBiteStart)) -- Biting Cold
+			self:Bar(136992, 45 - (GetTime() - frostBiteStart)) -- Biting Cold
 		end
 		if self:Heroic() then self:UnregisterUnitEvent("UNIT_AURA", "player") end
 	elseif mobId == 69134 then -- Kazra'jin

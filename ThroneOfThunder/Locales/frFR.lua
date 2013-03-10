@@ -38,6 +38,7 @@ if L then
 	L.priestess_adds_desc = "Prévient de l'arrivée des différents genres de renforts de la Grande prêtresse Mar'li."
 	L.priestess_adds_message = "Add de la prêtresse"
 
+	L.assault_stun = "Tank Stunned!"
 	L.full_power = "Puissance maximale"
 	L.assault_message = "Assaut"
 	L.hp_to_go_power = "PV à faire : %d%% - Puissance : %d"

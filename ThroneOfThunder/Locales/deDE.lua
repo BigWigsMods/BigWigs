@@ -38,6 +38,7 @@ if L then
 	L.priestess_adds_desc = "Warnungen, wenn Hohepriesterin Mar'li beginnt, Adds zu beschwören."
 	L.priestess_adds_message = "Priesterin Add"
 
+	L.assault_stun = "Tank Stunned!"
 	L.full_power = "Volle Energie"
 	L.assault_message = "Kalte Angriffe"
 	L.hp_to_go_power = "Noch %d%% HP - Energie: %d"
