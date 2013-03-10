@@ -10,6 +10,16 @@ mod.otherMenu = 6
 mod.worldBoss = true
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.engage_yell = "Bring me their corpses!"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -23,14 +33,13 @@ end
 function mod:OnBossEnable()
 	self:Emote("CannonBarrage", "spell:121600")
 	self:Emote("Stomp", "spell:121787")
+	self:Yell("Engage", L.engage_yell)
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 62346) --Galleon
 end
 
 function mod:OnEngage()
-	self:Bar(121600, 24) -- Cannon Barrage
+	self:Bar(121600, 23) -- Cannon Barrage
 	self:Bar(121787, 50) -- Stomp
 end
 

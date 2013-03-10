@@ -4,3 +4,8 @@ if L then
 	L.ability_desc = "Délai de temps de recharge de la prochaine technique."
 end
 
+L = BigWigs:NewBossLocale("Salyis's Warband", "frFR")
+if L then
+	L.engage_yell = "Bring me their corpses!"
+end
+

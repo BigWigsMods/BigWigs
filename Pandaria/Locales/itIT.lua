@@ -4,3 +4,8 @@ if L then
 	L.ability_desc = "Timer di Recupero per la prossima abilità."
 end
 
+L = BigWigs:NewBossLocale("Salyis's Warband", "itIT")
+if L then
+	L.engage_yell = "Bring me their corpses!"
+end
+
