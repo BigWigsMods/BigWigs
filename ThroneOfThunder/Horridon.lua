@@ -334,6 +334,7 @@ function mod:Charge(msg, _, _, _, player)
 end
 
 function mod:Doors(msg)
+	self:Message("adds", "Attention", nil, L["door_opened"], "inv_shield_11")
 	doorCounter = doorCounter + 1
 	-- next door
 	if doorCounter < 5 then
