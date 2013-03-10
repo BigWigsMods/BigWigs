@@ -2,7 +2,7 @@
 TODO:
 	code abilities used in the last phase when both bosses are there ( need logs )
 	:OnEngage bar durations need to be double checked
-	need to figure out a good way to warn for phase changes for those handling the constellations
+	verify constellation durations for heroics
 ]]--
 
 --------------------------------------------------------------------------------
@@ -59,8 +59,12 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Yell("LastPhase", L["last_phase_yell_trigger"])
 
+	self:AddSyncListener("Phase2")
+	self:AddSyncListener("Phase3")
+	self:AddSyncListener("TidalForce")
+
 	-- Celestial Aid
-	self:Log("SPELL_AURA_APPLIED", "Tiger", 138645)
+	self:Log("SPELL_AURA_APPLIED", "Tiger", 138645, 138855) -- 138855 is from 25 N live, not sure if the other spellId is still used
 	self:Log("SPELL_AURA_APPLIED", "Serpent", 138306)
 	self:Log("SPELL_DAMAGE", "Crane", 138318)
 	self:Log("SPELL_AURA_APPLIED", "Ox", 138300)
@@ -104,14 +108,36 @@ end
 -- Event Handlers
 --
 
+function mod:OnSync(sync)
+	if sync == "Phase2" then
+		self:Bar("stages", 184, CL["phase"]:format(3), 138688)
+		self:Message("stages", "Positive", "Long", CL["phase"]:format(2), 137401)
+		self:StopBar(137404) -- Tears of the Sun
+		self:StopBar(-7634) -- Beast of Nightmares
+		self:StopBar(-7631) -- Cosmic Barrage
+		self:CDBar(-7649, 23) -- IceComet
+		if self:Heroic() then
+			self:Bar(137491, 50) -- Nuclear Inferno
+		end
+	elseif sync == "Phase3" then
+		self:Message("stages", "Positive", "Long", CL["phase"]:format(3), 137401)
+		self:StopBar(-7649) -- Ice Comet
+		self:StopBar(137408) -- Fan of Flames
+		self:Bar(137531, self:Heroic() and 19 or 34) -- Tidal Force
+	elseif sync == "TidalForce" then
+		self:Message(137531, "Urgent", "Alarm")
+		self:CDBar(137531, 71)
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Celestial Aid
 --
 
--- Maybe should merge soem of these into 1 function?
+-- Maybe should merge some of these into 1 function?
 function mod:Tiger(args)
 	self:Message(-7664, "Positive", nil, args.spellId)
-	self:Bar(-7664, 15, args.spellId)
+	self:Bar(-7664, 20, args.spellId)
 end
 
 do
@@ -120,7 +146,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			self:Message(-7659, "Positive", nil, args.spellId)
-			self:Bar(-7659, 15, args.spellId)
+			self:Bar(-7659, 30, args.spellId)
 			prev = t
 		end
 	end
@@ -130,7 +156,7 @@ do
 	local prev = 0
 	function mod:Crane(args)
 		local t = GetTime()
-		if t-prev > 20 then
+		if t-prev > 30 then
 			self:Message(-7658, "Positive", nil, args.spellId)
 			prev = t
 		end
@@ -143,7 +169,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			self:Message(-7657, "Positive", nil, args.spellId)
-			self:Bar(-7657, 15, args.spellId)
+			self:Bar(-7657, 30, args.spellId)
 			prev = t
 		end
 	end
@@ -206,8 +232,7 @@ end
 -- Phase 3
 
 function mod:TidalForce(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
-	self:CDBar(args.spellId, 70) -- XXX need more logs for a better timer
+	self:Sync("TidalForce")
 end
 
 -- Phase 2
@@ -240,10 +265,7 @@ end
 --
 
 function mod:LastPhase()
-	self:Message("stages", "Positive", "Long", CL["phase"]:format(3), 137401)
-	self:StopBar(-7649) -- Ice Comet
-	self:StopBar(137408) -- Fan of Flames
-	self:Bar(137531, self:Heroic() and 19 or 34) -- Tidal Force
+	self:Sync("Phase3")
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
@@ -252,15 +274,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(-7631, 20)
 		self:ScheduleTimer("Message", 5.5, -7631, "Urgent", "Alarm", L["barrage_fired"]) -- This is when the little orbs start to move
 	elseif spellId == 137187 then -- lu'lin Dissipate aka p2
-		self:Bar("stages", 184, CL["phase"]:format(3), 138688)
-		self:Message("stages", "Positive", "Long", CL["phase"]:format(2), 137401)
-		self:StopBar(137404) -- Tears of the Sun
-		self:StopBar(-7634) -- Beast of Nightmares
-		self:StopBar(-7631) -- Cosmic Barrage
-		self:CDBar(-7649, 23) -- IceComet
-		if self:Heroic() then
-			self:Bar(137491, 50) -- Nuclear Inferno
-		end
+		self:Sync("Phase2")
 	end
 end
 
@@ -270,6 +284,9 @@ function mod:Deaths(args)
 		self:StopBar(137531) -- Tidal Force
 	elseif args.mobId == 68904 then -- Suen
 		self:StopBar(137491) -- Nuclear Inferno
+		if self:Tank() or self:Healer() then
+			self:CDBar(-7634, 55) -- Beasts of Nightmare
+		end
 	end
 	deadBosses = deadBosses + 1
 	if deadBosses == 2 then
