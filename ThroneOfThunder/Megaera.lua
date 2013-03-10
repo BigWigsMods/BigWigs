@@ -71,7 +71,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Breaths", 137729, 139841, 139838, 139991)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Rampage", "boss1")
 
-	self:Death("Deaths", 70248, 70212, 70235, 70247, 68065)
+	self:Death("Deaths", 70248, 70212, 70235, 70247) -- Arcane Head, Flaming Head, Frozen Head, Venomous Head
+	self:Death("Win", 68065) -- Megaera
 end
 
 function mod:OnEngage()
@@ -133,15 +134,8 @@ do
 end
 
 function mod:Deaths(args)
-	if args.mobId == 70212 then -- Fire
+	if args.mobId == 70235 or args.mobId == 70212 then
 		frostOrFireDead = true
-	elseif args.mobId == 70235 then -- Frost
-		frostOrFireDead = true
-	elseif args.mobId == 70247 then -- Poison
-	elseif args.mobId == 70248 then -- Arcane
-	elseif args.mobId == 68065 then -- Megaera
-		self:Win()
-		return
 	end
 
 	headCounter = headCounter + 1
