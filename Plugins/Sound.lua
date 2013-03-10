@@ -216,8 +216,8 @@ function plugin:OnPluginEnable()
 	end
 end
 
-local function play(sound)
-	if plugin.db.profile.defaultonly then
+local function play(sound, overwrite)
+	if plugin.db.profile.defaultonly and not overwrite then
 		PlaySound("RaidWarning", "Master")
 	elseif type(sound) == "string" then
 		local s = plugin.db.profile.media[sound] and media:Fetch(mType, plugin.db.profile.media[sound]) or media:Fetch(mType, sound)
@@ -250,8 +250,8 @@ function plugin:BigWigs_Message(event, module, key, text, color, sound)
 	play(customSound(module, key, sound) or sound)
 end
 
-function plugin:BigWigs_Sound(event, sound)
+function plugin:BigWigs_Sound(event, sound, overwrite)
 	if not BigWigs.db.profile.sound or not sound then return end
-	play(sound)
+	play(sound, overwrite)
 end
 
