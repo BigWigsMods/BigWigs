@@ -16,7 +16,6 @@ mod:RegisterEnableMob(69017)
 --------------------------------------------------------------------------------
 -- Locals
 --
-local MB = "<MB:0>" -- MetabolicBoost
 local UnitDebuff = UnitDebuff
 local select = select
 
@@ -26,7 +25,6 @@ local select = select
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.stream_of_blobs = "Stream of blobs"
 	L.mutations = "Mutations"
 end
 L = mod:GetLocale()
@@ -37,9 +35,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		136037, 136216, {136218, "PROXIMITY"}, {136228, "ICON"}, 136245, {136246, "PROXIMITY"}, -7830, {-6960, "FLASH"}, -6969,
+		-6969,
+		136037, 136216, {136218, "PROXIMITY"}, 136228, 136245, {136246, "PROXIMITY"}, -7830, {-6960, "FLASH"},
 		"berserk", "bosskill",
 	}, {
+		[-6969] = "heroic",
 		[136037] = "general",
 	}
 end
@@ -74,9 +74,8 @@ local function warnHorror()
 end
 
 function mod:OnEngage()
-	self:Berserk(600) -- XXX Assumed
+	self:Berserk(480) -- confirmed 25 N live
 	self:Bar(136037, 18) -- Primordial Strike
-	MB = "<MB:0>"
 	if self:Heroic() then
 		self:Bar(-6969, 12)
 		self:ScheduleTimer(warnHorror, 12)
@@ -135,13 +134,11 @@ function mod:EruptingPustulesApplied(args)
 	if not UnitBuff("boss1", self:SpellName(136218)) then -- the 5 yard spread AcidicSpines
 		self:OpenProximity(args.spellId, 2)
 	end
-	self:Message(args.spellId, "Attention", nil, args.spellName..MB)
+	self:Message(args.spellId, "Attention", nil, args.spellName)
 end
 
 function mod:MetabolicBoost(args)
-	local MBStacks = select(4, UnitBuff("boss1", self:SpellName(136245))) or (UnitBuff("boss1", self:SpellName(136245)) and 1 or 0)
-	MB = ("<MB:%d>"):format(MBStacks)
-	self:Message(args.spellId, "Attention", nil, CL["count"]:format(args.spellName, MBStacks))
+	self:Message(args.spellId, "Attention")
 end
 
 function mod:VolatilePathogenRemoved(args)
@@ -149,13 +146,16 @@ function mod:VolatilePathogenRemoved(args)
 end
 
 function mod:VolatilePathogen(args)
-	self:PrimaryIcon(args.spellId, args.destName)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", L["stream_of_blobs"]..MB)
-	self:CDBar(args.spellId, 27, L["stream_of_blobs"])
+	if self:Healer() or self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	end
+	self:CDBar(args.spellId, 27)
 end
 
 function mod:PathogenGlands(args)
-	self:Message(136228, "Important", "Long", CL["soon"]:format(L["stream_of_blobs"]..MB))
+	if self:Healer() then
+		self:Message(136228, "Important", "Long", CL["soon"]:format(args.spellName))
+	end
 end
 
 function mod:AcidicSpinesRemoved(args)
@@ -169,16 +169,16 @@ end
 
 function mod:AcidicSpinesApplied(args)
 	self:OpenProximity(args.spellId, 5)
-	self:Message(args.spellId, "Important", "Long", args.spellName..MB) -- this maybe should say: Splash attack - SPREAD! ?
+	self:Message(args.spellId, "Important", "Long", args.spellName) -- this maybe should say: Splash attack - SPREAD! ?
 end
 
 function mod:CausticGas(args)
-	self:Message(args.spellId, "Urgent", nil, args.spellName..MB)
+	self:Message(args.spellId, "Urgent", nil, args.spellName)
 	self:CDBar(args.spellId, 12)
 end
 
 function mod:PrimordialStrike(args)
-	self:Message(args.spellId, "Attention", nil, args.spellName..MB)
+	self:Message(args.spellId, "Attention", nil, args.spellName)
 	self:CDBar(args.spellId, 19)
 end
 
