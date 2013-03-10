@@ -121,10 +121,10 @@ end
 -- High Priestess Mar'li
 
 function mod:MarkedSoul(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert", 40415, args.spellId)
-	self:TargetBar(args.spellId, 20, args.destName, 40415, args.spellId) -- 40415 = Fixated
+	self:TargetMessage(137350, args.destName, "Urgent", "Alert", 40415, args.spellId)
+	self:TargetBar(137350, 20, args.destName, 40415, args.spellId) -- 40415 = Fixated
 	if self:Me(args.destGUID) then
-		self:Flash(args.spellId)
+		self:Flash(137350)
 	end
 end
 
@@ -145,7 +145,7 @@ function mod:BlessedLoaSpirit(args)
 			end
 		end
 	end
-	self:TargetMessage(args.spellId, UnitName(lowest), "Attention", "Alert", 40415, args.spellId) -- yellow text!
+	self:Message(args.spellId, "Attention", nil, CL["other"]:format(self:SpellName(40415), UnitName(lowest)))
 	self:TargetBar(args.spellId, args.spellName, 20, 40415, args.spellId) -- 40415 = Fixated
 end
 
@@ -319,7 +319,7 @@ do
 			if UnitGUID(boss) == args.destGUID then
 				posessHPStart = UnitHealth(boss)
 				if self.db.profile.custom_on_markpossessed then
-					SetRaidIcon(boss, 8)
+					SetRaidTarget(boss, 8)
 				end
 			end
 		end
@@ -353,7 +353,7 @@ function mod:PossessedRemoved(args)
 		for i = 1, 5 do
 			local boss = ("boss%d"):format(i)
 			if UnitGUID(boss) == args.destGUID then
-				SetRaidIcon(boss, 0) -- clear the icon because posses have travel time, so people know when something is no longer possessed
+				SetRaidTarget(boss, 0) -- clear the icon because posses have travel time, so people know when something is no longer possessed
 			end
 		end
 	end
