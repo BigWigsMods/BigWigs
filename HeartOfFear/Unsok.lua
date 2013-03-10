@@ -65,7 +65,7 @@ function mod:GetOptions()
 		{-6548, "FLASH", "ICON", "SAY"},
 		122784, 123059, "explosion_by_you", {"explosion_casting_by_you", "FLASH"}, 123060, "willpower",
 		"explosion_by_other", {"explosion_casting_by_other", "FLASH"}, 122413, 122408,
-		{121995, "FLASH", "SAY"}, 123020, {121949, "FLASH"},
+		121995, 123020, {121949, "FLASH"},
 		"stages", "berserk", "bosskill",
 	}, {
 		[-6548] = "heroic",
@@ -110,7 +110,7 @@ function mod:OnEngage(diff)
 	monsterDestabilizeStacks = 1
 	self:Bar(122784, 20, CL["count"]:format(self:SpellName(122784), reshapeLifeCounter)) -- Reshape Life
 	self:Bar(121949, 24) -- Parasitic Growth
-	self:Bar(121994, 10) -- Amber Scalpel
+	self:Bar(121995, 10) -- Amber Scalpel
 	self:Berserk(600)
 
 	phase = 1
@@ -149,11 +149,10 @@ do
 	end
 end
 
-function mod:AmberScalpel(args)
-	self:Bar(args.spellId, 50)
-	self:Message(args.spellId, "Attention")
+function mod:AmberScalpel()
+	self:Bar(121995, 50)
+	self:Message(121995, "Attention")
 end
-
 
 --------------
 -- Construct
@@ -341,7 +340,6 @@ function mod:MassiveStomp(args)
 	self:Message(args.spellId, "Urgent", "Alarm")
 	self:CDBar(args.spellId, 18)
 end
-
 
 ------------
 -- Phase 3
