@@ -45,8 +45,6 @@ if L then
 	L.ability_cd = "CD de la habilidad"
 	L.ability_cd_desc = "Intenta adivinar en que orden se usarán las habilidades después de Emerger."
 
-	L.huddle_or_spout = "Encogeros o Aspersor"
-	L.huddle_or_strike = "Encogeros o Golpe"
 	L.strike_or_spout = "Golpe o Aspersor"
 	L.huddle_or_spout_or_strike = "Encogeros o Aspersor o Golpe"
 end

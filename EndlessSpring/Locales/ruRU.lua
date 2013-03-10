@@ -42,8 +42,6 @@ if L then
 	L.ability_cd = "Перезарядка способности"
 	L.ability_cd_desc = "Попытка угадать, в каком порядке способности будут использоваться после Появления."
 
-	L.huddle_or_spout = "Оцепенение или Изводень"
-	L.huddle_or_strike = "Оцепенение или Удар"
 	L.strike_or_spout = "Удар или Изводень"
 	L.huddle_or_spout_or_strike = "Оцепенение или Изводень или Удар"
 end

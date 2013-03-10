@@ -42,8 +42,6 @@ if L then
 	L.ability_cd = "Recupero delle abilità"
 	L.ability_cd_desc = "Mostra la successiva possibile (o possibili) abilità."
 
-	--L.huddle_or_spout = "Ammasso o Manifestazione" There isnt anymore this entry into boss file, commented out
-	--L.huddle_or_strike = "Ammasso o Assalto" There isnt anymore this entry into boss file, commented out
 	L.strike_or_spout = "Assalto o Manifestazione"
 	L.huddle_or_spout_or_strike = "Ammasso o Manifestazione o Assalto"
 end

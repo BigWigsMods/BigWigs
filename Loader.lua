@@ -508,20 +508,17 @@ end
 do
 	local warnedOutOfDate = nil
 
-	loaderUtilityFrame:Hide()
-	loaderUtilityFrame:SetScript("OnUpdate", function(self, elapsed)
-		self.elapsed = self.elapsed + elapsed
-		if self.elapsed > 5 then
-			self:Hide()
-			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:" or "VRA:")..BIGWIGS_RELEASE_REVISION, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
-		end
+	loaderUtilityFrame.timer = loaderUtilityFrame:CreateAnimationGroup()
+	loaderUtilityFrame.timer:SetScript("OnFinished", function()
+		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:" or "VRA:")..BIGWIGS_RELEASE_REVISION, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
 	end)
+	loaderUtilityFrame.timer:CreateAnimation():SetDuration(5)
 
 	function loader:BigWigs_AddonMessage(event, prefix, message, sender)
 		if prefix == "VR" or prefix == "VQ" then
 			if prefix == "VQ" then
-				loaderUtilityFrame.elapsed = 0
-				loaderUtilityFrame:Show()
+				loaderUtilityFrame.timer:Stop()
+				loaderUtilityFrame.timer:Play()
 			end
 			message = tonumber(message)
 			if not message then return end
@@ -534,8 +531,8 @@ do
 			end
 		elseif prefix == "VRA" or prefix == "VQA" then
 			if prefix == "VQA" then
-				loaderUtilityFrame.elapsed = 0
-				loaderUtilityFrame:Show()
+				loaderUtilityFrame.timer:Stop()
+				loaderUtilityFrame.timer:Play()
 			end
 			message = tonumber(message)
 			if not message then return end

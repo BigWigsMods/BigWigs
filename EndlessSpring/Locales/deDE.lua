@@ -42,7 +42,7 @@ if L then
 	L.ability_cd = "Fähigkeiten-Abklingzeit"
 	L.ability_cd_desc = "Zeigt die nächste(n) mögliche(n) Fähigkeit(en) an."
 
-	L.huddle_or_spout = "Kauern oder Fontane"
+	--L.strike_or_spout = "Strike or Spout" -- translate me
 	L.huddle_or_spout_or_strike = "Kauern oder Fontäne oder Stoß"
 end
 
