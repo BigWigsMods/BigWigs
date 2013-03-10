@@ -43,7 +43,7 @@ if L then
 
 	L.intermission = "Intermission"
 	L.overchargerd_message = "Stunning AoE pulse"
-	L.static_shock_message = "Splitting AoE damege"
+	L.static_shock_message = "Splitting AoE damage"
 	L.diffusion_add_message = "Diffusion adds"
 	L.diffusion_chain_message = "Diffusion adds soon - SPREAD!"
 end
@@ -192,13 +192,12 @@ function mod:Intermission(args)
 			self:CDBar(-7239, 7, L["diffusion_chain_message"])
 		end
 	else -- 25 man
-		if isConduitAlive(68398) then self:CDBar(135695, 15) end -- Static Shock
+		if isConduitAlive(68398) then self:CDBar(135695, 19) end -- Static Shock
 		if isConduitAlive(68697) then self:CDBar(136295, 7) end -- Overcharged
-		if isConduitAlive(68698) then self:CDBar(-7242, 10, 136395, "SPELL_SHAMAN_MEASUREDINSIGHT") end -- Bouncing Bolt
+		if isConduitAlive(68698) then self:CDBar(-7242, 14, 136395, "SPELL_SHAMAN_MEASUREDINSIGHT") end -- Bouncing Bolt
 		if isConduitAlive(68696) then
-			self:CDBar(-7239, 8, L["diffusion_chain_message"])
-			self:ScheduleTimer(warnSmallAdds, 6) -- so we don't instantly overwrite previous message
-			self:ScheduleTimer(warnSmallAdds, 31)
+			self:CDBar(-7239, 6, L["diffusion_chain_message"])
+			self:ScheduleTimer(warnSmallAdds, 4) -- so we don't instantly overwrite previous message
 		end
 	end
 end
@@ -252,7 +251,7 @@ end
 function mod:Boss1Succeeded(unitId, spellName, _, _, spellId)
 	if spellId == 136395 then -- Bouncing Bolt -- should somehow try and count how many more bounces are left
 		if not UnitExists("boss1") then -- poor mans intermission check
-			self:Bar(-7242, 25, 136395, "SPELL_SHAMAN_MEASUREDINSIGHT")
+			self:Bar(-7242, 24, 136395, "SPELL_SHAMAN_MEASUREDINSIGHT")
 		else
 			self:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		end
@@ -261,6 +260,7 @@ function mod:Boss1Succeeded(unitId, spellName, _, _, spellId)
 		-- XXX should probably handle proximity here for intermission
 		if not UnitExists("boss1") then -- poor mans intermission check
 			self:Bar(-7239, 25, L["diffusion_add_message"])
+			self:ScheduleTimer(warnSmallAdds, 23)
 		else
 			self:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		end
