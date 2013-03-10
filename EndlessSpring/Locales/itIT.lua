@@ -8,7 +8,7 @@ end
 
 L = BigWigs:NewBossLocale("Tsulong", "itIT")
 if L then
-	L.engage_yell = " Questo non Ë il vostro posto! Le acque devono essere protette... vi allontanerÚ... o vi ucciderÚ!"
+	L.engage_yell = " Questo non √® il vostro posto! Le acque devono essere protette... vi allontaner√≤ o vi uccider√≤!"
 	L.kill_yell = "Grazie, stranieri. Sono stato liberato."
 
 	L.phases = "Fasi"
@@ -21,8 +21,8 @@ L = BigWigs:NewBossLocale("Lei Shi", "itIT")
 if L then
 	L.hp_to_go = "%d%% alla fine"
 
-	L.special = "Prossima abilit‡ speciale"
-	L.special_desc = "Avviso per prossima abilit‡ speciale"
+	L.special = "Prossima abilit√† speciale"
+	L.special_desc = "Avviso per prossima abilit√† speciale"
 end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "itIT")
@@ -37,10 +37,10 @@ if L then
 	L.ball_you = "Hai il Globo!"
 	L.ball = "Globo"
 
-	L.cooldown_reset = "I tempi di recupero delle tue abilit‡ sono stati reimpostati!"
+	L.cooldown_reset = "I tempi di recupero delle tue abilit√† sono stati reimpostati!"
 
-	L.ability_cd = "Recupero delle abilit‡"
-	L.ability_cd_desc = "Mostra la successiva possibile (o possibili) abilit‡."
+	L.ability_cd = "Recupero delle abilit√†"
+	L.ability_cd_desc = "Mostra la successiva possibile (o possibili) abilit√†."
 
 	--L.huddle_or_spout = "Ammasso o Manifestazione" There isnt anymore this entry into boss file, commented out
 	--L.huddle_or_strike = "Ammasso o Assalto" There isnt anymore this entry into boss file, commented out
