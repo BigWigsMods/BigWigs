@@ -128,6 +128,7 @@ function mod:OnEngage()
 	doorCounter = 1
 	self:Berserk(720) -- XXX assumed ( more than 660 on 25 N ptr )
 	self:CDBar("adds", 16, L["door_bar"]:format(doorCounter), "inv_shield_11")
+	self:CDBar(-7080, 33)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "LastPhase", "boss1")
 end
 
@@ -324,7 +325,7 @@ end
 
 function mod:Charge(msg, _, _, _, player)
 	self:TargetMessage(-7080, player, "Attention", "Warning", nil, nil, true)
-	self:CDBar(-7080, 11)
+	self:CDBar(-7080, 51)
 	self:PrimaryIcon(-7080, player)
 	if UnitIsUnit("player", player) then
 		self:Flash(-7080)
