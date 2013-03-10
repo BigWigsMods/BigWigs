@@ -145,8 +145,9 @@ function boss:OnDisable()
 	end
 
 	self.scheduledMessages = nil
-
+	self.isWiping = nil
 	self.isEngaged = nil
+
 	self:SendMessage("BigWigs_OnBossDisable", self)
 end
 function boss:GetOption(spellId)
@@ -358,6 +359,18 @@ do
 			module:Reboot(true)
 		end
 	end
+
+	function boss:StartWipeCheck()
+		self:StopWipeCheck()
+		self.isWiping = self:ScheduleRepeatingTimer(wipeCheck, 1, self)
+	end
+	function boss:StopWipeCheck()
+		if self.isWiping then
+			self:CancelTimer(self.isWiping)
+			self.isWiping = nil
+		end
+	end
+
 	function boss:CheckBossStatus(noEngage)
 		local hasBoss = UnitHealth("boss1") > 100 or UnitHealth("boss2") > 100 or UnitHealth("boss3") > 100 or UnitHealth("boss4") > 100 or UnitHealth("boss5") > 100
 		if not hasBoss and self.isEngaged then
@@ -385,9 +398,6 @@ do
 			end
 		end
 		if debug then dbg(self, ":CheckBossStatus called with no result. Engaged = "..tostring(self.isEngaged).." hasBoss = "..tostring(hasBoss)) end
-	end
-	function boss:WipeCheck(module)
-		self:ScheduleRepeatingTimer(wipeCheck, 1, self)
 	end
 end
 
