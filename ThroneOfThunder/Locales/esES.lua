@@ -39,7 +39,7 @@ if L then
 	L.priestess_adds_desc = "Aviso para todo tipo de adds de la Suma Sacerdotisa Mar'li."
 	L.priestess_adds_message = "Add de la Sacerdotisa"
 
-	L.assault_stun = "Tank Stunned!"
+	L.assault_stun = "¡Tanque aturdido!"
 	L.full_power = "Poder máximo"
 	L.assault_message = "Asalto"
 	L.hp_to_go_power = "HP para acabar: %d%% - Poder: %d"
@@ -95,9 +95,9 @@ if L then
 	L.red_add = "Add |cffff0000rojo|r"
 	L.blue_add = "Add |cff0000ffazul|r"
 	L.death_beam = "Rayo mortal"
-	L.red_beam = "|cffff0000Red|r beam"
-	L.blue_beam = "|cff0000ffBlue|r beam"
-	L.yellow_beam = "|cffffff00Yellow|r beam"
+	L.red_beam = "Rayo |cffff0000rojo|r"
+	L.blue_beam = "Rayo |cff0000ffazul|r"
+	L.yellow_beam = "Rayo |cffffff00amarillo|r"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "esES")
