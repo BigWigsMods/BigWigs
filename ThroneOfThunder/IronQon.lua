@@ -47,7 +47,7 @@ function mod:GetOptions()
 		-6914, 136520, 139180, 135145,
 		-6877, {137669, "FLASH"}, {136192, "ICON", "PROXIMITY"}, 77333,
 		137221, "overload_casting", {-6870, "PROXIMITY"}, -6871, {137668, "FLASH"},
-		134926, "molten_energy", -6917, "berserk", "bosskill",
+		134926, {134691, "TANK_HEALER"}, "molten_energy", -6917, "berserk", "bosskill",
 	}, {
 		[-6914] = -6867, -- Dam'ren
 		[-6877] = -6866, -- Quet'zal
@@ -76,6 +76,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "MoltenOverloadRemoved", 137221)
 	-- General
 	self:Log("SPELL_SUMMON", "ThrowSpear", 134926)
+	self:Log("SPELL_AURA_APPLIED", "Impale", 134691)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -288,6 +289,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(-6917, 7.5, CL["cast"]:format(spellName))
 		self:Bar(-6917, 20)
 	end
+end
+
+function mod:Impale(args)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Positive")
+	self:CDBar(args.spellId, 20)
 end
 
 function mod:ThrowSpear(args)
