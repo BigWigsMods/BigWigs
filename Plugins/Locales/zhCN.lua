@@ -92,7 +92,7 @@ L.Personal = "个人"
 L.Urgent = "紧急"
 L.Attention = "注意"
 L.Positive = "积极"
---L.Neutral = "Neutral"
+L.Neutral = "中性"
 
 -----------------------------------------------------------------------
 -- Emphasize.lua
