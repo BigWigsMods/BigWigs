@@ -58,7 +58,7 @@ function mod:GetOptions()
 		{134916, "TANK", "FLASH"}, 135095, {135150, "FLASH"},
 		{136478, "TANK"}, {136543, "PROXIMITY"}, 136850,
 		136889,
-		"stages", {135695, "PROXIMITY", "ICON"}, {-7239, "PROXIMITY"}, 136295, -7242, "conduit_abilities",
+		"stages", {135695, "PROXIMITY", "SAY"}, {-7239, "PROXIMITY"}, {136295, "SAY"}, -7242, "conduit_abilities",
 		"berserk", "bosskill",
 	}, {
 		[134916] = -7178,
@@ -80,7 +80,7 @@ function mod:OnBossEnable()
 	-- Stage 1
 	self:Log("SPELL_DAMAGE", "CrashingThunder", 135150)
 	self:Log("SPELL_CAST_START", "Thunderstruck", 135095)
-	self:Log("SPELL_AURA_APPLIED", "Decapitate", 135000)
+	self:Log("SPELL_AURA_APPLIED", "Decapitate", 134912)
 	-- Conduits
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Boss1Succeeded", "boss1")
 	-- Overcharged -- Diffusion Chain -- Static Shock -- Bouncing Bolt
@@ -158,6 +158,9 @@ function mod:OverloadedCircuits()
 	self:Message("stages", "Positive", "Info", CL["phase"]:format(phase), 137176)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1") -- just to be efficient
 	self:StopBar(136295) -- Overcharged
+	self:StopBar(135695) -- Static Shock
+	self:StopBar(-7242) -- Bouncing Bolt
+	self:StopBar(L["diffusion_chain_message"])
 	self:CancelAllTimers()
 	-- stage 2
 	if phase == 2 then
@@ -283,6 +286,9 @@ do
 		scheduled = nil
 	end
 	function mod:Overcharged(args)
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId, CL["say"]:format(L["overchargerd_message"]))
+		end
 		overchargedList[#overchargedList+1] = args.destName
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnOvercharged, 0.1, args.spellId)
@@ -304,28 +310,36 @@ end
 function mod:StaticShockRemoved(args)
 	self:CloseProximity(args.spellId)
 	proximityOpen = nil
-	self:PrimaryIcon(args.spellId)
 end
 
 do
-	local staticShockList, scheduled = {}, nil
+	local staticShockList, scheduled, coloredStaticShockList = {}, nil, mod:NewTargetList()
 	local function warnStaticShock(spellId)
 		if not UnitExists("boss1") then -- poor mans intermission check
 			mod:Bar("conduit_abilities", 20, L["static_shock_message"], spellId)
 		else
 			mod:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
 		end
-		mod:Message(spellId, "Urgent", "Alarm", L["static_shock_message"])
-		sort(staticShockList) -- so targeted proximity opens to the same person for everyone
-		mod:OpenProximity(spellId, 8, staticShockList[1], true)
-		proximityOpen = "Static Shock"
-		if #staticShockList == 1 then
-			mod:PrimaryIcon(spellId, staticShockList[1])
+
+		local closest, distance = nil, 2000
+		for k, player in pairs(staticShockList) do
+			coloredStaticShockList[k] = player
+			local playerDistance = mod:Range(player)
+			if playerDistance < distance then
+				distance = playerDistance
+				closest = player
+			end
 		end
+		mod:TargetMessage(spellId, coloredStaticShockList, "Urgent", "Alarm", L["static_shock_message"])
+		mod:OpenProximity(spellId, 8, closest, true) -- open to closest static shock target
+		proximityOpen = "Static Shock"
 		scheduled = nil
 		wipe(staticShockList)
 	end
 	function mod:StaticShockApplied(args)
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId, CL["say"]:format(L["static_shock_message"]))
+		end
 		staticShockList[#staticShockList+1] = args.destName
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnStaticShock, 0.1, args.spellId)
