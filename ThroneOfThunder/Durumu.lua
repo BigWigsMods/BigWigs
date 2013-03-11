@@ -144,7 +144,7 @@ do
 	function mod:UNIT_AURA(unit)
 		if UnitDebuff(unit, blueRayTracking) then
 			local name, server = UnitName(unit)
-			if server then name = name.."-"..server end
+			--if server then name = name.."-"..server end -- XXX emotes don't have server names
 			if blueController ~= name then
 				blueController = name
 				mark(unit, 6)
@@ -154,7 +154,7 @@ do
 			end
 		elseif UnitDebuff(unit, redRayTracking) then
 			local name, server = UnitName(unit)
-			if server then name = name.."-"..server end
+			--if server then name = name.."-"..server end -- XXX emotes don't have server names
 			if redController ~= name then
 				redController = name
 				mark(unit, 7)
