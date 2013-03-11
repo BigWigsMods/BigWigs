@@ -77,6 +77,7 @@ function mod:OnBossEnable()
 	-- General
 	self:Log("SPELL_SUMMON", "ThrowSpear", 134926)
 	self:Log("SPELL_AURA_APPLIED", "Impale", 134691)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Impale", 134691)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
