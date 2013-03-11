@@ -63,7 +63,6 @@ L = BigWigs:NewBossLocale("Megaera", "itIT")
 if L then
 	L.breaths = "Soffi"
 	L.breaths_desc = "Avvisi relativi ad ogni tipo di soffio possibile."
-	--L.rampage_over = "Furia Terminata!" Commented out since there isnt anymore into Locals, Keep it for lazyness.
 	L.arcane_adds = "Teste Arcane"
 end
 
@@ -86,22 +85,19 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "itIT")
 if L then
-	L.rays_spawn = "Apparizione raggi"
-	--L.ray_controller = "Controllore del Raggio" Commented out since there isnt anymore into Locals, Keep it for lazyness.
-	--L.ray_controller_desc = "Annuncia la direzione del raggio del controllore per il raggio blu e rosso." Commented out since there isnt anymore into Locals, Keep it for lazyness.
-
-	--L.red_ray_controller = "Sei il controllore del raggio |c000000FFBlu|r" Commented out since there isnt anymore into Locals, Keep it for lazyness.
-	--L.blue_ray_controller = "Sei il controllore del raggio |c00FF0000Rosso|r" Commented out since there isnt anymore into Locals, Keep it for lazyness.
 	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
 	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
-	L.red_add = "Add |c00FF0000Rosso|r"
-	L.blue_add = "Add |c000000FFBlu|r"
-	L.clockwise = "Senso Orario"
-	L.counter_clockwise = "Senso Antiorario"
-	L.death_beam = "Raggio Disintegratore"
 
 	L.custom_off_ray_controllers = "Controllori dei Raggi"
 	L.custom_off_ray_controllers_desc = "Usa le icone di incursione %s, %s, %s per evidenziare i giocatori che controllano le posizioni dei raggi e il loro movimento."
+
+	L.rays_spawn = "Apparizione raggi"
+	L.red_add = "Add |cffff000Rosso|r"
+	L.blue_add = "Add |cff0000ffBlu|r"
+	L.death_beam = "Raggio Disintegratore"
+	L.red_beam = "|cffff0000Red|r beam"
+	L.blue_beam = "|cff0000ffBlue|r beam"
+	L.yellow_beam = "|cffffff00Yellow|r beam"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "itIT")

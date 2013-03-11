@@ -84,17 +84,19 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "zhCN")
 if L then
-	L.rays_spawn = "光线出现"
 	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
 	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
-	L.red_add = "|c00FF0000红色|r增援"
-	L.blue_add = "|c000000FF蓝色|r增援"
-	L.clockwise = "顺时针"
-	L.counter_clockwise = "逆时针"
-	L.death_beam = "衰变光束"
 
 	L.custom_off_ray_controllers = "光线控制"
 	L.custom_off_ray_controllers_desc = "使用%s，%s和%s团队标记控制光线增援和移动的玩家。"
+
+	L.rays_spawn = "光线出现"
+	L.red_add = "|cffff0000红色|r增援"
+	L.blue_add = "|cff0000ff蓝色|r增援"
+	L.death_beam = "衰变光束"
+	L.red_beam = "|cffff0000Red|r beam"
+	L.blue_beam = "|cff0000ffBlue|r beam"
+	L.yellow_beam = "|cffffff00Yellow|r beam"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "zhCN")

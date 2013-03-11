@@ -84,17 +84,19 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "deDE")
 if L then
-	L.rays_spawn = "Lichtstrahlen erscheinen"
 	L.red_spawn_trigger = "Das Infrarotlicht offenbart einen purpurroten Nebel!"
 	L.blue_spawn_trigger = "Der blaue Strahl offenbart einen azurblauen Nebel!"
-	L.red_add = "|c00FF0000Rotes|r Add"
-	L.blue_add = "|c000000FFBlaues|r Add"
-	L.clockwise = "Im Uhrzeigersinn"
-	L.counter_clockwise = "Gegen den Uhrzeigersinn"
-	L.death_beam = "Desintegrationsstrahl"
 
 	L.custom_off_ray_controllers = "Kontrollierer der Lichtstrahlen"
-	L.custom_off_ray_controllers_desc = "Verwenden der %s, %s, %s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."
+	L.custom_off_ray_controllers_desc = "Verwenden der %s, %s, %s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren
+
+	L.rays_spawn = "Lichtstrahlen erscheinen"
+	L.red_add = "|cffff0000Rotes|r Add"
+	L.blue_add = "|cff0000ffBlaues|r Add"
+	L.death_beam = "Desintegrationsstrahl"
+	L.red_beam = "|cffff0000Red|r beam"
+	L.blue_beam = "|cff0000ffBlue|r beam"
+	L.yellow_beam = "|cffffff00Yellow|r beam"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "deDE")

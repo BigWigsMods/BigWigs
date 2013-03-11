@@ -85,17 +85,19 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "esES")
 if L then
-	L.rays_spawn = "Aparecen rayos"
 	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
 	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
-	L.red_add = "Add |c00FF0000rojo|r"
-	L.blue_add = "Add |c000000FFazul|r"
-	L.clockwise = "En sentido horario"
-	L.counter_clockwise = "Sentido antihorario"
-	L.death_beam = "Rayo mortal"
 
 	L.custom_off_ray_controllers = "Controladores de rayo"
 	L.custom_off_ray_controllers_desc = "Usa las marcas de raid %s, %s, %s para marcar gente que controlará las posiciones y movimientos cuando aparecen los rayos."
+
+	L.rays_spawn = "Aparecen rayos"
+	L.red_add = "Add |cffff0000rojo|r"
+	L.blue_add = "Add |cff0000ffazul|r"
+	L.death_beam = "Rayo mortal"
+	L.red_beam = "|cffff0000Red|r beam"
+	L.blue_beam = "|cff0000ffBlue|r beam"
+	L.yellow_beam = "|cffffff00Yellow|r beam"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "esES")

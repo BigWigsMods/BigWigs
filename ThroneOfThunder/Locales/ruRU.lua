@@ -84,17 +84,19 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "ruRU")
 if L then
-	L.rays_spawn = "Появляются лучи"
 	L.red_spawn_trigger = "Инфракрасный свет высвечивает багровый туман!"
-	-- L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
-	L.red_add = "|c00FF0000Красный|r помощник"
-	L.blue_add = "|c000000FFСиний|r помощник"
-	L.clockwise = "По часовой стрелке"
-	L.counter_clockwise = "Отсчет часовой стрелки"
-	L.death_beam = "Смертельный луч"
+	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
 
 	L.custom_off_ray_controllers = "Операторы луча"
 	L.custom_off_ray_controllers_desc = "Использовать %s, %s, %s метки для обозначения людей, контроллирующих лучи."
+
+	L.rays_spawn = "Появляются лучи"
+	L.red_add = "|cffff0000Красный|r помощник"
+	L.blue_add = "|cff0000ffСиний|r помощник"
+	L.death_beam = "Смертельный луч"
+	L.red_beam = "|cffff0000Red|r beam"
+	L.blue_beam = "|cff0000ffBlue|r beam"
+	L.yellow_beam = "|cffffff00Yellow|r beam"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "ruRU")
