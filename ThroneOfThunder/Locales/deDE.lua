@@ -88,7 +88,7 @@ if L then
 	L.blue_spawn_trigger = "Der blaue Strahl offenbart einen azurblauen Nebel!"
 
 	L.custom_off_ray_controllers = "Kontrollierer der Lichtstrahlen"
-	L.custom_off_ray_controllers_desc = "Verwenden der %s, %s, %s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren
+	L.custom_off_ray_controllers_desc = "Verwenden der %s, %s, %s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren"
 
 	L.rays_spawn = "Lichtstrahlen erscheinen"
 	L.red_add = "|cffff0000Rotes|r Add"
