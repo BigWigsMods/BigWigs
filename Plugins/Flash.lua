@@ -56,6 +56,7 @@ function mod:OnPluginEnable()
 		pulseFrame:SetAlpha(0.5)
 		pulseFrame:Hide()
 		pulseFrame.tex = pulseFrame:CreateTexture(nil, "ARTWORK")
+		pulseFrame.tex:SetTexCoord(0.07, 0.93, 0.07, 0.93)
 		pulseFrame.tex:SetAllPoints(pulseFrame)
 		pulseFrame.tex:SetTexture("Interface\\Icons\\ability_warrior_charge")
 
