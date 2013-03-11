@@ -73,7 +73,7 @@ function mod:OnBossEnable()
 	-- Stage 2
 	self:Log("SPELL_CAST_START", "LightningWhip", 136850)
 	self:Log("SPELL_CAST_SUCCESS", "SummonBallLightning", 136543)
-	self:Log("SPELL_CAST_START", "FusionSlash", 136478)
+	self:Log("SPELL_CAST_SUCCESS", "FusionSlash", 136478)
 	-- Intermission
 	self:Emote("OverloadedCircuits", "137176")
 	self:Log("SPELL_CAST_START", "Intermission", 137045)
