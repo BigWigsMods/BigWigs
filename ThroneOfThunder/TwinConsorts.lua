@@ -251,10 +251,11 @@ end
 -- Phase 1
 
 function mod:BeastOfNightmares(args)
-	if self:Me(args.destGUID) or self:Tank() then -- this is for tank
+	if self:Me(args.destGUID) then -- this is for tank
 		self:Message(-7634, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:Bar(-7634, 51)
-	elseif self:Healer() then
+	end
+	if self:Healer() then
 		self:TargetMessage(-7634, args.destName, "Attention", nil, nil, nil, true)
 		self:Bar(-7634, 51)
 	end
