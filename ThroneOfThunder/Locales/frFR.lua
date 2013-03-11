@@ -101,8 +101,7 @@ end
 
 L = BigWigs:NewBossLocale("Primordius", "frFR")
 if L then
-	L.stream_of_blobs = "Flux de limons"
-	L.mutations = "Mutations"
+	L.mutations = "Mutations |cff008000(%d)|r |cffff0000(%d)|r"
 end
 
 L = BigWigs:NewBossLocale("Dark Animus", "frFR")

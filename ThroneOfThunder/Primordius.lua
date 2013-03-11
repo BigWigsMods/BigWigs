@@ -1,7 +1,5 @@
 --[[
 TODO:
-	I have put metabolic boost stack count in every message, so it is easier to figure out what is affected by it and what is not from a transcriptor log
-		this should be removed once we figure things out
 	VolatilePathogen no longer seems to spawn adds (25 H PTR) need to confirm this on live
 ]]--
 
@@ -16,8 +14,6 @@ mod:RegisterEnableMob(69017)
 --------------------------------------------------------------------------------
 -- Locals
 --
-local UnitDebuff = UnitDebuff
-local select = select
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -25,7 +21,7 @@ local select = select
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.mutations = "Mutations"
+	L.mutations = "Mutations |cff008000(%d)|r |cffff0000(%d)|r"
 end
 L = mod:GetLocale()
 
@@ -46,6 +42,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+
 	self:Log("SPELL_AURA_REMOVED", "PlayerMutations", 136184, 136186, 136182, 136180, 136185, 136187, 136183, 136181)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PlayerMutations", 136184, 136186, 136182, 136180, 136185, 136187, 136183, 136181)
 	self:Log("SPELL_AURA_APPLIED", "PlayerMutations", 136184, 136186, 136182, 136180, 136185, 136187, 136183, 136181)
@@ -67,24 +64,24 @@ function mod:OnBossEnable()
 	self:Death("Win", 69017)
 end
 
-local function warnHorror()
-	mod:Message(-6969, "Attention")
-	mod:Bar(-6969, 30)
-	mod:ScheduleTimer(warnHorror, 30)
-end
-
 function mod:OnEngage()
 	self:Berserk(480) -- confirmed 25 N live
 	self:Bar(136037, 18) -- Primordial Strike
 	if self:Heroic() then
-		self:Bar(-6969, 12)
-		self:ScheduleTimer(warnHorror, 12)
+		self:Bar(-6969, 12, 137000) -- Viscous Horror
+		self:ScheduleTimer("ViscousHorror", 12)
 	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:ViscousHorror()
+	self:Message(-6969, "Attention", nil, nil, 137000)
+	self:Bar(-6969, 30, 137000)
+	self:ScheduleTimer("ViscousHorror", 30)
+end
 
 do
 	local scheduled = nil
@@ -101,27 +98,32 @@ do
 		local hasteN = select(4, UnitDebuff("player", mod:SpellName(136183))) or 0
 		local critN = select(4, UnitDebuff("player", mod:SpellName(136181))) or 0
 		local totalN = statsN + masteryN + hasteN + critN
-		if totalP == 5 then mod:Flash(-6960) end
-		local stacks = (" |c00008000(%d)|r |c00FF0000(%d)|r"):format(totalP, totalN)
-		mod:Message(-6960, "Personal", ((totalP > 3) or (totalN > 0)) and "Info" or nil, L["mutations"]..stacks, 136184)
+
+		mod:Message(-6960, "Personal", ((totalP > 3) or (totalN > 0)) and "Info" or nil, L["mutations"]:format(totalP, totalN), 136184)
+		if totalP == 5 then
+			mod:Flash(-6960)
+		end
 		scheduled = nil
 	end
 	function mod:PlayerMutations(args)
-		if not self:Me(args.destGUID) then return end
-		if not scheduled then scheduled = self:ScheduleTimer(warnPlayerMutations, 1) end
+		if self:Me(args.destGUID) and not scheduled then
+			scheduled = self:ScheduleTimer(warnPlayerMutations, 1)
+		end
 	end
 end
 
 function mod:FullyMutatedRemoved(args)
-	if not self:Me(args.destGUID) then return end
-	self:StopBar(args.spellId)
-	self:Message(-7830, "Personal", "Info", CL["over"]:format(args.spellName), args.spellId)
+	if self:Me(args.destGUID) then
+		self:StopBar(args.spellId)
+		self:Message(-7830, "Personal", "Info", CL["over"]:format(args.spellName), args.spellId)
+	end
 end
 
 function mod:FullyMutatedApplied(args)
-	if not self:Me(args.destGUID) then return end
-	self:Bar(-7830, 120, args.spellId)
-	self:Message(-7830, "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
+	if self:Me(args.destGUID) then
+		self:Message(-7830, "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
+		self:Bar(-7830, 120, args.spellId)
+	end
 end
 
 function mod:EruptingPustulesRemoved(args)
@@ -131,10 +133,10 @@ function mod:EruptingPustulesRemoved(args)
 end
 
 function mod:EruptingPustulesApplied(args)
-	if not UnitBuff("boss1", self:SpellName(136218)) then -- the 5 yard spread AcidicSpines
-		self:OpenProximity(args.spellId, 2)
+	if not UnitBuff("boss1", self:SpellName(136218)) then -- the 5 yard spread Acidic Spines
+		self:OpenProximity(args.spellId, 5)
 	end
-	self:Message(args.spellId, "Attention", nil, args.spellName)
+	self:Message(args.spellId, "Attention")
 end
 
 function mod:MetabolicBoost(args)

@@ -101,7 +101,7 @@ end
 
 L = BigWigs:NewBossLocale("Primordius", "zhCN")
 if L then
-	L.mutations = "变异"
+	L.mutations = "变异 |cff008000>%d<|r |cffff0000>%d<|r"
 end
 
 L = BigWigs:NewBossLocale("Dark Animus", "zhCN")

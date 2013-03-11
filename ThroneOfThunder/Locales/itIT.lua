@@ -102,8 +102,7 @@ end
 
 L = BigWigs:NewBossLocale("Primordius", "itIT")
 if L then
-	L.stream_of_blobs = "Ondata di Fluidi"
-	L.mutations = "Mutazioni"
+	L.mutations = "Mutazioni |cff008000(%d)|r |cffff0000(%d)|r"
 end
 
 L = BigWigs:NewBossLocale("Dark Animus", "itIT")
