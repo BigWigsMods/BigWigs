@@ -38,7 +38,7 @@ if L then
 	L.priestess_adds_desc = "Prévient de l'arrivée des différents genres de renforts de la Grande prêtresse Mar'li."
 	L.priestess_adds_message = "Add de la prêtresse"
 
-	L.assault_stun = "Tank Stunned!"
+	L.assault_stun = "Tank étourdi !"
 	L.full_power = "Puissance maximale"
 	L.assault_message = "Assaut"
 	L.hp_to_go_power = "PV à faire : %d%% - Puissance : %d"
@@ -73,7 +73,7 @@ if L then
 	L.nest = "Nids"
 	L.nest_desc = "Alertes relatives aux nids. |cffff0000Décochez ceci pour désactiver les alertes si vous n'êtes pas assigné à la gestion des nids !|r"
 
-	L.flight_over = "Vol terminé pendant %d sec !"
+	L.flight_over = "Vol terminé dans %d sec !"
 	L.upper_nest = "Nid |cff008000supérieur|r"
 	L.lower_nest = "Nid |cffff0000inférieur|r"
 	L.upper = "|cff008000Supérieur|r"
@@ -94,9 +94,9 @@ if L then
 	L.red_add = "Add |cffff0000rouge|r"
 	L.blue_add = "Add |cff0000ffbleu|r"
 	L.death_beam = "Rayon mortel"
-	L.red_beam = "|cffff0000Red|r beam"
-	L.blue_beam = "|cff0000ffBlue|r beam"
-	L.yellow_beam = "|cffffff00Yellow|r beam"
+	L.red_beam = "Rayon |cffff0000rouge|r"
+	L.blue_beam = "Rayon |cff0000ffbleu|r"
+	L.yellow_beam = "Rayon |cffffff00jaune|r"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "frFR")

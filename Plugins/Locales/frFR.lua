@@ -149,7 +149,7 @@ L["Font color"] = "Couleur de police"
 --
 
 L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|tNom technique"
-L["Custom range indicator"] = "Indicateur personnalisé de portée"
+L["Custom range indicator"] = "Indicateur perso. de portée"
 L["%d yards"] = "%d mètres"
 L["Proximity"] = "Proximité"
 L["Sound"] = "Son"
