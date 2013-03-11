@@ -95,9 +95,9 @@ if L then
 	L.red_add = "Add |cffff000Rosso|r"
 	L.blue_add = "Add |cff0000ffBlu|r"
 	L.death_beam = "Raggio Disintegratore"
-	L.red_beam = "|cffff0000Red|r beam"
-	L.blue_beam = "|cff0000ffBlue|r beam"
-	L.yellow_beam = "|cffffff00Yellow|r beam"
+	L.red_beam = "Raggio |cffff0000Rosso|r"
+	L.blue_beam = "Raggio |cff0000ffBlu|r"
+	L.yellow_beam = "Raggio |cffffff00Giallo|r"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "itIT")
