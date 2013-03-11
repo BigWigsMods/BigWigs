@@ -18,7 +18,7 @@ mod:RegisterEnableMob(68905, 68904) -- Lu'lin, Suen
 --
 
 local deadBosses = 0
-local inferno = false
+local inferno = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -26,8 +26,9 @@ local inferno = false
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.barrage_fired = "Barrage fired!"
 	L.last_phase_yell_trigger = "Just this once..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
+
+	L.barrage_fired = "Barrage fired!"
 end
 L = mod:GetLocale()
 
@@ -101,7 +102,7 @@ function mod:OnEngage()
 	if self:Tank() or self:Healer() then
 		self:CDBar(-7634, 50) -- Beast of Nightmares
 	end
-	inferno = false
+	inferno = nil
 end
 
 --------------------------------------------------------------------------------
@@ -183,7 +184,7 @@ end
 
 do
 	local function infernoOver(spellId)
-		inferno = false
+		inferno = nil
 		mod:Message(spellId, "Positive", nil, CL["over"]:format(mod:SpellName(spellId)))
 	end
 	function mod:NuclearInferno(args)
@@ -274,7 +275,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Message(-7631, "Urgent", "Alarm")
 		self:CDBar(-7631, 20)
 		self:ScheduleTimer("Message", 5.5, -7631, "Urgent", "Alarm", L["barrage_fired"]) -- This is when the little orbs start to move
-	elseif spellId == 137187 then -- lu'lin Dissipate aka p2
+	elseif spellId == 137187 then -- Lu'lin Dissipate aka p2
 		self:Sync("Phase2")
 	end
 end

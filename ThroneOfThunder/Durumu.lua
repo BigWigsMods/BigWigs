@@ -85,7 +85,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:RegisterEvent("UNIT_AURA")
 	self:Berserk(600) -- Confirmed 25N
 	self:CDBar(134626, 15) -- Lingering Gaze
 	self:Bar(136932, 33) -- Force of Will
@@ -237,7 +236,7 @@ function mod:LingeringGazeRemoved(args)
 	if self:Me(args.destGUID) then
 		openedForMe = nil
 	end
-	-- gotta do all this so in case you can bubble or cloak/etc the debuff then we don't close the display for everyone
+	-- don't close if someone uses bubble/cloak/etc to remove it
 	for i,v in next, lingeringGaze do
 		if v == args.destName then
 			tremove(lingeringGaze, i)
