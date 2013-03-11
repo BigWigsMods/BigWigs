@@ -6,6 +6,6 @@ end
 
 L = BigWigs:NewBossLocale("Salyis's Warband", "ruRU")
 if L then
-	L.engage_yell = "Bring me their corpses!"
+	L.engage_yell = "Принесите мне их трупы!"
 end
 

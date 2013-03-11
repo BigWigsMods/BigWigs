@@ -38,7 +38,7 @@ if L then
 	L.priestess_adds_desc = "Предупреждать о всех типах помощников верховной жрицы Мар'ли."
 	L.priestess_adds_message = "Помощник Жрицы"
 
-	L.assault_stun = "Tank Stunned!"
+	L.assault_stun = "Танк оглушен!"
 	L.full_power = "Полная энергия"
 	L.assault_message = "Выпад"
 	L.hp_to_go_power = "HP осталось: %d%% - Энергия: %d"
@@ -73,7 +73,7 @@ if L then
 	L.nest = "Гнезда"
 	L.nest_desc = "Предупреждения, связанные с гнездами. |cffff0000Снимите галочку, чтобы отключить предупреждения, если вы не назначены на гнезда!|r"
 
-	L.flight_over = "Облет для %d сек!"
+	L.flight_over = "Облет через %d сек!"
 	L.upper_nest = "|cff008000Верхние|r гнезда"
 	L.lower_nest = "|cffff0000Нижние|r гнезда"
 	L.upper = "|cff008000Верхние|r"
@@ -94,9 +94,9 @@ if L then
 	L.red_add = "|cffff0000Красный|r помощник"
 	L.blue_add = "|cff0000ffСиний|r помощник"
 	L.death_beam = "Смертельный луч"
-	L.red_beam = "|cffff0000Red|r beam"
-	L.blue_beam = "|cff0000ffBlue|r beam"
-	L.yellow_beam = "|cffffff00Yellow|r beam"
+	L.red_beam = "|cffff0000Красный|r луч"
+	L.blue_beam = "|cff0000ffСиний|r луч"
+	L.yellow_beam = "|cffffff00Желтый|r луч"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "ruRU")
@@ -139,4 +139,3 @@ L = BigWigs:NewBossLocale("Ra-den", "ruRU")
 if L then
 
 end
-
