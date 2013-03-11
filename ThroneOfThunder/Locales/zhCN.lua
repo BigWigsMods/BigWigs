@@ -67,18 +67,19 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "zhCN")
 if L then
-	L.flight_over = "飞行结束"
-	L.young_egg_hatching = "年幼的蛋孵化"
 	L.lower_hatch_trigger = "The eggs in one of the lower nests begin to hatch!"
 	L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch!"
-	L.upper_nest = "|c00008000下层|r巢穴"
-	L.lower_nest = "|c00FF0000上层|r巢穴"
+
 	L.nest = "巢穴"
-	L.nest_desc = "警报依赖于巢穴。|c00FF0000如果你没有分配到处理巢穴请关闭该警报！|r"
-	L.big_add_message = "Big add at %s"
-	L.upper = "|c00008000上层|r"
-	L.lower = "|c00FF0000下层|r"
+	L.nest_desc = "警报依赖于巢穴。|cffff0000如果你没有分配到处理巢穴请关闭该警报！|r"
+
+	L.flight_over = "飞行结束 %d秒！"
+	L.upper_nest = "|cff008000下层|r巢穴"
+	L.lower_nest = "|cffff0000上层|r巢穴"
+	L.upper = "|cff008000上层|r"
+	L.lower = "|cffff0000下层|r"
 	L.add = "增援"
+	L.big_add_message = "Big add at %s"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "zhCN")
@@ -114,7 +115,7 @@ if L then
 	L.overload_casting = "正在施放 熔火过载"
 	L.overload_casting_desc = "当正在施放熔火过载时发出警报。"
 
-	L.arcing_lightning_cleared = "弧形闪电"	
+	L.arcing_lightning_cleared = "弧形闪电"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "zhCN")

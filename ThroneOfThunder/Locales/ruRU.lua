@@ -67,18 +67,19 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "ruRU")
 if L then
-	L.flight_over = "Облет"
-	L.young_egg_hatching = "Молодое инкубационное яйцо"
 	L.lower_hatch_trigger = "Яйца в одном из нижних гнезд начинают проклевываться!"
 	L.upper_hatch_trigger = "Яйца в одном из верхних гнезд начинают проклевываться!"
-	L.upper_nest = "|c00008000Верхние|r гнезда"
-	L.lower_nest = "|c00FF0000Нижние|r гнезда"
+
 	L.nest = "Гнезда"
-	L.nest_desc = "Предупреждения, связанные с гнездами. |c00FF0000Снимите галочку, чтобы отключить предупреждения, если вы не назначены на гнезда!|r"
-	L.big_add_message = "Большой помощник: %s"
-	L.upper = "|c00008000Верхние|r"
-	L.lower = "|c00FF0000Нижние|r"
+	L.nest_desc = "Предупреждения, связанные с гнездами. |cffff0000Снимите галочку, чтобы отключить предупреждения, если вы не назначены на гнезда!|r"
+
+	L.flight_over = "Облет для %d сек!"
+	L.upper_nest = "|cff008000Верхние|r гнезда"
+	L.lower_nest = "|cffff0000Нижние|r гнезда"
+	L.upper = "|cff008000Верхние|r"
+	L.lower = "|cffff0000Нижние|r"
 	L.add = "Помощник"
+	L.big_add_message = "Большой помощник: %s"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "ruRU")

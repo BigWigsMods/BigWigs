@@ -69,16 +69,18 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "itIT")
 if L then
-	L.flight_over = "Termine del Volo"
-	L.young_egg_hatching = "Schiusura Uova Giovani"
 	L.lower_hatch_trigger = "Le uova in uno dei nidi più bassi iniziano a schiudersi!" --da controllare
 	L.upper_hatch_trigger = "Le uova in uno dei nidi più alti iniziano a schiudersi!" -- da controllare
-	L.upper_nest = "Nido |c00008000Superiore|r"
-	L.lower_nest = "Nido |c00FF0000Inferiore|r"
-	L.lower_upper_nest = "Nido |c00FF0000Inferiore|r + |c00008000Superiore|r"
-	--L.food_call_trigger = "Hatchling calls for food!" --da tradurre / Commented out since there isnt anymore into Locals, Keep it for lazyness.
+
 	L.nest = "Nidi"
 	L.nest_desc = "Avvisi relativi ai nidi. |c00FF0000Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi!|r"
+
+	L.flight_over = "Termine del Volo per %d sec!"
+	L.upper_nest = "Nido |cff008000Superiore|r"
+	L.lower_nest = "Nido |cffff0000Inferiore|r"
+	L.upper = "|cff008000Superiore|r"
+	L.lower = "|cffff0000Inferiore|r"
+	L.add = "Add"
 	L.big_add_message = "Add Grande su %s"
 end
 

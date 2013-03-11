@@ -67,15 +67,18 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "frFR")
 if L then
-	L.flight_over = "Vol terminé"
-	L.young_egg_hatching = "Éclosion d'un jeune œuf"
 	L.lower_hatch_trigger = "Les œufs de l'un des nids inférieurs commencent à éclore !" -- à vérifier
 	L.upper_hatch_trigger = "Les œufs de l'un des nids supérieurs commencent à éclore !" -- à vérifier
-	L.upper_nest = "Nid |c00008000supérieur|r"
-	L.lower_nest = "Nid |c00FF0000inférieur|r"
-	L.lower_upper_nest = "Nid |c00FF0000inférieur|r + |c00008000supérieur|r"
+
 	L.nest = "Nids"
-	L.nest_desc = "Alertes relatives aux nids. |c00FF0000Décochez ceci pour désactiver les alertes si vous n'êtes pas assigné à la gestion des nids !|r"
+	L.nest_desc = "Alertes relatives aux nids. |cffff0000Décochez ceci pour désactiver les alertes si vous n'êtes pas assigné à la gestion des nids !|r"
+
+	L.flight_over = "Vol terminé pendant %d sec !"
+	L.upper_nest = "Nid |cff008000supérieur|r"
+	L.lower_nest = "Nid |cffff0000inférieur|r"
+	L.upper = "|cff008000Supérieur|r"
+	L.lower = "|cffff0000Inférieur|r"
+	L.add = "Add"
 	L.big_add_message = "Gros add au %s"
 end
 

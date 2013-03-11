@@ -26,18 +26,19 @@ local nestCounter = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.flight_over = "Flight over"
-	L.young_egg_hatching = "Young egg hatching"
 	L.lower_hatch_trigger = "The eggs in one of the lower nests begin to hatch!"
 	L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch!"
-	L.upper_nest = "|c00008000Upper|r nest"
-	L.lower_nest = "|c00FF0000Lower|r nest"
+
 	L.nest = "Nests"
-	L.nest_desc = "Warnings related to the nests. |c00FF0000Untoggle this to turn off warnings, if you are not assigned to handle the nests!|r"
-	L.big_add_message = "Big add at %s"
-	L.upper = "|c00008000Upper|r"
-	L.lower = "|c00FF0000Lower|r"
+	L.nest_desc = "Warnings related to the nests. |cffff0000Untoggle this to turn off warnings if you are not assigned to handle the nests!|r"
+
+	L.flight_over = "Flight over in %d sec!"
+	L.upper_nest = "|cff008000Upper|r nest"
+	L.lower_nest = "|cffff0000Lower|r nest"
+	L.upper = "|cff008000Upper|r"
+	L.lower = "|cffff0000Lower|r"
 	L.add = "Add"
+	L.big_add_message = "Big add at %s"
 end
 L = mod:GetLocale()
 
@@ -48,8 +49,8 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"nest", -- this controls a lot of things, so it is easier to turn off for people who don't handle the nests
-		{-7360, "FLASH"}, 140741,
-		{140092, "TANK"}, {134366, "TANK"}, {134380, "FLASH"}, 134370, 137528,
+		{-7360, "FLASH"}, 140741, 137528,
+		{140092, "TANK_HEALER"}, {134366, "TANK_HEALER"}, {134380, "FLASH"}, 134370, 138923,
 		"proximity", "berserk", "bosskill",
 	}, {
 		["nest"] = -7348,
@@ -62,15 +63,16 @@ function mod:OnBossEnable()
 
 	-- eat for the hatchlings is intentionally not here, players can't do anything about it once it is casted, so we don't warn uselessly
 	self:Log("SPELL_AURA_APPLIED", "FeedYoung", 137528)
-	self:Log("SPELL_AURA_APPLIED", "YoungEgg", 134347) -- XXX This was not there on 10 H or 25 H ptr, consider removing it
-	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:Log("SPELL_AURA_APPLIED", "PrimalNutriment", 140741)
 	self:Log("SPELL_AURA_APPLIED", "Flight", 133755)
+	self:Log("SPELL_CAST_START", "Caw", 138923)
 	self:Log("SPELL_CAST_START", "DownDraft", 134370)
 	self:Log("SPELL_CAST_START", "Quills", 134380)
 	self:Log("SPELL_AURA_APPLIED", "TalonRake", 134366)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TalonRake", 134366)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "InfectedTalons", 140092)
+
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	self:Death("Win", 69712)
 end
@@ -88,23 +90,15 @@ end
 --
 
 function mod:FeedYoung(args)
-	self:CDBar(args.spellId, 30)
-	-- only warn for people who can get Primal Nutriment
-	if not UnitBuff("player", self:SpellName(140741)) and UnitBuff("player", self:SpellName(134339)) then -- not Primal Nutriment and Daedalian Wings
+	if UnitBuff("player", self:SpellName(134339)) then -- Daedalian Wings (only warn for people who can get Primal Nutriment)
 		self:Message(args.spellId, "Positive", "Info") -- Positive because it is green!
 	end
+	self:CDBar(args.spellId, 30)
 end
 
-do
-	local prev = 0
-	function mod:YoungEgg(args)
-		local t = GetTime()
-		if t-prev > 2 then
-			prev = t
-			self:Message("nest", "Attention", nil, L["young_egg_hatching"], args.spellId) -- this might be redundant, if we use the emote to warn for hatching nests
-			self:Bar("nest", 10, L["young_egg_hatching"], args.spellId) -- XXX this is not redundant, keep this! (or maybe it is now that it is a fraction of the 10 sec it used to be need to check on normals again )
-		end
-	end
+function mod:Caw(args)
+	self:Message(args.spellId, "Attention", nil, CL["incoming"]:format(args.spellName)) -- no z-axis info for range check to ignore for nest people :\
+	--self:CDBar(args.spellId, 18) -- 18-30s
 end
 
 -- lower, lower, lower, upper, upper, upper, -- 10 N/H
@@ -115,63 +109,74 @@ end
 -- 1 lower, 2 lower, 3 lower, 4 {lower, 5 upper}, 6 {lower, 7 upper}, 8 upper, 9 {lower, 10 upper}, 11 {lower, 12 upper}, 13 lower, 14 {upper, 15 lower}, 16 {upper, 17 lower} -- 25 H
 
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
+	if not msg:find(L["upper_hatch_trigger"], nil, true) and not msg:find(L["lower_hatch_trigger"], nil, true) then return end
+
 	local diff = self:Difficulty()
-	if msg:find(L["upper_hatch_trigger"]) or msg:find(L["lower_hatch_trigger"]) then
-		nestCounter = nestCounter + 1
-		local count = (" (%d)"):format(nestCounter) -- right now only print count to the message not the bars
-		local text = (msg:find(L["upper_hatch_trigger"])) and L["upper_nest"]..count or L["lower_nest"]..count
-		local icon = (msg:find(L["upper_hatch_trigger"])) and "misc_arrowlup" or "misc_arrowdown"
-		if diff == 5 and nestCounter % 2 == 0 then
-			text = L["big_add_message"]:format(text) -- since no double nest in 10 man, might as well not do 2 messages
+	nestCounter = nestCounter + 1
+
+	-- right now only print count to the message not the bars
+	local color, text, icon
+	if msg:find(L["upper_hatch_trigger"]) then
+		color = "Attention"
+		text = CL["count"]:format(L["upper_nest"], nestCounter)
+		icon = "misc_arrowlup"
+	else
+		color = "Urgent"
+		text = CL["count"]:format(L["lower_nest"], nestCounter)
+		icon = "misc_arrowdown"
+	end
+
+	if diff == 5 and nestCounter % 2 == 0 then
+		text = L["big_add_message"]:format(text) -- since no double nest in 10 man, might as well not do 2 messages
+	end
+	self:Message("nest", color, "Alert", text, icon) -- XXX keep this here till all the nest rotations are 100% figured out
+
+	if diff == 3 then -- 10 N
+		if nestCounter % 6 > 2 then -- first 3 down, second 3 up
+			self:Bar("nest", 40, L["upper_nest"], "misc_arrowlup")
+		else
+			self:Bar("nest", 40, L["lower_nest"], "misc_arrowdown")
 		end
-		self:Message("nest", "Attention", "Alert", text, icon) -- XXX keep this here till all the nest rotations are 100% figured out
-		if diff == 3 then -- 10 N
-			if nestCounter % 6 > 2 then -- first 3 down, second 3 up
-				self:Bar("nest", 40, L["upper_nest"], "misc_arrowlup")
+	elseif diff == 5 then -- 10 H
+		if nestCounter % 6 > 2 then -- first 3 down, second 3 up
+			if nestCounter % 2 == 1 then
+				self:Bar("nest", 30, ("%s (%s)"):format(L["upper"], L["add"]), "misc_arrowlup")
 			else
-				self:Bar("nest", 40, L["lower_nest"], "misc_arrowdown")
-			end
-		elseif diff == 5 then -- 10 H
-			if nestCounter % 6 > 2 then -- first 3 down, second 3 up
-				if nestCounter % 2 == 1 then
-					self:Bar("nest", 30, ("%s (%s)"):format(L["upper"], L["add"]), "misc_arrowlup")
-				else
-					self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
-				end
-			else
-				if nestCounter % 2 == 1 then
-					self:Bar("nest", 30, ("%s (%s)"):format(L["lower"], L["add"]), "misc_arrowdown")
-				else
-					self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
-				end
-			end
-		elseif diff == 4 then -- 25 N
-			if nestCounter % 28 < 4 or nestCounter % 28 == 12 or nestCounter % 28 == 13 or nestCounter % 28 == 23 then
-				self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
-			elseif nestCounter % 28 == 4 or nestCounter % 28 == 8 or nestCounter % 28 == 10 or nestCounter % 28 == 14 or nestCounter % 28 == 17 or nestCounter % 28 == 19 or nestCounter % 28 == 21 or nestCounter % 28 == 24 or nestCounter % 28 == 26 then -- up and down at same time
-				self:Bar("nest", 30, ("%s + %s"):format(L["lower"], L["upper"]), 134347)
-			elseif nestCounter % 28 == 6 or nestCounter % 28 == 7 or nestCounter % 28 == 16 then
 				self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
 			end
-		elseif diff == 6 then -- 25 H
-			if nestCounter % 17 == 2 or nestCounter % 17 == 12 then
-				self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
-			elseif nestCounter % 17 == 3 or nestCounter % 17 == 8 or nestCounter % 17 == 13 or nestCounter % 17 == 15 then
-				self:Bar("nest", 30, ("%s + %s"):format(L["lower"], L["upper"]), 134347)
-			elseif nestCounter % 17 == 7 then
-				self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
-			elseif nestCounter % 17 == 1 then
+		else
+			if nestCounter % 2 == 1 then
 				self:Bar("nest", 30, ("%s (%s)"):format(L["lower"], L["add"]), "misc_arrowdown")
-			elseif nestCounter % 17 == 5 then
-				self:Bar("nest", 30, ("%s(%s)+%s"):format(L["lower"], L["add"], L["upper"]), 134347)
-			elseif nestCounter % 17 == 10 then
-				self:Bar("nest", 30, ("%s+%s(%s)"):format(L["lower"], L["upper"], L["add"]), 134347)
+			else
+				self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
 			end
-			if nestCounter % 17 == 2 or nestCounter % 17 == 6 then
-				self:Message("nest", "Attention", "Alert", L["big_add_message"]:format(L["lower_nest"]), 134367)
-			elseif nestCounter % 17 == 12 then
-				self:Message("nest", "Attention", "Alert", L["big_add_message"]:format(L["upper_nest"]), 134367)
-			end
+		end
+	elseif diff == 4 then -- 25 N
+		if nestCounter % 28 < 4 or nestCounter % 28 == 12 or nestCounter % 28 == 13 or nestCounter % 28 == 23 then
+			self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
+		elseif nestCounter % 28 == 4 or nestCounter % 28 == 8 or nestCounter % 28 == 10 or nestCounter % 28 == 14 or nestCounter % 28 == 17 or nestCounter % 28 == 19 or nestCounter % 28 == 21 or nestCounter % 28 == 24 or nestCounter % 28 == 26 then -- up and down at same time
+			self:Bar("nest", 30, ("%s + %s"):format(L["lower"], L["upper"]), 134347)
+		elseif nestCounter % 28 == 6 or nestCounter % 28 == 7 or nestCounter % 28 == 16 then
+			self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
+		end
+	elseif diff == 6 then -- 25 H
+		if nestCounter % 17 == 2 or nestCounter % 17 == 12 then
+			self:Bar("nest", 30, L["lower_nest"], "misc_arrowdown")
+		elseif nestCounter % 17 == 3 or nestCounter % 17 == 8 or nestCounter % 17 == 13 or nestCounter % 17 == 15 then
+			self:Bar("nest", 30, ("%s + %s"):format(L["lower"], L["upper"]), 134347)
+		elseif nestCounter % 17 == 7 then
+			self:Bar("nest", 30, L["upper_nest"], "misc_arrowlup")
+		elseif nestCounter % 17 == 1 then
+			self:Bar("nest", 30, ("%s (%s)"):format(L["lower"], L["add"]), "misc_arrowdown")
+		elseif nestCounter % 17 == 5 then
+			self:Bar("nest", 30, ("%s(%s)+%s"):format(L["lower"], L["add"], L["upper"]), 134347)
+		elseif nestCounter % 17 == 10 then
+			self:Bar("nest", 30, ("%s+%s(%s)"):format(L["lower"], L["upper"], L["add"]), 134347)
+		end
+		if nestCounter % 17 == 2 or nestCounter % 17 == 6 then
+			self:Message("nest", "Urgent", "Alert", L["big_add_message"]:format(L["lower_nest"]), 134367)
+		elseif nestCounter % 17 == 12 then
+			self:Message("nest", "Attention", "Alert", L["big_add_message"]:format(L["upper_nest"]), 134367)
 		end
 	end
 end
@@ -184,15 +189,15 @@ end
 
 do
 	local function flightMessage(remainingTime)
-		mod:Message(-7360, "Personal", (remainingTime<5) and "Info", CL["custom_sec"]:format(L["flight_over"], remainingTime), 133755)
+		mod:Message(-7360, "Personal", remainingTime < 5 and "Info", CL["flight_over"]:format(remainingTime), 133755)
 	end
 	function mod:Flight(args)
 		if not self:Me(args.destGUID) then return end
 		self:ScheduleTimer(flightMessage, 5, 5)
 		self:ScheduleTimer(flightMessage, 8, 2)
 		self:ScheduleTimer(flightMessage, 9, 1) -- A bit of spam, but it is necessary!
-		self:Bar(-7360, 10)
 		self:ScheduleTimer("Flash", 8, -7360)
+		self:Bar(-7360, 10)
 	end
 end
 
@@ -202,19 +207,19 @@ function mod:DownDraft(args)
 end
 
 function mod:Quills(args)
-	self:Flash(args.spellId)
-	self:Message(args.spellId, "Important", "Long")
+	self:Message(args.spellId, "Important", "Warning")
 	self:Bar(args.spellId, 63)
+	self:Flash(args.spellId)
 end
 
 function mod:TalonRake(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
+	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Info")
 	self:CDBar(args.spellId, 22)
 end
 
 function mod:InfectedTalons(args)
 	if args.amount % 2 == 0 then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Info")
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
 	end
 end
 

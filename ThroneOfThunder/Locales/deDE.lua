@@ -67,18 +67,19 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "deDE")
 if L then
-	L.flight_over = "Flug vorbei"
-	L.young_egg_hatching = "Frisch gelegtes Ei schlüpft"
 	L.lower_hatch_trigger = "Die Eier in einem der unteren Nester beginnen, aufzubrechen!"
 	L.upper_hatch_trigger = "Die Eier in einem der oberen Nester beginnen, aufzubrechen!"
-	L.upper_nest = "|c00008000Oberes|r Nest"
-	L.lower_nest = "|c00FF0000Unteres|r Nest"
+
 	L.nest = "Nester"
 	L.nest_desc = "Warnungen für die Nester. |c00FF0000Schalte diese Warnungen aus, wenn Du nicht für die Nester eingeteilt bist!|r"
-	L.big_add_message = "Großes Add in %s"
-	L.upper = "|c00008000Oben|r"
-	L.lower = "|c00FF0000Unten|r"
+
+	L.flight_over = "Flug vorbei für %d sec!"
+	L.upper_nest = "|cff008000Oberes|r Nest"
+	L.lower_nest = "|cffff0000Unteres|r Nest"
+	L.upper = "|cff008000Oben|r"
+	L.lower = "|cffff0000Unten|r"
 	L.add = "Add"
+	L.big_add_message = "Großes Add in %s"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "deDE")
@@ -93,7 +94,7 @@ if L then
 	L.death_beam = "Desintegrationsstrahl"
 
 	L.custom_off_ray_controllers = "Kontrollierer der Lichtstrahlen"
-	L.custom_off_ray_controllers_desc = "Verwenden der %s, %s, %s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."	
+	L.custom_off_ray_controllers_desc = "Verwenden der %s, %s, %s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."
 end
 
 L = BigWigs:NewBossLocale("Primordius", "deDE")
