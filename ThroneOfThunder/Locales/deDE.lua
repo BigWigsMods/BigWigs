@@ -73,7 +73,7 @@ if L then
 	L.nest = "Nester"
 	L.nest_desc = "Warnungen für die Nester. |c00FF0000Schalte diese Warnungen aus, wenn Du nicht für die Nester eingeteilt bist!|r"
 
-	L.flight_over = "Flug vorbei für %d sec!"
+	L.flight_over = "Flug in %d Sek vorbei!"
 	L.upper_nest = "|cff008000Oberes|r Nest"
 	L.lower_nest = "|cffff0000Unteres|r Nest"
 	L.upper = "|cff008000Oben|r"
@@ -88,15 +88,15 @@ if L then
 	L.blue_spawn_trigger = "Der blaue Strahl offenbart einen azurblauen Nebel!"
 
 	L.custom_off_ray_controllers = "Kontrollierer der Lichtstrahlen"
-	L.custom_off_ray_controllers_desc = "Verwenden der %s, %s, %s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren"
+	L.custom_off_ray_controllers_desc = "Verwenden der %s, %s, %s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."
 
 	L.rays_spawn = "Lichtstrahlen erscheinen"
 	L.red_add = "|cffff0000Rotes|r Add"
 	L.blue_add = "|cff0000ffBlaues|r Add"
 	L.death_beam = "Desintegrationsstrahl"
-	L.red_beam = "|cffff0000Red|r beam"
-	L.blue_beam = "|cff0000ffBlue|r beam"
-	L.yellow_beam = "|cffffff00Yellow|r beam"
+	L.red_beam = "|cffff0000Roter|r Strahl"
+	L.blue_beam = "|cff0000ffBlauer|r Strahl"
+	L.yellow_beam = "|cffffff00Gelber|r Strahl"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "deDE")
