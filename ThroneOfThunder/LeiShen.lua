@@ -42,7 +42,7 @@ if L then
 	L.conduit_abilities_message = "Next conduit ability"
 
 	L.intermission = "Intermission"
-	L.overchargerd_message = "Stunning AoE pulse"
+	L.overcharged_message = "Stunning AoE pulse"
 	L.static_shock_message = "Splitting AoE damage"
 	L.diffusion_add_message = "Diffusion adds"
 	L.diffusion_chain_message = "Diffusion adds soon - SPREAD!"
@@ -287,7 +287,7 @@ do
 	end
 	function mod:Overcharged(args)
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL["say"]:format(L["overchargerd_message"]))
+			self:Say(args.spellId, L["overcharged_message"])
 		end
 		overchargedList[#overchargedList+1] = args.destName
 		if not scheduled then

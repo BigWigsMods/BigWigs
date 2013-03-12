@@ -130,7 +130,7 @@ if L then
 	L.conduit_ability_meassage = "След. способность проводника"
 
 	L.intermission = "Перерыв"
-	L.overchargerd_message = "Оглушающий AoE импульс"
+	L.overcharged_message = "Оглушающий AoE импульс"
 	L.static_shock_message = "Делящийся AoE урон"
 	L.diffusion_add_message = "Рассеивающие помощники"
 	L.diffusion_chain_message = "Скоро рассеивающий помощник - Разбегитесь!"

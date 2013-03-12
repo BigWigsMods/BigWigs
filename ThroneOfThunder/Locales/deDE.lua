@@ -133,7 +133,7 @@ if L then
 	L.conduit_ability_meassage = "Nächste Leitungs-Fähigkeit"
 
 	L.intermission = "Unterbrechung"
-	L.overchargerd_message = "Betäubender AoE Puls"
+	L.overcharged_message = "Betäubender AoE Puls"
 	L.static_shock_message = "Aufteilender AoE Schaden"
 	L.diffusion_add_message = "Kugelblitzelementare"
 	L.diffusion_chain_message = "Kugelblitzelementare bald - VERTEILEN!"
