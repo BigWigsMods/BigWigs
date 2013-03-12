@@ -71,7 +71,7 @@ if L then
 	L.upper_hatch_trigger = "Die Eier in einem der oberen Nester beginnen, aufzubrechen!"
 
 	L.nest = "Nester"
-	L.nest_desc = "Warnungen für die Nester. |c00FF0000Schalte diese Warnungen aus, wenn Du nicht für die Nester eingeteilt bist!|r"
+	L.nest_desc = "Warnungen für die Nester. |cffff0000Schalte diese Warnungen aus, wenn Du nicht für die Nester eingeteilt bist!|r"
 
 	L.flight_over = "Flug in %d Sek vorbei!"
 	L.upper_nest = "|cff008000Oberes|r Nest"
@@ -86,13 +86,18 @@ L = BigWigs:NewBossLocale("Durumu the Forgotten", "deDE")
 if L then
 	L.red_spawn_trigger = "Das Infrarotlicht offenbart einen purpurroten Nebel!"
 	L.blue_spawn_trigger = "Der blaue Strahl offenbart einen azurblauen Nebel!"
+	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
+
+	L.adds = "Reveal Adds"
+	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and how many Crimson Fogs remain."
 
 	L.custom_off_ray_controllers = "Kontrollierer der Lichtstrahlen"
-	L.custom_off_ray_controllers_desc = "Verwenden der %s, %s, %s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."
+	L.custom_off_ray_controllers_desc = "Verwenden der %s%s%s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."
 
 	L.rays_spawn = "Lichtstrahlen erscheinen"
 	L.red_add = "|cffff0000Rotes|r Add"
 	L.blue_add = "|cff0000ffBlaues|r Add"
+	L.yellow_add = "|cffffff00Gelber|r Add"
 	L.death_beam = "Desintegrationsstrahl"
 	L.red_beam = "|cffff0000Roter|r Strahl"
 	L.blue_beam = "|cff0000ffBlauer|r Strahl"

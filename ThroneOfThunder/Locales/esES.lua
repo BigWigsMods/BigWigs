@@ -72,11 +72,11 @@ if L then
 	L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch!"
 
 	L.nest = "Nidos"
-	L.nest_desc = "Avisos relacionados con los nidos. |c00FF0000¡No cambies esto para desactivar los avisos, si no estás asignado para gestionar los nidos!|r"
+	L.nest_desc = "Avisos relacionados con los nidos. |cffff0000¡No cambies esto para desactivar los avisos, si no estás asignado para gestionar los nidos!|r"
 
 	L.flight_over = "Vuelo completado durante %d sec!"
-	L.upper_nest = "Nido |c00008000superior|r"
-	L.lower_nest = "Nido |c00FF0000inferior|r"
+	L.upper_nest = "Nido |cff008000superior|r"
+	L.lower_nest = "Nido |cffff0000inferior|r"
 	L.upper = "|cff008000Superior|r"
 	L.lower = "|cffff0000Inferior|r"
 	L.add = "Add"
@@ -86,14 +86,19 @@ end
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "esES")
 if L then
 	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
-	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
+	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Fog!"
+	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
+
+	L.adds = "Reveal Adds"
+	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
 
 	L.custom_off_ray_controllers = "Controladores de rayo"
-	L.custom_off_ray_controllers_desc = "Usa las marcas de raid %s, %s, %s para marcar gente que controlará las posiciones y movimientos cuando aparecen los rayos."
+	L.custom_off_ray_controllers_desc = "Usa las marcas de raid %s%s%s para marcar gente que controlará las posiciones y movimientos cuando aparecen los rayos."
 
 	L.rays_spawn = "Aparecen rayos"
 	L.red_add = "Add |cffff0000rojo|r"
 	L.blue_add = "Add |cff0000ffazul|r"
+	L.yellow_add = "Add |cffffff00amarillo|r"
 	L.death_beam = "Rayo mortal"
 	L.red_beam = "Rayo |cffff0000rojo|r"
 	L.blue_beam = "Rayo |cff0000ffazul|r"

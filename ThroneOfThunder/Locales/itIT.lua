@@ -72,7 +72,7 @@ if L then
 	L.upper_hatch_trigger = "Le uova in uno dei nidi più alti iniziano a schiudersi!" -- da controllare
 
 	L.nest = "Nidi"
-	L.nest_desc = "Avvisi relativi ai nidi. |c00FF0000Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi!|r"
+	L.nest_desc = "Avvisi relativi ai nidi. |cffff0000Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi!|r"
 
 	L.flight_over = "Termine del Volo per %d sec!"
 	L.upper_nest = "Nido |cff008000Superiore|r"
@@ -86,14 +86,19 @@ end
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "itIT")
 if L then
 	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
-	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
+	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Fog!"
+	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
+
+	L.adds = "Reveal Adds"
+	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
 
 	L.custom_off_ray_controllers = "Controllori dei Raggi"
-	L.custom_off_ray_controllers_desc = "Usa le icone di incursione %s, %s, %s per evidenziare i giocatori che controllano le posizioni dei raggi e il loro movimento."
+	L.custom_off_ray_controllers_desc = "Usa le icone di incursione %s%s%s per evidenziare i giocatori che controllano le posizioni dei raggi e il loro movimento."
 
 	L.rays_spawn = "Apparizione raggi"
 	L.red_add = "Add |cffff000Rosso|r"
 	L.blue_add = "Add |cff0000ffBlu|r"
+	L.yellow_add = "Add |cffffff00Giallo|r"
 	L.death_beam = "Raggio Disintegratore"
 	L.red_beam = "Raggio |cffff0000Rosso|r"
 	L.blue_beam = "Raggio |cff0000ffBlu|r"

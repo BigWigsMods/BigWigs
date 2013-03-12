@@ -85,14 +85,19 @@ end
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "ruRU")
 if L then
 	L.red_spawn_trigger = "Инфракрасный свет высвечивает багровый туман!"
-	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye!"
+	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Fog!"
+	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
+
+	L.adds = "Reveal Adds"
+	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
 
 	L.custom_off_ray_controllers = "Операторы луча"
-	L.custom_off_ray_controllers_desc = "Использовать %s, %s, %s метки для обозначения людей, контроллирующих лучи."
+	L.custom_off_ray_controllers_desc = "Использовать %s%s%s метки для обозначения людей, контроллирующих лучи."
 
 	L.rays_spawn = "Появляются лучи"
 	L.red_add = "|cffff0000Красный|r помощник"
 	L.blue_add = "|cff0000ffСиний|r помощник"
+	L.yellow_add = "|cffffff00Желтый|r помощник"
 	L.death_beam = "Смертельный луч"
 	L.red_beam = "|cffff0000Красный|r луч"
 	L.blue_beam = "|cff0000ffСиний|r луч"

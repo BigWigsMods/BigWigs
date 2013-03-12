@@ -85,14 +85,19 @@ end
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "frFR")
 if L then
 	L.red_spawn_trigger = "La Lumière infrarouge révèle une brume écarlate !" -- à vérifier
-	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Eye !" -- à traduire
+	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Fog!" -- à traduire
+	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
+
+	L.adds = "Reveal Adds"
+	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
 
 	L.custom_off_ray_controllers = "Contrôleurs de rayon"
-	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s, %s, %s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements."
+	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s%s%s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements."
 
 	L.rays_spawn = "Apparition des rayons"
 	L.red_add = "Add |cffff0000rouge|r"
 	L.blue_add = "Add |cff0000ffbleu|r"
+	L.yellow_add = "Add |cffffff00jaune|r"
 	L.death_beam = "Rayon mortel"
 	L.red_beam = "Rayon |cffff0000rouge|r"
 	L.blue_beam = "Rayon |cff0000ffbleu|r"
