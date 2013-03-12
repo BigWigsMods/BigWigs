@@ -85,8 +85,8 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "esES")
 if L then
-	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
-	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Fog!"
+	L.red_spawn_trigger = "¡La Luz infrarroja revela una niebla carmesí!"
+	L.blue_spawn_trigger = "¡Los Rayos azules revelan una niebla azur!"
 	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
 
 	L.adds = "Reveal Adds"
