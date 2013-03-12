@@ -1,8 +1,3 @@
---[[
-TODO:
-	figure out where to start ForceOfWill in the DisintegrationBeam phase
-		as of 25 N ptr there is no force of will during DisintegrationBeam phase
-]]--
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -234,6 +229,8 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 			self:Message(-6905, "Personal", "Long", CL["you"]:format(self:SpellName(-6905)))
 			self:Flash(-6905)
 			self:Say(-6905)
+		elseif self:Range(target) < 6 then
+			self:RangeMessage(-6905)
 		else
 			self:Message(-6905, "Attention")
 		end
