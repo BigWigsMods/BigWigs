@@ -44,7 +44,8 @@ if L then
 	L.assault_stun = "坦克眩晕"
 	L.assault_message = "冰寒突击！"
 	L.full_power = "全能量"
-	L.hp_to_go_power = "生命：%d%% - 能量：%d"
+	L.hp_to_go_power = "%d%% HP to go! (Power: %d)"
+	L.hp_to_go_fullpower = "%d%% HP to go! (Full power)"
 end
 
 L = BigWigs:NewBossLocale("Tortos", "zhCN")

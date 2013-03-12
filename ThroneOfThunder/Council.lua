@@ -40,7 +40,8 @@ if L then
 	L.assault_stun = "Tank Stunned!"
 	L.assault_message = "Assault"
 	L.full_power = "Full power"
-	L.hp_to_go_power = "HP to go: %d%% - Power: %d"
+	L.hp_to_go_power = "%d%% HP to go! (Power: %d)"
+	L.hp_to_go_fullpower = "%d%% HP to go! (Full power)"
 end
 L = mod:GetLocale()
 
@@ -257,7 +258,7 @@ end
 
 -- Tank alerts so you know when you should be watching for stacks (if you're not avoiding hits, it can stack really fast)
 function mod:FrigidAssaultStart(args)
-	self:Message(-7054, "Attention", "Alarm", args.spellName)
+	self:Message(-7054, "Attention", "Warning", args.spellName)
 	self:Bar(-7054, 30)
 end
 
@@ -268,7 +269,7 @@ function mod:FrigidAssault(args)
 end
 
 function mod:FrigidAssaultStun(args)
-	self:Message(-7054, "Important", "Alarm", L["assault_stun"])
+	self:Message(-7054, "Important", "Warning", L["assault_stun"])
 end
 
 -- General
@@ -281,10 +282,25 @@ end
 
 do
 	local prevPower = 0
-	function mod:PossessedHPToGo(unitId)
-		if not UnitBuff(unitId, self:SpellName(136442)) then return end -- possessed
+	local possessed = mod:SpellName(136442)
+	local function warnFullPower(unitId, lastPercHPToGo)
+		if prevPower < 100 then return end
 		local maxHealth, currHealth = UnitHealthMax(unitId), UnitHealth(unitId)
-		local percHPToGo = 25-((posessHPStart - currHealth) / maxHealth * 100)
+		local percHPToGo = 25 - math.floor((posessHPStart - currHealth) / maxHealth * 100)
+		if percHPToGo < 1 then return end
+
+		if percHPToGo < lastPercHPToGo then
+			mod:Message(136442, "Important", "Alert", L["hp_to_go_fullpower"]:format(percHPToGo))
+		end
+		mod:ScheduleTimer(warnFullPower, 3, unitId, percHPToGo)
+	end
+
+	function mod:PossessedHPToGo(unitId)
+		if not UnitBuff(unitId, possessed) then return end
+		local maxHealth, currHealth = UnitHealthMax(unitId), UnitHealth(unitId)
+		local percHPToGo = 25 - math.floor((posessHPStart - currHealth) / maxHealth * 100)
+		if percHPToGo < 1 then return end
+
 		local power = UnitPower(unitId)
 		if power > 32 and prevPower == 0 then
 			prevPower = 33
@@ -303,8 +319,8 @@ do
 			self:Message(136442, "Important", nil, L["hp_to_go_power"]:format(percHPToGo, power))
 		elseif power > 99 and prevPower == 90 then
 			prevPower = 100
-			self:Message(136442, "Important", nil, L["hp_to_go_power"]:format(percHPToGo, power).." "..L["full_power"]) -- could probably make thise be a less awkward message with some more localization
-			-- then might as well consider doing some scheduled warning till hp to go is less than 2%
+			self:Message(136442, "Important", "Alert", L["hp_to_go_fullpower"]:format(percHPToGo))
+			self:ScheduleTimer(warnFullPower, 3, unitId, percHPToGo)
 		end
 	end
 
@@ -326,7 +342,7 @@ do
 
 		local regenMultiplier = self:Heroic() and 15 or self:LFR() and 5 or 10
 		local duration = 66 * (100 - lingeringCount * regenMultiplier) / 100 -- 66 seconds till full power without any lingering presences stacks
-		self:Message(args.spellId, "Attention", "Long", CL["other"]:format(args.spellName, args.destName))
+		self:Message(args.spellId, "Neutral", "Long", CL["other"]:format(args.spellName, args.destName))
 		self:Bar(args.spellId, duration, L["full_power"])
 
 		-- leave in all the elseif statements to be ready in case they are needed on heroic
@@ -344,30 +360,31 @@ do
 		elseif mobId == 69078 then -- Sandcrawler
 		end
 	end
-end
 
-function mod:PossessedRemoved(args)
-	self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2", "boss3", "boss4", "boss5") -- for a little bit of performance increase
-	if self.db.profile.custom_on_markpossessed then
-		for i=1,5 do
-			local boss = ("boss%d"):format(i)
-			if UnitGUID(boss) == args.destGUID then
-				SetRaidTarget(boss, 0) -- clear the icon because posses have travel time, so people know when something is no longer possessed
+	function mod:PossessedRemoved(args)
+		prevPower = 0
+		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2", "boss3", "boss4", "boss5")
+		if self.db.profile.custom_on_markpossessed then
+			for i=1,5 do
+				local boss = ("boss%d"):format(i)
+				if UnitGUID(boss) == args.destGUID then
+					SetRaidTarget(boss, 0) -- clear the icon because posses have travel time, so people know when something is no longer possessed
+				end
 			end
 		end
-	end
 
-	-- leave in all the elseif statements to be ready in case they are needed on heroic
-	local mobId = self:MobId(args.destGUID)
-	if mobId == 69132 then -- Priestess
-	elseif mobId == 69131 then -- Frost King
-		self:StopBar(136990) -- Frostbite
-		if frostBiteStart then
-			self:Bar(136992, 45 - (GetTime() - frostBiteStart)) -- Biting Cold
+		-- leave in all the elseif statements to be ready in case they are needed on heroic
+		local mobId = self:MobId(args.destGUID)
+		if mobId == 69132 then -- Priestess
+		elseif mobId == 69131 then -- Frost King
+			self:StopBar(136990) -- Frostbite
+			if frostBiteStart then
+				self:Bar(136992, 45 - (GetTime() - frostBiteStart)) -- Biting Cold
+			end
+			if self:Heroic() then self:UnregisterUnitEvent("UNIT_AURA", "player") end
+		elseif mobId == 69134 then -- Kazra'jin
+		elseif mobId == 69078 then -- Sandcrawler
 		end
-		if self:Heroic() then self:UnregisterUnitEvent("UNIT_AURA", "player") end
-	elseif mobId == 69134 then -- Kazra'jin
-	elseif mobId == 69078 then -- Sandcrawler
 	end
 end
 

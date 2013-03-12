@@ -44,7 +44,8 @@ if L then
 	L.assault_stun = "Танк оглушен!"
 	L.assault_message = "Натиск"
 	L.full_power = "Полная энергия"
-	L.hp_to_go_power = "HP осталось: %d%% - Энергия: %d"
+	L.hp_to_go_power = "%d%% HP to go! (Power: %d)"
+	L.hp_to_go_fullpower = "%d%% HP to go! (Full power)"
 end
 
 L = BigWigs:NewBossLocale("Tortos", "ruRU")

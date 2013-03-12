@@ -41,7 +41,8 @@ if L then
 	L.assault_stun = "Tank étourdi !"
 	L.full_power = "Puissance maximale"
 	L.assault_message = "Assaut"
-	L.hp_to_go_power = "PV à faire : %d%% - Puissance : %d"
+	L.hp_to_go_power = "%d%% PV à faire ! (Puissance : %d)"
+	L.hp_to_go_fullpower = "%d%% PV à faire ! (Puissance maximale)"
 
 	L.custom_on_markpossessed = "Marquage du boss possédé"
 	L.custom_on_markpossessed_desc = "Marque le boss possédé à l'aide d'une icône de crâne."

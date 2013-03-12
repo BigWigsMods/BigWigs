@@ -42,7 +42,8 @@ if L then
 	L.assault_stun = "¡Tanque aturdido!"
 	L.full_power = "Poder máximo"
 	L.assault_message = "Asalto"
-	L.hp_to_go_power = "HP para acabar: %d%% - Poder: %d"
+	L.hp_to_go_power = "¡%d%% HP para acabar! (Poder: %d)"
+	L.hp_to_go_fullpower = "¡%d%% HP para acabar! (Poder máximo)"
 
 	L.custom_on_markpossessed = "Marcar jefe poseído"
 	L.custom_on_markpossessed_desc = "Marca al jefe poseído con una calavera."
