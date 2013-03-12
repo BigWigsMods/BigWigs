@@ -55,13 +55,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{134916, "TANK", "FLASH"}, 135095, {135150, "FLASH"},
+		{134912, "TANK", "FLASH"}, 135095, {135150, "FLASH"},
 		{136478, "TANK"}, {136543, "PROXIMITY"}, 136850,
 		136889,
 		"stages", {135695, "PROXIMITY", "SAY"}, {-7239, "PROXIMITY"}, {136295, "SAY"}, -7242, "conduit_abilities",
 		"berserk", "bosskill",
 	}, {
-		[134916] = -7178,
+		[134912] = -7178,
 		[136478] = -7192,
 		[136889] = -7209,
 		["stages"] = "general",
@@ -98,7 +98,7 @@ function mod:OnEngage()
 	proximityOpen = nil
 	phase = 1
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
-	self:CDBar(134916, 42) -- Decapitate
+	self:CDBar(134912, 42) -- Decapitate
 	self:CDBar(135095, 25) -- Thunderstruck
 	if UnitBuff("boss1", self:SpellName(135681)) then
 		self:OpenProximity(-7239, 8) -- Diffusion Chain
@@ -176,7 +176,7 @@ end
 
 function mod:Intermission(args)
 	self:CancelAllTimers()
-	self:StopBar(134916) -- Decapitate
+	self:StopBar(134912) -- Decapitate
 	self:StopBar(135095) -- Thunderstruck
 	self:StopBar(136850) -- Lightning Whip
 	self:StopBar(136543) -- Summon Ball Lightning
@@ -240,10 +240,10 @@ function mod:Thunderstruck(args)
 end
 
 function mod:Decapitate(args)
-	self:CDBar(134916, 52)
-	self:TargetMessage(134916, args.destName, "Personal", "Info")
+	self:CDBar(args.spellId, 52)
+	self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
 	if self:Me(args.destGUID) then
-		self:Flash(134916)
+		self:Flash(args.spellId)
 	end
 end
 
