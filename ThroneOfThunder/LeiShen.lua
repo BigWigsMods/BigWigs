@@ -338,7 +338,7 @@ do
 	end
 	function mod:StaticShockApplied(args)
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL["say"]:format(L["static_shock_message"]))
+			self:Say(args.spellId, L["static_shock_message"])
 		end
 		staticShockList[#staticShockList+1] = args.destName
 		if not scheduled then
