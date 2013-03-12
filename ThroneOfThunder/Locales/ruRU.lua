@@ -35,16 +35,16 @@ end
 L = BigWigs:NewBossLocale("Council of Elders", "ruRU")
 if L then
 	L.priestess_adds = "Помощники Жрицы"
-	L.priestess_adds_desc = "Предупреждать о всех типах помощников верховной жрицы Мар'ли."
+	L.priestess_adds_desc = "Предупреждать о всех типах помощников Верховной жрицы Мар'ли."
 	L.priestess_adds_message = "Помощник Жрицы"
-
-	L.assault_stun = "Танк оглушен!"
-	L.full_power = "Полная энергия"
-	L.assault_message = "Выпад"
-	L.hp_to_go_power = "HP осталось: %d%% - Энергия: %d"
 
 	L.custom_on_markpossessed = "Помечать одержимого босса"
 	L.custom_on_markpossessed_desc = "На одержимого босса ставится череп."
+
+	L.assault_stun = "Танк оглушен!"
+	L.assault_message = "Натиск"
+	L.full_power = "Полная энергия"
+	L.hp_to_go_power = "HP осталось: %d%% - Энергия: %d"
 end
 
 L = BigWigs:NewBossLocale("Tortos", "ruRU")
@@ -59,7 +59,7 @@ end
 
 L = BigWigs:NewBossLocale("Megaera", "ruRU")
 if L then
-	L.breaths = "Дыхание"
+	L.breaths = "Дыхания"
 	L.breaths_desc = "Предупреждения, связанные со всеми типами дыхания."
 
 	L.arcane_adds = "Тайные помощники"
@@ -85,11 +85,11 @@ end
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "ruRU")
 if L then
 	L.red_spawn_trigger = "Инфракрасный свет высвечивает багровый туман!"
-	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Fog!"
-	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
+	L.blue_spawn_trigger = "Синий свет высвечивает лазурный туман!"
+	L.yellow_spawn_trigger = "Яркий свет высвечивает лузарный туман!"
 
-	L.adds = "Reveal Adds"
-	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
+	L.adds = "Найденные помощники"
+	L.adds_desc = "Предупреждать, когда вы находите Багровый, Янтарный или Лазурный туманы; и сколько ещё Багровых туманов осталось."
 
 	L.custom_off_ray_controllers = "Операторы луча"
 	L.custom_off_ray_controllers_desc = "Использовать %s%s%s метки для обозначения людей, контроллирующих лучи."
@@ -111,22 +111,23 @@ end
 
 L = BigWigs:NewBossLocale("Dark Animus", "ruRU")
 if L then
-	-- L.engage_trigger = "The orb explodes!"
+	L.engage_trigger = "Сфера взрывается!"
 	L.slam_message = "Удар"
 end
 L = BigWigs:NewBossLocale("Iron Qon", "ruRU")
 if L then
-	L.molten_energy = "Огненная энергия"
+	L.molten_energy = "Энергия огня"
 
-	L.overload_casting = "Чтение Огненной перегрузки"
-	L.overload_casting_desc = "Предупреждение для чтения Огненной перегрузки"
+	L.overload_casting = "Чтение Раскаленной силы"
+	L.overload_casting_desc = "Предупреждать, когда идет чтение Раскаленной силы"
 
-	-- L.arcing_lightning_cleared = "Raid is clear of Arcing Lightning"
+	L.arcing_lightning_cleared = "Рейд свободен от Дуговой молнии"
 end
 L = BigWigs:NewBossLocale("Twin Consorts", "ruRU")
 if L then
-	-- L.barrage_fired = "Barrage fired!"
-	-- L.last_phase_yell_trigger = "Just this once..."
+	L.last_phase_yell_trigger = "Только один раз..."
+
+	L.barrage_fired = "Обстрел закончен!"
 end
 L = BigWigs:NewBossLocale("Lei Shen", "ruRU")
 if L then
@@ -136,9 +137,9 @@ if L then
 
 	L.intermission = "Перерыв"
 	L.overcharged_message = "Оглушающий AoE импульс"
-	L.static_shock_message = "Делящийся AoE урон"
-	L.diffusion_add_message = "Рассеивающие помощники"
-	L.diffusion_chain_message = "Скоро рассеивающий помощник - Разбегитесь!"
+	L.static_shock_message = "Разделяемый AoE урон"
+	L.diffusion_add_message = "Цепные помощники"
+	L.diffusion_chain_message = "Скоро цепные помощники - РАЗБЕГАЙТЕСЬ!"
 end
 L = BigWigs:NewBossLocale("Ra-den", "ruRU")
 if L then
