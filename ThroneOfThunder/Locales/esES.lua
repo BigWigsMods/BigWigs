@@ -68,8 +68,8 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "esES")
 if L then
-	L.lower_hatch_trigger = "The eggs in one of the lower nests begin to hatch!"
-	L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch!"
+	L.lower_hatch_trigger = "¡Los huevos de uno de los nidos inferiores empiezan a abrirse!"
+	L.upper_hatch_trigger = "¡Los huevos de uno de los nidos superiores empiezan a abrirse!"
 
 	L.nest = "Nidos"
 	L.nest_desc = "Avisos relacionados con los nidos. |cffff0000¡No cambies esto para desactivar los avisos, si no estás asignado para gestionar los nidos!|r"
