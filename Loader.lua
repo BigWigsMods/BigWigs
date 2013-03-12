@@ -510,7 +510,7 @@ do
 
 	loaderUtilityFrame.timer = loaderUtilityFrame:CreateAnimationGroup()
 	loaderUtilityFrame.timer:SetScript("OnFinished", function()
-		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:" or "VRA:")..BIGWIGS_RELEASE_REVISION, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
+		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:%d" or "VRA:%d"):format(BIGWIGS_RELEASE_REVISION), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
 	end)
 	loaderUtilityFrame.timer:CreateAnimation():SetDuration(5)
 
@@ -660,7 +660,7 @@ do
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
 			self:ZONE_CHANGED_NEW_AREA()
-			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:" or "VQA:")..BIGWIGS_RELEASE_REVISION, groupType == 3 and "INSTANCE_CHAT" or "RAID")
+			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), groupType == 3 and "INSTANCE_CHAT" or "RAID")
 		elseif grouped and not groupType then
 			grouped = nil
 			wipe(usersRelease)
