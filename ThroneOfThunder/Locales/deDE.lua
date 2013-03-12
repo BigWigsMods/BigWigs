@@ -86,10 +86,10 @@ L = BigWigs:NewBossLocale("Durumu the Forgotten", "deDE")
 if L then
 	L.red_spawn_trigger = "Das Infrarotlicht offenbart einen purpurroten Nebel!"
 	L.blue_spawn_trigger = "Der blaue Strahl offenbart einen azurblauen Nebel!"
-	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
+	L.yellow_spawn_trigger = "Das helle Licht offenbart einen goldgelben Nebel!"
 
-	L.adds = "Reveal Adds"
-	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and how many Crimson Fogs remain."
+	L.adds = "Erscheinende Adds"
+	L.adds_desc = "Warnungen für das Erscheinen der purpurroten, goldgelben und azurblauen Nebel. Gibt an, wie viele purpurrote Nebel verbleiben."
 
 	L.custom_off_ray_controllers = "Kontrollierer der Lichtstrahlen"
 	L.custom_off_ray_controllers_desc = "Verwenden der %s%s%s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."
@@ -97,7 +97,7 @@ if L then
 	L.rays_spawn = "Lichtstrahlen erscheinen"
 	L.red_add = "|cffff0000Rotes|r Add"
 	L.blue_add = "|cff0000ffBlaues|r Add"
-	L.yellow_add = "|cffffff00Gelber|r Add"
+	L.yellow_add = "|cffffff00Gelbes|r Add"
 	L.death_beam = "Desintegrationsstrahl"
 	L.red_beam = "|cffff0000Roter|r Strahl"
 	L.blue_beam = "|cff0000ffBlauer|r Strahl"
@@ -127,8 +127,9 @@ end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "deDE")
 if L then
-	L.barrage_fired = "Beschuss abgefeuert!"
 	L.last_phase_yell_trigger = "Aber nur dieses eine Mal..."
+
+	L.barrage_fired = "Beschuss abgefeuert!"
 end
 
 L = BigWigs:NewBossLocale("Lei Shen", "deDE")
