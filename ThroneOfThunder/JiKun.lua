@@ -189,7 +189,7 @@ end
 
 do
 	local function flightMessage(remainingTime)
-		mod:Message(-7360, "Personal", remainingTime < 5 and "Info", CL["flight_over"]:format(remainingTime), 133755)
+		mod:Message(-7360, "Personal", remainingTime < 5 and "Info", L["flight_over"]:format(remainingTime), 133755)
 	end
 	function mod:Flight(args)
 		if not self:Me(args.destGUID) then return end
