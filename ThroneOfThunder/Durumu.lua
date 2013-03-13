@@ -307,7 +307,7 @@ function mod:Deaths(args)
 			mark(blueController, 0)
 			mark(redController, 0)
 		else
-			self:Message("adds", "Urgent", nil, CL["count"]:format(L["red_add"], redAddLeft))
+			self:Message("adds", "Urgent", nil, CL["count"]:format(L["red_add"], redAddLeft), 136154)
 		end
 	end
 end
