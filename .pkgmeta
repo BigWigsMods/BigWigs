@@ -30,3 +30,6 @@ ignore:
 	- globals.sh
 	- globals.lua
 	- Options/scripts
+	- Sounds/Long.wav
+	- Sounds/Alarm.wav
+	- Sounds/Alert.wav
