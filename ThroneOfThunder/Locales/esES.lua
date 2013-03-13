@@ -88,10 +88,10 @@ L = BigWigs:NewBossLocale("Durumu the Forgotten", "esES")
 if L then
 	L.red_spawn_trigger = "¡La Luz infrarroja revela una niebla carmesí!"
 	L.blue_spawn_trigger = "¡Los Rayos azules revelan una niebla azur!"
-	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
+	L.yellow_spawn_trigger = "¡La Luz brillante revela una niebla ámbar!" -- verificar
 
-	L.adds = "Reveal Adds"
-	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
+	L.adds = "Adds revelados"
+	L.adds_desc = "Avisa cuando revelas una niebla carmesí, ámbar o azur y cuantas nieblas carmesies quedan."
 
 	L.custom_off_ray_controllers = "Controladores de rayo"
 	L.custom_off_ray_controllers_desc = "Usa las marcas de raid %s%s%s para marcar gente que controlará las posiciones y movimientos cuando aparecen los rayos."
