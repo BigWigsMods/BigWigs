@@ -43,8 +43,8 @@ if L then
 	L.assault_stun = "Difensore Stordito!"
 	L.full_power = "Pieno Potere"
 	L.assault_message = "Assalto"
-	L.hp_to_go_power = "%d%% HP to go! (Power: %d)"
-	L.hp_to_go_fullpower = "%d%% HP to go! (Full power)"
+	L.hp_to_go_power = "Punti Vita alla Fine %d%%! (Potenza: %d)"
+	L.hp_to_go_fullpower = "Punti Vita alla Fine %d%%! (Piena Potenza)"
 
 	L.custom_on_markpossessed = "Evidenzia Boss Posseduto"
 	L.custom_on_markpossessed_desc = "Evidenzia il Boss posseduto con un teschio."
