@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.storm_duration = "Tormenta de relámpagos duración"
 	L.storm_duration_desc = "Una barra a parte avisa para la duración del casteo de la Tormenta de relámpagos."
-	L.storm_short = "Storm"
+	L.storm_short = "Tormenta"
 
 	L.in_water = "¡Estás en el agua!"
 end
