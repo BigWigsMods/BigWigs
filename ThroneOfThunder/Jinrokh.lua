@@ -75,7 +75,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(137313, 93) -- Lightning Storm
+	self:Bar(137313, 93, L["storm_short"]) -- Lightning Storm
 	self:Bar(137175, 30) -- Thundering Throw
 	self:CDBar(137162, 13) -- Static Burst
 	self:Berserk(self:Heroic() and 360 or 540)
