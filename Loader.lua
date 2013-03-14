@@ -611,6 +611,9 @@ do
 		-- Module loading
 		if enableZones[id] then
 			if enableZones[id] == "world" then
+				if BigWigs and not UnitIsDeadOrGhost("player") then
+					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first
+				end
 				loaderUtilityFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 				self:PLAYER_TARGET_CHANGED()
 			else
@@ -634,11 +637,9 @@ do
 			end
 		else
 			loaderUtilityFrame:UnregisterEvent("PLAYER_TARGET_CHANGED")
-		end
-
-		-- Disabling
-		if not enableZones[id] and not UnitIsDeadOrGhost("player") and BigWigs then
-			BigWigs:Disable()
+			if BigWigs and not UnitIsDeadOrGhost("player") then
+				BigWigs:Disable() -- Alive in a non-enable zone, disable
+			end
 		end
 
 		-- Lacking zone modules
