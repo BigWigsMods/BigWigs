@@ -365,6 +365,7 @@ end
 
 function mod:Puncture(args)
 	self:StackMessage(-7078, args.destName, args.amount, "Urgent")
+	self:CDBar(-7078, 10.9)
 end
 
 function mod:DireCall(args)
