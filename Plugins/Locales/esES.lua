@@ -26,6 +26,7 @@ L["Temporarily removes all other bars (except this one) and associated messages.
 L["Disable"] = "Desactivar"
 L["Permanently disables the boss encounter ability option that spawned this bar."] = "Desactiva permanentemente la habilidad del encuentro para que no de opción a que reaparezca esta barra"
 
+--L["Emphasize at... (seconds)"] = "Emphasize at... (seconds)"
 L["Scale"] = "Escala"
 L["Grow upwards"] = "Crecer ascendente"
 L["Toggle bars grow upwards/downwards from anchor."] = "Alterna entre crecer las barras ascendente/descendente desde el anclaje."

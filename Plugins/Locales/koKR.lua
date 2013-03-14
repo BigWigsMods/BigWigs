@@ -27,6 +27,7 @@ L["Temporarily removes all other bars (except this one) and associated messages.
 L["Disable"] = "사용안함"
 L["Permanently disables the boss encounter ability option that spawned this bar."] = "해당 바를 교전 모듈에서 체크 해제합니다.(다시 표시하고 싶다면 교전 모듈에서 해당 스킬 경고를 체크하시길 바랍니다.)"
 
+--L["Emphasize at... (seconds)"] = "Emphasize at... (seconds)"
 L["Scale"] = "크기"
 L["Grow upwards"] = "생성 방향"
 L["Toggle bars grow upwards/downwards from anchor."] = "바의 생성 방향을 위/아래로 전환합니다."

@@ -263,6 +263,7 @@ plugin.defaultDB = {
 	emphasizeScale = 1.5,
 	emphasizeGrowup = nil,
 	emphasizeRestart = true,
+	emphasizeTime = 11,
 	BigWigsAnchor_width = 200,
 	BigWigsEmphasizeAnchor_width = 300,
 	interceptMouse = nil,
@@ -573,10 +574,19 @@ do
 								desc = L["Toggle bars grow upwards/downwards from anchor."],
 								order = 4,
 							},
+							emphasizeTime = {
+								type = "range",
+								name = L["Emphasize at... (seconds)"],
+								order = 5,
+								min = 6,
+								max = 20,
+								step = 1,
+								width = "full",
+							},
 							emphasizeScale = {
 								type = "range",
 								name = L["Scale"],
-								order = 5,
+								order = 6,
 								min = 0.2,
 								max = 2.0,
 								step = 0.1,
@@ -1099,7 +1109,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	bar:SetIcon(db.icon and icon or nil)
 	bar:SetScale(db.scale)
 	bar:SetFill(db.fill)
-	if db.emphasize and time < 10.5 then
+	if db.emphasize and time < db.emphasizeTime then
 		self:EmphasizeBar(bar)
 	end
 	if db.interceptMouse and not db.onlyInterceptOnKeypress then
@@ -1119,7 +1129,7 @@ do
 	empUpdate = CreateFrame("Frame"):CreateAnimationGroup()
 	empUpdate:SetScript("OnLoop", function()
 		for k in next, normalAnchor.bars do
-			if k.remaining < 10 and not k:Get("bigwigs:emphasized") then
+			if k.remaining < db.emphasizeTime and not k:Get("bigwigs:emphasized") then
 				plugin:EmphasizeBar(k)
 				dirty = true
 			end
