@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.storm_duration = "Gewittersturm Dauer"
 	L.storm_duration_desc = "Eine separate Leiste für die Dauer von Gewittersturm"
-	L.storm_short = "Storm"
+	L.storm_short = "Sturm"
 
 	L.in_water = "Du stehst im Wasser!"
 end
