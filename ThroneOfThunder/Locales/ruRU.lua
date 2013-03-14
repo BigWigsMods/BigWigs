@@ -3,6 +3,7 @@ if not L then return end
 if L then
 	L.storm_duration = "Длительность Грозы"
 	L.storm_duration_desc = "Отдельная полоса предупреждения для длительности чтения Грозы."
+	L.storm_short = "Storm"
 
 	L.in_water = "Вы в воде!"
 end
