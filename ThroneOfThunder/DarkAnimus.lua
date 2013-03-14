@@ -1,6 +1,5 @@
 --[[
 TODO:
-	Crimson Wake needs to be switched to CLEU ASAP
 	could be fun to place 2nd icon for furthest target for Matter Swap, not sure about usefullness, revisit during 25 man testing
 	could maybe used UNIT_POWER to warn SOON for abilities that only enable after a certain amount of power
 	does not seem possible right now ( 10 H PTR ) but would be nice if we could tell accurately how many active golems are there when boss enters the fight
@@ -68,7 +67,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "MatterSwapApplied", 138609)
 	-- Large Anima Golem
 	self:Log("SPELL_DAMAGE", "CrimsonWake", 138485)
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- XXX Crimson Wake needs to be switched to CLEU ASAP
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- looks like this is forever emote
 
 	self:Death("Win", 69427)
 end
@@ -90,22 +89,12 @@ function mod:FullPower(args)
 	self:Flash(args.spellId)
 end
 
-do
-	local _, class = UnitClass("player")
-	local function isCaster()
-		local power = UnitPowerType("player")
-		if power ~= 0 then return end
-		if mod:Healer() then return true end
-		return true
-	end
-
-	function mod:InterruptingJolt(args)
-		local caster = isCaster()
-		local color = caster and "Personal" or "Attention"
-		local sound = caster and "Long" or nil
-		self:Message(args.spellId, color, sound)
-		self:CDBar(args.spellId, 18)
-		if caster then self:Flash(args.spellId) end
+function mod:InterruptingJolt(args)
+	local caster = UnitPowerType("player") == 0 or mod:Healer()
+	self:Message(args.spellId, caster and "Personal" or "Attention", caster and "Long")
+	self:CDBar(args.spellId, 18)
+	if caster then
+		self:Flash(args.spellId)
 	end
 end
 
@@ -132,7 +121,7 @@ end
 function mod:BossEngage()
 	self:CheckBossStatus()
 	if not self.isEngaged then return end -- XXX is this even needed?
-	if 69427 == self:MobId(UnitGUID("boss1")) then
+	if self:MobId(UnitGUID("boss1")) == 69427 then
 		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		self:StopWipeCheck()
@@ -154,7 +143,7 @@ end
 
 function mod:MatterSwapRemoved(args)
 	self:PrimaryIcon(args.spellId)
-	self:StopBar(CL["other"]:format(args.spellName, args.destName))
+	self:StopBar(args.spellName, args.destName)
 end
 
 function mod:MatterSwapApplied(args)
@@ -164,7 +153,7 @@ function mod:MatterSwapApplied(args)
 		self:Flash(args.spellId)
 	elseif self:Dispeller("magic") then
 		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", nil, nil, true)
-		self:Bar(args.spellId, 12, CL["other"]:format(args.spellName, args.destName))
+		self:TargetBar(args.spellId, 12, args.destName)
 	end
 end
 
