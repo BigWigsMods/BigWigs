@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.storm_duration = "闪电风暴持续"
 	L.storm_duration_desc = "当闪电风暴施放时显示分离持续警报条。"
-	L.storm_short = "Storm"
+	L.storm_short = "闪电风暴"
 
 	L.in_water = ">你< 水中！"
 end
@@ -45,8 +45,8 @@ if L then
 	L.assault_stun = "坦克眩晕"
 	L.assault_message = "冰寒突击！"
 	L.full_power = "全能量"
-	L.hp_to_go_power = "%d%% HP to go! (Power: %d)"
-	L.hp_to_go_fullpower = "%d%% HP to go! (Full power)"
+	L.hp_to_go_power = "%d%% 生命！（能量：%d）"
+	L.hp_to_go_fullpower = "%d%% 生命！（全能量）"
 end
 
 L = BigWigs:NewBossLocale("Tortos", "zhCN")
@@ -81,7 +81,7 @@ if L then
 	L.upper = "|cff008000上层|r"
 	L.lower = "|cffff0000下层|r"
 	L.add = "增援"
-	L.big_add_message = "Big add at %s"
+	L.big_add_message = "大量增援 >%s<！"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "zhCN")
@@ -90,8 +90,8 @@ if L then
 	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Fog!"
 	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
 
-	L.adds = "Reveal Adds"
-	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
+	L.adds = "显形增援"
+	L.adds_desc = "当猩红、琥珀和碧蓝雾行兽显形和猩红雾行兽剩余时发出警报。"
 
 	L.custom_off_ray_controllers = "光线控制"
 	L.custom_off_ray_controllers_desc = "使用%s%s%s团队标记控制光线增援和移动的玩家。"
@@ -99,11 +99,11 @@ if L then
 	L.rays_spawn = "光线出现"
 	L.red_add = "|cffff0000红色|r增援"
 	L.blue_add = "|cff0000ff蓝色|r增援"
-	L.yellow_add = "|cffffff00Yellow|r add"
+	L.yellow_add = "|cffffff00黄色|r增援"
 	L.death_beam = "衰变光束"
-	L.red_beam = "|cffff0000Red|r beam"
-	L.blue_beam = "|cff0000ffBlue|r beam"
-	L.yellow_beam = "|cffffff00Yellow|r beam"
+	L.red_beam = "|cffff0000红色|r光束"
+	L.blue_beam = "|cff0000ff蓝色|r光束"
+	L.yellow_beam = "|cffffff00黄色|r光束"
 end
 
 L = BigWigs:NewBossLocale("Primordius", "zhCN")
@@ -129,13 +129,13 @@ end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "zhCN")
 if L then
-	L.barrage_fired = "弹幕！"
 	L.last_phase_yell_trigger = "Just this once..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
+
+	L.barrage_fired = "弹幕！"
 end
 
 L = BigWigs:NewBossLocale("Lei Shen", "zhCN")
 if L then
-	L.conduit_abilities = "导管技能"
 	L.conduit_abilities_desc = "导管特定技能冷却计时条。"
 	L.conduit_abilities_message = "下一导管技能！"
 

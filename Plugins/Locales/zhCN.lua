@@ -26,7 +26,7 @@ L["Temporarily removes all other bars (except this one) and associated messages.
 L["Disable"] = "禁用"
 L["Permanently disables the boss encounter ability option that spawned this bar."] = "永久禁用此首领战斗技能计时条选项。"
 
---L["Emphasize at... (seconds)"] = "Emphasize at... (seconds)"
+L["Emphasize at... (seconds)"] = "…（秒）后醒目"
 L["Scale"] = "缩放"
 L["Grow upwards"] = "向上成长"
 L["Toggle bars grow upwards/downwards from anchor."] = "切换计时条在锚点向上或向下成长。"
