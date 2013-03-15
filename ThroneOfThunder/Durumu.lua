@@ -162,7 +162,7 @@ end
 do
 	-- The tracking spells are cast when first going active (10s after emote) and when the beam jumps after someone dies.
 	-- Even though they're SPELL_CAST_SUCCESS, they don't provide the target ;[
-	local function checkDebuff(spellName, spellId)
+	local function findDebuff(spellName, spellId)
 		local found
 		for i=1, GetNumGroupMembers() do
 			local unit = ("raid%d"):format(i)
@@ -172,13 +172,13 @@ do
 				found = true
 				if spellId == 139202 then
 					if blueController ~= name then
-						mod:TargetMessage(-6891, name, "Attention", "Alert", L["blue_beam"], spellId)
+						mod:TargetMessage(-6891, name, "Neutral", "Alert", L["blue_beam"], spellId)
 						mark(name, 6)
 						blueController = name
 					end
 				elseif spellId == 139204 then
 					if redController ~= name then
-						mod:TargetMessage(-6891, name, "Attention", "Alert", L["red_beam"], spellId)
+						mod:TargetMessage(-6891, name, "Neutral", "Alert", L["red_beam"], spellId)
 						mark(name, 7)
 						redController = name
 					end
@@ -187,12 +187,12 @@ do
 			end
 		end
 		if not found then -- just in case
-			mod:ScheduleTimer(checkDebuff, 0.1, spellName, spellId)
+			mod:ScheduleTimer(findDebuff, 0.1, spellName, spellId)
 		end
 	end
 
 	function mod:Tracking(args)
-		self:ScheduleTimer(checkDebuff, 0.1, args.spellName, args.spellId)
+		self:ScheduleTimer(findDebuff, 0.1, args.spellName, args.spellId)
 	end
 end
 
@@ -220,13 +220,13 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 		redController = target
 		mark(target, 7)
 		if UnitIsUnit("player", target) then
-			self:Message(-6891, "Personal", "Alert", CL["you"]:format(L["red_beam"]), 134123)
+			self:Message(-6891, "Personal", "Alert", CL["you"]:format(L["red_beam"]), 139204)
 		end
 	elseif msg:find("134122") then -- Blue
 		blueController = target
 		mark(target, 6)
 		if UnitIsUnit("player", target) then
-			self:Message(-6891, "Personal", "Alert", CL["you"]:format(L["blue_beam"]), 134122)
+			self:Message(-6891, "Personal", "Alert", CL["you"]:format(L["blue_beam"]), 139202)
 		end
 	elseif msg:find("133795") then -- Life Drain (gets target faster than CLEU)
 		self:TargetMessage(133798, target, "Important", "Alert")
