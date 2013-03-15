@@ -172,13 +172,13 @@ do
 				found = true
 				if spellId == 139202 then
 					if blueController ~= name then
-						mod:TargetMessage(-6891, name, "Neutral", "Alert", L["blue_beam"], spellId)
+						mod:TargetMessage(-6891, name, "Neutral", "Warning", L["blue_beam"], spellId, true)
 						mark(name, 6)
 						blueController = name
 					end
 				elseif spellId == 139204 then
 					if redController ~= name then
-						mod:TargetMessage(-6891, name, "Neutral", "Alert", L["red_beam"], spellId)
+						mod:TargetMessage(-6891, name, "Neutral", "Warning", L["red_beam"], spellId, true)
 						mark(name, 7)
 						redController = name
 					end
