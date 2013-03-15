@@ -9,7 +9,8 @@ mod:RegisterEnableMob(68036)
 --------------------------------------------------------------------------------
 -- Locals
 --
-local redAddLeft = 3
+local redAddDead = 0
+local lifeDrainCasts = 0
 local lingeringGaze = {}
 local openedForMe = nil
 local blueController, redController
@@ -55,7 +56,7 @@ function mod:GetOptions()
 	return {
 		-6889,
 		"custom_off_ray_controllers",
-		{133767, "TANK"}, {133765, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {-6905, "FLASH", "SAY"}, {-6891, "FLASH"}, "adds",
+		{133767, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {-6905, "FLASH", "SAY"}, {-6891, "FLASH"}, "adds",
 		{133798, "ICON"}, -6882, 140502,
 		"berserk", "bosskill",
 	}, {
@@ -71,8 +72,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "IceWall", 134587)
 	self:Log("SPELL_PERIODIC_DAMAGE", "EyeSoreDamage", 134755)
 	self:Log("SPELL_PERIODIC_MISSED", "EyeSoreDamage", 134755)
-	self:Log("SPELL_AURA_REMOVED", "LifeDrainRemoved", 133798)
-	self:Log("SPELL_AURA_APPLIED", "LifeDrainApplied", 133798)
+	self:Log("SPELL_CAST_SUCCESS", "LifeDrainCast", 133795)
+	self:Log("SPELL_AURA_APPLIED", "LifeDrainStunApplied", 137727)
+	self:Log("SPELL_AURA_REMOVED", "LifeDrainStunRemoved", 137727)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LifeDrainDose", 133798)
 	self:Log("SPELL_DAMAGE", "LingeringGazeDamage", 134044)
 	self:Log("SPELL_AURA_REMOVED", "LingeringGazeRemoved", 134626)
@@ -85,12 +87,12 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
-	self:Death("Deaths", 69052, 69050) -- Blue add, Red add
+	self:Death("Deaths", 69050) -- Crimson Fog
 	self:Death("Win", 68036) -- Boss
 end
 
 function mod:OnEngage()
-	self:Berserk(600) -- Confirmed 25N
+	self:Berserk(600)
 	self:CDBar(134626, 15) -- Lingering Gaze
 	self:Bar(-6905, 33) -- Force of Will
 	self:Bar(-6891, 41) -- Light Spectrum
@@ -98,9 +100,10 @@ function mod:OnEngage()
 	if self:Heroic() then
 		self:Bar(-6889, 127) -- Ice Wall
 	end
+	lifeDrainCasts = 0
 	wipe(lingeringGaze)
 	openedForMe = nil
-	redAddLeft = 3
+	redAddDead = 0
 end
 
 --------------------------------------------------------------------------------
@@ -130,18 +133,29 @@ do
 	end
 end
 
-function mod:LifeDrainRemoved(args)
-	self:PrimaryIcon(args.spellId)
+function mod:LifeDrainCast(args)
+	lifeDrainCasts = lifeDrainCasts + 1
+	self:Bar(133798, 15, CL["cast"]:format(args.spellName))
+	self:DelayedMessage(133798, 15, "Positive", CL["over"]:format(args.spellName))
+	if lifeDrainCasts == 1 then
+		self:CDBar(133798, 50)
+	else
+		self:CDBar(133798, 41) -- XXX 41-46 not sure why this one varies, doesn't look like its based on end of color
+	end
 end
 
-function mod:LifeDrainApplied(args)
-	self:PrimaryIcon(args.spellId, args.destName)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Alert")
+function mod:LifeDrainStunApplied(args)
+	self:PrimaryIcon(133798, args.destName)
+	self:TargetMessage(133798, args.destName, "Important", "Alert", true)
+end
+
+function mod:LifeDrainStunRemoved(args)
+	self:PrimaryIcon(133798)
 end
 
 function mod:LifeDrainDose(args)
 	if args.amount % 2 == 0 or args.amount > 4 then -- assuming you want to be soaking for ~5s each
-		self:StackMessage(args.spellId, args.destName, args.amount, "Important", "Alert")
+		self:StackMessage(133798, args.destName, args.amount, "Important")
 	end
 end
 
@@ -164,9 +178,7 @@ do
 		if player and player ~= blueController then
 			blueController = player
 			mark(player, 6)
-			if UnitIsUnit("player", player) then
-				self:Message(-6891, "Neutral", "Alert", CL["you"]:format(L["blue_beam"]), args.spellId)
-			end
+			self:TargetMessage(-6891, player, "Attention", "Alert", L["blue_beam"], args.spellId, true)
 		end
 	end
 
@@ -175,9 +187,7 @@ do
 		if player and player ~= redController then
 			redController = player
 			mark(player, 7)
-			if UnitIsUnit("player", player) then
-				self:Message(-6891, "Neutral", "Alert", CL["you"]:format(L["red_beam"]), args.spellId)
-			end
+			self:TargetMessage(-6891, player, "Attention", "Alert", L["red_beam"], args.spellId, true)
 		end
 	end
 end
@@ -190,7 +200,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 	if msg:find("134124") then -- Yellow
 		self:StopBar(-6905) -- Force of Will
 
-		redAddLeft = 3
+		redAddDead = 0
 		if self:Heroic() then
 			self:Bar(-6891, 80, 137747) -- Obliterate
 		end
@@ -200,23 +210,22 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 		self:ScheduleTimer(mark, 10, target, 0)
 		mark(target, 1)
 		if UnitIsUnit("player", target) then
-			self:Message(-6891, "Neutral", "Alert", CL["you"]:format(L["yellow_beam"]), 134124)
+			self:Message(-6891, "Personal", "Alert", CL["you"]:format(L["yellow_beam"]), 134124)
 		end
 	elseif msg:find("134123") then -- Red
 		redController = target
 		mark(target, 7)
 		if UnitIsUnit("player", target) then
-			self:Message(-6891, "Neutral", "Alert", CL["you"]:format(L["red_beam"]), 134123)
+			self:Message(-6891, "Personal", "Alert", CL["you"]:format(L["red_beam"]), 134123)
 		end
 	elseif msg:find("134122") then -- Blue
 		blueController = target
 		mark(target, 6)
 		if UnitIsUnit("player", target) then
-			self:Message(-6891, "Neutral", "Alert", CL["you"]:format(L["blue_beam"]), 134122)
+			self:Message(-6891, "Personal", "Alert", CL["you"]:format(L["blue_beam"]), 134122)
 		end
 	elseif msg:find("133795") then -- Life Drain (gets target faster than CLEU)
 		self:TargetMessage(133798, target, "Important", "Alert")
-		self:Bar(133798, 20, CL["cast"]:format(self:SpellName(133798))) -- 3s cast + 1.8ish delay + 15s channel
 		self:PrimaryIcon(133798, target)
 	elseif msg:find(L["red_spawn_trigger"]) then
 		self:Message("adds", "Urgent", UnitIsUnit("player", redController) and "Warning", L["red_add"], 136154)
@@ -236,9 +245,11 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 		end
 		self:CDBar(-6905, 20)
 	elseif msg:find("134169") then -- Disintegration Beam
+		lifeDrainCasts = 0
+		self:CDBar(133798, 66) -- Life Drain
 		self:CDBar(134626, 76) -- Lingering Gaze
 		self:CDBar(-6905, 78) -- Force of Will
-		self:Bar(-6882, 60, CL["cast"]:format(L["death_beam"])) -- Exactly 60 sec, a good place to start other timers
+		self:Bar(-6882, 63, CL["cast"]:format(L["death_beam"])) -- Exactly 60 sec, a good place to start other timers
 		self:Bar(-6882, 191, L["death_beam"])
 		self:Message(-6882, "Attention", nil, L["death_beam"])
 	end
@@ -291,7 +302,7 @@ function mod:LingeringGazeApplied(args)
 end
 
 function mod:HardStare(args)
-	self:Bar(args.spellId, 12)
+	self:ScheduleTimer("Bar", 1, 133767, 12) -- end the bar when the cast ends
 end
 
 function mod:SeriousWound(args)
@@ -300,14 +311,13 @@ end
 
 function mod:Deaths(args)
 	if args.mobId == 69050 then -- Red add
-		redAddLeft = redAddLeft - 1
-		if redAddLeft == 0 then
-			self:StopBar(137747)
+		redAddDead = redAddDead + 1
+		self:Message("adds", "Positive", redAddDead == 3 and "Info", CL["add_killed"]:format(redAddDead, 3), 136154)
+		if redAddDead == 3 then
+			self:StopBar(137747) -- Obliterate (heroic)
 			self:CDBar(-6905, 20) -- Force of Will
 			mark(blueController, 0)
 			mark(redController, 0)
-		else
-			self:Message("adds", "Urgent", nil, CL["count"]:format(L["red_add"], redAddLeft), 136154)
 		end
 	end
 end
