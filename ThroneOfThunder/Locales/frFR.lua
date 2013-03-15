@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.storm_duration = "Durée de Tempête de foudre"
 	L.storm_duration_desc = "Une barre d'alerte à part pour la durée d'incantation de Tempête de foudre."
-	L.storm_short = "Storm"
+	L.storm_short = "Tempête"
 
 	L.in_water = "Vous êtes dans l'eau !"
 end
@@ -42,8 +42,8 @@ if L then
 	L.assault_stun = "Tank étourdi !"
 	L.full_power = "Puissance maximale"
 	L.assault_message = "Assaut"
-	L.hp_to_go_power = "%d%% PV à faire ! (Puissance : %d)"
-	L.hp_to_go_fullpower = "%d%% PV à faire ! (Puissance maximale)"
+	L.hp_to_go_power = "%d%% de PV à faire ! (Puissance : %d)"
+	L.hp_to_go_fullpower = "%d%% de PV à faire ! (Puissance maximale)"
 
 	L.custom_on_markpossessed = "Marquage du boss possédé"
 	L.custom_on_markpossessed_desc = "Marque le boss possédé à l'aide d'une icône de crâne."
@@ -90,8 +90,8 @@ if L then
 	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Fog!" -- à traduire
 	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
 
-	L.adds = "Reveal Adds"
-	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
+	L.adds = "Adds révélés"
+	L.adds_desc = "Alertes quand vous révélez un Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
 
 	L.custom_off_ray_controllers = "Contrôleurs de rayon"
 	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s%s%s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements."
