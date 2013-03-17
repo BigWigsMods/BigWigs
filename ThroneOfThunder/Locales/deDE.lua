@@ -55,7 +55,6 @@ if L then
 	L.kick_desc = "Anzeigen, wie viele Schildkröten unterbrochen werden können"
 	L.kick_message = "Unterbrechbare Schildkröten: %d"
 
-	L.crystal_shell_removed = "Kristallpanzer entfernt!"
 	L.no_crystal_shell = "KEIN Kristallpanzer"
 end
 
