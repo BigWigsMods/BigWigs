@@ -15,7 +15,7 @@ mod:RegisterEnableMob(69465)
 -- Locals
 --
 local ionized = {}
-local openedForMe = false
+local openedForMe = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -81,7 +81,7 @@ function mod:OnEngage()
 	self:Berserk(self:Heroic() and 360 or 540)
 	if self:Heroic() then -- Ionization
 		wipe(ionized)
-		openedForMe = false
+		openedForMe = nil
 		self:Bar(138732, 60) -- Ionization
 	end
 end
@@ -92,17 +92,22 @@ end
 
 function mod:IonizationRemoved(args)
 	if self:Me(args.destGUID) then
-		openedForMe = false
+		openedForMe = nil
 		self:StopBar(CL["you"]:format(args.spellName))
 	end
-	for k, v in next, ionized do if v == args.destName then table.remove(ionized, k) end end
+	for k, v in next, ionized do
+		if v == args.destName then
+			tremove(ionized, k)
+			break
+		end
+	end
 	if #ionized == 0 then
 		self:CloseProximity(args.spellId)
 		if UnitDebuff("player", self:SpellName(137422)) then -- Focused Lightning
 			self:OpenProximity(-7741, 8) -- reopen it if we have lightning chasing us too
 		end
-	else
-		if not openedForMe then self:OpenProximity(args.spellId, 8, ionized) end
+	else if not openedForMe then
+		self:OpenProximity(args.spellId, 8, ionized)
 	end
 end
 
@@ -114,7 +119,9 @@ function mod:PersonalIonization(args)
 	else
 		ionized[#ionized+1] = args.destName
 	end
-	if not openedForMe then self:OpenProximity(args.spellId, 8, ionized) end
+	if not openedForMe then
+		self:OpenProximity(args.spellId, 8, ionized)
+	end
 end
 
 function mod:Ionization(args)

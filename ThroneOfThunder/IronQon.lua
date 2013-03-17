@@ -106,7 +106,9 @@ end
 local function closeLightningStormProximity()
 	for i=1, GetNumGroupMembers() do
 		local name = GetRaidRosterInfo(i)
-		if UnitDebuff(name, mod:SpellName(136193)) then return end -- If someone in raid still can spread the debuff, then don't close the proximity
+		if UnitDebuff(name, mod:SpellName(136193)) then -- don't close the proximity if someone can spread the debuff
+			return
+		end
 	end
 	mod:CloseProximity(136192)
 	if mod:MobId(UnitGUID("boss2")) == 68079 or (mod:Heroic() and mod:MobId(UnitGUID("boss4")) == 68081) then -- p1 or heroic p3

@@ -79,9 +79,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "LingeringGazeDamage", 134044)
 	self:Log("SPELL_AURA_REMOVED", "LingeringGazeRemoved", 134626)
 	self:Log("SPELL_AURA_APPLIED", "LingeringGazeApplied", 134626)
-	self:Log("SPELL_CAST_START", "HardStare", 133765) -- the reason we have this too is to help healers pre shield, and if shield fully absorbs, Serious Wound does not happen
+	self:Log("SPELL_CAST_START", "HardStare", 133765)
 	self:Log("SPELL_AURA_APPLIED", "SeriousWound", 133767)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "SeriousWound", 133767) -- this is for the tanks
+	self:Log("SPELL_AURA_APPLIED_DOSE", "SeriousWound", 133767)
 	self:Log("SPELL_CAST_SUCCESS", "Tracking", 139202) -- for beam jumping on deaths
 	self:Log("SPELL_CAST_SUCCESS", "Tracking", 139204)
 
@@ -286,6 +286,7 @@ function mod:LingeringGazeRemoved(args)
 	if #lingeringGaze == 0 then
 		self:CloseProximity(args.spellId)
 	elseif not openedForMe then
+		self:CloseProximity(args.spellId)
 		self:OpenProximity(args.spellId, 15, lingeringGaze)
 	end
 end
