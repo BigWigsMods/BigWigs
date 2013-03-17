@@ -18,7 +18,7 @@ mod:RegisterEnableMob(68078, 68079, 68080, 68081) -- Iron Qon, Ro'shak, Quet'zal
 --
 local UnitDebuff = UnitDebuff
 local arcingLightning = {}
-local openedForMe = false
+local openedForMe = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -87,8 +87,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	openedForMe = false
-	self:Berserk(720) -- confirmed for on live
+	openedForMe = nil
+	self:Berserk(720)
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PowerWarn", "boss2")
 	self:OpenProximity(-6870, 10)
 	self:CDBar(134926, 33) -- Throw spear
@@ -109,7 +109,7 @@ local function closeLightningStormProximity()
 		if UnitDebuff(name, mod:SpellName(136193)) then return end -- If someone in raid still can spread the debuff, then don't close the proximity
 	end
 	mod:CloseProximity(136192)
-	if (mod:MobId(UnitGUID("boss2")) == 68079) or (mod:Heroic() and (mod:MobId(UnitGUID("boss4")) == 68081)) then -- heroic p1 or heroic p3
+	if mod:MobId(UnitGUID("boss2")) == 68079 or (mod:Heroic() and mod:MobId(UnitGUID("boss4")) == 68081) then -- p1 or heroic p3
 		mod:OpenProximity(-6870, 10)
 	end
 	mod:Message(136192, "Positive", nil, L["arcing_lightning_cleared"])
@@ -144,9 +144,18 @@ end
 
 function mod:ArcingLightningRemoved(args)
 	if not self:Heroic() then
-		for k, v in next, arcingLightning do if v == args.destName then table.remove(arcingLightning, k) end end
-		if self:Me(args.destGUID) then openedForMe = false end
-		if not openedForMe then self:OpenProximity(136192, 12, arcingLightning) end
+		for i, v in next, arcingLightning do
+			if v == args.destName then
+				tremove(arcingLightning, i)
+				break
+			end
+		end
+		if self:Me(args.destGUID) then
+			openedForMe = nil
+		end
+		if not openedForMe then
+			self:OpenProximity(136192, 12, arcingLightning)
+		end
 	end
 	closeLightningStormProximity()
 end
@@ -158,7 +167,9 @@ function mod:ArcingLightningApplied(args)
 		self:OpenProximity(136192, 12)
 	else
 		arcingLightning[#arcingLightning+1] = args.destName
-		if not openedForMe then self:OpenProximity(136192, 12, arcingLightning) end
+		if not openedForMe then
+			self:OpenProximity(136192, 12, arcingLightning)
+		end
 	end
 end
 
@@ -187,8 +198,9 @@ do
 end
 
 function mod:Windstorm(args)
-	if not self:Me(args.destGUID) then return end
-	self:Message(-6877, "Attention") -- lets leave it here to warn people who fail and step back into the windstorm
+	if self:Me(args.destGUID) then
+		self:Message(-6877, "Attention") -- lets leave it here to warn people who fail and step back into the windstorm
+	end
 end
 
 -- Ro'shak
@@ -207,9 +219,8 @@ do
 end
 
 function mod:Scorched(args)
-	args.amount = args.amount or 1
 	if self:Me(args.destGUID) then
-		self:Message(-6871, "Important", nil, CL["count"]:format(args.spellName, args.amount))
+		self:Message(-6871, "Important", nil, CL["count"]:format(args.spellName, args.amount or 1))
 	end
 	if self:Heroic() and self:MobId(UnitGUID("boss4")) == 68081 then -- Dam'ren is active and heroic
 		self:Bar(-6870, 16) -- Unleashed Flame
@@ -225,7 +236,6 @@ do
 		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PowerWarn", "boss2")
 	end
 	function mod:PowerWarn(unitId)
-		if unitId ~= "boss2" then return end
 		local power = UnitPower(unitId)
 		if power > 64 and prevPower == 0 then
 			prevPower = 65
@@ -298,9 +308,10 @@ function mod:Impale(args)
 end
 
 function mod:ThrowSpear(args)
-	if UnitExists("boss1") then return end -- don't warn in last phase
-	self:CDBar(args.spellId, 33)
-	self:Message(args.spellId, "Urgent")
+	if not UnitExists("boss1") then -- don't warn in last phase
+		self:CDBar(args.spellId, 33)
+		self:Message(args.spellId, "Urgent")
+	end
 end
 
 function mod:Deaths(args)
