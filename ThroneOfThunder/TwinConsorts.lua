@@ -65,7 +65,7 @@ function mod:OnBossEnable()
 	self:AddSyncListener("TidalForce")
 
 	-- Celestial Aid
-	self:Log("SPELL_AURA_APPLIED", "Tiger", 138645, 138855) -- 138855 is from 25 N live, not sure if the other spellId is still used
+	self:Log("SPELL_AURA_APPLIED", "Tiger", 138855)
 	self:Log("SPELL_AURA_APPLIED", "Serpent", 138306)
 	self:Log("SPELL_DAMAGE", "Crane", 138318)
 	self:Log("SPELL_AURA_APPLIED", "Ox", 138300)
@@ -136,9 +136,16 @@ end
 --
 
 -- Maybe should merge some of these into 1 function?
-function mod:Tiger(args)
-	self:Message(-7664, "Positive", nil, args.spellId)
-	self:Bar(-7664, 20, args.spellId)
+do
+	local prev = 0
+	function mod:Tiger(args)
+		local t = GetTime()
+		if t-prev > 2 then
+			self:Message(-7664, "Positive", nil, args.spellId)
+			self:Bar(-7664, 20, args.spellId)
+			prev = t
+		end
+	end
 end
 
 do
@@ -218,11 +225,11 @@ end
 -- Phase 1
 
 function mod:TearsOfTheSunRemoved(args)
-	self:Message(-7643, "Attention")
+	self:Message(-7643, "Positive", nil, CL["over"]:format(args.spellName))
 end
 
 function mod:TearsOfTheSunApplied(args)
-	self:Message(-7643, "Positive", nil, CL["over"]:format(args.spellName))
+	self:Message(-7643, "Attention")
 	self:Bar(-7643, 41)
 end
 
