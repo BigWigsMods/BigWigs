@@ -1,8 +1,3 @@
---[[
-TODO:
-	-- consider handling growing fury to adjust stone breath bar
-]]--
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -22,7 +17,6 @@ if L then
 	L.kick_icon = 1766
 	L.kick_message = "Kickable turtles: %d"
 
-	L.crystal_shell_removed = "Crystal Shell removed!"
 	L.no_crystal_shell = "NO Crystal Shell"
 end
 L = mod:GetLocale()
@@ -31,10 +25,11 @@ L = mod:GetLocale()
 -- Locals
 --
 
+local nextBreath = 0
 local kickable = 0
 local crystalTimer = nil
-local crystalShell = mod:SpellName(137633)
 
+local crystalShell = mod:SpellName(137633)
 local function warnCrystalShell()
 	if UnitDebuff("player", crystalShell) or UnitIsDeadOrGhost("player") then
 		mod:CancelTimer(crystalTimer)
@@ -51,7 +46,7 @@ end
 function mod:GetOptions()
 	return {
 		{137633, "FLASH"},
-		136294, -7134, 133939, {134539, "FLASH"}, 134920, {135251, "TANK"}, -7140,
+		136294, -7134, 133939, {136010, "TANK"}, {134539, "FLASH"}, 134920, {135251, "TANK"}, -7140,
 		"kick", "berserk", "bosskill",
 	}, {
 		[137633] = "heroic",
@@ -69,11 +64,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "QuakeStomp", 134920)
 	self:Log("SPELL_DAMAGE", "Rockfall", 134539)
 	self:Log("SPELL_CAST_START", "FuriousStoneBreath", 133939)
+	self:Log("SPELL_CAST_SUCCESS", "GrowingFury", 136010)
 	self:Log("SPELL_CAST_SUCCESS", "KickShell", 134031)
 	self:Log("SPELL_CAST_SUCCESS", "ShellBlock", 133971)
 	self:Log("SPELL_CAST_START", "CallOfTortos", 136294)
 
-	self:RegisterUnitEvent("UNIT_AURA", "ShellConcussion", "boss1")
+	self:RegisterUnitEvent("UNIT_AURA", "ShellConcussionCheck", "boss1")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "SummonBats", "boss1")
 
 	self:Death("Win", 67977)
@@ -81,6 +77,7 @@ end
 
 function mod:OnEngage()
 	kickable = 0
+	nextBreath = GetTime() + 46
 	self:Berserk(600) -- XXX ASSUMED
 	self:Bar(-7140, 46, 136686) -- Summon Bats
 	self:Bar(133939, 46) -- Furious Stone Breath
@@ -98,11 +95,10 @@ end
 -- Event Handlers
 --
 
-
 function mod:CrystalShellRemoved(args)
 	if not self:Me(args.destGUID) or self:Tank() then return end
 	self:Flash(args.spellId)
-	self:Message(args.spellId, "Urgent", "Alarm", L["crystal_shell_removed"]) -- I think this should stay Urgent Alarm
+	self:Message(args.spellId, "Urgent", "Alarm", L["removed"]:format(args.spellName)) -- I think this should stay Urgent Alarm
 	crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3)
 end
 
@@ -130,7 +126,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName)) -- it is probably over you not under you
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -138,7 +134,14 @@ end
 
 function mod:FuriousStoneBreath(args)
 	self:Message(args.spellId, "Important", "Long")
-	self:Bar(args.spellId, 46)
+	self:CDBar(args.spellId, 46) -- 45.8-48.2
+	nextBreath = GetTime() + 46
+end
+
+function mod:GrowingFury(args)
+	self:Message(args.spellId, "Important", "Alarm")
+	nextBreath = nextBreath - 4.6 -- gives 10% power
+	self:CDBar(133939, nextBreath - GetTime())
 end
 
 do
@@ -165,7 +168,7 @@ do
 	local concussion = mod:SpellName(136431)
 	local prev = 0
 	local UnitDebuff = UnitDebuff
-	function mod:ShellConcussion(unit)
+	function mod:ShellConcussionCheck(unit)
 		local _, _, _, _, _, duration, expires = UnitDebuff(unit, concussion)
 		if expires and expires ~= prev then
 			if expires-prev > 4 then -- don't spam the message
