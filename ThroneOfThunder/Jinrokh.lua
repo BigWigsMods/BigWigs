@@ -106,7 +106,7 @@ function mod:IonizationRemoved(args)
 		if UnitDebuff("player", self:SpellName(137422)) then -- Focused Lightning
 			self:OpenProximity(-7741, 8) -- reopen it if we have lightning chasing us too
 		end
-	else if not openedForMe then
+	elseif not openedForMe then
 		self:OpenProximity(args.spellId, 8, ionized)
 	end
 end
