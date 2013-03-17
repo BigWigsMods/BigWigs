@@ -46,29 +46,23 @@ function mod:GetOptions()
 		-7643, -- phase 1
 		{137408, "TANK"}, {-7638, "FLASH"}, {137491, "FLASH"}, -- phase 2
 		-- Celestial Aid
-		-7657, -7658, -7659, -7664,
+		138300, 138318, 138306, 138855,
 		"proximity", "stages", "berserk", "bosskill",
 	}, {
 		[-7631] = -7629,
 		[-7643] = -7642,
-		[-7657] = -7651,
+		[138300] = -7651,
 		["proximity"] = "general",
 	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:Yell("LastPhase", L["last_phase_yell_trigger"])
-
-	self:AddSyncListener("Phase2")
-	self:AddSyncListener("Phase3")
-	self:AddSyncListener("TidalForce")
 
 	-- Celestial Aid
-	self:Log("SPELL_AURA_APPLIED", "Tiger", 138855)
-	self:Log("SPELL_AURA_APPLIED", "Serpent", 138306)
+	self:Log("SPELL_AURA_APPLIED", "CelestialAid", 138855, 138306, 138300) -- Tiger, Serpent, Ox
 	self:Log("SPELL_DAMAGE", "Crane", 138318)
-	self:Log("SPELL_AURA_APPLIED", "Ox", 138300)
+
 	-- Suen
 		-- phase 2
 	self:Log("SPELL_CAST_START", "NuclearInferno", 137491)
@@ -86,8 +80,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "IcyShadows", 137440)
 	self:Log("SPELL_SUMMON", "IceComet", 137419)
 		-- phase 1
+	self:Log("SPELL_CAST_SUCCESS", "CosmicBarrage", 136752)
 	self:Log("SPELL_CAST_SUCCESS", "BeastOfNightmares", 137375)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
+
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Phase2", "boss1", "boss2")
+	self:Yell("LastPhase", L["last_phase_yell_trigger"])
+
+	self:AddSyncListener("Phase2")
+	self:AddSyncListener("Phase3")
+	self:AddSyncListener("TidalForce")
 
 	self:Death("Deaths", 68905, 68904)
 end
@@ -116,7 +117,7 @@ function mod:OnSync(sync)
 		self:StopBar(137404) -- Tears of the Sun
 		self:StopBar(-7634) -- Beast of Nightmares
 		self:StopBar(-7631) -- Cosmic Barrage
-		self:CDBar(-7649, 23) -- IceComet
+		self:CDBar(-7649, 23) -- Ice Comet
 		if self:Heroic() then
 			self:Bar(137491, 50) -- Nuclear Inferno
 		end
@@ -135,27 +136,14 @@ end
 -- Celestial Aid
 --
 
--- Maybe should merge some of these into 1 function?
 do
 	local prev = 0
-	function mod:Tiger(args)
+	function mod:CelestialAid(args)
 		local t = GetTime()
 		if t-prev > 2 then
-			self:Message(-7664, "Positive", nil, args.spellId)
-			self:Bar(-7664, 20, args.spellId)
 			prev = t
-		end
-	end
-end
-
-do
-	local prev = 0
-	function mod:Serpent(args)
-		local t = GetTime()
-		if t-prev > 2 then
-			self:Message(-7659, "Positive", nil, args.spellId)
-			self:Bar(-7659, 30, args.spellId)
-			prev = t
+			self:Message(args.spellId, "Positive")
+			self:Bar(args.spellId, args.spellId == 138855 and 20 or 30) -- Xuen lasts 20s
 		end
 	end
 end
@@ -165,23 +153,12 @@ do
 	function mod:Crane(args)
 		local t = GetTime()
 		if t-prev > 30 then
-			self:Message(-7658, "Positive", nil, args.spellId)
+			self:Message(args.spellId, "Positive")
 			prev = t
 		end
 	end
 end
 
-do
-	local prev = 0
-	function mod:Ox(args)
-		local t = GetTime()
-		if t-prev > 2 then
-			self:Message(-7657, "Positive", nil, args.spellId)
-			self:Bar(-7657, 30, args.spellId)
-			prev = t
-		end
-	end
-end
 
 --------------------------------------------------------------------------------
 -- Suen
@@ -246,8 +223,8 @@ end
 -- Phase 2
 
 function mod:IcyShadows(args)
-	if UnitDebuff("player", self:SpellName(137440)) and not inferno then -- Nuclear Inferno
-		self:Message(137440, "Personal", "Info", CL["underyou"]:format(self:SpellName(137440)))
+	if self:Me(args.destGUID) and not inferno and not self:Tank() then
+		self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 	end
 end
 
@@ -257,6 +234,12 @@ function mod:IceComet(args)
 end
 
 -- Phase 1
+
+function mod:CosmicBarrage(args)
+	self:Message(-7631, "Urgent", "Alarm")
+	self:CDBar(-7631, 20)
+	self:ScheduleTimer("Message", 5.5, -7631, "Urgent", "Alarm", L["barrage_fired"]) -- This is when the little orbs start to move
+end
 
 function mod:BeastOfNightmares(args)
 	if self:Me(args.destGUID) then -- this is for tank
@@ -273,18 +256,14 @@ end
 -- General
 --
 
-function mod:LastPhase()
-	self:Sync("Phase3")
-end
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 136752 then -- channel start of Cosmic Barrage
-		self:Message(-7631, "Urgent", "Alarm")
-		self:CDBar(-7631, 20)
-		self:ScheduleTimer("Message", 5.5, -7631, "Urgent", "Alarm", L["barrage_fired"]) -- This is when the little orbs start to move
-	elseif spellId == 137187 then -- Lu'lin Dissipate aka p2
+function mod:Phase2(_, _, _, _, spellId)
+	if spellId == 137187 then -- Lu'lin Dissipate
 		self:Sync("Phase2")
 	end
+end
+
+function mod:LastPhase()
+	self:Sync("Phase3")
 end
 
 function mod:Deaths(args)
