@@ -286,7 +286,6 @@ function mod:LingeringGazeRemoved(args)
 	if #lingeringGaze == 0 then
 		self:CloseProximity(args.spellId)
 	elseif not openedForMe then
-		self:CloseProximity(args.spellId)
 		self:OpenProximity(args.spellId, 15, lingeringGaze)
 	end
 end
