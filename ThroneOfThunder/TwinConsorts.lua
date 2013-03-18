@@ -44,7 +44,7 @@ function mod:GetOptions()
 		137531, --Phase 3
 		-- Suen
 		-7643, -- phase 1
-		{137408, "TANK"}, {-7638, "FLASH"}, {137491, "FLASH"}, -- phase 2
+		{137408, "TANK_HEALER"}, {-7638, "FLASH"}, {137491, "FLASH"}, -- phase 2
 		-- Celestial Aid
 		138300, 138318, 138306, 138855,
 		"proximity", "stages", "berserk", "bosskill",
