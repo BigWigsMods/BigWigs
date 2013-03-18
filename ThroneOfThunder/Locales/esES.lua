@@ -115,7 +115,7 @@ end
 L = BigWigs:NewBossLocale("Dark Animus", "esES")
 if L then
 	L.engage_trigger = "¡El orbe explota!"
-	L.slam_message = "Slam"
+	L.slam_message = "Embate"
 end
 
 L = BigWigs:NewBossLocale("Iron Qon", "esES")
