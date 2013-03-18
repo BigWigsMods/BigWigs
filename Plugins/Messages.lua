@@ -449,7 +449,7 @@ do
 		if db.monochrome and db.outline then
 			flags = "MONOCHROME," .. db.outline
 		elseif db.monochrome then
-			flags = nil --"MONOCHROME", XXX monochrome only is disabled for now due to a client crash
+			flags = nil -- "MONOCHROME", XXX monochrome only is disabled for now as it causes a client crash
 		elseif db.outline then
 			flags = db.outline
 		end
@@ -574,7 +574,9 @@ function plugin:BigWigs_Message(event, module, key, text, color, sound, icon)
 		self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
 	end
 	if db.chat then
-		if icon then text = "|T"..icon..":15|t"..text end
+		-- http://www.wowpedia.org/UI_escape_sequences
+		-- |TTexturePath:size1:size2:xoffset:yoffset:dimx:dimy:coordx1:coordx2:coordy1:coordy2:red:green:blue|t
+		if icon then text = "|T"..icon..":0:0:0:0:64:64:4:60:4:60|t"..text end
 		ChatFrame1:AddMessage(text, r, g, b)
 	end
 end
