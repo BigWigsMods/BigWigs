@@ -131,7 +131,7 @@ end
 L = BigWigs:NewBossLocale("Twin Consorts", "esES")
 if L then
 	L.barrage_fired = "¡Tromba disparada!"
-	L.last_phase_yell_trigger = "Just this once..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
+	L.last_phase_yell_trigger = "Solo esta vez..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
 end
 
 L = BigWigs:NewBossLocale("Lei Shen", "esES")
