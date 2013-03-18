@@ -43,20 +43,23 @@ L = BigWigs:NewBossLocale("Dark Animus", "zhTW")
 if L then
 
 end
+
 L = BigWigs:NewBossLocale("Iron Qon", "zhTW")
 if L then
 
 end
+
 L = BigWigs:NewBossLocale("Twin Consorts", "zhTW")
 if L then
 
 end
+
 L = BigWigs:NewBossLocale("Lei Shen", "zhTW")
 if L then
 
 end
+
 L = BigWigs:NewBossLocale("Ra-den", "zhTW")
 if L then
 
 end
-

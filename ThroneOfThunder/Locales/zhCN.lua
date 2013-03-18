@@ -136,6 +136,7 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shen", "zhCN")
 if L then
+	L.conduit_abilities = "导管技能"
 	L.conduit_abilities_desc = "导管特定技能冷却计时条。"
 	L.conduit_abilities_message = "下一导管技能！"
 
