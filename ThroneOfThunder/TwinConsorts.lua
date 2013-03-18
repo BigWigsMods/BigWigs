@@ -39,7 +39,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		-- Lu'lin
-		-7631, -7634, -- phase 1
+		-7631, {-7634, "TANK_HEALER"}, -- phase 1
 		-7649, {137440, "FLASH"}, -- phase 2
 		137531, --Phase 3
 		-- Suen
@@ -100,9 +100,7 @@ function mod:OnEngage()
 	self:OpenProximity("proximity", 8)
 	self:CDBar(-7631, 14) -- Cosmic Barrage
 	self:CDBar(-7643, 22) -- Tears of the Sun
-	if self:Tank() or self:Healer() then
-		self:CDBar(-7634, 50) -- Beast of Nightmares
-	end
+	self:CDBar(-7634, 50) -- Beast of Nightmares
 	inferno = nil
 end
 
@@ -242,14 +240,8 @@ function mod:CosmicBarrage(args)
 end
 
 function mod:BeastOfNightmares(args)
-	if self:Me(args.destGUID) then -- this is for tank
-		self:Message(-7634, "Personal", "Info", CL["you"]:format(args.spellName))
-		self:Bar(-7634, 51)
-	end
-	if self:Healer() then
-		self:TargetMessage(-7634, args.destName, "Attention", nil, nil, nil, true)
-		self:Bar(-7634, 51)
-	end
+	self:TargetMessage(-7634, args.destName, "Attention", "Info", nil, nil, true)
+	self:Bar(-7634, 51)
 end
 
 --------------------------------------------------------------------------------
@@ -272,9 +264,7 @@ function mod:Deaths(args)
 		self:StopBar(137531) -- Tidal Force
 	elseif args.mobId == 68904 then -- Suen
 		self:StopBar(137491) -- Nuclear Inferno
-		if self:Tank() or self:Healer() then
-			self:CDBar(-7634, 55) -- Beasts of Nightmare
-		end
+		self:CDBar(-7634, 55) -- Beasts of Nightmare
 	end
 	deadBosses = deadBosses + 1
 	if deadBosses == 2 then
