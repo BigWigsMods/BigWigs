@@ -26,8 +26,8 @@ if L then
 	L.adds_desc = "Prévient quand les Farraki, les Gurubashi, les Drakkari, les Amani et le Dieu-guerrier Jalak apparaissent."
 
 	L.door_opened = "Porte ouverte !"
-	L.door_bar = "Proch. porte (%d)"
-	L.balcony_adds = "Adds du balcon"
+	L.door_bar = "Prochaine porte (%d)"
+	L.balcony_adds = "Trolls des gradins"
 	L.orb_message = "Orbe de contrôle lâchée !"
 
 	L.focus_only = "|cffff0000Alertes de la cible de focalisation uniquement.|r "
@@ -75,7 +75,7 @@ if L then
 	L.nest = "Nids"
 	L.nest_desc = "Alertes relatives aux nids. |cffff0000Décochez ceci pour désactiver les alertes si vous n'êtes pas assigné à la gestion des nids !|r"
 
-	L.flight_over = "Vol terminé dans %d sec !"
+	L.flight_over = "Vol terminé dans %d sec !"
 	L.upper_nest = "Nid |cff008000supérieur|r"
 	L.lower_nest = "Nid |cffff0000inférieur|r"
 	L.upper = "|cff008000Supérieur|r"
@@ -87,19 +87,19 @@ end
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "frFR")
 if L then
 	L.red_spawn_trigger = "La Lumière infrarouge révèle une brume écarlate !" -- à vérifier
-	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Fog!" -- à traduire
+	L.blue_spawn_trigger = "Les Rais bleus révèlent une brume azur !" -- à vérifier
 	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
 
-	L.adds = "Adds révélés"
-	L.adds_desc = "Alertes quand vous révélez un Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
+	L.adds = "Bêtes de brume révélées"
+	L.adds_desc = "Alertes quand vous révélez une Brume écarlate, d'ambre ou azur et combien de Brumes écarlates il reste."
 
 	L.custom_off_ray_controllers = "Contrôleurs de rayon"
 	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s%s%s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements."
 
 	L.rays_spawn = "Apparition des rayons"
-	L.red_add = "Add |cffff0000rouge|r"
-	L.blue_add = "Add |cff0000ffbleu|r"
-	L.yellow_add = "Add |cffffff00jaune|r"
+	L.red_add = "Bête de brume |cffff0000rouge|r"
+	L.blue_add = "Bête de brume |cff0000ffbleue|r"
+	L.yellow_add = "Bête de brume |cffffff00jaune|r"
 	L.death_beam = "Rayon mortel"
 	L.red_beam = "Rayon |cffff0000rouge|r"
 	L.blue_beam = "Rayon |cff0000ffbleu|r"
@@ -130,7 +130,7 @@ end
 L = BigWigs:NewBossLocale("Twin Consorts", "frFR")
 if L then
 	L.barrage_fired = "Barrage invoqué !"
-	L.last_phase_yell_trigger = "Just this once..." -- à traduire
+	L.last_phase_yell_trigger = "D'accord, pour cette fois..." -- à vérifier
 end
 
 L = BigWigs:NewBossLocale("Lei Shen", "frFR")
