@@ -126,7 +126,7 @@ end
 
 function mod:OnEngage()
 	doorCounter = 1
-	self:Berserk(720) -- XXX assumed ( more than 660 on 25 N ptr )
+	self:Berserk(720)
 	self:CDBar("adds", 16, L["door_bar"]:format(doorCounter), "inv_shield_11")
 	self:CDBar(-7080, 33)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "LastPhase", "boss1")
