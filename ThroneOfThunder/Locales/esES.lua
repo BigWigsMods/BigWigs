@@ -138,14 +138,14 @@ L = BigWigs:NewBossLocale("Lei Shen", "esES")
 if L then
 	L.conduit_abilities = "Habilidades de conducto"
 	L.conduit_abilities_desc = "Barras para CD aproximado para las habilidades específicas de los conductos."
-	L.conduit_abilities_message = "Siguiente habilidad de conductoNext conduit ability"
+	L.conduit_abilities_message = "Próx. hab. de conducto"
 
 	L.intermission = "Intermedio"
 	L.diffusion_add = "Difusión de adds"
 	L.shock = "Choque"
 
-	L.overcharged_message = "Impresionante pulso AoE"
-	L.static_shock_message = "Dividiendo el daño AoE"
+	L.overcharged_message = "Pulso de zona aturdidor"
+	L.static_shock_message = "Daño de zona para compartir"
 	L.diffusion_chain_message = "Difusión de adds inminente - ¡DISPERSAOS!"
 end
 
