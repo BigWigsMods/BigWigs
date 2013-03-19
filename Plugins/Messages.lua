@@ -406,7 +406,7 @@ end
 do
 	local scaleUpTime, scaleDownTime = 0.2, 0.4
 	local function bounceAnimation(anim, elapsed)
-		self = anim:GetParent()
+		local self = anim:GetParent()
 		self.elapsed = self.elapsed + elapsed
 		local min = db.fontSize
 		local max = min + 10
