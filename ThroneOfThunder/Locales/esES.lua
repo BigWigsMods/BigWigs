@@ -141,9 +141,11 @@ if L then
 	L.conduit_abilities_message = "Siguiente habilidad de conductoNext conduit ability"
 
 	L.intermission = "Intermedio"
+	L.diffusion_add = "Difusión de adds"
+	L.shock = "Choque"
+
 	L.overcharged_message = "Impresionante pulso AoE"
 	L.static_shock_message = "Dividiendo el daño AoE"
-	L.diffusion_add_message = "Difusión de adds"
 	L.diffusion_chain_message = "Difusión de adds inminente - ¡DISPERSAOS!"
 end
 

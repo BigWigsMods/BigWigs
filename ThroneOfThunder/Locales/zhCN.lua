@@ -141,9 +141,11 @@ if L then
 	L.conduit_abilities_message = "下一导管技能！"
 
 	L.intermission = "阶段转换"
+	L.diffusion_add = "散射闪电增援"
+	L.shock = "Shock"
+
 	L.overcharged_message = "昏迷 AoE 脉冲"
 	L.static_shock_message = "分摊 AoE 伤害"
-	L.diffusion_add_message = "散射闪电增援"
 	L.diffusion_chain_message = "即将散射闪电增援 - 散开！"
 end
 

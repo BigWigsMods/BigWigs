@@ -138,9 +138,11 @@ if L then
 	L.conduit_ability_meassage = "След. способность проводника"
 
 	L.intermission = "Перерыв"
+	L.diffusion_add = "Цепные помощники"
+	L.shock = "Потрясение"
+
 	L.overcharged_message = "Оглушающий AoE импульс"
 	L.static_shock_message = "Разделяемый AoE урон"
-	L.diffusion_add_message = "Цепные помощники"
 	L.diffusion_chain_message = "Скоро цепные помощники - РАЗБЕГАЙТЕСЬ!"
 end
 L = BigWigs:NewBossLocale("Ra-den", "ruRU")

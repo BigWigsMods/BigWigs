@@ -141,9 +141,11 @@ if L then
 	L.conduit_ability_meassage = "Abilità successiva del condotto"
 
 	L.intermission = "Intermezzo"
+	L.diffusion_add = "Add di Diffusione"
+	L.shock = "Folgore"
+
 	L.overcharged_message = "Pulsazione ad Effetto Stordente"
 	L.static_shock_message = "Danno ad Effetto da Suddividere"
-	L.diffusion_add_message = "Add di Diffusione"
 	L.diffusion_chain_message = "Add di Diffusione tra poco - ALLARGARSI!!!"
 end
 

@@ -140,6 +140,9 @@ if L then
 	L.conduit_ability_meassage = "Proch. tech. du conduit"
 
 	L.intermission = "Entracte"
+	L.diffusion_add = "Foudres diffuses"
+	L.shock = "Horion"
+
 	L.overcharged_message = "Pulsation de zone étourdissante"
 	L.static_shock_message = "Dégâts de zone à partager"
 	L.diffusion_add_message = "Foudres diffuses"
