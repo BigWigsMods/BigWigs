@@ -140,10 +140,6 @@ if L then
 	L.intermission = "Перерыв"
 	L.diffusion_add = "Цепные помощники"
 	L.shock = "Потрясение"
-
-	L.overcharged_message = "Оглушающий AoE импульс"
-	L.static_shock_message = "Разделяемый AoE урон"
-	L.diffusion_chain_message = "Скоро цепные помощники - РАЗБЕГАЙТЕСЬ!"
 end
 L = BigWigs:NewBossLocale("Ra-den", "ruRU")
 if L then
