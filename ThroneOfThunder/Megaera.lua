@@ -40,7 +40,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		140138, 140179,
-		{139822, "FLASH", "ICON"},
+		{139822, "FLASH", "ICON", "DISPEL"},
 		{139866, "FLASH", "SAY"}, {139909, "FLASH"},
 
 		139458, {"breaths", "FLASH"}, "proximity", "berserk", "bosskill",
@@ -204,7 +204,7 @@ function mod:CindersApplied(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:Flash(args.spellId)
-	elseif self:Dispeller("magic") then
+	elseif self:Dispeller("magic", nil, 139822) then
 		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", nil, nil, true )
 	end
 end
