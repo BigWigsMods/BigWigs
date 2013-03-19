@@ -85,9 +85,9 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "deDE")
 if L then
-	L.red_spawn_trigger = "Das Infrarotlicht offenbart einen purpurroten Nebel!"
-	L.blue_spawn_trigger = "Der blaue Strahl offenbart einen azurblauen Nebel!"
-	L.yellow_spawn_trigger = "Das helle Licht offenbart einen goldgelben Nebel!"
+	L.red_spawn_trigger = "purpurroten Nebel"
+	L.blue_spawn_trigger = "azurblauen Nebel"
+	L.yellow_spawn_trigger = "goldgelben Nebel"
 
 	L.adds = "Erscheinende Adds"
 	L.adds_desc = "Warnungen für das Erscheinen der purpurroten, goldgelben und azurblauen Nebel. Gibt an, wie viele purpurrote Nebel verbleiben."
