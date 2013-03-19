@@ -40,15 +40,15 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		140138, 140179,
-		{139822, "FLASH", "ICON", "DISPEL"},
-		{139866, "FLASH", "SAY"}, {139909, "FLASH"},
-
+		{139822, "FLASH", "ICON", "DISPEL"}, {137731, "HEALER"},
+		{139866, "FLASH", "SAY"}, {139909, "FLASH"}, {139843, "TANK"}, 
+		{139840, "HEALER"},
 		139458, {"breaths", "FLASH"}, "proximity", "berserk", "bosskill",
 	}, {
 		[140138] = ("%s (%s)"):format(mod:SpellName(-7005), CL["heroic"]), -- Arcane Head
 		[139822] = -6998, -- Fire Head
 		[139866] = -7002, -- Frost Head
-		--[] = -7004, -- Poison Head
+		[139840] = -7004, -- Poison Head
 		[139458] = "general",
 	}
 end
@@ -70,6 +70,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "BreathDamage", 137730, 139842, 139839, 139992)
 	self:Log("SPELL_CAST_START", "Breaths", 137729, 139841, 139838, 139991)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Rampage", "boss1")
+	self:Log("SPELL_AURA_APPLIED", "TankDebuffApplied", 139843, 137731, 139840) -- Frost, Fire, Poison, should probably add Diffusion
+	self:Log("SPELL_AURA_APPLIED_DOSE", "TankDebuffApplied", 139843, 137731, 139840)
+	self:Log("SPELL_AURA_REMOVED", "TankDebuffRemoved", 139843, 137731, 139840)
 
 	self:Death("Deaths", 70248, 70212, 70235, 70247) -- Arcane Head, Flaming Head, Frozen Head, Venomous Head
 	self:Death("Win", 68065) -- Megaera
@@ -88,6 +91,17 @@ end
 --------------------------------------------------------------------------------
 -- General
 --
+
+function mod:TankDebuffApplied(args)
+	if args.spellId == 139843 and (args.amount or 1) > 3 then -- Arctic Freeze
+		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Warning")
+	end
+	self:TargetBar(args.spellId, 45, args.destName)
+end
+
+function mod:TankDebuffRemoved(args)
+	self:StopBar(args.spellId, args.destName)
+end
 
 do
 	local prev = 0
