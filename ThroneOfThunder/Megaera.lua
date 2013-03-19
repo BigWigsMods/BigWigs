@@ -203,13 +203,16 @@ function mod:CindersApplied(args)
 	self:SecondaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+		self:TargetBar(args.spellId, 30, args.destName)
 		self:Flash(args.spellId)
-	elseif self:Dispeller("magic", nil, 139822) then
-		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", nil, nil, true )
+	elseif self:Dispeller("magic", nil, args.spellId) then
+		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", nil, nil, true)
+		self:TargetBar(args.spellId, 30, args.destName)
 	end
 end
 
 function mod:CindersRemoved(args)
 	self:SecondaryIcon(args.spellId)
+	self:StopBar(args.spellId, args.destName)
 end
 
