@@ -21,9 +21,9 @@ local blueController, redController
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
-	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Fog!"
-	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
+	L.red_spawn_trigger = "Crimson Fog"
+	L.blue_spawn_trigger = "Azure Fog"
+	L.yellow_spawn_trigger = "Amber Fog"
 
 	L.adds = "Reveal Adds"
 	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
@@ -115,9 +115,16 @@ local function mark(unit, mark)
 	SetRaidTarget(unit, mark)
 end
 
-function mod:IceWall(args)
-	self:Message(-6889, "Urgent")
-	self:Bar(-6889, 95)
+do
+	local prev = 0
+	function mod:IceWall(args)
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:Message(-6889, "Urgent")
+			self:Bar(-6889, 95)
+		end
+	end
 end
 
 do
@@ -154,9 +161,7 @@ function mod:LifeDrainStunRemoved(args)
 end
 
 function mod:LifeDrainDose(args)
-	if args.amount % 2 == 0 or args.amount > 4 then -- assuming you want to be soaking for ~5s each
-		self:StackMessage(133798, args.destName, args.amount, "Important")
-	end
+	self:StackMessage(133798, args.destName, args.amount, "Important")
 end
 
 do
