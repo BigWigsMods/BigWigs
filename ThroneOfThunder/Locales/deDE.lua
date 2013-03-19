@@ -142,10 +142,6 @@ if L then
 	L.intermission = "Unterbrechung"
 	L.diffusion_add = "Kugelblitzelementare"
 	L.shock = "Schock"
-
-	L.overcharged_message = "Betäubender AoE Puls"
-	L.static_shock_message = "Aufteilender AoE Schaden"
-	L.diffusion_chain_message = "Kugelblitzelementare bald - VERTEILEN!"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "deDE")
