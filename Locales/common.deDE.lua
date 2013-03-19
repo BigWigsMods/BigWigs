@@ -28,6 +28,10 @@ L.interrupted = "%s unterbrochen"
 L.add_spawned = "Add gespawnt!"
 L.next_add = "Nächstes Add"
 L.add_killed = "Add getötet! (%d/%d)"
+L.add_remaining = "Add killed, %d remaining"
+
+L.mob_killed = "%s killed! (%d/%d)"
+L.mob_remaining = "%s killed, %d remaining"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name

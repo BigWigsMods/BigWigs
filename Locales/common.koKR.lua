@@ -28,6 +28,10 @@ L.interrupted = "%s Interrupted"
 L.add_spawned = "Add Spawned!"
 L.next_add = "Next Add"
 L.add_killed = "Add killed! (%d/%d)"
+L.add_remaining = "Add killed, %d remaining"
+
+L.mob_killed = "%s killed! (%d/%d)"
+L.mob_remaining = "%s killed, %d remaining"
 
 L.custom_start = "%1$s 전투 개시 - %3$d분 후 %2$s"
 L.custom_start_s = "%1$s 전투 개시 - %3$d초 후 %2$s"

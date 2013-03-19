@@ -28,6 +28,10 @@ L.interrupted = "%s прервано"
 L.add_spawned = "Помощник появился!"
 L.next_add = "Следующий помощник"
 L.add_killed = "Помощник убит! (%d/%d)"
+L.add_remaining = "Add killed, %d remaining"
+
+L.mob_killed = "%s killed! (%d/%d)"
+L.mob_remaining = "%s killed, %d remaining"
 
 L.custom_start = "%s вступает в бой - %s через %d мин"
 L.custom_start_s = "%s вступает в бой - %s через %d сек"
