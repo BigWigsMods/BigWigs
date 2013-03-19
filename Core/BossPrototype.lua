@@ -583,10 +583,14 @@ end
 -- Role checking
 --
 
-function boss:Tank()
-	local tree = GetSpecialization()
-	local role = GetSpecializationRole(tree)
-	return role == "TANK"
+function boss:Tank(unit)
+	if unit then
+		return GetPartyAssignment("MAINTANK", unit) or UnitGroupRolesAssigned(unit) == "TANK"
+	else
+		local tree = GetSpecialization()
+		local role = GetSpecializationRole(tree)
+		return role == "TANK"
+	end
 end
 
 function boss:Healer()
