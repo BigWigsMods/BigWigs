@@ -288,9 +288,8 @@ do
 	local eerieSkull = mod:SpellName(119519)
 	local function skullWarn(unitId)
 		fired = fired + 1
-		local unitIdTarget = unitId.."target"
-		local player = UnitName(unitIdTarget)
-		if player and (not UnitDetailedThreatSituation(unitIdTarget, unitId) or fired > 13) then
+		local player = UnitName("boss1target")
+		if player and ((not UnitDetailedThreatSituation("boss1target", "boss1") and not mod:Tank("boss1target")) or fired > 13) then
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
 			if UnitIsUnit("player", player) then
 				mod:Message(119519, "Urgent", "Alarm", CL["you"]:format(eerieSkull))
@@ -311,7 +310,7 @@ do
 	function mod:EerieSkull()
 		fired = 0
 		if not timer and not self:LFR() then
-			timer = self:ScheduleRepeatingTimer(skullWarn, 0.05, "boss1")
+			timer = self:ScheduleRepeatingTimer(skullWarn, 0.05)
 		end
 	end
 end

@@ -187,7 +187,7 @@ do
 	local function warnFocusedLightning()
 		fired = fired + 1
 		local player = UnitName("boss1target")
-		if player and (not UnitDetailedThreatSituation("boss1target", "boss1") or fired > 13) then
+		if player and ((not UnitDetailedThreatSituation("boss1target", "boss1") and not mod:Tank("boss1target")) or fired > 13) then
 			mod:TargetMessage(-7741, player, "Positive", "Alarm")
 			mod:PrimaryIcon(-7741, player)
 			if UnitIsUnit("boss1target", "player") then
