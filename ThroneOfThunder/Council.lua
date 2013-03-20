@@ -102,7 +102,9 @@ end
 function mod:OnEngage()
 	self:Berserk(self:LFR() and 720 or 600) -- XXX assumed. 12 min or higher on LFR, prob 15
 	bossDead = 0
-	self:OpenProximity("proximity", 7) -- for Quicksand
+	if not self:LFR() then
+		self:OpenProximity("proximity", 7) -- for Quicksand
+	end
 	self:CDBar("priestess_adds", 27, L["priestess_adds_message"], L.priestess_adds_icon)
 	self:CDBar(-7062, 7) -- Quicksand
 	self:Bar(136990, 9.7) -- Frostbite -- might be 7.5?
