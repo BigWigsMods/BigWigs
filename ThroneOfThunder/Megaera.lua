@@ -62,6 +62,7 @@ function mod:OnBossEnable()
 	-- Frost
 	self:Log("SPELL_PERIODIC_DAMAGE", "IcyGround", 139909)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- XXX Torrent of Ice needs to be switched to CLEU ASAP
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ArcticFreeze", 139843)
 	-- Fire
 	self:Log("SPELL_DAMAGE", "Cinders", 139836)
 	self:Log("SPELL_AURA_APPLIED", "CindersApplied", 139822)
@@ -70,9 +71,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "BreathDamage", 137730, 139842, 139839, 139992)
 	self:Log("SPELL_CAST_START", "Breaths", 137729, 139841, 139838, 139991)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Rampage", "boss1")
-	self:Log("SPELL_AURA_APPLIED", "TankDebuffApplied", 139843, 137731, 139840) -- Frost, Fire, Poison, should probably add Diffusion
-	self:Log("SPELL_AURA_APPLIED_DOSE", "TankDebuffApplied", 139843, 137731, 139840)
-	self:Log("SPELL_AURA_REMOVED", "TankDebuffRemoved", 139843, 137731, 139840)
+	self:Log("SPELL_AURA_APPLIED", "TankDebuffApplied", 137731, 139840) -- Fire, Poison, should probably add Diffusion
+	self:Log("SPELL_AURA_APPLIED_DOSE", "TankDebuffApplied", 137731, 139840)
+	self:Log("SPELL_AURA_REMOVED", "TankDebuffRemoved", 137731, 139840)
 
 	self:Death("Deaths", 70248, 70212, 70235, 70247) -- Arcane Head, Flaming Head, Frozen Head, Venomous Head
 	self:Death("Win", 68065) -- Megaera
@@ -93,9 +94,6 @@ end
 --
 
 function mod:TankDebuffApplied(args)
-	if args.spellId == 139843 and (args.amount or 1) > 3 then -- Arctic Freeze
-		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Warning")
-	end
 	self:TargetBar(args.spellId, 45, args.destName)
 end
 
@@ -193,6 +191,12 @@ function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
 		self:Say(139866)
 		self:Message(139866, "Personal", "Info", CL["you"]:format(self:SpellName(139866)))
 		self:Flash(139866)
+	end
+end
+
+function mod:ArcticFreeze(args)
+	if args.amount > 3 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Warning")
 	end
 end
 
