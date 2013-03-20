@@ -43,9 +43,9 @@ end
 L = mod:GetLocale()
 
 L.custom_off_ray_controllers_desc = L.custom_off_ray_controllers_desc:format(
-	"|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15|t",
-	"|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15|t",
-	"|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15|t"
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t"
 )
 
 --------------------------------------------------------------------------------
