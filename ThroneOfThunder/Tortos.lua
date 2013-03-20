@@ -78,16 +78,14 @@ end
 function mod:OnEngage()
 	kickable = 0
 	nextBreath = GetTime() + 46
-	self:Berserk(600) -- XXX ASSUMED
+	self:Berserk(780)
 	self:Bar(-7140, 46, 136686) -- Summon Bats
 	self:Bar(133939, 46) -- Furious Stone Breath
 	self:Bar(136294, 21) -- Call of Tortos
 	self:Bar(134920, 30) -- Quake Stomp
-	if self:Heroic() then
-		if not UnitDebuff("player", crystalShell) then -- Here we can warn tanks too
-			self:Message(137633, "Personal", "Info", L["no_crystal_shell"])
-			crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3)
-		end
+	if self:Heroic() and not UnitDebuff("player", crystalShell) then -- Here we can warn tanks too
+		self:Message(137633, "Personal", "Info", L["no_crystal_shell"])
+		crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3)
 	end
 end
 
