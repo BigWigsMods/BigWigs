@@ -153,7 +153,7 @@ end
 
 function mod:LifeDrainStunApplied(args)
 	self:PrimaryIcon(133798, args.destName)
-	self:TargetMessage(133798, args.destName, "Important", "Alert", true)
+	self:TargetMessage(133798, args.destName, "Important", "Alert", nil, nil, true)
 end
 
 function mod:LifeDrainStunRemoved(args)
