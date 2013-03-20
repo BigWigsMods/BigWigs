@@ -137,7 +137,7 @@ L = BigWigs:NewBossLocale("Lei Shen", "deDE")
 if L then
 	L.conduit_abilities = "Leitungs-Fähigkeiten"
 	L.conduit_abilities_desc = "Ungefähre Cooldown-Leisten für die spezifischen Fähigkeiten der Leitungen"
-	L.conduit_ability_meassage = "Nächste Leitungs-Fähigkeit"
+	L.conduit_abilities_message = "Nächste Leitungs-Fähigkeit"
 
 	L.intermission = "Unterbrechung"
 	L.diffusion_add = "Kugelblitzelementare"

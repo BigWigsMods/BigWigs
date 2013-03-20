@@ -137,7 +137,7 @@ L = BigWigs:NewBossLocale("Lei Shen", "frFR")
 if L then
 	L.conduit_abilities = "Techniques du conduit"
 	L.conduit_abilities_desc = "Barres approximatives des temps de recharge des techniques spécifiques au conduit."
-	L.conduit_ability_meassage = "Proch. tech. du conduit"
+	L.conduit_abilities_message = "Proch. tech. du conduit"
 
 	L.intermission = "Entracte"
 	L.diffusion_add = "Foudres diffuses"

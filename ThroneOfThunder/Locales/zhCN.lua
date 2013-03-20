@@ -55,7 +55,6 @@ if L then
 	L.kick_desc = "持续追踪可被脚踢乌龟的数量。"
 	L.kick_message = "可脚踢乌龟：>%d<！"
 
-	L.crystal_shell_removed = "晶化甲壳 移除！"
 	L.no_crystal_shell = "没有晶化甲壳"
 end
 
@@ -86,9 +85,9 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "zhCN")
 if L then
-	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
-	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Fog!"
-	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
+	L.red_spawn_trigger = "猩红雾行兽"
+	L.blue_spawn_trigger = "碧蓝雾行兽"
+	L.yellow_spawn_trigger = "琥珀雾行兽"
 
 	L.adds = "显形增援"
 	L.adds_desc = "当猩红、琥珀和碧蓝雾行兽显形和猩红雾行兽剩余时发出警报。"
@@ -142,7 +141,7 @@ if L then
 
 	L.intermission = "阶段转换"
 	L.diffusion_add = "散射闪电增援"
-	L.shock = "Shock"
+	L.shock = "电能震击"
 
 	L.overcharged_message = "昏迷 AoE 脉冲"
 	L.static_shock_message = "分摊 AoE 伤害"

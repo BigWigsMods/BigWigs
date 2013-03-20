@@ -135,7 +135,7 @@ L = BigWigs:NewBossLocale("Lei Shen", "ruRU")
 if L then
 	L.conduit_abilities = "Способности проводника"
 	L.conduit_abilities_desc = "Полосы приблизительного восстановления способностей проводника."
-	L.conduit_ability_meassage = "След. способность проводника"
+	L.conduit_abilities_message = "След. способность проводника"
 
 	L.intermission = "Перерыв"
 	L.diffusion_add = "Цепные помощники"
