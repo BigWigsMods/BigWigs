@@ -97,7 +97,9 @@ function mod:OnEngage()
 	self:Berserk(600) -- 25 N PTR Confirmed
 	self:Bar("stages", 184, CL["phase"]:format(2), 137440)
 	deadBosses = 0
-	self:OpenProximity("proximity", 8)
+	if not self:LFR() then
+		self:OpenProximity("proximity", 8)
+	end
 	self:CDBar(-7631, 14) -- Cosmic Barrage
 	self:CDBar(-7643, 22) -- Tears of the Sun
 	self:CDBar(-7634, 50) -- Beast of Nightmares

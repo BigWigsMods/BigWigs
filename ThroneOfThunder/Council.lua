@@ -349,8 +349,7 @@ do
 
 		-- leave in all the elseif statements to be ready in case they are needed on heroic
 		local mobId = self:MobId(args.destGUID)
-		if mobId == 69132 then -- Priestess
-		elseif mobId == 69131 then -- Frost King
+		if mobId == 69131 then -- Frost King
 			self:StopBar(136992) -- Biting Cold
 			if bitingColdStart then
 				self:CDBar(136990, 45 - (GetTime() - bitingColdStart)) -- Frostbite -- CD bar because of Possessed buff travel time
@@ -358,8 +357,6 @@ do
 			if self:Heroic() then
 				self:RegisterUnitEvent("UNIT_AURA", "ChilledToTheBone", "player")
 			end
-		elseif mobId == 69134 then -- Kazra'jin
-		elseif mobId == 69078 then -- Sandcrawler
 		end
 	end
 
@@ -377,26 +374,21 @@ do
 
 		-- leave in all the elseif statements to be ready in case they are needed on heroic
 		local mobId = self:MobId(args.destGUID)
-		if mobId == 69132 then -- Priestess
-		elseif mobId == 69131 then -- Frost King
+		if mobId == 69131 then -- Frost King
 			self:StopBar(136990) -- Frostbite
 			if frostBiteStart then
 				self:Bar(136992, 45 - (GetTime() - frostBiteStart)) -- Biting Cold
 			end
 			if self:Heroic() then self:UnregisterUnitEvent("UNIT_AURA", "player") end
-		elseif mobId == 69134 then -- Kazra'jin
-		elseif mobId == 69078 then -- Sandcrawler
 		end
 	end
 end
 
 function mod:Deaths(args)
 	-- leave in all the elseif statements to be ready in case they are needed on heroic
-	if args.mobId == 69132 then -- Priestess
-	elseif args.mobId == 69131 then -- Frost King
+	if args.mobId == 69131 then -- Frost King
 		self:StopBar(136992) -- Frostbite
 		self:StopBar(136990) -- Biting Cold
-	elseif args.mobId == 69134 then -- Kazra'jin
 	elseif args.mobId == 69078 then -- Sandcrawler
 		sandGuyDead = true
 		self:StopBar(-7062) -- Quicksand

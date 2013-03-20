@@ -78,7 +78,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:OpenProximity("proximity", 8)
+	if not self:LFR() then
+		self:OpenProximity("proximity", 8)
+	end
 	self:Berserk(600) -- XXX assumed
 	self:Bar(134380, self:Heroic() and 63 or 43) -- Quills
 	self:Bar(134370, 90) -- Down Draft
