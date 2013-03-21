@@ -130,7 +130,7 @@ end
 do
 	local function rampageOver(spellId, spellName)
 		mod:Message(spellId, "Positive", nil, CL["over"]:format(spellName))
-		if frostOrFireDead and not self:LFR() then
+		if frostOrFireDead and not mod:LFR() then
 			mod:OpenProximity("proximity", 5)
 		end
 	end
