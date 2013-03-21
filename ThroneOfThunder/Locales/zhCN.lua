@@ -10,8 +10,8 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "zhCN")
 if L then
-	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
-	L.door_trigger = "pour" -- "Farraki forces pour from the Farraki Tribal Door!
+	L.charge_trigger = "用力拍动尾巴" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
+	L.door_trigger = "的门蜂拥而出" -- "Farraki forces pour from the Farraki Tribal Door!
 
 	L.chain_lightning_message = "焦点：>闪电链<！"
 	L.chain_lightning_bar = "焦点：闪电链"
@@ -68,8 +68,8 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "zhCN")
 if L then
-	L.lower_hatch_trigger = "The eggs in one of the lower nests begin to hatch!"
-	L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch!"
+	L.lower_hatch_trigger = "下层某个鸟巢中的蛋开始孵化了"
+	L.upper_hatch_trigger = "上层某个鸟巢中的蛋开始孵化了"
 
 	L.nest = "巢穴"
 	L.nest_desc = "警报依赖于巢穴。|cffff0000如果你没有分配到处理巢穴请关闭该警报！|r"
@@ -112,7 +112,7 @@ end
 
 L = BigWigs:NewBossLocale("Dark Animus", "zhCN")
 if L then
-	L.engage_trigger = "The orb explodes!"
+	L.engage_trigger = "宝珠爆炸了"
 	L.slam_message = "爆炸猛击！"
 end
 
