@@ -128,7 +128,11 @@ function mod:OnEngage()
 	doorCounter = 1
 	self:Berserk(720)
 	self:CDBar("adds", 16, L["door_bar"]:format(doorCounter), "inv_shield_11")
-	self:CDBar(-7080, 33)
+	self:CDBar(-7078, 10) -- Triple Puncture
+	self:CDBar(-7080, 33) -- Charge
+	if self:Heroic() then
+		self:Bar(137458, 63) -- Dire Call
+	end
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "LastPhase", "boss1")
 end
 
@@ -142,7 +146,7 @@ function mod:BossEngage()
 	self:CheckBossStatus()
 	if self:MobId(UnitGUID("boss2")) == 69374 then -- War-God Jalak
 		self:StopBar(-7087)
-		self:Message("adds", "Attention", "Info", -7087, false) -- War-God Jalak
+		self:Message("adds", "Neutral", "Info", -7087, false) -- War-God Jalak
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 		self:Bar(136817, 5) -- Bestial Cry
 	end
@@ -181,7 +185,7 @@ end
 function mod:DinoMendingInterrupt(args)
 	if args.extraSpellId == 136797 then
 		self:StopBar(-7090)
-		self:Message(-7090, "Important", nil, CL["interrupted"]:format(self:SpellName(-7090)))
+		self:Message(-7090, "Positive", nil, CL["interrupted"]:format(self:SpellName(-7090)))
 	end
 end
 
