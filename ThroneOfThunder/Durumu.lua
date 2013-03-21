@@ -82,8 +82,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "HardStare", 133765)
 	self:Log("SPELL_AURA_APPLIED", "SeriousWound", 133767)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SeriousWound", 133767)
-	self:Log("SPELL_CAST_SUCCESS", "Tracking", 139202) -- for beam jumping on deaths
-	self:Log("SPELL_CAST_SUCCESS", "Tracking", 139204)
+	self:Log("SPELL_CAST_SUCCESS", "Tracking", 139202, 139204) -- Blue Ray Tracking, Infrared Tracking (for beam jumping on deaths)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
@@ -234,7 +233,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 			self:Message(-6891, "Personal", "Alert", CL["you"]:format(L["blue_beam"]), 139202)
 		end
 	elseif msg:find("133795") then -- Life Drain (gets target faster than CLEU)
-		self:TargetMessage(133798, target, "Important", "Alert")
+		self:TargetMessage(133798, target, "Urgent", "Long")
 		self:PrimaryIcon(133798, target)
 	elseif msg:find(L["red_spawn_trigger"]) then
 		self:Message("adds", "Urgent", UnitIsUnit("player", redController) and "Warning", L["red_add"], 136154)
@@ -321,7 +320,7 @@ end
 function mod:Deaths(args)
 	if args.mobId == 69050 then -- Red add
 		redAddDead = redAddDead + 1
-		self:Message("adds", "Positive", redAddDead == 3 and "Info", CL["add_killed"]:format(redAddDead, 3), 136154)
+		self:Message("adds", "Positive", redAddDead == 3 and "Info", CL["mob_killed"]:format(L["red_add"], redAddDead, 3), 136154)
 		if redAddDead == 3 then
 			self:StopBar(137747) -- Obliterate (heroic)
 			self:CDBar(-6905, 20) -- Force of Will
