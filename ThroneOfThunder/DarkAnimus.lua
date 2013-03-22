@@ -36,7 +36,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{138485, "FLASH", "SAY"},
-		{138609, "FLASH", "ICON"}, {-7770, "TANK"},
+		{138609, "FLASH", "ICON", "DISPEL"}, {-7770, "TANK"},
 		138644, 136954, 138691, 138780, {138763, "FLASH"}, {138729, "FLASH"},
 		"berserk", "bosskill",
 	}, {
@@ -80,7 +80,7 @@ end
 -- Event Handlers
 --
 
---------------------------------------------------------------------------------
+----------------------------------------
 -- Dark Animus
 --
 
@@ -90,7 +90,7 @@ function mod:FullPower(args)
 end
 
 function mod:InterruptingJolt(args)
-	local caster = UnitPowerType("player") == 0 or mod:Healer()
+	local caster = UnitPowerType("player") == 0 or self:Healer()
 	self:Message(args.spellId, caster and "Personal" or "Attention", caster and "Long")
 	self:CDBar(args.spellId, 18)
 	if caster then
@@ -104,8 +104,8 @@ function mod:Empower(args)
 end
 
 function mod:AnimaFont(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
-	self:Bar(args.spellId, 30, CL["cast"]:format(args.spellName)) -- this is duration, cooldowns seems to be 33-46
+	-- cooldown seems to be 20-30ish
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
 end
 
 function mod:AnimaRing(args)
@@ -132,7 +132,7 @@ function mod:BossEngage()
 	end
 end
 
---------------------------------------------------------------------------------
+----------------------------------------
 -- Massive Anima Golem
 --
 
@@ -151,13 +151,13 @@ function mod:MatterSwapApplied(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:Flash(args.spellId)
-	elseif self:Dispeller("magic") then
+	elseif self:Dispeller("magic", nil, 138609) then
 		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", nil, nil, true)
 		self:TargetBar(args.spellId, 12, args.destName)
 	end
 end
 
---------------------------------------------------------------------------------
+----------------------------------------
 -- Large Anima Golem
 --
 
