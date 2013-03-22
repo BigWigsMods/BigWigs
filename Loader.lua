@@ -512,7 +512,8 @@ do
 	loaderUtilityFrame.timer:SetScript("OnFinished", function()
 		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:%d" or "VRA:%d"):format(BIGWIGS_RELEASE_REVISION), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
 	end)
-	loaderUtilityFrame.timer:CreateAnimation():SetDuration(5)
+	local anim = loaderUtilityFrame.timer:CreateAnimation()
+	anim:SetDuration(5)
 
 	function loader:BigWigs_AddonMessage(event, prefix, message, sender)
 		if prefix == "VR" or prefix == "VQ" then

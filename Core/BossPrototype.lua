@@ -814,6 +814,9 @@ do
 
 	function boss:TargetMessage(key, player, color, sound, text, icon, alwaysPlaySound)
 		local textType = type(text)
+		local msg = textType == "string" and text or spells[text or key]
+		local texture = icon ~= false and icons[icon or textType == "number" and text or key]
+
 		if type(player) == "table" then
 			local list = table.concat(player, ", ")
 			if not list:find(pName, nil, true) then
@@ -822,18 +825,23 @@ do
 			else
 				if not checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then wipe(player) return end
 			end
-			self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], list), color, sound, icon ~= false and icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, sound, texture)
 			wipe(player)
 		else
+			if not player then
+				if checkFlag(self, key, C.MESSAGE) then
+					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, ""), color == "Personal" and "Important" or color, alwaysPlaySound and sound, texture)
+				end
+				return
+			end
 			if UnitIsUnit(player, "player") then
 				if checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then
-					local msg = textType == "string" and text or spells[text or key]
-					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", sound, icon ~= false and icons[icon or textType == "number" and text or key])
+					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", sound, texture)
 				end
 			else
 				if checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
 					-- Change color and remove sound (if not alwaysPlaySound) when warning about effects on other players
-					self:SendMessage("BigWigs_Message", self, key, format(L.other, textType == "string" and text or spells[text or key], coloredNames[player]), color == "Personal" and "Important" or color, alwaysPlaySound and sound, icon ~= false and icons[icon or textType == "number" and text or key])
+					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color == "Personal" and "Important" or color, alwaysPlaySound and sound, texture)
 				end
 			end
 		end

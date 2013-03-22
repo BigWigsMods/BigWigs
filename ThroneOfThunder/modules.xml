@@ -14,6 +14,7 @@
 <Script file="TwinConsorts.lua" />
 <Script file="LeiShen.lua" />
 <Script file="Raden.lua" />
+<Script file="Trash.lua" />
 
 </Ui>
 
