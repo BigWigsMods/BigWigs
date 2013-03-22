@@ -56,7 +56,7 @@ function mod:GetOptions()
 	return {
 		-6889,
 		"custom_off_ray_controllers",
-		{133767, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {-6905, "FLASH", "SAY"}, {-6891, "FLASH"}, "adds",
+		{133767, "TANK_HEALER"}, {133768, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {-6905, "FLASH", "SAY"}, {-6891, "FLASH"}, "adds",
 		{133798, "ICON"}, -6882, 140502,
 		"berserk", "bosskill",
 	}, {
@@ -82,6 +82,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "HardStare", 133765)
 	self:Log("SPELL_AURA_APPLIED", "SeriousWound", 133767)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SeriousWound", 133767)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ArterialCut", 133768)
 	self:Log("SPELL_CAST_SUCCESS", "Tracking", 139202, 139204) -- Blue Ray Tracking, Infrared Tracking (for beam jumping on deaths)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -257,7 +258,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 		self:CDBar(133798, 66) -- Life Drain
 		self:CDBar(134626, 76) -- Lingering Gaze
 		self:CDBar(-6905, 78) -- Force of Will
-		self:Bar(-6882, 63, CL["cast"]:format(L["death_beam"])) -- Exactly 60 sec, a good place to start other timers
+		self:Bar(-6882, 64, CL["cast"]:format(L["death_beam"]))
 		self:Bar(-6882, 191, L["death_beam"])
 		self:Message(-6882, "Attention", nil, L["death_beam"])
 	end
@@ -315,6 +316,10 @@ end
 
 function mod:SeriousWound(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
+end
+
+function mod:ArterialCut(args)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Alarm")
 end
 
 function mod:Deaths(args)
