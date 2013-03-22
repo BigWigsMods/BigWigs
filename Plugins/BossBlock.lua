@@ -27,6 +27,8 @@ function plugin:OnPluginEnable()
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", chatFilter)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_WARNING", chatFilter)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", chatFilter)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_INSTANCE_CHAT", chatFilter)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_INSTANCE_CHAT_LEADER", chatFilter)
 end
 
 function plugin:OnPluginDisable()
@@ -40,6 +42,8 @@ function plugin:OnPluginDisable()
 	ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID", chatFilter)
 	ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID_WARNING", chatFilter)
 	ChatFrame_RemoveMessageEventFilter("CHAT_MSG_RAID_LEADER", chatFilter)
+	ChatFrame_RemoveMessageEventFilter("CHAT_MSG_INSTANCE_CHAT", chatFilter)
+	ChatFrame_RemoveMessageEventFilter("CHAT_MSG_INSTANCE_CHAT_LEADER", chatFilter)
 end
 
 do
