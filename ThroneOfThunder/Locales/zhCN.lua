@@ -152,3 +152,10 @@ L = BigWigs:NewBossLocale("Ra-den", "zhCN")
 if L then
 
 end
+
+L = BigWigs:NewBossLocale("Trash", "zhCN")
+if L then
+	L.stormcaller = "Zandalari Storm-Caller"
+	L.stormbringer = "Stormbringer Draz'kil"
+end
+

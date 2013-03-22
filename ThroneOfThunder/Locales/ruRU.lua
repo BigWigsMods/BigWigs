@@ -116,6 +116,7 @@ if L then
 	L.engage_trigger = "Сфера взрывается!"
 	L.slam_message = "Удар"
 end
+
 L = BigWigs:NewBossLocale("Iron Qon", "ruRU")
 if L then
 	L.molten_energy = "Энергия огня"
@@ -125,12 +126,14 @@ if L then
 
 	L.arcing_lightning_cleared = "Рейд свободен от Дуговой молнии"
 end
+
 L = BigWigs:NewBossLocale("Twin Consorts", "ruRU")
 if L then
 	L.last_phase_yell_trigger = "Только один раз..."
 
 	L.barrage_fired = "Обстрел закончен!"
 end
+
 L = BigWigs:NewBossLocale("Lei Shen", "ruRU")
 if L then
 	L.conduit_abilities = "Способности проводника"
@@ -141,7 +144,14 @@ if L then
 	L.diffusion_add = "Цепные помощники"
 	L.shock = "Потрясение"
 end
+
 L = BigWigs:NewBossLocale("Ra-den", "ruRU")
 if L then
 
+end
+
+L = BigWigs:NewBossLocale("Trash", "ruRU")
+if L then
+	L.stormcaller = "Zandalari Storm-Caller"
+	L.stormbringer = "Stormbringer Draz'kil"
 end

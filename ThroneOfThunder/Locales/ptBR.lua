@@ -60,3 +60,8 @@ if L then
 
 end
 
+L = BigWigs:NewBossLocale("Trash", "ptBR")
+if L then
+
+end
+
