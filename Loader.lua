@@ -99,7 +99,7 @@ do
 		[604]=wotlk, [543]=wotlk, [535]=wotlk, [529]=wotlk, [527]=wotlk, [532]=wotlk, [531]=wotlk, [609]=wotlk, [718]=wotlk,
 		[752]=cata, [758]=cata, [754]=cata, [824]=cata, [800]=cata, [773]=cata,
 
-		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw,
+		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw, [919]=lw,
 	}
 end
 
