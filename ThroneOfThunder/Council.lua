@@ -169,7 +169,7 @@ function mod:Entrapped(args)
 	if self:Me(args.destGUID) then
 		self:Flash(136857)
 		self:Message(136857, "Personal", "Info")
-	elseif self:Dispeller("magic") or ((select(2, UnitClass("player")) == "HUNTER") and (GetSpellCooldown(self:SpellName(53271)) == 0))then -- Master's call works on it too
+	elseif self:Dispeller("magic") or ((select(2, UnitClass("player")) == "HUNTER") and (GetSpellCooldown(self:SpellName(53271)) == 0)) then -- Master's call works on it too
 		self:TargetMessage(136857, args.destName, "Attention", nil, nil, nil, true)
 	end
 end

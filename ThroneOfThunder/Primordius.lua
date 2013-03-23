@@ -101,7 +101,7 @@ do
 
 		mod:Message(-6960, "Personal", ((totalP > 3) or (totalN > 0)) and "Info" or nil, L["mutations"]:format(totalP, totalN), 136184)
 		if totalP == 5 then
-			mod:Flash(-6960)
+			mod:Flash(-6960, 136184)
 		end
 		scheduled = nil
 	end

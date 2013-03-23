@@ -830,7 +830,7 @@ do
 		else
 			if not player then
 				if checkFlag(self, key, C.MESSAGE) then
-					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, ""), color == "Personal" and "Important" or color, alwaysPlaySound and sound, texture)
+					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, "???"), color == "Personal" and "Important" or color, alwaysPlaySound and sound, texture)
 				end
 				return
 			end
