@@ -522,7 +522,9 @@ do
 				loaderUtilityFrame.timer:Play()
 			end
 			message = tonumber(message)
-			if not message then return end
+			-- PhoenixStyle does a mass version check to see what boss mods people are using for some reason.
+			-- It uses version 0 in the query so we just respond to this normally but stop attributing these people as using Big Wigs.
+			if not message or message == 0 then return end
 			usersRelease[sender] = message
 			usersAlpha[sender] = nil
 			if message > highestReleaseRevision then highestReleaseRevision = message end
@@ -536,7 +538,7 @@ do
 				loaderUtilityFrame.timer:Play()
 			end
 			message = tonumber(message)
-			if not message then return end
+			if not message or message == 0 then return end
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
 			if message > highestAlphaRevision then highestAlphaRevision = message end
