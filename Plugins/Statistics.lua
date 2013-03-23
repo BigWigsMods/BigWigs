@@ -144,7 +144,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 		local sDB = BigWigsStatisticsDB[module.zoneId][module.encounterId][difficultyTable[module:Difficulty()]]
 
 		if self.db.profile.printKills then
-			BigWigs:Print(L.bossKillDurationPrint:format(module.moduleName, SecondsToTime(elapsed)))
+			BigWigs:Print(L.bossKillDurationPrint:format(module.displayName, SecondsToTime(elapsed)))
 		end
 
 		if self.db.profile.saveKills then
@@ -168,7 +168,7 @@ function plugin:BigWigs_OnBossWipe(event, module)
 
 		if elapsed > 30 then -- Fight must last longer than 30 seconds to be an actual wipe worth noting
 			if self.db.profile.printWipes then
-				BigWigs:Print(L.bossWipeDurationPrint:format(module.moduleName, SecondsToTime(elapsed)))
+				BigWigs:Print(L.bossWipeDurationPrint:format(module.displayName, SecondsToTime(elapsed)))
 			end
 
 			if self.db.profile.saveWipes then
