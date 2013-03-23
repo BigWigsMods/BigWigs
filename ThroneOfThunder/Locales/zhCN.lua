@@ -156,6 +156,6 @@ end
 L = BigWigs:NewBossLocale("Trash", "zhCN")
 if L then
 	L.stormcaller = "赞达拉风暴召唤者"
-	L.stormbringer = "风暴使者德拉兹基尔"
+	L.stormbringer = "风暴使者达兹基尔"
 end
 
