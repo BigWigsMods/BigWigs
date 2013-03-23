@@ -392,6 +392,7 @@ function mod:Deaths(args)
 	elseif args.mobId == 69078 then -- Sandcrawler
 		sandGuyDead = true
 		self:StopBar(-7062) -- Quicksand
+		self:StopBar(136894) -- Sandstorm
 		self:CloseProximity()
 	end
 
