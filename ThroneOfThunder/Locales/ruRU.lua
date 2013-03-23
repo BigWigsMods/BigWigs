@@ -129,7 +129,7 @@ end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "ruRU")
 if L then
-	L.last_phase_yell_trigger = "Только один раз..."
+	L.last_phase_yell_trigger = "Только в этот раз..."
 
 	L.barrage_fired = "Обстрел закончен!"
 end
@@ -152,6 +152,6 @@ end
 
 L = BigWigs:NewBossLocale("Trash", "ruRU")
 if L then
-	L.stormcaller = "Zandalari Storm-Caller"
-	L.stormbringer = "Stormbringer Draz'kil"
+	L.stormcaller = "Зандаларский призыватель бурь"
+	L.stormbringer = "Вестник шторма Драз'кил"
 end
