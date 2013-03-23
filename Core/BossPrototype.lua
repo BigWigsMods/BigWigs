@@ -938,7 +938,7 @@ function boss:AddSyncListener(sync)
 	core:AddSyncListener(self, sync)
 end
 
-function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk)
+function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, customFinalMessage)
 	local boss = customBoss or self.displayName
 	local key = "berserk"
 
@@ -969,7 +969,7 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk)
 	self:DelayedMessage(key, seconds - 30, "Urgent", format(L.custom_sec, berserk, 30))
 	self:DelayedMessage(key, seconds - 10, "Urgent", format(L.custom_sec, berserk, 10))
 	self:DelayedMessage(key, seconds - 5, "Important", format(L.custom_sec, berserk, 5))
-	self:DelayedMessage(key, seconds, "Important", format(L.custom_end, boss, berserk), icon, "Alarm")
+	self:DelayedMessage(key, seconds, "Important", customFinalMessage or format(L.custom_end, boss, berserk), icon, "Alarm")
 
 	self:Bar(key, seconds, berserk, icon)
 end
