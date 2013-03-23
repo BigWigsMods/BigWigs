@@ -143,10 +143,11 @@ function mod:GrowingFury(args)
 end
 
 do
-	local scheduled = nil
+	local scheduled, kicked = nil, {}
 	local function announceKickable()
 		mod:Message("kick", "Attention", nil, L["kick_message"]:format(kickable), 1766)
 		scheduled = nil
+		wipe(kicked)
 	end
 	function mod:ShellBlock()
 		kickable = kickable + 1
@@ -155,9 +156,12 @@ do
 		end
 	end
 	function mod:KickShell(args)
-		kickable = kickable - 1
-		if not scheduled then
-			scheduled = self:ScheduleTimer(announceKickable, 2)
+		if not kicked[args.destGUID] then
+			kicked[args.destGUID] = true
+			kickable = kickable - 1
+			if not scheduled then
+				scheduled = self:ScheduleTimer(announceKickable, 2)
+			end
 		end
 	end
 end
