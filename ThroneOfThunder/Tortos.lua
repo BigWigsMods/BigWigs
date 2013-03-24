@@ -31,7 +31,7 @@ local crystalTimer = nil
 
 local crystalShell = mod:SpellName(137633)
 local function warnCrystalShell()
-	if UnitDebuff("player", crystalShell) or UnitIsDeadOrGhost("player") then
+	if UnitDebuff("player", crystalShell) or not UnitAffectingCombat("player") then
 		mod:CancelTimer(crystalTimer)
 		crystalTimer = nil
 	else
@@ -84,8 +84,8 @@ function mod:OnEngage()
 	self:Bar(136294, 21) -- Call of Tortos
 	self:Bar(134920, 30) -- Quake Stomp
 	if self:Heroic() and not UnitDebuff("player", crystalShell) then -- Here we can warn tanks too
-		self:Message(137633, "Personal", "Info", L["no_crystal_shell"])
 		crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3)
+		warnCrystalShell()
 	end
 end
 
