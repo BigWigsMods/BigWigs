@@ -213,7 +213,7 @@ end
 do
 	local function setMark(unit, guid)
 		for mark=8, 1, -1 do
-			if not marksUsed[i] then
+			if not marksUsed[mark] then
 				adds[guid] = "marked"
 				SetRaidTarget(unit, mark)
 				marksUsed[mark] = guid
