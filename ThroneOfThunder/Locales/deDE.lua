@@ -55,6 +55,9 @@ if L then
 	L.kick_desc = "Anzeigen, wie viele Schildkröten unterbrochen werden können"
 	L.kick_message = "Unterbrechbare Schildkröten: %d"
 
+	L.custom_off_turtlemarker = "Schildkröten markieren"
+	L.custom_off_turtlemarker_desc = "Markiert die Schildkröten mit allen Raidsymbolen."
+
 	L.no_crystal_shell = "KEIN Kristallpanzer"
 end
 
