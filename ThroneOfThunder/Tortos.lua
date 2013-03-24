@@ -65,7 +65,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "Rockfall", 134539)
 	self:Log("SPELL_CAST_START", "FuriousStoneBreath", 133939)
 	self:Log("SPELL_CAST_SUCCESS", "GrowingFury", 136010)
-	self:Log("SPELL_CAST_SUCCESS", "KickShell", 134031)
+	self:Log("SPELL_AURA_REMOVED", "KickShell", 133971) -- Shell Block removed (as a result of Kick Shell)
 	self:Log("SPELL_CAST_SUCCESS", "ShellBlock", 133971)
 	self:Log("SPELL_CAST_START", "CallOfTortos", 136294)
 
@@ -143,11 +143,10 @@ function mod:GrowingFury(args)
 end
 
 do
-	local scheduled, kicked = nil, {}
+	local scheduled = nil
 	local function announceKickable()
 		mod:Message("kick", "Attention", nil, L["kick_message"]:format(kickable), 1766)
 		scheduled = nil
-		wipe(kicked)
 	end
 	function mod:ShellBlock()
 		kickable = kickable + 1
@@ -156,12 +155,9 @@ do
 		end
 	end
 	function mod:KickShell(args)
-		if not kicked[args.destGUID] then
-			kicked[args.destGUID] = true
-			kickable = kickable - 1
-			if not scheduled then
-				scheduled = self:ScheduleTimer(announceKickable, 2)
-			end
+		kickable = kickable - 1
+		if not scheduled then
+			scheduled = self:ScheduleTimer(announceKickable, 2)
 		end
 	end
 end
