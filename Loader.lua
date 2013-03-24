@@ -419,7 +419,8 @@ do
 			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale(), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
 		elseif prefix == "V" then
 			-- If there are people with newer versions than us, suddenly we've upgraded!
-			if tonumber(revision) > tonumber(DBMdotRevision) then
+			local rev = tonumber(revision)
+			if rev ~= 99999 and rev > tonumber(DBMdotRevision) then
 				DBMdotRevision = revision
 				DBMdotDisplayVersion = displayVersion
 				dbmFaker(nil, nil, "H") -- Re-send addon message.
