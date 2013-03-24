@@ -119,7 +119,7 @@ end
 
 L = BigWigs:NewBossLocale("Iron Qon", "ruRU")
 if L then
-	L.molten_energy = "Энергия огня"
+	L.molten_energy = "Сила огня"
 
 	L.overload_casting = "Чтение Раскаленной силы"
 	L.overload_casting_desc = "Предупреждать, когда идет чтение Раскаленной силы"
