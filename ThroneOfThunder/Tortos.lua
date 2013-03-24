@@ -17,6 +17,10 @@ if L then
 	L.kick_icon = 1766
 	L.kick_message = "Kickable turtles: %d"
 
+	L.custom_off_turtlemarker = "Turtle Marker"
+	L.custom_off_turtlemarker_desc = "Marks turtles with all raid icons."
+	L.custom_off_turtlemarker_icon = 103074
+
 	L.no_crystal_shell = "NO Crystal Shell"
 end
 L = mod:GetLocale()
@@ -39,6 +43,11 @@ local function warnCrystalShell()
 	end
 end
 
+-- marking
+local adds = {}
+local marksUsed = {}
+local markTimer = nil
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -47,7 +56,7 @@ function mod:GetOptions()
 	return {
 		{137633, "FLASH"},
 		136294, -7134, 133939, {136010, "TANK"}, {134539, "FLASH"}, 134920, {135251, "TANK"}, -7140,
-		"kick", "berserk", "bosskill",
+		"kick", "custom_off_turtlemarker", "berserk", "bosskill",
 	}, {
 		[137633] = "heroic",
 		[136294] = "general",
@@ -65,8 +74,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "Rockfall", 134539)
 	self:Log("SPELL_CAST_START", "FuriousStoneBreath", 133939)
 	self:Log("SPELL_CAST_SUCCESS", "GrowingFury", 136010)
-	self:Log("SPELL_AURA_REMOVED", "KickShell", 133971) -- Shell Block removed (as a result of Kick Shell)
-	self:Log("SPELL_CAST_SUCCESS", "ShellBlock", 133971)
+	self:Log("SPELL_AURA_APPLIED", "SpinningShell", 133974) -- spawn
+	self:Log("SPELL_AURA_APPLIED", "ShellBlock", 133971) -- death
+	self:Log("SPELL_AURA_REMOVED", "KickShell", 133971) -- kicked (Shell Block removed)
 	self:Log("SPELL_CAST_START", "CallOfTortos", 136294)
 
 	self:RegisterUnitEvent("UNIT_AURA", "ShellConcussionCheck", "boss1")
@@ -87,6 +97,11 @@ function mod:OnEngage()
 		crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3)
 		warnCrystalShell()
 	end
+	-- marking
+	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+	wipe(adds)
+	wipe(marksUsed)
+	markTimer = nil
 end
 
 --------------------------------------------------------------------------------
@@ -148,12 +163,22 @@ do
 		mod:Message("kick", "Attention", nil, L["kick_message"]:format(kickable), 1766)
 		scheduled = nil
 	end
-	function mod:ShellBlock()
+
+	function mod:ShellBlock(args)
 		kickable = kickable + 1
 		if not scheduled then
 			scheduled = self:ScheduleTimer(announceKickable, 2)
 		end
+
+		adds[args.destGUID] = nil
+		for i=8, 1, -1 do
+			if marksUsed[i] == args.destGUID then
+				marksUsed[i] = nil
+				break
+			end
+		end
 	end
+
 	function mod:KickShell(args)
 		kickable = kickable - 1
 		if not scheduled then
@@ -181,5 +206,53 @@ end
 function mod:CallOfTortos(args)
 	self:Message(args.spellId, "Urgent")
 	self:Bar(args.spellId, 60)
+end
+
+
+-- marking
+do
+	local function setMark(unit, guid)
+		for mark=8, 1, -1 do
+			if not marksUsed[i] then
+				adds[guid] = "marked"
+				SetRaidTarget(unit, mark)
+				marksUsed[mark] = guid
+				return
+			end
+		end
+	end
+
+	local function markMobs()
+		for guid in next, adds do
+			if adds[guid] == true then
+				local unit = mod:GetUnitIdByGUID(guid)
+				if unit then
+					setMark(unit, guid)
+				end
+			end
+		end
+		if not next(adds) or not mod.db.profile.custom_off_turtlemarker then
+			mod:CancelTimer(markTimer)
+			markTimer = nil
+		end
+	end
+
+	function mod:UPDATE_MOUSEOVER_UNIT()
+		if not self.db.profile.custom_off_turtlemarker then return end
+
+		local guid = UnitGUID("mouseover")
+		if guid and adds[guid] == true then
+			setMark("mouseover", guid)
+		end
+	end
+
+	function mod:SpinningShell(args)
+		if not adds[args.destGUID] then
+			adds[args.destGUID] = true
+			if self.db.profile.custom_off_turtlemarker and not markTimer then
+				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.2)
+			end
+		end
+	end
 end
 
