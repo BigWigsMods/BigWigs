@@ -94,7 +94,7 @@ end
 --
 
 function mod:CrystalShellRemoved(args)
-	if not self:Me(args.destGUID) or self:Tank() then return end
+	if not self:Me(args.destGUID) or self:Tank() or not UnitAffectingCombat("player") then return end
 	self:Flash(args.spellId)
 	self:Message(args.spellId, "Urgent", "Alarm", CL["removed"]:format(args.spellName)) -- I think this should stay Urgent Alarm
 	crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3)
