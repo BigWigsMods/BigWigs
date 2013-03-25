@@ -88,7 +88,7 @@ end
 function mod:OnEngage()
 	kickable = 0
 	nextBreath = GetTime() + 46
-	self:Berserk(780)
+	self:Berserk(600)
 	self:Bar(-7140, 46, 136686) -- Summon Bats
 	self:Bar(133939, 46) -- Furious Stone Breath
 	self:Bar(136294, 21) -- Call of Tortos
