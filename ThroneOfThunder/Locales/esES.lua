@@ -56,8 +56,8 @@ if L then
 	L.kick_desc = "Lleva la cuenta de cuantas tortugas pueden ser pateadas."
 	L.kick_message = "Tortugas pateables: %d"
 
-	L.custom_off_turtlemarker = "Turtle Marker"
-	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons."
+	L.custom_off_turtlemarker = "Marcador de tortugas"
+	L.custom_off_turtlemarker_desc = "Marca las tortugas usando todos los iconos de raid."
 
 	L.no_crystal_shell = "SIN Caparazón de cristal"
 end
@@ -146,8 +146,8 @@ if L then
 	L.diffusion_add = "Difusión de adds"
 	L.shock = "Choque"
 
-	L.overcharged_message = "Pulso de zona aturdidor"
-	L.static_shock_message = "Daño de zona para compartir"
+	L.overcharged_message = "Pulso AoE aturdidor"
+	L.static_shock_message = "Daño AoE compartido"
 	L.diffusion_chain_message = "Difusión de adds inminente - ¡DISPERSAOS!"
 end
 
