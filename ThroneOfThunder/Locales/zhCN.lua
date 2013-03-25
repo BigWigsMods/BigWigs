@@ -55,6 +55,8 @@ if L then
 	L.kick_desc = "持续追踪可被脚踢乌龟的数量。"
 	L.kick_message = "可脚踢乌龟：>%d<！"
 
+	L.custom_off_turtlemarker = "乌龟标记"
+	L.custom_off_turtlemarker_desc = "使用团队标记标记全部乌龟。"
 	L.no_crystal_shell = "没有晶化甲壳"
 end
 
