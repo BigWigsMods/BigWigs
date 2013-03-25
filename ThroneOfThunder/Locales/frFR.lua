@@ -55,8 +55,8 @@ if L then
 	L.kick_desc = "Effectue un suivi du nombre de tortues qui peuvent être bottées."
 	L.kick_message = "Tortues à botter : %d"
 
-	L.custom_off_turtlemarker = "Turtle Marker"
-	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons."
+	L.custom_off_turtlemarker = "Marqueur de tortue"
+	L.custom_off_turtlemarker_desc = "Marque les tortues en utilisant toutes les icônes de raid."
 
 	L.no_crystal_shell = "PAS de Carapace de cristal"
 end
@@ -158,7 +158,7 @@ end
 
 L = BigWigs:NewBossLocale("Trash", "frFR")
 if L then
-	L.stormcaller = "Zandalari Storm-Caller"
-	L.stormbringer = "Stormbringer Draz'kil"
+	L.stormcaller = "Mande-foudre zandalari"
+	L.stormbringer = "Porte-tempête Draz’kil"
 end
 
