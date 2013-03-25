@@ -837,7 +837,7 @@ function plugin:OnPluginEnable()
 	self:RefixClickIntercepts()
 	self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
 
-	self:SetBarStyle(db.barStyle)
+	self:SetBarStyle(currentBarStyler and currentBarStyler.GetStyleName and currentBarStyler.GetStyleName() or db.barStyle)
 end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
@@ -880,7 +880,6 @@ do
 	function plugin:SetBarStyle(style)
 		if type(style) ~= "string" or not barStyles[style] then
 			print(errorNoStyle:format(tostring(style)))
-			db.barStyle = "Default"
 			style = "Default"
 		end
 		local newBarStyler = barStyles[style]
@@ -908,7 +907,9 @@ do
 		rearrangeBars(normalAnchor)
 		rearrangeBars(emphasizeAnchor)
 
-		db.barStyle = style
+		if db then
+			db.barStyle = style
+		end
 	end
 end
 
