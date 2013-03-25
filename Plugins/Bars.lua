@@ -299,7 +299,6 @@ do
 
 	local function styleBar(bar)
 		bar:SetHeight(buttonsize/2.5)
-		bar.Height = buttonsize/2.5
 
 		local bg = nil
 		if #freebg > 0 then
@@ -324,18 +323,18 @@ do
 				icon = tremove(iconCache)
 			else
 				icon = createbg()
-				icon:SetSize(buttonsize, buttonsize)
+				icon:SetSize(buttonsize+4, buttonsize+4)
 				icon:SetFrameStrata("BACKGROUND")
 				icon.iconTex = icon:CreateTexture(nil, "LOW")
 				icon.iconTex:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 				icon.iconTex:SetPoint("CENTER")
-				icon.iconTex:SetSize(buttonsize-2, buttonsize-2)
+				icon.iconTex:SetSize(buttonsize, buttonsize)
 			end
 			icon.iconTex:SetTexture(tex)
 			icon:SetParent(bar)
 			icon:ClearAllPoints()
 			icon:Show()
-			icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -5, 0)
+			icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -3, -2)
 			bar:Set("bigwigs:MonoUI:icon", icon)
 		end
 
