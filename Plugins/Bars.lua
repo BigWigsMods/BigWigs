@@ -33,6 +33,7 @@ local colors = nil
 local candy = LibStub("LibCandyBar-3.0")
 local media = LibStub("LibSharedMedia-3.0")
 local next = next
+local tremove = tremove
 local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
 local empUpdate = nil -- emphasize updater frame
@@ -112,7 +113,7 @@ do
 	local function styleBar(bar)
 		local bgbc = nil
 		if #freeBackgroundsbc > 0 then
-			bgbc = table.remove(freeBackgroundsbc)
+			bgbc = tremove(freeBackgroundsbc)
 		else
 			bgbc = createBackgroundbc()
 		end
@@ -126,7 +127,7 @@ do
 
 		local borders = nil
 		if #freeBorderSets > 0 then
-			borders = table.remove(freeBorderSets)
+			borders = tremove(freeBorderSets)
 			for i, border in next, borders do
 				border:SetParent(bar.candyBarBar)
 				border:ClearAllPoints()
@@ -220,7 +221,7 @@ do
 	local function styleBar(bar)
 		local bg = nil
 		if #freeBackgrounds > 0 then
-			bg = table.remove(freeBackgrounds)
+			bg = tremove(freeBackgrounds)
 		else
 			bg = createBackground()
 		end
@@ -240,6 +241,122 @@ do
 		ApplyStyle = styleBar,
 		BarStopped = freeStyle,
 		GetStyleName = function() return "TukUI" end,
+	}
+end
+
+do
+	-- MonoUI
+	local buttonsize = 15
+
+	local backdrop_border = {
+		bgFile = [=[Interface\ChatFrame\ChatFrameBackground]=],
+		edgeFile = [=[Interface\ChatFrame\ChatFrameBackground]=],
+		tile = false, tileSize = 0, edgeSize = 1,
+		insets = { left = 0, right = 0, top = 0, bottom = 0}
+	}
+
+	local freebg = {}
+	local iconCache = {}
+
+	-- styling functions
+	local createbg = function()
+		local f = CreateFrame("Frame")
+		f:SetBackdrop(backdrop_border)
+		f:SetBackdropColor(.1,.1,.1,1)
+		f:SetBackdropBorderColor(0,0,0,1)
+		return f
+	end
+
+	local function freeStyle(bar)
+		-- reparent and hide bar background
+		local bg = bar:Get("bigwigs:MonoUI:barbg")
+		if bg then
+			bg:ClearAllPoints()
+			bg:SetParent("UIParent")
+			bg:Hide()
+			freebg[#freebg + 1] = bg
+		end
+
+		-- reparent and hide icon background
+		local icon = bar:Get("bigwigs:MonoUI:icon")
+		if icon then
+			icon:ClearAllPoints()
+			icon:SetParent("UIParent")
+			icon:Hide()
+			iconCache[#iconCache + 1] = icon
+		end
+
+		--Reset Positions
+		--Duration
+		bar.candyBarDuration:ClearAllPoints()
+		bar.candyBarDuration:SetPoint("RIGHT", bar.candyBarBar, "RIGHT", -2, 0)
+
+		--Name
+		bar.candyBarLabel:ClearAllPoints()
+		bar.candyBarLabel:SetPoint("LEFT", bar.candyBarBar, "LEFT", 2, 0)
+		bar.candyBarLabel:SetPoint("RIGHT", bar.candyBarBar, "RIGHT", -2, 0)
+	end
+
+	local function styleBar(bar)
+		bar:SetHeight(buttonsize/2.5)
+		bar.Height = buttonsize/2.5
+
+		local bg = nil
+		if #freebg > 0 then
+			bg = tremove(freebg)
+		else
+			bg = createbg()
+		end
+
+		bg:SetParent(bar)
+		bg:ClearAllPoints()
+		bg:SetPoint("TOPLEFT", bar, "TOPLEFT", -2, 2)
+		bg:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 2, -2)
+		bg:SetFrameStrata("BACKGROUND")
+		bg:Show()
+		bar:Set("bigwigs:MonoUI:barbg", bg)
+
+		if plugin.db.profile.icon then
+			local icon = nil
+			local tex = bar.candyBarIconFrame.icon
+			bar:SetIcon(nil)
+			if #iconCache > 0 then
+				icon = tremove(iconCache)
+			else
+				icon = createbg()
+				icon:SetSize(buttonsize, buttonsize)
+				icon:SetFrameStrata("BACKGROUND")
+				icon.iconTex = icon:CreateTexture(nil, "LOW")
+				icon.iconTex:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+				icon.iconTex:SetPoint("CENTER")
+				icon.iconTex:SetSize(buttonsize-2, buttonsize-2)
+			end
+			icon.iconTex:SetTexture(tex)
+			icon:SetParent(bar)
+			icon:ClearAllPoints()
+			icon:Show()
+			icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -5, 0)
+			bar:Set("bigwigs:MonoUI:icon", icon)
+		end
+
+		bar.candyBarLabel:SetJustifyH("LEFT")
+		bar.candyBarLabel:ClearAllPoints()
+		bar.candyBarLabel:SetPoint("LEFT", bar, "LEFT", 4, buttonsize/1.5)
+
+		bar.candyBarDuration:SetJustifyH("RIGHT")
+		bar.candyBarDuration:ClearAllPoints()
+		bar.candyBarDuration:SetPoint("RIGHT", bar, "RIGHT", -4, buttonsize/1.5)
+
+		bar:SetTexture(media:Fetch("statusbar", "Blizzard"))
+	end
+
+	barStyles.MonoUI = {
+		apiVersion = 1,
+		version = 2,
+		GetSpacing = function(bar) return buttonsize end,
+		ApplyStyle = styleBar,
+		BarStopped = freeStyle,
+		GetStyleName = function() return "MonoUI" end,
 	}
 end
 
