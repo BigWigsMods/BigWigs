@@ -246,38 +246,32 @@ end
 
 do
 	-- MonoUI
-	local buttonsize = 15
-
-	local backdrop_border = {
-		bgFile = [=[Interface\ChatFrame\ChatFrameBackground]=],
-		edgeFile = [=[Interface\ChatFrame\ChatFrameBackground]=],
+	local buttonSize, backdropBorder = 15, {
+		bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
+		edgeFile = "Interface\\ChatFrame\\ChatFrameBackground",
 		tile = false, tileSize = 0, edgeSize = 1,
-		insets = { left = 0, right = 0, top = 0, bottom = 0}
+		insets = {left = 0, right = 0, top = 0, bottom = 0}
 	}
 
-	local freebg = {}
-	local iconCache = {}
+	local backdropCache, iconCache = {}, {}
 
-	-- styling functions
 	local createbg = function()
 		local f = CreateFrame("Frame")
-		f:SetBackdrop(backdrop_border)
+		f:SetBackdrop(backdropBorder)
 		f:SetBackdropColor(.1,.1,.1,1)
 		f:SetBackdropBorderColor(0,0,0,1)
 		return f
 	end
 
-	local function freeStyle(bar)
-		-- reparent and hide bar background
-		local bg = bar:Get("bigwigs:MonoUI:barbg")
+	local function removeStyle(bar)
+		local bg = bar:Get("bigwigs:MonoUI:backdrop")
 		if bg then
 			bg:ClearAllPoints()
 			bg:SetParent("UIParent")
 			bg:Hide()
-			freebg[#freebg + 1] = bg
+			backdropCache[#backdropCache + 1] = bg
 		end
 
-		-- reparent and hide icon background
 		local icon = bar:Get("bigwigs:MonoUI:icon")
 		if icon then
 			icon:ClearAllPoints()
@@ -286,23 +280,20 @@ do
 			iconCache[#iconCache + 1] = icon
 		end
 
-		--Reset Positions
-		--Duration
 		bar.candyBarDuration:ClearAllPoints()
 		bar.candyBarDuration:SetPoint("RIGHT", bar.candyBarBar, "RIGHT", -2, 0)
 
-		--Name
 		bar.candyBarLabel:ClearAllPoints()
 		bar.candyBarLabel:SetPoint("LEFT", bar.candyBarBar, "LEFT", 2, 0)
 		bar.candyBarLabel:SetPoint("RIGHT", bar.candyBarBar, "RIGHT", -2, 0)
 	end
 
 	local function styleBar(bar)
-		bar:SetHeight(buttonsize/2.5)
+		bar:SetHeight(buttonSize/2.5)
 
 		local bg = nil
-		if #freebg > 0 then
-			bg = tremove(freebg)
+		if #backdropCache > 0 then
+			bg = tremove(backdropCache)
 		else
 			bg = createbg()
 		end
@@ -313,7 +304,7 @@ do
 		bg:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 2, -2)
 		bg:SetFrameStrata("BACKGROUND")
 		bg:Show()
-		bar:Set("bigwigs:MonoUI:barbg", bg)
+		bar:Set("bigwigs:MonoUI:backdrop", bg)
 
 		if plugin.db.profile.icon then
 			local icon = nil
@@ -323,12 +314,12 @@ do
 				icon = tremove(iconCache)
 			else
 				icon = createbg()
-				icon:SetSize(buttonsize+4, buttonsize+4)
+				icon:SetSize(buttonSize+4, buttonSize+4)
 				icon:SetFrameStrata("BACKGROUND")
 				icon.iconTex = icon:CreateTexture(nil, "LOW")
 				icon.iconTex:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 				icon.iconTex:SetPoint("CENTER")
-				icon.iconTex:SetSize(buttonsize, buttonsize)
+				icon.iconTex:SetSize(buttonSize, buttonSize)
 			end
 			icon.iconTex:SetTexture(tex)
 			icon:SetParent(bar)
@@ -340,11 +331,11 @@ do
 
 		bar.candyBarLabel:SetJustifyH("LEFT")
 		bar.candyBarLabel:ClearAllPoints()
-		bar.candyBarLabel:SetPoint("LEFT", bar, "LEFT", 4, buttonsize/1.5)
+		bar.candyBarLabel:SetPoint("LEFT", bar, "LEFT", 4, buttonSize/1.5)
 
 		bar.candyBarDuration:SetJustifyH("RIGHT")
 		bar.candyBarDuration:ClearAllPoints()
-		bar.candyBarDuration:SetPoint("RIGHT", bar, "RIGHT", -4, buttonsize/1.5)
+		bar.candyBarDuration:SetPoint("RIGHT", bar, "RIGHT", -4, buttonSize/1.5)
 
 		bar:SetTexture(media:Fetch("statusbar", "Blizzard"))
 	end
@@ -352,9 +343,9 @@ do
 	barStyles.MonoUI = {
 		apiVersion = 1,
 		version = 2,
-		GetSpacing = function(bar) return buttonsize end,
+		GetSpacing = function(bar) return buttonSize end,
 		ApplyStyle = styleBar,
-		BarStopped = freeStyle,
+		BarStopped = removeStyle,
 		GetStyleName = function() return "MonoUI" end,
 	}
 end
