@@ -57,6 +57,7 @@ if L then
 
 	L.custom_off_turtlemarker = "乌龟标记"
 	L.custom_off_turtlemarker_desc = "使用团队标记标记全部乌龟。"
+
 	L.no_crystal_shell = "没有晶化甲壳"
 end
 

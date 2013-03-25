@@ -56,7 +56,9 @@ if L then
 	L.kick_desc = "Lleva la cuenta de cuantas tortugas pueden ser pateadas."
 	L.kick_message = "Tortugas pateables: %d"
 
-	L.crystal_shell_removed = "¡Caparazón de cristal eliminado!"
+	L.custom_off_turtlemarker = "Turtle Marker"
+	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons."
+
 	L.no_crystal_shell = "SIN Caparazón de cristal"
 end
 

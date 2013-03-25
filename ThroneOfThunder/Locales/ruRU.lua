@@ -55,10 +55,10 @@ if L then
 	L.kick_desc = "Отслеживает, сколько черепах можно пнуть."
 	L.kick_message = "Можно пнуть черепах: %d"
 
-	L.no_crystal_shell = "НЕТ Защитного панциря"
-
 	L.custom_off_turtlemarker = "Метки на черепах"
 	L.custom_off_turtlemarker_desc = "Помечать всеми рейдовыми метками черепах."
+
+	L.no_crystal_shell = "НЕТ Защитного панциря"
 end
 
 L = BigWigs:NewBossLocale("Megaera", "ruRU")

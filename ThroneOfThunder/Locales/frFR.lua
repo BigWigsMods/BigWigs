@@ -55,7 +55,9 @@ if L then
 	L.kick_desc = "Effectue un suivi du nombre de tortues qui peuvent être bottées."
 	L.kick_message = "Tortues à botter : %d"
 
-	L.crystal_shell_removed = "Carapace de cristal enlevé !"
+	L.custom_off_turtlemarker = "Turtle Marker"
+	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons."
+
 	L.no_crystal_shell = "PAS de Carapace de cristal"
 end
 

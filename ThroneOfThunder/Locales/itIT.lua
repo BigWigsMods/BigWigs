@@ -57,7 +57,9 @@ if L then
 	L.kick_desc = "Tieni il conto di quante tartarughe possono essere prese a calci"
 	L.kick_message = "Tartarughe Calciabili: %d"
 
-	L.crystal_shell_removed = "Scudo di Cristallo RIMOSSO!"
+	L.custom_off_turtlemarker = "Turtle Marker"
+	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons."
+
 	L.no_crystal_shell = "NESSUNO Scudo di Cristallo"
 end
 

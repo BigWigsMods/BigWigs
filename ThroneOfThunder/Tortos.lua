@@ -18,8 +18,8 @@ if L then
 	L.kick_message = "Kickable turtles: %d"
 
 	L.custom_off_turtlemarker = "Turtle Marker"
-	L.custom_off_turtlemarker_desc = "Marks turtles with all raid icons."
-	L.custom_off_turtlemarker_icon = 103074
+	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons."
+	L.custom_off_turtlemarker_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8"
 
 	L.no_crystal_shell = "NO Crystal Shell"
 end
@@ -44,7 +44,7 @@ local function warnCrystalShell()
 end
 
 -- marking
-local adds = {}
+local markableMobs = {}
 local marksUsed = {}
 local markTimer = nil
 
@@ -99,7 +99,7 @@ function mod:OnEngage()
 	end
 	-- marking
 	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-	wipe(adds)
+	wipe(markableMobs)
 	wipe(marksUsed)
 	markTimer = nil
 end
@@ -153,8 +153,11 @@ end
 
 function mod:GrowingFury(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	nextBreath = nextBreath - 4.6 -- gives 10% power
-	self:CDBar(133939, nextBreath - GetTime())
+	nextBreath = nextBreath - (self:LFR() and 2.3 or 4.6) -- LFR gives 5% rage, otherwise 10%
+	local duration = nextBreath - GetTime()
+	if duration > 2 then
+		self:CDBar(133939, duration)
+	end
 end
 
 do
@@ -170,7 +173,7 @@ do
 			scheduled = self:ScheduleTimer(announceKickable, 2)
 		end
 
-		adds[args.destGUID] = nil
+		markableMobs[args.destGUID] = nil
 		for i=8, 1, -1 do
 			if marksUsed[i] == args.destGUID then
 				marksUsed[i] = nil
@@ -214,7 +217,7 @@ do
 	local function setMark(unit, guid)
 		for mark=8, 1, -1 do
 			if not marksUsed[mark] then
-				adds[guid] = "marked"
+				markableMobs[guid] = "marked"
 				SetRaidTarget(unit, mark)
 				marksUsed[mark] = guid
 				return
@@ -223,15 +226,15 @@ do
 	end
 
 	local function markMobs()
-		for guid in next, adds do
-			if adds[guid] == true then
+		for guid in next, markableMobs do
+			if markableMobs[guid] == true then
 				local unit = mod:GetUnitIdByGUID(guid)
 				if unit then
 					setMark(unit, guid)
 				end
 			end
 		end
-		if not next(adds) or not mod.db.profile.custom_off_turtlemarker then
+		if not next(markableMobs) or not mod.db.profile.custom_off_turtlemarker then
 			mod:CancelTimer(markTimer)
 			markTimer = nil
 		end
@@ -241,14 +244,14 @@ do
 		if not self.db.profile.custom_off_turtlemarker then return end
 
 		local guid = UnitGUID("mouseover")
-		if guid and adds[guid] == true then
+		if guid and markableMobs[guid] == true then
 			setMark("mouseover", guid)
 		end
 	end
 
 	function mod:SpinningShell(args)
-		if not adds[args.destGUID] then
-			adds[args.destGUID] = true
+		if not markableMobs[args.destGUID] then
+			markableMobs[args.destGUID] = true
 			if self.db.profile.custom_off_turtlemarker and not markTimer then
 				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.2)
 			end
