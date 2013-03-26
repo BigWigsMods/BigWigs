@@ -56,7 +56,7 @@ function mod:GetOptions()
 	return {
 		{137633, "FLASH"},
 		"custom_off_turtlemarker",
-		136294, -7134, 133939, {136010, "TANK"}, {134539, "FLASH"}, 134920, {135251, "TANK"}, -7140,
+		136294, -7134, 133939, {136010, "TANK"}, 134920, {135251, "TANK"}, -7140,
 		"kick", "berserk", "bosskill",
 	}, {
 		[137633] = "heroic",
@@ -73,7 +73,6 @@ function mod:OnBossEnable()
 	-- Normal
 	self:Log("SPELL_CAST_START", "SnappingBite", 135251)
 	self:Log("SPELL_CAST_START", "QuakeStomp", 134920)
-	self:Log("SPELL_DAMAGE", "Rockfall", 134539)
 	self:Log("SPELL_CAST_START", "FuriousStoneBreath", 133939)
 	self:Log("SPELL_CAST_SUCCESS", "GrowingFury", 136010)
 	self:Log("SPELL_AURA_APPLIED", "SpinningShell", 133974) -- spawn
@@ -134,19 +133,6 @@ end
 function mod:QuakeStomp(args)
 	self:Message(args.spellId, "Important", "Alert")
 	self:Bar(args.spellId, 47)
-end
-
-do
-	local prev = 0
-	function mod:Rockfall(args)
-		if not self:Me(args.destGUID) then return end
-		local t = GetTime()
-		if t-prev > 2 then
-			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
-			self:Flash(args.spellId)
-		end
-	end
 end
 
 function mod:FuriousStoneBreath(args)
