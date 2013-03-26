@@ -18,7 +18,7 @@ if L then
 	L.kick_message = "Kickable turtles: %d"
 
 	L.custom_off_turtlemarker = "Turtle Marker"
-	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons."
+	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"
 	L.custom_off_turtlemarker_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8"
 
 	L.no_crystal_shell = "NO Crystal Shell"
@@ -55,10 +55,12 @@ local markTimer = nil
 function mod:GetOptions()
 	return {
 		{137633, "FLASH"},
+		"custom_off_turtlemarker",
 		136294, -7134, 133939, {136010, "TANK"}, {134539, "FLASH"}, 134920, {135251, "TANK"}, -7140,
-		"kick", "custom_off_turtlemarker", "berserk", "bosskill",
+		"kick", "berserk", "bosskill",
 	}, {
 		[137633] = "heroic",
+		custom_off_turtlemarker = L.custom_off_turtlemarker,
 		[136294] = "general",
 	}
 end
@@ -98,7 +100,9 @@ function mod:OnEngage()
 		warnCrystalShell()
 	end
 	-- marking
-	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+	if self.db.profile.custom_off_turtlemarker then
+		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+	end
 	wipe(markableMobs)
 	wipe(marksUsed)
 	markTimer = nil
@@ -241,8 +245,6 @@ do
 	end
 
 	function mod:UPDATE_MOUSEOVER_UNIT()
-		if not self.db.profile.custom_off_turtlemarker then return end
-
 		local guid = UnitGUID("mouseover")
 		if guid and markableMobs[guid] == true then
 			setMark("mouseover", guid)

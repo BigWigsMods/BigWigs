@@ -40,7 +40,7 @@ if L then
 	L.priestess_adds_message = "Priesterin Add"
 
 	L.custom_on_markpossessed = "Verstärkten Boss markieren"
-	L.custom_on_markpossessed_desc = "Markiert den von Gara'jal verstärkten Boss mit einem Totenkopf."
+	L.custom_on_markpossessed_desc = "Markiert den von Gara'jal verstärkten Boss mit einem Totenkopf.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"
 
 	L.assault_stun = "Tank betäubt!"
 	L.assault_message = "Kalte Angriffe"
