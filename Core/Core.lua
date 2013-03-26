@@ -91,21 +91,21 @@ local function enableBossModule(module, noSync)
 	end
 end
 
-local function shouldReallyEnable(unit, moduleName)
+local function shouldReallyEnable(unit, moduleName, mobId)
 	local module = addon.bossCore:GetModule(moduleName)
 	if not module or module:IsEnabled() then return end
 	-- If we pass the Verify Enable func (or it doesn't exist) and it's been > 3 seconds since the module was disabled, then enable it.
-	if (not module.VerifyEnable or module:VerifyEnable(unit)) and (not module.lastKill or (GetTime() - module.lastKill) > 3) then
+	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId)) and (not module.lastKill or (GetTime() - module.lastKill) > 3) then
 		enableBossModule(module)
 	end
 end
 
-local function targetSeen(unit, targetModule)
+local function targetSeen(unit, targetModule, mobId)
 	if type(targetModule) == "string" then
-		shouldReallyEnable(unit, targetModule)
+		shouldReallyEnable(unit, targetModule, mobId)
 	else
 		for i, module in next, targetModule do
-			shouldReallyEnable(unit, module)
+			shouldReallyEnable(unit, module, mobId)
 		end
 	end
 end
@@ -114,7 +114,7 @@ local function targetCheck(unit)
 	if not UnitName(unit) or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
 	local id = tonumber((UnitGUID(unit)):sub(6, 10), 16)
 	if id and enablemobs[id] then
-		targetSeen(unit, enablemobs[id])
+		targetSeen(unit, enablemobs[id], id)
 	end
 end
 local function chatMsgMonsterYell(event, msg)
