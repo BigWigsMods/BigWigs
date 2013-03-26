@@ -191,16 +191,8 @@ end
 -- Kazra'jin
 
 function mod:RecklessCharge(unit, spellName, _, _, spellId)
-	if spellId == 137107 then
-		if UnitBuff(unit, self:SpellName(136442)) then -- Show timer when possessed
-			self:Bar(137122, 21)
-		end
-		local target = unit.."target"
-		if UnitIsUnit(target, "player") then
-			self:Message(137122, "Urgent", "Alarm", CL["you"]:format(spellName))
-		elseif self:Range(target) < 6 then
-			self:RangeMessage(137122)
-		end
+	if spellId == 137107 and UnitBuff(unit, self:SpellName(136442)) then
+		self:Bar(137122, 21) -- Show timer when possessed
 	end
 end
 
