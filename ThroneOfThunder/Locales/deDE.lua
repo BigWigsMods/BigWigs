@@ -40,7 +40,7 @@ if L then
 	L.priestess_adds_message = "Priesterin Add"
 
 	L.custom_on_markpossessed = "Verstärkten Boss markieren"
-	L.custom_on_markpossessed_desc = "Markiert den von Gara'jal verstärkten Boss mit einem Totenkopf.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"
+	L.custom_on_markpossessed_desc = "Markiert den von Gara'jal verstärkten Boss mit einem Totenkopf.
 
 	L.assault_stun = "Tank betäubt!"
 	L.assault_message = "Kalte Angriffe"
@@ -56,7 +56,7 @@ if L then
 	L.kick_message = "Unterbrechbare Schildkröten: %d"
 
 	L.custom_off_turtlemarker = "Schildkröten markieren"
-	L.custom_off_turtlemarker_desc = "Markiert die Schildkröten mit allen Raidsymbolen."
+	L.custom_off_turtlemarker_desc = "Markiert die Schildkröten mit allen Raidsymbolen.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r\n|cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über alle Schildkröten.|r"
 
 	L.no_crystal_shell = "KEIN Kristallpanzer"
 end
