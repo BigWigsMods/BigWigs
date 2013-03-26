@@ -94,7 +94,17 @@ end
 --
 
 function mod:TankDebuffApplied(args)
-	self:TargetBar(args.spellId, 45, args.destName)
+	local tank
+	for i=1, 4 do
+		local boss = ("boss%d"):format(i)
+		if UnitDetailedThreatSituation(args.destName, boss) then
+			tank = true
+			break
+		end
+	end
+	if tank or self:Tank(args.destName) then
+		self:TargetBar(args.spellId, 45, args.destName)
+	end
 end
 
 function mod:TankDebuffRemoved(args)
