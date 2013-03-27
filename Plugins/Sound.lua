@@ -39,15 +39,6 @@ end
 -- Options
 --
 
-local function resetAll()
-	plugin.db:ResetProfile()
-	for k in next, sounds do
-		if k ~= "Victory" then
-			if not plugin.db.profile[k] then plugin.db.profile[k] = {} end
-		end
-	end
-end
-
 plugin.defaultDB = {
 	defaultonly = false,
 	media = {
@@ -90,7 +81,7 @@ plugin.pluginOptions = {
 			type = "execute",
 			name = L["Reset all"],
 			desc = L.resetAllCustomSound,
-			func = resetAll,
+			func = function() plugin.db:ResetProfile() end,
 			order = 3,
 		},
 	}
@@ -171,30 +162,28 @@ function plugin:OnRegister()
 				name = n,
 				get = function(info)
 					local name, key = unpack(info.arg)
-					if not plugin.db.profile[info[#info]][name] then
-						for i, v in next, soundList do
-							if v == s then
-								return i
-							end
-						end
-					elseif not plugin.db.profile[info[#info]][name][key] then
-						for i, v in next, soundList do
-							if v == s then
-								return i
-							end
-						end
-					else
-						for i, v in next, soundList do
-							if v == plugin.db.profile[info[#info]][name][key] then
-								return i
-							end
+					for i, v in next, soundList do
+						if v == (plugin.db.profile[info[#info]] and plugin.db.profile[info[#info]][name] and plugin.db.profile[info[#info]][name][key] or s) then
+							return i
 						end
 					end
 				end,
 				set = function(info, value)
 					local name, key = unpack(info.arg)
-					if not plugin.db.profile[info[#info]][name] then plugin.db.profile[info[#info]][name] = {} end
-					plugin.db.profile[info[#info]][name][key] = soundList[value]
+					local optionName = info[#info]
+					if not plugin.db.profile[optionName] then plugin.db.profile[optionName] = {} end
+					if not plugin.db.profile[optionName][name] then plugin.db.profile[optionName][name] = {} end
+					plugin.db.profile[optionName][name][key] = soundList[value]
+					-- Back to default? Cleanup DB.
+					if sounds[optionName] == soundList[value] then
+						plugin.db.profile[optionName][name][key] = nil
+						if not next(plugin.db.profile[optionName][name]) then
+							plugin.db.profile[optionName][name] = nil
+						end
+						if not next(plugin.db.profile[optionName]) then
+							plugin.db.profile[optionName] = nil
+						end
+					end
 				end,
 				type = "select",
 				values = soundList,
@@ -209,11 +198,6 @@ end
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_Sound")
-	for k in next, sounds do
-		if k ~= "Victory" then
-			if not plugin.db.profile[k] then plugin.db.profile[k] = {} end
-		end
-	end
 end
 
 local function play(sound, overwrite)
@@ -232,16 +216,11 @@ end
 --
 
 local function customSound(module, key, sound)
-	if not module or not key or sound == "Victory" then return false end
-	if not plugin.db.profile[sound] then error(("Invalid sound: %s (module: %s, key: %s)"):format(sound, module.name, key)) return end
-	if not plugin.db.profile[sound][module.name] then
+	local sDb = plugin.db.profile[sound]
+	if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
 		return false
 	else
-		if plugin.db.profile[sound][module.name][key] == "None" then
-			return false
-		else
-			return plugin.db.profile[sound][module.name][key]
-		end
+		return plugin.db.profile[sound][module.name][key]
 	end
 end
 
