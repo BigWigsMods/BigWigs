@@ -51,7 +51,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-
 	self:Log("SPELL_AURA_REMOVED", "IonizationRemoved", 138732)
 	self:Log("SPELL_AURA_APPLIED", "PersonalIonization", 138732) -- This is needed for personal bar
 	self:Log("SPELL_CAST_START", "Ionization", 138732)
@@ -94,6 +93,7 @@ function mod:IonizationRemoved(args)
 	if self:Me(args.destGUID) then
 		openedForMe = nil
 		self:StopBar(CL["you"]:format(args.spellName))
+		self:Message(args.spellId, "Positive", "Info", CL["removed"]:format(args.spellName))
 	end
 	for k, v in next, ionized do
 		if v == args.destName then
