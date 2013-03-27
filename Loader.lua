@@ -276,6 +276,16 @@ function loader:OnInitialize()
 	end
 	self:RegisterTooltipInfo(versionTooltipFunc)
 
+	-- Cleanup function.
+	-- TODO: look into having a way for our boss modules not to create a table when no options are changed.
+	if BigWigs3DB and BigWigs3DB.namespaces then
+		for k,v in next, BigWigs3DB.namespaces do
+			if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
+				BigWigs3DB.namespaces[k] = nil
+			end
+		end
+	end
+
 	self.OnInitialize = nil
 end
 
