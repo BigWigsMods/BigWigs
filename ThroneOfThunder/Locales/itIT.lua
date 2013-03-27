@@ -57,9 +57,8 @@ if L then
 	L.kick_desc = "Tieni il conto di quante tartarughe possono essere prese a calci"
 	L.kick_message = "Tartarughe Calciabili: %d"
 
-	L.custom_off_turtlemarker = "Turtle Marker"
-	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"
-
+	L.custom_off_turtlemarker = "Selezionatore Tartarughe"
+	L.custom_off_turtlemarker_desc = "Evidenzia le tartarughe usando tutti i simboli dell'incursione.\n|cFFFF0000Solo una persona dovrebbe abilitare questa opzione per evitare conflitti nella marcatura.|r\n|cFFADFF2FSUGGERIMENTO: Se l'Incursione ha scelto te per abilitare questa opzione, muovere velocemente il mouse sopra le tartarughe è il modo più rapido per marcarle.|r"
 	L.no_crystal_shell = "NESSUNO Scudo di Cristallo"
 end
 
@@ -158,7 +157,7 @@ end
 
 L = BigWigs:NewBossLocale("Trash", "itIT")
 if L then
-	L.stormcaller = "Zandalari Storm-Caller"
-	L.stormbringer = "Stormbringer Draz'kil"
+	L.stormcaller = "Invocatore delle Tempeste Zandalari"
+	L.stormbringer = "Araldo della Tempesta Draz'kil"
 end
 
