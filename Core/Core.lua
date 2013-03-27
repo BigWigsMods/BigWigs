@@ -358,6 +358,8 @@ function addon:OnInitialize()
 		},
 	}
 	local db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
+	LibStub("LibDualSpec-1.0"):EnhanceDatabase(db, "BigWigs3DB")
+
 	local function profileUpdate()
 		addon:SendMessage("BigWigs_ProfileUpdate")
 	end

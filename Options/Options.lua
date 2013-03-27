@@ -257,6 +257,7 @@ local profileOptions
 local function getProfileOptions()
 	if not profileOptions then
 		profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db)
+		LibStub("LibDualSpec-1.0"):EnhanceOptions(profileOptions, BigWigs.db)
 	end
 	return profileOptions
 end
