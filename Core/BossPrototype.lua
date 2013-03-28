@@ -850,16 +850,22 @@ end
 
 -- BARS
 function boss:Bar(key, length, text, icon)
+	local textType = type(text)
 	if checkFlag(self, key, C.BAR) then
-		local textType = type(text)
 		self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key])
+	end
+	if checkFlag(self, key, C.EMPHASIZE) then
+		self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
 	end
 end
 
 function boss:CDBar(key, length, text, icon)
+	local textType = type(text)
 	if checkFlag(self, key, C.BAR) then
-		local textType = type(text)
 		self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key], true)
+	end
+	if checkFlag(self, key, C.EMPHASIZE) then
+		self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
 	end
 end
 
@@ -883,6 +889,7 @@ function boss:StopBar(text, player)
 		end
 	else
 		self:SendMessage("BigWigs_StopBar", self, type(text) == "number" and spells[text] or text)
+		self:SendMessage("BigWigs_StopEmphasize", self, key, type(text) == "string" and text or spells[text or key])
 	end
 end
 

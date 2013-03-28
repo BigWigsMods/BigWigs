@@ -145,8 +145,8 @@ end
 
 function plugin:OnPluginEnable()
 	emphasizeFlag = BigWigs.C.EMPHASIZE
-	self:RegisterMessage("BigWigs_StartBar")
-	self:RegisterMessage("BigWigs_StopBar")
+	self:RegisterMessage("BigWigs_StartEmphasize")
+	self:RegisterMessage("BigWigs_StopEmphasize")
 	self:RegisterMessage("BigWigs_TempSuperEmphasize")
 end
 
@@ -156,28 +156,26 @@ do
 		PlaySoundFile(("Interface\\AddOns\\BigWigs\\Sounds\\%d.mp3"):format(num), "Master")
 		plugin:SendMessage("BigWigs_EmphasizedCountdownMessage", num)
 	end
-	function plugin:BigWigs_StartBar(_, module, key, text, time)
-		if self:IsSuperEmphasized(module, key) then
-			self:BigWigs_StopBar(nil, module, text)
-			if time > 1.3 then
-				timers[text] = {}
-				timers[text][1] = module:ScheduleTimer(printEmph, time-1.3, 1)
-				if time > 2.3 then
-					timers[text][2] = module:ScheduleTimer(printEmph, time-2.3, 2)
-					if time > 3.3 then
-						timers[text][3] = module:ScheduleTimer(printEmph, time-3.3, 3)
-						if time > 4.3 then
-							timers[text][4] = module:ScheduleTimer(printEmph, time-4.3, 4)
-							if time > 5.3 then
-								timers[text][5] = module:ScheduleTimer(printEmph, time-5.3, 5)
-							end
+	function plugin:BigWigs_StartEmphasize(_, module, key, text, time)
+		self:BigWigs_StopEmphasize(nil, module, key, text)
+		if time > 1.3 then
+			timers[text] = {}
+			timers[text][1] = module:ScheduleTimer(printEmph, time-1.3, 1)
+			if time > 2.3 then
+				timers[text][2] = module:ScheduleTimer(printEmph, time-2.3, 2)
+				if time > 3.3 then
+					timers[text][3] = module:ScheduleTimer(printEmph, time-3.3, 3)
+					if time > 4.3 then
+						timers[text][4] = module:ScheduleTimer(printEmph, time-4.3, 4)
+						if time > 5.3 then
+							timers[text][5] = module:ScheduleTimer(printEmph, time-5.3, 5)
 						end
 					end
 				end
 			end
 		end
 	end
-	function plugin:BigWigs_StopBar(_, module, text)
+	function plugin:BigWigs_StopEmphasize(_, module, key, text)
 		if text and timers[text] then
 			for i = 1, #timers[text] do
 				module:CancelTimer(timers[text][i])
@@ -197,6 +195,6 @@ end
 function plugin:BigWigs_TempSuperEmphasize(_, module, key, text, time)
 	if not module or not key or text == "" then return end
 	temporaryEmphasizes[key] = GetTime() + time
-	self:BigWigs_StartBar(nil, module, key, text, time)
+	self:BigWigs_StartEmphasize(nil, module, key, text, time)
 end
 
