@@ -111,6 +111,7 @@ end
 L = BigWigs:NewBossLocale("Primordius", "deDE")
 if L then
 	L.mutations = "Mutationen |cff008000(%d)|r |cffff0000(%d)|r"
+	L.acidic_spines = "Säurestachel (Spritz-Schaden)"
 end
 
 L = BigWigs:NewBossLocale("Dark Animus", "deDE")
