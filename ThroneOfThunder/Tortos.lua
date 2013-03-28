@@ -56,7 +56,7 @@ function mod:GetOptions()
 	return {
 		{137633, "FLASH"},
 		"custom_off_turtlemarker",
-		136294, -7134, 133939, 136010, 134920, {135251, "TANK"}, -7140,
+		136294, -7134, 133939, {136010, "TANK"}, 134920, {135251, "TANK"}, -7140,
 		"kick", "berserk", "bosskill",
 	}, {
 		[137633] = "heroic",
