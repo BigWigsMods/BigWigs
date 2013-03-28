@@ -32,7 +32,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		-6969,
-		136037, 136216, {136218, "PROXIMITY"}, 136228, 136245, {136246, "PROXIMITY"}, -7830, {-6960, "FLASH"},
+		136037, 136216, {136218, "PROXIMITY"}, {136228, "ICON"}, 136245, {136246, "PROXIMITY"}, -7830, {-6960, "FLASH"},
 		"berserk", "bosskill",
 	}, {
 		[-6969] = "heroic",
@@ -54,7 +54,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "MetabolicBoost", 136245) -- have not seen this event yet, but lets assume it exists
 	self:Log("SPELL_AURA_APPLIED", "MetabolicBoost", 136245)
 	self:Log("SPELL_AURA_REMOVED", "VolatilePathogenRemoved", 136228)
-	self:Log("SPELL_CAST_SUCCESS", "VolatilePathogen", 136228) -- this is faster than APPLIED
+	self:Log("SPELL_AURA_APPLIED", "VolatilePathogen", 136228)
 	self:Log("SPELL_CAST_SUCCESS", "PathogenGlands", 136225)
 	self:Log("SPELL_AURA_REMOVED", "AcidicSpinesRemoved", 136218)
 	self:Log("SPELL_AURA_APPLIED", "AcidicSpinesApplied", 136218)
@@ -148,16 +148,13 @@ function mod:VolatilePathogenRemoved(args)
 end
 
 function mod:VolatilePathogen(args)
-	if self:Healer() or self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
-	end
-	self:CDBar(args.spellId, 27)
+	self:PrimaryIcon(args.spellId, args.destName)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	self:CDBar(args.spellId, 30)
 end
 
 function mod:PathogenGlands(args)
-	if self:Healer() then
-		self:Message(136228, "Important", "Long", CL["soon"]:format(args.spellName))
-	end
+	self:Message(136228, "Important", "Long", CL["soon"]:format(args.spellName))
 end
 
 function mod:AcidicSpinesRemoved(args)
