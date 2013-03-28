@@ -56,7 +56,7 @@ function mod:GetOptions()
 	return {
 		{137633, "FLASH"},
 		"custom_off_turtlemarker",
-		136294, -7134, 133939, {136010, "TANK"}, 134920, {135251, "TANK"}, -7140,
+		136294, -7134, 133939, 136010, 134920, {135251, "TANK"}, -7140,
 		"kick", "berserk", "bosskill",
 	}, {
 		[137633] = "heroic",
@@ -207,8 +207,8 @@ do
 	local function setMark(unit, guid)
 		for mark=8, 1, -1 do
 			if not marksUsed[mark] then
-				markableMobs[guid] = "marked"
 				SetRaidTarget(unit, mark)
+				markableMobs[guid] = "marked"
 				marksUsed[mark] = guid
 				return
 			end
