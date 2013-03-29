@@ -50,8 +50,6 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "BossEngage") -- use it to detect when the actual boss enters the fight
 	self:Emote("Engage", L["engage_trigger"])
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "StartWipeCheck") -- this is needed mainly for normal, when you wipe before boss is engaged
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "StopWipeCheck")
 
 	-- Dark Animus
 	self:Log("SPELL_CAST_START", "FullPower", 138729)
@@ -73,6 +71,12 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	if not self:Heroic() then
+		-- this is needed mainly for normal, when you wipe before boss is engaged
+		self:StopWipeCheck()
+		self:RegisterEvent("PLAYER_REGEN_ENABLED", "StartWipeCheck")
+		self:RegisterEvent("PLAYER_REGEN_DISABLED", "StopWipeCheck")
+	end
 	self:Berserk(600) -- assumed
 end
 
@@ -122,9 +126,6 @@ function mod:BossEngage()
 	self:CheckBossStatus()
 	if not self.isEngaged then return end -- XXX is this even needed?
 	if self:MobId(UnitGUID("boss1")) == 69427 then
-		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		self:StopWipeCheck()
 		self:Bar(138644, self:Heroic() and 120 or 30) -- Siphon Anima
 		if self:Heroic() then
 			self:Bar(138780, 7) -- Empower
