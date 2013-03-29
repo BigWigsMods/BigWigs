@@ -52,7 +52,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"priestess_adds", 137203, {137350, "FLASH"}, -- High Priestess Mar'li
-		{-7062, "FLASH"}, 136878, {136857, "FLASH"}, 136894, -- Sul the Sandcrawler
+		{-7062, "FLASH"}, 136878, {136857, "FLASH", "DISPEL"}, 136894, -- Sul the Sandcrawler
 		{137122, "FLASH"}, -- Kazra'jin
 		{-7054, "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, 136990, {137085, "FLASH"}, -- Frost King Malakk
 		136442, "custom_on_markpossessed", {137650, "FLASH"}, "proximity", "berserk", "bosskill",
@@ -165,12 +165,15 @@ function mod:Sandstorm(args)
 	self:Message(args.spellId, "Urgent", "Alert")
 end
 
-function mod:Entrapped(args)
-	if self:Me(args.destGUID) then
-		self:Flash(136857)
-		self:Message(136857, "Personal", "Info")
-	elseif self:Dispeller("magic") or ((select(2, UnitClass("player")) == "HUNTER") and (GetSpellCooldown(self:SpellName(53271)) == 0)) then -- Master's call works on it too
-		self:TargetMessage(136857, args.destName, "Attention", nil, nil, nil, true)
+do
+	local mastersCall = select(2, UnitClass("player")) == "HUNTER" and self:SpellName(53271)
+	function mod:Entrapped(args)
+		if self:Me(args.destGUID) then
+			self:Flash(136857)
+			self:Message(136857, "Personal", "Info")
+		elseif self:Dispeller("magic", nil, 136857) or (mastersCall and GetSpellCooldown(mastersCall) == 0) then -- Master's Call works on it, too
+			self:TargetMessage(136857, args.destName, "Attention", nil, nil, nil, true)
+		end
 	end
 end
 
