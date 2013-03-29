@@ -111,6 +111,7 @@ end
 L = BigWigs:NewBossLocale("Primordius", "zhCN")
 if L then
 	L.mutations = "变异 |cff008000>%d<|r |cffff0000>%d<|r"
+	L.acidic_spines = "酸性脊刺（溅射伤害）"
 end
 
 L = BigWigs:NewBossLocale("Dark Animus", "zhCN")
@@ -160,6 +161,6 @@ L = BigWigs:NewBossLocale("Trash", "zhCN")
 if L then
 	L.stormcaller = "赞达拉风暴召唤者"
 	L.stormbringer = "风暴使者达兹基尔"
-	L.monara = "Monara"
+	L.monara = "莫纳拉"
 end
 
