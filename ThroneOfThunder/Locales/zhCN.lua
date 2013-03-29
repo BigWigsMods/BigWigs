@@ -80,8 +80,8 @@ if L then
 	L.flight_over = "飞行结束 %d秒！"
 	L.upper_nest = "|cff008000下层|r巢穴"
 	L.lower_nest = "|cffff0000上层|r巢穴"
-	L.upper = "|cff008000上层|r"
-	L.lower = "|cffff0000下层|r"
+	L.up = "UP"
+	L.down = "DOWN"
 	L.add = "增援"
 	L.big_add_message = "大量增援 >%s<！"
 end

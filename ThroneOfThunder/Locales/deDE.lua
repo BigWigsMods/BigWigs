@@ -80,8 +80,8 @@ if L then
 	L.flight_over = "Flug in %d Sek vorbei!"
 	L.upper_nest = "|cff008000Oberes|r Nest"
 	L.lower_nest = "|cffff0000Unteres|r Nest"
-	L.upper = "|cff008000Oben|r"
-	L.lower = "|cffff0000Unten|r"
+	L.up = "UP"
+	L.down = "DOWN"
 	L.add = "Add"
 	L.big_add_message = "Großes Add in %s"
 end

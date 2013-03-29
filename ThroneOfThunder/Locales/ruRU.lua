@@ -80,8 +80,8 @@ if L then
 	L.flight_over = "Облет через %d сек!"
 	L.upper_nest = "|cff008000Верхние|r гнезда"
 	L.lower_nest = "|cffff0000Нижние|r гнезда"
-	L.upper = "|cff008000Верхние|r"
-	L.lower = "|cffff0000Нижние|r"
+	L.up = "UP"
+	L.down = "DOWN"
 	L.add = "Помощник"
 	L.big_add_message = "Большой помощник: %s"
 end
