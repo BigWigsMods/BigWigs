@@ -1,5 +1,5 @@
 
-local addon = LibStub("AceAddon-3.0"):NewAddon("BigWigs")
+local addon = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceTimer-3.0")
 addon:SetEnabledState(false)
 addon:SetDefaultModuleState(false)
 

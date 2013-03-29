@@ -12,7 +12,7 @@ if not plugin then return end
 local media = LibStub("LibSharedMedia-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
-local temporaryEmphasizes = {}
+local temporaryEmphasizes = nil
 local emphasizeFlag = nil
 
 -------------------------------------------------------------------------------
@@ -152,15 +152,16 @@ end
 
 do
 	local timers = {}
-	local function printEmph(num)
+	local function printEmph(num, text)
 		PlaySoundFile(("Interface\\AddOns\\BigWigs\\Sounds\\%d.mp3"):format(num), "Master")
 		plugin:SendMessage("BigWigs_EmphasizedCountdownMessage", num)
+		if text and timers[text] then wipe(timers[text]) end
 	end
 	function plugin:BigWigs_StartEmphasize(_, module, key, text, time)
 		self:BigWigs_StopEmphasize(nil, module, key, text)
 		if time > 1.3 then
-			timers[text] = {}
-			timers[text][1] = module:ScheduleTimer(printEmph, time-1.3, 1)
+			if not timers[text] then timers[text] = {} end
+			timers[text][1] = module:ScheduleTimer(printEmph, time-1.3, 1, text)
 			if time > 2.3 then
 				timers[text][2] = module:ScheduleTimer(printEmph, time-2.3, 2)
 				if time > 3.3 then
@@ -176,11 +177,11 @@ do
 		end
 	end
 	function plugin:BigWigs_StopEmphasize(_, module, key, text)
-		if text and timers[text] then
+		if text and timers[text] and #timers[text] > 0 then
 			for i = 1, #timers[text] do
 				module:CancelTimer(timers[text][i])
 			end
-			timers[text] = nil
+			wipe(timers[text])
 		end
 	end
 end
@@ -194,6 +195,7 @@ end
 
 function plugin:BigWigs_TempSuperEmphasize(_, module, key, text, time)
 	if not module or not key or text == "" then return end
+	if not temporaryEmphasizes then temporaryEmphasizes = {} end
 	temporaryEmphasizes[key] = GetTime() + time
 	self:BigWigs_StartEmphasize(nil, module, key, text, time)
 end

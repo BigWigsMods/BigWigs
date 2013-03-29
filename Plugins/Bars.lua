@@ -1321,7 +1321,7 @@ do
 			plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
 		else
 			timers[id] = plugin:ScheduleTimer("SendMessage", time, "BigWigs_Message", false, false, L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", false, "Interface\\Icons\\INV_Misc_PocketWatch_01")
-			plugin:SendMessage("BigWigs_StartBar", plugin, nil, nick..": "..barText, time, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+			plugin:SendMessage("BigWigs_StartBar", plugin, id, nick..": "..barText, time, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 		end
 	end
 end
