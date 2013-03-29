@@ -136,12 +136,12 @@ do
 		-- at this point boss1target has changed
 
 		boss1target = UnitName("boss1target")
-		local t = GetTime() -- anti-spam as we have no timer cancelling at the moment
-		if t-prev > 1 then
-			mod:TargetMessage(134926, boss1target, "Urgent", "Alarm", L["possible_spear_target"])
+		local t = GetTime() -- throttle as we have no timer cancelling at the moment
+		if t-prev > 0.5 then
+			mod:TargetMessage(134926, boss1target, "Urgent", nil, L["possible_spear_target"])
 			prev = t
 		end
-		-- XXX add icon and flash once the warning is working
+		-- XXX add icon, flash, sound once the warning is working
 
 		-- commented for now because sometimes the 2nd warning is the accurate for some reason
 		-- uncomment to test when to cancel and unregister stuff
