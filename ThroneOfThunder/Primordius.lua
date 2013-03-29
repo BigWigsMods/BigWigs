@@ -1,8 +1,3 @@
---[[
-TODO:
-	VolatilePathogen no longer seems to spawn adds (25 H PTR) need to confirm this on live
-]]--
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -47,6 +42,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "PlayerMutations", 136184, 136186, 136182, 136180, 136185, 136187, 136183, 136181)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PlayerMutations", 136184, 136186, 136182, 136180, 136185, 136187, 136183, 136181)
 	self:Log("SPELL_AURA_APPLIED", "PlayerMutations", 136184, 136186, 136182, 136180, 136185, 136187, 136183, 136181)
+	self:Log("SPELL_DISPEL", "PlayerMutations", 136184, 136186, 136182, 136180, 136185, 136187, 136183, 136181)
 	self:Log("SPELL_AURA_REMOVED", "FullyMutatedRemoved", 140546)
 	self:Log("SPELL_AURA_APPLIED", "FullyMutatedApplied", 140546)
 	self:Log("SPELL_AURA_REMOVED", "EruptingPustulesRemoved", 136246)
