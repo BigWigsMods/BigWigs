@@ -223,12 +223,19 @@ do
 		if a and messages[key] then
 			local color = colors[math.random(1, #colors)]
 			local sound = sounds[math.random(1, #sounds)]
-			local formatted = color..": "..key.." "..(sound and "("..sound..")" or "")
-			addon:SendMessage("BigWigs_Message", addon, key, formatted, color, sound, messages[key])
-			if math.random(1, 4) == 2 then
+			if random(1, 2) == 2 then
 				addon:SendMessage("BigWigs_Flash", addon, key)
 				addon:SendMessage("BigWigs_Pulse", addon, key, messages[key])
+				local colors = addon:GetPlugin("Colors", true)
+				local pulseColor
+				if colors then
+					local r, g, b = colors:GetColor("flash")
+					pulseColor = ("|cFF%02x%02x%02x"):format(r*255, g*255, b*255)
+				end
+				addon:Print(L.Test .." - ".. (pulseColor or "") ..L.FLASH.. (pulseColor and "|r" or "") .." - ".. L.PULSE ..": |T".. messages[key] ..":15:15:0:0:64:64:4:60:4:60|t")
 			end
+			if sound then addon:Print(L.Test .." - ".. L.Sound ..": ".. sound) end
+			addon:SendMessage("BigWigs_Message", addon, key, color..": "..key, color, sound, messages[key])
 			messages[key] = nil
 		end
 	end
