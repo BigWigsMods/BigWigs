@@ -144,6 +144,9 @@ function boss:OnDisable()
 		end
 	end
 
+	-- Remove any registered sync listeners
+	core:ClearSyncListeners(self)
+
 	self.scheduledMessages = nil
 	self.isWiping = nil
 	self.isEngaged = nil
@@ -942,6 +945,8 @@ end
 function boss:Sync(...) core:Transmit(...) end
 
 function boss:AddSyncListener(sync)
+	if not self.syncListeners then self.syncListeners = {} end
+	self.syncListeners[#self.syncListeners+1] = sync
 	core:AddSyncListener(self, sync)
 end
 

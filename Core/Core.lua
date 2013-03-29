@@ -323,8 +323,23 @@ do
 		end
 	end
 
+	function addon:ClearSyncListeners(module)
+		if module.syncListeners then
+			for i = 1, #module.syncListeners do
+				local sync = module.syncListeners[i]
+				if registered[sync] then
+					registered[sync][module] = nil -- Remove module from listening to this sync event.
+					if not next(registered[sync]) then
+						registered[sync] = nil -- Remove sync event entirely if no modules are registered to it.
+					end
+				end
+			end
+			module.syncListeners = nil
+		end
+	end
 	function addon:AddSyncListener(module, sync)
 		if not registered[sync] then registered[sync] = {} end
+		if type(registered[sync]) ~= "table" then return end -- Prevent registering BossEngaged/Death/EnableModule
 		registered[sync][module] = true
 	end
 	function addon:Transmit(sync, ...)
