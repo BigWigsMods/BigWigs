@@ -138,7 +138,7 @@ function mod:BlessedLoaSpirit(args)
 		local mobId = self:MobId(UnitGUID(boss))
 		if mobId == 69134 or mobId == 69078 or mobId == 69131 then -- Kazra'jin, Sandcrawler, Frost King
 			local hp = UnitHealth(boss) / UnitHealthMax(boss)
-			if hp < lowestHP then
+			if hp > 0 and hp < lowestHP then
 				lowest = boss
 				lowestHP = hp
 			end
@@ -277,8 +277,19 @@ end
 do
 	local prevPower = 0
 	local possessed = mod:SpellName(136442)
-	local function warnFullPower(unitId, lastPercHPToGo)
+	local function warnFullPower(guid, lastPercHPToGo)
 		if prevPower < 100 then return end
+
+		local unitId
+		for i=1,5 do
+			local boss = ("boss%d"):format(i)
+			if UnitGUID(boss) == guid then
+				unitId = boss
+				break
+			end
+		end
+		if not unitId then return end
+
 		local maxHealth, currHealth = UnitHealthMax(unitId), UnitHealth(unitId)
 		local percHPToGo = 25 - math.floor((posessHPStart - currHealth) / maxHealth * 100)
 		if percHPToGo < 1 then return end
@@ -286,7 +297,7 @@ do
 		if percHPToGo < lastPercHPToGo then
 			mod:Message(136442, "Important", "Alert", L["hp_to_go_fullpower"]:format(percHPToGo))
 		end
-		mod:ScheduleTimer(warnFullPower, 3, unitId, percHPToGo)
+		mod:ScheduleTimer(warnFullPower, 3, guid, percHPToGo)
 	end
 
 	function mod:PossessedHPToGo(unitId)
@@ -314,7 +325,7 @@ do
 		elseif power > 99 and prevPower == 90 then
 			prevPower = 100
 			self:Message(136442, "Important", "Alert", L["hp_to_go_fullpower"]:format(percHPToGo))
-			self:ScheduleTimer(warnFullPower, 3, unitId, percHPToGo)
+			self:ScheduleTimer(warnFullPower, 3, UnitGUID(unitId), percHPToGo)
 		end
 	end
 
@@ -339,7 +350,6 @@ do
 		self:Message(args.spellId, "Neutral", "Long", CL["other"]:format(args.spellName, args.destName))
 		self:Bar(args.spellId, duration, L["full_power"])
 
-		-- leave in all the elseif statements to be ready in case they are needed on heroic
 		local mobId = self:MobId(args.destGUID)
 		if mobId == 69131 then -- Frost King
 			self:StopBar(136992) -- Biting Cold
@@ -377,7 +387,6 @@ do
 end
 
 function mod:Deaths(args)
-	-- leave in all the elseif statements to be ready in case they are needed on heroic
 	if args.mobId == 69131 then -- Frost King
 		self:StopBar(136992) -- Frostbite
 		self:StopBar(136990) -- Biting Cold
