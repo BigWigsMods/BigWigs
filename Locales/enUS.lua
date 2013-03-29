@@ -6,7 +6,7 @@ L["%s has been defeated"] = true
 L.bosskill = "Boss death"
 L.bosskill_desc = "Announce when the boss has been defeated."
 L.berserk = "Berserk"
-L.berserk_desc = "Show a timer bar for and timed warnings for when the boss will go berserk."
+L.berserk_desc = "Show a bar and timed warnings for when the boss will go berserk."
 L.stages = "Stages"
 L.stages_desc = "Enable functions related to the various stages/phases of the boss like proximity, bars, etc."
 
