@@ -130,35 +130,37 @@ end
 -- Event Handlers
 --
 
-local function marParasite(destName)
-	for i = 1, 8 do
-		if not marksUsed[i] and (i == 3 or i == 4 or i == 5) then
-			SetRaidTarget(destName, i)
-			marksUsed[i] = destName
-			return
-		end
-	end
-end
-
-function mod:DarkParasiteRemoved(args)
-	if self.db.profile.custom_off_parasite_marks then
-		for k, v in next, marksUsed do
-			if v == args.destName then
-				marksUsed[k] = false
-				SetRaidTarget(args.destName, 0)
+do
+	-- Parasite marking
+	function mod:DarkParasiteRemoved(args)
+		if self.db.profile.custom_off_parasite_marks then
+			for i = 3, 5 do
+				if marksUsed[i] == args.destName then
+					marksUsed[i] = false
+					SetRaidTarget(args.destName, 0)
+				end
 			end
 		end
 	end
-end
 
-function mod:DarkParasiteApplied(args)
-	self:CDBar(args.spellId, 60)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
-		self:Flash(args.spellId)
+	local function markParasite(destName)
+		for i = 3, 5 do
+			if not marksUsed[i] then
+				SetRaidTarget(destName, i)
+				marksUsed[i] = destName
+				return
+			end
+		end
 	end
-	if self.db.profile.custom_off_parasite_marks then
-		marParasite(args.destName)
+	function mod:DarkParasiteApplied(args)
+		self:CDBar(args.spellId, 60)
+		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+			self:Flash(args.spellId)
+		end
+		if self.db.profile.custom_off_parasite_marks then
+			markParasite(args.destName)
+		end
 	end
 end
 
