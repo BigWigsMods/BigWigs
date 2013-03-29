@@ -40,6 +40,8 @@ if L then
 	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
 	L.initial_life_drain_icon = 133798
 
+	L.life_drain_say = "%dx Drain"
+
 	L.rays_spawn = "Rays spawn"
 	L.red_add = "|cffff0000Red|r add"
 	L.blue_add = "|cff0000ffBlue|r add"
@@ -213,7 +215,7 @@ end
 function mod:LifeDrainDose(args)
 	self:StackMessage(133798, args.destName, args.amount, "Important")
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId) -- this spams but is needed, hack even yell would be better
+		self:Say(args.spellId, L["life_drain_say"]:format(args.amount)) -- this spams but is needed, hack even yell would be better
 	end
 end
 
