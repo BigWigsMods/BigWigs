@@ -80,8 +80,8 @@ if L then
 	L.flight_over = "Flug in %d Sek vorbei!"
 	L.upper_nest = "|cff008000Oberes|r Nest"
 	L.lower_nest = "|cffff0000Unteres|r Nest"
-	L.up = "UP"
-	L.down = "DOWN"
+	L.up = "HOCH"
+	L.down = "RUNTER"
 	L.add = "Add"
 	L.big_add_message = "Großes Add in %s"
 end
@@ -97,6 +97,14 @@ if L then
 
 	L.custom_off_ray_controllers = "Kontrollierer der Lichtstrahlen"
 	L.custom_off_ray_controllers_desc = "Verwenden der %s%s%s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."
+
+	L.custom_off_parasite_marks = "Dunkle Parasiten markieren"
+	L.custom_off_parasite_marks_desc = "Um Heilzuteilungen zu erleichtern werden die Ziele der dunklen Parasiten mit %s%s%s markiert."
+
+	L.initial_life_drain = "Anfänglicher Lebensentzug"
+	L.initial_life_drain_desc = "Nachricht für den anfänglichen Lebensentzug anzeigen, um die erhaltene Heilung zur Verringerung des Schwächungszaubers aufrecht zu erhalten."
+
+	L.life_drain_say = "%dx Entzug"
 
 	L.rays_spawn = "Lichtstrahlen erscheinen"
 	L.red_add = "|cffff0000Rotes|r Add"
