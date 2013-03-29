@@ -136,6 +136,10 @@ if L then
 	L.overload_casting_desc = "当正在施放熔火过载时发出警报。"
 
 	L.arcing_lightning_cleared = "弧形闪电"
+
+	L.custom_off_spear_target = "Throw Spear Target"
+	L.custom_off_spear_target_desc = "Try to warn for the Throw Spear target. This method is very resource intensive and sometimes displays the wrong target so it is disabled by default.\n|cFFADFF2FTIP: Setting up TANK roles should help to increase the accuracy of the warning.|r"
+	L.possible_spear_target = "Possible Spear?"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "zhCN")

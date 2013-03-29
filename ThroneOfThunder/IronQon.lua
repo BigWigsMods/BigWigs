@@ -37,9 +37,9 @@ if L then
 
 	L.arcing_lightning_cleared = "Raid is clear of Arcing Lightning"
 
-	L.custom_off_spear_target = "Throw Spear target"
-	L.custom_off_spear_target_desc = "Try and warn for the Throw Spear target, this method is very resource intense and sometimes inaccurate, therefore it is disabled by default. Setting up TANK roles, should help increasing the warnings accuraccy."
-	L.possible_spear_target = "Possible spear target"
+	L.custom_off_spear_target = "Throw Spear Target"
+	L.custom_off_spear_target_desc = "Try to warn for the Throw Spear target. This method is very resource intensive and sometimes displays the wrong target so it is disabled by default.\n|cFFADFF2FTIP: Setting up TANK roles should help to increase the accuracy of the warning.|r"
+	L.possible_spear_target = "Possible Spear?"
 end
 L = mod:GetLocale()
 
@@ -93,50 +93,6 @@ function mod:OnBossEnable()
 	self:Death("Win", 68078) -- Iron Qon
 end
 
-local UnitIsUnit = UnitIsUnit
-local boss1target, timer = "n", nil -- "n" as in none, so I don't have to bother with nil checks
-local function watchBoss1TargetChange()
-	-- every check in new line to help debugging
-	if not UnitExists("boss1target") then return end
-	if UnitIsUnit(boss1target, "boss2target") then return end -- mount tank can't be spear target
-	if UnitIsUnit(boss1target, "boss1target") then return end -- boss1target have not changed yet, so probably not the spear target ( not sure if they are valid target )
-	if mod:Tank("boss1target") then return end -- this should not be needed, but ohh well, lets just get shit working first, right now at least it clears up the false tank warnings
-	-- XXX mess around with these if you want further testing, I could not get them working
-	--if UnitExists("boss2target") and UnitThreatSituation(boss1target, "boss2target") == 3 then return end     -- does not seem to work
-	--if UnitExists("boss3target") and UnitThreatSituation(boss1target, "boss3target") == 3 then return end     -- does not seem to work
-	--if UnitExists("boss4target") and UnitThreatSituation(boss1target, "boss4target") == 3 then return end     -- does not seem to work
-	--if UnitThreatSituation("boss1target") == 3 then return end -- having agro on something, persumably boss1, however boss1 is not a valid unit so can't specifically check for that
-	-- assuming spear targets don't jump to top of threat list or make UnitThreatSituation("player") return 3
-
-	-- at this point boss1target has changed
-
-	boss1target = UnitName("boss1target")
-	mod:TargetMessage(134926, boss1target, "Urgent", "Alarm", L["possible_spear_target"])
-	-- XXX add icon and flash once the warning is working
-
-	-- consider adding antispam since it'll warn when switching back too
-	-- uncommented for now because sometimes the 2nd warning is the accurate for some reason
-	-- uncomment to test when to cancel and unregister stuff
-	--mod:CancelTimer(timer)
-	--timer = nil
-end
-local function startRepeatingTimer()
-	if not mod.db.profile.custom_off_spear_target then return end
-	boss1target = (UnitName("boss1target")) or "n"
-	if not timer then
-		timer = mod:ScheduleRepeatingTimer(watchBoss1TargetChange, 0.05)
-	end
-end
-function mod:ThrowSpear(args)
-	if UnitExists("boss1") then return end -- don't warn in last phase
-	self:CDBar(args.spellId, 33)
-	self:Message(args.spellId, "Urgent") -- keep this in case TargetMessage fails to find a target
-	if not mod.db.profile.custom_off_spear_target then return end
-	self:CancelTimer(timer)
-	timer = nil
-	self:ScheduleTimer(startRepeatingTimer, 25) -- start watching boss1target in 25 sec
-end
-
 function mod:OnEngage()
 	openedForMe = nil
 	self:Berserk(720)
@@ -151,13 +107,64 @@ function mod:OnEngage()
 		self:Bar(136192, 20) -- Arcing Lightning
 	end
 	smashCounter = 1
-	if not mod.db.profile.custom_off_spear_target then return end
-	self:ScheduleTimer(startRepeatingTimer, 20) -- start watching boss1target in 20 sec
+	if self.db.profile.custom_off_spear_target then
+		self:ScheduleTimer("StartSpearScan", 20) -- start watching boss1target in 20 sec
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	-- Spear scanning
+	local UnitIsUnit, UnitExists = UnitIsUnit, UnitExists
+	local boss1target, timer, prev = "n", nil, 0 -- "n" as in none, so I don't have to bother with nil checks
+	local function watchBoss1TargetChange()
+		-- every check in new line to help debugging
+		if not UnitExists("boss1target") then return end
+		if UnitIsUnit(boss1target, "boss2target") then return end -- mount tank can't be spear target
+		if UnitIsUnit(boss1target, "boss1target") then return end -- boss1target have not changed yet, so probably not the spear target ( not sure if they are valid target )
+		if mod:Tank("boss1target") then return end -- this should not be needed, but ohh well, lets just get shit working first, right now at least it clears up the false tank warnings
+		-- XXX mess around with these if you want further testing, I could not get them working
+		--if UnitExists("boss2target") and UnitThreatSituation(boss1target, "boss2target") == 3 then return end     -- does not seem to work
+		--if UnitExists("boss3target") and UnitThreatSituation(boss1target, "boss3target") == 3 then return end     -- does not seem to work
+		--if UnitExists("boss4target") and UnitThreatSituation(boss1target, "boss4target") == 3 then return end     -- does not seem to work
+		--if UnitThreatSituation("boss1target") == 3 then return end -- having agro on something, persumably boss1, however boss1 is not a valid unit so can't specifically check for that
+		-- assuming spear targets don't jump to top of threat list or make UnitThreatSituation("player") return 3
+
+		-- at this point boss1target has changed
+
+		boss1target = UnitName("boss1target")
+		local t = GetTime() -- anti-spam as we have no timer cancelling at the moment
+		if t-prev > 1 then
+			mod:TargetMessage(134926, boss1target, "Urgent", "Alarm", L["possible_spear_target"])
+			prev = t
+		end
+		-- XXX add icon and flash once the warning is working
+
+		-- commented for now because sometimes the 2nd warning is the accurate for some reason
+		-- uncomment to test when to cancel and unregister stuff
+		--mod:CancelTimer(timer)
+		--timer = nil
+	end
+	function mod:StartSpearScan()
+		boss1target = (UnitName("boss1target")) or "n"
+		if not timer then
+			timer = mod:ScheduleRepeatingTimer(watchBoss1TargetChange, 0.05)
+		end
+	end
+	function mod:ThrowSpear(args)
+		if UnitExists("boss1") then return end -- don't warn in last phase
+		self:CDBar(args.spellId, 33)
+		self:Message(args.spellId, "Urgent") -- keep this in case TargetMessage fails to find a target
+		if self.db.profile.custom_off_spear_target then
+			self:CancelTimer(timer)
+			timer = nil
+			self:ScheduleTimer("StartSpearScan", 25) -- start watching boss1target in 25 sec
+		end
+	end
+end
 
 local function closeLightningStormProximity()
 	for i=1, GetNumGroupMembers() do

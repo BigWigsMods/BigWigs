@@ -137,9 +137,9 @@ if L then
 
 	L.arcing_lightning_cleared = "Kein Überspringender Blitz mehr"
 
-	L.custom_off_spear_target = "Speerwurf-Ziel"
-	L.custom_off_spear_target_desc = "Versucht das Ziel des Speerwurfes anzuzeigen. Diese Methode ist nicht ressourcenschonend, manchmal ungenau und daher standardmäßig deaktiviert. Die Vergabe der Tankrollen erhöht die Genauigkeit der Warnungen."
-	L.possible_spear_target = "Mögliches Speerwurf-Ziel"
+	L.custom_off_spear_target = "Throw Spear Target"
+	L.custom_off_spear_target_desc = "Try to warn for the Throw Spear target. This method is very resource intensive and sometimes displays the wrong target so it is disabled by default.\n|cFFADFF2FTIP: Setting up TANK roles should help to increase the accuracy of the warning.|r"
+	L.possible_spear_target = "Possible Spear?"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "deDE")
