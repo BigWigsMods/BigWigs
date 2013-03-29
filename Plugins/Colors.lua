@@ -218,12 +218,6 @@ plugin.pluginOptions.args.resetAll = {
 	order = 17,
 }
 
-function plugin:OnRegister()
-	if self.db.profile.upgraded then
-		self.db.profile.upgraded = nil
-	end
-end
-
 local white = { 1, 1, 1 }
 function plugin:GetColorTable(hint, module, key)
 	if not self.db.profile[hint] then return white end

@@ -579,8 +579,8 @@ do
 		if not enablezones[module.zoneId] then
 			enablezones[module.zoneId] = true
 			-- We fire zoneChanged() as a backup for LoD users. In rare cases,
-			-- ZONE_CHANGED_NEW_AREA fires before the first module can add its Id into the table,
-			-- resulting in a failed check to enable UPDATE_MOUSEOVER_UNIT, etc.
+			-- ZONE_CHANGED_NEW_AREA fires before the first module can add its zoneId into the table,
+			-- resulting in a failed check to register UPDATE_MOUSEOVER_UNIT, etc.
 			zoneChanged()
 		end
 
@@ -598,6 +598,7 @@ do
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
 			module:OnRegister()
+			module.OnRegister = nil
 		end
 		self:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 	end
@@ -612,6 +613,7 @@ do
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
 			module:OnRegister()
+			module.OnRegister = nil
 		end
 		self:SendMessage("BigWigs_PluginRegistered", module.moduleName, module)
 	end
