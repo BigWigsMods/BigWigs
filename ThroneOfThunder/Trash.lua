@@ -7,7 +7,8 @@ local mod, CL = BigWigs:NewBoss("Trash", 930)
 if not mod then return end
 mod:RegisterEnableMob(
 	70236, -- Zandalari Storm-Caller
-	70445 -- Stormbringer Draz'kil
+	70445, -- Stormbringer Draz'kil
+	70440 -- Monara
 	--68220 -- Gastropod
 )
 
@@ -26,6 +27,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.stormcaller = "Zandalari Storm-Caller"
 	L.stormbringer = "Stormbringer Draz'kil"
+	L.monara = "Monara"
 end
 L = mod:GetLocale()
 
@@ -37,9 +39,11 @@ function mod:GetOptions()
 	return {
 		{139322, "FLASH", "PROXIMITY", "SAY"},
 		{139900, "FLASH", "PROXIMITY", "SAY"},
+		{139899, "FLASH"},
 	}, {
 		[139322] = L.stormcaller,
 		[139900] = L.stormbringer,
+		[139899] = L.monara,
 	}
 end
 
@@ -49,9 +53,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Storms", 139322, 139900) -- Storm Energy, Stormcloud
 	self:Log("SPELL_AURA_REMOVED", "StormsRemoved", 139322, 139900)
 
+	self:Log("SPELL_CAST_START", "ShadowNova", 139899)
+
 	--self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Fixated", "target")
 
-	self:Death("Disable", 70236, 70445, 68220)
+	self:Death("Disable", 70236, 70445, 70440)
 end
 
 --------------------------------------------------------------------------------
@@ -80,6 +86,14 @@ do
 		end
 	end
 end
+
+function mod:ShadowNova(args)
+	self:Message(args.spellId, "Urgent", "Long", CL["incoming"]:format(args.spellName))
+	self:Bar(args.spellId, 3, CL["cast"]:format(args.spellName))
+	self:Bar(args.spellId, 14.4)
+	self:Flash(args.spellId)
+end
+
 --[[
 do
 	local function scan()
