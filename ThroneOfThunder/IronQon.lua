@@ -19,6 +19,7 @@ mod:RegisterEnableMob(68078, 68079, 68080, 68081) -- Iron Qon, Ro'shak, Quet'zal
 local UnitDebuff = UnitDebuff
 local arcingLightning = {}
 local openedForMe = nil
+local smashCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -35,6 +36,10 @@ if L then
 	L.overload_casting_icon = 137221
 
 	L.arcing_lightning_cleared = "Raid is clear of Arcing Lightning"
+
+	L.custom_off_spear_target = "Throw Spear target"
+	L.custom_off_spear_target_desc = "Try and warn for the Throw Spear target, this method is very resource intense and sometimes inaccurate, therefore it is disabled by default. Setting up TANK roles, should help increasing the warnings accuraccy."
+	L.possible_spear_target = "Possible spear target"
 end
 L = mod:GetLocale()
 
@@ -44,11 +49,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		"custom_off_spear_target",
 		-6914, 136520, 139180, 135145,
 		-6877, {137669, "FLASH"}, {136192, "ICON", "PROXIMITY"}, 77333,
 		137221, "overload_casting", {-6870, "PROXIMITY"}, -6871, {137668, "FLASH"},
 		134926, {134691, "TANK_HEALER"}, "molten_energy", -6917, "berserk", "bosskill",
 	}, {
+		["custom_off_spear_target"] = L.custom_off_spear_target,
 		[-6914] = -6867, -- Dam'ren
 		[-6877] = -6866, -- Quet'zal
 		[137221] = -6865, -- Ro'shak
@@ -86,6 +93,50 @@ function mod:OnBossEnable()
 	self:Death("Win", 68078) -- Iron Qon
 end
 
+local UnitIsUnit = UnitIsUnit
+local boss1target, timer = "n", nil -- "n" as in none, so I don't have to bother with nil checks
+local function watchBoss1TargetChange()
+	-- every check in new line to help debugging
+	if not UnitExists("boss1target") then return end
+	if UnitIsUnit(boss1target, "boss2target") then return end -- mount tank can't be spear target
+	if UnitIsUnit(boss1target, "boss1target") then return end -- boss1target have not changed yet, so probably not the spear target ( not sure if they are valid target )
+	if mod:Tank("boss1target") then return end -- this should not be needed, but ohh well, lets just get shit working first, right now at least it clears up the false tank warnings
+	-- XXX mess around with these if you want further testing, I could not get them working
+	--if UnitExists("boss2target") and UnitThreatSituation(boss1target, "boss2target") == 3 then return end     -- does not seem to work
+	--if UnitExists("boss3target") and UnitThreatSituation(boss1target, "boss3target") == 3 then return end     -- does not seem to work
+	--if UnitExists("boss4target") and UnitThreatSituation(boss1target, "boss4target") == 3 then return end     -- does not seem to work
+	--if UnitThreatSituation("boss1target") == 3 then return end -- having agro on something, persumably boss1, however boss1 is not a valid unit so can't specifically check for that
+	-- assuming spear targets don't jump to top of threat list or make UnitThreatSituation("player") return 3
+
+	-- at this point boss1target has changed
+
+	boss1target = UnitName("boss1target")
+	mod:TargetMessage(134926, boss1target, "Urgent", "Alarm", L["possible_spear_target"])
+	-- XXX add icon and flash once the warning is working
+
+	-- consider adding antispam since it'll warn when switching back too
+	-- uncommented for now because sometimes the 2nd warning is the accurate for some reason
+	-- uncomment to test when to cancel and unregister stuff
+	--mod:CancelTimer(timer)
+	--timer = nil
+end
+local function startRepeatingTimer()
+	if not mod.db.profile.custom_off_spear_target then return end
+	boss1target = (UnitName("boss1target")) or "n"
+	if not timer then
+		timer = mod:ScheduleRepeatingTimer(watchBoss1TargetChange, 0.05)
+	end
+end
+function mod:ThrowSpear(args)
+	if UnitExists("boss1") then return end -- don't warn in last phase
+	self:CDBar(args.spellId, 33)
+	self:Message(args.spellId, "Urgent") -- keep this in case TargetMessage fails to find a target
+	if not mod.db.profile.custom_off_spear_target then return end
+	self:CancelTimer(timer)
+	timer = nil
+	self:ScheduleTimer(startRepeatingTimer, 25) -- start watching boss1target in 25 sec
+end
+
 function mod:OnEngage()
 	openedForMe = nil
 	self:Berserk(720)
@@ -94,9 +145,14 @@ function mod:OnEngage()
 	self:CDBar(134926, 33) -- Throw spear
 	wipe(arcingLightning)
 	if self:Heroic() then
+		self:CloseProximity(-6870)
+		self:OpenProximity(136192, 12) -- Lightning Storm
 		self:Bar(77333, 17) -- Whirling Winds
 		self:Bar(136192, 20) -- Arcing Lightning
 	end
+	smashCounter = 1
+	if not mod.db.profile.custom_off_spear_target then return end
+	self:ScheduleTimer(startRepeatingTimer, 20) -- start watching boss1target in 20 sec
 end
 
 --------------------------------------------------------------------------------
@@ -179,7 +235,7 @@ function mod:LightningStormApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent") -- no point for sound since the guy stunned can't do anything
 	-- XXX we could potentially be intelligent when using a message here and only warn for the closet person to free the stormed guy, but we need :IsInRange for that
-	self:Bar(args.spellId, self:MobId(UnitGUID("boss2")) == 68079 and 40 or 20) -- Ro'shak is there aka Heroic p1 then 40 else 20
+	self:Bar(args.spellId, self:MobId(UnitGUID("boss3")) == 68080 and 20 or 40)
 end
 
 function mod:LightningStormRemoved(args)
@@ -295,12 +351,17 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:StopBar(134628) -- Unleashed Flame
 			self:StopBar(-6914) -- Dead zone
 			self:OpenProximity(136192, 12) -- Lightning Storm -- assume 10 (use 12 to be safe)
-			self:Bar(-6917, 30) -- Fist Smash
+			self:Bar(-6917, 63, ("%s (%d)"):format(self:SpellName(136146), 1)) -- Fist Smash -- timer verified
 		end
 	elseif spellId == 136146 then -- Fist Smash
-		self:Message(-6917, "Urgent", "Alarm")
+		self:Message(-6917, "Urgent", "Alarm", ("%s (%d)"):format(spellName, smashCounter))
+		smashCounter = smashCounter + 1
 		self:Bar(-6917, 7.5, CL["cast"]:format(spellName))
-		self:Bar(-6917, 20)
+		if self:Heroic() then
+			self:CDBar(-6917, 25, ("%s (%d)"):format(spellName, smashCounter)) -- 25 - 30
+		else
+			self:Bar(-6917, 20, ("%s (%d)"):format(spellName, smashCounter))
+		end
 	end
 end
 
