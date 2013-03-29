@@ -35,8 +35,8 @@ if L then
 	L.flight_over = "Flight over in %d sec!"
 	L.upper_nest = "|cff008000Upper|r nest"
 	L.lower_nest = "|cffff0000Lower|r nest"
-	L.upper = "|cff008000Upper|r"
-	L.lower = "|cffff0000Lower|r"
+	L.up = "|cff008000Up|r"
+	L.down = "|cffff0000Down|r"
 	L.add = "Add"
 	L.big_add_message = "Big add at %s"
 end
@@ -136,16 +136,16 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		end
 	elseif diff == 5 then -- 10 H
 		-- first 3 lower, second 3 upper
-		-- big add ever other
+		-- big add every other
 		if nestCounter % 6 > 2 then
 			if nestCounter % 2 == 1 then
-				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["upper"], L["add"]), "misc_arrowlup")
+				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["up"], L["add"]), "misc_arrowlup")
 			else
 				self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
 			end
 		else
 			if nestCounter % 2 == 1 then
-				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["lower"], L["add"]), "misc_arrowdown")
+				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["down"], L["add"]), "misc_arrowdown")
 			else
 				self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
 			end
@@ -156,7 +156,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		if nestCounter % 28 < 4 or nestCounter % 28 == 12 or nestCounter % 28 == 13 or nestCounter % 28 == 23 then
 			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
 		elseif nestCounter % 28 == 4 or nestCounter % 28 == 8 or nestCounter % 28 == 10 or nestCounter % 28 == 14 or nestCounter % 28 == 17 or nestCounter % 28 == 19 or nestCounter % 28 == 21 or nestCounter % 28 == 24 or nestCounter % 28 == 26 then -- up and down at same time
-			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["lower"], nextNest+1, L["upper"]), 134347)
+			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["down"], nextNest+1, L["up"]), 134347)
 		elseif nestCounter % 28 == 6 or nestCounter % 28 == 7 or nestCounter % 28 == 16 then
 			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
 		end
@@ -168,23 +168,23 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		if nestCounter < 3 or nestCounter == 12 then
 			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
 		elseif nestCounter == 3 or nestCounter == 8 or nestCounter == 17 or nestCounter == 19 or nestCounter == 29 then
-			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["lower"], nextNest+1, L["upper"]), 134347)
+			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["down"], nextNest+1, L["up"]), 134347)
 		elseif nestCounter == 13 or nestCounter == 15 or nestCounter == 24 then
-			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["upper"], nextNest+1, L["lower"]), 134347) -- this is intentional, because this is how blizzard announces it too!
+			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["up"], nextNest+1, L["down"]), 134347) -- this is intentional, because this is how blizzard announces it too!
 		elseif nestCounter == 7 then
 			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
 		elseif nestCounter == 1 then
-			self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["lower"], L["add"]), "misc_arrowdown")
+			self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["down"], L["add"]), "misc_arrowdown")
 		elseif nestCounter == 5 then
-			self:Bar("nest", 30, ("(%d)%s(%s)+(%d)%s"):format(nextNest, L["lower"], L["add"], nextNest+1, L["upper"]), 134347)
+			self:Bar("nest", 30, ("(%d)%s(%s)+(%d)%s"):format(nextNest, L["down"], L["add"], nextNest+1, L["up"]), 134347)
 		elseif nestCounter == 10 then
-			self:Bar("nest", 30, ("(%d)%s+(%d)%s(%s)"):format(nextNest, L["lower"], nextNest+1, L["upper"], L["add"]), 134347)
+			self:Bar("nest", 30, ("(%d)%s+(%d)%s(%s)"):format(nextNest, L["down"], nextNest+1, L["up"], L["add"]), 134347)
 		elseif nestCounter == 21 then
-			self:Bar("nest", 30, ("(%d)%s+(%d)%s(%s)+(%d)%s"):format(nextNest, L["upper"], nextNest+1, L["lower"], L["add"], nextNest+2, L["upper"]), 134347) -- XXX keep an eye out for this if it fits on the bar
+			self:Bar("nest", 30, ("(%d)%s+(%d)%s(%s)+(%d)%s"):format(nextNest, L["up"], nextNest+1, L["down"], L["add"], nextNest+2, L["up"]), 134347) -- XXX keep an eye out for this if it fits on the bar
 		elseif nestCounter == 26 or nestCounter == 34 then
-			self:Bar("nest", 30, ("(%d)%s+(%d)%s+%d(%s)"):format(nextNest, L["lower"], nextNest+1, L["upper"], nextNest+2, L["lower"]), 134347)
+			self:Bar("nest", 30, ("(%d)%s+(%d)%s+%d(%s)"):format(nextNest, L["down"], nextNest+1, L["up"], nextNest+2, L["down"]), 134347)
 		elseif nestCounter == 31 then
-			self:Bar("nest", 30, ("(%d)%s+(%d)%s+%d(%s)"):format(nextNest, L["upper"], nextNest+1, L["lower"], nextNest+2, L["upper"]), 134347)
+			self:Bar("nest", 30, ("(%d)%s+(%d)%s+%d(%s)"):format(nextNest, L["up"], nextNest+1, L["down"], nextNest+2, L["up"]), 134347)
 		end
 		-- big adds at 2, 6, 12, 23 -- there might be more between 23 and 37
 		if nestCounter == 2 or nestCounter == 6 or nestCounter == 23 then
