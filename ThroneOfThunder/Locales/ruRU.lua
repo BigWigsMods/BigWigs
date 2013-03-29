@@ -55,8 +55,8 @@ if L then
 	L.kick_desc = "Отслеживает, сколько черепах можно пнуть."
 	L.kick_message = "Можно пнуть черепах: %d"
 
-	L.custom_off_turtlemarker = "Метки на черепах"
-	L.custom_off_turtlemarker_desc = "Помечать всеми рейдовыми метками черепах.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"
+	L.custom_off_turtlemarker = "Маркировка черепах"
+	L.custom_off_turtlemarker_desc = "Помечать рейдовыми метками черепах.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r\n|cFFADFF2FЗАМЕТКА: Если вы выбраны для этой задачи, быстро проведите указателем мыши по черепахам, метки сразу же поставятся.|r"
 
 	L.no_crystal_shell = "НЕТ Защитного панциря"
 end
@@ -156,5 +156,5 @@ L = BigWigs:NewBossLocale("Trash", "ruRU")
 if L then
 	L.stormcaller = "Зандаларский призыватель бурь"
 	L.stormbringer = "Вестник шторма Драз'кил"
-	L.monara = "Monara"
+	L.monara = "Монара"
 end
