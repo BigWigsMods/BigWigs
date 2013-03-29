@@ -12,7 +12,7 @@ if not plugin then return end
 local media = LibStub("LibSharedMedia-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
-local temporaryEmphasizes = nil
+local temporaryEmphasizes = {}
 local emphasizeFlag = nil
 
 -------------------------------------------------------------------------------
@@ -195,7 +195,6 @@ end
 
 function plugin:BigWigs_TempSuperEmphasize(_, module, key, text, time)
 	if not module or not key or text == "" then return end
-	if not temporaryEmphasizes then temporaryEmphasizes = {} end
 	temporaryEmphasizes[key] = GetTime() + time
 	self:BigWigs_StartEmphasize(nil, module, key, text, time)
 end
