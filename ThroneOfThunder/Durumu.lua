@@ -1,4 +1,4 @@
-
+--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -9,6 +9,7 @@ mod:RegisterEnableMob(68036)
 --------------------------------------------------------------------------------
 -- Locals
 --
+
 local redAddDead = 0
 local lifeDrainCasts = 0
 local lingeringGaze = {}
@@ -32,11 +33,11 @@ if L then
 	L.custom_off_ray_controllers = "Ray controllers"
 	L.custom_off_ray_controllers_desc = "Use the %s%s%s raid markers to mark people who will control the ray spawn positions and movement."
 
-	L.custom_off_dark_parasite_marker = "Dark parasite marker"
-	L.custom_off_dark_parasite_marker_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s"
+	L.custom_off_parasite_marks = "Dark parasite marker"
+	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s."
 
 	L.initial_life_drain = "Initial Life Drain cast"
-	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff"
+	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
 	L.initial_life_drain_icon = 133798
 
 	L.rays_spawn = "Rays spawn"
@@ -55,7 +56,7 @@ L.custom_off_ray_controllers_desc = L.custom_off_ray_controllers_desc:format(
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t"
 )
-L.custom_off_dark_parasite_marker_desc = L.custom_off_dark_parasite_marker_desc:format(
+L.custom_off_parasite_marks_desc = L.custom_off_parasite_marks_desc:format(
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t"
@@ -67,7 +68,7 @@ L.custom_off_dark_parasite_marker_desc = L.custom_off_dark_parasite_marker_desc:
 
 function mod:GetOptions()
 	return {
-		-6889, {133597, "FLASH"}, "custom_off_dark_parasite_marker",
+		-6889, {133597, "FLASH"}, "custom_off_parasite_marks",
 		"custom_off_ray_controllers",
 		{133767, "TANK_HEALER"}, {133768, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {-6905, "FLASH", "SAY"}, {-6891, "FLASH"}, "adds",
 		{133798, "ICON", "SAY"}, {"initial_life_drain", "FLASH"},  -6882, 140502,
@@ -128,18 +129,18 @@ end
 --
 
 local function marParasite(destName)
-	for i=1, 8 do
+	for i = 1, 8 do
 		if not marksUsed[i] and (i == 3 or i == 4 or i == 5) then
-			marksUsed[i] = destName
 			SetRaidTarget(destName, i)
+			marksUsed[i] = destName
 			return
 		end
 	end
 end
 
 function mod:DarkParasiteRemoved(args)
-	if mod.db.profile.custom_off_dark_parasite_marker then
-		for k, v in pairs(marksUsed) do
+	if self.db.profile.custom_off_parasite_marks then
+		for k, v in next, marksUsed do
 			if v == args.destName then
 				marksUsed[k] = false
 				SetRaidTarget(args.destName, 0)
@@ -154,7 +155,7 @@ function mod:DarkParasiteApplied(args)
 		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 		self:Flash(args.spellId)
 	end
-	if mod.db.profile.custom_off_dark_parasite_marker then
+	if self.db.profile.custom_off_parasite_marks then
 		marParasite(args.destName)
 	end
 end
@@ -286,9 +287,9 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 			self:Message(-6891, "Personal", "Alert", CL["you"]:format(L["blue_beam"]), 139202)
 		end
 	elseif msg:find("133795") then -- Life Drain (gets target faster than CLEU)
-		self:TargetMessage(133798, target, "Urgent", "Long")
+		self:TargetMessage(133798, target, "Urgent")
+		self:PlaySound(133798, "Long")
 		self:PrimaryIcon(133798, target)
-		self:Message("initial_life_drain", "Important", "Warning", 133798) -- this is here so you can customized sound
 		self:Flash("initial_life_drain", 133798) -- so you can turn on pulse
 	elseif msg:find(L["red_spawn_trigger"]) then
 		self:Message("adds", "Urgent", UnitIsUnit("player", redController) and "Warning", L["red_add"], 136154)
