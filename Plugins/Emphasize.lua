@@ -54,6 +54,7 @@ do
 						name = L["Font"],
 						order = 1,
 						values = media:List("font"),
+						itemControl = "DDI-Font",
 						get = function()
 							for i, v in next, media:List("font") do
 								if v == plugin.db.profile.font then return i end

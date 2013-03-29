@@ -304,8 +304,7 @@ do
 						name = L["Font"],
 						order = 1,
 						values = media:List("font"),
-						--width = "half",
-						--itemControl = "DDI-Font",
+						itemControl = "DDI-Font",
 						get = function()
 							for i, v in next, media:List("font") do
 								if v == plugin.db.profile.font then return i end
@@ -325,7 +324,6 @@ do
 							OUTLINE = L["Thin"],
 							THICKOUTLINE = L["Thick"],
 						},
-						--width = "half",
 						get = function()
 							return plugin.db.profile.outline or "NONE"
 						end,
