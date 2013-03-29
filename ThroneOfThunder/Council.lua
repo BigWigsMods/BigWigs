@@ -393,6 +393,7 @@ function mod:Deaths(args)
 	if args.mobId == 69131 then -- Frost King
 		self:StopBar(136992) -- Frostbite
 		self:StopBar(136990) -- Biting Cold
+		self:StopBar(-7054) -- Frigid Assault
 	elseif args.mobId == 69078 then -- Sandcrawler
 		sandGuyDead = true
 		self:StopBar(-7062) -- Quicksand
