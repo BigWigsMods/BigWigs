@@ -1,4 +1,4 @@
---------------------------------------------------------------------------------
+
 -- Module Declaration
 --
 
@@ -14,6 +14,7 @@ local lifeDrainCasts = 0
 local lingeringGaze = {}
 local openedForMe = nil
 local blueController, redController
+local marksUsed = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -31,6 +32,13 @@ if L then
 	L.custom_off_ray_controllers = "Ray controllers"
 	L.custom_off_ray_controllers_desc = "Use the %s%s%s raid markers to mark people who will control the ray spawn positions and movement."
 
+	L.custom_off_dark_parasite_marker = "Dark parasite marker"
+	L.custom_off_dark_parasite_marker_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s"
+
+	L.initial_life_drain = "Initial Life Drain cast"
+	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff"
+	L.initial_life_drain_icon = 133798
+
 	L.rays_spawn = "Rays spawn"
 	L.red_add = "|cffff0000Red|r add"
 	L.blue_add = "|cff0000ffBlue|r add"
@@ -47,6 +55,11 @@ L.custom_off_ray_controllers_desc = L.custom_off_ray_controllers_desc:format(
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t"
 )
+L.custom_off_dark_parasite_marker_desc = L.custom_off_dark_parasite_marker_desc:format(
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t"
+)
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -54,10 +67,10 @@ L.custom_off_ray_controllers_desc = L.custom_off_ray_controllers_desc:format(
 
 function mod:GetOptions()
 	return {
-		-6889,
+		-6889, {133597, "FLASH"}, "custom_off_dark_parasite_marker",
 		"custom_off_ray_controllers",
 		{133767, "TANK_HEALER"}, {133768, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {-6905, "FLASH", "SAY"}, {-6891, "FLASH"}, "adds",
-		{133798, "ICON"}, -6882, 140502,
+		{133798, "ICON", "SAY"}, {"initial_life_drain", "FLASH"},  -6882, 140502,
 		"berserk", "bosskill",
 	}, {
 		[-6889] = "heroic",
@@ -84,6 +97,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SeriousWound", 133767)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ArterialCut", 133768)
 	self:Log("SPELL_CAST_SUCCESS", "Tracking", 139202, 139204) -- Blue Ray Tracking, Infrared Tracking (for beam jumping on deaths)
+	self:Log("SPELL_AURA_REMOVED", "DarkParasiteRemoved", 133597)
+	self:Log("SPELL_AURA_APPLIED", "DarkParasiteApplied", 133597)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
@@ -99,6 +114,8 @@ function mod:OnEngage()
 	self:Bar(-6882, 135, L["death_beam"])
 	if self:Heroic() then
 		self:Bar(-6889, 127) -- Ice Wall
+		self:Bar(133597, 60) -- Dark Parasite
+		wipe(marksUsed)
 	end
 	lifeDrainCasts = 0
 	wipe(lingeringGaze)
@@ -109,6 +126,38 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function marParasite(destName)
+	for i=1, 8 do
+		if not marksUsed[i] and (i == 3 or i == 4 or i == 5) then
+			marksUsed[i] = destName
+			SetRaidTarget(destName, i)
+			return
+		end
+	end
+end
+
+function mod:DarkParasiteRemoved(args)
+	if mod.db.profile.custom_off_dark_parasite_marker then
+		for k, v in pairs(marksUsed) do
+			if v == args.destName then
+				marksUsed[k] = false
+				SetRaidTarget(args.destName, 0)
+			end
+		end
+	end
+end
+
+function mod:DarkParasiteApplied(args)
+	self:CDBar(args.spellId, 60)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+		self:Flash(args.spellId)
+	end
+	if mod.db.profile.custom_off_dark_parasite_marker then
+		marParasite(args.destName)
+	end
+end
 
 local function mark(unit, mark)
 	if not unit or not mark or not mod.db.profile.custom_off_ray_controllers then return end
@@ -162,6 +211,9 @@ end
 
 function mod:LifeDrainDose(args)
 	self:StackMessage(133798, args.destName, args.amount, "Important")
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId) -- this spams but is needed, hack even yell would be better
+	end
 end
 
 do
@@ -236,6 +288,8 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 	elseif msg:find("133795") then -- Life Drain (gets target faster than CLEU)
 		self:TargetMessage(133798, target, "Urgent", "Long")
 		self:PrimaryIcon(133798, target)
+		self:Message("initial_life_drain", "Important", "Warning", 133798) -- this is here so you can customized sound
+		self:Flash("initial_life_drain", 133798) -- so you can turn on pulse
 	elseif msg:find(L["red_spawn_trigger"]) then
 		self:Message("adds", "Urgent", UnitIsUnit("player", redController) and "Warning", L["red_add"], 136154)
 	elseif msg:find(L["blue_spawn_trigger"]) then
