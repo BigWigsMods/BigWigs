@@ -71,7 +71,7 @@ function mod:GetOptions()
 		-6889, {133597, "FLASH"}, "custom_off_parasite_marks",
 		"custom_off_ray_controllers",
 		{133767, "TANK_HEALER"}, {133768, "TANK_HEALER"}, {134626, "PROXIMITY", "FLASH"}, {-6905, "FLASH", "SAY"}, {-6891, "FLASH"}, "adds",
-		{133798, "ICON", "SAY"}, {"initial_life_drain", "FLASH"},  -6882, 140502,
+		{133798, "ICON", "SAY"}, {"initial_life_drain", "FLASH"}, -6882, 140502,
 		"berserk", "bosskill",
 	}, {
 		[-6889] = "heroic",
@@ -287,9 +287,10 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 			self:Message(-6891, "Personal", "Alert", CL["you"]:format(L["blue_beam"]), 139202)
 		end
 	elseif msg:find("133795") then -- Life Drain (gets target faster than CLEU)
-		self:TargetMessage(133798, target, "Urgent")
-		self:PlaySound(133798, "Long")
 		self:PrimaryIcon(133798, target)
+
+		self:TargetMessage("initial_life_drain", target, "Urgent")
+		self:PlaySound("initial_life_drain", "Long")
 		self:Flash("initial_life_drain", 133798) -- so you can turn on pulse
 	elseif msg:find(L["red_spawn_trigger"]) then
 		self:Message("adds", "Urgent", UnitIsUnit("player", redController) and "Warning", L["red_add"], 136154)
