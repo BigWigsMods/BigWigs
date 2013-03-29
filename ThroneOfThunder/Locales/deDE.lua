@@ -96,10 +96,10 @@ if L then
 	L.adds_desc = "Warnungen für das Erscheinen der purpurroten, goldgelben und azurblauen Nebel. Gibt an, wie viele purpurrote Nebel verbleiben."
 
 	L.custom_off_ray_controllers = "Kontrollierer der Lichtstrahlen"
-	L.custom_off_ray_controllers_desc = "Verwenden der %s%s%s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_ray_controllers_desc = "Verwenden der %s%s%s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
 
 	L.custom_off_parasite_marks = "Dunkle Parasiten markieren"
-	L.custom_off_parasite_marks_desc = "Um Heilzuteilungen zu erleichtern werden die Ziele der dunklen Parasiten mit %s%s%s markiert.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_parasite_marks_desc = "Um Heilzuteilungen zu erleichtern werden die Ziele der dunklen Parasiten mit %s%s%s markiert.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
 
 	L.initial_life_drain = "Anfänglicher Lebensentzug"
 	L.initial_life_drain_desc = "Nachricht für den anfänglichen Lebensentzug anzeigen, um die erhaltene Heilung zur Verringerung des Schwächungszaubers aufrecht zu erhalten."
@@ -136,6 +136,10 @@ if L then
 	L.overload_casting_desc = "Warnung für das Wirken von Geschmolzene Überladung"
 
 	L.arcing_lightning_cleared = "Kein Überspringender Blitz mehr"
+
+	L.custom_off_spear_target = "Speerwurf-Ziel"
+	L.custom_off_spear_target_desc = "Versucht das Ziel des Speerwurfes anzuzeigen. Diese Methode ist nicht ressourcenschonend, manchmal ungenau und daher standardmäßig deaktiviert. Die Vergabe der Tankrollen erhöht die Genauigkeit der Warnungen."
+	L.possible_spear_target = "Mögliches Speerwurf-Ziel"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "deDE")
