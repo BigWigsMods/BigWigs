@@ -128,12 +128,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 
 	if t == "string" then
 		if customBossOptions[option] then
-			local icon = nil
-			if customBossOptions[option][4] then
-				local _
-				_, _, icon = GetSpellInfo(customBossOptions[option][4])
-			end
-			return option, customBossOptions[option][1], customBossOptions[option][2], icon
+			return option, customBossOptions[option][1], customBossOptions[option][2], customBossOptions[option][4]
 		else
 			local roleIcon, roleDesc
 			if option:find("^custom_") then

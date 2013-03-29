@@ -383,8 +383,8 @@ function addon:OnInitialize()
 	db.RegisterCallback(self, "OnProfileReset", profileUpdate)
 	self.db = db
 
-	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
-	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"], nil, 26662)
+	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"], nil, "Interface\\Icons\\inv_misc_bone_skull_01")
+	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"], nil, "Interface\\Icons\\spell_shadow_unholyfrenzy")
 	self:RegisterBossOption("stages", L["stages"], L["stages_desc"])
 
 	-- this should ALWAYS be the last action of OnInitialize, it will trigger the loader to

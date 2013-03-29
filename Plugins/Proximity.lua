@@ -704,7 +704,7 @@ end
 function plugin:OnRegister()
 	db = self.db.profile
 
-	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled, "inv_misc_map02")
+	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled, "Interface\\Icons\\ability_hunter_pathfinding")
 
 	if not db.font then
 		db.font = media:GetDefault("font")
