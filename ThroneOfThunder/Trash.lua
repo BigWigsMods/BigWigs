@@ -49,15 +49,19 @@ end
 
 function mod:OnBossEnable()
 	scheduled = nil
+	wipe(debuffTargets)
 
 	self:Log("SPELL_AURA_APPLIED", "Storms", 139322, 139900) -- Storm Energy, Stormcloud
 	self:Log("SPELL_AURA_REMOVED", "StormsRemoved", 139322, 139900)
 
 	self:Log("SPELL_CAST_START", "ShadowNova", 139899)
+	self:AddSyncListener("MonaraSN")
+	self:AddSyncListener("MonaraDies")
 
 	--self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Fixated", "target")
 
-	self:Death("Disable", 70236, 70445, 70440)
+	self:Death("Disable", 70236, 70445)
+	self:Death("MonaraDies", 70440)
 end
 
 --------------------------------------------------------------------------------
@@ -87,11 +91,26 @@ do
 	end
 end
 
-function mod:ShadowNova(args)
-	self:Message(args.spellId, "Urgent", "Long", CL["incoming"]:format(args.spellName))
-	self:Bar(args.spellId, 3, CL["cast"]:format(args.spellName))
-	self:Bar(args.spellId, 14.4)
-	self:Flash(args.spellId)
+do
+	-- Sync for corpse runners
+	function mod:OnSync(sync)
+		if sync == "MonaraDies" then
+			self:Disable()
+		elseif sync == "MonaraSN" then
+			local id = 139899
+			local name = self:SpellName(id)
+			self:Message(id, "Urgent", "Long", CL["incoming"]:format(name))
+			self:Bar(id, 3, CL["cast"]:format(name))
+			self:Bar(id, 14.4)
+			self:Flash(id)
+		end
+	end
+	function mod:ShadowNova(args)
+		self:Sync("MonaraSN")
+	end
+	function mod:MonaraDies()
+		self:Sync("MonaraDies")
+	end
 end
 
 --[[
