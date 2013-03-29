@@ -96,7 +96,15 @@ if L then
 	L.adds_desc = "当猩红、琥珀和碧蓝雾行兽显形和猩红雾行兽剩余时发出警报。"
 
 	L.custom_off_ray_controllers = "光线控制"
-	L.custom_off_ray_controllers_desc = "使用%s%s%s团队标记控制光线增援和移动的玩家。"
+	L.custom_off_ray_controllers_desc = "使用%s%s%s团队标记控制光线增援和移动的玩家。\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+
+	L.custom_off_parasite_marks = "Dark parasite marker"
+	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+
+	L.initial_life_drain = "Initial Life Drain cast"
+	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
+
+	L.life_drain_say = "%dx Drain"
 
 	L.rays_spawn = "光线出现"
 	L.red_add = "|cffff0000红色|r增援"

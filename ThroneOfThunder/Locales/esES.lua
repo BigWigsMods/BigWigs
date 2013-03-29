@@ -97,7 +97,15 @@ if L then
 	L.adds_desc = "Avisa cuando revelas una niebla carmesí, ámbar o azur y cuantas nieblas carmesies quedan."
 
 	L.custom_off_ray_controllers = "Controladores de rayo"
-	L.custom_off_ray_controllers_desc = "Usa las marcas de raid %s%s%s para marcar gente que controlará las posiciones y movimientos cuando aparecen los rayos."
+	L.custom_off_ray_controllers_desc = "Usa las marcas de raid %s%s%s para marcar gente que controlará las posiciones y movimientos cuando aparecen los rayos.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+
+	L.custom_off_parasite_marks = "Dark parasite marker"
+	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+
+	L.initial_life_drain = "Initial Life Drain cast"
+	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
+
+	L.life_drain_say = "%dx Drain"
 
 	L.rays_spawn = "Aparecen rayos"
 	L.red_add = "Add |cffff0000rojo|r"

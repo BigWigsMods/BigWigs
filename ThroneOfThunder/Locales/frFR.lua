@@ -96,7 +96,15 @@ if L then
 	L.adds_desc = "Alertes quand vous révélez une Brume écarlate, d'ambre ou azur et combien de Brumes écarlates il reste."
 
 	L.custom_off_ray_controllers = "Contrôleurs de rayon"
-	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s%s%s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements."
+	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s%s%s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+
+	L.custom_off_parasite_marks = "Dark parasite marker"
+	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+
+	L.initial_life_drain = "Initial Life Drain cast"
+	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
+
+	L.life_drain_say = "%dx Drain"
 
 	L.rays_spawn = "Apparition des rayons"
 	L.red_add = "Bête de brume |cffff0000rouge|r"
