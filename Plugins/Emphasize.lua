@@ -22,7 +22,7 @@ local emphasizeFlag = nil
 plugin.defaultDB = {
 	upper = true,
 	countdown = true,
-	font = "Friz Quadrata TT",
+	font = nil,
 	outline = "THICKOUTLINE",
 	fontSize = 32,
 	fontColor = { r = 1, g = 0, b = 0 },
@@ -38,7 +38,7 @@ do
 				set = function(info, value)
 					plugin.db.profile[info[#info]] = value
 					if plugin.anchorEmphasizedCountdownText then
-						plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline)
+						plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline)
 					end
 				end,
 				args = {
@@ -64,7 +64,7 @@ do
 							local list = media:List("font")
 							plugin.db.profile.font = list[value]
 							if plugin.anchorEmphasizedCountdownText then
-								plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline)
+								plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline)
 							end
 						end,
 					},
@@ -77,16 +77,6 @@ do
 							OUTLINE = L["Thin"],
 							THICKOUTLINE = L["Thick"],
 						},
-						get = function()
-							return plugin.db.profile.outline or "NONE"
-						end,
-						set = function(info, value)
-							if value == "NONE" then value = nil end
-							plugin.db.profile[info[#info]] = value
-							if plugin.anchorEmphasizedCountdownText then
-								plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline)
-							end
-						end,
 					},
 					fontSize = {
 						type = "range",
@@ -140,6 +130,13 @@ do
 		return pluginOptions
 	end
 end
+
+local function updateProfile()
+	if not plugin.db.profile.font then
+		plugin.db.profile.font = media:GetDefault("font")
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Initialization
 --
@@ -149,6 +146,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StartEmphasize")
 	self:RegisterMessage("BigWigs_StopEmphasize")
 	self:RegisterMessage("BigWigs_TempSuperEmphasize")
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 end
 
 do

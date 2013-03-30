@@ -671,18 +671,30 @@ end
 local function updateProfile()
 	db = plugin.db.profile
 
-	anchor:SetWidth(db.width)
-	anchor:SetHeight(db.height)
+	if anchor then
+		anchor:SetWidth(db.width)
+		anchor:SetHeight(db.height)
 
-	local x = db.posx
-	local y = db.posy
-	if x and y then
-		local s = anchor:GetEffectiveScale()
-		anchor:ClearAllPoints()
-		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-	else
-		anchor:ClearAllPoints()
-		anchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
+		local x = db.posx
+		local y = db.posy
+		if x and y then
+			local s = anchor:GetEffectiveScale()
+			anchor:ClearAllPoints()
+			anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+		else
+			anchor:ClearAllPoints()
+			anchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
+		end
+
+		plugin:RestyleWindow()
+	end
+
+	if not db.font then
+		db.font = media:GetDefault("font")
+	end
+	if not db.fontSize then
+		local _, size = GameFontNormalHuge:GetFont()
+		db.fontSize = size
 	end
 end
 
@@ -702,17 +714,9 @@ end
 --
 
 function plugin:OnRegister()
-	db = self.db.profile
-
 	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled, "Interface\\Icons\\ability_hunter_pathfinding")
-
-	if not db.font then
-		db.font = media:GetDefault("font")
-	end
-	if not db.fontSize then
-		local _, size = GameFontNormalHuge:GetFont()
-		db.fontSize = size
-	end
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	updateProfile()
 end
 
 do

@@ -111,24 +111,21 @@ local function updateProfile()
 		normalAnchor:RefixPosition()
 		emphasizeAnchor:RefixPosition()
 		emphasizeCountdownAnchor:RefixPosition()
+		BWMessageFrame:ClearAllPoints()
+		local align = db.align == "CENTER" and "" or db.align
+		BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
+		for i = 1, 4 do
+			local font = labels[i]
+			if font then
+				font.animFade:SetStartDelay(db.displaytime)
+				font.icon.animFade:SetStartDelay(db.displaytime)
+				font.animFade:SetDuration(db.fadetime)
+				font.icon.animFade:SetStartDelay(db.displaytime)
+			end
+		end
 	end
 	plugin:SetSinkStorage(db)
 	fakeEmphasizeMessageAddon:SetSinkStorage(db.emphasizedMessages)
-end
-
--------------------------------------------------------------------------------
--- Initialization
---
-
-function plugin:OnRegister()
-	db = self.db.profile
-
-	fakeEmphasizeMessageAddon:SetSinkStorage(db.emphasizedMessages)
-	self:RegisterSink("BigWigsEmphasized", L["Big Wigs Emphasized"], L.emphasizedSinkDescription, "EmphasizedPrint")
-	self:SetSinkStorage(self.db.profile)
-	self:RegisterSink("BigWigs", "Big Wigs", L.sinkDescription, "Print")
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-
 	if not db.font then
 		db.font = media:GetDefault("font")
 	end
@@ -136,6 +133,17 @@ function plugin:OnRegister()
 		local _, size = GameFontNormalHuge:GetFont()
 		db.fontSize = size
 	end
+end
+
+-------------------------------------------------------------------------------
+-- Initialization
+--
+
+function plugin:OnRegister()
+	self:RegisterSink("BigWigsEmphasized", L["Big Wigs Emphasized"], L.emphasizedSinkDescription, "EmphasizedPrint")
+	self:RegisterSink("BigWigs", "Big Wigs", L.sinkDescription, "Print")
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	updateProfile()
 end
 
 do
@@ -159,7 +167,7 @@ do
 			header:SetPoint("BOTTOM", display, "TOP", 0, 5)
 			header:SetJustifyV("TOP")
 			seModule.anchorEmphasizedCountdownText = display:CreateFontString(nil, "OVERLAY")
-			seModule.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, seModule.db.profile.outline)
+			seModule.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, seModule.db.profile.outline ~= "NONE" and seModule.db.profile.outline)
 			seModule.anchorEmphasizedCountdownText:SetPoint("CENTER")
 			seModule.anchorEmphasizedCountdownText:SetText("5")
 			seModule.anchorEmphasizedCountdownText:SetTextColor(seModule.db.profile.fontColor.r, seModule.db.profile.fontColor.g, seModule.db.profile.fontColor.b)
@@ -328,13 +336,6 @@ do
 							OUTLINE = L["Thin"],
 							THICKOUTLINE = L["Thick"],
 						},
-						get = function()
-							return plugin.db.profile.outline or "NONE"
-						end,
-						set = function(info, value)
-							if value == "NONE" then value = nil end
-							plugin.db.profile[info[#info]] = value
-						end,
 					},
 					align = {
 						type = "select",
@@ -467,11 +468,11 @@ do
 		local slot = getNextSlot()
 
 		local flags = nil
-		if db.monochrome and db.outline then
+		if db.monochrome and db.outline ~= "NONE" then
 			flags = "MONOCHROME," .. db.outline
 		elseif db.monochrome then
 			flags = nil -- "MONOCHROME", XXX monochrome only is disabled for now as it causes a client crash
-		elseif db.outline then
+		elseif db.outline ~= "NONE" then
 			flags = db.outline
 		end
 		slot:SetFont(media:Fetch("font", db.font), db.fontSize, flags)
@@ -522,7 +523,17 @@ do
 			anim:SetDuration(3.5)
 			anim:SetStartDelay(1.5)
 		end
-		emphasizedText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, seModule.db.profile.outline)
+
+		local flags = nil
+		if seModule.db.profile.monochrome and seModule.db.profile.outline ~= "NONE" then
+			flags = "MONOCHROME," .. seModule.db.profile.outline
+		elseif seModule.db.profile.monochrome then
+			flags = nil -- "MONOCHROME", XXX monochrome only is disabled for now as it causes a client crash
+		elseif seModule.db.profile.outline ~= "NONE" then
+			flags = seModule.db.profile.outline
+		end
+
+		emphasizedText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, flags)
 		emphasizedText:SetText(text)
 		emphasizedText:SetTextColor(r, g, b)
 		updater:Stop()
@@ -556,7 +567,17 @@ do
 			anim:SetDuration(3.5)
 			anim:SetStartDelay(1.5)
 		end
-		emphasizedCountdownText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, seModule.db.profile.outline)
+
+		local flags = nil
+		if seModule.db.profile.monochrome and seModule.db.profile.outline ~= "NONE" then
+			flags = "MONOCHROME," .. seModule.db.profile.outline
+		elseif seModule.db.profile.monochrome then
+			flags = nil -- "MONOCHROME", XXX monochrome only is disabled for now as it causes a client crash
+		elseif seModule.db.profile.outline ~= "NONE" then
+			flags = seModule.db.profile.outline
+		end
+
+		emphasizedCountdownText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, flags)
 		emphasizedCountdownText:SetText(text)
 		emphasizedCountdownText:SetTextColor(seModule.db.profile.fontColor.r, seModule.db.profile.fontColor.g, seModule.db.profile.fontColor.b)
 		updater:Stop()

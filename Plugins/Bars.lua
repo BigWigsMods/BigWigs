@@ -359,6 +359,7 @@ plugin.defaultDB = {
 	fontSize = 10,
 	texture = "BantoBar",
 	font = nil,
+	outline = "NONE",
 	growup = true,
 	time = true,
 	align = "LEFT",
@@ -525,8 +526,6 @@ do
 						for i, v in next, media:List("font") do
 							if v == db.font then return i end
 						end
-					elseif key == "outline" then
-						return db.outline or "NONE"
 					end
 					return db[key]
 				end,
@@ -540,9 +539,6 @@ do
 						db.font = list[value]
 					elseif key == "barStyle" then
 						plugin:SetBarStyle(value)
-					elseif key == "outline" then
-						if value == "NONE" then value = nil end
-						db.outline = value
 					else
 						db[key] = value
 					end
@@ -894,6 +890,15 @@ local function updateProfile()
 		normalAnchor:RefixPosition()
 		emphasizeAnchor:RefixPosition()
 	end
+	if not db.font then db.font = media:GetDefault("font") end
+	if plugin:IsEnabled() then
+		if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
+		plugin:SetBarStyle(db.barStyle)
+		if BigWigs.db.profile.customDBMbars then
+			RegisterAddonMessagePrefix("D4")
+			plugin:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
+		end
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -908,10 +913,8 @@ function plugin:OnRegister()
 	media:Register("statusbar", "BantoBar", "Interface\\AddOns\\BigWigs\\Textures\\default")
 	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
 
-	db = self.db.profile
-	if not db.font then db.font = media:GetDefault("font") end
-
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	updateProfile()
 
 	for k, v in next, barStyles do
 		barStyleRegister[k] = v:GetStyleName()
@@ -921,7 +924,6 @@ end
 function plugin:OnPluginEnable()
 	colors = BigWigs:GetPlugin("Colors")
 
-	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 	self:RegisterMessage("BigWigs_StartBar")
 	self:RegisterMessage("BigWigs_StopBar", "StopSpecificBar")
 	self:RegisterMessage("BigWigs_StopBars", "StopModuleBars")
@@ -933,6 +935,9 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 
+	self:RefixClickIntercepts()
+	self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
+
 	-- custom bars
 	BigWigs:AddSyncListener(self, "BWCustomBar")
 	BigWigs:AddSyncListener(self, "BWPull")
@@ -941,9 +946,7 @@ function plugin:OnPluginEnable()
 		self:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
 	end
 
-	self:RefixClickIntercepts()
-	self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
-
+	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 	self:SetBarStyle(currentBarStyler and currentBarStyler.GetStyleName and currentBarStyler.GetStyleName() or db.barStyle)
 end
 
@@ -1208,8 +1211,8 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	bar.candyBarLabel:SetTextColor(colors:GetColor("barText", module, key))
 	bar.candyBarLabel:SetJustifyH(db.align)
 	local f = media:Fetch("font", db.font)
-	bar.candyBarLabel:SetFont(f, db.fontSize, db.outline)
-	bar.candyBarDuration:SetFont(f, db.fontSize, db.outline)
+	bar.candyBarLabel:SetFont(f, db.fontSize, db.outline ~= "NONE" and db.outline)
+	bar.candyBarDuration:SetFont(f, db.fontSize, db.outline ~= "NONE" and db.outline)
 	bar:SetLabel(text)
 	bar:SetClampedToScreen(true)
 	bar:SetDuration(time, isApprox)
