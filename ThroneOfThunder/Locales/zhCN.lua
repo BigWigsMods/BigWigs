@@ -52,7 +52,7 @@ end
 L = BigWigs:NewBossLocale("Tortos", "zhCN")
 if L then
 	L.bats_desc = "大量吸血蝠。控制。"
-	
+
 	L.kick = "脚踢"
 	L.kick_desc = "持续追踪可被脚踢旋龟的数量。"
 	L.kick_message = "可脚踢旋龟：>%d<！"

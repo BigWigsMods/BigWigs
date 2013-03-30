@@ -22,7 +22,7 @@ if L then
 	L.kick_message = "Kickable turtles: %d"
 
 	L.custom_off_turtlemarker = "Turtle Marker"
-	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"
+	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"
 	L.custom_off_turtlemarker_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8"
 
 	L.no_crystal_shell = "NO Crystal Shell"

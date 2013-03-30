@@ -51,6 +51,8 @@ end
 
 L = BigWigs:NewBossLocale("Tortos", "frFR")
 if L then
+	L.bats_desc = "Many bats. Handle it."
+
 	L.kick = "Coup de pied"
 	L.kick_desc = "Effectue un suivi du nombre de tortues qui peuvent être bottées."
 	L.kick_message = "Tortues à botter : %d"

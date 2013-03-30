@@ -34,7 +34,7 @@ if L then
 	L.priestess_adds_message = "Priestess add"
 
 	L.custom_on_markpossessed = "Mark Possessed Boss"
-	L.custom_on_markpossessed_desc = "Mark the possessed boss with a skull."
+	L.custom_on_markpossessed_desc = "Mark the possessed boss with a skull, requires promoted or leader."
 	L.custom_on_markpossessed_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8"
 
 	L.assault_stun = "Tank Stunned!"

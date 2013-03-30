@@ -51,6 +51,8 @@ end
 
 L = BigWigs:NewBossLocale("Tortos", "ruRU")
 if L then
+	L.bats_desc = "Many bats. Handle it."
+
 	L.kick = "Пинок"
 	L.kick_desc = "Отслеживает, сколько черепах можно пнуть."
 	L.kick_message = "Можно пнуть черепах: %d"
