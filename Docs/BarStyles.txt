@@ -63,7 +63,7 @@ BigWigs:GetPlugin("Bars"):RegisterBarStyle("MyBigWigsSkin", {
 ==   Example MyBigWigsSkin.toc file   ==
 ========================================
 
-## Interface: 50001
+## Interface: 50200
 ## Title: MyBigWigsSkin
 ## Notes: My Big Wigs Skin
 ## Author: Me

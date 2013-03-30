@@ -11,23 +11,18 @@ pushing a new release to wowace/curse and wowinterface.
 2. Check that BigWigs.toc in the root folder has the correct Version.
    And, if not, update it and commit.
 
-3. Run the lua script under Options/scripts to update the credits.
+3. Run the lua script under Options/scripts to update the credits if required.
    And don't forget to commit it!
 
 4. Scan the code for any Lua comments starting with XXX and verify that
    these do not hinder the next release.
    (find . -name "*.lua" | xargs grep 'XXX' -n)
 
-5. Download the latest alpha zip (with libs) and install that in a clean
-   Interface\AddOns folder without other addons.
+5. Run the ingame Test, load the zone modules, and cycle through ALL the current 
+   boss mod config panels to make sure none error on display. If any core features
+   have been changed, test them.
 
-6. Start up WoW and navigate through ALL the options to verify that
-   nothing breaks instantly.
-
-7. Run the ingame Test, just spam click the button at least 20 times
-   on a character of level 40 or higher.
-
-8. Get a "go" from either Ammo or Rabbit on irc.freenode.net/#wowace.
+6. Get a "go" from a Big Wigs developer.
 
  -> Release!
 
