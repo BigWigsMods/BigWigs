@@ -112,6 +112,8 @@ local function updateProfile()
 		emphasizeAnchor:RefixPosition()
 		emphasizeCountdownAnchor:RefixPosition()
 	end
+	plugin:SetSinkStorage(db)
+	fakeEmphasizeMessageAddon:SetSinkStorage(db.emphasizedMessages)
 end
 
 -------------------------------------------------------------------------------
