@@ -80,8 +80,8 @@ if L then
 	L.flight_over = "Облет через %d сек!"
 	L.upper_nest = "|cff008000Верхние|r гнезда"
 	L.lower_nest = "|cffff0000Нижние|r гнезда"
-	L.up = "UP"
-	L.down = "DOWN"
+	L.up = "ВВЕРХ"
+	L.down = "ВНИЗ"
 	L.add = "Помощник"
 	L.big_add_message = "Большой помощник: %s"
 end
@@ -96,15 +96,15 @@ if L then
 	L.adds_desc = "Предупреждать, когда вы находите Багровый, Янтарный или Лазурный туманы; и сколько ещё Багровых туманов осталось."
 
 	L.custom_off_ray_controllers = "Операторы луча"
-	L.custom_off_ray_controllers_desc = "Использовать %s%s%s метки для обозначения людей, контроллирующих лучи.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_ray_controllers_desc = "Использовать %s%s%s метки для обозначения людей, контроллирующих лучи.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
 
-	L.custom_off_parasite_marks = "Dark parasite marker"
-	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_parasite_marks = "Маркировка Темного паразита"
+	L.custom_off_parasite_marks_desc = "Чтобы помочь лекарям, на людей с темным паразитом, будут поставлены метки %s%s%s.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
 
-	L.initial_life_drain = "Initial Life Drain cast"
-	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
+	L.initial_life_drain = "Начало чтения Похищения жизни"
+	L.initial_life_drain_desc = "Сообщать о начале чтения похищения жизни, чтобы помочь с распределением дебаффа."
 
-	L.life_drain_say = "%dx Drain"
+	L.life_drain_say = "%dx Похищение"
 
 	L.rays_spawn = "Появляются лучи"
 	L.red_add = "|cffff0000Красный|r помощник"
@@ -136,9 +136,9 @@ if L then
 
 	L.arcing_lightning_cleared = "Рейд свободен от Дуговой молнии"
 
-	L.custom_off_spear_target = "Throw Spear Target"
-	L.custom_off_spear_target_desc = "Try to warn for the Throw Spear target. This method is high on CPU usage and sometimes displays the wrong target so it is disabled by default.\n|cFFADFF2FTIP: Setting up TANK roles should help to increase the accuracy of the warning.|r"
-	L.possible_spear_target = "Possible Spear?"
+	L.custom_off_spear_target = "Цели Броска копья"
+	L.custom_off_spear_target_desc = "Пытаться предупреждать о целях броска копья. Этот способ сильно загружает процессор и иногда показывает неверные цели, поэтому выключен по умолчанию.\n|cFFADFF2FЗАМЕТКА: Установка ролей должна помочь повысить точность предупреждений.|r"
+	L.possible_spear_target = "Возможные копья?"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "ruRU")

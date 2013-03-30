@@ -24,8 +24,8 @@ if L then
 	L.special = "Cпец. способность"
 	L.special_desc = "Предупредать о следующей особой способности."
 
-	L.custom_off_addmarker = "Protector Marker"
-	L.custom_off_addmarker_desc = "Marks Animated Protectors during Lei Shi's Protect.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all of the Protectors is the fastest way to mark them.|r"
+	L.custom_off_addmarker = "Маркировка Защитников"
+	L.custom_off_addmarker_desc = "Помечать рейдовыми метками защитников, пока Лей Ши защищена.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r\n|cFFADFF2FЗАМЕТКА: Если вы выбраны для этой задачи, быстро проведите указателем мыши по защитникам, метки сразу же поставятся.|r"
 end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "ruRU")
