@@ -80,8 +80,8 @@ if L then
 	L.flight_over = "飞行结束 %d秒！"
 	L.upper_nest = "|cff008000下层|r巢穴"
 	L.lower_nest = "|cffff0000上层|r巢穴"
-	L.up = "UP"
-	L.down = "DOWN"
+	L.up = "上层"
+	L.down = "下层"
 	L.add = "增援"
 	L.big_add_message = "大量增援 >%s<！"
 end
@@ -96,15 +96,15 @@ if L then
 	L.adds_desc = "当猩红、琥珀和碧蓝雾行兽显形和猩红雾行兽剩余时发出警报。"
 
 	L.custom_off_ray_controllers = "光线控制"
-	L.custom_off_ray_controllers_desc = "使用%s%s%s团队标记控制光线增援和移动的玩家。\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_ray_controllers_desc = "使用%s%s%s团队标记控制光线增援和移动的玩家。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 
-	L.custom_off_parasite_marks = "Dark parasite marker"
-	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_parasite_marks = "黑暗寄生标记"
+	L.custom_off_parasite_marks_desc = "使用%s%s%s标记中了黑暗寄生的玩家帮助分配治疗。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 
-	L.initial_life_drain = "Initial Life Drain cast"
-	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
+	L.initial_life_drain = "初始生命吸取施放"
+	L.initial_life_drain_desc = "初始生命吸取施放消息以帮助保持接受治疗减少减益。"
 
-	L.life_drain_say = "%dx Drain"
+	L.life_drain_say = ">%d<层吸取"
 
 	L.rays_spawn = "光线出现"
 	L.red_add = "|cffff0000红色|r增援"
@@ -137,9 +137,9 @@ if L then
 
 	L.arcing_lightning_cleared = "弧形闪电"
 
-	L.custom_off_spear_target = "Throw Spear Target"
-	L.custom_off_spear_target_desc = "Try to warn for the Throw Spear target. This method is high on CPU usage and sometimes displays the wrong target so it is disabled by default.\n|cFFADFF2FTIP: Setting up TANK roles should help to increase the accuracy of the warning.|r"
-	L.possible_spear_target = "Possible Spear?"
+	L.custom_off_spear_target = "投掷长矛目标"
+	L.custom_off_spear_target_desc = "尝试警报投掷长矛目标。此方法将提高 CPU 使用率，有时会显示错误的目标，所以它在默认情况下是被禁用。\n|cFFADFF2F提示：设置为坦克职业会有助于提高警报准确性。|r"
+	L.possible_spear_target = "可能的长矛？"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "zhCN")
