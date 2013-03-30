@@ -74,6 +74,7 @@ plugin.defaultDB = {
 	font = nil,
 	monochrome = nil,
 	outline = "THICKOUTLINE",
+	align = "CENTER",
 	fontSize = nil,
 	usecolors = true,
 	scale = 1.0,
@@ -198,7 +199,8 @@ do
 		BWMessageFrame = CreateFrame("Frame", "BWMessageFrame", UIParent)
 		BWMessageFrame:SetWidth(UIParent:GetWidth())
 		BWMessageFrame:SetHeight(80)
-		BWMessageFrame:SetPoint("TOP", normalAnchor, "BOTTOM")
+		local align = db.value == "CENTER" and "" or db.align
+		BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
 		BWMessageFrame:SetScale(db.scale or 1)
 		BWMessageFrame:SetFrameStrata("HIGH")
 		BWMessageFrame:SetToplevel(true)
@@ -332,10 +334,27 @@ do
 							plugin.db.profile[info[#info]] = value
 						end,
 					},
+					align = {
+						type = "select",
+						name = L["Align"],
+						values = {
+							LEFT = L["Left"],
+							CENTER = L["Center"],
+							RIGHT = L["Right"],
+						},
+						style = "radio",
+						order = 3,
+						set = function(info, value) 
+							plugin.db.profile[info[#info]] = value
+							BWMessageFrame:ClearAllPoints()
+							local align = value == "CENTER" and "" or db.align
+							BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
+						end,
+					},
 					fontSize = {
 						type = "range",
 						name = L["Font size"],
-						order = 3,
+						order = 4,
 						max = 40,
 						min = 8,
 						step = 1,
@@ -374,20 +393,20 @@ do
 						type = "range",
 						name = L["Display time"],
 						desc = L["How long to display a message, in seconds"],
-						min=1,
-						max=30,
-						step=0.5,
-						order=10,
+						min = 1,
+						max = 30,
+						step = 0.5,
+						order = 10,
 						set = updateMessageTimers,
 					},
 					fadetime = {
 						type = "range",
 						name = L["Fade time"],
 						desc = L["How long to fade out a message, in seconds"],
-						min=1,
-						max=30,
-						step=0.5,
-						order=11,
+						min = 1,
+						max = 30,
+						step = 0.5,
+						order = 11,
 						set = updateMessageTimers,
 					},
 				},
@@ -426,12 +445,13 @@ do
 		labels[2] = labels[1]
 		labels[1] = old
 		-- reposition
-		for i = 1, 4 do
-			if i == 1 then
-				labels[i]:SetPoint("TOP")
-			else
-				labels[i]:SetPoint("TOP", labels[i - 1], "BOTTOM")
-			end
+		local align = db.align == "CENTER" and "" or db.align
+		old:ClearAllPoints()
+		old:SetPoint("TOP"..align)
+		for i = 2, 4 do
+			local lbl = labels[i]
+			lbl:ClearAllPoints()
+			lbl:SetPoint("TOP"..align, labels[i - 1], "BOTTOM"..align)
 		end
 		-- new message at 1
 		return labels[1]
