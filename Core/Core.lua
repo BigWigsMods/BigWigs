@@ -390,7 +390,7 @@ function addon:OnInitialize()
 	db.RegisterCallback(self, "OnProfileReset", profileUpdate)
 	self.db = db
 
-	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"], nil, "Interface\\Icons\\inv_misc_bone_skull_01")
+	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"], nil, "Interface\\Icons\\ability_rogue_feigndeath")
 	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"], nil, "Interface\\Icons\\spell_shadow_unholyfrenzy")
 	self:RegisterBossOption("stages", L["stages"], L["stages_desc"])
 
