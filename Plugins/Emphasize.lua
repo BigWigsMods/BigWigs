@@ -147,6 +147,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopEmphasize")
 	self:RegisterMessage("BigWigs_TempSuperEmphasize")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	updateProfile()
 end
 
 do
