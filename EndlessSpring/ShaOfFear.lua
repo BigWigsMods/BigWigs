@@ -379,7 +379,7 @@ function mod:Fearless(args)
 		local left = nextFear - GetTime()
 		self:Bar(119414, left)
 		if left > 10 then
-			self:DelayedMessage(119414, left-8, "Attention", CL["soon"]:format(self:SpellName(119414)))
+			self:DelayedMessage(119414, left-8, "Attention", CL["soon"]:format(self:SpellName(119414)), false, "Long")
 		end
 	end
 end
@@ -392,7 +392,7 @@ function mod:BreathOfFear(args)
 	nextFear = GetTime() + 33.3
 	if atSha then -- Don't care about Sha while at a shrine and you have Fearless when you come back
 		self:Bar(args.spellId, 33.3)
-		self:DelayedMessage(args.spellId, 25, "Attention", CL["soon"]:format(args.spellName))
+		self:DelayedMessage(args.spellId, 25, "Attention", CL["soon"]:format(args.spellName), false, "Long")
 	end
 end
 
