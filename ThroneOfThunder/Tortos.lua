@@ -12,6 +12,10 @@ mod:RegisterEnableMob(67977)
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.bats = EJ_GetSectionInfo(7140)
+	L.bats_desc = "Many bats. Handle it."
+	L.bats_icon = 136686
+
 	L.kick = "Kick"
 	L.kick_desc = "Keep track of how many turtles can be kicked."
 	L.kick_icon = 1766
@@ -56,7 +60,7 @@ function mod:GetOptions()
 	return {
 		{137633, "FLASH"},
 		"custom_off_turtlemarker",
-		136294, -7134, 133939, {136010, "TANK"}, 134920, {135251, "TANK"}, -7140,
+		136294, -7134, 133939, {136010, "TANK"}, 134920, {135251, "TANK"}, "bats",
 		"kick", "berserk", "bosskill",
 	}, {
 		[137633] = "heroic",
@@ -75,9 +79,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "QuakeStomp", 134920)
 	self:Log("SPELL_CAST_START", "FuriousStoneBreath", 133939)
 	self:Log("SPELL_CAST_SUCCESS", "GrowingFury", 136010)
-	self:Log("SPELL_AURA_APPLIED", "SpinningShell", 133974) -- spawn
+	self:Log("SPELL_AURA_APPLIED", "AddMarkedMob", 133974) -- spawn
 	self:Log("SPELL_AURA_APPLIED", "ShellBlock", 133971) -- death
-	self:Log("SPELL_AURA_REMOVED", "KickShell", 133971) -- kicked (Shell Block removed)
+	self:Log("SPELL_AURA_REMOVED", "ShellBlockRemoved", 133971) -- kicked
 	self:Log("SPELL_CAST_START", "CallOfTortos", 136294)
 
 	self:RegisterUnitEvent("UNIT_AURA", "ShellConcussionCheck", "boss1")
@@ -90,7 +94,7 @@ function mod:OnEngage()
 	kickable = 0
 	nextBreath = GetTime() + 46
 	self:Berserk(600)
-	self:Bar(-7140, 46, 136686) -- Summon Bats
+	self:Bar("bats", 46, 136686) -- Summon Bats
 	self:Bar(133939, 46) -- Furious Stone Breath
 	self:Bar(136294, 21) -- Call of Tortos
 	self:Bar(134920, 30) -- Quake Stomp
@@ -124,9 +128,9 @@ function mod:SnappingBite(args)
 end
 
 function mod:SummonBats(_, _, _, _, spellId)
-	if spellId == 136685 then
-		self:Message(-7140, "Urgent", self:Tank() and not UnitIsUnit("boss1target", "player") and "Warning", 136686) -- Summon Bats
-		self:Bar(-7140, 46, 136686)
+	if spellId == 136685 then -- Summon Bats
+		self:Message("bats", "Urgent", self:Tank() and not UnitIsUnit("boss1target", "player") and "Warning", 136686)
+		self:Bar("bats", 46, 136686)
 	end
 end
 
@@ -145,7 +149,7 @@ function mod:GrowingFury(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	nextBreath = nextBreath - (self:LFR() and 2.3 or 4.6) -- LFR gives 5% rage, otherwise 10%
 	local duration = nextBreath - GetTime()
-	if duration > 2 then
+	if duration > 1 then
 		self:CDBar(133939, duration)
 	end
 end
@@ -172,7 +176,7 @@ do
 		end
 	end
 
-	function mod:KickShell(args)
+	function mod:ShellBlockRemoved(args)
 		kickable = kickable - 1
 		if not scheduled then
 			scheduled = self:ScheduleTimer(announceKickable, 2)
@@ -216,15 +220,18 @@ do
 	end
 
 	local function markMobs()
+		local continue
 		for guid in next, markableMobs do
 			if markableMobs[guid] == true then
 				local unit = mod:GetUnitIdByGUID(guid)
 				if unit then
 					setMark(unit, guid)
+				else
+					continue = true
 				end
 			end
 		end
-		if not next(markableMobs) or not mod.db.profile.custom_off_turtlemarker then
+		if not continue or not mod.db.profile.custom_off_turtlemarker then
 			mod:CancelTimer(markTimer)
 			markTimer = nil
 		end
@@ -237,7 +244,7 @@ do
 		end
 	end
 
-	function mod:SpinningShell(args)
+	function mod:AddMarkedMob(args)
 		if not markableMobs[args.destGUID] then
 			markableMobs[args.destGUID] = true
 			if self.db.profile.custom_off_turtlemarker and not markTimer then
