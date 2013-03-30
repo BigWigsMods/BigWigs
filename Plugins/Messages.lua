@@ -342,6 +342,7 @@ do
 							CENTER = L["Center"],
 							RIGHT = L["Right"],
 						},
+						width = "half",
 						style = "radio",
 						order = 3,
 						set = function(info, value) 
