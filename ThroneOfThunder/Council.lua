@@ -54,7 +54,7 @@ function mod:GetOptions()
 		"priestess_adds", 137203, {137350, "FLASH"}, -- High Priestess Mar'li
 		{-7062, "FLASH"}, 136878, {136857, "FLASH", "DISPEL"}, 136894, -- Sul the Sandcrawler
 		{137122, "FLASH"}, -- Kazra'jin
-		{-7054, "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, 136990, {137085, "FLASH"}, -- Frost King Malakk
+		{-7054, "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, {136990, "ICON"}, {137085, "FLASH"}, -- Frost King Malakk
 		136442, "custom_on_markpossessed", {137650, "FLASH"}, "proximity", "berserk", "bosskill",
 	}, {
 		["priestess_adds"] = -7050,
@@ -85,6 +85,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "RecklessChargeDamage", 137133)
 	--Frost King Malakk
 	self:Log("SPELL_AURA_APPLIED", "FrostbiteApplied", 136990, 136922)
+	self:Log("SPELL_AURA_REMOVED", "FrostbiteRemoved", 136990, 136922)
 	self:Log("SPELL_AURA_APPLIED", "BitingColdApplied", 136992)
 	self:Log("SPELL_AURA_REMOVED", "BitingColdRemoved", 136992)
 	self:Log("SPELL_CAST_SUCCESS", "FrigidAssaultStart", 136904)
@@ -166,7 +167,7 @@ function mod:Sandstorm(args)
 end
 
 do
-	local mastersCall = select(2, UnitClass("player")) == "HUNTER" and self:SpellName(53271)
+	local mastersCall = select(2, UnitClass("player")) == "HUNTER" and mod:SpellName(53271)
 	function mod:Entrapped(args)
 		if self:Me(args.destGUID) then
 			self:Flash(136857)
@@ -214,8 +215,13 @@ end
 
 --Frost King Malakk
 
+function mod:FrostbiteRemoved(args)
+	self:PrimaryIcon(args.spellId)
+end
+
 -- We only use Icon on Biting cold, so people know that if someone has icon over their head, you need to stay away
 function mod:FrostbiteApplied(args)
+	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetMessage(136990, args.destName, "Positive", "Info")
 	self:Bar(136990, 45)
 	frostBiteStart = GetTime()
