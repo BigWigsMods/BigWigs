@@ -25,7 +25,7 @@ if L then
 	L.special_desc = "Prévient de l'arrivée de la prochaine technique spéciale."
 
 	L.custom_off_addmarker = "Marquage des protecteurs"
-	L.custom_off_addmarker_desc = "Marque les Protecteurs animés lors des Protections de Lei Shi.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement toutes les protecteurs est le moyen le plus rapide de les marquer.|r"
+	L.custom_off_addmarker_desc = "Marque les Protecteurs animés lors des Protections de Lei Shi, nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement toutes les protecteurs est le moyen le plus rapide de les marquer.|r"
 end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "frFR")

@@ -39,26 +39,26 @@ if L then
 	L.priestess_adds_desc = "Prévient de l'arrivée des différents genres de renforts de la Grande prêtresse Mar'li."
 	L.priestess_adds_message = "Add de la prêtresse"
 
-	L.assault_stun = "Tank étourdi !"
-	L.full_power = "Puissance maximale"
-	L.assault_message = "Assaut"
-	L.hp_to_go_power = "%d%% de PV à faire ! (Puissance : %d)"
-	L.hp_to_go_fullpower = "%d%% de PV à faire ! (Puissance maximale)"
-
 	L.custom_on_markpossessed = "Marquage du boss possédé"
 	L.custom_on_markpossessed_desc = "Marque le boss possédé à l'aide d'une icône de crâne."
+
+	L.assault_stun = "Tank étourdi !"
+	L.assault_message = "Assaut"
+	L.full_power = "Puissance maximale"
+	L.hp_to_go_power = "%d%% de PV à faire ! (Puissance : %d)"
+	L.hp_to_go_fullpower = "%d%% de PV à faire ! (Puissance maximale)"
 end
 
 L = BigWigs:NewBossLocale("Tortos", "frFR")
 if L then
-	L.bats_desc = "Many bats. Handle it."
+	L.bats_desc = "Les chauve-souris ! Butez-les !"
 
 	L.kick = "Coup de pied"
 	L.kick_desc = "Effectue un suivi du nombre de tortues qui peuvent être bottées."
 	L.kick_message = "Tortues à botter : %d"
 
 	L.custom_off_turtlemarker = "Marquage des tortues"
-	L.custom_off_turtlemarker_desc = "Marque les tortues en utilisant toutes les icônes de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement toutes les tortues est le moyen le plus rapide de les marquer.|r"
+	L.custom_off_turtlemarker_desc = "Marque les tortues en utilisant toutes les icônes de raid, nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement toutes les tortues est le moyen le plus rapide de les marquer.|r"
 
 	L.no_crystal_shell = "PAS de Carapace de cristal"
 end
@@ -90,18 +90,18 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "frFR")
 if L then
-	L.red_spawn_trigger = "La Lumière infrarouge révèle une brume écarlate !" -- à vérifier
-	L.blue_spawn_trigger = "Les Rais bleus révèlent une brume azur !" -- à vérifier
-	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
+	L.red_spawn_trigger = "brume écarlate" -- à vérifier
+	L.blue_spawn_trigger = "brume azur" -- à vérifier
+	L.yellow_spawn_trigger = "brume d'ambre" -- à vérifier
 
 	L.adds = "Bêtes de brume révélées"
 	L.adds_desc = "Alertes quand vous révélez une Brume écarlate, d'ambre ou azur et combien de Brumes écarlates il reste."
 
 	L.custom_off_ray_controllers = "Contrôleurs de rayon"
-	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s%s%s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
+	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s%s%s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements, nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 
 	L.custom_off_parasite_marks = "Marquage des Sombres parasites"
-	L.custom_off_parasite_marks_desc = "Afin d'aider les healing assignments, marque les personnes sous l'effet de Sombre parisite avec les marqueurs de raid %s%s%s.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
+	L.custom_off_parasite_marks_desc = "Afin d'aider les healing assignments, marque les personnes sous l'effet de Sombre parisite avec les marqueurs de raid %s%s%s, nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 
 	L.initial_life_drain = "Incantation initiale de Drain de vie"
 	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
@@ -121,6 +121,7 @@ end
 L = BigWigs:NewBossLocale("Primordius", "frFR")
 if L then
 	L.mutations = "Mutations |cff008000(%d)|r |cffff0000(%d)|r"
+	L.acidic_spines = "Pointes acides (dégâts collatéraux)" -- find something better
 end
 
 L = BigWigs:NewBossLocale("Dark Animus", "frFR")
@@ -140,7 +141,7 @@ if L then
 
 	L.custom_off_spear_target = "Cible de Lancer un javelot"
 	L.custom_off_spear_target_desc = "Tente de prévenir qui est la cible de Lancer un javelot. Cette méthode utilise de façon intensive le CPU et affiche parfois la mauvaise cible : elle est donc désactivée par défaut.\n|cFFADFF2FASTUCE : paramétrer les rôles des TANKS permet d'augmenter la précision de l'alerte.|r"
-	L.possible_spear_target = "Possible Spear?"
+	L.possible_spear_target = "Lancer probable ?"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "frFR")
@@ -158,11 +159,6 @@ if L then
 	L.intermission = "Entracte"
 	L.diffusion_add = "Foudres diffuses"
 	L.shock = "Horion"
-
-	L.overcharged_message = "Pulsation de zone étourdissante"
-	L.static_shock_message = "Dégâts de zone à partager"
-	L.diffusion_add_message = "Foudres diffuses"
-	L.diffusion_chain_message = "Foudres diffuses imminentes - DISPERSEZ-VOUS !"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "frFR")
