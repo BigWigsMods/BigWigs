@@ -24,8 +24,8 @@ if L then
 	L.special = "Nächste Spezialfähigkeit"
 	L.special_desc = "Warnung für nächste Spezialfähigkeit"
 
-	L.custom_off_addmarker = "Protector Marker"
-	L.custom_off_addmarker_desc = "Marks Animated Protectors during Lei Shi's Protect, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all of the Protectors is the fastest way to mark them.|r"
+	L.custom_off_addmarker = "Beschützer markieren"
+	L.custom_off_addmarker_desc = "Markiert die Belebten Beschützer während der 'Beschützen'-Phase. Benötigt Schlachtzugrechte.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r\n|cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über alle Beschützer.|r"
 end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "deDE")
