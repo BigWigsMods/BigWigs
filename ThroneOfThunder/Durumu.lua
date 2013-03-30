@@ -237,12 +237,18 @@ do
 						mod:TargetMessage(-6891, name, "Neutral", "Warning", L["blue_beam"], spellId, true)
 						mark(name, 6)
 						blueController = name
+						if UnitIsUnit(name, "player") then
+							mod:Flash(-6891)
+						end
 					end
 				elseif spellId == 139204 then
 					if redController ~= name then
 						mod:TargetMessage(-6891, name, "Neutral", "Warning", L["red_beam"], spellId, true)
 						mark(name, 7)
 						redController = name
+						if UnitIsUnit(name, "player") then
+							mod:Flash(-6891)
+						end
 					end
 				end
 				break
@@ -276,19 +282,22 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 		self:ScheduleTimer(mark, 10, target, 0)
 		mark(target, 1)
 		if UnitIsUnit("player", target) then
-			self:Message(-6891, "Personal", "Alert", CL["you"]:format(L["yellow_beam"]), 134124)
+			self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["yellow_beam"]), 134124)
+			slef:Flash(-6891)
 		end
 	elseif msg:find("134123") then -- Red
 		redController = target
 		mark(target, 7)
 		if UnitIsUnit("player", target) then
-			self:Message(-6891, "Personal", "Alert", CL["you"]:format(L["red_beam"]), 139204)
+			self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["red_beam"]), 139204)
+			slef:Flash(-6891)
 		end
 	elseif msg:find("134122") then -- Blue
 		blueController = target
 		mark(target, 6)
 		if UnitIsUnit("player", target) then
-			self:Message(-6891, "Personal", "Alert", CL["you"]:format(L["blue_beam"]), 139202)
+			self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["blue_beam"]), 139202)
+			slef:Flash(-6891)
 		end
 	elseif msg:find("133795") then -- Life Drain (gets target faster than CLEU)
 		self:PrimaryIcon(133798, target)
