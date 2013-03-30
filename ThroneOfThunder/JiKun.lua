@@ -182,9 +182,9 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		elseif nestCounter == 21 then
 			self:Bar("nest", 30, ("(%d)%s+(%d)%s(%s)+(%d)%s"):format(nextNest, L["up"], nextNest+1, L["down"], L["add"], nextNest+2, L["up"]), 134347) -- XXX keep an eye out for this if it fits on the bar
 		elseif nestCounter == 26 or nestCounter == 34 then
-			self:Bar("nest", 30, ("(%d)%s+(%d)%s+%d(%s)"):format(nextNest, L["down"], nextNest+1, L["up"], nextNest+2, L["down"]), 134347)
+			self:Bar("nest", 30, ("(%d)%s+(%d)%s+(%d)%s"):format(nextNest, L["down"], nextNest+1, L["up"], nextNest+2, L["down"]), 134347)
 		elseif nestCounter == 31 then
-			self:Bar("nest", 30, ("(%d)%s+(%d)%s+%d(%s)"):format(nextNest, L["up"], nextNest+1, L["down"], nextNest+2, L["up"]), 134347)
+			self:Bar("nest", 30, ("(%d)%s+(%d)%s+(%d)%s"):format(nextNest, L["up"], nextNest+1, L["down"], nextNest+2, L["up"]), 134347)
 		end
 		-- big adds at 2, 6, 12, 23 -- there might be more between 23 and 37
 		if nestCounter == 2 or nestCounter == 6 or nestCounter == 23 then
