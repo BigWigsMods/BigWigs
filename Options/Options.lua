@@ -558,7 +558,7 @@ local function masterOptionToggled(self, event, value)
 	if value == nil then self:SetValue(false) end -- toggling the master toggles all (we just pretend to be a tristate)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
-	if type(key) == "string" and key:find("^custom_") then
+	if type(key) == "string" and key:find("custom_", nil, true) then
 		module.db.profile[key] = value
 	else
 		if value then
@@ -567,6 +567,12 @@ local function masterOptionToggled(self, event, value)
 			module.db.profile[key] = 0
 		end
 		for k, toggle in next, advancedOptions do
+			-- XXX temporary debug, http://www.wowace.com/addons/big-wigs/tickets/561-error-when-setting-council-of-elders-options/
+			local debug = toggle:GetUserData("module")
+			if not debug then
+				print("Report this to Big Wigs Devs: No module set for slave option ".. tostring(toggle:GetUserData("key")) ..", with flag ".. tostring(toggle:GetUserData("flag")) ..". Master key: ".. tostring(key) ..", module: ", tostring(module))
+				error("Report this to Big Wigs Devs: No module set for slave option ".. tostring(toggle:GetUserData("key")) ..", with flag ".. tostring(toggle:GetUserData("flag")) ..". Master key: ".. tostring(key) ..", module: ", tostring(module))
+			end
 			toggle:SetValue(getSlaveOption(toggle))
 		end
 	end
