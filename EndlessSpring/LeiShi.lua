@@ -15,6 +15,11 @@ local hiding = nil
 local nextProtectWarning = 85
 local nextSpecial = 0
 
+-- marking
+local markableMobs = {}
+local marksUsed = {}
+local markTimer = nil
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -26,6 +31,10 @@ if L then
 	L.special = "Next special ability"
 	L.special_desc = "Warning for next special ability"
 	L.special_icon = 123263 -- I know it is icon for "Afraid", but since we don't warn for that, might as well use it
+
+	L.custom_off_addmarker = "Protector Marker"
+	L.custom_off_addmarker_desc = "Marks Animated Protectors during Lei Shi's Protect.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all of the Protectors is the fastest way to mark them.|r"
+	L.custom_off_addmarker_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8"
 end
 L = mod:GetLocale()
 
@@ -36,9 +45,11 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{123705, "PROXIMITY"},
+		"custom_off_addmarker",
 		{123121, "PROXIMITY", "TANK"}, 123461, 123250, 123244, "special", "berserk", "bosskill",
 	}, {
 		[123705] = "heroic",
+		custom_off_addmarker = L.custom_off_addmarker,
 		[123121] = "general",
 	}
 end
@@ -61,6 +72,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ScaryFog", 123705)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ScaryFog", 123705)
 	self:Log("SPELL_AURA_REMOVED", "ScaryFogRemoved", 123705)
+	self:Log("SPELL_AURA_APPLIED", "AddMarkedMob", 123505) -- Protect
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck") -- to detect her coming out of hide
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Kill", "boss1")
@@ -73,6 +85,13 @@ function mod:OnEngage(diff)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "HealthCheck", "boss1")
 	self:Berserk(self:Heroic() and 420 or 600)
 	self:OpenProximity(123121, 4)
+	-- marking
+	if self.db.profile.custom_off_addmarker then
+		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+	end
+	wipe(markableMobs)
+	wipe(marksUsed)
+	markTimer = nil
 end
 
 --------------------------------------------------------------------------------
@@ -186,11 +205,63 @@ function mod:ProtectRemoved()
 	else
 		self:Message("special", "Attention", nil, CL["soon"]:format(L["special"]), L.special_icon)
 	end
+	-- marking
+	wipe(markableMobs)
+	wipe(marksUsed)
 end
 
 function mod:Kill(_, _, _, _, spellId)
 	if spellId == 127524 then -- Transform
 		self:Win()
+	end
+end
+
+
+-- marking
+do
+	local function setMark(unit, guid)
+		for mark=8, 1, -1 do
+			if not marksUsed[mark] then
+				SetRaidTarget(unit, mark)
+				markableMobs[guid] = "marked"
+				marksUsed[mark] = guid
+				return
+			end
+		end
+	end
+
+	local function markMobs()
+		local continue
+		for guid in next, markableMobs do
+			if markableMobs[guid] == true then
+				local unit = mod:GetUnitIdByGUID(guid)
+				if unit then
+					setMark(unit, guid)
+				else
+					continue = true
+				end
+			end
+		end
+		if not continue or not mod.db.profile.custom_off_addmarker then
+			mod:CancelTimer(markTimer)
+			markTimer = nil
+		end
+	end
+
+	function mod:UPDATE_MOUSEOVER_UNIT()
+		local guid = UnitGUID("mouseover")
+		if guid and markableMobs[guid] == true then
+			setMark("mouseover", guid)
+		end
+	end
+
+	function mod:AddMarkedMob(args)
+		if not markableMobs[args.destGUID] then
+			markableMobs[args.destGUID] = true
+			if self.db.profile.custom_off_addmarker and not markTimer then
+				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.2)
+			end
+		end
 	end
 end
 
