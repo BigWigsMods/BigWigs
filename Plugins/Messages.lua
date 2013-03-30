@@ -120,7 +120,7 @@ local function updateProfile()
 				font.animFade:SetStartDelay(db.displaytime)
 				font.icon.animFade:SetStartDelay(db.displaytime)
 				font.animFade:SetDuration(db.fadetime)
-				font.icon.animFade:SetStartDelay(db.displaytime)
+				font.icon.animFade:SetDuration(db.fadetime)
 			end
 		end
 	end
@@ -299,7 +299,7 @@ do
 				font.animFade:SetStartDelay(db.displaytime)
 				font.icon.animFade:SetStartDelay(db.displaytime)
 				font.animFade:SetDuration(db.fadetime)
-				font.icon.animFade:SetStartDelay(db.displaytime)
+				font.icon.animFade:SetDuration(db.fadetime)
 			end
 		end
 	end
