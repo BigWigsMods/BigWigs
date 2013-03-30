@@ -24,8 +24,8 @@ if L then
 	L.special = "下次特殊技能"
 	L.special_desc = "警告下次特殊技能"
 
-	L.custom_off_addmarker = "Protector Marker"
-	L.custom_off_addmarker_desc = "Marks Animated Protectors during Lei Shi's Protect.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all of the Protectors is the fastest way to mark them.|r"
+	L.custom_off_addmarker = "保衛者標記"
+	L.custom_off_addmarker_desc = "當蕾希被保護時標記復生的保衛者。\n|cFFFF0000團隊中只有1名應該啟用此選項以防止標記衝突。|r\n|cFFADFF2F提示：如果團隊選擇你用來標記保衛者，滑鼠懸停快速劃過全部保衛者是最快的標記方式。|r"
 end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "zhTW")
