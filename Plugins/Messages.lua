@@ -199,7 +199,7 @@ do
 		BWMessageFrame = CreateFrame("Frame", "BWMessageFrame", UIParent)
 		BWMessageFrame:SetWidth(UIParent:GetWidth())
 		BWMessageFrame:SetHeight(80)
-		local align = db.value == "CENTER" and "" or db.align
+		local align = db.align == "CENTER" and "" or db.align
 		BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
 		BWMessageFrame:SetScale(db.scale or 1)
 		BWMessageFrame:SetFrameStrata("HIGH")
@@ -348,7 +348,7 @@ do
 						set = function(info, value) 
 							plugin.db.profile[info[#info]] = value
 							BWMessageFrame:ClearAllPoints()
-							local align = value == "CENTER" and "" or db.align
+							local align = value == "CENTER" and "" or value
 							BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
 						end,
 					},
