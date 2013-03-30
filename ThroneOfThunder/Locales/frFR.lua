@@ -55,8 +55,8 @@ if L then
 	L.kick_desc = "Effectue un suivi du nombre de tortues qui peuvent être bottées."
 	L.kick_message = "Tortues à botter : %d"
 
-	L.custom_off_turtlemarker = "Marqueur de tortue"
-	L.custom_off_turtlemarker_desc = "Marque les tortues en utilisant toutes les icônes de raid.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"
+	L.custom_off_turtlemarker = "Marquage des tortues"
+	L.custom_off_turtlemarker_desc = "Marque les tortues en utilisant toutes les icônes de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement toutes les tortues est le moyen le plus rapide de les marquer.|r"
 
 	L.no_crystal_shell = "PAS de Carapace de cristal"
 end
@@ -80,8 +80,8 @@ if L then
 	L.flight_over = "Vol terminé dans %d sec !"
 	L.upper_nest = "Nid |cff008000supérieur|r"
 	L.lower_nest = "Nid |cffff0000inférieur|r"
-	L.up = "UP"
-	L.down = "DOWN"
+	L.up = "HAUT"
+	L.down = "BAS"
 	L.add = "Add"
 	L.big_add_message = "Gros add au %s"
 end
@@ -96,12 +96,12 @@ if L then
 	L.adds_desc = "Alertes quand vous révélez une Brume écarlate, d'ambre ou azur et combien de Brumes écarlates il reste."
 
 	L.custom_off_ray_controllers = "Contrôleurs de rayon"
-	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s%s%s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s%s%s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 
-	L.custom_off_parasite_marks = "Dark parasite marker"
-	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_parasite_marks = "Marquage des Sombres parasites"
+	L.custom_off_parasite_marks_desc = "Afin d'aider les healing assignments, marque les personnes sous l'effet de Sombre parisite avec les marqueurs de raid %s%s%s.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 
-	L.initial_life_drain = "Initial Life Drain cast"
+	L.initial_life_drain = "Incantation initiale de Drain de vie"
 	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
 
 	L.life_drain_say = "%dx Drain"
@@ -136,8 +136,8 @@ if L then
 
 	L.arcing_lightning_cleared = "Le raid est libéré de Foudre en arc"
 
-	L.custom_off_spear_target = "Throw Spear Target"
-	L.custom_off_spear_target_desc = "Try to warn for the Throw Spear target. This method is high on CPU usage and sometimes displays the wrong target so it is disabled by default.\n|cFFADFF2FTIP: Setting up TANK roles should help to increase the accuracy of the warning.|r"
+	L.custom_off_spear_target = "Cible de Lancer un javelot"
+	L.custom_off_spear_target_desc = "Tente de prévenir qui est la cible de Lancer un javelot. Cette méthode utilise de façon intensive le CPU et affiche parfois la mauvaise cible : elle est donc désactivée par défaut.\n|cFFADFF2FASTUCE : paramétrer les rôles des TANKS permet d'augmenter la précision de l'alerte.|r"
 	L.possible_spear_target = "Possible Spear?"
 end
 
