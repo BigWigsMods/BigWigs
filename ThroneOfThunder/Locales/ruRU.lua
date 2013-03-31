@@ -140,7 +140,7 @@ if L then
 
 	L.custom_off_spear_target = "Цели Броска копья"
 	L.custom_off_spear_target_desc = "Пытаться предупреждать о целях броска копья. Этот способ сильно загружает процессор и иногда показывает неверные цели, поэтому выключен по умолчанию.\n|cFFADFF2FЗАМЕТКА: Установка ролей должна помочь повысить точность предупреждений.|r"
-	L.possible_spear_target = "Возможные копья?"
+	L.possible_spear_target = "Возможные копья"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "ruRU")
