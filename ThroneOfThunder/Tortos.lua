@@ -33,7 +33,6 @@ L = mod:GetLocale()
 -- Locals
 --
 
-local nextBreath = 0
 local kickable = 0
 local crystalTimer = nil
 
@@ -92,12 +91,12 @@ end
 
 function mod:OnEngage()
 	kickable = 0
-	nextBreath = GetTime() + 46
 	self:Berserk(600)
 	self:Bar("bats", 46, 136686) -- Summon Bats
 	self:Bar(133939, 46) -- Furious Stone Breath
 	self:Bar(136294, 21) -- Call of Tortos
-	self:Bar(134920, 30) -- Quake Stomp
+	self:CDBar(134920, 28) -- Quake Stomp
+
 	if self:Heroic() and not UnitDebuff("player", crystalShell) then -- Here we can warn tanks too
 		crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3)
 		warnCrystalShell()
@@ -115,6 +114,15 @@ end
 -- Event Handlers
 --
 
+function mod:BreathUpdate(unit)
+	local power = UnitPower(unit)
+	if power == 50 then
+		self:Bar(133939, 23)
+	elseif power == 80 then
+		self:Bar(133939, 9.2)
+	end
+end
+
 function mod:CrystalShellRemoved(args)
 	if not self:Me(args.destGUID) or self:Tank() or not self.isEngaged then return end
 	self:Flash(args.spellId)
@@ -123,7 +131,6 @@ function mod:CrystalShellRemoved(args)
 end
 
 function mod:SnappingBite(args)
-	-- don't think there is a point to have an 8 sec CD bar for tanks
 	self:Message(args.spellId, "Attention")
 end
 
@@ -136,22 +143,17 @@ end
 
 function mod:QuakeStomp(args)
 	self:Message(args.spellId, "Important", "Alert")
-	self:Bar(args.spellId, 47)
+	self:CDBar(args.spellId, 47)
 end
 
 function mod:FuriousStoneBreath(args)
 	self:Message(args.spellId, "Important", "Long")
 	self:CDBar(args.spellId, 46) -- 45.8-48.2
-	nextBreath = GetTime() + 46
+	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "BreathUpdate", "boss1") -- First is generally fine, register after
 end
 
 function mod:GrowingFury(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	nextBreath = nextBreath - (self:LFR() and 2.3 or 4.6) -- LFR gives 5% rage, otherwise 10%
-	local duration = nextBreath - GetTime()
-	if duration > 1 then
-		self:CDBar(133939, duration)
-	end
 end
 
 do
