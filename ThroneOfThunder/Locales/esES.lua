@@ -80,11 +80,11 @@ if L then
 	L.nest = "Nidos"
 	L.nest_desc = "Avisos relacionados con los nidos. |cffff0000¡No cambies esto para desactivar los avisos, si no estás asignado para gestionar los nidos!|r"
 
-	L.flight_over = "Vuelo completado durante %d sec!"
+	L.flight_over = "¡Vuelo completado en %d seg!"
 	L.upper_nest = "Nido |cff008000superior|r"
 	L.lower_nest = "Nido |cffff0000inferior|r"
-	L.up = "UP"
-	L.down = "DOWN"
+	L.up = "ARRIBA"
+	L.down = "ABAJO"
 	L.add = "Add"
 	L.big_add_message = "Add grande al %s"
 end
@@ -99,15 +99,15 @@ if L then
 	L.adds_desc = "Avisa cuando revelas una niebla carmesí, ámbar o azur y cuantas nieblas carmesies quedan."
 
 	L.custom_off_ray_controllers = "Controladores de rayo"
-	L.custom_off_ray_controllers_desc = "Usa las marcas de raid %s%s%s para marcar gente que controlará las posiciones y movimientos cuando aparecen los rayos.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_ray_controllers_desc = "Usa las marcas de raid %s%s%s para marcar gente que controlará las posiciones y movimientos cuando aparecen los rayos.\n|cFFFF0000Solo 1 persona en la raid debería tener esta opción activada para prevenir conflictos con las marcas.|r"
 
-	L.custom_off_parasite_marks = "Dark parasite marker"
-	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_parasite_marks = "Marcador de Parásito oscuro"
+	L.custom_off_parasite_marks_desc = "Para ayudar con las sanaciones, marca la gente que tiene Parásito oscuro en ellos con %s%s%s.\n|cFFFF0000Solo 1 persona en la raid debería tener activada esta opción para prevenir conflictos con las marcas.|r"
 
-	L.initial_life_drain = "Initial Life Drain cast"
-	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
+	L.initial_life_drain = "Casteo inicial de Drenar vida"
+	L.initial_life_drain_desc = "Mensaje para el casteo inicial de Drenar vida para ayudar a mantener la sanación recibida por el debuff de reducción."
 
-	L.life_drain_say = "%dx Drain"
+	L.life_drain_say = "%dx Drenar"
 
 	L.rays_spawn = "Aparecen rayos"
 	L.red_add = "Add |cffff0000rojo|r"

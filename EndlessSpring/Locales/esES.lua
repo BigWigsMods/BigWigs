@@ -24,8 +24,8 @@ if L then
 	L.special = "Próxima habilidad especial"
 	L.special_desc = "Siguiente habilidad especial."
 
-	L.custom_off_addmarker = "Protector Marker"
-	L.custom_off_addmarker_desc = "Marks Animated Protectors during Lei Shi's Protect, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all of the Protectors is the fastest way to mark them.|r"
+	L.custom_off_addmarker = "Marcador de Protectores"
+	L.custom_off_addmarker_desc = "Marca los Protectores animados durante el Proteger de Lei Shi, requiere ayudante o líder.\n|cFFFF0000Solo 1 persona en la raid debería tener activada esta opción para evitar conflictos con las marcas.|r\n|cFFADFF2FCONSEJO: Si la raid te ha elegido para activarla, mover el ratón rápidamente encima de todos los Protectores es la forma más rápida de marcarlos.|r"
 end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "esES") or BigWigs:NewBossLocale("Protector of the Endless", "esMX")
