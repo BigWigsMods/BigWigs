@@ -18,7 +18,7 @@ SPECIAL CLAUSES
 =======================================================================
 
 FUNKYDUDE
-	Contributions by Funkydude are copyrighted 2005-2010 by Funkydude and All
+	Contributions by Funkydude are copyrighted 2005-2013 by Funkydude and All
 	Rights Reserved.
 
 AMMO
