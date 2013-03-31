@@ -40,7 +40,7 @@ if L then
 	L.priestess_adds_message = "神灵增援"
 
 	L.custom_on_markpossessed = "标记控制首领"
-	L.custom_on_markpossessed_desc = "用骷髅团队标记被控制的首领。"
+	L.custom_on_markpossessed_desc = "用骷髅团队标记被控制的首领，需要权限。"
 
 	L.assault_stun = "坦克眩晕"
 	L.assault_message = "冰寒突击！"
@@ -58,7 +58,7 @@ if L then
 	L.kick_message = "可脚踢旋龟：>%d<！"
 
 	L.custom_off_turtlemarker = "旋龟标记"
-	L.custom_off_turtlemarker_desc = "使用团队标记标记全部旋龟。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r\n|cFFADFF2F提示：如果团队选择你用来标记旋龟，鼠标悬停快速划过全部旋龟是最快的标记方式。|r"
+	L.custom_off_turtlemarker_desc = "使用团队标记标记全部旋龟。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突，需要权限。|r\n|cFFADFF2F提示：如果团队选择你用来标记旋龟，鼠标悬停快速划过全部旋龟是最快的标记方式。|r"
 
 	L.no_crystal_shell = "没有晶化甲壳"
 end
@@ -98,10 +98,10 @@ if L then
 	L.adds_desc = "当猩红、琥珀和碧蓝雾行兽显形和猩红雾行兽剩余时发出警报。"
 
 	L.custom_off_ray_controllers = "光线控制"
-	L.custom_off_ray_controllers_desc = "使用%s%s%s团队标记控制光线增援和移动的玩家。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
+	L.custom_off_ray_controllers_desc = "使用%s%s%s团队标记控制光线增援和移动的玩家，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 
 	L.custom_off_parasite_marks = "黑暗寄生标记"
-	L.custom_off_parasite_marks_desc = "使用%s%s%s标记中了黑暗寄生的玩家帮助分配治疗。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
+	L.custom_off_parasite_marks_desc = "使用%s%s%s标记中了黑暗寄生的玩家帮助分配治疗，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 
 	L.initial_life_drain = "初始生命吸取施放"
 	L.initial_life_drain_desc = "初始生命吸取施放消息以帮助保持接受治疗减少减益。"

@@ -25,7 +25,7 @@ if L then
 	L.special_desc = "当下一次特殊技能时发出警报。"
 
 	L.custom_off_addmarker = "保护者标记"
-	L.custom_off_addmarker_desc = "当雷施被保护时标记复生的保护者。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r\n|cFFADFF2F提示：如果团队选择你用来标记保护者，鼠标悬停快速划过全部保护者是最快的标记方式。|r"
+	L.custom_off_addmarker_desc = "当雷施被保护时标记复生的保护者，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r\n|cFFADFF2F提示：如果团队选择你用来标记保护者，鼠标悬停快速划过全部保护者是最快的标记方式。|r"
 end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "zhCN")

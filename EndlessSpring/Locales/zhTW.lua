@@ -25,7 +25,7 @@ if L then
 	L.special_desc = "警告下次特殊技能"
 
 	L.custom_off_addmarker = "保衛者標記"
-	L.custom_off_addmarker_desc = "當蕾希被保護時標記復生的保衛者。\n|cFFFF0000團隊中只有1名應該啟用此選項以防止標記衝突。|r\n|cFFADFF2F提示：如果團隊選擇你用來標記保衛者，滑鼠懸停快速劃過全部保衛者是最快的標記方式。|r"
+	L.custom_off_addmarker_desc = "當蕾希被保護時標記復生的保衛者，需要權限。\n|cFFFF0000團隊中只有1名應該啟用此選項以防止標記衝突。|r\n|cFFADFF2F提示：如果團隊選擇你用來標記保衛者，滑鼠懸停快速劃過全部保衛者是最快的標記方式。|r"
 end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "zhTW")
