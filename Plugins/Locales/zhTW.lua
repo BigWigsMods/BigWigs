@@ -150,9 +150,8 @@ L["How long to fade out a message, in seconds"] = "以秒計訊息消退時間�
 -- Proximity.lua
 --
 
-L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|t技能名稱"
 L["Custom range indicator"] = "自訂距離指示器"
-L["%d yards"] = "%d碼"
+L.proximityTitle = "%d yd / %d |4player:players;" -- yd = yards (short)
 L["Proximity"] = "近距離顯"
 L["Sound"] = "音效"
 L["Disabled"] = "禁用"

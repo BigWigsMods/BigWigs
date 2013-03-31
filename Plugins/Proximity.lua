@@ -476,7 +476,7 @@ do
 			return
 		end
 
-		local anyoneClose = nil
+		local anyoneClose = 0
 
 		for i = 1, maxPlayers do
 			local n = raidList[i]
@@ -488,7 +488,7 @@ do
 				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[n])
 					if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
-						anyoneClose = true
+						anyoneClose = anyoneClose + 1
 					end
 				elseif blipList[n].isShown then -- A unit may die next to us
 					blipList[n]:Hide()
@@ -500,7 +500,9 @@ do
 			end
 		end
 
-		if not anyoneClose then
+		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+
+		if anyoneClose == 0 then
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 		else
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
@@ -542,8 +544,10 @@ do
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
+			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 1)
 		else
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 0)
 		end
 	end
 
@@ -564,6 +568,8 @@ do
 			return
 		end
 
+		local anyoneClose = 0
+
 		for i = 1, #proximityPlayerTable do
 			local player = proximityPlayerTable[i]
 			local unitX, unitY = GetPlayerMapPosition(player)
@@ -572,14 +578,20 @@ do
 			local range = (dx * dx + dy * dy) ^ 0.5
 			setDot(dx, dy, blipList[player])
 			if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
-				anchor.rangeCircle:SetVertexColor(1, 0, 0)
-				local t = GetTime()
-				if t > (lastplayed + 1) then
-					lastplayed = t
-					plugin:SendMessage("BigWigs_Sound", db.soundName, true)
-				end
-			else
-				anchor.rangeCircle:SetVertexColor(0, 1, 0)
+				anyoneClose = anyoneClose + 1
+			end
+		end
+
+		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+
+		if anyoneClose == 0 then
+			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+		else
+			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			local t = GetTime()
+			if t > (lastplayed + 1) then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
 		end
 	end
@@ -608,6 +620,7 @@ do
 		setDot(dx, dy, blipList[proximityPlayer])
 		if range <= activeRange then
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 1)
 		else
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
@@ -615,6 +628,7 @@ do
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
+			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 0)
 		end
 	end
 
@@ -753,12 +767,12 @@ do
 		anchor.sound = sound
 
 		local header = anchor:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-		header:SetFormattedText(L["%d yards"], 0)
+		header:SetFormattedText(L.proximityTitle, 5, 3)
 		header:SetPoint("BOTTOM", anchor, "TOP", 0, 4)
 		anchor.title = header
 
 		local abilityName = anchor:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-		abilityName:SetFormattedText(L["|T%s:20:20:-5|tAbility name"], "Interface\\Icons\\spell_nature_chainlightning")
+		abilityName:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L["Ability name"])
 		abilityName:SetPoint("BOTTOM", header, "TOP", 0, 4)
 		anchor.ability = abilityName
 
@@ -1063,8 +1077,8 @@ function plugin:Close()
 	proximityPlayer = nil
 	wipe(proximityPlayerTable)
 
-	anchor.title:SetFormattedText(L["%d yards"], 0)
-	anchor.ability:SetFormattedText(L["|T%s:20:20:-5|tAbility name"], "Interface\\Icons\\spell_nature_chainlightning")
+	anchor.title:SetFormattedText(L.proximityTitle, 5, 3)
+	anchor.ability:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L["Ability name"])
 	-- Just in case we were the last target of
 	-- configure mode, reset the background color.
 	anchor.background:SetTexture(0, 0, 0, 0.3)
@@ -1125,13 +1139,11 @@ function plugin:Open(range, module, key, player, isReverse)
 	local ppy = min(width, height) / (range * 3)
 	anchor.rangeCircle:SetSize(ppy * range * 2, ppy * range * 2)
 
-	-- Update the header to reflect the actual range we're checking
-	anchor.title:SetFormattedText(L["%d yards"], range)
 	-- Update the ability name display
 	if module and key then
 		local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, key)
 		if type(icon) == "string" then
-			anchor.ability:SetFormattedText(abilityNameFormat, icon, name)
+			anchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", icon, name)
 		else
 			anchor.ability:SetText(name)
 		end

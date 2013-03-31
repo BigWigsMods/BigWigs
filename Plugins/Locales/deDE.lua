@@ -150,9 +150,8 @@ L["How long to fade out a message, in seconds"] = "Bestimmt, wie lange (in Sekun
 -- Proximity.lua
 --
 
-L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|tFähigkeitsname"
 L["Custom range indicator"] = "Eigene Reichweitenanzeige"
-L["%d yards"] = "%d Meter"
+L.proximityTitle = "%d yd / %d |4player:players;" -- yd = yards (short)
 L["Proximity"] = "Nähe"
 L["Sound"] = "Sound"
 L["Disabled"] = "Deaktivieren"

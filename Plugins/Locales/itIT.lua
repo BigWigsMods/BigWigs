@@ -150,9 +150,8 @@ L["Font color"] = "Colore carattere"
 -- Proximity.lua
 --
 
-L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|tNome Abilità"
 L["Custom range indicator"] = "Indicatore di Distanza Personalizzato"
-L["%d yards"] = "%d metri"
+L.proximityTitle = "%d yd / %d |4player:players;" -- yd = yards (short)
 L["Proximity"] = "Prossimità"
 L["Sound"] = "Suono"
 L["Disabled"] = "Disabilitato"

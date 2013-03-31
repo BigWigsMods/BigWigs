@@ -146,9 +146,8 @@ L["Font color"] = "Font color"
 -- Proximity.lua
 --
 
-L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|t스킬 이름"
 L["Custom range indicator"] = "사용자 거리 지시기"
-L["%d yards"] = "%d 미터"
+L.proximityTitle = "%d yd / %d |4player:players;" -- yd = yards (short)
 L["Proximity"] = "근접"
 L["Sound"] = "효과음"
 L["Disabled"] = "미사용"
