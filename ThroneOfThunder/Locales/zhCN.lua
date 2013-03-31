@@ -104,7 +104,7 @@ if L then
 	L.custom_off_parasite_marks_desc = "使用%s%s%s标记中了黑暗寄生的玩家帮助分配治疗，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 
 	L.initial_life_drain = "初始生命吸取施放"
-	L.initial_life_drain_desc = "初始生命吸取施放消息以帮助保持接受治疗减少减益。"
+	L.initial_life_drain_desc = "初始生命吸取施放消息以帮助保持减少受到治疗的减益。"
 
 	L.life_drain_say = ">%d<层吸取"
 
@@ -141,7 +141,7 @@ if L then
 
 	L.custom_off_spear_target = "投掷长矛目标"
 	L.custom_off_spear_target_desc = "尝试警报投掷长矛目标。此方法将提高 CPU 使用率，有时会显示错误的目标，所以它在默认情况下是被禁用。\n|cFFADFF2F提示：设置为坦克职业会有助于提高警报准确性。|r"
-	L.possible_spear_target = "可能的长矛？"
+	L.possible_spear_target = "可能的长矛"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "zhCN")
