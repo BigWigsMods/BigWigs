@@ -104,7 +104,7 @@ if L then
 	L.custom_off_parasite_marks_desc = "Um Heilzuteilungen zu erleichtern werden die Ziele der dunklen Parasiten mit %s%s%s markiert.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
 
 	L.initial_life_drain = "Anfänglicher Lebensentzug"
-	L.initial_life_drain_desc = "Nachricht für den anfänglichen Lebensentzug anzeigen, um die erhaltene Heilung zur Verringerung des Schwächungszaubers aufrecht zu erhalten."
+	L.initial_life_drain_desc = "Nachricht für den anfänglichen Lebensentzug anzeigen, um die erhaltene Heilung durch Verringerung des Schwächungszaubers zu reduzieren."
 
 	L.life_drain_say = "%dx Entzug"
 
