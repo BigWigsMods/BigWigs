@@ -37,7 +37,7 @@ if L then
 	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 
 	L.initial_life_drain = "Initial Life Drain cast"
-	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
+	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help with keeping up a reduced healing received debuff."
 	L.initial_life_drain_icon = 133798
 
 	L.life_drain_say = "%dx Drain"
