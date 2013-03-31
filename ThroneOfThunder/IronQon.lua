@@ -39,7 +39,7 @@ if L then
 
 	L.custom_off_spear_target = "Throw Spear Target"
 	L.custom_off_spear_target_desc = "Try to warn for the Throw Spear target. This method is high on CPU usage and sometimes displays the wrong target so it is disabled by default.\n|cFFADFF2FTIP: Setting up TANK roles should help to increase the accuracy of the warning.|r"
-	L.possible_spear_target = "Possible Spear?"
+	L.possible_spear_target = "Possible Spear"
 end
 L = mod:GetLocale()
 
