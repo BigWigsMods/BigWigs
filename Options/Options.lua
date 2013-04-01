@@ -35,7 +35,6 @@ local colorModule
 local soundModule
 
 local showToggleOptions = nil
-local advancedOptions = {}
 local zoneModules = {}
 
 local pluginOptions = {
@@ -566,15 +565,6 @@ local function masterOptionToggled(self, event, value)
 		else
 			module.db.profile[key] = 0
 		end
-		for k, toggle in next, advancedOptions do
-			-- XXX temporary debug, http://www.wowace.com/addons/big-wigs/tickets/561-error-when-setting-council-of-elders-options/
-			local debug = toggle:GetUserData("module")
-			if not debug then
-				print("Report this to Big Wigs Devs: No module set for slave option ".. tostring(toggle:GetUserData("key")) ..", with flag ".. tostring(toggle:GetUserData("flag")) ..". Master key: ".. tostring(key) ..", module: ", tostring(module))
-				error("Report this to Big Wigs Devs: No module set for slave option ".. tostring(toggle:GetUserData("key")) ..", with flag ".. tostring(toggle:GetUserData("flag")) ..". Master key: ".. tostring(key) ..", module: ", tostring(module))
-			end
-			toggle:SetValue(getSlaveOption(toggle))
-		end
 	end
 end
 
@@ -611,7 +601,7 @@ end
 
 local function advancedToggles(dbKey, module, check)
 	local dbv = module.toggleDefaults[dbKey]
-	wipe(advancedOptions)
+	local advancedOptions = {}
 	for i, key in next, BigWigs:GetOptions() do
 		local flag = C[key]
 		if bit.band(dbv, flag) == flag then
@@ -664,14 +654,12 @@ local function advancedTabSelect(widget, callback, tab)
 	if tab == "options" then
 		widget:AddChildren(advancedToggles(key, module, master))
 	elseif tab == "sounds" then
-		wipe(advancedOptions)
 		local group = AceGUI:Create("SimpleGroup")
 		group:SetFullWidth(true)
 		widget:AddChild(group)
 		soundModule:SetSoundOptions(module.name, key, module.toggleDefaults[key])
 		acd:Open("Big Wigs: Sounds Override", group)
 	elseif tab == "colors" then
-		wipe(advancedOptions)
 		local group = AceGUI:Create("SimpleGroup")
 		group:SetFullWidth(true)
 		widget:AddChild(group)
@@ -704,7 +692,6 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	back:SetText(L["<< Back"])
 	back:SetFullWidth(true)
 	back:SetCallback("OnClick", function()
-		wipe(advancedOptions) -- important, mastertoggled is called from the parent that has no slaves as well
 		showToggleOptions(dropdown, nil, dropdown:GetUserData("bossIndex"))
 	end)
 	local check = AceGUI:Create("CheckBox")
