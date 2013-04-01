@@ -34,7 +34,7 @@ local AceGUI = LibStub("AceGUI-3.0")
 local colorModule
 local soundModule
 
-local showToggleOptions = nil
+local showToggleOptions, getAdvancedToggleOption = nil, nil
 local zoneModules = {}
 
 local pluginOptions = {
@@ -565,6 +565,17 @@ local function masterOptionToggled(self, event, value)
 		else
 			module.db.profile[key] = 0
 		end
+		local scrollFrame = self:GetUserData("scrollFrame")
+		-- This data ONLY exists if we're looking at the advanced options tab,
+		-- we force a refresh of all checkboxes when enabling/disabling the master option.
+		if scrollFrame then
+			local dropdown = self:GetUserData("dropdown")
+			local module = self:GetUserData("module")
+			local bossOption = self:GetUserData("option")
+			scrollFrame:ReleaseChildren()
+			scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
+			scrollFrame:PerformLayout()
+		end
 	end
 end
 
@@ -686,7 +697,7 @@ local advancedTabs = {
 	},
 }
 
-local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
+function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc = BigWigs:GetBossOptionDetails(module, bossOption)
 	local back = AceGUI:Create("Button")
 	back:SetText(L["<< Back"])
@@ -699,8 +710,10 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	check:SetTriState(true)
 
 	check:SetFullWidth(true)
-	check:SetUserData("key", dbKey)
 	check:SetDescription(desc)
+	check:SetUserData("key", dbKey)
+	check:SetUserData("scrollFrame", scrollFrame)
+	check:SetUserData("dropdown", dropdown)
 	check:SetUserData("module", module)
 	check:SetUserData("option", bossOption)
 	check:SetCallback("OnValueChanged", masterOptionToggled)
