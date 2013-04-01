@@ -73,8 +73,8 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "frFR")
 if L then
-	L.lower_hatch_trigger = "Les œufs de l'un des nids inférieurs commencent à éclore !" -- à vérifier
-	L.upper_hatch_trigger = "Les œufs de l'un des nids supérieurs commencent à éclore !" -- à vérifier
+	L.lower_hatch_trigger = "un des nids inférieurs commencent à éclore" -- à vérifier
+	L.upper_hatch_trigger = "un des nids supérieurs commencent à éclore" -- à vérifier
 
 	L.nest = "Nids"
 	L.nest_desc = "Alertes relatives aux nids. |cffff0000Décochez ceci pour désactiver les alertes si vous n'êtes pas assigné à la gestion des nids !|r"
@@ -104,7 +104,7 @@ if L then
 	L.custom_off_parasite_marks_desc = "Afin d'aider les healing assignments, marque les personnes sous l'effet de Sombre parisite avec les marqueurs de raid %s%s%s, nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 
 	L.initial_life_drain = "Incantation initiale de Drain de vie"
-	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
+	L.initial_life_drain_desc = "Message de l'incantation initiale de Drain de vie afin d'aider au suivi des affaiblissements de réduction des soins reçus."
 
 	L.life_drain_say = "%dx Drain"
 
@@ -141,13 +141,13 @@ if L then
 
 	L.custom_off_spear_target = "Cible de Lancer un javelot"
 	L.custom_off_spear_target_desc = "Tente de prévenir qui est la cible de Lancer un javelot. Cette méthode utilise de façon intensive le CPU et affiche parfois la mauvaise cible : elle est donc désactivée par défaut.\n|cFFADFF2FASTUCE : paramétrer les rôles des TANKS permet d'augmenter la précision de l'alerte.|r"
-	L.possible_spear_target = "Lancer probable ?"
+	L.possible_spear_target = "Lancer probable"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "frFR")
 if L then
 	L.barrage_fired = "Barrage invoqué !"
-	L.last_phase_yell_trigger = "D'accord, pour cette fois..." -- à vérifier
+	L.last_phase_yell_trigger = "D'accord, pour cette fois" -- à vérifier
 end
 
 L = BigWigs:NewBossLocale("Lei Shen", "frFR")
