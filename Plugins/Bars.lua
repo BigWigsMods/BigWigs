@@ -264,6 +264,8 @@ do
 	end
 
 	local function removeStyle(bar)
+		bar:SetHeight(bar.height)
+
 		local bg = bar:Get("bigwigs:MonoUI:backdrop")
 		if bg then
 			bg:ClearAllPoints()
