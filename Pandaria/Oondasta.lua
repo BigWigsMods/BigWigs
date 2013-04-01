@@ -41,7 +41,7 @@ function mod:Crush(args)
 end
 
 function mod:PiercingRoar(args)
-	self:Message(args.spellId, "Attention", UnitPowerType("player") == 0 and "Alarm") -- sound for mana users
+	self:Message(args.spellId, "Attention", UnitPowerType("player") == 0 and "Long") -- sound for mana users
 	self:CDBar(args.spellId, 25)
 end
 
