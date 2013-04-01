@@ -146,7 +146,7 @@ L["Font color"] = "Font color"
 --
 
 L["Custom range indicator"] = "Indicador de rango personalizado"
-L.proximityTitle = "%d yd / %d |4player:players;" -- yd = yards (short)
+L.proximityTitle = "%d m / %d |4jugador:jugadores;" -- yd = yards (short)
 L["Proximity"] = "Proximidad"
 L["Sound"] = "Sonido"
 L["Disabled"] = "Desactivado"
