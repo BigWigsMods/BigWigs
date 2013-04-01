@@ -163,7 +163,8 @@ function plugin:OnRegister()
 				get = function(info)
 					local name, key = unpack(info.arg)
 					for i, v in next, soundList do
-						if v == (plugin.db.profile[info[#info]] and plugin.db.profile[info[#info]][name] and plugin.db.profile[info[#info]][name][key] or s) then
+						-- If no custom sound exists for this option, fall back to global sound option
+						if v == (plugin.db.profile[info[#info]] and plugin.db.profile[info[#info]][name] and plugin.db.profile[info[#info]][name][key] or plugin.db.profile.media[info[#info]]) then
 							return i
 						end
 					end
@@ -174,16 +175,7 @@ function plugin:OnRegister()
 					if not plugin.db.profile[optionName] then plugin.db.profile[optionName] = {} end
 					if not plugin.db.profile[optionName][name] then plugin.db.profile[optionName][name] = {} end
 					plugin.db.profile[optionName][name][key] = soundList[value]
-					-- Back to default? Cleanup DB.
-					if sounds[optionName] == soundList[value] then
-						plugin.db.profile[optionName][name][key] = nil
-						if not next(plugin.db.profile[optionName][name]) then
-							plugin.db.profile[optionName][name] = nil
-						end
-						if not next(plugin.db.profile[optionName]) then
-							plugin.db.profile[optionName] = nil
-						end
-					end
+					-- We don't cleanup/reset the DB as someone may have a custom global sound but wish to use the default sound on a specific option
 				end,
 				type = "select",
 				values = soundList,
