@@ -179,6 +179,7 @@ do
 				self:StopBar(122777) -- Nightmares
 				self:StopBar(122752) -- Shadow Breath
 				self:StopBar(122789) -- Sunbeam
+				self:StopBar(-6550) -- The Dark of Night
 				self:Message("phases", "Positive", nil, -6315, "spell_holy_circleofrenewal") -- The Day
 				self:Bar("phases", 121, -6310, 122768) -- The Night
 				self:Bar(122855, 32) -- Sun Breath
