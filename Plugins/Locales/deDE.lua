@@ -151,7 +151,7 @@ L["How long to fade out a message, in seconds"] = "Bestimmt, wie lange (in Sekun
 --
 
 L["Custom range indicator"] = "Eigene Reichweitenanzeige"
-L.proximityTitle = "%d m / %d |4Spieler:Spieler;"
+L.proximityTitle = "%d m / %d Spieler"
 L["Proximity"] = "Nähe"
 L["Sound"] = "Sound"
 L["Disabled"] = "Deaktivieren"
