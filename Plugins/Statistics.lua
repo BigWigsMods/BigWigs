@@ -127,7 +127,7 @@ end
 --
 
 function plugin:BigWigs_OnBossEngage(event, module, diff)
-	if module.encounterId and diff and diff > 2 and diff < 8 then -- Raid restricted for now
+	if module.encounterId and diff and diff > 2 and diff < 8 and not module.worldBoss then -- Raid restricted for now
 		activeDurations[module.encounterId] = GetTime()
 
 		local sDB = BigWigsStatisticsDB

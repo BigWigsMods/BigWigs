@@ -13,7 +13,7 @@ mod.worldBoss = true
 --
 
 function mod:GetOptions()
-	return {{137504, "TANK_HEALER"}, 137457, 137505, "bosskill"}
+	return {{137504, "TANK_HEALER"}, 137457, 137505, "proximity", "bosskill"}
 end
 
 function mod:OnBossEnable()
@@ -22,7 +22,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "PiercingRoar", 137457)
 	self:Log("SPELL_CAST_START", "FrillBlast", 137505)
 
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
 	self:Death("Win", 69161)
+end
+
+function mod:OnEngage()
+	self:OpenProximity("proximity", 10)
 end
 
 --------------------------------------------------------------------------------
@@ -35,9 +42,11 @@ end
 
 function mod:PiercingRoar(args)
 	self:Message(args.spellId, "Attention", UnitPowerType("player") == 0 and "Alarm") -- sound for mana users
+	self:CDBar(args.spellId, 25)
 end
 
 function mod:FrillBlast(args)
 	self:Message(args.spellId, "Important", "Alert")
+	self:CDBar(args.spellId, 25)
 end
 

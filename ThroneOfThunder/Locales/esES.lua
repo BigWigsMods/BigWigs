@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Jin'rokh the Breaker", "esES")
+local L = BigWigs:NewBossLocale("Jin'rokh the Breaker", "esES") or BigWigs:NewBossLocale("Jin'rokh the Breaker", "esMX")
 if not L then return end
 if L then
 	L.storm_duration = "Tormenta de relámpagos duración"
@@ -8,7 +8,7 @@ if L then
 	L.in_water = "¡Estás en el agua!"
 end
 
-L = BigWigs:NewBossLocale("Horridon", "esES")
+L = BigWigs:NewBossLocale("Horridon", "esES") or BigWigs:NewBossLocale("Horridon", "esMX")
 if L then
 	L.charge_trigger = "fija la vista" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
 
@@ -34,7 +34,7 @@ if L then
 	L.door_trigger = "salen en tropel" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
 end
 
-L = BigWigs:NewBossLocale("Council of Elders", "esES")
+L = BigWigs:NewBossLocale("Council of Elders", "esES") or BigWigs:NewBossLocale("Council of Elders", "esMX")
 if L then
 	L.priestess_adds = "Adds de la Sacerdotisa"
 	L.priestess_adds_desc = "Aviso para todo tipo de adds de la Suma Sacerdotisa Mar'li."
@@ -50,7 +50,7 @@ if L then
 	L.custom_on_markpossessed_desc = "Marca al jefe poseído con una calavera."
 end
 
-L = BigWigs:NewBossLocale("Tortos", "esES")
+L = BigWigs:NewBossLocale("Tortos", "esES") or BigWigs:NewBossLocale("Tortos", "esMX")
 if L then
 	L.bats_desc = "Many bats. Handle it."
 
@@ -64,7 +64,7 @@ if L then
 	L.no_crystal_shell = "SIN Caparazón de cristal"
 end
 
-L = BigWigs:NewBossLocale("Megaera", "esES")
+L = BigWigs:NewBossLocale("Megaera", "esES") or BigWigs:NewBossLocale("Megaera", "esMX")
 if L then
 	L.breaths = "Alientos"
 	L.breaths_desc = "Avisos relacionados con los diferentes tipos de alientos."
@@ -72,7 +72,7 @@ if L then
 	L.arcane_adds = "Adds arcanos"
 end
 
-L = BigWigs:NewBossLocale("Ji-Kun", "esES")
+L = BigWigs:NewBossLocale("Ji-Kun", "esES") or BigWigs:NewBossLocale("Ji-Kun", "esMX")
 if L then
 	L.lower_hatch_trigger = "¡Los huevos de uno de los nidos inferiores empiezan a abrirse!"
 	L.upper_hatch_trigger = "¡Los huevos de uno de los nidos superiores empiezan a abrirse!"
@@ -89,7 +89,7 @@ if L then
 	L.big_add_message = "Add grande al %s"
 end
 
-L = BigWigs:NewBossLocale("Durumu the Forgotten", "esES")
+L = BigWigs:NewBossLocale("Durumu the Forgotten", "esES") or BigWigs:NewBossLocale("Durumu the Forgotten", "esMX")
 if L then
 	L.red_spawn_trigger = "¡La Luz infrarroja revela una niebla carmesí!"
 	L.blue_spawn_trigger = "¡Los Rayos azules revelan una niebla azur!"
@@ -119,18 +119,18 @@ if L then
 	L.yellow_beam = "Rayo |cffffff00amarillo|r"
 end
 
-L = BigWigs:NewBossLocale("Primordius", "esES")
+L = BigWigs:NewBossLocale("Primordius", "esES") or BigWigs:NewBossLocale("Primordius", "esMX")
 if L then
 	L.mutations = "Mutaciones |cff008000(%d)|r |cffff0000(%d)|r"
 end
 
-L = BigWigs:NewBossLocale("Dark Animus", "esES")
+L = BigWigs:NewBossLocale("Dark Animus", "esES") or BigWigs:NewBossLocale("Dark Animus", "esMX")
 if L then
 	L.engage_trigger = "¡El orbe explota!"
 	L.slam_message = "Embate"
 end
 
-L = BigWigs:NewBossLocale("Iron Qon", "esES")
+L = BigWigs:NewBossLocale("Iron Qon", "esES") or BigWigs:NewBossLocale("Iron Qon", "esMX")
 if L then
 	L.molten_energy = "Energía de arrabio"
 
@@ -144,13 +144,13 @@ if L then
 	L.possible_spear_target = "Possible Spear?"
 end
 
-L = BigWigs:NewBossLocale("Twin Consorts", "esES")
+L = BigWigs:NewBossLocale("Twin Consorts", "esES") or BigWigs:NewBossLocale("Twin Consorts", "esMX")
 if L then
 	L.barrage_fired = "¡Tromba disparada!"
 	L.last_phase_yell_trigger = "Solo esta vez..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
 end
 
-L = BigWigs:NewBossLocale("Lei Shen", "esES")
+L = BigWigs:NewBossLocale("Lei Shen", "esES") or BigWigs:NewBossLocale("Lei Shen", "esMX")
 if L then
 	L.conduit_abilities = "Habilidades de conducto"
 	L.conduit_abilities_desc = "Barras para CD aproximado para las habilidades específicas de los conductos."
@@ -165,12 +165,12 @@ if L then
 	L.diffusion_chain_message = "Difusión de adds inminente - ¡DISPERSAOS!"
 end
 
-L = BigWigs:NewBossLocale("Ra-den", "esES")
+L = BigWigs:NewBossLocale("Ra-den", "esES") or BigWigs:NewBossLocale("Ra-den", "esMX")
 if L then
 
 end
 
-L = BigWigs:NewBossLocale("Trash", "esES")
+L = BigWigs:NewBossLocale("Trash", "esES") or BigWigs:NewBossLocale("Trash", "esMX")
 if L then
 	L.stormcaller = "Invocatormentas Zandalari"
 	L.stormbringer = "Extiendetormentas Draz'kil"
