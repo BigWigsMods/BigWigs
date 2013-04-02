@@ -92,9 +92,7 @@ end
 --
 
 function mod:FeedYoung(args)
-	if UnitBuff("player", self:SpellName(134339)) then -- Daedalian Wings (only warn for people who can get Primal Nutriment)
-		self:Message(args.spellId, "Positive", "Info") -- Positive because it is green!
-	end
+	self:Message(args.spellId, "Positive", "Info") -- Positive because it is green!
 	self:CDBar(args.spellId, 30)
 end
 
