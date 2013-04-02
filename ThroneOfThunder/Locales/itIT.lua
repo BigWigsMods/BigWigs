@@ -53,7 +53,7 @@ end
 
 L = BigWigs:NewBossLocale("Tortos", "itIT")
 if L then
-	L.bats_desc = "Many bats. Handle it."
+	L.bats_desc = "Tanti pipistrelli. Dai una mano."
 
 	L.kick = "Calcio"
 	L.kick_desc = "Tieni il conto di quante tartarughe possono essere prese a calci"
@@ -82,8 +82,8 @@ if L then
 	L.flight_over = "Termine del Volo per %d sec!"
 	L.upper_nest = "Nido |cff008000Superiore|r"
 	L.lower_nest = "Nido |cffff0000Inferiore|r"
-	L.up = "UP"
-	L.down = "DOWN"
+	L.up = "SOPRA"
+	L.down = "SOTTO"
 	L.add = "Add"
 	L.big_add_message = "Add Grande su %s"
 end
@@ -100,13 +100,13 @@ if L then
 	L.custom_off_ray_controllers = "Controllori dei Raggi"
 	L.custom_off_ray_controllers_desc = "Usa le icone di incursione %s%s%s per evidenziare i giocatori che controllano le posizioni dei raggi e il loro movimento.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 
-	L.custom_off_parasite_marks = "Dark parasite marker"
-	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_parasite_marks = "Marcatore Parassita Oscuro"
+	L.custom_off_parasite_marks_desc = "Per aiutare l'assegnazione dei Guaritori, evidenzia i giocatori che hanno il Parassita Oscuro con %s%s%s.\n|cFFFF0000Solo 1 giocatore dell'incursione dovrebbe aver abilitato questa opzione per evitare conflitti sui marcamenti.|r"
 
-	L.initial_life_drain = "Initial Life Drain cast"
-	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
+	L.initial_life_drain = "Lancio iniziale Risucchio di Vita"
+	L.initial_life_drain_desc = "Messaggio per il primo lancio di Risucchio di Vita per aiutare le cure su colui che ha il maleficio sulle cure ricevute."
 
-	L.life_drain_say = "%dx Drain"
+	L.life_drain_say = "%dx Risucchiato"
 
 	L.rays_spawn = "Apparizione raggi"
 	L.red_add = "Add |cffff000Rosso|r"
@@ -138,9 +138,9 @@ if L then
 
 	L.arcing_lightning_cleared = "Fulmine Arcuato non più presente sull'Incursione"
 
-	L.custom_off_spear_target = "Throw Spear Target"
-	L.custom_off_spear_target_desc = "Try to warn for the Throw Spear target. This method is high on CPU usage and sometimes displays the wrong target so it is disabled by default.\n|cFFADFF2FTIP: Setting up TANK roles should help to increase the accuracy of the warning.|r"
-	L.possible_spear_target = "Possible Spear?"
+	L.custom_off_spear_target = "Bersaglio Tiro Lancia"
+	L.custom_off_spear_target_desc = "Cerca di avvisare il bersaglio di Tiro Lancia. Questo metodo è molto esigente in quanto all'uso di CPU e a volte mostra il bersaglio errato quindi è disabilitato per default.\n|cFFADFF2FTIP: Impostare il ruolo di DIFENSORE dovrebbe aiutare l'accuratezza dell'avviso.|r"
+	L.possible_spear_target = "Possibile Lancia?"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "itIT")

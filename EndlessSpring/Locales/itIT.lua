@@ -24,8 +24,8 @@ if L then
 	L.special = "Prossima abilità speciale"
 	L.special_desc = "Avviso per prossima abilità speciale"
 
-	L.custom_off_addmarker = "Protector Marker"
-	L.custom_off_addmarker_desc = "Marks Animated Protectors during Lei Shi's Protect, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all of the Protectors is the fastest way to mark them.|r"
+	L.custom_off_addmarker = "Marcatore Protettori"
+	L.custom_off_addmarker_desc = "Marca i Protettori Rianimati durante la Protezione di Lei Shi, richiede capogruppo o assistente.\n|cFFFF0000Solo 1 persona nell'incursione dovrebbe attivare questa opzione per evitare conflitti di marcamento.|r\n|cFFADFF2FTIP: Se l'incursione ha scelto te attivalo, e muovi velocemente il mouse sopra OGNI Protettore per marcarli più velocemente possibile.|r"
 end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "itIT")

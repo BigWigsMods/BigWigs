@@ -151,7 +151,7 @@ L["Font color"] = "Colore carattere"
 --
 
 L["Custom range indicator"] = "Indicatore di Distanza Personalizzato"
-L.proximityTitle = "%d yd / %d |4player:players;" -- yd = yards (short)
+L.proximityTitle = "%d mt / %d |4giocatore:giocatori;" -- mt = metri (short) note to devs: in the italian version yards have been converted to meters with a 1:1 valor conversion, even if it isn't true in real. Changed yards to meters in translation to reflect this.
 L["Proximity"] = "Prossimità"
 L["Sound"] = "Suono"
 L["Disabled"] = "Disabilitato"
