@@ -140,7 +140,7 @@ if L then
 
 	L.custom_off_spear_target = "Bersaglio Tiro Lancia"
 	L.custom_off_spear_target_desc = "Cerca di avvisare il bersaglio di Tiro Lancia. Questo metodo è molto esigente in quanto all'uso di CPU e a volte mostra il bersaglio errato quindi è disabilitato per default.\n|cFFADFF2FTIP: Impostare il ruolo di DIFENSORE dovrebbe aiutare l'accuratezza dell'avviso.|r"
-	L.possible_spear_target = "Possibile Lancia?"
+	L.possible_spear_target = "Possibile Lancia"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "itIT")

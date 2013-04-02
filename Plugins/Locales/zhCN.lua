@@ -151,7 +151,7 @@ L["How long to fade out a message, in seconds"] = "以秒计信息消退时间�
 --
 
 L["Custom range indicator"] = "自定义距离指示器"
-L.proximityTitle = "%d码/%d|4玩家:玩家;" -- yd = yards (short)
+L.proximityTitle = "%d码/%d玩家"
 L["Proximity"] = "近距离"
 L["Sound"] = "音效"
 L["Disabled"] = "禁用"

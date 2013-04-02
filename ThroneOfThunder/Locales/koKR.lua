@@ -139,7 +139,7 @@ if L then
 
 	L.custom_off_spear_target = "창 던지기 대상"
 	L.custom_off_spear_target_desc = "Try to warn for the Throw Spear target. This method is high on CPU usage and sometimes displays the wrong target so it is disabled by default.\n|cFFADFF2FTIP: Setting up TANK roles should help to increase the accuracy of the warning.|r"
-	L.possible_spear_target = "창 투척?"
+	L.possible_spear_target = "창 투척"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "koKR")
