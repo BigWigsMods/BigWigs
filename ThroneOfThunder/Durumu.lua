@@ -302,7 +302,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 	elseif msg:find("133795") then -- Life Drain (gets target faster than CLEU)
 		self:PrimaryIcon(133798, target)
 
-		self:TargetMessage("initial_life_drain", target, "Urgent")
+		self:TargetMessage("initial_life_drain", target, "Urgent", 133798)
 		self:PlaySound("initial_life_drain", "Long")
 		self:Flash("initial_life_drain", 133798) -- so you can turn on pulse
 	elseif msg:find(L["red_spawn_trigger"]) then
