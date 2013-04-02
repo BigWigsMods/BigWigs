@@ -367,7 +367,7 @@ plugin.defaultDB = {
 	align = "LEFT",
 	icon = true,
 	fill = nil,
-	barStyle = L.bigWigsBarStyleName_Default,
+	barStyle = "Default",
 	emphasize = true,
 	emphasizeMove = true,
 	emphasizeScale = 1.5,
@@ -949,7 +949,15 @@ function plugin:OnPluginEnable()
 	end
 
 	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
-	self:SetBarStyle(currentBarStyler and currentBarStyler.GetStyleName and currentBarStyler.GetStyleName() or db.barStyle)
+	if currentBarStyler and currentBarStyler.GetStyleName then
+		for k, v in next, barStyleRegister do
+			if currentBarStyler.GetStyleName() == v then
+				self:SetBarStyle(k)
+			end
+		end
+	else
+		self:SetBarStyle(db.barStyle)
+	end
 end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
