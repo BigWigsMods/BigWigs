@@ -73,8 +73,8 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "frFR")
 if L then
-	L.lower_hatch_trigger = "un des nids inférieurs commencent à éclore" -- à vérifier
-	L.upper_hatch_trigger = "un des nids supérieurs commencent à éclore" -- à vérifier
+	L.lower_hatch_trigger = "Les œufs de l’un des nids inférieurs commencent à éclore !"
+	L.upper_hatch_trigger = "Les œufs de l’un des nids supérieurs commencent à éclore !"
 
 	L.nest = "Nids"
 	L.nest_desc = "Alertes relatives aux nids. |cffff0000Décochez ceci pour désactiver les alertes si vous n'êtes pas assigné à la gestion des nids !|r"
@@ -126,7 +126,7 @@ end
 
 L = BigWigs:NewBossLocale("Dark Animus", "frFR")
 if L then
-	L.engage_trigger = "L'orbe explose !" -- à vérifier
+	L.engage_trigger = "L’orbe explose !" -- à vérifier
 	L.slam_message = "Heurt"
 end
 
