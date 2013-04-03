@@ -19,6 +19,7 @@ mod:RegisterEnableMob(69712) -- Ji-Kun
 -- Locals
 --
 local nestCounter = 0
+local quillCounter = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -82,9 +83,10 @@ function mod:OnEngage()
 		self:OpenProximity("proximity", 8)
 	end
 	self:Berserk(600) -- XXX assumed
-	self:Bar(134380, self:Heroic() and 63 or 43) -- Quills
+	self:Bar(134380, self:Heroic() and 63 or 41) -- Quills
 	self:Bar(134370, 90) -- Down Draft
 	nestCounter = 0
+	quillCounter = 0
 end
 
 --------------------------------------------------------------------------------
@@ -220,8 +222,20 @@ end
 
 function mod:Quills(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 63)
 	self:Flash(args.spellId)
+	local diff = self:Difficulty()
+	quillCounter = quillCounter + 1
+	if diff == 4 or diff == 6 then -- 25 N/H
+		self:Bar(args.spellId, 63)
+	else -- 10 N/H + LFR
+		if quillCounter < 4 or quillCounter == 5 or quillCounter == 6 then
+			self:Bar(args.spellId, 81)
+		elseif quillCounter == 4 or quillCounter == 7 then
+			self:Bar(args.spellId, 90)
+		else
+			self:Bar(args.spellId, 81) -- XXX need more data ( logs beyond 10 min )
+		end
+	end
 end
 
 function mod:TalonRake(args)
