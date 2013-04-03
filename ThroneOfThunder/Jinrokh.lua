@@ -60,7 +60,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "LightningFissure", 139467, 137485) -- 137485 is from 25 H PTR
 	self:Log("SPELL_AURA_REMOVED", "FocusedLightningRemoved", 137422)
 	self:Log("SPELL_CAST_START", "FocusedLightning", 137399) -- SUCCESS has destName, but this is so much earlier, and "boss1target" should be reliable for it
-	self:Log("SPELL_CAST_SUCCESS", "FocusedLightningReliable", 137399)
+	self:Log("SPELL_CAST_SUCCESS", "FocusedLightningFallback", 137399)
 	self:Log("SPELL_CAST_SUCCESS", "StaticBurst", 137162)
 	self:Log("SPELL_DAMAGE", "StaticWoundConduction", 138375)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ElectrifiedWaters", 138006)
@@ -184,43 +184,39 @@ function mod:FocusedLightningRemoved(args)
 end
 
 do
-	local timer, fired, focusedLightnigTarget = nil, 0, nil
-	local function warnFocusedLightning()
-		fired = fired + 1
-		local player = UnitName("boss1target")
-		focusedLightnigTarget = UnitGUID("boss1target")
-		if player and ((not UnitDetailedThreatSituation("boss1target", "boss1") and not mod:Tank("boss1target")) or fired > 13) then
-			mod:TargetMessage(-7741, player, "Positive", "Alarm")
-			mod:PrimaryIcon(-7741, player)
-			if UnitIsUnit("boss1target", "player") then
-				mod:Say(-7741)
-				mod:OpenProximity(-7741, 8)
-			end
-			mod:CancelTimer(timer)
-			timer = nil
-			return
+	local timer, focusedLightningTarget = nil, nil
+	local function warnFocusedLightning(player, guid)
+		mod:TargetMessage(-7741, player, "Positive", "Alarm")
+		mod:PrimaryIcon(-7741, player)
+		if mod:Me(guid) then
+			mod:Say(-7741)
+			mod:OpenProximity(-7741, 8)
 		end
-		-- 19 == 0.95sec
-		-- Safety check if the unit doesn't exist
-		if fired > 18 then
+	end
+	local function checkFocusedLightning()
+		local player = UnitName("boss1target")
+		if player and (not UnitDetailedThreatSituation("boss1target", "boss1") and not mod:Tank("boss1target")) then
+			focusedLightningTarget = UnitGUID("boss1target")
+			warnFocusedLightning(player, focusedLightningTarget)
 			mod:CancelTimer(timer)
 			timer = nil
 		end
 	end
 	function mod:FocusedLightning(args)
 		self:CDBar(-7741, 11)
-		fired = 0
+		focusedLightningTarget = nil
 		if not timer then
-			timer = self:ScheduleRepeatingTimer(warnFocusedLightning, 0.05)
+			timer = self:ScheduleRepeatingTimer(checkFocusedLightning, 0.05)
 		end
 	end
-	function mod:FocusedLightningReliable(args)
-		if args.destGUID == focusedLightnigTarget then return end -- don't do anything if we warned for the same target already
-		self:TargetMessage(-7741, args.destName, "Positive", "Alarm")
-		self:PrimaryIcon(-7741, args.destName)
-		if self:Me(args.destGUID) then
-			self:Say(-7741)
-			self:OpenProximity(-7741, 8)
+	function mod:FocusedLightningFallback(args)
+		if timer then
+			self:CancelTimer(timer)
+			timer = nil
+		end
+		 -- don't do anything if we warned for the target already
+		if args.destGUID ~= focusedLightningTarget then
+			warnFocusedLightning(args.destName, args.destGUID)
 		end
 	end
 end
