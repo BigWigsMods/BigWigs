@@ -109,7 +109,7 @@ if L then
 	L.life_drain_say = "%dx Risucchiato"
 
 	L.rays_spawn = "Apparizione raggi"
-	L.red_add = "Add |cffff000Rosso|r"
+	L.red_add = "Add |cffff0000Rosso|r"
 	L.blue_add = "Add |cff0000ffBlu|r"
 	L.yellow_add = "Add |cffffff00Giallo|r"
 	L.death_beam = "Raggio Disintegratore"
