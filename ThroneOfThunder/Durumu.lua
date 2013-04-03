@@ -10,7 +10,7 @@ mod:RegisterEnableMob(68036)
 -- Locals
 --
 
-local redAddDead = 0
+local deadAdds = 0
 local lifeDrainCasts = 0
 local lingeringGaze = {}
 local openedForMe = nil
@@ -114,7 +114,7 @@ function mod:OnEngage()
 	self:CDBar(134626, 15) -- Lingering Gaze
 	self:Bar(-6905, 33) -- Force of Will
 	self:Bar(-6891, 41) -- Light Spectrum
-	self:Bar(-6882, 135, L["death_beam"])
+	self:Bar(-6882, self:LFR() and 161 or 135, L["death_beam"])
 	if self:Heroic() then
 		self:Bar(-6889, 127) -- Ice Wall
 		self:Bar(133597, 60) -- Dark Parasite
@@ -123,7 +123,7 @@ function mod:OnEngage()
 	lifeDrainCasts = 0
 	wipe(lingeringGaze)
 	openedForMe = nil
-	redAddDead = 0
+	deadAdds = 0
 end
 
 --------------------------------------------------------------------------------
@@ -272,7 +272,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 	if msg:find("134124") then -- Yellow
 		self:StopBar(-6905) -- Force of Will
 
-		redAddDead = 0
+		deadAdds = 0
 		if self:Heroic() then
 			self:Bar(-6891, 80, 137747) -- Obliterate
 		end
@@ -391,17 +391,17 @@ end
 
 function mod:Deaths(args)
 	if args.mobId == 69050 then -- Red
-		redAddDead = redAddDead + 1
-		self:Message("adds", "Positive", nil, CL["mob_killed"]:format(L["red_add"], redAddDead, 3), 136154)
+		deadAdds = deadAdds + 1
+		self:Message("adds", "Positive", nil, CL["mob_killed"]:format(L["red_add"], deadAdds, 3), 136154)
 	elseif self:LFR() then
-		redAddDead = redAddDead + 1
+		deadAdds = deadAdds + 1
 		if args.mobId == 69052 then -- Blue
-			self:Message("adds", "Positive", nil, CL["mob_killed"]:format(L["blue_add"], redAddDead, 3), 136177)
+			self:Message("adds", "Positive", nil, CL["mob_killed"]:format(L["blue_add"], deadAdds, 3), 136177)
 		elseif args.mobId == 69051 then -- Yellow
-			self:Message("adds", "Positive", nil, CL["mob_killed"]:format(L["yellow_add"], redAddDead, 3), 136175)
+			self:Message("adds", "Positive", nil, CL["mob_killed"]:format(L["yellow_add"], deadAdds, 3), 136175)
 		end
 	end
-	if redAddDead == 3 then
+	if deadAdds == 3 then
 		self:PlaySound("adds", "Info")
 		self:StopBar(137747) -- Obliterate (heroic)
 		self:CDBar(-6905, 20) -- Force of Will
