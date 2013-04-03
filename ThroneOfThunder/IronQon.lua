@@ -20,6 +20,7 @@ local UnitDebuff = UnitDebuff
 local arcingLightning = {}
 local openedForMe = nil
 local smashCounter = 1
+local spearTimer = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -108,6 +109,7 @@ function mod:OnEngage()
 	end
 	smashCounter = 1
 	if self.db.profile.custom_off_spear_target then
+		spearTimer = nil
 		self:ScheduleTimer("StartSpearScan", 20) -- start watching boss1target in 20 sec
 	end
 end
@@ -119,7 +121,7 @@ end
 do
 	-- Spear scanning
 	local UnitIsUnit, UnitExists = UnitIsUnit, UnitExists
-	local boss1target, timer, prev = "n", nil, 0 -- "n" as in none, so I don't have to bother with nil checks
+	local boss1target, prev = "n", 0 -- "n" as in none, so I don't have to bother with nil checks
 	local function watchBoss1TargetChange()
 		-- every check in new line to help debugging
 		if not UnitExists("boss1target") then return end
@@ -145,13 +147,13 @@ do
 
 		-- commented for now because sometimes the 2nd warning is the accurate for some reason
 		-- uncomment to test when to cancel and unregister stuff
-		--mod:CancelTimer(timer)
-		--timer = nil
+		--mod:CancelTimer(spearTimer)
+		--spearTimer = nil
 	end
 	function mod:StartSpearScan()
 		boss1target = (UnitName("boss1target")) or "n"
-		if not timer then
-			timer = mod:ScheduleRepeatingTimer(watchBoss1TargetChange, 0.05)
+		if not spearTimer then
+			spearTimer = mod:ScheduleRepeatingTimer(watchBoss1TargetChange, 0.05)
 		end
 	end
 	function mod:ThrowSpear(args)
@@ -159,8 +161,8 @@ do
 		self:CDBar(args.spellId, 33)
 		self:Message(args.spellId, "Urgent") -- keep this in case TargetMessage fails to find a target
 		if self.db.profile.custom_off_spear_target then
-			self:CancelTimer(timer)
-			timer = nil
+			self:CancelTimer(spearTimer)
+			spearTimer = nil
 			self:ScheduleTimer("StartSpearScan", 25) -- start watching boss1target in 25 sec
 		end
 	end
