@@ -105,7 +105,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
-	self:Death("Deaths", 69050) -- Crimson Fog
+	self:Death("Deaths", 69050, 69051, 69052) -- Crimson Fog, Amber Fog, Azure Fog
 	self:Death("Win", 68036) -- Boss
 end
 
@@ -283,27 +283,25 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 		mark(target, 1)
 		if UnitIsUnit("player", target) then
 			self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["yellow_beam"]), 134124)
-			slef:Flash(-6891)
+			self:Flash(-6891)
 		end
 	elseif msg:find("134123") then -- Red
 		redController = target
 		mark(target, 7)
 		if UnitIsUnit("player", target) then
 			self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["red_beam"]), 139204)
-			slef:Flash(-6891)
+			self:Flash(-6891)
 		end
 	elseif msg:find("134122") then -- Blue
 		blueController = target
 		mark(target, 6)
 		if UnitIsUnit("player", target) then
 			self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["blue_beam"]), 139202)
-			slef:Flash(-6891)
+			self:Flash(-6891)
 		end
 	elseif msg:find("133795") then -- Life Drain (gets target faster than CLEU)
 		self:PrimaryIcon(133798, target)
-
-		self:TargetMessage("initial_life_drain", target, "Urgent", nil, 133798)
-		self:PlaySound("initial_life_drain", "Long")
+		self:TargetMessage("initial_life_drain", target, "Urgent", "Long", 133798, nil, true)
 		self:Flash("initial_life_drain", 133798) -- so you can turn on pulse
 	elseif msg:find(L["red_spawn_trigger"]) then
 		self:Message("adds", "Urgent", UnitIsUnit("player", redController) and "Warning", L["red_add"], 136154)
@@ -392,15 +390,23 @@ function mod:ArterialCut(args)
 end
 
 function mod:Deaths(args)
-	if args.mobId == 69050 then -- Red add
+	if args.mobId == 69050 then -- Red
 		redAddDead = redAddDead + 1
-		self:Message("adds", "Positive", redAddDead == 3 and "Info", CL["mob_killed"]:format(L["red_add"], redAddDead, 3), 136154)
-		if redAddDead == 3 then
-			self:StopBar(137747) -- Obliterate (heroic)
-			self:CDBar(-6905, 20) -- Force of Will
-			mark(blueController, 0)
-			mark(redController, 0)
+		self:Message("adds", "Positive", nil, CL["mob_killed"]:format(L["red_add"], redAddDead, 3), 136154)
+	elseif self:LFR() then
+		redAddDead = redAddDead + 1
+		if args.mobId == 69052 then -- Blue
+			self:Message("adds", "Positive", nil, CL["mob_killed"]:format(L["blue_add"], redAddDead, 3), 136177)
+		elseif  args.mobId == 69051 then -- Yellow
+			self:Message("adds", "Positive", nil, CL["mob_killed"]:format(L["yellow_add"], redAddDead, 3), 136175)
 		end
+	end
+	if redAddDead == 3 then
+		self:PlaySound("adds", "Info")
+		self:StopBar(137747) -- Obliterate (heroic)
+		self:CDBar(-6905, 20) -- Force of Will
+		mark(blueController, 0)
+		mark(redController, 0)
 	end
 end
 
