@@ -11,7 +11,7 @@ L.stack = "%dx %s - %s"
 L.cast = "<%s 시전중>"
 L.soon = "곧 %s!"
 L.count = "%s (%d)"
-L.near = "당신가 가까운 %s!"
+L.near = "당신가 가까움 %s!"
 
 L.phase = "%d 단계"
 L.normal = "일반 모드"

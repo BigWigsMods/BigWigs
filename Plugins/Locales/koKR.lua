@@ -57,7 +57,7 @@ L["Custom bar '%s' started by %s user '%s'."] = "Custom bar '%s' started by %s u
 
 L["Pull"] = "풀링"
 L["Pulling!"] = "풀링합니다!"
-L["Pull timer started by %s user '%s'."] = "%s 님이 '%s' 풀링 타이머를 시작합니다."
+L["Pull timer started by %s user '%s'."] = "%2$s 님이 '%1$s' 풀링 타이머를 시작합니다."
 L["Pull in %d sec"] = "풀링 %d초 전"
 L["Sending a pull timer to Big Wigs and DBM users."] = "Big Wigs과 DBM 사용자에게 풀링 타이머를 보냅니다."
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Big Wigs과 DBM 사용자에게 '%s' 사용자 바를 보냅니다."
@@ -151,7 +151,7 @@ L["How long to fade out a message, in seconds"] = "몇 초후 메시지가 점�
 --
 
 L["Custom range indicator"] = "사용자 거리 지시기"
-L.proximityTitle = "%d yd / %d |4player:players;" -- yd = yards (short)
+L.proximityTitle = "%d미터 / %d |4플레이어:플레이어;" -- yd = yards (short)
 L["Proximity"] = "근접"
 L["Sound"] = "효과음"
 L["Disabled"] = "미사용"
@@ -232,15 +232,15 @@ L.resetAllCustomSound = "If you've customized sounds for any boss encounter sett
 
 L.bossKillDurationPrint = "Defeated '%s' after %s."
 L.bossWipeDurationPrint = "Wiped on '%s' after %s."
-L.newBestKill = "New best kill!"
-L.bossStatistics = "Boss Statistics"
+L.newBestKill = "새로운 보스 죽임"
+L.bossStatistics = "보스 통계"
 L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times a boss had been killed, the amount of wipes, total time that combat lasted, or the fastest boss kill. These statistics can be viewed on each boss's configuration screen, but will be hidden for bosses that have no recorded statistics."
-L.enableStats = "Enable Statistics"
-L.chatMessages = "Chat Messages"
+L.enableStats = "통계 활성화"
+L.chatMessages = "대화 메시지"
 L.printBestKillOption = "Best Kill Notification"
-L.printKillOption = "Kill Time"
+L.printKillOption = "죽임 시간"
 L.printWipeOption = "Wipe Time"
-L.countKills = "Count Kills"
+L.countKills = "죽임 횟수"
 L.countWipes = "Count Wipes"
 L.recordBestKills = "Remember Best Kills"
 

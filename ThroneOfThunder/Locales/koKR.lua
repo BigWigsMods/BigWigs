@@ -35,18 +35,18 @@ end
 
 L = BigWigs:NewBossLocale("Council of Elders", "koKR")
 if L then
-	L.priestess_adds = "Priestess adds"
-	L.priestess_adds_desc = "Warnings for when High Priestess Mar'li starts to summon adds."
-	L.priestess_adds_message = "Priestess add"
+	L.priestess_adds = "영혼 추가"  -- Priestess adds
+	L.priestess_adds_desc = "대여사제 말리가 영혼을 추가로 소환할때 경고합니다."  -- Warnings for when High Priestess Mar'li starts to summon adds.
+	L.priestess_adds_message = "영혼 추가"  -- Priestess add
 
-	L.custom_on_markpossessed = "Mark Possessed Boss"
-	L.custom_on_markpossessed_desc = "Mark the possessed boss with a skull."
+	L.custom_on_markpossessed = "빙의된 보스 공격대 아이콘"
+	L.custom_on_markpossessed_desc = "영혼에 빙의된 보스에게 해골 공격대 아이콘을 표시합니다."
 
-	L.assault_stun = "Tank Stunned!"
-	L.assault_message = "Assault"
+	L.assault_stun = "탱커 기절!"
+	L.assault_message = "혹한의 공격"
 	L.full_power = "전체 파워"
-	L.hp_to_go_power = "이동 %d%% 생명력! (파워: %d)"
-	L.hp_to_go_fullpower = "이동 %d%% 생명력! (전체 파워)"
+	L.hp_to_go_power = "%d%% 생명력 이동! (파워: %d)"
+	L.hp_to_go_fullpower = "%d%% 생명력 이동! (전체 파워)"
 end
 
 L = BigWigs:NewBossLocale("Tortos", "koKR")
@@ -55,8 +55,8 @@ if L then
 	L.kick_desc = "몇개의 등껍질을 찾는지 정보를 표시합니다."
 	L.kick_message = "회오리 거북: %d"
 
-	L.custom_off_turtlemarker = "거북이 공격대 아이콘"
-	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"
+	L.custom_off_turtlemarker = "거북이 공격대 아이콘"  -- 대상 표시기 아이콘
+	L.custom_off_turtlemarker_desc = "모든 공격대 아이콘을 사용하여 표시합니다.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"
 
 	L.no_crystal_shell = "수정 보호막 없음"
 end
@@ -64,9 +64,9 @@ end
 L = BigWigs:NewBossLocale("Megaera", "koKR")
 if L then
 	L.breaths = "숨결"
-	L.breaths_desc = "Warnings related to all the different types of breaths."
+	L.breaths_desc = "여러 숨결에 대한 경고를 합니다."
 
-	L.arcane_adds = "Arcane adds"
+	L.arcane_adds = "황천 가르기 추가"
 end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "koKR")
@@ -75,7 +75,7 @@ if L then
 	L.upper_hatch_trigger = "위쪽 둥지에 있는 알들이 부화하기 시작합니다!"
 
 	L.nest = "둥지"
-	L.nest_desc = "Warnings related to the nests. |cffff0000Untoggle this to turn off warnings if you are not assigned to handle the nests!|r"
+	L.nest_desc = "둥지에 관련된 경고를합니다. |cffff0000만약 당신이 둥지를 처리하는 역할을 맞지 않았다면 이 경고를 해제하는게 좋습니다!|r"
 
 	L.flight_over = "비행 남은 시간 %d 초!"
 	L.upper_nest = "|cff008000위쪽|r 둥지"
@@ -83,7 +83,7 @@ if L then
 	L.up = "위쪽"
 	L.down = "아래쪽"
 	L.add = "추가"
-	L.big_add_message = "Big add at %s"
+	L.big_add_message = "%s에 둥지 수호자 추가"
 end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "koKR")
