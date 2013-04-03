@@ -83,7 +83,7 @@ function mod:OnEngage()
 		self:OpenProximity("proximity", 8)
 	end
 	self:Berserk(600) -- XXX assumed
-	self:Bar(134380, self:Heroic() and 63 or 41) -- Quills
+	self:Bar(134380, self:LFR() and 60 or self:Heroic() and 63 or 41) -- Quills
 	self:Bar(134370, 90) -- Down Draft
 	nestCounter = 0
 	quillCounter = 0
