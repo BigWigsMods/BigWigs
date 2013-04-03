@@ -11,6 +11,7 @@ end
 L = BigWigs:NewBossLocale("Horridon", "itIT")
 if L then
 	L.charge_trigger = "posa il suo sguardo" -- Horridon sets his eyes on PLAYERNAME and stamps his tail! Horridon posa il suo sguardo su PLAYER e sbatte la coda!
+	L.door_trigger = "irrompono" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
 
 	L.chain_lightning_message = "Il tuo focus sta lanciando Catena di Fulmini!"
 	L.chain_lightning_bar = "Focus: Catena di Fulmini"
@@ -24,15 +25,14 @@ if L then
 	L.adds = "Adds in arrivo"
 	L.adds_desc = "Avvisa quando sono in arrivo i vari add dei Farraki, dei Gurubashi, dei Drakkari, degli Amani, e il Dio della Guerra Jalak."
 
+	L.door_opened = "Porta Aperta!"
+	L.door_bar = "Prossima porta (%d)"
+	L.balcony_adds = "Add dal Balcone"
 	L.orb_message = "Globo del Controllo a Terra!"
 
 	--L.puncture_message = "Perforazione Tripla" Commented out since there isnt anymore into Locals, Keep it for lazyness.
  	L.focus_only = "|cffff0000Avviso solo per il bersaglio Focus.|r "
 
-	L.door_opened = "Porta Aperta!"
-	L.door_bar = "Prossima porta (%d)"
-	L.balcony_adds = "Add dal Balcone"
-	L.door_trigger = "irrompono" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "itIT")
@@ -90,12 +90,12 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "itIT")
 if L then
-	L.red_spawn_trigger = "The Infrared Light reveals a Crimson Fog!"
-	L.blue_spawn_trigger = "The Blue Rays reveal an Azure Fog!"
-	L.yellow_spawn_trigger = "The Bright Light reveals an Amber Fog!"
+	L.red_spawn_trigger = "Nebbia Cremisi" -- "The Infrared Light reveals a Crimson Fog!"
+	L.blue_spawn_trigger = "Nebbia Azzurra" -- "The Blue Rays reveal an Azure Fog!"
+	L.yellow_spawn_trigger = "Nebbia d'Ambra" -- "The Bright Light reveals an Amber Fog!"
 
-	L.adds = "Reveal Adds"
-	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
+	L.adds = "Rivela Adds"
+	L.adds_desc = "Avvisa quando rivela una Nebbia Cremisi, d'ambra o Azzurra e quante Nebbie d'Ambra rimangono."
 
 	L.custom_off_ray_controllers = "Controllori dei Raggi"
 	L.custom_off_ray_controllers_desc = "Usa le icone di incursione %s%s%s per evidenziare i giocatori che controllano le posizioni dei raggi e il loro movimento.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
@@ -121,6 +121,7 @@ end
 L = BigWigs:NewBossLocale("Primordius", "itIT")
 if L then
 	L.mutations = "Mutazioni |cff008000(%d)|r |cffff0000(%d)|r"
+	L.acidic_spines = "Spine Acide (Danno ad Area)"	
 end
 
 L = BigWigs:NewBossLocale("Dark Animus", "itIT")
@@ -159,9 +160,9 @@ if L then
 	L.diffusion_add = "Add di Diffusione"
 	L.shock = "Folgore"
 
-	L.overcharged_message = "Pulsazione ad Effetto Stordente"
-	L.static_shock_message = "Danno ad Effetto da Suddividere"
-	L.diffusion_chain_message = "Add di Diffusione tra poco - ALLARGARSI!!!"
+	--L.overcharged_message = "Pulsazione ad Effetto Stordente" Commented out since there isnt anymore into Locals, Keep it for lazyness.
+	--L.static_shock_message = "Danno ad Effetto da Suddividere" Commented out since there isnt anymore into Locals, Keep it for lazyness.
+	--L.diffusion_chain_message = "Add di Diffusione tra poco - ALLARGARSI!!!" Commented out since there isnt anymore into Locals, Keep it for lazyness.
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "itIT")
