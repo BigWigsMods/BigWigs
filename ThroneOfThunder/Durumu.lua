@@ -277,7 +277,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 			self:Bar(-6891, 80, 137747) -- Obliterate
 		end
 		self:Bar(-6891, 10, L["rays_spawn"], "inv_misc_gem_variety_02")
-		self:Bar(-6891, 190) -- Light Spectrum
+		self:Bar(-6891, self:LFR() and 240 or 190) -- Light Spectrum
 
 		self:ScheduleTimer(mark, 10, target, 0)
 		mark(target, 1)
@@ -326,7 +326,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 		self:CDBar(134626, 76) -- Lingering Gaze
 		self:CDBar(-6905, 78) -- Force of Will
 		self:Bar(-6882, 64, CL["cast"]:format(L["death_beam"]))
-		self:Bar(-6882, 191, L["death_beam"])
+		self:Bar(-6882, self:LFR() and 241 or 191, L["death_beam"])
 		self:Message(-6882, "Attention", nil, L["death_beam"])
 	end
 end
@@ -397,7 +397,7 @@ function mod:Deaths(args)
 		redAddDead = redAddDead + 1
 		if args.mobId == 69052 then -- Blue
 			self:Message("adds", "Positive", nil, CL["mob_killed"]:format(L["blue_add"], redAddDead, 3), 136177)
-		elseif  args.mobId == 69051 then -- Yellow
+		elseif args.mobId == 69051 then -- Yellow
 			self:Message("adds", "Positive", nil, CL["mob_killed"]:format(L["yellow_add"], redAddDead, 3), 136175)
 		end
 	end
