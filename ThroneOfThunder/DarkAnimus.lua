@@ -53,7 +53,7 @@ function mod:OnBossEnable()
 
 	-- Dark Animus
 	self:Log("SPELL_CAST_START", "FullPower", 138729)
-	self:Log("SPELL_CAST_START", "InterruptingJolt", 138763, 139867)
+	self:Log("SPELL_CAST_START", "InterruptingJolt", 138763, 139867, 139869)
 	self:Log("SPELL_CAST_SUCCESS", "Empower", 138780) -- Empower Golem
 	self:Log("SPELL_AURA_APPLIED", "AnimaFont", 138691)
 	self:Log("SPELL_CAST_START", "AnimaRing", 136954) -- this is 1 sec faster than SUCCESS but has no destName
