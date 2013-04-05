@@ -127,6 +127,10 @@ end
 L = BigWigs:NewBossLocale("Dark Animus", "esES") or BigWigs:NewBossLocale("Dark Animus", "esMX")
 if L then
 	L.engage_trigger = "¡El orbe explota!"
+
+	L.siphon_power = "Siphon Anima (%d%%)"
+	L.siphon_power_soon = "Siphon Anima (%d%%) %s soon!"
+	L.font_empower = "Font + Empower"
 	L.slam_message = "Embate"
 end
 

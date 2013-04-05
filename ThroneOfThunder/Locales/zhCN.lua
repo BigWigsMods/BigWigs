@@ -127,6 +127,10 @@ end
 L = BigWigs:NewBossLocale("Dark Animus", "zhCN")
 if L then
 	L.engage_trigger = "宝珠爆炸了"
+
+	L.siphon_power = "Siphon Anima (%d%%)"
+	L.siphon_power_soon = "Siphon Anima (%d%%) %s soon!"
+	L.font_empower = "Font + Empower"
 	L.slam_message = "爆炸猛击！"
 end
 

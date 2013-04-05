@@ -125,6 +125,10 @@ end
 L = BigWigs:NewBossLocale("Dark Animus", "koKR")
 if L then
 	L.engage_trigger = "The orb explodes!"
+
+	L.siphon_power = "Siphon Anima (%d%%)"
+	L.siphon_power_soon = "Siphon Anima (%d%%) %s soon!"
+	L.font_empower = "Font + Empower"
 	L.slam_message = "Slam"
 end
 
