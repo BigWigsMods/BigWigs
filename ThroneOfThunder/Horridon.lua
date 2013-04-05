@@ -350,11 +350,11 @@ function mod:Doors(msg)
 
 	-- 1st wave jumps down
 	self:Bar("adds", 20, L["balcony_adds"], L.adds_icon)
-	self:DelayedMessage("adds", 20, "Neutral", L["balcony_adds"], L.adds_icon)
+	self:DelayedMessage("adds", 20, "Neutral", CL["count"]:format(L["balcony_adds"], 1), L.adds_icon)
 
 	-- 2nd wave jumps down
 	self:ScheduleTimer("Bar", 20, "adds", 19, L["balcony_adds"], L.adds_icon)
-	self:DelayedMessage("adds", 39, "Neutral", L["balcony_adds"], L.adds_icon)
+	self:DelayedMessage("adds", 39, "Neutral", CL["count"]:format(L["balcony_adds"], 2), L.adds_icon)
 
 	-- dinomancer jumps down
 	self:Bar(-7086, 58, nil, "ability_hunter_beastwithin") -- Zandalari Dinomancer (Dino Form icon)
