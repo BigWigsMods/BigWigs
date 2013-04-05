@@ -9,6 +9,12 @@ mod.otherMenu = 6
 mod.worldBoss = true
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local roarCounter = 0
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -30,6 +36,7 @@ end
 
 function mod:OnEngage()
 	self:OpenProximity("proximity", 10)
+	roarCounter = 0
 end
 
 --------------------------------------------------------------------------------
@@ -41,8 +48,9 @@ function mod:Crush(args)
 end
 
 function mod:PiercingRoar(args)
-	self:Message(args.spellId, "Attention", UnitPowerType("player") == 0 and "Long") -- sound for mana users
-	self:CDBar(args.spellId, 25)
+	roarCounter = roarCounter + 1
+	self:Message(args.spellId, "Attention", UnitPowerType("player") == 0 and "Long", CL["count"]:format(args.spellName, roarCounter)) -- sound for mana users
+	self:CDBar(args.spellId, 25, CL["count"]:format(args.spellName, roarCounter+1))
 end
 
 function mod:FrillBlast(args)
