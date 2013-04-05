@@ -121,8 +121,10 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		icon = "misc_arrowdown"
 	end
 
-	if diff == 5 and nestCounter % 2 == 0 then
-		text = L["big_add_message"]:format(text) -- since no double nest in 10 man, might as well not do 2 messages
+	if diff == 5 then
+		if nestCounter == 2 or nestCounter == 4 or nestCounter == 8 or nestCounter == 12 then -- big adds in 10H in 2, 4, 8, and 12  
+			text = L["big_add_message"]:format(text) -- XXX can't tell beyond 17
+		end
 	end
 	self:Message("nest", color, "Alert", text, icon) -- XXX keep this here till all the nest rotations are 100% figured out
 
@@ -136,15 +138,16 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		end
 	elseif diff == 5 then -- 10 H
 		-- first 3 lower, second 3 upper
-		-- big add every other
+		-- big add on 2, 4, 8, 12 
+		-- XXX can't tell beyond 17
 		if nestCounter % 6 > 2 then
-			if nestCounter % 2 == 1 then
+			if nestCounter == 3 or nestCounter == 11 then -- 4 and 12 are upper
 				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["up"], L["add"]), "misc_arrowlup")
 			else
 				self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
 			end
 		else
-			if nestCounter % 2 == 1 then
+			if nestCounter == 1 or nestCounter == 7 then -- 2 and 8 are lower
 				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["down"], L["add"]), "misc_arrowdown")
 			else
 				self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
@@ -229,11 +232,11 @@ function mod:Quills(args)
 		self:Bar(args.spellId, 63)
 	else -- 10 N/H + LFR
 		if quillCounter < 4 or quillCounter == 5 or quillCounter == 6 then
-			self:Bar(args.spellId, 81)
+			self:Bar(args.spellId, 78) -- fluctuates between 1m 18s-21s, so 78 may be safer
 		elseif quillCounter == 4 or quillCounter == 7 then
-			self:Bar(args.spellId, 90)
+			self:Bar(args.spellId, 88)-- fluctuates between 1m 28s-30s, so 88 may be safer
 		else
-			self:Bar(args.spellId, 81) -- XXX need more data ( logs beyond 10 min )
+			self:Bar(args.spellId, 78) -- XXX need more data ( logs beyond 10 min )
 		end
 	end
 end
