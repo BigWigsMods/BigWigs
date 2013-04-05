@@ -78,12 +78,13 @@ function mod:OnBossEnable()
 	self:Death("Win", 69712)
 end
 
-function mod:OnEngage()
+function mod:OnEngage(diff)
 	if not self:LFR() then
 		self:OpenProximity("proximity", 8)
 	end
 	self:Berserk(600) -- XXX assumed
-	self:Bar(134380, self:LFR() and 60 or self:Heroic() and 63 or 41) -- Quills
+	local is25 = diff == 4 or diff == 6
+	self:Bar(134380, is25 and 41 or 60) -- Quills
 	self:Bar(134370, 90) -- Down Draft
 	nestCounter = 0
 	quillCounter = 0
