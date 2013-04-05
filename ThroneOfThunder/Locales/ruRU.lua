@@ -127,9 +127,9 @@ L = BigWigs:NewBossLocale("Dark Animus", "ruRU")
 if L then
 	L.engage_trigger = "Сфера взрывается!"
 
-	L.siphon_power = "Siphon Anima (%d%%)"
-	L.siphon_power_soon = "Siphon Anima (%d%%) %s soon!"
-	L.font_empower = "Font + Empower"
+	L.siphon_power = "Поглощение анимы (%d%%)"
+	L.siphon_power_soon = "Поглощение анимы (%d%%) %s скоро!"
+	L.font_empower = "Источник + Усиление"
 	L.slam_message = "Удар"
 end
 
