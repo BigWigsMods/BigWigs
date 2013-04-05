@@ -109,7 +109,6 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 	local diff = self:Difficulty()
 	nestCounter = nestCounter + 1
 
-	-- right now only print count to the message not the bars
 	local color, text, icon
 	if msg:find(L["upper_hatch_trigger"]) then
 		color = "Attention"
@@ -121,10 +120,8 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		icon = "misc_arrowdown"
 	end
 
-	if diff == 5 then
-		if nestCounter == 2 or nestCounter == 4 or nestCounter == 8 or nestCounter == 12 then -- big adds in 10H in 2, 4, 8, and 12  
-			text = L["big_add_message"]:format(text) -- XXX can't tell beyond 17
-		end
+	if diff == 5 and (nestCounter == 2 or nestCounter == 4 or nestCounter == 8 or nestCounter == 12) then  
+		text = L["big_add_message"]:format(text)
 	end
 	self:Message("nest", color, "Alert", text, icon) -- XXX keep this here till all the nest rotations are 100% figured out
 
@@ -138,16 +135,15 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		end
 	elseif diff == 5 then -- 10 H
 		-- first 3 lower, second 3 upper
-		-- big add on 2, 4, 8, 12 
-		-- XXX can't tell beyond 17
+		-- big adds at 2, 4, 8, 12 (no data past 17)
 		if nestCounter % 6 > 2 then
-			if nestCounter == 3 or nestCounter == 11 then -- 4 and 12 are upper
+			if nestCounter == 3 or nestCounter == 11 then
 				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["up"], L["add"]), "misc_arrowlup")
 			else
 				self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
 			end
 		else
-			if nestCounter == 1 or nestCounter == 7 then -- 2 and 8 are lower
+			if nestCounter == 1 or nestCounter == 7 then
 				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["down"], L["add"]), "misc_arrowdown")
 			else
 				self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
@@ -163,19 +159,19 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		elseif nestCounter % 28 == 6 or nestCounter % 28 == 7 or nestCounter % 28 == 16 then
 			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
 		end
-	elseif diff == 6 then -- 25 H 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 2, 2, 2, 3, 2, 3, 2, 3, 3
+	elseif diff == 6 then -- 25 H
 		-- 1 lower, 2 lower, 3 lower, 4 {lower, 5 upper}, 6 {lower, 7 upper}, 8 upper, 9 {lower, 10 upper}, 11 {lower, 12 upper}, 13 lower, 14 {upper, 15 lower}, 16 {upper, 17 lower}
 		-- 18 {lower, 19 upper}, 20 {lower, 21 upper}, 22 {upper, 23 lower, 24 upper}, 25 {upper, 26 lower}, 27 {lower, 28 upper, 29 lower}, 30 {lower, 31 upper}, 32 {upper, 33 lower, 34 upper}
 		-- 35 {lower, 36 upper, 37 lower}
-		-- there are no spaces intentinally on some bars, else text don't fit on the bars, alternatively consider using UP / DOWN instead of upper lower to shorten the bar text
+		-- there are intentionally no spaces on some bars so text fits
 		if nestCounter < 3 or nestCounter == 12 then
-			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
+			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["down"]), "misc_arrowdown")
 		elseif nestCounter == 3 or nestCounter == 8 or nestCounter == 17 or nestCounter == 19 or nestCounter == 29 then
 			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["down"], nextNest+1, L["up"]), 134347)
 		elseif nestCounter == 13 or nestCounter == 15 or nestCounter == 24 then
 			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["up"], nextNest+1, L["down"]), 134347) -- this is intentional, because this is how blizzard announces it too!
 		elseif nestCounter == 7 then
-			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
+			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["up"]), "misc_arrowlup")
 		elseif nestCounter == 1 then
 			self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["down"], L["add"]), "misc_arrowdown")
 		elseif nestCounter == 5 then
@@ -189,7 +185,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		elseif nestCounter == 31 then
 			self:Bar("nest", 30, ("(%d)%s+(%d)%s+(%d)%s"):format(nextNest, L["up"], nextNest+1, L["down"], nextNest+2, L["up"]), 134347)
 		end
-		-- big adds at 2, 6, 12, 16, 23 -- there might be more between 23 and 37
+		-- big adds at 2, 6, 12, 23 (there might be more between 23 and 37)
 		if nestCounter == 2 or nestCounter == 6 or nestCounter == 23 then
 			self:Message("nest", "Urgent", "Alert", L["big_add_message"]:format(L["lower_nest"]), 134367)
 		elseif nestCounter == 12 or nestCounter == 16 then
@@ -231,10 +227,10 @@ function mod:Quills(args)
 	if diff == 4 or diff == 6 then -- 25 N/H
 		self:Bar(args.spellId, 63)
 	else -- 10 N/H + LFR
-		if quillCounter < 4 or quillCounter == 5 or quillCounter == 6 then
-			self:Bar(args.spellId, 78) -- fluctuates between 1m 18s-21s, so 78 may be safer
-		elseif quillCounter == 4 or quillCounter == 7 then
-			self:Bar(args.spellId, 88)-- fluctuates between 1m 28s-30s, so 88 may be safer
+		if quillCounter == 4 or quillCounter == 7 then
+			self:Bar(args.spellId, 88)
+		elseif quillCounter < 7 then
+			self:Bar(args.spellId, 78)
 		else
 			self:Bar(args.spellId, 78) -- XXX need more data ( logs beyond 10 min )
 		end
