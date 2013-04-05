@@ -228,12 +228,14 @@ function mod:Quills(args)
 	if diff == 4 or diff == 6 then -- 25 N/H
 		self:Bar(args.spellId, 63)
 	else -- 10 N/H + LFR
-		if quillCounter == 4 or quillCounter == 7 then
-			self:Bar(args.spellId, 88)
+		if quillCounter == 4 then
+			self:Bar(args.spellId, 91)
+		elseif quillCounter == 7 then
+			self:Bar(args.spellId, 44) -- soft enrage it looks like
 		elseif quillCounter < 7 then
-			self:Bar(args.spellId, 78)
+			self:Bar(args.spellId, 81)
 		else
-			self:Bar(args.spellId, 78) -- XXX need more data ( logs beyond 10 min )
+			self:Bar(args.spellId, 81) -- XXX need more data ( logs beyond 10 min )
 		end
 	end
 end
