@@ -163,6 +163,7 @@ function mod:Deaths(args)
 	headCounter = headCounter + 1
 	self:CloseProximity("proximity")
 	self:Message(139458, "Attention", nil, CL["soon"]:format(CL["count"]:format(self:SpellName(139458), headCounter))) -- Rampage
+	self:Bar(139458, 5, CL["incoming"]:format(self:SpellName(139458)))
 end
 
 --------------------------------------------------------------------------------
