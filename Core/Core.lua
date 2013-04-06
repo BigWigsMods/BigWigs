@@ -143,6 +143,8 @@ local function zoneChanged()
 			addon:RegisterEvent("CHAT_MSG_MONSTER_YELL", chatMsgMonsterYell)
 			addon:RegisterEvent("UPDATE_MOUSEOVER_UNIT", updateMouseover)
 			addon:RegisterEvent("UNIT_TARGET", unitTargetChanged)
+			targetCheck("target")
+			targetCheck("mouseover")
 		end
 	elseif monitoring then
 		monitoring = nil

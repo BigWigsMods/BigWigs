@@ -156,8 +156,8 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shen", "frFR")
 if L then
-	L.custom_off_diffused_add_marker = "Diffused Lightning Marker"
-	L.custom_off_diffused_add_marker_desc = "Mark the Diffused Lightning adds"
+	L.custom_off_diffused_marker = "Diffused Lightning Marker"
+	L.custom_off_diffused_marker_desc = "Mark the Diffused Lightning adds using all raid icons, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the adds is the fastest way to mark them.|r"
 
 	L.stuns = "Stuns"
 	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."

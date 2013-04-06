@@ -47,8 +47,8 @@ end
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.custom_off_diffused_add_marker = "Diffused Lightning Marker"
-	L.custom_off_diffused_add_marker_desc = "Mark the Diffused Lightning adds"
+	L.custom_off_diffused_marker = "Diffused Lightning Marker"
+	L.custom_off_diffused_marker_desc = "Mark the Diffused Lightning adds using all raid icons, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the adds is the fastest way to mark them.|r"
 
 	L.stuns = "Stuns"
 	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."
@@ -57,7 +57,7 @@ if L then
 	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
 
 	L.last_inermission_ability = "Last intermission ability used!"
-	L.safe_from_stun = "You are probably safe from Overcharge stuns"
+	L.safe_from_stun = "You're probably safe from Overcharge stuns"
 	L.intermission = "Intermission"
 	L.diffusion_add = "Diffusion add"
 	L.shock = "Shock"
@@ -70,7 +70,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"custom_off_diffused_add_marker",
+		"custom_off_diffused_marker",
 		{139011, "FLASH"},
 		{134912, "TANK", "FLASH"}, 135095, {135150, "FLASH"},
 		{136478, "TANK"}, {136543, "PROXIMITY"}, {136850, "FLASH"},
@@ -78,7 +78,7 @@ function mod:GetOptions()
 		{135695, "PROXIMITY", "SAY", "FLASH"}, {135991, "PROXIMITY"}, {136295, "SAY"}, 136366,
 		"stages", {"aoe_grip", "SAY"}, "stuns", "berserk", "proximity", "bosskill",
 	}, {
-		["custom_off_diffused_add_marker"] = L.custom_off_diffused_add_marker,
+		["custom_off_diffused_marker"] = L.custom_off_diffused_marker,
 		[139011] = "heroic",
 		[134912] = -7178,
 		[136478] = -7192,
@@ -122,7 +122,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StaticShockApplied", 135695)
 
 	self:Death("Deaths", 68397, 69014, 69013, 69012) -- Lei Shen, Greater Diffused Lightning, Diffused Lightning, Lesser Diffused Lightning
-	if not self.db.profile.custom_off_diffused_add_marker then return end
+	if not self.db.profile.custom_off_diffused_marker then return end
 	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 	self:Log("SPELL_DAMAGE", "ChainLightning", 136018, 136019, 136021)
 	self:Log("SPELL_SUMMON", "SummonSmallDiffusedLightning", 135992)
@@ -131,6 +131,7 @@ end
 function mod:OnEngage()
 	self:Berserk(720) -- XXX assumed
 	proximityOpen = nil
+	markerTimer = nil
 	phase = 1
 	tooCloseForOvercharged = nil
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
@@ -176,11 +177,6 @@ local function updateProximity()
 	end
 end
 
-local function stopScan()
-	mod:CancelTimer(markerTimer)
-	markerTimer = nil
-end
-
 local function stopConduitAbilityBars()
 	mod:StopBar(135695)
 	mod:StopBar(136295)
@@ -188,67 +184,74 @@ local function stopConduitAbilityBars()
 	mod:StopBar(136366)
 end
 
-local function getMark()
-	for i=8,1,-1 do
-		if not marksUsed[i] then
-			return i
-		end
-	end
-	return false
-end
-
-function mod:UPDATE_MOUSEOVER_UNIT()
-	if not self.db.profile.custom_off_diffused_add_marker then return end
-	local GUID = UnitGUID("mouseover")
-	if not GUID then return end
-	local mobId = self:MobId(GUID)
-	if mobId == 69014 or mobId == 69012 or mobId == 69013 then
-		if adds[GUID] ~= "marked" then
-			adds[GUID] = "marked"
-			local mark = getMark()
-			if mark then
-				SetRaidTarget("mouseover", mark)
-				marksUsed[mark] = GUID
+do
+	-- Add Marking
+	local function getMark()
+		for i=8,1,-1 do
+			if not marksUsed[i] then
+				return i
 			end
 		end
+		return false
 	end
-end
 
-function mod:MarkCheck()
-	for GUID in next, adds do
-		if adds[GUID] ~= "marked" then
-			local unitId = mod:GetUnitIdByGUID(GUID)
-			local mark = getMark()
-			if unitId and mark then
+	function mod:UPDATE_MOUSEOVER_UNIT()
+		local GUID = UnitGUID("mouseover")
+		if not GUID then return end
+		local mobId = self:MobId(GUID)
+		if mobId == 69014 or mobId == 69012 or mobId == 69013 then
+			if adds[GUID] ~= "marked" then
 				adds[GUID] = "marked"
-				SetRaidTarget(unitId, mark)
-				marksUsed[mark] = GUID
+				local mark = getMark()
+				if mark then
+					SetRaidTarget("mouseover", mark)
+					marksUsed[mark] = GUID
+				end
 			end
 		end
 	end
-end
 
-function mod:ChainLightning(args)
-	local mobId = self:MobId(args.sourceGUID)
-	if mobId == 69014 or mobId == 69012 or mobId == 69013 then
-		if not adds[args.sourceGUID] then
-			adds[args.sourceGUID] = true
+	function mod:MarkCheck()
+		for GUID in next, adds do
+			if adds[GUID] ~= "marked" then
+				local unitId = mod:GetUnitIdByGUID(GUID)
+				local mark = getMark()
+				if unitId and mark then
+					adds[GUID] = "marked"
+					SetRaidTarget(unitId, mark)
+					marksUsed[mark] = GUID
+				end
+			end
+		end
+	end
+
+	function mod:StopMarkCheck()
+		self:CancelTimer(markerTimer)
+		markerTimer = nil
+	end
+
+	function mod:ChainLightning(args)
+		local mobId = self:MobId(args.sourceGUID)
+		if mobId == 69014 or mobId == 69012 or mobId == 69013 then
+			if not adds[args.sourceGUID] then
+				adds[args.sourceGUID] = true
+			end
+		end
+	end
+	function mod:SummonSmallDiffusedLightning(args)
+		local mobId = self:MobId(args.destGUID)
+		if mobId == 69014 or mobId == 69012 or mobId == 69013 then
+			if not adds[args.destGUID] then
+				adds[args.destGUID] = true
+			end
+		end
+		if not markerTimer then
+			markerTimer = self:ScheduleRepeatingTimer("MarkCheck", 0.2)
+			self:ScheduleTimer("StopMarkCheck", 15) -- scan for 15 sec
 		end
 	end
 end
 
-function mod:SummonSmallDiffusedLightning(args)
-	local mobId = self:MobId(args.destGUID)
-	if mobId == 69014 or mobId == 69012 or mobId == 69013 then
-		if not adds[args.destGUID] then
-			adds[args.destGUID] = true
-		end
-	end
-	if not markerTimer then
-		markerTimer = self:ScheduleRepeatingTimer("MarkCheck", 0.04)
-		self:ScheduleTimer(stopScan, 15) -- scan for 15 sec
-	end
-end
 ----------------------------------------
 -- Heroic
 --
@@ -573,9 +576,9 @@ do
 	function mod:DiffusionChain(args)
 		wipe(diffusionList)
 		self:ScheduleTimer(warnDiffusionAdds, 0.2)
-		if self.db.profile.custom_off_diffused_add_marker and not markerTimer then
-			markerTimer = self:ScheduleRepeatingTimer("MarkCheck", 0.04)
-			self:ScheduleTimer(stopScan, 15) -- scan for 15 sec
+		if self.db.profile.custom_off_diffused_marker and not markerTimer then
+			markerTimer = self:ScheduleRepeatingTimer("MarkCheck", 0.2)
+			self:ScheduleTimer("StopMarkCheck", 15) -- scan for 15 sec
 		end
 	end
 	function mod:DiffusionChainRemoved() -- on conduit/lei shen
@@ -633,19 +636,23 @@ do
 			end
 		end
 	end
-	local function staticShockSayCountdown(remainingTime)
-		mod:Say(135695, remainingTime, true)
-		mod:PlaySound(135695, ("BigWigs: %d"):format(remainingTime))
+	local timeLeft, timer = 8, nil
+	local function staticShockSayCountdown()
+		timeLeft = timeLeft - 1
+		if timeLeft < 6 then
+			mod:Say(135695, timeLeft, true)
+			mod:PlaySound(135695, ("BigWigs: %d"):format(timeLeft)) -- XXX sort this
+			if timeLeft < 2 then
+				mod:CancelTimer(timer)
+			end
+		end
 	end
 	function mod:StaticShockApplied(args)
 		if self:Me(args.destGUID) then
+			timeLeft = 8
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
-			self:ScheduleTimer(staticShockSayCountdown, 3, 5)
-			self:ScheduleTimer(staticShockSayCountdown, 4, 4)
-			self:ScheduleTimer(staticShockSayCountdown, 5, 3)
-			self:ScheduleTimer(staticShockSayCountdown, 6, 2)
-			self:ScheduleTimer(staticShockSayCountdown, 7, 1)
+			timer = self:ScheduleRepeatingTimer(staticShockSayCountdown, 1)
 		end
 		staticShockList[#staticShockList+1] = args.destName
 		coloredNames[#coloredNames+1] = args.destName
