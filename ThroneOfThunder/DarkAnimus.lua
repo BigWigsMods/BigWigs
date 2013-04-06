@@ -23,9 +23,9 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "The orb explodes!"
 
-	L.custom_off_matterswap = "Matter Swap Target"
-	L.custom_off_matterswap_desc = "|cFFFF0000Promoted only.|r Mark and send a warning to the player furthest from the player with Matter Swap debuff. If multiple Matter Swap debuffs are present, they are marked in the order casted."
-	L.custom_off_matterswap_icon = 138609
+	L.custom_off_matterswap = GetSpellInfo(139919)
+	L.custom_off_matterswap_desc = "|cFFFF0000Requires promoted or leader.|r Mark and send a warning to the player furthest from the player with Matter Swap debuff. This method is high on CPU usage so it is disabled by default.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent conflicts.|r"
+	L.custom_off_matterswap_icon = 138618
 	L.matterswap_message = "You are furthest for Matter Swap!"
 
 	L.siphon_power = "Siphon Anima (%d%%)"
@@ -62,6 +62,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "InterruptingJolt", 138763, 139867, 139869)
 	self:Log("SPELL_CAST_SUCCESS", "EmpowerGolem", 138780)
 	self:Log("SPELL_AURA_APPLIED", "AnimaFontApplied", 138691)
+	self:Log("SPELL_AURA_REFRESH", "AnimaFontRefresh", 138691)
 	self:Log("SPELL_AURA_REMOVED", "AnimaFontRemoved", 138691)
 	self:Log("SPELL_CAST_START", "AnimaRing", 136954) -- this is 1 sec faster than SUCCESS but has no destName
 	self:Log("SPELL_CAST_SUCCESS", "SiphonAnima", 138644)
@@ -70,11 +71,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveSlam", 138569)
 	self:Log("SPELL_AURA_REMOVED", "MatterSwapRemoved", 138609)
 	self:Log("SPELL_AURA_APPLIED", "MatterSwapApplied", 138609)
+	self:AddSyncListener("MatterSwapTarget")
 	-- Large Anima Golem
 	self:Log("SPELL_DAMAGE", "CrimsonWake", 138485)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- looks like this is forever emote
 
-	--self:AddSyncListener("MatterSwapTarget")
 
 	self:Death("Win", 69427)
 end
@@ -123,7 +124,13 @@ end
 function mod:AnimaFontApplied(args)
 	-- cooldown seems to be 20-30ish
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
-	self:TargetBar(args.spellId, 30, args.destName) -- XXX refreshing (cast on same target) does weird things to the debuff's duration
+	self:TargetBar(args.spellId, 30, args.destName)
+end
+
+function mod:AnimaFontRefresh(args)
+	local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+	local duration = expires - GetTime()
+	self:TargetBar(args.spellId, duration, args.destName)
 end
 
 function mod:AnimaFontRemoved(args)
@@ -156,7 +163,7 @@ do
 	end
 	function mod:SiphonAnima(args)
 		self:Bar(args.spellId, self:Heroic() and 20 or 6)
-		self:ScheduleTimer(warnPower, 0.1, args.spellId) -- the the drain/power update happens the cast
+		self:ScheduleTimer(warnPower, 0.1, args.spellId) -- the power update happens after the cast
 	end
 end
 
@@ -270,7 +277,7 @@ do
 		if args.destName == matterSwapTargets[1] then
 			tremove(matterSwapTargets, 1)
 			self:PrimaryIcon(args.spellId, matterSwapTargets[1]) -- mark next (if set)
-		else -- dispeller ignored marks!
+		else -- dispeller ignored marks! (should only be two)
 			tremove(matterSwapTargets, 2)
 		end
 	end
