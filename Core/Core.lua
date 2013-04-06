@@ -579,10 +579,10 @@ do
 	end
 
 	function addon:RegisterBossModule(module)
-		if not module.displayName then module.displayName = module.moduleName end
 		if module.encounterId then
 			module.displayName = EJ_GetEncounterInfo(module.encounterId)
 		end
+		if not module.displayName then module.displayName = module.moduleName end
 		if not enablezones[module.zoneId] then
 			enablezones[module.zoneId] = true
 			-- We fire zoneChanged() as a backup for LoD users. In rare cases,

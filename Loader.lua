@@ -686,7 +686,12 @@ do
 end
 
 function loader:BigWigs_BossModuleRegistered(_, _, module)
-	enableZones[module.zoneId] = module.worldBoss and "world" or true
+	if module.worldBoss then
+		enableZones[module.zoneId] = "world"
+		worldBosses[module.worldBoss] = module.zoneId
+	else
+		enableZones[module.zoneId] = true
+	end
 end
 
 function loader:BigWigs_CoreEnabled()
