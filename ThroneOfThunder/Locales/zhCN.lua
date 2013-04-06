@@ -10,8 +10,8 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "zhCN")
 if L then
-	L.charge_trigger = "用力拍动尾巴"
-	L.door_trigger = "的门蜂拥而出"
+	L.charge_trigger = "开始拍打他的尾巴"
+	L.door_trigger = "之门中涌出"
 
 	L.chain_lightning_message = "焦点：>闪电链<！"
 	L.chain_lightning_bar = "焦点：闪电链"
