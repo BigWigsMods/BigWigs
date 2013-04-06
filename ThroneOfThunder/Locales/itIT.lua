@@ -156,17 +156,20 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shen", "itIT")
 if L then
-	L.conduit_abilities = "Abilità dei Condotti"
-	L.conduit_abilities_desc = "Barre di recupero approssimative per le abilità specifiche dei condotti"
-	L.conduit_abilities_message = "Abilità successiva del condotto"
+	L.custom_off_diffused_add_marker = "Diffused Lightning Marker"
+	L.custom_off_diffused_add_marker_desc = "Mark the Diffused Lightning adds"
 
+	L.stuns = "Stuns"
+	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."
+
+	L.aoe_grip = "AoE grip"
+	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
+
+	L.last_inermission_ability = "Last intermission ability used!"
+	L.safe_from_stun = "You are probably safe from Overcharge stuns"
 	L.intermission = "Intermezzo"
 	L.diffusion_add = "Add di Diffusione"
 	L.shock = "Folgore"
-
-	--L.overcharged_message = "Pulsazione ad Effetto Stordente" Commented out since there isnt anymore into Locals, Keep it for lazyness.
-	--L.static_shock_message = "Danno ad Effetto da Suddividere" Commented out since there isnt anymore into Locals, Keep it for lazyness.
-	--L.diffusion_chain_message = "Add di Diffusione tra poco - ALLARGARSI!!!" Commented out since there isnt anymore into Locals, Keep it for lazyness.
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "itIT")

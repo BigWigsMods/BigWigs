@@ -156,17 +156,20 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shen", "esES") or BigWigs:NewBossLocale("Lei Shen", "esMX")
 if L then
-	L.conduit_abilities = "Habilidades de conducto"
-	L.conduit_abilities_desc = "Barras para CD aproximado para las habilidades específicas de los conductos."
-	L.conduit_abilities_message = "Próx. hab. de conducto"
+	L.custom_off_diffused_add_marker = "Diffused Lightning Marker"
+	L.custom_off_diffused_add_marker_desc = "Mark the Diffused Lightning adds"
 
+	L.stuns = "Stuns"
+	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."
+
+	L.aoe_grip = "AoE grip"
+	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
+
+	L.last_inermission_ability = "Last intermission ability used!"
+	L.safe_from_stun = "You are probably safe from Overcharge stuns"
 	L.intermission = "Intermedio"
 	L.diffusion_add = "Difusión de adds"
 	L.shock = "Choque"
-
-	L.overcharged_message = "Pulso AoE aturdidor"
-	L.static_shock_message = "Daño AoE compartido"
-	L.diffusion_chain_message = "Difusión de adds inminente - ¡DISPERSAOS!"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "esES") or BigWigs:NewBossLocale("Ra-den", "esMX")

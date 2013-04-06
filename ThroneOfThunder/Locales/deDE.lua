@@ -161,10 +161,17 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shen", "deDE")
 if L then
-	L.conduit_abilities = "Leitungs-Fähigkeiten"
-	L.conduit_abilities_desc = "Ungefähre Cooldown-Leisten für die spezifischen Fähigkeiten der Leitungen"
-	L.conduit_abilities_message = "Nächste Leitungs-Fähigkeit"
+	L.custom_off_diffused_add_marker = "Diffused Lightning Marker"
+	L.custom_off_diffused_add_marker_desc = "Mark the Diffused Lightning adds"
 
+	L.stuns = "Stuns"
+	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."
+
+	L.aoe_grip = "AoE grip"
+	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
+
+	L.last_inermission_ability = "Last intermission ability used!"
+	L.safe_from_stun = "You are probably safe from Overcharge stuns"
 	L.intermission = "Unterbrechung"
 	L.diffusion_add = "Kugelblitzelementare"
 	L.shock = "Schock"

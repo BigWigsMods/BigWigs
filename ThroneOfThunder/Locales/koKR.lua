@@ -155,10 +155,17 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shen", "koKR")
 if L then
-	L.conduit_abilities = "도관 충천 단계"
-	L.conduit_abilities_desc = "도도관 충천 단계에 대한 대략적인 재사용 대기시간 바를 표시합니다."
-	L.conduit_abilities_message = "다음 도관 충천 단계"
+	L.custom_off_diffused_add_marker = "Diffused Lightning Marker"
+	L.custom_off_diffused_add_marker_desc = "Mark the Diffused Lightning adds"
 
+	L.stuns = "Stuns"
+	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."
+
+	L.aoe_grip = "AoE grip"
+	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
+
+	L.last_inermission_ability = "Last intermission ability used!"
+	L.safe_from_stun = "You are probably safe from Overcharge stuns"
 	L.intermission = "튀어오르는 화살"
 	L.diffusion_add = "연쇄 확산"
 	L.shock = "전기 충격"

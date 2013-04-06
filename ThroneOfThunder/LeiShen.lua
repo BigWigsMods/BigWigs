@@ -47,20 +47,20 @@ end
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.custom_off_diffused_add_marker = "Diffused add marker"
+	L.custom_off_diffused_add_marker = "Diffused Lightning Marker"
 	L.custom_off_diffused_add_marker_desc = "Mark the Diffused Lightning adds"
 
 	L.stuns = "Stuns"
-	L.stuns_desc = "Show bars for stun durations for Ball Lightnings."
+	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."
 
 	L.aoe_grip = "AoE grip"
-	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp."
+	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
 
+	L.last_inermission_ability = "Last intermission ability used!"
+	L.safe_from_stun = "You are probably safe from Overcharge stuns"
 	L.intermission = "Intermission"
 	L.diffusion_add = "Diffusion add"
 	L.shock = "Shock"
-	L.last_inermission_ability = "Last intermission ability used!"
-	L.safe_from_stun = "You are probably safe from Overcharge stuns"
 end
 L = mod:GetLocale()
 
@@ -163,14 +163,16 @@ function mod:Stuns(args)
 end
 
 local function updateProximity()
-	if activeProximityAbilities[2] then
-		mod:OpenProximity("proximity", 8)
-	elseif activeProximityAbilities[3] then
-		mod:OpenProximity("proximity", 6)
-	elseif activeProximityAbilities[4] then
-		mod:OpenProximity("proximity", 3)
-	elseif not activeProximityAbilities[1] then
-		mod:CloseProximity("proximity")
+	if not activeProximityAbilities[1] then
+		if activeProximityAbilities[2] then
+			mod:OpenProximity("proximity", 8)
+		elseif activeProximityAbilities[3] then
+			mod:OpenProximity("proximity", 6)
+		elseif activeProximityAbilities[4] then
+			mod:OpenProximity("proximity", 3)
+		else
+			mod:CloseProximity("proximity")
+		end
 	end
 end
 
