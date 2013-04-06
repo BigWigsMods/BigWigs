@@ -10,8 +10,8 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "zhCN")
 if L then
-	L.charge_trigger = "用力拍动尾巴" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
-	L.door_trigger = "的门蜂拥而出" -- "Farraki forces pour from the Farraki Tribal Door!
+	L.charge_trigger = "用力拍动尾巴"
+	L.door_trigger = "的门蜂拥而出"
 
 	L.chain_lightning_message = "焦点：>闪电链<！"
 	L.chain_lightning_bar = "焦点：闪电链"
@@ -73,8 +73,8 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "zhCN")
 if L then
-	L.lower_hatch_trigger = "下层某个鸟巢中的蛋开始孵化了"
-	L.upper_hatch_trigger = "上层某个鸟巢中的蛋开始孵化了"
+	L.lower_hatch_trigger = "下层某个鸟巢中的蛋开始孵化了！"
+	L.upper_hatch_trigger = "上层某个鸟巢中的蛋开始孵化了！"
 
 	L.nest = "巢穴"
 	L.nest_desc = "警报依赖于巢穴。|cffff0000如果你没有分配到处理巢穴请关闭该警报！|r"
@@ -90,9 +90,9 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "zhCN")
 if L then
-	L.red_spawn_trigger = "猩红雾行兽"
-	L.blue_spawn_trigger = "碧蓝雾行兽"
-	L.yellow_spawn_trigger = "琥珀雾行兽"
+	L.red_spawn_trigger = "红光照出了一只猩红雾行兽！"
+	L.blue_spawn_trigger = "蓝光照出了一只碧蓝雾行兽！"
+	L.yellow_spawn_trigger = "强光照出了一只琥珀雾行兽！"
 
 	L.adds = "显形增援"
 	L.adds_desc = "当猩红、琥珀和碧蓝雾行兽显形和猩红雾行兽剩余时发出警报。"
@@ -126,11 +126,15 @@ end
 
 L = BigWigs:NewBossLocale("Dark Animus", "zhCN")
 if L then
-	L.engage_trigger = "宝珠爆炸了"
+	L.engage_trigger = "宝珠爆炸了！"
 
-	L.siphon_power = "Siphon Anima (%d%%)"
-	L.siphon_power_soon = "Siphon Anima (%d%%) %s soon!"
-	L.font_empower = "Font + Empower"
+	L.custom_off_matterswap = "物质交换目标"
+	L.custom_off_matterswap_desc = "|cFFFF0000需要权限。|r 标记并发送警报给受到物质交换减益最远的玩家。如果多个物质交换减益效果存在，将按照施放的顺序被标记。"
+	L.matterswap_message = ">你< 最远距离物质交换！"
+
+	L.siphon_power = "心能虹吸（%d%%）"
+	L.siphon_power_soon = "心能虹吸（%d%%）即将%s！"
+	L.font_empower = "心能之泉+强化魔像"
 	L.slam_message = "爆炸猛击！"
 end
 
@@ -150,7 +154,7 @@ end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "zhCN")
 if L then
-	L.last_phase_yell_trigger = "Just this once..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
+	L.last_phase_yell_trigger = "只此一次……"
 
 	L.barrage_fired = "弹幕！"
 end
