@@ -19,13 +19,18 @@ local GetTime = GetTime
 
 local phase = 1
 local proximityOpen = nil
-local tooCloseForOvercharged = false
+local tooCloseForOvercharged = nil
 local adds = {}
 local markerTimer = nil
 local marksUsed = {}
 local activeProximityAbilities = {}
 local thunderstruckCounter = 1
 local whipCounter = 1
+local stunDuration = {
+	[119381] = 5, -- Leg Sweep
+	[119072] = 3, -- Holy Wrath
+	[30283] = 3, -- Shadowfury
+}
 
 local function isConduitAlive(mobId)
 	for i=1, 5 do
@@ -42,18 +47,20 @@ end
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.intermission = "Intermission"
-	L.diffusion_add = "Diffusion add"
-	L.shock = "Shock"
 	L.custom_off_diffused_add_marker = "Diffused add marker"
 	L.custom_off_diffused_add_marker_desc = "Mark the Diffused Lightning adds"
 
 	L.stuns = "Stuns"
-	L.stuns_desc = "Show some bars for stun durations for Ball Lightnings"
+	L.stuns_desc = "Show bars for stun durations for Ball Lightnings."
+
 	L.aoe_grip = "AoE grip"
-	L.aoe_grip_desc = "Warning for when a death knight uses Gorefiend's Grasp (AoE Grip)"
+	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp."
+
+	L.intermission = "Intermission"
+	L.diffusion_add = "Diffusion add"
+	L.shock = "Shock"
 	L.last_inermission_ability = "Last intermission ability used!"
-	L.safe_from_stun = "You'r probably far enough from stun pulses"
+	L.safe_from_stun = "You are probably safe from Overcharge stuns"
 end
 L = mod:GetLocale()
 
@@ -82,13 +89,10 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	-- stuns
-	--3/26 19:47:37.364  SPELL_CAST_SUCCESS,0x07000000057676A1,"Kinszi",0x514,0x0,0x0000000000000000,nil,0x80000000,0x80000000,119381,"Leg Sweep",0x1,0x07000000057676A1,260771,734,36038,0,0
-	--3/26 19:09:54.613  SPELL_CAST_SUCCESS,0x0700000004FE75ED,"Trdksvina",0x514,0x0,0x0000000000000000,nil,0x80000000,0x80000000,119072,"Holy Wrath",0x2,0x0700000004FE75ED,680741,62062,112,0,56366
-	--3/26 19:47:47.332  SPELL_CAST_SUCCESS,0x07000000031FF0CF,"Eveny",0x512,0x0,0x0000000000000000,nil,0x80000000,0x80000000,30283,"Shadowfury",0x20,0x07000000031FF0CF,179869,147,33375,0,0
-	self:Log("SPELL_CAST_SUCCESS", "Stuns", 119381, 119072, 30283)
-	--3/26 19:35:44.654  SPELL_CAST_SUCCESS,0x070000000474B337,"Mionee",0x514,0x0,0x0000000000000000,nil,0x80000000,0x80000000,108199,"Gorefiend's Grasp",0x20,0x070000000474B337,218399,79428,109,0,0
-	self:Log("SPELL_CAST_SUCCESS", "Grip", 108199)
+	-- Ball Lightning helpers
+	self:Log("SPELL_CAST_SUCCESS", "Stuns", 119381, 119072, 30283) -- Leg Sweep, Holy Wrath, Shadowfury
+	self:Log("SPELL_CAST_SUCCESS", "Grip", 108199) -- Gorefiend's Grasp
+
 	-- Heroic
 	self:Log("SPELL_AURA_APPLIED", "HelmOfCommand", 139011)
 	-- Stage 3
@@ -128,7 +132,7 @@ function mod:OnEngage()
 	self:Berserk(720) -- XXX assumed
 	proximityOpen = nil
 	phase = 1
-	tooCloseForOvercharged = false
+	tooCloseForOvercharged = nil
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	self:CDBar(134912, 40) -- Decapitate
 	self:CDBar(135095, 25) -- Thunderstruck
@@ -153,33 +157,21 @@ end
 
 function mod:Stuns(args)
 	if phase < 2 then return end
-	local duration
-	if args.spellId == 119381 then -- leg sweep
-		duration = 5
-	elseif args.spellId == 119072 then -- holy wrath
-		duration = 3
-	elseif args.spellId == 30283 then -- shadowfury
-		duration = 3
-	end
 	local target = self:NewTargetList()
 	target[1] = args.sourceName
-	self:Bar("stuns", duration, ("Stun: %s"):format(target[1]), args.spellId)
+	self:Bar("stuns", stunDuration[args.spellId], ("Stun: %s"):format(target[1]), args.spellId)
 end
 
 local function updateProximity()
-	if activeProximityAbilities[1] then
-		return
-	elseif activeProximityAbilities[2] then
+	if activeProximityAbilities[2] then
 		mod:OpenProximity("proximity", 8)
-		return
 	elseif activeProximityAbilities[3] then
 		mod:OpenProximity("proximity", 6)
-		return
 	elseif activeProximityAbilities[4] then
 		mod:OpenProximity("proximity", 3)
-		return
+	elseif not activeProximityAbilities[1] then
+		mod:CloseProximity("proximity")
 	end
-	mod:CloseProximity("proximity")
 end
 
 local function stopScan()
@@ -334,7 +326,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			activeProximityAbilities[3] = false
+			activeProximityAbilities[3] = nil
 			if self:Heroic() then
 				activeProximityAbilities[4] = true
 				updateProximity()
@@ -417,7 +409,7 @@ function mod:IntermissionStart(args)
 	self:StopBar(136543) -- Summon Ball Lightning
 	self:StopBar(136478) -- Furious Slash
 	self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1") -- just to be efficient
-	activeProximityAbilities[4] = false
+	activeProximityAbilities[4] = nil
 	local diff = self:Difficulty()
 	if diff == 3 or diff == 5 or diff == 7 then -- 10 mans and assume LFR too
 		if isConduitAlive(68398) then self:CDBar(135695, 18) end -- Static Shock
@@ -527,13 +519,12 @@ do
 			if phase == 1 or not mod:Heroic() then stopConduitAbilityBars() end
 			mod:Bar(spellId, 40)
 		end
-		mod:TargetMessage(spellId, overchargedList, "Urgent")
-		mod:PlaySound(spellId, "Alarm")
+		mod:TargetMessage(spellId, overchargedList, "Urgent", "Alarm", nil, nil, true)
 		scheduled = nil
 		if not tooCloseForOvercharged then
 			mod:Message(spellId, "Positive", nil, L["safe_from_stun"])
 		end
-		tooCloseForOvercharged = false
+		tooCloseForOvercharged = nil
 	end
 	function mod:Overcharged(args)
 		if self:Me(args.destGUID) then
@@ -562,11 +553,10 @@ do
 	end
 	local function warnDiffusionAdds()
 		if #diffusionList > 0 then
-			mod:TargetMessage(135991, diffusionList, "Important", nil, L["diffusion_add"], nil, true)
+			mod:TargetMessage(135991, diffusionList, "Important", "Warning", L["diffusion_add"], nil, true)
 		else -- no one in range
-			mod:Message(135991, "Important")
+			mod:Message(135991, "Important", "Warning")
 		end
-		mod:PlaySound(135991, "Warning")
 		if not UnitExists("boss1") then -- poor mans intermission check
 			mod:Bar(135991, 25)
 			mod:ScheduleTimer(warnDiffusionChainSoon, 20)
@@ -575,14 +565,13 @@ do
 			mod:Bar(135991, 40)
 			timer = mod:ScheduleTimer(warnDiffusionChainSoon, 30)
 		end
-		activeProximityAbilities[2] = false
+		activeProximityAbilities[2] = nil
 		updateProximity()
 	end
 	function mod:DiffusionChain(args)
 		wipe(diffusionList)
 		self:ScheduleTimer(warnDiffusionAdds, 0.2)
-		if not self.db.profile.custom_off_diffused_add_marker then return end
-		if not markerTimer then
+		if self.db.profile.custom_off_diffused_add_marker and not markerTimer then
 			markerTimer = self:ScheduleRepeatingTimer("MarkCheck", 0.04)
 			self:ScheduleTimer(stopScan, 15) -- scan for 15 sec
 		end
@@ -590,7 +579,7 @@ do
 	function mod:DiffusionChainRemoved() -- on conduit/lei shen
 		self:CancelTimer(timer)
 		timer = nil
-		activeProximityAbilities[2] = false
+		activeProximityAbilities[2] = nil
 		updateProximity()
 	end
 end
@@ -605,7 +594,7 @@ end
 function mod:StaticShockRemoved(args)
 	if proximityOpen == "Diffusion Chain" or proximityOpen == "Ball Lightning" then return end
 	self:CloseProximity(args.spellId)
-	activeProximityAbilities[1] = false -- statick shock
+	activeProximityAbilities[1] = nil -- static shock
 	updateProximity()
 end
 
@@ -629,21 +618,21 @@ do
 				closest = player
 			end
 		end
-		mod:TargetMessage(spellId, coloredNames, "Positive") -- green because everyone should be friendly and hug the person with it
-		mod:PlaySound(spellId, "Info")
+		mod:TargetMessage(spellId, coloredNames, "Positive", "Info", nil, nil, true) -- green because everyone should be friendly and hug the person with it
 		scheduled = nil
 		wipe(staticShockList)
-		if intermission and distance > 40 then return end -- ignore other quadrants during the intermission
-		mod:CloseProximity("proximity")
-		activeProximityAbilities[1] = true -- statick shock
-		if UnitIsUnit("player", closest) then
-			mod:OpenProximity(spellId, 8) -- XXX not exactly the best choice, but this way at least you see people around you
-		else
-			mod:OpenProximity(spellId, 8, closest, true) -- open to closest static shock target
+		if intermission and distance < 40 then -- ignore other quadrants during the intermission
+			mod:CloseProximity("proximity")
+			activeProximityAbilities[1] = true -- static shock
+			if UnitIsUnit("player", closest) then
+				mod:OpenProximity(spellId, 8) -- XXX not exactly the best choice, but this way at least you see people around you
+			else
+				mod:OpenProximity(spellId, 8, closest, true) -- open to closest static shock target
+			end
 		end
 	end
 	local function staticShockSayCountdown(remainingTime)
-		mod:Say(135695, ("%d"):format(remainingTime), true)
+		mod:Say(135695, remainingTime, true)
 		mod:PlaySound(135695, ("BigWigs: %d"):format(remainingTime))
 	end
 	function mod:StaticShockApplied(args)
@@ -671,7 +660,7 @@ function mod:Deaths(args)
 	elseif args.mobId == 69014 or args.mobId == 69013 or args.mobId == 69012 then -- Diffused Lightnings
 		for i=8,1,-1 do
 			if marksUsed[i] == args.destGUID then
-				marksUsed[i] = false
+				marksUsed[i] = nil
 				return
 			end
 		end
