@@ -1,9 +1,3 @@
---[[
-TODO:
-	make sure proximity meters are currently shown
-]]--
-
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -16,8 +10,22 @@ mod:RegisterEnableMob(68397, 68398, 68696, 68697, 68698) -- Lei Shen, Static Sho
 -- Locals
 --
 
+local SetRaidTarget = SetRaidTarget
+local UnitExists = UnitExists
+local UnitHealth = UnitHealth
+local UnitHealthMax = UnitHealthMax
+local UnitGUID = UnitGUID
+local GetTime = GetTime
+
 local phase = 1
 local proximityOpen = nil
+local tooCloseForOvercharged = false
+local adds = {}
+local markerTimer = nil
+local marksUsed = {}
+local activeProximityAbilities = {}
+local thunderstruckCounter = 1
+local whipCounter = 1
 
 local function isConduitAlive(mobId)
 	for i=1, 5 do
@@ -34,14 +42,18 @@ end
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.conduit_abilities = "Conduit Abilities"
-	L.conduit_abilities_desc = "Approximate cooldown bars for the conduit specific abilities."
-	L.conduit_abilities_icon = 139271
-	L.conduit_abilities_message = "Next conduit ability"
-
 	L.intermission = "Intermission"
 	L.diffusion_add = "Diffusion add"
 	L.shock = "Shock"
+	L.custom_off_diffused_add_marker = "Diffused add marker"
+	L.custom_off_diffused_add_marker_desc = "Mark the Diffused Lightning adds"
+
+	L.stuns = "Stuns"
+	L.stuns_desc = "Show some bars for stun durations for Ball Lightnings"
+	L.aoe_grip = "AoE grip"
+	L.aoe_grip_desc = "Warning for when a death knight uses Gorefiend's Grasp (AoE Grip)"
+	L.last_inermission_ability = "Last intermission ability used!"
+	L.safe_from_stun = "You'r probably far enough from stun pulses"
 end
 L = mod:GetLocale()
 
@@ -51,60 +63,220 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		"custom_off_diffused_add_marker",
+		{139011, "FLASH"},
 		{134912, "TANK", "FLASH"}, 135095, {135150, "FLASH"},
-		{136478, "TANK"}, {136543, "PROXIMITY"}, 136850,
+		{136478, "TANK"}, {136543, "PROXIMITY"}, {136850, "FLASH"},
 		{136914, "TANK"}, 136889,
-		"conduit_abilities", {135695, "PROXIMITY", "SAY"}, {135991, "PROXIMITY"}, {136295, "SAY"}, 136366,
-		"stages", "berserk", "bosskill",
+		{135695, "PROXIMITY", "SAY", "FLASH"}, {135991, "PROXIMITY"}, {136295, "SAY"}, 136366,
+		"stages", {"aoe_grip", "SAY"}, "stuns", "berserk", "proximity", "bosskill",
 	}, {
+		["custom_off_diffused_add_marker"] = L.custom_off_diffused_add_marker,
+		[139011] = "heroic",
 		[134912] = -7178,
 		[136478] = -7192,
 		[136914] = -7209,
-		["conduit_abilities"] = "general",
+		[135695] = "general",
 	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	-- stuns
+	--3/26 19:47:37.364  SPELL_CAST_SUCCESS,0x07000000057676A1,"Kinszi",0x514,0x0,0x0000000000000000,nil,0x80000000,0x80000000,119381,"Leg Sweep",0x1,0x07000000057676A1,260771,734,36038,0,0
+	--3/26 19:09:54.613  SPELL_CAST_SUCCESS,0x0700000004FE75ED,"Trdksvina",0x514,0x0,0x0000000000000000,nil,0x80000000,0x80000000,119072,"Holy Wrath",0x2,0x0700000004FE75ED,680741,62062,112,0,56366
+	--3/26 19:47:47.332  SPELL_CAST_SUCCESS,0x07000000031FF0CF,"Eveny",0x512,0x0,0x0000000000000000,nil,0x80000000,0x80000000,30283,"Shadowfury",0x20,0x07000000031FF0CF,179869,147,33375,0,0
+	self:Log("SPELL_CAST_SUCCESS", "Stuns", 119381, 119072, 30283)
+	--3/26 19:35:44.654  SPELL_CAST_SUCCESS,0x070000000474B337,"Mionee",0x514,0x0,0x0000000000000000,nil,0x80000000,0x80000000,108199,"Gorefiend's Grasp",0x20,0x070000000474B337,218399,79428,109,0,0
+	self:Log("SPELL_CAST_SUCCESS", "Grip", 108199)
+	-- Heroic
+	self:Log("SPELL_AURA_APPLIED", "HelmOfCommand", 139011)
 	-- Stage 3
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ElectricalShock", 136914)
 	-- Stage 2
 	self:Log("SPELL_CAST_START", "LightningWhip", 136850)
+	self:Log("SPELL_PERIODIC_DAMAGE", "LightningWhipDamage", 136853)
 	self:Log("SPELL_CAST_SUCCESS", "SummonBallLightning", 136543)
 	self:Log("SPELL_CAST_START", "FusionSlash", 136478)
 	-- Intermission
-	self:Emote("OverloadedCircuits", "137176")
-	self:Log("SPELL_CAST_START", "SuperchargeConduits", 137045)
+	self:Emote("IntermissionEnd", "137176")
+	self:Log("SPELL_CAST_START", "IntermissionStart", 137045)
 	-- Stage 1
 	self:Log("SPELL_DAMAGE", "CrashingThunder", 135150)
+	self:Log("SPELL_PERIODIC_DAMAGE", "CrashingThunder", 135153)
 	self:Log("SPELL_CAST_START", "Thunderstruck", 135095)
 	self:Log("SPELL_AURA_APPLIED", "Decapitate", 134912)
 	-- Conduits: Overcharged -- Diffusion Chain -- Static Shock -- Bouncing Bolt
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Boss1Succeeded", "boss1")
 	self:Log("SPELL_AURA_APPLIED", "Overcharged", 136295)
 	self:Log("SPELL_CAST_SUCCESS", "DiffusionChain", 135991)
-	self:Log("SPELL_DAMAGE", "DiffusionChainDamage", 135991) -- damage = add spawn
+	self:Log("SPELL_DAMAGE", "DiffusionChainDamage", 135991) -- add spawn
+	self:Log("SPELL_MISS", "DiffusionChainDamage", 135991) -- add spawn
 	self:Log("SPELL_AURA_REMOVED", "DiffusionChainRemoved", 135681)
 	self:Log("SPELL_AURA_APPLIED", "DiffusionChainApplied", 135681)
 	self:Log("SPELL_AURA_REMOVED", "StaticShockRemoved", 135695)
 	self:Log("SPELL_AURA_APPLIED", "StaticShockApplied", 135695)
 
-	self:Death("Win", 68397)
+	self:Death("Deaths", 68397, 69014, 69013, 69012) -- Lei Shen, Greater Diffused Lightning, Diffused Lightning, Lesser Diffused Lightning
+	if not self.db.profile.custom_off_diffused_add_marker then return end
+	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+	self:Log("SPELL_DAMAGE", "ChainLightning", 136018, 136019, 136021)
+	self:Log("SPELL_SUMMON", "SummonSmallDiffusedLightning", 135992)
 end
 
 function mod:OnEngage()
-	self:Berserk(600) -- XXX assumed
+	self:Berserk(720) -- XXX assumed
 	proximityOpen = nil
 	phase = 1
+	tooCloseForOvercharged = false
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	self:CDBar(134912, 40) -- Decapitate
 	self:CDBar(135095, 25) -- Thunderstruck
-	self:CDBar("conduit_abilities", 15, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+	wipe(adds)
+	wipe(marksUsed)
+	wipe(activeProximityAbilities)
+	thunderstruckCounter = 1
+	whipCounter = 1
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Grip(args)
+	if phase < 2 then return end
+	if self:Me(args.sourceGUID) then
+		self:Say("aoe_grip", L["aoe_grip"]) -- to help with aoe stuns
+	end
+	self:TargetMessage("aoe_grip", args.sourceName, "Urgent", nil, L["aoe_grip"], 108199)
+end
+
+function mod:Stuns(args)
+	if phase < 2 then return end
+	local duration
+	if args.spellId == 119381 then -- leg sweep
+		duration = 5
+	elseif args.spellId == 119072 then -- holy wrath
+		duration = 3
+	elseif args.spellId == 30283 then -- shadowfury
+		duration = 3
+	end
+	local target = self:NewTargetList()
+	target[1] = args.sourceName
+	self:Bar("stuns", duration, ("Stun: %s"):format(target[1]), args.spellId)
+end
+
+local function updateProximity()
+	if activeProximityAbilities[1] then
+		return
+	elseif activeProximityAbilities[2] then
+		mod:OpenProximity("proximity", 8)
+		return
+	elseif activeProximityAbilities[3] then
+		mod:OpenProximity("proximity", 6)
+		return
+	elseif activeProximityAbilities[4] then
+		mod:OpenProximity("proximity", 3)
+		return
+	end
+	mod:CloseProximity("proximity")
+end
+
+local function stopScan()
+	mod:CancelTimer(markerTimer)
+	markerTimer = nil
+end
+
+local function stopConduitAbilityBars()
+	mod:StopBar(135695)
+	mod:StopBar(136295)
+	mod:StopBar(135991)
+	mod:StopBar(136366)
+end
+
+local function getMark()
+	for i=8,1,-1 do
+		if not marksUsed[i] then
+			return i
+		end
+	end
+	return false
+end
+
+function mod:UPDATE_MOUSEOVER_UNIT()
+	if not self.db.profile.custom_off_diffused_add_marker then return end
+	local GUID = UnitGUID("mouseover")
+	if not GUID then return end
+	local mobId = self:MobId(GUID)
+	if mobId == 69014 or mobId == 69012 or mobId == 69013 then
+		if adds[GUID] ~= "marked" then
+			adds[GUID] = "marked"
+			local mark = getMark()
+			if mark then
+				SetRaidTarget("mouseover", mark)
+				marksUsed[mark] = GUID
+			end
+		end
+	end
+end
+
+function mod:MarkCheck()
+	for GUID in next, adds do
+		if adds[GUID] ~= "marked" then
+			local unitId = mod:GetUnitIdByGUID(GUID)
+			local mark = getMark()
+			if unitId and mark then
+				adds[GUID] = "marked"
+				SetRaidTarget(unitId, mark)
+				marksUsed[mark] = GUID
+			end
+		end
+	end
+end
+
+function mod:ChainLightning(args)
+	local mobId = self:MobId(args.sourceGUID)
+	if mobId == 69014 or mobId == 69012 or mobId == 69013 then
+		if not adds[args.sourceGUID] then
+			adds[args.sourceGUID] = true
+		end
+	end
+end
+
+function mod:SummonSmallDiffusedLightning(args)
+	local mobId = self:MobId(args.destGUID)
+	if mobId == 69014 or mobId == 69012 or mobId == 69013 then
+		if not adds[args.destGUID] then
+			adds[args.destGUID] = true
+		end
+	end
+	if not markerTimer then
+		markerTimer = self:ScheduleRepeatingTimer("MarkCheck", 0.04)
+		self:ScheduleTimer(stopScan, 15) -- scan for 15 sec
+	end
+end
+----------------------------------------
+-- Heroic
+--
+
+do
+	local helmOfCommandList, scheduled = mod:NewTargetList(), nil
+	local function warnHelmOfCommand(spellId)
+		mod:TargetMessage(spellId, helmOfCommandList, "Urgent", "Alert")
+		scheduled = nil
+	end
+	function mod:HelmOfCommand(args)
+		helmOfCommandList[#helmOfCommandList+1] = args.destName
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+		end
+		self:Bar(args.spellId, 24)
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warnHelmOfCommand, 0.1, args.spellId)
+		end
+	end
+end
+
 
 ----------------------------------------
 -- Stage 3
@@ -120,25 +292,52 @@ end
 -- Stage 2
 --
 
-function mod:LightningWhip(args)
-	self:Bar(args.spellId, 46)
-	self:Message(args.spellId, "Urgent", "Alert")
+do
+	local function whipSoon(spellId, spellName)
+		mod:Message(spellId, "Important", "Warning", CL["soon"]:format(("%s (%d)"):format(spellName, whipCounter)))
+		mod:Flash(spellId)
+	end
+	function mod:LightningWhip(args)
+		if phase == 3 then
+			self:Message(args.spellId, "Urgent", "Alert", ("%s (%d)"):format(args.spellName, whipCounter))
+			whipCounter = whipCounter + 1
+			self:Bar(args.spellId, 30.3, ("%s (%d)"):format(args.spellName, whipCounter))
+			self:ScheduleTimer(whipSoon, 27, args.spellId, args.spellName)
+		else
+			self:Message(args.spellId, "Urgent", "Alert")
+			self:Bar(args.spellId, 45.1)
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:LightningWhipDamage(args)
+		if not self:Me(args.destGUID) then return end
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:Message(136850, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Flash(136850)
+		end
+	end
 end
 
 do
 	local prev = 0
 	local function warnBallsSoon(spellId, spellName)
-		mod:Message(spellId, "Attention", nil, CL["soon"]:format(spellName)) -- should maybe shorten this
-		if proximityOpen ~= "Diffusion Chain" then -- Diffusion Chain is 8 yards, so don't change to 6 yards if that is open already
-			mod:OpenProximity(spellId, 6)
-		end
+		mod:Message(spellId, "Attention", nil, CL["soon"]:format(spellName))
+		activeProximityAbilities[3] = true
+		updateProximity()
 	end
 	function mod:SummonBallLightning(args)
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			if not proximityOpen then -- Only close the proximity display if it wasn't open before
-				self:CloseProximity(args.spellId)
+			activeProximityAbilities[3] = false
+			if self:Heroic() then
+				activeProximityAbilities[4] = true
+				updateProximity()
 			end
 			self:ScheduleTimer(warnBallsSoon, 41, args.spellId, args.spellName)-- reopen it when new balls are about to come
 			self:Bar(args.spellId, 46)
@@ -148,7 +347,7 @@ do
 end
 
 function mod:FusionSlash(args)
-	self:CDBar(args.spellId, 52)
+	self:CDBar(args.spellId, 42)
 	self:Message(args.spellId, "Important", "Warning")
 end
 
@@ -157,44 +356,68 @@ end
 --
 
 local function warnDiffusionChainSoon()
-	mod:Message(135991, "Important", "Long", CL["soon"]:format(mod:SpellName(135991)))
-	mod:OpenProximity(135991, 8)
-	proximityOpen = "Diffusion Chain"
+	mod:Message(135991, "Important", "Warning", CL["soon"]:format(mod:SpellName(135991)))
+	activeProximityAbilities[2] = true
+	updateProximity()
 end
 
-function mod:OverloadedCircuits()
+function mod:IntermissionEnd(msg)
 	self:CancelAllTimers()
+	self:StopBar(139011) -- Helm of Command -- heroic
 	self:StopBar(136295) -- Overcharged
 	self:StopBar(135695) -- Static Shock
 	self:StopBar(136366) -- Bouncing Bolt
 	self:StopBar(135991) -- Diffusion Chain
-	self:CloseProximity(135991)
-	proximityOpen = nil
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1") -- just to be efficient
 
 	-- stage 2
+	activeProximityAbilities[2] = true
+	updateProximity()
 	if phase == 2 then
-		self:OpenProximity(136543, 6) -- Summon Ball Lightning
 		self:CDBar(136478, 46) -- Fusion Slash
-	elseif phase == 3 then
-		self:CDBar(135095, 28) -- Thunderstruck
+		if self:Heroic() then -- XXX these are probably not time based either and need to add abilities for all conduits
+			if msg:find("135681") then -- Diffusion Adds
+				self:CDBar(135991, 14)
+			elseif msg:find("135682") then -- Overcharged
+				self:CDBar(136295, 14)
+			elseif msg:find("135683") then -- Bouncing Bolt
+				self:CDBar(136366, 14)
+			elseif msg:find("135680") then -- Static Shock
+				self:CDBar(135695, 14)
+			end
+		end
+	elseif phase == 3 then -- XXX should start bars for already disabled conduits too
+		self:CDBar(135095, 36, ("%s (%d)"):format(self:SpellName(135095), thunderstruckCounter)) -- Thunderstruck
 		self:CDBar(136889, 20) -- Violent Gale Winds
+		if self:Heroic() then
+			if msg:find("135681") then -- Diffusion Adds
+				self:CDBar(135991, 28)
+			elseif msg:find("135682") then -- Overcharged
+				self:CDBar(136295, 28)
+			elseif msg:find("135683") then -- Bouncing Bolt
+				self:CDBar(136366, 30)
+			elseif msg:find("135680") then -- Static Shock
+				self:CDBar(135695, 28)
+			end
+		end
 	end
-	self:CDBar(136850, (phase == 2) and 30 or 15) -- Lightning Whip
-	self:CDBar(136543, 19) -- Summon Ball Lightning
+	self:Bar(136850, (phase == 2) and 29 or 22, ("%s (%d)"):format(self:SpellName(136850), whipCounter)) -- Lightning Whip
+	self:Bar(136543, (phase == 2) and 14 or 41) -- Summon Ball Lightning
 
 	self:Message("stages", "Neutral", "Info", CL["phase"]:format(phase), false)
 end
 
-function mod:SuperchargeConduits(args)
+function mod:IntermissionStart(args)
+	stopConduitAbilityBars()
 	self:CancelAllTimers()
+	self:StopBar(135150) -- Crashing Thunder
 	self:StopBar(134912) -- Decapitate
 	self:StopBar(135095) -- Thunderstruck
 	self:StopBar(136850) -- Lightning Whip
 	self:StopBar(136543) -- Summon Ball Lightning
 	self:StopBar(136478) -- Furious Slash
 	self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1") -- just to be efficient
-
+	activeProximityAbilities[4] = false
 	local diff = self:Difficulty()
 	if diff == 3 or diff == 5 or diff == 7 then -- 10 mans and assume LFR too
 		if isConduitAlive(68398) then self:CDBar(135695, 18) end -- Static Shock
@@ -210,14 +433,15 @@ function mod:SuperchargeConduits(args)
 		if isConduitAlive(68698) then self:CDBar(136366, 14) end -- Bouncing Bolt
 		if isConduitAlive(68696) then
 			self:CDBar(135991, 6)
-			self:Message(135991, "Important", nil, CL["soon"]:format(self:SpellName(135991)))
-			self:OpenProximity(135991, 8)
-			proximityOpen = "Diffusion Chain"
+			self:ScheduleTimer(warnDiffusionChainSoon, 1)
 		end
 	end
-
+	if self:Heroic() then
+		self:Bar(139011, 14) -- Helm of Command
+	end
 	self:Bar("stages", 45, L["intermission"], args.spellId)
 	self:Message("stages", "Neutral", "Info", L["intermission"], false)
+	self:DelayedMessage("stages", 40, "Positive", L["last_inermission_ability"])
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
@@ -241,7 +465,7 @@ do
 	function mod:CrashingThunder(args)
 		if not self:Me(args.destGUID) then return end
 		local t = GetTime()
-		if t-prev > 2 then
+		if t-prev > 1 then
 			prev = t
 			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			self:Flash(args.spellId)
@@ -250,8 +474,14 @@ do
 end
 
 function mod:Thunderstruck(args)
-	self:Message(args.spellId, "Attention", "Alert")
-	self:CDBar(args.spellId, 46)
+	if phase == 3 then
+		self:Message(args.spellId, "Attention", "Alert", ("%s (%d)"):format(args.spellName, thunderstruckCounter))
+		thunderstruckCounter = thunderstruckCounter + 1
+		self:Bar(args.spellId, 30, ("%s (%d)"):format(args.spellName, thunderstruckCounter))
+	else
+		self:CDBar(args.spellId, 46)
+		self:Message(args.spellId, "Attention", "Alert")
+	end
 end
 
 function mod:Decapitate(args)
@@ -272,12 +502,19 @@ function mod:Boss1Succeeded(unitId, spellName, _, _, spellId)
 		if not UnitExists("boss1") then -- poor mans intermission check
 			self:Bar(136366, 24)
 		else
-			self:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+			if phase == 1 or not self:Heroic() then stopConduitAbilityBars() end
+			self:Bar(136366, 40)
 		end
 		self:Message(136366, "Important", "Long")
 	elseif spellId == 136869 then -- Violent Gale Winds
 		self:Message(136889, "Important", "Long")
 		self:Bar(136889, 30)
+	elseif spellId == 135143 then -- Crashung Thunder
+		self:Message(135150, "Attention")
+		self:Bar(135150, 30)
+	elseif spellId == 139006 or spellId == 139007 or spellId == 139008 or spellId == 139009 then -- active quadrant
+		if phase ~= 3 then return end
+		self:Message("stages", "Attention", nil, spellName, 136913) -- probably shouldn't be linked to stages, but dunno anything better -- overwhelming power icon
 	end
 end
 
@@ -287,16 +524,26 @@ do
 		if not UnitExists("boss1") then -- poor mans intermission check
 			mod:Bar(spellId, 23)
 		else
-			mod:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+			if phase == 1 or not mod:Heroic() then stopConduitAbilityBars() end
+			mod:Bar(spellId, 40)
 		end
-		mod:TargetMessage(spellId, overchargedList, "Urgent", "Alarm")
+		mod:TargetMessage(spellId, overchargedList, "Urgent")
+		mod:PlaySound(spellId, "Alarm")
 		scheduled = nil
+		if not tooCloseForOvercharged then
+			mod:Message(spellId, "Positive", nil, L["safe_from_stun"])
+		end
+		tooCloseForOvercharged = false
 	end
 	function mod:Overcharged(args)
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 		end
+		if self:Range(args.destName) < 50 then -- XXX verify range ( should be more than 40 )
+			tooCloseForOvercharged = true
+		end
 		overchargedList[#overchargedList+1] = args.destName
+		self:Bar(args.spellId, 6, ("%s: %s"):format(args.spellName, overchargedList[#overchargedList]))
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnOvercharged, 0.1, args.spellId)
 		end
@@ -304,8 +551,8 @@ do
 end
 
 do
-	local diffusionList = mod:NewTargetList()
-	function mod:DiffusionChainDamage(args)
+	local diffusionList, timer = mod:NewTargetList(), nil
+	function mod:DiffusionChainDamage(args) -- XXX consider syncing, or figure out why sometimes the list is empty
 		for i, player in next, diffusionList do -- can hit the same person multiple times apparently
 			if player:find(args.destName, nil, true) then
 				return
@@ -313,43 +560,53 @@ do
 		end
 		diffusionList[#diffusionList+1] = args.destName
 	end
-
 	local function warnDiffusionAdds()
 		if #diffusionList > 0 then
-			mod:TargetMessage(135991, diffusionList, "Important", mod:Tank() and "Info", L["diffusion_add"], nil, true)
+			mod:TargetMessage(135991, diffusionList, "Important", nil, L["diffusion_add"], nil, true)
 		else -- no one in range
 			mod:Message(135991, "Important")
 		end
-		mod:CloseProximity(135991)
-		proximityOpen = nil
-	end
-
-	function mod:DiffusionChain(args)
+		mod:PlaySound(135991, "Warning")
 		if not UnitExists("boss1") then -- poor mans intermission check
-			self:Bar(135991, 25)
-			self:ScheduleTimer(warnDiffusionChainSoon, 20)
+			mod:Bar(135991, 25)
+			mod:ScheduleTimer(warnDiffusionChainSoon, 20)
 		else
-			self:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+			if phase == 1 or not mod:Heroic() then stopConduitAbilityBars() end
+			mod:Bar(135991, 40)
+			timer = mod:ScheduleTimer(warnDiffusionChainSoon, 30)
 		end
-
-		self:ScheduleTimer(warnDiffusionAdds, 0.2)
+		activeProximityAbilities[2] = false
+		updateProximity()
 	end
-end
-
-function mod:DiffusionChainRemoved()
-	self:CloseProximity(135991)
-	proximityOpen = nil
+	function mod:DiffusionChain(args)
+		wipe(diffusionList)
+		self:ScheduleTimer(warnDiffusionAdds, 0.2)
+		if not self.db.profile.custom_off_diffused_add_marker then return end
+		if not markerTimer then
+			markerTimer = self:ScheduleRepeatingTimer("MarkCheck", 0.04)
+			self:ScheduleTimer(stopScan, 15) -- scan for 15 sec
+		end
+	end
+	function mod:DiffusionChainRemoved() -- on conduit/lei shen
+		self:CancelTimer(timer)
+		timer = nil
+		activeProximityAbilities[2] = false
+		updateProximity()
+	end
 end
 
 function mod:DiffusionChainApplied(args)
-	if self:MobId(args.destGUID) == 68696 then -- Diffusion Chain Conduit
-		self:Message(135991, "Important", "Long", CL["incoming"]:format(self:SpellName(135991)))
+	local mobId = self:MobId(args.destGUID)
+	if mobId == 68696 then -- Diffusion Chain Conduit
+		warnDiffusionChainSoon()
 	end
 end
 
 function mod:StaticShockRemoved(args)
+	if proximityOpen == "Diffusion Chain" or proximityOpen == "Ball Lightning" then return end
 	self:CloseProximity(args.spellId)
-	proximityOpen = nil
+	activeProximityAbilities[1] = false -- statick shock
+	updateProximity()
 end
 
 do
@@ -357,37 +614,68 @@ do
 	local function warnStaticShock(spellId)
 		local intermission
 		if not UnitExists("boss1") then -- poor mans intermission check
-			mod:Bar("conduit_abilities", 20, spellId)
+			mod:Bar(spellId, 20, spellId)
 			intermission = true
 		else
-			mod:CDBar("conduit_abilities", 40, L["conduit_abilities_message"], L.conduit_abilities_icon) -- need to rework this once I'm 100% sure how the abilities work, for now assume, they share CD
+			if phase == 1 or not mod:Heroic() then stopConduitAbilityBars() end
+			mod:Bar(135695, 40)
 		end
 
 		local closest, distance = nil, 200
 		for i, player in next, staticShockList do
-			coloredNames[i] = player
 			local playerDistance = mod:Range(player)
 			if playerDistance < distance then
 				distance = playerDistance
 				closest = player
 			end
 		end
-		mod:TargetMessage(spellId, coloredNames, "Positive", "Alarm") -- green because everyone should be friendly and hug the person with it
-		if not intermission or distance < 25 then -- ignore other quadrants during the intermission
-			mod:OpenProximity(spellId, 8, closest, true) -- open to closest static shock target
-			proximityOpen = "Static Shock"
-		end
+		mod:TargetMessage(spellId, coloredNames, "Positive") -- green because everyone should be friendly and hug the person with it
+		mod:PlaySound(spellId, "Info")
 		scheduled = nil
 		wipe(staticShockList)
+		if intermission and distance > 40 then return end -- ignore other quadrants during the intermission
+		mod:CloseProximity("proximity")
+		activeProximityAbilities[1] = true -- statick shock
+		if UnitIsUnit("player", closest) then
+			mod:OpenProximity(spellId, 8) -- XXX not exactly the best choice, but this way at least you see people around you
+		else
+			mod:OpenProximity(spellId, 8, closest, true) -- open to closest static shock target
+		end
+	end
+	local function staticShockSayCountdown(remainingTime)
+		mod:Say(135695, ("%d"):format(remainingTime), true)
+		mod:PlaySound(135695, ("BigWigs: %d"):format(remainingTime))
 	end
 	function mod:StaticShockApplied(args)
 		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
 			self:Say(args.spellId)
+			self:ScheduleTimer(staticShockSayCountdown, 3, 5)
+			self:ScheduleTimer(staticShockSayCountdown, 4, 4)
+			self:ScheduleTimer(staticShockSayCountdown, 5, 3)
+			self:ScheduleTimer(staticShockSayCountdown, 6, 2)
+			self:ScheduleTimer(staticShockSayCountdown, 7, 1)
 		end
 		staticShockList[#staticShockList+1] = args.destName
+		coloredNames[#coloredNames+1] = args.destName
+		self:Bar(args.spellId, 8, ("%s: %s"):format(args.spellName, coloredNames[#coloredNames]))
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnStaticShock, 0.1, args.spellId)
 		end
 	end
 end
+
+function mod:Deaths(args)
+	if args.mobId == 68397 then -- Lei Shen
+		self:Win()
+	elseif args.mobId == 69014 or args.mobId == 69013 or args.mobId == 69012 then -- Diffused Lightnings
+		for i=8,1,-1 do
+			if marksUsed[i] == args.destGUID then
+				marksUsed[i] = false
+				return
+			end
+		end
+	end
+end
+
 
