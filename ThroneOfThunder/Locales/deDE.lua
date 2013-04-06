@@ -128,9 +128,13 @@ L = BigWigs:NewBossLocale("Dark Animus", "deDE")
 if L then
 	L.engage_trigger = "Die Kugel explodiert!"
 
-	L.siphon_power = "Siphon Anima (%d%%)"
-	L.siphon_power_soon = "Siphon Anima (%d%%) %s soon!"
-	L.font_empower = "Font + Empower"
+	L.custom_off_matterswap = "Materientausch-Ziel"
+	L.custom_off_matterswap_desc = "|cFFFF0000Benötigt Assistent.|r Markiert und sendet eine Warnung an den Spieler, der am weitesten von dem mit Materientausch betroffenen Spieler entfernt steht. Wenn mehrere Ziele von Materientausch betroffen sind, werden diese in chronologischer Reihenfolge markiert."
+	L.matterswap_message = "Du bist am weitesten für Materientausch entfernt!"
+
+	L.siphon_power = "Anima entziehen (%d%%)"
+	L.siphon_power_soon = "Anima entziehen (%d%%) %s bald!"
+	L.font_empower = "Quell + Aufladen"
 	L.slam_message = "Schmettern"
 end
 
