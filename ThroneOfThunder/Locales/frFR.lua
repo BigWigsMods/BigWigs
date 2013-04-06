@@ -90,9 +90,9 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "frFR")
 if L then
-	L.red_spawn_trigger = "brume écarlate" -- à vérifier
-	L.blue_spawn_trigger = "brume azur" -- à vérifier
-	L.yellow_spawn_trigger = "brume d'ambre" -- à vérifier
+	L.red_spawn_trigger = "brume écarlate"
+	L.blue_spawn_trigger = "brume azur"
+	L.yellow_spawn_trigger = "brume d'ambre"
 
 	L.adds = "Bêtes de brume révélées"
 	L.adds_desc = "Alertes quand vous révélez une Brume écarlate, d'ambre ou azur et combien de Brumes écarlates il reste."
@@ -126,7 +126,7 @@ end
 
 L = BigWigs:NewBossLocale("Dark Animus", "frFR")
 if L then
-	L.engage_trigger = "L’orbe explose !" -- à vérifier
+	L.engage_trigger = "L’orbe explose !"
 
 	L.siphon_power = "Siphon Anima (%d%%)"
 	L.siphon_power_soon = "Siphon Anima (%d%%) %s soon!"

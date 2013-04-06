@@ -28,10 +28,10 @@ L.interrupted = "%s interrompu"
 L.add_spawned = "Add apparu !"
 L.next_add = "Prochain Add"
 L.add_killed = "Add tué ! (%d/%d)"
-L.add_remaining = "Add killed, %d remaining"
+L.add_remaining = "Add tué, il en reste %d"
 
-L.mob_killed = "%s killed! (%d/%d)"
-L.mob_remaining = "%s killed, %d remaining"
+L.mob_killed = "%s tué ! (%d/%d)"
+L.mob_remaining = "%s tué, il en reste %d"
 
 L.custom_start = "%s engagé - %s dans %d min."
 L.custom_start_s = "%s engagé - %s dans %d sec."
