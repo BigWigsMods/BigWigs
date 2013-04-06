@@ -92,6 +92,9 @@ function mod:OnBossEnable()
 	-- Ball Lightning helpers
 	self:Log("SPELL_CAST_SUCCESS", "Stuns", 119381, 119072, 30283) -- Leg Sweep, Holy Wrath, Shadowfury
 	self:Log("SPELL_CAST_SUCCESS", "Grip", 108199) -- Gorefiend's Grasp
+	-- Marking
+	self:Log("SPELL_DAMAGE", "ChainLightning", 136018, 136019, 136021)
+	self:Log("SPELL_SUMMON", "SummonSmallDiffusedLightning", 135992)
 
 	-- Heroic
 	self:Log("SPELL_AURA_APPLIED", "HelmOfCommand", 139011)
@@ -121,11 +124,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "StaticShockRemoved", 135695)
 	self:Log("SPELL_AURA_APPLIED", "StaticShockApplied", 135695)
 
-	self:Death("Deaths", 68397, 69014, 69013, 69012) -- Lei Shen, Greater Diffused Lightning, Diffused Lightning, Lesser Diffused Lightning
-	if not self.db.profile.custom_off_diffused_marker then return end
-	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-	self:Log("SPELL_DAMAGE", "ChainLightning", 136018, 136019, 136021)
-	self:Log("SPELL_SUMMON", "SummonSmallDiffusedLightning", 135992)
+	self:Death("Win", 68397) -- Lei Shen
+	self:Death("AddDeaths", 68397, 69014, 69013, 69012) -- Greater Diffused Lightning, Diffused Lightning, Lesser Diffused Lightning
 end
 
 function mod:OnEngage()
@@ -142,6 +142,10 @@ function mod:OnEngage()
 	wipe(activeProximityAbilities)
 	thunderstruckCounter = 1
 	whipCounter = 1
+
+	if self.db.profile.custom_off_diffused_marker then
+		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -248,6 +252,15 @@ do
 		if not markerTimer then
 			markerTimer = self:ScheduleRepeatingTimer("MarkCheck", 0.2)
 			self:ScheduleTimer("StopMarkCheck", 15) -- scan for 15 sec
+		end
+	end
+	
+	function mod:AddDeaths(args)
+		for i=8,1,-1 do
+			if marksUsed[i] == args.destGUID then
+				marksUsed[i] = nil
+				return
+			end
 		end
 	end
 end
@@ -659,19 +672,6 @@ do
 		self:Bar(args.spellId, 8, ("%s: %s"):format(args.spellName, coloredNames[#coloredNames]))
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnStaticShock, 0.1, args.spellId)
-		end
-	end
-end
-
-function mod:Deaths(args)
-	if args.mobId == 68397 then -- Lei Shen
-		self:Win()
-	elseif args.mobId == 69014 or args.mobId == 69013 or args.mobId == 69012 then -- Diffused Lightnings
-		for i=8,1,-1 do
-			if marksUsed[i] == args.destGUID then
-				marksUsed[i] = nil
-				return
-			end
 		end
 	end
 end
