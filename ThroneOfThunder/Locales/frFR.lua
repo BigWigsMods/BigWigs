@@ -77,13 +77,13 @@ if L then
 	L.upper_hatch_trigger = "Les œufs de l’un des nids supérieurs commencent à éclore !"
 
 	L.nest = "Nids"
-	L.nest_desc = "Alertes relatives aux nids. |cffff0000Décochez ceci pour désactiver les alertes si vous n'êtes pas assigné à la gestion des nids !|r"
+	L.nest_desc = "Alertes relatives aux nids.\n|cFFADFF2FASTUCE : Décochez ceci pour désactiver les alertes si vous n'êtes pas assigné à la gestion des nids.|r"
 
 	L.flight_over = "Vol terminé dans %d sec !"
 	L.upper_nest = "Nid |cff008000supérieur|r"
 	L.lower_nest = "Nid |cffff0000inférieur|r"
-	L.up = "HAUT"
-	L.down = "BAS"
+	L.up = "|cff008000HAUT|r"
+	L.down = "|cffff0000BAS|r"
 	L.add = "Add"
 	L.big_add_message = "Gros add au %s"
 end
@@ -128,9 +128,11 @@ L = BigWigs:NewBossLocale("Dark Animus", "frFR")
 if L then
 	L.engage_trigger = "L’orbe explose !"
 
+	L.matterswap_desc = "Un personnage-joueur porteur d’Echange de matière se trouve loin de vous. Il échangera sa position avec la vôtre si Echange de matière est retiré."
+	L.matterswap_message = "You are furthest for Matter Swap!"
+
 	L.siphon_power = "Siphon d’anima (%d%%)"
 	L.siphon_power_soon = "Siphon d’anima (%d%%) %s imminent !"
-	L.font_empower = "Source + Renforcement"
 	L.slam_message = "Heurt"
 end
 

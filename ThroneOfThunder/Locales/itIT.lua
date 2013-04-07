@@ -73,17 +73,17 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "itIT")
 if L then
-	L.lower_hatch_trigger = "Le uova in uno dei nidi inferiori iniziano a schiudersi!" 
-	L.upper_hatch_trigger = "Le uova in uno dei nidi superiori iniziano a schiudersi!" 
+	L.lower_hatch_trigger = "Le uova in uno dei nidi inferiori iniziano a schiudersi!"
+	L.upper_hatch_trigger = "Le uova in uno dei nidi superiori iniziano a schiudersi!"
 
 	L.nest = "Nidi"
-	L.nest_desc = "Avvisi relativi ai nidi. |cffff0000Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi!|r"
+	L.nest_desc = "Avvisi relativi ai nidi.\n|cFFADFF2FSUGGERIMENTO: Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi.|r"
 
 	L.flight_over = "Termine del Volo per %d sec!"
 	L.upper_nest = "Nido |cff008000Superiore|r"
 	L.lower_nest = "Nido |cffff0000Inferiore|r"
-	L.up = "SOPRA"
-	L.down = "SOTTO"
+	L.up = "|cff008000SOPRA|r"
+	L.down = "|cffff0000SOTTO|r"
 	L.add = "Add"
 	L.big_add_message = "Add Grande su %s"
 end
@@ -121,16 +121,18 @@ end
 L = BigWigs:NewBossLocale("Primordius", "itIT")
 if L then
 	L.mutations = "Mutazioni |cff008000(%d)|r |cffff0000(%d)|r"
-	L.acidic_spines = "Spine Acide (Danno ad Area)"	
+	L.acidic_spines = "Spine Acide (Danno ad Area)"
 end
 
 L = BigWigs:NewBossLocale("Dark Animus", "itIT")
 if L then
 	L.engage_trigger = "Il globo esplode!"
 
+	L.matterswap_desc = "A player with Matter Swap is far away from you. You will swap places with them if they are dispelled."
+	L.matterswap_message = "You are furthest for Matter Swap!"
+
 	L.siphon_power = "Aspirazione dell'Anima (%d%%)"
 	L.siphon_power_soon = "Aspirazione dell'Anima (%d%%) %s tra poco!"
-	L.font_empower = "Fonte dell'Anima + Golem Potenziato"
 	L.slam_message = "Urto Esplosivo"
 end
 

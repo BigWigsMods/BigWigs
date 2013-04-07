@@ -31,13 +31,13 @@ if L then
 	L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch!"
 
 	L.nest = "Nests"
-	L.nest_desc = "Warnings related to the nests. |cffff0000Untoggle this to turn off warnings if you are not assigned to handle the nests!|r"
+	L.nest_desc = "Warnings related to the nests.\n|cFFADFF2FTIP: Untoggle this to turn off warnings if you are not assigned to handle the nests.|r"
 
 	L.flight_over = "Flight over in %d sec!"
 	L.upper_nest = "|cff008000Upper|r nest"
 	L.lower_nest = "|cffff0000Lower|r nest"
-	L.up = "UP"
-	L.down = "DOWN"
+	L.up = "|cff008000UP|r"
+	L.down = "|cffff0000DOWN|r"
 	L.add = "Add"
 	L.big_add_message = "Big add at %s"
 end
@@ -83,8 +83,7 @@ function mod:OnEngage(diff)
 		self:OpenProximity("proximity", 8)
 	end
 	self:Berserk(600) -- XXX assumed
-	local is25 = diff == 4 or diff == 6
-	self:Bar(134380, is25 and 41 or 60) -- Quills
+	self:Bar(134380, (diff == 4 or diff == 6) and 42 or 60) -- Quills
 	self:Bar(134370, 90) -- Down Draft
 	nestCounter = 0
 	quillCounter = 0
@@ -121,7 +120,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		icon = "misc_arrowdown"
 	end
 
-	if diff == 5 and (nestCounter == 2 or nestCounter == 4 or nestCounter == 8 or nestCounter == 12) then  
+	if diff == 5 and (nestCounter == 2 or nestCounter == 4 or nestCounter == 8 or nestCounter == 12) then
 		text = L["big_add_message"]:format(text)
 	end
 	self:Message("nest", color, "Alert", text, icon) -- XXX keep this here till all the nest rotations are 100% figured out
@@ -139,13 +138,13 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		-- big adds at 2, 4, 8, 12 (no data past 17)
 		if nestCounter % 6 > 2 then
 			if nestCounter == 3 or nestCounter == 11 then
-				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["up"], L["add"]), "misc_arrowlup")
+				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["upper_nest"], L["add"]), "misc_arrowlup")
 			else
 				self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
 			end
 		else
 			if nestCounter == 1 or nestCounter == 7 then
-				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["down"], L["add"]), "misc_arrowdown")
+				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["lower_nest"], L["add"]), "misc_arrowdown")
 			else
 				self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
 			end
@@ -166,15 +165,15 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		-- 35 {lower, 36 upper, 37 lower}
 		-- there are intentionally no spaces on some bars so text fits
 		if nestCounter < 3 or nestCounter == 12 then
-			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["down"]), "misc_arrowdown")
+			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
 		elseif nestCounter == 3 or nestCounter == 8 or nestCounter == 17 or nestCounter == 19 or nestCounter == 29 then
 			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["down"], nextNest+1, L["up"]), 134347)
 		elseif nestCounter == 13 or nestCounter == 15 or nestCounter == 24 then
 			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["up"], nextNest+1, L["down"]), 134347) -- this is intentional, because this is how blizzard announces it too!
 		elseif nestCounter == 7 then
-			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["up"]), "misc_arrowlup")
+			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
 		elseif nestCounter == 1 then
-			self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["down"], L["add"]), "misc_arrowdown")
+			self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["lower_nest"], L["add"]), "misc_arrowdown")
 		elseif nestCounter == 5 then
 			self:Bar("nest", 30, ("(%d)%s(%s)+(%d)%s"):format(nextNest, L["down"], L["add"], nextNest+1, L["up"]), 134347)
 		elseif nestCounter == 10 then
@@ -230,12 +229,10 @@ function mod:Quills(args)
 	else -- 10 N/H + LFR
 		if quillCounter == 4 then
 			self:Bar(args.spellId, 91)
-		elseif quillCounter == 7 then
+		elseif quillCounter > 6 then
 			self:Bar(args.spellId, 44) -- soft enrage it looks like
-		elseif quillCounter < 7 then
-			self:Bar(args.spellId, 81)
 		else
-			self:Bar(args.spellId, 81) -- XXX need more data ( logs beyond 10 min )
+			self:Bar(args.spellId, 81)
 		end
 	end
 end

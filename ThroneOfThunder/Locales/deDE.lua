@@ -77,13 +77,13 @@ if L then
 	L.upper_hatch_trigger = "Die Eier in einem der oberen Nester beginnen, aufzubrechen!"
 
 	L.nest = "Nester"
-	L.nest_desc = "Warnungen für die Nester. |cffff0000Schalte diese Warnungen aus, wenn Du nicht für die Nester eingeteilt bist!|r"
+	L.nest_desc = "Warnungen für die Nester.\n|cFFADFF2FTIPP: Schalte diese Warnungen aus, wenn Du nicht für die Nester eingeteilt bist.|r"
 
 	L.flight_over = "Flug in %d Sek vorbei!"
 	L.upper_nest = "|cff008000Oberes|r Nest"
 	L.lower_nest = "|cffff0000Unteres|r Nest"
-	L.up = "HOCH"
-	L.down = "RUNTER"
+	L.up = "|cff008000HOCH|r"
+	L.down = "|cffff0000RUNTER|r"
 	L.add = "Add"
 	L.big_add_message = "Großes Add in %s"
 end
@@ -128,12 +128,11 @@ L = BigWigs:NewBossLocale("Dark Animus", "deDE")
 if L then
 	L.engage_trigger = "Die Kugel explodiert!"
 
-	L.custom_off_matterswap_desc = "|cFFFF0000Benötigt Leiter oder Assistent.|r Markiert und sendet eine Warnung an den Spieler, der am weitesten von dem mit Materientausch betroffenen Spieler entfernt steht. Die verwendete Methode erzeugt hohe CPU-Last, weshalb sie standardmäßig deaktiviert ist.\n|cFFFF0000Um Konflikte zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
+	L.matterswap_desc = "Ein Spielercharakter mit 'Materientausch' ist weit von Euch entfernt. Wenn der Effekt gebannt wird, tauscht Ihr Eure Positionen."
 	L.matterswap_message = "Du bist am weitesten für Materientausch entfernt!"
 
 	L.siphon_power = "Anima entziehen (%d%%)"
 	L.siphon_power_soon = "Anima entziehen (%d%%) %s bald!"
-	L.font_empower = "Quell + Aufladen"
 	L.slam_message = "Schmettern"
 end
 

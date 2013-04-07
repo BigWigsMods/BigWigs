@@ -78,13 +78,13 @@ if L then
 	L.upper_hatch_trigger = "¡Los huevos de uno de los nidos superiores empiezan a abrirse!"
 
 	L.nest = "Nidos"
-	L.nest_desc = "Avisos relacionados con los nidos. |cffff0000¡No cambies esto para desactivar los avisos, si no estás asignado para gestionar los nidos!|r"
+	L.nest_desc = "Avisos relacionados con los nidos.\n|cFFADFF2FCONSEJO: No cambies esto para desactivar los avisos, si no estás asignado para gestionar los nidos.|r"
 
 	L.flight_over = "¡Vuelo completado en %d seg!"
 	L.upper_nest = "Nido |cff008000superior|r"
 	L.lower_nest = "Nido |cffff0000inferior|r"
-	L.up = "ARRIBA"
-	L.down = "ABAJO"
+	L.up = "|cff008000ARRIBA|r"
+	L.down = "|cffff0000ABAJO|r"
 	L.add = "Add"
 	L.big_add_message = "Add grande al %s"
 end
@@ -128,9 +128,11 @@ L = BigWigs:NewBossLocale("Dark Animus", "esES") or BigWigs:NewBossLocale("Dark 
 if L then
 	L.engage_trigger = "¡El orbe explota!"
 
+	L.matterswap_desc = "Un jugador con Intercambio de materia está lejos de ti. Intercambiaréis lugares si se disipa."
+	L.matterswap_message = "You are furthest for Matter Swap!"
+
 	L.siphon_power = "Succionar ánima (%d%%)"
 	L.siphon_power_soon = "¡Succionar ánima (%d%%) %s inminente!"
-	L.font_empower = "Fuente + Potenciar"
 	L.slam_message = "Embate"
 end
 

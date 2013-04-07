@@ -75,13 +75,13 @@ if L then
 	L.upper_hatch_trigger = "위쪽 둥지에 있는 알들이 부화하기 시작합니다!"
 
 	L.nest = "둥지"
-	L.nest_desc = "둥지에 관련된 경고를합니다. |cffff0000만약 당신이 둥지를 처리하는 역할을 맞지 않았다면 이 경고를 해제하는게 좋습니다!|r"
+	L.nest_desc = "둥지에 관련된 경고를합니다.\n|cFFADFF2FTIP: 만약 당신이 둥지를 처리하는 역할을 맞지 않았다면 이 경고를 해제하는게 좋습니다.|r"
 
 	L.flight_over = "비행 남은 시간 %d 초!"
 	L.upper_nest = "|cff008000위쪽|r 둥지"
 	L.lower_nest = "|cffff0000아래쪽|r 둥지"
-	L.up = "위쪽"
-	L.down = "아래쪽"
+	L.up = "|cff008000위쪽|r"
+	L.down = "|cffff0000아래쪽|r"
 	L.add = "추가"
 	L.big_add_message = "%s에 둥지 수호자 추가"
 end
@@ -126,9 +126,11 @@ L = BigWigs:NewBossLocale("Dark Animus", "koKR")
 if L then
 	L.engage_trigger = "The orb explodes!"
 
+	L.matterswap_desc = "A player with Matter Swap is far away from you. You will swap places with them if they are dispelled."
+	L.matterswap_message = "You are furthest for Matter Swap!"
+
 	L.siphon_power = "Siphon Anima (%d%%)"
 	L.siphon_power_soon = "Siphon Anima (%d%%) %s soon!"
-	L.font_empower = "Font + Empower"
 	L.slam_message = "Slam"
 end
 

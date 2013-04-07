@@ -77,13 +77,13 @@ if L then
 	L.upper_hatch_trigger = "上层某个鸟巢中的蛋开始孵化了！"
 
 	L.nest = "巢穴"
-	L.nest_desc = "警报依赖于巢穴。|cffff0000如果你没有分配到处理巢穴请关闭该警报！|r"
+	L.nest_desc = "警报依赖于巢穴。\n|cFFADFF2F提示：如果你没有分配到处理巢穴请关闭该警报。|r"
 
 	L.flight_over = "飞行结束 %d秒！"
 	L.upper_nest = "|cff008000下层|r巢穴"
 	L.lower_nest = "|cffff0000上层|r巢穴"
-	L.up = "上层"
-	L.down = "下层"
+	L.up = "|cff008000上层|r"
+	L.down = "|cffff0000下层|r"
 	L.add = "增援"
 	L.big_add_message = "大量增援 >%s<！"
 end
@@ -128,13 +128,11 @@ L = BigWigs:NewBossLocale("Dark Animus", "zhCN")
 if L then
 	L.engage_trigger = "宝珠爆炸了！"
 
-	L.custom_off_matterswap = "物质交换目标"
-	L.custom_off_matterswap_desc = "|cFFFF0000需要权限。|r 标记并发送警报给受到物质交换减益最远的玩家。如果多个物质交换减益效果存在，将按照施放的顺序被标记。"
+	L.matterswap_desc = "A player with Matter Swap is far away from you. You will swap places with them if they are dispelled."
 	L.matterswap_message = ">你< 最远距离物质交换！"
 
 	L.siphon_power = "心能虹吸（%d%%）"
 	L.siphon_power_soon = "心能虹吸（%d%%）即将%s！"
-	L.font_empower = "心能之泉+强化魔像"
 	L.slam_message = "爆炸猛击！"
 end
 

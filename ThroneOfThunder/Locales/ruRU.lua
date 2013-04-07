@@ -77,13 +77,13 @@ if L then
 	L.upper_hatch_trigger = "Яйца в одном из верхних гнезд начинают проклевываться!"
 
 	L.nest = "Гнезда"
-	L.nest_desc = "Предупреждения, связанные с гнездами. |cffff0000Снимите галочку, чтобы отключить предупреждения, если вы не назначены на гнезда!|r"
+	L.nest_desc = "Предупреждения, связанные с гнездами.\n|cFFADFF2FСОВЕТ: Снимите галочку, чтобы отключить предупреждения, если вы не назначены на гнезда.|r"
 
 	L.flight_over = "Полет закончится через %d сек!"
 	L.upper_nest = "|cff008000Верхние|r гнезда"
 	L.lower_nest = "|cffff0000Нижние|r гнезда"
-	L.up = "ВВЕРХ"
-	L.down = "ВНИЗ"
+	L.up = "|cff008000ВВЕРХ|r"
+	L.down = "|cffff0000ВНИЗ|r"
 	L.add = "Помощник"
 	L.big_add_message = "Большой помощник: %s"
 end
@@ -127,9 +127,11 @@ L = BigWigs:NewBossLocale("Dark Animus", "ruRU")
 if L then
 	L.engage_trigger = "Сфера взрывается!"
 
+	L.matterswap_desc = "Игрок, на которого наложен эффект \"Обмен материей\", находится слишком далеко от вас. При рассеивании эффекта этот игрок поменяется с вами местами."
+	L.matterswap_message = "You are furthest for Matter Swap!"
+
 	L.siphon_power = "Поглощение анимы (%d%%)"
 	L.siphon_power_soon = "Поглощение анимы (%d%%) %s скоро!"
-	L.font_empower = "Источник + Усиление"
 	L.slam_message = "Удар"
 end
 
