@@ -58,7 +58,7 @@ if L then
 	L.kick_message = "Можно пнуть черепах: %d"
 
 	L.custom_off_turtlemarker = "Маркировка черепах"
-	L.custom_off_turtlemarker_desc = "Помечать рейдовыми метками черепах, требуется быть лидером или помощником.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r\n|cFFADFF2FЗАМЕТКА: Если вы выбраны для этой задачи, быстро проведите указателем мыши по черепахам, метки сразу же поставятся.|r"
+	L.custom_off_turtlemarker_desc = "Помечать рейдовыми метками черепах, требуется быть лидером или помощником.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r\n|cFFADFF2FСОВЕТ: Если вы выбраны для этой задачи, быстро проведите указателем мыши по черепахам, метки сразу же поставятся.|r"
 
 	L.no_crystal_shell = "НЕТ Защитного панциря"
 end
@@ -143,7 +143,7 @@ if L then
 	L.arcing_lightning_cleared = "Рейд свободен от Дуговой молнии"
 
 	L.custom_off_spear_target = "Цели Броска копья"
-	L.custom_off_spear_target_desc = "Пытаться предупреждать о целях броска копья. Этот способ сильно загружает процессор и иногда показывает неверные цели, поэтому выключен по умолчанию.\n|cFFADFF2FЗАМЕТКА: Установка ролей должна помочь повысить точность предупреждений.|r"
+	L.custom_off_spear_target_desc = "Пытаться предупреждать о целях броска копья. Этот способ сильно загружает процессор и иногда показывает неверные цели, поэтому выключен по умолчанию.\n|cFFADFF2FСОВЕТ: Установка ролей должна помочь повысить точность предупреждений.|r"
 	L.possible_spear_target = "Возможные копья"
 end
 
@@ -166,7 +166,7 @@ if L then
 	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
 
 	L.last_inermission_ability = "Last intermission ability used!"
-	L.safe_from_stun = "You are probably safe from Overcharge stuns"
+	L.safe_from_stun = "Возможно, вы защищены от оглушения Перегрузкой"
 	L.intermission = "Перерыв"
 	L.diffusion_add = "Цепные помощники"
 	L.shock = "Потрясение"
