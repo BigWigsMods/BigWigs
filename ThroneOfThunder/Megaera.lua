@@ -83,6 +83,8 @@ function mod:OnEngage()
 	frostOrFireDead = nil
 	breathCounter = 0
 	headCounter = 0
+	self:Bar("breaths", 5, L["breaths"], L.breaths_icon)
+	self:Message("breaths", "Attention", nil, L["custom_start_s"]:format(self.displayName, L["breaths"], 5), false)
 end
 
 --------------------------------------------------------------------------------
@@ -115,7 +117,7 @@ do
 	local prev = 0
 	function mod:Breaths(args)
 		local t = GetTime()
-		if t-prev > 2 then
+		if t-prev > 6 then
 			prev = t
 			breathCounter = breathCounter + 1
 			self:Message("breaths", "Attention", nil, CL["count"]:format(L["breaths"], breathCounter), L.breaths_icon) -- neutral breath icon
@@ -162,6 +164,7 @@ function mod:Deaths(args)
 
 	headCounter = headCounter + 1
 	self:CloseProximity("proximity")
+	self:StopBar(L["breaths"])
 	self:Message(139458, "Attention", nil, CL["soon"]:format(CL["count"]:format(self:SpellName(139458), headCounter))) -- Rampage
 	self:Bar(139458, 5, CL["incoming"]:format(self:SpellName(139458)))
 end
