@@ -180,6 +180,13 @@ local acOptions = {
 			order = 33,
 			width = "full",
 		},
+		autoRole = {
+			type = "toggle",
+			name = L.autoRole,
+			desc = L.autoRoleDesc,
+			order = 34,
+			width = "full",
+		},
 		separator4 = {
 			type = "description",
 			name = " ",

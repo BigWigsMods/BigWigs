@@ -70,6 +70,8 @@ L["Create custom DBM bars"] = "創建自訂的 DBM 計時條"
 L.dbmBarDesc = "如果 DBM 使用者發送一個倒數計時或一個自訂的圓環型計時條，他會顯示在 Big Wigs。"
 L.chatMessages = "聊天框體訊息"
 L.chatMessagesDesc = "除了顯示設定，輸出所有 Big Wigs 訊息到預設聊天框體。"
+--L.autoRole = "Automatic role update"
+--L.autoRoleDesc = "Some boss modules will show better warnings when they know what role a player is, this option lets Big Wigs automatically update your role when you engage a boss. It's recommended you leave this turned on."
 
 L.slashDescTitle = "|cFFFED000命令行：|r"
 L.slashDescPull = "|cFFFED000/pull:|r 發送拉怪倒數提示到團隊。"

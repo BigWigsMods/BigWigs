@@ -68,6 +68,8 @@ L["Create custom DBM bars"] = "Создавать полосы DBM"
 L.dbmBarDesc = "Если пользователь DBM отправляет таймер атаки или другие полосы, они будут показаны в Big Wigs."
 L.chatMessages = "Сообщения в чат"
 L.chatMessagesDesc = "Выводить все сообщения BigWigs в стандартное окно чата в дополнение к настройкам отображения."
+--L.autoRole = "Automatic role update"
+--L.autoRoleDesc = "Some boss modules will show better warnings when they know what role a player is, this option lets Big Wigs automatically update your role when you engage a boss. It's recommended you leave this turned on."
 
 L.slashDescTitle = "|cFFFED000Быстрые команды:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Отправляет отсчет атаки в рейд."

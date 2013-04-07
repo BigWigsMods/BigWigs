@@ -501,6 +501,26 @@ do
 			-- Update map size
 			UpdateMapData()
 
+			-- Update current role
+			if core.db.profile.autoRole and (IsInRaid() or IsInGroup()) and not IsPartyLFG() then
+				if self:Tank() then
+					if UnitGroupRolesAssigned("player") ~= "TANK" then
+						UnitSetRole("player", "TANK")
+						core:Print(L.roleUpdate)
+					end
+				elseif self:Healer() then
+					if UnitGroupRolesAssigned("player") ~= "HEALER" then
+						UnitSetRole("player", "HEALER")
+						core:Print(L.roleUpdate)
+					end
+				else
+					if UnitGroupRolesAssigned("player") ~= "DAMAGER" then
+						UnitSetRole("player", "DAMAGER")
+						core:Print(L.roleUpdate)
+					end
+				end
+			end
+
 			if self.OnEngage then
 				self:OnEngage(diff)
 			end

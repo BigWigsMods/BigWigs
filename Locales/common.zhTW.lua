@@ -18,6 +18,7 @@ L.normal = "普通模式"
 L.heroic = "英雄模式"
 L.hard = "困難模式"
 L.general = "通用" -- General settings, i.e. things that apply to both normal and hard mode.
+L.roleUpdate = "Updating your role."
 
 L.duration = ">%s< %s秒"
 L.over = ">%s< 結束！"

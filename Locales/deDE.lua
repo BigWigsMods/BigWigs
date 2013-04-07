@@ -70,6 +70,8 @@ L["Create custom DBM bars"] = "Erstelle DBM Custombars"
 L.dbmBarDesc = "Sendet ein DBM-Nutzer einen Pizza-Timer oder Custombar wird diese in Big Wigs angezeigt."
 L.chatMessages = "Chatfenster-Nachrichten"
 L.chatMessagesDesc = "Gibt alle Big Wigs Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung unter 'Ausgabe'."
+--L.autoRole = "Automatic role update"
+--L.autoRoleDesc = "Some boss modules will show better warnings when they know what role a player is, this option lets Big Wigs automatically update your role when you engage a boss. It's recommended you leave this turned on."
 
 L.slashDescTitle = "|cFFFED000Slash Befehle:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Sendet einen Countdown zum Pull an den Raid."

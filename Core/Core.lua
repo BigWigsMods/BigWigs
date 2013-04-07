@@ -376,6 +376,7 @@ function addon:OnInitialize()
 			blockmovies = true,
 			fakeDBMVersion = false,
 			customDBMbars = true,
+			autoRole = true,
 		},
 		global = {
 			optionShiftIndexes = {},

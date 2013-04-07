@@ -18,6 +18,7 @@ L.normal = "일반 모드"
 L.heroic = "영웅(하드) 모드"
 L.hard = "도전 모드"
 L.general = "일반 경고" -- General settings, i.e. things that apply to both normal and hard mode.
+L.roleUpdate = "Updating your role."
 
 L.duration = "%2$s초 후 %1$s"
 L.over = "%s 초과!"
