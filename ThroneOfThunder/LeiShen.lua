@@ -655,7 +655,6 @@ do
 		timeLeft = timeLeft - 1
 		if timeLeft < 6 then
 			mod:Say(135695, timeLeft, true)
-			mod:PlaySound(135695, ("BigWigs: %d"):format(timeLeft)) -- XXX sort this
 			if timeLeft < 2 then
 				mod:CancelTimer(timer)
 			end
