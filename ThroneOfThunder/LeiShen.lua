@@ -385,6 +385,7 @@ function mod:IntermissionEnd(msg)
 	updateProximity()
 	if phase == 2 then
 		self:CDBar(136478, 46) -- Fusion Slash
+		self:Bar(136850, 29) -- Lightning Whip
 		if self:Heroic() then -- XXX these are probably not time based either and need to add abilities for all conduits
 			if msg:find("135681") then -- Diffusion Adds
 				self:CDBar(135991, 14)
@@ -398,6 +399,7 @@ function mod:IntermissionEnd(msg)
 		end
 	elseif phase == 3 then -- XXX should start bars for already disabled conduits too
 		self:CDBar(135095, 36, ("%s (%d)"):format(self:SpellName(135095), thunderstruckCounter)) -- Thunderstruck
+		self:Bar(136850, 22, ("%s (%d)"):format(self:SpellName(136850), whipCounter)) -- Lightning Whip
 		self:CDBar(136889, 20) -- Violent Gale Winds
 		if self:Heroic() then
 			if msg:find("135681") then -- Diffusion Adds
@@ -411,7 +413,6 @@ function mod:IntermissionEnd(msg)
 			end
 		end
 	end
-	self:Bar(136850, (phase == 2) and 29 or 22, ("%s (%d)"):format(self:SpellName(136850), whipCounter)) -- Lightning Whip
 	self:Bar(136543, (phase == 2) and 14 or 41) -- Summon Ball Lightning
 
 	self:Message("stages", "Neutral", "Info", CL["phase"]:format(phase), false)
