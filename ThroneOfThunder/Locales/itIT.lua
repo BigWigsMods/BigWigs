@@ -156,17 +156,17 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shen", "itIT")
 if L then
-	L.custom_off_diffused_marker = "Diffused Lightning Marker"
-	L.custom_off_diffused_marker_desc = "Mark the Diffused Lightning adds using all raid icons, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the adds is the fastest way to mark them.|r"
+	L.custom_off_diffused_marker = "Marcatore Fulmine Diffuso Marker"
+	L.custom_off_diffused_marker_desc = "Marca gli add Fulmine Diffuso usando tutte le icone dell'incursione, richiede capogruppo o assistente.\n|cFFFF0000Solo 1 persona nell'incursione dovrebbe attivare questa opzione per evitare conflitti di marcamento.|r\n|cFFADFF2FTIP: Se l'incursione ha scelto te attivalo, e muovi velocemente il mouse sopra OGNI add per marcarli più velocemente possibile.|r"
 
-	L.stuns = "Stuns"
-	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."
+	L.stuns = "Disorientamenti"
+	L.stuns_desc = "Mostra delle barre per la durata dei disorientamenti, da usare per la gestione dei Fulmini Globulari."
 
-	L.aoe_grip = "AoE grip"
-	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
+	L.aoe_grip = "Attrazione ad Area"
+	L.aoe_grip_desc = "Avvisa quando un cavaliere della Morte usa Presa di Malacarne, da usare per la gestione dei Fulmini Globulari."
 
-	L.last_inermission_ability = "Last intermission ability used!"
-	L.safe_from_stun = "You are probably safe from Overcharge stuns"
+	L.last_inermission_ability = "Ultima abilità intermezzo usata!"
+	L.safe_from_stun = "Sei probabilmente al sicuro dai disorientamenti di Sovraccarico"
 	L.intermission = "Intermezzo"
 	L.diffusion_add = "Add di Diffusione"
 	L.shock = "Folgore"
