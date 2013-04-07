@@ -540,7 +540,7 @@ do
 				if t == "table" then
 					for i = 2, #v do
 						local flagName = v[i]
-						if C[flagName] and flagName ~= "EMPHASIZE" then
+						if C[flagName] then
 							bitflags = bitflags + C[flagName]
 						else
 							error(("%q tried to register '%q' as a bitflag for toggleoption '%q'"):format(module.moduleName, flagName, v[1]))
