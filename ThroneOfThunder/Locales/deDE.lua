@@ -128,8 +128,7 @@ L = BigWigs:NewBossLocale("Dark Animus", "deDE")
 if L then
 	L.engage_trigger = "Die Kugel explodiert!"
 
-	L.custom_off_matterswap = "Materientausch-Ziel"
-	L.custom_off_matterswap_desc = "|cFFFF0000Benötigt Assistent.|r Markiert und sendet eine Warnung an den Spieler, der am weitesten von dem mit Materientausch betroffenen Spieler entfernt steht. Wenn mehrere Ziele von Materientausch betroffen sind, werden diese in chronologischer Reihenfolge markiert."
+	L.custom_off_matterswap_desc = "|cFFFF0000Benötigt Leiter oder Assistent.|r Markiert und sendet eine Warnung an den Spieler, der am weitesten von dem mit Materientausch betroffenen Spieler entfernt steht. Die verwendete Methode erzeugt hohe CPU-Last, weshalb sie standardmäßig deaktiviert ist.\n|cFFFF0000Um Konflikte zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
 	L.matterswap_message = "Du bist am weitesten für Materientausch entfernt!"
 
 	L.siphon_power = "Anima entziehen (%d%%)"
@@ -161,17 +160,17 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shen", "deDE")
 if L then
-	L.custom_off_diffused_marker = "Diffused Lightning Marker"
-	L.custom_off_diffused_marker_desc = "Mark the Diffused Lightning adds using all raid icons, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the adds is the fastest way to mark them.|r"
+	L.custom_off_diffused_marker = "Diffusionsblitze markieren"
+	L.custom_off_diffused_marker_desc = "Markiert die Diffusionsblitze mit allen Raidsymbolen. Benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r\n|cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über alle Adds.|r"
 
-	L.stuns = "Stuns"
-	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."
+	L.stuns = "Betäubungen"
+	L.stuns_desc = "Zeigt Leisten mit der Dauer von Betäubungen an um bei der Bewältigung der Kugelblitze zu helfen."
 
-	L.aoe_grip = "AoE grip"
-	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
+	L.aoe_grip = "AoE Griff"
+	L.aoe_grip_desc = "Gibt Warnungen aus, wenn ein Todesritter Blutschattens Griff nutzt um bei der Bewältigung der Kugelblitze zu helfen."
 
-	L.last_inermission_ability = "Last intermission ability used!"
-	L.safe_from_stun = "You are probably safe from Overcharge stuns"
+	L.last_inermission_ability = "Letzte Unterbrechungs-Fähigkeit genutzt!"
+	L.safe_from_stun = "Du bist wahrscheinlich sicher vor Überladungs-Betäubungen"
 	L.intermission = "Unterbrechung"
 	L.diffusion_add = "Kugelblitzelementare"
 	L.shock = "Schock"
