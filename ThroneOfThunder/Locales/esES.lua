@@ -52,7 +52,7 @@ end
 
 L = BigWigs:NewBossLocale("Tortos", "esES") or BigWigs:NewBossLocale("Tortos", "esMX")
 if L then
-	L.bats_desc = "Many bats. Handle it."
+	L.bats_desc = "Murciélagos. Contrólalos."
 
 	L.kick = "Patear"
 	L.kick_desc = "Lleva la cuenta de cuantas tortugas pueden ser pateadas."
@@ -128,9 +128,9 @@ L = BigWigs:NewBossLocale("Dark Animus", "esES") or BigWigs:NewBossLocale("Dark 
 if L then
 	L.engage_trigger = "¡El orbe explota!"
 
-	L.siphon_power = "Siphon Anima (%d%%)"
-	L.siphon_power_soon = "Siphon Anima (%d%%) %s soon!"
-	L.font_empower = "Font + Empower"
+	L.siphon_power = "Succionar ánima (%d%%)"
+	L.siphon_power_soon = "¡Succionar ánima (%d%%) %s inminente!"
+	L.font_empower = "Fuente + Potenciar"
 	L.slam_message = "Embate"
 end
 
@@ -143,9 +143,9 @@ if L then
 
 	L.arcing_lightning_cleared = "Raid limpia de Arco de relámpagos"
 
-	L.custom_off_spear_target = "Throw Spear Target"
-	L.custom_off_spear_target_desc = "Try to warn for the Throw Spear target. This method is high on CPU usage and sometimes displays the wrong target so it is disabled by default.\n|cFFADFF2FTIP: Setting up TANK roles should help to increase the accuracy of the warning.|r"
-	L.possible_spear_target = "Possible Spear"
+	L.custom_off_spear_target = "Objetivo de Lanzar lanza"
+	L.custom_off_spear_target_desc = "Intentará avisar del objetivo de Lanzar lanza. Esto requiere un uso elevado de la CPU y a veces muestra un objetivo equivocado así que esta deshabilitado por defecto.\n|cFFADFF2FCONSEJO: Crear roles de TANQUE debería ayudar a aumentar la precisión del aviso.|r"
+	L.possible_spear_target = "Posible Lanza"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "esES") or BigWigs:NewBossLocale("Twin Consorts", "esMX")
@@ -156,17 +156,17 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shen", "esES") or BigWigs:NewBossLocale("Lei Shen", "esMX")
 if L then
-	L.custom_off_diffused_marker = "Diffused Lightning Marker"
-	L.custom_off_diffused_marker_desc = "Mark the Diffused Lightning adds using all raid icons, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the adds is the fastest way to mark them.|r"
+	L.custom_off_diffused_marker = "Marcador de Relámpago difuminado"
+	L.custom_off_diffused_marker_desc = "Marca los adds Relámpago difuminado usando todos los iconos de raid, requiere ayudante o líder.\n|cFFFF0000Solo 1 persona en la raid debería tener esto activado para prevenir conflictos con las marcas.|r\n|cFFADFF2FCONSEJO: Si la raid te ha elegido para activar esto, mover el ratón rápidamente por encima de todos los adds es la forma más rápida de marcarlos.|r"
 
-	L.stuns = "Stuns"
-	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."
+	L.stuns = "Aturdimientos"
+	L.stuns_desc = "Muestra barras para la duración del aturdimiento, usar para controlar la Bola de relámpagos."
 
-	L.aoe_grip = "AoE grip"
-	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
+	L.aoe_grip = "Agarre zonal"
+	L.aoe_grip_desc = "Avisa cuando un DK usa Abrazo de Sanguino, usar para controlar la Bola de relámpagos."
 
-	L.last_inermission_ability = "Last intermission ability used!"
-	L.safe_from_stun = "You are probably safe from Overcharge stuns"
+	L.last_inermission_ability = "¡Última habilidad del intermedio usada!"
+	L.safe_from_stun = "Probablemente estés a salvo de los aturdimientos por Sobrecarga"
 	L.intermission = "Intermedio"
 	L.diffusion_add = "Difusión de adds"
 	L.shock = "Choque"

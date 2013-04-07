@@ -79,7 +79,7 @@ L.Messages = "Mensajes"
 L.Bars = "Barras"
 L.Background = "Fondo"
 L.Text = "Texto"
---L.TextShadow = "Text Shadow"
+L.TextShadow = "Sombra de texto"
 L.Flash = "Flash"
 L.Normal = "Normal"
 L.Emphasized = "Enfatizado"
@@ -219,8 +219,8 @@ L.Victory = "Victoria"
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Ajusta el sonido a usar para %q.\n\nCtrl-Clic un sonido a vista previa."
 L["Default only"] = "Solo por defecto"
 
-L.customSoundDesc = "Play the selected custom sound instead of the one supplied by the module"
-L.resetAllCustomSound = "If you've customized sounds for any boss encounter settings, this button will reset ALL of them so the sounds defined here will be used instead."
+L.customSoundDesc = "Reproduce el sonido seleccionado en lugar de uno suministrado por el módulo"
+L.resetAllCustomSound = "Si tienes sonidos personalizados para algun ajuste en algún encuentro, este botón los reiniciará a TODOS y así los sonidos definidos aquí serán usados en su lugar."
 
 -----------------------------------------------------------------------
 -- Statistics.lua
