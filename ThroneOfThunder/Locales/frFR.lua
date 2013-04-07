@@ -35,12 +35,12 @@ end
 
 L = BigWigs:NewBossLocale("Council of Elders", "frFR")
 if L then
-	L.priestess_adds = "Adds de la prêtresse"
-	L.priestess_adds_desc = "Prévient de l'arrivée des différents genres de renforts de la Grande prêtresse Mar'li."
-	L.priestess_adds_message = "Add de la prêtresse"
+	L.priestess_adds = "Esprits loa de la prêtresse"
+	L.priestess_adds_desc = "Prévient quand la Grande prêtresse Mar'li commence à invoquer des esprits loa."
+	L.priestess_adds_message = "Esprit loa de la prêtresse"
 
 	L.custom_on_markpossessed = "Marquage du boss possédé"
-	L.custom_on_markpossessed_desc = "Marque le boss possédé à l'aide d'une icône de crâne."
+	L.custom_on_markpossessed_desc = "Marque le boss possédé à l'aide d'une icône de crâne. Nécessite d'être assistant ou chef de raid."
 
 	L.assault_stun = "Tank étourdi !"
 	L.assault_message = "Assaut"
@@ -156,17 +156,17 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shen", "frFR")
 if L then
-	L.custom_off_diffused_marker = "Diffused Lightning Marker"
-	L.custom_off_diffused_marker_desc = "Mark the Diffused Lightning adds using all raid icons, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the adds is the fastest way to mark them.|r"
+	L.custom_off_diffused_marker = "Marquages des Foudres diffuses"
+	L.custom_off_diffused_marker_desc = "Marque les Foudres diffuses en utilisant toutes les icônes de raid, nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement toutes les Foudres diffuses est le moyen le plus rapide de les marquer.|r"
 
-	L.stuns = "Stuns"
-	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."
+	L.stuns = "Étourdissements"
+	L.stuns_desc = "Affiche des barres pour les durées d'étourdissement, à utiliser avec la gestion des foudres en boule."
 
-	L.aoe_grip = "AoE grip"
-	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
+	L.aoe_grip = "\"Grip\" de zone"
+	L.aoe_grip_desc = "Prévient quand un chevalier de la mort utilise Emprise de Fielsang, à utiliser avec la gestion des foudres en boule."
 
-	L.last_inermission_ability = "Last intermission ability used!"
-	L.safe_from_stun = "You are probably safe from Overcharge stuns"
+	L.last_inermission_ability = "Dernière technique d'entracte utilisée !"
+	L.safe_from_stun = "Vous êtes probablement à l'abri des étourdissements de Surchargé"
 	L.intermission = "Entracte"
 	L.diffusion_add = "Foudres diffuses"
 	L.shock = "Horion"
