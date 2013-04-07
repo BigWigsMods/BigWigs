@@ -18,7 +18,7 @@ L.normal = "Modalità Normale"
 L.heroic = "Modalità Eroica"
 L.hard = "Modalità Hard"
 L.general = "Generali" -- General settings, i.e. things that apply to both normal and hard mode.
-L.roleUpdate = "Updating your role."
+L.roleUpdate = "Updated your role."
 
 L.duration = "%s per %s sec"
 L.over = "%s Terminato!"
