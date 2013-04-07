@@ -156,19 +156,19 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shen", "ruRU")
 if L then
-	L.custom_off_diffused_marker = "Diffused Lightning Marker"
-	L.custom_off_diffused_marker_desc = "Mark the Diffused Lightning adds using all raid icons, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the adds is the fastest way to mark them.|r"
+	L.custom_off_diffused_marker = "Маркировка Рассеянных молний"
+	L.custom_off_diffused_marker_desc = "Помечать рейдовыми метками Рассеянные молнии, требуется быть лидером или помощником.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r\n|cFFADFF2FСОВЕТ: Если вы выбраны для этой задачи, быстро проведите указателем мыши по молниям, метки сразу же поставятся.|r"
 
-	L.stuns = "Stuns"
-	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."
+	L.stuns = "Оглушения"
+	L.stuns_desc = "Показывать полосы длительности оглушений для Шаровых молний."
 
-	L.aoe_grip = "AoE grip"
-	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
+	L.aoe_grip = "AoE хватка"
+	L.aoe_grip_desc = "Предупрждать, когда рыцарь смерти использует Хватку Кровожада для Шаровых молний."
 
-	L.last_inermission_ability = "Last intermission ability used!"
+	L.last_inermission_ability = "Последний перерыв!"
 	L.safe_from_stun = "Возможно, вы защищены от оглушения Перегрузкой"
 	L.intermission = "Перерыв"
-	L.diffusion_add = "Цепные помощники"
+	L.diffusion_add = "Рассеянный помощник"
 	L.shock = "Потрясение"
 end
 
