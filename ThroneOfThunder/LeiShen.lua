@@ -249,12 +249,12 @@ do
 				adds[args.destGUID] = true
 			end
 		end
-		if not markerTimer then
+		if self.db.profile.custom_off_diffused_marker and not markerTimer then
 			markerTimer = self:ScheduleRepeatingTimer("MarkCheck", 0.2)
 			self:ScheduleTimer("StopMarkCheck", 15) -- scan for 15 sec
 		end
 	end
-	
+
 	function mod:AddDeaths(args)
 		for i=8,1,-1 do
 			if marksUsed[i] == args.destGUID then
