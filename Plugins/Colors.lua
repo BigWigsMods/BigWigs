@@ -20,7 +20,8 @@ plugin.defaultDB = {
 	Neutral = { ["*"] = { ["*"] = { 0.2, 1, 1 } } }, -- Cyan
 
 	barBackground = { ["*"] = { ["*"] = { 0.5, 0.5, 0.5, 0.3 } } },
-	barText = { ["*"] = { ["*"] = { 1, 1, 1 } } },
+	barText = { ["*"] = { ["*"] = { 1, 1, 1, 1 } } },
+	barTextShadow = { ["*"] = { ["*"] = { 0, 0, 0, 1 } } },
 	barColor = { ["*"] = { ["*"] = { 0.25, 0.33, 0.68, 1 } } },
 	barEmphasized = { ["*"] = { ["*"] = { 1, 0, 0, 1 } } },
 
@@ -71,7 +72,7 @@ end
 
 local colorOptions = {
 	type = "group",
-	name = L["Colors"],
+	name = L.Colors,
 	handler = plugin,
 	get = get,
 	set = set,
@@ -79,37 +80,37 @@ local colorOptions = {
 	args = {
 		messages = {
 			type = "group",
-			name = L["Messages"],
+			name = L.Messages,
 			inline = true,
 			order = 1,
 			args = {
 				Important = {
-					name = L["Important"],
+					name = L.Important,
 					type = "color",
 					order = 1,
 				},
 				Personal = {
-					name = L["Personal"],
+					name = L.Personal,
 					type = "color",
 					order = 2,
 				},
 				Urgent = {
-					name = L["Urgent"],
+					name = L.Urgent,
 					type = "color",
 					order = 3,
 				},
 				Attention = {
-					name = L["Attention"],
+					name = L.Attention,
 					type = "color",
 					order = 4,
 				},
 				Positive = {
-					name = L["Positive"],
+					name = L.Positive,
 					type = "color",
 					order = 5,
 				},
 				Neutral = {
-					name = L["Neutral"],
+					name = L.Neutral,
 					type = "color",
 					order = 6,
 				},
@@ -117,43 +118,50 @@ local colorOptions = {
 		},
 		bars = {
 			type = "group",
-			name = L["Bars"],
+			name = L.Bars,
 			inline = true,
 			order = 2,
 			args = {
 				barColor = {
-					name = L["Normal"],
+					name = L.Normal,
 					type = "color",
 					hasAlpha = true,
 					order = 1,
 				},
 				barEmphasized = {
-					name = L["Emphasized"],
+					name = L.Emphasized,
 					type = "color",
 					hasAlpha = true,
 					order = 2,
 				},
 				barBackground = {
-					name = L["Background"],
+					name = L.Background,
 					type = "color",
 					hasAlpha = true,
 					order = 3,
 				},
 				barText = {
-					name = L["Text"],
+					name = L.Text,
 					type = "color",
+					hasAlpha = true,
 					order = 4,
+				},
+				barTextShadow = {
+					name = L.TextShadow,
+					type = "color",
+					hasAlpha = true,
+					order = 5,
 				},
 			},
 		},
 		flash = {
 			type = "group",
-			name = L["Flash"],
+			name = L.Flash,
 			inline = true,
 			order = 3,
 			args = {
 				flash = {
-					name = L["Flash"],
+					name = L.Flash,
 					type = "color",
 					order = 11,
 				},
@@ -161,7 +169,7 @@ local colorOptions = {
 		},
 		reset = {
 			type = "execute",
-			name = L["Reset"],
+			name = L.Reset,
 			desc = L["Resets the above colors to their defaults."],
 			func = reset,
 			order = 4,
