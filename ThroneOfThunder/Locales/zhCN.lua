@@ -161,17 +161,17 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shen", "zhCN")
 if L then
-	L.custom_off_diffused_marker = "Diffused Lightning Marker"
-	L.custom_off_diffused_marker_desc = "Mark the Diffused Lightning adds using all raid icons, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the adds is the fastest way to mark them.|r"
+	L.custom_off_diffused_marker = "散射闪电标记"
+	L.custom_off_diffused_marker_desc = "使用全部团队标记标记全部散射闪电，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r\n|cFFADFF2F提示：如果团队选择你用来标记散射闪电，鼠标悬停快速划过全部散射闪电是最快的标记方式。|r"
 
-	L.stuns = "Stuns"
-	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."
+	L.stuns = "昏迷"
+	L.stuns_desc = "显示昏迷持续计时条，用于处理球状闪电。"
 
-	L.aoe_grip = "AoE grip"
-	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
+	L.aoe_grip = "AoE 之握"
+	L.aoe_grip_desc = "当死亡骑士使用血魔之握时发出警报，用于处理球状闪电。"
 
-	L.last_inermission_ability = "Last intermission ability used!"
-	L.safe_from_stun = "You are probably safe from Overcharge stuns"
+	L.last_inermission_ability = "最终阶段转换技能已使用！"
+	L.safe_from_stun = "超载昏迷你也许是安全的"
 	L.intermission = "阶段转换"
 	L.diffusion_add = "散射闪电增援"
 	L.shock = "电能震击"
