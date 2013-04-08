@@ -502,7 +502,7 @@ do
 			UpdateMapData()
 
 			-- Update current role
-			if core.db.profile.autoRole and (IsInRaid() or IsInGroup()) and not IsPartyLFG() then
+			--[[if core.db.profile.autoRole and (IsInRaid() or IsInGroup()) and not IsPartyLFG() then
 				if self:Tank() then
 					if UnitGroupRolesAssigned("player") ~= "TANK" then
 						UnitSetRole("player", "TANK")
@@ -519,7 +519,7 @@ do
 						core:Print(L.roleUpdate)
 					end
 				end
-			end
+			end]]
 
 			if self.OnEngage then
 				self:OnEngage(diff)
