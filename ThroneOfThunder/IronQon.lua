@@ -404,6 +404,6 @@ function mod:Deaths(args)
 		closeLightningStormProximity()
 	elseif args.mobId == 68081 then -- Dam'ren
 		self:StopBar(-6914) -- Dead zone
-		self:Bar(-6917, 30) -- Fist Smash
+		self:Bar(-6917, 20, ("%s (%d)"):format(self:SpellName(136146), 1)) -- Fist Smash
 	end
 end
