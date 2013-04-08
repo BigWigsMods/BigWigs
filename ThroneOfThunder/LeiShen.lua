@@ -335,8 +335,8 @@ end
 
 do
 	local prev = 0
-	local function warnBallsSoon(spellId, spellName)
-		mod:Message(spellId, "Attention", nil, CL["soon"]:format(spellName))
+	local function warnBallsSoon(spellId)
+		mod:Message(spellId, "Attention", nil, CL["soon"]:format(mod:SpellName(136620)))
 		activeProximityAbilities[3] = true
 		updateProximity()
 	end
@@ -349,9 +349,9 @@ do
 				activeProximityAbilities[4] = true
 				updateProximity()
 			end
-			self:ScheduleTimer(warnBallsSoon, 41, args.spellId, args.spellName)-- reopen it when new balls are about to come
-			self:Bar(args.spellId, 46)
-			self:Message(args.spellId, "Attention")
+			self:ScheduleTimer(warnBallsSoon, 41, args.spellId)-- reopen it when new balls are about to come
+			self:Bar(args.spellId, 46, 136620)
+			self:Message(args.spellId, "Attention", nil, 136620)
 		end
 	end
 end
@@ -413,7 +413,7 @@ function mod:IntermissionEnd(msg)
 			end
 		end
 	end
-	self:Bar(136543, (phase == 2) and 14 or 41) -- Summon Ball Lightning
+	self:Bar(136543, (phase == 2) and 14 or 41, 136620) -- Ball Lightning
 
 	self:Message("stages", "Neutral", "Info", CL["phase"]:format(phase), false)
 end
@@ -425,7 +425,7 @@ function mod:IntermissionStart(args)
 	self:StopBar(134912) -- Decapitate
 	self:StopBar(135095) -- Thunderstruck
 	self:StopBar(136850) -- Lightning Whip
-	self:StopBar(136543) -- Summon Ball Lightning
+	self:StopBar(136620) -- Ball Lightning
 	self:StopBar(136478) -- Furious Slash
 	self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1") -- just to be efficient
 	activeProximityAbilities[4] = nil
@@ -524,8 +524,9 @@ function mod:Boss1Succeeded(unitId, spellName, _, _, spellId)
 		self:Message(135150, "Attention")
 		self:Bar(135150, 30)
 	elseif spellId == 139006 or spellId == 139007 or spellId == 139008 or spellId == 139009 then -- active quadrant
-		if phase ~= 3 then return end
-		self:Message("stages", "Attention", nil, spellName, 136913) -- probably shouldn't be linked to stages, but dunno anything better -- overwhelming power icon
+		if self:Heroic() and phase < 3 then
+			self:Message("stages", "Attention", nil, spellName, 136913) -- probably shouldn't be linked to stages, but dunno anything better -- overwhelming power icon
+		end
 	end
 end
 
@@ -669,7 +670,7 @@ do
 		end
 		staticShockList[#staticShockList+1] = args.destName
 		coloredNames[#coloredNames+1] = args.destName
-		self:Bar(args.spellId, 8, ("%s: %s"):format(args.spellName, coloredNames[#coloredNames]))
+		self:TargetBar(args.spellId, 8, args.destName)
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnStaticShock, 0.1, args.spellId)
 		end
