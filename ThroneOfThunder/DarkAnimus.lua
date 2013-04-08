@@ -41,7 +41,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{138485, "FLASH", "SAY"},
-		{138609, "FLASH", "ICON", "DISPEL"}, {"matterswap", "FLASH", "ICON"}, {-7770, "TANK"},
+		{138609, "FLASH", "ICON", "DISPEL"}, {"matterswap", "ICON"}, {-7770, "TANK"},
 		138644, 136954, 138691, 138780, {138763, "FLASH"}, {138729, "FLASH"},
 		"berserk", "bosskill",
 	}, {
@@ -222,9 +222,8 @@ do
 
 		if furthest and furthest ~= last then
 			mod:SecondaryIcon("matterswap", furthest)
-			if UnitIsUnit(furthest, "player") then -- XXX not sure if this should be throttled or not
+			if UnitIsUnit(furthest, "player") then
 				mod:Message("matterswap", "Personal", "Info", L["matterswap_message"], L.matterswap_icon)
-				mod:Flash("matterswap")
 			end
 			last = furthest
 		end
