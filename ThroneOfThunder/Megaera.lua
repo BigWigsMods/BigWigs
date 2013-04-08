@@ -41,7 +41,7 @@ function mod:GetOptions()
 	return {
 		140138, 140179,
 		{139822, "FLASH", "ICON", "DISPEL", "SAY"}, {137731, "HEALER"},
-		{139866, "FLASH", "SAY"}, {139909, "FLASH"}, {139843, "TANK"}, 
+		{139866, "FLASH", "ICON", "SAY"}, {139909, "FLASH"}, {139843, "TANK"}, 
 		{139840, "HEALER"},
 		139458, {"breaths", "FLASH"}, "proximity", "berserk", "bosskill",
 	}, {
@@ -61,7 +61,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "NetherTear", 140138)
 	-- Frost
 	self:Log("SPELL_PERIODIC_DAMAGE", "IcyGround", 139909)
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- XXX Torrent of Ice needs to be switched to CLEU ASAP
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ArcticFreeze", 139843)
 	-- Fire
 	self:Log("SPELL_DAMAGE", "Cinders", 139836)
@@ -84,7 +83,8 @@ function mod:OnEngage()
 	breathCounter = 0
 	headCounter = 0
 	self:Bar("breaths", 5, L["breaths"], L.breaths_icon)
-	self:Message("breaths", "Attention", nil, L["custom_start_s"]:format(self.displayName, L["breaths"], 5), false)
+	self:Message("breaths", "Attention", nil, CL["custom_start_s"]:format(self.displayName, L["breaths"], 5), false)
+	self:RegisterEvent("UNIT_AURA")
 end
 
 --------------------------------------------------------------------------------
@@ -199,12 +199,26 @@ do
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
-	if msg:find("139866") then -- Torrent of Ice
-		-- XXX this should have an icon too, but lets not bother implementing it till CLEU is fixed for this event
-		self:Say(139866)
-		self:Message(139866, "Personal", "Info", CL["you"]:format(self:SpellName(139866)))
-		self:Flash(139866)
+do
+	local prev = 0
+	local iceTorrent = mod:SpellName(139857)
+	local UnitDebuff = UnitDebuff
+	function mod:UNIT_AURA(_, unit)
+		local spellName, _, _, _, _, _, expires = UnitDebuff(unit, iceTorrent)
+		if expires and expires ~= prev then
+			local player, server = UnitName(unit)
+			if server then player = player.."-"..server end
+			self:TargetMessage(139866, player, "Urgent", "Info")
+			if UnitIsUnit(unit, "player") then
+				self:Flash(139866)
+				self:Say(139866)
+			elseif self:Range(unit) < 10 then
+				self:RangeMessage(139866)
+				self:Flash(139866)
+			end
+			self:ScheduleTimer("PrimaryIcon", 9, 139866)
+			prev = expires
+		end
 	end
 end
 
