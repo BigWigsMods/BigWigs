@@ -128,8 +128,8 @@ L = BigWigs:NewBossLocale("Dark Animus", "itIT")
 if L then
 	L.engage_trigger = "Il globo esplode!"
 
-	L.matterswap_desc = "A player with Matter Swap is far away from you. You will swap places with them if they are dispelled."
-	L.matterswap_message = "You are furthest for Matter Swap!"
+	L.matterswap_desc = "Un giocatore con Scambio di Materia è troppo distante da te. Scambierai posto con lui se l'effetto verrà dissipato."
+	L.matterswap_message = "Sei il più lontano dallo Scambio di Materia!"
 
 	L.siphon_power = "Aspirazione dell'Anima (%d%%)"
 	L.siphon_power_soon = "Aspirazione dell'Anima (%d%%) %s tra poco!"
