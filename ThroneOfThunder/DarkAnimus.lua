@@ -23,14 +23,13 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "The orb explodes!"
 
-	L.custom_off_matterswap = GetSpellInfo(139919)
-	L.custom_off_matterswap_desc = "|cFFFF0000Requires promoted or leader.|r Mark and send a warning to the player furthest from the player with Matter Swap debuff. This method is high on CPU usage so it is disabled by default.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent conflicts.|r"
-	L.custom_off_matterswap_icon = 138618
+	L.matterswap = GetSpellInfo(139919)
+	L.matterswap_desc = "A player with Matter Swap is far away from you. You will swap places with them if they are dispelled."
 	L.matterswap_message = "You are furthest for Matter Swap!"
+	L.matterswap_icon = 138618
 
 	L.siphon_power = "Siphon Anima (%d%%)"
 	L.siphon_power_soon = "Siphon Anima (%d%%) %s soon!"
-	L.font_empower = "Font + Empower"
 	L.slam_message = "Slam"
 end
 L = mod:GetLocale()
@@ -42,7 +41,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{138485, "FLASH", "SAY"},
-		{138609, "FLASH", "ICON", "DISPEL"}, {-7770, "TANK"}, --, "custom_off_matterswap"
+		{138609, "FLASH", "ICON", "DISPEL"}, {"matterswap", "FLASH", "ICON"}, {-7770, "TANK"},
 		138644, 136954, 138691, 138780, {138763, "FLASH"}, {138729, "FLASH"},
 		"berserk", "bosskill",
 	}, {
@@ -71,7 +70,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveSlam", 138569)
 	self:Log("SPELL_AURA_REMOVED", "MatterSwapRemoved", 138609)
 	self:Log("SPELL_AURA_APPLIED", "MatterSwapApplied", 138609)
-	self:AddSyncListener("MatterSwapTarget")
 	-- Large Anima Golem
 	self:Log("SPELL_DAMAGE", "CrimsonWake", 138485)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- looks like this is forever emote
@@ -118,7 +116,7 @@ end
 
 function mod:EmpowerGolem(args)
 	self:Message(138780, "Attention")
-	self:CDBar(138780, self:Heroic() and 17 or 30)
+	self:Bar(138780, 15.5)
 end
 
 function mod:AnimaFontApplied(args)
@@ -147,16 +145,15 @@ do
 		local power = UnitPower("boss1")
 		if power > nextPower then
 			if nextPower == 15 then
-				mod:Message(spellId, "Attention", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(136954))) -- Anima Ring
-			elseif nextPower == 40 then
-				local ability = mod:Heroic() and L["font_empower"] or mod:SpellName(138691)
-				mod:Message(spellId, "Attention", "Info", L["siphon_power_soon"]:format(power, ability)) -- Anima Font (+ Empower Golem)
-			elseif nextPower == 65 then
-				mod:Message(spellId, "Attention", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(138763))) -- Interrupting Jolt
-			elseif nextPower == 90 then
-				mod:Message(spellId, "Attention", "Warning", L["siphon_power_soon"]:format(power, mod:SpellName(138729))) -- Full Power
+				mod:Message(spellId, "Attention", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(136954))) -- Anima Ring (25)
+			elseif nextPower == 45 then
+				mod:Message(spellId, "Attention", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(138691))) -- Anima Font (50)
+			elseif nextPower == 70 then
+				mod:Message(spellId, "Attention", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(138763))) -- Interrupting Jolt (75)
+			elseif nextPower == 95 then
+				mod:Message(spellId, "Attention", "Warning", L["siphon_power_soon"]:format(power, mod:SpellName(138729))) -- Full Power (100)
 			end
-			nextPower = nextPower + 25
+			nextPower = nextPower + 30
 		else
 			mod:Message(spellId, "Neutral", nil, L["siphon_power"]:format(power))
 		end
@@ -190,20 +187,6 @@ end
 
 -- Matter Swap fun!
 do
-	local prev = 0
-	function mod:OnSync(sync, rest, sender)
-		if sync == "MatterSwapTarget" and UnitIsUnit(rest, "player") then
-			local t = GetTime()
-			if t-prev > 2 then
-				self:Message(138609, "Personal", "Info", L["matterswap_message"])
-				self:Flash(138609)
-				prev = t
-			end
-		end
-	end
-end
-
-do
 	local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
 	local function getDistance(unit1, unit2)
 		local tx, ty = GetPlayerMapPosition(unit1)
@@ -215,7 +198,7 @@ do
 		return distance
 	end
 
-	local timer = nil
+	local timer, last = nil, nil
 	local function warnSwapTarget()
 		local player = matterSwapTargets[1]
 		if not player then
@@ -237,19 +220,18 @@ do
 			end
 		end
 
-		if furthest then
+		if furthest and furthest ~= last then
 			local name, server = UnitName(furthest)
 			if server then name = name.."-"..server end
 			if not name then return end
 
-			mod:SecondaryIcon(138609, name)
-			mod:Sync("MatterSwapTarget", name)
+			mod:SecondaryIcon("matterswap", name)
+			if UnitIsUnit(furthest, "player") then
+				mod:Message("matterswap", "Personal", "Info", L["matterswap_message"], L.matterswap_icon)
+				mod:Flash("matterswap")
+			end
+			last = furthest
 		end
-	end
-
-	local function checkDistance()
-		-- don't need everyone doing it, so be kind of restrictive about it
-		return mod.db.profile.custom_off_matterswap and (UnitIsGroupLeader("player") or (not IsEveryoneAssistant() and UnitIsGroupAssistant("player"))) -- and not mod:LFR()
 	end
 
 	function mod:MatterSwapApplied(args)
@@ -265,11 +247,11 @@ do
 		matterSwapTargets[#matterSwapTargets+1] = args.destName
 		self:PrimaryIcon(args.spellId, matterSwapTargets[1])
 
-		--[[
-		if not timer and checkDistance() then
+		last = nil
+		if not timer and self.db.profile.matterswap > 0 then -- pretty wasteful to do the scanning if the option isn't on
+			warnSwapTarget()
 			timer = self:ScheduleRepeatingTimer(warnSwapTarget, 0.5)
 		end
-		--]]
 	end
 
 	function mod:MatterSwapRemoved(args)
