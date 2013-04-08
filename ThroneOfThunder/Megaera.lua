@@ -216,6 +216,7 @@ do
 				self:RangeMessage(139866)
 				self:Flash(139866)
 			end
+			self:PrimaryIcon(139866, player)
 			self:ScheduleTimer("PrimaryIcon", 9, 139866)
 			prev = expires
 		end
