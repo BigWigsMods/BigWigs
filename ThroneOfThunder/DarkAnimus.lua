@@ -145,13 +145,13 @@ do
 		local power = UnitPower("boss1")
 		if power > nextPower then
 			if nextPower == 15 then
-				mod:Message(spellId, "Attention", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(136954))) -- Anima Ring (25)
+				mod:Message(spellId, "Neutral", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(136954))) -- Anima Ring (25)
 			elseif nextPower == 45 then
-				mod:Message(spellId, "Attention", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(138691))) -- Anima Font (50)
+				mod:Message(spellId, "Neutral", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(138691))) -- Anima Font (50)
 			elseif nextPower == 70 then
-				mod:Message(spellId, "Attention", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(138763))) -- Interrupting Jolt (75)
+				mod:Message(spellId, "Neutral", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(138763))) -- Interrupting Jolt (75)
 			elseif nextPower == 95 then
-				mod:Message(spellId, "Attention", "Warning", L["siphon_power_soon"]:format(power, mod:SpellName(138729))) -- Full Power (100)
+				mod:Message(spellId, "Neutral", "Warning", L["siphon_power_soon"]:format(power, mod:SpellName(138729))) -- Full Power (100)
 			end
 			nextPower = nextPower + 30
 		else
@@ -244,13 +244,13 @@ do
 
 		last = nil
 		if not timer and self.db.profile.matterswap > 0 then -- pretty wasteful to do the scanning if the option isn't on
-			warnSwapTarget()
 			timer = self:ScheduleRepeatingTimer(warnSwapTarget, 0.5)
 		end
 	end
 
 	function mod:MatterSwapRemoved(args)
 		self:StopBar(args.spellId, args.destName)
+		self:SecondaryIcon("matterswap", nil)
 		if args.destName == matterSwapTargets[1] then
 			tremove(matterSwapTargets, 1)
 			self:PrimaryIcon(args.spellId, matterSwapTargets[1]) -- mark next (if set)
