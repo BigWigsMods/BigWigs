@@ -70,15 +70,6 @@ do
 		insets = {top = 1, left = 1, bottom = 1, right = 1},
 	}
 
-	local function createBackgroundbc()
-		local bgbc = CreateFrame("Frame")
-		bgbc:SetBackdrop(backdropbc)
-		bgbc:SetBackdropColor(.1, .1, .1, 1)
-		bgbc:SetWidth(10)
-		bgbc:SetHeight(10)
-		return bgbc
-	end
-
 	local function createBorder(self)
 		local border = UIParent:CreateTexture(nil, "OVERLAY")
 		border:SetParent(self)
@@ -89,7 +80,6 @@ do
 		return border
 	end
 
-	local freeBackgroundsbc = {}
 	local freeBorderSets = {}
 
 	local function freeStyle(bar)
@@ -101,29 +91,19 @@ do
 			end
 			freeBorderSets[#freeBorderSets + 1] = borders
 		end
-
-		local bgbc = bar:Get("bigwigs:beautycase:bgbc")
-		if bgbc then
-			bgbc:SetParent(UIParent)
-			bgbc:Hide()
-			freeBackgroundsbc[#freeBackgroundsbc + 1] = bgbc
-		end
 	end
 
 	local function styleBar(bar)
-		local bgbc = nil
-		if #freeBackgroundsbc > 0 then
-			bgbc = tremove(freeBackgroundsbc)
-		else
-			bgbc = createBackgroundbc()
-		end
-		bgbc:SetParent(bar)
-		bgbc:ClearAllPoints()
-		bgbc:SetPoint("TOPLEFT", bar, "TOPLEFT", -1, 1)
-		bgbc:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
-		bgbc:SetFrameStrata("LOW")
-		bgbc:Show()
-		bar:Set("bigwigs:beautycase:bgbc", bgbc)
+		local bd = bar.candyBarBackdrop
+
+		bd:SetBackdrop(backdropbc)
+		bd:SetBackdropColor(.1, .1, .1, 1)
+
+		bd:ClearAllPoints()
+		bd:SetPoint("TOPLEFT", bar, "TOPLEFT", -1, 1)
+		bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
+		bd:SetFrameStrata("LOW")
+		bd:Show()
 
 		local borders = nil
 		if #freeBorderSets > 0 then
@@ -187,8 +167,6 @@ end
 do
 	-- TukUI Bar Styler
 
-	local freeBackgrounds = {}
-
 	local backdrop = {
 		bgFile = "Interface\\Buttons\\WHITE8X8",
 		edgeFile = "Interface\\Buttons\\WHITE8X8",
@@ -196,42 +174,22 @@ do
 		insets = { left = -0.64, right = -0.64, top = -0.64, bottom = -0.64}
 	}
 
-	local function createBackground()
-		local bg = CreateFrame("Frame")
-		bg:SetBackdrop(backdrop)
-		if IsAddOnLoaded("Tukui") then
-			local F, C, L = unpack(Tukui) -- tukui support :)
-			bg:SetBackdropColor(unpack(C["media"].backdropcolor))
-			bg:SetBackdropBorderColor(unpack(C["media"].bordercolor))
-		else
-			bg:SetBackdropColor(.1,.1,.1,1)
-			bg:SetBackdropBorderColor(.6,.6,.6,1)
-		end
-		return bg
-	end
-
-	local function freeStyle(bar)
-		local bg = bar:Get("bigwigs:tukui:bg")
-		if not bg then return end
-		bg:SetParent(UIParent)
-		bg:Hide()
-		freeBackgrounds[#freeBackgrounds + 1] = bg
-	end
-
 	local function styleBar(bar)
-		local bg = nil
-		if #freeBackgrounds > 0 then
-			bg = tremove(freeBackgrounds)
+		local bd = bar.candyBarBackdrop
+		bd:SetBackdrop(backdrop)
+		if Tukui then
+			local F, C, L = unpack(Tukui) -- tukui support :)
+			bd:SetBackdropColor(unpack(C["media"].backdropcolor))
+			bd:SetBackdropBorderColor(unpack(C["media"].bordercolor))
 		else
-			bg = createBackground()
+			bd:SetBackdropColor(.1,.1,.1,1)
+			bd:SetBackdropBorderColor(.6,.6,.6,1)
 		end
-		bg:SetParent(bar)
-		bg:ClearAllPoints()
-		bg:SetPoint("TOPLEFT", bar, "TOPLEFT", -1, 1)
-		bg:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
-		bg:SetFrameStrata("BACKGROUND")
-		bg:Show()
-		bar:Set("bigwigs:tukui:bg", bg)
+		bd:ClearAllPoints()
+		bd:SetPoint("TOPLEFT", bar, "TOPLEFT", -1, 1)
+		bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
+		bd:SetFrameStrata("BACKGROUND")
+		bd:Show()
 	end
 
 	barStyles.TukUI = {
@@ -239,7 +197,7 @@ do
 		version = 1,
 		GetSpacing = function(bar) return 4 end,
 		ApplyStyle = styleBar,
-		BarStopped = freeStyle,
+		--BarStopped = freeStyle,
 		GetStyleName = function() return "TukUI" end,
 	}
 end
@@ -253,7 +211,7 @@ do
 		insets = {left = 0, right = 0, top = 0, bottom = 0}
 	}
 
-	local backdropCache, iconCache = {}, {}
+	local iconCache = {}
 
 	local createbg = function()
 		local f = CreateFrame("Frame")
@@ -265,14 +223,6 @@ do
 
 	local function removeStyle(bar)
 		bar:SetHeight(14)
-
-		local bg = bar:Get("bigwigs:MonoUI:backdrop")
-		if bg then
-			bg:ClearAllPoints()
-			bg:SetParent("UIParent")
-			bg:Hide()
-			backdropCache[#backdropCache + 1] = bg
-		end
 
 		local icon = bar:Get("bigwigs:MonoUI:icon")
 		if icon then
@@ -293,20 +243,17 @@ do
 	local function styleBar(bar)
 		bar:SetHeight(buttonSize/2.5)
 
-		local bg = nil
-		if #backdropCache > 0 then
-			bg = tremove(backdropCache)
-		else
-			bg = createbg()
-		end
+		local bd = bar.candyBarBackdrop
 
-		bg:SetParent(bar)
-		bg:ClearAllPoints()
-		bg:SetPoint("TOPLEFT", bar, "TOPLEFT", -2, 2)
-		bg:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 2, -2)
-		bg:SetFrameStrata("BACKGROUND")
-		bg:Show()
-		bar:Set("bigwigs:MonoUI:backdrop", bg)
+		bd:SetBackdrop(backdropBorder)
+		bd:SetBackdropColor(.1,.1,.1,1)
+		bd:SetBackdropBorderColor(0,0,0,1)
+
+		bd:ClearAllPoints()
+		bd:SetPoint("TOPLEFT", bar, "TOPLEFT", -2, 2)
+		bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 2, -2)
+		bd:SetFrameStrata("BACKGROUND")
+		bd:Show()
 
 		if plugin.db.profile.icon then
 			local icon = nil
@@ -1012,12 +959,14 @@ do
 			if normalAnchor then
 				for bar in next, normalAnchor.bars do
 					currentBarStyler.BarStopped(bar)
+					bar.candyBarBackdrop:Hide()
 					newBarStyler.ApplyStyle(bar)
 				end
 			end
 			if emphasizeAnchor then
 				for bar in next, emphasizeAnchor.bars do
 					currentBarStyler.BarStopped(bar)
+					bar.candyBarBackdrop:Hide()
 					newBarStyler.ApplyStyle(bar)
 				end
 			end
