@@ -128,7 +128,7 @@ if L then
 	L.engage_trigger = "Сфера взрывается!"
 
 	L.matterswap_desc = "Игрок, на которого наложен эффект \"Обмен материей\", находится слишком далеко от вас. При рассеивании эффекта этот игрок поменяется с вами местами."
-	L.matterswap_message = "You are furthest for Matter Swap!"
+	L.matterswap_message = "Вы дальше всех для Обмена материей!"
 
 	L.siphon_power = "Поглощение анимы (%d%%)"
 	L.siphon_power_soon = "Поглощение анимы (%d%%) %s скоро!"
