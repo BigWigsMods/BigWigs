@@ -128,7 +128,7 @@ L = BigWigs:NewBossLocale("Dark Animus", "zhCN")
 if L then
 	L.engage_trigger = "宝珠爆炸了！"
 
-	L.matterswap_desc = "A player with Matter Swap is far away from you. You will swap places with them if they are dispelled."
+	L.matterswap_desc = "中了物质交换的玩家离你过远，如果他们被驱散时你会与他们交换的位置。"
 	L.matterswap_message = ">你< 最远距离物质交换！"
 
 	L.siphon_power = "心能虹吸（%d%%）"
