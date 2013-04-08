@@ -221,12 +221,8 @@ do
 		end
 
 		if furthest and furthest ~= last then
-			local name, server = UnitName(furthest)
-			if server then name = name.."-"..server end
-			if not name then return end
-
-			mod:SecondaryIcon("matterswap", name)
-			if UnitIsUnit(furthest, "player") then
+			mod:SecondaryIcon("matterswap", furthest)
+			if UnitIsUnit(furthest, "player") then -- XXX not sure if this should be throttled or not
 				mod:Message("matterswap", "Personal", "Info", L["matterswap_message"], L.matterswap_icon)
 				mod:Flash("matterswap")
 			end
