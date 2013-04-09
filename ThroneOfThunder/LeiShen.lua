@@ -10,15 +10,7 @@ mod:RegisterEnableMob(68397, 68398, 68696, 68697, 68698) -- Lei Shen, Static Sho
 -- Locals
 --
 
-local SetRaidTarget = SetRaidTarget
-local UnitExists = UnitExists
-local UnitHealth = UnitHealth
-local UnitHealthMax = UnitHealthMax
-local UnitGUID = UnitGUID
-local GetTime = GetTime
-
 local phase = 1
-local proximityOpen = nil
 local tooCloseForOvercharged = nil
 local adds = {}
 local markerTimer = nil
@@ -130,7 +122,6 @@ end
 
 function mod:OnEngage()
 	self:Berserk(720) -- XXX assumed
-	proximityOpen = nil
 	markerTimer = nil
 	phase = 1
 	tooCloseForOvercharged = nil
@@ -160,11 +151,13 @@ function mod:Grip(args)
 	self:TargetMessage("aoe_grip", args.sourceName, "Urgent", nil, L["aoe_grip"], 108199)
 end
 
-function mod:Stuns(args)
-	if phase < 2 then return end
+do
 	local target = self:NewTargetList()
-	target[1] = args.sourceName
-	self:Bar("stuns", stunDuration[args.spellId], ("Stun: %s"):format(target[1]), args.spellId)
+	function mod:Stuns(args)
+		if phase < 2 then return end
+		target[1] = args.sourceName
+		self:Bar("stuns", stunDuration[args.spellId], ("Stun: %s"):format(target[1]), args.spellId)
+	end
 end
 
 local function updateProximity()
@@ -605,14 +598,13 @@ do
 end
 
 function mod:DiffusionChainApplied(args)
-	local mobId = self:MobId(args.destGUID)
-	if mobId == 68696 then -- Diffusion Chain Conduit
-		warnDiffusionChainSoon()
+	if self:MobId(args.destGUID) == 68696 then -- Diffusion Chain Conduit
+		activeProximityAbilities[2] = true
+		updateProximity()
 	end
 end
 
 function mod:StaticShockRemoved(args)
-	if proximityOpen == "Diffusion Chain" or proximityOpen == "Ball Lightning" then return end
 	self:CloseProximity(args.spellId)
 	activeProximityAbilities[1] = nil -- static shock
 	updateProximity()
