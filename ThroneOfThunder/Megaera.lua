@@ -200,16 +200,23 @@ do
 end
 
 do
-	local prev = 0
-	local iceTorrent = mod:SpellName(139857)
+	local iceTorrent, torrentList = mod:SpellName(139857), {}
 	local UnitDebuff = UnitDebuff
+	local function torrentOver(expires)
+		torrentList[expires] = nil
+		if not next(torrentList) then
+			mod:PrimaryIcon(139866)
+		end
+	end
 	function mod:UNIT_AURA(_, unit)
-		local spellName, _, _, _, _, _, expires = UnitDebuff(unit, iceTorrent)
-		if expires and expires ~= prev then
+		local _, _, _, _, _, _, expires = UnitDebuff(unit, iceTorrent)
+		if expires and not torrentList[expires] then
+			local duration = expires - GetTime() -- EJ says 8, spell tooltip says 11
 			local player, server = UnitName(unit)
 			if server then player = player.."-"..server end
 			self:TargetMessage(139866, player, "Urgent", "Info")
 			if UnitIsUnit(unit, "player") then
+				self:TargetBar(139866, duration , player)
 				self:Flash(139866)
 				self:Say(139866)
 			elseif self:Range(unit) < 10 then
@@ -217,8 +224,8 @@ do
 				self:Flash(139866)
 			end
 			self:PrimaryIcon(139866, player)
-			self:ScheduleTimer("PrimaryIcon", 9, 139866)
-			prev = expires
+			self:ScheduleTimer(torrentOver, duration + 1, expires)
+			torrentList[expires] = true
 		end
 	end
 end
