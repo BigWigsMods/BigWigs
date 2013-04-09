@@ -12,6 +12,9 @@ L.stages_desc = "Active les fonctions relatives aux différentes phases/étapes 
 
 L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r) existe déjà en tant que module dans Big Wigs, mais quelque chose essaye de l'enregistrer à nouveau. Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de Big Wigs et de le réinstaller complètement."
 
+L["Prevented boss movie '%d' from playing."] = "Lecture de la cinématique de boss '%d' évitée."
+L.roleUpdate = "Rôle mis à jour."
+
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Vous utilisez une version FINALISÉE de Big Wigs %s (r%d)."
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Vous utilisez une version ALPHA de Big Wigs %s (r%d)."
@@ -61,7 +64,6 @@ L["Select encounter"] = "Sélectionnez une rencontre"
 L["List abilities in group chat"] = "Lister les techniques dans la discussion de groupe"
 L["Block boss movies"] = "Bloquer les cinématiques"
 L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = "Après avoir visionné une cinématique de boss une première fois, Big Wigs empêchera qu'elle soit jouée à nouveau."
-L["Prevented boss movie '%d' from playing."] = "Lecture de la cinématique de boss '%d' évitée."
 L["Pretend I'm using DBM"] = "Prétendre d'utiliser DBM"
 L.pretendDesc = "Si un utilisateur de DBM effectue une vérification des versions pour voir qui utilise DBM, il vous verra sur la liste. Utile pour les guildes qui forcent l'utilisation de DBM."
 L["Create custom DBM bars"] = "Créer les barres DBM"

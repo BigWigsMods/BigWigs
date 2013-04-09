@@ -14,6 +14,9 @@ L.stages_desc = "근접 표시, 바, 기타등 보스의 다양한 단계(페이
 
 L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%d|r) 이미 Big Wigs 에서 보스 모듈로 존재하지만, 다시 등록이 필요합니다 (revision에 |cffffff00%d|r). 이 것은 일반적으로 애드온 업데이트 실패로 인하여 이 모듈이 당신의 애드온 폴더에 두개의 사본이 있는 것을 뜻합니다. 당신이 가지고 있는 Big Wigs 폴더의 삭제와 재설치를 권장합니다."
 
+L["Prevented boss movie '%d' from playing."] = "플레이도중에 나타나는 보스 영상 '%d' 차단합니다."
+L.roleUpdate = "Updated your role."
+
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Big Wigs %s (revision %d) 의 공식 릴리스가 실행중입니다."
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Big Wigs %s (revision %d) 의 알파 릴리스가 실행중입니다."
@@ -63,7 +66,6 @@ L["Select encounter"] = "교전 선택"
 L["List abilities in group chat"] = "대화창에 스킬 목록 표시"
 L["Block boss movies"] = "보스 영상 차단"
 L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = "보스 영상을 한번 본 이후, Big Wigs 를 통해 보스 영상을 차단 할수있습니다."
-L["Prevented boss movie '%d' from playing."] = "플레이도중에 나타나는 보스 영상 '%d' 차단합니다."
 L["Pretend I'm using DBM"] = "DBM 사용 확인"
 L.pretendDesc = "DBM 사용자가 DBM 사용을 체크하기 위해 버전 정보를 확인하면 그 목록에 표시되도록 합니다. DBM을 강제로 사용하는 길드에 유용합니다."
 L["Create custom DBM bars"] = "사용자 DBM 바 생성"

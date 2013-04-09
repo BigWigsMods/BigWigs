@@ -14,6 +14,9 @@ L.stages_desc = "Funktionen für bestimmte Phasen von Bossbegegnungen wie Abstan
 
 L.already_registered = "|cffff0000WARNUNG:|r |cff00ff00%s|r (|cffffff00%s|r) existiert bereits als Modul in Big Wigs, aber irgend etwas versucht es erneut anzumelden. Dies bedeutet normalerweise, dass du zwei Kopien des Moduls aufgrund eines Fehlers beim Aktualisieren in deinem Addon-Ordner hast. Es wird empfohlen, jegliche Big Wigs Ordner zu löschen und dann von Grund auf neu zu installieren."
 
+L["Prevented boss movie '%d' from playing."] = "Videosequenz '%d' wurde blockiert."
+L.roleUpdate = "Deine Rolle wurde aktualisiert."
+
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Bei dir läuft ein offizieller Release von Big Wigs %s (revision %d)."
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Bei dir läuft ein ALPHA RELEASE von Big Wigs %s (revision %d)."
@@ -63,7 +66,6 @@ L["Select encounter"] = "Wähle Begegnung"
 L["List abilities in group chat"] = "Fähigkeiten im Chat auflisten"
 L["Block boss movies"] = "Videos blockieren"
 L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = "Nachdem Sie eine Boss-Videosequenz einmal gesehen haben, wird diese zukünftig von BigWigs blockiert."
-L["Prevented boss movie '%d' from playing."] = "Videosequenz '%d' wurde blockiert."
 L["Pretend I'm using DBM"] = "Täusche vor, dass ich DBM nutze"
 L.pretendDesc = "Wenn ein DBM-Nutzer eine Versionskontrolle ausführt erscheinst du in der Liste. Nützlich für Gilden die auf DBM bestehen."
 L["Create custom DBM bars"] = "Erstelle DBM Custombars"

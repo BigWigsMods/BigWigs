@@ -210,6 +210,42 @@ do
 end
 
 -------------------------------------------------------------------------------
+-- Role Updating
+--
+
+local roleUpdate
+do
+	local timer = nil
+	local function scheduledUpdate()
+		timer = nil
+		local tree = GetSpecialization()
+		local role = GetSpecializationRole(tree)
+		if role == "TANK" then
+			if UnitGroupRolesAssigned("player") ~= "TANK" then
+				UnitSetRole("player", "TANK")
+				addon:Print(L.roleUpdate)
+			end
+		elseif role == "HEALER" then
+			if UnitGroupRolesAssigned("player") ~= "HEALER" then
+				UnitSetRole("player", "HEALER")
+				addon:Print(L.roleUpdate)
+			end
+		else
+			if UnitGroupRolesAssigned("player") ~= "DAMAGER" then
+				UnitSetRole("player", "DAMAGER")
+				addon:Print(L.roleUpdate)
+			end
+		end
+	end
+
+	function roleUpdate()
+		if not timer and not InCombatLockdown() and not UnitAffectingCombat("player") and addon.db.profile.autoRole and (IsInRaid() or IsInGroup()) and not IsPartyLFG() then
+			timer = addon:ScheduleTimer(scheduledUpdate, 1.5) -- Delay as GetSpecialization isn't fast enough
+		end
+	end
+end
+
+-------------------------------------------------------------------------------
 -- Testing
 --
 
@@ -406,11 +442,13 @@ end
 function addon:OnEnable()
 	self:RegisterMessage("BigWigs_AddonMessage", chatMsgAddon)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
+	self:RegisterEvent("PLAYER_TALENT_UPDATE", roleUpdate)
 
 	self.pluginCore:Enable()
 	self.bossCore:Enable()
 
 	zoneChanged()
+	roleUpdate()
 	self:SendMessage("BigWigs_CoreEnabled")
 end
 

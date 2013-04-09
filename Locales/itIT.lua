@@ -12,6 +12,9 @@ L.stages_desc = "Abilita funzioni relative alle varie fasi del boss come la pros
 
 L.already_registered = "|cffff0000ATTENZIONE:|r |cff00ff00%s|r (|cffffff00%s|r) esiste già come modulo di BigWigs, ma qualcosa sta cercando di caricarlo di nuovo. Questo solitamente significa che hai due copie di questo modulo nella cartella addons a causa di qualche aggiornamento sbagliato. È consigliabile reinstallare BigWigs cancellando tutte le cartelle BigWigs."
 
+L["Prevented boss movie '%d' from playing."] = "Bloccato il video '%d'."
+L.roleUpdate = "Il tuo ruolo è stato aggiornato."
+
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Stai usando una versione ufficiale di BigWigs %s (Revisione %d)"
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Stai usando una versione ALPHA di BigWigs %s (Revisione %d)"
@@ -61,7 +64,6 @@ L["Select encounter"] = "Seleziona il Combattimento"
 L["List abilities in group chat"] = "Elenca le Abilità nella Chat"
 L["Block boss movies"] = "Blocca i video dei Boss"
 L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = "Dopo aver visto un video la prima volta, Big Wigs impedirà di vederlo di nuovo."
-L["Prevented boss movie '%d' from playing."] = "Bloccato il video '%d'."
 L["Pretend I'm using DBM"] = "Fingi di usare DBM"
 L.pretendDesc = "Se un'utente DBM effettua un controllo di versione per vedere chi usa DBM, ti vedranno nella lista. Utile per quelle gilde che obbligano ad usare DBM."
 L["Create custom DBM bars"] = "Crea barre DBM personalizzate"

@@ -12,6 +12,9 @@ L.stages_desc = "Enable functions related to the various stages/phases of the bo
 
 L.already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%s|r) already exists as a module in Big Wigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch."
 
+L["Prevented boss movie '%d' from playing."] = true
+L.roleUpdate = "Updated your role."
+
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = true
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = true
@@ -61,7 +64,6 @@ L["Select encounter"] = true
 L["List abilities in group chat"] = true
 L["Block boss movies"] = true
 L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = true
-L["Prevented boss movie '%d' from playing."] = true
 L["Pretend I'm using DBM"] = true
 L.pretendDesc = "If a DBM user does a version check to see who's using DBM, they will see you on the list. Useful for guilds that force using DBM."
 L["Create custom DBM bars"] = true

@@ -14,6 +14,9 @@ L.stages_desc = "启用首领不同阶段的相关功能，如近距离显示、
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 Big Wigs 中已经存在模块，但存在模块仍试图重新注册。可能由于更新失败的原因，通常表示您有两份模块拷贝在您插件的文件夹中。建议删除所有 Big Wigs 文件夹并重新安装。"
 
+L["Prevented boss movie '%d' from playing."] = "防止首领过场动画“%d”被播放。"
+L.roleUpdate = "更新职责。"
+
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "你所使用的 Big Wigs %s 为官方正式版（修订号%d）"
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "你所使用的 Big Wigs %s 为“α测试版”（修订号%d）"
@@ -63,7 +66,6 @@ L["Select encounter"] = "选择战斗"
 L["List abilities in group chat"] = "列出技能到团队聊天"
 L["Block boss movies"] = "阻止首领过场动画"
 L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = "在看过一次首领过场动画以后，Big Wigs 将防止它再次播放。"
-L["Prevented boss movie '%d' from playing."] = "防止首领过场动画“%d”被播放。"
 L["Pretend I'm using DBM"] = "假如我使用 DBM"
 L.pretendDesc = "如果 DBM 用户进行版本检查，看看谁在使用 DBM，他们会看到你的列表上。当公会强制使用 DBM 时非常有用。"
 L["Create custom DBM bars"] = "创建自定义 DBM 计时条"

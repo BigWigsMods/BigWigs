@@ -12,6 +12,9 @@ L.stages_desc = "Habilita funções relacionadas a vários estágios/fases do ch
 
 L.already_registered = "|cffff0000ATENÇÃO:|r |cff00ff00%s|r (|cffffff00%s|r) já existe este módulo BigWigs, isso normalmente significa que você tem 2 cópias desse módulo em sua pasta de AddOns, o que pode ter ocorrido devido a uma atualização mal sucedida. Recomenda-se deletar as pastas do BigWigs e reinstalar."
 
+L["Block boss movies"] = "Bloquear filmes de chefes"
+L.roleUpdate = "Updated your role."
+
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Você está usando uma versão oficial do Big Wigs %s (revisão %d)"
 L["You are running ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Você está usando uma VERSÃO ALFA do Big Wigs %s (revisão %d)"
@@ -59,7 +62,6 @@ L["Reset positions"] = "Reiniciar posições"
 L["Colors"] = "Cores"
 L["Select encounter"] = "Selecionar encontro"
 L["List abilities in group chat"] = "Listar as habilidades no chat"
-L["Block boss movies"] = "Bloquear filmes de chefes"
 L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = "Depois de ver o filme de um chefe uma vez, o Big Wigs evitará que este volte a reproduzir."
 L["Prevented boss movie '%d' from playing."] = "Filme do chefe '%d' bloqueado."
 L["Pretend I'm using DBM"] = "Fingir que estou usando DBM"

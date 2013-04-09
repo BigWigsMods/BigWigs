@@ -18,7 +18,6 @@ L.normal = "Обычный режим"
 L.heroic = "Героический режим"
 L.hard = "Сложный режим"
 L.general = "Общее"
-L.roleUpdate = "Ваша роль обновлена."
 
 L.duration = "%s для %s сек"
 L.over = "%s закончился!"
