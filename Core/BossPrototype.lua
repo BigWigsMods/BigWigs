@@ -808,14 +808,17 @@ do
 	end
 	local coloredNames = setmetatable({}, {__index =
 		function(self, key)
-			if type(key) == "nil" then return nil end
-			local _, class = UnitClass(key)
-			if class then
-				self[key] = hexColors[class] .. key:gsub("%-.+", "*") .. "|r" -- Replace server names with *
-			else
-				return key
+			if key then
+				local shortKey = key:gsub("%-.+", "*") -- Replace server names with *
+				local _, class = UnitClass(key)
+				if class then
+					local newKey = hexColors[class] .. shortKey .. "|r"
+					self[key] = newKey
+					return newKey
+				else
+					return shortKey
+				end
 			end
-			return self[key]
 		end
 	})
 
@@ -894,10 +897,13 @@ end
 
 function boss:TargetBar(key, length, player, text, icon)
 	if checkFlag(self, key, C.BAR) then
-		local textType = type(text)
+		if not player then
+			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???", length, icons[icon or textType == "number" and text or key])
+			return
+		end
 		if UnitIsUnit(player, "player") then
 			self:SendMessage("BigWigs_StartBar", self, key, format(L.you, textType == "string" and text or spells[text or key]), length, icons[icon or textType == "number" and text or key])
-		else
+		elseif not checkFlag(self, key, C.ME_ONLY) then
 			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], player:gsub("%-.+", "*")), length, icons[icon or textType == "number" and text or key])
 		end
 	end
