@@ -221,6 +221,11 @@ L.Long = "Lang"
 L.Warning = "Warnung"
 L.Victory = "Sieg"
 
+--L.Beware = "'Beware' (Algalon)"
+--L.FlagTaken = "'Flag Taken' (PvP)"
+--L.Destruction = "'Destruction' (Kil'jaeden)"
+--L.RunAway = "'Run Away Little Girl (Big Bad Wolf)'"
+
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Legt den Sound fest, der für %q verwendet wird.\n\nStrg-Klicken, um reinzuhören."
 L["Default only"] = "Nur Standards"
 

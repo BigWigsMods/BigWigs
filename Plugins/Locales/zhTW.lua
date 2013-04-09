@@ -221,6 +221,11 @@ L.Long = "長響"
 --L.Warning = "Warning"
 L.Victory = "勝利"
 
+--L.Beware = "'Beware' (Algalon)"
+--L.FlagTaken = "'Flag Taken' (PvP)"
+--L.Destruction = "'Destruction' (Kil'jaeden)"
+--L.RunAway = "'Run Away Little Girl (Big Bad Wolf)'"
+
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "設定使用%q音效（Ctrl-點擊可以預覽效果）。"
 L["Default only"] = "僅用預設"
 
