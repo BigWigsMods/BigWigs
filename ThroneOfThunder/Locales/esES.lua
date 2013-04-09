@@ -129,7 +129,7 @@ if L then
 	L.engage_trigger = "¡El orbe explota!"
 
 	L.matterswap_desc = "Un jugador con Intercambio de materia está lejos de ti. Intercambiaréis lugares si se disipa."
-	L.matterswap_message = "You are furthest for Matter Swap!"
+	L.matterswap_message = "¡Estás alejado de Intercambio de materia!"
 
 	L.siphon_power = "Succionar ánima (%d%%)"
 	L.siphon_power_soon = "¡Succionar ánima (%d%%) %s inminente!"
