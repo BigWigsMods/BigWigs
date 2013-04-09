@@ -898,7 +898,7 @@ end
 function boss:TargetBar(key, length, player, text, icon)
 	if checkFlag(self, key, C.BAR) then
 		if not player then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???", length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), length, icons[icon or textType == "number" and text or key])
 			return
 		end
 		if UnitIsUnit(player, "player") then
