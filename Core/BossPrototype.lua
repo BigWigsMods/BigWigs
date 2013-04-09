@@ -551,7 +551,7 @@ function boss:LFR()
 end
 
 function boss:Heroic()
-	return difficulty == 5 or difficulty == 6
+	return difficulty == 2 or difficulty == 5 or difficulty == 6
 end
 
 function boss:MobId(guid)
