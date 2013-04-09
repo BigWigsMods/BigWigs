@@ -214,14 +214,16 @@ do
 			local duration = expires - GetTime() -- EJ says 8, spell tooltip says 11
 			local player, server = UnitName(unit)
 			if server then player = player.."-"..server end
-			self:TargetMessage(139866, player, "Urgent", "Info")
 			if UnitIsUnit(unit, "player") then
+				self:TargetMessage(139866, player, "Urgent", "Info")
 				self:TargetBar(139866, duration , player)
 				self:Flash(139866)
 				self:Say(139866)
-			elseif self:Range(unit) < 10 then
+			elseif self:Range(unit) < 6 then
 				self:RangeMessage(139866)
 				self:Flash(139866)
+			else
+				self:TargetMessage(139866, player, "Urgent")
 			end
 			self:PrimaryIcon(139866, player)
 			self:ScheduleTimer(torrentOver, duration + 1, expires)
