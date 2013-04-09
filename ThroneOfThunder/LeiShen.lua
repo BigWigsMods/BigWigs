@@ -599,8 +599,7 @@ end
 
 function mod:DiffusionChainApplied(args)
 	if self:MobId(args.destGUID) == 68696 then -- Diffusion Chain Conduit
-		activeProximityAbilities[2] = true
-		updateProximity()
+		warnDiffusionChainSoon()
 	end
 end
 
