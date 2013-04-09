@@ -152,7 +152,7 @@ function mod:Grip(args)
 end
 
 do
-	local target = self:NewTargetList()
+	local target = mod:NewTargetList()
 	function mod:Stuns(args)
 		if phase < 2 then return end
 		target[1] = args.sourceName
