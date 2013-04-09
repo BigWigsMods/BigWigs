@@ -71,7 +71,7 @@ L.dbmBarDesc = "Se um usuário do DBM enviar um contador de puxe ou uma barra pe
 L.chatMessages = "Chat frame messages"
 L.chatMessagesDesc = "Coloca todas as mensagens do BigWigs na janela de chat padrão, em adição da configuração de amostra"
 --L.autoRole = "Automatic role update"
---L.autoRoleDesc = "Some boss modules will show better warnings when they know what role a player is, this option lets Big Wigs automatically update your role when you engage a boss. It's recommended you leave this turned on."
+--L.autoRoleDesc = "Knowing what role you are will improve Big Wigs warnings for other people in your raid, this option lets Big Wigs automatically update your role. For example, some modules will check if a player is a tank when scanning for boss abilities that never affect tanks.\n\n|cffff4411This is not related to role specific warnings and it's highly recommended you leave this turned on!|r"
 
 --L.slashDescTitle = "|cFFFED000Slash Commands:|r"
 --L.slashDescPull = "|cFFFED000/pull:|r Sends a pull countdown to your raid."

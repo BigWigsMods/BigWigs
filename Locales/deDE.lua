@@ -73,7 +73,7 @@ L.dbmBarDesc = "Sendet ein DBM-Nutzer einen Pizza-Timer oder Custombar wird dies
 L.chatMessages = "Chatfenster-Nachrichten"
 L.chatMessagesDesc = "Gibt alle Big Wigs Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung unter 'Ausgabe'."
 L.autoRole = "Automatisches Rollen-Update"
-L.autoRoleDesc = "Einige Bossmodule zeigen bessere Warnungen an, wenn sie die Rolle eines Spielers erkennen. Diese Option lässt Big Wigs Deine Rolle automatisch bei Kampfbeginn aktualisieren. Es wird empfohlen diese Option eingeschaltet zu lassen."
+--L.autoRoleDesc = "Knowing what role you are will improve Big Wigs warnings for other people in your raid, this option lets Big Wigs automatically update your role. For example, some modules will check if a player is a tank when scanning for boss abilities that never affect tanks.\n\n|cffff4411This is not related to role specific warnings and it's highly recommended you leave this turned on!|r"
 
 L.slashDescTitle = "|cFFFED000Slash Befehle:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Sendet einen Countdown zum Pull an den Raid."

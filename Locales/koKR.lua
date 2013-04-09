@@ -73,7 +73,7 @@ L.dbmBarDesc = "DBM 사용자가 풀링 타이머나 사용자 'pizza' 바를 �
 L.chatMessages = "대화 창 메시지"
 L.chatMessagesDesc = "모든 BigWigs 메세지를 디스플레이 설정에 추가된 기본 대화창에 출력합니다."
 --L.autoRole = "Automatic role update"
---L.autoRoleDesc = "Some boss modules will show better warnings when they know what role a player is, this option lets Big Wigs automatically update your role when you engage a boss. It's recommended you leave this turned on."
+--L.autoRoleDesc = "Knowing what role you are will improve Big Wigs warnings for other people in your raid, this option lets Big Wigs automatically update your role. For example, some modules will check if a player is a tank when scanning for boss abilities that never affect tanks.\n\n|cffff4411This is not related to role specific warnings and it's highly recommended you leave this turned on!|r"
 
 --L.slashDescTitle = "|cFFFED000Slash Commands:|r"
 --L.slashDescPull = "|cFFFED000/pull:|r Sends a pull countdown to your raid."

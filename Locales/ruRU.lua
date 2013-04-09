@@ -71,7 +71,7 @@ L.dbmBarDesc = "Если пользователь DBM отправляет та�
 L.chatMessages = "Сообщения в чат"
 L.chatMessagesDesc = "Выводить все сообщения BigWigs в стандартное окно чата в дополнение к настройкам отображения."
 L.autoRole = "Автоматическое обновление роли"
-L.autoRoleDesc = "Некоторые модули будут лучше работать, если известна ваша роль, эта опция позволит Big Wigs автоматически обновлять вашу роль в начале схватки с боссом. Рекоммендуется включить."
+--L.autoRoleDesc = "Knowing what role you are will improve Big Wigs warnings for other people in your raid, this option lets Big Wigs automatically update your role. For example, some modules will check if a player is a tank when scanning for boss abilities that never affect tanks.\n\n|cffff4411This is not related to role specific warnings and it's highly recommended you leave this turned on!|r"
 
 L.slashDescTitle = "|cFFFED000Быстрые команды:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Отправляет отсчет атаки в рейд."
