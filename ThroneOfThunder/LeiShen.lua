@@ -517,7 +517,7 @@ function mod:Boss1Succeeded(unitId, spellName, _, _, spellId)
 		self:Message(135150, "Attention")
 		self:Bar(135150, 30)
 	elseif spellId == 139006 or spellId == 139007 or spellId == 139008 or spellId == 139009 then -- active quadrant
-		if self:Heroic() and phase < 3 then
+		if self:Heroic() and phase == 3 then
 			self:Message("stages", "Attention", nil, spellName, 136913) -- probably shouldn't be linked to stages, but dunno anything better -- overwhelming power icon
 		end
 	end
