@@ -547,7 +547,7 @@ do
 			tooCloseForOvercharged = true
 		end
 		overchargedList[#overchargedList+1] = args.destName
-		self:Bar(args.spellId, 6, ("%s: %s"):format(args.spellName, overchargedList[#overchargedList]))
+		self:TargetBar(args.spellId, 6, args.destName)
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnOvercharged, 0.1, args.spellId)
 		end

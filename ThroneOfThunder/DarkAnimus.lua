@@ -250,7 +250,7 @@ do
 
 	function mod:MatterSwapRemoved(args)
 		self:StopBar(args.spellId, args.destName)
-		self:SecondaryIcon("matterswap", nil)
+		self:SecondaryIcon("matterswap")
 		if args.destName == matterSwapTargets[1] then
 			tremove(matterSwapTargets, 1)
 			self:PrimaryIcon(args.spellId, matterSwapTargets[1]) -- mark next (if set)
