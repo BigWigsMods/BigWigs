@@ -145,10 +145,10 @@ function plugin:OnRegister()
 	media:Register(mType, "BigWigs: 1", "Interface\\AddOns\\BigWigs\\Sounds\\1.mp3")
 
 	-- Ingame sounds that DBM uses for DBM converts
-	media:Register(mType, "BigWigs: DBM-".. L.FlagTaken, "Sound\\Spells\\PVPFlagTaken.wav")
-	media:Register(mType, "BigWigs: DBM-".. L.Beware, "Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.wav")
-	media:Register(mType, "BigWigs: DBM-".. L.Destruction, "Sound\\Creature\\KilJaeden\\KILJAEDEN02.wav")
-	media:Register(mType, "BigWigs: DBM-".. L.RunAway, "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
+	media:Register(mType, "BigWigs: [DBM] ".. L.FlagTaken, "Sound\\Spells\\PVPFlagTaken.wav")
+	media:Register(mType, "BigWigs: [DBM] ".. L.Beware, "Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.wav")
+	media:Register(mType, "BigWigs: [DBM] ".. L.Destruction, "Sound\\Creature\\KilJaeden\\KILJAEDEN02.wav")
+	media:Register(mType, "BigWigs: [DBM] ".. L.RunAway, "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
 
 	soundList = media:List(mType)
 
