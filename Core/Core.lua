@@ -213,34 +213,19 @@ end
 -- Role Updating
 --
 
-local roleUpdate
-do
-	local timer = nil
-	local function scheduledUpdate()
-		timer = nil
+function addon:UpdateRole()
+	if self.db.profile.autoRole and not InCombatLockdown() and not UnitAffectingCombat("player") and (IsInRaid() or IsInGroup()) and not IsPartyLFG() then
 		local tree = GetSpecialization()
 		local role = GetSpecializationRole(tree)
-		if role == "TANK" then
-			if UnitGroupRolesAssigned("player") ~= "TANK" then
-				UnitSetRole("player", "TANK")
-				addon:Print(L.roleUpdate)
-			end
-		elseif role == "HEALER" then
-			if UnitGroupRolesAssigned("player") ~= "HEALER" then
-				UnitSetRole("player", "HEALER")
-				addon:Print(L.roleUpdate)
-			end
-		else
-			if UnitGroupRolesAssigned("player") ~= "DAMAGER" then
-				UnitSetRole("player", "DAMAGER")
-				addon:Print(L.roleUpdate)
-			end
-		end
-	end
-
-	function roleUpdate()
-		if not timer and not InCombatLockdown() and not UnitAffectingCombat("player") and addon.db.profile.autoRole and (IsInRaid() or IsInGroup()) and not IsPartyLFG() then
-			timer = addon:ScheduleTimer(scheduledUpdate, 1.5) -- Delay as GetSpecialization isn't fast enough
+		if role == "TANK" and UnitGroupRolesAssigned("player") ~= "TANK" then
+			UnitSetRole("player", "TANK")
+			self:Print(L.roleUpdate)
+		elseif role == "HEALER" and UnitGroupRolesAssigned("player") ~= "HEALER" then
+			UnitSetRole("player", "HEALER")
+			self:Print(L.roleUpdate)
+		elseif role == "DAMAGER" and UnitGroupRolesAssigned("player") ~= "DAMAGER" then
+			UnitSetRole("player", "DAMAGER")
+			self:Print(L.roleUpdate)
 		end
 	end
 end
@@ -442,13 +427,13 @@ end
 function addon:OnEnable()
 	self:RegisterMessage("BigWigs_AddonMessage", chatMsgAddon)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
-	self:RegisterEvent("PLAYER_TALENT_UPDATE", roleUpdate)
+	self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED", "UpdateRole")
 
 	self.pluginCore:Enable()
 	self.bossCore:Enable()
 
 	zoneChanged()
-	roleUpdate()
+	self:UpdateRole()
 	self:SendMessage("BigWigs_CoreEnabled")
 end
 
