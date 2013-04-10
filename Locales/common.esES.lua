@@ -28,7 +28,7 @@ L.interrupted = "%s cortad@"
 L.add_spawned = "¡Add aparece!"
 L.next_add = "Siguiente Add"
 L.add_killed = "¡Add muerto! (%d/%d)"
-L.add_remaining = "Add killed, %d remaining"
+L.add_remaining = "Add muerto, %d restantes"
 
 L.mob_killed = "¡%s muert@! (%d/%d)"
 L.mob_remaining = "%s muert@, %d restantes"
