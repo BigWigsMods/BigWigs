@@ -180,7 +180,7 @@ end
 
 function mod:ExplosiveSlam(args)
 	local golem = self:GetUnitIdByGUID(args.sourceGUID)
-	if (golem and UnitIsUnit(args.destName, golem.."target")) or self:Tank(args.destName) then -- don't care about non-tanks gaining stacks
+	if (golem and UnitGUID(golem.."target") == args.destGUID) or (args.destName and self:Tank(args.destName)) then -- don't care about non-tanks gaining stacks
 		self:StackMessage(-7770, args.destName, args.amount, "Urgent", "Info", L["slam_message"])
 	end
 end
