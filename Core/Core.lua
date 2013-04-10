@@ -85,7 +85,7 @@ local monitoring = nil
 local function enableBossModule(module, noSync)
 	if not module:IsEnabled() then
 		module:Enable()
-		if not noSync then
+		if not noSync and not module.worldBoss then
 			module:Sync("EnableModule", module:GetName())
 		end
 	end
@@ -609,13 +609,6 @@ do
 			module.displayName = EJ_GetEncounterInfo(module.encounterId)
 		end
 		if not module.displayName then module.displayName = module.moduleName end
-		if not enablezones[module.zoneId] then
-			enablezones[module.zoneId] = true
-			-- We fire zoneChanged() as a backup for LoD users. In rare cases,
-			-- ZONE_CHANGED_NEW_AREA fires before the first module can add its zoneId into the table,
-			-- resulting in a failed check to register UPDATE_MOUSEOVER_UNIT, etc.
-			zoneChanged()
-		end
 
 		module.SetupOptions = function(self)
 			if self.GetOptions then
@@ -633,6 +626,15 @@ do
 			module:OnRegister()
 			module.OnRegister = nil
 		end
+
+		if not enablezones[module.zoneId] then
+			enablezones[module.zoneId] = true
+			-- We fire zoneChanged() as a backup for LoD users. In rare cases,
+			-- ZONE_CHANGED_NEW_AREA fires before the first module can add its zoneId into the table,
+			-- resulting in a failed check to register UPDATE_MOUSEOVER_UNIT, etc.
+			zoneChanged()
+		end
+
 		self:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 	end
 
