@@ -111,7 +111,7 @@ do
 		if self:Me(args.destGUID) and not self:Me(args.sourceGUID) then
 			local t = GetTime()
 			if t-prev > 3 then
-				self:Message(136340, "Personal", "Alarm", CL["under"]:format(args.spellName))
+				self:Message(136340, "Personal", "Alarm", CL["underyou"]:format(args.spellName))
 			end
 		end
 	end
