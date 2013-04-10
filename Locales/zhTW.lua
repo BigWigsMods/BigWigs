@@ -73,7 +73,7 @@ L.dbmBarDesc = "如果 DBM 使用者發送一個倒數計時或一個自訂的�
 L.chatMessages = "聊天框體訊息"
 L.chatMessagesDesc = "除了顯示設定，輸出所有 Big Wigs 訊息到預設聊天框體。"
 L.autoRole = "自動更新職責"
---L.autoRoleDesc = "Knowing what role you are will improve Big Wigs warnings for other people in your raid, this option lets Big Wigs automatically update your role. For example, some modules will check if a player is a tank when scanning for boss abilities that never affect tanks.\n\n|cffff4411This is not related to role specific warnings and it's highly recommended you leave this turned on!|r"
+L.autoRoleDesc = "明確所擔任的職責 Big Wigs 將為團隊其他隊友優化警報，此選項將使 Big Wigs 自動更新你的職責。比如，一些模組將檢查玩家是坦克時首領並不會對坦克所施放的技能。\n\n|cffff4411這是與特定的職責不相關的警報並強烈建議開啟此選項！|r"
 
 L.slashDescTitle = "|cFFFED000命令行：|r"
 L.slashDescPull = "|cFFFED000/pull:|r 發送拉怪倒數提示到團隊。"
