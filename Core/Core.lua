@@ -217,14 +217,8 @@ function addon:UpdateRole()
 	if self.db.profile.autoRole and not InCombatLockdown() and not UnitAffectingCombat("player") and (IsInRaid() or IsInGroup()) and not IsPartyLFG() then
 		local tree = GetSpecialization()
 		local role = GetSpecializationRole(tree)
-		if role == "TANK" and UnitGroupRolesAssigned("player") ~= "TANK" then
-			UnitSetRole("player", "TANK")
-			self:Print(L.roleUpdate)
-		elseif role == "HEALER" and UnitGroupRolesAssigned("player") ~= "HEALER" then
-			UnitSetRole("player", "HEALER")
-			self:Print(L.roleUpdate)
-		elseif role == "DAMAGER" and UnitGroupRolesAssigned("player") ~= "DAMAGER" then
-			UnitSetRole("player", "DAMAGER")
+		if UnitGroupRolesAssigned("player") ~= role then
+			UnitSetRole("player", role)
 			self:Print(L.roleUpdate)
 		end
 	end
