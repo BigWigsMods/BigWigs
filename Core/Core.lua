@@ -501,12 +501,12 @@ do
 		self:Print(errorDeprecatedNew:format(module))
 	end
 
-	local function new(core, module, zone, encounterId, ...)
+	local function new(core, module, zoneId, encounterId, ...)
 		if core:GetModule(module, true) then
 			addon:Print(errorAlreadyRegistered:format(module))
 		else
-			if type(zone) == "string" then
-				addon:Print(errorDeprecatedZone:format(module, tostring(zone)))
+			if type(zoneId) == "string" then
+				addon:Print(errorDeprecatedZone:format(module, tostring(zoneId)))
 				return
 			end
 			local m = core:NewModule(module, ...)
@@ -520,7 +520,7 @@ do
 			m.RegisterEvent = addon.RegisterEvent
 			m.UnregisterEvent = addon.UnregisterEvent
 
-			m.zoneId = zone
+			m.zoneId = zoneId
 			m.encounterId = encounterId
 			return m, CL
 		end
@@ -528,8 +528,8 @@ do
 
 	-- A wrapper for :NewModule to present users with more information in the
 	-- case where a module with the same name has already been registered.
-	function addon:NewBoss(module, zone, ...)
-		return new(self.bossCore, module, zone, ...)
+	function addon:NewBoss(module, zoneId, ...)
+		return new(self.bossCore, module, zoneId, ...)
 	end
 	function addon:NewPlugin(module, ...)
 		return new(self.pluginCore, module, nil, nil, ...)

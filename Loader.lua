@@ -304,7 +304,7 @@ do
 				if override then
 					loadOnZone[override][#loadOnZone[override] + 1] = addon
 				else
-					menus[zone] = true
+					if not menus[zone] then menus[zone] = true end
 				end
 			else
 				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZone), tostring(addon)))
@@ -330,7 +330,7 @@ do
 					if override then
 						loadOnZone[override][#loadOnZone[override] + 1] = addon
 					else
-						menus[zoneOrBoss] = true
+						if not menus[zoneOrBoss] then menus[zoneOrBoss] = true end
 					end
 				else
 					worldBosses[zoneOrBoss] = currentZone
@@ -347,7 +347,7 @@ do
 			local menu = tonumber(GetAddOnMetadata(name, "X-BigWigs-Menu"))
 			if menu then
 				if not loadOnZone[menu] then loadOnZone[menu] = {} end
-				menus[menu] = true
+				if not menus[menu] then menus[menu] = true end
 			end
 			local zones = GetAddOnMetadata(name, "X-BigWigs-LoadOn-ZoneId")
 			if zones then
@@ -359,7 +359,7 @@ do
 			local menu = tonumber(GetAddOnMetadata(name, "X-BigWigs-Menu"))
 			if menu then
 				if not loadOnZone[menu] then loadOnZone[menu] = {} end
-				menus[menu] = true
+				if not menus[menu] then menus[menu] = true end
 			end
 			local zones = GetAddOnMetadata(name, "X-BigWigs-LoadOn-WorldBoss")
 			if zones then
@@ -692,6 +692,10 @@ function loader:BigWigs_BossModuleRegistered(_, _, module)
 	else
 		enableZones[module.zoneId] = true
 	end
+
+	local id = module.otherMenu or module.zoneId
+	if type(menus[id]) ~= "table" then menus[id] = {} end
+	menus[id][#menus[id]+1] = module
 end
 
 function loader:BigWigs_CoreEnabled()

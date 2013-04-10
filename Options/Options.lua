@@ -402,12 +402,7 @@ function options:OnEnable()
 		tmp[zone] = k
 		tmpZone[#tmpZone+1] = zone
 	end
-	for k in next, zoneModules do
-		local zone = translateZoneID(k)
-		tmp[zone] = k
-		tmpZone[#tmpZone+1] = zone
-	end
-	table.sort(tmpZone)
+	sort(tmpZone)
 	for i=1, #tmpZone do
 		local zone = tmpZone[i]
 		self:GetZonePanel(tmp[zone])
@@ -1032,7 +1027,6 @@ end
 
 function showToggleOptions(widget, event, group)
 	if widget:GetUserData("zone") then
-		local modules = zoneModules[widget:GetUserData("zone")]
 		local module = BigWigs:GetBossModule(group)
 		widget:SetUserData("bossIndex", group)
 		populateToggleOptions(widget, module)
@@ -1041,93 +1035,91 @@ function showToggleOptions(widget, event, group)
 	end
 end
 
-local onZoneShow
-do
-	local sorted = {}
-	function onZoneShow(frame)
-		local zone = frame.id
+local function onZoneShow(frame)
+	local zoneId = frame.id
 
-		-- Make sure all the bosses for this zone are loaded.
-		BigWigsLoader:LoadZone(zone)
+	-- Make sure all the bosses for this zone are loaded.
+	BigWigsLoader:LoadZone(zoneId)
 
-		-- Does this zone have multiple encounters?
-		local multiple = zone and zoneModules[zone] and true or nil
+	-- Does this zone have multiple encounters?
+	local moduleList = BigWigsLoader:GetZoneMenus()[zoneId]
+	local multiple = moduleList[2] and true
 
-		-- This zone has no modules, nor is the panel related
-		-- to a module.
-		if not multiple and not frame.module then
-			error(("We wanted to show options for the zone %q, but it does not have any modules registered."):format(tostring(zone)))
-			return
-		end
+	-- This zone has no modules, nor is the panel related
+	-- to a module.
+	if not multiple and not frame.module then
+		error(("We wanted to show options for the zone %q, but it does not have any modules registered."):format(tostring(zoneId)))
+		return
+	end
 
-		local outerContainer = AceGUI:Create("SimpleGroup")
-		outerContainer:PauseLayout()
-		outerContainer:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -8)
-		outerContainer:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -8, 8)
-		outerContainer:SetLayout("Fill")
-		outerContainer:SetFullWidth(true)
+	local zoneList, zoneSort = {}, {}
+	for i = 1, #moduleList do
+		local module = moduleList[i]
+		zoneList[module.moduleName] = module.displayName
+		zoneSort[i] = module.moduleName
+	end
 
-		local innerContainer = nil
-		if multiple then
-			innerContainer = AceGUI:Create("DropdownGroup")
-			innerContainer:SetTitle(L["Select encounter"])
-			innerContainer:SetLayout("Flow")
-			innerContainer:SetCallback("OnGroupSelected", showToggleOptions)
-			innerContainer:SetUserData("zone", zone)
+	local outerContainer = AceGUI:Create("SimpleGroup")
+	outerContainer:PauseLayout()
+	outerContainer:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -8)
+	outerContainer:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -8, 8)
+	outerContainer:SetLayout("Fill")
+	outerContainer:SetFullWidth(true)
 
-			-- Sort the encounters for this zone, so we don't have
-			-- to do it twice.
-			wipe(sorted)
-			for k, v in next, zoneModules[zone] do
-				sorted[#sorted + 1] = k
+	local innerContainer = nil
+	if multiple then
+		innerContainer = AceGUI:Create("DropdownGroup")
+		innerContainer:SetTitle(L["Select encounter"])
+		innerContainer:SetLayout("Flow")
+		innerContainer:SetCallback("OnGroupSelected", showToggleOptions)
+		innerContainer:SetUserData("zone", zoneId)
+
+		innerContainer:SetGroupList(zoneList, zoneSort)
+	else
+		innerContainer = AceGUI:Create("SimpleGroup")
+		innerContainer:SetLayout("Fill")
+		innerContainer:SetUserData("module", frame.module)
+	end
+
+	-- scroll is where we actually put stuff in case things
+	-- overflow vertically
+	local scroll = AceGUI:Create("ScrollFrame")
+	scroll:SetLayout("Flow")
+	scroll:SetFullWidth(true)
+	scroll:SetFullHeight(true)
+	innerContainer:SetUserData("parent", scroll)
+	innerContainer:AddChild(scroll)
+
+	outerContainer:AddChild(innerContainer)
+
+	outerContainer:ResumeLayout()
+	outerContainer:PerformLayout()
+
+	-- Need to parent the AceGUI container to the actual
+	-- zone panel frame so that the AceGUI container will
+	-- show at all.
+	outerContainer.frame:SetParent(frame)
+	outerContainer.frame:Show()
+
+	-- Need a reference to the outer container so that we can
+	-- release all children when the zone panel is hidden.
+	frame.container = outerContainer
+
+	if multiple then
+		-- Find the first enabled module and select that in the
+		-- dropdown if possible.
+		local index = 1
+		for i = 1, #zoneSort do
+			local name = zoneSort[i]
+			local m = BigWigs:GetBossModule(name)
+			if m:IsEnabled() then
+				index = i
+				break
 			end
-			table.sort(sorted)
-			innerContainer:SetGroupList(zoneModules[zone], sorted)
-		else
-			innerContainer = AceGUI:Create("SimpleGroup")
-			innerContainer:SetLayout("Fill")
-			innerContainer:SetUserData("module", frame.module)
 		end
-
-		-- scroll is where we actually put stuff in case things
-		-- overflow vertically
-		local scroll = AceGUI:Create("ScrollFrame")
-		scroll:SetLayout("Flow")
-		scroll:SetFullWidth(true)
-		scroll:SetFullHeight(true)
-		innerContainer:SetUserData("parent", scroll)
-		innerContainer:AddChild(scroll)
-
-		outerContainer:AddChild(innerContainer)
-
-		outerContainer:ResumeLayout()
-		outerContainer:PerformLayout()
-
-		-- Need to parent the AceGUI container to the actual
-		-- zone panel frame so that the AceGUI container will
-		-- show at all.
-		outerContainer.frame:SetParent(frame)
-		outerContainer.frame:Show()
-
-		-- Need a reference to the outer container so that we can
-		-- release all children when the zone panel is hidden.
-		frame.container = outerContainer
-
-		if multiple then
-			-- Find the first enabled module and select that in the
-			-- dropdown if possible.
-			local index = 1
-			for i, v in next, sorted do
-				local m = BigWigs:GetBossModule(v)
-				if m:IsEnabled() then
-					index = i
-					break
-				end
-			end
-			innerContainer:SetGroup(sorted[index])
-		else
-			populateToggleOptions(innerContainer, frame.module)
-		end
+		innerContainer:SetGroup(zoneSort[index])
+	else
+		populateToggleOptions(innerContainer, frame.module)
 	end
 end
 
@@ -1204,19 +1196,12 @@ do
 	function options:Register(message, moduleName, module)
 		if registered[module.name] then return end
 		registered[module.name] = true
-		if module.toggleOptions or module.GetOptions then
-			if module:IsBossModule() then
-				local zone = module.otherMenu or module.zoneId
-				if not zone then error(module.name .. " doesn't have any valid zone set!") end
-				if not zoneModules[zone] then zoneModules[zone] = {} end
-				zoneModules[zone][module.moduleName] = module.displayName
-			else
-				local panel, created = self:GetPanel(moduleName, "Big Wigs")
-				if created then
-					panel:SetScript("OnShow", onZoneShow)
-					panel:SetScript("OnHide", onZoneHide)
-					panel.module = module
-				end
+		if (module.toggleOptions or module.GetOptions) and not module:IsBossModule() then
+			local panel, created = self:GetPanel(moduleName, "Big Wigs")
+			if created then
+				panel:SetScript("OnShow", onZoneShow)
+				panel:SetScript("OnHide", onZoneHide)
+				panel.module = module
 			end
 		end
 		if module.pluginOptions then
