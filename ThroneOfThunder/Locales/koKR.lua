@@ -35,27 +35,29 @@ end
 
 L = BigWigs:NewBossLocale("Council of Elders", "koKR")
 if L then
-	L.priestess_adds = "영혼 추가"  -- Priestess adds
-	L.priestess_adds_desc = "대여사제 말리가 영혼을 추가로 소환할때 경고합니다."  -- Warnings for when High Priestess Mar'li starts to summon adds.
-	L.priestess_adds_message = "영혼 추가"  -- Priestess add
+	L.priestess_adds = "영혼 추가"
+	L.priestess_adds_desc = "대여사제 말리가 영혼을 추가로 소환할때 경고합니다."
+	L.priestess_adds_message = "영혼 추가"
 
 	L.custom_on_markpossessed = "빙의된 보스 공격대 아이콘"
 	L.custom_on_markpossessed_desc = "영혼에 빙의된 보스에게 해골 공격대 아이콘을 표시합니다."
 
 	L.assault_stun = "탱커 기절!"
 	L.assault_message = "혹한의 공격"
-	L.full_power = "전체 파워"
-	L.hp_to_go_power = "%d%% 생명력 이동! (파워: %d)"
-	L.hp_to_go_fullpower = "%d%% 생명력 이동! (전체 파워)"
+	L.full_power = "전체 기력"
+	L.hp_to_go_power = "%d%% 생명력 이동! (기력: %d)"
+	L.hp_to_go_fullpower = "%d%% 생명력 이동! (전체 기력)"
 end
 
 L = BigWigs:NewBossLocale("Tortos", "koKR")
 if L then
+	L.bats_desc = "박쥐 등장! 처리하세요."
+
 	L.kick = "등껍질 차기"
 	L.kick_desc = "몇개의 등껍질을 찾는지 정보를 표시합니다."
 	L.kick_message = "회오리 거북: %d"
 
-	L.custom_off_turtlemarker = "거북이 공격대 아이콘"  -- 대상 표시기 아이콘
+	L.custom_off_turtlemarker = "거북이 공격대 아이콘"
 	L.custom_off_turtlemarker_desc = "모든 공격대 아이콘을 사용하여 표시합니다.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"
 
 	L.no_crystal_shell = "수정 보호막 없음"
@@ -90,7 +92,7 @@ L = BigWigs:NewBossLocale("Durumu the Forgotten", "koKR")
 if L then
 	L.red_spawn_trigger = "진흥빛 안개"
 	L.blue_spawn_trigger = "하늘빛 안개"
-	L.yellow_spawn_trigger = "Amber Fog"
+	L.yellow_spawn_trigger = "호박색 안개"
 
 	L.adds = "Reveal Adds"
 	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
@@ -104,13 +106,13 @@ if L then
 	L.initial_life_drain = "생명력 흡수"
 	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."
 
-	L.life_drain_say = "%dx 흡수"
+	L.life_drain_say = "%dx 생명력 흡수"
 
-	L.rays_spawn = "Rays spawn"
+	L.rays_spawn = "Rays spawn"  -- 빛의 스펙트럼
 	L.red_add = "|cffff0000붉은색|r 추가"
 	L.blue_add = "|cff0000ff푸른색|r 추가"
 	L.yellow_add = "|cffffff00노란색|r 추가"
-	L.death_beam = "분해 광선"
+	L.death_beam = "분해 광선"  -- 광선 추적
 	L.red_beam = "|cffff0000붉은색|r 광선"
 	L.blue_beam = "|cff0000ff푸른색|r 광선"
 	L.yellow_beam = "|cffffff00노란색|r 광선"
@@ -124,14 +126,14 @@ end
 
 L = BigWigs:NewBossLocale("Dark Animus", "koKR")
 if L then
-	L.engage_trigger = "The orb explodes!"
+	L.engage_trigger = "구슬이 폭발합니다!"  -- The orb explodes!
 
 	L.matterswap_desc = "A player with Matter Swap is far away from you. You will swap places with them if they are dispelled."
-	L.matterswap_message = "You are furthest for Matter Swap!"
+	L.matterswap_message = "당신은 물질 바꾸기를 위해 멀리있어야합니다!"
 
-	L.siphon_power = "Siphon Anima (%d%%)"
-	L.siphon_power_soon = "Siphon Anima (%d%%) %s soon!"
-	L.slam_message = "Slam"
+	L.siphon_power = "령 착취 (%d%%)"
+	L.siphon_power_soon = "령 착취 (%d%%) 곧 %s!"
+	L.slam_message = "격돌"
 end
 
 L = BigWigs:NewBossLocale("Iron Qon", "koKR")
@@ -160,15 +162,15 @@ if L then
 	L.custom_off_diffused_marker = "Diffused Lightning Marker"
 	L.custom_off_diffused_marker_desc = "Mark the Diffused Lightning adds using all raid icons, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the adds is the fastest way to mark them.|r"
 
-	L.stuns = "Stuns"
-	L.stuns_desc = "Show bars for stun durations, for use with handling Ball Lightnings."
+	L.stuns = "기절"
+	L.stuns_desc = "뛰어오르는 화살 처리를 위해 기절 지속 시간에 대한 바를 표시합니다."
 
-	L.aoe_grip = "AoE grip"
-	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
+	L.aoe_grip = "뛰어오르는 화살 처리"
+	L.aoe_grip_desc = "죽음의 기사로 뛰어오르는 화살 처리를 위해 고어핀드의 손아귀를 사용할 수 있도록 경고합니다."
 
-	L.last_inermission_ability = "Last intermission ability used!"
-	L.safe_from_stun = "You are probably safe from Overcharge stuns"
-	L.intermission = "튀어오르는 화살"
+	L.last_inermission_ability = "마지막 도관 작동 능력 사용!"  -- Last intermission ability used!
+	L.safe_from_stun = "당신은 과충전 기절에 안전"
+	L.intermission = "도관 작동 중지"
 	L.diffusion_add = "연쇄 확산"
 	L.shock = "전기 충격"
 end

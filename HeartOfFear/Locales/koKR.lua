@@ -2,13 +2,13 @@ local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "koKR")
 if not L then return end
 if L then
 	L.engage_yell = "신성하신 분께서 당신의 신성한 뜻을 실현하라고 우리에게 목소리를 주셨다. 우리는 도구일 뿐이다."
-	L.force_message = "AoE Pulse"
+	L.force_message = "힘과 활력"
 
 	L.attenuation = EJ_GetSectionInfo(6426) .. " (Discs)"
 	L.attenuation_bar = "Discs... Dance!"
 	L.attenuation_message = "%s Dancing %s"
-	L.echo = "|c001cc986Echo|r"
-	L.zorlok = "|c00ed1ffaZor'lok|r"
+	L.echo = "|c001cc986감쇠|r"
+	L.zorlok = "|c00ed1ffa조르로크|r"
 	L.left = "|c00008000<- 왼쪽 <-|r"
 	L.right = "|c00FF0000-> 오른쪽 ->|r"
 
@@ -22,7 +22,7 @@ if L then
 	L.engage_yell = "On your guard, invaders. I, Ta'yak, Lord of Blades, will be your opponent."
 
 	L.unseenstrike_soon = "Strike (%d) in ~5-10 sec!"
-	L.assault_message = "Assault"
+	L.assault_message = "압도적인 공격"
 	L.side_swap = "Side Swap"
 end
 
@@ -39,7 +39,7 @@ if L then
 
 	L.mending_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Zar'thik Battle-Menders have separate heal cooldowns.|r "
 	L.mending_warning = "Your focus is casting Mending!"
-	L.mending_bar = "Focus: Mending"
+	L.mending_bar = "주시대상: Mending"  -- Focus: Mending
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "koKR")

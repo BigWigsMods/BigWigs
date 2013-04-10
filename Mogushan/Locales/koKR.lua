@@ -18,16 +18,16 @@ if L then
 	L.phase_shadow_trigger = "과거의 위대한 영웅들이여! 너희의 방패를 빌려다오!"
 
 
-	L.phase_lightning = "번개 채찍 단계!"  -- Lightning phase!
-	L.phase_flame = "불타는 창 단계!"  -- Flame phase!
-	L.phase_arcane = "비전 충격 단계!"  -- Arcane phase!
-	L.phase_shadow = "(영웅) 어둠의 연소 단계!"  -- (Heroic) Shadow phase!
+	L.phase_lightning = "번개 채찍 단계!"
+	L.phase_flame = "불타는 창 단계!"
+	L.phase_arcane = "비전 충격 단계!"
+	L.phase_shadow = "(영웅) 어둠의 연소 단계!"
 
-	L.phase_message = "곧 새로운 단계!"  -- New phase soon!
-	L.shroud_message = "역전의 장막"  -- Shroud
-	L.shroud_can_interrupt = "%s|1으로;로; %s|1을;를; 방해 할 수 있습니다!"  -- %s can interrupt %s!
-	L.barrier_message = "무효화의 장벽!"  -- Barrier UP!
-	L.barrier_cooldown = "무효화의 장벽 대기시간"  -- Barrier cooldown
+	L.phase_message = "곧 새로운 단계!"
+	L.shroud_message = "역전의 장막"
+	L.shroud_can_interrupt = "%2$s|1으로;로; %1$s|1을;를; 방해 할 수 있습니다!"
+	L.barrier_message = "무효화의 장벽!"
+	L.barrier_cooldown = "무효화의 장벽 대기시간"
 
 	-- Tanks
 	L.tank = "방어 전담 경고"
@@ -62,7 +62,7 @@ if L then
 	L.engage_yell = "방어 모드로 전환. 안전 장치 해제."
 
 	L.last_phase = "마지막 단계"
-	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
+	L.overcharged_total_annihilation = "과충전 %d!"
 
 	L.floor = "바닥 떨어짐"
 	L.floor_desc = "바닥에 언제 떨어지는지 경고합니다."
@@ -87,5 +87,7 @@ if L then
 	L.gas_overdrive_trigger = "고대 모구 기계가 폭주합니다!"
 
 	L.target_only = "|cFFFF0000이 경고는 당신이 대상으로 삼고 있는 우두머리만 표시합니다.|r "
+
+	L.combo_message = "%s: 곧 연타공격!"
 end
 

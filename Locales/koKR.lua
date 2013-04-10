@@ -15,7 +15,7 @@ L.stages_desc = "근접 표시, 바, 기타등 보스의 다양한 단계(페이
 L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%d|r) 이미 Big Wigs 에서 보스 모듈로 존재하지만, 다시 등록이 필요합니다 (revision에 |cffffff00%d|r). 이 것은 일반적으로 애드온 업데이트 실패로 인하여 이 모듈이 당신의 애드온 폴더에 두개의 사본이 있는 것을 뜻합니다. 당신이 가지고 있는 Big Wigs 폴더의 삭제와 재설치를 권장합니다."
 
 L["Prevented boss movie '%d' from playing."] = "플레이도중에 나타나는 보스 영상 '%d' 차단합니다."
-L.roleUpdate = "Updated your role."
+L.roleUpdate = "당신의 역할을 업데이트합니다."
 
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Big Wigs %s (revision %d) 의 공식 릴리스가 실행중입니다."
@@ -72,7 +72,7 @@ L["Create custom DBM bars"] = "사용자 DBM 바 생성"
 L.dbmBarDesc = "DBM 사용자가 풀링 타이머나 사용자 'pizza' 바를 보내면 Big Wigs에 표시합니다."
 L.chatMessages = "대화 창 메시지"
 L.chatMessagesDesc = "모든 BigWigs 메세지를 디스플레이 설정에 추가된 기본 대화창에 출력합니다."
---L.autoRole = "Automatic role update"
+L.autoRole = "당신 역할 업데이트"
 --L.autoRoleDesc = "Knowing what role you are will improve Big Wigs warnings for other people in your raid, this option lets Big Wigs automatically update your role. For example, some modules will check if a player is a tank when scanning for boss abilities that never affect tanks.\n\n|cffff4411This is not related to role specific warnings and it's highly recommended you leave this turned on!|r"
 
 --L.slashDescTitle = "|cFFFED000Slash Commands:|r"
