@@ -1043,7 +1043,7 @@ local function onZoneShow(frame)
 
 	-- Does this zone have multiple encounters?
 	local moduleList = BigWigsLoader:GetZoneMenus()[zoneId]
-	local multiple = moduleList[2] and true
+	local multiple = moduleList and moduleList[2] and true
 
 	-- This zone has no modules, nor is the panel related
 	-- to a module.
@@ -1053,10 +1053,12 @@ local function onZoneShow(frame)
 	end
 
 	local zoneList, zoneSort = {}, {}
-	for i = 1, #moduleList do
-		local module = moduleList[i]
-		zoneList[module.moduleName] = module.displayName
-		zoneSort[i] = module.moduleName
+	if moduleList then
+		for i = 1, #moduleList do
+			local module = moduleList[i]
+			zoneList[module.moduleName] = module.displayName
+			zoneSort[i] = module.moduleName
+		end
 	end
 
 	local outerContainer = AceGUI:Create("SimpleGroup")
