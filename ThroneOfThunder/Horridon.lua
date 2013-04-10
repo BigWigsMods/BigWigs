@@ -70,7 +70,7 @@ function mod:GetOptions()
 		{-7119, "DISPEL"}, {-7120, "HEALER"}, {136573, "FLASH"}, -- Drakkari
 		"fireball", "chain_lightning", {-7125, "DISPEL"}, {136490, "FLASH"}, -- Amani
 		136817, 136821, -- War-God Jalak
-		{-7078, "TANK_HEALER"}, 136741, {-7080, "FLASH", "SAY", "ICON"}, 137240, "adds", "berserk", "bosskill",
+		{-7078, "TANK_HEALER"}, 136741, {-7080, "FLASH", "SAY"}, 137240, "adds", "berserk", "bosskill",
 	}, {
 		[137458] = "heroic",
 		[-7086] = -7086,
@@ -330,12 +330,10 @@ end
 function mod:Charge(msg, _, _, _, player)
 	self:TargetMessage(-7080, player, "Attention", "Warning", nil, nil, true)
 	self:CDBar(-7080, 51)
-	self:PrimaryIcon(-7080, player)
 	if UnitIsUnit("player", player) then
 		self:Flash(-7080)
 		self:Say(-7080)
 	end
-	self:ScheduleTimer("PrimaryIcon", 10, -7080) -- remove icon
 end
 
 function mod:Doors(msg)
