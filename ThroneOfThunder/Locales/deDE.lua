@@ -173,11 +173,20 @@ if L then
 	L.intermission = "Unterbrechung"
 	L.diffusion_add = "Kugelblitzelementare"
 	L.shock = "Schock"
+	L.staticshockdebuff = "Elektroschock Schwächungszauber"
+	L.staticshockdebuff_desc = "Eine Leiste für die Dauer des Elektroschock Schwächungszaubers anzeigen."
+	L.overchargeddebuff = "Überladung Schwächungszauber"
+	L.overchargeddebuff_desc = "Eine Leiste für die Dauer des Überladung Schwächungszaubers anzeigen."
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "deDE")
 if L then
-
+	L.vita_abilities = "Vita Fähigkeiten"
+	L.anima_abilities = "Anima Fähigkeiten"
+	L.worm = "Wurm"
+	L.worm_desc = "Wurm beschwören"
+	L.balls = "Bälle"
+	L.balls_desc = "Anima- (rot) und Vita- (blau) Bälle, welche die von Ra-den verwendeten Fähigkeiten bestimmen."
 end
 
 L = BigWigs:NewBossLocale("Trash", "deDE")
