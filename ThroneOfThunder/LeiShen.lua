@@ -53,11 +53,11 @@ if L then
 	L.intermission = "Intermission"
 	L.diffusion_add = "Diffusion add"
 	L.shock = "Shock"
-	L.staticshockdebuff = "Static Shock debuff"
-	L.staticshockdebuff_desc = "Show a duration bar for the Static Shock debuffs"
+	L.staticshockdebuff = "Static Shock debuff on you"
+	L.staticshockdebuff_desc = "Separate option to show a duration bar for the Static Shock debuff on you"
 	L.staticshockdebuff_icon = 135695
-	L.overchargeddebuff = "Overcharged debuff"
-	L.overchargeddebuff_desc = "Show a duration bar for the Overcharged debuffs"
+	L.overchargeddebuff = "Overcharged debuff on you"
+	L.overchargeddebuff_desc = "Separate option to show a duration bar for the Overcharged debuff on you"
 	L.overchargeddebuff_icon = 136295
 end
 L = mod:GetLocale()
@@ -553,7 +553,7 @@ do
 			tooCloseForOvercharged = true
 		end
 		overchargedList[#overchargedList+1] = args.destName
-		self:TargetBar("overchargeddebuff", 6, args.destName)
+		self:TargetBar(self:Me(args.destGUID) and "overchargeddebuff" or args.spellId, 6, args.destName)
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnOvercharged, 0.1, args.spellId)
 		end
@@ -667,7 +667,7 @@ do
 		end
 		staticShockList[#staticShockList+1] = args.destName
 		coloredNames[#coloredNames+1] = args.destName
-		self:TargetBar("staticshockdebuff", 8, args.destName)
+		self:TargetBar(self:Me(args.destGUID) and "staticshockdebuff" or args.spellId, 8, args.destName)
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnStaticShock, 0.1, args.spellId)
 		end
