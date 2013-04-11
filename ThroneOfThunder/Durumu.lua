@@ -382,7 +382,8 @@ function mod:HardStare(args)
 end
 
 function mod:SeriousWound(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", (args.amount or 1) > 4 and "Info")
+	local amount = args.amount or 1
+	self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 4 and "Info")
 end
 
 function mod:ArterialCut(args)

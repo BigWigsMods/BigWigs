@@ -179,10 +179,9 @@ end
 --
 
 do
-	local explosiveSlam = mod:SpellName(138569)
 	local scheduled = {}
-	local function warnSlam(destName)
-		local _, _, _, amount = UnitDebuff(destName, explosiveSlam)
+	local function warnSlam(destName, spellName)
+		local _, _, _, amount = UnitDebuff(destName, spellName)
 		if amount then
 			mod:StackMessage(-7770, destName, amount, "Urgent", not mod:LFR() and amount > 3 and "Info", L["slam_message"])
 		end
@@ -192,7 +191,7 @@ do
 		local golem = self:GetUnitIdByGUID(args.sourceGUID)
 		if (golem and UnitGUID(golem.."target") == args.destGUID) or (args.destName and self:Tank(args.destName)) then -- don't care about non-tanks gaining stacks
 			if not scheduled[args.destName] then
-				scheduled[args.destName] = self:ScheduleTimer(warnSlam, 1, args.destName)
+				scheduled[args.destName] = self:ScheduleTimer(warnSlam, 1, args.destName, args.spellName)
 			end
 		end
 	end
