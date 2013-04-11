@@ -549,8 +549,8 @@ do
 	end
 	function mod:Overcharged(args)
 		if self:Me(args.destGUID) then
-			self:Say("overcharged_self")
-			self:TargetBar("overcharged_self", 6, args.destName)
+			self:Say("overcharged_self", args.spellId)
+			self:TargetBar("overcharged_self", 6, args.destName, args.spellId)
 		else
 			self:TargetBar(args.spellId, 6, args.destName)
 		end
@@ -665,9 +665,9 @@ do
 	function mod:StaticShockApplied(args)
 		if self:Me(args.destGUID) then
 			timeLeft = 8
-			self:Flash("shock_self")
-			self:Say("shock_self")
-			self:TargetBar("shock_self", 8, args.destName)
+			self:Flash("shock_self", args.spellId)
+			self:Say("shock_self", args.spellId)
+			self:TargetBar("shock_self", 8, args.destName, args.spellId)
 			timer = self:ScheduleRepeatingTimer(staticShockSayCountdown, 1)
 		else
 			self:TargetBar(args.spellId, 8, args.destName)
