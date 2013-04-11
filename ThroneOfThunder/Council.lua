@@ -348,8 +348,9 @@ do
 			end
 		end
 
+		local baseTime = self:Difficulty() == 3 and 76 or 66 -- 66 (76 in 10m) seconds till full power without any lingering presences stacks
 		local regenMultiplier = self:Heroic() and 15 or self:LFR() and 5 or 10
-		local duration = 66 * (100 - lingeringCount * regenMultiplier) / 100 -- 66 seconds till full power without any lingering presences stacks
+		local duration = baseTime * (100 - lingeringCount * regenMultiplier) / 100
 		self:Message(args.spellId, "Neutral", "Long", CL["other"]:format(args.spellName, args.destName))
 		self:Bar(args.spellId, duration, L["full_power"])
 
