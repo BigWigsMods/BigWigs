@@ -12,6 +12,8 @@ mod.worldBoss = 69099
 -- Locals
 --
 
+local openedForMe = nil
+local stormcloudTargets = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -30,16 +32,15 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
-	return {
-		136338, {136339, "FLASH"}, {136340, "SAY"}, "ability", "proximity", "bosskill",
-	}
+	return { 136338, {136339, "FLASH"}, {136340, "PROXIMITY", "SAY"}, "ability", "bosskill" }
 end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ArcNova", 136338)
 	self:Log("SPELL_AURA_APPLIED", "LightningTether", 136339)
 	self:Log("SPELL_CAST_START", "StormcloudCast", 136340)
-	self:Log("SPELL_AURA_APPLIED", "Stormcloud", 136340)
+	self:Log("SPELL_AURA_APPLIED", "StormcloudApplied", 136340)
+	self:Log("SPELL_AURA_REMOVED", "StormcloudRemoved", 136340)
 	self:Log("SPELL_DAMAGE", "StormcloudDamage", 136345)
 	self:Log("SPELL_MISSED", "StormcloudDamage", 136345)
 
@@ -50,7 +51,8 @@ end
 
 function mod:OnEngage()
 	self:CDBar("ability", 12, L["ability"], L.ability_icon) -- 12-22s, seems to go out in a random order then stay in that order
-	self:OpenProximity("proximity", 10)
+	openedForMe = nil
+	wipe(stormcloudTargets)
 end
 
 --------------------------------------------------------------------------------
@@ -64,18 +66,17 @@ function mod:ArcNova(args)
 end
 
 do
-	local targets, scheduled = mod:NewTargetList(), nil
+	local targetList, scheduled = mod:NewTargetList(), nil
 	local function warnTether(spellId)
-		mod:TargetMessage(spellId, targets, "Attention", "Alert")
+		mod:TargetMessage(spellId, targetList, "Attention", "Alert")
 		mod:CDBar("ability", 12, L["ability"], L.ability_icon)
 		scheduled = nil
 	end
 	function mod:LightningTether(args)
-		targets[#targets+1] = args.destName
+		targetList[#targetList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Bar(args.spellId, 15, CL["you"]:format(args.spellName))
 			self:Flash(args.spellId)
-			--maybe use CheckInteractDistance("target/focus/raid target scan", 4) (28yd check) and spam when you're too far away?
 		end
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnTether, 0.2, args.spellId)
@@ -88,19 +89,45 @@ function mod:StormcloudCast(args)
 end
 
 do
-	local targets, scheduled = mod:NewTargetList(), nil
+	local targetList, scheduled = mod:NewTargetList(), nil
 	local function warnStormcloud(spellId)
-		mod:TargetMessage(spellId, targets, "Urgent", "Info") -- three targets
+		mod:TargetMessage(spellId, targetList, "Urgent", "Info")
 		mod:CDBar("ability", 12, L["ability"], L.ability_icon)
+		if not openedForMe and #stormcloudTargets > 0 then
+			mod:OpenProximity(spellId, 10, stormcloudTargets)
+		end
 		scheduled = nil
 	end
-	function mod:Stormcloud(args)
-		targets[#targets+1] = args.destName
+
+	function mod:StormcloudApplied(args)
+		targetList[#targetList+1] = args.destName
+		if UnitExists(args.destName) then -- player is in your group
+			stormcloudTargets[#stormcloudTargets+1] = args.destName
+		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
+			self:OpenProximity(args.spellId, 10)
+			openedForMe = true
 		end
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnStormcloud, 0.2, args.spellId)
+		end
+	end
+
+	function mod:StormcloudRemoved(args)
+		if self:Me(args.destGUID) then
+			openedForMe = nil
+		end
+		for i, player in next, stormcloudTargets do
+			if player == args.destName then
+				tremove(stormcloudTargets, i)
+				break
+			end
+		end
+		if #stormcloudTargets == 0 then
+			self:CloseProximity(args.spellId)
+		elseif not openedForMe then
+			self:OpenProximity(args.spellId, 10, stormcloudTargets)
 		end
 	end
 end
@@ -111,7 +138,7 @@ do
 		if self:Me(args.destGUID) and not self:Me(args.sourceGUID) then
 			local t = GetTime()
 			if t-prev > 3 then
-				self:Message(136340, "Personal", "Alarm", CL["underyou"]:format(args.spellName))
+				self:Message(136340, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			end
 		end
 	end
