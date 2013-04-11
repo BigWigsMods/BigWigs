@@ -621,6 +621,8 @@ do
 			module.OnRegister = nil
 		end
 
+		self:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
+
 		if not enablezones[module.zoneId] then
 			enablezones[module.zoneId] = true
 			-- We fire zoneChanged() as a backup for LoD users. In rare cases,
@@ -628,8 +630,6 @@ do
 			-- resulting in a failed check to register UPDATE_MOUSEOVER_UNIT, etc.
 			zoneChanged()
 		end
-
-		self:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 	end
 
 	function addon:RegisterPlugin(module)
