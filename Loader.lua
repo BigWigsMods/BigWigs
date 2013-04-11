@@ -9,7 +9,6 @@ local loader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader")
 local REPO = "REPO"
 local ALPHA = "ALPHA"
 local RELEASE = "RELEASE"
-local UNKNOWN = "UNKNOWN"
 local BIGWIGS_RELEASE_TYPE, BIGWIGS_RELEASE_REVISION
 
 do

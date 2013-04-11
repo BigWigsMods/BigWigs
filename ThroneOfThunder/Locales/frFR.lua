@@ -172,11 +172,23 @@ if L then
 	L.intermission = "Entracte"
 	L.diffusion_add = "Foudres diffuses"
 	L.shock = "Horion"
+
+	L.shock_self = "Static Shock on YOU"
+	L.shock_self_desc = "Show a duration bar for the Static Shock debuff on you."
+
+	L.overcharged_self = "Overcharged on YOU"
+	L.overcharged_self_desc = "Show a duration bar for the Overcharged debuff on you."
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "frFR")
 if L then
+	L.vita_abilities = "Vita abilities"
+	L.anima_abilities = "Anima abilities"
+	L.worm = "Worm"
+	L.worm_desc = "Summon worm"
 
+	L.balls = "Balls"
+	L.balls_desc = "Anima (red) and Vita (blue) balls, that determine which abilities will Ra-den gain"
 end
 
 L = BigWigs:NewBossLocale("Trash", "frFR")

@@ -173,11 +173,23 @@ if L then
 	L.intermission = "阶段转换"
 	L.diffusion_add = "散射闪电增援"
 	L.shock = "电能震击"
+
+	L.shock_self = "Static Shock on YOU"
+	L.shock_self_desc = "Show a duration bar for the Static Shock debuff on you."
+
+	L.overcharged_self = "Overcharged on YOU"
+	L.overcharged_self_desc = "Show a duration bar for the Overcharged debuff on you."
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "zhCN")
 if L then
+	L.vita_abilities = "Vita abilities"
+	L.anima_abilities = "Anima abilities"
+	L.worm = "Worm"
+	L.worm_desc = "Summon worm"
 
+	L.balls = "Balls"
+	L.balls_desc = "Anima (red) and Vita (blue) balls, that determine which abilities will Ra-den gain"
 end
 
 L = BigWigs:NewBossLocale("Trash", "zhCN")
