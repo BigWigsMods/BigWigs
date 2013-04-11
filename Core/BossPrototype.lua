@@ -861,7 +861,7 @@ function boss:Bar(key, length, text, icon)
 		self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key])
 	end
 	if checkFlag(self, key, C.EMPHASIZE) then
-		self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
+		self:SendMessage("BigWigs_StartEmphasize", self, textType == "string" and text or spells[text or key], length)
 	end
 end
 
@@ -871,35 +871,41 @@ function boss:CDBar(key, length, text, icon)
 		self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key], true)
 	end
 	if checkFlag(self, key, C.EMPHASIZE) then
-		self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
+		self:SendMessage("BigWigs_StartEmphasize", self, textType == "string" and text or spells[text or key], length)
 	end
 end
 
 function boss:TargetBar(key, length, player, text, icon)
-	if checkFlag(self, key, C.BAR) then
-		local textType = type(text)
-		if not player then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), length, icons[icon or textType == "number" and text or key])
-			return
+	local textType = type(text)
+	if not player and checkFlag(self, key, C.BAR) then
+		self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), length, icons[icon or textType == "number" and text or key])
+		return
+	end
+	if UnitIsUnit(player, "player") then
+		local msg = format(L.you, textType == "string" and text or spells[text or key])
+		if checkFlag(self, key, C.BAR) then
+			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
 		end
-		if UnitIsUnit(player, "player") then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L.you, textType == "string" and text or spells[text or key]), length, icons[icon or textType == "number" and text or key])
-		elseif not checkFlag(self, key, C.ME_ONLY) then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], player:gsub("%-.+", "*")), length, icons[icon or textType == "number" and text or key])
+		if checkFlag(self, key, C.EMPHASIZE) then
+			self:SendMessage("BigWigs_StartEmphasize", self, msg, length)
 		end
+	elseif not checkFlag(self, key, C.ME_ONLY) and checkFlag(self, key, C.BAR) then
+		self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], player:gsub("%-.+", "*")), length, icons[icon or textType == "number" and text or key])
 	end
 end
 
 function boss:StopBar(text, player)
 	if player then
 		if UnitIsUnit(player, "player") then
-			self:SendMessage("BigWigs_StopBar", self, format(L.you, type(text) == "number" and spells[text] or text))
+			local msg = format(L.you, type(text) == "number" and spells[text] or text)
+			self:SendMessage("BigWigs_StopBar", self, msg)
+			self:SendMessage("BigWigs_StopEmphasize", self, msg)
 		else
 			self:SendMessage("BigWigs_StopBar", self, format(L.other, type(text) == "number" and spells[text] or text, player:gsub("%-.+", "*")))
 		end
 	else
 		self:SendMessage("BigWigs_StopBar", self, type(text) == "number" and spells[text] or text)
-		self:SendMessage("BigWigs_StopEmphasize", self, key, type(text) == "string" and text or spells[text or key])
+		self:SendMessage("BigWigs_StopEmphasize", self, type(text) == "string" and text or spells[text])
 	end
 end
 

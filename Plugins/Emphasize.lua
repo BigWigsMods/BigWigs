@@ -157,8 +157,8 @@ do
 		plugin:SendMessage("BigWigs_EmphasizedCountdownMessage", num)
 		if text and timers[text] then wipe(timers[text]) end
 	end
-	function plugin:BigWigs_StartEmphasize(_, module, key, text, time)
-		self:BigWigs_StopEmphasize(nil, module, key, text)
+	function plugin:BigWigs_StartEmphasize(_, module, text, time)
+		self:BigWigs_StopEmphasize(nil, module, text)
 		if time > 1.3 then
 			if not timers[text] then timers[text] = {} end
 			timers[text][1] = module:ScheduleTimer(printEmph, time-1.3, 1, text)
@@ -176,7 +176,7 @@ do
 			end
 		end
 	end
-	function plugin:BigWigs_StopEmphasize(_, module, key, text)
+	function plugin:BigWigs_StopEmphasize(_, module, text)
 		if text and timers[text] and #timers[text] > 0 then
 			for i = 1, #timers[text] do
 				module:CancelTimer(timers[text][i])
@@ -196,6 +196,6 @@ end
 function plugin:BigWigs_TempSuperEmphasize(_, module, key, text, time)
 	if not module or not key or text == "" then return end
 	temporaryEmphasizes[key] = GetTime() + time
-	self:BigWigs_StartEmphasize(nil, module, key, text, time)
+	self:BigWigs_StartEmphasize(nil, module, text, time)
 end
 
