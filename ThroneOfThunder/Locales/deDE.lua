@@ -174,11 +174,11 @@ if L then
 	L.diffusion_add = "Kugelblitzelementare"
 	L.shock = "Schock"
 
-	L.shock_self = "Static Shock on YOU"
-	L.shock_self_desc = "Show a duration bar for the Static Shock debuff on you."
+	L.shock_self = "Elektroschock auf DIR"
+	L.shock_self_desc = "Eine Leiste für die Dauer des Elektroschock-Schwächungszaubers auf Dir anzeigen."
 
-	L.overcharged_self = "Overcharged on YOU"
-	L.overcharged_self_desc = "Show a duration bar for the Overcharged debuff on you."
+	L.overcharged_self = "Überladung auf DIR"
+	L.overcharged_self_desc = "Eine Leiste für die Dauer des Überladung-Schwächungszaubers auf Dir anzeigen."
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "deDE")
