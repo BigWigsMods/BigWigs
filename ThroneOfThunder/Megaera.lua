@@ -150,7 +150,7 @@ do
 		if spellId == 139458 then
 			self:Bar("breaths", 30, L["breaths"], L.breaths_icon)
 			self:Message(spellId, "Important", "Long", CL["count"]:format(spellName, headCounter))
-			self:Bar(spellId, 20, CL["cast"]:format(spellName))
+			self:Bar(spellId, 20, CL["count"]:format(spellName, headCounter))
 			self:ScheduleTimer(rampageOver, 20, spellId, spellName)
 			breathCounter = 0
 		end
