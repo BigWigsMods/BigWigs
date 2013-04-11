@@ -127,7 +127,7 @@ end
 function mod:OnEngage()
 	doorCounter = 1
 	self:Berserk(720)
-	self:CDBar("adds", 16, L["door_bar"]:format(doorCounter), "inv_shield_11")
+	self:CDBar("adds", 22, L["door_bar"]:format(doorCounter), "inv_shield_11")
 	self:CDBar(-7078, 10) -- Triple Puncture
 	self:CDBar(-7080, 33) -- Charge
 	if self:Heroic() then
@@ -337,11 +337,11 @@ function mod:Charge(msg, _, _, _, player)
 end
 
 function mod:Doors(msg)
-	self:Message("adds", "Neutral", nil, L["door_opened"], "inv_shield_11")
+	self:DelayedMessage("adds", 5, "Neutral", L["door_opened"], "inv_shield_11")
 	doorCounter = doorCounter + 1
 	-- next door
 	if doorCounter < 5 then
-		self:Bar("adds", 114, L["door_bar"]:format(doorCounter), "inv_shield_11") -- door like icon
+		self:ScheduleTimer("Bar", 5, "adds", 114, L["door_bar"]:format(doorCounter), "inv_shield_11") -- door like icon
 	else
 		self:Bar("adds", 143, -7087, "achievement_boss_trollgore") -- War-God Jalak
 	end
