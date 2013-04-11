@@ -38,7 +38,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ArcNova", 136338)
 	self:Log("SPELL_AURA_APPLIED", "LightningTether", 136339)
-	self:Log("SPELL_CAST_START", "StormcloudCast", 136340)
+	self:Log("SPELL_CAST_SUCCESS", "StormcloudCast", 136340)
 	self:Log("SPELL_AURA_APPLIED", "StormcloudApplied", 136340)
 	self:Log("SPELL_AURA_REMOVED", "StormcloudRemoved", 136340)
 	self:Log("SPELL_DAMAGE", "StormcloudDamage", 136345)
@@ -65,33 +65,22 @@ function mod:ArcNova(args)
 	self:CDBar("ability", 12, L["ability"], L.ability_icon)
 end
 
-do
-	local targetList, scheduled = mod:NewTargetList(), nil
-	local function warnTether(spellId)
-		mod:TargetMessage(spellId, targetList, "Attention", "Alert")
-		mod:CDBar("ability", 12, L["ability"], L.ability_icon)
-		scheduled = nil
-	end
-	function mod:LightningTether(args)
-		targetList[#targetList+1] = args.destName
-		if self:Me(args.destGUID) then
-			self:Bar(args.spellId, 15, CL["you"]:format(args.spellName))
-			self:Flash(args.spellId)
-		end
-		if not scheduled then
-			scheduled = self:ScheduleTimer(warnTether, 0.2, args.spellId)
-		end
+function mod:LightningTether(args)
+	self:CDBar("ability", 12, L["ability"], L.ability_icon)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", "Alert", CL["you"]:format(args.spellName))
+		self:Bar(args.spellId, 15, CL["you"]:format(args.spellName))
+		self:Flash(args.spellId)
 	end
 end
 
 function mod:StormcloudCast(args)
-	self:Message(args.spellId, "Attention", nil, CL["soon"]:format(args.spellName))
+	self:Message(args.spellId, "Attention")
 end
 
 do
-	local targetList, scheduled = mod:NewTargetList(), nil
+	local scheduled = nil
 	local function warnStormcloud(spellId)
-		mod:TargetMessage(spellId, targetList, "Urgent", "Info")
 		mod:CDBar("ability", 12, L["ability"], L.ability_icon)
 		if not openedForMe and #stormcloudTargets > 0 then
 			mod:OpenProximity(spellId, 10, stormcloudTargets)
@@ -100,11 +89,11 @@ do
 	end
 
 	function mod:StormcloudApplied(args)
-		targetList[#targetList+1] = args.destName
 		if UnitExists(args.destName) then -- player is in your group
 			stormcloudTargets[#stormcloudTargets+1] = args.destName
 		end
 		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Personal", "Alert", CL["you"]:format(args.spellName))
 			self:Say(args.spellId)
 			self:OpenProximity(args.spellId, 10)
 			openedForMe = true
