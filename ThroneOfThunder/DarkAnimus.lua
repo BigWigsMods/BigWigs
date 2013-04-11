@@ -178,10 +178,24 @@ end
 -- Massive Anima Golem
 --
 
-function mod:ExplosiveSlam(args)
-	local golem = self:GetUnitIdByGUID(args.sourceGUID)
-	if (golem and UnitGUID(golem.."target") == args.destGUID) or (args.destName and self:Tank(args.destName)) then -- don't care about non-tanks gaining stacks
-		self:StackMessage(-7770, args.destName, args.amount, "Urgent", "Info", L["slam_message"])
+do
+	local targets, coloredName, scheduled = {}, mod:NewTargetList(), nil
+	local function warnSlam()
+		for destName, amount in next, targets do
+			coloredName[1] = destName
+			mod:StackMessage(-7770, coloredName[1], amount, "Urgent", not mod:LFR() and amount > 3 and "Info", L["slam_message"])
+		end
+		wipe(targets)
+		scheduled = nil
+	end
+	function mod:ExplosiveSlam(args)
+		local golem = self:GetUnitIdByGUID(args.sourceGUID)
+		if (golem and UnitGUID(golem.."target") == args.destGUID) or (args.destName and self:Tank(args.destName)) then -- don't care about non-tanks gaining stacks
+			targets[args.destName] = args.amount or 1
+			if not scheduled then
+				scheduled = self:ScheduleTimer(warnSlam, 1)
+			end
+		end
 	end
 end
 
