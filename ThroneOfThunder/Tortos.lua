@@ -118,6 +118,10 @@ function mod:BreathUpdate(unit)
 	local power = UnitPower(unit)
 	if power == 50 then
 		self:Bar(133939, 23)
+	elseif power == 60 then
+		self:Bar(133939, 18.4)
+	elseif power == 70 then
+		self:Bar(133939, 13.8)
 	elseif power == 80 then
 		self:Bar(133939, 9.2)
 	end
