@@ -382,7 +382,7 @@ function mod:HardStare(args)
 end
 
 function mod:SeriousWound(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", (args.amount or 1) > 4 and "Info")
 end
 
 function mod:ArterialCut(args)
