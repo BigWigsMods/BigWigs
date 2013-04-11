@@ -38,7 +38,6 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ArcNova", 136338)
 	self:Log("SPELL_AURA_APPLIED", "LightningTether", 136339)
-	self:Log("SPELL_CAST_SUCCESS", "StormcloudCast", 136340)
 	self:Log("SPELL_AURA_APPLIED", "StormcloudApplied", 136340)
 	self:Log("SPELL_AURA_REMOVED", "StormcloudRemoved", 136340)
 	self:Log("SPELL_DAMAGE", "StormcloudDamage", 136345)
@@ -74,16 +73,15 @@ function mod:LightningTether(args)
 	end
 end
 
-function mod:StormcloudCast(args)
-	self:Message(args.spellId, "Attention")
-end
-
 do
 	local scheduled = nil
 	local function warnStormcloud(spellId)
 		mod:CDBar("ability", 12, L["ability"], L.ability_icon)
-		if not openedForMe and #stormcloudTargets > 0 then
-			mod:OpenProximity(spellId, 10, stormcloudTargets)
+		if not openedForMe then
+			mod:Message(spellId, "Attention")
+			if #stormcloudTargets > 0 then
+				mod:OpenProximity(spellId, 10, stormcloudTargets)
+			end
 		end
 		scheduled = nil
 	end
