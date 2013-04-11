@@ -67,7 +67,7 @@ function mod:OnEngage(diff)
 	legCounter, crushCounter = 4, 0
 	mendLegTimerRunning = nil
 
-	self:Berserk(self:LFR() and 720 or 420)
+	self:Berserk(self:Heroic() and 420 or 720)
 	self:Bar(122735, 11) -- Furious Swipe
 	if self:Heroic() then
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "PrePhase2", "boss1", "boss2", "boss3", "boss4", "boss5")
