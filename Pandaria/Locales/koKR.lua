@@ -1,5 +1,7 @@
 local L = BigWigs:NewBossLocale("Nalak", "koKR")
 if L then
+	L.engage_yell = "Can you feel a chill wind blow? The storm is coming..."
+
 	L.ability = "다음 능력"
 	L.ability_desc = "다음 능력에 대한 재사용 대기시간을 표시합니다."
 end

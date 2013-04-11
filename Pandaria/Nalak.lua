@@ -21,6 +21,8 @@ local stormcloudTargets = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_yell = "Can you feel a chill wind blow? The storm is coming..."
+
 	L.ability = "Next ability"
 	L.ability_desc = "Cooldown timer for the next ability."
 	L.ability_icon = "spell_nature_lightning" -- generic lightning icon
