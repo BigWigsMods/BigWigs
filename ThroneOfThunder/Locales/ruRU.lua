@@ -173,22 +173,22 @@ if L then
 	L.diffusion_add = "Рассеянный помощник"
 	L.shock = "Потрясение"
 
-	L.shock_self = "Static Shock on YOU"
-	L.shock_self_desc = "Show a duration bar for the Static Shock debuff on you."
+	L.shock_self = "Статический шок на ТЕБЕ"
+	L.shock_self_desc = "Показывать полосу с длительностью эффекта Статического шока на тебе."
 
-	L.overcharged_self = "Overcharged on YOU"
-	L.overcharged_self_desc = "Show a duration bar for the Overcharged debuff on you."
+	L.overcharged_self = "Перегрузка на ТЕБЕ"
+	L.overcharged_self_desc = "Показывать полосу с длительностью эффекта Перегрузки на тебе."
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "ruRU")
 if L then
-	L.vita_abilities = "Vita abilities"
-	L.anima_abilities = "Anima abilities"
-	L.worm = "Worm"
-	L.worm_desc = "Summon worm"
+	L.vita_abilities = "Способности Жизни"
+	L.anima_abilities = "Способности Анимы"
+	L.worm = "Червь"
+	L.worm_desc = "Призыв червя"
 
-	L.balls = "Balls"
-	L.balls_desc = "Anima (red) and Vita (blue) balls, that determine which abilities will Ra-den gain"
+	L.balls = "Сферы"
+	L.balls_desc = "Сферы Анимы (красные) и Жизни (синие), которые определяют, какие способности получит Ра-ден"
 end
 
 L = BigWigs:NewBossLocale("Trash", "ruRU")

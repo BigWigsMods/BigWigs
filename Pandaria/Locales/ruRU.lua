@@ -1,6 +1,6 @@
 local L = BigWigs:NewBossLocale("Nalak", "ruRU")
 if L then
-	L.engage_yell = "Can you feel a chill wind blow? The storm is coming..."
+	L.engage_yell = "Чувствуете порывы холодного ветра? Приближается буря..."
 
 	L.ability = "Следующая способность"
 	L.ability_desc = "Таймер восстановления следующей способности."
