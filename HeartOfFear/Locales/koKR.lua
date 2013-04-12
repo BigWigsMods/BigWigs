@@ -19,11 +19,11 @@ end
 
 L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "koKR")
 if L then
-	L.engage_yell = "On your guard, invaders. I, Ta'yak, Lord of Blades, will be your opponent."
+	L.engage_yell = "무기를 들어라. 나, 칼날군주 타마크가 상대해주마."
 
-	L.unseenstrike_soon = "Strike (%d) in ~5-10 sec!"
+	L.unseenstrike_soon = "보이지 않는 일격 (%d) ~ 5-10초 전!"
 	L.assault_message = "압도적인 공격"
-	L.side_swap = "Side Swap"
+	L.side_swap = "복도 전환"  -- Side Swap
 end
 
 L = BigWigs:NewBossLocale("Garalon", "koKR")
@@ -35,27 +35,27 @@ end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "koKR")
 if L then
-	L.spear_removed = "Your Impaling Spear was removed!"
+	L.spear_removed = "당신의 꿰뚫는 창이 제거되었습니다!"
 
-	L.mending_desc = "|cFFFF0000WARNING: Only the timer for your 'focus' target will show because all Zar'thik Battle-Menders have separate heal cooldowns.|r "
-	L.mending_warning = "Your focus is casting Mending!"
-	L.mending_bar = "주시대상: Mending"  -- Focus: Mending
+	L.mending_desc = "|cFFFF0000경고: 모든 자르티크 전쟁치유사들이 별도의 치유 재사용 대기시간을 가지고 있기 때문에 주시대상에 대한 타이머를 표시합니다.|r "
+	L.mending_warning = "당신의 주시대상이 치유 주문 시전!"
+	L.mending_bar = "주시대상: 전쟁치유사"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "koKR")
 if L then
-	L.explosion_by_other = "Amber Explosion cooldown bar by Monstrosity/Focus"
-	L.explosion_by_other_desc = "Cooldown warnings and bar for Amber Explosions cast by the Amber Monstrosity or your focus target."
+	L.explosion_by_other = "몬스터/주시대상의 호박석 폭발 재사용 대기시간 바"
+	L.explosion_by_other_desc = "호박석 괴수나 주시대상의 호박석 폭발에 대한 재사용 대기시간이나 바를 표시합니다."
 
-	L.explosion_casting_by_other = "Amber Explosion cast bar by Monstrosity/Focus"
-	L.explosion_casting_by_other_desc = "Cast warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_other = "몬스터/주시대상의 호박석 폭발 시전 바"
+	L.explosion_casting_by_other_desc = "호박석 회수나 당신의 주시대상의 호박석 폭발 시전을 경고합니다. 이것을 강조하는걸 추천합니다!"
 
-	L.explosion_by_you = "Your Amber Explosion cooldown"
-	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
-	L.explosion_by_you_bar = "You start casting..."
+	L.explosion_by_you = "자신의 호박석 폭발 대기시간"
+	L.explosion_by_you_desc = "자신의 호박석 폭발 재사용 대기시간을 경고합니다."
+	L.explosion_by_you_bar = "당신이 폭발 시전 시작..."
 
-	L.explosion_casting_by_you = "Your Amber Explosion cast bar"
-	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_you = "자신의 호박석 폭발 시전 바"
+	L.explosion_casting_by_you_desc = "자신의 호박석 폭발 시작 시전을 경고합니다. 이것을 강조하는걸 추천합니다!"
 
 	L.willpower = "의지력"
 	L.willpower_message = "%d 의지력!"
@@ -78,11 +78,11 @@ if L then
 	L.phases = "단계"
 	L.phases_desc = "단계 변경을 경고합니다."
 
-	L.eyes = "Eyes of the Empress"
-	L.eyes_desc = "Count the stacks and show a duration bar for Eyes of the Empress."
-	L.eyes_message = "Eyes"
+	L.eyes = "여제의 눈"
+	L.eyes_desc = "여제의 눈 중첩과 지속시간 바를 표시합니다."
+	L.eyes_message = "눈"
 
-	L.visions_message = "Visions"
-	L.visions_dispel = "Players have been feared!"
+	L.visions_message = "파멸의 환영"  -- Visions
+	L.visions_dispel = "플레이어 파멸의 환영!"  -- Players have been feared!
 	L.fumes_bar = "Your fumes buff"
 end
