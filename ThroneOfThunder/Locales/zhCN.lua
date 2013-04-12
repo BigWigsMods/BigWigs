@@ -174,22 +174,22 @@ if L then
 	L.diffusion_add = "散射闪电增援"
 	L.shock = "电能震击"
 
-	L.shock_self = "Static Shock on YOU"
-	L.shock_self_desc = "Show a duration bar for the Static Shock debuff on you."
+	L.shock_self = ">你< 静电冲击"
+	L.shock_self_desc = "显示静电冲击减益持续计时条。"
 
-	L.overcharged_self = "Overcharged on YOU"
-	L.overcharged_self_desc = "Show a duration bar for the Overcharged debuff on you."
+	L.overcharged_self = ">你< 超载"
+	L.overcharged_self_desc = "显示超载减益持续计时条。"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "zhCN")
 if L then
-	L.vita_abilities = "Vita abilities"
-	L.anima_abilities = "Anima abilities"
-	L.worm = "Worm"
-	L.worm_desc = "Summon worm"
+	L.vita_abilities = "生命技能"
+	L.anima_abilities = "心能技能"
+	L.worm = "血色恐魔"
+	L.worm_desc = "召唤血色恐魔。"
 
-	L.balls = "Balls"
-	L.balls_desc = "Anima (red) and Vita (blue) balls, that determine which abilities will Ra-den gain"
+	L.balls = "造物材料"
+	L.balls_desc = "心能（红）和生命（蓝）造物材料，这些技能使莱登获得增益。"
 end
 
 L = BigWigs:NewBossLocale("Trash", "zhCN")
