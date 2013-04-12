@@ -325,7 +325,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 		self:CDBar(133798, 66) -- Life Drain
 		self:CDBar(134626, 76) -- Lingering Gaze
 		self:CDBar(-6905, 78) -- Force of Will
-		self:Bar(-6882, 64, CL["cast"]:format(L["death_beam"]))
+		self:Bar(-6882, self:LFR() and 54 or 64, CL["cast"]:format(L["death_beam"]))
 		self:Bar(-6882, self:LFR() and 241 or 191, L["death_beam"])
 		self:Message(-6882, "Attention", nil, L["death_beam"])
 	end
