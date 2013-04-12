@@ -34,7 +34,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{125310, "FLASH"},
+		{125310, "FLASH", "EMPHASIZE"},
 		122842, {-6346, "ICON", "SAY", "PROXIMITY"}, {123175, "PROXIMITY"}, {123474, "TANK_HEALER"}, -6350,
 		"proximity", "berserk", "bosskill",
 	}, {

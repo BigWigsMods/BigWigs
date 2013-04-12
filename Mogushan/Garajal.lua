@@ -29,7 +29,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		122151, 116174, 116272, 116161,
+		122151, 116174, 116272, {116161, "EMPHASIZE"},
 		-5759,
 		-6698, "berserk", "bosskill",
 	}, {
@@ -164,7 +164,7 @@ end
 
 function mod:CrossedOverRemoved(args)
 	if self:Me(args.destGUID) then
-		self:StopBar(args.spellName)
+		self:StopBar(116161)
 	end
 end
 
@@ -174,14 +174,14 @@ end
 
 function mod:Banishment(args)
 	if self:Me(args.destGUID) then
-		self:Bar(args.spellId, 30, CL["you"]:format(args.spellName))
+		self:Bar(116161, 30) -- Crossed Over
 	end
 	self:Sync("Banish", args.destName)
 end
 
 function mod:SoulSeverRemoved(args)
 	if self:Me(args.destGUID) then
-		self:StopBar(116272, CL["you"]:format(self:SpellName(116272))) -- Banish
+		self:StopBar(116161) -- Crossed Over
 	end
 end
 

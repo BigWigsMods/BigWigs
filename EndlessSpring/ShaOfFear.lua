@@ -52,7 +52,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{-6699, "TANK_HEALER"}, 119414, 129147, {119519, "FLASH", "SAY"},
+		{-6699, "TANK_HEALER"}, {119414, "EMPHASIZE"}, 129147, {119519, "FLASH", "SAY"},
 		{ 119888, "FLASH" }, 118977,
 		129378, {-6700, "TANK_HEALER"}, {120669, "TANK"}, "ability_cd", {120629, "SAY"}, {120519, "FLASH"}, 120672, 120455, {120268, "FLASH", "PROXIMITY"}, {-6109, "FLASH"}, -6107,
 		{"swing", "TANK"}, "berserk", "proximity", "bosskill",

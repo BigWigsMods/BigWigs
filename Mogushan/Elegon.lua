@@ -44,7 +44,7 @@ function mod:GetOptions()
 	return {
 		117960, "adds", -6186, {117878, "FLASH"},
 		119360,
-		{"floor", "FLASH"},
+		{"floor", "FLASH", "EMPHASIZE"},
 		"stages", "berserk", "bosskill",
 	}, {
 		[117960] = -6174,
@@ -93,8 +93,6 @@ function mod:FloorRemoved(_, _, _, _, spellId)
 	if spellId == 118189 then
 		self:Bar("floor", 6, L["floor"], L.floor_icon)
 		self:Message("floor", "Personal", "Alarm", L["floor_message"], L.floor_icon)
-		self:ScheduleTimer("Message", 0.5, "floor", "Personal", "Alarm", L["floor_message"], L.floor_icon)
-		self:ScheduleTimer("Message", 1, "floor", "Personal", "Alarm", L["floor_message"], L.floor_icon)
 		self:Flash("floor", L.floor_icon)
 	end
 end
