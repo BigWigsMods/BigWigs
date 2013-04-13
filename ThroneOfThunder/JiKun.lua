@@ -134,21 +134,26 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 			self:Bar("nest", 40, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
 		end
 	elseif diff == 5 then -- 10 H
-		-- first 3 lower, second 3 upper
-		-- big adds at 2, 4, 8, 12 (no data past 17)
-		if nestCounter % 6 > 2 then
-			if nestCounter == 3 or nestCounter == 11 then
-				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["upper_nest"], L["add"]), "misc_arrowlup")
-			else
-				self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
-			end
-		else
-			if nestCounter == 1 or nestCounter == 7 then
-				self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["lower_nest"], L["add"]), "misc_arrowdown")
-			else
-				self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
-			end
+		-- 1 lower, 2 lower (add), 3 lower, 4 upper (add), 5 upper, 6 upper
+		-- 7 lower, 8 lower (add), 9 {lower, 10 upper}, 11 upper, 12 upper (add)
+		-- 13 lower, 14 lower, 15 {lower, 16 upper}, 17 upper, 18 upper
+		if nestCounter == 2 or nestCounter == 6 or nestCounter == 12 or nestCounter == 13 then
+			self:Bar("nest", 40, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
+		elseif nestCounter == 4 or nestCounter == 5 or nestCounter == 10 or nestCounter == 16 or nestCounter == 17 then
+			self:Bar("nest", 40, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
+		elseif nestCounter == 8 or nestCounter == 14 then -- up and down at same time 
+			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["down"], nextNest+1, L["up"]), 134347)		
+		elseif nestCounter == 1 or nestCounter == 7 then
+			self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["lower_nest"], L["add"]), "misc_arrowdown")	
+		elseif nestCounter == 3 or nestCounter == 11 then
+			self:Bar("nest", 30, ("(%d) %s (%s)"):format(nextNest, L["upper_nest"], L["add"]), "misc_arrowlup")
 		end
+		-- big adds at 2, 4, 8, 12
+		if nestCounter == 2 or nestCounter == 8 then
+			self:Message("nest", "Urgent", "Alert", L["big_add_message"]:format(L["lower_nest"]), 134367)
+		elseif nestCounter == 4 or nestCounter == 12 then
+			self:Message("nest", "Attention", "Alert", L["big_add_message"]:format(L["upper_nest"]), 134367)
+		end	
 	elseif diff == 4 then -- 25 N
 		-- 1 lower, 2 lower, 3 lower, 4 lower, 5 {lower, 6 upper}, 7 upper, 8 upper, 9 {lower, 10 upper}, 11 {lower, 12 upper}, 13 lower, 14 lower, 15 {lower, 16 upper},
 		-- 17 upper, 18 {lower, 19 upper}, 20 {lower, 21 upper}, 22 {lower, 23 upper}, 24 lower, 25 {lower, 26 upper}, 27 {lower, 28 upper}
