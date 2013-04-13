@@ -71,7 +71,7 @@ L.dbmBarDesc = "Si un utilisateur envoie un délai de pull ou une barre personna
 L.chatMessages = "Messages de la fenêtre de discussion"
 L.chatMessagesDesc = "Affiche tous les messages de BigWigs dans la fenêtre de discussion par défaut, en plus de son affichage normal."
 L.autoRole = "Mise à jour auto. du rôle"
---L.autoRoleDesc = "Knowing what role you are will improve Big Wigs warnings for other people in your raid, this option lets Big Wigs automatically update your role. For example, some modules will check if a player is a tank when scanning for boss abilities that never affect tanks.\n\n|cffff4411This is not related to role specific warnings and it's highly recommended you leave this turned on!|r"
+L.autoRoleDesc = "Savoir quel rôle vous jouez améliore les alertes Big Wigs des autres joueurs de votre raid. Cette option permet à Big Wigs de mettre à jour automatiquement votre rôle. Par exemple, certains modules vérifient si un joueur est un tank lors de l'analyse des techniques de boss qui n'affectent jamais les tanks.\n\n|cffff4411Ceci n'est pas lié aux alertes spécifiques de rôle et il est fortement recommandé de le laisser activé !|r"
 
 L.slashDescTitle = "|cFFFED000Commandes slash :|r"
 L.slashDescPull = "|cFFFED000/pull :|r envoie un compte à rebours de pull à votre raid."

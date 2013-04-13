@@ -173,17 +173,17 @@ if L then
 	L.diffusion_add = "Foudres diffuses"
 	L.shock = "Horion"
 
-	L.shock_self = "Static Shock on YOU"
-	L.shock_self_desc = "Show a duration bar for the Static Shock debuff on you."
+	L.shock_self = "Horion statique sur VOUS"
+	L.shock_self_desc = "Affiche une barre de durée de l'affaiblissement Horion statique quand ce dernier est sur vous.."
 
-	L.overcharged_self = "Overcharged on YOU"
-	L.overcharged_self_desc = "Show a duration bar for the Overcharged debuff on you."
+	L.overcharged_self = "Surchargé sur VOUS"
+	L.overcharged_self_desc = "Affiche une barre de durée de l'affaiblissement Surchargé quand ce dernier est sur vous."
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "frFR")
 if L then
-	L.vita_abilities = "Vita abilities"
-	L.anima_abilities = "Anima abilities"
+	L.vita_abilities = "Techniques de Vita"
+	L.anima_abilities = "Techniques d'Anima"
 	L.worm = "Worm"
 	L.worm_desc = "Summon worm"
 
