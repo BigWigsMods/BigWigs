@@ -105,7 +105,7 @@ function mod:OnEngage()
 		self:CloseProximity(-6870)
 		self:OpenProximity(136192, 12) -- Lightning Storm
 		self:Bar(77333, 17) -- Whirling Winds
-		self:Bar(136192, 20) -- Arcing Lightning
+		self:Bar(136192, 20) -- Lightning Storm (Arcing Lightning)
 	end
 	smashCounter = 1
 	if self.db.profile.custom_off_spear_target then
@@ -345,12 +345,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:StopBar(137221) -- Molten Overload
 			self:StopBar(134628) -- Unleashed Flame
 			self:Bar(-6877, 50) -- Windstorm
-			self:Bar(136192, 17) -- Arcing Lightning -- XXX not sure if it has to be restarted here for heroic
+			self:Bar(136192, 17) -- Lightning Storm (Arcing Lightning) -- XXX not sure if it has to be restarted here for heroic
 			self:OpenProximity(136192, 12) -- Lightning Storm -- assume 10 (use 12 to be safe)
 			self:StopBar(77333) -- Whirling Wind
 		elseif unit == "boss3" then
 			self:StopBar(-6877) -- Windstorm
-			self:StopBar(136192) -- Arcing Lightning
+			self:StopBar(136192) -- Lightning Storm (Arcing Lightning)
 			closeLightningStormProximity()
 			self:OpenProximity(-6870, 10)
 			self:Bar(-6914, 7) -- Dead Zone
@@ -393,12 +393,12 @@ function mod:Deaths(args)
 		self:StopBar(137221) -- Molten Overload
 		self:StopBar(134628) -- Unleashed Flame
 		self:Bar(-6877, 50) -- Windstorm
-		self:Bar(136192, 17) -- Arcing Lightning
+		self:Bar(136192, 17) -- Lightning Storm (Arcing Lightning)
 		self:OpenProximity(136192, 12) -- Lightning Storm -- assume 10 (use 12 to be safe)
 	elseif args.mobId == 68080 then -- Quet'zal
 		if not self:Heroic() then
 			self:StopBar(-6877) -- Windstorm
-			self:StopBar(136192) -- Arcing Lightning
+			self:StopBar(136192) -- Lightning Storm (Arcing Lightning)
 			self:Bar(-6914, 7) -- Dead Zone
 		end
 		closeLightningStormProximity()
