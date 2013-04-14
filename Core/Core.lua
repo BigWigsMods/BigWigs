@@ -433,6 +433,7 @@ end
 
 function addon:OnDisable()
 	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
+	self:UnregisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 	self:UnregisterMessage("BigWigs_AddonMessage")
 	zoneChanged() -- Unregister zone events
 	self.bossCore:Disable()
