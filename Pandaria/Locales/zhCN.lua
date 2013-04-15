@@ -1,6 +1,6 @@
 local L = BigWigs:NewBossLocale("Nalak", "zhCN")
 if L then
-	L.engage_yell = "感受"
+	L.engage_yell = "你感觉到劲吹的寒风了吗"
 
 	L.ability = "下一技能"
 	L.ability_desc = "下一技能冷却计时器。"
