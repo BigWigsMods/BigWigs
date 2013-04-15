@@ -173,22 +173,22 @@ if L then
 	L.diffusion_add = "Add di Diffusione"
 	L.shock = "Folgore"
 
-	L.shock_self = "Static Shock on YOU"
-	L.shock_self_desc = "Show a duration bar for the Static Shock debuff on you."
+	L.shock_self = "Folgore Statica SU I TE!!!"
+	L.shock_self_desc = "Mostra una barra di durata per il maleficio Folgore Statica su di te."
 
-	L.overcharged_self = "Overcharged on YOU"
-	L.overcharged_self_desc = "Show a duration bar for the Overcharged debuff on you."
+	L.overcharged_self = "Sovraccarico SU DI TE!!!"
+	L.overcharged_self_desc = "Mostra una barra di durata per il maleficio Sovraccarico su di te."
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "itIT")
 if L then
-	L.vita_abilities = "Vita abilities"
-	L.anima_abilities = "Anima abilities"
-	L.worm = "Worm"
-	L.worm_desc = "Summon worm"
+	L.vita_abilities = "Abilità Vita"
+	L.anima_abilities = "Abilità Anima"
+	L.worm = "Verme"
+	L.worm_desc = "Evocazione verme"
 
-	L.balls = "Balls"
-	L.balls_desc = "Anima (red) and Vita (blue) balls, that determine which abilities will Ra-den gain"
+	L.balls = "Sfere"
+	L.balls_desc = "Sfere dell'Anima (rosse) e della Vita (blu), che determinano quali abilità guadagna Ra-den"
 end
 
 L = BigWigs:NewBossLocale("Trash", "itIT")
