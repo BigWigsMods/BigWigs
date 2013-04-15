@@ -120,6 +120,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		icon = "misc_arrowdown"
 	end
 
+	-- one message for 10h nests with a guardian
 	if diff == 5 and (nestCounter == 2 or nestCounter == 4 or nestCounter == 8 or nestCounter == 12) then
 		text = L["big_add_message"]:format(text)
 	end
@@ -142,18 +143,12 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		elseif nestCounter == 4 or nestCounter == 5 or nestCounter == 10 or nestCounter == 16 or nestCounter == 17 then
 			self:Bar("nest", 40, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
 		elseif nestCounter == 8 or nestCounter == 14 then -- up and down at same time 
-			self:Bar("nest", 40, ("(%d)%s+(%d)%s"):format(nextNest, L["down"], nextNest+1, L["up"]), 134347)		
+			self:Bar("nest", 40, ("(%d) %s + (%d) %s"):format(nextNest, L["up"], nextNest+1, L["down"]), 134347)		
 		elseif nestCounter == 1 or nestCounter == 7 then
 			self:Bar("nest", 40, ("(%d) %s (%s)"):format(nextNest, L["lower_nest"], L["add"]), "misc_arrowdown")	
 		elseif nestCounter == 3 or nestCounter == 11 then
 			self:Bar("nest", 40, ("(%d) %s (%s)"):format(nextNest, L["upper_nest"], L["add"]), "misc_arrowlup")
 		end
-		-- big adds at 2, 4, 8, 12
-		if nestCounter == 2 or nestCounter == 8 then
-			self:Message("nest", "Urgent", "Alert", L["big_add_message"]:format(L["lower_nest"]), 134367)
-		elseif nestCounter == 4 or nestCounter == 12 then
-			self:Message("nest", "Attention", "Alert", L["big_add_message"]:format(L["upper_nest"]), 134367)
-		end	
 	elseif diff == 4 then -- 25 N
 		-- 1 lower, 2 lower, 3 lower, 4 lower, 5 {lower, 6 upper}, 7 upper, 8 upper, 9 {lower, 10 upper}, 11 {lower, 12 upper}, 13 lower, 14 lower, 15 {lower, 16 upper},
 		-- 17 upper, 18 {lower, 19 upper}, 20 {lower, 21 upper}, 22 {lower, 23 upper}, 24 lower, 25 {lower, 26 upper}, 27 {lower, 28 upper}
