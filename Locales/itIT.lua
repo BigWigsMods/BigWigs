@@ -71,7 +71,7 @@ L.dbmBarDesc = "Se un'utente DMB invia un timer di ingaggio o una barra 'pizza' 
 L.chatMessages = "Messaggi Riquadro Chat"
 L.chatMessagesDesc = "Invia tutti i messaggi di Big Wigs alla chat oltre che nei settaggi di visualizzazione."
 L.autoRole = "Aggiornamento automatico del ruolo"
---L.autoRoleDesc = "Knowing what role you are will improve Big Wigs warnings for other people in your raid, this option lets Big Wigs automatically update your role. For example, some modules will check if a player is a tank when scanning for boss abilities that never affect tanks.\n\n|cffff4411This is not related to role specific warnings and it's highly recommended you leave this turned on!|r"
+L.autoRoleDesc = "Sapere quale è il tuo ruolo migliorerà i suggerimenti di Big Wigs per tutti i membri dell'incursione; questa opzione permette a Big Wigs di aggiornare automaticamente il tuo ruolo. Per esempio, alcuni moduli controllano se il giocatore è un difensore quando controllano le abilità del boss che non possono affliggere i difensori.\n\n|cffff4411Questo non è limitato soltanot agli avvisi specifici di ruolo ed è caldamente consigliato lasciare questa opzione abilitata!|r"
 
 L.slashDescTitle = "|cFFFED000Comandi Slash:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Invia un conto alla rovescia per l'ingaggio alla tua incursione."
