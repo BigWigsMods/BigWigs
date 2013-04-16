@@ -1041,13 +1041,11 @@ local function onZoneShow(frame)
 	-- Make sure all the bosses for this zone are loaded.
 	BigWigsLoader:LoadZone(zoneId)
 
-	-- Does this zone have multiple encounters?
+	-- Does this zone have a module list?
 	local moduleList = BigWigsLoader:GetZoneMenus()[zoneId]
-	local multiple = moduleList and moduleList[2] and true
 
-	-- This zone has no modules, nor is the panel related
-	-- to a module.
-	if not multiple and not frame.module then
+	-- This zone has no modules, nor is the panel related to a module.
+	if not moduleList and not frame.module then
 		error(("We wanted to show options for the zone %q, but it does not have any modules registered."):format(tostring(zoneId)))
 		return
 	end
@@ -1069,7 +1067,7 @@ local function onZoneShow(frame)
 	outerContainer:SetFullWidth(true)
 
 	local innerContainer = nil
-	if multiple then
+	if moduleList then
 		innerContainer = AceGUI:Create("DropdownGroup")
 		innerContainer:SetTitle(L["Select encounter"])
 		innerContainer:SetLayout("Flow")
@@ -1107,7 +1105,7 @@ local function onZoneShow(frame)
 	-- release all children when the zone panel is hidden.
 	frame.container = outerContainer
 
-	if multiple then
+	if moduleList then
 		-- Find the first enabled module and select that in the
 		-- dropdown if possible.
 		local index = 1
