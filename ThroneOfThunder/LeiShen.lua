@@ -131,7 +131,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(self:LFR() and 900 or 720) -- XXX assumed
+	self:Berserk(self:LFR() and 900 or 720) -- XXX normal is assumed
 	markerTimer = nil
 	phase = 1
 	tooCloseForOvercharged = nil

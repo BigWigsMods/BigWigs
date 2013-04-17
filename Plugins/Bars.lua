@@ -891,7 +891,6 @@ function plugin:OnPluginEnable()
 	BigWigs:AddSyncListener(self, "BWCustomBar")
 	BigWigs:AddSyncListener(self, "BWPull")
 	if BigWigs.db.profile.customDBMbars then
-		RegisterAddonMessagePrefix("D4")
 		self:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
 	end
 

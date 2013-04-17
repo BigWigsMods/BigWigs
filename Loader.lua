@@ -392,6 +392,7 @@ do
 		loaderUtilityFrame:RegisterEvent("CHAT_MSG_ADDON")
 		self:RegisterMessage("BigWigs_AddonMessage")
 		RegisterAddonMessagePrefix("BigWigs")
+		RegisterAddonMessagePrefix("D4") -- DBM
 
 		self:RegisterMessage("BigWigs_CoreEnabled")
 		self:RegisterMessage("BigWigs_CoreDisabled")
@@ -439,7 +440,6 @@ do
 	function loader:UpdateDBMFaking(_, key, value)
 		if key == "fakeDBMVersion" then
 			if value then
-				RegisterAddonMessagePrefix("D4")
 				self:RegisterMessage("DBM_AddonMessage", dbmFaker)
 				if IsInRaid() or IsInGroup() then
 					dbmFaker(nil, nil, "H") -- Send addon message if feature is being turned on inside a raid/group.
@@ -576,6 +576,9 @@ do
 					else
 						BigWigs:Enable()
 					end
+					-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
+					-- which kills your ability to receive addon comms during the loading process.
+					self:GROUP_ROSTER_UPDATE("fake")
 				end
 			end
 		end
@@ -601,6 +604,9 @@ do
 						else
 							BigWigs:Enable()
 						end
+						-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
+						-- which kills your ability to receive addon comms during the loading process.
+						self:GROUP_ROSTER_UPDATE("fake")
 					end
 				end
 			end
@@ -645,6 +651,9 @@ do
 						else
 							BigWigs:Enable()
 						end
+						-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
+						-- which kills your ability to receive addon comms during the loading process.
+						self:GROUP_ROSTER_UPDATE("fake")
 					end
 				end
 			end
@@ -656,7 +665,7 @@ do
 		end
 
 		-- Lacking zone modules
-		local zoneAddon = loader.zoneList[id]
+		local zoneAddon = self.zoneList[id]
 		if zoneAddon and not warnedThisZone[id] then
 			local _, _, _, enabled = GetAddOnInfo(zoneAddon)
 			if not enabled then
@@ -669,13 +678,13 @@ end
 
 do
 	local grouped = nil
-	function loader:GROUP_ROSTER_UPDATE()
+	function loader:GROUP_ROSTER_UPDATE(isFake)
 		local groupType = (IsPartyLFG() and 3) or (IsInRaid() and 2) or (IsInGroup() and 1)
-		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
+		if (isFake == "fake" and groupType) or (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
-			self:ZONE_CHANGED_NEW_AREA()
 			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), groupType == 3 and "INSTANCE_CHAT" or "RAID")
-		elseif grouped and not groupType then
+			if isFake ~= "fake" then self:ZONE_CHANGED_NEW_AREA() end
+		elseif grouped and not groupType and isFake ~= "fake" then
 			grouped = nil
 			wipe(usersRelease)
 			wipe(usersAlpha)
