@@ -153,7 +153,7 @@ end
 L = BigWigs:NewBossLocale("Twin Consorts", "itIT")
 if L then
 	L.barrage_fired = "Raffica Lanciata!"
-	L.last_phase_yell_trigger = "Just this once..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
+	L.last_phase_yell_trigger = "Solo per questa volta..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
 end
 
 L = BigWigs:NewBossLocale("Lei Shen", "itIT")
@@ -167,7 +167,7 @@ if L then
 	L.aoe_grip = "Attrazione ad Area"
 	L.aoe_grip_desc = "Avvisa quando un cavaliere della Morte usa Presa di Malacarne, da usare per la gestione dei Fulmini Globulari."
 
-	L.shock_self = "Folgore Statica SU I TE!!!"
+	L.shock_self = "Folgore Statica SU DI TE!!!"
 	L.shock_self_desc = "Mostra una barra di durata per il maleficio Folgore Statica su di te."
 
 	L.overcharged_self = "Sovraccarico SU DI TE!!!"
@@ -178,8 +178,8 @@ if L then
 	L.intermission = "Intermezzo"
 	L.diffusion_add = "Add di Diffusione"
 	L.shock = "Folgore"
-	L.static_shock_bar = "<Static Shock Split>"
-	L.overcharge_bar = "<Overcharge Pulse>"
+	L.static_shock_bar = "<Divisione Folgore Statica>"
+	L.overcharge_bar = "<Pulsazione Sovraccarico>"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "itIT")
