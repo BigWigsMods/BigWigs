@@ -60,7 +60,7 @@ if L then
 	L.custom_off_turtlemarker = "Schildkröten markieren"
 	L.custom_off_turtlemarker_desc = "Markiert die Schildkröten mit allen Raidsymbolen.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r\n|cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über alle Schildkröten.|r"
 
-	L.no_crystal_shell = "KEIN Kristallpanzer"
+	L.no_crystal_shell = "KEIN Kristallpanzer!"
 end
 
 L = BigWigs:NewBossLocale("Megaera", "deDE")
@@ -179,8 +179,8 @@ if L then
 	L.intermission = "Unterbrechung"
 	L.diffusion_add = "Kugelblitzelementare"
 	L.shock = "Schock"
-	L.static_shock_bar = "<Static Shock Split>"
-	L.overcharge_bar = "<Overcharge Pulse>"
+	L.static_shock_bar = "<Elektroschock-Aufteilung>"
+	L.overcharge_bar = "<Überladung-Impuls>"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "deDE")
