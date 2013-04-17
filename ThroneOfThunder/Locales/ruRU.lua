@@ -178,8 +178,8 @@ if L then
 	L.intermission = "Перерыв"
 	L.diffusion_add = "Рассеянный помощник"
 	L.shock = "Потрясение"
-	L.static_shock_bar = "<Static Shock Split>"
-	L.overcharge_bar = "<Overcharge Pulse>"
+	L.static_shock_bar = "<Статический шок>"
+	L.overcharge_bar = "<Выброс Перегрузки>"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "ruRU")
