@@ -168,17 +168,19 @@ if L then
 	L.aoe_grip = "뛰어오르는 화살 처리"
 	L.aoe_grip_desc = "죽음의 기사로 뛰어오르는 화살 처리를 위해 고어핀드의 손아귀를 사용할 수 있도록 경고합니다."
 
-	L.last_inermission_ability = "마지막 도관 작동 능력 사용!"
-	L.safe_from_stun = "당신은 과충전 기절에 안전"
-	L.intermission = "도관 작동 중지"
-	L.diffusion_add = "연쇄 확산"
-	L.shock = "전하 충격"
-
 	L.shock_self = "당신에 전하 충격"
 	L.shock_self_desc = "전하 충격 디버프의 지속시간 바를 표시합니다."
 
 	L.overcharged_self = "당신에 과충전"
 	L.overcharged_self_desc = "과충전 디버프의 지속시간 바를 표시합니다."
+
+	L.last_inermission_ability = "마지막 도관 작동 능력 사용!"
+	L.safe_from_stun = "당신은 과충전 기절에 안전"
+	L.intermission = "도관 작동 중지"
+	L.diffusion_add = "연쇄 확산"
+	L.shock = "전하 충격"
+	L.static_shock_bar = "<Static Shock Split>"
+	L.overcharge_bar = "<Overcharge Pulse>"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "koKR")

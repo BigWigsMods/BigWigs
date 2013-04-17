@@ -48,12 +48,6 @@ if L then
 	L.aoe_grip = "AoE grip"
 	L.aoe_grip_desc = "Warning for when a Death Knight uses Gorefiend's Grasp, for use with handling Ball Lightnings."
 
-	L.last_inermission_ability = "Last intermission ability used!"
-	L.safe_from_stun = "You're probably safe from Overcharge stuns"
-	L.intermission = "Intermission"
-	L.diffusion_add = "Diffusion add"
-	L.shock = "Shock"
-
 	L.shock_self = "Static Shock on YOU"
 	L.shock_self_desc = "Show a duration bar for the Static Shock debuff on you."
 	L.shock_self_icon = 135695
@@ -61,6 +55,14 @@ if L then
 	L.overcharged_self = "Overcharged on YOU"
 	L.overcharged_self_desc = "Show a duration bar for the Overcharged debuff on you."
 	L.overcharged_self_icon = 136295
+
+	L.last_inermission_ability = "Last intermission ability used!"
+	L.safe_from_stun = "You're probably safe from Overcharge stuns"
+	L.intermission = "Intermission"
+	L.diffusion_add = "Diffusion add"
+	L.shock = "Shock"
+	L.static_shock_bar = "<Static Shock Split>"
+	L.overcharge_bar = "<Overcharge Pulse>"
 end
 L = mod:GetLocale()
 
@@ -532,7 +534,7 @@ function mod:Boss1Succeeded(unitId, spellName, _, _, spellId)
 end
 
 do
-	local overchargedList, scheduled = mod:NewTargetList(), nil
+	local overchargedList, overchargedOnMe, scheduled = mod:NewTargetList(), nil, nil
 	local function warnOvercharged(spellId)
 		if not UnitExists("boss1") then -- poor mans intermission check
 			mod:Bar(spellId, 23)
@@ -540,19 +542,23 @@ do
 			if phase == 1 or not mod:Heroic() then stopConduitAbilityBars() end
 			mod:Bar(spellId, 40)
 		end
+
 		mod:TargetMessage(spellId, overchargedList, "Urgent", "Alarm", nil, nil, true)
-		scheduled = nil
+		if not overchargedOnMe then
+			mod:Bar(spellId, 6, L["overcharge_bar"])
+		end
 		if not tooCloseForOvercharged then
-			mod:Message(spellId, "Positive", nil, L["safe_from_stun"])
+			mod:Message(spellId, "Positive", nil, L["safe_from_stun"], false)
 		end
 		tooCloseForOvercharged = nil
+		overchargedOnMe = nil
+		scheduled = nil
 	end
 	function mod:Overcharged(args)
 		if self:Me(args.destGUID) then
 			self:Say("overcharged_self", args.spellId)
 			self:TargetBar("overcharged_self", 6, args.destName, args.spellId)
-		else
-			self:TargetBar(args.spellId, 6, args.destName)
+			overchargedOnMe = true
 		end
 		if self:Range(args.destName) < 50 then -- XXX verify range ( should be more than 40 )
 			tooCloseForOvercharged = true
@@ -620,7 +626,7 @@ function mod:StaticShockRemoved(args)
 end
 
 do
-	local staticShockList, scheduled, coloredNames = {}, nil, mod:NewTargetList()
+	local staticShockList, staticShockOnMe, scheduled, coloredNames = {}, nil, nil, mod:NewTargetList()
 	local function warnStaticShock(spellId)
 		local intermission
 		if not UnitExists("boss1") then -- poor mans intermission check
@@ -640,7 +646,11 @@ do
 			end
 		end
 		mod:TargetMessage(spellId, coloredNames, "Positive", "Info", nil, nil, true) -- green because everyone should be friendly and hug the person with it
+		if not staticShockOnMe and not mod:Heroic() then
+			mod:Bar(spellId, 8, L["static_shock_bar"])
+		end
 		scheduled = nil
+		staticShockOnMe = nil
 		wipe(staticShockList)
 		if intermission and distance < 40 then -- ignore other quadrants during the intermission
 			mod:CloseProximity("proximity")
@@ -663,21 +673,21 @@ do
 		end
 	end
 	function mod:StaticShockApplied(args)
+		coloredNames[#coloredNames+1] = args.destName
 		if self:Me(args.destGUID) then
 			timeLeft = 8
 			self:Flash("shock_self", args.spellId)
 			self:Say("shock_self", args.spellId)
 			self:TargetBar("shock_self", 8, args.destName, args.spellId)
 			timer = self:ScheduleRepeatingTimer(staticShockSayCountdown, 1)
-		else
-			self:TargetBar(args.spellId, 8, args.destName)
+			staticShockOnMe = true
+		elseif self:Heroic() then
+			self:TargetBar(args.spellId, 8, coloredNames[#coloredNames])
 		end
 		staticShockList[#staticShockList+1] = args.destName
-		coloredNames[#coloredNames+1] = args.destName
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnStaticShock, 0.1, args.spellId)
 		end
 	end
 end
-
 

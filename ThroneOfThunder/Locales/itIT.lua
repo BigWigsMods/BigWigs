@@ -167,17 +167,19 @@ if L then
 	L.aoe_grip = "Attrazione ad Area"
 	L.aoe_grip_desc = "Avvisa quando un cavaliere della Morte usa Presa di Malacarne, da usare per la gestione dei Fulmini Globulari."
 
-	L.last_inermission_ability = "Ultima abilità intermezzo usata!"
-	L.safe_from_stun = "Sei probabilmente al sicuro dai disorientamenti di Sovraccarico"
-	L.intermission = "Intermezzo"
-	L.diffusion_add = "Add di Diffusione"
-	L.shock = "Folgore"
-
 	L.shock_self = "Folgore Statica SU I TE!!!"
 	L.shock_self_desc = "Mostra una barra di durata per il maleficio Folgore Statica su di te."
 
 	L.overcharged_self = "Sovraccarico SU DI TE!!!"
 	L.overcharged_self_desc = "Mostra una barra di durata per il maleficio Sovraccarico su di te."
+
+	L.last_inermission_ability = "Ultima abilità intermezzo usata!"
+	L.safe_from_stun = "Sei probabilmente al sicuro dai disorientamenti di Sovraccarico"
+	L.intermission = "Intermezzo"
+	L.diffusion_add = "Add di Diffusione"
+	L.shock = "Folgore"
+	L.static_shock_bar = "<Static Shock Split>"
+	L.overcharge_bar = "<Overcharge Pulse>"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "itIT")

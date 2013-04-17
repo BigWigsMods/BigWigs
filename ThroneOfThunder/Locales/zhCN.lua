@@ -168,17 +168,19 @@ if L then
 	L.aoe_grip = "AoE 之握"
 	L.aoe_grip_desc = "当死亡骑士使用血魔之握时发出警报，用于处理球状闪电。"
 
-	L.last_inermission_ability = "最终阶段转换技能已使用！"
-	L.safe_from_stun = "超载昏迷你也许是安全的"
-	L.intermission = "阶段转换"
-	L.diffusion_add = "散射闪电增援"
-	L.shock = "电能震击"
-
 	L.shock_self = ">你< 静电冲击"
 	L.shock_self_desc = "显示静电冲击减益持续计时条。"
 
 	L.overcharged_self = ">你< 超载"
 	L.overcharged_self_desc = "显示超载减益持续计时条。"
+
+	L.last_inermission_ability = "最终阶段转换技能已使用！"
+	L.safe_from_stun = "超载昏迷你也许是安全的"
+	L.intermission = "阶段转换"
+	L.diffusion_add = "散射闪电增援"
+	L.shock = "电能震击"
+	L.static_shock_bar = "<Static Shock Split>"
+	L.overcharge_bar = "<Overcharge Pulse>"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "zhCN")

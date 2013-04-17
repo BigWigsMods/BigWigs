@@ -167,17 +167,19 @@ if L then
 	L.aoe_grip = "Agarre zonal"
 	L.aoe_grip_desc = "Avisa cuando un DK usa Abrazo de Sanguino, usar para controlar la Bola de relámpagos."
 
-	L.last_inermission_ability = "¡Última habilidad del intermedio usada!"
-	L.safe_from_stun = "Probablemente estés a salvo de los aturdimientos por Sobrecarga"
-	L.intermission = "Intermedio"
-	L.diffusion_add = "Difusión de adds"
-	L.shock = "Choque"
-
 	L.shock_self = "Static Shock on YOU"
 	L.shock_self_desc = "Show a duration bar for the Static Shock debuff on you."
 
 	L.overcharged_self = "Overcharged on YOU"
 	L.overcharged_self_desc = "Show a duration bar for the Overcharged debuff on you."
+
+	L.last_inermission_ability = "¡Última habilidad del intermedio usada!"
+	L.safe_from_stun = "Probablemente estés a salvo de los aturdimientos por Sobrecarga"
+	L.intermission = "Intermedio"
+	L.diffusion_add = "Difusión de adds"
+	L.shock = "Choque"
+	L.static_shock_bar = "<Static Shock Split>"
+	L.overcharge_bar = "<Overcharge Pulse>"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "esES") or BigWigs:NewBossLocale("Ra-den", "esMX")

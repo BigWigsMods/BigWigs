@@ -167,17 +167,19 @@ if L then
 	L.aoe_grip = "AoE хватка"
 	L.aoe_grip_desc = "Предупрждать, когда рыцарь смерти использует Хватку Кровожада для Шаровых молний."
 
-	L.last_inermission_ability = "Последний перерыв!"
-	L.safe_from_stun = "Возможно, вы защищены от оглушения Перегрузкой"
-	L.intermission = "Перерыв"
-	L.diffusion_add = "Рассеянный помощник"
-	L.shock = "Потрясение"
-
 	L.shock_self = "Статический шок на ТЕБЕ"
 	L.shock_self_desc = "Показывать полосу с длительностью эффекта Статического шока на тебе."
 
 	L.overcharged_self = "Перегрузка на ТЕБЕ"
 	L.overcharged_self_desc = "Показывать полосу с длительностью эффекта Перегрузки на тебе."
+
+	L.last_inermission_ability = "Последний перерыв!"
+	L.safe_from_stun = "Возможно, вы защищены от оглушения Перегрузкой"
+	L.intermission = "Перерыв"
+	L.diffusion_add = "Рассеянный помощник"
+	L.shock = "Потрясение"
+	L.static_shock_bar = "<Static Shock Split>"
+	L.overcharge_bar = "<Overcharge Pulse>"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "ruRU")

@@ -168,17 +168,19 @@ if L then
 	L.aoe_grip = "AoE Griff"
 	L.aoe_grip_desc = "Gibt Warnungen aus, wenn ein Todesritter Blutschattens Griff nutzt um bei der Bewältigung der Kugelblitze zu helfen."
 
-	L.last_inermission_ability = "Letzte Unterbrechungs-Fähigkeit genutzt!"
-	L.safe_from_stun = "Du bist wahrscheinlich sicher vor Überladungs-Betäubungen"
-	L.intermission = "Unterbrechung"
-	L.diffusion_add = "Kugelblitzelementare"
-	L.shock = "Schock"
-
 	L.shock_self = "Elektroschock auf DIR"
 	L.shock_self_desc = "Eine Leiste für die Dauer des Elektroschock-Schwächungszaubers auf Dir anzeigen."
 
 	L.overcharged_self = "Überladung auf DIR"
 	L.overcharged_self_desc = "Eine Leiste für die Dauer des Überladung-Schwächungszaubers auf Dir anzeigen."
+
+	L.last_inermission_ability = "Letzte Unterbrechungs-Fähigkeit genutzt!"
+	L.safe_from_stun = "Du bist wahrscheinlich sicher vor Überladungs-Betäubungen"
+	L.intermission = "Unterbrechung"
+	L.diffusion_add = "Kugelblitzelementare"
+	L.shock = "Schock"
+	L.static_shock_bar = "<Static Shock Split>"
+	L.overcharge_bar = "<Overcharge Pulse>"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "deDE")

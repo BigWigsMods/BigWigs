@@ -167,17 +167,19 @@ if L then
 	L.aoe_grip = "\"Grip\" de zone"
 	L.aoe_grip_desc = "Prévient quand un chevalier de la mort utilise Emprise de Fielsang, à utiliser avec la gestion des foudres en boule."
 
-	L.last_inermission_ability = "Dernière technique d'entracte utilisée !"
-	L.safe_from_stun = "Vous êtes probablement à l'abri des étourdissements de Surchargé"
-	L.intermission = "Entracte"
-	L.diffusion_add = "Foudres diffuses"
-	L.shock = "Horion"
-
 	L.shock_self = "Horion statique sur VOUS"
 	L.shock_self_desc = "Affiche une barre de durée de l'affaiblissement Horion statique quand ce dernier est sur vous.."
 
 	L.overcharged_self = "Surchargé sur VOUS"
 	L.overcharged_self_desc = "Affiche une barre de durée de l'affaiblissement Surchargé quand ce dernier est sur vous."
+
+	L.last_inermission_ability = "Dernière technique d'entracte utilisée !"
+	L.safe_from_stun = "Vous êtes probablement à l'abri des étourdissements de Surchargé"
+	L.intermission = "Entracte"
+	L.diffusion_add = "Foudres diffuses"
+	L.shock = "Horion"
+	L.static_shock_bar = "<Static Shock Split>"
+	L.overcharge_bar = "<Overcharge Pulse>"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "frFR")
