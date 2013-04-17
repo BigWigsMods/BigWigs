@@ -33,8 +33,8 @@ L["There are people in your group with older versions or without Big Wigs. You c
 L["Up to date:"] = "已更新："
 L["Out of date:"] = "过期："
 L["No Big Wigs:"] = "没有 Big Wigs："
-L["DBM users:"] = "DBM users:"
-L["No boss mod:"] = "No boss mod:"
+L["DBM users:"] = "使用 DBM："
+L["No boss mod:"] = "没有首领模块："
 
 L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = "因为暴雪的战斗限制将在等待战斗结束后加载。"
 L["Combat has ended, Big Wigs has now finished loading."] = "战斗已结束，Big Wigs 已完成加载。"
