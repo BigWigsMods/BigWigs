@@ -167,30 +167,30 @@ if L then
 	L.aoe_grip = "Agarre zonal"
 	L.aoe_grip_desc = "Avisa cuando un DK usa Abrazo de Sanguino, usar para controlar la Bola de relámpagos."
 
-	L.shock_self = "Static Shock on YOU"
-	L.shock_self_desc = "Show a duration bar for the Static Shock debuff on you."
+	L.shock_self = "Choque estático en TI"
+	L.shock_self_desc = "Muestra una barra con la duración del debuff Choque estático en ti."
 
-	L.overcharged_self = "Overcharged on YOU"
-	L.overcharged_self_desc = "Show a duration bar for the Overcharged debuff on you."
+	L.overcharged_self = "Sobrecarga en TI"
+	L.overcharged_self_desc = "Muestra una barra con la duración del debuff Sobrecarga en ti."
 
 	L.last_inermission_ability = "¡Última habilidad del intermedio usada!"
 	L.safe_from_stun = "Probablemente estés a salvo de los aturdimientos por Sobrecarga"
 	L.intermission = "Intermedio"
 	L.diffusion_add = "Difusión de adds"
 	L.shock = "Choque"
-	L.static_shock_bar = "<Static Shock Split>"
-	L.overcharge_bar = "<Overcharge Pulse>"
+	L.static_shock_bar = "<Choque estático dividido>"
+	L.overcharge_bar = "<Pulso de Sobrecarga>"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "esES") or BigWigs:NewBossLocale("Ra-den", "esMX")
 if L then
-	L.vita_abilities = "Vita abilities"
-	L.anima_abilities = "Anima abilities"
-	L.worm = "Worm"
-	L.worm_desc = "Summon worm"
+	L.vita_abilities = "Habilidades de Vita"
+	L.anima_abilities = "Habilidades de Ánima"
+	L.worm = "Gusano"
+	L.worm_desc = "Invocar gusano"
 
-	L.balls = "Balls"
-	L.balls_desc = "Anima (red) and Vita (blue) balls, that determine which abilities will Ra-den gain"
+	L.balls = "Bolas"
+	L.balls_desc = "Bolas de Ánima (rojo) y Vita (azul), que determinan que habilidades ganará Ra-den"
 end
 
 L = BigWigs:NewBossLocale("Trash", "esES") or BigWigs:NewBossLocale("Trash", "esMX")
@@ -198,7 +198,7 @@ if L then
 	L.stormcaller = "Invocatormentas Zandalari"
 	L.stormbringer = "Extiendetormentas Draz'kil"
 	L.monara = "Monara"
-	L.rockyhorror = "Rocky Horror"
-	L.thunderlord_guardian = "Thunder Lord / Lightning Guardian"
+	L.rockyhorror = "Horror rocoso"
+	L.thunderlord_guardian = "Señor de los truenos  / Guardián de los relámpagos"
 end
 
