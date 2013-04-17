@@ -529,9 +529,7 @@ do
 				loaderUtilityFrame.timer:Play()
 			end
 			message = tonumber(message)
-			-- PhoenixStyle does a mass version check to see what boss mods people are using for some reason.
-			-- It uses version 0 in the query so we just respond to this normally but stop attributing these people as using Big Wigs.
-			if not message or message == 0 then return end
+			if not message or message == 0 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
 			usersRelease[sender] = message
 			usersAlpha[sender] = nil
 			if message > highestReleaseRevision then highestReleaseRevision = message end
@@ -545,7 +543,7 @@ do
 				loaderUtilityFrame.timer:Play()
 			end
 			message = tonumber(message)
-			if not message or message == 0 then return end
+			if not message or message == 0 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
 			if message > highestAlphaRevision then highestAlphaRevision = message end
@@ -671,6 +669,7 @@ do
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
 			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), groupType == 3 and "INSTANCE_CHAT" or "RAID")
+			SendAddonMessage("D4", "H", IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			self:ZONE_CHANGED_NEW_AREA()
 		elseif grouped and not groupType then
 			grouped = nil
@@ -703,6 +702,7 @@ function loader:BigWigs_CoreEnabled()
 	-- which kills your ability to receive addon comms during the loading process.
 	if IsInRaid() or IsInGroup() then
 		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
+		SendAddonMessage("D4", "H", IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 	end
 
 	loadAddons(loadOnCoreEnabled)
