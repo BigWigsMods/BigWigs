@@ -25,7 +25,7 @@ if L then
 	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"
 	L.custom_off_turtlemarker_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8"
 
-	L.no_crystal_shell = "NO Crystal Shell"
+	L.no_crystal_shell = "NO Crystal Shell!"
 end
 L = mod:GetLocale()
 
@@ -36,9 +36,8 @@ L = mod:GetLocale()
 local kickable = 0
 local crystalTimer = nil
 
-local crystalShell = mod:SpellName(137633)
-local function warnCrystalShell()
-	if UnitDebuff("player", crystalShell) or not UnitAffectingCombat("player") then
+local function warnCrystalShell(spellName)
+	if UnitDebuff("player", spellName) or not UnitAffectingCombat("player") then
 		mod:CancelTimer(crystalTimer)
 		crystalTimer = nil
 	else
@@ -97,9 +96,8 @@ function mod:OnEngage()
 	self:Bar(136294, 21) -- Call of Tortos
 	self:CDBar(134920, 28) -- Quake Stomp
 
-	if self:Heroic() and not UnitDebuff("player", crystalShell) then -- Here we can warn tanks too
-		crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3)
-		warnCrystalShell()
+	if self:Heroic() then
+		crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3, self:SpellName(137633))
 	end
 	-- marking
 	if self.db.profile.custom_off_turtlemarker then
@@ -128,14 +126,17 @@ function mod:BreathUpdate(unit)
 end
 
 function mod:CrystalShellRemoved(args)
-	if not self:Me(args.destGUID) or self:Tank() or not self.isEngaged then return end
-	self:Flash(args.spellId)
-	self:Message(args.spellId, "Urgent", "Alarm", CL["removed"]:format(args.spellName)) -- I think this should stay Urgent Alarm
-	crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3)
+	if not self:Me(args.destGUID) or not self.isEngaged then return end
+	self:Message(args.spellId, "Urgent", "Alarm", CL["removed"]:format(args.spellName))
+	if not self:Tank() then
+		self:Flash(args.spellId)
+		crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3, args.spellName)
+	end
 end
 
 function mod:SnappingBite(args)
 	self:Message(args.spellId, "Attention")
+	self:Bar(args.spellId, 8)
 end
 
 function mod:SummonBats(_, _, _, _, spellId)
