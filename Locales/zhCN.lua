@@ -32,7 +32,9 @@ L["All running modules have been disabled."] = "所有运行中的模块都已�
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "在你队伍里使用旧版本或没有使用 Big Wigs。你可以用 /bwv 获得详细内容。"
 L["Up to date:"] = "已更新："
 L["Out of date:"] = "过期："
-L["No Big Wigs 3.x:"] = "没有 Big Wigs 3.x："
+L["No Big Wigs:"] = "没有 Big Wigs："
+L["DBM users:"] = "DBM users:"
+L["No boss mod:"] = "No boss mod:"
 
 L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = "因为暴雪的战斗限制将在等待战斗结束后加载。"
 L["Combat has ended, Big Wigs has now finished loading."] = "战斗已结束，Big Wigs 已完成加载。"

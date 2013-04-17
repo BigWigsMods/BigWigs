@@ -30,7 +30,9 @@ L["All running modules have been disabled."] = true
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = true
 L["Up to date:"] = true
 L["Out of date:"] = true
-L["No Big Wigs 3.x:"] = true
+L["No Big Wigs:"] = true
+L["DBM users:"] = true
+L["No boss mod:"] = true
 
 L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = true
 L["Combat has ended, Big Wigs has now finished loading."] = true

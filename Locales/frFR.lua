@@ -30,7 +30,9 @@ L["All running modules have been disabled."] = "Tous les modules actifs ont ét�
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "Certains joueurs de votre groupe ont d'anciennes versions ou n'ont pas Big Wigs. Tapez /bwv pour plus de détails."
 L["Up to date:"] = "À jour :"
 L["Out of date:"] = "Périmé :"
-L["No Big Wigs 3.x:"] = "BW 3.x absent :"
+L["No Big Wigs:"] = "Big Wigs absent :"
+L["DBM users:"] = "DBM users:"
+L["No boss mod:"] = "No boss mod:"
 
 L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = "En attente de la fin du combat afin de terminer le chargement en raison de restrictions mises en place par Blizzard."
 L["Combat has ended, Big Wigs has now finished loading."] = "Le combat a pris fin, Big Wigs a maintenant terminé de se charger."

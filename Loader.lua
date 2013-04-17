@@ -64,6 +64,7 @@ loader.SetMapToCurrentZone = SetMapToCurrentZone
 -- Version
 local usersAlpha = {}
 local usersRelease = {}
+local usersDBM = {}
 -- Only set highestReleaseRevision if we're actually using a release of BigWigs.
 -- If we set this as an alpha user we will alert release users with out-of-date warnings
 -- and class them as out-of-date in /bwv (if our alpha version is higher). But they may be
@@ -391,6 +392,7 @@ do
 
 		loaderUtilityFrame:RegisterEvent("CHAT_MSG_ADDON")
 		self:RegisterMessage("BigWigs_AddonMessage")
+		self:RegisterMessage("DBM_AddonMessage") -- DBM
 		RegisterAddonMessagePrefix("BigWigs")
 		RegisterAddonMessagePrefix("D4") -- DBM
 
@@ -401,52 +403,45 @@ do
 		self:ZONE_CHANGED_NEW_AREA()
 
 		self:RegisterMessage("BigWigs_CoreOptionToggled", "UpdateDBMFaking")
-		local isFakingDBM = nil
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of the the core for this 1 feature
 		if BigWigs3DB and BigWigs3DB.profileKeys and BigWigs3DB.profiles then
 			local name = UnitName("player")
 			local realm = GetRealmName()
 			if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
 				local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
-				isFakingDBM = key.fakeDBMVersion
+				self.isFakingDBM = key.fakeDBMVersion
 			end
 		end
-		self:UpdateDBMFaking(nil, "fakeDBMVersion", isFakingDBM)
+		self:UpdateDBMFaking(nil, "fakeDBMVersion", self.isFakingDBM)
 
 		self.OnEnable = nil
 	end
 end
 
 -----------------------------------------------------------------------
--- DBM faking
+-- DBM version collection & faking
 --
 
 do
 	local DBMdotRevision = "9314"
 	local DBMdotDisplayVersion = "5.2.4"
-	local function dbmFaker(_, _, prefix, revision, _, displayVersion)
-		if prefix == "H" then
+	function loader:DBM_AddonMessage(channel, sender, prefix, revision, _, displayVersion)
+		if prefix == "H" and (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
 			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale(), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
 		elseif prefix == "V" then
+			usersDBM[sender] = displayVersion
 			-- If there are people with newer versions than us, suddenly we've upgraded!
 			local rev, dotRev = tonumber(revision), tonumber(DBMdotRevision)
 			if rev and displayVersion and rev ~= 99999 and rev > dotRev then
 				DBMdotRevision = revision
 				DBMdotDisplayVersion = displayVersion
-				dbmFaker(nil, nil, "H") -- Re-send addon message.
+				self:DBM_AddonMessage(nil, nil, "H") -- Re-send addon message.
 			end
 		end
 	end
 	function loader:UpdateDBMFaking(_, key, value)
-		if key == "fakeDBMVersion" then
-			if value then
-				self:RegisterMessage("DBM_AddonMessage", dbmFaker)
-				if IsInRaid() or IsInGroup() then
-					dbmFaker(nil, nil, "H") -- Send addon message if feature is being turned on inside a raid/group.
-				end
-			else
-				self:UnregisterMessage("DBM_AddonMessage")
-			end
+		if key == "fakeDBMVersion" and value and (IsInRaid() or IsInGroup()) then
+			self:DBM_AddonMessage(nil, nil, "H") -- Send addon message if feature is being turned on inside a raid/group.
 		end
 	end
 end
@@ -845,13 +840,17 @@ do
 		local good = {} -- highest release users
 		local ugly = {} -- old version users
 		local bad = {} -- non-bw users
+		local crazy = {} -- DBM users
+		local insane = {} -- no bossmod
 		for i, player in next, m do
+			local usesBossMod = nil
 			if usersRelease[player] then
 				if usersRelease[player] < highestReleaseRevision then
 					ugly[#ugly + 1] = coloredNameVersion(player, usersRelease[player])
 				else
 					good[#good + 1] = coloredNameVersion(player, usersRelease[player])
 				end
+				usesBossMod = true
 			elseif usersAlpha[player] then
 				-- If this person's alpha version isn't SVN (-1) and it's higher or the same as the highest found release version minus 1 because
 				-- of tagging, or it's higher or the same as the highest found alpha version (with a 10 revision leeway) then that person's good
@@ -860,13 +859,23 @@ do
 				else
 					ugly[#ugly + 1] = coloredNameVersion(player, usersAlpha[player], ALPHA)
 				end
+				usesBossMod = true
 			else
 				bad[#bad + 1] = coloredNames[player]
+			end
+			if usersDBM[player] then
+				crazy[#crazy+1] = coloredNameVersion(player, usersDBM[player])
+				usesBossMod = true
+			end
+			if not usesBossMod then
+				insane[#insane+1] = coloredNames[player]
 			end
 		end
 		if #good > 0 then print(L["Up to date:"], unpack(good)) end
 		if #ugly > 0 then print(L["Out of date:"], unpack(ugly)) end
-		if #bad > 0 then print(L["No Big Wigs 3.x:"], unpack(bad)) end
+		if #crazy > 0 then print(L["DBM users:"], unpack(crazy)) end
+		if #bad > 0 then print(L["No Big Wigs:"], unpack(bad)) end
+		if #insane > 0 then print(L["No boss mod:"], unpack(insane)) end
 	end
 
 	SLASH_BIGWIGSVERSION1 = "/bwv"
