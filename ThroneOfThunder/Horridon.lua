@@ -95,7 +95,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_INTERRUPT", "DinoMendingInterrupt", "*")
 	-- The Amani
 	self:Log("SPELL_DAMAGE", "LightningNova", 136490)
-	self:Log("SPELL_CAST_START", "Hex", 136512)
+	self:Log("SPELL_AURA_APPLIED", "Hex", 136512)
 	self:Log("SPELL_CAST_START", "ChainLightning", 136480)
 	self:Log("SPELL_CAST_START", "Fireball", 136465)
 	-- The Drakkari
@@ -204,8 +204,8 @@ do
 end
 
 function mod:Hex(args)
-	if self:Dispeller("curse", nil, -7125) then
-		self:Message(-7125, "Important", "Alarm", args.spellName, args.spellId)
+	if self:Dispeller("curse", nil, -7125) or self:Me(args.destGUID) then
+		self:TargetMessage(-7125, args.destName, "Important", "Alarm", args.spellName, args.spellId)
 	end
 end
 
