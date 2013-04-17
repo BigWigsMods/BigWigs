@@ -515,7 +515,9 @@ do
 
 	loaderUtilityFrame.timer = loaderUtilityFrame:CreateAnimationGroup()
 	loaderUtilityFrame.timer:SetScript("OnFinished", function()
-		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:%d" or "VRA:%d"):format(BIGWIGS_RELEASE_REVISION), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
+		if IsInRaid() or IsInGroup() then
+			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:%d" or "VRA:%d"):format(BIGWIGS_RELEASE_REVISION), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
+		end
 	end)
 	local anim = loaderUtilityFrame.timer:CreateAnimation()
 	anim:SetDuration(5)
@@ -571,9 +573,6 @@ do
 					else
 						BigWigs:Enable()
 					end
-					-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
-					-- which kills your ability to receive addon comms during the loading process.
-					self:GROUP_ROSTER_UPDATE("fake")
 				end
 			end
 		end
@@ -599,9 +598,6 @@ do
 						else
 							BigWigs:Enable()
 						end
-						-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
-						-- which kills your ability to receive addon comms during the loading process.
-						self:GROUP_ROSTER_UPDATE("fake")
 					end
 				end
 			end
@@ -646,9 +642,6 @@ do
 						else
 							BigWigs:Enable()
 						end
-						-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
-						-- which kills your ability to receive addon comms during the loading process.
-						self:GROUP_ROSTER_UPDATE("fake")
 					end
 				end
 			end
@@ -673,13 +666,13 @@ end
 
 do
 	local grouped = nil
-	function loader:GROUP_ROSTER_UPDATE(isFake)
+	function loader:GROUP_ROSTER_UPDATE()
 		local groupType = (IsPartyLFG() and 3) or (IsInRaid() and 2) or (IsInGroup() and 1)
-		if (isFake == "fake" and groupType) or (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
+		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
 			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), groupType == 3 and "INSTANCE_CHAT" or "RAID")
-			if isFake ~= "fake" then self:ZONE_CHANGED_NEW_AREA() end
-		elseif grouped and not groupType and isFake ~= "fake" then
+			self:ZONE_CHANGED_NEW_AREA()
+		elseif grouped and not groupType then
 			grouped = nil
 			wipe(usersRelease)
 			wipe(usersAlpha)
@@ -704,6 +697,12 @@ end
 function loader:BigWigs_CoreEnabled()
 	if ldb then
 		ldb.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-enabled"
+	end
+
+	-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
+	-- which kills your ability to receive addon comms during the loading process.
+	if IsInRaid() or IsInGroup() then
+		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
 	end
 
 	loadAddons(loadOnCoreEnabled)
