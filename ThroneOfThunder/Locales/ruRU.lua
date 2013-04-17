@@ -198,4 +198,6 @@ if L then
 	L.stormcaller = "Зандаларский призыватель бурь"
 	L.stormbringer = "Вестник шторма Драз'кил"
 	L.monara = "Монара"
+	L.rockyhorror = "Rocky Horror"
+	L.thunderlord_guardian = "Thunder Lord / Lightning Guardian"
 end

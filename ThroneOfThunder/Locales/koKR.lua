@@ -199,4 +199,6 @@ if L then
 	L.stormcaller = "Zandalari Storm-Caller"
 	L.stormbringer = "Stormbringer Draz'kil"
 	L.monara = "Monara"
+	L.rockyhorror = "Rocky Horror"
+	L.thunderlord_guardian = "Thunder Lord / Lightning Guardian"
 end

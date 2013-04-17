@@ -199,5 +199,7 @@ if L then
 	L.stormcaller = "赞达拉风暴召唤者"
 	L.stormbringer = "风暴使者达兹基尔"
 	L.monara = "莫纳拉"
+	L.rockyhorror = "Rocky Horror"
+	L.thunderlord_guardian = "Thunder Lord / Lightning Guardian"
 end
 
