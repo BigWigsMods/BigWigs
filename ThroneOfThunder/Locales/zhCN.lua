@@ -179,8 +179,8 @@ if L then
 	L.intermission = "阶段转换"
 	L.diffusion_add = "散射闪电增援"
 	L.shock = "电能震击"
-	L.static_shock_bar = "<Static Shock Split>"
-	L.overcharge_bar = "<Overcharge Pulse>"
+	L.static_shock_bar = "<静电冲击分摊>"
+	L.overcharge_bar = "<超载脉冲>"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "zhCN")
