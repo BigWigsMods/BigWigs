@@ -136,7 +136,7 @@ end
 
 function mod:SnappingBite(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 8)
+	self:CDBar(args.spellId, 7)
 end
 
 function mod:SummonBats(_, _, _, _, spellId)
