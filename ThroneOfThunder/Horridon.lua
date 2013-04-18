@@ -203,9 +203,21 @@ do
 	end
 end
 
-function mod:Hex(args)
-	if self:Dispeller("curse", nil, -7125) or self:Me(args.destGUID) then
-		self:TargetMessage(-7125, args.destName, "Important", "Alarm", args.spellName, args.spellId)
+do
+	local hexTargets, scheduled = mod:NewTargetList(), nil
+	local function warnHex()
+		scheduled = nil
+		mod:TargetMessage(-7125, hexTargets, "Important", "Alarm")
+	end
+	function mod:Hex(args)
+		if self:Dispeller("curse", nil, -7125) then
+			hexTargets[#hexTargets+1] = args.destName
+			if not scheduled then
+				scheduled = self:ScheduleTimer(warnHex, 0.2)
+			end
+		elseif self:Me(args.destGUID) then
+			self:TargetMessage(-7125, args.destName, "Important", "Alarm")
+		end
 	end
 end
 
