@@ -520,7 +520,7 @@ do
 		end
 	end)
 	local anim = loaderUtilityFrame.timer:CreateAnimation()
-	anim:SetDuration(5)
+	anim:SetDuration(3)
 
 	function loader:BigWigs_AddonMessage(event, prefix, message, sender)
 		if prefix == "VR" or prefix == "VQ" then
@@ -838,9 +838,8 @@ do
 		end
 		local good = {} -- highest release users
 		local ugly = {} -- old version users
-		local bad = {} -- non-bw users
+		local bad = {} -- no boss mod
 		local crazy = {} -- DBM users
-		local insane = {} -- no bossmod
 		for i, player in next, m do
 			local usesBossMod = nil
 			if usersRelease[player] then
@@ -859,23 +858,19 @@ do
 					ugly[#ugly + 1] = coloredNameVersion(player, usersAlpha[player], ALPHA)
 				end
 				usesBossMod = true
-			else
-				bad[#bad + 1] = coloredNames[player]
 			end
 			if usersDBM[player] then
 				crazy[#crazy+1] = coloredNameVersion(player, usersDBM[player])
 				usesBossMod = true
 			end
 			if not usesBossMod then
-				insane[#insane+1] = coloredNames[player]
+				bad[#bad+1] = coloredNames[player]
 			end
 		end
 		if #good > 0 then print(L["Up to date:"], unpack(good)) end
 		if #ugly > 0 then print(L["Out of date:"], unpack(ugly)) end
-		if #bad > 0 then print(L["No Big Wigs:"], unpack(bad)) end
-		print("-------")
 		if #crazy > 0 then print(L["DBM users:"], unpack(crazy)) end
-		if #insane > 0 then print(L["No boss mod:"], unpack(insane)) end
+		if #bad > 0 then print(L["No boss mod:"], unpack(bad)) end
 	end
 
 	SLASH_BIGWIGSVERSION1 = "/bwv"

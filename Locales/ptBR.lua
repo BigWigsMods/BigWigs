@@ -30,7 +30,6 @@ L["All running modules have been disabled."] = "Todos os módulos foram desativa
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "Há pessoas no seu grupo com versões mais antigas do BigWigs. Digite /bwv para mais detalhes."
 L["Up to date:"] = "Atualizado:"
 L["Out of date:"] = "Desatualizado:"
-L["No Big Wigs:"] = "Sem Big Wigs:"
 L["DBM users:"] = "DBM users:"
 L["No boss mod:"] = "No boss mod:"
 
