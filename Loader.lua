@@ -669,7 +669,7 @@ do
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
 			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), groupType == 3 and "INSTANCE_CHAT" or "RAID")
-			SendAddonMessage("D4", "H", IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+			SendAddonMessage("D4", "H\t", IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			self:ZONE_CHANGED_NEW_AREA()
 		elseif grouped and not groupType then
 			grouped = nil
@@ -702,7 +702,7 @@ function loader:BigWigs_CoreEnabled()
 	-- which kills your ability to receive addon comms during the loading process.
 	if IsInRaid() or IsInGroup() then
 		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
-		SendAddonMessage("D4", "H", IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+		SendAddonMessage("D4", "H\t", IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 	end
 
 	loadAddons(loadOnCoreEnabled)
@@ -872,8 +872,9 @@ do
 		end
 		if #good > 0 then print(L["Up to date:"], unpack(good)) end
 		if #ugly > 0 then print(L["Out of date:"], unpack(ugly)) end
-		if #crazy > 0 then print(L["DBM users:"], unpack(crazy)) end
 		if #bad > 0 then print(L["No Big Wigs:"], unpack(bad)) end
+		print("-------")
+		if #crazy > 0 then print(L["DBM users:"], unpack(crazy)) end
 		if #insane > 0 then print(L["No boss mod:"], unpack(insane)) end
 	end
 
