@@ -13,8 +13,8 @@ if L then
 	L.left = "|c00008000<- Sinistra <-|r"
 	L.right = "|c00FF0000-> Destra ->|r"
 
-	L.platform_emote = "Piattaforme" -- Visir Imperiale Zor'lok vola su una delle sue piattaforme!
-	L.platform_emote_final = "Inalazione"-- Visir Imperiale Zor'lok inala i Feromoni dello Zelo!
+	L.platform_emote = "piattaforme" -- Visir Imperiale Zor'lok vola su una delle sue piattaforme!
+	L.platform_emote_final = "inala"-- Visir Imperiale Zor'lok inala i Feromoni dello Zelo!
 	L.platform_message = "Cambio Piattaforma"
 end
 

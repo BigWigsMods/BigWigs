@@ -17,7 +17,7 @@ L.roleUpdate = "Il tuo ruolo è stato aggiornato."
 
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Stai usando una versione ufficiale di BigWigs %s (Revisione %d)"
-L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Stai usando una versione ALPHA di BigWigs %s (Revisione %d)"
+L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Stai usando una VERSIONE ALPHA di BigWigs %s (Revisione %d)"
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "Stai usando una versione di Big Wigs %s presa direttamente dal repository."
 L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "C'é una nuova versione di Big Wigs disponibile (/bwv). Puoi prenderla da curse.com, wowinterface.com, wowace.com o usare il client di Curse per scaricarla."
 L["Your alpha version of Big Wigs is out of date (/bwv)."] = "La tua versione Alpha di Big Wigs è obsoleta (/bwv)."
@@ -48,7 +48,7 @@ L.introduction = "Benvenuto in Big Wigs, dove imposti i combattimenti dei boss. 
 L["Configure ..."] = "Configura ..."
 L.configureDesc = "Chiude le opzioni dell'interfaccia e ti permette di configurare la visualizzazione delle barre e dei messaggi.\n\nSe vuoi personalizzare con maggior dettaglio, puoi espandere Big Wigs nell'albero di sinistra ed entrare nella sezione 'Personalizza ...'."
 L["Sound"] = "Suoni"
-L.soundDesc = "I messaggi possono essere visualizzati insieme a dei suoni. Alcuni trovano più semplice associare il suono all'abilità che viene mostrata nel messaggio piuttosto che leggere il messaggio stesso.\n\n|cffff4411Anche quando disattivato, il suono può essere lanciato dai raid warning. Quel suono è comunque diverso da quello che usiamo noi.|r"
+L.soundDesc = "I messaggi possono essere visualizzati insieme a dei suoni. Alcuni trovano più semplice associare il suono all'abilità che viene mostrata nel messaggio piuttosto che leggere il messaggio stesso.\n\n|cffff4411Anche quando disattivato, il suono può essere lanciato dagli avvisi incursione. Quel suono è comunque diverso da quello che usiamo noi.|r"
 L["Show Blizzard warnings"] = "Visualizza i messaggi Blizzard"
 L.blizzardDesc = "La Blizzard fornisce i propri messaggi per alcune abilità di alcuni combattimenti. Secondo noi, questi messaggi sono troppo lunghi e descrittivi. Noi proviamo a produrne di più immediati, più puntali, che non interferiscano con il gioco e che non ti dicano esattamente cosa fare.\n\n|cffff4411Quando disattivatii, gli avvertimenti Blizzard non verranno visualizzati in mezzo allo schermo, ma compariranno comunque in chat.|r"
 L["Flash Screen"] = "Lampeggia Schermo"
