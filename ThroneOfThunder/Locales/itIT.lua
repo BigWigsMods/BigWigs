@@ -198,7 +198,7 @@ if L then
 	L.stormcaller = "Invocatore delle Tempeste Zandalari"
 	L.stormbringer = "Araldo della Tempesta Draz'kil"
 	L.monara = "Monara"
-	L.rockyhorror = "Rocky Horror"
-	L.thunderlord_guardian = "Thunder Lord / Lightning Guardian"
+	L.rockyhorror = "Orrore Roccioso"
+	L.thunderlord_guardian = "Signore del Tuono / Guardiano del Fulmine"
 end
 
