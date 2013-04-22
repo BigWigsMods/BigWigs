@@ -106,7 +106,15 @@ end
 
 function mod:InterruptingJolt(args)
 	local caster = UnitPowerType("player") == 0 or self:Healer()
-	if caster then self:Flash(args.spellId) end
+	if caster then
+		-- heroic is 1.4s so a bar isn't really helpful
+		if self:LFR() then
+			self:Bar(args.spellId, 3.8, CL["cast"]:format(args.spellName))
+		elseif not self:Heroic() then
+			self:Bar(args.spellId, 2.2, CL["cast"]:format(args.spellName))
+		end
+		self:Flash(args.spellId)
+	end
 
 	joltCounter = joltCounter + 1
 	self:StopBar(CL["count"]:format(args.spellName, joltCounter))
@@ -255,7 +263,7 @@ do
 		self:PrimaryIcon(args.spellId, matterSwapTargets[1])
 
 		last = nil
-		if not timer and self.db.profile.matterswap > 0 then -- pretty wasteful to do the scanning if the option isn't on
+		if not timer and not self:LFR() and self.db.profile.matterswap > 0 then -- pretty wasteful to do the scanning if the option isn't on
 			timer = self:ScheduleRepeatingTimer(warnSwapTarget, 0.5)
 		end
 	end
