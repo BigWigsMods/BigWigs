@@ -14,6 +14,7 @@ mod:RegisterEnableMob(69701, 69700, 69699, 69427) -- Anima Golem, Large Anima Go
 local nextPower = 15
 local joltCounter = 0
 local matterSwapTargets = {}
+local caster = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -74,7 +75,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "CrimsonWake", 138485)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- looks like this is forever emote
 
-
 	self:Death("Win", 69427)
 end
 
@@ -85,10 +85,14 @@ function mod:OnEngage()
 		self:RegisterEvent("PLAYER_REGEN_ENABLED", "StartWipeCheck")
 		self:RegisterEvent("PLAYER_REGEN_DISABLED", "StopWipeCheck")
 	end
-	--self:Berserk(600)
+	if self:LFR() then
+		self:Berserk(600)
+	end
 	nextPower = 15
 	joltCounter = 0
 	wipe(matterSwapTargets)
+	local _, class = UnitClass("player")
+	caster = self:Healer() or (UnitPowerType("player") == 0 and class ~= "PALADIN")
 end
 
 --------------------------------------------------------------------------------
@@ -105,7 +109,6 @@ function mod:FullPower(args)
 end
 
 function mod:InterruptingJolt(args)
-	local caster = UnitPowerType("player") == 0 or self:Healer()
 	if caster then
 		-- heroic is 1.4s so a bar isn't really helpful
 		if self:LFR() then
