@@ -127,25 +127,35 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 	self:Message("nest", color, "Alert", text, icon) -- XXX keep this here till all the nest rotations are 100% figured out
 
 	local nextNest = nestCounter + 1
-	if diff == 3 or diff == 7 then -- 10 N / LFR
+	if diff == 7 then -- LFR
 		-- first 3 lower, second 3 upper
 		if nestCounter % 6 > 2 then
 			self:Bar("nest", 40, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
 		else
 			self:Bar("nest", 40, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
 		end
+	elseif diff == 3 then -- 10 N
+		-- first 3 lower, second 3 upper with 9/10 and 15/16 happening at the same time
+		if nestCounter == 8 or nestCounter == 14 then -- up and down at same time
+			self:Bar("nest", 40, ("(%d) %s + (%d) %s"):format(nextNest, L["up"], nextNest+1, L["down"]), 134347)
+		elseif nestCounter == 9 or nestCounter == 15 then
+			-- no bar for second of double nests
+		elseif nestCounter % 6 > 2 then
+				self:Bar("nest", 40, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
+		else
+			self:Bar("nest", 40, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
+		end
 	elseif diff == 5 then -- 10 H
-		-- 1 lower, 2 lower (add), 3 lower, 4 upper (add), 5 upper, 6 upper
-		-- 7 lower, 8 lower (add), 9 {lower, 10 upper}, 11 upper, 12 upper (add)
-		-- 13 lower, 14 lower, 15 {lower, 16 upper}, 17 upper, 18 upper
+		-- first 3 lower, second 3 upper with 9/10 and 15/16 happening at the same time
+		-- big adds at 2, 4, 12
 		if nestCounter == 2 or nestCounter == 6 or nestCounter == 12 or nestCounter == 13 then
 			self:Bar("nest", 40, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
 		elseif nestCounter == 4 or nestCounter == 5 or nestCounter == 10 or nestCounter == 16 or nestCounter == 17 then
 			self:Bar("nest", 40, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
-		elseif nestCounter == 8 or nestCounter == 14 then -- up and down at same time 
-			self:Bar("nest", 40, ("(%d) %s + (%d) %s"):format(nextNest, L["up"], nextNest+1, L["down"]), 134347)		
+		elseif nestCounter == 8 or nestCounter == 14 then -- up and down at same time
+			self:Bar("nest", 40, ("(%d) %s + (%d) %s"):format(nextNest, L["up"], nextNest+1, L["down"]), 134347)
 		elseif nestCounter == 1 or nestCounter == 7 then
-			self:Bar("nest", 40, ("(%d) %s (%s)"):format(nextNest, L["lower_nest"], L["add"]), "misc_arrowdown")	
+			self:Bar("nest", 40, ("(%d) %s (%s)"):format(nextNest, L["lower_nest"], L["add"]), "misc_arrowdown")
 		elseif nestCounter == 3 or nestCounter == 11 then
 			self:Bar("nest", 40, ("(%d) %s (%s)"):format(nextNest, L["upper_nest"], L["add"]), "misc_arrowlup")
 		end
