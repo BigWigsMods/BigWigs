@@ -568,6 +568,17 @@ do
 						desc = L["Fills the bars up instead of draining them."],
 						order = 9,
 						width = "half",
+						set = function(info, value)
+							local key = info[#info]
+							db[key] = value
+							-- XXX broaden this to all options
+							for k in next, normalAnchor.bars do
+								k:SetFill(value)
+							end
+							for k in next, emphasizeAnchor.bars do
+								k:SetFill(value)
+							end
+						end,
 					},
 					normal = {
 						type = "group",
