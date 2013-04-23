@@ -98,7 +98,7 @@ if L then
 	L.adds_desc = "Alertes quand vous révélez une Brume écarlate, d'ambre ou azur et combien de Brumes écarlates il reste."
 
 	L.custom_off_ray_controllers = "Contrôleurs de rayon"
-	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s%s%s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements, nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
+	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s%s%s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements, nécessite d'être assistant ou chef de raid."
 
 	L.custom_off_parasite_marks = "Marquage des Sombres parasites"
 	L.custom_off_parasite_marks_desc = "Afin d'aider les healing assignments, marque les personnes sous l'effet de Sombre parisite avec les marqueurs de raid %s%s%s, nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"

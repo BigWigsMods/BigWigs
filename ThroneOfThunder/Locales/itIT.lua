@@ -98,7 +98,7 @@ if L then
 	L.adds_desc = "Avvisa quando rivela una Nebbia Cremisi, d'ambra o Azzurra e quante Nebbie d'Ambra rimangono."
 
 	L.custom_off_ray_controllers = "Controllori dei Raggi"
-	L.custom_off_ray_controllers_desc = "Usa le icone di incursione %s%s%s per evidenziare i giocatori che controllano le posizioni dei raggi e il loro movimento.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_ray_controllers_desc = "Usa le icone di incursione %s%s%s per evidenziare i giocatori che controllano le posizioni dei raggi e il loro movimento."
 
 	L.custom_off_parasite_marks = "Marcatore Parassita Oscuro"
 	L.custom_off_parasite_marks_desc = "Per aiutare l'assegnazione dei Guaritori, evidenzia i giocatori che hanno il Parassita Oscuro con %s%s%s.\n|cFFFF0000Solo 1 giocatore dell'incursione dovrebbe aver abilitato questa opzione per evitare conflitti sui marcamenti.|r"
