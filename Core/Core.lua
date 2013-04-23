@@ -70,6 +70,7 @@ do
 				end
 			end
 		end
+		addon:ClearSyncListeners(module) -- Also remove sync events
 	end
 	addon:RegisterMessage("BigWigs_OnBossDisable", UnregisterAllEvents)
 	addon:RegisterMessage("BigWigs_OnPluginDisable", UnregisterAllEvents)
@@ -316,62 +317,60 @@ do
 		EnableModule = true,
 	}
 
-	-- local bossEngagedSyncError = "Got a BossEngaged sync for %q from %s, but there's no such module."
-
-	local function onSync(sync, rest, nick)
-		if not registered[sync] then return end
-		if sync == "BossEngaged" then
-			local m = addon:GetBossModule(rest, true)
-			if not m or m.isEngaged then
-				-- print(bossEngagedSyncError:format(rest, nick))
-				return
-			end
-			m:UnregisterEvent("PLAYER_REGEN_DISABLED")
-			-- print("Engaging " .. tostring(rest) .. " based on engage sync from " .. tostring(nick) .. ".")
-			m:Engage()
-		elseif sync == "EnableModule" or sync == "Death" then
-			coreSync(sync, rest, nick)
-		else
-			for m in next, registered[sync] do
-				m:OnSync(sync, rest, nick)
-			end
-		end
-	end
-
-	function chatMsgAddon(event, prefix, message, sender)
+	function chatMsgAddon(event, prefix, message, nick)
 		if prefix ~= "T" then return end
 		local sync, rest = message:match("(%S+)%s*(.*)$")
-		if sync and (not times[sync] or GetTime() > (times[sync] + 2)) then
-			times[sync] = GetTime()
-			onSync(sync, rest, sender)
+		if sync and registered[sync] then
+			local t = GetTime()
+			if sync == "BossEngaged" then
+				if not times[sync] or t > (times[sync] + 2) then
+					times[sync] = t
+					local m = addon:GetBossModule(rest, true)
+					if not m or m.isEngaged then
+						-- print(bossEngagedSyncError:format(rest, nick))
+						return
+					end
+					m:UnregisterEvent("PLAYER_REGEN_DISABLED")
+					-- print("Engaging " .. tostring(rest) .. " based on engage sync from " .. tostring(nick) .. ".")
+					m:Engage()
+				end
+			elseif sync == "EnableModule" or sync == "Death" then
+				if not times[sync] or t > (times[sync] + 2) then
+					coreSync(sync, rest, nick)
+					times[sync] = t
+				end
+			else
+				for module, throttle in next, registered[sync] do
+					if not times[sync] or t >= (times[sync] + throttle) then
+						module:OnSync(sync, rest, nick)
+						times[sync] = t
+					end
+				end
+			end
 		end
 	end
 
 	function addon:ClearSyncListeners(module)
-		if module.syncListeners then
-			for i = 1, #module.syncListeners do
-				local sync = module.syncListeners[i]
-				if registered[sync] then
-					registered[sync][module] = nil -- Remove module from listening to this sync event.
-					if not next(registered[sync]) then
-						registered[sync] = nil -- Remove sync event entirely if no modules are registered to it.
-					end
+		for sync, list in next, registered do
+			if type(list) == "table" then
+				registered[sync][module] = nil -- Remove module from listening to this sync event.
+				if not next(registered[sync]) then
+					registered[sync] = nil -- Remove sync event entirely if no modules are registered to it.
 				end
 			end
-			module.syncListeners = nil
 		end
 	end
-	function addon:AddSyncListener(module, sync)
+	function addon:AddSyncListener(module, sync, throttle)
 		if not registered[sync] then registered[sync] = {} end
 		if type(registered[sync]) ~= "table" then return end -- Prevent registering BossEngaged/Death/EnableModule
-		registered[sync][module] = true
+		registered[sync][module] = throttle or 2
 	end
 	function addon:Transmit(sync, ...)
-		if sync and (not times[sync] or GetTime() > (times[sync] + 2)) then
-			times[sync] = GetTime()
-			onSync(sync, strjoin(" ", ...), pName)
+		if sync then
+			local msg = strjoin(" ", sync, ...)
+			chatMsgAddon(nil, "T", msg, pName)
 			if IsInRaid() or IsInGroup() then
-				SendAddonMessage("BigWigs", "T:"..strjoin(" ", sync, ...), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
+				SendAddonMessage("BigWigs", "T:"..msg, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
 			end
 		end
 	end

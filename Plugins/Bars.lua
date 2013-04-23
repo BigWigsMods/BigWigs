@@ -899,8 +899,8 @@ function plugin:OnPluginEnable()
 	self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
 
 	-- custom bars
-	BigWigs:AddSyncListener(self, "BWCustomBar")
-	BigWigs:AddSyncListener(self, "BWPull")
+	BigWigs:AddSyncListener(self, "BWCustomBar", 0)
+	BigWigs:AddSyncListener(self, "BWPull", 0)
 	if BigWigs.db.profile.customDBMbars then
 		self:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
 	end
@@ -1266,15 +1266,16 @@ end
 
 local startCustomBar
 do
-	local timers = {}
-	local prevBar, prevTime = "", 0
+	local timers, prevBars
 	function startCustomBar(bar, nick, localOnly, isDBM)
+		if not timers then timers, prevBars = {}, {} end
+
 		local time, barText
 		if localOnly then
 			time, barText, nick = bar, localOnly, L["Local"]
 		else
-			if bar == prevBar and GetTime() - prevTime < 1 then return end -- Throttle
-			prevBar, prevTime = bar, GetTime()
+			if prevBars[bar] and GetTime() - prevBars[bar] < 1.2 then return end -- Throttle
+			prevBars[bar] = GetTime()
 			if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) then return end
 			time, barText = bar:match("(%S+) (.*)")
 			time = parseTime(time)
@@ -1319,12 +1320,18 @@ do
 	function startPull(time, nick, isDBM)
 		if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) then return end
 		time = tonumber(time)
-		if not time or time < 1 or time > 60 then return end
+		if not time or time < 0 or time > 60 then return end
 		time = floor(time)
 		if timeLeft == time then return end -- Throttle
 		timeLeft = time
+		if timer then
+			plugin:CancelTimer(timer)
+			if time == 0 then
+				plugin:SendMessage("BigWigs_StopBar", plugin, L["Pull"])
+				return
+			end
+		end
 		BigWigs:Print(L["Pull timer started by %s user '%s'."]:format(isDBM and "DBM" or "Big Wigs", nick))
-		if timer then plugin:CancelTimer(timer) end
 		timer = plugin:ScheduleRepeatingTimer(printPull, 1)
 		plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention", "Long")
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L["Pull"], time, "Interface\\Icons\\ability_warrior_charge")
@@ -1354,7 +1361,7 @@ end
 --
 
 do
-	local times = {}
+	local times
 	SlashCmdList.BIGWIGSRAIDBAR = function(input)
 		if not plugin:IsEnabled() then BigWigs:Enable() end
 
@@ -1366,12 +1373,13 @@ do
 		time = parseTime(time)
 		if not time or time < 0 then BigWigs:Print(L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]) return end
 
+		if not times then times = {} end
 		local t = GetTime()
 		if not times[input] or (times[input] and (times[input] + 2) < t) then
 			times[input] = t
 			BigWigs:Print(L["Sending custom bar '%s' to Big Wigs and DBM users."]:format(barText))
 			BigWigs:Transmit("BWCustomBar", time, barText)
-			plugin:ScheduleTimer(SendAddonMessage, 0.1, "D4", ("U\t%d\t%s"):format(time, barText), IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- DBM message
+			SendAddonMessage("D4", ("U\t%d\t%s"):format(time, barText), IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	end
 	SLASH_BIGWIGSRAIDBAR1 = "/raidbar"
@@ -1395,11 +1403,11 @@ SlashCmdList.BIGWIGSPULL = function(input)
 	if IsEncounterInProgress() then BigWigs:Print(L["This function can't be used during an encounter."]) return end -- Doesn't make sense to allow this in combat
 	if UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then
 		local time = tonumber(input)
-		if not time or time < 1 or time > 60 then BigWigs:Print(L["Must be between 1 and 60. A correct example is: /pull 5"]) return end
+		if not time or time < 0 or time > 60 then BigWigs:Print(L["Must be between 1 and 60. A correct example is: /pull 5"]) return end
 
 		BigWigs:Print(L["Sending a pull timer to Big Wigs and DBM users."])
 		BigWigs:Transmit("BWPull", input)
-		plugin:ScheduleTimer(SendAddonMessage, 0.1, "D4", "PT\t".. input, IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- DBM message
+		SendAddonMessage("D4", "PT\t".. input, IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- DBM message
 	else
 		BigWigs:Print(L["This function requires raid leader or raid assist."])
 	end
