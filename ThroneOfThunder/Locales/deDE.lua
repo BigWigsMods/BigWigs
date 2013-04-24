@@ -189,9 +189,15 @@ if L then
 	L.anima_abilities = "Anima Fähigkeiten"
 	L.worm = "Wurm"
 	L.worm_desc = "Wurm beschwören"
-
 	L.balls = "Bälle"
 	L.balls_desc = "Anima- (rot) und Vita- (blau) Bälle, welche die von Ra-den verwendeten Fähigkeiten bestimmen."
+	L.corruptedballs = "Korrumpierte Bälle"
+	L.corruptedballs_desc = "Korrumpierte Vita- und Anima-Bälle, die entweder den verursachten Schaden (Vita) oder die maximale Gesundheit (Anima) erhöhen."
+	L.unstablevitajumptarget = "Instabile Vita-Sprung-Ziel"
+	L.unstablevitajumptarget_desc = "Warnen, wenn Du am weitestn von einem Spieler mit instabilen Vita entfernt bist. Wenn Du dies hervorhebst, gibt es auch einen Countdown wenn instabile Vita VON Dir weiterspringen."
+	L.unstablevitajumptarget_message = "Du bist am weitesten von instabilen Vita entfernt"
+	L.sensitivityfurthestbad = "Vita Sensitivität + Weit weg = |cffff0000SCHLECHT|r!"
+	L.kill_trigger = "Wartet!"
 end
 
 L = BigWigs:NewBossLocale("Trash", "deDE")
