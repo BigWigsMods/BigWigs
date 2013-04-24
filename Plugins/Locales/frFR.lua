@@ -65,9 +65,9 @@ L["Must be between 1 and 60. A correct example is: /pull 5"] = "Doit être compr
 L["Incorrect format. A correct example is: /raidbar 20 text"] = "Format incorrect. Un exemple correct est le suivant : /raidbar 20 texte"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Durée spécifiée incorrecte. <durée> peut être exprimée soit avec un nombre en secondes, avec une paire M:S ou avec Mm. Par exemple 5, 1:20 ou 2m."
 L["This function can't be used during an encounter."] = "Cette fonction ne peut pas être utilisée pendant une rencontre."
---L["Pull timer cancelled by %s."] = "Pull timer cancelled by %s."
+L["Pull timer cancelled by %s."] = "Délai de pull annulé par %s."
 
---L.customBarSlashPrint = "This functionality has been renamed. Use /raidbar to send a custom bar to your raid or /localbar for a bar only you can see."
+L.customBarSlashPrint = "Cette fonctionnalité a été renommée. Utilisez /raidbar pour envoyer une barre personnalisée à votre raid ou /localbar pour une barre que seul vous pouvez voir."
 
 -----------------------------------------------------------------------
 -- Colors.lua
