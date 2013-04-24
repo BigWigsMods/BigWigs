@@ -261,11 +261,6 @@ do
 		end
 		self:TargetMessage(138297, args.destName, "Personal", "Info")
 		self:PrimaryIcon(138297, args.destName)
-		if args.spellId == 138297 then
-			if args.destName == "Marilina" and UnitName("player", "Calebh") then
-				self:TargetMessage(138372, args.destName, "Personal", "Info", "Move out now because:")
-			end
-		end
 
 		last = nil
 		player = args.destName
