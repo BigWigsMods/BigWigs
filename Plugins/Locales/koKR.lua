@@ -53,21 +53,22 @@ L["Fills the bars up instead of draining them."] = "바를 채우기로 표시�
 
 L["Local"] = "로컬"
 L["%s: Timer [%s] finished."] = "%s: [%s] 타이머가 종료되었습니다."
-L["Custom bar '%s' started by %s user '%s'."] = "Custom bar '%s' started by %s user '%s'."
+--L["Custom bar '%s' started by %s user %s."] = "Custom bar '%s' started by %s user %s."
 
 L["Pull"] = "풀링"
 L["Pulling!"] = "풀링합니다!"
-L["Pull timer started by %s user '%s'."] = "%2$s님이 '%1$s' 풀링 타이머를 시작합니다."
+L["Pull timer started by %s user %s."] = "%2$s님이 %1$s 풀링 타이머를 시작합니다."
 L["Pull in %d sec"] = "풀링 %d초 전"
 L["Sending a pull timer to Big Wigs and DBM users."] = "Big Wigs과 DBM 사용자에게 풀링 타이머를 보냅니다."
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Big Wigs과 DBM 사용자에게 '%s' 사용자 바를 보냅니다."
 L["This function requires raid leader or raid assist."] = "이 기능은 공격대장이나 부공격대장만 가능합니다."
 L["Must be between 1 and 60. A correct example is: /pull 5"] = "1에서 60 사이의 숫자여야 합니다. 예: /pull 5"
-L["Incorrect format. A correct example is: /raidbar 20 text"] = "Incorrect format. A correct example is: /raidbar 20 text"
-L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."
-L["This function can't be used during an encounter."] = "This function can't be used during an encounter."
+--L["Incorrect format. A correct example is: /raidbar 20 text"] = "Incorrect format. A correct example is: /raidbar 20 text"
+--L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."
+--L["This function can't be used during an encounter."] = "This function can't be used during an encounter."
+--L["Pull timer cancelled by %s."] = "Pull timer cancelled by %s."
 
-L.customBarSlashPrint = "This functionality has been renamed. Use /raidbar to send a custom bar to your raid or /localbar for a bar only you can see."
+--L.customBarSlashPrint = "This functionality has been renamed. Use /raidbar to send a custom bar to your raid or /localbar for a bar only you can see."
 
 -----------------------------------------------------------------------
 -- Colors.lua

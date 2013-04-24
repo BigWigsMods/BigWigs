@@ -53,11 +53,11 @@ L["Fills the bars up instead of draining them."] = "Llena las barras o las drena
 
 L["Local"] = "Local"
 L["%s: Timer [%s] finished."] = "%s: Contador [%s] terminado."
-L["Custom bar '%s' started by %s user '%s'."] = "Barra personal '%s' lanzada por el jugador %s '%s'."
+L["Custom bar '%s' started by %s user %s."] = "Barra personal '%s' lanzada por el jugador %s %s."
 
 L["Pull"] = "Pull"
 L["Pulling!"] = "¡Puleando!"
-L["Pull timer started by %s user '%s'."] = "Cuenta atrás para el Pull lanzada por el jugador %s '%s'."
+L["Pull timer started by %s user %s."] = "Cuenta atrás para el Pull lanzada por el jugador %s %s."
 L["Pull in %d sec"] = "Pull en %d seg"
 L["Sending a pull timer to Big Wigs and DBM users."] = "Enviando una cuenta para el Pull a usuarios de Big Wigs y DBM."
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Enviando barra personalizada '%s' a usuarios de Big Wigs y DBM."
@@ -66,6 +66,7 @@ L["Must be between 1 and 60. A correct example is: /pull 5"] = "Debe ser entre 1
 L["Incorrect format. A correct example is: /raidbar 20 text"] = "Formato incorrecto. Un ejemplo seria: /raidbar 20 text"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Tiempo especificado inválido. <time> puede ser bien un número en segundos, un par M:S, o Min. Por ejemplo 5, 1:20 o 2m."
 L["This function can't be used during an encounter."] = "Esta función no se puede usar durante un encuentro."
+--L["Pull timer cancelled by %s."] = "Pull timer cancelled by %s."
 
 L.customBarSlashPrint = "Esta funcionalidad ha sido renombrada. Usa /raidbar para enviar una barra personalizada a tu raid o /localbar para una barra que solo podrás ver tu."
 

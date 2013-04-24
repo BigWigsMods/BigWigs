@@ -53,11 +53,11 @@ L["Fills the bars up instead of draining them."] = "Заполнение пол�
 
 L["Local"] = "Локальный"
 L["%s: Timer [%s] finished."] = "%s: Таймер [%s] готов."
-L["Custom bar '%s' started by %s user '%s'."] = "Таймер '%s' начат %s игроком '%s'."
+L["Custom bar '%s' started by %s user %s."] = "Таймер '%s' начат %s игроком %s."
 
 L["Pull"] = "Атака"
 L["Pulling!"] = "Выступаем!"
-L["Pull timer started by %s user '%s'."] = "Таймер атаки начат %s игроком '%s'."
+L["Pull timer started by %s user %s."] = "Таймер атаки начат %s игроком %s."
 L["Pull in %d sec"] = "Атакуем через %d сек"
 L["Sending a pull timer to Big Wigs and DBM users."] = "Отправка таймера атаки пользователям Big Wigs и DBM."
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Отправка таймера '%s' пользователям Big Wigs и DBM."
@@ -66,6 +66,7 @@ L["Must be between 1 and 60. A correct example is: /pull 5"] = "Должно б�
 L["Incorrect format. A correct example is: /raidbar 20 text"] = "Неверный формат. Правильно будет: /raidbar 20 текст"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Неверно указанное время. <время> может быть числом в секундах, М:С парой, или Mm. Например, 5, 1:20 или 2m."
 L["This function can't be used during an encounter."] = "Это функция не может быть использована во время битвы."
+--L["Pull timer cancelled by %s."] = "Pull timer cancelled by %s."
 
 L.customBarSlashPrint = "Данная функция переименована. Используйте /raidbar чтобы отправить полосу в рейд или /localbar для полосы, которую увидите только вы."
 

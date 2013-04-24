@@ -53,11 +53,11 @@ L["Fills the bars up instead of draining them."] = "填充計時條而不是顯�
 
 L["Local"] = "區域"
 L["%s: Timer [%s] finished."] = "%s：計時條[%s]到時間。"
-L["Custom bar '%s' started by %s user '%s'."] = "自訂計時條 '%s' 開始於 %s 使用者 '%s'."
+L["Custom bar '%s' started by %s user %s."] = "自訂計時條 '%s' 開始於 %s 使用者 %s."
 
 L["Pull"] = "拉怪倒數"
 L["Pulling!"] = "拉怪中!"
-L["Pull timer started by %s user '%s'."] = "拉怪倒數計時開始於 %s 使用者 '%s'."
+L["Pull timer started by %s user %s."] = "拉怪倒數計時開始於 %s 使用者 %s."
 L["Pull in %d sec"] = "%d秒後拉怪"
 L["Sending a pull timer to Big Wigs and DBM users."] = "發送一個拉怪倒數計時到Big Wigs與DBM使用者."
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "發送自訂計時條 '%s' 到Big Wigs與DBM使用者."
@@ -66,8 +66,9 @@ L["Must be between 1 and 60. A correct example is: /pull 5"] = "必須在1跟60�
 L["Incorrect format. A correct example is: /raidbar 20 text"] = "不正確的格式。一個正確的範例是: /raidbar 20 文字"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "指定的時間無效。 <time> 可以為一個秒數，一個 分:秒，或是Mm。例如 5, 1:20 或 2m。"
 L["This function can't be used during an encounter."] = "此功能在戰鬥中不能使用。"
+--L["Pull timer cancelled by %s."] = "Pull timer cancelled by %s."
 
-L.customBarSlashPrint = "This functionality has been renamed. Use /raidbar to send a custom bar to your raid or /localbar for a bar only you can see."
+--L.customBarSlashPrint = "This functionality has been renamed. Use /raidbar to send a custom bar to your raid or /localbar for a bar only you can see."
 
 -----------------------------------------------------------------------
 -- Colors.lua

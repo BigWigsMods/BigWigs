@@ -1282,7 +1282,7 @@ do
 			if type(time) ~= "number" or type(barText) ~= "string" or time < 0 then
 				return
 			end
-			BigWigs:Print(L["Custom bar '%s' started by %s user '%s'."]:format(barText, isDBM and "DBM" or "Big Wigs", nick))
+			BigWigs:Print(L["Custom bar '%s' started by %s user %s."]:format(barText, isDBM and "DBM" or "Big Wigs", nick))
 		end
 
 		local id = "bwcb" .. nick .. barText
@@ -1327,11 +1327,13 @@ do
 		if timer then
 			plugin:CancelTimer(timer)
 			if time == 0 then
+				timeLeft = 0
+				BigWigs:Print(L["Pull timer cancelled by %s."]:format(nick))
 				plugin:SendMessage("BigWigs_StopBar", plugin, L["Pull"])
 				return
 			end
 		end
-		BigWigs:Print(L["Pull timer started by %s user '%s'."]:format(isDBM and "DBM" or "Big Wigs", nick))
+		BigWigs:Print(L["Pull timer started by %s user %s."]:format(isDBM and "DBM" or "Big Wigs", nick))
 		timer = plugin:ScheduleRepeatingTimer(printPull, 1)
 		plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention", "Long")
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L["Pull"], time, "Interface\\Icons\\ability_warrior_charge")
@@ -1405,7 +1407,9 @@ SlashCmdList.BIGWIGSPULL = function(input)
 		local time = tonumber(input)
 		if not time or time < 0 or time > 60 then BigWigs:Print(L["Must be between 1 and 60. A correct example is: /pull 5"]) return end
 
-		BigWigs:Print(L["Sending a pull timer to Big Wigs and DBM users."])
+		if time ~= 0 then
+			BigWigs:Print(L["Sending a pull timer to Big Wigs and DBM users."])
+		end
 		BigWigs:Transmit("BWPull", input)
 		SendAddonMessage("D4", "PT\t".. input, IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- DBM message
 	else

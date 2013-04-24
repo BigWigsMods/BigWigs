@@ -52,11 +52,11 @@ L["Fills the bars up instead of draining them."] = true
 
 L["Local"] = true
 L["%s: Timer [%s] finished."] = true
-L["Custom bar '%s' started by %s user '%s'."] = true
+L["Custom bar '%s' started by %s user %s."] = true
 
 L["Pull"] = true
 L["Pulling!"] = true
-L["Pull timer started by %s user '%s'."] = true
+L["Pull timer started by %s user %s."] = true
 L["Pull in %d sec"] = true
 L["Sending a pull timer to Big Wigs and DBM users."] = true
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = true
@@ -65,6 +65,7 @@ L["Must be between 1 and 60. A correct example is: /pull 5"] = true
 L["Incorrect format. A correct example is: /raidbar 20 text"] = true
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = true
 L["This function can't be used during an encounter."] = true
+L["Pull timer cancelled by %s."] = true
 
 L.customBarSlashPrint = "This functionality has been renamed. Use /raidbar to send a custom bar to your raid or /localbar for a bar only you can see."
 
