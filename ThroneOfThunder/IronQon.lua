@@ -52,7 +52,7 @@ function mod:GetOptions()
 	return {
 		"custom_off_spear_target",
 		-6914, 136520, 139180, 135145,
-		-6877, {137669, "FLASH"}, {136192, "ICON", "PROXIMITY"}, 77333,
+		-6877, {137669, "FLASH"}, {136192, "ICON", "PROXIMITY", "SAY"}, 77333,
 		137221, "overload_casting", {-6870, "PROXIMITY"}, -6871, {137668, "FLASH"},
 		134926, {134691, "TANK_HEALER"}, "molten_energy", -6917, "berserk", "bosskill",
 	}, {
@@ -245,6 +245,9 @@ function mod:LightningStormApplied(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent") -- no point for sound since the guy stunned can't do anything
 	-- XXX we could potentially be intelligent when using a message here and only warn for the closet person to free the stormed guy, but we need :IsInRange for that
 	self:Bar(args.spellId, self:MobId(UnitGUID("boss3")) == 68080 and 20 or 40)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+	end
 end
 
 function mod:LightningStormRemoved(args)
