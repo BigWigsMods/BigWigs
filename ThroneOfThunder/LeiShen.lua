@@ -127,7 +127,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StaticShockApplied", 135695)
 
 	self:Death("Win", 68397) -- Lei Shen
-	self:Death("AddDeaths", 68397, 69014, 69013, 69012) -- Greater Diffused Lightning, Diffused Lightning, Lesser Diffused Lightning
+	self:Death("AddDeaths", 69014, 69013, 69012) -- Greater Diffused Lightning, Diffused Lightning, Lesser Diffused Lightning
 end
 
 function mod:OnEngage()
