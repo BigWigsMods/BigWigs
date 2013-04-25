@@ -53,11 +53,11 @@ L["Fills the bars up instead of draining them."] = "Riempi le barre invece di sv
 
 L["Local"] = "Locale"
 L["%s: Timer [%s] finished."] = "%s: Timer [%s] Terminato."
---L["Custom bar '%s' started by %s user %s."] = "Barra personalizzata '%s' creata dall'utente %s." -- XXX wtf? There should be 3 %s
+L["Custom bar '%s' started by %s user %s."] = "Barra personalizzata '%s' creata da %s utente %s." -- Need checking if syntax is good and the result can be quite readable
 
 L["Pull"] = "Ingaggio"
 L["Pulling!"] = "Ingaggio!"
---L["Pull timer started by %s user %s."] = "Timer Ingaggio iniziato dall'utente %s." -- XXX wtf? There should be 2 %s
+L["Pull timer started by %s user %s."] = "Timer Ingaggio iniziato da %s utente %s." -- Need checking if syntax is good and the result can be quite readable
 L["Pull in %d sec"] = "Ingaggio tra %d sec"
 L["Sending a pull timer to Big Wigs and DBM users."] = "Invio di un timer di Ingaggio agli utenti di Big Wigs e DBM."
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Invio barra personalizzata '%s' agli utenti di Big Wigs e DBM."
@@ -66,7 +66,7 @@ L["Must be between 1 and 60. A correct example is: /pull 5"] = "Deve essere tra 
 L["Incorrect format. A correct example is: /raidbar 20 text"] = "Formato non corretto. Un'esempio corretto è: /raidbar 20 testo"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Specificato tempo non valido. <time> può essere sia un numero in secondi, una coppia M:S , o Mm. Per esempio 5, 1:20 or 2m."
 L["This function can't be used during an encounter."] = "Questa funzione non può essere usata durante uno scontro con un boss."
---L["Pull timer cancelled by %s."] = "Pull timer cancelled by %s."
+L["Pull timer cancelled by %s."] = "Barra d'ingaggio cancellata da %s."
 
 L.customBarSlashPrint = "Questa funzionalità è stata rinominata. Usa il comando /raidbar per inciare una barra personalizzata alla tua incursione oppure /localbar per una barra visibile solo a te stesso."
 
