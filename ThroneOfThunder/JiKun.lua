@@ -1,10 +1,6 @@
 --[[
 TODO:
-	on 10 H/25N PTR - food_call_trigger was gone, could not find anything to replace it, rethink how the warning should work later
-	maybe message should be in :CallForFood not :FeedYoung, someone maybe should look into if it is safe to do so
-		as in: is the 10 sec ( the max flight time ) enough from :CallForFood to catch the slime?
 	people NOT on the main platform should have proximity closed
-	need lots of TRANSCRIPTOR logs to figure out nest orders
 ]]--
 
 --------------------------------------------------------------------------------
@@ -49,9 +45,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"nest", -- this controls a lot of things, so it is easier to turn off for people who don't handle the nests
-		{-7360, "FLASH"}, 140741, 137528,
-		{140092, "TANK_HEALER"}, {134366, "TANK_HEALER"}, {134380, "FLASH"}, 134370, 138923,
+		"nest", {-7360, "FLASH"}, 140741, 137528,
+		{140092, "TANK_HEALER"}, {134366, "TANK_HEALER"}, {134380, "FLASH"}, 134370, {138923, "PROXIMITY"},
 		"proximity", "berserk", "bosskill",
 	}, {
 		["nest"] = -7348,
@@ -68,7 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Flight", 133755)
 	self:Log("SPELL_CAST_START", "Caw", 138923)
 	self:Log("SPELL_CAST_START", "DownDraft", 134370)
-	self:Log("SPELL_CAST_START", "Quills", 134380)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_START", "Quills", "boss1")
 	self:Log("SPELL_AURA_APPLIED", "TalonRake", 134366)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TalonRake", 134366)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "InfectedTalons", 140092)
@@ -85,6 +80,7 @@ function mod:OnEngage(diff)
 	self:Berserk(600) -- XXX assumed
 	self:Bar(134380, (diff == 4 or diff == 6) and 42 or 60) -- Quills
 	self:Bar(134370, 90) -- Down Draft
+	self:CDBar(134366, 24) -- Talon Rake
 	nestCounter = 0
 	quillCounter = 0
 end
@@ -99,7 +95,7 @@ function mod:FeedYoung(args)
 end
 
 function mod:Caw(args)
-	self:Message(args.spellId, "Attention", nil, CL["incoming"]:format(args.spellName)) -- no z-axis info for range check to ignore for nest people :\
+	self:Message(args.spellId, "Attention", nil, CL["incoming"]:format(args.spellName))
 	--self:CDBar(args.spellId, 18) -- 18-30s
 end
 
@@ -229,20 +225,22 @@ function mod:DownDraft(args)
 	self:Bar(args.spellId, 93)
 end
 
-function mod:Quills(args)
-	self:Message(args.spellId, "Important", "Warning")
-	self:Flash(args.spellId)
-	local diff = self:Difficulty()
-	quillCounter = quillCounter + 1
-	if diff == 4 or diff == 6 then -- 25 N/H
-		self:Bar(args.spellId, 63)
-	else -- 10 N/H + LFR
-		if quillCounter == 4 then
-			self:Bar(args.spellId, 91)
-		elseif quillCounter > 6 then
-			self:Bar(args.spellId, 44) -- soft enrage it looks like
-		else
-			self:Bar(args.spellId, 81)
+function mod:Quills(_, _, _, _, spellId)
+	if spellId == 134380 then
+		self:Message(spellId, "Important", "Warning")
+		self:Flash(spellId)
+		local diff = self:Difficulty()
+		quillCounter = quillCounter + 1
+		if diff == 4 or diff == 6 then -- 25 N/H
+			self:Bar(spellId, 63)
+		else -- 10 N/H + LFR
+			if quillCounter == 4 then
+				self:Bar(spellId, 91)
+			elseif quillCounter > 6 then
+				self:Bar(spellId, 44) -- soft enrage it looks like
+			else
+				self:Bar(spellId, 81)
+			end
 		end
 	end
 end
