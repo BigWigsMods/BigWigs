@@ -189,9 +189,15 @@ if L then
 	L.anima_abilities = "心能技能"
 	L.worm = "血色恐魔"
 	L.worm_desc = "召唤血色恐魔。"
-
 	L.balls = "造物材料"
 	L.balls_desc = "心能（红）和生命（蓝）造物材料，这些技能使莱登获得增益。"
+	L.corruptedballs = "腐化心能"
+	L.corruptedballs_desc = "腐化生命和腐化心能，（腐化生命）增加伤害或（腐化心能）增加生命值。"
+	L.unstablevitajumptarget = "不稳定的生命弹跳目标"
+	L.unstablevitajumptarget_desc = "当你距离最远受到不稳定的生命玩家时发出提示。如果醒目此选项，将会在不稳定的生命弹跳到你时候看到冷却计时条。"
+	L.unstablevitajumptarget_message = ">你< 距离不稳定的生命最远！"
+	L.sensitivityfurthestbad = "生命过敏+最远距离 = |cffff0000坏|r！"
+	L.kill_trigger = "等等"
 end
 
 L = BigWigs:NewBossLocale("Trash", "zhCN")

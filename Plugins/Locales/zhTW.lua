@@ -66,9 +66,9 @@ L["Must be between 1 and 60. A correct example is: /pull 5"] = "必須在1跟60�
 L["Incorrect format. A correct example is: /raidbar 20 text"] = "不正確的格式。一個正確的範例是: /raidbar 20 文字"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "指定的時間無效。 <time> 可以為一個秒數，一個 分:秒，或是Mm。例如 5, 1:20 或 2m。"
 L["This function can't be used during an encounter."] = "此功能在戰鬥中不能使用。"
---L["Pull timer cancelled by %s."] = "Pull timer cancelled by %s."
+L["Pull timer cancelled by %s."] = "%s取消了拉怪計時器。"
 
---L.customBarSlashPrint = "This functionality has been renamed. Use /raidbar to send a custom bar to your raid or /localbar for a bar only you can see."
+L.customBarSlashPrint = "此功能已被重新命名。使用 /raidbar 發送自訂計時條到團隊或使用 /localbar 只有自身可見計時條。"
 
 -----------------------------------------------------------------------
 -- Colors.lua
