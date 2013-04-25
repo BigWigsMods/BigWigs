@@ -53,11 +53,11 @@ L["Fills the bars up instead of draining them."] = "Riempi le barre invece di sv
 
 L["Local"] = "Locale"
 L["%s: Timer [%s] finished."] = "%s: Timer [%s] Terminato."
-L["Custom bar '%s' started by %s user %s."] = "Barra personalizzata '%s' creata da %s utente %s." -- Need checking if syntax is good and the result can be quite readable
+L["Custom bar '%s' started by %s user %s."] = "Barra personalizzata '%s' creata da utente %s - %s."
 
 L["Pull"] = "Ingaggio"
 L["Pulling!"] = "Ingaggio!"
-L["Pull timer started by %s user %s."] = "Timer Ingaggio iniziato da %s utente %s." -- Need checking if syntax is good and the result can be quite readable
+L["Pull timer started by %s user %s."] = "Timer Ingaggio iniziato da utente %s - %s."
 L["Pull in %d sec"] = "Ingaggio tra %d sec"
 L["Sending a pull timer to Big Wigs and DBM users."] = "Invio di un timer di Ingaggio agli utenti di Big Wigs e DBM."
 L["Sending custom bar '%s' to Big Wigs and DBM users."] = "Invio barra personalizzata '%s' agli utenti di Big Wigs e DBM."
