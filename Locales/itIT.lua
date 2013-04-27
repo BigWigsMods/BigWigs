@@ -21,7 +21,7 @@ L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Stai usand
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "Stai usando una versione di Big Wigs %s presa direttamente dal repository."
 L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "C'é una nuova versione di Big Wigs disponibile (/bwv). Puoi prenderla da curse.com, wowinterface.com, wowace.com o usare il client di Curse per scaricarla."
 L["Your alpha version of Big Wigs is out of date (/bwv)."] = "La tua versione Alpha di Big Wigs è obsoleta (/bwv)."
---L.extremelyOutdated = "|cffff0000WARNING:|r Your Big Wigs is over 200 revisions out of date!! Your version may have bugs, missing features, or completely incorrect timers. It is HIGHLY recommended you update."
+L.extremelyOutdated = "|cffff0000AVVISO:|r Il tuo Big Wigs è obsoleto di almeno 200 revisioni!! La versione che usi può avere bug, mancare di funzioni o timer completamente sballati. È CALDAMENTE raccomandato aggiornare il tutto."
 
 L.tooltipHint = "|cffeda55fClic|r per reinizializzare tutti i moduli. |cffeda55fAlt-Clic|r per Disattivarli. |cffeda55fClic-Destro|r per aprire le Opzioni."
 L["Active boss modules:"] = "Moduli dei Combattimenti Attivi:"
