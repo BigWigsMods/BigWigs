@@ -58,12 +58,12 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	-- eat for the hatchlings is intentionally not here, players can't do anything about it once it is casted, so we don't warn uselessly
-	self:Log("SPELL_AURA_APPLIED", "FeedYoung", 137528)
 	self:Log("SPELL_AURA_APPLIED", "PrimalNutriment", 140741)
 	self:Log("SPELL_AURA_APPLIED", "Flight", 133755)
 	self:Log("SPELL_CAST_START", "Caw", 138923)
 	self:Log("SPELL_CAST_START", "DownDraft", 134370)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_START", "Quills", "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "FeedYoung", "boss1")
 	self:Log("SPELL_AURA_APPLIED", "TalonRake", 134366)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TalonRake", 134366)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "InfectedTalons", 140092)
@@ -88,11 +88,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:FeedYoung(args)
-	self:Message(args.spellId, "Positive", "Info") -- Positive because it is green!
-	self:CDBar(args.spellId, 30)
-end
 
 function mod:Caw(args)
 	self:Message(args.spellId, "Attention", nil, CL["incoming"]:format(args.spellName))
@@ -226,7 +221,7 @@ function mod:DownDraft(args)
 end
 
 function mod:Quills(_, _, _, _, spellId)
-	if spellId == 134380 then
+	if spellId == 134380 then -- UNIT event due to combat log range issues
 		self:Message(spellId, "Important", "Warning")
 		self:Flash(spellId)
 		local diff = self:Difficulty()
@@ -242,6 +237,15 @@ function mod:Quills(_, _, _, _, spellId)
 				self:Bar(spellId, 81)
 			end
 		end
+	end
+end
+
+function mod:FeedYoung(_, _, _, _, spellId)
+	if spellId == 137528 then -- UNIT event due to combat log range issues
+		self:Message(spellId, "Positive", "Info") -- Positive because it is green!
+		local diff = self:Difficulty()
+		local is25 = diff == 4 or diff == 6
+		self:CDBar(spellId, is25 and 30 or 41)
 	end
 end
 
