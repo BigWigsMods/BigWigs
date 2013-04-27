@@ -377,7 +377,7 @@ do
 		local hasBoss = UnitHealth("boss1") > 100 or UnitHealth("boss2") > 100 or UnitHealth("boss3") > 100 or UnitHealth("boss4") > 100 or UnitHealth("boss5") > 100
 		if not hasBoss and self.isEngaged then
 			if debug then dbg(self, ":CheckBossStatus wipeCheck scheduled.") end
-			self:ScheduleTimer(wipeCheck, 2, self)
+			self:ScheduleTimer(wipeCheck, 3, self)
 		elseif not self.isEngaged and hasBoss then
 			if debug then dbg(self, ":CheckBossStatus Engage called.") end
 			local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4") or UnitGUID("boss5")
@@ -511,7 +511,6 @@ do
 		self:Sync("Death", self.moduleName)
 		wipe(icons) -- Wipe icon cache
 		wipe(spells)
-		self:SendMessage("BigWigs_OnBossWin", self)
 	end
 end
 
