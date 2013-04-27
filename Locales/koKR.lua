@@ -22,7 +22,8 @@ L["You are running an official release of Big Wigs %s (revision %d)"] = "Big Wig
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Big Wigs %s (revision %d) 의 알파 릴리스가 실행중입니다."
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "저장소에서 Big Wigs %s 을 직접 소스를 체크 아웃을 실행하고 있습니다."
 L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Big Wigs을 사용할 수있는 새로운 릴리즈 버전을 (/bwv)을 통해서 알수있으며, curse.com, wowinterface.com, wowace.com 또는 Curse Updater를 통하여 새로운 릴리스 버전을 찾아 사용할수 있습니다."
-L["Your alpha version of Big Wigs is out of date (/bwv)."] = "Your alpha version of Big Wigs is out of date (/bwv)."
+--L["Your alpha version of Big Wigs is out of date (/bwv)."] = "Your alpha version of Big Wigs is out of date (/bwv)."
+--L.extremelyOutdated = "|cffff0000WARNING:|r Your Big Wigs is over 200 revisions out of date!! Your version may have bugs, missing features, or completely incorrect timers. It is HIGHLY recommended you update."
 
 L.tooltipHint = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f알트-클릭|r 비활성화 |cffeda55f컨트롤-알트-클릭|r : BigWigs 비활성화."
 L["Active boss modules:"] = "사용중인 보스 모듈:"
@@ -35,11 +36,11 @@ L["Out of date:"] = "구 버전"
 L["DBM users:"] = "DBM users:"
 L["No boss mod:"] = "No boss mod:"
 
-L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = "Waiting until combat ends to finish loading due to Blizzard combat restrictions."
-L["Combat has ended, Big Wigs has now finished loading."] = "Combat has ended, Big Wigs has now finished loading."
-L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."
+--L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = "Waiting until combat ends to finish loading due to Blizzard combat restrictions."
+--L["Combat has ended, Big Wigs has now finished loading."] = "Combat has ended, Big Wigs has now finished loading."
+--L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."
 
-L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."] = "Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."
+--L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."] = "Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."
 
 L.coreAddonDisabled = "%s 애드온 비활성화이기 때문에 Big Wigs가 제대로 작동하지 않습니다. 캐릭터 선택 화면에서 좌측하단의 '외부 인터페이스'에서 활성화/비활성화를 설정할 수 있습니다."
 

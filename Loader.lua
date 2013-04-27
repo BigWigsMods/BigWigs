@@ -511,7 +511,7 @@ function loader:CHAT_MSG_ADDON(prefix, msg, _, sender)
 end
 
 do
-	local warnedOutOfDate = nil
+	local warnedOutOfDate, warnedExtremelyOutOfDate = nil, nil
 
 	loaderUtilityFrame.timer = loaderUtilityFrame:CreateAnimationGroup()
 	loaderUtilityFrame.timer:SetScript("OnFinished", function()
@@ -533,9 +533,15 @@ do
 			usersRelease[sender] = message
 			usersAlpha[sender] = nil
 			if message > highestReleaseRevision then highestReleaseRevision = message end
-			if BIGWIGS_RELEASE_TYPE == RELEASE and BIGWIGS_RELEASE_REVISION ~= -1 and message > BIGWIGS_RELEASE_REVISION and not warnedOutOfDate then
-				sysprint(L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
-				warnedOutOfDate = true
+			if BIGWIGS_RELEASE_TYPE == RELEASE and BIGWIGS_RELEASE_REVISION ~= -1 and message > BIGWIGS_RELEASE_REVISION then
+				if not warnedOutOfDate then
+					sysprint(L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
+					warnedOutOfDate = true
+				end
+				if not warnedExtremelyOutOfDate and (message - BIGWIGS_RELEASE_REVISION) > 200 then
+					sysprint(L.extremelyOutdated)
+					warnedExtremelyOutOfDate = true
+				end
 			end
 		elseif prefix == "VRA" or prefix == "VQA" then
 			if prefix == "VQA" then
@@ -547,9 +553,15 @@ do
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
 			if message > highestAlphaRevision then highestAlphaRevision = message end
-			if BIGWIGS_RELEASE_TYPE == ALPHA and BIGWIGS_RELEASE_REVISION ~= -1 and ((message-10) > BIGWIGS_RELEASE_REVISION or highestReleaseRevision > BIGWIGS_RELEASE_REVISION) and not warnedOutOfDate then
-				sysprint(L["Your alpha version of Big Wigs is out of date (/bwv)."])
-				warnedOutOfDate = true
+			if BIGWIGS_RELEASE_TYPE == ALPHA and BIGWIGS_RELEASE_REVISION ~= -1 and ((message-10) > BIGWIGS_RELEASE_REVISION or highestReleaseRevision > BIGWIGS_RELEASE_REVISION) then
+				if not warnedOutOfDate then
+					sysprint(L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
+					warnedOutOfDate = true
+				end
+				if not warnedExtremelyOutOfDate and (message - BIGWIGS_RELEASE_REVISION) > 200 then
+					sysprint(L.extremelyOutdated)
+					warnedExtremelyOutOfDate = true
+				end
 			end
 		end
 	end
