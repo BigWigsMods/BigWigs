@@ -28,7 +28,7 @@ if L then
 	L.door_opened = "Porte ouverte !"
 	L.door_bar = "Prochaine porte (%d)"
 	L.balcony_adds = "Trolls des gradins"
-	L.orb_message = "Orbe de contrôle lâchée !"
+	L.orb_message = "Orbe de contrôle lâché !"
 
 	L.focus_only = "|cffff0000Alertes de la cible de focalisation uniquement.|r "
 end
@@ -168,7 +168,7 @@ if L then
 	L.aoe_grip_desc = "Prévient quand un chevalier de la mort utilise Emprise de Fielsang, à utiliser avec la gestion des foudres en boule."
 
 	L.shock_self = "Horion statique sur VOUS"
-	L.shock_self_desc = "Affiche une barre de durée de l'affaiblissement Horion statique quand ce dernier est sur vous.."
+	L.shock_self_desc = "Affiche une barre de durée de l'affaiblissement Horion statique quand ce dernier est sur vous."
 
 	L.overcharged_self = "Surchargé sur VOUS"
 	L.overcharged_self_desc = "Affiche une barre de durée de l'affaiblissement Surchargé quand ce dernier est sur vous."
@@ -178,8 +178,8 @@ if L then
 	L.intermission = "Entracte"
 	L.diffusion_add = "Foudres diffuses"
 	L.shock = "Horion"
-	L.static_shock_bar = "<Static Shock Split>"
-	L.overcharge_bar = "<Overcharge Pulse>"
+	L.static_shock_bar = "<Split d'Horion statique>"
+	L.overcharge_bar = "<Pulse de Surcharge>"
 end
 
 L = BigWigs:NewBossLocale("Ra-den", "frFR")
@@ -189,8 +189,18 @@ if L then
 	L.worm = "Worm"
 	L.worm_desc = "Summon worm"
 
-	L.balls = "Balls"
-	L.balls_desc = "Anima (red) and Vita (blue) balls, that determine which abilities will Ra-den gain"
+	L.balls = "Boules"
+	L.balls_desc = "Boules d'Anima (rouge) et de Vita (bleu), qui déterminent les techniques que Ra-den gagnera."
+
+	L.corruptedballs = "Boules corrompues"
+	L.corruptedballs_desc = "Boules corrompues de Vita et d'Anima dont l'effet est d'augmenter soit les dégâts infligés (Vita), soit les points de vie maximum (Anima)."
+
+	L.unstablevitajumptarget = "Cible de saut de Vita instable"
+	L.unstablevitajumptarget_desc = "Prévient quand vous êtes le plus éloigné d'un joueur sous Vita instable. Si vous mettez en évidence ceci, vous aurez également un compte à rebours indiquant quand Vita instable est sur le point de passer sur un autre joueur À PARTIR de vous."
+
+	L.unstablevitajumptarget_message = "Vous êtes le plus éloigné de Vita instable"
+	L.sensitivityfurthestbad = "Sensibilité au Vita + le plus éloigné = |cffff0000MAUVAIS|r !"
+	L.kill_trigger = "Attendez !" -- à vérifier
 end
 
 L = BigWigs:NewBossLocale("Trash", "frFR")
