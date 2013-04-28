@@ -599,22 +599,24 @@ do
 		end
 	end
 
+	local function moduleOptions(self)
+		if self.GetOptions then
+			local toggles, headers = self:GetOptions(CL)
+			if toggles then self.toggleOptions = toggles end
+			if headers then self.optionHeaders = headers end
+			self.GetOptions = nil
+		end
+		setupOptions(self)
+		self.SetupOptions = nil
+	end
+
 	function addon:RegisterBossModule(module)
 		if module.encounterId then
 			module.displayName = EJ_GetEncounterInfo(module.encounterId)
 		end
 		if not module.displayName then module.displayName = module.moduleName end
 
-		module.SetupOptions = function(self)
-			if self.GetOptions then
-				local toggles, headers = self:GetOptions(CL)
-				if toggles then self.toggleOptions = toggles end
-				if headers then self.optionHeaders = headers end
-				self.GetOptions = nil
-			end
-			setupOptions(self)
-			self.SetupOptions = nil
-		end
+		module.SetupOptions = moduleOptions
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
