@@ -79,7 +79,7 @@ if L then
 	L.nest = "Nidi"
 	L.nest_desc = "Avvisi relativi ai nidi.\n|cFFADFF2FSUGGERIMENTO: Deselezionalo per spengere gli avvisi, se non sei designato a gestire i nidi.|r"
 
-	L.flight_over = "Termine del Volo per %d sec!"
+	L.flight_over = "Termine del Volo tra %d sec!"
 	L.upper_nest = "Nido |cff008000Superiore|r"
 	L.lower_nest = "Nido |cffff0000Inferiore|r"
 	L.up = "|cff008000SOPRA|r"
