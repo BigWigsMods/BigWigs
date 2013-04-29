@@ -114,10 +114,9 @@ end
 --
 
 do
-	local nuclearInferno = mod:SpellName(137491)
 	local function infernoOver(spellId)
 		inferno = nil
-		mod:Message(spellId, "Positive", nil, CL["over"]:format(nuclearInferno))
+		mod:Message(spellId, "Positive", nil, CL["over"]:format(mod:SpellName(137491))) -- Nuclear Inferno
 	end
 	function mod:OnSync(sync)
 		if sync == "Phase2" then -- Day
@@ -151,7 +150,7 @@ do
 			self:Message(137491, "Important", "Alert")
 			self:Flash(137491)
 			self:Bar(137491, phase3 and 71 or 55)
-			self:Bar(137491, 12, CL["cast"]:format(nuclearInferno))
+			self:Bar(137491, 12, CL["cast"]:format(self:SpellName(137491))) -- Nuclear Inferno
 			self:ScheduleTimer(infernoOver, 12, 137491)
 		elseif sync == "IceComet" then
 			self:Message(-7649, "Positive")
@@ -198,7 +197,7 @@ end
 
 -- Phase 2
 
-function mod:NuclearInferno(args)
+function mod:NuclearInferno()
 	self:Sync("NuclearInferno")
 end
 
@@ -222,7 +221,7 @@ end
 
 -- Phase 1
 
-function mod:TearsOfTheSunApplied(args)
+function mod:TearsOfTheSunApplied()
 	self:Sync("TearsOfTheSunApplied")
 end
 
@@ -232,7 +231,7 @@ end
 
 -- Phase 3
 
-function mod:TidalForce(args)
+function mod:TidalForce()
 	self:Sync("TidalForce")
 end
 
@@ -244,13 +243,13 @@ function mod:IcyShadows(args)
 	end
 end
 
-function mod:IceComet(args)
+function mod:IceComet()
 	self:Sync("IceComet")
 end
 
 -- Phase 1
 
-function mod:CosmicBarrage(args)
+function mod:CosmicBarrage()
 	self:Sync("CosmicBarrage")
 end
 
