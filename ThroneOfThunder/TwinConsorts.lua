@@ -17,6 +17,7 @@ mod:RegisterEnableMob(68905, 68904) -- Lu'lin, Suen
 
 local deadBosses = 0
 local inferno = nil
+local phase3 = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -93,7 +94,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(600) -- 25 N PTR Confirmed
+	self:Berserk(600)
 	self:Bar("stages", 184, CL["phase"]:format(2), 137440)
 	deadBosses = 0
 	if not self:LFR() then
@@ -103,6 +104,7 @@ function mod:OnEngage()
 	self:CDBar(-7643, 28) -- Tears of the Sun
 	self:CDBar(-7634, 50) -- Beast of Nightmares
 	inferno = nil
+	phase3 = nil
 end
 
 --------------------------------------------------------------------------------
@@ -123,15 +125,19 @@ do
 			self:StopBar(-7634) -- Beast of Nightmares
 			self:StopBar(-7631) -- Cosmic Barrage
 			self:CDBar(-7649, 23) -- Ice Comet
+			self:CDBar(137408, 11) -- Fan of Flames
 			if self:Heroic() then
 				self:Bar(137491, 50) -- Nuclear Inferno
 			end
 		elseif sync == "Phase3" then -- Dusk
+			phase3 = true
 			self:Message("stages", "Positive", "Long", CL["phase"]:format(3), 137401)
-			self:StopBar(-7649) -- Ice Comet
 			self:StopBar(137408) -- Fan of Flames
+			self:CDBar(-7649, 17) -- Ice Comet
 			self:Bar(137531, self:Heroic() and 19 or 34) -- Tidal Force
-			-- XXX nuclear inferno missing?
+			if self:Heroic() then
+				self:Bar(137491, 63) -- Nuclear Inferno
+			end
 		elseif sync == "TidalForce" then
 			self:Message(137531, "Urgent", "Alarm")
 			self:CDBar(137531, 71)
@@ -142,12 +148,12 @@ do
 			inferno = true
 			self:Message(137491, "Important", "Alert")
 			self:Flash(137491)
-			self:Bar(137491, 55)
+			self:Bar(137491, phase3 and 71 or 55)
 			self:Bar(137491, 12, CL["cast"]:format(nuclearInferno))
 			self:ScheduleTimer(infernoOver, 12, 137491)
 		elseif sync == "IceComet" then
 			self:Message(-7649, "Positive")
-			self:CDBar(-7649, 23)
+			self:CDBar(-7649, phase3 and 30 or 20)
 		elseif sync == "CosmicBarrage" then
 			self:Message(-7631, "Urgent", "Alarm")
 			self:CDBar(-7631, 20)
@@ -266,16 +272,18 @@ function mod:Phase3()
 end
 
 function mod:Deaths(args)
-	if args.mobId == 68905 then -- Lu'lin
-		self:StopBar(-7631) -- Cosmic Barrage
-		self:StopBar(137531) -- Tidal Force
-	elseif args.mobId == 68904 then -- Suen
-		self:StopBar(137491) -- Nuclear Inferno
-		self:CDBar(-7634, 55) -- Beasts of Nightmare
-	end
 	deadBosses = deadBosses + 1
 	if deadBosses == 2 then
 		self:Win()
+	else
+		self:StopBar(137491) -- Nuclear Inferno
+		self:StopBar(137531) -- Tidal Force
+		if args.mobId == 68905 then -- Lu'lin
+			self:StopBar(-7631) -- Cosmic Barrage
+			self:CDBar(137408, 15) -- Fan of Flames
+		elseif args.mobId == 68904 then -- Suen
+			self:CDBar(-7634, 55) -- Beasts of Nightmare
+		end
 	end
 end
 
