@@ -89,6 +89,8 @@ function mod:OnBossEnable()
 	self:AddSyncListener("TidalForce")
 	self:AddSyncListener("TearsOfTheSunApplied")
 	self:AddSyncListener("NuclearInferno")
+	self:AddSyncListener("IceComet")
+	self:AddSyncListener("CosmicBarrage")
 
 	self:Death("Deaths", 68905, 68904)
 end
