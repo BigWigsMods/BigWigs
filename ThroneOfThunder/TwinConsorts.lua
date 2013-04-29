@@ -17,7 +17,6 @@ mod:RegisterEnableMob(68905, 68904) -- Lu'lin, Suen
 
 local deadBosses = 0
 local inferno = nil
-local nuclearInferno = mod:SpellName(137491)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -82,7 +81,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BeastOfNightmares", 137375)
 
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Phase2", "boss1", "boss2")
-	self:Yell("LastPhase", L["last_phase_yell_trigger"])
+	self:Yell("Phase3", L["last_phase_yell_trigger"])
 
 	self:AddSyncListener("Phase2")
 	self:AddSyncListener("Phase3")
@@ -111,12 +110,13 @@ end
 --
 
 do
+	local nuclearInferno = mod:SpellName(137491)
 	local function infernoOver(spellId)
 		inferno = nil
 		mod:Message(spellId, "Positive", nil, CL["over"]:format(nuclearInferno))
 	end
 	function mod:OnSync(sync)
-		if sync == "Phase2" then
+		if sync == "Phase2" then -- Day
 			self:Bar("stages", 184, CL["phase"]:format(3), 138688)
 			self:Message("stages", "Positive", "Long", CL["phase"]:format(2), 137401)
 			self:StopBar(137404) -- Tears of the Sun
@@ -126,7 +126,7 @@ do
 			if self:Heroic() then
 				self:Bar(137491, 50) -- Nuclear Inferno
 			end
-		elseif sync == "Phase3" then
+		elseif sync == "Phase3" then -- Dusk
 			self:Message("stages", "Positive", "Long", CL["phase"]:format(3), 137401)
 			self:StopBar(-7649) -- Ice Comet
 			self:StopBar(137408) -- Fan of Flames
@@ -145,6 +145,13 @@ do
 			self:Bar(137491, 55)
 			self:Bar(137491, 12, CL["cast"]:format(nuclearInferno))
 			self:ScheduleTimer(infernoOver, 12, 137491)
+		elseif sync == "IceComet" then
+			self:Message(-7649, "Positive")
+			self:CDBar(-7649, 23)
+		elseif sync == "CosmicBarrage" then
+			self:Message(-7631, "Urgent", "Alarm")
+			self:CDBar(-7631, 20)
+			self:ScheduleTimer("Message", 4.5, -7631, "Urgent", "Alarm", L["barrage_fired"]) -- This is when the little orbs start to move
 		end
 	end
 end
@@ -230,16 +237,13 @@ function mod:IcyShadows(args)
 end
 
 function mod:IceComet(args)
-	self:Message(-7649, "Positive")
-	self:CDBar(-7649, 23)
+	self:Sync("IceComet")
 end
 
 -- Phase 1
 
 function mod:CosmicBarrage(args)
-	self:Message(-7631, "Urgent", "Alarm")
-	self:CDBar(-7631, 20)
-	self:ScheduleTimer("Message", 4.5, -7631, "Urgent", "Alarm", L["barrage_fired"]) -- This is when the little orbs start to move
+	self:Sync("CosmicBarrage")
 end
 
 function mod:BeastOfNightmares(args)
@@ -257,7 +261,7 @@ function mod:Phase2(_, _, _, _, spellId)
 	end
 end
 
-function mod:LastPhase()
+function mod:Phase3()
 	self:Sync("Phase3")
 end
 
