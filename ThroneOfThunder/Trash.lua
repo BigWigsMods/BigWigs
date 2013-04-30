@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Trash", 930)
+local mod, CL = BigWigs:NewBoss("Throne of Thunder Trash", 930)
 if not mod then return end
 mod:RegisterEnableMob(
 	70236, -- Zandalari Storm-Caller
@@ -27,6 +27,8 @@ local scheduled = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.displayname = "Trash"
+
 	L.stormcaller = "Zandalari Storm-Caller"
 	L.stormbringer = "Stormbringer Draz'kil"
 	L.monara = "Monara"
@@ -34,6 +36,7 @@ if L then
 	L.thunderlord_guardian = "Thunder Lord / Lightning Guardian"
 end
 L = mod:GetLocale()
+mod.displayName = L.displayname
 
 --------------------------------------------------------------------------------
 -- Initialization
