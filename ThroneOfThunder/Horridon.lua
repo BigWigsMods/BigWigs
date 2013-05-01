@@ -63,7 +63,7 @@ L.chain_lightning_desc = L.focus_only..L.chain_lightning_desc
 
 function mod:GetOptions()
 	return {
-		137458,
+		137458, {-7868, "FLASH"},
 		-7086, -7090, -7092,
 		{-7109, "DISPEL"}, {136723, "FLASH"}, -- Farraki
 		{"venom_bolt_volley", "FLASH"}, {136646, "FLASH"}, -- Gurubashi
@@ -389,6 +389,7 @@ end
 
 function mod:DireFixation(args)
 	if self:Me(args.destGUID) then
-		self:Message(137458, "Personal", "Info", CL["you"]:format(args.spellName), args.spellId)
+		self:Message(-7868, "Personal", "Info", CL["you"]:format(args.spellName))
+		self:Flash(-7868)
 	end
 end
