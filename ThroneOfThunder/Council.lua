@@ -257,7 +257,7 @@ do
 	end
 
 	function mod:FrostbiteRemoved(args)
-		if self:Me(args.destGUID) and self:Heroic() then
+		if self:Heroic() then
 			self:UnregisterEvent("UNIT_AURA")
 			self:StopBar(137084)
 		end
