@@ -183,7 +183,7 @@ function mod:Ensnared(args)
 end
 
 function mod:Quicksand(args)
-	self:Bar(-7062, 35, args.spellId)
+	self:CDBar(-7062, 33, args.spellId)
 end
 
 function mod:QuicksandApplied(args)
