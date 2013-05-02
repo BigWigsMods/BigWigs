@@ -146,7 +146,7 @@ end
 function mod:ThunderingThrowSafe()
 	self:SecondaryIcon(137175)
 	self:CloseProximity(137175)
-	if UnitDebuff("player", self:SpellName(137162)) then -- Focused Lightning
+	if UnitDebuff("player", self:SpellName(137399)) then -- Focused Lightning
 		self:OpenProximity(-7741, 5)
 	end
 end
