@@ -61,8 +61,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PrimalNutriment", 140741)
 	self:Log("SPELL_AURA_APPLIED", "Flight", 133755)
 	self:Log("SPELL_CAST_START", "Caw", 138923)
-	self:Log("SPELL_CAST_START", "DownDraft", 134370)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_START", "Quills", "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "FeedYoung", "boss1")
 	self:Log("SPELL_AURA_APPLIED", "TalonRake", 134366)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TalonRake", 134366)
@@ -215,13 +214,9 @@ do
 	end
 end
 
-function mod:DownDraft(args)
-	self:Message(args.spellId, "Important", "Long")
-	self:Bar(args.spellId, 93)
-end
-
-function mod:Quills(_, _, _, _, spellId)
-	if spellId == 134380 then -- UNIT event due to combat log range issues
+function mod:UNIT_SPELLCAST_START(_, _, _, _, spellId)
+	-- UNIT event due to combat log range issues
+	if spellId == 134380 then -- Quills
 		self:Message(spellId, "Important", "Warning")
 		self:Flash(spellId)
 		local diff = self:Difficulty()
@@ -237,6 +232,9 @@ function mod:Quills(_, _, _, _, spellId)
 				self:Bar(spellId, 81)
 			end
 		end
+	elseif spellId == 134370 then -- Down Draft
+		self:Message(spellId, "Important", "Long")
+		self:Bar(spellId, 93)
 	end
 end
 
