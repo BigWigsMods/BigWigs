@@ -66,6 +66,6 @@ end
 
 L = BigWigs:NewBossLocale("Trash", "zhTW")
 if L then
-
+	L.displayname = "小怪"
 end
 
