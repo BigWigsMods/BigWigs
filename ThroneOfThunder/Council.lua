@@ -15,7 +15,6 @@ mod:RegisterEnableMob(69132, 69131, 69134, 69078) -- High Priestess Mar'li, Fros
 --------------------------------------------------------------------------------
 -- Locals
 --
-local hasChilledToTheBone = nil
 local bossDead = 0
 local posessHPStart = 0
 local frostBiteStart, bitingColdStart = nil, nil
@@ -54,7 +53,7 @@ function mod:GetOptions()
 		"priestess_adds", 137203, {137350, "FLASH"}, -- High Priestess Mar'li
 		{-7062, "FLASH"}, 136878, {136857, "FLASH", "DISPEL"}, 136894, -- Sul the Sandcrawler
 		{137122, "FLASH"}, -- Kazra'jin
-		{-7054, "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, 136990, {137085, "FLASH"}, -- Frost King Malakk
+		{-7054, "TANK_HEALER"}, {136992, "ICON", "SAY", "PROXIMITY"}, 136990, 137084, {137085, "FLASH"}, -- Frost King Malakk
 		136442, "custom_on_markpossessed", {137650, "FLASH"}, "proximity", "berserk", "bosskill",
 	}, {
 		["priestess_adds"] = -7050,
@@ -75,7 +74,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "MarkedSoul", 137359)
 	self:Log("SPELL_AURA_REMOVED", "MarkedSoulRemoved", 137359)
 	-- Sul the Sandcrawler
-	self:Log("SPELL_AURA_APPLIED", "Quicksand", 136860)
+	self:Log("SPELL_CAST_SUCCESS", "Quicksand", 136521)
+	self:Log("SPELL_AURA_APPLIED", "QuicksandApplied", 136860)
 	self:Log("SPELL_AURA_APPLIED", "Ensnared", 136878)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Ensnared", 136878)
 	self:Log("SPELL_AURA_APPLIED", "Entrapped", 136857)
@@ -84,6 +84,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "RecklessCharge", "boss1", "boss2", "boss3", "boss4", "boss5")
 	self:Log("SPELL_DAMAGE", "RecklessChargeDamage", 137133)
 	--Frost King Malakk
+	self:Log("SPELL_AURA_REMOVED", "FrostbiteRemoved", 136990, 136922)
 	self:Log("SPELL_AURA_APPLIED", "FrostbiteApplied", 136990, 136922)
 	self:Log("SPELL_AURA_APPLIED", "BitingColdApplied", 136992)
 	self:Log("SPELL_AURA_REMOVED", "BitingColdRemoved", 136992)
@@ -108,7 +109,6 @@ function mod:OnEngage()
 	self:CDBar("priestess_adds", 27, L["priestess_adds_message"], L.priestess_adds_icon)
 	self:CDBar(-7062, 7) -- Quicksand
 	self:Bar(136990, 9.7) -- Frostbite -- might be 7.5?
-	hasChilledToTheBone = nil
 	frostBiteStart, bitingColdStart = nil, nil
 	sandGuyDead = nil
 end
@@ -132,7 +132,7 @@ function mod:MarkedSoulRemoved(args)
 end
 
 function mod:BlessedLoaSpirit(args)
-	local lowest, lowestHP = nil, 1
+	local lowest, lowestHP = "", 1
 	for i=1,5 do
 		local boss = ("boss%d"):format(i)
 		local mobId = self:MobId(UnitGUID(boss))
@@ -144,8 +144,7 @@ function mod:BlessedLoaSpirit(args)
 			end
 		end
 	end
-	if not lowest then return end -- just in case of weirdness if priestess is last
-	self:Message(args.spellId, "Attention", nil, CL["other"]:format(fixated, UnitName(lowest)))
+	self:Message(args.spellId, "Attention", nil, CL["other"]:format(fixated, UnitName(lowest) or "???"))
 	self:Bar(args.spellId, 20, CL["other"]:format(fixated, args.spellName))
 end
 
@@ -184,7 +183,10 @@ function mod:Ensnared(args)
 end
 
 function mod:Quicksand(args)
-	self:CDBar(-7062, 33, args.spellId)
+	self:Bar(-7062, 35, args.spellId)
+end
+
+function mod:QuicksandApplied(args)
 	if self:Me(args.destGUID) then
 		self:Message(-7062, "Personal", "Info", CL["underyou"]:format(args.spellName))
 		self:Flash(-7062)
@@ -193,7 +195,7 @@ end
 
 -- Kazra'jin
 
-function mod:RecklessCharge(unit, spellName, _, _, spellId)
+function mod:RecklessCharge(unit, _, _, _, spellId)
 	if spellId == 137107 and UnitBuff(unit, self:SpellName(136442)) then
 		self:Bar(137122, 21) -- Show timer when possessed
 	end
@@ -214,11 +216,52 @@ end
 
 --Frost King Malakk
 
--- We only use Icon on Biting cold, so people know that if someone has icon over their head, you need to stay away
-function mod:FrostbiteApplied(args)
-	self:TargetMessage(136990, args.destName, "Positive", "Info")
-	self:Bar(136990, 45)
-	frostBiteStart = GetTime()
+do
+	-- ugly UNIT_AURA polling
+	local hasFrostbite, hasChilledToTheBone, someoneHasBodyHeat = nil, nil, nil
+	local bodyHeat, chilledToTheBone = mod:SpellName(137084), mod:SpellName(137085)
+	local UnitDebuff = UnitDebuff
+	local function reset(chill) -- one unblocking function to rule them all
+		if chill then hasChilledToTheBone = nil
+		else someoneHasBodyHeat = nil end
+	end
+	function mod:UNIT_AURA(_, unit)
+		if hasFrostbite and not someoneHasBodyHeat then
+			local _, _, _, _, _, duration = UnitDebuff(unit, bodyHeat)
+			if duration and duration > 7 then
+				-- everyone should be stacked and get their debuffs at the same time (having four bars up would be annoying)
+				someoneHasBodyHeat = true
+				self:Bar(137084, duration)
+				self:ScheduleTimer(reset, duration)
+			end
+		end
+		if unit == "player" and not hasChilledToTheBone and UnitDebuff(unit, chilledToTheBone) then
+			hasChilledToTheBone = true
+			self:Message(137085, "Personal", "Info") -- run away little girl!
+			self:Flash(137085)
+			self:ScheduleTimer(reset, 15, true) -- minimum of 16s before you can get it again
+		end
+	end
+
+	function mod:FrostbiteApplied(args)
+		-- We only use Icon on Biting cold, so people know that if someone has icon over their head, you need to stay away
+		self:TargetMessage(136990, args.destName, "Positive", "Info")
+		self:Bar(136990, 45)
+		frostBiteStart = GetTime()
+		if self:Heroic() then
+			hasFrostbite = self:Me(args.destGUID)
+			someoneHasBodyHeat = nil
+			hasChilledToTheBone = nil
+			self:RegisterEvent("UNIT_AURA")
+		end
+	end
+
+	function mod:FrostbiteRemoved(args)
+		if self:Me(args.destGUID) and self:Heroic() then
+			self:UnregisterEvent("UNIT_AURA")
+			self:StopBar(137084)
+		end
+	end
 end
 
 function mod:BitingColdApplied(args)
@@ -240,16 +283,6 @@ function mod:BitingColdRemoved(args)
 	self:SecondaryIcon(args.spellId)
 	if sandGuyDead then
 		self:CloseProximity(args.spellId)
-	end
-end
-
-function mod:ChilledToTheBone()
-	if not hasChilledToTheBone and UnitDebuff("player", self:SpellName(137085)) then
-		self:Message(137085, "Personal", "Info")
-		self:Flash(137085)
-		hasChilledToTheBone = true
-	elseif not UnitDebuff("player", self:SpellName(137085)) then
-		hasChilledToTheBone = nil
 	end
 end
 
@@ -360,9 +393,6 @@ do
 			if bitingColdStart then
 				self:CDBar(136990, 45 - (GetTime() - bitingColdStart)) -- Frostbite -- CD bar because of Possessed buff travel time
 			end
-			if self:Heroic() then
-				self:RegisterUnitEvent("UNIT_AURA", "ChilledToTheBone", "player")
-			end
 		end
 	end
 
@@ -378,14 +408,12 @@ do
 			end
 		end
 
-		-- leave in all the elseif statements to be ready in case they are needed on heroic
 		local mobId = self:MobId(args.destGUID)
 		if mobId == 69131 then -- Frost King
 			self:StopBar(136990) -- Frostbite
 			if frostBiteStart then
 				self:Bar(136992, 45 - (GetTime() - frostBiteStart)) -- Biting Cold
 			end
-			if self:Heroic() then self:UnregisterUnitEvent("UNIT_AURA", "player") end
 		end
 	end
 end
@@ -399,7 +427,11 @@ function mod:Deaths(args)
 		sandGuyDead = true
 		self:StopBar(-7062) -- Quicksand
 		self:StopBar(136894) -- Sandstorm
-		self:CloseProximity()
+		if not UnitDebuff("player", self:SpellName(136992)) then -- Biting Cold
+			self:CloseProximity()
+		end
+	elseif args.mobId == 69132 then -- Priestess
+		self:StopBar(L["priestess_adds_message"])
 	end
 
 	bossDead = bossDead + 1
