@@ -107,7 +107,7 @@ do
 	local function checkSpearTarget()
 		if not UnitExists("boss1target") or mod:Tank("boss1target") or UnitDetailedThreatSituation("boss1target", "boss2") then return end
 		local tanking, status = UnitDetailedThreatSituation("boss1target", "boss1")
-		if tanking or status == 3 then return end
+		if tanking or status == 3 then return end -- healer aggro
 
 		local name, server = UnitName("boss1target")
 		if server then name = name .. "-" .. server end
@@ -132,9 +132,9 @@ do
 		if phase == 4 then return end -- don't warn in last phase
 		self:CDBar(args.spellId, 33)
 		self:SecondaryIcon(args.spellId)
-		if spearTimer then
-			self:Message(args.spellId, "Urgent")
+		if spearTimer then -- didn't find a target
 			self:StopSpearScan()
+			self:Message(args.spellId, "Urgent")
 		end
 		spearStartTimer = self:ScheduleTimer("StartSpearScan", 25)
 	end
@@ -144,7 +144,7 @@ end
 
 function mod:Freeze(args)
 	local _, _, _, _, _, duration = UnitDebuff(args.destName, args.spellName)
-	self:Bar(args.spellId, duration) -- so people can use personal cooldowns for when the damage happens
+	self:Bar(args.spellId, duration, CL["incoming"]:format(args.spellName)) -- so people can use personal cooldowns for when the damage happens
 end
 
 do
@@ -234,7 +234,7 @@ end
 function mod:LightningStormApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent") -- no point for sound since the guy stunned can't do anything
-	self:Bar(args.spellId, phase == 2 and 20 or 40)
+	self:Bar(args.spellId, 20)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
@@ -259,6 +259,7 @@ end
 
 function mod:Windstorm(args)
 	if self:Me(args.destGUID) then
+		self:StopBar(136192) -- Lightning Storm
 		self:Message(-6877, "Attention") -- lets leave it here to warn people who fail and step back into the windstorm
 	end
 end
@@ -335,7 +336,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 137656 then -- Rushing Winds
 		if phase == 2 then
 			self:Message(-6877, "Positive", nil, CL["over"]:format(self:SpellName(136577)), 136577) -- Wind Storm
-			self:Bar(-6877, 70) -- Wind Storm
+			self:Bar(-6877, 70) -- Windstorm
+			self:CDBar(136192, 17) -- Lightning Storm
 		end
 	elseif spellId == 50630 then -- Eject All Passangers (Heroic phase change)
 		self:StopSpearScan()
