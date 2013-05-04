@@ -140,14 +140,7 @@ L = BigWigs:NewBossLocale("Iron Qon", "deDE")
 if L then
 	L.molten_energy = "Geschmolzene Macht"
 
-	L.overload_casting = "Wirkt Geschmolzene Überladung"
-	L.overload_casting_desc = "Warnung für das Wirken von Geschmolzene Überladung"
-
 	L.arcing_lightning_cleared = "Kein Überspringender Blitz mehr"
-
-	L.custom_off_spear_target = "Speerwurf-Ziel"
-	L.custom_off_spear_target_desc = "Gibt eine Warnung für das mögliche Speerwurf-Ziel aus. Die verwendete Methode erzeugt hohe CPU-Last und zeigt manchmal das falsche Ziel an, weshalb sie standardmäßig deaktiviert ist.\n|cFFADFF2FTIPP: Das Zuweisen der Tankrollen erhöht die Zuverlässigkeit der Warnungen.|r"
-	L.possible_spear_target = "Möglicher Speerwurf"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "deDE")
