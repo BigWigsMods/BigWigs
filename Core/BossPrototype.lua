@@ -564,13 +564,14 @@ do
 		end
 	end
 
-	function boss:Range(player)
+	function boss:Range(player, otherPlayer)
 		if not activeMap then return 200 end
 
 		SetMapToCurrentZone()
 		local tx, ty = GetPlayerMapPosition(player)
 		if tx == 0 and ty == 0 then return 200 end -- position is unknown or unit is invalid
-		local px, py = GetPlayerMapPosition("player")
+		local px, py = GetPlayerMapPosition(otherPlayer or "player")
+		if px == 0 and py == 0 then return 200 end
 
 		local dx = (tx - px) * mapWidth
 		local dy = (ty - py) * mapHeight
