@@ -287,7 +287,7 @@ end
 
 function mod:Boss1Succeeded(unitId, spellName, _, _, spellId)
 	if spellId == 139040 then
-		self:CDBar(spellId, 16)
+		self:CDBar("corruptedballs", 16)
 		self:Message("corruptedballs", "Important", "Alarm", L["corruptedballs"], 139071)
 	end
 end
@@ -326,20 +326,5 @@ function mod:Balls(args)
 	self:Message("balls", "Urgent", "Warning", CL["count"]:format(L["balls"], ballCounter), args.spellId)
 	ballCounter = ballCounter + 1
 	self:Bar("balls", 33, CL["count"]:format(L["balls"], ballCounter), args.spellId)
-	-- XXX Maybe work this into a custom_off_suggestedkillorder for at least 25 man
-	--if ballCounter == 5 or ballCounter == 8 or ballCounter == 11 or ballCounter == 14 or ballCounter == 17 then
-	--	self:Message("balls", "Urgent", nil, CL["count"]:format("Balls touching",cooldownCounter), args.spellId)
-	--	cooldownCounter = cooldownCounter + 1
-	--	ballCounter = ballCounter + 1
-	--	self:Bar("balls", 33, CL["count"]:format("Kill: |cffff0000RED|r ball", ballCounter), args.spellId)
-	--elseif ballCounter == 4 or ballCounter == 7 or ballCounter == 10 or ballCounter == 13 or ballCounter == 16 then
-	--	self:Message("balls", "Urgent", "Warning", CL["count"]:format("Kill: |cffff0000RED|r ball", ballCounter), args.spellId)
-	--	ballCounter = ballCounter + 1
-	--	self:Bar("balls", 33, CL["count"]:format("Balls touching", cooldownCounter), args.spellId)
-	--else
-	--	self:Message("balls", "Urgent", "Warning", CL["count"]:format("Kill: |cffff0000RED|r ball", ballCounter), args.spellId)
-	--	ballCounter = ballCounter + 1
-	--	self:Bar("balls", 33, CL["count"]:format("Kill: |cffff0000RED|r ball", ballCounter), args.spellId)
-	--end
 end
 
