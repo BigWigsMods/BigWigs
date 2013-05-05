@@ -423,8 +423,8 @@ end
 --
 
 do
-	local DBMdotRevision = "9314"
-	local DBMdotDisplayVersion = "5.2.4"
+	local DBMdotRevision = "9413"
+	local DBMdotDisplayVersion = "5.2.5"
 	function loader:DBM_AddonMessage(channel, sender, prefix, revision, _, displayVersion)
 		if prefix == "H" and (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
 			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale(), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
