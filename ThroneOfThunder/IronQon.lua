@@ -335,7 +335,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(139180, 13)
 	elseif spellId == 137656 then -- Rushing Winds
 		if phase == 2 then
-			self:Message(-6877, "Positive", nil, CL["over"]:format(self:SpellName(136577)), 136577) -- Wind Storm
+			self:Message(-6877, "Positive", nil, CL["over"]:format(self:SpellName(-6877))) -- Windstorm
 			self:Bar(-6877, 70) -- Windstorm
 			self:CDBar(136192, 17) -- Lightning Storm
 		end
