@@ -287,7 +287,7 @@ end
 
 function mod:Boss1Succeeded(unitId, spellName, _, _, spellId)
 	if spellId == 139040 then
-		self:CDBar("corruptedballs", 16)
+		self:CDBar("corruptedballs", 16, L["corruptedballs"], 139071)
 		self:Message("corruptedballs", "Important", "Alarm", L["corruptedballs"], 139071)
 	end
 end
