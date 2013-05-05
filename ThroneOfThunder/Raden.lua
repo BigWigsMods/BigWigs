@@ -117,7 +117,7 @@ do
 	local prev, sensitiveToAnima = 0, {}
 	local function proximityAfterUnstableAnimaDamage()
 		local targets = {}
-		for k, v in pairs(sensitiveToAnima) do
+		for k, v in next, sensitiveToAnima do
 			if v then
 				targets[#targets+1] = k
 			end

@@ -12,7 +12,7 @@ mod:RegisterEnableMob(69701, 69700, 69699, 69427) -- Anima Golem, Large Anima Go
 --
 
 local nextPower = 15
-local joltCounter = 0
+local joltCounter, siphonAnimaCounter = 1, 1
 local matterSwapTargets = {}
 local caster = nil
 
@@ -89,7 +89,7 @@ function mod:OnEngage()
 		self:Berserk(600)
 	end
 	nextPower = 15
-	joltCounter = 0
+	joltCounter, siphonAnimaCounter = 1, 1
 	wipe(matterSwapTargets)
 	local _, class = UnitClass("player")
 	caster = self:Healer() or (UnitPowerType("player") == 0 and class ~= "PALADIN")
@@ -119,10 +119,10 @@ function mod:InterruptingJolt(args)
 		self:Flash(args.spellId)
 	end
 
-	joltCounter = joltCounter + 1
 	self:StopBar(CL["count"]:format(args.spellName, joltCounter))
 	self:Message(args.spellId, caster and "Personal" or "Attention", caster and "Long", CL["count"]:format(args.spellName, joltCounter))
-	self:Bar(args.spellId, 22, CL["count"]:format(args.spellName, joltCounter+1))
+	joltCounter = joltCounter + 1
+	self:Bar(args.spellId, 22, CL["count"]:format(args.spellName, joltCounter))
 end
 
 function mod:EmpowerGolem(args)
@@ -170,7 +170,12 @@ do
 		end
 	end
 	function mod:SiphonAnima(args)
-		self:Bar(args.spellId, self:Heroic() and 20 or 6)
+		if self:Heroic() then
+			siphonAnimaCounter = siphonAnimaCounter + 1
+			self:Bar(args.spellId, 20, CL["count"]:format(args.spellName, siphonAnimaCounter))
+		else
+			self:Bar(args.spellId, 6)
+		end
 		self:ScheduleTimer(warnPower, 0.1, args.spellId) -- the power update happens after the cast
 	end
 end
@@ -178,7 +183,11 @@ end
 function mod:BossEngage()
 	self:CheckBossStatus()
 	if self:MobId(UnitGUID("boss1")) == 69427 then
-		self:Bar(138644, self:Heroic() and 120 or 30) -- Siphon Anima
+		if self:Heroic() then
+			self:Bar(138644, 120, CL["count"]:format(self:SpellName(138644), 1)) -- Siphon Anima
+		else
+			self:Bar(138644, 30) -- Siphon Anima
+		end
 		if self:Heroic() then
 			self:Bar(138780, 7) -- Empower Golem
 		end
