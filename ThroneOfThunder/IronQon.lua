@@ -109,6 +109,10 @@ do
 		local tanking, status = UnitDetailedThreatSituation("boss1target", "boss1")
 		if tanking or status == 3 then return end -- healer aggro
 
+		-- blizzard decided to let eminence healing be safe
+		local _, class = UnitClass("boss1target")
+		if class == "MONK" and mod:Range("boss1target", "boss2target") < 15 then return end
+
 		local name, server = UnitName("boss1target")
 		if server then name = name .. "-" .. server end
 		mod:TargetMessage(134926, name, "Urgent", "Alarm")
