@@ -102,7 +102,7 @@ end
 
 do
 	-- Spear scanning
-	local UnitDetailedThreatSituation, UnitExists, UnitName = UnitDetailedThreatSituation, UnitExists, UnitName
+	local UnitDetailedThreatSituation, UnitExists = UnitDetailedThreatSituation, UnitExists
 	local spearTimer, spearStartTimer = nil, nil
 	local function checkSpearTarget()
 		if not UnitExists("boss1target") or mod:Tank("boss1target") or UnitDetailedThreatSituation("boss1target", "boss2") then return end
@@ -124,7 +124,9 @@ do
 		mod:StopSpearScan()
 	end
 	function mod:StartSpearScan()
-		spearTimer = self:ScheduleRepeatingTimer(checkSpearTarget, 0.2)
+		if not spearTimer then
+			spearTimer = self:ScheduleRepeatingTimer(checkSpearTarget, 0.2)
+		end
 	end
 	function mod:StopSpearScan()
 		self:CancelTimer(spearStartTimer)
@@ -135,7 +137,7 @@ do
 	function mod:ThrowSpear(args)
 		if phase == 4 then return end -- don't warn in last phase
 		self:CDBar(args.spellId, 33)
-		self:SecondaryIcon(args.spellId)
+		self:ScheduleTimer("SecondaryIcon", 2, args.spellId) -- few seconds before the lines go out
 		if spearTimer then -- didn't find a target
 			self:StopSpearScan()
 			self:Message(args.spellId, "Urgent")
