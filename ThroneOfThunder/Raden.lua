@@ -251,13 +251,11 @@ do
 	end
 
 	function mod:UnstableVitaApplied(args)
-		local target = self:NewTargetList()
 		if self:Me(args.destGUID) then
 			self:Flash(138297)
 			self:Bar("unstablevitajumptarget", 5, CL["you"]:format(args.spellName), args.spellId)
 		else
-			target[1] = args.destName
-			self:TargetBar(138297, 5, target[1])
+			self:TargetBar(138297, 5, args.destName)
 		end
 		self:TargetMessage(138297, args.destName, "Personal", "Info")
 		self:PrimaryIcon(138297, args.destName)
