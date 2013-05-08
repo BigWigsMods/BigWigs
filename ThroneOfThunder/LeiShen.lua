@@ -565,7 +565,7 @@ do
 		end
 		overchargedList[#overchargedList+1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnOvercharged, 0.1, args.spellId)
+			scheduled = self:ScheduleTimer(warnOvercharged, 0.2, args.spellId)
 		end
 	end
 end
@@ -628,22 +628,29 @@ end
 do
 	local staticShockList, staticShockOnMe, scheduled, coloredNames = {}, nil, nil, mod:NewTargetList()
 	local function warnStaticShock(spellId)
-		local intermission
 		if not UnitExists("boss1") then -- poor mans intermission check
 			mod:Bar(spellId, 20, spellId)
-			intermission = true
+			-- ignore other quadrants during the intermission
+			local closest, distance = nil, 200
+			for player in next, staticShockList do
+				local playerDistance = mod:Range(player)
+				if playerDistance < distance then
+					distance = playerDistance
+					closest = player
+				end
+			end
+			if distance < 40 then
+				mod:CloseProximity("proximity")
+				activeProximityAbilities[1] = true -- static shock
+				if UnitIsUnit("player", closest) then
+					mod:OpenProximity(spellId, 8) -- XXX not exactly the best choice, but this way at least you see people around you
+				else
+					mod:OpenProximity(spellId, 8, closest, true) -- open to closest static shock target
+				end
+			end
 		else
 			if phase == 1 or not mod:Heroic() then stopConduitAbilityBars() end
 			mod:Bar(135695, 40)
-		end
-
-		local closest, distance = nil, 200
-		for i, player in next, staticShockList do
-			local playerDistance = mod:Range(player)
-			if playerDistance < distance then
-				distance = playerDistance
-				closest = player
-			end
 		end
 		mod:TargetMessage(spellId, coloredNames, "Positive", "Info", nil, nil, true) -- green because everyone should be friendly and hug the person with it
 		if not staticShockOnMe and not mod:Heroic() then
@@ -652,15 +659,6 @@ do
 		scheduled = nil
 		staticShockOnMe = nil
 		wipe(staticShockList)
-		if intermission and distance < 40 then -- ignore other quadrants during the intermission
-			mod:CloseProximity("proximity")
-			activeProximityAbilities[1] = true -- static shock
-			if UnitIsUnit("player", closest) then
-				mod:OpenProximity(spellId, 8) -- XXX not exactly the best choice, but this way at least you see people around you
-			else
-				mod:OpenProximity(spellId, 8, closest, true) -- open to closest static shock target
-			end
-		end
 	end
 	local timeLeft, timer = 8, nil
 	local function staticShockSayCountdown()
@@ -684,7 +682,7 @@ do
 		elseif self:Heroic() then
 			self:TargetBar(args.spellId, 8, coloredNames[#coloredNames])
 		end
-		staticShockList[#staticShockList+1] = args.destName
+		staticShockList[args.destName] = true
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnStaticShock, 0.1, args.spellId)
 		end
