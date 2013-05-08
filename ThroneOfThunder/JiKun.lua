@@ -185,8 +185,8 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		elseif nestCounter == 31 then
 			self:Bar("nest", 30, ("(%d)%s+(%d)%s+(%d)%s"):format(nextNest, L["up"], nextNest+1, L["down"], nextNest+2, L["up"]), 134347)
 		end
-		-- big adds at 2, 6, 12, 23 (there might be more between 23 and 37)
-		if nestCounter == 2 or nestCounter == 6 or nestCounter == 23 then
+		-- big adds at 2, 6, 12, 23, 30 (another upper add in the 38 set, probably 39)
+		if nestCounter == 2 or nestCounter == 6 or nestCounter == 23 or nestCounter == 30 then
 			self:Message("nest", "Urgent", "Alert", L["big_add_message"]:format(L["lower_nest"]), 134367)
 		elseif nestCounter == 12 or nestCounter == 16 then
 			self:Message("nest", "Attention", "Alert", L["big_add_message"]:format(L["upper_nest"]), 134367)
