@@ -115,6 +115,7 @@ do
 
 		local name, server = UnitName("boss1target")
 		if server then name = name .. "-" .. server end
+
 		mod:TargetMessage(134926, name, "Urgent", "Alarm")
 		mod:SecondaryIcon(134926, name)
 		if UnitIsUnit("player", "boss1target") then
@@ -137,7 +138,7 @@ do
 	function mod:ThrowSpear(args)
 		if phase == 4 then return end -- don't warn in last phase
 		self:CDBar(args.spellId, 33)
-		self:ScheduleTimer("SecondaryIcon", 2, args.spellId) -- few seconds before the lines go out
+		self:ScheduleTimer("SecondaryIcon", 3, args.spellId) -- few seconds before the lines go out
 		if spearTimer then -- didn't find a target
 			self:StopSpearScan()
 			self:Message(args.spellId, "Urgent")
@@ -293,8 +294,7 @@ do
 		end
 		local t = GetTime()
 		if t-prev > 1 then
-			local damren = phase == 3 or self:MobId(UnitGUID("boss4")) == 68081
-			self:CDBar(-6870, damren and 16 or 8) -- apparently won't happen during Dead Zone, so can be quite delayed while Dam'ren is up
+			self:CDBar(-6870, phase == 3 and 33 or 8) -- apparently won't happen during Dead Zone, so can be quite delayed while Dam'ren is up
 			prev = t
 		end
 	end
