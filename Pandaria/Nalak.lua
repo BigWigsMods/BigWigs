@@ -51,7 +51,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:CDBar("ability", 12, L["ability"], L.ability_icon) -- 12-22s, seems to go out in a random order then stay in that order
+	self:CDBar("ability", 10, L["ability"], L.ability_icon)
 	openedForMe = nil
 	wipe(stormcloudTargets)
 end
@@ -63,11 +63,11 @@ end
 function mod:ArcNova(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	self:Bar(args.spellId, 3, CL["cast"]:format(args.spellName))
-	self:CDBar("ability", 12, L["ability"], L.ability_icon)
+	self:CDBar("ability", 10, L["ability"], L.ability_icon)
 end
 
 function mod:LightningTether(args)
-	self:CDBar("ability", 12, L["ability"], L.ability_icon)
+	self:CDBar("ability", 10, L["ability"], L.ability_icon)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Alert", CL["you"]:format(args.spellName))
 		self:Bar(args.spellId, 15, CL["you"]:format(args.spellName))
@@ -78,7 +78,7 @@ end
 do
 	local scheduled = nil
 	local function warnStormcloud(spellId)
-		mod:CDBar("ability", 12, L["ability"], L.ability_icon)
+		mod:CDBar("ability", 10, L["ability"], L.ability_icon)
 		if not openedForMe then
 			mod:Message(spellId, "Attention")
 			if #stormcloudTargets > 0 then
@@ -124,10 +124,11 @@ end
 do
 	local prev = 0
 	function mod:StormcloudDamage(args)
-		if self:Me(args.destGUID) and not self:Me(args.sourceGUID) then
+		if self:Me(args.destGUID) then
 			local t = GetTime()
-			if t-prev > 3 then
+			if t-prev > 2 and not UnitDebuff("player", args.spellName) then
 				self:Message(136340, "Personal", "Info", CL["underyou"]:format(args.spellName))
+				prev = t
 			end
 		end
 	end
