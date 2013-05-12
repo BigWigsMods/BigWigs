@@ -11,8 +11,7 @@ mod:RegisterEnableMob(69701, 69700, 69699, 69427) -- Anima Golem, Large Anima Go
 -- Locals
 --
 
-local nextPower = 15
-local joltCounter, siphonAnimaCounter = 1, 1
+local nextPower, joltCounter, siphonAnimaCounter = 1, 1, 1
 local matterSwapTargets = {}
 local caster = nil
 
@@ -88,8 +87,7 @@ function mod:OnEngage()
 	if self:LFR() then
 		self:Berserk(600)
 	end
-	nextPower = 15
-	joltCounter, siphonAnimaCounter = 1, 1
+	nextPower, joltCounter, siphonAnimaCounter = 1, 1, 1
 	wipe(matterSwapTargets)
 	local _, class = UnitClass("player")
 	caster = self:Healer() or (UnitPowerType("player") == 0 and class ~= "PALADIN")
@@ -154,17 +152,18 @@ end
 do
 	local function warnPower(spellId)
 		local power = UnitPower("boss1")
-		if power > nextPower then
-			if nextPower == 15 then
-				mod:Message(spellId, "Neutral", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(136954))) -- Anima Ring (25)
-			elseif nextPower == 45 then
-				mod:Message(spellId, "Neutral", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(138691))) -- Anima Font (50)
-			elseif nextPower == 70 then
-				mod:Message(spellId, "Neutral", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(138763))) -- Interrupting Jolt (75)
-			elseif nextPower == 95 then
-				mod:Message(spellId, "Neutral", "Warning", L["siphon_power_soon"]:format(power, mod:SpellName(138729))) -- Full Power (100)
-			end
-			nextPower = nextPower + 30
+		if power > 15 and nextPower == 1 then
+			mod:Message(spellId, "Neutral", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(136954))) -- Anima Ring (25)
+			nextPower = nextPower + 1
+		elseif power > 45 and nextPower == 2 then
+			mod:Message(spellId, "Neutral", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(138691))) -- Anima Font (50)
+			nextPower = nextPower + 1
+		elseif power > 70 and nextPower == 3 then
+			mod:Message(spellId, "Neutral", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(138763))) -- Interrupting Jolt (75)
+			nextPower = nextPower + 1
+		elseif power > 95 and nextPower == 4 then
+			mod:Message(spellId, "Neutral", "Warning", L["siphon_power_soon"]:format(power, mod:SpellName(138729))) -- Full Power (100)
+			nextPower = nextPower + 1
 		else
 			mod:Message(spellId, "Neutral", nil, L["siphon_power"]:format(power))
 		end
