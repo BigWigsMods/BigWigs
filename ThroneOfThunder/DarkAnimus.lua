@@ -152,7 +152,7 @@ end
 do
 	local function warnPower(spellId)
 		local power = UnitPower("boss1")
-		if power > 15 and nextPower == 1 then
+		if power > 20 and nextPower == 1 then
 			mod:Message(spellId, "Neutral", "Info", L["siphon_power_soon"]:format(power, mod:SpellName(136954))) -- Anima Ring (25)
 			nextPower = nextPower + 1
 		elseif power > 45 and nextPower == 2 then
