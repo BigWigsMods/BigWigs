@@ -42,6 +42,8 @@ L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timer
 
 L.coreAddonDisabled = "Big Wigs non può funzionare correttamente perché l'addon %s è disattivato. Puoi attivarlo nel pannello di controllo degli Addon nella schermata di login dei personaggi."
 
+--L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
+
 -- Options.lua
 L["Customize ..."] = "Personalizza ..."
 L["Profiles"] = "Profili"

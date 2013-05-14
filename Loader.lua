@@ -368,6 +368,36 @@ do
 		end
 		loadOnWorldBoss, iterateWorldBosses = nil, nil
 
+		local old = { -- XXX temp print
+			BigWigs_Ulduar = "BigWigs_WrathOfTheLichKing",
+			BigWigs_TheEye = "BigWigs_BurningCrusade",
+			BigWigs_Sunwell = "BigWigs_BurningCrusade",
+			BigWigs_SSC = "BigWigs_BurningCrusade",
+			BigWigs_Outland = "BigWigs_BurningCrusade",
+			BigWigs_Northrend = "BigWigs_WrathOfTheLichKing",
+			BigWigs_Naxxramas = "BigWigs_WrathOfTheLichKing",
+			BigWigs_MC = "BigWigs_Classic",
+			BigWigs_Karazhan = "BigWigs_BurningCrusade",
+			BigWigs_Hyjal = "BigWigs_BurningCrusade",
+			BigWigs_Coliseum = "BigWigs_WrathOfTheLichKing",
+			BigWigs_Citadel = "BigWigs_WrathOfTheLichKing",
+			BigWigs_BWL = "BigWigs_Classic",
+			BigWigs_BlackTemple = "BigWigs_BurningCrusade",
+			BigWigs_AQ20 = "BigWigs_Classic",
+			BigWigs_AQ40 = "BigWigs_Classic",
+			BigWigs_Baradin = "BigWigs_Cataclysm",
+			BigWigs_Bastion = "BigWigs_Cataclysm",
+			BigWigs_Blackwing = "BigWigs_Cataclysm",
+			BigWigs_DragonSoul = "BigWigs_Cataclysm",
+			BigWigs_Firelands = "BigWigs_Cataclysm",
+			BigWigs_Throne = "BigWigs_Cataclysm",
+			LittleWigs_ShadoPanMonastery = "LittleWigs",
+			LittleWigs_ScarletHalls = "LittleWigs",
+			LittleWigs_ScarletMonastery = "LittleWigs",
+			LittleWigs_MogushanPalace = "LittleWigs",
+			LittleWigs_TempleOfTheJadeSerpent = "LittleWigs",
+		}
+
 		-- XXX hopefully remove this some day, try to teach people not to force load our modules.
 		for i = 1, GetNumAddOns() do
 			local name, _, _, enabled = GetAddOnInfo(i)
@@ -384,6 +414,13 @@ do
 						print("|cFF33FF99Big Wigs|r: The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
 					end
 				end
+			end
+
+			-- XXX temp print for old stuff
+			if old[name] then
+				AutoCompleteInfoDelayer:HookScript("OnFinished", function()
+					print(L.removeAddon:format(name, old[name]))
+				end)
 			end
 		end
 

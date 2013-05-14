@@ -44,6 +44,8 @@ L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timer
 
 L.coreAddonDisabled = "当%s被禁用时，Big Wigs 将无法正常工作。你可以在角色选择屏幕的插件控制面板开启它们。"
 
+--L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
+
 -- Options.lua
 L["Customize ..."] = "自定义…"
 L["Profiles"] = "配置文件"
