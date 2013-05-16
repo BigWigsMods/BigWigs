@@ -359,6 +359,7 @@ do
 		if not IsEncounterInProgress() then
 			if debug then dbg(module, "Wipe!") end
 			module:Reboot(true)
+			if module.OnWipe then module:OnWipe() end
 		end
 	end
 
@@ -935,6 +936,15 @@ function boss:SecondaryIcon(key, player)
 		self:SendMessage("BigWigs_RemoveRaidIcon", 2)
 	else
 		self:SendMessage("BigWigs_SetRaidIcon", player, 2)
+	end
+end
+
+function boss:ClearCustomRaidIcon(icon)
+	for i = 1, GetNumRaidMembers() do
+		local unit = ("raid%d"):format(i)
+		if GetRaidTargetIndex(unit) == icon then
+			SetRaidTarget(unit, 0)
+		end
 	end
 end
 

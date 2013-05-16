@@ -126,6 +126,19 @@ function mod:OnEngage()
 	deadAdds = 0
 end
 
+function mod:OnBossDisable()
+	if self.db.profile.custom_off_parasite_marks then
+		self:ClearCustomRaidIcon(3)
+		self:ClearCustomRaidIcon(4)
+		self:ClearCustomRaidIcon(5)
+	end
+	if self.db.profile.custom_off_ray_controllers then
+		self:ClearCustomRaidIcon(1)
+		self:ClearCustomRaidIcon(7)
+		self:ClearCustomRaidIcon(6)
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
