@@ -18,11 +18,6 @@ local marksUsed = {}
 local activeProximityAbilities = {}
 local thunderstruckCounter = 1
 local whipCounter = 1
-local stunDuration = {
-	[119381] = 5, -- Leg Sweep
-	[119072] = 3, -- Holy Wrath
-	[30283] = 3, -- Shadowfury
-}
 
 local function isConduitAlive(mobId)
 	for i=1, 5 do
@@ -162,11 +157,14 @@ function mod:Grip(args)
 end
 
 do
-	local target = mod:NewTargetList()
+	local stunDuration = {
+		[119381] = 5, -- Leg Sweep
+		[119072] = 3, -- Holy Wrath
+		[30283] = 3, -- Shadowfury
+	}
 	function mod:Stuns(args)
 		if phase < 2 then return end
-		target[1] = args.sourceName
-		self:Bar("stuns", stunDuration[args.spellId], ("Stun: %s"):format(target[1]), args.spellId)
+		self:TargetBar("stuns", stunDuration[args.spellId], args.destName, 9179, args.spellId) -- 9179 = "Stun"
 	end
 end
 
@@ -671,7 +669,6 @@ do
 		end
 	end
 	function mod:StaticShockApplied(args)
-		coloredNames[#coloredNames+1] = args.destName
 		if self:Me(args.destGUID) then
 			timeLeft = 8
 			self:Flash("shock_self", args.spellId)
@@ -680,8 +677,9 @@ do
 			timer = self:ScheduleRepeatingTimer(staticShockSayCountdown, 1)
 			staticShockOnMe = true
 		elseif self:Heroic() then
-			self:TargetBar(args.spellId, 8, coloredNames[#coloredNames])
+			self:TargetBar(args.spellId, 8, args.destName)
 		end
+		coloredNames[#coloredNames+1] = args.destName
 		staticShockList[args.destName] = true
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnStaticShock, 0.1, args.spellId)
