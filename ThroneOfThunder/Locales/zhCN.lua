@@ -101,7 +101,7 @@ if L then
 	L.custom_off_ray_controllers_desc = "使用%s%s%s团队标记控制光线增援和移动的玩家，需要权限。"
 
 	L.custom_off_parasite_marks = "黑暗寄生标记"
-	L.custom_off_parasite_marks_desc = "使用%s%s%s标记中了黑暗寄生的玩家帮助分配治疗，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
+	L.custom_off_parasite_marks_desc = "使用%s%s%s标记中了黑暗寄生的玩家帮助分配治疗，需要权限。"
 
 	L.initial_life_drain = "初始生命吸取施放"
 	L.initial_life_drain_desc = "初始生命吸取施放消息以帮助保持减少受到治疗的减益。"

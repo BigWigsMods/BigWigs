@@ -101,7 +101,7 @@ if L then
 	L.custom_off_ray_controllers_desc = "Use the %s%s%s raid markers to mark people who will control the ray spawn positions and movement."
 
 	L.custom_off_parasite_marks = "암흑의 기생충 공격대 아이콘"  -- Dark parasite marker
-	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s, requires promoted or leader."
 
 	L.initial_life_drain = "생명력 흡수"
 	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."

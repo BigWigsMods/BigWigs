@@ -102,7 +102,7 @@ if L then
 	L.custom_off_ray_controllers_desc = "Usa las marcas de raid %s%s%s para marcar gente que controlará las posiciones y movimientos cuando aparecen los rayos."
 
 	L.custom_off_parasite_marks = "Marcador de Parásito oscuro"
-	L.custom_off_parasite_marks_desc = "Para ayudar con las sanaciones, marca la gente que tiene Parásito oscuro en ellos con %s%s%s.\n|cFFFF0000Solo 1 persona en la raid debería tener activada esta opción para prevenir conflictos con las marcas.|r"
+	L.custom_off_parasite_marks_desc = "Para ayudar con las sanaciones, marca la gente que tiene Parásito oscuro en ellos con %s%s%s."
 
 	L.initial_life_drain = "Casteo inicial de Drenar vida"
 	L.initial_life_drain_desc = "Mensaje para el casteo inicial de Drenar vida para ayudar a mantener la sanación recibida por el debuff de reducción."

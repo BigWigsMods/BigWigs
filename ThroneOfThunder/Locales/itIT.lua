@@ -101,7 +101,7 @@ if L then
 	L.custom_off_ray_controllers_desc = "Usa le icone di incursione %s%s%s per evidenziare i giocatori che controllano le posizioni dei raggi e il loro movimento."
 
 	L.custom_off_parasite_marks = "Marcatore Parassita Oscuro"
-	L.custom_off_parasite_marks_desc = "Per aiutare l'assegnazione dei Guaritori, evidenzia i giocatori che hanno il Parassita Oscuro con %s%s%s.\n|cFFFF0000Solo 1 giocatore dell'incursione dovrebbe aver abilitato questa opzione per evitare conflitti sui marcamenti.|r"
+	L.custom_off_parasite_marks_desc = "Per aiutare l'assegnazione dei Guaritori, evidenzia i giocatori che hanno il Parassita Oscuro con %s%s%s."
 
 	L.initial_life_drain = "Lancio iniziale Risucchio di Vita"
 	L.initial_life_drain_desc = "Messaggio per il primo lancio di Risucchio di Vita per aiutare le cure su colui che ha il maleficio sulle cure ricevute."

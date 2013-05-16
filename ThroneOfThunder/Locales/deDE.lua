@@ -101,7 +101,7 @@ if L then
 	L.custom_off_ray_controllers_desc = "Verwenden der %s%s%s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."
 
 	L.custom_off_parasite_marks = "Dunkle Parasiten markieren"
-	L.custom_off_parasite_marks_desc = "Um Heilzuteilungen zu erleichtern werden die Ziele der dunklen Parasiten mit %s%s%s markiert.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
+	L.custom_off_parasite_marks_desc = "Um Heilzuteilungen zu erleichtern werden die Ziele der dunklen Parasiten mit %s%s%s markiert."
 
 	L.initial_life_drain = "Anfänglicher Lebensentzug"
 	L.initial_life_drain_desc = "Nachricht für den anfänglichen Lebensentzug anzeigen, um die erhaltene Heilung durch Verringerung des Schwächungszaubers zu reduzieren."
