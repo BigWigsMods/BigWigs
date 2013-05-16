@@ -113,8 +113,7 @@ do
 		local _, class = UnitClass("boss1target")
 		if class == "MONK" and mod:Range("boss1target", "boss2target") < 15 then return end
 
-		local name, server = UnitName("boss1target")
-		if server then name = name .. "-" .. server end
+		local name = mod:UnitName("boss1target")
 
 		mod:TargetMessage(134926, name, "Urgent", "Alarm")
 		mod:SecondaryIcon(134926, name)

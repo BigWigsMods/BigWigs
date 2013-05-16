@@ -120,7 +120,7 @@ do
 				highestStackPlayer = unit
 			end
 		end
-		local player = UnitName(highestStackPlayer)
+		local player = mod:UnitName(highestStackPlayer)
 		mod:StackMessage(123705, player, highestStack, "Attention")
 		scheduled = nil
 	end

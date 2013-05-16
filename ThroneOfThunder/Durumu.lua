@@ -229,8 +229,7 @@ do
 		for i=1, GetNumGroupMembers() do
 			local unit = ("raid%d"):format(i)
 			if UnitDebuff(unit, spellName) then
-				local name, server = UnitName(unit)
-				if server then name = name.."-"..server end
+				local name = mod:UnitName(unit)
 				found = true
 				if spellId == 139202 then
 					if blueController ~= name then
@@ -266,8 +265,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 	-- get full name if needed (hope everyone has a unique name!)
-	local name, server = UnitName(target)
-	if server then target = name.."-"..server end
+	local name = self:UnitName(target)
 
 	if msg:find("134124") then -- Yellow
 		self:StopBar(-6905) -- Force of Will

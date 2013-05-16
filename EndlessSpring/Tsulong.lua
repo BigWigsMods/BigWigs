@@ -144,7 +144,7 @@ do
 	local fired, timer = 0, nil
 	local function getNightmaresTarget(spellId)
 		fired = fired + 1
-		local player = UnitName("boss1target")
+		local player = mod:UnitName("boss1target")
 		if player and ((not UnitDetailedThreatSituation("boss1target", "boss1") and not mod:Tank("boss1target")) or fired > 13) then
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
 			mod:CancelTimer(timer)

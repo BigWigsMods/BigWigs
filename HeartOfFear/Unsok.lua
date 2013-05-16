@@ -238,7 +238,7 @@ function mod:Interrupt(unitId, _, _, _, spellId)
 			self:StopBar(CL["cast"]:format(explosion))
 		elseif unitId == "focus" then
 			local player, server = UnitName(unitId)
-			if server then player = player.."*" end
+			if server and server ~= "" then player = player.."*" end
 			self:StopBar(CL["cast"]:format(CL["other"]:format(player, explosion)))
 		end
 	end

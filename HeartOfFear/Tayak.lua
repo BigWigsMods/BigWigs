@@ -118,8 +118,7 @@ do
 		if player then
 			mod:CancelTimer(timer)
 			timer = nil
-			local name, server = UnitName(player)
-			if server then name = name .."-".. server end
+			local name = mod:UnitName(player)
 			if UnitIsUnit(player, "player") then
 				mod:Say(-6346)
 			else

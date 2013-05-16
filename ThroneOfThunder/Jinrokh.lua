@@ -194,7 +194,7 @@ do
 		end
 	end
 	local function checkFocusedLightning()
-		local player = UnitName("boss1target")
+		local player = mod:UnitName("boss1target")
 		if player and (not UnitDetailedThreatSituation("boss1target", "boss1") and not mod:Tank("boss1target")) then
 			focusedLightningTarget = UnitGUID("boss1target")
 			warnFocusedLightning(player, focusedLightningTarget)

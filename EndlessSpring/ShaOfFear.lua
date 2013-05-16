@@ -291,7 +291,7 @@ do
 		local player = UnitName("boss1target")
 		if player and ((not UnitDetailedThreatSituation("boss1target", "boss1") and not mod:Tank("boss1target")) or fired > 13) then
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
-			if UnitIsUnit("player", player) then
+			if UnitIsUnit("boss1target", "player") then
 				mod:Message(119519, "Urgent", "Alarm", CL["you"]:format(eerieSkull))
 				mod:Say(119519, eerieSkull)
 				mod:Flash(119519)

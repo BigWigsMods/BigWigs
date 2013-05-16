@@ -135,10 +135,7 @@ do
 	end
 	function mod:UNIT_AURA(_, unitId)
 		if UnitDebuff(unitId, korthikStrike) then
-			local player, server = UnitName(unitId)
-			if server then
-				player = player .. "-" .. server
-			end
+			local player = self:UnitName(unitId)
 			if not korthikStrikeWarned[player] then
 				korthikStrikeWarned[player] = true
 				self:ScheduleTimer(allowKorthikStrike, 10, player)

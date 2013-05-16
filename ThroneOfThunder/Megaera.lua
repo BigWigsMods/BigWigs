@@ -212,8 +212,7 @@ do
 		local _, _, _, _, _, _, expires = UnitDebuff(unit, iceTorrent)
 		if expires and not torrentList[expires] then
 			local duration = expires - GetTime() -- EJ says 8, spell tooltip says 11
-			local player, server = UnitName(unit)
-			if server then player = player.."-"..server end
+			local player = self:UnitName(unit)
 			if UnitIsUnit(unit, "player") then
 				self:TargetMessage(139866, player, "Urgent", "Info")
 				self:TargetBar(139866, duration , player)

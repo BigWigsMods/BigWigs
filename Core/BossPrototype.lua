@@ -543,6 +543,19 @@ function boss:Me(guid)
 end
 
 do
+	local UnitName = UnitName
+	function boss:UnitName(unit)
+		local name, server = UnitName(unit)
+		if not name then
+			return
+		elseif server and server ~= "" then
+			name = name .."-".. server
+		end
+		return name
+	end
+end
+
+do
 	local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
 	local GetPlayerMapPosition = GetPlayerMapPosition
 
