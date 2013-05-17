@@ -939,15 +939,6 @@ function boss:SecondaryIcon(key, player)
 	end
 end
 
-function boss:ClearCustomRaidIcon(icon)
-	for i = 1, GetNumRaidMembers() do
-		local unit = ("raid%d"):format(i)
-		if GetRaidTargetIndex(unit) == icon then
-			SetRaidTarget(unit, 0)
-		end
-	end
-end
-
 -- MISC
 function boss:Flash(key, icon)
 	if checkFlag(self, key, C.FLASH) then

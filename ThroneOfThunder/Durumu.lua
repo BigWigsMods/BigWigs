@@ -14,7 +14,7 @@ local deadAdds = 0
 local lifeDrainCasts = 0
 local lingeringGaze = {}
 local openedForMe = nil
-local blueController, redController
+local blueController, redController, yellowController
 local marksUsed = {}
 
 --------------------------------------------------------------------------------
@@ -128,19 +128,7 @@ function mod:OnEngage()
 	wipe(lingeringGaze)
 	openedForMe = nil
 	deadAdds = 0
-end
-
-function mod:OnBossDisable()
-	if self.db.profile.custom_off_parasite_marks then
-		self:ClearCustomRaidIcon(3)
-		self:ClearCustomRaidIcon(4)
-		self:ClearCustomRaidIcon(5)
-	end
-	if self.db.profile.custom_off_ray_controllers then
-		self:ClearCustomRaidIcon(1)
-		self:ClearCustomRaidIcon(7)
-		self:ClearCustomRaidIcon(6)
-	end
+	blueController, redController, yellowController = nil, nil, nil
 end
 
 --------------------------------------------------------------------------------
@@ -184,6 +172,22 @@ end
 local function mark(unit, mark)
 	if not unit or not mark or not mod.db.profile.custom_off_ray_controllers then return end
 	SetRaidTarget(unit, mark)
+end
+
+-- Clear icons on wipe/win
+function mod:OnBossDisable()
+	mark(blueController, 0)
+	mark(redController, 0)
+	mark(yellowController, 0)
+
+	if self:Heroic() and self.db.profile.custom_off_parasite_marks then
+		for i = 3, 5 do
+			local n = marksUsed[i]
+			if n then
+				SetRaidTarget(n, 0)
+			end
+		end
+	end
 end
 
 do
@@ -287,8 +291,9 @@ function mod:YellowBeam(args)
 	self:Bar(-6891, 10, L["rays_spawn"], "inv_misc_gem_variety_02")
 	self:Bar(-6891, self:LFR() and 240 or 190) -- Light Spectrum
 
-	self:ScheduleTimer(mark, 10, args.destName, 0)
-	mark(args.destName, 1)
+	yellowController = args.destName
+	self:ScheduleTimer(mark, 10, yellowController, 0)
+	mark(yellowController, 1)
 	if self:Me(args.destGUID) then
 		self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["yellow_beam"]), args.spellId)
 		self:Flash(-6891)
@@ -297,7 +302,7 @@ end
 
 function mod:BlueBeam(args)
 	blueController = args.destName
-	mark(args.destName, 6)
+	mark(blueController, 6)
 	if self:Me(args.destGUID) then
 		self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["blue_beam"]), args.spellId)
 		self:Flash(-6891)
@@ -306,7 +311,7 @@ end
 
 function mod:RedBeam(args)
 	redController = args.destName
-	mark(args.destName, 7)
+	mark(redController, 7)
 	if self:Me(args.destGUID) then
 		self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["red_beam"]), args.spellId)
 		self:Flash(-6891)
