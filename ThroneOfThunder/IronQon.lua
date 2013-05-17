@@ -12,8 +12,8 @@ mod:RegisterEnableMob(68078, 68079, 68080, 68081) -- Iron Qon, Ro'shak, Quet'zal
 --
 
 local arcingLightning = mod:SpellName(136193)
-local phase = 1
-local smashCounter = 1
+local phase, smashCounter = 1, 1
+local quetzalDead = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -84,6 +84,7 @@ function mod:OnEngage()
 	self:Berserk(720)
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "PowerWarn", "boss2")
 	self:CDBar(134926, 33) -- Throw Spear
+	self:ScheduleTimer("StartSpearScan", 25)
 	if self:Heroic() then
 		self:OpenProximity(136192, 12) -- Lightning Storm (12 to be safe)
 		self:Bar(136192, 20) -- Lightning Storm
@@ -91,9 +92,8 @@ function mod:OnEngage()
 	else
 		self:OpenProximity(-6870, 10) -- Unleashed Flame
 	end
-	phase = 1
-	smashCounter = 1
-	self:ScheduleTimer("StartSpearScan", 20)
+	phase, smashCounter = 1, 1
+	quetzalDead = nil
 end
 
 --------------------------------------------------------------------------------
@@ -101,20 +101,23 @@ end
 --
 
 do
-	-- Spear scanning
-	local UnitDetailedThreatSituation, UnitExists = UnitDetailedThreatSituation, UnitExists
+	-- Spear target scanning
+	local UnitDetailedThreatSituation, UnitExists, UnitIsUnit = UnitDetailedThreatSituation, UnitExists, UnitIsUnit
 	local spearTimer, spearStartTimer = nil, nil
+	local initialTarget = nil
 	local function checkSpearTarget()
 		if not UnitExists("boss1target") or mod:Tank("boss1target") or UnitDetailedThreatSituation("boss1target", "boss2") then return end
+
+		-- healer aggro in p1
 		local tanking, status = UnitDetailedThreatSituation("boss1target", "boss1")
-		if tanking or status == 3 then return end -- healer aggro
+		if tanking or status == 3 then return end
+		if initialTarget and UnitIsUnit("boss1target", initialTarget) then return end
 
 		-- blizzard decided to let eminence healing be safe
 		local _, class = UnitClass("boss1target")
 		if class == "MONK" and mod:Range("boss1target", "boss2target") < 15 then return end
 
 		local name = mod:UnitName("boss1target")
-
 		mod:TargetMessage(134926, name, "Urgent", "Alarm")
 		mod:SecondaryIcon(134926, name)
 		if UnitIsUnit("player", "boss1target") then
@@ -123,8 +126,14 @@ do
 		end
 		mod:StopSpearScan()
 	end
+
 	function mod:StartSpearScan()
 		if not spearTimer then
+			if phase == 1 and UnitExists("boss1target") and UnitGroupRolesAssigned("boss1target") ~= "DAMAGER" then -- unassigned or healer (or tank, but they're already ignored)
+				initialTarget = self:UnitName("boss1target")
+			else
+				initialTarget = nil
+			end
 			spearTimer = self:ScheduleRepeatingTimer(checkSpearTarget, 0.2)
 		end
 	end
@@ -136,13 +145,13 @@ do
 
 	function mod:ThrowSpear(args)
 		if phase == 4 then return end -- don't warn in last phase
-		self:CDBar(args.spellId, 33)
-		self:ScheduleTimer("SecondaryIcon", 3, args.spellId) -- few seconds before the lines go out
 		if spearTimer then -- didn't find a target
-			self:StopSpearScan()
 			self:Message(args.spellId, "Urgent")
 		end
+		self:StopSpearScan()
+		self:CDBar(args.spellId, 33)
 		spearStartTimer = self:ScheduleTimer("StartSpearScan", 25)
+		self:ScheduleTimer("SecondaryIcon", 3, args.spellId) -- wait until the lines go out (mark is quicker to spot than the spear in the ground)
 	end
 end
 
@@ -174,55 +183,45 @@ end
 -- Quet'zal
 
 do
-	local debuffed, everyoneElse, scheduled = {}, {}, nil
-	local function checkArcLightning(spellName)
-		wipe(debuffed)
+	local everyoneElse, scheduled = {}, nil
+	local function checkArcLightning(spellName, checkOpen)
+		local debuffs = nil
 		wipe(everyoneElse)
 		-- seems easier than table searching/removing/inserting. multi-target should take a name-keyed table ;[
 		for i=1, GetNumGroupMembers() do
 			local name = GetRaidRosterInfo(i)
 			if UnitDebuff(name, spellName) then
-				debuffed[#debuffed+1] = name
-			elseif UnitAffectingCombat(name) then
+				debuffs = true
+			elseif UnitAffectingCombat(name) then -- XXX doesn't update for bres/ss/reincarnate
 				everyoneElse[#everyoneElse+1] = name
 			end
 		end
-		if UnitDebuff("player", spellName) and not mod:LFR() then
-			mod:OpenProximity(136193, 12, everyoneElse) -- multi-target proximity for people with Arcing Lightning
-		end
-		if #debuffed == 0 then
+		if not debuffs then
 			mod:Message(136193, "Positive", nil, L["arcing_lightning_cleared"], false)
 		end
 		scheduled = nil
+		if mod:LFR() then return end
+
+		if UnitDebuff("player", spellName) then
+			mod:OpenProximity(136193, 12, everyoneElse) -- open multi-target proximity if you have Arcing Lighning
+		elseif checkOpen then
+			mod:CloseProximity(136193) -- close multi-target
+			-- reopen Lightning Storm/Unleashed Flame
+			if not mod:Heroic() then
+				if phase == 2 then
+					mod:OpenProximity(136192, 12) -- Lightning Storm
+				end
+			elseif phase == 3 then -- Dam'ren + Ro'shak
+				mod:OpenProximity(-6870, 10) -- Unleashed Flame
+			elseif not quetzalDead then
+				mod:OpenProximity(136192, 12) -- Lightning Storm
+			end
+		end
 	end
 
 	function mod:ArcingLightningRemoved(args)
-		if self:Me(args.destGUID) then
-			self:StopBar(args.spellId, args.destName)
-			if not self:LFR() then
-				self:CloseProximity(args.spellId) -- close multi-target
-
-				-- reopen Lightning Storm/Unleashed Flame
-				if not self:Heroic() then
-					if phase == 2 then
-						self:OpenProximity(136192, 12) -- Lightning Storm
-					end
-				elseif phase < 3 then
-					self:OpenProximity(136192, 12) -- Lightning Storm
-				elseif phase == 3 then -- Dam'ren + Ro'shak
-					self:OpenProximity(-6870, 10) -- Unleashed Flame
-				elseif phase == 4 then -- Puppy party
-					for i=2, 4 do
-						if self:MobId(UnitGUID(("boss%d"):format(i))) == 68080 then -- Quet'zal is still alive
-							self:OpenProximity(136192, 12) -- Lightning Storm
-							break
-						end
-					end
-				end
-			end
-		end
 		if not scheduled then
-			scheduled = self:ScheduleTimer(checkArcLightning, 0.5, args.spellName)
+			scheduled = self:ScheduleTimer(checkArcLightning, 0.5, args.spellName, true)
 		end
 	end
 
@@ -426,6 +425,7 @@ function mod:Deaths(args)
 			self:CDBar(134926, 33) -- Throw Spear
 			self:Bar(-6914, 7) -- Dead Zone
 		end
+		quetzalDead = true
 	elseif args.mobId == 68081 then
 		-- Dam'ren
 		self:StopBar(-6914) -- Dead Zone
