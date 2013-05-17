@@ -243,9 +243,8 @@ do
 	-- Even though they're SPELL_CAST_SUCCESS, they don't provide the target ;[
 	local function findDebuff(spellName, spellId)
 		for i=1, GetNumGroupMembers() do
-			local unit = ("raid%d"):format(i)
-			if UnitDebuff(unit, spellName) then
-				local name = mod:UnitName(unit)
+			local name = GetRaidRosterInfo(i)
+			if UnitDebuff(name, spellName) then
 				if spellId == 139202 then
 					if blueController ~= name then
 						mod:TargetMessage(-6891, name, "Neutral", "Warning", L["blue_beam"], spellId, true)
