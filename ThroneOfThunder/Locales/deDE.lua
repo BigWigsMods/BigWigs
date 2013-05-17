@@ -95,7 +95,7 @@ if L then
 	L.yellow_spawn_trigger = "goldgelben Nebel"
 
 	L.adds = "Erscheinende Adds"
-	L.adds_desc = "Warnungen für das Erscheinen der purpurroten, goldgelben und azurblauen Nebel. Gibt an, wie viele purpurrote Nebel verbleiben."
+	L.adds_desc = "Warnungen für das Erscheinen der purpurroten, goldgelben und azurblauen Nebel. Gibt an, wie viele Nebel verbleiben."
 
 	L.custom_off_ray_controllers = "Kontrollierer der Lichtstrahlen"
 	L.custom_off_ray_controllers_desc = "Verwenden der %s%s%s Schlachtzugsmarkierungen auf Spieler, welche die Erscheinungsorte sowie Bewegungen der Lichtstrahlen kontrollieren."
