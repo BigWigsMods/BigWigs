@@ -28,7 +28,7 @@ if L then
 	L.yellow_spawn_trigger = "Amber Fog"
 
 	L.adds = "Reveal Adds"
-	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Crimson Fogs remain."
+	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Fogs remain."
 
 	L.custom_off_ray_controllers = "Ray controllers"
 	L.custom_off_ray_controllers_desc = "Use the %s%s%s raid markers to mark people who will control the ray spawn positions and movement, requires promoted or leader."
@@ -85,6 +85,8 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
+	self:Log("SPELL_AURA_REMOVED", "DarkParasiteRemoved", 133597)
+	self:Log("SPELL_AURA_APPLIED", "DarkParasiteApplied", 133597)
 	self:Log("SPELL_CAST_START", "IceWall", 134587)
 	self:Log("SPELL_PERIODIC_DAMAGE", "EyeSoreDamage", 134755)
 	self:Log("SPELL_PERIODIC_MISSED", "EyeSoreDamage", 134755)
@@ -99,9 +101,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SeriousWound", 133767)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SeriousWound", 133767)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ArterialCut", 133768)
-	self:Log("SPELL_CAST_SUCCESS", "Tracking", 139202, 139204) -- Blue Ray Tracking, Infrared Tracking (for beam jumping on deaths)
-	self:Log("SPELL_AURA_REMOVED", "DarkParasiteRemoved", 133597)
-	self:Log("SPELL_AURA_APPLIED", "DarkParasiteApplied", 133597)
+	self:Log("SPELL_CAST_SUCCESS", "ForceOfWill", 136932)
+	self:Log("SPELL_CAST_SUCCESS", "BeamJump", 139202, 139204) -- Blue Ray Tracking, Infrared Tracking (for beam jumping on deaths)
+	self:Log("SPELL_CAST_SUCCESS", "BlueBeam", 134122)
+	self:Log("SPELL_CAST_SUCCESS", "RedBeam", 134123)
+	self:Log("SPELL_CAST_SUCCESS", "YellowBeam", 134124)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
@@ -238,12 +242,10 @@ do
 	-- The tracking spells are cast when first going active (10s after emote) and when the beam jumps after someone dies.
 	-- Even though they're SPELL_CAST_SUCCESS, they don't provide the target ;[
 	local function findDebuff(spellName, spellId)
-		local found
 		for i=1, GetNumGroupMembers() do
 			local unit = ("raid%d"):format(i)
 			if UnitDebuff(unit, spellName) then
 				local name = mod:UnitName(unit)
-				found = true
 				if spellId == 139202 then
 					if blueController ~= name then
 						mod:TargetMessage(-6891, name, "Neutral", "Warning", L["blue_beam"], spellId, true)
@@ -263,74 +265,84 @@ do
 						end
 					end
 				end
-				break
+				return
 			end
 		end
-		if not found then -- just in case
-			mod:ScheduleTimer(findDebuff, 0.1, spellName, spellId)
-		end
+		mod:ScheduleTimer(findDebuff, 0.1, spellName, spellId) -- just in case
 	end
 
-	function mod:Tracking(args)
+	function mod:BeamJump(args)
 		self:ScheduleTimer(findDebuff, 0.1, args.spellName, args.spellId)
 	end
 end
 
+
+function mod:YellowBeam(args)
+	-- this is our start of color phase setup, too
+	self:StopBar(-6905) -- Force of Will
+
+	deadAdds = 0
+	if self:Heroic() then
+		self:Bar(-6891, 80, 137747) -- Obliterate
+	end
+	self:Bar(-6891, 10, L["rays_spawn"], "inv_misc_gem_variety_02")
+	self:Bar(-6891, self:LFR() and 240 or 190) -- Light Spectrum
+
+	self:ScheduleTimer(mark, 10, args.destName, 0)
+	mark(args.destName, 1)
+	if self:Me(args.destGUID) then
+		self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["yellow_beam"]), args.spellId)
+		self:Flash(-6891)
+	end
+end
+
+function mod:BlueBeam(args)
+	blueController = args.destName
+	mark(args.destName, 6)
+	if self:Me(args.destGUID) then
+		self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["blue_beam"]), args.spellId)
+		self:Flash(-6891)
+	end
+end
+
+function mod:RedBeam(args)
+	redController = args.destName
+	mark(args.destName, 7)
+	if self:Me(args.destGUID) then
+		self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["red_beam"]), args.spellId)
+		self:Flash(-6891)
+	end
+end
+
+function mod:ForceOfWill(args)
+	if self:Me(args.destGUID) then
+		self:Message(-6905, "Personal", "Long", CL["you"]:format(self:SpellName(-6905)))
+		self:Flash(-6905)
+		self:Say(-6905)
+	elseif self:Range(args.destName) < 6 then
+		self:RangeMessage(-6905)
+	else
+		self:Message(-6905, "Attention")
+	end
+	self:CDBar(-6905, 20)
+end
+
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
-	-- get full name if needed (hope everyone has a unique name!)
-	local name = self:UnitName(target)
-
-	if msg:find("134124") then -- Yellow
-		self:StopBar(-6905) -- Force of Will
-
-		deadAdds = 0
-		if self:Heroic() then
-			self:Bar(-6891, 80, 137747) -- Obliterate
-		end
-		self:Bar(-6891, 10, L["rays_spawn"], "inv_misc_gem_variety_02")
-		self:Bar(-6891, self:LFR() and 240 or 190) -- Light Spectrum
-
-		self:ScheduleTimer(mark, 10, target, 0)
-		mark(target, 1)
-		if UnitIsUnit("player", target) then
-			self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["yellow_beam"]), 134124)
-			self:Flash(-6891)
-		end
-	elseif msg:find("134123") then -- Red
-		redController = target
-		mark(target, 7)
-		if UnitIsUnit("player", target) then
-			self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["red_beam"]), 139204)
-			self:Flash(-6891)
-		end
-	elseif msg:find("134122") then -- Blue
-		blueController = target
-		mark(target, 6)
-		if UnitIsUnit("player", target) then
-			self:Message(-6891, "Personal", "Warning", CL["you"]:format(L["blue_beam"]), 139202)
-			self:Flash(-6891)
-		end
-	elseif msg:find("133795") then -- Life Drain (gets target faster than CLEU)
-		self:PrimaryIcon(133798, target)
-		self:TargetMessage("initial_life_drain", target, "Urgent", "Long", 133798, nil, true)
+	if msg:find("133795") then -- Life Drain (gets target faster than CLEU)
+		local name = self:UnitName(target)
+		self:PrimaryIcon(133798, name)
+		self:TargetMessage("initial_life_drain", name, "Urgent", "Long", 133798, nil, true)
 		self:Flash("initial_life_drain", 133798) -- so you can turn on pulse
+
 	elseif msg:find(L["red_spawn_trigger"]) then
-		self:Message("adds", "Urgent", UnitIsUnit("player", redController) and "Warning", L["red_add"], 136154)
+		self:Message("adds", "Urgent", UnitIsUnit("player", redController) and "Warning", L["red_add"], 134123)
+
 	elseif msg:find(L["blue_spawn_trigger"]) then
-		self:Message("adds", "Attention", UnitIsUnit("player", blueController) and "Warning", L["blue_add"], 136177)
+		self:Message("adds", "Attention", UnitIsUnit("player", blueController) and "Warning", L["blue_add"], 134122)
+
 	elseif msg:find(L["yellow_spawn_trigger"]) then
-		self:Message("adds", "Attention", nil, L["yellow_add"], 136175)
-	elseif msg:find("136932") then -- Force of Will
-		if UnitIsUnit("player", target) then
-			self:Message(-6905, "Personal", "Long", CL["you"]:format(self:SpellName(-6905)))
-			self:Flash(-6905)
-			self:Say(-6905)
-		elseif self:Range(target) < 6 then
-			self:RangeMessage(-6905)
-		else
-			self:Message(-6905, "Attention")
-		end
-		self:CDBar(-6905, 20)
+		self:Message("adds", "Attention", nil, L["yellow_add"], 134124)
+
 	elseif msg:find("134169") then -- Disintegration Beam
 		lifeDrainCasts = 0
 		self:CDBar(133798, 66) -- Life Drain
