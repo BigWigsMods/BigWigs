@@ -208,6 +208,34 @@ do
 			return origMovieHandler(frame, event, id, ...)
 		end
 	end)
+
+	-- Cinematic handling
+	local cinematicZones = {
+		[930] = 3, -- Tortos cave entry
+		[930] = 7, -- Ra-Den room opening
+	}
+	function addon:CINEMATIC_START()
+		--[[if self.db.profile.blockmovies then
+			SetMapToCurrentZone()
+
+			if not self.db.global.seenmovies then
+				self.db.global.seenmovies = {}
+			end
+
+			local areaId = GetCurrentMapAreaID() or 0
+			local areaLevel = GetCurrentMapDungeonLevel() or 0
+			local zoneFloor = cinematicZones[areaId]
+			if zoneFloor and zoneFloor == areaLevel then
+				local id = tonumber(("%d.%d"):format(areaId, areaLevel))
+				if self.db.global.seenmovies[id] then
+					self:Print(L["Prevented boss movie '%d' from playing."]:format(id))
+					CinematicFrame_CancelCinematic()
+				else
+					self.db.global.seenmovies[id] = true
+				end
+			end
+		end]]
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -423,6 +451,7 @@ function addon:OnEnable()
 	self:RegisterMessage("BigWigs_AddonMessage", chatMsgAddon)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
 	self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED", "UpdateRole")
+	self:RegisterEvent("CINEMATIC_START")
 
 	self.pluginCore:Enable()
 	self.bossCore:Enable()
@@ -435,7 +464,9 @@ end
 function addon:OnDisable()
 	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:UnregisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+	self:UnregisterEvent("CINEMATIC_START")
 	self:UnregisterMessage("BigWigs_AddonMessage")
+
 	zoneChanged() -- Unregister zone events
 	self.bossCore:Disable()
 	self.pluginCore:Disable()
