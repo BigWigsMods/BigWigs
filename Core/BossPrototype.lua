@@ -604,6 +604,7 @@ function boss:Tank(unit)
 		return GetPartyAssignment("MAINTANK", unit) or UnitGroupRolesAssigned(unit) == "TANK"
 	else
 		local tree = GetSpecialization()
+		if not tree then return end
 		local role = GetSpecializationRole(tree)
 		return role == "TANK"
 	end
@@ -611,14 +612,14 @@ end
 
 function boss:Healer()
 	local tree = GetSpecialization()
+	if not tree then return end
 	local role = GetSpecializationRole(tree)
 	return role == "HEALER"
 end
 
---[[
 function boss:Damager()
-	if core.db.profile.ignorerole then return true end
 	local tree = GetSpecialization()
+	if not tree then return end
 	local role
 	local _, class = UnitClass("player")
 	if
@@ -634,7 +635,6 @@ function boss:Damager()
 	end
 	return role
 end
-]]
 
 do
 	local offDispel, defDispel = "", ""
