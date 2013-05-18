@@ -95,7 +95,7 @@ if L then
 	L.yellow_spawn_trigger = "强光照出了一只琥珀雾行兽！"
 
 	L.adds = "显形增援"
-	L.adds_desc = "当猩红、琥珀和碧蓝雾行兽显形和猩红雾行兽剩余时发出警报。"
+	L.adds_desc = "当猩红、琥珀和碧蓝雾行兽显形和雾行兽剩余时发出警报。"
 
 	L.custom_off_ray_controllers = "光线控制"
 	L.custom_off_ray_controllers_desc = "使用%s%s%s团队标记控制光线增援和移动的玩家，需要权限。"
