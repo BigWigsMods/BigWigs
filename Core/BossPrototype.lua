@@ -629,7 +629,8 @@ function boss:Damager()
 		role = "RANGED"
 	elseif
 		class == "ROGUE" or (class == "WARRIOR" and tree ~= 3) or (class == "DEATHKNIGHT" and tree ~= 1) or
-		(class == "PALADIN" and tree == 3) or (class == "DRUID" and tree == 2) or (class == "SHAMAN" and tree == 2)
+		(class == "PALADIN" and tree == 3) or (class == "DRUID" and tree == 2) or (class == "SHAMAN" and tree == 2) or
+		(class == "MONK" and tree == 3)
 	then
 		role = "MELEE"
 	end
