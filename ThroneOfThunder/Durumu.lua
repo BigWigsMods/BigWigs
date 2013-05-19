@@ -339,10 +339,12 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 		self:Flash("initial_life_drain", 133798) -- so you can turn on pulse
 
 	elseif msg:find(L["red_spawn_trigger"]) then
-		self:Message("adds", "Urgent", self:Damager() and "Warning", L["red_add"], 134123)
+		local sound = (UnitIsUnit("player", redController) or self:Damager()) and "Warning" or nil
+		self:Message("adds", "Urgent", sound, L["red_add"], 134123)
 
 	elseif msg:find(L["blue_spawn_trigger"]) then
-		self:Message("adds", "Attention", self:Damager() and "Warning", L["blue_add"], 134122)
+		local sound = (UnitIsUnit("player", blueController) or self:Damager()) and "Warning" or nil
+		self:Message("adds", "Attention", sound, L["blue_add"], 134122)
 
 	elseif msg:find(L["yellow_spawn_trigger"]) then
 		self:Message("adds", "Attention", nil, L["yellow_add"], 134124)
