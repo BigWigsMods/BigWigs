@@ -104,6 +104,11 @@ plugin.pluginOptions.args.normal.name = L["Normal messages"]
 plugin.pluginOptions.args.normal.order = 1
 plugin.pluginOptions.args.emphasized.name = L["Emphasized messages"]
 plugin.pluginOptions.args.emphasized.order = 2
+-- Kill chat outputs
+plugin.pluginOptions.args.normal.args.Channel = nil
+plugin.pluginOptions.args.emphasized.args.Channel = nil
+plugin.pluginOptions.args.normal.args.ChatFrame = nil
+plugin.pluginOptions.args.emphasized.args.ChatFrame = nil
 
 local function updateProfile()
 	db = plugin.db.profile
@@ -132,6 +137,16 @@ local function updateProfile()
 	if not db.fontSize then
 		local _, size = GameFontNormalHuge:GetFont()
 		db.fontSize = size
+	end
+
+	-- Kill chat outputs
+	if db.sink20OutputSink == "Channel" or db.sink20OutputSink == "ChatFrame" then
+		db.sink20OutputSink = "BigWigs"
+		db.sink20ScrollArea = nil
+	end
+	if db.emphasizedMessages.sink20OutputSink == "Channel" or db.emphasizedMessages.sink20OutputSink == "ChatFrame" then
+		db.emphasizedMessages.sink20OutputSink = "BigWigsEmphasized"
+		db.emphasizedMessages.sink20ScrollArea = nil
 	end
 end
 
