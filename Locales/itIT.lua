@@ -21,7 +21,7 @@ L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Stai usand
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "Stai usando una versione di Big Wigs %s presa direttamente dal repository."
 L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "C'é una nuova versione di Big Wigs disponibile (/bwv). Puoi prenderla da curse.com, wowinterface.com, wowace.com o usare il client di Curse per scaricarla."
 L["Your alpha version of Big Wigs is out of date (/bwv)."] = "La tua versione Alpha di Big Wigs è obsoleta (/bwv)."
-L.extremelyOutdated = "|cffff0000AVVISO:|r Il tuo Big Wigs è obsoleto di almeno 200 revisioni!! La versione che usi può avere bug, mancare di funzioni o timer completamente sballati. È CALDAMENTE raccomandato aggiornare il tutto."
+L.extremelyOutdated = "\124cffff0000AVVISO:\124r Il tuo Big Wigs è obsoleto di almeno 200 revisioni!! La versione che usi può avere bug, mancare di funzioni o timer completamente sballati. È CALDAMENTE raccomandato aggiornare il tutto."
 
 L.tooltipHint = "|cffeda55fClic|r per reinizializzare tutti i moduli. |cffeda55fAlt-Clic|r per Disattivarli. |cffeda55fClic-Destro|r per aprire le Opzioni."
 L["Active boss modules:"] = "Moduli dei Combattimenti Attivi:"
@@ -38,7 +38,7 @@ L["Waiting until combat ends to finish loading due to Blizzard combat restrictio
 L["Combat has ended, Big Wigs has now finished loading."] = "Combattimento terminato, Big Wigs è stato caricato completamente."
 L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "A causa di restrizioni Blizzard, la configurazione deve essere aperta fuori combattimento, prima che vi si possa accedere durante il combattimento."
 
-L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."] = "Per favore, prendi nota che questa zona richiede il plugin -[[|cFF436EEE%s|r]]- per fare in modo di visualizzare barre e timers."
+L.missingAddOn = "Per favore, prendi nota che questa zona richiede il plugin -[[\124cFF436EEE%s\124r]]- per fare in modo di visualizzare barre e timers."
 
 L.coreAddonDisabled = "Big Wigs non può funzionare correttamente perché l'addon %s è disattivato. Puoi attivarlo nel pannello di controllo degli Addon nella schermata di login dei personaggi."
 

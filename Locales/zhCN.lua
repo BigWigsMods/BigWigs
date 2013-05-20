@@ -23,7 +23,7 @@ L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "你所使�
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "你所使用的 Big Wigs %s 为从源直接检出的。"
 L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "有新的 Big Wigs 正式版可用。（/bwv）你可以访问 curse.com，wowinterface.com，wowace.com 或使用 Curse 更新器来更新到新的正式版。"
 L["Your alpha version of Big Wigs is out of date (/bwv)."] = "Big Wigs α 测试版已过期。（/bwv）。"
-L.extremelyOutdated = "|cffff0000警告：|r 你的 Big Wigs 已经过期超过200个修订版本了！！此版本可能有许多臭虫（Bug）、功能缺失或完全不正确的计时器。“强烈”建议升级。"
+L.extremelyOutdated = "\124cffff0000警告：\124r 你的 Big Wigs 已经过期超过200个修订版本了！！此版本可能有许多臭虫（Bug）、功能缺失或完全不正确的计时器。“强烈”建议升级。"
 
 L.tooltipHint = "|cffeda55f点击|r图标重置所有运行中的模块。|cffeda55fAlt-点击|r可以禁用所有首领模块。"
 L["Active boss modules:"] = "激活首领模块："
@@ -40,7 +40,7 @@ L["Waiting until combat ends to finish loading due to Blizzard combat restrictio
 L["Combat has ended, Big Wigs has now finished loading."] = "战斗已结束，Big Wigs 已完成加载。"
 L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "由于暴雪的限制必须脱离战斗后才可进行配置，然后才可以在战斗中使用。"
 
-L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."] = "请注意，这个区域需要 -[[|cFF436EEE%s|r]]- 插件计时器才可被显示。"
+L.missingAddOn = "请注意，这个区域需要 -[[\124cFF436EEE%s\124r]]- 插件计时器才可被显示。"
 
 L.coreAddonDisabled = "当%s被禁用时，Big Wigs 将无法正常工作。你可以在角色选择屏幕的插件控制面板开启它们。"
 

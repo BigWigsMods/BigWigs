@@ -576,8 +576,9 @@ do
 					warnedOutOfDate = true
 				end
 				if not warnedExtremelyOutOfDate and (message - BIGWIGS_RELEASE_REVISION) > 200 then
-					sysprint(L.extremelyOutdated)
 					warnedExtremelyOutOfDate = true
+					sysprint(L.extremelyOutdated)
+					RaidNotice_AddMessage(RaidWarningFrame, L.extremelyOutdated, {r=1,g=1,b=1})
 				end
 			end
 		elseif prefix == "VRA" or prefix == "VQA" then
@@ -592,12 +593,13 @@ do
 			if message > highestAlphaRevision then highestAlphaRevision = message end
 			if BIGWIGS_RELEASE_TYPE == ALPHA and BIGWIGS_RELEASE_REVISION ~= -1 and ((message-10) > BIGWIGS_RELEASE_REVISION or highestReleaseRevision > BIGWIGS_RELEASE_REVISION) then
 				if not warnedOutOfDate then
-					sysprint(L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
+					sysprint(L["Your alpha version of Big Wigs is out of date (/bwv)."])
 					warnedOutOfDate = true
 				end
-				if not warnedExtremelyOutOfDate and (message - BIGWIGS_RELEASE_REVISION) > 200 then
-					sysprint(L.extremelyOutdated)
+				if not warnedExtremelyOutOfDate and ((message - BIGWIGS_RELEASE_REVISION) > 200 or (highestReleaseRevision - BIGWIGS_RELEASE_REVISION) > 200) then
 					warnedExtremelyOutOfDate = true
+					sysprint(L.extremelyOutdated)
+					RaidNotice_AddMessage(RaidWarningFrame, L.extremelyOutdated, {r=1,g=1,b=1})
 				end
 			end
 		end
@@ -704,8 +706,10 @@ do
 		if zoneAddon and not warnedThisZone[id] then
 			local _, _, _, enabled = GetAddOnInfo(zoneAddon)
 			if not enabled then
-				sysprint((L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."]):format(zoneAddon))
 				warnedThisZone[id] = true
+				local msg = L.missingAddOn:format(zoneAddon)
+				sysprint(msg)
+				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
 			end
 		end
 	end

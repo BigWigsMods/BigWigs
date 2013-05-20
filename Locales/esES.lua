@@ -13,7 +13,7 @@ L.stages_desc = "Habilita funciones relacionadas con varias etapas/fases del jef
 L.already_registered = "|cffff0000ATENCIóN:|r |cff00ff00%s|r (|cffffff00%s|r) ya existe ese módulo en BigWigs, pero sin embargo está intentando registrarlo de nuevo. Esto normalmente ocurre cuando tienes varias copias de este módulo en tu carpeta de addons posiblemente por una actualización fallida. Es recomendable que borres la carpeta de Big Wigs y lo reinstales por completo."
 
 --L.movieBlocked = "You've seen this movie before, skipping it."
-L.roleUpdate = "Updated your role."
+--L.roleUpdate = "Updated your role."
 
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Estás usando la versión oficial de Big Wigs %s (revisión %d)"
@@ -21,7 +21,7 @@ L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Estás usa
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "Estás usando la versión de Big Wigs %s directamente del repositorio."
 L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Existe una nueva versión de Big Wigs disponible (/bwv). Puedes visitar curse.com, wowinterface.com, wowace.com o usar el cliente de Curse para adquirirla."
 L["Your alpha version of Big Wigs is out of date (/bwv)."] = "Tu versión alpha de Big Wigs está desactualizada (/bwv)."
-L.extremelyOutdated = "|cffff0000ATENCIÓN:|r ¡¡Tu Big Wigs tiene más de 200 revisiones desactualizadas!! Tu versión puede tener fallos, características que faltan, o temporizadores completamente incorrectos. Te recomendamos ENCARECIDAMENTE que lo actulices."
+L.extremelyOutdated = "\124cffff0000ATENCIÓN:\124r ¡¡Tu Big Wigs tiene más de 200 revisiones desactualizadas!! Tu versión puede tener fallos, características que faltan, o temporizadores completamente incorrectos. Te recomendamos ENCARECIDAMENTE que lo actulices."
 
 L.tooltipHint = "|cffeda55fClic|r para reiniciar todos los módulos. |cffeda55fAlt-Clic|r para desactivarlos. |cffeda55fRight-Clic|r para acceder a las opciones."
 L["Active boss modules:"] = "Módulos de jefes activos:"
@@ -38,7 +38,7 @@ L["Waiting until combat ends to finish loading due to Blizzard combat restrictio
 L["Combat has ended, Big Wigs has now finished loading."] = "El combate ha terminado, Big Wigs ha terminado de cargar."
 L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "Debido a las restricciones de Blizzard la configuración debe abrirse primero fuera de combate, antes se podia acceder en combate."
 
-L["Please note that this zone requires the -[[|cFF436EEE%s|r]]- plugin for timers to be displayed."] = "Tenga en cuenta que esta zona requiere el plugin -[[|cFF436EEE%s|r]]- para que los contadores sean mostrados."
+L.missingAddOn = "Tenga en cuenta que esta zona requiere el plugin -[[\124cFF436EEE%s\124r]]- para que los contadores sean mostrados."
 
 L.coreAddonDisabled = "Big Wigs no puede funcionar debidamente ya que el addon %s está desactivado. Puedes activarlo desde el addon Control panel o en la pantalla de selección de personaje."
 
