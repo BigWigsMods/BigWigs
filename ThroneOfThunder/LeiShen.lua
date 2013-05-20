@@ -671,11 +671,13 @@ do
 	function mod:StaticShockApplied(args)
 		if self:Me(args.destGUID) then
 			timeLeft = 8
+			staticShockOnMe = true
 			self:Flash("shock_self", args.spellId)
 			self:Say("shock_self", args.spellId)
 			self:TargetBar("shock_self", 8, args.destName, args.spellId)
-			timer = self:ScheduleRepeatingTimer(staticShockSayCountdown, 1)
-			staticShockOnMe = true
+			if not self:LFR() then -- Don't spam in LFR
+				timer = self:ScheduleRepeatingTimer(staticShockSayCountdown, 1)
+			end
 		elseif self:Heroic() then
 			self:TargetBar(args.spellId, 8, args.destName)
 		end
