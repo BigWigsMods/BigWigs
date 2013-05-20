@@ -12,7 +12,7 @@ L.stages_desc = "Habilita funciones relacionadas con varias etapas/fases del jef
 
 L.already_registered = "|cffff0000ATENCIóN:|r |cff00ff00%s|r (|cffffff00%s|r) ya existe ese módulo en BigWigs, pero sin embargo está intentando registrarlo de nuevo. Esto normalmente ocurre cuando tienes varias copias de este módulo en tu carpeta de addons posiblemente por una actualización fallida. Es recomendable que borres la carpeta de Big Wigs y lo reinstales por completo."
 
-L["Prevented boss movie '%d' from playing."] = "Evitada la cinemática del jefe '%d'."
+--L.movieBlocked = "You've seen this movie before, skipping it."
 L.roleUpdate = "Updated your role."
 
 -- Loader / Options.lua

@@ -198,7 +198,7 @@ do
 				addon.db.global.seenmovies = {}
 			end
 			if addon.db.global.seenmovies[id] then
-				addon:Print(L["Prevented boss movie '%d' from playing."]:format(id))
+				addon:Print(L.movieBlocked)
 				return MovieFrame_OnMovieFinished(frame)
 			else
 				addon.db.global.seenmovies[id] = true
@@ -211,11 +211,12 @@ do
 
 	-- Cinematic handling
 	local cinematicZones = {
-		[930] = 3, -- Tortos cave entry
+		[875] = 1, -- Gate of the Setting Sun gate breach
+		--[930] = 3, -- Tortos cave entry -- Apparently Blizzard don't want us to skip this..?
 		[930] = 7, -- Ra-Den room opening
 	}
 	function addon:CINEMATIC_START()
-		--[[if self.db.profile.blockmovies then
+		if self.db.profile.blockmovies then
 			SetMapToCurrentZone()
 
 			if not self.db.global.seenmovies then
@@ -228,13 +229,13 @@ do
 			if zoneFloor and zoneFloor == areaLevel then
 				local id = tonumber(("%d.%d"):format(areaId, areaLevel))
 				if self.db.global.seenmovies[id] then
-					self:Print(L["Prevented boss movie '%d' from playing."]:format(id))
+					self:Print(L.movieBlocked)
 					CinematicFrame_CancelCinematic()
 				else
 					self.db.global.seenmovies[id] = true
 				end
 			end
-		end]]
+		end
 	end
 end
 

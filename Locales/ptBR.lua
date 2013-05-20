@@ -12,7 +12,7 @@ L.stages_desc = "Habilita funções relacionadas a vários estágios/fases do ch
 
 L.already_registered = "|cffff0000ATENÇÃO:|r |cff00ff00%s|r (|cffffff00%s|r) já existe este módulo BigWigs, isso normalmente significa que você tem 2 cópias desse módulo em sua pasta de AddOns, o que pode ter ocorrido devido a uma atualização mal sucedida. Recomenda-se deletar as pastas do BigWigs e reinstalar."
 
-L["Block boss movies"] = "Bloquear filmes de chefes"
+--L.movieBlocked = "You've seen this movie before, skipping it."
 L.roleUpdate = "Updated your role."
 
 -- Loader / Options.lua

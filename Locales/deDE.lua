@@ -14,7 +14,7 @@ L.stages_desc = "Funktionen für bestimmte Phasen von Bossbegegnungen wie Abstan
 
 L.already_registered = "|cffff0000WARNUNG:|r |cff00ff00%s|r (|cffffff00%s|r) existiert bereits als Modul in Big Wigs, aber irgend etwas versucht es erneut anzumelden. Dies bedeutet normalerweise, dass du zwei Kopien des Moduls aufgrund eines Fehlers beim Aktualisieren in deinem Addon-Ordner hast. Es wird empfohlen, jegliche Big Wigs Ordner zu löschen und dann von Grund auf neu zu installieren."
 
-L["Prevented boss movie '%d' from playing."] = "Videosequenz '%d' wurde blockiert."
+--L.movieBlocked = "You've seen this movie before, skipping it."
 L.roleUpdate = "Deine Rolle wurde aktualisiert."
 
 -- Loader / Options.lua

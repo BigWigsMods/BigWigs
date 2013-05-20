@@ -14,7 +14,7 @@ L.stages_desc = "근접 표시, 바, 기타등 보스의 다양한 단계(페이
 
 L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%d|r) 이미 Big Wigs 에서 보스 모듈로 존재하지만, 다시 등록이 필요합니다 (revision에 |cffffff00%d|r). 이 것은 일반적으로 애드온 업데이트 실패로 인하여 이 모듈이 당신의 애드온 폴더에 두개의 사본이 있는 것을 뜻합니다. 당신이 가지고 있는 Big Wigs 폴더의 삭제와 재설치를 권장합니다."
 
-L["Prevented boss movie '%d' from playing."] = "플레이도중에 나타나는 보스 영상 '%d' 차단합니다."
+--L.movieBlocked = "You've seen this movie before, skipping it."
 L.roleUpdate = "당신의 역할을 업데이트합니다."
 
 -- Loader / Options.lua

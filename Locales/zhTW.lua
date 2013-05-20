@@ -14,7 +14,7 @@ L.stages_desc = "啟用首領不同階段的相關功能，如近距離顯示、
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 Big Wigs 中已經存在模組，但存在模組仍試圖重新註冊。可能由於更新失敗的原因，通常表示您有兩份模組拷貝在您插件的檔案夾中。建議刪除所有 Big Wigs 檔案夾並重新安裝。"
 
-L["Prevented boss movie '%d' from playing."] = "防止首領過場動畫“%d”被播放。"
+--L.movieBlocked = "You've seen this movie before, skipping it."
 L.roleUpdate = "更新職責。"
 
 -- Loader / Options.lua
