@@ -14,7 +14,7 @@ L.stages_desc = "启用首领不同阶段的相关功能，如近距离显示、
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 Big Wigs 中已经存在模块，但存在模块仍试图重新注册。可能由于更新失败的原因，通常表示您有两份模块拷贝在您插件的文件夹中。建议删除所有 Big Wigs 文件夹并重新安装。"
 
---L.movieBlocked = "You've seen this movie before, skipping it."
+L.movieBlocked = "以前观看过此动画，跳过。"
 L.roleUpdate = "更新职责。"
 
 -- Loader / Options.lua
