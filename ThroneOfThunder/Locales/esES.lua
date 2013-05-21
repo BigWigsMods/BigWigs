@@ -193,7 +193,7 @@ if L then
 	L.balls_desc = "Bolas de Ánima (rojo) y Vita (azul), que determinan que habilidades ganará Ra-den"
 end
 
-L = BigWigs:NewBossLocale("Trash", "esES") or BigWigs:NewBossLocale("Trash", "esMX")
+L = BigWigs:NewBossLocale("Throne of Thunder Trash", "esES") or BigWigs:NewBossLocale("Throne of Thunder Trash", "esMX")
 if L then
 	L.displayname = "Trash"
 

@@ -193,7 +193,7 @@ if L then
 	L.balls_desc = "Sfere dell'Anima (rosse) e della Vita (blu), che determinano quali abilità guadagna Ra-den"
 end
 
-L = BigWigs:NewBossLocale("Trash", "itIT")
+L = BigWigs:NewBossLocale("Throne of Thunder Trash", "itIT")
 if L then
 	L.displayname = "Trash"
 

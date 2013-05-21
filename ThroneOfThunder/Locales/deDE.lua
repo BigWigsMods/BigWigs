@@ -193,7 +193,7 @@ if L then
 	L.kill_trigger = "Wartet!"
 end
 
-L = BigWigs:NewBossLocale("Trash", "deDE")
+L = BigWigs:NewBossLocale("Throne of Thunder Trash", "deDE")
 if L then
 	L.displayname = "Trash"
 

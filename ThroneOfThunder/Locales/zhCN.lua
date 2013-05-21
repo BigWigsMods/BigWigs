@@ -200,7 +200,7 @@ if L then
 	L.kill_trigger = "等等"
 end
 
-L = BigWigs:NewBossLocale("Trash", "zhCN")
+L = BigWigs:NewBossLocale("Throne of Thunder Trash", "zhCN")
 if L then
 	L.displayname = "小怪"
 

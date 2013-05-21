@@ -199,7 +199,7 @@ if L then
 	L.kill_trigger = "Остановитесь!"
 end
 
-L = BigWigs:NewBossLocale("Trash", "ruRU")
+L = BigWigs:NewBossLocale("Throne of Thunder Trash", "ruRU")
 if L then
 	L.displayname = "Трэш"
 

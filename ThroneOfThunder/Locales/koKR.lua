@@ -194,7 +194,7 @@ if L then
 	L.balls_desc = "Anima (red) and Vita (blue) balls, that determine which abilities will Ra-den gain"
 end
 
-L = BigWigs:NewBossLocale("Trash", "koKR")
+L = BigWigs:NewBossLocale("Throne of Thunder Trash", "koKR")
 if L then
 	L.displayname = "Trash"
 
