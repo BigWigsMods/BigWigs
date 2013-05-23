@@ -13,6 +13,7 @@ mod:RegisterEnableMob(62543)
 
 local phase = 1
 local strikeCounter = 1
+local usedMarks = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -25,8 +26,19 @@ if L then
 	L.unseenstrike_soon = "Strike (%d) in ~5-10 sec!"
 	L.assault_message = "Assault"
 	L.side_swap = "Side Swap"
+
+	L.custom_off_windstep = "Wind step marker"
+	L.custom_off_windstep_desc = "To help healing assignments, mark the people who have wind step on them with %s%s%s%s%s%s, requires promoted or leader."
 end
 L = mod:GetLocale()
+L.custom_off_windstep_desc = L.custom_off_windstep_desc:format(
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_2.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t"
+)
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -35,7 +47,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{125310, "FLASH", "EMPHASIZE"},
-		122842, {-6346, "ICON", "SAY", "PROXIMITY"}, {123175, "PROXIMITY"}, {123474, "TANK_HEALER"}, -6350,
+		122842, {-6346, "ICON", "SAY", "PROXIMITY"}, {123175, "PROXIMITY"}, "custom_off_windstep", {123474, "TANK_HEALER"}, -6350,
 		"proximity", "berserk", "bosskill",
 	}, {
 		[125310] = "heroic",
@@ -49,6 +61,8 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "BladeTempest", 125310)
 	self:Log("SPELL_CAST_SUCCESS", "WindStep", 123175)
+	self:Log("SPELL_AURA_APPLIED", "WindStepApplied", 123180)
+	self:Log("SPELL_AURA_REMOVED", "WindStepRemoved", 123180)
 
 	self:Log("SPELL_AURA_APPLIED", "Assault", 123474)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Assault", 123474)
@@ -71,6 +85,7 @@ function mod:OnEngage()
 	self:OpenProximity(123175, 8)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	self:Berserk(self:LFR() and 600 or 490)
+	wipe(usedMarks)
 	phase = 1
 	strikeCounter = 1
 
@@ -81,6 +96,35 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	-- wind step marker
+	local function GetAvailableMark()
+		for i=1, 6 do
+			if not usedMarks[i] then
+				return i
+			end
+		end
+		return false
+	end
+	function mod:WindStepApplied(args)
+		if not self.db.profile.custom_off_windstep then return end
+		local mark = GetAvailableMark()
+		if not mark then return end
+
+		SetRaidTarget(args.destName, mark)
+		usedMarks[mark] = args.destName
+	end
+	function mod:WindStepRemoved(args)
+		if not self.db.profile.custom_off_windstep then return end
+		for i=1, 6 do
+			if usedMarks[i] == args.destName then
+				usedMarks[i] = nil
+				SetRaidTarget(args.destName, 0)
+			end
+		end
+	end
+end
 
 function mod:BladeTempest(args)
 	self:Message(args.spellId, "Important", "Alarm")

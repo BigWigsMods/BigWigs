@@ -183,10 +183,12 @@ do
 		end
 	end
 	function mod:HuddleInTerrorRemoved(args)
-		for i=1, 6 do
-			if usedMarks[i] == args.destName then
-				usedMarks[i] = nil
-				SetRaidTarget(args.destName, 0)
+		if self.db.profile.custom_off_huddle then
+			for i=1, 6 do
+				if usedMarks[i] == args.destName then
+					usedMarks[i] = nil
+					SetRaidTarget(args.destName, 0)
+				end
 			end
 		end
 	end
