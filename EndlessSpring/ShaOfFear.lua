@@ -18,6 +18,7 @@ local submergeCounter = 0
 local cackleCounter = 1
 local phase = 1
 local dreadSpawns = {}
+local usedMarks = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -43,8 +44,20 @@ if L then
 
 	L.strike_or_spout = "Strike or Spout"
 	L.huddle_or_spout_or_strike = "Huddle or Spout or Strike"
+
+	L.custom_off_huddle = "Huddle marker"
+	L.custom_off_huddle_desc = "To help healing assignments, mark the people who have huddle in terror on them with %s%s%s%s%s%s, requires promoted or leader."
+
 end
 L = mod:GetLocale()
+L.custom_off_huddle_desc = L.custom_off_huddle_desc:format(
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_2.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t"
+)
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -54,7 +67,7 @@ function mod:GetOptions()
 	return {
 		{-6699, "TANK_HEALER"}, {119414, "EMPHASIZE"}, 129147, {119519, "FLASH", "SAY"},
 		{ 119888, "FLASH" }, 118977,
-		129378, {-6700, "TANK_HEALER"}, {120669, "TANK"}, "ability_cd", {120629, "SAY"}, {120519, "FLASH"}, 120672, 120455, {120268, "FLASH", "PROXIMITY"}, {-6109, "FLASH"}, -6107,
+		129378, {-6700, "TANK_HEALER"}, {120669, "TANK"}, "ability_cd", {120629, "SAY"}, "custom_off_huddle", {120519, "FLASH"}, 120672, 120455, {120268, "FLASH", "PROXIMITY"}, {-6109, "FLASH"}, -6107,
 		{"swing", "TANK"}, "berserk", "proximity", "bosskill",
 	}, {
 		[-6699] = -6086,
@@ -78,7 +91,8 @@ function mod:OnBossEnable()
 	-- Heroic
 	self:Log("SPELL_CAST_START", "Waterspout", 120519)
 	self:Log("SPELL_AURA_APPLIED", "WaterspoutApplied", 120519)
-	self:Log("SPELL_AURA_APPLIED", "HuddleInTerror", 120629)
+	self:Log("SPELL_AURA_APPLIED", "HuddleInTerrorApplied", 120629)
+	self:Log("SPELL_AURA_REMOVED", "HuddleInTerrorRemoved", 120629)
 	self:Log("SPELL_CAST_SUCCESS", "NakedAndAfraid", 120669)
 	self:Log("SPELL_AURA_APPLIED", "ChampionOfTheLight", 120268)
 	self:Log("SPELL_AURA_REMOVED", "ChampionOfTheLightRemoved", 120268)
@@ -110,6 +124,7 @@ function mod:OnEngage(diff)
 	nextFear = 0
 	submergeCounter = 0
 	wipe(dreadSpawns)
+	wipe(usedMarks)
 	phase = 1
 end
 
@@ -122,7 +137,7 @@ end
 --
 
 do
-	-- intelligent ability warning for last phase
+	-- intelligent ability warning for last phase + marking
 	local huddleUsed, strikeUsed, spoutUsed = nil, nil, nil
 	local huddleList, scheduled = mod:NewTargetList(), nil
 	local function warnNext()
@@ -136,11 +151,27 @@ do
 			mod:Bar("ability_cd", 10, 120519) -- spout
 		end
 	end
+	local function GetAvailableMark()
+		for i=1, 6 do
+			if not usedMarks[i] then
+				return i
+			end
+		end
+		return false
+	end
 	local function warnHuddle(spellId)
 		mod:TargetMessage(spellId, huddleList, "Important", "Alert")
 		scheduled = nil
 	end
-	function mod:HuddleInTerror(args)
+	function mod:HuddleInTerrorApplied(args)
+		if self.db.profile.custom_off_huddle then
+			local mark = GetAvailableMark()
+			if mark then
+				SetRaidTarget(args.destName, mark)
+				usedMarks[mark] = args.destName
+			end
+		end
+
 		huddleUsed = true
 		warnNext()
 		huddleList[#huddleList + 1] = args.destName
@@ -149,6 +180,14 @@ do
 		end
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnHuddle, 0.3, args.spellId)
+		end
+	end
+	function mod:HuddleInTerrorRemowed(args)
+		for i=1, 6 do
+			if usedMarks[i] == args.destName then
+				usedMarks[i] = nil
+				SetRaidTarget(args.destName, 0)
+			end
 		end
 	end
 	function mod:Waterspout(args)
