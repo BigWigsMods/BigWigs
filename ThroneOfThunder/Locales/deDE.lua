@@ -56,7 +56,7 @@ if L then
 	L.kick = "Unterbrechen"
 	L.kick_desc = "Anzeigen, wie viele Schildkröten unterbrochen werden können"
 	L.kick_message = "Unterbrechbare Schildkröten: %d"
-	L.kicked_message = "%s kicked! (%d remaining)"
+	L.kicked_message = "%s gekickt! (%d verbleiben)"
 
 	L.custom_off_turtlemarker = "Schildkröten markieren"
 	L.custom_off_turtlemarker_desc = "Markiert die Schildkröten mit allen Raidsymbolen.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r\n|cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über alle Schildkröten.|r"

@@ -47,5 +47,8 @@ if L then
 
 	L.strike_or_spout = "Stoß oder Fontäne"
 	L.huddle_or_spout_or_strike = "Kauern oder Fontäne oder Stoß"
+
+	L.custom_off_huddle = "Kauern markieren"
+	L.custom_off_huddle_desc = "Um die Heilung zu vereinfachen, werden die vom Furchterfüllten Kauern betroffenen Spieler mit %s%s%s%s%s%s markiert. Benötigt Leiter oder Assistent."
 end
 

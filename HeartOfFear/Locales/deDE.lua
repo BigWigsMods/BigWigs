@@ -25,6 +25,9 @@ if L then
 	L.unseenstrike_soon = "Stoß (%d) in ~5-10 sec!"
 	L.assault_message = "Angriff"
 	L.side_swap = "Seitenwechsel"
+
+	L.custom_off_windstep = "Windlauf markieren"
+	L.custom_off_windstep_desc = "Um die Heilung zu vereinfachen, werden die vom Windlauf betroffenen Spieler mit %s%s%s%s%s%s markiert. Benötigt Leiter oder Assistent."
 end
 
 L = BigWigs:NewBossLocale("Garalon", "deDE")
