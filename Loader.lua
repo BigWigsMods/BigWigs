@@ -396,6 +396,10 @@ do
 			LittleWigs_ScarletMonastery = "LittleWigs",
 			LittleWigs_MogushanPalace = "LittleWigs",
 			LittleWigs_TempleOfTheJadeSerpent = "LittleWigs",
+			BigWigs_TayakIcons = "BigWigs",
+			BigWigs_PizzaBar = "BigWigs",
+			BigWigs_ShaIcons = "BigWigs",
+			BigWigs_LeiShi_Marker = "BigWigs",
 		}
 
 		-- XXX hopefully remove this some day, try to teach people not to force load our modules.
