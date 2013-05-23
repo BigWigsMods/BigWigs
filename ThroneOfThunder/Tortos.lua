@@ -138,7 +138,9 @@ function mod:CrystalShellRemoved(args)
 end
 
 function mod:SnappingBite(args)
-	self:Message(args.spellId, "Attention", self:Heroic() and UnitIsUnit("boss1target", "player") and "Warning")
+	if UnitIsUnit("boss1target", "player") then
+		self:Message(args.spellId, "Attention", self:Heroic() and "Warning")
+	end
 	self:CDBar(args.spellId, 7)
 end
 
