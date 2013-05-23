@@ -56,6 +56,7 @@ if L then
 	L.kick = "Coup de pied"
 	L.kick_desc = "Effectue un suivi du nombre de tortues qui peuvent être bottées."
 	L.kick_message = "Tortues à botter : %d"
+	L.kicked_message = "%s kicked! (%d remaining)"
 
 	L.custom_off_turtlemarker = "Marquage des tortues"
 	L.custom_off_turtlemarker_desc = "Marque les tortues en utilisant toutes les icônes de raid, nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement toutes les tortues est le moyen le plus rapide de les marquer.|r"

@@ -56,6 +56,7 @@ if L then
 	L.kick = "등껍질 차기"
 	L.kick_desc = "몇개의 등껍질을 찾는지 정보를 표시합니다."
 	L.kick_message = "회오리 거북: %d"
+	L.kicked_message = "%s kicked! (%d remaining)"
 
 	L.custom_off_turtlemarker = "거북이 공격대 아이콘"
 	L.custom_off_turtlemarker_desc = "모든 공격대 아이콘을 사용하여 표시합니다.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"

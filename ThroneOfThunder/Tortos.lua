@@ -20,6 +20,7 @@ if L then
 	L.kick_desc = "Keep track of how many turtles can be kicked."
 	L.kick_icon = 1766
 	L.kick_message = "Kickable turtles: %d"
+	L.kicked_message = "%s kicked! (%d remaining)"
 
 	L.custom_off_turtlemarker = "Turtle Marker"
 	L.custom_off_turtlemarker_desc = "Marks turtles using all raid icons, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the turtles is the fastest way to mark them.|r"
@@ -33,6 +34,7 @@ L = mod:GetLocale()
 -- Locals
 --
 
+local quakeCounter = 0
 local kickable = 0
 local crystalTimer = nil
 
@@ -80,6 +82,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "AddMarkedMob", 133974) -- spawn
 	self:Log("SPELL_AURA_APPLIED", "ShellBlock", 133971) -- death
 	self:Log("SPELL_AURA_REMOVED", "ShellBlockRemoved", 133971) -- kicked
+	self:Log("SPELL_CAST_SUCCESS", "KickShell", 134031)
 	self:Log("SPELL_CAST_START", "CallOfTortos", 136294)
 
 	self:RegisterUnitEvent("UNIT_AURA", "ShellConcussionCheck", "boss1")
@@ -90,12 +93,12 @@ end
 
 function mod:OnEngage()
 	kickable = 0
+	quakeCounter = 0
 	self:Berserk(600)
 	self:Bar("bats", 46, 136686) -- Summon Bats
 	self:Bar(133939, 46) -- Furious Stone Breath
 	self:Bar(136294, 21) -- Call of Tortos
-	self:CDBar(134920, 28) -- Quake Stomp
-
+	self:CDBar(134920, 28, CL["count"]:format(self:SpellName(134920), 1)) -- Quake Stomp
 	if self:Heroic() then
 		crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3, self:SpellName(137633))
 	end
@@ -127,7 +130,7 @@ end
 
 function mod:CrystalShellRemoved(args)
 	if not self:Me(args.destGUID) or not self.isEngaged then return end
-	self:Message(args.spellId, "Urgent", "Alarm", CL["removed"]:format(args.spellName))
+	self:Message(args.spellId, "Personal", "Alarm", CL["removed"]:format(args.spellName))
 	if not self:Tank() then
 		self:Flash(args.spellId)
 		crystalTimer = self:ScheduleRepeatingTimer(warnCrystalShell, 3, args.spellName)
@@ -135,7 +138,7 @@ function mod:CrystalShellRemoved(args)
 end
 
 function mod:SnappingBite(args)
-	self:Message(args.spellId, "Attention")
+	self:Message(args.spellId, "Attention", self:Heroic() and UnitIsUnit("boss1target", "player") and "Warning")
 	self:CDBar(args.spellId, 7)
 end
 
@@ -147,8 +150,9 @@ function mod:SummonBats(_, _, _, _, spellId)
 end
 
 function mod:QuakeStomp(args)
-	self:Message(args.spellId, "Important", "Alert")
-	self:CDBar(args.spellId, 47)
+	quakeCounter = quakeCounter + 1
+	self:Message(args.spellId, "Important", "Alert", CL["count"]:format(args.spellName, quakeCounter))
+	self:CDBar(args.spellId, 47, CL["count"]:format(args.spellName, quakeCounter+1))
 end
 
 function mod:FuriousStoneBreath(args)
@@ -162,12 +166,27 @@ function mod:GrowingFury(args)
 end
 
 do
+	local kicked, coloredName = {}, mod:NewTargetList()
+	function mod:KickShell(args)
+		if kicked[args.destGUID] then return end -- prevent multiple people kicking the same turtle from messing up the count
+		kicked[args.destGUID] = true
+
+		kickable = kickable - 1
+		coloredName[1] = args.sourceName
+		self:Message("kick", "Attention", nil, L["kicked_message"]:format(coloredName[1], kickable), args.spellId)
+	end
+
+	function mod:ShellBlockRemoved(args)
+		kicked[args.destGUID] = nil
+	end
+end
+
+do
 	local scheduled = nil
 	local function announceKickable()
 		mod:Message("kick", "Attention", nil, L["kick_message"]:format(kickable), 1766)
 		scheduled = nil
 	end
-
 	function mod:ShellBlock(args)
 		kickable = kickable + 1
 		if not scheduled then
@@ -182,13 +201,6 @@ do
 			end
 		end
 	end
-
-	function mod:ShellBlockRemoved(args)
-		kickable = kickable - 1
-		if not scheduled then
-			scheduled = self:ScheduleTimer(announceKickable, 2)
-		end
-	end
 end
 
 do
@@ -196,11 +208,13 @@ do
 	local prev = 0
 	local UnitDebuff = UnitDebuff
 	function mod:ShellConcussionCheck(unit)
-		local _, _, _, _, _, duration, expires = UnitDebuff(unit, concussion)
+		local _, _, _, _, _, _, expires = UnitDebuff(unit, concussion)
 		if expires and expires ~= prev then
-			if expires-prev > 4 then -- don't spam the message
+			local t = GetTime()
+			if prev < t then -- buff fell off
 				self:Message(-7134, "Positive", "Info")
 			end
+			local duration = expires-t
 			self:Bar(-7134, duration)
 			prev = expires
 		end
