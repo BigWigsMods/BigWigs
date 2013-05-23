@@ -58,7 +58,7 @@ if L then
 	L.kick = "Calcio"
 	L.kick_desc = "Tieni il conto di quante tartarughe possono essere prese a calci"
 	L.kick_message = "Tartarughe Calciabili: %d"
-	L.kicked_message = "%s kicked! (%d remaining)"
+	L.kicked_message = "%s calciata! (%d rimaste)"
 
 	L.custom_off_turtlemarker = "Selezionatore Tartarughe"
 	L.custom_off_turtlemarker_desc = "Evidenzia le tartarughe usando tutti i simboli dell'incursione.\n|cFFFF0000Solo una persona dovrebbe abilitare questa opzione per evitare conflitti nella marcatura.|r\n|cFFADFF2FSUGGERIMENTO: Se l'Incursione ha scelto te per abilitare questa opzione, muovere velocemente il mouse sopra le tartarughe è il modo più rapido per marcarle.|r"
