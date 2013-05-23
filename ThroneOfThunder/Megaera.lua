@@ -39,9 +39,9 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		140138, 140179,
+		140138, 140179, {139993, "HEALER"},
 		{139822, "FLASH", "ICON", "DISPEL", "SAY"}, {137731, "HEALER"},
-		{139866, "FLASH", "ICON", "SAY"}, {139909, "FLASH"}, {139843, "TANK"}, 
+		{139866, "FLASH", "ICON", "SAY"}, {139909, "FLASH"}, {139843, "TANK"},
 		{139840, "HEALER"},
 		139458, {"breaths", "FLASH"}, "proximity", "berserk", "bosskill",
 	}, {
@@ -70,9 +70,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "BreathDamage", 137730, 139842, 139839, 139992)
 	self:Log("SPELL_CAST_START", "Breaths", 137729, 139841, 139838, 139991)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Rampage", "boss1")
-	self:Log("SPELL_AURA_APPLIED", "TankDebuffApplied", 137731, 139840) -- Fire, Poison, should probably add Diffusion
-	self:Log("SPELL_AURA_APPLIED_DOSE", "TankDebuffApplied", 137731, 139840)
-	self:Log("SPELL_AURA_REMOVED", "TankDebuffRemoved", 137731, 139840)
+	self:Log("SPELL_AURA_APPLIED", "TankDebuffApplied", 137731, 139840, 139993) -- Ignite Flesh, Rot Armor, Diffusion
+	self:Log("SPELL_AURA_APPLIED_DOSE", "TankDebuffApplied", 137731, 139840, 139993)
+	self:Log("SPELL_AURA_REMOVED", "TankDebuffRemoved", 137731, 139840, 139993)
 
 	self:Death("Deaths", 70248, 70212, 70235, 70247) -- Arcane Head, Flaming Head, Frozen Head, Venomous Head
 	self:Death("Win", 68065) -- Megaera
@@ -96,15 +96,7 @@ end
 --
 
 function mod:TankDebuffApplied(args)
-	local tank = self:Tank(args.destName)
-	for i=1, 4 do
-		local boss = ("boss%d"):format(i)
-		if UnitDetailedThreatSituation(args.destName, boss) then
-			tank = true
-			break
-		end
-	end
-	if tank then
+	if self:Tank(args.destName) then
 		self:TargetBar(args.spellId, 45, args.destName)
 	end
 end
