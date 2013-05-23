@@ -182,7 +182,7 @@ do
 			scheduled = self:ScheduleTimer(warnHuddle, 0.3, args.spellId)
 		end
 	end
-	function mod:HuddleInTerrorRemowed(args)
+	function mod:HuddleInTerrorRemoved(args)
 		for i=1, 6 do
 			if usedMarks[i] == args.destName then
 				usedMarks[i] = nil
