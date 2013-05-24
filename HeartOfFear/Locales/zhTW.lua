@@ -5,6 +5,7 @@ if L then
 
 	L.force_message = "力與魄(AoE)"
 
+	L.attenuation = EJ_GetSectionInfo(6426) .. "（跳舞）"
 	L.attenuation_bar = "定音區... 跳吧!"
 	L.attenuation_message = "%s 跳舞 %s"
 	L.echo = "|c001cc986回音|r"
@@ -24,6 +25,9 @@ if L then
 	L.unseenstrike_soon = "5-10秒後無形打擊(%d)！"
 	L.assault_message = "壓倒性的襲擊"
 	L.side_swap = "換邊"
+
+	L.custom_off_windstep = "疾風步標記"
+	L.custom_off_windstep_desc = "幫助治療分配，使用%s%s%s%s%s%s標記玩家受到疾風步，需要權限。"
 end
 
 L = BigWigs:NewBossLocale("Garalon", "zhTW")
@@ -82,8 +86,8 @@ if L then
 	L.eyes_desc = "計算女皇之眼的堆疊與顯示持續時間條。"
 	L.eyes_message = "女皇之眼"
 
-	L.visions_message = "Visions"
-	L.visions_dispel = "Players have been feared!"
+	L.visions_message = "死亡幻覺"
+	L.visions_dispel = "玩家被恐懼！"
 	L.fumes_bar = "你的毒氣增益"
 end
 

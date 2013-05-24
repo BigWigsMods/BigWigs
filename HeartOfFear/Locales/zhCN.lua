@@ -5,6 +5,7 @@ if L then
 
 	L.force_message = "力与魄脉冲"
 
+	L.attenuation = EJ_GetSectionInfo(6426) .. "（跳舞）"
 	L.attenuation_bar = "音波衰减"
 	L.attenuation_message = "%s 音波衰减 %s"
 	L.echo = "|c001cc986回响傀儡|r"
@@ -24,6 +25,9 @@ if L then
 	L.unseenstrike_soon = "5-10秒后，无影击(%d)！"
 	L.assault_message = "压制突袭"
 	L.side_swap = "换边"
+
+	L.custom_off_windstep = "疾风步标记"
+	L.custom_off_windstep_desc = "帮助治疗分配，使用%s%s%s%s%s%s标记玩家受到疾风步，需要权限。"
 end
 
 L = BigWigs:NewBossLocale("Garalon", "zhCN")

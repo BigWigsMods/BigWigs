@@ -56,7 +56,7 @@ if L then
 	L.kick = "脚踢"
 	L.kick_desc = "持续追踪可被脚踢旋龟的数量。"
 	L.kick_message = "可脚踢旋龟：>%d<！"
-	L.kicked_message = "%s kicked! (%d remaining)"
+	L.kicked_message = "%s已被踢！（%d剩余）"
 
 	L.custom_off_turtlemarker = "旋龟标记"
 	L.custom_off_turtlemarker_desc = "使用团队标记标记全部旋龟。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突，需要权限。|r\n|cFFADFF2F提示：如果团队选择你用来标记旋龟，鼠标悬停快速划过全部旋龟是最快的标记方式。|r"
