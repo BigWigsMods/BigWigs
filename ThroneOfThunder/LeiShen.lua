@@ -164,7 +164,7 @@ do
 	}
 	function mod:Stuns(args)
 		if phase < 2 then return end
-		self:TargetBar("stuns", stunDuration[args.spellId], args.destName, 9179, args.spellId) -- 9179 = "Stun"
+		self:TargetBar("stuns", stunDuration[args.spellId], args.sourceName, 9179, args.spellId) -- 9179 = "Stun"
 	end
 end
 
