@@ -237,7 +237,7 @@ end
 
 function mod:LifeDrainDose(args)
 	self:StackMessage(133798, args.destName, args.amount, "Important")
-	if self:Me(args.destGUID) then
+	if self:Me(args.destGUID) and not self:LFR() then
 		self:Say(args.spellId, L["life_drain_say"]:format(args.amount)) -- this spams but is needed, hack even yell would be better
 	end
 end
