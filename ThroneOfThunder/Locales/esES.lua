@@ -57,7 +57,7 @@ if L then
 	L.kick = "Patear"
 	L.kick_desc = "Lleva la cuenta de cuantas tortugas pueden ser pateadas."
 	L.kick_message = "Tortugas pateables: %d"
-	L.kicked_message = "%s kicked! (%d remaining)"
+	L.kicked_message = "¡%s pateada! (%d restantes)"
 
 	L.custom_off_turtlemarker = "Marcador de tortugas"
 	L.custom_off_turtlemarker_desc = "Marca las tortugas usando todos los iconos de raid.\n|cFFFF0000Solo 1 persona de la raid debería tener esta opción activada para prevenir conflictos con las marcas.|r\n|cFFADFF2FCONSEJO: Si la raid te ha elegido para activarla, mover el ratón rápidamente sobre todas las tortugas es la forma más rápida de marcarlas.|r"
