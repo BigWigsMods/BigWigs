@@ -150,6 +150,9 @@ function plugin:OnRegister()
 	media:Register(mType, "BigWigs: [DBM] ".. L.Destruction, "Sound\\Creature\\KilJaeden\\KILJAEDEN02.wav")
 	media:Register(mType, "BigWigs: [DBM] ".. L.RunAway, "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
 
+	-- Ingame sounds used by Blizzard
+	media:Register(mType, "BigWigs: Raid Boss Whisper", "Sound\\Interface\\UI_RaidBossWhisperWarning.ogg")
+
 	soundList = media:List(mType)
 
 	for k, s in next, sounds do
