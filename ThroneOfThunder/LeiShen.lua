@@ -367,7 +367,7 @@ end
 --
 
 local function warnDiffusionChainSoon()
-	mod:Message(135991, "Important", "Warning", CL["soon"]:format(mod:SpellName(135991)))
+	mod:Message(135991, "Important", nil, CL["soon"]:format(mod:SpellName(135991)))
 	activeProximityAbilities[2] = true
 	updateProximity()
 end
