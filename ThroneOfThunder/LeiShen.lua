@@ -367,7 +367,7 @@ end
 --
 
 local function warnDiffusionChainSoon()
-	mod:Message(135991, "Important", nil, CL["soon"]:format(mod:SpellName(135991)))
+	mod:Message(135991, "Important", "Warning", CL["soon"]:format(mod:SpellName(135991)))
 	activeProximityAbilities[2] = true
 	updateProximity()
 end
@@ -498,11 +498,12 @@ end
 
 function mod:Decapitate(args)
 	self:CDBar(args.spellId, 50)
-	self:TargetMessage(args.spellId, args.destName, "Personal", "Warning", nil, nil, true)
-	self:TargetBar(args.spellId, 5, args.destName) -- usually another ~2s before damage due to travel time
-	if self:Me(args.destGUID) then
+	self:TargetMessage(args.spellId, args.destName, "Personal")
+	if self:Tank() then
+		self:PlaySound(args.spellId, "Long")
 		self:Flash(args.spellId)
 	end
+	self:TargetBar(args.spellId, 5, args.destName) -- usually another ~2s before damage due to travel time
 end
 
 ----------------------------------------
