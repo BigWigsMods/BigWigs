@@ -40,7 +40,7 @@ L["Waiting until combat ends to finish loading due to Blizzard combat restrictio
 L["Combat has ended, Big Wigs has now finished loading."] = "戰鬥已經結束，Big Wigs現在完成載入。"
 L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "由於暴雪的限制，要打開選項配置需要離開戰鬥，或是在戰鬥之前。"
 
-L.missingAddOn = "請注意這個區域需要此-[[\124cFF436EEE%s\124r]]- 計時器掛件才能顯示。"
+L.missingAddOn = "請注意這個區域需要此 [\124cFF436EEE%s\124r] 計時器掛件才能顯示。"
 
 L.coreAddonDisabled = "當%s被禁用時，Big Wigs 將無法正常工作。你可以在角色選擇螢幕的插件控制面板開啟它們。"
 

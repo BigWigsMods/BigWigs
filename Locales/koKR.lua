@@ -40,7 +40,7 @@ L["No boss mod:"] = "No boss mod:"
 --L["Combat has ended, Big Wigs has now finished loading."] = "Combat has ended, Big Wigs has now finished loading."
 --L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."
 
---L.missingAddOn = "Please note that this zone requires the -[[\124cFF436EEE%s\124r]]- plugin for timers to be displayed."
+--L.missingAddOn = "Please note that this zone requires the [\124cFF436EEE%s\124r] plugin for timers to be displayed."
 
 L.coreAddonDisabled = "%s 애드온 비활성화이기 때문에 Big Wigs가 제대로 작동하지 않습니다. 캐릭터 선택 화면에서 좌측하단의 '외부 인터페이스'에서 활성화/비활성화를 설정할 수 있습니다."
 

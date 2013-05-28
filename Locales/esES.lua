@@ -38,7 +38,7 @@ L["Waiting until combat ends to finish loading due to Blizzard combat restrictio
 L["Combat has ended, Big Wigs has now finished loading."] = "El combate ha terminado, Big Wigs ha terminado de cargar."
 L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = "Debido a las restricciones de Blizzard la configuración debe abrirse primero fuera de combate, antes se podia acceder en combate."
 
-L.missingAddOn = "Tenga en cuenta que esta zona requiere el plugin -[[\124cFF436EEE%s\124r]]- para que los contadores sean mostrados."
+L.missingAddOn = "Tenga en cuenta que esta zona requiere el plugin [\124cFF436EEE%s\124r] para que los contadores sean mostrados."
 
 L.coreAddonDisabled = "Big Wigs no puede funcionar debidamente ya que el addon %s está desactivado. Puedes activarlo desde el addon Control panel o en la pantalla de selección de personaje."
 

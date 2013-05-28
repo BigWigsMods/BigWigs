@@ -38,7 +38,7 @@ L["Waiting until combat ends to finish loading due to Blizzard combat restrictio
 L["Combat has ended, Big Wigs has now finished loading."] = true
 L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = true
 
-L.missingAddOn = "Please note that this zone requires the -[[\124cFF436EEE%s\124r]]- plugin for timers to be displayed."
+L.missingAddOn = "Please note that this zone requires the [\124cFF436EEE%s\124r] plugin for timers to be displayed."
 
 L.coreAddonDisabled = "Big Wigs won't function properly since the addon %s is disabled. You can enable it from the addon control panel at the character selection screen."
 
