@@ -366,8 +366,8 @@ end
 -- Intermissions
 --
 
-local function warnDiffusionChainSoon()
-	mod:Message(135991, "Important", "Warning", CL["soon"]:format(mod:SpellName(135991)))
+local function warnDiffusionChainSoon(intermission)
+	mod:Message(135991, "Important", intermission or not mod:Tank() and "Warning", CL["soon"]:format(mod:SpellName(135991)))
 	activeProximityAbilities[2] = true
 	updateProximity()
 end
@@ -437,7 +437,7 @@ function mod:IntermissionStart(args)
 		if isConduitAlive(68698) then self:CDBar(136366, 20) end -- Bouncing Bolt
 		if isConduitAlive(68696) then
 			self:CDBar(135991, 7)
-			self:ScheduleTimer(warnDiffusionChainSoon, 2)
+			self:ScheduleTimer(warnDiffusionChainSoon, 2, true)
 		end
 	else -- 25 man
 		if isConduitAlive(68398) then self:CDBar(135695, 19) end -- Static Shock
@@ -445,7 +445,7 @@ function mod:IntermissionStart(args)
 		if isConduitAlive(68698) then self:CDBar(136366, 14) end -- Bouncing Bolt
 		if isConduitAlive(68696) then
 			self:CDBar(135991, 6)
-			self:ScheduleTimer(warnDiffusionChainSoon, 1)
+			self:ScheduleTimer(warnDiffusionChainSoon, 1, true)
 		end
 	end
 	if self:Heroic() then
@@ -498,9 +498,8 @@ end
 
 function mod:Decapitate(args)
 	self:CDBar(args.spellId, 50)
-	self:TargetMessage(args.spellId, args.destName, "Personal")
+	self:TargetMessage(args.spellId, args.destName, "Personal", "Warning", nil, nil, true)
 	if self:Tank() then
-		self:PlaySound(args.spellId, "Long")
 		self:Flash(args.spellId)
 	end
 	self:TargetBar(args.spellId, 5, args.destName) -- usually another ~2s before damage due to travel time
@@ -581,13 +580,13 @@ do
 	end
 	local function warnDiffusionAdds()
 		if #diffusionList > 0 then
-			mod:TargetMessage(135991, diffusionList, "Important", "Warning", L["diffusion_add"], nil, true)
+			mod:TargetMessage(135991, diffusionList, "Important", nil, L["diffusion_add"], nil, true)
 		else -- no one in range
-			mod:Message(135991, "Important", "Warning")
+			mod:Message(135991, "Important", nil)
 		end
 		if not UnitExists("boss1") then -- poor mans intermission check
 			mod:Bar(135991, 25)
-			mod:ScheduleTimer(warnDiffusionChainSoon, 20)
+			mod:ScheduleTimer(warnDiffusionChainSoon, 20, true)
 		else
 			if phase == 1 or not mod:Heroic() then stopConduitAbilityBars() end
 			mod:Bar(135991, 40)
