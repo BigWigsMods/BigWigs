@@ -579,12 +579,13 @@ do
 		diffusionList[#diffusionList+1] = args.destName
 	end
 	local function warnDiffusionAdds()
+		local intermission = not UnitExists("boss1") -- poor mans intermission check
 		if #diffusionList > 0 then
-			mod:TargetMessage(135991, diffusionList, "Important", nil, L["diffusion_add"], nil, true)
+			mod:TargetMessage(135991, diffusionList, "Important", intermission and "Warning", L["diffusion_add"], nil, true)
 		else -- no one in range
-			mod:Message(135991, "Important", nil)
+			mod:Message(135991, "Important", intermission and "Warning")
 		end
-		if not UnitExists("boss1") then -- poor mans intermission check
+		if intermission then
 			mod:Bar(135991, 25)
 			mod:ScheduleTimer(warnDiffusionChainSoon, 20, true)
 		else
