@@ -84,7 +84,6 @@ function mod:OnEngage()
 	headCounter = 0
 	self:Bar("breaths", 5, L["breaths"], L.breaths_icon)
 	self:Message("breaths", "Attention", nil, CL["custom_start_s"]:format(self.displayName, L["breaths"], 5), false)
-	self:RegisterEvent("UNIT_AURA")
 end
 
 --------------------------------------------------------------------------------
@@ -137,9 +136,11 @@ do
 		if frostOrFireDead and not mod:LFR() then
 			mod:OpenProximity("proximity", 5)
 		end
+		mod:RegisterEvent("UNIT_AURA")
 	end
 	function mod:Rampage(unit, spellName, _, _, spellId)
 		if spellId == 139458 then
+			self:UnregisterEvent("UNIT_AURA")
 			self:Bar("breaths", 30, L["breaths"], L.breaths_icon)
 			self:Message(spellId, "Important", "Long", CL["count"]:format(spellName, headCounter))
 			self:Bar(spellId, 20, CL["count"]:format(spellName, headCounter))
