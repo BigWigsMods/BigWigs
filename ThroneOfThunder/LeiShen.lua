@@ -305,14 +305,14 @@ end
 
 do
 	local function whipSoon(spellId, spellName)
-		mod:Message(spellId, "Important", "Warning", CL["soon"]:format(("%s (%d)"):format(spellName, whipCounter)))
+		mod:Message(spellId, "Important", "Warning", CL["soon"]:format(CL["count"]:format(spellName, whipCounter)))
 		mod:Flash(spellId)
 	end
 	function mod:LightningWhip(args)
 		if phase == 3 then
-			self:Message(args.spellId, "Urgent", "Alert", ("%s (%d)"):format(args.spellName, whipCounter))
+			self:Message(args.spellId, "Urgent", "Alert", CL["count"]:format(args.spellName, whipCounter))
 			whipCounter = whipCounter + 1
-			self:Bar(args.spellId, 30.3, ("%s (%d)"):format(args.spellName, whipCounter))
+			self:Bar(args.spellId, 30.3, CL["count"]:format(args.spellName, whipCounter))
 			self:ScheduleTimer(whipSoon, 27, args.spellId, args.spellName)
 		else
 			self:Message(args.spellId, "Urgent", "Alert")
@@ -399,8 +399,8 @@ function mod:IntermissionEnd(msg)
 			end
 		end
 	elseif phase == 3 then -- XXX should start bars for already disabled conduits too
-		self:CDBar(135095, 36, ("%s (%d)"):format(self:SpellName(135095), thunderstruckCounter)) -- Thunderstruck
-		self:Bar(136850, 22, ("%s (%d)"):format(self:SpellName(136850), whipCounter)) -- Lightning Whip
+		self:CDBar(135095, 36, CL["count"]:format(self:SpellName(135095), thunderstruckCounter)) -- Thunderstruck
+		self:Bar(136850, 22, CL["count"]:format(self:SpellName(136850), whipCounter)) -- Lightning Whip
 		self:CDBar(136889, 20) -- Violent Gale Winds
 		if self:Heroic() then
 			if msg:find("135681") then -- Diffusion Adds
@@ -487,9 +487,9 @@ end
 
 function mod:Thunderstruck(args)
 	if phase == 3 then
-		self:Message(args.spellId, "Attention", "Alert", ("%s (%d)"):format(args.spellName, thunderstruckCounter))
+		self:Message(args.spellId, "Attention", "Alert", CL["count"]:format(args.spellName, thunderstruckCounter))
 		thunderstruckCounter = thunderstruckCounter + 1
-		self:Bar(args.spellId, 30, ("%s (%d)"):format(args.spellName, thunderstruckCounter))
+		self:Bar(args.spellId, 30, CL["count"]:format(args.spellName, thunderstruckCounter))
 	else
 		self:CDBar(args.spellId, 46)
 		self:Message(args.spellId, "Attention", "Alert")
