@@ -193,7 +193,7 @@ if L then
 	L.sensitivityfurthestbad = "Vita Sensitivität + Weit weg = |cffff0000SCHLECHT|r!"
 	L.kill_trigger = "Wartet!"
 
-	L.assistPrint = "A plugin called called 'BigWigs_Ra-denAssist' has now been released for assistance during the Ra-den encounter that your guild may be interested in trying."
+	L.assistPrint = "Das kürzlich veröffentlichte Plugin 'BigWigs_Ra-denAssist' bietet weitere Hilfestellungen zu Ra-den an. Vielleicht wollt ihr es ja einmal ausprobieren."
 end
 
 L = BigWigs:NewBossLocale("Throne of Thunder Trash", "deDE")

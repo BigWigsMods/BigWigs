@@ -200,7 +200,7 @@ if L then
 	L.sensitivityfurthestbad = "生命过敏+最远距离 = |cffff0000坏|r！"
 	L.kill_trigger = "等等"
 
-	L.assistPrint = "A plugin called called 'BigWigs_Ra-denAssist' has now been released for assistance during the Ra-den encounter that your guild may be interested in trying."
+	L.assistPrint = "A plugin called 'BigWigs_Ra-denAssist' has now been released for assistance during the Ra-den encounter that your guild may be interested in trying."
 end
 
 L = BigWigs:NewBossLocale("Throne of Thunder Trash", "zhCN")

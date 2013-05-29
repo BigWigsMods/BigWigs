@@ -39,7 +39,7 @@ if L then
 	L.sensitivityfurthestbad = "Vita Sensitivity + Furthest = |cffff0000BAD|r!"
 	L.kill_trigger = "Wait!" -- Wait! I am... I am not your enemy. You are powerful. More powerful than he was, even.... Perhaps you are right. Perhaps there is still hope.
 
-	L.assistPrint = "A plugin called called 'BigWigs_Ra-denAssist' has now been released for assistance during the Ra-den encounter that your guild may be interested in trying."
+	L.assistPrint = "A plugin called 'BigWigs_Ra-denAssist' has now been released for assistance during the Ra-den encounter that your guild may be interested in trying."
 end
 L = mod:GetLocale()
 
