@@ -192,7 +192,7 @@ end
 
 function mod:CracklingStalker(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 60)
+	self:Bar(args.spellId, 42)
 end
 
 function mod:VitaSensitivity(args)
