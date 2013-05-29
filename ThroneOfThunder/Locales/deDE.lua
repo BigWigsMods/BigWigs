@@ -192,6 +192,8 @@ if L then
 	L.unstablevitajumptarget_message = "Du bist am weitesten von instabilen Vita entfernt"
 	L.sensitivityfurthestbad = "Vita Sensitivität + Weit weg = |cffff0000SCHLECHT|r!"
 	L.kill_trigger = "Wartet!"
+
+	L.assistPrint = "A plugin called called 'BigWigs_Ra-denAssist' has now been released for assistance during the Ra-den encounter that your guild may be interested in trying."
 end
 
 L = BigWigs:NewBossLocale("Throne of Thunder Trash", "deDE")

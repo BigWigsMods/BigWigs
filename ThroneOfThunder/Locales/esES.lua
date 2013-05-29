@@ -192,6 +192,8 @@ if L then
 
 	L.balls = "Bolas"
 	L.balls_desc = "Bolas de Ánima (rojo) y Vita (azul), que determinan que habilidades ganará Ra-den"
+
+	L.assistPrint = "A plugin called called 'BigWigs_Ra-denAssist' has now been released for assistance during the Ra-den encounter that your guild may be interested in trying."
 end
 
 L = BigWigs:NewBossLocale("Throne of Thunder Trash", "esES") or BigWigs:NewBossLocale("Throne of Thunder Trash", "esMX")

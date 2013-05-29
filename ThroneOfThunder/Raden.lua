@@ -38,6 +38,8 @@ if L then
 	L.unstablevitajumptarget_message = "You're furthest from Unstable Vita"
 	L.sensitivityfurthestbad = "Vita Sensitivity + Furthest = |cffff0000BAD|r!"
 	L.kill_trigger = "Wait!" -- Wait! I am... I am not your enemy. You are powerful. More powerful than he was, even.... Perhaps you are right. Perhaps there is still hope.
+
+	L.assistPrint = "A plugin called called 'BigWigs_Ra-denAssist' has now been released for assistance during the Ra-den encounter that your guild may be interested in trying."
 end
 L = mod:GetLocale()
 
@@ -61,6 +63,13 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	if not self.assistWarned then
+		if not IsAddOnLoaded("BigWigs_Ra-denAssist") then
+			BigWigs:Print(L.assistPrint)
+		end
+		self.assistWarned = true
+	end
+
 	-- Anima abilities
 	self:Log("SPELL_CAST_START", "Worm", 138338)
 	self:Log("SPELL_CAST_SUCCESS", "MurderousStrike", 138333)

@@ -199,6 +199,8 @@ if L then
 	L.unstablevitajumptarget_message = ">你< 距离不稳定的生命最远！"
 	L.sensitivityfurthestbad = "生命过敏+最远距离 = |cffff0000坏|r！"
 	L.kill_trigger = "等等"
+
+	L.assistPrint = "A plugin called called 'BigWigs_Ra-denAssist' has now been released for assistance during the Ra-den encounter that your guild may be interested in trying."
 end
 
 L = BigWigs:NewBossLocale("Throne of Thunder Trash", "zhCN")
