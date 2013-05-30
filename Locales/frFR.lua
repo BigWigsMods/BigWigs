@@ -12,7 +12,7 @@ L.stages_desc = "Active les fonctions relatives aux différentes phases/étapes 
 
 L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r) existe déjà en tant que module dans Big Wigs, mais quelque chose essaye de l'enregistrer à nouveau. Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de Big Wigs et de le réinstaller complètement."
 
---L.movieBlocked = "You've seen this movie before, skipping it."
+L.movieBlocked = "Vous avez déjà vu cette cinématique, elle ne sera pas affichée."
 L.roleUpdate = "Rôle mis à jour."
 
 -- Loader / Options.lua
@@ -42,7 +42,7 @@ L.missingAddOn = "Notez que cette zone nécessite le plugin [\124cFF436EEE%s\124
 
 L.coreAddonDisabled = "Big Wigs ne fonctionnera pas correctement car l'addon %s est désactivé. Vous pouvez l'activer via le panneau de contrôle des addons à l'écran de sélection du personnage."
 
---L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
+L.removeAddon = "Veuillez enlever '|cFF436EEE%s|r' étant donné qu'il a été remplacé par '|cFF436EEE%s|r'."
 
 -- Options.lua
 L["Customize ..."] = "Personnaliser..."
@@ -77,7 +77,7 @@ L.chatMessagesDesc = "Affiche tous les messages de BigWigs dans la fenêtre de d
 L.autoRole = "Mise à jour auto. du rôle"
 L.autoRoleDesc = "Savoir quel rôle vous jouez améliore les alertes Big Wigs des autres joueurs de votre raid. Cette option permet à Big Wigs de mettre à jour automatiquement votre rôle. Par exemple, certains modules vérifient si un joueur est un tank lors de l'analyse des techniques de boss qui n'affectent jamais les tanks.\n\n|cffff4411Ceci n'est pas lié aux alertes spécifiques de rôle et il est fortement recommandé de le laisser activé !|r"
 
-L.slashDescTitle = "|cFFFED000Commandes slash :|r"
+L.slashDescTitle = "|cFFFED000Commandes :|r"
 L.slashDescPull = "|cFFFED000/pull :|r envoie un compte à rebours de pull à votre raid."
 L.slashDescRaidBar = "|cFFFED000/raidbar :|r envoie une barre personnalisée à votre raid."
 L.slashDescLocalBar = "|cFFFED000/localbar :|r créée une barre personnalisée que seul vous pouvez voir."

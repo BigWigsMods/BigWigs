@@ -56,7 +56,7 @@ if L then
 	L.kick = "Coup de pied"
 	L.kick_desc = "Effectue un suivi du nombre de tortues qui peuvent être bottées."
 	L.kick_message = "Tortues à botter : %d"
-	L.kicked_message = "%s kicked! (%d remaining)"
+	L.kicked_message = "%s a botté ! (il en reste %d)"
 
 	L.custom_off_turtlemarker = "Marquage des tortues"
 	L.custom_off_turtlemarker_desc = "Marque les tortues en utilisant toutes les icônes de raid, nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement toutes les tortues est le moyen le plus rapide de les marquer.|r"
@@ -141,14 +141,7 @@ L = BigWigs:NewBossLocale("Iron Qon", "frFR")
 if L then
 	L.molten_energy = "Énergie magmatique"
 
-	L.overload_casting = "Incantation de Surcharge de magma"
-	L.overload_casting_desc = "Prévient quand Surcharge de magma est incanté."
-
 	L.arcing_lightning_cleared = "Le raid est libéré de Foudre en arc"
-
-	L.custom_off_spear_target = "Cible de Lancer un javelot"
-	L.custom_off_spear_target_desc = "Tente de prévenir qui est la cible de Lancer un javelot. Cette méthode utilise de façon intensive le CPU et affiche parfois la mauvaise cible : elle est donc désactivée par défaut.\n|cFFADFF2FASTUCE : paramétrer les rôles des TANKS permet d'augmenter la précision de l'alerte.|r"
-	L.possible_spear_target = "Lancer probable"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "frFR")
@@ -187,8 +180,8 @@ L = BigWigs:NewBossLocale("Ra-den", "frFR")
 if L then
 	L.vita_abilities = "Techniques de Vita"
 	L.anima_abilities = "Techniques d'Anima"
-	L.worm = "Worm"
-	L.worm_desc = "Summon worm"
+	L.worm = "Ver"
+	L.worm_desc = "Invoque un ver"
 
 	L.balls = "Boules"
 	L.balls_desc = "Boules d'Anima (rouge) et de Vita (bleu), qui déterminent les techniques que Ra-den gagnera."
@@ -203,7 +196,7 @@ if L then
 	L.sensitivityfurthestbad = "Sensibilité au Vita + le plus éloigné = |cffff0000MAUVAIS|r !"
 	L.kill_trigger = "Attendez !" -- à vérifier
 
-	L.assistPrint = "A plugin called 'BigWigs_Ra-denAssist' has now been released for assistance during the Ra-den encounter that your guild may be interested in trying."
+	L.assistPrint = "Un plugin appelé 'BigWigs_Ra-denAssist' est désormais disponible pour vous assister durant la rencontre face à Ra-den. N'hésitez pas à l'essayer."
 end
 
 L = BigWigs:NewBossLocale("Throne of Thunder Trash", "frFR")
