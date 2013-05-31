@@ -96,7 +96,7 @@ if L then
 	L.yellow_spawn_trigger = "Nebbia d'Ambra" -- "The Bright Light reveals an Amber Fog!"
 
 	L.adds = "Rivela Adds"
-	L.adds_desc = "Avvisa quando rivela una Nebbia Cremisi, d'ambra o Azzurra e quante Nebbie d'Ambra rimangono."
+	L.adds_desc = "Avvisa quando rivela una Nebbia Cremisi, d'Ambra o Azzurra e quante Nebbie d'Ambra rimangono."
 
 	L.custom_off_ray_controllers = "Controllori dei Raggi"
 	L.custom_off_ray_controllers_desc = "Usa le icone di incursione %s%s%s per evidenziare i giocatori che controllano le posizioni dei raggi e il loro movimento."
@@ -159,7 +159,7 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shen", "itIT")
 if L then
-	L.custom_off_diffused_marker = "Marcatore Fulmine Diffuso Marker"
+	L.custom_off_diffused_marker = "Marcatore Fulmine Diffuso"
 	L.custom_off_diffused_marker_desc = "Marca gli add Fulmine Diffuso usando tutte le icone dell'incursione, richiede capogruppo o assistente.\n|cFFFF0000Solo 1 persona nell'incursione dovrebbe attivare questa opzione per evitare conflitti di marcamento.|r\n|cFFADFF2FTIP: Se l'incursione ha scelto te attivalo, e muovi velocemente il mouse sopra OGNI add per marcarli più velocemente possibile.|r"
 
 	L.stuns = "Disorientamenti"
@@ -193,7 +193,7 @@ if L then
 	L.balls = "Sfere"
 	L.balls_desc = "Sfere dell'Anima (rosse) e della Vita (blu), che determinano quali abilità guadagna Ra-den"
 
-	L.assistPrint = "A plugin called 'BigWigs_Ra-denAssist' has now been released for assistance during the Ra-den encounter that your guild may be interested in trying."
+	L.assistPrint = "Un plugin di nome 'BigWigs_Ra-denAssist' è stato rilasciato e reso disponibile per assistenza durante lo scontro con Ra-den che potrebbe interessare alla tua gilda."
 end
 
 L = BigWigs:NewBossLocale("Throne of Thunder Trash", "itIT")
