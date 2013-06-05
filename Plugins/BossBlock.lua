@@ -10,7 +10,7 @@ if not plugin then return end
 --
 
 local function chatFilter(_, _, msg)
-	if msg:find("***", nil, true) then
+	if msg:find("^Pull in %d sec$") or msg:find("Pull now!", nil, true) then
 		return true
 	end
 end
@@ -51,7 +51,7 @@ do
 	local RaidWarningFrame = RaidWarningFrame
 	local RaidWarningFrame_OnEvent = RaidWarningFrame_OnEvent
 	function plugin:CHAT_MSG_RAID_WARNING(event, msg, ...)
-		if not msg:find("***", nil, true) then
+		if not msg:find("^Pull in %d sec$") and not msg:find("Pull now!", nil, true) then
 			RaidWarningFrame_OnEvent(RaidWarningFrame, event, msg, ...)
 		end
 	end
