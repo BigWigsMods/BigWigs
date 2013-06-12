@@ -176,6 +176,7 @@ do
 		kickable = kickable - 1
 		coloredName[1] = args.sourceName
 		self:Message("kick", "Attention", nil, L["kicked_message"]:format(coloredName[1], kickable), args.spellId)
+		wipe(coloredName)
 	end
 
 	function mod:ShellBlockRemoved(args)
