@@ -1118,6 +1118,7 @@ function plugin:Open(range, module, key, player, isReverse)
 					break
 				end
 			end
+			if not proximityPlayer then self:Close() end -- Not found e.g. Mirror Image
 			if isReverse then
 				updater:SetScript("OnLoop", reverseTargetProximity)
 			else
