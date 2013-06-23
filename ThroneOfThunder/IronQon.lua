@@ -188,6 +188,7 @@ do
 		local debuffs = nil
 		wipe(everyoneElse)
 		-- seems easier than table searching/removing/inserting. multi-target should take a name-keyed table ;[
+		if not mod.isEngaged then return end -- This can run after wipe, so check if the encounter is engaged
 		for i=1, GetNumGroupMembers() do
 			local name = GetRaidRosterInfo(i)
 			if UnitDebuff(name, spellName) then
