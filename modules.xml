@@ -22,6 +22,9 @@
 
 <Include file="ThroneOfThunder\locales.xml"/>
 <Include file="ThroneOfThunder\modules.xml"/>
+
+<Include file="SiegeOfOrgrimmar\locales.xml"/>
+<Include file="SiegeOfOrgrimmar\modules.xml"/>
 <!--@end-debug@-->
 </Ui>
 

@@ -26,6 +26,7 @@ move-folders:
     BigWigs/EndlessSpring: BigWigs_EndlessSpring
     BigWigs/Pandaria: BigWigs_Pandaria
     BigWigs/ThroneOfThunder : BigWigs_ThroneOfThunder
+    BigWigs/SiegeOfOrgrimmar : BigWigs_SiegeOfOrgrimmar
 
 ignore:
 	- globals.sh
