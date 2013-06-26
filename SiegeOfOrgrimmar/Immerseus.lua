@@ -1,12 +1,16 @@
 --[[
-if select(4, GetBuildInfo()) < 50400 then return end
+TODO:
+
+]]--
+
+if GetBuildInfo() ~= "5.4.0" then return end -- 4th return is 50300 on the PTR ATM so can't use that
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
 local mod, CL = BigWigs:NewBoss("Immerseus", 956, 852)
 if not mod then return end
-mod:RegisterEnableMob(100000)
+mod:RegisterEnableMob(71543)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -29,24 +33,71 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		--"berserk", "bosskill",
+		{143295, "FLASH"}, 143309, -7992, 143469, 143436,
+		"berserk", "bosskill",
 	}, {
-		--[] = "general",
+		[143295] = "general",
 	}
 end
 
 function mod:OnBossEnable()
-	--self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	--self:Death("Win", 100000)
+	self:Log("SPELL_CAST_START", "CorrosiveBlast", 143436) -- not tank only so people know when to not walk in front of the boss
+	self:Emote("Splits", "143020")
+	self:Emote("Reform", "143469")
+	self:Log("SPELL_CAST_START", "Swirl", 143309)
+	self:Log("SPELL_DAMAGE", "ShaBolt", 144357)
+	self:Log("SPELL_PERIODIC_DAMAGE", "ShaPoolDamage", 144357)
+	self:Death("Win", 71543)
 end
 
 function mod:OnEngage()
-
+	self:Berserk(600) -- XXX Assumed
+	self:Bar(143309, 24) -- Swirl
+	self:Bar(143436, 6) -- Corrosive Blast
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-]]--
+
+function mod:CorrosiveBlast(args)
+	self:Message(args.spellId, "Urgent", self:Tank() and "Warning")
+	self:CDBar(args.spellId, 35)
+end
+
+function mod:Splits()
+	self:StopBar(143309)
+	self:StopBar(143436)
+	self:Message(-7992, "Neutral")
+end
+
+function mod:Reform()
+	self:Message(143469, "Neutral")
+	self:Bar(143309, 28) -- Swirl
+	self:Bar(143436, 14) -- Corrosive Blast
+end
+
+function mod:Swirl(args)
+	self:Message(args.spellId, "Important", "Long")
+	self:Bar(args.spellId, 48)
+end
+
+function mod:ShaBolt(args)
+	self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+end
+
+do
+	local prev = 0
+	function mod:ShaPoolDamage(args)
+		if not self:Me(args.destGUID) then return end
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:Message(144357, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Flash(144357)
+		end
+	end
+end
 
