@@ -70,7 +70,7 @@ function mod:GetOptions()
 		[144396] = -7885, -- Rook Stonetoe
 		[143330] = -7889, -- He Softfoot
 		[143446] = -7904, -- Sun Tenderheart
-		custom_off_bane_marks = custom_off_bane_marks,
+		["custom_off_bane_marks"] = L.custom_off_bane_marks,
 		[143497] = "general",
 	}
 end
