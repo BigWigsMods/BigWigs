@@ -88,9 +88,7 @@ end
 
 -- Earthbreaker Haromm
 
-
 do
-	-- Parasite marking
 	function mod:ToxicMistRemoved(args)
 		if self.db.profile.custom_off_mist_marks then
 			for i = 1, 7 do

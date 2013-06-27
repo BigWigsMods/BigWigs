@@ -1,6 +1,6 @@
 --[[
 TODO:
-
+	corosive blast could potentially get a fancy warning, so people know when they are in front of the boss, could greatly help melee if they run out of room around the boss
 ]]--
 
 if GetBuildInfo() ~= "5.4.0" then return end -- 4th return is 50300 on the PTR ATM so can't use that
@@ -68,8 +68,8 @@ function mod:CorrosiveBlast(args)
 end
 
 function mod:Splits()
-	self:StopBar(143309)
-	self:StopBar(143436)
+	self:StopBar(143309) -- Swirl
+	self:StopBar(143436) -- Corrosive Blast
 	self:Message(-7992, "Neutral")
 end
 

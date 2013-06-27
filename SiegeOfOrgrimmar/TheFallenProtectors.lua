@@ -1,5 +1,6 @@
 --[[
 TODO:
+	:StopBar
 	look if we can get target for Clash
 	improve timers by checking how they interact with different Desperate Measures
 	look for inferno blast (inferno strike in CLEU) target
@@ -157,7 +158,6 @@ function mod:Calamity(args)
 end
 
 do
-	-- Parasite marking
 	function mod:BaneRemoved(args)
 		if self.db.profile.custom_off_bane_marks then
 			for i = 1, 7 do
