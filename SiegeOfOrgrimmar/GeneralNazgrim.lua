@@ -3,6 +3,7 @@ TODO:
 	look for event for add waves - none atm 10N PTR
 	maybe do target scanning on new waves, to start some short initial bars for add abilities?
 	rethink proximity for different difficulties
+	EJ says 10% new forces, but there is a special yell at 30% too: "Omega squad, kill them now!" look into it during further testing - look into these extra waves
 ]]--
 
 if GetBuildInfo() ~= "5.4.0" then return end -- 4th return is 50300 on the PTR ATM so can't use that

@@ -21,7 +21,6 @@ mod:RegisterEnableMob(71475, 71479, 71480) -- Rook Stonetoe, He Softfoot, Sun Te
 local UnitHealth = UnitHealth
 local UnitHealthMax = UnitHealthMax
 local UnitGUID = UnitGUID
-local UnitName = UnitName
 
 local marksUsed = {}
 local darkMeditationTimer
@@ -312,7 +311,7 @@ function mod:CorruptionShock(args)
 	-- target scanning probably needs improvement
 	-- alternative method could be to just scan with a repeating timer for target on the mob, because he only has a target when the cast on the ability finishes
 	if UnitExists(target) then
-		self:TargetMessage(args.spellId, (UnitName(target)), "Personal", "Info")
+		self:TargetMessage(args.spellId, self:UnitName(target), "Personal", "Info")
 		if self:Range(target) < 4 then
 			self:RangeMessage(args.spellId)
 			self:Flash(args.spellId)
@@ -321,7 +320,7 @@ function mod:CorruptionShock(args)
 			self:Flash(args.spellId)
 		end
 	else
-		self:ScheduleTimer("TargetMessage", 0.1, args.spellId, (UnitName(target)), "Personal", "Info")
+		self:ScheduleTimer("TargetMessage", 0.1, args.spellId, self:UnitName(target), "Personal", "Info")
 	end
 end
 
@@ -356,7 +355,7 @@ function mod:BossSucceeded(unitId, spellName, _, _, spellId)
 		-- when target scanning works, need near you warning fixed up too
 		local target = unitId.."target"
 		if UnitExists(target) then
-			self:TargetMessage(spellId, (UnitName(target)), "Personal", "Info")
+			self:TargetMessage(spellId, self:UnitName(target), "Personal", "Info")
 			if self:Range(target) < 5 then
 				self:RangeMessage(spellId)
 				self:Flash(spellId)
@@ -365,7 +364,7 @@ function mod:BossSucceeded(unitId, spellName, _, _, spellId)
 				self:Flash(spellId)
 			end
 		else
-			self:ScheduleTimer("TargetMessage", 0.1, spellId, (UnitName(target)), "Personal", "Info")
+			self:ScheduleTimer("TargetMessage", 0.1, spellId, self:UnitName(target), "Personal", "Info")
 		end
 	end
 end
@@ -392,10 +391,10 @@ function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	local GUID = UnitGUID(unitId) -- XXX not sure if unitIds reliably reset after intermissions, so just be safe and track by GUID rather than unitId
 	if hp < 70 and not intermission[GUID] then -- 66%
-		self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], UnitName(unitId))), false)
+		self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], self:UnitName(unitId))), false)
 		intermission[GUID] = 1
 	elseif hp < 37 and intermission[GUID] and intermission[GUID] == 1 then -- 33%
-		self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], UnitName(unitId))), false)
+		self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], self:UnitName(unitId))), false)
 		intermission[GUID] = 2
 	end
 	if intermission[UnitGUID("boss1")] and intermission[UnitGUID("boss1")] == 2 and intermission[UnitGUID("boss2")] and intermission[UnitGUID("boss2")] == 2 and intermission[UnitGUID("boss3")] and intermission[UnitGUID("boss3")] == 2 then
