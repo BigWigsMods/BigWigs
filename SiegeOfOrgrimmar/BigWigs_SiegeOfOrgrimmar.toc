@@ -6,7 +6,7 @@
 ## Title-frFR: Big Wigs [|cffeda55fSiege of Orgrimmar|r]
 ## Title-ruRU: Big Wigs [|cffeda55fSiege of Orgrimmar|r]
 ## Title-zhCN: Big Wigs [|cffeda55fSiege of Orgrimmar|r]
-## Title-zhTW: Big Wigs [|cffeda55fSiege of Orgrimmar|r]
+## Title-zhTW: Big Wigs [|cffeda55f圍攻奧格瑪|r]
 ## Title-itIT: Big Wigs [|cffeda55fSiege of Orgrimmar|r]
 ## Notes: Big Wigs Modules for the Siege of Orgrimmar.
 ## Notes-deDE: Big Wigs Modules for the Siege of Orgrimmar.
@@ -14,7 +14,7 @@
 ## Notes-frFR: Big Wigs Modules for the Siege of Orgrimmar.
 ## Notes-ruRU: Big Wigs Modules for the Siege of Orgrimmar.
 ## Notes-zhCN: Big Wigs Modules for the Siege of Orgrimmar.
-## Notes-zhTW: Big Wigs Modules for the Siege of Orgrimmar.
+## Notes-zhTW: Big Wigs 圍攻奧格瑪模組
 ## Notes-itIT: Big Wigs Modules for the Siege of Orgrimmar.
 
 ## LoadOnDemand: 1
