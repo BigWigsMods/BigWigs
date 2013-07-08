@@ -131,7 +131,7 @@ function mod:OnEngage()
 	self:CDBar(-7078, 10) -- Triple Puncture
 	self:CDBar(-7080, 33) -- Charge
 	if self:Heroic() then
-		self:Bar(137458, 63) -- Dire Call
+		self:Bar(137458, 61) -- Dire Call
 	end
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "LastPhase", "boss1")
 end
