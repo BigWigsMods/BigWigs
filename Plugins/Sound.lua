@@ -218,6 +218,7 @@ end
 
 local function customSound(module, key, sound)
 	local sDb = plugin.db.profile[sound]
+	if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end
 	if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
 		return false
 	else
