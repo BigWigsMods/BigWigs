@@ -470,7 +470,7 @@ do
 	local DBMdotDisplayVersion = "5.3.4"
 	function loader:DBM_AddonMessage(channel, sender, prefix, revision, _, displayVersion)
 		if prefix == "H" and (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
-			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale(), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
+			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale(), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		elseif prefix == "V" then
 			usersDBM[sender] = displayVersion
 			-- If there are people with newer versions than us, suddenly we've upgraded!
@@ -762,8 +762,8 @@ function loader:BigWigs_CoreEnabled()
 	-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
 	-- which kills your ability to receive addon comms during the loading process.
 	if IsInRaid() or IsInGroup() then
-		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
-		SendAddonMessage("D4", "H\t", IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+		SendAddonMessage("D4", "H\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 	end
 
 	loadAddons(loadOnCoreEnabled)
