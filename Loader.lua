@@ -31,7 +31,7 @@ do
 	end
 
 	-- Then build the release string, which we can add to the interface option panel.
-	local majorVersion = GetAddOnMetadata("BigWigs", "Version") or "3.?"
+	local majorVersion = GetAddOnMetadata("BigWigs", "Version") or "4.?"
 	if releaseType == REPO then
 		releaseString = L["You are running a source checkout of Big Wigs %s directly from the repository."]:format(majorVersion)
 	elseif releaseType == RELEASE then
@@ -422,6 +422,12 @@ do
 					print(L.removeAddon:format(name, old[name]))
 				end)
 			end
+
+			-- XXX disable addons that break us
+			if name == "ReckonersProMending" then -- Unfortunately the author isn't responding and it looks abandoned, luckily the addon has next to 0 popularity
+				DisableAddOn("ReckonersProMending")
+				print("The AddOn 'Reckoner's ProMending' has been disabled due to incompatibility, please ask the author to fix it.")
+			end
 		end
 
 		loaderUtilityFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
@@ -553,7 +559,7 @@ do
 	loaderUtilityFrame.timer = loaderUtilityFrame:CreateAnimationGroup()
 	loaderUtilityFrame.timer:SetScript("OnFinished", function()
 		if IsInRaid() or IsInGroup() then
-			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:%d" or "VRA:%d"):format(BIGWIGS_RELEASE_REVISION), IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
+			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:%d" or "VRA:%d"):format(BIGWIGS_RELEASE_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 		end
 	end)
 	local anim = loaderUtilityFrame.timer:CreateAnimation()
@@ -711,7 +717,7 @@ do
 				warnedThisZone[id] = true
 				local msg = L.missingAddOn:format(zoneAddon)
 				sysprint(msg)
-				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
+				--RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
 			end
 		end
 	end
@@ -720,11 +726,11 @@ end
 do
 	local grouped = nil
 	function loader:GROUP_ROSTER_UPDATE()
-		local groupType = (IsPartyLFG() and 3) or (IsInRaid() and 2) or (IsInGroup() and 1)
+		local groupType = (IsInGroup(2) and 3) or (IsInRaid() and 2) or (IsInGroup() and 1) -- LE_PARTY_CATEGORY_INSTANCE = 2
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
 			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), groupType == 3 and "INSTANCE_CHAT" or "RAID")
-			SendAddonMessage("D4", "H\t", IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+			SendAddonMessage("D4", "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			self:ZONE_CHANGED_NEW_AREA()
 		elseif grouped and not groupType then
 			grouped = nil
