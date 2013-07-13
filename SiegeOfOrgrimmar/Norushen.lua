@@ -77,6 +77,7 @@ function mod:OnEngage()
 	bigAddCounter = 0
 	phase = 1
 	self:Berserk(420)
+	self:Bar(145226, 25) -- Blind Hatred
 end
 
 --------------------------------------------------------------------------------
