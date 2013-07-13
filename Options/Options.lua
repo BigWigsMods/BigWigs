@@ -276,7 +276,7 @@ local function translateZoneID(id)
 	else
 		name = GetMapNameByID(id)
 	end
-	if id == 956 then -- XXX temp
+	if id == 953 then -- XXX temp
 		name = "SiegeOfOrgrimmarBETA"
 	end
 	if not name then
