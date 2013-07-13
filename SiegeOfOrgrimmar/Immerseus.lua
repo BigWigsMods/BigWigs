@@ -8,7 +8,7 @@ if GetBuildInfo() ~= "5.4.0" then return end -- 4th return is 50300 on the PTR A
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Immerseus", 956, 852)
+local mod, CL = BigWigs:NewBoss("Immerseus", 953, 852)
 if not mod then return end
 mod:RegisterEnableMob(71543)
 

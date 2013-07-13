@@ -4,7 +4,7 @@ if select(4, GetBuildInfo()) < 50400 then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Spoils of Pandaria", 956, 870)
+local mod, CL = BigWigs:NewBoss("Spoils of Pandaria", 953, 870)
 if not mod then return end
 mod:RegisterEnableMob(100000)
 

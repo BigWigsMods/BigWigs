@@ -11,7 +11,7 @@ if GetBuildInfo() ~= "5.4.0" then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Paragons of the Klaxxi", 956, 853)
+local mod, CL = BigWigs:NewBoss("Paragons of the Klaxxi", 953, 853)
 if not mod then return end
 mod:RegisterEnableMob(71161, 71157, 71156, 71155, -- Kil'ruk the Wind-Reaver, Xaril the Poisoned Mind, Kaz'tik the Manipulator, Korven the Prime
 71160, 71154, 71152, 71158, 71153 ) -- Iyyokuk the Lucid, Ka'roz the Locust, Skeer the Bloodseeker, Rik'kal the Dissector, Hisek the Swarmkeeper

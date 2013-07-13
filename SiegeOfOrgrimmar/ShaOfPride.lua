@@ -8,7 +8,7 @@ if select(4, GetBuildInfo()) < 50400 then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Sha of Pride", 956, 867)
+local mod, CL = BigWigs:NewBoss("Sha of Pride", 953, 867)
 if not mod then return end
 mod:RegisterEnableMob(71734)
 

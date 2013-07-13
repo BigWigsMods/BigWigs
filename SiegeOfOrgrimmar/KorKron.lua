@@ -8,7 +8,7 @@ if GetBuildInfo() ~= "5.4.0" then return end -- 4th return is 50300 on the PTR A
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Kor'kron Dark Shaman", 956, 856)
+local mod, CL = BigWigs:NewBoss("Kor'kron Dark Shaman", 953, 856)
 if not mod then return end
 mod:RegisterEnableMob(71859, 71858) -- Earthbreaker Haromm, Wavebinder Kardris
 

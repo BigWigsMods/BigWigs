@@ -4,7 +4,7 @@ if select(4, GetBuildInfo()) < 50400 then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Siege of Orgrimmar Trash", 956)
+local mod, CL = BigWigs:NewBoss("Siege of Orgrimmar Trash", 953)
 if not mod then return end
 mod:RegisterEnableMob(100000)
 

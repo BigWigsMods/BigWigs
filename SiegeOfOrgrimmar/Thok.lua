@@ -4,7 +4,7 @@ if select(4, GetBuildInfo()) < 50400 then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Thok the Bloodthirsty", 956, 851)
+local mod, CL = BigWigs:NewBoss("Thok the Bloodthirsty", 953, 851)
 if not mod then return end
 mod:RegisterEnableMob(100000)
 

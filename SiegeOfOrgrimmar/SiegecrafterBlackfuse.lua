@@ -8,7 +8,7 @@ if GetBuildInfo() ~= "5.4.0" then return end -- 4th return is 50300 on the PTR A
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Siegecrafter Blackfuse", 956, 865)
+local mod, CL = BigWigs:NewBoss("Siegecrafter Blackfuse", 953, 865)
 if not mod then return end
 mod:RegisterEnableMob(71504)
 

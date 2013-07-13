@@ -11,7 +11,7 @@ if GetBuildInfo() ~= "5.4.0" then return end -- 4th return is 50300 on the PTR A
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("The Fallen Protectors", 956, 849)
+local mod, CL = BigWigs:NewBoss("The Fallen Protectors", 953, 849)
 if not mod then return end
 mod:RegisterEnableMob(71475, 71479, 71480) -- Rook Stonetoe, He Softfoot, Sun Tenderheart
 
