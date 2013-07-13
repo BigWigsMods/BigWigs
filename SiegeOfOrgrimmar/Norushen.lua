@@ -1,6 +1,5 @@
 --[[
 TODO:
-	-- look into if tank or healers need some special warning for the inside phase
 ]]--
 
 if select(4, GetBuildInfo()) < 50400 then return end
@@ -41,7 +40,7 @@ function mod:GetOptions()
 	return {
 		{-8218, "TANK_HEALER"}, 145226, 145132,-- Amalgam of Corruption
 		"big_adds",
-		-8220, 144482,
+		-8220, 144482, 144514, 144649, 144628,
 		"stages", "berserk", "bosskill",
 	}, {
 		[-8218] = -8216, -- Amalgam of Corruption
@@ -55,6 +54,9 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	-- Look Within
+	self:Log("SPELL_CAST_START", "TitanicSmash", 144628)
+	self:Log("SPELL_CAST_START", "HurlCorruption", 144649)
+	self:Log("SPELL_CAST_SUCCESS", "LingeringCorruption", 144514)
 	self:Log("SPELL_CAST_START", "TearReality", 144482)
 	self:Log("SPELL_AURA_REMOVED", "LookWithinRemoved", 144851, 144850, 144849) -- Test of Serenity (DPS), Test of Reliance (HEALER), Test of Confiidence (TANK)
 	self:Log("SPELL_AURA_APPLIED", "LookWithinApplied", 144851, 144850, 144849) -- Test of Serenity (DPS), Test of Reliance (HEALER), Test of Confiidence (TANK)
@@ -85,8 +87,26 @@ end
 --
 
 -- Look Within
-function mod:TearReality(args)
+-- TANK
+function mod:HurlCorruption(args)
+	self:Message(args.spellId, "Attention", "Info")
+	self:CBar(args.spellID, 15)
+end
+
+function mod:HurlCorruption(args)
 	self:Message(args.spellId, "Urgent", "Warning")
+	self:Bar(args.spellID, 20)
+end
+
+-- HEALER
+function mod:LingeringCorruption(args)
+	self:Message(args.spellId, "Urgent", "Warning")
+	self:Bar(args.spellID, 15)
+end
+
+-- DPS
+function mod:TearReality(args)
+	self:Message(args.spellId, "Attention", "Info")
 	self:CDBar(args.spellID, 8) -- any point for this?
 end
 
@@ -113,7 +133,7 @@ function mod:UNIT_SPELLCAST_SUCCEDED(unitId, spellName, _, _, spellId)
 	elseif spellId == 145007 then -- Unleash Corruption -- spawns adds in p2
 		-- don't think this needs sync
 		bigAddCounter = bigAddCounter + 1
-		self:Message("big_adds", "Urgent", "Alarm", L["big_add"]:format(bigAddCounter))
+		self:Message("big_adds", "Urgent", nil, L["big_add"]:format(bigAddCounter))
 	end
 end
 
