@@ -10,7 +10,7 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "zhTW")
 if L then
-	L.charge_trigger = "開始拍打他的尾巴"
+	L.charge_trigger = "用力拍動尾巴!"
 	L.door_trigger = "的門蜂擁而出!"
 
 	L.chain_lightning_message = "焦點：>閃電鏈<！"
@@ -74,8 +74,8 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "zhTW")
 if L then
-	L.lower_hatch_trigger = "下層某個鳥巢中的蛋開始孵化了！"
-	L.upper_hatch_trigger = "上層某個鳥巢中的蛋開始孵化了！"
+	L.lower_hatch_trigger = "下層巢裡的蛋開始孵化了!"
+	L.upper_hatch_trigger = "上層巢裡的蛋開始孵化了!"
 
 	L.nest = "巢穴"
 	L.nest_desc = "警報依賴於巢穴。\n|cFFADFF2F提示：如果你沒有分配到處理巢穴請關閉該警報。|r"
