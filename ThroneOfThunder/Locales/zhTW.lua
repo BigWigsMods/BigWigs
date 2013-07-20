@@ -81,8 +81,8 @@ if L then
 	L.nest_desc = "鳥巢警報。\n|cFFADFF2F提示：如果你不是分配到處理鳥巢請取消此選項關閉警報。|r"
 
 	L.flight_over = "飛行結束 %d秒！"
-	L.upper_nest = "|cff008000下層|r鳥巢"
-	L.lower_nest = "|cffff0000上層|r鳥巢"
+	L.upper_nest = "|cff008000上層|r鳥巢"
+	L.lower_nest = "|cffff0000下層|r鳥巢"
 	L.up = "|cff008000上層|r"
 	L.down = "|cffff0000下層|r"
 	L.add = "巢穴守衛者"
