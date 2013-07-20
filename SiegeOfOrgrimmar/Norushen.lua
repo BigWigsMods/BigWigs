@@ -88,7 +88,7 @@ end
 
 -- Look Within
 -- TANK
-function mod:HurlCorruption(args)
+function mod:TitanicSmash(args)
 	self:Message(args.spellId, "Attention", "Info")
 	self:CBar(args.spellID, 15)
 end
