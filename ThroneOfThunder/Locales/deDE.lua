@@ -74,6 +74,7 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "deDE")
 if L then
+	--L.first_lower_hatch_trigger = "The eggs in one of the lower nests begin to hatch!"
 	L.lower_hatch_trigger = "Die Eier in einem der unteren Nester beginnen, aufzubrechen!"
 	L.upper_hatch_trigger = "Die Eier in einem der oberen Nester beginnen, aufzubrechen!"
 

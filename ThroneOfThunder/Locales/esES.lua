@@ -75,6 +75,7 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "esES") or BigWigs:NewBossLocale("Ji-Kun", "esMX")
 if L then
+	L.first_lower_hatch_trigger = "¡Los huevos de los nidos más bajos empiezan a abrirse!"
 	L.lower_hatch_trigger = "¡Los huevos de uno de los nidos inferiores empiezan a abrirse!"
 	L.upper_hatch_trigger = "¡Los huevos de uno de los nidos superiores empiezan a abrirse!"
 

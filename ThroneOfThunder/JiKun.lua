@@ -23,6 +23,7 @@ local quillCounter = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.first_lower_hatch_trigger = "The eggs in one of the lower nests begin to hatch!"
 	L.lower_hatch_trigger = "The eggs in one of the lower nests begin to hatch!"
 	L.upper_hatch_trigger = "The eggs in one of the upper nests begin to hatch!"
 
@@ -94,7 +95,8 @@ function mod:Caw(args)
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
-	if not msg:find(L["upper_hatch_trigger"], nil, true) and not msg:find(L["lower_hatch_trigger"], nil, true) then return end
+	-- Some locales (Spanish esES) use a custom emote for the very first nest, support it.
+	if not msg:find(L["upper_hatch_trigger"], nil, true) and not msg:find(L["lower_hatch_trigger"], nil, true) and not msg:find(L["first_lower_hatch_trigger"], nil, true) then return end
 
 	local diff = self:Difficulty()
 	nestCounter = nestCounter + 1
