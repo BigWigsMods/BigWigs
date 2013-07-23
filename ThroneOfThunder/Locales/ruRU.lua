@@ -74,7 +74,7 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "ruRU")
 if L then
-	--L.first_lower_hatch_trigger = "The eggs in one of the lower nests begin to hatch!"
+	L.first_lower_hatch_trigger = "Яйца в одном из нижних гнезд начинают проклевываться!"
 	L.lower_hatch_trigger = "Яйца в одном из нижних гнезд начинают проклевываться!"
 	L.upper_hatch_trigger = "Яйца в одном из верхних гнезд начинают проклевываться!"
 
@@ -200,7 +200,7 @@ if L then
 	L.sensitivityfurthestbad = "Восприимчивость к жизни + далеко = |cffff0000ПЛОХО|r!"
 	L.kill_trigger = "Остановитесь!"
 
-	L.assistPrint = "A plugin called 'BigWigs_Ra-denAssist' has now been released for assistance during the Ra-den encounter that your guild may be interested in trying."
+	L.assistPrint = "Плагин 'BigWigs_Ra-denAssist' уже выпущен для помощи во время схватки с Ра-Деном. Возможно, ваша гильдия захочет его попробовать."
 end
 
 L = BigWigs:NewBossLocale("Throne of Thunder Trash", "ruRU")
