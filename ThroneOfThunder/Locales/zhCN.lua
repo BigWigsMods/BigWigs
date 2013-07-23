@@ -81,8 +81,8 @@ if L then
 	L.nest_desc = "警报依赖于巢穴。\n|cFFADFF2F提示：如果你没有分配到处理巢穴请关闭该警报。|r"
 
 	L.flight_over = "飞行结束 %d秒！"
-	L.upper_nest = "|cff008000下层|r巢穴"
-	L.lower_nest = "|cffff0000上层|r巢穴"
+	L.upper_nest = "|cff008000上层|r巢穴"
+	L.lower_nest = "|cffff0000下层|r巢穴"
 	L.up = "|cff008000上层|r"
 	L.down = "|cffff0000下层|r"
 	L.add = "增援"
