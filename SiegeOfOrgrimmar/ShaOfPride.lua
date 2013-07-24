@@ -35,7 +35,7 @@ if L then
 	L.custom_off_titan_mark_desc = "To help spotting others with Gift of the Titans, mark the people who have Gift of the Titans on them with %s%s%s%s%s%s%s%s (players with Aura of Pride are not marked), requires promoted or leader."
 
 	L.projection_message = "Go to |cFF00FF00GREEN|r arrow!"
-	L.projection_explosion = "Projection expolosion"
+	L.projection_explosion = "Projection explosion"
 
 	L.big_add_bar = "Big add"
 	L.big_add_spawning = "Big add spawning!"

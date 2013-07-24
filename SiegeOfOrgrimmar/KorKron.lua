@@ -28,7 +28,6 @@ if L then
 
 	L.custom_off_mist_marks = "Toxic Mist"
 	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
-
 end
 L = mod:GetLocale()
 L.custom_off_mist_marks_desc = L.custom_off_mist_marks_desc:format( -- XXX cut down the number of marks used once we know the max amount used in 25H
