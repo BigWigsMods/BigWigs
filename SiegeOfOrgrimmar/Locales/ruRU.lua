@@ -66,7 +66,8 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "ruRU")
 if L then
-
+	L.tank_debuffs = "Дебаффы танка"
+	L.tank_debuffs_desc = "Предупреждать о разных типах дебаффов танка, связанных со Страшным ревом."
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "ruRU")
