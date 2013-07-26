@@ -85,7 +85,7 @@ function mod:OnEngage()
 	smashCounter = 1
 	slamCounter = 1
 	breathCounter = 1
-	self:Bar(142826, 12, L["count"]:format(arcingSmash, 1)) -- Arcing Smash
+	self:Bar(142826, 12, CL["count"]:format(arcingSmash, 1)) -- Arcing Smash
 	self:Bar(142851, 5) -- Seismic Slam
 	self:OpenProximity(142851, 5)
 	self:Bar(142842, 59, CL["count"]:format(self:SpellName(142842), 1)) -- Breath
@@ -185,7 +185,7 @@ do
 	end
 end
 
-function mod:ArchingSmash(args)
+function mod:ArcingSmash(args)
 	self:Message(args.spellId, "Attention", nil, CL["count"]:format(args.spellName, smashCounter))
 	smashCounter = smashCounter + 1
 	self:CDBar(args.spellId, 17, CL["count"]:format(args.spellName, smashCounter))
