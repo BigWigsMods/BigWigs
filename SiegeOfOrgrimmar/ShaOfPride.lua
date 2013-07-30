@@ -59,10 +59,12 @@ L.custom_off_titan_mark_desc = L.custom_off_titan_mark_desc:format(
 
 function mod:GetOptions()
 	return {
+		145215, 147207,
 		"custom_off_titan_mark",
 		146595, 144400, -8257, {-8258, "FLASH"}, {146817, "FLASH", "PROXIMITY"}, -8270, 144351, {144358, "TANK", "FLASH"}, -8262, 144800, 144563, -8349,
 		"berserk", "bosskill",
 	}, {
+		[145215] = "heroic",
 		["custom_off_titan_mark"] = L.custom_off_titan_mark,
 		[146595] = "general",
 	}
@@ -71,6 +73,10 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
+	-- heroic
+	self:Log("SPELL_AURA_REMOVED", "WeakenedResolveOver", 147207)
+	self:Log("SPELL_AURA_APPLIED", "Banishment", 145215)
+	-- normal
 	self:Log("SPELL_CAST_SUCCESS", "Unleashed", 144832)
 	self:Log("SPELL_AURA_APPLIED", "ImprisonApplied", 144574, 144684, 144683, 144636)
 	self:Log("SPELL_CAST_START", "Imprison", 144563)
@@ -108,6 +114,18 @@ end
 -- Event Handlers
 --
 
+-- heroic
+function mod:WeakenedResolveOver(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Positive", nil, CL["over"]:format(args.spellName))
+	end
+end
+
+function mod:Banishment(args)
+	selt:TargetMessage(args.spellId, args.destName, "Attention")
+end
+
+-- normal
 function mod:Unleashed()
 	self:Message(8349, "Neutral", "Info")
 	self:Bar(146595, 7) -- Titan Gift
@@ -233,7 +251,7 @@ do
 end
 
 function mod:SwellingPride(args)
-	self:Message(args.spellId, "Attention", nil, CL["casting"]:formta(args.spellName))
+	self:Message(args.spellId, "Attention", nil, CL["casting"]:format(args.spellName))
 	self:Bar(args.spellId, 62)
 end
 

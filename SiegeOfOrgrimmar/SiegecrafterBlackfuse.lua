@@ -19,6 +19,14 @@ mod:RegisterEnableMob(71504)
 local assemblyLineCounter = 1
 local shredder = EJ_GetSectionInfo(8199)
 local sawbladeTarget
+local function getBossByMobId(mobId)
+	for i=1, 5 do
+		if mod:MobId("boss"..i) == mobId then
+			return "boss"..i
+		end
+	end
+	return
+end
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,6 +40,8 @@ if L then
 
 	L.assembly_line_trigger = "Unfinished weapons begin to roll out on the assembly line."
 	L.assembly_line_message = "Unfinished weapons (%d)"
+
+	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!"
 end
 L = mod:GetLocale()
 
@@ -63,7 +73,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Superheated", 143856)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Superheated", 143856)
 	self:RegisterEvent("RAID_BOSS_WHISPER")
-	self:Log("SPELL_AURA_APPLIED", "ShockwaveMissile", 143639)
+	self:Yell("ShockwaveMissile", L["shockwave_missile_trigger"])
+	self:Log("SPELL_AURA_APPLIED", "ShockwaveMissileOver", 143639)
 	self:Log("SPELL_AURA_APPLIED", "PatternRecognitionApplied", 144236)
 	self:Log("SPELL_AURA_REMOVED", "PatternRecognitionRemoved", 144236)
 	-- Automated Shredders
@@ -97,12 +108,26 @@ function mod:AssemblyLine()
 	self:Bar(-8202, 40, CL["count"]:format((EJ_GetSectionInfo(8202)), assemblyLineCounter), "Inv_crate_03")
 end
 
-function mod:CrawlerMine(args)
-	self:Message(-8212, "Urgent", nil, args.destName, 77976) -- mine like icon
+do
+	local prev = 0
+	function mod:CrawlerMine(args)
+		local t = GetTime()
+		if t-prev > 5 then
+			prev = t
+			self:Message(-8212, "Urgent", nil, args.destName, 77976) -- mine like icon
+		end
+	end
 end
 
-function mod:MagneticCrush(args)
-	self:Message(args.spellId, "Important", "Long")
+do
+	local prev = 0
+	function mod:MagneticCrush(args)
+		local t = GetTime()
+		if t-prev > 15 then
+			prev = t
+			self:Message(args.spellId, "Important", "Long")
+		end
+	end
 end
 
 function mod:Superheated(args)
@@ -123,15 +148,19 @@ function mod:RAID_BOSS_WHISPER(msg, sender)
 	elseif msg:find("143266") then -- Sawblade
 		-- this is faster than target scanning, hence why we do it
 		sawbladeTarget = UnitGUID("player")
-		self:TargetMessage(-8195, self:UnitName("player"), "Positive", "Info")
+		self:Message(-8195, "Positive", "Info", CL["you"]:format(self:SpellName(143266)))
 		self:PrimaryIcon(-8195, "player")
 		self:Flash(-8195)
 		self:Say(-8195)
 	end
 end
 
-function mod:ShockwaveMissile(args)
-	self:Message(args.spellId, "Urgent")
+function mod:ShockwaveMissile()
+	self:Message(143639, "Urgent")
+end
+
+function mod:ShockwaveMissileOver(args)
+	self:Message(args.spellId, "Urgent", nil, CL["over"]:format(args.spellName))
 end
 
 function mod:PatternRecognitionApplied(args)
@@ -142,15 +171,15 @@ end
 
 function mod:PatternRecognitionRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(-8207, "Positive")
+		self:Message(-8207, "Positive", CL["over"]:format(args.spellName))
 	end
 end
 
 -- Automated Shredders
 
 function mod:ShredderEngage()
-	self:Message(-8199, "Attention", self:Tank() and "Long", shredder)
-	self:Bar(-8199, 121, shredder)
+	self:Message(-8199, "Attention", self:Tank() and "Long", shredder, "INV_MISC_ARMORKIT_27")
+	self:Bar(-8199, 121, shredder, "INV_MISC_ARMORKIT_27")
 	self:Bar(144208, 16)
 end
 
@@ -181,23 +210,25 @@ end
 do
 	-- rather do this than syncing
 	local timer = nil
-	local function warnSawblade(player, guid)
-		mod:TargetMessage(-8195, player, "Positive", "Info")
-		mod:PrimaryIcon(-8195, player)
-		if mod:Me(guid) then
-			mod:Flash(-8195)
-			mod:Say(-8195)
-		end
-		if mod:Range(player) < 8 then -- 8 is guessed
+	local function warnSawblade(target, guid)
+		local player = mod:UnitName(target)
+		mod:PrimaryIcon(-8195, target)
+		if mod:Range(target) < 8 then -- 8 is guessed
 			mod:RangeMessage(-8195)
 			mod:Flash(-8195)
+		elseif not mod:Me(guid) then -- we warn for ourself from the BOSS_WHISPER
+			mod:TargetMessage(-8195, player, "Positive", "Info")
 		end
 	end
 	local function checkSawblade()
-		local player = mod:UnitName("boss1target")
-		if player and (not UnitDetailedThreatSituation("boss1target", "boss1") and not mod:Tank("boss1target")) then
-			sawbladeTarget = UnitGUID("boss1target")
-			warnSawblade(player, sawbladeTarget)
+		local boss = getBossByMobId(71504)
+		local target
+		if boss and UnitExists(boss.."target") then
+			target = boss.."target"
+		end
+		if target and (not UnitDetailedThreatSituation(target, boss) and not mod:Tank(target)) then
+			sawbladeTarget = UnitGUID(target)
+			warnSawblade(target, sawbladeTarget)
 			mod:CancelTimer(timer)
 			timer = nil
 		end

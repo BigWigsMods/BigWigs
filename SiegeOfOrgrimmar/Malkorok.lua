@@ -121,14 +121,20 @@ do
 			end
 		end
 	end
-	local energyList = mod:NewTargetList()
+	local energyList, scheduled = mod:NewTargetList()
+	local function warnDisplacedEnergy(spellId)
+		mod:TargetMessage(spellId, energyList, "Urgent", "Alert")
+		scheduled = nil
+	end
 	function mod:DisplacedEnergyApplied(args)
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:OpenProximity(args.spellId, 8)
 		end
 		energyList[#energyList+1] = args.destName
-		self:ScheduleTimer("TargetMessage", 0.1, args.spellId, energyList, "Urgent", "Alert")
+		if not scheduled then
+			self:ScheduleTimer(warnDisplacedEnergy, 0.1)
+		end
 		if self.db.profile.custom_off_energy_marks then
 			markEnergy(args.destName)
 		end
@@ -148,13 +154,9 @@ end
 
 function mod:ExpelMiasma()
 	self:Message(142879, "Neutral", "Long", CL["over"]:format(self:SpellName(142879)))
-	smashCounter = 1
-	slamCounter = 1
-	breathCounter = 1
-	self:Bar(142826, 7, CL["count"]:format(arcingSmash, 1)) -- Arcing Smash
-	self:Bar(142851, 5) -- Seismic Slam
 	self:OpenProximity(142851, 5)
 	self:StopBar(142913) -- Displaced Energy
+	breathCounter = 1
 end
 
 -- Non rage phase
@@ -170,6 +172,11 @@ function mod:Breath(args)
 	self:Message(args.spellId, "Important", "Warning", CL["count"]:format(args.spellName, breathCounter))
 	breathCounter = breathCounter + 1
 	self:Bar(args.spellId, 59, CL["count"]:format(args.spellName, breathCounter))
+
+	smashCounter = 1
+	slamCounter = 1
+	self:Bar(142826, 7, CL["count"]:format(arcingSmash, 1)) -- Arcing Smash
+	self:Bar(142851, 5) -- Seismic Slam
 end
 
 do
@@ -177,10 +184,13 @@ do
 	local slamTimer
 	function mod:SeismicSlam(args)
 		if not slamTimers[slamCounter] then return end -- don't do anything if we don't have timer
+		if self:Heroic() then
+			args.spellName = CL["add_spawned"]
+		end
 		-- don't think this needs a message
 		-- if anything a soon message, since timers seem reliable
 		slamTimer = self:ScheduleTimer("Message", slamTimers[slamCounter]-2, args.spellId, "Urgent", nil, CL["custom_sec"]:format(args.spellName, 2))
-		self:Bar(args.spellId, slamTimers[slamCounter])
+		self:Bar(args.spellId, slamTimers[slamCounter], self:Heroic() and CL["next_add"])
 		slamCounter = slamCounter + 1
 	end
 end

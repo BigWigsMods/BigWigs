@@ -4,6 +4,7 @@ TODO:
 	look if we can get target for Clash
 	improve timers by checking how they interact with different Desperate Measures
 	look for inferno blast (inferno strike in CLEU) target
+	corruption shock target scanning or at least verify how the mobs targeting works
 ]]--
 
 if GetBuildInfo() ~= "5.4.0" then return end -- 4th return is 50300 on the PTR ATM so can't use that
@@ -307,9 +308,13 @@ end
 function mod:CorruptionShock(args)
 	-- in 10 man one cast resulted in 2 bolts, so obviously can only warn for 1 target, since CLEU does not supply target
 	local unit = self:GetUnitIdByGUID(args.sourceGUID)
-	local target = unit.."target"
+	local target
+	if unit then
+		target = unit.."target"
+	end
 	-- target scanning probably needs improvement
 	-- alternative method could be to just scan with a repeating timer for target on the mob, because he only has a target when the cast on the ability finishes
+	-- XXX this needs testing and verifying again how the mob changes target
 	if UnitExists(target) then
 		self:TargetMessage(args.spellId, self:UnitName(target), "Personal", "Info")
 		if self:Range(target) < 4 then
@@ -347,24 +352,31 @@ function mod:Clash(args)
 	self:CDBar(args.spellId, 46)
 end
 
-function mod:BossSucceeded(unitId, spellName, _, _, spellId)
-	if spellId == 143019 then -- Corrupted Brew
-		-- timer is all over the place, need to figure out if something delays it or what
-		self:CDBar(spellId, 11) -- not sure if there is a point for this like this
-		-- target scanning might be needed
-		-- when target scanning works, need near you warning fixed up too
+do
+	local timer
+	local function warnCorruptedBrewTarget(unitId)
 		local target = unitId.."target"
-		if UnitExists(target) then
-			self:TargetMessage(spellId, self:UnitName(target), "Personal", "Info")
-			if self:Range(target) < 5 then
-				self:RangeMessage(spellId)
-				self:Flash(spellId)
+		if not UnitExists(target) or mod:Tank(target) or UnitDetailedThreatSituation(target, unitId) then return end
+		mod:TargetMessage(143019, mod:UnitName(target), "Personal", "Info")
+		if mod:Range(target) < 5 then
+			mod:RangeMessage(143019)
+			mod:Flash(143019)
+		end
+		if mod:Me(UnitGUID(target)) then
+			mod:Flash(143019)
+		end
+		mod:CancelTimer(timer)
+		timer = nil
+	end
+	function mod:BossSucceeded(unitId, spellName, _, _, spellId)
+		if spellId == 143019 then -- Corrupted Brew
+			-- timer is all over the place, need to figure out if something delays it or what
+			self:CDBar(spellId, 11) -- not sure if there is a point for this like this
+			-- target scanning might be needed
+			-- when target scanning works, need near you warning fixed up too
+			if not timer then
+				timer = self:ScheduleRepeatingTimer(warnCorruptedBrewTarget, 0.05, unitId)
 			end
-			if self:Me(UnitGUID(target)) then
-				self:Flash(spellId)
-			end
-		else
-			self:ScheduleTimer("TargetMessage", 0.1, spellId, self:UnitName(target), "Personal", "Info")
 		end
 	end
 end
