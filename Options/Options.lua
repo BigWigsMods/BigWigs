@@ -81,6 +81,7 @@ local acOptions = {
 			name = L["Customize ..."],
 			func = function()
 				InterfaceOptionsFrame_OpenToCategory(L["Customize ..."])
+				InterfaceOptionsFrame_OpenToCategory(L["Customize ..."])
 			end,
 			order = 11.5,
 		},
@@ -296,7 +297,9 @@ local function findPanel(name, parent)
 end
 
 function options:OnInitialize()
-	BigWigsLoader:RemoveInterfaceOptions()
+	if BigWigsLoader.RemoveInterfaceOptions then
+		BigWigsLoader:RemoveInterfaceOptions()
+	end
 
 	ac:RegisterOptionsTable("BigWigs", acOptions)
 	local mainOpts = acd:AddToBlizOptions("BigWigs", "Big Wigs")
@@ -418,9 +421,11 @@ function options:Open()
 			local menu = translateZoneID(module.otherMenu) or translateZoneID(module.zoneId)
 			if not menu then return end
 			InterfaceOptionsFrame_OpenToCategory(self:GetZonePanel(module.otherMenu or module.zoneId))
+			InterfaceOptionsFrame_OpenToCategory(self:GetZonePanel(module.otherMenu or module.zoneId))
 		end
 	end
 	if not InterfaceOptionsFrame:IsShown() then
+		InterfaceOptionsFrame_OpenToCategory("Big Wigs")
 		InterfaceOptionsFrame_OpenToCategory("Big Wigs")
 	end
 end
@@ -1172,7 +1177,10 @@ do
 					-- if we were collapsed.
 					-- So now we need to select the first zone.
 					p = findPanel(nil, self.name)
-					if p then InterfaceOptionsFrame_OpenToCategory(p.element.name) end
+					if p then
+						InterfaceOptionsFrame_OpenToCategory(p.element.name)
+						InterfaceOptionsFrame_OpenToCategory(p.element.name)
+					end
 				end)
 			end
 
@@ -1184,7 +1192,7 @@ do
 
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
-		local parent = BigWigsLoader.zoneList[zoneId] and addonNameToHeader[BigWigsLoader.zoneList[zoneId]] or addonNameToHeader.BigWigs_MistsOfPandaria
+		local parent = BigWigsLoader.zonesList[zoneId] and addonNameToHeader[BigWigsLoader.zonesList[zoneId]] or addonNameToHeader.BigWigs_MistsOfPandaria
 		local panel, created = self:GetPanel(zoneName, parent, zoneId)
 		if created then
 			panel:SetScript("OnShow", onZoneShow)

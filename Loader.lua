@@ -93,7 +93,7 @@ do
 	local cata = "BigWigs_Cataclysm"
 	local lw = "LittleWigs"
 
-	loader.zoneList = {
+	loader.zonesList = {
 		[696]=c, [755]=c,
 		[775]=bc, [780]=bc, [779]=bc, [776]=bc, [465]=bc, [473]=bc, [799]=bc, [782]=bc,
 		[604]=wotlk, [543]=wotlk, [535]=wotlk, [529]=wotlk, [527]=wotlk, [532]=wotlk, [531]=wotlk, [609]=wotlk, [718]=wotlk,
@@ -710,7 +710,7 @@ do
 		end
 
 		-- Lacking zone modules
-		local zoneAddon = self.zoneList[id]
+		local zoneAddon = self.zonesList[id]
 		if zoneAddon and not warnedThisZone[id] then
 			local _, _, _, enabled = GetAddOnInfo(zoneAddon)
 			if not enabled then
@@ -941,25 +941,34 @@ end
 -----------------------------------------------------------------------
 -- Interface options
 --
+
 do
 	local frame = CreateFrame("Frame", nil, UIParent)
 	frame.name = "Big Wigs"
 	frame:Hide()
-	local function removeFrame()
+	loader.RemoveInterfaceOptions = function()
 		for k, f in next, INTERFACEOPTIONS_ADDONCATEGORIES do
 			if f == frame then
 				tremove(INTERFACEOPTIONS_ADDONCATEGORIES, k)
 				break
 			end
 		end
+		frame:SetScript("OnShow", nil)
+		loader.RemoveInterfaceOptions = nil
 	end
 	frame:SetScript("OnShow", function()
-		removeFrame()
+		if not BigWigsOptions and (InCombatLockdown() or UnitAffectingCombat("player")) then
+			sysprint(L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."])
+			return
+		end
+
+		loader:RemoveInterfaceOptions()
+		loadCoreAndOpenOptions()
+		InterfaceOptionsFrameOkay:Click()
 		loadCoreAndOpenOptions()
 	end)
 
 	InterfaceOptions_AddCategory(frame)
-	loader.RemoveInterfaceOptions = removeFrame
 end
 
 BigWigsLoader = loader -- Set global
