@@ -10,7 +10,7 @@ if select(4, GetBuildInfo()) < 50400 then return end
 
 local mod, CL = BigWigs:NewBoss("Galakras", 953, 868)
 if not mod then return end
-mod:RegisterEnableMob(72249, 72560) -- Galakras, Lor'themar Theron
+mod:RegisterEnableMob(72249, 72560, 72311) -- Galakras, Lor'themar Theron (Horde), King Varian Wrynn (Alliance)
 
 --------------------------------------------------------------------------------
 -- Locals

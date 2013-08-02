@@ -46,11 +46,13 @@ L.custom_off_mist_marks_desc = L.custom_off_mist_marks_desc:format( -- XXX cut d
 
 function mod:GetOptions()
 	return {
+		144330, 144328,
 		{-8132, "FLASH", "ICON", "SAY"}, -- Earthbreaker Haromm
 		"custom_off_mist_marks",
-		{144005, "FLASH"}, 143990, 143973, -- Wavebinder Kardris
+		{144005, "FLASH"}, {143990, "FLASH"}, 143973, -- Wavebinder Kardris
 		144302, "berserk", "bosskill",
 	}, {
+		[144330] = "heroic",
 		[-8132] = -8128, -- Earthbreaker Haromm
 		["custom_off_mist_marks"] = L.custom_off_mist_marks,
 		[144005] = -8134, -- Wavebinder Kardris
@@ -64,14 +66,17 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Bloodlust", 144302)
 	-- Earthbreaker Haromm
 	self:Log("SPELL_AURA_APPLIED", "ToxicMistApplied", 144089)
-	self:Log("SPELL_AURA_Removed", "ToxicMistRemoved", 144089)
-	self:Log("SPELL_CAST_START", "FoulStream", 137399) -- SUCCESS has destName but is way too late, and "boss1target" should be reliable for it
-	self:Log("SPELL_CAST_SUCCESS", "FoulStreamFallback", 137399)
+	self:Log("SPELL_AURA_REMOVED", "ToxicMistRemoved", 144089)
+	self:Log("SPELL_CAST_START", "FoulStream", 137399, 144090) -- SUCCESS has destName but is way too late, and "boss1target" should be reliable for it
+	self:Log("SPELL_CAST_SUCCESS", "FoulStreamFallback", 137399, 144090)
 	-- Wavebinder Kardris
 	self:Log("SPELL_CAST_START", "FallingAsh", 143973)
-	self:Log("SPELL_CAST_START", "FoulGeyser", 143990)
+	self:Log("SPELL_CAST_SUCCESS", "FoulGeyser", 143990) -- we can live with success for this since blobs don't spawn instantly, rather not do the whole target scanning again
 	self:Log("SPELL_CAST_START", "ToxicStorm", 144005)
 	self:Log("SPELL_DAMAGE", "ToxicStormDamage", 144017)
+	-- heroic
+	self:Log("SPELL_AURA_APPLIED", "IronPrison", 144330)
+	self:Log("SPELL_CAST_START", "IronTomb", 144328)
 
 	self:Death("Win", 71859)
 end
@@ -84,6 +89,19 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+-- heroic
+function mod:IronTomb(args)
+	self:Bar(args.spellId, 31)
+	self:Message(args.spellId, "Important", "Long")
+end
+
+function mod:IronPrison(args)
+	if self:Me(args.destGUID) then
+		self:Bar(args.spellId, 60)
+		self:ScheduleTimer("Message", 57, "Attention", "Warning", CL["soon"]:format(CL["removed"]:format(args.spellName)))
+	end
+end
 
 -- Earthbreaker Haromm
 
@@ -166,8 +184,14 @@ function mod:FallingAsh(args)
 end
 
 function mod:FoulGeyser(args)
-	self:Message(args.spellId, "Important", "Alert", CL["soon"]:format(L["blobs"]))
-	self:Bar(args.spellId, 35, L["blobs"]) --32+3
+	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", L["blobs"])
+	self:Bar(args.spellId, 32, L["blobs"])
+	if self:Me(args.destGUID) then
+		self:Flash(args.spellId)
+	end
+	if self:Range(args.destName) < 5 then -- splash is 3 but want bigger warning so people know that blobs will be around that area
+		self:RangeMessage(args.spellId, nil, "Alert", CL["near"]:format(L["blobs"]))
+	end
 end
 
 do
@@ -184,7 +208,7 @@ do
 end
 
 function mod:ToxicStorm(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
+	self:Message(args.spellId, "Urgent")
 	self:Bar(args.spellId, 32)
 end
 

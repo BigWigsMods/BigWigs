@@ -28,15 +28,21 @@ local marksUsed = {}
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.custom_off_bonecracker_marks = "Bonecracker"
-	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with %s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
 
 	L.stance_bar = "%s (NOW: %s)"
+	-- shorten stances so they fit on the bars
+	L.battle = "Battle"
+	L.berserker = "Berserker"
+	L.defensive = "Defensive"
 
 	L.adds_trigger1 = "Defend the gate!"
 	L.adds_trigger2 = "Rally the forces!"
 	L.adds_trigger3 = "Next squad, to the front!"
 	L.adds_trigger4 = "Warriors, on the double!"
 	L.adds_trigger5 = "Kor'kron, at my side!"
+	L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW"
+	L.extra_adds = "Extra adds"
 
 	L.chain_heal, L.chain_heal_desc = EJ_GetSectionInfo(7935)
 	L.chain_heal_icon = 1064
@@ -55,11 +61,15 @@ L.custom_off_bonecracker_marks_desc = L.custom_off_bonecracker_marks_desc:format
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15\124t"
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t"
 )
 L.chain_heal_desc = L.focus_only..L.chain_heal_desc
 L.arcane_shock_desc = L.focus_only..L.arcane_shock_desc
+local stances = {
+	[143589] = L.battle,
+	[143594] = L.berserker,
+	[143593] = L.defensive,
+}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -67,11 +77,13 @@ L.arcane_shock_desc = L.focus_only..L.arcane_shock_desc
 
 function mod:GetOptions()
 	return {
+		{143502, "TANK_HEALER", "FLASH"}, {-7947, "FLASH", "ICON"},
 		143484, {143716, "FLASH"}, 143536, {143872, "FLASH", "SAY"}, 143503,
 		"custom_off_bonecracker_marks",
-		-7920, {-7933, "FLASH"}, {143475, "FLASH"}, "chain_heal", 143474, {143431, "DISPEL"}, 143432,
+		-7920, {-7933, "FLASH"}, {143475, "FLASH", "ICON"}, "chain_heal", 143474, {143431, "DISPEL"}, 143432,
 		{143494, "TANK_HEALER"}, {143638, "HEALER"}, -7915, "proximity", "berserk", "bosskill",
 	}, {
+		[143502] = "heroic",
 		[143484] = -7909,
 		["custom_off_bonecracker_marks"] = L.custom_off_bonecracker_marks,
 		[-7920] = -7920,
@@ -82,6 +94,9 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
+	-- heroic
+	self:Log("SPELL_AURA_APPLIED", "HuntersMark", 143882)
+	self:Log("SPELL_CAST_START", "Execute", 143502)
 	-- Adds
 	self:Log("SPELL_CAST_START", "ArcaneShock", 143432)
 	self:Log("SPELL_CAST_START", "ChainHeal", 143473)
@@ -91,16 +106,16 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "EarthShield", 143475)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 143480)
 	self:Yell("Adds", L.adds_trigger1, L.adds_trigger2, L.adds_trigger3, L.adds_trigger4, L.adds_trigger5)
+	self:Yell("ExtraAdds", L.adds_trigger_extra_wave)
 	-- Boss
 	self:Log("SPELL_CAST_START", "WarSong", 143503)
 	self:Log("SPELL_CAST_SUCCESS", "Ravager", 143872) -- _START has no destName but boss has target, so that could be better, but since this can target pets, and it takes 2 sec before any damage is done after _SUCCESS I guess we can live with using _SUCCESS over _START here
 	self:Log("SPELL_SUMMON", "Banner", 143501) -- XXX this is a tiny bit faster sometimes than _SUCCESS however it's spellId does not match up with the rest atm, so pay attention in case this breaks
-	self:Log("SPELL_DAMAGE", "HeroicShockwaveDamage", 143716)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "HeroicShockwave", "boss1") -- faster than _SUCCESS
 	self:Log("SPELL_AURA_APPLIED", "CoolingOff", 143484)
 	self:Log("SPELL_AURA_APPLIED", "Stances", 143589, 143594, 143593) -- Battle, Berserker, Defensive
 	self:Log("SPELL_AURA_APPLIED", "BoneCrackerApplied", 143638)
-	self:Log("SPELL_AURA_Removed", "BoneCrackerRemoved", 143638)
+	self:Log("SPELL_AURA_REMOVED", "BoneCrackerRemoved", 143638)
 	self:Log("SPELL_CAST_START", "BoneCracker", 143638)
 	self:Log("SPELL_AURA_APPLIED", "SunderingBlow", 143494)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SunderingBlow", 143494)
@@ -113,15 +128,32 @@ function mod:OnEngage()
 	self:Berserk(600) -- XXX Assumed
 	wipe(marksUsed)
 	self:CDBar(143494, 10) -- Sundering Blow
-	self:Bar(143638, 15.5)
+	self:Bar(143638, 15.5) -- Bonecracker
+	self:Bar(-7920, 46, nil, "achievement_guildperk_everybodysfriend") -- adds
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
--- Adds
+-- heroic
+function mod:HuntersMark(args)
+	self:PrimaryIcon(-7947, args.destName)
+	if self:Me(args.destGUID) then
+		self:Flash(-7947)
+	end
+	self:TargetMessage(-7947, args.destName, "Attention", "Alarm")
+end
 
+function mod:Execute(args)
+	self:Message(args.spellId, "Important", "Warning", CL["casting"]:format(args.spellName)) -- XXX need feedback if this sound works fine with the other sounds
+	self:Bar(args.spellId, 33)
+	if UnitIsUnit("player", "boss1target") then -- poor mans target check
+		self:Flash(args.spellId)
+	end
+end
+
+-- Adds
 function mod:ArcaneShock(args)
 	if UnitGUID("focus") == args.sourceGUID then
 		self:Message("arcane_shock", "Personal", "Alert", L["arcane_shock_message"], args.spellId)
@@ -150,8 +182,14 @@ function mod:ChainHeal(args)
 end
 
 function mod:EarthShield(args)
+	local isPlayerEvent = bit.band(args.destFlags, COMBATLOG_OBJECT_TYPE_PLAYER) > 0
+	if isPlayerEvent then return end -- spell steal
 	local offensiveDispeller = self:Dispeller("magic", true)
-	self:Message(args.spellId, "Positive", offensiveDispeller and "Warning")
+	local target = self:GetUnitIdByGUID(args.destGUID)
+	if UnitExists(target) then
+		self:SecondaryIcon(args.spellId, target) -- try to mark earth shield target, not really trying too hard tho
+	end
+	self:TargetMessage(args.spellId, args.destName, "Positive", offensiveDispeller and "Warning")
 	if offensiveDispeller then
 		self:Flash(args.spellId) -- for pulse (best would be pulse only no flash :S)
 	end
@@ -162,6 +200,10 @@ function mod:Fixate(args)
 	if self:Me(args.destGUID) then
 		self:Flash(-7933)
 	end
+end
+
+function mod:ExtraAdds()
+	self:Message(-7920, "Neutral", "Long", L["extra_adds"])
 end
 
 function mod:Adds()
@@ -226,17 +268,6 @@ do
 			end
 		end
 	end
-	function mod:HeroicShockwaveDamage(args)
-		if timer then
-			self:CancelTimer(timer)
-			self:ScheduleTimer(checkshockwaveTarget, 0.05)
-			timer = nil
-		end
-		 -- don't do anything if we warned for the target already
-		if args.destGUID ~= shockwaveTarget then
-			warnShockwave(args.destName, args.destGUID)
-		end
-	end
 end
 
 function mod:CoolingOff(args)
@@ -244,16 +275,16 @@ function mod:CoolingOff(args)
 end
 
 function mod:Stances(args)
-	self:Message(-7915, "Positive", (args.spellId == 143593) and "Warning") -- Play sound if he switches to defensive -- this might conflich with War Song
+	self:Message(-7915, "Positive", (args.spellId == 143593) and "Warning", args.spellName, args.spellId) -- Play sound if he switches to defensive -- this might conflich with War Song
 	local nextStance
-	if args.spellId == 143589 then
-		nextStance = 143594
-	elseif args.spellId == 143594 then
-		nextStance = 143593
-	elseif args.spellId == 143593 then
-		nextStance = 143589
+	if args.spellId == 143589 then -- battle
+		nextStance = 143594 -- berserker
+	elseif args.spellId == 143594 then -- berserker
+		nextStance = 143593 -- defensive
+	elseif args.spellId == 143593 then -- defensive
+		nextStance = 143589 -- battle
 	end
-	self:Bar(-7915, 60, L["stance_bar"]:format(self:SpellName(nextStance), args.spellName), nextStance)
+	self:Bar(-7915, 60, L["stance_bar"]:format(stances[nextStance], stances[args.spellId]), nextStance)
 end
 
 do
@@ -288,7 +319,7 @@ do
 end
 
 function mod:BoneCracker(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
+	self:Message(args.spellId, "Urgent")
 	self:Bar(args.spellId, 32)
 end
 
