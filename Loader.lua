@@ -476,13 +476,13 @@ do
 		elseif prefix == "V" then
 			usersDBM[sender] = displayVersion
 			-- If there are people with newer versions than us, suddenly we've upgraded!
-			local rev, dotRev = tonumber(revision), tonumber(DBMdotRevision)
-			if rev and displayVersion and rev ~= 99999 and rev > dotRev then -- Failsafes
-				DBMdotRevision = revision -- Update our local rev with the highest possible rev found including alphas.
-				DBMdotReleaseRevision = releaseRevision -- Update our release rev with the highest found, this should be the same for alpha users and latest release users.
-				DBMdotDisplayVersion = displayVersion -- Update to the latest display version, including alphas.
-				self:DBM_AddonMessage(nil, nil, "H") -- Re-send addon message.
-			end
+			--local rev, dotRev = tonumber(revision), tonumber(DBMdotRevision)
+			--if rev and displayVersion and rev ~= 99999 and rev > dotRev then -- Failsafes
+			--	DBMdotRevision = revision -- Update our local rev with the highest possible rev found including alphas.
+			--	DBMdotReleaseRevision = releaseRevision -- Update our release rev with the highest found, this should be the same for alpha users and latest release users.
+			--	DBMdotDisplayVersion = displayVersion -- Update to the latest display version, including alphas.
+			--	self:DBM_AddonMessage(nil, nil, "H") -- Re-send addon message.
+			--end
 		end
 	end
 	function loader:UpdateDBMFaking(_, key, value)
