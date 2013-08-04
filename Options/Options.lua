@@ -1192,7 +1192,7 @@ do
 
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
-		local parent = BigWigsLoader.zonesList[zoneId] and addonNameToHeader[BigWigsLoader.zonesList[zoneId]] or addonNameToHeader.BigWigs_MistsOfPandaria
+		local parent = BigWigsLoader.zonesTbl[zoneId] and addonNameToHeader[BigWigsLoader.zonesTbl[zoneId]] or addonNameToHeader.BigWigs_MistsOfPandaria
 		local panel, created = self:GetPanel(zoneName, parent, zoneId)
 		if created then
 			panel:SetScript("OnShow", onZoneShow)

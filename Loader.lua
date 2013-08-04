@@ -93,7 +93,7 @@ do
 	local cata = "BigWigs_Cataclysm"
 	local lw = "LittleWigs"
 
-	loader.zonesList = {
+	loader.zonesTbl = {
 		[696]=c, [755]=c,
 		[775]=bc, [780]=bc, [779]=bc, [776]=bc, [465]=bc, [473]=bc, [799]=bc, [782]=bc,
 		[604]=wotlk, [543]=wotlk, [535]=wotlk, [529]=wotlk, [527]=wotlk, [532]=wotlk, [531]=wotlk, [609]=wotlk, [718]=wotlk,
@@ -466,18 +466,21 @@ end
 --
 
 do
-	local DBMdotRevision = "9947"
-	local DBMdotDisplayVersion = "5.3.4"
-	function loader:DBM_AddonMessage(channel, sender, prefix, revision, _, displayVersion)
+	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
+	local DBMdotRevision = "10055" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotReleaseRevision = "10055" -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotDisplayVersion = "5.3.5" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
+	function loader:DBM_AddonMessage(channel, sender, prefix, revision, releaseRevision, displayVersion)
 		if prefix == "H" and (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
-			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale(), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale(), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		elseif prefix == "V" then
 			usersDBM[sender] = displayVersion
 			-- If there are people with newer versions than us, suddenly we've upgraded!
 			local rev, dotRev = tonumber(revision), tonumber(DBMdotRevision)
-			if rev and displayVersion and rev ~= 99999 and rev > dotRev then
-				DBMdotRevision = revision
-				DBMdotDisplayVersion = displayVersion
+			if rev and displayVersion and rev ~= 99999 and rev > dotRev then -- Failsafes
+				DBMdotRevision = revision -- Update our local rev with the highest possible rev found including alphas.
+				DBMdotReleaseRevision = releaseRevision -- Update our release rev with the highest found, this should be the same for alpha users and latest release users.
+				DBMdotDisplayVersion = displayVersion -- Update to the latest display version, including alphas.
 				self:DBM_AddonMessage(nil, nil, "H") -- Re-send addon message.
 			end
 		end
@@ -710,7 +713,7 @@ do
 		end
 
 		-- Lacking zone modules
-		local zoneAddon = self.zonesList[id]
+		local zoneAddon = self.zonesTbl[id]
 		if zoneAddon and not warnedThisZone[id] then
 			local _, _, _, enabled = GetAddOnInfo(zoneAddon)
 			if not enabled then
