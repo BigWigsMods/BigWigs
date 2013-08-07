@@ -57,7 +57,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "IgniteArmor", 144467)
 	self:Log("SPELL_AURA_APPLIED", "LaserBurn", 144459)
 	self:Log("SPELL_DAMAGE", "BorerDrill", 144218)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEDED", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	self:Death("Win", 71466)
 end
@@ -92,7 +92,7 @@ end
 
 function mod:CutterLaserApplied(args)
 	-- way too varied timer 11-21
-	self:TargetMessage(-8190, "Important", "Warning")
+	self:TargetMessage(-8190, args.destName, "Important", "Warning")
 	self:PrimaryIcon(-8190, args.destName)
 	if self:Me(args.destGUID) then
 		self:Flash(-8190)
@@ -106,7 +106,7 @@ end
 
 -- Assaukt mode
 function mod:IgniteArmor(args)
-	local amount = args.amount
+	local amount = args.amount or 0
 	self:Message(args.spellId, "Attention", nil, CL["count"]:format(amount))
 	self:CDBar(args.spellId, 9)
 end
@@ -129,7 +129,7 @@ do
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEDED(unitId, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 	if spellId == 144296 then -- Borer Drill
 		self:Message(-8179, "Attention")
 		self:CDBar(-8179, 19) -- Borer Drill

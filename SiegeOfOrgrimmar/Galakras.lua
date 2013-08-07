@@ -89,7 +89,7 @@ function mod:OnBossEnable()
 	self:Emote("Towers", L["south_tower_trigger"], L["north_tower_trigger"])
 	self:Emote("Demolisher", "116040")
 	-- Galakras
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEDED", "LastPhase", "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "LastPhase", "boss1")
 
 	self:Death("Deaths", 72249, 72367) -- Galakras, Dragonmaw Tidal Shaman
 end

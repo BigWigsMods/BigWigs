@@ -153,7 +153,7 @@ function mod:OnBossEnable()
 	--Hisek the Swarmkeeper
 	self:Log("SPELL_CAST_SUCCESS", "Aim", 144759)
 
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEDED", nil, "boss1", "boss2", "boss3", "boss4")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4")
 	self:Death("Deaths", 71161, 71157, 71156, 71155, 71160, 71154, 71152, 71158, 71153)
 end
 
@@ -534,7 +534,7 @@ function mod:MyEngage()
 	self:CheckBossStatus()
 end
 
-function mod:UNIT_SPELLCAST_SUCCEDED(unitId, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 	if spellId == 143545 then -- Jump to center aka enter the fight, not so reliable for encounter engage aka boss 1-3
 		local mobId = self:MobId(UnitGUID(unitId))
 		if mobId == 71161 then --Kil'ruk the Wind-Reaver

@@ -89,7 +89,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEDED", nil, "boss1", "boss2", "boss3")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
 
 	-- phase 2
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GrippingDispair", 145183)
@@ -238,7 +238,7 @@ function mod:YShaarjsProtection(args)
 	annihilateCounter = 1
 end
 
-function mod:UNIT_SPELLCAST_SUCCEDED(unitId, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 	if spellId == 145235 then -- throw axe at heart , transition into first intermission
 		self:Bar(-8305, 25, 144866, "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 		phase = 2
