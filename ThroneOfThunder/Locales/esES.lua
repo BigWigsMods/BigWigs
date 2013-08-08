@@ -195,6 +195,16 @@ if L then
 	L.balls_desc = "Bolas de Ánima (rojo) y Vita (azul), que determinan que habilidades ganará Ra-den"
 
 	L.assistPrint = "Un plugin llamado 'BigWigs_Ra-denAssist' ha sido publicado para ayudarte en el encuentro contra Ra-den y puede que tu grupo esté interesado en probarlo."
+	
+	L.corruptedballs = "Bolas corruptas"
+	L.corruptedballs_desc = "Bolas Vita y Ánima corruptas, que, o bien aumenta el daño (Vita) o hp máximo (Ánima)"
+
+	L.unstablevitajumptarget = "Salto intestable de Vita"
+	L.unstablevitajumptarget_desc = "Te avisa cuando estás más alejado de un jugador con Vita inestable. Si enfatizas esto, también mostrará una cuenta atrás para cuando Vita inestable esté a punto de saltar DE ti."
+
+	L.unstablevitajumptarget_message = "Eres el más alejado de Vita inestable"
+	L.sensitivityfurthestbad = "Sensibilidad a la vita + alejado = |cffff0000MALO|r!"
+	L.kill_trigger = "Wait!" -- Wait! I am... I am not your enemy. You are powerful. More powerful than he was, even.... Perhaps you are right. Perhaps there is still hope.
 end
 
 L = BigWigs:NewBossLocale("Throne of Thunder Trash", "esES") or BigWigs:NewBossLocale("Throne of Thunder Trash", "esMX")
