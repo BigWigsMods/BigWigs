@@ -357,7 +357,7 @@ do
 				if not times[sync] or t > (times[sync] + 2) then
 					times[sync] = t
 					local m = addon:GetBossModule(rest, true)
-					if not m or m.isEngaged then
+					if not m or m.isEngaged or not m:IsEnabled() then
 						-- print(bossEngagedSyncError:format(rest, nick))
 						return
 					end
