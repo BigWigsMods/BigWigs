@@ -28,7 +28,7 @@ end
 L = BigWigs:NewBossLocale("Sha of Pride", "ruRU")
 if L then
 	L.custom_off_titan_mark = "Маркировка Дара титанов"
-	L.custom_off_titan_mark_desc = "Чтобы помочь задействовать Силу татанов, люди с Даром титанов будут помечены метками %s%s%s%s%s%s%s%s (игроки с Аурой гордыни не помечаются), требуется быть помощником или лидером."
+	L.custom_off_titan_mark_desc = "Чтобы помочь задействовать Силу титанов, люди с Даром титанов будут помечены метками %s%s%s%s%s%s%s%s (игроки с Аурой гордыни не помечаются), требуется быть помощником или лидером."
 
 	L.projection_message = "Бегите по |cFF00FF00ЗЕЛЕНОЙ|r стрелке!"
 	L.projection_explosion = "Проекция взрывается"
@@ -68,7 +68,27 @@ end
 
 L = BigWigs:NewBossLocale("General Nazgrim", "ruRU")
 if L then
+	L.custom_off_bonecracker_marks = "Костолом"
+	L.custom_off_bonecracker_marks_desc = "Чтобы помочь лекарям, люди с Костоломом будут помечены метками %s%s%s%s%s%s (в этой последовательности)(не все метки могут быть использованы), требуется быть помощником или лидером."
 
+	L.stance_bar = "%s (СЕЙЧАС: %s)"
+	L.battle = "Бой"
+	L.berserker = "Берсерк"
+	L.defensive = "Защита"
+
+	-- L.adds_trigger1 = "Defend the gate!"
+	-- L.adds_trigger2 = "Rally the forces!"
+	-- L.adds_trigger3 = "Next squad, to the front!"
+	-- L.adds_trigger4 = "Warriors, on the double!"
+	-- L.adds_trigger5 = "Kor'kron, at my side!"
+	-- L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW"
+	L.extra_adds = "Новые помощники"
+
+	L.chain_heal_message = "Ваш фокус читает Цепное исцеление!"
+
+	L.arcane_shock_message = "Ваш фокус читает Чародейское потрясение!"
+
+	L.focus_only = "|cffff0000Предупреждения только для фокуса.|r "
 end
 
 L = BigWigs:NewBossLocale("Malkorok", "ruRU")
@@ -79,7 +99,11 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "ruRU")
 if L then
+	L.enable_zone = "Хранилище артефактов"
+	L.matter_scramble_explosion = "Взрыв материи"
 
+	L.custom_off_mark_brewmaster = "Маркировка Хмелевара"
+	L.custom_off_mark_brewmaster_desc = "Дух древнего хмелевара будет помечен меткой %s"
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "ruRU")
