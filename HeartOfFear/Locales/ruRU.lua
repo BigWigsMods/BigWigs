@@ -76,7 +76,7 @@ L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "ruRU")
 if L then
 	L.engage_trigger = "Смерть каждому, кто осмелился бросить вызов моей Империи!"
 	L.phases = "Фазы"
-	L.phases_desc = "Предупредать о смене фаз."
+	L.phases_desc = "Предупреждать о смене фаз."
 
 	L.eyes = "Взгляд императрицы"
 	L.eyes_desc = "Считает стаки Взгляда императрицы и показывает таймер."
