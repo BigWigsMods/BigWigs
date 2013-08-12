@@ -88,7 +88,7 @@ if L then
 
 	L.arcane_shock_message = "Ваш фокус читает Чародейское потрясение!"
 
-	L.focus_only = "|cffff0000Предупреждения только для фокуса.|r "
+	L.focus_only = "|cffff0000Оповещения только для фокуса.|r "
 end
 
 L = BigWigs:NewBossLocale("Malkorok", "ruRU")
