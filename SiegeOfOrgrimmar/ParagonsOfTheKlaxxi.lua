@@ -38,6 +38,7 @@ local results = {
 	[1] = {}, [2] = {}, [3] = {}, [4] = {}, [5] = {},
 }
 local raidParsed
+local emoteTriggers = {}
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -45,25 +46,12 @@ local raidParsed
 local L = mod:NewLocale("enUS", true)
 if L then
 	-- for getting all those calculate emotes:
-	-- cat Transcriptor.lua | sed "s/\t//g" | grep -E "(CHAT_MSG_RAID_BOSS_EMOTE].*Iyyokuk)" | sed "s/.*EMOTE//" | sed "s/Iyyo.*//" | sed "s/#/\"/g" | sort | uniq
-	-- XXX incomplete this should be 15 strings
-	L.bomb = "Detonate every Bomb!"
-	L.sword = "Slice the Swords!"
-	L.drums = "Sound the Drums!"
-	L.mantid = "PH"
-	L.staff = "PH"
-
-	L.yellow = "Chase Down Every Yellow Coward!"
-	L.red = "Drain all the Red Blood!"
-	L.blue = "Make Every Blue Cry!"
-	L.purple = "PH"
-	L.green = "PH"
-
-	L.one = "Every Solitary One!"
-	L.two = "Split Every Pair!"
-	L.three = "Target Every Three!"
-	L.four = "PH"
-	L.five = "PH"
+	-- cat Transcriptor.lua | sed "s/\t//g" | grep -E "(CHAT_MSG_RAID_BOSS_EMOTE].*Iyyokuk)" | sed "s/.*EMOTE//" | sed "s/#/\"/" | sed "s/#.*/\"/" | sort | uniq
+	L.one = "Iyyokuk selects: One!"
+	L.two = "Iyyokuk selects: Two!"
+	L.three = "Iyyokuk selects: Three!"
+	L.four = "Iyyokuk selects: Four!"
+	L.five = "Iyyokuk selects: Five!"
 	--------------------------------
 	L.edge_message = "You're an edge"
 	L.custom_off_edge_marks = "Edge marks"
@@ -79,6 +67,30 @@ L.custom_off_edge_marks_desc = L.custom_off_edge_marks_desc:format( -- XXX cut d
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t"
 )
+
+local calculations = {
+	["shape"] = {
+		["ABILITY_IYYOKUK_BOMB_white"] = "bomb",
+		["ABILITY_IYYOKUK_SWORD_white"] = "sword",
+		["ABILITY_IYYOKUK_DRUM_white"] = "drum",
+		["ABILITY_IYYOKUK_MANTID_white"] = "mantid",
+		["ABILITY_IYYOKUK_STAFF_white"] = "staff"
+	},
+	["color"] = {
+		["FFFFFF00"] = "yellow",
+		["FFFF0000"] = "red",
+		["FF0000FF"] = "blue",
+		["Purple"] = "purple",-- XXX fix this for 25 man
+		["Green"] = "green"-- XXX fix this for 25 man
+	},
+	["number"] = {
+		[L.one] = 1,
+		[L.two] = 2,
+		[L.three] = 3,
+		[L.four] = 4,
+		[L.five] = 5
+	}
+}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -114,6 +126,11 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	for type, t in pairs(calculations) do
+		for partial, v in pairs(t) do
+			emoteTriggers[#emoteTriggers+1] = partial
+		end
+	end
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "MyEngage")
 
 	--Kil'ruk the Wind-Reaver
@@ -133,7 +150,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "EncaseInEmber", 142564)
 	self:Log("SPELL_CAST_START", "ShieldBash", 143974)
 	--Iyyokuk the Lucid
-	self:Emote("CalculateEmotes", L.bomb, L.sword, L.drums, L.yellow, L.red, L.blue, L.one, L.two, L.three)
+	self:Emote("CalculateEmotes", unpack(emoteTriggers))
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:Log("SPELL_AURA_REMOVED", "CalculationRemoved", 143605,143606,143607,143608,143609,143610,143611,143612,143613,143614,143615,143616,143617,143618,143619,143620,143621,143622,143623,143624,143627,143628,143629,143630,143631)
 	--Ka'roz the Locust
@@ -161,7 +178,7 @@ function mod:OnEngage()
 	deathCounter = 0
 	wipe(bossesSeen)
 	results = {
-		mantid = {}, sword = {}, staff = {}, ring = {}, amber = {},
+		mantid = {}, sword = {}, staff = {}, drum = {}, bomb = {},
 		red = {}, purple = {}, blue = {}, green = {}, yellow = {},
 		[1] = {}, [2] = {}, [3] = {}, [4] = {}, [5] = {},
 	}
@@ -254,37 +271,14 @@ do
 			prev = t
 			results.shape, results.color, results.number = nil, nil, nil -- reset
 		end
-		-- this is some ugly ass shit, probably could do it more elegantly?
-		if msg == L.bomb then
-			results.shape = "bomb"
-		elseif msg == L.sword then
-			results.shape = "sword"
-		elseif msg == L.drums then
-			results.shape = "drums"
-		elseif msg == L.mantid then
-			results.shape = "mantid"
-		elseif msg == L.staff then
-			results.shape = "staff"
-		elseif msg == L.yellow then
-			results.color = "yellow"
-		elseif msg == L.red then
-			results.color = "red"
-		elseif msg == L.blue then
-			results.color = "blue"
-		elseif msg == L.purple then
-			results.color = "purple"
-		elseif msg == L.green then
-			results.color = "green"
-		elseif msg == L.one then
-			results.number = 1
-		elseif msg == L.two then
-			results.number = 2
-		elseif msg == L.three then
-			results.number = 3
-		elseif msg == L.four then
-			results.number = 4
-		elseif msg == L.five then
-			results.number = 5
+
+		for type, t in pairs(calculations) do
+			for partial, v in pairs(t) do
+				if msg:find(partial) then
+					results[type] = v
+					return
+				end
+			end
 		end
 	end
 end
@@ -341,65 +335,96 @@ local function warnEdge()
 	mod:Bar(-8055, 9, mod:SpellName(142809), 142809) -- Fiery Edge
 end
 
+local function iyyokukSelected()
+	-- handle the player first
+	local shape, color, number = parseDebuff("player")
+	if shape then
+		if isMatching(shape, color, number) then
+			warnEdge()
+		end
+	end
+
+	if mod.db.profile.custom_off_edge_marks then
+		local name
+		if not raidParsed then
+			for i = 1, GetNumGroupMembers() do
+				name = GetRaidRosterInfo(i)
+				shape, color, number = parseDebuff(name)
+				if shape then
+					results[shape][name] = true
+					results[color][name] = true
+					results[number][name] = true
+				end
+			end
+			raidParsed = true
+		end
+
+		local count = 1
+		for i = 1, GetNumGroupMembers() do
+			name = GetRaidRosterInfo(i)
+			local match = nil
+			if results[results.shape][name] or results[results.color][name] or results[results.number][name] then
+				match = true
+			end
+
+			if count < 7 and match then
+				SetRaidTarget(name, count)
+				count = count + 1
+			end
+		end
+	end
+end
+
+local function figureShitOut()
+	--@debug@
+	-- XXX try and make life easier for figuring shit out
+	-- print a bunch of stuff so they are in the transcriptor log
+	mod:Message(-8055, nil, nil, ("Calculated: shape: %s color: %s number: %s"):format(results.shape, results.color, results.number))
+
+	local msg = ""
+	for k, v in pairs(results) do
+		if type(v) == "table" and #v > 0 then
+			msg = ("All %s: "):format(k)
+			for p, _ in pairs(v) do
+				msg = ("%s %s(%d)"):format(msg, p, GetRaidIndex(p) or 0)
+			end
+			mod:Message(-8055, nil, nil, msg)
+			msg = ""
+		end
+	end
+	--@end-debug@
+end
+
 function mod:CHAT_MSG_MONSTER_EMOTE(_, sender, _, _, target)
 	-- Iyyokuk only have one MONSTER_EMOTE so this should be a safe method rather than having to translate the msg
 	if sender == EJ_GetSectionInfo(8012) then -- hopefully no weird naming missmatch in different localization like for "Xaril the Poisoned Mind" vs "Xaril the Poisoned-Mind"
+		--@debug@
+		self:ScheduleTimer(figureShitOut, 0.3)
+		--@end-debug@
 		local diff = self:Difficulty()
-		if diff == 5 or diff == 6 then -- Heroic
-			results.shape, results.color, results.number = parseDebuff(target) -- we don't have to rely on emotes for heroic
-		end
-		if target == mod:UnitName("player") then
+		if target == self:UnitName("player") then
 			warnEdge()
+		elseif diff == 5 or diff == 6 then -- Heroic
+			results.shape, results.color, results.number = parseDebuff(target) -- we don't have to rely on emotes for heroic
+			iyyokukSelected()
 		else
-			-- handle the player first
-			local shape, color, number = parseDebuff("player")
-			if shape then
-				if isMatching(shape, color, number) then
-					warnEdge()
-				end
-			end
-
-			if self.db.profile.custom_off_edge_marks then
-				local name
-				if not raidParsed then
-					for i = 1, GetNumGroupMembers() do
-						name = GetRaidRosterInfo(i)
-						shape, color, number = parseDebuff(name)
-						results[shape][name] = true
-						results[color][name] = true
-						results[number][name] = true
-					end
-					raidParsed = true
-				end
-
-				local count = 1
-				for i = 1, GetNumGroupMembers() do
-					name = GetRaidRosterInfo(i)
-					local match = nil
-					if results[results.shape][name] or results[results.color][name] or results[results.number][name] then
-						match = true
-					end
-
-					if count < 7 and match then
-						SetRaidTarget(name, count)
-						count = count + 1
-					end
-				end
-			end
+			self:ScheduleTimer(iyyokukSelected, 0.2)
 		end
 	end
 end
 
 --Korven the Prime
 function mod:ShieldBash(args)
-	local target = getBossByMobId(71155) .. "target"
+	local target = getBossByMobId(71155)
+	if not target then return end
+	target = target .. "target"
 	self:TargetMessage(args.spellId, self:UnitName(target), "Urgent", "Alarm", nil, nil, true)
 	self:Bar(args.spellId, 17)
 end
 
 function mod:EncaseInEmber(args)
-	self:Message(args.spellId, "Important", self:Damager() and "Warning")
-	self:CDBar(args.spellId, 25)
+	self:TargetMessage(args.spellId, args.destName, "Important", self:Damager() and "Warning")
+	self:CDBar(args.spellId, self:Heroic() and 30 or 25)
 end
 --Kaz'tik the Manipulator
 function mod:Mesmerize(args)
@@ -515,7 +540,7 @@ function mod:MyEngage()
 	-- have to do this because Jump to Center is not reliable for the first 3 bosses you engage at start of the encounter - 10N PTR
 	for i=1, 5 do
 		local guid = UnitGUID("boss"..i)
-		if not bossesSeen[guid] then
+		if guid and not bossesSeen[guid] then
 			bossesSeen[guid] = true
 			local mobId = self:MobId(guid)
 			if mobId == 71161 then --Kil'ruk the Wind-Reaver

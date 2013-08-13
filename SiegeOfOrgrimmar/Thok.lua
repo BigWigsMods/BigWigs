@@ -117,7 +117,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then -- don't spam
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["under_you"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 		end
 	end
 end

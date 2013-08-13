@@ -1,5 +1,6 @@
 --[[
 TODO:
+	-- custom off essence of corruption marker, depending on if it is neded for 25 man or not
 ]]--
 
 if select(4, GetBuildInfo()) < 50400 then return end
@@ -25,8 +26,13 @@ local phase = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.pre_pull = "Pre pull"
+	L.pre_pull_desc = "Timer bar for the RP before the boss engage"
+	L.pre_pull_trigger = "Very well, I will create a field to keep your corruption quarantined."
+
 	L.big_adds = "Big adds"
 	L.big_adds_desc = "Warning for killing big adds inside/outside"
+	L.big_add_icon = 147082
 	L.big_add = "Big add! (%d)"
 	L.big_add_killed = "Big add killed! (%d)"
 end
@@ -41,7 +47,7 @@ function mod:GetOptions()
 		{-8218, "TANK_HEALER"}, 145226, 145132,-- Amalgam of Corruption
 		"big_adds",
 		-8220, 144482, 144514, 144649, 144628,
-		"stages", "berserk", "bosskill",
+		"stages", "pre_pull", "berserk", "bosskill",
 	}, {
 		[-8218] = -8216, -- Amalgam of Corruption
 		["big_adds"] = L.big_adds, -- Big add
@@ -53,13 +59,15 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
+	self:Yell("PrePull", L.pre_pull_trigger)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEDED", "PrePull", "target")
 	-- Look Within
 	self:Log("SPELL_CAST_START", "TitanicSmash", 144628)
 	self:Log("SPELL_CAST_START", "HurlCorruption", 144649)
 	self:Log("SPELL_CAST_SUCCESS", "LingeringCorruption", 144514)
 	self:Log("SPELL_CAST_START", "TearReality", 144482)
-	self:Log("SPELL_AURA_REMOVED", "LookWithinRemoved", 144851, 144850, 144849) -- Test of Serenity (DPS), Test of Reliance (HEALER), Test of Confiidence (TANK)
-	self:Log("SPELL_AURA_APPLIED", "LookWithinApplied", 144851, 144850, 144849) -- Test of Serenity (DPS), Test of Reliance (HEALER), Test of Confiidence (TANK)
+	self:Log("SPELL_AURA_REMOVED", "LookWithinRemoved", 144849, 144850, 144851) -- Test of Serenity (DPS), Test of Reliance (HEALER), Test of Confiidence (TANK)
+	self:Log("SPELL_AURA_APPLIED", "LookWithinApplied", 144849, 144850, 144851) -- Test of Serenity (DPS), Test of Reliance (HEALER), Test of Confiidence (TANK)
 	-- Amalgam of Corruption
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Fusion", 145132)
 	self:Log("SPELL_AURA_APPLIED", "Fusion", 145132)
@@ -85,6 +93,15 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:PrePull(unitId, spellName, _, _, spellId)
+	if spellId and type(spellId) == "number" and spellId == 145188 then -- Norushen needs to be targeted
+		self:Bar("pre_pull", 25)
+		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEDED", "target")
+	else -- this is always there, but needs localization
+		self:Bar("pre_pull", 26)
+	end
+end
 
 -- Look Within
 -- TANK
@@ -112,13 +129,13 @@ end
 
 function mod:LookWithinRemoved(args)
 	lookWithinList[#lookWithinList+1] = args.destName
-	self:ScheduleTimer("TargetMessage", 1, -8220, lookWithinList, "Neutral", nil, CL["over"]:format(EJ_GetSectionInfo(-8220))) -- we care about people coming out, not so much going in
+	self:ScheduleTimer("TargetMessage", 1, -8220, lookWithinList, "Neutral", nil, CL["over"]:format(EJ_GetSectionInfo(8220))) -- we care about people coming out, not so much going in
 	self:StopBar(-8220) -- personal bar
-	self:StopBar(144849, args.destName) -- other tank bar
+	self:StopBar(-8220, args.destName) -- other tank bar
 end
 
 function mod:LookWithinApplied(args)
-	if args.spellId == 144849 and self:Tank() then -- Test of Confiidence (TANK) mainly for the other tank
+	if args.spellId == 144851 and self:Tank() then -- Test of Confiidence (TANK) mainly for the other tank
 		self:TargetBar(-8220, 60, args.destName, nil, args.spellId)
 	elseif self:Me(args.destGUID) then
 		self:Bar(-8220, 60, nil, args.spellId)
@@ -133,7 +150,7 @@ function mod:UNIT_SPELLCAST_SUCCEDED(unitId, spellName, _, _, spellId)
 	elseif spellId == 145007 then -- Unleash Corruption -- spawns adds in p2
 		-- don't think this needs sync
 		bigAddCounter = bigAddCounter + 1
-		self:Message("big_adds", "Urgent", nil, L["big_add"]:format(bigAddCounter))
+		self:Message("big_adds", "Urgent", nil, L["big_add"]:format(bigAddCounter), 147082)
 	end
 end
 
@@ -144,9 +161,9 @@ function mod:OnSync(sync)
 	-- Big add messages are assuming you are not having two up at the same time
 	elseif sync == "InsideBigAddDeath" then
 		bigAddCounter = bigAddCounter + 1
-		self:Message("big_adds", "Urgent", "Alarm", L["big_add"]:format(bigAddCounter))
+		self:Message("big_adds", "Urgent", "Alarm", L["big_add"]:format(bigAddCounter), 147082)
 	elseif sync == "OutsideBigAddDeath" then
-		self:Message("big_adds", "Attention", "Alert", L["big_add_killed"]:format(bigAddCounter)) -- this could probably live wouthout sound but this way people know for sure that they need to check if it is their turn to soak
+		self:Message("big_adds", "Attention", "Alert", L["big_add_killed"]:format(bigAddCounter), 147082) -- this could probably live wouthout sound but this way people know for sure that they need to check if it is their turn to soak
 	end
 end
 
@@ -159,7 +176,7 @@ function mod:Deaths(args)
 		if phase == 1 then
 			self:Sync("OutsideBigAddDeath")
 		else -- don't do unnecesary syncing
-			self:Message("big_adds", "Attention", nil, L["big_add_killed"]:format(bigAddCounter))
+			self:Message("big_adds", "Attention", nil, L["big_add_killed"]:format(bigAddCounter), 147082)
 		end
 	end
 end
@@ -167,7 +184,7 @@ end
 -- Amalgam of Corruption
 function mod:Fusion(args)
 	local amount = args.amount or 1
-	self:Message(args.spellId, "Attention", nil, CL["count"]:format(amount))
+	self:Message(args.spellId, "Attention", nil, CL["count"]:format(args.spellName, amount))
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)

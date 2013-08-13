@@ -2,15 +2,17 @@
 TODO:
 	need win trigger
 	could maybe hook into the world state timer, but I'm not sure if there is much point to work on a code just for that
+	could maybe pre warn for keg toss at least for one of the targets
 ]]--
 if select(4, GetBuildInfo()) < 50400 then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
 local mod, CL = BigWigs:NewBoss("Spoils of Pandaria", 953, 870)
 if not mod then return end
-mod:RegisterEnableMob(73152) -- Storeroom Guard ( trash guy )
+mod:RegisterEnableMob(73152, 73720, 71512) -- Storeroom Guard ( trash guy ), Mogu Spoils, Mantid Spoils
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -18,6 +20,7 @@ mod:RegisterEnableMob(73152) -- Storeroom Guard ( trash guy )
 
 local setToBlow = {}
 local remaining
+local brewmasterMarked
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -68,7 +71,7 @@ function mod:OnRegister()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "Engage", 145687)
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	-- Crate of Panderan Relics
 	self:Log("SPELL_DAMAGE", "PathOfBlossoms", 146257)
@@ -89,6 +92,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SetToBlowApplied", 145987)
 	self:Log("SPELL_AURA_REMOVED", "SetToBlowRemoved", 145987)
 
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
 	--self:Death("Win", 100000)
 end
 
@@ -96,6 +101,7 @@ function mod:OnEngage()
 	wipe(setToBlow)
 	self:OpenProximity("proximity", 3)
 	remaining = nil
+	brewmasterMarked = nil
 end
 
 --------------------------------------------------------------------------------
@@ -110,7 +116,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then -- don't spam
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["under_you"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 		end
 	end
 end
@@ -119,7 +125,8 @@ do
 	local timer
 	local function markBrewmaster(GUID)
 		local brewmaster = mod:GetUnitIdByGUID(GUID)
-		if brewmaster then
+		if brewmaster and brewmasterMarked ~= GUID then
+			brewmasterMarked = GUID
 			mod:CancelTimer(timer)
 			timer = nil
 			SetRaidTarget(brewmaster, 4)
@@ -164,7 +171,7 @@ end
 -- Mantid crate
 do
 	local prev = 0
-	function mod:ResidueStart(args)
+	function mod:Residue(args)
 		local t = GetTime()
 		if t-prev > 2 and self:Dispeller("magic", true) then
 			self:Message(args.spellId, "Urgent", "Alarm")
@@ -188,7 +195,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then -- don't spam
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["under_you"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 		end
 	end
 end
@@ -199,7 +206,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then -- don't spam
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["under_you"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 		end
 	end
 end
