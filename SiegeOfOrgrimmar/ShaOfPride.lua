@@ -122,7 +122,7 @@ function mod:WeakenedResolveOver(args)
 end
 
 function mod:Banishment(args)
-	selt:TargetMessage(args.spellId, args.destName, "Attention")
+	self:TargetMessage(args.spellId, args.destName, "Attention")
 end
 
 -- normal
