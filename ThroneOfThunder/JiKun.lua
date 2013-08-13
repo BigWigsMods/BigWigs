@@ -169,7 +169,9 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["lower_nest"]), "misc_arrowdown")
 		elseif nestCounter == 3 or nestCounter == 8 or nestCounter == 17 or nestCounter == 19 or nestCounter == 29 then
 			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["down"], nextNest+1, L["up"]), 134347)
-		elseif nestCounter == 13 or nestCounter == 15 or nestCounter == 24 then
+		elseif nestCounter == 15 then
+			self:Bar("nest", 30, ("(%d)%s(%s)+(%d)%s"):format(nextNest, L["up"], L["add"], nextNest+1, L["down"]), 134347)  -- this is intentional, because this is how blizzard announces it too!
+		elseif nestCounter == 13 or nestCounter == 24 then
 			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["up"], nextNest+1, L["down"]), 134347) -- this is intentional, because this is how blizzard announces it too!
 		elseif nestCounter == 7 then
 			self:Bar("nest", 30, ("(%d) %s"):format(nextNest, L["upper_nest"]), "misc_arrowlup")
@@ -186,7 +188,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		elseif nestCounter == 31 then
 			self:Bar("nest", 30, ("(%d)%s+(%d)%s+(%d)%s"):format(nextNest, L["up"], nextNest+1, L["down"], nextNest+2, L["up"]), 134347)
 		end
-		-- big adds at 2, 6, 12, 23, 30 (another upper add in the 38 set, probably 39)
+		-- big adds at 2, 6, 12, 16, 23, 30 (another upper add in the 38 set, probably 39)
 		if nestCounter == 2 or nestCounter == 6 or nestCounter == 23 or nestCounter == 30 then
 			self:Message("nest", "Urgent", "Alert", L["big_add_message"]:format(L["lower_nest"]), 134367)
 		elseif nestCounter == 12 or nestCounter == 16 then
