@@ -14,8 +14,8 @@ mod:RegisterEnableMob(69712) -- Ji-Kun
 --------------------------------------------------------------------------------
 -- Locals
 --
-local nestCounter = 0
-local quillCounter = 0
+
+local nestCounter, quillCounter, draftCounter = 0, 0, 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -81,8 +81,7 @@ function mod:OnEngage(diff)
 	self:Bar(134380, (diff == 4 or diff == 6) and 42 or 60) -- Quills
 	self:Bar(134370, 90) -- Down Draft
 	self:CDBar(134366, 24) -- Talon Rake
-	nestCounter = 0
-	quillCounter = 0
+	nestCounter, quillCounter, draftCounter = 0, 0, 0
 end
 
 --------------------------------------------------------------------------------
@@ -216,27 +215,31 @@ do
 	end
 end
 
-function mod:UNIT_SPELLCAST_START(_, _, _, _, spellId)
-	-- UNIT event due to combat log range issues
-	if spellId == 134380 then -- Quills
-		self:Message(spellId, "Important", "Warning")
-		self:Flash(spellId)
-		local diff = self:Difficulty()
-		quillCounter = quillCounter + 1
-		if diff == 4 or diff == 6 then -- 25 N/H
-			self:Bar(spellId, 63)
-		else -- 10 N/H + LFR
-			if quillCounter == 4 then
-				self:Bar(spellId, 91)
-			elseif quillCounter > 6 then
-				self:Bar(spellId, 44) -- soft enrage it looks like
-			else
-				self:Bar(spellId, 81)
+do
+	local draftTimes = {97.7, 94, 100, 104}
+	function mod:UNIT_SPELLCAST_START(_, _, _, _, spellId)
+		-- UNIT event due to combat log range issues
+		if spellId == 134380 then -- Quills
+			self:Message(spellId, "Important", "Warning")
+			self:Flash(spellId)
+			local diff = self:Difficulty()
+			quillCounter = quillCounter + 1
+			if diff == 4 or diff == 6 then -- 25 N/H
+				self:Bar(spellId, 63)
+			else -- 10 N/H + LFR
+				if quillCounter == 4 then
+					self:Bar(spellId, 91)
+				elseif quillCounter > 6 then
+					self:Bar(spellId, 44) -- soft enrage it looks like
+				else
+					self:Bar(spellId, 81)
+				end
 			end
+		elseif spellId == 134370 then -- Down Draft
+			self:Message(spellId, "Important", "Long")
+			draftCounter = draftCounter + 1
+			self:Bar(spellId, draftTimes[draftCounter] or 93)
 		end
-	elseif spellId == 134370 then -- Down Draft
-		self:Message(spellId, "Important", "Long")
-		self:Bar(spellId, 93)
 	end
 end
 
