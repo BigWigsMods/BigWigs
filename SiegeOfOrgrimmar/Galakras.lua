@@ -1,6 +1,7 @@
 --[[
 TODO:
 	-- figure out where the south tower timer starts
+	-- figure out tower add timers for 2nd tower
 	-- maybe try and add wave timers
 ]]--
 if select(4, GetBuildInfo()) < 50400 then return end
@@ -37,6 +38,7 @@ if L then
 	L.south_tower = "South tower"
 	L.north_tower_trigger = "The door barring the North Tower has been breached!"
 	L.north_tower = "North tower"
+	L.tower_defender = "Tower defender"
 
 	L.custom_off_shaman_marker = "Shaman marker"
 	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
@@ -60,6 +62,7 @@ function mod:GetOptions()
 	return {
 		147328, 146765, 146757, -- Foot Soldiers
 		"towers", "demolisher", 146849, 147705, -- Ranking Officials
+		"custom_off_shaman_marker",
 		"stages", -- Galakras
 		"bosskill",
 	}, {
@@ -94,13 +97,29 @@ function mod:OnBossEnable()
 	self:Death("Deaths", 72249, 72367) -- Galakras, Dragonmaw Tidal Shaman
 end
 
+local function warnTowerAdds()
+	mod:Message("towers", "Attention", nil, L["tower_defender"], 85214)
+	mod:Bar("towers", 60, L["tower_defender"], 85214) -- random orc icon
+end
+
+local function firstTowerAdd()
+	mod:Message("towers", "Attention", nil, L["tower_defender"], 85214)
+	mod:Bar("towers", 60, L["tower_defender"], 85214) -- random orc icon
+	mod:ScheduleRepeatingTimer(warnTowerAdds, 60)
+end
+
 function mod:OnEngage()
-	self:Bar("towers", 120, L["south_tower"], "achievement_bg_winsoa")
-	self:CDBar("towers", 270, L["north_tower"], "achievement_bg_winsoa") -- XXX need to figure out timer
-	wipe(markableMobs)
-	wipe(marksUsed)
-	markTimer = nil
+	if self:Heroic() then
+		self:Bar("towers", 13, L["tower_defender"], 85214) -- random orc icon
+		self:ScheduleTimer(firstTowerAdd, 13)
+	else
+		self:Bar("towers", 120, L["south_tower"], "achievement_bg_winsoa")
+		self:CDBar("towers", 270, L["north_tower"], "achievement_bg_winsoa") -- XXX need to figure out timer
+	end
 	if self.db.profile.custom_off_shaman_marker then
+		wipe(markableMobs)
+		wipe(marksUsed)
+		markTimer = nil
 		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 	end
 end
@@ -225,8 +244,8 @@ do
 	end
 
 	function mod:AddMarkedMob(args)
-		if not markableMobs[args.destGUID] then
-			markableMobs[args.destGUID] = true
+		if not markableMobs[args.sourceGUID] then
+			markableMobs[args.sourceGUID] = true
 			if self.db.profile.custom_off_shaman_marker and not markTimer then
 				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.2)
 			end

@@ -38,7 +38,7 @@ if L then
 	L.defile_icon = 143961
 
 	L.custom_off_bane_marks = "Shadow Word: Bane marker"
-	L.custom_off_bane_marks_desc = "To help dispelling assignments, mark the people who have Shadow Word: Bane on them with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+	L.custom_off_bane_marks_desc = "To help dispelling assignments, mark the initial people who have Shadow Word: Bane on them with %s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
 
 	L.no_meditative_field = "NO Meditative Field!"
 
@@ -51,9 +51,7 @@ L.custom_off_bane_marks_desc = L.custom_off_bane_marks_desc:format(
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_2.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15\124t"
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t"
 )
 
 --------------------------------------------------------------------------------
@@ -98,7 +96,7 @@ function mod:OnBossEnable()
 	-- Rook Stonetoe
 	self:Log("SPELL_AURA_APPLIED", "VengefulStrikes", 144396)
 	self:Log("SPELL_CAST_SUCCESS", "Clash", 143027)
-	self:Log("SPELL_AURA_APPLIED", "CorruptionKick", 143007)
+	self:Log("SPELL_AURA_APPLIED", "CorruptionKick", 143007, 143010) -- XXX double checks spellIds in 10 man
 	self:Log("SPELL_CAST_SUCCESS", "CorruptionShock", 143958)
 	self:Log("SPELL_DAMAGE", "DefiledGroundDamage", 144357)
 	self:Log("SPELL_CAST_START", "DefiledGround", 144357)
@@ -180,7 +178,11 @@ do
 	end
 	function mod:BaneApplied(args)
 		if self.db.profile.custom_off_bane_marks then
-			markBane(args.destName)
+			-- no _DOSE for this so gotta get stacks like this:
+			local amount = select(4, UnitDebuff(args.destName, args.spellName))
+			if amount and amount == 3 then -- only mark the initial cast
+				markBane(args.destName)
+			end
 		end
 	end
 end
@@ -255,6 +257,7 @@ do
 	local target
 	local function checkTarget(sourceGUID)
 		local unit = mod:GetUnitIdByGUID(sourceGUID)
+		if not unit then return end
 		if UnitExists(unit.."target") and unit.."target" ~= target then
 			target = unit.."target"
 			if mod:Me(UnitGUID(target)) then
@@ -263,7 +266,7 @@ do
 				mod:CloseProximity("proximity")
 				mod:OpenProximity(-7959, 8, target, true)
 			end
-			mod:TargetBar(-7959, 7, target) -- 9-2
+			mod:TargetBar(-7959, 7, mod:UnitName(target)) -- 9-2
 		else
 			mod:CloseProximity(-7959)
 			mod:OpenProximity("proximity", 5)
@@ -316,13 +319,14 @@ function mod:CorruptionShock(args)
 	-- alternative method could be to just scan with a repeating timer for target on the mob, because he only has a target when the cast on the ability finishes
 	-- XXX this needs testing and verifying again how the mob changes target
 	if UnitExists(target) then
-		self:TargetMessage(args.spellId, self:UnitName(target), "Personal", "Info")
-		if self:Range(target) < 4 then
-			self:RangeMessage(args.spellId)
-			self:Flash(args.spellId)
-		end
 		if self:Me(UnitGUID(target)) then
 			self:Flash(args.spellId)
+			self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+		elseif self:Range(target) < 4 then
+			self:RangeMessage(args.spellId)
+			self:Flash(args.spellId)
+		else
+			self:TargetMessage(args.spellId, self:UnitName(target), "Personal", "Info") -- XXX for debug only for now
 		end
 	else
 		self:ScheduleTimer("TargetMessage", 0.1, args.spellId, self:UnitName(target), "Personal", "Info")
@@ -331,7 +335,7 @@ end
 
 do
 	local corrruptionKickTargets, scheduled = mod:NewTargetList(), nil
-	local function warnHex()
+	local function warnKick()
 		scheduled = nil
 		mod:TargetMessage(143007, corrruptionKickTargets, "Important", "Alarm")
 	end
@@ -339,7 +343,7 @@ do
 		if self:Dispeller("curse", nil, args.spellId) then
 			corrruptionKickTargets[#corrruptionKickTargets+1] = args.destName
 			if not scheduled then
-				scheduled = self:ScheduleTimer(warnHex, 0.2)
+				scheduled = self:ScheduleTimer(warnKick, 0.2)
 			end
 		elseif self:Me(args.destGUID) then
 			self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
@@ -357,13 +361,14 @@ do
 	local function warnCorruptedBrewTarget(unitId)
 		local target = unitId.."target"
 		if not UnitExists(target) or mod:Tank(target) or UnitDetailedThreatSituation(target, unitId) then return end
-		mod:TargetMessage(143019, mod:UnitName(target), "Personal", "Info")
-		if mod:Range(target) < 5 then
-			mod:RangeMessage(143019)
-			mod:Flash(143019)
-		end
 		if mod:Me(UnitGUID(target)) then
 			mod:Flash(143019)
+			mod:Message(143019, "Personal", "Info", CL["you"]:format(mod:SpellName(143019)))
+		elseif mod:Range(target) < 5 then
+			mod:RangeMessage(143019)
+			mod:Flash(143019)
+		else
+			mod:TargetMessage(143019, mod:UnitName(target), "Personal", "Info")
 		end
 		mod:CancelTimer(timer)
 		timer = nil
@@ -372,8 +377,6 @@ do
 		if spellId == 143019 then -- Corrupted Brew
 			-- timer is all over the place, need to figure out if something delays it or what
 			self:CDBar(spellId, 11) -- not sure if there is a point for this like this
-			-- target scanning might be needed
-			-- when target scanning works, need near you warning fixed up too
 			if not timer then
 				timer = self:ScheduleRepeatingTimer(warnCorruptedBrewTarget, 0.05, unitId)
 			end
