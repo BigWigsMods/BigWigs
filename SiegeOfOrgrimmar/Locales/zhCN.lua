@@ -19,6 +19,10 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "zhCN")
 if L then
+	L.pre_pull = "Pre pull"
+	L.pre_pull_desc = "Timer bar for the RP before the boss engage"
+	L.pre_pull_trigger = "Very well, I will create a field to keep your corruption quarantined."
+
 	L.big_adds = "Big adds"
 	L.big_adds_desc = "Warning for killing big adds inside/outside"
 	L.big_add = "Big add! (%d)"
@@ -31,7 +35,7 @@ if L then
 	L.custom_off_titan_mark_desc = "To help spotting others with Gift of the Titans, mark the people who have Gift of the Titans on them with %s%s%s%s%s%s%s%s (players with Aura of Pride are not marked), requires promoted or leader."
 
 	L.projection_message = "Go to |cFF00FF00GREEN|r arrow!"
-	L.projection_explosion = "Projection expolosion"
+	L.projection_explosion = "Projection explosion"
 
 	L.big_add_bar = "Big add"
 	L.big_add_spawning = "Big add spawning!"
@@ -40,7 +44,17 @@ end
 
 L = BigWigs:NewBossLocale("Galakras", "zhCN")
 if L then
+	L.demolisher = "Demolisher"
+	L.demolisher_desc = "Timers for when the Kor'kron Demolishers enter the fight"
+	L.towers = "Towers"
+	L.towers_desc = "Warnings for when the towers get breached"
+	L.south_tower_trigger = "The door barring the South Tower has been breached!"
+	L.south_tower = "South tower"
+	L.north_tower_trigger = "The door barring the North Tower has been breached!"
+	L.north_tower = "North tower"
 
+	L.custom_off_shaman_marker = "Shaman marker"
+	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "zhCN")
@@ -59,15 +73,20 @@ end
 L = BigWigs:NewBossLocale("General Nazgrim", "zhCN")
 if L then
 	L.custom_off_bonecracker_marks = "Bonecracker"
-	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with %s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
 
 	L.stance_bar = "%s (NOW: %s)"
+	L.battle = "Battle"
+	L.berserker = "Berserker"
+	L.defensive = "Defensive"
 
 	L.adds_trigger1 = "Defend the gate!"
 	L.adds_trigger2 = "Rally the forces!"
 	L.adds_trigger3 = "Next squad, to the front!"
 	L.adds_trigger4 = "Warriors, on the double!"
 	L.adds_trigger5 = "Kor'kron, at my side!"
+	L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW"
+	L.extra_adds = "Extra adds"
 
 	L.chain_heal_message = "Your focus is casting Chain Heal!"
 
@@ -105,31 +124,17 @@ if L then
 
 	L.assembly_line_trigger = "Unfinished weapons begin to roll out on the assembly line."
 	L.assembly_line_message = "Unfinished weapons (%d)"
+
+	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!"
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "zhCN")
 if L then
-	-- for getting all those calculate emotes:
-	-- cat Transcriptor.lua | sed "s/\t//g" | grep -E "(CHAT_MSG_RAID_BOSS_EMOTE].*Iyyokuk)" | sed "s/.*EMOTE//" | sed "s/Iyyo.*//" | sed "s/#/\"/g" | sort | uniq
-	-- XXX incomplete this should be 15 strings
-	L.bomb = "Detonate every Bomb!"
-	L.sword = "Slice the Swords!"
-	L.drums = "Sound the Drums!"
-	L.mantid = "PH"
-	L.staff = "PH"
-
-	L.yellow = "Chase Down Every Yellow Coward!"
-	L.red = "Drain all the Red Blood!"
-	L.blue = "Make Every Blue Cry!"
-	L.purple = "PH"
-	L.green = "PH"
-
-	L.one = "Every Solitary One!"
-	L.two = "Split Every Pair!"
-	L.three = "Target Every Three!"
-	L.four = "PH"
-	L.five = "PH"
-	--------------------------------
+	L.one = "Iyyokuk selects: One!"
+	L.two = "Iyyokuk selects: Two!"
+	L.three = "Iyyokuk selects: Three!"
+	L.four = "Iyyokuk selects: Four!"
+	L.five = "Iyyokuk selects: Five!"
 	L.edge_message = "You're an edge"
 	L.custom_off_edge_marks = "Edge marks"
 	L.custom_off_edge_marks_desc = "Mark the players who will be edges based on the calculations %s%s%s%s%s%s, requires promoted or leader."
@@ -138,7 +143,17 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "zhCN")
 if L then
+	L.mind_control = "Mind Control"
 
+	L.chain_heal_desc = "Heals a friendly target for 40% of their max health, chaining to nearby friendly targets."
+	L.chain_heal_message = "Your focus is casting Chain Heal!"
+	L.chain_heal_bar = "Focus: Chain Heal"
+
+	L.farseer_trigger = "Farseers, mend our wounds!"
+	L.custom_off_shaman_marker = "Farseer marker"
+	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Farseer Wolf Rider with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+
+	L.focus_only = "|cffff0000Focus target alerts only.|r "
 end
 
 L = BigWigs:NewBossLocale("Siege of Orgrimmar Trash", "zhCN")

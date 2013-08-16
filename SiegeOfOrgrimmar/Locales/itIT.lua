@@ -64,7 +64,6 @@ if L then
 
 	L.custom_off_mist_marks = "Infestazione"
 	L.custom_off_mist_marks_desc = "Per aiutare l'assegnazione delle cure, evidenzia i giocatori che hanno Infestazione su di loro con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
-
 end
 
 L = BigWigs:NewBossLocale("General Nazgrim", "itIT")
@@ -76,7 +75,7 @@ if L then
 	L.battle = "Battle"
 	L.berserker = "Berserker"
 	L.defensive = "Defensive"
-	
+
 	L.adds_trigger1 = "Difendete il cancello!" --all triggers need verify
 	L.adds_trigger2 = "Radunate le forze!"
 	L.adds_trigger3 = "Prossima squadra, al fronte!"
@@ -84,7 +83,7 @@ if L then
 	L.adds_trigger5 = "Kor'kron, con me!"
 	L.adds_trigger_extra_wave = "Tutti Kor'kron... al mio comando... uccideteli... ORA"
 	L.extra_adds = "Extra adds"
-	
+
 	L.chain_heal_message = "Il tuo focus sta lanciando Catena di Guarigione Potenziata!"
 
 	L.arcane_shock_message = "Il tuo focus sta lanciando Folgore Arcana!"
@@ -96,7 +95,6 @@ L = BigWigs:NewBossLocale("Malkorok", "itIT")
 if L then
 	L.custom_off_energy_marks = "Marcatore Energia Dispersa"
 	L.custom_off_energy_marks_desc = "Per aiutare l'assegnazione delle cure, evidenzia i giocatori che hanno Energia Dispersa su di loro con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
-
 end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "itIT")
@@ -122,7 +120,7 @@ if L then
 
 	L.assembly_line_trigger = "Unfinished weapons begin to roll out on the assembly line."--need check/translation
 	L.assembly_line_message = "Armi non finite (%d)"
-	
+
 	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!" --need check/translation
 end
 
