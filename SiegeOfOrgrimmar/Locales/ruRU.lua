@@ -9,7 +9,7 @@ if L then
 	L.defile = "Чтение Оскверненной земли"
 
 	L.custom_off_bane_marks = "Маркировка Слово Тьмы: Погибель"
-	L.custom_off_bane_marks_desc = "Чтобы помочь с рассеиванием, люди со Словом Тьмы: Погибель будут помечены метками %s%s%s%s%s%s%s (в этой последовательности)(не все метки могут быть использованы), требуется быть помощником или лидером."
+	L.custom_off_bane_marks_desc = "Чтобы помочь с рассеиванием, люди со Словом Тьмы: Погибель будут помечены метками %s%s%s%s%s (в этой последовательности)(не все метки могут быть использованы), требуется быть помощником или лидером."
 
 	L.no_meditative_field = "НЕТ Медитативного поля!"
 
@@ -48,6 +48,7 @@ if L then
 	L.south_tower = "Южная башня"
 	-- L.north_tower_trigger = "The door barring the North Tower has been breached!"
 	L.north_tower = "Северная башня"
+	L.tower_defender = "Защитник башни"
 
 	L.custom_off_shaman_marker = "Маркировка Шаманов"
 	L.custom_off_shaman_marker_desc = "Чтобы помочь с прерыванием, Шаманы приливов будут помечены метками %s%s%s%s%s%s%s (в этой последовательности)(не все метки могут быть использованы), требуется быть помощником или лидером."
@@ -55,7 +56,8 @@ end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "ruRU")
 if L then
-
+	L.custom_off_mine_marks = "Маркировка мин"
+	L.custom_off_mine_marks_desc = "Чтобы помочь с распределением, Ползучие мины будут помечены метками %s%s%s%s%s (в этой последовательности)(не все метки могут быть использованы), требуется быть помощником или лидером."
 end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "ruRU")

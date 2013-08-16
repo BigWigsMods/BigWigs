@@ -92,9 +92,9 @@ end
 
 L = BigWigs:NewBossLocale("Durumu the Forgotten", "ruRU")
 if L then
-	L.red_spawn_trigger = "Багровый туман"
-	L.blue_spawn_trigger = "Лазурный туман"
-	L.yellow_spawn_trigger = "Янтарный туман"
+	L.red_spawn_trigger = "багровый туман"
+	L.blue_spawn_trigger = "лазурный туман"
+	L.yellow_spawn_trigger = "янтарный туман"
 
 	L.adds = "Найденные помощники"
 	L.adds_desc = "Предупреждать, когда вы находите Багровый, Янтарный или Лазурный туманы, и сколько туманов ещё осталось."
