@@ -30,7 +30,7 @@ if L then
 	L.custom_off_bonecracker_marks = "Bonecracker"
 	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with %s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
 
-	L.stance_bar = "%s (NOW: %s)"
+	L.stance_bar = "%s(NOW:%s)"
 	-- shorten stances so they fit on the bars
 	L.battle = "Battle"
 	L.berserker = "Berserker"
@@ -125,7 +125,7 @@ end
 
 function mod:OnEngage()
 	self:OpenProximity("proximity", 10) -- Heroic Shockwave , Magistrike is 8 yard having a constant proximity meter might be too much for LFR
-	self:Berserk(600) -- XXX Assumed
+	self:Berserk(600) -- confirmed 25N PTR
 	wipe(marksUsed)
 	self:CDBar(143494, 10) -- Sundering Blow
 	self:Bar(143638, 15.5) -- Bonecracker
@@ -204,6 +204,8 @@ end
 
 function mod:ExtraAdds()
 	self:Message(-7920, "Neutral", "Long", L["extra_adds"])
+	-- XXX looked like on 25N PTR this reset the add timer - double check
+	self:Bar(-7920, 46, nil, "achievement_guildperk_everybodysfriend")
 end
 
 function mod:Adds()

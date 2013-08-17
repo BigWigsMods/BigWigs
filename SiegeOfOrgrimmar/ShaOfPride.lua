@@ -24,6 +24,7 @@ local auraOfPride = mod:SpellName(146817)
 local auraOfPrideGroup = {}
 local alterPride
 local prisoned = mod:NewTargetList()
+local swellingPrideCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,7 +33,7 @@ local prisoned = mod:NewTargetList()
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.custom_off_titan_mark = "Gift of the Titans marker"
-	L.custom_off_titan_mark_desc = "To help spotting others with Gift of the Titans, mark the people who have Gift of the Titans on them with %s%s%s%s%s%s%s%s (players with Aura of Pride are not marked), requires promoted or leader."
+	L.custom_off_titan_mark_desc = "To help spotting others with Gift of the Titans, mark the people who have Gift of the Titans on them with %s%s%s%s%s%s%s%s (players with Aura of Pride and tanks are not marked), requires promoted or leader."
 
 	L.projection_message = "Go to |cFF00FF00GREEN|r arrow!"
 	L.projection_explosion = "Projection explosion"
@@ -88,23 +89,24 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SwellingPrideSuccess", 144400)
 	self:Log("SPELL_CAST_START", "SwellingPride", 144400)
 	self:Log("SPELL_CAST_SUCCESS", "TitanGiftSuccess", 146595)
-	self:Log("SPELL_AURA_APPLIED", "TitanGiftApplied", 144359)
-	self:Log("SPELL_AURA_REMOVED", "TitanGiftRemoved", 144359)
+	self:Log("SPELL_AURA_APPLIED", "TitanGiftApplied", 144359, 146594)
+	self:Log("SPELL_AURA_REMOVED", "TitanGiftRemoved", 144359, 146594)
 
 	self:Death("Win", 71734)
 end
 
 function mod:OnEngage()
+	swellingPrideCounter = 1
 	wipe(marksUsed)
 	wipe(auraOfPrideGroup)
 	self:Bar(146595, 7) -- Titan Gift
-	self:Bar(144400, 62) -- Swelling Pride
+	self:Bar(144400, 62, CL["count"]:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
 	if self:Tank() then
 		alterPride = nil
 		self:CDBar(144358, 11) -- Wounded Pride
 	end
-	self:Bar(-8262, 50, L["big_add_bar"])
-	self:ScheduleTimer("Message", 45, -8262, "Urgent", nil, L["big_add_spawning"])
+	self:Bar(-8262, 50, L["big_add_bar"], 144379) -- signature ability icon
+	self:ScheduleTimer("Message", 45, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
 	self:Bar(144800, 21, L["small_adds"])
 	self:Bar(144563, 40) -- Imprison
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
@@ -127,15 +129,16 @@ end
 
 -- normal
 function mod:Unleashed()
-	self:Message(8349, "Neutral", "Info")
+	self:CancelAllTimers()
+	self:Message(-8349, "Neutral", "Info")
 	self:Bar(146595, 7) -- Titan Gift
 	self:Bar(144400, 62) -- Swelling Pride
 	if self:Tank() then
 		alterPride = nil
 		self:CDBar(144358, 11) -- Wounded Pride
 	end
-	self:Bar(-8262, 50, L["big_add_bar"])
-	self:ScheduleTimer("Message", 45, -8262, "Urgent", nil, L["big_add_spawning"])
+	self:Bar(-8262, 50, L["big_add_bar"], 144379)
+	self:ScheduleTimer("Message", 45, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
 	self:Bar(144800, 21, L["small_adds"])
 	self:Bar(144563, 40) -- Imprison
 end
@@ -143,14 +146,23 @@ end
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 33 then -- 30%
-		self:Message(8349, "Neutral", "Info", CL["soon"]:format(EJ_GetSectionInfo(8349)))
+		self:Message(-8349, "Neutral", "Info", CL["soon"]:format(EJ_GetSectionInfo(8349)))
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end
 
-function mod:ImprisonApplied(args)
-	prisoned[#prisoned+1] = args.destName
-	self:ScheduleTimer("TargetMessage", 0.1, 144563, prisoned, "Neutral")
+do
+	local scheduled
+	local function warnImprison(spellId)
+		mod:TargetMessage(spellId, prisoned, "Neutral")
+		scheduled = nil
+	end
+	function mod:ImprisonApplied(args)
+		prisoned[#prisoned+1] = args.destName
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warnImprison, 0.1, 144563)
+		end
+	end
 end
 
 function mod:Imprison(args)
@@ -196,7 +208,6 @@ do
 			table.remove(auraOfPrideGroup, index)
 		end
 		if self:Me(args.destGUID) and #auraOfPrideGroup > 0 then
-			self:CloseProximity(args.spellId) -- XXX does this even needed?
 			self:OpenProximity(args.spellId, 5, auraOfPrideGroup)
 		elseif not self:Me(args.destGUID) and #auraOfPrideGroup > 0 then
 			self:OpenProximity(args.spellId, 5, auraOfPrideGroup)
@@ -221,8 +232,8 @@ do
 	local prev = 0
 	local mindcontrolled = mod:NewTargetList()
 	function mod:SwellingPrideSuccess(args)
-		self:Bar(-8262, 50, L["big_add_bar"]) -- when the add is actually up
-		self:ScheduleTimer("Message", 45, -8262, "Urgent", nil, L["big_add_spawning"])
+		self:Bar(-8262, 50, L["big_add_bar"], 144379) -- when the add is actually up
+		self:ScheduleTimer("Message", 45, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
 		-- lets do some fancy stuff
 		local playerPower = UnitPower("player", ALTERNATE_POWER_INDEX)
 		if playerPower > 24 and playerPower < 50 then
@@ -251,8 +262,9 @@ do
 end
 
 function mod:SwellingPride(args)
-	self:Message(args.spellId, "Attention", nil, CL["casting"]:format(args.spellName))
-	self:Bar(args.spellId, 62)
+	self:Message(args.spellId, "Attention", "Info", CL["count"]:format(args.spellName, swellingPrideCounter)) -- play sound so people can use personal CDs
+	swellingPrideCounter = swellingPrideCounter + 1
+	self:Bar(args.spellId, 62, CL["count"]:format(args.spellName, swellingPrideCounter))
 end
 
 do
@@ -284,13 +296,13 @@ do
 				self:Message(146595, "Positive", "Long", CL["you"]:format(args.spellName))
 			end
 		end
-		if self.db.profile.custom_off_titan_mark and not UnitDebuff(args.destName, auraOfPride) then
+		if self.db.profile.custom_off_titan_mark and not UnitDebuff(args.destName, auraOfPride) and not self:Tank(args.destName) then
 			markTitans(args.destName)
 		end
 	end
 end
 
-function mod:GiftOfTheTitansSuccess(args)
+function mod:TitanGiftSuccess(args)
 	self:Bar(args.spellId, 25)
 end
 

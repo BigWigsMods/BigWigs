@@ -27,7 +27,7 @@ if L then
 	L.blobs = "Blobs"
 
 	L.custom_off_mist_marks = "Toxic Mist"
-	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with %s%s%s%s%s%s (in that order)(not all marks may be used)(tanks are not marked), requires promoted or leader."
 end
 L = mod:GetLocale()
 L.custom_off_mist_marks_desc = L.custom_off_mist_marks_desc:format( -- XXX cut down the number of marks used once we know the max amount used in 25H
@@ -36,8 +36,7 @@ L.custom_off_mist_marks_desc = L.custom_off_mist_marks_desc:format( -- XXX cut d
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15\124t"
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t"
 )
 
 --------------------------------------------------------------------------------
@@ -184,6 +183,7 @@ function mod:FallingAsh(args)
 end
 
 function mod:FoulGeyser(args)
+	-- XXX still not 100% reliable, maybe should wait till the channel starts and annonce target then?
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", L["blobs"])
 	self:Bar(args.spellId, 32, L["blobs"])
 	if self:Me(args.destGUID) then
@@ -215,6 +215,6 @@ end
 -- General
 
 function mod:Bloodlust(args)
-	self:Message(args.spellId, "Neutral")
+	self:Message(args.spellId, "Neutral", "Info")
 end
 

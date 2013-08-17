@@ -190,7 +190,7 @@ do
 		-- don't think this needs a message
 		-- if anything a soon message, since timers seem reliable
 		slamTimer = self:ScheduleTimer("Message", slamTimers[slamCounter]-2, args.spellId, "Urgent", nil, CL["custom_sec"]:format(args.spellName, 2))
-		self:Bar(args.spellId, slamTimers[slamCounter], self:Heroic() and CL["next_add"])
+		self:Bar(args.spellId, slamTimers[slamCounter], args.spellName)
 		slamCounter = slamCounter + 1
 	end
 end
@@ -200,7 +200,7 @@ function mod:ArcingSmash(args)
 	smashCounter = smashCounter + 1
 	self:CDBar(args.spellId, 17, CL["count"]:format(args.spellName, smashCounter))
 
-	self:ScheduleTimer("Message", 3, 142986, "Urgent", "Alarm") -- Imploding Energy, don't wanna use SPELL_DAMAGE, and this seems accurate enough
-	self:Bar(142986, 6, self:SpellName(67792)) -- A bar with a text "Implosion" for when the damage actually happens, so people can time immunities. 67792 is just a random spell called "Implosion"
+	self:ScheduleTimer("Message", 4, 142986, "Urgent", "Alarm") -- Imploding Energy, don't wanna use SPELL_DAMAGE, and this seems accurate enough
+	self:CDBar(142986, 9, self:SpellName(67792)) -- A bar with a text "Implosion" for when the damage actually happens, so people can time immunities. 67792 is just a random spell called "Implosion"
 end
 
