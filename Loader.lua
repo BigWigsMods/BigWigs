@@ -446,7 +446,7 @@ do
 		self:ZONE_CHANGED_NEW_AREA()
 
 		self:RegisterMessage("BigWigs_CoreOptionToggled", "UpdateDBMFaking")
-		-- Somewhat ugly, but saves loading AceDB with the loader instead of the the core for this 1 feature
+		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core for this 1 feature
 		if BigWigs3DB and BigWigs3DB.profileKeys and BigWigs3DB.profiles then
 			local name = UnitName("player")
 			local realm = GetRealmName()
@@ -483,6 +483,7 @@ do
 			--	DBMdotDisplayVersion = displayVersion -- Update to the latest display version, including alphas.
 			--	self:DBM_AddonMessage(nil, nil, "H") -- Re-send addon message.
 			--end
+			-- XXX enable this for 5.4
 		end
 	end
 	function loader:UpdateDBMFaking(_, key, value)
