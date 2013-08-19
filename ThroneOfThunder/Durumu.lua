@@ -219,10 +219,10 @@ function mod:LifeDrainCast(args)
 	lifeDrainCasts = lifeDrainCasts + 1
 	self:Bar(133798, 15, CL["cast"]:format(args.spellName))
 	self:DelayedMessage(133798, 15, "Positive", CL["over"]:format(args.spellName))
-	if lifeDrainCasts == 1 then
-		self:CDBar(133798, 50)
+	if lifeDrainCasts == 1 and not self:Heroic() then
+		self:CDBar(133798, self:LFR() and 75 or 50)
 	else
-		self:CDBar(133798, 41) -- XXX 41-46 not sure why this one varies, doesn't look like its based on end of color
+		self:CDBar(133798, 41) -- 41-46 not sure why this one varies, doesn't look like its based on end of color
 	end
 end
 
