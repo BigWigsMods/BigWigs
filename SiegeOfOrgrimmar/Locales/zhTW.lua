@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Immerseus", "zhTW")
+﻿local L = BigWigs:NewBossLocale("Immerseus", "zhTW")
 if not L then return end
 if L then
 
@@ -9,7 +9,7 @@ if L then
 	L.defile = "Defiled Ground cast"
 
 	L.custom_off_bane_marks = "Shadow Word: Bane marker"
-	L.custom_off_bane_marks_desc = "To help dispelling assignments, mark the people who have Shadow Word: Bane on them with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+	L.custom_off_bane_marks_desc = "To help dispelling assignments, mark the inital people who have Shadow Word: Bane on them with %s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
 
 	L.no_meditative_field = "NO Meditative Field!"
 
@@ -32,7 +32,7 @@ end
 L = BigWigs:NewBossLocale("Sha of Pride", "zhTW")
 if L then
 	L.custom_off_titan_mark = "Gift of the Titans marker"
-	L.custom_off_titan_mark_desc = "To help spotting others with Gift of the Titans, mark the people who have Gift of the Titans on them with %s%s%s%s%s%s%s%s (players with Aura of Pride are not marked), requires promoted or leader."
+	L.custom_off_titan_mark_desc = "To help spotting others with Gift of the Titans, mark the people who have Gift of the Titans on them with %s%s%s%s%s%s%s%s (players with Aura of Pride and tanks are not marked), requires promoted or leader."
 
 	L.projection_message = "Go to |cFF00FF00GREEN|r arrow!"
 	L.projection_explosion = "Projection explosion"
@@ -52,6 +52,7 @@ if L then
 	L.south_tower = "South tower"
 	L.north_tower_trigger = "The door barring the North Tower has been breached!"
 	L.north_tower = "North tower"
+	L.tower_defender = "Tower defender"
 
 	L.custom_off_shaman_marker = "Shaman marker"
 	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
@@ -59,7 +60,8 @@ end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "zhTW")
 if L then
-
+	L.custom_off_mine_marks = "Mine marker"
+	L.custom_off_mine_marks_desc = "To help soaking assignments, try and mark the Crawler Mines with %s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
 end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "zhTW")
@@ -67,7 +69,7 @@ if L then
 	L.blobs = "Blobs"
 
 	L.custom_off_mist_marks = "Toxic Mist"
-	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with %s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
 end
 
 L = BigWigs:NewBossLocale("General Nazgrim", "zhTW")
@@ -75,7 +77,7 @@ if L then
 	L.custom_off_bonecracker_marks = "Bonecracker"
 	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with %s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
 
-	L.stance_bar = "%s (NOW: %s)"
+	L.stance_bar = "%s(NOW:%s)"
 	L.battle = "Battle"
 	L.berserker = "Berserker"
 	L.defensive = "Defensive"
