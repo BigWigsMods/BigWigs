@@ -112,6 +112,8 @@ L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "ruRU")
 if L then
 	L.tank_debuffs = "Дебаффы танка"
 	L.tank_debuffs_desc = "Предупреждать о разных типах дебаффов танка, связанных со Страшным ревом."
+
+	L.cage_opened = "Клетка открыта"
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "ruRU")
@@ -133,7 +135,18 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "ruRU")
 if L then
+	L.intermission = "Перерыв"
+	L.mind_control = "Контроль разума"
 
+	-- L.chain_heal_desc = "Heals a friendly target for 40% of their max health, chaining to nearby friendly targets."
+	L.chain_heal_message = "Ваш фокус читает Цепное исцеление!"
+	L.chain_heal_bar = "Фокус: Цепное исцеление"
+
+	-- L.farseer_trigger = "Farseers, mend our wounds!"
+	L.custom_off_shaman_marker = "Маркировка Предсказателей"
+	L.custom_off_shaman_marker_desc = "Чтобы помочь с прерыванием, Предсказатели - всадники на волках будет помечены метками %s%s%s%s%s%s%s (в этой последовательности)(не все метки могут быть использованы), требуется быть помощником или лидером."
+
+	L.focus_only = "|cffff0000Оповещения только для фокуса.|r "
 end
 
 L = BigWigs:NewBossLocale("Siege of Orgrimmar Trash", "ruRU")
