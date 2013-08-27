@@ -19,6 +19,10 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "itIT")
 if L then
+	L.pre_pull = "Pre ingaggio"
+	L.pre_pull_desc = "Barra per la scenetta prima dell'ingaggio del boss "
+	L.pre_pull_trigger = "Very well, I will create a field to keep your corruption quarantined." --need translation
+
 	L.big_adds = "Add Maggiori"
 	L.big_adds_desc = "Avvisa quando uccidi gli Add Maggiori dentro/fuori"
 	L.big_add = "Add Maggiore! (%d)"
@@ -55,7 +59,8 @@ end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "itIT")
 if L then
-
+	L.custom_off_mine_marks = "Mine marker"
+	L.custom_off_mine_marks_desc = "To help soaking assignments, try and mark the Crawler Mines with %s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
 end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "itIT")
@@ -127,26 +132,13 @@ end
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "itIT")
 if L then
 	-- for getting all those calculate emotes:
-	-- cat Transcriptor.lua | sed "s/\t//g" | grep -E "(CHAT_MSG_RAID_BOSS_EMOTE].*Iyyokuk)" | sed "s/.*EMOTE//" | sed "s/Iyyo.*//" | sed "s/#/\"/g" | sort | uniq
-	-- XXX incomplete this should be 15 strings
-	L.bomb = "Detonate every Bomb!" -- all those triggers need checking and translation
-	L.sword = "Slice the Swords!"
-	L.drums = "Sound the Drums!"
-	L.mantid = "PH"
-	L.staff = "PH"
-
-	L.yellow = "Chase Down Every Yellow Coward!"
-	L.red = "Drain all the Red Blood!"
-	L.blue = "Make Every Blue Cry!"
-	L.purple = "PH"
-	L.green = "PH"
-
-	L.one = "Every Solitary One!"
-	L.two = "Split Every Pair!"
-	L.three = "Target Every Three!"
-	L.four = "PH"
-	L.five = "PH"
-	--------------------------------
+	-- cat Transcriptor.lua | sed "s/\t//g" | grep -E "(CHAT_MSG_RAID_BOSS_EMOTE].*Iyyokuk)" | sed "s/.*EMOTE//" | sed "s/#/\"/" | sed "s/#.*/\"/" | sort | uniq
+	L.one = "Iyyokuk selects: One!"
+	L.two = "Iyyokuk selects: Two!"
+	L.three = "Iyyokuk selects: Three!"
+	L.four = "Iyyokuk selects: Four!"
+	L.five = "Iyyokuk selects: Five!"
+	-------------------------------------
 	L.edge_message = "Sei uno dei limiti"
 	L.custom_off_edge_marks = "Marcatori dei Limiti"
 	L.custom_off_edge_marks_desc = "Evidenzia i giocatori che, dopo i calcoli, saranno i limiti di Confine Ardente con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistenteho will be edges based on the calculations %s%s%s%s%s%s, requires promoted or leader."
@@ -157,7 +149,6 @@ L = BigWigs:NewBossLocale("Garrosh Hellscream", "itIT")
 if L then
 	L.mind_control = "Controllo della Mente"
 
-	L.chain_heal = mod:SpellName(144583)
 	L.chain_heal_desc = "Heals a friendly target for 40% of their max health, chaining to nearby friendly targets."
 	L.chain_heal_message = "Your focus is casting Chain Heal!"
 	L.chain_heal_bar = "Focus: Chain Heal"
