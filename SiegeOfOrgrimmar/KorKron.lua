@@ -81,7 +81,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(600) -- XXX Assumed
+	self:Berserk(600, nil, nil, "Berserk (assumed)") -- XXX Assumed
 	wipe(marksUsed)
 end
 

@@ -23,7 +23,7 @@ local UnitDebuff = UnitDebuff
 local deathCounter = 0
 local function getBossByMobId(mobId)
 	for i=1, 5 do
-		if mod:MobId("boss"..i) == mobId then
+		if mod:MobId(UnitGUID("boss"..i)) == mobId then
 			return "boss"..i
 		end
 	end
@@ -259,7 +259,9 @@ end
 function mod:CalculationRemoved(args)
 	if not results.shape and not results.color and not results.number then return end -- No Fiery Edge yet, so the table is not populated
 	for k, v in pairs(results) do
-		v[args.destName] = nil -- we don't have to do name parsing magic for LFR ppl because GetRaidRosterInfo returs servered names too
+		if type(v) == "table" then
+			v[args.destName] = nil -- we don't have to do name parsing magic for LFR ppl because GetRaidRosterInfo returs servered names too
+		end
 	end
 end
 
@@ -352,7 +354,11 @@ local function iyyokukSelected()
 				shape, color, number = parseDebuff(name)
 				if shape then
 					results[shape][name] = true
+				end
+				if color then
 					results[color][name] = true
+				end
+				if number then
 					results[number][name] = true
 				end
 			end
@@ -379,7 +385,7 @@ local function figureShitOut()
 	--@debug@
 	-- XXX try and make life easier for figuring shit out
 	-- print a bunch of stuff so they are in the transcriptor log
-	mod:Message(-8055, nil, nil, ("Calculated: shape: %s color: %s number: %s"):format(results.shape, results.color, results.number))
+	mod:Message(-8055, nil, nil, ("Calculated: shape: %s color: %s number: %s"):format(results.shape or "none", results.color or "none", results.number or "none"))
 
 	local msg = ""
 	for k, v in pairs(results) do
@@ -395,10 +401,11 @@ local function figureShitOut()
 	--@end-debug@
 end
 
-function mod:CHAT_MSG_MONSTER_EMOTE(_, sender, _, _, target)
+function mod:CHAT_MSG_MONSTER_EMOTE(_, _, sender, _, _, target)
 	-- Iyyokuk only have one MONSTER_EMOTE so this should be a safe method rather than having to translate the msg
 	if sender == EJ_GetSectionInfo(8012) then -- hopefully no weird naming missmatch in different localization like for "Xaril the Poisoned Mind" vs "Xaril the Poisoned-Mind"
 		--@debug@
+		print(sender, target)
 		self:ScheduleTimer(figureShitOut, 0.3)
 		--@end-debug@
 		local diff = self:Difficulty()

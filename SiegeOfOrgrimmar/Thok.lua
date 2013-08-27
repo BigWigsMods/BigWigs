@@ -26,6 +26,8 @@ if L then
 	L.tank_debuffs = "Tank debuffs"
 	L.tank_debuffs_desc = "Warnings for the different types of tank debuffs associated with Fearsome Roar"
 	L.tank_debuffs_icon = 143766
+
+	L.cage_opened = "Cage opened"
 end
 L = mod:GetLocale()
 
@@ -36,8 +38,8 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{"tank_debuffs", "TANK"}, -7963, 143428, 143777, 143783, -- stage 1
-		-7981, {-7980, "ICON", "FLASH", "SAY"}, -- stage 2
-		"proximity", "bosskill",
+		-7981, {-7980, "ICON", "FLASH", "SAY"}, {146589, "FLASH"}, 143442,-- stage 2
+		"proximity", "berserk", "bosskill",
 	}, {
 		["tank_debuffs"] = -7960, -- stage 1
 		[-7981] = -7961, -- stage 2
@@ -49,10 +51,13 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	-- stage 2
+	self:Log("SPELL_AURA_APPLIED_DOSE", "BloodFrenzy", 143442)
+	self:Log("SPELL_AURA_REMOVED", "SkeletonKeyRemoved", 146589)
+	self:Log("SPELL_AURA_APPLIED", "SkeletonKey", 146589)
 	self:Log("SPELL_AURA_REMOVED", "BloodFrenzyOver", 143440)
-	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 146540)
-	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 146540)
-	self:Emoty("BloodFrenzy", "143440")
+	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 143445)
+	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 143445)
+	self:Emote("BloodFrenzy", "143440")
 	-- stage 1
 	self:Log("SPELL_PERIODIC_DAMAGE", "BurningBlood", 143783)
 	self:Log("SPELL_DAMAGE", "BurningBlood", 143783)
@@ -60,14 +65,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "TailLash", 143428)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Acceleration", 143411)
 	self:Log("SPELL_CAST_SUCCESS", "FearsomeRoar", 143426, 143780, 143773, 143767) -- Fearsome Roar, Acid Breath, Freezing Breath, Scorching Breath
-	self:Log("SPELL_AURA_APPLIED", "TankDebuff", 71529, 143780, 143773, 143767) -- Panic, Acid Breath, Freezing Breath, Scorching Breath
-	self:Log("SPELL_AURA_APPLIED_DOSE", "TankDebuff", 71529, 143780)
+	self:Log("SPELL_AURA_APPLIED", "TankDebuff", 143766, 143780, 143773, 143767) -- Panic, Acid Breath, Freezing Breath, Scorching Breath
+	self:Log("SPELL_AURA_APPLIED_DOSE", "TankDebuff", 143766, 143780, 143773, 143767)
 
 	self:Death("Win", 71529)
 end
 
 function mod:OnEngage()
-	self:OpenProximity("proximity", 10) -- it is so you know if you are too close to another group
+	self:Berserk(600) -- confirmed 25N PTR
+	self:OpenProximity("proximity", 10) -- it is so you know if you are too close to another group -- XXX this is maybe tactic dependant
 	self:Bar(-7963, 25) -- Acceleration, not much point for more timers than the initial one since then it is too frequent
 end
 
@@ -76,6 +82,23 @@ end
 --
 
 -- stage 2
+
+function mod:BloodFrenzy(args)
+	self:Message(args.spellId, "Attention", nil, CL["count"]:format(args.spellName, args.amount))
+end
+
+function mod:SkeletonKeyRemoved(args)
+	self:Message(args.spellId, "Positive", "Alert", L["cage_opened"])
+	self:StopBar(args.spellId)
+end
+
+function mod:SkeletonKey(args)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+	if self:Me(args.destGUID) then
+		self:Flash(args.spellId)
+		self:Bar(args.spellId, 60)
+	end
+end
 
 function mod:BloodFrenzyOver(args)
 	self:OpenProximity("proximity", 10)
@@ -95,7 +118,7 @@ function mod:FixateApplied(args)
 		self:Say(-7980)
 		self:Flash(-7980)
 	end
-	self:TargetMessage(-7980, "Urgent", "Alarm")
+	self:TargetMessage(-7980, args.destName, "Urgent", "Alarm")
 	self:PrimaryIcon(-7980, args.destName)
 end
 
@@ -122,9 +145,18 @@ do
 	end
 end
 
-function mod:FrozenSolid(args)
-	frozenSolid[#frozenSolid+1] = args.destName
-	self:ScheduleTimer("TargetMessage", 0.1, 143777, frozenSolid, "Attention")
+do
+	local frozenSolid, scheduled = mod:NewTargetList(), nil
+	local function warnFrozenSolid()
+		scheduled = nil
+		mod:TargetMessage(143777, frozenSolid, "Attention")
+	end
+	function mod:FrozenSolid(args)
+		frozenSolid[#frozenSolid+1] = args.destName
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warnFrozenSolid, 0.1)
+		end
+	end
 end
 
 function mod:TailLash(args)

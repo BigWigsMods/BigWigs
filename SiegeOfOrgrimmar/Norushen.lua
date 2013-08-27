@@ -96,10 +96,10 @@ end
 
 function mod:PrePull(unitId, spellName, _, _, spellId)
 	if spellId and type(spellId) == "number" and spellId == 145188 then -- Norushen needs to be targeted
-		self:Bar("pre_pull", 25)
+		self:Bar("pre_pull", 25, L["pre_pull"], "ABILITY_TITANKEEPER_QUARANTINE.BLP")
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEDED", "target")
 	else -- this is always there, but needs localization
-		self:Bar("pre_pull", 26)
+		self:Bar("pre_pull", 26, L["pre_pull"], "ABILITY_TITANKEEPER_QUARANTINE.BLP")
 	end
 end
 
@@ -107,24 +107,24 @@ end
 -- TANK
 function mod:TitanicSmash(args)
 	self:Message(args.spellId, "Attention", "Info")
-	self:CBar(args.spellID, 15)
+	self:CDBar(args.spellId, 15)
 end
 
 function mod:HurlCorruption(args)
 	self:Message(args.spellId, "Urgent", "Warning")
-	self:Bar(args.spellID, 20)
+	self:Bar(args.spellId, 20)
 end
 
 -- HEALER
 function mod:LingeringCorruption(args)
 	self:Message(args.spellId, "Urgent", "Warning")
-	self:Bar(args.spellID, 15)
+	self:Bar(args.spellId, 15)
 end
 
 -- DPS
 function mod:TearReality(args)
 	self:Message(args.spellId, "Attention", "Info")
-	self:CDBar(args.spellID, 8) -- any point for this?
+	self:CDBar(args.spellId, 8) -- any point for this?
 end
 
 function mod:LookWithinRemoved(args)
@@ -190,7 +190,7 @@ end
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 53 then -- 50%
-		self:Message("stages", "Neutral", "Info", CL["soon"]:format(CL["phase"]:format(2)))
+		self:Message("stages", "Neutral", "Info", CL["soon"]:format(CL["phase"]:format(2)), 146179)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end

@@ -59,7 +59,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(600) -- XXX Assumed
+	self:Berserk(600, nil, nil, "Berserk (assumed)") -- XXX Assumed
 	self:Bar(143309, 24) -- Swirl
 	self:Bar(143436, 6) -- Corrosive Blast
 	if self:Heroic() then
@@ -106,10 +106,6 @@ function mod:Swirl(args)
 	self:Bar(args.spellId, 48)
 end
 
-function mod:ShaBolt(args)
-	self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
-end
-
 do
 	local prev = 0
 	function mod:ShaPoolDamage(args)
@@ -117,8 +113,16 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(144357, "Personal", "Info", CL["underyou"]:format(args.spellName))
-			self:Flash(144357)
+			self:Message(143295, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Flash(143295)
+		end
+	end
+	function mod:ShaBolt(args)
+		if not self:Me(args.destGUID) then return end
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
 		end
 	end
 end

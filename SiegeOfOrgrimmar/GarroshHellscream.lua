@@ -1,6 +1,5 @@
 --[[
 TODO:
-	-- maybe try and add wave timers
 	-- fix p2 desecrated weapon timer
 ]]--
 if select(4, GetBuildInfo()) < 50400 then return end
@@ -28,18 +27,21 @@ local desecrateCounter = 1
 local phase = 1
 local function getBossByMobId(mobId)
 	for i=1, 5 do
-		if mod:MobId("boss"..i) == mobId then
+		if mod:MobId(UnitGUID("boss"..i)) == mobId then
 			return "boss"..i
 		end
 	end
 	return
 end
+local waveTimers = { 45, 45, 40 } -- XXX there are no events for this so really what we need is videos
+local waveTimer, waveCounter = nil, 1
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.intermission = "Intermission"
 	L.mind_control = "Mind Control"
 
 	L.chain_heal = mod:SpellName(144583)
@@ -71,7 +73,7 @@ L.custom_off_shaman_marker_desc = L.custom_off_shaman_marker_desc:format(
 
 function mod:GetOptions()
 	return {
-		-8298, -- phase 1
+		-8298, -8292,-- phase 1
 		-8294, "chain_heal", "custom_off_shaman_marker", -- Farseer
 		-8305, 144945, 144969, -- Intermissions
 		145065, 144985, {145183, "TANK"}, -- phase 2
@@ -95,7 +97,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GrippingDispair", 145183)
 	self:Log("SPELL_AURA_APPLIED", "GrippingDispair", 145183)
 	self:Log("SPELL_CAST_START", "WhirlingCorruption", 144985, 145037)
-	self:Log("SPELL_CAST_START", "MindControl", 145065, 145171)
 	-- Intermissions
 	self:Log("SPELL_CAST_START", "Annihilate", 144969)
 	self:Log("SPELL_AURA_REMOVED", "YShaarjsProtection", 144945)
@@ -105,11 +106,21 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ChainHeal", 144583)
 	self:Yell("Farseer", L["farseer_trigger"])
 	self:Emote("SiegeEngineer", "144616")
-	self:Log("SPELL_CAST_SUCCESS", "DesecratedWeapon", 144758) -- XXX need empowered spellId
+	self:Log("SPELL_CAST_SUCCESS", "DesecratedWeapon", 144748) -- XXX need empowered spellId
 	self:Death("Win", 71865)
 end
 
-function mod:OnEngage()
+function mod:OnEngage(diff)
+	waveCounter = 1
+	waveTimer = self:ScheduleTimer("NewWave", waveTimers[waveCounter])
+	self:Bar(-8292, waveTimers[waveCounter], nil, 144582)
+	if diff == 3 or diff == 5 then -- 10 man
+		self:Log("SPELL_CAST_START", "MindControl", 145065, 145171) -- no longer there on 25N PTR XXX double check if it is there on 10 man on live
+	else
+		self:Log("SPELL_CAST_SUCCESS", "MindControl", 145065, 145171)
+	end
+	self:Berserk(900, nil, nil, "Berserk (assumed)") -- XXX assumed
+	annihilateCounter = 1
 	self:Bar(144758, 60) -- DesecratedWeapon
 	self:Bar(-8298, 20) -- Siege Engineer
 	self:Bar(-8294, 30, nil, 144584) -- Farseer
@@ -152,6 +163,13 @@ function mod:MindControl(args)
 end
 
 -- Phase 1
+function mod:NewWave()
+	self:Message(-8292, "Attention", CL["count"]:format((EJ_GetSectionInfo(8292)), waveCounter), nil, 144582) -- XXX the count message is only in for debugging
+	waveCounter = waveCounter + 1
+	self:Bar(-8292, waveTimers[waveCounter] or 40, nil, 144582)
+	waveTimer = self:ScheduleTimer("NewWave", waveTimers[waveCounter] or 40)
+end
+
 -- marking
 do
 	local function setMark(unit, guid)
@@ -214,16 +232,17 @@ end
 
 do
 	local farseerTimers = { 50, 50, 40 } -- XXX need more data
+	--  cat Transcriptor.lua | sed "s/\t//g" | cut -d ' ' -f 2-300 | grep -E "(YELL].*Farseers)|(DED.*144489)|(DED.*144866)"
 	function mod:Farseer()
-		self:Message(-8294, "Urgent", self:Damager() and "Alert")
+		self:Message(-8294, "Urgent", self:Damager() and "Alert", nil, 144584)
 		self:Bar(-8294, farseerTimers[farseerCounter] or 40, nil, 144584) -- chain lightning icon cuz that is some shaman spell
 		farseerCounter = farseerCounter + 1
 	end
 end
 
 function mod:SiegeEngineer()
-	self:Message(-8298, "Attention")
-	self:Bar(-8298, engineerCounter == 1 and 45 or 40)
+	self:Message(-8298, "Attention", nil, nil, 144616)
+	self:Bar(-8298, engineerCounter == 1 and 45 or 40, 144616)
 	engineerCounter = engineerCounter + 1
 end
 
@@ -233,22 +252,44 @@ function mod:Annihilate(args)
 	annihilateCounter = annihilateCounter + 1
 end
 
-function mod:YShaarjsProtection(args)
-	self:Message(args.spellId, "Positive", "Long", CL["over"]:format(args.spellName))
-	annihilateCounter = 1
+do
+	local hopeList = mod:NewTargetList()
+	function mod:YShaarjsProtection(args)
+		if self:MobId(args.destGUID) ~= 71865 then return end
+		self:Message(args.spellId, "Positive", "Long", CL["over"]:format(args.spellName))
+		annihilateCounter = 1
+		local diff = self:Difficulty()
+		for i=1, GetNumGroupMembers() do
+			local name, _, subgroup = GetRaidRosterInfo(i)
+			if diff == 3 or diff == 5 then -- 10 man
+				if subgroup < 3 then
+					hopeList[#hopeList+1] = name
+				end
+			else
+				if subgroup < 6 then
+					hopeList[#hopeList+1] = name
+				end
+			end
+		end
+		-- this is so people know they'll take extra damage
+		self:TargetMessage(args.spellId, hopeList, "Attention", "Warning", 29125, 149004) -- maybe add it's own option key? 29125 spell called "Hopeless"
+	end
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 	if spellId == 145235 then -- throw axe at heart , transition into first intermission
-		self:Bar(-8305, 25, 144866, "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
+		self:Bar(-8305, 25, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 		phase = 2
+		self:CancelTimer(waveTimer)
+		waveTimer = nil
+		self:StopBar(-8292) -- Kor'kron Warbringer aka add waves
 	elseif spellId == 144866 then -- Enter Realm of Y'Shaarj -- actually being pulled
 		self:StopBar(144758) -- Desecrated Weapon
 		self:StopWeaponScan()
 		self:StopBar(145065) -- Mind Control
 		self:StopBar(144985) -- Whirling Corruption
-		self:Message(-8305, "Neutral", nil, 144866, "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
-		self:Bar(-8305, 210, 144866, "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
+		self:Message(-8305, "Neutral", nil, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
+		self:Bar(-8305, 210, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 	elseif spellId == 144956 then -- Jump To Ground -- exiting intermission
 		desecrateCounter = 1
 		self:Bar(144758, 10) -- Desecrated Weapon
@@ -264,9 +305,10 @@ end
 
 -- General
 function mod:UNIT_HEALTH_FREQUENT(unitId)
+	if self:MobId(UnitGUID(unitId)) ~= 71865 then return end
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if (hp < 15 and phase == 1) or (hp < 13 and phase == 2) then -- 10%
-		self:Message("stages", "Neutral", "Info", CL["soon"]:format(CL["phase"]:format(phase+1)))
+		self:Message("stages", "Neutral", "Info", CL["soon"]:format(CL["phase"]:format(phase+1)), false)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3")
 	end
 end
@@ -291,20 +333,25 @@ do
 	end
 	function mod:StartWeaponScan()
 		if not weaponTimer then
-			weaponTimer = self:ScheduleRepeatingTimer(checkWeaponTarget, 0.2)
+			weaponTimer = self:ScheduleRepeatingTimer(checkWeaponTarget, 0.05)
 		end
 	end
 	function mod:StopWeaponScan()
 		self:CancelTimer(weaponTimer)
 		weaponTimer = nil
 	end
-	local phase2DesecreteCDs = {36, 45, 36} -- XXX need more data
+	local phase2DesecreteCDs = {36, 45, 36}
 	function mod:DesecratedWeapon(args)
-		if not phase == 1 then
-			desecrateCD = phase2DesecreteCDs[desecrateCounter] or 45
-			print("desecrateCounter: "..desecrateCounter)
+		if phase ~= 1 then
+			local diff = self:Difficulty()
+			if diff == 3 or diff == 5 then -- 10 man
+				-- XXX these need verifiaction for when they go live
+				desecrateCD = phase2DesecreteCDs[desecrateCounter] or 45
+			else
+				desecrateCD = 35 -- although 40 sec has been seen on 25N PTR too
+			end
 		end
-		self:Bar(args.spellId, desecrateCD)
+		self:CDBar(args.spellId, desecrateCD)
 		desecrateCounter = desecrateCounter + 1
 		self:ScheduleTimer("StopWeaponScan", 2) -- delay it a bit just to be safe
 		self:ScheduleTimer("StartWeaponScan", desecrateCD-7)

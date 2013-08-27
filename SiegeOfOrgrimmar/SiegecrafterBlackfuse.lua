@@ -21,7 +21,7 @@ local shredder = EJ_GetSectionInfo(8199)
 local sawbladeTarget
 local function getBossByMobId(mobId)
 	for i=1, 5 do
-		if mod:MobId("boss"..i) == mobId then
+		if mod:MobId(UnitGUID("boss"..i)) == mobId then
 			return "boss"..i
 		end
 	end

@@ -111,7 +111,7 @@ function mod:OnEngage()
 	wipe(intermission)
 	darkMeditationTimer = nil
 	self:OpenProximity("proximity", 5) -- this might not be needed in LFR
-	self:Berserk(900) -- XXX assumed, more than 10 min
+	self:Berserk(900, nil, nil, "Berserk (assumed)") -- XXX assumed, more than 10 min
 	self:Bar(144396, 7) -- VengefulStrikes
 	self:Bar(143019, 16) -- Corrupted Brew
 	self:CDBar(143027, 44) -- Clash
