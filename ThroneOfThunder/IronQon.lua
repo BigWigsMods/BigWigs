@@ -118,7 +118,7 @@ do
 		if class == "MONK" and mod:Range("boss1target", "boss2target") < 15 then return end
 
 		local name = mod:UnitName("boss1target")
-		mod:TargetMessage(134926, name, "Urgent", "Alarm")
+		mod:TargetMessage(134926, name, "Urgent", "Alarm", nil, nil, true)
 		mod:SecondaryIcon(134926, name)
 		if UnitIsUnit("player", "boss1target") then
 			mod:Flash(134926)
@@ -146,7 +146,7 @@ do
 	function mod:ThrowSpear(args)
 		if phase == 4 then return end -- don't warn in last phase
 		if spearTimer then -- didn't find a target
-			self:Message(args.spellId, "Urgent")
+			self:Message(args.spellId, "Urgent", "Alarm")
 		end
 		self:StopSpearScan()
 		self:CDBar(args.spellId, 33)
@@ -289,7 +289,8 @@ do
 	local prev = 0
 	function mod:Scorched(args)
 		if self:Me(args.destGUID) then
-			self:Message(-6871, "Important", nil, CL["count"]:format(args.spellName, args.amount or 1))
+			local amount = args.amount or 1
+			self:Message(-6871, "Important", amount > 1 and "Warning", CL["count"]:format(args.spellName, args.amount or 1))
 		end
 		local t = GetTime()
 		if t-prev > 1 then
@@ -315,16 +316,16 @@ do
 			self:Message("molten_energy", "Urgent", nil, ("%s (%d%%)"):format(L["molten_energy"], power), L.molten_energy_icon)
 		elseif power > 84 and prevPower == 75 then
 			prevPower = 85
-			self:Message("molten_energy", "Important", nil, ("%s (%d%%)"):format(L["molten_energy"], power), L.molten_energy_icon)
+			self:Message("molten_energy", "Important", "Long", ("%s (%d%%)"):format(L["molten_energy"], power), L.molten_energy_icon)
 		elseif power > 94 and prevPower == 85 then
 			prevPower = 95
-			self:Message("molten_energy", "Important", nil, ("%s (%d%%)"):format(L["molten_energy"], power), L.molten_energy_icon)
+			self:Message("molten_energy", "Important", "Long", ("%s (%d%%)"):format(L["molten_energy"], power), L.molten_energy_icon)
 		end
 	end
 end
 
 function mod:MoltenOverloadApplied(args)
-	self:Message(args.spellId, "Important", "Long") -- message should be WIPE IT!
+	self:Message(args.spellId, "Important") -- message should be WIPE IT!
 	self:Bar(args.spellId, 10, CL["cast"]:format(args.spellName))
 	self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss2")
 end
@@ -393,7 +394,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 function mod:Impale(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Positive")
+	local amount = args.amount or 1
+	self:StackMessage(args.spellId, args.destName, amount, "Positive", amount > 1 and "Warning")
 	self:CDBar(args.spellId, 20)
 end
 
