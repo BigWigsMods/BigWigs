@@ -290,7 +290,7 @@ do
 	function mod:Scorched(args)
 		if self:Me(args.destGUID) then
 			local amount = args.amount or 1
-			self:Message(-6871, "Important", amount > 1 and "Warning", CL["count"]:format(args.spellName, args.amount or 1))
+			self:Message(-6871, "Important", amount > 1 and "Warning", CL["count"]:format(args.spellName, amount))
 		end
 		local t = GetTime()
 		if t-prev > 1 then
