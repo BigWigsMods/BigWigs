@@ -116,6 +116,8 @@ L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "zhTW")
 if L then
 	L.tank_debuffs = "Tank debuffs"
 	L.tank_debuffs_desc = "Warnings for the different types of tank debuffs associated with Fearsome Roar"
+
+	L.cage_opened = "籠子已打開"
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "zhTW")
@@ -145,7 +147,8 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "zhTW")
 if L then
-	L.mind_control = "Mind Control"
+	L.intermission = "中場休息"
+	L.mind_control = "亚煞极之触"
 
 	L.chain_heal_desc = "Heals a friendly target for 40% of their max health, chaining to nearby friendly targets."
 	L.chain_heal_message = "Your focus is casting Chain Heal!"

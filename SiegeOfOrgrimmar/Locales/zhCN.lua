@@ -116,6 +116,8 @@ L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "zhCN")
 if L then
 	L.tank_debuffs = "坦克减益"
 	L.tank_debuffs_desc = "当坦克受到不同类型的恐惧咆哮减益时发出警报。"
+
+	L.cage_opened = "笼子已打开"
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "zhCN")
@@ -145,6 +147,7 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "zhCN")
 if L then
+	L.intermission = "中场休息"
 	L.mind_control = "亚煞极之触"
 
 	L.chain_heal_desc = "治疗一个友方目标40%最大生命，会跳到附近友方目标身上。"
