@@ -401,7 +401,7 @@ do
 			local msg = strjoin(" ", sync, ...)
 			chatMsgAddon(nil, "T", msg, pName)
 			if IsInRaid() or IsInGroup() then
-				SendAddonMessage("BigWigs", "T:"..msg, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
+				SendAddonMessage("BigWigs", "T:"..msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 			end
 		end
 	end

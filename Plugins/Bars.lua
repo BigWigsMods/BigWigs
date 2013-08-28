@@ -1381,7 +1381,7 @@ do
 			times[input] = t
 			BigWigs:Print(L["Sending custom bar '%s' to Big Wigs and DBM users."]:format(barText))
 			BigWigs:Transmit("BWCustomBar", time, barText)
-			SendAddonMessage("D4", ("U\t%d\t%s"):format(time, barText), IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- DBM message
+			SendAddonMessage("D4", ("U\t%d\t%s"):format(time, barText), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	end
 	SLASH_BIGWIGSRAIDBAR1 = "/raidbar"
@@ -1411,7 +1411,9 @@ SlashCmdList.BIGWIGSPULL = function(input)
 			BigWigs:Print(L["Sending a pull timer to Big Wigs and DBM users."])
 		end
 		BigWigs:Transmit("BWPull", input)
-		SendAddonMessage("D4", "PT\t".. input, IsPartyLFG() and "INSTANCE_CHAT" or "RAID") -- DBM message
+
+		local _, _, _, _, _, _, _, mapID = GetInstanceInfo()
+		SendAddonMessage("D4", ("PT\t%s\t%d"):format(input, mapID or 0), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 	else
 		BigWigs:Print(L["This function requires raid leader or raid assist."])
 	end
