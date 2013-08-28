@@ -45,10 +45,10 @@ L.custom_off_mist_marks_desc = L.custom_off_mist_marks_desc:format( -- XXX cut d
 
 function mod:GetOptions()
 	return {
-		144330, 144328,
+		{144330, "FLASH"}, 144328,
 		{-8132, "FLASH", "ICON", "SAY"}, -- Earthbreaker Haromm
 		"custom_off_mist_marks",
-		{144005, "FLASH"}, {143990, "FLASH"}, 143973, -- Wavebinder Kardris
+		{144005, "FLASH"}, {143990, "FLASH", "ICON"}, 143973, -- Wavebinder Kardris
 		144302, "berserk", "bosskill",
 	}, {
 		[144330] = "heroic",
@@ -95,10 +95,16 @@ function mod:IronTomb(args)
 	self:Message(args.spellId, "Important", "Long")
 end
 
-function mod:IronPrison(args)
-	if self:Me(args.destGUID) then
-		self:Bar(args.spellId, 60)
-		self:ScheduleTimer("Message", 57, "Attention", "Warning", CL["soon"]:format(CL["removed"]:format(args.spellName)))
+do
+	local function ironPrisonOverSoon(spellId)
+		mod:Message(spellId, "Attention", "Warning", CL["soon"]:format(CL["removed"]:format(mod:SpellName(spellId))))
+		mod:Flash(spellId)
+	end
+	function mod:IronPrison(args)
+		if self:Me(args.destGUID) then
+			self:Bar(args.spellId, 60)
+			self:ScheduleTimer(ironPrisonOverSoon, 57)
+		end
 	end
 end
 
@@ -184,6 +190,8 @@ end
 
 function mod:FoulGeyser(args)
 	-- XXX still not 100% reliable, maybe should wait till the channel starts and annonce target then?
+	self:SecondaryIcon(args.spellId, args.destName)
+	self:ScheduleTimer("SecondaryIcon", 15, args.spellId)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", L["blobs"])
 	self:Bar(args.spellId, 32, L["blobs"])
 	if self:Me(args.destGUID) then

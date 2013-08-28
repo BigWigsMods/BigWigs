@@ -158,7 +158,7 @@ end
 do
 	function mod:BaneRemoved(args)
 		if self.db.profile.custom_off_bane_marks then
-			for i = 1, 7 do
+			for i = 1, 5 do
 				if marksUsed[i] == args.destName then
 					marksUsed[i] = false
 					SetRaidTarget(args.destName, 0)
@@ -168,7 +168,7 @@ do
 	end
 
 	local function markBane(destName)
-		for i = 1, 7 do
+		for i = 1, 5 do
 			if not marksUsed[i] then
 				SetRaidTarget(destName, i)
 				marksUsed[i] = destName
@@ -176,8 +176,15 @@ do
 			end
 		end
 	end
+	local prev = 0
 	function mod:BaneApplied(args)
+		-- XXX this whole marking probably use some code clean up
 		if self.db.profile.custom_off_bane_marks then
+			local t = GetTime()
+			if t-prev > 2 then
+				prev = t
+				wipe(marksUsed)
+			end
 			-- no _DOSE for this so gotta get stacks like this:
 			local amount = select(4, UnitDebuff(args.destName, args.spellName))
 			if amount and amount == 3 then -- only mark the initial cast
@@ -385,7 +392,8 @@ do
 end
 
 function mod:VengefulStrikes(args)
-	local unit = mod:GetUnitIdByGUID(args.sourceGUID)
+	local unit = self:GetUnitIdByGUID(args.sourceGUID)
+	if not unit then return end
 	local target = unit.."target"
 	-- only warn for the tank targeted by the mob
 	if UnitExists(target) then
@@ -403,16 +411,19 @@ function mod:Heal(args)
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
-	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-	local GUID = UnitGUID(unitId) -- XXX not sure if unitIds reliably reset after intermissions, so just be safe and track by GUID rather than unitId
-	if hp < 70 and not intermission[GUID] then -- 66%
-		self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], self:UnitName(unitId))), false)
-		intermission[GUID] = 1
-	elseif hp < 37 and intermission[GUID] and intermission[GUID] == 1 then -- 33%
-		self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], self:UnitName(unitId))), false)
-		intermission[GUID] = 2
-	end
-	if intermission[UnitGUID("boss1")] and intermission[UnitGUID("boss1")] == 2 and intermission[UnitGUID("boss2")] and intermission[UnitGUID("boss2")] == 2 and intermission[UnitGUID("boss3")] and intermission[UnitGUID("boss3")] == 2 then
-		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3")
+	local mobId = self:MobId(UnitGUID(unitId))
+	if mobId and (mobId == 71475 or mobId == 71479 or mobId == 71480) then
+		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+		local GUID = UnitGUID(unitId) -- XXX not sure if unitIds reliably reset after intermissions, so just be safe and track by GUID rather than unitId
+		if hp < 70 and not intermission[GUID] then -- 66%
+			self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], self:UnitName(unitId))), false)
+			intermission[GUID] = 1
+		elseif hp < 37 and intermission[GUID] and intermission[GUID] == 1 then -- 33%
+			self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], self:UnitName(unitId))), false)
+			intermission[GUID] = 2
+		end
+		if intermission[UnitGUID("boss1")] and intermission[UnitGUID("boss1")] == 2 and intermission[UnitGUID("boss2")] and intermission[UnitGUID("boss2")] == 2 and intermission[UnitGUID("boss3")] and intermission[UnitGUID("boss3")] == 2 then
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3")
+		end
 	end
 end

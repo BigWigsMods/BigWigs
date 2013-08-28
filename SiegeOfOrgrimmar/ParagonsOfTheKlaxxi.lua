@@ -80,8 +80,8 @@ local calculations = {
 		["FFFFFF00"] = "yellow",
 		["FFFF0000"] = "red",
 		["FF0000FF"] = "blue",
-		["Purple"] = "purple",-- XXX fix this for 25 man
-		["Green"] = "green"-- XXX fix this for 25 man
+		["FFFF00FF"] = "purple",
+		["FF00FF00"] = "green"
 	},
 	["number"] = {
 		[L.one] = 1,
@@ -533,7 +533,7 @@ do
 end
 
 function mod:Gouge(args)
-	-- timer varies was too much, no point for a bar 22-62
+	-- timer varies way too much, no point for a bar 22-62
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", nil, nil, true)
 end
 
