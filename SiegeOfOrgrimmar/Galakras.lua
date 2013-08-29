@@ -63,7 +63,7 @@ function mod:GetOptions()
 		147328, 146765, 146757, -- Foot Soldiers
 		"towers", "demolisher", 146849, 147705, -- Ranking Officials
 		"custom_off_shaman_marker",
-		"stages", -- Galakras
+		"stages", {147068, "ICON", "FLASH"},-- Galakras
 		"bosskill",
 	}, {
 		[147328] = -8421, -- Foot Soldiers
@@ -92,6 +92,9 @@ function mod:OnBossEnable()
 	self:Emote("Towers", L["south_tower_trigger"], L["north_tower_trigger"])
 	self:Emote("Demolisher", "116040")
 	-- Galakras
+	self:Log("SPELL_AURA_APPLIED_DOSE", "FlamesOfGalakrondStacking", 147029)
+	self:Log("SPELL_AURA_APPLIED", "FlamesOfGalakrondApplied", 147068)
+	self:Log("SPELL_AURA_REMOVED", "FlamesOfGalakrondRemoved", 147068)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "LastPhase", "boss1")
 
 	self:Death("Deaths", 72249, 72367) -- Galakras, Dragonmaw Tidal Shaman
@@ -129,6 +132,24 @@ end
 --
 
 --Galakras
+function mod:FlamesOfGalakrondStacking(args)
+	if args.amount > 3 and self:Me(args.destGUID) then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+	end
+end
+
+function mod:FlamesOfGalakrondRemoved(args)
+	self:PrimaryIcon(args.spellId)
+end
+
+function mod:FlamesOfGalakrondApplied(args)
+	self:PrimaryIcon(args.spellId, args.destName)
+	if self:Me(args.destGUID) then
+		self:Flash(args.spellId)
+		self:Message(args.spellId, "Personal", "Warning", CL["you"]:format(args.spellName))
+	end
+end
+
 function mod:LastPhase(unitId, _, _, _, spellId)
 	if spellId == 50630 then
 		self:Message("stages", "Neutral", "Warning", CL["incoming"]:format(UnitName(unitId)), "ability_mount_drake_proto")

@@ -17,7 +17,6 @@ mod:RegisterEnableMob(72276, 71977, 71976, 71967) -- Amalgam of Corruption, Mani
 --
 
 local bigAddCounter = 0
-local lookWithinList = mod:NewTargetList()
 local phase = 1
 
 --------------------------------------------------------------------------------
@@ -127,11 +126,20 @@ function mod:TearReality(args)
 	self:CDBar(args.spellId, 8) -- any point for this?
 end
 
-function mod:LookWithinRemoved(args)
-	lookWithinList[#lookWithinList+1] = args.destName
-	self:ScheduleTimer("TargetMessage", 1, -8220, lookWithinList, "Neutral", nil, CL["over"]:format(EJ_GetSectionInfo(8220))) -- we care about people coming out, not so much going in
-	self:StopBar(-8220) -- personal bar
-	self:StopBar(-8220, args.destName) -- other tank bar
+do
+	local scheduled, lookWithinList = nil, mod:NewTargetList()
+	local function warnLookWithinRmoved()
+		mod:TargetMessage(-8220, lookWithinList, "Neutral", nil, CL["over"]:format(EJ_GetSectionInfo(8220)))
+		scheduled = nil
+	end
+	function mod:LookWithinRemoved(args)
+		lookWithinList[#lookWithinList+1] = args.destName
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warnLookWithinRmoved, 1) -- we care about people coming out, not so much going in
+		end
+		self:StopBar(-8220) -- personal bar
+		self:StopBar(-8220, args.destName) -- other tank bar
+	end
 end
 
 function mod:LookWithinApplied(args)
