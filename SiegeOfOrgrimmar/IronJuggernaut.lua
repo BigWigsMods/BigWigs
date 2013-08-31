@@ -177,7 +177,7 @@ end
 
 function mod:ShockPulse(args)
 	self:Message(args.spellId, "Attention", "Alert")
-	self:Bar(args.spellId, 4, CL["cast"]:format(args.spellName))
+	self:Bar(args.spellId, 16)
 end
 
 -- Assaukt mode
@@ -243,6 +243,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		mineCounter = 1
 		self:CDBar(-8183, 18, CL["count"]:format(spellName, mineCounter)) -- Crawler Mine
 		self:CDBar(-8179, 10) -- Napalm Oil
+		self:Bar(144485 ,18) -- Shock Pulse
 		self:StopBar(144459) -- Laser Burn
 		self:StopBar(-8179) -- Borer Drill
 		self:StopBar(144467) -- Ignite Armor
