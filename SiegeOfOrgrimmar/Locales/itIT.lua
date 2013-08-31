@@ -9,9 +9,9 @@ if L then
 	L.defile = "Lancio Suolo Profanato"
 
 	L.custom_off_bane_marks = "Parola d'Ombra: Flagello"
-	L.custom_off_bane_marks_desc = "Per aiutare a dissipare, evidenzia chi ha Parola d'Ombra: Flagello su di loro con mark the people who have Shadow Word: Bane on them with %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
+	L.custom_off_bane_marks_desc = "Per aiutare a dissipare, evidenzia chi ha Parola d'Ombra: Flagello su di loro con  %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
 
-	L.no_meditative_field = "NIENTE Campo di Meditazione!"
+	L.no_meditative_field = "NESSUN Campo di Meditazione!"
 
 	L.intermission = "Misure Disperate"
 	L.intermission_desc = "Avvisa quando ti stai avvicinando ad un boss che sta lanciando Misure Disperate"
@@ -19,7 +19,7 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "itIT")
 if L then
-	L.pre_pull = "Pre ingaggio"
+	L.pre_pull = "Pre-ingaggio"
 	L.pre_pull_desc = "Barra per la scenetta prima dell'ingaggio del boss "
 	L.pre_pull_trigger = "Very well, I will create a field to keep your corruption quarantined." --need translation
 
@@ -45,7 +45,7 @@ end
 L = BigWigs:NewBossLocale("Galakras", "itIT")
 if L then
 	L.demolisher = "Demolitori"
-	L.demolisher_desc = "Timer per l'arrivo in combattimento dei Demolitoris Kor'kron"
+	L.demolisher_desc = "Timer per l'arrivo in combattimento dei Demolitori Kor'kron"
 	L.towers = "Torri"
 	L.towers_desc = "Avvisa quando le torri vengono distrutte"
 	L.south_tower_trigger = "The door barring the South Tower has been breached!" --need check/translation
@@ -54,13 +54,13 @@ if L then
 	L.north_tower = "Torre nord"
 
 	L.custom_off_shaman_marker = "Marcatore Sciamano"
-	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader." --need check/translation
+	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni. evidenzia lo Sciamano delle Maree delle Fauci di Drago con %s%s%s%s%s%s%s (in questo ordine)(non tutti i simboli possono essere usati), richiede capo incursione o assistente."
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "itIT")
 if L then
-	L.custom_off_mine_marks = "Mine marker"
-	L.custom_off_mine_marks_desc = "To help soaking assignments, try and mark the Crawler Mines with %s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+	L.custom_off_mine_marks = "Marcatore delle Mine"
+	L.custom_off_mine_marks_desc = "Per aiutare l'assegnazione degli assorbimenti, cerca di evidenziare le Mine Striscianti con %s%s%s%s%s (in questo ordine)(non tutti i simboli possono essere usati), richiede capo incursione o assistente."
 end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "itIT")
@@ -77,17 +77,17 @@ if L then
 	L.custom_off_bonecracker_marks_desc = "Per aiutare l'assegnazione delle cure, evidenzia i giocatori che hanno Colpo Incrinante su di loro con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
 
 	L.stance_bar = "%s (ADESSO: %s)"
-	L.battle = "Battle"
+	L.battle = "Battaglia"
 	L.berserker = "Berserker"
-	L.defensive = "Defensive"
+	L.defensive = "Difesa"
 
 	L.adds_trigger1 = "Difendete il cancello!" --all triggers need verify
 	L.adds_trigger2 = "Radunate le forze!"
 	L.adds_trigger3 = "Prossima squadra, al fronte!"
 	L.adds_trigger4 = "Guerrieri, in marcia!"
 	L.adds_trigger5 = "Kor'kron, con me!"
-	L.adds_trigger_extra_wave = "Tutti Kor'kron... al mio comando... uccideteli... ORA"
-	L.extra_adds = "Extra adds"
+	L.adds_trigger_extra_wave = "Tutti i Kor'kron... al mio comando... uccideteli... ORA"
+	L.extra_adds = "Armate Aggiuntive"
 
 	L.chain_heal_message = "Il tuo focus sta lanciando Catena di Guarigione Potenziata!"
 
@@ -99,12 +99,12 @@ end
 L = BigWigs:NewBossLocale("Malkorok", "itIT")
 if L then
 	L.custom_off_energy_marks = "Marcatore Energia Dispersa"
-	L.custom_off_energy_marks_desc = "Per aiutare l'assegnazione delle cure, evidenzia i giocatori che hanno Energia Dispersa su di loro con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
+	L.custom_off_energy_marks_desc = "Per aiutare l'assegnazione dei dissolvimenti, evidenzia i giocatori che hanno Energia Dispersa su di loro con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
 end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "itIT")
 if L then
-	L.enable_zone = "Artifact Storage"
+	L.enable_zone = "Immagazzinamento Artefatti"
 	L.matter_scramble_explosion = "Esplosione Scambio di Materia" -- shorten maybe?
 
 	L.custom_off_mark_brewmaster = "Marcatore Mastro Birraio"
@@ -115,6 +115,8 @@ L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "itIT")
 if L then
 	L.tank_debuffs = "Malefici Difensori"
 	L.tank_debuffs_desc = "Avvisi per i vari tipi di malefici sui Difensori associati a Ruggito Temibile"
+	
+	L.cage_opened = "Gabbia Aperta"
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "itIT")
@@ -126,7 +128,7 @@ if L then
 	L.assembly_line_trigger = "Unfinished weapons begin to roll out on the assembly line."--need check/translation
 	L.assembly_line_message = "Armi non finite (%d)"
 
-	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!" --need check/translation
+	L.shockwave_missile_trigger = "Vi presento... la nuova, magnifica torretta lanciamissili a onda d'urto ST-03!" --need check
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "itIT")
@@ -141,23 +143,24 @@ if L then
 	-------------------------------------
 	L.edge_message = "Sei uno dei limiti"
 	L.custom_off_edge_marks = "Marcatori dei Limiti"
-	L.custom_off_edge_marks_desc = "Evidenzia i giocatori che, dopo i calcoli, saranno i limiti di Confine Ardente con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistenteho will be edges based on the calculations %s%s%s%s%s%s, requires promoted or leader."
+	L.custom_off_edge_marks_desc = "Evidenzia i giocatori che, dopo i calcoli, saranno i limiti di Confine Ardente con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
 	L.injection_over_soon = "Fine di Iniezione tra poco (%s)!"
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "itIT")
 if L then
+	L.intermission = "Intermezzo"
 	L.mind_control = "Controllo della Mente"
 
-	L.chain_heal_desc = "Heals a friendly target for 40% of their max health, chaining to nearby friendly targets."
-	L.chain_heal_message = "Your focus is casting Chain Heal!"
-	L.chain_heal_bar = "Focus: Chain Heal"
+	L.chain_heal_desc = "Cura un bersaglio amico per il 40% della sua vita massima, e a catena anche i bersagli amici vicini."
+	L.chain_heal_message = "Il tuo focus sta lanciando Catena di Guarigione!"
+	L.chain_heal_bar = "Focus: Catena di Guarigione"
 
 	L.farseer_trigger = "Chiaroveggenti, guarite le nostre ferite!"
-	L.custom_off_shaman_marker = "Farseer marker"
-	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Farseer Wolf Rider with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+	L.custom_off_shaman_marker = "Marcatore Chiaroveggenti"
+	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni. evidenzia i Cavalcalupi Chiaroveggenti con %s%s%s%s%s%s%s (in questo ordine)(non tutti i simboli possono essere usati), richiede capo incursione o assistente."
 
-	L.focus_only = "|cffff0000Focus target alerts only.|r "
+	L.focus_only = "|cffff0000Avvisi solo dei bersagli focus.|r "
 end
 
 L = BigWigs:NewBossLocale("Siege of Orgrimmar Trash", "itIT")

@@ -38,7 +38,7 @@ end
 L = BigWigs:NewBossLocale("Council of Elders", "itIT")
 if L then
 	L.priestess_adds = "Add Sacerdotessa"
-	L.priestess_adds_desc = "Avviso per tutti i tipi di add della Gran Sacerdotessa Mar'li"
+	L.priestess_adds_desc = "Avvisa quando la Gran Sacerdotessa Mar'li inizia ad evocare un'add"
 	L.priestess_adds_message = "Add Sacerdotessa"
 
 	L.assault_stun = "Difensore Stordito!"
@@ -48,7 +48,7 @@ if L then
 	L.hp_to_go_fullpower = "Punti Vita alla Fine %d%%! (Piena Potenza)"
 
 	L.custom_on_markpossessed = "Evidenzia Boss Posseduto"
-	L.custom_on_markpossessed_desc = "Evidenzia il Boss posseduto con un teschio."
+	L.custom_on_markpossessed_desc = "Evidenzia il Boss posseduto con un teschio richiede capo incursione o assistente."
 end
 
 L = BigWigs:NewBossLocale("Tortos", "itIT")
@@ -69,7 +69,7 @@ L = BigWigs:NewBossLocale("Megaera", "itIT")
 if L then
 	L.breaths = "Soffi"
 	L.breaths_desc = "Avvisi relativi ad ogni tipo di soffio possibile."
-	L.arcane_adds = "Teste Arcane"
+	L.arcane_adds = "Testa Arcana"
 end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "itIT")
@@ -97,7 +97,7 @@ if L then
 	L.yellow_spawn_trigger = "Nebbia d'Ambra" -- "The Bright Light reveals an Amber Fog!"
 
 	L.adds = "Rivela Adds"
-	L.adds_desc = "Avvisa quando rivela una Nebbia Cremisi, d'Ambra o Azzurra e quante Nebbie d'Ambra rimangono."
+	L.adds_desc = "Avvisa quando rivela una Nebbia Cremisi, d'Ambra o Azzurra e quante Nebbie rimangono."
 
 	L.custom_off_ray_controllers = "Controllori dei Raggi"
 	L.custom_off_ray_controllers_desc = "Usa le icone di incursione %s%s%s per evidenziare i giocatori che controllano le posizioni dei raggi e il loro movimento."
@@ -138,23 +138,23 @@ if L then
 	L.slam_message = "Urto Esplosivo"
 end
 
-L = BigWigs:NewBossLocale("Iron Qon", "itIT")
+L = BigWigs:NewBossLocale("Iron Qon", "itIT") -- commented out strings not present anymore in this module, keeping translated strings for lazyness; if not useful feel free to delete them
 if L then
 	L.molten_energy = "Energia Fusa"
 
-	L.overload_casting = "Lancio Sovraccarico Fuso"
-	L.overload_casting_desc = "Avvisa quando viene lanciato Sovraccarico Fuso"
+	--L.overload_casting = "Lancio Sovraccarico Fuso"
+	--L.overload_casting_desc = "Avvisa quando viene lanciato Sovraccarico Fuso"
 
 	L.arcing_lightning_cleared = "Fulmine Arcuato non più presente sull'Incursione"
 
-	L.custom_off_spear_target = "Bersaglio Tiro Lancia"
-	L.custom_off_spear_target_desc = "Cerca di avvisare il bersaglio di Tiro Lancia. Questo metodo è molto esigente in quanto all'uso di CPU e a volte mostra il bersaglio errato quindi è disabilitato per default.\n|cFFADFF2FTIP: Impostare il ruolo di DIFENSORE dovrebbe aiutare l'accuratezza dell'avviso.|r"
-	L.possible_spear_target = "Possibile Lancia"
+	--L.custom_off_spear_target = "Bersaglio Tiro Lancia"
+	--L.custom_off_spear_target_desc = "Cerca di avvisare il bersaglio di Tiro Lancia. Questo metodo è molto esigente in quanto all'uso di CPU e a volte mostra il bersaglio errato quindi è disabilitato per default.\n|cFFADFF2FTIP: Impostare il ruolo di DIFENSORE dovrebbe aiutare l'accuratezza dell'avviso.|r"
+	--L.possible_spear_target = "Possibile Lancia"
 end
 
 L = BigWigs:NewBossLocale("Twin Consorts", "itIT")
 if L then
-	L.barrage_fired = "Raffica Lanciata!"
+	L.barrage_fired = "Lancio di Raffica!"
 	L.last_phase_yell_trigger = "Solo per questa volta..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
 end
 
@@ -193,6 +193,13 @@ if L then
 
 	L.balls = "Sfere"
 	L.balls_desc = "Sfere dell'Anima (rosse) e della Vita (blu), che determinano quali abilità guadagna Ra-den"
+	L.corruptedballs = "Sfere Corrotte"
+	L.corruptedballs_desc = "Sfere Corrotte della Vita e dell'Anima, che aumentano il danno fatto (Vita) o i pf massimi (Anima)"
+	L.unstablevitajumptarget = "Cambio bersaglio Vita Instabile"
+	L.unstablevitajumptarget_desc = "Ti avvisa quando sei il più distante da un giocatore con Vita Instabile. Se enfatizzi questo avviso, attiverai un conto alla rovescia che indica quando Vita Instabile salterà SU DI TE."
+	L.unstablevitajumptarget_message = "Sei il più lontano da Vita Instabile"
+	L.sensitivityfurthestbad = "Sensitività Vita + più lontano = |cffff0000NON BENE|r!"
+	L.kill_trigger = "Fermi!" 
 
 	L.assistPrint = "Un plugin di nome 'BigWigs_Ra-denAssist' è stato rilasciato e reso disponibile per assistenza durante lo scontro con Ra-den che potrebbe interessare alla tua gilda."
 end
