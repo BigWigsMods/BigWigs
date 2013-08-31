@@ -1412,8 +1412,13 @@ SlashCmdList.BIGWIGSPULL = function(input)
 		end
 		BigWigs:Transmit("BWPull", input)
 
-		local _, _, _, _, _, _, _, mapID = GetInstanceInfo()
-		SendAddonMessage("D4", ("PT\t%s\t%d"):format(input, mapID or 0), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+		--local _, _, _, _, _, _, _, mapID = GetInstanceInfo()
+		--SendAddonMessage("D4", ("PT\t%s\t%d"):format(input, mapID or 0), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+		-- XXX
+		-- Seems like DBM has screwed up their pulling mechanism. Their current release doesn't properly verify the mapID (string ~= number)
+		-- and when they release a new version, all old versions of DBM will ignore their pull sync. However if we stop sending the mapID,
+		-- new and old versions of DBM will pick it up, so BW users will have better compatibility with DBM than DBM itself... let's do that for now.
+		SendAddonMessage("D4", "PT\t".. input, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 	else
 		BigWigs:Print(L["This function requires raid leader or raid assist."])
 	end
