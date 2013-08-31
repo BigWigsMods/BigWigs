@@ -1,6 +1,6 @@
 --[[
 TODO:
-	timers have to be double checked
+
 ]]--
 
 if GetBuildInfo() ~= "5.4.0" then return end -- 4th return is 50300 on the PTR ATM so can't use that
@@ -93,7 +93,7 @@ end
 
 function mod:OnEngage()
 	assemblyLineCounter = 1
-	self:Bar(-8199, 35) -- Shredder Engage
+	self:Bar(-8199, 35, shredder, "INV_MISC_ARMORKIT_27") -- Shredder Engage
 end
 
 --------------------------------------------------------------------------------
@@ -112,7 +112,7 @@ do
 	local prev = 0
 	function mod:CrawlerMine(args)
 		local t = GetTime()
-		if t-prev > 5 then
+		if t-prev > 5 then -- XXX this still spams, rethink it maybe
 			prev = t
 			self:Message(-8212, "Urgent", nil, args.destName, 77976) -- mine like icon
 		end
