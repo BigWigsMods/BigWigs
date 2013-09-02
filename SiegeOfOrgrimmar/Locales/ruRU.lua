@@ -44,9 +44,9 @@ if L then
 	L.demolisher_desc = "Таймеры, когда Кор'кронские разрушители вступят в бой."
 	L.towers = "Башня"
 	L.towers_desc = "Предупреждать, когда башни ломаются."
-	-- L.south_tower_trigger = "The door barring the South Tower has been breached!"
+	L.south_tower_trigger = "Дверь южной башни разбита!"
 	L.south_tower = "Южная башня"
-	-- L.north_tower_trigger = "The door barring the North Tower has been breached!"
+	L.north_tower_trigger = "Дверь северной башни разбита!"
 	L.north_tower = "Северная башня"
 	L.tower_defender = "Защитник башни"
 
