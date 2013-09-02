@@ -78,12 +78,12 @@ if L then
 	L.berserker = "Берсерк"
 	L.defensive = "Защита"
 
-	-- L.adds_trigger1 = "Defend the gate!"
-	-- L.adds_trigger2 = "Rally the forces!"
-	-- L.adds_trigger3 = "Next squad, to the front!"
-	-- L.adds_trigger4 = "Warriors, on the double!"
-	-- L.adds_trigger5 = "Kor'kron, at my side!"
-	-- L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW"
+	L.adds_trigger1 = "Удерживайте врата!"
+	L.adds_trigger2 = "Сомкнуть ряды!"
+	L.adds_trigger3 = "Следующий отряд, вперед!"
+	L.adds_trigger4 = "Воины, бегом!"
+	L.adds_trigger5 = "Кор'крон, ко мне!"
+	L.adds_trigger_extra_wave = "Кор'кронцы... все, кто со мной! Убейте их!"
 	L.extra_adds = "Новые помощники"
 
 	L.chain_heal_message = "Ваш фокус читает Цепное исцеление!"
