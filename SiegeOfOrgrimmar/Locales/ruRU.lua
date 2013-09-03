@@ -130,7 +130,16 @@ end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "ruRU")
 if L then
-
+	L.one = "Ийокук выбирает: Один!"
+	L.two = "Ийокук выбирает: Два!"
+	L.three = "Ийокук выбирает: Три!"
+	L.four = "Ийокук выбирает: Четыре!"
+	L.five = "Ийокук выбирает: Пять!"
+	--------------------------------
+	L.edge_message = "Ты в луче"
+	L.custom_off_edge_marks = "Маркировка луча"
+	L.custom_off_edge_marks_desc = "Маркировка людей, которые станут лучами, на основе вычислений %s%s%s%s%s%s, требуется быть помощником или лидером."
+	L.injection_over_soon = "Инъекция заканчивается (%s)!"
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "ruRU")
