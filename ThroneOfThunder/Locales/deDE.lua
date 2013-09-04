@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Jin'rokh the Breaker", "deDE")
+﻿local L = BigWigs:NewBossLocale("Jin'rokh the Breaker", "deDE")
 if not L then return end
 if L then
 	L.storm_duration = "Gewittersturm Dauer"
@@ -74,7 +74,7 @@ end
 
 L = BigWigs:NewBossLocale("Ji-Kun", "deDE")
 if L then
-	--L.first_lower_hatch_trigger = "The eggs in one of the lower nests begin to hatch!"
+	L.first_lower_hatch_trigger = "Die Eier in einem der unteren Nester beginnen, aufzubrechen!"
 	L.lower_hatch_trigger = "Die Eier in einem der unteren Nester beginnen, aufzubrechen!"
 	L.upper_hatch_trigger = "Die Eier in einem der oberen Nester beginnen, aufzubrechen!"
 
@@ -189,7 +189,7 @@ if L then
 	L.corruptedballs = "Korrumpierte Bälle"
 	L.corruptedballs_desc = "Korrumpierte Vita- und Anima-Bälle, die entweder den verursachten Schaden (Vita) oder die maximale Gesundheit (Anima) erhöhen."
 	L.unstablevitajumptarget = "Instabile Vita-Sprung-Ziel"
-	L.unstablevitajumptarget_desc = "Warnen, wenn Du am weitestn von einem Spieler mit instabilen Vita entfernt bist. Wenn Du dies hervorhebst, gibt es auch einen Countdown wenn instabile Vita VON Dir weiterspringen."
+	L.unstablevitajumptarget_desc = "Warnen, wenn Du am weitesten von einem Spieler mit instabilen Vita entfernt bist. Wenn Du dies hervorhebst, gibt es auch einen Countdown wenn instabile Vita VON Dir weiterspringen."
 	L.unstablevitajumptarget_message = "Du bist am weitesten von instabilen Vita entfernt"
 	L.sensitivityfurthestbad = "Vita Sensitivität + Weit weg = |cffff0000SCHLECHT|r!"
 	L.kill_trigger = "Wartet!"
