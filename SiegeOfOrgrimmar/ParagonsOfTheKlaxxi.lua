@@ -296,27 +296,27 @@ local staff  = {mod:SpellName(143627), mod:SpellName(143628), mod:SpellName(1436
 local function parseDebuff(player)
 	local count
 	for i=1, 5 do
-		count = select(3,UnitDebuff(player, sword[i]))
+		count = select(4,UnitDebuff(player, sword[i]))
 		if count then
 			return "sword", colors[i], (count == 0) and 1 or count
 		end
 
-		count = select(3,UnitDebuff(player, drum[i]))
+		count = select(4,UnitDebuff(player, drum[i]))
 		if count then
 			return "drum", colors[i], (count == 0) and 1 or count
 		end
 
-		count = select(3,UnitDebuff(player, bomb[i]))
+		count = select(4,UnitDebuff(player, bomb[i]))
 		if count then
 			return "bomb", colors[i], (count == 0) and 1 or count
 		end
 
-		count = select(3,UnitDebuff(player, mantid[i]))
+		count = select(4,UnitDebuff(player, mantid[i]))
 		if count then
 			return "mantid", colors[i], (count == 0) and 1 or count
 		end
 
-		count = select(3,UnitDebuff(player, staff[i]))
+		count = select(4,UnitDebuff(player, staff[i]))
 		if count then
 			return "staff", colors[i], (count == 0) and 1 or count
 		end
@@ -351,18 +351,15 @@ local function iyyokukSelected()
 		if not raidParsed then
 			for i = 1, GetNumGroupMembers() do
 				name = GetRaidRosterInfo(i)
-				if name then
-					shape, color, number = parseDebuff(name)
-					if shape then
-						results[shape][name] = true
-					end
-					if color then
-						results[color][name] = true
-					end
-					if number then
-						--print("line 362", number, name, results)
-						results[number][name] = true
-					end
+				shape, color, number = parseDebuff(name)
+				if shape then
+					results[shape][name] = true
+				end
+				if color then
+					results[color][name] = true
+				end
+				if number then
+					results[number][name] = true
 				end
 			end
 			raidParsed = true
