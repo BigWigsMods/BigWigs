@@ -138,7 +138,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ExposedVeins", 142931)
 	self:Log("SPELL_CAST_SUCCESS", "Gouge", 143939)
 	--Xaril the Poisoned Mind
-	self:Log("SPELL_CAST_START", "Catalysts", 142725, 142726, 142727) -- blue red yellow
+	self:Log("SPELL_CAST_START", "Catalysts", 142725, 142726, 142727, 142729, 142730, 142728) -- blue red yellow purple green orange
 	self:Log("SPELL_CAST_SUCCESS", "ToxicInjection", 142528)
 	self:Log("SPELL_AURA_APPLIED", "ToxicInjectionsRemoved", 142532, 142533, 142534) -- blue red yellow
 	self:Log("SPELL_AURA_APPLIED", "ToxicInjectionsApplied", 142532, 142533, 142534) -- blue red yellow
@@ -351,15 +351,18 @@ local function iyyokukSelected()
 		if not raidParsed then
 			for i = 1, GetNumGroupMembers() do
 				name = GetRaidRosterInfo(i)
-				shape, color, number = parseDebuff(name)
-				if shape then
-					results[shape][name] = true
-				end
-				if color then
-					results[color][name] = true
-				end
-				if number then
-					results[number][name] = true
+				if name then
+					shape, color, number = parseDebuff(name)
+					if shape then
+						results[shape][name] = true
+					end
+					if color then
+						results[color][name] = true
+					end
+					if number then
+						--print("line 362", number, name, results)
+						results[number][name] = true
+					end
 				end
 			end
 			raidParsed = true
@@ -462,7 +465,7 @@ do
 		local name
 		for i=1, GetNumGroupMembers() do
 			name = GetRaidRosterInfo(i)
-			if UnitDebuff(name, self:SpellName(142533)) then
+			if UnitDebuff(name, self:SpellName(142533)) and not UnitIsUnit("player", name) then
 				redPlayers[#redPlayers+1] = name
 			end
 		end
