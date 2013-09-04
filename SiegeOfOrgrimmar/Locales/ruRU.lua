@@ -140,6 +140,8 @@ if L then
 	L.custom_off_edge_marks = "Маркировка луча"
 	L.custom_off_edge_marks_desc = "Маркировка людей, которые станут лучами, на основе вычислений %s%s%s%s%s%s, требуется быть помощником или лидером."
 	L.injection_over_soon = "Инъекция заканчивается (%s)!"
+	L.custom_off_mutate_marks = "Мутирование: Янтарный скорпион маркировка"
+	L.custom_off_mutate_marks_desc = "Отмечать игроков, имеющих Мутирование: Янтарный скорпион метками %s%s%s чтобы помочь лекарям, требуется быть помощником или лидером."
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "ruRU")
