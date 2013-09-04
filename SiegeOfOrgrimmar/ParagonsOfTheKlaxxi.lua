@@ -57,8 +57,8 @@ if L then
 	L.custom_off_edge_marks = "Edge marks"
 	L.custom_off_edge_marks_desc = "Mark the players who will be edges based on the calculations %s%s%s%s%s%s, requires promoted or leader."
 	L.injection_over_soon = "Injection over soon (%s)!"
-	L.custom_off_mutate_marks = "Mutate: Amber Scorpion marks"
-	L.custom_off_mutate_marks_desc = "Mark the players who have Mutate: Amber Scorpion with %s%s%s to help healing assignments, requires promoted or leader."
+	L.custom_off_mutate_marks = "Mutate: Mantid Scorpion marks"
+	L.custom_off_mutate_marks_desc = "Mark the players who have Mutate: Mantid Scorpion with %s%s%s to help healing assignments, requires promoted or leader."
 end
 L = mod:GetLocale()
 L.custom_off_edge_marks_desc = L.custom_off_edge_marks_desc:format( -- XXX these marks are not enough

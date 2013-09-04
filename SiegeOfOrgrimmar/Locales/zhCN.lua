@@ -143,6 +143,8 @@ if L then
 	L.custom_off_edge_marks = "炎界标记"
 	L.custom_off_edge_marks_desc = "基于计算给谁将会炎界的玩家使用 %s%s%s%s%s%s 进行标记，需要权限。"
 	L.injection_over_soon = "注射即将结束 >%s<！"
+	L.custom_off_mutate_marks = "突变：螳螂巨蝎标记"
+	L.custom_off_mutate_marks_desc = "帮助治疗分配，给受到突变：螳螂巨蝎的玩家使用 %s%s%s 进行标记，需要权限。"
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "zhCN")
