@@ -144,6 +144,8 @@ if L then
 	L.custom_off_edge_marks = "Brennendes Band markieren"
 	L.custom_off_edge_marks_desc = "Markiert die Spieler mit Brennendem Band, basierend auf den Kalkulationen, mit %s%s%s%s%s%s, benötigt Leiter oder Assistent."
 	L.injection_over_soon = "Injektion bald vorbei (%s)!"
+	L.custom_off_mutate_marks = "Mutation: Bernskorpion markieren"
+	L.custom_off_mutate_marks_desc = "Markiert die Spieler mit Mutation: Bernskorpion mit %s%s%s um bei der Einteilung zum Heilen zu helfen, benötigt Leiter oder Assistent."
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "deDE")
