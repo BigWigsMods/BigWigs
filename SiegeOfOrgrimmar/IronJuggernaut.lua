@@ -234,6 +234,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		mineCounter = 1
 		self:Bar(-8183, 30, CL["count"]:format(spellName, mineCounter)) -- Crawler Mine
 		self:CDBar(-8179, 19) -- Borer Drill
+		self:StopBar(144485) -- Shock Pulse
 		self:StopBar(-8179) -- Napalm Oil
 		self:StopBar(CL["phase"]:format(1)) -- in case it overruns
 	elseif spellId == 146360 then -- Depletion aka Siege mode

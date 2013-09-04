@@ -185,7 +185,7 @@ do
 	function mod:SeismicSlam(args)
 		if not slamTimers[slamCounter] then return end -- don't do anything if we don't have timer
 		if self:Heroic() then
-			args.spellName = CL["add_spawned"]
+			args.spellName = CL["next_add"]
 		end
 		-- don't think this needs a message
 		-- if anything a soon message, since timers seem reliable

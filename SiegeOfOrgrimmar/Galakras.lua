@@ -1,6 +1,5 @@
 --[[
 TODO:
-	-- figure out where the south tower timer starts
 	-- figure out tower add timers for 2nd tower
 	-- maybe try and add wave timers
 ]]--
@@ -61,7 +60,7 @@ L.custom_off_shaman_marker_desc = L.custom_off_shaman_marker_desc:format(
 function mod:GetOptions()
 	return {
 		147328, 146765, 146757, -- Foot Soldiers
-		"towers", "demolisher", 146849, 147705, -- Ranking Officials
+		"towers", "demolisher", 146769, 146849, 147705, -- Ranking Officials
 		"custom_off_shaman_marker",
 		"stages", {147068, "ICON", "FLASH"},-- Galakras
 		"bosskill",
@@ -78,8 +77,8 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	-- Foot Soldiers
-	self:Log("SPELL_CAST_START", "AddMarkedMob", 148520) -- Tidal Wave
-	self:Log("SPELL_CAST_START", "ChainHeal", 146757)
+	self:Log("SPELL_CAST_START", "AddMarkedMob", 148520, 149187, 148522) -- Tidal Wave
+	self:Log("SPELL_CAST_START", "ChainHeal", 146757, 146728)
 	self:Log("SPELL_PERIODIC_DAMAGE", "FlameArrows", 146765)
 	self:Log("SPELL_DAMAGE", "FlameArrows", 146764)
 	self:Log("SPELL_AURA_APPLIED", "FlameArrows", 146765)
@@ -107,6 +106,7 @@ end
 
 local function firstTowerAdd()
 	mod:Message("towers", "Attention", nil, L["tower_defender"], 85214)
+	-- XXX this gets totally inaccurate at some point
 	mod:Bar("towers", 60, L["tower_defender"], 85214) -- random orc icon
 	mod:ScheduleRepeatingTimer(warnTowerAdds, 60)
 end
@@ -186,6 +186,12 @@ function mod:Towers(msg)
 	local tower = msg:find(L["north_tower_trigger"]) and L["north_tower"] or L["south_tower"] -- this will be kinda bad till every localization is done
 	self:Message("towers", "Neutral", "Long", tower, "achievement_bg_winsoa")
 	self:Bar("demolisher", 20, L["demolisher"], L["demolisher_icon"])
+
+	if self:Heroic() then
+		-- timer needs double checking
+		self:Bar("towers", 40, L["tower_defender"], 85214) -- random orc icon
+		self:ScheduleTimer(firstTowerAdd, 40)
+	end
 end
 
 -- Foot Soldiers

@@ -2,7 +2,6 @@
 TODO:
 	recheck if "Jump to Center" SUCCEEDED so it is always there on encounter engage
 	stopbars on boss deaths
-	warnings for Mutate: Amber Scorpion missing need logs
 	sonic resonance maybe could use some advanced proximity warning
 ]]--
 
@@ -39,6 +38,7 @@ local results = {
 }
 local raidParsed
 local emoteTriggers = {}
+local mutateCounter = 1
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -57,15 +57,22 @@ if L then
 	L.custom_off_edge_marks = "Edge marks"
 	L.custom_off_edge_marks_desc = "Mark the players who will be edges based on the calculations %s%s%s%s%s%s, requires promoted or leader."
 	L.injection_over_soon = "Injection over soon (%s)!"
+	L.custom_off_mutate_marks = "Mutate: Amber Scorpion marks"
+	L.custom_off_mutate_marks_desc = "Mark the players who have Mutate: Amber Scorpion with %s%s%s to help healing assignments, requires promoted or leader."
 end
 L = mod:GetLocale()
-L.custom_off_edge_marks_desc = L.custom_off_edge_marks_desc:format( -- XXX cut down the number of marks used once we know the max amount used in 25H
+L.custom_off_edge_marks_desc = L.custom_off_edge_marks_desc:format( -- XXX these marks are not enough
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_2.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t",
 	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t"
+)
+L.custom_off_mutate_marks_desc = L.custom_off_mutate_marks_desc:format(
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_2.blp:15\124t",
+	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t"
 )
 
 local calculations = {
@@ -99,15 +106,16 @@ local calculations = {
 function mod:GetOptions()
 	return {
 		{142931, "TANK"}, {143939, "TANK_HEALER"}, {-8008, "FLASH", "SAY"}, --Kil'ruk the Wind-Reaver
-		142929, {-8034, "PROXIMITY"}, --Xaril the Poisoned Mind
+		142929, {-8034, "PROXIMITY"}, 142803, 143576, --Xaril the Poisoned Mind
 		142671, --Kaz'tik the Manipulator
 		142564, {143974, "TANK_HEALER"}, --Korven the Prime
 		{-8055, "FLASH"}, --Iyyokuk the Lucid
 		"custom_off_edge_marks",
 		143701, 143759, {143735, "FLASH"}, --Ka'roz the Locust
 		{143275, "TANK"}, 143280, --Skeer the Bloodseeker
-		{143279, "TANK"}, 143339, {-8065, "FLASH"}, --Rik'kal the Dissector
-		-8073, --Hisek the Swarmkeeper
+		{143279, "TANK"}, 143339, {-8065, "FLASH"}, {148589, "FLASH"}, 143337, --Rik'kal the Dissector
+		"custom_off_mutate_marks",
+		{-8073, "ICON"}, 143243, --Hisek the Swarmkeeper
 
 		"berserk", "bosskill",
 	}, {
@@ -120,6 +128,7 @@ function mod:GetOptions()
 		[143701] = -8013, --Ka'roz the Locust
 		[143275] = -8014, --Skeer the Bloodseeker
 		[143279] = -8015, --Rik'kal the Dissector
+		["custom_off_mutate_marks"] = L.custom_off_mutate_marks,
 		[-8073] = -8016, --Hisek the Swarmkeeper
 		["berserk"] = "general",
 	}
@@ -144,6 +153,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ToxicInjectionsApplied", 142532, 142533, 142534) -- blue red yellow
 	self:Log("SPELL_AURA_APPLIED", "TenderizingStrike", 142929)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TenderizingStrike", 142929)
+	self:Log("SPELL_PERIODIC_DAMAGE", "ExplosiveRing", 142803)
+	self:Log("SPELL_PERIODIC_DAMAGE", "CannedHeat", 143576)
+
 	--Kaz'tik the Manipulator
 	self:Log("SPELL_AURA_APPLIED", "Mesmerize", 142671)
 	--Korven the Prime
@@ -166,9 +178,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Injection", 143339)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Injection", 143339)
 	self:Log("SPELL_AURA_REMOVED", "InjectionRemoved", 143339)
-	self:Log("SPELL_AURA_APPLED", "ParasiteFixate", 143358)
+	self:Log("SPELL_AURA_APPLIED", "ParasiteFixate", 143358)
+	self:Log("SPELL_AURA_REMOVED", "FaultyMutationRemoved", 148589)
+	self:Log("SPELL_AURA_APPLIED", "FaultyMutationApplied", 148589)
+	self:Log("SPELL_AURA_APPLIED", "Mutate", 143337)
+	self:Log("SPELL_AURA_REMOVED", "MutateRemoved", 143337)
 	--Hisek the Swarmkeeper
-	self:Log("SPELL_CAST_SUCCESS", "Aim", 144759)
+	self:Log("SPELL_CAST_SUCCESS", "Aim", 144759, 142948)
+	self:Log("SPELL_CAST_START", "RapidFire", 143243)
 
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4")
 	self:Death("Deaths", 71161, 71157, 71156, 71155, 71160, 71154, 71152, 71158, 71153)
@@ -183,6 +200,7 @@ function mod:OnEngage()
 		[1] = {}, [2] = {}, [3] = {}, [4] = {}, [5] = {},
 	}
 	raidParsed = nil
+	mutateCounter = 1
 end
 
 --------------------------------------------------------------------------------
@@ -190,11 +208,68 @@ end
 --
 
 --Hisek the Swarmkeeper
+function mod:RapidFire(args)
+	self:Message(args.spellId, "Attention")
+	self:CDBar(args.spellId, 47)
+end
+
 function mod:Aim(args)
+	self:CDBar(-8073, 42)
+	self:SecondaryIcon(-8073, args.destName)
 	self:TargetMessage(-8073, "Important", "Warning", nil, nil, true)
 	self:TargetBar(-8073, 5, args.destName)
 end
 --Rik'kal the Dissector
+do
+	local scheduled = nil
+	local function resetMutateCounter()
+		mutateCounter = 1
+		scheduled = nil
+	end
+	function mod:MutateRemoved(args)
+		if self.db.profile.custom_off_mutate_marks then
+			SetRaidTarget(args.destName, 0)
+		end
+	end
+	function mod:Mutate(args)
+																													   -- injection
+		self:Message(args.spellId, "Attention", (self:Healer() or (self:Tank() and UnitDebuff("player", self:SpellName(143339)))) and "Alert", (EJ_GetSectionInfo(8068))) -- this text has "Amber Scorpion" in it's name, so it is more obvious
+		self:Bar(args.spellId, 44)
+		if self.db.profile.custom_off_mutate_marks then
+			SetRaidTarget(args.destName, mutateCounter)
+			mutateCounter = mutateCounter + 1
+			if not scheduled then
+				scheduled = self:ScheduleTimer(resetMutateCounter, 5)
+			end
+		end
+	end
+end
+
+do
+	local faultyMutationTimer
+	local function warnFaultyMutation(spellId)
+		mod:Message(spellId, "Important", "Warning", CL["you"]:format(mod:SpellName(spellId)))
+		-- message maybe should say: "Use Prey on parasite!"
+		-- message remindier is a must, not sure if we need to flash every 3 sec tho, lets just see how it feels for now
+		mod:Flash(spellId)
+	end
+	function mod:FaultyMutationRemoved(args)
+		if not self:Me(args.destGUID) then return end
+		self:StopBar(args.spellId)
+		self:CancelTimer(faultyMutationTimer)
+		faultyMutationTimer = nil
+	end
+
+	function mod:FaultyMutationApplied(args)
+		if not self:Me(args.destGUID) then return end
+		self:Message(args.spellId, "Important", "Warning", CL["you"]:format(args.spellName))
+		self:Bar(args.spellId, 18)
+		if not faultyMutationTimer then
+			faultyMutationTimer = self:ScheduleRepeatingTimer(warnFaultyMutation, 3, args.spellId)
+		end
+	end
+end
+
 function mod:ParasiteFixate(args)
 	if self:Me(args.destGUID) then
 		self:Flash(-8065)
@@ -236,12 +311,10 @@ do
 	local prev = 0
 	function mod:CausticAmber(args)
 		local t = GetTime()
-		if t-prev > 2 then
+		if t-prev > 2 and self:Me(args.destGUID) then
 			prev = t
-			if self:Me(args.destGUID) then
-				self:Flash(args.spellId)
-				self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
-			end
+			self:Flash(args.spellId)
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
 		end
 	end
 end
@@ -389,7 +462,7 @@ local function figureShitOut()
 
 	local msg = ""
 	for k, v in pairs(results) do
-		if type(v) == "table" and #v > 0 then
+		if type(v) == "table" then
 			msg = ("All %s: "):format(k)
 			for p, _ in pairs(v) do
 				msg = ("%s %s(%d)"):format(msg, p, GetRaidIndex(p) or 0)
@@ -439,6 +512,28 @@ function mod:Mesmerize(args)
 	self:CDBar(args.spellId, 18) -- 18-40 probably should figure out what delays it or where does it restart
 end
 --Xaril the Poisoned Mind
+do
+	local prev = 0
+	function mod:CannedHeat(args)
+		local t = GetTime()
+		if t-prev > 2 and self:Me(args.destGUID) then
+			prev = t
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:ExplosiveRing(args)
+		local t = GetTime()
+		if t-prev > 2 and self:Me(args.destGUID) then
+			prev = t
+			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+		end
+	end
+end
+
 function mod:Catalysts(args)
 	self:Message(-8034, "Neutral", "Alert", args.spellName, args.spellId)
 	self:Bar(-8034, 25, chooseCatalyst)
@@ -544,7 +639,7 @@ function mod:ExposedVeins(args)
 end
 -- General
 function mod:MyEngage()
-	-- have to do this because Jump to Center is not reliable for the first 3 bosses you engage at start of the encounter - 10N PTR
+	-- have to do this because Jump to Center is not reliable for some of the bosses, noticably (Korven the Prime, Skeer the Bloodseeker, Hisek the Swarmpkeeper)
 	for i=1, 5 do
 		local guid = UnitGUID("boss"..i)
 		if guid and not bossesSeen[guid] then
@@ -554,12 +649,11 @@ function mod:MyEngage()
 				self:ScheduleTimer("StartReaveScan", 12) -- XXX timer he is assumed need to verify this once we encounter this boss being in the starter 3
 			elseif mobId == 71155 then --Korven the Prime
 				self:Bar(143974, 17)
-			-- I'm not sure below this point these are needed seeing how Jump to Center seems reliable for these bosses
-			elseif mobId == 71154 then -- Ka'roz the Locust
-				self:Bar(143701, 11) -- Whirling
-				self:Bar(143759, 43) -- Hurl Amber
 			elseif mobId == 71152 then -- Skeer the Bloodseeker
 				self:Bar(143280 ,10) -- Bloodletting
+			elseif mobId == 71153 then --Hisek the Swarmkeeper
+				self:Bar(-8073, 40) -- Aim
+				self:Bar(143243, 48) -- Rapid Fire
 			end
 		end
 	end
@@ -576,7 +670,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 			self:Bar(143701, 11) -- Whirling
 			self:Bar(143759, 43) -- Hurl Amber
 		elseif mobId == 71152 then -- Skeer the Bloodseeker
-			self:Bar(143280 ,10) -- Bloodletting
+			self:Bar(143280, 10) -- Bloodletting
+		elseif mobId == 71161 then --Kil'ruk the Wind-Reaver
+			self:CDBar(143337, 34) -- Mutate
 		end
 	end
 end
@@ -596,6 +692,11 @@ function mod:Deaths(args)
 		self:StopBar(chooseCatalyst)
 	elseif args.mobId == 71161 then --Kil'ruk the Wind-Reaver
 		self:StopBar(-8008) --Impact
+	elseif args.mobId == 71153 then --Hisek the Swarmkeeper
+		self:StopBar(-8073) --Aim
+		self:StopBar(143243) --Rapid Fire
+	elseif args.mobId == 71158 then --Rik'kal the Dissector
+		self:StopBar((EJ_GetSectionInfo(8068))) --Mutate
 	end
 	deathCounter = deathCounter + 1
 	if deathCounter == 9 then
