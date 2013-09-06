@@ -32,7 +32,7 @@ end
 L = BigWigs:NewBossLocale("Sha of Pride", "deDE")
 if L then
 	L.custom_off_titan_mark = "Gabe der Titanen markieren"
-	L.custom_off_titan_mark_desc = "Um andere Spieler mit Gabe der Titanen einfacher zu erkennen, werden Spieler mit Gabe der Titanen mit %s%s%s%s%s%s%s%s markiert (Spieler mit Aura des Stolzes und Tanks werden nicht markiert), benötigt Leiter oder Assistent."
+	L.custom_off_titan_mark_desc = "Um andere Spieler mit Gabe der Titanen einfacher zu erkennen, werden Spieler mit Gabe der Titanen mit %s%s%s%s%s%s%s%s markiert (Spieler mit Aura des Stolzes werden nicht markiert), aber trotzdem im Nähe-Fenster angezeigt (noch keine Entfernungsanzeige). Benötigt Leiter oder Assistent."
 
 	L.projection_message = "Gehe zum |cFF00FF00GRÜNEN|r Pfeil!"
 	L.projection_explosion = "Projektion Explosion"
@@ -40,6 +40,8 @@ if L then
 	L.big_add_bar = "Großes Add"
 	L.big_add_spawning = "Großes Add ercsheint!"
 	L.small_adds = "Kleine Adds"
+
+	L.titan_pride = "Titanen+Stolz: %s"
 end
 
 L = BigWigs:NewBossLocale("Galakras", "deDE")
