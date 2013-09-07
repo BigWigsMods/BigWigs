@@ -671,7 +671,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 			self:Bar(143759, 43) -- Hurl Amber
 		elseif mobId == 71152 then -- Skeer the Bloodseeker
 			self:Bar(143280, 10) -- Bloodletting
-		elseif mobId == 71161 then --Kil'ruk the Wind-Reaver
+		elseif mobId == 71158 then --Rik'kal the Dissector
 			self:CDBar(143337, 34) -- Mutate
 		end
 	end
