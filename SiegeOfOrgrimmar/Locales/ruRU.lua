@@ -125,7 +125,7 @@ if L then
 	L.laser_say = "Лазер ПИУ-ПИУ!"
 
 	L.assembly_line_trigger = "На сборочную линию начинает поступать незаконченное оружие."
-	L.assembly_line_message = "Незавершенные оружия (%d)"
+	L.assembly_line_message = "Незаконченное оружие (%d)"
 
 	-- L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!"
 end
