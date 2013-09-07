@@ -28,7 +28,7 @@ end
 L = BigWigs:NewBossLocale("Sha of Pride", "ruRU")
 if L then
 	L.custom_off_titan_mark = "Маркировка Дара титанов"
-	L.custom_off_titan_mark_desc = "Чтобы помочь задействовать Силу титанов, люди с Даром титанов будут помечены метками %s%s%s%s%s%s%s%s (игроки с Аурой гордыни и танки не помечаются), требуется быть помощником или лидером."
+	L.custom_off_titan_mark_desc = "Чтобы помочь задействовать Силу титанов, люди с Даром титанов будут помечены метками %s%s%s%s%s%s%s%s (игроки с Аурой гордыни не помечаются), но они будут отображаться в окне близости. Требуется быть помощником или лидером."
 
 	L.projection_message = "Бегите по |cFF00FF00ЗЕЛЕНОЙ|r стрелке!"
 	L.projection_explosion = "Проекция взрывается"
@@ -36,6 +36,8 @@ if L then
 	L.big_add_bar = "Большой помощник"
 	L.big_add_spawning = "Большой помощник появляется!"
 	L.small_adds = "Маленькие помощники"
+
+	L.titan_pride = "Титан+Гордыня: %s"
 end
 
 L = BigWigs:NewBossLocale("Galakras", "ruRU")
@@ -149,11 +151,11 @@ if L then
 	L.intermission = "Перерыв"
 	L.mind_control = "Контроль разума"
 
-	-- L.chain_heal_desc = "Heals a friendly target for 40% of their max health, chaining to nearby friendly targets."
+	L.chain_heal_desc = "Лечит союзника, восстанавливая определенный процент от его максимального запаса здоровья, переходя на находящиеся поблизости дружественные цели."
 	L.chain_heal_message = "Ваш фокус читает Цепное исцеление!"
 	L.chain_heal_bar = "Фокус: Цепное исцеление"
 
-	-- L.farseer_trigger = "Farseers, mend our wounds!"
+	L.farseer_trigger = "Исцелите наши раны!"
 	L.custom_off_shaman_marker = "Маркировка Предсказателей"
 	L.custom_off_shaman_marker_desc = "Чтобы помочь с прерыванием, Предсказатели - всадники на волках будет помечены метками %s%s%s%s%s%s%s (в этой последовательности)(не все метки могут быть использованы), требуется быть помощником или лидером."
 
