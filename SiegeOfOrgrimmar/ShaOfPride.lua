@@ -314,7 +314,7 @@ do
 			if prideExpires then
 				self:TargetBar(146595, prideExpires-GetTime(), args.destName, L["titan_pride"])
 			else
-				SetRaidTarget(destName, titanCounter)
+				SetRaidTarget(args.destName, titanCounter)
 				titanCounter = titanCounter + 1
 			end
 		end
