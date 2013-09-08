@@ -6,9 +6,7 @@ end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "frFR")
 if L then
-	L.defile = "Defiled Ground cast"
-	L.defile_desc = select(2, EJ_GetSectionInfo(7958))
-	L.defile_icon = 143961
+	L.defile = "Incantation de Sol profané"
 
 	L.custom_off_bane_marks = "Marquage Mot de l'ombre : Plaie"
 	L.custom_off_bane_marks_desc = "Afin d'aider à l'attribution des dissipations, marque les personnes initialement touchées par Mot de l'ombre : Plaie avec %s%s%s%s%s (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
@@ -27,7 +25,6 @@ if L then
 
 	L.big_adds = "Manifestations de la corruption"
 	L.big_adds_desc = "Warning for killing big adds inside/outside"
-	L.big_add_icon = 147082
 	L.big_add = "Manifestation de la corruption ! (%d)"
 	L.big_add_killed = "Manifestation de la corruption tuée ! (%d)"
 
@@ -51,7 +48,6 @@ L = BigWigs:NewBossLocale("Galakras", "frFR")
 if L then
 	L.demolisher = "Demolisher"
 	L.demolisher_desc = "Timers for when the Kor'kron Demolishers enter the fight"
-	L.demolisher_icon = 125914
 	L.towers = "Tours"
 	L.towers_desc = "Warnings for when the towers get breached"
 	L.south_tower_trigger = "The door barring the South Tower has been breached!" -- to translate
@@ -97,12 +93,8 @@ if L then
 	L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW" -- to translate
 	L.extra_adds = "Renforts supplémentaires"
 
-	L.chain_heal, L.chain_heal_desc = EJ_GetSectionInfo(7935)
-	L.chain_heal_icon = 1064
 	L.chain_heal_message = "Votre focalisation est en train d'incanter Salve de guérison !"
 
-	L.arcane_shock, L.arcane_shock_desc = EJ_GetSectionInfo(7928)
-	L.arcane_shock_icon = 114003
 	L.arcane_shock_message = "Votre focalisation est en train d'incanter Horion des Arcanes !"
 
 	L.focus_only = "|cffff0000Alertes de la cible de focalisation uniquement.|r "
@@ -127,7 +119,6 @@ L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "frFR")
 if L then
 	L.tank_debuffs = "Affaiblissements tank"
 	L.tank_debuffs_desc = "Alertes concernant les différents types d'affaiblisement de tank associés avec Rugissement effroyable."
-	L.tank_debuffs_icon = 143766
 
 	L.cage_opened = "Cage ouverte"
 end
@@ -162,10 +153,9 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "frFR")
 if L then
-	L.intermission = "Entracte"
+	L.intermission = "Intervalle"
 	L.mind_control = "Contrôle mental"
 
-	L.chain_heal = mod:SpellName(144583)
 	L.chain_heal_desc = "Rend 40% de ses points de vie maximum à une cible alliée et se propage aux cibles alliées à proximité."
 	L.chain_heal_message = "Votre focalisation est en train d'incanter Salve de guérison !"
 	L.chain_heal_bar = "Focalisation : Salve de guérison"
