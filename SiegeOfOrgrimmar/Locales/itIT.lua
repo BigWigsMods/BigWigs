@@ -15,12 +15,13 @@ if L then
 
 	L.intermission = "Misure Disperate"
 	L.intermission_desc = "Avvisa quando ti stai avvicinando ad un boss che sta lanciando Misure Disperate"
+	L.titan_pride = "Titano+Orgoglio: %s"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "itIT")
 if L then
 	L.pre_pull = "Pre-ingaggio"
-	L.pre_pull_desc = "Barra per la scenetta prima dell'ingaggio del boss "
+	L.pre_pull_desc = "Barra per la scenetta prima dell'ingaggio del boss"
 	L.pre_pull_trigger = "Very well, I will create a field to keep your corruption quarantined." --need translation
 
 	L.big_adds = "Add Maggiori"
@@ -52,7 +53,8 @@ if L then
 	L.south_tower = "Torre sud"
 	L.north_tower_trigger = "The door barring the North Tower has been breached!" --need check/translation
 	L.north_tower = "Torre nord"
-
+	L.tower_defender = "DIfensore Torre"
+	
 	L.custom_off_shaman_marker = "Marcatore Sciamano"
 	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni. evidenzia lo Sciamano delle Maree delle Fauci di Drago con %s%s%s%s%s%s%s (in questo ordine)(non tutti i simboli possono essere usati), richiede capo incursione o assistente."
 end
@@ -145,6 +147,8 @@ if L then
 	L.custom_off_edge_marks = "Marcatori dei Limiti"
 	L.custom_off_edge_marks_desc = "Evidenzia i giocatori che, dopo i calcoli, saranno i limiti di Confine Ardente con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
 	L.injection_over_soon = "Fine di Iniezione tra poco (%s)!"
+	L.custom_off_mutate_marks = "Mutazione: Marcatore Scorpione Mantid"
+	L.custom_off_mutate_marks_desc = "Evidenzia il giocatore con Mutazione Scoprione Mantid con %s%s%s per aiutare l'assegnazione delle cure, richiede capo incursione o assistente."
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "itIT")
