@@ -125,7 +125,7 @@ do
 			self:StopBar(137404) -- Tears of the Sun
 			self:StopBar(-7634) -- Beast of Nightmares
 			self:StopBar(-7631) -- Cosmic Barrage
-			self:CDBar(-7649, 23) -- Ice Comet
+			self:CDBar(-7649, 18) -- Ice Comet
 			self:CDBar(137408, 11) -- Fan of Flames
 			if self:Heroic() then
 				self:Bar(137491, 50) -- Nuclear Inferno
