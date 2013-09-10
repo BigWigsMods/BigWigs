@@ -251,7 +251,7 @@ do
 		self:Bar(-8262, self:Heroic() and 60 or 50, L["big_add_bar"], 144379) -- when the add is actually up
 		self:ScheduleTimer("Message", self:Heroic() and 55 or 45, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
 		-- lets do some fancy stuff
-		local playerPower = UnitPower("player", ALTERNATE_POWER_INDEX)
+		local playerPower = UnitPower("player", 10)
 		if playerPower > 24 and playerPower < 50 then
 			self:Message(-8257, "Personal", "Alarm", CL["underyou"]:format(self:SpellName(144911))) -- bursting pride
 		elseif playerPower > 49 and playerPower < 75 then
@@ -262,7 +262,7 @@ do
 		local unit, power
 		for i=1, GetNumGroupMembers() do
 			unit = GetRaidRosterInfo(i)
-			power = UnitPower(unit, ALTERNATE_POWER_INDEX)
+			power = UnitPower(unit, 10)
 			if power > 24 and power < 50 and self:Range(unit) < 5 and (playerPower < 25 or playerPower > 49) then -- someone near have it, but not the "player"
 				local t = GetTime()
 				if t-prev > 2 then -- don't spam
@@ -292,9 +292,7 @@ do
 	function mod:TitanGiftRemoved(args)
 		if self.db.profile.custom_off_titan_mark then
 			SetRaidTarget(args.destName, 0)
-			if self:Me(args.destGUID) then
-				self:CloseProximity(146595)
-			end
+			self:CloseProximity(146595)
 		end
 	end
 	function mod:TitanGiftApplied(args)
