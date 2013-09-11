@@ -3,7 +3,6 @@ TODO:
 	look if there is even a point to try and target scan for mortar cannon
 ]]--
 
-if select(4, GetBuildInfo()) < 50400 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

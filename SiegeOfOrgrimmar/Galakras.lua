@@ -3,7 +3,7 @@ TODO:
 	-- figure out tower add timers for 2nd tower
 	-- maybe try and add wave timers
 ]]--
-if select(4, GetBuildInfo()) < 50400 then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

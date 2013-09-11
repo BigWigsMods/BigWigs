@@ -4,7 +4,6 @@ TODO:
 	keep an eye out for Imploding Energy events have only SPELL_DAMAGE atm 10N PTR
 ]]--
 
-if GetBuildInfo() ~= "5.4.0" then return end -- 4th return is 50300 on the PTR ATM so can't use that
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

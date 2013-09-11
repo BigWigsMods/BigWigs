@@ -5,7 +5,6 @@ TODO:
 	sonic resonance maybe could use some advanced proximity warning
 ]]--
 
-if GetBuildInfo() ~= "5.4.0" then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

@@ -4,7 +4,6 @@ TODO:
 	could maybe hook into the world state timer, but I'm not sure if there is much point to work on a code just for that
 	could maybe pre warn for keg toss at least for one of the targets
 ]]--
-if select(4, GetBuildInfo()) < 50400 then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration

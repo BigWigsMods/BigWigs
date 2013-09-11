@@ -2,7 +2,7 @@
 TODO:
 	-- fix p2 desecrated weapon timer
 ]]--
-if select(4, GetBuildInfo()) < 50400 then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

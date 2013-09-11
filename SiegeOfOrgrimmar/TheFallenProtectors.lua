@@ -7,7 +7,6 @@ TODO:
 	corruption shock target scanning or at least verify how the mobs targeting works
 ]]--
 
-if GetBuildInfo() ~= "5.4.0" then return end -- 4th return is 50300 on the PTR ATM so can't use that
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

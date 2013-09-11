@@ -3,7 +3,6 @@ TODO:
 	-- custom off essence of corruption marker, depending on if it is neded for 25 man or not
 ]]--
 
-if select(4, GetBuildInfo()) < 50400 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
