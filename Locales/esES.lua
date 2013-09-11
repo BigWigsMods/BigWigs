@@ -12,8 +12,8 @@ L.stages_desc = "Habilita funciones relacionadas con varias etapas/fases del jef
 
 L.already_registered = "|cffff0000ATENCIóN:|r |cff00ff00%s|r (|cffffff00%s|r) ya existe ese módulo en BigWigs, pero sin embargo está intentando registrarlo de nuevo. Esto normalmente ocurre cuando tienes varias copias de este módulo en tu carpeta de addons posiblemente por una actualización fallida. Es recomendable que borres la carpeta de Big Wigs y lo reinstales por completo."
 
---L.movieBlocked = "You've seen this movie before, skipping it."
---L.roleUpdate = "Updated your role."
+L.movieBlocked = "Ya has visto esta cinemática antes, omitiéndola."
+L.roleUpdate = "Rol actualizado."
 
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Estás usando la versión oficial de Big Wigs %s (revisión %d)"
@@ -42,7 +42,7 @@ L.missingAddOn = "Tenga en cuenta que esta zona requiere el plugin [\124cFF436EE
 
 L.coreAddonDisabled = "Big Wigs no puede funcionar debidamente ya que el addon %s está desactivado. Puedes activarlo desde el addon Control panel o en la pantalla de selección de personaje."
 
---L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
+L.removeAddon = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
 
 -- Options.lua
 L["Customize ..."] = "Personalizar..."
