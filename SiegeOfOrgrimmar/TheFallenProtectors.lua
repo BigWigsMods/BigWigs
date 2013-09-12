@@ -102,7 +102,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "InfernoStrike", 143962)
 
 
-	--self:Death("Win", 100000)
+	self:Death("Deaths", 71475, 71479, 71480) -- Rook Stonetoe, He Softfoot, Sun Tenderheart
 end
 
 function mod:OnEngage()
@@ -426,3 +426,14 @@ function mod:UNIT_HEALTH_FREQUENT(unitId)
 		end
 	end
 end
+
+do
+	local deathCount = 0
+	function mod:Deaths()
+		deathCount = deathCount + 1
+		if deathCount > 2 then
+			self:Win()
+		end
+	end
+end
+
