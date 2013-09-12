@@ -119,6 +119,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SunderingBlow", 143494)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SunderingBlow", 143494)
 
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	self:Death("Win", 71515)
 end
 
@@ -198,6 +199,14 @@ function mod:Fixate(args)
 	self:TargetMessage(-7933, args.destName, "Attention", "Info")
 	if self:Me(args.destGUID) then
 		self:Flash(-7933)
+	end
+end
+
+function mod:UNIT_HEALTH_FREQUENT(unit)
+	local hp = UnitHealth(unit)/UnitHealthMax(unit) * 100
+	if hp < 20 then
+		self:Message(-7920, "Neutral", "Info", CL["soon"]:format(L["extra_adds"]))
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 	end
 end
 
