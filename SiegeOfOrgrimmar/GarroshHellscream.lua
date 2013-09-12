@@ -122,7 +122,7 @@ function mod:OnEngage(diff)
 	self:Berserk(900, nil, nil, "Berserk (assumed)") -- XXX assumed
 	annihilateCounter = 1
 	self:Bar(144758, 60) -- DesecratedWeapon
-	self:Bar(-8298, 20) -- Siege Engineer
+	self:Bar(-8298, 20, nil, 144616) -- Siege Engineer
 	self:Bar(-8294, 30, nil, 144584) -- Farseer
 	farseerCounter = 1
 	engineerCounter = 1
@@ -261,13 +261,19 @@ do
 		local diff = self:Difficulty()
 		for i=1, GetNumGroupMembers() do
 			local name, _, subgroup = GetRaidRosterInfo(i)
-			if diff == 3 or diff == 5 then -- 10 man
-				if subgroup < 3 then
-					hopeList[#hopeList+1] = name
-				end
-			else
-				if subgroup < 6 then
-					hopeList[#hopeList+1] = name
+			-- 149004 hope
+			-- 148983 courage
+			-- 148994 faith
+			local debuffed = (UnitDebuff(name, self:SpellName(149004))) or (UnitDebuff(name, self:SpellName(148983))) or (UnitDebuff(name, self:SpellName(148994)))
+			if not debuffed then
+				if diff == 3 or diff == 5 then -- 10 man
+					if subgroup < 3 then
+						hopeList[#hopeList+1] = name
+					end
+				else
+					if subgroup < 6 then
+						hopeList[#hopeList+1] = name
+					end
 				end
 			end
 		end

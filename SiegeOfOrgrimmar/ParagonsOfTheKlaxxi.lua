@@ -441,7 +441,7 @@ local function iyyokukSelected()
 		for i = 1, GetNumGroupMembers() do
 			name = GetRaidRosterInfo(i)
 			local match = nil
-			if results[results.shape][name] or results[results.color][name] or results[results.number][name] then
+			if (results.shape and results[results.shape][name]) or (results.color and results[results.color][name]) or (results.number and results[results.number][name]) then
 				match = true
 			end
 
@@ -464,7 +464,7 @@ local function figureShitOut()
 		if type(v) == "table" then
 			msg = ("All %s: "):format(k)
 			for p, _ in pairs(v) do
-				msg = ("%s %s(%d)"):format(msg, p, GetRaidIndex(p) or 0)
+				msg = ("%s %s(%d)"):format(msg, p, GetRaidTargetIndex(p) or 0)
 			end
 			mod:Message(-8055, nil, nil, msg)
 			msg = ""
@@ -652,7 +652,9 @@ function mod:MyEngage()
 				self:Bar(143280 ,10) -- Bloodletting
 			elseif mobId == 71153 then --Hisek the Swarmkeeper
 				self:Bar(-8073, 40) -- Aim
-				self:Bar(143243, 48) -- Rapid Fire
+				if self:Heroic() then
+					self:Bar(143243, 48) -- Rapid Fire
+				end
 			end
 		end
 	end

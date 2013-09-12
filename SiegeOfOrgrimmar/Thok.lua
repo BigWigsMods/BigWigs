@@ -56,7 +56,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "BloodFrenzyOver", 143440)
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 143445)
 	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 143445)
-	self:Emote("BloodFrenzy", "143440")
+	self:Emote("BloodFrenzyPhase", "143440")
 	-- stage 1
 	self:Log("SPELL_PERIODIC_DAMAGE", "BurningBlood", 143783)
 	self:Log("SPELL_DAMAGE", "BurningBlood", 143783)
@@ -121,7 +121,7 @@ function mod:FixateApplied(args)
 	self:PrimaryIcon(-7980, args.destName)
 end
 
-function mod:BloodFrenzy()
+function mod:BloodFrenzyPhase()
 	self:StopBar(143428) -- Tail Lash
 	self:StopBar(143426) -- Fearsome Roar
 	self:StopBar(143780) -- Acid Breath
