@@ -182,7 +182,7 @@ end
 -- Assaukt mode
 function mod:IgniteArmor(args)
 	local amount = args.amount or 0
-	self:Message(args.spellId, "Attention", nil, CL["count"]:format(amount))
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
 	self:CDBar(args.spellId, 9)
 end
 
