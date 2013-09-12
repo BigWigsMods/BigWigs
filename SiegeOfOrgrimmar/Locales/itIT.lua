@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Immerseus", "itIT")
 if not L then return end
 if L then
-
+	L.win_yell = "Ah, you have done it!"
 end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "itIT")

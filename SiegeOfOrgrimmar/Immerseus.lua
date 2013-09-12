@@ -22,7 +22,7 @@ mod:RegisterEnableMob(71543)
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.win_yell = "Ah, you have done it!"
 end
 L = mod:GetLocale()
 
@@ -41,6 +41,12 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable(unit)
+	if UnitCanAttack("player", unit) then
+		return true
+	end
+end
+
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -54,7 +60,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Swirl", 143309)
 	self:Log("SPELL_DAMAGE", "ShaBolt", 143295)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ShaPoolDamage", 143297)
-	self:Death("Win", 71543)
+
+	self:Yell("Win", L["win_yell"])
 end
 
 function mod:OnEngage()

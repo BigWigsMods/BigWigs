@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Immerseus", "esES") or BigWigs:NewBossLocale("Immerseus", "esMX")
 if not L then return end
 if L then
-
+	L.win_yell = "Ah, you have done it!"
 end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "esES") or BigWigs:NewBossLocale("The Fallen Protectors", "esMX")
