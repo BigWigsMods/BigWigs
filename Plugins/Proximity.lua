@@ -485,7 +485,7 @@ do
 
 		local currentFloor = GetCurrentMapDungeonLevel()
 		if currentFloor == 0 then currentFloor = 1 end
-		local id = activeMap[currentFloor]
+		local id = activeMap and activeMap[currentFloor]
 
 		if not id then
 			print("No floor id, closing proximity.")
@@ -541,7 +541,7 @@ do
 
 		local currentFloor = GetCurrentMapDungeonLevel()
 		if currentFloor == 0 then currentFloor = 1 end
-		local id = activeMap[currentFloor]
+		local id = activeMap and activeMap[currentFloor]
 
 		if not id then
 			print("No floor id, closing proximity.")
@@ -577,7 +577,7 @@ do
 
 		local currentFloor = GetCurrentMapDungeonLevel()
 		if currentFloor == 0 then currentFloor = 1 end
-		local id = activeMap[currentFloor]
+		local id = activeMap and activeMap[currentFloor]
 
 		if not id then
 			print("No floor id, closing proximity.")
@@ -622,7 +622,7 @@ do
 
 		local currentFloor = GetCurrentMapDungeonLevel()
 		if currentFloor == 0 then currentFloor = 1 end
-		local id = activeMap[currentFloor]
+		local id = activeMap and activeMap[currentFloor]
 
 		if not id then
 			print("No floor id, closing proximity.")
