@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "deDE")
+﻿local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "deDE")
 
 if not L then return end
 
@@ -134,11 +134,11 @@ L["Thanks to the following for all their help in various fields of development"]
 -- Statistics
 L.statistics = "Statistiken"
 L.norm25 = "25"
-L.heroic25 = "25h"
+L.heroic25 = "25 HC"
 L.norm10 = "10"
-L.heroic10 = "10h"
+L.heroic10 = "10 HC"
 L.lfr = "LFR"
-L.flex = "Flex"
+L.flex = "Flexibel"
 L.wipes = "Niederlagen:"
 L.kills = "Siege:"
 L.bestkill = "Bester Sieg:"
