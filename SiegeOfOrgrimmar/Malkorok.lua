@@ -132,7 +132,7 @@ do
 		end
 		energyList[#energyList+1] = args.destName
 		if not scheduled then
-			self:ScheduleTimer(warnDisplacedEnergy, 0.3, args.spellId)
+			scheduled = self:ScheduleTimer(warnDisplacedEnergy, 0.3, args.spellId)
 		end
 		if self.db.profile.custom_off_energy_marks then
 			markEnergy(args.destName)
