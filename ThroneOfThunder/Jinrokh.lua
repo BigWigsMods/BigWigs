@@ -138,7 +138,7 @@ end
 function mod:LightningStorm(args)
 	self:Message(args.spellId, "Important", "Long")
 	self:Bar(args.spellId, 93, L["storm_short"])
-	self:Bar(-7741, self:Heroic() and 20 or 26) -- Focused Lightning -- XXX re check timers for non heroic
+	self:Bar(-7741, self:Heroic() and 20 or 26) -- Focused Lightning
 	self:Bar(137162, 20) -- Static Burst
 	self:Bar(137175, 30) -- Thundering Throw
 end
