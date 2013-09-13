@@ -14,8 +14,6 @@ mod:RegisterEnableMob(71529)
 -- Locals
 --
 
-local frozenSolid = mod:NewTargetList()
-
 --------------------------------------------------------------------------------
 -- Localization
 --
