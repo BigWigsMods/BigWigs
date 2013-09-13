@@ -78,6 +78,8 @@ L.chatMessages = "聊天框體訊息"
 L.chatMessagesDesc = "除了顯示設定，輸出所有 Big Wigs 訊息到預設聊天框體。"
 L.autoRole = "自動更新職責"
 L.autoRoleDesc = "明確所擔任的職責 Big Wigs 將為團隊其他隊友優化警報，此選項將使 Big Wigs 自動更新你的職責。比如，一些模組將檢查玩家是坦克時首領並不會對坦克所施放的技能。\n\n|cffff4411這是與特定的職責不相關的警報並強烈建議開啟此選項！|r"
+--L.zoneMessages = "Show zone messages"
+--L.zoneMessagesDesc = "Disabling this will stop showing messages when you enter a zone that Big Wigs has no content for. We recommend you leave this turned on as we may suddenly create timers for a new zone that you may find useful."
 
 L.slashDescTitle = "|cFFFED000命令行：|r"
 L.slashDescPull = "|cFFFED000/pull:|r 發送拉怪倒數提示到團隊。"

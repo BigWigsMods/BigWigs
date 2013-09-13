@@ -75,6 +75,8 @@ L.chatMessages = "Сообщения в чат"
 L.chatMessagesDesc = "Выводить все сообщения BigWigs в стандартное окно чата в дополнение к настройкам отображения."
 L.autoRole = "Автоматическое обновление роли"
 L.autoRoleDesc = "Предупреждения Big Wigs будут лучше для рейда, если известна ваша роль; эта опция позволит Big Wigs автоматически обновлять вашу роль. Например, некоторые модули проверяют является ли игрок танком, когда сканируют способности боссов и они не действуют на них.\n\n|cffff4411Настройка не затрагивает предупреждения, связанные с вашей ролью. Настоятельно рекомендуется оставить включенной!|r"
+--L.zoneMessages = "Show zone messages"
+--L.zoneMessagesDesc = "Disabling this will stop showing messages when you enter a zone that Big Wigs has no content for. We recommend you leave this turned on as we may suddenly create timers for a new zone that you may find useful."
 
 L.slashDescTitle = "|cFFFED000Быстрые команды:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Отправляет отсчет атаки в рейд."

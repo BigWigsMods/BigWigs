@@ -93,7 +93,7 @@ do
 	local cata = "BigWigs_Cataclysm"
 	local lw = "LittleWigs"
 
-	loader.zonesTbl = {
+	loader.zoneTbl = {
 		[696]=c, [755]=c,
 		[775]=bc, [780]=bc, [779]=bc, [776]=bc, [465]=bc, [473]=bc, [799]=bc, [782]=bc,
 		[604]=wotlk, [543]=wotlk, [535]=wotlk, [529]=wotlk, [527]=wotlk, [532]=wotlk, [531]=wotlk, [609]=wotlk, [718]=wotlk,
@@ -396,6 +396,7 @@ do
 			BigWigs_PizzaBar = "BigWigs",
 			BigWigs_ShaIcons = "BigWigs",
 			BigWigs_LeiShi_Marker = "BigWigs",
+			BigWigs_NoPluginWarnings = "BigWigs",
 		}
 
 		-- XXX hopefully remove this some day, try to teach people not to force load our modules.
@@ -442,21 +443,21 @@ do
 		self:RegisterMessage("BigWigs_CoreEnabled")
 		self:RegisterMessage("BigWigs_CoreDisabled")
 
-		self:GROUP_ROSTER_UPDATE()
-		self:ZONE_CHANGED_NEW_AREA()
-
 		self:RegisterMessage("BigWigs_CoreOptionToggled", "UpdateDBMFaking")
-		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core for this 1 feature
+		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
 		if BigWigs3DB and BigWigs3DB.profileKeys and BigWigs3DB.profiles then
 			local name = UnitName("player")
 			local realm = GetRealmName()
 			if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
 				local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
 				self.isFakingDBM = key.fakeDBMVersion
+				self.isShowingZoneMessages = key.showZoneMessages
 			end
 		end
 		self:UpdateDBMFaking(nil, "fakeDBMVersion", self.isFakingDBM)
 
+		self:GROUP_ROSTER_UPDATE()
+		self:ZONE_CHANGED_NEW_AREA()
 		self.OnEnable = nil
 	end
 end
@@ -713,14 +714,15 @@ do
 		end
 
 		-- Lacking zone modules
-		local zoneAddon = self.zonesTbl[id]
+		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
+		local zoneAddon = self.zoneTbl[id]
 		if zoneAddon and not warnedThisZone[id] then
 			local _, _, _, enabled = GetAddOnInfo(zoneAddon)
 			if not enabled then
 				warnedThisZone[id] = true
 				local msg = L.missingAddOn:format(zoneAddon)
 				sysprint(msg)
-				--RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
+				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
 			end
 		end
 	end
@@ -768,6 +770,10 @@ function loader:BigWigs_CoreEnabled()
 		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		SendAddonMessage("D4", "H\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 	end
+
+	-- Core is loaded, nil these to force checking BigWigs.db.profile.option
+	self.isFakingDBM = nil
+	self.isShowingZoneMessages = nil
 
 	loadAddons(loadOnCoreEnabled)
 

@@ -120,14 +120,13 @@ local acOptions = {
 			name = L["Sound"],
 			desc = L.soundDesc,
 			order = 21,
-			width = "full",
+			width = "half",
 		},
 		flash = {
 			type = "toggle",
 			name = L["Flash Screen"],
 			desc = L.flashDesc,
 			order = 22,
-			width = "full",
 		},
 		raidicon = {
 			type = "toggle",
@@ -142,7 +141,6 @@ local acOptions = {
 				plugin:Enable()
 			end,
 			order = 24,
-			width = "full",
 		},
 		chat = {
 			type = "toggle",
@@ -172,6 +170,13 @@ local acOptions = {
 				plugin:Enable()
 			end,
 			order = 31,
+			width = "full",
+		},
+		showZoneMessages = {
+			type = "toggle",
+			name = L.zoneMessages,
+			desc = L.zoneMessagesDesc,
+			order = 32,
 			width = "full",
 		},
 		blockmovies = {
@@ -1209,7 +1214,7 @@ do
 
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
-		local parent = BigWigsLoader.zonesTbl[zoneId] and addonNameToHeader[BigWigsLoader.zonesTbl[zoneId]] or addonNameToHeader.BigWigs_MistsOfPandaria
+		local parent = BigWigsLoader.zoneTbl[zoneId] and addonNameToHeader[BigWigsLoader.zoneTbl[zoneId]] or addonNameToHeader.BigWigs_MistsOfPandaria
 		local panel, created = self:GetPanel(zoneName, parent, zoneId)
 		if created then
 			panel:SetScript("OnShow", onZoneShow)

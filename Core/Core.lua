@@ -418,6 +418,7 @@ function addon:OnInitialize()
 			raidicon = true,
 			flash = true,
 			showBlizzardWarnings = false,
+			showZoneMessages = true,
 			blockmovies = true,
 			fakeDBMVersion = false,
 			customDBMbars = true,
