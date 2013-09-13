@@ -12,11 +12,6 @@ if not mod then return end
 mod:RegisterEnableMob(71543)
 
 --------------------------------------------------------------------------------
--- Locals
---
-
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -55,6 +50,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SwellingCorruption", 143574)
 	-- normal
 	self:Log("SPELL_CAST_START", "CorrosiveBlast", 143436) -- not tank only so people know when to not walk in front of the boss
+	self:Log("SPELL_AURA_APPLIED", "CorrosiveBlastStack", 143436)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "CorrosiveBlastStack", 143436)
+
 	self:Emote("Splits", "143020")
 	self:Emote("Reform", "143469")
 	self:Log("SPELL_CAST_START", "Swirl", 143309)
@@ -65,11 +63,20 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "KillCheck")
 	self:Berserk(600, nil, nil, "Berserk (assumed)") -- XXX Assumed
-	self:Bar(143309, 24) -- Swirl
-	self:Bar(143436, 6) -- Corrosive Blast
+	self:Bar(143309, 20.8) -- Swirl
+	self:Bar(143436, 10) -- Corrosive Blast
 	if self:Heroic() then
 		self:CDBar(143574, 10) -- Swelling Corruption
+	end
+end
+
+-- XXX TEST OUT USING THE VERIFY ENABLE CHECK AS THE BOSS KILL EVENT NEXT WEEK
+function mod:KillCheck()
+	local hasBoss = UnitHealth("boss1") > 100 or UnitHealth("boss2") > 100 or UnitHealth("boss3") > 100 or UnitHealth("boss4") > 100 or UnitHealth("boss5") > 100
+	if not hasBoss then
+		self:ScheduleTimer("StartWipeCheck", 10)
 	end
 end
 
@@ -91,6 +98,12 @@ function mod:CorrosiveBlast(args)
 	self:CDBar(args.spellId, 35)
 end
 
+function mod:CorrosiveBlastStack(args)
+	if self:Tank() and self:Tank(args.destName) then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", "Warning")
+	end
+end
+
 function mod:Splits()
 	self:StopBar(143309) -- Swirl
 	self:StopBar(143436) -- Corrosive Blast
@@ -100,8 +113,8 @@ end
 
 function mod:Reform()
 	self:Message(143469, "Neutral")
-	self:Bar(143309, 28) -- Swirl
-	self:Bar(143436, 14) -- Corrosive Blast
+	self:Bar(143309, 24) -- Swirl 24.1 - 24.9
+	self:Bar(143436, 14) -- Corrosive Blast 13.6 - 15.2
 	if self:Heroic() then
 		self:CDBar(143574, 10) -- Swelling Corruption
 	end
@@ -109,7 +122,7 @@ end
 
 function mod:Swirl(args)
 	self:Message(args.spellId, "Important", "Long")
-	self:Bar(args.spellId, 48)
+	self:Bar(args.spellId, 48) -- Most people probably never encounter one before split
 end
 
 do
