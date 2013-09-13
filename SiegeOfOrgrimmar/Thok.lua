@@ -37,7 +37,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{"tank_debuffs", "TANK"}, -7963, 143428, 143777, 143783, -- stage 1
-		-7981, {-7980, "ICON", "FLASH", "SAY"}, {146589, "FLASH"}, 143442,-- stage 2
+		-7981, {-7980, "ICON", "FLASH", "SAY"}, {146589, "FLASH"},-- stage 2
 		"proximity", "berserk", "bosskill",
 	}, {
 		["tank_debuffs"] = -7960, -- stage 1
@@ -73,7 +73,7 @@ end
 function mod:OnEngage()
 	self:Berserk(600) -- confirmed 25N PTR
 	self:OpenProximity("proximity", 10) -- it is so you know if you are too close to another group -- XXX this is maybe tactic dependant
-	self:Bar(-7963, 25) -- Acceleration, not much point for more timers than the initial one since then it is too frequent
+	self:Bar(-7963, 25) -- Deafening Screech
 end
 
 --------------------------------------------------------------------------------
@@ -83,12 +83,13 @@ end
 -- stage 2
 
 function mod:BloodFrenzy(args)
-	self:Message(args.spellId, "Attention", nil, CL["count"]:format(args.spellName, args.amount))
+	self:Message(-7981, "Attention", nil, CL["count"]:format(args.spellName, args.amount))
 end
 
 function mod:SkeletonKeyRemoved(args)
 	self:Message(args.spellId, "Positive", "Alert", L["cage_opened"])
 	self:StopBar(args.spellId)
+	self:Bar(-7981, 13, CL["over"]:format(self:SpellName(-7981))) -- Blood Frenzy
 end
 
 function mod:SkeletonKey(args)
@@ -102,7 +103,7 @@ end
 function mod:BloodFrenzyOver(args)
 	self:OpenProximity("proximity", 10)
 	self:Message(-7981, "Neutral", "Long", CL["over"]:format(args.spellName))
-	self:Bar(-7963, 25) -- Acceleration, not much point for more timers than the initial one since then it is too frequent
+	self:Bar(-7963, 25) -- Deafening Screech, not much point for more timers than the initial one since then it is too frequent
 end
 
 function mod:FixateRemoved(args)
