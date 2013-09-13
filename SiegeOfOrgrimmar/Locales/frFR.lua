@@ -1,17 +1,17 @@
 local L = BigWigs:NewBossLocale("Immerseus", "frFR")
 if not L then return end
 if L then
-	L.win_yell = "Ah, you have done it!"
+	L.win_yell = "Ah, you have done it!" -- to translate
 end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "frFR")
 if L then
-	L.defile = "Incantation de Sol profané"
+	L.defile = "Incant. de Sol profané"
 
 	L.custom_off_bane_marks = "Marquage Mot de l'ombre : Plaie"
 	L.custom_off_bane_marks_desc = "Afin d'aider à l'attribution des dissipations, marque les personnes initialement touchées par Mot de l'ombre : Plaie avec %s%s%s%s%s (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
 
-	L.no_meditative_field = "NO Meditative Field !"
+	L.no_meditative_field = "PAS de Champ de méditation !"
 
 	L.intermission = "Mesures désespérées"
 	L.intermission_desc = "Prévient quand l'un des boss est sur le point d'utiliser ses Mesures désespérées."
@@ -46,15 +46,15 @@ end
 
 L = BigWigs:NewBossLocale("Galakras", "frFR")
 if L then
-	L.demolisher = "Demolisher"
-	L.demolisher_desc = "Timers for when the Kor'kron Demolishers enter the fight"
+	L.demolisher = "Démolisseur"
+	L.demolisher_desc = "Délais avant que les Démolisseurs kor’kron ne se joignent au combat."
 	L.towers = "Tours"
-	L.towers_desc = "Warnings for when the towers get breached"
-	L.south_tower_trigger = "The door barring the South Tower has been breached!" -- to translate
+	L.towers_desc = "Alertes quand les portes des tours sont détruites."
+	L.south_tower_trigger = "La porte qui barrait l'accès à la tour sud a été détruite !" -- to check
 	L.south_tower = "Tour sud"
-	L.north_tower_trigger = "The door barring the North Tower has been breached!" -- to translate
+	L.north_tower_trigger = "La porte qui barrait l'accès à la tour nord a été détruite !" -- to check
 	L.north_tower = "Tour nord"
-	L.tower_defender = "Tower defender"
+	L.tower_defender = "Défenseur de la tour"
 
 	L.custom_off_shaman_marker = "Marquages Chaman des marées"
 	L.custom_off_shaman_marker_desc = "Afin d'aider à l'attribution des interruptions, marque les Chamans des marées gueule-de-dragon avec %s%s%s%s%s%s%s (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
@@ -108,8 +108,8 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "frFR")
 if L then
-	L.enable_zone = "Artifact Storage" -- to translate
-	L.matter_scramble_explosion = "Matter Scramble explosion" -- shorten maybe?
+	L.enable_zone = "Entrepôt de l'Artéfact" -- to check
+	L.matter_scramble_explosion = "Explosion Brouillage de la matière" -- shorten maybe?
 
 	L.custom_off_mark_brewmaster = "Marquage Maître brasseur"
 	L.custom_off_mark_brewmaster_desc = "Marque l'Esprit d'ancien maître brasseur avec %s."
@@ -125,12 +125,12 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "frFR")
 if L then
-	L.shredder_engage_trigger = "An Automated Shredder draws near!" -- to translate
+	L.shredder_engage_trigger = "Un déchireur automatisé approche !" -- to check
 	L.laser_on_you = "Laser sur vous PIOU PIOU !"
 	L.laser_say = "Laser PIOU PIOU !"
 
-	L.assembly_line_trigger = "Unfinished weapons begin to roll out on the assembly line."
-	L.assembly_line_message = "Unfinished weapons (%d)"
+	L.assembly_line_trigger = "Des armes non terminées commencent à avancer sur la chaîne d'assemblage." -- to check
+	L.assembly_line_message = "Armes non terminées (%d)"
 
 	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!" -- to translate
 end
@@ -149,6 +149,8 @@ if L then
 	L.custom_off_edge_marks = "Marquages Edge"
 	L.custom_off_edge_marks_desc = "Marque les joueurs qui seront les edges based on the calculations %s%s%s%s%s%s. Nécessite d'être assistant ou chef de raid."
 	L.injection_over_soon = "Injection bientôt terminée (%s) !"
+	L.custom_off_mutate_marks = "Marquage Mutation : scorpion d'ambre"
+	L.custom_off_mutate_marks_desc = "Afin d'aider à l'attribution des soins, marque les joueurs ayant Mutation : scorpion d'ambre avec %s%s%s. Nécessite d'être assistant ou chef de raid."
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "frFR")
