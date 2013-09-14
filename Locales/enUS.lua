@@ -77,7 +77,7 @@ L.chatMessagesDesc = "Outputs all BigWigs messages to the default chat frame in 
 L.autoRole = "Automatic role update"
 L.autoRoleDesc = "Knowing what role you are will improve Big Wigs warnings for other people in your raid, this option lets Big Wigs automatically update your role. For example, some modules will check if a player is a tank when scanning for boss abilities that never affect tanks.\n\n|cffff4411This is not related to role specific warnings and it's highly recommended you leave this turned on!|r"
 L.zoneMessages = "Show zone messages"
-L.zoneMessagesDesc = "Disabling this will stop showing messages when you enter a zone that Big Wigs has no content for. We recommend you leave this turned on as we may suddenly create timers for a new zone that you may find useful."
+L.zoneMessagesDesc = "Disabling this will stop showing messages when you enter a zone that Big Wigs has timers for, but you don't have installed. We recommend you leave this turned on as it's the only notification you will get if we suddenly create timers for a new zone that you find useful."
 
 L.slashDescTitle = "|cFFFED000Slash Commands:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Sends a pull countdown to your raid."
