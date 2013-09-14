@@ -108,6 +108,8 @@ if L then
 
 	L.custom_off_mark_brewmaster = "Маркировка Хмелевара"
 	L.custom_off_mark_brewmaster_desc = "Дух древнего хмелевара будет помечен меткой %s"
+
+	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "ruRU")

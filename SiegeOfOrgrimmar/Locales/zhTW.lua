@@ -110,6 +110,8 @@ if L then
 
 	L.custom_off_mark_brewmaster = "Brewmaster marker"
 	L.custom_off_mark_brewmaster_desc = "Mark the Ancient Brewmaster Spirit with %s"
+
+	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "zhTW")

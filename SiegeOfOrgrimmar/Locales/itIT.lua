@@ -54,7 +54,7 @@ if L then
 	L.north_tower_trigger = "The door barring the North Tower has been breached!" --need check/translation
 	L.north_tower = "Torre nord"
 	L.tower_defender = "DIfensore Torre"
-	
+
 	L.custom_off_shaman_marker = "Marcatore Sciamano"
 	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni. evidenzia lo Sciamano delle Maree delle Fauci di Drago con %s%s%s%s%s%s%s (in questo ordine)(non tutti i simboli possono essere usati), richiede capo incursione o assistente."
 end
@@ -111,13 +111,15 @@ if L then
 
 	L.custom_off_mark_brewmaster = "Marcatore Mastro Birraio"
 	L.custom_off_mark_brewmaster_desc = "Evidenzia il Mastro Birraio Antico con %s"
+
+	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "itIT")
 if L then
 	L.tank_debuffs = "Malefici Difensori"
 	L.tank_debuffs_desc = "Avvisi per i vari tipi di malefici sui Difensori associati a Ruggito Temibile"
-	
+
 	L.cage_opened = "Gabbia Aperta"
 end
 
