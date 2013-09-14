@@ -334,8 +334,7 @@ function mod:BoneCracker(args)
 end
 
 function mod:SunderingBlow(args)
-	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Attention", "Info")
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
 	self:CDBar(args.spellId, 10)
 end
 

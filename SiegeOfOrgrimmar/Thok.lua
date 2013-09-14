@@ -145,14 +145,14 @@ end
 
 do
 	local frozenSolid, scheduled = mod:NewTargetList(), nil
-	local function warnFrozenSolid()
+	local function warnFrozenSolid(spellId)
 		scheduled = nil
-		mod:TargetMessage(143777, frozenSolid, "Attention")
+		mod:TargetMessage(spellId, frozenSolid, "Attention")
 	end
 	function mod:FrozenSolid(args)
 		frozenSolid[#frozenSolid+1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnFrozenSolid, 0.1)
+			scheduled = self:ScheduleTimer(warnFrozenSolid, 0.1, args.spellId)
 		end
 	end
 end
@@ -172,7 +172,6 @@ function mod:FearsomeRoar(args)
 end
 
 function mod:TankDebuff(args)
-	local amount = args.amount or 1
-	self:StackMessage("tank_debuffs", args.destName, amount, "Attention", self:Me(args.destGUID) and nil or "Warning", args.spellName, args.spellId)
+	self:StackMessage("tank_debuffs", args.destName, args.amount, "Attention", self:Me(args.destGUID) and nil or "Warning", args.spellName, args.spellId)
 end
 
