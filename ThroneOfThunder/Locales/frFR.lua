@@ -195,7 +195,7 @@ if L then
 
 	L.unstablevitajumptarget_message = "Vous êtes le plus éloigné de Vita instable"
 	L.sensitivityfurthestbad = "Sensibilité au Vita + le plus éloigné = |cffff0000MAUVAIS|r !"
-	L.kill_trigger = "Attendez !" -- à vérifier
+	L.kill_trigger = "Attendez !"
 
 	L.assistPrint = "Un plugin appelé 'BigWigs_Ra-denAssist' est désormais disponible pour vous assister durant la rencontre face à Ra-den. N'hésitez pas à l'essayer."
 end

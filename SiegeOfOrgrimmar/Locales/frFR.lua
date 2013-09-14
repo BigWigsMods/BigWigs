@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Immerseus", "frFR")
 if not L then return end
 if L then
-	L.win_yell = "Ah, you have done it!" -- to translate
+	L.win_yell = "Ah, vous avez réussi !"
 end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "frFR")
@@ -20,8 +20,8 @@ end
 L = BigWigs:NewBossLocale("Norushen", "frFR")
 if L then
 	L.pre_pull = "Pre pull"
-	L.pre_pull_desc = "Timer bar for the RP before the boss engage"
-	L.pre_pull_trigger = "Très bien, je vais créer un champ de force qui contiendra votre corruption." -- to check
+	L.pre_pull_desc = "Barre de délai de l'événement RP avant l'engagement du boss."
+	L.pre_pull_trigger = "Très bien, je vais créer un champ de force qui contiendra votre corruption."
 
 	L.big_adds = "Manifestations de la corruption"
 	L.big_adds_desc = "Warning for killing big adds inside/outside"

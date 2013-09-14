@@ -77,7 +77,7 @@ L.chatMessagesDesc = "Affiche tous les messages de BigWigs dans la fenêtre de d
 L.autoRole = "Mise à jour auto. du rôle"
 L.autoRoleDesc = "Savoir quel rôle vous jouez améliore les alertes Big Wigs des autres joueurs de votre raid. Cette option permet à Big Wigs de mettre à jour automatiquement votre rôle. Par exemple, certains modules vérifient si un joueur est un tank lors de l'analyse des techniques de boss qui n'affectent jamais les tanks.\n\n|cffff4411Ceci n'est pas lié aux alertes spécifiques de rôle et il est fortement recommandé de le laisser activé !|r"
 L.zoneMessages = "Afficher les messages de zone"
-L.zoneMessagesDesc = "La désactivation de ceci enlevera les messages qui s'affichent quand vous entrez dans une zone pour laquelle Big Wigs n'a aucun contenu. Nous vous recommendons de laisser ceci activé étant donné qu'il se peut que nous ajoutions des délais pour une nouvelle zone que vous trouverez utiles."
+L.zoneMessagesDesc = "La désactivation de ceci enlevera les messages qui s'affichent quand vous entrez dans une zone pour laquelle Big Wigs a un module de délais que vous n'avez pas installé. Nous vous recommendons de laisser ceci activé, étant donné qu'il s'agit de la seule notification que vous recevrez si nous ajoutons un module que vous n'avez pas pour une nouvelle zone qui vous intéresse."
 
 L.slashDescTitle = "|cFFFED000Commandes :|r"
 L.slashDescPull = "|cFFFED000/pull :|r envoie un compte à rebours de pull à votre raid."
