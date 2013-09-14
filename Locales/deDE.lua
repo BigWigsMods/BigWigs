@@ -79,7 +79,7 @@ L.chatMessagesDesc = "Gibt alle Big Wigs Nachrichten im Standard-Chatfenster aus
 L.autoRole = "Automatisches Rollen-Update"
 L.autoRoleDesc = "Wenn Big Wigs Deine Rolle bekannt ist, verbessert dies die Warnungen für andere Spieler im Schlachtzug. Diese Option aktualisiert Deine Rolle automatisch. Beispielsweise überprüfen einige Module, ob der Spielercharakter die Tankrolle übernimmt, da einige Boss-Fähigkeiten niemals den Tank treffen.\n\n|cffff4411Dies steht nicht in Bezug zu den rollenspezifischen Warnungen und es wird empfohlen diese Option aktiviert zu lassen!|r"
 L.zoneMessages = "Gebietsmeldungen anzeigen"
-L.zoneMessagesDesc = "Wenn Du diese Option deaktivierst, zeigt Big Wigs beim Betreten von Gebieten ohne vorhandene Boss Mods keine Meldungen mehr an. Es wird empfohlen, diese Option aktiviert zu lassen, da immer wieder neue Timer für neue Gebiete hinzugefügt werden."
+L.zoneMessagesDesc = "Wenn Du diese Option deaktivierst, zeigt Big Wigs beim Betreten von Gebieten ohne installierte Boss Mods keine Meldungen mehr an. Es wird empfohlen, diese Option aktiviert zu lassen, da sie über neu erstellte Timer für neue Gebiete informiert."
 
 L.slashDescTitle = "|cFFFED000Slash Befehle:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Sendet einen Countdown zum Pull an den Raid."
