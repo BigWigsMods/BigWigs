@@ -1,6 +1,6 @@
 --[[
 TODO:
-	need win trigger
+	look into doing :win without trigger that requires localization
 	could maybe hook into the world state timer, but I'm not sure if there is much point to work on a code just for that
 	could maybe pre warn for keg toss at least for one of the targets
 ]]--
@@ -27,6 +27,8 @@ local brewmasterMarked
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
+
 	L.enable_zone = "Artifact Storage"
 	L.matter_scramble_explosion = "Matter Scramble explosion" -- shorten maybe?
 
@@ -91,9 +93,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SetToBlowApplied", 145987)
 	self:Log("SPELL_AURA_REMOVED", "SetToBlowRemoved", 145987)
 
+	self:Yell("Win", L.win_trigger)
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
-	--self:Death("Win", 100000)
 end
 
 function mod:OnEngage()

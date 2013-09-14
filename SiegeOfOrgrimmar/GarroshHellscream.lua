@@ -164,7 +164,7 @@ end
 
 -- Phase 1
 function mod:NewWave()
-	self:Message(-8292, "Attention", CL["count"]:format((EJ_GetSectionInfo(8292)), waveCounter), nil, 144582) -- XXX the count message is only in for debugging
+	self:Message(-8292, "Attention", CL["count"]:format(self:SpellName(-8292), waveCounter), nil, 144582) -- XXX the count message is only in for debugging
 	waveCounter = waveCounter + 1
 	self:Bar(-8292, waveTimers[waveCounter] or 40, nil, 144582)
 	waveTimer = self:ScheduleTimer("NewWave", waveTimers[waveCounter] or 40)
@@ -256,7 +256,6 @@ do
 	local hopeList = mod:NewTargetList()
 	function mod:YShaarjsProtection(args)
 		if self:MobId(args.destGUID) ~= 71865 then return end
-		self:Message(args.spellId, "Positive", "Long", CL["over"]:format(args.spellName))
 		annihilateCounter = 1
 		local diff = self:Difficulty()
 		for i=1, GetNumGroupMembers() do
@@ -279,6 +278,7 @@ do
 		end
 		-- this is so people know they'll take extra damage
 		self:TargetMessage(args.spellId, hopeList, "Attention", "Warning", 29125, 149004) -- maybe add it's own option key? 29125 spell called "Hopeless"
+		self:Message(args.spellId, "Positive", "Long", CL["over"]:format(args.spellName))
 	end
 end
 
@@ -289,17 +289,20 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		self:CancelTimer(waveTimer)
 		waveTimer = nil
 		self:StopBar(-8292) -- Kor'kron Warbringer aka add waves
+		self:StopBar(-8298) -- Siege Engineer
+		self:StopBar(-8294) -- Farseer
+		-- XXX maybe desecrate stops here too?
 	elseif spellId == 144866 then -- Enter Realm of Y'Shaarj -- actually being pulled
 		self:StopBar(144758) -- Desecrated Weapon
 		self:StopWeaponScan()
-		self:StopBar(145065) -- Mind Control
+		self:StopBar(L["mind_control"]) -- Mind Control
 		self:StopBar(144985) -- Whirling Corruption
 		self:Message(-8305, "Neutral", nil, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 		self:Bar(-8305, 210, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 	elseif spellId == 144956 then -- Jump To Ground -- exiting intermission
 		desecrateCounter = 1
 		self:Bar(144758, 10) -- Desecrated Weapon
-		self:Bar(145065, 15) -- Mind Control
+		self:Bar(145065, 15, L["mind_control"]) -- Mind Control
 		self:Bar(144985, 30) -- Whirling Corruption
 		self:ScheduleTimer("StartWeaponScan", 5)
 		local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
@@ -329,11 +332,16 @@ do
 		if not UnitExists(target) or mod:Tank(target) or UnitDetailedThreatSituation(target, boss) then return end
 
 		local name = mod:UnitName(target)
-		mod:TargetMessage(144758, name, "Urgent", "Alarm")
 		mod:SecondaryIcon(144758, name) -- so we don't use skull as that might be used for marking the healing add
 		if UnitIsUnit("player", target) then
+			mod:TargetMessage(144758, name, "Urgent", "Alarm")
 			mod:Flash(144758)
 			mod:Say(144758)
+		elseif mod:Range(name) < 15 then
+			mod:Flash(144758)
+			mod:RangeMessage(144758, "Urgent", "Alarm")
+		else
+			mod:TargetMessage(144758, name, "Urgent", "Alarm")
 		end
 		mod:StopWeaponScan()
 	end

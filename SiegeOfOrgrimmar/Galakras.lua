@@ -63,7 +63,7 @@ function mod:GetOptions()
 		147328, 146765, 146757, -- Foot Soldiers
 		"towers", "demolisher", 146769, 146849, 147705, -- Ranking Officials
 		"custom_off_shaman_marker",
-		"stages", {147068, "ICON", "FLASH"},-- Galakras
+		"stages", {147068, "ICON", "FLASH", "PROXIMITY"},-- Galakras
 		"bosskill",
 	}, {
 		[147328] = -8421, -- Foot Soldiers
@@ -117,8 +117,8 @@ function mod:OnEngage()
 		self:Bar("towers", 13, L["tower_defender"], 85214) -- random orc icon
 		self:ScheduleTimer(firstTowerAdd, 13)
 	else
-		self:Bar("towers", 120, L["south_tower"], "achievement_bg_winsoa")
-		self:CDBar("towers", 270, L["north_tower"], "achievement_bg_winsoa") -- XXX need to figure out timer
+		self:Bar("towers", 100, L["south_tower"], "achievement_bg_winsoa")
+		self:CDBar("towers", 265, L["north_tower"], "achievement_bg_winsoa") -- XXX need to figure out timer
 	end
 	if self.db.profile.custom_off_shaman_marker then
 		wipe(markableMobs)
@@ -141,13 +141,17 @@ end
 
 function mod:FlamesOfGalakrondRemoved(args)
 	self:PrimaryIcon(args.spellId)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
+	end
 end
 
 function mod:FlamesOfGalakrondApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
+	self:TargetMessage(args.spellId, args.destName, "Important", "Warning")
 	if self:Me(args.destGUID) then
+		self:OpenProximity(args.spellId, 8)
 		self:Flash(args.spellId)
-		self:Message(args.spellId, "Personal", "Warning", CL["you"]:format(args.spellName))
 	end
 end
 
@@ -185,6 +189,7 @@ end
 
 function mod:Towers(msg)
 	local tower = msg:find(L["north_tower_trigger"]) and L["north_tower"] or L["south_tower"] -- this will be kinda bad till every localization is done
+	self:StopBar(tower)
 	self:Message("towers", "Neutral", "Long", tower, "achievement_bg_winsoa")
 	self:Bar("demolisher", 20, L["demolisher"], L["demolisher_icon"])
 

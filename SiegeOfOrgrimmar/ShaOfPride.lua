@@ -18,6 +18,7 @@ mod:RegisterEnableMob(71734)
 local titans, titanCounter = {}, 1
 local auraOfPride, auraOfPrideGroup, auraOfPrideOnMe =  mod:SpellName(146817), {}, nil
 local swellingPrideCounter = 1
+local bigAddTimer = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -99,7 +100,7 @@ function mod:OnEngage()
 	self:Bar(144400, 77, CL["count"]:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
 	self:CDBar(144358, 11) -- Wounded Pride
 	self:Bar(-8262, 60, L["big_add_bar"], 144379) -- signature ability icon
-	self:ScheduleTimer("Message", 55, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
+	bigAddTimer = self:ScheduleTimer("Message", 55, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
 	self:Bar(144800, 25, L["small_adds"])
 	self:Bar(144563, 50) -- Imprison
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
@@ -138,13 +139,12 @@ end
 function mod:Unleashed()
 	self:CancelAllTimers()
 	self:Message(-8349, "Neutral", "Info")
-	self:Bar(146595, 7) -- Titan Gift
 	self:Bar(144400, 77) -- Swelling Pride
-	self:CDBar(144358, 11) -- Wounded Pride
 	self:Bar(-8262, 60, L["big_add_bar"], 144379)
-	self:ScheduleTimer("Message", 55, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
-	self:Bar(144800, 21, L["small_adds"])
-	self:Bar(144563, 50) -- Imprison
+	self:CancelTimer(bigAddTimer)
+	bigAddTimer = self:ScheduleTimer("Message", 55, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
+	self:Bar(144800, 16, L["small_adds"])
+	self:Bar(144563, 42) -- Imprison
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
@@ -221,7 +221,7 @@ do
 	local mindcontrolled = mod:NewTargetList()
 	function mod:SwellingPrideSuccess(args)
 		self:Bar(-8262, 60, L["big_add_bar"], 144379) -- when the add is actually up
-		self:ScheduleTimer("Message", 55, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
+		bigAddTimer = self:ScheduleTimer("Message", 55, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
 		-- lets do some fancy stuff
 		local playerPower = UnitPower("player", 10)
 		if playerPower > 24 and playerPower < 50 then

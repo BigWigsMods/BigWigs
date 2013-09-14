@@ -16,6 +16,7 @@ mod:RegisterEnableMob(71859, 71858) -- Earthbreaker Haromm, Wavebinder Kardris
 --
 
 local marksUsed = {}
+local ashCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -82,6 +83,7 @@ end
 function mod:OnEngage()
 	self:Berserk(600, nil, nil, "Berserk (assumed)") -- XXX Assumed
 	wipe(marksUsed)
+	ashCounter = 1
 end
 
 --------------------------------------------------------------------------------
@@ -183,8 +185,10 @@ end
 -- Wavebinder Kardris
 
 function mod:FallingAsh(args)
-	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 32)
+	-- this is for when the damage happens
+	self:ScheduleTimer("Message", 15, args.spellId, "Attention", self:Healer() and "Info", CL["soon"]:format(CL["count"]:format(args.spellName, ashCounter)))
+	ashCounter = ashCounter + 1
+	self:Bar(args.spellId, 18, CL["count"]:format(args.spellName, ashCounter))
 end
 
 function mod:FoulGeyser(args)

@@ -21,6 +21,7 @@ local markableMobs = {}
 local marksUsed = {}
 local markTimer = nil
 local mineCounter = 1
+local crawlerMine = mod:SpellName(144673)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -125,6 +126,9 @@ do
 	function mod:UPDATE_MOUSEOVER_UNIT()
 		local guid = UnitGUID("mouseover")
 		if guid and markableMobs[guid] == true then
+			setMark("mouseover", guid)
+		elseif guid and self:MobId(guid) == 72050 and not markableMobs[guid] then
+			markableMobs[guid] = true
 			setMark("mouseover", guid)
 		end
 	end
@@ -231,7 +235,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 			self:CDBar(144459, 8)
 		end
 		mineCounter = 1
-		self:Bar(-8183, 30, CL["count"]:format(spellName, mineCounter)) -- Crawler Mine
+		self:Bar(-8183, 30, CL["count"]:format(crawlerMine, mineCounter)) -- Crawler Mine
 		self:CDBar(-8179, 19) -- Borer Drill
 		self:StopBar(144485) -- Shock Pulse
 		self:StopBar(-8179) -- Napalm Oil
@@ -241,7 +245,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		self:Message("stages", "Neutral", "Long", CL["phase"]:format(phase), false)
 		self:Bar("stages", 64, CL["phase"]:format(1), 144464) -- maybe should use UNIT_POWER to adjust timer since there seems to be a 6 sec variance
 		mineCounter = 1
-		self:CDBar(-8183, 18, CL["count"]:format(spellName, mineCounter)) -- Crawler Mine
+		self:CDBar(-8183, 18, CL["count"]:format(crawlerMine, mineCounter)) -- Crawler Mine
 		self:CDBar(-8179, 10) -- Napalm Oil
 		self:Bar(144485 ,18) -- Shock Pulse
 		self:StopBar(144459) -- Laser Burn

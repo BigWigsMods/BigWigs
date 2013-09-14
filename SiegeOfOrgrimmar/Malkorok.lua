@@ -20,7 +20,6 @@ local smashCounter = 1
 local slamCounter = 1
 local breathCounter = 1
 local arcingSmash = mod:SpellName(142826)
-local marksUsed = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -79,11 +78,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	wipe(marksUsed)
 	self:Berserk(360)
-	smashCounter = 1
-	slamCounter = 1
-	breathCounter = 1
+	breathCounter, smashCounter, slamCounter  = 1, 1, 1
 	self:Bar(142826, 12, CL["count"]:format(arcingSmash, 1)) -- Arcing Smash
 	self:Bar(142851, 5) -- Seismic Slam
 	self:OpenProximity(142851, 5)
@@ -102,25 +98,11 @@ do
 			self:CloseProximity(args.spellId)
 		end
 		if self.db.profile.custom_off_energy_marks then
-			for i = 1, 7 do
-				if marksUsed[i] == args.destName then
-					marksUsed[i] = false
-					SetRaidTarget(args.destName, 0)
-				end
-			end
+			SetRaidTarget(args.destName, 0)
 		end
 	end
 
-	local function markEnergy(destName)
-		for i = 1, 7 do
-			if not marksUsed[i] then
-				SetRaidTarget(destName, i)
-				marksUsed[i] = destName
-				return
-			end
-		end
-	end
-	local energyList, scheduled = mod:NewTargetList(), nil
+	local energyList, scheduled, counter, prev = mod:NewTargetList(), nil, 1, 0
 	local function warnDisplacedEnergy(spellId)
 		mod:TargetMessage(spellId, energyList, "Urgent", "Alert")
 		scheduled = nil
@@ -132,10 +114,16 @@ do
 		end
 		energyList[#energyList+1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnDisplacedEnergy, 0.3, args.spellId)
+			scheduled = self:ScheduleTimer(warnDisplacedEnergy, 0.4, args.spellId) -- XXX this might be too slow now maybe just do 0.2 and have two lines of warning?
 		end
 		if self.db.profile.custom_off_energy_marks then
-			markEnergy(args.destName)
+			local t = GetTime()
+			if t-prev > 2 then
+				prev = t
+				counter = 1
+			end
+			SetRaidTarget(args.destName, counter)
+			counter = counter + 1
 		end
 	end
 end
@@ -145,9 +133,10 @@ function mod:DisplacedEnergy(args)
 end
 
 function mod:BloodRage(args)
-	wipe(marksUsed) -- just to be safe
 	self:Message(args.spellId, "Neutral", "Long")
 	self:StopBar(CL["count"]:format(self:SpellName(142842), breathCounter)) -- Breath
+	self:StopBar(CL["count"]:format(self:SpellName(142826), 1)) -- Arcing Smash
+	self:StopBar(142851) -- Seismic Slam
 	self:CloseProximity(142851)
 end
 
@@ -155,7 +144,10 @@ function mod:ExpelMiasma()
 	self:Message(142879, "Neutral", "Long", CL["over"]:format(self:SpellName(142879)))
 	self:OpenProximity(142851, 5)
 	self:StopBar(142913) -- Displaced Energy
-	breathCounter = 1
+	breathCounter, smashCounter, slamCounter  = 1, 1, 1
+	self:Bar(142842, 59, CL["count"]:format(self:SpellName(142842), 1)) -- Breath
+	self:Bar(142826, 17, CL["count"]:format(arcingSmash, 1)) -- Arcing Smash
+	self:Bar(142851, 10) -- Seismic Slam
 end
 
 -- Non rage phase
@@ -171,10 +163,8 @@ function mod:Breath(args)
 	self:Message(args.spellId, "Important", "Warning", CL["count"]:format(args.spellName, breathCounter))
 	breathCounter = breathCounter + 1
 	self:Bar(args.spellId, 59, CL["count"]:format(args.spellName, breathCounter))
-
-	smashCounter = 1
-	slamCounter = 1
-	self:Bar(142826, 7, CL["count"]:format(arcingSmash, 1)) -- Arcing Smash
+	smashCounter, slamCounter = 1, 1
+	self:Bar(142826, 15, CL["count"]:format(arcingSmash, 1)) -- Arcing Smash
 	self:Bar(142851, 5) -- Seismic Slam
 end
 

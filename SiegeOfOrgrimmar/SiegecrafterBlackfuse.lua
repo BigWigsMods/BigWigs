@@ -178,7 +178,7 @@ end
 
 function mod:ShredderEngage()
 	self:Message(-8199, "Attention", self:Tank() and "Long", shredder, "INV_MISC_ARMORKIT_27")
-	self:Bar(-8199, 121, shredder, "INV_MISC_ARMORKIT_27")
+	self:Bar(-8199, 60, shredder, "INV_MISC_ARMORKIT_27")
 	self:Bar(144208, 16)
 end
 

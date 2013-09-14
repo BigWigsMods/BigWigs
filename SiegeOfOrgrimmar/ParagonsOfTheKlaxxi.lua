@@ -110,7 +110,7 @@ function mod:GetOptions()
 		142564, {143974, "TANK_HEALER"}, --Korven the Prime
 		{-8055, "FLASH"}, --Iyyokuk the Lucid
 		"custom_off_edge_marks",
-		143701, 143759, {143735, "FLASH"}, --Ka'roz the Locust
+		143701, 143759, {143735, "FLASH"}, {148650, "FLASH"}, --Ka'roz the Locust
 		{143275, "TANK"}, 143280, --Skeer the Bloodseeker
 		{143279, "TANK"}, 143339, {-8065, "FLASH"}, {148589, "FLASH"}, 143337, --Rik'kal the Dissector
 		"custom_off_mutate_marks",
@@ -230,10 +230,14 @@ do
 			SetRaidTarget(args.destName, 0)
 		end
 	end
+	local prev = 0
 	function mod:Mutate(args)
-																													   -- injection
-		self:Message(args.spellId, "Attention", (self:Healer() or (self:Tank() and UnitDebuff("player", self:SpellName(143339)))) and "Alert", (EJ_GetSectionInfo(8068))) -- this text has "Amber Scorpion" in it's name, so it is more obvious
-		self:Bar(args.spellId, 44)
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t																										   -- injection
+			self:Message(args.spellId, "Attention", (self:Healer() or (self:Tank() and UnitDebuff("player", self:SpellName(143339)))) and "Alert", self:SpellName(-8068)) -- this text has "Amber Scorpion" in it's name, so it is more obvious
+			self:Bar(args.spellId, 44)
+		end
 		if self.db.profile.custom_off_mutate_marks then
 			SetRaidTarget(args.destName, mutateCounter)
 			mutateCounter = mutateCounter + 1
@@ -502,6 +506,10 @@ function mod:ShieldBash(args)
 end
 
 function mod:EncaseInEmber(args)
+	if UnitDebuff("player", self:SpellName(148650)) then
+		-- XXX for pulse, maybe should add a custom option description so people know to turn pulse on for this, or turn it on by default?
+		self:Flash(148650) -- Strong Legs
+	end
 	self:TargetMessage(args.spellId, args.destName, "Important", self:Damager() and "Warning")
 	self:CDBar(args.spellId, self:Heroic() and 30 or 25)
 end
@@ -535,7 +543,7 @@ end
 
 function mod:Catalysts(args)
 	self:Message(-8034, "Neutral", "Alert", args.spellName, args.spellId)
-	self:Bar(-8034, 25, chooseCatalyst)
+	self:CDBar(-8034, 25, chooseCatalyst)
 end
 
 function mod:ToxicInjection(args)
@@ -655,6 +663,8 @@ function mod:MyEngage()
 				if self:Heroic() then
 					self:Bar(143243, 48) -- Rapid Fire
 				end
+			elseif mobId == 71157 then -- Xaril the Poisoned Mind
+				self:Bar(-8034, 21, chooseCatalyst)
 			end
 		end
 	end

@@ -409,7 +409,7 @@ function mod:VengefulStrikes(args)
 end
 
 function mod:Heal(args)
-	self:Bar(args.spellId, 15)
+	self:Bar(args.spellId, 15, ("%s (%s)"):format(args.spellName, args.sourceName)) -- this is too long for a normal bar, but needed so bars don't overwrite each other
 	self:Message(args.spellId, "Positive", "Warning")
 end
 
