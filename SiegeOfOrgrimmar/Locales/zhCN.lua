@@ -126,7 +126,7 @@ if L then
 	L.laser_on_you = ">你< 激光 BIU BIU！"
 	L.laser_say = "激光 BIU BIU！"
 
-	L.assembly_line_trigger = "Unfinished weapons begin to roll out on the assembly line."
+	L.assembly_line_trigger = "未完成的武器从装配流水线上传送出来了。"
 	L.assembly_line_message = "零散的武器 >%d<"
 
 	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!"
