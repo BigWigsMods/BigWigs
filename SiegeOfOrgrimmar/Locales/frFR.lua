@@ -85,12 +85,12 @@ if L then
 	L.berserker = "Berserker"
 	L.defensive = "Défensive"
 
-	L.adds_trigger1 = "Defend the gate!" -- to translate
-	L.adds_trigger2 = "Rally the forces!" -- to translate
-	L.adds_trigger3 = "Next squad, to the front!" -- to translate
-	L.adds_trigger4 = "Warriors, on the double!" -- to translate
-	L.adds_trigger5 = "Kor'kron, at my side!" -- to translate
-	L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW" -- to translate
+	L.adds_trigger1 = "Défendez les portes !" -- to check
+	L.adds_trigger2 = "Ralliez les troupes !" -- to check
+	L.adds_trigger3 = "Escouade suivante, au front !" -- to check
+	L.adds_trigger4 = "Guerriers, au pas de course !" -- to check
+	L.adds_trigger5 = "Kor'krons, avec moi !" -- to check
+	L.adds_trigger_extra_wave = "Tous les Kor'krons sous mon commandement, tuez-les, maintenant !" -- to check
 	L.extra_adds = "Renforts supplémentaires"
 
 	L.chain_heal_message = "Votre focalisation est en train d'incanter Salve de guérison !"
