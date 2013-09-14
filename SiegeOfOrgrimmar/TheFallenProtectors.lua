@@ -26,6 +26,8 @@ local marksUsed = {}
 local darkMeditationTimer
 local intermission = {}
 
+local deathCount = 0
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -109,6 +111,7 @@ function mod:OnEngage()
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3")
 	wipe(intermission)
 	darkMeditationTimer = nil
+	deathCount = 0
 	self:OpenProximity("proximity", 5) -- this might not be needed in LFR
 	self:Berserk(900, nil, nil, "Berserk (assumed)") -- XXX assumed, more than 10 min
 	self:Bar(144396, 7) -- VengefulStrikes
@@ -317,13 +320,15 @@ end
 function mod:CorruptionShock(args)
 	-- in 10 man one cast resulted in 2 bolts, so obviously can only warn for 1 target, since CLEU does not supply target
 	local unit = self:GetUnitIdByGUID(args.sourceGUID)
-	local target
-	if unit then
-		target = unit.."target"
+	if not unit then
+		self:Message(args.spellId, "Personal", "Info")
+		return
 	end
+
 	-- target scanning probably needs improvement
 	-- alternative method could be to just scan with a repeating timer for target on the mob, because he only has a target when the cast on the ability finishes
 	-- XXX this needs testing and verifying again how the mob changes target
+	local target = unit.."target"
 	if UnitExists(target) then
 		if self:Me(UnitGUID(target)) then
 			self:Flash(args.spellId)
@@ -393,14 +398,13 @@ end
 function mod:VengefulStrikes(args)
 	local unit = self:GetUnitIdByGUID(args.sourceGUID)
 	if not unit then return end
-	local target = unit.."target"
+
 	-- only warn for the tank targeted by the mob
-	if UnitExists(target) then
-		if self:Me(UnitGUID(target)) then
-			self:Message(args.spellId, "Urgent", "Alarm")
-			self:Bar(args.spellId, 3, CL["cast"]:format(args.spellName))
-			self:CDBar(args.spellId, 21)
-		end
+	local target = unit.."target"
+	if UnitExists(target) and self:Me(UnitGUID(target)) then
+		self:Message(args.spellId, "Urgent", "Alarm")
+		self:Bar(args.spellId, 3, CL["cast"]:format(args.spellName))
+		self:CDBar(args.spellId, 21)
 	end
 end
 
@@ -427,13 +431,10 @@ function mod:UNIT_HEALTH_FREQUENT(unitId)
 	end
 end
 
-do
-	local deathCount = 0
-	function mod:Deaths()
-		deathCount = deathCount + 1
-		if deathCount > 2 then
-			self:Win()
-		end
+function mod:Deaths()
+	deathCount = deathCount + 1
+	if deathCount > 2 then
+		self:Win()
 	end
 end
 
