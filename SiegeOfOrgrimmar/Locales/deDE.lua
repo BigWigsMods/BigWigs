@@ -107,13 +107,13 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "deDE")
 if L then
+	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
+
 	L.enable_zone = "Artefaktlagerraum"
 	L.matter_scramble_explosion = "Materiewirbel Explosion"
 
 	L.custom_off_mark_brewmaster = "Braumeister markieren"
 	L.custom_off_mark_brewmaster_desc = "Markiert den Geist eines alten Braumeisters mit %s"
-
-	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "deDE")
@@ -126,11 +126,11 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "deDE")
 if L then
-	L.shredder_engage_trigger = "Ein Automatisierter Schredder nähert sich!"
+	L.shredder_engage_trigger = "Ein automatisierter Schredder nähert sich!"
 	L.laser_on_you = "Laser auf Dir PEW PEW!"
 	L.laser_say = "Laser PEW PEW!"
 
-	L.assembly_line_trigger = "Unfertige Waffen befinden sich auf dem Fließband."
+	L.assembly_line_trigger = "Unfertige Waffen werden auf das Fabrikationsband befördert."
 	L.assembly_line_message = "Unfertige Waffen (%d)"
 
 	L.shockwave_missile_trigger = "Ich präsentiere... den wunderschönen Erschütterungsraketenturm ST-03!"
