@@ -43,6 +43,7 @@ plugin.defaultDB = {
 	printKills = true,
 	printWipes = true,
 	printNewBestKill = true,
+	showBar = true,
 }
 
 local function checkDisabled() return not plugin.db.profile.enabled end
@@ -120,6 +121,13 @@ plugin.subPanelOptions = {
 				disabled = checkDisabled,
 				width = "full",
 			},
+			showBar = {
+				type = "toggle",
+				name = L.createTimeBar,
+				order = 7,
+				disabled = checkDisabled,
+				width = "full",
+			},
 		},
 	},
 }
@@ -145,7 +153,7 @@ end
 --
 
 function plugin:BigWigs_OnBossEngage(event, module, diff)
-	if module.encounterId and diff and difficultyTable[diff] and not module.worldBoss then -- Raid restricted for now
+	if module.encounterId and module.zoneId and diff and difficultyTable[diff] and not module.worldBoss then -- Raid restricted for now
 		activeDurations[module.encounterId] = GetTime()
 
 		local sDB = BigWigsStatisticsDB
@@ -153,6 +161,11 @@ function plugin:BigWigs_OnBossEngage(event, module, diff)
 		if not sDB[module.zoneId][module.encounterId] then sDB[module.zoneId][module.encounterId] = {} end
 		sDB = sDB[module.zoneId][module.encounterId]
 		if not sDB[difficultyTable[diff]] then sDB[difficultyTable[diff]] = {} end
+
+		local best = sDB[difficultyTable[diff]].best
+		if self.db.profile.showBar and best then
+			self:SendMessage("BigWigs_StartBar", self, nil, L.bestTimeBar, best, "Interface\\Icons\\spell_holy_borrowedtime")
+		end
 	end
 end
 

@@ -245,4 +245,6 @@ L.printWipeOption = "Tiempo del Wipe"
 L.countKills = "Contar Muertes"
 L.countWipes = "Contar Wipes"
 L.recordBestKills = "Recordar muertes más rápidas"
+--L.createTimeBar = "Show 'Best Time' bar"
+--L.bestTimeBar = "Best Time"
 

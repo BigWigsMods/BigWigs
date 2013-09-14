@@ -250,4 +250,6 @@ L.printWipeOption = "Tempo Tentativo Fallito"
 L.countKills = "Numero Uccisioni"
 L.countWipes = "Numero Tentativi Falliti"
 L.recordBestKills = "Ricorda Miglior Uccisione"
+--L.createTimeBar = "Show 'Best Time' bar"
+--L.bestTimeBar = "Best Time"
 

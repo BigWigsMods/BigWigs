@@ -250,4 +250,6 @@ L.printWipeOption = "Wipe Time"
 L.countKills = "죽임 횟수"
 L.countWipes = "Count Wipes"
 L.recordBestKills = "Remember Best Kills"
+--L.createTimeBar = "Show 'Best Time' bar"
+--L.bestTimeBar = "Best Time"
 

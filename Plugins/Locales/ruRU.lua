@@ -250,4 +250,6 @@ L.printWipeOption = "Время поражения"
 L.countKills = "Количество побед"
 L.countWipes = "Количество поражений"
 L.recordBestKills = "Запоминать лучшее убийство"
+--L.createTimeBar = "Show 'Best Time' bar"
+--L.bestTimeBar = "Best Time"
 
