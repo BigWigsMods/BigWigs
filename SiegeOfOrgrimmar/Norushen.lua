@@ -42,7 +42,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{-8218, "TANK_HEALER"}, 145226, 145132,-- Amalgam of Corruption
+		{-8218, "TANK_HEALER"}, {146124, "TANK"}, 145226, 145132,-- Amalgam of Corruption
 		"big_adds",
 		-8220, 144482, 144514, 144649, 144628,
 		"stages", "pre_pull", "berserk", "bosskill",
@@ -71,6 +71,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Fusion", 145132)
 	self:Log("SPELL_AURA_APPLIED", "BlindHatred", 145226)
 	self:Log("SPELL_CAST_START", "UnleashedAnger", 145216)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "SelfDoubt", 146124)
+	self:Log("SPELL_AURA_APPLIED", "SelfDoubt", 146124)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEDED", nil, "boss1")
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 
@@ -209,5 +211,10 @@ end
 function mod:UnleashedAnger(args)
 	self:Message(-8218, "Attention")
 	self:CDBar(-8218, 10)
+end
+
+function mod:SelfDoubt(args)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
+	self:CDBar(args.spellId, 16)
 end
 
