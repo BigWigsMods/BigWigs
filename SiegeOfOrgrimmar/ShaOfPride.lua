@@ -15,14 +15,9 @@ mod:RegisterEnableMob(71734)
 -- Locals
 --
 
-local UnitPower = UnitPower
-local GetRaidRosterInfo = GetRaidRosterInfo
-
 local titans, titanCounter = {}, 1
 local auraOfPride = mod:SpellName(146817)
 local auraOfPrideGroup = {}
-local alterPride
-local prisoned = mod:NewTargetList()
 local swellingPrideCounter = 1
 
 --------------------------------------------------------------------------------
@@ -101,15 +96,12 @@ function mod:OnEngage()
 	wipe(titans)
 	wipe(auraOfPrideGroup)
 	self:Bar(146595, 7) -- Titan Gift
-	self:Bar(144400, self:Heroic() and 77 or 62, CL["count"]:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
-	if self:Tank() then
-		alterPride = nil
-		self:CDBar(144358, 11) -- Wounded Pride
-	end
-	self:Bar(-8262, self:Heroic() and 60 or 50, L["big_add_bar"], 144379) -- signature ability icon
-	self:ScheduleTimer("Message", self:Heroic() and 55 or 45, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
-	self:Bar(144800, self:Heroic() and 25 or 21, L["small_adds"])
-	self:Bar(144563, self:Heroic() and 50 or 40) -- Imprison
+	self:Bar(144400, 77, CL["count"]:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
+	self:CDBar(144358, 11) -- Wounded Pride
+	self:Bar(-8262, 60, L["big_add_bar"], 144379) -- signature ability icon
+	self:ScheduleTimer("Message", 55, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
+	self:Bar(144800, 25, L["small_adds"])
+	self:Bar(144563, 50) -- Imprison
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	if self:Heroic() then
 		self:Bar(145215, 37) -- Banishment
@@ -147,15 +139,12 @@ function mod:Unleashed()
 	self:CancelAllTimers()
 	self:Message(-8349, "Neutral", "Info")
 	self:Bar(146595, 7) -- Titan Gift
-	self:Bar(144400, self:Heroic() and 77 or 62) -- Swelling Pride
-	if self:Tank() then
-		alterPride = nil
-		self:CDBar(144358, 11) -- Wounded Pride
-	end
-	self:Bar(-8262, self:Heroic() and 60 or 50, L["big_add_bar"], 144379)
-	self:ScheduleTimer("Message", self:Heroic() and 55 or 45, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
+	self:Bar(144400, 77) -- Swelling Pride
+	self:CDBar(144358, 11) -- Wounded Pride
+	self:Bar(-8262, 60, L["big_add_bar"], 144379)
+	self:ScheduleTimer("Message", 55, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
 	self:Bar(144800, 21, L["small_adds"])
-	self:Bar(144563, self:Heroic() and 50 or 40) -- Imprison
+	self:Bar(144563, 50) -- Imprison
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
@@ -167,38 +156,38 @@ function mod:UNIT_HEALTH_FREQUENT(unitId)
 end
 
 do
-	local scheduled
-	local function warnImprison(spellId)
-		mod:TargetMessage(spellId, prisoned, "Neutral")
+
+	local prisoned, scheduled = mod:NewTargetList(), nil
+	local function warnImprison()
+		mod:TargetMessage(144563, prisoned, "Neutral")
 		scheduled = nil
 	end
 	function mod:ImprisonApplied(args)
 		prisoned[#prisoned+1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnImprison, 0.1, 144563)
+			scheduled = self:ScheduleTimer(warnImprison, 0.1)
 		end
 	end
 end
 
 function mod:Imprison(args)
 	self:Message(args.spellId, "Neutral", nil, CL["casting"]:format(args.spellName))
-	self:Bar(args.spellId, self:Heroic() and 79 or 62)
+	self:Bar(args.spellId, 77)
 end
 
 function mod:SelfReflection(args)
 	self:Message(args.spellId, "Important", nil, L["small_adds"])
-	self:Bar(args.spellId, self:Heroic() and 77 or 62, L["small_adds"])
+	self:Bar(args.spellId, 77, L["small_adds"])
 end
 
 function mod:WoundedPride(args)
 	-- mainly warn the guy not getting the debuff
-	local onMe = self:Me(args.destGUID)
-	if not onMe then
+	local notOnMe = not self:Me(args.destGUID)
+	if notOnMe then
 		self:Flash(args.spellId)
 	end
-	self:TargetMessage(args.spellId, args.destName, "Important", onMe and nil or "Warning", nil, nil, true) -- play sound for the other tanks
-	self:CDBar(args.spellId, alterPride and 36 or 25)
-	alterPride = not alterPride
+	self:TargetMessage(args.spellId, args.destName, "Important", notOnMe and "Warning", nil, nil, true) -- play sound for the other tanks
+	self:CDBar(args.spellId, 30)
 end
 
 function mod:MarkOfArrogance(args)
@@ -220,7 +209,7 @@ do
 	function mod:AuraOfPrideRemoved(args)
 		local index = findPlayerInIndexedTable(auraOfPrideGroup, args.destName)
 		if index then
-			table.remove(auraOfPrideGroup, index)
+			tremove(auraOfPrideGroup, index)
 		end
 		if self:Me(args.destGUID) and #auraOfPrideGroup > 0 then
 			self:OpenProximity(args.spellId, 5, auraOfPrideGroup)
@@ -247,8 +236,8 @@ do
 	local prev = 0
 	local mindcontrolled = mod:NewTargetList()
 	function mod:SwellingPrideSuccess(args)
-		self:Bar(-8262, self:Heroic() and 60 or 50, L["big_add_bar"], 144379) -- when the add is actually up
-		self:ScheduleTimer("Message", self:Heroic() and 55 or 45, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
+		self:Bar(-8262, 60, L["big_add_bar"], 144379) -- when the add is actually up
+		self:ScheduleTimer("Message", 55, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
 		-- lets do some fancy stuff
 		local playerPower = UnitPower("player", 10)
 		if playerPower > 24 and playerPower < 50 then
@@ -258,10 +247,9 @@ do
 			self:Flash(-8258, "Achievement_pvp_g_01.png")
 			self:Bar(-8258, 6, L["projection_explosion"])
 		end
-		local unit, power
 		for i=1, GetNumGroupMembers() do
-			unit = GetRaidRosterInfo(i)
-			power = UnitPower(unit, 10)
+			local unit = GetRaidRosterInfo(i)
+			local power = UnitPower(unit, 10)
 			if power > 24 and power < 50 and self:Range(unit) < 5 and (playerPower < 25 or playerPower > 49) then -- someone near have it, but not the "player"
 				local t = GetTime()
 				if t-prev > 2 then -- don't spam
@@ -279,7 +267,7 @@ end
 function mod:SwellingPride(args)
 	self:Message(args.spellId, "Attention", "Info", CL["count"]:format(args.spellName, swellingPrideCounter)) -- play sound so people can use personal CDs
 	swellingPrideCounter = swellingPrideCounter + 1
-	self:Bar(args.spellId, self:Heroic() and 77 or 62, CL["count"]:format(args.spellName, swellingPrideCounter))
+	self:Bar(args.spellId, 77, CL["count"]:format(args.spellName, swellingPrideCounter))
 end
 
 do
