@@ -16,8 +16,7 @@ mod:RegisterEnableMob(71734)
 --
 
 local titans, titanCounter = {}, 1
-local auraOfPride = mod:SpellName(146817)
-local auraOfPrideGroup = {}
+local auraOfPride, auraOfPrideGroup, auraOfPrideOnMe =  mod:SpellName(146817), {}, nil
 local swellingPrideCounter = 1
 
 --------------------------------------------------------------------------------
@@ -58,7 +57,7 @@ function mod:GetOptions()
 	return {
 		145215, 147207,
 		"custom_off_titan_mark",
-		{146595, "PROXIMITY"}, 144400, -8257, {-8258, "FLASH"}, {146817, "FLASH", "PROXIMITY"}, -8270, 144351, {144358, "TANK", "FLASH"}, -8262, 144800, 144563, -8349,
+		{146595, "PROXIMITY"}, 144400, -8257, {-8258, "FLASH"}, {146817, "FLASH", "PROXIMITY"}, -8270, {144351, "DISPEL"}, {144358, "TANK", "FLASH"}, -8262, 144800, 144563, -8349,
 		"berserk", "bosskill",
 	}, {
 		[145215] = "heroic",
@@ -95,6 +94,7 @@ function mod:OnEngage()
 	swellingPrideCounter, titanCounter = 1, 1
 	wipe(titans)
 	wipe(auraOfPrideGroup)
+	auraOfPrideOnMe = nil
 	self:Bar(146595, 7) -- Titan Gift
 	self:Bar(144400, 77, CL["count"]:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
 	self:CDBar(144358, 11) -- Wounded Pride
@@ -120,7 +120,7 @@ function mod:WeakenedResolveOver(args)
 end
 
 do
-	local scheduled, banishmentList = nil, mod:NewTargetList()
+	local banishmentList, scheduled = mod:NewTargetList(), nil
 	local function warnBanishment(spellId)
 		mod:Bar(spellId, 77)
 		mod:TargetMessage(spellId, banishmentList, "Attention")
@@ -150,13 +150,12 @@ end
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 33 then -- 30%
-		self:Message(-8349, "Neutral", "Info", CL["soon"]:format(EJ_GetSectionInfo(8349)))
+		self:Message(-8349, "Neutral", "Info", CL["soon"]:format(self:SpellName(-8349)))
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end
 
 do
-
 	local prisoned, scheduled = mod:NewTargetList(), nil
 	local function warnImprison()
 		mod:TargetMessage(144563, prisoned, "Neutral")
@@ -191,43 +190,28 @@ function mod:WoundedPride(args)
 end
 
 function mod:MarkOfArrogance(args)
-	if self:Dispeller("magic") then
+	if self:Dispeller("magic", nil, args.spellId) then
 		self:Message(args.spellId, "Important", "Alarm")
 		self:Bar(args.spellId, 20)
 	end
 end
 
-do
-	local function findPlayerInIndexedTable(t, player)
-		for k, name in next, t do
-			if name == player then
-				return k
-			end
-		end
-		return false
-	end
-	function mod:AuraOfPrideRemoved(args)
-		local index = findPlayerInIndexedTable(auraOfPrideGroup, args.destName)
-		if index then
-			tremove(auraOfPrideGroup, index)
-		end
-		if self:Me(args.destGUID) and #auraOfPrideGroup > 0 then
-			self:OpenProximity(args.spellId, 5, auraOfPrideGroup)
-		elseif not self:Me(args.destGUID) and #auraOfPrideGroup > 0 then
-			self:OpenProximity(args.spellId, 5, auraOfPrideGroup)
-		elseif #auraOfPrideGroup == 0 then
-			self:CloseProximity(args.spellId)
-		end
-	end
+function mod:AuraOfPrideRemoved(args)
+	self:CloseProximity(args.spellId)
+	wipe(auraOfPrideGroup)
+	auraOfPrideOnMe = nil
 end
 
 function mod:AuraOfPrideApplied(args)
 	if self:Me(args.destGUID) then
-		self:Flash(args.spellId)
 		self:Message(args.spellId, "Personal", "Alert", CL["you"]:format(args.spellName))
+		self:Flash(args.spellId)
 		self:OpenProximity(args.spellId, 5)
+		auraOfPrideOnMe = true
 	else
 		auraOfPrideGroup[#auraOfPrideGroup+1] = args.destName
+	end
+	if not auraOfPrideOnMe then
 		self:OpenProximity(args.spellId, 5, auraOfPrideGroup)
 	end
 end
