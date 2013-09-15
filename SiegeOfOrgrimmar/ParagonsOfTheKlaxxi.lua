@@ -183,7 +183,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Mutate", 143337)
 	self:Log("SPELL_AURA_REMOVED", "MutateRemoved", 143337)
 	--Hisek the Swarmkeeper
-	self:Log("SPELL_CAST_SUCCESS", "Aim", 144759, 142948)
+	self:Log("SPELL_AURA_APPLIED", "Aim", 142948)
 	self:Log("SPELL_CAST_START", "RapidFire", 143243)
 
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4")
