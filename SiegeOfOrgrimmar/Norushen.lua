@@ -156,7 +156,7 @@ function mod:UNIT_SPELLCAST_SUCCEDED(unitId, spellName, _, _, spellId)
 	if spellId == 146179 then -- Frayed -- p2 trigger
 		phase = 2
 		self:Message("stages", "Neutral", "Warning", CL["phase"]:format(phase), 146179)
-	elseif spellId == 145007 then -- Unleash Corruption -- spawns adds in p2
+	elseif spellId == 145769 then -- Unleash Corruption -- spawns adds in p2
 		-- don't think this needs sync
 		bigAddCounter = bigAddCounter + 1
 		self:Message("big_adds", "Urgent", nil, L["big_add"]:format(bigAddCounter), 147082)
