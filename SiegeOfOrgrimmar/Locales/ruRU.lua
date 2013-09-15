@@ -19,6 +19,10 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "ruRU")
 if L then
+	L.pre_pull = "Подготовка"
+	L.pre_pull_desc = "Полоса отсчета до нападения босса."
+	L.pre_pull_trigger = "Хорошо, я создам поле для удержания порчи."
+
 	L.big_adds = "Большие помощники"
 	L.big_adds_desc = "Предупреждать об убийстве больших помощников снаружи/внутри."
 	L.big_add = "Большой помощник! (%d)"
