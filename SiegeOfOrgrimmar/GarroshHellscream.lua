@@ -1,6 +1,6 @@
 --[[
 TODO:
-	-- fix p2 desecrated weapon timer
+	maybe mark hopeless people, need some healer feedback on it
 ]]--
 
 --------------------------------------------------------------------------------
@@ -20,6 +20,7 @@ local annihilateCounter
 local markableMobs = {}
 local marksUsed = {}
 local markTimer = nil
+local mcCounter = 1
 local farseerCounter = 1
 local engineerCounter = 1
 local desecrateCD = 41
@@ -94,6 +95,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
 
 	-- phase 2
+	self:Log("SPELL_CAST_SUCCESS", "MindControl", 145065, 145171)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GrippingDispair", 145183)
 	self:Log("SPELL_AURA_APPLIED", "GrippingDispair", 145183)
 	self:Log("SPELL_CAST_START", "WhirlingCorruption", 144985, 145037)
@@ -106,7 +108,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ChainHeal", 144583)
 	self:Yell("Farseer", L["farseer_trigger"])
 	self:Emote("SiegeEngineer", "144616")
-	self:Log("SPELL_CAST_SUCCESS", "DesecratedWeapon", 144748) -- XXX need empowered spellId
+	self:Log("SPELL_CAST_SUCCESS", "DesecratedWeapon", 144748, 144749)
 	self:Death("Win", 71865)
 end
 
@@ -114,11 +116,6 @@ function mod:OnEngage(diff)
 	waveCounter = 1
 	waveTimer = self:ScheduleTimer("NewWave", waveTimers[waveCounter])
 	self:Bar(-8292, waveTimers[waveCounter], nil, 144582)
-	if diff == 3 or diff == 5 then -- 10 man
-		self:Log("SPELL_CAST_START", "MindControl", 145065, 145171) -- no longer there on 25N PTR XXX double check if it is there on 10 man on live
-	else
-		self:Log("SPELL_CAST_SUCCESS", "MindControl", 145065, 145171)
-	end
 	self:Berserk(900, nil, nil, "Berserk (assumed)") -- XXX assumed
 	annihilateCounter = 1
 	self:Bar(144758, 60) -- DesecratedWeapon
@@ -159,7 +156,12 @@ end
 
 function mod:MindControl(args)
 	self:Message(145065, "Urgent", "Alert", CL["casting"]:format(L["mind_control"]))
-	self:Bar(145065, 45, L["mind_control"])
+	if phase == 3 then
+		self:Bar(145065, (mcCounter == 1) and 35 or 42, L["mind_control"])
+		mcCounter = mcCounter + 1 -- XXX might need more data
+	else
+		self:Bar(145065, 45, L["mind_control"])
+	end
 end
 
 -- Phase 1
@@ -309,6 +311,16 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		if hp < 50 then -- XXX might need adjusting
 			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3") -- don't really need this till 2nd intermission phase
 		end
+	elseif spellId == 145647 then -- Realm of Y'Shaarj -- phase 3
+		phase = 3
+		mcCounter = 1
+		desecrateCounter = 1
+		self:Message("stages", "Neutral", nil, CL["phase"]:format(phase), false)
+		self:StopBar(L["intermission"])
+		self:StopBar(144985) -- stop Whirling Corruption bar in case it was not empowered already
+		self:Bar(144985, 48, 145037) -- Empowered Whirling Corruption
+		self:Bar(145065, 29, L["mind_control"]) -- Mind Control
+		self:Bar(144758, 21) -- Desecrated Weapon
 	end
 end
 
@@ -356,16 +368,22 @@ do
 	end
 	local phase2DesecreteCDs = {36, 45, 36}
 	function mod:DesecratedWeapon(args)
-		if phase ~= 1 then
+		if phase == 2 then
 			local diff = self:Difficulty()
 			if diff == 3 or diff == 5 then -- 10 man
-				-- XXX these need verifiaction for when they go live
 				desecrateCD = phase2DesecreteCDs[desecrateCounter] or 45
 			else
-				desecrateCD = 35 -- although 40 sec has been seen on 25N PTR too
+				desecrateCD = 35
+			end
+		elseif phase == 3 then
+			local diff = self:Difficulty()
+			if diff == 3 or diff == 5 then -- 10 man
+				desecrateCD = (desecrateCounter == 1) and 30 or 25
+			else
+				desecrateCD = (desecrateCounter == 1) and 35 or 25
 			end
 		end
-		self:CDBar(args.spellId, desecrateCD)
+		self:CDBar(144758, desecrateCD)
 		desecrateCounter = desecrateCounter + 1
 		self:ScheduleTimer("StopWeaponScan", 2) -- delay it a bit just to be safe
 		self:ScheduleTimer("StartWeaponScan", desecrateCD-7)
