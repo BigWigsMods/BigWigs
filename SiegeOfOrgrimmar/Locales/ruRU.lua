@@ -103,13 +103,13 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "ruRU")
 if L then
+	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
+
 	L.enable_zone = "Хранилище артефактов"
 	L.matter_scramble_explosion = "Взрыв материи"
 
 	L.custom_off_mark_brewmaster = "Маркировка Хмелевара"
 	L.custom_off_mark_brewmaster_desc = "Дух древнего хмелевара будет помечен меткой %s"
-
-	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "ruRU")

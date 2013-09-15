@@ -250,6 +250,6 @@ L.printWipeOption = "團滅時間"
 L.countKills = "擊殺次數"
 L.countWipes = "團滅次數"
 L.recordBestKills = "記憶最快擊殺"
---L.createTimeBar = "Show 'Best Time' bar"
---L.bestTimeBar = "Best Time"
+L.createTimeBar = "顯示“最快擊殺”計時條"
+L.bestTimeBar = "最快時間"
 

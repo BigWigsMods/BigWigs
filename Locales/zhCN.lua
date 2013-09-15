@@ -79,7 +79,7 @@ L.chatMessagesDesc = "除了显示设置，输出所有 Big Wigs 信息到默认
 L.autoRole = "自动更新职责"
 L.autoRoleDesc = "明确所担任的职责 Big Wigs 将为团队其他队友优化警报，此选项将使 Big Wigs 自动更新你的职责。比如，一些模块将检查玩家是坦克时首领并不会对坦克所施放的技能。\n\n|cffff4411这是与特定的职责不相关的警报并强烈建议开启此选项！|r"
 L.zoneMessages = "显示区域信息"
-L.zoneMessagesDesc = "禁用此项 Big Wigs 在进入新区域时将停止显示信息。建议不要关闭此选项，因为可能在进入新的区域时需要创建新的计时器，这是非常有帮助的。"
+L.zoneMessagesDesc = "禁用此项 Big Wigs 在进入新区域时将停止显示已有计时器。建议不要关闭此选项，因为可能在进入新的区域时需要创建新的计时器，这是非常有帮助的。"
 
 L.slashDescTitle = "|cFFFED000命令行：|r"
 L.slashDescPull = "|cFFFED000/pull:|r 发送拉怪倒数提示到团队。"

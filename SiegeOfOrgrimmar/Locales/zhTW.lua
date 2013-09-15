@@ -40,6 +40,8 @@ if L then
 	L.big_add_bar = "Big add"
 	L.big_add_spawning = "Big add spawning!"
 	L.small_adds = "Small adds"
+
+	L.titan_pride = "Titan+Pride : %s"
 end
 
 L = BigWigs:NewBossLocale("Galakras", "zhTW")
@@ -105,13 +107,13 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "zhTW")
 if L then
+	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
+
 	L.enable_zone = "Artifact Storage"
 	L.matter_scramble_explosion = "Matter Scramble explosion" -- shorten maybe?
 
 	L.custom_off_mark_brewmaster = "Brewmaster marker"
 	L.custom_off_mark_brewmaster_desc = "Mark the Ancient Brewmaster Spirit with %s"
-
-	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "zhTW")

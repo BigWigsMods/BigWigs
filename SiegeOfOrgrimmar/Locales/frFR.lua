@@ -27,8 +27,6 @@ if L then
 	L.big_adds_desc = "Warning for killing big adds inside/outside"
 	L.big_add = "Manifestation de la corruption ! (%d)"
 	L.big_add_killed = "Manifestation de la corruption tuée ! (%d)"
-
-	L.titan_pride = "Titan+Pride : %s"
 end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "frFR")
@@ -42,6 +40,8 @@ if L then
 	L.big_add_bar = "Manifestation de l'orgueil"
 	L.big_add_spawning = "Apparition d'une Manifestation de l'orgueil !"
 	L.small_adds = "Reflets d'orgueil"
+
+	L.titan_pride = "Titan+Pride : %s"
 end
 
 L = BigWigs:NewBossLocale("Galakras", "frFR")
@@ -108,13 +108,13 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "frFR")
 if L then
+	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
+
 	L.enable_zone = "Entrepôt de l'Artéfact" -- to check
 	L.matter_scramble_explosion = "Explosion Brouillage de la matière" -- shorten maybe?
 
 	L.custom_off_mark_brewmaster = "Marquage Maître brasseur"
 	L.custom_off_mark_brewmaster_desc = "Marque l'Esprit d'ancien maître brasseur avec %s."
-
-	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "frFR")

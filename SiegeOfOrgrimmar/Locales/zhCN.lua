@@ -32,7 +32,7 @@ end
 L = BigWigs:NewBossLocale("Sha of Pride", "zhCN")
 if L then
 	L.custom_off_titan_mark = "泰坦之赐标记"
-	L.custom_off_titan_mark_desc = "帮助提示泰坦之赐，给受到泰坦之赐的玩家使用 %s%s%s%s%s%s%s%s 进行标记（受到傲气之环的玩家和坦克不会被标记），需要权限。"
+	L.custom_off_titan_mark_desc = "帮助提示泰坦之赐，给受到泰坦之赐的玩家使用 %s%s%s%s%s%s%s%s 进行标记（受到傲气之环的玩家和坦克不会被标记），但他们仍然在近距离窗口（还不能反转近距离）。需要权限。"
 
 	L.projection_message = "快到|cFF00FF00绿|r箭头！"
 	L.projection_explosion = "投影爆炸"
@@ -40,6 +40,8 @@ if L then
 	L.big_add_bar = "傲慢具象"
 	L.big_add_spawning = "傲慢具象出现！"
 	L.small_adds = "本我具象"
+
+	L.titan_pride = "泰坦+傲：%s"
 end
 
 L = BigWigs:NewBossLocale("Galakras", "zhCN")
@@ -75,7 +77,7 @@ end
 L = BigWigs:NewBossLocale("General Nazgrim", "zhCN")
 if L then
 	L.custom_off_bonecracker_marks = "碎骨重锤"
-	L.custom_off_bonecracker_marks_desc = "帮助治疗分配，给受到碎骨重锤的玩家使用  %s%s%s%s%s%s 进行标记（按照这个顺序）（不是所有标记会被用到），需要权限。"
+	L.custom_off_bonecracker_marks_desc = "帮助治疗分配，给受到碎骨重锤的玩家使用 %s%s%s%s%s%s 进行标记（按照这个顺序）（不是所有标记会被用到），需要权限。"
 
 	L.stance_bar = "%s（现在：%s）"
 	L.battle = "战斗"
@@ -99,19 +101,19 @@ end
 
 L = BigWigs:NewBossLocale("Malkorok", "zhCN")
 if L then
-	L.custom_off_energy_marks = "散逸能量"
+	L.custom_off_energy_marks = "散逸能量标记"
 	L.custom_off_energy_marks_desc = "帮助驱散分配，给受到散逸能量的玩家使用 %s%s%s%s%s%s%s 进行标记（按照这个顺序）（不是所有标记会被用到），需要权限。"
 end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "zhCN")
 if L then
+	L.win_trigger = "系统重置中。请勿关闭电源，否则将发生爆炸。"
+
 	L.enable_zone = "遗物仓库"
 	L.matter_scramble_explosion = "斗转乾坤爆炸" -- shorten maybe?
 
 	L.custom_off_mark_brewmaster = "酒仙标记"
 	L.custom_off_mark_brewmaster_desc = "使用 %s 标记上古酒仙之灵。"
-
-	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "zhCN")
@@ -158,7 +160,7 @@ if L then
 	L.chain_heal_message = "你的焦点目标正在施放先祖治疗链！"
 	L.chain_heal_bar = "焦点：先祖治疗链"
 
-	L.farseer_trigger = "Farseers, mend our wounds!"
+	L.farseer_trigger = "先知们，为我们治疗！"
 	L.custom_off_shaman_marker = "先知标记"
 	L.custom_off_shaman_marker_desc = "帮助打断分配，使用 %s%s%s%s%s%s%s 标记先知狼骑（按照这个顺序）（不是所有标记会被用到），需要权限。"
 
