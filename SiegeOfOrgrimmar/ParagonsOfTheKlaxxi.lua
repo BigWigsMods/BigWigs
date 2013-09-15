@@ -215,7 +215,7 @@ end
 function mod:Aim(args)
 	self:CDBar(-8073, 42)
 	self:SecondaryIcon(-8073, args.destName)
-	self:TargetMessage(-8073, "Important", "Warning", nil, nil, true)
+	self:TargetMessage(-8073, args.destName, "Important", "Warning", nil, nil, true)
 	self:TargetBar(-8073, 5, args.destName)
 end
 --Rik'kal the Dissector
