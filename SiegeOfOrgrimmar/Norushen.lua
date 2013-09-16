@@ -86,7 +86,7 @@ end
 function mod:OnEngage()
 	bigAddCounter = 0
 	phase = 1
-	self:Berserk(420)
+	self:Berserk(418)
 	self:Bar(145226, 25) -- Blind Hatred
 end
 
@@ -129,17 +129,27 @@ end
 
 do
 	local scheduled, lookWithinList = nil, mod:NewTargetList()
-	local function warnLookWithinRmoved()
+	local function warnLookWithinRemoved()
 		mod:TargetMessage(-8220, lookWithinList, "Neutral", nil, CL["over"]:format(EJ_GetSectionInfo(8220)))
 		scheduled = nil
 	end
 	function mod:LookWithinRemoved(args)
 		lookWithinList[#lookWithinList+1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnLookWithinRmoved, 1) -- we care about people coming out, not so much going in
+			scheduled = self:ScheduleTimer(warnLookWithinRemoved, 1) -- we care about people coming out, not so much going in
 		end
-		self:StopBar(-8220) -- personal bar
 		self:StopBar(-8220, args.destName) -- other tank bar
+
+		if self:Me(args.destGUID) then
+			self:StopBar(-8220) -- personal bar
+			-- tank
+			self:StopBar(144628) -- Titanic Smash
+			self:StopBar(144649) -- Hurl Corruption
+			-- healer
+			self:StopBar(144514) -- Lingering Corruption
+			-- dps
+			self:StopBar(144482) -- Tear Reality
+		end
 	end
 end
 
