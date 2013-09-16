@@ -57,7 +57,7 @@ if L then
 	L.tower_defender = "DIfensore Torre"
 
 	L.custom_off_shaman_marker = "Marcatore Sciamano"
-	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni. evidenzia lo Sciamano delle Maree delle Fauci di Drago con %s%s%s%s%s%s%s (in questo ordine)(non tutti i simboli possono essere usati), richiede capo incursione o assistente."
+	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni, evidenzia lo Sciamano delle Maree delle Fauci di Drago con %s%s%s%s%s%s%s (in questo ordine)(non tutti i simboli possono essere usati), richiede capo incursione o assistente."
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "itIT")
@@ -96,7 +96,7 @@ if L then
 
 	L.arcane_shock_message = "Il tuo focus sta lanciando Folgore Arcana!"
 
-	L.focus_only = "|cffff0000Avvisi solo dei bersagli focus.|r "
+	L.focus_only = "|cffff0000Avvisi solo dei bersagli focus.|r " 
 end
 
 L = BigWigs:NewBossLocale("Malkorok", "itIT")

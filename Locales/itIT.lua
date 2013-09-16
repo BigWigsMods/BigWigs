@@ -76,8 +76,8 @@ L.chatMessages = "Messaggi Riquadro Chat"
 L.chatMessagesDesc = "Invia tutti i messaggi di Big Wigs alla chat oltre che nei settaggi di visualizzazione."
 L.autoRole = "Aggiornamento automatico del ruolo"
 L.autoRoleDesc = "Sapere quale è il tuo ruolo migliorerà i suggerimenti di Big Wigs per tutti i membri dell'incursione; questa opzione permette a Big Wigs di aggiornare automaticamente il tuo ruolo. Per esempio, alcuni moduli controllano se il giocatore è un difensore quando controllano le abilità del boss che non possono affliggere i difensori.\n\n|cffff4411Questo non è limitato soltanot agli avvisi specifici di ruolo ed è caldamente consigliato lasciare questa opzione abilitata!|r"
---L.zoneMessages = "Show zone messages"
---L.zoneMessagesDesc = "Disabling this will stop showing messages when you enter a zone that Big Wigs has timers for, but you don't have installed. We recommend you leave this turned on as it's the only notification you will get if we suddenly create timers for a new zone that you find useful."
+L.zoneMessages = "Mostra messaggi di zona
+L.zoneMessagesDesc = "Disabilitando questa opzione BigWigs non mostrerà più i messaggi per avvisare che esistono moduli con timer/barre ecc. disponibili ma che tu non hai installato. Raccomandiamo di lasciare attiva questa opzione perché è una notifica che vedrai solo quando verranno creati timer e quant'altro per una nuova zona che potresti trovare utile."
 
 L.slashDescTitle = "|cFFFED000Comandi Slash:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Invia un conto alla rovescia per l'ingaggio alla tua incursione."
