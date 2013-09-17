@@ -11,7 +11,11 @@ TODO:
 
 local mod, CL = BigWigs:NewBoss("Galakras", 953, 868)
 if not mod then return end
-mod:RegisterEnableMob(72249, 72560, 72311) -- Galakras, Lor'themar Theron (Horde), King Varian Wrynn (Alliance)
+mod:RegisterEnableMob(
+	72249, -- Galakras
+	72560, 72561, 73909, -- Horde: Lor'themar Theron, Lady Sylvanas Windrunner, Archmage Aethas Sunreaver
+	72311, 72302, 73910 -- Alliance: King Varian Wrynn, Lady Jaina Proudmoore, Vereesa Windrunner
+)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -29,16 +33,20 @@ local markTimer = nil
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.demolisher = "Demolisher"
-	L.demolisher_desc = "Timers for when the Kor'kron Demolishers enter the fight"
+	L.demolisher_desc = "Timers for when the Kor'kron Demolishers enter the fight."
 	L.demolisher_icon = 125914
+
 	L.towers = "Towers"
-	L.towers_desc = "Warnings for when the towers get breached"
+	L.towers_desc = "Warnings for when the towers are breached."
 	L.towers_icon = "achievement_bg_winsoa"
 	L.south_tower_trigger = "The door barring the South Tower has been breached!"
 	L.south_tower = "South tower"
 	L.north_tower_trigger = "The door barring the North Tower has been breached!"
 	L.north_tower = "North tower"
 	L.tower_defender = "Tower defender"
+
+	L.drakes, L.drakes_desc = EJ_GetSectionInfo(8586)
+	L.drakes_icon = "ability_mount_drake_proto"
 
 	L.custom_off_shaman_marker = "Shaman marker"
 	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
@@ -60,8 +68,8 @@ L.custom_off_shaman_marker_desc = L.custom_off_shaman_marker_desc:format(
 
 function mod:GetOptions()
 	return {
-		147328, 146765, 146757, -- Foot Soldiers
-		"towers", "demolisher", 146769, 146849, 147705, -- Ranking Officials
+		147328, 146765, 146757, 146899, 146753, -- Foot Soldiers
+		"towers", "drakes", "demolisher", 146769, 146849, 147705, -- Ranking Officials
 		"custom_off_shaman_marker",
 		"stages", {147068, "ICON", "FLASH", "PROXIMITY"},-- Galakras
 		"bosskill",
@@ -80,10 +88,12 @@ function mod:OnBossEnable()
 	-- Foot Soldiers
 	self:Log("SPELL_CAST_START", "AddMarkedMob", 148520, 149187, 148522) -- Tidal Wave
 	self:Log("SPELL_CAST_START", "ChainHeal", 146757, 146728)
+	self:Log("SPELL_CAST_SUCCESS", "HealingTotem", 146753)
 	self:Log("SPELL_PERIODIC_DAMAGE", "FlameArrows", 146765)
 	self:Log("SPELL_DAMAGE", "FlameArrows", 146764)
 	self:Log("SPELL_AURA_APPLIED", "FlameArrows", 146765)
 	self:Log("SPELL_AURA_APPLIED", "Warbanner", 147328)
+	self:Log("SPELL_AURA_APPLIED", "Fracture", 146899)
 	-- Ranking Officials
 	self:Log("SPELL_PERIODIC_DAMAGE", "PoisonCloud", 147705)
 	self:Log("SPELL_AURA_APPLIED", "PoisonCloud", 147705)
@@ -97,7 +107,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FlamesOfGalakrondRemoved", 147068)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "LastPhase", "boss1")
 
-	self:Death("Deaths", 72249, 72367) -- Galakras, Dragonmaw Tidal Shaman
+	self:Death("Deaths", 72367) -- Dragonmaw Tidal Shaman
+	self:Death("Win", 72249) -- Galakras
 end
 
 local function warnTowerAdds()
@@ -117,9 +128,9 @@ function mod:OnEngage()
 		self:Bar("towers", 13, L["tower_defender"], 85214) -- random orc icon
 		self:ScheduleTimer(firstTowerAdd, 13)
 	else
-		self:Bar("towers", 100, L["south_tower"], "achievement_bg_winsoa")
-		self:CDBar("towers", 265, L["north_tower"], "achievement_bg_winsoa") -- XXX need to figure out timer
+		self:Bar("towers", 116, L["south_tower"], "achievement_bg_winsoa")
 	end
+	self:Bar("drakes", 172, L["drakes"], "ability_mount_drake_proto")
 	if self.db.profile.custom_off_shaman_marker then
 		wipe(markableMobs)
 		wipe(marksUsed)
@@ -134,8 +145,10 @@ end
 
 --Galakras
 function mod:FlamesOfGalakrondStacking(args)
-	if args.amount > 3 and self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+	if args.amount > 3 then
+		if self:Me(args.destGUID) or (self:Tank() and self:Tank(args.destName)) then
+			self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+		end
 	end
 end
 
@@ -192,6 +205,9 @@ function mod:Towers(msg)
 	self:StopBar(tower)
 	self:Message("towers", "Neutral", "Long", tower, "achievement_bg_winsoa")
 	self:Bar("demolisher", 20, L["demolisher"], L["demolisher_icon"])
+	if tower == L["south_tower"] then
+		self:Bar("towers", 150, L["north_tower"], "achievement_bg_winsoa") -- XXX verify
+	end
 
 	if self:Heroic() then
 		-- timer needs double checking
@@ -202,10 +218,14 @@ end
 
 -- Foot Soldiers
 function mod:ChainHeal(args)
-	self:Message(args.spellId, "Important")
+	self:Message(args.spellId, "Important", "Warning")
 	if self.db.profile.custom_off_shaman_marker then
 		mod:AddMarkedMob(args)
 	end
+end
+
+function mod:HealingTotem(args)
+	self:Message(args.spellId, "Urgent", "Warning")
 end
 
 do
@@ -224,10 +244,12 @@ function mod:Warbanner(args)
 	self:Message(args.spellId, "Urgent")
 end
 
+function mod:Fracture(args)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert", nil, nil, true)
+end
+
 function mod:Deaths(args)
-	if args.mobId == 72249 then
-		self:Win()
-	elseif args.mobId == 72367 and self.db.profile.custom_off_shaman_marker then
+	if args.mobId == 72367 and self.db.profile.custom_off_shaman_marker then
 		for i = 1, 7 do
 			if not marksUsed[i] then
 				marksUsed[i] = nil

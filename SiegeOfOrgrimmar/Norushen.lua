@@ -164,7 +164,7 @@ function mod:LookWithinApplied(args)
 	end
 end
 
-function mod:Phase2(args)
+function mod:Phase2()
 	self:Sync("Phase2")
 end
 
