@@ -1,7 +1,7 @@
-﻿local L = BigWigs:NewBossLocale("Immerseus", "zhCN")
+local L = BigWigs:NewBossLocale("Immerseus", "zhCN")
 if not L then return end
 if L then
-	L.win_yell = "Ah, you have done it!"
+	L.win_yell = "啊，你成功了。泉水再一次变得纯净了！"
 end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "zhCN")
@@ -21,7 +21,7 @@ L = BigWigs:NewBossLocale("Norushen", "zhCN")
 if L then
 	L.pre_pull = "准备开战"
 	L.pre_pull_desc = "准备与首领开始战斗前的计时条。"
-	L.pre_pull_trigger = "Very well, I will create a field to keep your corruption quarantined."
+	L.pre_pull_trigger = "很好，我会制造一个空间来隔离你们的腐蚀。"
 
 	L.big_adds = "大型腐化物"
 	L.big_adds_desc = "当在内心或现实杀死大型腐化物时发出警报。"
@@ -50,9 +50,9 @@ if L then
 	L.demolisher_desc = "库卡隆投石车进入战斗计时条。"
 	L.towers = "塔楼"
 	L.towers_desc = "当塔楼被突破时发出警报。"
-	L.south_tower_trigger = "The door barring the South Tower has been breached!"
+	L.south_tower_trigger = "南塔楼的大门被攻破了！"
 	L.south_tower = "南塔楼"
-	L.north_tower_trigger = "The door barring the North Tower has been breached!"
+	L.north_tower_trigger = "北塔楼的大门被攻破了！"
 	L.north_tower = "北塔楼"
 	L.tower_defender = "塔楼防御者"
 
@@ -84,11 +84,11 @@ if L then
 	L.berserker = "狂暴"
 	L.defensive = "防御"
 
-	L.adds_trigger1 = "Defend the gate!"
+	L.adds_trigger1 = "守住大门！"
 	L.adds_trigger2 = "Rally the forces!"
-	L.adds_trigger3 = "Next squad, to the front!"
-	L.adds_trigger4 = "Warriors, on the double!"
-	L.adds_trigger5 = "Kor'kron, at my side!"
+	L.adds_trigger3 = "下一队，冲上去！"
+	L.adds_trigger4 = "战士们，快过来！"
+	L.adds_trigger5 = "库卡隆，支援我！"
 	L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW"
 	L.extra_adds = "额外增援部队"
 
@@ -126,7 +126,7 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "zhCN")
 if L then
-	L.shredder_engage_trigger = "An Automated Shredder draws near!"
+	L.shredder_engage_trigger = "一台自动伐木机正在靠近！"
 	L.laser_on_you = ">你< 激光 BIU BIU！"
 	L.laser_say = "激光 BIU BIU！"
 
