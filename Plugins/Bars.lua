@@ -855,7 +855,6 @@ local function updateProfile()
 		if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 		plugin:SetBarStyle(db.barStyle)
 		if BigWigs.db.profile.customDBMbars then
-			RegisterAddonMessagePrefix("D4")
 			plugin:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
 		end
 	end

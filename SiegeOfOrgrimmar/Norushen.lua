@@ -16,7 +16,6 @@ mod:RegisterEnableMob(72276, 71977, 71976, 71967) -- Amalgam of Corruption, Mani
 --
 
 local bigAddCounter = 0
-local phase = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -64,8 +63,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "HurlCorruption", 144649)
 	self:Log("SPELL_CAST_SUCCESS", "LingeringCorruption", 144514)
 	self:Log("SPELL_CAST_START", "TearReality", 144482)
-	self:Log("SPELL_AURA_REMOVED", "LookWithinRemoved", 144849, 144850, 144851) -- Test of Serenity (DPS), Test of Reliance (HEALER), Test of Confiidence (TANK)
-	self:Log("SPELL_AURA_APPLIED", "LookWithinApplied", 144849, 144850, 144851) -- Test of Serenity (DPS), Test of Reliance (HEALER), Test of Confiidence (TANK)
+	self:Log("SPELL_AURA_REMOVED", "LookWithinRemoved", 144849, 144850, 144851) -- Test of Serenity (DPS), Test of Reliance (HEALER), Test of Confidence (TANK)
+	self:Log("SPELL_AURA_APPLIED", "LookWithinApplied", 144849, 144850, 144851) -- Test of Serenity (DPS), Test of Reliance (HEALER), Test of Confidence (TANK)
 	-- Amalgam of Corruption
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Fusion", 145132)
 	self:Log("SPELL_AURA_APPLIED", "Fusion", 145132)
@@ -73,19 +72,23 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "UnleashedAnger", 145216)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SelfDoubt", 146124)
 	self:Log("SPELL_AURA_APPLIED", "SelfDoubt", 146124)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEDED", nil, "boss1")
+	self:Log("SPELL_CAST_SUCCESS", "UnleashCorruption", 145769) -- Spawns big adds in phase 2
+	self:Log("SPELL_AURA_APPLIED", "Phase2", 146179) -- Phase 2, "Frayed"
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 
 	self:AddSyncListener("BlindHatred")
 	self:AddSyncListener("InsideBigAddDeath")
 	self:AddSyncListener("OutsideBigAddDeath")
+	self:AddSyncListener("Phase2")
 
-	self:Death("Deaths", 72276, 71977, 72264) -- Amalgam of Corruption, Manifestation of Corruption, Unleashed Manifestation of Corruption
+	--self:RegisterMessage("DBM_AddonMessage", "OnDBMSync") -- Catch DBM users killing big adds
+
+	self:Death("Deaths", 71977, 72264) -- Manifestation of Corruption, Unleashed Manifestation of Corruption
+	self:Death("Win", 72276) -- Amalgam of Corruption
 end
 
 function mod:OnEngage()
 	bigAddCounter = 0
-	phase = 1
 	self:Berserk(418)
 	self:Bar(145226, 25) -- Blind Hatred
 end
@@ -154,23 +157,21 @@ do
 end
 
 function mod:LookWithinApplied(args)
-	if args.spellId == 144851 and self:Tank() then -- Test of Confiidence (TANK) mainly for the other tank
-		self:TargetBar(-8220, 60, args.destName, nil, args.spellId)
-	elseif self:Me(args.destGUID) then
+	if self:Me(args.destGUID) then
 		self:Bar(-8220, 60, nil, args.spellId)
+	elseif args.spellId == 144851 and self:Tank() then -- Test of Confidence (TANK) mainly for the other tank
+		self:TargetBar(-8220, 60, args.destName, nil, args.spellId)
 	end
 end
 
--- General and syncing
-function mod:UNIT_SPELLCAST_SUCCEDED(unitId, spellName, _, _, spellId)
-	if spellId == 146179 then -- Frayed -- p2 trigger
-		phase = 2
-		self:Message("stages", "Neutral", "Warning", CL["phase"]:format(phase), 146179)
-	elseif spellId == 145769 then -- Unleash Corruption -- spawns adds in p2
-		-- don't think this needs sync
-		bigAddCounter = bigAddCounter + 1
-		self:Message("big_adds", "Urgent", nil, L["big_add"]:format(bigAddCounter), 147082)
-	end
+function mod:Phase2(args)
+	self:Sync("Phase2")
+end
+
+function mod:UnleashCorruption()
+	--self:Sync("InsideBigAddDeath") -- Big adds spawning outside in p2
+	bigAddCounter = bigAddCounter + 1
+	self:Message("big_adds", "Urgent", nil, L["big_add"]:format(bigAddCounter), 147082)
 end
 
 function mod:OnSync(sync)
@@ -178,6 +179,9 @@ function mod:OnSync(sync)
 		self:Message(145226, "Important", "Long")
 		self:Bar(145226, 60)
 	-- Big add messages are assuming you are not having two up at the same time
+	elseif sync == "Phase2" then
+		self:Message("stages", "Neutral", "Warning", CL["phase"]:format(2), 146179)
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	elseif sync == "InsideBigAddDeath" then
 		bigAddCounter = bigAddCounter + 1
 		self:Message("big_adds", "Urgent", "Alarm", L["big_add"]:format(bigAddCounter), 147082)
@@ -185,18 +189,18 @@ function mod:OnSync(sync)
 		self:Message("big_adds", "Attention", "Alert", L["big_add_killed"]:format(bigAddCounter), 147082) -- this could probably live wouthout sound but this way people know for sure that they need to check if it is their turn to soak
 	end
 end
-
+--[[
+function mod:OnDBMSync(_, player, prefix, _, _, event)
+	if prefix == "M" and event == "ManifestationDied" then
+		self:OnSync("InsideBigAddDeath") -- XXX check this
+	end
+end
+]]
 function mod:Deaths(args)
-	if args.mobId == 72276 then
-		self:Win()
-	elseif args.mobId == 71977 then -- Big add inside (Manifestation of Corruption)
+	if args.mobId == 71977 then -- Big add inside (Manifestation of Corruption)
 		self:Sync("InsideBigAddDeath")
 	elseif args.mobId == 72264 then -- Big add outside (Unleashed Manifestation of Corruption)
-		if phase == 1 then
-			self:Sync("OutsideBigAddDeath")
-		else -- don't do unnecesary syncing
-			self:Message("big_adds", "Attention", nil, L["big_add_killed"]:format(bigAddCounter), 147082)
-		end
+		self:Sync("OutsideBigAddDeath")
 	end
 end
 
