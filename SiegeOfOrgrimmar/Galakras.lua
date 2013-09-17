@@ -205,14 +205,13 @@ function mod:Towers(msg)
 	self:StopBar(tower)
 	self:Message("towers", "Neutral", "Long", tower, "achievement_bg_winsoa")
 	self:Bar("demolisher", 20, L["demolisher"], L["demolisher_icon"])
-	if tower == L["south_tower"] then
-		self:Bar("towers", 150, L["north_tower"], "achievement_bg_winsoa") -- XXX verify
-	end
 
 	if self:Heroic() then
 		-- timer needs double checking
 		self:Bar("towers", 40, L["tower_defender"], 85214) -- random orc icon
 		self:ScheduleTimer(firstTowerAdd, 40)
+	elseif tower == L["south_tower"] then
+		self:Bar("towers", 150, L["north_tower"], "achievement_bg_winsoa") -- XXX verify
 	end
 end
 
