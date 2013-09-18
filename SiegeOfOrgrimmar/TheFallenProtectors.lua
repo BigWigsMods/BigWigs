@@ -392,6 +392,8 @@ do
 			if not timer then
 				timer = self:ScheduleRepeatingTimer(warnCorruptedBrewTarget, 0.05, unitId)
 			end
+		elseif spellId == 138175 and self:MobId(UnitGUID(unitId)) == 71481 then -- Despawn Area Triggers
+			self:CloseProximity(-7959)
 		end
 	end
 end

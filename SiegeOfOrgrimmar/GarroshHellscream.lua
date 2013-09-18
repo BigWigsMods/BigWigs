@@ -116,7 +116,7 @@ function mod:OnEngage(diff)
 	waveCounter = 1
 	waveTimer = self:ScheduleTimer("NewWave", waveTimers[waveCounter])
 	self:Bar(-8292, waveTimers[waveCounter], nil, 144582)
-	self:Berserk(900, nil, nil, "Berserk (assumed)") -- XXX assumed
+	self:Berserk(900, nil, nil, "Berserk (assumed)") -- XXX assumed (more than 10 min)
 	annihilateCounter = 1
 	self:Bar(144758, 60) -- DesecratedWeapon
 	self:Bar(-8298, 20, nil, 144616) -- Siege Engineer

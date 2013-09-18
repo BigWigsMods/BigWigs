@@ -38,6 +38,7 @@ local results = {
 local raidParsed
 local emoteTriggers = {}
 local mutateCounter = 1
+local redPlayers = {}
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -191,6 +192,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	wipe(redPlayers)
 	deathCounter = 0
 	wipe(bossesSeen)
 	results = {
@@ -557,30 +559,27 @@ function mod:ToxicInjectionsRemoved(args)
 	end
 end
 
-do
-	local redPlayers = {}
-	function mod:ToxicInjectionsApplied(args)
-		if not self:Me(args.destGUID) then return end
-		local name
-		for i=1, GetNumGroupMembers() do
-			name = GetRaidRosterInfo(i)
-			if UnitDebuff(name, self:SpellName(142533)) and not UnitIsUnit("player", name) then
-				redPlayers[#redPlayers+1] = name
-			end
+function mod:ToxicInjectionsApplied(args)
+	if not self:Me(args.destGUID) then return end
+	local name
+	for i=1, GetNumGroupMembers() do
+		name = GetRaidRosterInfo(i)
+		if UnitDebuff(name, self:SpellName(142533)) and not UnitIsUnit("player", name) then
+			redPlayers[#redPlayers+1] = name
 		end
-		local message
-		if args.spellId == 142532 then -- blue
-			message = blueToxin
-			self:OpenProximity(-8034, 10, redPlayers)
-		elseif args.spellId == 142533 then -- red
-			message = redToxin
-			self:OpenProximity(-8034, 10)
-		elseif args.spellId == 142534 then -- yellow
-			message = yellowToxin
-			self:OpenProximity(-8034, 10, redPlayers)
-		end
-		self:Message(-8034, "Personal", "Long", CL["you"]:format(message))
 	end
+	local message
+	if args.spellId == 142532 then -- blue
+		message = blueToxin
+		self:OpenProximity(-8034, 10, redPlayers)
+	elseif args.spellId == 142533 then -- red
+		message = redToxin
+		self:OpenProximity(-8034, 10)
+	elseif args.spellId == 142534 then -- yellow
+		message = yellowToxin
+		self:OpenProximity(-8034, 10, redPlayers)
+	end
+	self:Message(-8034, "Personal", "Long", CL["you"]:format(message))
 end
 
 function mod:TenderizingStrike(args)
