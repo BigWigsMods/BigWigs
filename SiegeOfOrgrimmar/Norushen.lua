@@ -89,7 +89,7 @@ end
 
 function mod:OnEngage()
 	bigAddCounter = 0
-	self:Berserk(418)
+	self:Berserk(self:LFR() and 600 or 418) -- LFR is guessed
 	self:Bar(145226, 25) -- Blind Hatred
 end
 
