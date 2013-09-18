@@ -98,7 +98,6 @@ function mod:OnEngage()
 	auraOfPrideOnMe = nil
 	self:Bar(146595, 7) -- Titan Gift
 	self:Bar(144400, 77, CL["count"]:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
-	self:CDBar(144358, 11) -- Wounded Pride
 	self:Bar(-8262, 60, L["big_add_bar"], 144379) -- signature ability icon
 	bigAddTimer = self:ScheduleTimer("Message", 55, -8262, "Urgent", nil, L["big_add_spawning"], 144379)
 	self:Bar(144800, 25, L["small_adds"])
@@ -106,6 +105,9 @@ function mod:OnEngage()
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	if self:Heroic() then
 		self:Bar(145215, 37) -- Banishment
+	end
+	if not self:LFR() then
+		self:CDBar(144358, 11) -- Wounded Pride
 	end
 end
 
@@ -136,8 +138,8 @@ do
 end
 
 -- normal
-function mod:Unleashed()
-	self:CancelAllTimers()
+function mod:Unleashed() -- Final Gift
+	self:StopBar(146595) -- Gift of the Titans
 	self:Message(-8349, "Neutral", "Info")
 	self:Bar(144400, 77) -- Swelling Pride
 	self:Bar(-8262, 60, L["big_add_bar"], 144379)
@@ -295,5 +297,4 @@ do
 		end
 	end
 end
-
 
