@@ -272,7 +272,7 @@ do
 			target = unitTarget
 			if mod:Me(UnitGUID(target)) then
 				mod:Flash(-7959)
-			elseif not self:LFR() then
+			elseif not mod:LFR() then
 				mod:CloseProximity("proximity")
 				mod:OpenProximity(-7959, 8, target, true)
 			end
