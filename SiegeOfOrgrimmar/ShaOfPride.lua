@@ -256,21 +256,21 @@ end
 
 do
 	local function titansCasted()
-		mod:OpenProximity(146595, 8, titans) -- XXX this should be multi target reverse proximity, but for now we use it so we know how many are in range
+		--mod:OpenProximity(146595, 8, titans) -- XXX this should be multi target reverse proximity, but for now we use it so we know how many are in range
 		titanCounter = 1
 		wipe(titans)
 	end
 	function mod:TitanGiftRemoved(args)
 		if self.db.profile.custom_off_titan_mark then
 			SetRaidTarget(args.destName, 0)
-			self:CloseProximity(146595)
+			--self:CloseProximity(146595)
 		end
 	end
 	function mod:TitanGiftApplied(args)
-		local prideExpires = select(7, UnitDebuff(args.destName, auraOfPride)) -- this is to check if the person has aura of pride then later spawn remaining duration bar
+		local _, _, _, _, _, _, prideExpires = UnitDebuff(args.destName, auraOfPride) -- this is to check if the person has aura of pride then later spawn remaining duration bar
 		if self:Me(args.destGUID) then
 			if prideExpires then  -- Aura of Pride 5 yard aoe
-				self:Message(146595, "Natural", "Long", CL["you"]:format(("%s + %s"):format(args.spellName,auraOfPride)))
+				self:Message(146595, "Neutral", "Long", CL["you"]:format(("%s + %s"):format(args.spellName,auraOfPride)))
 				self:Flash(146817) -- Aura of Pride flash
 			else
 				self:Message(146595, "Positive", "Long", CL["you"]:format(args.spellName))
