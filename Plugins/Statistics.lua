@@ -190,8 +190,6 @@ function plugin:BigWigs_OnBossWin(event, module)
 			end
 		end
 
-		self:SendMessage("BigWigs_StopBar", self, L.bestTimeBar)
-
 		activeDurations[module.encounterId] = nil
 	end
 end
@@ -211,13 +209,11 @@ function plugin:BigWigs_OnBossWipe(event, module)
 			end
 		end
 
-		self:SendMessage("BigWigs_StopBar", self, L.bestTimeBar)
-
 		activeDurations[module.encounterId] = nil
 	end
 end
 
-function plugin:BigWigs_OnBossDisable(event, module)
+function plugin:BigWigs_OnBossDisable()
 	self:SendMessage("BigWigs_StopBar", self, L.bestTimeBar)
 end
 
