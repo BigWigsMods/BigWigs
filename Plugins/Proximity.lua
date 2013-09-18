@@ -557,7 +557,7 @@ do
 		if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
-			if t > (lastplayed + 1) then
+			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
@@ -606,7 +606,7 @@ do
 		else
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
-			if t > (lastplayed + 1) then
+			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
@@ -641,7 +641,7 @@ do
 		else
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
-			if t > (lastplayed + 1) then
+			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
