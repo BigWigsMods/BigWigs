@@ -267,11 +267,12 @@ do
 	local function checkTarget(sourceGUID)
 		local unit = mod:GetUnitIdByGUID(sourceGUID)
 		if not unit then return end
-		if UnitExists(unit.."target") and unit.."target" ~= target then
-			target = unit.."target"
+		local unitTarget = unit.."target"
+		if UnitExists(unitTarget) and unitTarget ~= target then
+			target = unitTarget
 			if mod:Me(UnitGUID(target)) then
 				mod:Flash(-7959)
-			else
+			elseif not self:LFR() then
 				mod:CloseProximity("proximity")
 				mod:OpenProximity(-7959, 8, target, true)
 			end
