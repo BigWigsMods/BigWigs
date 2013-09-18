@@ -16,6 +16,7 @@ mod:RegisterEnableMob(72276, 71977, 71976, 71967) -- Amalgam of Corruption, Mani
 --
 
 local bigAddCounter = 0
+local throttlePlayers = {} -- Throttle users that have BW & DBM installed >.>
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -53,6 +54,10 @@ function mod:GetOptions()
 	}
 end
 
+function mod:OnBossDisable()
+	wipe(throttlePlayers)
+end
+
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -77,11 +82,12 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 
 	self:AddSyncListener("BlindHatred")
-	self:AddSyncListener("InsideBigAddDeath")
+	self:AddSyncListener("InsideBigAddDeath", 0)
 	self:AddSyncListener("OutsideBigAddDeath")
+	self:AddSyncListener("Phase2BigAddSpawn")
 	self:AddSyncListener("Phase2")
 
-	--self:RegisterMessage("DBM_AddonMessage", "OnDBMSync") -- Catch DBM users killing big adds
+	self:RegisterMessage("DBM_AddonMessage", "OnDBMSync") -- Catch DBM users killing big adds
 
 	self:Death("Deaths", 71977, 72264) -- Manifestation of Corruption, Unleashed Manifestation of Corruption
 	self:Death("Win", 72276) -- Amalgam of Corruption
@@ -89,7 +95,7 @@ end
 
 function mod:OnEngage()
 	bigAddCounter = 0
-	self:Berserk(self:LFR() and 600 or 418) -- LFR is guessed
+	self:Berserk(self:LFR() and 600 or 418)
 	self:Bar(145226, 25) -- Blind Hatred
 end
 
@@ -169,33 +175,39 @@ function mod:Phase2()
 end
 
 function mod:UnleashCorruption()
-	--self:Sync("InsideBigAddDeath") -- Big adds spawning outside in p2
-	bigAddCounter = bigAddCounter + 1
-	self:Message("big_adds", "Urgent", nil, L["big_add"]:format(bigAddCounter), 147082)
+	self:Sync("Phase2BigAddSpawn") -- Big adds spawning outside in p2
 end
 
-function mod:OnSync(sync)
+function mod:OnSync(sync, _, player)
 	if sync == "BlindHatred" then
 		self:Message(145226, "Important", "Long")
 		self:Bar(145226, 60)
-	-- Big add messages are assuming you are not having two up at the same time
 	elseif sync == "Phase2" then
 		self:Message("stages", "Neutral", "Warning", CL["phase"]:format(2), 146179)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
-	elseif sync == "InsideBigAddDeath" then
+	-- Big add messages are assuming you are not having two up at the same time
+	elseif sync == "InsideBigAddDeath" or sync == "Phase2BigAddSpawn" then
+		if sync == "InsideBigAddDeath" then
+			local t = GetTime()
+			if throttlePlayers[player] and (t - throttlePlayers[player]) < 5 then
+				return
+			end
+			throttlePlayers[player] = t
+		end
+
 		bigAddCounter = bigAddCounter + 1
 		self:Message("big_adds", "Urgent", "Alarm", L["big_add"]:format(bigAddCounter), 147082)
 	elseif sync == "OutsideBigAddDeath" then
 		self:Message("big_adds", "Attention", "Alert", L["big_add_killed"]:format(bigAddCounter), 147082) -- this could probably live wouthout sound but this way people know for sure that they need to check if it is their turn to soak
 	end
 end
---[[
+
 function mod:OnDBMSync(_, player, prefix, _, _, event)
 	if prefix == "M" and event == "ManifestationDied" then
-		self:OnSync("InsideBigAddDeath") -- XXX check this
+		self:OnSync("InsideBigAddDeath", nil, player)
 	end
 end
-]]
+
 function mod:Deaths(args)
 	if args.mobId == 71977 then -- Big add inside (Manifestation of Corruption)
 		self:Sync("InsideBigAddDeath")
