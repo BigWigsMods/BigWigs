@@ -48,6 +48,7 @@ L = BigWigs:NewBossLocale("Galakras", "frFR")
 if L then
 	L.demolisher = "Démolisseur"
 	L.demolisher_desc = "Délais avant que les Démolisseurs kor’kron ne se joignent au combat."
+
 	L.towers = "Tours"
 	L.towers_desc = "Alertes quand les portes des tours sont détruites."
 	L.south_tower_trigger = "La porte qui barrait l'accès à la tour sud a été détruite !" -- to check
@@ -108,7 +109,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "frFR")
 if L then
-	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
+	L.win_trigger = "Système en cours de réinitialisation. Veuillez ne pas le débrancher, ou il pourrait vous sauter à la figure." -- to check
 
 	L.enable_zone = "Entrepôt de l'Artéfact" -- to check
 	L.matter_scramble_explosion = "Explosion Brouillage de la matière" -- shorten maybe?
