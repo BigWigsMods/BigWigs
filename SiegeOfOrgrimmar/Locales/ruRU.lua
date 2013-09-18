@@ -14,7 +14,7 @@ if L then
 	L.no_meditative_field = "НЕТ Медитативного поля!"
 
 	L.intermission = "Крайние меры"
-	L.intermission_desc = "Предупреждать, когда боссы готовятся применить Крайние меры"
+	L.intermission_desc = "Предупреждать, когда боссы готовятся применить Крайние меры."
 end
 
 L = BigWigs:NewBossLocale("Norushen", "ruRU")
@@ -48,6 +48,7 @@ L = BigWigs:NewBossLocale("Galakras", "ruRU")
 if L then
 	L.demolisher = "Разрушитель"
 	L.demolisher_desc = "Таймеры, когда Кор'кронские разрушители вступят в бой."
+
 	L.towers = "Башня"
 	L.towers_desc = "Предупреждать, когда башни ломаются."
 	L.south_tower_trigger = "Дверь южной башни разбита!"
@@ -138,11 +139,11 @@ end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "ruRU")
 if L then
-	L.one = "Ийокук выбирает: Один!"
-	L.two = "Ийокук выбирает: Два!"
-	L.three = "Ийокук выбирает: Три!"
-	L.four = "Ийокук выбирает: Четыре!"
-	L.five = "Ийокук выбирает: Пять!"
+	L.one = "Выбор Ийокука: Один!"
+	L.two = "Выбор Ийокука: Два!"
+	L.three = "Выбор Ийокука: Три!"
+	L.four = "Выбор Ийокука: Четыре!"
+	L.five = "Выбор Ийокука: Пять!"
 	--------------------------------
 	L.edge_message = "Ты в луче"
 	L.custom_off_edge_marks = "Маркировка луча"
