@@ -76,7 +76,7 @@ end
 function mod:KillCheck()
 	local hasBoss = UnitHealth("boss1") > 100 or UnitHealth("boss2") > 100 or UnitHealth("boss3") > 100 or UnitHealth("boss4") > 100 or UnitHealth("boss5") > 100
 	if not hasBoss then
-		self:ScheduleTimer("StartWipeCheck", 10)
+		self:ScheduleTimer("StartWipeCheck", 11)
 	end
 end
 
