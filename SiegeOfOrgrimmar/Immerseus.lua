@@ -64,6 +64,8 @@ end
 
 function mod:OnEngage()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "KillCheck")
+	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "KillCheckMouseOver")
+
 	self:Berserk(600, nil, nil, "Berserk (assumed)") -- XXX Assumed
 	self:Bar(143309, 20.8) -- Swirl
 	self:Bar(143436, 10) -- Corrosive Blast
@@ -72,11 +74,17 @@ function mod:OnEngage()
 	end
 end
 
--- XXX TEST OUT USING THE VERIFY ENABLE CHECK AS THE BOSS KILL EVENT NEXT WEEK
 function mod:KillCheck()
 	local hasBoss = UnitHealth("boss1") > 100 or UnitHealth("boss2") > 100 or UnitHealth("boss3") > 100 or UnitHealth("boss4") > 100 or UnitHealth("boss5") > 100
 	if not hasBoss then
 		self:ScheduleTimer("StartWipeCheck", 11)
+	end
+end
+
+function mod:KillCheckMouseOver()
+	if self:MobId(UnitGUID("mouseover")) == 71543 and not self:VerifyEnable("mouseover") then
+		print("BigWigs: WIN")
+		--self:Win()
 	end
 end
 
