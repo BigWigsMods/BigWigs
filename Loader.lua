@@ -433,6 +433,7 @@ do
 
 		loaderUtilityFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 		loaderUtilityFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+		loaderUtilityFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
 
 		loaderUtilityFrame:RegisterEvent("CHAT_MSG_ADDON")
 		self:RegisterMessage("BigWigs_AddonMessage")
@@ -545,6 +546,30 @@ end
 loaderUtilityFrame:SetScript("OnEvent", function(_, event, ...)
 	loader[event](loader, ...)
 end)
+
+function loader:LFG_PROPOSAL_SHOW()
+	if not self.LFGFrame then
+		local f = CreateFrame("Frame", nil, LFGDungeonReadyDialog)
+		f:SetPoint("BOTTOM", LFGDungeonReadyDialog, "BOTTOM", 0, -60)
+		f:SetSize(100, 100)
+		f:Show()
+		f.start = GetTime()
+		self.LFGFrame = f
+
+		local text = f:CreateFontString(nil, "OVERLAY")
+		text:SetPoint("CENTER", f, "CENTER")
+		text:SetFont(TextStatusBarText:GetFont(), 11, "OUTLINE")
+		text:SetText(40)
+		f.text = text
+
+		f:SetScript("OnUpdate", function(frame)
+			local t = GetTime() - frame.start
+			frame.text:SetFormattedText("Big Wigs: %.1f", 40-t)
+		end)
+
+		self.LFG_PROPOSAL_SHOW = function() loader.LFGFrame.start = GetTime() end
+	end
+end
 
 function loader:CHAT_MSG_ADDON(prefix, msg, _, sender)
 	if prefix == "BigWigs" then
