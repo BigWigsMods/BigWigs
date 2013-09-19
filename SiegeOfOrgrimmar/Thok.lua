@@ -172,6 +172,6 @@ function mod:FearsomeRoar(args)
 end
 
 function mod:TankDebuff(args)
-	self:StackMessage("tank_debuffs", args.destName, args.amount, "Attention", self:Me(args.destGUID) and nil or "Warning", args.spellName, args.spellId)
+	self:StackMessage("tank_debuffs", args.destName, args.amount, "Attention", not self:Me(args.destGUID) and "Warning", args.spellName, args.spellId)
 end
 

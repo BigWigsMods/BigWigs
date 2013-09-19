@@ -231,7 +231,7 @@ do
 		else
 			local index = findPlayerInIndexedTable(setToBlow, args.destName)
 			if index then
-				table.remove(setToBlow, index)
+				tremove(setToBlow, index)
 			end
 			if #setToBlow == 0 then
 				self:CloseProximity(args.spellId)
