@@ -107,6 +107,8 @@ function mod:OnEngage()
 	end
 	if not self:LFR() then
 		self:CDBar(144358, 11) -- Wounded Pride
+	else
+		self:Berserk(600)
 	end
 end
 
