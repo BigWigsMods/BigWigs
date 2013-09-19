@@ -57,7 +57,7 @@ function mod:GetOptions()
 	return {
 		145215, 147207,
 		"custom_off_titan_mark",
-		{146595, "PROXIMITY"}, 144400, -8257, {-8258, "FLASH"}, {146817, "FLASH", "PROXIMITY"}, -8270, {144351, "DISPEL"}, {144358, "TANK", "FLASH"}, -8262, 144800, 144563, -8349,
+		{146595, "PROXIMITY"}, 144400, -8257, {-8258, "FLASH"}, {146817, "FLASH", "PROXIMITY"}, -8270, {144351, "DISPEL"}, {144358, "TANK", "FLASH", "EMPHASIZE"}, -8262, 144800, 144563, -8349,
 		"berserk", "bosskill",
 	}, {
 		[145215] = "heroic",
@@ -222,6 +222,7 @@ do
 	local prev = 0
 	local mindcontrolled = mod:NewTargetList()
 	function mod:SwellingPrideSuccess(args)
+		self:CDBar(args.spellId, 11) -- Wounded Pride, 10-11.2
 		self:Bar(-8262, 60, L["big_add_bar"], 144379) -- when the add is actually up
 		self:DelayedMessage(-8262, 55, "Urgent", L["big_add_spawning"], 144379)
 		-- lets do some fancy stuff
