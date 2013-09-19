@@ -61,7 +61,7 @@ L.custom_off_bane_marks_desc = L.custom_off_bane_marks_desc:format(
 
 function mod:GetOptions()
 	return {
-		{144396, "TANK"}, {143019, "FLASH"}, 143027, {143007, "DISPEL"}, 143958, {"defile", "TANK"}, {144357, "FLASH"}, {-7959, "SAY", "PROXIMITY"}, -- Rook Stonetoe
+		{144396, "TANK"}, {143019, "FLASH"}, 143027, {143007, "DISPEL"}, 143958, {"defile", "TANK"}, {144357, "FLASH"}, {-7959, "FLASH", "SAY", "PROXIMITY", "ICON"}, -- Rook Stonetoe
 		{143330, "TANK"}, {143292, "FLASH"}, {144367, "FLASH"}, {143840, "FLASH", "PROXIMITY"}, -- He Softfoot
 		143446, 143491, 143546, -- Sun Tenderheart
 		"custom_off_bane_marks",
@@ -263,33 +263,32 @@ end
 -- Rook Stonetoe
 
 do
-	local target
 	local function checkTarget(sourceGUID)
-		local unit = mod:GetUnitIdByGUID(sourceGUID)
-		if not unit then return end
-		local unitTarget = unit.."target"
-		if UnitExists(unitTarget) and unitTarget ~= target then
-			target = unitTarget
-			if mod:Me(UnitGUID(target)) then
-				mod:Flash(-7959)
-			elseif not mod:LFR() then
-				mod:CloseProximity("proximity")
-				mod:OpenProximity(-7959, 8, target, true)
+		for i = 1, 5 do
+			local boss = ("boss%d"):format(i)
+			if UnitGUID(boss) == sourceGUID then
+				local bossTarget = boss.."target"
+				local player = UnitGUID(bossTarget)
+				if player then
+					local playerName = mod:UnitName(bossTarget)
+					mod:TargetMessage(-7959, playerName, "Urgent", "Warning")
+					mod:TargetBar(-7959, 8.5, playerName)
+					mod:PrimaryIcon(-7959, playerName)
+					if mod:Me(player) then
+						mod:Flash(-7959)
+						mod:Say(-7959)
+					else
+						mod:CloseProximity("proximity")
+						mod:OpenProximity(-7959, 8, playerName, true)
+					end
+				end
 			end
-			mod:TargetBar(-7959, 7, mod:UnitName(target)) -- 9-2
-		else
-			mod:CloseProximity(-7959)
-			mod:OpenProximity("proximity", 5)
 		end
 	end
 	function mod:InfernoStrike(args)
-		-- no debuff, no target no nothing, one gypsy implementation of an ability marked as "Important" in the EJ
-		-- this probably could use that static shock like say countdown once we can actually reliably determine the target maybe
-		if target then
-			self:StopBar(-7959, target)
-		end
 		self:CloseProximity(-7959)
-		self:ScheduleTimer(checkTarget, 2, args.sourceGUID)
+		self:PrimaryIcon(-7959)
+		self:ScheduleTimer(checkTarget, 0.5, args.sourceGUID)
 	end
 end
 
@@ -394,6 +393,8 @@ do
 			end
 		elseif spellId == 138175 and self:MobId(UnitGUID(unitId)) == 71481 then -- Despawn Area Triggers
 			self:CloseProximity(-7959)
+			self:OpenProximity("proximity", 5)
+			self:PrimaryIcon(-7959)
 		end
 	end
 end
