@@ -83,8 +83,7 @@ end
 
 function mod:KillCheckMouseOver()
 	if self:MobId(UnitGUID("mouseover")) == 71543 and not self:VerifyEnable("mouseover") then
-		print("BigWigs: WIN")
-		--self:Win()
+		self:Win()
 	end
 end
 
