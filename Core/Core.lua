@@ -211,12 +211,20 @@ do
 
 	-- Cinematic handling
 	local cinematicZones = {
-		[875] = 1, -- Gate of the Setting Sun gate breach
-		[930] = 3, -- Tortos cave entry -- Doesn't work, apparently Blizzard don't want us to skip this..?
-		[930] = 7, -- Ra-Den room opening
-		[953] = 2, -- After Immerseus, entry to Fallen Protectors
-		[953] = 9, -- Blackfuse room opening
+		[875.1] = true, -- Gate of the Setting Sun gate breach
+		[930.3] = true, -- Tortos cave entry -- Doesn't work, apparently Blizzard don't want us to skip this..?
+		[930.7] = true, -- Ra-Den room opening
+		[953.2] = true, -- After Immerseus, entry to Fallen Protectors
+		[953.9] = true, -- Blackfuse room opening
 	}
+
+	local function hasBannedQuests() -- Clean me
+		-- Timeless Isle quest line to use items in the Siege of Orgrimmar and watch cinematics
+		if GetQuestLogIndexByID(33337) > 0 or GetQuestLogIndexByID(33375) > 0 or GetQuestLogIndexByID(33376) > 0 or GetQuestLogIndexByID(33377) > 0 or GetQuestLogIndexByID(33378) > 0 or GetQuestLogIndexByID(33379) > 0 then
+			return true
+		end
+	end
+
 	function addon:CINEMATIC_START()
 		if self.db.profile.blockmovies then
 			SetMapToCurrentZone()
@@ -227,9 +235,9 @@ do
 
 			local areaId = GetCurrentMapAreaID() or 0
 			local areaLevel = GetCurrentMapDungeonLevel() or 0
-			local zoneFloor = cinematicZones[areaId]
-			if zoneFloor and zoneFloor == areaLevel then
-				local id = tonumber(("%d.%d"):format(areaId, areaLevel))
+			local id = tonumber(("%d.%d"):format(areaId, areaLevel))
+
+			if cinematicZones[id] and not hasBannedQuests() then
 				if self.db.global.seenmovies[id] then
 					self:Print(L.movieBlocked)
 					CinematicFrame_CancelCinematic()
