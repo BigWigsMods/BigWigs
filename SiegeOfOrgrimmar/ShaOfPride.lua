@@ -257,31 +257,36 @@ function mod:SwellingPride(args)
 end
 
 do
+	local isOnMe = nil
 	local function titansCasted()
-		--mod:OpenProximity(146595, 8, titans) -- XXX this should be multi target reverse proximity, but for now we use it so we know how many are in range
+		if isOnMe then
+			mod:OpenProximity(146595, 8, titans, true)
+			isOnMe = nil
+		end
 		titanCounter = 1
 		wipe(titans)
 	end
 	function mod:TitanGiftRemoved(args)
+		self:CloseProximity(146595)
 		if self.db.profile.custom_off_titan_mark then
 			SetRaidTarget(args.destName, 0)
-			--self:CloseProximity(146595)
 		end
 	end
 	function mod:TitanGiftApplied(args)
 		local _, _, _, _, _, _, prideExpires = UnitDebuff(args.destName, auraOfPride) -- this is to check if the person has aura of pride then later spawn remaining duration bar
 		if self:Me(args.destGUID) then
-			if prideExpires then  -- Aura of Pride 5 yard aoe
+			isOnMe = true
+			if prideExpires then -- Aura of Pride 5 yard aoe
 				self:Message(146595, "Neutral", "Long", CL["you"]:format(("%s + %s"):format(args.spellName,auraOfPride)))
 				self:Flash(146817) -- Aura of Pride flash
 			else
 				self:Message(146595, "Positive", "Long", CL["you"]:format(args.spellName))
 			end
+		else
+			titans[#titans+1] = args.destName
 		end
+
 		if self.db.profile.custom_off_titan_mark then
-			if not self:Me(args.destGUID) then
-				titans[#titans+1] = args.destName
-			end
 			if prideExpires then
 				self:TargetBar(146595, prideExpires-GetTime(), args.destName, L["titan_pride"])
 			else
@@ -292,9 +297,7 @@ do
 	end
 	function mod:TitanGiftSuccess(args)
 		self:Bar(args.spellId, 25)
-		if self.db.profile.custom_off_titan_mark then
-			self:ScheduleTimer(titansCasted, 0.3)
-		end
+		self:ScheduleTimer(titansCasted, 0.3)
 	end
 end
 
