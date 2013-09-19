@@ -215,6 +215,7 @@ do
 		[930] = 3, -- Tortos cave entry -- Doesn't work, apparently Blizzard don't want us to skip this..?
 		[930] = 7, -- Ra-Den room opening
 		[953] = 2, -- After Immerseus, entry to Fallen Protectors
+		[953] = 9, -- Blackfuse room opening
 	}
 	function addon:CINEMATIC_START()
 		if self.db.profile.blockmovies then
