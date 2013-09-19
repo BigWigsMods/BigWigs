@@ -26,6 +26,8 @@ local markableMobs = {}
 local marksUsed = {}
 local markTimer = nil
 
+local lastKill = 0
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -82,7 +84,22 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable()
+	if GetTime() - lastKill > 120 then -- Prevent re-enabling after kill
+		return true
+	end
+end
+
+function mod:OnWin()
+	lastKill = GetTime()
+end
+
 function mod:OnBossEnable()
+	if GetTime() - lastKill < 120 then -- Temp for outdated users enabling us
+		self:ScheduleTimer("Disable", 5)
+		return
+	end
+
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	-- Foot Soldiers
