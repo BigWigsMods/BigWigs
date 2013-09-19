@@ -46,7 +46,7 @@ L.custom_off_mist_marks_desc = L.custom_off_mist_marks_desc:format( -- XXX cut d
 function mod:GetOptions()
 	return {
 		{144330, "FLASH"}, 144328,
-		{-8132, "FLASH", "ICON", "SAY"}, {144215, "TANK"}, -- Earthbreaker Haromm
+		{-8132, "FLASH", "ICON", "SAY"}, {144215, "TANK"}, 144070, -- Earthbreaker Haromm
 		"custom_off_mist_marks",
 		{144005, "FLASH"}, {143990, "FLASH", "ICON"}, 143973, -- Wavebinder Kardris
 		144302, "berserk", "bosskill",
@@ -70,6 +70,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "FoulStreamFallback", 137399, 144090)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FroststormStrike", 144215)
 	self:Log("SPELL_AURA_APPLIED", "FroststormStrike", 144215)
+	self:Log("SPELL_CAST_START", "AshenWall", 144070)
 	-- Wavebinder Kardris
 	self:Log("SPELL_CAST_START", "FallingAsh", 143973)
 	self:Log("SPELL_CAST_SUCCESS", "FoulGeyser", 143990) -- we can live with success for this since blobs don't spawn instantly, rather not do the whole target scanning again
@@ -186,6 +187,11 @@ end
 
 function mod:FroststormStrike(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+end
+
+function mod:AshenWall(args)
+	self:Message(args.spellId, "Neutral")
+	self:Bar(args.spellId, 32.2)
 end
 
 -- Wavebinder Kardris
