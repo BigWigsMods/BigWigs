@@ -15,6 +15,10 @@ if L then
 
 	L.intermission = "背水一战"
 	L.intermission_desc = "当任一首领即将使用背水一战时发出警报。"
+
+	--L.inferno_self = "Inferno Strike on you"
+	--L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
+	--L.inferno_self_bar = "You explode!"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "zhCN")

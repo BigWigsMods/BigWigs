@@ -26,6 +26,8 @@ local marksUsed = {}
 local darkMeditationTimer
 local intermission = {}
 
+local infernoTarget, infernoTimer = nil, nil
+
 local deathCount = 0
 
 --------------------------------------------------------------------------------
@@ -45,6 +47,11 @@ if L then
 
 	L.intermission = "Desperate Measures"
 	L.intermission_desc = "Warnings for when you are getting close to any of the bosses using Desperate Measures"
+
+	L.inferno_self = "Inferno Strike on you"
+	L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
+	L.inferno_self_icon = 143962
+	L.inferno_self_bar = "You explode!"
 end
 L = mod:GetLocale()
 L.custom_off_bane_marks_desc = L.custom_off_bane_marks_desc:format(
@@ -61,7 +68,7 @@ L.custom_off_bane_marks_desc = L.custom_off_bane_marks_desc:format(
 
 function mod:GetOptions()
 	return {
-		{144396, "TANK"}, {143019, "FLASH"}, 143027, {143007, "DISPEL"}, 143958, {"defile", "TANK"}, {144357, "FLASH"}, {-7959, "FLASH", "SAY", "PROXIMITY", "ICON"}, -- Rook Stonetoe
+		{144396, "TANK"}, {143019, "FLASH"}, 143027, {143007, "DISPEL"}, 143958, {"defile", "TANK"}, {144357, "FLASH"}, {-7959, "FLASH", "SAY", "PROXIMITY", "ICON"}, {"inferno_self", "SAY", "EMPHASIZE"}, -- Rook Stonetoe
 		{143330, "TANK"}, {143292, "FLASH"}, {144367, "FLASH"}, {143840, "FLASH", "PROXIMITY"}, -- He Softfoot
 		143446, 143491, 143546, -- Sun Tenderheart
 		"custom_off_bane_marks",
@@ -78,7 +85,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "BossSucceeded", "boss1", "boss2", "boss3")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "BossSucceeded", "boss1", "boss2", "boss3", "boss4", "boss5")
 	self:Log("SPELL_CAST_START", "Heal", 143497)
 	-- Sun Tenderheart
 	self:Log("SPELL_AURA_APPLIED", "DarkMeditationApplied", 143546)
@@ -112,6 +119,7 @@ function mod:OnEngage()
 	wipe(intermission)
 	darkMeditationTimer = nil
 	deathCount = 0
+	infernoTarget, infernoTimer = nil, nil
 	self:OpenProximity("proximity", 5) -- this might not be needed in LFR
 	self:Berserk(900, nil, nil, "Berserk (assumed)") -- XXX assumed, more than 10 min
 	self:Bar(144396, 7) -- VengefulStrikes
@@ -188,7 +196,7 @@ do
 				wipe(marksUsed)
 			end
 			-- no _DOSE for this so gotta get stacks like this:
-			local amount = select(4, UnitDebuff(args.destName, args.spellName))
+			local _, _, _, amount = UnitDebuff(args.destName, args.spellName)
 			if amount and amount == 3 then -- only mark the initial cast
 				markBane(args.destName)
 			end
@@ -263,23 +271,44 @@ end
 -- Rook Stonetoe
 
 do
+	local timeLeft = 8
+	local function infernoCountdown()
+		timeLeft = timeLeft - 1
+		if timeLeft < 6 then
+			mod:Say("inferno_self", timeLeft, true)
+			if timeLeft < 2 then
+				mod:CancelTimer(infernoTimer)
+				infernoTimer = nil
+			end
+		end
+	end
 	local function checkTarget(sourceGUID)
+		local self = mod
 		for i = 1, 5 do
 			local boss = ("boss%d"):format(i)
 			if UnitGUID(boss) == sourceGUID then
 				local bossTarget = boss.."target"
 				local player = UnitGUID(bossTarget)
 				if player then
-					local playerName = mod:UnitName(bossTarget)
-					mod:TargetMessage(-7959, playerName, "Urgent", "Warning")
-					mod:TargetBar(-7959, 8.5, playerName)
-					mod:PrimaryIcon(-7959, playerName)
-					if mod:Me(player) then
-						mod:Flash(-7959)
-						mod:Say(-7959)
-					else
-						mod:CloseProximity("proximity")
-						mod:OpenProximity(-7959, 8, playerName, true)
+					infernoTarget = self:UnitName(bossTarget)
+					self:TargetMessage(-7959, infernoTarget, "Urgent", "Warning")
+					self:TargetBar(-7959, 8.5, infernoTarget)
+					self:PrimaryIcon(-7959, infernoTarget)
+					if self:Me(player) then
+						self:Flash(-7959)
+						self:Say(-7959)
+						if not self:LFR() then -- Don't spam in LFR
+							timeLeft = 8
+							if infernoTimer then mod:CancelTimer(infernoTimer) end
+							infernoTimer = self:ScheduleRepeatingTimer(infernoCountdown, 1)
+						end
+						-- Emphasized abilities
+						self:StopBar(-7959, infernoTarget)
+						self:TargetMessage("inferno_self", infernoTarget, "Urgent")
+						self:Bar("inferno_self", 8.5, L["you_explode"])
+					elseif not self:Tank() then
+						self:CloseProximity("proximity")
+						self:OpenProximity(-7959, 8, infernoTarget, true)
 					end
 				end
 			end
@@ -395,6 +424,15 @@ do
 			self:CloseProximity(-7959)
 			self:OpenProximity("proximity", 5)
 			self:PrimaryIcon(-7959)
+			if infernoTimer then
+				self:CancelTimer(infernoTimer)
+				infernoTimer = nil
+			end
+			if infernoTarget then
+				self:StopBar(-7959, infernoTarget)
+				self:StopBar(L["you_explode"])
+				infernoTarget = nil
+			end
 		end
 	end
 end

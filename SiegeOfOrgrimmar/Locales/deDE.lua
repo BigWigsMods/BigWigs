@@ -15,6 +15,10 @@ if L then
 
 	L.intermission = "Verzweifelte Maßnahmen"
 	L.intermission_desc = "Warnt, wenn Du Dich nahe bei einem Boss befindest, welcher Verzweifelte Maßnahmen benutzt"
+
+	--L.inferno_self = "Inferno Strike on you"
+	--L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
+	--L.inferno_self_bar = "You explode!"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "deDE")
