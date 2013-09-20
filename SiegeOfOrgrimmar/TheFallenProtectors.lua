@@ -304,8 +304,8 @@ do
 						end
 						-- Emphasized abilities
 						self:StopBar(-7959, infernoTarget)
-						self:TargetMessage("inferno_self", infernoTarget, "Urgent")
-						self:Bar("inferno_self", 8.5, L["you_explode"])
+						self:TargetMessage("inferno_self", infernoTarget, "Urgent", nil, -7959)
+						self:Bar("inferno_self", 8.5, L["you_explode"], -7959)
 					elseif not self:Tank() then
 						self:CloseProximity("proximity")
 						self:OpenProximity(-7959, 8, infernoTarget, true)
