@@ -135,7 +135,7 @@ function mod:Superheated(args)
 	end
 end
 
-function mod:RAID_BOSS_WHISPER(msg, sender)
+function mod:RAID_BOSS_WHISPER(_, msg, sender)
 	if msg:find("Ability_Siege_Engineer_Superheated") then -- laser fixate
 		-- might wanna do syncing to get range message working
 		self:Message(-8208, "Personal", "Info", L.laser_on_you, 144040)
