@@ -16,9 +16,9 @@ if L then
 	L.intermission = "Крайние меры"
 	L.intermission_desc = "Предупреждать, когда боссы готовятся применить Крайние меры."
 
-	--L.inferno_self = "Inferno Strike on you"
-	--L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
-	--L.inferno_self_bar = "You explode!"
+	L.inferno_self = "Адский удар на тебе"
+	L.inferno_self_desc = "Особый отсчет, когда Адский удар на тебе."
+	L.inferno_self_bar = "Ты взорвешься!"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "ruRU")
