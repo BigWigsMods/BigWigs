@@ -16,9 +16,9 @@ if L then
 	L.intermission = "Verzweifelte Maßnahmen"
 	L.intermission_desc = "Warnt, wenn Du Dich nahe bei einem Boss befindest, welcher Verzweifelte Maßnahmen benutzt"
 
-	--L.inferno_self = "Inferno Strike on you"
-	--L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
-	--L.inferno_self_bar = "You explode!"
+	L.inferno_self = "Infernostoß auf Dir"
+	L.inferno_self_desc = "Spezieller Timer wenn Du von Infernostoß betroffen bist."
+	L.inferno_self_bar = "Du explodierst!"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "deDE")
@@ -51,9 +51,10 @@ end
 L = BigWigs:NewBossLocale("Galakras", "deDE")
 if L then
 	L.demolisher = "Verwüster"
-	L.demolisher_desc = "Zeigt an, wann die Verwüster der Kor'kron in den Kampf eintreten"
+	L.demolisher_desc = "Zeigt an, wann die Verwüster der Kor'kron in den Kampf eintreten."
+
 	L.towers = "Türme"
-	L.towers_desc = "Warnungen für das Durchbrechen der Tore zu den Türmen"
+	L.towers_desc = "Warnungen für das Durchbrechen der Tore zu den Türmen."
 	L.south_tower_trigger = "Das Tor zum Südturm ist durchbrochen!"
 	L.south_tower = "Südlicher Turm"
 	L.north_tower_trigger = "Das Tor zum Nordturm ist durchbrochen!"
