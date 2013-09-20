@@ -218,13 +218,6 @@ do
 		[953.9] = true, -- Blackfuse room opening
 	}
 
-	local function hasBannedQuests() -- Clean me
-		-- Timeless Isle quest line to use items in the Siege of Orgrimmar and watch cinematics
-		if GetQuestLogIndexByID(33337) > 0 or GetQuestLogIndexByID(33375) > 0 or GetQuestLogIndexByID(33376) > 0 or GetQuestLogIndexByID(33377) > 0 or GetQuestLogIndexByID(33378) > 0 or GetQuestLogIndexByID(33379) > 0 then
-			return true
-		end
-	end
-
 	function addon:CINEMATIC_START()
 		if self.db.profile.blockmovies then
 			SetMapToCurrentZone()
@@ -234,10 +227,15 @@ do
 			end
 
 			local areaId = GetCurrentMapAreaID() or 0
+			if areaId == 953 then--Siege of Org
+				for i = 105930, 105935 do--Scan quest items that trigger CINEMATIC_START
+					if select(3,GetItemCooldown(i)) > 0 then return end--Item has a 1 second cooldown so we know without a doubt that if it's on cooldown it was JUST used.
+				end
+			end
 			local areaLevel = GetCurrentMapDungeonLevel() or 0
 			local id = tonumber(("%d.%d"):format(areaId, areaLevel))
 
-			if cinematicZones[id] and not hasBannedQuests() then
+			if cinematicZones[id] then
 				if self.db.global.seenmovies[id] then
 					self:Print(L.movieBlocked)
 					CinematicFrame_CancelCinematic()
