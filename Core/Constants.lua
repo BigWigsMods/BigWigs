@@ -140,7 +140,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			local L = module:GetLocale(true)
 			local title, description = L[option], L[option .. "_desc"]
 			if title then title = title..roleIcon end
-			if description then description = roleDesc..description end
+			if description then description = roleDesc..(description):gsub("{rt(%d)}", "\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%1.blp:15\124t") end
 			local icon = L[option .. "_icon"]
 			if icon == option .. "_icon" then icon = nil end
 			if type(icon) == "number" then
