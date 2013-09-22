@@ -69,11 +69,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FoulStream", 137399, 144090) -- SUCCESS has destName but is way too late, and "boss1target" should be reliable for it
 	self:Log("SPELL_CAST_SUCCESS", "FoulStreamFallback", 137399, 144090)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FroststormStrike", 144215)
-	self:Log("SPELL_AURA_APPLIED", "FroststormStrike", 144215)
 	self:Log("SPELL_CAST_START", "AshenWall", 144070)
 	-- Wavebinder Kardris
 	self:Log("SPELL_CAST_START", "FallingAsh", 143973)
-	self:Log("SPELL_CAST_SUCCESS", "FoulGeyser", 143990) -- we can live with success for this since blobs don't spawn instantly, rather not do the whole target scanning again
+	self:Log("SPELL_CAST_SUCCESS", "FoulGeyser", 143990)
+	self:Log("SPELL_AURA_REMOVED", "FoulGeyserRemoved", 143990)
 	self:Log("SPELL_CAST_START", "ToxicStorm", 144005)
 	self:Log("SPELL_DAMAGE", "ToxicStormDamage", 144017)
 	-- heroic
@@ -186,7 +186,9 @@ do
 end
 
 function mod:FroststormStrike(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+	if args.amount > 3 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+	end
 end
 
 function mod:AshenWall(args)
@@ -203,17 +205,21 @@ function mod:FallingAsh(args)
 	self:Bar(args.spellId, 18, CL["count"]:format(args.spellName, ashCounter))
 end
 
-function mod:FoulGeyser(args)
-	-- XXX still not 100% reliable, maybe should wait till the channel starts and annonce target then?
+function mod:FoulGeyser(args) -- Blobs
 	self:SecondaryIcon(args.spellId, args.destName)
-	self:ScheduleTimer("SecondaryIcon", 15, args.spellId)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", L["blobs"])
 	self:Bar(args.spellId, 32, L["blobs"])
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
-	end
-	if self:Range(args.destName) < 5 then -- splash is 3 but want bigger warning so people know that blobs will be around that area
+	elseif self:Range(args.destName) < 5 then -- splash is 3 but want bigger warning so people know that blobs will be around that area
 		self:RangeMessage(args.spellId, "Personal", "Alert", L["blobs"])
+		return
+	end
+	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", L["blobs"])
+end
+
+function mod:FoulGeyserRemoved(args)
+	if self:MobId(args.destGUID) == 71858 then -- Wavebinder Kardris
+		self:SecondaryIcon(args.spellId)
 	end
 end
 
