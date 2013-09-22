@@ -68,7 +68,7 @@ L.custom_off_bane_marks_desc = L.custom_off_bane_marks_desc:format(
 
 function mod:GetOptions()
 	return {
-		{144396, "TANK"}, {143019, "FLASH"}, 143027, {143007, "DISPEL"}, 143958, {"defile", "TANK"}, {144357, "FLASH"}, {-7959, "FLASH", "SAY", "PROXIMITY", "ICON"}, {"inferno_self", "SAY", "EMPHASIZE"}, -- Rook Stonetoe
+		{144396, "TANK"}, {143019, "FLASH"}, 143027, {143007, "HEALER"}, 143958, {"defile", "TANK"}, {144357, "FLASH"}, {-7959, "FLASH", "SAY", "PROXIMITY", "ICON"}, {"inferno_self", "SAY", "EMPHASIZE"}, -- Rook Stonetoe
 		{143330, "TANK"}, {143292, "FLASH"}, {144367, "FLASH"}, {143840, "FLASH", "PROXIMITY"}, -- He Softfoot
 		143446, 143491, 143546, -- Sun Tenderheart
 		"custom_off_bane_marks",
@@ -104,7 +104,7 @@ function mod:OnBossEnable()
 	-- Rook Stonetoe
 	self:Log("SPELL_CAST_SUCCESS", "VengefulStrikes", 144396)
 	self:Log("SPELL_CAST_SUCCESS", "Clash", 143027)
-	self:Log("SPELL_AURA_APPLIED", "CorruptionKick", 143007, 143010)
+	self:Log("SPELL_CAST_SUCCESS", "CorruptionKick", 143007)
 	self:Log("SPELL_CAST_SUCCESS", "CorruptionShock", 143958)
 	self:Log("SPELL_DAMAGE", "DefiledGroundDamage", 144357)
 	self:Log("SPELL_CAST_START", "DefiledGround", 144357)
@@ -311,6 +311,7 @@ do
 						self:OpenProximity(-7959, 8, infernoTarget, true)
 					end
 				end
+				break
 			end
 		end
 	end
@@ -373,22 +374,8 @@ function mod:CorruptionShock(args)
 	end
 end
 
-do
-	local corrruptionKickTargets, scheduled = mod:NewTargetList(), nil
-	local function warnKick()
-		scheduled = nil
-		mod:TargetMessage(143007, corrruptionKickTargets, "Important", "Alarm")
-	end
-	function mod:CorruptionKick(args)
-		if self:Dispeller("curse", nil, args.spellId) then
-			corrruptionKickTargets[#corrruptionKickTargets+1] = args.destName
-			if not scheduled then
-				scheduled = self:ScheduleTimer(warnKick, 0.2)
-			end
-		elseif self:Me(args.destGUID) then
-			self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
-		end
-	end
+function mod:CorruptionKick(args)
+	self:Message(args.spellId, "Important", "Alarm")
 end
 
 function mod:Clash(args)
