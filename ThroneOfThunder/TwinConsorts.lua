@@ -25,7 +25,7 @@ local phase3 = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.last_phase_yell_trigger = "Just this once..." -- "<490.4 01:24:30> CHAT_MSG_MONSTER_YELL#Just this once...#Lu'lin###Suen##0#0##0#3273#nil#0#false#false", -- [6]
+	L.last_phase_yell_trigger = "Just this once..."
 
 	L.barrage_fired = "Barrage fired!"
 end

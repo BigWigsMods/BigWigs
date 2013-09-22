@@ -100,10 +100,10 @@ if L then
 	L.adds_desc = "Avvisa quando rivela una Nebbia Cremisi, d'Ambra o Azzurra e quante Nebbie rimangono."
 
 	L.custom_off_ray_controllers = "Controllori dei Raggi"
-	L.custom_off_ray_controllers_desc = "Usa le icone di incursione %s%s%s per evidenziare i giocatori che controllano le posizioni dei raggi e il loro movimento."
+	L.custom_off_ray_controllers_desc = "Usa le icone di incursione {rt1}{rt7}{rt6} per evidenziare i giocatori che controllano le posizioni dei raggi e il loro movimento."
 
 	L.custom_off_parasite_marks = "Marcatore Parassita Oscuro"
-	L.custom_off_parasite_marks_desc = "Per aiutare l'assegnazione dei Guaritori, evidenzia i giocatori che hanno il Parassita Oscuro con %s%s%s."
+	L.custom_off_parasite_marks_desc = "Per aiutare l'assegnazione dei Guaritori, evidenzia i giocatori che hanno il Parassita Oscuro con {rt3}{rt4}{rt5}."
 
 	L.initial_life_drain = "Lancio iniziale Risucchio di Vita"
 	L.initial_life_drain_desc = "Messaggio per il primo lancio di Risucchio di Vita per aiutare le cure su colui che ha il maleficio sulle cure ricevute."

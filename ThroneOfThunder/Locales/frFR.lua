@@ -100,10 +100,10 @@ if L then
 	L.adds_desc = "Alertes quand vous révélez une Brume écarlate, d'ambre ou azur et combien de Brumes écarlates il reste."
 
 	L.custom_off_ray_controllers = "Contrôleurs de rayon"
-	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid %s%s%s afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements, nécessite d'être assistant ou chef de raid."
+	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid {rt1}{rt7}{rt6} afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements, nécessite d'être assistant ou chef de raid."
 
 	L.custom_off_parasite_marks = "Marquage des Sombres parasites"
-	L.custom_off_parasite_marks_desc = "Afin d'aider les healing assignments, marque les personnes sous l'effet de Sombre parisite avec les marqueurs de raid %s%s%s, nécessite d'être assistant ou chef de raid."
+	L.custom_off_parasite_marks_desc = "Afin d'aider les healing assignments, marque les personnes sous l'effet de Sombre parisite avec les marqueurs de raid {rt3}{rt4}{rt5}, nécessite d'être assistant ou chef de raid."
 
 	L.initial_life_drain = "Incantation initiale de Drain de vie"
 	L.initial_life_drain_desc = "Message de l'incantation initiale de Drain de vie afin d'aider au suivi des affaiblissements de réduction des soins reçus."

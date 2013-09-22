@@ -100,10 +100,10 @@ if L then
 	L.adds_desc = "진흥빛, 하늘빛, 호박색 안개중 몇마리의 진흥빛 안개가 남았는지 경고합니다."
 
 	L.custom_off_ray_controllers = "적외선 조절 공격대 아이콘"
-	L.custom_off_ray_controllers_desc = "Use the %s%s%s raid markers to mark people who will control the ray spawn positions and movement."
+	L.custom_off_ray_controllers_desc = "Use the {rt1}{rt7}{rt6} raid markers to mark people who will control the ray spawn positions and movement."
 
 	L.custom_off_parasite_marks = "암흑의 기생충 공격대 아이콘"  -- Dark parasite marker
-	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s, requires promoted or leader."
+	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with {rt3}{rt4}{rt5}, requires promoted or leader."
 
 	L.initial_life_drain = "생명력 흡수"
 	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help keeping up healing received reducing debuff."

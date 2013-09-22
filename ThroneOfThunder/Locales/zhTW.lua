@@ -100,10 +100,10 @@ if L then
 	L.adds_desc = "當緋紅、蔚藍和琥珀霧獸現形時發出警報並提示剩餘多少霧獸。"
 
 	L.custom_off_ray_controllers = "射線控制"
-	L.custom_off_ray_controllers_desc = "使用%s%s%s團隊圖示標記控制射線出生位置及位移的玩家，需要權限。"
+	L.custom_off_ray_controllers_desc = "使用{rt1}{rt7}{rt6}團隊圖示標記控制射線出生位置及位移的玩家，需要權限。"
 
 	L.custom_off_parasite_marks = "黑暗寄生蟲標記"
-	L.custom_off_parasite_marks_desc = "使用%s%s%s標記中了黑暗寄生蟲的玩家協助分配治療，需要權限。"
+	L.custom_off_parasite_marks_desc = "使用{rt3}{rt4}{rt5}標記中了黑暗寄生蟲的玩家協助分配治療，需要權限。"
 
 	L.initial_life_drain = "生命吸取起始警報"
 	L.initial_life_drain_desc = "一施放生命吸取就發送訊息以協助跟上治療減益。"

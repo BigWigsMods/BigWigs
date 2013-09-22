@@ -31,10 +31,10 @@ if L then
 	L.adds_desc = "Warnings for when you reveal a Crimson, Amber, or Azure Fog and for how many Fogs remain."
 
 	L.custom_off_ray_controllers = "Ray controllers"
-	L.custom_off_ray_controllers_desc = "Use the %s%s%s raid markers to mark people who will control the ray spawn positions and movement, requires promoted or leader."
+	L.custom_off_ray_controllers_desc = "Use the {rt1}{rt7}{rt6} raid markers to mark people who will control the ray spawn positions and movement, requires promoted or leader."
 
 	L.custom_off_parasite_marks = "Dark parasite marker"
-	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with %s%s%s, requires promoted or leader."
+	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with {rt3}{rt4}{rt5}, requires promoted or leader."
 
 	L.initial_life_drain = "Initial Life Drain cast"
 	L.initial_life_drain_desc = "Message for the initial Life Drain cast to help with keeping up a reduced healing received debuff."
@@ -52,17 +52,6 @@ if L then
 	L.yellow_beam = "|cffffff00Yellow|r beam"
 end
 L = mod:GetLocale()
-
-L.custom_off_ray_controllers_desc = L.custom_off_ray_controllers_desc:format(
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t"
-)
-L.custom_off_parasite_marks_desc = L.custom_off_parasite_marks_desc:format(
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t"
-)
 
 --------------------------------------------------------------------------------
 -- Initialization
