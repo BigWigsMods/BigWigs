@@ -102,8 +102,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "MarkOfAnguishRemoved", 143840)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LingeringAnguish", 144176)
 	-- Rook Stonetoe
+	self:Log("SPELL_CAST_SUCCESS", "VengefulStrikes", 144396)
 	self:Log("SPELL_CAST_SUCCESS", "Clash", 143027)
-	self:Log("SPELL_AURA_APPLIED", "CorruptionKick", 143007, 143010) -- XXX double checks spellIds in 10 man
+	self:Log("SPELL_AURA_APPLIED", "CorruptionKick", 143007, 143010)
 	self:Log("SPELL_CAST_SUCCESS", "CorruptionShock", 143958)
 	self:Log("SPELL_DAMAGE", "DefiledGroundDamage", 144357)
 	self:Log("SPELL_CAST_START", "DefiledGround", 144357)
@@ -419,14 +420,6 @@ do
 			if not timer then
 				timer = self:ScheduleRepeatingTimer(warnCorruptedBrewTarget, 0.05, unitId)
 			end
-		elseif spellId == 144396 then -- Vengeful Strikes
-			-- only warn for the tank targeted by the mob
-			local target = unitId.."target"
-			if UnitExists(target) and self:Me(UnitGUID(target)) then
-				self:Message(spellId, "Urgent", "Alarm")
-				self:Bar(spellId, 3, CL["cast"]:format(spellName))
-				self:CDBar(spellId, 21)
-			end
 		elseif spellId == 138175 and self:MobId(UnitGUID(unitId)) == 71481 then -- Despawn Area Triggers
 			self:CloseProximity(-7959)
 			self:OpenProximity("proximity", 5)
@@ -441,6 +434,15 @@ do
 				infernoTarget = nil
 			end
 		end
+	end
+end
+
+function mod:VengefulStrikes(args)
+	-- only warn for the tank targeted by the mob
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Urgent", "Alarm")
+		self:Bar(args.spellId, 3, CL["cast"]:format(args.spellName))
+		self:CDBar(args.spellId, 21)
 	end
 end
 
