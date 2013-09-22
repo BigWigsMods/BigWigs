@@ -66,7 +66,7 @@ L["Must be between 1 and 60. A correct example is: /pull 5"] = "Debe ser entre 1
 L["Incorrect format. A correct example is: /raidbar 20 text"] = "Formato incorrecto. Un ejemplo seria: /raidbar 20 text"
 L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Tiempo especificado inválido. <time> puede ser bien un número en segundos, un par M:S, o Min. Por ejemplo 5, 1:20 o 2m."
 L["This function can't be used during an encounter."] = "Esta función no se puede usar durante un encuentro."
---L["Pull timer cancelled by %s."] = "Pull timer cancelled by %s."
+L["Pull timer cancelled by %s."] = "Pull cancelado por %s."
 
 L.customBarSlashPrint = "Esta funcionalidad ha sido renombrada. Usa /raidbar para enviar una barra personalizada a tu raid o /localbar para una barra que solo podrás ver tu."
 
@@ -245,6 +245,6 @@ L.printWipeOption = "Tiempo del Wipe"
 L.countKills = "Contar Muertes"
 L.countWipes = "Contar Wipes"
 L.recordBestKills = "Recordar muertes más rápidas"
---L.createTimeBar = "Show 'Best Time' bar"
---L.bestTimeBar = "Best Time"
+L.createTimeBar = "Mostrar barra de 'Mejor tiempo' "
+L.bestTimeBar = "Mejor tiempo"
 
