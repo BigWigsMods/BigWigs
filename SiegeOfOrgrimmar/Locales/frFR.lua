@@ -36,7 +36,7 @@ end
 L = BigWigs:NewBossLocale("Sha of Pride", "frFR")
 if L then
 	L.custom_off_titan_mark = "Marquage Don des titans"
-	L.custom_off_titan_mark_desc = "Afin d'aider à repérer les joueurs ayant Don des titans, marque ces derniers avec %s%s%s%s%s%s%s%s (les joueurs ayant Aura d'orgeuil et les tanks ne sont pas marqués). Nécessite d'être assistant ou chef de raid."
+	L.custom_off_titan_mark_desc = "Mark people that have Gift of the Titans with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 
 	L.projection_message = "Allez sur la flèche |cFF00FF00VERTE|r !"
 	L.projection_explosion = "Explosion de la projection"

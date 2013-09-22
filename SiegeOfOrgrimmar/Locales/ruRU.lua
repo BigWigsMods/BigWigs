@@ -36,7 +36,7 @@ end
 L = BigWigs:NewBossLocale("Sha of Pride", "ruRU")
 if L then
 	L.custom_off_titan_mark = "Маркировка Дара титанов"
-	L.custom_off_titan_mark_desc = "Чтобы помочь задействовать Силу титанов, люди с Даром титанов будут помечены метками %s%s%s%s%s%s%s%s (игроки с Аурой гордыни не помечаются), но они будут отображаться в окне близости. Требуется быть помощником или лидером."
+	L.custom_off_titan_mark_desc = "Mark people that have Gift of the Titans with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 
 	L.projection_message = "Бегите по |cFF00FF00ЗЕЛЕНОЙ|r стрелке!"
 	L.projection_explosion = "Проекция взрывается"

@@ -36,7 +36,7 @@ end
 L = BigWigs:NewBossLocale("Sha of Pride", "zhTW")
 if L then
 	L.custom_off_titan_mark = "Gift of the Titans marker"
-	L.custom_off_titan_mark_desc = "To help spotting others with Gift of the Titans, mark the people who have Gift of the Titans on them with %s%s%s%s%s%s%s%s (players with Aura of Pride and tanks are not marked), requires promoted or leader."
+	L.custom_off_titan_mark_desc = "Mark people that have Gift of the Titans with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 
 	L.projection_message = "Go to |cFF00FF00GREEN|r arrow!"
 	L.projection_explosion = "Projection explosion"

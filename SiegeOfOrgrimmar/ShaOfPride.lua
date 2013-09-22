@@ -1,7 +1,3 @@
---[[
-TODO:
-	do some intelligent proximity meter ( would need multi target reverse proximity )
-]]--
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -26,7 +22,7 @@ local swellingPrideCounter = 1
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.custom_off_titan_mark = "Gift of the Titans marker"
-	L.custom_off_titan_mark_desc = "To help spotting others with Gift of the Titans, mark the people who have Gift of the Titans on them with %s%s%s%s%s%s%s%s (players with Aura of Pride are not marked), but they are still included in the proximity window (not reverse proximity yet). Requires promoted or leader."
+	L.custom_off_titan_mark_desc = "Mark people that have Gift of the Titans with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 
 	L.projection_message = "Go to |cFF00FF00GREEN|r arrow!"
 	L.projection_explosion = "Projection explosion"
@@ -38,16 +34,6 @@ if L then
 	L.titan_pride = "Titan+Pride: %s"
 end
 L = mod:GetLocale()
-L.custom_off_titan_mark_desc = L.custom_off_titan_mark_desc:format(
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_2.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8.blp:15\124t"
-)
 
 --------------------------------------------------------------------------------
 -- Initialization

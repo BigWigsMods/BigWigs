@@ -36,7 +36,7 @@ end
 L = BigWigs:NewBossLocale("Sha of Pride", "itIT")
 if L then
 	L.custom_off_titan_mark = "Marcatore Potenza dei Titani"
-	L.custom_off_titan_mark_desc = "Per aiutare a trovare gli altri con Potenza dei Titani, evidenzia i giocatori che hanno Potenza dei Titani su di lorocon %s%s%s%s%s%s%s%s (i giocatori con Aura d'Orgoglio non sono evidenziati), richiede capo-incursione o assistente."
+	L.custom_off_titan_mark_desc = "Mark people that have Gift of the Titans with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 
 	L.projection_message = "Vai verso la freccia |cFF00FF00VERDE|r!"
 	L.projection_explosion = "Proiezione esplosione"
