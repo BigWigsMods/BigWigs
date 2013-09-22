@@ -73,6 +73,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "WeakenedResolveOver", 147207)
 	self:Log("SPELL_AURA_APPLIED", "Banishment", 145215)
 	-- normal
+	self:Log("SPELL_CAST_START", "UnleashedStart", 144832)
 	self:Log("SPELL_CAST_SUCCESS", "Unleashed", 144832)
 	self:Log("SPELL_AURA_APPLIED", "ImprisonApplied", 144574, 144684, 144683, 144636)
 	self:Log("SPELL_CAST_START", "Imprison", 144563)
@@ -139,6 +140,10 @@ do
 end
 
 -- normal
+function mod:UnleashedStart()
+	self:CDBar(144358, 11) -- Wounded Pride
+end
+
 function mod:Unleashed() -- Final Gift
 	self:StopBar(146595) -- Gift of the Titans
 	self:Message(-8349, "Neutral", "Info")
@@ -222,7 +227,7 @@ do
 	local prev = 0
 	local mindcontrolled = mod:NewTargetList()
 	function mod:SwellingPrideSuccess(args)
-		self:CDBar(args.spellId, 11) -- Wounded Pride, 10-11.2
+		self:CDBar(144358, 10.5) -- Wounded Pride, 10-11.2
 		self:Bar(-8262, 60, L["big_add_bar"], 144379) -- when the add is actually up
 		self:DelayedMessage(-8262, 55, "Urgent", L["big_add_spawning"], 144379)
 		-- lets do some fancy stuff
