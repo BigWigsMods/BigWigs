@@ -257,14 +257,12 @@ function mod:Fixate(args)
 end
 
 function mod:Gouge(args)
+	-- only warn the tank targeted by the mob
 	local unit = mod:GetUnitIdByGUID(args.sourceGUID)
-	local target = unit.."target"
-	-- only warn for the tank targeted by the mob
-	if UnitExists(target) then
-		if self:Me(UnitGUID(target)) then
-			self:Message(args.spellId, "Urgent", "Alarm")
-			self:CDBar(args.spellId, 29)
-		end
+	local guid = UnitGUID(unit.."target")
+	if guid and self:Me(guid) then
+		self:Message(args.spellId, "Urgent", "Alarm")
+		self:CDBar(args.spellId, 29)
 	end
 end
 
