@@ -171,7 +171,7 @@ if L then
 
 	L.farseer_trigger = "Long-voyants, soignez nos blessures !" -- to check
 	L.custom_off_shaman_marker = "Marquage Chevaucheur de loup long-voyant"
-	L.custom_off_shaman_marker_desc = "Afin d'aider à l'attribution des interruptions, marque les Chevaucheurs de loup long-voyant avec %s%s%s%s%s%s%s (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
+	L.custom_off_shaman_marker_desc = "Afin d'aider à l'attribution des interruptions, marque les Chevaucheurs de loup long-voyant avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
 
 	L.focus_only = "|cffff0000Alertes de la cible de focalisation uniquement.|r "
 end

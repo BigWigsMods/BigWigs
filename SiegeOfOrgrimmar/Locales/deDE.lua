@@ -168,7 +168,7 @@ if L then
 
 	L.farseer_trigger = "Scharfseher, heilt unsere Wunden!"
 	L.custom_off_shaman_marker = "Scharfseher markieren"
-	L.custom_off_shaman_marker_desc = "Um bei der Einteilung zum Unterbrechen zu helfen, werden die Scharfseherwolfsreiter mit %s%s%s%s%s%s%s markiert (in dieser Reihenfolge)(vielleicht werden nicht alle Symbole genutzt), benötigt Leiter oder Assistent."
+	L.custom_off_shaman_marker_desc = "Um bei der Einteilung zum Unterbrechen zu helfen, werden die Scharfseherwolfsreiter mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} markiert (in dieser Reihenfolge)(vielleicht werden nicht alle Symbole genutzt), benötigt Leiter oder Assistent."
 
 	L.focus_only = "|cffff0000Nur Meldungen für Fokusziele.|r "
 end

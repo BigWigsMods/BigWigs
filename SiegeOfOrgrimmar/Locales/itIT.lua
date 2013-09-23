@@ -169,7 +169,7 @@ if L then
 
 	L.farseer_trigger = "Chiaroveggenti, guarite le nostre ferite!"
 	L.custom_off_shaman_marker = "Marcatore Chiaroveggenti"
-	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni. evidenzia i Cavalcalupi Chiaroveggenti con %s%s%s%s%s%s%s (in questo ordine)(non tutti i simboli possono essere usati), richiede capo incursione o assistente."
+	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni. evidenzia i Cavalcalupi Chiaroveggenti con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} (in questo ordine, non tutti i simboli possono essere usati), richiede capo incursione o assistente."
 
 	L.focus_only = "|cffff0000Avvisi solo dei bersagli focus.|r "
 end

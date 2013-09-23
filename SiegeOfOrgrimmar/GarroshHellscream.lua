@@ -52,21 +52,12 @@ if L then
 
 	L.farseer_trigger = "Farseers, mend our wounds!"
 	L.custom_off_shaman_marker = "Farseer marker"
-	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Farseer Wolf Rider with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Farseer Wolf Rider with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} (in that order, not all marks may be used), requires promoted or leader."
 
 	L.focus_only = "|cffff0000Focus target alerts only.|r "
 end
 L = mod:GetLocale()
 L.chain_heal_desc = L.focus_only..L.chain_heal_desc
-L.custom_off_shaman_marker_desc = L.custom_off_shaman_marker_desc:format(
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_2.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15\124t"
-)
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -286,14 +277,15 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 	if spellId == 145235 then -- throw axe at heart , transition into first intermission
-		self:Bar(-8305, 25, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
-		phase = 2
-		self:CancelTimer(waveTimer)
-		waveTimer = nil
-		self:StopBar(-8292) -- Kor'kron Warbringer aka add waves
-		self:StopBar(-8298) -- Siege Engineer
-		self:StopBar(-8294) -- Farseer
-		-- XXX maybe desecrate stops here too?
+		if phase == 1 then
+			self:Bar(-8305, 25, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
+			self:CancelTimer(waveTimer)
+			waveTimer = nil
+			self:StopBar(-8292) -- Kor'kron Warbringer aka add waves
+			self:StopBar(-8298) -- Siege Engineer
+			self:StopBar(-8294) -- Farseer
+			self:StopBar(144758) -- Desecrated Weapon
+		end
 	elseif spellId == 144866 then -- Enter Realm of Y'Shaarj -- actually being pulled
 		self:StopBar(144758) -- Desecrated Weapon
 		self:StopWeaponScan()
@@ -302,14 +294,18 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		self:Message(-8305, "Neutral", nil, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 		self:Bar(-8305, 210, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 	elseif spellId == 144956 then -- Jump To Ground -- exiting intermission
-		desecrateCounter = 1
-		self:Bar(144758, 10) -- Desecrated Weapon
-		self:Bar(145065, 15, L["mind_control"]) -- Mind Control
-		self:Bar(144985, 30) -- Whirling Corruption
-		self:ScheduleTimer("StartWeaponScan", 5)
-		local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
-		if hp < 50 then -- XXX might need adjusting
-			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3") -- don't really need this till 2nd intermission phase
+		if phase == 2 then
+			desecrateCounter = 1
+			self:Bar(144758, 10) -- Desecrated Weapon
+			self:Bar(145065, 15, L["mind_control"]) -- Mind Control
+			self:Bar(144985, 30) -- Whirling Corruption
+			self:ScheduleTimer("StartWeaponScan", 5)
+			local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
+			if hp < 50 then -- XXX might need adjusting
+				self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3") -- don't really need this till 2nd intermission phase
+			end
+		else -- first time, don't start timers yet
+			phase = 2
 		end
 	elseif spellId == 145647 then -- Realm of Y'Shaarj -- phase 3
 		phase = 3
