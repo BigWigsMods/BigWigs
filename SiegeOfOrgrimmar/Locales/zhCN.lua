@@ -137,7 +137,7 @@ if L then
 	L.assembly_line_trigger = "未完成的武器从装配流水线上传送出来了。"
 	L.assembly_line_message = "零散的武器 >%d<"
 
-	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!"
+	L.shockwave_missile_trigger = "为各位送上"
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "zhCN")
