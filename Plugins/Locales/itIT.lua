@@ -155,7 +155,7 @@ L["Font color"] = "Colore carattere"
 L["Custom range indicator"] = "Indicatore di Distanza Personalizzato"
 L.proximityTitle = "%d m / %d |4giocatore:giocatori;"
 L["Proximity"] = "Prossimità"
-L["Sound"] = "Suono"
+L.sound = "Suono"
 L["Disabled"] = "Disabilitato"
 L["Disable the proximity display for all modules that use it."] = "Disabilita il monitor di prossimità per tutti i moduli che lo usano."
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "Il monitor di prossimità verrà visualizzzato la prossima volta. Per disabilitarlo completamente per questo combattimento, devi disabilitarlo nelle opzioni del combattimento."
@@ -191,7 +191,7 @@ L["Shows or hides a spell tooltip if the Proximity display is currently tied dir
 
 L["Icons"] = "Icone"
 
-L.raidIconDescription = "Alcuni combattimenti possono includere elementi come bombe su giocatori specifici, un giocatore inseguito da qualcosa, che interessano un giocatore. Qui puoi personalizzare quali Simboli devono essere applicati sui giocatori.|r"
+L.raidIconsDescription = "Alcuni combattimenti possono includere elementi come bombe su giocatori specifici, un giocatore inseguito da qualcosa, che interessano un giocatore. Qui puoi personalizzare quali Simboli devono essere applicati sui giocatori.|r"
 L["Primary"] = "Primario"
 L["The first raid target icon that a encounter script should use."] = "Il primo Simbolo che l'automazione del combattimento dovrebbe usare."
 L["Secondary"] = "Secondario"

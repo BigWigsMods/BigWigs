@@ -38,7 +38,7 @@ local showToggleOptions, getAdvancedToggleOption = nil, nil
 local zoneModules = {}
 
 local pluginOptions = {
-	name = L["Customize ..."],
+	name = L.customizeBtn,
 	type = "group",
 	childGroups = "tab",
 	args = {},
@@ -65,8 +65,8 @@ local acOptions = {
 		},
 		configure = {
 			type = "execute",
-			name = L["Configure ..."],
-			desc = L.configureDesc,
+			name = L.configureBtn,
+			desc = L.configureBtnDesc,
 			func = function()
 				InterfaceOptionsFrameOkay:Click()
 				if not BigWigs:IsEnabled() then BigWigs:Enable() end
@@ -78,10 +78,10 @@ local acOptions = {
 		},
 		customize = {
 			type = "execute",
-			name = L["Customize ..."],
+			name = L.customizeBtn,
 			func = function()
-				InterfaceOptionsFrame_OpenToCategory(L["Customize ..."])
-				InterfaceOptionsFrame_OpenToCategory(L["Customize ..."])
+				InterfaceOptionsFrame_OpenToCategory(L.customizeBtn)
+				InterfaceOptionsFrame_OpenToCategory(L.customizeBtn)
 			end,
 			order = 11.5,
 		},
@@ -93,8 +93,8 @@ local acOptions = {
 		},
 		minimap = {
 			type = "toggle",
-			name = L["Minimap icon"],
-			desc = L["Toggle show/hide of the minimap icon."],
+			name = L.minimapIcon,
+			desc = L.minimapToggle,
 			order = 13,
 			get = function() return not BigWigs3IconDB.hide end,
 			set = function(info, v)
@@ -117,21 +117,21 @@ local acOptions = {
 		},
 		sound = {
 			type = "toggle",
-			name = L["Sound"],
+			name = L.sound,
 			desc = L.soundDesc,
 			order = 21,
 			width = "half",
 		},
 		flash = {
 			type = "toggle",
-			name = L["Flash Screen"],
-			desc = L.flashDesc,
+			name = L.flashScreen,
+			desc = L.flashScreenDesc,
 			order = 22,
 		},
 		raidicon = {
 			type = "toggle",
-			name = L["Raid icons"],
-			desc = L.raidiconDesc,
+			name = L.raidIcons,
+			desc = L.raidIconsDesc,
 			set = function(info, value)
 				local key = info[#info]
 				local plugin = BigWigs:GetPlugin("Raid Icons")
@@ -159,8 +159,8 @@ local acOptions = {
 		},
 		showBlizzardWarnings = {
 			type = "toggle",
-			name = L["Show Blizzard warnings"],
-			desc = L.blizzardDesc,
+			name = L.showBlizzWarnings,
+			desc = L.showBlizzWarningsDesc,
 			set = function(info, value)
 				local key = info[#info]
 				local plugin = BigWigs:GetPlugin("BossBlock")
@@ -181,8 +181,8 @@ local acOptions = {
 		},
 		blockmovies = {
 			type = "toggle",
-			name = L["Block boss movies"],
-			desc = L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."],
+			name = L.blockMovies,
+			desc = L.blockMoviesDesc,
 			order = 33,
 			width = "full",
 		},
@@ -201,14 +201,14 @@ local acOptions = {
 		},
 		fakeDBMVersion = {
 			type = "toggle",
-			name = L["Pretend I'm using DBM"],
-			desc = L.pretendDesc,
+			name = L.dbmFaker,
+			desc = L.dbmFakerDesc,
 			order = 41,
 			width = "full",
 		},
 		customDBMbars = {
 			type = "toggle",
-			name = L["Create custom DBM bars"],
+			name = L.dbmBar,
 			desc = L.dbmBarDesc,
 			order = 42,
 			width = "full",
@@ -311,23 +311,23 @@ function options:OnInitialize()
 		if p and p.element.collapsed then OptionsListButtonToggle_OnClick(p.toggle) end
 	end)
 
-	local about = self:GetPanel(L["About"], "Big Wigs")
+	local about = self:GetPanel(L.about, "Big Wigs")
 	about:SetScript("OnShow", function(frame)
 		local fields = {
-			L["Developers"],
-			L["License"],
-			L["Website"],
-			L["Contact"],
+			L.developers,
+			L.license,
+			L.website,
+			L.contact,
 		}
 		local fieldData = {
-			"Ammo, Funkydude, Maat, Nebula169, Rabbit",
-			L["See license.txt in the main Big Wigs folder."],
+			"Funkydude, Maat, Nebula169",
+			L.allRightsReserved,
 			"http://www.wowace.com/addons/big-wigs/",
-			L["irc.freenode.net in the #wowace channel"],
+			L.ircChannel,
 		}
 		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 		title:SetPoint("TOPLEFT", 16, -16)
-		title:SetText(L["About"])
+		title:SetText(L.about)
 
 		local subtitle = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 		subtitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
@@ -367,7 +367,7 @@ function options:OnInitialize()
 		title:SetWidth(frame:GetWidth() - 24)
 		title:SetJustifyH("LEFT")
 		title:SetJustifyV("TOP")
-		title:SetText(L["Thanks to the following for all their help in various fields of development"])
+		title:SetText(L.thanks)
 		local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 		detail:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -4)
 		detail:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -24, -24)
@@ -379,10 +379,10 @@ function options:OnInitialize()
 	end)
 
 	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
-	acd:AddToBlizOptions("Big Wigs: Plugins", L["Customize ..."], "Big Wigs")
+	acd:AddToBlizOptions("Big Wigs: Plugins", L.customizeBtn, "Big Wigs")
 
 	ac:RegisterOptionsTable("Big Wigs: Profiles", getProfileOptions)
-	acd:AddToBlizOptions("Big Wigs: Profiles", L["Profiles"], "Big Wigs")
+	acd:AddToBlizOptions("Big Wigs: Profiles", L.profiles, "Big Wigs")
 
 	colorModule = BigWigs:GetPlugin("Colors")
 	soundModule = BigWigs:GetPlugin("Sounds")
@@ -463,7 +463,7 @@ do
 		frame:SetWidth(410)
 		frame:SetHeight(515)
 		frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 12, -12)
-		frame:SetTitle(L["Configure"])
+		frame:SetTitle(L.configure)
 		frame:SetCallback("OnClose", function(widget, callback)
 			options:SendMessage("BigWigs_StopConfigureMode")
 		end)
@@ -474,12 +474,12 @@ do
 		scroll:SetFullWidth(true)
 
 		local test = AceGUI:Create("Button")
-		test:SetText(L["Test"])
+		test:SetText(L.test)
 		test:SetCallback("OnClick", onTestClick)
 		test:SetFullWidth(true)
 
 		local reset = AceGUI:Create("Button")
-		reset:SetText(L["Reset positions"])
+		reset:SetText(L.resetPositions)
 		reset:SetCallback("OnClick", onResetClick)
 		reset:SetFullWidth(true)
 
@@ -696,15 +696,15 @@ end
 
 local advancedTabs = {
 	{
-		text = L["Advanced options"],
+		text = L.advanced,
 		value = "options",
 	},
 	{
-		text = L["Colors"],
+		text = L.colors,
 		value = "colors",
 	},
 	{
-		text = L["Sound"],
+		text = L.sound,
 		value = "sounds",
 	},
 }
@@ -712,7 +712,7 @@ local advancedTabs = {
 function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc = BigWigs:GetBossOptionDetails(module, bossOption)
 	local back = AceGUI:Create("Button")
-	back:SetText(L["<< Back"])
+	back:SetText(L.back)
 	back:SetFullWidth(true)
 	back:SetCallback("OnClick", function()
 		showToggleOptions(dropdown, nil, dropdown:GetUserData("bossIndex"))
@@ -1048,7 +1048,7 @@ local function populateToggleOptions(widget, module)
 	end
 	local list = AceGUI:Create("Button")
 	list:SetFullWidth(true)
-	list:SetText(L["List abilities in group chat"])
+	list:SetText(L.listAbilities)
 	list:SetUserData("module", module)
 	list:SetCallback("OnClick", listAbilitiesInChat)
 	scrollFrame:AddChild(list)
@@ -1099,7 +1099,7 @@ local function onZoneShow(frame)
 	local innerContainer = nil
 	if moduleList then
 		innerContainer = AceGUI:Create("DropdownGroup")
-		innerContainer:SetTitle(L["Select encounter"])
+		innerContainer:SetTitle(L.selectEncounter)
 		innerContainer:SetLayout("Flow")
 		innerContainer:SetCallback("OnGroupSelected", showToggleOptions)
 		innerContainer:SetUserData("zone", zoneId)

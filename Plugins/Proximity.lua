@@ -1007,7 +1007,7 @@ do
 					},
 					soundName = {
 						type = "select",
-						name = L["Sound"],
+						name = L.sound,
 						order = 6,
 						values = media:List("sound"),
 						width = "full",

@@ -41,14 +41,14 @@ p:close()
 
 -- We don't recognize roots efforts! Muhaha!
 numberOfCommits.root = nil
--- Remove ourselves, we don't need to be listed twice!
-numberOfCommits.rabbit = nil
-numberOfCommits.ammo = nil
+
+-- Remove authors, we don't need to be listed twice!
 numberOfCommits.funkydude = nil
 numberOfCommits.nebula169 = nil
 -- Maat uses two logins
 numberOfCommits.Maat = nil
 numberOfCommits.maat = nil
+
 -- Wetxius has two logins
 numberOfCommits.Wetxius = numberOfCommits.Wetxius + numberOfCommits.wetxius
 numberOfCommits.wetxius = nil

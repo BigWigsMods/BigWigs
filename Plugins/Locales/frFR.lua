@@ -154,7 +154,7 @@ L["Font color"] = "Couleur de police"
 L["Custom range indicator"] = "Indicateur perso. de portée"
 L.proximityTitle = "%d m / %d |4joueur:joueurs;"
 L["Proximity"] = "Proximité"
-L["Sound"] = "Son"
+L.sound = "Son"
 L["Disabled"] = "Désactivé"
 L["Disable the proximity display for all modules that use it."] = "Désactive l'affichage de proximité pour tous les modules l'utilisant."
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "L'affichage de proximité sera affiché la prochaine fois. Pour le désactiver complètement, rendez-vous dans les options du boss et décochez \"Proximité\"."
@@ -190,7 +190,7 @@ L["Shows or hides a spell tooltip if the Proximity display is currently tied dir
 
 L["Icons"] = "Icônes"
 
-L.raidIconDescription = "Certaines rencontres peuvent comporter des éléments tels que les techniques de type 'bombe' qui affectent un joueur spécifique, un joueur poursuivi ou bien encore un joueur spécifique important pour d'autres raisons. Vous pouvez personnaliser ici les icônes de raid qui seront utilisées pour marquer ces joueurs.\n\nSi une rencontre ne comporte qu'une technique qui requiert de marquer quelqu'un, seule l'icône primaire sera utilisée. Une icône ne sera jamais utilisée pour deux techniques différentes de la même rencontre, et chaque technique utilisera toujours la même icône la prochaine fois qu'elle se produira.\n\n|cffff4411Notez que si un joueur a déjà été marqué manuellement, Big Wigs ne changera jamais son icône.|r"
+L.raidIconsDescription = "Certaines rencontres peuvent comporter des éléments tels que les techniques de type 'bombe' qui affectent un joueur spécifique, un joueur poursuivi ou bien encore un joueur spécifique important pour d'autres raisons. Vous pouvez personnaliser ici les icônes de raid qui seront utilisées pour marquer ces joueurs.\n\nSi une rencontre ne comporte qu'une technique qui requiert de marquer quelqu'un, seule l'icône primaire sera utilisée. Une icône ne sera jamais utilisée pour deux techniques différentes de la même rencontre, et chaque technique utilisera toujours la même icône la prochaine fois qu'elle se produira.\n\n|cffff4411Notez que si un joueur a déjà été marqué manuellement, Big Wigs ne changera jamais son icône.|r"
 L["Primary"] = "Primaire"
 L["The first raid target icon that a encounter script should use."] = "La première icône de cible de raid qu'un script de rencontre doit utiliser."
 L["Secondary"] = "Secondaire"

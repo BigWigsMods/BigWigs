@@ -155,7 +155,7 @@ L["How long to fade out a message, in seconds"] = "Bestimmt, wie lange (in Sekun
 L["Custom range indicator"] = "Eigene Reichweitenanzeige"
 L.proximityTitle = "%d m / %d Spieler"
 L["Proximity"] = "Nähe"
-L["Sound"] = "Sound"
+L.sound = "Sound"
 L["Disabled"] = "Deaktivieren"
 L["Disable the proximity display for all modules that use it."] = "Deaktiviert die Anzeige naher Spieler für alle Module, die sie benutzen."
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "Die Anzeige naher Spieler wird beim nächsten Mal angezeigt werden. Um sie für diesen Boss vollständig zu deaktivieren, musst du die Option 'Nähe' im Bossmodul ausschalten."
@@ -191,7 +191,7 @@ L["Shows or hides a spell tooltip if the Proximity display is currently tied dir
 
 L["Icons"] = "Symbole"
 
-L.raidIconDescription = "Einige Begegnungen schließen Elemente wie 'Bomben'-Fähigkeiten ein, die einen bestimmten Spieler zum Ziel haben, ihn verfolgen oder er ist in sonst einer Art und Weise interessant. Hier kannst du bestimmen, welche Schlachtzugs-Symbole benutzt werden sollen, um die Spieler zu markieren.\n\nFalls nur ein Symbol benötigt wird, wird nur das erste benutzt. Ein Symbol wird niemals für zwei verschiedene Fähigkeiten innerhalb einer Begegnung benutzt.\n\n|cffff4411Beachte, dass ein manuell markierter Spieler von Big Wigs nicht ummarkiert wird.|r"
+L.raidIconsDescription = "Einige Begegnungen schließen Elemente wie 'Bomben'-Fähigkeiten ein, die einen bestimmten Spieler zum Ziel haben, ihn verfolgen oder er ist in sonst einer Art und Weise interessant. Hier kannst du bestimmen, welche Schlachtzugs-Symbole benutzt werden sollen, um die Spieler zu markieren.\n\nFalls nur ein Symbol benötigt wird, wird nur das erste benutzt. Ein Symbol wird niemals für zwei verschiedene Fähigkeiten innerhalb einer Begegnung benutzt.\n\n|cffff4411Beachte, dass ein manuell markierter Spieler von Big Wigs nicht ummarkiert wird.|r"
 L["Primary"] = "Erstes Symbol"
 L["The first raid target icon that a encounter script should use."] = "Das erste Schlachtzugs-Symbol, das verwendet wird."
 L["Secondary"] = "Zweites Symbol"

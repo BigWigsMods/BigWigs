@@ -1,7 +1,7 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "enUS", true, "raw")
 
 -- Core.lua
-L["%s has been defeated"] = true
+L.defeated = "%s has been defeated"
 
 L.bosskill = "Boss death"
 L.bosskill_desc = "Announce when the boss has been defeated."
@@ -16,27 +16,27 @@ L.movieBlocked = "You've seen this movie before, skipping it."
 L.roleUpdate = "Updated your role."
 
 -- Loader / Options.lua
-L["You are running an official release of Big Wigs %s (revision %d)"] = true
-L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = true
-L["You are running a source checkout of Big Wigs %s directly from the repository."] = true
-L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = true
-L["Your alpha version of Big Wigs is out of date (/bwv)."] = true
+L.officialRelease = "You are running an official release of Big Wigs %s (revision %d)"
+L.alphaRelease = "You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"
+L.sourceCheckout = "You are running a source checkout of Big Wigs %s directly from the repository."
+L.newReleaseAvailable = "There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."
+L.alphaOutdated = "Your alpha version of Big Wigs is out of date (/bwv)."
 L.extremelyOutdated = "\124cffff0000WARNING:\124r Your Big Wigs is over 200 revisions out of date!! Your version may have bugs, missing features, or completely incorrect timers. It is HIGHLY recommended you update."
 
 L.tooltipHint = "|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fRight-Click|r to access options."
-L["Active boss modules:"] = true
-L["All running modules have been reset."] = true
-L["All running modules have been disabled."] = true
+L.activeBossModules = "Active boss modules:"
+L.modulesReset = "All running modules have been reset."
+L.modulesDisabled = "All running modules have been disabled."
 
-L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = true
-L["Up to date:"] = true
-L["Out of date:"] = true
-L["DBM users:"] = true
-L["No boss mod:"] = true
+L.oldVersionsInGroup = "There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."
+L.upToDate = "Up to date:"
+L.outOfDate = "Out of date:"
+L.dbmUsers = "DBM users:"
+L.noBossMod = "No boss mod:"
 
-L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."] = true
-L["Combat has ended, Big Wigs has now finished loading."] = true
-L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."] = true
+L.blizzRestrictionsZone = "Waiting until combat ends to finish loading due to Blizzard combat restrictions."
+L.finishedLoading = "Combat has ended, Big Wigs has now finished loading."
+L.blizzRestrictionsConfig = "Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."
 
 L.missingAddOn = "Please note that this zone requires the [\124cFF436EEE%s\124r] plugin for timers to be displayed."
 
@@ -45,32 +45,33 @@ L.coreAddonDisabled = "Big Wigs won't function properly since the addon %s is di
 L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
 
 -- Options.lua
-L["Customize ..."] = true
-L["Profiles"] = true
+L.customizeBtn = "Customize ..."
+L.profiles = "Profiles"
 L.introduction = "Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group."
-L["Configure ..."] = true
-L.configureDesc = "Closes the interface options window and lets you configure displays for things like bars and messages.\n\nIf you want to customize more behind-the-scenes things, you can expand Big Wigs in the left tree and find the 'Customize ...' subsection."
-L["Sound"] = true
+L.configureBtn = "Configure ..."
+L.configureBtnDesc = "Closes the interface options window and lets you configure displays for things like bars and messages.\n\nIf you want to customize more behind-the-scenes things, you can expand Big Wigs in the left tree and find the 'Customize ...' subsection."
+L.sound = "Sound"
 L.soundDesc = "Messages might come with a sound. Some people find it easier to listen for these after they've learned which sound goes with which message, as opposed to reading the actual messages.\n\n|cffff4411Even when off, the default raid warning sound might be played by incoming raid warnings from other players. That sound, however, is different from the sounds we use.|r"
-L["Show Blizzard warnings"] = true
-L.blizzardDesc = "Blizzard provides their own messages for some abilities on some encounters. In our opinion, these messages are both way too long and descriptive. We try to produce smaller, more fitting messages that do not interfere with the gameplay, and that don't tell you specifically what to do.\n\n|cffff4411When off, Blizzards warnings will not be shown in the middle of the screen, but they will still show in your chat frame.|r"
-L["Flash Screen"] = true
-L.flashDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."
-L["Raid icons"] = true
-L.raidiconDesc = "Some encounter scripts use raid icons to mark players that are of special interest to your group. For example 'bomb'-type effects and mind control. If you turn this off, you won't mark anyone.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"
-L["Minimap icon"] = true
-L["Toggle show/hide of the minimap icon."] = true
-L["Configure"] = true
-L["Test"] = true
-L["Reset positions"] = true
-L["Colors"] = true
-L["Select encounter"] = true
-L["List abilities in group chat"] = true
-L["Block boss movies"] = true
-L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = true
-L["Pretend I'm using DBM"] = true
-L.pretendDesc = "If a DBM user does a version check to see who's using DBM, they will see you on the list. Useful for guilds that force using DBM."
-L["Create custom DBM bars"] = true
+L.showBlizzWarnings = "Show Blizzard warnings"
+L.showBlizzWarningsDesc = "Blizzard provides their own messages for some abilities on some encounters. In our opinion, these messages are both way too long and descriptive. We try to produce smaller, more fitting messages that do not interfere with the gameplay, and that don't tell you specifically what to do.\n\n|cffff4411When off, Blizzards warnings will not be shown in the middle of the screen, but they will still show in your chat frame.|r"
+L.flashScreen = "Flash Screen"
+L.flashScreenDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."
+L.raidIcons = "Raid icons"
+L.raidIconsDesc = "Some encounter scripts use raid icons to mark players that are of special interest to your group. For example 'bomb'-type effects and mind control. If you turn this off, you won't mark anyone.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"
+L.minimapIcon = "Minimap icon"
+L.minimapToggle = "Toggle show/hide of the minimap icon."
+L.configure = "Configure"
+L.test = "Test"
+L.resetPositions = "Reset positions"
+L.colors = "Colors"
+L.selectEncounter = "Select encounter"
+L.listAbilities = "List abilities in group chat"
+
+L.blockMovies = "Block boss movies"
+L.blockMoviesDesc = "After you've seen a boss movie once, Big Wigs will prevent it from playing again."
+L.dbmFaker = "Pretend I'm using DBM"
+L.dbmFakerDesc = "If a DBM user does a version check to see who's using DBM, they will see you on the list. Useful for guilds that force using DBM."
+L.dbmBar = "Create custom DBM bars"
 L.dbmBarDesc = "If a DBM user sends a pull timer or a custom 'pizza' bar, it will be shown in Big Wigs."
 L.chatMessages = "Chat frame messages"
 L.chatMessagesDesc = "Outputs all BigWigs messages to the default chat frame in addition to the display setting."
@@ -113,23 +114,23 @@ L.TANK_HEALER = "Tank & Healer Only"
 L.TANK_HEALER_desc = "Some abilities are only important for tanks and healers. If you want to see warnings for this ability regardless of your role, disable this option."
 L.DISPEL = "Dispeller Only"
 L.DISPEL_desc = "If you want to see warnings for this ability even when you cannot dispel it, disable this option."
-L["Advanced options"] = true
-L["<< Back"] = true
+
+L.advanced = "Advanced options"
+L.back = "<< Back"
 
 L.tank = "|cFFFF0000Tank alerts only.|r "
 L.healer = "|cFFFF0000Healer alerts only.|r "
 L.tankhealer = "|cFFFF0000Tank & Healer alerts only.|r "
 L.dispeller = "|cFFFF0000Dispeller alerts only.|r "
 
-L.About = "About"
-L.Developers = "Developers"
-L.Maintainers = "Maintainers"
-L.License = "License"
-L.Website = "Website"
-L.Contact = "Contact"
-L["See license.txt in the main Big Wigs folder."] = true
-L["irc.freenode.net in the #wowace channel"] = true
-L["Thanks to the following for all their help in various fields of development"] = true
+L.about = "About"
+L.developers = "Developers"
+L.license = "License"
+L.website = "Website"
+L.contact = "Contact"
+L.allRightsReserved = "All Rights Reserved"
+L.ircChannel = "irc.freenode.net in the #wowace channel"
+L.thanks = "Thanks to the following for all their help in various fields of development"
 
 -- Statistics
 L.statistics = "Statistics"

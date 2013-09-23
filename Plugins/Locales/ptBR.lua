@@ -150,7 +150,7 @@ L["Font color"] = "Font color"
 L["Custom range indicator"] = "Indicador de distância personalizado"
 L.proximityTitle = "%d yd / %d |4player:players;" -- yd = yards (short)
 L["Proximity"] = "Aproximação"
-L["Sound"] = "Som"
+L.sound = "Som"
 L["Disabled"] = "Desativado"
 L["Disable the proximity display for all modules that use it."] = "Desativa a janela de aproximação em todos os módulos que a use."
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "A janela de aproximação aparecerá na próxima vez. Para desativala completamente neste encontro, você deve apagala das opções de encontros."
@@ -186,7 +186,7 @@ L["Shows or hides a spell tooltip if the Proximity display is currently tied dir
 
 L["Icons"] = "Icones"
 
-L.raidIconDescription = "Elementos de tipo 'bomba' e similares em um jogador podem ser de interesse especial. Aqui você pode configurar como se deveria marcar com icones algunos personagens.\n\nSó se usa um icone para cada encontro se usará o primario, nunca se usará o mesmo icone para 2 habilidades distintas, para isto esta o icone secundario.\n\n|cffff4411Nota: Se um jogador foi marcado manualmente o Big Wigs nunca trocará seu icone.|r"
+L.raidIconsDescription = "Elementos de tipo 'bomba' e similares em um jogador podem ser de interesse especial. Aqui você pode configurar como se deveria marcar com icones algunos personagens.\n\nSó se usa um icone para cada encontro se usará o primario, nunca se usará o mesmo icone para 2 habilidades distintas, para isto esta o icone secundario.\n\n|cffff4411Nota: Se um jogador foi marcado manualmente o Big Wigs nunca trocará seu icone.|r"
 L["Primary"] = "Primário"
 L["The first raid target icon that a encounter script should use."] = "O primeiro objetivo da raide, este icone será usado"
 L["Secondary"] = "Secundário"

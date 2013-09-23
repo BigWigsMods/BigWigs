@@ -33,11 +33,11 @@ do
 	-- Then build the release string, which we can add to the interface option panel.
 	local majorVersion = GetAddOnMetadata("BigWigs", "Version") or "4.?"
 	if releaseType == REPO then
-		releaseString = L["You are running a source checkout of Big Wigs %s directly from the repository."]:format(majorVersion)
+		releaseString = L.sourceCheckout:format(majorVersion)
 	elseif releaseType == RELEASE then
-		releaseString = L["You are running an official release of Big Wigs %s (revision %d)"]:format(majorVersion, releaseRevision)
+		releaseString = L.officialRelease:format(majorVersion, releaseRevision)
 	elseif releaseType == ALPHA then
-		releaseString = L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"]:format(majorVersion, releaseRevision)
+		releaseString = L.alphaRelease:format(majorVersion, releaseRevision)
 	end
 	BIGWIGS_RELEASE_TYPE = releaseType
 	BIGWIGS_RELEASE_REVISION = releaseRevision
@@ -175,7 +175,7 @@ end
 
 local function loadCoreAndOpenOptions()
 	if not BigWigsOptions and (InCombatLockdown() or UnitAffectingCombat("player")) then
-		sysprint(L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."])
+		sysprint(L.blizzRestrictionsConfig)
 		return
 	end
 	loadAndEnableCore()
@@ -222,7 +222,7 @@ local function versionTooltipFunc(tt)
 		end
 	end
 	if add then
-		tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
+		tt:AddLine(L.oldVersionsInGroup, 1, 0, 0, 1)
 	end
 end
 
@@ -608,7 +608,7 @@ do
 			if message > highestReleaseRevision then highestReleaseRevision = message end
 			if BIGWIGS_RELEASE_TYPE == RELEASE and BIGWIGS_RELEASE_REVISION ~= -1 and message > BIGWIGS_RELEASE_REVISION then
 				if not warnedOutOfDate then
-					sysprint(L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
+					sysprint(L.newReleaseAvailable)
 					warnedOutOfDate = true
 				end
 				if not warnedExtremelyOutOfDate and (message - BIGWIGS_RELEASE_REVISION) > 200 then
@@ -630,7 +630,7 @@ do
 			if message > highestAlphaRevision then highestAlphaRevision = message end
 			if BIGWIGS_RELEASE_TYPE == ALPHA and BIGWIGS_RELEASE_REVISION ~= -1 and ((message-10) > BIGWIGS_RELEASE_REVISION or highestReleaseRevision > BIGWIGS_RELEASE_REVISION) then
 				if not warnedOutOfDate then
-					sysprint(L["Your alpha version of Big Wigs is out of date (/bwv)."])
+					sysprint(L.alphaOutdated)
 					warnedOutOfDate = true
 				end
 				if not warnedExtremelyOutOfDate and ((message - BIGWIGS_RELEASE_REVISION) > 200 or (highestReleaseRevision - BIGWIGS_RELEASE_REVISION) > 200) then
@@ -649,7 +649,7 @@ do
 	local warnedThisZone = {[465]=true,[473]=true,[807]=true,[809]=true,[928]=true,[929]=true} -- World Bosses
 	function loader:PLAYER_REGEN_ENABLED()
 		loaderUtilityFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		sysprint(L["Combat has ended, Big Wigs has now finished loading."])
+		sysprint(L.finishedLoading)
 		if load(BigWigs, "BigWigs_Core") then
 			for k,v in next, queueLoad do
 				if v == "unloaded" then
@@ -674,7 +674,7 @@ do
 					if not queueLoad[id] then
 						queueLoad[id] = "unloaded"
 						loaderUtilityFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-						sysprint(L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."])
+						sysprint(L.blizzRestrictionsZone)
 					end
 				else
 					queueLoad[id] = "loaded"
@@ -718,7 +718,7 @@ do
 					if not queueLoad[id] then
 						queueLoad[id] = "unloaded"
 						loaderUtilityFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-						sysprint(L["Waiting until combat ends to finish loading due to Blizzard combat restrictions."])
+						sysprint(L.blizzRestrictionsZone)
 					end
 				else
 					queueLoad[id] = "loaded"
@@ -861,13 +861,13 @@ if ldb11 then
 					for name, module in BigWigs:IterateBossModules() do
 						if module:IsEnabled() then module:Disable() end
 					end
-					sysprint(L["All running modules have been disabled."])
+					sysprint(L.modulesDisabled)
 				end
 			else
 				for name, module in BigWigs:IterateBossModules() do
 					if module:IsEnabled() then module:Reboot() end
 				end
-				sysprint(L["All running modules have been reset."])
+				sysprint(L.modulesReset)
 			end
 		end
 	end
@@ -880,7 +880,7 @@ if ldb11 then
 			for name, module in BigWigs:IterateBossModules() do
 				if module:IsEnabled() then
 					if not added then
-						tt:AddLine(L["Active boss modules:"], 1, 1, 1)
+						tt:AddLine(L.activeBossModules, 1, 1, 1)
 						added = true
 					end
 					tt:AddLine(module.displayName)
@@ -962,10 +962,10 @@ do
 				bad[#bad+1] = coloredNames[player]
 			end
 		end
-		if #good > 0 then print(L["Up to date:"], unpack(good)) end
-		if #ugly > 0 then print(L["Out of date:"], unpack(ugly)) end
-		if #crazy > 0 then print(L["DBM users:"], unpack(crazy)) end
-		if #bad > 0 then print(L["No boss mod:"], unpack(bad)) end
+		if #good > 0 then print(L.upToDate, unpack(good)) end
+		if #ugly > 0 then print(L.outOfDate, unpack(ugly)) end
+		if #crazy > 0 then print(L.dbmUsers, unpack(crazy)) end
+		if #bad > 0 then print(L.noBossMod, unpack(bad)) end
 	end
 
 	SLASH_BIGWIGSVERSION1 = "/bwv"
@@ -992,7 +992,7 @@ do
 	end
 	frame:SetScript("OnShow", function()
 		if not BigWigsOptions and (InCombatLockdown() or UnitAffectingCombat("player")) then
-			sysprint(L["Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."])
+			sysprint(L.blizzRestrictionsConfig)
 			return
 		end
 

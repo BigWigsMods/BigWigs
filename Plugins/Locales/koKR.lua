@@ -155,7 +155,7 @@ L["How long to fade out a message, in seconds"] = "몇 초후 메시지가 점�
 L["Custom range indicator"] = "사용자 거리 지시기"
 L.proximityTitle = "%d미터 / %d |4플레이어:플레이어;" -- yd = yards (short)
 L["Proximity"] = "근접"
-L["Sound"] = "효과음"
+L.sound = "효과음"
 L["Disabled"] = "미사용"
 L["Disable the proximity display for all modules that use it."] = "모든 모듈의 근접 표시를 비활성화 합니다."
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "다음 표시때 근접 표시를 표시하도록 합니다. 이것을 비활성화 하려면 옵션을 통해 전환하세요."
@@ -191,7 +191,7 @@ L["Shows or hides a spell tooltip if the Proximity display is currently tied dir
 
 L["Icons"] = "아이콘"
 
-L.raidIconDescription = "중요한 '폭탄'-유형의 보스 능력을 플레이어에게 사용할 경우 BigWigs에서 공격대 대상 아이콘 지정을 설정합니다. 중요 '폭탄'-유형 기술이 2개일 경우 1개의 기술에 첫번째, 그나머지 기술에 대해서는 두번째 아이콘을 지정하여 사용합니다.\n\n|cffff4411주의: 만약에 플레이어가 이미 수동으로 전술 지정이 되어있다면 Big Wigs 에서는 그것을 변경하지 않습니다.|r"
+L.raidIconsDescription = "중요한 '폭탄'-유형의 보스 능력을 플레이어에게 사용할 경우 BigWigs에서 공격대 대상 아이콘 지정을 설정합니다. 중요 '폭탄'-유형 기술이 2개일 경우 1개의 기술에 첫번째, 그나머지 기술에 대해서는 두번째 아이콘을 지정하여 사용합니다.\n\n|cffff4411주의: 만약에 플레이어가 이미 수동으로 전술 지정이 되어있다면 Big Wigs 에서는 그것을 변경하지 않습니다.|r"
 L["Primary"] = "첫번째 아이콘"
 L["The first raid target icon that a encounter script should use."] = "첫번째 공격대 대상에게 사용할 아이콘을 지정합니다."
 L["Secondary"] = "두번째 아이콘"

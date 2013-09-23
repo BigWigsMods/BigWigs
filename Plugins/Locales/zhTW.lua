@@ -155,7 +155,7 @@ L["How long to fade out a message, in seconds"] = "以秒計訊息消退時間�
 L["Custom range indicator"] = "自訂距離指示器"
 L.proximityTitle = "%d碼/%d玩家"
 L["Proximity"] = "近距離顯"
-L["Sound"] = "音效"
+L.sound = "音效"
 L["Disabled"] = "禁用"
 L["Disable the proximity display for all modules that use it."] = "禁止所有首領模组使用近距離。"
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "近距離顯示將在下次顯示。要完全禁用此功能，需要關閉此功能選項。"
@@ -191,7 +191,7 @@ L["Shows or hides a spell tooltip if the Proximity display is currently tied dir
 
 L["Icons"] = "圖示"
 
-L.raidIconDescription = "可能遇到包含例如炸彈類型的技能指向特定的玩家，玩家被追，或是特定玩家可能有興趣在其他方面。這裡可以自訂團隊圖示來標記這些玩家。\n\n如果只遇到一種技能，很好，只有第一個圖示會被使用。在某些戰鬥中一個圖示不被使用在兩個不同的技能上，任何特定技能在下次總是使用相同圖示。\n\n|cffff4411注意：如果玩家已經被手動標記，Big Wigs 將不會改變他的圖示。|r"
+L.raidIconsDescription = "可能遇到包含例如炸彈類型的技能指向特定的玩家，玩家被追，或是特定玩家可能有興趣在其他方面。這裡可以自訂團隊圖示來標記這些玩家。\n\n如果只遇到一種技能，很好，只有第一個圖示會被使用。在某些戰鬥中一個圖示不被使用在兩個不同的技能上，任何特定技能在下次總是使用相同圖示。\n\n|cffff4411注意：如果玩家已經被手動標記，Big Wigs 將不會改變他的圖示。|r"
 L["Primary"] = "主要"
 L["The first raid target icon that a encounter script should use."] = "戰鬥時使用的第一個團隊圖示。"
 L["Secondary"] = "次要"
