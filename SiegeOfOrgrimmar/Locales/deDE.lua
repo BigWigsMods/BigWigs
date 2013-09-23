@@ -94,7 +94,7 @@ if L then
 	L.adds_trigger3 = "Nächste Staffel, nach vorn!"
 	L.adds_trigger4 = "Krieger, im Laufschritt!"
 	L.adds_trigger5 = "Kor'kron, zu mir!"
-	L.adds_trigger_extra_wave = "Alle Kor'kron... unter meinem Befehl... tötet sie... JETZT"
+	L.adds_trigger_extra_wave = "Alle Kor'kron unter meinem Befehl, tötet sie, Jetzt!"
 	L.extra_adds = "Zusätzliche Adds"
 
 	L.chain_heal_message = "Dein Fokusziel wirkt Kettenheilung!"
@@ -112,7 +112,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "deDE")
 if L then
-	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
+	L.win_trigger = "System wird neu gestartet. Die Energieversorgung muss stabil bleiben, sonst fliegt die ganze Chose in die Luft."
 
 	L.enable_zone = "Artefaktlagerraum"
 	L.matter_scramble_explosion = "Materiewirbel Explosion"
