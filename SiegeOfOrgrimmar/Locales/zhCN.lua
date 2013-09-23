@@ -16,9 +16,9 @@ if L then
 	L.intermission = "背水一战"
 	L.intermission_desc = "当任一首领即将使用背水一战时发出警报。"
 
-	--L.inferno_self = "Inferno Strike on you"
-	--L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
-	--L.inferno_self_bar = "You explode!"
+	L.inferno_self = "自身炼狱打击"
+	L.inferno_self_desc = "当你受到炼狱打击时显示特殊的倒计时条。"
+	L.inferno_self_bar = ">你< 爆炸！"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "zhCN")
@@ -36,7 +36,7 @@ end
 L = BigWigs:NewBossLocale("Sha of Pride", "zhCN")
 if L then
 	L.custom_off_titan_mark = "泰坦之赐标记"
-	L.custom_off_titan_mark_desc = "Mark people that have Gift of the Titans with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_titan_mark_desc = "给受到泰坦之赐的玩家使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 进行标记，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 
 	L.projection_message = "快到|cFF00FF00绿|r箭头！"
 	L.projection_explosion = "投影爆炸"
