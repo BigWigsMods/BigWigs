@@ -16,9 +16,9 @@ if L then
 	L.intermission = "Misure Disperate"
 	L.intermission_desc = "Avvisa quando ti stai avvicinando ad un boss che sta lanciando Misure Disperate"
 
-	--L.inferno_self = "Inferno Strike on you"
-	--L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
-	--L.inferno_self_bar = "You explode!"
+	L.inferno_self = "Assalto dell'Inferno su di te"
+	L.inferno_self_desc = "Countdown Speciale quando Assalto dell'nferno è su di te."
+	L.inferno_self_bar = "Stai Esplodendo!"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "itIT")
@@ -36,7 +36,7 @@ end
 L = BigWigs:NewBossLocale("Sha of Pride", "itIT")
 if L then
 	L.custom_off_titan_mark = "Marcatore Potenza dei Titani"
-	L.custom_off_titan_mark_desc = "Mark people that have Gift of the Titans with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_titan_mark_desc = "Evidenzia i giocatori con Dono dei Titani con  {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, richiede capoincursione o assistente.\n|cFFFF0000Soltanto 1 dei giocatori nell'incursione dovrebbe tenere abilitata questa opzione per evitare conflitti di marcamento.|r"
 
 	L.projection_message = "Vai verso la freccia |cFF00FF00VERDE|r!"
 	L.projection_explosion = "Proiezione esplosione"
