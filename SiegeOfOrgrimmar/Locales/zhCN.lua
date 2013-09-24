@@ -166,7 +166,7 @@ if L then
 
 	L.farseer_trigger = "先知们，为我们治疗！"
 	L.custom_off_shaman_marker = "先知标记"
-	L.custom_off_shaman_marker_desc = "帮助打断分配，使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 标记先知狼骑（按照这个顺序）（不是所有标记会被用到），需要权限。"
+	L.custom_off_shaman_marker_desc = "帮助打断分配，使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 标记先知狼骑（按照这个顺序，不是所有标记会被用到），需要权限。"
 
 	L.focus_only = "|cffff0000只警报焦点目标。|r "
 end
