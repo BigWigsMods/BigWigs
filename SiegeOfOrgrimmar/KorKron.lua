@@ -9,7 +9,7 @@ TODO:
 
 local mod, CL = BigWigs:NewBoss("Kor'kron Dark Shaman", 953, 856)
 if not mod then return end
-mod:RegisterEnableMob(71859, 71858) -- Earthbreaker Haromm, Wavebinder Kardris
+mod:RegisterEnableMob(71859, 71858, 71923, 71921) -- Earthbreaker Haromm, Wavebinder Kardris, Bloodclaw, Darkfang
 
 --------------------------------------------------------------------------------
 -- Locals
