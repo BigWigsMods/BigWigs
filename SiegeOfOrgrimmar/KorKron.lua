@@ -143,7 +143,7 @@ do
 end
 
 do
-	local timer, foulStreamTarget = nil, nil
+	local timer, foulStreamTarget, fired = nil, nil, 0
 	local function warnFoulStream(player, guid)
 		mod:PrimaryIcon(-8132, player)
 		if mod:Me(guid) then
@@ -159,7 +159,8 @@ do
 	local function checkFoulStream()
 		local boss = mod:MobId(UnitGUID("boss1")) == 71859 and "boss1" or "boss2"
 		local player = mod:UnitName(boss.."target")
-		if player and (not UnitDetailedThreatSituation(boss.."target", boss) and not mod:Tank(boss.."target")) then -- assuming tanks can't get it
+		fired = fired + 1
+		if player and ((not UnitDetailedThreatSituation(boss.."target", boss) and not mod:Tank(boss.."target")) or fired > 9) then
 			foulStreamTarget = UnitGUID(boss.."target")
 			warnFoulStream(player, foulStreamTarget)
 			mod:CancelTimer(timer)
@@ -169,6 +170,7 @@ do
 	function mod:FoulStream(args)
 		self:CDBar(-8132, 32)
 		foulStreamTarget = nil
+		fired = 0
 		if not timer then
 			timer = self:ScheduleRepeatingTimer(checkFoulStream, 0.05)
 		end
@@ -187,7 +189,7 @@ end
 
 function mod:FroststormStrike(args)
 	if args.amount > 3 then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 4 and "Warning")
 	end
 end
 
@@ -236,9 +238,25 @@ do
 	end
 end
 
-function mod:ToxicStorm(args)
-	self:Message(args.spellId, "Urgent")
-	self:Bar(args.spellId, 32)
+do
+	local function checkTarget(sourceGUID)
+		for i = 1, 5 do
+			local boss = ("boss%d"):format(i)
+			if UnitGUID(boss) == sourceGUID then
+				local bossTarget = boss.."target"
+				local player = UnitGUID(bossTarget)
+				if player then
+					local toxicTarget = mod:UnitName(bossTarget)
+					mod:TargetMessage(144005, toxicTarget, "Urgent", "Alert")
+				end
+				break
+			end
+		end
+	end
+	function mod:ToxicStorm(args)
+		self:Bar(args.spellId, 32)
+		self:ScheduleTimer(checkTarget, 0.1, args.sourceGUID)
+	end
 end
 
 -- General

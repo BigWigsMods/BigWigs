@@ -11,8 +11,9 @@
 ## Notes-esES: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Notes-esMX: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Notes-itIT: Un approccio modulare, leggero e non intrusivo per gli avvisi ai combattimenti con i boss.
-## Author: Ammo, Funkydude, Maat, Nebula169, Rabbit
-## Version: 4.375
+## Notes-ptBR: Modular, lightweight, non-intrusive approach to boss encounter warnings.
+## Author: Funkydude, Maat, Nebula169
+## Version: 4.380
 ## X-Category: Raid
 
 ## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibChatAnims, LibDualSpec-1.0
