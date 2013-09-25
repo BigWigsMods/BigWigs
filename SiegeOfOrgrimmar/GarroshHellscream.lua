@@ -82,10 +82,9 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
 
-	-- phase 2
+	-- Phase 2
 	self:Log("SPELL_CAST_SUCCESS", "MindControl", 145065, 145171)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GrippingDispair", 145183)
 	self:Log("SPELL_AURA_APPLIED", "GrippingDispair", 145183)
@@ -100,6 +99,7 @@ function mod:OnBossEnable()
 	self:Yell("Farseer", L["farseer_trigger"])
 	self:Emote("SiegeEngineer", "144616")
 	self:Log("SPELL_CAST_SUCCESS", "DesecratedWeapon", 144748, 144749)
+
 	self:Death("Win", 71865)
 end
 
@@ -270,7 +270,9 @@ do
 			end
 		end
 		-- this is so people know they'll take extra damage
-		self:TargetMessage(args.spellId, hopeList, "Attention", "Warning", 29125, 149004) -- maybe add it's own option key? 29125 spell called "Hopeless"
+		if #hopeList > 0 then
+			self:TargetMessage(args.spellId, hopeList, "Attention", "Warning", 29125, 149004) -- maybe add it's own option key? 29125 spell called "Hopeless"
+		end
 		self:Message(args.spellId, "Positive", "Long", CL["over"]:format(args.spellName))
 	end
 end
