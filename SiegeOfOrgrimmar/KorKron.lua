@@ -66,8 +66,7 @@ function mod:OnBossEnable()
 	-- Earthbreaker Haromm
 	self:Log("SPELL_AURA_APPLIED", "ToxicMistApplied", 144089)
 	self:Log("SPELL_AURA_REMOVED", "ToxicMistRemoved", 144089)
-	self:Log("SPELL_CAST_START", "FoulStream", 137399, 144090) -- SUCCESS has destName but is way too late, and "boss1target" should be reliable for it
-	self:Log("SPELL_CAST_SUCCESS", "FoulStreamFallback", 137399, 144090)
+	self:Log("SPELL_CAST_START", "FoulStream", 144090) -- SUCCESS has destName but is way too late, and "boss1target" should be reliable for it
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FroststormStrike", 144215)
 	self:Log("SPELL_CAST_START", "AshenWall", 144070)
 	-- Wavebinder Kardris
@@ -143,47 +142,20 @@ do
 end
 
 do
-	local timer, foulStreamTarget, fired = nil, nil, 0
-	local function warnFoulStream(player, guid)
-		mod:PrimaryIcon(-8132, player)
+	local function printTarget(name, guid)
+		mod:PrimaryIcon(-8132, name)
 		if mod:Me(guid) then
 			mod:Say(-8132)
-		end
-		if mod:Range(player) < 8 then -- 8 is assumed, also a circular distance check is not the best for this
-			mod:RangeMessage(-8132)
 			mod:Flash(-8132)
-		else
-			mod:TargetMessage(-8132, player, "Positive", "Alarm")
+		elseif mod:Range(name) < 8 then -- 8 is assumed, also a circular distance check is not the best for this
+			mod:RangeMessage(-8132)
+			return
 		end
-	end
-	local function checkFoulStream()
-		local boss = mod:MobId(UnitGUID("boss1")) == 71859 and "boss1" or "boss2"
-		local player = mod:UnitName(boss.."target")
-		fired = fired + 1
-		if player and ((not UnitDetailedThreatSituation(boss.."target", boss) and not mod:Tank(boss.."target")) or fired > 9) then
-			foulStreamTarget = UnitGUID(boss.."target")
-			warnFoulStream(player, foulStreamTarget)
-			mod:CancelTimer(timer)
-			timer = nil
-		end
+		mod:TargetMessage(-8132, name, "Positive", "Alarm")
 	end
 	function mod:FoulStream(args)
 		self:CDBar(-8132, 32)
-		foulStreamTarget = nil
-		fired = 0
-		if not timer then
-			timer = self:ScheduleRepeatingTimer(checkFoulStream, 0.05)
-		end
-	end
-	function mod:FoulStreamFallback(args)
-		if timer then
-			self:CancelTimer(timer)
-			timer = nil
-		end
-		 -- don't do anything if we warned for the target already
-		if args.destGUID ~= foulStreamTarget then
-			warnFoulStream(args.destName, args.destGUID)
-		end
+		self:GetBossTarget(printTarget, 0.4, args.sourceGUID)
 	end
 end
 
@@ -239,23 +211,12 @@ do
 end
 
 do
-	local function checkTarget(sourceGUID)
-		for i = 1, 5 do
-			local boss = ("boss%d"):format(i)
-			if UnitGUID(boss) == sourceGUID then
-				local bossTarget = boss.."target"
-				local player = UnitGUID(bossTarget)
-				if player then
-					local toxicTarget = mod:UnitName(bossTarget)
-					mod:TargetMessage(144005, toxicTarget, "Urgent", "Alert")
-				end
-				break
-			end
-		end
+	local function printTarget(name)
+		mod:TargetMessage(144005, name, "Urgent", "Alert")
 	end
 	function mod:ToxicStorm(args)
 		self:Bar(args.spellId, 32)
-		self:ScheduleTimer(checkTarget, 0.1, args.sourceGUID)
+		self:GetBossTarget(printTarget, 0.2, args.sourceGUID)
 	end
 end
 
