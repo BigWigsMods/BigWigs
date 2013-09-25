@@ -79,7 +79,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(450)
+	self:Berserk(self:LFR() and 600 or 450)
 	-- no need to start bars here we do it at regeneration
 	phase = 1
 	if self.db.profile.custom_off_mine_marks then
