@@ -71,7 +71,7 @@ end
 function mod:OnEngage()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "KillCheck")
 	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "KillCheckMouseOver")
-	
+
 	blastCounter = 1
 
 	self:Berserk(600)

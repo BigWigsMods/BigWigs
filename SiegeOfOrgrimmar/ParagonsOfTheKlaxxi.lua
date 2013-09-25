@@ -283,15 +283,14 @@ function mod:ParasiteFixate(args)
 end
 
 do
-	local timers = {}
 	function mod:InjectionRemoved(args)
-		self:CancelTimer(timers[args.destName])
+		self:CancelDelayedMessage(L["injection_over_soon"]:format(args.destName))
 	end
 	function mod:Injection(args)
 		local amount = args.amount or 1
 		self:StopBar(CL["count"]:format(args.spellName, amount-1), args.destName)
 		self:TargetBar(args.spellId, 20, args.destName, CL["count"]:format(args.spellName, amount))
-		timers[args.destName] = self:ScheduleTimer("Message", 15, args.spellId, "Urgent", nil, L["injection_over_soon"]:format(args.destName)) -- might want to check what happens if player deis with debuff
+		self:DelayedMessage(args.spellId, 15, "Urgent", L["injection_over_soon"]:format(args.destName), args.spellId) -- might want to check what happens if player deis with debuff
 	end
 end
 
