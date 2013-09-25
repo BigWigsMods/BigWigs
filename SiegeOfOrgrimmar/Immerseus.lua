@@ -12,6 +12,12 @@ if not mod then return end
 mod:RegisterEnableMob(71543)
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local blastCounter = 1
+
+--------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -65,8 +71,10 @@ end
 function mod:OnEngage()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "KillCheck")
 	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "KillCheckMouseOver")
+	
+	blastCounter = 1
 
-	self:Berserk(600, nil, nil, "Berserk (assumed)") -- XXX Assumed
+	self:Berserk(600)
 	self:Bar(143309, 20.8) -- Swirl
 	self:Bar(143436, 10) -- Corrosive Blast
 	if self:Heroic() then
@@ -100,9 +108,13 @@ end
 -- add personal too high stack warning
 
 -- normal
-function mod:CorrosiveBlast(args)
-	self:Message(args.spellId, "Urgent", self:Tank() and "Warning")
-	self:CDBar(args.spellId, 35)
+do
+	local blastTimers = { 34, 23, 30 } -- 23s cd, reset with swirl it seems
+	function mod:CorrosiveBlast(args)
+		self:Message(args.spellId, "Urgent", "Alarm")
+		self:CDBar(args.spellId, blastTimers[blastCounter] or 23)
+		blastCounter = blastCounter + 1
+	end
 end
 
 function mod:CorrosiveBlastStack(args)
@@ -119,6 +131,7 @@ function mod:Splits()
 end
 
 function mod:Reform()
+	blastCounter = 1
 	self:Message(143469, "Neutral")
 	self:Bar(143309, 24) -- Swirl 24.1 - 24.9
 	self:Bar(143436, 14) -- Corrosive Blast 13.6 - 15.2
@@ -129,7 +142,7 @@ end
 
 function mod:Swirl(args)
 	self:Message(args.spellId, "Important", "Long")
-	self:Bar(args.spellId, 48) -- Most people probably never encounter one before split
+	self:Bar(args.spellId, 53)
 end
 
 do
