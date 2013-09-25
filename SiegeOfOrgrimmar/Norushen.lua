@@ -186,15 +186,16 @@ function mod:OnSync(sync, _, player)
 		self:Message("stages", "Neutral", "Warning", CL["phase"]:format(2), 146179)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	-- Big add messages are assuming you are not having two up at the same time
-	elseif sync == "InsideBigAddDeath" or sync == "Phase2BigAddSpawn" then
-		if sync == "InsideBigAddDeath" then
-			local t = GetTime()
-			if throttlePlayers[player] and (t - throttlePlayers[player]) < 5 then
-				return
-			end
-			throttlePlayers[player] = t
+	elseif sync == "InsideBigAddDeath" then
+		local t = GetTime()
+		if throttlePlayers[player] and (t - throttlePlayers[player]) < 5 then
+			return
 		end
+		throttlePlayers[player] = t
 
+		bigAddCounter = bigAddCounter + 1
+		self:Message("big_adds", "Urgent", "Alarm", CL["incoming"]:format(L["big_add"]:format(bigAddCounter)), 147082)
+	elseif sync == "Phase2BigAddSpawn" then
 		bigAddCounter = bigAddCounter + 1
 		self:Message("big_adds", "Urgent", "Alarm", L["big_add"]:format(bigAddCounter), 147082)
 	elseif sync == "OutsideBigAddDeath" then
