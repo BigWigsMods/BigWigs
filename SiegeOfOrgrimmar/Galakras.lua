@@ -162,9 +162,9 @@ end
 
 --Galakras
 function mod:FlamesOfGalakrondStacking(args)
-	if args.amount > 3 then
+	if args.amount > 2 then
 		if self:Me(args.destGUID) or (self:Tank() and self:Tank(args.destName)) then
-			self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+			self:StackMessage(147068, args.destName, args.amount, "Attention", nil, 71393, args.spellId) -- 71393 = "Flames"
 		end
 	end
 end
@@ -178,7 +178,7 @@ end
 
 function mod:FlamesOfGalakrondApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Warning")
+	self:TargetMessage(args.spellId, args.destName, "Important", "Warning", 88986, args.spellId) -- 88986 = "Fireball"
 	if self:Me(args.destGUID) then
 		self:OpenProximity(args.spellId, 8)
 		self:Flash(args.spellId)
