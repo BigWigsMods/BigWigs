@@ -76,7 +76,7 @@ do
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				self:Message(144692, "Personal", "Info", CL["under"]:format(args.spellName))
+				self:Message(144692, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			end
 		end
 	end
