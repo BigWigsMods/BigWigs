@@ -192,9 +192,16 @@ function mod:IgniteArmor(args)
 	self:CDBar(args.spellId, 9)
 end
 
-function mod:LaserBurn(args)
-	self:Bar(args.spellId, 11) -- is there even a point for this?
-	self:Message(args.spellId, "Important")
+do
+	local prev = 0
+	function mod:LaserBurn(args)
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:Bar(args.spellId, 11) -- is there even a point for this?
+			self:Message(args.spellId, "Important")
+		end
+	end
 end
 
 do
