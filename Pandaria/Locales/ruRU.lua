@@ -11,3 +11,10 @@ if L then
 	L.engage_yell = "Принесите мне их трупы!"
 end
 
+L = BigWigs:NewBossLocale("Ordos", "ruRU")
+if L then
+	L.engage_yell = "You will take my place on the eternal brazier!"
+
+	L.burning_soul_bar = "Explosions"
+end
+

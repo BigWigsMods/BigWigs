@@ -5,6 +5,7 @@
 <Script file="Salyis.lua"/>
 <Script file="Nalak.lua"/>
 <Script file="Oondasta.lua"/>
+<Script file="Ordos.lua"/>
 
 </Ui>
 
