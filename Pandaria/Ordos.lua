@@ -60,7 +60,7 @@ end
 --
 
 function mod:MagmaCrush(args)
-	self:Message(args.spellId, "Urgent", nil, CL["cast"]:format(args.spellName))
+	self:Message(args.spellId, "Urgent", nil, CL["casting"]:format(args.spellName))
 	self:CDBar(args.spellId, 12) -- 15.7 29.1 24.1 13.3 20.6 12.1
 end
 
