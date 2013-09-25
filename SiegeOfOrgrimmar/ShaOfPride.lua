@@ -113,13 +113,13 @@ end
 do
 	local banishmentList, scheduled = mod:NewTargetList(), nil
 	local function warnBanishment(spellId)
-		mod:Bar(spellId, 77)
 		mod:TargetMessage(spellId, banishmentList, "Attention")
 		scheduled = nil
 	end
 	function mod:Banishment(args)
 		banishmentList[#banishmentList+1] = args.destName
 		if not scheduled then
+			mod:Bar(spellId, 77)
 			scheduled = self:ScheduleTimer(warnBanishment, 0.1, args.spellId)
 		end
 	end

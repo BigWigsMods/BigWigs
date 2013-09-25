@@ -21,7 +21,7 @@ L.alphaRelease = "You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"
 L.sourceCheckout = "You are running a source checkout of Big Wigs %s directly from the repository."
 L.newReleaseAvailable = "There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."
 L.alphaOutdated = "Your alpha version of Big Wigs is out of date (/bwv)."
-L.extremelyOutdated = "\124cffff0000WARNING:\124r Your Big Wigs is over 200 revisions out of date!! Your version may have bugs, missing features, or completely incorrect timers. It is HIGHLY recommended you update."
+L.extremelyOutdated = "\124cffff0000WARNING:\124r Your Big Wigs is over 120 revisions out of date!! Your version may have bugs, missing features, or completely incorrect timers. It is HIGHLY recommended you update."
 
 L.tooltipHint = "|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fRight-Click|r to access options."
 L.activeBossModules = "Active boss modules:"

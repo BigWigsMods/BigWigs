@@ -611,7 +611,7 @@ do
 					sysprint(L.newReleaseAvailable)
 					warnedOutOfDate = true
 				end
-				if not warnedExtremelyOutOfDate and (message - BIGWIGS_RELEASE_REVISION) > 200 then
+				if not warnedExtremelyOutOfDate and (message - BIGWIGS_RELEASE_REVISION) > 120 then
 					warnedExtremelyOutOfDate = true
 					sysprint(L.extremelyOutdated)
 					RaidNotice_AddMessage(RaidWarningFrame, L.extremelyOutdated, {r=1,g=1,b=1})
@@ -633,7 +633,7 @@ do
 					sysprint(L.alphaOutdated)
 					warnedOutOfDate = true
 				end
-				if not warnedExtremelyOutOfDate and ((message - BIGWIGS_RELEASE_REVISION) > 200 or (highestReleaseRevision - BIGWIGS_RELEASE_REVISION) > 200) then
+				if not warnedExtremelyOutOfDate and ((message - BIGWIGS_RELEASE_REVISION) > 120 or (highestReleaseRevision - BIGWIGS_RELEASE_REVISION) > 120) then
 					warnedExtremelyOutOfDate = true
 					sysprint(L.extremelyOutdated)
 					RaidNotice_AddMessage(RaidWarningFrame, L.extremelyOutdated, {r=1,g=1,b=1})

@@ -382,29 +382,21 @@ function mod:Clash(args)
 end
 
 do
-	local timer
-	local function warnCorruptedBrewTarget(unitId)
-		local target = unitId.."target"
-		if not UnitExists(target) or mod:Tank(target) or UnitDetailedThreatSituation(target, unitId) then return end
-		if mod:Me(UnitGUID(target)) then
+	local function printTarget(name, guid)
+		if mod:Me(guid) then
 			mod:Flash(143019)
-			mod:Message(143019, "Personal", "Info", CL["you"]:format(mod:SpellName(143019)))
-		elseif mod:Range(target) < 5 then
+		elseif mod:Range(name) < 5 then
 			mod:RangeMessage(143019)
 			mod:Flash(143019)
-		else
-			mod:TargetMessage(143019, mod:UnitName(target), "Personal", "Info")
+			return
 		end
-		mod:CancelTimer(timer)
-		timer = nil
+		mod:TargetMessage(143019, name, "Personal", "Info")
 	end
 	function mod:BossSucceeded(unitId, spellName, _, _, spellId)
 		if spellId == 143019 then -- Corrupted Brew
 			-- timer is all over the place, need to figure out if something delays it or what
 			self:CDBar(spellId, 11) -- not sure if there is a point for this like this
-			if not timer then
-				timer = self:ScheduleRepeatingTimer(warnCorruptedBrewTarget, 0.05, unitId)
-			end
+			self:GetBossTarget(printTarget, 0.2, UnitGUID(unitId))
 		elseif spellId == 138175 and self:MobId(UnitGUID(unitId)) == 71481 then -- Despawn Area Triggers
 			self:CloseProximity(-7959)
 			self:OpenProximity("proximity", 5)
