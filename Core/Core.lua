@@ -253,7 +253,10 @@ end
 --
 
 function addon:UpdateRole()
-	if self.db.profile.autoRole and not InCombatLockdown() and not UnitAffectingCombat("player") and (IsInRaid() or IsInGroup()) and not IsPartyLFG() then
+	if self.db.profile.autoRole and not InCombatLockdown() and not UnitAffectingCombat("player") and (IsInRaid() or IsInGroup()) then
+		local _, _, diff = GetInstanceInfo()
+		if IsPartyLFG() and diff ~= 14 then return end
+
 		local tree = GetSpecialization()
 		if not tree then return end -- No spec selected
 		local role = GetSpecializationRole(tree)
