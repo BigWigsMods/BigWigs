@@ -47,14 +47,16 @@ L.custom_off_mine_marks_desc = L.custom_off_mine_marks_desc:format(
 
 function mod:GetOptions()
 	return {
-		{-8179, "FLASH"}, {144459, "HEALER"}, {144467, "TANK"}, -- Assaukt mode
+		{-8179, "FLASH"}, {144459, "HEALER"}, {144467, "TANK"}, -- Assault mode
 		144485, {-8190, "FLASH", "ICON"}, {144498, "FLASH"}, -- Siege mode
 		"custom_off_mine_marks",
+		-8181,
 		"stages", -8183, "berserk", "bosskill",
 	}, {
 		[-8179] = -8177,
 		[144485] = -8178,
 		["custom_off_mine_marks"] = L.custom_off_mine_marks,
+		[-8181] = "heroic",
 		["stages"] = "general",
 	}
 end
@@ -252,6 +254,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		self:StopBar(-8179) -- Borer Drill
 		self:StopBar(144467) -- Ignite Armor
 		self:StopBar(CL["phase"]:format(2)) -- in case it overruns
+	elseif spellName == self:SpellName(144356) then -- Ricochet
+		self:CDBar(-8181, 15) -- Ricochet, 15-18?
 	end
 end
 
