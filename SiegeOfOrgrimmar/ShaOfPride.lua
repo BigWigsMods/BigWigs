@@ -252,14 +252,16 @@ do
 	local isOnMe = nil
 	local function titansCasted()
 		if isOnMe then
-			mod:OpenProximity(146595, 8, titans, true)
 			isOnMe = nil
+			mod:OpenProximity(146595, 8, titans, true)
 		end
 		titanCounter = 1
 		wipe(titans)
 	end
 	function mod:TitanGiftRemoved(args)
-		self:CloseProximity(146595)
+		if self:Me(args.destGUID) then
+			self:CloseProximity(146595)
+		end
 		if self.db.profile.custom_off_titan_mark then
 			SetRaidTarget(args.destName, 0)
 		end
