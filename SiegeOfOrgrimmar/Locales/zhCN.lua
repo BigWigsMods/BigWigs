@@ -54,10 +54,10 @@ if L then
 	L.demolisher_desc = "库卡隆投石车进入战斗计时条。"
 	L.towers = "塔楼"
 	L.towers_desc = "当塔楼被突破时发出警报。"
-	L.south_tower_trigger = "南塔楼的大门被攻破了！"
-	L.south_tower = "南塔楼"
-	L.north_tower_trigger = "北塔楼的大门被攻破了！"
-	L.north_tower = "北塔楼"
+	L.south_tower_trigger = "封锁南部塔楼的大门被攻破了！"
+	L.south_tower = "南部塔楼"
+	L.north_tower_trigger = "封锁北部塔楼的大门被攻破了！"
+	L.north_tower = "北部塔楼"
 	L.tower_defender = "塔楼防御者"
 
 	L.custom_off_shaman_marker = "萨满标记"
@@ -89,11 +89,11 @@ if L then
 	L.defensive = "防御"
 
 	L.adds_trigger1 = "守住大门！"
-	L.adds_trigger2 = "Rally the forces!"
+	L.adds_trigger2 = "重新整队！"
 	L.adds_trigger3 = "下一队，冲上去！"
 	L.adds_trigger4 = "战士们，快过来！"
 	L.adds_trigger5 = "库卡隆，支援我！"
-	L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW"
+	L.adds_trigger_extra_wave = "库卡隆，听我的命令，杀了他们！"
 	L.extra_adds = "额外增援部队"
 
 	L.chain_heal_message = "你的焦点正在施放强效治疗链！"
