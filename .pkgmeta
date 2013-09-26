@@ -7,7 +7,7 @@ externals:
     Libs/LibDBIcon-1.0: svn://svn.wowace.com/wow/libdbicon-1-0/mainline/trunk/LibDBIcon-1.0
     Core/Libs/AceTimer-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceTimer-3.0
     Core/Libs/AceDB-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceDB-3.0
-	Core/Libs/LibDualSpec-1.0: git://git.wowace.com/wow/libdualspec-1-0/mainline.git
+    Core/Libs/LibDualSpec-1.0: git://git.wowace.com/wow/libdualspec-1-0/mainline.git
     Core/Libs/LibChatAnims: svn://svn.wowace.com/wow/libchatanims/mainline/trunk/LibChatAnims
     Plugins/Libs/LibSharedMedia-3.0: svn://svn.wowace.com/wow/libsharedmedia-3-0/mainline/trunk/LibSharedMedia-3.0
     Plugins/Libs/LibSink-2.0: svn://svn.wowace.com/wow/libsink-2-0/mainline/trunk/LibSink-2.0
@@ -29,10 +29,10 @@ move-folders:
     BigWigs/SiegeOfOrgrimmar : BigWigs_SiegeOfOrgrimmar
 
 ignore:
-	- globals.sh
-	- globals.lua
-	- Options/scripts
-	- Sounds/Long.wav
-	- Sounds/Alarm.wav
-	- Sounds/Alert.wav
-	- Sounds/VictoryClassic_Orig.mp3
+  - globals.sh
+  - globals.lua
+  - Options/scripts
+  - Sounds/Long.wav
+  - Sounds/Alarm.wav
+  - Sounds/Alert.wav
+  - Sounds/VictoryClassic_Orig.mp3
