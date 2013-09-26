@@ -29,7 +29,7 @@ if L then
 
 	L.big_adds = "Manifestations de la corruption"
 	L.big_adds_desc = "Warning for killing big adds inside/outside"
-	L.big_add = "Manifestation de la corruption ! (%d)"
+	L.big_add = "Manifestation de la corruption (%d)"
 	L.big_add_killed = "Manifestation de la corruption tuée ! (%d)"
 end
 

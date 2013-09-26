@@ -29,7 +29,7 @@ if L then
 
 	L.big_adds = "大型腐化物"
 	L.big_adds_desc = "当在内心或现实杀死大型腐化物时发出警报。"
-	L.big_add = "大型腐化物！>%d<"
+	L.big_add = "大型腐化物 >%d<"
 	L.big_add_killed = "杀死大型腐化物！>%d<"
 end
 

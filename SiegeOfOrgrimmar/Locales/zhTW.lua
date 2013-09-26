@@ -29,7 +29,7 @@ if L then
 
 	L.big_adds = "Big adds"
 	L.big_adds_desc = "Warning for killing big adds inside/outside"
-	L.big_add = "Big add! (%d)"
+	L.big_add = "Big add (%d)"
 	L.big_add_killed = "Big add killed! (%d)"
 end
 

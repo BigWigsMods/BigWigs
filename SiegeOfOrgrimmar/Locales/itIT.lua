@@ -29,7 +29,7 @@ if L then
 
 	L.big_adds = "Add Maggiori"
 	L.big_adds_desc = "Avvisa quando uccidi gli Add Maggiori dentro/fuori"
-	L.big_add = "Add Maggiore! (%d)"
+	L.big_add = "Add Maggiore (%d)"
 	L.big_add_killed = "Add Maggiore ucciso! (%d)"
 end
 

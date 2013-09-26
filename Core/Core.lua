@@ -95,7 +95,7 @@ end
 local function shouldReallyEnable(unit, moduleName, mobId)
 	local module = addon.bossCore:GetModule(moduleName)
 	if not module or module:IsEnabled() then return end
-	-- If we pass the Verify Enable func (or it doesn't exist) and it's been > 5 seconds since the module was disabled, then enable it.
+	-- If we pass the Verify Enable func (or it doesn't exist) and it's been > 120 seconds since the module was disabled, then enable it.
 	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId)) and (not module.lastKill or (GetTime() - module.lastKill) > 120) then
 		enableBossModule(module)
 	end
