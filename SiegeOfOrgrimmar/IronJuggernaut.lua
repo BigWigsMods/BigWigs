@@ -21,7 +21,6 @@ local markableMobs = {}
 local marksUsed = {}
 local markTimer = nil
 local mineCounter = 1
-local crawlerMine = mod:SpellName(144673)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -81,7 +80,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(self:LFR() and 600 or 450)
+	self:Berserk(self:Heroic() and 450 or 600)
 	-- no need to start bars here we do it at regeneration
 	phase = 1
 	if self.db.profile.custom_off_mine_marks then
@@ -243,8 +242,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		if self:Healer() then
 			self:CDBar(144459, 8)
 		end
+		self:StopBar(CL["count"]:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
 		mineCounter = 1
-		self:Bar(-8183, 30, CL["count"]:format(crawlerMine, mineCounter)) -- Crawler Mine
+		self:Bar(-8183, 30, CL["count"]:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
 		self:CDBar(-8179, 19) -- Borer Drill
 		self:StopBar(144485) -- Shock Pulse
 		self:StopBar(-8179) -- Napalm Oil
@@ -253,10 +253,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		phase = 2
 		self:Message("stages", "Neutral", "Long", CL["phase"]:format(phase), false)
 		self:Bar("stages", 64, CL["phase"]:format(1), 144464) -- maybe should use UNIT_POWER to adjust timer since there seems to be a 6 sec variance
+		self:StopBar(CL["count"]:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
 		mineCounter = 1
-		self:CDBar(-8183, 18, CL["count"]:format(crawlerMine, mineCounter)) -- Crawler Mine
+		self:CDBar(-8183, 23, CL["count"]:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
+		self:Bar(144485, 15.5) -- Shock Pulse, 15.6 - 15.8
 		self:CDBar(-8179, 10) -- Napalm Oil
-		self:Bar(144485 ,18) -- Shock Pulse
 		self:StopBar(144459) -- Laser Burn
 		self:StopBar(-8179) -- Borer Drill
 		self:StopBar(144467) -- Ignite Armor
