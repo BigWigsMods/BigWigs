@@ -127,7 +127,7 @@ do
 
 		burningSoulList[#burningSoulList+1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(0.3, warnBurningSoul, args.spellId)
+			scheduled = self:ScheduleTimer(warnBurningSoul, 0.3, args.spellId)
 		end
 	end
 end
