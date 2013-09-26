@@ -12,7 +12,7 @@ TODO:
 local mod, CL = BigWigs:NewBoss("Galakras", 953, 868)
 if not mod then return end
 mod:RegisterEnableMob(
-	72249, -- Galakras
+	72249, 72358, -- Galakras, Kor'kron Cannon
 	72560, 72561, 73909, -- Horde: Lor'themar Theron, Lady Sylvanas Windrunner, Archmage Aethas Sunreaver
 	72311, 72302, 73910 -- Alliance: King Varian Wrynn, Lady Jaina Proudmoore, Vereesa Windrunner
 )
@@ -82,12 +82,6 @@ function mod:GetOptions()
 		["stages"] = -8418, -- Galakras
 		["bosskill"] = "general",
 	}
-end
-
-function mod:VerifyEnable()
-	if GetTime() - lastKill > 120 then -- Prevent re-enabling after kill
-		return true
-	end
 end
 
 function mod:OnWin()
