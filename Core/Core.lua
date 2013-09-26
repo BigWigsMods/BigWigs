@@ -249,25 +249,6 @@ do
 end
 
 -------------------------------------------------------------------------------
--- Role Updating
---
-
-function addon:UpdateRole()
-	if self.db.profile.autoRole and not InCombatLockdown() and not UnitAffectingCombat("player") and (IsInRaid() or IsInGroup()) then
-		local _, _, diff = GetInstanceInfo()
-		if IsPartyLFG() and diff ~= 14 then return end
-
-		local tree = GetSpecialization()
-		if not tree then return end -- No spec selected
-		local role = GetSpecializationRole(tree)
-		if UnitGroupRolesAssigned("player") ~= role then
-			UnitSetRole("player", role)
-			self:Print(L.roleUpdate)
-		end
-	end
-end
-
--------------------------------------------------------------------------------
 -- Testing
 --
 
@@ -464,20 +445,17 @@ end
 function addon:OnEnable()
 	self:RegisterMessage("BigWigs_AddonMessage", chatMsgAddon)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
-	self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED", "UpdateRole")
 	self:RegisterEvent("CINEMATIC_START")
 
 	self.pluginCore:Enable()
 	self.bossCore:Enable()
 
 	zoneChanged()
-	self:UpdateRole()
 	self:SendMessage("BigWigs_CoreEnabled")
 end
 
 function addon:OnDisable()
 	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
-	self:UnregisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 	self:UnregisterEvent("CINEMATIC_START")
 	self:UnregisterMessage("BigWigs_AddonMessage")
 

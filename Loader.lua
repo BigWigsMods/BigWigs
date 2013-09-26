@@ -435,6 +435,11 @@ do
 		loaderUtilityFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 		loaderUtilityFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
 
+		-- Role Updating
+		loaderUtilityFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+		loaderUtilityFrame:RegisterEvent("GROUP_JOINED")
+		RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
+
 		loaderUtilityFrame:RegisterEvent("CHAT_MSG_ADDON")
 		self:RegisterMessage("BigWigs_AddonMessage")
 		self:RegisterMessage("DBM_AddonMessage") -- DBM
@@ -547,6 +552,28 @@ loaderUtilityFrame:SetScript("OnEvent", function(_, event, ...)
 	loader[event](loader, ...)
 end)
 
+-- Role Updating
+function loader:ACTIVE_TALENT_GROUP_CHANGED()
+	if IsInGroup() then
+		if InCombatLockdown() or UnitAffectingCombat("player") then
+			loaderUtilityFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+			return
+		end
+		local _, _, diff = GetInstanceInfo()
+		if IsPartyLFG() and diff ~= 14 then return end
+
+		local tree = GetSpecialization()
+		if not tree then return end -- No spec selected
+		local role = GetSpecializationRole(tree)
+		if UnitGroupRolesAssigned("player") ~= role then
+			UnitSetRole("player", role)
+			sysprint(L.roleUpdate)
+		end
+	end
+end
+loader.GROUP_JOINED = loader.ACTIVE_TALENT_GROUP_CHANGED
+
+-- LFG/R Timer
 function loader:LFG_PROPOSAL_SHOW()
 	if not self.LFGFrame then
 		local f = CreateFrame("Frame", nil, LFGDungeonReadyDialog)
@@ -571,6 +598,7 @@ function loader:LFG_PROPOSAL_SHOW()
 	end
 end
 
+-- Misc
 function loader:CHAT_MSG_ADDON(prefix, msg, _, sender)
 	if prefix == "BigWigs" then
 		local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
@@ -648,19 +676,23 @@ do
 	-- Kazzak, Doomwalker, Salyis's Warband, Sha of Anger, Nalak, Oondasta
 	local warnedThisZone = {[465]=true,[473]=true,[807]=true,[809]=true,[928]=true,[929]=true} -- World Bosses
 	function loader:PLAYER_REGEN_ENABLED()
+		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		loaderUtilityFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		sysprint(L.finishedLoading)
-		if load(BigWigs, "BigWigs_Core") then
-			for k,v in next, queueLoad do
-				if v == "unloaded" then
-					queueLoad[k] = "loaded"
-					if BigWigs:IsEnabled() and loadOnZone[k] then
-						loadZone(k)
-					else
-						BigWigs:Enable()
-					end
+
+		local shouldPrint = false
+		for k,v in next, queueLoad do
+			if v == "unloaded" and load(BigWigs, "BigWigs_Core") then
+				shouldPrint = true
+				queueLoad[k] = "loaded"
+				if BigWigs:IsEnabled() and loadOnZone[k] then
+					loadZone(k)
+				else
+					BigWigs:Enable()
 				end
 			end
+		end
+		if shouldPrint then
+			sysprint(L.finishedLoading)
 		end
 	end
 
@@ -795,6 +827,8 @@ function loader:BigWigs_CoreEnabled()
 		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		SendAddonMessage("D4", "H\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 	end
+
+	self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 
 	-- Core is loaded, nil these to force checking BigWigs.db.profile.option
 	self.isFakingDBM = nil
