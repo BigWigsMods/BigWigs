@@ -531,8 +531,8 @@ do
 				local bossTarget = boss.."target"
 				local playerGUID = UnitGUID(bossTarget)
 				if playerGUID and ((not UnitDetailedThreatSituation(bossTarget, boss) and not self:Tank(bossTarget)) or elapsed >= tankCheckExpiry) then
-					func(self, self:UnitName(bossTarget), playerGUID, elapsed)
 					self:CancelTimer(self.scheduledScans[t])
+					func(self, self:UnitName(bossTarget), playerGUID, elapsed)
 				end
 				break
 			end
@@ -542,6 +542,10 @@ do
 		if not self.scheduledScans then self.scheduledScans = {} self.scheduledScansCounter = {} end
 
 		local t = GetTime()
+		if self.scheduledScans[t] then -- Safety check, should never happen
+			self:CancelTimer(self.scheduledScans[t])
+			core:Print("Detected a timer with the same id already running whilst trying to schedule a new one, tell the Big Wigs authors!")
+		end
 		self.scheduledScansCounter[t] = 0
 		self.scheduledScans[t] = self:ScheduleRepeatingTimer(bossScanner, 0.05, self, func, tankCheckExpiry, guid, t)
 	end
