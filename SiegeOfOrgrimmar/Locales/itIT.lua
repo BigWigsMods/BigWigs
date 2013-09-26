@@ -60,7 +60,7 @@ if L then
 	L.north_tower = "Torre nord"
 	L.tower_defender = "DIfensore Torre"
 
-	L.custom_off_shaman_marker = "Marcatore Sciamano"
+	L.custom_off_shaman_marker = "Marcatore Sciamano"1
 	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni, evidenzia lo Sciamano delle Maree delle Fauci di Drago con %s%s%s%s%s%s%s (in questo ordine)(non tutti i simboli possono essere usati), richiede capo incursione o assistente."
 end
 
@@ -88,7 +88,7 @@ if L then
 	L.berserker = "Berserker"
 	L.defensive = "Difesa"
 
-	L.adds_trigger1 = "Difendete il cancello!" --all triggers need verify
+	L.adds_trigger1 = "Difendete il cancello!" --all triggers verified
 	L.adds_trigger2 = "Radunate le forze!"
 	L.adds_trigger3 = "Prossima squadra, al fronte!"
 	L.adds_trigger4 = "Guerrieri, in marcia!"
@@ -169,7 +169,7 @@ if L then
 
 	L.farseer_trigger = "Chiaroveggenti, guarite le nostre ferite!"
 	L.custom_off_shaman_marker = "Marcatore Chiaroveggenti"
-	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni. evidenzia i Cavalcalupi Chiaroveggenti con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} (in questo ordine, non tutti i simboli possono essere usati), richiede capo incursione o assistente."
+	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni, evidenzia i Cavalcalupi Chiaroveggenti con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} (in questo ordine, non tutti i simboli possono essere usati), richiede capo incursione o assistente."
 
 	L.focus_only = "|cffff0000Avvisi solo dei bersagli focus.|r "
 end
