@@ -142,16 +142,16 @@ do
 end
 
 do
-	local function printTarget(name, guid)
-		mod:PrimaryIcon(-8132, name)
-		if mod:Me(guid) then
-			mod:Say(-8132)
-			mod:Flash(-8132)
-		elseif mod:Range(name) < 8 then -- 8 is assumed, also a circular distance check is not the best for this
-			mod:RangeMessage(-8132)
+	local function printTarget(self, name, guid)
+		self:PrimaryIcon(-8132, name)
+		if self:Me(guid) then
+			self:Say(-8132)
+			self:Flash(-8132)
+		elseif self:Range(name) < 8 then -- 8 is assumed, also a circular distance check is not the best for this
+			self:RangeMessage(-8132)
 			return
 		end
-		mod:TargetMessage(-8132, name, "Positive", "Alarm")
+		self:TargetMessage(-8132, name, "Positive", "Alarm")
 	end
 	function mod:FoulStream(args)
 		self:CDBar(-8132, 32)
@@ -211,8 +211,8 @@ do
 end
 
 do
-	local function printTarget(name)
-		mod:TargetMessage(144005, name, "Urgent", "Alert")
+	local function printTarget(self, name)
+		self:TargetMessage(144005, name, "Urgent", "Alert")
 	end
 	function mod:ToxicStorm(args)
 		self:Bar(args.spellId, 32)

@@ -382,15 +382,15 @@ function mod:Clash(args)
 end
 
 do
-	local function printTarget(name, guid)
-		if mod:Me(guid) then
-			mod:Flash(143019)
-		elseif mod:Range(name) < 5 then
-			mod:RangeMessage(143019)
-			mod:Flash(143019)
+	local function printTarget(self, name, guid)
+		if self:Me(guid) then
+			self:Flash(143019)
+		elseif self:Range(name) < 5 then
+			self:RangeMessage(143019)
+			self:Flash(143019)
 			return
 		end
-		mod:TargetMessage(143019, name, "Personal", "Info")
+		self:TargetMessage(143019, name, "Personal", "Info")
 	end
 	function mod:BossSucceeded(unitId, spellName, _, _, spellId)
 		if spellId == 143019 then -- Corrupted Brew

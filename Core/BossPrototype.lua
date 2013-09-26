@@ -531,7 +531,7 @@ do
 				local bossTarget = boss.."target"
 				local playerGUID = UnitGUID(bossTarget)
 				if playerGUID and ((not UnitDetailedThreatSituation(bossTarget, boss) and not self:Tank(bossTarget)) or elapsed >= tankCheckExpiry) then
-					func(self:UnitName(bossTarget), playerGUID, elapsed)
+					func(self, self:UnitName(bossTarget), playerGUID, elapsed)
 					self:CancelTimer(self.scheduledScans[t])
 				end
 				break
