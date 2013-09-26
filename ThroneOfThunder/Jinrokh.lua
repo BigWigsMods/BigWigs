@@ -60,7 +60,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "LightningFissure", 139467, 137485) -- 137485 is from 25 H PTR
 	self:Log("SPELL_AURA_REMOVED", "FocusedLightningRemoved", 137422)
 	self:Log("SPELL_CAST_START", "FocusedLightning", 137399) -- SUCCESS has destName, but this is so much earlier, and "boss1target" should be reliable for it
-	self:Log("SPELL_CAST_SUCCESS", "FocusedLightningFallback", 137399)
 	self:Log("SPELL_CAST_SUCCESS", "StaticBurst", 137162)
 	self:Log("SPELL_DAMAGE", "StaticWoundConduction", 138375)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ElectrifiedWaters", 138006)
@@ -184,40 +183,18 @@ function mod:FocusedLightningRemoved(args)
 end
 
 do
-	local timer, focusedLightningTarget = nil, nil
-	local function warnFocusedLightning(player, guid)
-		mod:TargetMessage(-7741, player, "Positive", "Alarm")
-		mod:PrimaryIcon(-7741, player)
-		if mod:Me(guid) then
-			mod:Say(-7741)
-			mod:OpenProximity(-7741, 8)
-		end
-	end
-	local function checkFocusedLightning()
-		local player = mod:UnitName("boss1target")
-		if player and (not UnitDetailedThreatSituation("boss1target", "boss1") and not mod:Tank("boss1target")) then
-			focusedLightningTarget = UnitGUID("boss1target")
-			warnFocusedLightning(player, focusedLightningTarget)
-			mod:CancelTimer(timer)
-			timer = nil
+	local function printTarget(self, player, guid)
+		self:TargetMessage(-7741, player, "Positive", "Alarm")
+		self:PrimaryIcon(-7741, player)
+		if self:Me(guid) then
+			self:Say(-7741)
+			self:OpenProximity(-7741, 8)
 		end
 	end
 	function mod:FocusedLightning(args)
 		self:CDBar(-7741, 11)
 		focusedLightningTarget = nil
-		if not timer then
-			timer = self:ScheduleRepeatingTimer(checkFocusedLightning, 0.05)
-		end
-	end
-	function mod:FocusedLightningFallback(args)
-		if timer then
-			self:CancelTimer(timer)
-			timer = nil
-		end
-		 -- don't do anything if we warned for the target already
-		if args.destGUID ~= focusedLightningTarget then
-			warnFocusedLightning(args.destName, args.destGUID)
-		end
+		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
 	end
 end
 
