@@ -127,7 +127,9 @@ end
 
 -- normal
 function mod:UnleashedStart()
-	self:CDBar(144358, 11) -- Wounded Pride
+	if not self:LFR() then
+		self:CDBar(144358, 11) -- Wounded Pride
+	end
 end
 
 function mod:Unleashed() -- Final Gift
@@ -213,7 +215,9 @@ do
 	local prev = 0
 	local mindcontrolled = mod:NewTargetList()
 	function mod:SwellingPrideSuccess(args)
-		self:CDBar(144358, 10.5) -- Wounded Pride, 10-11.2
+		if not self:LFR() then
+			self:CDBar(144358, 10.5) -- Wounded Pride, 10-11.2
+		end
 		self:Bar(-8262, 60, L["big_add_bar"], 144379) -- when the add is actually up
 		self:DelayedMessage(-8262, 55, "Urgent", L["big_add_spawning"], 144379)
 		-- lets do some fancy stuff
