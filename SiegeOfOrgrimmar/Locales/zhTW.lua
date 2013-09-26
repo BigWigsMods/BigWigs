@@ -1,7 +1,7 @@
 ﻿local L = BigWigs:NewBossLocale("Immerseus", "zhTW")
 if not L then return end
 if L then
-	L.win_yell = "Ah, you have done it!"
+	L.win_yell = "啊，你成功了!水又再次純淨了。"
 end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "zhTW")
@@ -23,9 +23,9 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "zhTW")
 if L then
-	L.pre_pull = "Pre pull"
-	L.pre_pull_desc = "Timer bar for the RP before the boss engage"
-	L.pre_pull_trigger = "Very well, I will create a field to keep your corruption quarantined."
+	L.pre_pull = "準備開戰"
+	L.pre_pull_desc = "準備與首領戰鬥前的計時器"
+	L.pre_pull_trigger = "很好，我會創造一個力場隔離你們的腐化。"
 
 	L.big_adds = "Big adds"
 	L.big_adds_desc = "Warning for killing big adds inside/outside"
@@ -45,22 +45,22 @@ if L then
 	L.big_add_spawning = "Big add spawning!"
 	L.small_adds = "Small adds"
 
-	L.titan_pride = "Titan+Pride : %s"
+	L.titan_pride = "泰坦+傲慢 : %s"
 end
 
 L = BigWigs:NewBossLocale("Galakras", "zhTW")
 if L then
-	L.demolisher = "Demolisher"
-	L.demolisher_desc = "Timers for when the Kor'kron Demolishers enter the fight"
-	L.towers = "Towers"
-	L.towers_desc = "Warnings for when the towers get breached"
-	L.south_tower_trigger = "The door barring the South Tower has been breached!"
-	L.south_tower = "South tower"
-	L.north_tower_trigger = "The door barring the North Tower has been breached!"
-	L.north_tower = "North tower"
+	L.demolisher = "石毀車"
+	L.demolisher_desc = "柯爾克隆石毀車進入戰鬥計時器"
+	L.towers = "高塔"
+	L.towers_desc = "當高塔被突破時發出警報"
+	L.south_tower_trigger = "封鎖南塔的門已經遭到破壞!"
+	L.south_tower = "南塔"
+	L.north_tower_trigger = "封鎖北塔的門已經遭到破壞!"
+	L.north_tower = "北塔"
 	L.tower_defender = "Tower defender"
 
-	L.custom_off_shaman_marker = "Shaman marker"
+	L.custom_off_shaman_marker = "薩滿標記"
 	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
 end
 
@@ -83,18 +83,18 @@ if L then
 	L.custom_off_bonecracker_marks = "Bonecracker"
 	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with %s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
 
-	L.stance_bar = "%s(NOW:%s)"
-	L.battle = "Battle"
-	L.berserker = "Berserker"
-	L.defensive = "Defensive"
+	L.stance_bar = "%s(現在:%s)"
+	L.battle = "戰鬥"
+	L.berserker = "狂暴"
+	L.defensive = "防禦"
 
-	L.adds_trigger1 = "Defend the gate!"
-	L.adds_trigger2 = "Rally the forces!"
-	L.adds_trigger3 = "Next squad, to the front!"
-	L.adds_trigger4 = "Warriors, on the double!"
-	L.adds_trigger5 = "Kor'kron, at my side!"
-	L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW"
-	L.extra_adds = "Extra adds"
+	L.adds_trigger1 = "守住大門!"
+	L.adds_trigger2 = "重整部隊!"
+	L.adds_trigger3 = "下一隊，來前線!"
+	L.adds_trigger4 = "戰士們，快點過來!"
+	L.adds_trigger5 = "柯爾克隆，來我身邊!"
+	L.adds_trigger_extra_wave = "所有科爾克隆...聽我號令...殺死他們!"
+	L.extra_adds = "額外增援部隊"
 
 	L.chain_heal_message = "Your focus is casting Chain Heal!"
 
