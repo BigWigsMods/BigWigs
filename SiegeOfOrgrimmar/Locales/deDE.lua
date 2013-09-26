@@ -94,7 +94,7 @@ if L then
 	L.adds_trigger3 = "Nächste Staffel, nach vorn!"
 	L.adds_trigger4 = "Krieger, im Laufschritt!"
 	L.adds_trigger5 = "Kor'kron, zu mir!"
-	L.adds_trigger_extra_wave = "Alle Kor'kron unter meinem Befehl, tötet sie, Jetzt!"
+	L.adds_trigger_extra_wave = "Alle Kor'kron unter meinem Befehl, tötet sie! Jetzt!"
 	L.extra_adds = "Zusätzliche Adds"
 
 	L.chain_heal_message = "Dein Fokusziel wirkt Kettenheilung!"
