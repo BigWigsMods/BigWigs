@@ -114,6 +114,7 @@ end
 
 function mod:FixateRemoved(args)
 	self:PrimaryIcon(-7980)
+	self:StopBar(-7980, args.destName)
 	if self:Me(args.destGUID) then
 		self:Message(-7980, "Positive", nil, CL["over"]:format(args.spellName))
 	end
