@@ -99,14 +99,14 @@ function mod:IronTomb(args)
 end
 
 do
-	local function ironPrisonOverSoon(spellId)
-		mod:Message(spellId, "Attention", "Warning", CL["soon"]:format(CL["removed"]:format(mod:SpellName(spellId))))
+	local function ironPrisonOverSoon(spellId, spellName)
+		mod:Message(spellId, "Attention", "Warning", CL["soon"]:format(CL["removed"]:format(spellName)))
 		mod:Flash(spellId)
 	end
 	function mod:IronPrison(args)
 		if self:Me(args.destGUID) then
 			self:Bar(args.spellId, 60)
-			self:ScheduleTimer(ironPrisonOverSoon, 57)
+			self:ScheduleTimer(ironPrisonOverSoon, 57, args.spellId, args.spellName)
 		end
 	end
 end
