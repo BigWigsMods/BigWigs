@@ -70,7 +70,7 @@ function mod:GetOptions()
 	return {
 		{144396, "TANK"}, {143019, "FLASH"}, 143027, {143007, "HEALER"}, 143958, {"defile", "TANK"}, {144357, "FLASH"}, {-7959, "FLASH", "SAY", "PROXIMITY", "ICON"}, {"inferno_self", "SAY", "EMPHASIZE"}, -- Rook Stonetoe
 		{143330, "TANK"}, {143292, "FLASH"}, {144367, "FLASH"}, {143840, "FLASH", "PROXIMITY"}, -- He Softfoot
-		143446, 143491, 143546, -- Sun Tenderheart
+		143446, 143491, 143546, {143423, "SAY"}, -- Sun Tenderheart
 		"custom_off_bane_marks",
 		143497, "intermission", "berserk", "proximity", "bosskill",
 	}, {
@@ -94,6 +94,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Bane", 143446)
 	self:Log("SPELL_AURA_APPLIED", "BaneApplied", 143434)
 	self:Log("SPELL_AURA_REMOVED", "BaneRemoved", 143434)
+	self:Log("SPELL_AURA_APPLIED", "ShaSear", 143423)
 	-- He Softfoot
 	self:Log("SPELL_CAST_START", "Gouge", 143330)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 143292)
@@ -208,6 +209,14 @@ function mod:Bane(args)
 	if self:Dispeller("magic") then
 		self:Message(args.spellId, "Urgent", "Alarm")
 		self:CDBar(args.spellId, 14)
+	end
+end
+
+function mod:ShaSear(args)
+	if infernoTarget and self:Me(args.destGUID) then -- Only during Inferno Strike phase (when people are hugging)
+		self:Say(args.spellId)
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+		self:TargetBar(args.spellId, 5, args.destName)
 	end
 end
 
