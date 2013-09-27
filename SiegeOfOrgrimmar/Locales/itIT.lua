@@ -60,7 +60,7 @@ if L then
 	L.north_tower = "Torre nord"
 	L.tower_defender = "DIfensore Torre"
 
-	L.custom_off_shaman_marker = "Marcatore Sciamano"1
+	L.custom_off_shaman_marker = "Marcatore Sciamano"
 	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni, evidenzia lo Sciamano delle Maree delle Fauci di Drago con %s%s%s%s%s%s%s (in questo ordine)(non tutti i simboli possono essere usati), richiede capo incursione o assistente."
 end
 
