@@ -35,7 +35,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{"tank_debuffs", "TANK"}, -7963, 143428, 143777, 143783, -- stage 1
-		-7981, {-7980, "ICON", "FLASH", "SAY"}, {146589, "FLASH"},-- stage 2
+		-7981, {-7980, "ICON", "FLASH", "SAY"}, {146589, "FLASH"}, {145974, "DISPEL"},-- stage 2
 		"proximity", "berserk", "bosskill",
 	}, {
 		["tank_debuffs"] = -7960, -- stage 1
@@ -54,10 +54,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "BloodFrenzyOver", 143440)
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 143445)
 	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 143445)
+	self:Log("SPELL_AURA_APPLIED", "Enrage", 145974)
 	self:Emote("BloodFrenzyPhase", "143440")
 	-- stage 1
 	self:Log("SPELL_PERIODIC_DAMAGE", "BurningBlood", 143783)
 	self:Log("SPELL_DAMAGE", "BurningBlood", 143783)
+	self:Log("SPELL_MISSED", "BurningBlood", 143783)
 	self:Log("SPELL_AURA_APPLIED", "FrozenSolid", 143777)
 	self:Log("SPELL_CAST_SUCCESS", "TailLash", 143428)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Acceleration", 143411)
@@ -82,6 +84,12 @@ end
 
 function mod:BloodFrenzy(args)
 	self:Message(-7981, "Attention", nil, CL["count"]:format(args.spellName, args.amount))
+end
+
+function mod:Enrage(args)
+	if self:Dispeller("enrage", true, args.spellId) then
+		self:Message(args.spellId, "Urgent", "Alert")
+	end
 end
 
 function mod:SkeletonKeyRemoved(args)
@@ -117,6 +125,7 @@ function mod:FixateApplied(args)
 		self:Flash(-7980)
 	end
 	self:TargetMessage(-7980, args.destName, "Urgent", "Alarm")
+	self:TargetBar(-7980, 12, args.destName)
 	self:PrimaryIcon(-7980, args.destName)
 end
 
@@ -135,10 +144,12 @@ end
 do
 	local prev = 0
 	function mod:BurningBlood(args)
-		local t = GetTime()
-		if t-prev > 2 and self:Me(args.destGUID) then -- don't spam
-			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+		if self:Me(args.destGUID) then
+			local t = GetTime()
+			if t-prev > 2 then
+				prev = t
+				self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			end
 		end
 	end
 end
