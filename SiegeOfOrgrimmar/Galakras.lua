@@ -26,8 +26,6 @@ local markableMobs = {}
 local marksUsed = {}
 local markTimer = nil
 
-local lastKill = 0
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -84,12 +82,8 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnWin()
-	lastKill = GetTime()
-end
-
 function mod:OnBossEnable()
-	if GetTime() - lastKill < 120 then -- Temp for outdated users enabling us
+	if self.lastKill and (GetTime() - self.lastKill) < 120 then -- Temp for outdated users enabling us
 		self:ScheduleTimer("Disable", 5)
 		return
 	end
