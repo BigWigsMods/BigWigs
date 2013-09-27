@@ -88,7 +88,7 @@ function mod:OnEngage()
 	self:Bar(-8262, 60, L["big_add_bar"], 144379) -- signature ability icon
 	self:DelayedMessage(-8262, 55, "Urgent", L["big_add_spawning"], 144379)
 	self:Bar(144800, 25, L["small_adds"])
-	self:Bar(144563, 50) -- Imprison
+	self:Bar(144563, 52.5) -- Imprison
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	if self:Heroic() then
 		self:Bar(145215, 37) -- Banishment
@@ -119,7 +119,6 @@ do
 	function mod:Banishment(args)
 		banishmentList[#banishmentList+1] = args.destName
 		if not scheduled then
-			self:Bar(args.spellId, 77)
 			scheduled = self:ScheduleTimer(warnBanishment, 0.1, args.spellId)
 		end
 	end
@@ -129,17 +128,26 @@ end
 function mod:UnleashedStart()
 	if not self:LFR() then
 		self:CDBar(144358, 11) -- Wounded Pride
+		self:StopBar(144400) -- Swelling Pride
+		self:StopBar(144563) -- Imprison
+		self:StopBar(145215) -- Banishment
+		self:StopBar(L["small_adds"])
+		self:StopBar(L["big_add_bar"])
+		self:CancelDelayedMessage(L["big_add_spawning"])
 	end
 end
 
 function mod:Unleashed() -- Final Gift
 	self:StopBar(146595) -- Gift of the Titans
 	self:Message(-8349, "Neutral", "Info")
-	self:Bar(144400, 77) -- Swelling Pride
+	self:Bar(144400, 74) -- Swelling Pride
 	self:Bar(-8262, 60, L["big_add_bar"], 144379)
 	self:DelayedMessage(-8262, 55, "Urgent", L["big_add_spawning"], 144379)
-	self:Bar(144800, 16, L["small_adds"])
-	self:Bar(144563, 42) -- Imprison
+	self:Bar(144800, 16.3, L["small_adds"])
+	self:Bar(144563, 43.6) -- Imprison
+	if self:Heroic() then
+		self:Bar(145215, 29) -- Banishment
+	end
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
@@ -166,12 +174,10 @@ end
 
 function mod:Imprison(args)
 	self:Message(args.spellId, "Neutral", nil, CL["casting"]:format(args.spellName))
-	self:Bar(args.spellId, 77)
 end
 
 function mod:SelfReflection(args)
 	self:Message(args.spellId, "Important", nil, L["small_adds"])
-	self:Bar(args.spellId, 77, L["small_adds"])
 end
 
 function mod:WoundedPride(args)
@@ -218,7 +224,12 @@ do
 		if not self:LFR() then
 			self:CDBar(144358, 10.5) -- Wounded Pride, 10-11.2
 		end
+		if self:Heroic() then
+			self:Bar(145215, 37.4) -- Banishment
+		end
+		self:Bar(144563, 53) -- Imprison
 		self:Bar(-8262, 60, L["big_add_bar"], 144379) -- when the add is actually up
+		self:Bar(144800, 25.6, L["small_adds"])
 		self:DelayedMessage(-8262, 55, "Urgent", L["big_add_spawning"], 144379)
 		-- lets do some fancy stuff
 		local playerPower = UnitPower("player", 10)
