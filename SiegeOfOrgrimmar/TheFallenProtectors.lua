@@ -96,7 +96,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "BaneRemoved", 143434)
 	self:Log("SPELL_AURA_APPLIED", "ShaSear", 143423)
 	-- He Softfoot
-	self:Log("SPELL_CAST_START", "Gouge", 143330)
+	self:RegisterEvent("RAID_BOSS_WHISPER", "Gouge")
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 143292)
 	self:Log("SPELL_DAMAGE", "NoxiousPoisonDamage", 144367)
 	self:Log("SPELL_AURA_APPLIED", "MarkOfAnguishApplied", 143840)
@@ -265,13 +265,11 @@ function mod:Fixate(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Long")
 end
 
-function mod:Gouge(args)
-	-- only warn the tank targeted by the mob
-	local unit = mod:GetUnitIdByGUID(args.sourceGUID)
-	local guid = UnitGUID(unit.."target")
-	if guid and self:Me(guid) then
-		self:Message(args.spellId, "Urgent", "Alarm")
-		self:CDBar(args.spellId, 29)
+function mod:Gouge(_, msg)
+	-- only warn the tank targeted by the mob by using _WHISPER
+	if msg:find("143330", nil, true) then
+		self:Message(143330, "Urgent", "Alarm")
+		self:CDBar(143330, 29)
 	end
 end
 
