@@ -16,9 +16,9 @@ if L then
 	L.intermission = "Desperate Measures"
 	L.intermission_desc = "Warnings for when you are getting close to any of the bosses using Desperate Measures"
 
-	--L.inferno_self = "Inferno Strike on you"
-	--L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
-	--L.inferno_self_bar = "You explode!"
+	L.inferno_self = "Inferno Strike on you"
+	L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
+	L.inferno_self_bar = "You explode!"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "zhTW")
@@ -122,6 +122,9 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "zhTW")
 if L then
+	L.adds = "Heroic adds"
+	L.adds_desc = "Warnings for when the heroic only adds enter the fight"
+
 	L.tank_debuffs = "Tank debuffs"
 	L.tank_debuffs_desc = "Warnings for the different types of tank debuffs associated with Fearsome Roar"
 
