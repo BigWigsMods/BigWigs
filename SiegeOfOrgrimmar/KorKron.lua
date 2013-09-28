@@ -83,7 +83,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(600, nil, nil, "Berserk (assumed)") -- XXX Assumed
+	self:Berserk(self:Heroic() and 540 or 600) -- Maybe 9 on normal also?
 	wipe(marksUsed)
 	ashCounter = 1
 end
