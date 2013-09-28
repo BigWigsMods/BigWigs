@@ -138,7 +138,7 @@ if L then
 	L.assembly_line_trigger = "На сборочную линию начинает поступать незаконченное оружие."
 	L.assembly_line_message = "Незаконченное оружие (%d)"
 
-	-- L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!"
+	L.shockwave_missile_trigger = "Представляю вам прекрасную ударно-волновую турель УТ-03!"
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "ruRU")
