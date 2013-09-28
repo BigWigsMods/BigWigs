@@ -123,6 +123,9 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "deDE")
 if L then
+	L.adds = "Heroische Adds"
+	L.adds_desc = "Warnungen für den Kampfeintritt der heroischen Adds."
+
 	L.tank_debuffs = "Tank Schwächungszauber"
 	L.tank_debuffs_desc = "Warnungen für die verschiedenen Typen von Schwächungszaubern auf den Tanks in Verbindung mit Fürchterlichem Brüllen"
 
