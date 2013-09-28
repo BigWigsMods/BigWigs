@@ -214,7 +214,9 @@ end
 
 function mod:ShaSear(args)
 	if infernoTarget and self:Me(args.destGUID) then -- Only during Inferno Strike phase (when people are hugging)
-		self:Say(args.spellId)
+		if not self:LFR() then
+			self:Say(args.spellId)
+		end
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
 		self:TargetBar(args.spellId, 5, args.destName)
 	end
