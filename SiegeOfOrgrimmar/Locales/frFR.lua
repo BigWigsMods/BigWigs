@@ -16,14 +16,14 @@ if L then
 	L.intermission = "Mesures désespérées"
 	L.intermission_desc = "Prévient quand l'un des boss est sur le point d'utiliser ses Mesures désespérées."
 
-	--L.inferno_self = "Inferno Strike on you"
-	--L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
-	--L.inferno_self_bar = "You explode!"
+	L.inferno_self = "Frappe du feu d'enfer"
+	L.inferno_self_desc = "Compte à rebours spécial quand la Frappe du feu d'enfer est sur vous."
+	L.inferno_self_bar = "Vous explosez !"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "frFR")
 if L then
-	L.pre_pull = "Pre pull"
+	L.pre_pull = "Début du combat"
 	L.pre_pull_desc = "Barre de délai de l'événement RP avant l'engagement du boss."
 	L.pre_pull_trigger = "Très bien, je vais créer un champ de force qui contiendra votre corruption."
 
@@ -36,7 +36,7 @@ end
 L = BigWigs:NewBossLocale("Sha of Pride", "frFR")
 if L then
 	L.custom_off_titan_mark = "Marquage Don des titans"
-	L.custom_off_titan_mark_desc = "Mark people that have Gift of the Titans with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_titan_mark_desc = "Marque les joueurs sous l'effet de Don des titans avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 
 	L.projection_message = "Allez sur la flèche |cFF00FF00VERTE|r !"
 	L.projection_explosion = "Explosion de la projection"
@@ -55,9 +55,9 @@ if L then
 
 	L.towers = "Tours"
 	L.towers_desc = "Alertes quand les portes des tours sont détruites."
-	L.south_tower_trigger = "La porte qui barrait l'accès à la tour sud a été détruite !" -- to check
+	L.south_tower_trigger = "La porte qui barrait l’accès à la tour sud a été détruite !"
 	L.south_tower = "Tour sud"
-	L.north_tower_trigger = "La porte qui barrait l'accès à la tour nord a été détruite !" -- to check
+	L.north_tower_trigger = "La porte qui barrait l’accès à la tour nord a été détruite !"
 	L.north_tower = "Tour nord"
 	L.tower_defender = "Défenseur de la tour"
 
@@ -90,9 +90,9 @@ if L then
 	L.berserker = "Berserker"
 	L.defensive = "Défensive"
 
-	L.adds_trigger1 = "Défendez les portes !" -- to check
+	L.adds_trigger1 = "Défendez les portes !"
 	L.adds_trigger2 = "Ralliez les troupes !"
-	L.adds_trigger3 = "Escouade suivante, au front !" -- to check
+	L.adds_trigger3 = "Escouade suivante, au front !"
 	L.adds_trigger4 = "Guerriers, au pas de course !"
 	L.adds_trigger5 = "Kor’krons, avec moi !"
 	L.adds_trigger_extra_wave = "Tous les Kor’krons sous mon commandement, tuez-les, maintenant !"
@@ -169,7 +169,7 @@ if L then
 	L.chain_heal_message = "Votre focalisation est en train d'incanter Salve de guérison !"
 	L.chain_heal_bar = "Focalisation : Salve de guérison"
 
-	L.farseer_trigger = "Long-voyants, soignez nos blessures !" -- to check
+	L.farseer_trigger = "Long-voyants, soignez nos blessures !"
 	L.custom_off_shaman_marker = "Marquage Chevaucheur de loup long-voyant"
 	L.custom_off_shaman_marker_desc = "Afin d'aider à l'attribution des interruptions, marque les Chevaucheurs de loup long-voyant avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
 
