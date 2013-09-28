@@ -15,6 +15,7 @@ mod:RegisterEnableMob(71504)
 -- Locals
 --
 
+local overloadCounter = 1
 local assemblyLineCounter = 1
 local shredder = EJ_GetSectionInfo(8199)
 local sawbladeTarget
@@ -51,7 +52,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{-8195, "FLASH", "SAY", "ICON"}, {145365, "TANK_HEALER"}, {143385, "TANK"}, -- Siegecrafter Blackfuse
-		-8199, 144208, -- Automated Shredders
+		-8199, 144208, 145444, -- Automated Shredders
 		-8202, -8207, 143639, {-8208, "FLASH", "SAY"}, 143856, 144466, {-8212, "FLASH"},
 		"berserk", "bosskill",
 	}, {
@@ -80,6 +81,8 @@ function mod:OnBossEnable()
 	self:Emote("ShredderEngage", L["shredder_engage_trigger"])
 	self:Log("SPELL_CAST_START", "DeathFromAbove", 144208)
 	self:Log("SPELL_CAST_START", "DeathFromAboveApplied", 144210)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Overload", 145444)
+	self:Log("SPELL_AURA_APPLIED", "Overload", 145444)
 	-- Siegecrafter Blackfuse
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ElectrostaticCharge", 143385)
 	self:Log("SPELL_AURA_APPLIED", "ProtectiveFrenzy", 145365)
@@ -179,7 +182,9 @@ end
 function mod:ShredderEngage()
 	self:Message(-8199, "Attention", self:Tank() and "Long", shredder, "INV_MISC_ARMORKIT_27")
 	self:Bar(-8199, 60, shredder, "INV_MISC_ARMORKIT_27")
-	self:Bar(144208, 16)
+	self:Bar(144208, 16) -- Death from Above
+	overloadCounter = 1
+	self:Bar(145444, 7, CL["count"]:format(self:SpellName(144208), overloadCounter)) -- Overload
 end
 
 function mod:DeathFromAboveApplied(args)
@@ -191,8 +196,16 @@ function mod:DeathFromAbove(args)
 	self:Bar(args.spellId, 41)
 end
 
+function mod:Overload(args)
+	local amount = args.amount or 1
+	self:Message(args.spellId, "Urgent", nil, CL["count"]:format(args.spellName, amount))
+	overloadCounter = amount + 1
+	self:Bar(args.spellId, 11, CL["count"]:format(args.spellName, overloadCounter))
+end
+
 function mod:ShredderDied()
-	self:StopBar(144208)
+	self:StopBar(144208) -- Death from Above
+	self:StopBar(CL["count"]:format(self:SpellName(145444), overloadCounter)) -- Overload
 end
 
 -- Siegecrafter Blackfuse
