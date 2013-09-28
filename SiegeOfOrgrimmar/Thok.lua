@@ -13,13 +13,18 @@ mod:RegisterEnableMob(71529)
 --------------------------------------------------------------------------------
 -- Locals
 --
-
+local accCount = 0
+local yetiChargeTimer
+local heroicAdd
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.adds = "Heroic adds"
+	L.adds_desc = "Warnings for when the heroic only adds enter the fight"
+
 	L.tank_debuffs = "Tank debuffs"
 	L.tank_debuffs_desc = "Warnings for the different types of tank debuffs associated with Fearsome Roar"
 	L.tank_debuffs_icon = 143766
@@ -34,10 +39,12 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		148145, "adds",
 		{"tank_debuffs", "TANK"}, -7963, 143428, 143777, 143783, -- stage 1
 		-7981, {-7980, "ICON", "FLASH", "SAY"}, {146589, "FLASH"}, {145974, "DISPEL"},-- stage 2
 		"proximity", "berserk", "bosskill",
 	}, {
+		[148145] = "heroic",
 		["tank_debuffs"] = -7960, -- stage 1
 		[-7981] = -7961, -- stage 2
 		["proximity"] = "general",
@@ -47,6 +54,8 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
+	-- heroic
+	self:Log("SPELL_AURA_APPLIED", "YetCharge", 148145)
 	-- stage 2
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BloodFrenzy", 143442)
 	self:Log("SPELL_AURA_REMOVED", "SkeletonKeyRemoved", 146589)
@@ -68,11 +77,16 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TankDebuff", 143766, 143780, 143773, 143767)
 
 	self:Death("Win", 71529)
+	self:Death("Deaths", 71744, 73526, 71749) -- Skumblade Captive, Starved Yeti, Waterspeaker Gorai
 end
 
 function mod:OnEngage()
-	self:Berserk(600) -- confirmed 25N PTR
-	self:OpenProximity("proximity", 10) -- it is so you know if you are too close to another group -- XXX this is maybe tactic dependant
+	if self:Heroic() then
+		yetiChargeTimer = nil
+		heroicAdd = nil
+	end
+	self:Berserk(600)
+	self:OpenProximity("proximity", 10) -- it is so you know if you are too close to another group -- XXX this is maybe tactic dependant - needed for heroic
 	self:Bar(-7963, 25) -- Deafening Screech
 end
 
@@ -80,9 +94,19 @@ end
 -- Event Handlers
 --
 
+-- heroic
+
+function mod:YetCharge(args)
+	self:Bar(args.spellId, 15)
+	if not yetiChargeTimer then
+		yetiChargeTimer = self:ScheduleTimer("Message", 15, args.spellId, "Important", "Warning", CL["soon"]:format(args.spellName))
+	end
+end
+
 -- stage 2
 
 function mod:BloodFrenzy(args)
+	-- this may feel like double message, but knowing exact stack count on phase change can help plan the rest of the fight
 	self:Message(-7981, "Attention", nil, CL["count"]:format(args.spellName, args.amount))
 end
 
@@ -110,6 +134,16 @@ function mod:BloodFrenzyOver(args)
 	self:OpenProximity("proximity", 10)
 	self:Message(-7981, "Neutral", "Long", CL["over"]:format(args.spellName))
 	self:Bar(-7963, 25) -- Deafening Screech, not much point for more timers than the initial one since then it is too frequent
+	if self:Heroic() then
+		if heroicAdd then
+			-- XXX maybe add scheduled message once we know exact timer (videos)
+			if heroicAdd == "bats" then
+				self:CDBar("adds", 28, self:SpellName(-8584), 24733) -- bat icon
+			elseif heroicAdd == "yeti" then
+				self:CDBar("adds", 16, self:SpellName(-8582), 26010) -- yeti icon
+			end
+		end
+	end
 end
 
 function mod:FixateRemoved(args)
@@ -131,6 +165,7 @@ function mod:FixateApplied(args)
 end
 
 function mod:BloodFrenzyPhase()
+	self:Message(-7963, "Attention", nil, CL["count"]:format(self:SpellName(143411), accCount))
 	self:StopBar(143428) -- Tail Lash
 	self:StopBar(143426) -- Fearsome Roar
 	self:StopBar(143780) -- Acid Breath
@@ -174,6 +209,7 @@ function mod:TailLash(args)
 end
 
 function mod:Acceleration(args)
+	accCount = args.amount
 	if args.amount > 5 and args.amount % 3 == 0 then
 		self:Message(-7963, "Attention", nil, CL["count"]:format(args.spellName, args.amount))
 	end
@@ -187,3 +223,14 @@ function mod:TankDebuff(args)
 	self:StackMessage("tank_debuffs", args.destName, args.amount, "Attention", not self:Me(args.destGUID) and "Warning", args.spellName, args.spellId)
 end
 
+function mod:Deaths(args)
+	if args.mobId == 71744 then -- Skumblade Captive
+		heroicAdd = "bats"
+	elseif args.mobId == 71749 then -- Waterspeaker Gorai
+		heroicAdd = "yeti"
+	elseif args.mobId == 73526 then -- Starved Yeti
+		self:CancelTimer(yetiChargeTimer)
+		yetiChargeTimer = nil
+		heroicAdd = nil
+	end
+end
