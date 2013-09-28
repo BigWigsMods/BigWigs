@@ -431,6 +431,17 @@ do
 			end
 		end
 
+		local L = GetLocale() -- XXX temp
+		if L == "ptBR" then
+			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
+				print("Think you can translate Big Wigs into Brazilian Portuguese (ptBR)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
+			end)
+		elseif L == "koKR" then
+			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
+				print("Think you can translate Big Wigs into Korean (koKR)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
+			end)
+		end
+
 		loaderUtilityFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 		loaderUtilityFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 		loaderUtilityFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
