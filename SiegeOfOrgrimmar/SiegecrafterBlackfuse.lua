@@ -184,7 +184,7 @@ function mod:ShredderEngage()
 	self:Bar(-8199, 60, shredder, "INV_MISC_ARMORKIT_27")
 	self:Bar(144208, 16) -- Death from Above
 	overloadCounter = 1
-	self:Bar(145444, 7, CL["count"]:format(self:SpellName(144208), overloadCounter)) -- Overload
+	self:Bar(145444, 7, CL["count"]:format(self:SpellName(145444), overloadCounter)) -- Overload
 end
 
 function mod:DeathFromAboveApplied(args)
