@@ -74,7 +74,7 @@ do
 	function mod:PoolOfFireDamage(args)
 		if self:Me(args.destGUID) then
 			local t = GetTime()
-			if t-prev > 2 then
+			if t-prev > 4 then
 				prev = t
 				self:Message(144692, "Personal", "Info", CL["underyou"]:format(args.spellName))
 			end
@@ -92,7 +92,7 @@ do
 	function mod:AncientFlameDamage(args)
 		if self:Me(args.destGUID) then
 			local t = GetTime()
-			if t-prev > 2 then
+			if t-prev > 4 then
 				prev = t
 				self:Message(144695, "Personal", "Info", CL["near"]:format(args.spellName))
 			end
@@ -106,7 +106,7 @@ do
 		if not isOnMe then
 			mod:OpenProximity(spellId, 8, burningSoulList)
 		end
-		mod:TargetMessage(spellId, burningSoulList, "Urgent", "Alert", nil, true)
+		mod:TargetMessage(spellId, burningSoulList, "Urgent", "Alert", nil, nil, true)
 		scheduled = nil
 	end
 
