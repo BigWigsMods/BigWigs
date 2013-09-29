@@ -58,7 +58,7 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
+function mod:OnRegister() -- XXX check out replacing this the chest id
 	-- Kel'Thuzad v3
 	local f = CreateFrame("Frame")
 	local func = function()
@@ -94,7 +94,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "SetToBlowRemoved", 145987)
 
 	self:Yell("Win", L.win_trigger)
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
 function mod:OnEngage()

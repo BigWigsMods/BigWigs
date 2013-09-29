@@ -378,7 +378,7 @@ do
 	end
 
 	function boss:CheckBossStatus(noEngage)
-		local hasBoss = UnitHealth("boss1") > 100 or UnitHealth("boss2") > 100 or UnitHealth("boss3") > 100 or UnitHealth("boss4") > 100 or UnitHealth("boss5") > 100
+		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
 		if not hasBoss and self.isEngaged then
 			if debug then dbg(self, ":CheckBossStatus wipeCheck scheduled.") end
 			self:ScheduleTimer(wipeCheck, 3, self)
