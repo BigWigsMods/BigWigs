@@ -113,7 +113,6 @@ L = BigWigs:NewBossLocale("Spoils of Pandaria", "itIT")
 if L then
 	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 
-	L.enable_zone = "Immagazzinamento Artefatti"
 	L.matter_scramble_explosion = "Esplosione Scambio di Materia" -- shorten maybe?
 
 	L.custom_off_mark_brewmaster = "Marcatore Mastro Birraio"

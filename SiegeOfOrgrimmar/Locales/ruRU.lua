@@ -114,7 +114,6 @@ L = BigWigs:NewBossLocale("Spoils of Pandaria", "ruRU")
 if L then
 	L.win_trigger = "Система перезагружается. Не выключать питание, иначе возможен взрыв."
 
-	L.enable_zone = "Хранилище артефактов"
 	L.matter_scramble_explosion = "Взрыв материи"
 
 	L.custom_off_mark_brewmaster = "Маркировка Хмелевара"

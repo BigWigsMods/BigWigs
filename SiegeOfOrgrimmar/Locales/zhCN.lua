@@ -113,7 +113,6 @@ L = BigWigs:NewBossLocale("Spoils of Pandaria", "zhCN")
 if L then
 	L.win_trigger = "系统重置中。请勿关闭电源，否则将发生爆炸。"
 
-	L.enable_zone = "遗物仓库"
 	L.matter_scramble_explosion = "斗转乾坤爆炸" -- shorten maybe?
 
 	L.custom_off_mark_brewmaster = "酒仙标记"

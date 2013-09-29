@@ -11,7 +11,7 @@ TODO:
 
 local mod, CL = BigWigs:NewBoss("Spoils of Pandaria", 953, 870)
 if not mod then return end
-mod:RegisterEnableMob(73152, 73720, 71512) -- Storeroom Guard ( trash guy ), Mogu Spoils, Mantid Spoils
+mod:RegisterEnableMob(71889, 73720, 71512) -- Secured Stockpile of Pandaren Spoils, Mogu Spoils, Mantid Spoils
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -29,7 +29,6 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 
-	L.enable_zone = "Artifact Storage"
 	L.matter_scramble_explosion = "Matter Scramble explosion" -- shorten maybe?
 
 	L.custom_off_mark_brewmaster = "Brewmaster marker"
@@ -56,19 +55,6 @@ function mod:GetOptions()
 		["custom_off_mark_brewmaster"] = L.custom_off_mark_brewmaster,
 		["proximity"] = "general",
 	}
-end
-
-function mod:OnRegister() -- XXX check out replacing this the chest id
-	-- Kel'Thuzad v3
-	local f = CreateFrame("Frame")
-	local func = function()
-		if not mod:IsEnabled() and GetSubZoneText() == L["enable_zone"] then
-			mod:Enable()
-		end
-	end
-	f:SetScript("OnEvent", func)
-	f:RegisterEvent("ZONE_CHANGED_INDOORS")
-	func()
 end
 
 function mod:OnBossEnable()

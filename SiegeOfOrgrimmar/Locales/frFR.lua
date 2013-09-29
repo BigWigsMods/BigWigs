@@ -115,7 +115,6 @@ L = BigWigs:NewBossLocale("Spoils of Pandaria", "frFR")
 if L then
 	L.win_trigger = "Système en cours de réinitialisation. Veuillez ne pas le débrancher, ou il pourrait vous sauter à la figure." -- to check
 
-	L.enable_zone = "Entrepôt de l’Artéfact"
 	L.matter_scramble_explosion = "Explosion Brouillage de la matière" -- shorten maybe?
 
 	L.custom_off_mark_brewmaster = "Marquage Maître brasseur"
