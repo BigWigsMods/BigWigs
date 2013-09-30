@@ -230,7 +230,7 @@ do
 		self:Bar(144563, 53) -- Imprison
 		self:Bar(-8262, 60, L["big_add_bar"], 144379) -- when the add is actually up
 		self:Bar(144800, 25.6, L["small_adds"])
-		self:DelayedMessage(-8262, 55, "Urgent", L["big_add_spawning"], 144379)
+		self:DelayedMessage(-8262, 55, "Urgent", L["big_add_spawning"], 144379, not self:Tank() and not self:Healer() and "Alert")
 		-- lets do some fancy stuff
 		local playerPower = UnitPower("player", 10)
 		if playerPower > 24 and playerPower < 50 then
