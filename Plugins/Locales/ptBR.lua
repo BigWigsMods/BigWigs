@@ -180,57 +180,7 @@ L["Shows or hides the ability name above the window."] = "Mostra/oculta o nome d
 L["Tooltip"] = "Tooltip"
 L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Mostra/oculta o tooltip do feitiço se a janela de aproximação estiver empatada com uma habilidade de chefe."
 
------------------------------------------------------------------------
--- RaidIcon.lua
---
 
-L["Icons"] = "Icones"
-
-L.raidIconsDescription = "Elementos de tipo 'bomba' e similares em um jogador podem ser de interesse especial. Aqui você pode configurar como se deveria marcar com icones algunos personagens.\n\nSó se usa um icone para cada encontro se usará o primario, nunca se usará o mesmo icone para 2 habilidades distintas, para isto esta o icone secundario.\n\n|cffff4411Nota: Se um jogador foi marcado manualmente o Big Wigs nunca trocará seu icone.|r"
-L["Primary"] = "Primário"
-L["The first raid target icon that a encounter script should use."] = "O primeiro objetivo da raide, este icone será usado"
-L["Secondary"] = "Secundário"
-L["The second raid target icon that a encounter script should use."] = "O segundo objetivo da raide, este icone será usado"
-
-L["Star"] = "Estrela"
-L["Circle"] = "Círculo"
-L["Diamond"] = "Diamante"
-L["Triangle"] = "Triângulo"
-L["Moon"] = "Lua"
-L["Square"] = "Quadrado"
-L["Cross"] = "Cruz"
-L["Skull"] = "Caveira"
-L["|cffff0000Disable|r"] = "|cffff0000Desativar|r"
-
------------------------------------------------------------------------
--- Sound.lua
---
-
-L.soundDefaultDescription = "Com esta opção habilitada, Big Wigs usará somente o som padrão da Blizzard para os alertas de raide e para mensagens que chegão com um alerta de som. Nota: Somente algumas mensagens dos scripts de encontros usarão alerta de som."
-
-L.Sounds = "Sons"
-
-L.Alarm = "Alarme"
-L.Info = "Info"
-L.Alert = "Alerta"
-L.Long = "Longo"
---L.Warning = "Warning"
-L.Victory = "Vitória"
-
---L.Beware = "Beware (Algalon)"
---L.FlagTaken = "Flag Taken (PvP)"
---L.Destruction = "Destruction (Kil'jaeden)"
---L.RunAway = "Run Away Little Girl (Big Bad Wolf)"
-
-L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Ajuste o som a se usar para %q.\n\nCtrl-Clique em um som para previsualizar."
-L.defaultOnly = "Somente padrões"
-
-L.customSoundDesc = "Play the selected custom sound instead of the one supplied by the module"
-L.resetAllCustomSound = "If you've customized sounds for any boss encounter settings, this button will reset ALL of them so the sounds defined here will be used instead."
-
------------------------------------------------------------------------
--- Statistics.lua
---
 
 -- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
 --@localization(locale="ptBR", namespace="Plugins", format="lua_additive_table", handle-unlocalized="ignore")@

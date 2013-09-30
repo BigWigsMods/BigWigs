@@ -185,57 +185,7 @@ L["Shows or hides the ability name above the window."] = "스킬의 이름을 �
 L["Tooltip"] = "툴팁"
 L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "현재 보스 스킬에 직접 연결되어 자동으로 뜨는 근접 표시창에 대해 커서를 올릴시 툴팁을 표시하거나 숨깁니다."
 
------------------------------------------------------------------------
--- RaidIcon.lua
---
 
-L["Icons"] = "아이콘"
-
-L.raidIconsDescription = "중요한 '폭탄'-유형의 보스 능력을 플레이어에게 사용할 경우 BigWigs에서 공격대 대상 아이콘 지정을 설정합니다. 중요 '폭탄'-유형 기술이 2개일 경우 1개의 기술에 첫번째, 그나머지 기술에 대해서는 두번째 아이콘을 지정하여 사용합니다.\n\n|cffff4411주의: 만약에 플레이어가 이미 수동으로 전술 지정이 되어있다면 Big Wigs 에서는 그것을 변경하지 않습니다.|r"
-L["Primary"] = "첫번째 아이콘"
-L["The first raid target icon that a encounter script should use."] = "첫번째 공격대 대상에게 사용할 아이콘을 지정합니다."
-L["Secondary"] = "두번째 아이콘"
-L["The second raid target icon that a encounter script should use."] = "두번째 공격대 대상에게 사용할 아이콘을 지정합니다."
-
-L["Star"] = "별"
-L["Circle"] = "원"
-L["Diamond"] = "다이아몬드"
-L["Triangle"] = "세모"
-L["Moon"] = "달"
-L["Square"] = "네모"
-L["Cross"] = "가위표"
-L["Skull"] = "해골"
-L["|cffff0000Disable|r"] = "|cffff0000비활성화|r"
-
------------------------------------------------------------------------
--- Sound.lua
---
-
-L.soundDefaultDescription = "이 옵션을 세트로 Big Wigs 의 기본 소리 경고와 함께 메시지에 대한 블리자드의 공격대 경고 사운드를 사용합니다."
-
-L.Sounds = "효과음"
-
-L.Alarm = "경보"
-L.Info = "정보"
-L.Alert = "알림"
-L.Long = "장음"
-L.Warning = "경고"
-L.Victory = "승리"
-
---L.Beware = "Beware (Algalon)"
---L.FlagTaken = "Flag Taken (PvP)"
---L.Destruction = "Destruction (Kil'jaeden)"
---L.RunAway = "Run Away Little Girl (Big Bad Wolf)"
-
-L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "%q에 사용할 효과음을 설정합니다.\n\n미리듣기는 CTRL-클릭하세요."
-L.defaultOnly = "기본음"
-
-L.customSoundDesc = "선택한 사용자 정의 소리 대신 모듈에서 제공하는 효과음을 사용합니다."
-L.resetAllCustomSound = "If you've customized sounds for any boss encounter settings, this button will reset ALL of them so the sounds defined here will be used instead."
-
------------------------------------------------------------------------
--- Statistics.lua
---
 
 -- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
 --@localization(locale="koKR", namespace="Plugins", format="lua_additive_table", handle-unlocalized="ignore")@

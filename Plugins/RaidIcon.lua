@@ -13,15 +13,15 @@ local lastplayer = {}
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 local icons = {
-	L["Star"],
-	L["Circle"],
-	L["Diamond"],
-	L["Triangle"],
-	L["Moon"],
-	L["Square"],
-	L["Cross"],
-	L["Skull"],
-	L["|cffff0000Disable|r"],
+	RAID_TARGET_1,
+	RAID_TARGET_2,
+	RAID_TARGET_3,
+	RAID_TARGET_4,
+	RAID_TARGET_5,
+	RAID_TARGET_6,
+	RAID_TARGET_7,
+	RAID_TARGET_8,
+	("|cffff0000%s|r"):format(L["Disable"]),
 }
 
 --------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ end
 
 plugin.pluginOptions = {
 	type = "group",
-	name = L["Icons"],
+	name = L.icons,
 	get = get,
 	set = set,
 	args = {
@@ -57,8 +57,8 @@ plugin.pluginOptions = {
 		},
 		icon = {
 			type = "select",
-			name = L["Primary"],
-			desc = L["The first raid target icon that a encounter script should use."],
+			name = L.primary,
+			desc = L.primaryDesc,
 			order = 2,
 			values = icons,
 			width = "full",
@@ -66,8 +66,8 @@ plugin.pluginOptions = {
 		},
 		secondIcon = {
 			type = "select",
-			name = L["Secondary"],
-			desc = L["The second raid target icon that a encounter script should use."],
+			name = L.secondary,
+			desc = L.secondaryDesc,
 			order = 3,
 			values = icons,
 			width = "full",

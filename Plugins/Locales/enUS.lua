@@ -188,28 +188,18 @@ L["Shows or hides a spell tooltip if the Proximity display is currently tied dir
 -- RaidIcon.lua
 --
 
-L["Icons"] = true
-
+L.icons = "Icons"
 L.raidIconsDescription = "Some encounters might include elements such as bomb-type abilities targetted on a specific player, a player being chased, or a specific player might be of interest in other ways. Here you can customize which raid icons should be used to mark these players.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, Big Wigs will never change his icon.|r"
-L["Primary"] = true
-L["The first raid target icon that a encounter script should use."] = true
-L["Secondary"] = true
-L["The second raid target icon that a encounter script should use."] = true
-
-L["Star"] = true
-L["Circle"] = true
-L["Diamond"] = true
-L["Triangle"] = true
-L["Moon"] = true
-L["Square"] = true
-L["Cross"] = true
-L["Skull"] = true
-L["|cffff0000Disable|r"] = true
+L.primary = "Primary"
+L.primaryDesc = "The first raid target icon that a encounter script should use."
+L.secondary = "Secondary"
+L.secondaryDesc = "The second raid target icon that a encounter script should use."
 
 -----------------------------------------------------------------------
 -- Sound.lua
 --
 
+L.defaultOnly = "Default only"
 L.soundDefaultDescription = "With this option set, Big Wigs will only use the default Blizzard raid warning sound for messages that come with a sound alert. Note that only some messages from encounter scripts will trigger a sound alert."
 
 L.Sounds = "Sounds"
@@ -225,9 +215,6 @@ L.Beware = "Beware (Algalon)"
 L.FlagTaken = "Flag Taken (PvP)"
 L.Destruction = "Destruction (Kil'jaeden)"
 L.RunAway = "Run Away Little Girl (Big Bad Wolf)"
-
-L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = true
-L.defaultOnly = "Default only"
 
 L.customSoundDesc = "Play the selected custom sound instead of the one supplied by the module"
 L.resetAllCustomSound = "If you've customized sounds for any boss encounter settings, this button will reset ALL of them so the sounds defined here will be used instead."

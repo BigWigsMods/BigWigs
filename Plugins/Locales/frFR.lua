@@ -184,57 +184,7 @@ L["Shows or hides the ability name above the window."] = "Affiche ou non le nom 
 L["Tooltip"] = "Bulle d'aide"
 L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Affiche ou non la bulle d'aide du sort si l'affichage de proximité est actuellement directement lié avec une technique de rencontre de boss."
 
------------------------------------------------------------------------
--- RaidIcon.lua
---
 
-L["Icons"] = "Icônes"
-
-L.raidIconsDescription = "Certaines rencontres peuvent comporter des éléments tels que les techniques de type 'bombe' qui affectent un joueur spécifique, un joueur poursuivi ou bien encore un joueur spécifique important pour d'autres raisons. Vous pouvez personnaliser ici les icônes de raid qui seront utilisées pour marquer ces joueurs.\n\nSi une rencontre ne comporte qu'une technique qui requiert de marquer quelqu'un, seule l'icône primaire sera utilisée. Une icône ne sera jamais utilisée pour deux techniques différentes de la même rencontre, et chaque technique utilisera toujours la même icône la prochaine fois qu'elle se produira.\n\n|cffff4411Notez que si un joueur a déjà été marqué manuellement, Big Wigs ne changera jamais son icône.|r"
-L["Primary"] = "Primaire"
-L["The first raid target icon that a encounter script should use."] = "La première icône de cible de raid qu'un script de rencontre doit utiliser."
-L["Secondary"] = "Secondaire"
-L["The second raid target icon that a encounter script should use."] = "La seconde icône de cible de raid qu'un script de rencontre doit utiliser."
-
-L["Star"] = "Étoile"
-L["Circle"] = "Cercle"
-L["Diamond"] = "Diamant"
-L["Triangle"] = "Triangle"
-L["Moon"] = "Lune"
-L["Square"] = "Carré"
-L["Cross"] = "Croix"
-L["Skull"] = "Crâne"
-L["|cffff0000Disable|r"] = "|cffff0000Désactiver|r"
-
------------------------------------------------------------------------
--- Sound.lua
---
-
-L.soundDefaultDescription = "Si ceci est coché, Big Wigs utilisera uniquement le son de l'Avertissement raid de Blizzard pour les messages accompagnés d'un son. Notez que seuls certains messages des scripts de rencontre déclencheront une alerte sonore."
-
-L.Sounds = "Sons"
-
-L.Alarm = "Alarme"
-L.Info = "Info"
-L.Alert = "Alerte"
-L.Long = "Long"
-L.Warning = "Avertissement"
-L.Victory = "Victoire"
-
-L.Beware = "Attention (Algalon)"
-L.FlagTaken = "Drapeau pris (JcJ)"
-L.Destruction = "Destruction (Kil'jaeden)"
-L.RunAway = "Cours petite fille, cours (Le Grand Méchant Loup)"
-
-L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Détermine le son à utiliser pour %q (Ctrl-clic sur un son pour avoir un aperçu)."
-L.defaultOnly = "Son par défaut uniquement"
-
-L.customSoundDesc = "Joue le son personnalisé sélectionné au lieu de celui fourni par le module"
-L.resetAllCustomSound = "Si vous avez des sons personnalisés pour certains paramètres des rencontres de boss, ce bouton les réinitialisera TOUS afin que les sons par défaut soient utilisés à la place."
-
------------------------------------------------------------------------
--- Statistics.lua
---
 
 -- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
 --@localization(locale="frFR", namespace="Plugins", format="lua_additive_table", handle-unlocalized="ignore")@

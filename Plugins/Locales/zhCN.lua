@@ -185,57 +185,7 @@ L["Shows or hides the ability name above the window."] = "在窗口上面显示�
 L["Tooltip"] = "提示"
 L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "显示或隐藏近距离显示从首领战斗技能获取的法术提示。"
 
------------------------------------------------------------------------
--- RaidIcon.lua
---
 
-L["Icons"] = "图标"
-
-L.raidIconsDescription = "可能遇到包含例如炸弹类型的技能指向特定的玩家，玩家被追，或是特定玩家可能有兴趣在其他方面。这里可以自定义团队标记来标记这些玩家。\n\n如果只遇到一种技能，很好，只有第一个图标会被使用。在某些战斗中一个图标不会使用在两个不同的技能上，任何特定技能在下次总是使用相同图标。\n\n|cffff4411注意：如果玩家已经被手动标记，Big Wigs 将不会改变他的图标。|r"
-L["Primary"] = "主要"
-L["The first raid target icon that a encounter script should use."] = "战斗时使用的第一个团队标记。"
-L["Secondary"] = "次要"
-L["The second raid target icon that a encounter script should use."] = "战斗时使用的第二个团队标记。"
-
-L["Star"] = "星形"
-L["Circle"] = "圆形"
-L["Diamond"] = "棱形"
-L["Triangle"] = "三角"
-L["Moon"] = "月亮"
-L["Square"] = "方形"
-L["Cross"] = "十字"
-L["Skull"] = "骷髅"
-L["|cffff0000Disable|r"] = "|cffff0000禁用|r"
-
------------------------------------------------------------------------
--- Sound.lua
---
-
-L.soundDefaultDescription = "根据这些选项设置，Big Wigs 将只使用暴雪默认团队信息警报音效。注意：只有一些信息通过遇到脚本时才会出发音效警报。"
-
-L.Sounds = "音效"
-
-L.Alarm = "警报"
-L.Info = "信息"
-L.Alert = "报警"
-L.Long = "长计时"
-L.Warning = "警报"
-L.Victory = "胜利"
-
-L.Beware = "当心（奥尔加隆）"
-L.FlagTaken = "夺旗（PvP）"
-L.Destruction = "毁灭（基尔加丹）"
-L.RunAway = "快跑吧小姑娘，快跑……（大灰狼）"
-
-L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "设置使用%q音效（Ctrl-点击可以预览效果）。"
-L.defaultOnly = "只用预设"
-
-L.customSoundDesc = "播放选定的自定义的声音，而不是由模块提供的"
-L.resetAllCustomSound = "如果设置全部首领战斗自定义的声音，此按钮将重置“全部”以这里自定义的声音来代替。"
-
------------------------------------------------------------------------
--- Statistics.lua
---
 
 -- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
 --@localization(locale="zhCN", namespace="Plugins", format="lua_additive_table", handle-unlocalized="ignore")@

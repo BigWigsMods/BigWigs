@@ -185,57 +185,7 @@ L["Shows or hides the ability name above the window."] = "Visualizza o nasconde 
 L["Tooltip"] = "ToolTip"
 L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Visualizza o nasconde il tooltip dell'abilità nel display di prossimità ed è strettamente legato all'abilità del boss."
 
------------------------------------------------------------------------
--- RaidIcon.lua
---
 
-L["Icons"] = "Icone"
-
-L.raidIconsDescription = "Alcuni combattimenti possono includere elementi come bombe su giocatori specifici, un giocatore inseguito da qualcosa, che interessano un giocatore. Qui puoi personalizzare quali Simboli devono essere applicati sui giocatori.|r"
-L["Primary"] = "Primario"
-L["The first raid target icon that a encounter script should use."] = "Il primo Simbolo che l'automazione del combattimento dovrebbe usare."
-L["Secondary"] = "Secondario"
-L["The second raid target icon that a encounter script should use."] = "Il secondo Simbolo che l'automazione del combattimento dovrebbe usare."
-
-L["Star"] = "Stella"
-L["Circle"] = "Cerchio"
-L["Diamond"] = "Diamante"
-L["Triangle"] = "Triangolo"
-L["Moon"] = "Luna"
-L["Square"] = "Quadrato"
-L["Cross"] = "X"
-L["Skull"] = "Teschio"
-L["|cffff0000Disable|r"] = "|cffff0000Disabilitato|r"
-
------------------------------------------------------------------------
--- Sound.lua
---
-
-L.soundDefaultDescription = "Con questa opzione, Big Wigs userà solo i suoni predefiniti Blizzard che indicano un avviso. Ricorda che solo alcuni messaggi utilizzeranno i suoni durante un combattimento."
-
-L.Sounds = "Suoni"
-
-L.Alarm = "Allarme"
-L.Info = "Informazioni"
-L.Alert = "Avvertimento"
-L.Long = "Lungo"
-L.Warning = "Avviso"
-L.Victory = "Vittoria"
-
-L.Beware = "Attenti! (Algalon)"
-L.FlagTaken = "Cattura Bandiera (PvP)"
-L.Destruction = "Distruzione (Kil'jaeden)"
-L.RunAway = "Scappa ragazzina, scappa!!! (Big Bad Wolf)"
-
-L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Imposta il suono da usare per %q.\n\nCtrl-Clic per ascoltare un suono."
-L.defaultOnly = "Solo Suoni Predefiniti"
-
-L.customSoundDesc = "Riproduci il suono personalizzato scelto invece che quelli proposti dal modulo"
-L.resetAllCustomSound = "Se hai personalizzzato i suoni per qualsiasi boss, questo pulsante reimposterà TUTTI i suoni predefiniti e quindi verranno usati i suoni definiti qui."
-
------------------------------------------------------------------------
--- Statistics.lua
---
 
 -- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
 --@localization(locale="itIT", namespace="Plugins", format="lua_additive_table", handle-unlocalized="ignore")@
