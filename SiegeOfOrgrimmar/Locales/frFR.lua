@@ -108,7 +108,7 @@ end
 L = BigWigs:NewBossLocale("Malkorok", "frFR")
 if L then
 	L.custom_off_energy_marks = "Marquage Énergie déplacée"
-	L.custom_off_energy_marks_desc = "Afin d'aider à l'attribution des dissipations, marque les joueurs ayant Énergie déplacée avec %s%s%s%s%s%s%s (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
+	L.custom_off_energy_marks_desc = "To help dispelling assignments, mark the people who have Displaced Energy on them with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "frFR")

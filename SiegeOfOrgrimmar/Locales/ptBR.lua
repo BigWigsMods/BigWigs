@@ -46,7 +46,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "ptBR")
 if L then
-	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
+
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "ptBR")

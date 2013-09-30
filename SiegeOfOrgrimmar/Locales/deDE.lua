@@ -107,7 +107,7 @@ end
 L = BigWigs:NewBossLocale("Malkorok", "deDE")
 if L then
 	L.custom_off_energy_marks = "Verdrängte Energie markieren"
-	L.custom_off_energy_marks_desc = "Um bei der Einteilung zum Bannen zu helfen, werden Spieler mit Verdrängter Energie mit %s%s%s%s%s%s%s markiert (in dieser Reihenfolge)(vielleicht werden nicht alle Symbole genutzt), benötigt Leiter oder Assistent."
+	L.custom_off_energy_marks_desc = "To help dispelling assignments, mark the people who have Displaced Energy on them with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "deDE")
