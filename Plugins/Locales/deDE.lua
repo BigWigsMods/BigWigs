@@ -228,7 +228,7 @@ L.Destruction = "Zerstörung (Kil'jaeden)"
 L.RunAway = "Lauf kleines Mädchen, lauf (Der große böse Wolf)"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Legt den Sound fest, der für %q verwendet wird.\n\nStrg-Klicken, um reinzuhören."
-L["Default only"] = "Nur Standards"
+L.defaultOnly = "Nur Standards"
 
 L.customSoundDesc = "Den speziell gewählten Sound anstatt des vom Modul bereitgestellten abspielen"
 L.resetAllCustomSound = "Wenn Du die Sounds für Bossbegegnungen geändert hast, werden diese ALLE über diese Schaltfläche zurückgesetzt, sodass stattdessen die hier gewählten genutzt werden."
@@ -237,19 +237,6 @@ L.resetAllCustomSound = "Wenn Du die Sounds für Bossbegegnungen geändert hast,
 -- Statistics.lua
 --
 
-L.bossKillDurationPrint = "'%s' wurde nach %s besiegt."
-L.bossWipeDurationPrint = "An '%s' nach %s gescheitert."
-L.newBestKill = "Neue Rekordzeit!"
-L.bossStatistics = "Boss-Statistiken"
-L.bossStatsDescription = "Zeichnet verschiedene Statistiken der Bossbegegnungen wie die Anzahl der Siege und Niederlagen, sowie die Kampfdauer oder die Rekordzeiten auf. Diese Statistiken können, falls vorhanden, in der Konfiguration der einzelnen Bosse eingesehen werden. Andernfalls werden diese ausgeblendet."
-L.enableStats = "Statistiken aktivieren"
-L.chatMessages = "Chatnachrichten"
-L.printBestKillOption = "Benachrichtigung über besten Kill"
-L.printKillOption = "Siegesdauer"
-L.printWipeOption = "Niederlagendauer"
-L.countKills = "Siege zählen"
-L.countWipes = "Niederlagen zählen"
-L.recordBestKills = "Beste Siege speichern"
-L.createTimeBar = "'Rekordzeit'-Timer anzeigen"
-L.bestTimeBar = "Rekordzeit"
+-- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
+--@localization(locale="deDE", namespace="Plugins", format="lua_additive_table", handle-unlocalized="ignore")@
 

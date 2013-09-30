@@ -70,7 +70,7 @@ plugin.pluginOptions = {
 	args = {
 		default = {
 			type = "toggle",
-			name = colorize[L["Default only"]],
+			name = colorize[L.defaultOnly],
 			desc = L.soundDefaultDescription,
 			get = function(info) return plugin.db.profile.defaultonly end,
 			set = function(info, v) plugin.db.profile.defaultonly = v end,

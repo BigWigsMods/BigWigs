@@ -228,7 +228,7 @@ L.Destruction = "毀滅（基爾加丹）"
 L.RunAway = "快逃啊小女孩，快逃……（大野狼）"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "設定使用%q音效（Ctrl-點擊可以預覽效果）。"
-L["Default only"] = "僅用預設"
+L.defaultOnly = "僅用預設"
 
 L.customSoundDesc = "播放選定的自訂的聲音，而不是由模塊提供的"
 L.resetAllCustomSound = "如果設置全部首領戰鬥自訂的聲音，此按鈕將重置“全部”以這裡自訂的聲音來代替。"
@@ -237,19 +237,6 @@ L.resetAllCustomSound = "如果設置全部首領戰鬥自訂的聲音，此按�
 -- Statistics.lua
 --
 
-L.bossKillDurationPrint = "“%s”已被擊殺，用時%s。"
-L.bossWipeDurationPrint = "“%s”戰鬥團滅，用時%s。"
-L.newBestKill = "新的最快擊殺！"
-L.bossStatistics = "首領統計"
-L.bossStatsDescription = "首領戰鬥相關的統計數據，如首領被擊殺數量，團滅次數，戰鬥持續時間，最快的首領擊殺記錄。可以在配置屏幕上查看每個首領的統計數據，沒有首領記錄的統計數據會被隱藏。"
-L.enableStats = "啟用統計"
-L.chatMessages = "聊天訊息"
-L.printBestKillOption = "最快擊殺提醒"
-L.printKillOption = "擊殺時間"
-L.printWipeOption = "團滅時間"
-L.countKills = "擊殺次數"
-L.countWipes = "團滅次數"
-L.recordBestKills = "記憶最快擊殺"
-L.createTimeBar = "顯示“最快擊殺”計時條"
-L.bestTimeBar = "最快時間"
+-- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
+--@localization(locale="zhTW", namespace="Plugins", format="lua_additive_table", handle-unlocalized="ignore")@
 

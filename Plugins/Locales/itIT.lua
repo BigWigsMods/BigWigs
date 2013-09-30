@@ -228,7 +228,7 @@ L.Destruction = "Distruzione (Kil'jaeden)"
 L.RunAway = "Scappa ragazzina, scappa!!! (Big Bad Wolf)"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Imposta il suono da usare per %q.\n\nCtrl-Clic per ascoltare un suono."
-L["Default only"] = "Solo Suoni Predefiniti"
+L.defaultOnly = "Solo Suoni Predefiniti"
 
 L.customSoundDesc = "Riproduci il suono personalizzato scelto invece che quelli proposti dal modulo"
 L.resetAllCustomSound = "Se hai personalizzzato i suoni per qualsiasi boss, questo pulsante reimposterà TUTTI i suoni predefiniti e quindi verranno usati i suoni definiti qui."
@@ -237,19 +237,6 @@ L.resetAllCustomSound = "Se hai personalizzzato i suoni per qualsiasi boss, ques
 -- Statistics.lua
 --
 
-L.bossKillDurationPrint = "Sconfitto '%s' dopo %s."
-L.bossWipeDurationPrint = "Tentativo fallito su '%s' dopo %s."
-L.newBestKill = "Nuova uccisione rapida!"
-L.bossStatistics = "Statistiche del Boss"
-L.bossStatsDescription = "Tiene il conto di varie statistiche relative ad ogni singolo boss, tipo il numero di volte che è stato sconfitto, il numero di tentativi falliti(wipes), quanto è durato il combattimento, o l'uccisione più veloce. Queste statistiche possono essere viste nella finestra di configurazione di ogni singolo boss, ma saranno nascoste per quei boss di cui non c'é nessuna informazione statistica."
-L.enableStats = "Abilita Statistiche"
-L.chatMessages = "Messaggi Chat"
-L.printBestKillOption = "Notifica Miglior Uccisione"
-L.printKillOption = "Tempo Uccisione"
-L.printWipeOption = "Tempo Tentativo Fallito"
-L.countKills = "Numero Uccisioni"
-L.countWipes = "Numero Tentativi Falliti"
-L.recordBestKills = "Ricorda Miglior Uccisione"
-L.createTimeBar = "Mostra la barra 'Miglior Tempo'"
-L.bestTimeBar = "Miglior Tempo"
+-- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
+--@localization(locale="itIT", namespace="Plugins", format="lua_additive_table", handle-unlocalized="ignore")@
 

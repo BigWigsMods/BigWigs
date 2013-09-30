@@ -89,12 +89,12 @@ plugin.subPanelOptions = {
 					},
 					printKills = {
 						type = "toggle",
-						name = L.printKillOption,
+						name = L.printDefeatOption,
 						order = 2,
 					},
 					printNewBestKill = {
 						type = "toggle",
-						name = L.printBestKillOption,
+						name = L.printBestTimeOption,
 						order = 3,
 						disabled = function() return not plugin.db.profile.saveBestKill or not plugin.db.profile.enabled end,
 					},
@@ -102,7 +102,7 @@ plugin.subPanelOptions = {
 			},
 			saveKills = {
 				type = "toggle",
-				name = L.countKills,
+				name = L.countDefeats,
 				order = 4,
 				disabled = checkDisabled,
 				width = "full",
@@ -116,7 +116,7 @@ plugin.subPanelOptions = {
 			},
 			saveBestKill = {
 				type = "toggle",
-				name = L.recordBestKills,
+				name = L.recordBestTime,
 				order = 6,
 				disabled = checkDisabled,
 				width = "full",
@@ -176,7 +176,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 		local sDB = BigWigsStatisticsDB[module.zoneId][module.encounterId][difficultyTable[module:Difficulty()]]
 
 		if self.db.profile.printKills then
-			BigWigs:Print(L.bossKillDurationPrint:format(module.displayName, SecondsToTime(elapsed)))
+			BigWigs:Print(L.bossDefeatDurationPrint:format(module.displayName, SecondsToTime(elapsed)))
 		end
 
 		if self.db.profile.saveKills then
@@ -186,7 +186,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 		if self.db.profile.saveBestKill and (not sDB.best or elapsed < sDB.best) then
 			sDB.best = elapsed
 			if self.db.profile.printNewBestKill then
-				BigWigs:Print(L.newBestKill)
+				BigWigs:Print(L.newBestTime)
 			end
 		end
 

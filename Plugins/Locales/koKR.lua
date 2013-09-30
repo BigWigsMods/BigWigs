@@ -228,7 +228,7 @@ L.Victory = "승리"
 --L.RunAway = "Run Away Little Girl (Big Bad Wolf)"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "%q에 사용할 효과음을 설정합니다.\n\n미리듣기는 CTRL-클릭하세요."
-L["Default only"] = "기본음"
+L.defaultOnly = "기본음"
 
 L.customSoundDesc = "선택한 사용자 정의 소리 대신 모듈에서 제공하는 효과음을 사용합니다."
 L.resetAllCustomSound = "If you've customized sounds for any boss encounter settings, this button will reset ALL of them so the sounds defined here will be used instead."
@@ -237,19 +237,6 @@ L.resetAllCustomSound = "If you've customized sounds for any boss encounter sett
 -- Statistics.lua
 --
 
-L.bossKillDurationPrint = "Defeated '%s' after %s."
-L.bossWipeDurationPrint = "Wiped on '%s' after %s."
-L.newBestKill = "새로운 보스 죽임"
-L.bossStatistics = "보스 통계"
-L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times a boss had been killed, the amount of wipes, total time that combat lasted, or the fastest boss kill. These statistics can be viewed on each boss's configuration screen, but will be hidden for bosses that have no recorded statistics."
-L.enableStats = "통계 활성화"
-L.chatMessages = "대화 메시지"
-L.printBestKillOption = "Best Kill Notification"
-L.printKillOption = "죽임 시간"
-L.printWipeOption = "Wipe Time"
-L.countKills = "죽임 횟수"
-L.countWipes = "Count Wipes"
-L.recordBestKills = "Remember Best Kills"
---L.createTimeBar = "Show 'Best Time' bar"
---L.bestTimeBar = "Best Time"
+-- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
+--@localization(locale="koKR", namespace="Plugins", format="lua_additive_table", handle-unlocalized="ignore")@
 

@@ -223,7 +223,7 @@ L.Destruction = "Destrucción (Kil'jaeden)"
 L.RunAway = "Corre pequeña (Big Bad Wolf)"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Ajusta el sonido a usar para %q.\n\nCtrl-Clic un sonido a vista previa."
-L["Default only"] = "Solo por defecto"
+L.defaultOnly = "Solo por defecto"
 
 L.customSoundDesc = "Reproduce el sonido seleccionado en lugar de uno suministrado por el módulo"
 L.resetAllCustomSound = "Si tienes sonidos personalizados para algun ajuste en algún encuentro, este botón los reiniciará a TODOS y así los sonidos definidos aquí serán usados en su lugar."
@@ -232,19 +232,6 @@ L.resetAllCustomSound = "Si tienes sonidos personalizados para algun ajuste en a
 -- Statistics.lua
 --
 
-L.bossKillDurationPrint = "Derrotado '%s' después de %s."
-L.bossWipeDurationPrint = "Wipe en '%s' después de %s."
-L.newBestKill = "¡Nueva muerte más rápida!"
-L.bossStatistics = "Estadísticas de Jefe"
-L.bossStatsDescription = "Registro de estadísticas de Jefes como el número de veces que ha sido derrotado, canditad de wipes, tiempo total que duró el combate, o la muerte más rápida. Estas estadísticas se pueden ver en la ventana de configuración de cada jefe, pero permanecerán ocultas en los jefes que no tengan todavía registro de estadísticas."
-L.enableStats = "Activar estadísticas"
-L.chatMessages = "Mensajes de chat"
-L.printBestKillOption = "Notificar muerte más rápida"
-L.printKillOption = "Tiempo de la Muerte"
-L.printWipeOption = "Tiempo del Wipe"
-L.countKills = "Contar Muertes"
-L.countWipes = "Contar Wipes"
-L.recordBestKills = "Recordar muertes más rápidas"
-L.createTimeBar = "Mostrar barra de 'Mejor tiempo' "
-L.bestTimeBar = "Mejor tiempo"
+-- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
+--@localization(locale="esES", namespace="Plugins", format="lua_additive_table", handle-unlocalized="ignore")@
 

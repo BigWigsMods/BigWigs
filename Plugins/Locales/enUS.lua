@@ -227,7 +227,7 @@ L.Destruction = "Destruction (Kil'jaeden)"
 L.RunAway = "Run Away Little Girl (Big Bad Wolf)"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = true
-L["Default only"] = true
+L.defaultOnly = "Default only"
 
 L.customSoundDesc = "Play the selected custom sound instead of the one supplied by the module"
 L.resetAllCustomSound = "If you've customized sounds for any boss encounter settings, this button will reset ALL of them so the sounds defined here will be used instead."
@@ -236,19 +236,19 @@ L.resetAllCustomSound = "If you've customized sounds for any boss encounter sett
 -- Statistics.lua
 --
 
-L.bossKillDurationPrint = "Defeated '%s' after %s."
+L.bossDefeatDurationPrint = "Defeated '%s' after %s."
 L.bossWipeDurationPrint = "Wiped on '%s' after %s."
-L.newBestKill = "New best time!"
+L.newBestTime = "New best time!"
 L.bossStatistics = "Boss Statistics"
 L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times a boss had been killed, the amount of wipes, total time that combat lasted, or the fastest boss kill. These statistics can be viewed on each boss's configuration screen, but will be hidden for bosses that have no recorded statistics."
 L.enableStats = "Enable Statistics"
 L.chatMessages = "Chat Messages"
-L.printBestKillOption = "Best Kill Notification"
-L.printKillOption = "Kill Time"
+L.printBestTimeOption = "Best Time Notification"
+L.printDefeatOption = "Defeat Time"
 L.printWipeOption = "Wipe Time"
-L.countKills = "Count Kills"
+L.countDefeats = "Count Defeats"
 L.countWipes = "Count Wipes"
-L.recordBestKills = "Remember Best Kills"
+L.recordBestTime = "Remember Best Time"
 L.createTimeBar = "Show 'Best Time' bar"
 L.bestTimeBar = "Best Time"
 

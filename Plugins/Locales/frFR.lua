@@ -227,7 +227,7 @@ L.Destruction = "Destruction (Kil'jaeden)"
 L.RunAway = "Cours petite fille, cours (Le Grand Méchant Loup)"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Détermine le son à utiliser pour %q (Ctrl-clic sur un son pour avoir un aperçu)."
-L["Default only"] = "Son par défaut uniquement"
+L.defaultOnly = "Son par défaut uniquement"
 
 L.customSoundDesc = "Joue le son personnalisé sélectionné au lieu de celui fourni par le module"
 L.resetAllCustomSound = "Si vous avez des sons personnalisés pour certains paramètres des rencontres de boss, ce bouton les réinitialisera TOUS afin que les sons par défaut soient utilisés à la place."
@@ -236,19 +236,6 @@ L.resetAllCustomSound = "Si vous avez des sons personnalisés pour certains para
 -- Statistics.lua
 --
 
-L.bossKillDurationPrint = "Défaite de '%s' au bout de %s."
-L.bossWipeDurationPrint = "Wipe sur '%s' au bout de %s."
-L.newBestKill = "Nouveau record !"
-L.bossStatistics = "Statistiques des boss"
-L.bossStatsDescription = "Enregistrement de diverses statitistiques relatives aux boss telles que le nombre de fois qu'un boss a été vaincu, le nombre de wipes, la durée totale du combat ou la victoire la plus rapide. Ces statistiques peuvent être visionnées sur l'écran de configuration de chaque boss, mais seront cachées pour les boss qui n'ont pas encore de statistiques enregistrées."
-L.enableStats = "Activer les statistiques"
-L.chatMessages = "Messages de la fenêtre de discussion"
-L.printBestKillOption = "Notif. de nv record"
-L.printKillOption = "Durée (victoire)"
-L.printWipeOption = "Durée (échec)"
-L.countKills = "Compter les victoires"
-L.countWipes = "Compter les échecs"
-L.recordBestKills = "Se souvenir des meilleurs temps"
-L.createTimeBar = "Afficher la barre 'Meilleur temps'"
-L.bestTimeBar = "Meilleur temps"
+-- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
+--@localization(locale="frFR", namespace="Plugins", format="lua_additive_table", handle-unlocalized="ignore")@
 
