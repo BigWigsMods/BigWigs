@@ -122,7 +122,7 @@ function mod:OnEngage()
 	deathCount = 0
 	infernoTarget, infernoTimer = nil, nil
 	self:OpenProximity("proximity", 5) -- this might not be needed in LFR
-	self:Berserk(self:Heroic() and 600 or 900) -- Both unverified           -- 600 verified for 10m hc /Mikk
+	self:Berserk(self:Heroic() and 600 or 900)
 	self:Bar(144396, 7) -- VengefulStrikes
 	self:Bar(143019, 16) -- Corrupted Brew
 	self:CDBar(143027, 44) -- Clash

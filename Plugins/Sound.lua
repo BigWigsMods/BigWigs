@@ -22,6 +22,7 @@ local sounds = {
 	Victory = "BigWigs: Victory",
 }
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
+local BigWigs, GetSpellInfo, PlaySoundFile, PlaySound = BigWigs, GetSpellInfo, PlaySoundFile, PlaySound
 
 local colorize = nil
 do
@@ -222,7 +223,7 @@ local function customSound(module, key, sound)
 	if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
 		return false
 	else
-		return plugin.db.profile[sound][module.name][key]
+		return sDb[module.name][key]
 	end
 end
 
@@ -232,7 +233,7 @@ function plugin:BigWigs_Message(event, module, key, text, color, sound)
 end
 
 function plugin:BigWigs_Sound(event, sound, overwrite)
-	if not BigWigs.db.profile.sound or not sound then return end
+	if not sound or not BigWigs.db.profile.sound then return end
 	play(sound, overwrite)
 end
 

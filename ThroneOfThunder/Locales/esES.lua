@@ -215,6 +215,6 @@ if L then
 	L.stormbringer = "Extiendetormentas Draz'kil"
 	L.monara = "Monara"
 	L.rockyhorror = "Horror rocoso"
-	L.thunderlord_guardian = "Señor de los truenos  / Guardián de los relámpagos"
+	L.thunderlord_guardian = "Señor de los truenos / Guardián de los relámpagos"
 end
 

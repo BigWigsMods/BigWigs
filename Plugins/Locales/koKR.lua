@@ -18,7 +18,7 @@ L["Allows bars to be click-through unless the specified modifier key is held dow
 
 L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "선택한 바에 대하여 지속시간 동안 바와 메세지에 특수 강조 기능을 적용합니다."
 L["Report"] = "보고"
-L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."] = "활성화된 대화창에 현재 바의 상태를 보고합니다.  인스턴스 대화, 공격대, 파티나 일반 창에 알릴 수 있습니다."
+L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."] = "활성화된 대화창에 현재 바의 상태를 보고합니다. 인스턴스 대화, 공격대, 파티나 일반 창에 알릴 수 있습니다."
 L["Remove"] = "삭제"
 L["Temporarily removes the bar and all associated messages."] = "해당 바에 관련된 모든 바와 메세지를 제거합니다."
 L["Remove other"] = "기타 삭제"

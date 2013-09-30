@@ -130,7 +130,7 @@ function mod:ExpelMiasma() -- Blood Rage over
 	self:Message(142879, "Neutral", "Long", CL["over"]:format(self:SpellName(142879)))
 	self:OpenProximity(142851, 5)
 	self:StopBar(142913) -- Displaced Energy
-	breathCounter, smashCounter, slamCounter  = 1, 1, 1
+	breathCounter, smashCounter, slamCounter = 1, 1, 1
 	self:Bar(142826, 17, CL["count"]:format(self:SpellName(142826), smashCounter)) -- Arcing Smash
 	self:Bar(142851, 10) -- Seismic Slam
 	self:CDBar(142842, 72.2, CL["count"]:format(self:SpellName(142842), breathCounter)) -- Breath of Y'Shaarj

@@ -22,6 +22,7 @@ local difficulty = 3
 local UpdateDispelStatus = nil
 local UpdateMapData = nil
 local myGUID = nil
+local myRole = nil
 
 -------------------------------------------------------------------------------
 -- Debug
@@ -85,7 +86,14 @@ function boss:OnInitialize() core:RegisterBossModule(self) end
 function boss:OnEnable()
 	if debug then dbg(self, "OnEnable()") end
 
+	-- Update GUID
 	myGUID = UnitGUID("player")
+
+	-- Update Role
+	local tree = GetSpecialization()
+	if tree then
+		myRole = GetSpecializationRole(tree)
+	end
 
 	if IsEncounterInProgress() then
 		self:CheckBossStatus("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
@@ -490,7 +498,14 @@ do
 		if debug then dbg(self, ":Engage") end
 
 		if not noEngage or noEngage ~= "NoEngage" then
+			-- Update GUID
 			myGUID = UnitGUID("player")
+
+			-- Update Role
+			local tree = GetSpecialization()
+			if tree then
+				myRole = GetSpecializationRole(tree)
+			end
 
 			-- Update Difficulty
 			local _, _, diff = GetInstanceInfo()
@@ -639,23 +654,16 @@ function boss:Tank(unit)
 	if unit then
 		return GetPartyAssignment("MAINTANK", unit) or UnitGroupRolesAssigned(unit) == "TANK"
 	else
-		local tree = GetSpecialization()
-		if not tree then return end
-		local role = GetSpecializationRole(tree)
-		return role == "TANK"
+		return myRole == "TANK"
 	end
 end
 
 function boss:Healer()
-	local tree = GetSpecialization()
-	if not tree then return end
-	local role = GetSpecializationRole(tree)
-	return role == "HEALER"
+	return myRole == "HEALER"
 end
 
 function boss:Damager()
-	local tree = GetSpecialization()
-	if not tree then return end
+	if myRole ~= "DAMAGER" then return end
 	local role
 	local _, class = UnitClass("player")
 	if

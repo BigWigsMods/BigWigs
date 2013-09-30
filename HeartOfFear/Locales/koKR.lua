@@ -23,7 +23,7 @@ if L then
 
 	L.unseenstrike_soon = "보이지 않는 일격 (%d) ~ 5-10초 전!"
 	L.assault_message = "압도적인 공격"
-	L.side_swap = "복도 전환"  -- Side Swap
+	L.side_swap = "복도 전환" -- Side Swap
 end
 
 L = BigWigs:NewBossLocale("Garalon", "koKR")
@@ -82,7 +82,7 @@ if L then
 	L.eyes_desc = "여제의 눈 중첩과 지속시간 바를 표시합니다."
 	L.eyes_message = "눈"
 
-	L.visions_message = "파멸의 환영"  -- Visions
-	L.visions_dispel = "플레이어 파멸의 환영!"  -- Players have been feared!
+	L.visions_message = "파멸의 환영" -- Visions
+	L.visions_dispel = "플레이어 파멸의 환영!" -- Players have been feared!
 	L.fumes_bar = "Your fumes buff"
 end

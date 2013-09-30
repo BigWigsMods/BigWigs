@@ -90,7 +90,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", "TankAbilityUpdate", "boss1")
 	self:Log("SPELL_AURA_APPLIED", "Anima", 138331) -- on boss to start/stop timers
-	self:Log("SPELL_AURA_APPLIED", "Vita", 138332)  -- on boss to start/stop timers
+	self:Log("SPELL_AURA_APPLIED", "Vita", 138332) -- on boss to start/stop timers
 	self:Log("SPELL_CAST_START", "Balls", 138321)
 end
 

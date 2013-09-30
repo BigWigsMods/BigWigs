@@ -121,7 +121,7 @@ do
 		if self.db.profile.custom_off_mark_brewmaster and not timer then
 			timer = self:ScheduleRepeatingTimer(markBrewmaster, 0.1, args.sourceGUID)
 		end
-		local debuffed =  UnitDebuff("player", self:SpellName(146217)) -- Keg Toss
+		local debuffed = UnitDebuff("player", self:SpellName(146217)) -- Keg Toss
 		self:Message(args.spellId, "Attention", debuffed and "Long")
 		if debuffed then
 			self:Flash(146217) -- flash again

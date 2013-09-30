@@ -9,7 +9,7 @@ if L then
 	L.defile = "Lancio Suolo Profanato"
 
 	L.custom_off_bane_marks = "Parola d'Ombra: Flagello"
-	L.custom_off_bane_marks_desc = "Per aiutare a dissipare, evidenzia chi ha Parola d'Ombra: Flagello su di loro con  %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
+	L.custom_off_bane_marks_desc = "Per aiutare a dissipare, evidenzia chi ha Parola d'Ombra: Flagello su di loro con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
 
 	L.no_meditative_field = "NESSUN Campo di Meditazione!"
 
@@ -36,7 +36,7 @@ end
 L = BigWigs:NewBossLocale("Sha of Pride", "itIT")
 if L then
 	L.custom_off_titan_mark = "Marcatore Potenza dei Titani"
-	L.custom_off_titan_mark_desc = "Evidenzia i giocatori con Dono dei Titani con  {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, richiede capoincursione o assistente.\n|cFFFF0000Soltanto 1 dei giocatori nell'incursione dovrebbe tenere abilitata questa opzione per evitare conflitti di marcamento.|r"
+	L.custom_off_titan_mark_desc = "Evidenzia i giocatori con Dono dei Titani con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, richiede capoincursione o assistente.\n|cFFFF0000Soltanto 1 dei giocatori nell'incursione dovrebbe tenere abilitata questa opzione per evitare conflitti di marcamento.|r"
 
 	L.projection_message = "Vai verso la freccia |cFF00FF00VERDE|r!"
 	L.projection_explosion = "Proiezione esplosione"

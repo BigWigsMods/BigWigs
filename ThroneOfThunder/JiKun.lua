@@ -170,7 +170,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 		elseif nestCounter == 3 or nestCounter == 8 or nestCounter == 17 or nestCounter == 19 or nestCounter == 29 then
 			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["down"], nextNest+1, L["up"]), 134347)
 		elseif nestCounter == 15 then
-			self:Bar("nest", 30, ("(%d)%s(%s)+(%d)%s"):format(nextNest, L["up"], L["add"], nextNest+1, L["down"]), 134347)  -- this is intentional, because this is how blizzard announces it too!
+			self:Bar("nest", 30, ("(%d)%s(%s)+(%d)%s"):format(nextNest, L["up"], L["add"], nextNest+1, L["down"]), 134347) -- this is intentional, because this is how blizzard announces it too!
 		elseif nestCounter == 13 or nestCounter == 24 then
 			self:Bar("nest", 30, ("(%d)%s+(%d)%s"):format(nextNest, L["up"], nextNest+1, L["down"]), 134347) -- this is intentional, because this is how blizzard announces it too!
 		elseif nestCounter == 7 then

@@ -96,13 +96,13 @@ if L then
 	L.blue_spawn_trigger = "하늘빛 안개"
 	L.yellow_spawn_trigger = "호박색 안개"
 
-	L.adds = "공개 추가"  -- Reveal Adds
+	L.adds = "공개 추가" -- Reveal Adds
 	L.adds_desc = "진흥빛, 하늘빛, 호박색 안개중 몇마리의 진흥빛 안개가 남았는지 경고합니다."
 
 	L.custom_off_ray_controllers = "적외선 조절 공격대 아이콘"
 	L.custom_off_ray_controllers_desc = "Use the {rt1}{rt7}{rt6} raid markers to mark people who will control the ray spawn positions and movement."
 
-	L.custom_off_parasite_marks = "암흑의 기생충 공격대 아이콘"  -- Dark parasite marker
+	L.custom_off_parasite_marks = "암흑의 기생충 공격대 아이콘" -- Dark parasite marker
 	L.custom_off_parasite_marks_desc = "To help healing assignments, mark the people who have dark parasite on them with {rt3}{rt4}{rt5}, requires promoted or leader."
 
 	L.initial_life_drain = "생명력 흡수"
@@ -115,15 +115,15 @@ if L then
 	L.blue_add = "|cff0000ff푸른색|r 추가"
 	L.yellow_add = "|cffffff00노란색|r 추가"
 	L.death_beam = "광선"
-	L.red_beam = "|cffff0000붉은색|r 광선"  -- 적외선
-	L.blue_beam = "|cff0000ff푸른색|r 광선"  -- 청색 광선
-	L.yellow_beam = "|cffffff00노란색|r 광선"  -- 직사광선
+	L.red_beam = "|cffff0000붉은색|r 광선" -- 적외선
+	L.blue_beam = "|cff0000ff푸른색|r 광선" -- 청색 광선
+	L.yellow_beam = "|cffffff00노란색|r 광선" -- 직사광선
 end
 
 L = BigWigs:NewBossLocale("Primordius", "koKR")
 if L then
 	L.mutations = "변형 |cff008000(%d)|r |cffff0000(%d)|r"
-	L.acidic_spines = "산성 가시 (바닥 피해)"  -- Acidic Spines (Splash Damage)
+	L.acidic_spines = "산성 가시 (바닥 피해)" -- Acidic Spines (Splash Damage)
 end
 
 L = BigWigs:NewBossLocale("Dark Animus", "koKR")
@@ -189,8 +189,8 @@ L = BigWigs:NewBossLocale("Ra-den", "koKR")
 if L then
 	L.vita_abilities = "Vita abilities"
 	L.anima_abilities = "Anima abilities"
-	L.worm = "벌레"  -- Worm
-	L.worm_desc = "벌레 소환"  -- Summon worm
+	L.worm = "벌레" -- Worm
+	L.worm_desc = "벌레 소환" -- Summon worm
 
 	L.balls = "Balls"
 	L.balls_desc = "Anima (red) and Vita (blue) balls, that determine which abilities will Ra-den gain"

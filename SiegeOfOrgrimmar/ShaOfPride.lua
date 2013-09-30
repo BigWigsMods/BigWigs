@@ -12,7 +12,7 @@ mod:RegisterEnableMob(71734)
 --
 
 local titans, titanCounter = {}, 1
-local auraOfPride, auraOfPrideGroup, auraOfPrideOnMe =  mod:SpellName(146817), {}, nil
+local auraOfPride, auraOfPrideGroup, auraOfPrideOnMe = mod:SpellName(146817), {}, nil
 local swellingPrideCounter = 1
 
 --------------------------------------------------------------------------------

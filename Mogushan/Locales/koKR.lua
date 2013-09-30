@@ -68,7 +68,7 @@ if L then
 	L.floor_desc = "바닥에 언제 떨어지는지 경고합니다."
 	L.floor_message = "바닥에서 나오세요!"
 
-	L.adds = "추가"  --Adds
+	L.adds = "추가" --Adds
 	L.adds_desc = "Warnings for when a Celestial Protector is about to spawn."
 end
 
