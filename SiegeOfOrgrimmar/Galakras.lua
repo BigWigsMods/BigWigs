@@ -194,7 +194,7 @@ end
 
 function mod:CrushersCall(args)
 	self:Bar(args.spellId, 48)
-	self:Message(args.spellId, "Urgent")
+	self:Message(args.spellId, "Urgent", "Alert")
 end
 
 function mod:ShatteringCleave(args)
@@ -239,7 +239,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Alarm", CL["underyou"]:format(args.spellName))
 		end
 	end
 end
@@ -249,7 +249,7 @@ function mod:Warbanner(args)
 end
 
 function mod:Fracture(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, true)
 end
 
 function mod:Deaths(args)
