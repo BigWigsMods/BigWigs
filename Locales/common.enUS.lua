@@ -26,11 +26,15 @@ L.removed = "%s Removed"
 L.incoming = "%s Incoming!"
 L.interrupted = "%s Interrupted"
 
+-- Add related
 L.add_spawned = "Add Spawned!"
 L.next_add = "Next Add"
 L.add_killed = "Add killed! (%d/%d)"
 L.add_remaining = "Add killed, %d remaining"
+L.add = "Add"
+L.adds = "Adds"
 
+-- Mob related
 L.mob_killed = "%s killed! (%d/%d)"
 L.mob_remaining = "%s killed, %d remaining"
 
