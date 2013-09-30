@@ -68,7 +68,7 @@ L.custom_off_bane_marks_desc = L.custom_off_bane_marks_desc:format(
 
 function mod:GetOptions()
 	return {
-		{144396, "TANK"}, {143019, "FLASH"}, 143027, {143007, "HEALER"}, 143958, {"defile", "TANK"}, {144357, "FLASH"}, {-7959, "FLASH", "SAY", "PROXIMITY", "ICON"}, {"inferno_self", "SAY", "EMPHASIZE"}, -- Rook Stonetoe
+		{144396, "TANK"}, {143019, "FLASH", "SAY"}, 143027, {143007, "HEALER"}, 143958, {"defile", "TANK"}, {144357, "FLASH"}, {-7959, "FLASH", "SAY", "PROXIMITY", "ICON"}, {"inferno_self", "SAY", "EMPHASIZE"}, -- Rook Stonetoe
 		{143330, "TANK"}, {143292, "FLASH"}, {144367, "FLASH"}, {143840, "FLASH", "PROXIMITY"}, -- He Softfoot
 		143446, 143491, 143546, {143423, "SAY"}, -- Sun Tenderheart
 		"custom_off_bane_marks",
@@ -124,7 +124,7 @@ function mod:OnEngage()
 	self:OpenProximity("proximity", 5) -- this might not be needed in LFR
 	self:Berserk(self:Heroic() and 600 or 900)
 	self:Bar(144396, 7) -- VengefulStrikes
-	self:Bar(143019, 16) -- Corrupted Brew
+	self:CDBar(143019, 18) -- Corrupted Brew
 	self:CDBar(143027, 44) -- Clash
 	self:CDBar(143330, 23) -- Gouge
 	self:CDBar(143446, 14) -- Bane
@@ -394,6 +394,7 @@ do
 	local function printTarget(self, name, guid)
 		if self:Me(guid) then
 			self:Flash(143019)
+			self:Say(143019)
 		elseif self:Range(name) < 5 then
 			self:RangeMessage(143019)
 			self:Flash(143019)
