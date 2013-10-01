@@ -124,9 +124,9 @@ end
 
 function mod:SkeletonKey(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+	self:TargetBar(args.spellId, 60, args.destName)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
-		self:Bar(args.spellId, 60)
 	end
 end
 
