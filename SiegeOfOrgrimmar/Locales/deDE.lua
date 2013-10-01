@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Immerseus", "deDE")
+﻿local L = BigWigs:NewBossLocale("Immerseus", "deDE")
 if not L then return end
 if L then
 	L.win_yell = "Ah, Ihr habt es geschafft!"
@@ -145,11 +145,11 @@ end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "deDE")
 if L then
-	L.one = "Iyyokuk wählt: Eins!"
-	L.two = "Iyyokuk wählt: Zwei!"
-	L.three = "Iyyokuk wählt: Drei!"
-	L.four = "Iyyokuk wählt: Vier!"
-	L.five = "Iyyokuk wählt: Fünf!"
+	L.one = "Iyyokuk wählt aus: Eins!"
+	L.two = "Iyyokuk wählt aus: Zwei!"
+	L.three = "Iyyokuk wählt aus: Drei!"
+	L.four = "Iyyokuk wählt aus: Vier!"
+	L.five = "Iyyokuk wählt aus: Fünf!"
 	--------------------------------
 	L.edge_message = "Brennendes Band auf Dir"
 	L.custom_off_edge_marks = "Brennendes Band markieren"
