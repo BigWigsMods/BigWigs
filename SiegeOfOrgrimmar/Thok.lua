@@ -210,7 +210,7 @@ end
 
 function mod:Acceleration(args)
 	accCount = args.amount
-	if args.amount > 5 and args.amount % 3 == 0 then
+	if args.amount % 3 == 0 then
 		self:Message(-7963, "Attention", nil, CL["count"]:format(args.spellName, args.amount))
 	end
 end
