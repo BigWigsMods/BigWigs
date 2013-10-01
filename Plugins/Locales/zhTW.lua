@@ -23,7 +23,7 @@ L["Remove"] = "移除"
 L["Temporarily removes the bar and all associated messages."] = "臨時移除計時條和全部相關訊息。"
 L["Remove other"] = "移除其它"
 L["Temporarily removes all other bars (except this one) and associated messages."] = "臨時移除所有計時條（除此之外）和全部相關訊息。"
-L["Disable"] = "停用"
+L.disable = "停用"
 L["Permanently disables the boss encounter ability option that spawned this bar."] = "永久停用此首領戰鬥技能計時條選項。"
 
 L["Emphasize at... (seconds)"] = "…（秒）後強調"
@@ -45,7 +45,7 @@ L["Time"] = "時間"
 L["Whether to show or hide the time left on the bars."] = "在計時條上顯示或隱藏時間。"
 L["Icon"] = "圖示"
 L["Shows or hides the bar icons."] = "顯示或隱藏計時條圖示。"
-L["Font"] = "字型"
+L.font = "字型"
 L["Restart"] = "重新加載"
 L["Restarts emphasized bars so they start from the beginning and count from 10."] = "重新加載強調計時條並從10開始倒數。"
 L["Fill"] = "填充"
@@ -87,7 +87,7 @@ L.Emphasized = "強調"
 
 L.Reset = "重置"
 L["Resets the above colors to their defaults."] = "重置以上顏色為預設。"
-L["Reset all"] = "重置所有"
+L.resetAll = "重置所有"
 L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "如果為首領戰鬥自訂了顏色設定。這個按鈕將重置替換“所有”顏色為預設。"
 
 L.Important = "重要"
@@ -134,7 +134,7 @@ L["Show icons next to messages, only works for Raid Warning."] = "顯示圖示�
 L["Class colors"] = "職業顏色"
 L["Colors player names in messages by their class."] = "使用職業顏色來染色訊息內玩家顏色。"
 
-L["Font size"] = "字型大小"
+L.fontSize = "字型大小"
 L["None"] = "無"
 L["Thin"] = "細"
 L["Thick"] = "粗"
@@ -147,44 +147,6 @@ L["Display time"] = "顯示時間"
 L["How long to display a message, in seconds"] = "以秒計訊息顯示時間。"
 L["Fade time"] = "消退時間"
 L["How long to fade out a message, in seconds"] = "以秒計訊息消退時間。"
-
------------------------------------------------------------------------
--- Proximity.lua
---
-
-L["Custom range indicator"] = "自訂距離指示器"
-L.proximityTitle = "%d碼/%d玩家"
-L["Proximity"] = "近距離顯"
-L.sound = "音效"
-L["Disabled"] = "禁用"
-L["Disable the proximity display for all modules that use it."] = "禁止所有首領模组使用近距離。"
-L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "近距離顯示將在下次顯示。要完全禁用此功能，需要關閉此功能選項。"
-L["Sound delay"] = "音效延遲"
-L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "當有人太靠近你時指定多長時間 Big Wigs 重複間隔等待指定的音效。"
-
-L.proximity = "近距離顯示"
-L.proximity_desc = "顯示近距離顯示視窗，列出距離你很近的玩家。"
-
-L["Close"] = "關閉"
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "關閉近距離顯示。\n\n要完全禁用此任一功能，需進入相對應首領模組選項關閉“近距離”功能。"
-L["Lock"] = "鎖定"
-L["Locks the display in place, preventing moving and resizing."] = "鎖定顯示視窗，防止被移動和縮放。"
-L["Title"] = "標題"
-L["Shows or hides the title."] = "顯示或隱藏標題。"
-L["Background"] = "背景"
-L["Shows or hides the background."] = "顯示或隱藏背景。"
-L["Toggle sound"] = "切換音效"
-L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "當近距離視窗有其他過近玩家時切換任一或關閉聲效。"
-L["Sound button"] = "音效按鈕"
-L["Shows or hides the sound button."] = "顯示或隱藏音效按鈕。"
-L["Close button"] = "關閉按鈕"
-L["Shows or hides the close button."] = "顯示或隱藏關閉按鈕。"
-L["Show/hide"] = "顯示/隱藏"
-L["Ability name"] = "技能名稱"
-L["Shows or hides the ability name above the window."] = "在視窗上面顯示或隱藏技能名稱。"
-L["Tooltip"] = "工具提示"
-L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "顯示或隱藏近距離顯示從首領戰鬥技能獲取的法術提示。"
-
 
 
 -- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/

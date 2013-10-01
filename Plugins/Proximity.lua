@@ -370,7 +370,7 @@ end
 local function onControlLeave() GameTooltip:Hide() end
 
 local function onNormalClose()
-	BigWigs:Print(L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."])
+	BigWigs:Print(L.toggleProximityPrint)
 	plugin:Close()
 end
 
@@ -785,7 +785,7 @@ end
 --
 
 function plugin:OnRegister()
-	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled, "Interface\\Icons\\ability_hunter_pathfinding")
+	BigWigs:RegisterBossOption("proximity", L.proximity, L.proximity_desc, OnOptionToggled, "Interface\\Icons\\ability_hunter_pathfinding")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
 end
@@ -810,8 +810,8 @@ do
 		close:SetPoint("BOTTOMRIGHT", anchor, "TOPRIGHT", -2, 2)
 		close:SetHeight(16)
 		close:SetWidth(16)
-		close.tooltipHeader = L["Close"]
-		close.tooltipText = L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."]
+		close.tooltipHeader = L.close
+		close.tooltipText = L.closeProximityDesc
 		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
 		anchor.close = close
 
@@ -819,8 +819,8 @@ do
 		sound:SetPoint("BOTTOMLEFT", anchor, "TOPLEFT", 2, 2)
 		sound:SetHeight(16)
 		sound:SetWidth(16)
-		sound.tooltipHeader = L["Toggle sound"]
-		sound.tooltipText = L["Toggle whether or not the proximity window should beep when you're too close to another player."]
+		sound.tooltipHeader = L.toggleSound
+		sound.tooltipText = L.toggleSoundDesc
 		anchor.sound = sound
 
 		local header = anchor:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
@@ -829,7 +829,7 @@ do
 		anchor.title = header
 
 		local abilityName = anchor:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-		abilityName:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L["Ability name"])
+		abilityName:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName)
 		abilityName:SetPoint("BOTTOM", header, "TOP", 0, 4)
 		anchor.ability = abilityName
 
@@ -976,21 +976,21 @@ do
 				args = {
 					disabled = {
 						type = "toggle",
-						name = L["Disabled"],
-						desc = L["Disable the proximity display for all modules that use it."],
+						name = L.disabled,
+						desc = L.disabledDesc,
 						order = 1,
 						width = "half",
 					},
 					lock = {
 						type = "toggle",
-						name = L["Lock"],
-						desc = L["Locks the display in place, preventing moving and resizing."],
+						name = L.lock,
+						desc = L.lockDesc,
 						order = 2,
 						width = "half",
 					},
 					font = {
 						type = "select",
-						name = L["Font"],
+						name = L.font,
 						order = 4,
 						values = media:List("font"),
 						width = "full",
@@ -998,7 +998,7 @@ do
 					},
 					fontSize = {
 						type = "range",
-						name = L["Font size"],
+						name = L.fontSize,
 						order = 5,
 						max = 40,
 						min = 8,
@@ -1015,8 +1015,8 @@ do
 					},
 					soundDelay = {
 						type = "range",
-						name = L["Sound delay"],
-						desc = L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."],
+						name = L.soundDelay,
+						desc = L.soundDelayDesc,
 						order = 7,
 						max = 10,
 						min = 1,
@@ -1025,7 +1025,7 @@ do
 					},
 					showHide = {
 						type = "group",
-						name = L["Show/hide"],
+						name = L.showHide,
 						inline = true,
 						order = 10,
 						get = function(info)
@@ -1040,43 +1040,43 @@ do
 						args = {
 							title = {
 								type = "toggle",
-								name = L["Title"],
-								desc = L["Shows or hides the title."],
+								name = L.title,
+								desc = L.titleDesc,
 								order = 1,
 								width = "half",
 							},
 							background = {
 								type = "toggle",
-								name = L["Background"],
-								desc = L["Shows or hides the background."],
+								name = L.background,
+								desc = L.backgroundDesc,
 								order = 2,
 								width = "half",
 							},
 							sound = {
 								type = "toggle",
-								name = L["Sound button"],
-								desc = L["Shows or hides the sound button."],
+								name = L.soundButton,
+								desc = L.soundButtonDesc,
 								order = 3,
 								width = "half",
 							},
 							close = {
 								type = "toggle",
-								name = L["Close button"],
-								desc = L["Shows or hides the close button."],
+								name = L.closeButton,
+								desc = L.closeButtonDesc,
 								order = 4,
 								width = "half",
 							},
 							ability = {
 								type = "toggle",
-								name = L["Ability name"],
-								desc = L["Shows or hides the ability name above the window."],
+								name = L.abilityName,
+								desc = L.abilityNameDesc,
 								order = 5,
 								width = "half",
 							},
 							tooltip = {
 								type = "toggle",
-								name = L["Tooltip"],
-								desc = L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."],
+								name = L.tooltip,
+								desc = L.tooltipDesc,
 								order = 6,
 								width = "half",
 							}
@@ -1135,7 +1135,7 @@ function plugin:Close()
 	wipe(proximityPlayerTable)
 
 	anchor.title:SetFormattedText(L.proximityTitle, 5, 3)
-	anchor.ability:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L["Ability name"])
+	anchor.ability:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName)
 	-- Just in case we were the last target of
 	-- configure mode, reset the background color.
 	anchor.background:SetTexture(0, 0, 0, 0.3)
@@ -1210,7 +1210,7 @@ function plugin:Open(range, module, key, player, isReverse)
 			anchor.ability:SetText(name)
 		end
 	else
-		anchor.ability:SetText(L["Custom range indicator"])
+		anchor.ability:SetText(L.customRange)
 	end
 	if type(key) == "number" and key > 0 then -- GameTooltip doesn't do "journal" hyperlinks
 		activeSpellID = key

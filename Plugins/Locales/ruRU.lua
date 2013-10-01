@@ -23,7 +23,7 @@ L["Remove"] = "Убрать"
 L["Temporarily removes the bar and all associated messages."] = "Временно убирает полосу и все связанные с ней сообщения."
 L["Remove other"] = "Убрать другие"
 L["Temporarily removes all other bars (except this one) and associated messages."] = "Временно удаляет все другие полосы (кроме этой) и связанные с ними сообщения."
-L["Disable"] = "Отключить"
+L.disable = "Отключить"
 L["Permanently disables the boss encounter ability option that spawned this bar."] = "Полностью отключает способность босса, которая вызывает эту полосу."
 
 L["Emphasize at... (seconds)"] = "Увеличение на... (секунды)"
@@ -45,7 +45,7 @@ L["Time"] = "Время"
 L["Whether to show or hide the time left on the bars."] = "Показывать или скрывать остаток времени на полосах."
 L["Icon"] = "Иконка"
 L["Shows or hides the bar icons."] = "Показывать или скрывать иконку полосы."
-L["Font"] = "Шрифт"
+L.font = "Шрифт"
 L["Restart"] = "Перезапуск"
 L["Restarts emphasized bars so they start from the beginning and count from 10."] = "Перезапуск увеличенных полос так, что они стартуют с самого начала, отсчитывая от 10."
 L["Fill"] = "Заполнение"
@@ -87,7 +87,7 @@ L.Emphasized = "Увеличенные"
 
 L.Reset = "Сброс"
 L["Resets the above colors to their defaults."] = "Сброс цветов на стандартные значения."
-L["Reset all"] = "Сбросить все"
+L.resetAll = "Сбросить все"
 L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "Если вы настроили цвета для каких-либо событий боя с боссом, эта кнопка сбросит ВСЕ такие настройки."
 
 L.Important = "Важные"
@@ -134,7 +134,7 @@ L["Show icons next to messages, only works for Raid Warning."] = "Отображ
 L["Class colors"] = "Окраска по классу"
 L["Colors player names in messages by their class."] = "Окрашивает имя игрока в сообщениях в соответствии с его классом."
 
-L["Font size"] = "Размер шрифта"
+L.fontSize = "Размер шрифта"
 L["None"] = "Нет"
 L["Thin"] = "Тонкий"
 L["Thick"] = "Толстый"
@@ -148,42 +148,6 @@ L["How long to display a message, in seconds"] = "Сколько секунд б
 L["Fade time"] = "Время затухания"
 L["How long to fade out a message, in seconds"] = "Сколько секунд будет затухать сообщение"
 
------------------------------------------------------------------------
--- Proximity.lua
---
-
-L["Custom range indicator"] = "Пользовательский индикатор досягаемости"
-L.proximityTitle = "%d м / %d |4игрок:игрока:игроков;"
-L["Proximity"] = "Близость"
-L.sound = "Звук"
-L["Disabled"] = "Отключить"
-L["Disable the proximity display for all modules that use it."] = "Отключить отображение окна близости для всех модулей, использующих его."
-L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "Модуль близости будет показан в следующий раз. Чтобы полностью его отключить для данного боя, вам нужно зайти в опции этого боя и отключить его там."
-L["Sound delay"] = "Задержка звука"
-L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "Определяет как долго Big Wigs должен подождать между повторением заданного звука, когда кто-то слишком близко к вам."
-
-L.proximity = "Отображение близости"
-L.proximity_desc = "Показывать окно близости при соответствующей схватке, выводя список игроков, которые стоят слишком близко к вам."
-
-L["Close"] = "Закрыть"
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Закрыть окно модуля близости.\n\nЧтобы полностью его отключить для любого боя, вам нужно зайти в опции соответствующего босса и там отключить опцию 'Близость'."
-L["Lock"] = "Фиксировать"
-L["Locks the display in place, preventing moving and resizing."] = "Фиксирование рамки, предотвращает перемещение и изменение размера."
-L["Title"] = "Название"
-L["Shows or hides the title."] = "Показать или скрыть название."
-L["Background"] = "Фон"
-L["Shows or hides the background."] = "Показать или скрыть фон."
-L["Toggle sound"] = "Переключение звука"
-L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Включить/выключить звуковое оповещение окна близости, когда вы находитесь слишком близко к другому игроку."
-L["Sound button"] = "Кнопка звука"
-L["Shows or hides the sound button."] = "Показать или скрыть кнопку звука."
-L["Close button"] = "Кнопка закрытия"
-L["Shows or hides the close button."] = "Показать или скрыть кнопку закрытия."
-L["Show/hide"] = "Показ/скрыть"
-L["Ability name"] = "Название способности"
-L["Shows or hides the ability name above the window."] = "Показывает или скрывает название способности в верхней части окна."
-L["Tooltip"] = "Подсказка"
-L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Показывает или скрывает подсказку заклинания в окне близости, если эта способность связана боссом."
 
 
 

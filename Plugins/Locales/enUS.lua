@@ -22,7 +22,7 @@ L["Remove"] = true
 L["Temporarily removes the bar and all associated messages."] = true
 L["Remove other"] = true
 L["Temporarily removes all other bars (except this one) and associated messages."] = true
-L["Disable"] = true
+L.disable = "Disable"
 L["Permanently disables the boss encounter ability option that spawned this bar."] = true
 
 L["Emphasize at... (seconds)"] = true
@@ -44,7 +44,7 @@ L["Time"] = true
 L["Whether to show or hide the time left on the bars."] = true
 L["Icon"] = true
 L["Shows or hides the bar icons."] = true
-L["Font"] = true
+L.font = "Font"
 L["Restart"] = true
 L["Restarts emphasized bars so they start from the beginning and count from 10."] = true
 L["Fill"] = true
@@ -86,7 +86,7 @@ L.Emphasized = "Emphasized"
 
 L.Reset = "Reset"
 L["Resets the above colors to their defaults."] = true
-L["Reset all"] = true
+L.resetAll = "Reset all"
 L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = true
 
 L.Important = "Important"
@@ -133,7 +133,7 @@ L["Show icons next to messages, only works for Raid Warning."] = true
 L["Class colors"] = true
 L["Colors player names in messages by their class."] = true
 
-L["Font size"] = true
+L.fontSize = "Font size"
 L["None"] = true
 L["Thin"] = true
 L["Thick"] = true
@@ -151,38 +151,38 @@ L["How long to fade out a message, in seconds"] = true
 -- Proximity.lua
 --
 
-L["Custom range indicator"] = true
+L.customRange = "Custom range indicator"
 L.proximityTitle = "%d yd / %d |4player:players;" -- yd = yards (short)
-L["Proximity"] = true
+L.proximity = "Proximity"
 L.sound = "Sound"
-L["Disabled"] = true
-L["Disable the proximity display for all modules that use it."] = true
-L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = true
-L["Sound delay"] = true
-L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = true
+L.disabled = "Disabled"
+L.disabledDesc = "Disable the proximity display for all modules that use it."
+L.toggleProximityPrint = "The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."
+L.soundDelay = "Sound delay"
+L.soundDelayDesc = "Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."
 
 L.proximity = "Proximity display"
 L.proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you."
 
-L["Close"] = true
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = true
-L["Lock"] = true
-L["Locks the display in place, preventing moving and resizing."] = true
-L["Title"] = true
-L["Shows or hides the title."] = true
-L["Background"] = true
-L["Shows or hides the background."] = true
-L["Toggle sound"] = true
-L["Toggle whether or not the proximity window should beep when you're too close to another player."] = true
-L["Sound button"] = true
-L["Shows or hides the sound button."] = true
-L["Close button"] = true
-L["Shows or hides the close button."] = true
-L["Show/hide"] = true
-L["Ability name"] = true
-L["Shows or hides the ability name above the window."] = true
-L["Tooltip"] = true
-L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = true
+L.close = "Close"
+L.closeProximityDesc = "Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."
+L.lock = "Lock"
+L.lockDesc = "Locks the display in place, preventing moving and resizing."
+L.title = "Title"
+L.titleDesc = "Shows or hides the title."
+L.background = "Background"
+L.backgroundDesc = "Shows or hides the background."
+L.toggleSound = "Toggle sound"
+L.toggleSoundDesc = "Toggle whether or not the proximity window should beep when you're too close to another player."
+L.soundButton = "Sound button"
+L.soundButtonDesc = "Shows or hides the sound button."
+L.closeButton = "Close button"
+L.closeButtonDesc = "Shows or hides the close button."
+L.showHide = "Show/hide"
+L.abilityName = "Ability name"
+L.abilityNameDesc = "Shows or hides the ability name above the window."
+L.tooltip = "Tooltip"
+L.tooltipDesc = "Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

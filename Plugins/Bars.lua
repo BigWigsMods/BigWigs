@@ -368,7 +368,7 @@ local clickOptions = {
 	},
 	disable = {
 		type = "toggle",
-		name = colorize[L["Disable"]],
+		name = colorize[L.disable],
 		desc = L["Permanently disables the boss encounter ability option that spawned this bar."],
 		descStyle = "inline",
 		order = 5,
@@ -495,7 +495,7 @@ do
 				args = {
 					font = {
 						type = "select",
-						name = L["Font"],
+						name = L.font,
 						order = 1,
 						values = media:List("font"),
 						--width = "full",
@@ -514,7 +514,7 @@ do
 					},
 					fontSize = {
 						type = "range",
-						name = L["Font size"],
+						name = L.fontSize,
 						order = 3,
 						max = 40,
 						min = 6,

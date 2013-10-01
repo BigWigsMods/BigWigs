@@ -399,7 +399,7 @@ do
 			BigWigs_NoPluginWarnings = "BigWigs",
 		}
 
-		-- XXX hopefully remove this some day, try to teach people not to force load our modules.
+		-- Try to teach people not to force load our modules.
 		for i = 1, GetNumAddOns() do
 			local name, _, _, enabled = GetAddOnInfo(i)
 			if enabled and not IsAddOnLoadOnDemand(i) then
@@ -425,9 +425,11 @@ do
 			end
 
 			-- XXX disable addons that break us
-			if name == "ReckonersProMending" then -- Unfortunately the author isn't responding and it looks abandoned, luckily the addon has next to 0 popularity
+			if name == "ReckonersProMending" then -- Dead addon is dead.
 				DisableAddOn("ReckonersProMending")
-				print("The AddOn 'Reckoner's ProMending' has been disabled due to incompatibility, please ask the author to fix it.")
+				AutoCompleteInfoDelayer:HookScript("OnFinished", function()
+					print("The AddOn 'Reckoner's ProMending' has been disabled due to incompatibility, please remove it.")
+				end)
 			end
 		end
 
@@ -439,6 +441,10 @@ do
 		elseif L == "koKR" then
 			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
 				print("Think you can translate Big Wigs into Korean (koKR)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
+			end)
+		elseif L == "esMX" then
+			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
+				print("Think you can translate Big Wigs into Latin American Spanish (esMX)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
 			end)
 		end
 

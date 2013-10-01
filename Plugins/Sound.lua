@@ -54,7 +54,7 @@ plugin.defaultDB = {
 
 plugin.pluginOptions = {
 	type = "group",
-	name = L["Sounds"],
+	name = L.Sounds,
 	get = function(info)
 		for i, v in next, soundList do
 			if v == plugin.db.profile.media[info[#info]] then
@@ -80,7 +80,7 @@ plugin.pluginOptions = {
 		},
 		resetAll = {
 			type = "execute",
-			name = L["Reset all"],
+			name = L.resetAll,
 			desc = L.resetAllCustomSound,
 			func = function() plugin.db:ResetProfile() end,
 			order = 3,
@@ -90,7 +90,7 @@ plugin.pluginOptions = {
 
 local soundOptions = {
 	type = "group",
-	name = L["Sounds"],
+	name = L.Sounds,
 	handler = plugin,
 	inline = true,
 	args = {

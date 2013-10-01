@@ -23,7 +23,7 @@ L["Remove"] = "Quitar"
 L["Temporarily removes the bar and all associated messages."] = "Temporalmente quita la barra y los mensajes asociados"
 L["Remove other"] = "Quitar otro"
 L["Temporarily removes all other bars (except this one) and associated messages."] = "Temporalmente quita todas las barras (excepto esta) y los mensajes asociados."
-L["Disable"] = "Desactivar"
+L.disable = "Desactivar"
 L["Permanently disables the boss encounter ability option that spawned this bar."] = "Desactiva permanentemente la habilidad del encuentro para que no de opción a que reaparezca esta barra"
 
 L["Emphasize at... (seconds)"] = "Enfatizar en... (segundos)"
@@ -45,7 +45,7 @@ L["Time"] = "Tiempo"
 L["Whether to show or hide the time left on the bars."] = "Oculta o muestra el tiempo restante en las barras."
 L["Icon"] = "Icono"
 L["Shows or hides the bar icons."] = "Muestra u oculta los iconos de las barras."
-L["Font"] = "Fuente"
+L.font = "Fuente"
 L["Restart"] = "Reiniciar"
 L["Restarts emphasized bars so they start from the beginning and count from 10."] = "Reinicia las barras enfatizadas para que empiecen desde el principio y el recuento desde 10."
 L["Fill"] = "Llenar"
@@ -87,7 +87,7 @@ L.Emphasized = "Enfatizado"
 
 L.Reset = "Reiniciar"
 L["Resets the above colors to their defaults."] = "Reinicia los colores por defecto"
-L["Reset all"] = "Resetear todo"
+L.resetAll = "Resetear todo"
 L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "Si has personallizado los colores y los ajustes de algun encuentro, este botón seiniciará TODO y se usarán los colores por defecto."
 
 L.Important = "Importante"
@@ -134,7 +134,7 @@ L["Show icons next to messages, only works for Raid Warning."] = "Muestra los si
 L["Class colors"] = "Colores de clase"
 L["Colors player names in messages by their class."] = "Colores el nombre del jugador en los mensajes con el color de su clase"
 
-L["Font size"] = "Tamaño de fuente"
+L.fontSize = "Tamaño de fuente"
 L["None"] = "Ninguno"
 L["Thin"] = "Fino"
 L["Thick"] = "Grueso"
@@ -142,43 +142,6 @@ L["Outline"] = "Contorno"
 L["Monochrome"] = "Monocromo"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "Cambia a monocromo el indicador en todos los mensajes, quitando cualquier suavizado de fuente."
 L["Font color"] = "Font color"
-
------------------------------------------------------------------------
--- Proximity.lua
---
-
-L["Custom range indicator"] = "Indicador de rango personalizado"
-L.proximityTitle = "%d m / %d |4jugador:jugadores;" -- yd = yards (short)
-L["Proximity"] = "Proximidad"
-L.sound = "Sonido"
-L["Disabled"] = "Desactivado"
-L["Disable the proximity display for all modules that use it."] = "Desactiva la ventana de proximidad pra todos los módulos que la usen."
-L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "La ventana de proximidad se mostrará la próxima vez. Para desativarla completamente de este encuentro, necesitas apagarla de las opciones de encuentros."
-L["Sound delay"] = "Retardo de sonido"
-L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "Especifica el tiempo que Big Wigs debería esperar entre cada repetición de sonido cuando alguien está demasiado cerca de ti."
-
-L.proximity = "Visualizar proximidad"
-L.proximity_desc = "Muestra la ventana de proximidad cuando sea apropidada para este encuentro, lista los jugadores que están demasiado cerca tuya."
-
-L["Close"] = "Cerrar"
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Cierra la ventana de proximidad.\n\nPara desactivarla completamente para un encuentro, tienes que ir a las opciones para ese encuentro y desactivar la opción de 'Proximidad'."
-L["Lock"] = "Bloquear"
-L["Locks the display in place, preventing moving and resizing."] = "Bloquea la ventana en el lugar, previniendo que se mueva y redimensione"
-L["Title"] = "Título"
-L["Shows or hides the title."] = "Muestra/oculta el título"
-L["Background"] = "Fondo"
-L["Shows or hides the background."] = "Muestra/oculta el fondo"
-L["Toggle sound"] = "Cambiar sonido"
-L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Activada o no la ventana de proximidad debería emitir un beep si estás cerca de otro jugador."
-L["Sound button"] = "Botón de sonido"
-L["Shows or hides the sound button."] = "Muestra/oculta el botón de sonido"
-L["Close button"] = "Boton cerrar"
-L["Shows or hides the close button."] = "Muestra/oculta el botón de cerrar"
-L["Show/hide"] = "Mostrar/ocultar"
-L["Ability name"] = "Nombre de habilidad"
-L["Shows or hides the ability name above the window."] = "Muestra/oculta el nombre de la habilidad encima de la ventana"
-L["Tooltip"] = "Tooltip"
-L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Muestra/oculta el tooltip del hechizo si la ventana de proximidad esta empatada con una habilidad del boss."
 
 
 

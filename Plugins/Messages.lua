@@ -328,7 +328,7 @@ do
 				args = {
 					font = {
 						type = "select",
-						name = L["Font"],
+						name = L.font,
 						order = 1,
 						values = media:List("font"),
 						itemControl = "DDI-Font",
@@ -372,7 +372,7 @@ do
 					},
 					fontSize = {
 						type = "range",
-						name = L["Font size"],
+						name = L.fontSize,
 						order = 4,
 						max = 40,
 						min = 8,

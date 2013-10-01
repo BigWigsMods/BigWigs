@@ -21,7 +21,7 @@ local icons = {
 	RAID_TARGET_6,
 	RAID_TARGET_7,
 	RAID_TARGET_8,
-	("|cffff0000%s|r"):format(L["Disable"]),
+	("|cffff0000%s|r"):format(L.disable),
 }
 
 --------------------------------------------------------------------------------

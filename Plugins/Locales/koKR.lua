@@ -23,7 +23,7 @@ L["Remove"] = "삭제"
 L["Temporarily removes the bar and all associated messages."] = "해당 바에 관련된 모든 바와 메세지를 제거합니다."
 L["Remove other"] = "기타 삭제"
 L["Temporarily removes all other bars (except this one) and associated messages."] = "해당 바를 제외한 모든 바와 메세지를 제거합니다."
-L["Disable"] = "사용안함"
+L.disable = "사용안함"
 L["Permanently disables the boss encounter ability option that spawned this bar."] = "해당 바를 교전 모듈에서 체크 해제합니다.(다시 표시하고 싶다면 교전 모듈에서 해당 스킬 경고를 체크하시길 바랍니다.)"
 
 L["Emphasize at... (seconds)"] = "강조... (초)"
@@ -45,7 +45,7 @@ L["Time"] = "시간"
 L["Whether to show or hide the time left on the bars."] = "바의 우측에 시간을 숨기거나 표시합니다."
 L["Icon"] = "아이콘"
 L["Shows or hides the bar icons."] = "바 아이콘을 숨기거나 표시합니다."
-L["Font"] = "글꼴"
+L.font = "글꼴"
 L["Restart"] = "재시작"
 L["Restarts emphasized bars so they start from the beginning and count from 10."] = "이전의 시간을 그대로 적용하지않고 새롭게 10초부터 특수강조바를 생성합니다."
 L["Fill"] = "채우기"
@@ -87,7 +87,7 @@ L.Emphasized = "강조"
 
 L.Reset = "초기화"
 L["Resets the above colors to their defaults."] = "위의 색상을 모두 기본으로 초기화 합니다."
-L["Reset all"] = "모두 초기화"
+L.resetAll = "모두 초기화"
 L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "보스 교전 모듈의 사용자가 지정한 색상이 있다면, 이 버튼으로 인해 모든 색상이 초기화되며 다시 설정이 가능합니다."
 
 L.Important = "중요"
@@ -134,7 +134,7 @@ L["Show icons next to messages, only works for Raid Warning."] = "레이드 경�
 L["Class colors"] = "직업 색상"
 L["Colors player names in messages by their class."] = "메세지의 플레이어 이름에 직업 색상을 사용합니다."
 
-L["Font size"] = "글꼴 크기"
+L.fontSize = "글꼴 크기"
 L["None"] = "없음"
 L["Thin"] = "얇게"
 L["Thick"] = "두겁게"
@@ -148,42 +148,6 @@ L["How long to display a message, in seconds"] = "몇 초동안 메시지를 표
 L["Fade time"] = "사라짐 시간"
 L["How long to fade out a message, in seconds"] = "몇 초후 메시지가 점점 사라집니다."
 
------------------------------------------------------------------------
--- Proximity.lua
---
-
-L["Custom range indicator"] = "사용자 거리 지시기"
-L.proximityTitle = "%d미터 / %d |4플레이어:플레이어;" -- yd = yards (short)
-L["Proximity"] = "근접"
-L.sound = "효과음"
-L["Disabled"] = "미사용"
-L["Disable the proximity display for all modules that use it."] = "모든 모듈의 근접 표시를 비활성화 합니다."
-L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "다음 표시때 근접 표시를 표시하도록 합니다. 이것을 비활성화 하려면 옵션을 통해 전환하세요."
-L["Sound delay"] = "효과음 딜레이"
-L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "누군가가 근접해 있을때 나오는 효과음의 반복되는 사이의 딜레이를 설정합니다."
-
-L.proximity = "근접 표시"
-L.proximity_desc = "해당 보스전에서 필요 시 자신과 근접해 있는 플레이어 목록을 표시하는 근접 표시창을 표시합니다."
-
-L["Close"] = "닫기"
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "근접 표시를 닫습니다.\n\n완전히 비활성화기 위해서는 해당 보스 모듈에 있는 옵션의 근접 표시를 끄세요."
-L["Lock"] = "고정"
-L["Locks the display in place, preventing moving and resizing."] = "미리 이동 또는 크기 조절을 하고 표시할 장소에 고정합니다."
-L["Title"] = "제목"
-L["Shows or hides the title."] = "제목을 표시하거나 숨깁니다."
-L["Background"] = "배경"
-L["Shows or hides the background."] = "배경을 표시하거나 숨깁니다."
-L["Toggle sound"] = "소리 전환"
-L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "근접 창에 다른 플에이어와 가까이 있을 경에 알리는 경고음을 켜거나 끌수있게 합니다."
-L["Sound button"] = "소리 버튼"
-L["Shows or hides the sound button."] = "소리 버튼을 표시하거나 숨깁니다."
-L["Close button"] = "닫기 버튼"
-L["Shows or hides the close button."] = "닫기 버튼을 표시하거나 숨깁니다."
-L["Show/hide"] = "표시/숨김"
-L["Ability name"] = "스킬 이름"
-L["Shows or hides the ability name above the window."] = "스킬의 이름을 창위에 표시하거나 숨깁니다."
-L["Tooltip"] = "툴팁"
-L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "현재 보스 스킬에 직접 연결되어 자동으로 뜨는 근접 표시창에 대해 커서를 올릴시 툴팁을 표시하거나 숨깁니다."
 
 
 
