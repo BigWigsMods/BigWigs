@@ -107,7 +107,7 @@ end
 L = BigWigs:NewBossLocale("Malkorok", "ruRU")
 if L then
 	L.custom_off_energy_marks = "Маркировка Блуждающей энергии"
-	L.custom_off_energy_marks_desc = "To help dispelling assignments, mark the people who have Displaced Energy on them with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_energy_marks_desc = "Чтобы помочь с рассеиванием, люди с Блуждающей энергией будут помечены метками {rt1}{rt2}{rt3}{rt4}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
 end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "ruRU")
