@@ -211,7 +211,7 @@ end
 -- Siegecrafter Blackfuse
 
 function mod:ElectrostaticCharge(args)
-	self:CDBar(args.spellId, 18)
+	self:CDBar(args.spellId, 17)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
 end
 
