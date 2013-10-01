@@ -114,6 +114,7 @@ L = BigWigs:NewBossLocale("Spoils of Pandaria", "deDE")
 if L then
 	L.win_trigger = "System wird neu gestartet. Die Energieversorgung muss stabil bleiben, sonst fliegt die ganze Chose in die Luft."
 
+	L.enable_zone = "Artefaktlagerraum"
 	L.matter_scramble_explosion = "Materiewirbel Explosion"
 
 	L.custom_off_mark_brewmaster = "Braumeister markieren"
