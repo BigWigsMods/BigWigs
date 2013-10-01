@@ -86,8 +86,8 @@ function mod:OnBossEnable()
 
 	-- Phase 2
 	self:Log("SPELL_CAST_SUCCESS", "MindControl", 145065, 145171)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "GrippingDispair", 145183)
-	self:Log("SPELL_AURA_APPLIED", "GrippingDispair", 145183)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "GrippingDespair", 145183)
+	self:Log("SPELL_AURA_APPLIED", "GrippingDespair", 145183)
 	self:Log("SPELL_CAST_START", "WhirlingCorruption", 144985, 145037)
 	-- Intermissions
 	self:Log("SPELL_CAST_START", "Annihilate", 144969)
@@ -109,7 +109,7 @@ function mod:OnEngage(diff)
 	self:Bar(-8292, waveTimers[waveCounter], nil, 144582)
 	self:Berserk(900, nil, nil, "Berserk (assumed)") -- XXX assumed (more than 10 min)
 	annihilateCounter = 1
-	self:Bar(144758, 60) -- DesecratedWeapon
+	self:Bar(144758, 11) -- Desecrated Weapon
 	self:Bar(-8298, 20, nil, 144616) -- Siege Engineer
 	self:Bar(-8294, 30, nil, 144584) -- Farseer
 	farseerCounter = 1
@@ -130,9 +130,8 @@ end
 --
 
 -- phase 2
-function mod:GrippingDispair(args)
+function mod:GrippingDespair(args)
 	local amount = args.amount or 1
-	self:CDBar(args.spellId, 8)
 	local sound
 	if amount > 3 and not self:Me(args.destGUID) then
 		sound = "Warning"
@@ -287,6 +286,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 			self:StopBar(-8298) -- Siege Engineer
 			self:StopBar(-8294) -- Farseer
 			self:StopBar(144758) -- Desecrated Weapon
+			self:StopWeaponScan()
 		end
 	elseif spellId == 144866 then -- Enter Realm of Y'Shaarj -- actually being pulled
 		self:StopBar(144758) -- Desecrated Weapon
@@ -301,7 +301,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 			self:Bar(144758, 10) -- Desecrated Weapon
 			self:Bar(145065, 15, L["mind_control"]) -- Mind Control
 			self:Bar(144985, 30) -- Whirling Corruption
-			self:ScheduleTimer("StartWeaponScan", 5)
+			self:StartWeaponScan(5)
 			local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
 			if hp < 50 then -- XXX might need adjusting
 				self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3") -- don't really need this till 2nd intermission phase
@@ -355,14 +355,21 @@ do
 		end
 		mod:StopWeaponScan()
 	end
-	function mod:StartWeaponScan()
-		if not weaponTimer then
+	function mod:StartWeaponScan(delay)
+		if delay then
+			self:CancelTimer(weaponTimer)
+			weaponTimer = self:ScheduleTimer("StartWeaponScan", delay)
+		elseif not weaponTimer then
 			weaponTimer = self:ScheduleRepeatingTimer(checkWeaponTarget, 0.05)
 		end
 	end
-	function mod:StopWeaponScan()
-		self:CancelTimer(weaponTimer)
-		weaponTimer = nil
+	function mod:StopWeaponScan(delay)
+		if delay then
+			self:ScheduleTimer("StopWeaponScan", delay)
+		else
+			self:CancelTimer(weaponTimer)
+			weaponTimer = nil
+		end
 	end
 	local phase2DesecreteCDs = {36, 45, 36}
 	function mod:DesecratedWeapon(args)
@@ -374,17 +381,12 @@ do
 				desecrateCD = 35
 			end
 		elseif phase == 3 then
-			local diff = self:Difficulty()
-			if diff == 3 or diff == 5 then -- 10 man
-				desecrateCD = (desecrateCounter == 1) and 30 or 25
-			else
-				desecrateCD = (desecrateCounter == 1) and 35 or 25
-			end
+			desecrateCD = (desecrateCounter == 1) and 35 or 25
 		end
 		self:CDBar(144758, desecrateCD)
 		desecrateCounter = desecrateCounter + 1
-		self:ScheduleTimer("StopWeaponScan", 2) -- delay it a bit just to be safe
-		self:ScheduleTimer("StartWeaponScan", desecrateCD-7)
+		self:StopWeaponScan(2) -- delay it a bit just to be safe
+		self:StartWeaponScan(desecrateCD-7)
 	end
 end
 
