@@ -106,7 +106,7 @@ end
 L = BigWigs:NewBossLocale("Malkorok", "zhCN")
 if L then
 	L.custom_off_energy_marks = "散逸能量标记"
-	L.custom_off_energy_marks_desc = "To help dispelling assignments, mark the people who have Displaced Energy on them with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_energy_marks_desc = "帮助驱散分配，给受到散逸能量的玩家使用 {rt1}{rt2}{rt3}{rt4} 进行标记，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "zhCN")
