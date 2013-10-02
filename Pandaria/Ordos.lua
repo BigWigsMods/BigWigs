@@ -101,13 +101,19 @@ do
 end
 
 do
-	local burningSoulList, isOnMe, scheduled = mod:NewTargetList(), nil, nil
+	local coloredNames, burningSoulList, isOnMe, scheduled = mod:NewTargetList(), {}, nil, nil
 	local function warnBurningSoul(spellId)
+		mod:CDBar(spellId, 24) -- 23.8 - 41.4
+		mod:Bar(spellId, 10, L.burning_soul_bar)
 		if not isOnMe then
 			mod:OpenProximity(spellId, 8, burningSoulList)
 		end
-		mod:TargetMessage(spellId, burningSoulList, "Urgent", "Alert", nil, nil, true)
+		for i,v in ipairs(burningSoulList) do
+			coloredNames[i] = v
+		end
+		mod:TargetMessage(spellId, coloredNames, "Urgent", "Alert", nil, nil, true)
 		scheduled = nil
+		wipe(burningSoulList)
 	end
 
 	function mod:BurningSoulRemoved(args)
@@ -116,8 +122,6 @@ do
 	end
 
 	function mod:BurningSoul(args)
-		self:CDBar(args.spellId, 24) -- 23.8 - 41.4
-		self:Bar(args.spellId, 10, L.burning_soul_bar)
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
@@ -127,7 +131,7 @@ do
 
 		burningSoulList[#burningSoulList+1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnBurningSoul, 0.3, args.spellId)
+			scheduled = self:ScheduleTimer(warnBurningSoul, 0.1, args.spellId)
 		end
 	end
 end
