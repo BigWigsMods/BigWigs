@@ -420,7 +420,7 @@ end
 --
 
 local updater, updaterFrame = nil, nil
-local normalProximity, reverseTargetProximity, targetProximity, multiTargetProximity
+local normalProximity, reverseTargetProximity, targetProximity, multiTargetProximity, reverseMultiTargetProximity
 do
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
 
