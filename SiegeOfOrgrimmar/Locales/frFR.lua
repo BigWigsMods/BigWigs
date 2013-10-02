@@ -144,17 +144,15 @@ end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "frFR")
 if L then
-	-- for getting all those calculate emotes:
-	-- cat Transcriptor.lua | sed "s/\t//g" | grep -E "(CHAT_MSG_RAID_BOSS_EMOTE].*Iyyokuk)" | sed "s/.*EMOTE//" | sed "s/#/\"/" | sed "s/#.*/\"/" | sort | uniq
-	L.one = "Iyyokuk selects: One !"
-	L.two = "Iyyokuk selects: Two !"
-	L.three = "Iyyokuk selects: Three !"
-	L.four = "Iyyokuk selects: Four !"
-	L.five = "Iyyokuk selects: Five !"
+	L.one = "Iyyokuk sélectionne : Un !" -- to check
+	L.two = "Iyyokuk sélectionne : Deux !" -- to check
+	L.three = "Iyyokuk sélectionne : Trois !" -- to check
+	L.four = "Iyyokuk sélectionne : Quatre !" -- to check
+	L.five = "Iyyokuk sélectionne : Cinq !" -- to check
 	--------------------------------
-	L.edge_message = "Vous êtes un edge"
-	L.custom_off_edge_marks = "Marquages Edge"
-	L.custom_off_edge_marks_desc = "Marque les joueurs qui seront les edges based on the calculations %s%s%s%s%s%s. Nécessite d'être assistant ou chef de raid."
+	L.edge_message = "Vous êtes un sommet"
+	L.custom_off_edge_marks = "Marquages Tranchant enflammé"
+	L.custom_off_edge_marks_desc = "Marque les joueurs qui seront les sommets des Tranchants enflammés selon les calculs avec %s%s%s%s%s%s. Nécessite d'être assistant ou chef de raid."
 	L.injection_over_soon = "Injection bientôt terminée (%s) !"
 	L.custom_off_mutate_marks = "Marquage Mutation : scorpion d'ambre"
 	L.custom_off_mutate_marks_desc = "Afin d'aider à l'attribution des soins, marque les joueurs ayant Mutation : scorpion d'ambre avec %s%s%s. Nécessite d'être assistant ou chef de raid."
