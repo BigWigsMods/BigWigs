@@ -70,12 +70,12 @@ do
 					},
 					outline = {
 						type = "select",
-						name = L["Outline"],
+						name = L.outline,
 						order = 2,
 						values = {
-							NONE = L["None"],
-							OUTLINE = L["Thin"],
-							THICKOUTLINE = L["Thick"],
+							NONE = L.none,
+							OUTLINE = L.thin,
+							THICKOUTLINE = L.thick,
 						},
 					},
 					fontSize = {
@@ -90,7 +90,7 @@ do
 					fontColor = {
 						order = 4,
 						type = "color",
-						name = L["Font color"],
+						name = L.fontColor,
 						get = function(info)
 							return plugin.db.profile[info[#info]].r, plugin.db.profile[info[#info]].g, plugin.db.profile[info[#info]].b
 						end,
@@ -103,8 +103,8 @@ do
 					},
 					monochrome = {
 						type = "toggle",
-						name = L["Monochrome"],
-						desc = L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."],
+						name = L.monochrome,
+						desc = L.monochromeDesc,
 						order = 5,
 					},
 					newline = {
@@ -114,14 +114,14 @@ do
 					},
 					upper = {
 						type = "toggle",
-						name = L["UPPERCASE"],
-						desc = L["Uppercases all messages related to a super emphasized option."],
+						name = L.uppercase,
+						desc = L.uppercaseDesc,
 						order = 6,
 					},
 					countdown = {
 						type = "toggle",
-						name = L["Countdown"],
-						desc = L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."],
+						name = L.countdown,
+						desc = L.countdownDesc,
 						order = 7,
 					},
 				},

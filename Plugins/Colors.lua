@@ -72,7 +72,7 @@ end
 
 local colorOptions = {
 	type = "group",
-	name = L.Colors,
+	name = L.colors,
 	handler = plugin,
 	get = get,
 	set = set,
@@ -80,7 +80,7 @@ local colorOptions = {
 	args = {
 		messages = {
 			type = "group",
-			name = L.Messages,
+			name = L.messages,
 			inline = true,
 			order = 1,
 			args = {
@@ -118,36 +118,36 @@ local colorOptions = {
 		},
 		bars = {
 			type = "group",
-			name = L.Bars,
+			name = L.bars,
 			inline = true,
 			order = 2,
 			args = {
 				barColor = {
-					name = L.Normal,
+					name = L.normal,
 					type = "color",
 					hasAlpha = true,
 					order = 1,
 				},
 				barEmphasized = {
-					name = L.Emphasized,
+					name = L.emphasized,
 					type = "color",
 					hasAlpha = true,
 					order = 2,
 				},
 				barBackground = {
-					name = L.Background,
+					name = L.background,
 					type = "color",
 					hasAlpha = true,
 					order = 3,
 				},
 				barText = {
-					name = L.Text,
+					name = L.text,
 					type = "color",
 					hasAlpha = true,
 					order = 4,
 				},
 				barTextShadow = {
-					name = L.TextShadow,
+					name = L.textShadow,
 					type = "color",
 					hasAlpha = true,
 					order = 5,
@@ -156,12 +156,12 @@ local colorOptions = {
 		},
 		flash = {
 			type = "group",
-			name = L.Flash,
+			name = L.flash,
 			inline = true,
 			order = 3,
 			args = {
 				flash = {
-					name = L.Flash,
+					name = L.flash,
 					type = "color",
 					order = 11,
 				},
@@ -169,8 +169,8 @@ local colorOptions = {
 		},
 		reset = {
 			type = "execute",
-			name = L.Reset,
-			desc = L["Resets the above colors to their defaults."],
+			name = L.reset,
+			desc = L.resetDesc,
 			func = reset,
 			order = 4,
 			width = "full",
@@ -221,7 +221,7 @@ plugin.pluginOptions.args.reset.width = nil --"half"
 plugin.pluginOptions.args.resetAll = {
 	type = "execute",
 	name = L.resetAll,
-	desc = L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."],
+	desc = L.resetAllDesc,
 	func = resetAll,
 	order = 17,
 }

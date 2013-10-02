@@ -67,27 +67,23 @@ L["Invalid time specified. <time> can be either a number in seconds, a M:S pair,
 L["This function can't be used during an encounter."] = true
 L["Pull timer cancelled by %s."] = true
 
-L.customBarSlashPrint = "This functionality has been renamed. Use /raidbar to send a custom bar to your raid or /localbar for a bar only you can see."
-
 -----------------------------------------------------------------------
 -- Colors.lua
 --
 
-L.Colors = "Colors"
+L.colors = "Colors"
 
-L.Messages = "Messages"
-L.Bars = "Bars"
-L.Background = "Background"
-L.Text = "Text"
-L.TextShadow = "Text Shadow"
-L.Flash = "Flash"
-L.Normal = "Normal"
-L.Emphasized = "Emphasized"
+L.bars = "Bars"
+L.text = "Text"
+L.textShadow = "Text Shadow"
+L.flash = "Flash"
+L.normal = "Normal"
+L.emphasized = "Emphasized"
 
-L.Reset = "Reset"
-L["Resets the above colors to their defaults."] = true
+L.reset = "Reset"
+L.resetDesc = "Resets the above colors to their defaults."
 L.resetAll = "Reset all"
-L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = true
+L.resetAllDesc = "If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."
 
 L.Important = "Important"
 L.Personal = "Personal"
@@ -100,14 +96,14 @@ L.Neutral = "Neutral"
 -- Emphasize.lua
 --
 
-L["Super Emphasize"] = true
+L.superEmphasize = "Super Emphasize"
 L.superEmphasizeDesc = "Boosts related messages or bars of a specific boss encounter ability.\n\nHere you configure exactly what should happen when you toggle on the Super Emphasize option in the advanced section for a boss encounter ability.\n\n|cffff4411Note that Super Emphasize is off by default for all abilities.|r\n"
-L["UPPERCASE"] = true
-L["Uppercases all messages related to a super emphasized option."] = true
-L["Double size"] = true
-L["Doubles the size of super emphasized bars and messages."] = true
-L["Countdown"] = true
-L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = true
+L.uppercase = "UPPERCASE"
+L.uppercaseDesc = "Uppercases all messages related to a super emphasized option."
+L.doubleSize = "Double size"
+L.doubleSizeDesc = "Doubles the size of super emphasized bars and messages."
+L.countdown = "Countdown"
+L.countdownDesc = "If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -117,35 +113,33 @@ L.sinkDescription = "Route output from this addon through the Big Wigs message d
 L.emphasizedSinkDescription = "Route output from this addon through the Big Wigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
 L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
 
-L["Big Wigs Emphasized"] = true
-L["Messages"] = true
-L["Normal messages"] = true
-L["Emphasized messages"] = true
-L["Output"] = true
-L["Emphasized countdown"] = true
+L.bwEmphasized = "Big Wigs Emphasized"
+L.messages = "Messages"
+L.normalMessages = "Normal messages"
+L.emphasizedMessages = "Emphasized messages"
+L.output = "Output"
+L.emphasizedCountdown = "Emphasized countdown"
 
-L["Use colors"] = true
-L["Toggles white only messages ignoring coloring."] = true
-
-L["Use icons"] = true
-L["Show icons next to messages, only works for Raid Warning."] = true
-
-L["Class colors"] = true
-L["Colors player names in messages by their class."] = true
+L.useColors = "Use colors"
+L.useColorsDesc = "Toggles white only messages ignoring coloring."
+L.useIcons = "Use icons"
+L.useIconsDesc = "Show icons next to messages."
+L.classColors = "Class colors"
+L.classColorsDesc = "Colors player names by their class."
 
 L.fontSize = "Font size"
-L["None"] = true
-L["Thin"] = true
-L["Thick"] = true
-L["Outline"] = true
-L["Monochrome"] = true
-L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = true
-L["Font color"] = true
+L.none = "None"
+L.thin = "Thin"
+L.thick = "Thick"
+L.outline = "Outline"
+L.monochrome = "Monochrome"
+L.monochromeDesc = "Toggles the monochrome flag on all messages, removing any smoothing of the font edges."
+L.fontColor = "Font color"
 
-L["Display time"] = true
-L["How long to display a message, in seconds"] = true
-L["Fade time"] = true
-L["How long to fade out a message, in seconds"] = true
+L.displayTime = "Display time"
+L.displayTimeDesc = "How long to display a message, in seconds"
+L.fadeTime = "Fade time"
+L.fadeTimeDesc = "How long to fade out a message, in seconds"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

@@ -340,7 +340,7 @@ plugin.defaultDB = {
 local clickOptions = {
 	emphasize = {
 		type = "toggle",
-		name = colorize[L["Super Emphasize"]],
+		name = colorize[L.superEmphasize],
 		desc = L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."],
 		descStyle = "inline",
 		order = 1,
@@ -1418,9 +1418,4 @@ SlashCmdList.BIGWIGSPULL = function(input)
 	end
 end
 SLASH_BIGWIGSPULL1 = "/pull"
-
-SlashCmdList.BWLCB_SHORTHAND = function() BigWigs:Print(L.customBarSlashPrint) end
-SLASH_BWLCB_SHORTHAND1 = "/bwlcb"
-SlashCmdList.BWCB_SHORTHAND = function() BigWigs:Print(L.customBarSlashPrint) end
-SLASH_BWCB_SHORTHAND1 = "/bwcb"
 

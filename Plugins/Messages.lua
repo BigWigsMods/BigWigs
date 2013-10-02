@@ -93,16 +93,16 @@ LibStub("LibSink-2.0"):Embed(fakeEmphasizeMessageAddon)
 
 plugin.pluginOptions = {
 	type = "group",
-	name = L["Output"],
+	name = L.output,
 	childGroups = "tab",
 	args = {
 		normal = plugin:GetSinkAce3OptionsDataTable(),
 		emphasized = fakeEmphasizeMessageAddon:GetSinkAce3OptionsDataTable(),
 	},
 }
-plugin.pluginOptions.args.normal.name = L["Normal messages"]
+plugin.pluginOptions.args.normal.name = L.normalMessages
 plugin.pluginOptions.args.normal.order = 1
-plugin.pluginOptions.args.emphasized.name = L["Emphasized messages"]
+plugin.pluginOptions.args.emphasized.name = L.emphasizedMessages
 plugin.pluginOptions.args.emphasized.order = 2
 -- Kill chat outputs
 plugin.pluginOptions.args.normal.args.Channel = nil
@@ -155,7 +155,7 @@ end
 --
 
 function plugin:OnRegister()
-	self:RegisterSink("BigWigsEmphasized", L["Big Wigs Emphasized"], L.emphasizedSinkDescription, "EmphasizedPrint")
+	self:RegisterSink("BigWigsEmphasized", L.bwEmphasized, L.emphasizedSinkDescription, "EmphasizedPrint")
 	self:RegisterSink("BigWigs", "Big Wigs", L.sinkDescription, "Print")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
@@ -270,9 +270,9 @@ do
 		colorModule = BigWigs:GetPlugin("Colors", true)
 
 		if not normalAnchor then
-			normalAnchor = createAnchor("BWMessageAnchor", L["Messages"])
-			emphasizeAnchor = createAnchor("BWEmphasizeMessageAnchor", L["Emphasized messages"])
-			emphasizeCountdownAnchor = createAnchor("BWEmphasizeCountdownMessageAnchor", L["Emphasized countdown"])
+			normalAnchor = createAnchor("BWMessageAnchor", L.messages)
+			emphasizeAnchor = createAnchor("BWEmphasizeMessageAnchor", L.emphasizedMessages)
+			emphasizeCountdownAnchor = createAnchor("BWEmphasizeCountdownMessageAnchor", L.emphasizedCountdown)
 			createSlots()
 			createAnchor, createSlots = nil, nil
 		end
@@ -344,12 +344,12 @@ do
 					},
 					outline = {
 						type = "select",
-						name = L["Outline"],
+						name = L.outline,
 						order = 2,
 						values = {
-							NONE = L["None"],
-							OUTLINE = L["Thin"],
-							THICKOUTLINE = L["Thick"],
+							NONE = L.none,
+							OUTLINE = L.thin,
+							THICKOUTLINE = L.thick,
 						},
 					},
 					align = {
@@ -381,26 +381,26 @@ do
 					},
 					usecolors = {
 						type = "toggle",
-						name = L["Use colors"],
-						desc = L["Toggles white only messages ignoring coloring."],
+						name = L.useColors,
+						desc = L.useColorsDesc,
 						order = 5,
 					},
 					monochrome = {
 						type = "toggle",
-						name = L["Monochrome"],
-						desc = L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."],
+						name = L.monochrome,
+						desc = L.monochromeDesc,
 						order = 6,
 					},
 					classcolor = {
 						type = "toggle",
-						name = L["Class colors"],
-						desc = L["Colors player names in messages by their class."],
+						name = L.classColors,
+						desc = L.classColorsDesc,
 						order = 7,
 					},
 					useicons = {
 						type = "toggle",
-						name = L["Use icons"],
-						desc = L["Show icons next to messages, only works for Raid Warning."],
+						name = L.useIcons,
+						desc = L.useIconsDesc,
 						order = 8,
 					},
 					newline1 = {
@@ -410,8 +410,8 @@ do
 					},
 					displaytime = {
 						type = "range",
-						name = L["Display time"],
-						desc = L["How long to display a message, in seconds"],
+						name = L.displayTime,
+						desc = L.displayTimeDesc,
 						min = 1,
 						max = 30,
 						step = 0.5,
@@ -420,8 +420,8 @@ do
 					},
 					fadetime = {
 						type = "range",
-						name = L["Fade time"],
-						desc = L["How long to fade out a message, in seconds"],
+						name = L.fadeTime,
+						desc = L.fadeTimeDesc,
 						min = 1,
 						max = 30,
 						step = 0.5,
