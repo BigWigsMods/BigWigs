@@ -503,12 +503,12 @@ do
 					},
 					outline = {
 						type = "select",
-						name = L["Outline"],
+						name = L.outline,
 						order = 2,
 						values = {
-							NONE = L["None"],
-							OUTLINE = L["Thin"],
-							THICKOUTLINE = L["Thick"],
+							NONE = L.none,
+							OUTLINE = L.thin,
+							THICKOUTLINE = L.thick,
 						},
 						--width = "full",
 					},
@@ -821,7 +821,7 @@ local function createAnchor(frameName, title)
 end
 
 local function createAnchors()
-	normalAnchor = createAnchor("BigWigsAnchor", L["Bars"])
+	normalAnchor = createAnchor("BigWigsAnchor", L.bars)
 	emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized bars"])
 
 	createAnchors = nil
