@@ -95,6 +95,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "MarkOfAnguishApplied", 143840)
 	self:Log("SPELL_AURA_REMOVED", "MarkOfAnguishRemoved", 143840)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LingeringAnguish", 144176)
+	self:Emote("HeIntermission", "143840")
 	-- Rook Stonetoe
 	self:Log("SPELL_CAST_SUCCESS", "VengefulStrikes", 144396)
 	self:Log("SPELL_CAST_SUCCESS", "Clash", 143027)
@@ -145,6 +146,8 @@ do
 		end
 	end
 	function mod:DarkMeditationApplied(args)
+		self:StopBar(143491) -- Calamity
+		self:StopBar(143446) -- Bane
 		self:Message(args.spellId, "Important", "Alert")
 		if not self:Tank() then
 			darkMeditationTimer = self:ScheduleRepeatingTimer(warnDarkMeditation, 3, self:SpellName(143546))
@@ -221,7 +224,7 @@ end
 
 function mod:LingeringAnguish(args)
 	-- inform the player with the debuff if stacks are getting high, the values might need adjusting (one warning about every 6 sec atm)
-	if UnitDebuff("player", self:SpellName(143840)) and (args.amount > 7 and args.amount%2==0) then -- MarkOfAnguish
+	if UnitDebuff("player", self:SpellName(143840)) and (args.amount > 7 and args.amount % 2 == 0) then -- MarkOfAnguish
 		self:StackMessage(143840, args.destName, args.amount, "Personal", "Info", 144176, 144176)
 	end
 end
@@ -268,6 +271,10 @@ function mod:Gouge(_, msg)
 		self:Message(143330, "Urgent", "Alarm")
 		self:CDBar(143330, 29)
 	end
+end
+
+function mod:HeIntermission()
+	self:StopBar(143330) -- Gouge
 end
 
 -- Rook Stonetoe
@@ -424,6 +431,7 @@ end
 function mod:RookIntermission()
 	self:StopBar(143027) -- Clash
 	self:StopBar(144396) -- Vengeful Strikes
+	self:StopBar(143019) -- Corrupted Brew
 end
 
 
