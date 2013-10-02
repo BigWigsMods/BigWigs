@@ -9,7 +9,7 @@ if L then
 	L.defile = "Defiled Ground cast"
 
 	L.custom_off_bane_marks = "Shadow Word: Bane marker"
-	L.custom_off_bane_marks_desc = "To help dispelling assignments, mark the inital people who have Shadow Word: Bane on them with %s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+	L.custom_off_bane_marks_desc = "To help dispelling assignments, mark the inital people who have Shadow Word: Bane on them with {rt1}{rt2}{rt3}{rt4}{rt5} (in that order, not all marks may be used), requires promoted or leader."
 
 	L.no_meditative_field = "NO Meditative Field!"
 

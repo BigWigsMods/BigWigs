@@ -9,7 +9,7 @@ if L then
 	L.defile = "Lancio Suolo Profanato"
 
 	L.custom_off_bane_marks = "Parola d'Ombra: Flagello"
-	L.custom_off_bane_marks_desc = "Per aiutare a dissipare, evidenzia chi ha Parola d'Ombra: Flagello su di loro con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
+	L.custom_off_bane_marks_desc = "Per aiutare a dissipare, evidenzia chi ha Parola d'Ombra: Flagello su di loro con {rt1}{rt2}{rt3}{rt4}{rt5} (in questo ordine, possono non essere usati tutti i simboli), richiede capo incursione o assistente."
 
 	L.no_meditative_field = "NESSUN Campo di Meditazione!"
 

@@ -41,7 +41,7 @@ if L then
 	L.defile_icon = 143961
 
 	L.custom_off_bane_marks = "Shadow Word: Bane marker"
-	L.custom_off_bane_marks_desc = "To help dispelling assignments, mark the initial people who have Shadow Word: Bane on them with %s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+	L.custom_off_bane_marks_desc = "To help dispelling assignments, mark the initial people who have Shadow Word: Bane on them with {rt1}{rt2}{rt3}{rt4}{rt5} (in that order, not all marks may be used), requires promoted or leader."
 
 	L.no_meditative_field = "NO Meditative Field!"
 
@@ -54,13 +54,6 @@ if L then
 	L.inferno_self_bar = "You explode!"
 end
 L = mod:GetLocale()
-L.custom_off_bane_marks_desc = L.custom_off_bane_marks_desc:format(
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_2.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t"
-)
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -70,7 +63,7 @@ function mod:GetOptions()
 	return {
 		{144396, "TANK"}, {143019, "FLASH", "SAY"}, 143027, {143007, "HEALER"}, 143958, {"defile", "TANK"}, {144357, "FLASH"}, {-7959, "FLASH", "SAY", "PROXIMITY", "ICON"}, {"inferno_self", "SAY", "EMPHASIZE"}, -- Rook Stonetoe
 		{143330, "TANK"}, {143292, "FLASH"}, {144367, "FLASH"}, {143840, "FLASH", "PROXIMITY"}, -- He Softfoot
-		143446, 143491, 143546, {143423, "SAY"}, -- Sun Tenderheart
+		{143446, "DISPEL"}, 143491, 143546, {143423, "SAY"}, -- Sun Tenderheart
 		"custom_off_bane_marks",
 		143497, "intermission", "berserk", "proximity", "bosskill",
 	}, {
@@ -108,9 +101,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CorruptionKick", 143007)
 	self:Log("SPELL_CAST_SUCCESS", "CorruptionShock", 143958)
 	self:Log("SPELL_DAMAGE", "DefiledGroundDamage", 144357)
-	self:Log("SPELL_CAST_START", "DefiledGround", 144357)
 	self:Log("SPELL_CAST_START", "InfernoStrike", 143962)
-
+	self:Emote("RookIntermission", "143955")
 
 	self:Death("Deaths", 71475, 71479, 71480) -- Rook Stonetoe, He Softfoot, Sun Tenderheart
 end
@@ -123,7 +115,7 @@ function mod:OnEngage()
 	infernoTarget, infernoTimer = nil, nil
 	self:OpenProximity("proximity", 5) -- this might not be needed in LFR
 	self:Berserk(self:Heroic() and 600 or 900)
-	self:Bar(144396, 7) -- VengefulStrikes
+	self:Bar(144396, 7) -- Vengeful Strikes
 	self:CDBar(143019, 18) -- Corrupted Brew
 	self:CDBar(143027, 44) -- Clash
 	self:CDBar(143330, 23) -- Gouge
@@ -206,19 +198,22 @@ do
 end
 
 function mod:Bane(args)
-	if self:Dispeller("magic") then
+	if self:Dispeller("magic", nil, 143446) then
 		self:Message(args.spellId, "Urgent", "Alarm")
 		self:CDBar(args.spellId, 14)
 	end
 end
 
 function mod:ShaSear(args)
-	if infernoTarget and self:Me(args.destGUID) then -- Only during Inferno Strike phase (when people are hugging)
-		if not self:LFR() then
-			self:Say(args.spellId)
+	if infernoTarget then
+		if self:Me(args.destGUID) then -- Only during Inferno Strike phase (when people are hugging)
+			if not self:LFR() then
+				self:Say(args.spellId)
+			end
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+			self:TargetBar(args.spellId, 5, args.destName)
 		end
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
-		self:TargetBar(args.spellId, 5, args.destName)
+		--self:SecondaryIcon(args.spellId, args.destName)
 	end
 end
 
@@ -329,18 +324,6 @@ do
 	end
 end
 
-function mod:DefiledGround(args)
-	local unit = mod:GetUnitIdByGUID(args.sourceGUID)
-	local target = unit.."target"
-	-- only warn for the tank targeted by the mob
-	if UnitExists(target) then
-		if self:Me(UnitGUID(target)) then
-			self:CDBar("defile", 10, 144357)
-			self:Message("defile", "Urgent", "Alarm", 144357)
-		end
-	end
-end
-
 do
 	local prev = 0
 	function mod:DefiledGroundDamage(args)
@@ -407,6 +390,11 @@ do
 			-- timer is all over the place, need to figure out if something delays it or what
 			self:CDBar(spellId, 11) -- not sure if there is a point for this like this
 			self:GetBossTarget(printTarget, 0.2, UnitGUID(unitId))
+		elseif spellId == 143961 then
+			if UnitDetailedThreatSituation("player", unitId) then
+				self:CDBar("defile", 10, 144357)
+				self:Message("defile", "Urgent", "Alarm", 144357)
+			end
 		elseif spellId == 138175 and self:MobId(UnitGUID(unitId)) == 71481 then -- Despawn Area Triggers
 			self:CloseProximity(-7959)
 			self:OpenProximity("proximity", 5)
@@ -433,6 +421,12 @@ function mod:VengefulStrikes(args)
 	end
 end
 
+function mod:RookIntermission()
+	self:StopBar(143027) -- Clash
+	self:StopBar(144396) -- Vengeful Strikes
+end
+
+
 function mod:Heal(args)
 	self:Bar(args.spellId, 15, ("%s (%s)"):format(args.spellName, args.sourceName)) -- this is too long for a normal bar, but needed so bars don't overwrite each other
 	self:Message(args.spellId, "Positive", "Warning")
@@ -440,17 +434,16 @@ end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local mobId = self:MobId(UnitGUID(unitId))
-	if mobId and (mobId == 71475 or mobId == 71479 or mobId == 71480) then
+	if mobId == 71475 or mobId == 71479 or mobId == 71480 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		local GUID = UnitGUID(unitId) -- XXX not sure if unitIds reliably reset after intermissions, so just be safe and track by GUID rather than unitId
-		if hp < 70 and not intermission[GUID] then -- 66%
-			self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], self:UnitName(unitId))), false)
-			intermission[GUID] = 1
-		elseif hp < 37 and intermission[GUID] and intermission[GUID] == 1 then -- 33%
-			self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], self:UnitName(unitId))), false)
-			intermission[GUID] = 2
+		if hp < 70 and not intermission[mobId] then -- 66%
+			self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], (UnitName(unitId)))), false)
+			intermission[mobId] = 1
+		elseif hp < 37 and intermission[mobId] == 1 then -- 33%
+			self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], (UnitName(unitId)))), false)
+			intermission[mobId] = 2
 		end
-		if intermission[UnitGUID("boss1")] and intermission[UnitGUID("boss1")] == 2 and intermission[UnitGUID("boss2")] and intermission[UnitGUID("boss2")] == 2 and intermission[UnitGUID("boss3")] and intermission[UnitGUID("boss3")] == 2 then
+		if intermission[71475] == 2 and intermission[71479] == 2 and intermission[71480] == 2 then
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3")
 		end
 	end

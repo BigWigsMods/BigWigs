@@ -9,7 +9,7 @@ if L then
 	L.defile = "Incant. de Sol profané"
 
 	L.custom_off_bane_marks = "Marquage Mot de l'ombre : Plaie"
-	L.custom_off_bane_marks_desc = "Afin d'aider à l'attribution des dissipations, marque les personnes initialement touchées par Mot de l'ombre : Plaie avec %s%s%s%s%s (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
+	L.custom_off_bane_marks_desc = "Afin d'aider à l'attribution des dissipations, marque les personnes initialement touchées par Mot de l'ombre : Plaie avec {rt1}{rt2}{rt3}{rt4}{rt5} (dans cet ordre, il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
 
 	L.no_meditative_field = "PAS de Champ de méditation !"
 

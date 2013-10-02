@@ -9,7 +9,7 @@ if L then
 	L.defile = "Lanza Suelo mancillado"
 
 	L.custom_off_bane_marks = "Palabra de las Sombras: terror marcador"
-	L.custom_off_bane_marks_desc = "Para ayudar a asignar los dispels, marca inicialmente a la gente que tiene Palabra de las Sombras: terror en ellos con %s%s%s%s%s (en este orden)(puede que no se usen todas las marcas), requiere ayudante o líder."
+	L.custom_off_bane_marks_desc = "Para ayudar a asignar los dispels, marca inicialmente a la gente que tiene Palabra de las Sombras: terror en ellos con {rt1}{rt2}{rt3}{rt4}{rt5} (en este orden, puede que no se usen todas las marcas), requiere ayudante o líder."
 
 	L.no_meditative_field = "¡SIN Campo meditativo!"
 

@@ -9,7 +9,7 @@ if L then
 	L.defile = "Geschändeter Boden"
 
 	L.custom_off_bane_marks = "Schattenwort: Unheil markieren"
-	L.custom_off_bane_marks_desc = "Um bei der Einteilung zum Bannen zu helfen, werden die anfangs von Schattenwort: Unheil betroffenen Spieler mit %s%s%s%s%s markiert (in dieser Reihenfolge)(vielleicht werden nicht alle Symbole genutzt), benötigt Leiter oder Assistent."
+	L.custom_off_bane_marks_desc = "Um bei der Einteilung zum Bannen zu helfen, werden die anfangs von Schattenwort: Unheil betroffenen Spieler mit {rt1}{rt2}{rt3}{rt4}{rt5} markiert (in dieser Reihenfolge, vielleicht werden nicht alle Symbole genutzt), benötigt Leiter oder Assistent."
 
 	L.no_meditative_field = "KEIN Meditationsfeld!"
 
