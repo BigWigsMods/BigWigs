@@ -273,9 +273,9 @@ do
 					local r, g, b = colors:GetColor("flash")
 					pulseColor = ("|cFF%02x%02x%02x"):format(r*255, g*255, b*255)
 				end
-				addon:Print(L.Test .." - ".. (pulseColor or "") ..L.FLASH.. (pulseColor and "|r" or "") .." - ".. L.PULSE ..": |T".. messages[key] ..":15:15:0:0:64:64:4:60:4:60|t")
+				addon:Print(L.test .." - ".. (pulseColor or "") ..L.FLASH.. (pulseColor and "|r" or "") .." - ".. L.PULSE ..": |T".. messages[key] ..":15:15:0:0:64:64:4:60:4:60|t")
 			end
-			if sound then addon:Print(L.Test .." - ".. L.Sound ..": ".. sound) end
+			if sound then addon:Print(L.test .." - ".. L.Sound ..": ".. sound) end
 			addon:SendMessage("BigWigs_Message", addon, key, color..": "..key, color, sound, messages[key])
 			messages[key] = nil
 		end

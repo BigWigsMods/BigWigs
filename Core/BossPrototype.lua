@@ -537,8 +537,8 @@ do
 	local UnitDetailedThreatSituation = UnitDetailedThreatSituation
 	local function bossScanner(self, func, tankCheckExpiry, guid, t)
 		local elapsed = self.scheduledScansCounter[t] + 0.05
-		self.scheduledScansCounter[t] = elapsed
 		if elapsed > 0.8 then self:CancelTimer(self.scheduledScans[t]) end
+		self.scheduledScansCounter[t] = elapsed
 
 		for i = 1, 5 do
 			local boss = format("boss%d", i)
