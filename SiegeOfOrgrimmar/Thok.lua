@@ -118,7 +118,7 @@ end
 
 function mod:SkeletonKeyRemoved(args)
 	self:Message(args.spellId, "Positive", "Alert", L["cage_opened"])
-	self:StopBar(args.spellId)
+	self:StopBar(args.spellId, args.destName)
 	self:Bar(-7981, 13, CL["over"]:format(self:SpellName(-7981))) -- Blood Frenzy
 end
 
