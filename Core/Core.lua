@@ -275,7 +275,7 @@ do
 				end
 				addon:Print(L.test .." - ".. (pulseColor or "") ..L.FLASH.. (pulseColor and "|r" or "") .." - ".. L.PULSE ..": |T".. messages[key] ..":15:15:0:0:64:64:4:60:4:60|t")
 			end
-			if sound then addon:Print(L.test .." - ".. L.Sound ..": ".. sound) end
+			if sound then addon:Print(L.test .." - ".. L.sound ..": ".. sound) end
 			addon:SendMessage("BigWigs_Message", addon, key, color..": "..key, color, sound, messages[key])
 			messages[key] = nil
 		end
