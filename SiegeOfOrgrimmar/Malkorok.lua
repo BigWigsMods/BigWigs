@@ -153,7 +153,7 @@ function mod:BreathOfYShaarj(args)
 
 	if breathCounter == 2 then
 		self:Bar(142826, 15, CL["count"]:format(self:SpellName(142826), smashCounter)) -- Arcing Smash
-		self:CDBar(args.spellName, 69.8, CL["count"]:format(args.spellName, breathCounter))
+		self:CDBar(args.spellId, 69.8, CL["count"]:format(args.spellName, breathCounter))
 	end
 	self:Bar(142851, 5) -- Seismic Slam
 end
