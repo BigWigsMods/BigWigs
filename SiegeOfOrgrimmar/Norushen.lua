@@ -15,7 +15,7 @@ mod:RegisterEnableMob(72276, 71977, 71976, 71967) -- Amalgam of Corruption, Mani
 -- Locals
 --
 
-local bigAddCounter = 0
+local bigAddSpawnCounter, bigAddKillCounter = 0, 0
 local throttlePlayers = {} -- Throttle users that have BW & DBM installed >.>
 
 --------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	bigAddCounter = 0
+	bigAddSpawnCounter, bigAddKillCounter = 0, 0
 	self:Berserk(self:LFR() and 600 or 418)
 	self:Bar(145226, 25) -- Blind Hatred
 end
@@ -185,7 +185,6 @@ function mod:OnSync(sync, _, player)
 	elseif sync == "Phase2" then
 		self:Message("stages", "Neutral", "Warning", CL["phase"]:format(2), 146179)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
-	-- Big add messages are assuming you are not having two up at the same time
 	elseif sync == "InsideBigAddDeath" then
 		local t = GetTime()
 		if throttlePlayers[player] and (t - throttlePlayers[player]) < 5 then
@@ -193,13 +192,17 @@ function mod:OnSync(sync, _, player)
 		end
 		throttlePlayers[player] = t
 
-		bigAddCounter = bigAddCounter + 1
-		self:Message("big_adds", "Urgent", "Alarm", CL["incoming"]:format(L["big_add"]:format(bigAddCounter)), 147082)
+		bigAddSpawnCounter = bigAddSpawnCounter + 1
+		self:Message("big_adds", "Urgent", "Alarm", CL["incoming"]:format(L["big_add"]:format(bigAddSpawnCounter)), 147082)
 	elseif sync == "Phase2BigAddSpawn" then
-		bigAddCounter = bigAddCounter + 1
-		self:Message("big_adds", "Urgent", "Alarm", L["big_add"]:format(bigAddCounter), 147082)
+		bigAddSpawnCounter = bigAddSpawnCounter + 1
+		self:Message("big_adds", "Urgent", "Alarm", L["big_add"]:format(bigAddSpawnCounter), 147082)
 	elseif sync == "OutsideBigAddDeath" then
-		self:Message("big_adds", "Attention", "Alert", L["big_add_killed"]:format(bigAddCounter), 147082) -- this could probably live wouthout sound but this way people know for sure that they need to check if it is their turn to soak
+		bigAddKillCounter = bigAddKillCounter + 1
+		if bigAddKillCounter > bigAddSpawnCounter then
+			bigAddSpawnCounter = bigAddKillCounter -- Compensate for no boss mod players :[
+		end
+		self:Message("big_adds", "Attention", "Alert", L["big_add_killed"]:format(bigAddKillCounter), 147082) -- this could probably live wouthout sound but this way people know for sure that they need to check if it is their turn to soak
 	end
 end
 
