@@ -812,6 +812,7 @@ do
 			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), groupType == 3 and "INSTANCE_CHAT" or "RAID")
 			SendAddonMessage("D4", "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			self:ZONE_CHANGED_NEW_AREA()
+			self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		elseif grouped and not groupType then
 			grouped = nil
 			wipe(usersRelease)
@@ -845,8 +846,6 @@ function loader:BigWigs_CoreEnabled()
 		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		SendAddonMessage("D4", "H\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 	end
-
-	self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 
 	-- Core is loaded, nil these to force checking BigWigs.db.profile.option
 	self.isFakingDBM = nil
