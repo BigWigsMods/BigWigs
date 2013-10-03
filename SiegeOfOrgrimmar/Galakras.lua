@@ -93,7 +93,7 @@ function mod:OnBossEnable()
 	-- Foot Soldiers
 	self:Log("SPELL_CAST_START", "AddMarkedMob", 148520, 149187, 148522) -- Tidal Wave
 	self:Log("SPELL_CAST_START", "ChainHeal", 146757, 146728)
-	self:Log("SPELL_CAST_SUCCESS", "HealingTotem", 146753)
+	self:Log("SPELL_CAST_SUCCESS", "HealingTotem", 146753, 146722)
 	self:Log("SPELL_PERIODIC_DAMAGE", "FlameArrows", 146765)
 	self:Log("SPELL_DAMAGE", "FlameArrows", 146764)
 	self:Log("SPELL_AURA_APPLIED", "FlameArrows", 146765)
@@ -222,14 +222,14 @@ end
 
 -- Foot Soldiers
 function mod:ChainHeal(args)
-	self:Message(args.spellId, "Important", "Warning")
+	self:Message(146757, "Important", "Warning")
 	if self.db.profile.custom_off_shaman_marker then
 		mod:AddMarkedMob(args)
 	end
 end
 
-function mod:HealingTotem(args)
-	self:Message(args.spellId, "Urgent", "Warning")
+function mod:HealingTotem()
+	self:Message(146753, "Urgent", "Warning")
 end
 
 do
@@ -311,3 +311,4 @@ do
 		end
 	end
 end
+
