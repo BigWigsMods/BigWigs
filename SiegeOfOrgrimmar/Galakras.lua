@@ -98,7 +98,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "FlameArrows", 146764)
 	self:Log("SPELL_AURA_APPLIED", "FlameArrows", 146765)
 	self:Log("SPELL_AURA_APPLIED", "Warbanner", 147328)
-	self:Log("SPELL_AURA_APPLIED", "Fracture", 146899)
+	self:Log("SPELL_AURA_APPLIED", "Fracture", 146899, 147200)
 	-- Ranking Officials
 	self:Log("SPELL_PERIODIC_DAMAGE", "PoisonCloud", 147705)
 	self:Log("SPELL_AURA_APPLIED", "PoisonCloud", 147705)
@@ -249,7 +249,7 @@ function mod:Warbanner(args)
 end
 
 function mod:Fracture(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, true)
+	self:TargetMessage(146899, args.destName, "Urgent", "Info", nil, nil, true)
 end
 
 function mod:Deaths(args)
