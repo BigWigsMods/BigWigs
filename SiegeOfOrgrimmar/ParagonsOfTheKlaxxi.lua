@@ -202,6 +202,9 @@ function mod:OnEngage()
 	}
 	raidParsed = nil
 	mutateCounter = 1
+	self:StopWipeCheck()
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "StartWipeCheck")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "StopWipeCheck")
 end
 
 --------------------------------------------------------------------------------
