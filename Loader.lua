@@ -454,7 +454,6 @@ do
 
 		-- Role Updating
 		loaderUtilityFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-		loaderUtilityFrame:RegisterEvent("GROUP_JOINED")
 		RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 		loaderUtilityFrame:RegisterEvent("CHAT_MSG_ADDON")
@@ -589,7 +588,6 @@ function loader:ACTIVE_TALENT_GROUP_CHANGED()
 		end
 	end
 end
-loader.GROUP_JOINED = loader.ACTIVE_TALENT_GROUP_CHANGED
 
 -- LFG/R Timer
 function loader:LFG_PROPOSAL_SHOW()
