@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Immerseus", "itIT")
 if not L then return end
 if L then
-	L.win_yell = "Ah, you have done it!"
+	L.win_yell = "Ah, ce l'avete fatta!"
 end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "itIT")
@@ -122,6 +122,9 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "itIT")
 if L then
+	L.adds = "Add Modalità Eroica"
+	L.adds_desc = "Avvisa quando entrano in combattimento gli add nella sola modalità eroica"
+	
 	L.tank_debuffs = "Malefici Difensori"
 	L.tank_debuffs_desc = "Avvisi per i vari tipi di malefici sui Difensori associati a Ruggito Temibile"
 
