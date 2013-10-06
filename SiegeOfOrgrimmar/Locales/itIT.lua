@@ -54,9 +54,9 @@ if L then
 	L.demolisher_desc = "Timer per l'arrivo in combattimento dei Demolitori Kor'kron"
 	L.towers = "Torri"
 	L.towers_desc = "Avvisa quando le torri vengono distrutte"
-	L.south_tower_trigger = "The door barring the South Tower has been breached!" --need check/translation
+	L.south_tower_trigger = "La porta a protezione della torre a sud è stata sfondata!" --checked
 	L.south_tower = "Torre sud"
-	L.north_tower_trigger = "The door barring the North Tower has been breached!" --need check/translation
+	L.north_tower_trigger = "La porta a protezione della torre a nord è stata sfondata!" --checked
 	L.north_tower = "Torre nord"
 	L.tower_defender = "DIfensore Torre"
 
