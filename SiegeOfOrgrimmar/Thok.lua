@@ -71,6 +71,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_MISSED", "BurningBlood", 143783)
 	self:Log("SPELL_AURA_APPLIED", "FrozenSolid", 143777)
 	self:Log("SPELL_CAST_SUCCESS", "TailLash", 143428)
+	self:Log("SPELL_AURA_APPLIED", "Acceleration", 143411)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Acceleration", 143411)
 	self:Log("SPELL_CAST_SUCCESS", "FearsomeRoar", 143426, 143780, 143773, 143767) -- Fearsome Roar, Acid Breath, Freezing Breath, Scorching Breath
 	self:Log("SPELL_AURA_APPLIED", "TankDebuff", 143766, 143780, 143773, 143767) -- Panic, Acid Breath, Freezing Breath, Scorching Breath
@@ -85,6 +86,7 @@ function mod:OnEngage()
 		yetiChargeTimer = nil
 		heroicAdd = nil
 	end
+	accCount = 0
 	self:Berserk(600)
 	self:OpenProximity("proximity", 10) -- it is so you know if you are too close to another group -- XXX this is maybe tactic dependant - needed for heroic
 	self:Bar(-7963, 25) -- Deafening Screech
@@ -166,6 +168,7 @@ end
 
 function mod:BloodFrenzyPhase()
 	self:Message(-7963, "Attention", nil, CL["count"]:format(self:SpellName(143411), accCount))
+	accCount = 0
 	self:StopBar(143428) -- Tail Lash
 	self:StopBar(143426) -- Fearsome Roar
 	self:StopBar(143780) -- Acid Breath
@@ -209,9 +212,9 @@ function mod:TailLash(args)
 end
 
 function mod:Acceleration(args)
-	accCount = args.amount
-	if args.amount % 3 == 0 then
-		self:Message(-7963, "Attention", nil, CL["count"]:format(args.spellName, args.amount))
+	accCount = args.amount or 1
+	if accCount % 3 == 0 then
+		self:Message(-7963, "Attention", nil, CL["count"]:format(args.spellName, accCount))
 	end
 end
 
