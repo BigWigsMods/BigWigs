@@ -114,7 +114,7 @@ end
 
 function mod:Enrage(args)
 	if self:Dispeller("enrage", true, args.spellId) then
-		self:Message(args.spellId, "Urgent", "Alert")
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert")
 	end
 end
 
@@ -213,7 +213,7 @@ end
 
 function mod:Acceleration(args)
 	accCount = args.amount or 1
-	if accCount % 3 == 0 then
+	if accCount < 6 or accCount % 3 == 0 then
 		self:Message(-7963, "Attention", nil, CL["count"]:format(args.spellName, accCount))
 	end
 end
