@@ -186,6 +186,7 @@ function mod:FoulGeyser(args) -- Blobs
 		self:Flash(args.spellId)
 	elseif self:Range(args.destName) < 5 then -- splash is 3 but want bigger warning so people know that blobs will be around that area
 		self:RangeMessage(args.spellId, "Personal", "Alert", L["blobs"])
+		self:Flash(args.spellId)
 		return
 	end
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", L["blobs"])

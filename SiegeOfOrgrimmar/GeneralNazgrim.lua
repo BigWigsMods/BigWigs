@@ -246,36 +246,22 @@ function mod:Banner(args)
 end
 
 do
-	local timer, shockwaveTarget = nil, nil
-	local function warnShockwave(player, guid)
-		if mod:Me(guid) then
-			mod:Flash(143716)
+	local function warnShockwave(self, player, guid)
+		if self:Me(guid) then
+			self:Flash(143716)
+		elseif self:Range(player) < 5 then
+			-- 5 is assumed, also a circular distance check is not the best for this
+			-- EJ says 10 yard, but that is for the landing, don't get confused!
+			-- this could get fancy if we used player facing and some math
+			self:RangeMessage(143716)
+			self:Flash(143716)
+			return
 		end
-		-- 5 is assumed, also a circular distance check is not the best for this
-		-- EJ says 10 yard, but that is for the landing, don't get confused!
-		-- this could get fancy if we used player facing and some math
-		if mod:Range(player) < 5 then
-			mod:RangeMessage(143716)
-			mod:Flash(143716)
-		else
-			mod:TargetMessage(143716, player, "Urgent", "Alarm")
-		end
+		self:TargetMessage(143716, player, "Urgent", "Alarm")
 	end
-	local function checkshockwaveTarget()
-		local player = mod:UnitName("boss1target")
-		if player and (not UnitDetailedThreatSituation("boss1target", "boss1") and not mod:Tank("boss1target")) then -- assuming tanks are not valid targets
-			shockwaveTarget = UnitGUID("boss1target")
-			warnShockwave(player, shockwaveTarget)
-			mod:CancelTimer(timer)
-			timer = nil
-		end
-	end
-	function mod:HeroicShockwave(_, _, _, _, spellId)
+	function mod:HeroicShockwave(unit, _, _, _, spellId)
 		if spellId == 143500 then -- Heroic Shockwave
-			shockwaveTarget = nil
-			if not timer then
-				timer = self:ScheduleRepeatingTimer(checkshockwaveTarget, 0.05)
-			end
+			self:GetBossTarget(warnShockwave, 0.2, UnitGUID(unit))
 		end
 	end
 end
@@ -337,5 +323,4 @@ function mod:SunderingBlow(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
 	self:CDBar(args.spellId, 10)
 end
-
 
