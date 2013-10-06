@@ -116,7 +116,7 @@ do
 		local t = GetTime()
 		if t-prev > 5 then -- XXX this still spams, rethink it maybe
 			prev = t
-			self:Message(-8212, "Urgent", nil, args.destName, 77976) -- mine like icon
+			self:Message(-8212, "Urgent", nil, -8212, 77976) -- mine like icon
 		end
 	end
 end
