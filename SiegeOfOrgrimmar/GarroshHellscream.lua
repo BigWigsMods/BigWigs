@@ -100,7 +100,8 @@ function mod:OnBossEnable()
 	self:Emote("SiegeEngineer", "144616")
 	self:Log("SPELL_CAST_SUCCESS", "DesecratedWeapon", 144748, 144749)
 
-	self:Death("Win", 71865)
+	self:Death("Deaths", 71983) -- Farseer Wolf Rider
+	self:Death("Win", 71865) -- Garrosh
 end
 
 function mod:OnEngage(diff)
@@ -205,6 +206,18 @@ do
 			markableMobs[args.destGUID] = true
 			if self.db.profile.custom_off_shaman_marker and not markTimer then
 				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.2)
+			end
+		end
+	end
+
+	function mod:Deaths(args)
+		if self.db.profile.custom_off_shaman_marker then
+			markableMobs[args.destGUID] = nil
+			for i=1, 7 do
+				if marksUsed[i] == args.destGUID then
+					marksUsed[i] = nil
+					break
+				end
 			end
 		end
 	end
