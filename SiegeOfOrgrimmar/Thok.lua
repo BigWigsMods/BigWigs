@@ -23,10 +23,10 @@ local heroicAdd
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.adds = "Heroic adds"
-	L.adds_desc = "Warnings for when the heroic only adds enter the fight"
+	L.adds_desc = "Warnings for when the heroic only adds enter the fight."
 
 	L.tank_debuffs = "Tank debuffs"
-	L.tank_debuffs_desc = "Warnings for the different types of tank debuffs associated with Fearsome Roar"
+	L.tank_debuffs_desc = "Warnings for the different types of tank debuffs associated with Fearsome Roar."
 	L.tank_debuffs_icon = 143766
 
 	L.cage_opened = "Cage opened"
@@ -113,7 +113,7 @@ function mod:BloodFrenzy(args)
 end
 
 function mod:Enrage(args)
-	if self:Dispeller("enrage", true, args.spellId) then
+	if self:Tank() or self:Dispeller("enrage", true, args.spellId) then
 		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert")
 	end
 end
@@ -136,14 +136,12 @@ function mod:BloodFrenzyOver(args)
 	self:OpenProximity("proximity", 10)
 	self:Message(-7981, "Neutral", "Long", CL["over"]:format(args.spellName))
 	self:Bar(-7963, 25) -- Deafening Screech, not much point for more timers than the initial one since then it is too frequent
-	if self:Heroic() then
-		if heroicAdd then
-			-- XXX maybe add scheduled message once we know exact timer (videos)
-			if heroicAdd == "bats" then
-				self:CDBar("adds", 28, self:SpellName(-8584), 24733) -- bat icon
-			elseif heroicAdd == "yeti" then
-				self:CDBar("adds", 16, self:SpellName(-8582), 26010) -- yeti icon
-			end
+	if self:Heroic() and heroicAdd then
+		-- XXX maybe add scheduled message once we know exact timer (videos)
+		if heroicAdd == "bats" then
+			self:CDBar("adds", 28, self:SpellName(-8584), 24733) -- bat icon
+		elseif heroicAdd == "yeti" then
+			self:CDBar("adds", 16, self:SpellName(-8582), 26010) -- yeti icon
 		end
 	end
 end
