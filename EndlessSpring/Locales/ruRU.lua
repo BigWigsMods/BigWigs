@@ -48,7 +48,7 @@ if L then
 	L.strike_or_spout = "Удар или Изводень"
 	L.huddle_or_spout_or_strike = "Оцепенение или Изводень или Удар"
 
-	--L.custom_off_huddle = "Huddle marker"
-	--L.custom_off_huddle_desc = "To help healing assignments, mark the people who have huddle in terror on them with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader."
+	L.custom_off_huddle = "Маркировка Оцепенения"
+	L.custom_off_huddle_desc = "Чтобы помочь лекарям, на людей с Оцепенением будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, требуется быть помощником или лидером."
 end
 

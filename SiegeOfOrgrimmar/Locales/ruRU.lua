@@ -9,7 +9,7 @@ if L then
 	L.defile = "Чтение Оскверненной земли"
 
 	L.custom_off_bane_marks = "Маркировка Слово Тьмы: Погибель"
-	L.custom_off_bane_marks_desc = "Чтобы помочь с рассеиванием, люди со Словом Тьмы: Погибель будут помечены метками {rt1}{rt2}{rt3}{rt4}{rt5} (в этой последовательности, не все метки могут быть использованы), требуется быть помощником или лидером."
+	L.custom_off_bane_marks_desc = "Чтобы помочь с рассеиванием, на людей со Словом Тьмы: Погибель будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5} (в этой последовательности, не все метки могут быть использованы), требуется быть помощником или лидером."
 
 	L.no_meditative_field = "НЕТ Медитативного поля!"
 
@@ -54,7 +54,7 @@ if L then
 	L.demolisher_desc = "Таймеры, когда Кор'кронские разрушители вступят в бой."
 
 	L.towers = "Башня"
-	L.towers_desc = "Предупреждать, когда башни ломаются."
+	L.towers_desc = "Предупреждать, когда разбиваются двери башен."
 	L.south_tower_trigger = "Дверь южной башни разбита!"
 	L.south_tower = "Южная башня"
 	L.north_tower_trigger = "Дверь северной башни разбита!"
@@ -62,27 +62,27 @@ if L then
 	L.tower_defender = "Защитник башни"
 
 	L.custom_off_shaman_marker = "Маркировка Шаманов"
-	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the shamans is the fastest way to mark them.|r"
+	L.custom_off_shaman_marker_desc = "Чтобы помочь с распределением прерываний, на Шаманов прилива из клана Драконьей Пасти будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r\n|cFFADFF2FСОВЕТ: Если вы выбраны для этой задачи, быстро проведите указателем мыши по шаманам, метки сразу же поставятся.|r"
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "ruRU")
 if L then
 	L.custom_off_mine_marks = "Маркировка мин"
-	L.custom_off_mine_marks_desc = "To help soaking assignments, mark the Crawler Mines with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the mines is the fastest way to mark them.|r"
+	L.custom_off_mine_marks_desc = "Чтобы помочь с подрывом, на Ползучие мины будут поставлены метки {rt1}{rt2}{rt3}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r\n|cFFADFF2FСОВЕТ: Если вы выбраны для этой задачи, быстро проведите указателем мыши по минам, метки сразу же поставятся.|r"
 end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "ruRU")
 if L then
 	L.blobs = "Капли"
 
-	L.custom_off_mist_marks = "Toxic Mist marker"
-	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_mist_marks = "Маркировка Токсичного тумана"
+	L.custom_off_mist_marks_desc = "Чтобы помочь лекарям, на людей с Токсичным туманом будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
 end
 
 L = BigWigs:NewBossLocale("General Nazgrim", "ruRU")
 if L then
-	L.custom_off_bonecracker_marks = "Bonecracker marker"
-	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_bonecracker_marks = "Маркировка Костолома"
+	L.custom_off_bonecracker_marks_desc = "Чтобы помочь лекарям, на людей с Костоломом будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
 
 	L.stance_bar = "%s(СЕЙЧАС:%s)"
 	L.battle = "Бой"
@@ -107,7 +107,7 @@ end
 L = BigWigs:NewBossLocale("Malkorok", "ruRU")
 if L then
 	L.custom_off_energy_marks = "Маркировка Блуждающей энергии"
-	L.custom_off_energy_marks_desc = "Чтобы помочь с рассеиванием, люди с Блуждающей энергией будут помечены метками {rt1}{rt2}{rt3}{rt4}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
+	L.custom_off_energy_marks_desc = "Чтобы помочь с рассеиванием, на людей с Блуждающей энергией будут поставлены метки {rt1}{rt2}{rt3}{rt4}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
 end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "ruRU")
