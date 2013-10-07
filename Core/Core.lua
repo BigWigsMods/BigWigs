@@ -317,7 +317,6 @@ local function coreSync(sync, moduleName, sender)
 		if not module then return end
 		enableBossModule(module, true)
 	elseif sync == "Death" then
-		if moduleName == "Paragons of the Klaxxi" and not UnitIsUnit(sender, "player") then return end -- XXX temp till WoW v6.x
 		local mod = addon:GetBossModule(moduleName, true)
 		if mod and mod:IsEnabled() then
 			mod:Message("bosskill", "Positive", "Victory", L.defeated:format(mod.displayName), false)
@@ -360,6 +359,7 @@ do
 					m:Engage()
 				end
 			elseif sync == "EnableModule" or sync == "Death" then
+				if sync == "Death" and rest == "Paragons of the Klaxxi" and not UnitIsUnit(nick, "player") then return end -- XXX temp till WoW v6.x
 				if not times[sync] or t > (times[sync] + 2) then
 					coreSync(sync, rest, nick)
 					times[sync] = t
