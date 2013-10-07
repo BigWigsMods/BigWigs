@@ -25,6 +25,9 @@ if L then
 	L.unseenstrike_soon = "Frappe (%d) dans ~5-10 sec !"
 	L.assault_message = "Assauts"
 	L.side_swap = "Changement de côté"
+
+	--L.custom_off_windstep = "Wind step marker"
+	--L.custom_off_windstep_desc = "To help healing assignments, mark the people who have wind step on them with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader."
 end
 
 L = BigWigs:NewBossLocale("Garalon", "frFR")

@@ -27,7 +27,7 @@ if L then
 	L.side_swap = "Seitenwechsel"
 
 	L.custom_off_windstep = "Windlauf markieren"
-	L.custom_off_windstep_desc = "Um die Heilung zu vereinfachen, werden die vom Windlauf betroffenen Spieler mit %s%s%s%s%s%s markiert. Benötigt Leiter oder Assistent."
+	L.custom_off_windstep_desc = "Um die Heilung zu vereinfachen, werden die vom Windlauf betroffenen Spieler mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6} markiert. Benötigt Leiter oder Assistent."
 end
 
 L = BigWigs:NewBossLocale("Garalon", "deDE")

@@ -18,8 +18,6 @@ mod:RegisterEnableMob(73152, 73720, 71512) -- Storeroom Guard ( trash guy ), Mog
 --
 
 local setToBlow = {}
-local remaining
-local brewmasterMarked
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -31,12 +29,8 @@ if L then
 
 	L.enable_zone = "Artifact Storage"
 	L.matter_scramble_explosion = "Matter Scramble explosion" -- shorten maybe?
-
-	L.custom_off_mark_brewmaster = "Brewmaster marker"
-	L.custom_off_mark_brewmaster_desc = "Mark the Ancient Brewmaster Spirit with %s"
 end
 L = mod:GetLocale()
-L.custom_off_mark_brewmaster_desc = L.custom_off_mark_brewmaster_desc:format("\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t")
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -47,18 +41,16 @@ function mod:GetOptions()
 		145288, {145461, "TANK"}, {142947, "TANK"}, -- Mogu crate
 		{145987, "PROXIMITY", "FLASH"}, 145747, {145692, "TANK"}, 145715, 145786,-- Mantid crate
 		{146217, "FLASH"}, 146222, 146257, -- Crate of Panderan Relics
-		"custom_off_mark_brewmaster",
 		"proximity", "bosskill",
 	}, {
 		[145288] = -8434, -- Mogu crate
 		[145987] = -8439, -- Mantid crate
 		[146217] = -8366, -- Crate of Panderan Relics
-		["custom_off_mark_brewmaster"] = L.custom_off_mark_brewmaster,
 		["proximity"] = "general",
 	}
 end
 
-function mod:OnRegister() -- XXX check out replacing this the chest id
+function mod:OnRegister() -- XXX check out replacing this with the chest id
 	-- Kel'Thuzad v3
 	local f = CreateFrame("Frame")
 	local func = function()
@@ -99,8 +91,6 @@ end
 function mod:OnEngage()
 	wipe(setToBlow)
 	self:OpenProximity("proximity", 3)
-	remaining = nil
-	brewmasterMarked = nil
 	-- Sometimes there's a long delay between the last IEEU and IsEncounterInProgress being false so use this as a backup.
 	self:StopWipeCheck()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "StartWipeCheck")
@@ -124,36 +114,18 @@ do
 	end
 end
 
-do
-	local timer
-	local function markBrewmaster(GUID)
-		local brewmaster = mod:GetUnitIdByGUID(GUID)
-		if brewmaster and brewmasterMarked ~= GUID then
-			brewmasterMarked = GUID
-			mod:CancelTimer(timer)
-			timer = nil
-			SetRaidTarget(brewmaster, 4)
-		end
+function mod:BreathOfFire(args)
+	local debuffed = UnitDebuff("player", self:SpellName(146217)) -- Keg Toss
+	self:Message(args.spellId, "Attention", debuffed and "Long")
+	if debuffed then
+		self:Flash(146217) -- flash again
 	end
-	function mod:BreathOfFire(args)
-		if self.db.profile.custom_off_mark_brewmaster and not timer then
-			timer = self:ScheduleRepeatingTimer(markBrewmaster, 0.1, args.sourceGUID)
-		end
-		local debuffed = UnitDebuff("player", self:SpellName(146217)) -- Keg Toss
-		self:Message(args.spellId, "Attention", debuffed and "Long")
-		if debuffed then
-			self:Flash(146217) -- flash again
-		end
-	end
-	function mod:KegToss(args)
-		if self.db.profile.custom_off_mark_brewmaster and not timer then
-			timer = self:ScheduleRepeatingTimer(markBrewmaster, 0.1, args.sourceGUID)
-		end
-		markBrewmaster(args.sourceGUID)
-		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Personal", "Info")
-			self:Flash(args.spellId)
-		end
+end
+
+function mod:KegToss(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", "Info")
+		self:Flash(args.spellId)
 	end
 end
 

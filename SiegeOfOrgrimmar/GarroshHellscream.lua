@@ -52,7 +52,7 @@ if L then
 
 	L.farseer_trigger = "Farseers, mend our wounds!"
 	L.custom_off_shaman_marker = "Farseer marker"
-	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Farseer Wolf Rider with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} (in that order, not all marks may be used), requires promoted or leader."
+	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Farseer Wolf Rider with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the mines is the fastest way to mark them.|r"
 
 	L.focus_only = "|cffff0000Focus target alerts only.|r "
 end

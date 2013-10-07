@@ -26,18 +26,11 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.blobs = "Blobs"
 
-	L.custom_off_mist_marks = "Toxic Mist"
-	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with %s%s%s%s%s%s (in that order)(not all marks may be used)(tanks are not marked), requires promoted or leader."
+	L.custom_off_mist_marks = "Toxic Mist marker"
+	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_mist_marks_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1"
 end
 L = mod:GetLocale()
-L.custom_off_mist_marks_desc = L.custom_off_mist_marks_desc:format( -- XXX cut down the number of marks used once we know the max amount used in 25H
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_2.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t"
-)
 
 --------------------------------------------------------------------------------
 -- Initialization

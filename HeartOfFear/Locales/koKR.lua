@@ -24,6 +24,9 @@ if L then
 	L.unseenstrike_soon = "보이지 않는 일격 (%d) ~ 5-10초 전!"
 	L.assault_message = "압도적인 공격"
 	L.side_swap = "복도 전환" -- Side Swap
+
+	--L.custom_off_windstep = "Wind step marker"
+	--L.custom_off_windstep_desc = "To help healing assignments, mark the people who have wind step on them with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader."
 end
 
 L = BigWigs:NewBossLocale("Garalon", "koKR")

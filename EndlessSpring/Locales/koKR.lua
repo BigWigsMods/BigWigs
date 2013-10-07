@@ -47,5 +47,8 @@ if L then
 
 	L.strike_or_spout = "집념의 일격이나 혼비백산"  -- Strike or Spout
 	L.huddle_or_spout_or_strike = "혼비백산이나 집념의 일격이나 용오름"  -- Huddle or Spout or Strike
+
+	--L.custom_off_huddle = "Huddle marker"
+	--L.custom_off_huddle_desc = "To help healing assignments, mark the people who have huddle in terror on them with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader."
 end
 

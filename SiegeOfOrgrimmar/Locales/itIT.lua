@@ -61,27 +61,27 @@ if L then
 	L.tower_defender = "DIfensore Torre"
 
 	L.custom_off_shaman_marker = "Marcatore Sciamano"
-	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni, evidenzia lo Sciamano delle Maree delle Fauci di Drago con %s%s%s%s%s%s%s (in questo ordine)(non tutti i simboli possono essere usati), richiede capo incursione o assistente."
+	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with (rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the shamans is the fastest way to mark them.|r"
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "itIT")
 if L then
 	L.custom_off_mine_marks = "Marcatore delle Mine"
-	L.custom_off_mine_marks_desc = "Per aiutare l'assegnazione degli assorbimenti, cerca di evidenziare le Mine Striscianti con %s%s%s%s%s (in questo ordine)(non tutti i simboli possono essere usati), richiede capo incursione o assistente."
+	L.custom_off_mine_marks_desc = "To help soaking assignments, mark the Crawler Mines with (rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the mines is the fastest way to mark them.|r"
 end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "itIT")
 if L then
 	L.blobs = "Melme"
 
-	L.custom_off_mist_marks = "Infestazione"
-	L.custom_off_mist_marks_desc = "Per aiutare l'assegnazione delle cure, evidenzia i giocatori che hanno Infestazione su di loro con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
+	L.custom_off_mist_marks = "Toxic Mist marker"
+	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 end
 
 L = BigWigs:NewBossLocale("General Nazgrim", "itIT")
 if L then
-	L.custom_off_bonecracker_marks = "Colpo Incrinante"
-	L.custom_off_bonecracker_marks_desc = "Per aiutare l'assegnazione delle cure, evidenzia i giocatori che hanno Colpo Incrinante su di loro con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
+	L.custom_off_bonecracker_marks = "Bonecracker marker"
+	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 
 	L.stance_bar = "%s (ADESSO: %s)"
 	L.battle = "Battaglia"
@@ -115,9 +115,6 @@ if L then
 
 	L.enable_zone = "Immagazzinamento Artefatti"
 	L.matter_scramble_explosion = "Esplosione Scambio di Materia" -- shorten maybe?
-
-	L.custom_off_mark_brewmaster = "Marcatore Mastro Birraio"
-	L.custom_off_mark_brewmaster_desc = "Evidenzia il Mastro Birraio Antico con %s"
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "itIT")
@@ -155,7 +152,7 @@ if L then
 	-------------------------------------
 	L.edge_message = "Sei uno dei limiti"
 	L.custom_off_edge_marks = "Marcatori dei Limiti"
-	L.custom_off_edge_marks_desc = "Evidenzia i giocatori che, dopo i calcoli, saranno i limiti di Confine Ardente con %s%s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
+	L.custom_off_edge_marks_desc = "Evidenzia i giocatori che, dopo i calcoli, saranno i limiti di Confine Ardente con %s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
 	L.injection_over_soon = "Fine di Iniezione tra poco (%s)!"
 	L.custom_off_mutate_marks = "Mutazione: Marcatore Scorpione Mantid"
 	L.custom_off_mutate_marks_desc = "Evidenzia il giocatore con Mutazione Scoprione Mantid con %s%s%s per aiutare l'assegnazione delle cure, richiede capo incursione o assistente."

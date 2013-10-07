@@ -62,27 +62,27 @@ if L then
 	L.tower_defender = "Défenseur de la tour"
 
 	L.custom_off_shaman_marker = "Marquages Chaman des marées"
-	L.custom_off_shaman_marker_desc = "Afin d'aider à l'attribution des interruptions, marque les Chamans des marées gueule-de-dragon avec %s%s%s%s%s%s%s (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
+	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with (rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the shamans is the fastest way to mark them.|r"
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "frFR")
 if L then
 	L.custom_off_mine_marks = "Marquage Mine rampante"
-	L.custom_off_mine_marks_desc = "Afin d'aider à l'attribution des soaking, tente de marquer les Mines rampantes avec %s%s%s%s%s (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
+	L.custom_off_mine_marks_desc = "To help soaking assignments, mark the Crawler Mines with (rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the mines is the fastest way to mark them.|r"
 end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "frFR")
 if L then
 	L.blobs = "Gelées"
 
-	L.custom_off_mist_marks = "Marquage Brume toxique"
-	L.custom_off_mist_marks_desc = "Afin d'aider à l'attribution des soins, marque les joueurs ayant Brume toxique avec %s%s%s%s%s%s (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées)(les tanks ne sont pas marqués). Nécessite d'être assistant ou chef de raid."
+	L.custom_off_mist_marks = "Toxic Mist marker"
+	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 end
 
 L = BigWigs:NewBossLocale("General Nazgrim", "frFR")
 if L then
-	L.custom_off_bonecracker_marks = "Marquage Brise-os"
-	L.custom_off_bonecracker_marks_desc = "Afin d'aider à l'attribution des soins, marque les joueurs ayant Brise-os avec (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
+	L.custom_off_bonecracker_marks = "Bonecracker marker"
+	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 
 	L.stance_bar = "%s(ACTUELLE : %s)"
 	-- shorten stances so they fit on the bars
@@ -117,9 +117,6 @@ if L then
 
 	L.enable_zone = "Entrepôt de l’Artéfact"
 	L.matter_scramble_explosion = "Explosion Brouillage de la matière" -- shorten maybe?
-
-	L.custom_off_mark_brewmaster = "Marquage Maître brasseur"
-	L.custom_off_mark_brewmaster_desc = "Marque l'Esprit d'ancien maître brasseur avec %s."
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "frFR")

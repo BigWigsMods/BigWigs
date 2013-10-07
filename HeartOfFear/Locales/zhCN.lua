@@ -27,7 +27,7 @@ if L then
 	L.side_swap = "换边"
 
 	L.custom_off_windstep = "疾风步标记"
-	L.custom_off_windstep_desc = "帮助治疗分配，使用%s%s%s%s%s%s标记玩家受到疾风步，需要权限。"
+	L.custom_off_windstep_desc = "帮助治疗分配，使用{rt1}{rt2}{rt3}{rt4}{rt5}{rt6}标记玩家受到疾风步，需要权限。"
 end
 
 L = BigWigs:NewBossLocale("Garalon", "zhCN")

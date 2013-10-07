@@ -29,16 +29,10 @@ local mineCounter = 1
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.custom_off_mine_marks = "Mine marker"
-	L.custom_off_mine_marks_desc = "To help soaking assignments, try and mark the Crawler Mines with %s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+	L.custom_off_mine_marks_desc = "To help soaking assignments, mark the Crawler Mines with (rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the mines is the fastest way to mark them.|r"
+	L.custom_off_mine_marks_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1"
 end
 L = mod:GetLocale()
-L.custom_off_mine_marks_desc = L.custom_off_mine_marks_desc:format(
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_2.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t"
-)
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -96,7 +90,7 @@ end
 
 do
 	local function setMark(unit, guid)
-		for mark = 1, 5 do
+		for mark = 1, 3 do
 			if not marksUsed[mark] then
 				SetRaidTarget(unit, mark)
 				markableMobs[guid] = "marked"
@@ -126,11 +120,13 @@ do
 
 	function mod:UPDATE_MOUSEOVER_UNIT()
 		local guid = UnitGUID("mouseover")
-		if guid and markableMobs[guid] == true then
-			setMark("mouseover", guid)
-		elseif guid and self:MobId(guid) == 72050 and not markableMobs[guid] then
-			markableMobs[guid] = true
-			setMark("mouseover", guid)
+		if guid then
+			if markableMobs[guid] == true then
+				setMark("mouseover", guid)
+			elseif not markableMobs[guid] and self:MobId(guid) == 72050 then
+				markableMobs[guid] = true
+				setMark("mouseover", guid)
+			end
 		end
 	end
 

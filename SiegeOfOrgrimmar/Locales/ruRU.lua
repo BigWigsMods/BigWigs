@@ -62,27 +62,27 @@ if L then
 	L.tower_defender = "Защитник башни"
 
 	L.custom_off_shaman_marker = "Маркировка Шаманов"
-	L.custom_off_shaman_marker_desc = "Чтобы помочь с прерыванием, Шаманы приливов будут помечены метками %s%s%s%s%s%s%s (в этой последовательности)(не все метки могут быть использованы), требуется быть помощником или лидером."
+	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with (rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the shamans is the fastest way to mark them.|r"
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "ruRU")
 if L then
 	L.custom_off_mine_marks = "Маркировка мин"
-	L.custom_off_mine_marks_desc = "Чтобы помочь с распределением, Ползучие мины будут помечены метками %s%s%s%s%s (в этой последовательности)(не все метки могут быть использованы), требуется быть помощником или лидером."
+	L.custom_off_mine_marks_desc = "To help soaking assignments, mark the Crawler Mines with (rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the mines is the fastest way to mark them.|r"
 end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "ruRU")
 if L then
 	L.blobs = "Капли"
 
-	L.custom_off_mist_marks = "Токсичный туман"
-	L.custom_off_mist_marks_desc = "Чтобы помочь лекарям, люди с Токсичным туманом будут помечены метками %s%s%s%s%s%s (в этой последовательности)(не все метки могут быть использованы), требуется быть помощником или лидером."
+	L.custom_off_mist_marks = "Toxic Mist marker"
+	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 end
 
 L = BigWigs:NewBossLocale("General Nazgrim", "ruRU")
 if L then
-	L.custom_off_bonecracker_marks = "Костолом"
-	L.custom_off_bonecracker_marks_desc = "Чтобы помочь лекарям, люди с Костоломом будут помечены метками %s%s%s%s%s%s (в этой последовательности)(не все метки могут быть использованы), требуется быть помощником или лидером."
+	L.custom_off_bonecracker_marks = "Bonecracker marker"
+	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 
 	L.stance_bar = "%s(СЕЙЧАС:%s)"
 	L.battle = "Бой"
@@ -116,9 +116,6 @@ if L then
 
 	L.enable_zone = "Хранилище артефактов"
 	L.matter_scramble_explosion = "Взрыв материи"
-
-	L.custom_off_mark_brewmaster = "Маркировка Хмелевара"
-	L.custom_off_mark_brewmaster_desc = "Дух древнего хмелевара будет помечен меткой %s"
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "ruRU")

@@ -49,18 +49,10 @@ if L then
 	L.drakes_icon = "ability_mount_drake_proto"
 
 	L.custom_off_shaman_marker = "Shaman marker"
-	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with %s%s%s%s%s%s%s (in that order)(not all marks may be used), requires promoted or leader."
+	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with (rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the shamans is the fastest way to mark them.|r"
+	L.custom_off_shaman_marker_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1"
 end
 L = mod:GetLocale()
-L.custom_off_shaman_marker_desc = L.custom_off_shaman_marker_desc:format(
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_2.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_7.blp:15\124t"
-)
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -252,22 +244,10 @@ function mod:Fracture(args)
 	self:TargetMessage(146899, args.destName, "Urgent", "Info", nil, nil, true)
 end
 
-function mod:Deaths(args)
-	if args.mobId == 72367 and self.db.profile.custom_off_shaman_marker then
-		for i = 1, 7 do
-			if not marksUsed[i] then
-				marksUsed[i] = nil
-				markableMobs[args.destGUID] = nil
-				return
-			end
-		end
-	end
-end
-
 -- marking
 do
 	local function setMark(unit, guid)
-		for mark = 1, 7 do
+		for mark = 1, 5 do
 			if not marksUsed[mark] then
 				SetRaidTarget(unit, mark)
 				markableMobs[guid] = "marked"
@@ -307,6 +287,18 @@ do
 			markableMobs[args.sourceGUID] = true
 			if self.db.profile.custom_off_shaman_marker and not markTimer then
 				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.2)
+			end
+		end
+	end
+
+	function mod:Deaths(args)
+		if args.mobId == 72367 and self.db.profile.custom_off_shaman_marker then
+			markableMobs[args.destGUID] = nil
+			for i=1, 5 do
+				if marksUsed[i] == args.destGUID then
+					marksUsed[i] = nil
+					break
+				end
 			end
 		end
 	end

@@ -28,17 +28,9 @@ if L then
 	L.side_swap = "Side Swap"
 
 	L.custom_off_windstep = "Wind step marker"
-	L.custom_off_windstep_desc = "To help healing assignments, mark the people who have wind step on them with %s%s%s%s%s%s, requires promoted or leader."
+	L.custom_off_windstep_desc = "To help healing assignments, mark the people who have wind step on them with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader."
 end
 L = mod:GetLocale()
-L.custom_off_windstep_desc = L.custom_off_windstep_desc:format(
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_2.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_5.blp:15\124t",
-	"\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.blp:15\124t"
-)
 
 --------------------------------------------------------------------------------
 -- Initialization

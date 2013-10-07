@@ -23,7 +23,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.custom_off_titan_mark = "Gift of the Titans marker"
 	L.custom_off_titan_mark_desc = "Mark people that have Gift of the Titans with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
-	L.custom_off_titan_mark_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8"
+	L.custom_off_titan_mark_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1"
 
 	L.projection_message = "Go to |cFF00FF00GREEN|r arrow!"
 	L.projection_explosion = "Projection explosion"

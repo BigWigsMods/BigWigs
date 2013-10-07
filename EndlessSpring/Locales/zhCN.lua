@@ -49,6 +49,6 @@ if L then
 	L.huddle_or_spout_or_strike = "因畏惧而蜷缩或龙卷水涌或宿怨打击"
 
 	L.custom_off_huddle = "因畏惧而蜷缩标记"
-	L.custom_off_huddle_desc = "帮助治疗分配，使用%s%s%s%s%s%s标记玩家受到因畏惧而蜷缩，需要权限。"
+	L.custom_off_huddle_desc = "帮助治疗分配，使用{rt1}{rt2}{rt3}{rt4}{rt5}{rt6}标记玩家受到因畏惧而蜷缩，需要权限。"
 end
 
