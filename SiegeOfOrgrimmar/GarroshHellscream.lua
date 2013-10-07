@@ -100,7 +100,7 @@ function mod:OnBossEnable()
 	self:Emote("SiegeEngineer", "144616")
 	self:Log("SPELL_CAST_SUCCESS", "DesecratedWeapon", 144748, 144749)
 
-	self:Death("Deaths", 71983) -- Farseer Wolf Rider
+	self:Death("RiderDeath", 71983) -- Farseer Wolf Rider
 	self:Death("Win", 71865) -- Garrosh
 end
 
@@ -210,7 +210,7 @@ do
 		end
 	end
 
-	function mod:Deaths(args)
+	function mod:RiderDeath(args)
 		if self.db.profile.custom_off_shaman_marker then
 			markableMobs[args.destGUID] = nil
 			for i=1, 7 do

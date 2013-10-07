@@ -104,7 +104,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FlamesOfGalakrondRemoved", 147068)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "LastPhase", "boss1")
 
-	self:Death("Deaths", 72367) -- Dragonmaw Tidal Shaman
+	self:Death("ShamanDeath", 72367) -- Dragonmaw Tidal Shaman
 	self:Death("Win", 72249) -- Galakras
 end
 
@@ -291,8 +291,8 @@ do
 		end
 	end
 
-	function mod:Deaths(args)
-		if args.mobId == 72367 and self.db.profile.custom_off_shaman_marker then
+	function mod:ShamanDeath(args)
+		if self.db.profile.custom_off_shaman_marker then
 			markableMobs[args.destGUID] = nil
 			for i=1, 5 do
 				if marksUsed[i] == args.destGUID then
