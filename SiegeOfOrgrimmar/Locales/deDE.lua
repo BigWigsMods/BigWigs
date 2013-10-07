@@ -24,11 +24,11 @@ end
 L = BigWigs:NewBossLocale("Norushen", "deDE")
 if L then
 	L.pre_pull = "Boss aktiv"
-	L.pre_pull_desc = "Leiste für das Event, bevor der Boss aktiv wird"
+	L.pre_pull_desc = "Leiste für das Event, bevor der Boss aktiv wird."
 	L.pre_pull_trigger = "Nun gut, ich werde ein Feld erschaffen, das Eure Verderbnis eindämmt."
 
 	L.big_adds = "Große Adds"
-	L.big_adds_desc = "Warnungen für das Besiegen der großen Adds (Drinnen/Draußen)"
+	L.big_adds_desc = "Warnungen für das Besiegen der großen Adds (Drinnen/Draußen)."
 	L.big_add = "Großes Add (%d)"
 	L.big_add_killed = "Großes Add getötet! (%d)"
 end
@@ -62,27 +62,27 @@ if L then
 	L.tower_defender = "Turmverteidiger"
 
 	L.custom_off_shaman_marker = "Schamanen markieren"
-	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the shamans is the fastest way to mark them.|r"
+	L.custom_off_shaman_marker_desc = "Um bei der Einteilung zum Unterbrechen zu helfen, werden die Gezeitenschamanen des Drachenmals mit {rt1}{rt2}{rt3}{rt4}{rt5} markiert, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r\n|cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über die Schamanen.|r"
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "deDE")
 if L then
 	L.custom_off_mine_marks = "Minen markieren"
-	L.custom_off_mine_marks_desc = "To help soaking assignments, mark the Crawler Mines with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the mines is the fastest way to mark them.|r"
+	L.custom_off_mine_marks_desc = "Um bei der Einteilung zum Einstampfen zu helfen, werden die Kriecherminen mit {rt1}{rt2}{rt3} markiert, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r\n|cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über die Minen.|r"
 end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "deDE")
 if L then
 	L.blobs = "Schleim"
 
-	L.custom_off_mist_marks = "Toxic Mist marker"
-	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_mist_marks = "Toxischer Nebel markieren"
+	L.custom_off_mist_marks_desc = "Um bei der Einteilung zum Heilen zu helfen, werden Spieler mit Toxischem Nebel mit {rt1}{rt2}{rt3}{rt4}{rt5} markiert, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
 end
 
 L = BigWigs:NewBossLocale("General Nazgrim", "deDE")
 if L then
-	L.custom_off_bonecracker_marks = "Bonecracker marker"
-	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_bonecracker_marks = "Knochenknacker markieren"
+	L.custom_off_bonecracker_marks_desc = "Um bei der Einteilung zum Heilen zu helfen, werden die von Knochenknacker betroffenen Spieler mit {rt1}{rt2}{rt3}{rt4}{rt5} markiert, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
 
 	L.stance_bar = "%s(JETZT:%s)"
 	L.battle = "Kampf"
@@ -124,7 +124,7 @@ if L then
 	L.adds_desc = "Warnungen für den Kampfeintritt der heroischen Adds."
 
 	L.tank_debuffs = "Tank Schwächungszauber"
-	L.tank_debuffs_desc = "Warnungen für die verschiedenen Typen von Schwächungszaubern auf den Tanks in Verbindung mit Fürchterlichem Brüllen"
+	L.tank_debuffs_desc = "Warnungen für die verschiedenen Typen von Schwächungszaubern auf den Tanks in Verbindung mit Fürchterlichem Brüllen."
 
 	L.cage_opened = "Käfig geöffnet"
 end
