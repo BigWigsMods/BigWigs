@@ -28,7 +28,7 @@ if L then
 	L.pre_pull_trigger = "Très bien, je vais créer un champ de force qui contiendra votre corruption."
 
 	L.big_adds = "Manifestations de la corruption"
-	L.big_adds_desc = "Warning for killing big adds inside/outside"
+	L.big_adds_desc = "Alertes quand des Manifestations de la corruptions sont tuées à l'intérieur/à l'extérieur."
 	L.big_add = "Manifestation de la corruption (%d)"
 	L.big_add_killed = "Manifestation de la corruption tuée ! (%d)"
 end
@@ -61,28 +61,28 @@ if L then
 	L.north_tower = "Tour nord"
 	L.tower_defender = "Défenseur de la tour"
 
-	L.custom_off_shaman_marker = "Marquages Chaman des marées"
-	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the shamans is the fastest way to mark them.|r"
+	L.custom_off_shaman_marker = "Marquage Chaman des marées"
+	L.custom_off_shaman_marker_desc = "Afin d'aider à l'attribution des interruptions, marque les Chamans des marées gueule-de-dragon avec {rt1}{rt2}{rt3}{rt4}{rt5}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2ASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement tous les chamans est le moyen le plus rapide de les marquer.|r"
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "frFR")
 if L then
 	L.custom_off_mine_marks = "Marquage Mine rampante"
-	L.custom_off_mine_marks_desc = "To help soaking assignments, mark the Crawler Mines with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the mines is the fastest way to mark them.|r"
+	L.custom_off_mine_marks_desc = "Afin d'aider à l'attribution des soaking, marque les Mines rampantes avec {rt1}{rt2}{rt3}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement toutes les mines est le moyen le plus rapide de les marquer.|r"
 end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "frFR")
 if L then
 	L.blobs = "Gelées"
 
-	L.custom_off_mist_marks = "Toxic Mist marker"
-	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_mist_marks = "Marquage Brume toxique"
+	L.custom_off_mist_marks_desc = "Afin d'aider à l'attribution des soins, marque les joueurs subissant Brume toxique avec {rt1}{rt2}{rt3}{rt4}{rt5}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 end
 
 L = BigWigs:NewBossLocale("General Nazgrim", "frFR")
 if L then
-	L.custom_off_bonecracker_marks = "Bonecracker marker"
-	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_bonecracker_marks = "Marquage Brise-os"
+	L.custom_off_bonecracker_marks_desc = "Afin d'aider à l'attribution des soins, marque les joueurs subissant Brise-os avec {rt1}{rt2}{rt3}{rt4}{rt5}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 
 	L.stance_bar = "%s(ACTUELLE : %s)"
 	-- shorten stances so they fit on the bars
@@ -108,7 +108,7 @@ end
 L = BigWigs:NewBossLocale("Malkorok", "frFR")
 if L then
 	L.custom_off_energy_marks = "Marquage Énergie déplacée"
-	L.custom_off_energy_marks_desc = "To help dispelling assignments, mark the people who have Displaced Energy on them with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_energy_marks_desc = "Afin d'aider à l'attribution des dissipations, marque les joueurs subissant Énergie déplacée avec {rt1}{rt2}{rt3}{rt4}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "frFR")
