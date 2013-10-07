@@ -133,7 +133,7 @@ L.thin = "Thin"
 L.thick = "Thick"
 L.outline = "Outline"
 L.monochrome = "Monochrome"
-L.monochromeDesc = "Toggles the monochrome flag on all messages, removing any smoothing of the font edges."
+L.monochromeDesc = "Toggles the monochrome flag, removing any smoothing of the font edges."
 L.fontColor = "Font color"
 
 L.displayTime = "Display time"

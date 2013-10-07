@@ -308,6 +308,7 @@ plugin.defaultDB = {
 	fontSize = 10,
 	texture = "BantoBar",
 	font = nil,
+	monochrome = nil,
 	outline = "NONE",
 	growup = true,
 	time = true,
@@ -519,7 +520,13 @@ do
 						max = 40,
 						min = 6,
 						step = 1,
-						width = "full",
+						--width = "full",
+					},
+					monochrome = {
+						type = "toggle",
+						name = L.monochrome,
+						desc = L.monochromeDesc,
+						order = 3.5,
 					},
 					texture = {
 						type = "select",
@@ -1181,9 +1188,19 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	bar.candyBarLabel:SetShadowColor(colors:GetColor("barTextShadow", module, key))
 	bar.candyBarDuration:SetShadowColor(colors:GetColor("barTextShadow", module, key))
 	bar.candyBarLabel:SetJustifyH(db.align)
+
+	local flags = nil
+	if db.monochrome and db.outline ~= "NONE" then
+		flags = "MONOCHROME," .. db.outline
+	elseif db.monochrome then
+		flags = nil -- "MONOCHROME", XXX monochrome only is disabled for now as it causes a client crash
+	elseif db.outline ~= "NONE" then
+		flags = db.outline
+	end
 	local f = media:Fetch("font", db.font)
-	bar.candyBarLabel:SetFont(f, db.fontSize, db.outline ~= "NONE" and db.outline)
-	bar.candyBarDuration:SetFont(f, db.fontSize, db.outline ~= "NONE" and db.outline)
+	bar.candyBarLabel:SetFont(f, db.fontSize, flags)
+	bar.candyBarDuration:SetFont(f, db.fontSize, flags)
+
 	bar:SetLabel(text)
 	bar:SetDuration(time, isApprox)
 	bar:SetTimeVisibility(db.time)
