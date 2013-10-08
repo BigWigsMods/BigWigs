@@ -222,44 +222,25 @@ end
 do
 	-- rather do this than syncing
 	local timer = nil
-	local function warnSawblade(target, guid)
-		local player = mod:UnitName(target)
-		mod:PrimaryIcon(-8195, target)
-		if mod:Range(target) < 8 then -- 8 is guessed
-			mod:RangeMessage(-8195)
-			mod:Flash(-8195)
-		elseif not mod:Me(guid) then -- we warn for ourself from the BOSS_WHISPER
-			mod:TargetMessage(-8195, player, "Positive", "Info")
-		end
-	end
-	local function checkSawblade()
-		local boss = getBossByMobId(71504)
-		local target
-		if boss and UnitExists(boss.."target") then
-			target = boss.."target"
-		end
-		if target and (not UnitDetailedThreatSituation(target, boss) and not mod:Tank(target)) then
-			sawbladeTarget = UnitGUID(target)
-			warnSawblade(target, sawbladeTarget)
-			mod:CancelTimer(timer)
-			timer = nil
+	local function warnSawblade(self, target, guid)
+		sawbladeTarget = guid
+		self:PrimaryIcon(-8195, target)
+		if self:Range(target) < 8 then -- 8 is guessed
+			self:RangeMessage(-8195)
+			self:Flash(-8195)
+		elseif not self:Me(guid) then -- we warn for ourself from the BOSS_WHISPER
+			self:TargetMessage(-8195, target, "Positive", "Info")
 		end
 	end
 	function mod:Sawblade(args)
 		self:CDBar(-8195, 11)
 		sawbladeTarget = nil
-		if not timer then
-			timer = self:ScheduleRepeatingTimer(checkSawblade, 0.05)
-		end
+		self:GetBossTarget(warnSawblade, 0.4, args.sourceGUID)
 	end
 	function mod:SawbladeFallback(args)
-		if timer then
-			self:CancelTimer(timer)
-			timer = nil
-		end
 		 -- don't do anything if we warned for the target already
 		if args.destGUID ~= sawbladeTarget then
-			warnSawblade(args.destName, args.destGUID)
+			warnSawblade(self, args.destName, args.destGUID)
 		end
 	end
 end
