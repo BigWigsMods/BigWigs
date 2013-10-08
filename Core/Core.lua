@@ -216,6 +216,7 @@ do
 		[930.7] = true, -- Ra-Den room opening
 		[953.2] = true, -- After Immerseus, entry to Fallen Protectors
 		[953.9] = true, -- Blackfuse room opening
+		[953.12] = true, -- Heroic Garrosh Phase 4
 	}
 
 	function addon:CINEMATIC_START()

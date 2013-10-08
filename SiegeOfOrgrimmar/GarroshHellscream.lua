@@ -1,6 +1,7 @@
 --[[
 TODO:
-	maybe mark hopeless people, need some healer feedback on it
+	p3 desecrate timer is way off
+	desecrate scanning should be disabled during whirling
 ]]--
 
 --------------------------------------------------------------------------------
@@ -34,14 +35,28 @@ local function getBossByMobId(mobId)
 	end
 	return
 end
-local waveTimers = { 45, 45, 40 } -- XXX there are no events for this so really what we need is videos
+local waveTimers = { 45, 45, 40 }
 local waveTimer, waveCounter = nil, 1
+local whirlingCounter = 1
+local malicious = {}
+local weaponTimer = nil
+local maliciousSpreader
+local clumpCheckAllowed
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.clump_check = "Clump check"
+	L.clump_check_desc = "Check every 3 seconds during bombardment for clumped up players, if a clump is found a Kor'kron Iron Star will spawn."
+	L.clump_check_icon = 147126
+
+	L.bombardment = "Bombardment"
+	L.bombardment_desc = "Bombarding Stormwind and leaving fires on the ground. Kor'kron Iron Star can only spawn during bombardment."
+	L.bombardment_icon = 147120
+
+	L.spread = "Spread!"
 	L.intermission = "Intermission"
 	L.mind_control = "Mind Control"
 
@@ -54,6 +69,9 @@ if L then
 	L.custom_off_shaman_marker = "Farseer marker"
 	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Farseer Wolf Rider with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the mines is the fastest way to mark them.|r"
 
+	L.custom_off_minion_marker = "Minion marker"
+	L.custom_off_minion_marker_desc = "To help separating minions, mark them with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}"
+
 	L.focus_only = "|cffff0000Focus target alerts only.|r "
 end
 L = mod:GetLocale()
@@ -64,17 +82,21 @@ L.chain_heal_desc = L.focus_only..L.chain_heal_desc
 --
 
 function mod:GetOptions()
+	-- XXX Funkeh clean "FLASH" up as you see fit
 	return {
-		-8298, -8292,-- phase 1
+		{147209, "FLASH", "ICON", "PROXIMITY"}, "bombardment", {147665, "FLASH", "ICON"}, {"clump_check", "FLASH", "PROXIMITY"}, -- phase 4 .. fix descriptions
+		-8298, -8292, 144821,-- phase 1
 		-8294, "chain_heal", "custom_off_shaman_marker", -- Farseer
 		-8305, 144945, 144969, -- Intermissions
-		145065, 144985, {145183, "TANK"}, -- phase 2
+		"custom_off_minion_marker",
+		145065, {144985, "FLASH"}, {145183, "TANK"}, -- phase 2
 		{144758, "SAY", "FLASH", "ICON"},
 		"stages", "berserk", "bosskill",
 	}, {
+		[147209] = CL["phase"]:format(4),
 		[-8298] = -8288, -- phase 1
 		[-8294] = -8294, -- Farseer
-		[-8305] = -8305, -- Intermissions
+		[-8305] = -8305, "custom_off_minion_marker", -- Intermissions
 		[145065] = -8307, -- phase 2
 		[144758] = "general",
 	}
@@ -84,15 +106,26 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
 
+	-- Phase 4
+	self:Emote("IronStar", "147047")
+	self:Log("SPELL_AURA_APPLIED", "IronStarFixateApplied", 147665)
+	self:Log("SPELL_AURA_REMOVED", "IronStarFixateRemoved", 147665)
+	self:Log("SPELL_AURA_APPLIED", "MaliciousBlastApplied", 147235)
+	self:Log("SPELL_AURA_REMOVED", "MaliciousBlastRemoved", 147235)
+	self:Log("SPELL_AURA_APPLIED", "MaliceApplied", 147209)
+	self:Log("SPELL_AURA_REMOVED", "MaliceRemoved", 147209)
+	self:Log("SPELL_CAST_START", "Bombardment", 147120)
 	-- Phase 2
 	self:Log("SPELL_CAST_SUCCESS", "MindControl", 145065, 145171)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GrippingDespair", 145183)
 	self:Log("SPELL_AURA_APPLIED", "GrippingDespair", 145183)
 	self:Log("SPELL_CAST_START", "WhirlingCorruption", 144985, 145037)
+	self:Log("SPELL_SUMMON", "SummonEmpowredAdd", 145033)
 	-- Intermissions
 	self:Log("SPELL_CAST_START", "Annihilate", 144969)
 	self:Log("SPELL_AURA_REMOVED", "YShaarjsProtection", 144945)
 	-- Phase 1
+	self:Log("SPELL_CAST_START", "Warsong", 144821)
 	self:Log("SPELL_AURA_APPLIED", "AddMarkedMob", 144585) -- Ancestral Fury
 	self:Log("SPELL_CAST_START", "AddMarkedMob", 144584) -- Chain Lightning
 	self:Log("SPELL_CAST_START", "ChainHeal", 144583)
@@ -111,8 +144,11 @@ function mod:OnEngage(diff)
 	self:Berserk(900, nil, nil, "Berserk (assumed)") -- XXX assumed (more than 10 min)
 	annihilateCounter = 1
 	self:Bar(144758, 11) -- Desecrated Weapon
+	self:ScheduleTimer("StartWeaponScan", 5)
 	self:Bar(-8298, 20, nil, 144616) -- Siege Engineer
 	self:Bar(-8294, 30, nil, 144584) -- Farseer
+	self:Bar(144821, 22) -- Warsong
+	whirlingCounter = 1
 	farseerCounter = 1
 	engineerCounter = 1
 	desecrateCD = 41
@@ -130,6 +166,91 @@ end
 -- Event Handlers
 --
 
+-- phase 4
+function mod:IronStar()
+	self:Message("clump_check", "Important", "Long", L["spread"], 147126)
+	self:Flash("clump_check")
+	self:OpenProximity("clump_check", 10) -- XXX assumed distance
+	self:ScheduleTimer("CloseProximity", 10, "clump_check") -- XXX need to verify if this is a good timer or need fix
+end
+
+local function findNameInTable(name, t)
+	for i=1, #t do
+		if t[i] == name then
+			return i
+		end
+	end
+	return false
+end
+
+function mod:MaliciousBlastApplied(args)
+	if not findNameInTable(args.destName, malicious) then
+		malicious[#malicious+1] = args.destName
+	end
+	if UnitDebuff("player", self:SpellName(147209)) then -- malice -- XXX maybe should update this with a timer so it is not so many calls (5)
+		self:OpenProximity(147209, 8, malicious)
+	end
+	if self:Me(args.destGUID) then
+		self:OpenProximity(147209, 8, maliciousSpreader)
+	end
+end
+
+function mod:MaliciousBlastRemoved(args)
+	local index = findNameInTable(args.destName, malicious)
+	if index then
+		table.remove(malicious, index)
+	end
+	if UnitDebuff("player", self:SpellName(147209)) and #malicious > 0 then -- malice
+		self:OpenProximity(147209, 8, malicious)
+	end
+	if self:Me(args.destGUID) then
+		self:CloseProximity(147209)
+	end
+end
+
+function mod:MaliceRemoved(args)
+	self:SecondaryIcon(args.spellId)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
+	end
+end
+
+function mod:MaliceApplied(args)
+	-- maybe we could do this earlier, by a timer for the bombardment duration? This is the safest tho
+	clumpCheckAllowed = false
+	self:CloseProximity("clump_check")
+	--
+	self:SecondaryIcon(args.spellId, args.destName)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	self:Bar(args.spellId, 30)
+	maliciousSpreader = args.destName
+	if self:Me(args.destGUID) then
+		self:Bar(args.spellId, 14, CL["you"]:format(args.spellName))
+		self:Flash(args.spellId)
+		self:OpenProximity(args.spellId, 8, malicious)
+	end
+end
+
+function mod:IronStarFixateRemoved(args)
+	self:PrimaryIcon(args.spellId)
+end
+
+function mod:IronStarFixateApplied(args)
+	self:PrimaryIcon(args.spellId, args.destName)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+	if self:Me(args.destGUID) then
+		self:Flash(args.spellId)
+	end
+end
+
+function mod:Bombardment(args)
+	self:Message("bombardment", "Attention", nil, L["bombardment"], args.spellId)
+	self:Bar("bombardment", 55, L["bombardment"], args.spellId)
+	self:Bar("bombardment", 13, CL["casting"]:format(args.spellName))
+	clumpCheckAllowed = true
+	self:Bar("clump_check", 3, L["clump_check"], 147126) -- Clump Check
+end
+
 -- phase 2
 function mod:GrippingDespair(args)
 	local amount = args.amount or 1
@@ -138,11 +259,6 @@ function mod:GrippingDespair(args)
 		sound = "Warning"
 	end
 	self:StackMessage(args.spellId, args.destName, amount, "Attention", sound)
-end
-
-function mod:WhirlingCorruption(args)
-	self:Message(144985, "Important", "Long", args.spellName)
-	self:Bar(144985, 50, args.spellName)
 end
 
 function mod:MindControl(args)
@@ -156,6 +272,11 @@ function mod:MindControl(args)
 end
 
 -- Phase 1
+function mod:Warsong(args)
+	self:Message(args.spellId, "Attention")
+	self:Bar(args.spellId, 42)
+end
+
 function mod:NewWave()
 	self:Message(-8292, "Attention", CL["count"]:format(self:SpellName(-8292), waveCounter), nil, 144582) -- XXX the count message is only in for debugging
 	waveCounter = waveCounter + 1
@@ -209,7 +330,35 @@ do
 			end
 		end
 	end
-
+	function mod:SummonEmpowredAdd(args)
+		if not markableMobs[args.destGUID] then
+			markableMobs[args.destGUID] = true
+			if self.db.profile.custom_off_minion_marker and not markTimer then
+				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.1)
+			end
+		end
+	end
+	function mod:WhirlingCorruption(args)
+		self:Flash(144985)
+		self:Message(144985, "Important", "Long", CL["count"]:format(args.spellName, whirlingCounter))
+		whirlingCounter = whirlingCounter + 1
+		self:Bar(144985, 50, CL["count"]:format(args.spellName, whirlingCounter))
+		if weaponTimer then
+			-- XXX this is still not good enough, maybe this should be done in a repeating timer to catch those timers that are started during a cast
+			self:CancelTimer(weaponTimer)
+			weaponTimer = nil
+			self:ScheduleTimer("StartWeaponScan", 6)
+		end
+		if args.spellId == 145037 and self.db.profile.custom_off_minion_marker then
+			markableMobs = {}
+			marksUsed = {}
+			markTimer = nil
+			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+			if not markTimer then
+				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.1)
+			end
+		end
+	end
 	function mod:RiderDeath(args)
 		if self.db.profile.custom_off_shaman_marker then
 			markableMobs[args.destGUID] = nil
@@ -247,7 +396,8 @@ end
 
 function mod:SiegeEngineer()
 	self:Message(-8298, "Attention", nil, nil, 144616)
-	self:Bar(-8298, engineerCounter == 1 and 45 or 40, 144616)
+	self:Bar(-8298, engineerCounter == 1 and 45 or 40, nil, 144616)
+	self:Bar(-8298, 22, 144616, 144616)
 	engineerCounter = engineerCounter + 1
 end
 
@@ -259,16 +409,14 @@ end
 
 do
 	local hopeList = mod:NewTargetList()
-	function mod:YShaarjsProtection(args)
-		if self:MobId(args.destGUID) ~= 71865 then return end
-		annihilateCounter = 1
-		local diff = self:Difficulty()
+	local function announceHopeless()
+		local diff = mod:Difficulty()
 		for i=1, GetNumGroupMembers() do
 			local name, _, subgroup = GetRaidRosterInfo(i)
 			-- 149004 hope
 			-- 148983 courage
 			-- 148994 faith
-			local debuffed = (UnitDebuff(name, self:SpellName(149004))) or (UnitDebuff(name, self:SpellName(148983))) or (UnitDebuff(name, self:SpellName(148994)))
+			local debuffed = (UnitDebuff(name, mod:SpellName(149004))) or (UnitDebuff(name, mod:SpellName(148983))) or (UnitDebuff(name, mod:SpellName(148994)))
 			if not debuffed then
 				if diff == 3 or diff == 5 then -- 10 man
 					if subgroup < 3 then
@@ -283,8 +431,14 @@ do
 		end
 		-- this is so people know they'll take extra damage
 		if #hopeList > 0 then
-			self:TargetMessage(args.spellId, hopeList, "Attention", "Warning", 29125, 149004) -- maybe add it's own option key? 29125 spell called "Hopeless"
+			mod:TargetMessage(144945, hopeList, "Attention", "Warning", CL["count"]:format(mod:SpellName(29125), #hopeList), 149004) -- maybe add it's own option key? 29125 spell called "Hopeless"
 		end
+	end
+	function mod:YShaarjsProtection(args)
+		if self:MobId(args.destGUID) ~= 71865 then return end
+		whirlingCounter = 1
+		annihilateCounter = 1
+		self:ScheduleTimer(announceHopeless, 5)
 		self:Message(args.spellId, "Positive", "Long", CL["over"]:format(args.spellName))
 	end
 end
@@ -299,6 +453,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 			self:StopBar(-8298) -- Siege Engineer
 			self:StopBar(-8294) -- Farseer
 			self:StopBar(144758) -- Desecrated Weapon
+			self:StopBar(144821) -- Warsong
 			self:StopWeaponScan()
 		end
 	elseif spellId == 144866 then -- Enter Realm of Y'Shaarj -- actually being pulled
@@ -308,13 +463,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		self:StopBar(144985) -- Whirling Corruption
 		self:Message(-8305, "Neutral", nil, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 		self:Bar(-8305, 210, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
+		self:Bar(-8305, 62, CL["over"]:format(L["intermission"]), "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 	elseif spellId == 144956 then -- Jump To Ground -- exiting intermission
 		if phase == 2 then
 			desecrateCounter = 1
 			self:Bar(144758, 10) -- Desecrated Weapon
 			self:Bar(145065, 15, L["mind_control"]) -- Mind Control
-			self:Bar(144985, 30) -- Whirling Corruption
-			self:StartWeaponScan(5)
+			self:Bar(144985, 30, CL["count"]:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
+			self:ScheduleTimer("StartWeaponScan", 5)
 			local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
 			if hp < 50 then -- XXX might need adjusting
 				self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3") -- don't really need this till 2nd intermission phase
@@ -329,9 +485,22 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		self:Message("stages", "Neutral", nil, CL["phase"]:format(phase), false)
 		self:StopBar(L["intermission"])
 		self:StopBar(144985) -- stop Whirling Corruption bar in case it was not empowered already
-		self:Bar(144985, 48, 145037) -- Empowered Whirling Corruption
+		self:Bar(144985, 48, CL["count"]:format(self:SpellName(145037), whirlingCounter)) -- Empowered Whirling Corruption
 		self:Bar(145065, 29, L["mind_control"]) -- Mind Control
 		self:Bar(144758, 21) -- Desecrated Weapon
+	elseif spellId == 146984 then -- phase 4 Enter Realm of Garrosh
+		phase = 4
+		self:Message("stages", "Neutral", nil, CL["phase"]:format(phase), false)
+		self:StopBar(L["intermission"])
+		self:StopBar(144985) -- whirling corruption
+		self:StopBar(145037) -- whirling corruption
+		self:StopBar(144758) -- desecrate weapon
+		self:StopBar(L["mind_control"]) -- Mind Control
+		self:Bar(147209, 30) -- Malice
+		self:Bar("bombardment", 69, L["bombardment"], 147120) -- Bombardment
+		self:StopWeaponScan()
+	elseif spellId == 147126 and clumpCheckAllowed then -- Clump Check
+		self:Bar("clump_check", 3, L["clump_check"], 147126)
 	end
 end
 
@@ -347,7 +516,6 @@ end
 
 do
 	local UnitDetailedThreatSituation, UnitExists, UnitIsUnit = UnitDetailedThreatSituation, UnitExists, UnitIsUnit
-	local weaponTimer = nil
 	local function checkWeaponTarget()
 		local boss = getBossByMobId(71865)
 		if not boss then return end
@@ -368,21 +536,14 @@ do
 		end
 		mod:StopWeaponScan()
 	end
-	function mod:StartWeaponScan(delay)
-		if delay then
-			self:CancelTimer(weaponTimer)
-			weaponTimer = self:ScheduleTimer("StartWeaponScan", delay)
-		elseif not weaponTimer then
+	function mod:StartWeaponScan()
+		if not weaponTimer then
 			weaponTimer = self:ScheduleRepeatingTimer(checkWeaponTarget, 0.05)
 		end
 	end
-	function mod:StopWeaponScan(delay)
-		if delay then
-			self:ScheduleTimer("StopWeaponScan", delay)
-		else
-			self:CancelTimer(weaponTimer)
-			weaponTimer = nil
-		end
+	function mod:StopWeaponScan()
+		self:CancelTimer(weaponTimer)
+		weaponTimer = nil
 	end
 	local phase2DesecreteCDs = {36, 45, 36}
 	function mod:DesecratedWeapon(args)
@@ -398,8 +559,8 @@ do
 		end
 		self:CDBar(144758, desecrateCD)
 		desecrateCounter = desecrateCounter + 1
-		self:StopWeaponScan(2) -- delay it a bit just to be safe
-		self:StartWeaponScan(desecrateCD-7)
+		self:ScheduleTimer("StopWeaponScan", 2) -- delay it a bit just to be safe
+		self:ScheduleTimer("StartWeaponScan", desecrateCD-7)
 	end
 end
 

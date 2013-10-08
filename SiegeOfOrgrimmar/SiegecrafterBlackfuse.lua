@@ -16,17 +16,12 @@ mod:RegisterEnableMob(71504)
 --
 
 local overloadCounter = 1
+local markableMobs = {}
+local marksUsed = {}
+local markTimer
 local assemblyLineCounter = 1
 local shredder = EJ_GetSectionInfo(8199)
 local sawbladeTarget
-local function getBossByMobId(mobId)
-	for i=1, 5 do
-		if mod:MobId(UnitGUID("boss"..i)) == mobId then
-			return "boss"..i
-		end
-	end
-	return
-end
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -34,6 +29,16 @@ end
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.overcharged_crawler_mine = "Overcharged Crawler Mine" -- sadly this is needed since they have same mobId
+	L.custom_off_mine_marker = "Mine marker"
+	L.custom_off_mine_marker_desc = "Mark the mines for specific stun assignments. (All the marks are used)"
+
+	L.saw_blade_near_you = "Saw blade near you (not on you)"
+	L.saw_blade_near_you_desc = "You might want to turn this off to avoid spam if your raid is mostly bunched up according to your tactics."
+	L.saw_blade_near_you_icon = 143265
+
+	L.disabled = "Disabled"
+
 	L.shredder_engage_trigger = "An Automated Shredder draws near!"
 	L.laser_on_you = "Laser on you PEW PEW!"
 	L.laser_say = "Laser PEW PEW!"
@@ -51,11 +56,15 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{-8195, "FLASH", "SAY", "ICON"}, {145365, "TANK_HEALER"}, {143385, "TANK"}, -- Siegecrafter Blackfuse
+		"custom_off_mine_marker",
+		-8408,
+		{-8195, "FLASH", "SAY", "ICON"}, "saw_blade_near_you", 145365, {143385, "TANK"}, -- Siegecrafter Blackfuse
 		-8199, 144208, 145444, -- Automated Shredders
 		-8202, -8207, 143639, {-8208, "FLASH", "SAY"}, 143856, 144466, {-8212, "FLASH"},
 		"berserk", "bosskill",
 	}, {
+		["custom_off_mine_marker"] = L.custom_off_mine_marker,
+		[-8408] = "heroic",
 		[-8195] = -8194, -- Siegecrafter Blackfuse
 		[-8199] = -8199, -- Automated Shredders
 		[-8202] = -8202, -- The Assembly Line
@@ -66,6 +75,8 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
+	-- heroic
+	self:Log("SPELL_CAST_SUCCESS", "Overcharge", 145774)
 	-- The Assembly Line
 	self:Emote("AssemblyLine", L["assembly_line_trigger"])
 	self:Log("SPELL_AURA_APPLIED", "CrawlerMine", 145269)
@@ -78,6 +89,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PatternRecognitionApplied", 144236)
 	self:Log("SPELL_AURA_REMOVED", "PatternRecognitionRemoved", 144236)
 	-- Automated Shredders
+	self:Log("SPELL_CAST_SUCCESS", "AddMarkedMob", 145269) -- break in
 	self:Emote("ShredderEngage", L["shredder_engage_trigger"])
 	self:Log("SPELL_CAST_START", "DeathFromAbove", 144208)
 	self:Log("SPELL_CAST_START", "DeathFromAboveApplied", 144210)
@@ -94,27 +106,114 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	if self:Heroic() then
+		self:Berserk(540)
+	else
+		self:Berserk(600)
+	end
 	assemblyLineCounter = 1
 	self:Bar(-8199, 35, shredder, "INV_MISC_ARMORKIT_27") -- Shredder Engage
+	self:CDBar(-8195, 9) -- Sawblade
+	if self.db.profile.custom_off_mine_marker then
+		wipe(markableMobs)
+		wipe(marksUsed)
+		markTimer = nil
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+-- heroic
+-- marking
+do
+	local function setMark(unit, guid)
+		for mark = 1, 8 do
+			if not marksUsed[mark] then
+				SetRaidTarget(unit, mark)
+				markableMobs[guid] = "marked"
+				marksUsed[mark] = guid
+				return
+			end
+		end
+	end
+
+	local function markMobs()
+		local continue
+		for guid in next, markableMobs do
+			if markableMobs[guid] == true then
+				local unit = mod:GetUnitIdByGUID(guid)
+				if unit then
+					setMark(unit, guid)
+				else
+					continue = true
+				end
+			end
+		end
+	end
+
+	function mod:UPDATE_MOUSEOVER_UNIT()
+		local guid = UnitGUID("mouseover")
+		if guid and markableMobs[guid] == true then
+			setMark("mouseover", guid)
+		elseif guid and UnitName("mouseover") == L.overcharged_crawler_mine and not markableMobs[guid] then -- overcharged crawler mine
+			markableMobs[guid] = true
+			setMark("mouseover", guid)
+		end
+	end
+
+	function mod:AddMarkedMob(args)
+		if not markableMobs[args.sourceGUID] and L.overcharged_crawler_mine == args.sourceName then
+			markableMobs[args.sourceGUID] = true
+			if self.db.profile.custom_off_mine_marker and not markTimer then
+				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.1)
+			end
+		end
+	end
+
+	function mod:Overcharge(args)
+		self:Message(-8408, "Important", nil, CL["other"]:format(args.spellName, args.destName), false) -- maybe shorten args.destName?
+		if self.db.profile.custom_off_mine_marker and self:MobId(args.destGUID) == 71790 then -- mines
+			wipe(markableMobs)
+			wipe(marksUsed)
+			markTimer = nil
+			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+			if not markTimer then
+				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.1)
+			end
+		end
+	end
+end
+
 -- The Assembly Line
 
-function mod:AssemblyLine()
-	self:Message(-8202, "Neutral", "Warning", L["assembly_line_message"]:format(assemblyLineCounter), "Inv_crate_03")
-	assemblyLineCounter = assemblyLineCounter + 1
-	self:Bar(-8202, 40, CL["count"]:format((EJ_GetSectionInfo(8202)), assemblyLineCounter), "Inv_crate_03")
+do
+	-- this helps people trying to figure out tactics
+	local function beltItems()
+		local items = ""
+		local boss
+		for i=1, 5 do
+			boss = "boss"..i
+			if UnitExists(boss) and mod:MobId(UnitGUID(boss)) ~= 71504 then
+				items = ("%s - %s"):format(items, UnitName(boss)) -- I used to gsub this with to shorten it but guess that won't work for all localization, maybe use localized names instead?
+			end
+		end
+		mod:Message(-8202, "Neutral", nil, CL["count"]:format("Items: "..items, assemblyLineCounter-1), false)
+	end
+	function mod:AssemblyLine()
+		self:ScheduleTimer(beltItems, 13)
+		self:Message(-8202, "Neutral", "Warning", L["assembly_line_message"]:format(assemblyLineCounter), "Inv_crate_03")
+		assemblyLineCounter = assemblyLineCounter + 1
+		self:Bar(-8202, 40, CL["count"]:format((EJ_GetSectionInfo(8202)), assemblyLineCounter), "Inv_crate_03")
+	end
 end
 
 do
 	local prev = 0
 	function mod:CrawlerMine(args)
 		local t = GetTime()
-		if t-prev > 5 then -- XXX this still spams, rethink it maybe
+		if t-prev > 5 then
 			prev = t
 			self:Message(-8212, "Urgent", nil, -8212, 77976) -- mine like icon
 		end
@@ -217,6 +316,13 @@ end
 
 function mod:ProtectiveFrenzy(args)
 	self:Message(args.spellId, "Attention", "Long")
+	local boss
+	for i=1, 5 do
+		boss = "boss"..i
+		if UnitExists(boss) and UnitIsDead(boss) then
+			self:Message(-8202, "Positive", nil, CL["other"]:format(L["disabled"], UnitName(boss)), false) -- maybe shorten the unit name?
+		end
+	end
 end
 
 do
@@ -225,11 +331,13 @@ do
 	local function warnSawblade(self, target, guid)
 		sawbladeTarget = guid
 		self:PrimaryIcon(-8195, target)
-		if self:Range(target) < 8 then -- 8 is guessed
-			self:RangeMessage(-8195)
-			self:Flash(-8195)
-		elseif not self:Me(guid) then -- we warn for ourself from the BOSS_WHISPER
-			self:TargetMessage(-8195, target, "Positive", "Info")
+		if not self:Me(guid) then -- we warn for ourself from the BOSS_WHISPER
+			if self:Range(target) < 8 then -- 8 is guessed
+				self:RangeMessage("saw_blade_near_you", "Personal", "Alarm", mod:SpellName(-8195), 143265)
+				--mod:Flash(-8195) -- this is too much for our tactic
+			else
+				self:TargetMessage(-8195, target, "Positive", "Info")
+			end
 		end
 	end
 	function mod:Sawblade(args)
