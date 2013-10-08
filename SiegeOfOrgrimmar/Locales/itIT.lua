@@ -152,10 +152,10 @@ if L then
 	-------------------------------------
 	L.edge_message = "Sei uno dei limiti"
 	L.custom_off_edge_marks = "Marcatori dei Limiti"
-	L.custom_off_edge_marks_desc = "Evidenzia i giocatori che, dopo i calcoli, saranno i limiti di Confine Ardente con %s%s%s%s%s%s (in questo ordine)(possono non essere usati tutti i simboli), richiede capo incursione o assistente."
+	--L.custom_off_edge_marks_desc = "Mark the players who will be edges based on the calculations {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.injection_over_soon = "Fine di Iniezione tra poco (%s)!"
-	L.custom_off_mutate_marks = "Mutazione: Marcatore Scorpione Mantid"
-	L.custom_off_mutate_marks_desc = "Evidenzia il giocatore con Mutazione Scoprione Mantid con %s%s%s per aiutare l'assegnazione delle cure, richiede capo incursione o assistente."
+	--L.custom_off_parasite_marks = "Parasite marker"
+	--L.custom_off_parasite_marks_desc = "Mark the parasites for crowd control and Prey assignments with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "itIT")

@@ -148,10 +148,10 @@ if L then
 	--------------------------------
 	L.edge_message = "Ты в луче"
 	L.custom_off_edge_marks = "Маркировка луча"
-	L.custom_off_edge_marks_desc = "Маркировка людей, которые станут лучами, на основе вычислений %s%s%s%s%s%s, требуется быть помощником или лидером."
+	--L.custom_off_edge_marks_desc = "Mark the players who will be edges based on the calculations {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.injection_over_soon = "Инъекция заканчивается (%s)!"
-	L.custom_off_mutate_marks = "Мутирование: Янтарный скорпион маркировка"
-	L.custom_off_mutate_marks_desc = "Отмечать игроков, имеющих Мутирование: Янтарный скорпион метками %s%s%s чтобы помочь лекарям, требуется быть помощником или лидером."
+	--L.custom_off_parasite_marks = "Parasite marker"
+	--L.custom_off_parasite_marks_desc = "Mark the parasites for crowd control and Prey assignments with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "ruRU")

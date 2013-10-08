@@ -149,10 +149,10 @@ if L then
 	L.five = "依约库克选择：五！"
 	L.edge_message = ">你< 炎界"
 	L.custom_off_edge_marks = "炎界标记"
-	L.custom_off_edge_marks_desc = "基于计算给谁将会炎界的玩家使用 %s%s%s%s%s%s 进行标记，需要权限。"
+	--L.custom_off_edge_marks_desc = "Mark the players who will be edges based on the calculations {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.injection_over_soon = "注射即将结束 >%s<！"
-	L.custom_off_mutate_marks = "突变：螳螂巨蝎标记"
-	L.custom_off_mutate_marks_desc = "帮助治疗分配，给受到突变：螳螂巨蝎的玩家使用 %s%s%s 进行标记，需要权限。"
+	--L.custom_off_parasite_marks = "Parasite marker"
+	--L.custom_off_parasite_marks_desc = "Mark the parasites for crowd control and Prey assignments with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "zhCN")

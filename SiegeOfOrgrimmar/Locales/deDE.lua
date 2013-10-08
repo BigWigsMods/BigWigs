@@ -151,10 +151,10 @@ if L then
 	--------------------------------
 	L.edge_message = "Brennendes Band auf Dir"
 	L.custom_off_edge_marks = "Brennendes Band markieren"
-	L.custom_off_edge_marks_desc = "Markiert die Spieler mit Brennendem Band, basierend auf den Kalkulationen, mit %s%s%s%s%s%s, benötigt Leiter oder Assistent."
+	--L.custom_off_edge_marks_desc = "Mark the players who will be edges based on the calculations {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.injection_over_soon = "Injektion bald vorbei (%s)!"
-	L.custom_off_mutate_marks = "Mutation: Bernskorpion markieren"
-	L.custom_off_mutate_marks_desc = "Markiert die Spieler mit Mutation: Bernskorpion mit %s%s%s um bei der Einteilung zum Heilen zu helfen, benötigt Leiter oder Assistent."
+	--L.custom_off_parasite_marks = "Parasite marker"
+	--L.custom_off_parasite_marks_desc = "Mark the parasites for crowd control and Prey assignments with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "deDE")
