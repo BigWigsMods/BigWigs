@@ -140,6 +140,10 @@ end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "ruRU")
 if L then
+	L.catalyst_match = "Катализатор: |c%sСОВПАДЕНИЕ|r"
+	L.you_ate = "Тебя ест паразит!"
+	L.dance = "Танцуем"
+	L.prey_message = "Используй Охоту на паразита"
 	L.one = "Выбор Ийокука: Один!"
 	L.two = "Выбор Ийокука: Два!"
 	L.three = "Выбор Ийокука: Три!"
@@ -148,14 +152,21 @@ if L then
 	--------------------------------
 	L.edge_message = "Ты в луче"
 	L.custom_off_edge_marks = "Маркировка луча"
-	--L.custom_off_edge_marks_desc = "Mark the players who will be edges based on the calculations {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_edge_marks_desc = "Люди, которые станут лучами на основе расчетов, будут отмечены {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
 	L.injection_over_soon = "Инъекция заканчивается (%s)!"
-	--L.custom_off_parasite_marks = "Parasite marker"
-	--L.custom_off_parasite_marks_desc = "Mark the parasites for crowd control and Prey assignments with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_parasite_marks = "Маркировка Паразита"
+	L.custom_off_parasite_marks_desc = "Чтобы помочь с распределением контроля и Охоты, на паразитов будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "ruRU")
 if L then
+	-- L.clump_check = "Clump check"
+	-- L.clump_check_desc = "Check every 3 seconds during bombardment for clumped up players, if a clump is found a Kor'kron Iron Star will spawn."
+
+	-- L.bombardment = "Bombardment"
+	-- L.bombardment_desc = "Bombarding Stormwind and leaving fires on the ground. Kor'kron Iron Star can only spawn during bombardment."
+
+	L.spread = "Разбегайтесь!"
 	L.intermission = "Перерыв"
 	L.mind_control = "Контроль разума"
 
