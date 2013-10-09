@@ -132,7 +132,7 @@ L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "itIT")
 if L then
 	L.shredder_engage_trigger = "Un Segatronchi Automatizzato si avvicina!" -- needs verify
 	L.laser_on_you = "Laser su di te PEW PEW!"
-	L.laser_say = "Laser PEW PEW!"
+	L.laser_say = "Laser PEW PEW"
 
 	L.assembly_line_trigger = "Unfinished weapons begin to roll out on the assembly line."--need check/translation
 	L.assembly_line_message = "Armi non finite (%d)"

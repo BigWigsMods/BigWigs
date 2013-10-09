@@ -131,7 +131,7 @@ L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "frFR")
 if L then
 	L.shredder_engage_trigger = "Un déchiqueteur automatisé approche !"
 	L.laser_on_you = "Laser sur vous PIOU PIOU !"
-	L.laser_say = "Laser PIOU PIOU !"
+	L.laser_say = "Laser PIOU PIOU"
 
 	L.assembly_line_trigger = "Des armes non terminées commencent à avancer sur la chaîne d’assemblage."
 	L.assembly_line_message = "Armes non terminées (%d)"

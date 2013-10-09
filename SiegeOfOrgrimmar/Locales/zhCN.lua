@@ -132,7 +132,7 @@ L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "zhCN")
 if L then
 	L.shredder_engage_trigger = "一台自动伐木机正在靠近！"
 	L.laser_on_you = ">你< 激光 BIU BIU！"
-	L.laser_say = "激光 BIU BIU！"
+	L.laser_say = "激光 BIU BIU"
 
 	L.assembly_line_trigger = "未完成的武器从装配流水线上传送出来了。"
 	L.assembly_line_message = "零散的武器 >%d<"

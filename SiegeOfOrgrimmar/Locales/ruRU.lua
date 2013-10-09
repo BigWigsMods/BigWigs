@@ -130,7 +130,7 @@ L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "ruRU")
 if L then
 	L.shredder_engage_trigger = "Приближается автоматический крошшер!"
 	L.laser_on_you = "Лазер на тебе ПИУ-ПИУ!"
-	L.laser_say = "Лазер ПИУ-ПИУ!"
+	L.laser_say = "Лазер ПИУ-ПИУ"
 
 	L.assembly_line_trigger = "На сборочную линию начинает поступать незаконченное оружие."
 	L.assembly_line_message = "Незаконченное оружие (%d)"

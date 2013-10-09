@@ -41,7 +41,7 @@ if L then
 
 	L.shredder_engage_trigger = "An Automated Shredder draws near!"
 	L.laser_on_you = "Laser on you PEW PEW!"
-	L.laser_say = "Laser PEW PEW!"
+	L.laser_say = "Laser PEW PEW"
 
 	L.assembly_line_trigger = "Unfinished weapons begin to roll out on the assembly line."
 	L.assembly_line_message = "Unfinished weapons (%d)"
@@ -242,7 +242,7 @@ function mod:RAID_BOSS_WHISPER(_, msg, sender)
 		-- might wanna do syncing to get range message working
 		self:Message(-8208, "Personal", "Info", L.laser_on_you, 144040)
 		self:Flash(-8208)
-		self:Say(-8208, L.laser_say, true)
+		self:Say(-8208, L.laser_say)
 	elseif msg:find("Ability_Siege_Engineer_Detonate") then -- mine fixate
 		self:Message(-8212, "Personal", "Info", CL["you"]:format(sender))
 		self:Flash(-8212)
