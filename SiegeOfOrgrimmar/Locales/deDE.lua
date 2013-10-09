@@ -131,6 +131,15 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "deDE")
 if L then
+	L.overcharged_crawler_mine = "Überladene Kriechermine"
+	L.custom_off_mine_marker = "Minen markieren"
+	L.custom_off_mine_marker_desc = "Markiert die Minen zum Einteilen der Betäubungen. (Alle Zeichen werden genutzt)"
+
+	L.saw_blade_near_you = "Sägeblatt in der Nähe (nicht auf Dir)"
+	L.saw_blade_near_you_desc = "Du kannst diese Option deaktivieren um Spam und Verwirrung zu vermeiden."
+
+	L.disabled = "Deaktiviert"
+
 	L.shredder_engage_trigger = "Ein automatisierter Schredder nähert sich!"
 	L.laser_on_you = "Laser auf Dir PEW PEW!"
 	L.laser_say = "Laser PEW PEW"
@@ -143,6 +152,10 @@ end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "deDE")
 if L then
+	L.catalyst_match = "Katalysator: |c%sSTIMMT MIT DIR ÜBEREIN|r"
+	L.you_ate = "Du hast einen Parasiten gegessen!"
+	L.dance = "Tanzen"
+	L.prey_message = "Wirke Beute auf Parasiten"
 	L.one = "Iyyokuk wählt aus: Eins!"
 	L.two = "Iyyokuk wählt aus: Zwei!"
 	L.three = "Iyyokuk wählt aus: Drei!"
@@ -151,14 +164,21 @@ if L then
 	--------------------------------
 	L.edge_message = "Brennendes Band auf Dir"
 	L.custom_off_edge_marks = "Brennendes Band markieren"
-	--L.custom_off_edge_marks_desc = "Mark the players who will be edges based on the calculations {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_edge_marks_desc = "Markiert die Spieler mit Brennendem Band, basierend auf den Kalkulationen, mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
 	L.injection_over_soon = "Injektion bald vorbei (%s)!"
-	--L.custom_off_parasite_marks = "Parasite marker"
-	--L.custom_off_parasite_marks_desc = "Mark the parasites for crowd control and Prey assignments with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_parasite_marks = "Parasiten markieren"
+	L.custom_off_parasite_marks_desc = "Markiert die Parasiten für Gruppenkontroll- und Beute-Einteilungen mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "deDE")
 if L then
+	L.clump_check = "Gruppierungsprüfung"
+	L.clump_check_desc = "Prüft alle 3 Sekunden während des Bombardements, ob Spieler eng zusammenstehen, da hierdurch Eiserne Sterne der Kor'kron entstehen."
+
+	L.bombardment = "Bombardement"
+	L.bombardment_desc = "Bombardiert Sturmwind und hinterlässt Feuer auf dem Boden. Eiserne Sterne der Kor'kron können nur während des Bombardements entstehen."
+
+	L.spread = "Verteilen!"
 	L.intermission = "Unterbrechung"
 	L.mind_control = "Gedankenkontrolle"
 
@@ -168,7 +188,10 @@ if L then
 
 	L.farseer_trigger = "Scharfseher, heilt unsere Wunden!"
 	L.custom_off_shaman_marker = "Scharfseher markieren"
-	L.custom_off_shaman_marker_desc = "Um bei der Einteilung zum Unterbrechen zu helfen, werden die Scharfseherwolfsreiter mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} markiert (in dieser Reihenfolge)(vielleicht werden nicht alle Symbole genutzt), benötigt Leiter oder Assistent."
+	L.custom_off_shaman_marker_desc = "Um bei der Einteilung zum Unterbrechen zu helfen, werden die Scharfseherwolfsreiter mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} markiert, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r\n|cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über die Scharfseher.|r"
+
+	L.custom_off_minion_marker = "Diener markerieren"
+	L.custom_off_minion_marker_desc = "Um bei der Unterscheidung der Diener zu helfen, werden diese mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} markiert, benötigt Leiter oder Assistent."
 
 	L.focus_only = "|cffff0000Nur Meldungen für Fokusziele.|r "
 end
