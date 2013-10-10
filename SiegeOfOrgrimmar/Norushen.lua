@@ -17,6 +17,7 @@ mod:RegisterEnableMob(72276, 71977, 71976, 71967) -- Amalgam of Corruption, Mani
 
 local bigAddSpawnCounter, bigAddKillCounter = 0, 0
 local throttlePlayers = {} -- Throttle users that have BW & DBM installed >.>
+local bigAddKills = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -54,10 +55,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnBossDisable()
-	wipe(throttlePlayers)
-end
-
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -83,7 +80,7 @@ function mod:OnBossEnable()
 
 	self:AddSyncListener("BlindHatred")
 	self:AddSyncListener("InsideBigAddDeath", 0)
-	self:AddSyncListener("OutsideBigAddDeath")
+	self:AddSyncListener("OutsideBigAddDeath", 0)
 	self:AddSyncListener("Phase2BigAddSpawn")
 	self:AddSyncListener("Phase2")
 
@@ -97,6 +94,8 @@ function mod:OnEngage()
 	bigAddSpawnCounter, bigAddKillCounter = 0, 0
 	self:Berserk(self:LFR() and 600 or 418)
 	self:Bar(145226, 25) -- Blind Hatred
+	wipe(bigAddKills)
+	wipe(throttlePlayers)
 end
 
 --------------------------------------------------------------------------------
@@ -178,7 +177,7 @@ function mod:UnleashCorruption()
 	self:Sync("Phase2BigAddSpawn") -- Big adds spawning outside in p2
 end
 
-function mod:OnSync(sync, _, player)
+function mod:OnSync(sync, rest, player)
 	if sync == "BlindHatred" then
 		self:Message(145226, "Important", "Long")
 		self:Bar(145226, 60)
@@ -197,7 +196,8 @@ function mod:OnSync(sync, _, player)
 	elseif sync == "Phase2BigAddSpawn" then
 		bigAddSpawnCounter = bigAddSpawnCounter + 1
 		self:Message("big_adds", "Urgent", "Alarm", L["big_add"]:format(bigAddSpawnCounter), 147082)
-	elseif sync == "OutsideBigAddDeath" then
+	elseif sync == "OutsideBigAddDeath" and rest then
+		if bigAddKills[rest] then return else bigAddKills[rest] = true end -- Custom throttle to catch 2 big adds dieing outside at the same time
 		bigAddKillCounter = bigAddKillCounter + 1
 		if bigAddKillCounter > bigAddSpawnCounter then
 			bigAddSpawnCounter = bigAddKillCounter -- Compensate for no boss mod players :[
@@ -216,7 +216,7 @@ function mod:Deaths(args)
 	if args.mobId == 71977 then -- Big add inside (Manifestation of Corruption)
 		self:Sync("InsideBigAddDeath")
 	elseif args.mobId == 72264 then -- Big add outside (Unleashed Manifestation of Corruption)
-		self:Sync("OutsideBigAddDeath")
+		self:Sync("OutsideBigAddDeath", args.destGUID)
 	end
 end
 
@@ -228,7 +228,7 @@ end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-	if hp < 53 then -- 50%
+	if hp < 56 then -- 50%
 		self:Message("stages", "Neutral", "Info", CL["soon"]:format(CL["phase"]:format(2)), 146179)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
