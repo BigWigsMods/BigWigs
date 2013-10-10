@@ -106,11 +106,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	if self:Heroic() then
-		self:Berserk(540)
-	else
-		self:Berserk(600)
-	end
+	self:Berserk(self:Heroic() and 540 or 600)
 	assemblyLineCounter = 1
 	self:Bar(-8199, 35, shredder, "INV_MISC_ARMORKIT_27") -- Shredder Engage
 	self:CDBar(-8195, 9) -- Sawblade

@@ -1,6 +1,5 @@
 --[[
 TODO:
-	-- win trigger
 	-- figure out tower add timers for 2nd tower -- it is not improved but still need feedback
 	-- maybe try and add wave timers
 ]]--

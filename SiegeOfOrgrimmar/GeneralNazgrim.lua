@@ -195,8 +195,8 @@ function mod:Fixate(args)
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unit)
-	local hp = UnitHealth(unit)/UnitHealthMax(unit) * 100
-	if hp < 20 then
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	if hp < 17 then
 		self:Message(-7920, "Neutral", "Info", CL["soon"]:format(L["extra_adds"]))
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 	end
