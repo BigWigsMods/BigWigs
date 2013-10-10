@@ -1,6 +1,6 @@
 --[[
 TODO:
-	-- custom off essence of corruption marker, depending on if it is neded for 25 man or not
+
 ]]--
 
 --------------------------------------------------------------------------------

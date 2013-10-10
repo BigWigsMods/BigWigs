@@ -1,6 +1,6 @@
 --[[
 TODO:
-	look if there is even a point to try and target scan for mortar cannon
+
 ]]--
 
 --------------------------------------------------------------------------------

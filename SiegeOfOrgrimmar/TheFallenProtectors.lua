@@ -1,10 +1,7 @@
 --[[
 TODO:
 	:StopBar
-	look if we can get target for Clash
-	improve timers by checking how they interact with different Desperate Measures
-	look for inferno blast (inferno strike in CLEU) target
-	corruption shock target scanning or at least verify how the mobs targeting works
+	improve timers by checking how they interact with different Desperate Measures -- Sun Tenderheart fixed, other two still need fixing
 ]]--
 
 --------------------------------------------------------------------------------
@@ -142,6 +139,8 @@ do
 	end
 
 	function mod:DarkMeditationRemoved(args)
+		self:CDBar(143491, 30) -- Calamity
+		self:CDBar(143446, 17) -- Bane
 		if not self:Tank() then
 			mod:CancelTimer(darkMeditationTimer)
 		end
@@ -301,7 +300,7 @@ do
 				local player = UnitGUID(bossTarget)
 				if player then
 					infernoTarget = self:UnitName(bossTarget)
-					self:TargetMessage(-7959, infernoTarget, "Urgent", "Warning")
+					self:TargetMessage(-7959, infernoTarget, "Urgent", "Warning") -- XXX this results in double message, shouldn't we do something about it? /poke Funkeh
 					self:TargetBar(-7959, 8.5, infernoTarget)
 					self:PrimaryIcon(-7959, infernoTarget)
 					if self:Me(player) then
@@ -314,7 +313,7 @@ do
 						end
 						-- Emphasized abilities
 						self:StopBar(-7959, infernoTarget)
-						self:TargetMessage("inferno_self", infernoTarget, "Urgent", nil, -7959)
+						self:TargetMessage("inferno_self", infernoTarget, "Urgent", nil, -7959) -- XXX this results in double message, shouldn't we do something about it? /poke Funkeh
 						self:Bar("inferno_self", 8.5, L["inferno_self_bar"], -7959)
 					elseif not self:Tank() then
 						self:CloseProximity("proximity")
@@ -353,9 +352,6 @@ function mod:CorruptionShock(args)
 		return
 	end
 
-	-- target scanning probably needs improvement
-	-- alternative method could be to just scan with a repeating timer for target on the mob, because he only has a target when the cast on the ability finishes
-	-- XXX this needs testing and verifying again how the mob changes target
 	local target = unit.."target"
 	if UnitExists(target) then
 		if self:Me(UnitGUID(target)) then
@@ -365,7 +361,8 @@ function mod:CorruptionShock(args)
 			self:RangeMessage(args.spellId)
 			self:Flash(args.spellId)
 		else
-			self:TargetMessage(args.spellId, self:UnitName(target), "Personal", "Info") -- XXX for debug only for now
+			-- XXX even tho the codes seems to work fine, keep this for debugging just to be safe
+			self:TargetMessage(args.spellId, self:UnitName(target), "Personal", "Info")
 		end
 	else
 		self:ScheduleTimer("TargetMessage", 0.1, args.spellId, self:UnitName(target), "Personal", "Info")
@@ -378,7 +375,7 @@ end
 
 function mod:Clash(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 46)
+	self:CDBar(args.spellId, self:Heroic() and 50 or 46)
 end
 
 do
@@ -437,7 +434,7 @@ end
 
 
 function mod:Heal(args)
-	self:Bar(args.spellId, 15, ("%s (%s)"):format(args.spellName, args.sourceName)) -- this is too long for a normal bar, but needed so bars don't overwrite each other
+	self:Bar(args.spellId, 15, CL["cast"]:format(CL["other"]:format(self:SpellName(98417), args.sourceName))) -- use text "Heal" instead of the long one
 	self:Message(args.spellId, "Positive", "Warning")
 end
 

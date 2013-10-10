@@ -225,7 +225,7 @@ do
 			self:CDBar(144358, 10.5) -- Wounded Pride, 10-11.2
 		end
 		if self:Heroic() then
-			self:Bar(145215, 37.4) -- Banishment
+			self:Bar(145215, 40) -- Banishment -- more frequently 40 than anything else
 		end
 		self:Bar(144563, 53) -- Imprison
 		self:Bar(-8262, 60, L["big_add_bar"], 144379) -- when the add is actually up

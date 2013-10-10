@@ -1,9 +1,7 @@
 --[[
 TODO:
-	look for event for add waves - none atm 10N PTR
 	maybe do target scanning on new waves, to start some short initial bars for add abilities?
 	rethink proximity for different difficulties
-	EJ says 10% new forces, but there is a special yell at 30% too: "Omega squad, kill them now!" look into it during further testing - look into these extra waves
 ]]--
 
 --------------------------------------------------------------------------------
@@ -93,7 +91,7 @@ function mod:OnBossEnable()
 	-- Adds
 	self:Log("SPELL_CAST_START", "ArcaneShock", 143432)
 	self:Log("SPELL_CAST_START", "ChainHeal", 143473)
-	self:Log("SPELL_AURA_APPLIED", "Fixate", 143431)
+	self:Log("SPELL_AURA_APPLIED", "Magistrike", 143431)
 	self:Log("SPELL_CAST_SUCCESS", "HealingTideTotem", 143474)
 	self:Log("SPELL_CAST_START", "ChainHeal", 143473)
 	self:Log("SPELL_CAST_SUCCESS", "EarthShield", 143475)
@@ -103,7 +101,7 @@ function mod:OnBossEnable()
 	-- Boss
 	self:Log("SPELL_CAST_START", "WarSong", 143503)
 	self:Log("SPELL_CAST_SUCCESS", "Ravager", 143872) -- _START has no destName but boss has target, so that could be better, but since this can target pets, and it takes 2 sec before any damage is done after _SUCCESS I guess we can live with using _SUCCESS over _START here
-	self:Log("SPELL_SUMMON", "Banner", 143501) -- XXX this is a tiny bit faster sometimes than _SUCCESS however it's spellId does not match up with the rest atm, so pay attention in case this breaks
+	self:Log("SPELL_SUMMON", "Banner", 143501)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "HeroicShockwave", "boss1") -- faster than _SUCCESS
 	self:Log("SPELL_AURA_APPLIED", "CoolingOff", 143484)
 	self:Log("SPELL_AURA_APPLIED", "Stances", 143589, 143594, 143593) -- Battle, Berserker, Defensive
