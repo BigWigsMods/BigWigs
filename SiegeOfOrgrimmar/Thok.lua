@@ -132,16 +132,25 @@ function mod:SkeletonKey(args)
 	end
 end
 
-function mod:BloodFrenzyOver(args)
-	self:OpenProximity("proximity", 10)
-	self:Message(-7981, "Neutral", "Long", CL["over"]:format(args.spellName))
-	self:Bar(-7963, 25) -- Deafening Screech, not much point for more timers than the initial one since then it is too frequent
-	if self:Heroic() and heroicAdd then
-		-- XXX maybe add scheduled message once we know exact timer (videos)
-		if heroicAdd == "bats" then
-			self:CDBar("adds", 28, self:SpellName(-8584), 24733) -- bat icon
-		elseif heroicAdd == "yeti" then
-			self:CDBar("adds", 16, self:SpellName(-8582), 26010) -- yeti icon
+do
+	local function checkPrisonerKilled()
+		if heroicAdd then
+			-- XXX maybe add scheduled message once we know exact timer (videos)
+			-- timer still need verification and still looking for a better event to start bars (don't seem to be any)
+			if heroicAdd == "bats" then
+				mod:CDBar("adds", 13, mod:SpellName(-8584), 24733) -- bat icon
+			elseif heroicAdd == "yeti" then
+				mod:CDBar("adds", 10, mod:SpellName(-8582), 26010) -- yeti icon
+				heroicAdd = nil
+			end
+		end
+	end
+	function mod:BloodFrenzyOver(args)
+		self:OpenProximity("proximity", 10)
+		self:Message(-7981, "Neutral", "Long", CL["over"]:format(args.spellName))
+		self:Bar(-7963, 25) -- Deafening Screech, not much point for more timers than the initial one since then it is too frequent
+		if self:Heroic() then
+			self:ScheduleTimer(checkPrisonerKilled, 10)
 		end
 	end
 end

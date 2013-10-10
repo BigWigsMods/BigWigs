@@ -132,7 +132,7 @@ function mod:ExpelMiasma() -- Blood Rage over
 	self:StopBar(142913) -- Displaced Energy
 	breathCounter, smashCounter, slamCounter = 1, 1, 1
 	self:Bar(142826, 17, CL["count"]:format(self:SpellName(142826), smashCounter)) -- Arcing Smash
-	self:Bar(142851, 10, self:Heroic() and CL["next_add"]) -- Seismic Slam
+	self:Bar(142851, 10, self:Heroic() and CL["adds"]) -- Seismic Slam
 	self:CDBar(142842, 72.2, CL["count"]:format(self:SpellName(142842), breathCounter)) -- Breath of Y'Shaarj
 end
 
@@ -155,7 +155,7 @@ function mod:BreathOfYShaarj(args)
 		self:Bar(142826, 15, CL["count"]:format(self:SpellName(142826), smashCounter)) -- Arcing Smash
 		self:CDBar(args.spellId, 69.8, CL["count"]:format(args.spellName, breathCounter))
 	end
-	self:Bar(142851, 5, self:Heroic() and CL["next_add"]) -- Seismic Slam
+	self:Bar(142851, 5, self:Heroic() and CL["adds"]) -- Seismic Slam
 end
 
 do
@@ -164,7 +164,7 @@ do
 	function mod:SeismicSlam(args)
 		if not slamTimers[slamCounter] then return end -- don't do anything if we don't have timer
 		if self:Heroic() then
-			args.spellName = CL["next_add"]
+			args.spellName = CL["adds"]
 		end
 		-- don't think this needs a message
 		-- if anything a soon message, since timers seem reliable

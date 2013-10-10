@@ -2,7 +2,7 @@
 TODO:
 	look into doing :win without trigger that requires localization
 	could maybe hook into the world state timer, but I'm not sure if there is much point to work on a code just for that
-	could maybe pre warn for keg toss at least for one of the targets
+	could maybe pre warn for keg toss at least for one of the targets, but mob is not on boss frames, so a bit aids
 ]]--
 
 --------------------------------------------------------------------------------

@@ -4,6 +4,7 @@ TODO:
 	stopbars on boss deaths
 	sonic resonance maybe could use some advanced proximity warning
 
+	-- reported/requested by others
 	could maybe warn one hurl amber target?
 	heroic toxic injection proximity submarine sound and not closing
 	win sound
@@ -47,7 +48,7 @@ local function getBossByMobId(mobId)
 	end
 	return
 end
-local bossesSeen = {}
+local bossesActive = {}
 local blueToxin, redToxin, yellowToxin = ("|cFF0033FF%s|r"):format(mod:SpellName(142532)), ("|cFFFF0000%s|r"):format(mod:SpellName(142533)),("|cFFFFFF00%s|r"):format(mod:SpellName(142534))
 local chooseCatalyst = EJ_GetSectionInfo(8036)
 local results = {
@@ -126,7 +127,7 @@ local calculations = {
 
 function mod:GetOptions()
 	return {
-		{142931, "TANK"}, {143939, "TANK_HEALER"}, {-8008, "FLASH", "SAY"}, --Kil'ruk the Wind-Reaver
+		{142931, "TANK"}, {143939, "TANK_HEALER"}, {-8008, "FLASH", "SAY"}, 148676, --Kil'ruk the Wind-Reaver
 		142929, {-8034, "PROXIMITY"}, 142803, 143576, --Xaril the Poisoned Mind
 		142671, --Kaz'tik the Manipulator
 		142564, {143974, "TANK_HEALER"}, --Korven the Prime
@@ -164,7 +165,8 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "MyEngage")
 
 	--Kil'ruk the Wind-Reaver
-	self:Log("SPELL_CAST_SUCCESS", "Impact", 142232) -- does not matter that there are events closer in time to the target change since we scan in a time interval before this
+	self:Log("SPELL_CAST_START", "Reave", 148676)
+	self:Log("SPELL_CAST_SUCCESS", "DeathFromAbove", 142232) -- this is not so reliable but still good to have it as a backup to our timers
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ExposedVeins", 142931)
 	self:Log("SPELL_CAST_SUCCESS", "Gouge", 143939)
 	--Xaril the Poisoned Mind
@@ -216,7 +218,7 @@ function mod:OnEngage()
 	self:Berserk(720)
 	wipe(redPlayers)
 	deathCounter = 0
-	wipe(bossesSeen)
+	wipe(bossesActive)
 	results = {
 		mantid = {}, sword = {}, staff = {}, drum = {}, bomb = {},
 		red = {}, purple = {}, blue = {}, green = {}, yellow = {},
@@ -719,12 +721,17 @@ function mod:TenderizingStrike(args)
 	end
 end
 --Kil'ruk the Wind-Reaver
+function mod:Reave(args)
+	self:Message(args.spellId, "Urgent", "Long")
+	self:CDBar(args.spellId, 33)
+end
+
 do
-	-- Reave target scanning
+	-- Death from Above target scanning
 	local UnitDetailedThreatSituation, UnitExists, UnitIsUnit = UnitDetailedThreatSituation, UnitExists, UnitIsUnit
-	local reaveTimer, reaveStartTimer = nil, nil
+	local deathFromAboveTimer, deathFromAboveStartTimer = nil, nil
 	local initialTarget = nil
-	local function checkReaveTarget()
+	local function cheackDeathFromAboveTarget()
 		local boss = getBossByMobId(71161)
 		if not boss then return end
 		local target = boss.."target"
@@ -733,33 +740,41 @@ do
 		if initialTarget and UnitIsUnit(target, initialTarget) then return end
 
 		local name = mod:UnitName(target)
-		mod:TargetMessage(-8008, name, "Urgent", "Alarm")
+		mod:CDBar(-8008, 22)
 		if UnitIsUnit("player", target) then
 			mod:Flash(-8008)
 			mod:Say(-8008)
+			mod:TargetMessage(-8008, name, "Urgent", "Alarm")
+		elseif mod:Range(target) < 5 then
+			mod:RangeMessage(-8008)
+			mod:Flash(-8008)
+		else
+			mod:TargetMessage(-8008, name, "Urgent") -- XXX just for debug for now
 		end
-		mod:StopReaveScan()
+		mod:StopDeathFromAboveScan()
+		deathFromAboveStartTimer = mod:ScheduleTimer("StartDeathFromAboveScan", 15)
 	end
 
-	function mod:StartReaveScan()
-		if not reaveTimer then
-			initialTarget = self:UnitName("boss1target")
-			reaveTimer = self:ScheduleRepeatingTimer(checkReaveTarget, 0.2)
+	function mod:StartDeathFromAboveScan()
+		local boss = getBossByMobId(71161)
+		if not deathFromAboveTimer and boss then
+			initialTarget = self:UnitName(boss.."target")
+			deathFromAboveTimer = self:ScheduleRepeatingTimer(cheackDeathFromAboveTarget, 0.2)
 		end
 	end
-	function mod:StopReaveScan()
-		self:CancelTimer(reaveStartTimer)
-		self:CancelTimer(reaveTimer)
-		reaveTimer = nil
+	function mod:StopDeathFromAboveScan()
+		self:CancelTimer(deathFromAboveStartTimer)
+		self:CancelTimer(deathFromAboveTimer)
+		deathFromAboveTimer = nil
 	end
 
-	function mod:Impact(args)
-		if reaveTimer then -- didn't find a target
+	function mod:DeathFromAbove(args)
+		if deathFromAboveTimer then -- didn't find a target
 			self:Message(-8008, "Urgent")
 		end
-		self:StopReaveScan()
+		self:StopDeathFromAboveScan()
 		self:CDBar(-8008, 22)
-		reaveStartTimer = self:ScheduleTimer("StartReaveScan", 15)
+		deathFromAboveStartTimer = self:ScheduleTimer("StartDeathFromAboveScan", 15)
 	end
 end
 
@@ -776,15 +791,16 @@ end
 -- General
 function mod:MyEngage()
 	-- have to do this because Jump to Center is not reliable for some of the bosses, noticably (Korven the Prime, Skeer the Bloodseeker, Hisek the Swarmpkeeper)
-	for i=1, 5 do
+	for i=1, 3 do -- only first 3 bosses are active, lets not start false timers
 		local guid = UnitGUID("boss"..i)
-		if guid and not bossesSeen[guid] then
-			bossesSeen[guid] = true
+		if guid and not bossesActive[guid] then
+			bossesActive[guid] = true
 			local mobId = self:MobId(guid)
 			if mobId == 71161 then --Kil'ruk the Wind-Reaver
-				self:ScheduleTimer("StartReaveScan", 12) -- XXX timer he is assumed need to verify this once we encounter this boss being in the starter 3
+				self:CDBar(148676, 42) -- Reave
+				self:ScheduleTimer("StartDeathFromAboveScan", 17) -- 22 is timer but lets start to scan 5 sec early
 			elseif mobId == 71155 then --Korven the Prime
-				self:Bar(143974, 17)
+				self:Bar(143974, 17) -- Shield bash
 			elseif mobId == 71152 then -- Skeer the Bloodseeker
 				self:Bar(143280 ,10) -- Bloodletting
 			elseif mobId == 71153 then --Hisek the Swarmkeeper
@@ -805,7 +821,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		local mobId = self:MobId(UnitGUID(unitId))
 		if mobId == 71161 then --Kil'ruk the Wind-Reaver
 			-- 19s is shortest between jump and impact seen so far 10PTR N
-			self:ScheduleTimer("StartReaveScan", 12)
+			self:CDBar(148676, 42) -- Reave
+			self:ScheduleTimer("StartDeathFromAboveScan", 12)
 		elseif mobId == 71154 then -- Ka'roz the Locust
 			self:Bar(143701, 11) -- Whirling
 			self:Bar(143759, 43) -- Hurl Amber
@@ -843,7 +860,9 @@ function mod:Deaths(args)
 		self:StopBar(chooseCatalyst)
 		deathCounter = deathCounter + 1
 	elseif args.mobId == 71161 then --Kil'ruk the Wind-Reaver
-		self:StopBar(-8008) --Impact
+		self:StopBar(148676) -- Reave
+		self:StopBar(-8008) -- Death from Above
+		self:StopDeathFromAboveScan()
 		deathCounter = deathCounter + 1
 	elseif args.mobId == 71153 then --Hisek the Swarmkeeper
 		self:StopBar(-8073) --Aim
