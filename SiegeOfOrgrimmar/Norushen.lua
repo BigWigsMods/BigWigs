@@ -196,7 +196,7 @@ function mod:OnSync(sync, rest, player)
 	elseif sync == "Phase2BigAddSpawn" then
 		bigAddSpawnCounter = bigAddSpawnCounter + 1
 		self:Message("big_adds", "Urgent", "Alarm", L["big_add"]:format(bigAddSpawnCounter), 147082)
-	elseif sync == "OutsideBigAddDeath" and rest then
+	elseif sync == "OutsideBigAddDeath" and rest and rest ~= "" then -- XXX backwards compat
 		if bigAddKills[rest] then return else bigAddKills[rest] = true end -- Custom throttle to catch 2 big adds dieing outside at the same time
 		bigAddKillCounter = bigAddKillCounter + 1
 		if bigAddKillCounter > bigAddSpawnCounter then

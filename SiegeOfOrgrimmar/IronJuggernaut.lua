@@ -260,7 +260,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		self:StopBar(CL["phase"]:format(2)) -- in case it overruns
 	elseif spellId == 144356 then -- Ricochet
 		self:Message(-8181, "Attention")
-		self:CDBar(-8181, 15) -- Ricochet, 15-20!
+		self:CDBar(-8181, 15) -- Ricochet, 15-20s
 	end
 end
 
