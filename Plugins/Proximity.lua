@@ -420,7 +420,7 @@ end
 --
 
 local updater, updaterFrame = nil, nil
-local normalProximity, reverseTargetProximity, targetProximity, multiTargetProximity, reverseMultiTargetProximity
+local normalProximity, reverseTargetProximity, targetProximity, multiTargetProximity, reverseMultiTargetProximity, reverseProximity
 do
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
 
@@ -616,7 +616,7 @@ do
 		end
 	end
 
-	function reverseMultiTargetProximity()
+	function reverseProximity()
 		local srcX, srcY = GetPlayerMapPosition("player")
 		if srcX == 0 and srcY == 0 then
 			SetMapToCurrentZone()
@@ -635,15 +635,25 @@ do
 
 		local anyoneClose = 0
 
-		for i = 1, #proximityPlayerTable do
-			local player = proximityPlayerTable[i]
-			local unitX, unitY = GetPlayerMapPosition(player)
+		for i = 1, maxPlayers do
+			local n = raidList[i]
+			local unitX, unitY = GetPlayerMapPosition(n)
 			local dx = (unitX - srcX) * id[1]
 			local dy = (unitY - srcY) * id[2]
 			local range = (dx * dx + dy * dy) ^ 0.5
-			setDot(dx, dy, blipList[player])
-			if range <= activeRange then
-				anyoneClose = anyoneClose + 1
+			if range < (activeRange * 1.5) then
+				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
+					setDot(dx, dy, blipList[n])
+					if range <= activeRange then
+						anyoneClose = anyoneClose + 1
+					end
+				elseif blipList[n].isShown then -- A unit may die next to us
+					blipList[n]:Hide()
+					blipList[n].isShown = nil
+				end
+			elseif blipList[n].isShown then
+				blipList[n]:Hide()
+				blipList[n].isShown = nil
 			end
 		end
 
@@ -651,6 +661,12 @@ do
 
 		if anyoneClose == 0 then
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			if not db.sound then return end
+			local t = GetTime()
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
+			end
 		else
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 		end
@@ -689,6 +705,46 @@ do
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
 			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 0)
+		end
+	end
+
+	function reverseMultiTargetProximity()
+		local srcX, srcY = GetPlayerMapPosition("player")
+		if srcX == 0 and srcY == 0 then
+			SetMapToCurrentZone()
+			srcX, srcY = GetPlayerMapPosition("player")
+		end
+
+		local currentFloor = GetCurrentMapDungeonLevel()
+		if currentFloor == 0 then currentFloor = 1 end
+		local id = activeMap and activeMap[currentFloor]
+
+		if not id then
+			print("No floor id, closing proximity.")
+			plugin:Close()
+			return
+		end
+
+		local anyoneClose = 0
+
+		for i = 1, #proximityPlayerTable do
+			local player = proximityPlayerTable[i]
+			local unitX, unitY = GetPlayerMapPosition(player)
+			local dx = (unitX - srcX) * id[1]
+			local dy = (unitY - srcY) * id[2]
+			local range = (dx * dx + dy * dy) ^ 0.5
+			setDot(dx, dy, blipList[player])
+			if range <= activeRange then
+				anyoneClose = anyoneClose + 1
+			end
+		end
+
+		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+
+		if anyoneClose == 0 then
+			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+		else
+			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 		end
 	end
 
@@ -1189,9 +1245,9 @@ function plugin:Open(range, module, key, player, isReverse)
 				updater:SetScript("OnLoop", targetProximity)
 			end
 		end
-	else
-		print("Current range functionality not implemented, aborting.")
-		return
+	elseif isReverse then
+		updater:SetScript("OnLoop", reverseProximity)
+		makeThingsWork()
 	end
 	activeRange = range
 
