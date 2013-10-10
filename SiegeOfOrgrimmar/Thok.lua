@@ -73,7 +73,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "TailLash", 143428)
 	self:Log("SPELL_AURA_APPLIED", "Acceleration", 143411)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Acceleration", 143411)
-	self:Log("SPELL_CAST_SUCCESS", "FearsomeRoar", 143426, 143780, 143773, 143767) -- Fearsome Roar, Acid Breath, Freezing Breath, Scorching Breath
+	self:Log("SPELL_CAST_SUCCESS", "TankDebuffCast", 143426, 143780, 143773, 143767) -- Fearsome Roar, Acid Breath, Freezing Breath, Scorching Breath
 	self:Log("SPELL_AURA_APPLIED", "TankDebuff", 143766, 143780, 143773, 143767) -- Panic, Acid Breath, Freezing Breath, Scorching Breath
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TankDebuff", 143766, 143780, 143773, 143767)
 
@@ -88,7 +88,7 @@ function mod:OnEngage()
 	end
 	accCount = 0
 	self:Berserk(600)
-	self:OpenProximity("proximity", 10) -- it is so you know if you are too close to another group -- XXX this is maybe tactic dependant - needed for heroic
+	self:OpenProximity("proximity", 10) -- Too close to another group. Tactic dependant - needed for heroic
 	self:Bar(-7963, 25) -- Deafening Screech
 end
 
@@ -225,8 +225,8 @@ function mod:Acceleration(args)
 	end
 end
 
-function mod:FearsomeRoar(args)
-	self:Bar("tank_debuffs", 11, args.spellName, args.spellId)
+function mod:TankDebuffCast(args)
+	self:Bar("tank_debuffs", 11, args.spellName, args.spellId == 143426 and 143766 or args.spellId) -- Spell ID hack for Blizzard giving Fearsome Roar the wrong icon
 end
 
 function mod:TankDebuff(args)
