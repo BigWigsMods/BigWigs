@@ -258,8 +258,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		self:StopBar(-8179) -- Borer Drill
 		self:StopBar(144467) -- Ignite Armor
 		self:StopBar(CL["phase"]:format(2)) -- in case it overruns
-	elseif spellName == self:SpellName(144356) then -- Ricochet
-		self:CDBar(-8181, 15) -- Ricochet, 15-18?
+	elseif spellId == 144356 then -- Ricochet
+		self:Message(-8181, "Attention")
+		self:CDBar(-8181, 15) -- Ricochet, 15-20!
 	end
 end
 
