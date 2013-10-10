@@ -281,18 +281,17 @@ end
 
 do
 	local timeLeft = 8
-	local function infernoCountdown()
+	local function infernoCountdown(self)
 		timeLeft = timeLeft - 1
 		if timeLeft < 6 then
-			mod:Say("inferno_self", timeLeft, true)
+			self:Say("inferno_self", timeLeft, true)
 			if timeLeft < 2 then
-				mod:CancelTimer(infernoTimer)
+				self:CancelTimer(infernoTimer)
 				infernoTimer = nil
 			end
 		end
 	end
-	local function checkTarget(sourceGUID)
-		local self = mod
+	local function checkTarget(self, sourceGUID)
 		for i = 1, 5 do
 			local boss = ("boss%d"):format(i)
 			if UnitGUID(boss) == sourceGUID then
@@ -300,8 +299,7 @@ do
 				local player = UnitGUID(bossTarget)
 				if player then
 					infernoTarget = self:UnitName(bossTarget)
-					self:TargetMessage(-7959, infernoTarget, "Urgent", "Warning") -- XXX this results in double message, shouldn't we do something about it? /poke Funkeh
-					self:TargetBar(-7959, 8.5, infernoTarget)
+					self:CloseProximity("proximity")
 					self:PrimaryIcon(-7959, infernoTarget)
 					if self:Me(player) then
 						self:Flash(-7959)
@@ -309,15 +307,18 @@ do
 						if not self:LFR() then -- Don't spam in LFR
 							timeLeft = 8
 							if infernoTimer then mod:CancelTimer(infernoTimer) end
-							infernoTimer = self:ScheduleRepeatingTimer(infernoCountdown, 1)
+							infernoTimer = self:ScheduleRepeatingTimer(infernoCountdown, 1, self)
 						end
+						self:OpenProximity(-7959, 8, nil, true)
 						-- Emphasized abilities
-						self:StopBar(-7959, infernoTarget)
-						self:TargetMessage("inferno_self", infernoTarget, "Urgent", nil, -7959) -- XXX this results in double message, shouldn't we do something about it? /poke Funkeh
+						self:TargetMessage("inferno_self", infernoTarget, "Urgent", "Warning", -7959)
 						self:Bar("inferno_self", 8.5, L["inferno_self_bar"], -7959)
-					elseif not self:Tank() then
-						self:CloseProximity("proximity")
-						self:OpenProximity(-7959, 8, infernoTarget, true)
+					else
+						self:TargetMessage(-7959, infernoTarget, "Urgent")
+						self:TargetBar(-7959, 8.5, infernoTarget)
+						if not self:Tank() then
+							self:OpenProximity(-7959, 8, infernoTarget, true)
+						end
 					end
 				end
 				break
@@ -327,7 +328,7 @@ do
 	function mod:InfernoStrike(args)
 		self:CloseProximity(-7959)
 		self:PrimaryIcon(-7959)
-		self:ScheduleTimer(checkTarget, 0.5, args.sourceGUID)
+		self:ScheduleTimer(checkTarget, 0.5, self, args.sourceGUID)
 	end
 end
 
@@ -361,7 +362,7 @@ function mod:CorruptionShock(args)
 			self:RangeMessage(args.spellId)
 			self:Flash(args.spellId)
 		else
-			-- XXX even tho the codes seems to work fine, keep this for debugging just to be safe
+			-- Even though the codes seems to work fine, keep this for debugging just to be safe
 			self:TargetMessage(args.spellId, self:UnitName(target), "Personal", "Info")
 		end
 	else

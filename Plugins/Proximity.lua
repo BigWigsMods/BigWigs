@@ -1195,8 +1195,7 @@ function plugin:Close()
 
 	anchor.title:SetFormattedText(L.proximityTitle, 5, 3)
 	anchor.ability:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName)
-	-- Just in case we were the last target of
-	-- configure mode, reset the background color.
+	-- Just in case we were the last target of configure mode, reset the background color.
 	anchor.background:SetTexture(0, 0, 0, 0.3)
 	anchor:Hide()
 end
@@ -1204,7 +1203,7 @@ end
 local abilityNameFormat = "|T%s:20:20:-5|t%s"
 function plugin:Open(range, module, key, player, isReverse)
 	if type(range) ~= "number" then print("Range needs to be a number!") return end
-	if not IsInRaid() and not IsInGroup() then return end -- Solo runs of old content?
+	if not IsInRaid() and not IsInGroup() then return end -- Solo runs of old content
 	self:Close()
 
 	SetMapToCurrentZone()
