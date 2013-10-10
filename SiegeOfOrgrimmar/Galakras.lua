@@ -229,8 +229,8 @@ function mod:ChainHeal(args)
 	end
 end
 
-function mod:HealingTotem()
-	self:Message(146753, "Urgent", "Warning")
+function mod:HealingTotem(args)
+	self:Message(146753, "Urgent", "Warning", args.spellName, 143474) -- Better totem icon
 end
 
 do
