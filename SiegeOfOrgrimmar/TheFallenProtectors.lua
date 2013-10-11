@@ -291,44 +291,37 @@ do
 			end
 		end
 	end
-	local function checkTarget(self, sourceGUID)
-		for i = 1, 5 do
-			local boss = ("boss%d"):format(i)
-			if UnitGUID(boss) == sourceGUID then
-				local bossTarget = boss.."target"
-				local player = UnitGUID(bossTarget)
-				if player then
-					infernoTarget = self:UnitName(bossTarget)
-					self:CloseProximity("proximity")
-					self:PrimaryIcon(-7959, infernoTarget)
-					if self:Me(player) then
-						self:Flash(-7959)
-						self:Say(-7959)
-						if not self:LFR() then -- Don't spam in LFR
-							timeLeft = 8
-							if infernoTimer then mod:CancelTimer(infernoTimer) end
-							infernoTimer = self:ScheduleRepeatingTimer(infernoCountdown, 1, self)
-						end
-						self:OpenProximity(-7959, 8, nil, true)
-						-- Emphasized abilities
-						self:TargetMessage("inferno_self", infernoTarget, "Urgent", "Warning", -7959)
-						self:Bar("inferno_self", 8.5, L["inferno_self_bar"], -7959)
-					else
-						self:TargetMessage(-7959, infernoTarget, "Urgent")
-						self:TargetBar(-7959, 8.5, infernoTarget)
-						if not self:Tank() then
-							self:OpenProximity(-7959, 8, infernoTarget, true)
-						end
-					end
-				end
-				break
+	local function startTimer(self)
+		timeLeft = 8
+		if infernoTimer then self:CancelTimer(infernoTimer) end
+		infernoTimer = self:ScheduleRepeatingTimer(infernoCountdown, 1, self)
+	end
+	local function checkTarget(self, name, guid, elapsed)
+		infernoTarget = name
+		self:CloseProximity("proximity")
+		self:PrimaryIcon(-7959, name)
+		if self:Me(guid) then
+			self:Flash(-7959)
+			self:Say(-7959)
+			if not self:LFR() then -- Don't spam in LFR
+				self:ScheduleTimer(startTimer, 1-elapsed, self)
+			end
+			self:OpenProximity(-7959, 8, nil, true)
+			-- Emphasized abilities
+			self:TargetMessage("inferno_self", name, "Urgent", "Warning", -7959)
+			self:Bar("inferno_self", 9-elapsed, L["inferno_self_bar"], -7959)
+		else
+			self:TargetMessage(-7959, name, "Urgent")
+			self:TargetBar(-7959, 9-elapsed, name)
+			if not self:Tank() then
+				self:OpenProximity(-7959, 8, name, true)
 			end
 		end
 	end
 	function mod:InfernoStrike(args)
 		self:CloseProximity(-7959)
 		self:PrimaryIcon(-7959)
-		self:ScheduleTimer(checkTarget, 0.5, self, args.sourceGUID)
+		self:GetBossTarget(checkTarget, 0.6, args.sourceGUID)
 	end
 end
 
