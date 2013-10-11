@@ -160,10 +160,15 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "ruRU")
 if L then
+	L.manifest_rage = "Проявить ярость"
+	-- L.manifest_rage_desc = "When Garrosh reaches 100 energy he'll pre cast Manifest Rage for 2 seconds, then channel it. While it's channelled it summons big adds. Kite the Iron Star into Garrosh to stun and interrupt his cast."
+
+	-- L.phase_3_end_trigger = "You think you have WON?  You are BLIND.  I WILL FORCE YOUR EYES OPEN."
+
 	-- L.clump_check = "Clump check"
 	-- L.clump_check_desc = "Check every 3 seconds during bombardment for clumped up players, if a clump is found a Kor'kron Iron Star will spawn."
 
-	-- L.bombardment = "Bombardment"
+	L.bombardment = "Бомбардировка"
 	-- L.bombardment_desc = "Bombarding Stormwind and leaving fires on the ground. Kor'kron Iron Star can only spawn during bombardment."
 
 	L.spread = "Разбегайтесь!"
@@ -176,7 +181,10 @@ if L then
 
 	L.farseer_trigger = "Исцелите наши раны!"
 	L.custom_off_shaman_marker = "Маркировка Предсказателей"
-	L.custom_off_shaman_marker_desc = "Чтобы помочь с прерыванием, Предсказатели - всадники на волках будет помечены метками {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} (в этой последовательности, не все метки могут быть использованы), требуется быть помощником или лидером."
+	L.custom_off_shaman_marker_desc = "Чтобы помочь с распределением прерываний, на 'Предсказателей - всадников на волках' будет поставлены метки  {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r\n|cFFADFF2FСОВЕТ: Если вы выбраны для этой задачи, быстро проведите указателем мыши по минам, метки сразу же поставятся.|r"
+
+	L.custom_off_minion_marker = "Маркировка прислужника"
+	L.custom_off_minion_marker_desc = "Чтобы помочь разделить прислужников, на них будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, требуется быть помощником или лидером."
 
 	L.focus_only = "|cffff0000Оповещения только для фокуса.|r "
 end
