@@ -17,6 +17,7 @@ mod:RegisterEnableMob(71515, 71715, 71516, 71517, 71518, 71519) -- General Nazgr
 --
 
 local marksUsed = {}
+local addWaveCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -121,7 +122,8 @@ function mod:OnEngage()
 	wipe(marksUsed)
 	self:CDBar(143494, 10) -- Sundering Blow
 	self:Bar(143638, 15.5) -- Bonecracker
-	self:Bar(-7920, 46, nil, "achievement_guildperk_everybodysfriend") -- adds
+	addWaveCounter = 1
+	self:Bar(-7920, 46, CL["count"]:format(self:SpellName(-7920), addWaveCounter), "achievement_guildperk_everybodysfriend") -- adds
 end
 
 --------------------------------------------------------------------------------
@@ -209,8 +211,9 @@ function mod:ExtraAdds()
 end
 
 function mod:Adds()
-	self:Bar(-7920, 46, nil, "achievement_guildperk_everybodysfriend")
-	self:Message(-7920, "Neutral", "Long")
+	self:Message(-7920, "Neutral", "Long", CL["count"]:format(self:SpellName(-7920), addWaveCounter))
+	addWaveCounter = addWaveCounter + 1
+	self:Bar(-7920, 46, CL["count"]:format(self:SpellName(-7920), addWaveCounter), "achievement_guildperk_everybodysfriend")
 end
 
 -- Boss
