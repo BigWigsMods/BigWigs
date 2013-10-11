@@ -172,6 +172,11 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "deDE")
 if L then
+	L.manifest_rage = "Wut manifestieren"
+	L.manifest_rage_desc = "Wenn Garrosh 100 Energie erreicht, wirkt er zwei Sekunden lang Wut manifestieren und kanalisiert diesen Zauber dann. Während des Kanalisierens entstehen große Adds. Zieht den Eisernen Stern in Garrosh, um ihn zu betäuben und den Zauber zu unterbrechen."
+
+	L.phase_3_end_trigger = "Ihr glaubt GEWONNEN zu haben? BLIND seid ihr. ICH WERDE EUCH DIE AUGEN ÖFFNEN."
+
 	L.clump_check = "Gruppierungsprüfung"
 	L.clump_check_desc = "Prüft alle 3 Sekunden während des Bombardements, ob Spieler eng zusammenstehen, da hierdurch Eiserne Sterne der Kor'kron entstehen."
 
