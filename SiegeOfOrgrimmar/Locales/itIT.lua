@@ -106,7 +106,7 @@ end
 L = BigWigs:NewBossLocale("Malkorok", "itIT")
 if L then
 	L.custom_off_energy_marks = "Marcatore Energia Dispersa"
-	L.custom_off_energy_marks_desc = "To help dispelling assignments, mark the people who have Displaced Energy on them with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_energy_marks_desc = "Per aiutare l'assegnazione dei dissolvimenti, evidenzia i giocatori che hanno Energia Diffusa su di loro con {rt1}{rt2}{rt3}{rt4}, richiede capoincursione o assistente.\n|cFFFF0000Solo 1 persona nell'incursione dovrebbe attivare questa opzione per evitare conflitti con le assegnazioni.|r"
 end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "itIT")
@@ -130,6 +130,15 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "itIT")
 if L then
+	L.overcharged_crawler_mine = "Mina Strisciante Sovraccaricata" -- sadly this is needed since they have same mobId
+	L.custom_off_mine_marker = "Marcatore delle Mine"
+	L.custom_off_mine_marker_desc = "Evidenzia le mine per l'assegnazione specifica degli incapacitamenti (Vengono utilizzati tutti i simboli)"
+
+	L.saw_blade_near_you = "Lama Rotante vicino a te (non su di te)"
+	L.saw_blade_near_you_desc = "Potresti disabilitare questa opzione ed evitare spam inutile di messaggi se la vostra incursione preferisce usare una tattica in cui state molto ammassati."
+
+	L.disabled = "Disabilitato"
+
 	L.shredder_engage_trigger = "Un Segatronchi Automatizzato si avvicina!" -- needs verify
 	L.laser_on_you = "Laser su di te PEW PEW!"
 	L.laser_say = "Laser PEW PEW"
@@ -142,6 +151,10 @@ end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "itIT")
 if L then
+	L.catalyst_match = "Catalizzatore: |c%sHA SCELTO TE|r" -- might not be best for colorblind?
+	L.you_ate = "Hai mangiato un parassita!"
+	L.dance = "Danza"
+	L.prey_message = "Usa Preda sul parassita"
 	-- for getting all those calculate emotes:
 	-- cat Transcriptor.lua | sed "s/\t//g" | grep -E "(CHAT_MSG_RAID_BOSS_EMOTE].*Iyyokuk)" | sed "s/.*EMOTE//" | sed "s/#/\"/" | sed "s/#.*/\"/" | sort | uniq
 	L.one = "Iyyokuk selects: One!"
@@ -152,10 +165,10 @@ if L then
 	-------------------------------------
 	L.edge_message = "Sei uno dei limiti"
 	L.custom_off_edge_marks = "Marcatori dei Limiti"
-	--L.custom_off_edge_marks_desc = "Mark the players who will be edges based on the calculations {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_edge_marks_desc = "Evidenzia i giocatori che saranno i limiti in base ai calcoli {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, richiede capoincursione o assistente.\n|cFFFF0000Solo 1 persona nell'incursione dovrebbe attivare questa opzione per evitare conflitti con le assegnazioni.|r"
 	L.injection_over_soon = "Fine di Iniezione tra poco (%s)!"
 	--L.custom_off_parasite_marks = "Parasite marker"
-	--L.custom_off_parasite_marks_desc = "Mark the parasites for crowd control and Prey assignments with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_parasite_marks_desc = "Evidenzia i parassiti da controllare e le assegnazioni di Preda con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, richiede capoincursione o assistente.\n|cFFFF0000Solo 1 persona nell'incursione dovrebbe attivare questa opzione per evitare conflitti con le assegnazioni.|r"
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "itIT")
