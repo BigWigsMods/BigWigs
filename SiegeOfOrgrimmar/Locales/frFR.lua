@@ -121,6 +121,9 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "frFR")
 if L then
+	L.adds = "Heroic adds"
+	L.adds_desc = "Alertes indiquant quand les animaux du mode héroïque entrent en combat."
+
 	L.tank_debuffs = "Affaiblissements tank"
 	L.tank_debuffs_desc = "Alertes concernant les différents types d'affaiblisement de tank associés avec Rugissement effroyable."
 
@@ -129,6 +132,15 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "frFR")
 if L then
+	L.overcharged_crawler_mine = "Mine rampante surchargée"
+	L.custom_off_mine_marker = "Marquage Mine"
+	L.custom_off_mine_marker_desc = "Afin d'aider à l'attribution des étourdissements, marque les mines avec toutes les marques disponibles."
+
+	L.saw_blade_near_you = "Lame de scie près de vous (pas sur vous)"
+	L.saw_blade_near_you_desc = "Vous devriez désactiver ceci pour éviter d'être spammé si votre raid est regroupé dans votre stratégie."
+
+	L.disabled = "Désactivé"
+
 	L.shredder_engage_trigger = "Un déchiqueteur automatisé approche !"
 	L.laser_on_you = "Laser sur vous PIOU PIOU !"
 	L.laser_say = "Laser PIOU PIOU"
@@ -141,6 +153,11 @@ end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "frFR")
 if L then
+	L.catalyst_match = "Catalyseur : |c%sVOUS CORRESPOND|r" -- might not be best for colorblind?
+	L.you_ate = "Vous avez mangé un parasite !"
+	L.dance = "Danse"
+	L.prey_message = "Utilisez Prendre pour proie sur le parasite"
+
 	L.one = "Iyyokuk sélectionne : Un !" -- to check
 	L.two = "Iyyokuk sélectionne : Deux !" -- to check
 	L.three = "Iyyokuk sélectionne : Trois !" -- to check
@@ -157,6 +174,18 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "frFR")
 if L then
+	L.manifest_rage = "Manifestation de la rage"
+	L.manifest_rage_desc = "Quand Garrosh atteint 100 d'énergie, il incante Manifestation de la rage pendant 2 secondes, puis canalise ce dernier. Durant la canalisation, des adds apparaissent. Amenez l'étoile de fer sur Garrosh pour l'étourdir et interrompre son incantation."
+
+	L.phase_3_end_trigger = "Vous croyez avoir GAGNÉ ? Vous êtes AVEUGLE. JE VAIS VOUS OUVRIR LES YEUX." -- to check
+
+	L.clump_check = "Vérification des regroupements"
+	L.clump_check_desc = "Vérifie toutes les 3 secondes durant les bombardements les joueurs regroupés. Si un regroupement est trouvé, une étoile de fer Kor'kron apparaîtra."
+
+	L.bombardment = "Bombardement"
+	L.bombardment_desc = "Bombarde Hurlevent et laisse des gerbes de feu sur le sol. Les étoiles de fer Kor'kron n'apparaissent que durant les bombardements."
+
+	L.spread = "Éparpillez-vous !"
 	L.intermission = "Intervalle"
 	L.mind_control = "Contrôle mental"
 
@@ -167,6 +196,9 @@ if L then
 	L.farseer_trigger = "Long-voyants, soignez nos blessures !"
 	L.custom_off_shaman_marker = "Marquage Chevaucheur de loup long-voyant"
 	L.custom_off_shaman_marker_desc = "Afin d'aider à l'attribution des interruptions, marque les Chevaucheurs de loup long-voyant avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
+
+	L.custom_off_minion_marker = "Marquage Sbires"
+	L.custom_off_minion_marker_desc = "Afin d'aider à la séparation des sbires, marque ces derniers avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}. Nécessite d'être assistant ou chef de raid."
 
 	L.focus_only = "|cffff0000Alertes de la cible de focalisation uniquement.|r "
 end
