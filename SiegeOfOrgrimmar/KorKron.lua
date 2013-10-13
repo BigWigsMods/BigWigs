@@ -76,7 +76,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(self:Heroic() and 540 or 600) -- Maybe 9 on normal also?
+	self:Berserk(555)
 	wipe(marksUsed)
 	ashCounter = 1
 end
