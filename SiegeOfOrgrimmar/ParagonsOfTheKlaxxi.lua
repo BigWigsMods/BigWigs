@@ -69,6 +69,8 @@ local marksUsed = {}
 local markTimer = nil
 local parasites = {}
 local calculateCounter = 1
+local aimCounter = 1
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -231,6 +233,7 @@ function mod:OnEngage()
 	parasiteCounter = 0
 	wipe(parasites)
 	calculateCounter = 1
+	aimCounter = 1
 	self:StopWipeCheck()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "StartWipeCheck")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "StopWipeCheck")
@@ -248,11 +251,13 @@ function mod:RapidFire(args)
 end
 
 function mod:Aim(args)
-	self:CDBar(-8073, 42)
 	self:SecondaryIcon(-8073, args.destName)
-	self:TargetMessage(-8073, args.destName, "Important", "Warning", nil, nil, true)
+	self:TargetMessage(-8073, args.destName, "Important", "Warning", CL["count"]:format(args.spellName, aimCounter), args.spellId, true)
 	self:TargetBar(-8073, 5, args.destName)
 	self:Flash(-8073) -- XXX Funkeh remove this if you think this is too much
+
+	aimCounter = aimCounter + 1
+	self:CDBar(-8073, 42, CL["count"]:format(args.spellName, aimCounter))
 end
 --Rik'kal the Dissector
 do
