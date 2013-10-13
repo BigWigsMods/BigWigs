@@ -133,7 +133,7 @@ function mod:GetOptions()
 		142929, {-8034, "PROXIMITY"}, 142803, 143576, --Xaril the Poisoned Mind
 		142671, --Kaz'tik the Manipulator
 		142564, {143974, "TANK_HEALER"}, --Korven the Prime
-		{-8055, "FLASH"}, --Iyyokuk the Lucid
+		{-8055, "FLASH", "SAY"}, --Iyyokuk the Lucid
 		"custom_off_edge_marks",
 		{143701, "FLASH", "SAY"}, {143759, "FLASH"}, {143735, "FLASH"}, {148650, "FLASH"}, --Ka'roz the Locust
 		{143275, "TANK"}, 143280, --Skeer the Bloodseeker
@@ -556,6 +556,7 @@ local function warnEdge()
 	mod:Flash(-8055)
 	mod:Message(-8055, "Personal", "Info", L["edge_message"])
 	mod:Bar(-8055, 9, mod:SpellName(142809), 142809) -- Fiery Edge
+	mod:Say(-8055, mod:SpellName(142809))
 end
 
 local function iyyokukSelected()
