@@ -19,6 +19,15 @@ mod:RegisterEnableMob(73152, 73720, 71512) -- Storeroom Guard ( trash guy ), Mog
 
 local setToBlow = {}
 
+local function checkPlayerSide()
+	BigWigsLoader.SetMapToCurrentZone()
+	local cx, cy = GetPlayerMapPosition("player")
+	if cy == 0 then return 0 end
+
+	-- simplified cross product: above (mantid) > 0 (colinear) > below (mogu)
+	return 0.04362700914 - (cx * 0.11017924547) + (cy * 0.04940152168)
+end
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -39,7 +48,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		145288, {145461, "TANK"}, {142947, "TANK"}, -- Mogu crate
-		{145987, "PROXIMITY", "FLASH"}, 145747, {145692, "TANK"}, 145715, 145786,-- Mantid crate
+		{145987, "PROXIMITY", "FLASH"}, 145747, {145692, "TANK"}, 145715, {145786, "DISPEL"},-- Mantid crate
 		{146217, "FLASH"}, 146222, 146257, -- Crate of Panderan Relics
 		"proximity", "bosskill",
 	}, {
@@ -75,7 +84,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "MoguRuneOfPower", 145461)
 	self:Log("SPELL_CAST_START", "MatterScramble", 145288)
 	-- Mantid crate
-	self:Log("SPELL_CAST_START", "Residue", 145790)
+	self:Log("SPELL_AURA_APPLIED", "Residue", 145790)
 	self:Log("SPELL_CAST_START", "ResidueStart", 145786)
 	self:Log("SPELL_DAMAGE", "BlazingCharge", 145715)
 	self:Log("SPELL_AURA_APPLIED", "BlazingCharge", 145716)
@@ -114,7 +123,7 @@ do
 	end
 end
 
-function mod:BreathOfFire(args)
+function mod:BreathOfFire(args) -- XXX no position check, could use :GetUnitIdByGUID, strip "target" and do a range check?
 	local debuffed = UnitDebuff("player", self:SpellName(146217)) -- Keg Toss
 	self:Message(args.spellId, "Attention", debuffed and "Long")
 	if debuffed then
@@ -131,16 +140,22 @@ end
 
 -- Mogu crate
 function mod:CrimsonReconstitution(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
+	if checkPlayerSide() < 0 then
+		self:Message(args.spellId, "Urgent", "Alarm")
+	end
 end
 
 function mod:MoguRuneOfPower(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
+	if checkPlayerSide() < 0 then
+		self:Message(args.spellId, "Urgent", "Alarm")
+	end
 end
 
 function mod:MatterScramble(args)
-	self:Message(args.spellId, "Important", "Alert")
-	self:Bar(args.spellId, 8, L["matter_scramble_explosion"])
+	if checkPlayerSide() < 0 then
+		self:Message(args.spellId, "Important", "Alert")
+		self:Bar(args.spellId, 8, L["matter_scramble_explosion"])
+	end
 end
 
 -- Mantid crate
@@ -148,20 +163,23 @@ do
 	local prev = 0
 	function mod:Residue(args)
 		local t = GetTime()
-		if t-prev > 2 and self:Dispeller("magic", true) then
-			self:Message(args.spellId, "Urgent", "Alarm")
+		if t-prev > 2 and checkPlayerSide() > 0 and self:Dispeller("magic", true, 145786) then
+			prev = t
+			self:Message(145786, "Urgent", "Alarm")
 		end
 	end
 end
 
 function mod:ResidueStart(args)
-	if self:Dispeller("magic", true) then
+	if checkPlayerSide() > 0 and self:Dispeller("magic", true, args.spellId) then
 		self:Message(args.spellId, "Attention", nil, CL["casting"]:format(args.spellName))
 	end
 end
 
 function mod:WarcallerEnrage(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
+	if checkPlayerSide() > 0 then
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	end
 end
 
 do
@@ -187,49 +205,47 @@ do
 end
 
 do
-	local function findPlayerInIndexedTable(t, player)
-		for k, name in next, t do
-			if name == player then
-				return k
-			end
+	local openForMe = nil
+	local function updateProximity(spellId)
+		if openForMe then return end
+
+		if checkPlayerSide() > 0 and #setToBlow > 0 then
+			mod:CloseProximity("proximity")
+			mod:OpenProximity(spellId, 12, setToBlow)
+		else
+			mod:CloseProximity(spellId)
+			mod:OpenProximity("proximity", 3)
 		end
-		return false
 	end
+
 	function mod:SetToBlowRemoved(args)
 		if self:Me(args.destGUID) then
 			self:Message(args.spellId, "Positive", nil, CL["over"]:format(args.spellName))
 			self:StopBar(args.spellId, args.destName)
-			if #setToBlow > 0 then
-				self:CloseProximity("proximity")
-				self:OpenProximity(args.spellId, 12, setToBlow)
-			end
+			openForMe = nil
 		else
-			local index = findPlayerInIndexedTable(setToBlow, args.destName)
-			if index then
-				tremove(setToBlow, index)
-			end
-			if #setToBlow == 0 then
-				self:CloseProximity(args.spellId)
-				self:OpenProximity("proximity", 3)
-			else
-				self:CloseProximity("proximity")
-				self:OpenProximity(args.spellId, 12, setToBlow)
+			for i, name in ipairs(setToBlow) do
+				if name == args.destName then
+					tremove(setToBlow, i)
+					break
+				end
 			end
 		end
+		updateProximity(args.spellId)
 	end
-end
 
-function mod:SetToBlowApplied(args)
-	if self:Me(args.destGUID) then
-		self:CloseProximity("proximity")
-		self:OpenProximity(args.spellId, 12) -- 10, but be more safe
-		self:Message(args.spellId, "Important", "Warning", CL["you"]:format(args.spellName))
-		self:TargetBar(args.spellId, 30, args.destName)
-		self:Flash(args.spellId)
-	else
-		setToBlow[#setToBlow+1] = args.destName
-		self:CloseProximity("proximity")
-		self:OpenProximity(args.spellId, 12, setToBlow)
+	function mod:SetToBlowApplied(args)
+		if self:Me(args.destGUID) then
+			self:CloseProximity("proximity")
+			self:OpenProximity(args.spellId, 12) -- 10, but be more safe
+			self:Message(args.spellId, "Important", "Warning", CL["you"]:format(args.spellName))
+			self:TargetBar(args.spellId, 30, args.destName)
+			self:Flash(args.spellId)
+			openForMe = true
+		else
+			setToBlow[#setToBlow+1] = args.destName
+			updateProximity(args.spellId)
+		end
 	end
 end
 
