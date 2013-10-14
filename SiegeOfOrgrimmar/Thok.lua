@@ -73,9 +73,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "TailLash", 143428)
 	self:Log("SPELL_AURA_APPLIED", "Acceleration", 143411)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Acceleration", 143411)
-	self:Log("SPELL_CAST_SUCCESS", "TankDebuffCast", 143426, 143780, 143773, 143767) -- Fearsome Roar, Acid Breath, Freezing Breath, Scorching Breath
 	self:Log("SPELL_AURA_APPLIED", "TankDebuff", 143766, 143780, 143773, 143767) -- Panic, Acid Breath, Freezing Breath, Scorching Breath
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TankDebuff", 143766, 143780, 143773, 143767)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "TankDebuffCasts", "boss1")
 
 	self:Death("Win", 71529)
 	self:Death("Deaths", 71744, 73526, 71749) -- Skumblade Captive, Starved Yeti, Waterspeaker Gorai
@@ -89,7 +89,8 @@ function mod:OnEngage()
 	accCount = 0
 	self:Berserk(600)
 	self:OpenProximity("proximity", 10) -- Too close to another group. Tactic dependant - needed for heroic
-	self:Bar(-7963, 25) -- Deafening Screech
+	self:Bar(-7963, 14) -- Deafening Screech
+	self:CDBar("tank_debuffs", 12, 143426, 143766) -- Fearsome Roar with correct icon
 end
 
 --------------------------------------------------------------------------------
@@ -148,7 +149,7 @@ do
 	function mod:BloodFrenzyOver(args)
 		self:OpenProximity("proximity", 10)
 		self:Message(-7981, "Neutral", "Long", CL["over"]:format(args.spellName))
-		self:Bar(-7963, 25) -- Deafening Screech, not much point for more timers than the initial one since then it is too frequent
+		self:Bar(-7963, 13.3) -- Deafening Screech
 		if self:Heroic() then
 			self:ScheduleTimer(checkPrisonerKilled, 10)
 		end
@@ -218,15 +219,23 @@ function mod:TailLash(args)
 	self:CDBar(args.spellId, 10) -- don't think this needs a message
 end
 
-function mod:Acceleration(args)
-	accCount = args.amount or 1
-	if accCount < 6 or accCount % 3 == 0 then
-		self:Message(-7963, "Attention", nil, CL["count"]:format(args.spellName, accCount))
+do
+	local accTimes = {10.9, 7.2, 4.8, 3.6}
+	function mod:Acceleration(args)
+		accCount = args.amount or 1
+		if accTimes[accCount] then -- Beyond this is too short a timer to care (2.1-2.4)
+			self:Bar(-7963, accTimes[accCount])
+		end
+		if accCount < 6 or accCount % 3 == 0 then
+			self:Message(-7963, "Attention", nil, CL["count"]:format(args.spellName, accCount))
+		end
 	end
 end
 
-function mod:TankDebuffCast(args)
-	self:Bar("tank_debuffs", 11, args.spellName, args.spellId == 143426 and 143766 or args.spellId) -- Spell ID hack for Blizzard giving Fearsome Roar the wrong icon
+function mod:TankDebuffCasts(_, spellName, _, _, spellId)
+	if spellId == 143426 or spellId == 143780 or spellId == 143773 or spellId == 143767 then -- Fearsome Roar, Acid Breath, Freezing Breath, Scorching Breath
+		self:CDBar("tank_debuffs", 11, spellName, spellId == 143426 and 143766 or spellId) -- 11-15s, spell ID hack for Blizzard giving Fearsome Roar the wrong icon
+	end
 end
 
 function mod:TankDebuff(args)
@@ -244,3 +253,4 @@ function mod:Deaths(args)
 		heroicAdd = nil
 	end
 end
+
