@@ -584,7 +584,6 @@ function loader:ACTIVE_TALENT_GROUP_CHANGED()
 				return
 			end
 			UnitSetRole("player", role)
-			sysprint(L.roleUpdate)
 		end
 	end
 end
