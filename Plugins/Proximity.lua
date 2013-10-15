@@ -48,9 +48,9 @@ local activeMap = nil
 local proximityPlayer = nil
 local proximityPlayerTable = {}
 local maxPlayers = 0
-local raidList = {}
+local raidList = plugin:GetRaidList()
 local blipList = {}
-local anchor = nil
+local anchor, updater = nil, nil
 
 --Radial upvalues
 local GetPlayerMapPosition = GetPlayerMapPosition
@@ -419,7 +419,6 @@ end
 -- Proximity Updater
 --
 
-local updater, updaterFrame = nil, nil
 local normalProximity, reverseTargetProximity, targetProximity, multiTargetProximity, reverseMultiTargetProximity, reverseProximity
 do
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
@@ -747,12 +746,6 @@ do
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 		end
 	end
-
-	updaterFrame = CreateFrame("Frame")
-	updater = updaterFrame:CreateAnimationGroup()
-	updater:SetLooping("REPEAT")
-	local anim = updater:CreateAnimation()
-	anim:SetDuration(0.05)
 end
 
 local function updateBlipIcons()
@@ -760,11 +753,11 @@ local function updateBlipIcons()
 		local n = raidList[i]
 		local blip = blipList[n]
 		local icon = GetRaidTargetIndex(n)
-		if icon then
+		if icon and not blip.hasIcon then
 			blip:SetTexture(format("Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d.blp", icon))
 			blip:SetDrawLayer("OVERLAY", 1)
 			blip.hasIcon = true
-		elseif blip.hasIcon then
+		elseif not icon and blip.hasIcon then
 			blip.hasIcon = nil
 			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
 			local _, class = UnitClass(n)
@@ -859,6 +852,12 @@ do
 		anchor:EnableMouse(true)
 		anchor:SetScript("OnEnter", onDisplayEnter)
 		anchor:SetScript("OnLeave", onControlLeave)
+
+		updater = anchor:CreateAnimationGroup()
+		updater:SetLooping("REPEAT")
+		local anim = updater:CreateAnimation()
+		anim:SetDuration(0.05)
+
 		local bg = anchor:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints(anchor)
 		bg:SetBlendMode("BLEND")
@@ -940,14 +939,13 @@ do
 		anchor:Hide()
 
 		for i = 1, 40 do
-			local n = format("raid%d", i)
-			raidList[i] = n
-			blipList[n] = anchor:CreateTexture(nil, "OVERLAY")
-			blipList[n]:SetSize(16, 16)
-			blipList[n]:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
+			local blip = anchor:CreateTexture(nil, "OVERLAY")
+			blip:SetSize(16, 16)
+			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
+			blipList[raidList[i]] = blip
 		end
 
-		updaterFrame:SetScript("OnEvent", function(_, event)
+		anchor:SetScript("OnEvent", function(_, event)
 			if event == "GROUP_ROSTER_CHANGED" then
 				updateBlipColors()
 			else
@@ -1177,8 +1175,8 @@ end
 function plugin:Close()
 	updater:Stop()
 
-	updaterFrame:UnregisterEvent("GROUP_ROSTER_CHANGED")
-	updaterFrame:UnregisterEvent("RAID_TARGET_UPDATE")
+	anchor:UnregisterEvent("GROUP_ROSTER_CHANGED")
+	anchor:UnregisterEvent("RAID_TARGET_UPDATE")
 
 	for i = 1, 40 do
 		if blipList[raidList[i]].isShown then
@@ -1203,7 +1201,7 @@ end
 local abilityNameFormat = "|T%s:20:20:-5|t%s"
 function plugin:Open(range, module, key, player, isReverse)
 	if type(range) ~= "number" then print("Range needs to be a number!") return end
-	if not IsInRaid() and not IsInGroup() then return end -- Solo runs of old content
+	if not IsInGroup() then return end -- Solo runs of old content
 	self:Close()
 
 	SetMapToCurrentZone()
@@ -1250,8 +1248,8 @@ function plugin:Open(range, module, key, player, isReverse)
 	end
 	activeRange = range
 
-	updaterFrame:RegisterEvent("GROUP_ROSTER_CHANGED")
-	updaterFrame:RegisterEvent("RAID_TARGET_UPDATE")
+	anchor:RegisterEvent("GROUP_ROSTER_CHANGED")
+	anchor:RegisterEvent("RAID_TARGET_UPDATE")
 	updateBlipColors()
 	updateBlipIcons()
 

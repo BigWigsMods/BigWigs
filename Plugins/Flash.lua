@@ -17,12 +17,8 @@ local colors = nil
 -- Initialization
 --
 
-function mod:OnPluginEnable()
-	colors = BigWigs:GetPlugin("Colors")
-	self:RegisterMessage("BigWigs_Flash")
-	self:RegisterMessage("BigWigs_Pulse")
-
-	if not flashFrame then
+do
+	local function createFrames()
 		flashFrame = CreateFrame("Frame", nil, UIParent)
 		flashFrame:SetFrameStrata("BACKGROUND")
 		flashFrame:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"})
@@ -72,6 +68,13 @@ function mod:OnPluginEnable()
 		pulse2:SetDuration(0.25)
 		pulse2:SetScale(0.2,0.2)
 		pulse2:SetOrder(2)
+	end
+
+	function mod:OnPluginEnable()
+		if createFrames then createFrames() createFrames = nil end
+		colors = BigWigs:GetPlugin("Colors")
+		self:RegisterMessage("BigWigs_Flash")
+		self:RegisterMessage("BigWigs_Pulse")
 	end
 end
 
