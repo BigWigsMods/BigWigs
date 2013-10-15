@@ -377,7 +377,7 @@ do
 	end
 	function mod:InjectionRemoved(args)
 		if getBossByMobId(71158) then -- no more parasites spawn when boss is dead
-			local is10m = self:Difficulty == 3 or self:Difficulty == 5
+			local is10m = self:Difficulty() == 3 or self:Difficulty() == 5
 			parasiteCounter = parasiteCounter + (is10m and 5 or 8)
 			self:Message(143339, "Attention", nil, L["parasites_up"]:format(parasiteCounter), 99315) -- spell called parasite, worm look like icon
 		end
