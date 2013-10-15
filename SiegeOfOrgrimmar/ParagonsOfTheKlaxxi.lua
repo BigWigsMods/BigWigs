@@ -257,8 +257,11 @@ function mod:Aim(args)
 	self:SecondaryIcon(-8073, args.destName)
 	self:TargetMessage(-8073, args.destName, "Important", "Warning", CL["count"]:format(args.spellName, aimCounter), args.spellId, true)
 	self:TargetBar(-8073, 5, args.destName)
-	self:Flash(-8073) -- XXX Funkeh remove this if you think this is too much
+	if not self:Tank() then
+		self:Flash(-8073)
+	end
 
+	self:StopBar(CL["count"]:format(args.spellName, aimCounter))
 	aimCounter = aimCounter + 1
 	self:CDBar(-8073, 42, CL["count"]:format(args.spellName, aimCounter))
 end
@@ -807,7 +810,7 @@ function mod:MyEngage()
 			elseif mobId == 71152 then -- Skeer the Bloodseeker
 				self:Bar(143280 ,10) -- Bloodletting
 			elseif mobId == 71153 then --Hisek the Swarmkeeper
-				self:Bar(-8073, 40) -- Aim
+				self:CDBar(-8073, 40, CL["count"]:format(self:SpellName(-8073), aimCounter)) -- Aim
 				if self:Heroic() then
 					self:Bar(143243, 48) -- Rapid Fire
 				end
