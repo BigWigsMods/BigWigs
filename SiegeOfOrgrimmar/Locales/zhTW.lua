@@ -105,70 +105,34 @@ end
 
 L = BigWigs:NewBossLocale("Malkorok", "zhTW")
 if L then
-	L.custom_off_energy_marks = "Displaced Energy marker"
-	L.custom_off_energy_marks_desc = "To help dispelling assignments, mark the people who have Displaced Energy on them with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+
 end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "zhTW")
 if L then
-	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 
-	L.enable_zone = "Artifact Storage"
-	L.matter_scramble_explosion = "Matter Scramble explosion" -- shorten maybe?
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "zhTW")
 if L then
-	L.adds = "Heroic adds"
-	L.adds_desc = "Warnings for when the heroic only adds enter the fight"
-
-	L.tank_debuffs = "Tank debuffs"
-	L.tank_debuffs_desc = "Warnings for the different types of tank debuffs associated with Fearsome Roar"
-
 	L.cage_opened = "籠子已打開"
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "zhTW")
 if L then
-	L.shredder_engage_trigger = "An Automated Shredder draws near!"
-	L.laser_on_you = "Laser on you PEW PEW!"
-	L.laser_say = "Laser PEW PEW"
 
-	L.assembly_line_trigger = "Unfinished weapons begin to roll out on the assembly line."
-	L.assembly_line_message = "Unfinished weapons (%d)"
-
-	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!"
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "zhTW")
 if L then
-	L.one = "Iyyokuk selects: One!"
-	L.two = "Iyyokuk selects: Two!"
-	L.three = "Iyyokuk selects: Three!"
-	L.four = "Iyyokuk selects: Four!"
-	L.five = "Iyyokuk selects: Five!"
-	L.edge_message = "You're an edge"
-	L.custom_off_edge_marks = "Edge marks"
-	--L.custom_off_edge_marks_desc = "Mark the players who will be edges based on the calculations {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
-	L.injection_over_soon = "Injection over soon (%s)!"
-	--L.custom_off_parasite_marks = "Parasite marker"
-	--L.custom_off_parasite_marks_desc = "Mark the parasites for crowd control and Prey assignments with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+
+
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "zhTW")
 if L then
 	L.intermission = "中場休息"
 	L.mind_control = "亚煞极之触"
-
-	L.chain_heal_desc = "Heals a friendly target for 40% of their max health, chaining to nearby friendly targets."
-	L.chain_heal_message = "Your focus is casting Chain Heal!"
-	L.chain_heal_bar = "Focus: Chain Heal"
-
-	L.farseer_trigger = "Farseers, mend our wounds!"
-	L.custom_off_shaman_marker = "Farseer marker"
-	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Farseer Wolf Rider with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} (in that order, not all marks may be used), requires promoted or leader."
-
-	L.focus_only = "|cffff0000Focus target alerts only.|r "
 end
 
 L = BigWigs:NewBossLocale("Siege of Orgrimmar Trash", "zhTW")

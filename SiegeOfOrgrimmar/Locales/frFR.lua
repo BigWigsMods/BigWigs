@@ -154,7 +154,9 @@ end
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "frFR")
 if L then
 	L.catalyst_match = "Catalyseur : |c%sVOUS CORRESPOND|r" -- might not be best for colorblind?
-	L.you_ate = "Vous avez mangé un parasite !"
+	--L.you_ate = "You ate a parasite (%d left)"
+	--L.other_ate = "%s ate a parasite (%d left)"
+	--L.parasites_up = "%d |4Parasite:Parasites; up"
 	L.dance = "Danse"
 	L.prey_message = "Utilisez Prendre pour proie sur le parasite"
 

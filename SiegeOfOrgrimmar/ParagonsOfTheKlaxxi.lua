@@ -33,8 +33,11 @@ local UnitDebuff = UnitDebuff
 
 local mod, CL = BigWigs:NewBoss("Paragons of the Klaxxi", 953, 853)
 if not mod then return end
-mod:RegisterEnableMob(71161, 71157, 71156, 71155, -- Kil'ruk the Wind-Reaver, Xaril the Poisoned Mind, Kaz'tik the Manipulator, Korven the Prime
-71160, 71154, 71152, 71158, 71153 ) -- Iyyokuk the Lucid, Ka'roz the Locust, Skeer the Bloodseeker, Rik'kal the Dissector, Hisek the Swarmkeeper
+mod:RegisterEnableMob(
+	71161, 71157, 71156, 71155, -- Kil'ruk the Wind-Reaver, Xaril the Poisoned Mind, Kaz'tik the Manipulator, Korven the Prime
+	71160, 71154, 71152, 71158, 71153 -- Iyyokuk the Lucid, Ka'roz the Locust, Skeer the Bloodseeker, Rik'kal the Dissector, Hisek the Swarmkeeper
+)
+
 --------------------------------------------------------------------------------
 -- Locals
 --
@@ -78,7 +81,9 @@ local aimCounter = 1
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.catalyst_match = "Catalyst: |c%sMATCHES YOU|r" -- might not be best for colorblind?
-	L.you_ate = "You ate a parasite!"
+	L.you_ate = "You ate a parasite (%d left)"
+	L.other_ate = "%s ate a parasite (%d left)"
+	L.parasites_up = "%d |4Parasite:Parasites; up"
 	L.dance = "Dance"
 	L.prey_message = "Use Prey on parasite"
 	-- for getting all those calculate emotes:
@@ -136,8 +141,8 @@ function mod:GetOptions()
 		{-8055, "FLASH", "SAY"}, --Iyyokuk the Lucid
 		"custom_off_edge_marks",
 		{143701, "FLASH", "SAY"}, {143759, "FLASH"}, {143735, "FLASH"}, {148650, "FLASH"}, --Ka'roz the Locust
-		{143275, "TANK"}, 143280, --Skeer the Bloodseeker
-		{143279, "TANK"}, 143339, {-8065, "FLASH"}, {148589, "FLASH"}, 143337, --Rik'kal the Dissector
+		143280, --Skeer the Bloodseeker
+		143339, {-8065, "FLASH"}, {148589, "FLASH"}, 143337, --Rik'kal the Dissector
 		"custom_off_parasite_marks",
 		{-8073, "ICON", "FLASH"}, {143243, "FLASH"}, --Hisek the Swarmkeeper
 
@@ -150,8 +155,8 @@ function mod:GetOptions()
 		[-8055] = -8012, --Iyyokuk the Lucid
 		["custom_off_edge_marks"] = L.custom_off_edge_marks,
 		[143701] = -8013, --Ka'roz the Locust
-		[143275] = -8014, --Skeer the Bloodseeker
-		[143279] = -8015, --Rik'kal the Dissector
+		[143280] = -8014, --Skeer the Bloodseeker
+		[143339] = -8015, --Rik'kal the Dissector
 		["custom_off_parasite_marks"] = L.custom_off_parasite_marks,
 		[-8073] = -8016, --Hisek the Swarmkeeper
 		["berserk"] = "general",
@@ -196,11 +201,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CausticAmber", 143735) -- this is half a sec faster than _DAMAGE
 	self:Log("SPELL_PERIODIC_DAMAGE", "CausticAmber", 143735)
 	--Skeer the Bloodseeker
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Hewn", 143275)
 	self:Log("SPELL_CAST_START", "Bloodletting", 143280)
 	--Rik'kal the Dissector
 	self:Log("SPELL_CAST_SUCCESS" , "Prey", 144286)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "GeneticAlteration", 143279)
 	self:Log("SPELL_AURA_APPLIED", "Injection", 143339)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Injection", 143339)
 	self:Log("SPELL_AURA_REMOVED", "InjectionRemoved", 143339)
@@ -266,13 +269,14 @@ do
 		if not parasites[args.destGUID] then
 			parasiteCounter = parasiteCounter - 1
 			parasites[args.destGUID] = true
-			parasiteEater[1] = args.sourceName
-			-- intentionally not :TargetMessage
-			self:Message(143339, "Attention", nil, CL["other"]:format(CL["count"]:format(self:SpellName(8363), parasiteCounter), parasiteEater[1]), 99315) -- spell called parasite, worm look like icon
-			parasiteEater[1] = nil
 			if self:Me(args.sourceGUID) then
-				self:Message(143339, "Positive", "Info", L["you_ate"])
+				self:Message(143339, "Positive", "Info", L["you_ate"]:format(parasiteCounter))
 				youAte = true
+			else
+				parasiteEater[1] = args.sourceName
+				-- Important message for heroic, intentionally not :TargetMessage
+				self:Message(143339, "Attention", nil, L["other_ate"]:format(parasiteEater[1], parasiteCounter), 99315) -- spell called parasite, worm look like icon
+				parasiteEater[1] = nil
 			end
 		end
 		if self.db.profile.custom_off_parasite_marks then
@@ -370,8 +374,9 @@ do
 	end
 	function mod:InjectionRemoved(args)
 		if getBossByMobId(71158) then -- no more parasites spawn when boss is dead
-			parasiteCounter = parasiteCounter + 8
-			self:Message(143339, "Attention", nil, CL["count"]:format(self:SpellName(8363), parasiteCounter), 99315) -- spell called parasite, worm look like icon
+			local is10m = self:Difficulty == 3 or self:Difficulty == 5
+			parasiteCounter = parasiteCounter + (is10m and 5 or 8)
+			self:Message(143339, "Attention", nil, L["parasites_up"]:format(parasiteCounter), 99315) -- spell called parasite, worm look like icon
 		end
 		self:CancelDelayedMessage(L["injection_over_soon"]:format(args.destName))
 		if self.db.profile.custom_off_parasite_marks and not markTimer then
@@ -406,22 +411,12 @@ do
 	end
 end
 
-function mod:GeneticAlteration(args)
-	if args.amount > 5 and args.amount%3 == 0 then -- XXX this probably needs adjustment
-		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
-	end
-end
 --Skeer the Bloodseeker
 function mod:Bloodletting(args)
 	self:Message(args.spellId, "Important", self:Damager() and "Warning")
 	self:CDBar(args.spellId, 37)
 end
 
-function mod:Hewn(args)
-	if args.amount > 5 and args.amount%3 == 0 then -- XXX this probably needs adjustment
-		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
-	end
-end
 --Ka'roz the Locust
 do
 	local prev = 0
@@ -622,12 +617,14 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, _, sender, _, _, target)
 end
 
 --Korven the Prime
-function mod:ShieldBash(args)
-	local target = getBossByMobId(71155)
-	if not target then return end
-	target = target .. "target"
-	self:TargetMessage(args.spellId, self:UnitName(target), "Urgent", "Alarm", nil, nil, true)
-	self:Bar(args.spellId, 17)
+do
+	local function printTarget(self, name)
+		self:TargetMessage(143974, name, "Urgent", "Alarm", nil, nil, true)
+	end
+	function mod:ShieldBash(args)
+		self:Bar(args.spellId, 17)
+		self:GetBossTarget(printTarget, 0, args.sourceGUID)
+	end
 end
 
 function mod:EncaseInEmber(args)
@@ -884,7 +881,7 @@ function mod:Deaths(args)
 		if not parasites[args.destGUID] then
 			parasites[args.destGUID] = true
 			parasiteCounter = parasiteCounter - 1
-			self:Message(143339, "Attention", nil, CL["count"]:format(self:SpellName(8363), parasiteCounter), 99315) -- spell called parasite, worm look like icon
+			self:Message(143339, "Attention", nil, L["parasites_up"]:format(parasiteCounter), 99315) -- spell called parasite, worm look like icon
 		end
 		if self.db.profile.custom_off_parasite_marks then
 			self:FreeMarkByGUID(args.destGUID)
