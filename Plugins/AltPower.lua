@@ -87,7 +87,7 @@ do
 		close:SetScript("OnClick", function()
 			--BigWigs:Print(L.toggleProximityPrint)
 			plugin:Close()
-		end
+		end)
 
 		local header = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 		header:SetText("AltPower")
