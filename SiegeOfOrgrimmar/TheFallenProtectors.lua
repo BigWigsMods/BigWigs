@@ -2,6 +2,7 @@
 TODO:
 	improve timers by checking how they interact with different Desperate Measures -- Sun Tenderheart fixed, other two still need fixing
 	fix Corrupted Brew timer (in heroic every 2 casts it gets .5s faster) Clash and Vengeful Strikes probably delay it, too
+	need some data from normal for starting timers at intermission ends
 ]]--
 
 --------------------------------------------------------------------------------
@@ -44,8 +45,7 @@ if L then
 	L.no_meditative_field = "NO Meditative Field!"
 
 	L.intermission = "Desperate Measures"
-	L.intermission_desc = "Warnings for when you are getting close to any of the bosses using Desperate Measures"
-	L.intermission_desc = "Warnings for any of the bosses using Desperate Measures."
+	L.intermission_desc = "Warnings for when bosses use Desperate Measures."
 
 	L.inferno_self = "Inferno Strike on you"
 	L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
@@ -93,8 +93,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("RAID_BOSS_WHISPER", "Gouge")
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 143292)
 	self:Log("SPELL_DAMAGE", "NoxiousPoisonDamage", 144367)
-	self:Log("SPELL_AURA_APPLIED", "MarkOfAnguishApplied", 143840)
-	self:Log("SPELL_AURA_REMOVED", "MarkOfAnguishRemoved", 143840)
+	self:Log("SPELL_AURA_APPLIED", "MarkOfAnguish", 143840)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LingeringAnguish", 144176)
 	-- Rook Stonetoe
 	self:Log("SPELL_AURA_APPLIED", "RookIntermission", 143955) -- Misery, Sorrow, and Gloom
@@ -240,15 +239,12 @@ function mod:LingeringAnguish(args)
 	end
 end
 
-function mod:MarkOfAnguishRemoved(args)
-	self:CloseProximity(args.spellId)
-	self:OpenProximity("proximity", 5)
-end
-
-function mod:MarkOfAnguishApplied(args)
+function mod:MarkOfAnguish(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alert")
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
+		self:CloseProximity(args.spellId)
+		self:OpenProximity("proximity", 5)
 	else
 		self:CloseProximity("proximity")
 		self:OpenProximity(args.spellId, 30, args.destName, true)
