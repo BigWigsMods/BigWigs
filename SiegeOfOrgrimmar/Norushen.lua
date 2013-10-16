@@ -96,7 +96,7 @@ function mod:OnEngage()
 	self:Bar(145226, 25) -- Blind Hatred
 	wipe(bigAddKills)
 	wipe(throttlePlayers)
-	self:SendMessage("BigWigs_OpenAltPower") -- XXX temp
+	self:SendMessage("BigWigs_OpenAltPower", self) -- XXX temp
 end
 
 --------------------------------------------------------------------------------

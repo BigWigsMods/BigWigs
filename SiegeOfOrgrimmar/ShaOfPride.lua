@@ -97,7 +97,7 @@ function mod:OnEngage()
 		self:CDBar(144358, 11) -- Wounded Pride
 	end
 	self:Berserk(600)
-	self:SendMessage("BigWigs_OpenAltPower") -- XXX temp
+	self:SendMessage("BigWigs_OpenAltPower", self) -- XXX temp
 end
 
 --------------------------------------------------------------------------------

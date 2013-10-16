@@ -84,6 +84,10 @@ do
 		close:SetHeight(16)
 		close:SetWidth(16)
 		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
+		close:SetScript("OnClick", function()
+			--BigWigs:Print(L.toggleProximityPrint)
+			plugin:Close()
+		end
 
 		local header = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 		header:SetText("AltPower")
@@ -92,7 +96,7 @@ do
 		display.text = {}
 		for i = 1, 25 do
 			local text = display:CreateFontString(nil, "OVERLAY", "GameFontNormalHuge")
-			text:SetFont("Fonts\\FRIZQT__.TTF", 12)
+			text:SetFont("Fonts\\FRIZQT__.TTF", 12) -- XXX Fix font
 			text:SetText("")
 			text:SetSize(110, 14)
 			text:SetJustifyH("LEFT")
