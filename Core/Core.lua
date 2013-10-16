@@ -216,6 +216,7 @@ do
 		[930.7] = true, -- Ra-Den room opening
 		[953.2] = true, -- After Immerseus, entry to Fallen Protectors
 		[953.9] = true, -- Blackfuse room opening
+		[953.8] = true, -- Blackfuse room opening -- do this room too
 		[953.12] = true, -- Heroic Garrosh Phase 4
 	}
 
