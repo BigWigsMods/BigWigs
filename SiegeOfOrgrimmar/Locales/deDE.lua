@@ -14,8 +14,7 @@ if L then
 	L.no_meditative_field = "KEIN Meditationsfeld!"
 
 	L.intermission = "Verzweifelte Maßnahmen"
-	L.intermission_desc = "Warnt, wenn sich ein Boss kurz vor der Verwendung der Verzweifelten Maßnahmen befindet."
-	L.intermission_desc = "Warnt, wenn einer der Bosse Verzweifelte Maßnahmen verwendet."
+	L.intermission_desc = "Warnt, wenn die Bosse Verzweifelte Maßnahmen verwenden."
 
 	L.inferno_self = "Infernostoß auf Dir"
 	L.inferno_self_desc = "Spezieller Timer wenn Du von Infernostoß betroffen bist."
