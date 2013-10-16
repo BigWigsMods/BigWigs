@@ -9,6 +9,11 @@ print"alt power loaded"
 local plugin = BigWigs:NewPlugin("Alt Power")
 if not plugin then return end
 
+plugin.defaultDB = {
+	posx = nil,
+	posy = nil,
+}
+
 --------------------------------------------------------------------------------
 -- Locals
 --
@@ -20,6 +25,7 @@ local opener = nil
 local UpdateDisplay
 local tsort = table.sort
 local UnitPower = UnitPower
+local db
 
 -------------------------------------------------------------------------------
 -- Initialization
@@ -33,6 +39,8 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StartConfigureMode", "Test")
 	self:RegisterMessage("BigWigs_StopConfigureMode", "Close")
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
+
+	db = self.db.profile
 end
 
 function plugin:OnPluginDisable()
@@ -48,8 +56,16 @@ do
 		display = CreateFrame("Frame", "BigWigsAltPower", UIParent)
 		display:SetSize(220, 80)
 		display:SetClampedToScreen(true)
-		--display:EnableMouse(true)
-		display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
+		display:EnableMouse(true)
+		display:SetMovable(true)
+		display:RegisterForDrag("LeftButton")
+		display:SetScript("OnDragStart", function(self) self:StartMoving() end)
+		display:SetScript("OnDragStop", function(self)
+			self:StopMovingOrSizing()
+			local s = self:GetEffectiveScale()
+			db.posx = self:GetLeft() * s
+			db.posy = self:GetTop() * s
+		end)
 
 		updater = display:CreateAnimationGroup()
 		updater:SetLooping("REPEAT")
@@ -89,6 +105,17 @@ do
 			end
 			display.text[i] = text
 		end
+
+		local x = db.posx
+		local y = db.posy
+		if x and y then
+			local s = display:GetEffectiveScale()
+			display:ClearAllPoints()
+			display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+		else
+			display:ClearAllPoints()
+			display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
+		end
 	end
 
 	function plugin:BigWigs_OpenAltPower(_, module)
@@ -111,6 +138,7 @@ do
 		if createFrame then createFrame() createFrame = nil end
 		-- Close ourselves in case we entered configure mode DURING a boss fight.
 		self:Close()
+		raidList = self:GetRaidList()
 		for i = 1, 10 do
 			local name = raidList[i]
 			display.text[i]:SetFormattedText("[%d] %s", 100-i, name)
