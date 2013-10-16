@@ -14,7 +14,8 @@ if L then
 	L.no_meditative_field = "KEIN Meditationsfeld!"
 
 	L.intermission = "Verzweifelte Maßnahmen"
-	L.intermission_desc = "Warnt, wenn Du Dich nahe bei einem Boss befindest, welcher Verzweifelte Maßnahmen benutzt"
+	L.intermission_desc = "Warnt, wenn sich ein Boss kurz vor der Verwendung der Verzweifelten Maßnahmen befindet."
+	L.intermission_desc = "Warnt, wenn einer der Bosse Verzweifelte Maßnahmen verwendet."
 
 	L.inferno_self = "Infernostoß auf Dir"
 	L.inferno_self_desc = "Spezieller Timer wenn Du von Infernostoß betroffen bist."
@@ -153,9 +154,9 @@ end
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "deDE")
 if L then
 	L.catalyst_match = "Katalysator: |c%sSTIMMT MIT DIR ÜBEREIN|r"
-	--L.you_ate = "You ate a parasite (%d left)"
-	--L.other_ate = "%s ate a parasite (%d left)"
-	--L.parasites_up = "%d |4Parasite:Parasites; up"
+	L.you_ate = "Du hast einen Parasiten gegessen (noch %d)"
+	L.other_ate = "%s hat einen Parasiten gegessen (noch %d)"
+	L.parasites_up = "%d |4Parasit:Parasiten; vorhanden"
 	L.dance = "Tanzen"
 	L.prey_message = "Wirke Beute auf Parasiten"
 	L.one = "Iyyokuk wählt aus: Eins!"
