@@ -6,7 +6,6 @@ TODO:
 
 	-- reported/requested by others
 	could maybe warn one hurl amber target?
-	heroic toxic injection proximity submarine sound and not closing
 	win sound
 ]]--
 
@@ -179,7 +178,7 @@ function mod:OnBossEnable()
 	--Xaril the Poisoned Mind
 	self:Log("SPELL_CAST_START", "Catalysts", 142725, 142726, 142727, 142729, 142730, 142728) -- blue red yellow purple green orange
 	self:Log("SPELL_CAST_SUCCESS", "ToxicInjection", 142528)
-	self:Log("SPELL_AURA_APPLIED", "ToxicInjectionsRemoved", 142532, 142533, 142534) -- blue red yellow
+	self:Log("SPELL_AURA_REMOVED", "ToxicInjectionsRemoved", 142532, 142533, 142534) -- blue red yellow
 	self:Log("SPELL_AURA_APPLIED", "ToxicInjectionsApplied", 142532, 142533, 142534) -- blue red yellow
 	self:Log("SPELL_AURA_APPLIED", "TenderizingStrike", 142929)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TenderizingStrike", 142929)
