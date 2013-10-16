@@ -61,7 +61,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{144396, "TANK"}, {143019, "FLASH", "SAY"}, 143027, {143007, "HEALER"}, 143958, {"defile", "TANK"}, {144357, "FLASH"}, {-7959, "FLASH", "SAY", "PROXIMITY", "ICON"}, {"inferno_self", "SAY", "EMPHASIZE"}, -- Rook Stonetoe
-		{143330, "TANK"}, {143292, "FLASH"}, {144367, "FLASH"}, {143840, "FLASH", "PROXIMITY"}, -- He Softfoot
+		{143330, "TANK"}, {143292, "FLASH"}, {144367, "FLASH"}, {143840, "FLASH"}, -- He Softfoot
 		{143446, "DISPEL"}, 143491, 143564, {143423, "ICON", "SAY"}, -- Sun Tenderheart
 		"custom_off_bane_marks",
 		143497, "intermission", "berserk", "proximity", "bosskill",
@@ -243,11 +243,6 @@ function mod:MarkOfAnguish(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alert")
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
-		self:CloseProximity(args.spellId)
-		self:OpenProximity("proximity", 5)
-	else
-		self:CloseProximity("proximity")
-		self:OpenProximity(args.spellId, 30, args.destName, true)
 	end
 end
 
@@ -289,8 +284,6 @@ function mod:HeIntermission(args)
 end
 
 function mod:HeIntermissionEnd(args)
-	self:CloseProximity(143840) -- Mark of Anguish
-	self:OpenProximity("proximity", 5)
 	if not self:Heroic() then
 		--self:CDBar(143491, ) -- Calamity
 		--self:CDBar(143027, ) -- Clash
@@ -341,7 +334,6 @@ do
 	end
 	function mod:InfernoStrike(args)
 		self:CloseProximity(-7959)
-		self:OpenProximity("proximity", 5)
 		self:PrimaryIcon(-7959)
 		self:GetBossTarget(checkTarget, 0.6, args.sourceGUID)
 	end
