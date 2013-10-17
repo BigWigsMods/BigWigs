@@ -24,7 +24,7 @@ function plugin:IsBossModule() return end
 
 do
 	local UnitName = UnitName
-	function boss:UnitName(unit, trimServer)
+	function plugin:UnitName(unit, trimServer)
 		local name, server = UnitName(unit)
 		if not name then
 			return
