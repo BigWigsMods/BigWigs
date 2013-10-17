@@ -61,7 +61,7 @@ end
 do
 	local function createFrame()
 		display = CreateFrame("Frame", "BigWigsAltPower", UIParent)
-		display:SetSize(220, 80)
+		display:SetSize(230, 80)
 		display:SetClampedToScreen(true)
 		display:EnableMouse(true)
 		display:SetMovable(true)
@@ -104,7 +104,7 @@ do
 		for i = 1, 25 do
 			local text = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 			text:SetText("")
-			text:SetSize(110, 14)
+			text:SetSize(115, 16)
 			text:SetJustifyH("LEFT")
 			if i == 1 then
 				text:SetPoint("TOPLEFT", display, "TOPLEFT", 5, 0)
@@ -185,7 +185,7 @@ do
 			local unit = unitList[i]
 			powerList[unit] = UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
 		end
-		--tsort(sortedUnitList)
+		tsort(sortedUnitList)
 		tsort(sortedUnitList, sortTbl)
 		for i = 1, 10 do
 			local name = sortedUnitList[i]
