@@ -18,14 +18,21 @@ plugin.defaultDB = {
 -- Locals
 --
 
-local playerTbl, nameList, raidList = {}, {}, plugin:GetPartyList()
+local powerList, sortedUnitList, roleColoredList = nil, nil, nil
+local unitList = nil
 local maxPlayers = 0
 local display, updater = nil, nil
 local opener = nil
 local UpdateDisplay
 local tsort = table.sort
 local UnitPower = UnitPower
-local db
+local db = nil
+local roleIcons = {
+	["TANK"] = INLINE_TANK_ICON,
+	["HEALER"] = INLINE_HEALER_ICON,
+	["DAMAGER"] = INLINE_DAMAGER_ICON,
+	["NONE"] = "",
+}
 
 -------------------------------------------------------------------------------
 -- Initialization
@@ -95,8 +102,7 @@ do
 
 		display.text = {}
 		for i = 1, 25 do
-			local text = display:CreateFontString(nil, "OVERLAY", "GameFontNormalHuge")
-			text:SetFont("Fonts\\FRIZQT__.TTF", 12) -- XXX Fix font
+			local text = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 			text:SetText("")
 			text:SetSize(110, 14)
 			text:SetJustifyH("LEFT")
@@ -122,6 +128,8 @@ do
 		end
 	end
 
+	-- This module is rarely used, and opened once during an encounter where it is.
+	-- We will prefer on-demand variables over permanent ones.
 	function plugin:BigWigs_OpenAltPower(_, module)
 		if not IsInGroup() then return end -- Solo runs of old content
 		if createFrame then createFrame() createFrame = nil end
@@ -129,9 +137,21 @@ do
 
 		maxPlayers = GetNumGroupMembers()
 		opener = module
-		raidList = IsInRaid() and self:GetRaidList() or self:GetPartyList()
+		unitList = IsInRaid() and self:GetRaidList() or self:GetPartyList()
+		powerList, sortedUnitList, roleColoredList = {}, {}, {}
+		local UnitClass, UnitGroupRolesAssigned = UnitClass, UnitGroupRolesAssigned
+		local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
 		for i = 1, maxPlayers do
-			nameList[i] = UnitName(raidList[i])
+			local unit = unitList[i]
+			sortedUnitList[i] = unit
+
+			local name = self:UnitName(unit, true)
+			local _, class = UnitClass(unit)
+			if class then
+				local tbl = colorTbl[class]
+				name = ("|cFF%02x%02x%02x%s|r"):format(tbl.r*255, tbl.g*255, tbl.b*255, name)
+			end
+			roleColoredList[unit] = roleIcons[UnitGroupRolesAssigned(unit)] .. name
 		end
 		display:Show()
 		updater:Play()
@@ -140,12 +160,11 @@ do
 
 	function plugin:Test()
 		if createFrame then createFrame() createFrame = nil end
-		-- Close ourselves in case we entered configure mode DURING a boss fight.
 		self:Close()
-		raidList = self:GetRaidList()
+
+		unitList = self:GetRaidList()
 		for i = 1, 10 do
-			local name = raidList[i]
-			display.text[i]:SetFormattedText("[%d] %s", 100-i, name)
+			display.text[i]:SetFormattedText("[%d] %s", 100-i, unitList[i])
 		end
 		display:Show()
 	end
@@ -161,21 +180,20 @@ end
 
 do
 	local function sortTbl(x,y)
-		return playerTbl[x] > playerTbl[y]
+		return powerList[x] > powerList[y]
 	end
 
 	function UpdateDisplay()
 		for i = 1, maxPlayers do
-			local unit = raidList[i]
-			local fullName = nameList[i]
-			playerTbl[fullName] = UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
+			local unit = unitList[i]
+			powerList[unit] = UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
 		end
-		--tsort(nameList)
-		tsort(nameList, sortTbl)
+		--tsort(sortedUnitList)
+		tsort(sortedUnitList, sortTbl)
 		for i = 1, 10 do
-			local name = nameList[i]
+			local name = sortedUnitList[i]
 			if not name then return end
-			display.text[i]:SetFormattedText("[%d] %s", playerTbl[name], name)
+			display.text[i]:SetFormattedText("[%d] %s", powerList[name], roleColoredList[name])
 		end
 	end
 end
@@ -184,8 +202,8 @@ function plugin:Close()
 	if not updater then return end
 	updater:Stop()
 	display:Hide()
-	wipe(playerTbl)
-	wipe(nameList)
+	powerList, sortedUnitList, roleColoredList = nil, nil, nil
+	unitList = nil
 	opener = nil
 	for i = 1, 25 do
 		display.text[i]:SetText("")
