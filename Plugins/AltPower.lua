@@ -145,13 +145,10 @@ do
 			local unit = unitList[i]
 			sortedUnitList[i] = unit
 
-			local name = self:UnitName(unit, true)
+			local name = self:UnitName(unit, true) or "???"
 			local _, class = UnitClass(unit)
-			if class then
-				local tbl = colorTbl[class]
-				name = ("|cFF%02x%02x%02x%s|r"):format(tbl.r*255, tbl.g*255, tbl.b*255, name)
-			end
-			roleColoredList[unit] = roleIcons[UnitGroupRolesAssigned(unit)] .. name
+			local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
+			roleColoredList[unit] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
 		end
 		display:Show()
 		updater:Play()
