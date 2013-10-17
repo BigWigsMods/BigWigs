@@ -444,7 +444,7 @@ do
 		mod:CancelTimer(whirlingTimer)
 		whirlingTimer = nil
 	end
-	local function warnWhilringTarget()
+	local function warnWhirlingTarget()
 		local boss = getBossByMobId(71154)
 		if not boss then return end
 		local target = boss.."target"
@@ -464,11 +464,10 @@ do
 		end
 	end
 	function mod:StoreKineticEnergy(args)
-		self:Message(143701, "Urgent")
 		self:CDBar(143701, 63)
 		lastWhirlTarget = ""
 		if not whirlingTimer then
-			whirlingTimer = self:ScheduleRepeatingTimer(warnWhilringTarget, 0.1)
+			whirlingTimer = self:ScheduleRepeatingTimer(warnWhirlingTarget, 0.1)
 			self:ScheduleTimer(stopScanning, 20)
 		end
 	end
@@ -512,29 +511,29 @@ local mantid = {mod:SpellName(143620), mod:SpellName(143621), mod:SpellName(1436
 local staff  = {mod:SpellName(143627), mod:SpellName(143628), mod:SpellName(143629), mod:SpellName(143630), mod:SpellName(143631)}
 
 local function parseDebuff(player)
-	local count
+	local _, count
 	for i=1, 5 do
-		count = select(4,UnitDebuff(player, sword[i]))
+		_, _, _, count = UnitDebuff(player, sword[i])
 		if count then
 			return "sword", colors[i], (count == 0) and 1 or count
 		end
 
-		count = select(4,UnitDebuff(player, drum[i]))
+		_, _, _, count = UnitDebuff(player, drum[i])
 		if count then
 			return "drum", colors[i], (count == 0) and 1 or count
 		end
 
-		count = select(4,UnitDebuff(player, bomb[i]))
+		_, _, _, count = UnitDebuff(player, bomb[i])
 		if count then
 			return "bomb", colors[i], (count == 0) and 1 or count
 		end
 
-		count = select(4,UnitDebuff(player, mantid[i]))
+		_, _, _, count = UnitDebuff(player, mantid[i])
 		if count then
 			return "mantid", colors[i], (count == 0) and 1 or count
 		end
 
-		count = select(4,UnitDebuff(player, staff[i]))
+		_, _, _, count = UnitDebuff(player, staff[i])
 		if count then
 			return "staff", colors[i], (count == 0) and 1 or count
 		end
