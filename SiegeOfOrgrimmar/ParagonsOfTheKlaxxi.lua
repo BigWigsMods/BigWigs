@@ -81,7 +81,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.catalyst_match = "Catalyst: |c%sMATCHES YOU|r" -- might not be best for colorblind?
 	L.you_ate = "You ate a parasite (%d left)"
-	L.other_ate = "%s ate a parasite (%d left)"
+	L.other_ate = "%s ate a %sparasite (%d left)"
 	L.parasites_up = "%d |4Parasite:Parasites; up"
 	L.dance = "Dance"
 	L.prey_message = "Use Prey on parasite"
@@ -277,7 +277,8 @@ do
 			else
 				parasiteEater[1] = args.sourceName
 				-- Important message for heroic, intentionally not :TargetMessage
-				self:Message(143339, "Attention", nil, L["other_ate"]:format(parasiteEater[1], parasiteCounter), 99315) -- spell called parasite, worm look like icon
+				--local raidIcon = CombatLog_String_GetIcon(args.destRaidFlags)
+				self:Message(143339, "Attention", nil, L["other_ate"]:format(parasiteEater[1], "", parasiteCounter), 99315) -- spell called parasite, worm look like icon
 				parasiteEater[1] = nil
 			end
 		end

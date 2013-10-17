@@ -142,7 +142,7 @@ L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "ruRU")
 if L then
 	L.catalyst_match = "Катализатор: |c%sСОВПАДЕНИЕ|r"
 	L.you_ate = "Тебя ест паразит (%d осталось)"
-	L.other_ate = "%s ест паразит (%d осталось)"
+	L.other_ate = "%s ест %sпаразит (%d осталось)"
 	L.parasites_up = "%d |4Паразит жив:Паразита живы:Паразитов живы;"
 	L.dance = "Танцуем"
 	L.prey_message = "Используй Охоту на паразита"

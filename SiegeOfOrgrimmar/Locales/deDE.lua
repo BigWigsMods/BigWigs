@@ -154,7 +154,7 @@ L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "deDE")
 if L then
 	L.catalyst_match = "Katalysator: |c%sSTIMMT MIT DIR ÜBEREIN|r"
 	L.you_ate = "Du hast einen Parasiten gegessen (noch %d)"
-	L.other_ate = "%s hat einen Parasiten gegessen (noch %d)"
+	L.other_ate = "%s hat einen %sParasiten gegessen (noch %d)"
 	L.parasites_up = "%d |4Parasit:Parasiten; vorhanden"
 	L.dance = "Tanzen"
 	L.prey_message = "Wirke Beute auf Parasiten"
