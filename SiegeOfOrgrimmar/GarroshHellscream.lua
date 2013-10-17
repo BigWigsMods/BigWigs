@@ -223,7 +223,7 @@ end
 
 function mod:IronStar()
 	self:Message("clump_check", "Important", "Long", L["spread"], 147126)
-	self:Flash("clump_check")
+	self:Flash("clump_check", 147126)
 end
 
 do
@@ -558,6 +558,7 @@ do
 		if not boss then return end
 		local target = boss.."target"
 		-- added UnitCastingInfo(boss), if it turns out to be too restrictive could just disable weaponTarget check while whirling corruption is being casted
+		-- XXX    ^^ IT DOES NOT WORK NEED FIXING XXX
 		if not UnitExists(target) or mod:Tank(target) or UnitDetailedThreatSituation(target, boss) or UnitCastingInfo(boss) then return end
 
 		local name = mod:UnitName(target)
