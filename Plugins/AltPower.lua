@@ -177,7 +177,12 @@ end
 
 do
 	local function sortTbl(x,y)
-		return powerList[x] > powerList[y]
+		local px, py = powerList[x], powerList[y]
+		if px == py then
+			return x > y
+		else
+			return px > py
+		end
 	end
 
 	function UpdateDisplay()
@@ -185,7 +190,6 @@ do
 			local unit = unitList[i]
 			powerList[unit] = UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
 		end
-		tsort(sortedUnitList)
 		tsort(sortedUnitList, sortTbl)
 		for i = 1, 10 do
 			local name = sortedUnitList[i]
