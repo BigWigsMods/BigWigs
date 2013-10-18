@@ -65,7 +65,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(360)
+	self:Berserk(self:LFR() and 720 or 360)
 	breathCounter, smashCounter, slamCounter = 1, 1, 1
 	self:Bar(142826, 12, CL["count"]:format(self:SpellName(142826), 1)) -- Arcing Smash
 	self:Bar(142851, 5) -- Seismic Slam
