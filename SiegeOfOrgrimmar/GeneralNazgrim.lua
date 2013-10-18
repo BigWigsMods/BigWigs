@@ -118,7 +118,7 @@ end
 
 function mod:OnEngage()
 	self:OpenProximity("proximity", 10) -- Heroic Shockwave , Magistrike is 8 yard having a constant proximity meter might be too much for LFR
-	self:Berserk(600) -- confirmed 25N PTR
+	self:Berserk(600)
 	wipe(marksUsed)
 	self:CDBar(143494, 10) -- Sundering Blow
 	self:Bar(143638, 15.5) -- Bonecracker
@@ -141,7 +141,7 @@ end
 
 function mod:Execute(args)
 	self:Message(args.spellId, "Important", "Warning", CL["casting"]:format(args.spellName)) -- XXX need feedback if this sound works fine with the other sounds
-	self:Bar(args.spellId, 33)
+	self:CDBar(args.spellId, 18) -- varies a bit due to ability casts
 	if UnitIsUnit("player", "boss1target") then -- poor mans target check
 		self:Flash(args.spellId)
 	end
