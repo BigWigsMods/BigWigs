@@ -397,7 +397,7 @@ do
 		if spellId == 143019 then -- Corrupted Brew
 			-- timer is all over the place, need to figure out if something delays it or what
 			self:CDBar(spellId, 11)
-			self:GetBossTarget(printTarget, 0.2, UnitGUID(unitId))
+			self:GetBossTarget(printTarget, 0.4, UnitGUID(unitId))
 		elseif spellId == 143961 then
 			if UnitDetailedThreatSituation("player", unitId) then
 				self:CDBar("defile", 10, 144357)
