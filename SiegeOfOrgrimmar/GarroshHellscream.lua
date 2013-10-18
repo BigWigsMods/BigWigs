@@ -42,6 +42,7 @@ local weaponTimer = nil
 local maliciousSpreader
 local clumpCheckAllowed
 local mindControl = nil
+local bombardmentCounter = 1
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -212,6 +213,7 @@ function mod:ManifestRage(args)
 end
 
 function mod:Phase3End()
+	bombardmentCounter = 1
 	self:Bar("stages", 19, CL["phase"]:format(4), 147126)
 	-- stop bars here too, but since this needs localization we need to do it at the actual pull into the phase 4
 	self:StopBar(L["intermission"])
@@ -268,7 +270,8 @@ end
 
 function mod:Bombardment(args)
 	self:Message("bombardment", "Attention", nil, L["bombardment"], args.spellId)
-	self:Bar("bombardment", 55, L["bombardment"], args.spellId)
+	self:Bar("bombardment", (bombardmentCounter == 1) and 55 or 40, L["bombardment"], args.spellId)
+	bombardmentCounter = bombardmentCounter + 1
 	self:Bar("bombardment", 13, CL["casting"]:format(args.spellName), args.spellId)
 	self:Bar("clump_check", 3, L["clump_check"], 147126) -- Clump Check
 end
