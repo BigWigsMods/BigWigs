@@ -96,6 +96,15 @@ do
 			plugin:Close()
 		end)
 
+		local expand = CreateFrame("Button", nil, display)
+		expand:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
+		expand:SetHeight(16)
+		expand:SetWidth(16)
+		expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows")
+		expand:SetScript("OnClick", function()
+			--plugin:Close()
+		end)
+
 		local header = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 		header:SetText("AltPower")
 		header:SetPoint("BOTTOM", display, "TOP", 0, 4)
