@@ -129,7 +129,7 @@ end
 function mod:UnleashedStart()
 	if not self:LFR() then
 		self:CDBar(144358, 11) -- Wounded Pride
-		self:StopBar(144400) -- Swelling Pride
+		self:StopBar(CL["count"]:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
 		self:StopBar(144563) -- Imprison
 		self:StopBar(145215) -- Banishment
 		self:StopBar(L["small_adds"])
@@ -141,7 +141,7 @@ end
 function mod:Unleashed() -- Final Gift
 	self:StopBar(146595) -- Gift of the Titans
 	self:Message(-8349, "Neutral", "Info")
-	self:Bar(144400, 74) -- Swelling Pride
+	self:Bar(144400, 74, CL["count"]:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
 	self:Bar(-8262, 60, L["big_add_bar"], 144379)
 	self:DelayedMessage(-8262, 55, "Urgent", L["big_add_spawning"], 144379)
 	self:Bar(144800, 16.3, L["small_adds"])
