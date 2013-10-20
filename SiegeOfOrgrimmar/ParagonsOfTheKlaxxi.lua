@@ -134,7 +134,7 @@ local calculations = {
 function mod:GetOptions()
 	return {
 		{142931, "TANK"}, {143939, "TANK_HEALER"}, {-8008, "FLASH", "SAY"}, 148676, --Kil'ruk the Wind-Reaver
-		142929, {-8034, "PROXIMITY"}, 142803, 143576, --Xaril the Poisoned Mind
+		{-8034, "PROXIMITY"}, 142803, 143576, --Xaril the Poisoned Mind
 		142671, --Kaz'tik the Manipulator
 		142564, {143974, "TANK_HEALER"}, --Korven the Prime
 		{-8055, "FLASH", "SAY"}, --Iyyokuk the Lucid
@@ -148,7 +148,7 @@ function mod:GetOptions()
 		"berserk", "bosskill",
 	}, {
 		[142931] = -8004, --Kil'ruk the Wind-Reaver
-		[142929] = -8009, --Xaril the Poisoned Mind
+		[-8034] = -8009, --Xaril the Poisoned Mind
 		[142671] = -8010, --Kaz'tik the Manipulator
 		[142564] = -8011, --Korven the Prime
 		[-8055] = -8012, --Iyyokuk the Lucid
@@ -180,8 +180,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ToxicInjection", 142528)
 	self:Log("SPELL_AURA_REMOVED", "ToxicInjectionsRemoved", 142532, 142533, 142534) -- blue red yellow
 	self:Log("SPELL_AURA_APPLIED", "ToxicInjectionsApplied", 142532, 142533, 142534) -- blue red yellow
-	self:Log("SPELL_AURA_APPLIED", "TenderizingStrike", 142929)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "TenderizingStrike", 142929)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ExplosiveRing", 142803)
 	self:Log("SPELL_PERIODIC_DAMAGE", "CannedHeat", 143576)
 
@@ -719,12 +717,6 @@ function mod:ToxicInjectionsApplied(args)
 	self:Message(-8034, "Personal", "Long", CL["you"]:format(message))
 end
 
-function mod:TenderizingStrike(args)
-	local amount = args.amount or 1
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", nil, CL["count"]:format(args.spellName, amount))
-	end
-end
 --Kil'ruk the Wind-Reaver
 function mod:Reave(args)
 	self:Message(args.spellId, "Urgent", "Long")
