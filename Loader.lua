@@ -438,9 +438,9 @@ do
 			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
 				print("Think you can translate Big Wigs into Brazilian Portuguese (ptBR)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
 			end)
-		elseif L == "koKR" then
+		elseif L == "esES" then
 			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-				print("Think you can translate Big Wigs into Korean (koKR)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
+				print("Think you can translate Big Wigs into Spanish (esES)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
 			end)
 		elseif L == "esMX" then
 			AutoCompleteInfoDelayer:HookScript("OnFinished", function()

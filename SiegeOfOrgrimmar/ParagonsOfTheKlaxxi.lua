@@ -277,7 +277,7 @@ do
 				-- Important message for heroic, intentionally not :TargetMessage
 				local raidIcon = CombatLog_String_GetIcon(args.destRaidFlags) -- Raid icon string
 				self:Message(143339, "Attention", nil, L["other_ate"]:format(parasiteEater[1], raidIcon, parasiteCounter), 99315) -- spell called parasite, worm look like icon
-				parasiteEater[1] = nil
+				wipe(parasiteEater)
 			end
 		end
 		if self.db.profile.custom_off_parasite_marks then
