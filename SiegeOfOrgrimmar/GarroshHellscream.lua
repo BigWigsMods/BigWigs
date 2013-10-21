@@ -43,6 +43,7 @@ local maliciousSpreader
 local clumpCheckAllowed
 local mindControl = nil
 local bombardmentCounter = 1
+local bombardmentTimers = { 55, 40, 40, 25 } -- XXX need more data
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -270,7 +271,7 @@ end
 
 function mod:Bombardment(args)
 	self:Message("bombardment", "Attention", nil, L["bombardment"], args.spellId)
-	self:Bar("bombardment", (bombardmentCounter == 1) and 55 or 40, L["bombardment"], args.spellId)
+	self:Bar("bombardment", bombardmentTimers[bombardmentCounter] and bombardmentTimers[bombardmentCounter] or 25, L["bombardment"], args.spellId)
 	bombardmentCounter = bombardmentCounter + 1
 	self:Bar("bombardment", 13, CL["casting"]:format(args.spellName), args.spellId)
 	self:Bar("clump_check", 3, L["clump_check"], 147126) -- Clump Check
