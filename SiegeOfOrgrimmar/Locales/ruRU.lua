@@ -141,8 +141,8 @@ end
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "ruRU")
 if L then
 	L.catalyst_match = "Катализатор: |c%sСОВПАДЕНИЕ|r"
-	L.you_ate = "Тебя ест паразит (%d осталось)"
-	L.other_ate = "%s ест %sпаразит (%d осталось)"
+	L.you_ate = "Тебя ест Паразит (%d осталось)"
+	L.other_ate = "%s ест %sПаразит (%d осталось)"
 	L.parasites_up = "%d |4Паразит жив:Паразита живы:Паразитов живы;"
 	L.dance = "Танцуем"
 	L.prey_message = "Используй Охоту на паразита"
@@ -166,7 +166,7 @@ if L then
 
 	-- L.phase_3_end_trigger = "You think you have WON?  You are BLIND.  I WILL FORCE YOUR EYES OPEN."
 
-	-- L.clump_check = "Clump check"
+	L.clump_check = "Проверка проходимости"
 	-- L.clump_check_desc = "Check every 3 seconds during bombardment for clumped up players, if a clump is found a Kor'kron Iron Star will spawn."
 
 	L.bombardment = "Бомбардировка"
