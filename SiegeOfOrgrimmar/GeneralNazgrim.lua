@@ -207,7 +207,7 @@ end
 function mod:ExtraAdds()
 	self:Message(-7920, "Neutral", "Long", L["extra_adds"])
 	-- XXX looked like on 25N PTR this reset the add timer - double check
-	self:Bar(-7920, 46, nil, "achievement_guildperk_everybodysfriend")
+	self:Bar(-7920, 46, CL["count"]:format(self:SpellName(-7920), addWaveCounter), "achievement_guildperk_everybodysfriend")
 end
 
 function mod:Adds()
