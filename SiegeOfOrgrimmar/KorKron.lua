@@ -173,6 +173,7 @@ function mod:FallingAsh(args)
 end
 
 function mod:FoulGeyser(args) -- Blobs
+	self:PrimaryIcon(-8132)
 	self:SecondaryIcon(args.spellId, args.destName)
 	self:Bar(args.spellId, 32, L["blobs"])
 	if self:Me(args.destGUID) then
