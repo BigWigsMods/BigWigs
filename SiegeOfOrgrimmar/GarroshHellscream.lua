@@ -561,9 +561,8 @@ do
 		local boss = getBossByMobId(71865)
 		if not boss then return end
 		local target = boss.."target"
-		-- added UnitCastingInfo(boss), if it turns out to be too restrictive could just disable weaponTarget check while whirling corruption is being casted
-		-- XXX    ^^ IT DOES NOT WORK NEED FIXING XXX
-		if not UnitExists(target) or mod:Tank(target) or UnitDetailedThreatSituation(target, boss) or UnitCastingInfo(boss) then return end
+		-- added UnitCastingInfo(boss), UnitChannelInfo(boss), if it turns out to be too restrictive could just disable weaponTarget check while whirling corruption is being casted
+		if not UnitExists(target) or mod:Tank(target) or UnitDetailedThreatSituation(target, boss) or UnitCastingInfo(boss) or UnitChannelInfo(boss) then return end
 
 		local name = mod:UnitName(target)
 		mod:SecondaryIcon(144758, name) -- so we don't use skull as that might be used for marking the healing add
