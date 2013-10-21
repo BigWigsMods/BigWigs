@@ -85,7 +85,6 @@ if L then
 	L.custom_off_bonecracker_marks_desc = "Afin d'aider à l'attribution des soins, marque les joueurs subissant Brise-os avec {rt1}{rt2}{rt3}{rt4}{rt5}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 
 	L.stance_bar = "%s(ACTUELLE : %s)"
-	-- shorten stances so they fit on the bars
 	L.battle = "Combat"
 	L.berserker = "Berserker"
 	L.defensive = "Défensive"
@@ -159,13 +158,11 @@ if L then
 	--L.parasites_up = "%d |4Parasite:Parasites; up"
 	L.dance = "Danse"
 	L.prey_message = "Utilisez Prendre pour proie sur le parasite"
-
 	L.one = "Iyyokuk sélectionne : Un !" -- to check
 	L.two = "Iyyokuk sélectionne : Deux !" -- to check
 	L.three = "Iyyokuk sélectionne : Trois !" -- to check
 	L.four = "Iyyokuk sélectionne : Quatre !" -- to check
 	L.five = "Iyyokuk sélectionne : Cinq !" -- to check
-	--------------------------------
 	L.edge_message = "Vous êtes un sommet"
 	L.custom_off_edge_marks = "Marquage Tranchant enflammé"
 	L.custom_off_edge_marks_desc = "Marque les joueurs qui seront les sommets des Tranchants enflammés avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"

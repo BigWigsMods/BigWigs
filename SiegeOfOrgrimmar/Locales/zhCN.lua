@@ -52,6 +52,7 @@ L = BigWigs:NewBossLocale("Galakras", "zhCN")
 if L then
 	L.demolisher = "投石车"
 	L.demolisher_desc = "库卡隆投石车进入战斗计时条。"
+
 	L.towers = "塔楼"
 	L.towers_desc = "当塔楼被突破时发出警报。"
 	L.south_tower_trigger = "封锁南部塔楼的大门被攻破了！"
@@ -61,27 +62,27 @@ if L then
 	L.tower_defender = "塔楼防御者"
 
 	L.custom_off_shaman_marker = "萨满标记"
-	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the shamans is the fastest way to mark them.|r"
+	L.custom_off_shaman_marker_desc = "帮助打断分配，使用 {rt1}{rt2}{rt3}{rt4}{rt5} 标记龙喉潮汐萨满，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r\n|cFFADFF2F提示：如果团队选择你打开此选项，鼠标快速指向萨满是标记他们的最快方式。|r"
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "zhCN")
 if L then
 	L.custom_off_mine_marks = "地雷标记"
-	L.custom_off_mine_marks_desc = "To help soaking assignments, mark the Crawler Mines with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over all the mines is the fastest way to mark them.|r"
+	L.custom_off_mine_marks_desc = "帮助沙包分配，使用 {rt1}{rt2}{rt3} 标记蛛形地雷，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r\n|cFFADFF2F提示：如果团队选择你打开此选项，鼠标快速指向全部地雷是标记他们的最快方式。|r"
 end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "zhCN")
 if L then
 	L.blobs = "污秽软泥怪"
 
-	L.custom_off_mist_marks = "Toxic Mist marker"
-	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_mist_marks = "剧毒之雾标记"
+	L.custom_off_mist_marks_desc = "帮助治疗分配，给受到剧毒之雾的玩家使用 {rt1}{rt2}{rt3}{rt4}{rt5} 进行标记，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 end
 
 L = BigWigs:NewBossLocale("General Nazgrim", "zhCN")
 if L then
-	L.custom_off_bonecracker_marks = "Bonecracker marker"
-	L.custom_off_bonecracker_marks_desc = "To help healing assignments, mark the people who have Bonecracker on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_bonecracker_marks = "碎骨重锤标记"
+	L.custom_off_bonecracker_marks_desc = "帮助治疗分配，给受到碎骨重锤的玩家使用 {rt1}{rt2}{rt3}{rt4}{rt5} 进行标记，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 
 	L.stance_bar = "%s（现在：%s）"
 	L.battle = "战斗"
@@ -130,6 +131,15 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "zhCN")
 if L then
+	L.overcharged_crawler_mine = "超载的蛛形地雷" -- sadly this is needed since they have same mobId
+	L.custom_off_mine_marker = "地雷标记"
+	L.custom_off_mine_marker_desc = "帮助眩晕职业给每个特定地雷打上标记。（会使用全部标记）"
+
+	L.saw_blade_near_you = "锯刃在旁边（不是在你）"
+	L.saw_blade_near_you_desc = "你可能想关闭这个功能以避免骚扰，如果你的团队大多是根据自己的战术安排。"
+
+	L.disabled = "已禁用"
+
 	L.shredder_engage_trigger = "一台自动伐木机正在靠近！"
 	L.laser_on_you = ">你< 激光 BIU BIU！"
 	L.laser_say = "激光 BIU BIU"
@@ -142,6 +152,12 @@ end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "zhCN")
 if L then
+	L.catalyst_match = "催化药剂：|c%s 引爆 >你<|r" -- might not be best for colorblind?
+	L.you_ate = "你已吃寄生虫（%d 剩余）"
+	L.other_ate = "%s 已吃 %s 寄生虫（%d 剩余）"
+	L.parasites_up = "%d |4寄生虫:寄生虫; 可用"
+	L.dance = "跳舞"
+	L.prey_message = "使用控制诱捕寄生虫"
 	L.one = "依约库克选择：一！"
 	L.two = "依约库克选择：二！"
 	L.three = "依约库克选择：三！"
@@ -149,14 +165,26 @@ if L then
 	L.five = "依约库克选择：五！"
 	L.edge_message = ">你< 炎界"
 	L.custom_off_edge_marks = "炎界标记"
-	--L.custom_off_edge_marks_desc = "Mark the players who will be edges based on the calculations {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_edge_marks_desc = "基于计算给谁将会炎界的玩家使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 进行标记，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 	L.injection_over_soon = "注射即将结束 >%s<！"
-	--L.custom_off_parasite_marks = "Parasite marker"
-	--L.custom_off_parasite_marks_desc = "Mark the parasites for crowd control and Prey assignments with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_parasite_marks = "寄生虫标记"
+	L.custom_off_parasite_marks_desc = "帮助群体控制和诱捕分配，给寄生虫使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 进行标记，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "zhCN")
 if L then
+	L.manifest_rage = "暴怒具象"
+	L.manifest_rage_desc = "当加尔鲁什获得100能量时将释放2秒引导的暴怒具象技能，当引导结束后会召唤大型增援。风筝钢铁之星到加尔鲁什将昏迷并打断他的施法。"
+
+	L.phase_3_end_trigger = "别以为你们已经赢了"
+
+	L.clump_check = "群体确认"
+	L.clump_check_desc = "在呼叫轰炸阶段时每3秒检查扎堆的玩家，如果检查到群体存在库卡隆钢铁之星将会出现。"
+
+	L.bombardment = "呼叫轰炸"
+	L.bombardment_desc = "轰击暴风城，并在地面上留下火焰。 库卡隆钢铁之星只会在呼叫轰炸阶段出现。"
+
+	L.spread = "分散！"
 	L.intermission = "中场休息"
 	L.mind_control = "亚煞极之触"
 
@@ -167,6 +195,9 @@ if L then
 	L.farseer_trigger = "先知们，为我们治疗！"
 	L.custom_off_shaman_marker = "先知标记"
 	L.custom_off_shaman_marker_desc = "帮助打断分配，使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 标记先知狼骑（按照这个顺序，不是所有标记会被用到），需要权限。"
+
+	L.custom_off_minion_marker = "亚煞极的爪牙标记"
+	L.custom_off_minion_marker_desc = "帮助分离亚煞极的爪牙，使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 标记，需要权限。"
 
 	L.focus_only = "|cffff0000只警报焦点目标。|r "
 end

@@ -52,6 +52,7 @@ L = BigWigs:NewBossLocale("Galakras", "itIT")
 if L then
 	L.demolisher = "Demolitori"
 	L.demolisher_desc = "Timer per l'arrivo in combattimento dei Demolitori Kor'kron"
+
 	L.towers = "Torri"
 	L.towers_desc = "Avvisa quando le torri vengono distrutte"
 	L.south_tower_trigger = "La porta a protezione della torre a sud è stata sfondata!" --checked
@@ -121,7 +122,7 @@ L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "itIT")
 if L then
 	L.adds = "Add Modalità Eroica"
 	L.adds_desc = "Avvisa quando entrano in combattimento gli add nella sola modalità eroica"
-	
+
 	L.tank_debuffs = "Malefici Difensori"
 	L.tank_debuffs_desc = "Avvisi per i vari tipi di malefici sui Difensori associati a Ruggito Temibile"
 
@@ -157,14 +158,11 @@ if L then
 	--L.parasites_up = "%d |4Parasite:Parasites; up"
 	L.dance = "Danza"
 	L.prey_message = "Usa Preda sul parassita"
-	-- for getting all those calculate emotes:
-	-- cat Transcriptor.lua | sed "s/\t//g" | grep -E "(CHAT_MSG_RAID_BOSS_EMOTE].*Iyyokuk)" | sed "s/.*EMOTE//" | sed "s/#/\"/" | sed "s/#.*/\"/" | sort | uniq
 	L.one = "Iyyokuk selects: One!"
 	L.two = "Iyyokuk selects: Two!"
 	L.three = "Iyyokuk selects: Three!"
 	L.four = "Iyyokuk selects: Four!"
 	L.five = "Iyyokuk selects: Five!"
-	-------------------------------------
 	L.edge_message = "Sei uno dei limiti"
 	L.custom_off_edge_marks = "Marcatori dei Limiti"
 	L.custom_off_edge_marks_desc = "Evidenzia i giocatori che saranno i limiti in base ai calcoli {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, richiede capoincursione o assistente.\n|cFFFF0000Solo 1 persona nell'incursione dovrebbe attivare questa opzione per evitare conflitti con le assegnazioni.|r"

@@ -163,7 +163,6 @@ if L then
 	L.three = "Iyyokuk wählt aus: Drei!"
 	L.four = "Iyyokuk wählt aus: Vier!"
 	L.five = "Iyyokuk wählt aus: Fünf!"
-	--------------------------------
 	L.edge_message = "Brennendes Band auf Dir"
 	L.custom_off_edge_marks = "Brennendes Band markieren"
 	L.custom_off_edge_marks_desc = "Markiert die Spieler mit Brennendem Band, basierend auf den Kalkulationen, mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"

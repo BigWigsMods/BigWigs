@@ -49,6 +49,6 @@ if L then
 	L.huddle_or_spout_or_strike = "畏縮或水魄或襲擊"
 
 	L.custom_off_huddle = "恐懼畏縮標記"
-	L.custom_off_huddle_desc = "幫助治療分配，使用{rt1}{rt2}{rt3}{rt4}{rt5}{rt6}標記玩家受到因畏惧而蜷缩，需要權限。"
+	L.custom_off_huddle_desc = "幫助治療分配，使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6} 標記玩家受到因畏惧而蜷缩，需要權限。"
 end
 
