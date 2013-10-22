@@ -290,6 +290,7 @@ do
 		end
 		allowedEvents[event] = true
 		bossUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		self:SendMessage("BigWigs_OnBossLog", self, event, ...)
 	end
 	function boss:Death(func, ...)
 		if not func then error(format(missingArgument, self.moduleName)) end
