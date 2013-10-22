@@ -12,6 +12,7 @@ if not plugin then return end
 plugin.defaultDB = {
 	posx = nil,
 	posy = nil,
+	expanded = false,
 }
 
 --------------------------------------------------------------------------------
@@ -23,6 +24,7 @@ local unitList = nil
 local maxPlayers = 0
 local display, updater = nil, nil
 local opener = nil
+local inTestMode = nil
 local UpdateDisplay
 local tsort = table.sort
 local UnitPower = UnitPower
@@ -61,7 +63,7 @@ end
 do
 	local function createFrame()
 		display = CreateFrame("Frame", "BigWigsAltPower", UIParent)
-		display:SetSize(230, 80)
+		display:SetSize(230, db.expanded and 210 or 80)
 		display:SetClampedToScreen(true)
 		display:EnableMouse(true)
 		display:SetMovable(true)
@@ -102,7 +104,11 @@ do
 		expand:SetWidth(16)
 		expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows")
 		expand:SetScript("OnClick", function()
-			--plugin:Close()
+			if db.expanded then
+				plugin:Contract()
+			else
+				plugin:Expand()
+			end
 		end)
 
 		local header = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -169,10 +175,11 @@ do
 		self:Close()
 
 		unitList = self:GetRaidList()
-		for i = 1, 10 do
+		for i = 1, db.expanded and 25 or 10 do
 			display.text[i]:SetFormattedText("[%d] %s", 100-i, unitList[i])
 		end
 		display:Show()
+		inTestMode = true
 	end
 end
 
@@ -200,11 +207,27 @@ do
 			powerList[unit] = UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
 		end
 		tsort(sortedUnitList, sortTbl)
-		for i = 1, 10 do
+		for i = 1, db.expanded and 25 or 10 do
 			local name = sortedUnitList[i]
 			if not name then return end
 			display.text[i]:SetFormattedText("[%d] %s", powerList[name], roleColoredList[name])
 		end
+	end
+end
+
+function plugin:Expand()
+	db.expanded = true
+	display:SetHeight(210)
+	if inTestMode then
+		self:Test()
+	end
+end
+
+function plugin:Contract()
+	db.expanded = false
+	display:SetHeight(80)
+	for i = 11, 25 do
+		display.text[i]:SetText("")
 	end
 end
 
@@ -215,6 +238,7 @@ function plugin:Close()
 	powerList, sortedUnitList, roleColoredList = nil, nil, nil
 	unitList = nil
 	opener = nil
+	inTestMode = nil
 	for i = 1, 25 do
 		display.text[i]:SetText("")
 	end
