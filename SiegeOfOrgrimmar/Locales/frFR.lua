@@ -187,6 +187,7 @@ if L then
 	L.spread = "Éparpillez-vous !"
 	L.intermission = "Intervalle"
 	L.mind_control = "Contrôle mental"
+	--L.ironstar_rolling = "Iron Star Rolling!"
 
 	L.chain_heal_desc = "Rend 40% de ses points de vie maximum à une cible alliée et se propage aux cibles alliées à proximité."
 	L.chain_heal_message = "Votre focalisation est en train d'incanter Salve de guérison !"

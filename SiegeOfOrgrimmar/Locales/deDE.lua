@@ -187,6 +187,7 @@ if L then
 	L.spread = "Verteilen!"
 	L.intermission = "Unterbrechung"
 	L.mind_control = "Gedankenkontrolle"
+	--L.ironstar_rolling = "Iron Star Rolling!"
 
 	L.chain_heal_desc = "Heilt ein verbündetes Ziel um 40% ihrer maximalen Gesundheit. Springt auf nahe verbündete Ziele über."
 	L.chain_heal_message = "Dein Fokusziel wirkt Kettenheilung!"

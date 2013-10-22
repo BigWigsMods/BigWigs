@@ -187,6 +187,7 @@ if L then
 	L.spread = "分散！"
 	L.intermission = "中场休息"
 	L.mind_control = "亚煞极之触"
+	--L.ironstar_rolling = "Iron Star Rolling!"
 
 	L.chain_heal_desc = "治疗一个友方目标40%最大生命，会跳到附近友方目标身上。"
 	L.chain_heal_message = "你的焦点目标正在施放先祖治疗链！"

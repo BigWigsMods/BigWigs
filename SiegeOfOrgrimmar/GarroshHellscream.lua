@@ -67,6 +67,7 @@ if L then
 	L.spread = "Spread!"
 	L.intermission = "Intermission"
 	L.mind_control = "Mind Control"
+	L.ironstar_rolling = "Iron Star Rolling!"
 
 	L.chain_heal = mod:SpellName(144583)
 	L.chain_heal_desc = "Heals a friendly target for 40% of their max health, chaining to nearby friendly targets."
@@ -93,7 +94,7 @@ function mod:GetOptions()
 	-- XXX Funkeh clean "FLASH" up as you see fit
 	return {
 		{147209, "FLASH", "ICON"}, 147235, "bombardment", {147665, "FLASH", "ICON"}, {"clump_check", "FLASH"}, "manifest_rage", -- phase 4 .. fix descriptions
-		-8298, -8292, 144821,-- phase 1
+		-8298, 144616, -8292, 144821, -- phase 1
 		-8294, "chain_heal", "custom_off_shaman_marker", -- Farseer
 		-8305, 144945, 144969, -- Intermissions
 		"custom_off_minion_marker",
@@ -139,6 +140,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "AddMarkedMob", 144585) -- Ancestral Fury
 	self:Log("SPELL_CAST_START", "AddMarkedMob", 144584) -- Chain Lightning
 	self:Log("SPELL_CAST_START", "ChainHeal", 144583)
+	self:Log("SPELL_CAST_SUCCESS", "PowerIronStar", 144616)
 	self:Yell("Farseer", L["farseer_trigger"])
 	self:Emote("SiegeEngineer", "144616")
 	self:Log("SPELL_CAST_SUCCESS", "DesecratedWeapon", 144748, 144749)
@@ -423,8 +425,12 @@ end
 function mod:SiegeEngineer()
 	self:Message(-8298, "Attention", nil, nil, 144616)
 	self:Bar(-8298, engineerCounter == 1 and 45 or 40, nil, 144616)
-	self:Bar(-8298, 22, 144616, 144616)
 	engineerCounter = engineerCounter + 1
+end
+
+function mod:PowerIronStar(args)
+	self:DelayedMessage(args.spellId, 15, "Important", L["ironstar_rolling"])
+	self:Bar(args.spellId, 15)
 end
 
 -- Intermission
