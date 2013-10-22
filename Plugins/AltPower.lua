@@ -102,7 +102,7 @@ do
 		expand:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
 		expand:SetHeight(16)
 		expand:SetWidth(16)
-		expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows")
+		expand:SetNormalTexture(db.expanded and "Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_up" or "Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_down")
 		expand:SetScript("OnClick", function()
 			if db.expanded then
 				plugin:Contract()
@@ -110,6 +110,7 @@ do
 				plugin:Expand()
 			end
 		end)
+		display.expand = expand
 
 		local header = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 		header:SetPoint("BOTTOM", display, "TOP", 0, 4)
@@ -145,7 +146,7 @@ do
 
 	-- This module is rarely used, and opened once during an encounter where it is.
 	-- We will prefer on-demand variables over permanent ones.
-	function plugin:BigWigs_OpenAltPower(event, module, title)
+	function plugin:BigWigs_ShowAltPower(event, module, title)
 		if not IsInGroup() then return end -- Solo runs of old content
 		if createFrame then createFrame() createFrame = nil end
 		self:Close()
@@ -224,6 +225,7 @@ end
 function plugin:Expand()
 	db.expanded = true
 	display:SetHeight(210)
+	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_up")
 	if inTestMode then
 		self:Test()
 	end
@@ -232,6 +234,7 @@ end
 function plugin:Contract()
 	db.expanded = false
 	display:SetHeight(80)
+	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_down")
 	for i = 11, 25 do
 		display.text[i]:SetText("")
 	end
