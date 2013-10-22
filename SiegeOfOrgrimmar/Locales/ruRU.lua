@@ -164,7 +164,7 @@ if L then
 	L.manifest_rage = "Проявить ярость"
 	-- L.manifest_rage_desc = "When Garrosh reaches 100 energy he'll pre cast Manifest Rage for 2 seconds, then channel it. While it's channelled it summons big adds. Kite the Iron Star into Garrosh to stun and interrupt his cast."
 
-	-- L.phase_3_end_trigger = "You think you have WON?  You are BLIND.  I WILL FORCE YOUR EYES OPEN."
+	L.phase_3_end_trigger = "Думаете, вы победили? Слепцы. Я раскрою вам глаза!"
 
 	L.clump_check = "Проверка проходимости"
 	-- L.clump_check_desc = "Check every 3 seconds during bombardment for clumped up players, if a clump is found a Kor'kron Iron Star will spawn."
