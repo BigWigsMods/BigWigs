@@ -41,8 +41,8 @@ local roleIcons = {
 --
 
 function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_OpenAltPower")
-	self:RegisterMessage("BigWigs_CloseAltPower", "Close")
+	self:RegisterMessage("BigWigs_ShowAltPower")
+	self:RegisterMessage("BigWigs_HideAltPower", "Close")
 	self:RegisterMessage("BigWigs_OnBossDisable")
 
 	self:RegisterMessage("BigWigs_StartConfigureMode", "Test")
@@ -112,8 +112,8 @@ do
 		end)
 
 		local header = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-		header:SetText("AltPower")
 		header:SetPoint("BOTTOM", display, "TOP", 0, 4)
+		display.title = header
 
 		display.text = {}
 		for i = 1, 25 do
@@ -145,7 +145,7 @@ do
 
 	-- This module is rarely used, and opened once during an encounter where it is.
 	-- We will prefer on-demand variables over permanent ones.
-	function plugin:BigWigs_OpenAltPower(_, module)
+	function plugin:BigWigs_OpenAltPower(event, module, title)
 		if not IsInGroup() then return end -- Solo runs of old content
 		if createFrame then createFrame() createFrame = nil end
 		self:Close()
@@ -165,6 +165,11 @@ do
 			local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
 			roleColoredList[unit] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
 		end
+		if title then
+			display.title:SetFormattedText("Alt Power: %s", title)
+		else
+			display.title:SetText("Alt Power")
+		end
 		display:Show()
 		updater:Play()
 		UpdateDisplay()
@@ -178,6 +183,7 @@ do
 		for i = 1, db.expanded and 25 or 10 do
 			display.text[i]:SetFormattedText("[%d] %s", 100-i, unitList[i])
 		end
+		display.title:SetText("Alt Power")
 		display:Show()
 		inTestMode = true
 	end

@@ -796,6 +796,19 @@ do
 	end
 end
 
+-- ALT POWER
+function boss:OpenAltPower(title)
+	--if checkFlag(self, "altpower", C.ALTPOWER) then
+		self:SendMessage("BigWigs_ShowAltPower", self, type(title) == "number" and spells[title] or title)
+	--end
+end
+
+function boss:CloseAltPower()
+	--if checkFlag(self, "altpower", C.ALTPOWER) then
+		self:SendMessage("BigWigs_HideAltPower", self)
+	--end
+end
+
 -- PROXIMITY
 function boss:OpenProximity(key, range, player, isReverse)
 	if checkFlag(self, key, C.PROXIMITY) then
