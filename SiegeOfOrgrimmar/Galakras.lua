@@ -204,7 +204,7 @@ function mod:Towers(msg)
 	self:Bar("demolisher", 20, L["demolisher"], L["demolisher_icon"])
 
 	if self:Heroic() then
-		if tower == L["south_tower"] then
+		if tower == L["north_tower"] then
 			self:CancelTimer(towerAddTimer)
 			towerAddTimer = nil
 			self:StopBar(L["tower_defender"])
