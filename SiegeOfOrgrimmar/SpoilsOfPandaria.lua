@@ -18,6 +18,7 @@ mod:RegisterEnableMob(73152, 73720, 71512) -- Storeroom Guard ( trash guy ), Mog
 --
 
 local setToBlow = {}
+local sparkCounter = 0
 
 local function checkPlayerSide()
 	BigWigsLoader.SetMapToCurrentZone()
@@ -47,7 +48,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		145288, {145461, "TANK"}, {142947, "TANK"}, -- Mogu crate
+		145288, {145461, "TANK"}, {142947, "TANK"}, 142694, -- Mogu crate
 		{145987, "PROXIMITY", "FLASH"}, 145747, {145692, "TANK"}, 145715, {145786, "DISPEL"},-- Mantid crate
 		{146217, "FLASH"}, 146222, 146257, -- Crate of Panderan Relics
 		"proximity", "bosskill",
@@ -81,8 +82,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "KegToss", 146217)
 	-- Mogu crate
 	self:Log("SPELL_CAST_START", "CrimsonReconstitution", 142947)
+	self:Log("SPELL_PERIODIC_HEAL", "CrimsonReconstitutionHeal", 145271)
 	self:Log("SPELL_CAST_START", "MoguRuneOfPower", 145461)
 	self:Log("SPELL_CAST_START", "MatterScramble", 145288)
+	self:Log("SPELL_CAST_SUCCESS", "SparkOfLife", 142765) -- Pulse
+	self:Log("SPELL_CAST_SUCCESS", "SparkOfLifeDeath", 149277) -- Nova
 	-- Mantid crate
 	self:Log("SPELL_AURA_APPLIED", "Residue", 145790)
 	self:Log("SPELL_CAST_START", "ResidueStart", 145786)
@@ -141,7 +145,18 @@ end
 -- Mogu crate
 function mod:CrimsonReconstitution(args)
 	if checkPlayerSide() < 0 then
-		self:Message(args.spellId, "Urgent", "Alarm")
+		self:Message(args.spellId, "Urgent", "Warning", CL["casting"]:format(args.spellName))
+	end
+end
+
+do
+	local prev = 0
+	function mod:CrimsonReconstitutionHeal(args)
+		local t = GetTime()
+		if t-prev > 2 and checkPlayerSide() < 0 then
+			prev = t
+			self:Message(145271, "Urgent", "Alarm")
+		end
 	end
 end
 
@@ -155,6 +170,19 @@ function mod:MatterScramble(args)
 	if checkPlayerSide() < 0 then
 		self:Message(args.spellId, "Important", "Alert")
 		self:Bar(args.spellId, 8, L["matter_scramble_explosion"])
+	end
+end
+
+function mod:SparkOfLife(args)
+	if checkPlayerSide() < 0 then
+		sparkCounter = sparkCounter + 1
+		self:Message(142694, "Attention", nil, CL["count"]:format(args.sourceName, sparkCounter))
+	end
+end
+
+function mod:SparkOfLifeDeath(args)
+	if checkPlayerSide() < 0 then -- counting after side check to prevent straggling kills messing with counts on room transition
+		sparkCounter = sparkCounter - 1
 	end
 end
 
