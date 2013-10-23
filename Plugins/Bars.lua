@@ -342,35 +342,35 @@ local clickOptions = {
 	emphasize = {
 		type = "toggle",
 		name = colorize[L.superEmphasize],
-		desc = L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."],
+		desc = L.tempEmphasize,
 		descStyle = "inline",
 		order = 1,
 	},
 	report = {
 		type = "toggle",
-		name = colorize[L["Report"]],
-		desc = L["Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."],
+		name = colorize[L.report],
+		desc = L.reportDesc,
 		descStyle = "inline",
 		order = 2,
 	},
 	remove = {
 		type = "toggle",
-		name = colorize[L["Remove"]],
-		desc = L["Temporarily removes the bar and all associated messages."],
+		name = colorize[L.remove],
+		desc = L.removeDesc,
 		descStyle = "inline",
 		order = 3,
 	},
 	removeOther = {
 		type = "toggle",
-		name = colorize[L["Remove other"]],
-		desc = L["Temporarily removes all other bars (except this one) and associated messages."],
+		name = colorize[L.removeOther],
+		desc = L.removeOtherDesc,
 		descStyle = "inline",
 		order = 4,
 	},
 	disable = {
 		type = "toggle",
 		name = colorize[L.disable],
-		desc = L["Permanently disables the boss encounter ability option that spawned this bar."],
+		desc = L.disableDesc,
 		descStyle = "inline",
 		order = 5,
 	},
@@ -380,9 +380,9 @@ local function shouldDisable() return not plugin.db.profile.interceptMouse end
 
 plugin.subPanelOptions = {
 	key = "Big Wigs: Clickable Bars",
-	name = L["Clickable Bars"],
+	name = L.clickableBars,
 	options = {
-		name = L["Clickable Bars"],
+		name = L.clickableBars,
 		type = "group",
 		childGroups = "tab",
 		get = function(i) return plugin.db.profile[i[#i]] end,
@@ -403,22 +403,22 @@ plugin.subPanelOptions = {
 			},
 			interceptMouse = {
 				type = "toggle",
-				name = L["Enable"],
-				desc = L["Enables bars to receive mouse clicks."],
+				name = L.enable,
+				desc = L.interceptMouseDesc,
 				order = 2,
 				width = "full",
 			},
 			onlyInterceptOnKeypress = {
 				type = "toggle",
-				name = L["Only with modifier key"],
-				desc = L["Allows bars to be click-through unless the specified modifier key is held down, at which point the mouse actions described below will be available."],
+				name = L.modifierKey,
+				desc = L.modifierKeyDesc,
 				order = 3,
 				disabled = shouldDisable,
 			},
 			interceptKey = {
 				type = "select",
-				name = L["Modifier"],
-				desc = L["Hold down the selected modifier key to enable click actions on the timer bars."],
+				name = L.modifier,
+				desc = L.modifierDesc,
 				values = {
 					CTRL = CTRL_KEY_TEXT or "Ctrl",
 					ALT = ALT_KEY or "Alt",
@@ -530,7 +530,7 @@ do
 					},
 					texture = {
 						type = "select",
-						name = L["Texture"],
+						name = L.texture,
 						order = 4,
 						values = media:List("statusbar"),
 						--width = "full",
@@ -538,18 +538,18 @@ do
 					},
 					barStyle = {
 						type = "select",
-						name = L["Style"],
+						name = L.style,
 						order = 5,
 						values = barStyleRegister,
 						--width = "full",
 					},
 					align = {
 						type = "select",
-						name = L["Align"],
+						name = L.align,
 						values = {
-							LEFT = L["Left"],
-							CENTER = L["Center"],
-							RIGHT = L["Right"],
+							LEFT = L.left,
+							CENTER = L.center,
+							RIGHT = L.right,
 						},
 						style = "radio",
 						width = "half",
@@ -557,22 +557,22 @@ do
 					},
 					icon = {
 						type = "toggle",
-						name = L["Icon"],
-						desc = L["Shows or hides the bar icons."],
+						name = L.icon,
+						desc = L.iconDesc,
 						order = 7,
 						width = "half",
 					},
 					time = {
 						type = "toggle",
-						name = L["Time"],
-						desc = L["Whether to show or hide the time left on the bars."],
+						name = L.time,
+						desc = L.timeDesc,
 						order = 8,
 						width = "half",
 					},
 					fill = {
 						type = "toggle",
-						name = L["Fill"],
-						desc = L["Fills the bars up instead of draining them."],
+						name = L.fill,
+						desc = L.fillDesc,
 						order = 9,
 						width = "half",
 						set = function(info, value)
@@ -589,19 +589,19 @@ do
 					},
 					normal = {
 						type = "group",
-						name = L["Regular bars"],
+						name = L.regularBars,
 						inline = true,
 						width = "full",
 						args = {
 							growup = {
 								type = "toggle",
-								name = L["Grow upwards"],
-								desc = L["Toggle bars grow upwards/downwards from anchor."],
+								name = L.growUpwards,
+								desc = L.growUpwardsDesc,
 								order = 1,
 							},
 							scale = {
 								type = "range",
-								name = L["Scale"],
+								name = L.scale,
 								min = 0.2,
 								max = 2.0,
 								step = 0.1,
@@ -613,40 +613,40 @@ do
 					},
 					emphasize = {
 						type = "group",
-						name = L["Emphasized bars"],
+						name = L.emphasizedBars,
 						inline = true,
 						width = "full",
 						args = {
 							emphasize = {
 								type = "toggle",
-								name = L["Enable"],
+								name = L.enable,
 								order = 1,
 								width = "half",
 							},
 							emphasizeMove = {
 								type = "toggle",
-								name = L["Move"],
+								name = L.move,
 								desc = L.moveDesc,
 								order = 2,
 								width = "half",
 							},
 							emphasizeRestart = {
 								type = "toggle",
-								name = L["Restart"],
-								desc = L["Restarts emphasized bars so they start from the beginning and count from 10."],
+								name = L.restart,
+								desc = L.restartDesc,
 								order = 3,
 								width = "half",
 								disabled = function() return not db.emphasizeMove end,
 							},
 							emphasizeGrowup = {
 								type = "toggle",
-								name = L["Grow upwards"],
-								desc = L["Toggle bars grow upwards/downwards from anchor."],
+								name = L.growUpwards,
+								desc = L.growUpwardsDesc,
 								order = 4,
 							},
 							emphasizeTime = {
 								type = "range",
-								name = L["Emphasize at... (seconds)"],
+								name = L.emphasizeAt,
 								order = 5,
 								min = 6,
 								max = 20,
@@ -655,7 +655,7 @@ do
 							},
 							emphasizeScale = {
 								type = "range",
-								name = L["Scale"],
+								name = L.scale,
 								order = 6,
 								min = 0.2,
 								max = 2.0,
@@ -829,7 +829,7 @@ end
 
 local function createAnchors()
 	normalAnchor = createAnchor("BigWigsAnchor", L.bars)
-	emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized bars"])
+	emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L.emphasizedBars)
 
 	createAnchors = nil
 	createAnchor = nil
@@ -1288,7 +1288,7 @@ do
 
 		local time, barText
 		if localOnly then
-			time, barText, nick = bar, localOnly, L["Local"]
+			time, barText, nick = bar, localOnly, L.local
 		else
 			if prevBars[bar] and GetTime() - prevBars[bar] < 1.2 then return end -- Throttle
 			prevBars[bar] = GetTime()
@@ -1298,7 +1298,7 @@ do
 			if type(time) ~= "number" or type(barText) ~= "string" or time < 0 then
 				return
 			end
-			BigWigs:Print(L["Custom bar '%s' started by %s user %s."]:format(barText, isDBM and "DBM" or "Big Wigs", nick))
+			BigWigs:Print(L.customBarStarted:format(barText, isDBM and "DBM" or "Big Wigs", nick))
 		end
 
 		local id = "bwcb" .. nick .. barText
@@ -1311,7 +1311,7 @@ do
 		if time == 0 then
 			plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
 		else
-			timers[id] = plugin:ScheduleTimer("SendMessage", time, "BigWigs_Message", false, false, L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", false, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+			timers[id] = plugin:ScheduleTimer("SendMessage", time, "BigWigs_Message", false, false, L.timerFinished:format(nick, barText), "Attention", false, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 			plugin:SendMessage("BigWigs_StartBar", plugin, id, nick..": "..barText, time, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 		end
 	end
@@ -1325,9 +1325,9 @@ do
 		if timeLeft == 0 then
 			plugin:CancelTimer(timer)
 			timer = nil
-			plugin:SendMessage("BigWigs_Message", nil, nil, L["Pulling!"], "Attention", "Alarm", "Interface\\Icons\\ability_warrior_charge")
+			plugin:SendMessage("BigWigs_Message", nil, nil, L.pulling, "Attention", "Alarm", "Interface\\Icons\\ability_warrior_charge")
 		elseif timeLeft < 11 then
-			plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention")
+			plugin:SendMessage("BigWigs_Message", nil, nil, L.pullIn:format(timeLeft), "Attention")
 			if timeLeft < 6 and BigWigs.db.profile.sound then
 				PlaySoundFile(("Interface\\AddOns\\BigWigs\\Sounds\\%d.mp3"):format(timeLeft), "Master")
 			end
@@ -1344,15 +1344,15 @@ do
 			plugin:CancelTimer(timer)
 			if time == 0 then
 				timeLeft = 0
-				BigWigs:Print(L["Pull timer cancelled by %s."]:format(nick))
-				plugin:SendMessage("BigWigs_StopBar", plugin, L["Pull"])
+				BigWigs:Print(L.pullStopped:format(nick))
+				plugin:SendMessage("BigWigs_StopBar", plugin, L.pull)
 				return
 			end
 		end
-		BigWigs:Print(L["Pull timer started by %s user %s."]:format(isDBM and "DBM" or "Big Wigs", nick))
+		BigWigs:Print(L.pullStarted:format(isDBM and "DBM" or "Big Wigs", nick))
 		timer = plugin:ScheduleRepeatingTimer(printPull, 1)
-		plugin:SendMessage("BigWigs_Message", nil, nil, L["Pull in %d sec"]:format(timeLeft), "Attention", "Long")
-		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L["Pull"], time, "Interface\\Icons\\ability_warrior_charge")
+		plugin:SendMessage("BigWigs_Message", nil, nil, L.pullIn:format(timeLeft), "Attention", "Long")
+		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.pull, time, "Interface\\Icons\\ability_warrior_charge")
 	end
 end
 
@@ -1383,19 +1383,19 @@ do
 	SlashCmdList.BIGWIGSRAIDBAR = function(input)
 		if not plugin:IsEnabled() then BigWigs:Enable() end
 
-		if not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player") then BigWigs:Print(L["This function requires raid leader or raid assist."]) return end
+		if not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player") then BigWigs:Print(L.requiresLeadOrAssist) return end
 
 		local time, barText = input:match("(%S+) (.*)")
-		if not time or not barText then BigWigs:Print(L["Incorrect format. A correct example is: /raidbar 20 text"]) return end
+		if not time or not barText then BigWigs:Print(L.wrongCustomBarFormat) return end
 
 		time = parseTime(time)
-		if not time or time < 0 then BigWigs:Print(L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]) return end
+		if not time or time < 0 then BigWigs:Print(L.wrongTime) return end
 
 		if not times then times = {} end
 		local t = GetTime()
 		if not times[input] or (times[input] and (times[input] + 2) < t) then
 			times[input] = t
-			BigWigs:Print(L["Sending custom bar '%s' to Big Wigs and DBM users."]:format(barText))
+			BigWigs:Print(L.sendCustomBar:format(barText))
 			BigWigs:Transmit("BWCustomBar", time, barText)
 			SendAddonMessage("D4", ("U\t%d\t%s"):format(time, barText), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
@@ -1407,10 +1407,10 @@ SlashCmdList.BIGWIGSLOCALBAR = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 
 	local time, barText = input:match("(%S+) (.*)")
-	if not time or not barText then BigWigs:Print(L["Incorrect format. A correct example is: /raidbar 20 text"]:gsub("/raidbar", "/localbar")) return end
+	if not time or not barText then BigWigs:Print(L.wrongCustomBarFormat:gsub("/raidbar", "/localbar")) return end
 
 	time = parseTime(time)
-	if not time then BigWigs:Print(L["Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]) return end
+	if not time then BigWigs:Print(L.wrongTime) return end
 
 	startCustomBar(time, UnitName("player"), barText)
 end
@@ -1418,20 +1418,20 @@ SLASH_BIGWIGSLOCALBAR1 = "/localbar"
 
 SlashCmdList.BIGWIGSPULL = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
-	if IsEncounterInProgress() then BigWigs:Print(L["This function can't be used during an encounter."]) return end -- Doesn't make sense to allow this in combat
+	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
 	if UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then
 		local time = tonumber(input)
-		if not time or time < 0 or time > 60 then BigWigs:Print(L["Must be between 1 and 60. A correct example is: /pull 5"]) return end
+		if not time or time < 0 or time > 60 then BigWigs:Print(L.wrongPullFormat) return end
 
 		if time ~= 0 then
-			BigWigs:Print(L["Sending a pull timer to Big Wigs and DBM users."])
+			BigWigs:Print(L.sendPull)
 		end
 		BigWigs:Transmit("BWPull", input)
 
 		local _, _, _, _, _, _, _, mapID = GetInstanceInfo()
 		SendAddonMessage("D4", ("PT\t%s\t%d"):format(input, mapID or 0), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 	else
-		BigWigs:Print(L["This function requires raid leader or raid assist."])
+		BigWigs:Print(L.requiresLeadOrAssist)
 	end
 end
 SLASH_BIGWIGSPULL1 = "/pull"
