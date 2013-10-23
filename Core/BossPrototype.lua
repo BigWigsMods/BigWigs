@@ -797,9 +797,9 @@ do
 end
 
 -- ALT POWER
-function boss:OpenAltPower(title)
+function boss:OpenAltPower(title, sorting)
 	--if checkFlag(self, "altpower", C.ALTPOWER) then
-		self:SendMessage("BigWigs_ShowAltPower", self, type(title) == "number" and spells[title] or title)
+		self:SendMessage("BigWigs_ShowAltPower", self, type(title) == "number" and spells[title] or title, sorting == "ZA" and sorting or "AZ")
 	--end
 end
 

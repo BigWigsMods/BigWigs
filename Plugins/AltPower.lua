@@ -25,6 +25,7 @@ local maxPlayers = 0
 local display, updater = nil, nil
 local opener = nil
 local inTestMode = nil
+local sortDir = nil
 local UpdateDisplay
 local tsort = table.sort
 local UnitPower = UnitPower
@@ -146,13 +147,14 @@ do
 
 	-- This module is rarely used, and opened once during an encounter where it is.
 	-- We will prefer on-demand variables over permanent ones.
-	function plugin:BigWigs_ShowAltPower(event, module, title)
+	function plugin:BigWigs_ShowAltPower(event, module, title, sorting)
 		if not IsInGroup() then return end -- Solo runs of old content
 		if createFrame then createFrame() createFrame = nil end
 		self:Close()
 
 		maxPlayers = GetNumGroupMembers()
 		opener = module
+		sortDir = sorting
 		unitList = IsInRaid() and self:GetRaidList() or self:GetPartyList()
 		powerList, sortedUnitList, roleColoredList = {}, {}, {}
 		local UnitClass, UnitGroupRolesAssigned = UnitClass, UnitGroupRolesAssigned
@@ -203,9 +205,15 @@ do
 		local px, py = powerList[x], powerList[y]
 		if px == py then
 			return x > y
-		else
+		elseif sortDir == "AZ" then
 			return px > py
+		else
+			return px < py
 		end
+	end
+
+	local function colorize(power)
+		return 0.99*255, 0.82*255, 0*255
 	end
 
 	function UpdateDisplay()
@@ -215,9 +223,12 @@ do
 		end
 		tsort(sortedUnitList, sortTbl)
 		for i = 1, db.expanded and 25 or 10 do
-			local name = sortedUnitList[i]
-			if not name then return end
-			display.text[i]:SetFormattedText("[%d] %s", powerList[name], roleColoredList[name])
+			local unit = sortedUnitList[i]
+			if not unit then return end
+
+			local power = powerList[unit]
+			local r, g, b = colorize(power)
+			display.text[i]:SetFormattedText("|cFF%02x%02x%02x[%d]|r %s", r, g, b, power, roleColoredList[unit])
 		end
 	end
 end

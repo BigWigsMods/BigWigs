@@ -601,7 +601,6 @@ end
 function mod:CHAT_MSG_MONSTER_EMOTE(_, _, sender, _, _, target)
 	-- Iyyokuk only have one MONSTER_EMOTE so this should be a safe method rather than having to translate the msg
 	if sender == self:SpellName(-8012) then -- hopefully no weird naming missmatch in different localization like for "Xaril the Poisoned Mind" vs "Xaril the Poisoned-Mind"
-		local diff = self:Difficulty()
 		self:Message(-8055, "Attention", nil, CL["count"]:format(self:SpellName(142514), calculateCounter), 142514)
 		calculateCounter = calculateCounter + 1
 		self:Bar(-8055, 35, CL["count"]:format(self:SpellName(142514), calculateCounter), 142514) -- Calculate
