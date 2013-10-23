@@ -188,9 +188,9 @@ if L then
 	L.intermission = "中场休息"
 	L.mind_control = "亚煞极之触"
 
-	--L.ironstar_impact = "Iron Star Impact"
-	--L.ironstar_impact_desc = "A timer bar for when the Iron Star will impact the wall at the other side."
-	--L.ironstar_rolling = "Iron Star Rolling!"
+	L.ironstar_impact = "钢铁之星撞击"
+	L.ironstar_impact_desc = "当钢铁之星将撞击墙壁另一边时显示计时条。"
+	L.ironstar_rolling = "钢铁之星翻滚！"
 
 	L.chain_heal_desc = "治疗一个友方目标40%最大生命，会跳到附近友方目标身上。"
 	L.chain_heal_message = "你的焦点目标正在施放先祖治疗链！"
