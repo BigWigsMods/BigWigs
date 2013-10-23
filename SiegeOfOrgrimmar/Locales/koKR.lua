@@ -1,24 +1,24 @@
 local L = BigWigs:NewBossLocale("Immerseus", "koKR")
 if not L then return end
 if L then
-	L.win_yell = "오, 역시 해냈군!"
+	L.win_yell = "아, 역시 해냈군! 골짜기의 물이 다시 깨끗해졌네."
 end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "koKR")
 if L then
 	L.defile = "더럽혀진 땅 시전"
 
-	L.custom_off_bane_marks = "어둠의 권능 : 파멸 표시"
-	L.custom_off_bane_marks_desc = "해제를 돕기 위해 어둠의 권능 : 파멸을 가진 플레이어들을 {rt1}{rt2}{rt3}{rt4}{rt5} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
+	L.custom_off_bane_marks = "어둠의 권능: 파멸 징표 설정"
+	L.custom_off_bane_marks_desc = "해제를 돕기 위해 어둠의 권능: 파멸을 가진 플레이어들을 {rt1}{rt2}{rt3}{rt4}{rt5} 징표로 표시합니다. 공격대장이거나 권한이 필요합니다."
 
-	L.no_meditative_field = "명상의 장 안으로 들어가야 합니다!!"
+	L.no_meditative_field = "명상의 장 안으로 들어가야 합니다!"
 
 	L.intermission = "궁책"
-	L.intermission_desc = "네임드의 궁책 사용 시기가 가까워지면 경고로 알려줍니다."
+	L.intermission_desc = "수호자의 궁책 사용 시기가 가까워지면 경고로 알려줍니다."
 
-	L.inferno_self = "나에게 지옥불 일격!"
+	L.inferno_self = "당신에게 지옥불 일격"
 	L.inferno_self_desc = "당신이 지옥불 일격에 걸렸을 때 특수 경고를 해줍니다."
-	L.inferno_self_bar = "터져욧!"
+	L.inferno_self_bar = "지옥불 일격 폭파"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "koKR")
@@ -27,10 +27,10 @@ if L then
 	L.pre_pull_desc = "네임드와 전투에 돌입하기까지의 시간을 표시합니다."
 	L.pre_pull_trigger = "그래, 좋다. 너희 타락을 가두어 둘 공간을 만들겠다."
 
-	L.big_adds = "큰 쫄 추가"
-	L.big_adds_desc = "내부 및 외부에서 큰 쫄 죽을 시 경고"
-	L.big_add = "큰 쫄 추가! (%d)"
-	L.big_add_killed = "큰 쫄 잡음! (%d)"
+	L.big_adds = "타락의 현신"
+	L.big_adds_desc = "내부 및 외부에서 타락의 현신 알림"
+	L.big_add = "타락의 현신 등장 (%d)"
+	L.big_add_killed = "타락의 현신 처치 (%d)"
  end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "koKR")
@@ -38,12 +38,12 @@ if L then
 	L.custom_off_titan_mark = "티탄의 선물 표시"
 	L.custom_off_titan_mark_desc = "티탄의 선물 걸린 플레이어를 파악하기 쉽게하기 위해, 티탄의 선물이 걸린 플레이어를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
 
-	L.projection_message = "|cFF00FF00GREEN|r 방향으로 이동!"
+	L.projection_message = "|cFF00FF00녹색|r 화살표 위로 올라가세요!"
 	L.projection_explosion = "투영 폭발!"
 
-	L.big_add_bar = "큰 쫄 추가"
-	L.big_add_spawning = "큰 쫄 추가!"
-	L.small_adds = "작은 쫄 추가"
+	L.big_add_bar = "교만의 현신"
+	L.big_add_spawning = "교만의 현신 등장!"
+	L.small_adds = "자아성찰: 투영체"
 
 	L.titan_pride = "티탄 + 교만: %s"
  end
@@ -61,13 +61,13 @@ if L then
 	L.north_tower = "북쪽 탑"
 	L.tower_defender = "탑 수호자"
 
-	L.custom_off_shaman_marker = "파도주술사 표시"
+	L.custom_off_shaman_marker = "파도주술사 징표 설정"
 	L.custom_off_shaman_marker_desc = "차단하는 것을 돕기 위해, 용아귀부족 파도주술사를 {rt1}{rt2}{rt3}{rt4}{rt5} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "koKR")
 if L then
-	L.custom_off_mine_marks = "지뢰 표시"
+	L.custom_off_mine_marks = "지뢰 징표 설정"
 	L.custom_off_mine_marks_desc = "지뢰 밟는 것을 돕기 위해, 집게 지뢰들을 {rt1}{rt2}{rt3} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
 end
 
@@ -75,13 +75,13 @@ L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "koKR")
 if L then
 	L.blobs = "오염된 점액"
 
-	L.custom_off_mist_marks = "독성 안개"
+	L.custom_off_mist_marks = "독성 안개 징표 설정"
 	L.custom_off_mist_marks_desc = "힐을 돕기 위해, 독성 안개에 걸린 플레이어를 {rt1}{rt2}{rt3}{rt4}{rt5} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
 end
 
 L = BigWigs:NewBossLocale("General Nazgrim", "koKR")
 if L then
-	L.custom_off_bonecracker_marks = "뼈파쇄기"
+	L.custom_off_bonecracker_marks = "뼈파쇄기 징표 설정"
 	L.custom_off_bonecracker_marks_desc = "힐을 돕기 위해, 뼈파쇄기에 걸린 플레이어를 {rt1}{rt2}{rt3}{rt4}{rt5} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
 
 	L.stance_bar = "%s(현재:%s)"
@@ -89,13 +89,13 @@ if L then
 	L.berserker = "광폭 태세"
 	L.defensive = "방어 태세"
 
-	L.adds_trigger1 = "성문을 막아라!"
+	L.adds_trigger1 = "놈들을 막아라!"
 	L.adds_trigger2 = "병력 집결!"
 	L.adds_trigger3 = "다음 분대, 앞으로!"
 	L.adds_trigger4 = "전사들이여! 이리로!"
-	L.adds_trigger5 = "코르크론, 날 지원하라!"
-	L.adds_trigger_extra_wave = "전 코르크론, 내 명령을 따르라, 모두 죽여!"
-	L.extra_adds = "추가 애드"
+	L.adds_trigger5 = "코르크론! 날 지원하라!"
+	L.adds_trigger_extra_wave = "전 코르크론, 내 명령을 따르라. 모두 죽여!"
+	L.extra_adds = "다음 병력"
 
 	L.chain_heal_message = "당신의 주시 대상이 연쇄 치유를 시전합니다!"
 
@@ -106,8 +106,8 @@ if L then
 
 L = BigWigs:NewBossLocale("Malkorok", "koKR")
 if L then
-	L.custom_off_energy_marks = "어긋난 에너지 표시"
-	L.custom_off_energy_marks_desc = "해제를 돕기 위해, 어긋난 에너지에 걸린 플레이어를 {rt1}{rt2}{rt3}{rt4} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
+	L.custom_off_energy_marks = "어긋난 힘 징표 설정"
+	L.custom_off_energy_marks_desc = "해제를 돕기 위해, 어긋난 힘에 걸린 플레이어를 {rt1}{rt2}{rt3}{rt4} 징표로 표시합니다. 공격대장이거나 권한이 필요합니다."
 end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "koKR")
@@ -130,7 +130,7 @@ L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "koKR")
 if L then
 	L.shredder_engage_trigger = "자동 분쇄기가 다가옵니다!"
 	L.laser_on_you = "레이저가 당신에게 꽂힙니다!"
-	L.laser_say = "나에게 레이저!"
+	L.laser_say = "나에게 절단 레이저!"
 
 	L.assembly_line_trigger = "생산 설비에서 미완성 무기가 나오기 시작합니다."
 	L.assembly_line_message = "생산 설비 가동 (%d)"
@@ -152,7 +152,7 @@ if L then
 	L.four = "이요쿠크가 4을 선택합니다!"
 	L.five = "이요쿠크가 5을 선택합니다!"
 	L.edge_message = "당신은 광기의 계산 대상자입니다."
-	L.custom_off_edge_marks = "광기의 계산 대상 표시"
+	L.custom_off_edge_marks = "광기의 계산 대상 징표 설정"
 	L.custom_off_edge_marks_desc = "광기의 계산의 대상이 된 플레이어를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
 	L.injection_over_soon = "주입이 곧 끝남! (%s)"
 	L.custom_off_mutate_marks = "돌연변이: 호박석 전갈 표시"
@@ -172,7 +172,7 @@ if L then
 	L.bombardment_desc = "스톰윈드를 폭격하고, 지면에 불길의 흔적을 남깁니다. 폭격 동안에만 코르크론 강철의 별이 소환될 수 있습니다."
 
 	L.spread = "산개하세요!"
-	L.intermission = "사잇단계"
+	L.intermission = "내면 세계"
 	L.mind_control = "정신 지배"
 
 	--L.ironstar_impact_desc = "A timer bar for when the Iron Star will impact the wall at the other side."
@@ -184,9 +184,9 @@ if L then
 
 	L.farseer_trigger = "선견자, 우리를 치료하라!"
 	L.custom_off_shaman_marker = "선견자 표시"
-	L.custom_off_shaman_marker_desc = "차단을 돕기 위해, 선견자 늑대 기수를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다. \n|cFFFF0000혼선을 빚는 것을 방지하기 위하여, 오직 공대원 중 한 사람만이 이 옵션을 켜야합니다.|r\n|cFFADFF2F팁: 만약 공대에서 당신이 이 옵션을 키기로 했다면, 빠르게 선견자에게 마우스를 대는 것이 마킹을 하는 가장 빠른 방법입니다.|r"
+	L.custom_off_shaman_marker_desc = "차단을 돕기 위해, 선견자 늑대 기수를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다. \\n|cFFFF0000혼선을 빚는 것을 방지하기 위하여, 오직 공대원 중 한 사람만이 이 옵션을 켜야합니다.|r\\n|cFFADFF2F팁: 만약 공대에서 당신이 이 옵션을 키기로 했다면, 빠르게 선견자에게 마우스를 대는 것이 마킹을 하는 가장 빠른 방법입니다.|r"
 
-	L.custom_off_minion_marker = "쫄 표시"
+	L.custom_off_minion_marker = "이샤라즈의 하수인 징표 설정"
 	L.custom_off_minion_marker_desc = "쫄들을 분리하는 것을 돕기 위해, {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
 
 	L.focus_only = "|cffff0000주시 대상 경고 전용.|r "
