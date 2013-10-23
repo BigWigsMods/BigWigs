@@ -30,6 +30,9 @@ if L then
 	L.tank_debuffs_icon = 143766
 
 	L.cage_opened = "Cage opened"
+
+	L.akolik = "Akolik"
+	L.waterspeaker_gorai = "Waterspeaker Gorai"
 end
 L = mod:GetLocale()
 
@@ -56,6 +59,7 @@ function mod:OnBossEnable()
 
 	-- heroic
 	self:Log("SPELL_AURA_APPLIED", "YetCharge", 148145)
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "PrisonerTracker")
 	-- stage 2
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BloodFrenzy", 143442)
 	self:Log("SPELL_AURA_REMOVED", "SkeletonKeyRemoved", 146589)
@@ -78,7 +82,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "TankDebuffCasts", "boss1")
 
 	self:Death("Win", 71529)
-	self:Death("Deaths", 71744, 73526, 71749) -- Skumblade Captive, Starved Yeti, Waterspeaker Gorai
+	self:Death("Deaths", 73526) -- Starved Yeti
 end
 
 function mod:OnEngage()
@@ -98,6 +102,14 @@ end
 --
 
 -- heroic
+
+function mod:PrisonerTracker(_, _, sender)
+	if sender == L["akolik"] then
+		heroicAdd = "bats"
+	elseif sender == L["waterspeaker_gorai"] then
+		heroicAdd = "yeti"
+	end
+end
 
 function mod:YetCharge(args)
 	self:Bar(args.spellId, 15)
@@ -139,7 +151,7 @@ do
 			-- XXX maybe add scheduled message once we know exact timer (videos)
 			-- timer still need verification and still looking for a better event to start bars (don't seem to be any)
 			if heroicAdd == "bats" then
-				mod:CDBar("adds", 13, mod:SpellName(-8584), 24733) -- bat icon
+				mod:CDBar("adds", 12, mod:SpellName(-8584), 24733) -- bat icon
 			elseif heroicAdd == "yeti" then
 				mod:CDBar("adds", 10, mod:SpellName(-8582), 26010) -- yeti icon
 				heroicAdd = nil
@@ -243,11 +255,7 @@ function mod:TankDebuff(args)
 end
 
 function mod:Deaths(args)
-	if args.mobId == 71744 then -- Skumblade Captive
-		heroicAdd = "bats"
-	elseif args.mobId == 71749 then -- Waterspeaker Gorai
-		heroicAdd = "yeti"
-	elseif args.mobId == 73526 then -- Starved Yeti
+	if args.mobId == 73526 then -- Starved Yeti
 		self:CancelTimer(yetiChargeTimer)
 		yetiChargeTimer = nil
 		heroicAdd = nil
