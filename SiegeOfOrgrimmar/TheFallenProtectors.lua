@@ -408,6 +408,7 @@ do
 			self:CloseProximity(-7959)
 			self:OpenProximity("proximity", 5)
 			self:PrimaryIcon(-7959)
+			self:SecondaryIcon(143423)
 			if infernoTimer then
 				self:CancelTimer(infernoTimer)
 				infernoTimer = nil
@@ -446,7 +447,7 @@ end
 
 function mod:RookIntermissionEnd(args)
 	self:StopBar(144357) -- Defiled Ground
-	self:OpenProximity("proximity", 5) -- just in case
+	self:OpenProximity("proximity", 5)
 	if not self:Heroic() then
 		self:CDBar(143491, 5) -- Calamity
 		self:CDBar(143027, 57) -- Clash
@@ -457,8 +458,8 @@ end
 
 
 function mod:Heal(args)
-	self:Bar(args.spellId, 15, CL["cast"]:format(CL["other"]:format(self:SpellName(98417), args.sourceName))) -- use text "Heal" instead of the long one
-	self:Message(args.spellId, "Positive", "Warning", CL["other"]:format(args.spellName, args.sourceName))
+	self:Bar(args.spellId, 15, CL["cast"]:format(CL["other"]:format(self:SpellName(98417), args.sourceName))) -- "Heal"
+	self:Message(args.spellId, "Positive", "Warning", CL["other"]:format(self:SpellName(37455), args.sourceName)) -- "Healing"
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
@@ -466,14 +467,16 @@ function mod:UNIT_HEALTH_FREQUENT(unitId)
 	if mobId == 71475 or mobId == 71479 or mobId == 71480 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 70 and not intermission[mobId] then -- 66%
-			self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], (UnitName(unitId)))), false)
+			local boss = UnitName(unitId)
+			self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], boss)), false)
 			intermission[mobId] = 1
 		elseif hp < 37 and intermission[mobId] == 1 then -- 33%
-			self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], (UnitName(unitId)))), false)
+			local boss = UnitName(unitId)
+			self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], boss)), false)
 			intermission[mobId] = 2
-		end
-		if intermission[71475] == 2 and intermission[71479] == 2 and intermission[71480] == 2 then
-			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3")
+			if intermission[71475] == 2 and intermission[71479] == 2 and intermission[71480] == 2 then
+				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3")
+			end
 		end
 	end
 end
