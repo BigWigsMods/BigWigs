@@ -434,12 +434,12 @@ function mod:SiegeEngineer()
 end
 
 function mod:PowerIronStar(args)
-	self:DelayedMessage(args.spellId, 15, "Important", L["ironstar_rolling"])
 	self:Bar(args.spellId, 15)
 end
 
 function mod:UNIT_SPELLCAST_CHANNEL_STOP(_, _, _, _, spellId)
 	if spellId == 144616 then -- Power Iron Star
+		self:Message(144616, "Important", L["ironstar_rolling"])
 		self:Bar("ironstar_impact", 9, 144653) -- Iron Star Impact
 	end
 end
