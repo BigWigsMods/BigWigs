@@ -41,7 +41,7 @@ function mod:GetOptions()
 		{144330, "FLASH"}, 144328,
 		{-8132, "FLASH", "ICON", "SAY"}, {144215, "TANK"}, 144070, -- Earthbreaker Haromm
 		"custom_off_mist_marks",
-		{144005, "FLASH"}, {143990, "FLASH", "ICON"}, 143973, -- Wavebinder Kardris
+		{144005, "FLASH", "SAY"}, {143990, "FLASH", "ICON"}, 143973, -- Wavebinder Kardris
 		144302, "berserk", "bosskill",
 	}, {
 		[144330] = "heroic",
@@ -140,9 +140,6 @@ do
 		if self:Me(guid) then
 			self:Say(-8132)
 			self:Flash(-8132)
-		elseif self:Range(name) < 8 then -- 8 is assumed, also a circular distance check is not the best for this
-			self:RangeMessage(-8132)
-			return
 		end
 		self:TargetMessage(-8132, name, "Positive", "Alarm")
 	end
@@ -206,7 +203,13 @@ do
 end
 
 do
-	local function printTarget(self, name)
+	local function printTarget(self, name, guid)
+		if self:Me(guid) then
+			self:Say(144005)
+		elseif self:Range(name) < 10 then
+			self:RangeMessage(144005, "Personal", "Alert")
+			return
+		end
 		self:TargetMessage(144005, name, "Urgent", "Alert")
 	end
 	function mod:ToxicStorm(args)
