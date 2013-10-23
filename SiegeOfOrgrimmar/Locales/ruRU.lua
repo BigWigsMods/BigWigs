@@ -134,6 +134,11 @@ if L then
 
 	L.assembly_line_trigger = "На сборочную линию начинает поступать незаконченное оружие."
 	L.assembly_line_message = "Незаконченное оружие (%d)"
+	--L.assembly_line_items = "Items (%d): %s"
+	--L[71606] = "Missile" -- Deactivated Missile Turret
+	--L[71790] = "Mines" -- Disassembled Crawler Mines
+	--L[71751] = "Laser" -- Deactivated Laser Turret
+	--L[71694] = "Magnet" -- Deactivated Electromagnet
 
 	L.shockwave_missile_trigger = "Представляю вам прекрасную ударно-волновую турель УТ-03!"
 end

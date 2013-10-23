@@ -146,6 +146,11 @@ if L then
 
 	L.assembly_line_trigger = "未完成的武器从装配流水线上传送出来了。"
 	L.assembly_line_message = "零散的武器 >%d<"
+	--L.assembly_line_items = "Items (%d): %s"
+	--L[71606] = "Missile" -- Deactivated Missile Turret
+	--L[71790] = "Mines" -- Disassembled Crawler Mines
+	--L[71751] = "Laser" -- Deactivated Laser Turret
+	--L[71694] = "Magnet" -- Deactivated Electromagnet
 
 	L.shockwave_missile_trigger = "为各位送上"
 end

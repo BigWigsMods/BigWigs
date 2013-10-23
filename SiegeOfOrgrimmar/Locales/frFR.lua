@@ -146,6 +146,11 @@ if L then
 
 	L.assembly_line_trigger = "Des armes non terminées commencent à avancer sur la chaîne d’assemblage."
 	L.assembly_line_message = "Armes non terminées (%d)"
+	--L.assembly_line_items = "Items (%d): %s"
+	--L[71606] = "Missile" -- Deactivated Missile Turret
+	--L[71790] = "Mines" -- Disassembled Crawler Mines
+	--L[71751] = "Laser" -- Deactivated Laser Turret
+	--L[71694] = "Magnet" -- Deactivated Electromagnet
 
 	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!" -- to translate
 end

@@ -20,7 +20,6 @@ local markableMobs = {}
 local marksUsed = {}
 local markTimer
 local assemblyLineCounter = 1
-local shredder = EJ_GetSectionInfo(8199)
 local sawbladeTarget
 
 --------------------------------------------------------------------------------
@@ -45,6 +44,11 @@ if L then
 
 	L.assembly_line_trigger = "Unfinished weapons begin to roll out on the assembly line."
 	L.assembly_line_message = "Unfinished weapons (%d)"
+	L.assembly_line_items = "Items (%d): %s"
+	L[71606] = "Missile" -- Deactivated Missile Turret
+	L[71790] = "Mines" -- Disassembled Crawler Mines
+	L[71751] = "Laser" -- Deactivated Laser Turret
+	L[71694] = "Magnet" -- Deactivated Electromagnet
 
 	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!"
 end
@@ -108,7 +112,7 @@ end
 function mod:OnEngage()
 	self:Berserk(self:Heroic() and 540 or 600)
 	assemblyLineCounter = 1
-	self:Bar(-8199, 35, shredder, "INV_MISC_ARMORKIT_27") -- Shredder Engage
+	self:Bar(-8199, 35, nil, "INV_MISC_ARMORKIT_27") -- Shredder Engage
 	self:CDBar(-8195, 9) -- Sawblade
 	if self.db.profile.custom_off_mine_marker then
 		wipe(markableMobs)
@@ -186,22 +190,22 @@ end
 
 do
 	-- this helps people trying to figure out tactics
-	local function beltItems()
-		local items = ""
-		local boss
+	local items = {}
+	local function beltItems(count)
 		for i=1, 5 do
-			boss = "boss"..i
-			if UnitExists(boss) and mod:MobId(UnitGUID(boss)) ~= 71504 then
-				items = ("%s - %s"):format(items, UnitName(boss)) -- I used to gsub this with to shorten it but guess that won't work for all localization, maybe use localized names instead?
+			local mobId = mod:MobId(UnitGUID("boss"..i))
+			if mobId and mobId ~= 71504 then
+				items[#items+1] = L[mobId]
 			end
 		end
-		mod:Message(-8202, "Neutral", nil, CL["count"]:format("Items: "..items, assemblyLineCounter-1), false)
+		mod:Message(-8202, "Neutral", nil, L["assembly_line_items"]:format(count, table.concat(" - ", items)), false)
+		wipe(items)
 	end
 	function mod:AssemblyLine()
-		self:ScheduleTimer(beltItems, 13)
+		self:ScheduleTimer(beltItems, 13, assemblyLineCounter)
 		self:Message(-8202, "Neutral", "Warning", L["assembly_line_message"]:format(assemblyLineCounter), "Inv_crate_03")
 		assemblyLineCounter = assemblyLineCounter + 1
-		self:Bar(-8202, 40, CL["count"]:format((EJ_GetSectionInfo(8202)), assemblyLineCounter), "Inv_crate_03")
+		self:Bar(-8202, 40, CL["count"]:format(self:SpellName(-8202), assemblyLineCounter), "Inv_crate_03")
 	end
 end
 
@@ -275,8 +279,8 @@ end
 -- Automated Shredders
 
 function mod:ShredderEngage()
-	self:Message(-8199, "Attention", self:Tank() and "Long", shredder, "INV_MISC_ARMORKIT_27")
-	self:Bar(-8199, 60, shredder, "INV_MISC_ARMORKIT_27")
+	self:Message(-8199, "Attention", self:Tank() and "Long", nil, "INV_MISC_ARMORKIT_27")
+	self:Bar(-8199, 60, nil, "INV_MISC_ARMORKIT_27")
 	self:Bar(144208, 16) -- Death from Above
 	overloadCounter = 1
 	self:Bar(145444, 7, CL["count"]:format(self:SpellName(145444), overloadCounter)) -- Overload
