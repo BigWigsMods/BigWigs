@@ -146,11 +146,11 @@ if L then
 
 	L.assembly_line_trigger = "Des armes non terminées commencent à avancer sur la chaîne d’assemblage."
 	L.assembly_line_message = "Armes non terminées (%d)"
-	--L.assembly_line_items = "Items (%d): %s"
-	--L[71606] = "Missile" -- Deactivated Missile Turret
-	--L[71790] = "Mines" -- Disassembled Crawler Mines
-	--L[71751] = "Laser" -- Deactivated Laser Turret
-	--L[71694] = "Magnet" -- Deactivated Electromagnet
+	L.assembly_line_items = "Objets (%d) : %s"
+	L[71606] = "Missile" -- Deactivated Missile Turret
+	L[71790] = "Mines" -- Disassembled Crawler Mines
+	L[71751] = "Laser" -- Deactivated Laser Turret
+	L[71694] = "Aimant" -- Deactivated Electromagnet
 
 	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!" -- to translate
 end
@@ -158,16 +158,16 @@ end
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "frFR")
 if L then
 	L.catalyst_match = "Catalyseur : |c%sVOUS CORRESPOND|r" -- might not be best for colorblind?
-	--L.you_ate = "You ate a parasite (%d left)"
-	--L.other_ate = "%s ate a %sparasite (%d left)"
-	--L.parasites_up = "%d |4Parasite:Parasites; up"
+	L.you_ate = "Vous avez mangé un parasite (il en reste %d)"
+	L.other_ate = "%s a mangé un %sparasite (il en reste %d)"
+	L.parasites_up = "%d |4Parasite actif:Parasites actifs;"
 	L.dance = "Danse"
 	L.prey_message = "Utilisez Prendre pour proie sur le parasite"
-	L.one = "Iyyokuk sélectionne : Un !" -- to check
-	L.two = "Iyyokuk sélectionne : Deux !" -- to check
-	L.three = "Iyyokuk sélectionne : Trois !" -- to check
-	L.four = "Iyyokuk sélectionne : Quatre !" -- to check
-	L.five = "Iyyokuk sélectionne : Cinq !" -- to check
+	L.one = "Iyyokuk sélectionne : Un !"
+	L.two = "Iyyokuk sélectionne : Deux !"
+	L.three = "Iyyokuk sélectionne : Trois !"
+	L.four = "Iyyokuk sélectionne : Quatre !"
+	L.five = "Iyyokuk sélectionne : Cinq !"
 	L.edge_message = "Vous êtes un sommet"
 	L.custom_off_edge_marks = "Marquage Tranchant enflammé"
 	L.custom_off_edge_marks_desc = "Marque les joueurs qui seront les sommets des Tranchants enflammés avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
@@ -193,8 +193,8 @@ if L then
 	L.intermission = "Intervalle"
 	L.mind_control = "Contrôle mental"
 
-	--L.ironstar_impact_desc = "A timer bar for when the Iron Star will impact the wall at the other side."
-	--L.ironstar_rolling = "Iron Star Rolling!"
+	L.ironstar_impact_desc = "Une barre de délai indiquant quand l'Étoile de fer touchera le mur d'en face."
+	L.ironstar_rolling = "L'Étoile de fer roule !"
 
 	L.chain_heal_desc = "Rend 40% de ses points de vie maximum à une cible alliée et se propage aux cibles alliées à proximité."
 	L.chain_heal_message = "Votre focalisation est en train d'incanter Salve de guérison !"
