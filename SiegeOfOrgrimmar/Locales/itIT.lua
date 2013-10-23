@@ -101,7 +101,7 @@ if L then
 
 	L.arcane_shock_message = "Il tuo focus sta lanciando Folgore Arcana!"
 
-	L.focus_only = "|cffff0000Avvisi solo dei bersagli focus.|r " 
+	L.focus_only = "|cffff0000Avvisi solo dei bersagli focus.|r "
 end
 
 L = BigWigs:NewBossLocale("Malkorok", "itIT")
@@ -175,6 +175,9 @@ L = BigWigs:NewBossLocale("Garrosh Hellscream", "itIT")
 if L then
 	L.intermission = "Intermezzo"
 	L.mind_control = "Controllo della Mente"
+
+	--L.ironstar_impact_desc = "A timer bar for when the Iron Star will impact the wall at the other side."
+	--L.ironstar_rolling = "Iron Star Rolling!"
 
 	L.chain_heal_desc = "Cura un bersaglio amico per il 40% della sua vita massima, e a catena anche i bersagli amici vicini."
 	L.chain_heal_message = "Il tuo focus sta lanciando Catena di Guarigione!"

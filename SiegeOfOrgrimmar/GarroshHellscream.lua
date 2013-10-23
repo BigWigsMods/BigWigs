@@ -68,7 +68,7 @@ if L then
 	L.intermission = "Intermission"
 	L.mind_control = "Mind Control"
 
-	L.ironstar_impact = "Iron Star Impact"
+	L.ironstar_impact = mod:SpellName(144653)
 	L.ironstar_impact_desc = "A timer bar for when the Iron Star will impact the wall at the other side."
 	L.ironstar_impact_icon = 144653
 	L.ironstar_rolling = "Iron Star Rolling!"
@@ -118,7 +118,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
-	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", nil, "boss1", "boss2", "boss3")
+	self:RegisterUnitEvent("IronStarRolling", nil, "boss2", "boss3")
 
 	-- Phase 4
 	self:Yell("Phase3End", L.phase_3_end_trigger)
@@ -437,9 +437,9 @@ function mod:PowerIronStar(args)
 	self:Bar(args.spellId, 15)
 end
 
-function mod:UNIT_SPELLCAST_CHANNEL_STOP(_, _, _, _, spellId)
+function mod:IronStarRolling(_, _, _, _, spellId)
 	if spellId == 144616 then -- Power Iron Star
-		self:Message(144616, "Important", L["ironstar_rolling"])
+		self:Message(spellId, "Important", L["ironstar_rolling"])
 		self:Bar("ironstar_impact", 9, 144653) -- Iron Star Impact
 	end
 end

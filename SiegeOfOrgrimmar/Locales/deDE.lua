@@ -188,7 +188,6 @@ if L then
 	L.intermission = "Unterbrechung"
 	L.mind_control = "Gedankenkontrolle"
 
-	--L.ironstar_impact = "Iron Star Impact"
 	--L.ironstar_impact_desc = "A timer bar for when the Iron Star will impact the wall at the other side."
 	--L.ironstar_rolling = "Iron Star Rolling!"
 
