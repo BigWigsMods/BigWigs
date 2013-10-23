@@ -1,6 +1,5 @@
 --[[
 TODO:
-	-- figure out tower add timers for 2nd tower -- it is not improved but still need feedback
 	-- maybe try and add wave timers
 ]]--
 
@@ -115,7 +114,6 @@ end
 
 local function firstTowerAdd()
 	mod:Message("towers", "Attention", nil, L["tower_defender"], 85214)
-	-- XXX this gets totally inaccurate at some point -- might be better now for north tower, still need feedback
 	mod:Bar("towers", 60, L["tower_defender"], 85214) -- random orc icon
 	if not towerAddTimer then
 		towerAddTimer = mod:ScheduleRepeatingTimer(warnTowerAdds, 60)
@@ -206,15 +204,15 @@ function mod:Towers(msg)
 	self:Bar("demolisher", 20, L["demolisher"], L["demolisher_icon"])
 
 	if self:Heroic() then
-		-- timer needs double checking
-		self:CancelTimer(towerAddTimer)
-		towerAddTimer = nil
-		self:Bar("towers", 35, L["tower_defender"], 85214) -- random orc icon
-		self:ScheduleTimer(firstTowerAdd, 35)
-		if tower == L["north_tower"] then
+		if tower == L["south_tower"] then
 			self:CancelTimer(towerAddTimer)
 			towerAddTimer = nil
 			self:StopBar(L["tower_defender"])
+		else
+			self:CancelTimer(towerAddTimer)
+			towerAddTimer = nil
+			self:Bar("towers", 35, L["tower_defender"], 85214) -- random orc icon
+			self:ScheduleTimer(firstTowerAdd, 35)
 		end
 	elseif tower == L["south_tower"] then
 		self:Bar("towers", 150, L["north_tower"], "achievement_bg_winsoa") -- XXX verify
