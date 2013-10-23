@@ -1288,7 +1288,7 @@ do
 
 		local time, barText
 		if localOnly then
-			time, barText, nick = bar, localOnly, L.local
+			time, barText, nick = bar, localOnly, L.localTimer
 		else
 			if prevBars[bar] and GetTime() - prevBars[bar] < 1.2 then return end -- Throttle
 			prevBars[bar] = GetTime()

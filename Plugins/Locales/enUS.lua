@@ -50,7 +50,7 @@ L.restartDesc = "Restarts emphasized bars so they start from the beginning and c
 L.fill = "Fill"
 L.fillDesc = "Fills the bars up instead of draining them."
 
-L.local = "Local"
+L.localTimer = "Local"
 L.timerFinished = "%s: Timer [%s] finished."
 L.customBarStarted = "Custom bar '%s' started by %s user %s."
 

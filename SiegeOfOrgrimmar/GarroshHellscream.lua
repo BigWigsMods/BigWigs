@@ -439,7 +439,7 @@ do
 	function mod:EngineerDeath()
 		dead = dead + 1
 		if dead > 1 then
-			self:StopBar(144616)
+			self:StopBar(144616) -- Power Iron Star
 		end
 	end
 end
