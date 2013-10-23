@@ -175,7 +175,7 @@ do
 	function mod:Overcharge(args)
 		local mobId = self:MobId(args.destGUID)
 		self:Message(-8408, "Important", nil, CL["other"]:format(args.spellName, L[mobId]), false)
-		if self.db.profile.custom_off_mine_marker and self:MobId(args.destGUID) == 71790 then -- mines
+		if self.db.profile.custom_off_mine_marker and mobId == 71790 then -- mines
 			wipe(markableMobs)
 			wipe(marksUsed)
 			markTimer = nil
@@ -199,7 +199,7 @@ do
 				items[#items+1] = L[mobId]
 			end
 		end
-		mod:Message(-8202, "Neutral", nil, L["assembly_line_items"]:format(count, table.concat(" - ", items)), false)
+		mod:Message(-8202, "Neutral", nil, L["assembly_line_items"]:format(count, table.concat(items, " - ")), false)
 		wipe(items)
 	end
 	function mod:AssemblyLine()
