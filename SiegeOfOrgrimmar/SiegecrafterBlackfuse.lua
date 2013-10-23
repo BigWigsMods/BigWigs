@@ -204,7 +204,7 @@ do
 	end
 	function mod:AssemblyLine()
 		self:ScheduleTimer(beltItems, 13, assemblyLineCounter)
-		self:Message(-8202, "Neutral", "Warning", L["assembly_line_message"]:format(assemblyLineCounter).. beltKillOrder[assemblyLineCounter], "Inv_crate_03")
+		self:Message(-8202, "Neutral", "Warning", L["assembly_line_message"]:format(assemblyLineCounter), "Inv_crate_03")
 		assemblyLineCounter = assemblyLineCounter + 1
 		self:Bar(-8202, 40, CL["count"]:format(self:SpellName(-8202), assemblyLineCounter), "Inv_crate_03")
 	end
@@ -335,7 +335,6 @@ do
 		if not self:Me(guid) then -- we warn for ourself from the BOSS_WHISPER
 			if self:Range(target) < 8 then -- 8 is guessed
 				self:RangeMessage("saw_blade_near_you", "Personal", "Alarm", mod:SpellName(-8195), 143265)
-				--mod:Flash(-8195) -- this is too much for our tactic
 			else
 				self:TargetMessage(-8195, target, "Positive", "Info")
 			end
