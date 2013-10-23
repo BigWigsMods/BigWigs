@@ -75,6 +75,7 @@ if L then
 
 	L.chain_heal = mod:SpellName(144583)
 	L.chain_heal_desc = "Heals a friendly target for 40% of their max health, chaining to nearby friendly targets."
+	L.chain_heal_icon = 144583
 	L.chain_heal_message = "Your focus is casting Chain Heal!"
 	L.chain_heal_bar = "Focus: Chain Heal"
 

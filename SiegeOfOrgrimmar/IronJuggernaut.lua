@@ -40,16 +40,16 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{-8179, "FLASH"}, {144459, "HEALER"}, {144467, "TANK"}, -- Assault mode
+		-8181,
+		{-8179, "FLASH"}, {144459, "HEALER"}, {144467, "TANK_HEALER"}, -- Assault mode
 		144485, {-8190, "FLASH", "ICON"}, {144498, "FLASH"}, -- Siege mode
 		"custom_off_mine_marks",
-		-8181,
 		"stages", -8183, "berserk", "bosskill",
 	}, {
+		[-8181] = "heroic",
 		[-8179] = -8177,
 		[144485] = -8178,
 		["custom_off_mine_marks"] = L.custom_off_mine_marks,
-		[-8181] = "heroic",
 		["stages"] = "general",
 	}
 end
@@ -182,19 +182,20 @@ end
 
 -- Assaukt mode
 function mod:IgniteArmor(args)
-	local amount = args.amount or 0
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
 	self:CDBar(args.spellId, 9)
 end
 
 do
-	local prev = 0
+	local burnList, scheduled = mod:NewTargetList(), nil
+	local function warnBurn(spellId)
+		mod:TargetMessage(spellId, burnList, "Important")
+		scheduled = nil
+	end
 	function mod:LaserBurn(args)
-		local t = GetTime()
-		if t-prev > 2 then
-			prev = t
-			self:Bar(args.spellId, 11) -- is there even a point for this?
-			self:Message(args.spellId, "Important")
+		burnList[#burnList+1] = args.destName
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warnBurn, 1, args.spellId)
 		end
 	end
 end
@@ -218,6 +219,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		self:CDBar(-8179, 19)
 	elseif spellId == 144673 then -- Crawler Mine
 		self:Message(-8183, "Urgent", nil, CL["count"]:format(spellName, mineCounter))
+		self:Bar(-8183, 18, 144718) -- 48732 = Mine Explosion?
 		mineCounter = mineCounter + 1
 		if phase == 1 then
 			self:Bar(-8183, 30, CL["count"]:format(spellName, mineCounter))

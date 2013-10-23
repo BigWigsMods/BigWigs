@@ -59,7 +59,6 @@ local results = {
 	[1] = {}, [2] = {}, [3] = {}, [4] = {}, [5] = {},
 }
 local raidParsed
-local emoteTriggers = {}
 local mutateCounter = 1
 local redPlayers = {}
 local parasiteCounter = 0
@@ -163,11 +162,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	for _, t in pairs(calculations) do
-		for partial, v in pairs(t) do
-			emoteTriggers[#emoteTriggers+1] = partial
-		end
-	end
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "MyEngage")
 
 	--Kil'ruk the Wind-Reaver
@@ -189,6 +183,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "EncaseInEmber", 142564)
 	self:Log("SPELL_CAST_START", "ShieldBash", 143974)
 	--Iyyokuk the Lucid
+	local emoteTriggers = {}
+	for _, t in next, calculations do
+		for partial in next, t do
+			emoteTriggers[#emoteTriggers+1] = partial
+		end
+	end
 	self:Emote("CalculateEmotes", unpack(emoteTriggers))
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:Log("SPELL_AURA_REMOVED", "CalculationRemoved", 143605,143606,143607,143608,143609,143610,143611,143612,143613,143614,143615,143616,143617,143618,143619,143620,143621,143622,143623,143624,143627,143628,143629,143630,143631)
@@ -600,14 +600,14 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(_, _, sender, _, _, target)
 	-- Iyyokuk only have one MONSTER_EMOTE so this should be a safe method rather than having to translate the msg
-	if sender == EJ_GetSectionInfo(8012) then -- hopefully no weird naming missmatch in different localization like for "Xaril the Poisoned Mind" vs "Xaril the Poisoned-Mind"
+	if sender == self:SpellName(-8012) then -- hopefully no weird naming missmatch in different localization like for "Xaril the Poisoned Mind" vs "Xaril the Poisoned-Mind"
 		local diff = self:Difficulty()
 		self:Message(-8055, "Attention", nil, CL["count"]:format(self:SpellName(142514), calculateCounter), 142514)
 		calculateCounter = calculateCounter + 1
 		self:Bar(-8055, 35, CL["count"]:format(self:SpellName(142514), calculateCounter), 142514) -- Calculate
-		if target == self:UnitName("player") then
+		if UnitIsUnit(target, "player") then
 			warnEdge()
-		elseif diff == 5 or diff == 6 then -- Heroic
+		elseif self:Heroic() then
 			results.shape, results.color, results.number = parseDebuff(target) -- we don't have to rely on emotes for heroic
 			iyyokukSelected()
 		else
