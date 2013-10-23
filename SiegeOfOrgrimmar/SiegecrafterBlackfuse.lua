@@ -173,7 +173,8 @@ do
 	end
 
 	function mod:Overcharge(args)
-		self:Message(-8408, "Important", nil, CL["other"]:format(args.spellName, args.destName), false) -- maybe shorten args.destName?
+		local mobId = self:MobId(args.destGUID)
+		self:Message(-8408, "Important", nil, CL["other"]:format(args.spellName, L[mobId]), false)
 		if self.db.profile.custom_off_mine_marker and self:MobId(args.destGUID) == 71790 then -- mines
 			wipe(markableMobs)
 			wipe(marksUsed)
@@ -316,11 +317,11 @@ end
 
 function mod:ProtectiveFrenzy(args)
 	self:Message(args.spellId, "Attention", "Long")
-	local boss
 	for i=1, 5 do
-		boss = "boss"..i
+		local boss = "boss"..i
 		if UnitExists(boss) and UnitIsDead(boss) then
-			self:Message(-8202, "Positive", nil, CL["other"]:format(L["disabled"], UnitName(boss)), false) -- maybe shorten the unit name?
+			local mobId = self:MobId(UnitGUID(boss))
+			self:Message(-8202, "Positive", nil, CL["other"]:format(L["disabled"], L[mobId]), false)
 		end
 	end
 end
