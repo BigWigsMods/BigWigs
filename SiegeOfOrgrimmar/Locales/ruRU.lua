@@ -175,6 +175,9 @@ if L then
 	L.spread = "Разбегайтесь!"
 	L.intermission = "Перерыв"
 	L.mind_control = "Контроль разума"
+
+	--L.ironstar_impact = "Iron Star Impact"
+	--L.ironstar_impact_desc = "A timer bar for when the Iron Star will impact the wall at the other side."
 	L.ironstar_rolling = "Железная звезда катится!"
 
 	L.chain_heal_desc = "Лечит союзника, восстанавливая определенный процент от его максимального запаса здоровья, переходя на находящиеся поблизости дружественные цели."

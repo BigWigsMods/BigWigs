@@ -438,10 +438,6 @@ do
 			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
 				print("Think you can translate Big Wigs into Brazilian Portuguese (ptBR)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
 			end)
-		elseif L == "esES" then
-			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-				print("Think you can translate Big Wigs into Spanish (esES)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
-			end)
 		elseif L == "esMX" then
 			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
 				print("Think you can translate Big Wigs into Latin American Spanish (esMX)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")

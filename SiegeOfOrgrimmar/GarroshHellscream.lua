@@ -67,6 +67,10 @@ if L then
 	L.spread = "Spread!"
 	L.intermission = "Intermission"
 	L.mind_control = "Mind Control"
+
+	L.ironstar_impact = "Iron Star Impact"
+	L.ironstar_impact_desc = "A timer bar for when the Iron Star will impact the wall at the other side."
+	L.ironstar_impact_icon = 144616
 	L.ironstar_rolling = "Iron Star Rolling!"
 
 	L.chain_heal = mod:SpellName(144583)
@@ -94,7 +98,7 @@ function mod:GetOptions()
 	-- XXX Funkeh clean "FLASH" up as you see fit
 	return {
 		{147209, "FLASH", "ICON"}, 147235, "bombardment", {147665, "FLASH", "ICON"}, {"clump_check", "FLASH"}, "manifest_rage", -- phase 4 .. fix descriptions
-		-8298, 144616, -8292, 144821, -- phase 1
+		-8298, 144616, "ironstar_impact", -8292, 144821, -- phase 1
 		-8294, "chain_heal", "custom_off_shaman_marker", -- Farseer
 		-8305, 144945, 144969, -- Intermissions
 		"custom_off_minion_marker",

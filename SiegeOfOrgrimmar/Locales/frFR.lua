@@ -187,6 +187,9 @@ if L then
 	L.spread = "Éparpillez-vous !"
 	L.intermission = "Intervalle"
 	L.mind_control = "Contrôle mental"
+
+	--L.ironstar_impact = "Iron Star Impact"
+	--L.ironstar_impact_desc = "A timer bar for when the Iron Star will impact the wall at the other side."
 	--L.ironstar_rolling = "Iron Star Rolling!"
 
 	L.chain_heal_desc = "Rend 40% de ses points de vie maximum à une cible alliée et se propage aux cibles alliées à proximité."
