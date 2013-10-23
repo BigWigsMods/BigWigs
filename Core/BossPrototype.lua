@@ -797,16 +797,16 @@ do
 end
 
 -- ALT POWER
-function boss:OpenAltPower(title, sorting)
-	--if checkFlag(self, "altpower", C.ALTPOWER) then
+function boss:OpenAltPower(key, title, sorting)
+	if checkFlag(self, key, C.ALTPOWER) then
 		self:SendMessage("BigWigs_ShowAltPower", self, type(title) == "number" and spells[title] or title, sorting == "ZA" and sorting or "AZ")
-	--end
+	end
 end
 
-function boss:CloseAltPower()
-	--if checkFlag(self, "altpower", C.ALTPOWER) then
+function boss:CloseAltPower(key)
+	if checkFlag(self, key or "altpower", C.ALTPOWER) then
 		self:SendMessage("BigWigs_HideAltPower", self)
-	--end
+	end
 end
 
 -- PROXIMITY

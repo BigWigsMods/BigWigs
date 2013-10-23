@@ -46,7 +46,7 @@ function mod:GetOptions()
 		{-8218, "TANK_HEALER"}, {146124, "TANK"}, 145226, 145132,-- Amalgam of Corruption
 		"big_adds",
 		-8220, 144482, 144514, 144649, 144628,
-		"stages", "pre_pull", "berserk", "bosskill",
+		"stages", "pre_pull", "altpower", "berserk", "bosskill",
 	}, {
 		[-8218] = -8216, -- Amalgam of Corruption
 		["big_adds"] = L.big_adds, -- Big add
@@ -96,7 +96,7 @@ function mod:OnEngage()
 	self:Bar(145226, 25) -- Blind Hatred
 	wipe(bigAddKills)
 	wipe(throttlePlayers)
-	self:OpenAltPower(147800) -- Corruption
+	self:OpenAltPower("altpower", 147800) -- Corruption
 end
 
 --------------------------------------------------------------------------------

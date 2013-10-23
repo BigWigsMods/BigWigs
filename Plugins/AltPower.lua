@@ -41,6 +41,10 @@ local roleIcons = {
 -- Initialization
 --
 
+local function updateProfile()
+	db = plugin.db.profile
+end
+
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ShowAltPower")
 	self:RegisterMessage("BigWigs_HideAltPower", "Close")
@@ -50,7 +54,8 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode", "Close")
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 
-	db = self.db.profile
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	updateProfile()
 end
 
 function plugin:OnPluginDisable()
@@ -169,9 +174,9 @@ do
 			roleColoredList[unit] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
 		end
 		if title then
-			display.title:SetFormattedText("Alt Power: %s", title)
+			display.title:SetFormattedText("%s: %s", L.altPowerTitle, title)
 		else
-			display.title:SetText("Alt Power")
+			display.title:SetText(L.altPowerTitle)
 		end
 		display:Show()
 		updater:Play()
@@ -186,7 +191,7 @@ do
 		for i = 1, db.expanded and 25 or 10 do
 			display.text[i]:SetFormattedText("[%d] %s", 100-i, unitList[i])
 		end
-		display.title:SetText("Alt Power")
+		display.title:SetText(L.altPowerTitle)
 		display:Show()
 		inTestMode = true
 	end

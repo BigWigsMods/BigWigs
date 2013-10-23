@@ -45,7 +45,7 @@ function mod:GetOptions()
 		145215, 147207,
 		"custom_off_titan_mark",
 		{146595, "PROXIMITY"}, 144400, -8257, {-8258, "FLASH"}, {146817, "FLASH", "PROXIMITY"}, -8270, {144351, "DISPEL"}, {144358, "TANK", "FLASH", "EMPHASIZE"}, -8262, 144800, 144563, -8349,
-		"berserk", "bosskill",
+		"altpower", "berserk", "bosskill",
 	}, {
 		[145215] = "heroic",
 		["custom_off_titan_mark"] = L.custom_off_titan_mark,
@@ -97,7 +97,7 @@ function mod:OnEngage()
 		self:CDBar(144358, 11) -- Wounded Pride
 	end
 	self:Berserk(600)
-	self:OpenAltPower(144343) -- Pride
+	self:OpenAltPower("altpower", 144343) -- Pride
 end
 
 --------------------------------------------------------------------------------

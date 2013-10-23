@@ -434,9 +434,10 @@ function addon:OnInitialize()
 	db.RegisterCallback(self, "OnProfileReset", profileUpdate)
 	self.db = db
 
-	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"], nil, "Interface\\Icons\\ability_rogue_feigndeath")
-	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"], nil, "Interface\\Icons\\spell_shadow_unholyfrenzy")
-	self:RegisterBossOption("stages", L["stages"], L["stages_desc"])
+	self:RegisterBossOption("bosskill", L.bosskill, L.bosskill_desc, nil, "Interface\\Icons\\ability_rogue_feigndeath")
+	self:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, "Interface\\Icons\\spell_shadow_unholyfrenzy")
+	self:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, "Interface\\Icons\\spell_arcane_invocation")
+	self:RegisterBossOption("stages", L.stages, L.stages_desc)
 
 	-- this should ALWAYS be the last action of OnInitialize, it will trigger the loader to
 	-- enable the foreign language pack, and other packs that want to be loaded when the core loads
@@ -556,6 +557,7 @@ do
 				berserk = C.BAR + C.MESSAGE,
 				bosskill = C.MESSAGE,
 				proximity = C.PROXIMITY,
+				altpower = C.ALTPOWER,
 			}, {__index = function(self, key)
 				return C.BAR + C.MESSAGE
 			end})
