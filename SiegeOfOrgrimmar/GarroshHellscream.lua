@@ -118,7 +118,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
-	self:RegisterUnitEvent("IronStarRolling", nil, "boss2", "boss3")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", "IronStarRolling", "boss2", "boss3")
 
 	-- Phase 4
 	self:Yell("Phase3End", L.phase_3_end_trigger)
@@ -150,6 +150,7 @@ function mod:OnBossEnable()
 	self:Emote("SiegeEngineer", "144616")
 	self:Log("SPELL_CAST_SUCCESS", "DesecratedWeapon", 144748, 144749)
 
+	self:Death("EngineerDeath", 71984) -- Siege Engineer
 	self:Death("RiderDeath", 71983) -- Farseer Wolf Rider
 	self:Death("Win", 71865) -- Garrosh
 end
@@ -427,10 +428,20 @@ do
 	end
 end
 
-function mod:SiegeEngineer()
-	self:Message(-8298, "Attention", nil, nil, 144616)
-	self:Bar(-8298, engineerCounter == 1 and 45 or 40, nil, 144616)
-	engineerCounter = engineerCounter + 1
+do
+	local dead = 0
+	function mod:SiegeEngineer()
+		self:Message(-8298, "Attention", nil, nil, 144616)
+		self:Bar(-8298, engineerCounter == 1 and 45 or 40, nil, 144616)
+		engineerCounter = engineerCounter + 1
+		dead = 0
+	end
+	function mod:EngineerDeath()
+		dead = dead + 1
+		if dead > 1 then
+			self:StopBar(144616)
+		end
+	end
 end
 
 function mod:PowerIronStar(args)
