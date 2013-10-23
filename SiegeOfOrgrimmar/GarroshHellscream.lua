@@ -451,7 +451,7 @@ end
 
 function mod:IronStarRolling(_, _, _, _, spellId)
 	if spellId == 144616 then -- Power Iron Star
-		self:Message(spellId, "Important", L["ironstar_rolling"])
+		self:Message(spellId, "Important", nil, L["ironstar_rolling"])
 		self:Bar("ironstar_impact", 9, 144653) -- Iron Star Impact
 	end
 end
