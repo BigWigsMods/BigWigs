@@ -44,6 +44,7 @@ local clumpCheckAllowed
 local mindControl = nil
 local bombardmentCounter = 1
 local bombardmentTimers = { 55, 40, 40, 25 } -- XXX need more data
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -103,7 +104,7 @@ function mod:GetOptions()
 		-8294, "chain_heal", "custom_off_shaman_marker", -- Farseer
 		-8305, 144945, 144969, -- Intermissions
 		"custom_off_minion_marker",
-		145065, {144985, "FLASH"}, 145183, -- phase 2
+		145065, {144985, "FLASH"}, {145183, "TANK"}, -- phase 2
 		{144758, "SAY", "FLASH", "ICON"},
 		"stages", "berserk", "bosskill",
 	}, {
@@ -289,16 +290,8 @@ end
 -- phase 2
 function mod:GrippingDespair(args)
 	local amount = args.amount or 1
-	local sound
-	if amount > 3 and not self:Me(args.destGUID) then
-		sound = "Warning"
-	end
-	if args.spellId == 145195 then -- XXX do tanks need a bar for non empowered?
-		self:TargetBar(145183, 10, args.destName, 145195) -- text might be too long
-	end
-	if self:Tank() then
-		self:StackMessage(145183, args.destName, amount, "Attention", sound) -- force Gripping Despair text to keep it short
-	end
+	-- force Gripping Despair text to keep it short
+	self:StackMessage(145183, args.destName, amount, "Attention", amount > 2 and not self:Me(args.destGUID) and "Warning")
 end
 
 function mod:MindControl(args)
@@ -381,9 +374,10 @@ do
 	end
 	function mod:WhirlingCorruption(args)
 		self:Flash(144985)
-		self:Message(144985, "Important", "Long", CL["count"]:format(args.spellName, whirlingCounter))
+		local shortName = self:SpellName(144985)
+		self:Message(144985, "Important", "Long", CL["count"]:format(shortName, whirlingCounter))
 		whirlingCounter = whirlingCounter + 1
-		self:Bar(144985, 50, CL["count"]:format(args.spellName, whirlingCounter))
+		self:Bar(144985, 50, CL["count"]:format(shortName, whirlingCounter))
 		if args.spellId == 145037 and self.db.profile.custom_off_minion_marker then
 			markableMobs = {}
 			marksUsed = {}
