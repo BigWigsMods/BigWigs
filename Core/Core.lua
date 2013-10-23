@@ -188,6 +188,7 @@ do
 		[74] = true, -- DeathwingSpine engage
 		[75] = true, -- DeathwingSpine death
 		[76] = true, -- DeathwingMadness death
+		[152] = true, -- Garrosh defeat
 	}
 
 	-- We can't :HookScript as we need to prevent the movie starting to play in the first place
