@@ -212,7 +212,7 @@ do
 	end
 	function mod:AssemblyLine()
 		self:ScheduleTimer(beltItems, 13, assemblyLineCounter)
-		self:Message(-8202, "Neutral", "Warning", L["assembly_line_message"]:format(assemblyLineCounter).. beltKillOrder[assemblyLineCounter], "Inv_crate_03")
+		self:Message(-8202, "Neutral", "Warning", L["assembly_line_message"]:format(assemblyLineCounter), "Inv_crate_03")
 		assemblyLineCounter = assemblyLineCounter + 1
 		self:Bar(-8202, 40, CL["count"]:format(self:SpellName(-8202), assemblyLineCounter), "Inv_crate_03")
 	end
