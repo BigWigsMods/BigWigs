@@ -147,10 +147,10 @@ if L then
 	L.assembly_line_trigger = "생산 설비에서 미완성 무기가 나오기 시작합니다."
 	L.assembly_line_message = "생산 설비 가동 (%d)"
 	L.assembly_line_items = "설비들 (%d): %s"
-	L[71606] = "미사일" -- Deactivated Missile Turret
-	L[71790] = "지뢰" -- Disassembled Crawler Mines
-	L[71751] = "레이저" -- Deactivated Laser Turret
-	L[71694] = "전자석" -- Deactivated Electromagnet
+	L.item_missile = "미사일"
+	L.item_mines = "지뢰"
+	L.item_laser = "레이저"
+	L.item_magnet = "전자석"
 
 	L.shockwave_missile_trigger = "내 이쁜이 ST-03 충격파 미사일 포탑을 소개하지!"
 end

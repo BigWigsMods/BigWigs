@@ -45,14 +45,25 @@ if L then
 	L.assembly_line_trigger = "Unfinished weapons begin to roll out on the assembly line."
 	L.assembly_line_message = "Unfinished weapons (%d)"
 	L.assembly_line_items = "Items (%d): %s"
-	L[71606] = "Missile" -- Deactivated Missile Turret
-	L[71790] = "Mines" -- Disassembled Crawler Mines
-	L[71751] = "Laser" -- Deactivated Laser Turret
-	L[71694] = "Magnet" -- Deactivated Electromagnet
+	L.item_missile = "Missile"
+	L.item_mines = "Mines"
+	L.item_laser = "Laser"
+	L.item_magnet = "Magnet"
 
 	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!"
 end
 L = mod:GetLocale()
+
+local itemNames = {
+	[71606] = L.item_missile, -- Deactivated Missile Turret
+	[71790] = L.item_mines, -- Disassembled Crawler Mines
+	[71751] = L.item_laser, -- Deactivated Laser Turret
+	[71694] = L.item_magnet, -- Deactivated Electromagnet
+	[71752] = L.item_missile, -- Activated Missile Turret
+	[71795] = L.item_mines, -- Activated Crawler Mine Vehicle
+	[71638] = L.item_laser, -- Activated Laser Turret
+	[71696] = L.item_magnet, -- Activated Electromagnet
+}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -140,14 +151,11 @@ do
 	end
 
 	local function markMobs()
-		local continue
 		for guid in next, markableMobs do
 			if markableMobs[guid] == true then
 				local unit = mod:GetUnitIdByGUID(guid)
 				if unit then
 					setMark(unit, guid)
-				else
-					continue = true
 				end
 			end
 		end
@@ -174,7 +182,7 @@ do
 
 	function mod:Overcharge(args)
 		local mobId = self:MobId(args.destGUID)
-		self:Message(-8408, "Important", nil, CL["other"]:format(args.spellName, L[mobId]), false)
+		self:Message(-8408, "Important", nil, CL["other"]:format(args.spellName, itemNames[mobId]), false)
 		if self.db.profile.custom_off_mine_marker and mobId == 71790 then -- mines
 			wipe(markableMobs)
 			wipe(marksUsed)
@@ -195,8 +203,8 @@ do
 	local function beltItems(count)
 		for i=1, 5 do
 			local mobId = mod:MobId(UnitGUID("boss"..i))
-			if mobId and mobId ~= 71504 then
-				items[#items+1] = L[mobId]
+			if mobId > 0 and mobId ~= 71504 then
+				items[#items+1] = itemNames[mobId]
 			end
 		end
 		mod:Message(-8202, "Neutral", nil, L["assembly_line_items"]:format(count, table.concat(items, " - ")), false)
@@ -321,7 +329,7 @@ function mod:ProtectiveFrenzy(args)
 		local boss = "boss"..i
 		if UnitExists(boss) and UnitIsDead(boss) then
 			local mobId = self:MobId(UnitGUID(boss))
-			self:Message(-8202, "Positive", nil, CL["other"]:format(L["disabled"], L[mobId]), false)
+			self:Message(-8202, "Positive", nil, CL["other"]:format(L["disabled"], itemNames[mobId]), false)
 		end
 	end
 end

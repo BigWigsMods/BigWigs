@@ -150,10 +150,10 @@ if L then
 	L.assembly_line_trigger = "Unfertige Waffen werden auf das Fabrikationsband befördert."
 	L.assembly_line_message = "Unfertige Waffen (%d)"
 	L.assembly_line_items = "Waffen (%d): %s"
-	L[71606] = "Rakete"
-	L[71790] = "Minen"
-	L[71751] = "Laser"
-	L[71694] = "Magnet"
+	L.item_missile = "Rakete"
+	L.item_mines = "Minen"
+	L.item_laser = "Laser"
+	L.item_magnet = "Magnet"
 
 	L.shockwave_missile_trigger = "Ich präsentiere... den wunderschönen Erschütterungsraketenturm ST-03!"
 end

@@ -150,10 +150,10 @@ if L then
 	L.assembly_line_trigger = "Armi incomplete iniziano a uscire dalla catena di montaggio." --verified
 	L.assembly_line_message = "Armi non finite (%d)"
 	L.assembly_line_items = "Oggetti (%d): %s"
-	L[71606] = "Missile" -- Deactivated Missile Turret
-	L[71790] = "Mine" -- Disassembled Crawler Mines
-	L[71751] = "Laser" -- Deactivated Laser Turret
-	L[71694] = "Magnete" -- Deactivated Electromagnet
+	L.item_missile = "Missile"
+	L.item_mines = "Mines"
+	L.item_laser = "Laser"
+	L.item_magnet = "Magnete"
 
 	L.shockwave_missile_trigger = "Vi presento... la nuova, magnifica torretta lanciamissili a onda d'urto ST-03!" --verified
 end
