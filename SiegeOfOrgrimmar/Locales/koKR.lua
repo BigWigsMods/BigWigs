@@ -120,6 +120,9 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "koKR")
 if L then
+	L.adds = "하드모드 쫄"
+	L.adds_desc = "하드모드에서만 나오는 쫄이 전투 중 출현했을 때 경고해줍니다."
+
 	L.tank_debuffs = "탱커 디버프"
 	L.tank_debuffs_desc = "무시무시한 외침과 연계된 탱커 디버프를 경고합니다."
 
@@ -128,12 +131,26 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "koKR")
 if L then
+	L.overcharged_crawler_mine = "과충전된 거미 지뢰"
+	L.custom_off_mine_marker = "지뢰 징표 설정"
+	L.custom_off_mine_marker_desc = "스턴 임무를 맡은 플레이어를 위해 지뢰에 징표를 찍습니다. (모든 징표가 사용됩니다)"
+
+	L.saw_blade_near_you = "근처에 톱날이 날아옵니다! (나 보고 쏘는 게 아님)"
+	L.saw_blade_near_you_desc = "공격대의 택틱이 뭉쳐서 하는 것이라면 스팸 메시지를 피하기 위해 이 옵션을 꺼주세요."
+
+	L.disabled = "파괴됨"
+
 	L.shredder_engage_trigger = "자동 분쇄기가 다가옵니다!"
 	L.laser_on_you = "레이저가 당신에게 꽂힙니다!"
 	L.laser_say = "나에게 절단 레이저!"
 
 	L.assembly_line_trigger = "생산 설비에서 미완성 무기가 나오기 시작합니다."
 	L.assembly_line_message = "생산 설비 가동 (%d)"
+	L.assembly_line_items = "설비들 (%d): %s"
+	L[71606] = "미사일" -- Deactivated Missile Turret
+	L[71790] = "지뢰" -- Disassembled Crawler Mines
+	L[71751] = "레이저" -- Deactivated Laser Turret
+	L[71694] = "전자석" -- Deactivated Electromagnet
 
 	L.shockwave_missile_trigger = "내 이쁜이 ST-03 충격파 미사일 포탑을 소개하지!"
 end
@@ -155,14 +172,17 @@ if L then
 	L.custom_off_edge_marks = "광기의 계산 대상 징표 설정"
 	L.custom_off_edge_marks_desc = "광기의 계산의 대상이 된 플레이어를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
 	L.injection_over_soon = "주입이 곧 끝남! (%s)"
-	L.custom_off_mutate_marks = "돌연변이: 호박석 전갈 표시"
+	L.custom_off_mutate_marks = "돌연변이: 호박석 전갈 징표 설정"
 	L.custom_off_mutate_marks_desc = "힐을 돕기 위해, 돌연변이: 호박석 전갈에 걸린 플레이어를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
-end
+	L.custom_off_parasite_marks = "기생충 징표 설정"
+	L.custom_off_parasite_marks_desc = "군중 제어기나 기생충을 먹어야 하는 플레이어를 위해 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다. \n|cFFFF0000혼선을 빚는 것을 방지하기 위하여, 오직 공대원 중 한 사람만이 이 옵션을 켜야합니다.|r"
+ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "koKR")
 if L then
 	L.manifest_rage = "명백한 분노"
 	L.manifest_rage_desc = "가로쉬의 기력이 100에 도달하면 그는 2초동안 명백한 분노를 시전하고, 그 후 정신집중에 들어갑니다. 가로쉬가 정신집중하는 동안에는 큰 쫄이 나옵니다. 강철의 별을 가로쉬에게 유도해서 스턴시켜 시전을 멈추게 해야 합니다."
+
 	L.phase_3_end_trigger = "네가 이겼다고 생각하나? 넌 눈이 멀었다! 내가 그 눈을 뜨게해 주마!"
 
 	L.clump_check = "뭉침 여부 확인"
@@ -175,8 +195,8 @@ if L then
 	L.intermission = "내면 세계"
 	L.mind_control = "정신 지배"
 
-	--L.ironstar_impact_desc = "A timer bar for when the Iron Star will impact the wall at the other side."
-	--L.ironstar_rolling = "Iron Star Rolling!"
+	L.ironstar_impact_desc = "강철의 별이 다른 쪽 벽에 충돌할 때를 위한 타이머 바를 생성합니다."
+	L.ironstar_rolling = "강철의 별이 굴러갑니다!"
 
 	L.chain_heal_desc = "아군 대상의 최대 생명력의 40%를 치유하고, 인접한 아군 대상에게 튕겨갑니다."
 	L.chain_heal_message = "당신의 주시 대상이 연쇄 치유를 시전합니다"
@@ -184,7 +204,7 @@ if L then
 
 	L.farseer_trigger = "선견자, 우리를 치료하라!"
 	L.custom_off_shaman_marker = "선견자 표시"
-	L.custom_off_shaman_marker_desc = "차단을 돕기 위해, 선견자 늑대 기수를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다. \\n|cFFFF0000혼선을 빚는 것을 방지하기 위하여, 오직 공대원 중 한 사람만이 이 옵션을 켜야합니다.|r\\n|cFFADFF2F팁: 만약 공대에서 당신이 이 옵션을 키기로 했다면, 빠르게 선견자에게 마우스를 대는 것이 마킹을 하는 가장 빠른 방법입니다.|r"
+	L.custom_off_shaman_marker_desc = "차단을 돕기 위해, 선견자 늑대 기수를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다. \n|cFFFF0000혼선을 빚는 것을 방지하기 위하여, 오직 공대원 중 한 사람만이 이 옵션을 켜야합니다.|r \n|cFFADFF2F팁: 만약 공대에서 당신이 이 옵션을 키기로 했다면, 빠르게 선견자에게 마우스를 대는 것이 마킹을 하는 가장 빠른 방법입니다.|r"
 
 	L.custom_off_minion_marker = "이샤라즈의 하수인 징표 설정"
 	L.custom_off_minion_marker_desc = "쫄들을 분리하는 것을 돕기 위해, {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
