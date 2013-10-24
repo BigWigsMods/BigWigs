@@ -6,7 +6,7 @@ end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "koKR")
 if L then
-	L.defile = "더럽혀진 땅 시전"
+	L.defile = "더럽혀진 땅 방어전담 경고"
 
 	L.custom_off_bane_marks = "어둠의 권능: 파멸 징표 설정"
 	L.custom_off_bane_marks_desc = "해제를 돕기 위해 어둠의 권능: 파멸을 가진 플레이어들을 {rt1}{rt2}{rt3}{rt4}{rt5} 징표로 표시합니다. 공격대장이거나 권한이 필요합니다."
@@ -16,7 +16,7 @@ if L then
 	L.intermission = "궁책"
 	L.intermission_desc = "수호자의 궁책 사용 시기가 가까워지면 경고로 알려줍니다."
 
-	L.inferno_self = "당신에게 지옥불 일격"
+	L.inferno_self = "지옥불 일격 특수경고"
 	L.inferno_self_desc = "당신이 지옥불 일격에 걸렸을 때 특수 경고를 해줍니다."
 	L.inferno_self_bar = "지옥불 일격 시전"
 end
