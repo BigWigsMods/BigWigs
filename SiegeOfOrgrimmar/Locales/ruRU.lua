@@ -120,14 +120,29 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "ruRU")
 if L then
+	L.adds = "Героические помощники"
+	L.adds_desc = "Предупреждать, если героические помощники вступают в бой."
+
 	L.tank_debuffs = "Дебаффы танка"
 	L.tank_debuffs_desc = "Предупреждать о разных типах дебаффов танка, связанных со Страшным ревом."
 
 	L.cage_opened = "Клетка открыта"
+
+	L.akolik = "Аколик"
+	L.waterspeaker_gorai = "Говорящий с водой Гожай"
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "ruRU")
 if L then
+	L.overcharged_crawler_mine = "Перегретая ползучая мина"
+	L.custom_off_mine_marker = "Маркировка мин"
+	L.custom_off_mine_marker_desc = "Ставить метки на мины, для распределения оглушений. (Все метки используются)"
+
+	L.saw_blade_near_you = "Пила возле тебя (не на тебе)"
+	L.saw_blade_near_you_desc = "Возможно, вы захотите выключить эту опцию, чтобы избежать спама, если ваш рейд сгруппирован по другой тактике."
+
+	-- L.disabled = "Disabled"
+
 	L.shredder_engage_trigger = "Приближается автоматический крошшер!"
 	L.laser_on_you = "Лазер на тебе ПИУ-ПИУ!"
 	L.laser_say = "Лазер ПИУ-ПИУ"
