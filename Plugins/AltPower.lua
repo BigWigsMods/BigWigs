@@ -19,6 +19,8 @@ plugin.defaultDB = {
 -- Locals
 --
 
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
+
 local powerList, sortedUnitList, roleColoredList = nil, nil, nil
 local unitList = nil
 local maxPlayers = 0
@@ -36,6 +38,16 @@ local roleIcons = {
 	["DAMAGER"] = INLINE_DAMAGER_ICON,
 	["NONE"] = "",
 }
+
+local function colorize(power)
+	local ratio = power/100*510
+	local r, g = math.min(ratio, 255), math.min(510-ratio, 255)
+	if sortDir == "AZ" then -- red to green
+		return r, g
+	else -- green to red
+		return g, r
+	end
+end
 
 -------------------------------------------------------------------------------
 -- Initialization
@@ -187,9 +199,12 @@ do
 		if createFrame then createFrame() createFrame = nil end
 		self:Close()
 
+		sortDir = "AZ"
 		unitList = self:GetRaidList()
 		for i = 1, db.expanded and 25 or 10 do
-			display.text[i]:SetFormattedText("[%d] %s", 100-i, unitList[i])
+			local power = 100-(i*(db.expanded and 4 or 10))
+			local r, g = colorize(power)
+			display.text[i]:SetFormattedText("|cFF%02x%02x00[%d]|r %s", r, g, power, unitList[i])
 		end
 		display.title:SetText(L.altPowerTitle)
 		display:Show()
@@ -217,10 +232,6 @@ do
 		end
 	end
 
-	local function colorize(power)
-		return 0.99*255, 0.82*255, 0*255
-	end
-
 	function UpdateDisplay()
 		for i = 1, maxPlayers do
 			local unit = unitList[i]
@@ -232,8 +243,8 @@ do
 			if not unit then return end
 
 			local power = powerList[unit]
-			local r, g, b = colorize(power)
-			display.text[i]:SetFormattedText("|cFF%02x%02x%02x[%d]|r %s", r, g, b, power, roleColoredList[unit])
+			local r, g = colorize(power)
+			display.text[i]:SetFormattedText("|cFF%02x%02x00[%d]|r %s", r, g, power, roleColoredList[unit])
 		end
 	end
 end
@@ -253,6 +264,9 @@ function plugin:Contract()
 	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_down")
 	for i = 11, 25 do
 		display.text[i]:SetText("")
+	end
+	if inTestMode then
+		self:Test()
 	end
 end
 
