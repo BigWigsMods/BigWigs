@@ -127,6 +127,9 @@ if L then
 	L.tank_debuffs_desc = "Warnungen für die verschiedenen Typen von Schwächungszaubern auf den Tanks in Verbindung mit Fürchterlichem Brüllen."
 
 	L.cage_opened = "Käfig geöffnet"
+
+	L.akolik = "Akolik"
+	L.waterspeaker_gorai = "Wassersprecher Gorai"
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "deDE")
@@ -147,10 +150,10 @@ if L then
 	L.assembly_line_trigger = "Unfertige Waffen werden auf das Fabrikationsband befördert."
 	L.assembly_line_message = "Unfertige Waffen (%d)"
 	L.assembly_line_items = "Waffen (%d): %s"
-	L[71606] = "Rakete" -- Deactivated Missile Turret
-	L[71790] = "Minen" -- Disassembled Crawler Mines
-	L[71751] = "Laser" -- Deactivated Laser Turret
-	L[71694] = "Magnet" -- Deactivated Electromagnet
+	L[71606] = "Rakete"
+	L[71790] = "Minen"
+	L[71751] = "Laser"
+	L[71694] = "Magnet"
 
 	L.shockwave_missile_trigger = "Ich präsentiere... den wunderschönen Erschütterungsraketenturm ST-03!"
 end
@@ -193,8 +196,8 @@ if L then
 	L.intermission = "Unterbrechung"
 	L.mind_control = "Gedankenkontrolle"
 
-	--L.ironstar_impact_desc = "Zeigt einen Timer für die Explosion der Eisernen Sterne an der jeweils gegenüberliegenden Wand."
-	--L.ironstar_rolling = "Eiserner Stern rollt!"
+	L.ironstar_impact_desc = "Zeigt einen Timer für die Explosion der Eisernen Sterne an der jeweils gegenüberliegenden Wand."
+	L.ironstar_rolling = "Eiserner Stern rollt!"
 
 	L.chain_heal_desc = "Heilt ein verbündetes Ziel um 40% ihrer maximalen Gesundheit. Springt auf nahe verbündete Ziele über."
 	L.chain_heal_message = "Dein Fokusziel wirkt Kettenheilung!"
