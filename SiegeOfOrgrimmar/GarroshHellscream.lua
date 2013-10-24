@@ -96,23 +96,25 @@ L.chain_heal_desc = L.focus_only..L.chain_heal_desc
 -- Initialization
 --
 
-function mod:GetOptions()
+function mod:GetOptions(CL)
 	-- XXX Funkeh clean "FLASH" up as you see fit
 	return {
-		{147209, "FLASH", "ICON"}, 147235, "bombardment", {147665, "FLASH", "ICON"}, {"clump_check", "FLASH"}, "manifest_rage", -- phase 4 .. fix descriptions
 		-8298, 144616, "ironstar_impact", -8292, 144821, -- phase 1
 		-8294, "chain_heal", "custom_off_shaman_marker", -- Farseer
 		-8305, 144945, 144969, -- Intermissions
 		"custom_off_minion_marker",
 		145065, {144985, "FLASH"}, {145183, "TANK"}, -- phase 2
+		-8325, -- phase 3
+		{147209, "FLASH", "ICON"}, 147235, "bombardment", {147665, "FLASH", "ICON"}, {"clump_check", "FLASH"}, "manifest_rage", -- phase 4 .. fix descriptions
 		{144758, "SAY", "FLASH", "ICON"},
 		"stages", "berserk", "bosskill",
 	}, {
-		[147209] = CL["phase"]:format(4),
 		[-8298] = -8288, -- phase 1
 		[-8294] = -8294, -- Farseer
 		[-8305] = -8305, "custom_off_minion_marker", -- Intermissions
 		[145065] = -8307, -- phase 2
+		[-8325] = -8319, -- phase 3
+		[147209] = CL["stage"]:format(4).." ("..CL["heroic"]..")",
 		[144758] = "general",
 	}
 end
@@ -292,6 +294,9 @@ function mod:GrippingDespair(args)
 	local amount = args.amount or 1
 	-- force Gripping Despair text to keep it short
 	self:StackMessage(145183, args.destName, amount, "Attention", amount > 2 and not self:Me(args.destGUID) and "Warning")
+	if args.spellId == 145195 then -- Empowered (Explosive Despair)
+		self:TargetBar(-8325, 10, args.destName)
+	end
 end
 
 function mod:MindControl(args)

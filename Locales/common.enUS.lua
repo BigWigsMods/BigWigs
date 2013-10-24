@@ -15,6 +15,7 @@ L.count = "%s (%d)"
 L.near = "%s near YOU!"
 
 L.phase = "Phase %d"
+L.stage = "Stage %d"
 L.normal = "Normal mode"
 L.heroic = "Heroic mode"
 L.hard = "Hard mode"
