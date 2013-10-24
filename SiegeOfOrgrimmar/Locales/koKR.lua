@@ -18,7 +18,7 @@ if L then
 
 	L.inferno_self = "당신에게 지옥불 일격"
 	L.inferno_self_desc = "당신이 지옥불 일격에 걸렸을 때 특수 경고를 해줍니다."
-	L.inferno_self_bar = "지옥불 일격 폭파"
+	L.inferno_self_bar = "지옥불 일격 시전"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "koKR")
