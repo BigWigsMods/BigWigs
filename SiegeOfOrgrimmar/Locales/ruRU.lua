@@ -182,21 +182,21 @@ end
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "ruRU")
 if L then
 	L.manifest_rage = "Проявить ярость"
-	-- L.manifest_rage_desc = "When Garrosh reaches 100 energy he'll pre cast Manifest Rage for 2 seconds, then channel it. While it's channelled it summons big adds. Kite the Iron Star into Garrosh to stun and interrupt his cast."
+	L.manifest_rage_desc = "Когда Гаррош накапливает 100 энергии, он 2 секунды готовится к Проявлению ярости и зачем начинает поддерживать это заклинание. В это время вызываются большие помощники. Прикатите Железную звезду в Гарроша, чтобы прервать чтение."
 
 	L.phase_3_end_trigger = "Думаете, вы победили? Слепцы. Я раскрою вам глаза!"
 
 	L.clump_check = "Проверка проходимости"
-	-- L.clump_check_desc = "Check every 3 seconds during bombardment for clumped up players, if a clump is found a Kor'kron Iron Star will spawn."
+	L.clump_check_desc = "Каждые 3 секунды, во время Бомбардировки, будет проверяться проходимость, если она обнаружена, появится Кор'кронская железная звезда."
 
 	L.bombardment = "Бомбардировка"
-	-- L.bombardment_desc = "Bombarding Stormwind and leaving fires on the ground. Kor'kron Iron Star can only spawn during bombardment."
+	L.bombardment_desc = "Бомбардировка города и появление горящих луж. Кор'кронская железная звезда появляется только в это время."
 
 	L.spread = "Разбегайтесь!"
 	L.intermission = "Перерыв"
 	L.mind_control = "Контроль разума"
 
-	--L.ironstar_impact_desc = "A timer bar for when the Iron Star will impact the wall at the other side."
+	L.ironstar_impact_desc = "Таймер, когда Железная звезда ударится о противоположную стену."
 	L.ironstar_rolling = "Железная звезда катится!"
 
 	L.chain_heal_desc = "Лечит союзника, восстанавливая определенный процент от его максимального запаса здоровья, переходя на находящиеся поблизости дружественные цели."
