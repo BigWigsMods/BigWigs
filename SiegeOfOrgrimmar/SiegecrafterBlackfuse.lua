@@ -173,7 +173,7 @@ do
 	end
 
 	function mod:Overcharge(args)
-		local mobId = self:MobId(args.sourceGUID)
+		local mobId = self:MobId(args.destGUID)
 		self:Message(-8408, "Important", nil, CL["other"]:format(args.spellName, L[mobId]), false)
 		if self.db.profile.custom_off_mine_marker and mobId == 71790 then -- mines
 			wipe(markableMobs)
@@ -204,7 +204,7 @@ do
 	end
 	function mod:AssemblyLine()
 		self:ScheduleTimer(beltItems, 13, assemblyLineCounter)
-		self:Message(-8202, "Neutral", "Warning", L["assembly_line_message"]:format(assemblyLineCounter), "Inv_crate_03")
+		self:Message(-8202, "Neutral", "Warning", L["assembly_line_message"]:format(assemblyLineCounter).. beltKillOrder[assemblyLineCounter], "Inv_crate_03")
 		assemblyLineCounter = assemblyLineCounter + 1
 		self:Bar(-8202, 40, CL["count"]:format(self:SpellName(-8202), assemblyLineCounter), "Inv_crate_03")
 	end
