@@ -153,7 +153,7 @@ L.fadeTimeDesc = "How long to fade out a message, in seconds"
 
 L.customRange = "Custom range indicator"
 L.proximityTitle = "%d yd / %d |4player:players;" -- yd = yards (short)
-L.proximity = "Proximity"
+L.proximity_name = "Proximity"
 L.sound = "Sound"
 L.disabled = "Disabled"
 L.disabledDesc = "Disable the proximity display for all modules that use it."

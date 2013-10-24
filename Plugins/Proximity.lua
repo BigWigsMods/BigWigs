@@ -35,7 +35,7 @@ plugin.defaultDB = {
 local db = nil
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
-plugin.displayName = L.proximity
+plugin.displayName = L.proximity_name
 
 local media = LibStub("LibSharedMedia-3.0")
 
