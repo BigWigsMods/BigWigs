@@ -27,6 +27,7 @@ local db = nil
 local floor = math.floor
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
+plugin.displayName = L.messages
 
 --------------------------------------------------------------------------------
 -- Anchors

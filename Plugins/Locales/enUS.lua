@@ -10,6 +10,7 @@ L.altPowerTitle = "AltPower"
 -- Bars.lua
 --
 
+L.bars = "Bars"
 L.style = "Style"
 L.bigWigsBarStyleName_Default = "Default"
 
@@ -79,7 +80,6 @@ L.encounterRestricted = "This function can't be used during an encounter."
 
 L.colors = "Colors"
 
-L.bars = "Bars"
 L.text = "Text"
 L.textShadow = "Text Shadow"
 L.flash = "Flash"

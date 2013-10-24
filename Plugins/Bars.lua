@@ -28,6 +28,7 @@ do
 end
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
+plugin.displayName = L.bars
 
 local colors = nil
 local candy = LibStub("LibCandyBar-3.0")

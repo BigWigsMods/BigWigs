@@ -488,7 +488,7 @@ do
 			if module.GetPluginConfig then
 				plugins[#plugins + 1] = {
 					value = name,
-					text = name,
+					text = module.displayName or name,
 				}
 				ac:RegisterOptionsTable(acId:format(name), module:GetPluginConfig())
 			end
