@@ -505,7 +505,7 @@ do
 		end
 	end
 	function loader:UpdateDBMFaking(_, key, value)
-		if key == "fakeDBMVersion" and value and (IsInRaid() or IsInGroup()) then
+		if key == "fakeDBMVersion" and value and IsInGroup() then
 			self:DBM_AddonMessage(nil, nil, "H") -- Send addon message if feature is being turned on inside a raid/group.
 		end
 	end
@@ -626,7 +626,7 @@ do
 
 	loaderUtilityFrame.timer = loaderUtilityFrame:CreateAnimationGroup()
 	loaderUtilityFrame.timer:SetScript("OnFinished", function()
-		if IsInRaid() or IsInGroup() then
+		if IsInGroup() then
 			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:%d" or "VRA:%d"):format(BIGWIGS_RELEASE_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 		end
 	end)
@@ -835,7 +835,7 @@ function loader:BigWigs_CoreEnabled()
 
 	-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
 	-- which kills your ability to receive addon comms during the loading process.
-	if IsInRaid() or IsInGroup() then
+	if IsInGroup() then
 		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		SendAddonMessage("D4", "H\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 	end

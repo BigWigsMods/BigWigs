@@ -1127,7 +1127,7 @@ do
 	end
 	clickHandlers.report = function(bar)
 		local text = ("%s: %s"):format(bar.candyBarLabel:GetText(), timeDetails(bar.remaining))
-		SendChatMessage(text, (IsPartyLFG() and "INSTANCE_CHAT") or (IsInRaid() and "RAID") or (IsInGroup() and "PARTY") or "SAY")
+		SendChatMessage(text, (IsInGroup(2) and "INSTANCE_CHAT") or (IsInRaid() and "RAID") or (IsInGroup() and "PARTY") or "SAY")
 	end
 end
 
