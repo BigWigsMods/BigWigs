@@ -1,7 +1,3 @@
---[[
-TODO:
-	corosive blast could potentially get a fancy warning, so people know when they are in front of the boss, could greatly help melee if they run out of room around the boss
-]]--
 
 --------------------------------------------------------------------------------
 -- Module Declaration
