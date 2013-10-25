@@ -1,4 +1,4 @@
-﻿local L = BigWigs:NewBossLocale("Immerseus", "zhTW")
+local L = BigWigs:NewBossLocale("Immerseus", "zhTW")
 if not L then return end
 if L then
 	L.win_yell = "啊，你成功了!水又再次純淨了。"
@@ -134,10 +134,5 @@ L = BigWigs:NewBossLocale("Garrosh Hellscream", "zhTW")
 if L then
 	L.intermission = "中場休息"
 	L.mind_control = "亚煞极之触"
-end
-
-L = BigWigs:NewBossLocale("Siege of Orgrimmar Trash", "zhTW")
-if L then
-
 end
 

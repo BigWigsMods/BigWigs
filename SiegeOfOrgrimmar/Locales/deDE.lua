@@ -1,4 +1,4 @@
-﻿local L = BigWigs:NewBossLocale("Immerseus", "deDE")
+local L = BigWigs:NewBossLocale("Immerseus", "deDE")
 if not L then return end
 if L then
 	L.win_yell = "Ah, Ihr habt es geschafft!"
@@ -211,10 +211,5 @@ if L then
 	L.custom_off_minion_marker_desc = "Um bei der Unterscheidung der Diener zu helfen, werden diese mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} markiert, benötigt Leiter oder Assistent."
 
 	L.focus_only = "|cffff0000Nur Meldungen für Fokusziele.|r "
-end
-
-L = BigWigs:NewBossLocale("Siege of Orgrimmar Trash", "deDE")
-if L then
-
 end
 

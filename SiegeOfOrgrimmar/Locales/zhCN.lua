@@ -210,8 +210,3 @@ if L then
 	L.focus_only = "|cffff0000只警报焦点目标。|r "
 end
 
-L = BigWigs:NewBossLocale("Siege of Orgrimmar Trash", "zhCN")
-if L then
-
-end
-

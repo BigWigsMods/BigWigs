@@ -69,8 +69,3 @@ if L then
 
 end
 
-L = BigWigs:NewBossLocale("Siege of Orgrimmar Trash", "ptBR")
-if L then
-
-end
-

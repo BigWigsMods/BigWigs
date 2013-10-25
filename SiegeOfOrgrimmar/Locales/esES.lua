@@ -81,8 +81,3 @@ if L then
 
 end
 
-L = BigWigs:NewBossLocale("Siege of Orgrimmar Trash", "esES") or BigWigs:NewBossLocale("Siege of Orgrimmar Trash", "esMX")
-if L then
-
-end
-

@@ -213,8 +213,3 @@ if L then
 	L.focus_only = "|cffff0000Оповещения только для фокуса.|r "
 end
 
-L = BigWigs:NewBossLocale("Siege of Orgrimmar Trash", "ruRU")
-if L then
-
-end
-

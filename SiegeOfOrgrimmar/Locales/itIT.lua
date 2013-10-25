@@ -129,7 +129,7 @@ if L then
 	L.cage_opened = "Gabbia Aperta"
 
 	L.akolik = "Akolik"
-	L.waterspeaker_gorai = "Oratore dell'Acqua Gorai"	
+	L.waterspeaker_gorai = "Oratore dell'Acqua Gorai"
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "itIT")
@@ -182,20 +182,20 @@ end
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "itIT")
 if L then
 	L.manifest_rage = "Manifestazione della Rabbia"
-	L.manifest_rage_desc = "Quando Garrosh raggiungwe 100 inizierà a prelanciare Manifestazione della Rabbia per 2 secondi, e poi la canalizzerà. Mentre canalizza, evoca degli add grandi. Porta la Pirostella su Garrosh per incapacitarlo ed interrompere il suo lancio."	
+	L.manifest_rage_desc = "Quando Garrosh raggiungwe 100 inizierà a prelanciare Manifestazione della Rabbia per 2 secondi, e poi la canalizzerà. Mentre canalizza, evoca degli add grandi. Porta la Pirostella su Garrosh per incapacitarlo ed interrompere il suo lancio."
 
 	L.phase_3_end_trigger = "Pensate di aver VINTO? Siete CIECHI. VI COSTRINGERÒ AD APRIRE GLI OCCHI."
-	
+
 	L.clump_check = "CControllo ammucchiamento"
 	L.clump_check_desc = "Controlla ogni 3 secondi durante il Bombardamento i giocatori ammucchiati, se viene rilevato un gruppo, verrà creata una Pirostella Kor'kron."
-	
+
 	L.bombardment = "Bombardmento"
 	L.bombardment_desc = "Bombardamendo di Roccavento che lascia dei fuochi sul terreno. Le Pirostelle Kor'kron possono apparire soltanto durante il bombardmento."
-	
+
 	L.spread = "Allargarsi!"
 	L.intermission = "Intermezzo"
-	L.mind_control = "Controllo della Mente"	
-	
+	L.mind_control = "Controllo della Mente"
+
 	L.ironstar_impact_desc = "Una barra a tempo per quando la Pirostella si schianterà contro l'altra parte della stanza."
 	L.ironstar_rolling = "Pirostella in movimento!"
 
@@ -209,12 +209,7 @@ if L then
 
 	L.custom_off_minion_marker = "Marcatore servitori"
 	L.custom_off_minion_marker_desc = "Per aiutare a separare i servitori, evidenziali con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, richiede capoincursione o assistente."
-	
+
 	L.focus_only = "|cffff0000Avvisi solo dei bersagli focus.|r "
-end
-
-L = BigWigs:NewBossLocale("Siege of Orgrimmar Trash", "itIT")
-if L then
-
 end
 

@@ -30,6 +30,7 @@ local inTestMode = nil
 local sortDir = nil
 local UpdateDisplay
 local tsort = table.sort
+local min = math.min
 local UnitPower = UnitPower
 local db = nil
 local roleIcons = {
@@ -41,7 +42,7 @@ local roleIcons = {
 
 local function colorize(power)
 	local ratio = power/100*510
-	local r, g = math.min(ratio, 255), math.min(510-ratio, 255)
+	local r, g = min(ratio, 255), min(510-ratio, 255)
 	if sortDir == "AZ" then -- red to green
 		return r, g
 	else -- green to red
