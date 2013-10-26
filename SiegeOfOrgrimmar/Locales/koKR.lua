@@ -135,7 +135,7 @@ if L then
 	L.custom_off_mine_marker = "지뢰 징표 설정"
 	L.custom_off_mine_marker_desc = "스턴 임무를 맡은 플레이어를 위해 지뢰에 징표를 찍습니다. (모든 징표가 사용됩니다)"
 
-	L.saw_blade_near_you = "근처에 톱날이 날아옵니다! (나 보고 쏘는 게 아님)"
+	L.saw_blade_near_you = "근처에 톱날이 날아옵니다!"
 	L.saw_blade_near_you_desc = "공격대의 택틱이 뭉쳐서 하는 것이라면 스팸 메시지를 피하기 위해 이 옵션을 꺼주세요."
 
 	L.disabled = "파괴됨"
