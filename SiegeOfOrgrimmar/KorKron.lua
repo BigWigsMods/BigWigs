@@ -1,7 +1,3 @@
---[[
-TODO:
-
-]]--
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -17,6 +13,7 @@ mod:RegisterEnableMob(71859, 71858, 71923, 71921) -- Earthbreaker Haromm, Wavebi
 
 local marksUsed = {}
 local ashCounter = 1
+local hpWarned = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -39,27 +36,28 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{144330, "FLASH"}, 144328,
-		{-8132, "FLASH", "ICON", "SAY"}, {144215, "TANK"}, 144070, -- Earthbreaker Haromm
-		"custom_off_mist_marks",
+		{144215, "TANK"}, "custom_off_mist_marks", {-8132, "FLASH", "ICON", "SAY"}, 144070, -- Earthbreaker Haromm
 		{144005, "FLASH", "SAY"}, {143990, "FLASH", "ICON"}, 143973, -- Wavebinder Kardris
-		144302, "berserk", "bosskill",
+		-8124, 144302, "berserk", "bosskill",
 	}, {
 		[144330] = "heroic",
-		[-8132] = -8128, -- Earthbreaker Haromm
-		["custom_off_mist_marks"] = L.custom_off_mist_marks,
+		[144215] = -8128, -- Earthbreaker Haromm
 		[144005] = -8134, -- Wavebinder Kardris
-		[144302] = "general",
+		[-8124] = "general",
 	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Log("SPELL_CAST_SUCCESS", "Bloodlust", 144302)
+	-- Heroic
+	self:Log("SPELL_AURA_APPLIED", "IronPrison", 144330)
+	self:Log("SPELL_CAST_START", "IronTomb", 144328)
 	-- Earthbreaker Haromm
 	self:Log("SPELL_AURA_APPLIED", "ToxicMistApplied", 144089)
 	self:Log("SPELL_AURA_REMOVED", "ToxicMistRemoved", 144089)
 	self:Log("SPELL_CAST_START", "FoulStream", 144090) -- SUCCESS has destName but is way too late, and "boss1target" should be reliable for it
+	self:Log("SPELL_AURA_APPLIED", "FroststormStrike", 144215)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FroststormStrike", 144215)
 	self:Log("SPELL_CAST_START", "AshenWall", 144070)
 	-- Wavebinder Kardris
@@ -68,9 +66,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FoulGeyserRemoved", 143990)
 	self:Log("SPELL_CAST_START", "ToxicStorm", 144005)
 	self:Log("SPELL_DAMAGE", "ToxicStormDamage", 144017)
-	-- heroic
-	self:Log("SPELL_AURA_APPLIED", "IronPrison", 144330)
-	self:Log("SPELL_CAST_START", "IronTomb", 144328)
+	-- General
+	self:Log("SPELL_CAST_SUCCESS", "Bloodlust", 144302)
 
 	self:Death("Win", 71859)
 end
@@ -79,13 +76,17 @@ function mod:OnEngage()
 	self:Berserk(555)
 	wipe(marksUsed)
 	ashCounter = 1
+	hpWarned = 1
+	self:Bar(144215, 6) -- Froststorm Strike
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "TotemWarn", "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
--- heroic
+-- Heroic
+
 function mod:IronTomb(args)
 	self:Bar(args.spellId, 31)
 	self:Message(args.spellId, "Important", "Long")
@@ -150,7 +151,8 @@ do
 end
 
 function mod:FroststormStrike(args)
-	if args.amount > 3 then
+	self:Bar(args.spellId, 6)
+	if (args.amount or 1) > 3 then
 		self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 4 and "Warning")
 	end
 end
@@ -222,5 +224,20 @@ end
 
 function mod:Bloodlust(args)
 	self:Message(args.spellId, "Neutral", "Info")
+end
+
+do
+	local hpWarn = { 87, 68, 53, 28 }
+	local warnings = { mod:SpellName(-8125), mod:SpellName(-8126), mod:SpellName(-8127), mod:SpellName(-8120) }
+	function mod:TotemWarn(unit)
+		local hp = UnitHealth(unit)/UnitHealthMax(unit) * 100
+		if hp < hpWarn[hpWarned] then
+			self:Message(-8124, "Neutral", "Info", CL["soon"]:format(warnings[hpWarned]), false)
+			hpWarned = hpWarned + 1
+			if hpWarned > #hpWarn then
+				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
+			end
+		end
+	end
 end
 
