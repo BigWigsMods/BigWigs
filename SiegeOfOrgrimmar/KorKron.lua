@@ -77,7 +77,6 @@ function mod:OnEngage()
 	wipe(marksUsed)
 	ashCounter = 1
 	hpWarned = 1
-	self:Bar(144215, 6) -- Froststorm Strike
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "TotemWarn", "boss1")
 end
 
@@ -151,9 +150,15 @@ do
 end
 
 function mod:FroststormStrike(args)
-	self:Bar(args.spellId, 6)
-	if (args.amount or 1) > 3 then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 4 and "Warning")
+	local amount = args.amount or 1
+	if amount > 3 then
+		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 4 and "Warning")
+		self:Bar(args.spellId, 6)
+	else -- if tanking Haromm
+		local boss = self:GetUnitIdByGUID(args.sourceGUID)
+		if UnitDetailedThreatSituation("player", boss) then
+			self:Bar(args.spellId, 6)
+		end
 	end
 end
 
@@ -227,7 +232,7 @@ function mod:Bloodlust(args)
 end
 
 do
-	local hpWarn = { 87, 68, 53, 28 }
+	local hpWarn = { 87, 68, 53, 28 } -- Poisonmist, Foulstream, Ashflare, Bloodlust
 	local warnings = { mod:SpellName(-8125), mod:SpellName(-8126), mod:SpellName(-8127), mod:SpellName(-8120) }
 	function mod:TotemWarn(unit)
 		local hp = UnitHealth(unit)/UnitHealthMax(unit) * 100

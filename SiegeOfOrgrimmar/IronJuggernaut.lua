@@ -180,7 +180,7 @@ function mod:ShockPulse(args)
 	self:Bar(args.spellId, 16)
 end
 
--- Assaukt mode
+-- Assault mode
 function mod:IgniteArmor(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
 	self:CDBar(args.spellId, 9)
