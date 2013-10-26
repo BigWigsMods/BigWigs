@@ -129,13 +129,13 @@ end
 function mod:UnleashedStart()
 	if not self:LFR() then
 		self:CDBar(144358, 11) -- Wounded Pride
-		self:StopBar(CL["count"]:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
-		self:StopBar(144563) -- Imprison
-		self:StopBar(145215) -- Banishment
-		self:StopBar(L["small_adds"])
-		self:StopBar(L["big_add_bar"])
-		self:CancelDelayedMessage(L["big_add_spawning"])
 	end
+	self:StopBar(CL["count"]:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
+	self:StopBar(144563) -- Imprison
+	self:StopBar(145215) -- Banishment
+	self:StopBar(L["small_adds"])
+	self:StopBar(L["big_add_bar"])
+	self:CancelDelayedMessage(L["big_add_spawning"])
 end
 
 function mod:Unleashed() -- Final Gift
@@ -298,11 +298,13 @@ do
 
 		if self.db.profile.custom_off_titan_mark then
 			if prideExpires then
-				self:TargetBar(146595, prideExpires-GetTime(), args.destName, L["titan_pride"])
+				local remaining = prideExpires-GetTime()
+				self:TargetBar(146595, remaining, args.destName, L["titan_pride"])
+				self:ScheduleTimer(SetRaidTarget, remaining, args.destName, titanCounter)
 			else
 				SetRaidTarget(args.destName, titanCounter)
-				titanCounter = titanCounter + 1
 			end
+			titanCounter = titanCounter + 1
 		end
 	end
 	function mod:TitanGiftSuccess(args)
