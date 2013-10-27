@@ -202,6 +202,7 @@ if L then
 	L.spread = "Verteilen!"
 	L.intermission = "Unterbrechung"
 	L.mind_control = "Gedankenkontrolle"
+	--L.empowered_message = "%s is now empowered!"
 
 	L.ironstar_impact_desc = "Zeigt einen Timer für die Explosion der Eisernen Sterne an der jeweils gegenüberliegenden Wand."
 	L.ironstar_rolling = "Eiserner Stern rollt!"

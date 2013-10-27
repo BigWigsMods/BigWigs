@@ -201,6 +201,7 @@ if L then
 	L.spread = "산개하세요!"
 	L.intermission = "내면 세계"
 	L.mind_control = "정신 지배"
+	--L.empowered_message = "%s is now empowered!"
 
 	L.ironstar_impact_desc = "강철의 별이 다른 쪽 벽에 충돌할 때를 위한 타이머 바를 생성합니다."
 	L.ironstar_rolling = "강철의 별이 굴러갑니다!"

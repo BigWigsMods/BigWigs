@@ -199,6 +199,7 @@ if L then
 	L.spread = "Éparpillez-vous !"
 	L.intermission = "Intervalle"
 	L.mind_control = "Contrôle mental"
+	--L.empowered_message = "%s is now empowered!"
 
 	L.ironstar_impact_desc = "Une barre de délai indiquant quand l'Étoile de fer touchera le mur d'en face."
 	L.ironstar_rolling = "L'Étoile de fer roule !"

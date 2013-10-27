@@ -141,5 +141,6 @@ L = BigWigs:NewBossLocale("Garrosh Hellscream", "zhTW")
 if L then
 	L.intermission = "中場休息"
 	L.mind_control = "亚煞极之触"
+	--L.empowered_message = "%s is now empowered!"
 end
 

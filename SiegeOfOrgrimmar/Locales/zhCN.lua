@@ -199,6 +199,7 @@ if L then
 	L.spread = "分散！"
 	L.intermission = "中场休息"
 	L.mind_control = "亚煞极之触"
+	--L.empowered_message = "%s is now empowered!"
 
 	L.ironstar_impact_desc = "当钢铁之星将撞击墙壁另一边时显示计时条。"
 	L.ironstar_rolling = "钢铁之星翻滚！"

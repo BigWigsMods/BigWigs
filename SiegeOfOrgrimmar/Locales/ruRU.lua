@@ -202,6 +202,7 @@ if L then
 	L.spread = "Разбегайтесь!"
 	L.intermission = "Перерыв"
 	L.mind_control = "Контроль разума"
+	--L.empowered_message = "%s is now empowered!"
 
 	L.ironstar_impact_desc = "Таймер, когда Железная звезда ударится о противоположную стену."
 	L.ironstar_rolling = "Железная звезда катится!"

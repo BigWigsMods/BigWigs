@@ -202,6 +202,7 @@ if L then
 	L.spread = "Allargarsi!"
 	L.intermission = "Intermezzo"
 	L.mind_control = "Controllo della Mente"
+	--L.empowered_message = "%s is now empowered!"
 
 	L.ironstar_impact_desc = "Una barra a tempo per quando la Pirostella si schianterà contro l'altra parte della stanza."
 	L.ironstar_rolling = "Pirostella in movimento!"
