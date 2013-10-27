@@ -564,6 +564,7 @@ do
 		end
 		self.scheduledScansCounter[t] = 0
 		self.scheduledScans[t] = self:ScheduleRepeatingTimer(bossScanner, 0.05, self, func, tankCheckExpiry, guid, t)
+		self:ScheduleTimer(bossScanner, 0.01, self, func, tankCheckExpiry, guid, t)
 	end
 end
 
