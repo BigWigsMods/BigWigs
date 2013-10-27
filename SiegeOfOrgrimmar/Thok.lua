@@ -161,7 +161,8 @@ do
 	function mod:BloodFrenzyOver(args)
 		self:OpenProximity("proximity", 10)
 		self:Message(-7981, "Neutral", "Long", CL["over"]:format(args.spellName))
-		self:Bar(-7963, 13.3) -- Deafening Screech
+		self:Bar(-7963, 14) -- Deafening Screech
+		self:CDBar("tank_debuffs", 12, -7962) -- Fearsome Roar
 		if self:Heroic() then
 			self:ScheduleTimer(checkPrisonerKilled, 10)
 		end
