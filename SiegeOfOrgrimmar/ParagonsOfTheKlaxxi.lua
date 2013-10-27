@@ -826,6 +826,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 			self:Bar(143280, 10) -- Bloodletting
 		elseif mobId == 71158 then --Rik'kal the Dissector
 			self:CDBar(143337, 34) -- Mutate
+			self:Bar(143339, 8) -- Injection
 			parasiteCounter = 0
 			if self.db.profile.custom_off_parasite_marks then
 				wipe(markableMobs)
