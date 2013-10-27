@@ -61,6 +61,13 @@ if L then
 	L.north_tower = "北部塔楼"
 	L.tower_defender = "塔楼防御者"
 
+	--L.adds_desc = "Timers for when a new set of adds enter the fight."
+	--L.adds_trigger1 = "Bring her down quick so I can wrap my fingers around her neck." -- Lady Sylvanas Windrunner
+	--L.adds_trigger2 = "Here they come!" -- Lady Jaina Proudmoore
+	--L.adds_trigger3 = "Dragonmaw, advance!"
+	--L.adds_trigger4	= "For Hellscream!"
+	--L.adds_trigger5	= "Next squad, push forward!"
+
 	L.custom_off_shaman_marker = "萨满标记"
 	L.custom_off_shaman_marker_desc = "帮助打断分配，使用 {rt1}{rt2}{rt3}{rt4}{rt5} 标记龙喉潮汐萨满，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r\n|cFFADFF2F提示：如果团队选择你打开此选项，鼠标快速指向萨满是标记他们的最快方式。|r"
 end

@@ -1,7 +1,3 @@
---[[
-TODO:
-	-- maybe try and add wave timers
-]]--
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -19,7 +15,8 @@ mod:RegisterEnableMob(
 -- Locals
 --
 
-local towerAddTimer
+local towerAddTimer = nil
+local addsCounter = 1
 -- marking
 local markableMobs = {}
 local marksUsed = {}
@@ -44,6 +41,15 @@ if L then
 	L.north_tower = "North tower"
 	L.tower_defender = "Tower defender"
 
+	L.adds = CL.adds
+	L.adds_desc = "Timers for when a new set of adds enter the fight."
+	L.adds_icon = "achievement_character_orc_female" -- female since Zaela is calling them (and to be be the same as tower add icon)
+	L.adds_trigger1 = "Bring her down quick so I can wrap my fingers around her neck." -- Lady Sylvanas Windrunner
+	L.adds_trigger2 = "Here they come!" -- Lady Jaina Proudmoore
+	L.adds_trigger3 = "Dragonmaw, advance!"
+	L.adds_trigger4	= "For Hellscream!"
+	L.adds_trigger5	= "Next squad, push forward!"
+
 	L.drakes, L.drakes_desc = EJ_GetSectionInfo(8586)
 	L.drakes_icon = "ability_mount_drake_proto"
 
@@ -59,17 +65,17 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		147328, 146765, 146757, 146899, 146753, -- Foot Soldiers
-		"towers", "drakes", "demolisher", 146769, 146849, 147705, -- Ranking Officials
+		"towers", 146769, 146849, 147705, -8443, -- Ranking Officials
+		"adds", "drakes", "demolisher", 147328, 146765, 146757, -8489, 146899, -- Foot Soldiers
 		"custom_off_shaman_marker",
-		"stages", {147068, "ICON", "FLASH", "PROXIMITY"},-- Galakras
-		"bosskill",
+		{147068, "ICON", "FLASH", "PROXIMITY"},-- Galakras
+		"stages", "bosskill",
 	}, {
-		[147328] = -8421, -- Foot Soldiers
-		["towers"] = -8427, -- Ranking Officials
+		["towers"] = -8421, -- Ranking Officials
+		["adds"] = -8427, -- Foot Soldiers
 		["custom_off_shaman_marker"] = L.custom_off_shaman_marker,
-		["stages"] = -8418, -- Galakras
-		["bosskill"] = "general",
+		[147068] = -8418, -- Galakras
+		["stages"] = "general",
 	}
 end
 
@@ -80,6 +86,9 @@ function mod:OnBossEnable()
 	end
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	--self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "Adds") -- could just check for sender = Warlord Zaela, target = player to avoid localization?
+	self:Emote("AddsInitial", L.adds_trigger1, L.adds_trigger2)
+	self:Emote("Adds", L.adds_trigger3, L.adds_trigger4, L.adds_trigger5)
 
 	-- Foot Soldiers
 	self:Log("SPELL_CAST_START", "AddMarkedMob", 148520, 149187, 148522) -- Tidal Wave
@@ -91,6 +100,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Warbanner", 147328)
 	self:Log("SPELL_AURA_APPLIED", "Fracture", 146899, 147200)
 	-- Ranking Officials
+	self:Log("SPELL_CAST_SUCCESS", "CurseOfVenom", 147711)
 	self:Log("SPELL_PERIODIC_DAMAGE", "PoisonCloud", 147705)
 	self:Log("SPELL_AURA_APPLIED", "PoisonCloud", 147705)
 	self:Log("SPELL_CAST_START", "CrushersCall", 146769)
@@ -121,13 +131,13 @@ local function firstTowerAdd()
 end
 
 function mod:OnEngage()
+	addsCounter = 1
 	if self:Heroic() then
 		self:Bar("towers", 13, L["tower_defender"], 85214) -- random orc icon
 		self:ScheduleTimer(firstTowerAdd, 13)
 	else
 		self:Bar("towers", 116, L["south_tower"], "achievement_bg_winsoa")
 	end
-	self:Bar("drakes", 172, L["drakes"], "ability_mount_drake_proto")
 	if self.db.profile.custom_off_shaman_marker then
 		wipe(markableMobs)
 		wipe(marksUsed)
@@ -184,6 +194,10 @@ do
 	end
 end
 
+function mod:CurseOfVenom(args)
+	self:Message(-8443, "Urgent", "Alert")
+end
+
 function mod:CrushersCall(args)
 	self:Bar(args.spellId, 48)
 	self:Message(args.spellId, "Urgent", "Alert")
@@ -228,7 +242,7 @@ function mod:ChainHeal(args)
 end
 
 function mod:HealingTotem(args)
-	self:Message(146753, "Urgent", "Warning", args.spellName, 143474) -- Better totem icon
+	self:Message(-8489, "Urgent", "Warning")
 end
 
 do
@@ -249,6 +263,24 @@ end
 
 function mod:Fracture(args)
 	self:TargetMessage(146899, args.destName, "Urgent", "Info", nil, nil, true)
+end
+
+function mod:AddsInitial()
+	self:Bar("adds", 48, L["adds"], L.adds_icon)
+	self:Bar("drakes", 158, L["drakes"], L.drakes_icon)
+	addsCounter = addsCounter + 1
+end
+
+function mod:Adds()
+	if addsCounter == 3 or addsCounter == 7 or addsCounter == 11 then
+		self:Bar("adds", 110, L["adds"], L.adds_icon) -- gap for drakes
+	else
+		if addsCounter % 4  == 0 then -- start the drakes timer on the wave after drakes
+			self:Bar("drakes", 220, L["drakes"], L.drakes_icon)
+		end
+		self:Bar("adds", 55, L["adds"], L.adds_icon)
+	end
+	addsCounter = addsCounter + 1
 end
 
 -- marking

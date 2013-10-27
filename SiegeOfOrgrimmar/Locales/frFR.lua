@@ -61,6 +61,13 @@ if L then
 	L.north_tower = "Tour nord"
 	L.tower_defender = "Défenseur de la tour"
 
+	--L.adds_desc = "Timers for when a new set of adds enter the fight."
+	--L.adds_trigger1 = "Bring her down quick so I can wrap my fingers around her neck." -- Lady Sylvanas Windrunner
+	--L.adds_trigger2 = "Here they come!" -- Lady Jaina Proudmoore
+	--L.adds_trigger3 = "Dragonmaw, advance!"
+	--L.adds_trigger4	= "For Hellscream!"
+	--L.adds_trigger5	= "Next squad, push forward!"
+
 	L.custom_off_shaman_marker = "Marquage Chaman des marées"
 	L.custom_off_shaman_marker_desc = "Afin d'aider à l'attribution des interruptions, marque les Chamans des marées gueule-de-dragon avec {rt1}{rt2}{rt3}{rt4}{rt5}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2ASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement tous les chamans est le moyen le plus rapide de les marquer.|r"
 end

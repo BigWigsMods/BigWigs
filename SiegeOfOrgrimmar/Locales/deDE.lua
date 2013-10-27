@@ -61,6 +61,13 @@ if L then
 	L.north_tower = "Nördlicher Turm"
 	L.tower_defender = "Turmverteidiger"
 
+	--L.adds_desc = "Timers for when a new set of adds enter the fight."
+	--L.adds_trigger1 = "Bring her down quick so I can wrap my fingers around her neck." -- Lady Sylvanas Windrunner
+	--L.adds_trigger2 = "Here they come!" -- Lady Jaina Proudmoore
+	--L.adds_trigger3 = "Dragonmaw, advance!"
+	--L.adds_trigger4	= "For Hellscream!"
+	--L.adds_trigger5	= "Next squad, push forward!"
+
 	L.custom_off_shaman_marker = "Schamanen markieren"
 	L.custom_off_shaman_marker_desc = "Um bei der Einteilung zum Unterbrechen zu helfen, werden die Gezeitenschamanen des Drachenmals mit {rt1}{rt2}{rt3}{rt4}{rt5} markiert, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r\n|cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über die Schamanen.|r"
 end
