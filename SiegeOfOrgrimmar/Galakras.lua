@@ -43,7 +43,7 @@ if L then
 
 	L.adds = CL.adds
 	L.adds_desc = "Timers for when a new set of adds enter the fight."
-	L.adds_icon = "achievement_character_orc_female" -- female since Zaela is calling them (and to be be the same as tower add icon)
+	L.adds_icon = "achievement_character_orc_female" -- female since Zaela is calling them (and to be not the same as tower add icon)
 	L.adds_trigger1 = "Bring her down quick so I can wrap my fingers around her neck." -- Lady Sylvanas Windrunner
 	L.adds_trigger2 = "Here they come!" -- Lady Jaina Proudmoore
 	L.adds_trigger3 = "Dragonmaw, advance!"
@@ -136,7 +136,7 @@ function mod:OnEngage()
 		self:Bar("towers", 13, L["tower_defender"], 85214) -- random orc icon
 		self:ScheduleTimer(firstTowerAdd, 13)
 	else
-		self:Bar("towers", 116, L["south_tower"], "achievement_bg_winsoa")
+		self:Bar("towers", 116, L["south_tower"], L.towers_icon)
 	end
 	if self.db.profile.custom_off_shaman_marker then
 		wipe(markableMobs)
@@ -214,7 +214,7 @@ end
 function mod:Towers(msg)
 	local tower = msg:find(L["north_tower_trigger"]) and L["north_tower"] or L["south_tower"] -- this will be kinda bad till every localization is done
 	self:StopBar(tower)
-	self:Message("towers", "Neutral", "Long", tower, "achievement_bg_winsoa")
+	self:Message("towers", "Neutral", "Long", tower, L.towers_icon)
 	self:Bar("demolisher", 20, L["demolisher"], L["demolisher_icon"])
 
 	if self:Heroic() then
@@ -229,7 +229,7 @@ function mod:Towers(msg)
 			self:ScheduleTimer(firstTowerAdd, 35)
 		end
 	elseif tower == L["south_tower"] then
-		self:Bar("towers", 150, L["north_tower"], "achievement_bg_winsoa") -- XXX verify
+		self:Bar("towers", 150, L["north_tower"], L.towers_icon) -- XXX verify
 	end
 end
 
