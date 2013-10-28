@@ -26,7 +26,6 @@ local desecrateCounter = 1
 local phase = 1
 local waveTimer, waveCounter = nil, 1
 local whirlingCounter = 1
-local clumpCheckAllowed = nil
 local mindControl = nil
 local bombardmentCounter = 1
 
@@ -555,7 +554,7 @@ do
 			self:Bar("bombardment", 69, L["bombardment"], 147120) -- Bombardment
 			self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 			self:StopWeaponScan()
-		elseif spellId == 147126 and clumpCheckAllowed then -- Clump Check -- XXX what is this for Caleb?
+		elseif spellId == 147126 then -- Clump Check
 			self:Bar("clump_check", 3, L["clump_check"], 147126)
 		end
 	end
