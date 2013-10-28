@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Immerseus", "koKR")
 if not L then return end
 if L then
-	L.win_yell = "아, 역시 해냈군! 골짜기의 물이 다시 깨끗해졌네."
+--@localization(locale="koKR", namespace="SiegeOfOrgrimmar/Immerseus", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "koKR")
