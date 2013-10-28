@@ -23,9 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "zhCN")
 if L then
-	L.pre_pull = "准备开战"
-	L.pre_pull_desc = "准备与首领开始战斗前的计时条。"
-	L.pre_pull_trigger = "很好，我会制造一个空间来隔离你们的腐蚀。"
+	L.warmup_trigger = "很好，我会制造一个空间来隔离你们的腐蚀。"
 
 	L.big_adds = "大型腐化物"
 	L.big_adds_desc = "当在内心或现实杀死大型腐化物时发出警报。"

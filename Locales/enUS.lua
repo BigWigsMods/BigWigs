@@ -11,6 +11,8 @@ L.altpower = "Alternate power display"
 L.altpower_desc = "Show the alternate power window, which displays the amount of alternate power that your group members have."
 L.stages = "Stages"
 L.stages_desc = "Enable functions related to the various stages/phases of the boss like proximity, bars, etc."
+L.warmup = "Warmup"
+L.warmup_desc = "Time until combat with the boss starts."
 
 L.already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%s|r) already exists as a module in Big Wigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch."
 

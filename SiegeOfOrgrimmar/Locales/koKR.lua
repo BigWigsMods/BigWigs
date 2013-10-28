@@ -23,9 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "koKR")
 if L then
-	L.pre_pull = "전투 시작"
-	L.pre_pull_desc = "네임드와 전투에 돌입하기까지의 시간을 표시합니다."
-	L.pre_pull_trigger = "그래, 좋다. 너희 타락을 가두어 둘 공간을 만들겠다."
+	L.warmup_trigger = "그래, 좋다. 너희 타락을 가두어 둘 공간을 만들겠다."
 
 	L.big_adds = "타락의 현신"
 	L.big_adds_desc = "내부 및 외부에서 타락의 현신 알림"

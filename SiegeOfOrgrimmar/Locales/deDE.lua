@@ -23,9 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "deDE")
 if L then
-	L.pre_pull = "Boss aktiv"
-	L.pre_pull_desc = "Leiste für das Event, bevor der Boss aktiv wird."
-	L.pre_pull_trigger = "Nun gut, ich werde ein Feld erschaffen, das Eure Verderbnis eindämmt."
+	L.warmup_trigger = "Nun gut, ich werde ein Feld erschaffen, das Eure Verderbnis eindämmt."
 
 	L.big_adds = "Große Adds"
 	L.big_adds_desc = "Warnungen für das Besiegen der großen Adds (Drinnen/Draußen)."

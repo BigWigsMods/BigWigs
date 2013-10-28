@@ -23,9 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "frFR")
 if L then
-	L.pre_pull = "Début du combat"
-	L.pre_pull_desc = "Barre de délai de l'événement RP avant l'engagement du boss."
-	L.pre_pull_trigger = "Très bien, je vais créer un champ de force qui contiendra votre corruption."
+	L.warmup_trigger = "Très bien, je vais créer un champ de force qui contiendra votre corruption."
 
 	L.big_adds = "Manifestations de la corruption"
 	L.big_adds_desc = "Alertes quand des Manifestations de la corruptions sont tuées à l'intérieur/à l'extérieur."

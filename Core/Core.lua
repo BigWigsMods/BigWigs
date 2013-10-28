@@ -439,6 +439,7 @@ function addon:OnInitialize()
 	self:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, "Interface\\Icons\\spell_shadow_unholyfrenzy")
 	self:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, "Interface\\Icons\\spell_arcane_invocation")
 	self:RegisterBossOption("stages", L.stages, L.stages_desc)
+	self:RegisterBossOption("warmup", L.warmup, L.warmup_desc)
 
 	-- this should ALWAYS be the last action of OnInitialize, it will trigger the loader to
 	-- enable the foreign language pack, and other packs that want to be loaded when the core loads

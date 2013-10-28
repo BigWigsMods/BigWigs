@@ -15,10 +15,6 @@ if L then
 
 	L.intermission = "Medidas desesperadas"
 	L.intermission_desc = "Alertas para cuando estás acercándote a algún jefe usando Medidas desesperadas"
-
-	--L.inferno_self = "Inferno Strike on you"
-	--L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
-	--L.inferno_self_bar = "You explode!"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "esES") or BigWigs:NewBossLocale("Norushen", "esMX")

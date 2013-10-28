@@ -23,9 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "itIT")
 if L then
-	L.pre_pull = "Pre-ingaggio"
-	L.pre_pull_desc = "Barra per la scenetta prima dell'ingaggio del boss"
-	L.pre_pull_trigger = "Molto bene, creerò un campo di contenimento per la corruzione che vi affligge."
+	L.warmup_trigger = "Molto bene, creerò un campo di contenimento per la corruzione che vi affligge."
 
 	L.big_adds = "Add Maggiori"
 	L.big_adds_desc = "Avvisa quando uccidi gli Add Maggiori dentro/fuori"
