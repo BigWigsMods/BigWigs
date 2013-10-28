@@ -188,7 +188,7 @@ if L then
 	L.manifest_rage = "暴怒具象"
 	L.manifest_rage_desc = "当加尔鲁什获得100能量时将释放2秒引导的暴怒具象技能，当引导结束后会召唤大型增援。风筝钢铁之星到加尔鲁什将昏迷并打断他的施法。"
 
-	L.phase_3_end_trigger = "别以为你们已经赢了，你们这些瞎子，睁大眼睛好好看看！”
+	L.phase_3_end_trigger = "别以为你们已经赢了，你们这些瞎子，睁大眼睛好好看看！"
 
 	L.clump_check_desc = "在呼叫轰炸阶段时每3秒检查扎堆的玩家，如果检查到群体存在库卡隆钢铁之星将会出现。"
 	L.clump_check_warning = "发现呼叫轰炸，即将 >钢铁之星<！"
