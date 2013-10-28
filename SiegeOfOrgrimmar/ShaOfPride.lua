@@ -97,7 +97,7 @@ function mod:OnEngage()
 		self:CDBar(144358, 11) -- Wounded Pride
 	end
 	self:Berserk(600)
-	self:OpenAltPower("altpower", 144343) -- Pride
+	--self:OpenAltPower("altpower", 144343) -- Pride
 end
 
 --------------------------------------------------------------------------------

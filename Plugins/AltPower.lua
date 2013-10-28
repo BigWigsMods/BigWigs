@@ -2,10 +2,6 @@
 -- Module Declaration
 --
 
-local LULZ = false
-if not LULZ then return end
-print"alt power loaded"
-
 local plugin = BigWigs:NewPlugin("Alt Power")
 if not plugin then return end
 
