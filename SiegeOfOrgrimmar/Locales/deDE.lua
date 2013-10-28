@@ -23,12 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "deDE")
 if L then
-	L.warmup_trigger = "Nun gut, ich werde ein Feld erschaffen, das Eure Verderbnis eindämmt."
-
-	L.big_adds = "Große Adds"
-	L.big_adds_desc = "Warnungen für das Besiegen der großen Adds (Drinnen/Draußen)."
-	L.big_add = "Großes Add (%d)"
-	L.big_add_killed = "Großes Add getötet! (%d)"
+--@localization(locale="deDE", namespace="SiegeOfOrgrimmar/Norushen", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "deDE")

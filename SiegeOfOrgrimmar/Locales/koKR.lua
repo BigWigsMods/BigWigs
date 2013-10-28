@@ -23,12 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "koKR")
 if L then
-	L.warmup_trigger = "그래, 좋다. 너희 타락을 가두어 둘 공간을 만들겠다."
-
-	L.big_adds = "타락의 현신"
-	L.big_adds_desc = "내부 및 외부에서 타락의 현신 알림"
-	L.big_add = "타락의 현신 등장 (%d)"
-	L.big_add_killed = "타락의 현신 처치 (%d)"
+--@localization(locale="koKR", namespace="SiegeOfOrgrimmar/Norushen", format="lua_additive_table", handle-unlocalized="ignore")@
  end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "koKR")

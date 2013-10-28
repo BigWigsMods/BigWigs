@@ -28,10 +28,10 @@ if L then
 	L.warmup_trigger = "Very well, I will create a field to keep your corruption quarantined."
 
 	L.big_adds = "Big adds"
-	L.big_adds_desc = "Warning for killing big adds inside/outside"
-	L.big_add_icon = 147082
+	L.big_adds_desc = "Warnings for big adds spawning and being killed."
+	L.big_adds_icon = 147082
 	L.big_add = "Big add (%d)"
-	L.big_add_killed = "Big add killed! (%d)"
+	L.big_add_killed = "Big add killed (%d)"
 end
 L = mod:GetLocale()
 

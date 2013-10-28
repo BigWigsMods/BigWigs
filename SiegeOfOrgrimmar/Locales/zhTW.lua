@@ -6,29 +6,12 @@ end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "zhTW")
 if L then
-	L.defile = "Defiled Ground cast"
 
-	L.custom_off_bane_marks = "Shadow Word: Bane marker"
-	L.custom_off_bane_marks_desc = "To help dispelling assignments, mark the inital people who have Shadow Word: Bane on them with {rt1}{rt2}{rt3}{rt4}{rt5} (in that order, not all marks may be used), requires promoted or leader."
-
-	L.no_meditative_field = "NO Meditative Field!"
-
-	L.intermission = "Desperate Measures"
-	L.intermission_desc = "Warnings for when you are getting close to any of the bosses using Desperate Measures"
-
-	L.inferno_self = "Inferno Strike on you"
-	L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
-	L.inferno_self_bar = "You explode!"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "zhTW")
 if L then
-	L.warmup_trigger = "很好，我會創造一個力場隔離你們的腐化。"
-
-	L.big_adds = "Big adds"
-	L.big_adds_desc = "Warning for killing big adds inside/outside"
-	L.big_add = "Big add (%d)"
-	L.big_add_killed = "Big add killed! (%d)"
+--@localization(locale="zhTW", namespace="SiegeOfOrgrimmar/Norushen", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "zhTW")

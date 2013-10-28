@@ -23,12 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "frFR")
 if L then
-	L.warmup_trigger = "Très bien, je vais créer un champ de force qui contiendra votre corruption."
-
-	L.big_adds = "Manifestations de la corruption"
-	L.big_adds_desc = "Alertes quand des Manifestations de la corruptions sont tuées à l'intérieur/à l'extérieur."
-	L.big_add = "Manifestation de la corruption (%d)"
-	L.big_add_killed = "Manifestation de la corruption tuée ! (%d)"
+--@localization(locale="frFR", namespace="SiegeOfOrgrimmar/Norushen", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "frFR")

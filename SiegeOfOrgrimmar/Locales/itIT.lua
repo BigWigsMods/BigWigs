@@ -23,12 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "itIT")
 if L then
-	L.warmup_trigger = "Molto bene, creerò un campo di contenimento per la corruzione che vi affligge."
-
-	L.big_adds = "Add Maggiori"
-	L.big_adds_desc = "Avvisa quando uccidi gli Add Maggiori dentro/fuori"
-	L.big_add = "Add Maggiore (%d)"
-	L.big_add_killed = "Add Maggiore ucciso! (%d)"
+--@localization(locale="itIT", namespace="SiegeOfOrgrimmar/Norushen", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "itIT")

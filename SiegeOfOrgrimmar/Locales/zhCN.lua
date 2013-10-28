@@ -23,12 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "zhCN")
 if L then
-	L.warmup_trigger = "很好，我会制造一个空间来隔离你们的腐蚀。"
-
-	L.big_adds = "大型腐化物"
-	L.big_adds_desc = "当在内心或现实杀死大型腐化物时发出警报。"
-	L.big_add = "大型腐化物 >%d<"
-	L.big_add_killed = "杀死大型腐化物！>%d<"
+--@localization(locale="zhCN", namespace="SiegeOfOrgrimmar/Norushen", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "zhCN")
