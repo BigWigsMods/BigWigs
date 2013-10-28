@@ -520,7 +520,7 @@ do
 				-- warn for empowered abilities
 				local power = UnitPower("boss1")
 				while power >= warnPower do -- can he hit 100 energy before p3? that would be some shenanigans
-					self:Message("stages", "Attention", "Info", L["empowered_message"]:format(abilities[warnPower]))
+					self:Message("stages", "Attention", "Info", L["empowered_message"]:format(abilities[warnPower]), false)
 					warnPower = warnPower + 25
 				end
 			else -- first time, don't start timers yet

@@ -61,8 +61,8 @@ if L then
 	L.north_tower = "北部塔楼"
 	L.tower_defender = "塔楼防御者"
 
-	L.adds_desc = “当新的一组增援进入战斗时发出警报。"
-	L.adds_trigger1 = “快把她打下来，然后我要活活掐死她。” -- Lady Sylvanas Windrunner
+	L.adds_desc = "当新的一组增援进入战斗时发出警报。"
+	L.adds_trigger1 = "快把她打下来，然后我要活活掐死她。" -- Lady Sylvanas Windrunner
 	L.adds_trigger2 = "他们来了！" -- Lady Jaina Proudmoore
 	L.adds_trigger3 = "龙喉氏族，前进！"
 	L.adds_trigger4	= "为了地狱咆哮！"
@@ -191,14 +191,14 @@ if L then
 	L.phase_3_end_trigger = "别以为你们已经赢了"
 
 	L.clump_check_desc = "在呼叫轰炸阶段时每3秒检查扎堆的玩家，如果检查到群体存在库卡隆钢铁之星将会出现。"
-	L.clump_check_warning = “发现呼叫轰炸，即将 >钢铁之星<"
+	L.clump_check_warning = "发现呼叫轰炸，即将 >钢铁之星<"
 
 	L.bombardment = "呼叫轰炸"
 	L.bombardment_desc = "轰击暴风城，并在地面上留下火焰。 库卡隆钢铁之星只会在呼叫轰炸阶段出现。"
 
 	L.intermission = "中场休息"
 	L.mind_control = "亚煞极之触"
-	L.empowered_message = “>%s< 强化腐蚀！”
+	L.empowered_message = ">%s< 强化腐蚀！"
 
 	L.ironstar_impact_desc = "当钢铁之星将撞击墙壁另一边时显示计时条。"
 	L.ironstar_rolling = "钢铁之星翻滚！"
