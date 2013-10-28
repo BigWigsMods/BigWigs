@@ -139,7 +139,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "PowerIronStar", 144616)
 	self:Yell("Farseer", L["farseer_trigger"])
 	self:Emote("SiegeEngineer", "144616")
-	self:Log("SPELL_CAST_SUCCESS", "DesecratedWeapon", 144748, 144749)
+	self:Log("SPELL_CAST_SUCCESS", "Desecrate", 144748, 144749)
 
 	self:Death("EngineerDeath", 71984) -- Siege Engineer
 	self:Death("RiderDeath", 71983) -- Farseer Wolf Rider
@@ -151,7 +151,7 @@ function mod:OnEngage(diff)
 	waveTimer = self:ScheduleTimer("NewWave", 45)
 	self:Bar(-8292, 45, nil, 144582)
 	self:Berserk(960, nil, nil, "Berserk (assumed)") -- XXX assumed (more than 15:13 on 25H)
-	self:Bar(144758, 11) -- Desecrated Weapon
+	self:Bar(144758, 11) -- Desecrate
 	self:StartWeaponScan(5)
 	self:Bar(-8298, 20, nil, 144616) -- Siege Engineer
 	self:Bar(-8294, 30, nil, 144584) -- Farseer
@@ -215,7 +215,7 @@ function mod:Phase3End()
 	-- stop bars here too, but since this needs localization we need to do it at the actual pull into the phase 4
 	self:StopBar(L["intermission"])
 	self:StopBar(CL["count"]:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
-	self:StopBar(144758) -- desecrate weapon
+	self:StopBar(144758) -- Desecrate
 	self:StopBar(L["mind_control"]) -- Mind Control
 end
 
@@ -267,7 +267,7 @@ do
 	local bombardmentTimers = { 55, 40, 40, 25 } -- XXX need more data
 	function mod:Bombardment(args)
 		self:Message("bombardment", "Attention", nil, L["bombardment"], args.spellId)
-		self:Bar("bombardment", bombardmentTimers[bombardmentCounter] and bombardmentTimers[bombardmentCounter] or 25, L["bombardment"], args.spellId)
+		self:Bar("bombardment", bombardmentTimers[bombardmentCounter] or 25, L["bombardment"], args.spellId)
 		bombardmentCounter = bombardmentCounter + 1
 		self:Bar("bombardment", 13, CL["casting"]:format(args.spellName), args.spellId)
 		self:Bar("clump_check", 3, L["clump_check"], 147126) -- Clump Check
@@ -493,12 +493,12 @@ do
 				self:StopBar(-8292) -- Kor'kron Warbringer aka add waves
 				self:StopBar(-8298) -- Siege Engineer
 				self:StopBar(-8294) -- Farseer
-				self:StopBar(144758) -- Desecrated Weapon
+				self:StopBar(144758) -- Desecrate
 				self:StopBar(144821) -- Warsong
 				self:StopWeaponScan()
 			end
 		elseif spellId == 144866 then -- Enter Realm of Y'Shaarj -- actually being pulled
-			self:StopBar(144758) -- Desecrated Weapon
+			self:StopBar(144758) -- Desecrate
 			self:StopWeaponScan()
 			self:StopBar(L["mind_control"]) -- Mind Control
 			self:StopBar(CL["count"]:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
@@ -510,7 +510,7 @@ do
 		elseif spellId == 144956 then -- Jump To Ground -- exiting intermission
 			if phase == 2 then
 				desecrateCounter = 1
-				self:Bar(144758, 10) -- Desecrated Weapon
+				self:Bar(144758, 10) -- Desecrate
 				self:Bar(145065, 15, L["mind_control"]) -- Mind Control
 				self:Bar(144985, 30, CL["count"]:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
 				self:StartWeaponScan(5)
@@ -543,13 +543,13 @@ do
 			else
 				self:Bar(145065, 29, L["mind_control"]) -- Mind Control
 			end
-			self:CDBar(144758, 21) -- Desecrated Weapon -- on heroic 21-23
+			self:CDBar(144758, 21) -- Desecrate -- on heroic 21-23
 		elseif spellId == 146984 then -- phase 4 Enter Realm of Garrosh
 			phase = 4
 			self:Message("stages", "Neutral", nil, CL["phase"]:format(phase), false)
 			self:StopBar(L["intermission"])
 			self:StopBar(CL["count"]:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
-			self:StopBar(144758) -- desecrate weapon
+			self:StopBar(144758) -- Desecrate
 			self:StopBar(L["mind_control"]) -- Mind Control
 			self:Bar(147209, 30) -- Malice
 			self:Bar("bombardment", 69, L["bombardment"], 147120) -- Bombardment
@@ -610,13 +610,13 @@ do
 end
 
 do
-	local phase2DesecreteCDs = {36, 45, 36}
-	function mod:DesecratedWeapon(args)
+	local phase2DesecrateCDs = {36, 45, 36}
+	function mod:Desecrate(args)
 		local desecrateCD = 41
 		if phase == 2 then
 			local diff = self:Difficulty()
 			if diff == 3 or diff == 5 then -- 10 man
-				desecrateCD = phase2DesecreteCDs[desecrateCounter] or 45
+				desecrateCD = phase2DesecrateCDs[desecrateCounter] or 45
 			else
 				desecrateCD = 35
 			end
