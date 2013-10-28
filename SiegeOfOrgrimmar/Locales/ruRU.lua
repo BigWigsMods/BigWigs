@@ -61,12 +61,12 @@ if L then
 	L.north_tower = "Северная башня"
 	L.tower_defender = "Защитник башни"
 
-	--L.adds_desc = "Timers for when a new set of adds enter the fight."
-	--L.adds_trigger1 = "Bring her down quick so I can wrap my fingers around her neck." -- Lady Sylvanas Windrunner
-	--L.adds_trigger2 = "Here they come!" -- Lady Jaina Proudmoore
-	--L.adds_trigger3 = "Dragonmaw, advance!"
-	--L.adds_trigger4	= "For Hellscream!"
-	--L.adds_trigger5	= "Next squad, push forward!"
+	L.adds_desc = "Таймеры, когда новые помощники вступят в бой."
+	L.adds_trigger1 = "Сбейте ее скорее, не терпится взять ее за глотку." -- Lady Sylvanas Windrunner
+	L.adds_trigger2 = "Вот и они!" -- Lady Jaina Proudmoore
+	L.adds_trigger3 = "Драконья Пасть, вперед!"
+	L.adds_trigger4	= "За Гарроша!"
+	L.adds_trigger5	= "Следующий отряд!"
 
 	L.custom_off_shaman_marker = "Маркировка Шаманов"
 	L.custom_off_shaman_marker_desc = "Чтобы помочь с распределением прерываний, на Шаманов прилива из клана Драконьей Пасти будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r\n|cFFADFF2FСОВЕТ: Если вы выбраны для этой задачи, быстро проведите указателем мыши по шаманам, метки сразу же поставятся.|r"
@@ -148,7 +148,7 @@ if L then
 	L.saw_blade_near_you = "Пила возле тебя (не на тебе)"
 	L.saw_blade_near_you_desc = "Возможно, вы захотите выключить эту опцию, чтобы избежать спама, если ваш рейд сгруппирован по другой тактике."
 
-	-- L.disabled = "Disabled"
+	L.disabled = "Отключено"
 
 	L.shredder_engage_trigger = "Приближается автоматический крошшер!"
 	L.laser_on_you = "Лазер на тебе ПИУ-ПИУ!"
@@ -173,17 +173,23 @@ if L then
 	L.parasites_up = "%d |4Паразит жив:Паразита живы:Паразитов живы;"
 	L.dance = "Танцуем"
 	L.prey_message = "Используй Охоту на паразита"
+	L.injection_over_soon = "Инъекция заканчивается (%s)!"
+
 	L.one = "Выбор Ийокука: Один!"
 	L.two = "Выбор Ийокука: Два!"
 	L.three = "Выбор Ийокука: Три!"
 	L.four = "Выбор Ийокука: Четыре!"
 	L.five = "Выбор Ийокука: Пять!"
-	L.edge_message = "Ты в луче"
+
 	L.custom_off_edge_marks = "Маркировка луча"
 	L.custom_off_edge_marks_desc = "Люди, которые станут лучами на основе расчетов, будут отмечены {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
-	L.injection_over_soon = "Инъекция заканчивается (%s)!"
+	L.edge_message = "Ты в луче"
+
 	L.custom_off_parasite_marks = "Маркировка Паразита"
 	L.custom_off_parasite_marks_desc = "Чтобы помочь с распределением контроля и Охоты, на паразитов будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
+
+	L.injection_tank = "Чтение Инъекции"
+	L.injection_tank_desc = "Таймер, когда идет чтение Инъекции на текущего танка."
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "ruRU")
@@ -194,14 +200,14 @@ if L then
 	L.phase_3_end_trigger = "Думаете, вы победили? Слепцы. Я раскрою вам глаза!"
 
 	L.clump_check_desc = "Каждые 3 секунды, во время Бомбардировки, будет проверяться проходимость, если она обнаружена, появится Кор'кронская железная звезда."
-	--L.clump_check_warning = "Clump found, Star inc"
+	L.clump_check_warning = "Проход найден, Звезда на подходе"
 
 	L.bombardment = "Бомбардировка"
 	L.bombardment_desc = "Бомбардировка города и появление горящих луж. Кор'кронская железная звезда появляется только в это время."
 
 	L.intermission = "Перерыв"
 	L.mind_control = "Контроль разума"
-	--L.empowered_message = "%s is now empowered!"
+	L.empowered_message = "%s теперь усилено!"
 
 	L.ironstar_impact_desc = "Таймер, когда Железная звезда ударится о противоположную стену."
 	L.ironstar_rolling = "Железная звезда катится!"
@@ -214,8 +220,8 @@ if L then
 	L.custom_off_shaman_marker = "Маркировка Предсказателей"
 	L.custom_off_shaman_marker_desc = "Чтобы помочь с распределением прерываний, на 'Предсказателей - всадников на волках' будет поставлены метки  {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r\n|cFFADFF2FСОВЕТ: Если вы выбраны для этой задачи, быстро проведите указателем мыши по минам, метки сразу же поставятся.|r"
 
-	L.custom_off_minion_marker = "Маркировка прислужника"
-	L.custom_off_minion_marker_desc = "Чтобы помочь разделить прислужников, на них будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, требуется быть помощником или лидером."
+	L.custom_off_minion_marker = "Маркировка прислужников"
+	L.custom_off_minion_marker_desc = "Чтобы помочь разделить прислужников, на них будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, требуется быть помощником или лидером."
 
 	L.focus_only = "|cffff0000Оповещения только для фокуса.|r "
 end
