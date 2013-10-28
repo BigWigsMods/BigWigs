@@ -109,7 +109,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
-	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", "IronStarRolling", "boss2", "boss3")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", "IronStarRolling", "boss1", "boss2", "boss3")
 
 	-- Phase 4
 	self:Yell("Phase3End", L.phase_3_end_trigger)
@@ -165,7 +165,7 @@ function mod:OnEngage(diff)
 	if self.db.profile.custom_off_shaman_marker then
 		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 	end
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3")
 end
 
 --------------------------------------------------------------------------------
@@ -516,7 +516,7 @@ do
 				self:StartWeaponScan(5)
 				local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
 				if hp < 50 then -- XXX might need adjusting
-					self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1") -- don't really need this till 2nd intermission phase
+					self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3") -- don't really need this till 2nd intermission phase
 				end
 				-- warn for empowered abilities
 				local power = UnitPower("boss1")
@@ -563,10 +563,11 @@ end
 
 -- General
 function mod:UNIT_HEALTH_FREQUENT(unitId)
+	if self:MobId(UnitGUID(unitId)) ~= 71865 then return end
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if (hp < 15 and phase == 1) or (hp < 13 and phase == 2) then -- 10%
 		self:Message("stages", "Neutral", "Info", CL["soon"]:format(CL["phase"]:format(phase+1)), false)
-		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3")
 	end
 end
 
