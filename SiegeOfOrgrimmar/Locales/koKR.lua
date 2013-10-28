@@ -61,12 +61,12 @@ if L then
 	L.north_tower = "북쪽 탑"
 	L.tower_defender = "탑 수호자"
 
-	--L.adds_desc = "Timers for when a new set of adds enter the fight."
-	--L.adds_trigger1 = "Bring her down quick so I can wrap my fingers around her neck." -- Lady Sylvanas Windrunner
-	--L.adds_trigger2 = "Here they come!" -- Lady Jaina Proudmoore
-	--L.adds_trigger3 = "Dragonmaw, advance!"
-	--L.adds_trigger4	= "For Hellscream!"
-	--L.adds_trigger5	= "Next squad, push forward!"
+	L.adds_desc = "추가병력"
+	L.adds_trigger1 = "저 계집을 당장 끌어내려라. 내가 친히 그녀의 목을 죌 것이다." -- Lady Sylvanas Windrunner
+	L.adds_trigger2 = "놈들이 와요!" -- Lady Jaina Proudmoore
+	L.adds_trigger3 = "용아귀 용사들아, 진격하라!"
+	L.adds_trigger4	= "헬스크림 님을 위하여!"
+	L.adds_trigger5	= "다음 분대, 진격!"
 
 	L.custom_off_shaman_marker = "파도주술사 징표 설정"
 	L.custom_off_shaman_marker_desc = "차단하는 것을 돕기 위해, 용아귀부족 파도주술사를 {rt1}{rt2}{rt3}{rt4}{rt5} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
