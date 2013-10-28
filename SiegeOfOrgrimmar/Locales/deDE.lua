@@ -54,12 +54,12 @@ if L then
 	L.north_tower = "Nördlicher Turm"
 	L.tower_defender = "Turmverteidiger"
 
-	--L.adds_desc = "Timers for when a new set of adds enter the fight."
-	--L.adds_trigger1 = "Bring her down quick so I can wrap my fingers around her neck." -- Lady Sylvanas Windrunner
-	--L.adds_trigger2 = "Here they come!" -- Lady Jaina Proudmoore
-	--L.adds_trigger3 = "Dragonmaw, advance!"
-	--L.adds_trigger4	= "For Hellscream!"
-	--L.adds_trigger5	= "Next squad, push forward!"
+	L.adds_desc = "Zeigt an, wann neue Adds in den Kampf eintreten."
+	L.adds_trigger1 = "Holt sie schnell vom Himmel, damit ich sie erwürgen kann."
+	L.adds_trigger2 = "Da kommen sie!"
+	L.adds_trigger3 = "Drachenmalklan, ausrücken!"
+	L.adds_trigger4 = "Für Höllschrei!"
+	L.adds_trigger5 = "Nächster Trupp, vorwärts!"
 
 	L.custom_off_shaman_marker = "Schamanen markieren"
 	L.custom_off_shaman_marker_desc = "Um bei der Einteilung zum Unterbrechen zu helfen, werden die Gezeitenschamanen des Drachenmals mit {rt1}{rt2}{rt3}{rt4}{rt5} markiert, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r\n|cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über die Schamanen.|r"
@@ -166,17 +166,23 @@ if L then
 	L.parasites_up = "%d |4Parasit:Parasiten; vorhanden"
 	L.dance = "Tanzen"
 	L.prey_message = "Wirke Beute auf Parasiten"
+	L.injection_over_soon = "Injektion bald vorbei (%s)!"
+
 	L.one = "Iyyokuk wählt aus: Eins!"
 	L.two = "Iyyokuk wählt aus: Zwei!"
 	L.three = "Iyyokuk wählt aus: Drei!"
 	L.four = "Iyyokuk wählt aus: Vier!"
 	L.five = "Iyyokuk wählt aus: Fünf!"
-	L.edge_message = "Brennendes Band auf Dir"
+
 	L.custom_off_edge_marks = "Brennendes Band markieren"
 	L.custom_off_edge_marks_desc = "Markiert die Spieler mit Brennendem Band, basierend auf den Kalkulationen, mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
-	L.injection_over_soon = "Injektion bald vorbei (%s)!"
+	L.edge_message = "Brennendes Band auf Dir"
+
 	L.custom_off_parasite_marks = "Parasiten markieren"
 	L.custom_off_parasite_marks_desc = "Markiert die Parasiten für Gruppenkontroll- und Beute-Einteilungen mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
+
+	L.injection_tank = "<Wirkt Injektion>"
+	L.injection_tank_desc = "Timer für die Wirkzeit von Injektion auf den aktuellen Tank."
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "deDE")
@@ -187,14 +193,14 @@ if L then
 	L.phase_3_end_trigger = "Ihr glaubt GEWONNEN zu haben? BLIND seid ihr. ICH WERDE EUCH DIE AUGEN ÖFFNEN."
 
 	L.clump_check_desc = "Prüft alle 3 Sekunden während des Bombardements, ob Spieler eng zusammenstehen, da hierdurch Eiserne Sterne der Kor'kron entstehen."
-	--L.clump_check_warning = "Clump found, Star inc"
+	L.clump_check_warning = "Gruppierung gefunden, Stern kommt"
 
 	L.bombardment = "Bombardement"
 	L.bombardment_desc = "Bombardiert Sturmwind und hinterlässt Feuer auf dem Boden. Eiserne Sterne der Kor'kron können nur während des Bombardements entstehen."
 
 	L.intermission = "Unterbrechung"
 	L.mind_control = "Gedankenkontrolle"
-	--L.empowered_message = "%s is now empowered!"
+	L.empowered_message = "%s ist jetzt mächtig!"
 
 	L.ironstar_impact_desc = "Zeigt einen Timer für die Explosion der Eisernen Sterne an der jeweils gegenüberliegenden Wand."
 	L.ironstar_rolling = "Eiserner Stern rollt!"
