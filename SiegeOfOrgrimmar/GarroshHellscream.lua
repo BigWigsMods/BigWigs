@@ -41,15 +41,15 @@ if L then
 
 	L.phase_3_end_trigger = "You think you have WON?  You are BLIND.  I WILL FORCE YOUR EYES OPEN."
 
-	L.clump_check = "Clump check"
+	L.clump_check = mod:SpellName(147126)
 	L.clump_check_desc = "Check every 3 seconds during bombardment for clumped up players, if a clump is found a Kor'kron Iron Star will spawn."
+	L.clump_check_warning = "Clump found, Star inc"
 	L.clump_check_icon = 147126
 
 	L.bombardment = "Bombardment"
 	L.bombardment_desc = "Bombarding Stormwind and leaving fires on the ground. Kor'kron Iron Star can only spawn during bombardment."
 	L.bombardment_icon = 147120
 
-	L.spread = "Spread!"
 	L.intermission = "Intermission"
 	L.mind_control = "Mind Control"
 	L.empowered_message = "%s is now empowered!"
@@ -112,7 +112,7 @@ function mod:OnBossEnable()
 
 	-- Phase 4
 	self:Yell("Phase3End", L.phase_3_end_trigger)
-	self:Emote("IronStar", "147047")
+	self:Emote("ClumpFailIronStarSpawn", "147047")
 	self:Log("SPELL_CAST_START", "ManifestRage", 147011)
 	self:Log("SPELL_AURA_APPLIED", "IronStarFixateApplied", 147665)
 	self:Log("SPELL_AURA_REMOVED", "IronStarFixateRemoved", 147665)
@@ -218,8 +218,8 @@ function mod:Phase3End()
 	self:StopBar(L["mind_control"]) -- Mind Control
 end
 
-function mod:IronStar()
-	self:Message("clump_check", "Important", "Long", L["spread"], 147126)
+function mod:ClumpFailIronStarSpawn()
+	self:Message("clump_check", "Important", "Long", L["clump_check_warning"], 147126)
 	self:Flash("clump_check", 147126)
 end
 
@@ -269,7 +269,7 @@ do
 		self:Bar("bombardment", bombardmentTimers[bombardmentCounter] or 25, L["bombardment"], args.spellId)
 		bombardmentCounter = bombardmentCounter + 1
 		self:Bar("bombardment", 13, CL["casting"]:format(args.spellName), args.spellId)
-		self:Bar("clump_check", 3, L["clump_check"], 147126) -- Clump Check
+		self:Bar("clump_check", 3, 147126) -- Clump Check
 	end
 end
 
@@ -555,7 +555,7 @@ do
 			self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 			self:StopWeaponScan()
 		elseif spellId == 147126 then -- Clump Check
-			self:Bar("clump_check", 3, L["clump_check"], 147126)
+			self:Bar("clump_check", 3, spellName, spellId)
 		end
 	end
 end

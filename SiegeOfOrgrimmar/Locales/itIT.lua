@@ -193,13 +193,12 @@ if L then
 
 	L.phase_3_end_trigger = "Pensate di aver VINTO? Siete CIECHI. VI COSTRINGERÒ AD APRIRE GLI OCCHI."
 
-	L.clump_check = "CControllo ammucchiamento"
 	L.clump_check_desc = "Controlla ogni 3 secondi durante il Bombardamento i giocatori ammucchiati, se viene rilevato un gruppo, verrà creata una Pirostella Kor'kron."
+	--L.clump_check_warning = "Clump found, Star inc"
 
 	L.bombardment = "Bombardmento"
 	L.bombardment_desc = "Bombardamendo di Roccavento che lascia dei fuochi sul terreno. Le Pirostelle Kor'kron possono apparire soltanto durante il bombardmento."
 
-	L.spread = "Allargarsi!"
 	L.intermission = "Intermezzo"
 	L.mind_control = "Controllo della Mente"
 	--L.empowered_message = "%s is now empowered!"

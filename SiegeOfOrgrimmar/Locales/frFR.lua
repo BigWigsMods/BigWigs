@@ -190,13 +190,12 @@ if L then
 
 	L.phase_3_end_trigger = "Vous croyez avoir GAGNÉ ? Vous êtes AVEUGLE. JE VAIS VOUS OUVRIR LES YEUX." -- to check
 
-	L.clump_check = "Vérification des regroupements"
 	L.clump_check_desc = "Vérifie toutes les 3 secondes durant les bombardements les joueurs regroupés. Si un regroupement est trouvé, une étoile de fer Kor'kron apparaîtra."
+	--L.clump_check_warning = "Clump found, Star inc"
 
 	L.bombardment = "Bombardement"
 	L.bombardment_desc = "Bombarde Hurlevent et laisse des gerbes de feu sur le sol. Les étoiles de fer Kor'kron n'apparaissent que durant les bombardements."
 
-	L.spread = "Éparpillez-vous !"
 	L.intermission = "Intervalle"
 	L.mind_control = "Contrôle mental"
 	--L.empowered_message = "%s is now empowered!"

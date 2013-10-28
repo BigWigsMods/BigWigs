@@ -193,13 +193,12 @@ if L then
 
 	L.phase_3_end_trigger = "Ihr glaubt GEWONNEN zu haben? BLIND seid ihr. ICH WERDE EUCH DIE AUGEN ÖFFNEN."
 
-	L.clump_check = "Gruppierungsprüfung"
 	L.clump_check_desc = "Prüft alle 3 Sekunden während des Bombardements, ob Spieler eng zusammenstehen, da hierdurch Eiserne Sterne der Kor'kron entstehen."
+	--L.clump_check_warning = "Clump found, Star inc"
 
 	L.bombardment = "Bombardement"
 	L.bombardment_desc = "Bombardiert Sturmwind und hinterlässt Feuer auf dem Boden. Eiserne Sterne der Kor'kron können nur während des Bombardements entstehen."
 
-	L.spread = "Verteilen!"
 	L.intermission = "Unterbrechung"
 	L.mind_control = "Gedankenkontrolle"
 	--L.empowered_message = "%s is now empowered!"

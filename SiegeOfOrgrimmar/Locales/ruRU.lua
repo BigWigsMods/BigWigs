@@ -193,13 +193,12 @@ if L then
 
 	L.phase_3_end_trigger = "Думаете, вы победили? Слепцы. Я раскрою вам глаза!"
 
-	L.clump_check = "Проверка проходимости"
 	L.clump_check_desc = "Каждые 3 секунды, во время Бомбардировки, будет проверяться проходимость, если она обнаружена, появится Кор'кронская железная звезда."
+	--L.clump_check_warning = "Clump found, Star inc"
 
 	L.bombardment = "Бомбардировка"
 	L.bombardment_desc = "Бомбардировка города и появление горящих луж. Кор'кронская железная звезда появляется только в это время."
 
-	L.spread = "Разбегайтесь!"
 	L.intermission = "Перерыв"
 	L.mind_control = "Контроль разума"
 	--L.empowered_message = "%s is now empowered!"

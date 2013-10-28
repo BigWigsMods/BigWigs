@@ -192,13 +192,12 @@ if L then
 
 	L.phase_3_end_trigger = "네가 이겼다고 생각하나? 넌 눈이 멀었다! 내가 그 눈을 뜨게해 주마!"
 
-	L.clump_check = "뭉침 여부 확인"
 	L.clump_check_desc = "폭격 동안 3초마다 플레이어들이 뭉쳐있는 지 확인합니다. 뭉쳐있는 것이 발견된다면 코르크론 강철의 별이 소환됩니다."
+	--L.clump_check_warning = "Clump found, Star inc"
 
 	L.bombardment = "폭격"
 	L.bombardment_desc = "스톰윈드를 폭격하고, 지면에 불길의 흔적을 남깁니다. 폭격 동안에만 코르크론 강철의 별이 소환될 수 있습니다."
 
-	L.spread = "산개하세요!"
 	L.intermission = "내면 세계"
 	L.mind_control = "정신 지배"
 	--L.empowered_message = "%s is now empowered!"

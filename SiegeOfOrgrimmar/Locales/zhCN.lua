@@ -190,13 +190,12 @@ if L then
 
 	L.phase_3_end_trigger = "别以为你们已经赢了"
 
-	L.clump_check = "群体确认"
 	L.clump_check_desc = "在呼叫轰炸阶段时每3秒检查扎堆的玩家，如果检查到群体存在库卡隆钢铁之星将会出现。"
+	--L.clump_check_warning = "Clump found, Star inc"
 
 	L.bombardment = "呼叫轰炸"
 	L.bombardment_desc = "轰击暴风城，并在地面上留下火焰。 库卡隆钢铁之星只会在呼叫轰炸阶段出现。"
 
-	L.spread = "分散！"
 	L.intermission = "中场休息"
 	L.mind_control = "亚煞极之触"
 	--L.empowered_message = "%s is now empowered!"
