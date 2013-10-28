@@ -87,8 +87,8 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	--self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "Adds") -- could just check for sender = Warlord Zaela, target = player to avoid localization?
-	self:Emote("AddsInitial", L.adds_trigger1, L.adds_trigger2)
-	self:Emote("Adds", L.adds_trigger3, L.adds_trigger4, L.adds_trigger5)
+	self:Yell("AddsInitial", L.adds_trigger1, L.adds_trigger2)
+	self:Yell("Adds", L.adds_trigger3, L.adds_trigger4, L.adds_trigger5)
 
 	-- Foot Soldiers
 	self:Log("SPELL_CAST_START", "AddMarkedMob", 148520, 149187, 148522) -- Tidal Wave
