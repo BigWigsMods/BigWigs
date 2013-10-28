@@ -448,7 +448,7 @@ do
 		if not boss then return end
 		local target = boss.."target"
 		if not UnitExists(target) then return end
-		if lastWhirlTarget and lastWhirlTarget ~= mod:UnitName(target) then
+		if not UnitDetailedThreatSituation(target, boss) and lastWhirlTarget ~= mod:UnitName(target) then
 			lastWhirlTarget = mod:UnitName(target)
 			if UnitIsUnit("player", target) then
 				mod:Message(143701, "Personal", "Info", CL["you"]:format(mod:SpellName(143701)))
