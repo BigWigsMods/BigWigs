@@ -151,7 +151,7 @@ function mod:OnEngage(diff)
 	self:Bar(-8292, 45, nil, 144582)
 	self:Berserk(960, nil, nil, "Berserk (assumed)") -- XXX assumed (more than 15:13 on 25H)
 	self:Bar(144758, 11) -- Desecrate
-	self:StartWeaponScan(5)
+	self:ScheduleTimer("StartWeaponScan", 5)
 	self:Bar(-8298, 20, nil, 144616) -- Siege Engineer
 	self:Bar(-8294, 30, nil, 144584) -- Farseer
 	self:Bar(144821, 22) -- Warsong
@@ -512,7 +512,7 @@ do
 				self:Bar(144758, 10) -- Desecrate
 				self:Bar(145065, 15, L["mind_control"]) -- Mind Control
 				self:Bar(144985, 30, CL["count"]:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
-				self:StartWeaponScan(5)
+				self:ScheduleTimer("StartWeaponScan", 5)
 				local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
 				if hp < 50 then -- XXX might need adjusting
 					self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3") -- don't really need this till 2nd intermission phase
@@ -594,21 +594,14 @@ do
 		end
 		mod:StopWeaponScan()
 	end
-	function mod:StartWeaponScan(delay)
-		self:CancelTimer(weaponTimer)
-		if delay then
-			weaponTimer = self:ScheduleTimer("StartWeaponScan", delay)
-		else
+	function mod:StartWeaponScan()
+		if not weaponTimer then
 			weaponTimer = self:ScheduleRepeatingTimer(checkWeaponTarget, 0.05)
 		end
 	end
-	function mod:StopWeaponScan(delay)
-		if delay then
-			self:ScheduleTimer("StopWeaponScan", delay)
-		else
-			self:CancelTimer(weaponTimer)
-			weaponTimer = nil
-		end
+	function mod:StopWeaponScan()
+		self:CancelTimer(weaponTimer)
+		weaponTimer = nil
 	end
 end
 
@@ -628,8 +621,8 @@ do
 		end
 		self:CDBar(144758, desecrateCD)
 		desecrateCounter = desecrateCounter + 1
-		self:StopWeaponScan(2) -- delay it a bit just to be safe
-		self:StartWeaponScan(desecrateCD-7)
+		self:ScheduleTimer("StopWeaponScan", 2) -- delay it a bit just to be safe
+		self:ScheduleTimer("StartWeaponScan", desecrateCD-7)
 	end
 end
 
