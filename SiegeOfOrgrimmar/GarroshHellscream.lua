@@ -598,7 +598,8 @@ do
 		if delay then
 			self:CancelTimer(weaponTimer)
 			weaponTimer = self:ScheduleTimer("StartWeaponScan", delay)
-		elseif not weaponTimer then
+		else
+			self:CancelTimer(weaponTimer)
 			weaponTimer = self:ScheduleRepeatingTimer(checkWeaponTarget, 0.05)
 		end
 	end
