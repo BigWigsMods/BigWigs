@@ -495,6 +495,7 @@ do
 				self:StopBar(144758) -- Desecrate
 				self:StopBar(144821) -- Warsong
 				self:StopWeaponScan()
+				self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 			end
 		elseif spellId == 144866 then -- Enter Realm of Y'Shaarj -- actually being pulled
 			self:StopBar(144758) -- Desecrate
