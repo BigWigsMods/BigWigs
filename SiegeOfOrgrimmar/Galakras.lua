@@ -275,7 +275,7 @@ function mod:Adds()
 	if addsCounter == 3 or addsCounter == 7 or addsCounter == 11 then
 		self:Bar("adds", 110, L["adds"], L.adds_icon) -- gap for drakes
 	else
-		if addsCounter % 4  == 0 then -- start the drakes timer on the wave after drakes
+		if addsCounter % 4 == 0 then -- start the drakes timer on the wave after drakes
 			self:Bar("drakes", 220, L["drakes"], L.drakes_icon)
 		end
 		self:Bar("adds", 55, L["adds"], L.adds_icon)

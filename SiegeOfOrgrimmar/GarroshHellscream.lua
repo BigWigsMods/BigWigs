@@ -579,7 +579,7 @@ do
 
 		local name = mod:UnitName("boss1target")
 		mod:SecondaryIcon(144758, name) -- so we don't use skull as that might be used for marking the healing add
-		if UnitIsUnit("player",  "boss1target") then
+		if UnitIsUnit("player", "boss1target") then
 			mod:TargetMessage(144758, name, "Urgent", "Alarm")
 			mod:Flash(144758)
 			mod:Say(144758)
