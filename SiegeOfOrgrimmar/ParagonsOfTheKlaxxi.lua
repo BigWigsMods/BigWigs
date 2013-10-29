@@ -866,8 +866,10 @@ function mod:Deaths(args)
 		deathCounter = deathCounter + 1
 	elseif args.mobId == 71158 then --Rik'kal the Dissector
 		self:StopBar(CL["count"]:format(self:SpellName(143337), mutateCastCounter)) -- Mutate
-		self:CancelDelayedMessage(L["injection_over_soon"]:format(injectionTarget))
-		self:StopBar(injectionBar, injectionTarget)
+		if injectionTarget then
+			self:CancelDelayedMessage(L["injection_over_soon"]:format(injectionTarget))
+			self:StopBar(injectionBar, injectionTarget)
+		end
 		self:StopBar(143339) -- Injection
 		deathCounter = deathCounter + 1
 	elseif args.mobId == 71160 then -- Iyyokuk the Lucid
