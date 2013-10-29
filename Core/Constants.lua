@@ -145,7 +145,13 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			if icon == option .. "_icon" then icon = nil end
 			if type(icon) == "number" then
 				local _
-				_, _, icon = GetSpellInfo(icon)
+				if icon > 10 then
+					_, _, icon = GetSpellInfo(icon)
+				elseif icon > 0 then
+					icon = ("Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d"):format(icon)
+				else
+					_, _, _, icon = EJ_GetSectionInfo(-icon)
+				end
 				if not icon then
 					print("|cFF33FF99BigWigs|r:", "No icon found for", module, L[option .. "_icon"])
 				end
