@@ -371,8 +371,8 @@ do
 		self:Bar(144985, 50, CL["count"]:format(self:SpellName(144985), whirlingCounter))
 
 		if args.spellId == 145037 and self.db.profile.custom_off_minion_marker then
-			markableMobs = {}
-			marksUsed = {}
+			wipe(markableMobs)
+			wipe(marksUsed)
 			markTimer = nil
 			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 			if not markTimer then
@@ -574,12 +574,15 @@ do
 	local UnitDetailedThreatSituation, UnitExists, UnitCastingInfo, UnitChannelInfo = UnitDetailedThreatSituation, UnitExists, UnitCastingInfo, UnitChannelInfo
 	local weaponTimer = nil
 	local function checkWeaponTarget()
+		local boss = mod:GetUnitByGUID(71865)
+		if not boss then return end
+		local target = boss.."target"
 		-- added UnitCastingInfo and UnitChannelInfo, if it turns out to be too restrictive could just disable weaponTarget check while whirling corruption is being casted
-		if not UnitExists("boss1target") or mod:Tank("boss1target") or UnitDetailedThreatSituation("boss1target", "boss1") or UnitCastingInfo("boss1") or UnitChannelInfo("boss1") then return end
+		if not UnitExists(target) or mod:Tank(target) or UnitDetailedThreatSituation(target, boss) or UnitCastingInfo(boss) or UnitChannelInfo(boss) then return end
 
-		local name = mod:UnitName("boss1target")
-		mod:SecondaryIcon(144758, name) -- so we don't use skull as that might be used for marking the healing add
-		if UnitIsUnit("player", "boss1target") then
+		local name = mod:UnitName(target)
+		mod:SecondaryIcon(144758, name) -- we don't use skull as that might be used for marking the healing add
+		if UnitIsUnit("player", target) then
 			mod:TargetMessage(144758, name, "Urgent", "Alarm")
 			mod:Flash(144758)
 			mod:Say(144758)
