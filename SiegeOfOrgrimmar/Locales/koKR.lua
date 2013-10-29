@@ -54,7 +54,8 @@ if L then
 	L.north_tower = "북쪽 탑"
 	L.tower_defender = "탑 수호자"
 
-	L.adds_desc = "추가병력"
+	L.adds = "다음 병력:"
+	L.adds_desc = "추가병력 타이머"
 	L.adds_trigger1 = "저 계집을 당장 끌어내려라. 내가 친히 그녀의 목을 죌 것이다." -- Lady Sylvanas Windrunner
 	L.adds_trigger2 = "놈들이 와요!" -- Lady Jaina Proudmoore
 	L.adds_trigger3 = "용아귀 용사들아, 진격하라!"
