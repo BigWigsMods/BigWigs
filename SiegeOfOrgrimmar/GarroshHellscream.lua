@@ -574,7 +574,7 @@ do
 	local UnitDetailedThreatSituation, UnitExists, UnitCastingInfo, UnitChannelInfo = UnitDetailedThreatSituation, UnitExists, UnitCastingInfo, UnitChannelInfo
 	local weaponTimer = nil
 	local function checkWeaponTarget()
-		local boss = mod:GetUnitByGUID(71865)
+		local boss = mod:GetUnitIdByGUID(71865)
 		if not boss then return end
 		local target = boss.."target"
 		-- added UnitCastingInfo and UnitChannelInfo, if it turns out to be too restrictive could just disable weaponTarget check while whirling corruption is being casted
@@ -595,11 +595,10 @@ do
 		mod:StopWeaponScan()
 	end
 	function mod:StartWeaponScan(delay)
+		self:CancelTimer(weaponTimer)
 		if delay then
-			self:CancelTimer(weaponTimer)
 			weaponTimer = self:ScheduleTimer("StartWeaponScan", delay)
 		else
-			self:CancelTimer(weaponTimer)
 			weaponTimer = self:ScheduleRepeatingTimer(checkWeaponTarget, 0.05)
 		end
 	end
