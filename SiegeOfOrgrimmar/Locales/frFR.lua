@@ -54,12 +54,12 @@ if L then
 	L.north_tower = "Tour nord"
 	L.tower_defender = "Défenseur de la tour"
 
-	--L.adds_desc = "Timers for when a new set of adds enter the fight."
-	--L.adds_trigger1 = "Bring her down quick so I can wrap my fingers around her neck." -- Lady Sylvanas Windrunner
-	--L.adds_trigger2 = "Here they come!" -- Lady Jaina Proudmoore
-	--L.adds_trigger3 = "Dragonmaw, advance!"
-	--L.adds_trigger4	= "For Hellscream!"
-	--L.adds_trigger5	= "Next squad, push forward!"
+	L.adds_desc = "Barres de délai indiquant quand un nouveau groupe d'ennemi se joint au combat."
+	L.adds_trigger1 = "Descendez-la, que je puisse serrer mes mains autour de son cou."
+	L.adds_trigger2 = "Les voilà !"
+	L.adds_trigger3 = "Gueules-de-dragon, avancez !"
+	L.adds_trigger4 = "Pour Hurlenfer !"
+	L.adds_trigger5 = "Escouade suivante, en avant !"
 
 	L.custom_off_shaman_marker = "Marquage Chaman des marées"
 	L.custom_off_shaman_marker_desc = "Afin d'aider à l'attribution des interruptions, marque les Chamans des marées gueule-de-dragon avec {rt1}{rt2}{rt3}{rt4}{rt5}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2ASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement tous les chamans est le moyen le plus rapide de les marquer.|r"
@@ -127,6 +127,9 @@ if L then
 	L.tank_debuffs_desc = "Alertes concernant les différents types d'affaiblisement de tank associés avec Rugissement effroyable."
 
 	L.cage_opened = "Cage ouverte"
+
+	L.akolik = "Akolik"
+	L.waterspeaker_gorai = "Eauracle Goraï"
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "frFR")
@@ -163,17 +166,23 @@ if L then
 	L.parasites_up = "%d |4Parasite actif:Parasites actifs;"
 	L.dance = "Danse"
 	L.prey_message = "Utilisez Prendre pour proie sur le parasite"
+	L.injection_over_soon = "Injection bientôt terminée (%s) !"
+
 	L.one = "Iyyokuk sélectionne : Un !"
 	L.two = "Iyyokuk sélectionne : Deux !"
 	L.three = "Iyyokuk sélectionne : Trois !"
 	L.four = "Iyyokuk sélectionne : Quatre !"
 	L.five = "Iyyokuk sélectionne : Cinq !"
-	L.edge_message = "Vous êtes un sommet"
+
 	L.custom_off_edge_marks = "Marquage Tranchant enflammé"
 	L.custom_off_edge_marks_desc = "Marque les joueurs qui seront les sommets des Tranchants enflammés avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
-	L.injection_over_soon = "Injection bientôt terminée (%s) !"
+	L.edge_message = "Vous êtes un sommet"
+
 	L.custom_off_parasite_marks = "Marquage Parasite"
 	L.custom_off_parasite_marks_desc = "Afin d'aider à l'attribution des contrôles de foule et des Prendre pour proie, marque les parasites avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
+
+	L.injection_tank = "Incantation d'Injection"
+	L.injection_tank_desc = "Barre de délai indiquant quand Injection est incanté sur son tank actuel."
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "frFR")
@@ -184,14 +193,14 @@ if L then
 	L.phase_3_end_trigger = "Vous croyez avoir GAGNÉ ? Vous êtes AVEUGLE. JE VAIS VOUS OUVRIR LES YEUX." -- to check
 
 	L.clump_check_desc = "Vérifie toutes les 3 secondes durant les bombardements les joueurs regroupés. Si un regroupement est trouvé, une étoile de fer Kor'kron apparaîtra."
-	--L.clump_check_warning = "Clump found, Star inc"
+	L.clump_check_warning = "Regroupement détecté, arrivée d'une étoile"
 
 	L.bombardment = "Bombardement"
 	L.bombardment_desc = "Bombarde Hurlevent et laisse des gerbes de feu sur le sol. Les étoiles de fer Kor'kron n'apparaissent que durant les bombardements."
 
 	L.intermission = "Intervalle"
 	L.mind_control = "Contrôle mental"
-	--L.empowered_message = "%s is now empowered!"
+	L.empowered_message = "%s est maintenant surpuissant !"
 
 	L.ironstar_impact_desc = "Une barre de délai indiquant quand l'Étoile de fer touchera le mur d'en face."
 	L.ironstar_rolling = "L'Étoile de fer roule !"
