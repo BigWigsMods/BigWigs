@@ -16,7 +16,6 @@ mod:RegisterEnableMob(
 --
 
 local towerAddTimer = nil
-local addsCounter = 1
 -- marking
 local markableMobs = {}
 local marksUsed = {}
@@ -123,21 +122,20 @@ local function warnTowerAdds()
 end
 
 local function firstTowerAdd()
-	mod:Message("towers", "Attention", nil, L["tower_defender"], 85214)
-	mod:Bar("towers", 60, L["tower_defender"], 85214) -- random orc icon
+	warnTowerAdds()
 	if not towerAddTimer then
 		towerAddTimer = mod:ScheduleRepeatingTimer(warnTowerAdds, 60)
 	end
 end
 
 function mod:OnEngage()
-	addsCounter = 1
 	if self:Heroic() then
 		self:Bar("towers", 13, L["tower_defender"], 85214) -- random orc icon
 		self:ScheduleTimer(firstTowerAdd, 13)
 	else
 		self:Bar("towers", 116, L["south_tower"], L.towers_icon)
 	end
+
 	if self.db.profile.custom_off_shaman_marker then
 		wipe(markableMobs)
 		wipe(marksUsed)
@@ -176,8 +174,11 @@ function mod:FlamesOfGalakrondApplied(args)
 end
 
 function mod:LastPhase(unitId, _, _, _, spellId)
-	if spellId == 50630 then
+	if spellId == 50630 then -- Eject All Passengers
 		self:Message("stages", "Neutral", "Warning", CL["incoming"]:format(UnitName(unitId)), "ability_mount_drake_proto")
+		self:StopBar(L["adds"])
+		self:StopBar(L["drakes"])
+		self:CancelDelayedMessage(L["drakes"])
 	end
 end
 
@@ -208,14 +209,14 @@ function mod:ShatteringCleave(args)
 end
 
 function mod:Demolisher()
-	self:Message("demolisher", "Attention", nil, L["demolisher"], L["demolisher_icon"])
+	self:Message("demolisher", "Attention", nil, L["demolisher"], L.demolisher_icon)
 end
 
 function mod:Towers(msg)
 	local tower = msg:find(L["north_tower_trigger"]) and L["north_tower"] or L["south_tower"] -- this will be kinda bad till every localization is done
 	self:StopBar(tower)
 	self:Message("towers", "Neutral", "Long", tower, L.towers_icon)
-	self:Bar("demolisher", 20, L["demolisher"], L["demolisher_icon"])
+	self:Bar("demolisher", 20, L["demolisher"], L.demolisher_icon)
 
 	if self:Heroic() then
 		if tower == L["north_tower"] then
@@ -265,22 +266,27 @@ function mod:Fracture(args)
 	self:TargetMessage(146899, args.destName, "Urgent", "Info", nil, nil, true)
 end
 
-function mod:AddsInitial()
-	self:Bar("adds", 48, L["adds"], L.adds_icon)
-	self:Bar("drakes", 158, L["drakes"], L.drakes_icon)
-	addsCounter = addsCounter + 1
-end
-
-function mod:Adds()
-	if addsCounter == 3 or addsCounter == 7 or addsCounter == 11 then
-		self:Bar("adds", 110, L["adds"], L.adds_icon) -- gap for drakes
-	else
-		if addsCounter % 4 == 0 then -- start the drakes timer on the wave after drakes
-			self:Bar("drakes", 220, L["drakes"], L.drakes_icon)
-		end
-		self:Bar("adds", 55, L["adds"], L.adds_icon)
+do
+	local addsCounter = 1
+	function mod:AddsInitial()
+		-- is actually ~6s or so after the first wave, but a better starting point than engage
+		addsCounter = 1
+		self:Bar("adds", 49, L["adds"], L.adds_icon)
+		self:Bar("drakes", 158, L["drakes"], L.drakes_icon)
 	end
-	addsCounter = addsCounter + 1
+
+	function mod:Adds()
+		addsCounter = addsCounter + 1
+		if (addsCounter + 1) % 4  == 0 then
+			self:DelayedMessage("adds", 55, "Attention", L["drakes"], L.adds_icon, "Info")
+			self:Bar("adds", 110, L["adds"], L.adds_icon)
+		else
+			if addsCounter % 4 == 0 then -- start the drakes timer on the wave after drakes
+				self:Bar("drakes", 220, L["drakes"], L.drakes_icon)
+			end
+			self:Bar("adds", 55, L["adds"], L.adds_icon)
+		end
+	end
 end
 
 -- marking
