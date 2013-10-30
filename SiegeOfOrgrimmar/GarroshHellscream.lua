@@ -582,7 +582,8 @@ do
 		if not UnitExists(target) or mod:Tank(target) or UnitDetailedThreatSituation(target, boss) or UnitCastingInfo(boss) or UnitChannelInfo(boss) then return end
 
 		local name = mod:UnitName(target)
-		mod:SecondaryIcon(144758, name) -- we don't use skull as that might be used for marking the healing add
+		mod:PrimaryIcon(144758, name)
+		mod:ScheduleTimer("PrimaryIcon", 7, 144758)
 		if UnitIsUnit("player", target) then
 			mod:TargetMessage(144758, name, "Urgent", "Alarm")
 			mod:Flash(144758)
