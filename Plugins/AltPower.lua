@@ -9,6 +9,8 @@ plugin.defaultDB = {
 	posx = nil,
 	posy = nil,
 	expanded = false,
+	disabled = false,
+	lock = false,
 }
 
 --------------------------------------------------------------------------------
@@ -16,6 +18,8 @@ plugin.defaultDB = {
 --
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
+local media = LibStub("LibSharedMedia-3.0")
+plugin.displayName = L.altPowerTitle
 
 local powerList, sortedUnitList, roleColoredList = nil, nil, nil
 local unitList = nil
@@ -43,6 +47,127 @@ local function colorize(power)
 		return r, g
 	else -- green to red
 		return g, r
+	end
+end
+
+-------------------------------------------------------------------------------
+-- Options
+--
+
+do
+	local pluginOptions = nil
+	function plugin:GetPluginConfig()
+		if not pluginOptions then
+			pluginOptions = {
+				type = "group",
+				get = function(info)
+					local key = info[#info]
+					if key == "font" then
+						for i, v in next, media:List("font") do
+							if v == db.font then return i end
+						end
+					else
+						return db[key]
+					end
+				end,
+				set = function(info, value)
+					local key = info[#info]
+					if key == "font" then
+						db.font = media:List("font")[value]
+					else
+						db[key] = value
+					end
+					--plugin:RestyleWindow()
+				end,
+				args = {
+					disabled = {
+						type = "toggle",
+						name = L.disabled,
+						--desc = L.disabledDesc,
+						order = 1,
+					},
+					lock = {
+						type = "toggle",
+						name = L.lock,
+						desc = L.lockDesc,
+						order = 2,
+					},
+					font = {
+						type = "select",
+						name = L.font,
+						order = 3,
+						values = media:List("font"),
+						width = "full",
+						itemControl = "DDI-Font",
+						disabled = true,
+					},
+					fontSize = {
+						type = "range",
+						name = L.fontSize,
+						order = 4,
+						max = 40,
+						min = 8,
+						step = 1,
+						width = "full",
+						disabled = true,
+					},
+					--[[showHide = {
+						type = "group",
+						name = L.showHide,
+						inline = true,
+						order = 5,
+						get = function(info)
+							local key = info[#info]
+							return db.objects[key]
+						end,
+						set = function(info, value)
+							local key = info[#info]
+							db.objects[key] = value
+							plugin:RestyleWindow()
+						end,
+						args = {
+							title = {
+								type = "toggle",
+								name = L.title,
+								desc = L.titleDesc,
+								order = 1,
+							},
+							background = {
+								type = "toggle",
+								name = L.background,
+								desc = L.backgroundDesc,
+								order = 2,
+							},
+							sound = {
+								type = "toggle",
+								name = L.soundButton,
+								desc = L.soundButtonDesc,
+								order = 3,
+							},
+							close = {
+								type = "toggle",
+								name = L.closeButton,
+								desc = L.closeButtonDesc,
+								order = 4,
+							},
+							ability = {
+								type = "toggle",
+								name = L.abilityName,
+								desc = L.abilityNameDesc,
+								order = 5,
+							},
+							tooltip = {
+								type = "toggle",
+								name = L.tooltip,
+								desc = L.tooltipDesc,
+								order = 6,
+							}
+						},
+					},]]
+				},
+			}
+		end
+		return pluginOptions
 	end
 end
 
@@ -162,7 +287,7 @@ do
 	-- This module is rarely used, and opened once during an encounter where it is.
 	-- We will prefer on-demand variables over permanent ones.
 	function plugin:BigWigs_ShowAltPower(event, module, title, sorting)
-		if not IsInGroup() then return end -- Solo runs of old content
+		if db.disabled or not IsInGroup() then return end -- Solo runs of old content
 		if createFrame then createFrame() createFrame = nil end
 		self:Close()
 
