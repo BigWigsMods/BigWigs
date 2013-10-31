@@ -182,7 +182,8 @@ function mod:LastPhase(unitId, _, _, _, spellId)
 		self:Message("stages", "Neutral", "Warning", CL["incoming"]:format(UnitName(unitId)), "ability_mount_drake_proto")
 		self:StopBar(L["adds"])
 		self:StopBar(L["drakes"])
-		self:CancelDelayedMessage(L["drakes"])
+		self:CancelDelayedMessage(CL["incoming"]:format(L["drakes"]))
+		self:CancelDelayedMessage(CL["incoming"]:format(L["adds"]))
 	end
 end
 
@@ -254,7 +255,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", nil, CL["underyou"]:format(args.spellName))
 		end
 	end
 end
@@ -264,7 +265,7 @@ function mod:Warbanner(args)
 end
 
 function mod:Fracture(args)
-	self:TargetMessage(146899, args.destName, "Urgent", "Info", nil, nil, true)
+	self:TargetMessage(146899, args.destName, "Urgent", "Alarm", nil, nil, true)
 end
 
 do
@@ -272,6 +273,7 @@ do
 	function mod:AddsInitial()
 		-- is actually ~6s or so after the first wave, but a better starting point than engage
 		addsCounter = 1
+		self:DelayedMessage("adds", 49, "Attention", CL["incoming"]:format(L["adds"]), L.adds_icon, "Info")
 		self:Bar("adds", 49, L["adds"], L.adds_icon)
 		self:Bar("drakes", 158, L["drakes"], L.drakes_icon)
 	end
@@ -279,12 +281,14 @@ do
 	function mod:Adds()
 		addsCounter = addsCounter + 1
 		if (addsCounter + 1) % 4  == 0 then
-			self:DelayedMessage("drakes", 55, "Attention", L["drakes"], L.drakes_icon, "Info")
+			self:DelayedMessage("drakes", 55, "Attention", CL["incoming"]:format(L["drakes"]), L.drakes_icon, "Info")
+			self:DelayedMessage("adds", 110, "Attention", CL["incoming"]:format(L["adds"]), L.adds_icon, "Info")
 			self:Bar("adds", 110, L["adds"], L.adds_icon)
 		else
 			if addsCounter % 4 == 0 then -- start the drakes timer on the wave after drakes
 				self:Bar("drakes", 220, L["drakes"], L.drakes_icon)
 			end
+			self:DelayedMessage("adds", 55, "Attention", CL["incoming"]:format(L["adds"]), L.adds_icon, "Info")
 			self:Bar("adds", 55, L["adds"], L.adds_icon)
 		end
 	end
