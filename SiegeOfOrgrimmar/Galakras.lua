@@ -54,7 +54,7 @@ if L then
 
 	L.custom_off_shaman_marker = "Shaman marker"
 	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the shamans is the fastest way to mark them.|r"
-	L.custom_off_shaman_marker_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1"
+	L.custom_off_shaman_marker_icon = 1
 end
 L = mod:GetLocale()
 
@@ -101,6 +101,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FlameArrows", 146765)
 	self:Log("SPELL_AURA_APPLIED", "Warbanner", 147328)
 	self:Log("SPELL_AURA_APPLIED", "Fracture", 146899, 147200)
+	self:Emote("Demolisher", "116040")
 	-- Ranking Officials
 	self:Log("SPELL_CAST_SUCCESS", "CurseOfVenom", 147711)
 	self:Log("SPELL_PERIODIC_DAMAGE", "PoisonCloud", 147705)
@@ -108,7 +109,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CrushersCall", 146769)
 	self:Log("SPELL_CAST_SUCCESS", "ShatteringCleave", 146849)
 	self:Emote("Towers", L["south_tower_trigger"], L["north_tower_trigger"])
-	self:Emote("Demolisher", "116040")
 	-- Galakras
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FlamesOfGalakrondStacking", 147029)
 	self:Log("SPELL_AURA_APPLIED", "FlamesOfGalakrondApplied", 147068)
@@ -279,7 +279,7 @@ do
 	function mod:Adds()
 		addsCounter = addsCounter + 1
 		if (addsCounter + 1) % 4  == 0 then
-			self:DelayedMessage("adds", 55, "Attention", L["drakes"], L.adds_icon, "Info")
+			self:DelayedMessage("drakes", 55, "Attention", L["drakes"], L.drakes_icon, "Info")
 			self:Bar("adds", 110, L["adds"], L.adds_icon)
 		else
 			if addsCounter % 4 == 0 then -- start the drakes timer on the wave after drakes
