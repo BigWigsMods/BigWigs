@@ -89,8 +89,11 @@ function mod:OnBossEnable()
 	self:Yell("AddsInitial", L.adds_trigger1, L.adds_trigger2)
 	self:Yell("Adds", L.adds_trigger3, L.adds_trigger4, L.adds_trigger5)
 
+	-- Shaman marking, enabled here for trash
+	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+	self:Log("SPELL_CAST_START", "TidalWave", 149187, 149188, 148522) -- XXX check if n87 or n88 is the damage event for the trash and remove it
+	self:Death("ShamanDeath", 72367, 72958)
 	-- Foot Soldiers
-	self:Log("SPELL_CAST_START", "AddMarkedMob", 148520, 149187, 148522) -- Tidal Wave
 	self:Log("SPELL_CAST_START", "ChainHeal", 146757, 146728)
 	self:Log("SPELL_CAST_SUCCESS", "HealingTotem", 146753, 146722)
 	self:Log("SPELL_PERIODIC_DAMAGE", "FlameArrows", 146765)
@@ -112,7 +115,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FlamesOfGalakrondRemoved", 147068)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "LastPhase", "boss1")
 
-	self:Death("ShamanDeath", 72367) -- Dragonmaw Tidal Shaman
 	self:Death("Win", 72249) -- Galakras
 end
 
@@ -139,8 +141,10 @@ function mod:OnEngage()
 	if self.db.profile.custom_off_shaman_marker then
 		wipe(markableMobs)
 		wipe(marksUsed)
-		markTimer = nil
-		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+		if markTimer then
+			self:CancelTimer(markTimer)
+			markTimer = nil
+		end
 	end
 end
 
@@ -237,9 +241,6 @@ end
 -- Foot Soldiers
 function mod:ChainHeal(args)
 	self:Message(146757, "Important", "Warning")
-	if self.db.profile.custom_off_shaman_marker then
-		mod:AddMarkedMob(args)
-	end
 end
 
 function mod:HealingTotem(args)
@@ -321,16 +322,18 @@ do
 	end
 
 	function mod:UPDATE_MOUSEOVER_UNIT()
-		local guid = UnitGUID("mouseover")
-		if guid and markableMobs[guid] == true then
-			setMark("mouseover", guid)
+		if self.db.profile.custom_off_shaman_marker then
+			local guid = UnitGUID("mouseover")
+			if guid and markableMobs[guid] == true then
+				setMark("mouseover", guid)
+			end
 		end
 	end
 
-	function mod:AddMarkedMob(args)
-		if not markableMobs[args.sourceGUID] then
+	function mod:TidalWave(args)
+		if self.db.profile.custom_off_shaman_marker and not markableMobs[args.sourceGUID] then
 			markableMobs[args.sourceGUID] = true
-			if self.db.profile.custom_off_shaman_marker and not markTimer then
+			if not markTimer then
 				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.2)
 			end
 		end
@@ -339,7 +342,7 @@ do
 	function mod:ShamanDeath(args)
 		if self.db.profile.custom_off_shaman_marker then
 			markableMobs[args.destGUID] = nil
-			for i=1, 5 do
+			for i = 1, 5 do
 				if marksUsed[i] == args.destGUID then
 					marksUsed[i] = nil
 					break
