@@ -91,7 +91,7 @@ function mod:OnBossEnable()
 
 	-- Shaman marking, enabled here for trash
 	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-	self:Log("SPELL_CAST_START", "TidalWave", 149187, 149188, 148522) -- XXX check if n87 or n88 is the damage event for the trash and remove it
+	self:Log("SPELL_CAST_START", "TidalWave", 149187, 148522)
 	self:Death("ShamanDeath", 72367, 72958)
 	-- Foot Soldiers
 	self:Log("SPELL_CAST_START", "ChainHeal", 146757, 146728)
