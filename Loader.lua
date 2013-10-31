@@ -230,61 +230,35 @@ end
 -- Loader initialization
 --
 
-local reqFuncAddons = {
-	BigWigs_Core = true,
-	BigWigs_Options = true,
-	BigWigs_Plugins = true,
-}
+do
+	local reqFuncAddons = {
+		BigWigs_Core = true,
+		BigWigs_Options = true,
+		BigWigs_Plugins = true,
+	}
 
-function mod:ADDON_LOADED(addon)
-	if addon == "BigWigs" then
-		for i = 1, GetNumAddOns() do
-			local name, _, _, enabled = GetAddOnInfo(i)
-			if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
-				local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
-				if meta then
-					loadOnCoreEnabled[#loadOnCoreEnabled + 1] = name
-				end
-				meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreLoaded")
-				if meta then
-					loadOnCoreLoaded[#loadOnCoreLoaded + 1] = name
-				end
-				meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-ZoneId")
-				if meta then
-					loadOnZoneAddons[#loadOnZoneAddons + 1] = name
-				end
-				meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-WorldBoss")
-				if meta then
-					loadOnWorldBoss[#loadOnWorldBoss + 1] = name
-				end
-			elseif not enabled and reqFuncAddons[name] then
-				sysprint(L["coreAddonDisabled"])
+	for i = 1, GetNumAddOns() do
+		local name, _, _, enabled = GetAddOnInfo(i)
+		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
+			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
+			if meta then
+				loadOnCoreEnabled[#loadOnCoreEnabled + 1] = name
 			end
-		end
-
-		-- register for these messages OnInit so we receive these messages when the core and modules oninitialize fires
-		self:RegisterMessage("BigWigs_BossModuleRegistered")
-		self:RegisterMessage("BigWigs_CoreLoaded")
-
-		local icon = LibStub("LibDBIcon-1.0", true)
-		if icon and ldb then
-			if not BigWigs3IconDB then BigWigs3IconDB = {} end
-			icon:Register("BigWigs", ldb, BigWigs3IconDB)
-		end
-		public:RegisterTooltipInfo(versionTooltipFunc)
-
-		-- Cleanup function.
-		-- TODO: look into having a way for our boss modules not to create a table when no options are changed.
-		if BigWigs3DB and BigWigs3DB.namespaces then
-			for k,v in next, BigWigs3DB.namespaces do
-				if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
-					BigWigs3DB.namespaces[k] = nil
-				end
+			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreLoaded")
+			if meta then
+				loadOnCoreLoaded[#loadOnCoreLoaded + 1] = name
 			end
+			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-ZoneId")
+			if meta then
+				loadOnZoneAddons[#loadOnZoneAddons + 1] = name
+			end
+			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-WorldBoss")
+			if meta then
+				loadOnWorldBoss[#loadOnWorldBoss + 1] = name
+			end
+		elseif not enabled and reqFuncAddons[name] then
+			sysprint(L["coreAddonDisabled"])
 		end
-
-		self:UnregisterEvent("ADDON_LOADED")
-		self.ADDON_LOADED = nil
 	end
 end
 
@@ -367,90 +341,6 @@ do
 		end
 		loadOnWorldBoss, iterateWorldBosses = nil, nil
 
-		local old = { -- XXX temp print
-			BigWigs_Ulduar = "BigWigs_WrathOfTheLichKing",
-			BigWigs_TheEye = "BigWigs_BurningCrusade",
-			BigWigs_Sunwell = "BigWigs_BurningCrusade",
-			BigWigs_SSC = "BigWigs_BurningCrusade",
-			BigWigs_Outland = "BigWigs_BurningCrusade",
-			BigWigs_Northrend = "BigWigs_WrathOfTheLichKing",
-			BigWigs_Naxxramas = "BigWigs_WrathOfTheLichKing",
-			BigWigs_MC = "BigWigs_Classic",
-			BigWigs_Karazhan = "BigWigs_BurningCrusade",
-			BigWigs_Hyjal = "BigWigs_BurningCrusade",
-			BigWigs_Coliseum = "BigWigs_WrathOfTheLichKing",
-			BigWigs_Citadel = "BigWigs_WrathOfTheLichKing",
-			BigWigs_BWL = "BigWigs_Classic",
-			BigWigs_BlackTemple = "BigWigs_BurningCrusade",
-			BigWigs_AQ20 = "BigWigs_Classic",
-			BigWigs_AQ40 = "BigWigs_Classic",
-			BigWigs_Baradin = "BigWigs_Cataclysm",
-			BigWigs_Bastion = "BigWigs_Cataclysm",
-			BigWigs_Blackwing = "BigWigs_Cataclysm",
-			BigWigs_DragonSoul = "BigWigs_Cataclysm",
-			BigWigs_Firelands = "BigWigs_Cataclysm",
-			BigWigs_Throne = "BigWigs_Cataclysm",
-			LittleWigs_ShadoPanMonastery = "LittleWigs",
-			LittleWigs_ScarletHalls = "LittleWigs",
-			LittleWigs_ScarletMonastery = "LittleWigs",
-			LittleWigs_MogushanPalace = "LittleWigs",
-			LittleWigs_TempleOfTheJadeSerpent = "LittleWigs",
-			BigWigs_TayakIcons = "BigWigs",
-			BigWigs_PizzaBar = "BigWigs",
-			BigWigs_ShaIcons = "BigWigs",
-			BigWigs_LeiShi_Marker = "BigWigs",
-			BigWigs_NoPluginWarnings = "BigWigs",
-		}
-
-		-- Try to teach people not to force load our modules.
-		for i = 1, GetNumAddOns() do
-			local name, _, _, enabled = GetAddOnInfo(i)
-			if enabled and not IsAddOnLoadOnDemand(i) then
-				for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
-					local meta = select(j, GetAddOnOptionalDependencies(i))
-					if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
-						print("|cFF33FF99Big Wigs|r: The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
-					end
-				end
-				for j = 1, select("#", GetAddOnDependencies(i)) do
-					local meta = select(j, GetAddOnDependencies(i))
-					if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
-						print("|cFF33FF99Big Wigs|r: The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
-					end
-				end
-			end
-
-			-- XXX temp print for old stuff
-			if old[name] then
-				AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-					print(L.removeAddon:format(name, old[name]))
-				end)
-			end
-
-			-- XXX disable addons that break us
-			if name == "ReckonersProMending" then -- Dead addon is dead.
-				DisableAddOn("ReckonersProMending")
-				AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-					print("The AddOn 'Reckoner's ProMending' has been disabled due to incompatibility, please remove it.")
-				end)
-			end
-		end
-
-		local L = GetLocale() -- XXX temp
-		if L == "ptBR" then
-			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-				print("Think you can translate Big Wigs into Brazilian Portuguese (ptBR)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
-			end)
-		elseif L == "esMX" then
-			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-				print("Think you can translate Big Wigs into Latin American Spanish (esMX)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
-			end)
-		--[[elseif L == "esES" then
-			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-				print("Think you can translate Big Wigs into Spanish (esES)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
-			end)]]
-		end
-
 		self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 		self:RegisterEvent("GROUP_ROSTER_UPDATE")
 		self:RegisterEvent("LFG_PROPOSAL_SHOW")
@@ -460,30 +350,131 @@ do
 		RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 		self:RegisterEvent("CHAT_MSG_ADDON")
-		self:RegisterMessage("BigWigs_AddonMessage")
-		self:RegisterMessage("DBM_AddonMessage") -- DBM
+		public.RegisterMessage(self, "BigWigs_AddonMessage")
+		public.RegisterMessage(self, "DBM_AddonMessage") -- DBM
 		RegisterAddonMessagePrefix("BigWigs")
 		RegisterAddonMessagePrefix("D4") -- DBM
 
-		self:RegisterMessage("BigWigs_CoreEnabled")
-		self:RegisterMessage("BigWigs_CoreDisabled")
+		public.RegisterMessage(self, "BigWigs_CoreEnabled")
+		public.RegisterMessage(self, "BigWigs_CoreDisabled")
 
-		self:RegisterMessage("BigWigs_CoreOptionToggled", "UpdateDBMFaking")
-		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
-		if BigWigs3DB and BigWigs3DB.profileKeys and BigWigs3DB.profiles then
-			local name = UnitName("player")
-			local realm = GetRealmName()
-			if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
-				local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
-				self.isFakingDBM = key.fakeDBMVersion
-				self.isShowingZoneMessages = key.showZoneMessages
+		local icon = LibStub("LibDBIcon-1.0", true)
+		if icon and ldb then
+			if not BigWigs3IconDB then BigWigs3IconDB = {} end
+			icon:Register("BigWigs", ldb, BigWigs3IconDB)
+		end
+		public:RegisterTooltipInfo(versionTooltipFunc)
+
+		public.RegisterMessage(self, "BigWigs_CoreOptionToggled", "UpdateDBMFaking")
+		if BigWigs3DB then
+			-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
+			if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
+				local name = UnitName("player")
+				local realm = GetRealmName()
+				if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
+					local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
+					self.isFakingDBM = key.fakeDBMVersion
+					self.isShowingZoneMessages = key.showZoneMessages
+				end
+			end
+			-- Cleanup function.
+			-- TODO: look into having a way for our boss modules not to create a table when no options are changed.
+			if BigWigs3DB.namespaces then
+				for k,v in next, BigWigs3DB.namespaces do
+					if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
+						BigWigs3DB.namespaces[k] = nil
+					end
+				end
 			end
 		end
 		self:UpdateDBMFaking(nil, "fakeDBMVersion", self.isFakingDBM)
 
 		self:GROUP_ROSTER_UPDATE()
 		self:ZONE_CHANGED_NEW_AREA()
-		self.OnEnable = nil
+		self:UnregisterEvent("PLAYER_LOGIN")
+		self.PLAYER_LOGIN = nil
+	end
+end
+
+-- Various temporary printing stuff
+do
+	local old = {
+		BigWigs_Ulduar = "BigWigs_WrathOfTheLichKing",
+		BigWigs_TheEye = "BigWigs_BurningCrusade",
+		BigWigs_Sunwell = "BigWigs_BurningCrusade",
+		BigWigs_SSC = "BigWigs_BurningCrusade",
+		BigWigs_Outland = "BigWigs_BurningCrusade",
+		BigWigs_Northrend = "BigWigs_WrathOfTheLichKing",
+		BigWigs_Naxxramas = "BigWigs_WrathOfTheLichKing",
+		BigWigs_MC = "BigWigs_Classic",
+		BigWigs_Karazhan = "BigWigs_BurningCrusade",
+		BigWigs_Hyjal = "BigWigs_BurningCrusade",
+		BigWigs_Coliseum = "BigWigs_WrathOfTheLichKing",
+		BigWigs_Citadel = "BigWigs_WrathOfTheLichKing",
+		BigWigs_BWL = "BigWigs_Classic",
+		BigWigs_BlackTemple = "BigWigs_BurningCrusade",
+		BigWigs_AQ20 = "BigWigs_Classic",
+		BigWigs_AQ40 = "BigWigs_Classic",
+		BigWigs_Baradin = "BigWigs_Cataclysm",
+		BigWigs_Bastion = "BigWigs_Cataclysm",
+		BigWigs_Blackwing = "BigWigs_Cataclysm",
+		BigWigs_DragonSoul = "BigWigs_Cataclysm",
+		BigWigs_Firelands = "BigWigs_Cataclysm",
+		BigWigs_Throne = "BigWigs_Cataclysm",
+		LittleWigs_ShadoPanMonastery = "LittleWigs",
+		LittleWigs_ScarletHalls = "LittleWigs",
+		LittleWigs_ScarletMonastery = "LittleWigs",
+		LittleWigs_MogushanPalace = "LittleWigs",
+		LittleWigs_TempleOfTheJadeSerpent = "LittleWigs",
+		BigWigs_TayakIcons = "BigWigs",
+		BigWigs_PizzaBar = "BigWigs",
+		BigWigs_ShaIcons = "BigWigs",
+		BigWigs_LeiShi_Marker = "BigWigs",
+		BigWigs_NoPluginWarnings = "BigWigs",
+	}
+
+	-- Try to teach people not to force load our modules.
+	for i = 1, GetNumAddOns() do
+		local name, _, _, enabled = GetAddOnInfo(i)
+		if enabled and not IsAddOnLoadOnDemand(i) then
+			for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
+				local meta = select(j, GetAddOnOptionalDependencies(i))
+				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
+					AutoCompleteInfoDelayer:HookScript("OnFinished", function()
+						print("|cFF33FF99Big Wigs|r: The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
+					end)
+				end
+			end
+			for j = 1, select("#", GetAddOnDependencies(i)) do
+				local meta = select(j, GetAddOnDependencies(i))
+				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
+					AutoCompleteInfoDelayer:HookScript("OnFinished", function()
+						print("|cFF33FF99Big Wigs|r: The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
+					end)
+				end
+			end
+		end
+
+		if old[name] then
+			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
+				print(L.removeAddon:format(name, old[name]))
+			end)
+		end
+	end
+
+	local L = GetLocale()
+	if L == "ptBR" then
+		AutoCompleteInfoDelayer:HookScript("OnFinished", function()
+			print("Think you can translate Big Wigs into Brazilian Portuguese (ptBR)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
+		end)
+	elseif L == "esMX" then
+		AutoCompleteInfoDelayer:HookScript("OnFinished", function()
+			print("Think you can translate Big Wigs into Latin American Spanish (esMX)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
+		end)
+	--[[elseif L == "esES" then
+		AutoCompleteInfoDelayer:HookScript("OnFinished", function()
+			print("Think you can translate Big Wigs into Spanish (esES)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
+		end)]]
 	end
 end
 
@@ -559,10 +550,10 @@ do
 			end
 		end
 	end
-	mod.RegisterMessage = public.RegisterMessage
-	mod.SendMessage = public.SendMessage
-	mod:RegisterMessage("BigWigs_OnBossDisable", UnregisterAllMessages)
-	mod:RegisterMessage("BigWigs_OnPluginDisable", UnregisterAllMessages)
+	public.RegisterMessage(mod, "BigWigs_OnBossDisable", UnregisterAllMessages)
+	public.RegisterMessage(mod, "BigWigs_OnPluginDisable", UnregisterAllMessages)
+	public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
+	public.RegisterMessage(mod, "BigWigs_CoreLoaded")
 end
 
 -----------------------------------------------------------------------
@@ -572,7 +563,6 @@ end
 mod:SetScript("OnEvent", function(frame, event, ...)
 	frame[event](frame, ...)
 end)
-mod:RegisterEvent("ADDON_LOADED")
 mod:RegisterEvent("PLAYER_LOGIN")
 
 -- Role Updating
@@ -625,10 +615,10 @@ function mod:CHAT_MSG_ADDON(prefix, msg, _, sender)
 	if prefix == "BigWigs" then
 		local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
 		if bwPrefix then
-			self:SendMessage("BigWigs_AddonMessage", bwPrefix, bwMsg, sender)
+			public:SendMessage("BigWigs_AddonMessage", bwPrefix, bwMsg, sender)
 		end
 	elseif prefix == "D4" then
-		self:SendMessage("DBM_AddonMessage", sender, strsplit("\t", msg))
+		public:SendMessage("DBM_AddonMessage", sender, strsplit("\t", msg))
 	end
 end
 
