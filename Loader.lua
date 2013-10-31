@@ -1,6 +1,7 @@
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
-local loader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader")
+local mod = CreateFrame("Frame")
+local public = {}
 
 -----------------------------------------------------------------------
 -- Generate our version variables
@@ -41,7 +42,7 @@ do
 	end
 	BIGWIGS_RELEASE_TYPE = releaseType
 	BIGWIGS_RELEASE_REVISION = releaseRevision
-	loader.BIGWIGS_RELEASE_STRING = releaseString
+	public.BIGWIGS_RELEASE_STRING = releaseString
 	-- END: MAGIC WOWACE VOODOO VERSION STUFF
 end
 
@@ -53,13 +54,12 @@ local ldb = nil
 local tooltipFunctions = {}
 local pName = UnitName("player")
 local next = next
-local loaderUtilityFrame = CreateFrame("Frame")
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
 local GetCurrentMapAreaID = GetCurrentMapAreaID
 local SetMapToCurrentZone = SetMapToCurrentZone
-loader.GetCurrentMapAreaID = GetCurrentMapAreaID
-loader.SetMapToCurrentZone = SetMapToCurrentZone
+public.GetCurrentMapAreaID = GetCurrentMapAreaID
+public.SetMapToCurrentZone = SetMapToCurrentZone
 
 -- Version
 local usersAlpha = {}
@@ -93,7 +93,7 @@ do
 	local cata = "BigWigs_Cataclysm"
 	local lw = "LittleWigs"
 
-	loader.zoneTbl = {
+	public.zoneTbl = {
 		[696]=c, [755]=c,
 		[775]=bc, [780]=bc, [779]=bc, [776]=bc, [465]=bc, [473]=bc, [799]=bc, [782]=bc,
 		[604]=wotlk, [543]=wotlk, [535]=wotlk, [529]=wotlk, [527]=wotlk, [532]=wotlk, [531]=wotlk, [609]=wotlk, [718]=wotlk,
@@ -156,7 +156,7 @@ local function loadAddons(tbl)
 	if not tbl then return end
 	for i, addon in next, tbl do
 		if not IsAddOnLoaded(addon) and load(nil, addon) then
-			loader:SendMessage("BigWigs_ModulePackLoaded", addon)
+			public:SendMessage("BigWigs_ModulePackLoaded", addon)
 		end
 	end
 	tbl = nil
@@ -236,53 +236,56 @@ local reqFuncAddons = {
 	BigWigs_Plugins = true,
 }
 
-function loader:OnInitialize()
-	for i = 1, GetNumAddOns() do
-		local name, _, _, enabled = GetAddOnInfo(i)
-		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
-			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
-			if meta then
-				loadOnCoreEnabled[#loadOnCoreEnabled + 1] = name
-			end
-			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreLoaded")
-			if meta then
-				loadOnCoreLoaded[#loadOnCoreLoaded + 1] = name
-			end
-			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-ZoneId")
-			if meta then
-				loadOnZoneAddons[#loadOnZoneAddons + 1] = name
-			end
-			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-WorldBoss")
-			if meta then
-				loadOnWorldBoss[#loadOnWorldBoss + 1] = name
-			end
-		elseif not enabled and reqFuncAddons[name] then
-			sysprint(L["coreAddonDisabled"])
-		end
-	end
-
-	-- register for these messages OnInit so we receive these messages when the core and modules oninitialize fires
-	self:RegisterMessage("BigWigs_BossModuleRegistered")
-	self:RegisterMessage("BigWigs_CoreLoaded")
-
-	local icon = LibStub("LibDBIcon-1.0", true)
-	if icon and ldb then
-		if not BigWigs3IconDB then BigWigs3IconDB = {} end
-		icon:Register("BigWigs", ldb, BigWigs3IconDB)
-	end
-	self:RegisterTooltipInfo(versionTooltipFunc)
-
-	-- Cleanup function.
-	-- TODO: look into having a way for our boss modules not to create a table when no options are changed.
-	if BigWigs3DB and BigWigs3DB.namespaces then
-		for k,v in next, BigWigs3DB.namespaces do
-			if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
-				BigWigs3DB.namespaces[k] = nil
+function mod:ADDON_LOADED(addon)
+	if addon == "BigWigs" then
+		for i = 1, GetNumAddOns() do
+			local name, _, _, enabled = GetAddOnInfo(i)
+			if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
+				local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
+				if meta then
+					loadOnCoreEnabled[#loadOnCoreEnabled + 1] = name
+				end
+				meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreLoaded")
+				if meta then
+					loadOnCoreLoaded[#loadOnCoreLoaded + 1] = name
+				end
+				meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-ZoneId")
+				if meta then
+					loadOnZoneAddons[#loadOnZoneAddons + 1] = name
+				end
+				meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-WorldBoss")
+				if meta then
+					loadOnWorldBoss[#loadOnWorldBoss + 1] = name
+				end
+			elseif not enabled and reqFuncAddons[name] then
+				sysprint(L["coreAddonDisabled"])
 			end
 		end
-	end
 
-	self.OnInitialize = nil
+		-- register for these messages OnInit so we receive these messages when the core and modules oninitialize fires
+		self:RegisterMessage("BigWigs_BossModuleRegistered")
+		self:RegisterMessage("BigWigs_CoreLoaded")
+
+		local icon = LibStub("LibDBIcon-1.0", true)
+		if icon and ldb then
+			if not BigWigs3IconDB then BigWigs3IconDB = {} end
+			icon:Register("BigWigs", ldb, BigWigs3IconDB)
+		end
+		public:RegisterTooltipInfo(versionTooltipFunc)
+
+		-- Cleanup function.
+		-- TODO: look into having a way for our boss modules not to create a table when no options are changed.
+		if BigWigs3DB and BigWigs3DB.namespaces then
+			for k,v in next, BigWigs3DB.namespaces do
+				if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
+					BigWigs3DB.namespaces[k] = nil
+				end
+			end
+		end
+
+		self:UnregisterEvent("ADDON_LOADED")
+		self.ADDON_LOADED = nil
+	end
 end
 
 do
@@ -338,7 +341,7 @@ do
 		end
 	end
 
-	function loader:OnEnable()
+	function mod:PLAYER_LOGIN()
 		for i, name in next, loadOnZoneAddons do
 			local menu = tonumber(GetAddOnMetadata(name, "X-BigWigs-Menu"))
 			if menu then
@@ -442,21 +445,21 @@ do
 			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
 				print("Think you can translate Big Wigs into Latin American Spanish (esMX)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
 			end)
-		elseif L == "esES" then
+		--[[elseif L == "esES" then
 			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
 				print("Think you can translate Big Wigs into Spanish (esES)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
-			end)
+			end)]]
 		end
 
-		loaderUtilityFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-		loaderUtilityFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-		loaderUtilityFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
+		self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+		self:RegisterEvent("GROUP_ROSTER_UPDATE")
+		self:RegisterEvent("LFG_PROPOSAL_SHOW")
 
 		-- Role Updating
-		loaderUtilityFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+		self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 		RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
-		loaderUtilityFrame:RegisterEvent("CHAT_MSG_ADDON")
+		self:RegisterEvent("CHAT_MSG_ADDON")
 		self:RegisterMessage("BigWigs_AddonMessage")
 		self:RegisterMessage("DBM_AddonMessage") -- DBM
 		RegisterAddonMessagePrefix("BigWigs")
@@ -493,7 +496,7 @@ do
 	local DBMdotRevision = "10680" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
 	local DBMdotReleaseRevision = "10680" -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local DBMdotDisplayVersion = "5.4.4" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
-	function loader:DBM_AddonMessage(channel, sender, prefix, revision, releaseRevision, displayVersion)
+	function mod:DBM_AddonMessage(channel, sender, prefix, revision, releaseRevision, displayVersion)
 		if prefix == "H" and (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
 			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale(), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		elseif prefix == "V" then
@@ -508,7 +511,7 @@ do
 			end
 		end
 	end
-	function loader:UpdateDBMFaking(_, key, value)
+	function mod:UpdateDBMFaking(_, key, value)
 		if key == "fakeDBMVersion" and value and IsInGroup() then
 			self:DBM_AddonMessage(nil, nil, "H") -- Send addon message if feature is being turned on inside a raid/group.
 		end
@@ -521,12 +524,12 @@ end
 
 do
 	local callbackMap = {}
-	function loader:RegisterMessage(msg, func)
+	function public:RegisterMessage(msg, func)
 		if type(msg) ~= "string" then error(":RegisterMessage(message, function) attempted to register invalid message, must be a string!") end
 		if not callbackMap[msg] then callbackMap[msg] = {} end
 		callbackMap[msg][self] = func or msg
 	end
-	function loader:UnregisterMessage(msg)
+	function public:UnregisterMessage(msg)
 		if type(msg) ~= "string" then error(":UnregisterMessage(message) attempted to unregister an invalid message, must be a string!") end
 		if not callbackMap[msg] then return end
 		callbackMap[msg][self] = nil
@@ -535,7 +538,7 @@ do
 		end
 	end
 
-	function loader:SendMessage(msg, ...)
+	function public:SendMessage(msg, ...)
 		if callbackMap[msg] then
 			for k,v in next, callbackMap[msg] do
 				if type(v) == "function" then
@@ -551,25 +554,29 @@ do
 		for k,v in next, callbackMap do
 			for j in next, v do
 				if j == module then
-					loader.UnregisterMessage(module, k)
+					public.UnregisterMessage(module, k)
 				end
 			end
 		end
 	end
-	loader:RegisterMessage("BigWigs_OnBossDisable", UnregisterAllMessages)
-	loader:RegisterMessage("BigWigs_OnPluginDisable", UnregisterAllMessages)
+	mod.RegisterMessage = public.RegisterMessage
+	mod.SendMessage = public.SendMessage
+	mod:RegisterMessage("BigWigs_OnBossDisable", UnregisterAllMessages)
+	mod:RegisterMessage("BigWigs_OnPluginDisable", UnregisterAllMessages)
 end
 
 -----------------------------------------------------------------------
 -- Events
 --
 
-loaderUtilityFrame:SetScript("OnEvent", function(_, event, ...)
-	loader[event](loader, ...)
+mod:SetScript("OnEvent", function(frame, event, ...)
+	frame[event](frame, ...)
 end)
+mod:RegisterEvent("ADDON_LOADED")
+mod:RegisterEvent("PLAYER_LOGIN")
 
 -- Role Updating
-function loader:ACTIVE_TALENT_GROUP_CHANGED()
+function mod:ACTIVE_TALENT_GROUP_CHANGED()
 	if IsInGroup() then
 		local _, _, diff = GetInstanceInfo()
 		if IsPartyLFG() and diff ~= 14 then return end
@@ -580,7 +587,7 @@ function loader:ACTIVE_TALENT_GROUP_CHANGED()
 		local role = GetSpecializationRole(tree)
 		if UnitGroupRolesAssigned("player") ~= role then
 			if InCombatLockdown() or UnitAffectingCombat("player") then
-				loaderUtilityFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+				self:RegisterEvent("PLAYER_REGEN_ENABLED")
 				return
 			end
 			UnitSetRole("player", role)
@@ -589,14 +596,14 @@ function loader:ACTIVE_TALENT_GROUP_CHANGED()
 end
 
 -- LFG/R Timer
-function loader:LFG_PROPOSAL_SHOW()
-	if not self.LFGFrame then
+function mod:LFG_PROPOSAL_SHOW()
+	if not public.LFGFrame then
 		local f = CreateFrame("Frame", nil, LFGDungeonReadyDialog)
 		f:SetPoint("BOTTOM", LFGDungeonReadyDialog, "BOTTOM", 0, -60)
 		f:SetSize(100, 100)
 		f:Show()
 		f.start = GetTime()
-		self.LFGFrame = f
+		public.LFGFrame = f
 
 		local text = f:CreateFontString(nil, "OVERLAY")
 		text:SetPoint("CENTER", f, "CENTER")
@@ -609,12 +616,12 @@ function loader:LFG_PROPOSAL_SHOW()
 			frame.text:SetFormattedText("Big Wigs: %.1f", 40-t)
 		end)
 
-		self.LFG_PROPOSAL_SHOW = function() loader.LFGFrame.start = GetTime() end
+		self.LFG_PROPOSAL_SHOW = function() public.LFGFrame.start = GetTime() end
 	end
 end
 
 -- Misc
-function loader:CHAT_MSG_ADDON(prefix, msg, _, sender)
+function mod:CHAT_MSG_ADDON(prefix, msg, _, sender)
 	if prefix == "BigWigs" then
 		local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
 		if bwPrefix then
@@ -627,21 +634,20 @@ end
 
 do
 	local warnedOutOfDate, warnedExtremelyOutOfDate = nil, nil
-
-	loaderUtilityFrame.timer = loaderUtilityFrame:CreateAnimationGroup()
-	loaderUtilityFrame.timer:SetScript("OnFinished", function()
+	local timer = mod:CreateAnimationGroup()
+	timer:SetScript("OnFinished", function()
 		if IsInGroup() then
 			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:%d" or "VRA:%d"):format(BIGWIGS_RELEASE_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 		end
 	end)
-	local anim = loaderUtilityFrame.timer:CreateAnimation()
+	local anim = timer:CreateAnimation()
 	anim:SetDuration(3)
 
-	function loader:BigWigs_AddonMessage(event, prefix, message, sender)
+	function mod:BigWigs_AddonMessage(event, prefix, message, sender)
 		if prefix == "VR" or prefix == "VQ" then
 			if prefix == "VQ" then
-				loaderUtilityFrame.timer:Stop()
-				loaderUtilityFrame.timer:Play()
+				timer:Stop()
+				timer:Play()
 			end
 			message = tonumber(message)
 			-- XXX The > 14k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
@@ -662,8 +668,8 @@ do
 			end
 		elseif prefix == "VRA" or prefix == "VQA" then
 			if prefix == "VQA" then
-				loaderUtilityFrame.timer:Stop()
-				loaderUtilityFrame.timer:Play()
+				timer:Stop()
+				timer:Play()
 			end
 			message = tonumber(message)
 			-- XXX The > 14k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
@@ -690,9 +696,9 @@ do
 	local queueLoad = {}
 	-- Kazzak, Doomwalker, Salyis's Warband, Sha of Anger, Nalak, Oondasta
 	local warnedThisZone = {[465]=true,[473]=true,[807]=true,[809]=true,[928]=true,[929]=true} -- World Bosses
-	function loader:PLAYER_REGEN_ENABLED()
+	function mod:PLAYER_REGEN_ENABLED()
 		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
-		loaderUtilityFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
+		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 
 		local shouldPrint = false
 		for k,v in next, queueLoad do
@@ -711,7 +717,7 @@ do
 		end
 	end
 
-	function loader:PLAYER_TARGET_CHANGED()
+	function mod:PLAYER_TARGET_CHANGED()
 		local guid = UnitGUID("target")
 		if guid then
 			local mobId = tonumber(guid:sub(6, 10), 16)
@@ -720,7 +726,7 @@ do
 				if InCombatLockdown() or UnitAffectingCombat("player") then
 					if not queueLoad[id] then
 						queueLoad[id] = "unloaded"
-						loaderUtilityFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+						self:RegisterEvent("PLAYER_REGEN_ENABLED")
 						sysprint(L.blizzRestrictionsZone)
 					end
 				else
@@ -737,7 +743,7 @@ do
 		end
 	end
 
-	function loader:ZONE_CHANGED_NEW_AREA()
+	function mod:ZONE_CHANGED_NEW_AREA()
 		-- Zone checking
 		local inside = IsInInstance()
 		local id
@@ -757,14 +763,14 @@ do
 				if BigWigs and not UnitIsDeadOrGhost("player") then
 					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first
 				end
-				loaderUtilityFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+				self:RegisterEvent("PLAYER_TARGET_CHANGED")
 				self:PLAYER_TARGET_CHANGED()
 			else
-				loaderUtilityFrame:UnregisterEvent("PLAYER_TARGET_CHANGED")
+				self:UnregisterEvent("PLAYER_TARGET_CHANGED")
 				if not IsEncounterInProgress() and (InCombatLockdown() or UnitAffectingCombat("player")) then
 					if not queueLoad[id] then
 						queueLoad[id] = "unloaded"
-						loaderUtilityFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+						self:RegisterEvent("PLAYER_REGEN_ENABLED")
 						sysprint(L.blizzRestrictionsZone)
 					end
 				else
@@ -779,7 +785,7 @@ do
 				end
 			end
 		else
-			loaderUtilityFrame:UnregisterEvent("PLAYER_TARGET_CHANGED")
+			self:UnregisterEvent("PLAYER_TARGET_CHANGED")
 			if BigWigs and not UnitIsDeadOrGhost("player") then
 				BigWigs:Disable() -- Alive in a non-enable zone, disable
 			end
@@ -787,7 +793,7 @@ do
 
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
-		local zoneAddon = self.zoneTbl[id]
+		local zoneAddon = public.zoneTbl[id]
 		if zoneAddon and not warnedThisZone[id] then
 			local _, _, _, enabled = GetAddOnInfo(zoneAddon)
 			if not enabled then
@@ -802,7 +808,7 @@ end
 
 do
 	local grouped = nil
-	function loader:GROUP_ROSTER_UPDATE()
+	function mod:GROUP_ROSTER_UPDATE()
 		local groupType = (IsInGroup(2) and 3) or (IsInRaid() and 2) or (IsInGroup() and 1) -- LE_PARTY_CATEGORY_INSTANCE = 2
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
@@ -819,7 +825,7 @@ do
 	end
 end
 
-function loader:BigWigs_BossModuleRegistered(_, _, module)
+function mod:BigWigs_BossModuleRegistered(_, _, module)
 	if module.worldBoss then
 		enableZones[module.zoneId] = "world"
 		worldBosses[module.worldBoss] = module.zoneId
@@ -832,7 +838,7 @@ function loader:BigWigs_BossModuleRegistered(_, _, module)
 	menus[id][#menus[id]+1] = module
 end
 
-function loader:BigWigs_CoreEnabled()
+function mod:BigWigs_CoreEnabled()
 	if ldb then
 		ldb.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-enabled"
 	end
@@ -854,13 +860,13 @@ function loader:BigWigs_CoreEnabled()
 	loadZone(GetCurrentMapAreaID())
 end
 
-function loader:BigWigs_CoreDisabled()
+function mod:BigWigs_CoreDisabled()
 	if ldb then
 		ldb.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled"
 	end
 end
 
-function loader:BigWigs_CoreLoaded()
+function mod:BigWigs_CoreLoaded()
 	loadAddons(loadOnCoreLoaded)
 end
 
@@ -868,7 +874,7 @@ end
 -- API
 --
 
-function loader:RegisterTooltipInfo(func)
+function public:RegisterTooltipInfo(func)
 	for i, v in next, tooltipFunctions do
 		if v == func then
 			error(("The function %q has already been registered."):format(func))
@@ -877,11 +883,11 @@ function loader:RegisterTooltipInfo(func)
 	tooltipFunctions[#tooltipFunctions+1] = func
 end
 
-function loader:GetZoneMenus()
+function public:GetZoneMenus()
 	return menus
 end
 
-function loader:LoadZone(zone)
+function public:LoadZone(zone)
 	loadZone(zone)
 end
 
@@ -1028,7 +1034,7 @@ do
 	local frame = CreateFrame("Frame", nil, UIParent)
 	frame.name = "Big Wigs"
 	frame:Hide()
-	loader.RemoveInterfaceOptions = function()
+	public.RemoveInterfaceOptions = function()
 		for k, f in next, INTERFACEOPTIONS_ADDONCATEGORIES do
 			if f == frame then
 				tremove(INTERFACEOPTIONS_ADDONCATEGORIES, k)
@@ -1036,7 +1042,7 @@ do
 			end
 		end
 		frame:SetScript("OnShow", nil)
-		loader.RemoveInterfaceOptions = nil
+		public.RemoveInterfaceOptions = nil
 	end
 	frame:SetScript("OnShow", function()
 		if not BigWigsOptions and (InCombatLockdown() or UnitAffectingCombat("player")) then
@@ -1044,7 +1050,7 @@ do
 			return
 		end
 
-		loader:RemoveInterfaceOptions()
+		public:RemoveInterfaceOptions()
 		loadCoreAndOpenOptions()
 		InterfaceOptionsFrameOkay:Click()
 		loadCoreAndOpenOptions()
@@ -1053,5 +1059,5 @@ do
 	InterfaceOptions_AddCategory(frame)
 end
 
-BigWigsLoader = loader -- Set global
+BigWigsLoader = public -- Set global
 
