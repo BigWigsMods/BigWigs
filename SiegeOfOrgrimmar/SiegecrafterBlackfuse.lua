@@ -49,6 +49,7 @@ if L then
 	L.item_mines = "Mines"
 	L.item_laser = "Laser"
 	L.item_magnet = "Magnet"
+	L.item_deathdealer = "Deathdealer"
 
 	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!"
 end
@@ -59,10 +60,12 @@ local itemNames = {
 	[71790] = L.item_mines, -- Disassembled Crawler Mines
 	[71751] = L.item_laser, -- Deactivated Laser Turret
 	[71694] = L.item_magnet, -- Deactivated Electromagnet
+	[72904] = L.item_deathdealer, -- Deactivated Deathdealer Turret
 	[71752] = L.item_missile, -- Activated Missile Turret
 	[71795] = L.item_mines, -- Activated Crawler Mine Vehicle
 	[71638] = L.item_laser, -- Activated Laser Turret
 	[71696] = L.item_magnet, -- Activated Electromagnet
+	[72905] = L.item_deathdealer, -- Activated Deathdealer Turret
 }
 
 --------------------------------------------------------------------------------
