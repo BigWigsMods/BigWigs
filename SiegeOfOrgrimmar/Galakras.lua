@@ -183,7 +183,6 @@ function mod:LastPhase(unitId, _, _, _, spellId)
 		self:StopBar(L["adds"])
 		self:StopBar(L["drakes"])
 		self:CancelDelayedMessage(CL["incoming"]:format(L["drakes"]))
-		self:CancelDelayedMessage(CL["incoming"]:format(L["adds"]))
 	end
 end
 
@@ -273,22 +272,20 @@ do
 	function mod:AddsInitial()
 		-- is actually ~6s or so after the first wave, but a better starting point than engage
 		addsCounter = 1
-		self:DelayedMessage("adds", 49, "Attention", CL["incoming"]:format(L["adds"]), L.adds_icon, "Info")
 		self:Bar("adds", 49, L["adds"], L.adds_icon)
 		self:Bar("drakes", 158, L["drakes"], L.drakes_icon)
 	end
 
 	function mod:Adds()
+		self:Message("adds", "Attention", "Info", CL["incoming"]:format(L["adds"]), L.adds_icon)
 		addsCounter = addsCounter + 1
 		if (addsCounter + 1) % 4  == 0 then
 			self:DelayedMessage("drakes", 55, "Attention", CL["incoming"]:format(L["drakes"]), L.drakes_icon, "Info")
-			self:DelayedMessage("adds", 110, "Attention", CL["incoming"]:format(L["adds"]), L.adds_icon, "Info")
 			self:Bar("adds", 110, L["adds"], L.adds_icon)
 		else
 			if addsCounter % 4 == 0 then -- start the drakes timer on the wave after drakes
 				self:Bar("drakes", 220, L["drakes"], L.drakes_icon)
 			end
-			self:DelayedMessage("adds", 55, "Attention", CL["incoming"]:format(L["adds"]), L.adds_icon, "Info")
 			self:Bar("adds", 55, L["adds"], L.adds_icon)
 		end
 	end
