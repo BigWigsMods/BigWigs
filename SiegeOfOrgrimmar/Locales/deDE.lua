@@ -120,16 +120,7 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "deDE")
 if L then
-	L.adds = "Heroische Adds"
-	L.adds_desc = "Warnungen für den Kampfeintritt der heroischen Adds."
-
-	L.tank_debuffs = "Tank Schwächungszauber"
-	L.tank_debuffs_desc = "Warnungen für die verschiedenen Typen von Schwächungszaubern auf den Tanks in Verbindung mit Fürchterlichem Brüllen."
-
-	L.cage_opened = "Käfig geöffnet"
-
-	L.akolik = "Akolik"
-	L.waterspeaker_gorai = "Wassersprecher Gorai"
+--@localization(locale="deDE", namespace="SiegeOfOrgrimmar/ThokTheBloodthirsty", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "deDE")

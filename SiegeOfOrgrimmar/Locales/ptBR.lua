@@ -51,7 +51,7 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "ptBR")
 if L then
-
+--@localization(locale="ptBR", namespace="SiegeOfOrgrimmar/ThokTheBloodthirsty", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "ptBR")

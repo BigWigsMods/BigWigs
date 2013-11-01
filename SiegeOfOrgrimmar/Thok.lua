@@ -1,7 +1,4 @@
---[[
-TODO:
 
-]]--
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -16,23 +13,21 @@ mod:RegisterEnableMob(71529)
 local accCount = 0
 local yetiChargeTimer
 local heroicAdd
+
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.adds = "Heroic adds"
-	L.adds_desc = "Warnings for when the heroic only adds enter the fight."
-
-	L.tank_debuffs = "Tank debuffs"
-	L.tank_debuffs_desc = "Warnings for the different types of tank debuffs associated with Fearsome Roar."
-	L.tank_debuffs_icon = 143766
+	L.adds = CL.adds
+	L.adds_desc = "Warnings for when the Yeti or Bats enter the fight."
+	L.adds_icon = "ability_hunter_pet_bat"
 
 	L.cage_opened = "Cage opened"
 
-	L.akolik = "Akolik"
-	L.waterspeaker_gorai = "Waterspeaker Gorai"
+	L.npc_akolik = "Akolik"
+	L.npc_waterspeaker_gorai = "Waterspeaker Gorai"
 end
 L = mod:GetLocale()
 
@@ -43,13 +38,15 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		148145, "adds",
-		{"tank_debuffs", "TANK"}, -7963, 143428, 143777, 143783, -- stage 1
+		-7963, 143428, 143777, 143783, -- stage 1
 		-7981, {-7980, "ICON", "FLASH", "SAY"}, {146589, "FLASH"}, {145974, "DISPEL"},-- stage 2
+		{143766, "TANK"}, {143780, "TANK"}, {143767, "TANK"}, {143773, "TANK"},
 		"proximity", "berserk", "bosskill",
 	}, {
 		[148145] = "heroic",
-		["tank_debuffs"] = -7960, -- stage 1
+		[-7963] = -7960, -- stage 1
 		[-7981] = -7961, -- stage 2
+		[143766] = INLINE_TANK_ICON..TANK,
 		["proximity"] = "general",
 	}
 end
@@ -104,9 +101,9 @@ end
 -- heroic
 
 function mod:PrisonerTracker(_, _, sender)
-	if sender == L["akolik"] then
+	if sender == L["npc_akolik"] then
 		heroicAdd = "bats"
-	elseif sender == L["waterspeaker_gorai"] then
+	elseif sender == L["npc_waterspeaker_gorai"] then
 		heroicAdd = "yeti"
 	end
 end
@@ -247,12 +244,13 @@ end
 
 function mod:TankDebuffCasts(_, spellName, _, _, spellId)
 	if spellId == 143426 or spellId == 143780 or spellId == 143773 or spellId == 143767 then -- Fearsome Roar, Acid Breath, Freezing Breath, Scorching Breath
-		self:CDBar("tank_debuffs", 11, spellName, spellId == 143426 and 143766 or spellId) -- 11-15s, spell ID hack for Blizzard giving Fearsome Roar the wrong icon
+		if spellId == 143426 then spellId = 143766 end -- Blizzard gave Fearsome Roar the wrong icon
+		self:CDBar(spellId, 11, spellName, spellId) -- 11-15s
 	end
 end
 
 function mod:TankDebuff(args)
-	self:StackMessage("tank_debuffs", args.destName, args.amount, "Attention", not self:Me(args.destGUID) and "Warning", args.spellName, args.spellId)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", not self:Me(args.destGUID) and "Warning")
 end
 
 function mod:Deaths(args)

@@ -121,13 +121,7 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "koKR")
 if L then
-	L.adds = "하드모드 쫄"
-	L.adds_desc = "하드모드에서만 나오는 쫄이 전투 중 출현했을 때 경고해줍니다."
-
-	L.tank_debuffs = "탱커 디버프"
-	L.tank_debuffs_desc = "무시무시한 외침과 연계된 탱커 디버프를 경고합니다."
-
-	L.cage_opened = "감옥 열림"
+--@localization(locale="koKR", namespace="SiegeOfOrgrimmar/ThokTheBloodthirsty", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "koKR")

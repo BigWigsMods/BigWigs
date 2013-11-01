@@ -120,16 +120,7 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "itIT")
 if L then
-	L.adds = "Add Modalità Eroica"
-	L.adds_desc = "Avvisa quando entrano in combattimento gli add nella sola modalità eroica"
-
-	L.tank_debuffs = "Malefici Difensori"
-	L.tank_debuffs_desc = "Avvisi per i vari tipi di malefici sui Difensori associati a Ruggito Temibile"
-
-	L.cage_opened = "Gabbia Aperta"
-
-	L.akolik = "Akolik"
-	L.waterspeaker_gorai = "Oratore dell'Acqua Gorai"
+--@localization(locale="itIT", namespace="SiegeOfOrgrimmar/ThokTheBloodthirsty", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "itIT")

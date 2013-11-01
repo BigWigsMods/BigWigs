@@ -104,7 +104,7 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "zhTW")
 if L then
-	L.cage_opened = "籠子已打開"
+--@localization(locale="zhTW", namespace="SiegeOfOrgrimmar/ThokTheBloodthirsty", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "zhTW")

@@ -120,16 +120,7 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "ruRU")
 if L then
-	L.adds = "Героические помощники"
-	L.adds_desc = "Предупреждать, если героические помощники вступают в бой."
-
-	L.tank_debuffs = "Дебаффы танка"
-	L.tank_debuffs_desc = "Предупреждать о разных типах дебаффов танка, связанных со Страшным ревом."
-
-	L.cage_opened = "Клетка открыта"
-
-	L.akolik = "Аколик"
-	L.waterspeaker_gorai = "Говорящий с водой Гожай"
+--@localization(locale="ruRU", namespace="SiegeOfOrgrimmar/ThokTheBloodthirsty", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "ruRU")

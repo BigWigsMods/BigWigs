@@ -120,13 +120,7 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "zhCN")
 if L then
-	L.adds = "英雄难度增援"
-	L.adds_desc = "当只在英雄难度出现的增援进入战斗时发出警报。"
-
-	L.tank_debuffs = "坦克减益"
-	L.tank_debuffs_desc = "当坦克受到不同类型的恐惧咆哮减益时发出警报。"
-
-	L.cage_opened = "笼子已打开"
+--@localization(locale="zhCN", namespace="SiegeOfOrgrimmar/ThokTheBloodthirsty", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "zhCN")
