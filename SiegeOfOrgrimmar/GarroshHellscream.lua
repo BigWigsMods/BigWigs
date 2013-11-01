@@ -149,9 +149,8 @@ function mod:OnEngage(diff)
 	waveCounter = 1
 	waveTimer = self:ScheduleTimer("NewWave", 45)
 	self:Bar(-8292, 45, nil, 144582)
-	self:Berserk(960, nil, nil, "Berserk (assumed)") -- XXX assumed (more than 15:13 on 25H)
+	self:Berserk(960) -- XXX assumed (more than 15:13 on 25H)
 	self:Bar(144758, 11) -- Desecrate
-	self:ScheduleTimer("StartWeaponScan", 5)
 	self:Bar(-8298, 20, nil, 144616) -- Siege Engineer
 	self:Bar(-8294, 30, nil, 144584) -- Farseer
 	self:Bar(144821, 22) -- Warsong
@@ -457,11 +456,13 @@ do
 		-- this is so people know they'll take extra damage
 		if #hopeList > 0 then
 			mod:TargetMessage(144945, hopeList, "Attention", "Warning", CL["count"]:format(mod:SpellName(29125), #hopeList), 149004) -- maybe add it's own option key? 29125 spell called "Hopeless"
+		else
+			mod:Message(144945, "Attention", nil, CL["count"]:format(mod:SpellName(29125), 0), 149004)
 		end
 	end
 	function mod:YShaarjsProtection(args)
-		if self:MobId(args.destGUID) == 71865 then
-			self:ScheduleTimer(announceHopeless, 5)
+		if not self:LFR() and self:MobId(args.destGUID) == 71865 then
+			self:ScheduleTimer(announceHopeless, 6)
 			self:Message(args.spellId, "Positive", "Long", CL["over"]:format(args.spellName))
 		end
 	end
@@ -494,12 +495,10 @@ do
 				self:StopBar(-8294) -- Farseer
 				self:StopBar(144758) -- Desecrate
 				self:StopBar(144821) -- Warsong
-				self:StopWeaponScan()
 				self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 			end
 		elseif spellId == 144866 then -- Enter Realm of Y'Shaarj -- actually being pulled
 			self:StopBar(144758) -- Desecrate
-			self:StopWeaponScan()
 			self:StopBar(L["mind_control"]) -- Mind Control
 			self:StopBar(CL["count"]:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
 			self:Message(-8305, "Neutral", nil, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
@@ -513,7 +512,6 @@ do
 				self:Bar(144758, 10) -- Desecrate
 				self:Bar(145065, 15, L["mind_control"]) -- Mind Control
 				self:Bar(144985, 30, CL["count"]:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
-				self:ScheduleTimer("StartWeaponScan", 5)
 				local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
 				if hp < 50 then -- XXX might need adjusting
 					self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3") -- don't really need this till 2nd intermission phase
@@ -521,7 +519,7 @@ do
 				-- warn for empowered abilities
 				local power = UnitPower("boss1")
 				while power >= warnPower do -- can he hit 100 energy before p3? that would be some shenanigans
-					self:Message("stages", "Attention", "Info", L["empowered_message"]:format(abilities[warnPower]), false)
+					self:DelayedMessage("stages", 2, "Attention", L["empowered_message"]:format(abilities[warnPower]), false, "Info")
 					warnPower = warnPower + 25
 				end
 			else -- first time, don't start timers yet
@@ -554,7 +552,6 @@ do
 			self:Bar(147209, 30) -- Malice
 			self:Bar("bombardment", 69, L["bombardment"], 147120) -- Bombardment
 			self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
-			self:StopWeaponScan()
 		elseif spellId == 147126 then -- Clump Check
 			self:Bar("clump_check", 3, spellName, spellId)
 		end
@@ -572,44 +569,23 @@ function mod:UNIT_HEALTH_FREQUENT(unitId)
 end
 
 do
-	local UnitDetailedThreatSituation, UnitExists, UnitCastingInfo, UnitChannelInfo = UnitDetailedThreatSituation, UnitExists, UnitCastingInfo, UnitChannelInfo
-	local weaponTimer = nil
-	local function checkWeaponTarget()
-		local boss = mod:GetUnitIdByGUID(71865)
-		if not boss then return end
-		local target = boss.."target"
-		-- added UnitCastingInfo and UnitChannelInfo, if it turns out to be too restrictive could just disable weaponTarget check while whirling corruption is being casted
-		if not UnitExists(target) or mod:Tank(target) or UnitDetailedThreatSituation(target, boss) or UnitCastingInfo(boss) or UnitChannelInfo(boss) then return end
-
-		local name = mod:UnitName(target)
-		mod:PrimaryIcon(144758, name)
-		mod:ScheduleTimer("PrimaryIcon", 7, 144758)
-		if UnitIsUnit("player", target) then
-			mod:TargetMessage(144758, name, "Urgent", "Alarm")
-			mod:Flash(144758)
-			mod:Say(144758)
-		elseif mod:Range(name) < 15 then
-			mod:Flash(144758)
-			mod:RangeMessage(144758, "Urgent", "Alarm")
-		else
-			mod:TargetMessage(144758, name, "Urgent", "Alarm")
+	local function bossTarget(self, name, guid)
+		self:PrimaryIcon(144758, name)
+		self:ScheduleTimer("PrimaryIcon", 7, 144758)
+		if self:Me(guid) then
+			self:Flash(144758)
+			self:Say(144758)
+		elseif self:Range(name) < 15 then
+			self:Flash(144758)
+			self:RangeMessage(144758, "Urgent", "Alarm")
+			return
 		end
-		mod:StopWeaponScan()
+		self:TargetMessage(144758, name, "Urgent", "Alarm")
 	end
-	function mod:StartWeaponScan()
-		if not weaponTimer then
-			weaponTimer = self:ScheduleRepeatingTimer(checkWeaponTarget, 0.05)
-		end
-	end
-	function mod:StopWeaponScan()
-		self:CancelTimer(weaponTimer)
-		weaponTimer = nil
-	end
-end
 
-do
 	local phase2DesecrateCDs = {36, 45, 36}
 	function mod:Desecrate(args)
+		self:GetBossTarget(bossTarget, 1, args.sourceGUID)
 		local desecrateCD = 41
 		if phase == 2 then
 			local diff = self:Difficulty()
@@ -623,8 +599,6 @@ do
 		end
 		self:CDBar(144758, desecrateCD)
 		desecrateCounter = desecrateCounter + 1
-		self:ScheduleTimer("StopWeaponScan", 2) -- delay it a bit just to be safe
-		self:ScheduleTimer("StartWeaponScan", desecrateCD-7)
 	end
 end
 
