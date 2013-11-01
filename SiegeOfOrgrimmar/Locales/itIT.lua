@@ -58,8 +58,8 @@ if L then
 	--L.adds_trigger1 = "Bring her down quick so I can wrap my fingers around her neck." -- Lady Sylvanas Windrunner
 	--L.adds_trigger2 = "Here they come!" -- Lady Jaina Proudmoore
 	--L.adds_trigger3 = "Dragonmaw, advance!"
-	--L.adds_trigger4	= "For Hellscream!"
-	--L.adds_trigger5	= "Next squad, push forward!"
+	--L.adds_trigger4 = "For Hellscream!"
+	--L.adds_trigger5 = "Next squad, push forward!"
 
 	L.custom_off_shaman_marker = "Marcatore Sciamano"
 	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzzioni, evidenzia gli Sciamani delle Maree delle Fauci di Drago con {rt1}{rt2}{rt3}{rt4}{rt5}, richiede capo incursione o assistente.\n|cFFFF0000Solo 1 persona nell'incursione dovrebbe attivare questa opzione per evitare conflitti con le assegnazioni.|r\n|cFFADFF2FSUGGERIMENTO: Se l'Incursione ha scelto te per abilitare questa opzione, muovere velocemente il mouse sopra gli sciamani è il modo più rapido per evidenziarli.|r"

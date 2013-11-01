@@ -42,13 +42,6 @@ if L then
 	L.north_tower = "北塔"
 	L.tower_defender = "Tower defender"
 
-	--L.adds_desc = "Timers for when a new set of adds enter the fight."
-	--L.adds_trigger1 = "Bring her down quick so I can wrap my fingers around her neck." -- Lady Sylvanas Windrunner
-	--L.adds_trigger2 = "Here they come!" -- Lady Jaina Proudmoore
-	--L.adds_trigger3 = "Dragonmaw, advance!"
-	--L.adds_trigger4	= "For Hellscream!"
-	--L.adds_trigger5	= "Next squad, push forward!"
-
 	L.custom_off_shaman_marker = "薩滿標記"
 	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the shamans is the fastest way to mark them.|r"
 end

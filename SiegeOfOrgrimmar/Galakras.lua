@@ -46,8 +46,8 @@ if L then
 	L.adds_trigger1 = "Bring her down quick so I can wrap my fingers around her neck." -- Lady Sylvanas Windrunner
 	L.adds_trigger2 = "Here they come!" -- Lady Jaina Proudmoore
 	L.adds_trigger3 = "Dragonmaw, advance!"
-	L.adds_trigger4	= "For Hellscream!"
-	L.adds_trigger5	= "Next squad, push forward!"
+	L.adds_trigger4 = "For Hellscream!"
+	L.adds_trigger5 = "Next squad, push forward!"
 
 	L.drakes, L.drakes_desc = EJ_GetSectionInfo(8586)
 	L.drakes_icon = "ability_mount_drake_proto"

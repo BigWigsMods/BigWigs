@@ -76,7 +76,7 @@ local highestReleaseRevision = BIGWIGS_RELEASE_TYPE == RELEASE and BIGWIGS_RELEA
 local highestAlphaRevision = BIGWIGS_RELEASE_TYPE == ALPHA and BIGWIGS_RELEASE_REVISION or -1
 
 -- Loading
-local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-Zone directive. Filled in OnInitialize, garbagecollected in OnEnable.
+local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-ZoneId directive
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the core is loaded
