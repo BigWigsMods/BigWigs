@@ -431,6 +431,7 @@ do
 		BigWigs_ShaIcons = "BigWigs",
 		BigWigs_LeiShi_Marker = "BigWigs",
 		BigWigs_NoPluginWarnings = "BigWigs",
+		LFG_ProposalTime = "BigWigs",
 	}
 
 	-- Try to teach people not to force load our modules.
@@ -585,28 +586,52 @@ function mod:ACTIVE_TALENT_GROUP_CHANGED()
 	end
 end
 
--- LFG/R Timer
-function mod:LFG_PROPOSAL_SHOW()
-	if not public.LFGFrame then
-		local f = CreateFrame("Frame", nil, LFGDungeonReadyDialog)
-		f:SetPoint("BOTTOM", LFGDungeonReadyDialog, "BOTTOM", 0, -60)
-		f:SetSize(100, 100)
-		f:Show()
-		f.start = GetTime()
-		public.LFGFrame = f
+-- Merged LFG_ProposalTime addon by Freebaser
+do
+	local timeLeft
+	function mod:LFG_PROPOSAL_SHOW()
+		if not timeLeft then
+			local BD = {
+				bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+				tile = true,
+				tileSize = 32,
+				insets = {left = -1, right = -1, top = -1, bottom = -1},
+			}
 
-		local text = f:CreateFontString(nil, "OVERLAY")
-		text:SetPoint("CENTER", f, "CENTER")
-		text:SetFont(TextStatusBarText:GetFont(), 11, "OUTLINE")
-		text:SetText(40)
-		f.text = text
+			local timerBar = CreateFrame("StatusBar", nil, LFGDungeonReadyPopup)
+			timerBar:SetPoint("TOP", LFGDungeonReadyPopup, "BOTTOM", 0, -5)
+			timerBar:SetSize(190, 9)
+			timerBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar", "BORDER")
+			timerBar:SetStatusBarColor(1,.1,0)
+			timerBar:SetBackdrop(BD)
+			timerBar:SetMinMaxValues(0, 40)
+			timerBar:Show()
 
-		f:SetScript("OnUpdate", function(frame)
-			local t = GetTime() - frame.start
-			frame.text:SetFormattedText("Big Wigs: %.1f", 40-t)
-		end)
+			local spark = timerBar:CreateTexture(nil, "OVERLAY")
+			spark:SetTexture("Interface\\CastingBar\\UI-CastingBar-Spark")
+			spark:SetSize(32, 32)
+			spark:SetBlendMode("ADD")
+			spark:SetPoint("LEFT", timerBar:GetStatusBarTexture(), "RIGHT", -15, 0)
 
-		self.LFG_PROPOSAL_SHOW = function() public.LFGFrame.start = GetTime() end
+			local border = timerBar:CreateTexture(nil, "ARTWORK")
+			border:SetTexture("Interface\\CastingBar\\UI-CastingBar-Border")
+			border:SetSize(256, 64)
+			border:SetPoint("TOP", timerBar, 0, 28)
+
+			timerBar.text = timerBar:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+			timerBar.text:SetPoint("CENTER", timerBar, "CENTER")
+
+			timeLeft = 40
+			timerBar:SetScript("OnUpdate", function(frame, elapsed)
+				timeLeft = timeLeft - elapsed
+				if timeLeft > 0 then
+					frame:SetValue(timeLeft)
+					frame.text:SetFormattedText("Big Wigs: %.1f", timeLeft)
+				end
+			end)
+
+			self.LFG_PROPOSAL_SHOW = function() timeLeft = 40 end
+		end
 	end
 end
 
