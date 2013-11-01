@@ -151,6 +151,7 @@ if L then
 	L.item_mines = "地雷"
 	L.item_laser = "激光"
 	L.item_magnet = "电磁体"
+	L.item_deathdealer = "死亡执行者"
 
 	L.shockwave_missile_trigger = "为各位送上"
 end

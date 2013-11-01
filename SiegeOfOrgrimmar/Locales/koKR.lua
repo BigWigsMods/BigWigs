@@ -24,7 +24,7 @@ end
 L = BigWigs:NewBossLocale("Norushen", "koKR")
 if L then
 --@localization(locale="koKR", namespace="SiegeOfOrgrimmar/Norushen", format="lua_additive_table", handle-unlocalized="ignore")@
- end
+end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "koKR")
 if L then
@@ -39,7 +39,7 @@ if L then
 	L.small_adds = "자아성찰: 투영체"
 
 	L.titan_pride = "티탄 + 교만: %s"
- end
+end
 
 L = BigWigs:NewBossLocale("Galakras", "koKR")
 if L then
@@ -103,7 +103,7 @@ if L then
 	L.arcane_shock_message = "당신의 주시 대상이 비전 충격을 시전합니다!"
 
 	L.focus_only = "|cffff0000주시 대상을 잡았을 경우에만 경고합니다.|r "
- end
+end
 
 L = BigWigs:NewBossLocale("Malkorok", "koKR")
 if L then
@@ -173,11 +173,9 @@ if L then
 	L.custom_off_edge_marks = "광기의 계산 대상 징표 설정"
 	L.custom_off_edge_marks_desc = "광기의 계산의 대상이 된 플레이어를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
 	L.injection_over_soon = "주입이 곧 끝남! (%s)"
-	L.custom_off_mutate_marks = "돌연변이: 호박석 전갈 징표 설정"
-	L.custom_off_mutate_marks_desc = "힐을 돕기 위해, 돌연변이: 호박석 전갈에 걸린 플레이어를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
 	L.custom_off_parasite_marks = "기생충 징표 설정"
 	L.custom_off_parasite_marks_desc = "군중 제어기나 기생충을 먹어야 하는 플레이어를 위해 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다. \n|cFFFF0000혼선을 빚는 것을 방지하기 위하여, 오직 공대원 중 한 사람만이 이 옵션을 켜야합니다.|r"
- end
+end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "koKR")
 if L then
@@ -211,5 +209,5 @@ if L then
 	L.custom_off_minion_marker_desc = "쫄들을 분리하는 것을 돕기 위해, {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
 
 	L.focus_only = "|cffff0000주시 대상 경고 전용.|r "
- end
+end
 
