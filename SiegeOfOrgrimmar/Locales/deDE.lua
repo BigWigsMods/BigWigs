@@ -145,6 +145,7 @@ if L then
 	L.item_mines = "Minen"
 	L.item_laser = "Laser"
 	L.item_magnet = "Magnet"
+	L.item_deathdealer = "Todesboten"
 
 	L.shockwave_missile_trigger = "Ich präsentiere... den wunderschönen Erschütterungsraketenturm ST-03!"
 end
