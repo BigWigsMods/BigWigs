@@ -1,7 +1,8 @@
 local L = BigWigs:NewBossLocale("Immerseus", "koKR")
 if not L then return end
 if L then
---@localization(locale="koKR", namespace="SiegeOfOrgrimmar/Immerseus", format="lua_additive_table", handle-unlocalized="ignore")@
+L["win_yell"] = "아, 역시 해냈군! 골짜기의 물이 다시 깨끗해졌네."
+
 end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "koKR")
@@ -23,7 +24,12 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "koKR")
 if L then
---@localization(locale="koKR", namespace="SiegeOfOrgrimmar/Norushen", format="lua_additive_table", handle-unlocalized="ignore")@
+L["big_add"] = "타락의 현신 등장 (%d)"
+L["big_add_killed"] = "타락의 현신 처치 (%d)"
+L["big_adds"] = "타락의 현신"
+L["big_adds_desc"] = "큰 쫄이 나타나고 죽는 것에 대한 경고"
+L["warmup_trigger"] = "그래, 좋다. 너희 타락을 가두어 둘 공간을 만들겠다."
+
 end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "koKR")
@@ -43,7 +49,7 @@ end
 
 L = BigWigs:NewBossLocale("Galakras", "koKR")
 if L then
-	L.demolisher = "파괴전차"
+	L.demolisher = "파괴 전차 등장"
 	L.demolisher_desc = "코르크론 파괴 전차가 전투에 나타날 때 까지의 시간"
 
 	L.towers = "탑"
@@ -54,7 +60,7 @@ if L then
 	L.north_tower = "북쪽 탑"
 	L.tower_defender = "탑 수호자"
 
-	L.adds = "다음 병력:"
+	L.adds = "다음 병력"
 	L.adds_desc = "추가병력 타이머"
 	L.adds_trigger1 = "저 계집을 당장 끌어내려라. 내가 친히 그녀의 목을 죌 것이다." -- Lady Sylvanas Windrunner
 	L.adds_trigger2 = "놈들이 와요!" -- Lady Jaina Proudmoore
@@ -121,7 +127,11 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "koKR")
 if L then
---@localization(locale="koKR", namespace="SiegeOfOrgrimmar/ThokTheBloodthirsty", format="lua_additive_table", handle-unlocalized="ignore")@
+L["adds_desc"] = "설인과 박쥐가 전투에 나타났을 때를 위한 경고"
+L["cage_opened"] = "감옥 열림"
+L["npc_akolik"] = "아콜릭"
+L["npc_waterspeaker_gorai"] = "물예언자 고라이"
+
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "koKR")
