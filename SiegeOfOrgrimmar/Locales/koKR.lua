@@ -1,8 +1,7 @@
 local L = BigWigs:NewBossLocale("Immerseus", "koKR")
 if not L then return end
 if L then
-L["win_yell"] = "아, 역시 해냈군! 골짜기의 물이 다시 깨끗해졌네."
-
+--@localization(locale="koKR", namespace="SiegeOfOrgrimmar/Immerseus", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "koKR")
@@ -24,12 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("Norushen", "koKR")
 if L then
-L["big_add"] = "타락의 현신 등장 (%d)"
-L["big_add_killed"] = "타락의 현신 처치 (%d)"
-L["big_adds"] = "타락의 현신"
-L["big_adds_desc"] = "큰 쫄이 나타나고 죽는 것에 대한 경고"
-L["warmup_trigger"] = "그래, 좋다. 너희 타락을 가두어 둘 공간을 만들겠다."
-
+--@localization(locale="koKR", namespace="SiegeOfOrgrimmar/Norushen", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "koKR")
@@ -127,11 +121,7 @@ end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "koKR")
 if L then
-L["adds_desc"] = "설인과 박쥐가 전투에 나타났을 때를 위한 경고"
-L["cage_opened"] = "감옥 열림"
-L["npc_akolik"] = "아콜릭"
-L["npc_waterspeaker_gorai"] = "물예언자 고라이"
-
+--@localization(locale="koKR", namespace="SiegeOfOrgrimmar/ThokTheBloodthirsty", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "koKR")
