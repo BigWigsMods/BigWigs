@@ -262,10 +262,10 @@ function mod:IronStarFixateApplied(args)
 end
 
 do
-	local bombardmentTimers = { 55, 40, 40, 25 } -- XXX need more data
+	local bombardmentTimers = { 55, 40, 40, 25, 25, 15 }
 	function mod:Bombardment(args)
 		self:Message("bombardment", "Attention", nil, L["bombardment"], args.spellId)
-		self:Bar("bombardment", bombardmentTimers[bombardmentCounter] or 25, L["bombardment"], args.spellId)
+		self:Bar("bombardment", bombardmentTimers[bombardmentCounter] or 15, L["bombardment"], args.spellId)
 		bombardmentCounter = bombardmentCounter + 1
 		self:Bar("bombardment", 13, CL["casting"]:format(args.spellName), args.spellId)
 		self:Bar("clump_check", 3, 147126) -- Clump Check
