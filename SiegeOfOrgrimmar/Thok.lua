@@ -91,7 +91,7 @@ function mod:OnEngage()
 	self:Berserk(600)
 	self:OpenProximity("proximity", 10) -- Too close to another group. Tactic dependant - needed for heroic
 	self:Bar(-7963, 14) -- Deafening Screech
-	self:CDBar("tank_debuffs", 12, 143426, 143766) -- Fearsome Roar with correct icon
+	self:CDBar(143766, 12, 143426, 143766) -- Fearsome Roar with correct icon
 end
 
 --------------------------------------------------------------------------------
@@ -159,7 +159,7 @@ do
 		self:OpenProximity("proximity", 10)
 		self:Message(-7981, "Neutral", "Long", CL["over"]:format(args.spellName))
 		self:Bar(-7963, 14) -- Deafening Screech
-		self:CDBar("tank_debuffs", 12, 17086, "ability_hunter_pet_devilsaur") -- Breath
+		self:CDBar(143766, 12, 17086, "ability_hunter_pet_devilsaur") -- Breath. 143766 isn't exactly a combined option but it's one of the breaths.
 		if self:Heroic() then
 			self:ScheduleTimer(checkPrisonerKilled, 10)
 		end
