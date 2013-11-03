@@ -45,7 +45,7 @@ local icons = setmetatable({}, {__index =
 			if key > 0 then
 				_, _, value = GetSpellInfo(key)
 				if not value then
-					print(format("Big Wigs: An invalid spell id (%d) is being used in a bar/message.", key))
+					core:Print(format("An invalid spell id (%d) is being used in a bar/message.", key))
 				end
 			else
 				local _, _, _, abilityIcon = EJ_GetSectionInfo(-key)
@@ -208,8 +208,8 @@ do
 		end
 	end
 	function boss:Emote(func, ...)
-		if not func then error(format(missingArgument, self.moduleName)) end
-		if not self[func] then error(format(missingFunction, self.moduleName, func)) end
+		if not func then core:Print(format(missingArgument, self.moduleName)) return end
+		if not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self].CHAT_MSG_RAID_BOSS_EMOTE then eventMap[self].CHAT_MSG_RAID_BOSS_EMOTE = {} end
 		for i = 1, select("#", ...) do
 			eventMap[self]["CHAT_MSG_RAID_BOSS_EMOTE"][(select(i, ...))] = func
@@ -229,8 +229,8 @@ do
 		end
 	end
 	function boss:Yell(func, ...)
-		if not func then error(format(missingArgument, self.moduleName)) end
-		if not self[func] then error(format(missingFunction, self.moduleName, func)) end
+		if not func then core:Print(format(missingArgument, self.moduleName)) return end
+		if not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self].CHAT_MSG_MONSTER_YELL then eventMap[self].CHAT_MSG_MONSTER_YELL = {} end
 		for i = 1, select("#", ...) do
 			eventMap[self]["CHAT_MSG_MONSTER_YELL"][(select(i, ...))] = func
@@ -278,23 +278,24 @@ do
 		end
 	end)
 	function boss:Log(event, func, ...)
-		if not event or not func then error(format(missingArgument, self.moduleName)) end
-		if type(func) ~= "function" and not self[func] then error(format(missingFunction, self.moduleName, func)) end
+		if not event or not func then core:Print(format(missingArgument, self.moduleName)) return end
+		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self][event] then eventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
 			local id = (select(i, ...))
-			eventMap[self][event][id] = func
 			if type(id) == "number" and not GetSpellInfo(id) then
-				print(format(invalidId, self.moduleName, id, event))
+				core:Print(format(invalidId, self.moduleName, id, event))
+				return
 			end
+			eventMap[self][event][id] = func
 		end
 		allowedEvents[event] = true
 		bossUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		self:SendMessage("BigWigs_OnBossLog", self, event, ...)
 	end
 	function boss:Death(func, ...)
-		if not func then error(format(missingArgument, self.moduleName)) end
-		if type(func) ~= "function" and not self[func] then error(format(missingFunction, self.moduleName, func)) end
+		if not func then core:Print(format(missingArgument, self.moduleName)) return end
+		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self].UNIT_DIED then eventMap[self].UNIT_DIED = {} end
 		for i = 1, select("#", ...) do
 			eventMap[self]["UNIT_DIED"][(select(i, ...))] = func
@@ -325,9 +326,9 @@ do
 	end
 
 	function boss:RegisterUnitEvent(event, func, ...)
-		if type(event) ~= "string" then error(format(noEvent, self.moduleName)) end
-		if not ... then error(format(noUnit, self.moduleName)) end
-		if (not func and not self[event]) or (func and not self[func]) then error(format(noFunc, self.moduleName, func or event)) end
+		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
+		if not ... then core:Print(format(noUnit, self.moduleName)) return end
+		if (not func and not self[event]) or (func and not self[func]) then core:Print(format(noFunc, self.moduleName, func or event)) return end
 		if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
@@ -341,8 +342,8 @@ do
 		end
 	end
 	function boss:UnregisterUnitEvent(event, ...)
-		if type(event) ~= "string" then error(format(noEvent, self.moduleName)) end
-		if not ... then error(format(noUnit, self.moduleName)) end
+		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
+		if not ... then core:Print(format(noUnit, self.moduleName)) return end
 		if not unitEventMap[self][event] then return end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
@@ -773,17 +774,19 @@ do
 	local invalidFlagError = "Module %s tried to check for an invalid flag type %q (%q). Flags must be bits."
 	local noDBError        = "Module %s does not have a .db property, which is weird."
 	checkFlag = function(self, key, flag)
-		if type(key) == "nil" then error(format(nilKeyError, self.name)) end
-		if type(flag) ~= "number" then error(format(invalidFlagError, self.name, type(flag), tostring(flag))) end
+		if type(key) == "nil" then core:Print(format(nilKeyError, self.name)) return end
+		if type(flag) ~= "number" then core:Print(format(invalidFlagError, self.name, type(flag), tostring(flag))) return end
 		if silencedOptions[key] then return end
 		if type(key) == "number" and key > 0 then key = spells[key] end
-		if type(self.db) ~= "table" then error(format(noDBError, self.name)) end
+		if type(self.db) ~= "table" then core:Print(format(noDBError, self.name)) return end
 		if type(self.db.profile[key]) ~= "number" then
 			if not self.toggleDefaults[key] then
-				error(format(noDefaultError, self.name, key))
+				core:Print(format(noDefaultError, self.name, key))
+				return
 			end
 			if debug then
-				error(format(notNumberError, self.name, key, type(self.db.profile[key])))
+				core:Print(format(notNumberError, self.name, key, type(self.db.profile[key])))
+				return
 			end
 			self.db.profile[key] = self.toggleDefaults[key]
 		end
