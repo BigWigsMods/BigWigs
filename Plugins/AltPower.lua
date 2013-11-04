@@ -316,7 +316,7 @@ do
 		opener = module
 		sortDir = sorting
 		unitList = IsInRaid() and self:GetRaidList() or self:GetPartyList()
-		powerList, sortedUnitList, roleColoredList = {}, {}, {}
+		powerList, sortedUnitList, roleColoredList, syncPowerList = {}, {}, {}, {}
 		local UnitClass, UnitGroupRolesAssigned = UnitClass, UnitGroupRolesAssigned
 		local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
 		for i = 1, maxPlayers do
@@ -440,7 +440,7 @@ function plugin:BigWigs_OnBossDisable(_, module)
 end
 
 do
-	local power = 0
+	local power = -1
 	local function sendPower()
 		local newPower = UnitPower("player", 10) -- ALTERNATE_POWER_INDEX = 10
 		if newPower ~= power then
@@ -450,8 +450,8 @@ do
 	end
 
 	function plugin:BigWigs_StartSyncingPower()
+		power = -1
 		if not repeatSync then
-			syncPowerList = {}
 			repeatSync = self:ScheduleRepeatingTimer(sendPower, 1)
 		end
 	end
