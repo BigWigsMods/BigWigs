@@ -52,6 +52,10 @@ local function colorize(power)
 	end
 end
 
+function plugin:RestyleWindow()
+	
+end
+
 -------------------------------------------------------------------------------
 -- Options
 --
@@ -79,7 +83,7 @@ do
 					else
 						db[key] = value
 					end
-					--plugin:RestyleWindow()
+					plugin:RestyleWindow()
 				end,
 				args = {
 					disabled = {
@@ -292,11 +296,10 @@ do
 	function plugin:BigWigs_ShowAltPower(event, module, title, sorting)
 		if db.disabled or not IsInGroup() then return end -- Solo runs of old content
 
-		BigWigs:AddSyncListener(self, "BWPower", 0)
-
 		if createFrame then createFrame() createFrame = nil end
 		self:Close()
 
+		BigWigs:AddSyncListener(self, "BWPower", 0)
 		maxPlayers = GetNumGroupMembers()
 		opener = module
 		sortDir = sorting
@@ -427,7 +430,7 @@ end
 do
 	local power = 0
 	local function sendPower()
-		local newPower = UnitPower("player", 10)
+		local newPower = UnitPower("player", 10) -- ALTERNATE_POWER_INDEX = 10
 		if newPower ~= power then
 			power = newPower
 			BigWigs:Transmit("BWPower", newPower)
