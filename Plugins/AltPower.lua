@@ -53,7 +53,22 @@ local function colorize(power)
 end
 
 function plugin:RestyleWindow()
-	
+	if db.lock then
+		display:SetMovable(false)
+		display:RegisterForDrag()
+		display:SetScript("OnDragStart", nil)
+		display:SetScript("OnDragStop", nil)
+	else
+		display:SetMovable(true)
+		display:RegisterForDrag("LeftButton")
+		display:SetScript("OnDragStart", function(self) self:StartMoving() end)
+		display:SetScript("OnDragStop", function(self)
+			self:StopMovingOrSizing()
+			local s = self:GetEffectiveScale()
+			db.posx = self:GetLeft() * s
+			db.posy = self:GetTop() * s
+		end)
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -213,14 +228,10 @@ do
 		display:SetSize(230, db.expanded and 210 or 80)
 		display:SetClampedToScreen(true)
 		display:EnableMouse(true)
-		display:SetMovable(true)
-		display:RegisterForDrag("LeftButton")
-		display:SetScript("OnDragStart", function(self) self:StartMoving() end)
-		display:SetScript("OnDragStop", function(self)
-			self:StopMovingOrSizing()
-			local s = self:GetEffectiveScale()
-			db.posx = self:GetLeft() * s
-			db.posy = self:GetTop() * s
+		display:SetScript("OnMouseUp", function(self, button)
+			if inTestMode and button == "LeftButton" then
+				plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
+			end
 		end)
 
 		updater = display:CreateAnimationGroup()
@@ -289,6 +300,7 @@ do
 			display:ClearAllPoints()
 			display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
 		end
+		plugin:RestyleWindow()
 	end
 
 	-- This module is rarely used, and opened once during an encounter where it is.
