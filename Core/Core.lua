@@ -396,7 +396,7 @@ do
 		if sync then
 			local msg = strjoin(" ", sync, ...)
 			chatMsgAddon(nil, "T", msg, pName)
-			if IsInRaid() or IsInGroup() then
+			if IsInGroup() then
 				SendAddonMessage("BigWigs", "T:"..msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 			end
 		end

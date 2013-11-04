@@ -55,6 +55,9 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	if IsEncounterInProgress() then
+		self:OpenAltPower("altpower", 147800, "sync") -- Corruption
+	end
 
 	self:Yell("Warmup", L.warmup_trigger)
 	-- Look Within
@@ -97,7 +100,7 @@ function mod:OnEngage()
 	self:Bar(145226, 25) -- Blind Hatred
 	wipe(bigAddKills)
 	wipe(throttlePlayers)
-	--self:OpenAltPower("altpower", 147800) -- Corruption
+	self:OpenAltPower("altpower", 147800, "sync") -- Corruption
 end
 
 --------------------------------------------------------------------------------

@@ -28,6 +28,8 @@ local display, updater = nil, nil
 local opener = nil
 local inTestMode = nil
 local sortDir = nil
+local repeatSync = nil
+local syncPowerList = nil
 local UpdateDisplay
 local tsort = table.sort
 local min = math.min
@@ -180,6 +182,7 @@ local function updateProfile()
 end
 
 function plugin:OnPluginEnable()
+	self:RegisterMessage("BigWigs_StartSyncingPower")
 	self:RegisterMessage("BigWigs_ShowAltPower")
 	self:RegisterMessage("BigWigs_HideAltPower", "Close")
 	self:RegisterMessage("BigWigs_OnBossDisable")
@@ -288,6 +291,9 @@ do
 	-- We will prefer on-demand variables over permanent ones.
 	function plugin:BigWigs_ShowAltPower(event, module, title, sorting)
 		if db.disabled or not IsInGroup() then return end -- Solo runs of old content
+
+		BigWigs:AddSyncListener(self, "BWPower", 0)
+
 		if createFrame then createFrame() createFrame = nil end
 		self:Close()
 
@@ -357,7 +363,7 @@ do
 	function UpdateDisplay()
 		for i = 1, maxPlayers do
 			local unit = unitList[i]
-			powerList[unit] = UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
+			powerList[unit] = syncPowerList and (syncPowerList[unit] or -1) or UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
 		end
 		tsort(sortedUnitList, sortTbl)
 		for i = 1, db.expanded and 25 or 10 do
@@ -377,6 +383,8 @@ function plugin:Expand()
 	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_up")
 	if inTestMode then
 		self:Test()
+	else
+		UpdateDisplay()
 	end
 end
 
@@ -396,7 +404,12 @@ function plugin:Close()
 	if not updater then return end
 	updater:Stop()
 	display:Hide()
-	powerList, sortedUnitList, roleColoredList = nil, nil, nil
+	if repeatSync then
+		self:CancelTimer(repeatSync)
+		repeatSync = nil
+	end
+	BigWigs:ClearSyncListeners(self)
+	powerList, sortedUnitList, roleColoredList, syncPowerList = nil, nil, nil, nil
 	unitList = nil
 	opener = nil
 	inTestMode = nil
@@ -408,6 +421,37 @@ end
 function plugin:BigWigs_OnBossDisable(_, module)
 	if module == opener then
 		self:Close()
+	end
+end
+
+do
+	local power = 0
+	local function sendPower()
+		local newPower = UnitPower("player", 10)
+		if newPower ~= power then
+			power = newPower
+			BigWigs:Transmit("BWPower", newPower)
+		end
+	end
+
+	function plugin:BigWigs_StartSyncingPower()
+		if not repeatSync then
+			syncPowerList = {}
+			repeatSync = self:ScheduleRepeatingTimer(sendPower, 1)
+		end
+	end
+
+	function plugin:OnSync(sync, amount, nick)
+		local curPower = tonumber(amount)
+		if curPower then
+			for i = 1, maxPlayers do
+				local unit = unitList[i]
+				if nick == self:UnitName(unit) then
+					syncPowerList[unit] = curPower
+					break
+				end
+			end
+		end
 	end
 end
 

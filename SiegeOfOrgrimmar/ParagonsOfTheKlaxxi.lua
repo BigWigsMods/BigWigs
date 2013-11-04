@@ -225,6 +225,7 @@ function mod:OnEngage()
 	wipe(parasites)
 	calculateCounter = 1
 	aimCounter = 1
+	-- Sometimes there's a long delay between the last IEEU and IsEncounterInProgress being false so use this as a backup.
 	self:StopWipeCheck()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "StartWipeCheck")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "StopWipeCheck")
