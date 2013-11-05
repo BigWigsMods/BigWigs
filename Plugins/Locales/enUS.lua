@@ -5,6 +5,9 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "enUS", true)
 --
 
 L.altPowerTitle = "AltPower"
+L.toggleDisplayPrint = "The display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."
+L.disabled = "Disabled"
+L.disabledDisplayDesc = "Disable the display for all modules that use it."
 
 -----------------------------------------------------------------------
 -- Bars.lua
@@ -155,9 +158,6 @@ L.customRange = "Custom range indicator"
 L.proximityTitle = "%d yd / %d |4player:players;" -- yd = yards (short)
 L.proximity_name = "Proximity"
 L.sound = "Sound"
-L.disabled = "Disabled"
-L.disabledDesc = "Disable the proximity display for all modules that use it."
-L.toggleProximityPrint = "The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."
 L.soundDelay = "Sound delay"
 L.soundDelayDesc = "Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."
 

@@ -104,7 +104,7 @@ do
 					disabled = {
 						type = "toggle",
 						name = L.disabled,
-						--desc = L.disabledDesc,
+						desc = L.disabledDisplayDesc,
 						order = 1,
 					},
 					lock = {
@@ -252,7 +252,7 @@ do
 		close:SetWidth(16)
 		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
 		close:SetScript("OnClick", function()
-			--BigWigs:Print(L.toggleProximityPrint)
+			BigWigs:Print(L.toggleDisplayPrint)
 			plugin:Close()
 		end)
 

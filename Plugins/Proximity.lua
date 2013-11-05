@@ -367,7 +367,7 @@ end
 local function onControlLeave() GameTooltip:Hide() end
 
 local function onNormalClose()
-	BigWigs:Print(L.toggleProximityPrint)
+	BigWigs:Print(L.toggleDisplayPrint)
 	plugin:Close()
 end
 
@@ -1033,7 +1033,7 @@ do
 					disabled = {
 						type = "toggle",
 						name = L.disabled,
-						desc = L.disabledDesc,
+						desc = L.disabledDisplayDesc,
 						order = 1,
 					},
 					lock = {
