@@ -570,8 +570,8 @@ end
 
 do
 	local function bossTarget(self, name, guid)
-		self:PrimaryIcon(144758, name)
-		self:ScheduleTimer("PrimaryIcon", 7, 144758)
+		self:SecondaryIcon(144758, name)
+		self:ScheduleTimer("SecondaryIcon", 7, 144758)
 		if self:Me(guid) then
 			self:Flash(144758)
 			self:Say(144758)
