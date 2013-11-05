@@ -242,11 +242,8 @@ do
 	local function warnShockwave(self, player, guid)
 		if self:Me(guid) then
 			self:Flash(143716)
-		elseif self:Range(player) < 5 then
-			-- 5 is assumed, also a circular distance check is not the best for this
-			-- EJ says 10 yard, but that is for the landing, don't get confused!
-			-- this could get fancy if we used player facing and some math
-			self:RangeMessage(143716)
+		elseif self:Range(player) < 8 then
+			self:RangeMessage(143716, "Personal", "Alarm")
 			self:Flash(143716)
 			return
 		end
