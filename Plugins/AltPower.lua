@@ -305,18 +305,21 @@ do
 
 	-- This module is rarely used, and opened once during an encounter where it is.
 	-- We will prefer on-demand variables over permanent ones.
-	function plugin:BigWigs_ShowAltPower(event, module, title, sorting)
+	function plugin:BigWigs_ShowAltPower(event, module, title, sorting, sync)
 		if db.disabled or not IsInGroup() then return end -- Solo runs of old content
 
 		if createFrame then createFrame() createFrame = nil end
 		self:Close()
 
-		BigWigs:AddSyncListener(self, "BWPower", 0)
+		if sync then
+			BigWigs:AddSyncListener(self, "BWPower", 0)
+			syncPowerList = {}
+		end
 		maxPlayers = GetNumGroupMembers()
 		opener = module
 		sortDir = sorting
 		unitList = IsInRaid() and self:GetRaidList() or self:GetPartyList()
-		powerList, sortedUnitList, roleColoredList, syncPowerList = {}, {}, {}, {}
+		powerList, sortedUnitList, roleColoredList = {}, {}, {}
 		local UnitClass, UnitGroupRolesAssigned = UnitClass, UnitGroupRolesAssigned
 		local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
 		for i = 1, maxPlayers do
@@ -378,7 +381,7 @@ do
 	function UpdateDisplay()
 		for i = 1, maxPlayers do
 			local unit = unitList[i]
-			powerList[unit] = syncPowerList and (syncPowerList[unit] or -1) or UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
+			powerList[unit] = syncPowerList and (syncPowerList[unit] or 0.1) or UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
 		end
 		tsort(sortedUnitList, sortTbl)
 		for i = 1, db.expanded and 25 or 10 do

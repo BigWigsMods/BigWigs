@@ -802,7 +802,7 @@ end
 -- ALT POWER
 function boss:OpenAltPower(key, title, sorting, sync)
 	if title ~= 147800 and checkFlag(self, key, C.ALTPOWER) then -- Temp disable Norushen display but keep syncing
-		self:SendMessage("BigWigs_ShowAltPower", self, type(title) == "number" and spells[title] or title, sorting == "ZA" and sorting or "AZ")
+		self:SendMessage("BigWigs_ShowAltPower", self, type(title) == "number" and spells[title] or title, sorting == "ZA" and sorting or "AZ", sync)
 	end
 	if sync then
 		self:SendMessage("BigWigs_StartSyncingPower", self)
