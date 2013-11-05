@@ -13,8 +13,8 @@ end
 
 L = BigWigs:NewBossLocale("Ordos", "koKR")
 if L then
-	--L.engage_yell = "You will take my place on the eternal brazier."
+	L.engage_yell = "영원한 화로에서 내 자리를 대신해라."
 
-	--L.burning_soul_bar = "Explosions"
+	L.burning_soul_bar = "불타는 영혼 폭발"
 end
 
