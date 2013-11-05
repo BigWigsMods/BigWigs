@@ -945,7 +945,7 @@ do
 		end
 
 		anchor:SetScript("OnEvent", function(_, event)
-			if event == "GROUP_ROSTER_CHANGED" then
+			if event == "GROUP_ROSTER_UPDATE" then
 				updateBlipColors()
 			else
 				updateBlipIcons()
@@ -1166,7 +1166,7 @@ end
 function plugin:Close()
 	updater:Stop()
 
-	anchor:UnregisterEvent("GROUP_ROSTER_CHANGED")
+	anchor:UnregisterEvent("GROUP_ROSTER_UPDATE")
 	anchor:UnregisterEvent("RAID_TARGET_UPDATE")
 
 	for i = 1, 40 do
@@ -1239,7 +1239,7 @@ function plugin:Open(range, module, key, player, isReverse)
 	end
 	activeRange = range
 
-	anchor:RegisterEvent("GROUP_ROSTER_CHANGED")
+	anchor:RegisterEvent("GROUP_ROSTER_UPDATE")
 	anchor:RegisterEvent("RAID_TARGET_UPDATE")
 	updateBlipColors()
 	updateBlipIcons()
