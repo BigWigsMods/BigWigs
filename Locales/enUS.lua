@@ -17,7 +17,6 @@ L.warmup_desc = "Time until combat with the boss starts."
 L.already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%s|r) already exists as a module in Big Wigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch."
 
 L.movieBlocked = "You've seen this movie before, skipping it."
-L.roleUpdate = "Updated your role."
 
 -- Loader / Options.lua
 L.officialRelease = "You are running an official release of Big Wigs %s (revision %d)"
@@ -79,8 +78,6 @@ L.dbmBar = "Create custom DBM bars"
 L.dbmBarDesc = "If a DBM user sends a pull timer or a custom 'pizza' bar, it will be shown in Big Wigs."
 L.chatMessages = "Chat frame messages"
 L.chatMessagesDesc = "Outputs all BigWigs messages to the default chat frame in addition to the display setting."
-L.autoRole = "Automatic role update"
-L.autoRoleDesc = "Knowing what role you are will improve Big Wigs warnings for other people in your raid, this option lets Big Wigs automatically update your role. For example, some modules will check if a player is a tank when scanning for boss abilities that never affect tanks.\n\n|cffff4411This is not related to role specific warnings and it's highly recommended you leave this turned on!|r"
 L.zoneMessages = "Show zone messages"
 L.zoneMessagesDesc = "Disabling this will stop showing messages when you enter a zone that Big Wigs has timers for, but you don't have installed. We recommend you leave this turned on as it's the only notification you will get if we suddenly create timers for a new zone that you find useful."
 
