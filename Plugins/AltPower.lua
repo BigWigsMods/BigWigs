@@ -223,6 +223,32 @@ end
 --
 
 do
+	-- Realistically this should never fire during an encounter, we're just compensating for someone leaving the group
+	-- whilst the display is shown (more likely to happen in LFR). The display should not be shown outside of an encounter
+	-- where the event seems to fire frequently, which would make this very inefficient.
+	local function GROUP_ROSTER_UPDATE()
+		updater:Stop()
+		if not IsInGroup() then plugin:Close() return end
+
+		maxPlayers = GetNumGroupMembers()
+		unitList = IsInRaid() and plugin:GetRaidList() or plugin:GetPartyList()
+		powerList, sortedUnitList, roleColoredList = {}, {}, {}
+		if repeatSync then syncPowerList = {} plugin:SendMessage("BigWigs_StartSyncingPower") end
+
+		local UnitClass, UnitGroupRolesAssigned = UnitClass, UnitGroupRolesAssigned
+		local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
+		for i = 1, maxPlayers do
+			local unit = unitList[i]
+			sortedUnitList[i] = unit
+
+			local name = plugin:UnitName(unit, true) or "???"
+			local _, class = UnitClass(unit)
+			local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
+			roleColoredList[unit] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
+		end
+		updater:Play()
+	end
+
 	local function createFrame()
 		display = CreateFrame("Frame", "BigWigsAltPower", UIParent)
 		display:SetSize(230, db.expanded and 210 or 80)
@@ -300,6 +326,8 @@ do
 			display:ClearAllPoints()
 			display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
 		end
+
+		display:SetScript("OnEvent", GROUP_ROSTER_UPDATE)
 		plugin:RestyleWindow()
 	end
 
@@ -313,31 +341,19 @@ do
 
 		if sync then
 			BigWigs:AddSyncListener(self, "BWPower", 0)
-			syncPowerList = {}
 		end
-		maxPlayers = GetNumGroupMembers()
+
+		display:RegisterEvent("GROUP_ROSTER_UPDATE")
+
 		opener = module
 		sortDir = sorting
-		unitList = IsInRaid() and self:GetRaidList() or self:GetPartyList()
-		powerList, sortedUnitList, roleColoredList = {}, {}, {}
-		local UnitClass, UnitGroupRolesAssigned = UnitClass, UnitGroupRolesAssigned
-		local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
-		for i = 1, maxPlayers do
-			local unit = unitList[i]
-			sortedUnitList[i] = unit
-
-			local name = self:UnitName(unit, true) or "???"
-			local _, class = UnitClass(unit)
-			local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
-			roleColoredList[unit] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
-		end
 		if title then
 			display.title:SetFormattedText("%s: %s", L.altPowerTitle, title)
 		else
 			display.title:SetText(L.altPowerTitle)
 		end
 		display:Show()
-		updater:Play()
+		GROUP_ROSTER_UPDATE()
 		UpdateDisplay()
 	end
 
@@ -381,16 +397,18 @@ do
 	function UpdateDisplay()
 		for i = 1, maxPlayers do
 			local unit = unitList[i]
-			powerList[unit] = syncPowerList and (syncPowerList[unit] or 0.1) or UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
+			powerList[unit] = syncPowerList and (syncPowerList[unit] or 0) or UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
 		end
 		tsort(sortedUnitList, sortTbl)
 		for i = 1, db.expanded and 25 or 10 do
 			local unit = sortedUnitList[i]
-			if not unit then return end
-
-			local power = powerList[unit]
-			local r, g = colorize(power)
-			display.text[i]:SetFormattedText("|cFF%02x%02x00[%d]|r %s", r, g, power, roleColoredList[unit])
+			if unit then
+				local power = powerList[unit]
+				local r, g = colorize(power)
+				display.text[i]:SetFormattedText("|cFF%02x%02x00[%d]|r %s", r, g, power, roleColoredList[unit])
+			else
+				display.text[i]:SetText("")
+			end
 		end
 	end
 end
@@ -427,6 +445,7 @@ function plugin:Close()
 		repeatSync = nil
 	end
 	BigWigs:ClearSyncListeners(self)
+	display:UnregisterEvent("GROUP_ROSTER_UPDATE")
 	powerList, sortedUnitList, roleColoredList, syncPowerList = nil, nil, nil, nil
 	unitList = nil
 	opener = nil
@@ -456,6 +475,9 @@ do
 		power = -1
 		if not repeatSync then
 			repeatSync = self:ScheduleRepeatingTimer(sendPower, 1)
+			if display:IsShown() then
+				syncPowerList = {}
+			end
 		end
 	end
 
