@@ -232,7 +232,7 @@ do
 			if areaId == 953 then -- Siege of Orgrimmar
 				for i = 105930, 105935 do -- Scan quest items (Vision of Time) that trigger CINEMATIC_START inside the zone
 					local _, _, cd = GetItemCooldown(i)
-					if cd > 0 then return end -- Item has a 1 second cooldown so we know without a doubt that if it's on cooldown it was JUST used.
+					if cd > 0 then return end -- Item is in our inventory, prevent cancelling cinematics
 				end
 			end
 			local areaLevel = GetCurrentMapDungeonLevel() or 0

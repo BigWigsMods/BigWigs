@@ -350,7 +350,6 @@ do
 		RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 		self:RegisterEvent("CHAT_MSG_ADDON")
-		public.RegisterMessage(self, "BigWigs_AddonMessage")
 		public.RegisterMessage(self, "DBM_AddonMessage") -- DBM
 		RegisterAddonMessagePrefix("BigWigs")
 		RegisterAddonMessagePrefix("D4") -- DBM
@@ -639,7 +638,9 @@ end
 function mod:CHAT_MSG_ADDON(prefix, msg, _, sender)
 	if prefix == "BigWigs" then
 		local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
-		if bwPrefix then
+		if bwPrefix == "VR" or bwPrefix == "VRA" or bwPrefix == "VQ" or bwPrefix == "VQA" then
+			self:VersionCheck(bwPrefix, bwMsg, sender)
+		elseif bwPrefix then
 			public:SendMessage("BigWigs_AddonMessage", bwPrefix, bwMsg, sender)
 		end
 	elseif prefix == "D4" then
@@ -658,7 +659,7 @@ do
 	local anim = timer:CreateAnimation()
 	anim:SetDuration(3)
 
-	function mod:BigWigs_AddonMessage(event, prefix, message, sender)
+	function mod:VersionCheck(prefix, message, sender)
 		if prefix == "VR" or prefix == "VQ" then
 			if prefix == "VQ" then
 				timer:Stop()
@@ -709,8 +710,8 @@ end
 
 do
 	local queueLoad = {}
-	-- Kazzak, Doomwalker, Salyis's Warband, Sha of Anger, Nalak, Oondasta
-	local warnedThisZone = {[465]=true,[473]=true,[807]=true,[809]=true,[928]=true,[929]=true} -- World Bosses
+	-- Kazzak, Doomwalker, Salyis's Warband, Sha of Anger, Nalak, Oondasta, Ordos
+	local warnedThisZone = {[465]=true,[473]=true,[807]=true,[809]=true,[928]=true,[929]=true,[951]=true} -- World Bosses
 	function mod:PLAYER_REGEN_ENABLED()
 		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
