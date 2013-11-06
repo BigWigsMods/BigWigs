@@ -475,7 +475,7 @@ do
 		power = -1
 		if not repeatSync then
 			repeatSync = self:ScheduleRepeatingTimer(sendPower, 1)
-			if display:IsShown() then
+			if display and display:IsShown() then
 				syncPowerList = {}
 			end
 		end
