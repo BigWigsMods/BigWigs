@@ -437,22 +437,23 @@ function plugin:Contract()
 end
 
 function plugin:Close()
-	if not updater then return end
-	updater:Stop()
-	display:Hide()
 	if repeatSync then
 		self:CancelTimer(repeatSync)
 		repeatSync = nil
 	end
-	BigWigs:ClearSyncListeners(self)
-	display:UnregisterEvent("GROUP_ROSTER_UPDATE")
-	powerList, sortedUnitList, roleColoredList, syncPowerList = nil, nil, nil, nil
-	unitList = nil
-	opener = nil
-	inTestMode = nil
-	for i = 1, 25 do
-		display.text[i]:SetText("")
+
+	if display then
+		updater:Stop()
+		display:UnregisterEvent("GROUP_ROSTER_UPDATE")
+		display:Hide()
+		BigWigs:ClearSyncListeners(self)
+		for i = 1, 25 do
+			display.text[i]:SetText("")
+		end
 	end
+
+	powerList, sortedUnitList, roleColoredList, syncPowerList = nil, nil, nil, nil
+	unitList, opener, inTestMode = nil, nil, nil
 end
 
 function plugin:BigWigs_OnBossDisable(_, module)
@@ -471,8 +472,9 @@ do
 		end
 	end
 
-	function plugin:BigWigs_StartSyncingPower()
+	function plugin:BigWigs_StartSyncingPower(_, module)
 		power = -1
+		opener = module
 		if not repeatSync then
 			repeatSync = self:ScheduleRepeatingTimer(sendPower, 1)
 			if display and display:IsShown() then
