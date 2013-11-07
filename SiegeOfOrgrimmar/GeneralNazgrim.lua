@@ -123,7 +123,7 @@ function mod:OnEngage()
 	self:CDBar(143494, 10) -- Sundering Blow
 	self:Bar(143638, 15.5) -- Bonecracker
 	addWaveCounter = 1
-	self:Bar(-7920, 46, CL["count"]:format(self:SpellName(-7920), addWaveCounter), "achievement_guildperk_everybodysfriend") -- adds
+	self:Bar(-7920, 46, CL["count"]:format(CL["adds"], addWaveCounter), "achievement_guildperk_everybodysfriend") -- adds
 end
 
 --------------------------------------------------------------------------------
@@ -209,9 +209,9 @@ function mod:ExtraAdds()
 end
 
 function mod:Adds()
-	self:Message(-7920, "Neutral", "Long", CL["count"]:format(self:SpellName(-7920), addWaveCounter))
+	self:Message(-7920, "Neutral", "Long", CL["count"]:format(CL["adds"], addWaveCounter))
 	addWaveCounter = addWaveCounter + 1
-	self:Bar(-7920, 46, CL["count"]:format(self:SpellName(-7920), addWaveCounter), "achievement_guildperk_everybodysfriend")
+	self:Bar(-7920, 46, CL["count"]:format(CL["adds"], addWaveCounter), "achievement_guildperk_everybodysfriend")
 end
 
 -- Boss
