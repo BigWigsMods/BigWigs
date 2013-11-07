@@ -49,7 +49,8 @@ if L then
 	L.adds_trigger4 = "For Hellscream!"
 	L.adds_trigger5 = "Next squad, push forward!"
 
-	L.drakes, L.drakes_desc = EJ_GetSectionInfo(8586)
+	L.drakes = "Proto-Drakes"
+	L.drakes_desc = select(2, EJ_GetSectionInfo(8586))
 	L.drakes_icon = "ability_mount_drake_proto"
 
 	L.custom_off_shaman_marker = "Shaman marker"

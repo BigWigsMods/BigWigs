@@ -61,6 +61,8 @@ if L then
 	L.adds_trigger4 = "为了地狱咆哮！"
 	L.adds_trigger5 = "下一队，前进！"
 
+	--L.drakes = "Proto-Drakes"
+
 	L.custom_off_shaman_marker = "萨满标记"
 	L.custom_off_shaman_marker_desc = "帮助打断分配，使用 {rt1}{rt2}{rt3}{rt4}{rt5} 标记龙喉潮汐萨满，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r\n|cFFADFF2F提示：如果团队选择你打开此选项，鼠标快速指向萨满是标记他们的最快方式。|r"
 end
