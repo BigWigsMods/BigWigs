@@ -171,9 +171,9 @@ end
 
 function mod:FallingAsh(args)
 	-- this is for when the damage happens
-	self:ScheduleTimer("Message", 12, args.spellId, "Attention", self:Healer() and "Info", CL["soon"]:format(CL["count"]:format(args.spellName, ashCounter)))
+	self:ScheduleTimer("Message", 14, args.spellId, "Attention", self:Healer() and "Info", CL["soon"]:format(CL["count"]:format(args.spellName, ashCounter)))
 	ashCounter = ashCounter + 1
-	self:Bar(args.spellId, 15, CL["count"]:format(args.spellName, ashCounter))
+	self:Bar(args.spellId, 17, CL["count"]:format(args.spellName, ashCounter))
 end
 
 function mod:FoulGeyser(args) -- Blobs
