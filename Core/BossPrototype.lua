@@ -520,10 +520,10 @@ end
 
 do
 	local UnitDetailedThreatSituation = UnitDetailedThreatSituation
-	local function bossScanner(self, func, tankCheckExpiry, guid, t)
-		local elapsed = self.scheduledScansCounter[t] + 0.05
-		if elapsed > 0.8 then self:CancelTimer(self.scheduledScans[t]) end
-		self.scheduledScansCounter[t] = elapsed
+	local function bossScanner(self, func, tankCheckExpiry, guid)
+		local elapsed = self.scheduledScansCounter[func] + 0.05
+		if elapsed > 0.8 then self:CancelTimer(self.scheduledScans[func]) end
+		self.scheduledScansCounter[func] = elapsed
 
 		for i = 1, 5 do
 			local boss = format("boss%d", i)
@@ -531,8 +531,10 @@ do
 				local bossTarget = boss.."target"
 				local playerGUID = UnitGUID(bossTarget)
 				if playerGUID and ((not UnitDetailedThreatSituation(bossTarget, boss) and not self:Tank(bossTarget)) or elapsed > tankCheckExpiry) then
-					self:CancelTimer(self.scheduledScans[t])
-					func(self, self:UnitName(bossTarget), playerGUID, elapsed)
+					local name = self:UnitName(bossTarget)
+					self:CancelTimer(self.scheduledScans[func])
+					self.scheduledScans[func] = nil
+					func(self, name, playerGUID, elapsed)
 				end
 				break
 			end
@@ -541,13 +543,12 @@ do
 	function boss:GetBossTarget(func, tankCheckExpiry, guid)
 		if not self.scheduledScans then self.scheduledScans = {} self.scheduledScansCounter = {} end
 
-		local t = GetTime()
-		if self.scheduledScans[t] then -- Safety check, should never happen
-			self:CancelTimer(self.scheduledScans[t])
+		if self.scheduledScans[func] then -- Safety check, should never happen
+			self:CancelTimer(self.scheduledScans[func])
 			core:Print("Detected a timer with the same id already running whilst trying to schedule a new one, tell the Big Wigs authors!")
 		end
-		self.scheduledScansCounter[t] = 0
-		self.scheduledScans[t] = self:ScheduleRepeatingTimer(bossScanner, 0.05, self, func, tankCheckExpiry, guid, t)
+		self.scheduledScansCounter[func] = 0
+		self.scheduledScans[func] = self:ScheduleRepeatingTimer(bossScanner, 0.05, self, func, tankCheckExpiry, guid)
 	end
 end
 
