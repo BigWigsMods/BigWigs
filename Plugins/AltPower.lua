@@ -233,7 +233,7 @@ do
 		maxPlayers = GetNumGroupMembers()
 		unitList = IsInRaid() and plugin:GetRaidList() or plugin:GetPartyList()
 		powerList, sortedUnitList, roleColoredList = {}, {}, {}
-		if repeatSync then syncPowerList = {} plugin:SendMessage("BigWigs_StartSyncingPower") end
+		if repeatSync then syncPowerList = {} plugin:SendMessage("BigWigs_StartSyncingPower", opener) end
 
 		local UnitClass, UnitGroupRolesAssigned = UnitClass, UnitGroupRolesAssigned
 		local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
