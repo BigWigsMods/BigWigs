@@ -502,6 +502,7 @@ do
 		if not noEngage or noEngage ~= "NoEngage" then
 			updateData()
 
+			local diff = self:Difficulty()
 			if self.OnEngage then
 				self:OnEngage(diff)
 			end
