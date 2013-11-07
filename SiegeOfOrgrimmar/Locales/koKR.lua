@@ -6,7 +6,7 @@ end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "koKR")
 if L then
-	--@localization(locale="koKR", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
+--@localization(locale="koKR", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_bane_marks = "어둠의 권능: 파멸 징표 설정"
 	L.custom_off_bane_marks_desc = "해제를 돕기 위해 어둠의 권능: 파멸을 가진 플레이어들을 {rt1}{rt2}{rt3}{rt4}{rt5} 징표로 표시합니다. 공격대장이거나 권한이 필요합니다."

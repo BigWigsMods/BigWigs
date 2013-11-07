@@ -6,7 +6,7 @@ end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "frFR")
 if L then
-	--@localization(locale="frFR", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
+--@localization(locale="frFR", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_bane_marks = "Marquage Mot de l'ombre : Plaie"
 	L.custom_off_bane_marks_desc = "Afin d'aider à l'attribution des dissipations, marque les personnes initialement touchées par Mot de l'ombre : Plaie avec {rt1}{rt2}{rt3}{rt4}{rt5} (dans cet ordre, il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."

@@ -6,7 +6,7 @@ end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "ruRU")
 if L then
-	--@localization(locale="ruRU", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
+--@localization(locale="ruRU", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_bane_marks = "Маркировка Слово Тьмы: Погибель"
 	L.custom_off_bane_marks_desc = "Чтобы помочь с рассеиванием, на людей со Словом Тьмы: Погибель будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5} (в этой последовательности, не все метки могут быть использованы), требуется быть помощником или лидером."

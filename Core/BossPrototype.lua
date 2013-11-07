@@ -502,12 +502,11 @@ do
 		if not noEngage or noEngage ~= "NoEngage" then
 			updateData()
 
-			local diff = self:Difficulty()
 			if self.OnEngage then
-				self:OnEngage(diff)
+				self:OnEngage(difficulty)
 			end
 
-			self:SendMessage("BigWigs_OnBossEngage", self, diff)
+			self:SendMessage("BigWigs_OnBossEngage", self, difficulty)
 		end
 	end
 

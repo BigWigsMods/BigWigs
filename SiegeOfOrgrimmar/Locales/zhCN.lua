@@ -6,7 +6,7 @@ end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "zhCN")
 if L then
-	--@localization(locale="zhCN", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
+--@localization(locale="zhCN", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_bane_marks = "暗言术：蛊标记"
 	L.custom_off_bane_marks_desc = "帮助驱散分配，给最初受到暗言术：蛊的玩家使用 {rt1}{rt2}{rt3}{rt4}{rt5} 进行标记（按照这个顺序，不是所有标记会被用到），需要权限。"

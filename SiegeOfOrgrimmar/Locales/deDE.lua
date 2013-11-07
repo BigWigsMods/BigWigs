@@ -6,7 +6,7 @@ end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "deDE")
 if L then
-	--@localization(locale="deDE", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
+--@localization(locale="deDE", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_bane_marks = "Schattenwort: Unheil markieren"
 	L.custom_off_bane_marks_desc = "Um bei der Einteilung zum Bannen zu helfen, werden die anfangs von Schattenwort: Unheil betroffenen Spieler mit {rt1}{rt2}{rt3}{rt4}{rt5} markiert (in dieser Reihenfolge, vielleicht werden nicht alle Symbole genutzt), benötigt Leiter oder Assistent."
