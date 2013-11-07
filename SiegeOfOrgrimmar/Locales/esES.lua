@@ -6,15 +6,10 @@ end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "esES") or BigWigs:NewBossLocale("The Fallen Protectors", "esMX")
 if L then
-	L.defile = "Lanza Suelo mancillado"
+	--@localization(locale="esES", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_bane_marks = "Palabra de las Sombras: terror marcador"
 	L.custom_off_bane_marks_desc = "Para ayudar a asignar los dispels, marca inicialmente a la gente que tiene Palabra de las Sombras: terror en ellos con {rt1}{rt2}{rt3}{rt4}{rt5} (en este orden, puede que no se usen todas las marcas), requiere ayudante o líder."
-
-	L.no_meditative_field = "¡SIN Campo meditativo!"
-
-	L.intermission = "Medidas desesperadas"
-	L.intermission_desc = "Alertas para cuando estás acercándote a algún jefe usando Medidas desesperadas"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "esES") or BigWigs:NewBossLocale("Norushen", "esMX")

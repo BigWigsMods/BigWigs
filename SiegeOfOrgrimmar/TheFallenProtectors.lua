@@ -34,23 +34,23 @@ local deathCount = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.defile = "Defiled Ground cast"
-	L.defile_desc = select(2, EJ_GetSectionInfo(7958))
-	L.defile_icon = 143961
+	L.defile_you = "Defiled Ground under you"
+	L.defile_you_desc = "Warning for when Defiled Ground is under you."
+	L.defile_you_icon = -7958
 
-	L.custom_off_bane_marks = "Shadow Word: Bane marker"
-	L.custom_off_bane_marks_desc = "To help dispelling assignments, mark the initial people who have Shadow Word: Bane on them with {rt1}{rt2}{rt3}{rt4}{rt5} (in that order, not all marks may be used), requires promoted or leader."
-	L.custom_off_bane_marks_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1"
+	L.no_meditative_field = "You're not in the bubble!"
 
-	L.no_meditative_field = "NO Meditative Field!"
-
-	L.intermission = "Desperate Measures"
-	L.intermission_desc = "Warnings for when bosses use Desperate Measures."
+	L.intermission = EJ_GetSectionInfo(7940) -- Desperate Measures
+	L.intermission_desc = "Warnings for when the bosses use Desperate Measures."
 
 	L.inferno_self = "Inferno Strike on you"
 	L.inferno_self_desc = "Special countdown when Inferno Strike is on you."
 	L.inferno_self_icon = 143962
 	L.inferno_self_bar = "You explode!"
+
+	L.custom_off_bane_marks = "Shadow Word: Bane marker"
+	L.custom_off_bane_marks_desc = "To help dispelling assignments, mark the initial people who have Shadow Word: Bane on them with {rt1}{rt2}{rt3}{rt4}{rt5} (in that order, not all marks may be used), requires promoted or leader."
+	L.custom_off_bane_marks_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1"
 end
 L = mod:GetLocale()
 
@@ -60,7 +60,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{144396, "TANK"}, {143019, "FLASH", "SAY"}, 143027, {143007, "HEALER"}, 143958, {"defile", "TANK"}, {144357, "FLASH"}, {-7959, "FLASH", "SAY", "PROXIMITY", "ICON"}, {"inferno_self", "SAY", "EMPHASIZE"}, -- Rook Stonetoe
+		{144396, "TANK"}, {143019, "FLASH", "SAY"}, 143027, {143007, "HEALER"}, 143958, {-7958, "TANK"}, {"defile_you", "FLASH"}, {-7959, "FLASH", "SAY", "PROXIMITY", "ICON"}, {"inferno_self", "SAY", "EMPHASIZE"}, -- Rook Stonetoe
 		{143330, "TANK"}, {143292, "FLASH"}, {144367, "FLASH"}, {143840, "FLASH"}, -- He Softfoot
 		{143446, "DISPEL"}, 143491, 143564, {143423, "ICON", "SAY", "FLASH"}, -- Sun Tenderheart
 		"custom_off_bane_marks",
@@ -347,8 +347,8 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
-			self:Flash(args.spellId)
+			self:Message("defile_you", "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
+			self:Flash("defile_you", args.spellId)
 		end
 	end
 end
@@ -401,8 +401,8 @@ do
 			self:GetBossTarget(printTarget, 0.4, UnitGUID(unitId))
 		elseif spellId == 143961 then
 			if UnitDetailedThreatSituation("player", unitId) then
-				self:CDBar("defile", 10, 144357)
-				self:Message("defile", "Urgent", "Alarm", 144357)
+				self:CDBar(-7958, 10)
+				self:Message(-7958, "Urgent", "Alarm")
 			end
 		elseif spellId == 138175 and self:MobId(UnitGUID(unitId)) == 71481 then -- Despawn Area Triggers
 			self:CloseProximity(-7959)
@@ -440,13 +440,13 @@ function mod:RookIntermission(args)
 	if not self:Heroic() then
 		self:StopBar(143491) -- Calamity
 	end
-	self:CDBar("defile", 9, 144357) -- Defiled Ground (first cast not limited her tank, obviously)
+	self:CDBar(-7958, 9) -- Defiled Ground (first cast not limited to her tank, obviously)
 	self:CDBar(-7959, 7) -- Inferno Strike
 	self:CDBar(143958, 5) -- Corruption Shock
 end
 
 function mod:RookIntermissionEnd(args)
-	self:StopBar(144357) -- Defiled Ground
+	self:StopBar(-7958) -- Defiled Ground
 	self:OpenProximity("proximity", 5)
 	if not self:Heroic() then
 		self:CDBar(143491, 5) -- Calamity

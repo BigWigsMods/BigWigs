@@ -6,19 +6,10 @@ end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "deDE")
 if L then
-	L.defile = "Geschändeter Boden"
+	--@localization(locale="deDE", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_bane_marks = "Schattenwort: Unheil markieren"
 	L.custom_off_bane_marks_desc = "Um bei der Einteilung zum Bannen zu helfen, werden die anfangs von Schattenwort: Unheil betroffenen Spieler mit {rt1}{rt2}{rt3}{rt4}{rt5} markiert (in dieser Reihenfolge, vielleicht werden nicht alle Symbole genutzt), benötigt Leiter oder Assistent."
-
-	L.no_meditative_field = "KEIN Meditationsfeld!"
-
-	L.intermission = "Verzweifelte Maßnahmen"
-	L.intermission_desc = "Warnt, wenn die Bosse Verzweifelte Maßnahmen verwenden."
-
-	L.inferno_self = "Infernostoß auf Dir"
-	L.inferno_self_desc = "Spezieller Timer wenn Du von Infernostoß betroffen bist."
-	L.inferno_self_bar = "Du explodierst!"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "deDE")

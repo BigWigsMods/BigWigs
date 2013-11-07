@@ -6,19 +6,10 @@ end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "zhCN")
 if L then
-	L.defile = "施放大地污染"
+	--@localization(locale="zhCN", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_bane_marks = "暗言术：蛊标记"
 	L.custom_off_bane_marks_desc = "帮助驱散分配，给最初受到暗言术：蛊的玩家使用 {rt1}{rt2}{rt3}{rt4}{rt5} 进行标记（按照这个顺序，不是所有标记会被用到），需要权限。"
-
-	L.no_meditative_field = "没有黑暗冥想！"
-
-	L.intermission = "背水一战"
-	L.intermission_desc = "当任一首领即将使用背水一战时发出警报。"
-
-	L.inferno_self = "自身炼狱打击"
-	L.inferno_self_desc = "当你受到炼狱打击时显示特殊的倒计时条。"
-	L.inferno_self_bar = ">你< 爆炸！"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "zhCN")

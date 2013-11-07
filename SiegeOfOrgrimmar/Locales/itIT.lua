@@ -6,19 +6,10 @@ end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "itIT")
 if L then
-	L.defile = "Lancio Suolo Profanato"
+	--@localization(locale="itIT", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_bane_marks = "Parola d'Ombra: Flagello"
 	L.custom_off_bane_marks_desc = "Per aiutare a dissipare, evidenzia chi ha Parola d'Ombra: Flagello su di loro con {rt1}{rt2}{rt3}{rt4}{rt5} (in questo ordine, possono non essere usati tutti i simboli), richiede capo incursione o assistente."
-
-	L.no_meditative_field = "NESSUN Campo di Meditazione!"
-
-	L.intermission = "Misure Disperate"
-	L.intermission_desc = "Avvisa quando ti stai avvicinando ad un boss che sta lanciando Misure Disperate"
-
-	L.inferno_self = "Assalto dell'Inferno su di te"
-	L.inferno_self_desc = "Countdown Speciale quando Assalto dell'nferno è su di te."
-	L.inferno_self_bar = "Stai Esplodendo!"
 end
 
 L = BigWigs:NewBossLocale("Norushen", "itIT")
