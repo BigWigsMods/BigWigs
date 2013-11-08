@@ -16,7 +16,7 @@ end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "ptBR")
 if L then
-
+--@localization(locale="ptBR", namespace="SiegeOfOrgrimmar/ShaOfPride", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Galakras", "ptBR")

@@ -19,17 +19,10 @@ end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "frFR")
 if L then
+--@localization(locale="frFR", namespace="SiegeOfOrgrimmar/ShaOfPride", format="lua_additive_table", handle-unlocalized="ignore")@
+
 	L.custom_off_titan_mark = "Marquage Don des titans"
 	L.custom_off_titan_mark_desc = "Marque les joueurs sous l'effet de Don des titans avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
-
-	L.projection_message = "Allez sur la flèche |cFF00FF00VERTE|r !"
-	L.projection_explosion = "Explosion de la projection"
-
-	L.big_add_bar = "Manifestation de l'orgueil"
-	L.big_add_spawning = "Apparition d'une Manifestation de l'orgueil !"
-	L.small_adds = "Reflets d'orgueil"
-
-	L.titan_pride = "Titan+Orgueil : %s"
 end
 
 L = BigWigs:NewBossLocale("Galakras", "frFR")

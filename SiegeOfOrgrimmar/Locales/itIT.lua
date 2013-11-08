@@ -19,17 +19,10 @@ end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "itIT")
 if L then
+--@localization(locale="itIT", namespace="SiegeOfOrgrimmar/ShaOfPride", format="lua_additive_table", handle-unlocalized="ignore")@
+
 	L.custom_off_titan_mark = "Marcatore Potenza dei Titani"
 	L.custom_off_titan_mark_desc = "Evidenzia i giocatori con Dono dei Titani con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, richiede capoincursione o assistente.\n|cFFFF0000Soltanto 1 dei giocatori nell'incursione dovrebbe tenere abilitata questa opzione per evitare conflitti di marcamento.|r"
-
-	L.projection_message = "Vai verso la freccia |cFF00FF00VERDE|r!"
-	L.projection_explosion = "Proiezione esplosione"
-
-	L.big_add_bar = "Add Maggiore"
-	L.big_add_spawning = "Add Maggiore in arrivo!"
-	L.small_adds = "Add Minori"
-
-	L.titan_pride = "Titano+Orgoglio: %s"
 end
 
 L = BigWigs:NewBossLocale("Galakras", "itIT")

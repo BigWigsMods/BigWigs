@@ -50,7 +50,7 @@ if L then
 
 	L.custom_off_bane_marks = "Shadow Word: Bane marker"
 	L.custom_off_bane_marks_desc = "To help dispelling assignments, mark the initial people who have Shadow Word: Bane on them with {rt1}{rt2}{rt3}{rt4}{rt5} (in that order, not all marks may be used), requires promoted or leader."
-	L.custom_off_bane_marks_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1"
+	L.custom_off_bane_marks_icon = 1
 end
 L = mod:GetLocale()
 

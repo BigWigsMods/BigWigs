@@ -19,17 +19,10 @@ end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "zhCN")
 if L then
+--@localization(locale="zhCN", namespace="SiegeOfOrgrimmar/ShaOfPride", format="lua_additive_table", handle-unlocalized="ignore")@
+
 	L.custom_off_titan_mark = "泰坦之赐标记"
 	L.custom_off_titan_mark_desc = "给受到泰坦之赐的玩家使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 进行标记，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
-
-	L.projection_message = "快到|cFF00FF00绿|r箭头！"
-	L.projection_explosion = "投影爆炸"
-
-	L.big_add_bar = "傲慢具象"
-	L.big_add_spawning = "傲慢具象出现！"
-	L.small_adds = "本我具象"
-
-	L.titan_pride = "泰坦+傲：%s"
 end
 
 L = BigWigs:NewBossLocale("Galakras", "zhCN")

@@ -19,17 +19,10 @@ end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "koKR")
 if L then
+--@localization(locale="koKR", namespace="SiegeOfOrgrimmar/ShaOfPride", format="lua_additive_table", handle-unlocalized="ignore")@
+
 	L.custom_off_titan_mark = "티탄의 선물 표시"
 	L.custom_off_titan_mark_desc = "티탄의 선물 걸린 플레이어를 파악하기 쉽게하기 위해, 티탄의 선물이 걸린 플레이어를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
-
-	L.projection_message = "|cFF00FF00녹색|r 화살표 위로 올라가세요!"
-	L.projection_explosion = "투영 폭발!"
-
-	L.big_add_bar = "교만의 현신"
-	L.big_add_spawning = "교만의 현신 등장!"
-	L.small_adds = "자아성찰: 투영체"
-
-	L.titan_pride = "티탄 + 교만: %s"
 end
 
 L = BigWigs:NewBossLocale("Galakras", "koKR")

@@ -21,18 +21,14 @@ local swellingPrideCounter = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.custom_off_titan_mark = "Gift of the Titans marker"
-	L.custom_off_titan_mark_desc = "Mark people that have Gift of the Titans with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
-	L.custom_off_titan_mark_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1"
-
 	L.projection_message = "Go to |cFF00FF00GREEN|r arrow!"
 	L.projection_explosion = "Projection explosion"
 
-	L.big_add_bar = "Big add"
-	L.big_add_spawning = "Big add spawning!"
-	L.small_adds = "Small adds"
-
 	L.titan_pride = "Titan+Pride: %s"
+
+	L.custom_off_titan_mark = "Gift of the Titans marker"
+	L.custom_off_titan_mark_desc = "Mark people that have Gift of the Titans with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_titan_mark_icon = 1
 end
 L = mod:GetLocale()
 
@@ -88,9 +84,9 @@ function mod:OnEngage()
 	auraOfPrideOnMe = nil
 	self:Bar(146595, 7) -- Titan Gift
 	self:Bar(144400, 77, CL["count"]:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
-	self:Bar(-8262, 60, L["big_add_bar"], 144379) -- signature ability icon
-	self:DelayedMessage(-8262, 55, "Urgent", L["big_add_spawning"], 144379)
-	self:Bar(144800, 25, L["small_adds"])
+	self:Bar(-8262, 60, CL["big_add"], 144379) -- signature ability icon
+	self:DelayedMessage(-8262, 55, "Urgent", CL["spawning"]:format(CL["big_add"]), 144379)
+	self:Bar(144800, 25, CL["small_adds"])
 	self:Bar(144563, 52.5) -- Imprison
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	if self:Heroic() then
@@ -136,18 +132,18 @@ function mod:UnleashedStart()
 	self:StopBar(CL["count"]:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
 	self:StopBar(144563) -- Imprison
 	self:StopBar(145215) -- Banishment
-	self:StopBar(L["small_adds"])
-	self:StopBar(L["big_add_bar"])
-	self:CancelDelayedMessage(L["big_add_spawning"])
+	self:StopBar(CL["small_adds"])
+	self:StopBar(CL["big_add"])
+	self:CancelDelayedMessage(CL["spawning"]:format(CL["big_add"]))
 end
 
 function mod:Unleashed() -- Final Gift
 	self:StopBar(146595) -- Gift of the Titans
 	self:Message(-8349, "Neutral", "Info")
 	self:Bar(144400, 74, CL["count"]:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
-	self:Bar(-8262, 60, L["big_add_bar"], 144379)
-	self:DelayedMessage(-8262, 55, "Urgent", L["big_add_spawning"], 144379)
-	self:Bar(144800, 16.3, L["small_adds"])
+	self:Bar(-8262, 60, CL["big_add"], 144379)
+	self:DelayedMessage(-8262, 55, "Urgent", CL["spawning"]:format(CL["big_add"]), 144379)
+	self:Bar(144800, 16.3, CL["small_adds"])
 	self:Bar(144563, 43.6) -- Imprison
 	if self:Heroic() then
 		self:Bar(145215, 29) -- Banishment
@@ -181,7 +177,7 @@ function mod:Imprison(args)
 end
 
 function mod:SelfReflection(args)
-	self:Message(args.spellId, "Important", nil, L["small_adds"])
+	self:Message(args.spellId, "Important", nil, CL["small_adds"])
 end
 
 function mod:WoundedPride(args)
@@ -232,9 +228,9 @@ do
 			self:Bar(145215, 40) -- Banishment -- more frequently 40 than anything else
 		end
 		self:Bar(144563, 53) -- Imprison
-		self:Bar(-8262, 60, L["big_add_bar"], 144379) -- when the add is actually up
-		self:Bar(144800, 25.6, L["small_adds"])
-		self:DelayedMessage(-8262, 55, "Urgent", L["big_add_spawning"], 144379, not self:Tank() and not self:Healer() and "Alert")
+		self:Bar(-8262, 60, CL["big_add"], 144379) -- when the add is actually up
+		self:Bar(144800, 25.6, CL["small_adds"])
+		self:DelayedMessage(-8262, 55, "Urgent", CL["spawning"]:format(CL["big_add"]), 144379, not self:Tank() and not self:Healer() and "Alert")
 		-- lets do some fancy stuff
 		local playerPower = UnitPower("player", 10)
 		if playerPower > 24 and playerPower < 50 then

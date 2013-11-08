@@ -16,17 +16,7 @@ end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "zhTW")
 if L then
-	L.custom_off_titan_mark = "Gift of the Titans marker"
-	L.custom_off_titan_mark_desc = "Mark people that have Gift of the Titans with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
-
-	L.projection_message = "Go to |cFF00FF00GREEN|r arrow!"
-	L.projection_explosion = "Projection explosion"
-
-	L.big_add_bar = "Big add"
-	L.big_add_spawning = "Big add spawning!"
-	L.small_adds = "Small adds"
-
-	L.titan_pride = "泰坦+傲慢 : %s"
+--@localization(locale="zhTW", namespace="SiegeOfOrgrimmar/ShaOfPride", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Galakras", "zhTW")
