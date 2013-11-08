@@ -114,7 +114,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FlamesOfGalakrondStacking", 147029)
 	self:Log("SPELL_AURA_APPLIED", "FlamesOfGalakrondApplied", 147068)
 	self:Log("SPELL_AURA_REMOVED", "FlamesOfGalakrondRemoved", 147068)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "LastPhase", "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "LastPhase", "boss1", "boss2", "boss3", "boss4")
 
 	self:Death("Win", 72249) -- Galakras
 end
