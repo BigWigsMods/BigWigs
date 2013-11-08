@@ -43,6 +43,7 @@ local roleIcons = {
 }
 
 local function colorize(power)
+	if power == -1 then return 0, 255 end
 	local ratio = power/100*510
 	local r, g = min(ratio, 255), min(510-ratio, 255)
 	if sortDir == "AZ" then -- red to green
@@ -400,7 +401,7 @@ do
 	function UpdateDisplay()
 		for i = 1, maxPlayers do
 			local unit = unitList[i]
-			powerList[unit] = syncPowerList and (syncPowerList[unit] or 0) or UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
+			powerList[unit] = syncPowerList and (syncPowerList[unit] or -1) or UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
 		end
 		tsort(sortedUnitList, sortTbl)
 		for i = 1, db.expanded and 25 or 10 do
