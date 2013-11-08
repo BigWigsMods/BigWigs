@@ -230,10 +230,13 @@ do
 		updater:Stop()
 		if not IsInGroup() then plugin:Close() return end
 
+		if repeatSync then
+			plugin:GROUP_ROSTER_UPDATE() -- Force sync refresh
+			syncPowerList = {}
+		end
 		maxPlayers = GetNumGroupMembers()
 		unitList = IsInRaid() and plugin:GetRaidList() or plugin:GetPartyList()
 		powerList, sortedUnitList, roleColoredList = {}, {}, {}
-		if repeatSync then syncPowerList = {} plugin:SendMessage("BigWigs_StartSyncingPower", opener) end
 
 		local UnitClass, UnitGroupRolesAssigned = UnitClass, UnitGroupRolesAssigned
 		local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
@@ -472,6 +475,15 @@ do
 		end
 	end
 
+	function plugin:GROUP_ROSTER_UPDATE()
+		-- This is for people that don't show the AltPower display (event isn't registered to the display as it normally would be).
+		-- It will force sending the current power for those that do have the display shown
+		-- but just had their power list reset by a GROUP_ROSTER_UPDATE.
+		self:CancelTimer(repeatSync)
+		power = -1
+		repeatSync = self:ScheduleRepeatingTimer(sendPower, 1)
+	end
+
 	function plugin:BigWigs_StartSyncingPower(_, module)
 		power = -1
 		opener = module
@@ -479,6 +491,8 @@ do
 			repeatSync = self:ScheduleRepeatingTimer(sendPower, 1)
 			if display and display:IsShown() then
 				syncPowerList = {}
+			else
+				self:RegisterEvent("GROUP_ROSTER_UPDATE")
 			end
 		end
 	end
