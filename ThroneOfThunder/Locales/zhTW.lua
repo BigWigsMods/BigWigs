@@ -170,10 +170,10 @@ if L then
 	L.aoe_grip = "AoE控場"
 	L.aoe_grip_desc = "當死亡騎士使用血魔之握時發出警報，用於處理閃電球。"
 
-	L.shock_self = ">你<中了靜電震擊"
+	L.shock_self = "自身靜電震擊"
 	L.shock_self_desc = "顯示靜電震擊減益的持續時間計時條。"
 
-	L.overcharged_self = ">你<中了電能超載"
+	L.overcharged_self = "自身電能超載"
 	L.overcharged_self_desc = "顯示電能超載減益的持續時間計時條。"
 
 	L.last_inermission_ability = "最終階段轉換技能已使用！"

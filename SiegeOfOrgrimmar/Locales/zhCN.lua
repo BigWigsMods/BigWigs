@@ -144,17 +144,23 @@ if L then
 	L.parasites_up = "%d |4寄生虫:寄生虫; 可用"
 	L.dance = "跳舞"
 	L.prey_message = "使用控制诱捕寄生虫"
+	L.injection_over_soon = "注射即将结束 >%s<！"
+
 	L.one = "依约库克选择：一！"
 	L.two = "依约库克选择：二！"
 	L.three = "依约库克选择：三！"
 	L.four = "依约库克选择：四！"
 	L.five = "依约库克选择：五！"
-	L.edge_message = ">你< 炎界"
+
 	L.custom_off_edge_marks = "炎界标记"
 	L.custom_off_edge_marks_desc = "基于计算给谁将会炎界的玩家使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 进行标记，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
-	L.injection_over_soon = "注射即将结束 >%s<！"
+	L.edge_message = ">你< 炎界"
+
 	L.custom_off_parasite_marks = "寄生虫标记"
 	L.custom_off_parasite_marks_desc = "帮助群体控制和诱捕分配，给寄生虫使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 进行标记，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
+
+	L.injection_tank = "施放注射"
+	L.injection_tank_desc = "当对当前坦克施放注射时显示计时条。"
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "zhCN")

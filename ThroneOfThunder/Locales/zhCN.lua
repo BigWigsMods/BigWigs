@@ -170,10 +170,10 @@ if L then
 	L.aoe_grip = "AoE 之握"
 	L.aoe_grip_desc = "当死亡骑士使用血魔之握时发出警报，用于处理球状闪电。"
 
-	L.shock_self = ">你< 静电冲击"
+	L.shock_self = "自身静电冲击"
 	L.shock_self_desc = "显示静电冲击减益持续计时条。"
 
-	L.overcharged_self = ">你< 超载"
+	L.overcharged_self = "自身超载"
 	L.overcharged_self_desc = "显示超载减益持续计时条。"
 
 	L.last_inermission_ability = "最终阶段转换技能已使用！"

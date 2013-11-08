@@ -187,6 +187,7 @@ if L then
 	L.chain_heal_bar = "Focalisation : Salve de guérison"
 
 	L.farseer_trigger = "Long-voyants, soignez nos blessures !"
+
 	L.custom_off_shaman_marker = "Marquage Chevaucheur de loup long-voyant"
 	L.custom_off_shaman_marker_desc = "Afin d'aider à l'attribution des interruptions, marque les Chevaucheurs de loup long-voyant avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
 

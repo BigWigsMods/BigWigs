@@ -144,15 +144,18 @@ if L then
 	L.parasites_up = "%d 마리의 |4기생충:기생충들; 나타남"
 	L.dance = "속사"
 	L.prey_message = "기생충을 드세요."
+	L.injection_over_soon = "주입이 곧 끝남! (%s)"
+
 	L.one = "이요쿠크가 1을 선택합니다!"
 	L.two = "이요쿠크가 2을 선택합니다!"
 	L.three = "이요쿠크가 3을 선택합니다!"
 	L.four = "이요쿠크가 4을 선택합니다!"
 	L.five = "이요쿠크가 5을 선택합니다!"
-	L.edge_message = "당신은 광기의 계산 대상자입니다."
+
 	L.custom_off_edge_marks = "광기의 계산 대상 징표 설정"
 	L.custom_off_edge_marks_desc = "광기의 계산의 대상이 된 플레이어를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
-	L.injection_over_soon = "주입이 곧 끝남! (%s)"
+	L.edge_message = "당신은 광기의 계산 대상자입니다."
+
 	L.custom_off_parasite_marks = "기생충 징표 설정"
 	L.custom_off_parasite_marks_desc = "군중 제어기나 기생충을 먹어야 하는 플레이어를 위해 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다. \n|cFFFF0000혼선을 빚는 것을 방지하기 위하여, 오직 공대원 중 한 사람만이 이 옵션을 켜야합니다.|r"
 end

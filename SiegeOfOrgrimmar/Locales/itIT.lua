@@ -143,15 +143,18 @@ if L then
 	L.parasites_up = "%d |4Parassita:Parassiti; attivi"
 	L.dance = "Danza"
 	L.prey_message = "Usa Preda sul Parassita"
+	L.injection_over_soon = "Fine di Iniezione tra poco (%s)!"
+
 	L.one = "Iyyokuk seleziona: Uno!"
 	L.two = "Iyyokuk seleziona: Due!"
 	L.three = "Iyyokuk seleziona: Tre!"
 	L.four = "Iyyokuk seleziona: Quattro!"
 	L.five = "Iyyokuk seleziona: Cinque!"
-	L.edge_message = "Sei uno dei limiti"
+
 	L.custom_off_edge_marks = "Marcatori dei Limiti"
 	L.custom_off_edge_marks_desc = "Evidenzia i giocatori che saranno i limiti in base ai calcoli {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, richiede capoincursione o assistente.\n|cFFFF0000Solo 1 persona nell'incursione dovrebbe attivare questa opzione per evitare conflitti con le assegnazioni.|r"
-	L.injection_over_soon = "Fine di Iniezione tra poco (%s)!"
+	L.edge_message = "Sei uno dei limiti"
+
 	L.custom_off_parasite_marks = "Marcatore Parassita"
 	L.custom_off_parasite_marks_desc = "Evidenzia i parassiti da controllare e le assegnazioni di Preda con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, richiede capoincursione o assistente.\n|cFFFF0000Solo 1 persona nell'incursione dovrebbe attivare questa opzione per evitare conflitti con le assegnazioni.|r"
 end
@@ -163,7 +166,6 @@ if L then
 
 	L.phase_3_end_trigger = "Pensate di aver VINTO? Siete CIECHI. VI COSTRINGERÒ AD APRIRE GLI OCCHI."
 
-	L.clump_check = "Controllo ammucchiamento"
 	L.clump_check_desc = "Controlla ogni 3 secondi durante il Bombardamento i giocatori ammucchiati, se viene rilevato un gruppo, verrà creata una Pirostella Kor'kron."
 	L.clump_check_warning = "Rilevato ammucchiamento, Pirostella in arrivo"
 
