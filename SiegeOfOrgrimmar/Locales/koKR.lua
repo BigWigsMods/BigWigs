@@ -46,7 +46,7 @@ if L then
 	L.adds_trigger4 = "헬스크림 님을 위하여!"
 	L.adds_trigger5 = "다음 분대, 진격!"
 
-	--L.drakes = "Proto-Drakes"
+	L.drakes = "용아귀 원시비룡"
 
 	L.custom_off_shaman_marker = "파도주술사 징표 설정"
 	L.custom_off_shaman_marker_desc = "차단하는 것을 돕기 위해, 용아귀부족 파도주술사를 {rt1}{rt2}{rt3}{rt4}{rt5} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
