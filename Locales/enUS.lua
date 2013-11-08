@@ -145,5 +145,5 @@ L.lfr = "LFR"
 L.flex = "Flex"
 L.wipes = "Wipes:"
 L.kills = "Kills:"
-L.bestkill = "Best Kill:"
+L.best = "Best:"
 
