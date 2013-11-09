@@ -486,6 +486,7 @@ do
 	end
 
 	function plugin:BigWigs_StartSyncingPower(_, module)
+		if not IsInGroup() then return end
 		power = -1
 		opener = module
 		if not repeatSync then
