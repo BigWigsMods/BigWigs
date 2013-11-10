@@ -121,13 +121,13 @@ end
 
 local function warnTowerAdds()
 	mod:Message("towers", "Attention", nil, L["tower_defender"], 85214)
-	mod:Bar("towers", 59, L["tower_defender"], 85214) -- random orc icon
+	mod:Bar("towers", 60, L["tower_defender"], 85214) -- random orc icon
 end
 
 local function firstTowerAdd()
 	warnTowerAdds()
 	if not towerAddTimer then
-		towerAddTimer = mod:ScheduleRepeatingTimer(warnTowerAdds, 59)
+		towerAddTimer = mod:ScheduleRepeatingTimer(warnTowerAdds, 60)
 	end
 end
 
