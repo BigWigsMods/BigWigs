@@ -127,14 +127,14 @@ end
 local function firstTowerAdd()
 	warnTowerAdds()
 	if not towerAddTimer then
-		towerAddTimer = mod:ScheduleRepeatingTimer(warnTowerAdds, 60)
+		towerAddTimer = mod:ScheduleRepeatingTimer(warnTowerAdds, 59)
 	end
 end
 
 function mod:OnEngage()
 	if self:Heroic() then
-		self:Bar("towers", 8, L["tower_defender"], 85214) -- random orc icon
-		self:ScheduleTimer(firstTowerAdd, 8)
+		self:Bar("towers", 6, L["tower_defender"], 85214) -- random orc icon
+		self:ScheduleTimer(firstTowerAdd, 6)
 	else
 		self:Bar("towers", 116, L["south_tower"], L.towers_icon)
 	end
