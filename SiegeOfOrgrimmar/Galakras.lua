@@ -133,8 +133,8 @@ end
 
 function mod:OnEngage()
 	if self:Heroic() then
-		self:Bar("towers", 13, L["tower_defender"], 85214) -- random orc icon
-		self:ScheduleTimer(firstTowerAdd, 13)
+		self:Bar("towers", 8, L["tower_defender"], 85214) -- random orc icon
+		self:ScheduleTimer(firstTowerAdd, 8)
 	else
 		self:Bar("towers", 116, L["south_tower"], L.towers_icon)
 	end
