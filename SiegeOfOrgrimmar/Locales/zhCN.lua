@@ -27,8 +27,7 @@ end
 
 L = BigWigs:NewBossLocale("Galakras", "zhCN")
 if L then
-	L.demolisher = "投石车"
-	L.demolisher_desc = "库卡隆投石车进入战斗计时条。"
+	L.demolisher_message = "投石车"
 
 	L.towers = "塔楼"
 	L.towers_desc = "当塔楼被突破时发出警报。"

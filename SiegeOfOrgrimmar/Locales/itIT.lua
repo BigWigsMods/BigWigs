@@ -27,8 +27,7 @@ end
 
 L = BigWigs:NewBossLocale("Galakras", "itIT")
 if L then
-	L.demolisher = "Demolitori"
-	L.demolisher_desc = "Timer per l'arrivo in combattimento dei Demolitori Kor'kron"
+	L.demolisher_message = "Demolitori"
 
 	L.towers = "Torri"
 	L.towers_desc = "Avvisa quando le torri vengono distrutte"

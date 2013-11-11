@@ -27,8 +27,7 @@ end
 
 L = BigWigs:NewBossLocale("Galakras", "koKR")
 if L then
-	L.demolisher = "파괴 전차 등장"
-	L.demolisher_desc = "코르크론 파괴 전차가 전투에 나타날 때 까지의 시간"
+	L.demolisher_message = "파괴 전차 등장"
 
 	L.towers = "탑"
 	L.towers_desc = "탑에 진입이 가능해 질 때 경고"

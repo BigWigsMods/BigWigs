@@ -21,8 +21,7 @@ end
 
 L = BigWigs:NewBossLocale("Galakras", "zhTW")
 if L then
-	L.demolisher = "石毀車"
-	L.demolisher_desc = "柯爾克隆石毀車進入戰鬥計時器"
+	L.demolisher_message = "石毀車"
 
 	L.towers = "高塔"
 	L.towers_desc = "當高塔被突破時發出警報"

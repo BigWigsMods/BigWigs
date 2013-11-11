@@ -27,8 +27,8 @@ local markTimer = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.demolisher = "Demolisher"
-	L.demolisher_desc = "Timers for when the Kor'kron Demolishers enter the fight."
+	L.demolisher, L.demolisher_desc = EJ_GetSectionInfo(8533)
+	L.demolisher_message = "Demolisher"
 	L.demolisher_icon = 125914
 
 	L.towers = "Towers"
@@ -215,13 +215,13 @@ function mod:ShatteringCleave(args)
 end
 
 function mod:Demolisher()
-	self:Message("demolisher", "Attention", nil, L["demolisher"], L.demolisher_icon)
+	self:Message("demolisher", "Attention", nil, L["demolisher_message"], L.demolisher_icon)
 end
 
 function mod:SouthTower()
 	self:StopBar(L["south_tower"])
 	self:Message("towers", "Neutral", "Long", L["south_tower"], L.towers_icon)
-	self:Bar("demolisher", 20, L["demolisher"], L.demolisher_icon)
+	self:Bar("demolisher", 20, L["demolisher_message"], L.demolisher_icon)
 
 	if self:Heroic() then
 		self:CancelTimer(towerAddTimer)
@@ -236,7 +236,7 @@ end
 function mod:NorthTower()
 	self:StopBar(L["north_tower"])
 	self:Message("towers", "Neutral", "Long", L["north_tower"], L.towers_icon)
-	self:Bar("demolisher", 20, L["demolisher"], L.demolisher_icon)
+	self:Bar("demolisher", 20, L["demolisher_message"], L.demolisher_icon)
 
 	if self:Heroic() then
 		self:CancelTimer(towerAddTimer)
