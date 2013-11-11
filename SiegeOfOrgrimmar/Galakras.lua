@@ -109,7 +109,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PoisonCloud", 147705)
 	self:Log("SPELL_CAST_START", "CrushersCall", 146769)
 	self:Log("SPELL_CAST_SUCCESS", "ShatteringCleave", 146849)
-	self:Emote("Towers", L["south_tower_trigger"], L["north_tower_trigger"])
+	self:Emote("SouthTower", L["south_tower_trigger"])
+	self:Emote("NorthTower", L["north_tower_trigger"])
 	-- Galakras
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FlamesOfGalakrondStacking", 147029)
 	self:Log("SPELL_AURA_APPLIED", "FlamesOfGalakrondApplied", 147068)
@@ -217,25 +218,30 @@ function mod:Demolisher()
 	self:Message("demolisher", "Attention", nil, L["demolisher"], L.demolisher_icon)
 end
 
-function mod:Towers(msg)
-	local tower = msg:find(L["north_tower_trigger"]) and L["north_tower"] or L["south_tower"] -- this will be kinda bad till every localization is done
-	self:StopBar(tower)
-	self:Message("towers", "Neutral", "Long", tower, L.towers_icon)
+function mod:SouthTower()
+	self:StopBar(L["south_tower"])
+	self:Message("towers", "Neutral", "Long", L["south_tower"], L.towers_icon)
 	self:Bar("demolisher", 20, L["demolisher"], L.demolisher_icon)
 
 	if self:Heroic() then
-		if tower == L["north_tower"] then
-			self:CancelTimer(towerAddTimer)
-			towerAddTimer = nil
-			self:StopBar(L["tower_defender"])
-		else
-			self:CancelTimer(towerAddTimer)
-			towerAddTimer = nil
-			self:Bar("towers", 35, L["tower_defender"], 85214) -- random orc icon
-			self:ScheduleTimer(firstTowerAdd, 35)
-		end
-	elseif tower == L["south_tower"] then
+		self:CancelTimer(towerAddTimer)
+		towerAddTimer = nil
+		self:Bar("towers", 35, L["tower_defender"], 85214) -- random orc icon
+		self:ScheduleTimer(firstTowerAdd, 35)
+	else
 		self:Bar("towers", 150, L["north_tower"], L.towers_icon) -- XXX verify
+	end
+end
+
+function mod:NorthTower()
+	self:StopBar(L["north_tower"])
+	self:Message("towers", "Neutral", "Long", L["north_tower"], L.towers_icon)
+	self:Bar("demolisher", 20, L["demolisher"], L.demolisher_icon)
+
+	if self:Heroic() then
+		self:CancelTimer(towerAddTimer)
+		towerAddTimer = nil
+		self:StopBar(L["tower_defender"])
 	end
 end
 
