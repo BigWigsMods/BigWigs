@@ -442,6 +442,7 @@ end
 
 function plugin:Close()
 	if repeatSync then
+		self:UnregisterEvent("GROUP_ROSTER_UPDATE")
 		self:CancelTimer(repeatSync)
 		repeatSync = nil
 	end
