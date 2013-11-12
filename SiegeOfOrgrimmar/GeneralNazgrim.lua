@@ -211,7 +211,9 @@ end
 function mod:Adds()
 	self:Message(-7920, "Neutral", "Long", CL["count"]:format(CL["adds"], addWaveCounter))
 	addWaveCounter = addWaveCounter + 1
-	self:Bar(-7920, 46, CL["count"]:format(CL["adds"], addWaveCounter), "achievement_guildperk_everybodysfriend")
+	if addWaveCounter < 11 then
+		self:Bar(-7920, 46, CL["count"]:format(CL["adds"], addWaveCounter), "achievement_guildperk_everybodysfriend")
+	end
 end
 
 -- Boss
