@@ -21,7 +21,7 @@ end
 
 L = BigWigs:NewBossLocale("Galakras", "ptBR")
 if L then
-
+	L.warlord_zaela = "Senhora da Guerra Zaela"
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "ptBR")

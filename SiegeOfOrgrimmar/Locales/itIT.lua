@@ -44,6 +44,8 @@ if L then
 	L.adds_trigger4 = "Per Malogrido!"
 	L.adds_trigger5 = "Prossima squadra, avanti!"
 
+	L.warlord_zaela = "Warlord Zaela"
+
 	L.drakes = "Proto-Draghi"
 
 	L.custom_off_shaman_marker = "Marcatore Sciamano"

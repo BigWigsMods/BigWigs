@@ -20,6 +20,7 @@ local towerAddTimer = nil
 local markableMobs = {}
 local marksUsed = {}
 local markTimer = nil
+local addsCounter = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -48,6 +49,8 @@ if L then
 	L.adds_trigger3 = "Dragonmaw, advance!"
 	L.adds_trigger4 = "For Hellscream!"
 	L.adds_trigger5 = "Next squad, push forward!"
+
+	L.warlord_zaela = "Warlord Zaela"
 
 	L.drakes = "Proto-Drakes"
 	L.drakes_desc = select(2, EJ_GetSectionInfo(8586))
@@ -86,9 +89,6 @@ function mod:OnBossEnable()
 	end
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	--self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "Adds") -- could just check for sender = Warlord Zaela, target = player to avoid localization?
-	self:Yell("AddsInitial", L.adds_trigger1, L.adds_trigger2)
-	self:Yell("Adds", L.adds_trigger3, L.adds_trigger4, L.adds_trigger5)
 
 	-- Shaman marking, enabled here for trash
 	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
@@ -140,6 +140,9 @@ function mod:OnEngage()
 		self:Bar("towers", 116, L["south_tower"], L.towers_icon)
 	end
 
+	addsCounter = 0
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "Adds")
+
 	if self.db.profile.custom_off_shaman_marker then
 		wipe(markableMobs)
 		wipe(marksUsed)
@@ -181,6 +184,7 @@ end
 
 function mod:LastPhase(unitId, _, _, _, spellId)
 	if spellId == 50630 then -- Eject All Passengers
+		self:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
 		self:Message("stages", "Neutral", "Warning", CL["incoming"]:format(UnitName(unitId)), "ability_mount_drake_proto")
 		self:StopBar(L["adds"])
 		self:StopBar(L["drakes"])
@@ -274,26 +278,24 @@ function mod:Fracture(args)
 	self:TargetMessage(146899, args.destName, "Urgent", "Alarm", nil, nil, true)
 end
 
-do
-	local addsCounter = 1
-	function mod:AddsInitial()
-		-- is actually ~6s or so after the first wave, but a better starting point than engage
-		addsCounter = 1
-		self:Bar("adds", 49, L["adds"], L.adds_icon)
-		self:Bar("drakes", 158, L["drakes"], L.drakes_icon)
-	end
-
-	function mod:Adds()
-		self:Message("adds", "Attention", "Info", CL["incoming"]:format(L["adds"]), L.adds_icon)
-		addsCounter = addsCounter + 1
-		if (addsCounter + 1) % 4  == 0 then
-			self:DelayedMessage("drakes", 55, "Attention", CL["incoming"]:format(L["drakes"]), L.drakes_icon, "Info")
-			self:Bar("adds", 110, L["adds"], L.adds_icon)
-		else
-			if addsCounter % 4 == 0 then -- start the drakes timer on the wave after drakes
-				self:Bar("drakes", 220, L["drakes"], L.drakes_icon)
+function mod:Adds(_, _, unit, _, _, target)
+	if unit == L["warlord_zaela"] then
+		if addsCounter == 0 then
+			self:Bar("adds", 59, L["adds"], L.adds_icon)
+			self:Bar("drakes", 168, L["drakes"], L.drakes_icon)
+			addsCounter = 1
+		elseif UnitIsPlayer(target) then
+			self:Message("adds", "Attention", "Info", CL["incoming"]:format(L["adds"]), L.adds_icon)
+			addsCounter = addsCounter + 1
+			if (addsCounter + 1) % 4  == 0 then
+				self:DelayedMessage("drakes", 55, "Attention", CL["incoming"]:format(L["drakes"]), L.drakes_icon, "Info")
+				self:Bar("adds", 110, L["adds"], L.adds_icon)
+			else
+				if addsCounter % 4 == 0 then -- start the drakes timer on the wave after drakes
+					self:Bar("drakes", 220, L["drakes"], L.drakes_icon)
+				end
+				self:Bar("adds", 55, L["adds"], L.adds_icon)
 			end
-			self:Bar("adds", 55, L["adds"], L.adds_icon)
 		end
 	end
 end

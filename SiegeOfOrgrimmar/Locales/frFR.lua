@@ -44,6 +44,8 @@ if L then
 	L.adds_trigger4 = "Pour Hurlenfer !"
 	L.adds_trigger5 = "Escouade suivante, en avant !"
 
+	L.warlord_zaela = "Seigneur de guerre Zaela"
+
 	--L.drakes = "Proto-Drakes"
 
 	L.custom_off_shaman_marker = "Marquage Chaman des marées"

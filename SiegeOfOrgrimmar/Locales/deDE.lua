@@ -44,6 +44,8 @@ if L then
 	L.adds_trigger4 = "Für Höllschrei!"
 	L.adds_trigger5 = "Nächster Trupp, vorwärts!"
 
+	L.warlord_zaela = "Kriegsfürstin Zaela"
+
 	--L.drakes = "Proto-Drakes"
 
 	L.custom_off_shaman_marker = "Schamanen markieren"

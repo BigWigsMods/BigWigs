@@ -45,6 +45,8 @@ if L then
 	L.adds_trigger4 = "헬스크림 님을 위하여!"
 	L.adds_trigger5 = "다음 분대, 진격!"
 
+	L.warlord_zaela = "Warlord Zaela"
+
 	L.drakes = "용아귀 원시비룡"
 
 	L.custom_off_shaman_marker = "파도주술사 징표 설정"

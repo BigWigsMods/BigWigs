@@ -44,6 +44,8 @@ if L then
 	L.adds_trigger4 = "За Гарроша!"
 	L.adds_trigger5 = "Следующий отряд!"
 
+	L.warlord_zaela = "Полководец Зела"
+
 	L.drakes = "Протодракон"
 
 	L.custom_off_shaman_marker = "Маркировка Шаманов"

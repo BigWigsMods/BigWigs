@@ -44,6 +44,8 @@ if L then
 	L.adds_trigger4 = "为了地狱咆哮！"
 	L.adds_trigger5 = "下一队，前进！"
 
+	L.warlord_zaela = "Warlord Zaela"
+
 	L.drakes = "始祖幼龙"
 
 	L.custom_off_shaman_marker = "萨满标记"

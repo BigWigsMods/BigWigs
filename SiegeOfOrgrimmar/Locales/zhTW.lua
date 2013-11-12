@@ -31,6 +31,8 @@ if L then
 	L.north_tower = "北塔"
 	L.tower_defender = "Tower defender"
 
+	L.warlord_zaela = "Warlord Zaela"
+
 	L.drakes = "元龍"
 
 	L.custom_off_shaman_marker = "薩滿標記"
