@@ -650,6 +650,7 @@ function boss:Damager()
 	if myRole ~= "DAMAGER" then return end
 	local role
 	local _, class = UnitClass("player")
+	local tree = GetSpecialization()
 	if
 		class == "MAGE" or class == "WARLOCK" or class == "HUNTER" or (class == "DRUID" and tree == 1) or
 		(class == "PRIEST" and tree == 3) or (class == "SHAMAN" and tree == 1)
