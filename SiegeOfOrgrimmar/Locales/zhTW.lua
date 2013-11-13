@@ -31,7 +31,7 @@ if L then
 	L.north_tower = "北塔"
 	L.tower_defender = "Tower defender"
 
-	L.warlord_zaela = "Warlord Zaela"
+	L.warlord_zaela = "督軍札伊拉"
 
 	L.drakes = "元龍"
 
