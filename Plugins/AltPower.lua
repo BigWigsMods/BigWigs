@@ -228,29 +228,36 @@ do
 	-- whilst the display is shown (more likely to happen in LFR). The display should not be shown outside of an encounter
 	-- where the event seems to fire frequently, which would make this very inefficient.
 	local function GROUP_ROSTER_UPDATE()
-		updater:Stop()
 		if not IsInGroup() then plugin:Close() return end
 
+		local players = GetNumGroupMembers()
+		if players ~= maxPlayers then
+			updater:Stop()
+
+			if repeatSync then
+				syncPowerList = {}
+			end
+			maxPlayers = players
+			unitList = IsInRaid() and plugin:GetRaidList() or plugin:GetPartyList()
+			powerList, sortedUnitList, roleColoredList = {}, {}, {}
+
+			local UnitClass, UnitGroupRolesAssigned = UnitClass, UnitGroupRolesAssigned
+			local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
+			for i = 1, players do
+				local unit = unitList[i]
+				sortedUnitList[i] = unit
+
+				local name = plugin:UnitName(unit, true) or "???"
+				local _, class = UnitClass(unit)
+				local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
+				roleColoredList[unit] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
+			end
+			updater:Play()
+		end
+
 		if repeatSync then
-			plugin:GROUP_ROSTER_UPDATE() -- Force sync refresh
-			syncPowerList = {}
+			plugin:RosterUpdateForHiddenDisplay() -- Maybe a player logged back on after a DC, force sync refresh to send them our power.
 		end
-		maxPlayers = GetNumGroupMembers()
-		unitList = IsInRaid() and plugin:GetRaidList() or plugin:GetPartyList()
-		powerList, sortedUnitList, roleColoredList = {}, {}, {}
-
-		local UnitClass, UnitGroupRolesAssigned = UnitClass, UnitGroupRolesAssigned
-		local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
-		for i = 1, maxPlayers do
-			local unit = unitList[i]
-			sortedUnitList[i] = unit
-
-			local name = plugin:UnitName(unit, true) or "???"
-			local _, class = UnitClass(unit)
-			local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
-			roleColoredList[unit] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
-		end
-		updater:Play()
 	end
 
 	local function createFrame()
@@ -351,6 +358,7 @@ do
 
 		opener = module
 		sortDir = sorting
+		maxPlayers = 0 -- Force an update via GROUP_ROSTER_UPDATE
 		if title then
 			display.title:SetFormattedText("%s: %s", L.altPowerTitle, title)
 		else
@@ -477,10 +485,10 @@ do
 		end
 	end
 
-	function plugin:GROUP_ROSTER_UPDATE()
+	function plugin:RosterUpdateForHiddenDisplay()
 		-- This is for people that don't show the AltPower display (event isn't registered to the display as it normally would be).
-		-- It will force sending the current power for those that do have the display shown
-		-- but just had their power list reset by a GROUP_ROSTER_UPDATE.
+		-- It will force sending the current power for those that do have the display shown but just had their power list reset by a 
+		-- GROUP_ROSTER_UPDATE. Or someone DCd and is logging back on, so send an update.
 		self:CancelTimer(repeatSync)
 		power = -1
 		repeatSync = self:ScheduleRepeatingTimer(sendPower, 1)
@@ -495,7 +503,7 @@ do
 			if display and display:IsShown() then
 				syncPowerList = {}
 			else
-				self:RegisterEvent("GROUP_ROSTER_UPDATE")
+				self:RegisterEvent("GROUP_ROSTER_UPDATE", "RosterUpdateForHiddenDisplay")
 			end
 		end
 	end

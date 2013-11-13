@@ -666,8 +666,8 @@ do
 				timer:Play()
 			end
 			message = tonumber(message)
-			-- XXX The > 14k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
-			if not message or message == 0 or message > 14000 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
+			-- XXX The > 13k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
+			if not message or message == 0 or message > 13000 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
 			usersRelease[sender] = message
 			usersAlpha[sender] = nil
 			if message > highestReleaseRevision then highestReleaseRevision = message end
@@ -688,8 +688,8 @@ do
 				timer:Play()
 			end
 			message = tonumber(message)
-			-- XXX The > 14k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
-			if not message or message == 0 or message > 14000 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
+			-- XXX The > 13k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
+			if not message or message == 0 or message > 13000 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
 			if message > highestAlphaRevision then highestAlphaRevision = message end
