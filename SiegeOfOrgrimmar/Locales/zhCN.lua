@@ -99,6 +99,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "zhCN")
 if L then
+	--L.start_trigger = "Hey, we recording?"
 	L.win_trigger = "系统重置中。请勿关闭电源，否则将发生爆炸。"
 
 	L.enable_zone = "遗物仓库"

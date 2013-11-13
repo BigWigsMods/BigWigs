@@ -99,6 +99,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "frFR")
 if L then
+	--L.start_trigger = "Hey, we recording?"
 	L.win_trigger = "Système en cours de réinitialisation. Veuillez ne pas le débrancher, ou il pourrait vous sauter à la figure." -- to check
 
 	L.enable_zone = "Entrepôt de l’Artéfact"

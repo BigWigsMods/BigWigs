@@ -35,6 +35,7 @@ end
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.start_trigger = "Hey, we recording?"
 	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 
 	L.enable_zone = "Artifact Storage"
@@ -51,7 +52,7 @@ function mod:GetOptions()
 		145288, {145461, "TANK"}, {142947, "TANK"}, 142694, -- Mogu crate
 		{145987, "PROXIMITY", "FLASH"}, 145747, {145692, "TANK"}, 145715, {145786, "DISPEL"},-- Mantid crate
 		{146217, "FLASH"}, 146222, 146257, -- Crate of Panderan Relics
-		"proximity", "bosskill",
+		"proximity", "warmup", "bosskill",
 	}, {
 		[145288] = -8434, -- Mogu crate
 		[145987] = -8439, -- Mantid crate
@@ -98,7 +99,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SetToBlowApplied", 145987)
 	self:Log("SPELL_AURA_REMOVED", "SetToBlowRemoved", 145987)
 
+	self:Yell("Warmup", L.start_trigger)
 	self:Yell("Win", L.win_trigger)
+end
+
+function mod:Warmup()
+	self:Bar("warmup", 19, COMBAT, "achievement_boss_spoils_of_pandaria")
 end
 
 function mod:OnEngage()

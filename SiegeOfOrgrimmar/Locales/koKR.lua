@@ -100,6 +100,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "koKR")
 if L then
+	--L.start_trigger = "Hey, we recording?"
 	L.win_trigger = "시스템 초기화 중. 전원을 끄면 폭발할 수 있으니 주의하라고."
 
 	L.enable_zone = "유물 보관실"
