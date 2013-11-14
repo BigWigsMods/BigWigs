@@ -100,7 +100,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "koKR")
 if L then
-	--L.start_trigger = "Hey, we recording?"
+	L.start_trigger = "녹음되고 있는 건가? 응? 좋아. 고블린 티탄 제어 모듈 시동 중. 물러서라고."
 	L.win_trigger = "시스템 초기화 중. 전원을 끄면 폭발할 수 있으니 주의하라고."
 
 	L.enable_zone = "유물 보관실"
