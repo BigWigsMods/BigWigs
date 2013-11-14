@@ -45,12 +45,12 @@ if L then
 	L.adds_trigger4 = "헬스크림 님을 위하여!"
 	L.adds_trigger5 = "다음 분대, 진격!"
 
-	L.warlord_zaela = "Warlord Zaela"
+	L.warlord_zaela = "전쟁군주 잴라"
 
 	L.drakes = "용아귀 원시비룡"
 
 	L.custom_off_shaman_marker = "파도주술사 징표 설정"
-	L.custom_off_shaman_marker_desc = "차단하는 것을 돕기 위해, 용아귀부족 파도주술사를 {rt1}{rt2}{rt3}{rt4}{rt5} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
+	L.custom_off_shaman_marker_desc = "차단하는 것을 돕기 위해, 용아귀부족 파라주술사를 {rt1}{rt2}{rt3}{rt4}{rt5} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "koKR")
@@ -148,11 +148,11 @@ if L then
 	L.prey_message = "기생충을 드세요."
 	L.injection_over_soon = "주입이 곧 끝남! (%s)"
 
-	L.one = "이요쿠크가 1을 선택합니다!"
-	L.two = "이요쿠크가 2을 선택합니다!"
-	L.three = "이요쿠크가 3을 선택합니다!"
-	L.four = "이요쿠크가 4을 선택합니다!"
-	L.five = "이요쿠크가 5을 선택합니다!"
+	L.one = "이요쿠크가 1"
+	L.two = "이요쿠크가 2"
+	L.three = "이요쿠크가 3"
+	L.four = "이요쿠크가 4"
+	L.five = "이요쿠크가 5"
 
 	L.custom_off_edge_marks = "광기의 계산 대상 징표 설정"
 	L.custom_off_edge_marks_desc = "광기의 계산의 대상이 된 플레이어를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
