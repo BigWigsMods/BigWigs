@@ -55,6 +55,7 @@ local injectionBar, injectionTarget
 local markableMobs = {}
 local marksUsed = {}
 local markTimer = nil
+local catalystProximityHandler = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -162,6 +163,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Gouge", 143939)
 	--Xaril the Poisoned Mind
 	self:Log("SPELL_CAST_START", "Catalysts", 142725, 142726, 142727, 142729, 142730, 142728) -- blue red yellow purple green orange
+	self:Log("SPELL_CAST_SUCCESS", "CatalystsSuccess", 142725, 142726, 142727, 142729, 142730, 142728) -- blue red yellow purple green orange
 	self:Log("SPELL_CAST_SUCCESS", "ToxicInjection", 142528)
 	self:Log("SPELL_AURA_REMOVED", "ToxicInjectionsRemoved", 142532, 142533, 142534) -- blue red yellow
 	self:Log("SPELL_AURA_APPLIED", "ToxicInjectionsApplied", 142532, 142533, 142534) -- blue red yellow
@@ -211,6 +213,7 @@ end
 function mod:OnEngage()
 	self:Berserk(720)
 	wipe(redPlayers)
+	catalystProximityHandler = nil
 	deathCounter = 0
 	wipe(bossesActive)
 	results = {
@@ -663,19 +666,43 @@ end
 
 do
 	local matches = {
-		[mod:SpellName(142532)] = {[142725] = "ff0000ff", [142729] = "ff9900FF", [142730] = "ff008000"}, -- blue
+		[mod:SpellName(142532)] = {[142725] = "ff0000ff", [142729] = "ff9900FF", [142730] = "ff008000", proximityN = redPlayers, proximityH = redPlayers}, -- blue
 		[mod:SpellName(142533)] = {[142726] = "ffff0000", [142729] = "ff9900FF", [142728] = "ffFF9900"}, -- red
-		[mod:SpellName(142534)] = {[142727] = "ffFFFF00", [142730] = "ff008000", [142728] = "ffFF9900"} -- yellow
+		[mod:SpellName(142534)] = {[142727] = "ffFFFF00", [142730] = "ff008000", [142728] = "ffFF9900", proximityN = redPlayers} -- yellow
 	}
+	local function handleCatalystProximity()
+		wipe(redPlayers)
+		for i=1, GetNumGroupMembers() do
+			local name = GetRaidRosterInfo(i)
+			if not UnitIsUnit("player", name) and (UnitDebuff(name, mod:SpellName(142533)) or (mod:Heroic() and UnitDebuff(name, mod:SpellName(142534)))) then -- red or heroic and yellow
+				redPlayers[#redPlayers+1] = name
+			end
+		end
+		local myDebuff = UnitDebuff("player", mod:SpellName(142532)) or UnitDebuff("player", mod:SpellName(142533)) or UnitDebuff("player", mod:SpellName(142534)) -- blue, red, yellow
+		if myDebuff then
+			mod:OpenProximity(-8034, 10, matches[myDebuff][mod:Heroic() and "proximityH" or "proximityN"])
+		end
+		mod:Message(-8034, "Neutral", nil, CL["soon"]:format(mod:SpellName(-8034)))
+	end
 	function mod:Catalysts(args)
 		self:CDBar(-8034, 25, chooseCatalyst)
 		local myDebuff = UnitDebuff("player", mod:SpellName(142532)) or UnitDebuff("player", mod:SpellName(142533)) or UnitDebuff("player", mod:SpellName(142534)) -- blue, red, yellow
 		self:Message(-8034, "Neutral", "Alert", (myDebuff and matches[myDebuff][args.spellId]) and L.catalyst_match:format(matches[myDebuff][args.spellId]) or args.spellName, args.spellId)
+		self:CancelTimer(catalystProximityHandler) -- stop our previous timer it should have happened by now, but first one is tricky, so be safe and just stop it, 2nd one will be accurate
+		catalystProximityHandler = self:ScheduleTimer(handleCatalystProximity, 20)
+	end
+	function mod:ToxicInjection(args)
+		self:CDBar(-8034, 18, chooseCatalyst)
+		catalystProximityHandler = self:ScheduleTimer(handleCatalystProximity, 13) -- nothing should be scheduled at this point since this happens before ANYTHING so we don't overwrite any timer
 	end
 end
 
-function mod:ToxicInjection(args)
-	self:CDBar(-8034, 18, chooseCatalyst)
+function mod:CatalystsSuccess(args)
+	if self:Heroic() then -- on heroic they have flight time
+		self:ScheduleTimer("CloseProximity", (args.spellId == 142729) and 12 or 5, -8034) -- you want proximity open for purple for full duration of the debuff -- timers might need some adjusting
+	else
+		self:CloseProximity(-8034)
+	end
 end
 
 function mod:ToxicInjectionsRemoved(args)
@@ -686,32 +713,17 @@ function mod:ToxicInjectionsRemoved(args)
 end
 
 function mod:ToxicInjectionsApplied(args)
-	if not self:Me(args.destGUID) then return end
-	for i=1, GetNumGroupMembers() do
-		local name = GetRaidRosterInfo(i)
-		if UnitDebuff(name, self:SpellName(142533)) and not UnitIsUnit("player", name) then
-			redPlayers[#redPlayers+1] = name
+	if self:Me(args.destGUID) then
+		local message
+		if args.spellId == 142532 then -- blue
+			message = blueToxin
+		elseif args.spellId == 142533 then -- red
+			message = redToxin
+		elseif args.spellId == 142534 then -- yellow
+			message = yellowToxin
 		end
-		if self:Heroic() and UnitDebuff(name, self:SpellName(142534)) and not UnitIsUnit("player", name) then -- add yellow too
-			redPlayers[#redPlayers+1] = name
-		end
+		self:Message(-8034, "Personal", "Long", CL["you"]:format(message))
 	end
-	local message
-	if args.spellId == 142532 then -- blue
-		message = blueToxin
-		self:OpenProximity(-8034, 10, redPlayers)
-	elseif args.spellId == 142533 then -- red
-		message = redToxin
-		self:OpenProximity(-8034, 10)
-	elseif args.spellId == 142534 then -- yellow
-		message = yellowToxin
-		if self:Heroic() then
-			self:OpenProximity(-8034, 10) -- cuz of orange
-		else
-			self:OpenProximity(-8034, 10, redPlayers)
-		end
-	end
-	self:Message(-8034, "Personal", "Long", CL["you"]:format(message))
 end
 
 --Kil'ruk the Wind-Reaver
@@ -856,6 +868,8 @@ function mod:Deaths(args)
 		self:StopBar(chooseCatalyst)
 		deathCounter = deathCounter + 1
 		self:CloseProximity(-8034)
+		self:CancelTimer(catalystProximityHandler)
+		catalystProximityHandler = nil
 	elseif args.mobId == 71161 then --Kil'ruk the Wind-Reaver
 		self:StopBar(148676) -- Reave
 		self:StopBar(-8008) -- Death from Above
