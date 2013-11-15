@@ -461,9 +461,11 @@ do
 		end
 	end
 	function mod:YShaarjsProtection(args)
-		if not self:LFR() and self:MobId(args.destGUID) == 71865 then
-			self:ScheduleTimer(announceHopeless, 6)
+		if self:MobId(args.destGUID) == 71865 then
 			self:Message(args.spellId, "Positive", "Long", CL["over"]:format(args.spellName))
+			if not self:LFR() then
+				self:ScheduleTimer(announceHopeless, 6)
+			end
 		end
 	end
 end
@@ -583,21 +585,22 @@ do
 		self:TargetMessage(144758, name, "Urgent", "Alarm")
 	end
 
-	local phase2DesecrateCDs = {36, 45, 36}
+	local phase2DesecrateTimers = {36, 45, 36}
 	function mod:Desecrate(args)
 		self:GetBossTarget(bossTarget, 1, args.sourceGUID)
-		local desecrateCD = 41
+
+		local cd = 41
 		if phase == 2 then
 			local diff = self:Difficulty()
 			if diff == 3 or diff == 5 then -- 10 man
-				desecrateCD = phase2DesecrateCDs[desecrateCounter] or 45
+				cd = phase2DesecrateTimers[desecrateCounter] or 45
 			else
-				desecrateCD = 35
+				cd = 35
 			end
 		elseif phase == 3 then
-			desecrateCD = (desecrateCounter == 1) and 35 or 25
+			cd = (desecrateCounter == 1) and 35 or 25
 		end
-		self:CDBar(144758, desecrateCD)
+		self:CDBar(144758, cd)
 		desecrateCounter = desecrateCounter + 1
 	end
 end
