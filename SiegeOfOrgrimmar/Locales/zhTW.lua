@@ -2,7 +2,6 @@ local L = BigWigs:NewBossLocale("Immerseus", "zhTW")
 if not L then return end
 if L then
 --@localization(locale="zhTW", namespace="SiegeOfOrgrimmar/Immerseus", format="lua_additive_table", handle-unlocalized="ignore")@
-	L.win_yell = "啊，你成功了!水又再次純淨了。"
 end
 
 L = BigWigs:NewBossLocale("The Fallen Protectors", "zhTW")
@@ -16,13 +15,6 @@ end
 L = BigWigs:NewBossLocale("Norushen", "zhTW")
 if L then
 --@localization(locale="zhTW", namespace="SiegeOfOrgrimmar/Norushen", format="lua_additive_table", handle-unlocalized="ignore")@
-	L.warmup_trigger = "很好，我會創造一個力場隔離你們的腐化。"
-
-	L.big_adds = "Big adds"
-	L.big_adds_desc = "Warnings for big adds spawning and being killed."
-	L.big_adds_icon = 147082
-	L.big_add = "Big add (%d)"
-	L.big_add_killed = "Big add killed (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "zhTW")
@@ -45,7 +37,7 @@ if L then
 	L.north_tower = "北塔"
 	L.tower_defender = "Tower defender"
 
-	L.adds_desc = "新一波增援進入戰鬥時發出警報。"
+	L.adds_desc = "當新一波增援進入戰鬥時發出警報。"
 	L.adds_trigger1 = "趕快把她弄下來，讓我用手掐死她。" -- Lady Sylvanas Windrunner
 	L.adds_trigger2 = "他們來了!" -- Lady Jaina Proudmoore
 	L.adds_trigger3 = "龍喉氏族，前進!"
