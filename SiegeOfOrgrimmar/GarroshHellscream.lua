@@ -472,7 +472,7 @@ end
 
 do
 	local warnPower = 25
-	local abilities = { [25] = mod:SpellName(144985), [50] = mod:SpellName(145065), [75] = mod:SpellName(144748), [100] = mod:SpellName(145183) }
+	local abilities = { [25] = mod:SpellName(144985), [50] = L.mind_control, [75] = mod:SpellName(144748), [100] = mod:SpellName(145183) }
 
 	local function mindControlMagic(spellId)
 		if not mindControl then -- there has not been an MC for more than 32 sec
