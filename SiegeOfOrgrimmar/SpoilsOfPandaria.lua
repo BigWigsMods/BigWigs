@@ -52,7 +52,7 @@ function mod:GetOptions()
 		145288, {145461, "TANK"}, {142947, "TANK"}, 142694, -- Mogu crate
 		{145987, "PROXIMITY", "FLASH"}, 145747, {145692, "TANK"}, 145715, {145786, "DISPEL"},-- Mantid crate
 		{146217, "FLASH"}, 146222, 146257, -- Crate of Panderan Relics
-		"proximity", "warmup", "bosskill",
+		"proximity", {"warmup", "EMPHASIZE"}, "bosskill",
 	}, {
 		[145288] = -8434, -- Mogu crate
 		[145987] = -8439, -- Mantid crate

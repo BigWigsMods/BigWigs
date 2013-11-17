@@ -45,7 +45,7 @@ function mod:GetOptions()
 		{-8218, "TANK_HEALER"}, {146124, "TANK"}, 145226, 145132,-- Amalgam of Corruption
 		"big_adds",
 		-8220, 144482, 144514, 144649, 144628,
-		"stages", "warmup", "altpower", "berserk", "bosskill",
+		"stages", {"warmup", "EMPHASIZE"}, "altpower", "berserk", "bosskill",
 	}, {
 		[-8218] = -8216, -- Amalgam of Corruption
 		["big_adds"] = L.big_adds, -- Big add
