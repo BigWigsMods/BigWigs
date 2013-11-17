@@ -699,7 +699,7 @@ end
 
 function mod:CatalystsSuccess(args)
 	if self:Heroic() then -- on heroic they have flight time
-		self:ScheduleTimer("CloseProximity", (args.spellId == 142729) and 12 or 5, -8034) -- you want proximity open for purple for full duration of the debuff -- timers might need some adjusting
+		self:ScheduleTimer("CloseProximity", (args.spellId == 142729) and 14 or 4, -8034) -- you want proximity open for purple for full duration of the debuff -- timers might need some adjusting
 	else
 		self:CloseProximity(-8034)
 	end

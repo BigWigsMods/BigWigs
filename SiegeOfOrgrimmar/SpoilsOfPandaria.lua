@@ -19,6 +19,7 @@ mod:RegisterEnableMob(73152, 73720, 71512) -- Storeroom Guard ( trash guy ), Mog
 
 local setToBlow = {}
 local sparkCounter = 0
+local bossUnitPowers = { [71512] = 0, [73721] = 0, [73720] = 0, [73722] = 0 }
 
 local function checkPlayerSide()
 	BigWigsLoader.SetMapToCurrentZone()
@@ -49,11 +50,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		{146815, "FLASH"},
 		145288, {145461, "TANK"}, {142947, "TANK"}, 142694, -- Mogu crate
 		{145987, "PROXIMITY", "FLASH"}, 145747, {145692, "TANK"}, 145715, {145786, "DISPEL"},-- Mantid crate
 		{146217, "FLASH"}, 146222, 146257, -- Crate of Panderan Relics
 		"proximity", {"warmup", "EMPHASIZE"}, "bosskill",
 	}, {
+		[146815] = CL["heroic"],
 		[145288] = -8434, -- Mogu crate
 		[145987] = -8439, -- Mantid crate
 		[146217] = -8366, -- Crate of Panderan Relics
@@ -77,6 +80,10 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
+	-- Heroic
+	if self:Heroic() then
+		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2")
+	end
 	-- Crate of Panderan Relics
 	self:Log("SPELL_DAMAGE", "PathOfBlossoms", 146257)
 	self:Log("SPELL_CAST_START", "BreathOfFire", 146222)
@@ -109,6 +116,7 @@ end
 
 function mod:OnEngage()
 	wipe(setToBlow)
+	bossUnitPowers = { [71512] = 0, [73721] = 0, [73720] = 0, [72722] = 0 }
 	self:OpenProximity("proximity", 3)
 	-- Sometimes there's a long delay between the last IEEU and IsEncounterInProgress being false so use this as a backup.
 	self:StopWipeCheck()
@@ -119,6 +127,22 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+-- Heroic
+
+function mod:UNIT_POWER_FREQUENT(unit, powerType)
+	local power = UnitPower(unit, 10)
+	if powerType ~= "ALTERNATE" or power == 0 then return end -- == 0 might be needed when you change rooms
+	local playerSide, mobId = checkPlayerSide(), self:MobId(UnitGUID(unit))
+	if bossUnitPowers[mobId] == power then return end -- don't fire twice for the same value
+	bossUnitPowers[mobId] = power
+	if ((mobId == 71512 or mobId == 73721) and playerSide < 0) or ((mobId == 73720 or mobId == 73722) and playerSide > 0) then -- mantid spoils and you are on mogu side OR  mogu spoils and you are on mantid side
+		self:Message(146815, "Important", "Alert", CL["incoming"]:format(self:SpellName(-8469))) -- Unstable Spark
+		if self:Damager() then
+			self:Flash(146815)
+		end
+	end
+end
 
 -- Crate of Panderan Relics
 
