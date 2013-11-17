@@ -18,6 +18,7 @@ mod:RegisterEnableMob(72276, 71977, 71976, 71967) -- Amalgam of Corruption, Mani
 local bigAddSpawnCounter, bigAddKillCounter = 0, 0
 local throttlePlayers = {} -- Throttle users that have BW & DBM installed >.>
 local bigAddKills = {}
+local percent = 50
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -100,6 +101,7 @@ function mod:OnEngage()
 	self:Bar(145226, 25) -- Blind Hatred
 	wipe(bigAddKills)
 	wipe(throttlePlayers)
+	percent = 50
 	self:OpenAltPower("altpower", 147800, "AZ", true) -- Corruption
 end
 
@@ -188,10 +190,13 @@ function mod:OnSync(sync, rest, player)
 		throttlePlayers[player] = t
 
 		bigAddSpawnCounter = bigAddSpawnCounter + 1
-		self:Message("big_adds", "Urgent", "Alarm", CL["incoming"]:format(L["big_add"]:format(bigAddSpawnCounter)), 147082)
+		self:Message("big_adds", "Urgent", "Alarm", CL["custom_sec"]:format(L["big_add"]:format(bigAddSpawnCounter), 5), 147082)
+		self:CDBar("big_adds", 5, L["big_add"]:format(bigAddSpawnCounter), 147082)
 	elseif sync == "Phase2BigAddSpawn" then
 		bigAddSpawnCounter = bigAddSpawnCounter + 1
-		self:Message("big_adds", "Urgent", "Alarm", L["big_add"]:format(bigAddSpawnCounter), 147082)
+		self:Message("big_adds", "Urgent", "Alarm", ("%d%% - "):format(percent) .. CL["custom_sec"]:format(L["big_add"]:format(bigAddSpawnCounter), 5), 147082)
+		self:CDBar("big_adds", 5, L["big_add"]:format(bigAddSpawnCounter), 147082)
+		percent = percent - 10
 	elseif sync == "OutsideBigAddDeath" and rest and rest ~= "" then -- XXX backwards compat
 		if bigAddKills[rest] then return else bigAddKills[rest] = true end -- Custom throttle to catch 2 big adds dieing outside at the same time
 		bigAddKillCounter = bigAddKillCounter + 1
@@ -240,7 +245,8 @@ function mod:UnleashedAnger(args)
 end
 
 function mod:SelfDoubt(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
+	local amount = args.amount or 1
+	self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Info")
 	self:CDBar(args.spellId, 16)
 end
 
