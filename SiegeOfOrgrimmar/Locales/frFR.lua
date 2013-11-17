@@ -46,7 +46,7 @@ if L then
 
 	L.warlord_zaela = "Seigneur de guerre Zaela"
 
-	--L.drakes = "Proto-Drakes"
+	L.drakes = "Proto-Drakes"
 
 	L.custom_off_shaman_marker = "Marquage Chaman des marées"
 	L.custom_off_shaman_marker_desc = "Afin d'aider à l'attribution des interruptions, marque les Chamans des marées gueule-de-dragon avec {rt1}{rt2}{rt3}{rt4}{rt5}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2ASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement tous les chamans est le moyen le plus rapide de les marquer.|r"
@@ -134,7 +134,7 @@ if L then
 	L.item_laser = "Laser"
 	L.item_magnet = "Aimant"
 
-	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!" -- to translate
+	L.shockwave_missile_trigger = "Je vous présente ma merveilleuse tourelle lance-missiles Onde de Choc TOC-03 !" -- to check
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "frFR")
@@ -169,7 +169,7 @@ if L then
 	L.manifest_rage = "Manifestation de la rage"
 	L.manifest_rage_desc = "Quand Garrosh atteint 100 d'énergie, il incante Manifestation de la rage pendant 2 secondes, puis canalise ce dernier. Durant la canalisation, des adds apparaissent. Amenez l'étoile de fer sur Garrosh pour l'étourdir et interrompre son incantation."
 
-	L.phase_3_end_trigger = "Vous croyez avoir GAGNÉ ? Vous êtes AVEUGLE. JE VAIS VOUS OUVRIR LES YEUX." -- to check
+	L.phase_3_end_trigger = "Vous croyez avoir GAGNÉ ? Vous êtes AVEUGLES. JE VAIS VOUS OUVRIR LES YEUX." -- to check
 
 	L.clump_check_desc = "Vérifie toutes les 3 secondes durant les bombardements les joueurs regroupés. Si un regroupement est trouvé, une étoile de fer Kor'kron apparaîtra."
 	L.clump_check_warning = "Regroupement détecté, arrivée d'une étoile"
