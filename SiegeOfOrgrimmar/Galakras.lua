@@ -36,20 +36,14 @@ if L then
 	L.towers_desc = "Warnings for when the towers are breached."
 	L.towers_icon = "achievement_bg_winsoa"
 	L.south_tower_trigger = "The door barring the South Tower has been breached!"
-	L.south_tower = "South tower"
+	L.south_tower = "South Tower"
 	L.north_tower_trigger = "The door barring the North Tower has been breached!"
-	L.north_tower = "North tower"
+	L.north_tower = "North Tower"
 	L.tower_defender = "Tower defender"
 
 	L.adds = CL.adds
 	L.adds_desc = "Timers for when a new set of adds enter the fight."
 	L.adds_icon = "achievement_character_orc_female" -- female since Zaela is calling them (and to be not the same as tower add icon)
-	L.adds_trigger1 = "Bring her down quick so I can wrap my fingers around her neck." -- Lady Sylvanas Windrunner
-	L.adds_trigger2 = "Here they come!" -- Lady Jaina Proudmoore
-	L.adds_trigger3 = "Dragonmaw, advance!"
-	L.adds_trigger4 = "For Hellscream!"
-	L.adds_trigger5 = "Next squad, push forward!"
-
 	L.warlord_zaela = "Warlord Zaela"
 
 	L.drakes = "Proto-Drakes"

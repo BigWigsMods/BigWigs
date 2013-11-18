@@ -27,26 +27,7 @@ end
 
 L = BigWigs:NewBossLocale("Galakras", "deDE")
 if L then
-	L.demolisher_message = "Verwüster"
-
-	L.towers = "Türme"
-	L.towers_desc = "Warnungen für das Durchbrechen der Tore zu den Türmen."
-	L.south_tower_trigger = "Das Tor zum Südturm ist durchbrochen!"
-	L.south_tower = "Südlicher Turm"
-	L.north_tower_trigger = "Das Tor zum Nordturm ist durchbrochen!"
-	L.north_tower = "Nördlicher Turm"
-	L.tower_defender = "Turmverteidiger"
-
-	L.adds_desc = "Zeigt an, wann neue Adds in den Kampf eintreten."
-	L.adds_trigger1 = "Holt sie schnell vom Himmel, damit ich sie erwürgen kann."
-	L.adds_trigger2 = "Da kommen sie!"
-	L.adds_trigger3 = "Drachenmalklan, ausrücken!"
-	L.adds_trigger4 = "Für Höllschrei!"
-	L.adds_trigger5 = "Nächster Trupp, vorwärts!"
-
-	L.warlord_zaela = "Kriegsfürstin Zaela"
-
-	--L.drakes = "Proto-Drakes"
+--@localization(locale="deDE", namespace="SiegeOfOrgrimmar/Galakras", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_shaman_marker = "Schamanen markieren"
 	L.custom_off_shaman_marker_desc = "Um bei der Einteilung zum Unterbrechen zu helfen, werden die Gezeitenschamanen des Drachenmals mit {rt1}{rt2}{rt3}{rt4}{rt5} markiert, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r\n|cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über die Schamanen.|r"

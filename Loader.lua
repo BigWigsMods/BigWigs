@@ -10,12 +10,12 @@ local public = {}
 local REPO = "REPO"
 local ALPHA = "ALPHA"
 local RELEASE = "RELEASE"
-local BIGWIGS_RELEASE_TYPE, BIGWIGS_RELEASE_REVISION
+local BIGWIGS_RELEASE_TYPE, MY_BIGWIGS_REVISION
 
 do
 	-- START: MAGIC WOWACE VOODOO VERSION STUFF
 	local releaseType = RELEASE
-	local releaseRevision = nil
+	local myRevision = nil
 	local releaseString = nil
 	--@alpha@
 	-- The following code will only be present in alpha ZIPs.
@@ -23,11 +23,11 @@ do
 	--@end-alpha@
 
 	-- This will (in ZIPs), be replaced by the highest revision number in the source tree.
-	releaseRevision = tonumber("@project-revision@")
+	myRevision = tonumber("@project-revision@")
 
-	-- If the releaseRevision ends up NOT being a number, it means we're running a SVN copy.
-	if type(releaseRevision) ~= "number" then
-		releaseRevision = -1
+	-- If myRevision ends up NOT being a number, it means we're running a SVN copy.
+	if type(myRevision) ~= "number" then
+		myRevision = -1
 		releaseType = REPO
 	end
 
@@ -36,12 +36,12 @@ do
 	if releaseType == REPO then
 		releaseString = L.sourceCheckout:format(majorVersion)
 	elseif releaseType == RELEASE then
-		releaseString = L.officialRelease:format(majorVersion, releaseRevision)
+		releaseString = L.officialRelease:format(majorVersion, myRevision)
 	elseif releaseType == ALPHA then
-		releaseString = L.alphaRelease:format(majorVersion, releaseRevision)
+		releaseString = L.alphaRelease:format(majorVersion, myRevision)
 	end
 	BIGWIGS_RELEASE_TYPE = releaseType
-	BIGWIGS_RELEASE_REVISION = releaseRevision
+	MY_BIGWIGS_REVISION = myRevision
 	public.BIGWIGS_RELEASE_STRING = releaseString
 	-- END: MAGIC WOWACE VOODOO VERSION STUFF
 end
@@ -71,9 +71,9 @@ local usersDBM = {}
 -- using the latest available release version of BigWigs. This method ensures they are
 -- classed as up-to-date in /bwv if they use the latest available release of BigWigs
 -- even if our alpha is revisions ahead.
-local highestReleaseRevision = BIGWIGS_RELEASE_TYPE == RELEASE and BIGWIGS_RELEASE_REVISION or -1
+local highestReleaseRevision = BIGWIGS_RELEASE_TYPE == RELEASE and MY_BIGWIGS_REVISION or -1
 -- The highestAlphaRevision is so we can alert old alpha users (we didn't previously)
-local highestAlphaRevision = BIGWIGS_RELEASE_TYPE == ALPHA and BIGWIGS_RELEASE_REVISION or -1
+local highestAlphaRevision = BIGWIGS_RELEASE_TYPE == ALPHA and MY_BIGWIGS_REVISION or -1
 
 -- Loading
 local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-ZoneId directive
@@ -649,15 +649,37 @@ function mod:CHAT_MSG_ADDON(prefix, msg, _, sender)
 end
 
 do
-	local warnedOutOfDate, warnedExtremelyOutOfDate = nil, nil
 	local timer = mod:CreateAnimationGroup()
 	timer:SetScript("OnFinished", function()
 		if IsInGroup() then
-			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:%d" or "VRA:%d"):format(BIGWIGS_RELEASE_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
+			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:%d" or "VRA:%d"):format(MY_BIGWIGS_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 		end
 	end)
 	local anim = timer:CreateAnimation()
 	anim:SetDuration(3)
+
+	local hasWarned, hasCritWarned = nil, nil
+	local function printOutOfDate(tbl, isAlpha)
+		if hasCritWarned then return end
+		local warnedOutOfDate, warnedExtremelyOutOfDate = 0, 0
+		for k,v in next, tbl do
+			if (v-isAlpha) > MY_BIGWIGS_REVISION then
+				warnedOutOfDate = warnedOutOfDate + 1
+				if warnedOutOfDate > 1 and not hasWarned then
+					hasWarned = true
+					sysprint(isAlpha == 10 and L.alphaOutdated or L.newReleaseAvailable)
+				end
+				if ((v-isAlpha) - MY_BIGWIGS_REVISION) > 120 then
+					warnedExtremelyOutOfDate = warnedExtremelyOutOfDate + 1
+					if warnedExtremelyOutOfDate > 1 and not hasCritWarned then
+						hasCritWarned = true
+						sysprint(L.extremelyOutdated)
+						RaidNotice_AddMessage(RaidWarningFrame, L.extremelyOutdated, {r=1,g=1,b=1})
+					end
+				end
+			end
+		end
+	end
 
 	function mod:VersionCheck(prefix, message, sender)
 		if prefix == "VR" or prefix == "VQ" then
@@ -671,16 +693,8 @@ do
 			usersRelease[sender] = message
 			usersAlpha[sender] = nil
 			if message > highestReleaseRevision then highestReleaseRevision = message end
-			if BIGWIGS_RELEASE_TYPE == RELEASE and BIGWIGS_RELEASE_REVISION ~= -1 and message > BIGWIGS_RELEASE_REVISION then
-				if not warnedOutOfDate then
-					sysprint(L.newReleaseAvailable)
-					warnedOutOfDate = true
-				end
-				if not warnedExtremelyOutOfDate and (message - BIGWIGS_RELEASE_REVISION) > 120 then
-					warnedExtremelyOutOfDate = true
-					sysprint(L.extremelyOutdated)
-					RaidNotice_AddMessage(RaidWarningFrame, L.extremelyOutdated, {r=1,g=1,b=1})
-				end
+			if MY_BIGWIGS_REVISION ~= -1 and message > MY_BIGWIGS_REVISION then
+				printOutOfDate(usersRelease, 0)
 			end
 		elseif prefix == "VRA" or prefix == "VQA" then
 			if prefix == "VQA" then
@@ -693,16 +707,8 @@ do
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
 			if message > highestAlphaRevision then highestAlphaRevision = message end
-			if BIGWIGS_RELEASE_TYPE == ALPHA and BIGWIGS_RELEASE_REVISION ~= -1 and ((message-10) > BIGWIGS_RELEASE_REVISION or highestReleaseRevision > BIGWIGS_RELEASE_REVISION) then
-				if not warnedOutOfDate then
-					sysprint(L.alphaOutdated)
-					warnedOutOfDate = true
-				end
-				if not warnedExtremelyOutOfDate and ((message - BIGWIGS_RELEASE_REVISION) > 120 or (highestReleaseRevision - BIGWIGS_RELEASE_REVISION) > 120) then
-					warnedExtremelyOutOfDate = true
-					sysprint(L.extremelyOutdated)
-					RaidNotice_AddMessage(RaidWarningFrame, L.extremelyOutdated, {r=1,g=1,b=1})
-				end
+			if BIGWIGS_RELEASE_TYPE == ALPHA and MY_BIGWIGS_REVISION ~= -1 and (message-10) > MY_BIGWIGS_REVISION then
+				printOutOfDate(usersAlpha, 10)
 			end
 		end
 	end
@@ -828,7 +834,7 @@ do
 		local groupType = (IsInGroup(2) and 3) or (IsInRaid() and 2) or (IsInGroup() and 1) -- LE_PARTY_CATEGORY_INSTANCE = 2
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
-			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), groupType == 3 and "INSTANCE_CHAT" or "RAID")
+			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(MY_BIGWIGS_REVISION), groupType == 3 and "INSTANCE_CHAT" or "RAID")
 			SendAddonMessage("D4", "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			self:ZONE_CHANGED_NEW_AREA()
 			self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
@@ -862,7 +868,7 @@ function mod:BigWigs_CoreEnabled()
 	-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
 	-- which kills your ability to receive addon comms during the loading process.
 	if IsInGroup() then
-		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(BIGWIGS_RELEASE_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+		SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VQ:%d" or "VQA:%d"):format(MY_BIGWIGS_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		SendAddonMessage("D4", "H\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 	end
 

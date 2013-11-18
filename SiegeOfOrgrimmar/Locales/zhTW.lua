@@ -27,26 +27,7 @@ end
 
 L = BigWigs:NewBossLocale("Galakras", "zhTW")
 if L then
-	L.demolisher_message = "石毀車"
-
-	L.towers = "高塔"
-	L.towers_desc = "當高塔被突破時發出警報"
-	L.south_tower_trigger = "封鎖南塔的門已經遭到破壞!"
-	L.south_tower = "南塔"
-	L.north_tower_trigger = "封鎖北塔的門已經遭到破壞!"
-	L.north_tower = "北塔"
-	L.tower_defender = "Tower defender"
-
-	L.adds_desc = "當新一波增援進入戰鬥時發出警報。"
-	L.adds_trigger1 = "趕快把她弄下來，讓我用手掐死她。" -- Lady Sylvanas Windrunner
-	L.adds_trigger2 = "他們來了!" -- Lady Jaina Proudmoore
-	L.adds_trigger3 = "龍喉氏族，前進!"
-	L.adds_trigger4 = "為了地獄吼!"
-	L.adds_trigger5 = "下一隊，前進!"
-
-	L.warlord_zaela = "督軍札伊拉"
-
-	L.drakes = "元龍"
+--@localization(locale="zhTW", namespace="SiegeOfOrgrimmar/Galakras", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_shaman_marker = "薩滿標記"
 	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the shamans is the fastest way to mark them.|r"

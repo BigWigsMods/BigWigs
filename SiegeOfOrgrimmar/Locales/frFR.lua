@@ -27,26 +27,7 @@ end
 
 L = BigWigs:NewBossLocale("Galakras", "frFR")
 if L then
-	L.demolisher_message = "Démolisseur"
-
-	L.towers = "Tours"
-	L.towers_desc = "Alertes quand les portes des tours sont détruites."
-	L.south_tower_trigger = "La porte qui barrait l’accès à la tour sud a été détruite !"
-	L.south_tower = "Tour sud"
-	L.north_tower_trigger = "La porte qui barrait l’accès à la tour nord a été détruite !"
-	L.north_tower = "Tour nord"
-	L.tower_defender = "Défenseur de la tour"
-
-	L.adds_desc = "Barres de délai indiquant quand un nouveau groupe d'ennemi se joint au combat."
-	L.adds_trigger1 = "Descendez-la, que je puisse serrer mes mains autour de son cou."
-	L.adds_trigger2 = "Les voilà !"
-	L.adds_trigger3 = "Gueules-de-dragon, avancez !"
-	L.adds_trigger4 = "Pour Hurlenfer !"
-	L.adds_trigger5 = "Escouade suivante, en avant !"
-
-	L.warlord_zaela = "Seigneur de guerre Zaela"
-
-	L.drakes = "Proto-Drakes"
+--@localization(locale="frFR", namespace="SiegeOfOrgrimmar/Galakras", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_shaman_marker = "Marquage Chaman des marées"
 	L.custom_off_shaman_marker_desc = "Afin d'aider à l'attribution des interruptions, marque les Chamans des marées gueule-de-dragon avec {rt1}{rt2}{rt3}{rt4}{rt5}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2ASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement tous les chamans est le moyen le plus rapide de les marquer.|r"

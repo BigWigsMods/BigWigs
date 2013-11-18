@@ -27,26 +27,7 @@ end
 
 L = BigWigs:NewBossLocale("Galakras", "ruRU")
 if L then
-	L.demolisher_message = "Разрушитель"
-
-	L.towers = "Башня"
-	L.towers_desc = "Предупреждать, когда разбиваются двери башен."
-	L.south_tower_trigger = "Дверь южной башни разбита!"
-	L.south_tower = "Южная башня"
-	L.north_tower_trigger = "Дверь северной башни разбита!"
-	L.north_tower = "Северная башня"
-	L.tower_defender = "Защитник башни"
-
-	L.adds_desc = "Таймеры, когда новые помощники вступят в бой."
-	L.adds_trigger1 = "Сбейте ее скорее, не терпится взять ее за глотку." -- Lady Sylvanas Windrunner
-	L.adds_trigger2 = "Вот и они!" -- Lady Jaina Proudmoore
-	L.adds_trigger3 = "Драконья Пасть, вперед!"
-	L.adds_trigger4 = "За Гарроша!"
-	L.adds_trigger5 = "Следующий отряд!"
-
-	L.warlord_zaela = "Полководец Зела"
-
-	L.drakes = "Протодраконы"
+--@localization(locale="ruRU", namespace="SiegeOfOrgrimmar/Galakras", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_shaman_marker = "Маркировка Шаманов"
 	L.custom_off_shaman_marker_desc = "Чтобы помочь с распределением прерываний, на Шаманов прилива из клана Драконьей Пасти будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r\n|cFFADFF2FСОВЕТ: Если вы выбраны для этой задачи, быстро проведите указателем мыши по шаманам, метки сразу же поставятся.|r"

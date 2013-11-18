@@ -21,7 +21,7 @@ end
 
 L = BigWigs:NewBossLocale("Galakras", "ptBR")
 if L then
-	L.warlord_zaela = "Senhora da Guerra Zaela"
+--@localization(locale="ptBR", namespace="SiegeOfOrgrimmar/Galakras", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Iron Juggernaut", "ptBR")
