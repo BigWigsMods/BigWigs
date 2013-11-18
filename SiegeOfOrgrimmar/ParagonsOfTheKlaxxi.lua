@@ -319,7 +319,7 @@ do
 	function mod:FaultyMutationApplied(args)
 		mutated[#mutated+1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(announceMutationTargets, 0.1, args.spellId)
+			scheduled = self:ScheduleTimer(announceMutationTargets, 0.2, args.spellId)
 		end
 		if self:Me(args.destGUID) then
 			youAte = nil

@@ -220,7 +220,7 @@ do
 	function mod:FrozenSolid(args)
 		frozenSolid[#frozenSolid+1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnFrozenSolid, 0.1, args.spellId)
+			scheduled = self:ScheduleTimer(warnFrozenSolid, 0.2, args.spellId)
 		end
 	end
 end
