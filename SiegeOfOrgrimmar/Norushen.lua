@@ -190,18 +190,26 @@ function mod:OnSync(sync, rest, player)
 		throttlePlayers[player] = t
 
 		bigAddSpawnCounter = bigAddSpawnCounter + 1
-		self:Message("big_adds", "Urgent", "Alarm", CL["custom_sec"]:format(L["big_add"]:format(bigAddSpawnCounter), 5), 147082)
-		self:CDBar("big_adds", 5, L["big_add"]:format(bigAddSpawnCounter), 147082)
+		if self:LFR() then
+			self:Message("big_adds", "Urgent", nil, CL["soon"]:format(L["big_add"]:format(bigAddSpawnCounter)), 147082)
+		else
+			self:Message("big_adds", "Urgent", "Alarm", CL["custom_sec"]:format(L["big_add"]:format(bigAddSpawnCounter), 5), 147082)
+			self:CDBar("big_adds", 5, L["big_add"]:format(bigAddSpawnCounter), 147082)
+		end
 	elseif sync == "Phase2BigAddSpawn" then
 		bigAddSpawnCounter = bigAddSpawnCounter + 1
-		self:Message("big_adds", "Urgent", "Alarm", ("%d%% - "):format(percent) .. CL["custom_sec"]:format(L["big_add"]:format(bigAddSpawnCounter), 5), 147082)
-		self:CDBar("big_adds", 5, L["big_add"]:format(bigAddSpawnCounter), 147082)
+		if self:LFR() then
+			self:Message("big_adds", "Urgent", nil, ("%d%% - "):format(percent) .. CL["soon"]:format(L["big_add"]:format(bigAddSpawnCounter)), 147082)
+		else
+			self:Message("big_adds", "Urgent", "Alarm", ("%d%% - "):format(percent) .. CL["custom_sec"]:format(L["big_add"]:format(bigAddSpawnCounter), 5), 147082)
+			self:CDBar("big_adds", 5, L["big_add"]:format(bigAddSpawnCounter), 147082)
+		end
 		percent = percent - 10
 	elseif sync == "OutsideBigAddDeath" and rest and rest ~= "" then -- XXX backwards compat
 		if bigAddKills[rest] then return else bigAddKills[rest] = true end -- Custom throttle to catch 2 big adds dieing outside at the same time
 		bigAddKillCounter = bigAddKillCounter + 1
 		if bigAddKillCounter > bigAddSpawnCounter then
-			bigAddSpawnCounter = bigAddKillCounter -- Compensate for no boss mod players :[
+			bigAddSpawnCounter = bigAddKillCounter -- Compensate for no boss mod players (LFR) :[
 		end
 		self:Message("big_adds", "Attention", "Alert", L["big_add_killed"]:format(bigAddKillCounter), 147082) -- this could probably live wouthout sound but this way people know for sure that they need to check if it is their turn to soak
 	end
