@@ -65,7 +65,7 @@ local acOptions = {
 		},
 		configure = {
 			type = "execute",
-			name = L.configureBtn,
+			name = L.configureBtnName,
 			desc = L.configureBtnDesc,
 			func = function()
 				InterfaceOptionsFrameOkay:Click()
