@@ -268,15 +268,15 @@ function mod:CoolingOff(args)
 end
 
 function mod:Stances(args)
-	self:Message(-7915, "Positive", (args.spellId == 143593) and "Warning", args.spellName, args.spellId) -- Play sound if he switches to defensive -- this might conflich with War Song
+	self:Message(-7915, "Positive", args.spellId == 143593 and "Alert", args.spellName, args.spellId) -- Play sound if he switches to defensive -- this might conflich with War Song
 	local nextStance
 	if args.spellId == 143589 then -- battle
 		nextStance = 143594 -- berserker
 	elseif args.spellId == 143594 then -- berserker
 		nextStance = 143593 -- defensive
-		self:DelayedMessage(-7915, 55, "Positive", CL["custom_sec"]:format(self:SpellName(nextStance), 5), nextStance)
-		self:DelayedMessage(-7915, 57, "Positive", CL["custom_sec"]:format(self:SpellName(nextStance), 3), nextStance)
-		self:DelayedMessage(-7915, 59, "Positive", CL["custom_sec"]:format(self:SpellName(nextStance), 1), nextStance)
+		self:DelayedMessage(-7915, 55, "Positive", CL["custom_sec"]:format(self:SpellName(nextStance), 5), nextStance, "Alert")
+		self:DelayedMessage(-7915, 57, "Positive", CL["custom_sec"]:format(self:SpellName(nextStance), 3), nextStance, "Alert")
+		self:DelayedMessage(-7915, 59, "Positive", CL["custom_sec"]:format(self:SpellName(nextStance), 1), nextStance, "Alert")
 	elseif args.spellId == 143593 then -- defensive
 		nextStance = 143589 -- battle
 	end
