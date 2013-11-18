@@ -328,7 +328,7 @@ do
 		else
 			self:TargetMessage(-7959, name, "Urgent")
 			self:TargetBar(-7959, 9-elapsed, name)
-			if not self:Tank() then
+			if not self:Tank() and not self:LFR() then
 				self:OpenProximity(-7959, 8, name, true)
 			end
 		end
