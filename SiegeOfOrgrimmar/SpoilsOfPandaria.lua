@@ -19,7 +19,7 @@ mod:RegisterEnableMob(73152, 73720, 71512) -- Storeroom Guard ( trash guy ), Mog
 
 local setToBlow = {}
 local sparkCounter = 0
-local bossUnitPowers = { [71512] = 0, [73721] = 0, [73720] = 0, [73722] = 0 }
+local bossUnitPowers = {}
 
 local function checkPlayerSide()
 	BigWigsLoader.SetMapToCurrentZone()
@@ -116,7 +116,7 @@ end
 
 function mod:OnEngage()
 	wipe(setToBlow)
-	bossUnitPowers = { [71512] = 0, [73721] = 0, [73720] = 0, [72722] = 0 }
+	wipe(bossUnitPowers)
 	self:OpenProximity("proximity", 3)
 	-- Sometimes there's a long delay between the last IEEU and IsEncounterInProgress being false so use this as a backup.
 	self:StopWipeCheck()
