@@ -64,7 +64,7 @@ if L then
 	L.adds_trigger5 = "Кор'крон, ко мне!"
 	L.adds_trigger_extra_wave = "Кор'кронцы... все, кто со мной! Убейте их!"
 	L.extra_adds = "10% - Дополнительный отряд"
-	--L.final_wave = "Final Wave"
+	L.final_wave = "Последняя волна"
 
 	L.chain_heal_message = "Ваш фокус читает Цепное исцеление!"
 
@@ -115,6 +115,7 @@ if L then
 	L.item_mines = "Мины"
 	L.item_laser = "Лазер"
 	L.item_magnet = "Магнит"
+	L.item_deathdealer = "Смертоносная"
 
 	L.shockwave_missile_trigger = "Представляю вам прекрасную ударно-волновую турель УТ-03!"
 end
