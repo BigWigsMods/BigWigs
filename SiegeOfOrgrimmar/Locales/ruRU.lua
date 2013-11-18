@@ -63,7 +63,8 @@ if L then
 	L.adds_trigger4 = "Воины, бегом!"
 	L.adds_trigger5 = "Кор'крон, ко мне!"
 	L.adds_trigger_extra_wave = "Кор'кронцы... все, кто со мной! Убейте их!"
-	L.extra_adds = "Дополнительный отряд"
+	L.extra_adds = "10% - Дополнительный отряд"
+	--L.final_wave = "Final Wave"
 
 	L.chain_heal_message = "Ваш фокус читает Цепное исцеление!"
 

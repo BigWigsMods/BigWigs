@@ -41,7 +41,8 @@ if L then
 	L.adds_trigger4 = "Warriors, on the double!"
 	L.adds_trigger5 = "Kor'kron, at my side!"
 	L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW"
-	L.extra_adds = "Extra adds"
+	L.extra_adds = "10% - Extra adds"
+	L.final_wave = "Final Wave"
 
 	L.chain_heal, L.chain_heal_desc = EJ_GetSectionInfo(7935)
 	L.chain_heal_icon = 1064
@@ -209,7 +210,11 @@ function mod:ExtraAdds()
 end
 
 function mod:Adds()
-	self:Message(-7920, "Neutral", "Long", CL["count"]:format(CL["adds"], addWaveCounter))
+	if addWaveCounter == 10 then
+		self:Message(-7920, "Neutral", "Long", CL["count"]:format(CL["adds"], addWaveCounter) .. " - " .. L["final_wave"])
+	else
+		self:Message(-7920, "Neutral", "Long", CL["count"]:format(CL["adds"], addWaveCounter))
+	end
 	addWaveCounter = addWaveCounter + 1
 	if addWaveCounter < 11 then
 		self:Bar(-7920, 46, CL["count"]:format(CL["adds"], addWaveCounter), "achievement_guildperk_everybodysfriend")
@@ -269,6 +274,9 @@ function mod:Stances(args)
 		nextStance = 143594 -- berserker
 	elseif args.spellId == 143594 then -- berserker
 		nextStance = 143593 -- defensive
+		self:DelayedMessage(-7915, 55, "Positive", CL["custom_sec"]:format(self:SpellName(nextStance), 5), nextStance)
+		self:DelayedMessage(-7915, 57, "Positive", CL["custom_sec"]:format(self:SpellName(nextStance), 3), nextStance)
+		self:DelayedMessage(-7915, 59, "Positive", CL["custom_sec"]:format(self:SpellName(nextStance), 1), nextStance)
 	elseif args.spellId == 143593 then -- defensive
 		nextStance = 143589 -- battle
 	end
