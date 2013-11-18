@@ -119,7 +119,7 @@ do
 	function mod:Banishment(args)
 		banishmentList[#banishmentList+1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnBanishment, 0.1, args.spellId)
+			scheduled = self:ScheduleTimer(warnBanishment, 0.2, args.spellId)
 		end
 	end
 end
@@ -167,7 +167,7 @@ do
 	function mod:ImprisonApplied(args)
 		prisoned[#prisoned+1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnImprison, 0.1)
+			scheduled = self:ScheduleTimer(warnImprison, 0.2)
 		end
 	end
 end
