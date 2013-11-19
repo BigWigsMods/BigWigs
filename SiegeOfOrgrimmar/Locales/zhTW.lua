@@ -63,7 +63,7 @@ if L then
 	L.adds_trigger4 = "戰士們，快點過來!"
 	L.adds_trigger5 = "柯爾克隆，來我身邊!"
 	L.adds_trigger_extra_wave = "所有科爾克隆...聽我號令...殺死他們!"
-	L.extra_adds = "10% - 額外增援部隊"
+	L.extra_adds = "額外增援部隊"
 	L.final_wave = "最後一波"
 
 	L.chain_heal_message = "你的專注目標正在施放治療鍊！"

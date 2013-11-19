@@ -41,7 +41,7 @@ if L then
 	L.adds_trigger4 = "Warriors, on the double!"
 	L.adds_trigger5 = "Kor'kron, at my side!"
 	L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW"
-	L.extra_adds = "10% - Extra adds"
+	L.extra_adds = "Extra adds"
 	L.final_wave = "Final Wave"
 
 	L.chain_heal, L.chain_heal_desc = EJ_GetSectionInfo(7935)
@@ -206,7 +206,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 function mod:ExtraAdds()
-	self:Message(-7920, "Neutral", "Long", L.extra_adds)
+	self:Message(-7920, "Neutral", "Long", "10% - ".. L.extra_adds)
 end
 
 function mod:Adds()

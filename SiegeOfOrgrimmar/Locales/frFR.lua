@@ -63,7 +63,7 @@ if L then
 	L.adds_trigger4 = "Guerriers, au pas de course !"
 	L.adds_trigger5 = "Kor’krons, avec moi !"
 	L.adds_trigger_extra_wave = "Tous les Kor’krons sous mon commandement, tuez-les, maintenant !"
-	L.extra_adds = "10% - Renforts supplémentaires"
+	L.extra_adds = "Renforts supplémentaires"
 	--L.final_wave = "Final Wave"
 
 	L.chain_heal_message = "Votre focalisation est en train d'incanter Salve de guérison !"
