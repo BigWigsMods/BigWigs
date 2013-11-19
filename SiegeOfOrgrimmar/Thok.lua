@@ -101,9 +101,9 @@ end
 -- heroic
 
 function mod:PrisonerTracker(_, _, sender)
-	if sender == L["npc_akolik"] then
+	if sender == L.npc_akolik then
 		heroicAdd = "bats"
-	elseif sender == L["npc_waterspeaker_gorai"] then
+	elseif sender == L.npc_waterspeaker_gorai then
 		heroicAdd = "yeti"
 	end
 end
@@ -111,7 +111,7 @@ end
 function mod:YetCharge(args)
 	self:Bar(args.spellId, 15)
 	if not yetiChargeTimer then
-		yetiChargeTimer = self:ScheduleTimer("Message", 15, args.spellId, "Important", "Warning", CL["soon"]:format(args.spellName))
+		yetiChargeTimer = self:ScheduleTimer("Message", 15, args.spellId, "Important", "Warning", CL.soon:format(args.spellName))
 	end
 end
 
@@ -119,7 +119,7 @@ end
 
 function mod:BloodFrenzy(args)
 	-- this may feel like double message, but knowing exact stack count on phase change can help plan the rest of the fight
-	self:Message(-7981, "Attention", nil, CL["count"]:format(args.spellName, args.amount))
+	self:Message(-7981, "Attention", nil, CL.count:format(args.spellName, args.amount))
 end
 
 function mod:Enrage(args)
@@ -129,9 +129,9 @@ function mod:Enrage(args)
 end
 
 function mod:SkeletonKeyRemoved(args)
-	self:Message(args.spellId, "Positive", "Alert", L["cage_opened"])
+	self:Message(args.spellId, "Positive", "Alert", L.cage_opened)
 	self:StopBar(args.spellId, args.destName)
-	self:Bar(-7981, 13, CL["over"]:format(self:SpellName(-7981))) -- Blood Frenzy
+	self:Bar(-7981, 13, CL.over:format(self:SpellName(-7981))) -- Blood Frenzy
 end
 
 function mod:SkeletonKey(args)
@@ -157,7 +157,7 @@ do
 	end
 	function mod:BloodFrenzyOver(args)
 		self:OpenProximity("proximity", 10)
-		self:Message(-7981, "Neutral", "Long", CL["over"]:format(args.spellName))
+		self:Message(-7981, "Neutral", "Long", CL.over:format(args.spellName))
 		self:Bar(-7963, 14) -- Deafening Screech
 		self:CDBar(143766, 12, 17086, "ability_hunter_pet_devilsaur") -- Breath. 143766 isn't exactly a combined option but it's one of the breaths.
 		if self:Heroic() then
@@ -170,7 +170,7 @@ function mod:FixateRemoved(args)
 	self:PrimaryIcon(-7980)
 	self:StopBar(-7980, args.destName)
 	if self:Me(args.destGUID) then
-		self:Message(-7980, "Positive", nil, CL["over"]:format(args.spellName))
+		self:Message(-7980, "Positive", nil, CL.over:format(args.spellName))
 	end
 end
 
@@ -185,7 +185,7 @@ function mod:FixateApplied(args)
 end
 
 function mod:BloodFrenzyPhase()
-	self:Message(-7963, "Attention", nil, CL["count"]:format(self:SpellName(143411), accCount))
+	self:Message(-7963, "Attention", nil, CL.count:format(self:SpellName(143411), accCount))
 	accCount = 0
 	self:StopBar(143428) -- Tail Lash
 	self:StopBar(143426) -- Fearsome Roar
@@ -205,7 +205,7 @@ do
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+				self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 			end
 		end
 	end
@@ -237,7 +237,7 @@ do
 			self:Bar(-7963, accTimes[accCount])
 		end
 		if accCount < 6 or accCount % 3 == 0 then
-			self:Message(-7963, "Attention", nil, CL["count"]:format(args.spellName, accCount))
+			self:Message(-7963, "Attention", nil, CL.count:format(args.spellName, accCount))
 		end
 	end
 end

@@ -136,7 +136,7 @@ end
 do
 	local scheduled, lookWithinList = nil, mod:NewTargetList()
 	local function warnLookWithinRemoved()
-		mod:TargetMessage(-8220, lookWithinList, "Neutral", nil, CL["over"]:format(EJ_GetSectionInfo(8220)))
+		mod:TargetMessage(-8220, lookWithinList, "Neutral", nil, CL.over:format(EJ_GetSectionInfo(8220)))
 		scheduled = nil
 	end
 	function mod:LookWithinRemoved(args)
@@ -180,7 +180,7 @@ function mod:OnSync(sync, rest, player)
 		self:Message(145226, "Important", "Long")
 		self:Bar(145226, 60)
 	elseif sync == "Phase2" then
-		self:Message("stages", "Neutral", "Warning", CL["phase"]:format(2), 146179)
+		self:Message("stages", "Neutral", "Warning", CL.phase:format(2), 146179)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	elseif sync == "InsideBigAddDeath" then
 		local t = GetTime()
@@ -191,18 +191,18 @@ function mod:OnSync(sync, rest, player)
 
 		bigAddSpawnCounter = bigAddSpawnCounter + 1
 		if self:LFR() then
-			self:Message("big_adds", "Urgent", nil, CL["soon"]:format(L["big_add"]:format(bigAddSpawnCounter)), 147082)
+			self:Message("big_adds", "Urgent", nil, CL.soon:format(L.big_add:format(bigAddSpawnCounter)), 147082)
 		else
-			self:Message("big_adds", "Urgent", "Alarm", CL["custom_sec"]:format(L["big_add"]:format(bigAddSpawnCounter), 5), 147082)
-			self:CDBar("big_adds", 5, L["big_add"]:format(bigAddSpawnCounter), 147082)
+			self:Message("big_adds", "Urgent", "Alarm", CL.custom_sec:format(L.big_add:format(bigAddSpawnCounter), 5), 147082)
+			self:CDBar("big_adds", 5, L.big_add:format(bigAddSpawnCounter), 147082)
 		end
 	elseif sync == "Phase2BigAddSpawn" then
 		bigAddSpawnCounter = bigAddSpawnCounter + 1
 		if self:LFR() then
-			self:Message("big_adds", "Urgent", nil, ("%d%% - "):format(percent) .. CL["soon"]:format(L["big_add"]:format(bigAddSpawnCounter)), 147082)
+			self:Message("big_adds", "Urgent", nil, ("%d%% - "):format(percent) .. CL.soon:format(L.big_add:format(bigAddSpawnCounter)), 147082)
 		else
-			self:Message("big_adds", "Urgent", "Alarm", ("%d%% - "):format(percent) .. CL["custom_sec"]:format(L["big_add"]:format(bigAddSpawnCounter), 5), 147082)
-			self:CDBar("big_adds", 5, L["big_add"]:format(bigAddSpawnCounter), 147082)
+			self:Message("big_adds", "Urgent", "Alarm", ("%d%% - "):format(percent) .. CL.custom_sec:format(L.big_add:format(bigAddSpawnCounter), 5), 147082)
+			self:CDBar("big_adds", 5, L.big_add:format(bigAddSpawnCounter), 147082)
 		end
 		percent = percent - 10
 	elseif sync == "OutsideBigAddDeath" and rest and rest ~= "" then -- XXX backwards compat
@@ -211,7 +211,7 @@ function mod:OnSync(sync, rest, player)
 		if bigAddKillCounter > bigAddSpawnCounter then
 			bigAddSpawnCounter = bigAddKillCounter -- Compensate for no boss mod players (LFR) :[
 		end
-		self:Message("big_adds", "Attention", "Alert", L["big_add_killed"]:format(bigAddKillCounter), 147082) -- this could probably live wouthout sound but this way people know for sure that they need to check if it is their turn to soak
+		self:Message("big_adds", "Attention", "Alert", L.big_add_killed:format(bigAddKillCounter), 147082) -- this could probably live wouthout sound but this way people know for sure that they need to check if it is their turn to soak
 	end
 end
 
@@ -232,13 +232,13 @@ end
 -- Amalgam of Corruption
 function mod:Fusion(args)
 	local amount = args.amount or 1
-	self:Message(args.spellId, "Attention", nil, CL["count"]:format(args.spellName, amount))
+	self:Message(args.spellId, "Attention", nil, CL.count:format(args.spellName, amount))
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 56 then -- 50%
-		self:Message("stages", "Neutral", "Info", CL["soon"]:format(CL["phase"]:format(2)), 146179)
+		self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(2)), 146179)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end

@@ -56,7 +56,7 @@ function mod:GetOptions()
 		{146217, "FLASH"}, 146222, 146257, -- Crate of Panderan Relics
 		"proximity", {"warmup", "EMPHASIZE"}, "bosskill",
 	}, {
-		[146815] = CL["heroic"],
+		[146815] = CL.heroic,
 		[145288] = -8434, -- Mogu crate
 		[145987] = -8439, -- Mantid crate
 		[146217] = -8366, -- Crate of Panderan Relics
@@ -68,7 +68,7 @@ function mod:OnRegister() -- XXX check out replacing this with the chest id
 	-- Kel'Thuzad v3
 	local f = CreateFrame("Frame")
 	local func = function()
-		if not mod:IsEnabled() and GetSubZoneText() == L["enable_zone"] then
+		if not mod:IsEnabled() and GetSubZoneText() == L.enable_zone then
 			mod:Enable()
 		end
 	end
@@ -137,7 +137,7 @@ function mod:UNIT_POWER_FREQUENT(unit, powerType)
 	if bossUnitPowers[mobId] == power then return end -- don't fire twice for the same value
 	bossUnitPowers[mobId] = power
 	if ((mobId == 71512 or mobId == 73721) and playerSide < 0) or ((mobId == 73720 or mobId == 73722) and playerSide > 0) then -- mantid spoils and you are on mogu side OR  mogu spoils and you are on mantid side
-		self:Message(146815, "Important", "Alert", CL["incoming"]:format(self:SpellName(-8469))) -- Unstable Spark
+		self:Message(146815, "Important", "Alert", CL.incoming:format(self:SpellName(-8469))) -- Unstable Spark
 		if self:Damager() then
 			self:Flash(146815)
 		end
@@ -152,7 +152,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then -- don't spam
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -175,7 +175,7 @@ end
 -- Mogu crate
 function mod:CrimsonReconstitution(args)
 	if checkPlayerSide() < 0 then
-		self:Message(args.spellId, "Urgent", "Warning", CL["casting"]:format(args.spellName))
+		self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	end
 end
 
@@ -199,14 +199,14 @@ end
 function mod:MatterScramble(args)
 	if checkPlayerSide() < 0 then
 		self:Message(args.spellId, "Important", "Alert")
-		self:Bar(args.spellId, 8, L["matter_scramble_explosion"])
+		self:Bar(args.spellId, 8, L.matter_scramble_explosion)
 	end
 end
 
 function mod:SparkOfLife(args)
 	if checkPlayerSide() < 0 then
 		sparkCounter = sparkCounter + 1
-		self:Message(142694, "Attention", nil, CL["count"]:format(args.sourceName, sparkCounter))
+		self:Message(142694, "Attention", nil, CL.count:format(args.sourceName, sparkCounter))
 	end
 end
 
@@ -230,7 +230,7 @@ end
 
 function mod:ResidueStart(args)
 	if checkPlayerSide() > 0 and self:Dispeller("magic", true, args.spellId) then
-		self:Message(args.spellId, "Attention", nil, CL["casting"]:format(args.spellName))
+		self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
 	end
 end
 
@@ -246,7 +246,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then -- don't spam
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -257,7 +257,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then -- don't spam
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -278,7 +278,7 @@ do
 
 	function mod:SetToBlowRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Positive", nil, CL["over"]:format(args.spellName))
+			self:Message(args.spellId, "Positive", nil, CL.over:format(args.spellName))
 			self:StopBar(args.spellId, args.destName)
 			openForMe = nil
 		else
@@ -296,7 +296,7 @@ do
 		if self:Me(args.destGUID) then
 			self:CloseProximity("proximity")
 			self:OpenProximity(args.spellId, 12) -- 10, but be more safe
-			self:Message(args.spellId, "Important", "Warning", CL["you"]:format(args.spellName))
+			self:Message(args.spellId, "Important", "Warning", CL.you:format(args.spellName))
 			self:TargetBar(args.spellId, 30, args.destName)
 			self:Flash(args.spellId)
 			openForMe = true

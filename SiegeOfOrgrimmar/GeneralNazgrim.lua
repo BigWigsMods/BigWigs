@@ -124,7 +124,7 @@ function mod:OnEngage()
 	self:CDBar(143494, 10) -- Sundering Blow
 	self:Bar(143638, 15.5) -- Bonecracker
 	addWaveCounter = 1
-	self:Bar(-7920, 46, CL["count"]:format(CL["adds"], addWaveCounter), "achievement_guildperk_everybodysfriend") -- adds
+	self:Bar(-7920, 46, CL.count:format(CL.adds, addWaveCounter), "achievement_guildperk_everybodysfriend") -- adds
 end
 
 --------------------------------------------------------------------------------
@@ -141,7 +141,7 @@ function mod:HuntersMark(args)
 end
 
 function mod:Execute(args)
-	self:Message(args.spellId, "Important", "Warning", CL["casting"]:format(args.spellName)) -- XXX need feedback if this sound works fine with the other sounds
+	self:Message(args.spellId, "Important", "Warning", CL.casting:format(args.spellName)) -- XXX need feedback if this sound works fine with the other sounds
 	self:CDBar(args.spellId, 18) -- varies a bit due to ability casts
 	if UnitIsUnit("player", "boss1target") then -- poor mans target check
 		self:Flash(args.spellId)
@@ -151,7 +151,7 @@ end
 -- Adds
 function mod:ArcaneShock(args)
 	if UnitGUID("focus") == args.sourceGUID then
-		self:Message("arcane_shock", "Personal", "Alert", L["arcane_shock_message"], args.spellId)
+		self:Message("arcane_shock", "Personal", "Alert", L.arcane_shock_message, args.spellId)
 	end
 end
 
@@ -172,7 +172,7 @@ end
 
 function mod:ChainHeal(args)
 	if UnitGUID("focus") == args.sourceGUID then
-		self:Message("chain_heal", "Personal", "Alert", L["chain_heal_message"], args.spellId)
+		self:Message("chain_heal", "Personal", "Alert", L.chain_heal_message, args.spellId)
 	end
 end
 
@@ -200,31 +200,31 @@ end
 function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < 17 then
-		self:Message(-7920, "Neutral", "Info", CL["soon"]:format(L["extra_adds"]))
+		self:Message(-7920, "Neutral", "Info", CL.soon:format(L.extra_adds))
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 	end
 end
 
 function mod:ExtraAdds()
-	self:Message(-7920, "Neutral", "Long", L["extra_adds"])
+	self:Message(-7920, "Neutral", "Long", L.extra_adds)
 end
 
 function mod:Adds()
 	if addWaveCounter == 10 then
-		self:Message(-7920, "Neutral", "Long", CL["count"]:format(CL["adds"], addWaveCounter) .. " - " .. L["final_wave"])
+		self:Message(-7920, "Neutral", "Long", CL.count:format(CL.adds, addWaveCounter) .. " - " .. L.final_wave)
 	else
-		self:Message(-7920, "Neutral", "Long", CL["count"]:format(CL["adds"], addWaveCounter))
+		self:Message(-7920, "Neutral", "Long", CL.count:format(CL.adds, addWaveCounter))
 	end
 	addWaveCounter = addWaveCounter + 1
 	if addWaveCounter < 11 then
-		self:Bar(-7920, 46, CL["count"]:format(CL["adds"], addWaveCounter), "achievement_guildperk_everybodysfriend")
+		self:Bar(-7920, 46, CL.count:format(CL.adds, addWaveCounter), "achievement_guildperk_everybodysfriend")
 	end
 end
 
 -- Boss
 
 function mod:WarSong(args)
-	self:Bar(args.spellId, 3, CL["cast"]:format(args.spellName))
+	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
 	self:Message(args.spellId, "Important", "Warning")
 end
 
@@ -274,13 +274,13 @@ function mod:Stances(args)
 		nextStance = 143594 -- berserker
 	elseif args.spellId == 143594 then -- berserker
 		nextStance = 143593 -- defensive
-		self:DelayedMessage(-7915, 55, "Positive", CL["custom_sec"]:format(self:SpellName(nextStance), 5), nextStance, "Alert")
-		self:DelayedMessage(-7915, 57, "Positive", CL["custom_sec"]:format(self:SpellName(nextStance), 3), nextStance, "Alert")
-		self:DelayedMessage(-7915, 59, "Positive", CL["custom_sec"]:format(self:SpellName(nextStance), 1), nextStance, "Alert")
+		self:DelayedMessage(-7915, 55, "Positive", CL.custom_sec:format(self:SpellName(nextStance), 5), nextStance, "Alert")
+		self:DelayedMessage(-7915, 57, "Positive", CL.custom_sec:format(self:SpellName(nextStance), 3), nextStance, "Alert")
+		self:DelayedMessage(-7915, 59, "Positive", CL.custom_sec:format(self:SpellName(nextStance), 1), nextStance, "Alert")
 	elseif args.spellId == 143593 then -- defensive
 		nextStance = 143589 -- battle
 	end
-	self:Bar(-7915, 60, L["stance_bar"]:format(stances[nextStance], stances[args.spellId]), nextStance)
+	self:Bar(-7915, 60, L.stance_bar:format(stances[nextStance], stances[args.spellId]), nextStance)
 end
 
 do

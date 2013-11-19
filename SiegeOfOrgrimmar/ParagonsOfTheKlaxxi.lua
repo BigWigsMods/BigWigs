@@ -241,21 +241,21 @@ end
 --Hisek the Swarmkeeper
 function mod:RapidFire(args)
 	self:Flash(args.spellId)
-	self:Message(args.spellId, "Urgent", "Long", L["dance"])
-	self:CDBar(args.spellId, 47, L["dance"])
+	self:Message(args.spellId, "Urgent", "Long", L.dance)
+	self:CDBar(args.spellId, 47, L.dance)
 end
 
 function mod:Aim(args)
 	self:SecondaryIcon(-8073, args.destName)
-	self:TargetMessage(-8073, args.destName, "Important", "Warning", CL["count"]:format(args.spellName, aimCounter), args.spellId, true)
+	self:TargetMessage(-8073, args.destName, "Important", "Warning", CL.count:format(args.spellName, aimCounter), args.spellId, true)
 	self:TargetBar(-8073, 5, args.destName)
 	if not self:Tank() then
 		self:Flash(-8073)
 	end
 
-	self:StopBar(CL["count"]:format(args.spellName, aimCounter))
+	self:StopBar(CL.count:format(args.spellName, aimCounter))
 	aimCounter = aimCounter + 1
-	self:CDBar(-8073, 42, CL["count"]:format(args.spellName, aimCounter))
+	self:CDBar(-8073, 42, CL.count:format(args.spellName, aimCounter))
 end
 --Rik'kal the Dissector
 do
@@ -263,14 +263,17 @@ do
 	function mod:Prey(args)
 		if not parasites[args.destGUID] then
 			parasiteCounter = parasiteCounter - 1
+			if parasiteCounter < 0 then
+				BigWigs:Print("The parasite count went below 0 for some reason. If this is a Flex raid, please tell the Big Wigs authors how many people were in the raid so we can correct the counter.")
+			end
 			parasites[args.destGUID] = true
 			if self:Me(args.sourceGUID) then
-				self:Message(143339, "Positive", "Info", L["you_ate"]:format(parasiteCounter))
+				self:Message(143339, "Positive", "Info", L.you_ate:format(parasiteCounter))
 				youAte = true
 			else
 				parasiteEater[1] = args.sourceName
 				local raidIcon = CombatLog_String_GetIcon(args.destRaidFlags) -- Raid icon string
-				self:Message(143339, "Attention", nil, L["other_ate"]:format(parasiteEater[1], raidIcon, parasiteCounter), 99315) -- spell called parasite, worm look like icon
+				self:Message(143339, "Attention", nil, L.other_ate:format(parasiteEater[1], raidIcon, parasiteCounter), 99315) -- spell called parasite, worm look like icon
 				wipe(parasiteEater)
 			end
 		end
@@ -286,10 +289,10 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t																										   -- injection
-			self:Message(args.spellId, "Attention", (self:Healer() or (self:Tank() and UnitDebuff("player", self:SpellName(143339)))) and "Alert", CL["count"]:format(self:SpellName(-8068), mutateCastCounter))
+			self:Message(args.spellId, "Attention", (self:Healer() or (self:Tank() and UnitDebuff("player", self:SpellName(143339)))) and "Alert", CL.count:format(self:SpellName(-8068), mutateCastCounter))
 			mutateCastCounter = mutateCastCounter + 1
 			-- this text has "Amber Scorpion" in it's name, so it is more obvious
-			self:Bar(args.spellId, 32, CL["count"]:format(args.spellName, mutateCastCounter))
+			self:Bar(args.spellId, 32, CL.count:format(args.spellName, mutateCastCounter))
 		end
 	end
 end
@@ -302,7 +305,7 @@ do
 			faultyMutationTimer = nil
 			return
 		end
-		mod:Message(spellId, "Important", "Warning", L["prey_message"])
+		mod:Message(spellId, "Important", "Warning", L.prey_message)
 	end
 	function mod:FaultyMutationRemoved(args)
 		if not self:Me(args.destGUID) then return end
@@ -370,10 +373,10 @@ do
 	function mod:InjectionRemoved(args)
 		if getBossByMobId(71158) then -- no more parasites spawn when boss is dead
 			local diff = self:Difficulty()
-			parasiteCounter = parasiteCounter + ((diff == 3 or diff == 5) and 5 or 8)
-			self:Message(143339, "Attention", nil, L["parasites_up"]:format(parasiteCounter), 99315) -- spell called parasite, worm look like icon
+			parasiteCounter = parasiteCounter + ((diff == 4 or diff == 6) and 8 or 5)
+			self:Message(143339, "Attention", nil, L.parasites_up:format(parasiteCounter), 99315) -- spell called parasite, worm look like icon
 		end
-		self:CancelDelayedMessage(L["injection_over_soon"]:format(args.destName))
+		self:CancelDelayedMessage(L.injection_over_soon:format(args.destName))
 		if self.db.profile.custom_off_parasite_marks and not markTimer then
 			markTimer = self:ScheduleRepeatingTimer(markMobs, 0.2)
 		end
@@ -387,7 +390,7 @@ do
 	function mod:ParasiteFixate(args)
 		if self:Me(args.destGUID) then
 			self:Flash(-8065)
-			self:Message(-8065, "Personal", "Info", CL["you"]:format(self:SpellName(-8065)))
+			self:Message(-8065, "Personal", "Info", CL.you:format(self:SpellName(-8065)))
 		end
 		if self.db.profile.custom_off_parasite_marks then
 			if not markableMobs[args.sourceGUID] then
@@ -400,10 +403,10 @@ do
 	end
 	function mod:Injection(args)
 		local amount = args.amount or 1
-		injectionBar, injectionTarget = CL["count"]:format(args.spellName, amount), args.destName
-		self:StopBar(CL["count"]:format(args.spellName, amount-1), args.destName)
+		injectionBar, injectionTarget = CL.count:format(args.spellName, amount), args.destName
+		self:StopBar(CL.count:format(args.spellName, amount-1), args.destName)
 		self:TargetBar(args.spellId, 12, args.destName, injectionBar)
-		self:DelayedMessage(args.spellId, 10, "Urgent", L["injection_over_soon"]:format(args.destName), args.spellId) -- might want to check what happens if player deis with debuff
+		self:DelayedMessage(args.spellId, 10, "Urgent", L.injection_over_soon:format(args.destName), args.spellId) -- might want to check what happens if player deis with debuff
 	end
 end
 
@@ -428,7 +431,7 @@ do
 		if t-prev > 2 and self:Me(args.destGUID) then
 			prev = t
 			self:Flash(args.spellId)
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -453,7 +456,7 @@ do
 		if not UnitDetailedThreatSituation(target, boss) and lastWhirlTarget ~= mod:UnitName(target) then
 			lastWhirlTarget = mod:UnitName(target)
 			if UnitIsUnit("player", target) then
-				mod:Message(143701, "Personal", "Info", CL["you"]:format(mod:SpellName(143701)))
+				mod:Message(143701, "Personal", "Info", CL.you:format(mod:SpellName(143701)))
 				mod:Flash(143701)
 				mod:Say(143701)
 				-- add range stuff
@@ -551,7 +554,7 @@ end
 
 local function warnEdge()
 	mod:Flash(-8055)
-	mod:Message(-8055, "Personal", "Info", L["edge_message"])
+	mod:Message(-8055, "Personal", "Info", L.edge_message)
 	mod:Bar(-8055, 9, mod:SpellName(142809), 142809) -- Fiery Edge
 	mod:Say(-8055, mod:SpellName(142809))
 end
@@ -602,9 +605,9 @@ end
 function mod:CHAT_MSG_MONSTER_EMOTE(_, _, sender, _, _, target)
 	-- Iyyokuk only have one MONSTER_EMOTE so this should be a safe method rather than having to translate the msg
 	if sender == self:SpellName(-8012) then -- hopefully no weird naming missmatch in different localization like for "Xaril the Poisoned Mind" vs "Xaril the Poisoned-Mind"
-		self:Message(-8055, "Attention", nil, CL["count"]:format(self:SpellName(142514), calculateCounter), 142514)
+		self:Message(-8055, "Attention", nil, CL.count:format(self:SpellName(142514), calculateCounter), 142514)
 		calculateCounter = calculateCounter + 1
-		self:Bar(-8055, 35, CL["count"]:format(self:SpellName(142514), calculateCounter), 142514) -- Calculate
+		self:Bar(-8055, 35, CL.count:format(self:SpellName(142514), calculateCounter), 142514) -- Calculate
 		if UnitIsUnit(target, "player") then
 			warnEdge()
 		elseif self:Heroic() then
@@ -647,7 +650,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -658,7 +661,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -681,7 +684,7 @@ do
 		if myDebuff then
 			mod:OpenProximity(-8034, 10, matches[myDebuff][mod:Heroic() and "proximityH" or "proximityN"])
 		end
-		mod:Message(-8034, "Neutral", nil, CL["soon"]:format(mod:SpellName(-8034)))
+		mod:Message(-8034, "Neutral", nil, CL.soon:format(mod:SpellName(-8034)))
 	end
 	function mod:Catalysts(args)
 		self:CDBar(-8034, 25, chooseCatalyst)
@@ -721,7 +724,7 @@ function mod:ToxicInjectionsApplied(args)
 		elseif args.spellId == 142534 then -- yellow
 			message = yellowToxin
 		end
-		self:Message(-8034, "Personal", "Long", CL["you"]:format(message))
+		self:Message(-8034, "Personal", "Long", CL.you:format(message))
 	end
 end
 
@@ -808,7 +811,7 @@ function mod:MyEngage()
 			elseif mobId == 71152 then -- Skeer the Bloodseeker
 				self:Bar(143280 ,10) -- Bloodletting
 			elseif mobId == 71153 then -- Hisek the Swarmkeeper
-				self:CDBar(-8073, 40, CL["count"]:format(self:SpellName(-8073), aimCounter)) -- Aim
+				self:CDBar(-8073, 40, CL.count:format(self:SpellName(-8073), aimCounter)) -- Aim
 				if self:Heroic() then
 					self:Bar(143243, 48) -- Rapid Fire
 				end
@@ -876,24 +879,24 @@ function mod:Deaths(args)
 		deathCounter = deathCounter + 1
 	elseif args.mobId == 71153 then --Hisek the Swarmkeeper
 		self:StopBar(-8073) --Aim
-		self:StopBar(L["dance"]) --Rapid Fire
+		self:StopBar(L.dance) --Rapid Fire
 		deathCounter = deathCounter + 1
 	elseif args.mobId == 71158 then --Rik'kal the Dissector
-		self:StopBar(CL["count"]:format(self:SpellName(143337), mutateCastCounter)) -- Mutate
+		self:StopBar(CL.count:format(self:SpellName(143337), mutateCastCounter)) -- Mutate
 		if injectionTarget then
-			self:CancelDelayedMessage(L["injection_over_soon"]:format(injectionTarget))
+			self:CancelDelayedMessage(L.injection_over_soon:format(injectionTarget))
 			self:StopBar(injectionBar, injectionTarget)
 		end
 		self:StopBar(143339) -- Injection
 		deathCounter = deathCounter + 1
 	elseif args.mobId == 71160 then -- Iyyokuk the Lucid
-		self:StopBar(CL["count"]:format(self:SpellName(142514), calculateCounter))
+		self:StopBar(CL.count:format(self:SpellName(142514), calculateCounter))
 		deathCounter = deathCounter + 1
 	elseif args.mobId == 71578 then -- Parasite -- XXX don't think this is even needed, but lets have it as a backup
 		if not parasites[args.destGUID] then
 			parasites[args.destGUID] = true
 			parasiteCounter = parasiteCounter - 1
-			self:Message(143339, "Attention", nil, L["parasites_up"]:format(parasiteCounter), 99315) -- spell called parasite, worm look like icon
+			self:Message(143339, "Attention", nil, L.parasites_up:format(parasiteCounter), 99315) -- spell called parasite, worm look like icon
 		end
 		if self.db.profile.custom_off_parasite_marks then
 			self:FreeMarkByGUID(args.destGUID)

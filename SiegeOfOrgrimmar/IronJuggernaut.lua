@@ -156,7 +156,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(144498, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(144498, "Personal", "Info", CL.underyou:format(args.spellName))
 			self:Flash(144498)
 		end
 	end
@@ -207,7 +207,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(-8179, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(-8179, "Personal", "Info", CL.underyou:format(args.spellName))
 			self:Flash(-8179)
 		end
 	end
@@ -218,13 +218,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		self:Message(-8179, "Attention")
 		self:CDBar(-8179, 19)
 	elseif spellId == 144673 then -- Crawler Mine
-		self:Message(-8183, "Urgent", nil, CL["count"]:format(spellName, mineCounter))
+		self:Message(-8183, "Urgent", nil, CL.count:format(spellName, mineCounter))
 		self:Bar(-8183, 18, 144718) -- 48732 = Mine Explosion?
 		mineCounter = mineCounter + 1
 		if phase == 1 then
-			self:Bar(-8183, 30, CL["count"]:format(spellName, mineCounter))
+			self:Bar(-8183, 30, CL.count:format(spellName, mineCounter))
 		else
-			self:CDBar(-8183, 25, CL["count"]:format(spellName, mineCounter))
+			self:CDBar(-8183, 25, CL.count:format(spellName, mineCounter))
 		end
 		if self.db.profile.custom_off_mine_marks then
 			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
@@ -235,31 +235,31 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		self:CDBar(144498, 20)
 	elseif spellId == 146359 then -- Regeneration (Assault mode)
 		phase = 1
-		self:Message("stages", "Neutral", "Long", CL["phase"]:format(phase), false)
-		self:Bar("stages", 120, CL["phase"]:format(2), 144498) -- maybe should use UNIT_POWER to adjust timer since there seems to be a 6 sec variance
+		self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
+		self:Bar("stages", 120, CL.phase:format(2), 144498) -- maybe should use UNIT_POWER to adjust timer since there seems to be a 6 sec variance
 		if self:Healer() then
 			self:CDBar(144459, 8) -- Laser Burn
 		end
-		self:StopBar(CL["count"]:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
+		self:StopBar(CL.count:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
 		mineCounter = 1
-		self:Bar(-8183, 30, CL["count"]:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
+		self:Bar(-8183, 30, CL.count:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
 		self:CDBar(-8179, 19) -- Borer Drill
 		self:StopBar(144485) -- Shock Pulse
 		self:StopBar(144498) -- Explosive Tar
-		self:StopBar(CL["phase"]:format(1)) -- in case it overruns
+		self:StopBar(CL.phase:format(1)) -- in case it overruns
 	elseif spellId == 146360 then -- Depletion (Siege mode)
 		phase = 2
-		self:Message("stages", "Neutral", "Long", CL["phase"]:format(phase), false)
-		self:Bar("stages", 64, CL["phase"]:format(1), 144464) -- maybe should use UNIT_POWER to adjust timer since there seems to be a 6 sec variance
-		self:StopBar(CL["count"]:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
+		self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
+		self:Bar("stages", 64, CL.phase:format(1), 144464) -- maybe should use UNIT_POWER to adjust timer since there seems to be a 6 sec variance
+		self:StopBar(CL.count:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
 		mineCounter = 1
-		self:CDBar(-8183, 23, CL["count"]:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
+		self:CDBar(-8183, 23, CL.count:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
 		self:Bar(144485, 15.5) -- Shock Pulse, 15.6 - 15.8
 		self:CDBar(144498, 10) -- Explosive Tar
 		self:StopBar(144459) -- Laser Burn
 		self:StopBar(-8179) -- Borer Drill
 		self:StopBar(144467) -- Ignite Armor
-		self:StopBar(CL["phase"]:format(2)) -- in case it overruns
+		self:StopBar(CL.phase:format(2)) -- in case it overruns
 	elseif spellId == 144356 then -- Ricochet
 		self:Message(-8181, "Attention")
 		self:CDBar(-8181, 15) -- 15-20s

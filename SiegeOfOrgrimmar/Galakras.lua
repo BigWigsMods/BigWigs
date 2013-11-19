@@ -103,8 +103,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PoisonCloud", 147705)
 	self:Log("SPELL_CAST_START", "CrushersCall", 146769)
 	self:Log("SPELL_CAST_SUCCESS", "ShatteringCleave", 146849)
-	self:Emote("SouthTower", L["south_tower_trigger"])
-	self:Emote("NorthTower", L["north_tower_trigger"])
+	self:Emote("SouthTower", L.south_tower_trigger)
+	self:Emote("NorthTower", L.north_tower_trigger)
 	-- Galakras
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FlamesOfGalakrondStacking", 147029)
 	self:Log("SPELL_AURA_APPLIED", "FlamesOfGalakrondApplied", 147068)
@@ -115,8 +115,8 @@ function mod:OnBossEnable()
 end
 
 local function warnTowerAdds()
-	mod:Message("towers", "Attention", nil, L["tower_defender"], 85214)
-	mod:Bar("towers", 60, L["tower_defender"], 85214) -- random orc icon
+	mod:Message("towers", "Attention", nil, L.tower_defender, 85214)
+	mod:Bar("towers", 60, L.tower_defender, 85214) -- random orc icon
 end
 
 local function firstTowerAdd()
@@ -128,10 +128,10 @@ end
 
 function mod:OnEngage()
 	if self:Heroic() then
-		self:Bar("towers", 6, L["tower_defender"], 85214) -- random orc icon
+		self:Bar("towers", 6, L.tower_defender, 85214) -- random orc icon
 		self:ScheduleTimer(firstTowerAdd, 6)
 	else
-		self:Bar("towers", 116, L["south_tower"], L.towers_icon)
+		self:Bar("towers", 116, L.south_tower, L.towers_icon)
 	end
 
 	addsCounter = 0
@@ -179,10 +179,10 @@ end
 function mod:LastPhase(unitId, _, _, _, spellId)
 	if spellId == 50630 then -- Eject All Passengers
 		self:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
-		self:Message("stages", "Neutral", "Warning", CL["incoming"]:format(UnitName(unitId)), "ability_mount_drake_proto")
-		self:StopBar(L["adds"])
-		self:StopBar(L["drakes"])
-		self:CancelDelayedMessage(CL["incoming"]:format(L["drakes"]))
+		self:Message("stages", "Neutral", "Warning", CL.incoming:format(UnitName(unitId)), "ability_mount_drake_proto")
+		self:StopBar(L.adds)
+		self:StopBar(L.drakes)
+		self:CancelDelayedMessage(CL.incoming:format(L.drakes))
 	end
 end
 
@@ -194,7 +194,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -213,33 +213,33 @@ function mod:ShatteringCleave(args)
 end
 
 function mod:Demolisher()
-	self:Message("demolisher", "Attention", nil, L["demolisher_message"], L.demolisher_icon)
+	self:Message("demolisher", "Attention", nil, L.demolisher_message, L.demolisher_icon)
 end
 
 function mod:SouthTower()
-	self:StopBar(L["south_tower"])
-	self:Message("towers", "Neutral", "Long", L["south_tower"], L.towers_icon)
-	self:Bar("demolisher", 20, L["demolisher_message"], L.demolisher_icon)
+	self:StopBar(L.south_tower)
+	self:Message("towers", "Neutral", "Long", L.south_tower, L.towers_icon)
+	self:Bar("demolisher", 20, L.demolisher_message, L.demolisher_icon)
 
 	if self:Heroic() then
 		self:CancelTimer(towerAddTimer)
 		towerAddTimer = nil
-		self:Bar("towers", 35, L["tower_defender"], 85214) -- random orc icon
+		self:Bar("towers", 35, L.tower_defender, 85214) -- random orc icon
 		self:ScheduleTimer(firstTowerAdd, 35)
 	else
-		self:Bar("towers", 150, L["north_tower"], L.towers_icon) -- XXX verify
+		self:Bar("towers", 150, L.north_tower, L.towers_icon) -- XXX verify
 	end
 end
 
 function mod:NorthTower()
-	self:StopBar(L["north_tower"])
-	self:Message("towers", "Neutral", "Long", L["north_tower"], L.towers_icon)
-	self:Bar("demolisher", 20, L["demolisher_message"], L.demolisher_icon)
+	self:StopBar(L.north_tower)
+	self:Message("towers", "Neutral", "Long", L.north_tower, L.towers_icon)
+	self:Bar("demolisher", 20, L.demolisher_message, L.demolisher_icon)
 
 	if self:Heroic() then
 		self:CancelTimer(towerAddTimer)
 		towerAddTimer = nil
-		self:StopBar(L["tower_defender"])
+		self:StopBar(L.tower_defender)
 	end
 end
 
@@ -259,7 +259,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", nil, CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", nil, CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -273,22 +273,22 @@ function mod:Fracture(args)
 end
 
 function mod:Adds(_, _, unit, _, _, target)
-	if unit == L["warlord_zaela"] then
+	if unit == L.warlord_zaela then
 		if addsCounter == 0 then
-			self:Bar("adds", 59, L["adds"], L.adds_icon)
-			self:Bar("drakes", 168, L["drakes"], L.drakes_icon)
+			self:Bar("adds", 59, L.adds, L.adds_icon)
+			self:Bar("drakes", 168, L.drakes, L.drakes_icon)
 			addsCounter = 1
 		elseif UnitIsPlayer(target) then
-			self:Message("adds", "Attention", "Info", CL["incoming"]:format(L["adds"]), L.adds_icon)
+			self:Message("adds", "Attention", "Info", CL.incoming:format(L.adds), L.adds_icon)
 			addsCounter = addsCounter + 1
 			if (addsCounter + 1) % 4  == 0 then
-				self:DelayedMessage("drakes", 55, "Attention", CL["incoming"]:format(L["drakes"]), L.drakes_icon, "Info")
-				self:Bar("adds", 110, L["adds"], L.adds_icon)
+				self:DelayedMessage("drakes", 55, "Attention", CL.incoming:format(L.drakes), L.drakes_icon, "Info")
+				self:Bar("adds", 110, L.adds, L.adds_icon)
 			else
 				if addsCounter % 4 == 0 then -- start the drakes timer on the wave after drakes
-					self:Bar("drakes", 220, L["drakes"], L.drakes_icon)
+					self:Bar("drakes", 220, L.drakes, L.drakes_icon)
 				end
-				self:Bar("adds", 55, L["adds"], L.adds_icon)
+				self:Bar("adds", 55, L.adds, L.adds_icon)
 			end
 		end
 	end

@@ -93,7 +93,7 @@ end
 
 do
 	local function ironPrisonOverSoon(spellId, spellName)
-		mod:Message(spellId, "Attention", "Warning", CL["soon"]:format(CL["removed"]:format(spellName)))
+		mod:Message(spellId, "Attention", "Warning", CL.soon:format(CL.removed:format(spellName)))
 		mod:Flash(spellId)
 	end
 	function mod:IronPrison(args)
@@ -171,23 +171,23 @@ end
 
 function mod:FallingAsh(args)
 	-- this is for when the damage happens
-	self:ScheduleTimer("Message", 14, args.spellId, "Attention", self:Healer() and "Info", CL["soon"]:format(CL["count"]:format(args.spellName, ashCounter)))
+	self:ScheduleTimer("Message", 14, args.spellId, "Attention", self:Healer() and "Info", CL.soon:format(CL.count:format(args.spellName, ashCounter)))
 	ashCounter = ashCounter + 1
-	self:Bar(args.spellId, 17, CL["count"]:format(args.spellName, ashCounter))
+	self:Bar(args.spellId, 17, CL.count:format(args.spellName, ashCounter))
 end
 
 function mod:FoulGeyser(args) -- Blobs
 	self:PrimaryIcon(-8132)
 	self:SecondaryIcon(args.spellId, args.destName)
-	self:Bar(args.spellId, 32, L["blobs"])
+	self:Bar(args.spellId, 32, L.blobs)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 	elseif self:Range(args.destName) < 5 then -- splash is 3 but want bigger warning so people know that blobs will be around that area
-		self:RangeMessage(args.spellId, "Personal", "Alert", L["blobs"])
+		self:RangeMessage(args.spellId, "Personal", "Alert", L.blobs)
 		self:Flash(args.spellId)
 		return
 	end
-	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", L["blobs"])
+	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", L.blobs)
 end
 
 function mod:FoulGeyserRemoved(args)
@@ -203,7 +203,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -237,7 +237,7 @@ do
 	function mod:TotemWarn(unit)
 		local hp = UnitHealth(unit)/UnitHealthMax(unit) * 100
 		if hp < hpWarn[hpWarned] then
-			self:Message(-8124, "Neutral", "Info", CL["soon"]:format(warnings[hpWarned]), false)
+			self:Message(-8124, "Neutral", "Info", CL.soon:format(warnings[hpWarned]), false)
 			hpWarned = hpWarned + 1
 			if hpWarned > #hpWarn then
 				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)

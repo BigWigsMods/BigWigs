@@ -99,8 +99,8 @@ function mod:GetOptions(CL)
 		[-8305] = -8305, -- Intermissions
 		[145065] = -8307, -- phase 2
 		[-8325] = -8319, -- phase 3
-		["custom_off_minion_marker"] = L["custom_off_minion_marker"],
-		[147209] = ("%s (%s)"):format(CL["stage"]:format(4), CL["heroic"]),
+		["custom_off_minion_marker"] = L.custom_off_minion_marker,
+		[147209] = ("%s (%s)"):format(CL.stage:format(4), CL.heroic),
 		[144758] = "general",
 	}
 end
@@ -136,7 +136,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "AddMarkedMob", 144584) -- Chain Lightning
 	self:Log("SPELL_CAST_START", "ChainHeal", 144583)
 	self:Log("SPELL_CAST_SUCCESS", "PowerIronStar", 144616)
-	self:Yell("Farseer", L["farseer_trigger"])
+	self:Yell("Farseer", L.farseer_trigger)
 	self:Emote("SiegeEngineer", "144616")
 	self:Log("SPELL_CAST_SUCCESS", "Desecrate", 144748, 144749)
 
@@ -209,16 +209,16 @@ end
 
 function mod:Phase3End()
 	bombardmentCounter = 1
-	self:Bar("stages", 19, CL["phase"]:format(4), 147126)
+	self:Bar("stages", 19, CL.phase:format(4), 147126)
 	-- stop bars here too, but since this needs localization we need to do it at the actual pull into the phase 4
-	self:StopBar(L["intermission"])
-	self:StopBar(CL["count"]:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
+	self:StopBar(L.intermission)
+	self:StopBar(CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
 	self:StopBar(144758) -- Desecrate
-	self:StopBar(L["mind_control"]) -- Mind Control
+	self:StopBar(L.mind_control) -- Mind Control
 end
 
 function mod:ClumpFailIronStarSpawn()
-	self:Message("clump_check", "Important", "Long", L["clump_check_warning"], 147126)
+	self:Message("clump_check", "Important", "Long", L.clump_check_warning, 147126)
 	self:Flash("clump_check", 147126)
 end
 
@@ -244,7 +244,7 @@ function mod:MaliceApplied(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
 	self:Bar(args.spellId, 30)
 	if self:Me(args.destGUID) then
-		self:Bar(args.spellId, 14, CL["you"]:format(args.spellName))
+		self:Bar(args.spellId, 14, CL.you:format(args.spellName))
 		self:Flash(args.spellId)
 	end
 end
@@ -264,10 +264,10 @@ end
 do
 	local bombardmentTimers = { 55, 40, 40, 25, 25, 15 }
 	function mod:Bombardment(args)
-		self:Message("bombardment", "Attention", nil, L["bombardment"], args.spellId)
-		self:Bar("bombardment", bombardmentTimers[bombardmentCounter] or 15, L["bombardment"], args.spellId)
+		self:Message("bombardment", "Attention", nil, L.bombardment, args.spellId)
+		self:Bar("bombardment", bombardmentTimers[bombardmentCounter] or 15, L.bombardment, args.spellId)
 		bombardmentCounter = bombardmentCounter + 1
-		self:Bar("bombardment", 13, CL["casting"]:format(args.spellName), args.spellId)
+		self:Bar("bombardment", 13, CL.casting:format(args.spellName), args.spellId)
 		self:Bar("clump_check", 3, 147126) -- Clump Check
 	end
 end
@@ -284,12 +284,12 @@ end
 
 function mod:MindControl(args)
 	mindControl = true
-	self:Message(145065, "Urgent", "Alert", CL["casting"]:format(L["mind_control"]))
+	self:Message(145065, "Urgent", "Alert", CL.casting:format(L.mind_control))
 	if phase == 3 then
-		self:Bar(145065, (mcCounter == 1) and 35 or 42, L["mind_control"])
+		self:Bar(145065, (mcCounter == 1) and 35 or 42, L.mind_control)
 		mcCounter = mcCounter + 1 -- XXX might need more data
 	else
-		self:Bar(145065, 45, L["mind_control"])
+		self:Bar(145065, 45, L.mind_control)
 	end
 end
 
@@ -365,9 +365,9 @@ do
 	end
 	function mod:WhirlingCorruption(args)
 		self:Flash(144985)
-		self:Message(144985, "Important", "Long", CL["count"]:format(args.spellName, whirlingCounter))
+		self:Message(144985, "Important", "Long", CL.count:format(args.spellName, whirlingCounter))
 		whirlingCounter = whirlingCounter + 1
-		self:Bar(144985, 50, CL["count"]:format(self:SpellName(144985), whirlingCounter))
+		self:Bar(144985, 50, CL.count:format(self:SpellName(144985), whirlingCounter))
 
 		if args.spellId == 145037 and self.db.profile.custom_off_minion_marker then
 			wipe(markableMobs)
@@ -399,7 +399,7 @@ do
 		local t = GetTime()
 		if t-prev > 3 and UnitGUID("focus") == args.sourceGUID then -- don't spam
 			prev = t
-			self:Message("chain_heal", "Personal", "Alert", L["chain_heal_message"], args.spellId)
+			self:Message("chain_heal", "Personal", "Alert", L.chain_heal_message, args.spellId)
 		end
 	end
 end
@@ -436,7 +436,7 @@ end
 
 function mod:IronStarRolling(_, _, _, _, spellId)
 	if spellId == 144616 then -- Power Iron Star
-		self:Message(spellId, "Important", nil, L["ironstar_rolling"])
+		self:Message(spellId, "Important", nil, L.ironstar_rolling)
 		self:Bar("ironstar_impact", 9, 144653) -- Iron Star Impact
 	end
 end
@@ -455,14 +455,14 @@ do
 		end
 		-- this is so people know they'll take extra damage
 		if #hopeList > 0 then
-			mod:TargetMessage(144945, hopeList, "Attention", "Warning", CL["count"]:format(mod:SpellName(29125), #hopeList), 149004) -- maybe add it's own option key? 29125 spell called "Hopeless"
+			mod:TargetMessage(144945, hopeList, "Attention", "Warning", CL.count:format(mod:SpellName(29125), #hopeList), 149004) -- maybe add it's own option key? 29125 spell called "Hopeless"
 		else
-			mod:Message(144945, "Attention", nil, CL["count"]:format(mod:SpellName(29125), 0), 149004)
+			mod:Message(144945, "Attention", nil, CL.count:format(mod:SpellName(29125), 0), 149004)
 		end
 	end
 	function mod:YShaarjsProtection(args)
 		if self:MobId(args.destGUID) == 71865 then
-			self:Message(args.spellId, "Positive", "Long", CL["over"]:format(args.spellName))
+			self:Message(args.spellId, "Positive", "Long", CL.over:format(args.spellName))
 			if not self:LFR() then
 				self:ScheduleTimer(announceHopeless, 6)
 			end
@@ -476,20 +476,20 @@ do
 
 	local function mindControlMagic(spellId)
 		if not mindControl then -- there has not been an MC for more than 32 sec
-			mod:Bar(spellId, 8, L["mind_control"])
+			mod:Bar(spellId, 8, L.mind_control)
 		end
 	end
 
 	local annihilateCounter = 1
 	function mod:Annihilate(args)
-		self:Message(args.spellId, "Attention", nil, CL["casting"]:format(CL["count"]:format(args.spellName, annihilateCounter)))
+		self:Message(args.spellId, "Attention", nil, CL.casting:format(CL.count:format(args.spellName, annihilateCounter)))
 		annihilateCounter = annihilateCounter + 1
 	end
 
 	function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		if spellId == 145235 then -- throw axe at heart , transition into first intermission
 			if phase == 1 then
-				self:Bar(-8305, 25, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
+				self:Bar(-8305, 25, L.intermission, "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 				self:CancelTimer(waveTimer)
 				waveTimer = nil
 				self:StopBar(-8292) -- Kor'kron Warbringer aka add waves
@@ -501,19 +501,19 @@ do
 			end
 		elseif spellId == 144866 then -- Enter Realm of Y'Shaarj -- actually being pulled
 			self:StopBar(144758) -- Desecrate
-			self:StopBar(L["mind_control"]) -- Mind Control
-			self:StopBar(CL["count"]:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
-			self:Message(-8305, "Neutral", nil, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
-			self:Bar(-8305, 210, L["intermission"], "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
-			self:Bar(-8305, 62, CL["over"]:format(L["intermission"]), "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
+			self:StopBar(L.mind_control) -- Mind Control
+			self:StopBar(CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
+			self:Message(-8305, "Neutral", nil, L.intermission, "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
+			self:Bar(-8305, 210, L.intermission, "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
+			self:Bar(-8305, 62, CL.over:format(L.intermission), "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 			whirlingCounter = 1
 			annihilateCounter = 1
 		elseif spellId == 144956 then -- Jump To Ground -- exiting intermission
 			if phase == 2 then
 				desecrateCounter = 1
 				self:Bar(144758, 10) -- Desecrate
-				self:Bar(145065, 15, L["mind_control"]) -- Mind Control
-				self:Bar(144985, 30, CL["count"]:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
+				self:Bar(145065, 15, L.mind_control) -- Mind Control
+				self:Bar(144985, 30, CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
 				local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
 				if hp < 50 then -- XXX might need adjusting
 					self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3") -- don't really need this till 2nd intermission phase
@@ -521,7 +521,7 @@ do
 				-- warn for empowered abilities
 				local power = UnitPower("boss1")
 				while power >= warnPower do -- can he hit 100 energy before p3? that would be some shenanigans
-					self:DelayedMessage("stages", 2, "Attention", L["empowered_message"]:format(abilities[warnPower]), false, "Info")
+					self:DelayedMessage("stages", 2, "Attention", L.empowered_message:format(abilities[warnPower]), false, "Info")
 					warnPower = warnPower + 25
 				end
 			else -- first time, don't start timers yet
@@ -532,27 +532,27 @@ do
 			phase = 3
 			mcCounter = 1
 			desecrateCounter = 1
-			self:Message("stages", "Neutral", nil, CL["phase"]:format(phase), false)
-			self:StopBar(L["intermission"])
-			self:Bar(144985, 48, CL["count"]:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
+			self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)
+			self:StopBar(L.intermission)
+			self:Bar(144985, 48, CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
 			if self:Heroic() then
 				-- XXX lets try to improve this, because it looks like if it is not cast within 32 sec, then it is going to be closer to 40 than to 30 need more Transcriptor log
 				mindControl = nil
 				self:ScheduleTimer(mindControlMagic, 32, 145065)
-				self:Bar(145065, 31, L["mind_control"]) -- Mind Control
+				self:Bar(145065, 31, L.mind_control) -- Mind Control
 			else
-				self:Bar(145065, 29, L["mind_control"]) -- Mind Control
+				self:Bar(145065, 29, L.mind_control) -- Mind Control
 			end
 			self:CDBar(144758, 21) -- Desecrate -- on heroic 21-23
 		elseif spellId == 146984 then -- phase 4 Enter Realm of Garrosh
 			phase = 4
-			self:Message("stages", "Neutral", nil, CL["phase"]:format(phase), false)
-			self:StopBar(L["intermission"])
-			self:StopBar(CL["count"]:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
+			self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)
+			self:StopBar(L.intermission)
+			self:StopBar(CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
 			self:StopBar(144758) -- Desecrate
-			self:StopBar(L["mind_control"]) -- Mind Control
+			self:StopBar(L.mind_control) -- Mind Control
 			self:Bar(147209, 30) -- Malice
-			self:Bar("bombardment", 69, L["bombardment"], 147120) -- Bombardment
+			self:Bar("bombardment", 69, L.bombardment, 147120) -- Bombardment
 			self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 		elseif spellId == 147126 then -- Clump Check
 			self:Bar("clump_check", 3, spellName, spellId)
@@ -565,7 +565,7 @@ function mod:UNIT_HEALTH_FREQUENT(unitId)
 	if self:MobId(UnitGUID(unitId)) ~= 71865 then return end
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if (hp < 15 and phase == 1) or (hp < 13 and phase == 2) then -- 10%
-		self:Message("stages", "Neutral", "Info", CL["soon"]:format(CL["phase"]:format(phase+1)), false)
+		self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3")
 	end
 end

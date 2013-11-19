@@ -96,19 +96,19 @@ function mod:OnBossEnable()
 	-- heroic
 	self:Log("SPELL_CAST_SUCCESS", "Overcharge", 145774)
 	-- The Assembly Line
-	self:Emote("AssemblyLine", L["assembly_line_trigger"])
+	self:Emote("AssemblyLine", L.assembly_line_trigger)
 	self:Log("SPELL_AURA_APPLIED", "CrawlerMine", 145269)
 	self:Log("SPELL_AURA_APPLIED", "MagneticCrush", 144466)
 	self:Log("SPELL_AURA_APPLIED", "Superheated", 143856)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Superheated", 143856)
 	self:RegisterEvent("RAID_BOSS_WHISPER")
-	self:Yell("ShockwaveMissile", L["shockwave_missile_trigger"])
+	self:Yell("ShockwaveMissile", L.shockwave_missile_trigger)
 	self:Log("SPELL_AURA_APPLIED", "ShockwaveMissileOver", 143639)
 	self:Log("SPELL_AURA_APPLIED", "PatternRecognitionApplied", 144236)
 	self:Log("SPELL_AURA_REMOVED", "PatternRecognitionRemoved", 144236)
 	-- Automated Shredders
 	self:Log("SPELL_CAST_SUCCESS", "AddMarkedMob", 145269) -- break in
-	self:Emote("ShredderEngage", L["shredder_engage_trigger"])
+	self:Emote("ShredderEngage", L.shredder_engage_trigger)
 	self:Log("SPELL_CAST_START", "DeathFromAbove", 144208)
 	self:Log("SPELL_CAST_START", "DeathFromAboveApplied", 144210)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Overload", 145444)
@@ -185,7 +185,7 @@ do
 
 	function mod:Overcharge(args)
 		local mobId = self:MobId(args.destGUID)
-		self:Message(-8408, "Important", nil, CL["other"]:format(args.spellName, itemNames[mobId]), false)
+		self:Message(-8408, "Important", nil, CL.other:format(args.spellName, itemNames[mobId]), false)
 		if self.db.profile.custom_off_mine_marker and mobId == 71790 then -- mines
 			wipe(markableMobs)
 			wipe(marksUsed)
@@ -210,14 +210,14 @@ do
 				items[#items+1] = itemNames[mobId]
 			end
 		end
-		mod:Message(-8202, "Neutral", nil, L["assembly_line_items"]:format(count, table.concat(items, " - ")), false)
+		mod:Message(-8202, "Neutral", nil, L.assembly_line_items:format(count, table.concat(items, " - ")), false)
 		wipe(items)
 	end
 	function mod:AssemblyLine()
 		self:ScheduleTimer(beltItems, 13, assemblyLineCounter)
-		self:Message(-8202, "Neutral", "Warning", L["assembly_line_message"]:format(assemblyLineCounter), "Inv_crate_03")
+		self:Message(-8202, "Neutral", "Warning", L.assembly_line_message:format(assemblyLineCounter), "Inv_crate_03")
 		assemblyLineCounter = assemblyLineCounter + 1
-		self:Bar(-8202, 40, CL["count"]:format(self:SpellName(-8202), assemblyLineCounter), "Inv_crate_03")
+		self:Bar(-8202, 40, CL.count:format(self:SpellName(-8202), assemblyLineCounter), "Inv_crate_03")
 	end
 end
 
@@ -245,7 +245,7 @@ end
 
 function mod:Superheated(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 	end
 end
 
@@ -256,12 +256,12 @@ function mod:RAID_BOSS_WHISPER(_, msg, sender)
 		self:Flash(-8208)
 		self:Say(-8208, L.laser_say)
 	elseif msg:find("Ability_Siege_Engineer_Detonate") then -- mine fixate
-		self:Message(-8212, "Personal", "Info", CL["you"]:format(sender))
+		self:Message(-8212, "Personal", "Info", CL.you:format(sender))
 		self:Flash(-8212)
 	elseif msg:find("143266") then -- Sawblade
 		-- this is faster than target scanning, hence why we do it
 		sawbladeTarget = UnitGUID("player")
-		self:Message(-8195, "Positive", "Info", CL["you"]:format(self:SpellName(143266)))
+		self:Message(-8195, "Positive", "Info", CL.you:format(self:SpellName(143266)))
 		self:PrimaryIcon(-8195, "player")
 		self:Flash(-8195)
 		self:Say(-8195)
@@ -273,7 +273,7 @@ function mod:ShockwaveMissile()
 end
 
 function mod:ShockwaveMissileOver(args)
-	self:Message(args.spellId, "Urgent", nil, CL["over"]:format(args.spellName))
+	self:Message(args.spellId, "Urgent", nil, CL.over:format(args.spellName))
 end
 
 function mod:PatternRecognitionApplied(args)
@@ -284,7 +284,7 @@ end
 
 function mod:PatternRecognitionRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(-8207, "Positive", CL["over"]:format(args.spellName))
+		self:Message(-8207, "Positive", CL.over:format(args.spellName))
 	end
 end
 
@@ -295,7 +295,7 @@ function mod:ShredderEngage()
 	self:Bar(-8199, 60, nil, "INV_MISC_ARMORKIT_27")
 	self:Bar(144208, 16) -- Death from Above
 	overloadCounter = 1
-	self:Bar(145444, 7, CL["count"]:format(self:SpellName(145444), overloadCounter)) -- Overload
+	self:Bar(145444, 7, CL.count:format(self:SpellName(145444), overloadCounter)) -- Overload
 end
 
 function mod:DeathFromAboveApplied(args)
@@ -303,20 +303,20 @@ function mod:DeathFromAboveApplied(args)
 end
 
 function mod:DeathFromAbove(args)
-	self:Message(args.spellId, "Attention", nil, CL["casting"]:format(args.spellName))
+	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 41)
 end
 
 function mod:Overload(args)
 	local amount = args.amount or 1
-	self:Message(args.spellId, "Urgent", nil, CL["count"]:format(args.spellName, amount))
+	self:Message(args.spellId, "Urgent", nil, CL.count:format(args.spellName, amount))
 	overloadCounter = amount + 1
-	self:Bar(args.spellId, 11, CL["count"]:format(args.spellName, overloadCounter))
+	self:Bar(args.spellId, 11, CL.count:format(args.spellName, overloadCounter))
 end
 
 function mod:ShredderDied()
 	self:StopBar(144208) -- Death from Above
-	self:StopBar(CL["count"]:format(self:SpellName(145444), overloadCounter)) -- Overload
+	self:StopBar(CL.count:format(self:SpellName(145444), overloadCounter)) -- Overload
 end
 
 -- Siegecrafter Blackfuse
@@ -332,7 +332,7 @@ function mod:ProtectiveFrenzy(args)
 		local boss = "boss"..i
 		if UnitExists(boss) and UnitIsDead(boss) then
 			local mobId = self:MobId(UnitGUID(boss))
-			self:Message(-8202, "Positive", nil, CL["other"]:format(L["disabled"], itemNames[mobId]), false)
+			self:Message(-8202, "Positive", nil, CL.other:format(L.disabled, itemNames[mobId]), false)
 		end
 	end
 end

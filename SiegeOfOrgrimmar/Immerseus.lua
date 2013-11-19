@@ -62,7 +62,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "ShaBolt", 143295)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ShaPoolDamage", 143297)
 
-	self:Yell("Win", L["win_yell"])
+	self:Yell("Win", L.win_yell)
 end
 
 function mod:OnEngage()
@@ -104,7 +104,7 @@ end
 
 function mod:ShaCorruption(args)
 	if self:Me(args.destGUID) and args.amount > 2 then
-		self:Message(args.spellId, "Personal", "Info", CL["count"]:format(args.spellName, args.amount))
+		self:Message(args.spellId, "Personal", "Info", CL.count:format(args.spellName, args.amount))
 		if args.amount > 5 then
 			self:Flash(args.spellId)
 		end
@@ -146,7 +146,7 @@ end
 
 function mod:Swirl(args)
 	self:Message(args.spellId, "Important", "Long")
-	--self:Bar(args.spellId, 13, CL["cast"]:format(args.spellName))
+	--self:Bar(args.spellId, 13, CL.cast:format(args.spellName))
 	self:Bar(args.spellId, 53)
 end
 
@@ -157,7 +157,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(143295, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(143295, "Personal", "Info", CL.underyou:format(args.spellName))
 			self:Flash(143295)
 		end
 	end
@@ -166,7 +166,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["you"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
 		end
 	end
 end

@@ -134,7 +134,7 @@ do
 	local meditativeField = mod:SpellName(143564)
 	local function warnDarkMeditation(spellId)
 		if not UnitDebuff("player", meditativeField) and UnitAffectingCombat("player") then
-			mod:Message(143564, "Personal", "Info", L["no_meditative_field"])
+			mod:Message(143564, "Personal", "Info", L.no_meditative_field)
 		end
 	end
 
@@ -165,8 +165,8 @@ end
 
 function mod:Calamity(args)
 	self:CDBar(args.spellId, 40)
-	self:Bar(args.spellId, 5, CL["cast"]:format(args.spellName))
-	self:Message(args.spellId, "Attention", nil, CL["casting"]:format(args.spellName))
+	self:Bar(args.spellId, 5, CL.cast:format(args.spellName))
+	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
 end
 
 do
@@ -254,7 +254,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL["underyou"]:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -324,7 +324,7 @@ do
 			self:OpenProximity(-7959, 8, nil, true)
 			-- Emphasized abilities
 			self:TargetMessage("inferno_self", name, "Urgent", "Warning", -7959)
-			self:Bar("inferno_self", 9-elapsed, L["inferno_self_bar"], -7959)
+			self:Bar("inferno_self", 9-elapsed, L.inferno_self_bar, -7959)
 		else
 			self:TargetMessage(-7959, name, "Urgent")
 			self:TargetBar(-7959, 9-elapsed, name)
@@ -347,7 +347,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message("defile_you", "Personal", "Info", CL["underyou"]:format(args.spellName), args.spellId)
+			self:Message("defile_you", "Personal", "Info", CL.underyou:format(args.spellName), args.spellId)
 			self:Flash("defile_you", args.spellId)
 		end
 	end
@@ -415,7 +415,7 @@ do
 			end
 			if infernoTarget then
 				self:StopBar(-7959, infernoTarget)
-				self:StopBar(L["inferno_self_bar"])
+				self:StopBar(L.inferno_self_bar)
 				infernoTarget = nil
 			end
 		end
@@ -427,7 +427,7 @@ function mod:VengefulStrikes(args)
 	local unit = self:GetUnitIdByGUID(args.sourceGUID)
 	if self:Me(UnitGUID(unit.."target")) then -- or self:Healer()
 		self:Message(args.spellId, "Urgent", "Alarm")
-		self:Bar(args.spellId, 4, CL["cast"]:format(args.spellName))
+		self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
 		self:CDBar(args.spellId, 22)
 	end
 end
@@ -458,8 +458,8 @@ end
 
 
 function mod:Heal(args)
-	self:Bar(args.spellId, self:LFR() and 20 or 15, CL["cast"]:format(CL["other"]:format(self:SpellName(98417), args.sourceName))) -- "Heal"
-	self:Message(args.spellId, "Positive", "Warning", CL["other"]:format(self:SpellName(37455), args.sourceName)) -- "Healing"
+	self:Bar(args.spellId, self:LFR() and 20 or 15, CL.cast:format(CL.other:format(self:SpellName(98417), args.sourceName))) -- "Heal"
+	self:Message(args.spellId, "Positive", "Warning", CL.other:format(self:SpellName(37455), args.sourceName)) -- "Healing"
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
@@ -468,11 +468,11 @@ function mod:UNIT_HEALTH_FREQUENT(unitId)
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 70 and not intermission[mobId] then -- 66%
 			local boss = UnitName(unitId)
-			self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], boss)), false)
+			self:Message("intermission", "Neutral", "Info", CL.soon:format(("%s (%s)"):format(L.intermission, boss)), false)
 			intermission[mobId] = 1
 		elseif hp < 37 and intermission[mobId] == 1 then -- 33%
 			local boss = UnitName(unitId)
-			self:Message("intermission", "Neutral", "Info", CL["soon"]:format(("%s (%s)"):format(L["intermission"], boss)), false)
+			self:Message("intermission", "Neutral", "Info", CL.soon:format(("%s (%s)"):format(L.intermission, boss)), false)
 			intermission[mobId] = 2
 			if intermission[71475] == 2 and intermission[71479] == 2 and intermission[71480] == 2 then
 				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3")

@@ -67,10 +67,10 @@ end
 function mod:OnEngage()
 	self:Berserk(self:LFR() and 720 or 360)
 	breathCounter, smashCounter, slamCounter = 1, 1, 1
-	self:Bar(142826, 12, CL["count"]:format(self:SpellName(142826), 1)) -- Arcing Smash
+	self:Bar(142826, 12, CL.count:format(self:SpellName(142826), 1)) -- Arcing Smash
 	self:Bar(142851, 5) -- Seismic Slam
 	self:OpenProximity(142851, 5)
-	self:CDBar(142842, 67.7, CL["count"]:format(self:SpellName(142842), breathCounter)) -- Breath of Y'Shaarj
+	self:CDBar(142842, 67.7, CL.count:format(self:SpellName(142842), breathCounter)) -- Breath of Y'Shaarj
 end
 
 --------------------------------------------------------------------------------
@@ -127,13 +127,13 @@ function mod:BloodRage(args)
 end
 
 function mod:ExpelMiasma() -- Blood Rage over
-	self:Message(142879, "Neutral", "Long", CL["over"]:format(self:SpellName(142879)))
+	self:Message(142879, "Neutral", "Long", CL.over:format(self:SpellName(142879)))
 	self:OpenProximity(142851, 5)
 	self:StopBar(142913) -- Displaced Energy
 	breathCounter, smashCounter, slamCounter = 1, 1, 1
-	self:Bar(142826, 17, CL["count"]:format(self:SpellName(142826), smashCounter)) -- Arcing Smash
-	self:Bar(142851, 10, self:Heroic() and CL["adds"]) -- Seismic Slam
-	self:CDBar(142842, 72.2, CL["count"]:format(self:SpellName(142842), breathCounter)) -- Breath of Y'Shaarj
+	self:Bar(142826, 17, CL.count:format(self:SpellName(142826), smashCounter)) -- Arcing Smash
+	self:Bar(142851, 10, self:Heroic() and CL.adds) -- Seismic Slam
+	self:CDBar(142842, 72.2, CL.count:format(self:SpellName(142842), breathCounter)) -- Breath of Y'Shaarj
 end
 
 -- Non rage phase
@@ -148,14 +148,14 @@ function mod:BreathOfYShaarj(args)
 	smashCounter, slamCounter = 1, 1
 
 	self:Flash(args.spellId)
-	self:Message(args.spellId, "Important", "Warning", CL["count"]:format(args.spellName, breathCounter))
+	self:Message(args.spellId, "Important", "Warning", CL.count:format(args.spellName, breathCounter))
 	breathCounter = breathCounter + 1
 
 	if breathCounter == 2 then
-		self:Bar(142826, 15, CL["count"]:format(self:SpellName(142826), smashCounter)) -- Arcing Smash
-		self:CDBar(args.spellId, 69.8, CL["count"]:format(args.spellName, breathCounter))
+		self:Bar(142826, 15, CL.count:format(self:SpellName(142826), smashCounter)) -- Arcing Smash
+		self:CDBar(args.spellId, 69.8, CL.count:format(args.spellName, breathCounter))
 	end
-	self:Bar(142851, 5, self:Heroic() and CL["adds"]) -- Seismic Slam
+	self:Bar(142851, 5, self:Heroic() and CL.adds) -- Seismic Slam
 end
 
 do
@@ -164,11 +164,11 @@ do
 	function mod:SeismicSlam(args)
 		if not slamTimers[slamCounter] then return end -- don't do anything if we don't have timer
 		if self:Heroic() then
-			args.spellName = CL["adds"]
+			args.spellName = CL.adds
 		end
 		-- don't think this needs a message
 		-- if anything a soon message, since timers seem reliable
-		slamTimer = self:ScheduleTimer("Message", slamTimers[slamCounter]-2, args.spellId, "Urgent", nil, CL["custom_sec"]:format(args.spellName, 2))
+		slamTimer = self:ScheduleTimer("Message", slamTimers[slamCounter]-2, args.spellId, "Urgent", nil, CL.custom_sec:format(args.spellName, 2))
 		self:Bar(args.spellId, slamTimers[slamCounter], args.spellName)
 		slamCounter = slamCounter + 1
 	end
@@ -178,9 +178,9 @@ function mod:ArcingSmash(args)
 	self:ScheduleTimer("Message", 4, 142986, "Urgent", "Alarm") -- Imploding Energy, don't wanna use SPELL_DAMAGE, and this seems accurate enough
 	self:CDBar(142986, 9, 67792) -- A bar with a text "Implosion" for when the damage actually happens, so people can time immunities. 67792 is just a random spell called "Implosion"
 
-	self:Message(args.spellId, "Attention", nil, CL["count"]:format(args.spellName, smashCounter))
+	self:Message(args.spellId, "Attention", nil, CL.count:format(args.spellName, smashCounter))
 	smashCounter = smashCounter + 1
 	if smashCounter == 4 then return end
-	self:CDBar(args.spellId, 17, CL["count"]:format(args.spellName, smashCounter))
+	self:CDBar(args.spellId, 17, CL.count:format(args.spellName, smashCounter))
 end
 
