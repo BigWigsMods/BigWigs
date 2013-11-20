@@ -321,6 +321,6 @@ end
 
 function mod:SunderingBlow(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
-	self:CDBar(args.spellId, 10)
+	self:CDBar(args.spellId, self:LFR() and 8 or 10)
 end
 
