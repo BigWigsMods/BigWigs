@@ -53,7 +53,8 @@ end
 local ldb = nil
 local tooltipFunctions = {}
 local pName = UnitName("player")
-local next = next
+local next, tonumber = next, tonumber
+local SendAddonMessage = SendAddonMessage
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
 local GetCurrentMapAreaID = GetCurrentMapAreaID
@@ -440,7 +441,7 @@ do
 				local meta = select(j, GetAddOnOptionalDependencies(i))
 				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
 					AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-						print("|cFF33FF99Big Wigs|r: The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
+						sysprint("The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
 					end)
 				end
 			end
@@ -448,7 +449,7 @@ do
 				local meta = select(j, GetAddOnDependencies(i))
 				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
 					AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-						print("|cFF33FF99Big Wigs|r: The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
+						sysprint("The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
 					end)
 				end
 			end
@@ -456,7 +457,7 @@ do
 
 		if old[name] then
 			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-				print(L.removeAddon:format(name, old[name]))
+				sysprint(L.removeAddon:format(name, old[name]))
 			end)
 		end
 	end
@@ -464,15 +465,15 @@ do
 	local L = GetLocale()
 	if L == "ptBR" then
 		AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-			print("Think you can translate Big Wigs into Brazilian Portuguese (ptBR)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
+			sysprint("Think you can translate Big Wigs into Brazilian Portuguese (ptBR)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
 		end)
 	elseif L == "esMX" then
 		AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-			print("Think you can translate Big Wigs into Latin American Spanish (esMX)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
+			sysprint("Think you can translate Big Wigs into Latin American Spanish (esMX)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
 		end)
 	elseif L == "esES" then
 		AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-			print("Think you can translate Big Wigs into Spanish (esES)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
+			sysprint("Think you can translate Big Wigs into Spanish (esES)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
 		end)
 	end
 end
@@ -743,8 +744,9 @@ do
 		end
 	end
 
-	function mod:PLAYER_TARGET_CHANGED()
-		local guid = UnitGUID("target")
+	local UnitGUID = UnitGUID
+	function mod:UNIT_TARGET(unit)
+		local guid = UnitGUID(unit.."target")
 		if guid then
 			local mobId = tonumber(guid:sub(6, 10), 16)
 			if worldBosses[mobId] then
@@ -789,10 +791,10 @@ do
 				if BigWigs and not UnitIsDeadOrGhost("player") then
 					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first
 				end
-				bwFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-				self:PLAYER_TARGET_CHANGED()
+				bwFrame:RegisterEvent("UNIT_TARGET")
+				self:UNIT_TARGET("player")
 			else
-				bwFrame:UnregisterEvent("PLAYER_TARGET_CHANGED")
+				bwFrame:UnregisterEvent("UNIT_TARGET")
 				if not IsEncounterInProgress() and (InCombatLockdown() or UnitAffectingCombat("player")) then
 					if not queueLoad[id] then
 						queueLoad[id] = "unloaded"
@@ -811,7 +813,7 @@ do
 				end
 			end
 		else
-			bwFrame:UnregisterEvent("PLAYER_TARGET_CHANGED")
+			bwFrame:UnregisterEvent("UNIT_TARGET")
 			if BigWigs and not UnitIsDeadOrGhost("player") then
 				BigWigs:Disable() -- Alive in a non-enable zone, disable
 			end
