@@ -159,18 +159,20 @@ do
 		if text and timers[text] then wipe(timers[text]) end
 	end
 	function plugin:BigWigs_StartEmphasize(_, module, text, time)
-		self:BigWigs_StopEmphasize(nil, module, text)
-		if time > 1.3 then
-			if not timers[text] then timers[text] = {} end
-			timers[text][1] = module:ScheduleTimer(printEmph, time-1.3, 1, text)
-			if time > 2.3 then
-				timers[text][2] = module:ScheduleTimer(printEmph, time-2.3, 2)
-				if time > 3.3 then
-					timers[text][3] = module:ScheduleTimer(printEmph, time-3.3, 3)
-					if time > 4.3 then
-						timers[text][4] = module:ScheduleTimer(printEmph, time-4.3, 4)
-						if time > 5.3 then
-							timers[text][5] = module:ScheduleTimer(printEmph, time-5.3, 5)
+		if self.db.profile.countdown then
+			self:BigWigs_StopEmphasize(nil, module, text)
+			if time > 1.3 then
+				if not timers[text] then timers[text] = {} end
+				timers[text][1] = module:ScheduleTimer(printEmph, time-1.3, 1, text)
+				if time > 2.3 then
+					timers[text][2] = module:ScheduleTimer(printEmph, time-2.3, 2)
+					if time > 3.3 then
+						timers[text][3] = module:ScheduleTimer(printEmph, time-3.3, 3)
+						if time > 4.3 then
+							timers[text][4] = module:ScheduleTimer(printEmph, time-4.3, 4)
+							if time > 5.3 then
+								timers[text][5] = module:ScheduleTimer(printEmph, time-5.3, 5)
+							end
 						end
 					end
 				end
