@@ -1,7 +1,7 @@
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
-local mod = CreateFrame("Frame")
-local public = {}
+local mod, public = {}, {}
+local bwFrame = CreateFrame("Frame")
 
 -----------------------------------------------------------------------
 -- Generate our version variables
@@ -341,15 +341,15 @@ do
 		end
 		loadOnWorldBoss, iterateWorldBosses = nil, nil
 
-		self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-		self:RegisterEvent("GROUP_ROSTER_UPDATE")
-		self:RegisterEvent("LFG_PROPOSAL_SHOW")
+		bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+		bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+		bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
 
 		-- Role Updating
-		self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+		bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 		RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
-		self:RegisterEvent("CHAT_MSG_ADDON")
+		bwFrame:RegisterEvent("CHAT_MSG_ADDON")
 		RegisterAddonMessagePrefix("BigWigs")
 		RegisterAddonMessagePrefix("D4") -- DBM
 
@@ -389,7 +389,7 @@ do
 
 		self:GROUP_ROSTER_UPDATE()
 		self:ZONE_CHANGED_NEW_AREA()
-		self:UnregisterEvent("PLAYER_LOGIN")
+		bwFrame:UnregisterEvent("PLAYER_LOGIN")
 		self.PLAYER_LOGIN = nil
 	end
 end
@@ -559,10 +559,10 @@ end
 -- Events
 --
 
-mod:SetScript("OnEvent", function(frame, event, ...)
-	frame[event](frame, ...)
+bwFrame:SetScript("OnEvent", function(frame, event, ...)
+	mod[event](mod, ...)
 end)
-mod:RegisterEvent("PLAYER_LOGIN")
+bwFrame:RegisterEvent("PLAYER_LOGIN")
 
 -- Role Updating
 function mod:ACTIVE_TALENT_GROUP_CHANGED()
@@ -576,7 +576,7 @@ function mod:ACTIVE_TALENT_GROUP_CHANGED()
 		local role = GetSpecializationRole(tree)
 		if UnitGroupRolesAssigned("player") ~= role then
 			if InCombatLockdown() or UnitAffectingCombat("player") then
-				self:RegisterEvent("PLAYER_REGEN_ENABLED")
+				bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 				return
 			end
 			UnitSetRole("player", role)
@@ -653,7 +653,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, _, sender)
 end
 
 do
-	local timer = mod:CreateAnimationGroup()
+	local timer = bwFrame:CreateAnimationGroup()
 	timer:SetScript("OnFinished", function()
 		if IsInGroup() then
 			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:%d" or "VRA:%d"):format(MY_BIGWIGS_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
@@ -724,7 +724,7 @@ do
 	local warnedThisZone = {[465]=true,[473]=true,[807]=true,[809]=true,[928]=true,[929]=true,[951]=true} -- World Bosses
 	function mod:PLAYER_REGEN_ENABLED()
 		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
-		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+		bwFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
 
 		local shouldPrint = false
 		for k,v in next, queueLoad do
@@ -752,7 +752,7 @@ do
 				if InCombatLockdown() or UnitAffectingCombat("player") then
 					if not queueLoad[id] then
 						queueLoad[id] = "unloaded"
-						self:RegisterEvent("PLAYER_REGEN_ENABLED")
+						bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 						sysprint(L.blizzRestrictionsZone)
 					end
 				else
@@ -789,14 +789,14 @@ do
 				if BigWigs and not UnitIsDeadOrGhost("player") then
 					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first
 				end
-				self:RegisterEvent("PLAYER_TARGET_CHANGED")
+				bwFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 				self:PLAYER_TARGET_CHANGED()
 			else
-				self:UnregisterEvent("PLAYER_TARGET_CHANGED")
+				bwFrame:UnregisterEvent("PLAYER_TARGET_CHANGED")
 				if not IsEncounterInProgress() and (InCombatLockdown() or UnitAffectingCombat("player")) then
 					if not queueLoad[id] then
 						queueLoad[id] = "unloaded"
-						self:RegisterEvent("PLAYER_REGEN_ENABLED")
+						bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 						sysprint(L.blizzRestrictionsZone)
 					end
 				else
@@ -811,7 +811,7 @@ do
 				end
 			end
 		else
-			self:UnregisterEvent("PLAYER_TARGET_CHANGED")
+			bwFrame:UnregisterEvent("PLAYER_TARGET_CHANGED")
 			if BigWigs and not UnitIsDeadOrGhost("player") then
 				BigWigs:Disable() -- Alive in a non-enable zone, disable
 			end
