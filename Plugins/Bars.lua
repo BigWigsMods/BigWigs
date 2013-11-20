@@ -67,7 +67,7 @@ do
 	local textureNormal = "Interface\\AddOns\\BigWigs\\Textures\\beautycase"
 
 	local backdropbc = {
-		bgFile = [[Interface\Buttons\WHITE8x8]],
+		bgFile = "Interface\\Buttons\\WHITE8x8",
 		insets = {top = 1, left = 1, bottom = 1, right = 1},
 	}
 
@@ -103,7 +103,6 @@ do
 		bd:ClearAllPoints()
 		bd:SetPoint("TOPLEFT", bar, "TOPLEFT", -1, 1)
 		bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
-		bd:SetFrameStrata("LOW")
 		bd:Show()
 
 		local borders = nil
@@ -189,7 +188,6 @@ do
 		bd:ClearAllPoints()
 		bd:SetPoint("TOPLEFT", bar, "TOPLEFT", -1, 1)
 		bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
-		bd:SetFrameStrata("BACKGROUND")
 		bd:Show()
 	end
 
@@ -253,7 +251,6 @@ do
 		bd:ClearAllPoints()
 		bd:SetPoint("TOPLEFT", bar, "TOPLEFT", -2, 2)
 		bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 2, -2)
-		bd:SetFrameStrata("BACKGROUND")
 		bd:Show()
 
 		if plugin.db.profile.icon then
@@ -265,7 +262,7 @@ do
 			else
 				icon = createbg()
 				icon:SetSize(buttonSize+4, buttonSize+4)
-				icon:SetFrameStrata("BACKGROUND")
+				icon:SetFrameStrata("LOW")
 				icon.iconTex = icon:CreateTexture(nil, "LOW")
 				icon.iconTex:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 				icon.iconTex:SetPoint("CENTER")
@@ -297,6 +294,52 @@ do
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "MonoUI" end,
+	}
+end
+
+do
+	-- ElvUI
+	local E = ElvUI and ElvUI[1]
+	local backdropBorder = {
+		bgFile = "Interface\\Buttons\\WHITE8X8",
+		edgeFile = "Interface\\Buttons\\WHITE8X8", 
+		tile = false, tileSize = 0, edgeSize = E and E.mult or 1,
+		insets = {
+			left = E and (E.PixelMode and 0 or -E.mult) or 0,
+			right = E and (E.PixelMode and 0 or -E.mult) or 0,
+			top = E and (E.PixelMode and 0 or -E.mult) or 0,
+			bottom = E and (E.PixelMode and 0 or -E.mult) or 0
+		}
+	}
+
+	local function styleBar(bar)
+		bar:SetHeight(20)
+		bar.height = 20
+
+		local bd = bar.candyBarBackdrop
+
+		bd:SetBackdrop(backdropBorder)
+		if E then
+			bd:SetBackdropColor(unpack(E.media.backdropfadecolor))
+			bd:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		else
+			bd:SetBackdropColor(0.06, 0.06, 0.06, 0.8)
+			bd:SetBackdropBorderColor(0, 0, 0)
+		end
+
+		bd:ClearAllPoints()
+		bd:SetPoint("TOPLEFT", bar, "TOPLEFT", E and -(E.mult*floor(E.Border/E.mult+.5)) or -1, E and (E.mult*floor(E.Border/E.mult+.5)) or 1)
+		bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", E and (E.mult*floor(E.Border/E.mult+.5)) or 1, E and -(E.mult*floor(E.Border/E.mult+.5)) or -1)
+		bd:Show()
+	end
+
+	barStyles.ElvUI = {
+		apiVersion = 1,
+		version = 2,
+		GetSpacing = function(bar) return E and (E.PixelMode and 4 or 8) or 4 end,
+		ApplyStyle = styleBar,
+		BarStopped = removeStyle,
+		GetStyleName = function() return "ElvUI" end,
 	}
 end
 
