@@ -199,13 +199,6 @@ local acOptions = {
 			order = 41,
 			width = "full",
 		},
-		customDBMbars = {
-			type = "toggle",
-			name = L.dbmBar,
-			desc = L.dbmBarDesc,
-			order = 42,
-			width = "full",
-		},
 		slashDescTitle = {
 			type = "description",
 			name = "\n".. L.slashDescTitle,

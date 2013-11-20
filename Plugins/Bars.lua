@@ -905,9 +905,7 @@ local function updateProfile()
 	if plugin:IsEnabled() then
 		if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 		plugin:SetBarStyle(db.barStyle)
-		if BigWigs.db.profile.customDBMbars then
-			plugin:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
-		end
+		plugin:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
 	end
 end
 
@@ -951,9 +949,7 @@ function plugin:OnPluginEnable()
 	-- custom bars
 	BigWigs:AddSyncListener(self, "BWCustomBar", 0)
 	BigWigs:AddSyncListener(self, "BWPull", 0)
-	if BigWigs.db.profile.customDBMbars then
-		self:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
-	end
+	self:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
 
 	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 	if currentBarStyler and currentBarStyler.GetStyleName then

@@ -417,7 +417,6 @@ function addon:OnInitialize()
 			showZoneMessages = true,
 			blockmovies = true,
 			fakeDBMVersion = false,
-			customDBMbars = true,
 			autoRole = true,
 		},
 		global = {
@@ -434,6 +433,7 @@ function addon:OnInitialize()
 	db.RegisterCallback(self, "OnProfileCopied", profileUpdate)
 	db.RegisterCallback(self, "OnProfileReset", profileUpdate)
 	self.db = db
+	self.db.profile.customDBMbars = nil -- XXX temp cleanup
 
 	self:RegisterBossOption("bosskill", L.bosskill, L.bosskill_desc, nil, "Interface\\Icons\\ability_rogue_feigndeath")
 	self:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, "Interface\\Icons\\spell_shadow_unholyfrenzy")
