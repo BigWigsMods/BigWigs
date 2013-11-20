@@ -350,7 +350,6 @@ do
 		RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 		self:RegisterEvent("CHAT_MSG_ADDON")
-		public.RegisterMessage(self, "DBM_AddonMessage") -- DBM
 		RegisterAddonMessagePrefix("BigWigs")
 		RegisterAddonMessagePrefix("D4") -- DBM
 
@@ -487,7 +486,7 @@ do
 	local DBMdotRevision = "10680" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
 	local DBMdotReleaseRevision = "10680" -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local DBMdotDisplayVersion = "5.4.4" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
-	function mod:DBM_AddonMessage(channel, sender, prefix, revision, releaseRevision, displayVersion)
+	function mod:DBM_VersionCheck(prefix, sender, revision, releaseRevision, displayVersion)
 		if prefix == "H" and (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
 			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale(), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		elseif prefix == "V" then
@@ -498,13 +497,13 @@ do
 				DBMdotRevision = revision -- Update our local rev with the highest possible rev found including alphas.
 				DBMdotReleaseRevision = releaseRevision -- Update our release rev with the highest found, this should be the same for alpha users and latest release users.
 				DBMdotDisplayVersion = displayVersion -- Update to the latest display version, including alphas.
-				self:DBM_AddonMessage(nil, nil, "H") -- Re-send addon message.
+				self:DBM_VersionCheck("H") -- Re-send addon message.
 			end
 		end
 	end
 	function mod:UpdateDBMFaking(_, key, value)
 		if key == "fakeDBMVersion" and value and IsInGroup() then
-			self:DBM_AddonMessage(nil, nil, "H") -- Send addon message if feature is being turned on inside a raid/group.
+			self:DBM_VersionCheck("H") -- Send addon message if feature is being turned on inside a raid/group.
 		end
 	end
 end
@@ -644,7 +643,12 @@ function mod:CHAT_MSG_ADDON(prefix, msg, _, sender)
 			public:SendMessage("BigWigs_AddonMessage", bwPrefix, bwMsg, sender)
 		end
 	elseif prefix == "D4" then
-		public:SendMessage("DBM_AddonMessage", sender, strsplit("\t", msg))
+		local dbmPrefix, arg1, arg2, arg3 = strsplit("\t", msg)
+		if dbmPrefix == "V" or dbmPrefix == "H" then
+			self:DBM_VersionCheck(dbmPrefix, sender, arg1, arg2, arg3)
+		elseif dbmPrefix == "U" or dbmPrefix == "PT" or dbmPrefix == "M" then
+			public:SendMessage("DBM_AddonMessage", sender, dbmPrefix, arg1, arg2, arg3)
+		end
 	end
 end
 
