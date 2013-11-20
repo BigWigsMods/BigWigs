@@ -338,7 +338,7 @@ do
 		version = 2,
 		GetSpacing = function(bar) return E and (E.PixelMode and 4 or 8) or 4 end,
 		ApplyStyle = styleBar,
-		BarStopped = removeStyle,
+		--BarStopped = removeStyle,
 		GetStyleName = function() return "ElvUI" end,
 	}
 end
