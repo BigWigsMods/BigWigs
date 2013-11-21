@@ -218,8 +218,11 @@ function mod:AuraOfPrideApplied(args)
 end
 
 do
-	local prev = 0
-	local mindcontrolled = mod:NewTargetList()
+	local mindcontrolled, scheduled = mod:NewTargetList(), nil
+	local function warnOvercome()
+		mod:TargetMessage(-8270, mindcontrolled, "Attention")
+		scheduled = nil
+	end
 	function mod:SwellingPrideSuccess(args)
 		if not self:LFR() then
 			self:CDBar(144358, 10.5) -- Wounded Pride, 10-11.2
@@ -230,28 +233,31 @@ do
 		self:Bar(144563, 53) -- Imprison
 		self:Bar(-8262, 60, CL.big_add, 144379) -- when the add is actually up
 		self:Bar(144800, 25.6, CL.small_adds)
-		self:DelayedMessage(-8262, 55, "Urgent", CL.spawning:format(CL.big_add), 144379, not self:Tank() and not self:Healer() and "Alert")
+		self:DelayedMessage(-8262, 55, "Urgent", CL.spawning:format(CL.big_add), 144379, self:Damager() and "Alert")
+
 		-- lets do some fancy stuff
 		local playerPower = UnitPower("player", 10)
-		if playerPower > 24 and playerPower < 50 then
+		local playerBursting = playerPower > 24 and playerPower < 50
+		if playerBursting then
 			self:Message(-8257, "Personal", "Alarm", CL.underyou:format(self:SpellName(144911))) -- bursting pride
 		elseif playerPower > 49 and playerPower < 75 then
 			self:Message(-8258, "Personal", "Warning", L.projection_message, "Achievement_pvp_g_01.png") -- better fitting icon imo
 			self:Flash(-8258, "Achievement_pvp_g_01.png")
 			self:Bar(-8258, 6, L.projection_explosion)
 		end
+
+		local warned = nil
 		for i=1, GetNumGroupMembers() do
 			local unit = GetRaidRosterInfo(i)
 			local power = UnitPower(unit, 10)
-			if power > 24 and power < 50 and self:Range(unit) < 5 and (playerPower < 25 or playerPower > 49) then -- someone near have it, but not the "player"
-				local t = GetTime()
-				if t-prev > 2 then -- don't spam
-					prev = t
-					self:RangeMessage(-8257) -- bursting pride
-				end
-			elseif power == 100 then
+			if power == 100 then
 				mindcontrolled[#mindcontrolled+1] = unit
-				self:ScheduleTimer("TargetMessage", 0.1, -8270, mindcontrolled, "Attention")
+				if not scheduled then
+					scheduled = self:ScheduleTimer(warnOvercome, 0.1)
+				end
+			elseif not warned and not playerBursting and power > 24 and power < 50 and self:Range(unit) < 5 then -- someone near has bursting pride, but not you
+				warned = true
+				self:RangeMessage(-8257)
 			end
 		end
 	end
