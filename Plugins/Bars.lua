@@ -300,37 +300,91 @@ do
 	local backdropBorder = {
 		bgFile = "Interface\\Buttons\\WHITE8X8",
 		edgeFile = "Interface\\Buttons\\WHITE8X8", 
-		tile = false, tileSize = 0, edgeSize = E and E.mult or 1,
-		insets = {
-			left = E and (E.PixelMode and 0 or -E.mult) or 0,
-			right = E and (E.PixelMode and 0 or -E.mult) or 0,
-			top = E and (E.PixelMode and 0 or -E.mult) or 0,
-			bottom = E and (E.PixelMode and 0 or -E.mult) or 0
-		}
+		tile = false, tileSize = 0, edgeSize = 1,
+		insets = {left = 0, right = 0, top = 0, bottom = 0}
 	}
 
 	local function removeStyle(bar)
-		bar.candyBarBackdrop:Hide()
+		bar:SetHeight(14)
+
+		local bd = bar.candyBarBackdrop
+		bd:Hide()
+		if bd.iborder then
+			bd.iborder:Hide()
+			bd.oborder:Hide()
+		end
+
+		local tex = bar:Get("bigwigs:restoreicon")
+		if tex then
+			local icon = bar.candyBarIconFrame
+			icon:ClearAllPoints()
+			icon:SetPoint("TOPLEFT")
+			icon:SetPoint("BOTTOMLEFT")
+			bar:SetIcon(tex)
+
+			local iconBd = bar.candyBarIconFrameBackdrop
+			iconBd:Hide()
+			if iconBd.iborder then
+				iconBd.iborder:Hide()
+				iconBd.oborder:Hide()
+			end
+		end
 	end
 
 	local function styleBar(bar)
 		bar:SetHeight(20)
-		bar.height = 20
 
 		local bd = bar.candyBarBackdrop
 
-		bd:SetBackdrop(backdropBorder)
 		if E then
-			bd:SetBackdropColor(unpack(E.media.backdropfadecolor))
-			bd:SetBackdropBorderColor(unpack(E.media.bordercolor))
+			bd:SetTemplate("Transparent")
+			bd:SetOutside(bar)
+			if not E.PixelMode and bd.iborder then
+				bd.iborder:Show()
+				bd.oborder:Show()
+			end
 		else
+			bd:SetBackdrop(backdropBorder)
 			bd:SetBackdropColor(0.06, 0.06, 0.06, 0.8)
 			bd:SetBackdropBorderColor(0, 0, 0)
+
+			bd:ClearAllPoints()
+			bd:SetPoint("TOPLEFT", bar, "TOPLEFT", -1, 1)
+			bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
 		end
 
-		bd:ClearAllPoints()
-		bd:SetPoint("TOPLEFT", bar, "TOPLEFT", E and -(E.mult*floor(E.Border/E.mult+.5)) or -1, E and (E.mult*floor(E.Border/E.mult+.5)) or 1)
-		bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", E and (E.mult*floor(E.Border/E.mult+.5)) or 1, E and -(E.mult*floor(E.Border/E.mult+.5)) or -1)
+		if plugin.db.profile.icon then
+			local icon = bar.candyBarIconFrame
+			local tex = icon.icon
+			bar:SetIcon(nil)
+			icon:SetTexture(tex)
+			icon:ClearAllPoints()
+			icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", E and (E.PixelMode and -1 or -5) or -1, 0)
+			icon:SetSize(20, 20)
+			icon:Show() -- XXX temp
+			bar:Set("bigwigs:restoreicon", tex)
+
+			local iconBd = bar.candyBarIconFrameBackdrop
+
+			if E then 
+				iconBd:SetTemplate("Transparent")
+				iconBd:SetOutside(bar.candyBarIconFrame)
+				if not E.PixelMode and iconBd.iborder then
+					iconBd.iborder:Show()
+					iconBd.oborder:Show()
+				end
+			else
+				iconBd:SetBackdrop(backdropBorder)
+				iconBd:SetBackdropColor(0.06, 0.06, 0.06, 0.8)
+				iconBd:SetBackdropBorderColor(0, 0, 0)
+
+				iconBd:ClearAllPoints()
+				iconBd:SetPoint("TOPLEFT", icon, "TOPLEFT", -1, 1)
+				iconBd:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", 1, -1)
+			end
+			iconBd:Show()
+		end
+
 		bd:Show()
 	end
 
