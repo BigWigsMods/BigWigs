@@ -174,6 +174,10 @@ do
 		insets = { left = -0.64, right = -0.64, top = -0.64, bottom = -0.64}
 	}
 
+	local function removeStyle(bar)
+		bar.candyBarBackdrop:Hide()
+	end
+
 	local function styleBar(bar)
 		local bd = bar.candyBarBackdrop
 		bd:SetBackdrop(backdrop)
@@ -196,39 +200,33 @@ do
 		version = 1,
 		GetSpacing = function(bar) return 4 end,
 		ApplyStyle = styleBar,
-		--BarStopped = freeStyle,
+		BarStopped = removeStyle,
 		GetStyleName = function() return "TukUI" end,
 	}
 end
 
 do
 	-- MonoUI
-	local buttonSize, backdropBorder = 15, {
+	local backdropBorder = {
 		bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
 		edgeFile = "Interface\\ChatFrame\\ChatFrameBackground",
 		tile = false, tileSize = 0, edgeSize = 1,
 		insets = {left = 0, right = 0, top = 0, bottom = 0}
 	}
 
-	local iconCache = {}
-
-	local createbg = function()
-		local f = CreateFrame("Frame")
-		f:SetBackdrop(backdropBorder)
-		f:SetBackdropColor(.1,.1,.1,1)
-		f:SetBackdropBorderColor(0,0,0,1)
-		return f
-	end
-
 	local function removeStyle(bar)
 		bar:SetHeight(14)
+		bar.candyBarBackdrop:Hide()
 
-		local icon = bar:Get("bigwigs:MonoUI:icon")
-		if icon then
+		local tex = bar:Get("bigwigs:restoreicon")
+		if tex then
+			local icon = bar.candyBarIconFrame
 			icon:ClearAllPoints()
-			icon:SetParent("UIParent")
-			icon:Hide()
-			iconCache[#iconCache + 1] = icon
+			icon:SetPoint("TOPLEFT")
+			icon:SetPoint("BOTTOMLEFT")
+			bar:SetIcon(tex)
+
+			bar.candyBarIconFrameBackdrop:Hide()
 		end
 
 		bar.candyBarDuration:ClearAllPoints()
@@ -240,7 +238,7 @@ do
 	end
 
 	local function styleBar(bar)
-		bar:SetHeight(buttonSize/2.5)
+		bar:SetHeight(6)
 
 		local bd = bar.candyBarBackdrop
 
@@ -254,35 +252,34 @@ do
 		bd:Show()
 
 		if plugin.db.profile.icon then
-			local icon = nil
-			local tex = bar.candyBarIconFrame.icon
+			local icon = bar.candyBarIconFrame
+			local tex = icon.icon
 			bar:SetIcon(nil)
-			if #iconCache > 0 then
-				icon = tremove(iconCache)
-			else
-				icon = createbg()
-				icon:SetSize(buttonSize+4, buttonSize+4)
-				icon:SetFrameStrata("LOW")
-				icon.iconTex = icon:CreateTexture(nil, "LOW")
-				icon.iconTex:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-				icon.iconTex:SetPoint("CENTER")
-				icon.iconTex:SetSize(buttonSize, buttonSize)
-			end
-			icon.iconTex:SetTexture(tex)
-			icon:SetParent(bar)
+			icon:SetTexture(tex)
 			icon:ClearAllPoints()
-			icon:Show()
-			icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -3, -2)
-			bar:Set("bigwigs:MonoUI:icon", icon)
+			icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -5, 0)
+			icon:SetSize(16, 16)
+			icon:Show() -- XXX temp
+			bar:Set("bigwigs:restoreicon", tex)
+
+			local iconBd = bar.candyBarIconFrameBackdrop
+			iconBd:SetBackdrop(backdropBorder)
+			iconBd:SetBackdropColor(.1,.1,.1,1)
+			iconBd:SetBackdropBorderColor(0,0,0,1)
+
+			iconBd:ClearAllPoints()
+			iconBd:SetPoint("TOPLEFT", icon, "TOPLEFT", -2, 2)
+			iconBd:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", 2, -2)
+			iconBd:Show()
 		end
 
 		bar.candyBarLabel:SetJustifyH("LEFT")
 		bar.candyBarLabel:ClearAllPoints()
-		bar.candyBarLabel:SetPoint("LEFT", bar, "LEFT", 4, buttonSize/1.5)
+		bar.candyBarLabel:SetPoint("LEFT", bar, "LEFT", 4, 10)
 
 		bar.candyBarDuration:SetJustifyH("RIGHT")
 		bar.candyBarDuration:ClearAllPoints()
-		bar.candyBarDuration:SetPoint("RIGHT", bar, "RIGHT", -4, buttonSize/1.5)
+		bar.candyBarDuration:SetPoint("RIGHT", bar, "RIGHT", -4, 10)
 
 		bar:SetTexture(media:Fetch("statusbar", "Blizzard"))
 	end
@@ -290,7 +287,7 @@ do
 	barStyles.MonoUI = {
 		apiVersion = 1,
 		version = 2,
-		GetSpacing = function(bar) return buttonSize end,
+		GetSpacing = function(bar) return 15 end,
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "MonoUI" end,
@@ -311,6 +308,10 @@ do
 			bottom = E and (E.PixelMode and 0 or -E.mult) or 0
 		}
 	}
+
+	local function removeStyle(bar)
+		bar.candyBarBackdrop:Hide()
+	end
 
 	local function styleBar(bar)
 		bar:SetHeight(20)
@@ -338,7 +339,7 @@ do
 		version = 2,
 		GetSpacing = function(bar) return E and (E.PixelMode and 4 or 8) or 4 end,
 		ApplyStyle = styleBar,
-		--BarStopped = removeStyle,
+		BarStopped = removeStyle,
 		GetStyleName = function() return "ElvUI" end,
 	}
 end

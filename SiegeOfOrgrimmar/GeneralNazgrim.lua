@@ -40,7 +40,7 @@ if L then
 	L.adds_trigger3 = "Next squad, to the front!"
 	L.adds_trigger4 = "Warriors, on the double!"
 	L.adds_trigger5 = "Kor'kron, at my side!"
-	L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW"
+	L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW!"
 	L.extra_adds = "Extra adds"
 	L.final_wave = "Final Wave"
 
