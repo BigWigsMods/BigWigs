@@ -64,7 +64,7 @@ if L then
 	L.adds_trigger5 = "Kor'kron, zu mir!"
 	L.adds_trigger_extra_wave = "Alle Kor'kron unter meinem Befehl, tötet sie! Jetzt!"
 	L.extra_adds = "Zusätzliche Adds"
-	--L.final_wave = "Final Wave"
+	L.final_wave = "Letzte Welle"
 
 	L.chain_heal_message = "Dein Fokusziel wirkt Kettenheilung!"
 
@@ -81,7 +81,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "deDE")
 if L then
-	--L.start_trigger = "Hey, we recording?"
+	L.start_trigger = "Hallo? Mikrofontest"
 	L.win_trigger = "System wird neu gestartet. Die Energieversorgung muss stabil bleiben, sonst fliegt die ganze Chose in die Luft."
 
 	L.enable_zone = "Artefaktlagerraum"
