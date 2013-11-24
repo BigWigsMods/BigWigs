@@ -57,6 +57,7 @@ function mod:OnBossEnable()
 
 	-- heroic
 	self:Log("SPELL_AURA_REMOVED", "WeakenedResolveOver", 147207)
+	self:Log("SPELL_AURA_APPLIED", "WeakenedResolveBegin", 147207)
 	self:Log("SPELL_AURA_APPLIED", "Banishment", 145215)
 	-- normal
 	self:Log("SPELL_CAST_START", "UnleashedStart", 144832)
@@ -104,9 +105,19 @@ end
 --
 
 -- heroic
-function mod:WeakenedResolveOver(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Positive", nil, CL.over:format(args.spellName))
+do
+	local timer
+	function mod:WeakenedResolveOver(args)
+		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Personal", nil, CL.over:format(args.spellName))
+			timer = self:ScheduleRepeatingTimer("Message", 6, args.spellId, "Personal", nil, CL.no:format(args.spellName))
+		end
+	end
+	function mod:WeakenedResolveBegin(args)
+		if timer and self:Me(args.destGUID) then
+			self:CancelTimer(timer)
+			timer = nil
+		end
 	end
 end
 
