@@ -165,47 +165,6 @@ do
 end
 
 do
-	-- TukUI Bar Styler
-
-	local backdrop = {
-		bgFile = "Interface\\Buttons\\WHITE8X8",
-		edgeFile = "Interface\\Buttons\\WHITE8X8",
-		tile = false, tileSize = 0, edgeSize = 0.64,
-		insets = { left = -0.64, right = -0.64, top = -0.64, bottom = -0.64}
-	}
-
-	local function removeStyle(bar)
-		bar.candyBarBackdrop:Hide()
-	end
-
-	local function styleBar(bar)
-		local bd = bar.candyBarBackdrop
-		bd:SetBackdrop(backdrop)
-		if Tukui then
-			local F, C, L = unpack(Tukui) -- tukui support :)
-			bd:SetBackdropColor(unpack(C["media"].backdropcolor))
-			bd:SetBackdropBorderColor(unpack(C["media"].bordercolor))
-		else
-			bd:SetBackdropColor(.1,.1,.1,1)
-			bd:SetBackdropBorderColor(.6,.6,.6,1)
-		end
-		bd:ClearAllPoints()
-		bd:SetPoint("TOPLEFT", bar, "TOPLEFT", -1, 1)
-		bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
-		bd:Show()
-	end
-
-	barStyles.TukUI = {
-		apiVersion = 1,
-		version = 1,
-		GetSpacing = function(bar) return 4 end,
-		ApplyStyle = styleBar,
-		BarStopped = removeStyle,
-		GetStyleName = function() return "TukUI" end,
-	}
-end
-
-do
 	-- MonoUI
 	local backdropBorder = {
 		bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
@@ -291,6 +250,88 @@ do
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "MonoUI" end,
+	}
+end
+
+do
+	-- Tukui
+	local C = Tukui and Tukui[2]
+	local backdrop = {
+		bgFile = "Interface\\Buttons\\WHITE8X8",
+		edgeFile = "Interface\\Buttons\\WHITE8X8",
+		tile = false, tileSize = 0, edgeSize = 1,
+	}
+	local borderBackdrop = {
+		edgeFile = "Interface\\Buttons\\WHITE8X8",
+		edgeSize = 1,
+		insets = { left = 1, right = 1, top = 1, bottom = 1 }
+	}
+
+	local function removeStyle(bar)
+		local bd = bar.candyBarBackdrop
+		bd:Hide()
+		bd.tukiborder:Hide()
+		bd.tukoborder:Hide()
+	end
+
+	local function styleBar(bar)
+		local bd = bar.candyBarBackdrop
+		bd:SetBackdrop(backdrop)
+
+		if C then
+			bd:SetBackdropColor(unpack(C.media.backdropcolor))
+			bd:SetBackdropBorderColor(unpack(C.media.bordercolor))
+			bd:SetOutside(bar)
+		else
+			bd:SetBackdropColor(0.1,0.1,0.1,0.8)
+			bd:SetBackdropBorderColor(0.6,0.6,0.6)
+			bd:ClearAllPoints()
+			bd:SetPoint("TOPLEFT", bar, "TOPLEFT", -2, 2)
+			bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 2, -2)
+		end
+
+		if not bd.tukiborder then
+			local border = CreateFrame("Frame", nil, bd)
+			if C then
+				border:SetInside(bd, 1, 1)
+			else
+				border:SetPoint("TOPLEFT", bd, "TOPLEFT", 1, -1)
+				border:SetPoint("BOTTOMRIGHT", bd, "BOTTOMRIGHT", -1, 1)
+			end
+			border:SetFrameLevel(3)
+			border:SetBackdrop(borderBackdrop)
+			border:SetBackdropBorderColor(0, 0, 0)
+			bd.tukiborder = border
+		else
+			bd.tukiborder:Show()
+		end
+
+		if not bd.tukoborder then
+			border = CreateFrame("Frame", nil, bd)
+			if C then
+				border:SetOutside(bd, 1, 1)
+			else
+				border:SetPoint("TOPLEFT", bd, "TOPLEFT", -1, 1)
+				border:SetPoint("BOTTOMRIGHT", bd, "BOTTOMRIGHT", 1, -1)
+			end
+			border:SetFrameLevel(3)
+			border:SetBackdrop(borderBackdrop)
+			border:SetBackdropBorderColor(0, 0, 0)
+			bd.tukoborder = border
+		else
+			bd.tukoborder:Show()
+		end
+
+		bd:Show()
+	end
+
+	barStyles.TukUI = {
+		apiVersion = 1,
+		version = 2,
+		GetSpacing = function(bar) return 7 end,
+		ApplyStyle = styleBar,
+		BarStopped = removeStyle,
+		GetStyleName = function() return "TukUI" end,
 	}
 end
 
