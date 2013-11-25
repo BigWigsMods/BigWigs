@@ -113,6 +113,7 @@ L.doubleSize = "Double size"
 L.doubleSizeDesc = "Doubles the size of super emphasized bars and messages."
 L.countdown = "Countdown"
 L.countdownDesc = "If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."
+L.superEmphasizeDisableDesc = "Disable Super Emphasize for all modules that use it."
 
 -----------------------------------------------------------------------
 -- Messages.lua
