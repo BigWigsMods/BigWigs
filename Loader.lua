@@ -788,7 +788,7 @@ do
 		-- Module loading
 		if enableZones[id] then
 			if enableZones[id] == "world" then
-				if BigWigs and not UnitIsDeadOrGhost("player") then
+				if BigWigs and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:InConfigureMode()) then
 					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first
 				end
 				bwFrame:RegisterEvent("UNIT_TARGET")
@@ -814,7 +814,7 @@ do
 			end
 		else
 			bwFrame:UnregisterEvent("UNIT_TARGET")
-			if BigWigs and not UnitIsDeadOrGhost("player") then
+			if BigWigs and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:InConfigureMode()) then
 				BigWigs:Disable() -- Alive in a non-enable zone, disable
 			end
 		end
