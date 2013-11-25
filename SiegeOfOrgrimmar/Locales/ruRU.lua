@@ -23,6 +23,9 @@ if L then
 
 	L.custom_off_titan_mark = "Маркировка Дара титанов"
 	L.custom_off_titan_mark_desc = "Отмечать людей с Даром титанов метками {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
+
+	L.custom_off_fragment_mark = "Corrupted Fragment marker"
+	L.custom_off_fragment_mark_desc = "Mark the Corrupted Fragments with {rt8}{rt7}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.\nIn 25 player mode, this will conflict with the Gift of the Titans marker.|r"
 end
 
 L = BigWigs:NewBossLocale("Galakras", "ruRU")

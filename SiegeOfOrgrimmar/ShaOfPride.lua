@@ -29,6 +29,10 @@ if L then
 	L.custom_off_titan_mark = "Gift of the Titans marker"
 	L.custom_off_titan_mark_desc = "Mark people that have Gift of the Titans with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.custom_off_titan_mark_icon = 1
+
+	L.custom_off_fragment_mark = "Corrupted Fragment marker"
+	L.custom_off_fragment_mark_desc = "Mark the Corrupted Fragments with {rt8}{rt7}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.\nIn 25 player mode, this will conflict with the Gift of the Titans marker.|r"
+	L.custom_off_fragment_mark_icon = 8
 end
 L = mod:GetLocale()
 
@@ -38,7 +42,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		145215, 147207,
+		145215, 147207, "custom_off_fragment_mark",
 		"custom_off_titan_mark",
 		{146595, "PROXIMITY"}, 144400, -8257, {-8258, "FLASH"}, {146817, "FLASH", "PROXIMITY"}, -8270, {144351, "DISPEL"}, {144358, "TANK", "FLASH", "EMPHASIZE"}, -8262, 144800, 144563, -8349,
 		"altpower", "berserk", "bosskill",
