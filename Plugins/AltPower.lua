@@ -101,12 +101,14 @@ do
 					end
 					plugin:RestyleWindow()
 				end,
+				disabled = function() return plugin.db.profile.disabled end,
 				args = {
 					disabled = {
 						type = "toggle",
 						name = L.disabled,
 						desc = L.disabledDisplayDesc,
 						order = 1,
+						disabled = false,
 					},
 					lock = {
 						type = "toggle",
