@@ -4,16 +4,11 @@
 
 local AL = LibStub("AceLocale-3.0")
 local L = AL:GetLocale("Big Wigs: Common")
-local UnitExists = UnitExists
-local UnitAffectingCombat = UnitAffectingCombat
-local GetSpellInfo = GetSpellInfo
-local UnitGUID = UnitGUID
-local format = string.format
-local type = type
-local next = next
+local UnitExists, UnitAffectingCombat, GetSpellInfo, UnitGUID = UnitExists, UnitAffectingCombat, GetSpellInfo, UnitGUID
+local format, sub, band = string.format, string.sub, bit.band
+local type, next, tonumber = type, next, tonumber
 local core = BigWigs
 local C = core.C
-local band = bit.band
 local pName = UnitName("player")
 local bossUtilityFrame = CreateFrame("Frame")
 local enabledModules = {}
@@ -242,7 +237,7 @@ do
 	bossUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, _, extraSpellId, amount)
 		if allowedEvents[event] then
 			if event == "UNIT_DIED" then
-				local mobId = tonumber(destGUID:sub(6, 10), 16)
+				local mobId = tonumber(sub(destGUID, 6, 10), 16)
 				for i = #enabledModules, 1, -1 do
 					local self = enabledModules[i]
 					local m = eventMap[self][event]
@@ -395,7 +390,7 @@ do
 		elseif not self.isEngaged and hasBoss then
 			if debug then dbg(self, ":CheckBossStatus Engage called.") end
 			local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4") or UnitGUID("boss5")
-			local module = core:GetEnableMobs()[tonumber(guid:sub(6, 10), 16)]
+			local module = core:GetEnableMobs()[tonumber(sub(guid, 6, 10), 16)]
 			local modType = type(module)
 			if modType == "string" then
 				if module == self.moduleName then
@@ -435,7 +430,7 @@ do
 		for i, unit in next, t do
 			local guid = UnitGUID(unit)
 			if guid and not UnitIsPlayer(unit) then
-				if type(id) == "number" then guid = tonumber(guid:sub(6, 10), 16) end
+				if type(id) == "number" then guid = tonumber(sub(guid, 6, 10), 16) end
 				if guid == id then return unit end
 			end
 		end
@@ -567,7 +562,7 @@ function boss:Heroic()
 end
 
 function boss:MobId(guid)
-	return guid and tonumber(guid:sub(6, 10), 16) or -1
+	return guid and tonumber(sub(guid, 6, 10), 16) or -1
 end
 
 function boss:SpellName(spellId)
