@@ -95,7 +95,7 @@ function mod:OnEngage()
 	self:Bar(144563, 52.5) -- Imprison
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	if self:Heroic() then
-		self:Bar(145215, 37) -- Banishment
+		self:Bar(145215, 37.4) -- Banishment
 	end
 	if not self:LFR() then
 		self:CDBar(144358, 11) -- Wounded Pride
@@ -265,7 +265,7 @@ do
 			self:CDBar(144358, 10.5) -- Wounded Pride, 10-11.2
 		end
 		if self:Heroic() then
-			self:Bar(145215, 40) -- Banishment -- more frequently 40 than anything else
+			self:Bar(145215, 37.4) -- Banishment
 		end
 		self:Bar(144563, 53) -- Imprison
 		self:Bar(-8262, 60, CL.big_add, 144379) -- when the add is actually up
