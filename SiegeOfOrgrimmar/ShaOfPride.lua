@@ -126,6 +126,21 @@ do
 end
 
 do
+	local mobTbl, counter, UnitGUID = {}, 8, UnitGUID
+	local function CheckUnit(event, firedUnit)
+		local unit = firedUnit and firedUnit.."target" or "mouseover"
+		local guid = UnitGUID(unit)
+		if guid and not mobTbl[guid] and mod:MobId(guid) == 72569 then
+			mobTbl[guid] = true
+			SetRaidTarget(unit, counter)
+			counter = counter - 1
+			if counter == 5 or mod:Difficulty() == 5 then
+				mod:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+				mod:UnregisterEvent("UNIT_TARGET")
+			end
+		end
+	end
+
 	local banishmentList, scheduled = mod:NewTargetList(), nil
 	local function warnBanishment(spellId)
 		mod:TargetMessage(spellId, banishmentList, "Attention")
@@ -135,6 +150,13 @@ do
 		banishmentList[#banishmentList+1] = args.destName
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnBanishment, 0.2, args.spellId)
+
+			if self.db.profile.custom_off_fragment_mark then
+				wipe(mobTbl)
+				counter = 8
+				self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", CheckUnit)
+				self:RegisterEvent("UNIT_TARGET", CheckUnit)
+			end
 		end
 	end
 end
