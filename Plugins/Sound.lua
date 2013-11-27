@@ -24,18 +24,6 @@ local sounds = {
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 local BigWigs, GetSpellInfo, PlaySoundFile, PlaySound = BigWigs, GetSpellInfo, PlaySoundFile, PlaySound
 
-local colorize = nil
-do
-	local r, g, b
-	colorize = setmetatable({}, { __index =
-		function(self, key)
-			if not r then r, g, b = GameFontNormal:GetTextColor() end
-			self[key] = "|cff" .. ("%02x%02x%02x"):format(r * 255, g * 255, b * 255) .. key .. "|r"
-			return self[key]
-		end
-	})
-end
-
 --------------------------------------------------------------------------------
 -- Options
 --
@@ -70,7 +58,7 @@ plugin.pluginOptions = {
 	args = {
 		default = {
 			type = "toggle",
-			name = colorize[L.defaultOnly],
+			name = "|cfffed000".. L.defaultOnly .."|r",
 			desc = L.soundDefaultDescription,
 			get = function(info) return plugin.db.profile.defaultonly end,
 			set = function(info, v) plugin.db.profile.defaultonly = v end,

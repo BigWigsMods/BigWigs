@@ -145,7 +145,8 @@ end
 do
 	local prev = 0
 	function mod:VisionsDispel(args)
-		if self:Dispeller("magic") or select(2, UnitClass("player")) == "SHAMAN" then -- shamans too because of tremor totem
+		local _, class = UnitClass("player")
+		if self:Dispeller("magic") or class == "SHAMAN" then -- shamans too because of tremor totem
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t

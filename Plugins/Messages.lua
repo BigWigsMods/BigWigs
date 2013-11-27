@@ -636,7 +636,7 @@ function plugin:BigWigs_Message(event, module, key, text, color, sound, icon)
 		-- http://www.wowpedia.org/UI_escape_sequences
 		-- |TTexturePath:size1:size2:xoffset:yoffset:dimx:dimy:coordx1:coordx2:coordy1:coordy2:red:green:blue|t
 		if icon then text = "|T"..icon..":15:15:0:0:64:64:4:60:4:60|t"..text end
-		ChatFrame1:AddMessage(text, r, g, b)
+		DEFAULT_CHAT_FRAME:AddMessage(text, r, g, b)
 	end
 end
 

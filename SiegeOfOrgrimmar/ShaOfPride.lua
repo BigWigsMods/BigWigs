@@ -14,6 +14,7 @@ mod:RegisterEnableMob(71734)
 local titans, titanCounter = {}, 1
 local auraOfPride, auraOfPrideGroup, auraOfPrideOnMe = mod:SpellName(146817), {}, nil
 local swellingPrideCounter = 1
+local wrChecker = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -96,6 +97,7 @@ function mod:OnEngage()
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	if self:Heroic() then
 		self:Bar(145215, 37.4) -- Banishment
+		wrChecker = nil
 	end
 	if not self:LFR() then
 		self:CDBar(144358, 11) -- Wounded Pride
@@ -109,21 +111,19 @@ end
 --
 
 -- heroic
-do
-	local timer
-	function mod:WeakenedResolveOver(args)
-		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Personal", nil, CL.over:format(args.spellName))
-			timer = self:ScheduleRepeatingTimer("Message", 6, args.spellId, "Personal", nil, CL.no:format(args.spellName))
-		end
-	end
-	function mod:WeakenedResolveBegin(args)
-		if timer and self:Me(args.destGUID) then
-			self:CancelTimer(timer)
-			timer = nil
-		end
+function mod:WeakenedResolveOver(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", nil, CL.over:format(args.spellName))
+		wrChecker = self:ScheduleRepeatingTimer("Message", 6, args.spellId, "Personal", nil, CL.no:format(args.spellName))
 	end
 end
+function mod:WeakenedResolveBegin(args)
+	if wrChecker and self:Me(args.destGUID) then
+		self:CancelTimer(wrChecker)
+		wrChecker = nil
+	end
+end
+
 
 do
 	local mobTbl, counter, UnitGUID = {}, 8, UnitGUID

@@ -193,7 +193,6 @@ do
 	end
 	function mod:FocusedLightning(args)
 		self:CDBar(-7741, 11)
-		focusedLightningTarget = nil
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
 	end
 end

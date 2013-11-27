@@ -307,7 +307,7 @@ do
 		end
 
 		if not bd.tukoborder then
-			border = CreateFrame("Frame", nil, bd)
+			local border = CreateFrame("Frame", nil, bd)
 			if C then
 				border:SetOutside(bd, 1, 1)
 			else
