@@ -8,6 +8,7 @@ if not plugin then return end
 plugin.defaultDB = {
 	posx = nil,
 	posy = nil,
+	font = nil,
 	expanded = false,
 	disabled = false,
 	lock = false,
@@ -70,6 +71,12 @@ function plugin:RestyleWindow()
 			db.posy = self:GetTop() * s
 		end)
 	end
+
+	local _, size, flags = GameFontNormal:GetFont()
+	display.title:SetFont(media:Fetch("font", db.font), size, flags)
+	for i = 1, 25 do
+		display.text[i]:SetFont(media:Fetch("font", db.font), size, flags)
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -83,22 +90,10 @@ do
 			pluginOptions = {
 				type = "group",
 				get = function(info)
-					local key = info[#info]
-					if key == "font" then
-						for i, v in next, media:List("font") do
-							if v == db.font then return i end
-						end
-					else
-						return db[key]
-					end
+					return db[info[#info]]
 				end,
 				set = function(info, value)
-					local key = info[#info]
-					if key == "font" then
-						db.font = media:List("font")[value]
-					else
-						db[key] = value
-					end
+					db[info[#info]] = value
 					plugin:RestyleWindow()
 				end,
 				disabled = function() return plugin.db.profile.disabled end,
@@ -123,7 +118,15 @@ do
 						values = media:List("font"),
 						width = "full",
 						itemControl = "DDI-Font",
-						disabled = true,
+						get = function()
+							for i, v in next, media:List("font") do
+								if v == db.font then return i end
+							end
+						end,
+						set = function(info, value)
+							db.font = media:List("font")[value]
+							plugin:RestyleWindow()
+						end,
 					},
 					fontSize = {
 						type = "range",
@@ -209,6 +212,25 @@ end
 
 local function updateProfile()
 	db = plugin.db.profile
+
+	if display then
+		local x = db.posx
+		local y = db.posy
+		if x and y then
+			local s = display:GetEffectiveScale()
+			display:ClearAllPoints()
+			display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+		else
+			display:ClearAllPoints()
+			display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
+		end
+
+		plugin:RestyleWindow()
+	end
+
+	if not db.font then
+		db.font = media:GetDefault("font")
+	end
 end
 
 function plugin:OnPluginEnable()
