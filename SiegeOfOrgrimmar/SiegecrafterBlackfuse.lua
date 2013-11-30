@@ -61,9 +61,9 @@ local itemNames = {
 	[71751] = L.item_laser, -- Deactivated Laser Turret
 	[71694] = L.item_magnet, -- Deactivated Electromagnet
 	[72904] = L.item_deathdealer, -- Deactivated Deathdealer Turret
-	[71752] = L.item_missile, -- Activated Missile Turret
+	[71638] = L.item_missile, -- Activated Missile Turret
 	[71795] = L.item_mines, -- Activated Crawler Mine Vehicle
-	[71638] = L.item_laser, -- Activated Laser Turret
+	[71752] = L.item_laser, -- Activated Laser Turret
 	[71696] = L.item_magnet, -- Activated Electromagnet
 	[72905] = L.item_deathdealer, -- Activated Deathdealer Turret
 }
