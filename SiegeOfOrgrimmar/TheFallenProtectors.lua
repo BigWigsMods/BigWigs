@@ -26,7 +26,7 @@ local intermission = {}
 
 local infernoTarget, infernoTimer = nil, nil
 
-local deathCount = 0
+local deathCount, hcCalamityCount = 0, 30
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -122,6 +122,7 @@ function mod:OnEngage()
 	self:CDBar(143330, 23) -- Gouge
 	self:CDBar(143446, 14) -- Bane
 	self:Bar(143491, 29) -- Calamity
+	hcCalamityCount = 30
 end
 
 --------------------------------------------------------------------------------
@@ -160,13 +161,19 @@ do
 		end
 		self:StopBar(143491) -- Calamity
 		self:StopBar(143446) -- Bane
+		hcCalamityCount = 30
 	end
 end
 
 function mod:Calamity(args)
 	self:CDBar(args.spellId, 40)
 	self:Bar(args.spellId, 5, CL.cast:format(args.spellName))
-	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
+	if self:Heroic() then
+		self:Message(args.spellId, "Attention", nil, ("%s (%d%%)"):format(CL.casting:format(args.spellName), hcCalamityCount))
+		hcCalamityCount = hcCalamityCount + 10
+	else
+		self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
+	end
 end
 
 do
