@@ -22,8 +22,7 @@ local wrChecker = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.projection_message = "Go to |cFF00FF00GREEN|r arrow!"
-	L.projection_explosion = "Projection explosion"
+	L.projection_green_arrow = "GREEN ARROW"
 
 	L.titan_pride = "Titan+Pride: %s"
 
@@ -278,9 +277,10 @@ do
 		if playerBursting then
 			self:Message(-8257, "Personal", "Alarm", CL.underyou:format(self:SpellName(144911))) -- bursting pride
 		elseif playerPower > 49 and playerPower < 75 then
-			self:Message(-8258, "Personal", "Warning", L.projection_message, "Achievement_pvp_g_01.png") -- better fitting icon imo
+			local you = CL.you:format(self:SpellName(-8258))
+			self:Message(-8258, "Personal", "Warning", ("%s (|cFF00FF00%s|r)"):format(you, L.projection_green_arrow), "Achievement_pvp_g_01.png") -- better fitting icon imo
 			self:Flash(-8258, "Achievement_pvp_g_01.png")
-			self:Bar(-8258, 6, L.projection_explosion)
+			self:Bar(-8258, 6, you, "Achievement_pvp_g_01.png")
 		end
 
 		local warned = nil
