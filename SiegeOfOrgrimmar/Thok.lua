@@ -90,7 +90,7 @@ function mod:OnEngage()
 	accCount = 0
 	self:Berserk(600)
 	self:OpenProximity("proximity", 10) -- Too close to another group. Tactic dependant - needed for heroic
-	self:Bar(-7963, 14) -- Deafening Screech
+	self:CDBar(-7963, self:LFR() and 18 or 14) -- Deafening Screech
 	self:CDBar(143766, 12, 143426, 143766) -- Fearsome Roar with correct icon
 end
 
@@ -158,7 +158,7 @@ do
 	function mod:BloodFrenzyOver(args)
 		self:OpenProximity("proximity", 10)
 		self:Message(-7981, "Neutral", "Long", CL.over:format(args.spellName))
-		self:Bar(-7963, 14) -- Deafening Screech
+		self:CDBar(-7963, self:LFR() and 18 or 14) -- Deafening Screech
 		self:CDBar(143766, 12, 17086, "ability_hunter_pet_devilsaur") -- Breath. 143766 isn't exactly a combined option but it's one of the breaths.
 		if self:Heroic() then
 			self:ScheduleTimer(checkPrisonerKilled, 10)
@@ -233,7 +233,9 @@ do
 	local accTimes = {10.9, 7.2, 4.8, 3.6}
 	function mod:Acceleration(args)
 		accCount = args.amount or 1
-		if accTimes[accCount] then -- Beyond this is too short a timer to care (2.1-2.4)
+		if self:LFR() then
+			self:CDBar(-7963, 18)
+		elseif accTimes[accCount] then -- Beyond this is too short a timer to care (2.1-2.4)
 			self:Bar(-7963, accTimes[accCount])
 		end
 		if accCount < 6 or accCount % 3 == 0 then
