@@ -44,7 +44,7 @@ end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "frFR")
 if L then
-	L.blobs = "Gelées"
+--@localization(locale="frFR", namespace="SiegeOfOrgrimmar/KorkronDarkShaman", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_mist_marks = "Marquage Brume toxique"
 	L.custom_off_mist_marks_desc = "Afin d'aider à l'attribution des soins, marque les joueurs subissant Brume toxique avec {rt1}{rt2}{rt3}{rt4}{rt5}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
@@ -84,11 +84,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "frFR")
 if L then
-	--L.start_trigger = "Hey, we recording?"
-	L.win_trigger = "Système en cours de réinitialisation. Veuillez ne pas le débrancher, ou il pourrait vous sauter à la figure." -- to check
-
-	L.enable_zone = "Entrepôt de l’Artéfact"
-	L.matter_scramble_explosion = "Explosion Brouillage de la matière" -- shorten maybe?
+--@localization(locale="frFR", namespace="SiegeOfOrgrimmar/SpoilsOfPandaria", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "frFR")

@@ -40,7 +40,6 @@ if L then
 	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 
 	L.enable_zone = "Artifact Storage"
-	L.matter_scramble_explosion = "Matter Scramble explosion" -- shorten maybe?
 end
 L = mod:GetLocale()
 
@@ -198,8 +197,8 @@ end
 
 function mod:MatterScramble(args)
 	if checkPlayerSide() < 0 then
-		self:Message(args.spellId, "Important", "Alert")
-		self:Bar(args.spellId, 8, L.matter_scramble_explosion)
+		self:Message(args.spellId, "Important", "Alert", ("%s - %s"):format(args.spellName, CL.incoming:format(self:SpellName(125619))))
+		self:Bar(args.spellId, 8, 125619) -- 125619 = Explosion
 	end
 end
 

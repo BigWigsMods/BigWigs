@@ -44,7 +44,7 @@ end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "zhCN")
 if L then
-	L.blobs = "污秽软泥怪"
+--@localization(locale="zhCN", namespace="SiegeOfOrgrimmar/KorkronDarkShaman", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_mist_marks = "剧毒之雾标记"
 	L.custom_off_mist_marks_desc = "帮助治疗分配，给受到剧毒之雾的玩家使用 {rt1}{rt2}{rt3}{rt4}{rt5} 进行标记，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
@@ -84,11 +84,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "zhCN")
 if L then
-	L.start_trigger = "录像开了吗？开了？很好。地精泰坦控制模块启动，请退后。"
-	L.win_trigger = "系统重置中。请勿关闭电源，否则将发生爆炸。"
-
-	L.enable_zone = "遗物仓库"
-	L.matter_scramble_explosion = "斗转乾坤爆炸" -- shorten maybe?
+--@localization(locale="zhCN", namespace="SiegeOfOrgrimmar/SpoilsOfPandaria", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "zhCN")

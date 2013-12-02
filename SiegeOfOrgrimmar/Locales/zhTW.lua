@@ -44,7 +44,7 @@ end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "zhTW")
 if L then
-	L.blobs = "Blobs"
+--@localization(locale="zhTW", namespace="SiegeOfOrgrimmar/KorkronDarkShaman", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_mist_marks = "Toxic Mist marker"
 	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
@@ -84,11 +84,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "zhTW")
 if L then
-	L.start_trigger = "我們在錄音嗎?有嗎?好。哥布林-泰坦控制模組開始運作，請後退。"
-	L.win_trigger = "系統重置中。請勿關閉電源，否則可能會爆炸。"
-
-	L.enable_zone = "Artifact Storage"
-	L.matter_scramble_explosion = "Matter Scramble explosion" -- shorten maybe?
+--@localization(locale="zhTW", namespace="SiegeOfOrgrimmar/SpoilsOfPandaria", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "zhTW")

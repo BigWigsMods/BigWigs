@@ -44,7 +44,7 @@ end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "koKR")
 if L then
-	L.blobs = "오염된 점액"
+--@localization(locale="koKR", namespace="SiegeOfOrgrimmar/KorkronDarkShaman", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_mist_marks = "독성 안개 징표 설정"
 	L.custom_off_mist_marks_desc = "힐을 돕기 위해, 독성 안개에 걸린 플레이어를 {rt1}{rt2}{rt3}{rt4}{rt5} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
@@ -84,11 +84,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "koKR")
 if L then
-	L.start_trigger = "녹음되고 있는 건가? 응? 좋아. 고블린 티탄 제어 모듈 시동 중. 물러서라고."
-	L.win_trigger = "시스템 초기화 중. 전원을 끄면 폭발할 수 있으니 주의하라고."
-
-	L.enable_zone = "유물 보관실"
-	L.matter_scramble_explosion = "물질 뒤섞기 폭발"
+--@localization(locale="koKR", namespace="SiegeOfOrgrimmar/SpoilsOfPandaria", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "koKR")

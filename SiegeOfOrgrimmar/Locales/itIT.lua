@@ -44,7 +44,7 @@ end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "itIT")
 if L then
-	L.blobs = "Melme"
+--@localization(locale="itIT", namespace="SiegeOfOrgrimmar/KorkronDarkShaman", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_mist_marks = "Marcatore Nebbia Tossica"
 	L.custom_off_mist_marks_desc = "Per aiutare l'assegnazione delle cure, evidenzia i giocatori che hanno Nebbia Tossica con {rt1}{rt2}{rt3}{rt4}{rt5}, richiede capo incursione o assistente.\n|cFFFF0000Solo 1 persona nell'incursione dovrebbe attivare questa opzione per evitare conflitti con le assegnazioni.|r"
@@ -84,11 +84,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "itIT")
 if L then
-	L.start_trigger = "Stiamo registrando?"
-	L.win_trigger = "Riavvio del sistema. Non staccare la corrente o potrebbe saltare tutto in aria."
-
-	L.enable_zone = "Immagazzinamento Artefatti"
-	L.matter_scramble_explosion = "Esplosione Scambio di Materia" -- shorten maybe?
+--@localization(locale="itIT", namespace="SiegeOfOrgrimmar/SpoilsOfPandaria", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "itIT")

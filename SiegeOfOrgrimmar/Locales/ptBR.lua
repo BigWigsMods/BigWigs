@@ -31,7 +31,7 @@ end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "ptBR")
 if L then
-
+--@localization(locale="ptBR", namespace="SiegeOfOrgrimmar/KorkronDarkShaman", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("General Nazgrim", "ptBR")
@@ -46,7 +46,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "ptBR")
 if L then
-
+--@localization(locale="ptBR", namespace="SiegeOfOrgrimmar/SpoilsOfPandaria", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "ptBR")

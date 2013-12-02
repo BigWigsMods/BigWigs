@@ -44,7 +44,7 @@ end
 
 L = BigWigs:NewBossLocale("Kor'kron Dark Shaman", "ruRU")
 if L then
-	L.blobs = "Капли"
+--@localization(locale="ruRU", namespace="SiegeOfOrgrimmar/KorkronDarkShaman", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_mist_marks = "Маркировка Токсичного тумана"
 	L.custom_off_mist_marks_desc = "Чтобы помочь лекарям, на людей с Токсичным туманом будут поставлены метки {rt1}{rt2}{rt3}{rt4}{rt5}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
@@ -84,11 +84,7 @@ end
 
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "ruRU")
 if L then
-	L.start_trigger = "Эй, записываем?"
-	L.win_trigger = "Система перезагружается. Не выключать питание, иначе возможен взрыв."
-
-	L.enable_zone = "Хранилище артефактов"
-	L.matter_scramble_explosion = "Взрыв материи"
+--@localization(locale="ruRU", namespace="SiegeOfOrgrimmar/SpoilsOfPandaria", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "ruRU")
