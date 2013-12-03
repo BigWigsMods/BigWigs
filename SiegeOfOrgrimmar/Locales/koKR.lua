@@ -105,7 +105,7 @@ if L then
 
 	L.shredder_engage_trigger = "자동 분쇄기가 다가옵니다!"
 	L.laser_on_you = "레이저가 당신에게 꽂힙니다!"
-	L.laser_say = "나에게 절단 레이저!"
+	L.laser_say = "절단 레이저"
 
 	L.assembly_line_trigger = "생산 설비에서 미완성 무기가 나오기 시작합니다."
 	L.assembly_line_message = "생산 설비 가동 (%d)"
@@ -150,7 +150,7 @@ if L then
 	L.phase_3_end_trigger = "네가 이겼다고 생각하나? 넌 눈이 멀었다! 내가 그 눈을 뜨게해 주마!"
 
 	L.clump_check_desc = "폭격 동안 3초마다 플레이어들이 뭉쳐있는 지 확인합니다. 뭉쳐있는 것이 발견된다면 코르크론 강철의 별이 소환됩니다."
-	--L.clump_check_warning = "Clump found, Star inc"
+	L.clump_check_warning = "불안정한 강철의 별 생성"
 
 	L.bombardment = "폭격"
 	L.bombardment_desc = "스톰윈드를 폭격하고, 지면에 불길의 흔적을 남깁니다. 폭격 동안에만 코르크론 강철의 별이 소환될 수 있습니다."
