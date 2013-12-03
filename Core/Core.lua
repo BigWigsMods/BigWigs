@@ -410,7 +410,7 @@ do
 	function addon:AddSyncListener(module, sync, throttle)
 		if not registered[sync] then registered[sync] = {} end
 		if type(registered[sync]) ~= "table" then return end -- Prevent registering BossEngaged/Death/EnableModule
-		registered[sync][module] = throttle or 2
+		registered[sync][module] = throttle or 5
 	end
 	function addon:Transmit(sync, ...)
 		if sync then
