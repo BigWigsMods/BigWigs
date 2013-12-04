@@ -90,7 +90,8 @@ function mod:OnBossEnable()
 	-- He Softfoot
 	self:Log("SPELL_AURA_APPLIED", "HeIntermission", 143812) -- Mark of Anguish
 	self:Log("SPELL_AURA_REMOVED", "HeIntermissionEnd", 143812)
-	self:RegisterEvent("RAID_BOSS_WHISPER", "Gouge")
+	self:RegisterEvent("RAID_BOSS_WHISPER", "GougeWhisper")
+	self:Log("SPELL_CAST_START", "Gouge", 143330)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 143292)
 	self:Log("SPELL_DAMAGE", "NoxiousPoisonDamage", 144367)
 	self:Log("SPELL_AURA_APPLIED", "MarkOfAnguish", 143840)
@@ -275,11 +276,30 @@ function mod:Fixate(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Long")
 end
 
-function mod:Gouge(_, msg)
-	-- only warn the tank targeted by the mob by using _WHISPER
-	if msg:find("143330", nil, true) then
-		self:Message(143330, "Urgent", "Alarm")
-		self:CDBar(143330, 29)
+do
+	local prev = 0
+
+	function mod:GougeWhisper(_, msg)
+		local t = GetTime()
+		if (t-prev) > 10 and msg:find("143330", nil, true) then
+			prev = t
+			self:Message(143330, "Urgent", "Warning")
+			self:CDBar(143330, 29)
+		end
+	end
+
+	-- Whisper is 100% reliable, threat/target check is not, but it's faster. Just use both, whisper is our backup :)
+	function mod:Gouge(args)
+		if self:Tank() then
+			for i = 1, 5 do
+				local unit = ("boss%d"):format(i)
+				if UnitGUID(unit) == args.sourceGUID and self:Me(UnitGUID(unit.."target")) then
+					self:Message(143330, "Urgent", "Warning")
+					self:CDBar(143330, 29)
+					prev = GetTime()
+				end
+			end
+		end
 	end
 end
 
@@ -341,9 +361,17 @@ do
 		end
 	end
 	function mod:InfernoStrike(args)
+		if infernoTarget then
+			self:StopBar(-7959, infernoTarget)
+			self:StopBar(L.inferno_self_bar)
+		end
+		self:GetBossTarget(checkTarget, 0.6, args.sourceGUID)
 		self:CloseProximity(-7959)
 		self:PrimaryIcon(-7959)
-		self:GetBossTarget(checkTarget, 0.6, args.sourceGUID)
+		if infernoTimer then
+			self:CancelTimer(infernoTimer)
+			infernoTimer = nil
+		end
 	end
 end
 
