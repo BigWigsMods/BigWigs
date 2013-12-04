@@ -242,6 +242,18 @@ end
 local function updateProfile()
 	db = plugin.db.profile
 
+	if not db.font then
+		db.font = media:GetDefault("font")
+	end
+	if not db.fontSize then
+		local _, size = GameFontNormal:GetFont()
+		db.fontSize = size
+	end
+	if not db.fontOutline then
+		local _, _, flags = GameFontNormal:GetFont()
+		db.fontOutline = flags
+	end
+
 	if display then
 		local x = db.posx
 		local y = db.posy
@@ -255,18 +267,6 @@ local function updateProfile()
 		end
 
 		plugin:RestyleWindow()
-	end
-
-	if not db.font then
-		db.font = media:GetDefault("font")
-	end
-	if not db.fontSize then
-		local _, size = GameFontNormal:GetFont()
-		db.fontSize = size
-	end
-	if not db.fontOutline then
-		local _, _, flags = GameFontNormal:GetFont()
-		db.fontOutline = flags
 	end
 end
 

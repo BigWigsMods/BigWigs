@@ -788,6 +788,14 @@ end
 local function updateProfile()
 	db = plugin.db.profile
 
+	if not db.font then
+		db.font = media:GetDefault("font")
+	end
+	if not db.fontSize then
+		local _, size = GameFontNormalHuge:GetFont()
+		db.fontSize = size
+	end
+
 	if anchor then
 		anchor:SetWidth(db.width)
 		anchor:SetHeight(db.height)
@@ -804,14 +812,6 @@ local function updateProfile()
 		end
 
 		plugin:RestyleWindow()
-	end
-
-	if not db.font then
-		db.font = media:GetDefault("font")
-	end
-	if not db.fontSize then
-		local _, size = GameFontNormalHuge:GetFont()
-		db.fontSize = size
 	end
 end
 

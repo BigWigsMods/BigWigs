@@ -993,11 +993,11 @@ end
 
 local function updateProfile()
 	db = plugin.db.profile
+	if not db.font then db.font = media:GetDefault("font") end
 	if normalAnchor then
 		normalAnchor:RefixPosition()
 		emphasizeAnchor:RefixPosition()
 	end
-	if not db.font then db.font = media:GetDefault("font") end
 	if plugin:IsEnabled() then
 		if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 		plugin:SetBarStyle(db.barStyle)
