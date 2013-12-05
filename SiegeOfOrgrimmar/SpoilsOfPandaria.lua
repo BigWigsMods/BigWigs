@@ -210,7 +210,7 @@ function mod:SparkOfLife(args)
 end
 
 function mod:SparkOfLifeDeath(args)
-	if checkPlayerSide() < 0 then -- counting after side check to prevent straggling kills messing with counts on room transition
+	if checkPlayerSide() < 0 and sparkCounter > 0 then -- counting after side check to prevent straggling kills messing with counts on room transition
 		sparkCounter = sparkCounter - 1
 	end
 end
