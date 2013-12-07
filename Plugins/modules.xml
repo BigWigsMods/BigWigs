@@ -7,6 +7,7 @@
 <Script file="Messages.lua"/>
 <Script file="Bars.lua"/>
 <Script file="BossBlock.lua"/>
+<Script file="InfoBox.lua"/>
 <Script file="RaidIcon.lua"/>
 <Script file="Proximity.lua"/>
 <Script file="Flash.lua"/>
