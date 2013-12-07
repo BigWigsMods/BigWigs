@@ -409,6 +409,8 @@ do
 
 		display:SetScript("OnEvent", GROUP_ROSTER_UPDATE)
 		plugin:RestyleWindow()
+
+		plugin:SendMessage("BigWigs_FrameCreated", display, "AltPower")
 	end
 
 	-- This module is rarely used, and opened once during an encounter where it is.

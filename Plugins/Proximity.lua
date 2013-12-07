@@ -951,6 +951,8 @@ do
 				updateBlipIcons()
 			end
 		end)
+
+		plugin:SendMessage("BigWigs_FrameCreated", anchor, "Proximity")
 	end
 
 	function plugin:OnPluginEnable()
