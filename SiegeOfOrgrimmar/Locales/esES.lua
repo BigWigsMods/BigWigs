@@ -84,10 +84,6 @@ end
 L = BigWigs:NewBossLocale("Spoils of Pandaria", "esES") or BigWigs:NewBossLocale("Spoils of Pandaria", "esMX")
 if L then
 --@localization(locale="esES", namespace="SiegeOfOrgrimmar/SpoilsOfPandaria", format="lua_additive_table", handle-unlocalized="ignore")@
-	--L.start_trigger = "Hey, we recording?"
-	L.win_trigger = "Reiniciando sistema. No lo apague si no quiere que el artefacto explote."
-
-	L.enable_zone = "Depósito de Artefactos"
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "esES") or BigWigs:NewBossLocale("Thok the Bloodthirsty", "esMX")
