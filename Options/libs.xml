@@ -2,7 +2,8 @@
 ..\FrameXML\UI.xsd">
 <!--@no-lib-strip@-->
 <Include file="Libs\AceGUI-3.0\AceGUI-3.0.xml"/>
-<Include file="Libs\AceConfig-3.0\AceConfig-3.0.xml"/>
+<Include file="Libs\AceConfigRegistry-3.0\AceConfigRegistry-3.0.xml"/>
+<Include file="Libs\AceConfigDialog-3.0\AceConfigDialog-3.0.xml"/>
 <Include file="Libs\AceDBOptions-3.0\AceDBOptions-3.0.xml"/>
 <Include file="Libs\LibDDI-1.0\lib.xml"/>
 <!--@end-no-lib-strip@-->

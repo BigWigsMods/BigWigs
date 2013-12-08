@@ -27,7 +27,7 @@ local C = BigWigs.C
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 
 local icon = LibStub("LibDBIcon-1.0", true)
-local ac = LibStub("AceConfig-3.0")
+local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 
@@ -289,7 +289,7 @@ function options:OnInitialize()
 		BigWigsLoader:RemoveInterfaceOptions()
 	end
 
-	ac:RegisterOptionsTable("BigWigs", acOptions)
+	acr:RegisterOptionsTable("BigWigs", acOptions, true)
 	local mainOpts = acd:AddToBlizOptions("BigWigs", "Big Wigs")
 	mainOpts:HookScript("OnShow", function()
 		BigWigs:Enable()
@@ -364,16 +364,16 @@ function options:OnInitialize()
 		frame:SetScript("OnShow", nil)
 	end)
 
-	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
+	acr:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions, true)
 	acd:AddToBlizOptions("Big Wigs: Plugins", L.customizeBtn, "Big Wigs")
 
-	ac:RegisterOptionsTable("Big Wigs: Profiles", getProfileOptions)
+	acr:RegisterOptionsTable("Big Wigs: Profiles", getProfileOptions, true)
 	acd:AddToBlizOptions("Big Wigs: Profiles", L.profiles, "Big Wigs")
 
 	colorModule = BigWigs:GetPlugin("Colors")
 	soundModule = BigWigs:GetPlugin("Sounds")
-	ac:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"))
-	ac:RegisterOptionsTable("Big Wigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"))
+	acr:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
+	acr:RegisterOptionsTable("Big Wigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
 end
 
 function options:OnEnable()
@@ -476,7 +476,7 @@ do
 					value = name,
 					text = module.displayName or name,
 				}
-				ac:RegisterOptionsTable(acId:format(name), module:GetPluginConfig())
+				acr:RegisterOptionsTable(acId:format(name), module:GetPluginConfig(), true)
 			end
 		end
 		tabs = AceGUI:Create("TabGroup")
@@ -1236,7 +1236,7 @@ do
 			local key = module.subPanelOptions.key
 			local name = module.subPanelOptions.name
 			local options = module.subPanelOptions.options
-			ac:RegisterOptionsTable(key, options)
+			acr:RegisterOptionsTable(key, options, true)
 			acd:AddToBlizOptions(key, name, "Big Wigs")
 		end
 	end
