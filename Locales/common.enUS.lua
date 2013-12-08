@@ -51,3 +51,5 @@ L.custom_end = "%s goes %s!"
 L.custom_min = "%s in %d min"
 L.custom_sec = "%s in %d sec!"
 
+L.focus_only = "|cffff0000Focus target alerts only.|r "
+

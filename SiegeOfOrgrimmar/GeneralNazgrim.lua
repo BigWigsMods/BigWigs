@@ -51,12 +51,10 @@ if L then
 	L.arcane_shock, L.arcane_shock_desc = EJ_GetSectionInfo(7928)
 	L.arcane_shock_icon = 114003
 	L.arcane_shock_message = "Your focus is casting Arcane Shock!"
-
-	L.focus_only = "|cffff0000Focus target alerts only.|r "
 end
 L = mod:GetLocale()
-L.chain_heal_desc = L.focus_only..L.chain_heal_desc
-L.arcane_shock_desc = L.focus_only..L.arcane_shock_desc
+L.chain_heal_desc = CL.focus_only..L.chain_heal_desc
+L.arcane_shock_desc = CL.focus_only..L.arcane_shock_desc
 
 local stances = {
 	[143589] = L.battle,

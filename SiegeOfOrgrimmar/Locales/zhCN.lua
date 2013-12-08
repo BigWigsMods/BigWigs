@@ -72,8 +72,6 @@ if L then
 	L.chain_heal_message = "你的焦点正在施放强效治疗链！"
 
 	L.arcane_shock_message = "你的焦点正在施放奥术震击！"
-
-	L.focus_only = "|cffff0000只警报焦点目标。|r "
 end
 
 L = BigWigs:NewBossLocale("Malkorok", "zhCN")
@@ -148,35 +146,12 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "zhCN")
 if L then
-	L.manifest_rage = "暴怒具象"
-	L.manifest_rage_desc = "当加尔鲁什获得100能量时将释放2秒引导的暴怒具象技能，当引导结束后会召唤大型增援。风筝钢铁之星到加尔鲁什将昏迷并打断他的施法。"
+--@localization(locale="zhCN", namespace="SiegeOfOrgrimmar/GarroshHellscream", format="lua_additive_table", handle-unlocalized="ignore")@
 
-	L.phase_3_end_trigger = "别以为你们已经赢了，你们这些瞎子，睁大眼睛好好看看！"
-
-	L.clump_check_desc = "在呼叫轰炸阶段时每3秒检查扎堆的玩家，如果检查到群体存在库卡隆钢铁之星将会出现。"
-	L.clump_check_warning = "发现呼叫轰炸，即将 >钢铁之星<！"
-
-	L.bombardment = "呼叫轰炸"
-	L.bombardment_desc = "轰击暴风城，并在地面上留下火焰。 库卡隆钢铁之星只会在呼叫轰炸阶段出现。"
-
-	L.intermission = "中场休息"
-	L.mind_control = "亚煞极之触"
-	L.empowered_message = ">%s< 强化腐蚀！"
-
-	L.ironstar_impact_desc = "当钢铁之星将撞击墙壁另一边时显示计时条。"
-	L.ironstar_rolling = "钢铁之星翻滚！"
-
-	L.chain_heal_desc = "治疗一个友方目标40%最大生命，会跳到附近友方目标身上。"
-	L.chain_heal_message = "你的焦点目标正在施放先祖治疗链！"
-	L.chain_heal_bar = "焦点：先祖治疗链"
-
-	L.farseer_trigger = "先知们，为我们治疗！"
 	L.custom_off_shaman_marker = "先知标记"
 	L.custom_off_shaman_marker_desc = "帮助打断分配，使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 标记先知狼骑（按照这个顺序，不是所有标记会被用到），需要权限。"
 
 	L.custom_off_minion_marker = "亚煞极的爪牙标记"
 	L.custom_off_minion_marker_desc = "帮助分离亚煞极的爪牙，使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 标记，需要权限。"
-
-	L.focus_only = "|cffff0000只警报焦点目标。|r "
 end
 

@@ -39,50 +39,49 @@ if L then
 	L.manifest_rage_desc = "When Garrosh reaches 100 energy he'll pre cast Manifest Rage for 2 seconds, then channel it. While it's channelled it summons big adds. Kite the Iron Star into Garrosh to stun and interrupt his cast."
 	L.manifest_rage_icon = 147011
 
-	L.phase_3_end_trigger = "You think you have WON?  You are BLIND.  I WILL FORCE YOUR EYES OPEN."
+	L.phase_3_end_trigger = "You think you have WON?"
 
-	L.clump_check = mod:SpellName(147126)
+	L.clump_check = mod:SpellName(147126) -- "Clump Check"
 	L.clump_check_desc = "Check every 3 seconds during bombardment for clumped up players, if a clump is found a Kor'kron Iron Star will spawn."
 	L.clump_check_warning = "Clump found, Star inc"
 	L.clump_check_icon = 147126
 
 	L.bombardment = "Bombardment"
-	L.bombardment_desc = "Bombarding Stormwind and leaving fires on the ground. Kor'kron Iron Star can only spawn during bombardment."
+	L.bombardment_desc = "Bombards Stormwind, leaving patches of fire on the ground. The Kor'kron Iron Star can only spawn during bombardment."
 	L.bombardment_icon = 147120
 
 	L.intermission = "Intermission"
-	L.mind_control = "Mind Control"
 	L.empowered_message = "%s is now empowered!"
 
-	L.ironstar_impact = mod:SpellName(144653)
+	L.ironstar_impact = mod:SpellName(144653) -- "Iron Star Impact"
 	L.ironstar_impact_desc = "A timer bar for when the Iron Star will impact the wall at the other side."
 	L.ironstar_impact_icon = 144653
 	L.ironstar_rolling = "Iron Star Rolling!"
 
-	L.chain_heal = mod:SpellName(144583)
+	L.chain_heal = mod:SpellName(144583) -- "Ancestral Chain Heal"
 	L.chain_heal_desc = "Heals a friendly target for 40% of their max health, chaining to nearby friendly targets."
 	L.chain_heal_icon = 144583
 	L.chain_heal_message = "Your focus is casting Chain Heal!"
 	L.chain_heal_bar = "Focus: Chain Heal"
 
 	L.farseer_trigger = "Farseers, mend our wounds!"
+
 	L.custom_off_shaman_marker = "Farseer marker"
 	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Farseer Wolf Rider with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the farseers is the fastest way to mark them.|r"
+	L.custom_off_shaman_marker_icon = 1
 
 	L.custom_off_minion_marker = "Minion marker"
 	L.custom_off_minion_marker_desc = "To help separate Empowered Whirling Corruption adds, mark them with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requires promoted or leader."
-
-	L.focus_only = "|cffff0000Focus target alerts only.|r "
+	L.custom_off_minion_marker_icon = 1
 end
 L = mod:GetLocale()
-L.chain_heal_desc = L.focus_only..L.chain_heal_desc
+L.chain_heal_desc = CL.focus_only..L.chain_heal_desc
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
 function mod:GetOptions(CL)
-	-- XXX Funkeh clean "FLASH" up as you see fit
 	return {
 		-8298, 144616, "ironstar_impact", -8292, 144821, -- phase 1
 		-8294, "chain_heal", "custom_off_shaman_marker", -- Farseer
@@ -214,7 +213,7 @@ function mod:Phase3End()
 	self:StopBar(L.intermission)
 	self:StopBar(CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
 	self:StopBar(144758) -- Desecrate
-	self:StopBar(L.mind_control) -- Mind Control
+	self:StopBar(67229) -- Mind Control
 end
 
 function mod:ClumpFailIronStarSpawn()
@@ -284,12 +283,12 @@ end
 
 function mod:MindControl(args)
 	mindControl = true
-	self:Message(145065, "Urgent", "Alert", CL.casting:format(L.mind_control))
+	self:Message(145065, "Urgent", "Alert", CL.casting:format(mod:SpellName(67229)))
 	if phase == 3 then
-		self:Bar(145065, (mcCounter == 1) and 35 or 42, L.mind_control)
+		self:Bar(145065, (mcCounter == 1) and 35 or 42, 67229, 145065) -- "Mind Control" text
 		mcCounter = mcCounter + 1 -- XXX might need more data
 	else
-		self:Bar(145065, 45, L.mind_control)
+		self:Bar(145065, 45, 67229, 145065) -- "Mind Control" text
 	end
 end
 
@@ -472,11 +471,11 @@ end
 
 do
 	local warnPower = 25
-	local abilities = { [25] = mod:SpellName(144985), [50] = L.mind_control, [75] = mod:SpellName(144748), [100] = mod:SpellName(145183) }
+	local abilities = { [25] = mod:SpellName(144985), [50] = mod:SpellName(67229), [75] = mod:SpellName(144748), [100] = mod:SpellName(145183) }
 
 	local function mindControlMagic(spellId)
 		if not mindControl then -- there has not been an MC for more than 32 sec
-			mod:Bar(spellId, 8, L.mind_control)
+			mod:Bar(spellId, 8, 67229, spellId) -- "Mind Control" text
 		end
 	end
 
@@ -501,7 +500,7 @@ do
 			end
 		elseif spellId == 144866 then -- Enter Realm of Y'Shaarj -- actually being pulled
 			self:StopBar(144758) -- Desecrate
-			self:StopBar(L.mind_control) -- Mind Control
+			self:StopBar(67229) -- Mind Control
 			self:StopBar(CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
 			self:Message(-8305, "Neutral", nil, L.intermission, "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 			self:Bar(-8305, 210, L.intermission, "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
@@ -512,7 +511,7 @@ do
 			if phase == 2 then
 				desecrateCounter = 1
 				self:Bar(144758, 10) -- Desecrate
-				self:Bar(145065, 15, L.mind_control) -- Mind Control
+				self:Bar(145065, 15, 67229, 145065) -- Mind Control
 				self:Bar(144985, 30, CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
 				local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
 				if hp < 50 then -- XXX might need adjusting
@@ -539,9 +538,9 @@ do
 				-- XXX lets try to improve this, because it looks like if it is not cast within 32 sec, then it is going to be closer to 40 than to 30 need more Transcriptor log
 				mindControl = nil
 				self:ScheduleTimer(mindControlMagic, 32, 145065)
-				self:Bar(145065, 31, L.mind_control) -- Mind Control
+				self:Bar(145065, 31, 67229, 145065) -- Mind Control
 			else
-				self:Bar(145065, 29, L.mind_control) -- Mind Control
+				self:Bar(145065, 29, 67229, 145065) -- Mind Control
 			end
 			self:CDBar(144758, 21) -- Desecrate -- on heroic 21-23
 		elseif spellId == 146984 then -- phase 4 Enter Realm of Garrosh
@@ -550,7 +549,7 @@ do
 			self:StopBar(L.intermission)
 			self:StopBar(CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
 			self:StopBar(144758) -- Desecrate
-			self:StopBar(L.mind_control) -- Mind Control
+			self:StopBar(67229) -- Mind Control
 			self:Bar(147209, 30) -- Malice
 			self:Bar("bombardment", 69, L.bombardment, 147120) -- Bombardment
 			self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")

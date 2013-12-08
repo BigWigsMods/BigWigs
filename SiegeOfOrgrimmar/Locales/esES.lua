@@ -74,9 +74,6 @@ if L then
 	L.chain_heal_message = "¡Tu foco está casteando Sanación en cadena!"
 
 	L.arcane_shock_message = "¡Tu foco está casteando Choque Arcano!"
-
-	L.focus_only = "|cffff0000Alertas solo para objetivos en Foco.|r "
-
 end
 
 L = BigWigs:NewBossLocale("Malkorok", "esES") or BigWigs:NewBossLocale("Malkorok", "esMX")
@@ -106,6 +103,6 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "esES") or BigWigs:NewBossLocale("Garrosh Hellscream", "esMX")
 if L then
-
+--@localization(locale="esES", namespace="SiegeOfOrgrimmar/GarroshHellscream", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 

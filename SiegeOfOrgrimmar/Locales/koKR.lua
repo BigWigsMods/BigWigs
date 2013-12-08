@@ -72,8 +72,6 @@ if L then
 	L.chain_heal_message = "당신의 주시 대상이 연쇄 치유를 시전합니다!"
 
 	L.arcane_shock_message = "당신의 주시 대상이 비전 충격을 시전합니다!"
-
-	L.focus_only = "|cffff0000주시 대상을 잡았을 경우에만 경고합니다.|r "
 end
 
 L = BigWigs:NewBossLocale("Malkorok", "koKR")
@@ -144,35 +142,12 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "koKR")
 if L then
-	L.manifest_rage = "명백한 분노"
-	L.manifest_rage_desc = "가로쉬의 기력이 100에 도달하면 그는 2초동안 명백한 분노를 시전하고, 그 후 정신집중에 들어갑니다. 가로쉬가 정신집중하는 동안에는 큰 쫄이 나옵니다. 강철의 별을 가로쉬에게 유도해서 스턴시켜 시전을 멈추게 해야 합니다."
+--@localization(locale="koKR", namespace="SiegeOfOrgrimmar/GarroshHellscream", format="lua_additive_table", handle-unlocalized="ignore")@
 
-	L.phase_3_end_trigger = "네가 이겼다고 생각하나? 넌 눈이 멀었다! 내가 그 눈을 뜨게해 주마!"
-
-	L.clump_check_desc = "폭격 동안 3초마다 플레이어들이 뭉쳐있는 지 확인합니다. 뭉쳐있는 것이 발견된다면 코르크론 강철의 별이 소환됩니다."
-	L.clump_check_warning = "불안정한 강철의 별 생성"
-
-	L.bombardment = "폭격"
-	L.bombardment_desc = "스톰윈드를 폭격하고, 지면에 불길의 흔적을 남깁니다. 폭격 동안에만 코르크론 강철의 별이 소환될 수 있습니다."
-
-	L.intermission = "내면 세계"
-	L.mind_control = "정신 지배"
-	--L.empowered_message = "%s is now empowered!"
-
-	L.ironstar_impact_desc = "강철의 별이 다른 쪽 벽에 충돌할 때를 위한 타이머 바를 생성합니다."
-	L.ironstar_rolling = "강철의 별이 굴러갑니다!"
-
-	L.chain_heal_desc = "아군 대상의 최대 생명력의 40%를 치유하고, 인접한 아군 대상에게 튕겨갑니다."
-	L.chain_heal_message = "당신의 주시 대상이 연쇄 치유를 시전합니다"
-	L.chain_heal_bar = "주시: 연쇄 치유"
-
-	L.farseer_trigger = "선견자, 우리를 치료하라!"
 	L.custom_off_shaman_marker = "선견자 표시"
 	L.custom_off_shaman_marker_desc = "차단을 돕기 위해, 선견자 늑대 기수를 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다. \n|cFFFF0000혼선을 빚는 것을 방지하기 위하여, 오직 공대원 중 한 사람만이 이 옵션을 켜야합니다.|r \n|cFFADFF2F팁: 만약 공대에서 당신이 이 옵션을 키기로 했다면, 빠르게 선견자에게 마우스를 대는 것이 마킹을 하는 가장 빠른 방법입니다.|r"
 
 	L.custom_off_minion_marker = "이샤라즈의 하수인 징표 설정"
 	L.custom_off_minion_marker_desc = "쫄들을 분리하는 것을 돕기 위해, {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 마크로 표시합니다. 공격대장이거나 권한이 필요합니다."
-
-	L.focus_only = "|cffff0000주시 대상 경고 전용.|r "
 end
 

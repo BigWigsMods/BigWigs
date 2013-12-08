@@ -66,6 +66,6 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "ptBR")
 if L then
-
+--@localization(locale="ptBR", namespace="SiegeOfOrgrimmar/GarroshHellscream", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 

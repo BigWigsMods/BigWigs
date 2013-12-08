@@ -72,8 +72,6 @@ if L then
 	L.chain_heal_message = "Il tuo focus sta lanciando Catena di Guarigione Potenziata!"
 
 	L.arcane_shock_message = "Il tuo focus sta lanciando Folgore Arcana!"
-
-	L.focus_only = "|cffff0000Avvisi solo dei bersagli focus.|r "
 end
 
 L = BigWigs:NewBossLocale("Malkorok", "itIT")
@@ -144,35 +142,12 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "itIT")
 if L then
-	L.manifest_rage = "Manifestazione della Rabbia"
-	L.manifest_rage_desc = "Quando Garrosh raggiungwe 100 inizierà a prelanciare Manifestazione della Rabbia per 2 secondi, e poi la canalizzerà. Mentre canalizza, evoca degli add grandi. Porta la Pirostella su Garrosh per incapacitarlo ed interrompere il suo lancio."
+--@localization(locale="itIT", namespace="SiegeOfOrgrimmar/GarroshHellscream", format="lua_additive_table", handle-unlocalized="ignore")@
 
-	L.phase_3_end_trigger = "Pensate di aver VINTO? Siete CIECHI. VI COSTRINGERÒ AD APRIRE GLI OCCHI."
-
-	L.clump_check_desc = "Controlla ogni 3 secondi durante il Bombardamento i giocatori ammucchiati, se viene rilevato un gruppo, verrà creata una Pirostella Kor'kron."
-	L.clump_check_warning = "Rilevato ammucchiamento, Pirostella in arrivo"
-
-	L.bombardment = "Bombardmento"
-	L.bombardment_desc = "Bombardamendo di Roccavento che lascia dei fuochi sul terreno. Le Pirostelle Kor'kron possono apparire soltanto durante il bombardmento."
-
-	L.intermission = "Intermezzo"
-	L.mind_control = "Controllo della Mente"
-	L.empowered_message = "%s adesso è potenziato!"
-
-	L.ironstar_impact_desc = "Una barra a tempo per quando la Pirostella si schianterà contro l'altra parte della stanza."
-	L.ironstar_rolling = "Pirostella in movimento!"
-
-	L.chain_heal_desc = "Cura un bersaglio amico per il 40% della sua vita massima, e a catena anche i bersagli amici vicini."
-	L.chain_heal_message = "Il tuo focus sta lanciando Catena di Guarigione!"
-	L.chain_heal_bar = "Focus: Catena di Guarigione"
-
-	L.farseer_trigger = "Chiaroveggenti, guarite le nostre ferite!"
 	L.custom_off_shaman_marker = "Marcatore Chiaroveggenti"
 	L.custom_off_shaman_marker_desc = "Per aiutare l'assegnazione delle interruzioni, evidenzia i Cavalcalupi Chiaroveggenti con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} (in questo ordine, non tutti i simboli possono essere usati), richiede capo incursione o assistente."
 
 	L.custom_off_minion_marker = "Marcatore servitori"
 	L.custom_off_minion_marker_desc = "Per aiutare a separare i servitori, evidenziali con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, richiede capoincursione o assistente."
-
-	L.focus_only = "|cffff0000Avvisi solo dei bersagli focus.|r "
 end
 

@@ -123,7 +123,6 @@ function plugin:OnRegister()
 	media:Register(mType, "BigWigs: Info", "Interface\\AddOns\\BigWigs\\Sounds\\Info.mp3")
 	media:Register(mType, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Sounds\\Alert.mp3")
 	media:Register(mType, "BigWigs: Alarm", "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.mp3")
-	media:Register(mType, "BigWigs: Raid Warning", "Sound\\Interface\\RaidWarning.wav")
 	media:Register(mType, "BigWigs: Victory", "Interface\\AddOns\\BigWigs\\Sounds\\Victory.mp3")
 	media:Register(mType, "BigWigs: Victory Long", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryLong.mp3")
 	media:Register(mType, "BigWigs: Victory Classic", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryClassic.mp3")
@@ -140,6 +139,7 @@ function plugin:OnRegister()
 	media:Register(mType, "BigWigs: [DBM] ".. L.RunAway, "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
 
 	-- Ingame sounds used by Blizzard
+	media:Register(mType, "BigWigs: Raid Warning", "Sound\\Interface\\RaidWarning.wav")
 	media:Register(mType, "BigWigs: Raid Boss Whisper", "Sound\\Interface\\UI_RaidBossWhisperWarning.ogg")
 
 	soundList = media:List(mType)

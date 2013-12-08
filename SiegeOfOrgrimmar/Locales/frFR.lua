@@ -72,8 +72,6 @@ if L then
 	L.chain_heal_message = "Votre focalisation est en train d'incanter Salve de guérison !"
 
 	L.arcane_shock_message = "Votre focalisation est en train d'incanter Horion des Arcanes !"
-
-	L.focus_only = "|cffff0000Alertes de la cible de focalisation uniquement.|r "
 end
 
 L = BigWigs:NewBossLocale("Malkorok", "frFR")
@@ -147,36 +145,12 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "frFR")
 if L then
-	L.manifest_rage = "Manifestation de la rage"
-	L.manifest_rage_desc = "Quand Garrosh atteint 100 d'énergie, il incante Manifestation de la rage pendant 2 secondes, puis canalise ce dernier. Durant la canalisation, des adds apparaissent. Amenez l'étoile de fer sur Garrosh pour l'étourdir et interrompre son incantation."
-
-	L.phase_3_end_trigger = "Vous croyez avoir GAGNÉ ? Vous êtes AVEUGLES. JE VAIS VOUS OUVRIR LES YEUX." -- to check
-
-	L.clump_check_desc = "Vérifie toutes les 3 secondes durant les bombardements les joueurs regroupés. Si un regroupement est trouvé, une étoile de fer Kor'kron apparaîtra."
-	L.clump_check_warning = "Regroupement détecté, arrivée d'une étoile"
-
-	L.bombardment = "Bombardement"
-	L.bombardment_desc = "Bombarde Hurlevent et laisse des gerbes de feu sur le sol. Les étoiles de fer Kor'kron n'apparaissent que durant les bombardements."
-
-	L.intermission = "Intervalle"
-	L.mind_control = "Contrôle mental"
-	L.empowered_message = "%s est maintenant surpuissant !"
-
-	L.ironstar_impact_desc = "Une barre de délai indiquant quand l'Étoile de fer touchera le mur d'en face."
-	L.ironstar_rolling = "L'Étoile de fer roule !"
-
-	L.chain_heal_desc = "Rend 40% de ses points de vie maximum à une cible alliée et se propage aux cibles alliées à proximité."
-	L.chain_heal_message = "Votre focalisation est en train d'incanter Salve de guérison !"
-	L.chain_heal_bar = "Focalisation : Salve de guérison"
-
-	L.farseer_trigger = "Long-voyants, soignez nos blessures !"
+--@localization(locale="frFR", namespace="SiegeOfOrgrimmar/GarroshHellscream", format="lua_additive_table", handle-unlocalized="ignore")@
 
 	L.custom_off_shaman_marker = "Marquage Chevaucheur de loup long-voyant"
 	L.custom_off_shaman_marker_desc = "Afin d'aider à l'attribution des interruptions, marque les Chevaucheurs de loup long-voyant avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} (dans cet ordre)(il se peut que toutes les marques ne soient pas utilisées). Nécessite d'être assistant ou chef de raid."
 
 	L.custom_off_minion_marker = "Marquage Sbires"
 	L.custom_off_minion_marker_desc = "Afin d'aider à la séparation des sbires, marque ces derniers avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}. Nécessite d'être assistant ou chef de raid."
-
-	L.focus_only = "|cffff0000Alertes de la cible de focalisation uniquement.|r "
 end
 

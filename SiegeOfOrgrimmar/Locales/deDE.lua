@@ -72,8 +72,6 @@ if L then
 	L.chain_heal_message = "Dein Fokusziel wirkt Kettenheilung!"
 
 	L.arcane_shock_message = "Dein Fokusziel wirkt Arkaner Schock!"
-
-	L.focus_only = "|cffff0000Nur Meldungen für Fokusziele.|r "
 end
 
 L = BigWigs:NewBossLocale("Malkorok", "deDE")
@@ -148,35 +146,12 @@ end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "deDE")
 if L then
-	L.manifest_rage = "Wut manifestieren"
-	L.manifest_rage_desc = "Wenn Garrosh 100 Energie erreicht, wirkt er zwei Sekunden lang Wut manifestieren und kanalisiert diesen Zauber dann. Während des Kanalisierens entstehen große Adds. Zieht den Eisernen Stern in Garrosh, um ihn zu betäuben und den Zauber zu unterbrechen."
+--@localization(locale="deDE", namespace="SiegeOfOrgrimmar/GarroshHellscream", format="lua_additive_table", handle-unlocalized="ignore")@
 
-	L.phase_3_end_trigger = "Ihr glaubt GEWONNEN zu haben? BLIND seid ihr. ICH WERDE EUCH DIE AUGEN ÖFFNEN."
-
-	L.clump_check_desc = "Prüft alle 3 Sekunden während des Bombardements, ob Spieler eng zusammenstehen, da hierdurch Eiserne Sterne der Kor'kron entstehen."
-	L.clump_check_warning = "Gruppierung gefunden, Stern kommt"
-
-	L.bombardment = "Bombardement"
-	L.bombardment_desc = "Bombardiert Sturmwind und hinterlässt Feuer auf dem Boden. Eiserne Sterne der Kor'kron können nur während des Bombardements entstehen."
-
-	L.intermission = "Unterbrechung"
-	L.mind_control = "Gedankenkontrolle"
-	L.empowered_message = "%s ist jetzt mächtig!"
-
-	L.ironstar_impact_desc = "Zeigt einen Timer für die Explosion der Eisernen Sterne an der jeweils gegenüberliegenden Wand."
-	L.ironstar_rolling = "Eiserner Stern rollt!"
-
-	L.chain_heal_desc = "Heilt ein verbündetes Ziel um 40% ihrer maximalen Gesundheit. Springt auf nahe verbündete Ziele über."
-	L.chain_heal_message = "Dein Fokusziel wirkt Kettenheilung!"
-	L.chain_heal_bar = "Fokusziel: Kettenheilung"
-
-	L.farseer_trigger = "Scharfseher, heilt unsere Wunden!"
 	L.custom_off_shaman_marker = "Scharfseher markieren"
 	L.custom_off_shaman_marker_desc = "Um bei der Einteilung zum Unterbrechen zu helfen, werden die Scharfseherwolfsreiter mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7} markiert, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r\n|cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über die Scharfseher.|r"
 
 	L.custom_off_minion_marker = "Diener markerieren"
 	L.custom_off_minion_marker_desc = "Um bei der Unterscheidung der Diener zu helfen, werden diese mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} markiert, benötigt Leiter oder Assistent."
-
-	L.focus_only = "|cffff0000Nur Meldungen für Fokusziele.|r "
 end
 
