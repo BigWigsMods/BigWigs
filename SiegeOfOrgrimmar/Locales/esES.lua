@@ -67,7 +67,7 @@ if L then
 	L.adds_trigger3 = "¡Siguiente escuadrón, al frente!"
 	L.adds_trigger4 = "¡Guerreros, paso ligero!"
 	L.adds_trigger5 = "¡Kor'kron, conmigo!"
-	--L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW!"
+	L.adds_trigger_extra_wave = "¡Todos los Kor'kron a mi comando, mátenlos ya!"
 	L.extra_adds = "Adds extra"
 	L.final_wave = "Oleada final"
 
@@ -98,11 +98,57 @@ end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "esES") or BigWigs:NewBossLocale("Paragons of the Klaxxi", "esMX")
 if L then
+	L.catalyst_match = "Catalizador: |c%sTE CORRESPONDE|r" -- might not be best for colorblind?
+	L.you_ate = "Te comiste un Parásito (%d restantes)"
+	L.other_ate = "%s se comió un %sParásito (%d restantes)"
+	L.parasites_up = "%d |4Parásito activo:Parásitos activos;"
+	L.dance = "Baile"
+	L.prey_message = "Usa Depredar en parásito"
+	L.injection_over_soon = "¡Inyección acabará pronto (%s)!"
 
+	L.one = "¡Iyyokuk elige: Uno!"
+	L.two = "¡Iyyokuk elige: Dos!"
+	L.three = "¡Iyyokuk elige: Tres!"
+	L.four = "¡Iyyokuk elige: Cuatro!"
+	L.five = "¡Iyyokuk elige: Cinco!"
+
+	L.custom_off_edge_marks = "Marcador del límite"
+	L.custom_off_edge_marks_desc = "Marca los jugadores que serán los límites según los cálculos con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}, requiere ayudante o líder.\n|cFFFF0000Solo 1 persona de la raid debería tener activa esta opción para prevenir conflictos con las marcas.|r"
+	L.edge_message = "¡Estás en el límite!"
+
+	L.custom_off_parasite_marks = "Marcador de Parásito"
+	L.custom_off_parasite_marks_desc = "Marca los parásitos para controlar y asignar víctimas con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requiere ayudante o líder.\n|cFFFF0000Solo 1 persona de la raid debería tener activa esta opción para prevenir conflictos con las marcas.|r"
+
+	L.injection_tank = "Inyección (casteo)"
+	L.injection_tank_desc = "Barra de tiempo para cuando Inyección es casteada por su tanque actual."
 end
 
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "esES") or BigWigs:NewBossLocale("Garrosh Hellscream", "esMX")
 if L then
 --@localization(locale="esES", namespace="SiegeOfOrgrimmar/GarroshHellscream", format="lua_additive_table", handle-unlocalized="ignore")@
+	L.manifest_rage = "Manifiesto de ira" -- Needs review
+	L.manifest_rage_desc = "Cuando Garrosh alcanza 100 de energçia el pre-casteará Manifiesto de Ira durante 2 segundos, entonces lo canalizará. Mientras es canalizado invocará adds grandes. Pon la Estrella de hierro en Garrosh para stunearlo y así interrumpir su casteo." -- Needs review
+
+	--L.phase_3_end_trigger = "You think you have WON?"
+
+	L.clump_check_desc = "Comprueba cada 3 segundos durante el bombardeo los jugadores agrupados, si un grupo es encontrado por una Estrella de hierro Kor'kron aparecerá."
+	L.clump_check_warning = "Grupo encontrado, Estrella inc"
+
+	L.bombardment = "Bombardeo"
+	L.bombardment_desc = "Bombardea Ventormenta, dejando manchas de fuego en el suelo. La Estrella de hierro Kor'kron solo puede aparecer durante el bombardeo." -- Needs review
+
+	L.intermission = "Intermisión"
+	L.empowered_message = "¡%s está potenciado!"
+
+	L.ironstar_impact_desc = "Una barra de tiempo para cuando la Estrella de hierro impactará con la pared en el otro lado."
+	L.ironstar_rolling = "¡Estrella de hierro rodando!"
+
+	L.farseer_trigger = "¡Clarividentes, sanad nuestras heridas!"
+
+	L.custom_off_shaman_marker = "Marcador de Clarividentes"
+	L.custom_off_shaman_marker_desc = "Para ayudar con las interrupciones, marca los Clarividente jinete de lobos con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requiere ayudante o líder.\n|cFFFF0000Solo 1 persona de la raid debería tener activa esta opción para prevenir conflictos con las marcas.|r\n|cFFADFF2FCONSEJO: Si la raid te elige para que la actives, mover rápidamente el ratón por encima de los clarividentes es la manera más rápida de marcarlos.|r"
+
+	L.custom_off_minion_marker = "Marcador de esbirros"
+	L.custom_off_minion_marker_desc = "Para ayudar a separarse de los adds del Torbellino de corrupción potenciado, márcalos con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requiere ayudante o líder."
 end
 
