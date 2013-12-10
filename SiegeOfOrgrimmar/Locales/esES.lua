@@ -126,24 +126,6 @@ end
 L = BigWigs:NewBossLocale("Garrosh Hellscream", "esES") or BigWigs:NewBossLocale("Garrosh Hellscream", "esMX")
 if L then
 --@localization(locale="esES", namespace="SiegeOfOrgrimmar/GarroshHellscream", format="lua_additive_table", handle-unlocalized="ignore")@
-	L.manifest_rage = "Manifiesto de ira" -- Needs review
-	L.manifest_rage_desc = "Cuando Garrosh alcanza 100 de energçia el pre-casteará Manifiesto de Ira durante 2 segundos, entonces lo canalizará. Mientras es canalizado invocará adds grandes. Pon la Estrella de hierro en Garrosh para stunearlo y así interrumpir su casteo." -- Needs review
-
-	--L.phase_3_end_trigger = "You think you have WON?"
-
-	L.clump_check_desc = "Comprueba cada 3 segundos durante el bombardeo los jugadores agrupados, si un grupo es encontrado por una Estrella de hierro Kor'kron aparecerá."
-	L.clump_check_warning = "Grupo encontrado, Estrella inc"
-
-	L.bombardment = "Bombardeo"
-	L.bombardment_desc = "Bombardea Ventormenta, dejando manchas de fuego en el suelo. La Estrella de hierro Kor'kron solo puede aparecer durante el bombardeo." -- Needs review
-
-	L.intermission = "Intermisión"
-	L.empowered_message = "¡%s está potenciado!"
-
-	L.ironstar_impact_desc = "Una barra de tiempo para cuando la Estrella de hierro impactará con la pared en el otro lado."
-	L.ironstar_rolling = "¡Estrella de hierro rodando!"
-
-	L.farseer_trigger = "¡Clarividentes, sanad nuestras heridas!"
 
 	L.custom_off_shaman_marker = "Marcador de Clarividentes"
 	L.custom_off_shaman_marker_desc = "Para ayudar con las interrupciones, marca los Clarividente jinete de lobos con {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}, requiere ayudante o líder.\n|cFFFF0000Solo 1 persona de la raid debería tener activa esta opción para prevenir conflictos con las marcas.|r\n|cFFADFF2FCONSEJO: Si la raid te elige para que la actives, mover rápidamente el ratón por encima de los clarividentes es la manera más rápida de marcarlos.|r"
