@@ -79,10 +79,6 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	-- Heroic
-	if self:Heroic() then
-		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2")
-	end
 	-- Crate of Panderan Relics
 	self:Log("SPELL_DAMAGE", "PathOfBlossoms", 146257)
 	self:Log("SPELL_CAST_START", "BreathOfFire", 146222)
@@ -114,6 +110,11 @@ function mod:Warmup()
 end
 
 function mod:OnEngage()
+	if self:Heroic() then
+		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2")
+	end
+
+	sparkCounter = 0
 	wipe(setToBlow)
 	wipe(bossUnitPowers)
 	self:OpenProximity("proximity", 3)
