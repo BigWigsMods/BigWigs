@@ -93,7 +93,10 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "esES") or BigWigs:NewBossLocale("Siegecrafter Blackfuse", "esMX")
 if L then
+--@localization(locale="esES", namespace="SiegeOfOrgrimmar/SiegecrafterBlackfuse", format="lua_additive_table", handle-unlocalized="ignore")@
 
+	--L.custom_off_mine_marker = "Mine marker"
+	--L.custom_off_mine_marker_desc = "Mark the mines for specific stun assignments. (All the marks are used)"
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "esES") or BigWigs:NewBossLocale("Paragons of the Klaxxi", "esMX")

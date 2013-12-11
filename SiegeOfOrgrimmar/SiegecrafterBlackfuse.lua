@@ -1,7 +1,3 @@
---[[
-TODO:
-
-]]--
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -29,8 +25,6 @@ local sawbladeTarget
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.overcharged_crawler_mine = "Overcharged Crawler Mine" -- sadly this is needed since they have same mobId
-	L.custom_off_mine_marker = "Mine marker"
-	L.custom_off_mine_marker_desc = "Mark the mines for specific stun assignments. (All the marks are used)"
 
 	L.saw_blade_near_you = "Saw blade near you (not on you)"
 	L.saw_blade_near_you_desc = "You might want to turn this off to avoid spam if your raid is mostly bunched up according to your tactics."
@@ -52,6 +46,9 @@ if L then
 	L.item_deathdealer = "Deathdealer"
 
 	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!"
+
+	L.custom_off_mine_marker = "Mine marker"
+	L.custom_off_mine_marker_desc = "Mark the mines for specific stun assignments. (All the marks are used)"
 end
 L = mod:GetLocale()
 

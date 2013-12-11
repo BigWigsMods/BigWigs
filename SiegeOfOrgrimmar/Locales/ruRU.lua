@@ -92,29 +92,10 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "ruRU")
 if L then
-	L.overcharged_crawler_mine = "Перегретая ползучая мина"
+--@localization(locale="ruRU", namespace="SiegeOfOrgrimmar/SiegecrafterBlackfuse", format="lua_additive_table", handle-unlocalized="ignore")@
+
 	L.custom_off_mine_marker = "Маркировка мин"
 	L.custom_off_mine_marker_desc = "Ставить метки на мины, для распределения оглушений. (Все метки используются)"
-
-	L.saw_blade_near_you = "Пила возле тебя (не на тебе)"
-	L.saw_blade_near_you_desc = "Возможно, вы захотите выключить эту опцию, чтобы избежать спама, если ваш рейд сгруппирован по другой тактике."
-
-	L.disabled = "Отключено"
-
-	L.shredder_engage_trigger = "Приближается автоматический крошшер!"
-	L.laser_on_you = "Лазер на тебе ПИУ-ПИУ!"
-	L.laser_say = "Лазер ПИУ-ПИУ"
-
-	L.assembly_line_trigger = "На сборочную линию начинает поступать незаконченное оружие."
-	L.assembly_line_message = "Незаконченное оружие (%d)"
-	L.assembly_line_items = "Предметы (%d): %s"
-	L.item_missile = "Ракета"
-	L.item_mines = "Мины"
-	L.item_laser = "Лазер"
-	L.item_magnet = "Магнит"
-	L.item_deathdealer = "Смертоносная"
-
-	L.shockwave_missile_trigger = "Представляю вам прекрасную ударно-волновую турель УТ-03!"
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "ruRU")

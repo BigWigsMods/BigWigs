@@ -92,29 +92,10 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "deDE")
 if L then
-	L.overcharged_crawler_mine = "Überladene Kriechermine"
+--@localization(locale="deDE", namespace="SiegeOfOrgrimmar/SiegecrafterBlackfuse", format="lua_additive_table", handle-unlocalized="ignore")@
+
 	L.custom_off_mine_marker = "Minen markieren"
 	L.custom_off_mine_marker_desc = "Markiert die Minen zum Einteilen der Betäubungen. (Alle Zeichen werden genutzt)"
-
-	L.saw_blade_near_you = "Sägeblatt in der Nähe (nicht auf Dir)"
-	L.saw_blade_near_you_desc = "Du kannst diese Option deaktivieren um Spam und Verwirrung zu vermeiden."
-
-	L.disabled = "Deaktiviert"
-
-	L.shredder_engage_trigger = "Ein automatisierter Schredder nähert sich!"
-	L.laser_on_you = "Laser auf Dir PEW PEW!"
-	L.laser_say = "Laser PEW PEW"
-
-	L.assembly_line_trigger = "Unfertige Waffen werden auf das Fabrikationsband befördert."
-	L.assembly_line_message = "Unfertige Waffen (%d)"
-	L.assembly_line_items = "Waffen (%d): %s"
-	L.item_missile = "Rakete"
-	L.item_mines = "Minen"
-	L.item_laser = "Laser"
-	L.item_magnet = "Magnet"
-	L.item_deathdealer = "Todesboten"
-
-	L.shockwave_missile_trigger = "Ich präsentiere... den wunderschönen Erschütterungsraketenturm ST-03!"
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "deDE")

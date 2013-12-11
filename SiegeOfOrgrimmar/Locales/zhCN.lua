@@ -92,29 +92,10 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "zhCN")
 if L then
-	L.overcharged_crawler_mine = "超载的蛛形地雷" -- sadly this is needed since they have same mobId
+--@localization(locale="zhCN", namespace="SiegeOfOrgrimmar/SiegecrafterBlackfuse", format="lua_additive_table", handle-unlocalized="ignore")@
+
 	L.custom_off_mine_marker = "地雷标记"
 	L.custom_off_mine_marker_desc = "帮助眩晕职业给每个特定地雷打上标记。（会使用全部标记）"
-
-	L.saw_blade_near_you = "锯刃在旁边（不是在你）"
-	L.saw_blade_near_you_desc = "你可能想关闭这个功能以避免骚扰，如果你的团队大多是根据自己的战术安排。"
-
-	L.disabled = "已禁用"
-
-	L.shredder_engage_trigger = "一台自动伐木机正在靠近！"
-	L.laser_on_you = ">你< 激光 BIU BIU！"
-	L.laser_say = "激光 BIU BIU"
-
-	L.assembly_line_trigger = "未完成的武器从装配流水线上传送出来了。"
-	L.assembly_line_message = "零散的武器 >%d<"
-	L.assembly_line_items = "物品（%d）：%s"
-	L.item_missile = "导弹"
-	L.item_mines = "地雷"
-	L.item_laser = "激光"
-	L.item_magnet = "电磁体"
-	L.item_deathdealer = "死亡执行者"
-
-	L.shockwave_missile_trigger = "为各位送上"
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "zhCN")

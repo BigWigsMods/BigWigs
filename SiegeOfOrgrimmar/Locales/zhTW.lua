@@ -92,29 +92,10 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "zhTW")
 if L then
-	L.overcharged_crawler_mine = "Overcharged Crawler Mine" -- sadly this is needed since they have same mobId
+--@localization(locale="zhTW", namespace="SiegeOfOrgrimmar/SiegecrafterBlackfuse", format="lua_additive_table", handle-unlocalized="ignore")@
+
 	L.custom_off_mine_marker = "地雷標記"
-	L.custom_off_mine_marker_desc = "Mark the mines for specific stun assignments. (All the marks are used)"
-
-	L.saw_blade_near_you = "Saw blade near you (not on you)"
-	L.saw_blade_near_you_desc = "You might want to turn this off to avoid spam if your raid is mostly bunched up according to your tactics."
-
-	L.disabled = "已停用"
-
-	L.shredder_engage_trigger = "有個自動化伐木機靠近了!"
-	L.laser_on_you = "Laser on you PEW PEW!"
-	L.laser_say = "Laser PEW PEW"
-
-	L.assembly_line_trigger = "尚未完成的武器開始從生產線上掉落。"
-	L.assembly_line_message = "Unfinished weapons (%d)"
-	L.assembly_line_items = "物品 (%d): %s"
-	L.item_missile = "Missile"
-	L.item_mines = "Mines"
-	L.item_laser = "Laser"
-	L.item_magnet = "Magnet"
-	L.item_deathdealer = "Deathdealer"
-
-	L.shockwave_missile_trigger = "Presenting... the beautiful new ST-03 Shockwave missile turret!"
+	--L.custom_off_mine_marker_desc = "Mark the mines for specific stun assignments. (All the marks are used)"
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "zhTW")

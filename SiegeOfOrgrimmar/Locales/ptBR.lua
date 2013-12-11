@@ -56,7 +56,7 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "ptBR")
 if L then
-
+--@localization(locale="ptBR", namespace="SiegeOfOrgrimmar/SiegecrafterBlackfuse", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "ptBR")

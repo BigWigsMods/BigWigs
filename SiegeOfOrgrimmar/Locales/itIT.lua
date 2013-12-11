@@ -92,28 +92,10 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "itIT")
 if L then
-	L.overcharged_crawler_mine = "Mina Strisciante Sovraccaricata" -- sadly this is needed since they have same mobId
+--@localization(locale="itIT", namespace="SiegeOfOrgrimmar/SiegecrafterBlackfuse", format="lua_additive_table", handle-unlocalized="ignore")@
+
 	L.custom_off_mine_marker = "Marcatore delle Mine"
 	L.custom_off_mine_marker_desc = "Evidenzia le mine per l'assegnazione specifica degli incapacitamenti (Vengono utilizzati tutti i simboli)"
-
-	L.saw_blade_near_you = "Lama Rotante vicino a te (non su di te)"
-	L.saw_blade_near_you_desc = "Potresti disabilitare questa opzione ed evitare spam inutile di messaggi se la vostra incursione preferisce usare una tattica in cui state molto ammassati."
-
-	L.disabled = "Disabilitato"
-
-	L.shredder_engage_trigger = "Un Segatronchi Automatizzato si avvicina!" -- verified
-	L.laser_on_you = "Laser su di te PEW PEW!"
-	L.laser_say = "Laser PEW PEW"
-
-	L.assembly_line_trigger = "Armi incomplete iniziano a uscire dalla catena di montaggio." --verified
-	L.assembly_line_message = "Armi non finite (%d)"
-	L.assembly_line_items = "Oggetti (%d): %s"
-	L.item_missile = "Missile"
-	L.item_mines = "Mines"
-	L.item_laser = "Laser"
-	L.item_magnet = "Magnete"
-
-	L.shockwave_missile_trigger = "Vi presento... la nuova, magnifica torretta lanciamissili a onda d'urto ST-03!" --verified
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "itIT")

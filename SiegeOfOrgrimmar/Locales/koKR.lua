@@ -92,28 +92,10 @@ end
 
 L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "koKR")
 if L then
-	L.overcharged_crawler_mine = "과충전된 거미 지뢰"
+--@localization(locale="koKR", namespace="SiegeOfOrgrimmar/SiegecrafterBlackfuse", format="lua_additive_table", handle-unlocalized="ignore")@
+
 	L.custom_off_mine_marker = "지뢰 징표 설정"
 	L.custom_off_mine_marker_desc = "스턴 임무를 맡은 플레이어를 위해 지뢰에 징표를 찍습니다. (모든 징표가 사용됩니다)"
-
-	L.saw_blade_near_you = "근처에 톱날이 날아옵니다!"
-	L.saw_blade_near_you_desc = "공격대의 택틱이 뭉쳐서 하는 것이라면 스팸 메시지를 피하기 위해 이 옵션을 꺼주세요."
-
-	L.disabled = "파괴됨"
-
-	L.shredder_engage_trigger = "자동 분쇄기가 다가옵니다!"
-	L.laser_on_you = "레이저가 당신에게 꽂힙니다!"
-	L.laser_say = "절단 레이저"
-
-	L.assembly_line_trigger = "생산 설비에서 미완성 무기가 나오기 시작합니다."
-	L.assembly_line_message = "생산 설비 가동 (%d)"
-	L.assembly_line_items = "설비들 (%d): %s"
-	L.item_missile = "미사일"
-	L.item_mines = "지뢰"
-	L.item_laser = "레이저"
-	L.item_magnet = "전자석"
-
-	L.shockwave_missile_trigger = "내 이쁜이 ST-03 충격파 미사일 포탑을 소개하지!"
 end
 
 L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "koKR")
