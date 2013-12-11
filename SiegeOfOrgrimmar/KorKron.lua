@@ -73,7 +73,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(555)
+	self:Berserk(540)
 	wipe(marksUsed)
 	ashCounter = 1
 	hpWarned = 1
