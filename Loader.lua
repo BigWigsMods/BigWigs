@@ -631,7 +631,8 @@ do
 end
 
 -- Misc
-function mod:CHAT_MSG_ADDON(prefix, msg, _, sender)
+function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
+	if channel == "WHISPER" then return end
 	if prefix == "BigWigs" then
 		local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
 		if bwPrefix == "VR" or bwPrefix == "VRA" or bwPrefix == "VQ" or bwPrefix == "VQA" then
