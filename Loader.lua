@@ -632,8 +632,9 @@ end
 
 -- Misc
 function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
-	if channel == "WHISPER" then return end
-	if prefix == "BigWigs" then
+	if channel == "WHISPER" then
+		return
+	elseif prefix == "BigWigs" then
 		local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
 		if bwPrefix == "VR" or bwPrefix == "VRA" or bwPrefix == "VQ" or bwPrefix == "VQA" then
 			self:VersionCheck(bwPrefix, bwMsg, sender)
