@@ -12,6 +12,7 @@ TODO:
 local mod, CL = BigWigs:NewBoss("The Fallen Protectors", 953, 849)
 if not mod then return end
 mod:RegisterEnableMob(71475, 71479, 71480) -- Rook Stonetoe, He Softfoot, Sun Tenderheart
+mod.engageId = 1598
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -75,8 +76,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "BossSucceeded", "boss1", "boss2", "boss3", "boss4", "boss5")
 	self:Log("SPELL_CAST_START", "Heal", 143497)
 	-- Sun Tenderheart

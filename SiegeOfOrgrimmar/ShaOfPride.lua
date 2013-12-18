@@ -6,6 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Sha of Pride", 953, 867)
 if not mod then return end
 mod:RegisterEnableMob(71734)
+mod.engageId = 1604
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -54,7 +55,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	if IsEncounterInProgress() then
 		self:OpenAltPower("altpower", 144343) -- Pride
 	end
@@ -122,7 +122,6 @@ function mod:WeakenedResolveBegin(args)
 		wrChecker = nil
 	end
 end
-
 
 do
 	local mobTbl, counter, UnitGUID = {}, 8, UnitGUID

@@ -410,7 +410,7 @@ do
 					m:Engage()
 				end
 			elseif sync == "EnableModule" or sync == "Death" then
-				if sync == "Death" and rest == "Paragons of the Klaxxi" and not UnitIsUnit(nick, "player") then return end -- XXX temp till WoW v6.x
+				if sync == "Death" and (rest == "Paragons of the Klaxxi" or rest == "Norushen") and not UnitIsUnit(nick, "player") then return end -- XXX temp till WoW v6.x
 				if not times[sync] or t > (times[sync] + 2) then
 					coreSync(sync, rest, nick)
 					times[sync] = t

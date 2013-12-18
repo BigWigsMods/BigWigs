@@ -56,7 +56,6 @@ function mod:OnBossEnable()
 		self:OpenAltPower("altpower", 147800, "AZ", true) -- Corruption
 	end
 
-	self:Yell("Warmup", L.warmup_trigger)
 	-- Look Within
 	self:Log("SPELL_CAST_START", "TitanicSmash", 144628)
 	self:Log("SPELL_CAST_START", "HurlCorruption", 144649)
@@ -75,6 +74,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Phase2", 146179) -- Phase 2, "Frayed"
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 
+	self:RegisterEvent("ENCOUNTER_START")
+	self:RegisterEvent("ENCOUNTER_END")
+
 	self:AddSyncListener("BlindHatred")
 	self:AddSyncListener("InsideBigAddDeath", 0)
 	self:AddSyncListener("OutsideBigAddDeath", 0)
@@ -84,11 +86,22 @@ function mod:OnBossEnable()
 	self:RegisterMessage("DBM_AddonMessage", "OnDBMSync") -- Catch DBM users killing big adds
 
 	self:Death("Deaths", 71977, 72264) -- Manifestation of Corruption, Unleashed Manifestation of Corruption
-	self:Death("Win", 72276) -- Amalgam of Corruption
 end
 
-function mod:Warmup()
-	self:Bar("warmup", 26, COMBAT, "ability_titankeeper_quarantine")
+function mod:ENCOUNTER_START(id)
+	if id == 1624 then
+		self:Bar("warmup", 26, COMBAT, "ability_titankeeper_quarantine")
+	end
+end
+
+function mod:ENCOUNTER_END(id, name, diff, size, win)
+	if id == 1624 then
+		if win == 1 then
+			self:Win(true)
+		else
+			self:Wipe()
+		end
+	end
 end
 
 function mod:OnEngage()
