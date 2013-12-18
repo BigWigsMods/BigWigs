@@ -365,9 +365,8 @@ end
 do
 	local function wipeCheck(module)
 		if not IsEncounterInProgress() then
-			if debug then dbg(module, "Wipe!") end
-			module:Reboot(true)
-			if module.OnWipe then module:OnWipe() end
+			if debug then dbg(module, "IsEncounterInProgress() is nil, wiped.") end
+			module:Wipe()
 		end
 	end
 
@@ -477,8 +476,7 @@ do
 		local go = scan(self)
 		if not go then
 			if debug then dbg(self, "Wipe scan found no active boss entities, rebooting module.") end
-			self:Reboot(true)
-			if self.OnWipe then self:OnWipe() end
+			self:Wipe()
 		else
 			if debug then dbg(self, "Wipe scan found active boss entities (" .. tostring(go) .. "). Re-scheduling another wipe check in 2 seconds.") end
 			self:ScheduleTimer("CheckForWipe", 2)
@@ -505,20 +503,25 @@ do
 		end
 	end
 
-	function boss:Win()
+	function boss:Win(direct)
 		if debug then dbg(self, ":Win") end
-		if self.engageId then
+		if direct or self.engageId then
 			self:Message("bosskill", "Positive", "Victory", L.defeated:format(mod.displayName), false)
 			mod.lastKill = GetTime() -- Add the kill time for the enable check.
 			if mod.OnWin then mod:OnWin() end
 			mod:SendMessage("BigWigs_OnBossWin", mod)
 			mod:Disable()
-			self:Sync("Death", self.moduleName) -- XXX temp backwards compat for non updaters
+			if not direct then self:Sync("Death", self.moduleName) end -- XXX temp backwards compat for non updaters
 		else
 			self:Sync("Death", self.moduleName)
 		end
 		wipe(icons) -- Wipe icon cache
 		wipe(spells)
+	end
+
+	function boss:Wipe()
+		self:Reboot(true)
+		if self.OnWipe then self:OnWipe() end
 	end
 end
 

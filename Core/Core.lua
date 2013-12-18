@@ -99,7 +99,7 @@ function addon:ENCOUNTER_END(id, name, difficulty, size, win)
 			elseif win == 1 then
 				module:Win()
 			elseif win == 0 then
-				module:Reboot(true)
+				module:Wipe()
 			end
 		end
 	end
@@ -162,7 +162,7 @@ end
 local function zoneChanged()
 	if not IsInInstance() then
 		for _, module in next, bossCore.modules do
-			if module.isEngaged then module:Reboot(true) end
+			if module.isEngaged then module:Wipe() end
 		end
 	else
 		SetMapToCurrentZone() -- Hack because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.
