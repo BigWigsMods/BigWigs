@@ -88,13 +88,13 @@ function mod:OnBossEnable()
 	self:Death("Deaths", 71977, 72264) -- Manifestation of Corruption, Unleashed Manifestation of Corruption
 end
 
-function mod:ENCOUNTER_START(id)
+function mod:ENCOUNTER_START(_, id)
 	if id == 1624 then
 		self:Bar("warmup", 26, COMBAT, "ability_titankeeper_quarantine")
 	end
 end
 
-function mod:ENCOUNTER_END(id, name, diff, size, win)
+function mod:ENCOUNTER_END(_, id, name, diff, size, win)
 	if id == 1624 then
 		if win == 1 then
 			self:Win(true)
