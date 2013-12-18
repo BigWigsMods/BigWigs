@@ -19,6 +19,8 @@ local customBossOptions = {}
 local pName = UnitName("player")
 local bwUtilityFrame = CreateFrame("Frame")
 
+local bossCore, pluginCore
+
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
 local GetCurrentMapAreaID = BigWigsLoader.GetCurrentMapAreaID
 local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
@@ -77,6 +79,33 @@ do
 end
 
 -------------------------------------------------------------------------------
+-- Engage handler
+--
+
+function addon:ENCOUNTER_START(id, name)
+	for _, module in next, bossCore.modules do
+		if module.engageId == id then
+			if not module:IsEnabled() then module:Enable() end
+			module:Engage()
+		end
+	end
+end
+
+function addon:ENCOUNTER_END(id, name, difficulty, size, win)
+	for _, module in next, bossCore.modules do
+		if module.engageId == id then
+			if not module:IsEnabled() then
+				return
+			elseif win == 1 then
+				module:Win()
+			elseif win == 0 then
+				module:Reboot(true)
+			end
+		end
+	end
+end
+
+-------------------------------------------------------------------------------
 -- Target monitoring
 --
 
@@ -93,7 +122,7 @@ local function enableBossModule(module, noSync)
 end
 
 local function shouldReallyEnable(unit, moduleName, mobId)
-	local module = addon.bossCore:GetModule(moduleName)
+	local module = bossCore:GetModule(moduleName)
 	if not module or module:IsEnabled() then return end
 	-- If we pass the Verify Enable func (or it doesn't exist) and it's been > 150 seconds since the module was disabled, then enable it.
 	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId)) and (not module.lastKill or (GetTime() - module.lastKill) > 150) then
@@ -132,7 +161,7 @@ end
 
 local function zoneChanged()
 	if not IsInInstance() then
-		for _, module in addon:IterateBossModules() do
+		for _, module in next, bossCore.modules do
 			if module.isEngaged then module:Reboot(true) end
 		end
 	else
@@ -334,16 +363,16 @@ end
 local function coreSync(sync, moduleName, sender)
 	if not moduleName then return end
 	if sync == "EnableModule" then
-		if sender == pName then return end
 		local module = addon:GetBossModule(moduleName, true)
-		if not module then return end
-		enableBossModule(module, true)
+		if sender ~= pName and module then
+			enableBossModule(module, true)
+		end
 	elseif sync == "Death" then
 		local mod = addon:GetBossModule(moduleName, true)
-		if mod and mod:IsEnabled() then
+		if mod and not mod.engageId and mod:IsEnabled() then
 			mod:Message("bosskill", "Positive", "Victory", L.defeated:format(mod.displayName), false)
-			if mod.OnWin then mod:OnWin() end
 			mod.lastKill = GetTime() -- Add the kill time for the enable check.
+			if mod.OnWin then mod:OnWin() end
 			mod:SendMessage("BigWigs_OnBossWin", mod)
 			mod:Disable()
 		end
@@ -370,12 +399,12 @@ do
 			local t = GetTime()
 			if sync == "BossEngaged" then
 				if not times[sync] or t > (times[sync] + 2) then
-					times[sync] = t
 					local m = addon:GetBossModule(rest, true)
-					if not m or m.isEngaged or not m:IsEnabled() then
+					if not m or m.isEngaged or m.engageId or not m:IsEnabled() then
 						-- print(bossEngagedSyncError:format(rest, nick))
 						return
 					end
+					times[sync] = t
 					m:UnregisterEvent("PLAYER_REGEN_DISABLED")
 					-- print("Engaging " .. tostring(rest) .. " based on engage sync from " .. tostring(nick) .. ".")
 					m:Engage()
@@ -472,8 +501,11 @@ function addon:OnEnable()
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
 	self:RegisterEvent("CINEMATIC_START")
 
-	self.pluginCore:Enable()
-	self.bossCore:Enable()
+	self:RegisterEvent("ENCOUNTER_START")
+	self:RegisterEvent("ENCOUNTER_END")
+
+	pluginCore:Enable()
+	bossCore:Enable()
 
 	zoneChanged()
 	self:SendMessage("BigWigs_CoreEnabled")
@@ -484,9 +516,12 @@ function addon:OnDisable()
 	self:UnregisterEvent("CINEMATIC_START")
 	self:UnregisterMessage("BigWigs_AddonMessage")
 
+	self:UnregisterEvent("ENCOUNTER_START")
+	self:UnregisterEvent("ENCOUNTER_END")
+
 	zoneChanged() -- Unregister zone events
-	self.bossCore:Disable()
-	self.pluginCore:Disable()
+	bossCore:Disable()
+	pluginCore:Disable()
 	monitoring = nil
 	self:SendMessage("BigWigs_CoreDisabled")
 end
@@ -511,7 +546,7 @@ function addon:GetCustomBossOptions()
 	return customBossOptions
 end
 
-function addon:NewBossLocale(name, locale, default) return AL:NewLocale(("%s_%s"):format(self.bossCore.name, name), locale, default, true) end
+function addon:NewBossLocale(name, locale, default) return AL:NewLocale(("%s_%s"):format(bossCore.name, name), locale, default, true) end
 
 -------------------------------------------------------------------------------
 -- Module handling
@@ -558,17 +593,17 @@ do
 	-- A wrapper for :NewModule to present users with more information in the
 	-- case where a module with the same name has already been registered.
 	function addon:NewBoss(module, zoneId, ...)
-		return new(self.bossCore, module, zoneId, ...)
+		return new(bossCore, module, zoneId, ...)
 	end
 	function addon:NewPlugin(module, ...)
-		return new(self.pluginCore, module, nil, nil, ...)
+		return new(pluginCore, module, nil, nil, ...)
 	end
 
-	function addon:IterateBossModules() return self.bossCore:IterateModules() end
-	function addon:GetBossModule(...) return self.bossCore:GetModule(...) end
+	function addon:IterateBossModules() return bossCore:IterateModules() end
+	function addon:GetBossModule(...) return bossCore:GetModule(...) end
 
-	function addon:IteratePlugins() return self.pluginCore:IterateModules() end
-	function addon:GetPlugin(...) return self.pluginCore:GetModule(...) end
+	function addon:IteratePlugins() return pluginCore:IterateModules() end
+	function addon:GetPlugin(...) return pluginCore:GetModule(...) end
 
 	local defaultToggles = nil
 
@@ -705,27 +740,25 @@ end
 -- Module cores
 --
 
-local bossCore = addon:NewModule("Bosses")
-addon.bossCore = bossCore
+bossCore = addon:NewModule("Bosses")
 bossCore:SetDefaultModuleLibraries("AceTimer-3.0")
 bossCore:SetDefaultModuleState(false)
 function bossCore:OnDisable()
-	for name, mod in self:IterateModules() do
+	for name, mod in next, self.modules do
 		mod:Disable()
 	end
 end
 
-local pluginCore = addon:NewModule("Plugins")
-addon.pluginCore = pluginCore
+pluginCore = addon:NewModule("Plugins")
 pluginCore:SetDefaultModuleLibraries("AceTimer-3.0")
 pluginCore:SetDefaultModuleState(false)
 function pluginCore:OnEnable()
-	for name, mod in self:IterateModules() do
+	for name, mod in next, self.modules do
 		mod:Enable()
 	end
 end
 function pluginCore:OnDisable()
-	for name, mod in self:IterateModules() do
+	for name, mod in next, self.modules do
 		mod:Disable()
 	end
 end

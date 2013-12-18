@@ -89,7 +89,7 @@ local spells = setmetatable({}, {__index =
 --
 
 local boss = {}
-core.bossCore:SetDefaultModulePrototype(boss)
+core:GetModule("Bosses"):SetDefaultModulePrototype(boss)
 function boss:IsBossModule() return true end
 function boss:OnInitialize() core:RegisterBossModule(self) end
 function boss:OnEnable()
@@ -507,7 +507,16 @@ do
 
 	function boss:Win()
 		if debug then dbg(self, ":Win") end
-		self:Sync("Death", self.moduleName)
+		if self.engageId then
+			self:Message("bosskill", "Positive", "Victory", L.defeated:format(mod.displayName), false)
+			mod.lastKill = GetTime() -- Add the kill time for the enable check.
+			if mod.OnWin then mod:OnWin() end
+			mod:SendMessage("BigWigs_OnBossWin", mod)
+			mod:Disable()
+			self:Sync("Death", self.moduleName) -- XXX temp backwards compat for non updaters
+		else
+			self:Sync("Death", self.moduleName)
+		end
 		wipe(icons) -- Wipe icon cache
 		wipe(spells)
 	end

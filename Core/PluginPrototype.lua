@@ -1,9 +1,11 @@
 
+local core = BigWigs
+
 local plugin = {}
-BigWigs.pluginCore:SetDefaultModulePrototype(plugin)
+core:GetModule("Plugins"):SetDefaultModulePrototype(plugin)
 
 function plugin:OnInitialize()
-	BigWigs:RegisterPlugin(self)
+	core:RegisterPlugin(self)
 end
 
 function plugin:OnEnable()
