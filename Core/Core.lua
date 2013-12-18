@@ -82,7 +82,7 @@ end
 -- Engage handler
 --
 
-function addon:ENCOUNTER_START(id, name)
+function addon:ENCOUNTER_START(_, id, name)
 	for _, module in next, bossCore.modules do
 		if module.engageId == id then
 			if not module:IsEnabled() then module:Enable() end
@@ -91,7 +91,7 @@ function addon:ENCOUNTER_START(id, name)
 	end
 end
 
-function addon:ENCOUNTER_END(id, name, difficulty, size, win)
+function addon:ENCOUNTER_END(_, id, name, difficulty, size, win)
 	for _, module in next, bossCore.modules do
 		if module.engageId == id then
 			if not module:IsEnabled() then
