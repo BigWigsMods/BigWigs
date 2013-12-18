@@ -176,7 +176,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 		local sDB = BigWigsStatisticsDB[module.zoneId][module.encounterId][difficultyTable[module:Difficulty()]]
 
 		if self.db.profile.printKills then
-			BigWigs:Print(L.bossDefeatDurationPrint:format(module.displayName, SecondsToTime(elapsed)))
+			BigWigs:ScheduleTimer("Print", 1, L.bossDefeatDurationPrint:format(module.displayName, SecondsToTime(elapsed)))
 		end
 
 		if self.db.profile.saveKills then
@@ -186,7 +186,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 		if self.db.profile.saveBestKill and (not sDB.best or elapsed < sDB.best) then
 			sDB.best = elapsed
 			if self.db.profile.printNewBestKill then
-				BigWigs:Print(L.newBestTime)
+				BigWigs:ScheduleTimer("Print", 1, L.newBestTime)
 			end
 		end
 
