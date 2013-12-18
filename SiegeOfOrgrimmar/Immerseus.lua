@@ -6,22 +6,13 @@
 local mod, CL = BigWigs:NewBoss("Immerseus", 953, 852)
 if not mod then return end
 mod:RegisterEnableMob(71543)
+mod.engageId = 1602
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
 local blastCounter = 1
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:NewLocale("enUS", true)
-if L then
-	L.win_yell = "Ah, you have done it!"
-end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -45,8 +36,6 @@ function mod:VerifyEnable(unit)
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	-- heroic
 	self:Log("SPELL_AURA_APPLIED", "SwellingCorruption", 143574)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SwellingCorruption", 143574)
@@ -61,14 +50,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Swirl", 143309)
 	self:Log("SPELL_DAMAGE", "ShaBolt", 143295)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ShaPoolDamage", 143297)
-
-	self:Yell("Win", L.win_yell)
 end
 
 function mod:OnEngage()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "KillCheck")
-	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "KillCheckMouseOver")
-
 	blastCounter = 1
 
 	self:Berserk(600)
@@ -76,19 +60,6 @@ function mod:OnEngage()
 	self:Bar(143436, 10) -- Corrosive Blast
 	if self:Heroic() then
 		self:CDBar(143574, 10) -- Swelling Corruption
-	end
-end
-
-function mod:KillCheck()
-	local hasBoss = UnitHealth("boss1") > 100 or UnitHealth("boss2") > 100 or UnitHealth("boss3") > 100 or UnitHealth("boss4") > 100 or UnitHealth("boss5") > 100
-	if not hasBoss then
-		self:ScheduleTimer("StartWipeCheck", 11)
-	end
-end
-
-function mod:KillCheckMouseOver()
-	if self:MobId(UnitGUID("mouseover")) == 71543 and not self:VerifyEnable("mouseover") then
-		self:Win()
 	end
 end
 

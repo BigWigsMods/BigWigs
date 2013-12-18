@@ -1,10 +1,5 @@
-local L = BigWigs:NewBossLocale("Immerseus", "esES") or BigWigs:NewBossLocale("Immerseus", "esMX")
+local L = BigWigs:NewBossLocale("The Fallen Protectors", "esES") or BigWigs:NewBossLocale("The Fallen Protectors", "esMX")
 if not L then return end
-if L then
---@localization(locale="esES", namespace="SiegeOfOrgrimmar/Immerseus", format="lua_additive_table", handle-unlocalized="ignore")@
-end
-
-L = BigWigs:NewBossLocale("The Fallen Protectors", "esES") or BigWigs:NewBossLocale("The Fallen Protectors", "esMX")
 if L then
 --@localization(locale="esES", namespace="SiegeOfOrgrimmar/TheFallenProtectors", format="lua_additive_table", handle-unlocalized="ignore")@
 
