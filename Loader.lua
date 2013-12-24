@@ -52,7 +52,6 @@ end
 
 local ldb = nil
 local tooltipFunctions = {}
-local pName = UnitName("player")
 local next, tonumber = next, tonumber
 local SendAddonMessage = SendAddonMessage
 
@@ -104,36 +103,19 @@ do
 	}
 end
 
+-- GLOBALS: BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, CreateFrame, CUSTOM_CLASS_COLORS, error, GetAddOnInfo, GetAddOnMetadata, GetInstanceInfo
+-- GLOBALS: GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GRAY_FONT_COLOR, InCombatLockdown, INTERFACEOPTIONS_ADDONCATEGORIES
+-- GLOBALS: InterfaceOptionsFrameOkay, IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInInstance, IsInRaid, IsPartyLFG, LFGDungeonReadyPopup
+-- GLOBALS: LibStub, LoadAddOn, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, SetMapByID, strsplit
+-- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
+-- GLOBALS: SLASH_BigWigsVersion1, wipe, WorldMapFrame
+
 -----------------------------------------------------------------------
 -- Utility
 --
 
 local function sysprint(msg)
 	print("|cFF33FF99Big Wigs|r: "..msg)
-end
-
-local getGroupMembers = nil
-do
-	local members = {}
-	function getGroupMembers()
-		local raid = GetNumGroupMembers()
-		local party = GetNumSubgroupMembers()
-		if raid == 0 and party == 0 then return end
-		wipe(members)
-		if raid > 0 then
-			for i = 1, raid do
-				local n = GetRaidRosterInfo(i)
-				if n then members[#members + 1] = n end
-			end
-		elseif party > 0 then
-			members[#members + 1] = pName
-			for i = 1, 4 do
-				local n = UnitName("party" .. i)
-				if n then members[#members + 1] = n end
-			end
-		end
-		return members
-	end
 end
 
 local function load(obj, name)
@@ -190,12 +172,9 @@ end
 --
 
 local function versionTooltipFunc(tt)
-	-- Try to avoid calling getGroupMembers as long as possible.
-	-- XXX We should just get a file-local boolean flag that we update
-	-- whenever we receive a version reply from someone. That way we
-	-- reduce the processing required to open a simple tooltip.
-	local add = nil
+	local add, i = nil, 0
 	for player, version in next, usersRelease do
+		i = i + 1
 		if version < highestReleaseRevision then
 			add = true
 			break
@@ -203,6 +182,7 @@ local function versionTooltipFunc(tt)
 	end
 	if not add then
 		for player, version in next, usersAlpha do
+			i = i + 1
 			-- If this person's alpha version isn't SVN (-1) and it's lower than the highest found release version minus 1 because
 			-- of tagging, or it's lower than the highest found alpha version (with a 10 revision leeway) then that person is out-of-date
 			if version ~= -1 and (version < (highestReleaseRevision - 1) or version < (highestAlphaRevision - 10)) then
@@ -211,16 +191,8 @@ local function versionTooltipFunc(tt)
 			end
 		end
 	end
-	if not add then
-		local m = getGroupMembers()
-		if m then
-			for i, player in next, m do
-				if not usersRelease[player] and not usersAlpha[player] then
-					add = true
-					break
-				end
-			end
-		end
+	if not add and i ~= GetNumGroupMembers() then
+		add = true
 	end
 	if add then
 		tt:AddLine(L.oldVersionsInGroup, 1, 0, 0, 1)
@@ -978,78 +950,81 @@ end
 -- Slash commands
 --
 
-hash_SlashCmdList["/bw"] = nil
-hash_SlashCmdList["/bigwigs"] = nil
 SLASH_BigWigs1 = "/bw"
 SLASH_BigWigs2 = "/bigwigs"
 SlashCmdList.BigWigs = loadCoreAndOpenOptions
 
-do
-	local hexColors = nil
-	local coloredNames = setmetatable({}, {__index =
-		function(self, key)
-			if type(key) == "nil" then return nil end
-			local _, class = UnitClass(key)
-			if class then
-				self[key] = hexColors[class] .. key:gsub("%-.+", "*") .. "|r" -- Replace server names with *
-			else
-				self[key] = "|cffcccccc" .. key:gsub("%-.+", "*") .. "|r" -- Replace server names with *
-			end
-			return self[key]
-		end
-	})
+SLASH_BigWigsVersion1 = "/bwv"
+SlashCmdList.BigWigsVersion = function()
+	if not IsInGroup() then return end
+
 	local function coloredNameVersion(name, version, alpha)
-		if version == -1 then version = "svn" alpha = nil end
-		return ("%s|cffcccccc(%s%s)|r"):format(coloredNames[name], version or "unknown", alpha and "-alpha" or "")
-	end
-	local function showVersions()
-		local m = getGroupMembers()
-		if not m then return end
-		if not hexColors then
-			hexColors = {}
-			for k, v in next, (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS) do
-				hexColors[k] = "|cff" .. ("%02x%02x%02x"):format(v.r * 255, v.g * 255, v.b * 255)
-			end
+		if version == -1 then
+			version = "|cFFCCCCCC(SVN)|r"
+			alpha = nil
+		elseif not version then
+			version = ""
+		else
+			version = ("|cFFCCCCCC(%d%s)|r"):format(version, alpha and "-alpha" or "")
 		end
-		local good = {} -- highest release users
-		local ugly = {} -- old version users
-		local bad = {} -- no boss mod
-		local crazy = {} -- DBM users
-		for i, player in next, m do
-			local usesBossMod = nil
-			if usersRelease[player] then
-				if usersRelease[player] < highestReleaseRevision then
-					ugly[#ugly + 1] = coloredNameVersion(player, usersRelease[player])
-				else
-					good[#good + 1] = coloredNameVersion(player, usersRelease[player])
-				end
-				usesBossMod = true
-			elseif usersAlpha[player] then
-				-- If this person's alpha version isn't SVN (-1) and it's higher or the same as the highest found release version minus 1 because
-				-- of tagging, or it's higher or the same as the highest found alpha version (with a 10 revision leeway) then that person's good
-				if (usersAlpha[player] >= (highestReleaseRevision - 1) and usersAlpha[player] >= (highestAlphaRevision - 10)) or usersAlpha[player] == -1 then
-					good[#good + 1] = coloredNameVersion(player, usersAlpha[player], ALPHA)
-				else
-					ugly[#ugly + 1] = coloredNameVersion(player, usersAlpha[player], ALPHA)
-				end
-				usesBossMod = true
-			end
-			if usersDBM[player] then
-				crazy[#crazy+1] = coloredNameVersion(player, usersDBM[player])
-				usesBossMod = true
-			end
-			if not usesBossMod then
-				bad[#bad+1] = coloredNames[player]
-			end
-		end
-		if #good > 0 then print(L.upToDate, unpack(good)) end
-		if #ugly > 0 then print(L.outOfDate, unpack(ugly)) end
-		if #crazy > 0 then print(L.dbmUsers, unpack(crazy)) end
-		if #bad > 0 then print(L.noBossMod, unpack(bad)) end
+
+		local _, class = UnitClass(name)
+		local tbl = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class] or GRAY_FONT_COLOR
+		name = name:gsub("%-.+", "*") -- Replace server names with *
+		return ("|cFF%02x%02x%02x%s|r%s"):format(tbl.r*255, tbl.g*255, tbl.b*255, name, version)
 	end
 
-	SLASH_BIGWIGSVERSION1 = "/bwv"
-	SlashCmdList.BIGWIGSVERSION = showVersions
+	local m = {}
+	local unit
+	if not IsInRaid() then
+		m[1] = UnitName("player")
+		unit = "party%d"
+	else
+		unit = "raid%d"
+	end
+	for i = 1, GetNumGroupMembers() do
+		local n, s = UnitName((unit):format(i))
+		if n and s and s ~= "" then n = n.."-"..s end
+		if n then m[#m+1] = n end
+	end
+
+	local good = {} -- highest release users
+	local ugly = {} -- old version users
+	local bad = {} -- no boss mod
+	local crazy = {} -- DBM users
+
+	for i, player in next, m do
+		local usesBossMod = nil
+		if usersRelease[player] then
+			if usersRelease[player] < highestReleaseRevision then
+				ugly[#ugly + 1] = coloredNameVersion(player, usersRelease[player])
+			else
+				good[#good + 1] = coloredNameVersion(player, usersRelease[player])
+			end
+			usesBossMod = true
+		elseif usersAlpha[player] then
+			-- If this person's alpha version isn't SVN (-1) and it's higher or the same as the highest found release version minus 1 because
+			-- of tagging, or it's higher or the same as the highest found alpha version (with a 10 revision leeway) then that person's good
+			if (usersAlpha[player] >= (highestReleaseRevision - 1) and usersAlpha[player] >= (highestAlphaRevision - 10)) or usersAlpha[player] == -1 then
+				good[#good + 1] = coloredNameVersion(player, usersAlpha[player], ALPHA)
+			else
+				ugly[#ugly + 1] = coloredNameVersion(player, usersAlpha[player], ALPHA)
+			end
+			usesBossMod = true
+		end
+		if usersDBM[player] then
+			crazy[#crazy+1] = coloredNameVersion(player, usersDBM[player])
+			usesBossMod = true
+		end
+		if not usesBossMod then
+			bad[#bad+1] = coloredNameVersion(player)
+		end
+	end
+
+	if #good > 0 then print(L.upToDate, unpack(good)) end
+	if #ugly > 0 then print(L.outOfDate, unpack(ugly)) end
+	if #crazy > 0 then print(L.dbmUsers, unpack(crazy)) end
+	if #bad > 0 then print(L.noBossMod, unpack(bad)) end
 end
 
 -----------------------------------------------------------------------
