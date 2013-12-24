@@ -97,7 +97,7 @@ L = BigWigs:NewBossLocale("Paragons of the Klaxxi", "koKR")
 if L then
 	L.catalyst_match = "촉매제: |c%s당신에게 해당됩니다!|r"
 	L.you_ate = "기생충을 먹었습니다!"
-	L.other_ate = "%s이(가) 기생충을 먹었습니다! (%d 마리 남음)"
+	L.other_ate = "%s이(가) %s기생충을 먹었습니다! (%d마리 남음)"
 	L.parasites_up = "%d 마리의 |4기생충:기생충들; 나타남"
 	L.dance = "속사"
 	L.prey_message = "기생충을 드세요."
