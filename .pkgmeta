@@ -30,8 +30,6 @@ move-folders:
     BigWigs/SiegeOfOrgrimmar: BigWigs_SiegeOfOrgrimmar
 
 ignore:
-  - globals.sh
-  - globals.lua
   - Options/scripts
   - Sounds/Long.wav
   - Sounds/Alarm.wav
