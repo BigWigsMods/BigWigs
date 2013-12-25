@@ -19,8 +19,8 @@ if L then
 	L.custom_off_titan_mark = "Marquage Don des titans"
 	L.custom_off_titan_mark_desc = "Marque les joueurs sous l'effet de Don des titans avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 
-	L.custom_off_fragment_mark = "Corrupted Fragment marker"
-	L.custom_off_fragment_mark_desc = "Mark the Corrupted Fragments with {rt8}{rt7}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.\nIn 25 player mode, this will conflict with the Gift of the Titans marker.|r"
+	L.custom_off_fragment_mark = "Marquage Fragment corrompu"
+	L.custom_off_fragment_mark_desc = "Marque les Fragments corrompus avec {rt8}{rt7}{rt6}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.\nEn mode 25 joueurs, ceci entrera en conflit avec le marquage Don des titans.|r"
 end
 
 L = BigWigs:NewBossLocale("Galakras", "frFR")
@@ -62,7 +62,7 @@ if L then
 	L.adds_trigger5 = "Kor’krons, avec moi !"
 	L.adds_trigger_extra_wave = "Tous les Kor’krons sous mon commandement, tuez-les, maintenant !"
 	L.extra_adds = "Renforts supplémentaires"
-	--L.final_wave = "Final Wave"
+	L.final_wave = "Vague finale"
 
 	L.chain_heal_message = "Votre focalisation est en train d'incanter Salve de guérison !"
 
