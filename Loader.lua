@@ -965,11 +965,10 @@ SlashCmdList.BigWigsVersion = function()
 	local function coloredNameVersion(name, version, alpha)
 		if version == -1 then
 			version = "|cFFCCCCCC(SVN)|r"
-			alpha = nil
 		elseif not version then
 			version = ""
 		else
-			version = ("|cFFCCCCCC(%d%s)|r"):format(version, alpha and "-alpha" or "")
+			version = ("|cFFCCCCCC(%s%s)|r"):format(version, alpha and "-alpha" or "")
 		end
 
 		local _, class = UnitClass(name)

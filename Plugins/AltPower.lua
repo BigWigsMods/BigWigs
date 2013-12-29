@@ -410,6 +410,11 @@ do
 		display:SetScript("OnEvent", GROUP_ROSTER_UPDATE)
 		plugin:RestyleWindow()
 
+		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
+		-- local name, addon = ...
+		-- if BigWigsLoader then
+		--  BigWigsLoader.RegisterMessage(addon, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
+		-- end
 		plugin:SendMessage("BigWigs_FrameCreated", display, "AltPower")
 	end
 

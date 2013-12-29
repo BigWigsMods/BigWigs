@@ -490,8 +490,8 @@ function addon:OnInitialize()
 	self:RegisterBossOption("stages", L.stages, L.stages_desc)
 	self:RegisterBossOption("warmup", L.warmup, L.warmup_desc)
 
-	-- this should ALWAYS be the last action of OnInitialize, it will trigger the loader to
-	-- enable the foreign language pack, and other packs that want to be loaded when the core loads
+	-- This should ALWAYS be the last action of OnInitialize, it will trigger the loader to
+	-- enable other packs that want to be loaded when the core loads.
 	self:SendMessage("BigWigs_CoreLoaded")
 	self.OnInitialize = nil
 end
