@@ -27,7 +27,7 @@ local intermission = {}
 
 local infernoTarget, infernoTimer = nil, nil
 
-local deathCount, hcCalamityCount = 0, 30
+local hcCalamityCount = 30
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -104,15 +104,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CorruptionShock", 143958)
 	self:Log("SPELL_DAMAGE", "DefiledGroundDamage", 144357)
 	self:Log("SPELL_CAST_START", "InfernoStrike", 143962)
-
-	self:Death("Deaths", 71475, 71479, 71480) -- Rook Stonetoe, He Softfoot, Sun Tenderheart
 end
 
 function mod:OnEngage()
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3")
 	wipe(intermission)
 	darkMeditationTimer = nil
-	deathCount = 0
 	infernoTarget, infernoTimer = nil, nil
 	self:OpenProximity("proximity", 5) -- this might not be needed in LFR
 	self:Berserk(self:Heroic() and 600 or 900)
@@ -512,13 +509,6 @@ function mod:UNIT_HEALTH_FREQUENT(unitId)
 				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3")
 			end
 		end
-	end
-end
-
-function mod:Deaths()
-	deathCount = deathCount + 1
-	if deathCount > 2 then
-		self:Win()
 	end
 end
 

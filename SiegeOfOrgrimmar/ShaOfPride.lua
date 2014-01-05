@@ -78,8 +78,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "TitanGiftSuccess", 146595)
 	self:Log("SPELL_AURA_APPLIED", "TitanGiftApplied", 144359, 146594)
 	self:Log("SPELL_AURA_REMOVED", "TitanGiftRemoved", 144359, 146594)
-
-	self:Death("Win", 71734)
 end
 
 function mod:OnEngage()

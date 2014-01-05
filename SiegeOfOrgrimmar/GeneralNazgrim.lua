@@ -112,7 +112,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SunderingBlow", 143494)
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
-	self:Death("Win", 71515)
 end
 
 function mod:OnEngage()
