@@ -10,6 +10,7 @@ mod:RegisterEnableMob(
 	72560, 72561, 73909, -- Horde: Lor'themar Theron, Lady Sylvanas Windrunner, Archmage Aethas Sunreaver
 	72311, 72302, 73910 -- Alliance: King Varian Wrynn, Lady Jaina Proudmoore, Vereesa Windrunner
 )
+mod.engageId = 1622
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -81,8 +82,6 @@ function mod:OnBossEnable()
 		self:ScheduleTimer("Disable", 5)
 		return
 	end
-
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	-- Shaman marking, enabled here for trash
 	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")

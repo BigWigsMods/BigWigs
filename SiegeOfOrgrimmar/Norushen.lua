@@ -56,6 +56,7 @@ function mod:OnBossEnable()
 		self:OpenAltPower("altpower", 147800, "AZ", true) -- Corruption
 	end
 
+	self:Yell("Warmup", L.warmup_trigger)
 	-- Look Within
 	self:Log("SPELL_CAST_START", "TitanicSmash", 144628)
 	self:Log("SPELL_CAST_START", "HurlCorruption", 144649)
@@ -86,6 +87,11 @@ function mod:OnBossEnable()
 	self:RegisterMessage("DBM_AddonMessage", "OnDBMSync") -- Catch DBM users killing big adds
 
 	self:Death("Deaths", 71977, 72264) -- Manifestation of Corruption, Unleashed Manifestation of Corruption
+end
+
+function mod:Warmup()
+	-- Backup for ENCOUNTER_START not always firing.
+	self:Bar("warmup", 26, COMBAT, "ability_titankeeper_quarantine")
 end
 
 function mod:ENCOUNTER_START(_, id)
