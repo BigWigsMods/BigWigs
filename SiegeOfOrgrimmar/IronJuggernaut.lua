@@ -1,7 +1,3 @@
---[[
-TODO:
-
-]]--
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -10,6 +6,7 @@ TODO:
 local mod, CL = BigWigs:NewBoss("Iron Juggernaut", 953, 864)
 if not mod then return end
 mod:RegisterEnableMob(71466)
+mod.engageId = 1600
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -55,8 +52,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_CAST_SUCCESS", "MineArming", 144718) -- Detonation Sequence
 	-- Siege mode
 	self:Log("SPELL_PERIODIC_DAMAGE", "ExplosiveTar", 144498)
@@ -69,8 +64,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LaserBurn", 144459)
 	self:Log("SPELL_DAMAGE", "BorerDrill", 144218)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-
-	self:Death("Win", 71466)
 end
 
 function mod:OnEngage()
