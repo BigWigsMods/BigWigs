@@ -443,9 +443,9 @@ do
 		AutoCompleteInfoDelayer:HookScript("OnFinished", function()
 			sysprint("Think you can translate Big Wigs into Spanish (esES)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
 		end)
-	elseif L == "zhTW" then
+	elseif L == "frFR" then
 		AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-			sysprint("Think you can translate Big Wigs into Traditional Chinese (zhTW)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
+			sysprint("Think you can translate Big Wigs into French (frFR)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
 		end)
 	end
 end
