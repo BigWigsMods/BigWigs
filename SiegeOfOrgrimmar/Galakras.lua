@@ -83,6 +83,8 @@ function mod:OnBossEnable()
 		return
 	end
 
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+
 	-- Shaman marking, enabled here for trash
 	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 	self:Log("SPELL_CAST_START", "TidalWave", 149187, 148522)

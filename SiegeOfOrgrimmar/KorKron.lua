@@ -49,6 +49,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+
 	-- Heroic
 	self:Log("SPELL_AURA_APPLIED", "IronPrison", 144330)
 	self:Log("SPELL_CAST_START", "IronTomb", 144328)
@@ -96,7 +98,7 @@ do
 	function mod:IronPrison(args)
 		if self:Me(args.destGUID) then
 			self:Bar(args.spellId, 60)
-			self:ScheduleTimer(ironPrisonOverSoon, 57, args.spellId, args.spellName)
+			self:ScheduleTimer(ironPrisonOverSoon, 56, args.spellId, args.spellName)
 		end
 	end
 end

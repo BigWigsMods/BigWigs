@@ -76,6 +76,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "BossSucceeded", "boss1", "boss2", "boss3", "boss4", "boss5")
 	self:Log("SPELL_CAST_START", "Heal", 143497)
 	-- Sun Tenderheart
