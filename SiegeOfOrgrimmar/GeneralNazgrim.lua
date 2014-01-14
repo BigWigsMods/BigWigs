@@ -11,6 +11,7 @@ TODO:
 local mod, CL = BigWigs:NewBoss("General Nazgrim", 953, 850)
 if not mod then return end
 mod:RegisterEnableMob(71515, 71715, 71516, 71517, 71518, 71519) -- General Nazgrim, Orgrimmar Faithful, Kor'kron Ironblade, Kor'kron Arcweaver, Kor'kron Assassin, Kor'kron Warshaman
+mod.engageId = 1603
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -41,6 +42,7 @@ if L then
 	L.adds_trigger4 = "Warriors, on the double!"
 	L.adds_trigger5 = "Kor'kron, at my side!"
 	L.adds_trigger_extra_wave = "All Kor'kron... under my command... kill them... NOW!"
+	L.adds_trigger_extra_wave_demonic = "Kar AzgAlada revos xi amanare maev raka ZAR"
 	L.extra_adds = "Extra adds"
 	L.final_wave = "Final Wave"
 
@@ -83,8 +85,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	-- heroic
 	self:Log("SPELL_AURA_APPLIED", "HuntersMark", 143882)
 	self:Log("SPELL_CAST_START", "Execute", 143502)
@@ -97,7 +97,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "EarthShield", 143475)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 143480)
 	self:Yell("Adds", L.adds_trigger1, L.adds_trigger2, L.adds_trigger3, L.adds_trigger4, L.adds_trigger5)
-	self:Yell("ExtraAdds", L.adds_trigger_extra_wave)
+	self:Yell("ExtraAdds", L.adds_trigger_extra_wave, L.adds_trigger_extra_wave_demonic)
 	-- Boss
 	self:Log("SPELL_CAST_START", "WarSong", 143503)
 	self:Log("SPELL_CAST_SUCCESS", "Ravager", 143872) -- _START has no destName but boss has target, so that could be better, but since this can target pets, and it takes 2 sec before any damage is done after _SUCCESS I guess we can live with using _SUCCESS over _START here
