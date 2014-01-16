@@ -18,6 +18,7 @@ local markableMobs = {}
 local marksUsed = {}
 local markTimer = nil
 local mineCounter = 1
+local shockPulseCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -171,8 +172,11 @@ function mod:CutterLaserApplied(args)
 end
 
 function mod:ShockPulse(args)
-	self:Message(args.spellId, "Attention", "Alert")
-	self:Bar(args.spellId, 16)
+	self:Message(args.spellId, "Attention", "Alert", CL.count:format(args.spellName, shockPulseCounter))
+	shockPulseCounter = shockPulseCounter + 1
+	if shockPulseCounter < 4 then
+		self:CDBar(args.spellId, 16, CL.count:format(args.spellName, shockPulseCounter))
+	end
 end
 
 -- Assault mode
@@ -239,7 +243,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		mineCounter = 1
 		self:Bar(-8183, 30, CL.count:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
 		self:CDBar(-8179, 19) -- Borer Drill
-		self:StopBar(144485) -- Shock Pulse
 		self:StopBar(144498) -- Explosive Tar
 		self:StopBar(CL.phase:format(1)) -- in case it overruns
 	elseif spellId == 146360 then -- Depletion (Siege mode)
@@ -248,8 +251,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		self:Bar("stages", 64, CL.phase:format(1), 144464) -- maybe should use UNIT_POWER to adjust timer since there seems to be a 6 sec variance
 		self:StopBar(CL.count:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
 		mineCounter = 1
+		shockPulseCounter = 1
 		self:CDBar(-8183, 23, CL.count:format(self:SpellName(144673), mineCounter)) -- Crawler Mine
-		self:Bar(144485, 15.5) -- Shock Pulse, 15.6 - 15.8
+		self:CDBar(144485, 15, CL.count:format(self:SpellName(144485), shockPulseCounter)) -- Shock Pulse, 15 - 15.8
 		self:CDBar(144498, 10) -- Explosive Tar
 		self:StopBar(144459) -- Laser Burn
 		self:StopBar(-8179) -- Borer Drill

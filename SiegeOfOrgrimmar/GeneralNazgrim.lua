@@ -85,6 +85,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+
 	-- heroic
 	self:Log("SPELL_AURA_APPLIED", "HuntersMark", 143882)
 	self:Log("SPELL_CAST_START", "Execute", 143502)
