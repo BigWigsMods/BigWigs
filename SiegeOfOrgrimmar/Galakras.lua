@@ -17,11 +17,10 @@ mod.engageId = 1622
 --
 
 local towerAddTimer = nil
--- marking
-local markableMobs = {}
-local marksUsed = {}
-local markTimer = nil
 local addsCounter = 0
+-- marking
+local marksUsed
+local mobTbl
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -85,10 +84,14 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	-- Shaman marking, enabled here for trash
-	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-	self:Log("SPELL_CAST_START", "TidalWave", 149187, 148522)
-	self:Death("ShamanDeath", 72367, 72958)
+	if self.db.profile.custom_off_shaman_marker then
+		-- Shaman marking, enabled here for trash
+		if not marksUsed then marksUsed, mobTbl = {}, {} end
+		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
+		self:RegisterEvent("UNIT_TARGET")
+		self:Death("ShamanDeath", 72367, 72958)
+	end
+
 	-- Foot Soldiers
 	self:Log("SPELL_CAST_START", "ChainHeal", 146757, 146728)
 	self:Log("SPELL_CAST_SUCCESS", "HealingTotem", 146753, 146722)
@@ -137,12 +140,13 @@ function mod:OnEngage()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "Adds")
 
 	if self.db.profile.custom_off_shaman_marker then
-		wipe(markableMobs)
+		-- Shaman marking, also enabled here for people turning the feature on after the module is enabled
+		if not marksUsed then marksUsed, mobTbl = {}, {} end
 		wipe(marksUsed)
-		if markTimer then
-			self:CancelTimer(markTimer)
-			markTimer = nil
-		end
+		wipe(mobTbl)
+		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
+		self:RegisterEvent("UNIT_TARGET")
+		self:Death("ShamanDeath", 72367, 72958)
 	end
 end
 
@@ -295,61 +299,31 @@ end
 
 -- marking
 do
-	local function setMark(unit, guid)
-		for mark = 1, 5 do
-			if not marksUsed[mark] then
-				SetRaidTarget(unit, mark)
-				markableMobs[guid] = "marked"
-				marksUsed[mark] = guid
-				return
-			end
-		end
-	end
-
-	local function markMobs()
-		local continue
-		for guid in next, markableMobs do
-			if markableMobs[guid] == true then
-				local unit = mod:GetUnitIdByGUID(guid)
-				if unit then
-					setMark(unit, guid)
-				else
-					continue = true
+	local UnitGUID = UnitGUID
+	function mod:UNIT_TARGET(event, firedUnit)
+		local unit = firedUnit and firedUnit.."target" or "mouseover"
+		local guid = UnitGUID(unit)
+		if guid and not mobTbl[guid] then
+			local mobId = self:MobId(guid)
+			if mobId == 72367 or mobId == 72958 then
+				for i = 1, 5 do
+					if not marksUsed[i] then
+						marksUsed[i] = guid
+						mobTbl[guid] = true
+						SetRaidTarget(unit, i)
+						break
+					end
 				end
-			end
-		end
-		if not continue or not mod.db.profile.custom_off_shaman_marker then
-			mod:CancelTimer(markTimer)
-			markTimer = nil
-		end
-	end
-
-	function mod:UPDATE_MOUSEOVER_UNIT()
-		if self.db.profile.custom_off_shaman_marker then
-			local guid = UnitGUID("mouseover")
-			if guid and markableMobs[guid] == true then
-				setMark("mouseover", guid)
-			end
-		end
-	end
-
-	function mod:TidalWave(args)
-		if self.db.profile.custom_off_shaman_marker and not markableMobs[args.sourceGUID] then
-			markableMobs[args.sourceGUID] = true
-			if not markTimer then
-				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.2)
 			end
 		end
 	end
 
 	function mod:ShamanDeath(args)
-		if self.db.profile.custom_off_shaman_marker then
-			markableMobs[args.destGUID] = nil
-			for i = 1, 5 do
-				if marksUsed[i] == args.destGUID then
-					marksUsed[i] = nil
-					break
-				end
+		mobTbl[args.destGUID] = nil
+		for i = 1, 5 do
+			if marksUsed[i] == args.destGUID then
+				marksUsed[i] = nil
+				break
 			end
 		end
 	end
