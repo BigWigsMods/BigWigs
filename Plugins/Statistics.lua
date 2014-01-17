@@ -184,8 +184,8 @@ function plugin:BigWigs_OnBossWin(event, module)
 		end
 
 		if self.db.profile.saveBestKill and (not sDB.best or elapsed < sDB.best) then
-			if self.db.profile.printNewBestKill then
-				BigWigs:ScheduleTimer("Print", 1.02, ("%s (-%s)"):format(L.newBestTime, SecondsToTime(sDB.best-elapsed))
+			if self.db.profile.printNewBestKill and sDB.best then
+				BigWigs:ScheduleTimer("Print", 1.02, ("%s (-%s)"):format(L.newBestTime, SecondsToTime(sDB.best-elapsed)))
 			end
 			sDB.best = elapsed
 		end
