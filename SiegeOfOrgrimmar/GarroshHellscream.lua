@@ -27,7 +27,7 @@ local phase = 1
 local waveTimer, waveCounter = nil, 1
 local whirlingCounter = 1
 local mindControl = nil
-local bombardmentCounter = 1
+local bombardmentCounter, maliceCounter = 1, 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -208,6 +208,7 @@ end
 
 function mod:Phase3End()
 	bombardmentCounter = 1
+	maliceCounter = 1
 	self:Bar("stages", 19, CL.phase:format(4), 147126)
 	-- stop bars here too, but since this needs localization we need to do it at the actual pull into the phase 4
 	self:StopBar(L.intermission)
@@ -241,7 +242,8 @@ end
 function mod:MaliceApplied(args)
 	self:SecondaryIcon(args.spellId, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
-	self:Bar(args.spellId, 30)
+	maliceCounter = maliceCounter + 1
+	self:Bar(args.spellId, 30, CL.count:format(args.spellName, maliceCounter))
 	if self:Me(args.destGUID) then
 		self:Bar(args.spellId, 14, CL.you:format(args.spellName))
 		self:Flash(args.spellId)
@@ -263,8 +265,8 @@ end
 do
 	local bombardmentTimers = { 55, 40, 40, 25, 25, 15 }
 	function mod:Bombardment(args)
-		self:Message("bombardment", "Attention", nil, L.bombardment, args.spellId)
-		self:Bar("bombardment", bombardmentTimers[bombardmentCounter] or 15, L.bombardment, args.spellId)
+		self:Message("bombardment", "Attention", nil, CL.count:format(L.bombardment, bombardmentCounter), args.spellId)
+		self:Bar("bombardment", bombardmentTimers[bombardmentCounter] or 15, CL.count:format(L.bombardment, bombardmentCounter+1), args.spellId)
 		bombardmentCounter = bombardmentCounter + 1
 		self:Bar("bombardment", 13, CL.casting:format(args.spellName), args.spellId)
 		self:Bar("clump_check", 3, 147126) -- Clump Check
@@ -550,8 +552,8 @@ do
 			self:StopBar(CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
 			self:StopBar(144758) -- Desecrate
 			self:StopBar(67229) -- Mind Control
-			self:Bar(147209, 30) -- Malice
-			self:Bar("bombardment", 69, L.bombardment, 147120) -- Bombardment
+			self:Bar(147209, 30, CL.count:format(self:SpellName(147209), 1)) -- Malice
+			self:Bar("bombardment", 69, CL.count:format(L.bombardment, 1), 147120) -- Bombardment
 			self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 		elseif spellId == 147126 then -- Clump Check
 			self:Bar("clump_check", 3, spellName, spellId)
