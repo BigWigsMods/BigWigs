@@ -82,24 +82,31 @@ end
 -- Engage handler
 --
 
-function addon:ENCOUNTER_START(_, id, name)
-	for _, module in next, bossCore.modules do
-		if module.engageId == id then
-			if not module:IsEnabled() then module:Enable() end
-			module:Engage()
+do
+	local tbl = {}
+	function addon:ENCOUNTER_START(_, id, name)
+		for _, module in next, bossCore.modules do
+			if module.engageId == id then
+				if tbl[id] and (GetTime()-tbl[id]) < 10 then
+					self:Print(("Module [%s] falsely engaged after a wipe, tell the Big Wigs authors!"):format(module.moduleName))
+				end
+				if not module:IsEnabled() then module:Enable() end
+				module:Engage()
+			end
 		end
 	end
-end
 
-function addon:ENCOUNTER_END(_, id, name, difficulty, size, win)
-	for _, module in next, bossCore.modules do
-		if module.engageId == id then
-			if not module:IsEnabled() then
-				return
-			elseif win == 1 then
-				module:Win()
-			elseif win == 0 then
-				module:Wipe()
+	function addon:ENCOUNTER_END(_, id, name, difficulty, size, win)
+		for _, module in next, bossCore.modules do
+			if module.engageId == id then
+				tbl[id] = GetTime()
+				if not module:IsEnabled() then
+					return
+				elseif win == 1 then
+					module:Win()
+				elseif win == 0 then
+					module:Wipe()
+				end
 			end
 		end
 	end
