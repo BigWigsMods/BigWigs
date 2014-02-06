@@ -6,6 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Malkorok", 953, 846)
 if not mod then return end
 mod:RegisterEnableMob(71454)
+mod.engageId = 1595
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -60,8 +61,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SeismicSlam", 142851)
 	-- Arcing Smash has double CLEU events, pay attention if the warning stops working. 142826 first, 143805 second.
 	self:Log("SPELL_CAST_SUCCESS", "ArcingSmash", 142826)
-
-	self:Death("Win", 71454)
 end
 
 function mod:OnEngage()
