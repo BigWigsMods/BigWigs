@@ -167,7 +167,7 @@ do
 		end
 		-- don't think this needs a message
 		-- if anything a soon message, since timers seem reliable
-		slamTimer = self:ScheduleTimer("Message", slamTimers[slamCounter]-2, args.spellId, "Urgent", nil, CL.custom_sec:format(args.spellName, 2))
+		slamTimer = self:ScheduleTimer("Message", slamTimers[slamCounter]-2, args.spellId, "Urgent", "Info", CL.custom_sec:format(args.spellName, 2))
 		self:Bar(args.spellId, slamTimers[slamCounter], args.spellName)
 		slamCounter = slamCounter + 1
 	end
