@@ -604,6 +604,7 @@ end
 
 -- Misc
 function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
+	sender = Ambiguate(sender, "none")
 	if channel == "WHISPER" then
 		return
 	elseif prefix == "BigWigs" then
