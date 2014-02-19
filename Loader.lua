@@ -53,13 +53,14 @@ end
 local ldb = nil
 local tooltipFunctions = {}
 local next, tonumber = next, tonumber
-local SendAddonMessage = SendAddonMessage
+local SendAddonMessage, Ambiguate = SendAddonMessage, Ambiguate
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
 local GetCurrentMapAreaID = GetCurrentMapAreaID
 local SetMapToCurrentZone = SetMapToCurrentZone
 public.GetCurrentMapAreaID = GetCurrentMapAreaID
 public.SetMapToCurrentZone = SetMapToCurrentZone
+public.SendAddonMessage = SendAddonMessage
 
 -- Version
 local usersAlpha = {}
@@ -604,11 +605,11 @@ end
 
 -- Misc
 function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
-	sender = Ambiguate(sender, "none")
 	if channel == "WHISPER" then
 		return
 	elseif prefix == "BigWigs" then
 		local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
+		sender = Ambiguate(sender, "none")
 		if bwPrefix == "VR" or bwPrefix == "VRA" or bwPrefix == "VQ" or bwPrefix == "VQA" then
 			self:VersionCheck(bwPrefix, bwMsg, sender)
 		elseif bwPrefix then
@@ -617,9 +618,9 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	elseif prefix == "D4" then
 		local dbmPrefix, arg1, arg2, arg3 = strsplit("\t", msg)
 		if dbmPrefix == "V" or dbmPrefix == "H" then
-			self:DBM_VersionCheck(dbmPrefix, sender, arg1, arg2, arg3)
+			self:DBM_VersionCheck(dbmPrefix, Ambiguate(sender, "none"), arg1, arg2, arg3)
 		elseif dbmPrefix == "U" or dbmPrefix == "PT" or dbmPrefix == "M" then
-			public:SendMessage("DBM_AddonMessage", sender, dbmPrefix, arg1, arg2, arg3)
+			public:SendMessage("DBM_AddonMessage", Ambiguate(sender, "none"), dbmPrefix, arg1, arg2, arg3)
 		end
 	end
 end
