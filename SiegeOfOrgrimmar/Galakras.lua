@@ -28,6 +28,9 @@ local mobTbl
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.start_trigger_alliance = "Well done! Landing parties, form up! Footmen to the front!"
+	L.start_trigger_horde = "Well done. The first brigade has made landfall."
+
 	L.demolisher, L.demolisher_desc = EJ_GetSectionInfo(8533)
 	L.demolisher_message = "Demolisher"
 	L.demolisher_icon = 125914
@@ -66,7 +69,7 @@ function mod:GetOptions()
 		"adds", "drakes", "demolisher", 147328, 146765, 146757, -8489, 146899, -- Foot Soldiers
 		"custom_off_shaman_marker",
 		{147068, "ICON", "FLASH", "PROXIMITY"},-- Galakras
-		"stages", "bosskill",
+		"stages", {"warmup", "EMPHASIZE"}, "bosskill",
 	}, {
 		["towers"] = -8421, -- Ranking Officials
 		["adds"] = -8427, -- Foot Soldiers
@@ -83,6 +86,7 @@ function mod:OnBossEnable()
 	end
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:RegisterEvent("CHAT_MSG_MONSTER_SAY", "Warmup")
 
 	if self.db.profile.custom_off_shaman_marker then
 		-- Shaman marking, enabled here for trash
@@ -125,6 +129,14 @@ local function firstTowerAdd()
 	warnTowerAdds()
 	if not towerAddTimer then
 		towerAddTimer = mod:ScheduleRepeatingTimer(warnTowerAdds, 60)
+	end
+end
+
+function mod:Warmup(_, msg)
+	if msg == L.start_trigger_alliance then -- 34.5
+		self:Bar("warmup", 34.5, COMBAT, "achievement_boss_galakras")
+	elseif msg == L.start_trigger_horde then -- 30.5
+		self:Bar("warmup", 30.5, COMBAT, "achievement_boss_galakras")
 	end
 end
 
