@@ -181,7 +181,7 @@ end
 
 do
 	local prev = 0
-	function mod:CrimsonReconstitutionHeal(args)
+	function mod:CrimsonReconstitutionHeal()
 		local t = GetTime()
 		if t-prev > 2 and checkPlayerSide() < 0 then
 			prev = t
@@ -203,14 +203,14 @@ function mod:MatterScramble(args)
 	end
 end
 
-function mod:SparkOfLife(args)
+function mod:SparkOfLife()
 	if checkPlayerSide() < 0 then
 		sparkCounter = sparkCounter + 1
-		self:Message(142694, "Attention", nil, CL.count:format(args.sourceName, sparkCounter))
+		self:Message(142694, "Attention", nil, CL.count:format(self:SpellName(-8380), sparkCounter))
 	end
 end
 
-function mod:SparkOfLifeDeath(args)
+function mod:SparkOfLifeDeath()
 	if checkPlayerSide() < 0 and sparkCounter > 0 then -- counting after side check to prevent straggling kills messing with counts on room transition
 		sparkCounter = sparkCounter - 1
 	end
