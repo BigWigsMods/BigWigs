@@ -56,7 +56,7 @@ if L then
 	L.defensive = "Verteidigung"
 
 	L.adds_trigger1 = "Verteidigt das Tor!"
-	L.adds_trigger2 = "Truppen, sammelt euch!"
+	L.adds_trigger2 = "Truppen, sammelt Euch!"
 	L.adds_trigger3 = "Nächste Staffel, nach vorn!"
 	L.adds_trigger4 = "Krieger, im Laufschritt!"
 	L.adds_trigger5 = "Kor'kron, zu mir!"
