@@ -1,9 +1,5 @@
 --[[
 TODO:
-	recheck if "Jump to Center" SUCCEEDED so it is always there on encounter engage
-	stopbars on boss deaths
-	sonic resonance maybe could use some advanced proximity warning
-
 	-- reported/requested by others
 	could maybe warn one hurl amber target?
 	win sound
@@ -34,7 +30,6 @@ local function getBossByMobId(mobId)
 		end
 	end
 end
-local bossesActive = {}
 local blueToxin, redToxin, yellowToxin = ("|cFF0033FF%s|r"):format(mod:SpellName(142532)), ("|cFFFF0000%s|r"):format(mod:SpellName(142533)),("|cFFFFFF00%s|r"):format(mod:SpellName(142534))
 local chooseCatalyst = mod:SpellName(-8036)
 local results = {
@@ -43,7 +38,6 @@ local results = {
 	[1] = {}, [2] = {}, [3] = {}, [4] = {}, [5] = {},
 }
 local raidParsed = nil
-local redPlayers = {}
 local parasiteCounter = 0
 local mutateCastCounter = 1
 local youAte = nil
@@ -136,7 +130,7 @@ function mod:GetOptions()
 		"custom_off_parasite_marks",
 		{-8073, "ICON", "FLASH"}, {143243, "FLASH"}, --Hisek the Swarmkeeper
 
-		"berserk", "bosskill",
+		-8003, "berserk", "bosskill",
 	}, {
 		[142931] = -8004, --Kil'ruk the Wind-Reaver
 		[-8034] = -8009, --Xaril the Poisoned Mind
@@ -149,15 +143,16 @@ function mod:GetOptions()
 		[143339] = -8015, --Rik'kal the Dissector
 		["custom_off_parasite_marks"] = L.custom_off_parasite_marks,
 		[-8073] = -8016, --Hisek the Swarmkeeper
-		["berserk"] = "general",
+		[-8003] = "general",
 	}
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "MyEngage")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:Log("SPELL_AURA_REMOVED", "ReadyToFight", 143542)
 
 	--Kil'ruk the Wind-Reaver
-	self:Log("SPELL_CAST_START", "Reave", 148676)
+	self:Log("SPELL_CAST_START", "Reave", 148677)
 	self:Log("SPELL_CAST_SUCCESS", "DeathFromAbove", 142232) -- this is not so reliable but still good to have it as a backup to our timers
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ExposedVeins", 142931)
 	self:Log("SPELL_CAST_SUCCESS", "Gouge", 143939)
@@ -169,7 +164,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ToxicInjectionsApplied", 142532, 142533, 142534) -- blue red yellow
 	self:Log("SPELL_PERIODIC_DAMAGE", "ExplosiveRing", 142803)
 	self:Log("SPELL_PERIODIC_DAMAGE", "CannedHeat", 143576)
-
 	--Kaz'tik the Manipulator
 	self:Log("SPELL_AURA_APPLIED", "Mesmerize", 142671)
 	--Korven the Prime
@@ -204,18 +198,17 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Mutate", 143337)
 	--Hisek the Swarmkeeper
 	self:Log("SPELL_AURA_APPLIED", "Aim", 142948)
+	self:Log("SPELL_AURA_REMOVED", "AimRemoved", 142948)
 	self:Log("SPELL_CAST_START", "RapidFire", 143243)
 
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4")
-	self:Death("Deaths", 71161, 71157, 71156, 71155, 71160, 71154, 71152, 71158, 71153, 71578)
+	self:Death("ParasiteDeaths", 71578)
+	self:Death("Deaths", 71161, 71157, 71156, 71155, 71160, 71154, 71152, 71158, 71153)
 end
 
 function mod:OnEngage()
 	self:Berserk(720)
-	wipe(redPlayers)
 	catalystProximityHandler = nil
 	deathCounter = 0
-	wipe(bossesActive)
 	results = {
 		mantid = {}, sword = {}, staff = {}, drum = {}, bomb = {},
 		red = {}, purple = {}, blue = {}, green = {}, yellow = {},
@@ -257,6 +250,12 @@ function mod:Aim(args)
 	aimCounter = aimCounter + 1
 	self:CDBar(-8073, 42, CL.count:format(args.spellName, aimCounter))
 end
+
+function mod:AimRemoved(args)
+	self:StopBar(-8073, args.destName)
+	self:SecondaryIcon(-8073, nil)
+end
+
 --Rik'kal the Dissector
 do
 	local parasiteEater = mod:NewTargetList()
@@ -403,10 +402,13 @@ do
 	end
 	function mod:Injection(args)
 		local amount = args.amount or 1
+		if self:Me(args.destGUID) and amount == 1 then
+			self:Message(args.spellId, "Urgent", "Warning", CL.you:format(args.spellName))
+		end
 		injectionBar, injectionTarget = CL.count:format(args.spellName, amount), args.destName
 		self:StopBar(CL.count:format(args.spellName, amount-1), args.destName)
 		self:TargetBar(args.spellId, 12, args.destName, injectionBar)
-		self:DelayedMessage(args.spellId, 10, "Urgent", L.injection_over_soon:format(args.destName), args.spellId) -- might want to check what happens if player deis with debuff
+		self:DelayedMessage(args.spellId, 10, "Urgent", L.injection_over_soon:format(args.destName), args.spellId)
 	end
 end
 
@@ -476,6 +478,7 @@ do
 		end
 	end
 end
+
 --Iyyokuk the Lucid
 function mod:CalculationRemoved(args)
 	if not results.shape and not results.color and not results.number then return end -- No Fiery Edge yet, so the table is not populated
@@ -545,27 +548,13 @@ local function parseDebuff(player)
 	return false
 end
 
-local function isMatching(shape, color, number)
-	if shape == results.shape or color == results.color or number == results.number then
-		return true
-	end
-	return false
-end
-
-local function warnEdge()
-	mod:Flash(-8055)
-	mod:Message(-8055, "Personal", "Info", L.edge_message)
-	mod:Bar(-8055, 9, mod:SpellName(142809), 142809) -- Fiery Edge
-	mod:Say(-8055, mod:SpellName(142809))
-end
-
 local function iyyokukSelected()
-	-- handle the player first
 	local shape, color, number = parseDebuff("player")
-	if shape then
-		if isMatching(shape, color, number) then
-			warnEdge()
-		end
+	if shape and (shape == results.shape or color == results.color or number == results.number) then
+		mod:Flash(-8055)
+		mod:Message(-8055, "Personal", "Info", L.edge_message)
+		mod:Bar(-8055, 9, mod:SpellName(142809), 142809) -- Fiery Edge
+		mod:Say(-8055, mod:SpellName(142809))
 	end
 
 	if mod.db.profile.custom_off_edge_marks then
@@ -575,11 +564,7 @@ local function iyyokukSelected()
 				shape, color, number = parseDebuff(name)
 				if shape then
 					results[shape][name] = true
-				end
-				if color then
 					results[color][name] = true
-				end
-				if number then
 					results[number][name] = true
 				end
 			end
@@ -589,33 +574,22 @@ local function iyyokukSelected()
 		local count = 1
 		for i = 1, GetNumGroupMembers() do
 			local name = GetRaidRosterInfo(i)
-			local match = nil
 			if (results.shape and results[results.shape][name]) or (results.color and results[results.color][name]) or (results.number and results[results.number][name]) then
-				match = true
-			end
-
-			if count < 9 and match then
 				SetRaidTarget(name, count)
 				count = count + 1
+				if count > 8 then break end
 			end
 		end
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_EMOTE(_, _, sender, _, _, target)
+function mod:CHAT_MSG_MONSTER_EMOTE(_, _, sender)
 	-- Iyyokuk only have one MONSTER_EMOTE so this should be a safe method rather than having to translate the msg
 	if sender == self:SpellName(-8012) then -- hopefully no weird naming missmatch in different localization like for "Xaril the Poisoned Mind" vs "Xaril the Poisoned-Mind"
 		self:Message(-8055, "Attention", nil, CL.count:format(self:SpellName(142514), calculateCounter), 142514)
 		calculateCounter = calculateCounter + 1
 		self:Bar(-8055, 35, CL.count:format(self:SpellName(142514), calculateCounter), 142514) -- Calculate
-		if UnitIsUnit(target, "player") then
-			warnEdge()
-		elseif self:Heroic() then
-			results.shape, results.color, results.number = parseDebuff(target) -- we don't have to rely on emotes for heroic
-			iyyokukSelected()
-		else
-			self:ScheduleTimer(iyyokukSelected, 0.2)
-		end
+		self:ScheduleTimer(iyyokukSelected, 0.2)
 	end
 end
 
@@ -638,11 +612,13 @@ function mod:EncaseInEmber(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", self:Damager() and "Warning")
 	self:CDBar(args.spellId, self:Heroic() and 30 or 25)
 end
+
 --Kaz'tik the Manipulator
 function mod:Mesmerize(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", self:Damager() and "Warning", nil, nil, true)
 	self:CDBar(args.spellId, 18) -- 18-40 probably should figure out what delays it or where does it restart
 end
+
 --Xaril the Poisoned Mind
 do
 	local prev = 0
@@ -667,6 +643,7 @@ do
 end
 
 do
+	local redPlayers = {}
 	local matches = {
 		[mod:SpellName(142532)] = {[142725] = "ff0000ff", [142729] = "ff9900FF", [142730] = "ff008000", proximityN = redPlayers, proximityH = redPlayers}, -- blue
 		[mod:SpellName(142533)] = {[142726] = "ffff0000", [142729] = "ff9900FF", [142728] = "ffFF9900"}, -- red
@@ -729,25 +706,17 @@ function mod:ToxicInjectionsApplied(args)
 end
 
 --Kil'ruk the Wind-Reaver
-function mod:Reave(args)
-	self:Message(args.spellId, "Urgent", "Long")
-	self:CDBar(args.spellId, 33)
-end
-
 do
 	-- Death from Above target scanning
 	local deathFromAboveTimer, deathFromAboveStartTimer = nil, nil
-	local initialTarget = nil
-	local function cheackDeathFromAboveTarget()
+	local function checkTarget()
 		local boss = getBossByMobId(71161)
 		if not boss then return end
 		local target = boss.."target"
 		if not UnitExists(target) or mod:Tank(target) or UnitDetailedThreatSituation(target, boss) then return end
 
-		if initialTarget and UnitIsUnit(target, initialTarget) then return end
 
 		local name = mod:UnitName(target)
-		mod:CDBar(-8008, 22)
 		if UnitIsUnit("player", target) then
 			mod:Flash(-8008)
 			mod:Say(-8008)
@@ -756,17 +725,14 @@ do
 			mod:RangeMessage(-8008)
 			mod:Flash(-8008)
 		else
-			mod:TargetMessage(-8008, name, "Urgent") -- XXX just for debug for now
+			mod:TargetMessage(-8008, name, "Urgent")
 		end
 		mod:StopDeathFromAboveScan()
-		deathFromAboveStartTimer = mod:ScheduleTimer("StartDeathFromAboveScan", 15)
 	end
 
 	function mod:StartDeathFromAboveScan()
-		local boss = getBossByMobId(71161)
-		if not deathFromAboveTimer and boss then
-			initialTarget = self:UnitName(boss.."target")
-			deathFromAboveTimer = self:ScheduleRepeatingTimer(cheackDeathFromAboveTarget, 0.2)
+		if not deathFromAboveTimer then
+			deathFromAboveTimer = self:ScheduleRepeatingTimer(checkTarget, 0.2)
 		end
 	end
 	function mod:StopDeathFromAboveScan()
@@ -781,7 +747,17 @@ do
 		end
 		self:StopDeathFromAboveScan()
 		self:CDBar(-8008, 22)
-		deathFromAboveStartTimer = self:ScheduleTimer("StartDeathFromAboveScan", 15)
+		deathFromAboveStartTimer = self:ScheduleTimer("StartDeathFromAboveScan", 17)
+	end
+	
+	function mod:Reave(args)
+		-- stop scanning for Death from Above during Reave
+		if deathFromAboveTimer or deathFromAboveStartTimer then
+			self:StopDeathFromAboveScan()
+			deathFromAboveStartTimer = self:ScheduleTimer("StartDeathFromAboveScan", 10)
+		end
+		self:Message(args.spellId, "Urgent", "Long", CL.incoming:format(args.spellName))
+		self:CDBar(args.spellId, 33) -- 33-49
 	end
 end
 
@@ -791,84 +767,73 @@ function mod:Gouge(args)
 end
 
 function mod:ExposedVeins(args)
-	if args.amount > 5 and args.amount%3 == 0 then -- XXX this probably needs adjustment
+	if args.amount > 5 and args.amount % 3 == 0 then -- XXX this probably needs adjustment
 		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
 	end
 end
+
 -- General
-function mod:MyEngage()
-	-- have to do this because Jump to Center is not reliable for some of the bosses, noticably (Korven the Prime, Skeer the Bloodseeker, Hisek the Swarmpkeeper)
-	for i=1, 3 do -- only first 3 bosses are active, lets not start false timers
-		local guid = UnitGUID("boss"..i)
-		if guid and not bossesActive[guid] then
-			bossesActive[guid] = true
-			local mobId = self:MobId(guid)
-			if mobId == 71161 then -- Kil'ruk the Wind-Reaver
-				self:CDBar(148676, 42) -- Reave
-				self:ScheduleTimer("StartDeathFromAboveScan", 17) -- 22 is timer but lets start to scan 5 sec early
-			elseif mobId == 71155 then -- Korven the Prime
-				self:Bar(143974, 17) -- Shield bash
-			elseif mobId == 71152 then -- Skeer the Bloodseeker
-				self:Bar(143280 ,10) -- Bloodletting
-			elseif mobId == 71153 then -- Hisek the Swarmkeeper
-				self:CDBar(-8073, 40, CL.count:format(self:SpellName(-8073), aimCounter)) -- Aim
-				if self:Heroic() then
-					self:Bar(143243, 48) -- Rapid Fire
-				end
-			elseif mobId == 71157 then -- Xaril the Poisoned Mind
-				self:Bar(-8034, 21, chooseCatalyst)
-			end
+function mod:ReadyToFight(args)
+	local mobId = self:MobId(args.destGUID)
+	if mobId ~= 71152 and mobId ~= 71158 and mobId ~= 71153 then -- don't spam at the start, although engage to jump down varies
+		self:Message(-8003, "Neutral", false, args.destName, false)
+	end
+	if mobId == 71161 then -- Kil'ruk the Wind-Reaver
+		self:CDBar(148676, 42) -- Reave
+		self:ScheduleTimer("StartDeathFromAboveScan", 17) -- 22 is timer but lets start to scan 5 sec early
+	elseif mobId == 71155 then -- Korven the Prime
+		self:CDBar(143974, 20) -- Shield Bash
+	elseif mobId == 71153 then -- Hisek the Swarmkeeper
+		self:CDBar(-8073, 38, CL.count:format(self:SpellName(-8073), aimCounter)) -- Aim
+		if self:Heroic() then
+			self:CDBar(143243, 49) -- Rapid Fire
+		end
+	elseif mobId == 71157 then -- Xaril the Poisoned Mind
+		self:Bar(-8034, 21, chooseCatalyst)
+	elseif mobId == 71154 then -- Ka'roz the Locust
+		self:Bar(143701, 11) -- Whirling
+		self:Bar(143759, 35) -- Hurl Amber
+	elseif mobId == 71152 then -- Skeer the Bloodseeker
+		self:Bar(143280, 6) -- Bloodletting
+	elseif mobId == 71158 then -- Rik'kal the Dissector
+		self:CDBar(143337, 23) -- Mutate
+		if self:Tank() then
+			self:Bar("injection_tank", 9, 143339) -- Injection
+		end
+		parasiteCounter = 0
+		if self.db.profile.custom_off_parasite_marks then
+			wipe(markableMobs)
+			wipe(marksUsed)
+			markTimer = nil
+			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 		end
 	end
-	self:CheckBossStatus()
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
-	if spellId == 143545 then -- Jump to center aka enter the fight, not so reliable for encounter engage aka boss 1-3
-		local mobId = self:MobId(UnitGUID(unitId))
-		if mobId == 71161 then -- Kil'ruk the Wind-Reaver
-			-- 19s is shortest between jump and impact seen so far 10PTR N
-			self:CDBar(148676, 42) -- Reave
-			self:ScheduleTimer("StartDeathFromAboveScan", 12)
-		elseif mobId == 71154 then -- Ka'roz the Locust
-			self:Bar(143701, 11) -- Whirling
-			self:Bar(143759, 43) -- Hurl Amber
-		elseif mobId == 71152 then -- Skeer the Bloodseeker
-			self:Bar(143280, 10) -- Bloodletting
-		elseif mobId == 71158 then -- Rik'kal the Dissector
-			self:CDBar(143337, 34) -- Mutate
-			if self:Tank() then
-				self:Bar("injection_tank", 8, 143339) -- Injection
-			end
-			parasiteCounter = 0
-			if self.db.profile.custom_off_parasite_marks then
-				wipe(markableMobs)
-				wipe(marksUsed)
-				markTimer = nil
-				self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-			end
-		end
+function mod:ParasiteDeaths(args)
+	if not parasites[args.destGUID] then
+		parasites[args.destGUID] = true
+		parasiteCounter = parasiteCounter - 1
+		self:Message(143339, "Attention", nil, L.parasites_up:format(parasiteCounter), 99315) -- worm like icon
+	end
+	if self.db.profile.custom_off_parasite_marks then
+		self:FreeMarkByGUID(args.destGUID)
 	end
 end
 
 function mod:Deaths(args)
 	if args.mobId == 71152 then --Skeer the Bloodseeker
 		self:StopBar(143280) -- Bloodletting
-		deathCounter = deathCounter + 1
 	elseif args.mobId == 71154 then --Ka'roz the Locust
 		self:StopBar(143759) -- HurlAmber
 		self:StopBar(143701) -- StoreKineticEnergy
-		deathCounter = deathCounter + 1
 	elseif args.mobId == 71155 then --Korven the Prime
 		self:StopBar(143974) -- ShieldBash
 		self:StopBar(142564) -- EncaseInEmber
-		deathCounter = deathCounter + 1
 	elseif args.mobId == 71156 then --Kaz'tik the Manipulator
 		self:StopBar(142671) -- Mesmerize
-		deathCounter = deathCounter + 1
 	elseif args.mobId == 71157 then --Xaril the Poisoned Mind
 		self:StopBar(chooseCatalyst)
-		deathCounter = deathCounter + 1
 		self:CloseProximity(-8034)
 		self:CancelTimer(catalystProximityHandler)
 		catalystProximityHandler = nil
@@ -876,11 +841,9 @@ function mod:Deaths(args)
 		self:StopBar(148676) -- Reave
 		self:StopBar(-8008) -- Death from Above
 		self:StopDeathFromAboveScan()
-		deathCounter = deathCounter + 1
 	elseif args.mobId == 71153 then --Hisek the Swarmkeeper
 		self:StopBar(-8073) --Aim
 		self:StopBar(L.dance) --Rapid Fire
-		deathCounter = deathCounter + 1
 	elseif args.mobId == 71158 then --Rik'kal the Dissector
 		self:StopBar(CL.count:format(self:SpellName(143337), mutateCastCounter)) -- Mutate
 		if injectionTarget then
@@ -888,21 +851,13 @@ function mod:Deaths(args)
 			self:StopBar(injectionBar, injectionTarget)
 		end
 		self:StopBar(143339) -- Injection
-		deathCounter = deathCounter + 1
 	elseif args.mobId == 71160 then -- Iyyokuk the Lucid
 		self:StopBar(CL.count:format(self:SpellName(142514), calculateCounter))
-		deathCounter = deathCounter + 1
-	elseif args.mobId == 71578 then -- Parasite -- XXX don't think this is even needed, but lets have it as a backup
-		if not parasites[args.destGUID] then
-			parasites[args.destGUID] = true
-			parasiteCounter = parasiteCounter - 1
-			self:Message(143339, "Attention", nil, L.parasites_up:format(parasiteCounter), 99315) -- spell called parasite, worm look like icon
-		end
-		if self.db.profile.custom_off_parasite_marks then
-			self:FreeMarkByGUID(args.destGUID)
-		end
 	end
+
+	deathCounter = deathCounter + 1
 	if deathCounter == 9 then
 		self:Win()
 	end
 end
+
