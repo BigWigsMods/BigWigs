@@ -118,7 +118,7 @@ local calculations = {
 
 function mod:GetOptions()
 	return {
-		{142931, "TANK"}, {143939, "TANK_HEALER"}, {-8008, "FLASH", "SAY"}, 148676, --Kil'ruk the Wind-Reaver
+		{142931, "TANK"}, {143939, "TANK_HEALER"}, {-8008, "FLASH", "SAY"}, 148677, --Kil'ruk the Wind-Reaver
 		{-8034, "PROXIMITY"}, 142803, 143576, --Xaril the Poisoned Mind
 		142671, --Kaz'tik the Manipulator
 		142564, {143974, "TANK_HEALER"}, --Korven the Prime
@@ -715,7 +715,6 @@ do
 		local target = boss.."target"
 		if not UnitExists(target) or mod:Tank(target) or UnitDetailedThreatSituation(target, boss) then return end
 
-
 		local name = mod:UnitName(target)
 		if UnitIsUnit("player", target) then
 			mod:Flash(-8008)
@@ -779,7 +778,7 @@ function mod:ReadyToFight(args)
 		self:Message(-8003, "Neutral", false, args.destName, false)
 	end
 	if mobId == 71161 then -- Kil'ruk the Wind-Reaver
-		self:CDBar(148676, 42) -- Reave
+		self:CDBar(148677, 42) -- Reave
 		self:ScheduleTimer("StartDeathFromAboveScan", 17) -- 22 is timer but lets start to scan 5 sec early
 	elseif mobId == 71155 then -- Korven the Prime
 		self:CDBar(143974, 20) -- Shield Bash
@@ -838,7 +837,7 @@ function mod:Deaths(args)
 		self:CancelTimer(catalystProximityHandler)
 		catalystProximityHandler = nil
 	elseif args.mobId == 71161 then --Kil'ruk the Wind-Reaver
-		self:StopBar(148676) -- Reave
+		self:StopBar(148677) -- Reave
 		self:StopBar(-8008) -- Death from Above
 		self:StopDeathFromAboveScan()
 	elseif args.mobId == 71153 then --Hisek the Swarmkeeper
