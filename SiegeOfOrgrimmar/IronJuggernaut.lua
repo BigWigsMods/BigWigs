@@ -257,6 +257,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unitId, spellName, _, _, spellId)
 		self:CDBar(144498, 10) -- Explosive Tar
 		self:StopBar(144459) -- Laser Burn
 		self:StopBar(-8179) -- Borer Drill
+		self:StopBar(-8181) -- Ricochet
 		self:StopBar(144467) -- Ignite Armor
 		self:StopBar(CL.phase:format(2)) -- in case it overruns
 	elseif spellId == 144356 then -- Ricochet
