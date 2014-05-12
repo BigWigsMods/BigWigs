@@ -278,11 +278,13 @@ do
 		if not eventMap[self][event] then eventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
 			local id = (select(i, ...))
-			if type(id) == "number" and not GetSpellInfo(id) then
-				core:Print(format(invalidId, self.moduleName, id, event))
-				return
+			if type(id) == "number" then
+				if not GetSpellInfo(id) then
+					core:Print(format(invalidId, self.moduleName, id, event))
+				else
+					eventMap[self][event][id] = func
+				end
 			end
-			eventMap[self][event][id] = func
 		end
 		allowedEvents[event] = true
 		bossUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
