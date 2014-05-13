@@ -325,7 +325,9 @@ function mod:ElectrostaticCharge(args)
 end
 
 function mod:ElectrostaticChargeApplied(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
+	if UnitIsPlayer(args.destName) then -- Shows up for pets, etc.
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
+	end
 end
 
 function mod:ProtectiveFrenzy(args)
