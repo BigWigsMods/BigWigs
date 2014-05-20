@@ -148,7 +148,7 @@ function mod:OnEngage(diff)
 	waveCounter = 1
 	waveTimer = self:ScheduleTimer("NewWave", 45)
 	self:Bar(-8292, 45, nil, 144582)
-	self:Berserk(1080)
+	self:Berserk(self:LFR() and 1500 or 1080)
 	self:Bar(144758, 11) -- Desecrate
 	self:Bar(-8298, 20, nil, 144616) -- Siege Engineer
 	self:Bar(-8294, 30, nil, 144584) -- Farseer
