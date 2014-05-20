@@ -61,7 +61,7 @@ if L then
 	L.you_ate = "You ate a Parasite (%d left)"
 	L.other_ate = "%s ate a %sParasite (%d left)"
 	L.parasites_up = "%d |4Parasite:Parasites; up"
-	L.dance = "Dance"
+	L.dance = "%s, Dance!"
 	L.prey_message = "Use Prey on parasite"
 	L.injection_over_soon = "Injection over soon (%s)!"
 
@@ -234,8 +234,8 @@ end
 --Hisek the Swarmkeeper
 function mod:RapidFire(args)
 	self:Flash(args.spellId)
-	self:Message(args.spellId, "Urgent", "Long", L.dance)
-	self:CDBar(args.spellId, 47, L.dance)
+	self:Message(args.spellId, "Urgent", "Long", L.dance:format(args.spellName))
+	self:CDBar(args.spellId, 47)
 end
 
 function mod:Aim(args)
@@ -842,7 +842,7 @@ function mod:Deaths(args)
 		self:StopDeathFromAboveScan()
 	elseif args.mobId == 71153 then --Hisek the Swarmkeeper
 		self:StopBar(-8073) --Aim
-		self:StopBar(L.dance) --Rapid Fire
+		self:StopBar(143243) --Rapid Fire
 	elseif args.mobId == 71158 then --Rik'kal the Dissector
 		self:StopBar(CL.count:format(self:SpellName(143337), mutateCastCounter)) -- Mutate
 		if injectionTarget then

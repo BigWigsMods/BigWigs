@@ -99,7 +99,7 @@ if L then
 	L.you_ate = "你已吃寄生虫（%d 剩余）"
 	L.other_ate = "%s 已吃 %s 寄生虫（%d 剩余）"
 	L.parasites_up = "%d |4寄生虫:寄生虫; 可用"
-	L.dance = "跳舞"
+	L.dance = "%s, 跳舞"
 	L.prey_message = "使用控制诱捕寄生虫"
 	L.injection_over_soon = "注射即将结束 >%s<！"
 

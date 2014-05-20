@@ -100,7 +100,7 @@ if L then
 	L.you_ate = "Te comiste un Parásito (%d restantes)"
 	L.other_ate = "%s se comió un %sParásito (%d restantes)"
 	L.parasites_up = "%d |4Parásito activo:Parásitos activos;"
-	L.dance = "Baile"
+	L.dance = "%s, Baile"
 	L.prey_message = "Usa Depredar en parásito"
 	L.injection_over_soon = "¡Inyección acabará pronto (%s)!"
 
