@@ -471,6 +471,7 @@ do
 	end
 	function mod:StoreKineticEnergy(args)
 		self:CDBar(143701, 63)
+		self:Message(143701, "Urgent", nil, CL.incoming:format(mod:SpellName(143701)))
 		lastWhirlTarget = ""
 		if not whirlingTimer then
 			whirlingTimer = self:ScheduleRepeatingTimer(warnWhirlingTarget, 0.1)
