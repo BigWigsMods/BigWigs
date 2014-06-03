@@ -112,18 +112,19 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BoneCracker", 143638)
 	self:Log("SPELL_AURA_APPLIED", "SunderingBlow", 143494)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SunderingBlow", 143494)
-
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
 function mod:OnEngage()
-	self:OpenProximity("proximity", 10) -- Heroic Shockwave , Magistrike is 8 yard having a constant proximity meter might be too much for LFR
 	self:Berserk(600)
 	wipe(marksUsed)
 	self:CDBar(143494, 10) -- Sundering Blow
 	self:Bar(143638, 15.5) -- Bonecracker
 	addWaveCounter = 1
 	self:Bar(-7920, 46, CL.count:format(CL.adds, addWaveCounter), "achievement_guildperk_everybodysfriend") -- adds
+	if not self:LFR() then
+		self:OpenProximity("proximity", 10) -- Heroic Shockwave , Magistrike is 8 yard
+		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	end
 end
 
 --------------------------------------------------------------------------------
