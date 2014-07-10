@@ -605,7 +605,7 @@ end
 
 -- Misc
 function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
-	if channel == "WHISPER" then
+	if channel == "WHISPER" or channel == "GUILD" then
 		return
 	elseif prefix == "BigWigs" then
 		local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")

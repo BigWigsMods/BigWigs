@@ -106,14 +106,8 @@ function mod:Splits()
 end
 
 function mod:Reform()
-	local power = UnitPower("boss1")
-	if power < (self:LFR() and 13 or 9) then
-		self:Win()
-		return
-	end
-
 	blastCounter = 1
-	self:Message(143469, "Neutral", nil, ("%s (%d%%)"):format(self:SpellName(143469), power))
+	self:Message(143469, "Neutral", nil, ("%s (%d%%)"):format(self:SpellName(143469), UnitPower("boss1")))
 	self:Bar(143309, 24) -- Swirl 24.1 - 24.9
 	self:Bar(143436, 14) -- Corrosive Blast 13.6 - 15.2
 	if self:Heroic() then
