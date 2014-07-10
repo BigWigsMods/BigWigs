@@ -432,7 +432,7 @@ do
 end
 
 function mod:PowerIronStar(args)
-	self:Bar(args.spellId, 15)
+	self:Bar(args.spellId, self:Heroic() and 10 or 15)
 end
 
 function mod:IronStarRolling(_, _, _, _, spellId)
