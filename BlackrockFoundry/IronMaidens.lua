@@ -3,10 +3,12 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("The Iron Maidens", 953, 868)
+local mod, CL = BigWigs:NewBoss("The Iron Maidens", 1203, 868)
 if not mod then return end
 mod:RegisterEnableMob(
-	72249, 72358, -- Galakras, Kor'kron 	
+	77557, -- Admiral Gar'an
+	77231, -- Enforcer Sorka
+	77477, -- Marak the Blooded (all unfonfirmed)
 )
 mod.engageId = 1695
 

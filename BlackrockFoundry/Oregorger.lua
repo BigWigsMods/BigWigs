@@ -3,10 +3,10 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Oregorger", 953, 868)
+local mod, CL = BigWigs:NewBoss("Oregorger", 1202, 868)
 if not mod then return end
 mod:RegisterEnableMob(
-	72249, 72358, -- Galakras, Kor'kron Cannon	
+	77182, -- Oregorger (Unconfirmed)
 )
 mod.engageId = 1696
 

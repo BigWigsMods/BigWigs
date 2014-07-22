@@ -3,12 +3,11 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Hans'gar and Franzok", 953, 868)
+local mod, CL = BigWigs:NewBoss("Hans'gar and Franzok", 1155, 868)
 if not mod then return end
 mod:RegisterEnableMob(
-	72249, 72358, -- Galakras, Kor'kron Cannon
-	72560, 72561, 73909, -- Horde: Lor'themar Theron, Lady Sylvanas Windrunner, Archmage Aethas Sunreaver
-	72311, 72302, 73910 -- Alliance: King Varian Wrynn, Lady Jaina Proudmoore, Vereesa Windrunner
+	76973, -- Hans'gar
+	76974, -- Franzok (both unconfirmed)
 )
 mod.engageId = 1693
 

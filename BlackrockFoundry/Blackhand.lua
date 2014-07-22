@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Blackhand", 959, 868)
 if not mod then return end
 mod:RegisterEnableMob(
-	83949, -- Blackhand	
+	83949, -- Blackhand (Unconfirmed)	
 )
 mod.engageId = 1704
 

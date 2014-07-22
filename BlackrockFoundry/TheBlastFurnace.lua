@@ -3,10 +3,17 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("The Blast Furnace", 953, 868)
+local mod, CL = BigWigs:NewBoss("The Blast Furnace", 1154, 868)
 if not mod then return end
 mod:RegisterEnableMob(
-	72249, 72358, -- Galakras, Kor'kron Cannon	
+	76809, -- Foreman Feldspar
+	76809, -- Blackrock Security
+	76809, -- Blackrock Engineer
+	76809, -- Blackrock Bellows Operator
+	76809, -- Primal Elementalist
+	76809, -- Firecaller
+	76809, -- Slag Elemental
+	76809, -- Fury (just listed all the mobs from dungeon journal)
 )
 mod.engageId = 1690
 

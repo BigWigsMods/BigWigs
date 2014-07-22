@@ -3,12 +3,10 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Operator Thogar", 953, 868)
+local mod, CL = BigWigs:NewBoss("Operator Thogar", 1147, 868)
 if not mod then return end
 mod:RegisterEnableMob(
-	72249, 72358, -- Galakras, Kor'kron Cannon
-	72560, 72561, 73909, -- Horde: Lor'themar Theron, Lady Sylvanas Windrunner, Archmage Aethas Sunreaver
-	72311, 72302, 73910 -- Alliance: King Varian Wrynn, Lady Jaina Proudmoore, Vereesa Windrunner
+	76906, -- Operator Thogar (Unconfirmed)
 )
 mod.engageId = 1622
 
