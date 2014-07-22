@@ -3,12 +3,12 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Gruul", 1161, 868)
+local mod, CL = BigWigs:NewBoss("Kargath Bladefist", 1128, 868)
 if not mod then return end
 mod:RegisterEnableMob(
-	76877, -- Gruul	
+	85259, -- Kargath Bladefist (Unconfirmed)
 )
-mod.engageId = 1691
+mod.engageId = 1721
 
 --------------------------------------------------------------------------------
 -- Locals

@@ -10,7 +10,7 @@ mod:RegisterEnableMob(
 	72560, 72561, 73909, -- Horde: Lor'themar Theron, Lady Sylvanas Windrunner, Archmage Aethas Sunreaver
 	72311, 72302, 73910 -- Alliance: King Varian Wrynn, Lady Jaina Proudmoore, Vereesa Windrunner
 )
-mod.engageId = 1622
+mod.engageId = 1694
 
 --------------------------------------------------------------------------------
 -- Locals

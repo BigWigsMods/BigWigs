@@ -3,12 +3,12 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Gruul", 1161, 868)
+local mod, CL = BigWigs:NewBoss("The Butcher", 971, 868)
 if not mod then return end
 mod:RegisterEnableMob(
-	76877, -- Gruul	
+	79538, -- The Butcher
 )
-mod.engageId = 1691
+mod.engageId = 1706
 
 --------------------------------------------------------------------------------
 -- Locals
