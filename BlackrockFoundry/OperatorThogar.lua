@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Operator Thogar", 1147, 868)
+local mod, CL = BigWigs:NewBoss("Operator Thogar", 604, 1147)
 if not mod then return end
 mod:RegisterEnableMob(
 	76906, -- Operator Thogar (Unconfirmed)

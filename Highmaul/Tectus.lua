@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Tectus", 1195, 868)
+local mod, CL = BigWigs:NewBoss("Tectus", 766, 1195)
 if not mod then return end
 mod:RegisterEnableMob(
 	78948, -- Tectus (Unconfirmed)

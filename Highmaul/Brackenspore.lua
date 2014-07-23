@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Brackenspore", 1196, 868)
+local mod, CL = BigWigs:NewBoss("Brackenspore", 766, 1196)
 if not mod then return end
 mod:RegisterEnableMob(
 	78491, -- Brackenspore	(Unconfirmed)

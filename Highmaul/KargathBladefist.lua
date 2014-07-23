@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Kargath Bladefist", 1128, 868)
+local mod, CL = BigWigs:NewBoss("Kargath Bladefist", 766, 1128)
 if not mod then return end
 mod:RegisterEnableMob(
 	85259, -- Kargath Bladefist (Unconfirmed)
