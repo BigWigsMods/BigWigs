@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("The Butcher", 766, 971)
 if not mod then return end
 mod:RegisterEnableMob(
-	79538, -- The Butcher
+	79538 -- The Butcher
 )
 mod.engageId = 1706
 

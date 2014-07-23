@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Tectus", 766, 1195)
 if not mod then return end
 mod:RegisterEnableMob(
-	78948, -- Tectus (Unconfirmed)
+	78948 -- Tectus (Unconfirmed)
 )
 mod.engageId = 1722
 

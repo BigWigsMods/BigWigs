@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Fel Breaker", 766, 1153)
 if not mod then return end
 mod:RegisterEnableMob(
-	76877, -- Gruul	
+	76877 -- Gruul	
 )
 mod.engageId = 1691
 

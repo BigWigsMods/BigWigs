@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Oregorger", 604, 1202)
 if not mod then return end
 mod:RegisterEnableMob(
-	77182, -- Oregorger (Unconfirmed)
+	77182 -- Oregorger (Unconfirmed)
 )
 mod.engageId = 1696
 

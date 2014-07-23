@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Hans'gar and Franzok", 604, 1155)
 if not mod then return end
 mod:RegisterEnableMob(
 	76973, -- Hans'gar
-	76974, -- Franzok (both unconfirmed)
+	76974 -- Franzok (both unconfirmed)
 )
 mod.engageId = 1693
 

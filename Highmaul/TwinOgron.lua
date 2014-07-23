@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Twin Ogron", 766, 1148)
 if not mod then return end
 mod:RegisterEnableMob(
 	76877, -- Phemos (Placeholder ID)
-	76877, -- Pol (Placeholder ID)
+	76877 -- Pol (Placeholder ID)
 )
 mod.engageId = 1719
 

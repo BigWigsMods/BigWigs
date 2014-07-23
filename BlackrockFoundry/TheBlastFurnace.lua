@@ -13,7 +13,7 @@ mod:RegisterEnableMob(
 	76809, -- Primal Elementalist
 	76809, -- Firecaller
 	76809, -- Slag Elemental
-	76809, -- Fury (just listed all the mobs from dungeon journal)
+	76809 -- Fury (just listed all the mobs from dungeon journal)
 )
 mod.engageId = 1690
 

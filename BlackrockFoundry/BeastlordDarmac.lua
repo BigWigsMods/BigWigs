@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Beastlord Darmac", 604, 1122)
 if not mod then return end
 mod:RegisterEnableMob(
-	76865, -- Beastlord Darmac (Unconfirmed)
+	76865 -- Beastlord Darmac (Unconfirmed)
 )
 mod.engageId = 1694
 

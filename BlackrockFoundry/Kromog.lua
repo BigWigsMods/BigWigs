@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Kromog", 604, 1162)
 if not mod then return end
 mod:RegisterEnableMob(
-	77692, -- Kromog (unconfirmed)
+	77692 -- Kromog (unconfirmed)
 )
 mod.engageId = 1713
 

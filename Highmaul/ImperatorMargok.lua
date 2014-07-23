@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Imperator Mar'gok", 766, 1197)
 if not mod then return end
 mod:RegisterEnableMob(
-	83268, -- Imperator Mar'gok (Unconfirmed)
+	83268 -- Imperator Mar'gok (Unconfirmed)
 )
 mod.engageId = 1705
 

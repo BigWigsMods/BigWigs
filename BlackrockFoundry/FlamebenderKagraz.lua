@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Flamebender Ka'graz", 604, 1123)
 if not mod then return end
 mod:RegisterEnableMob(
-	76814, -- Flamebender Ka'graz (Unconfirmed)
+	76814 -- Flamebender Ka'graz (Unconfirmed)
 )
 mod.engageId = 1689 --might be wrong
 
