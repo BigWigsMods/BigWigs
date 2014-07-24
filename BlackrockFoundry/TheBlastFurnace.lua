@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("The Blast Furnace", 604, 1154)
+local mod, CL = BigWigs:NewBoss("The Blast Furnace", 988, 1154)
 if not mod then return end
 mod:RegisterEnableMob(
 	76809, -- Foreman Feldspar

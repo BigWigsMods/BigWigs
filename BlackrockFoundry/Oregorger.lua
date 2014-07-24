@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Oregorger", 604, 1202)
+local mod, CL = BigWigs:NewBoss("Oregorger", 988, 1202)
 if not mod then return end
 mod:RegisterEnableMob(
 	77182 -- Oregorger (Unconfirmed)
