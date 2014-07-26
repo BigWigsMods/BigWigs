@@ -5,10 +5,10 @@
 
 local mod, CL = BigWigs:NewBoss("The Iron Maidens", 988, 1203)
 if not mod then return end
-mod:RegisterEnableMob(
+mod:RegisterEnableMob( -- XXX all unconfirmed
 	77557, -- Admiral Gar'an
 	77231, -- Enforcer Sorka
-	77477, -- Marak the Blooded (all unfonfirmed)
+	77477  -- Marak the Blooded
 )
 mod.engageId = 1695
 
