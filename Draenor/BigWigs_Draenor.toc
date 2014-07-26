@@ -17,8 +17,8 @@
 ## Dependencies: BigWigs
 
 ## X-Category: Raid
-## X-BigWigs-Menu: 6
-## X-BigWigs-LoadOn-WorldBoss: 807, 62346, 809, 60491, 928, 69099, 929, 69161, 951, 72057
+## X-BigWigs-Menu: 7
+## X-BigWigs-LoadOn-WorldBoss: 1211, 1212, 1262
 
 locales.xml
 modules.xml
