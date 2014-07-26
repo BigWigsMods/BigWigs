@@ -4,16 +4,13 @@
 
 local mod, CL = BigWigs:NewBoss("Magnaron", 962, 1212)
 if not mod then return end
-mod:RegisterEnableMob(69099)
-mod.otherMenu = 6
-mod.worldBoss = 69099
+mod:RegisterEnableMob(0)
+mod.otherMenu = 962
+mod.worldBoss = 0
 
 --------------------------------------------------------------------------------
 -- Locals
 --
-
-local openedForMe = nil
-local stormcloudTargets = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -34,10 +31,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:Death("Win", 69099)
+	self:Death("Win", 0)
 end
 
 function mod:OnEngage()

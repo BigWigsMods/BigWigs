@@ -1,20 +1,12 @@
-local L = BigWigs:NewBossLocale("Nalak", "ruRU")
+local L = BigWigs:NewBossLocale("Rukhmar", "ruRU")
 if L then
-	L.engage_yell = "Чувствуете порывы холодного ветра? Приближается буря..."
-
-	L.ability = "Следующая способность"
-	L.ability_desc = "Таймер восстановления следующей способности."
 end
 
-L = BigWigs:NewBossLocale("Salyis's Warband", "ruRU")
+L = BigWigs:NewBossLocale("Tarlna", "ruRU")
 if L then
-	L.engage_yell = "Принесите мне их трупы!"
 end
 
-L = BigWigs:NewBossLocale("Ordos", "ruRU")
+L = BigWigs:NewBossLocale("Magnaron", "ruRU")
 if L then
-	L.engage_yell = "Вы займете мое место на вечной жаровне."
-
-	L.burning_soul_bar = "Взрывы"
 end
 

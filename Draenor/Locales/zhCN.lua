@@ -1,20 +1,12 @@
-local L = BigWigs:NewBossLocale("Nalak", "zhCN")
+local L = BigWigs:NewBossLocale("Rukhmar", "zhCN")
 if L then
-	L.engage_yell = "你感觉到劲吹的寒风了吗"
-
-	L.ability = "下一技能"
-	L.ability_desc = "下一技能冷却计时器。"
 end
 
-L = BigWigs:NewBossLocale("Salyis's Warband", "zhCN")
+L = BigWigs:NewBossLocale("Tarlna", "zhCN")
 if L then
-	L.engage_yell = "把他们的尸体带回来！"
 end
 
-L = BigWigs:NewBossLocale("Ordos", "zhCN")
+L = BigWigs:NewBossLocale("Magnaron", "zhCN")
 if L then
-	L.engage_yell = "你将代替我永远在这洪炉中煎熬。"
-
-	L.burning_soul_bar = "爆炸"
 end
 
