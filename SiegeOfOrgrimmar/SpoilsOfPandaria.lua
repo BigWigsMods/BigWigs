@@ -20,13 +20,14 @@ mod:RegisterEnableMob(73152, 73720, 71512) -- Storeroom Guard ( trash guy ), Mog
 local setToBlow = {}
 local sparkCounter = 0
 local bossUnitPowers = {}
+local massiveCrates = 2
 
 local function checkPlayerSide()
 	BigWigsLoader.SetMapToCurrentZone()
 	local cx, cy = GetPlayerMapPosition("player")
 	if cy == 0 then return 0 end
 
-	-- simplified cross product: above (mantid) > 0 (colinear) > below (mogu)
+	-- simplified cross product: mantid > 0 > mogu
 	return 0.04362700914 - (cx * 0.11017924547) + (cy * 0.04940152168)
 end
 
@@ -36,10 +37,16 @@ end
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.enable_zone = "Artifact Storage"
 	L.start_trigger = "Hey, we recording?"
 	L.win_trigger = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 
-	L.enable_zone = "Artifact Storage"
+	L.crates = "Crates"
+	L.crates_desc = "Messages for how much power you still need and how many large/medium/small crates it will take."
+	L.crates_icon = 96362
+
+	L.full_power = "Full Power!"
+	L.power_left = "%d left! (%d/%d/%d)"
 end
 L = mod:GetLocale()
 
@@ -53,7 +60,7 @@ function mod:GetOptions()
 		145288, {145461, "TANK"}, {142947, "TANK"}, 142694, -- Mogu crate
 		{145987, "PROXIMITY", "FLASH"}, 145747, {145692, "TANK"}, 145715, {145786, "DISPEL"},-- Mantid crate
 		{146217, "FLASH"}, 146222, 146257, -- Crate of Panderan Relics
-		"proximity", {"warmup", "EMPHASIZE"}, "bosskill",
+		"proximity", {"crates", "TANK"}, {"warmup", "EMPHASIZE"}, "bosskill",
 	}, {
 		[146815] = CL.heroic,
 		[145288] = -8434, -- Mogu crate
@@ -110,11 +117,9 @@ function mod:Warmup()
 end
 
 function mod:OnEngage()
-	if self:Heroic() then
-		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2")
-	end
-
+	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2")
 	sparkCounter = 0
+	massiveCrates = 2
 	wipe(setToBlow)
 	wipe(bossUnitPowers)
 	self:OpenProximity("proximity", 3)
@@ -128,15 +133,35 @@ end
 -- Event Handlers
 --
 
--- Heroic
-
 function mod:UNIT_POWER_FREQUENT(unit, powerType)
+	if powerType ~= "ALTERNATE" then return end
+
 	local power = UnitPower(unit, 10)
-	if powerType ~= "ALTERNATE" or power == 0 then return end -- == 0 might be needed when you change rooms
-	local playerSide, mobId = checkPlayerSide(), self:MobId(UnitGUID(unit))
+	if power == 0 then return end -- might be needed when you change rooms
+
+	local mobId = self:MobId(UnitGUID(unit))
 	if bossUnitPowers[mobId] == power then return end -- don't fire twice for the same value
+	local change = power - (bossUnitPowers[mobId] or 0)
 	bossUnitPowers[mobId] = power
-	if ((mobId == 71512 or mobId == 73721) and playerSide < 0) or ((mobId == 73720 or mobId == 73722) and playerSide > 0) then -- mantid spoils and you are on mogu side OR  mogu spoils and you are on mantid side
+
+	local playerSide = checkPlayerSide()
+	if ((mobId == 71512 or mobId == 73721) and playerSide > 0) or ((mobId == 73720 or mobId == 73722) and playerSide < 0) and not self:LFR() then -- mantid or mogu (side you're on)
+		-- guessimate how many crates of a type you need to open
+		if change > 13 then
+			massiveCrates = massiveCrates - 1
+		end
+		if power == 50 then
+			self:Message("crates", "Important", "Long", L.full_power, L.crates_icon)
+			massiveCrates = 2
+		else --if power > 25 then
+			local remaining = 50 - power
+			local small = remaining
+			small = max(0, small - (massiveCrates * 14))
+			local medium = floor(small / 3)
+			small = max(0, small - (medium * 3))
+			self:Message("crates", "Attention", nil, L.power_left:format(remaining, massiveCrates, medium, small), L.crates_icon)
+		end
+	elseif self:Heroic() then
 		self:Message(146815, "Important", "Alert", CL.incoming:format(self:SpellName(-8469))) -- Unstable Spark
 		if self:Damager() then
 			self:Flash(146815)
