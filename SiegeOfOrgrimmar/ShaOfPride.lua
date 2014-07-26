@@ -13,7 +13,7 @@ mod.engageId = 1604
 --
 
 local titans, titanCounter = {}, 1
-local auraOfPride, auraOfPrideGroup, auraOfPrideOnMe = mod:SpellName(146817), {}, nil
+local auraOfPride = mod:SpellName(146817)
 local swellingPrideCounter = 1
 local wrChecker = nil
 
@@ -85,8 +85,6 @@ end
 function mod:OnEngage()
 	swellingPrideCounter, titanCounter = 1, 1
 	wipe(titans)
-	wipe(auraOfPrideGroup)
-	auraOfPrideOnMe = nil
 	self:Bar(146595, 7) -- Titan Gift
 	self:Bar(144400, 77, CL.count:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
 	self:Bar(-8262, 60, CL.big_add, 144379) -- signature ability icon
@@ -110,12 +108,23 @@ end
 --
 
 -- heroic
-function mod:WeakenedResolveOver(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", nil, CL.over:format(args.spellName))
-		wrChecker = self:ScheduleRepeatingTimer("Message", 6, args.spellId, "Personal", nil, CL.no:format(args.spellName))
+do
+	local function warnWeakenedResolve(spellId, spellName)
+		if not UnitAffectingCombat("player") then
+			mod:CancelTimer(wrChecker)
+			wrChecker = nil
+		else
+			mod:Message(spellId, "Personal", nil, CL.no:format(spellName))
+		end
+	end
+	function mod:WeakenedResolveOver(args)
+		if self:Me(args.destGUID) and UnitAffectingCombat("player") then
+			self:Message(args.spellId, "Personal", nil, CL.over:format(args.spellName))
+			wrChecker = self:ScheduleRepeatingTimer(warnWeakenedResolve, 6, args.spellId, args.spellName)
+		end
 	end
 end
+
 function mod:WeakenedResolveBegin(args)
 	if wrChecker and self:Me(args.destGUID) then
 		self:CancelTimer(wrChecker)
@@ -232,23 +241,25 @@ function mod:MarkOfArrogance(args)
 	end
 end
 
-function mod:AuraOfPrideRemoved(args)
-	self:CloseProximity(args.spellId)
-	wipe(auraOfPrideGroup)
-	auraOfPrideOnMe = nil
-end
-
-function mod:AuraOfPrideApplied(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Alert", CL.you:format(args.spellName))
-		self:Flash(args.spellId)
-		self:OpenProximity(args.spellId, 5)
-		auraOfPrideOnMe = true
-	else
-		auraOfPrideGroup[#auraOfPrideGroup+1] = args.destName
+do
+	local auraOfPrideGroup, auraOfPrideOnMe = {}, nil
+	function mod:AuraOfPrideRemoved(args)
+		self:CloseProximity(args.spellId)
+		wipe(auraOfPrideGroup)
+		auraOfPrideOnMe = nil
 	end
-	if not auraOfPrideOnMe then
-		self:OpenProximity(args.spellId, 5, auraOfPrideGroup)
+	function mod:AuraOfPrideApplied(args)
+		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Personal", "Alert", CL.you:format(args.spellName))
+			self:Flash(args.spellId)
+			self:OpenProximity(args.spellId, 5)
+			auraOfPrideOnMe = true
+		else
+			auraOfPrideGroup[#auraOfPrideGroup+1] = args.destName
+		end
+		if not auraOfPrideOnMe then
+			self:OpenProximity(args.spellId, 5, auraOfPrideGroup)
+		end
 	end
 end
 
