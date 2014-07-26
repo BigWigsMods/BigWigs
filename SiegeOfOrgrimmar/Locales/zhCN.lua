@@ -63,6 +63,7 @@ if L then
 	L.adds_trigger_extra_wave = "库卡隆，听我的命令，杀了他们！"
 	L.extra_adds = "额外增援部队"
 	L.final_wave = "最后一波"
+	L.add_wave = "%s (%s): %s"
 
 	L.chain_heal_message = "你的焦点正在施放强效治疗链！"
 

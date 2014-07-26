@@ -63,6 +63,7 @@ if L then
 	L.adds_trigger_extra_wave = "전 코르크론, 내 명령을 따르라. 모두 죽여!"
 	L.extra_adds = "다음 병력"
 	L.final_wave = "마지막 병력!"
+	L.add_wave = "%s (%s): %s"
 
 	L.chain_heal_message = "당신의 주시 대상이 연쇄 치유를 시전합니다!"
 

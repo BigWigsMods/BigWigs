@@ -45,6 +45,12 @@ if L then
 	L.adds_trigger_extra_wave_demonic = "Kar AzgAlada revos xi amanare maev raka ZAR"
 	L.extra_adds = "Extra adds"
 	L.final_wave = "Final Wave"
+	L.add_wave = "%s (%s): %s"
+	L.mage = "|cFF69CCF0"..LOCALIZED_CLASS_NAMES_MALE.MAGE.."|r"
+	L.rogue = "|cFFFFF569"..LOCALIZED_CLASS_NAMES_MALE.ROGUE.."|r"
+	L.shaman = "|cFF0070DE"..LOCALIZED_CLASS_NAMES_MALE.SHAMAN.."|r"
+	L.warrior = "|cFFC79C6E"..LOCALIZED_CLASS_NAMES_MALE.WARRIOR.."r|r"
+	L.hunter = "|cFFABD473"..LOCALIZED_CLASS_NAMES_MALE.HUNTER.."|r"
 
 	L.chain_heal, L.chain_heal_desc = EJ_GetSectionInfo(7935)
 	L.chain_heal_icon = 1064
@@ -62,6 +68,31 @@ local stances = {
 	[143589] = L.battle,
 	[143594] = L.berserker,
 	[143593] = L.defensive,
+}
+
+local addsNormal = { -- shaman 2, 4, 5, 7, 8, 9
+	L.warrior.." - "..L.mage,
+	L.shaman.." - "..L.rogue,
+	L.rogue.." - "..L.warrior,
+	L.shaman.." - "..L.mage,
+	L.warrior.." - "..L.shaman,
+	L.rogue.." - "..L.mage,
+	L.warrior.." - "..L.rogue.." - "..L.shaman,
+	L.mage.." - "..L.shaman.." - "..L.warrior,
+	L.rogue.." - "..L.shaman.." - "..L.mage,
+	L.mage.." - "..L.warrior.." - "..L.rogue,
+}
+local addsHeroic = { -- shaman 2, 3, 5, 6, 8, 9
+	L.mage.." - "..L.rogue.." - "..L.warrior,
+	L.rogue.." - "..L.hunter.." - "..L.shaman,
+	L.mage.." - "..L.shaman.." - "..L.warrior,
+	L.mage.." - "..L.hunter.." - "..L.rogue,
+	L.shaman.." - "..L.rogue.." - "..L.warrior,
+	L.mage.." - "..L.shaman.." - "..L.hunter,
+	L.warrior..", "..L.hunter.." - "..L.rogue,
+	L.shaman.." - "..L.rogue.." - "..L.mage,
+	L.hunter.." - "..L.warrior.." - "..L.shaman,
+	L.hunter.." - "..L.mage.." - "..L.warrior,
 }
 
 --------------------------------------------------------------------------------
@@ -210,11 +241,13 @@ function mod:ExtraAdds()
 end
 
 function mod:Adds()
+	local mobs = self:Heroic() and addsHeroic[addWaveCounter] or addsNormal[addWaveCounter]
 	if addWaveCounter == 10 then
-		self:Message(-7920, "Neutral", "Long", CL.count:format(CL.adds, addWaveCounter) .. " - " .. L.final_wave)
+		self:Message(-7920, "Neutral", "Long", L.add_wave:format(CL.final_wave, addWaveCounter, mobs))
 	else
-		self:Message(-7920, "Neutral", "Long", CL.count:format(CL.adds, addWaveCounter))
+		self:Message(-7920, "Neutral", "Long", L.add_wave:format(CL.adds, addWaveCounter, mobs))
 	end
+
 	addWaveCounter = addWaveCounter + 1
 	if addWaveCounter < 11 then
 		self:Bar(-7920, 46, CL.count:format(CL.adds, addWaveCounter), "achievement_guildperk_everybodysfriend")

@@ -65,6 +65,7 @@ if L then
 	L.adds_trigger_extra_wave = "¡Todos los Kor'kron a mi comando, mátenlos ya!"
 	L.extra_adds = "Adds extra"
 	L.final_wave = "Oleada final"
+	L.add_wave = "%s (%s): %s"
 
 	L.chain_heal_message = "¡Tu foco está casteando Sanación en cadena!"
 

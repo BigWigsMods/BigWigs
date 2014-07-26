@@ -63,6 +63,7 @@ if L then
 	L.adds_trigger_extra_wave = "Tutti i Kor'kron... al mio comando... uccideteli... ORA"
 	L.extra_adds = "Armate Aggiuntive"
 	L.final_wave = "Ultima Ondata"
+	L.add_wave = "%s (%s): %s"
 
 	L.chain_heal_message = "Il tuo focus sta lanciando Catena di Guarigione Potenziata!"
 
