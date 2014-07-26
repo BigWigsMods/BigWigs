@@ -1,0 +1,25 @@
+## Interface: 60000
+
+## Title: Big Wigs [|cffeda55fDraenor|r]
+## Title-frFR: Big Wigs [|cffeda55fDraenor|r]
+## Title-itIT: Big Wigs [|cffeda55fDraenor|r]
+## Title-ruRU: Big Wigs [|cffeda55fПандария|r]
+## Title-zhCN: Big Wigs [|cffeda55f潘达利亚|r]
+## Title-zhTW: Big Wigs [|cffeda55f潘達利亞|r]
+## Notes: Big Wigs Draenor Modules
+## Notes-frFR: Modules Big Wigs concernant la Draenor.
+## Notes-itIT: Moduli Big Wigs per Draenor
+## Notes-ruRU: Модуль Big Wigs для Пандарии.
+## Notes-zhCN: Big Wigs 潘达利亚模块。
+## Notes-zhTW: Big Wigs 潘達利亞模組。
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-Menu: 6
+## X-BigWigs-LoadOn-WorldBoss: 807, 62346, 809, 60491, 928, 69099, 929, 69161, 951, 72057
+
+locales.xml
+modules.xml
+
