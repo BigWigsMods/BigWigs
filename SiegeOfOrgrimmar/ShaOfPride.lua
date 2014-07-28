@@ -13,7 +13,7 @@ mod.engageId = 1604
 --
 
 local titans, titanCounter = {}, 1
-local auraOfPride = mod:SpellName(146817)
+local auraOfPride, auraOfPrideGroup, auraOfPrideOnMe = mod:SpellName(146817), {}, nil
 local swellingPrideCounter = 1
 local wrChecker = nil
 
@@ -85,6 +85,8 @@ end
 function mod:OnEngage()
 	swellingPrideCounter, titanCounter = 1, 1
 	wipe(titans)
+	wipe(auraOfPrideGroup)
+	auraOfPrideOnMe = nil
 	self:Bar(146595, 7) -- Titan Gift
 	self:Bar(144400, 77, CL.count:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
 	self:Bar(-8262, 60, CL.big_add, 144379) -- signature ability icon
@@ -241,25 +243,23 @@ function mod:MarkOfArrogance(args)
 	end
 end
 
-do
-	local auraOfPrideGroup, auraOfPrideOnMe = {}, nil
-	function mod:AuraOfPrideRemoved(args)
-		self:CloseProximity(args.spellId)
-		wipe(auraOfPrideGroup)
-		auraOfPrideOnMe = nil
+function mod:AuraOfPrideRemoved(args)
+	self:CloseProximity(args.spellId)
+	wipe(auraOfPrideGroup)
+	auraOfPrideOnMe = nil
+end
+
+function mod:AuraOfPrideApplied(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", "Alert", CL.you:format(args.spellName))
+		self:Flash(args.spellId)
+		self:OpenProximity(args.spellId, 5)
+		auraOfPrideOnMe = true
+	else
+		auraOfPrideGroup[#auraOfPrideGroup+1] = args.destName
 	end
-	function mod:AuraOfPrideApplied(args)
-		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Personal", "Alert", CL.you:format(args.spellName))
-			self:Flash(args.spellId)
-			self:OpenProximity(args.spellId, 5)
-			auraOfPrideOnMe = true
-		else
-			auraOfPrideGroup[#auraOfPrideGroup+1] = args.destName
-		end
-		if not auraOfPrideOnMe then
-			self:OpenProximity(args.spellId, 5, auraOfPrideGroup)
-		end
+	if not auraOfPrideOnMe then
+		self:OpenProximity(args.spellId, 5, auraOfPrideGroup)
 	end
 end
 
