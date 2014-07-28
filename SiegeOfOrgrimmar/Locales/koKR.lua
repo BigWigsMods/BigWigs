@@ -80,10 +80,10 @@ L = BigWigs:NewBossLocale("Spoils of Pandaria", "koKR")
 if L then
 --@localization(locale="koKR", namespace="SiegeOfOrgrimmar/SpoilsOfPandaria", format="lua_additive_table", handle-unlocalized="ignore")@
 
-	--L.crates = "Crates"
-	--L.crates_desc = "Messages for how much power you still need and how many large/medium/small crates it will take."
-	--L.full_power = "Full Power!"
-	--L.power_left = "%d left! (%d/%d/%d)"
+	L.crates = "상자"
+	L.crates_desc = "종료까지 남은 대중소 상자에 대한 메세지"
+	L.full_power = "Full Power!"
+	L.power_left = "%d 남음! (%d/%d/%d)"
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "koKR")
