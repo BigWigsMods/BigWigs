@@ -405,7 +405,7 @@ do
 		elseif not self.isEngaged and hasBoss then
 			if debug then dbg(self, ":CheckBossStatus Engage called.") end
 			local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4") or UnitGUID("boss5")
-			local module = core:GetEnableMobs()[tonumber(sub(guid, 6, 10), 16)]
+			local module = core:GetEnableMobs()[self:MobId(guid)]
 			local modType = type(module)
 			if modType == "string" then
 				if module == self.moduleName then
@@ -445,7 +445,15 @@ do
 		for i, unit in next, t do
 			local guid = UnitGUID(unit)
 			if guid and not UnitIsPlayer(unit) then
-				if type(id) == "number" then guid = tonumber(sub(guid, 6, 10), 16) end
+				if type(id) == "number" then
+					-- XXX compat
+					if isWOD then
+						local _, _, _, _, _, id = strsplit(":", guid)
+						guid = tonumber(id) or -1
+					else
+						guid = tonumber(sub(guid, 6, 10), 16)
+					end
+				end
 				if guid == id then return unit end
 			end
 		end
