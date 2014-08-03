@@ -268,10 +268,7 @@ local function translateZoneID(id)
 	else
 		name = GetMapNameByID(id)
 	end
-	if not name then
-		print(("Big Wigs: Tried to translate %q as a zone ID, but it could not be resolved into a name."):format(tostring(id)))
-	end
-	return name
+	return name or tostring(id)
 end
 
 local function findPanel(name, parent)
