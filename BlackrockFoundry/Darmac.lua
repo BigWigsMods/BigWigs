@@ -14,7 +14,7 @@ mod.engageId = 1694
 -- Transition warnings on 85%, 65%, 45%
 -- Marking for spear, debuff on players (155365)
 -- Announce Conflag for dispel (154981)
--- Announce add spawn (http://wod.wowhead.com/spell=154975) ~every 25s
+-- Announce add spawn (http://wod.wowhead.com/spell=154975) ~every 27s
 -- Warn for Breath http://wod.wowhead.com/spell=154989
 -- 7y range check caster/ranged when cruelfang is active, 
 -- Announce Savage Howl (155198) for classes who can remove Enrage
