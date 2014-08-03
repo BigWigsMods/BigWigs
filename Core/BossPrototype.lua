@@ -33,6 +33,13 @@ local updateData = function()
 	UpdateMapData()
 end
 
+-- XXX compat
+local isWOD
+do
+	local _, _, _, toc = GetBuildInfo()
+	isWOD = toc > 59999 and true
+end
+
 -------------------------------------------------------------------------------
 -- Debug
 --
@@ -237,7 +244,14 @@ do
 	bossUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, _, extraSpellId, amount)
 		if allowedEvents[event] then
 			if event == "UNIT_DIED" then
-				local mobId = tonumber(sub(destGUID, 6, 10), 16)
+				-- XXX compat
+				local mobId
+				if isWOD then
+					local _, _, _, _, _, id = strsplit(":", destGUID)
+					mobId = tonumber(id) or -1
+				else
+					mobId = tonumber(sub(destGUID, 6, 10), 16)
+				end
 				for i = #enabledModules, 1, -1 do
 					local self = enabledModules[i]
 					local m = eventMap[self][event]
@@ -576,7 +590,14 @@ function boss:Heroic()
 end
 
 function boss:MobId(guid)
-	return guid and tonumber(sub(guid, 6, 10), 16) or -1
+	if isWOD then -- XXX compat
+		if guid then
+			local _, _, _, _, _, id = strsplit(":", guid)
+			return tonumber(id) or -1
+		end
+	else
+		return guid and tonumber(sub(guid, 6, 10), 16) or -1
+	end
 end
 
 function boss:SpellName(spellId)
