@@ -264,7 +264,12 @@ local function translateZoneID(id)
 	if not id or type(id) ~= "number" then return end
 	local name
 	if id < 10 then
-		name = select(id, GetMapContinents())
+		-- XXX compat
+		if BigWigs.isWOD then
+			name = select(id * 2, GetMapContinents())
+		else
+			name = select(id, GetMapContinents())
+		end
 	else
 		name = GetMapNameByID(id)
 	end
@@ -1156,7 +1161,8 @@ do
 		BigWigs_BurningCrusade = "Big Wigs ".. EJ_GetTierInfo(2),
 		BigWigs_WrathOfTheLichKing = "Big Wigs ".. EJ_GetTierInfo(3),
 		BigWigs_Cataclysm = "Big Wigs ".. EJ_GetTierInfo(4),
-		BigWigs_MistsOfPandaria = "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(5) .."|r",
+		BigWigs_MistsOfPandaria = BigWigs.isWOD and "Big Wigs ".. EJ_GetTierInfo(5) or "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(5) .."|r", -- XXX compat
+		BigWigs_WarlordsOfDraenor = BigWigs.isWOD and "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r" or false, -- XXX compat
 		LittleWigs = "Little Wigs",
 	}
 
@@ -1203,7 +1209,7 @@ do
 
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
-		local parent = BigWigsLoader.zoneTbl[zoneId] and addonNameToHeader[BigWigsLoader.zoneTbl[zoneId]] or addonNameToHeader.BigWigs_MistsOfPandaria
+		local parent = BigWigsLoader.zoneTbl[zoneId] and addonNameToHeader[BigWigsLoader.zoneTbl[zoneId]] or addonNameToHeader.BigWigs_WarlordsOfDraenor or addonNameToHeader.BigWigs_MistsOfPandaria -- XXX compat
 		local panel, created = self:GetPanel(zoneName, parent, zoneId)
 		if created then
 			panel:SetScript("OnShow", onZoneShow)
