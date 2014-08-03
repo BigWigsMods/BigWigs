@@ -29,6 +29,12 @@ local SendAddonMessage = BigWigsLoader.SendAddonMessage
 -- Upvalues
 local next, type = next, type
 
+-- XXX compat
+do
+	local _, _, _, toc = GetBuildInfo()
+	addon.isWOD = toc > 59999 and true
+end
+
 -------------------------------------------------------------------------------
 -- Event handling
 --
