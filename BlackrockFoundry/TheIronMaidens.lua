@@ -3,6 +3,7 @@
 -- Module Declaration
 --
 
+if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("The Iron Maidens", 988, 1203)
 if not mod then return end
 mod:RegisterEnableMob( -- XXX all unconfirmed

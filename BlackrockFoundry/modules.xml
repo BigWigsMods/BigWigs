@@ -5,10 +5,10 @@
 <Script file="Oregorger.lua"/>
 <Script file="TheBlastFurnace.lua"/>
 <Script file="HansgarAndFranzok.lua"/>
-<Script file="FlamebenderKagraz.lua"/>
+<Script file="Kagraz.lua"/>
 <Script file="Kromog.lua"/>
-<Script file="BeastlordDarmac.lua"/>
-<Script file="OperatorThogar.lua"/>
+<Script file="Darmac.lua"/>
+<Script file="Thogar.lua"/>
 <Script file="TheIronMaidens.lua"/>
 <Script file="Blackhand.lua"/>
 

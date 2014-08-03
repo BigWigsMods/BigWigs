@@ -2,7 +2,8 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Tarlna", 962, 1211)
+if not BigWigs.isWOD then return end -- XXX compat
+local mod, CL = BigWigs:NewBoss("Tarlna", 949, 1211)
 if not mod then return end
 mod:RegisterEnableMob(81535)
 mod.otherMenu = 962
@@ -31,7 +32,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 81535)

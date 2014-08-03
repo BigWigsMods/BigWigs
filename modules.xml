@@ -25,6 +25,15 @@
 
 <Include file="SiegeOfOrgrimmar\locales.xml"/>
 <Include file="SiegeOfOrgrimmar\modules.xml"/>
+
+<Include file="Draenor\locales.xml"/>
+<Include file="Draenor\modules.xml"/>
+
+<Include file="BlackrockFoundry\locales.xml"/>
+<Include file="BlackrockFoundry\modules.xml"/>
+
+<Include file="Highmaul\locales.xml"/>
+<Include file="Highmaul\modules.xml"/>
 <!--@end-debug@-->
 </Ui>
 
