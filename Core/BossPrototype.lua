@@ -590,11 +590,15 @@ function boss:Difficulty()
 end
 
 function boss:LFR()
-	return difficulty == 7
+	return difficulty == 7 or difficulty == 17
 end
 
 function boss:Heroic()
-	return difficulty == 2 or difficulty == 5 or difficulty == 6
+	return difficulty == 2 or difficulty == 5 or difficulty == 6 or difficulty == 15
+end
+
+function boss:Mythic()
+	return difficulty == 16
 end
 
 function boss:MobId(guid)
@@ -906,6 +910,10 @@ do
 	}
 	function boss:NewTargetList()
 		return setmetatable({}, mt)
+	end
+
+	function boss:ColorName(player)
+		return coloredNames[player]
 	end
 
 	function boss:StackMessage(key, player, stack, color, sound, text, icon)
