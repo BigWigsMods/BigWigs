@@ -104,6 +104,7 @@ do
 		[6]=mop, -- XXX compat
 
 		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw, [919]=lw,
+		[984]=lw, -- XXX compat
 	}
 end
 
