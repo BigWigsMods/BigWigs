@@ -1,9 +1,3 @@
---[[
-TODO:
-	-- reported/requested by others
-	could maybe warn one hurl amber target?
-	win sound
-]]--
 
 --------------------------------------------------------------------------------
 -- Module Declaration

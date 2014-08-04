@@ -1,8 +1,3 @@
---[[
-TODO:
-	maybe do target scanning on new waves, to start some short initial bars for add abilities?
-	rethink proximity for different difficulties
-]]--
 
 --------------------------------------------------------------------------------
 -- Module Declaration
