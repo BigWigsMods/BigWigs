@@ -93,6 +93,7 @@ do
 	local wotlk = "BigWigs_WrathOfTheLichKing"
 	local cata = "BigWigs_Cataclysm"
 	local mop = "BigWigs_MistsOfPandaria"
+	local lw_mop = "LittleWigs_MistsOfPandaria"
 	local lw = "LittleWigs"
 
 	public.zoneTbl = {
@@ -103,8 +104,8 @@ do
 		[896]=mop, [897]=mop, [886]=mop, [930]=mop, [953]=mop, [807]=mop, [809]=mop, [928]=mop, [929]=mop, [951]=mop, [862]=mop,
 		[6]=mop, -- XXX compat
 
-		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw, [919]=lw,
-		[984]=lw, -- XXX compat
+		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw, [919]=lw, -- XXX compat, move to lw_mop
+		[984]=lw,
 	}
 end
 
