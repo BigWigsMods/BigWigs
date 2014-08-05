@@ -105,7 +105,7 @@ do
 		[6]=mop, -- XXX compat
 
 		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw, [919]=lw, -- XXX compat, move to lw_mop
-		[964]=lw, [984]=lw
+		[964]=lw, [984]=lw, [993]=lw
 	}
 end
 
