@@ -4,12 +4,10 @@
 --
 
 if not BigWigs.isWOD then return end -- XXX compat
-local mod, CL = BigWigs:NewBoss("Fel Breaker", 994, 1153)
+local mod, CL = BigWigs:NewBoss("Ko'ragh", 994, 1153)
 if not mod then return end
-mod:RegisterEnableMob(
-	76877 -- Gruul	
-)
-mod.engageId = 1691
+mod:RegisterEnableMob(79015)
+--mod.engageId = 1691
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -38,11 +36,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	if self.lastKill and (GetTime() - self.lastKill) < 120 then -- Temp for outdated users enabling us
-		self:ScheduleTimer("Disable", 5)
-		return
-	end
-
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 end
 
