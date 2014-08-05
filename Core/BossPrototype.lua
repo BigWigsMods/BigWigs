@@ -34,11 +34,7 @@ local updateData = function()
 end
 
 -- XXX compat
-local isWOD
-do
-	local _, _, _, toc = GetBuildInfo()
-	isWOD = toc > 59999 and true
-end
+local isWOD = core.isWOD
 
 -------------------------------------------------------------------------------
 -- Debug

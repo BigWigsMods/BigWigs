@@ -105,7 +105,7 @@ do
 		[6]=mop, -- XXX compat
 
 		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw, [919]=lw, -- XXX compat, move to lw_mop
-		[984]=lw,
+		[964]=lw, [984]=lw
 	}
 end
 
@@ -610,7 +610,7 @@ end
 
 -- Misc
 function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
-	if channel == "WHISPER" or channel == "GUILD" then
+	if channel == "WHISPER" or channel == "GUILD" or channel == "CHANNEL" then
 		return
 	elseif prefix == "BigWigs" then
 		local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
