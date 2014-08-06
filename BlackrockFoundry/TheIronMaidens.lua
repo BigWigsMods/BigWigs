@@ -11,7 +11,7 @@ mod:RegisterEnableMob( -- XXX all unconfirmed
 	77231, -- Enforcer Sorka
 	77477  -- Marak the Blooded
 )
-mod.engageId = 1695
+--mod.engageId = 1695
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -40,10 +40,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	if self.lastKill and (GetTime() - self.lastKill) < 120 then -- Temp for outdated users enabling us
-		self:ScheduleTimer("Disable", 5)
-		return
-	end
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 end

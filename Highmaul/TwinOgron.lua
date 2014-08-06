@@ -10,7 +10,7 @@ mod:RegisterEnableMob(
 	76877, -- Phemos (Placeholder ID)
 	76877 -- Pol (Placeholder ID)
 )
-mod.engageId = 1719
+--mod.engageId = 1719
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -39,11 +39,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	if self.lastKill and (GetTime() - self.lastKill) < 120 then -- Temp for outdated users enabling us
-		self:ScheduleTimer("Disable", 5)
-		return
-	end
-
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 end
 

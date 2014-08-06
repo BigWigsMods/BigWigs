@@ -16,7 +16,7 @@ mod:RegisterEnableMob(
 	76809, -- Slag Elemental
 	76809 -- Fury (just listed all the mobs from dungeon journal)
 )
-mod.engageId = 1690
+--mod.engageId = 1690
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -45,10 +45,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	if self.lastKill and (GetTime() - self.lastKill) < 120 then -- Temp for outdated users enabling us
-		self:ScheduleTimer("Disable", 5)
-		return
-	end
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 end

@@ -9,7 +9,7 @@ if not mod then return end
 mod:RegisterEnableMob(
 	77182 -- Oregorger (Unconfirmed)
 )
-mod.engageId = 1696
+--mod.engageId = 1696
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -38,10 +38,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	if self.lastKill and (GetTime() - self.lastKill) < 120 then -- Temp for outdated users enabling us
-		self:ScheduleTimer("Disable", 5)
-		return
-	end
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 end

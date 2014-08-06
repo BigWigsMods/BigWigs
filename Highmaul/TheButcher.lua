@@ -7,7 +7,7 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("The Butcher", 994, 971)
 if not mod then return end
 mod:RegisterEnableMob(79538)
-mod.engageId = 1706
+--mod.engageId = 1706
 
 --------------------------------------------------------------------------------
 -- Localization

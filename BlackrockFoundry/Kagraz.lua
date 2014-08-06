@@ -15,7 +15,7 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Flamebender Ka'graz", 988, 1123)
 if not mod then return end
 mod:RegisterEnableMob(76814, 77337) -- Flamebender Ka'graz, Aknor Steelbringer
-mod.engageId = 1689
+--mod.engageId = 1689
 
 
 --------------------------------------------------------------------------------
