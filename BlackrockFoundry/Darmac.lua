@@ -200,6 +200,7 @@ end
 do
 	local pinnedList, scheduled = mod:NewTargetList(), nil
 
+	-- TODO figure out who got hit and use mouseover marking to mark the spear instead of the players
 	local function mark(name, index)
 		if mod.db.profile.custom_on_pinned_marker and index < 7 then
 			SetRaidTarget(name, index)
@@ -225,8 +226,8 @@ do
 	end
 
 	function mod:PinDownSpear(args)
-		self:CDBar(154960, 20)
 		if not scheduled then
+			self:CDBar(154960, 20)
 			scheduled = self:ScheduleTimer(warnSpear, 0.2, 154960)
 		end
 	end
