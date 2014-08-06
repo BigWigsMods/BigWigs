@@ -6,16 +6,8 @@
 if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("The Butcher", 994, 971)
 if not mod then return end
-mod:RegisterEnableMob(
-	79538 -- The Butcher
-)
+mod:RegisterEnableMob(79538)
 mod.engageId = 1706
-
---------------------------------------------------------------------------------
--- Locals
---
-
-
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,15 +24,16 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
-	return {
-		
-	}
+	return { "bosskill" }
 end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	
+	self:Death("Win", 79538)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
