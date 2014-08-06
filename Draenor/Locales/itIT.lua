@@ -2,11 +2,11 @@ local L = BigWigs:NewBossLocale("Rukhmar", "itIT")
 if L then
 end
 
-L = BigWigs:NewBossLocale("Tarlna", "itIT")
+L = BigWigs:NewBossLocale("Tarlna the Ageless", "itIT")
 if L then
 end
 
-L = BigWigs:NewBossLocale("Magnaron", "itIT")
+L = BigWigs:NewBossLocale("Drov the Ruiner", "itIT")
 if L then
 end
 

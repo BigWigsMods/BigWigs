@@ -3,15 +3,11 @@
 --
 
 if not BigWigs.isWOD then return end -- XXX compat
-local mod, CL = BigWigs:NewBoss("Tarlna", 949, 1211)
+local mod, CL = BigWigs:NewBoss("Tarlna the Ageless", 949, 1211)
 if not mod then return end
 mod:RegisterEnableMob(81535)
 mod.otherMenu = 962
 mod.worldBoss = 81535
-
---------------------------------------------------------------------------------
--- Locals
---
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -28,7 +24,7 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
-	return { }
+	return { "bosskill" }
 end
 
 function mod:OnBossEnable()

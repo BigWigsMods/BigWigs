@@ -10,10 +10,6 @@ mod.otherMenu = 962
 mod.worldBoss = 83746
 
 --------------------------------------------------------------------------------
--- Locals
---
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -28,7 +24,7 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
-	return { }
+	return { "bosskill" }
 end
 
 function mod:OnBossEnable()
