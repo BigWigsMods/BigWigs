@@ -41,7 +41,7 @@ end
 --
 
 function mod:ExpelMagicFireApplied(args)
-	if mod:Healer() or mod:DAMAGER() == "RANGED" then
+	if mod:Healer() or mod:Damager() == "RANGED" then
 		mod:OpenProximity("proximity", 7)
 	end
 end
