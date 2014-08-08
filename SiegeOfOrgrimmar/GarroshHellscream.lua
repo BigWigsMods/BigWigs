@@ -24,6 +24,7 @@ local waveTimer, waveCounter = nil, 1
 local whirlingCounter = 1
 local mindControl = nil
 local bombardmentCounter, maliceCounter = 1, 1
+local hopeTimer = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -456,12 +457,13 @@ do
 		else
 			mod:Message(144945, "Attention", nil, CL.count:format(mod:SpellName(29125), 0), 149004)
 		end
+		hopeTimer = nil
 	end
 	function mod:YShaarjsProtection(args)
 		if self:MobId(args.destGUID) == 71865 then
 			self:Message(args.spellId, "Positive", "Long", CL.over:format(args.spellName))
 			if not self:LFR() then
-				self:ScheduleTimer(announceHopeless, 6)
+				hopeTimer = self:ScheduleTimer(announceHopeless, 6)
 			end
 		end
 	end
@@ -507,6 +509,7 @@ do
 			annihilateCounter = 1
 		elseif spellId == 144956 then -- Jump To Ground -- exiting intermission
 			if phase == 2 then
+				if hopeTimer then self:CancelTimer(hopeTimer) end
 				desecrateCounter = 1
 				self:Bar(144758, 10) -- Desecrate
 				self:Bar(145065, 15, 67229, 145065) -- Mind Control
