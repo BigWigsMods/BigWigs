@@ -80,10 +80,10 @@ L = BigWigs:NewBossLocale("Spoils of Pandaria", "deDE")
 if L then
 --@localization(locale="deDE", namespace="SiegeOfOrgrimmar/SpoilsOfPandaria", format="lua_additive_table", handle-unlocalized="ignore")@
 
-	--L.crates = "Crates"
-	--L.crates_desc = "Messages for how much power you still need and how many large/medium/small crates it will take."
-	--L.full_power = "Full Power!"
-	--L.power_left = "%d left! (%d/%d/%d)"
+	L.crates = "Kisten"
+	L.crates_desc = "Nachrichten, für wie viel Energie du noch brauchst und wie viele große/mittlere/kleine Kisten das sind."
+	L.full_power = "Volle Energie!"
+	L.power_left = "%d übrig! (%d/%d/%d)"
 end
 
 L = BigWigs:NewBossLocale("Thok the Bloodthirsty", "deDE")
@@ -105,7 +105,7 @@ if L then
 	L.you_ate = "Du hast einen Parasiten gegessen (noch %d)"
 	L.other_ate = "%s hat einen %sParasiten gegessen (noch %d)"
 	L.parasites_up = "%d |4Parasit:Parasiten; vorhanden"
-	L.dance = "%s, Tanzen"
+	L.dance = "%s, Tanzen!"
 	L.prey_message = "Wirke Beute auf Parasiten"
 	L.injection_over_soon = "Injektion bald vorbei (%s)!"
 
