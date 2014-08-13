@@ -6,8 +6,15 @@
 if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("The Butcher", 994, 971)
 if not mod then return end
-mod:RegisterEnableMob(79538)
+mod:RegisterEnableMob(77404)
 --mod.engageId = 1706
+
+--------------------------------------------------------------------------------
+-- Locals
+--
+
+local cleaveCount = 1
+local frenzied = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -15,7 +22,8 @@ mod:RegisterEnableMob(79538)
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	
+	L.frenzy, L.frenzy_desc = EJ_GetSectionInfo(8862)
+	L.frenzy_icon = 156598
 end
 L = mod:GetLocale()
 
@@ -24,16 +32,91 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
-	return { "bosskill" }
+	return {
+		{156147, "TANK"}, {156151, "TANK_HEALER"}, 156157, 156152, {-8860, "PROXIMITY"}, "frenzy",
+		"berserk", "bosskill"
+	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	
-	self:Death("Win", 79538)
+
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "BoundingCleave", "boss1")
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Cleaver", 156147)
+	self:Log("SPELL_AURA_APPLIED", "Tenderizer", 156151)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Tenderizer", 156151)
+	self:Log("SPELL_CAST_START", "Cleave", 156157)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "GushingWounds", 156152)
+	self:Log("SPELL_AURA_APPLIED", "Frenzy", 156598)
+
+	self:Death("Win", 77404)
+end
+
+function mod:OnEngage()
+	cleaveCount = 1
+	frenzied = nil
+	self:Bar(156151, 7) -- Tenderizer
+	self:Bar(-8860, 60) -- Bounding Cleave
+	self:Berserk(300)
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:BoundingCleave(_, spellName, _, _, spellId)
+	if spellId == 156197 then -- Bounding Cleave (knockback)
+		cleaveCount = 1
+		self:Message(-8860, "Urgent", "Alert")
+		self:Bar(-8860, frenzied and 30 or 60)
+		self:Bar(156157, frenzied and 5 or 8) -- Cleave
+
+		local _, _, _, stacks = UnitDebuff("player", self:SpellName(156152)) -- Gushing Wounds
+		if stacks and stacks > 3 then
+			self:OpenProximity(-8860, 10) -- XXX no idea on clump size, 10yds should be safe
+			self:ScheduleTimer("CloseProximity", frenzied and 5 or 8, -8860)
+		end
+	end
+end
+
+function mod:Cleaver(args)
+	if args.amount % 2 == 0 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+	end
+end
+
+function mod:TenderizerApplied(args)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", args.amount and "Warning")
+	self:CDBar(args.spellId, 17)
+end
+
+function mod:Cleave(args)
+	self:Message(args.spellId, "Attention", nil, CL.count:format(args.spellName, cleaveCount))
+	--self:StopBar(CL.count:format(args.spellName, cleaveCount))
+	cleaveCount = cleaveCount + 1
+	--self:CDBar(args.spellId, 6, CL.count:format(args.spellName, cleaveCount))
+end
+
+function mod:GushingWounds(args)
+	if self:Me(args.destGUID) and args.amount > 2 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Personal", "Alarm")
+	end
+end
+
+function mod:UNIT_HEALTH_FREQUENT(unit)
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	if hp < 34 then
+		self:Message("frenzy", "Neutral", "Info", CL.soon(L.frenzy), false)
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT")
+	end
+end
+
+function mod:Frenzy(args)
+	self:Message("frenzy", "Important", "Alarm", L.frenzy_icon)
+	frenzied = true
+	-- gains power faster while frenzied
+	local left = 100 - UnitPower("boss1") * (10/3)
+	self:Bar(-8860, left) -- Bounding Cleave
+end
 
