@@ -48,7 +48,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		162287, {162288, "TANK"}, 162346, 163208, 162475,
+		162287, {162288, "TANK"}, {162346, "FLASH"}, 163208, 162475,
 		{162894, "TANK"}, {162892, "TANK"}, 162968,
 		163318,
 		"adds", "bosskill",
@@ -129,7 +129,11 @@ do
 	local prev = 0
 	function mod:CrystallineBarrage(args)
 		-- stop announcing barrage from Motes to the raid
-		if self:MobId(args.sourceGUID) ~= 80557 or self:Me(args.destGUID) then
+		local isMe = self:Me(args.destGUID)
+		if self:MobId(args.sourceGUID) ~= 80557 or isMe then
+			if isMe then
+				self:Flash(args.spellId)
+			end
 			self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
 		end
 		local t = GetTime()
