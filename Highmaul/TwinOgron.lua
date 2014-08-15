@@ -49,7 +49,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{143834, "TANK_HEALER"}, {158134, "ICON", "SAY", "FLASH"}, 158093, 158385,
+		{143834, "TANK_HEALER"}, {158134, "ICON", "SAY", "FLASH"}, {158093, "FLASH"}, 158385,
 		{158521, "TANK_HEALER"}, 157943, 158057, 158200,
 		"bosskill"
 	}, {
@@ -109,7 +109,7 @@ do
 		if self:Me(guid) then
 			self:Say(158134)
 			self:Flash(158134)
-		elseif self:Range(name, 10) then
+		elseif self:Range(name) < 11 then
 			self:RangeMessage(158134, "Personal", "Alarm")
 			self:Flash(158134)
 			return
@@ -134,6 +134,9 @@ function mod:InterruptingShout(args)
 	local cast = GetBossCastTime(args.sourceGUID)
 	if cast > 1 then
 		self:Bar(args.spellId, cast, CL.cast:format(args.spellName))
+	end
+	if self:Healer() or self:Damager() == "RANGED" then
+		self:Flash(args.spellId)
 	end
 	self:Bar(158385, 23) -- Pulverize
 end
