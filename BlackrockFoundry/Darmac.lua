@@ -38,16 +38,16 @@ function mod:GetOptions()
 	return {
 		154960, "custom_on_pinned_marker", 154975,
 		{155061, "TANK"}, 155198,
-		{155030, "TANK"}, 154989, {154981, "HEALER", "ICON"}, 155499, 155657,
+		{155030, "TANK"}, 154989, {154981, "HEALER", "ICON"}, {155499, "FLASH"}, {155657, "FLASH"},
 		{155236, "TANK"}, 155222, 155247,
-		---9316, -9333, -9334, -9335,
+		155284, {159044, "FLASH"}, 155826,
 		"stages", "proximity", "berserk", "bosskill",
 	}, {
 		[154960] = -9298, -- Stage 1
 		[155061] = -9301, -- Cruelfang
 		[155030] = -9302, -- Dreadwing
 		[155236] = -9303, -- Ironcrusher
-		--[-9316] = ("%s (%s)"):format(EJ_GetSectionInfo(9304), (GetDifficultyInfo(16))), -- Faultline (Mythic)
+		[155284] = ("%s (%s)"):format(EJ_GetSectionInfo(9304), (GetDifficultyInfo(16))), -- Faultline (Mythic)
 		["stages"] = "general",
 	}
 end
@@ -79,14 +79,20 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Stampede", 155247)
 	self:Log("SPELL_AURA_APPLIED", "CrushArmor", 155236)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushArmor", 155236)
+	-- Faultline
+	self:Log("SPELL_CAST_START", "CannonballBarrage", 155284)
+	--self:Log("SPELL_CAST_SUCCESS", "Epicenter", 159044, 162277)
+	self:Log("SPELL_PERIODIC_DAMAGE", "EpicenterDamage", 159044, 162277)
+	self:Log("SPELL_PERIODIC_MISSED", "EpicenterDamage", 159044, 162277)
+	--self:Log("SPELL_CAST_SUCCESS", "Unsteady", 155826, 162276)
 
 	-- Stage 3
 	self:Log("SPELL_DAMAGE", "ShrapnelDamage", 155499)
 	self:Log("SPELL_MISSED", "ShrapnelDamage", 155499)
-	self:Log("SPELL_PERIODIC_DAMAGE", "FlameInfusion", 155657)
-	self:Log("SPELL_MISSED", "FlameInfusion", 155657)
+	self:Log("SPELL_PERIODIC_DAMAGE", "FlameInfusionDamage", 155657)
+	self:Log("SPELL_PERIODIC_MISSED", "FlameInfusionDamage", 155657)
 
-	self:Death("Deaths", 76884, 76874, 76945) -- Cruelfang, Dreadwing, Ironcrusher
+	self:Death("Deaths", 76884, 76874, 76945, 76946) -- Cruelfang, Dreadwing, Ironcrusher, Faultline
 	self:Death("Win", 76796) -- Beastlord Darmac
 end
 
@@ -192,6 +198,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 155497 then -- Superheated Shrapnel
 		self:Message(155499, "Urgent", nil, CL.incoming:format(spellName))
 		self:CDBar(155499, 25)
+	elseif spellId == 159044 or spellId == 162277 then -- Epicenter (Faultline/Darmac)
+		self:Message(159044, "Attention")
+	elseif spellId == 155826 or spellId == 162276 then -- Unsteady (Faultline/Darmac)
+		self:Message(155826, "Attention")
 	end
 end
 
@@ -279,7 +289,7 @@ end
 
 do
 	local conflagList, conflagMarks, scheduled = mod:NewTargetList(), {}, nil
-	
+
 	local function warnConflag(spellId)
 		mod:PrimaryIcon(spellId, conflagMarks[1])
 		conflagList[1] = conflagMarks[1]
@@ -329,6 +339,22 @@ function mod:CrushArmor(args)
 	end
 end
 
+function mod:CannonballBarrage(args)
+	self:Message(args.spellId, "Urgent", "Alarm")
+end
+
+do
+	local prev = 0
+	function mod:EpicenterDamage(args)
+		local t = GetTime()
+		if t-prev > 2 and self:Me(args.destGUID) then
+			self:Message(159044, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Flash(159044)
+			prev = t
+		end
+	end
+end
+
 -- Stage 3
 
 do
@@ -336,19 +362,21 @@ do
 	function mod:ShrapnelDamage(args)
 		local t = GetTime()
 		if t-prev > 3 and self:Me(args.destGUID) then
-			prev = t
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Flash(args.spellId)
+			prev = t
 		end
 	end
 end
 
 do
 	local prev = 0
-	function mod:FlameInfusion(args)
+	function mod:FlameInfusionDamage(args)
 		local t = GetTime()
 		if t-prev > 3 and self:Me(args.destGUID) then
-			prev = t
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Flash(args.spellId)
+			prev = t
 		end
 	end
 end

@@ -6,17 +6,14 @@
 if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Hans'gar and Franzok", 988, 1155)
 if not mod then return end
-mod:RegisterEnableMob(
-	76973, -- Hans'gar
-	76974 -- Franzok (both unconfirmed)
-)
-mod.engageId = 1693
+mod:RegisterEnableMob(76973, 76974) -- Hans'gar, Franzok
+--mod.engageId = 1693
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-
+local bossDeaths = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -34,19 +31,28 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		
+		"bosskill"
 	}
 end
 
 function mod:OnBossEnable()
-	if self.lastKill and (GetTime() - self.lastKill) < 120 then -- Temp for outdated users enabling us
-		self:ScheduleTimer("Disable", 5)
-		return
-	end
-
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	
+	self:Death("Deaths", 76973, 76974)
+end
+
+function mod:OnEngage()
+
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Deaths(args)
+	bossDeaths = bossDeaths + 1
+	if bossDeaths > 1 then
+		self:Win()
+	end
+end
+

@@ -143,7 +143,6 @@ function mod:FeedingFrenzy(unit, spellName, _, _, spellId)
 		self:StopBar(156390) -- Explosive Shard
 
 		self:Message("stages", "Neutral", "Long", feedingFrenzy, false)
-		--self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 	end
 end
 

@@ -80,7 +80,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Petrification", 162892)
 	self:Log("SPELL_CAST_START", "EarthenFlechettes", 162968)
 	self:Log("SPELL_DAMAGE", "EarthenFlechettesDamage", 162968)
-	self:Log("SPELL_ABSORBED", "EarthenFlechettesDamage", 162968)
+	self:Log("SPELL_MISSED", "EarthenFlechettesDamage", 162968)
 	-- Berserker
 	self:Yell("Berserker", L.berserker_trigger)
 	self:Log("SPELL_CAST_SUCCESS", "RavingAssault", 163318) -- 3s cast, can we get target earlier/on SPELL_CAST_START?
