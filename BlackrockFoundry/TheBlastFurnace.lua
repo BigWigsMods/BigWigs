@@ -6,23 +6,12 @@
 if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("The Blast Furnace", 988, 1154)
 if not mod then return end
-mod:RegisterEnableMob(
-	76809, -- Foreman Feldspar
-	76809, -- Blackrock Security
-	76809, -- Blackrock Engineer
-	76809, -- Blackrock Bellows Operator
-	76809, -- Primal Elementalist
-	76809, -- Firecaller
-	76809, -- Slag Elemental
-	76809 -- Fury (just listed all the mobs from dungeon journal)
-)
+mod:RegisterEnableMob(76809, 76808, 76806) -- Foreman Feldspar, Heat Regulator, Heart of the Mountain
 --mod.engageId = 1690
 
 --------------------------------------------------------------------------------
 -- Locals
 --
-
-
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -40,15 +29,19 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		
+		--"bosskill"
 	}
 end
 
 function mod:OnBossEnable()
-
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+end
+
+function mod:OnEngage()
+
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
