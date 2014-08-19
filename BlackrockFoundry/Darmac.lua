@@ -108,6 +108,9 @@ function mod:OnEngage(diff)
 	self:Bar(154960, 11) -- Pin Down
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2")
+	if self.db.profile.custom_off_pinned_marker then
+		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+	end
 end
 
 --------------------------------------------------------------------------------
