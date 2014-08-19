@@ -28,6 +28,9 @@ move-folders:
     BigWigs/Pandaria: BigWigs_Pandaria
     BigWigs/ThroneOfThunder: BigWigs_ThroneOfThunder
     BigWigs/SiegeOfOrgrimmar: BigWigs_SiegeOfOrgrimmar
+    BigWigs/Highmaul: BigWigs_Highmaul
+    BigWigs/BlackrockFoundry: BigWigs_BlackrockFoundry
+    BigWigs/Draenor: BigWigs_Draenor
 
 ignore:
   - Options/scripts
