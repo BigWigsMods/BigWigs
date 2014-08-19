@@ -15,6 +15,7 @@ mod:RegisterEnableMob(76796)
 
 local phase = 1
 local activatedMounts = {}
+local spearList, marksUsed, markTimer = {}, {}, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -24,9 +25,9 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.next_mount = "Mounting soon!"
 
-	L.custom_on_pinned_marker = "Pin Down marker"
-	L.custom_on_pinned_marker_desc = "Mark pinned players with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
-	L.custom_on_pinned_marker_icon = 1
+	L.custom_off_pinned_marker = "Pin Down marker"
+	L.custom_off_pinned_marker_desc = "Mark pinning spears with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the spears is the fastest way to mark them.|r"
+	L.custom_off_pinned_marker_icon = 1
 end
 L = mod:GetLocale()
 
@@ -36,7 +37,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		154960, "custom_on_pinned_marker", 154975,
+		154960, "custom_off_pinned_marker", 154975,
 		{155061, "TANK"}, 155198,
 		{155030, "TANK"}, 154989, {154981, "HEALER", "ICON"}, {155499, "FLASH"}, {155657, "FLASH"},
 		{155236, "TANK"}, 155222, 155247,
@@ -58,7 +59,6 @@ function mod:OnBossEnable()
 	-- Stage 1
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
 	self:Log("SPELL_AURA_APPLIED", "PinDownApplied", 154960)
-	self:Log("SPELL_AURA_REMOVED", "PinDownRemoved", 154960)
 	self:Log("SPELL_SUMMON", "PinDownSpear", 154956)
 	self:Log("SPELL_CAST_START", "CallThePack", 154975)
 
@@ -92,6 +92,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "FlameInfusionDamage", 155657)
 	self:Log("SPELL_PERIODIC_MISSED", "FlameInfusionDamage", 155657)
 
+	self:Death("SpearDeath", 76796) -- Heavy Spear
 	self:Death("Deaths", 76884, 76874, 76945, 76946) -- Cruelfang, Dreadwing, Ironcrusher, Faultline
 	self:Death("Win", 76796) -- Beastlord Darmac
 end
@@ -99,6 +100,9 @@ end
 function mod:OnEngage(diff)
 	phase = 1
 	wipe(activatedMounts)
+	wipe(spearList)
+	wipe(marksUsed)
+	markTimer = nil
 
 	self:Bar(154975, 8) -- Call the Pack
 	self:Bar(154960, 11) -- Pin Down
@@ -208,15 +212,52 @@ end
 -- Stage 1
 
 do
-	local pinnedList, scheduled = mod:NewTargetList(), nil
-
-	-- TODO figure out who got hit and use mouseover marking to mark the spear instead of the players
-	local function mark(name, index)
-		if mod.db.profile.custom_on_pinned_marker and index < 7 then
-			SetRaidTarget(name, index)
+	-- spear marking
+	local function mark(unit, guid)
+		for mark=1, 6 do
+			if not marksUsed[mark] then
+				SetRaidTarget(unit, mark)
+				spearList[guid] = mark
+				marksUsed[mark] = guid
+				return
+			end
 		end
 	end
 
+	local function markSpears()
+		local continue
+		for guid in next, spearList do
+			if spearList[guid] == true then
+				local unit = mod:GetUnitIdByGUID(guid)
+				if unit then
+					mark(unit, guid)
+				else
+					continue = true
+				end
+			end
+		end
+		if not continue or not mod.db.profile.custom_off_pinned_marker then
+			mod:CancelTimer(markTimer)
+			markTimer = nil
+		end
+	end
+
+	function mod:UPDATE_MOUSEOVER_UNIT()
+		local guid = UnitGUID("mouseover")
+		if guid and spearList[guid] == true then
+			mark("mouseover", guid)
+		end
+	end
+
+	function mod:SpearDeath(args)
+		local mark = spearList[args.destGUID]
+		if mark then
+			marksUsed[mark] = nil
+			spearList[args.destGUID] = nil
+		end
+	end
+
+	local pinnedList, scheduled = mod:NewTargetList(), nil
 	local function warnSpear(spellId)
 		if #pinnedList > 0 then
 			mod:TargetMessage(spellId, pinnedList, "Important", "Alarm", nil, true)
@@ -228,11 +269,12 @@ do
 
 	function mod:PinDownApplied(args)
 		pinnedList[#pinnedList+1] = args.destName
-		mark(args.destName, #pinnedList)
-	end
-
-	function mod:PinDownRemoved(args)
-		mark(args.destName, 0)
+		if not spearList[args.sourceGUID] then
+			spearList[args.sourceGUID] = true
+			if self.db.profile.custom_off_pinned_marker and not markTimer then
+				markTimer = self:ScheduleRepeatingTimer(markSpears, 0.2)
+			end
+		end
 	end
 
 	function mod:PinDownSpear(args)
