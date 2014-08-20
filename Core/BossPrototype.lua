@@ -603,11 +603,9 @@ function boss:Mythic()
 end
 
 function boss:MobId(guid)
-	if isWOD then -- XXX compat
-		if guid then
-			local _, _, _, _, _, id = strsplit(":", guid)
-			return tonumber(id) or -1
-		end
+	if isWOD and guid then -- XXX compat
+		local _, _, _, _, _, id = strsplit(":", guid)
+		return tonumber(id) or -1
 	else
 		return guid and tonumber(sub(guid, 6, 10), 16) or -1
 	end
