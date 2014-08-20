@@ -1,12 +1,4 @@
---[[
-TODO:
 
-- Low HP warning for Cinder Wolves
-- Fiery Link dispeller warning at >2 stacks? prolly too spammy to be worthwhile
-- Always on proximity for Lava Slash? Would cover Blazing Radiance, but
-  conflicts with (beeps at) people stacking for Molten Torrent
-
---]]
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -46,24 +38,24 @@ function mod:GetOptions()
 	return {
 		156018, 156040,
 		155318, 156724, {154932, "ICON", "FLASH", "SAY", "PROXIMITY"}, {"molten_torrent_self", "SAY"}, 155776, {155277, "ICON", "FLASH", "PROXIMITY"}, 155493, {163284, "TANK"},
-		{154952, "FLASH"}, {154950, "TANK"}, {155074, "TANK"}, 155064,
+		{154952, "FLASH"}, {154950, "TANK"}, {155074, "TANK_HEALER"}, 155064,
 		"berserk", "bosskill"
 	}, {
 		[156018] = -9354, -- Aknor Steelbringer
 		[155318] = -9350, -- Ka'graz
 		[154952] = -9345, -- Cinder Wolf
-		["berserk"] = CL.general
+		["berserk"] = "general"
 	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	-- Aknor
 	self:Log("SPELL_CAST_START", "DevastatingSlam", 156018)
 	self:Log("SPELL_CAST_START", "DropHammer", 156040)
 	-- Ka'graz
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_DAMAGE", "LavaSlashDamage", 155318)
 	self:Log("SPELL_MISSED", "LavaSlashDamage", 155318)
 	self:Log("SPELL_AURA_APPLIED", "MoltenTorrentApplied", 154932)
@@ -185,12 +177,13 @@ end
 function mod:Overheated(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
 	self:Bar(args.spellId, 20)
+	--self:CDBar(155074, 5) -- Charring Breath
 end
 
 function mod:CharringBreath(args)
 	local amount = args.amount or 1
-	if amount % 3 == 0 then -- XXX no idea when we should warn for stacks
-		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 8 and "Warning")
+	if self:Mythic() or amount % 2 == 0 then
+		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > (self:Mythic() and 2 or 7) and "Warning")
 	end
 end
 

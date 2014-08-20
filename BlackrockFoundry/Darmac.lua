@@ -14,6 +14,7 @@ mod:RegisterEnableMob(76796)
 --
 
 local phase = 1
+local tantrumCount = 1
 local activatedMounts = {}
 local spearList, marksUsed, markTimer = {}, {}, nil
 
@@ -134,7 +135,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		local mobId = self:MobId(UnitGUID(unit))
 		if mobId > 0 and mobId ~= 76796 and activatedMounts[mobId] == nil then
 			self:StopBar(155061) -- Rend and Tear
-			self:StopBar(155222) -- Tantrum
+			self:StopBar(CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
 			self:StopBar(155499) -- Superheated Shrapnel
 			self:CloseProximity()
 
@@ -148,8 +149,9 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			elseif mobId == 76874 then -- Dreadwing
 				self:CDBar(154981, 12) -- Conflag
 			elseif mobId == 76945 then -- Ironcrusher
+				tantrumCount = 1
 				self:CDBar(155247, 15) -- Stampede
-				self:CDBar(155222, 30) -- Tantrum
+				self:CDBar(155222, 30, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
 			elseif mobId == 76946 then -- Faultline (Mythic)
 				--
 			end
@@ -172,7 +174,8 @@ function mod:Deaths(args)
 		activatedMounts[args.mobId] = false
 		self:StopBar(155247) -- Stampede
 
-		self:CDBar(155222, 23) -- Tantrum
+		tantrumCount = 1
+		self:CDBar(155222, 23, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
 	elseif args.mobId == 76946 then -- Faultline (Mythic)
 		activatedMounts[args.mobId] = false
 	end
@@ -201,11 +204,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 155365 then -- Pin Down
 		self:Message(spellId, "Urgent", "Warning", CL.incoming:format(spellName))
 	elseif spellId == 155221 then -- Iron Crusher's Tantrum
-		self:Message(155222, "Attention")
-		self:CDBar(spellId, 26)
+		self:Message(155222, "Attention", nil, CL.count:format(tantrumCount))
+		tantrumCount = tantrumCount + 1
+		self:CDBar(spellId, 26, CL.count:format(spellName, tantrumCount))
 	elseif spellId == 155520 then -- Darmac's Tantrum
-		self:Message(155222, "Attention")
-		self:CDBar(spellId, 23)
+		self:Message(155222, "Attention", nil, CL.count:format(tantrumCount))
+		tantrumCount = tantrumCount + 1
+		self:CDBar(spellId, 23, CL.count:format(spellName, tantrumCount))
 	elseif spellId == 155497 then -- Superheated Shrapnel
 		self:Message(155499, "Urgent", nil, CL.incoming:format(spellName))
 		self:CDBar(155499, 25)
@@ -233,8 +238,8 @@ do
 
 	local function markSpears()
 		local continue = nil
-		for guid in next, spearList do
-			if spearList[guid] == true then
+		for guid, m in next, spearList do
+			if m == true then
 				local unit = mod:GetUnitIdByGUID(guid)
 				if unit then
 					mark(unit, guid)
@@ -339,13 +344,6 @@ end
 do
 	local conflagList, conflagMark, scheduled = mod:NewTargetList(), 8, nil
 
-	local function mark(name)
-		if mod.db.profile.custom_off_conflag_marker and conflagMark > 5  then
-			SetRaidTarget(name, conflagMark)
-			conflagMark = conflagMark - 1
-		end
-	end
-
 	local function warnConflag(spellId)
 		mod:TargetMessage(spellId, conflagList, "Urgent", mod:Dispeller("MAGIC") and "Alert")
 		scheduled = nil
@@ -358,11 +356,14 @@ do
 			self:Bar(args.spellId, 20)
 			scheduled = self:ScheduleTimer(warnConflag, 0.1, args.spellId)
 		end
-		mark(args.destName)
+		if self.db.profile.custom_off_conflag_marker and conflagMark > 5  then
+			SetRaidTarget(args.destName, conflagMark)
+			conflagMark = conflagMark - 1
+		end
 	end
 
 	function mod:ConflagrationRemoved(args)
-		if mod.db.profile.custom_off_conflag_marker then
+		if self.db.profile.custom_off_conflag_marker then
 			SetRaidTarget(args.destName, 0)
 		end
 	end
