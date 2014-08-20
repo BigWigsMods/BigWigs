@@ -26,8 +26,12 @@ if L then
 	L.next_mount = "Mounting soon!"
 
 	L.custom_off_pinned_marker = "Pin Down marker"
-	L.custom_off_pinned_marker_desc = "Mark pinning spears with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the spears is the fastest way to mark them.|r"
+	L.custom_off_pinned_marker_desc = "Mark pinning spears with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the spears is the fastest way to mark them.|r"
 	L.custom_off_pinned_marker_icon = 1
+
+	L.custom_off_conflag_marker = "Conflagration marker"
+	L.custom_off_conflag_marker_desc = "Mark conflagration targets with {rt8}{rt7}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_conflag_marker_icon = 8
 end
 L = mod:GetLocale()
 
@@ -39,7 +43,7 @@ function mod:GetOptions()
 	return {
 		154960, "custom_off_pinned_marker", 154975,
 		{155061, "TANK"}, 155198,
-		{155030, "TANK"}, 154989, {154981, "HEALER", "ICON"}, {155499, "FLASH"}, {155657, "FLASH"},
+		{155030, "TANK"}, 154989, {154981, "HEALER"}, "custom_off_conflag_marker", {155499, "FLASH"}, {155657, "FLASH"},
 		{155236, "TANK"}, 155222, 155247,
 		155284, {159044, "FLASH"}, 155826,
 		"stages", "proximity", "berserk", "bosskill",
@@ -217,7 +221,7 @@ end
 do
 	-- spear marking
 	local function mark(unit, guid)
-		for mark=1, 6 do
+		for mark=1, 5 do
 			if not marksUsed[mark] then
 				SetRaidTarget(unit, mark)
 				spearList[guid] = mark
@@ -228,7 +232,7 @@ do
 	end
 
 	local function markSpears()
-		local continue
+		local continue = nil
 		for guid in next, spearList do
 			if spearList[guid] == true then
 				local unit = mod:GetUnitIdByGUID(guid)
@@ -333,34 +337,33 @@ do
 end
 
 do
-	local conflagList, conflagMarks, scheduled = mod:NewTargetList(), {}, nil
+	local conflagList, conflagMark, scheduled = mod:NewTargetList(), 8, nil
+
+	local function mark(name)
+		if mod.db.profile.custom_off_conflag_marker and conflagMark > 5  then
+			SetRaidTarget(name, conflagMark)
+			conflagMark = conflagMark - 1
+		end
+	end
 
 	local function warnConflag(spellId)
-		mod:PrimaryIcon(spellId, conflagMarks[1])
-		conflagList[1] = conflagMarks[1]
-		if conflagMarks[2] then
-			mod:SecondaryIcon(spellId, conflagMarks[2])
-			conflagList[2] = conflagMarks[2]
-		end
 		mod:TargetMessage(spellId, conflagList, "Urgent", mod:Dispeller("MAGIC") and "Alert")
 		scheduled = nil
 	end
 
 	function mod:ConflagrationApplied(args)
-		conflagMarks[#conflagMarks+1] = args.destName
+		conflagList[#conflagList+1] = args.destName
 		if not scheduled then
+			conflagMark = 8
 			self:Bar(args.spellId, 20)
 			scheduled = self:ScheduleTimer(warnConflag, 0.1, args.spellId)
 		end
+		mark(args.destName)
 	end
 
 	function mod:ConflagrationRemoved(args)
-		if args.destName == conflagMarks[1] then
-			self:PrimaryIcon(args.spellId)
-			conflagMarks[1] = nil
-		elseif args.destName == conflagMarks[2] then
-			mod:SecondaryIcon(args.spellId, conflagMarks[2])
-			conflagMarks[2] = nil
+		if mod.db.profile.custom_off_conflag_marker then
+			SetRaidTarget(args.destName, 0)
 		end
 	end
 end
