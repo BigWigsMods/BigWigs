@@ -27,12 +27,12 @@ if L then
 	L.next_mount = "Mounting soon!"
 
 	L.custom_off_pinned_marker = "Pin Down marker"
-	L.custom_off_pinned_marker_desc = "Mark pinning spears with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the spears is the fastest way to mark them.|r"
-	L.custom_off_pinned_marker_icon = 1
+	L.custom_off_pinned_marker_desc = "Mark pinning spears with {rt8}{rt7}{rt6}{rt5}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the spears is the fastest way to mark them.|r"
+	L.custom_off_pinned_marker_icon = 8
 
 	L.custom_off_conflag_marker = "Conflagration marker"
-	L.custom_off_conflag_marker_desc = "Mark conflagration targets with {rt8}{rt7}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
-	L.custom_off_conflag_marker_icon = 8
+	L.custom_off_conflag_marker_desc = "Mark conflagration targets with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_conflag_marker_icon = 1
 end
 L = mod:GetLocale()
 
@@ -53,7 +53,7 @@ function mod:GetOptions()
 		[155061] = -9301, -- Cruelfang
 		[155030] = -9302, -- Dreadwing
 		[155236] = -9303, -- Ironcrusher
-		[155284] = ("%s (%s)"):format(EJ_GetSectionInfo(9304), (GetDifficultyInfo(16))), -- Faultline (Mythic)
+		[155284] = ("%s (%s)"):format(EJ_GetSectionInfo(9304), GetDifficultyInfo(16)), -- Faultline (Mythic)
 		["stages"] = "general",
 	}
 end
@@ -226,7 +226,7 @@ end
 do
 	-- spear marking
 	local function mark(unit, guid)
-		for mark=1, 5 do
+		for mark=8, 4, -1 do
 			if not marksUsed[mark] then
 				SetRaidTarget(unit, mark)
 				spearList[guid] = mark
@@ -352,13 +352,13 @@ do
 	function mod:ConflagrationApplied(args)
 		conflagList[#conflagList+1] = args.destName
 		if not scheduled then
-			conflagMark = 8
+			conflagMark = 1
 			self:Bar(args.spellId, 20)
 			scheduled = self:ScheduleTimer(warnConflag, 0.1, args.spellId)
 		end
-		if self.db.profile.custom_off_conflag_marker and conflagMark > 5  then
+		if self.db.profile.custom_off_conflag_marker and conflagMark < 4  then
 			SetRaidTarget(args.destName, conflagMark)
-			conflagMark = conflagMark - 1
+			conflagMark = conflagMark + 1
 		end
 	end
 
