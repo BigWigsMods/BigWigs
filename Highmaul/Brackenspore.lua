@@ -50,7 +50,7 @@ function mod:GetOptions()
 	return {
 		"spore_shooter", "mind_fungus", "flesh_eater", "decay",
 		"living_mushroom", "rejuvenating_mushroom",
-		164125, {163241, "TANK"}, {159219, "TANK_HEALER"}, 159996, "berserk", "bosskill"
+		{164125, "FLASH"}, {163241, "TANK"}, {159219, "TANK_HEALER"}, 159996, "berserk", "bosskill"
 	}, {
 		["spore_shooter"] = -9993,
 		["living_mushroom"] = -9998,
@@ -122,7 +122,11 @@ end
 
 function mod:FungusSpawns(unit, spellName, _, _, spellId)
 	if spellId == 164125 then -- Creeping Moss
-		self:Message(spellId, "Urgent") -- TODO add sound for firefighter players... and tanks?
+		local flamethrower = UnitBuff("player", self:SpellName(163322))
+		self:Message(spellId, "Urgent", flamethrower and "Alert")
+		if flamethrower then
+			self:Flash(spellId)
+		end
 	elseif spellId == 163594 then -- Spore Shooter
 		self:Message("spore_shooter", "Attention", nil, spellId, L.spore_shooter_icon)
 		self:Bar("spore_shooter", 60, spellId, L.spore_shooter_icon)
