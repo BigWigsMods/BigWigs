@@ -273,6 +273,15 @@ local function translateZoneID(id)
 	else
 		name = GetMapNameByID(id)
 	end
+	if not name then -- XXX compat
+		if id == 988 then
+			name = "Blackrock Foundry [BETA]"
+		elseif id == 994 then
+			name = "Highmaul [BETA]"
+		elseif id == 962 then
+			name = "Draenor [BETA]"
+		end
+	end
 	return name or tostring(id)
 end
 
@@ -1051,9 +1060,13 @@ end
 
 function showToggleOptions(widget, event, group)
 	if widget:GetUserData("zone") then
-		local module = BigWigs:GetBossModule(group)
-		widget:SetUserData("bossIndex", group)
-		populateToggleOptions(widget, module)
+		-- If we don't have any modules registered to the zone then "group" will be nil.
+		-- In this case we skip this step and draw an empty panel.
+		if group then
+			local module = BigWigs:GetBossModule(group)
+			widget:SetUserData("bossIndex", group)
+			populateToggleOptions(widget, module)
+		end
 	else
 		populateToggleOptions(widget, widget:GetUserData("module"))
 	end
@@ -1075,7 +1088,7 @@ local function onZoneShow(frame)
 	end
 
 	local zoneList, zoneSort = {}, {}
-	if moduleList then
+	if type(moduleList) == "table" then
 		for i = 1, #moduleList do
 			local module = moduleList[i]
 			zoneList[module.moduleName] = module.displayName
