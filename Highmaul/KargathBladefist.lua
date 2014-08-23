@@ -21,7 +21,7 @@ local hurled = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.blade_dance_bar = "Dancing"
 end
 L = mod:GetLocale()
 
@@ -76,7 +76,7 @@ end
 
 function mod:BladeDance(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 10, "Blade Dancing")
+	self:Bar(args.spellId, 10, L.blade_dance_bar)
 	--self:CDBar(args.spellId, 20)
 end
 
