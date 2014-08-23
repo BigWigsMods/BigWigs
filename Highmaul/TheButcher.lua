@@ -53,8 +53,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GushingWounds", 156152)
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 156598)
 	--Mythic
-	self:Log("SPELL_PERIODIC_DAMAGE", "PaleVitriol", 163046)
-	self:Log("SPELL_PERIODIC_MISSED", "PaleVitriol", 163046)
+	self:Log("SPELL_PERIODIC_DAMAGE", "PaleVitriolDamage", 163046)
+	self:Log("SPELL_PERIODIC_MISSED", "PaleVitriolDamage", 163046)
 
 	self:Death("Win", 77404)
 end
@@ -73,6 +73,18 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local prev = 0
+	function mod:PaleVitriolDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 2 then
+			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Flash(args.spellId)
+			prev = t
+		end
+	end
+end
 
 function mod:BoundingCleave(_, spellName, _, _, spellId)
 	if spellId == 156197 then -- Bounding Cleave (knockback)
@@ -96,7 +108,7 @@ function mod:Cleaver(args)
 	end
 end
 
-function mod:TenderizerApplied(args)
+function mod:Tenderizer(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", args.amount and "Warning")
 	self:CDBar(args.spellId, 17)
 end
@@ -117,7 +129,7 @@ end
 function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < 34 then
-		self:Message("frenzy", "Neutral", "Info", CL.soon(L.frenzy), false)
+		self:Message("frenzy", "Neutral", "Info", CL.soon:format(L.frenzy), false)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT")
 	end
 end
