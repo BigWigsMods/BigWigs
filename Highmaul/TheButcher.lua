@@ -33,8 +33,12 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		{163046, "FLASH"},
 		{156147, "TANK"}, {156151, "TANK_HEALER"}, 156157, 156152, {-8860, "PROXIMITY"}, "frenzy",
 		"berserk", "bosskill"
+	}, {
+		[163046] = "mythic",
+		[156147] = "general"
 	}
 end
 
@@ -48,6 +52,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Cleave", 156157)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GushingWounds", 156152)
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 156598)
+	--Mythic
+	self:Log("SPELL_PERIODIC_DAMAGE", "PaleVitriol", 163046)
+	self:Log("SPELL_PERIODIC_MISSED", "PaleVitriol", 163046)
 
 	self:Death("Win", 77404)
 end
@@ -57,7 +64,9 @@ function mod:OnEngage()
 	frenzied = nil
 	self:Bar(156151, 7) -- Tenderizer
 	self:Bar(-8860, 60) -- Bounding Cleave
-	self:Berserk(300)
+	if not self:LFR() then
+		self:Berserk(self:Mythic() and 240 or 300)
+	end
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
@@ -69,8 +78,9 @@ function mod:BoundingCleave(_, spellName, _, _, spellId)
 	if spellId == 156197 then -- Bounding Cleave (knockback)
 		cleaveCount = 1
 		self:Message(-8860, "Urgent", "Alert")
-		self:Bar(-8860, frenzied and 30 or 60)
-		self:Bar(156157, frenzied and 5 or 8) -- Cleave
+		self:Bar(-8860, frenzied and 30 or 60) -- Bounding Cleave
+		self:CDBar(156157, frenzied and 5 or 8) -- Cleave
+		self:CDBar(156151, 17) -- Tenderizer
 
 		local _, _, _, stacks = UnitDebuff("player", self:SpellName(156152)) -- Gushing Wounds
 		if stacks and stacks > 3 then
