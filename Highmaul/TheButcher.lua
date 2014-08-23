@@ -14,6 +14,7 @@ mod:RegisterEnableMob(77404)
 --
 
 local cleaveCount = 1
+local addCount = 1
 local frenzied = nil
 
 --------------------------------------------------------------------------------
@@ -24,6 +25,8 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.frenzy, L.frenzy_desc = EJ_GetSectionInfo(8862)
 	L.frenzy_icon = 156598
+
+	L.adds_multiple = "Adds x%d"
 end
 L = mod:GetLocale()
 
@@ -33,11 +36,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{163046, "FLASH"},
+		-10228, {163046, "FLASH"},
 		{156147, "TANK"}, {156151, "TANK_HEALER"}, 156157, 156152, {-8860, "PROXIMITY"}, "frenzy",
 		"berserk", "bosskill"
 	}, {
-		[163046] = "mythic",
+		[-10228] = "mythic",
 		[156147] = "general"
 	}
 end
@@ -53,6 +56,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GushingWounds", 156152)
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 156598)
 	--Mythic
+	self:Log("SPELL_CAST_SUCCESS", "AddSpawn", 163051) -- Paleobomb
 	self:Log("SPELL_PERIODIC_DAMAGE", "PaleVitriolDamage", 163046)
 	self:Log("SPELL_PERIODIC_MISSED", "PaleVitriolDamage", 163046)
 
@@ -61,9 +65,13 @@ end
 
 function mod:OnEngage()
 	cleaveCount = 1
+	addCount = 1
 	frenzied = nil
 	self:Bar(156151, 7) -- Tenderizer
 	self:Bar(-8860, 60) -- Bounding Cleave
+	if self:Mythic() then
+		self:Bar(-10228, 18, CL.add, "spell_shadow_corpseexplode")
+	end
 	if not self:LFR() then
 		self:Berserk(self:Mythic() and 240 or 300)
 	end
@@ -73,6 +81,22 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local prev = 0
+	function mod:AddSpawn()
+		local t = GetTime()
+		if t-prev > 5 then
+			-- every four waves adds another add: 3x1, 4x2, 4x3 (might cap/reset, my logs only get to 190s or so)
+			local num = floor(addCount / 4) + 1
+			self:Message(-10228, "Attention", nil, CL.spawning:format(L.adds_multiple:format(num)), "spell_shadow_corpseexplode")
+			addCount = addCount + 1
+			local nextNum = floor((addCount) / 4) + 1
+			self:Bar(-10228, 14.5, L.adds_multiple:format(nextNum), "spell_shadow_corpseexplode")
+			prev = t
+		end
+	end
+end
 
 do
 	local prev = 0
