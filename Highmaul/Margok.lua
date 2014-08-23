@@ -42,7 +42,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{159515, "TANK"}, 156238, 156467, 156471, {158605, "ICON", "PROXIMITY", "FLASH"}, 157349,
-		{"volatile_anomaly", "TANK"},
+		"volatile_anomaly",
 		{157801, "DISPEL"}, {157763, "FLASH"}, "custom_off_fixate_marker",
 		{158553, "TANK"}, {158563, "TANK"},
 		"stages", "bosskill"
