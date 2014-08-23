@@ -31,18 +31,18 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{159113, "TANK_HEALER"}, 159250, {158986, "ICON", "FLASH"}, 159947, {159413, "FLASH"}, {159311, "FLASH"}, 160521, "bosskill"
+		{159113, "TANK_HEALER"}, 159250, {158986, "SAY", "ICON", "FLASH"}, 159947, {159413, "FLASH"}, {159311, "FLASH"}, 160521, "bosskill"
 	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Log("SPELL_START_START", "Impale", 159113)
+	self:Log("SPELL_CAST_START", "Impale", 159113)
 	self:Log("SPELL_AURA_APPLIED", "BladeDance", 159250)
-	self:Log("SPELL_START_START", "BerserkerRush", 158986)
+	self:Log("SPELL_CAST_START", "BerserkerRush", 158986)
 	self:Log("SPELL_AURA_REMOVED", "BerserkerRushRemoved", 158986)
-	self:Log("SPELL_START_START", "ChainHurl", 159947)
+	self:Log("SPELL_CAST_START", "ChainHurl", 159947)
 	self:Log("SPELL_AURA_APPLIED", "ChainHurlApplied", 159947)
 	self:Log("SPELL_PERIODIC_DAMAGE", "FlameJetDamage", 159311)
 	self:Log("SPELL_PERIODIC_MISSED", "FlameJetDamage", 159311)
@@ -63,11 +63,15 @@ end
 -- Event Handlers
 --
 
-function mod:Impale(args)
-	local target = UnitName("boss1target")
-	self:TargetMessage(args.spellId, target, "Important", "Warning", nil, nil, true)
-	self:TargetBar(args.spellId, 8.8) -- cast+channel
-	self:ScheduleTimer("CDBar", 8.8, args.spellId, 28.2) -- 37.4 cd with chain hurl/berserker rush delaying it
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage(159113, name, "Important", "Warning", nil, nil, true)
+		self:TargetBar(159113, 8.8, name) -- cast+channel
+	end
+	function mod:Impale(args)
+		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
+		self:CDBar(args.spellId, 37) -- 37.4 cd with chain hurl/berserker rush delaying it
+	end
 end
 
 function mod:BladeDance(args)
@@ -76,14 +80,19 @@ function mod:BladeDance(args)
 	--self:CDBar(args.spellId, 20)
 end
 
-function mod:BerserkerRush(args)
-	local target = UnitName("boss1target")
-	self:PrimaryIcon(args.spellId, target)
-	if self:Me(args.destGUID) then
-		self:Flash(args.spellId)
+do
+	local function printTarget(self, name, guid)
+		self:PrimaryIcon(158986, name)
+		if self:Me(guid) then
+			self:Say(158986)
+			self:Flash(158986)
+		end
+		self:TargetMessage(158986, name, "Important", "Alarm", nil, nil, true)
 	end
-	self:TargetMessage(args.spellId, target, "Important", "Alarm", nil, nil, true)
-	-- cd is 45-70 :\
+	function mod:BerserkerRush(args)
+		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
+		-- cd is 45-70 :\
+	end
 end
 
 function mod:BerserkerRushRemoved(args)
