@@ -37,7 +37,7 @@ if L then
 	L.rejuvenating_mushroom_desc = select(2, EJ_GetSectionInfo(9992))
 	L.rejuvenating_mushroom_icon = "Spell_Magic_ManaGain"
 
-	L.creeping_moss_heal = "Creeping Moss is HEALING!"
+	L.creeping_moss_heal = "Creeping Moss under BOSS (healing)"
 end
 L = mod:GetLocale()
 L.decay_desc = CL.focus_only..L.decay_desc
@@ -77,7 +77,7 @@ function mod:OnEngage()
 	self:Bar(159996, 90) -- Infesting Spores
 	self:CDBar("mind_fungus", 10, L.mind_fungus, L.mind_fungus_icon) -- Mind Fungus
 	self:CDBar("spore_shooter", 20, L.spore_shooter, L.spore_shooter_icon) -- Spore Shooter
-	self:CDBar("flesh_eater", 32, L.flesh_eater, L.flesh_eater_icon) -- Fungal Flesh-Eater
+	self:CDBar("flesh_eater", 32, CL.big_add, L.flesh_eater_icon) -- Fungal Flesh-Eater
 	self:CDBar("living_mushroom", 60, L.living_mushroom, L.living_mushroom_icon) -- Living Mushroom
 	self:CDBar("rejuvenating_mushroom", 80, L.rejuvenating_mushroom, L.rejuvenating_mushroom_icon) -- Rejuvenating Mushroom
 	self:Berserk(600) -- LFR enrage
@@ -134,8 +134,8 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 		self:Message("mind_fungus", "Attention", nil, spellId, L.mind_fungus_icon)
 		self:Bar("mind_fungus", 30, spellId, L.mind_fungus_icon)
 	elseif spellId == 163142 then -- Evolved Fungus (Fungal Flesh-Eater)
-		self:Message("flesh_eater", "Urgent", self:Tank() and "Info", L.flesh_eater, L.flesh_eater_icon)  -- Fungal Flesh-Eater
-		self:Bar("flesh_eater", 120, L.flesh_eater, L.flesh_eater_icon)
+		self:Message("flesh_eater", "Urgent", self:Tank() and "Info", CL.spawning:format(CL.big_add), L.flesh_eater_icon)
+		self:Bar("flesh_eater", 120, CL.big_add, L.flesh_eater_icon)
 	elseif spellId == 160022 then -- Living Mushroom
 		self:Message("living_mushroom", "Positive", "Info", spellId, L.living_mushroom_icon)
 		self:Bar("living_mushroom", 60, spellId, L.living_mushroom_icon)
