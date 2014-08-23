@@ -6,7 +6,7 @@
 if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Kargath Bladefist", 994, 1128)
 if not mod then return end
-mod:RegisterEnableMob(79459)
+mod:RegisterEnableMob(78714)
 --mod.engageId = 1721
 
 --------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{159113, "TANK_HEALER"}, 159250, {158986, "ICON", "FLASH"}, {159413, "FLASH"}, {159311, "FLASH"}, 160521, "bosskill"
+		{159113, "TANK_HEALER"}, 159250, {158986, "ICON", "FLASH"}, 159947, {159413, "FLASH"}, {159311, "FLASH"}, 160521, "bosskill"
 	}
 end
 
@@ -72,7 +72,8 @@ end
 
 function mod:BladeDance(args)
 	self:Message(args.spellId, "Attention")
-	-- its 10s on, 10s off, not really worth a timer considering you should be spread most of the fight
+	self:Bar(args.spellId, 10, "Blade Dancing")
+	--self:CDBar(args.spellId, 20)
 end
 
 function mod:BerserkerRush(args)
