@@ -1,21 +1,27 @@
 ## Interface: 50400
 
 ## Title: Big Wigs [|cffeda55fSiege of Orgrimmar|r]
-## Title-deDE: Big Wigs [|cffeda55fSiege of Orgrimmar|r]
-## Title-esES: Big Wigs [|cffeda55fSiege of Orgrimmar|r]
+## Title-deDE: Big Wigs [|cffeda55fSchlacht um Orgrimmar|r]
+## Title-esES: Big Wigs [|cffeda55fAsedio de Orgrimmar|r]
+## Title-esMX: Big Wigs [|cffeda55fAsedio de Orgrimmar|r]
 ## Title-frFR: Big Wigs [|cffeda55fSiège d'Orgrimmar|r]
 ## Title-ruRU: Big Wigs [|cffeda55fОсада Оргриммара|r]
 ## Title-zhCN: Big Wigs [|cffeda55f决战奥格瑞玛|r]
 ## Title-zhTW: Big Wigs [|cffeda55f圍攻奧格瑪|r]
 ## Title-itIT: Big Wigs [|cffeda55fAssedio di Orgrimmar|r]
+## Title-ptBR: Big Wigs [|cffeda55fCerco a Orgrimmar|r]
+## Title-koKR: Big Wigs [|cffeda55fSiege of Orgrimmar|r]
 ## Notes: Big Wigs Modules for the Siege of Orgrimmar.
 ## Notes-deDE: Big Wigs Modules for the Siege of Orgrimmar.
 ## Notes-esES: Big Wigs Modules for the Siege of Orgrimmar.
+## Notes-esMX: Big Wigs Modules for the Siege of Orgrimmar.
 ## Notes-frFR: Modules Big Wigs concernant le Siège d'Orgrimmar.
 ## Notes-ruRU: Модуль Big Wigs для Осады Оргриммара.
 ## Notes-zhCN: Big Wigs 决战奥格瑞玛模块。
 ## Notes-zhTW: Big Wigs 圍攻奧格瑪模組。
 ## Notes-itIT: Moduli Big Wigs per l'Assedio di Orgrimmar.
+## Notes-ptBR: Big Wigs Modules for the Siege of Orgrimmar.
+## Notes-koKR: Big Wigs Modules for the Siege of Orgrimmar.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

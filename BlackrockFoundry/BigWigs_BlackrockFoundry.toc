@@ -2,26 +2,32 @@
 
 ## Title: Big Wigs [|cffeda55fBlackrock Foundry|r]
 ## Title-deDE: Big Wigs [|cffeda55fBlackrock Foundry|r]
-## Title-esES: Big Wigs [|cffeda55fЛитейная клана Черной горы|r]
-## Title-frFR: Big Wigs [|cffeda55fSiège d'Orgrimmar|r]
-## Title-ruRU: Big Wigs [|cffeda55fОсада Оргриммара|r]
-## Title-zhCN: Big Wigs [|cffeda55f决战奥格瑞玛|r]
-## Title-zhTW: Big Wigs [|cffeda55f圍攻奧格瑪|r]
-## Title-itIT: Big Wigs [|cffeda55fAssedio di Orgrimmar|r]
+## Title-esES: Big Wigs [|cffeda55fBlackrock Foundry|r]
+## Title-esMX: Big Wigs [|cffeda55fBlackrock Foundry|r]
+## Title-frFR: Big Wigs [|cffeda55fBlackrock Foundry|r]
+## Title-ruRU: Big Wigs [|cffeda55fBlackrock Foundry|r]
+## Title-zhCN: Big Wigs [|cffeda55fBlackrock Foundry|r]
+## Title-zhTW: Big Wigs [|cffeda55fBlackrock Foundry|r]
+## Title-itIT: Big Wigs [|cffeda55fBlackrock Foundry|r]
+## Title-ptBR: Big Wigs [|cffeda55fBlackrock Foundry|r]
+## Title-koKR: Big Wigs [|cffeda55fBlackrock Foundry|r]
 ## Notes: Big Wigs Modules for the Blackrock Foundry.
 ## Notes-deDE: Big Wigs Modules for the Blackrock Foundry.
 ## Notes-esES: Big Wigs Modules for the Blackrock Foundry.
-## Notes-frFR: Modules Big Wigs concernant le Siège d'Orgrimmar.
-## Notes-ruRU: Модуль Big Wigs для Литейной клана Черной горы.
-## Notes-zhCN: Big Wigs 决战奥格瑞玛模块。
-## Notes-zhTW: Big Wigs 圍攻奧格瑪模組。
-## Notes-itIT: Moduli Big Wigs per l'Assedio di Orgrimmar.
+## Notes-esMX: Big Wigs Modules for the Blackrock Foundry.
+## Notes-frFR: Big Wigs Modules for the Blackrock Foundry.
+## Notes-ruRU: Big Wigs Modules for the Blackrock Foundry.
+## Notes-zhCN: Big Wigs Modules for the Blackrock Foundry.
+## Notes-zhTW: Big Wigs Modules for the Blackrock Foundry.
+## Notes-itIT: Big Wigs Modules for the Blackrock Foundry.
+## Notes-ptBR: Big Wigs Modules for the Blackrock Foundry.
+## Notes-koKR: Big Wigs Modules for the Blackrock Foundry.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
 
 ## X-Category: Raid
-## X-BigWigs-LoadOn-ZoneId: 604
+## X-BigWigs-LoadOn-ZoneId: 988
 
 locales.xml
 modules.xml
