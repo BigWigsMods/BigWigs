@@ -128,6 +128,33 @@ local function openProxitiy()
 	end
 end
 
+local function deactivateMount(mobId)
+	if mobId == 76884 then -- Cruelfang
+		activatedMounts[mobId] = false
+		mod:StopBar(155198) -- Savage Howl
+
+		mod:CDBar(155061, 12) -- Rend and Tear
+	elseif mobId == 76874 then -- Dreadwing
+		activatedMounts[mobId] = false
+		mod:StopBar(154981) -- Conflag
+
+		mod:CDBar(155499, 15) -- Superheated Shrapnel
+	elseif mobId == 76945 then -- Ironcrusher
+		activatedMounts[mobId] = false
+		mod:StopBar(155247) -- Stampede
+
+		tantrumCount = 1
+		mod:CDBar(155222, 23, CL.count:format(mod:SpellName(155222), tantrumCount)) -- Tantrum
+	elseif mobId == 76946 then -- Faultline (Mythic)
+		activatedMounts[mobId] = false
+	end
+	if activatedMounts[76884] == false then
+		openProxitiy()
+	else
+		mod:CloseProximity()
+	end
+end
+
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	self:CheckBossStatus()
 	wipe(currentBosses)
@@ -163,41 +190,16 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	end
 	-- Darmac dismounts at 40% in Mythic
 	if self:Mythic() then
-		local args = {}
 		for mobId, active in next, activatedMounts do
 			if active and not currentBosses[mobId] then
-				args.mobId = mobId
-				self:Deaths(args)
+				deactivateMount(mobId)
 			end
 		end
 	end
 end
 
 function mod:Deaths(args)
-	if args.mobId == 76884 then -- Cruelfang
-		activatedMounts[args.mobId] = false
-		self:StopBar(155198) -- Savage Howl
-
-		self:CDBar(155061, 12) -- Rend and Tear
-	elseif args.mobId == 76874 then -- Dreadwing
-		activatedMounts[args.mobId] = false
-		self:StopBar(154981) -- Conflag
-
-		self:CDBar(155499, 15) -- Superheated Shrapnel
-	elseif args.mobId == 76945 then -- Ironcrusher
-		activatedMounts[args.mobId] = false
-		self:StopBar(155247) -- Stampede
-
-		tantrumCount = 1
-		self:CDBar(155222, 23, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
-	elseif args.mobId == 76946 then -- Faultline (Mythic)
-		activatedMounts[args.mobId] = false
-	end
-	if activatedMounts[76884] == false then
-		openProxitiy()
-	else
-		self:CloseProximity()
-	end
+	deactivateMount(args.mobId)
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unit)
