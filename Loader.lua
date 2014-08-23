@@ -458,9 +458,9 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "11339" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotReleaseRevision = "11339" -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
-	local DBMdotDisplayVersion = "5.4.16" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
+	local DBMdotRevision = "11523" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotReleaseRevision = "11523" -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotDisplayVersion = "5.4.18" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
 	function mod:DBM_VersionCheck(prefix, sender, revision, releaseRevision, displayVersion)
 		if prefix == "H" and (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
 			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale(), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
