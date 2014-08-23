@@ -10,10 +10,6 @@ mod:RegisterEnableMob(76877)
 --mod.engageId = 1691
 
 --------------------------------------------------------------------------------
--- Locals
---
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -33,8 +29,8 @@ function mod:GetOptions()
 		155080, 155301, {155078, "FLASH"}, {155326, "PROXIMITY"}, 155730, 155539,
 		"bosskill"
 	}, {
-		[165300] = GetDifficultyInfo(16), -- Mythic
-		[155080] = "general",
+		[165300] = "mythic",
+		[155080] = "general"
 	}
 end
 
@@ -52,7 +48,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CrumblingRoar", 155730)
 	self:Log("SPELL_CAST_START", "DestructiveRampage", 155539)
 	--Mythic
-	self:Log("SPELL_CAST_START", "Flare", 165300)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- 165303
 	self:Log("SPELL_DAMAGE", "FlareDamage", 165300)
 	self:Log("SPELL_MISSED", "FlareDamage", 165300)
 
@@ -133,8 +129,11 @@ function mod:DestructiveRampage(args)
 	self:CDBar(args.spellId, 110)
 end
 
-function mod:Flare(args)
-	self:Message(args.spellId, "Important")
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 165303 then -- Flare
+		--self:Message(165300, "Attention")
+		self:CDBar(165300, 6)
+	end
 end
 
 do
@@ -148,3 +147,4 @@ do
 		end
 	end
 end
+
