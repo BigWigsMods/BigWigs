@@ -15,7 +15,7 @@ mod:RegisterEnableMob(76796)
 
 local phase = 1
 local tantrumCount = 1
-local activatedMounts = {}
+local activatedMounts, currentBosses = {}, {}
 local spearList, marksUsed, markTimer = {}, {}, nil
 
 --------------------------------------------------------------------------------
@@ -130,30 +130,44 @@ end
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	self:CheckBossStatus()
+	wipe(currentBosses)
 	for i=1, 5 do
 		local unit = ("boss%d"):format(i)
 		local mobId = self:MobId(UnitGUID(unit))
-		if mobId > 0 and mobId ~= 76796 and activatedMounts[mobId] == nil then
-			self:StopBar(155061) -- Rend and Tear
-			self:StopBar(CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
-			self:StopBar(155499) -- Superheated Shrapnel
-			self:CloseProximity()
+		if mobId > 0 and mobId ~= 76796 then
+			currentBosses[mobId] = true
+			if activatedMounts[mobId] == nil then
+				self:StopBar(155061) -- Rend and Tear
+				self:StopBar(CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
+				self:StopBar(155499) -- Superheated Shrapnel
+				self:CloseProximity()
 
-			activatedMounts[mobId] = true
-			self:Message("stages", "Neutral", "Info", (UnitName(unit)), false)
+				activatedMounts[mobId] = true
+				self:Message("stages", "Neutral", "Info", (UnitName(unit)), false)
 
-			if mobId == 76884 then -- Cruelfang
-				self:CDBar(155061, 13) -- Rend and Tear
-				self:CDBar(155198, 17) -- Savage Howl
-				openProxitiy()
-			elseif mobId == 76874 then -- Dreadwing
-				self:CDBar(154981, 12) -- Conflag
-			elseif mobId == 76945 then -- Ironcrusher
-				tantrumCount = 1
-				self:CDBar(155247, 15) -- Stampede
-				self:CDBar(155222, 30, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
-			elseif mobId == 76946 then -- Faultline (Mythic)
-				--
+				if mobId == 76884 then -- Cruelfang
+					self:CDBar(155061, 13) -- Rend and Tear
+					self:CDBar(155198, 17) -- Savage Howl
+					openProxitiy()
+				elseif mobId == 76874 then -- Dreadwing
+					self:CDBar(154981, 12) -- Conflag
+				elseif mobId == 76945 then -- Ironcrusher
+					tantrumCount = 1
+					self:CDBar(155247, 15) -- Stampede
+					self:CDBar(155222, 30, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
+				elseif mobId == 76946 then -- Faultline (Mythic)
+					--
+				end
+			end
+		end
+	end
+	-- Darmac dismounts at 40% in Mythic
+	if self:Mythic() then
+		local args = {}
+		for mobId, active in next, activatedMounts do
+			if active and not currentBosses[mobId] then
+				args.mobId = mobId
+				self:Deaths(args)
 			end
 		end
 	end
