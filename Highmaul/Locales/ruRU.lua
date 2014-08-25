@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Kargath Bladefist", "ruRU")
 if not L then return end
 if L then
-	--L.blade_dance_bar = "Dancing"
+	L.blade_dance_bar = "Танцуем"
 end
 
 L = BigWigs:NewBossLocale("The Butcher", "ruRU")
@@ -35,7 +35,7 @@ end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "ruRU")
 if L then
-	--L.intermission = "Intermission"
+	L.intermission = "Перерыв"
 
 	--L.custom_off_fixate_marker = "Fixate Marker"
 	--L.custom_off_fixate_marker_desc = "Mark Gorian Warmage's Fixate targets with {rt1}{rt2}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
