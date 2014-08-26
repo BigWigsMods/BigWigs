@@ -1,3 +1,4 @@
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -15,7 +16,7 @@ mod.worldBoss = 81252
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	
+
 end
 L = mod:GetLocale()
 
@@ -24,20 +25,48 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
-	return { "bosskill" }
+	return {
+		175791, 175953, 175827, {175915, "FLASH"}, "bosskill"
+	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
+	self:Log("SPELL_CAST_START", "ColossalSlam", 175791)
+	self:Log("SPELL_CAST_START", "GigaSmash", 175953)
+	self:Log("SPELL_CAST_START", "CallOfEarth", 175827)
+	self:Log("SPELL_AURA_APPLIED", "AcidBreath", 175915)
+
 	self:Death("Win", 81252)
 end
 
 function mod:OnEngage()
-	
+
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:ColossalSlam(args)
+	self:Message(args.spellId, "Urgent", "Alarm")
+end
+
+function mod:GigaSmash(args)
+	self:Message(args.spellId, "Urgent")
+end
+
+function mod:CallOfEarth(args)
+	self:Message(args.spellId, "Attention")
+	self:Bar(args.spellId, 20, CL.cast:format(args.spellName))
+end
+
+function mod:AcidBreath(args)
+	if not self:Tank() and self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+		self:Flash(args.spellId)
+	end
+end
 
