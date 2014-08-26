@@ -71,7 +71,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "IntermissionStart", 174057) -- Arcane Power
 	self:Log("SPELL_AURA_REMOVED", "IntermissionEnd", 174057)
 	self:Log("SPELL_AURA_APPLIED", "Slow", 157801)
-	self:Log("SPELL_AURA_APPLIED", "Fixate", 157763)
+	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 157763)
+	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 157763)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushArmor", 158553)
 	self:Log("SPELL_CAST_SUCCESS", "KickToTheFace", 158563)
 
