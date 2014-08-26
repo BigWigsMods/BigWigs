@@ -24,7 +24,9 @@ local doorCounter = 1
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.charge_trigger = "sets his eyes" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
-	L.door_trigger = "pour" -- "Farraki forces pour from the Farraki Tribal Door!
+	L.door_trigger = "pour" -- Farraki forces pour from the Farraki Tribal Door!
+	L.orb_trigger = "charge" -- PLAYERNAME forces Horridon to charge the Farraki door!
+ 
 
 	L.chain_lightning, L.chain_lightning_desc = EJ_GetSectionInfo(7124)
 	L.chain_lightning_icon = 136480
@@ -118,6 +120,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Swipe", 136741, 136770) -- 136770 is only after charge
 	self:Emote("Charge", L["charge_trigger"])
 	self:Emote("Doors", L["door_trigger"])
+	self:Emote("ControlOrb", L["orb_trigger"])
 	self:Log("SPELL_CAST_START", "DireCall", 137458)
 	self:Log("SPELL_AURA_APPLIED", "DireFixation", 140946)
 
@@ -164,10 +167,14 @@ function mod:CrackedShell(args)
 	self:Message(args.spellId, "Positive", nil, args.spellName) -- 10s stun timer, too, maybe?
 end
 
+function mod:ControlOrb(msg, _, _, _, player)
+	self:Message(137240, "Positive", nil, msg)
+end
+
 function mod:LastPhase(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if hp < 35 then -- phase starts at 30, except if the boss is already there
-		self:Message("adds", "Positive", "Info", CL["soon"]:format(self:SpellName(-7087)), "achievement_boss_trollgore") -- War-God Jalak
+		self:Message("adds", "Neutral", "Info", CL["soon"]:format(self:SpellName(-7087)), "achievement_boss_trollgore") -- War-God Jalak
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end

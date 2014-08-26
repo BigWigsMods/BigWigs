@@ -12,6 +12,7 @@ L = BigWigs:NewBossLocale("Horridon", "deDE")
 if L then
 	L.charge_trigger = "richtet seinen Blick"
 	L.door_trigger = "stürmen"
+	--L.orb_trigger = "charge" -- PLAYERNAME forces Horridon to charge the Farraki door!
 
 	L.chain_lightning_message = "Dein Fokus wirkt Kettenblitzschlag!"
 	L.chain_lightning_bar = "Fokus: Kettenblitzschlag"

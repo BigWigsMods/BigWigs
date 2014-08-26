@@ -10,8 +10,9 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "itIT")
 if L then
-	L.charge_trigger = "posa il suo sguardo" -- Horridon sets his eyes on PLAYERNAME and stamps his tail! Horridon posa il suo sguardo su PLAYER e sbatte la coda!
-	L.door_trigger = "irrompono" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
+	L.charge_trigger = "posa il suo sguardo"
+	L.door_trigger = "irrompono"
+	--L.orb_trigger = "charge" -- PLAYERNAME forces Horridon to charge the Farraki door!
 
 	L.chain_lightning_message = "Il tuo focus sta lanciando Catena di Fulmini!"
 	L.chain_lightning_bar = "Focus: Catena di Fulmini"

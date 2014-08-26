@@ -11,6 +11,8 @@ end
 L = BigWigs:NewBossLocale("Horridon", "esES") or BigWigs:NewBossLocale("Horridon", "esMX")
 if L then
 	L.charge_trigger = "fija la vista" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
+	--L.door_trigger = "pour" -- Farraki forces pour from the Farraki Tribal Door!
+	--L.orb_trigger = "charge" -- PLAYERNAME forces Horridon to charge the Farraki door!
 
 	L.chain_lightning_message = "¡Tu foco está casteando Cadena de relámpagos!"
 	L.chain_lightning_bar = "Foco: Cadena de relámpagos"

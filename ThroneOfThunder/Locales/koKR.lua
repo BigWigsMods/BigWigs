@@ -10,8 +10,9 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "koKR")
 if L then
-	L.charge_trigger = "시선을" -- 호리돈이 시선을 PLAYERNAME에게 고정하고 꼬리를 바닥에 쿵쿵 내려칩니다!
-	L.door_trigger = "모래의 분노" -- 파락키, 모래의 분노로 적의 껍질을 벗겨라!
+	L.charge_trigger = "시선을"
+	L.door_trigger = "모래의 분노"
+	--L.orb_trigger = "charge" -- PLAYERNAME forces Horridon to charge the Farraki door!
 
 	L.chain_lightning_message = "당신의 주시 대상이 연쇄 번개를 시전합니다!"
 	L.chain_lightning_bar = "주시 대상: 연쇄 번개"

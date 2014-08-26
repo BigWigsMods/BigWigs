@@ -10,8 +10,9 @@ end
 
 L = BigWigs:NewBossLocale("Horridon", "zhTW")
 if L then
-	L.charge_trigger = "用力拍動尾巴!" --哈里登雙眼盯著%s，用力拍動尾巴!
-	L.door_trigger = "的門蜂擁而出!" --...部隊從...部族的門蜂擁而出!
+	L.charge_trigger = "用力拍動尾巴!"
+	L.door_trigger = "的門蜂擁而出!"
+	--L.orb_trigger = "charge" -- PLAYERNAME forces Horridon to charge the Farraki door!
 
 	L.chain_lightning_message = "你的專注目標正在施展閃電鏈！"
 	L.chain_lightning_bar = "專注目標：閃電鏈"
