@@ -43,6 +43,7 @@ if L then
 	L.custom_on_markpossessed = "Marquage du boss possédé"
 	L.custom_on_markpossessed_desc = "Marque le boss possédé à l'aide d'une icône de crâne. Nécessite d'être assistant ou chef de raid."
 
+	--L.priestess_heal = "%s was healed!"
 	L.assault_stun = "Tank étourdi !"
 	L.assault_message = "Assaut"
 	L.full_power = "Puissance maximale"

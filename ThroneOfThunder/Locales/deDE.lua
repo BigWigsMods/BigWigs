@@ -43,6 +43,7 @@ if L then
 	L.custom_on_markpossessed = "Verstärkten Boss markieren"
 	L.custom_on_markpossessed_desc = "Markiert den von Gara'jal verstärkten Boss mit einem Totenkopf."
 
+	--L.priestess_heal = "%s was healed!"
 	L.assault_stun = "Tank betäubt!"
 	L.assault_message = "Kalte Angriffe"
 	L.full_power = "Volle Energie"

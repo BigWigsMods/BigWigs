@@ -43,6 +43,7 @@ if L then
 	L.custom_on_markpossessed = "标记控制首领"
 	L.custom_on_markpossessed_desc = "用骷髅团队标记被控制的首领，需要权限。"
 
+	--L.priestess_heal = "%s was healed!"
 	L.assault_stun = "坦克眩晕"
 	L.assault_message = "冰寒突击！"
 	L.full_power = "全能量"

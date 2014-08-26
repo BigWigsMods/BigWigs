@@ -1,8 +1,3 @@
---[[
-TODO:
-	watch out in case Chilled to the Bone gets CLEU
-	consider marking Twisted Fate targets or atleast announcing them
-]]--
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -36,6 +31,7 @@ if L then
 	L.custom_on_markpossessed_desc = "Mark the possessed boss with a skull, requires promoted or leader."
 	L.custom_on_markpossessed_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8"
 
+	L.priestess_heal = "%s was healed!"
 	L.assault_stun = "Tank Stunned!"
 	L.assault_message = "Assault"
 	L.full_power = "Full power"
@@ -88,7 +84,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FrostbiteApplied", 136990, 136922)
 	self:Log("SPELL_AURA_APPLIED", "BitingColdApplied", 136992)
 	self:Log("SPELL_AURA_REMOVED", "BitingColdRemoved", 136992)
-	self:Log("SPELL_CAST_SUCCESS", "FrigidAssaultStart", 136904)
+	self:Log("SPELL_CAST_START", "FrigidAssaultStart", 136904)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FrigidAssault", 136903)
 	self:Log("SPELL_AURA_APPLIED", "FrigidAssaultStun", 136910)
 	-- General
@@ -96,7 +92,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PossessedApplied", 136442)
 	self:Log("SPELL_AURA_REMOVED", "PossessedRemoved", 136442)
 
-	self:Death("BlessedGift", 69480) -- Blessed Loa Spirit
+	self:Death("BlessedLoaDeath", 69480) -- Blessed Loa Spirit
 	self:Death("Deaths", 69132, 69131, 69134, 69078) -- Priestess, Frost King, Kazra'jin, Sandcrawler
 end
 
@@ -148,7 +144,10 @@ function mod:BlessedLoaSpirit(args)
 	self:Bar(args.spellId, 20, CL["other"]:format(fixated, args.spellName))
 end
 
-function mod:BlessedGift()
+function mod:BlessedGift(args)
+	if not self:LFR() then
+		self:Message("priestess_adds", "Important", "Alarm", L["priestess_heal"]:format(args.destName), args.spellId)
+	end
 	self:StopBar(CL["other"]:format(fixated, self:SpellName(137203)))
 end
 
@@ -415,6 +414,12 @@ do
 				self:Bar(136992, 45 - (GetTime() - frostBiteStart)) -- Biting Cold
 			end
 		end
+	end
+end
+
+function mod:BlessedLoaDeath(args)
+	if args.mobId == 69480 then -- Blessed Loa Spirit
+		self:StopBar(CL["other"]:format(fixated, self:SpellName(137203)))
 	end
 end
 

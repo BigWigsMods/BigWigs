@@ -43,6 +43,7 @@ if L then
 	L.custom_on_markpossessed = "빙의된 보스 공격대 아이콘"
 	L.custom_on_markpossessed_desc = "영혼에 빙의된 보스에게 해골 공격대 아이콘을 표시합니다."
 
+	--L.priestess_heal = "%s was healed!"
 	L.assault_stun = "탱커 기절!"
 	L.assault_message = "혹한의 공격"
 	L.full_power = "전체 기력"

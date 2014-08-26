@@ -42,6 +42,7 @@ if L then
 	L.priestess_adds_desc = "Avvisa quando la Gran Sacerdotessa Mar'li inizia ad evocare un'add"
 	L.priestess_adds_message = "Add Sacerdotessa"
 
+	--L.priestess_heal = "%s was healed!"
 	L.assault_stun = "Difensore Stordito!"
 	L.full_power = "Pieno Potere"
 	L.assault_message = "Assalto"

@@ -42,6 +42,7 @@ if L then
 	L.priestess_adds_desc = "Aviso para todo tipo de adds de la Suma Sacerdotisa Mar'li."
 	L.priestess_adds_message = "Add de la Sacerdotisa"
 
+	--L.priestess_heal = "%s was healed!"
 	L.assault_stun = "¡Tanque aturdido!"
 	L.full_power = "Poder máximo"
 	L.assault_message = "Asalto"

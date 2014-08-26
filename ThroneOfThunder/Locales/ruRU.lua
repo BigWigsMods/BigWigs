@@ -43,6 +43,7 @@ if L then
 	L.custom_on_markpossessed = "Помечать одержимого босса"
 	L.custom_on_markpossessed_desc = "На одержимого босса ставится череп, требуется быть помощником или лидером."
 
+	--L.priestess_heal = "%s was healed!"
 	L.assault_stun = "Танк оглушен!"
 	L.assault_message = "Натиск"
 	L.full_power = "Полная энергия"
