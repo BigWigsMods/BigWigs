@@ -6,7 +6,7 @@ end
 
 L = BigWigs:NewBossLocale("The Butcher", "ruRU")
 if L then
-	--L.adds_multiple = "Adds x%d"
+	L.adds_multiple = "Помощники x%d"
 end
 
 L = BigWigs:NewBossLocale("Tectus", "ruRU")

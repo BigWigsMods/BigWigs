@@ -16,6 +16,6 @@ if L then
 	L.engage_yell = "Вы займете мое место на вечной жаровне."
 
 	L.burning_soul_bar = "Взрывы"
-	--L.burning_soul_self_bar = "You explode!"
+	L.burning_soul_self_bar = "Ты взорвешься!"
 end
 

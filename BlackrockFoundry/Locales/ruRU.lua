@@ -23,7 +23,7 @@ L = BigWigs:NewBossLocale("Flamebender Ka'graz", "ruRU")
 if L then
 	--L.molten_torrent_self = "Molten Torrent on you"
 	--L.molten_torrent_self_desc = "Special countdown when Molten Torrent is on you."
-	--L.molten_torrent_self_bar = "You explode!"
+	L.molten_torrent_self_bar = "Ты взорвешься!"
 end
 
 L = BigWigs:NewBossLocale("Kromog", "ruRU")

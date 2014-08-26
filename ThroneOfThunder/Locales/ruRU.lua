@@ -12,7 +12,7 @@ L = BigWigs:NewBossLocale("Horridon", "ruRU")
 if L then
 	L.charge_trigger = "останавливает свой взгляд"
 	L.door_trigger = "прибывают"
-	--L.orb_trigger = "charge" -- PLAYERNAME forces Horridon to charge the Farraki door!
+	L.orb_trigger = "направляет"
 
 	L.chain_lightning_message = "Ваш фокус читает Цепную молнию!"
 	L.chain_lightning_bar = "Фокус: Цепная молния"
@@ -43,7 +43,7 @@ if L then
 	L.custom_on_markpossessed = "Помечать одержимого босса"
 	L.custom_on_markpossessed_desc = "На одержимого босса ставится череп, требуется быть помощником или лидером."
 
-	--L.priestess_heal = "%s was healed!"
+	L.priestess_heal = "%s мсцелён!"
 	L.assault_stun = "Танк оглушен!"
 	L.assault_message = "Натиск"
 	L.full_power = "Полная энергия"
