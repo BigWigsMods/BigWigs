@@ -16,5 +16,6 @@ if L then
 	L.engage_yell = "영원한 화로에서 내 자리를 대신해라."
 
 	L.burning_soul_bar = "불타는 영혼 폭발"
+	--L.burning_soul_self_bar = "You explode!"
 end
 

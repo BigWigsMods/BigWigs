@@ -18,6 +18,7 @@ if L then
 	L.engage_yell = "You will take my place on the eternal brazier."
 
 	L.burning_soul_bar = "Explosions"
+	L.burning_soul_self_bar = "You explode!"
 end
 L = mod:GetLocale()
 
@@ -105,15 +106,18 @@ do
 	local function warnBurningSoul(spellId)
 		mod:CDBar(spellId, 24) -- 23.8 - 41.4
 		mod:Bar(spellId, 10, L.burning_soul_bar)
-		if not isOnMe then
+		if isOnMe then
+			mod:Bar(spellId, 10, L.burning_soul_self_bar)
+		else
 			mod:OpenProximity(spellId, 8, burningSoulList)
+			mod:Bar(spellId, 10, L.burning_soul_bar)
 		end
 		for i,v in ipairs(burningSoulList) do
 			coloredNames[i] = v
+			burningSoulList[i] = nil
 		end
 		mod:TargetMessage(spellId, coloredNames, "Urgent", "Alert", nil, nil, true)
 		scheduled = nil
-		wipe(burningSoulList)
 	end
 
 	function mod:BurningSoulRemoved(args)

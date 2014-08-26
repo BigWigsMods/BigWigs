@@ -16,5 +16,6 @@ if L then
 	L.engage_yell = "Prenderete il mio posto nel braciere eterno."
 
 	L.burning_soul_bar = "Esplosioni"
+	--L.burning_soul_self_bar = "You explode!"
 end
 
