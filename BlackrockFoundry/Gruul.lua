@@ -56,6 +56,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:Bar(155301, 20) -- Overhead Smash
 	self:Bar(155326, 35) -- Petrifying Slam
 end
 
@@ -65,6 +66,11 @@ end
 
 function mod:InfernoSlice(args)
 	self:Message(args.spellId, "Attention", "Alert")
+end
+
+function mod:OverheadSmash(args)
+	self:Message(args.spellId, "Attention")
+	self:CDBar(args.spellId, 25) -- 37.4 25.4 25.3
 end
 
 function mod:OverwhelmingBlows(args)
