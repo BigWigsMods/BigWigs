@@ -1,4 +1,4 @@
-﻿local L = BigWigs:NewBossLocale("Jin'rokh the Breaker", "deDE")
+local L = BigWigs:NewBossLocale("Jin'rokh the Breaker", "deDE")
 if not L then return end
 if L then
 	L.storm_duration = "Gewittersturm Dauer"
