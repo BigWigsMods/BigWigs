@@ -1,41 +1,43 @@
-local L = BigWigs:NewBossLocale("Kargath Bladefist", "koKR")
+﻿local L = BigWigs:NewBossLocale("Kargath Bladefist", "koKR")
 if not L then return end
 if L then
-	--L.blade_dance_bar = "Dancing"
+	L.blade_dance_bar = "칼춤 도는 중"
 end
 
 L = BigWigs:NewBossLocale("The Butcher", "koKR")
 if L then
-	--L.adds_multiple = "Adds x%d"
+	L.adds_multiple = "%d번째 쫄"
 end
 
 L = BigWigs:NewBossLocale("Tectus", "koKR")
 if L then
-	--L.earthwarper_trigger = "MASTER!" -- MASTER! I COME FOR YOU!
-	--L.berserker_trigger = "Graaagh!" --Graaagh! KAHL...  AHK... RAAHHHH!
+	L.earthwarper_trigger = "주인님! 제가 왔습니다!" -- MASTER! I COME FOR YOU!
+	L.berserker_trigger = "그아악! 카아... 아크... 으와아악!" --Graaagh! KAHL...  AHK... RAAHHHH!
 
-	--L.adds_desc = "Timers for when new adds enter the fight."
+	L.adds_desc = "다음 쫄이 언제 전투에 참여하는 지를 확인하기 위한 타이머입니다."
 end
 
 L = BigWigs:NewBossLocale("Brackenspore", "koKR")
 if L then
-	--L.decay_message = "Your focus is casting Decay!"
-	--L.creeping_moss_heal = "Creeping Moss under BOSS (healing)"
+	L.decay_message = "주시 대상이 부패를 시전합니다!"
+	L.creeping_moss_heal = "보스 아래에 덩굴 이끼가 있습니다 (치유 중)"
 end
 
 L = BigWigs:NewBossLocale("Ko'ragh", "koKR")
 if L then
-	--L.suppression_field_trigger1 = "Quiet!"
-	--L.suppression_field_trigger2 = "I will tear you in half!"
-	--L.suppression_field_trigger3 = "I will crush you!"
-	--L.suppression_field_trigger4 = "Silence!"
+	L.suppression_field_trigger1 = "조용히 해!"
+	L.suppression_field_trigger2 = "반으로 찢어주마!"
+	L.suppression_field_trigger3 = "박살내주마!"
+	L.suppression_field_trigger4 = "침묵!"
 
-	--L.fire_bar = "Everyone Explodes!"
+	L.fire_bar = "모두 폭발합니다!!"
 end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "koKR")
 if L then
-	--L.custom_off_fixate_marker = "Fixate Marker"
-	--L.custom_off_fixate_marker_desc = "Mark Gorian Warmage's Fixate targets with {rt1}{rt2}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.intermission = "사잇단계"
+
+	L.custom_off_fixate_marker = "시선집중 징표 설정"
+	L.custom_off_fixate_marker_desc = "고리안 전투마법사의 시선 집중의 대상을 {rt1}{rt2}의 징표로 설정합니다.\n|cFFFF0000징표 설정에서 문제가 발생하는 것을 막기 위해 공격대에서 오직 1명만 이 옵션을 활성화해야 합니다.|r"
 end
 
