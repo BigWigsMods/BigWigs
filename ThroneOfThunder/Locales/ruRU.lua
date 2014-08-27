@@ -172,7 +172,6 @@ if L then
 
 	L.last_inermission_ability = "Последний перерыв!"
 	L.safe_from_stun = "Возможно, вы защищены от оглушения Перегрузкой"
-	L.intermission = "Перерыв"
 	L.diffusion_add = "Рассеянная молния"
 	L.shock = "Электрошок"
 	L.static_shock_bar = "<Статический шок>"

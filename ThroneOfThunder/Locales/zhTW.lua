@@ -180,7 +180,6 @@ if L then
 
 	L.last_inermission_ability = "最終階段轉換技能已使用！"
 	L.safe_from_stun = "可容許的超載昏迷"
-	L.intermission = "階段轉換"
 	L.diffusion_add = "散射電靈"
 	L.shock = "靜電震擊"
 	L.static_shock_bar = "<靜電震擊分擔>"

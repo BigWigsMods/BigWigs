@@ -180,7 +180,6 @@ if L then
 
 	L.last_inermission_ability = "¡Última habilidad del intermedio usada!"
 	L.safe_from_stun = "Probablemente estés a salvo de los aturdimientos por Sobrecarga"
-	L.intermission = "Intermedio"
 	L.diffusion_add = "Difusión de adds"
 	L.shock = "Choque"
 	L.static_shock_bar = "<Choque estático dividido>"
@@ -198,7 +197,7 @@ if L then
 	L.balls_desc = "Bolas de Ánima (rojo) y Vita (azul), que determinan que habilidades ganará Ra-den"
 
 	L.assistPrint = "Un plugin llamado 'BigWigs_Ra-denAssist' ha sido publicado para ayudarte en el encuentro contra Ra-den y puede que tu grupo esté interesado en probarlo."
-	
+
 	L.corruptedballs = "Bolas corruptas"
 	L.corruptedballs_desc = "Bolas Vita y Ánima corruptas, que, o bien aumenta el daño (Vita) o hp máximo (Ánima)"
 

@@ -180,7 +180,6 @@ if L then
 
 	L.last_inermission_ability = "最终阶段转换技能已使用！"
 	L.safe_from_stun = "超载昏迷你也许是安全的"
-	L.intermission = "阶段转换"
 	L.diffusion_add = "散射闪电增援"
 	L.shock = "电能震击"
 	L.static_shock_bar = "<静电冲击分摊>"

@@ -29,6 +29,7 @@ L.incoming = "%s Incoming!"
 L.interrupted = "%s Interrupted"
 L.spawning = "%s Spawning!"
 L.no = "No %s!"
+L.intermission = "Intermission"
 
 -- Add related
 L.add_spawned = "Add Spawned!"

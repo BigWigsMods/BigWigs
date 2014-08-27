@@ -179,7 +179,6 @@ if L then
 
 	L.last_inermission_ability = "Ultima abilità intermezzo usata!"
 	L.safe_from_stun = "Sei probabilmente al sicuro dai disorientamenti di Sovraccarico"
-	L.intermission = "Intermezzo"
 	L.diffusion_add = "Add di Diffusione"
 	L.shock = "Folgore"
 	L.static_shock_bar = "<Divisione Folgore Statica>"

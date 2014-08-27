@@ -23,9 +23,6 @@ local fixateList = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.intermission = "Intermission"
-	L.intermission_icon = "spell_arcane_blast"
-
 	L.volatile_anomaly, L.volatile_anomaly_desc = EJ_GetSectionInfo(9919)
 	L.volatile_anomaly_icon = "spell_arcane_arcane04"
 
@@ -48,7 +45,7 @@ function mod:GetOptions()
 		"stages", "bosskill"
 	}, {
 		[159515] = mod.displayName,
-		["volatile_anomaly"] = L.intermission,
+		["volatile_anomaly"] = CL.intermission,
 		[157801] = -9922,
 		[158553] = -9921,
 		["stages"] = "general",
@@ -205,8 +202,8 @@ do
 	end
 
 	function mod:IntermissionStart(args)
-		self:Message("stages", "Neutral", nil, L.intermission, false)
-		self:Bar("stages", 65, L.intermission, L.intermission_icon)
+		self:Message("stages", "Neutral", nil, CL.intermission, false)
+		self:Bar("stages", 65, CL.intermission, "spell_arcane_blast")
 		self:Bar("volatile_anomaly", 14, L.volatile_anomaly, L.volatile_anomaly_icon)
 		self:ScheduleTimer(nextAdd, 14, self)
 	end

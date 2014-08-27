@@ -173,7 +173,6 @@ if L then
 
 	L.last_inermission_ability = "Letzte Unterbrechungs-Fähigkeit genutzt!"
 	L.safe_from_stun = "Du bist wahrscheinlich sicher vor Überladungs-Betäubungen"
-	L.intermission = "Unterbrechung"
 	L.diffusion_add = "Kugelblitzelementare"
 	L.shock = "Schock"
 	L.static_shock_bar = "<Elektroschock-Aufteilung>"

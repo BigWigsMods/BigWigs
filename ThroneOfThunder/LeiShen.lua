@@ -53,7 +53,6 @@ if L then
 
 	L.last_inermission_ability = "Last intermission ability used!"
 	L.safe_from_stun = "You're probably safe from Overcharge stuns"
-	L.intermission = "Intermission"
 	L.diffusion_add = "Diffusion add"
 	L.shock = "Shock"
 	L.static_shock_bar = "<Static Shock Split>"
@@ -451,18 +450,18 @@ function mod:IntermissionStart(args)
 	if self:Heroic() then
 		self:Bar(139011, 14) -- Helm of Command
 	end
-	self:Bar("stages", 45, L["intermission"], args.spellId)
-	self:Message("stages", "Neutral", "Info", L["intermission"], false)
+	self:Bar("stages", 45, CL.intermission, args.spellId)
+	self:Message("stages", "Neutral", "Info", CL.intermission, false)
 	self:DelayedMessage("stages", 40, "Positive", L["last_inermission_ability"])
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 	if phase == 1 and hp < 68 then
-		self:Message("stages", "Neutral", "Info", CL["soon"]:format(L["intermission"]), false)
+		self:Message("stages", "Neutral", "Info", CL["soon"]:format(CL.intermission), false)
 		phase = 2
 	elseif phase == 2 and hp < 33 then
-		self:Message("stages", "Neutral", "Info", CL["soon"]:format(L["intermission"]), false)
+		self:Message("stages", "Neutral", "Info", CL["soon"]:format(CL.intermission), false)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unitId)
 		phase = 3
 	end

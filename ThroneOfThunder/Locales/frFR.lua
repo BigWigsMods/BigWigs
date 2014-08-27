@@ -172,7 +172,6 @@ if L then
 
 	L.last_inermission_ability = "Dernière technique d'entracte utilisée !"
 	L.safe_from_stun = "Vous êtes probablement à l'abri des étourdissements de Surchargé"
-	L.intermission = "Intervalle"
 	L.diffusion_add = "Foudres diffuses"
 	L.shock = "Horion"
 	L.static_shock_bar = "<Split d'Horion statique>"

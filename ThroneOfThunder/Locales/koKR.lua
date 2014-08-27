@@ -180,7 +180,6 @@ if L then
 
 	L.last_inermission_ability = "마지막 도관 작동 능력 사용!"
 	L.safe_from_stun = "당신은 과충전 기절에 안전"
-	L.intermission = "도관 작동 중지"
 	L.diffusion_add = "연쇄 확산"
 	L.shock = "전하 충격"
 	L.static_shock_bar = "<Static Shock Split>"
