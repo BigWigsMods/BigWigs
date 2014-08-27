@@ -3,12 +3,12 @@
 
 <Script file="Gruul.lua"/>
 <Script file="Oregorger.lua"/>
-<Script file="TheBlastFurnace.lua"/>
-<Script file="HansgarAndFranzok.lua"/>
-<Script file="Kagraz.lua"/>
-<Script file="Kromog.lua"/>
 <Script file="Darmac.lua"/>
+<Script file="Kagraz.lua"/>
+<Script file="HansgarAndFranzok.lua"/>
 <Script file="Thogar.lua"/>
+<Script file="TheBlastFurnace.lua"/>
+<Script file="Kromog.lua"/>
 <Script file="TheIronMaidens.lua"/>
 <Script file="Blackhand.lua"/>
 
