@@ -40,16 +40,16 @@ function mod:GetOptions()
 		156937, {175104, "TANK_HEALER"}, {156932, "FLASH"}, -- Foreman Feldspar
 		-10325, -- Primal Elementalist
 		-10324, -- Slag Elemental
-		155186, {176121, "SAY", "FLASH", "ICON"}, --"custom_off_firecaller_marker", -- Firecaller
+		155186, {176121, "SAY", "FLASH", "ICON"}, -- Firecaller
 		155209, {155242, "TANK"}, {155223, "FLASH"}, 163776, -- Heart of the Mountain
 		"stages", "bosskill"
 	}, {
 		[-9650] = CL.adds,
-		[156937] = -9640, -- Foreman Feldspar
 		--[155179] = -9649,
 		--[160379] = -9648,
+		[156937] = -9640, -- Foreman Feldspar
 		[-10325] = -9655, -- Primal Elementalist
-		--[155196] = -9657,
+		--[-10324] = -9657,
 		--[155186] = -9659,
 		[155209] = -9641, -- Heart of the Mountain
 	}
