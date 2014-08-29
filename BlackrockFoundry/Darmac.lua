@@ -342,8 +342,8 @@ function mod:SavageHowl(args)
 	self:Bar(args.spellId, 26)
 end
 
-function mod:InfernoBreath(args)
-	self:Message(args.spellId, "Urgent", nil, CL.incoming(args.spellName))
+function mod:InfernoBreath()
+	self:Message(154989, "Urgent", nil, CL.incoming(self:SpellName(154989)))
 end
 
 do
