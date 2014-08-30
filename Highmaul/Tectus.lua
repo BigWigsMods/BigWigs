@@ -14,7 +14,6 @@ mod:RegisterEnableMob(78948)
 --
 
 local split = nil
-local shardsOfTectus = {}
 
 -- a better tContains with blackjack and the index found returned
 local function tContains(table, item)
@@ -34,13 +33,28 @@ end
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.earthwarper_trigger = "MASTER!" -- MASTER! I COME FOR YOU!
-	L.berserker_trigger = "Graaagh!" --Graaagh! KAHL...  AHK... RAAHHHH!
+	L.earthwarper_trigger1 = "Yjj'rmr" -- Yjj'rmr... Xzzolos...
+	L.earthwarper_trigger1 = "Yes, Tectus" -- Yes, Tectus. Bend to... our master's... will....
+	L.berserker_trigger1 = "MASTER!" -- MASTER! I COME FOR YOU!
+	L.berserker_trigger2 = "Kral'ach" --Kral'ach.... The darkness speaks.... A VOICE!
 
 	L.adds = CL.adds
 	L.adds_desc = "Timers for when new adds enter the fight."
+
+	L.tectus = "Tectus"
+	L.shard = "Shard"
+	L.motes = "Motes"
+
+	L.earthwarper_icon = "spell_shadow_raisedead" -- there's no pale orcish spell icons :(
+	L.berserker_icon = "ability_warrior_endlessrage" -- angry orc
 end
 L = mod:GetLocale()
+
+local names = {
+	[78948] = L.tectus,
+	[80551] = L.shard,
+	[80557] = L.motes,
+}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -48,15 +62,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		162287, {162288, "TANK"}, {162346, "FLASH"}, 163208, 162475,
 		{162894, "TANK"}, {162892, "TANK"}, 162968,
-		163318,
-		"adds", "bosskill",
+		163312,
+		{162288, "TANK"}, {162346, "FLASH"}, 162475, "adds", "bosskill",
 	}, {
-		[162287] = -10060,
-		[162894] = -10061,
-		[163318] = -10062,
-		["adds"] = "general",
+		[162894] = -10061, -- Earthwarper
+		[163312] = -10062, -- Berserker
+		[162288] = "general",
 	}
 end
 
@@ -64,56 +76,36 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	-- Tectus
-	self:Log("SPELL_AURA_REMOVED", "TheLivingMountainApplied", 162287, 162658) -- The Living Mountain, Shard of the Mountain
-	self:Log("SPELL_AURA_REMOVED", "TheLivingMountainRemoved", 162287, 162658)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Accretion", 162288)
 	self:Log("SPELL_AURA_APPLIED", "CrystallineBarrage", 162346)
 	self:Log("SPELL_AURA_APPLIED", "CrystallineBarrageDamage", 162370)
 	self:Log("SPELL_PERIODIC_DAMAGE", "CrystallineBarrageDamage", 162370)
-	self:Log("SPELL_CAST_SUCCESS", "Fracture", 163208)
 	self:Log("SPELL_CAST_START", "TectonicUpheaval", 162475)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", "TectonicUpheavalStop", "boss1", "boss2", "boss3")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Split", "boss1", "boss2", "boss3")
 	-- Earthwarper
-	self:Yell("Earthwarper", L.earthwarper_trigger)
+	self:Yell("Earthwarper", L.earthwarper_trigger1, L.earthwarper_trigger2)
 	self:Log("SPELL_CAST_START", "GiftOfEarth", 162894)
 	self:Log("SPELL_AURA_APPLIED", "Petrification", 162892)
 	self:Log("SPELL_CAST_START", "EarthenFlechettes", 162968)
 	self:Log("SPELL_DAMAGE", "EarthenFlechettesDamage", 162968)
 	self:Log("SPELL_MISSED", "EarthenFlechettesDamage", 162968)
 	-- Berserker
-	self:Yell("Berserker", L.berserker_trigger)
-	self:Log("SPELL_CAST_SUCCESS", "RavingAssault", 163318) -- 3s cast, can we get target earlier/on SPELL_CAST_START?
+	self:Yell("Berserker", L.berserker_trigger1, L.berserker_trigger2)
+	self:Log("SPELL_CAST_START", "RavingAssault", 163312)
 
 	self:Death("Win", 78948)
 end
 
 function mod:OnEngage()
 	split = nil
-	wipe(shardsOfTectus)
 	self:CDBar(162346, 6) -- Crystalline Barrage
-	self:CDBar("adds", 10, -10061) -- Earthwarper
-	self:CDBar("adds", 20, -10062) -- Berserker
+	self:CDBar("adds", 10, -10061, L.earthwarper_icon) -- Earthwarper
+	self:CDBar("adds", 20, -10062, L.berserker_icon) -- Berserker
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:TheLivingMountainApplied(args)
-	-- should probably just do this IEEU
-	local guid = args.sourceGUID
-	if self:MobId(guid) == 80551 and not tContains(shardsOfTectus, guid) then -- Shard of Tectus
-		shardsOfTectus[#shardsOfTectus+1] = guid
-	end
-end
-
-function mod:TheLivingMountainRemoved(args)
-	if self:MobId(args.sourceGUID) ~= 80557 then -- Mote of Tectus
-		local raidIcon = CombatLog_String_GetIcon(args.sourceRaidFlags) -- Raid icon string
-		self:Message(162287, "Positive", not split and "Long", CL.other:format(raidIcon .. args.sourceName, CL.removed:format(args.spellName)))
-	end
-end
 
 do
 	local prev = 0
@@ -155,36 +147,16 @@ do
 	end
 end
 
-function mod:Fracture(args)
-	if not split then
-		self:Bar(args.spellId, 6)
-	end
-end
-
-function mod:TectonicUpheaval(args)
-	if self:MobId(args.sourceGUID) ~= 80557 then -- Mote of Tectus
-		-- try and differentiate the bars
-		local raidIcon = CombatLog_String_GetIcon(args.sourceRaidFlags)
-		if raidIcon == "" and split then
-			local index = tContains(shardsOfTectus, args.sourceGUID)
-			raidIcon = index and ("[%d] "):format(index) or ""
+do
+	local prev = 0
+	function mod:TectonicUpheaval(args)
+		local t = GetTime()
+		local id = self:MobId(args.sourceGUID)
+		if id ~= 80557 or t-prev > 5 then -- Mote of Tectus
+			local raidIcon = CombatLog_String_GetIcon(args.sourceRaidFlags) -- Raid icon string
+			self:Message(args.spellId, "Positive", not split and "Long", CL.other:format(raidIcon .. names[id], args.spellName))
+			if id == 80557 then prev = t end
 		end
-		self:Bar(args.spellId, 12, raidIcon..CL.cast:format(args.spellName))
-	end
-end
-
-function mod:TectonicUpheavalStop(unit, spellName, _, _, spellId)
-	if spellId == 162475 then -- Tectonic Upheaval
-		local raidIcon
-		local index = GetRaidTargetIndex(unit)
-		if index then
-			raidIcon = _G["COMBATLOG_ICON_RAIDTARGET"..index]
-		else
-			index = tContains(shardsOfTectus, UnitGUID(unit))
-			raidIcon = index and ("[%d] "):format(index) or ""
-		end
-		self:StopBar(raidIcon..CL.cast:format(spellName))
-		-- yup. all that to stop a bar.
 	end
 end
 
@@ -200,8 +172,8 @@ end
 -- Adds
 
 function mod:Earthwarper(args)
-	self:Message("adds", "Attention", "Info", -10062, false)
-	self:CDBar("adds", 40, -10061) -- 40-44
+	self:Message("adds", "Attention", "Info", -10061, false)
+	self:CDBar("adds", 41, -10061, L.earthwarper_icon)
 	self:CDBar(162894, 10) -- Gift of Earth
 	self:CDBar(162968, 15) -- Earthen Flechettes
 end
@@ -231,14 +203,13 @@ do
 	end
 end
 
-
 function mod:Berserker(args)
 	self:Message("adds", "Attention", "Info", -10062, false)
-	self:CDBar("adds", 41, -10062)
+	self:CDBar("adds", 41, -10062, L.berserker_icon)
 	self:CDBar(163312, 13) -- Raving Assault (~10s + 3s cast)
 end
 
 function mod:RavingAssault(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	self:Message(args.spellId, "Urgent")
 end
 
