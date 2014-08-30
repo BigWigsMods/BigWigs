@@ -14,8 +14,9 @@ mod:RegisterEnableMob(78238, 78237) -- Pol, Phemos
 --
 
 local bossDeaths = 0
-local quakeCount = 1
+local quakeCount = 0
 local volatilityCount = 1
+local nextPhemo = 0
 
 local function GetBossUnit(guid)
 	for i=1, 3 do
@@ -71,7 +72,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ShieldCharge", 158134)
 	self:Log("SPELL_CAST_START", "ArcaneCharge", 163336) -- Mythic
 	self:Log("SPELL_CAST_START", "InterruptingShout", 158093)
-	self:Log("SPELL_CAST_SUCCESS", "Pulverize", 158385) -- then 1.58s casts of 157952, 158415, 158419
+	self:Log("SPELL_CAST_SUCCESS", "Pulverize", 158385)
+	self:Log("SPELL_CAST_START", "PulverizeCast", 157952, 158415, 158419) -- 1.58s cast
 	-- Phemos
 	self:Log("SPELL_CAST_START", "DoubleSlash", 158521)
 	self:Log("SPELL_AURA_APPLIED", "ArcaneWound", 167200) -- Mythic
@@ -91,12 +93,13 @@ end
 
 function mod:OnEngage()
 	bossDeaths = 0
-	quakeCount = 1
+	quakeCount = 0
 	volatilityCount = 1
+	nextPhemo = 158200
 	self:CDBar(158200, 12) -- Quake
 	self:CDBar(143834, 22) -- Shield Bash
-	self:CDBar(158521, 26) -- Double Slash
-	self:Bar(158134, 34) -- Shield Charge
+	--self:CDBar(158521, 26) -- Double Slash
+	self:CDBar(158134, 34) -- Shield Charge
 	if self:Mythic() then
 		self:Bar(163372, 65) -- Arcane Volatility
 	end
@@ -124,6 +127,7 @@ function mod:ShieldBash(args)
 end
 
 do
+	-- XXX target scanning doesn't work /sadface i'll leave it here for now, though
 	local timer = nil
 
 	local function warnShieldCharge(self, name, guid)
@@ -145,7 +149,7 @@ do
 			self:CancelTimer(timer)
 			timer = nil
 		end
-		self:Bar(158093, 23) -- Interrupting Shout
+		self:CDBar(158093, 27) -- Interrupting Shout
 	end
 
 	local UnitGUID, UnitDetailedThreatSituation = UnitGUID, UnitDetailedThreatSituation
@@ -193,13 +197,21 @@ function mod:InterruptingShout(args)
 		self:PlaySound(args.spellId, "Long")
 		self:Flash(args.spellId)
 	end
-	self:Bar(158385, 23) -- Pulverize
+	self:CDBar(158385, 27) -- Pulverize
 end
 
-function mod:Pulverize(args)
-	self:Message(args.spellId, "Urgent", "Alarm", CL.incoming:format(args.spellName))
-	self:Bar(158134, 24) -- Shield Charge
-	self:ScheduleTimer("ShieldChargeScan", 22)
+do
+	local count = 0
+	function mod:Pulverize(args)
+		count = 0
+		self:Message(args.spellId, "Urgent", nil, CL.incoming:format(args.spellName))
+		self:CDBar(158134, 27) -- Shield Charge
+		self:ScheduleTimer("ShieldChargeScan", 20)
+	end
+	function mod:PulverizeCast(args)
+		count = count + 1
+		self:Message(158385, "Urgent", "Alert", CL.count(args.spellName, count))
+	end
 end
 
 -- Phemos
@@ -211,27 +223,32 @@ end
 
 function mod:DoubleSlash(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 25)
+	--self:CDBar(args.spellId, 25) -- all over the place 10-34s
 end
 
 function mod:Whirlwind(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(158057, 28) -- Enfeebling Roar
+	if nextPhemo == args.spellId then
+		self:CDBar(158057, 33) -- Enfeebling Roar
+		nextPhemo = 158057
+	end
 end
 
 function mod:EnfeeblingRoar(args)
 	self:Message(args.spellId, "Attention", "Alert")
-	self:Bar(158200, 27, CL.count:format(self:SpellName(158200), quakeCount)) -- Quake
+	self:CDBar(158200, 33, CL.count:format(self:SpellName(158200), quakeCount+1)) -- Quake
+	nextPhemo = 158200
 end
 
 function mod:Quake(args)
-	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(CL.count:format(args.spellName, quakeCount)))
 	quakeCount = quakeCount + 1
-	self:Bar(157943, 27) -- Whirlwind
+	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(CL.count:format(args.spellName, quakeCount)))
+	self:CDBar(157943, 33) -- Whirlwind
+	nextPhemo = 157943
 end
 
 function mod:QuakeChannel(args)
-	self:Bar(args.spellId, 12, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, 12, CL.cast:format(CL.count:format(args.spellName, quakeCount)))
 end
 
 do
