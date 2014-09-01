@@ -63,14 +63,14 @@ if L then
 	--L.ship = "Jump to Ship: %s"
 
 	--L.custom_off_heartseeker_marker = "Bloodsoaked Heartseeker marker"
-	--L.custom_off_heartseeker_marker_desc = "Marks Heartseeker targets with {rt1}{rt2}{rt3}, requires promoted or leader."
+	--L.custom_off_heartseeker_marker_desc = "Marks Heartseeker targets with {rt1}{rt2}{rt3}, требуется быть помощником или лидером."
 
 	--L.power_message = "%d Iron Fury!"
 end
 
 L = BigWigs:NewBossLocale("Blackhand", "ruRU")
 if L then
-	--L.custom_off_markedfordeath_marker = "Marked for Death marker"
-	--L.custom_off_markedfordeath_marker_desc = "Mark Marked for Death targets with {rt1}{rt2}, requires promoted or leader."
+	L.custom_off_markedfordeath_marker = "Маркировка Метки смерти"
+	L.custom_off_markedfordeath_marker_desc = "Отмечать людей с Меткой смерти {rt1}{rt2}, требуется быть помощником или лидером."
 end
 
