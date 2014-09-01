@@ -40,7 +40,6 @@ if L then
 	L.custom_off_heartseeker_marker_desc = "Marks Heartseeker targets with {rt1}{rt2}{rt3}, requires promoted or leader."
 	L.custom_off_heartseeker_marker_icon = 1
 
-	L.health_message = "%s is under 25% health!"
 	L.power_message = "%d Iron Fury!"
 end
 L = mod:GetLocale()

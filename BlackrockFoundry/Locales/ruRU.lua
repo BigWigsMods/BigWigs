@@ -11,7 +11,7 @@ end
 
 L = BigWigs:NewBossLocale("The Blast Furnace", "ruRU")
 if L then
-
+	--L.heat_increased_message = "Heat increased! Blast every %ss"
 end
 
 L = BigWigs:NewBossLocale("Hans'gar and Franzok", "ruRU")
@@ -44,12 +44,28 @@ end
 
 L = BigWigs:NewBossLocale("Operator Thogar", "ruRU")
 if L then
+	--L.cauterizing_bolt_message = "Your focus is casting Cauterizing Bolt!"
 
+	--L.trains = "Train warnings"
+	--L.trains_desc = "Shows timers and messages for each lane for when the next train is coming. Lanes are numbered from the boss to the entrace, ie, Boss 1 2 3 4 Entrance."
+
+	--L.lane = "Lane %d: %s"
+	--L.train = "Train"
+	--L.adds_train = "Adds train"
+	--L.big_add_train = "Big add train"
+	--L.cannon_train = "Cannon train"
 end
 
 L = BigWigs:NewBossLocale("The Iron Maidens", "ruRU")
 if L then
+	--L.ship_trigger = "prepares to man the Dreadnaught's Main Cannon!"
 
+	--L.ship = "Jump to Ship: %s"
+
+	--L.custom_off_heartseeker_marker = "Bloodsoaked Heartseeker marker"
+	--L.custom_off_heartseeker_marker_desc = "Marks Heartseeker targets with {rt1}{rt2}{rt3}, requires promoted or leader."
+
+	--L.power_message = "%d Iron Fury!"
 end
 
 L = BigWigs:NewBossLocale("Blackhand", "ruRU")

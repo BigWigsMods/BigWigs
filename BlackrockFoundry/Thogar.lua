@@ -19,7 +19,7 @@ local trainData = {
 	-- mythic is probably going to fuck with these so hard T.T
 	-- times are for when the train is about to enter the room, ~5s after the door opens
 	[1] = {
-		{32, "adds_train"},
+		{ 32, "adds_train"},
 		{107, "train"},
 		{162, "train"},
 		{172, "cannon_train"},
@@ -29,8 +29,8 @@ local trainData = {
 		{407, "train"},
 	},
 	[2] = {
-		{27, "train"},
-		{77, "train"},
+		{ 27, "train"},
+		{ 77, "train"},
 		{122, "adds_train"},
 		{183, "train"},
 		{197, "train"},
@@ -41,8 +41,8 @@ local trainData = {
 		{372, "adds_train"},
 	},
 	[3] = {
-		{48, "train"},
-		{82, "big_add_train"},
+		{ 48, "train"},
+		{ 82, "big_add_train"},
 		{122, "adds_train"},
 		{217, "train"},
 		{277, "train"},
@@ -50,8 +50,8 @@ local trainData = {
 		{385, "train"},
 	},
 	[4] = {
-		{17, "train"},
-		{52, "cannon_train"},
+		{ 17, "train"},
+		{ 52, "cannon_train"},
 		{162, "train"},
 		{197, "adds_train"},
 		{252, "cannon_train"},
@@ -97,7 +97,7 @@ L.cauterizing_bolt_desc = CL.focus_only..L.cauterizing_bolt_desc
 
 function mod:GetOptions()
 	return {
-		163753, "cauterizing_bolt", "custom_off_firemender_marker", {159481, "ICON", "FLASH"},
+		163753, "cauterizing_bolt", {159481, "ICON", "FLASH"}, --, "custom_off_firemender_marker"
 		{155921, "TANK"}, {155864, "FLASH"}, "trains", "bosskill",
 	}, {
 		[163753] = -9537, -- Reinforcements
