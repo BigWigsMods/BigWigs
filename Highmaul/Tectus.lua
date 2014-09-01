@@ -10,24 +10,6 @@ mod:RegisterEnableMob(78948)
 --mod.engageId = 1722
 
 --------------------------------------------------------------------------------
--- Locals
---
-
-local split = nil
-
--- a better tContains with blackjack and the index found returned
-local function tContains(table, item)
-	local index = 1
-	while table[index] do
-		if item == table[index] then
-			return index
-		end
-		index = index + 1
-	end
-	return nil
-end
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -49,12 +31,6 @@ if L then
 	L.berserker_icon = "ability_warrior_endlessrage" -- angry orc
 end
 L = mod:GetLocale()
-
-local names = {
-	[78948] = L.tectus,
-	[80551] = L.shard,
-	[80557] = L.motes,
-}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -97,7 +73,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	split = nil
 	self:CDBar(162346, 6) -- Crystalline Barrage
 	self:CDBar("adds", 10, -10061, L.earthwarper_icon) -- Earthwarper
 	self:CDBar("adds", 20, -10062, L.berserker_icon) -- Berserker
@@ -149,12 +124,14 @@ end
 
 do
 	local prev = 0
+	local names = { [78948] = L.tectus, [80551] = L.shard, [80557] = L.motes }
+
 	function mod:TectonicUpheaval(args)
 		local t = GetTime()
 		local id = self:MobId(args.sourceGUID)
-		if id ~= 80557 or t-prev > 5 then -- Mote of Tectus
-			local raidIcon = CombatLog_String_GetIcon(args.sourceRaidFlags) -- Raid icon string
-			self:Message(args.spellId, "Positive", not split and "Long", CL.other:format(raidIcon .. names[id], args.spellName))
+		if id ~= 80557 or t-prev > 5 then -- not Mote or first Mote cast in 5s
+			local raidIcon = CombatLog_String_GetIcon(args.sourceRaidFlags)
+			self:Message(args.spellId, "Positive", nil, CL.other:format(raidIcon .. names[id], args.spellName))
 			if id == 80557 then prev = t end
 		end
 	end
@@ -162,7 +139,6 @@ end
 
 function mod:Split(unit, spellName, _, _, spellId)
 	if spellId == 140562 then -- Break Player Targetting (cast when Tectus/Shards die)
-		split = true
 		self:StopBar(-10061) -- Earthwarper
 		self:StopBar(-10062) -- Berserker
 		self:CDBar(162346, 8) -- Crystalline Barrage 7-12s, then every ~20s, 2-5s staggered
