@@ -31,7 +31,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		162497,
 		{159113, "TANK_HEALER"}, 159250, {158986, "SAY", "ICON", "FLASH"}, 159947, {159413, "FLASH"}, {159311, "FLASH"}, 160521, "bosskill"
+	}, {
+		[162497] = "mythic",
+		[159113] = "general"
 	}
 end
 
@@ -49,6 +53,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "MaulingBrewDamage", 159413)
 	self:Log("SPELL_PERIODIC_MISSED", "MaulingBrewDamage", 159413)
 	self:Log("SPELL_CAST_START", "VileBreath", 160521)
+	-- Mythic
+	--self:Log("SPELL_AURA_APPLIED", "CrowdFavorite", 163370, 163369, 163368, 163366)
+	self:Log("SPELL_AURA_APPLIED", "OnTheHunt", 162497)
 
 	self:Death("Win", 79459)
 end
@@ -62,6 +69,10 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:OnTheHunt(args)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", self:SpellName(-9437)) -- Ravenous Bloodmaw
+end
 
 do
 	local function printTarget(self, name, guid)
