@@ -43,10 +43,12 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		163755, 163794,
 		"spore_shooter", "mind_fungus", "flesh_eater", 160013,
 		"living_mushroom", "rejuvenating_mushroom",
 		{164125, "FLASH"}, {163241, "TANK"}, {159219, "TANK_HEALER"}, 159996, "berserk", "bosskill"
 	}, {
+		[163755] = "mythic",
 		["spore_shooter"] = -9993,
 		["living_mushroom"] = -9998,
 		[164125] = "general"
@@ -64,6 +66,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "InfestingSpores", 159996)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "FungusSpawns", "boss1")
 	self:Log("SPELL_CAST_START", "Decay", 160013)
+	-- Mythic
+	self:Log("SPELL_CAST_START", "CallOfTheTides", 163755)
+	self:Log("SPELL_CAST_START", "ExplodingFungus", 163794)
 
 	self:Death("Win", 78491)
 end
@@ -83,6 +88,14 @@ end
 -- Event Handlers
 --
 
+function mod:CallOfTheTides(args)
+	self:Message(args.spellId, "Urgent")
+end
+
+function mod:ExplodingFungus(args)
+	self:Message(args.spellId, "Urgent")
+end
+
 do
 	local prev = 0
 	function mod:CreepingMossHeal(args)
@@ -101,7 +114,7 @@ function mod:Rot(args)
 end
 
 function mod:NecroticBreath(args)
-	self:Message(args.spellId, "Urgent", "Alert")
+	self:Message(args.spellId, "Urgent", "Warning")
 	self:Bar(args.spellId, 30)
 end
 
@@ -131,10 +144,10 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 		self:Message("flesh_eater", "Urgent", self:Tank() and "Info", CL.spawning:format(CL.big_add), L.flesh_eater_icon)
 		self:Bar("flesh_eater", 120, CL.big_add, L.flesh_eater_icon)
 	elseif spellId == 160022 then -- Living Mushroom
-		self:Message("living_mushroom", "Positive", "Info", spellId, L.living_mushroom_icon)
+		self:Message("living_mushroom", "Positive", self:Healer() and "Info", spellId, L.living_mushroom_icon)
 		self:Bar("living_mushroom", 60, spellId, L.living_mushroom_icon)
 	elseif spellId == 160021 then -- Rejuvenating Mushroom
-		self:Message("rejuvenating_mushroom", "Positive", "Info", spellId, L.rejuvenating_mushroom_icon)
+		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Info", spellId, L.rejuvenating_mushroom_icon)
 		self:Bar("rejuvenating_mushroom", 145, spellId, L.rejuvenating_mushroom_icon)
 	end
 end
