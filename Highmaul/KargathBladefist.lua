@@ -71,7 +71,7 @@ end
 --
 
 function mod:OnTheHunt(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", self:SpellName(-9437)) -- Ravenous Bloodmaw
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", self:SpellName(-9436)) -- Ravenous Bloodmaw
 end
 
 do
