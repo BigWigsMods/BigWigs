@@ -44,7 +44,7 @@ if L then
 	L.mage = "|cFF69CCF0"..LOCALIZED_CLASS_NAMES_MALE.MAGE.."|r"
 	L.rogue = "|cFFFFF569"..LOCALIZED_CLASS_NAMES_MALE.ROGUE.."|r"
 	L.shaman = "|cFF0070DE"..LOCALIZED_CLASS_NAMES_MALE.SHAMAN.."|r"
-	L.warrior = "|cFFC79C6E"..LOCALIZED_CLASS_NAMES_MALE.WARRIOR.."r|r"
+	L.warrior = "|cFFC79C6E"..LOCALIZED_CLASS_NAMES_MALE.WARRIOR.."|r"
 	L.hunter = "|cFFABD473"..LOCALIZED_CLASS_NAMES_MALE.HUNTER.."|r"
 
 	L.chain_heal, L.chain_heal_desc = EJ_GetSectionInfo(7935)
