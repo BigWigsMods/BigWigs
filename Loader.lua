@@ -54,6 +54,19 @@ local ldb = nil
 local tooltipFunctions = {}
 local next, tonumber = next, tonumber
 local SendAddonMessage, Ambiguate = SendAddonMessage, Ambiguate
+-- XXX compat
+local pName = UnitName("player")
+local GetAddOnEnableState = GetAddOnEnableState or function(_, index)
+	local _, _, _, enabled = GetAddOnInfo(index)
+	return enabled and 2 or 0 -- tristate values, 1 being enabled for some chars
+end
+local function GetAddOnIndex(name)
+	for i=1, GetNumAddOns() do
+		if GetAddOnInfo(i) == name then
+			return i
+		end
+	end
+end
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
 local GetCurrentMapAreaID = GetCurrentMapAreaID
@@ -124,18 +137,13 @@ local function sysprint(msg)
 	print("|cFF33FF99Big Wigs|r: "..msg)
 end
 
-local function load(obj, name)
+local function load(obj, index)
 	if obj then return true end
-	-- Verify that the addon isn't disabled
-	local _, _, _, enabled = GetAddOnInfo(name)
-	if not enabled then
-		sysprint("Error loading " .. name .. " ("..name.." is not enabled)")
-		return
-	end
-	-- Load the addon
-	local succ, err = LoadAddOn(name)
-	if not succ then
-		sysprint("Error loading " .. name .. " (" .. err .. ")")
+	if type(index) == "string" then index = GetAddOnIndex(index) end -- XXX probably a better way to do this, BigWigs_Core and BigWigs_Options loaded by name
+	local loaded, reason = LoadAddOn(index)
+	if not loaded then
+		local name = GetAddOnInfo(index)
+		sysprint(ADDON_LOAD_FAILED:format(name, _G["ADDON_"..reason]))
 		return
 	end
 	return true
@@ -143,9 +151,10 @@ end
 
 local function loadAddons(tbl)
 	if not tbl then return end
-	for i, addon in next, tbl do
-		if not IsAddOnLoaded(addon) and load(nil, addon) then
-			public:SendMessage("BigWigs_ModulePackLoaded", addon)
+	for _, index in next, tbl do
+		if not IsAddOnLoaded(index) and load(nil, index) then
+			local name = GetAddOnInfo(index)
+			public:SendMessage("BigWigs_ModulePackLoaded", name)
 		end
 	end
 	tbl = nil
@@ -217,26 +226,27 @@ do
 	}
 
 	for i = 1, GetNumAddOns() do
-		local name, _, _, enabled = GetAddOnInfo(i)
+		local name = GetAddOnInfo(i)
+		local enabled = GetAddOnEnableState(pName, i) > 0
 		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
-				loadOnCoreEnabled[#loadOnCoreEnabled + 1] = name
+				loadOnCoreEnabled[#loadOnCoreEnabled + 1] = i
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreLoaded")
 			if meta then
-				loadOnCoreLoaded[#loadOnCoreLoaded + 1] = name
+				loadOnCoreLoaded[#loadOnCoreLoaded + 1] = i
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-ZoneId")
 			if meta then
-				loadOnZoneAddons[#loadOnZoneAddons + 1] = name
+				loadOnZoneAddons[#loadOnZoneAddons + 1] = i
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-WorldBoss")
 			if meta then
-				loadOnWorldBoss[#loadOnWorldBoss + 1] = name
+				loadOnWorldBoss[#loadOnWorldBoss + 1] = i
 			end
 		elseif not enabled and reqFuncAddons[name] then
-			sysprint(L["coreAddonDisabled"])
+			sysprint(L.coreAddonDisabled)
 		end
 	end
 end
@@ -259,7 +269,8 @@ do
 					if not menus[zone] then menus[zone] = true end
 				end
 			else
-				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZone), tostring(addon)))
+				local name = GetAddOnInfo(addon)
+				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZone), name))
 			end
 		end
 	end
@@ -289,36 +300,43 @@ do
 					currentZone = nil
 				end
 			else
-				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZoneOrBoss), tostring(addon)))
+				local name = GetAddOnInfo(addon)
+				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZoneOrBoss), name))
 			end
 		end
 	end
 
 	function mod:PLAYER_LOGIN()
-		for i, name in next, loadOnZoneAddons do
-			local menu = tonumber(GetAddOnMetadata(name, "X-BigWigs-Menu"))
+		for _, index in next, loadOnZoneAddons do
+			local menu = tonumber(GetAddOnMetadata(index, "X-BigWigs-Menu"))
 			if menu then
 				if not loadOnZone[menu] then loadOnZone[menu] = {} end
 				if not menus[menu] then menus[menu] = true end
 			end
-			local zones = GetAddOnMetadata(name, "X-BigWigs-LoadOn-ZoneId")
+			local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-ZoneId")
 			if zones then
-				iterateZones(name, menu, strsplit(",", zones))
+				iterateZones(index, menu, strsplit(",", zones))
 			end
 		end
 		loadOnZoneAddons, iterateZones = nil, nil
-		for i, name in next, loadOnWorldBoss do
-			local menu = tonumber(GetAddOnMetadata(name, "X-BigWigs-Menu"))
+		for _, index in next, loadOnWorldBoss do
+			local menu = tonumber(GetAddOnMetadata(index, "X-BigWigs-Menu"))
 			if menu then
 				if not loadOnZone[menu] then loadOnZone[menu] = {} end
 				if not menus[menu] then menus[menu] = true end
 			end
-			local zones = GetAddOnMetadata(name, "X-BigWigs-LoadOn-WorldBoss")
+			local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-WorldBoss")
 			if zones then
-				iterateWorldBosses(name, menu, strsplit(",", zones))
+				iterateWorldBosses(index, menu, strsplit(",", zones))
 			end
 		end
 		loadOnWorldBoss, iterateWorldBosses = nil, nil
+
+		-- Update zone panels for non-LoD users
+		if BigWigsOptions then
+			BigWigsOptions:Disable()
+			BigWigsOptions:Enable()
+		end
 
 		bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 		bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
@@ -413,7 +431,8 @@ do
 
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
-		local name, _, _, enabled = GetAddOnInfo(i)
+		local name = GetAddOnInfo(i)
+		local enabled = GetAddOnEnableState(pName, i) > 0
 		if enabled and not IsAddOnLoadOnDemand(i) then
 			for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
 				local meta = select(j, GetAddOnOptionalDependencies(i))
@@ -796,7 +815,8 @@ do
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
 		if zoneAddon and not warnedThisZone[id] and zoneAddon ~= "BigWigs_MistsOfPandaria" then -- XXX compat
-			local _, _, _, enabled = GetAddOnInfo(zoneAddon)
+			local index = GetAddOnIndex(zoneAddon)
+			local enabled = index and GetAddOnEnableState(pName, index) > 0
 			if not enabled then
 				warnedThisZone[id] = true
 				local msg = L.missingAddOn:format(zoneAddon)
