@@ -141,7 +141,7 @@ function mod:UNIT_POWER_FREQUENT(unit, powerType)
 	bossUnitPowers[mobId] = power
 
 	local playerSide = checkPlayerSide()
-	if ((mobId == 71512 or mobId == 73721) and playerSide > 0) or ((mobId == 73720 or mobId == 73722) and playerSide < 0) and not self:LFR() then -- mantid or mogu (side you're on)
+	if ((mobId == 71512 or mobId == 73721) and playerSide > 0) or ((mobId == 73720 or mobId == 73722) and playerSide < 0) then -- mantid or mogu (side you're on)
 		-- guessimate how many crates of a type you need to open
 		if change > 13 then
 			massiveCrates = massiveCrates - 1
