@@ -15,6 +15,7 @@ local setToBlow = {}
 local sparkCounter = 0
 local bossUnitPowers = {}
 local massiveCrates = 2
+local stoutCrates = 6
 
 local function checkPlayerSide()
 	BigWigsLoader.SetMapToCurrentZone()
@@ -114,6 +115,7 @@ function mod:OnEngage()
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2")
 	sparkCounter = 0
 	massiveCrates = 2
+	stoutCrates = 6
 	wipe(setToBlow)
 	wipe(bossUnitPowers)
 	self:OpenProximity("proximity", 3)
@@ -143,15 +145,18 @@ function mod:UNIT_POWER_FREQUENT(unit, powerType)
 		-- guessimate how many crates of a type you need to open
 		if change > 13 then
 			massiveCrates = massiveCrates - 1
+		elseif change > 3 then
+			stoutCrates = stoutCrates - 1
 		end
 		if power == 50 then
 			self:Message("crates", "Important", "Long", L.full_power, L.crates_icon)
 			massiveCrates = 2
+			stoutCrates = 6
 		else --if power > 25 then
 			local remaining = 50 - power
 			local small = remaining
 			small = max(0, small - (massiveCrates * 14))
-			local medium = floor(small / 3)
+			local medium = min(floor(small / 3), stoutCrates)
 			small = max(0, small - (medium * 3))
 			self:Message("crates", "Attention", nil, L.power_left:format(remaining, massiveCrates, medium, small), L.crates_icon)
 		end
