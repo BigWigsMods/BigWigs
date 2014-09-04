@@ -145,7 +145,7 @@ function mod:UNIT_POWER_FREQUENT(unit, powerType)
 		-- guessimate how many crates of a type you need to open
 		if change > 13 then
 			massiveCrates = massiveCrates - 1
-		elseif change > 3 then
+		elseif change > 2 then
 			stoutCrates = stoutCrates - 1
 		end
 		if power == 50 then
