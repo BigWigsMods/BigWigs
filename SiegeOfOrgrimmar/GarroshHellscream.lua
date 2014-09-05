@@ -221,12 +221,14 @@ end
 do
 	local prev = 0
 	function mod:MaliciousBlastApplied(args)
+		if self:Me(args.destGUID) then
+			self:StackMessage(args.spellId, args.destName, args.amount, "Personal", args.amount and "Alert") -- Sound for 2+ stacks
+		end
+
 		local t = GetTime()
-		if t-prev > 1 and UnitDebuff("player", self:SpellName(147209)) then -- malice
+		if t-prev > 1 and UnitDebuff("player", self:SpellName(147209)) then -- Malice Debuff
 			prev = t
-			self:Bar(args.spellId, 2)
-		elseif self:Me(args.destGUID) and args.amount and args.amount > 1 then
-			self:StackMessage(args.spellId, args.destName, args.amount) -- so people know they are taking extra damage
+			self:Bar(args.spellId, 2) -- Bar for when you as the player with Malice will spread Malicious Blast to others
 		end
 	end
 end
