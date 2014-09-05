@@ -13,12 +13,18 @@ L = BigWigs:NewBossLocale("Tectus", "koKR")
 if L then
 	--L.earthwarper_trigger1 = "Yjj'rmr" -- Yjj'rmr... Xzzolos...
 	--L.earthwarper_trigger2 = "Yes, Tectus" -- Yes, Tectus. Bend to... our master's... will....
+	--L.earthwarper_trigger3 = "You do not understand!" -- You do not understand! This one must not....
 	L.berserker_trigger1 = "주인님! 제가 왔습니다!" -- MASTER! I COME FOR YOU!
 	--L.berserker_trigger2 = "Kral'ach" --Kral'ach.... The darkness speaks.... A VOICE!
+	--L.berserker_trigger3 = "Graaagh!" --Graaagh! KAHL...  AHK... RAAHHHH!
 
 	--L.tectus = "Tectus"
 	--L.shard = "Shard"
 	--L.motes = "Motes"
+
+	--L.custom_off_barrage_marker = "Crystalline Barrage marker"
+	--L.custom_off_barrage_marker_desc = "Marks targets of Crystalline Barrage with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
+	--L.custom_off_barrage_marker_icon = 1
 
 	L.adds_desc = "다음 쫄이 언제 전투에 참여하는 지를 확인하기 위한 타이머입니다."
 end
