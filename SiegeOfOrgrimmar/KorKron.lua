@@ -70,6 +70,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "ToxicStormDamage", 144017)
 	-- General
 	self:Log("SPELL_CAST_SUCCESS", "Bloodlust", 144302)
+
+	self:AddSyncListener("FallingAsh")
+	self:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
 end
 
 function mod:ENCOUNTER_END(_, id, name, diff, size, win)
@@ -179,11 +182,23 @@ end
 
 -- Wavebinder Kardris
 
+function mod:OnSync(sync, rest, player)
+	if sync == "FallingAsh" then
+		-- this is for when the damage happens
+		self:DelayedMessage(143973, 14, "Attention", CL.soon:format(CL.count:format(self:SpellName(143973), ashCounter)), 143973, self:Healer() and "Info")
+		self:Bar(143973, 17, CL.count:format(self:SpellName(143973), ashCounter))
+		ashCounter = ashCounter + 1
+	end
+end
+
+function mod:OnDBMSync(_, player, prefix, _, _, event)
+	if prefix == "M" and event == "FallingAsh" then
+		self:Sync("FallingAsh")
+	end
+end
+
 function mod:FallingAsh(args)
-	-- this is for when the damage happens
-	self:ScheduleTimer("Message", 14, args.spellId, "Attention", self:Healer() and "Info", CL.soon:format(CL.count:format(args.spellName, ashCounter)))
-	self:Bar(args.spellId, 17, CL.count:format(args.spellName, ashCounter))
-	ashCounter = ashCounter + 1
+	self:Sync("FallingAsh")
 end
 
 function mod:FoulGeyser(args) -- Blobs
