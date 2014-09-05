@@ -119,10 +119,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CauterizingBolt", 160140)
 	self:Log("SPELL_AURA_APPLIED", "DelayedSiegeBomb", 159481)
 	-- Mythic
-	self:Log("SPELL_PERIODIC_DAMAGE", "ObliterationDamage", 156494)
-	self:Log("SPELL_PERIODIC_MISSED", "ObliterationDamage", 156494)
-	self:Log("SPELL_PERIODIC_DAMAGE", "HeatBlastDamage", 164380)
-	self:Log("SPELL_PERIODIC_MISSED", "HeatBlastDamage", 164380)
+	self:Log("SPELL_AURA_APPLIED", "ObliterationDamage", 156494)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ObliterationDamage", 156494)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "HeatBlastDamage", 164380)
 
 	self:Death("Deaths", 80791) -- Grom'kar Man-at-Arms
 	self:Death("Win", 76906)
@@ -142,25 +141,15 @@ end
 -- Event Handlers
 --
 
-do
-	local prev = 0
-	function mod:ObliterationDamage(args)
-		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 2 then
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName)) -- OBLITERATION under YOU! lol
-			prev = t
-		end
+function mod:ObliterationDamage(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName)) -- OBLITERATION under YOU! lol
 	end
 end
 
-do
-	local prev = 0
-	function mod:HeatBlastDamage(args)
-		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 2 then
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
-			prev = t
-		end
+function mod:HeatBlastDamage(args)
+	if self:Me(args.destGUID) and args.amount > 2 then
+		self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 	end
 end
 
