@@ -31,8 +31,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		162497,
-		{159113, "TANK_HEALER"}, 159250, {158986, "SAY", "ICON", "FLASH"}, 159947, {159413, "FLASH"}, {159311, "FLASH"}, 160521, "bosskill"
+		{162497, "FLASH"},
+		{159113, "TANK_HEALER"}, 159250, {158986, "SAY", "ICON", "FLASH"}, 159947, 159413, 159311, 160521, "bosskill"
 	}, {
 		[162497] = "mythic",
 		[159113] = "general"
@@ -72,6 +72,9 @@ end
 
 function mod:OnTheHunt(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", self:SpellName(-9436)) -- Ravenous Bloodmaw
+	if self:Me(args.destGUID) then
+		self:Flash(args.spellId)
+	end
 end
 
 do
@@ -144,7 +147,6 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
-			self:Flash(args.spellId)
 			prev = t
 		end
 	end
@@ -156,7 +158,6 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
-			self:Flash(args.spellId)
 			prev = t
 		end
 	end
