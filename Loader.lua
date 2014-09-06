@@ -127,7 +127,7 @@ end
 -- GLOBALS: InterfaceOptionsFrameOkay, IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInInstance, IsInRaid, IsPartyLFG, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, SetMapByID, strsplit
 -- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
--- GLOBALS: SLASH_BigWigsVersion1, wipe, WorldMapFrame
+-- GLOBALS: SLASH_BigWigsVersion1, wipe, WorldMapFrame, ADDON_LOAD_FAILED
 
 -----------------------------------------------------------------------
 -- Utility
@@ -344,7 +344,10 @@ do
 
 		-- Role Updating
 		bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-		bwFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
+		local _, class = UnitClass("player")
+		if class == "WARRIOR" then -- Handle Gladiator Stance
+			bwFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
+		end
 		RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 		bwFrame:RegisterEvent("CHAT_MSG_ADDON")
@@ -556,37 +559,30 @@ end)
 bwFrame:RegisterEvent("PLAYER_LOGIN")
 
 -- Role Updating
-local gladStance = GetSpellInfo(156291)
-local function RoleCheck()
-	if IsInGroup() then
-		local _, _, diff = GetInstanceInfo()
-		if IsPartyLFG() and diff ~= 14 then return end
+do
+	local gladiatorStance = GetSpellInfo(156291)
+	function mod:ACTIVE_TALENT_GROUP_CHANGED()
+		if IsInGroup() then
+			local _, _, diff = GetInstanceInfo()
+			if IsPartyLFG() and diff ~= 14 then return end
 
-		local tree = GetSpecialization()
-		if not tree then return end -- No spec selected
+			local tree = GetSpecialization()
+			if not tree then return end -- No spec selected
 
-		local role = GetSpecializationRole(tree)
-		if gladStance and role == "TANK" and UnitBuff("player", gladStance) then--Special handling for gladiator stance (Dps protection warriors)
-			role = "DAMAGER"
-		end
-		if UnitGroupRolesAssigned("player") ~= role then
-			if InCombatLockdown() or UnitAffectingCombat("player") then
-				bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-				return
+			local role = GetSpecializationRole(tree)
+			if gladiatorStance and UnitBuff("player", gladiatorStance) then -- XXX compat
+				role = "DAMAGER"
 			end
-			UnitSetRole("player", role)
+			if UnitGroupRolesAssigned("player") ~= role then
+				if InCombatLockdown() or UnitAffectingCombat("player") then
+					bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+					return
+				end
+				UnitSetRole("player", role)
+			end
 		end
 	end
-end
-function mod:ACTIVE_TALENT_GROUP_CHANGED()
-	RoleCheck()
-end
-
-function mod:UPDATE_SHAPESHIFT_FORM()
-	local _, class = UnitClass("player")
-	if class == "WARRIOR" then--check for stance changes for prot warriors that might be specced into Gladiator Stance
-		RoleCheck()
-	end
+	mod.UPDATE_SHAPESHIFT_FORM = mod.ACTIVE_TALENT_GROUP_CHANGED
 end
 
 -- Merged LFG_ProposalTime addon by Freebaser
