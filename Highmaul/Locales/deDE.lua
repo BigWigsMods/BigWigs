@@ -24,7 +24,6 @@ if L then
 
 	--L.custom_off_barrage_marker = "Crystalline Barrage marker"
 	--L.custom_off_barrage_marker_desc = "Marks targets of Crystalline Barrage with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
-	--L.custom_off_barrage_marker_icon = 1
 
 	--L.adds_desc = "Timers for when new adds enter the fight."
 end
