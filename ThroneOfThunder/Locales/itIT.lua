@@ -207,8 +207,6 @@ end
 
 L = BigWigs:NewBossLocale("Throne of Thunder Trash", "itIT")
 if L then
-	L.displayname = "Trash"
-
 	L.stormcaller = "Invocatore delle Tempeste Zandalari"
 	L.stormbringer = "Araldo della Tempesta Draz'kil"
 	L.monara = "Monara"

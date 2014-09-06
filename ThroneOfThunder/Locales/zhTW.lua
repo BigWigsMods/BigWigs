@@ -207,8 +207,6 @@ end
 
 L = BigWigs:NewBossLocale("Throne of Thunder Trash", "zhTW")
 if L then
-	L.displayname = "小怪"
-
 	L.stormcaller = "贊達拉召雷師"
 	L.stormbringer = "風暴召喚者德拉茲齊"
 	L.monara = "魔娜菈" --(任務)皇后的輓歌

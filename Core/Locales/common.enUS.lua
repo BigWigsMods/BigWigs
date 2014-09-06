@@ -20,7 +20,7 @@ L.normal = "Normal mode"
 L.heroic = "Heroic mode"
 L.hard = "Hard mode"
 L.mythic = "Mythic"
-L.general = "General" -- General settings, i.e. things that apply to both normal and hard mode.
+L.general = "General" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 
 L.duration = "%s for %s sec"
 L.over = "%s Over!"
@@ -54,4 +54,5 @@ L.custom_min = "%s in %d min"
 L.custom_sec = "%s in %d sec!"
 
 L.focus_only = "|cffff0000Focus target alerts only.|r "
+L.trash = "Trash"
 
