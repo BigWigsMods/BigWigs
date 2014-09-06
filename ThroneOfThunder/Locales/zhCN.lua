@@ -12,7 +12,7 @@ L = BigWigs:NewBossLocale("Horridon", "zhCN")
 if L then
 	L.charge_trigger = "开始拍打他的尾巴"
 	L.door_trigger = "之门中涌出"
-	--L.orb_trigger = "charge" -- PLAYERNAME forces Horridon to charge the Farraki door!
+	L.orb_trigger = "冲向" -- PLAYERNAME forces Horridon to charge the Farraki door!
 
 	L.chain_lightning_message = "焦点：>闪电链<！"
 	L.chain_lightning_bar = "焦点：闪电链"
@@ -43,7 +43,7 @@ if L then
 	L.custom_on_markpossessed = "标记控制首领"
 	L.custom_on_markpossessed_desc = "用骷髅团队标记被控制的首领，需要权限。"
 
-	--L.priestess_heal = "%s was healed!"
+	L.priestess_heal = ">%s< 被治疗！"
 	L.assault_stun = "坦克眩晕"
 	L.assault_message = "冰寒突击！"
 	L.full_power = "全能量"
