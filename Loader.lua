@@ -344,6 +344,7 @@ do
 
 		-- Role Updating
 		bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+		bwFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
 		RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 		bwFrame:RegisterEvent("CHAT_MSG_ADDON")
@@ -555,7 +556,8 @@ end)
 bwFrame:RegisterEvent("PLAYER_LOGIN")
 
 -- Role Updating
-function mod:ACTIVE_TALENT_GROUP_CHANGED()
+local gladStance = GetSpellInfo(156291)
+local function RoleCheck()
 	if IsInGroup() then
 		local _, _, diff = GetInstanceInfo()
 		if IsPartyLFG() and diff ~= 14 then return end
@@ -564,6 +566,9 @@ function mod:ACTIVE_TALENT_GROUP_CHANGED()
 		if not tree then return end -- No spec selected
 
 		local role = GetSpecializationRole(tree)
+		if gladStance and role == "TANK" and UnitBuff("player", gladStance) then--Special handling for gladiator stance (Dps protection warriors)
+			role = "DAMAGER"
+		end
 		if UnitGroupRolesAssigned("player") ~= role then
 			if InCombatLockdown() or UnitAffectingCombat("player") then
 				bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
@@ -571,6 +576,16 @@ function mod:ACTIVE_TALENT_GROUP_CHANGED()
 			end
 			UnitSetRole("player", role)
 		end
+	end
+end
+function mod:ACTIVE_TALENT_GROUP_CHANGED()
+	RoleCheck()
+end
+
+function mod:UPDATE_SHAPESHIFT_FORM()
+	local _, class = UnitClass("player")
+	if class == "WARRIOR" then--check for stance changes for prot warriors that might be specced into Gladiator Stance
+		RoleCheck()
 	end
 end
 
