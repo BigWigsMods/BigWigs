@@ -30,7 +30,6 @@ end
 
 L = BigWigs:NewBossLocale("Brackenspore", "koKR")
 if L then
-	L.decay_message = "주시 대상이 부패를 시전합니다!"
 	L.creeping_moss_heal = "보스 아래에 덩굴 이끼가 있습니다 (치유 중)"
 end
 

@@ -30,7 +30,6 @@ end
 
 L = BigWigs:NewBossLocale("Brackenspore", "ptBR")
 if L then
-	--L.decay_message = "Your focus is casting Decay!"
 	--L.creeping_moss_heal = "Creeping Moss under BOSS (healing)"
 end
 
