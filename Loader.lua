@@ -123,7 +123,7 @@ end
 -- XXX compat
 local GetAddOnEnableState = GetAddOnEnableState or function(_, index)
 	local _, _, _, enabled = GetAddOnInfo(index)
-	return enabled and 2 or 0 -- tristate values, 1 being enabled for some chars
+	return enabled and 3 or 0 -- tristate values, 1 being enabled for some chars
 end
 
 local function GetAddOnIndex(name)
@@ -256,7 +256,7 @@ do
 				loadOnWorldBoss[#loadOnWorldBoss + 1] = i
 			end
 		elseif not enabled and reqFuncAddons[name] then
-			sysprint(L.coreAddonDisabled)
+			sysprint(L.coreAddonDisabled:format(name))
 		end
 	end
 end
