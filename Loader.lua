@@ -123,7 +123,7 @@ end
 -- XXX compat
 local GetAddOnEnableState = GetAddOnEnableState or function(_, index)
 	local _, _, _, enabled = GetAddOnInfo(index)
-	return enabled and 3 or 0 -- tristate values, 1 being enabled for some chars
+	return enabled and 2 or 0 -- tristate values, 1 being enabled for some chars
 end
 
 local function GetAddOnIndex(name)
@@ -140,7 +140,7 @@ local function IsAddOnEnabled(index)
 		if not index then return end
 	end
 	local character = UnitName("player")
-	return GetAddOnEnableState(character, index) > 2
+	return GetAddOnEnableState(character, index) == 2
 end
 
 local function sysprint(msg)
