@@ -54,19 +54,6 @@ local ldb = nil
 local tooltipFunctions = {}
 local next, tonumber = next, tonumber
 local SendAddonMessage, Ambiguate = SendAddonMessage, Ambiguate
--- XXX compat
-local pName = UnitName("player")
-local GetAddOnEnableState = GetAddOnEnableState or function(_, index)
-	local _, _, _, enabled = GetAddOnInfo(index)
-	return enabled and 2 or 0 -- tristate values, 1 being enabled for some chars
-end
-local function GetAddOnIndex(name)
-	for i=1, GetNumAddOns() do
-		if GetAddOnInfo(i) == name then
-			return i
-		end
-	end
-end
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
 local GetCurrentMapAreaID = GetCurrentMapAreaID
@@ -133,13 +120,36 @@ end
 -- Utility
 --
 
+-- XXX compat
+local GetAddOnEnableState = GetAddOnEnableState or function(_, index)
+	local _, _, _, enabled = GetAddOnInfo(index)
+	return enabled and 2 or 0 -- tristate values, 1 being enabled for some chars
+end
+
+local function GetAddOnIndex(name)
+	for i=1, GetNumAddOns() do
+		if GetAddOnInfo(i) == name then
+			return i
+		end
+	end
+end
+
+local function IsAddOnEnabled(index)
+	if type(index) == "string" then
+		index = GetAddOnIndex(index)
+		if not index then return end
+	end
+	local character = UnitName("player")
+	return GetAddOnEnableState(character, index) > 2
+end
+
 local function sysprint(msg)
 	print("|cFF33FF99Big Wigs|r: "..msg)
 end
 
 local function load(obj, index)
 	if obj then return true end
-	if type(index) == "string" then index = GetAddOnIndex(index) end -- XXX probably a better way to do this, BigWigs_Core and BigWigs_Options loaded by name
+	if type(index) == "string" then index = GetAddOnIndex(index) end
 	local loaded, reason = LoadAddOn(index)
 	if not loaded then
 		local name = GetAddOnInfo(index)
@@ -227,7 +237,7 @@ do
 
 	for i = 1, GetNumAddOns() do
 		local name = GetAddOnInfo(i)
-		local enabled = GetAddOnEnableState(pName, i) > 0
+		local enabled = IsAddOnEnabled(i)
 		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
@@ -436,8 +446,7 @@ do
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
 		local name = GetAddOnInfo(i)
-		local enabled = GetAddOnEnableState(pName, i) > 0
-		if enabled and not IsAddOnLoadOnDemand(i) then
+		if IsAddOnEnabled(i) and not IsAddOnLoadOnDemand(i) then
 			for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
 				local meta = select(j, GetAddOnOptionalDependencies(i))
 				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
@@ -823,9 +832,7 @@ do
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
 		if zoneAddon and not warnedThisZone[id] and zoneAddon ~= "BigWigs_MistsOfPandaria" then -- XXX compat
-			local index = GetAddOnIndex(zoneAddon)
-			local enabled = index and GetAddOnEnableState(pName, index) > 0
-			if not enabled then
+			if not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
 				local msg = L.missingAddOn:format(zoneAddon)
 				sysprint(msg)
