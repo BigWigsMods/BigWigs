@@ -559,31 +559,28 @@ end)
 bwFrame:RegisterEvent("PLAYER_LOGIN")
 
 -- Role Updating
-do
-	local gladiatorStance = GetSpellInfo(156291)
-	function mod:ACTIVE_TALENT_GROUP_CHANGED()
-		if IsInGroup() then
-			local _, _, diff = GetInstanceInfo()
-			if IsPartyLFG() and diff ~= 14 then return end
+function mod:ACTIVE_TALENT_GROUP_CHANGED()
+	if IsInGroup() then
+		local _, _, diff = GetInstanceInfo()
+		if IsPartyLFG() and diff ~= 14 then return end
 
-			local tree = GetSpecialization()
-			if not tree then return end -- No spec selected
+		local tree = GetSpecialization()
+		if not tree then return end -- No spec selected
 
-			local role = GetSpecializationRole(tree)
-			if gladiatorStance and UnitBuff("player", gladiatorStance) then -- XXX compat
-				role = "DAMAGER"
+		local role = GetSpecializationRole(tree)
+		if IsSpellKnown(152276) and UnitBuff("player", (GetSpellInfo(156291))) then -- Gladiator Stance
+			role = "DAMAGER"
+		end
+		if UnitGroupRolesAssigned("player") ~= role then
+			if InCombatLockdown() or UnitAffectingCombat("player") then
+				bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+				return
 			end
-			if UnitGroupRolesAssigned("player") ~= role then
-				if InCombatLockdown() or UnitAffectingCombat("player") then
-					bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-					return
-				end
-				UnitSetRole("player", role)
-			end
+			UnitSetRole("player", role)
 		end
 	end
-	mod.UPDATE_SHAPESHIFT_FORM = mod.ACTIVE_TALENT_GROUP_CHANGED
 end
+mod.UPDATE_SHAPESHIFT_FORM = mod.ACTIVE_TALENT_GROUP_CHANGED
 
 -- Merged LFG_ProposalTime addon by Freebaser
 do

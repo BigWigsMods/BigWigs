@@ -24,6 +24,9 @@ local updateData = function()
 	local tree = GetSpecialization()
 	if tree then
 		myRole = GetSpecializationRole(tree)
+		if IsSpellKnown(152276) and UnitBuff("player", (GetSpellInfo(156291))) then -- Gladiator Stance
+			myRole = "DAMAGER"
+		end
 	end
 
 	local _, _, diff = GetInstanceInfo()
@@ -591,7 +594,7 @@ end
 
 function boss:Heroic()
 	-- XXX compat so I don't have to change every :Heroic() call initially
-	if self.zoneId == 953 and difficulty == 16 then
+	if self.zoneId == 953 and difficulty == 16 then -- Mythic SoO
 		return true
 	end
 
@@ -698,7 +701,7 @@ function boss:Damager()
 	then
 		role = "RANGED"
 	elseif
-		class == "ROGUE" or (class == "WARRIOR" and tree ~= 3) or (class == "DEATHKNIGHT" and tree ~= 1) or
+		class == "ROGUE" or class == "WARRIOR" or (class == "DEATHKNIGHT" and tree ~= 1) or
 		(class == "PALADIN" and tree == 3) or (class == "DRUID" and tree == 2) or (class == "SHAMAN" and tree == 2) or
 		(class == "MONK" and tree == 3)
 	then
