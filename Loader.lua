@@ -140,7 +140,7 @@ local function IsAddOnEnabled(index)
 		if not index then return end
 	end
 	local character = UnitName("player")
-	return GetAddOnEnableState(character, index) == 2
+	return GetAddOnEnableState(character, index) > 0
 end
 
 local function sysprint(msg)
@@ -442,6 +442,7 @@ do
 		BigWigs_NoPluginWarnings = "BigWigs",
 		LFG_ProposalTime = "BigWigs",
 	}
+	local delayedMessages = {}
 
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
@@ -450,34 +451,37 @@ do
 			for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
 				local meta = select(j, GetAddOnOptionalDependencies(i))
 				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
-					AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-						sysprint("The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
-					end)
+					delayedMessages[#delayedMessages+1] = "The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!"
 				end
 			end
 			for j = 1, select("#", GetAddOnDependencies(i)) do
 				local meta = select(j, GetAddOnDependencies(i))
 				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
-					AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-						sysprint("The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
-					end)
+					delayedMessages[#delayedMessages+1] = "The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!"
 				end
 			end
 		end
 
 		if old[name] then
-			AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-				sysprint(L.removeAddon:format(name, old[name]))
-			end)
+			delayedMessages[#delayedMessages+1] = L.removeAddon:format(name, old[name])
 		end
 	end
 
 	local L = GetLocale()
 	if L == "ptBR" then
-		AutoCompleteInfoDelayer:HookScript("OnFinished", function()
-			sysprint("Think you can translate Big Wigs into Brazilian Portuguese (ptBR)? Check out our easy translator tool: www.wowace.com/addons/big-wigs/localization/")
-		end)
+		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Brazilian Portuguese (ptBR)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
 	end
+
+	local timer = bwFrame:CreateAnimationGroup()
+	timer:SetScript("OnFinished", function()
+		for _, msg in ipairs(delayedMessages) do
+			sysprint(msg)
+		end
+		delayedMessages = nil
+	end)
+	local anim = timer:CreateAnimation()
+	anim:SetDuration(5)
+	timer:Play()
 end
 
 -----------------------------------------------------------------------
