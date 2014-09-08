@@ -52,6 +52,9 @@ numberOfCommits.maat = nil
 -- Wetxius has two logins
 numberOfCommits.Wetxius = numberOfCommits.Wetxius + numberOfCommits.wetxius
 numberOfCommits.wetxius = nil
+-- MysticalOS has two logins
+numberOfCommits.MysticalOS = numberOfCommits.MysticalOS + numberOfCommits.mysticalos
+numberOfCommits.mysticalos = nil
 -- Merge Gnarfoz's old login
 numberOfCommits.gnarfoz = numberOfCommits.gnarfoz + numberOfCommits["8timer"]
 numberOfCommits["8timer"] = nil
