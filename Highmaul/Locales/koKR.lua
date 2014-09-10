@@ -11,19 +11,18 @@ end
 
 L = BigWigs:NewBossLocale("Tectus", "koKR")
 if L then
-	--L.earthwarper_trigger1 = "Yjj'rmr" -- Yjj'rmr... Xzzolos...
-	--L.earthwarper_trigger2 = "Yes, Tectus" -- Yes, Tectus. Bend to... our master's... will....
-	--L.earthwarper_trigger3 = "You do not understand!" -- You do not understand! This one must not....
-	L.berserker_trigger1 = "주인님! 제가 왔습니다!" -- MASTER! I COME FOR YOU!
-	--L.berserker_trigger2 = "Kral'ach" --Kral'ach.... The darkness speaks.... A VOICE!
-	--L.berserker_trigger3 = "Graaagh!" --Graaagh! KAHL...  AHK... RAAHHHH!
+	L.earthwarper_trigger1 = "이즈므르..." -- Yjj'rmr... Xzzolos...
+	L.earthwarper_trigger2 = "안 돼! 이럴 순 없어!" -- You do not understand! This one must not....
+	L.berserker_trigger1 = "주인님! 제가 갑니다!" -- MASTER! I COME FOR YOU!
+	L.berserker_trigger2 = "크랄아크..." --Kral'ach.... The darkness speaks.... A VOICE!
+	L.berserker_trigger3 = "그아악!" --Graaagh! KAHL...  AHK... RAAHHHH!
 
-	--L.tectus = "Tectus"
-	--L.shard = "Shard"
-	--L.motes = "Motes"
+	L.tectus = "텍터스"
+	L.shard = "조각"
+	L.motes = "자갈"
 
-	--L.custom_off_barrage_marker = "Crystalline Barrage marker"
-	--L.custom_off_barrage_marker_desc = "Marks targets of Crystalline Barrage with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
+	L.custom_off_barrage_marker = "수정 포화 징표 설정"
+	L.custom_off_barrage_marker_desc = "수정 포화의 대상을 {rt1}{rt2}{rt3}{rt4}{rt5}의 징표로 설정합니다. 공격대장이거나 권한이 필요합니다."
 
 	L.adds_desc = "다음 쫄이 언제 전투에 참여하는 지를 확인하기 위한 타이머입니다."
 end
@@ -35,8 +34,8 @@ end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "koKR")
 if L then
-	--L.custom_off_volatility_marker = "Arcane Volatility marker"
-	--L.custom_off_volatility_marker_desc = "Marks targets of Arcane Volatility with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader."
+	L.custom_off_volatility_marker = "불안정한 비전 징표 설정"
+	L.custom_off_volatility_marker_desc = "불안정한 징표의 대상을 {rt1}{rt2}{rt3}{rt4}의 징표로 설정합니다. 공격대장이거나 권한이 필요합니다."
 end
 
 L = BigWigs:NewBossLocale("Ko'ragh", "koKR")
