@@ -12,7 +12,7 @@ end
 L = BigWigs:NewBossLocale("Tectus", "koKR")
 if L then
 	L.earthwarper_trigger1 = "이즈므르..." -- Yjj'rmr... Xzzolos...
-	--L.earthwarper_trigger2 = "Yes, Tectus" -- Yes, Tectus. Bend to... our master's... will....
+	L.earthwarper_trigger2 = "그래, 텍터스..." -- Yes, Tectus. Bend to... our master's... will....
 	L.earthwarper_trigger3 = "안 돼! 이럴 순 없어!" -- You do not understand! This one must not....
 	L.berserker_trigger1 = "주인님! 제가 갑니다!" -- MASTER! I COME FOR YOU!
 	L.berserker_trigger2 = "크랄아크..." --Kral'ach.... The darkness speaks.... A VOICE!
@@ -25,7 +25,7 @@ if L then
 	L.custom_off_barrage_marker = "수정 포화 징표 설정"
 	L.custom_off_barrage_marker_desc = "수정 포화의 대상을 {rt1}{rt2}{rt3}{rt4}{rt5}의 징표로 설정합니다. 공격대장이거나 권한이 필요합니다."
 
-	L.adds_desc = "다음 쫄이 언제 전투에 참여하는 지를 확인하기 위한 타이머입니다."
+	L.adds_desc = "다음 쫄이 언제 전투에 참여하는 지를 확인하기 위한 타이머입니다." 
 end
 
 L = BigWigs:NewBossLocale("Brackenspore", "koKR")
