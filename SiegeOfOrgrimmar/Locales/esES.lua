@@ -10,6 +10,7 @@ end
 L = BigWigs:NewBossLocale("Norushen", "esES") or BigWigs:NewBossLocale("Norushen", "esMX")
 if L then
 --@localization(locale="esES", namespace="SiegeOfOrgrimmar/Norushen", format="lua_additive_table", handle-unlocalized="ignore")@
+	L.warmup_trigger = "Muy bien, crearé un campo para mantener aislada vuestra corrupción."
 end
 
 L = BigWigs:NewBossLocale("Sha of Pride", "esES") or BigWigs:NewBossLocale("Sha of Pride", "esMX")
@@ -96,6 +97,9 @@ L = BigWigs:NewBossLocale("Siegecrafter Blackfuse", "esES") or BigWigs:NewBossLo
 if L then
 --@localization(locale="esES", namespace="SiegeOfOrgrimmar/SiegecrafterBlackfuse", format="lua_additive_table", handle-unlocalized="ignore")@
 
+	L.shredder_engage_trigger = "¡Una trituradora automática se acerca!"
+	L.assembly_line_trigger = "La cadena de montaje empieza a sacar armas sin terminar."
+	L.shockwave_missile_trigger = "¡He aquí la hermosa torreta de misiles de ondas de choque ST-03!"
 	--L.custom_off_mine_marker = "Mine marker"
 	--L.custom_off_mine_marker_desc = "Mark the mines for specific stun assignments. (All the marks are used)"
 end
