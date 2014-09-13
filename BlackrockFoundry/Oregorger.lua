@@ -14,7 +14,9 @@ mod:RegisterEnableMob(77182)
 --
 
 local feedingFrenzy = EJ_GetSectionInfo(9968)
+local berserk = GetSpellInfo(26662)
 local barrageCount = 1
+local feedingCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,7 +34,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{156240, "TANK_HEALER"}, {156203, "SAY", "FLASH"}, 156390, 156877, 155819, 155898,
+		{156240, "TANK_HEALER"}, {156203, "SAY", "FLASH"}, {156390, "FLASH", "PULSE"}, 156877, 155819, 155898,
 		"stages", "bosskill"
 	}
 end
@@ -59,6 +61,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	feedingCount = 1
 	self:CDBar(156203, 6) -- Retched Blackrock
 	self:CDBar(156390, 9) -- Explosive Shard
 	self:CDBar(156240, 12) -- Acid Torrent
@@ -72,7 +75,11 @@ end
 function mod:UNIT_POWER_FREQUENT(unit)
 	local power = UnitPower(unit)
 	if power < 21 then
-		self:Message("stages", "Neutral", "Info", CL.soon:format(feedingFrenzy), false)
+		if feedingCount > 1 then
+			self:Message("stages", "Important", "Alarm", CL.soon:format(berserk), false)
+		else
+			self:Message("stages", "Neutral", "Info", CL.soon:format(feedingFrenzy), false)
+		end
 		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1")
 	end
 end
@@ -96,7 +103,7 @@ do
 			self:Flash(156203)
 			return
 		end
-		self:TargetMessage(156203, "Attention", "Alarm")
+		self:TargetMessage(156203, name, "Attention", "Alarm")
 	end
 	function mod:RetchedBlackrock(args)
 		self:GetBossTarget(printTarget, 0.2, args.sourceGUID)
@@ -121,6 +128,7 @@ function mod:ExplosiveShard(args)
 	self:Message(args.spellId, "Urgent", melee and "Alarm")
 	if melee then -- ranged don't really need to worry about this
 		self:Bar(args.spellId, 3, 84474, "spell_shadow_mindbomb") -- "Explosion" with a bomb icon
+		self:Flash(args.spellId)
 	end
 	self:CDBar(args.spellId, 12)
 end
@@ -142,12 +150,12 @@ function mod:FeedingFrenzy(unit, spellName, _, _, spellId)
 		self:StopBar(156203) -- Retched Blackrock
 		self:StopBar(156390) -- Explosive Shard
 
-		self:Message("stages", "Neutral", "Long", feedingFrenzy, false)
+		self:Message("stages", "Positive", "Long", feedingFrenzy, false)
 	end
 end
 
 function mod:HungerDriveApplied(args)
-	if args.amount % 5 == 0 then
+	if args.amount % 5 == 0 then -- every 15s
 		local power = UnitPower("boss1")
 		self:Message(args.spellId, "Attention", nil, L.hunger_drive_power:format(args.amount, self:SpellName(155819), 100-power), false)
 	end
@@ -155,6 +163,7 @@ end
 
 function mod:HungerDriveRemoved(args)
 	self:StopBar(CL.incoming:format(self:SpellName(155898))) -- Rolling Fury
+	feedingCount = feedingCount + 1
 
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 	self:Message("stages", "Positive", "Long", CL.over:format(feedingFrenzy), false)
