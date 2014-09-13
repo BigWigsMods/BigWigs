@@ -6,6 +6,11 @@ end
 
 L = BigWigs:NewBossLocale("Oregorger", "itIT")
 if L then
+	--L.berserk_trigger = "Oregorger has gone insane from hunger!"
+
+	--L.shard_explosion = "Explosive Shard Explosion"
+	--L.shard_explosion_desc = "Separate emphasized bar for the explosion."
+
 	--L.hunger_drive_power = "%dx %s - %d ore to go!"
 end
 
