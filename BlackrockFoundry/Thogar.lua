@@ -13,11 +13,11 @@ mod:RegisterEnableMob(76906, 80791) -- Operator Thogar, Grom'kar Man-at-Arms
 -- Locals
 --
 
+local grenade = GetSpellInfo(135592)
 local engageTime = 0
 local trainData = {
-	-- heroic data, covers 7min of the fight
-	-- mythic is probably going to fuck with these so hard T.T
 	-- times are for when the train is about to enter the room, ~5s after the door opens
+	-- heroic data, covers 7min of the fight
 	[1] = {
 		{ 32, "adds_train"},
 		{107, "train"},
@@ -59,6 +59,13 @@ local trainData = {
 	},
 }
 
+local trainDataMythic = {
+	[1] = {},
+	[2] = {},
+	[3] = {},
+	[4] = {},
+}
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -87,6 +94,8 @@ if L then
 	L.big_add_train_icon = "warrior_talent_icon_skirmisher" -- one dude standing alone
 	L.cannon_train = "Cannon train"
 	L.cannon_train_icon = "ability_vehicle_siegeenginecannon" -- cannon ball, duh
+	L.deforester = EJ_GetSectionInfo(10329)
+	L.deforester_icon = "spell_shaman_lavasurge"
 end
 L = mod:GetLocale()
 L.cauterizing_bolt_desc = CL.focus_only..L.cauterizing_bolt_desc
@@ -112,10 +121,10 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "Enkindle", 155921)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Enkindle", 155921)
-	self:Log("SPELL_CAST_START", "PrototypeGrenade", 155864)
-	self:Log("SPELL_AURA_APPLIED", "PrototypeGrenadeDamage", 155864)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "PrototypeGrenadeDamage", 155864)
-	self:Log("SPELL_CAST_START", "IconBellow", 163753)
+	self:Log("SPELL_CAST_START", "PulseGrenade", 155864)
+	self:Log("SPELL_AURA_APPLIED", "PulseGrenadeDamage", 155864)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "PulseGrenadeDamage", 155864)
+	self:Log("SPELL_CAST_START", "IronBellow", 163753)
 	self:Log("SPELL_CAST_START", "CauterizingBolt", 160140)
 	self:Log("SPELL_AURA_APPLIED", "DelayedSiegeBomb", 159481)
 	-- Mythic
@@ -128,7 +137,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:CDBar(155864, 6) -- Prototype Grenade
+	self:CDBar(155864, 6, grenade) -- Pulse Grenade
 	self:CDBar(155921, 16) -- Enkindle
 	engageTime = GetTime()
 	-- bar for each lane seemed to make the most sense
@@ -154,8 +163,8 @@ function mod:HeatBlastDamage(args)
 end
 
 function mod:StartTrainTimer(lane, count)
-	if self:Mythic() then return end -- XXX until I know how the uber cannon and deforester adds work 
-	local info = trainData[lane][count]
+	local data = self:Mythic() and trainDataMythic or trainData
+	local info = data and data[lane][count]
 	if not info then
 		--print("No more train data for lane", lane, ":(")
 		return
@@ -163,8 +172,10 @@ function mod:StartTrainTimer(lane, count)
 
 	local time, type = unpack(info)
 	local length = floor(time - (GetTime() - engageTime))
-	self:CDBar("trains", length, L.lane:format(lane, L[type]), L[type.."_icon"]) -- "Lane 1: Adds train"
-	self:DelayedMessage("trains", length-4, "Attention", L.lane:format(lane, CL.incoming:format(L[type])), false) -- "Lane 1: Incoming Adds train!"
+	self:CDBar("trains", length, L.lane:format(lane, L[type]), L[type.."_icon"]) -- Lane 1: Adds train
+	if type ~= "train" then -- messages would get pretty spammy
+		self:DelayedMessage("trains", length-4, "Attention", L.lane:format(lane, CL.incoming:format(L[type])), false) -- Lane 1: Incoming Adds train!
+	end
 	--TODO get some map data for the lanes and flash/alarm if you're standing in it
 	self:ScheduleTimer("StartTrainTimer", length, lane, count+1)
 end
@@ -174,19 +185,19 @@ function mod:Enkindle(args)
 	self:CDBar(args.spellId, 16)
 end
 
-function mod:PrototypeGrenade(args)
+function mod:PulseGrenade(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 16)
+	self:CDBar(args.spellId, 16, grenade)
 end
 
-function mod:PrototypeGrenadeDamage(args)
+function mod:PulseGrenadeDamage(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		self:Flash(args.spellId)
 	end
 end
 
-function mod:IconBellow(args)
+function mod:IronBellow(args)
 	self:Message(args.spellId, "Urgent")
 	self:CDBar(args.spellId, 12)
 end
