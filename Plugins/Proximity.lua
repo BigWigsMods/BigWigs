@@ -49,24 +49,18 @@ local activeMap = nil
 local proximityPlayer = nil
 local proximityPlayerTable = {}
 local maxPlayers = 0
-local raidList = plugin:GetRaidList()
+local unitList = nil
 local blipList = {}
 local anchor, updater = nil, nil
 
---Radial upvalues
-local GetPlayerMapPosition = GetPlayerMapPosition
-local GetCurrentMapDungeonLevel = GetCurrentMapDungeonLevel
-local GetPlayerFacing = GetPlayerFacing
-local format = string.format
-local GetRaidTargetIndex = GetRaidTargetIndex
-local UnitIsDead = UnitIsDead
-local UnitIsUnit = UnitIsUnit
-local GetTime = GetTime
-local min = math.min
-local pi = math.pi
-local cos = math.cos
-local sin = math.sin
+-- Upvalues
 local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
+local GetPlayerMapPosition, GetCurrentMapDungeonLevel, GetPlayerFacing = GetPlayerMapPosition, GetCurrentMapDungeonLevel, GetPlayerFacing
+local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetNumGroupMembers, GetTime
+local IsInRaid, InCombatLockdown = IsInRaid, InCombatLockdown
+local UnitIsDead, UnitIsUnit, UnitClass = UnitIsDead, UnitIsUnit, UnitClass
+local min, pi, cos, sin = math.min, math.pi, math.cos, math.sin
+local format = string.format
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
@@ -509,15 +503,15 @@ do
 
 	testDots = function()
 		for i = 1, 40 do
-			blipList[raidList[i]].isShown = nil
-			blipList[raidList[i]]:Hide()
+			blipList[i].isShown = nil
+			blipList[i]:Hide()
 		end
 
-		setDot(10, 10, blipList["raid1"])
-		setDot(5, 0, blipList["raid2"])
-		setDot(3, 10, blipList["raid3"])
-		setDot(-9, -7, blipList["raid4"])
-		setDot(0, 10, blipList["raid5"])
+		setDot(10, 10, blipList[1])
+		setDot(5, 0, blipList[2])
+		setDot(3, 10, blipList[3])
+		setDot(-9, -7, blipList[4])
+		setDot(0, 10, blipList[5])
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local pixperyard = min(width, height) / 30
 		anchor.rangeCircle:SetSize(pixperyard * 20, pixperyard * 20)
@@ -546,24 +540,24 @@ do
 		local anyoneClose = 0
 
 		for i = 1, maxPlayers do
-			local n = raidList[i]
+			local n = unitList[i]
 			local unitX, unitY = GetPlayerMapPosition(n)
 			local dx = (unitX - srcX) * id[1]
 			local dy = (unitY - srcY) * id[2]
 			local range = (dx * dx + dy * dy) ^ 0.5
 			if range < (activeRange * 1.5) then
 				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
-					setDot(dx, dy, blipList[n])
+					setDot(dx, dy, blipList[i])
 					if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
 						anyoneClose = anyoneClose + 1
 					end
-				elseif blipList[n].isShown then -- A unit may die next to us
-					blipList[n]:Hide()
-					blipList[n].isShown = nil
+				elseif blipList[i].isShown then -- A unit may die next to us
+					blipList[i]:Hide()
+					blipList[i].isShown = nil
 				end
-			elseif blipList[n].isShown then
-				blipList[n]:Hide()
-				blipList[n].isShown = nil
+			elseif blipList[i].isShown then
+				blipList[i]:Hide()
+				blipList[i].isShown = nil
 			end
 		end
 
@@ -603,7 +597,7 @@ do
 		local dx = (unitX - srcX) * id[1]
 		local dy = (unitY - srcY) * id[2]
 		local range = (dx * dx + dy * dy) ^ 0.5
-		setDot(dx, dy, blipList[proximityPlayer])
+		setDot(dx, dy, blipList[1])
 		if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
@@ -643,7 +637,7 @@ do
 			local dx = (unitX - srcX) * id[1]
 			local dy = (unitY - srcY) * id[2]
 			local range = (dx * dx + dy * dy) ^ 0.5
-			setDot(dx, dy, blipList[player])
+			setDot(dx, dy, blipList[i])
 			if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
 				anyoneClose = anyoneClose + 1
 			end
@@ -683,24 +677,24 @@ do
 		local anyoneClose = 0
 
 		for i = 1, maxPlayers do
-			local n = raidList[i]
+			local n = unitList[i]
 			local unitX, unitY = GetPlayerMapPosition(n)
 			local dx = (unitX - srcX) * id[1]
 			local dy = (unitY - srcY) * id[2]
 			local range = (dx * dx + dy * dy) ^ 0.5
 			if range < (activeRange * 1.5) then
 				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
-					setDot(dx, dy, blipList[n])
+					setDot(dx, dy, blipList[i])
 					if range <= activeRange then
 						anyoneClose = anyoneClose + 1
 					end
-				elseif blipList[n].isShown then -- A unit may die next to us
-					blipList[n]:Hide()
-					blipList[n].isShown = nil
+				elseif blipList[i].isShown then -- A unit may die next to us
+					blipList[i]:Hide()
+					blipList[i].isShown = nil
 				end
-			elseif blipList[n].isShown then
-				blipList[n]:Hide()
-				blipList[n].isShown = nil
+			elseif blipList[i].isShown then
+				blipList[i]:Hide()
+				blipList[i].isShown = nil
 			end
 		end
 
@@ -740,7 +734,7 @@ do
 		local dx = (unitX - srcX) * id[1]
 		local dy = (unitY - srcY) * id[2]
 		local range = (dx * dx + dy * dy) ^ 0.5
-		setDot(dx, dy, blipList[proximityPlayer])
+		setDot(dx, dy, blipList[1])
 		if range <= activeRange then
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 1)
@@ -780,7 +774,7 @@ do
 			local dx = (unitX - srcX) * id[1]
 			local dy = (unitY - srcY) * id[2]
 			local range = (dx * dx + dy * dy) ^ 0.5
-			setDot(dx, dy, blipList[player])
+			setDot(dx, dy, blipList[i])
 			if range <= activeRange then
 				anyoneClose = anyoneClose + 1
 			end
@@ -798,8 +792,8 @@ end
 
 local function updateBlipIcons()
 	for i = 1, maxPlayers do
-		local n = raidList[i]
-		local blip = blipList[n]
+		local n = unitList[i]
+		local blip = blipList[i]
 		local icon = GetRaidTargetIndex(n)
 		if icon and not blip.hasIcon then
 			blip:SetTexture(format("Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d.blp", icon))
@@ -821,11 +815,15 @@ local function updateBlipIcons()
 end
 
 local function updateBlipColors()
+	-- Firstly lets update some things from the GROUP_ROSTER_UPDATE event, or the proximity window opening
 	maxPlayers = GetNumGroupMembers()
+	unitList = IsInRaid() and plugin:GetRaidList() or plugin:GetPartyList()
+
+	-- Move onto updating blip colors
 	for i = 1, maxPlayers do
-		local n = raidList[i]
+		local n = unitList[i]
 		if not GetRaidTargetIndex(n) then
-			local blip = blipList[n]
+			local blip = blipList[i]
 			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
 			local _, class = UnitClass(n)
 			if class then
@@ -995,7 +993,7 @@ do
 			local blip = anchor:CreateTexture(nil, "OVERLAY")
 			blip:SetSize(16, 16)
 			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
-			blipList[raidList[i]] = blip
+			blipList[i] = blip
 		end
 
 		anchor:SetScript("OnEvent", function(_, event)
@@ -1233,9 +1231,9 @@ function plugin:Close()
 	anchor:UnregisterEvent("RAID_TARGET_UPDATE")
 
 	for i = 1, 40 do
-		if blipList[raidList[i]].isShown then
-			blipList[raidList[i]].isShown = nil
-			blipList[raidList[i]]:Hide()
+		if blipList[i].isShown then
+			blipList[i].isShown = nil
+			blipList[i]:Hide()
 		end
 	end
 
@@ -1271,8 +1269,8 @@ function plugin:Open(range, module, key, player, isReverse)
 		if type(player) == "table" then
 			for i = 1, #player do
 				for j = 1, GetNumGroupMembers() do
-					if UnitIsUnit(player[i], raidList[j]) then
-						proximityPlayerTable[#proximityPlayerTable+1] = raidList[j]
+					if UnitIsUnit(player[i], unitList[j]) then
+						proximityPlayerTable[#proximityPlayerTable+1] = unitList[j]
 						break
 					end
 				end
@@ -1284,8 +1282,8 @@ function plugin:Open(range, module, key, player, isReverse)
 			end
 		else
 			for i = 1, GetNumGroupMembers() do
-				if UnitIsUnit(player, raidList[i]) then
-					proximityPlayer = raidList[i]
+				if UnitIsUnit(player, unitList[i]) then
+					proximityPlayer = unitList[i]
 					break
 				end
 			end
