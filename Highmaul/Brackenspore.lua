@@ -67,8 +67,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "FungusSpawns", "boss1")
 	self:Log("SPELL_CAST_START", "Decay", 160013)
 	-- Mythic
-	self:Log("SPELL_CAST_START", "CallOfTheTides", 163755)
-	self:Log("SPELL_CAST_START", "ExplodingFungus", 163794)
+	self:Log("SPELL_AURA_APPLIED", "CallOfTheTides", 163755)
 
 	self:Death("Win", 78491)
 end
@@ -89,10 +88,6 @@ end
 --
 
 function mod:CallOfTheTides(args)
-	self:Message(args.spellId, "Urgent")
-end
-
-function mod:ExplodingFungus(args)
 	self:Message(args.spellId, "Urgent")
 end
 
@@ -130,7 +125,7 @@ end
 function mod:FungusSpawns(unit, spellName, _, _, spellId)
 	if spellId == 164125 then -- Creeping Moss
 		local flamethrower = UnitBuff("player", self:SpellName(163322))
-		self:Message(spellId, "Urgent", flamethrower and "Alert")
+		self:Message(spellId, "Urgent", flamethrower and "Warning")
 		if flamethrower then
 			self:Flash(spellId)
 		end
@@ -149,6 +144,9 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 	elseif spellId == 160021 then -- Rejuvenating Mushroom
 		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Info", spellId, L.rejuvenating_mushroom_icon)
 		self:Bar("rejuvenating_mushroom", 145, spellId, L.rejuvenating_mushroom_icon)
+	elseif spellId == 163794 then  -- Exploding Fungus (Mythic)
+		self:Message(spellId, "Urgent")
+		self:Bar(spellId, 5)
 	end
 end
 
