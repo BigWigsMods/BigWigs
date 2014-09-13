@@ -108,38 +108,26 @@ do
 	}
 end
 
--- GLOBALS: BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, CreateFrame, CUSTOM_CLASS_COLORS, error, GetAddOnInfo, GetAddOnMetadata, GetInstanceInfo
--- GLOBALS: GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GRAY_FONT_COLOR, InCombatLockdown, INTERFACEOPTIONS_ADDONCATEGORIES
+-- GLOBALS: ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, CreateFrame, CUSTOM_CLASS_COLORS, error, GetAddOnEnableState, GetAddOnInfo
+-- GLOBALS: GetAddOnMetadata, GetInstanceInfo, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GRAY_FONT_COLOR, InCombatLockdown, INTERFACEOPTIONS_ADDONCATEGORIES
 -- GLOBALS: InterfaceOptionsFrameOkay, IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInInstance, IsInRaid, IsPartyLFG, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, SetMapByID, strsplit
 -- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
--- GLOBALS: SLASH_BigWigsVersion1, wipe, WorldMapFrame, ADDON_LOAD_FAILED
+-- GLOBALS: SLASH_BigWigsVersion1, wipe, WorldMapFrame
 
 -----------------------------------------------------------------------
 -- Utility
 --
 
--- XXX compat
-local GetAddOnEnableState = GetAddOnEnableState or function(_, index)
-	local _, _, _, enabled = GetAddOnInfo(index)
-	return enabled and 2 or 0 -- tristate values, 1 being enabled for some chars
-end
-
-local function GetAddOnIndex(name)
-	for i=1, GetNumAddOns() do
-		if GetAddOnInfo(i) == name then
-			return i
-		end
+local function IsAddOnEnabled(addon)
+	local enabled
+	if GetAddOnEnableState then -- XXX compat
+		local character = UnitName("player")
+		enabled = GetAddOnEnableState(character, addon)
+	else
+		enabled = select(4, GetAddOnInfo(addon)) and 2 or 0
 	end
-end
-
-local function IsAddOnEnabled(index)
-	if type(index) == "string" then
-		index = GetAddOnIndex(index)
-		if not index then return end
-	end
-	local character = UnitName("player")
-	return GetAddOnEnableState(character, index) > 0
+	return enabled > 0
 end
 
 local function sysprint(msg)
@@ -148,14 +136,12 @@ end
 
 local function load(obj, index)
 	if obj then return true end
-	if type(index) == "string" then index = GetAddOnIndex(index) end
 	local loaded, reason = LoadAddOn(index)
 	if not loaded then
 		local name = GetAddOnInfo(index)
 		sysprint(ADDON_LOAD_FAILED:format(name, _G["ADDON_"..reason]))
-		return
 	end
-	return true
+	return loaded
 end
 
 local function loadAddons(tbl)
