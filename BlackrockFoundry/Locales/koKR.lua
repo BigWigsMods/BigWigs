@@ -6,12 +6,12 @@ end
 
 L = BigWigs:NewBossLocale("Oregorger", "koKR")
 if L then
-	--L.berserk_trigger = "Oregorger has gone insane from hunger!"
+	L.berserk_trigger = "굶주린 광물먹보가 광란에 빠집니다!"
 
-	--L.shard_explosion = "Explosive Shard Explosion"
-	--L.shard_explosion_desc = "Separate emphasized bar for the explosion."
+	L.shard_explosion = "폭발성 파편 폭발"
+	L.shard_explosion_desc = "폭발을 대비하기 위한 강조 바를 별도로 표시합니다."
 
-	--L.hunger_drive_power = "%dx %s - %d ore to go!"
+	L.hunger_drive_power = "%d번째 %s - %d의 광석을 더 먹여야 합니다!"
 end
 
 L = BigWigs:NewBossLocale("The Blast Furnace", "koKR")
