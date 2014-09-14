@@ -133,7 +133,7 @@ function mod:Bomb(args)
 end
 
 function mod:BombRemoved(args)
-	if self:Me(args.destGUID)
+	if self:Me(args.destGUID) then
 		self:StopBar(args.spellId, args.destName)
 	end
 end
