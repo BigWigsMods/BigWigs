@@ -71,7 +71,7 @@ end
 --
 
 function mod:OnTheHunt(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", self:SpellName(-9436)) -- Ravenous Bloodmaw
+	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", self:SpellName(-9436)) -- Ravenous Bloodmaw
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 	end
@@ -79,7 +79,7 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(159113, name, "Important", "Warning", nil, nil, true)
+		self:TargetMessage(159113, name, "Urgent", "Warning", nil, nil, true)
 		self:TargetBar(159113, 8.8, name) -- cast+channel
 	end
 	function mod:Impale(args)
@@ -146,7 +146,7 @@ do
 	function mod:MaulingBrewDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 			prev = t
 		end
 	end
@@ -157,7 +157,7 @@ do
 	function mod:FlameJetDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 			prev = t
 		end
 	end
@@ -165,7 +165,7 @@ end
 
 function mod:VileBreath(args)
 	if hurled then
-		self:Message(args.spellId, "Urgent", "Alarm")
+		self:Message(args.spellId, "Attention", "Alarm")
 	end
 end
 
