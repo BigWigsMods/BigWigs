@@ -49,7 +49,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Log("SPELL_CAST_START", "AcidTorrent", 156240)
-	self:Log("SPELL_AURA_APPLIED", "AcidTorrentApplied", 156297)
 	self:Log("SPELL_CAST_START", "RetchedBlackrock", 156179)
 	self:Log("SPELL_PERIODIC_DAMAGE", "RetchedBlackrockDamage", 156203)
 	self:Log("SPELL_PERIODIC_MISSED", "RetchedBlackrockDamage", 156203)
@@ -97,10 +96,6 @@ function mod:AcidTorrent(args)
 	self:CDBar(args.spellId, 12) -- 11-14
 end
 
-function mod:AcidTorrentApplied(args)
-	self:TargetBar(156240, 20, args.destName)
-end
-
 do
 	local function printTarget(self, name, guid)
 		if self:Me(guid) then
@@ -133,7 +128,7 @@ end
 
 function mod:ExplosiveShard(args)
 	if self:Tank() or self:Damager() == "MELEE" then -- ranged don't need to worry about this
-		self:Message(args.spellId, "Urgent", "Warning")
+		self:Message(args.spellId, "Urgent", "Alarm")
 		self:CDBar(args.spellId, 12)
 		self:Flash(args.spellId)
 		self:Bar("shard_explosion", 3.4, 84474, "spell_shadow_mindbomb") -- "Explosion" with a bomb icon
