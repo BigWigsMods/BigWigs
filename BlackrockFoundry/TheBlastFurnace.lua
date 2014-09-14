@@ -171,7 +171,9 @@ do
 	end
 	function mod:VolatileFireApplied(args)
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+			if not self:LFR() then
+				self:Say(args.spellId)
+			end
 			self:Flash(args.spellId)
 		end
 		list[#list+1] = args.destName
