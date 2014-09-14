@@ -65,6 +65,7 @@ function mod:OnBossEnable()
 	-- Furnace Engineer
 	self:Log("SPELL_CAST_START", "Repair", 155179)
 	self:Log("SPELL_AURA_APPLIED", "Bomb", 155192)
+	self:Log("SPELL_AURA_REMOVED", "BombRemoved", 155192)
 	-- Firecaller
 	self:Log("SPELL_CAST_START", "CauterizeWounds", 155186)
 	self:Log("SPELL_AURA_APPLIED", "VolatileFireApplied", 176121)
@@ -95,7 +96,7 @@ function mod:OnEngage()
 	wipe(volatileFireTargets)
 
 	self:Bar(155209, blastTime) -- Blast
-	self:Bar(-9650, 20, nil, 155181) -- Bellows Operator
+	self:Bar(-9650, 55, nil, 155181) -- Bellows Operator
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
 
@@ -118,13 +119,7 @@ do
 end
 
 function mod:Repair(args)
-	if self:Healer() then return end
-
-	-- can be on both sides so check range on someone targeting him
-	local unit = self:GetUnitIdByGUID(args.sourceGUID)
-	local player = unit and unit:match("^(.-)target$") -- should always be a player or nil
-
-	if not player or self:Range(player) < 30 then
+	if not self:Healer() then
 		self:Message(args.spellId, "Personal", "Alert", CL.other:format(args.sourceName, args.spellName))
 	end
 end
@@ -134,6 +129,12 @@ function mod:Bomb(args)
 		self:Message(args.spellId, "Positive", "Alarm", CL.you:format(args.spellName)) -- is good thing
 		self:TargetBar(args.spellId, 15, args.destName)
 		self:Flash(args.spellId)
+	end
+end
+
+function mod:BombRemoved(args)
+	if self:Me(args.destGUID)
+		self:StopBar(args.spellId, args.destName)
 	end
 end
 
