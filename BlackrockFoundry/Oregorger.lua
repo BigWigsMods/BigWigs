@@ -40,7 +40,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{156240, "TANK_HEALER"}, {156203, "SAY", "FLASH"}, {156390, "FLASH"}, {"shard_explosion", "EMPHASIZE"}, 156877, 155819, 155898,
+		{156240, "TANK_HEALER"}, {173471, "TANK"}, {156203, "SAY", "FLASH"}, {156390, "FLASH"}, {"shard_explosion", "EMPHASIZE"}, 156877, 155819, 155898,
 		"stages", "berserk", "bosskill"
 	}
 end
@@ -48,6 +48,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
+	self:Log("SPELL_AURA_APPLIED_DOSE", "AcidMaw", 173471)
 	self:Log("SPELL_CAST_START", "AcidTorrent", 156240)
 	self:Log("SPELL_CAST_START", "RetchedBlackrock", 156179)
 	self:Log("SPELL_PERIODIC_DAMAGE", "RetchedBlackrockDamage", 156203)
@@ -94,6 +95,12 @@ end
 function mod:AcidTorrent(args)
 	self:Message(args.spellId, "Important", "Warning")
 	self:CDBar(args.spellId, 12) -- 11-14
+end
+
+function mod:AcidMaw(args)
+	if args.amount % 2 == 0 then -- 6s cd, 8s duration
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+	end
 end
 
 do

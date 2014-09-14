@@ -73,13 +73,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Pyroclasm", 156937)
 	self:Log("SPELL_AURA_APPLIED", "MeltArmor", 175104)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "MeltArmor", 175104)
-	--TODO Rupture frequency? warn for cast?
+	--self:Log("SPELL_CAST_START", "Rupture", 156934) -- 22-27.8
 	self:Log("SPELL_PERIODIC_DAMAGE", "RuptureDamage", 156932)
 	self:Log("SPELL_PERIODIC_MISSED", "RuptureDamage", 156932)
 	-- Heart of the Mountain
 	self:Log("SPELL_AURA_APPLIED", "Heat", 155242)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Heat", 155242)
-	--TODO Melt frequency? warn for cast?
+	--self:Log("SPELL_CAST_SUCCESS", "Melt", 155225) -- 7.2-10.8
 	self:Log("SPELL_PERIODIC_DAMAGE", "MeltDamage", 155223)
 	self:Log("SPELL_PERIODIC_MISSED", "MeltDamage", 155223)
 	self:Log("SPELL_AURA_APPLIED", "CoolingDown", 156880)
@@ -94,7 +94,7 @@ function mod:OnEngage()
 	blastTime = 25 -- 4 energy/s
 	wipe(volatileFireTargets)
 
-	self:Bar(155209, blastTime)
+	self:Bar(155209, blastTime) -- Blast
 	self:Bar(-9650, 20, nil, 155181) -- Bellows Operator
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
@@ -110,8 +110,8 @@ do
 	function mod:Loading(args)
 		local t = GetTime()
 		if t-prev > 5 then
-			self:Message(-9650, "Attention", "Info")
-			self:Bar(-9650, 60, nil, 155181) -- Bellows Operator
+			self:Message(-9650, "Attention", "Info") -- Bellows Operator
+			self:Bar(-9650, 60, nil, 155181)
 			prev = t
 		end
 	end
