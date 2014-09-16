@@ -1261,6 +1261,12 @@ function plugin:Open(range, module, key, player, isReverse)
 	activeMap = mapData[mapName]
 	if not activeMap then print("No map data!") return end
 
+	activeRange = range
+	anchor:RegisterEvent("GROUP_ROSTER_UPDATE")
+	anchor:RegisterEvent("RAID_TARGET_UPDATE")
+	updateBlipColors()
+	updateBlipIcons()
+
 	if not player and not isReverse then
 		updater:SetScript("OnLoop", normalProximity)
 		makeThingsWork()
@@ -1298,12 +1304,6 @@ function plugin:Open(range, module, key, player, isReverse)
 		updater:SetScript("OnLoop", reverseProximity)
 		makeThingsWork()
 	end
-	activeRange = range
-
-	anchor:RegisterEvent("GROUP_ROSTER_UPDATE")
-	anchor:RegisterEvent("RAID_TARGET_UPDATE")
-	updateBlipColors()
-	updateBlipIcons()
 
 	local width, height = anchor:GetWidth(), anchor:GetHeight()
 	local ppy = min(width, height) / (range * 3)
