@@ -6,7 +6,7 @@
 ## Title-esMX: Big Wigs [|cffeda55fBlackrock Foundry|r]
 ## Title-frFR: Big Wigs [|cffeda55fBlackrock Foundry|r]
 ## Title-ruRU: Big Wigs [|cffeda55fЛитейная клана Черной горы|r]
-## Title-zhCN: Big Wigs [|cffeda55fBlackrock Foundry|r]
+## Title-zhCN: Big Wigs [|cffeda55f黑石铸造厂|r]
 ## Title-zhTW: Big Wigs [|cffeda55fBlackrock Foundry|r]
 ## Title-itIT: Big Wigs [|cffeda55fBlackrock Foundry|r]
 ## Title-ptBR: Big Wigs [|cffeda55fBlackrock Foundry|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: Big Wigs Modules for the Blackrock Foundry.
 ## Notes-frFR: Big Wigs Modules for the Blackrock Foundry.
 ## Notes-ruRU: Модуль Big Wigs для Литейной клана Черной горы.
-## Notes-zhCN: Big Wigs Modules for the Blackrock Foundry.
+## Notes-zhCN: Big Wigs 黑石铸造厂模块。
 ## Notes-zhTW: Big Wigs Modules for the Blackrock Foundry.
 ## Notes-itIT: Big Wigs Modules for the Blackrock Foundry.
 ## Notes-ptBR: Big Wigs Modules for the Blackrock Foundry.

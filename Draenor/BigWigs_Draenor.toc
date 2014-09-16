@@ -6,8 +6,8 @@
 ## Title-esMX: Big Wigs [|cffeda55fDraenor|r]
 ## Title-frFR: Big Wigs [|cffeda55fDraenor|r]
 ## Title-ruRU: Big Wigs [|cffeda55fДренор|r]
-## Title-zhCN: Big Wigs [|cffeda55f潘达利亚|r]
-## Title-zhTW: Big Wigs [|cffeda55f潘達利亞|r]
+## Title-zhCN: Big Wigs [|cffeda55f德拉诺|r]
+## Title-zhTW: Big Wigs [|cffeda55fDraenor|r]
 ## Title-itIT: Big Wigs [|cffeda55fDraenor|r]
 ## Title-ptBR: Big Wigs [|cffeda55fDraenor|r]
 ## Title-koKR: Big Wigs [|cffeda55fDraenor|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: Big Wigs Draenor Modules
 ## Notes-frFR: Modules Big Wigs concernant la Draenor.
 ## Notes-ruRU: Модуль Big Wigs для Дренора.
-## Notes-zhCN: Big Wigs 潘达利亚模块。
+## Notes-zhCN: Big Wigs 德拉诺模块。
 ## Notes-zhTW: Big Wigs 潘達利亞模組。
 ## Notes-itIT: Moduli Big Wigs per Draenor
 ## Notes-ptBR: Big Wigs Draenor Modules
