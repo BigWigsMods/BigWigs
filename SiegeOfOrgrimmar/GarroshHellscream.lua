@@ -125,6 +125,7 @@ function mod:OnBossEnable()
 	-- Intermissions
 	self:Log("SPELL_CAST_START", "Annihilate", 144969)
 	self:Log("SPELL_AURA_REMOVED", "YShaarjsProtection", 144945)
+	self:Log("SPELL_AURA_APPLIED", "Hope", 149004, 148983, 148994) -- Hope, Courage, Faith
 	-- Phase 1
 	self:Log("SPELL_CAST_START", "Warsong", 144821)
 	self:Log("SPELL_AURA_APPLIED", "AddMarkedMob", 144585) -- Ancestral Fury
@@ -458,7 +459,12 @@ do
 		else
 			mod:Message(144945, "Attention", nil, CL.count:format(mod:SpellName(29125), 0), 149004)
 		end
-		hopeTimer = nil
+		hopeTimer = false
+	end
+	function mod:Hope()
+		if hopeTimer == false then
+			hopeTimer = self:ScheduleTimer(announceHopeless, 2)
+		end
 	end
 	function mod:YShaarjsProtection(args)
 		if self:MobId(args.destGUID) == 71865 then
@@ -508,6 +514,7 @@ do
 			self:Bar(-8305, 62, CL.over:format(CL.intermission), "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 			whirlingCounter = 1
 			annihilateCounter = 1
+			hopeTimer = nil
 		elseif spellId == 144956 then -- Jump To Ground -- exiting intermission
 			if phase == 2 then
 				if hopeTimer then self:CancelTimer(hopeTimer) end
