@@ -40,7 +40,7 @@ if L then
 
 	L.clump_check = mod:SpellName(147126) -- "Clump Check"
 	L.clump_check_desc = "Check every 3 seconds during bombardment for clumped up players, if a clump is found a Kor'kron Iron Star will spawn."
-	L.clump_check_warning = "Clump found, Star inc"
+	L.clump_check_warning = "Clump found, Star incoming!"
 	L.clump_check_icon = 147126
 
 	L.bombardment = "Bombardment"
@@ -223,7 +223,8 @@ do
 	local prev = 0
 	function mod:MaliciousBlastApplied(args)
 		if self:Me(args.destGUID) then
-			self:StackMessage(args.spellId, args.destName, args.amount, "Personal", args.amount and "Alert") -- Sound for 2+ stacks
+			self:Message(args.spellId, "Personal", "Alert", CL.you:format(CL.count:format(args.spellName, args.amount or 1)))
+			self:Bar(args.spellId, 2) -- Next tick
 		end
 
 		local t = GetTime()
@@ -334,7 +335,7 @@ do
 				end
 			end
 		end
-		if not continue or not mod.db.profile.custom_off_shaman_marker then
+		if not continue then
 			mod:CancelTimer(markTimer)
 			markTimer = nil
 		end
@@ -372,7 +373,6 @@ do
 		if args.spellId == 145037 and self.db.profile.custom_off_minion_marker then
 			wipe(markableMobs)
 			wipe(marksUsed)
-			markTimer = nil
 			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 			if not markTimer then
 				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.1)
@@ -392,15 +392,9 @@ do
 	end
 end
 
-do
-	local prev = 0
-	function mod:ChainHeal(args)
-		mod:AddMarkedMob(args)
-		local t = GetTime()
-		if t-prev > 3 and UnitGUID("focus") == args.sourceGUID then -- don't spam
-			prev = t
-			self:Message("chain_heal", "Personal", "Alert", L.chain_heal_message, args.spellId)
-		end
+function mod:ChainHeal(args)
+	if UnitGUID("focus") == args.sourceGUID then
+		self:Message("chain_heal", "Personal", "Alert", L.chain_heal_message, args.spellId)
 	end
 end
 
@@ -522,10 +516,7 @@ do
 				self:Bar(144758, 10) -- Desecrate
 				self:Bar(145065, 15, 67229, 145065) -- Mind Control
 				self:Bar(144985, 30, CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
-				local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
-				if hp < 50 then -- XXX might need adjusting
-					self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3") -- don't really need this till 2nd intermission phase
-				end
+				self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3")
 				-- warn for empowered abilities
 				local power = UnitPower("boss1")
 				while power >= warnPower do -- can he hit 100 energy before p3? that would be some shenanigans
