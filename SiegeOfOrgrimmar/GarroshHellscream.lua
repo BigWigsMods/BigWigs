@@ -40,7 +40,7 @@ if L then
 
 	L.clump_check = mod:SpellName(147126) -- "Clump Check"
 	L.clump_check_desc = "Check every 3 seconds during bombardment for clumped up players, if a clump is found a Kor'kron Iron Star will spawn."
-	L.clump_check_warning = "Clump found, Star incoming!"
+	L.clump_check_warning = "Clump found: Star Incoming!"
 	L.clump_check_icon = 147126
 
 	L.bombardment = "Bombardment"
@@ -453,10 +453,10 @@ do
 		else
 			mod:Message(144945, "Attention", nil, CL.count:format(mod:SpellName(29125), 0), 149004)
 		end
-		hopeTimer = false
+		hopeTimer = nil
 	end
 	function mod:Hope()
-		if hopeTimer == false then
+		if hopeTimer == nil then -- Purposely a nil check. Set as false when intermission begins.
 			hopeTimer = self:ScheduleTimer(announceHopeless, 2)
 		end
 	end
@@ -508,7 +508,7 @@ do
 			self:Bar(-8305, 62, CL.over:format(CL.intermission), "SPELL_HOLY_PRAYEROFSHADOWPROTECTION")
 			whirlingCounter = 1
 			annihilateCounter = 1
-			hopeTimer = nil
+			hopeTimer = false
 		elseif spellId == 144956 then -- Jump To Ground -- exiting intermission
 			if phase == 2 then
 				if hopeTimer then self:CancelTimer(hopeTimer) end
