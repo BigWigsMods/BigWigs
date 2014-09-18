@@ -151,7 +151,7 @@ local function targetCheck(unit)
 	if not UnitName(unit) or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
 	local id
 	if addon.isWOD then -- XXX compat
-		local _, _, _, _, _, mobId = strsplit(":", (UnitGUID(unit)))
+		local _, _, _, _, _, mobId = strsplit(":-", (UnitGUID(unit)))
 		id = tonumber(mobId) or -1
 	else
 		id = tonumber((UnitGUID(unit)):sub(6, 10), 16)
