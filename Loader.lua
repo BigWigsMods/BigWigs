@@ -746,7 +746,13 @@ do
 	function mod:UNIT_TARGET(unit)
 		local guid = UnitGUID(unit.."target")
 		if guid then
-			local mobId = tonumber(guid:sub(6, 10), 16)
+			local mobId
+			if GetAddOnEnableState then -- XXX compat
+				local _, _, _, _, _, id = strsplit("-", (UnitGUID(unit)))
+				mobId = tonumber(id) or -1
+			else
+				mobId = tonumber(guid:sub(6, 10), 16)
+			end
 			if worldBosses[mobId] then
 				local id = worldBosses[mobId]
 				if InCombatLockdown() or UnitAffectingCombat("player") then

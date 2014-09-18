@@ -246,7 +246,7 @@ do
 				-- XXX compat
 				local mobId
 				if isWOD then
-					local _, _, _, _, _, id = strsplit(":-", destGUID)
+					local _, _, _, _, _, id = strsplit("-", destGUID)
 					mobId = tonumber(id) or -1
 				else
 					mobId = tonumber(sub(destGUID, 6, 10), 16)
@@ -447,7 +447,7 @@ do
 				if type(id) == "number" then
 					-- XXX compat
 					if isWOD then
-						local _, _, _, _, _, id = strsplit(":-", guid)
+						local _, _, _, _, _, id = strsplit("-", guid)
 						guid = tonumber(id) or -1
 					else
 						guid = tonumber(sub(guid, 6, 10), 16)
@@ -607,7 +607,7 @@ end
 
 function boss:MobId(guid)
 	if isWOD and guid then -- XXX compat
-		local _, _, _, _, _, id = strsplit(":-", guid)
+		local _, _, _, _, _, id = strsplit("-", guid)
 		return tonumber(id) or -1
 	else
 		return guid and tonumber(sub(guid, 6, 10), 16) or -1
