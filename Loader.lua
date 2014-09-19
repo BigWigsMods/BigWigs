@@ -748,8 +748,8 @@ do
 		if guid then
 			local mobId
 			if GetAddOnEnableState then -- XXX compat
-				local _, _, _, _, _, id = strsplit("-", (UnitGUID(unit)))
-				mobId = tonumber(id) or -1
+				local _, _, _, _, _, id = strsplit("-", guid)
+				mobId = tonumber(id)
 			else
 				mobId = tonumber(guid:sub(6, 10), 16)
 			end
