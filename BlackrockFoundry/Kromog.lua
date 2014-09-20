@@ -39,7 +39,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "WarpedArmor", 156766)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WarpedArmor", 156766)
-	self:Log("SPELL_CAST_START", "StoneBreath", 156852)
+	self:Log("SPELL_CAST_SUCCESS", "StoneBreath", 156852)
 	self:Log("SPELL_CAST_START", "Slam", 156704)
 	self:Log("SPELL_CAST_START", "RipplingSmash", 157592)
 	self:Log("SPELL_CAST_START", "GraspingEarth", 157060)
@@ -47,18 +47,21 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 156861)
 	-- Mythic
 	self:Log("SPELL_CAST_SUCCESS", "TremblingEarth", 173917)
+	self:Log("SPELL_CAST_START", "CallOfTheMountain", 158217)
 
 	self:Death("Win", 77692)
 end
 
 function mod:OnEngage()
 	-- XXX all of the timers for this module are probably shit, need more logs
-	self:CDBar(156852, 10) -- Stone Breath
+	self:CDBar(156852, 9) -- Stone Breath
 	self:CDBar(156766, 16) -- Warped Armor
 	self:CDBar(156704, 22) -- Slam
 	self:CDBar(157592, 32) -- Rippling Smash
 	self:CDBar(157060, 59) -- Grasping Earth
-	--self:CDBar(157060, 70) -- Thundering Blows
+	if self:Mythic() then
+		self:CDBar(173917, 81) -- Trembling Earth
+	end
 	self:Berserk(600)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
@@ -66,6 +69,21 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+-- Mythic
+
+function mod:TremblingEarth(args)
+	self:Message(args.spellId, "Attention")
+	self:Bar(-9706, 26) -- Call of the Mountain
+	self:CDBar(156852, 61) -- Stone Breath
+	self:CDBar(157592, 72) -- Rippling Smash
+end
+
+function mod:CallOfTheMountain(args)
+	self:Message(-9706, "Important")
+end
+
+-- General
 
 function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
@@ -79,8 +97,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 156980 then -- Rune of Crushing Earth
 		self:Message(-9702, "Attention")
 		--self:Bar(spellId, 5, "Clap!")
-	elseif spellId == 173917 then -- Call of the Mountain (Mythic)
-		self:Message(-9706, "Important", "Alarm")
 	end
 end
 
@@ -92,7 +108,7 @@ end
 
 function mod:StoneBreath(args)
 	self:Message(args.spellId, "Urgent")
-	self:CDBar(args.spellId, 28)
+	self:CDBar(args.spellId, 26)
 end
 
 function mod:Slam(args)
@@ -101,32 +117,31 @@ function mod:Slam(args)
 end
 
 function mod:RipplingSmash(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
-	self:CDBar(args.spellId, 22)
+	self:Message(args.spellId, "Urgent", "Alert")
+	self:CDBar(args.spellId, self:Mythic() and 41 or 22)
+	-- XXX second cast is always skipped in mythic, it comes off cd during a stone breath->pillars->call combo
+	-- next cast happens 72-88s after pillars, so what happened to the third cast? sigh.
 end
 
 function mod:GraspingEarth(args)
-	self:Message(args.spellId, "Positive", "Alert")
+	self:Message(args.spellId, "Positive")
 	self:CDBar(args.spellId, 110)
 	self:CDBar(157060, 11) -- Thundering Blows
+
+	self:StopBar(156766) -- Warped Armor
+	self:StopBar(156704) -- Slam
+	self:StopBar(157592) -- Rippling Smash
+
+	self:CDBar(156852, 26) -- Stone Breath
 end
 
 function mod:ThunderingBlows(args)
 	self:Message(args.spellId, "Important", nil, CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
 
-	self:StopBar(156766) -- Warped Armor
-	self:StopBar(156704) -- Slam
-	self:StopBar(157592) -- Rippling Smash
 end
 
 function mod:Frenzy(args)
 	self:Message(args.spellId, "Important", "Alarm")
-end
-
--- Mythic
-
-function mod:TremblingEarth(args)
-	self:Message(args.spellId, "Attention")
 end
 
