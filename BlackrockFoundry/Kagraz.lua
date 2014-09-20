@@ -110,7 +110,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(155318, 14.5)
 	elseif spellId == 163644 then -- Summon Enchanted Armaments
 		self:Message(156724, "Attention")
-		self:Bar(156724, self:IsMythic() and 20 or 45)
+		self:Bar(156724, self:Mythic() and 20 or 45)
 	end
 end
 
