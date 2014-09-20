@@ -59,9 +59,7 @@ function mod:OnEngage()
 	self:CDBar(157592, 32) -- Rippling Smash
 	self:CDBar(157060, 59) -- Grasping Earth
 	--self:CDBar(157060, 70) -- Thundering Blows
-	if not self:LFR() then
-		self:Berserk(600)
-	end
+	self:Berserk(600)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
