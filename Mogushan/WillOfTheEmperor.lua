@@ -89,6 +89,7 @@ function mod:OnRegister()
 	end
 	f:SetScript("OnEvent", func)
 	f:RegisterEvent("ZONE_CHANGED_INDOORS")
+	f:RegisterEvent("ZONE_CHANGED_NEW_AREA") -- Summoned to the zone which doesn't fire ZONE_CHANGED_INDOORS
 	func()
 end
 
