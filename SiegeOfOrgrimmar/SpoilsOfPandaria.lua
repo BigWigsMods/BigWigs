@@ -6,6 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Spoils of Pandaria", 953, 870)
 if not mod then return end
 mod:RegisterEnableMob(73152, 73720, 71512) -- Storeroom Guard ( trash guy ), Mogu Spoils, Mantid Spoils
+--mod.engageId = 1594
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -75,11 +76,13 @@ function mod:OnRegister() -- XXX check out replacing this with the chest id
 	end
 	f:SetScript("OnEvent", func)
 	f:RegisterEvent("ZONE_CHANGED_INDOORS")
+	f:RegisterEvent("ZONE_CHANGED_NEW_AREA") -- Summoned to the zone which doesn't fire ZONE_CHANGED_INDOORS
 	func()
 end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:RegisterEvent("ENCOUNTER_END")
 
 	-- Crate of Panderan Relics
 	self:Log("SPELL_DAMAGE", "PathOfBlossoms", 146257)
@@ -107,6 +110,17 @@ function mod:OnBossEnable()
 	self:Yell("Win", L.win_trigger)
 end
 
+function mod:ENCOUNTER_END(_, id, name, diff, size, win)
+	-- Sometimes there's a long delay between the last IEEU and IsEncounterInProgress being false so use this instead.
+	if id == 1594 then
+		if win == 1 then
+			self:Win(true)
+		else
+			self:Wipe()
+		end
+	end
+end
+
 function mod:Warmup()
 	self:Bar("warmup", 19, COMBAT, "achievement_boss_spoils_of_pandaria")
 end
@@ -119,10 +133,6 @@ function mod:OnEngage()
 	wipe(setToBlow)
 	wipe(bossUnitPowers)
 	self:OpenProximity("proximity", 3)
-	-- Sometimes there's a long delay between the last IEEU and IsEncounterInProgress being false so use this as a backup.
-	self:StopWipeCheck()
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "StartWipeCheck")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "StopWipeCheck")
 end
 
 --------------------------------------------------------------------------------
