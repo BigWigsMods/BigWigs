@@ -188,7 +188,7 @@ function mod:CharringBreath(args)
 end
 
 function mod:Rekindle(args)
-	self:TargetMessage(args.spellId, args.destName, "Positive", "Warning")
+	self:TargetMessage(args.spellId, args.sourceName, "Positive", "Warning")
 	self:Bar(args.spellId, 6)
 end
 

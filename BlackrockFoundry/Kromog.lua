@@ -124,9 +124,9 @@ function mod:RipplingSmash(args)
 end
 
 function mod:GraspingEarth(args)
-	self:Message(args.spellId, "Positive")
+	self:Message(args.spellId, "Positive", "Info")
 	self:CDBar(args.spellId, 110)
-	self:CDBar(157060, 11) -- Thundering Blows
+	self:CDBar(157060, 12) -- Thundering Blows
 
 	self:StopBar(156766) -- Warped Armor
 	self:StopBar(156704) -- Slam
@@ -137,7 +137,7 @@ end
 
 function mod:ThunderingBlows(args)
 	self:Message(args.spellId, "Important", nil, CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, 7, CL.cast:format(args.spellName))
 
 end
 

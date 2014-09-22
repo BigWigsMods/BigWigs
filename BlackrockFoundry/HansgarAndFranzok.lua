@@ -51,7 +51,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "ScorchingBurnsDamage", 155818)
 	-- not sure how these work, it's not exactly rage based.. or maybe it is but is delayed
 	--   Searing Plates 161570 18-32ish & 78-87ish
-	--   Stamping Presses 158139 48-62ish & 87-dead (with both bosses)
+	--   Stamping Presses 158139 48-62ish & 87+ with both bosses down
 	--   Smart Stampers 162124 (Mythic)
 
 	self:Death("Deaths", 76973, 76974)
@@ -78,7 +78,7 @@ function mod:ShatteredVertebrae(args)
 			self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
 		end
 	elseif self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellId))
+		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 	end
 end
 
