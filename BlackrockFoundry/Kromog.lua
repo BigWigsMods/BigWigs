@@ -58,7 +58,7 @@ function mod:OnEngage()
 	self:CDBar(156766, 16) -- Warped Armor
 	self:CDBar(156704, 22) -- Slam
 	self:CDBar(157592, 32) -- Rippling Smash
-	self:CDBar(157060, 59) -- Grasping Earth
+	self:CDBar(157060, 50) -- Grasping Earth
 	if self:Mythic() then
 		self:CDBar(173917, 81) -- Trembling Earth
 	end
@@ -125,8 +125,8 @@ end
 
 function mod:GraspingEarth(args)
 	self:Message(args.spellId, "Positive", "Info")
-	self:CDBar(args.spellId, 110)
-	self:CDBar(157060, 12) -- Thundering Blows
+	self:CDBar(args.spellId, 114)
+	self:CDBar(157054, 12) -- Thundering Blows
 
 	self:StopBar(156766) -- Warped Armor
 	self:StopBar(156704) -- Slam
