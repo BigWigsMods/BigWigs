@@ -19,7 +19,7 @@ local strengthCounter = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.enable_zone = "Forge of the Endless"
+	L.enable_zone = "Forge of the Endless" -- DUNGEON_FLOOR_MOGUSHANVAULTS3
 
 	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
 	L.normal_start_trigger = "The machine hums" -- The machine hums to life!  Get to the lower level!

@@ -73,7 +73,7 @@ end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "ptBR")
 if L then
-	L.enable_zone = DUNGEON_FLOOR_MOGUSHANVAULTS3 -- translate me
+	L.enable_zone = "Forja dos Eternos"
 
 	L.heroic_start_trigger = "Destruindo os canos"
 	L.normal_start_trigger = "A máquina toma vida! Vá para o nível inferior!"
