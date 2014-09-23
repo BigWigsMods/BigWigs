@@ -168,32 +168,21 @@ end
 
 -- phase 4
 do
-	local lastMilestone = nil
+	local prev, castTime = 0, 0
 	function mod:UNIT_POWER_FREQUENT(unit)
-		-- let's try to not start a new bar if not necessary. Power gain speed is 1 power ever 0.8 exactly.
 		local power = UnitPower(unit)
+		if power == prev then return end
+		prev = power
+
+		local t = (100 - power) * 0.9 -- 90s
 		if power == 1 then
-			lastMilestone = GetTime()
-			self:Bar("manifest_rage", 79.2, 147011, 147011)
-		elseif power == 25 then
-			lastMilestone = GetTime()
-			if (GetTime() - lastMilestone) < 19.2 then -- there were extra power gain need to update the bar 24*0.8
-				self:Bar("manifest_rage", 60, 147011, 147011)
-			end
-		elseif power == 50 then
-			lastMilestone = GetTime()
-			if (GetTime() - lastMilestone) < 20 then -- there were extra power gain need to update the bar 25*0.8
-				self:Bar("manifest_rage", 40, 147011, 147011)
-			end
-		elseif power == 75 then
-			lastMilestone = GetTime()
-			if (GetTime() - lastMilestone) < 20 then -- there were extra power gain need to update the bar 25*0.8
-				self:Bar("manifest_rage", 20, 147011, 147011)
-			end
-		elseif power == 95 then
-			lastMilestone = GetTime()
-			if (GetTime() - lastMilestone) < 16 then -- there were extra power gain need to update the bar 20*0.8
-				self:Bar("manifest_rage", 4, 147011, 147011) -- 4 should be enough since there is still a 2 sec cast time before the channel
+			self:Bar("manifest_rage", t, 147011)
+			castTime = GetTime() + t
+		elseif power > 1 and power < 100 then
+			local newTime = GetTime() + t
+			if newTime+0.3 < castTime then
+				self:Bar("manifest_rage", t, 147011)
+				castTime = newTime
 			end
 		end
 	end
@@ -242,12 +231,12 @@ end
 function mod:MaliceApplied(args)
 	self:SecondaryIcon(args.spellId, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
-	maliceCounter = maliceCounter + 1
-	self:Bar(args.spellId, 30, CL.count:format(args.spellName, maliceCounter))
+	self:TargetBar(args.spellId, 14, args.destName)
 	if self:Me(args.destGUID) then
-		self:Bar(args.spellId, 14, CL.you:format(args.spellName))
 		self:Flash(args.spellId)
 	end
+	maliceCounter = maliceCounter + 1
+	self:Bar(args.spellId, 30, CL.count:format(args.spellName, maliceCounter))
 end
 
 function mod:IronStarFixateRemoved(args)
