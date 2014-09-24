@@ -66,10 +66,12 @@ end
 function mod:OnEngage()
 	self:Berserk(self:LFR() and 720 or 360)
 	breathCounter, smashCounter, slamCounter = 1, 1, 1
-	self:Bar(142826, 12, CL.count:format(self:SpellName(142826), 1)) -- Arcing Smash
-	self:Bar(142851, 5) -- Seismic Slam
+	self:Bar(142826, 12, CL.count:format(self:SpellName(142826), smashCounter)) -- Arcing Smash
 	self:OpenProximity(142851, 5)
 	self:CDBar(142842, 67.7, CL.count:format(self:SpellName(142842), breathCounter)) -- Breath of Y'Shaarj
+	-- Seismic Slam / Adds
+	self:ScheduleTimer("Message", 4.5, 142851, "Urgent", "Info", CL.incoming:format(self:Heroic() and CL.adds or self:SpellName(142851)))
+	self:Bar(142851, 5, self:Heroic() and CL.count:format(CL.adds, slamCounter))
 end
 
 --------------------------------------------------------------------------------
@@ -121,6 +123,7 @@ end
 
 function mod:BloodRage(args)
 	self:Message(args.spellId, "Neutral", "Long")
+	self:Bar(args.spellId, 22.5)
 	self:StopBar(142851) -- Seismic Slam
 	self:CloseProximity(142851)
 end
@@ -131,8 +134,10 @@ function mod:ExpelMiasma() -- Blood Rage over
 	self:StopBar(142913) -- Displaced Energy
 	breathCounter, smashCounter, slamCounter = 1, 1, 1
 	self:Bar(142826, 17, CL.count:format(self:SpellName(142826), smashCounter)) -- Arcing Smash
-	self:Bar(142851, 10, self:Heroic() and CL.adds) -- Seismic Slam
 	self:CDBar(142842, 72.2, CL.count:format(self:SpellName(142842), breathCounter)) -- Breath of Y'Shaarj
+	-- Seismic Slam / Adds
+	self:ScheduleTimer("Message", 9, 142851, "Urgent", "Info", CL.incoming:format(self:Heroic() and CL.adds or self:SpellName(142851)))
+	self:Bar(142851, 10, self:Heroic() and CL.count:format(CL.adds, slamCounter))
 end
 
 -- Non rage phase
@@ -153,24 +158,18 @@ function mod:BreathOfYShaarj(args)
 	if breathCounter == 2 then
 		self:Bar(142826, 15, CL.count:format(self:SpellName(142826), smashCounter)) -- Arcing Smash
 		self:CDBar(args.spellId, 69.8, CL.count:format(args.spellName, breathCounter))
+
+		-- Seismic Slam / Adds
+		self:ScheduleTimer("Message", 6.5, 142851, "Urgent", "Info", CL.incoming:format(self:Heroic() and CL.adds or self:SpellName(142851)))
+		self:Bar(142851, 7.5, self:Heroic() and CL.count:format(CL.adds, slamCounter))
 	end
-	self:Bar(142851, 5, self:Heroic() and CL.adds) -- Seismic Slam
 end
 
-do
-	local slamTimers = {18, 18, 23}
-	local slamTimer
-	function mod:SeismicSlam(args)
-		if not slamTimers[slamCounter] then return end -- don't do anything if we don't have timer
-		if self:Heroic() then
-			args.spellName = CL.adds
-		end
-		-- don't think this needs a message
-		-- if anything a soon message, since timers seem reliable
-		slamTimer = self:ScheduleTimer("Message", slamTimers[slamCounter]-2, args.spellId, "Urgent", "Info", CL.custom_sec:format(args.spellName, 2))
-		self:Bar(args.spellId, slamTimers[slamCounter], args.spellName)
-		slamCounter = slamCounter + 1
-	end
+function mod:SeismicSlam(args)
+	slamCounter = slamCounter + 1
+	if slamCounter > 3 then return end
+	self:ScheduleTimer("Message", 18.5, args.spellId, "Urgent", "Info", CL.incoming:format(self:Heroic() and CL.adds or args.spellName))
+	self:Bar(args.spellId, 19.5, self:Heroic() and CL.count:format(CL.adds, slamCounter))
 end
 
 function mod:ArcingSmash(args)
@@ -179,7 +178,7 @@ function mod:ArcingSmash(args)
 
 	self:Message(args.spellId, "Attention", nil, CL.count:format(args.spellName, smashCounter))
 	smashCounter = smashCounter + 1
-	if smashCounter == 4 then return end
+	if smashCounter > 3 then return end
 	self:CDBar(args.spellId, 17, CL.count:format(args.spellName, smashCounter))
 end
 
