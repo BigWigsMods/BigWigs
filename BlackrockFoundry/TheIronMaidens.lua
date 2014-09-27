@@ -15,7 +15,7 @@ mod:RegisterEnableMob(77477, 77557, 77231) -- Marak the Blooded, Admiral Gar'an,
 
 local marak, sorka, garan = (EJ_GetSectionInfo(10033)), (EJ_GetSectionInfo(10030)), (EJ_GetSectionInfo(10025))
 local bossDeaths = 0
-local warnPower = 50
+local shipCount = 0
 
 local function isOnABoat()
 	return false
@@ -51,15 +51,15 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"bombardment", {158683, "FLASH"},
-		{156626, "ICON", "FLASH"}, 156683, {164271, "ICON", "FLASH"}, 158599,
-		155794, 156214, 156007, 158315,
-		{158078, "FLASH"}, 156366, {157950, "FLASH"}, "custom_off_heartseeker_marker", 156601,
+		{156626, "ICON", "FLASH"}, {164271, "ICON"}, 158599,
+		155794, 156109, 156007, 158315,
+		159724, {158010, "FLASH"}, "custom_off_heartseeker_marker", 156601,
 		159336, "stages", "bosskill"
 	}, {
 		["bombardment"] = -10019, -- Dreadnaught
 		[156626] = garan, -- Gar'an
 		[155794] = sorka, -- Sorka
-		[158078] = marak, -- Marak
+		[159724] = marak, -- Marak
 		[159336] = "general"
 	}
 end
@@ -69,24 +69,20 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "IronWill", 159336)
 	-- Gar'an
-	self:Log("SPELL_AURA_APPLIED", "RapidFire", 156626)
-	self:Log("SPELL_CAST_START", "IncendiaryDevice", 156683) -- Mythic
+	self:Log("SPELL_AURA_APPLIED", "RapidFire", 156631)
 	self:Log("SPELL_AURA_APPLIED", "PenetratingShot", 164271)
 	self:Log("SPELL_CAST_START", "DeployTurret", 158599)
 	-- Sorka
 	self:Log("SPELL_CAST_START", "BladeDash", 155794)
-	self:Log("SPELL_AURA_APPLIED", "ConvulsiveShadows", 156214) -- Mythic
-	self:Log("SPELL_AURA_APPLIED", "Impale", 156007)
+	self:Log("SPELL_CAST_SUCCESS", "ConvulsiveShadows", 156109)
 	self:Log("SPELL_AURA_APPLIED", "DarkHunt", 158315)
 	-- Marak
-	self:Log("SPELL_CAST_START", "BloodRitual", 158078)
-	self:Log("SPELL_CAST_START", "WhirlOfBlood", 156366) -- Mythic
-	self:Log("SPELL_AURA_APPLIED", "HeartSeekerApplied", 157950)
-	self:Log("SPELL_AURA_REMOVED", "HeartSeekerRemoved", 157950)
+	self:Log("SPELL_AURA_APPLIED", "BloodRitual", 159724)
+	self:Log("SPELL_AURA_APPLIED", "HeartseekerApplied", 158010)
+	self:Log("SPELL_AURA_REMOVED", "HeartseekerRemoved", 158010)
 	self:Log("SPELL_AURA_APPLIED", "SanguineStrikes", 156601)
 	-- Ship
 	self:Emote("Ship", L.ship_trigger) -- 10/40/70 power
-	self:Log("SPELL_CAST_START", "WarmingUp", 158849)
 	self:Log("SPELL_CAST_SUCCESS", "BombardmentAlpha", 157854)
 	self:Log("SPELL_CAST_SUCCESS", "BombardmentOmega", 157886)
 	self:Log("SPELL_PERIODIC_DAMAGE", "CorruptedBloodDamage", 158683)
@@ -97,29 +93,37 @@ end
 
 function mod:OnEngage()
 	bossDeaths = 0
-	warnPower = self:Mythic() and 25 or 50
-	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2")
+	shipCount = 0
+	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2", "boss3")
 
-	self:Bar(158078, 6) -- Blood Ritual
+	self:Bar(158078, 5) -- Blood Ritual
 	self:Bar(155794, 11) -- Blade Dash
-	self:Bar(156626, 16) -- Rapid Fire
-	self:Bar("bombardment", 60, L.ship:format(marak), L.ship_icon)
+	self:Bar(156626, 19) -- Rapid Fire
+	self:Bar("bombardment", 60, 137266, L.ship_icon) -- Jump to Ship
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:UNIT_POWER_FREQUENT(unit)
-	local power = UnitPower(unit)
-	if power == warnPower then
-		self:Message("stages", "Neutral", nil, L.power_message:format(power), false)
-		warnPower = warnPower + 25
-		if warnPower == 100 then
-			self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2")
+do
+	local prev = 0
+	function mod:UNIT_POWER_FREQUENT(unit, powerType)
+		if powerType == "ALTERNATE" then
+			local power = UnitPower(unit, 10)
+			if power == 1 then
+				self:Bar("bombardment", 88, 158849, "inv_elemental_primal_fire") -- Warming Up
+			elseif power == 0 then
+				self:StopBar(158849)
+			end
+		else
+			local power = UnitPower(unit)
+			if power == prev then return end
+			if power == 30 or power == 100 then
+				self:Message("stages", "Neutral", "Info", L.power_message:format(power), false)
+			end
+			power = prev
 		end
-	elseif power == 100 then
-		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2")
 	end
 end
 
@@ -129,6 +133,9 @@ do
 		local t = GetTime()
 		if t-prev > 5 then
 			self:Message(args.spellId, "Important", "Alarm")
+			self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2", "boss3")
+			self:StopBar(137266) -- Jump to Ship
+			prev = t
 		end
 	end
 end
@@ -136,21 +143,23 @@ end
 -- Ship
 
 function mod:Ship(msg, sender)
+	shipCount = shipCount + 1
 	self:Message("bombardment", "Neutral", "Info", L.ship:format(sender), false)
-	self:Bar("bombardment", 15, L.bombardment, L.bombardment_icon)
 	if sender == garan then
-		self:StopBar(156626) -- Rapid Fire
+		self:StopBar(156631) -- Rapid Fire
+		self:StopBar(164271) -- Penetrating Shot
+		self:StopBar(158599) -- Deploy Turret
 	elseif sender == sorka then
-		self:Bar("bombardment", 130, L.ship:format(garan), L.ship_icon)
 		self:StopBar(155794) -- Blade Dash
+		self:StopBar(156109) -- Convulsive Shadows
 	elseif sender == marak then
-		self:Bar("bombardment", 130, L.ship:format(sorka), L.ship_icon)
-		self:StopBar(158078) -- Blood Ritual
+		self:StopBar(159724) -- Blood Ritual
+		self:StopBar(158010) -- Heartseeker
+		self:StopBar(156601) -- Sanguine Strikes
 	end
-end
-
-function mod:WarmingUp(args)
-	self:Bar("bombardment", 90, args.spellName, "spell_fire_selfdestruct") -- couldn't find a spell for "Obliteration barrage"
+	if shipCount < 3 then
+		self:Bar("bombardment", 198, 137266, L.ship_icon) -- Jump to Ship
+	end
 end
 
 function mod:BombardmentAlpha(args)
@@ -161,7 +170,6 @@ end
 function mod:BombardmentOmega(args)
 	self:Message("bombardment", "Urgent", nil, args.spellId)
 	self:StopBar(L.bombardment)
-	self:StopBar(158849) -- Warming Up
 end
 
 do
@@ -181,11 +189,11 @@ end
 function mod:RapidFire(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
-	self:TargetBar(args.spellId, 15, args.destName)
+	self:TargetBar(args.spellId, 8, args.destName)
 	if self:Me(args.spellId) then
 		self:Flash(args.spellId)
 	end
-	self:Bar(args.spellId, 30)
+	self:Bar(args.spellId, 31.6)
 end
 
 function mod:IncendiaryDevice(args)
@@ -195,14 +203,13 @@ end
 function mod:PenetratingShot(args)
 	self:SecondaryIcon(args.spellId, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
-	self:TargetBar(args.spellId, 5, args.destName)
-	if not self:Tank() then
-		self:Flash(args.spellId)
-	end
+	self:TargetBar(args.spellId, 8, args.destName)
+	self:CDBar(args.spellId, 22) -- 22-36
 end
 
 function mod:DeployTurret(args)
 	self:Message(args.spellId, "Attention")
+	self:CDBar(args.spellId, 22) -- 22-43 (?!)
 end
 
 -- Sorka
@@ -214,34 +221,20 @@ end
 
 function mod:ConvulsiveShadows(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent")
-end
-
-function mod:Impale(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention")
+	self:Bar(args.spellId, 46)
 end
 
 function mod:DarkHunt(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention")
+	self:TargetBar(args.spellId, 8, args.destName)
+	--13.3 
 end
 
 -- Marak
 
-do
-	local function printTarget(self, name, guid)
-		if self:Me(guid) then
-			self:TargetMessage(158078, name, "Urgent", "Alert")
-			self:Flash(158078)
-		end
-		self:TargetBar(158078, 5, name)
-	end
-	function mod:BloodRitual(args)
-		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
-		self:Bar(158078, 12)
-	end
-end
-
-function mod:WhirlOfBlood(args)
-	self:Message(args.spellId, "Urgent")
+function mod:BloodRitual(args)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert")
+	self:Bar(args.spellId, 12)
 end
 
 do
@@ -250,19 +243,21 @@ do
 		mod:TargetMessage(spellId, targets, "Urgent", "Alert")
 		scheduled = nil
 	end
-	function mod:HeartSeekerApplied(args)
+	function mod:HeartseekerApplied(args)
 		targets[#targets+1] = args.destName
 		if self:Me(args.spellId) then
+			self:TargetBar(args.spellId, 5, args.destName)
 			self:Flash(args.spellId)
 		end
 		if self.profile.custom_off_heartseeker_marker then
 			SetRaidTarget(args.destName, #targets)
 		end
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnTargets, 0.3, args.spellId)
+			self:Bar(args.spellId, 51)
+			scheduled = self:ScheduleTimer(warnTargets, 0.1, args.spellId)
 		end
 	end
-	function mod:HeartSeekerRemoved(args)
+	function mod:HeartseekerRemoved(args)
 		if self.profile.custom_off_heartseeker_marker then
 			SetRaidTarget(args.destName, 0)
 		end
@@ -275,6 +270,19 @@ end
 
 
 function mod:Deaths(args)
+	local mobId = args.mobId
+	if mobId == 77477 then -- Marak
+		self:StopBar(159724) -- Blood Ritual
+		self:StopBar(158010) -- Heartseeker
+		self:StopBar(156601) -- Sanguine Strikes
+	elseif mobId == 77557 then -- Gar'an
+		self:StopBar(156631) -- Rapid Fire
+		self:StopBar(164271) -- Penetrating Shot
+		self:StopBar(158599) -- Deploy Turret
+	elseif mobId == 77231 then -- Sorka
+		self:StopBar(155794) -- Blade Dash
+		self:StopBar(156109) -- Convulsive Shadows
+	end
 	bossDeaths = bossDeaths + 1
 	if bossDeaths > 2 then
 		self:Win()
