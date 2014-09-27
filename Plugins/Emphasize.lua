@@ -165,7 +165,7 @@ end
 do
 	local timers = {}
 	local function printEmph(num, text)
-		PlaySoundFile(("Interface\\AddOns\\BigWigs\\Sounds\\%d.mp3"):format(num), "Master")
+		PlaySoundFile(("Interface\\AddOns\\BigWigs\\Sounds\\%d.ogg"):format(num), "Master")
 		plugin:SendMessage("BigWigs_EmphasizedCountdownMessage", num)
 		if text and timers[text] then wipe(timers[text]) end
 	end
