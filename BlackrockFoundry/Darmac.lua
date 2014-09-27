@@ -6,7 +6,7 @@
 if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Beastlord Darmac", 988, 1122)
 if not mod then return end
-mod:RegisterEnableMob(76796)
+mod:RegisterEnableMob(76865)
 --mod.engageId = 1694
 
 --------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ function mod:GetOptions()
 		[155061] = -9301, -- Cruelfang
 		[155030] = -9302, -- Dreadwing
 		[155236] = -9303, -- Ironcrusher
-		[155284] = ("%s (%s)"):format(EJ_GetSectionInfo(9304), GetDifficultyInfo(16)), -- Faultline (Mythic)
+		[155284] = ("%s (%s)"):format(EJ_GetSectionInfo(9304), CL.mythic), -- Faultline (Mythic)
 		["stages"] = "general",
 	}
 end
@@ -99,7 +99,7 @@ function mod:OnBossEnable()
 
 	self:Death("SpearDeath", 76796) -- Heavy Spear
 	self:Death("Deaths", 76884, 76874, 76945, 76946) -- Cruelfang, Dreadwing, Ironcrusher, Faultline
-	self:Death("Win", 76796) -- Beastlord Darmac
+	self:Death("Win", 76865) -- Beastlord Darmac
 end
 
 function mod:OnEngage(diff)
@@ -161,7 +161,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	for i=1, 5 do
 		local unit = ("boss%d"):format(i)
 		local mobId = self:MobId(UnitGUID(unit))
-		if mobId > 0 and mobId ~= 76796 then
+		if mobId > 0 and mobId ~= 76865 then
 			currentBosses[mobId] = true
 			if activatedMounts[mobId] == nil then
 				self:StopBar(155061) -- Rend and Tear
@@ -203,7 +203,7 @@ function mod:Deaths(args)
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unit)
-	if self:MobId(UnitGUID(unit)) == 76796 then
+	if self:MobId(UnitGUID(unit)) == 76865 then
 		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 		-- Warnings for 85%, 65%, 45%, and 25% for mythic
 		if (phase == 1 and hp < 90) or (phase == 2 and hp < 70) or (phase == 3 and hp < 50) or (phase == 4 and hp < 30) then
@@ -218,15 +218,15 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 155365 then -- Pin Down
-		self:Message(spellId, "Urgent", "Warning", CL.incoming:format(spellName))
+		self:Message(154960, "Urgent", "Warning", CL.incoming:format(spellName))
 	elseif spellId == 155221 then -- Iron Crusher's Tantrum
-		self:Message(155222, "Attention", nil, CL.count:format(tantrumCount))
+		self:Message(155222, "Attention", nil, CL.count:format(spellName, tantrumCount))
 		tantrumCount = tantrumCount + 1
-		self:CDBar(spellId, 26, CL.count:format(spellName, tantrumCount))
+		self:CDBar(155222, 26, CL.count:format(spellName, tantrumCount))
 	elseif spellId == 155520 then -- Darmac's Tantrum
 		self:Message(155222, "Attention", nil, CL.count:format(tantrumCount))
 		tantrumCount = tantrumCount + 1
-		self:CDBar(spellId, 23, CL.count:format(spellName, tantrumCount))
+		self:CDBar(155222, 23, CL.count:format(spellName, tantrumCount))
 	elseif spellId == 155497 then -- Superheated Shrapnel
 		self:Message(155499, "Urgent", nil, CL.incoming:format(spellName))
 		self:CDBar(155499, 25)
@@ -343,7 +343,7 @@ function mod:SavageHowl(args)
 end
 
 function mod:InfernoBreath()
-	self:Message(154989, "Urgent", nil, CL.incoming(self:SpellName(154989)))
+	self:Message(154989, "Urgent", nil, CL.incoming:format(self:SpellName(154989)))
 end
 
 do
