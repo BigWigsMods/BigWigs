@@ -15,8 +15,8 @@ mod:RegisterEnableMob(76906, 80791) -- Operator Thogar, Grom'kar Man-at-Arms
 
 local grenade = GetSpellInfo(135592)
 local engageTime = 0
+-- times are for when the train is about to enter the room, ~5s after the door opens
 local trainData = {
-	-- times are for when the train is about to enter the room, ~5s after the door opens
 	-- heroic data, covers 7min of the fight
 	[1] = {
 		{ 32, "adds_train"},
@@ -25,28 +25,28 @@ local trainData = {
 		{172, "cannon_train"},
 		{237, "train"},
 		{272, "train"},
-		{307, "cannon_train"},
+		{307, "cannon_train", 4},
 		{407, "train"},
 	},
 	[2] = {
 		{ 27, "train"},
 		{ 77, "train"},
-		{122, "adds_train"},
+		{122, "adds_train", 3},
 		{183, "train"},
 		{197, "train"},
 		{227, "train"},
-		{252, "big_add_train"},
+		{252, "big_add_train", 4},
 		{317, "train"},
 		{342, "train"},
-		{372, "adds_train"},
+		{372, "adds_train", 3},
 	},
 	[3] = {
 		{ 48, "train"},
 		{ 82, "big_add_train"},
-		{122, "adds_train"},
+		{122, "adds_train", 2},
 		{217, "train"},
 		{277, "train"},
-		{372, "big_add_train"},
+		{372, "big_add_train", 2},
 		{385, "train"},
 	},
 	[4] = {
@@ -54,12 +54,13 @@ local trainData = {
 		{ 52, "cannon_train"},
 		{162, "train"},
 		{197, "adds_train"},
-		{252, "cannon_train"},
-		{307, "cannon_train"},
+		{252, "cannon_train", 2},
+		{307, "cannon_train", 1},
 	},
 }
 
 local trainDataMythic = {
+	-- better way to do random trains?
 	[1] = {},
 	[2] = {},
 	[3] = {},
@@ -85,7 +86,7 @@ if L then
 	L.trains_desc = "Shows timers and messages for each lane for when the next train is coming. Lanes are numbered from the boss to the entrace, ie, Boss 1 2 3 4 Entrance."
 	L.trains_icon = "achievement_dungeon_blackrockdepot"
 
-	L.lane = "Lane %d: %s"
+	L.lane = "Lane %s: %s"
 	L.train = "Train"
 	L.train_icon = "achievement_dungeon_blackrockdepot" -- chooo chooooo
 	L.adds_train = "Adds train"
@@ -96,6 +97,8 @@ if L then
 	L.cannon_train_icon = "ability_vehicle_siegeenginecannon" -- cannon ball, duh
 	L.deforester = EJ_GetSectionInfo(10329)
 	L.deforester_icon = "spell_shaman_lavasurge"
+	L.random = "Random trains"
+	L.random_icon = "ability_foundryraid_traindeath"
 end
 L = mod:GetLocale()
 L.cauterizing_bolt_desc = CL.focus_only..L.cauterizing_bolt_desc
@@ -106,7 +109,7 @@ L.cauterizing_bolt_desc = CL.focus_only..L.cauterizing_bolt_desc
 
 function mod:GetOptions()
 	return {
-		156494, 164380,
+		--156494, 164380,
 		163753, "cauterizing_bolt", {159481, "ICON", "FLASH"}, --, "custom_off_firemender_marker"
 		{155921, "TANK"}, {155864, "FLASH"}, "trains", "bosskill",
 	}, {
@@ -128,9 +131,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CauterizingBolt", 160140)
 	self:Log("SPELL_AURA_APPLIED", "DelayedSiegeBomb", 159481)
 	-- Mythic
-	self:Log("SPELL_AURA_APPLIED", "ObliterationDamage", 156494)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "ObliterationDamage", 156494)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "HeatBlastDamage", 164380)
+	--self:Log("SPELL_AURA_APPLIED", "ObliterationDamage", 156494)
+	--self:Log("SPELL_AURA_APPLIED_DOSE", "ObliterationDamage", 156494)
+	--self:Log("SPELL_AURA_APPLIED_DOSE", "HeatBlastDamage", 164380)
 
 	self:Death("Deaths", 80791) -- Grom'kar Man-at-Arms
 	self:Death("Win", 76906)
@@ -150,6 +153,30 @@ end
 -- Event Handlers
 --
 
+function mod:StartTrainTimer(lane, count)
+	if self:LFR() then return end
+	local data = self:Mythic() and trainDataMythic or trainData
+	local info = data and data[lane][count]
+	if not info then
+		--print("No more train data for lane", lane, ":(")
+		return
+	end
+
+	local time, type, with = unpack(info)
+	local length = floor(time - (GetTime() - engageTime))
+	if type ~= "random" or lane == 1 then -- only one bar for random trains
+		if type ~= "train" then -- no messages for single fast moving trains
+			self:DelayedMessage("trains", length-4, "Attention", CL.incoming:format(L[type]), false) -- Incoming Adds train!
+		end
+		self:CDBar("trains", length, L.lane:format(type ~= "random" and lane or "?", L[type]), L[type.."_icon"]) -- Lane 1: Adds train
+	end
+	--TODO get some map data for the lanes and flash/alarm if you're standing in it
+
+	self:ScheduleTimer("StartTrainTimer", length, lane, count+1)
+end
+
+-- Mythic
+
 function mod:ObliterationDamage(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName)) -- OBLITERATION under YOU! lol
@@ -162,23 +189,7 @@ function mod:HeatBlastDamage(args)
 	end
 end
 
-function mod:StartTrainTimer(lane, count)
-	local data = self:Mythic() and trainDataMythic or trainData
-	local info = data and data[lane][count]
-	if not info then
-		--print("No more train data for lane", lane, ":(")
-		return
-	end
-
-	local time, type = unpack(info)
-	local length = floor(time - (GetTime() - engageTime))
-	self:CDBar("trains", length, L.lane:format(lane, L[type]), L[type.."_icon"]) -- Lane 1: Adds train
-	if type ~= "train" then -- messages would get pretty spammy
-		self:DelayedMessage("trains", length-4, "Attention", L.lane:format(lane, CL.incoming:format(L[type])), false) -- Lane 1: Incoming Adds train!
-	end
-	--TODO get some map data for the lanes and flash/alarm if you're standing in it
-	self:ScheduleTimer("StartTrainTimer", length, lane, count+1)
-end
+-- General
 
 function mod:Enkindle(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Warning")
