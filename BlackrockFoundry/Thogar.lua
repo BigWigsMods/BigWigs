@@ -111,7 +111,7 @@ function mod:GetOptions()
 	return {
 		--156494, 164380,
 		163753, "cauterizing_bolt", {159481, "ICON", "FLASH"}, --, "custom_off_firemender_marker"
-		{155921, "TANK"}, {155864, "FLASH"}, "trains", "bosskill",
+		{155921, "TANK"}, {155864, "FLASH"}, {"trains", "FLASH"}, "bosskill",
 	}, {
 		[156494] = "mythic",
 		[163753] = -9537, -- Reinforcements
@@ -133,7 +133,6 @@ function mod:OnBossEnable()
 	-- Mythic
 	--self:Log("SPELL_AURA_APPLIED", "ObliterationDamage", 156494)
 	--self:Log("SPELL_AURA_APPLIED_DOSE", "ObliterationDamage", 156494)
-	--self:Log("SPELL_AURA_APPLIED_DOSE", "HeatBlastDamage", 164380)
 
 	self:Death("Deaths", 80791) -- Grom'kar Man-at-Arms
 	self:Death("Win", 76906)
@@ -153,24 +152,36 @@ end
 -- Event Handlers
 --
 
+local function checkLane(warnLane)
+	if not UnitAffectingCombat("player") then return end
+	-- nice square room!
+	local lane = 0
+	local pos = UnitPosition("player")
+	if pos < 529.7 then lane = 4
+	elseif pos > 577.7 then lane = 1
+	elseif pos > 553.7 then lane = 2
+	elseif pos < 553.8 then	lane = 3 end
+
+	if lane == warnLane then
+		mod:PlaySound("trains", "Info")
+		mod:Flash("trains") -- XXX too much?
+	end
+end
+
 function mod:StartTrainTimer(lane, count)
 	local data = self:Mythic() and trainDataMythic or trainData
 	local info = data and data[lane][count]
-	if not info then
-		--print("No more train data for lane", lane, ":(")
-		return
-	end
+	if not info then return end
 
-	local time, type, with = unpack(info)
+	local time, type = unpack(info)
 	local length = floor(time - (GetTime() - engageTime))
 	if type ~= "random" or lane == 1 then -- only one bar for random trains
-		if type ~= "train" then -- no messages for single fast moving trains
-			self:DelayedMessage("trains", length-4, "Attention", CL.incoming:format(L[type]), false) -- Incoming Adds train!
+		if type ~= "train" then -- no messages for the fast moving trains
+			self:DelayedMessage("trains", length-3, "Attention", CL.incoming:format(L[type]), false) -- Incoming Adds train!
 		end
 		self:CDBar("trains", length, L.lane:format(type ~= "random" and lane or "?", L[type]), L[type.."_icon"]) -- Lane 1: Adds train
 	end
-	--TODO get some map data for the lanes and flash/alarm if you're standing in it
-
+	self:ScheduleTimer(checkLane, length-1, lane) -- gives you ~2s to move
 	self:ScheduleTimer("StartTrainTimer", length, lane, count+1)
 end
 
@@ -179,12 +190,6 @@ end
 function mod:ObliterationDamage(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName)) -- OBLITERATION under YOU! lol
-	end
-end
-
-function mod:HeatBlastDamage(args)
-	if self:Me(args.destGUID) and args.amount > 2 then
-		self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 	end
 end
 

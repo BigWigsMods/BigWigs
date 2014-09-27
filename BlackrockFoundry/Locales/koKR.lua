@@ -54,11 +54,12 @@ if L then
 	L.trains = "기차 경고"
 	L.trains_desc = "각 라인마다 다음 기차가 언제 올 지에 대해서 타이머와 메시지를 표시합니다. 라인은 보스부터 입구쪽으로 '보스 1 2 3 4 입구'로 숫자가 매겨져 있습니다."
 
-	L.lane = "%d번째 라인 : %s"
+	L.lane = "%s번째 라인 : %s"
 	L.train = "기차"
 	L.adds_train = "기차 추가"
 	L.big_add_train = "큰 기차 추가"
 	L.cannon_train = "대포 기차"
+	--L.random = "Random trains"
 end
 
 L = BigWigs:NewBossLocale("The Iron Maidens", "koKR")
