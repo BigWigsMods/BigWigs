@@ -388,14 +388,15 @@ function options:OnInitialize()
 end
 
 function options:OnEnable()
+	self:RegisterMessage("BigWigs_BossModuleRegistered", "Register")
+	self:RegisterMessage("BigWigs_PluginRegistered", "Register")
+
 	for name, module in BigWigs:IterateBossModules() do
 		self:Register("BigWigs_BossModuleRegistered", name, module)
 	end
 	for name, module in BigWigs:IteratePlugins() do
 		self:Register("BigWigs_PluginRegistered", name, module)
 	end
-	self:RegisterMessage("BigWigs_BossModuleRegistered", "Register")
-	self:RegisterMessage("BigWigs_PluginRegistered", "Register")
 
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_StartConfigureMode")
@@ -1223,8 +1224,8 @@ do
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
 		local parent = BigWigsLoader.zoneTbl[zoneId] and addonNameToHeader[BigWigsLoader.zoneTbl[zoneId]] or addonNameToHeader.BigWigs_WarlordsOfDraenor or addonNameToHeader.BigWigs_MistsOfPandaria -- XXX compat
-		local panel, created = self:GetPanel(zoneName, parent, zoneId)
-		if created then
+		local panel, justCreated = self:GetPanel(zoneName, parent, zoneId)
+		if justCreated then
 			panel:SetScript("OnShow", onZoneShow)
 			panel:SetScript("OnHide", onZoneHide)
 		end

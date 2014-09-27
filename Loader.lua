@@ -77,13 +77,10 @@ local highestReleaseRevision = BIGWIGS_RELEASE_TYPE == RELEASE and MY_BIGWIGS_RE
 local highestAlphaRevision = BIGWIGS_RELEASE_TYPE == ALPHA and MY_BIGWIGS_REVISION or -1
 
 -- Loading
-local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-ZoneId directive
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the core is loaded
-local loadOnWorldBoss = {} -- Packs that should load when targetting a specific mob
--- XXX shouldn't really be named "menus", it's actually panels in interface options now
-local menus = {} -- contains the main menus for BigWigs, once the core is loaded they will get injected
+local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
 
@@ -219,6 +216,8 @@ do
 		BigWigs_Options = true,
 		BigWigs_Plugins = true,
 	}
+	local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-ZoneId directive
+	local loadOnWorldBoss = {} -- Packs that should load when targetting a specific mob
 
 	for i = 1, GetNumAddOns() do
 		local name = GetAddOnInfo(i)
@@ -244,9 +243,7 @@ do
 			sysprint(L.coreAddonDisabled:format(name))
 		end
 	end
-end
 
-do
 	local function iterateZones(addon, override, ...)
 		for i = 1, select("#", ...) do
 			local rawZone = select(i, ...)
@@ -301,93 +298,86 @@ do
 		end
 	end
 
-	function mod:PLAYER_LOGIN()
-		for _, index in next, loadOnZoneAddons do
-			local menu = tonumber(GetAddOnMetadata(index, "X-BigWigs-Menu"))
-			if menu then
-				if not loadOnZone[menu] then loadOnZone[menu] = {} end
-				if not menus[menu] then menus[menu] = true end
-			end
-			local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-ZoneId")
-			if zones then
-				iterateZones(index, menu, strsplit(",", zones))
-			end
+	for _, index in next, loadOnZoneAddons do
+		local menu = tonumber(GetAddOnMetadata(index, "X-BigWigs-Menu"))
+		if menu then
+			if not loadOnZone[menu] then loadOnZone[menu] = {} end
+			if not menus[menu] then menus[menu] = true end
 		end
-		loadOnZoneAddons, iterateZones = nil, nil
-		for _, index in next, loadOnWorldBoss do
-			local menu = tonumber(GetAddOnMetadata(index, "X-BigWigs-Menu"))
-			if menu then
-				if not loadOnZone[menu] then loadOnZone[menu] = {} end
-				if not menus[menu] then menus[menu] = true end
-			end
-			local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-WorldBoss")
-			if zones then
-				iterateWorldBosses(index, menu, strsplit(",", zones))
-			end
+		local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-ZoneId")
+		if zones then
+			iterateZones(index, menu, strsplit(",", zones))
 		end
-		loadOnWorldBoss, iterateWorldBosses = nil, nil
-
-		-- Update zone panels for non-LoD users
-		if BigWigsOptions then
-			BigWigsOptions:Disable()
-			BigWigsOptions:Enable()
-		end
-
-		bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-		bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-		bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
-
-		-- Role Updating
-		bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-		local _, class = UnitClass("player")
-		if class == "WARRIOR" then -- Handle Gladiator Stance
-			bwFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
-		end
-		RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
-
-		bwFrame:RegisterEvent("CHAT_MSG_ADDON")
-		RegisterAddonMessagePrefix("BigWigs")
-		RegisterAddonMessagePrefix("D4") -- DBM
-
-		public.RegisterMessage(self, "BigWigs_CoreEnabled")
-		public.RegisterMessage(self, "BigWigs_CoreDisabled")
-
-		local icon = LibStub("LibDBIcon-1.0", true)
-		if icon and ldb then
-			if not BigWigs3IconDB then BigWigs3IconDB = {} end
-			icon:Register("BigWigs", ldb, BigWigs3IconDB)
-		end
-		public:RegisterTooltipInfo(versionTooltipFunc)
-
-		public.RegisterMessage(self, "BigWigs_CoreOptionToggled", "UpdateDBMFaking")
-		if BigWigs3DB then
-			-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
-			if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
-				local name = UnitName("player")
-				local realm = GetRealmName()
-				if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
-					local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
-					self.isFakingDBM = key.fakeDBMVersion
-					self.isShowingZoneMessages = key.showZoneMessages
-				end
-			end
-			-- Cleanup function.
-			-- TODO: look into having a way for our boss modules not to create a table when no options are changed.
-			if BigWigs3DB.namespaces then
-				for k,v in next, BigWigs3DB.namespaces do
-					if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
-						BigWigs3DB.namespaces[k] = nil
-					end
-				end
-			end
-		end
-		self:UpdateDBMFaking(nil, "fakeDBMVersion", self.isFakingDBM)
-
-		self:GROUP_ROSTER_UPDATE()
-		self:ZONE_CHANGED_NEW_AREA()
-		bwFrame:UnregisterEvent("PLAYER_LOGIN")
-		self.PLAYER_LOGIN = nil
 	end
+
+	for _, index in next, loadOnWorldBoss do
+		local menu = tonumber(GetAddOnMetadata(index, "X-BigWigs-Menu"))
+		if menu then
+			if not loadOnZone[menu] then loadOnZone[menu] = {} end
+			if not menus[menu] then menus[menu] = true end
+		end
+		local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-WorldBoss")
+		if zones then
+			iterateWorldBosses(index, menu, strsplit(",", zones))
+		end
+	end
+end
+
+function mod:PLAYER_LOGIN()
+	bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+	bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
+
+	-- Role Updating
+	bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+	local _, class = UnitClass("player")
+	if class == "WARRIOR" then -- Handle Gladiator Stance
+		bwFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
+	end
+	RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
+
+	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
+	RegisterAddonMessagePrefix("BigWigs")
+	RegisterAddonMessagePrefix("D4") -- DBM
+
+	public.RegisterMessage(self, "BigWigs_CoreEnabled")
+	public.RegisterMessage(self, "BigWigs_CoreDisabled")
+
+	local icon = LibStub("LibDBIcon-1.0", true)
+	if icon and ldb then
+		if not BigWigs3IconDB then BigWigs3IconDB = {} end
+		icon:Register("BigWigs", ldb, BigWigs3IconDB)
+	end
+	public:RegisterTooltipInfo(versionTooltipFunc)
+
+	public.RegisterMessage(self, "BigWigs_CoreOptionToggled", "UpdateDBMFaking")
+	if BigWigs3DB then
+		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
+		if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
+			local name = UnitName("player")
+			local realm = GetRealmName()
+			if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
+				local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
+				self.isFakingDBM = key.fakeDBMVersion
+				self.isShowingZoneMessages = key.showZoneMessages
+			end
+		end
+		-- Cleanup function.
+		-- TODO: look into having a way for our boss modules not to create a table when no options are changed.
+		if BigWigs3DB.namespaces then
+			for k,v in next, BigWigs3DB.namespaces do
+				if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
+					BigWigs3DB.namespaces[k] = nil
+				end
+			end
+		end
+	end
+	self:UpdateDBMFaking(nil, "fakeDBMVersion", self.isFakingDBM)
+
+	self:GROUP_ROSTER_UPDATE()
+	self:ZONE_CHANGED_NEW_AREA()
+	bwFrame:UnregisterEvent("PLAYER_LOGIN")
+	self.PLAYER_LOGIN = nil
 end
 
 -- Various temporary printing stuff
