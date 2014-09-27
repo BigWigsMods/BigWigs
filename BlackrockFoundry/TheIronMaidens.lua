@@ -66,6 +66,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
 
 	self:Log("SPELL_AURA_APPLIED", "IronWill", 159336)
 	-- Gar'an
@@ -268,21 +269,25 @@ function mod:SanguineStrikes(args)
 	self:Message(args.spellId, "Important", "Warning")
 end
 
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 70628 then -- Permanent Feign Death
+		local mobId = self:MobId(UnitGUID(unit))
+		if mobId == 77477 then -- Marak
+			self:StopBar(159724) -- Blood Ritual
+			self:StopBar(158010) -- Heartseeker
+			self:StopBar(156601) -- Sanguine Strikes
+		elseif mobId == 77557 then -- Gar'an
+			self:StopBar(156631) -- Rapid Fire
+			self:StopBar(164271) -- Penetrating Shot
+			self:StopBar(158599) -- Deploy Turret
+		elseif mobId == 77231 then -- Sorka
+			self:StopBar(155794) -- Blade Dash
+			self:StopBar(156109) -- Convulsive Shadows
+		end
+	end
+end
 
 function mod:Deaths(args)
-	local mobId = args.mobId
-	if mobId == 77477 then -- Marak
-		self:StopBar(159724) -- Blood Ritual
-		self:StopBar(158010) -- Heartseeker
-		self:StopBar(156601) -- Sanguine Strikes
-	elseif mobId == 77557 then -- Gar'an
-		self:StopBar(156631) -- Rapid Fire
-		self:StopBar(164271) -- Penetrating Shot
-		self:StopBar(158599) -- Deploy Turret
-	elseif mobId == 77231 then -- Sorka
-		self:StopBar(155794) -- Blade Dash
-		self:StopBar(156109) -- Convulsive Shadows
-	end
 	bossDeaths = bossDeaths + 1
 	if bossDeaths > 2 then
 		self:Win()
