@@ -36,6 +36,7 @@ ignore:
   - Sounds/Long.wav
   - Sounds/Alarm.wav
   - Sounds/Alert.wav
-  - Sounds/VictoryClassic_Orig.mp3
+  - Sounds/VictoryClassic.wav
   - Sounds/12345_countdown_source.wav
   - Sounds/12345_countdown_license.txt
+  - Sounds/Info.mp3
