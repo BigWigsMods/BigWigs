@@ -10,13 +10,13 @@ local bwFrame = CreateFrame("Frame")
 local REPO = "REPO"
 local ALPHA = "ALPHA"
 local RELEASE = "RELEASE"
-local BIGWIGS_RELEASE_TYPE, MY_BIGWIGS_REVISION
+local BIGWIGS_RELEASE_TYPE, MY_BIGWIGS_REVISION, BIGWIGS_RELEASE_STRING
 
 do
 	-- START: MAGIC WOWACE VOODOO VERSION STUFF
 	local releaseType = RELEASE
-	local myRevision = nil
-	local releaseString = nil
+	local myRevision = 1
+	local releaseString = ""
 	--@alpha@
 	-- The following code will only be present in alpha ZIPs.
 	releaseType = ALPHA
@@ -42,7 +42,7 @@ do
 	end
 	BIGWIGS_RELEASE_TYPE = releaseType
 	MY_BIGWIGS_REVISION = myRevision
-	public.BIGWIGS_RELEASE_STRING = releaseString
+	BIGWIGS_RELEASE_STRING = releaseString
 	-- END: MAGIC WOWACE VOODOO VERSION STUFF
 end
 
@@ -904,6 +904,10 @@ function public:RegisterTooltipInfo(func)
 	tooltipFunctions[#tooltipFunctions+1] = func
 end
 
+function public:GetReleaseString()
+	return BIGWIGS_RELEASE_STRING
+end
+
 function public:GetZoneMenus()
 	return menus
 end
@@ -979,7 +983,10 @@ SlashCmdList.BigWigs = loadCoreAndOpenOptions
 
 SLASH_BigWigsVersion1 = "/bwv"
 SlashCmdList.BigWigsVersion = function()
-	if not IsInGroup() then return end
+	if not IsInGroup() then
+		sysprint(BIGWIGS_RELEASE_STRING)
+		return
+	end
 
 	local function coloredNameVersion(name, version, alpha)
 		if version == -1 then
