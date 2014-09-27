@@ -44,9 +44,9 @@ function mod:GetOptions()
 	return {
 		154960, "custom_off_pinned_marker", 154975,
 		{155061, "TANK"}, 155198,
-		{155030, "TANK"}, 154989, {154981, "HEALER"}, "custom_off_conflag_marker", {155499, "FLASH"}, {155657, "FLASH"},
+		{155030, "TANK"}, {154989, "FLASH"}, {154981, "HEALER"}, "custom_off_conflag_marker", 155499, 155657,
 		{155236, "TANK"}, 155222, 155247,
-		155284, {159044, "FLASH"}, 155826,
+		155284, 159044, 155826,
 		"stages", "proximity", "berserk", "bosskill",
 	}, {
 		[154960] = -9298, -- Stage 1
@@ -224,11 +224,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		tantrumCount = tantrumCount + 1
 		self:CDBar(155222, 26, CL.count:format(spellName, tantrumCount))
 	elseif spellId == 155520 then -- Darmac's Tantrum
-		self:Message(155222, "Attention", nil, CL.count:format(tantrumCount))
+		self:Message(155222, "Attention", nil, CL.count:format(spellName, tantrumCount))
 		tantrumCount = tantrumCount + 1
 		self:CDBar(155222, 23, CL.count:format(spellName, tantrumCount))
 	elseif spellId == 155497 then -- Superheated Shrapnel
-		self:Message(155499, "Urgent", nil, CL.incoming:format(spellName))
+		self:Message(155499, "Urgent")
 		self:CDBar(155499, 25)
 	elseif spellId == 159044 or spellId == 162277 then -- Epicenter (Faultline/Darmac)
 		self:Message(159044, "Attention")
@@ -288,9 +288,7 @@ do
 	local pinnedList, scheduled = mod:NewTargetList(), nil
 	local function warnSpear(spellId)
 		if #pinnedList > 0 then
-			mod:TargetMessage(spellId, pinnedList, "Important", "Alarm", nil, true)
-		else
-			mod:Message(spellId, "Attention")
+			mod:TargetMessage(spellId, pinnedList, "Important", "Alarm", nil, nil, true)
 		end
 		scheduled = nil
 	end
@@ -321,18 +319,16 @@ end
 -- Stage 2
 
 do
-	local scheduled = nil
-	local function reset() scheduled = nil end
-
+	local prev = 0
 	function mod:RendAndTear(args)
 		if self:Tank(args.destName) then
 			local amount = args.amount or 1
 			self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
 		end
-		if not scheduled then
-			-- XXX can hit multiple people at staggered times :\ SPELL_CAST_SUCCESS triggers multiple times, too
+		local t = GetTime()
+		if t-prev > 10 then -- XXX can hit multiple people at staggered times
 			self:CDBar(args.spellId, 12) -- 12-16
-			scheduled = self:ScheduleTimer(reset, 10)
+			prev = t
 		end
 	end
 end
@@ -351,8 +347,9 @@ do
 	function mod:InfernoBreathDamage(args)
 		local t = GetTime()
 		if t-prev > 3 and self:Me(args.destGUID) then
+			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+			self:Flash(args.spellId)
 			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -414,7 +411,6 @@ do
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then
 			self:Message(159044, "Personal", "Alarm", CL.underyou:format(args.spellName))
-			self:Flash(159044)
 			prev = t
 		end
 	end
@@ -428,7 +424,6 @@ do
 		local t = GetTime()
 		if t-prev > 3 and self:Me(args.destGUID) then
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
-			self:Flash(args.spellId)
 			prev = t
 		end
 	end
@@ -440,7 +435,6 @@ do
 		local t = GetTime()
 		if t-prev > 3 and self:Me(args.destGUID) then
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
-			self:Flash(args.spellId)
 			prev = t
 		end
 	end

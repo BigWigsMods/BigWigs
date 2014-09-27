@@ -154,7 +154,6 @@ end
 --
 
 function mod:StartTrainTimer(lane, count)
-	if self:LFR() then return end
 	local data = self:Mythic() and trainDataMythic or trainData
 	local info = data and data[lane][count]
 	if not info then
