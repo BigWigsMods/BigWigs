@@ -42,7 +42,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		154960, "custom_off_pinned_marker", 154975,
+		{154960, "SAY"}, "custom_off_pinned_marker", 154975,
 		{155061, "TANK"}, 155198,
 		{155030, "TANK"}, {154989, "FLASH"}, {154981, "HEALER"}, "custom_off_conflag_marker", 155499, 155657,
 		{155236, "TANK"}, 155222, 155247,
@@ -63,8 +63,8 @@ function mod:OnBossEnable()
 
 	-- Stage 1
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
-	self:Log("SPELL_AURA_APPLIED", "PinDownApplied", 154960)
-	self:Log("SPELL_SUMMON", "PinDownSpear", 154956)
+	self:Log("SPELL_AURA_APPLIED", "PinnedDown", 154960)
+	self:Log("SPELL_SUMMON", "SpearSummon", 154956)
 	self:Log("SPELL_CAST_START", "CallThePack", 154975)
 
 	-- Stage 2
@@ -293,8 +293,11 @@ do
 		scheduled = nil
 	end
 
-	function mod:PinDownApplied(args)
+	function mod:PinnedDown(args)
 		pinnedList[#pinnedList+1] = args.destName
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId, 155365) -- Pin Down
+		end
 		if not spearList[args.sourceGUID] then
 			spearList[args.sourceGUID] = true
 			if self.db.profile.custom_off_pinned_marker and not markTimer then
@@ -303,7 +306,7 @@ do
 		end
 	end
 
-	function mod:PinDownSpear(args)
+	function mod:SpearSummon(args)
 		if not scheduled then
 			self:CDBar(154960, 20)
 			scheduled = self:ScheduleTimer(warnSpear, 0.2, 154960)
@@ -313,7 +316,7 @@ end
 
 function mod:CallThePack(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 20) -- 20-30
+	self:CDBar(args.spellId, 31.5) -- can be delayed
 end
 
 -- Stage 2
@@ -391,7 +394,7 @@ end
 
 function mod:Stampede(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 20)
+	self:CDBar(args.spellId, 20)
 end
 
 function mod:CrushArmor(args)
