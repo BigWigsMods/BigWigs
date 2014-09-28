@@ -98,7 +98,7 @@ function mod:ExpelMagicFire(args)
 end
 
 function mod:ExpelMagicFrost(args)
-	self:Message(args.spellId, "Attention") --, self:Dispeller("MAGIC") and "Info"
+	self:Message(args.spellId, "Attention") --, self:Dispeller("magic") and "Info"
 end
 
 function mod:SuppressionField(msg, sender, _, _, target)

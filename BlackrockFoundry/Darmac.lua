@@ -361,7 +361,7 @@ do
 	local conflagList, conflagMark, scheduled = mod:NewTargetList(), 8, nil
 
 	local function warnConflag(spellId)
-		mod:TargetMessage(spellId, conflagList, "Urgent", mod:Dispeller("MAGIC") and "Info")
+		mod:TargetMessage(spellId, conflagList, "Urgent", mod:Dispeller("magic") and "Info")
 		scheduled = nil
 	end
 

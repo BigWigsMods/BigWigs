@@ -215,7 +215,7 @@ do
 end
 
 function mod:Slow(args)
-	if self:Dispeller("MAGIC", nil, args.spellId) then
+	if self:Dispeller("magic", nil, args.spellId) then
 		self:TargetMessage(args.spellId, args.destName, "Attention", "Alert", nil, true)
 	end
 end
