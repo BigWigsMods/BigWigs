@@ -52,9 +52,9 @@ function mod:GetOptions()
 	return {
 		"bombardment", {158683, "FLASH"},
 		{156626, "ICON", "FLASH"}, {164271, "ICON"}, 158599,
-		155794, 156109, 156007, 158315,
+		155794, {156109, "DISPEL"}, 158315,
 		159724, {158010, "FLASH"}, "custom_off_heartseeker_marker", 156601,
-		159336, "stages", "bosskill"
+		159336, "bosskill"
 	}, {
 		["bombardment"] = -10019, -- Dreadnaught
 		[156626] = garan, -- Gar'an
@@ -70,6 +70,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "IronWill", 159336)
 	-- Gar'an
+	self:RegisterEvent("RAID_BOSS_WHISPER")
 	self:Log("SPELL_AURA_APPLIED", "RapidFire", 156631)
 	self:Log("SPELL_AURA_APPLIED", "PenetratingShot", 164271)
 	self:Log("SPELL_CAST_START", "DeployTurret", 158599)
@@ -115,15 +116,16 @@ do
 			if power == 1 then
 				self:Bar("bombardment", 88, 158849, "inv_elemental_primal_fire") -- Warming Up
 			elseif power == 0 then
-				self:StopBar(158849)
+				self:StopBar(158849) -- Warming Up
+				self:StopBar(L.bombardment)
 			end
 		else
 			local power = UnitPower(unit)
 			if power == prev then return end
 			if power == 30 or power == 100 then
-				self:Message("stages", "Neutral", "Info", L.power_message:format(power), false)
+				self:Message(159336, "Neutral", "Info", L.power_message:format(power), false)
 			end
-			power = prev
+			prev = power
 		end
 	end
 end
@@ -164,13 +166,12 @@ function mod:Ship(msg, sender)
 end
 
 function mod:BombardmentAlpha(args)
-	self:Message("bombardment", "Urgent", nil, args.spellId)
+	self:Message("bombardment", "Neutral", nil, args.spellId)
 	self:CDBar("bombardment", 18, L.bombardment, L.bombardment_icon)
 end
 
 function mod:BombardmentOmega(args)
-	self:Message("bombardment", "Urgent", nil, args.spellId)
-	self:StopBar(L.bombardment)
+	self:Message("bombardment", "Neutral", nil, args.spellId)
 end
 
 do
@@ -187,12 +188,19 @@ end
 
 -- Gar'an
 
+function mod:RAID_BOSS_WHISPER(_, msg, sender)
+	if msg:find("156626", nil, true) then
+		local text = CL.you:format(self:SpellName(156631))
+		self:Message(156631, "Personal", "Alarm", text)
+		self:Bar(156631, 10.5, text)
+		self:Flash(156631)
+	end
+end
+
 function mod:RapidFire(args)
 	self:PrimaryIcon(args.spellId, args.destName)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
-	self:TargetBar(args.spellId, 8, args.destName)
-	if self:Me(args.spellId) then
-		self:Flash(args.spellId)
+	if not self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Urgent")
 	end
 	self:Bar(args.spellId, 31.6)
 end
@@ -221,20 +229,26 @@ function mod:BladeDash(args)
 end
 
 function mod:ConvulsiveShadows(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent")
-	self:Bar(args.spellId, 46)
+	if self:Dispeller("magic", nil, 156109) then
+		if isOnABoat() then
+			boatTimers[args.spellId] = GetTime() + 46
+			return
+		end
+		self:TargetMessage(args.spellId, args.destName, "Urgent")
+		self:Bar(args.spellId, 46)
+	end
 end
 
 function mod:DarkHunt(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention")
 	self:TargetBar(args.spellId, 8, args.destName)
-	--13.3 
+	--self:Bar(args.spellId, 13) --13.3 14.5
 end
 
 -- Marak
 
 function mod:BloodRitual(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert")
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Alert")
 	self:Bar(args.spellId, 12)
 end
 
@@ -250,7 +264,7 @@ do
 			self:TargetBar(args.spellId, 5, args.destName)
 			self:Flash(args.spellId)
 		end
-		if self.profile.custom_off_heartseeker_marker then
+		if self.db.profile.custom_off_heartseeker_marker then
 			SetRaidTarget(args.destName, #targets)
 		end
 		if not scheduled then
@@ -259,7 +273,7 @@ do
 		end
 	end
 	function mod:HeartseekerRemoved(args)
-		if self.profile.custom_off_heartseeker_marker then
+		if self.db.profile.custom_off_heartseeker_marker then
 			SetRaidTarget(args.destName, 0)
 		end
 	end
