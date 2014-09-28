@@ -66,7 +66,7 @@ end
 do
 	local vineList, vineTargets, isOnMe, scheduled = mod:NewTargetList(), {}, nil, nil
 	local function warnVines(spellId)
-		mod:TargetMessage(spellId, vineList, "Urgent", mod:Dispeller("MAGIC") and "Alert", nil, nil, true)
+		mod:TargetMessage(spellId, vineList, "Urgent", mod:Dispeller("magic") and "Alert", nil, nil, true)
 		if not isOnMe then
 			mod:OpenProximity(spellId, 8, vineTargets)
 			mod:ScheduleTimer("CloseProximity", 8, spellId)
