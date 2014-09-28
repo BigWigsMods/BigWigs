@@ -4,7 +4,7 @@
 ## Title-deDE: Big Wigs [|cffeda55fHighmaul|r]
 ## Title-esES: Big Wigs [|cffeda55fHighmaul|r]
 ## Title-esMX: Big Wigs [|cffeda55fHighmaul|r]
-## Title-frFR: Big Wigs [|cffeda55fHighmaul|r]
+## Title-frFR: Big Wigs [|cffeda55fCognefort|r]
 ## Title-ruRU: Big Wigs [|cffeda55fВерховный Молот|r]
 ## Title-zhCN: Big Wigs [|cffeda55f悬槌堡|r]
 ## Title-zhTW: Big Wigs [|cffeda55fHighmaul|r]
@@ -15,7 +15,7 @@
 ## Notes-deDE: Big Wigs Modules for Highmaul.
 ## Notes-esES: Big Wigs Modules for Highmaul.
 ## Notes-esMX: Big Wigs Modules for Highmaul.
-## Notes-frFR: Modules Big Wigs concernant le Highmaul.
+## Notes-frFR: Modules Big Wigs concernant Cognefort.
 ## Notes-ruRU: Модуль Big Wigs для Верховного Молота.
 ## Notes-zhCN: Big Wigs 悬槌堡模块。
 ## Notes-zhTW: Big Wigs Highmaul 模組。
