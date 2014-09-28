@@ -342,7 +342,7 @@ function mod:SavageHowl(args)
 end
 
 function mod:InfernoBreath()
-	self:Message(154989, "Urgent", nil, CL.incoming:format(self:SpellName(154989)))
+	self:Message(154989, "Urgent", "Alert", CL.incoming:format(self:SpellName(154989)))
 end
 
 do
@@ -361,7 +361,7 @@ do
 	local conflagList, conflagMark, scheduled = mod:NewTargetList(), 8, nil
 
 	local function warnConflag(spellId)
-		mod:TargetMessage(spellId, conflagList, "Urgent", mod:Dispeller("MAGIC") and "Alert")
+		mod:TargetMessage(spellId, conflagList, "Urgent", mod:Dispeller("MAGIC") and "Info")
 		scheduled = nil
 	end
 
