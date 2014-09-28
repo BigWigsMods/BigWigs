@@ -32,7 +32,7 @@ local trainData = {
 		{ 27, "train"},
 		{ 77, "train"},
 		{122, "adds_train", 3},
-		{183, "train"},
+		{187, "train"},
 		{197, "train"},
 		{227, "train"},
 		{252, "big_add_train", 4},
@@ -41,13 +41,13 @@ local trainData = {
 		{372, "adds_train", 3},
 	},
 	[3] = {
-		{ 48, "train"},
+		{ 47, "train"},
 		{ 82, "big_add_train"},
 		{122, "adds_train", 2},
 		{217, "train"},
 		{277, "train"},
 		{372, "big_add_train", 2},
-		{385, "train"},
+		{387, "train"},
 	},
 	[4] = {
 		{ 17, "train"},
@@ -56,15 +56,49 @@ local trainData = {
 		{197, "adds_train"},
 		{252, "cannon_train", 2},
 		{307, "cannon_train", 1},
+		{417, "cannon_train"},
 	},
+	-- really wish I recorded this attempt ;[
+	--{442, "train"},
+	--{457, "big_add_train"},
+	--{467, "train"},
 }
 
 local trainDataMythic = {
-	-- better way to do random trains?
-	[1] = {},
-	[2] = {},
-	[3] = {},
-	[4] = {},
+	-- covers 3min of the fight
+	[1] = {
+		{ 18, "deforester"},
+		{ 62, "random"},
+		{ 78, "cannon_train", 4},
+		{158, "train"},
+		{173, "random"},
+		{194, "random"},
+	},
+	[2] = {
+		{ 23, "train"},
+		{ 62, "random"},
+		{ 83, "train"},
+		{113, "train"},
+		{133, "adds_train", 3},
+		{173, "random"},
+		{194, "random"},
+	},
+	[3] = {
+		{ 37, "train"},
+		{ 62, "random"},
+		{ 98, "train"},
+		{133, "adds_train", 2},
+		{173, "random"},
+		{194, "random"},
+	},
+	[4] = {
+		{ 12, "big_add_train"},
+		{ 62, "random"},
+		{ 78, "cannon_train", 1},
+		{158, "train"},
+		{173, "random"},
+		{194, "random"},
+	},
 }
 
 --------------------------------------------------------------------------------
@@ -73,10 +107,6 @@ local trainDataMythic = {
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.cauterizing_bolt, L.cauterizing_bolt_desc = EJ_GetSectionInfo(9544)
-	L.cauterizing_bolt_icon = "Ability_Mage_FireStarter"
-	L.cauterizing_bolt_message = "Your focus is casting Cauterizing Bolt!"
-
 	L.custom_off_firemender_marker = "Grom'kar Firemender marker"
 	L.custom_off_firemender_marker_desc = "Marks Firemenders with {rt1}{rt2}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the mobs is the fastest way to mark them.|r"
 	L.custom_off_firemender_marker_icon = 1
@@ -101,7 +131,6 @@ if L then
 	L.random_icon = "ability_foundryraid_traindeath"
 end
 L = mod:GetLocale()
-L.cauterizing_bolt_desc = CL.focus_only..L.cauterizing_bolt_desc
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -110,7 +139,7 @@ L.cauterizing_bolt_desc = CL.focus_only..L.cauterizing_bolt_desc
 function mod:GetOptions()
 	return {
 		--156494, 164380,
-		163753, "cauterizing_bolt", {159481, "ICON", "FLASH"}, --, "custom_off_firemender_marker"
+		163753, 160140, {159481, "ICON", "FLASH"}, --, "custom_off_firemender_marker"
 		{155921, "TANK"}, {155864, "FLASH"}, {"trains", "FLASH"}, "bosskill",
 	}, {
 		[156494] = "mythic",
@@ -171,7 +200,11 @@ end
 function mod:StartTrainTimer(lane, count)
 	local data = self:Mythic() and trainDataMythic or trainData
 	local info = data and data[lane][count]
-	if not info then return end
+	if not info then
+		-- all out of lane data, just announce every yell
+		self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "TrainYell")
+		return
+	end
 
 	local time, type = unpack(info)
 	local length = floor(time - (GetTime() - engageTime))
@@ -183,6 +216,12 @@ function mod:StartTrainTimer(lane, count)
 	end
 	self:ScheduleTimer(checkLane, length, lane) -- gives you ~2s to move
 	self:ScheduleTimer("StartTrainTimer", length, lane, count+1)
+end
+
+function mod:TrainYell(_, _, sender)
+	if sender == L.train then
+		self:DelayedMessage("trains", 4.5, "Attention", CL.incoming:format(L.train), false) -- Incoming Train!
+	end
 end
 
 -- Mythic
@@ -218,9 +257,7 @@ function mod:IronBellow(args)
 end
 
 function mod:CauterizingBolt(args)
-	if UnitGUID("focus") == args.sourceGUID then
-		self:Message("cauterizing_bolt", "Personal", "Alert", L.cauterizing_bolt_message, L.cauterizing_bolt_icon)
-	end
+	self:Message(args.spellId, "Important", "Alert")
 end
 
 function mod:DelayedSiegeBomb(args)
