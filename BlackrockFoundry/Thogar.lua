@@ -177,11 +177,11 @@ function mod:StartTrainTimer(lane, count)
 	local length = floor(time - (GetTime() - engageTime))
 	if type ~= "random" or lane == 1 then -- only one bar for random trains
 		if type ~= "train" then -- no messages for the fast moving trains
-			self:DelayedMessage("trains", length-3, "Attention", CL.incoming:format(L[type]), false) -- Incoming Adds train!
+			self:DelayedMessage("trains", length, "Attention", CL.incoming:format(L[type]), false) -- Incoming Adds train!
 		end
 		self:CDBar("trains", length, L.lane:format(type ~= "random" and lane or "?", L[type]), L[type.."_icon"]) -- Lane 1: Adds train
 	end
-	self:ScheduleTimer(checkLane, length-1, lane) -- gives you ~2s to move
+	self:ScheduleTimer(checkLane, length, lane) -- gives you ~2s to move
 	self:ScheduleTimer("StartTrainTimer", length, lane, count+1)
 end
 
@@ -225,10 +225,12 @@ end
 
 function mod:DelayedSiegeBomb(args)
 	self:PrimaryIcon(args.spellId, args.destName)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Alarm")
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+		self:TargetBar(args.spellId, 6, args.destName)
 		self:Flash(args.spellId)
 	end
+	--self:Bar(args.spellId, 12) -- until cannon train leaves
 end
 
 function mod:Deaths(args)
