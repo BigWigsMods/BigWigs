@@ -857,7 +857,7 @@ do
 		local unitX, unitY = UnitPosition(proximityPlayer)
 		local dx = unitX - srcX
 		local dy = unitY - srcY
-		local range = (dx * dx + dy * dy) ^ 0.5
+		local range = dx * dx + dy * dy
 		setDot(-dy, -dx, blipList[1])
 		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(0, 1, 0)
