@@ -657,12 +657,19 @@ do
 		end
 	end
 
-	-- XXX compat, cleanup
-	local sqrt = sqrt
 	function boss:Range(player, otherPlayer)
-		if isWOD and not otherPlayer then
-			local squaredPos = UnitDistanceSquared(player)
-			return squaredPos == 0 and 200 or sqrt(squaredPos)
+		if isWOD then -- XXX compat, cleanup
+			if not otherPlayer then
+				local squaredPos = UnitDistanceSquared(player)
+				return squaredPos == 0 and 200 or squaredPos^0.5
+			else
+				local tx, ty = UnitPosition(player)
+				local px, py = UnitPosition(otherPlayer)
+				local dx = tx - px
+				local dy = ty - py
+				local distance = (dx * dx + dy * dy) ^ 0.5
+				return distance
+			end
 		end
 
 		if not activeMap then return 200 end
