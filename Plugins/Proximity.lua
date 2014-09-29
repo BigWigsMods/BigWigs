@@ -43,7 +43,7 @@ local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 
 local inConfigMode = nil
-local activeRange = nil
+local activeRange = 0
 local activeSpellID = nil
 local activeMap = nil
 local proximityPlayer = nil
@@ -56,6 +56,7 @@ local anchor, updater = nil, nil
 -- Upvalues
 local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
 local GetPlayerMapPosition, GetCurrentMapDungeonLevel, GetPlayerFacing = GetPlayerMapPosition, GetCurrentMapDungeonLevel, GetPlayerFacing
+local UnitPosition = UnitPosition
 local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetNumGroupMembers, GetTime
 local IsInRaid, InCombatLockdown = IsInRaid, InCombatLockdown
 local UnitIsDead, UnitIsUnit, UnitClass = UnitIsDead, UnitIsUnit, UnitClass
@@ -277,60 +278,6 @@ local mapData = {
 	TimelessIsle = {
 		{ 2400,1600 },
 	},
-
-	--[[ Warlords of Draenor ]]--
-	Gorgrond = {
-		{ 8177.08203125,5450.0 },
-	},
-	SpiresOfArak = {
-		{ 6060.416015625,4039.5830078125 },
-	},
-	DraenorAuchindoun = {
-		{ 1102.5,735.0 },
-	},
-	OgreMines = {
-		{ 1387.5,925.0 },
-	},
-	BlackrockTrainDepotDungeon = {
-		{ 318.75,212.5 },
-		{ 318.75,212.5 },
-		{ 295.0,196.666748046875 },
-		{ 270.0,180.0 },
-	},
-	IronDocks = {
-		{ 1132.5,755.0 },
-	},
-	ShadowmoonDungeon = {
-		{ 658.75,439.166748046875 },
-		{ 825.0,550.0 },
-		{ 250.0,166.666748046875 },
-	},
-	SpiresofArakDungeon = {
-		{ 792.5054931640625,528.3370361328125 },
-		{ 337.5,225.0 },
-	},
-	OvergrownOutpost = {
-		{1418.75,945.833984375 },
-	},
-	UpperBlackrockSpire = {
-		{ 886.8390140533447,591.2260131835938 },
-		{ 886.8390140533447,591.2260131835938 },
-		{ 886.8390140533447,591.2260131835938 },
-	},
-	HighmaulRaid = {
-		{ 247.5,165.0 },
-		{ 400.0,266.66650390625 },
-		{ 660.0,440.0 },
-		{ 937.5,625.0 },
-		{ 862.5,575.0 },
-	},
-	FoundryRaid = {
-		{ 937.75,625.1667213439941 },
-		{ 802.5,535.0 },
-		{ 562.5,375.0 },
-		{ 688.7607421875,459.1739807128906 },
-		{ 450.62109375,300.4139709472656 },
-	},
 }
 
 --------------------------------------------------------------------------------
@@ -520,6 +467,10 @@ do
 		anchor.playerDot:Show()
 	end
 
+	--------------------------------------------------------------------------------
+	-- Normal Proximity
+	--
+
 	function normalProximity()
 		local srcX, srcY = GetPlayerMapPosition("player")
 		if srcX == 0 and srcY == 0 then
@@ -576,6 +527,51 @@ do
 		end
 	end
 
+	function normalProximityWOD() -- XXX compat
+		local anyoneClose = 0
+
+		local srcX, srcY = UnitPosition("player")
+		for i = 1, maxPlayers do
+			local n = unitList[i]
+			local unitX, unitY = UnitPosition(n)
+			local dx = unitX - srcX
+			local dy = unitY - srcY
+			local range = (dx * dx + dy * dy) ^ 0.5
+			if range < activeRange*1.5 then
+				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
+					setDot(-dy, -dx, blipList[i])
+					if range <= activeRange then
+						anyoneClose = anyoneClose + 1
+					end
+				elseif blipList[i].isShown then -- A unit may die next to us
+					blipList[i]:Hide()
+					blipList[i].isShown = nil
+				end
+			elseif blipList[i].isShown then
+				blipList[i]:Hide()
+				blipList[i].isShown = nil
+			end
+		end
+
+		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+
+		if anyoneClose == 0 then
+			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+		else
+			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			if not db.sound then return end
+			local t = GetTime()
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
+			end
+		end
+	end
+
+	--------------------------------------------------------------------------------
+	-- Target Proximity
+	--
+
 	function targetProximity()
 		local srcX, srcY = GetPlayerMapPosition("player")
 		if srcX == 0 and srcY == 0 then
@@ -611,6 +607,32 @@ do
 			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 0)
 		end
 	end
+
+	function targetProximityWOD() -- XXX compat
+		local srcX, srcY = UnitPosition("player")
+		local unitX, unitY = UnitPosition(proximityPlayer)
+
+		local dx = unitX - srcX
+		local dy = unitY - srcY
+		local range = (dx * dx + dy * dy) ^ 0.5
+		setDot(-dy, -dx, blipList[1])
+		if range <= activeRange then
+			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			local t = GetTime()
+			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
+			end
+			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 1)
+		else
+			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 0)
+		end
+	end
+
+	--------------------------------------------------------------------------------
+	-- Multi Target Proximity
+	--
 
 	function multiTargetProximity()
 		local srcX, srcY = GetPlayerMapPosition("player")
@@ -656,6 +678,40 @@ do
 			end
 		end
 	end
+
+	function multiTargetProximityWOD() -- XXX compat
+		local anyoneClose = 0
+
+		local srcX, srcY = UnitPosition("player")
+		for i = 1, #proximityPlayerTable do
+			local player = proximityPlayerTable[i]
+			local unitX, unitY = UnitPosition(player)
+			local dx = unitX - srcX
+			local dy = unitY - srcY
+			local range = (dx * dx + dy * dy) ^ 0.5
+			setDot(-dy, -dx, blipList[i])
+			if range <= activeRange then
+				anyoneClose = anyoneClose + 1
+			end
+		end
+
+		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+
+		if anyoneClose == 0 then
+			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+		else
+			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			local t = GetTime()
+			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
+			end
+		end
+	end
+
+	--------------------------------------------------------------------------------
+	-- Reverse Proximity
+	--
 
 	function reverseProximity()
 		local srcX, srcY = GetPlayerMapPosition("player")
@@ -713,6 +769,51 @@ do
 		end
 	end
 
+	function reverseProximityWOD() -- XXX compat
+		local anyoneClose = 0
+
+		local srcX, srcY = UnitPosition("player")
+		for i = 1, maxPlayers do
+			local n = unitList[i]
+			local unitX, unitY = UnitPosition(n)
+			local dx = unitX - srcX
+			local dy = unitY - srcY
+			local range = (dx * dx + dy * dy) ^ 0.5
+			if range < (activeRange * 1.5) then
+				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
+					setDot(-dy, -dx, blipList[i])
+					if range <= activeRange then
+						anyoneClose = anyoneClose + 1
+					end
+				elseif blipList[i].isShown then -- A unit may die next to us
+					blipList[i]:Hide()
+					blipList[i].isShown = nil
+				end
+			elseif blipList[i].isShown then
+				blipList[i]:Hide()
+				blipList[i].isShown = nil
+			end
+		end
+
+		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+
+		if anyoneClose == 0 then
+			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			if not db.sound then return end
+			local t = GetTime()
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
+			end
+		else
+			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+		end
+	end
+
+	--------------------------------------------------------------------------------
+	-- Reverse Target Proximity
+	--
+
 	function reverseTargetProximity()
 		local srcX, srcY = GetPlayerMapPosition("player")
 		if srcX == 0 and srcY == 0 then
@@ -749,6 +850,31 @@ do
 		end
 	end
 
+	function reverseTargetProximityWOD() -- XXX compat
+		local srcX, srcY = UnitPosition("player")
+		local unitX, unitY = UnitPosition(proximityPlayer)
+		local dx = unitX - srcX
+		local dy = unitY - srcY
+		local range = (dx * dx + dy * dy) ^ 0.5
+		setDot(-dy, -dx, blipList[1])
+		if range <= activeRange then
+			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 1)
+		else
+			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			local t = GetTime()
+			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
+			end
+			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 0)
+		end
+	end
+
+	--------------------------------------------------------------------------------
+	-- Reverse Multi Target Proximity
+	--
+
 	function reverseMultiTargetProximity()
 		local srcX, srcY = GetPlayerMapPosition("player")
 		if srcX == 0 and srcY == 0 then
@@ -775,6 +901,31 @@ do
 			local dy = (unitY - srcY) * id[2]
 			local range = (dx * dx + dy * dy) ^ 0.5
 			setDot(dx, dy, blipList[i])
+			if range <= activeRange then
+				anyoneClose = anyoneClose + 1
+			end
+		end
+
+		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+
+		if anyoneClose == 0 then
+			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+		else
+			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+		end
+	end
+
+	function reverseMultiTargetProximityWOD() -- XXX compat
+		local anyoneClose = 0
+
+		local srcX, srcY = UnitPosition("player")
+		for i = 1, #proximityPlayerTable do
+			local player = proximityPlayerTable[i]
+			local unitX, unitY = UnitPosition(player)
+			local dx = unitX - srcX
+			local dy = unitY - srcY
+			local range = (dx * dx + dy * dy) ^ 0.5
+			setDot(-dy, -dx, blipList[i])
 			if range <= activeRange then
 				anyoneClose = anyoneClose + 1
 			end
@@ -1237,7 +1388,7 @@ function plugin:Close()
 		end
 	end
 
-	activeRange = nil
+	activeRange = 0
 	activeSpellID = nil
 	activeMap = nil
 	proximityPlayer = nil
@@ -1259,7 +1410,7 @@ function plugin:Open(range, module, key, player, isReverse)
 	SetMapToCurrentZone()
 	local mapName = GetMapInfo()
 	activeMap = mapData[mapName]
-	if not activeMap then print("No map data!") return end
+	if not activeMap and not BigWigs.isWOD then print("No map data!") return end -- XXX compat
 
 	activeRange = range
 	anchor:RegisterEvent("GROUP_ROSTER_UPDATE")
@@ -1268,7 +1419,7 @@ function plugin:Open(range, module, key, player, isReverse)
 	updateBlipIcons()
 
 	if not player and not isReverse then
-		updater:SetScript("OnLoop", normalProximity)
+		updater:SetScript("OnLoop", BigWigs.isWOD and normalProximityWOD or normalProximity) -- XXX compat
 		makeThingsWork()
 	elseif player then
 		breakThings()
@@ -1282,9 +1433,9 @@ function plugin:Open(range, module, key, player, isReverse)
 				end
 			end
 			if isReverse then
-				updater:SetScript("OnLoop", reverseMultiTargetProximity)
+				updater:SetScript("OnLoop", BigWigs.isWOD and reverseMultiTargetProximityWOD or reverseMultiTargetProximity) -- XXX compat
 			else
-				updater:SetScript("OnLoop", multiTargetProximity)
+				updater:SetScript("OnLoop", BigWigs.isWOD and multiTargetProximityWOD or multiTargetProximity) -- XXX compat
 			end
 		else
 			for i = 1, GetNumGroupMembers() do
@@ -1295,13 +1446,13 @@ function plugin:Open(range, module, key, player, isReverse)
 			end
 			if not proximityPlayer then self:Close() end -- Not found e.g. Mirror Image
 			if isReverse then
-				updater:SetScript("OnLoop", reverseTargetProximity)
+				updater:SetScript("OnLoop", BigWigs.isWOD and reverseTargetProximityWOD or reverseTargetProximity) -- XXX compat
 			else
-				updater:SetScript("OnLoop", targetProximity)
+				updater:SetScript("OnLoop", BigWigs.isWOD and targetProximityWOD or targetProximity) -- XXX compat
 			end
 		end
 	elseif isReverse then
-		updater:SetScript("OnLoop", reverseProximity)
+		updater:SetScript("OnLoop", BigWigs.isWOD and reverseProximityWOD or reverseProximity) -- XXX compat
 		makeThingsWork()
 	end
 
