@@ -56,10 +56,10 @@ if L then
 
 	L.lane = "%s번째 라인 : %s"
 	L.train = "기차"
-	L.adds_train = "기차 추가"
-	L.big_add_train = "큰 기차 추가"
+	L.adds_train = "쫄 기차"
+	L.big_add_train = "큰 쫄 기차"
 	L.cannon_train = "대포 기차"
-	--L.random = "Random trains"
+	L.random = "무작위 기차"
 end
 
 L = BigWigs:NewBossLocale("The Iron Maidens", "koKR")
