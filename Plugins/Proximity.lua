@@ -36,7 +36,7 @@ local db = nil
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 plugin.displayName = L.proximity_name
-local proximityTitle = L.proximityTitle
+local L_proximityTitle = L.proximityTitle
 
 local media = LibStub("LibSharedMedia-3.0")
 
@@ -497,11 +497,11 @@ do
 			local unitX, unitY = GetPlayerMapPosition(n)
 			local dx = (unitX - srcX) * id[1]
 			local dy = (unitY - srcY) * id[2]
-			local range = (dx * dx + dy * dy) ^ 0.5
-			if range < (activeRange * 1.5) then
+			local range = dx * dx + dy * dy
+			if range < activeRangeSquared*2.5 then
 				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[i])
-					if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
+					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
 					end
 				elseif blipList[i].isShown then -- A unit may die next to us
@@ -514,7 +514,7 @@ do
 			end
 		end
 
-		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
 			proxCircle:SetVertexColor(0, 1, 0)
@@ -539,7 +539,7 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			if range < activeRangeSquared*1.5 then
+			if range < activeRangeSquared*2.5 then
 				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
 					setDot(-dy, -dx, blipList[i])
 					if range <= activeRangeSquared then
@@ -555,7 +555,7 @@ do
 			end
 		end
 
-		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
 			proxCircle:SetVertexColor(0, 1, 0)
@@ -594,19 +594,19 @@ do
 		local unitX, unitY = GetPlayerMapPosition(proximityPlayer)
 		local dx = (unitX - srcX) * id[1]
 		local dy = (unitY - srcY) * id[2]
-		local range = (dx * dx + dy * dy) ^ 0.5
+		local range = dx * dx + dy * dy
 		setDot(dx, dy, blipList[1])
-		if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
+		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
-			proxTitle:SetFormattedText(proximityTitle, activeRange, 1)
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
 		else
 			proxCircle:SetVertexColor(0, 1, 0)
-			proxTitle:SetFormattedText(proximityTitle, activeRange, 0)
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 0)
 		end
 	end
 
@@ -616,19 +616,19 @@ do
 
 		local dx = unitX - srcX
 		local dy = unitY - srcY
-		local range = (dx * dx + dy * dy) ^ 0.5
+		local range = dx * dx + dy * dy
 		setDot(-dy, -dx, blipList[1])
-		if range <= activeRange then
+		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
-			proxTitle:SetFormattedText(proximityTitle, activeRange, 1)
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
 		else
 			proxCircle:SetVertexColor(0, 1, 0)
-			proxTitle:SetFormattedText(proximityTitle, activeRange, 0)
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 0)
 		end
 	end
 
@@ -660,14 +660,14 @@ do
 			local unitX, unitY = GetPlayerMapPosition(player)
 			local dx = (unitX - srcX) * id[1]
 			local dy = (unitY - srcY) * id[2]
-			local range = (dx * dx + dy * dy) ^ 0.5
+			local range = dx * dx + dy * dy
 			setDot(dx, dy, blipList[i])
-			if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
+			if range <= activeRangeSquared then
 				anyoneClose = anyoneClose + 1
 			end
 		end
 
-		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
 			proxCircle:SetVertexColor(0, 1, 0)
@@ -690,14 +690,14 @@ do
 			local unitX, unitY = UnitPosition(player)
 			local dx = unitX - srcX
 			local dy = unitY - srcY
-			local range = (dx * dx + dy * dy) ^ 0.5
+			local range = dx * dx + dy * dy
 			setDot(-dy, -dx, blipList[i])
-			if range <= activeRange then
+			if range <= activeRangeSquared then
 				anyoneClose = anyoneClose + 1
 			end
 		end
 
-		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
 			proxCircle:SetVertexColor(0, 1, 0)
@@ -739,11 +739,11 @@ do
 			local unitX, unitY = GetPlayerMapPosition(n)
 			local dx = (unitX - srcX) * id[1]
 			local dy = (unitY - srcY) * id[2]
-			local range = (dx * dx + dy * dy) ^ 0.5
-			if range < (activeRange * 1.5) then
+			local range = dx * dx + dy * dy
+			if range < activeRangeSquared*2.5 then
 				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[i])
-					if range <= activeRange then
+					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
 					end
 				elseif blipList[i].isShown then -- A unit may die next to us
@@ -756,7 +756,7 @@ do
 			end
 		end
 
-		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
 			proxCircle:SetVertexColor(1, 0, 0)
@@ -780,11 +780,11 @@ do
 			local unitX, unitY = UnitPosition(n)
 			local dx = unitX - srcX
 			local dy = unitY - srcY
-			local range = (dx * dx + dy * dy) ^ 0.5
-			if range < (activeRange * 1.5) then
+			local range = dx * dx + dy * dy
+			if range < activeRangeSquared*2.5 then
 				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
 					setDot(-dy, -dx, blipList[i])
-					if range <= activeRange then
+					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
 					end
 				elseif blipList[i].isShown then -- A unit may die next to us
@@ -797,7 +797,7 @@ do
 			end
 		end
 
-		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
 			proxCircle:SetVertexColor(1, 0, 0)
@@ -836,11 +836,11 @@ do
 		local unitX, unitY = GetPlayerMapPosition(proximityPlayer)
 		local dx = (unitX - srcX) * id[1]
 		local dy = (unitY - srcY) * id[2]
-		local range = (dx * dx + dy * dy) ^ 0.5
+		local range = dx * dx + dy * dy
 		setDot(dx, dy, blipList[1])
-		if range <= activeRange then
+		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(0, 1, 0)
-			proxTitle:SetFormattedText(proximityTitle, activeRange, 1)
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
 		else
 			proxCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
@@ -848,7 +848,7 @@ do
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
-			proxTitle:SetFormattedText(proximityTitle, activeRange, 0)
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 0)
 		end
 	end
 
@@ -859,9 +859,9 @@ do
 		local dy = unitY - srcY
 		local range = (dx * dx + dy * dy) ^ 0.5
 		setDot(-dy, -dx, blipList[1])
-		if range <= activeRange then
+		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(0, 1, 0)
-			proxTitle:SetFormattedText(proximityTitle, activeRange, 1)
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
 		else
 			proxCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
@@ -869,7 +869,7 @@ do
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
-			proxTitle:SetFormattedText(proximityTitle, activeRange, 0)
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 0)
 		end
 	end
 
@@ -901,14 +901,14 @@ do
 			local unitX, unitY = GetPlayerMapPosition(player)
 			local dx = (unitX - srcX) * id[1]
 			local dy = (unitY - srcY) * id[2]
-			local range = (dx * dx + dy * dy) ^ 0.5
+			local range = dx * dx + dy * dy
 			setDot(dx, dy, blipList[i])
-			if range <= activeRange then
+			if range <= activeRangeSquared then
 				anyoneClose = anyoneClose + 1
 			end
 		end
 
-		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
 			proxCircle:SetVertexColor(1, 0, 0)
@@ -933,7 +933,7 @@ do
 			end
 		end
 
-		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
 			proxCircle:SetVertexColor(1, 0, 0)
@@ -1086,7 +1086,7 @@ do
 		proxAnchor.sound = sound
 
 		local header = proxAnchor:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-		header:SetFormattedText(proximityTitle, 5, 3)
+		header:SetFormattedText(L_proximityTitle, 5, 3)
 		header:SetPoint("BOTTOM", proxAnchor, "TOP", 0, 4)
 		proxAnchor.title = header
 		proxTitle = header
@@ -1398,7 +1398,7 @@ function plugin:Close()
 	proximityPlayer = nil
 	wipe(proximityPlayerTable)
 
-	proxTitle:SetFormattedText(proximityTitle, 5, 3)
+	proxTitle:SetFormattedText(L_proximityTitle, 5, 3)
 	proxAnchor.ability:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName)
 	-- Just in case we were the last target of configure mode, reset the background color.
 	proxAnchor.background:SetTexture(0, 0, 0, 0.3)
