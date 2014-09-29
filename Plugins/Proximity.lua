@@ -36,6 +36,7 @@ local db = nil
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 plugin.displayName = L.proximity_name
+local proximityTitle = L.proximityTitle
 
 local media = LibStub("LibSharedMedia-3.0")
 
@@ -43,7 +44,7 @@ local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 
 local inConfigMode = nil
-local activeRange = 0
+local activeRange, activeRangeSquared = 0, 0
 local activeSpellID = nil
 local activeMap = nil
 local proximityPlayer = nil
@@ -51,7 +52,8 @@ local proximityPlayerTable = {}
 local maxPlayers = 0
 local unitList = nil
 local blipList = {}
-local anchor, updater = nil, nil
+local updater = nil
+local proxAnchor, proxTitle, proxCircle = nil, nil, nil
 
 -- Upvalues
 local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
@@ -285,8 +287,8 @@ local mapData = {
 --
 
 local function updateSoundButton()
-	if not anchor then return end
-	anchor.sound:SetNormalTexture(db.sound and unmute or mute)
+	if not proxAnchor then return end
+	proxAnchor.sound:SetNormalTexture(db.sound and unmute or mute)
 end
 local function toggleSound()
 	db.sound = not db.sound
@@ -313,10 +315,10 @@ local function onResize(self, width, height)
 	if inConfigMode then
 		testDots()
 	else
-		local width, height = anchor:GetWidth(), anchor:GetHeight()
+		local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
 		local range = activeRange and activeRange or 10
 		local pixperyard = min(width, height) / (range*3)
-		anchor.rangeCircle:SetSize(range*2*pixperyard, range*2*pixperyard)
+		proxCircle:SetSize(range*2*pixperyard, range*2*pixperyard)
 	end
 end
 
@@ -331,24 +333,24 @@ end
 local locked = nil
 local function lockDisplay()
 	if locked then return end
-	anchor:SetMovable(false)
-	anchor:SetResizable(false)
-	anchor:RegisterForDrag()
-	anchor:SetScript("OnSizeChanged", nil)
-	anchor:SetScript("OnDragStart", nil)
-	anchor:SetScript("OnDragStop", nil)
-	anchor.drag:Hide()
+	proxAnchor:SetMovable(false)
+	proxAnchor:SetResizable(false)
+	proxAnchor:RegisterForDrag()
+	proxAnchor:SetScript("OnSizeChanged", nil)
+	proxAnchor:SetScript("OnDragStart", nil)
+	proxAnchor:SetScript("OnDragStop", nil)
+	proxAnchor.drag:Hide()
 	locked = true
 end
 local function unlockDisplay()
 	if not locked then return end
-	anchor:SetMovable(true)
-	anchor:SetResizable(true)
-	anchor:RegisterForDrag("LeftButton")
-	anchor:SetScript("OnSizeChanged", onResize)
-	anchor:SetScript("OnDragStart", onDragStart)
-	anchor:SetScript("OnDragStop", onDragStop)
-	anchor.drag:Show()
+	proxAnchor:SetMovable(true)
+	proxAnchor:SetResizable(true)
+	proxAnchor:RegisterForDrag("LeftButton")
+	proxAnchor:SetScript("OnSizeChanged", onResize)
+	proxAnchor:SetScript("OnDragStart", onDragStart)
+	proxAnchor:SetScript("OnDragStop", onDragStop)
+	proxAnchor.drag:Show()
 	locked = nil
 end
 
@@ -367,31 +369,31 @@ local function onNormalClose()
 end
 
 local function breakThings()
-	anchor.sound:SetScript("OnEnter", nil)
-	anchor.sound:SetScript("OnLeave", nil)
-	anchor.sound:SetScript("OnClick", nil)
-	anchor.close:SetScript("OnEnter", nil)
-	anchor.close:SetScript("OnLeave", nil)
-	anchor.close:SetScript("OnClick", nil)
+	proxAnchor.sound:SetScript("OnEnter", nil)
+	proxAnchor.sound:SetScript("OnLeave", nil)
+	proxAnchor.sound:SetScript("OnClick", nil)
+	proxAnchor.close:SetScript("OnEnter", nil)
+	proxAnchor.close:SetScript("OnLeave", nil)
+	proxAnchor.close:SetScript("OnClick", nil)
 end
 
 local function makeThingsWork()
-	anchor.sound:SetScript("OnEnter", onControlEnter)
-	anchor.sound:SetScript("OnLeave", onControlLeave)
-	anchor.sound:SetScript("OnClick", toggleSound)
-	anchor.close:SetScript("OnEnter", onControlEnter)
-	anchor.close:SetScript("OnLeave", onControlLeave)
-	anchor.close:SetScript("OnClick", onNormalClose)
+	proxAnchor.sound:SetScript("OnEnter", onControlEnter)
+	proxAnchor.sound:SetScript("OnLeave", onControlLeave)
+	proxAnchor.sound:SetScript("OnClick", toggleSound)
+	proxAnchor.close:SetScript("OnEnter", onControlEnter)
+	proxAnchor.close:SetScript("OnLeave", onControlLeave)
+	proxAnchor.close:SetScript("OnClick", onNormalClose)
 end
 
 function plugin:RestyleWindow()
 	updateSoundButton()
 	for k, v in next, db.objects do
-		if anchor[k] then
+		if proxAnchor[k] then
 			if v then
-				anchor[k]:Show()
+				proxAnchor[k]:Show()
 			else
-				anchor[k]:Hide()
+				proxAnchor[k]:Hide()
 			end
 		end
 	end
@@ -416,7 +418,7 @@ do
 	-- class is player class
 	-- facing is radians with 0 being north, counting up clockwise
 	local setDot = function(dx, dy, blip)
-		local width, height = anchor:GetWidth(), anchor:GetHeight()
+		local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
 		local range = activeRange and activeRange or 10
 		-- range * 3, so we have 3x radius space
 		local pixperyard = min(width, height) / (range * 3)
@@ -441,7 +443,7 @@ do
 		elseif y > (height / 2) then
 			y = (height / 2)
 		end
-		blip:SetPoint("CENTER", anchor, "CENTER", x, y)
+		blip:SetPoint("CENTER", proxAnchor, "CENTER", x, y)
 		if not blip.isShown then
 			blip.isShown = true
 			blip:Show()
@@ -459,12 +461,12 @@ do
 		setDot(3, 10, blipList[3])
 		setDot(-9, -7, blipList[4])
 		setDot(0, 10, blipList[5])
-		local width, height = anchor:GetWidth(), anchor:GetHeight()
+		local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
 		local pixperyard = min(width, height) / 30
-		anchor.rangeCircle:SetSize(pixperyard * 20, pixperyard * 20)
-		anchor.rangeCircle:SetVertexColor(1,0,0)
-		anchor.rangeCircle:Show()
-		anchor.playerDot:Show()
+		proxCircle:SetSize(pixperyard * 20, pixperyard * 20)
+		proxCircle:SetVertexColor(1,0,0)
+		proxCircle:Show()
+		proxAnchor.playerDot:Show()
 	end
 
 	--------------------------------------------------------------------------------
@@ -512,12 +514,12 @@ do
 			end
 		end
 
-		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
-			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+			proxCircle:SetVertexColor(0, 1, 0)
 		else
-			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			proxCircle:SetVertexColor(1, 0, 0)
 			if not db.sound then return end
 			local t = GetTime()
 			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
@@ -536,11 +538,11 @@ do
 			local unitX, unitY = UnitPosition(n)
 			local dx = unitX - srcX
 			local dy = unitY - srcY
-			local range = (dx * dx + dy * dy) ^ 0.5
-			if range < activeRange*1.5 then
+			local range = dx * dx + dy * dy
+			if range < activeRangeSquared*1.5 then
 				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
 					setDot(-dy, -dx, blipList[i])
-					if range <= activeRange then
+					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
 					end
 				elseif blipList[i].isShown then -- A unit may die next to us
@@ -553,12 +555,12 @@ do
 			end
 		end
 
-		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
-			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+			proxCircle:SetVertexColor(0, 1, 0)
 		else
-			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			proxCircle:SetVertexColor(1, 0, 0)
 			if not db.sound then return end
 			local t = GetTime()
 			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
@@ -595,16 +597,16 @@ do
 		local range = (dx * dx + dy * dy) ^ 0.5
 		setDot(dx, dy, blipList[1])
 		if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
-			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			proxCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
-			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 1)
+			proxTitle:SetFormattedText(proximityTitle, activeRange, 1)
 		else
-			anchor.rangeCircle:SetVertexColor(0, 1, 0)
-			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 0)
+			proxCircle:SetVertexColor(0, 1, 0)
+			proxTitle:SetFormattedText(proximityTitle, activeRange, 0)
 		end
 	end
 
@@ -617,16 +619,16 @@ do
 		local range = (dx * dx + dy * dy) ^ 0.5
 		setDot(-dy, -dx, blipList[1])
 		if range <= activeRange then
-			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			proxCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
-			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 1)
+			proxTitle:SetFormattedText(proximityTitle, activeRange, 1)
 		else
-			anchor.rangeCircle:SetVertexColor(0, 1, 0)
-			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 0)
+			proxCircle:SetVertexColor(0, 1, 0)
+			proxTitle:SetFormattedText(proximityTitle, activeRange, 0)
 		end
 	end
 
@@ -665,12 +667,12 @@ do
 			end
 		end
 
-		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
-			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+			proxCircle:SetVertexColor(0, 1, 0)
 		else
-			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			proxCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
@@ -695,12 +697,12 @@ do
 			end
 		end
 
-		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
-			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+			proxCircle:SetVertexColor(0, 1, 0)
 		else
-			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			proxCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
@@ -754,10 +756,10 @@ do
 			end
 		end
 
-		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
-			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			proxCircle:SetVertexColor(1, 0, 0)
 			if not db.sound then return end
 			local t = GetTime()
 			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
@@ -765,7 +767,7 @@ do
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
 		else
-			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+			proxCircle:SetVertexColor(0, 1, 0)
 		end
 	end
 
@@ -795,10 +797,10 @@ do
 			end
 		end
 
-		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
-			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			proxCircle:SetVertexColor(1, 0, 0)
 			if not db.sound then return end
 			local t = GetTime()
 			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
@@ -806,7 +808,7 @@ do
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
 		else
-			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+			proxCircle:SetVertexColor(0, 1, 0)
 		end
 	end
 
@@ -837,16 +839,16 @@ do
 		local range = (dx * dx + dy * dy) ^ 0.5
 		setDot(dx, dy, blipList[1])
 		if range <= activeRange then
-			anchor.rangeCircle:SetVertexColor(0, 1, 0)
-			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 1)
+			proxCircle:SetVertexColor(0, 1, 0)
+			proxTitle:SetFormattedText(proximityTitle, activeRange, 1)
 		else
-			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			proxCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
-			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 0)
+			proxTitle:SetFormattedText(proximityTitle, activeRange, 0)
 		end
 	end
 
@@ -858,16 +860,16 @@ do
 		local range = (dx * dx + dy * dy) ^ 0.5
 		setDot(-dy, -dx, blipList[1])
 		if range <= activeRange then
-			anchor.rangeCircle:SetVertexColor(0, 1, 0)
-			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 1)
+			proxCircle:SetVertexColor(0, 1, 0)
+			proxTitle:SetFormattedText(proximityTitle, activeRange, 1)
 		else
-			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			proxCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
-			anchor.title:SetFormattedText(L.proximityTitle, activeRange, 0)
+			proxTitle:SetFormattedText(proximityTitle, activeRange, 0)
 		end
 	end
 
@@ -906,12 +908,12 @@ do
 			end
 		end
 
-		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
-			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			proxCircle:SetVertexColor(1, 0, 0)
 		else
-			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+			proxCircle:SetVertexColor(0, 1, 0)
 		end
 	end
 
@@ -924,19 +926,19 @@ do
 			local unitX, unitY = UnitPosition(player)
 			local dx = unitX - srcX
 			local dy = unitY - srcY
-			local range = (dx * dx + dy * dy) ^ 0.5
+			local range = dx * dx + dy * dy
 			setDot(-dy, -dx, blipList[i])
-			if range <= activeRange then
+			if range <= activeRangeSquared then
 				anyoneClose = anyoneClose + 1
 			end
 		end
 
-		anchor.title:SetFormattedText(L.proximityTitle, activeRange, anyoneClose)
+		proxTitle:SetFormattedText(proximityTitle, activeRange, anyoneClose)
 
 		if anyoneClose == 0 then
-			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			proxCircle:SetVertexColor(1, 0, 0)
 		else
-			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+			proxCircle:SetVertexColor(0, 1, 0)
 		end
 	end
 end
@@ -999,19 +1001,19 @@ local function updateProfile()
 		db.fontSize = size
 	end
 
-	if anchor then
-		anchor:SetWidth(db.width)
-		anchor:SetHeight(db.height)
+	if proxAnchor then
+		proxAnchor:SetWidth(db.width)
+		proxAnchor:SetHeight(db.height)
 
 		local x = db.posx
 		local y = db.posy
 		if x and y then
-			local s = anchor:GetEffectiveScale()
-			anchor:ClearAllPoints()
-			anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+			local s = proxAnchor:GetEffectiveScale()
+			proxAnchor:ClearAllPoints()
+			proxAnchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 		else
-			anchor:ClearAllPoints()
-			anchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
+			proxAnchor:ClearAllPoints()
+			proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
 		end
 
 		plugin:RestyleWindow()
@@ -1019,10 +1021,10 @@ local function updateProfile()
 end
 
 local function resetAnchor()
-	anchor:ClearAllPoints()
-	anchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
-	anchor:SetWidth(plugin.defaultDB.width)
-	anchor:SetHeight(plugin.defaultDB.height)
+	proxAnchor:ClearAllPoints()
+	proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
+	proxAnchor:SetWidth(plugin.defaultDB.width)
+	proxAnchor:SetHeight(plugin.defaultDB.height)
 	db.posx = nil
 	db.posy = nil
 	db.width = nil
@@ -1041,82 +1043,84 @@ end
 
 do
 	local createAnchor = function()
-		anchor = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
-		anchor:SetWidth(db.width or plugin.defaultDB.width)
-		anchor:SetHeight(db.height or plugin.defaultDB.height)
-		anchor:SetMinResize(100, 30)
-		anchor:SetClampedToScreen(true)
-		anchor:EnableMouse(true)
-		anchor:SetScript("OnEnter", onDisplayEnter)
-		anchor:SetScript("OnLeave", onControlLeave)
-		anchor:SetScript("OnMouseUp", function(self, button)
+		proxAnchor = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
+		proxAnchor:SetWidth(db.width or plugin.defaultDB.width)
+		proxAnchor:SetHeight(db.height or plugin.defaultDB.height)
+		proxAnchor:SetMinResize(100, 30)
+		proxAnchor:SetClampedToScreen(true)
+		proxAnchor:EnableMouse(true)
+		proxAnchor:SetScript("OnEnter", onDisplayEnter)
+		proxAnchor:SetScript("OnLeave", onControlLeave)
+		proxAnchor:SetScript("OnMouseUp", function(self, button)
 			if inConfigMode and button == "LeftButton" then
 				plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
 			end
 		end)
 
-		updater = anchor:CreateAnimationGroup()
+		updater = proxAnchor:CreateAnimationGroup()
 		updater:SetLooping("REPEAT")
 		local anim = updater:CreateAnimation()
 		anim:SetDuration(0.05)
 
-		local bg = anchor:CreateTexture(nil, "BACKGROUND")
-		bg:SetAllPoints(anchor)
+		local bg = proxAnchor:CreateTexture(nil, "BACKGROUND")
+		bg:SetAllPoints(proxAnchor)
 		bg:SetBlendMode("BLEND")
 		bg:SetTexture(0, 0, 0, 0.3)
-		anchor.background = bg
+		proxAnchor.background = bg
 
-		local close = CreateFrame("Button", nil, anchor)
-		close:SetPoint("BOTTOMRIGHT", anchor, "TOPRIGHT", -2, 2)
+		local close = CreateFrame("Button", nil, proxAnchor)
+		close:SetPoint("BOTTOMRIGHT", proxAnchor, "TOPRIGHT", -2, 2)
 		close:SetHeight(16)
 		close:SetWidth(16)
 		close.tooltipHeader = L.close
 		close.tooltipText = L.closeProximityDesc
 		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
-		anchor.close = close
+		proxAnchor.close = close
 
-		local sound = CreateFrame("Button", nil, anchor)
-		sound:SetPoint("BOTTOMLEFT", anchor, "TOPLEFT", 2, 2)
+		local sound = CreateFrame("Button", nil, proxAnchor)
+		sound:SetPoint("BOTTOMLEFT", proxAnchor, "TOPLEFT", 2, 2)
 		sound:SetHeight(16)
 		sound:SetWidth(16)
 		sound.tooltipHeader = L.toggleSound
 		sound.tooltipText = L.toggleSoundDesc
-		anchor.sound = sound
+		proxAnchor.sound = sound
 
-		local header = anchor:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-		header:SetFormattedText(L.proximityTitle, 5, 3)
-		header:SetPoint("BOTTOM", anchor, "TOP", 0, 4)
-		anchor.title = header
+		local header = proxAnchor:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+		header:SetFormattedText(proximityTitle, 5, 3)
+		header:SetPoint("BOTTOM", proxAnchor, "TOP", 0, 4)
+		proxAnchor.title = header
+		proxTitle = header
 
-		local abilityName = anchor:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+		local abilityName = proxAnchor:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 		abilityName:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName)
 		abilityName:SetPoint("BOTTOM", header, "TOP", 0, 4)
-		anchor.ability = abilityName
+		proxAnchor.ability = abilityName
 
-		local rangeCircle = anchor:CreateTexture(nil, "ARTWORK")
+		local rangeCircle = proxAnchor:CreateTexture(nil, "ARTWORK")
 		rangeCircle:SetPoint("CENTER")
 		rangeCircle:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\alert_circle")
 		rangeCircle:SetBlendMode("ADD")
-		anchor.rangeCircle = rangeCircle
+		proxAnchor.rangeCircle = rangeCircle
+		proxCircle = rangeCircle
 
-		local playerDot = anchor:CreateTexture(nil, "OVERLAY")
+		local playerDot = proxAnchor:CreateTexture(nil, "OVERLAY")
 		playerDot:SetSize(32, 32)
 		playerDot:SetTexture("Interface\\Minimap\\MinimapArrow")
 		playerDot:SetBlendMode("ADD")
 		playerDot:SetPoint("CENTER")
-		anchor.playerDot = playerDot
+		proxAnchor.playerDot = playerDot
 
-		local drag = CreateFrame("Frame", nil, anchor)
-		drag.frame = anchor
-		drag:SetFrameLevel(anchor:GetFrameLevel() + 10) -- place this above everything
+		local drag = CreateFrame("Frame", nil, proxAnchor)
+		drag.frame = proxAnchor
+		drag:SetFrameLevel(proxAnchor:GetFrameLevel() + 10) -- place this above everything
 		drag:SetWidth(16)
 		drag:SetHeight(16)
-		drag:SetPoint("BOTTOMRIGHT", anchor, -1, 1)
+		drag:SetPoint("BOTTOMRIGHT", proxAnchor, -1, 1)
 		drag:EnableMouse(true)
 		drag:SetScript("OnMouseDown", OnDragHandleMouseDown)
 		drag:SetScript("OnMouseUp", OnDragHandleMouseUp)
 		drag:SetAlpha(0.5)
-		anchor.drag = drag
+		proxAnchor.drag = drag
 
 		local tex = drag:CreateTexture(nil, "OVERLAY")
 		tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
@@ -1128,26 +1132,26 @@ do
 		local x = db.posx
 		local y = db.posy
 		if x and y then
-			local s = anchor:GetEffectiveScale()
-			anchor:ClearAllPoints()
-			anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+			local s = proxAnchor:GetEffectiveScale()
+			proxAnchor:ClearAllPoints()
+			proxAnchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 		else
-			anchor:ClearAllPoints()
-			anchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
+			proxAnchor:ClearAllPoints()
+			proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
 		end
 
 		plugin:RestyleWindow()
 
-		anchor:Hide()
+		proxAnchor:Hide()
 
 		for i = 1, 40 do
-			local blip = anchor:CreateTexture(nil, "OVERLAY")
+			local blip = proxAnchor:CreateTexture(nil, "OVERLAY")
 			blip:SetSize(16, 16)
 			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
 			blipList[i] = blip
 		end
 
-		anchor:SetScript("OnEvent", function(_, event)
+		proxAnchor:SetScript("OnEvent", function(_, event)
 			if event == "GROUP_ROSTER_UPDATE" then
 				updateBlipColors()
 			else
@@ -1160,7 +1164,7 @@ do
 		-- if BigWigsLoader then
 		--  BigWigsLoader.RegisterMessage(addon, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
 		-- end
-		plugin:SendMessage("BigWigs_FrameCreated", anchor, "Proximity")
+		plugin:SendMessage("BigWigs_FrameCreated", proxAnchor, "Proximity")
 	end
 
 	function plugin:OnPluginEnable()
@@ -1187,7 +1191,7 @@ end
 --
 
 function plugin:BigWigs_StartConfigureMode()
-	if anchor:IsShown() then
+	if proxAnchor:IsShown() then
 		print("Cannot enter configure mode whilst proximity is active.")
 		return
 	end
@@ -1202,9 +1206,9 @@ end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
 	if module == self then
-		anchor.background:SetTexture(0.2, 1, 0.2, 0.3)
+		proxAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
 	else
-		anchor.background:SetTexture(0, 0, 0, 0.3)
+		proxAnchor.background:SetTexture(0, 0, 0, 0.3)
 	end
 end
 
@@ -1378,8 +1382,8 @@ end
 function plugin:Close()
 	updater:Stop()
 
-	anchor:UnregisterEvent("GROUP_ROSTER_UPDATE")
-	anchor:UnregisterEvent("RAID_TARGET_UPDATE")
+	proxAnchor:UnregisterEvent("GROUP_ROSTER_UPDATE")
+	proxAnchor:UnregisterEvent("RAID_TARGET_UPDATE")
 
 	for i = 1, 40 do
 		if blipList[i].isShown then
@@ -1388,17 +1392,17 @@ function plugin:Close()
 		end
 	end
 
-	activeRange = 0
+	activeRange, activeRangeSquared = 0, 0
 	activeSpellID = nil
 	activeMap = nil
 	proximityPlayer = nil
 	wipe(proximityPlayerTable)
 
-	anchor.title:SetFormattedText(L.proximityTitle, 5, 3)
-	anchor.ability:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName)
+	proxTitle:SetFormattedText(proximityTitle, 5, 3)
+	proxAnchor.ability:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName)
 	-- Just in case we were the last target of configure mode, reset the background color.
-	anchor.background:SetTexture(0, 0, 0, 0.3)
-	anchor:Hide()
+	proxAnchor.background:SetTexture(0, 0, 0, 0.3)
+	proxAnchor:Hide()
 end
 
 local abilityNameFormat = "|T%s:20:20:-5|t%s"
@@ -1413,8 +1417,9 @@ function plugin:Open(range, module, key, player, isReverse)
 	if not activeMap and not BigWigs.isWOD then print("No map data!") return end -- XXX compat
 
 	activeRange = range
-	anchor:RegisterEvent("GROUP_ROSTER_UPDATE")
-	anchor:RegisterEvent("RAID_TARGET_UPDATE")
+	activeRangeSquared = range*range
+	proxAnchor:RegisterEvent("GROUP_ROSTER_UPDATE")
+	proxAnchor:RegisterEvent("RAID_TARGET_UPDATE")
 	updateBlipColors()
 	updateBlipIcons()
 
@@ -1456,20 +1461,20 @@ function plugin:Open(range, module, key, player, isReverse)
 		makeThingsWork()
 	end
 
-	local width, height = anchor:GetWidth(), anchor:GetHeight()
+	local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
 	local ppy = min(width, height) / (range * 3)
-	anchor.rangeCircle:SetSize(ppy * range * 2, ppy * range * 2)
+	proxCircle:SetSize(ppy * range * 2, ppy * range * 2)
 
 	-- Update the ability name display
 	if module and key then
 		local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, key)
 		if type(icon) == "string" then
-			anchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", icon, name)
+			proxAnchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", icon, name)
 		else
-			anchor.ability:SetText(name)
+			proxAnchor.ability:SetText(name)
 		end
 	else
-		anchor.ability:SetText(L.customRange)
+		proxAnchor.ability:SetText(L.customRange)
 	end
 	if type(key) == "number" and key > 0 then -- GameTooltip doesn't do "journal" hyperlinks
 		activeSpellID = key
@@ -1478,7 +1483,7 @@ function plugin:Open(range, module, key, player, isReverse)
 	end
 
 	-- Start the show!
-	anchor:Show()
+	proxAnchor:Show()
 	updater:Play()
 end
 
@@ -1488,7 +1493,7 @@ function plugin:Test()
 	-- Break the sound+close buttons
 	breakThings()
 	testDots()
-	anchor:Show()
+	proxAnchor:Show()
 end
 
 -------------------------------------------------------------------------------
