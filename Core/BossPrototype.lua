@@ -657,7 +657,14 @@ do
 		end
 	end
 
+	-- XXX compat, cleanup
+	local sqrt = sqrt
 	function boss:Range(player, otherPlayer)
+		if isWOD and not otherPlayer then
+			local squaredPos = UnitDistanceSquared(player)
+			return squaredPos == 0 and 200 or sqrt(squaredPos)
+		end
+
 		if not activeMap then return 200 end
 
 		SetMapToCurrentZone()
