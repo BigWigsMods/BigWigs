@@ -317,16 +317,16 @@ do
 	function normalProximityWOD() -- XXX compat
 		local anyoneClose = 0
 
-		local srcX, srcY = UnitPosition("player")
+		local srcY, srcX = UnitPosition("player")
 		for i = 1, maxPlayers do
 			local n = unitList[i]
-			local unitX, unitY = UnitPosition(n)
+			local unitY, unitX = UnitPosition(n)
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
 			if range < activeRangeSquared*2.5 then
 				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
-					setDot(-dy, -dx, blipList[i])
+					setDot(-dx, -dy, blipList[i])
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
 					end
@@ -386,13 +386,13 @@ do
 	end
 
 	function targetProximityWOD() -- XXX compat
-		local srcX, srcY = UnitPosition("player")
-		local unitX, unitY = UnitPosition(proximityPlayer)
+		local srcY, srcX = UnitPosition("player")
+		local unitY, unitX = UnitPosition(proximityPlayer)
 
 		local dx = unitX - srcX
 		local dy = unitY - srcY
 		local range = dx * dx + dy * dy
-		setDot(-dy, -dx, blipList[1])
+		setDot(-dx, -dy, blipList[1])
 		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
@@ -449,14 +449,14 @@ do
 	function multiTargetProximityWOD() -- XXX compat
 		local anyoneClose = 0
 
-		local srcX, srcY = UnitPosition("player")
+		local srcY, srcX = UnitPosition("player")
 		for i = 1, #proximityPlayerTable do
 			local player = proximityPlayerTable[i]
-			local unitX, unitY = UnitPosition(player)
+			local unitY, unitX = UnitPosition(player)
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			setDot(-dy, -dx, blipList[i])
+			setDot(-dx, -dy, blipList[i])
 			if range <= activeRangeSquared then
 				anyoneClose = anyoneClose + 1
 			end
@@ -529,16 +529,16 @@ do
 	function reverseProximityWOD() -- XXX compat
 		local anyoneClose = 0
 
-		local srcX, srcY = UnitPosition("player")
+		local srcY, srcX = UnitPosition("player")
 		for i = 1, maxPlayers do
 			local n = unitList[i]
-			local unitX, unitY = UnitPosition(n)
+			local unitY, unitX = UnitPosition(n)
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
 			if range < activeRangeSquared*2.5 then
 				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
-					setDot(-dy, -dx, blipList[i])
+					setDot(-dx, -dy, blipList[i])
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
 					end
@@ -598,12 +598,12 @@ do
 	end
 
 	function reverseTargetProximityWOD() -- XXX compat
-		local srcX, srcY = UnitPosition("player")
-		local unitX, unitY = UnitPosition(proximityPlayer)
+		local srcY, srcX = UnitPosition("player")
+		local unitY, unitX = UnitPosition(proximityPlayer)
 		local dx = unitX - srcX
 		local dy = unitY - srcY
 		local range = dx * dx + dy * dy
-		setDot(-dy, -dx, blipList[1])
+		setDot(-dx, -dy, blipList[1])
 		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(0, 1, 0)
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
@@ -655,14 +655,14 @@ do
 	function reverseMultiTargetProximityWOD() -- XXX compat
 		local anyoneClose = 0
 
-		local srcX, srcY = UnitPosition("player")
+		local srcY, srcX = UnitPosition("player")
 		for i = 1, #proximityPlayerTable do
 			local player = proximityPlayerTable[i]
-			local unitX, unitY = UnitPosition(player)
+			local unitY, unitX = UnitPosition(player)
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			setDot(-dy, -dx, blipList[i])
+			setDot(-dx, -dy, blipList[i])
 			if range <= activeRangeSquared then
 				anyoneClose = anyoneClose + 1
 			end
