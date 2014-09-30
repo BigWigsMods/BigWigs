@@ -1129,8 +1129,12 @@ function plugin:SetMapData()
 			activeMap = map
 			-- silly compat for no reason, some on-demand mapData
 			local mapName = GetMapInfo()
-			if mapName and not mapData[mapName] then
-				mapData[mapName] = { mapWidth, mapHeight }
+			local currentFloor = GetCurrentMapDungeonLevel()
+			if not mapData[mapName] then
+				mapData[mapName] = {}
+			end
+			if not mapData[mapName][currentFloor] then
+				mapData[mapName][currentFloor] = { mapWidth, mapHeight }
 			end
 		end
 	end
