@@ -72,10 +72,20 @@ L.pullIn = "Pull in %d sec"
 L.sendPull = "Sending a pull timer to Big Wigs and DBM users."
 L.sendCustomBar = "Sending custom bar '%s' to Big Wigs and DBM users."
 L.requiresLeadOrAssist = "This function requires raid leader or raid assist."
-L.wrongPullFormat = "Must be between 1 and 60. A correct example is: /pull 5"
+L.wrongPullFormat = "Must be between 1 and 60 seconds. A correct example is: /pull 5"
 L.wrongCustomBarFormat = "Incorrect format. A correct example is: /raidbar 20 text"
 L.wrongTime = "Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."
 L.encounterRestricted = "This function can't be used during an encounter."
+
+L.wrongBreakFormat = "Must be between 1 and 60 minutes. A correct example is: /break 5"
+L.sendBreak = "Sending a break timer to Big Wigs and DBM users."
+L.breakStarted = "Break timer started by %s user %s."
+L.breakStopped = "Break timer cancelled by %s."
+L.breakBar = "Break time"
+L.breakAnnounce = "%g |4minute:minutes; break starts now!"
+L.breakMinutes = "Break ends in %d minutes"
+L.breakSeconds = "Break ends in %d seconds"
+L.breakFinished = "Break time is now over!"
 
 -----------------------------------------------------------------------
 -- Colors.lua

@@ -1045,6 +1045,7 @@ function plugin:OnPluginEnable()
 	-- custom bars
 	BigWigs:AddSyncListener(self, "BWCustomBar", 0)
 	BigWigs:AddSyncListener(self, "BWPull", 0)
+	BigWigs:AddSyncListener(self, "BWBreak", 0)
 	self:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
 
 	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
@@ -1422,16 +1423,16 @@ do
 	function startCustomBar(bar, nick, localOnly, isDBM)
 		if not timers then timers, prevBars = {}, {} end
 
-		local time, barText
+		local seconds, barText
 		if localOnly then
-			time, barText, nick = bar, localOnly, L.localTimer
+			seconds, barText, nick = bar, localOnly, L.localTimer
 		else
 			if prevBars[bar] and GetTime() - prevBars[bar] < 1.2 then return end -- Throttle
 			prevBars[bar] = GetTime()
 			if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) then return end
-			time, barText = bar:match("(%S+) (.*)")
-			time = parseTime(time)
-			if type(time) ~= "number" or type(barText) ~= "string" or time < 0 then
+			seconds, barText = bar:match("(%S+) (.*)")
+			seconds = parseTime(seconds)
+			if type(seconds) ~= "number" or type(barText) ~= "string" or seconds < 0 then
 				return
 			end
 			BigWigs:Print(L.customBarStarted:format(barText, isDBM and "DBM" or "Big Wigs", nick))
@@ -1444,11 +1445,11 @@ do
 		end
 
 		nick = nick:gsub("%-.+", "*") -- Remove server name
-		if time == 0 then
+		if seconds == 0 then
 			plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
 		else
-			timers[id] = plugin:ScheduleTimer("SendMessage", time, "BigWigs_Message", false, false, L.timerFinished:format(nick, barText), "Attention", false, "Interface\\Icons\\INV_Misc_PocketWatch_01")
-			plugin:SendMessage("BigWigs_StartBar", plugin, id, nick..": "..barText, time, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+			timers[id] = plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", false, false, L.timerFinished:format(nick, barText), "Attention", false, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+			plugin:SendMessage("BigWigs_StartBar", plugin, id, nick..": "..barText, seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 		end
 	end
 end
@@ -1469,16 +1470,16 @@ do
 			end
 		end
 	end
-	function startPull(time, nick, isDBM)
-		if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) then return end
-		time = tonumber(time)
-		if not time or time < 0 or time > 60 then return end
-		time = floor(time)
-		if timeLeft == time then return end -- Throttle
-		timeLeft = time
+	function startPull(seconds, nick, isDBM)
+		if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player") then return end -- Solo or leader
+		seconds = tonumber(seconds)
+		if not seconds or seconds < 0 or seconds > 60 then return end
+		seconds = floor(seconds)
+		if timeLeft == seconds then return end -- Throttle
+		timeLeft = seconds
 		if timer then
 			plugin:CancelTimer(timer)
-			if time == 0 then
+			if seconds == 0 then
 				timeLeft = 0
 				BigWigs:Print(L.pullStopped:format(nick))
 				plugin:SendMessage("BigWigs_StopBar", plugin, L.pull)
@@ -1488,24 +1489,89 @@ do
 		BigWigs:Print(L.pullStarted:format(isDBM and "DBM" or "Big Wigs", nick))
 		timer = plugin:ScheduleRepeatingTimer(printPull, 1)
 		plugin:SendMessage("BigWigs_Message", nil, nil, L.pullIn:format(timeLeft), "Attention", "Long")
-		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.pull, time, "Interface\\Icons\\ability_warrior_charge")
+		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.pull, seconds, "Interface\\Icons\\ability_warrior_charge")
 	end
 end
 
-function plugin:OnDBMSync(_, sender, prefix, time, text)
+local startBreak
+do
+	local timerTbl, lastBreak = nil, 0
+	function startBreak(seconds, nick, isDBM)
+		if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player") then return end -- Solo or leader
+		seconds = tonumber(seconds)
+		if not seconds or seconds < 0 or seconds > 3600 or (seconds > 0 and seconds < 60) then return end -- 1h max, 1m min
+
+		local t = GetTime()
+		if t-lastBreak < 0.5 then return else lastBreak = t end -- Throttle
+
+		if timerTbl then
+			for i = 1, 6 do
+				plugin:CancelTimer(timerTbl[i])
+			end
+			if seconds == 0 then
+				timerTbl = nil
+				BigWigs:Print(L.breakStopped:format(nick))
+				plugin:SendMessage("BigWigs_StopBar", plugin, L.breakBar)
+				return
+			end
+		end
+		-- XXX SAVE to DB for restore
+		BigWigs:Print(L.breakStarted:format(isDBM and "DBM" or "Big Wigs", nick))
+		plugin:SendMessage("BigWigs_Message", nil, nil, L.breakAnnounce:format(seconds/60), "Attention", "Long", "Interface\\Icons\\inv_misc_fork&knife")
+		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.breakBar, seconds, "Interface\\Icons\\inv_misc_fork&knife")
+
+		local half = seconds / 2
+		local m = half % 60
+		local halfMin = (half - m) / 60
+		timerTbl = {
+			plugin:ScheduleTimer("SendMessage", half + m, "BigWigs_Message", nil, nil, L.breakMinutes:format(halfMin), "Positive", nil, "Interface\\Icons\\inv_misc_fork&knife"),
+			plugin:ScheduleTimer("SendMessage", seconds - 60, "BigWigs_Message", nil, nil, L.breakMinutes:format(1), "Positive", nil, "Interface\\Icons\\inv_misc_fork&knife"),
+			plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", nil, nil, L.breakSeconds:format(30), "Urgent", nil, "Interface\\Icons\\inv_misc_fork&knife"),
+			plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", nil, nil, L.breakSeconds:format(10), "Urgent", nil, "Interface\\Icons\\inv_misc_fork&knife"),
+			plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", nil, nil, L.breakSeconds:format(5), "Important", nil, "Interface\\Icons\\inv_misc_fork&knife"),
+			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", nil, nil, L.breakFinished, "Important", "Long", "Interface\\Icons\\inv_misc_fork&knife"),
+		}
+	end
+end
+
+local breakTimerHaxxForDBM = {
+	enUS = "Break time!",
+	zhTW = "休息時間!",
+	zhCN = "休息时间！",
+	ptBR = "Intervalo!",
+	deDE = "Pause!",
+	esES = "¡Descanso!",
+	frFR = "Pause !",
+	itIT = "Pausa!",
+	koKR = "쉬는 시간",
+	ruRU = "Перерыв!",
+}
+
+function plugin:OnDBMSync(_, sender, prefix, seconds, text)
 	if prefix == "U" then
-		startCustomBar(time.." "..text, sender, nil, true)
+		local foundBreakString = false
+		for k,v in next, breakTimerHaxxForDBM do
+			if text == v then foundString = true end
+		end
+
+		if foundBreakString then
+			startBreak(seconds, sender, true) -- DBM break timer is hacked into the custom bar functionality ~.~
+		else
+			startCustomBar(seconds.." "..text, sender, nil, true)
+		end
 	elseif prefix == "PT" then
-		startPull(time, sender, true)
+		startPull(seconds, sender, true)
 	end
 end
 
-function plugin:OnSync(sync, rest, nick)
-	if rest and nick then
+function plugin:OnSync(sync, seconds, nick)
+	if seconds and nick then
 		if sync == "BWCustomBar" then
-			startCustomBar(rest, nick)
+			startCustomBar(seconds, nick)
 		elseif sync == "BWPull" then
-			startPull(rest, nick)
+			startPull(seconds, nick)
+		elseif sync == "BWBreak" then
+			startBreak(seconds, nick)
 		end
 	end
 end
@@ -1521,19 +1587,19 @@ do
 
 		if not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player") then BigWigs:Print(L.requiresLeadOrAssist) return end
 
-		local time, barText = input:match("(%S+) (.*)")
-		if not time or not barText then BigWigs:Print(L.wrongCustomBarFormat) return end
+		local seconds, barText = input:match("(%S+) (.*)")
+		if not seconds or not barText then BigWigs:Print(L.wrongCustomBarFormat) return end
 
-		time = parseTime(time)
-		if not time or time < 0 then BigWigs:Print(L.wrongTime) return end
+		seconds = parseTime(seconds)
+		if not seconds or seconds < 0 then BigWigs:Print(L.wrongTime) return end
 
 		if not times then times = {} end
 		local t = GetTime()
 		if not times[input] or (times[input] and (times[input] + 2) < t) then
 			times[input] = t
 			BigWigs:Print(L.sendCustomBar:format(barText))
-			BigWigs:Transmit("BWCustomBar", time, barText)
-			SendAddonMessage("D4", ("U\t%d\t%s"):format(time, barText), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+			BigWigs:Transmit("BWCustomBar", seconds, barText)
+			SendAddonMessage("D4", ("U\t%d\t%s"):format(seconds, barText), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	end
 	SLASH_BIGWIGSRAIDBAR1 = "/raidbar"
@@ -1542,33 +1608,57 @@ end
 SlashCmdList.BIGWIGSLOCALBAR = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 
-	local time, barText = input:match("(%S+) (.*)")
-	if not time or not barText then BigWigs:Print(L.wrongCustomBarFormat:gsub("/raidbar", "/localbar")) return end
+	local seconds, barText = input:match("(%S+) (.*)")
+	if not seconds or not barText then BigWigs:Print(L.wrongCustomBarFormat:gsub("/raidbar", "/localbar")) return end
 
-	time = parseTime(time)
-	if not time then BigWigs:Print(L.wrongTime) return end
+	seconds = parseTime(seconds)
+	if not seconds then BigWigs:Print(L.wrongTime) return end
 
-	startCustomBar(time, UnitName("player"), barText)
+	startCustomBar(seconds, UnitName("player"), barText)
 end
 SLASH_BIGWIGSLOCALBAR1 = "/localbar"
 
 SlashCmdList.BIGWIGSPULL = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
-	if UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then
-		local time = tonumber(input)
-		if not time or time < 0 or time > 60 then BigWigs:Print(L.wrongPullFormat) return end
+	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then -- Solo or leader
+		local seconds = tonumber(input)
+		if not seconds or seconds < 0 or seconds > 60 then BigWigs:Print(L.wrongPullFormat) return end
 
-		if time ~= 0 then
+		if seconds ~= 0 then
 			BigWigs:Print(L.sendPull)
 		end
 		BigWigs:Transmit("BWPull", input)
 
-		local _, _, _, _, _, _, _, mapID = GetInstanceInfo()
-		SendAddonMessage("D4", ("PT\t%s\t%d"):format(input, mapID or 0), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+		if IsInGroup() then
+			local _, _, _, _, _, _, _, mapID = GetInstanceInfo()
+			SendAddonMessage("D4", ("PT\t%s\t%d"):format(input, mapID or 0), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+		end
 	else
 		BigWigs:Print(L.requiresLeadOrAssist)
 	end
 end
 SLASH_BIGWIGSPULL1 = "/pull"
+
+SlashCmdList.BIGWIGSBREAK = function(input)
+	if not plugin:IsEnabled() then BigWigs:Enable() end
+	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
+	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then -- Solo or leader
+		local minutes = tonumber(input)
+		if not minutes or minutes < 0 or minutes > 60 or (minutes > 0 and minutes < 1) then BigWigs:Print(L.wrongBreakFormat) return end -- 1h max, 1m min
+
+		if minutes ~= 0 then
+			BigWigs:Print(L.sendBreak)
+		end
+		local seconds = minutes * 60
+		BigWigs:Transmit("BWBreak", seconds)
+
+		if IsInGroup() then
+			SendAddonMessage("D4", ("U\t%d\t%s"):format(seconds, breakTimerHaxxForDBM[GetLocale()] or breakTimerHaxxForDBM.enUS), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+		end
+	else
+		BigWigs:Print(L.requiresLeadOrAssist)
+	end
+end
+SLASH_BIGWIGSBREAK1 = "/break"
 
