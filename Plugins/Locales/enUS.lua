@@ -83,8 +83,8 @@ L.breakStarted = "Break timer started by %s user %s."
 L.breakStopped = "Break timer cancelled by %s."
 L.breakBar = "Break time"
 L.breakAnnounce = "%g |4minute:minutes; break starts now!"
-L.breakMinutes = "Break ends in %d minutes"
-L.breakSeconds = "Break ends in %d seconds"
+L.breakMinutes = "Break ends in %d |4minute:minutes;!"
+L.breakSeconds = "Break ends in %d |4second:seconds;!"
 L.breakFinished = "Break time is now over!"
 
 -----------------------------------------------------------------------
