@@ -1551,7 +1551,7 @@ function plugin:OnDBMSync(_, sender, prefix, seconds, text)
 	if prefix == "U" then
 		local foundBreakString = false
 		for k,v in next, breakTimerHaxxForDBM do
-			if text == v then foundString = true end
+			if text == v then foundBreakString = true end
 		end
 
 		if foundBreakString then
