@@ -1581,6 +1581,8 @@ function plugin:OnDBMSync(_, sender, prefix, seconds, text)
 		end
 	elseif prefix == "PT" then
 		startPull(seconds, sender, true)
+	elseif prefix == "BT" then
+		startBreak(seconds, sender, true)
 	end
 end
 
@@ -1674,6 +1676,7 @@ SlashCmdList.BIGWIGSBREAK = function(input)
 		BigWigs:Transmit("BWBreak", seconds)
 
 		if IsInGroup() then
+			SendAddonMessage("D4", ("BT\t%d"):format(seconds), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 			SendAddonMessage("D4", ("U\t%d\t%s"):format(seconds, breakTimerHaxxForDBM[GetLocale()] or breakTimerHaxxForDBM.enUS), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	else

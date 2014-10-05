@@ -641,7 +641,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 		local dbmPrefix, arg1, arg2, arg3 = strsplit("\t", msg)
 		if dbmPrefix == "V" or dbmPrefix == "H" then
 			self:DBM_VersionCheck(dbmPrefix, Ambiguate(sender, "none"), arg1, arg2, arg3)
-		elseif dbmPrefix == "U" or dbmPrefix == "PT" or dbmPrefix == "M" then
+		elseif dbmPrefix == "U" or dbmPrefix == "PT" or dbmPrefix == "M" or dbmPrefix == "BT" then
 			public:SendMessage("DBM_AddonMessage", Ambiguate(sender, "none"), dbmPrefix, arg1, arg2, arg3)
 		end
 	end
