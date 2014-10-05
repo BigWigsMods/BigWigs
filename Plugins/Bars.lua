@@ -30,6 +30,8 @@ end
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 plugin.displayName = L.bars
 
+local startBreak -- Break timer function
+
 local colors = nil
 local candy = LibStub("LibCandyBar-3.0")
 local media = LibStub("LibSharedMedia-3.0")
@@ -1058,6 +1060,17 @@ function plugin:OnPluginEnable()
 	else
 		self:SetBarStyle(db.barStyle)
 	end
+
+	local tbl = BigWigs3DB.breakTime
+	if tbl then -- Break time present, resume it
+		local prevTime, seconds, nick, isDBM = tbl[1], tbl[2], tbl[3], tbl[4]
+		local curTime = time()
+		if curTime-prevTime > seconds then
+			BigWigs3DB.breakTime = nil
+		else
+			startBreak(seconds-(curTime-prevTime), nick, isDBM, true)
+		end
+	end
 end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
@@ -1493,29 +1506,35 @@ do
 	end
 end
 
-local startBreak
 do
 	local timerTbl, lastBreak = nil, 0
-	function startBreak(seconds, nick, isDBM)
-		if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player") then return end -- Solo or leader
-		seconds = tonumber(seconds)
-		if not seconds or seconds < 0 or seconds > 3600 or (seconds > 0 and seconds < 60) then return end -- 1h max, 1m min
+	function startBreak(seconds, nick, isDBM, reboot)
+		if not reboot then
+			if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player") then return end -- Solo or leader
+			seconds = tonumber(seconds)
+			if not seconds or seconds < 0 or seconds > 3600 or (seconds > 0 and seconds < 60) then return end -- 1h max, 1m min
 
-		local t = GetTime()
-		if t-lastBreak < 0.5 then return else lastBreak = t end -- Throttle
+			local t = GetTime()
+			if t-lastBreak < 0.5 then return else lastBreak = t end -- Throttle
+		end
 
 		if timerTbl then
-			for i = 1, 6 do
+			for i = 1, 7 do
 				plugin:CancelTimer(timerTbl[i])
 			end
 			if seconds == 0 then
 				timerTbl = nil
+				BigWigs3DB.breakTime = nil
 				BigWigs:Print(L.breakStopped:format(nick))
 				plugin:SendMessage("BigWigs_StopBar", plugin, L.breakBar)
 				return
 			end
 		end
-		-- XXX SAVE to DB for restore
+
+		if not reboot then
+			BigWigs3DB.breakTime = {time(), seconds, nick, isDBM}
+		end
+
 		BigWigs:Print(L.breakStarted:format(isDBM and "DBM" or "Big Wigs", nick))
 		plugin:SendMessage("BigWigs_Message", nil, nil, L.breakAnnounce:format(seconds/60), "Attention", "Long", "Interface\\Icons\\inv_misc_fork&knife")
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.breakBar, seconds, "Interface\\Icons\\inv_misc_fork&knife")
@@ -1530,6 +1549,7 @@ do
 			plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", nil, nil, L.breakSeconds:format(10), "Urgent", nil, "Interface\\Icons\\inv_misc_fork&knife"),
 			plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", nil, nil, L.breakSeconds:format(5), "Important", nil, "Interface\\Icons\\inv_misc_fork&knife"),
 			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", nil, nil, L.breakFinished, "Important", "Long", "Interface\\Icons\\inv_misc_fork&knife"),
+			plugin:ScheduleTimer(function() BigWigs3DB.breakTime = nil timerTbl = nil end, seconds)
 		}
 	end
 end
