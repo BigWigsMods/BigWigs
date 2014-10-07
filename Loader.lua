@@ -657,10 +657,10 @@ do
 	local anim = timer:CreateAnimation()
 	anim:SetDuration(3)
 
-	local hasWarned, hasCritWarned = nil, nil
+	local hasWarned, hasReallyWarned, hasExtremelyWarned = nil, nil, nil
 	local function printOutOfDate(tbl, isAlpha)
-		if hasCritWarned then return end
-		local warnedOutOfDate, warnedExtremelyOutOfDate = 0, 0
+		if hasExtremelyWarned then return end
+		local warnedOutOfDate, warnedReallyOutOfDate, warnedExtremelyOutOfDate = 0, 0, 0
 		for k,v in next, tbl do
 			if (v-isAlpha) > MY_BIGWIGS_REVISION then
 				warnedOutOfDate = warnedOutOfDate + 1
@@ -669,11 +669,19 @@ do
 					sysprint(isAlpha == 10 and L.alphaOutdated or L.newReleaseAvailable)
 				end
 				if ((v-isAlpha) - MY_BIGWIGS_REVISION) > 120 then
-					warnedExtremelyOutOfDate = warnedExtremelyOutOfDate + 1
-					if warnedExtremelyOutOfDate > 1 and not hasCritWarned then
-						hasCritWarned = true
+					warnedReallyOutOfDate = warnedReallyOutOfDate + 1
+					if warnedReallyOutOfDate > 1 and not hasReallyWarned then
+						hasReallyWarned = true
 						sysprint(L.extremelyOutdated)
 						RaidNotice_AddMessage(RaidWarningFrame, L.extremelyOutdated, {r=1,g=1,b=1})
+					end
+					if ((v-isAlpha) - MY_BIGWIGS_REVISION) > 300 then
+						warnedExtremelyOutOfDate = warnedExtremelyOutOfDate + 1
+						if warnedExtremelyOutOfDate > 1 and not hasExtremelyWarned then
+							hasExtremelyWarned = true
+							sysprint(L.severelyOutdated)
+							message(L.severelyOutdated)
+						end
 					end
 				end
 			end
@@ -688,7 +696,7 @@ do
 			end
 			message = tonumber(message)
 			-- XXX The > 13k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
-			if not message or message == 0 or message > 13000 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
+			if not message or message == 0 or message > 13500 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
 			usersRelease[sender] = message
 			usersAlpha[sender] = nil
 			if message > highestReleaseRevision then highestReleaseRevision = message end
@@ -702,7 +710,7 @@ do
 			end
 			message = tonumber(message)
 			-- XXX The > 13k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
-			if not message or message == 0 or message > 13000 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
+			if not message or message == 0 or message > 13500 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
 			if message > highestAlphaRevision then highestAlphaRevision = message end
