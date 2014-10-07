@@ -247,7 +247,7 @@ do
 				local mobId
 				if isWOD then
 					local _, _, _, _, _, id = strsplit("-", destGUID)
-					mobId = tonumber(id) or -1
+					mobId = tonumber(id) or 1
 				else
 					mobId = tonumber(sub(destGUID, 6, 10), 16)
 				end
@@ -448,7 +448,7 @@ do
 					-- XXX compat
 					if isWOD then
 						local _, _, _, _, _, id = strsplit("-", guid)
-						guid = tonumber(id) or -1
+						guid = tonumber(id) or 1
 					else
 						guid = tonumber(sub(guid, 6, 10), 16)
 					end
@@ -606,11 +606,12 @@ function boss:Mythic()
 end
 
 function boss:MobId(guid)
-	if isWOD and guid then -- XXX compat
+	if not guid then return 1 end
+	if isWOD then -- XXX compat
 		local _, _, _, _, _, id = strsplit("-", guid)
-		return tonumber(id) or -1
+		return tonumber(id) or 1
 	else
-		return guid and tonumber(sub(guid, 6, 10), 16) or -1
+		return guid and tonumber(sub(guid, 6, 10), 16) or 1
 	end
 end
 
