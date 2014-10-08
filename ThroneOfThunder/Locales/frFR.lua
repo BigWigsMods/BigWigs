@@ -12,7 +12,7 @@ L = BigWigs:NewBossLocale("Horridon", "frFR")
 if L then
 	L.charge_trigger = "pose les yeux sur"
 	L.door_trigger = "surgissent de la porte"
-	--L.orb_trigger = "charge" -- PLAYERNAME forces Horridon to charge the Farraki door!
+	L.orb_trigger = "enfoncer" -- PLAYERNAME forces Horridon to charge the Farraki door!
 
 	L.chain_lightning_message = "Votre focalisation est entrain d'incanter Chaîne d'éclairs !"
 	L.chain_lightning_bar = "Focalisation : Chaîne d'éclairs"
@@ -43,7 +43,7 @@ if L then
 	L.custom_on_markpossessed = "Marquage du boss possédé"
 	L.custom_on_markpossessed_desc = "Marque le boss possédé à l'aide d'une icône de crâne. Nécessite d'être assistant ou chef de raid."
 
-	--L.priestess_heal = "%s was healed!"
+	L.priestess_heal = "%s a été soigné !"
 	L.assault_stun = "Tank étourdi !"
 	L.assault_message = "Assaut"
 	L.full_power = "Puissance maximale"
@@ -105,7 +105,7 @@ if L then
 	L.custom_off_ray_controllers_desc = "Utile les marqueurs de raid {rt1}{rt7}{rt6} afin de marquer les personnes qui vont contrôler les positions d'apparition de rayon ainsi que leurs mouvements, nécessite d'être assistant ou chef de raid."
 
 	L.custom_off_parasite_marks = "Marquage des Sombres parasites"
-	L.custom_off_parasite_marks_desc = "Afin d'aider les healing assignments, marque les personnes sous l'effet de Sombre parisite avec les marqueurs de raid {rt3}{rt4}{rt5}, nécessite d'être assistant ou chef de raid."
+	L.custom_off_parasite_marks_desc = "Afin d'aider à l'attribution des soins, marque les personnes sous l'effet de Sombre parisite avec les marqueurs de raid {rt3}{rt4}{rt5}, nécessite d'être assistant ou chef de raid."
 
 	L.initial_life_drain = "Incantation initiale de Drain de vie"
 	L.initial_life_drain_desc = "Message de l'incantation initiale de Drain de vie afin d'aider au suivi des affaiblissements de réduction des soins reçus."

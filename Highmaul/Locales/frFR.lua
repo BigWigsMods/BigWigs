@@ -18,25 +18,25 @@ if L then
 	--L.berserker_trigger2 = "Kral'ach" --Kral'ach.... The darkness speaks.... A VOICE!
 	--L.berserker_trigger3 = "Graaagh!" --Graaagh! KAHL...  AHK... RAAHHHH!
 
-	--L.tectus = "Tectus"
-	--L.shard = "Shard"
-	--L.motes = "Motes"
+	L.tectus = "Tectus"
+	L.shard = "Eclat"
+	L.motes = "Granules"
 
-	--L.custom_off_barrage_marker = "Crystalline Barrage marker"
-	--L.custom_off_barrage_marker_desc = "Marks targets of Crystalline Barrage with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
+	L.custom_off_barrage_marker = "Marquage Barrage cristallin"
+	L.custom_off_barrage_marker_desc = "Marque les cibles de Barrage cristallin avec {rt1}{rt2}{rt3}{rt4}{rt5}. Nécessite d'être assistant ou chef de raid."
 
-	--L.adds_desc = "Timers for when new adds enter the fight."
+	L.adds_desc = "Délais indiquant quand de nouveaux renforts se joignent au combat."
 end
 
 L = BigWigs:NewBossLocale("Brackenspore", "frFR")
 if L then
-	--L.creeping_moss_heal = "Creeping Moss under BOSS (healing)"
+	L.creeping_moss_heal = "Mousse rampante sous le BOSS (soigne)"
 end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "frFR")
 if L then
-	--L.custom_off_volatility_marker = "Arcane Volatility marker"
-	--L.custom_off_volatility_marker_desc = "Marks targets of Arcane Volatility with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader."
+	L.custom_off_volatility_marker = "Marquage Volatilité arcanique"
+	L.custom_off_volatility_marker_desc = "Marque les cibles de Volatilité arcanique avec {rt1}{rt2}{rt3}{rt4}. Nécessite d'être assistant ou chef de raid."
 end
 
 L = BigWigs:NewBossLocale("Ko'ragh", "frFR")
@@ -46,12 +46,12 @@ if L then
 	--L.suppression_field_trigger3 = "I will crush you!"
 	--L.suppression_field_trigger4 = "Silence!"
 
-	--L.fire_bar = "Everyone Explodes!"
+	L.fire_bar = "Tout le monde explose !"
 end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "frFR")
 if L then
-	--L.custom_off_fixate_marker = "Fixate Marker"
-	--L.custom_off_fixate_marker_desc = "Mark Gorian Warmage's Fixate targets with {rt1}{rt2}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_fixate_marker = "Marquage Fixer"
+	L.custom_off_fixate_marker_desc = "Marque les cibles de Fixer du Mage de guerre gorien avec {rt1}{rt2}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 end
 

@@ -26,8 +26,8 @@ if L then
 	L.assault_message = "Assauts"
 	L.side_swap = "Changement de côté"
 
-	--L.custom_off_windstep = "Wind step marker"
-	--L.custom_off_windstep_desc = "To help healing assignments, mark the people who have wind step on them with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader."
+	L.custom_off_windstep = "Marquage Pas de vent"
+	L.custom_off_windstep_desc = "Afin d'aider à l'attribution des soins, marque les joueurs affectés par Pas de vent avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}. Nécessite d'être assistant ou chef de raid."
 end
 
 L = BigWigs:NewBossLocale("Garalon", "frFR")

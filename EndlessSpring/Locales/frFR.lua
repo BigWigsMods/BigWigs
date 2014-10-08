@@ -25,7 +25,7 @@ if L then
 	L.special_desc = "Prévient de l'arrivée de la prochaine technique spéciale."
 
 	L.custom_off_addmarker = "Marquage des protecteurs"
-	L.custom_off_addmarker_desc = "Marque les Protecteurs animés lors des Protections de Lei Shi, nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement toutes les protecteurs est le moyen le plus rapide de les marquer.|r"
+	L.custom_off_addmarker_desc = "Marque les Protecteurs animés lors des Protections de Lei Shi. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement toutes les protecteurs est le moyen le plus rapide de les marquer.|r"
 end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "frFR")
@@ -48,7 +48,7 @@ if L then
 	L.strike_or_spout = "Frappe ou Geysérit"
 	L.huddle_or_spout_or_strike = "Recroq. ou Geysérit ou Frappe"
 
-	--L.custom_off_huddle = "Huddle marker"
-	--L.custom_off_huddle_desc = "To help healing assignments, mark the people who have huddle in terror on them with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader."
+	L.custom_off_huddle = "Marquage Recroquevillement"
+	L.custom_off_huddle_desc = "Afin d'aider à l'attribution des soins, marque les joueurs affectés par Recroquevillement de terreur avec {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}. Nécessite d'être assistant ou chef de raid."
 end
 
