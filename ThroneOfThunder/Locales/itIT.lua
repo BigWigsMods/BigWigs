@@ -31,9 +31,7 @@ if L then
 	L.balcony_adds = "Add dal Balcone"
 	L.orb_message = "Globo del Controllo a Terra!"
 
-	--L.puncture_message = "Perforazione Tripla" Commented out since there isnt anymore into Locals, Keep it for lazyness.
- 	L.focus_only = "|cffff0000Avviso solo per il bersaglio Focus.|r "
-
+	L.focus_only = "|cffff0000Avviso solo per il bersaglio Focus.|r "
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "itIT")

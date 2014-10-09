@@ -11,7 +11,7 @@ end
 L = BigWigs:NewBossLocale("Horridon", "esES") or BigWigs:NewBossLocale("Horridon", "esMX")
 if L then
 	L.charge_trigger = "fija la vista" -- Horridon sets his eyes on PLAYERNAME and stamps his tail!
-	--L.door_trigger = "pour" -- Farraki forces pour from the Farraki Tribal Door!
+	L.door_trigger = "salen en tropel" -- Farraki forces pour from the Farraki Tribal Door!
 	--L.orb_trigger = "charge" -- PLAYERNAME forces Horridon to charge the Farraki door!
 
 	L.chain_lightning_message = "¡Tu foco está casteando Cadena de relámpagos!"
@@ -33,7 +33,6 @@ if L then
 	L.door_opened = "¡Puerta abierta!"
 	L.door_bar = "Siguiente Puerta (%d)"
 	L.balcony_adds = "Adds de balcón"
-	L.door_trigger = "salen en tropel" -- "<160.1 21:33:04> CHAT_MSG_RAID_BOSS_EMOTE#Farraki forces pour from the Farraki Tribal Door!#War-God Jalak#####0#0##0#1107#nil#0#false#false", -- [1]
 end
 
 L = BigWigs:NewBossLocale("Council of Elders", "esES") or BigWigs:NewBossLocale("Council of Elders", "esMX")
