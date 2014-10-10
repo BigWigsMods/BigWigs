@@ -106,6 +106,7 @@ local function OnDragHandleMouseUp(self, button) self.frame:StopMovingOrSizing()
 local function onResize(self, width, height)
 	db.width = width
 	db.height = height
+	proxAnchor.tooltipFrame:SetWidth(width)
 	if inConfigMode then
 		testDots()
 	else
@@ -116,11 +117,11 @@ local function onResize(self, width, height)
 	end
 end
 
-local function onDisplayEnter(self)
+local function onHeaderEnter(self)
 	if not db.objects.tooltip then return end
 	if not activeSpellID and not inConfigMode then return end
 	GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
-	GameTooltip:SetHyperlink("spell:" .. (activeSpellID or 44318))
+	GameTooltip:SetHyperlink(format("spell:%d", activeSpellID or 44318))
 	GameTooltip:Show()
 end
 
@@ -163,20 +164,12 @@ local function onNormalClose()
 end
 
 local function breakThings()
-	proxAnchor.sound:SetScript("OnEnter", nil)
-	proxAnchor.sound:SetScript("OnLeave", nil)
 	proxAnchor.sound:SetScript("OnClick", nil)
-	proxAnchor.close:SetScript("OnEnter", nil)
-	proxAnchor.close:SetScript("OnLeave", nil)
 	proxAnchor.close:SetScript("OnClick", nil)
 end
 
 local function makeThingsWork()
-	proxAnchor.sound:SetScript("OnEnter", onControlEnter)
-	proxAnchor.sound:SetScript("OnLeave", onControlLeave)
 	proxAnchor.sound:SetScript("OnClick", toggleSound)
-	proxAnchor.close:SetScript("OnEnter", onControlEnter)
-	proxAnchor.close:SetScript("OnLeave", onControlLeave)
 	proxAnchor.close:SetScript("OnClick", onNormalClose)
 end
 
@@ -784,13 +777,19 @@ do
 		proxAnchor:SetMinResize(100, 30)
 		proxAnchor:SetClampedToScreen(true)
 		proxAnchor:EnableMouse(true)
-		proxAnchor:SetScript("OnEnter", onDisplayEnter)
-		proxAnchor:SetScript("OnLeave", onControlLeave)
 		proxAnchor:SetScript("OnMouseUp", function(self, button)
 			if inConfigMode and button == "LeftButton" then
 				plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
 			end
 		end)
+
+		local dummyTooltipFrame = CreateFrame("Frame", nil, proxAnchor)
+		dummyTooltipFrame:SetWidth(db.width or plugin.defaultDB.width)
+		dummyTooltipFrame:SetHeight(40)
+		dummyTooltipFrame:SetPoint("BOTTOM", proxAnchor, "TOP")
+		dummyTooltipFrame:SetScript("OnEnter", onHeaderEnter)
+		dummyTooltipFrame:SetScript("OnLeave", onControlLeave)
+		proxAnchor.tooltipFrame = dummyTooltipFrame
 
 		updater = proxAnchor:CreateAnimationGroup()
 		updater:SetLooping("REPEAT")
@@ -805,19 +804,25 @@ do
 
 		local close = CreateFrame("Button", nil, proxAnchor)
 		close:SetPoint("BOTTOMRIGHT", proxAnchor, "TOPRIGHT", -2, 2)
+		close:SetFrameLevel(proxAnchor:GetFrameLevel() + 5) -- place this above everything
 		close:SetHeight(16)
 		close:SetWidth(16)
 		close.tooltipHeader = L.close
 		close.tooltipText = L.closeProximityDesc
+		close:SetScript("OnEnter", onControlEnter)
+		close:SetScript("OnLeave", onControlLeave)
 		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
 		proxAnchor.close = close
 
 		local sound = CreateFrame("Button", nil, proxAnchor)
 		sound:SetPoint("BOTTOMLEFT", proxAnchor, "TOPLEFT", 2, 2)
+		sound:SetFrameLevel(proxAnchor:GetFrameLevel() + 5) -- place this above everything
 		sound:SetHeight(16)
 		sound:SetWidth(16)
 		sound.tooltipHeader = L.toggleSound
 		sound.tooltipText = L.toggleSoundDesc
+		sound:SetScript("OnEnter", onControlEnter)
+		sound:SetScript("OnLeave", onControlLeave)
 		proxAnchor.sound = sound
 
 		local header = proxAnchor:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
@@ -847,7 +852,7 @@ do
 
 		local drag = CreateFrame("Frame", nil, proxAnchor)
 		drag.frame = proxAnchor
-		drag:SetFrameLevel(proxAnchor:GetFrameLevel() + 10) -- place this above everything
+		drag:SetFrameLevel(proxAnchor:GetFrameLevel() + 5) -- place this above everything
 		drag:SetWidth(16)
 		drag:SetHeight(16)
 		drag:SetPoint("BOTTOMRIGHT", proxAnchor, -1, 1)
@@ -926,9 +931,8 @@ end
 --
 
 function plugin:BigWigs_StartConfigureMode()
-	if proxAnchor:IsShown() then
-		print("Cannot enter configure mode whilst proximity is active.")
-		return
+	if activeRange > 0 then
+		return -- Pointless trying to start configure mode if proximity has already been opened by a boss encounter.
 	end
 	inConfigMode = true
 	self:Test()
@@ -1246,7 +1250,6 @@ function plugin:Open(range, module, key, player, isReverse)
 end
 
 function plugin:Test()
-	-- Close ourselves in case we entered configure mode DURING a boss fight.
 	self:Close()
 	-- Break the sound+close buttons
 	breakThings()
