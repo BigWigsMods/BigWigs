@@ -1495,7 +1495,7 @@ do
 		end
 	end
 	function startPull(seconds, nick, isDBM)
-		if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player") then return end -- Solo or leader
+		if (not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player")) or IsEncounterInProgress() then return end
 		seconds = tonumber(seconds)
 		if not seconds or seconds < 0 or seconds > 60 then return end
 		seconds = floor(seconds)
@@ -1521,7 +1521,7 @@ do
 	local timerTbl, lastBreak = nil, 0
 	function startBreak(seconds, nick, isDBM, reboot)
 		if not reboot then
-			if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player") then return end -- Solo or leader
+			if (not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player")) or IsEncounterInProgress() then return end
 			seconds = tonumber(seconds)
 			if not seconds or seconds < 0 or seconds > 3600 or (seconds > 0 and seconds < 60) then return end -- 1h max, 1m min
 
@@ -1654,7 +1654,7 @@ SLASH_BIGWIGSLOCALBAR1 = "/localbar"
 SlashCmdList.BIGWIGSPULL = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
-	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then -- Solo or leader
+	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then -- Solo or leader/assist
 		local seconds = tonumber(input)
 		if not seconds or seconds < 0 or seconds > 60 then BigWigs:Print(L.wrongPullFormat) return end
 
@@ -1676,7 +1676,7 @@ SLASH_BIGWIGSPULL1 = "/pull"
 SlashCmdList.BIGWIGSBREAK = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
-	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then -- Solo or leader
+	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then -- Solo or leader/assist
 		local minutes = tonumber(input)
 		if not minutes or minutes < 0 or minutes > 60 or (minutes > 0 and minutes < 1) then BigWigs:Print(L.wrongBreakFormat) return end -- 1h max, 1m min
 
