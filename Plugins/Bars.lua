@@ -847,12 +847,22 @@ do
 			local spacing = currentBarStyler.GetSpacing(bar) or 0
 			bar:ClearAllPoints()
 			if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
-				bar:SetPoint("BOTTOMLEFT", lastUpBar or anchor, "TOPLEFT", 0, spacing)
-				bar:SetPoint("BOTTOMRIGHT", lastUpBar or anchor, "TOPRIGHT", 0, spacing)
+				if lastUpBar then -- Growing from a bar
+					bar:SetPoint("BOTTOMLEFT", lastUpBar, "TOPLEFT", 0, spacing)
+					bar:SetPoint("BOTTOMRIGHT", lastUpBar, "TOPRIGHT", 0, spacing)
+				else -- Growing from the anchor
+					bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT", 0, 0)
+					bar:SetPoint("BOTTOMRIGHT", anchor, "BOTTOMRIGHT", 0, 0)
+				end
 				lastUpBar = bar
 			else
-				bar:SetPoint("TOPLEFT", lastDownBar or anchor, "BOTTOMLEFT", 0, -spacing)
-				bar:SetPoint("TOPRIGHT", lastDownBar or anchor, "BOTTOMRIGHT", 0, -spacing)
+				if lastDownBar then -- Growing from a bar
+					bar:SetPoint("TOPLEFT", lastDownBar, "BOTTOMLEFT", 0, -spacing)
+					bar:SetPoint("TOPRIGHT", lastDownBar, "BOTTOMRIGHT", 0, -spacing)
+				else -- Growing from the anchor
+					bar:SetPoint("TOPLEFT", anchor, "TOPLEFT", 0, 0)
+					bar:SetPoint("TOPRIGHT", anchor, "TOPRIGHT", 0, 0)
+				end
 				lastDownBar = bar
 			end
 		end
@@ -915,6 +925,7 @@ local function createAnchor(frameName, title)
 	display:SetHeight(20)
 	display:SetMinResize(80, 20)
 	display:SetMaxResize(1920, 20)
+	display:SetFrameLevel(20)
 	local bg = display:CreateTexture(nil, "BACKGROUND")
 	bg:SetAllPoints(display)
 	bg:SetBlendMode("BLEND")
