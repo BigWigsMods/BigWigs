@@ -325,7 +325,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(_, msg, _, _, _, target)
 		local name = self:UnitName(target)
 		self:PrimaryIcon(133798, name)
 		self:TargetMessage("initial_life_drain", name, "Urgent", "Long", 133798, nil, true)
-		self:Flash("initial_life_drain", 133798) -- so you can turn on pulse
+		self:Flash("initial_life_drain", 133798)
 
 	elseif msg:find(L["red_spawn_trigger"]) then
 		local sound = (UnitIsUnit("player", redController) or self:Damager()) and "Warning" or nil

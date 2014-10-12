@@ -37,8 +37,8 @@ L.disableDesc = "Permanently disables the boss encounter ability option that spa
 
 L.emphasizeAt = "Emphasize at... (seconds)"
 L.scale = "Scale"
-L.growUpwards = "Grow upwards"
-L.growUpwardsDesc = "Toggle bar growing upwards/downwards from the anchor."
+L.growingUpwards = "Grow upwards"
+L.growingUpwardsDesc = "Toggle growing upwards or downwards from the anchor."
 L.texture = "Texture"
 L.emphasize = "Emphasize"
 L.enable = "Enable"

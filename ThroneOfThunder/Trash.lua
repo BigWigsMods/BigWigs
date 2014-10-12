@@ -127,12 +127,12 @@ do
 		if sync == "MonaraDies" then
 			self:Disable()
 		elseif sync == "MonaraSN" then
-			local id = 139899
-			local name = self:SpellName(id)
-			self:Message(id, "Urgent", "Long", CL["incoming"]:format(name))
-			self:Bar(id, 3, CL["cast"]:format(name))
-			self:Bar(id, 14.4)
-			self:Flash(id)
+			local spellId = 139899
+			local name = self:SpellName(spellId)
+			self:Message(spellId, "Urgent", "Long", CL["incoming"]:format(name))
+			self:Bar(spellId, 3, CL["cast"]:format(name))
+			self:Bar(spellId, 14.4)
+			self:Flash(spellId)
 		end
 	end
 	function mod:ShadowNova(args)

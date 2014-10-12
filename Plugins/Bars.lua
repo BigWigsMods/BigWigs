@@ -737,8 +737,8 @@ do
 						args = {
 							growup = {
 								type = "toggle",
-								name = L.growUpwards,
-								desc = L.growUpwardsDesc,
+								name = L.growingUpwards,
+								desc = L.growingUpwardsDesc,
 								order = 1,
 							},
 							scale = {
@@ -782,8 +782,8 @@ do
 							},
 							emphasizeGrowup = {
 								type = "toggle",
-								name = L.growUpwards,
-								desc = L.growUpwardsDesc,
+								name = L.growingUpwards,
+								desc = L.growingUpwardsDesc,
 								order = 4,
 							},
 							emphasizeTime = {

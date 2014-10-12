@@ -193,7 +193,7 @@ local function checkLane(warnLane)
 
 	if lane == warnLane then
 		mod:PlaySound("trains", "Info")
-		mod:Flash("trains") -- XXX too much?
+		mod:Flash("trains", L.trains_icon) -- XXX too much?
 	end
 end
 

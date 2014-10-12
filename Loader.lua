@@ -455,13 +455,17 @@ do
 
 	local timer = bwFrame:CreateAnimationGroup()
 	timer:SetScript("OnFinished", function()
+		local _, _, _, _, _, _, year = GetAchievementInfo(8482) -- Mythic Garrosh
+		if year == 13 and (L == "enUS" or L == "enGB") then
+			sysprint("We're looking for a new end-game raider to join our developer team! See [goo.gl/aajTfo] for more info.")
+		end
 		for _, msg in ipairs(delayedMessages) do
 			sysprint(msg)
 		end
 		delayedMessages = nil
 	end)
 	local anim = timer:CreateAnimation()
-	anim:SetDuration(5)
+	anim:SetDuration(11)
 	timer:Play()
 end
 
@@ -835,7 +839,7 @@ do
 				warnedThisZone[id] = true
 				local msg = L.missingAddOn:format(zoneAddon)
 				sysprint(msg)
-				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
+				RaidNotice_AddMessage(RaidWarningFrame, msg:gsub("|", "\124"), {r=1,g=1,b=1}) -- XXX wowace packager doesn't keep my escape codes and RW doesn't like pipes :(
 			end
 		end
 	end

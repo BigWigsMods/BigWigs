@@ -81,7 +81,8 @@ plugin.defaultDB = {
 	scale = 1.0,
 	chat = nil,
 	useicons = true,
-	classcolor = true,
+	classcolor = true, -- XXX non-functional
+	growUpwards = nil,
 	emphasizedMessages = {
 		sink20OutputSink = "BigWigsEmphasized",
 	},
@@ -226,7 +227,11 @@ do
 		BWMessageFrame:SetWidth(UIParent:GetWidth())
 		BWMessageFrame:SetHeight(80)
 		local align = db.align == "CENTER" and "" or db.align
-		BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
+		if db.growUpwards then
+			BWMessageFrame:SetPoint("BOTTOM"..align, normalAnchor, "TOP"..align)
+		else
+			BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
+		end
 		BWMessageFrame:SetScale(db.scale or 1)
 		BWMessageFrame:SetFrameStrata("HIGH")
 		BWMessageFrame:SetToplevel(true)
@@ -319,6 +324,20 @@ do
 			end
 		end
 	end
+	local updateAnchor = function(info, value) 
+		plugin.db.profile[info[#info]] = value
+		BWMessageFrame:ClearAllPoints()
+		local align = plugin.db.profile.align == "CENTER" and "" or db.align
+		if plugin.db.profile.growUpwards then
+			BWMessageFrame:SetPoint("BOTTOM"..align, normalAnchor, "TOP"..align)
+		else
+			BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
+		end
+		for i = 1, 4 do
+			local font = labels[i]
+			font:ClearAllPoints()
+		end
+	end
 	local pluginOptions = nil
 	function plugin:GetPluginConfig()
 		if not pluginOptions then
@@ -364,12 +383,7 @@ do
 						width = "half",
 						style = "radio",
 						order = 3,
-						set = function(info, value) 
-							plugin.db.profile[info[#info]] = value
-							BWMessageFrame:ClearAllPoints()
-							local align = value == "CENTER" and "" or value
-							BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
-						end,
+						set = updateAnchor,
 					},
 					fontSize = {
 						type = "range",
@@ -386,28 +400,35 @@ do
 						desc = L.useColorsDesc,
 						order = 5,
 					},
-					monochrome = {
-						type = "toggle",
-						name = L.monochrome,
-						desc = L.monochromeDesc,
-						order = 6,
-					},
-					classcolor = {
-						type = "toggle",
-						name = L.classColors,
-						desc = L.classColorsDesc,
-						order = 7,
-					},
 					useicons = {
 						type = "toggle",
 						name = L.useIcons,
 						desc = L.useIconsDesc,
+						order = 6,
+					},
+					growUpwards = {
+						type = "toggle",
+						name = L.growingUpwards,
+						desc = L.growingUpwardsDesc,
+						order = 7,
+						set = updateAnchor,
+					},
+					monochrome = {
+						type = "toggle",
+						name = L.monochrome,
+						desc = L.monochromeDesc,
 						order = 8,
 					},
+				--	classcolor = {
+				--		type = "toggle",
+				--		name = L.classColors,
+				--		desc = L.classColorsDesc,
+				--		order = 9,
+				--	},
 					newline1 = {
 						type = "description",
 						name = "\n",
-						order = 9,
+						order = 10,
 					},
 					displaytime = {
 						type = "range",
@@ -416,7 +437,7 @@ do
 						min = 1,
 						max = 30,
 						step = 0.5,
-						order = 10,
+						order = 11,
 						set = updateMessageTimers,
 					},
 					fadetime = {
@@ -426,7 +447,7 @@ do
 						min = 1,
 						max = 30,
 						step = 0.5,
-						order = 11,
+						order = 12,
 						set = updateMessageTimers,
 					},
 				},
@@ -457,7 +478,7 @@ do
 		end
 	end
 
-	local function getNextSlot()
+	local function getNextSlotDown()
 		-- move 4 -> 1
 		local old = labels[4]
 		labels[4] = labels[3]
@@ -477,11 +498,31 @@ do
 		return labels[1]
 	end
 
+	local function getNextSlotUp()
+		-- move 1 -> 4
+		local old = labels[1]
+		labels[1] = labels[2]
+		labels[2] = labels[3]
+		labels[3] = labels[4]
+		labels[4] = old
+		-- reposition
+		local align = db.align == "CENTER" and "" or db.align
+		old:ClearAllPoints()
+		old:SetPoint("BOTTOM"..align)
+		for i = 1, 3 do
+			local lbl = labels[i]
+			lbl:ClearAllPoints()
+			lbl:SetPoint("BOTTOM"..align, labels[i + 1], "TOP"..align)
+		end
+		-- new message at 4
+		return labels[4]
+	end
+
 	function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
 		BWMessageFrame:SetScale(db.scale or 1)
 		BWMessageFrame:Show()
 
-		local slot = getNextSlot()
+		local slot = db.growUpwards and getNextSlotUp() or getNextSlotDown()
 
 		local flags = nil
 		if db.monochrome and db.outline ~= "NONE" then
