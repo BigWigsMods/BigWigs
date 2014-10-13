@@ -11,23 +11,26 @@ if not plugin then return end
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 local activeDurations = {}
-local difficultyTable = {false, false, "10", "25", "10h", "25h", "lfr", false, false, false, false, false, false, "flex"}
+local difficultyTable = {false, false, "10", "25", "10h", "25h", "lfr", false, false, false, false, false, false, "normal", "heroic", "mythic", "LFR"}
 
 --[[
-1."Normal"
-2."Heroic"
-3."10 Player"
-4."25 Player"
-5."10 Player (Heroic)"
-6."25 Player (Heroic)"
-7."Looking For Raid"
-8."Challenge Mode"
-9."40 Player"
-10.nil
-11."Heroic Scenario"
-12."Normal Scenario"
-13.nil
-14."Flexible"
+1. "Normal"
+2. "Heroic"
+3. "10 Player"
+4. "25 Player"
+5. "10 Player (Heroic)"
+6. "25 Player (Heroic)"
+7. "Looking For Raid"
+8. "Challenge Mode"
+9. "40 Player"
+10. nil
+11. "Heroic Scenario"
+12. "Normal Scenario"
+13. nil
+14. "Flexible" / "Normal Raid" (Warlords of Draenor)
+15. "Heroic Raid" (Warlords of Draenor)
+16. "Mythic Raid" (Warloads of Draenor)
+17. Flexible LFR
 http://wowpedia.org/API_GetDifficultyInfo
 ]]--
 
