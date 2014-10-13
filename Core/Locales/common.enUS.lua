@@ -19,7 +19,7 @@ L.stage = "Stage %d"
 L.normal = "Normal mode"
 L.heroic = "Heroic mode"
 L.hard = "Hard mode"
-L.mythic = "Mythic"
+L.mythic = "Mythic mode"
 L.general = "General" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 
 L.duration = "%s for %s sec"
