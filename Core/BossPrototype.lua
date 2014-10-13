@@ -1089,15 +1089,19 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, custo
 
 	-- There are many Berserks, but we use 26662 because Brutallus uses this one.
 	-- Brutallus is da bomb.
-	local berserk, icon = (GetSpellInfo(26662)), 26662
+	local berserk = spells[26662]
+	local icon = icons[26662]
 	-- XXX "Interface\\EncounterJournal\\UI-EJ-Icons" ?
 	-- http://static.wowhead.com/images/icons/ej-enrage.png
 	if type(customBerserk) == "number" then
 		key = customBerserk
-		berserk, icon = (GetSpellInfo(customBerserk)), customBerserk
+		berserk = spells[customBerserk]
+		icon = icons[customBerserk]
 	elseif type(customBerserk) == "string" then
 		berserk = customBerserk
 	end
+
+	self:Bar(key, seconds, berserk, icon)
 
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
@@ -1115,7 +1119,5 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, custo
 	self:DelayedMessage(key, seconds - 10, "Urgent", format(L.custom_sec, berserk, 10))
 	self:DelayedMessage(key, seconds - 5, "Important", format(L.custom_sec, berserk, 5))
 	self:DelayedMessage(key, seconds, "Important", customFinalMessage or format(L.custom_end, boss, berserk), icon, "Alarm")
-
-	self:Bar(key, seconds, berserk, icon)
 end
 
