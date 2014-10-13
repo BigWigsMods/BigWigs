@@ -1565,31 +1565,9 @@ do
 	end
 end
 
-local breakTimerHaxxForDBM = {
-	enUS = "Break time!",
-	zhTW = "休息時間!",
-	zhCN = "休息时间！",
-	ptBR = "Intervalo!",
-	deDE = "Pause!",
-	esES = "¡Descanso!",
-	frFR = "Pause !",
-	itIT = "Pausa!",
-	koKR = "쉬는 시간",
-	ruRU = "Перерыв!",
-}
-
 function plugin:OnDBMSync(_, sender, prefix, seconds, text)
 	if prefix == "U" then
-		local foundBreakString = false
-		for k,v in next, breakTimerHaxxForDBM do
-			if text == v then foundBreakString = true end
-		end
-
-		if foundBreakString then
-			startBreak(seconds, sender, true) -- DBM break timer is hacked into the custom bar functionality ~.~
-		else
-			startCustomBar(seconds.." "..text, sender, nil, true)
-		end
+		startCustomBar(seconds.." "..text, sender, nil, true)
 	elseif prefix == "PT" then
 		startPull(seconds, sender, true)
 	elseif prefix == "BT" then
@@ -1688,7 +1666,6 @@ SlashCmdList.BIGWIGSBREAK = function(input)
 
 		if IsInGroup() then
 			SendAddonMessage("D4", ("BT\t%d"):format(seconds), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
-			SendAddonMessage("D4", ("U\t%d\t%s"):format(seconds, breakTimerHaxxForDBM[GetLocale()] or breakTimerHaxxForDBM.enUS), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	else
 		BigWigs:Print(L.requiresLeadOrAssist)
