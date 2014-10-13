@@ -17,6 +17,7 @@ local sparkCounter = 0
 local bossUnitPowers = {}
 local massiveCrates = 2
 local stoutCrates = 6
+local prevEnrage = 0
 
 local function checkPlayerSide()
 	BigWigsLoader.SetMapToCurrentZone()
@@ -56,7 +57,7 @@ function mod:GetOptions()
 		145288, {145461, "TANK"}, {142947, "TANK"}, 142694, -- Mogu crate
 		{145987, "PROXIMITY", "FLASH"}, 145747, {145692, "TANK"}, 145715, {145786, "DISPEL"},-- Mantid crate
 		{146217, "FLASH"}, 146222, 146257, -- Crate of Panderan Relics
-		"proximity", {"crates", "TANK"}, {"warmup", "EMPHASIZE"}, "bosskill",
+		"proximity", {"crates", "TANK"}, {"warmup", "EMPHASIZE"}, "berserk", "bosskill",
 	}, {
 		[146815] = CL.heroic,
 		[145288] = -8434, -- Mogu crate
@@ -126,12 +127,15 @@ function mod:Warmup()
 end
 
 function mod:OnEngage()
-	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2")
+	self:UnregisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	sparkCounter = 0
+	prevEnrage = 0
 	massiveCrates = 2
 	stoutCrates = 6
 	wipe(setToBlow)
 	wipe(bossUnitPowers)
+	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2")
+	self:RegisterEvent("UPDATE_WORLD_STATES")
 	self:OpenProximity("proximity", 3)
 end
 
@@ -337,6 +341,32 @@ do
 		else
 			setToBlow[#setToBlow+1] = args.destName
 			updateProximity(args.spellId)
+		end
+	end
+end
+
+function mod:UPDATE_WORLD_STATES()
+	-- NEW MISSION! I want you to blow up... THE OCEAN!
+	-- If it wasn't clear from this code, I don't trust this API at all.
+	-- Hardcoding the values and firing :Berserk on engage/room change seemed to end up with timers going out of sync.
+	-- Doing this without timer refreshing every 60 seconds also ended up with sync issues.
+	-- Repeatedly running through LFR to test various methods was also a delightful experience.
+	-- Pretty much, I hate it. The only positive from this is that we don't need to schedule the messages.
+	-- If this ever breaks in a future patch, $#!+.
+	local _, _, _, enrage = GetWorldStateUIInfo(5)
+	if enrage then
+		local remaining = enrage:match("%d+")
+		if remaining then
+			local timeRemaining = tonumber(remaining)
+			if timeRemaining and timeRemaining > 0 then
+				if timeRemaining > prevEnrage or timeRemaining % 60 == 0 then
+					self:Bar("berserk", timeRemaining+1, 26662) -- +1s to compensate for timer rounding
+				end
+				if timeRemaining == 120 or timeRemaining == 60 or timeRemaining == 30 or timeRemaining == 10 or timeRemaining == 5 then
+					self:Message("berserk", "Positive", nil, timeRemaining > 59 and format(CL.custom_min, self:SpellName(26662), timeRemaining/60) or format(CL.custom_sec, self:SpellName(26662), timeRemaining), 26662)
+				end
+				prevEnrage = timeRemaining
+			end
 		end
 	end
 end
