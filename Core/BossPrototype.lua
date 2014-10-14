@@ -1089,14 +1089,12 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, custo
 
 	-- There are many Berserks, but we use 26662 because Brutallus uses this one.
 	-- Brutallus is da bomb.
-	local berserk = spells[26662]
-	local icon = icons[26662]
-	-- XXX "Interface\\EncounterJournal\\UI-EJ-Icons" ?
-	-- http://static.wowhead.com/images/icons/ej-enrage.png
+	local icon = 26662
+	local berserk = spells[icon]
 	if type(customBerserk) == "number" then
 		key = customBerserk
 		berserk = spells[customBerserk]
-		icon = icons[customBerserk]
+		icon = customBerserk
 	elseif type(customBerserk) == "string" then
 		berserk = customBerserk
 	end
