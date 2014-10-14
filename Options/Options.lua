@@ -881,7 +881,7 @@ local function populateToggleOptions(widget, module)
 	if module.encounterId and module.zoneId and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[module.zoneId] and sDB[module.zoneId][module.encounterId] then
 		sDB = sDB[module.zoneId][module.encounterId]
 
-		do -- Create NEW statistics table
+		if sDB.LFR or sDB.normal or sDB.heroic or sDB.mythic then -- Create NEW statistics table
 			local statGroup = AceGUI:Create("InlineGroup")
 			statGroup:SetTitle(L.statistics)
 			statGroup:SetLayout("Flow")
@@ -1008,7 +1008,7 @@ local function populateToggleOptions(widget, module)
 		---------------------------------------------------------------------------
 		---------------------------------------------------------------------------
 
-		do -- Create OLD statistics table
+		if sDB["25"] or sDB["25h"] or sDB["10"] or sDB["10h"] or sDB.lfr or sDB.flex then -- Create OLD statistics table
 			local statGroup = AceGUI:Create("InlineGroup")
 			statGroup:SetTitle(L.statistics)
 			statGroup:SetLayout("Flow")
