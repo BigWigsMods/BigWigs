@@ -1,4 +1,4 @@
-## Interface: 50400
+## Interface: 60000
 
 ## Title: Big Wigs [|cffeda55fThrone of Thunder|r]
 ## Title-deDE: Big Wigs [|cffeda55fThron des Donners|r]

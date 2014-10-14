@@ -1,4 +1,4 @@
-## Interface: 50400
+## Interface: 60000
 
 ## Title: Big Wigs [|cffeda55fHeart of Fear|r]
 ## Title-deDE: Big Wigs [|cffeda55fHerz der Angst|r]

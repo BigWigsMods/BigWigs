@@ -1,4 +1,4 @@
-## Interface: 50400
+## Interface: 60000
 
 ## Title: Big Wigs [|cffeda55fTerrace of Endless Spring|r]
 ## Title-deDE: Big Wigs [|cffeda55fTerrasse des endlosen Frühlings|r]

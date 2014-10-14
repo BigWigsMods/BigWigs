@@ -1,4 +1,4 @@
-## Interface: 50400
+## Interface: 60000
 
 ## Title: Big Wigs [|cffeda55fPandaria|r]
 ## Title-frFR: Big Wigs [|cffeda55fPandarie|r]
