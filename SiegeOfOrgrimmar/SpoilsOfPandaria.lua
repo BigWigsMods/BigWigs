@@ -360,10 +360,11 @@ function mod:UPDATE_WORLD_STATES()
 			local timeRemaining = tonumber(remaining)
 			if timeRemaining and timeRemaining > 0 then
 				if timeRemaining > prevEnrage or timeRemaining % 60 == 0 then
-					self:Bar("berserk", timeRemaining+1, 26662) -- +1s to compensate for timer rounding
+					self:Bar("berserk", timeRemaining+1, 26662) -- +1s to compensate for timer rounding.
 				end
-				if timeRemaining == 120 or timeRemaining == 60 or timeRemaining == 30 or timeRemaining == 10 or timeRemaining == 5 then
-					self:Message("berserk", "Positive", nil, timeRemaining > 59 and format(CL.custom_min, self:SpellName(26662), timeRemaining/60) or format(CL.custom_sec, self:SpellName(26662), timeRemaining), 26662)
+				-- It shouldn't fire the same value twice, but throttle for safety.
+				if timeRemaining ~= prevEnrage and (timeRemaining == 60 or timeRemaining == 30 or timeRemaining == 10 or timeRemaining == 5) then
+					self:Message("berserk", "Positive", nil, format(CL.custom_sec, self:SpellName(26662), timeRemaining), 26662)
 				end
 				prevEnrage = timeRemaining
 			end
