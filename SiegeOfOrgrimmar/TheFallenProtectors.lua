@@ -491,7 +491,7 @@ end
 
 
 function mod:Heal(args)
-	self:Bar(args.spellId, self:LFR() and 20 or 15, CL.cast:format(CL.other:format(self:SpellName(98417), args.sourceName))) -- "Heal"
+	self:Bar(args.spellId, self:LFR() and 20 or 15, CL.cast:format(CL.other:format(self:SpellName(2060), args.sourceName))) -- "Heal"
 	self:Message(args.spellId, "Positive", "Warning", CL.other:format(self:SpellName(37455), args.sourceName)) -- "Healing"
 end
 
