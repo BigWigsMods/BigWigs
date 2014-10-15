@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Salyis's Warband", 807, 725)
 if not mod then return end
 mod:RegisterEnableMob(62346)
-mod.otherMenu = 6
+mod.otherMenu = 862
 mod.worldBoss = 62346
 
 --------------------------------------------------------------------------------
