@@ -16,7 +16,6 @@ local enabledModules = {}
 local allowedEvents = {}
 local difficulty = 3
 local UpdateDispelStatus = nil
-local UpdateMapData = nil
 local myGUID = nil
 local myRole = nil
 local updateData = function()
@@ -34,7 +33,6 @@ local updateData = function()
 	difficulty = diff
 
 	UpdateDispelStatus()
-	UpdateMapData()
 end
 
 -------------------------------------------------------------------------------
