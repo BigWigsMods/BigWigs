@@ -53,7 +53,7 @@ end
 local ldb = nil
 local tooltipFunctions = {}
 local next, tonumber = next, tonumber
-local SendAddonMessage, Ambiguate = SendAddonMessage, Ambiguate
+local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
 local GetCurrentMapAreaID = GetCurrentMapAreaID
@@ -61,6 +61,8 @@ local SetMapToCurrentZone = SetMapToCurrentZone
 public.GetCurrentMapAreaID = GetCurrentMapAreaID
 public.SetMapToCurrentZone = SetMapToCurrentZone
 public.SendAddonMessage = SendAddonMessage
+public.CTimerAfter = CTimerAfter
+public.CTimerNewTicker = CTimerNewTicker
 
 -- Version
 local usersAlpha = {}
@@ -453,8 +455,7 @@ do
 		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Brazilian Portuguese (ptBR)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
 	end
 
-	local timer = bwFrame:CreateAnimationGroup()
-	timer:SetScript("OnFinished", function()
+	CTimerAfter(11, function()
 		local _, _, _, _, _, _, year = GetAchievementInfo(8482) -- Mythic Garrosh
 		if year == 13 and (L == "enUS" or L == "enGB") then
 			sysprint("We're looking for a new end-game raider to join our developer team! See [goo.gl/aajTfo] for more info.")
@@ -464,9 +465,6 @@ do
 		end
 		delayedMessages = nil
 	end)
-	local anim = timer:CreateAnimation()
-	anim:SetDuration(11)
-	timer:Play()
 end
 
 -----------------------------------------------------------------------
@@ -652,14 +650,13 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 end
 
 do
-	local timer = bwFrame:CreateAnimationGroup()
-	timer:SetScript("OnFinished", function()
+	local timer = nil
+	local function sendMsg()
 		if IsInGroup() then
 			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:%d" or "VRA:%d"):format(MY_BIGWIGS_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 		end
+		timer = nil
 	end)
-	local anim = timer:CreateAnimation()
-	anim:SetDuration(3)
 
 	local hasWarned, hasReallyWarned, hasExtremelyWarned = nil, nil, nil
 	local function printOutOfDate(tbl, isAlpha)
@@ -695,8 +692,8 @@ do
 	function mod:VersionCheck(prefix, message, sender)
 		if prefix == "VR" or prefix == "VQ" then
 			if prefix == "VQ" then
-				timer:Stop()
-				timer:Play()
+				if timer then timer:Cancel() end
+				timer = CTimerNewTicker(3, sendMsg, 1)
 			end
 			message = tonumber(message)
 			-- XXX The > 13k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
@@ -709,8 +706,8 @@ do
 			end
 		elseif prefix == "VRA" or prefix == "VQA" then
 			if prefix == "VQA" then
-				timer:Stop()
-				timer:Play()
+				if timer then timer:Cancel() end
+				timer = CTimerNewTicker(3, sendMsg, 1)
 			end
 			message = tonumber(message)
 			-- XXX The > 13k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
