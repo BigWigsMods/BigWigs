@@ -46,7 +46,6 @@ local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 local inConfigMode = nil
 local activeRange, activeRangeSquared = 0, 0
 local activeSpellID = nil
-local activeMap = nil
 local proximityPlayer = nil
 local proximityPlayerTable = {}
 local maxPlayers = 0
@@ -68,13 +67,6 @@ local format = string.format
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
 -- GLOBALS: BigWigs CUSTOM_CLASS_COLORS GameTooltip GameFontNormalHuge RAID_CLASS_COLORS SLASH_BigWigs_Proximity1 SLASH_BigWigs_Proximity2 UIParent
-
--------------------------------------------------------------------------------
--- Map Data
---
-
-local mapData = {}
-local mapWidth, mapHeight = 0, 0
 
 --------------------------------------------------------------------------------
 -- Options
@@ -897,36 +889,6 @@ end
 -- API
 --
 
-function plugin:GetMapData()
-	self:SetMapData()
-	return mapData
-end
-
-function plugin:SetMapData()
-	SetMapToCurrentZone()
-	local map = format("%d.%d", GetCurrentMapAreaID(), GetCurrentMapDungeonLevel())
-	if activeMap ~= map then
-		activeMap, mapWidth, mapHeight = nil, 0, 0
-		local _, left, top, right, bottom = GetCurrentMapZone()
-		local floorNum, dright, dbottom, dleft, dtop = GetCurrentMapDungeonLevel()
-		if DungeonUsesTerrainMap() then floorNum = floorNum - 1 end
-		if floorNum > 0 then left, top, right, bottom = dleft, dtop, dright, dbottom end
-		if left ~= 0 and right ~= 0 then
-			mapWidth, mapHeight = -right + left, -bottom + top
-			activeMap = map
-			-- silly compat for no reason, some on-demand mapData
-			local mapName = GetMapInfo()
-			local currentFloor = GetCurrentMapDungeonLevel()
-			if not mapData[mapName] then
-				mapData[mapName] = {}
-			end
-			if not mapData[mapName][currentFloor] then
-				mapData[mapName][currentFloor] = { mapWidth, mapHeight }
-			end
-		end
-	end
-end
-
 function plugin:Close()
 	updater:Stop()
 
@@ -958,8 +920,8 @@ function plugin:Open(range, module, key, player, isReverse)
 	if not IsInGroup() then return end -- Solo runs of old content
 	self:Close()
 
-	self:SetMapData()
-	if not activeMap then print("No map data!") end
+	local y, x = UnitPosition("player")
+	if x == 0 and y == 0 then print("No map data!") return end
 
 	activeRange = range
 	activeRangeSquared = range*range
