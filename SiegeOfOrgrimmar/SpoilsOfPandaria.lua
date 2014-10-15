@@ -21,7 +21,7 @@ local prevEnrage = 0
 
 local function checkPlayerSide()
 	BigWigsLoader.SetMapToCurrentZone()
-	local cx, cy = GetPlayerMapPosition("player")
+	local cx, cy = GetPlayerMapPosition("player") -- XXX compat
 	if cy == 0 then return 0 end
 
 	-- simplified cross product: mantid > 0 > mogu
