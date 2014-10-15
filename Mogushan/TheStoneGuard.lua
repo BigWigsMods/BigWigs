@@ -18,11 +18,11 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.petrifications = "Petrification"
 	L.petrifications_desc = "Warning for when bosses start petrification"
-	L.petrifications_icon = 125092
+	L.petrifications_icon = "inv_stone_weightstone_08"
 
 	L.overload = "Overload"
 	L.overload_desc = "Warning for all types of overloads."
-	L.overload_icon = 77222 -- overload like icon
+	L.overload_icon = "spell_nature_wispsplode"
 end
 L = mod:GetLocale()
 

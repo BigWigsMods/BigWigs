@@ -48,11 +48,11 @@ if L then
 	L.hunter = "|cFFABD473"..LOCALIZED_CLASS_NAMES_MALE.HUNTER.."|r"
 
 	L.chain_heal, L.chain_heal_desc = EJ_GetSectionInfo(7935)
-	L.chain_heal_icon = 1064
+	L.chain_heal_icon = "spell_nature_healingwavegreater"
 	L.chain_heal_message = "Your focus is casting Chain Heal!"
 
 	L.arcane_shock, L.arcane_shock_desc = EJ_GetSectionInfo(7928)
-	L.arcane_shock_icon = 114003
+	L.arcane_shock_icon = "spell_arcane_invocation"
 	L.arcane_shock_message = "Your focus is casting Arcane Shock!"
 end
 L = mod:GetLocale()
