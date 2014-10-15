@@ -181,8 +181,8 @@ do
 
 		-- rotate relative to player facing
 		local rotangle = (2 * pi) - GetPlayerFacing()
-		local x = (dx * cos(rotangle)) - (-1 * dy * sin(rotangle))
-		local y = (dx * sin(rotangle)) + (-1 * dy * cos(rotangle))
+		local x = (-1 * dx * cos(rotangle)) - (dy * sin(rotangle))
+		local y = (-1 * dx * sin(rotangle)) + (dy * cos(rotangle))
 
 		x = x * pixperyard
 		y = y * pixperyard
@@ -241,7 +241,7 @@ do
 			local range = dx * dx + dy * dy
 			if range < activeRangeSquared*2.5 then
 				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
-					setDot(-dx, -dy, blipList[i])
+					setDot(dx, dy, blipList[i])
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
 					end
@@ -281,7 +281,7 @@ do
 		local dx = unitX - srcX
 		local dy = unitY - srcY
 		local range = dx * dx + dy * dy
-		setDot(-dx, -dy, blipList[1])
+		setDot(dx, dy, blipList[1])
 		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(1, 0, 0)
 			local t = GetTime()
@@ -310,7 +310,7 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			setDot(-dx, -dy, blipList[i])
+			setDot(dx, dy, blipList[i])
 			if range <= activeRangeSquared then
 				anyoneClose = anyoneClose + 1
 			end
@@ -346,7 +346,7 @@ do
 			local range = dx * dx + dy * dy
 			if range < activeRangeSquared*2.5 then
 				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
-					setDot(-dx, -dy, blipList[i])
+					setDot(dx, dy, blipList[i])
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
 					end
@@ -385,7 +385,7 @@ do
 		local dx = unitX - srcX
 		local dy = unitY - srcY
 		local range = dx * dx + dy * dy
-		setDot(-dx, -dy, blipList[1])
+		setDot(dx, dy, blipList[1])
 		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(0, 1, 0)
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
@@ -414,7 +414,7 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			setDot(-dx, -dy, blipList[i])
+			setDot(dx, dy, blipList[i])
 			if range <= activeRangeSquared then
 				anyoneClose = anyoneClose + 1
 			end
