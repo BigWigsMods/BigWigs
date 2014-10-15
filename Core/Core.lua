@@ -32,7 +32,7 @@ local next, type = next, type
 -- XXX compat
 do
 	local _, _, _, toc = GetBuildInfo()
-	addon.isWOD = toc > 59999 and true
+	addon.isWOD = toc > 600000 and true
 end
 
 -------------------------------------------------------------------------------
@@ -149,13 +149,8 @@ end
 
 local function targetCheck(unit)
 	if not UnitName(unit) or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
-	local id
-	if addon.isWOD then -- XXX compat
-		local _, _, _, _, _, mobId = strsplit("-", (UnitGUID(unit)))
-		id = tonumber(mobId) or -1
-	else
-		id = tonumber((UnitGUID(unit)):sub(6, 10), 16)
-	end
+	local _, _, _, _, _, mobId = strsplit("-", (UnitGUID(unit)))
+	local id = tonumber(mobId) or 1
 	if id and enablemobs[id] then
 		targetSeen(unit, enablemobs[id], id)
 	end

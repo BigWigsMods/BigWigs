@@ -271,25 +271,11 @@ local function translateZoneID(id)
 	if not id or type(id) ~= "number" then return end
 	local name
 	if id < 10 then
-		-- XXX compat
-		if BigWigs.isWOD then
-			name = select(id * 2, GetMapContinents())
-		else
-			name = select(id, GetMapContinents())
-		end
+		name = select(id * 2, GetMapContinents())
 	else
 		name = GetMapNameByID(id)
 	end
-	if not name then -- XXX compat
-		if id == 988 then
-			name = "Blackrock Foundry [BETA]"
-		elseif id == 994 then
-			name = "Highmaul [BETA]"
-		elseif id == 962 then
-			name = "Draenor [BETA]"
-		end
-	end
-	return name or tostring(id)
+	return name
 end
 
 local function findPanel(name, parent)
@@ -412,8 +398,10 @@ function options:OnEnable()
 	local tmp, tmpZone = {}, {}
 	for k in next, BigWigsLoader:GetZoneMenus() do
 		local zone = translateZoneID(k)
-		tmp[zone] = k
-		tmpZone[#tmpZone+1] = zone
+		if zone then
+			tmp[zone] = k
+			tmpZone[#tmpZone+1] = zone
+		end
 	end
 	sort(tmpZone)
 	for i=1, #tmpZone do

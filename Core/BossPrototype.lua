@@ -5,6 +5,7 @@
 local AL = LibStub("AceLocale-3.0")
 local L = AL:GetLocale("Big Wigs: Common")
 local UnitExists, UnitAffectingCombat, GetSpellInfo, UnitGUID = UnitExists, UnitAffectingCombat, GetSpellInfo, UnitGUID
+local UnitDistanceSquared, UnitPosition = UnitDistanceSquared, UnitPosition
 local format, sub, gsub, band = string.format, string.sub, string.gsub, bit.band
 local type, next, tonumber = type, next, tonumber
 local core = BigWigs
@@ -35,9 +36,6 @@ local updateData = function()
 	UpdateDispelStatus()
 	UpdateMapData()
 end
-
--- XXX compat
-local isWOD = core.isWOD
 
 -------------------------------------------------------------------------------
 -- Debug
@@ -243,14 +241,8 @@ do
 	bossUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, _, extraSpellId, amount)
 		if allowedEvents[event] then
 			if event == "UNIT_DIED" then
-				-- XXX compat
-				local mobId
-				if isWOD then
-					local _, _, _, _, _, id = strsplit("-", destGUID)
-					mobId = tonumber(id) or 1
-				else
-					mobId = tonumber(sub(destGUID, 6, 10), 16)
-				end
+				local _, _, _, _, _, id = strsplit("-", destGUID)
+				local mobId = tonumber(id) or 1
 				for i = #enabledModules, 1, -1 do
 					local self = enabledModules[i]
 					local m = eventMap[self][event]
@@ -445,13 +437,8 @@ do
 			local guid = UnitGUID(unit)
 			if guid and not UnitIsPlayer(unit) then
 				if type(id) == "number" then
-					-- XXX compat
-					if isWOD then
-						local _, _, _, _, _, id = strsplit("-", guid)
-						guid = tonumber(id) or 1
-					else
-						guid = tonumber(sub(guid, 6, 10), 16)
-					end
+					local _, _, _, _, _, id = strsplit("-", guid)
+					guid = tonumber(id) or 1
 				end
 				if guid == id then return unit end
 			end
@@ -607,12 +594,8 @@ end
 
 function boss:MobId(guid)
 	if not guid then return 1 end
-	if isWOD then -- XXX compat
-		local _, _, _, _, _, id = strsplit("-", guid)
-		return tonumber(id) or 1
-	else
-		return guid and tonumber(sub(guid, 6, 10), 16) or 1
-	end
+	local _, _, _, _, _, id = strsplit("-", guid)
+	return tonumber(id) or 1
 end
 
 function boss:SpellName(spellId)
@@ -636,55 +619,16 @@ do
 	end
 end
 
-do
-	local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
-	local GetPlayerMapPosition = GetPlayerMapPosition
-
-	local activeMap, mapWidth, mapHeight = nil, 0, 0
-
-	function UpdateMapData()
-		activeMap = nil
-		local mapName = GetMapInfo()
-		local mapData = core:GetPlugin("Proximity"):GetMapData()
-		if not mapData[mapName] then return end
-
-		local currentFloor = GetCurrentMapDungeonLevel()
-		if currentFloor == 0 then currentFloor = 1 end
-
-		local id = mapData[mapName][currentFloor]
-		if id then
-			activeMap = true
-			mapWidth, mapHeight = id[1], id[2]
-		end
-	end
-
-	function boss:Range(player, otherPlayer)
-		if isWOD then -- XXX compat, cleanup
-			if not otherPlayer then
-				local squaredPos = UnitDistanceSquared(player)
-				return squaredPos == 0 and 200 or squaredPos^0.5
-			else
-				local tx, ty = UnitPosition(player)
-				local px, py = UnitPosition(otherPlayer)
-				local dx = tx - px
-				local dy = ty - py
-				local distance = (dx * dx + dy * dy) ^ 0.5
-				return distance
-			end
-		end
-
-		if not activeMap then return 200 end
-
-		SetMapToCurrentZone()
-		local tx, ty = GetPlayerMapPosition(player)
-		if tx == 0 and ty == 0 then return 200 end -- position is unknown or unit is invalid
-		local px, py = GetPlayerMapPosition(otherPlayer or "player")
-		if px == 0 and py == 0 then return 200 end
-
-		local dx = (tx - px) * mapWidth
-		local dy = (ty - py) * mapHeight
+function boss:Range(player, otherPlayer)
+	if not otherPlayer then
+		local distanceSquared = UnitDistanceSquared(player)
+		return distanceSquared == 0 and 200 or distanceSquared ^ 0.5
+	else
+		local tx, ty = UnitPosition(player)
+		local px, py = UnitPosition(otherPlayer)
+		local dx = tx - px
+		local dy = ty - py
 		local distance = (dx * dx + dy * dy) ^ 0.5
-
 		return distance
 	end
 end

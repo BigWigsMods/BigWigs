@@ -100,7 +100,6 @@ do
 		[604]=wotlk, [543]=wotlk, [535]=wotlk, [529]=wotlk, [527]=wotlk, [532]=wotlk, [531]=wotlk, [609]=wotlk, [718]=wotlk,
 		[752]=cata, [758]=cata, [754]=cata, [824]=cata, [800]=cata, [773]=cata,
 		[896]=mop, [897]=mop, [886]=mop, [930]=mop, [953]=mop, [807]=mop, [809]=mop, [928]=mop, [929]=mop, [951]=mop, [862]=mop,
-		[6]=mop, -- XXX compat
 
 		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw, [919]=lw, -- MoP
 		[964]=lw, [969]=lw, [984]=lw, [987]=lw, [989]=lw, [993]=lw, [995]=lw, [1008]=lw -- WoD
@@ -119,14 +118,8 @@ end
 --
 
 local function IsAddOnEnabled(addon)
-	local enabled
-	if GetAddOnEnableState then -- XXX compat
-		local character = UnitName("player")
-		enabled = GetAddOnEnableState(character, addon)
-	else
-		enabled = select(4, GetAddOnInfo(addon)) and 2 or 0
-	end
-	return enabled > 0
+	local character = UnitName("player")
+	return GetAddOnEnableState(character, addon) > 0
 end
 
 local function sysprint(msg)
@@ -656,7 +649,7 @@ do
 			SendAddonMessage("BigWigs", (BIGWIGS_RELEASE_TYPE == RELEASE and "VR:%d" or "VRA:%d"):format(MY_BIGWIGS_REVISION), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 		end
 		timer = nil
-	end)
+	end
 
 	local hasWarned, hasReallyWarned, hasExtremelyWarned = nil, nil, nil
 	local function printOutOfDate(tbl, isAlpha)
@@ -751,13 +744,8 @@ do
 	function mod:UNIT_TARGET(unit)
 		local guid = UnitGUID(unit.."target")
 		if guid then
-			local mobId
-			if GetAddOnEnableState then -- XXX compat
-				local _, _, _, _, _, id = strsplit("-", guid)
-				mobId = tonumber(id)
-			else
-				mobId = tonumber(guid:sub(6, 10), 16)
-			end
+			local _, _, _, _, _, id = strsplit("-", guid)
+			local mobId = tonumber(id)
 			if worldBosses[mobId] then
 				local id = worldBosses[mobId]
 				if InCombatLockdown() or UnitAffectingCombat("player") then
