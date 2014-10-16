@@ -578,7 +578,7 @@ function boss:LFR()
 end
 
 function boss:Heroic()
-	return difficulty == 2 or difficulty == 5 or difficulty == 6
+	return difficulty == 2 or difficulty == 5 or difficulty == 6 or difficulty == 15
 end
 
 function boss:Mythic()
