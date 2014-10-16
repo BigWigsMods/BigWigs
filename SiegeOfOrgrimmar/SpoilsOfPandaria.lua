@@ -353,7 +353,7 @@ function mod:UPDATE_WORLD_STATES()
 	-- Repeatedly running through LFR to test various methods was also a delightful experience.
 	-- Pretty much, I hate it. The only positive from this is that we don't need to schedule the messages.
 	-- If this ever breaks in a future patch, $#!+.
-	local _, _, _, enrage = GetWorldStateUIInfo(5)
+	local _, _, _, enrage = GetWorldStateUIInfo(6)
 	if enrage then
 		local remaining = enrage:match("%d+")
 		if remaining then
