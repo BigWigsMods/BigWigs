@@ -236,7 +236,7 @@ function mod:ExtraAdds()
 end
 
 function mod:Adds()
-	local mobs = self:Heroic() and addsHeroic[addWaveCounter] or addsNormal[addWaveCounter]
+	local mobs = self:Mythic() and addsHeroic[addWaveCounter] or addsNormal[addWaveCounter]
 	if addWaveCounter == 10 then
 		self:Message(-7920, "Neutral", "Long", L.add_wave:format(L.final_wave, addWaveCounter, mobs))
 	else

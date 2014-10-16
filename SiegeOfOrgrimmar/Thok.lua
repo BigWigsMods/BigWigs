@@ -83,7 +83,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	if self:Heroic() then
+	if self:Mythic() then
 		yetiChargeTimer = nil
 		heroicAdd = nil
 	end
@@ -160,7 +160,7 @@ do
 		self:Message(-7981, "Neutral", "Long", CL.over:format(args.spellName))
 		self:CDBar(-7963, self:LFR() and 18 or 14) -- Deafening Screech
 		self:CDBar(143766, 12, 17086, "ability_hunter_pet_devilsaur") -- Breath. 143766 isn't exactly a combined option but it's one of the breaths.
-		if self:Heroic() then
+		if self:Mythic() then
 			self:ScheduleTimer(checkPrisonerKilled, 10)
 		end
 	end

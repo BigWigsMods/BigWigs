@@ -174,7 +174,7 @@ function mod:UNIT_POWER_FREQUENT(unit, powerType)
 			small = max(0, small - (medium * 3))
 			self:Message("crates", "Attention", nil, L.power_left:format(remaining, massiveCrates, medium, small), L.crates_icon)
 		end
-	elseif self:Heroic() then
+	elseif self:Mythic() then
 		self:Message(146815, "Important", "Alert", CL.incoming:format(self:SpellName(-8469))) -- Unstable Spark
 		if self:Damager() then
 			self:Flash(146815)

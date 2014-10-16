@@ -94,7 +94,7 @@ function mod:OnEngage()
 	self:Bar(144800, 25, CL.small_adds)
 	self:Bar(144563, 52.5) -- Imprison
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
-	if self:Heroic() then
+	if self:Mythic() then
 		self:Bar(145215, 37.4) -- Banishment
 		wrChecker = nil
 	end
@@ -191,7 +191,7 @@ function mod:Unleashed() -- Final Gift
 	self:DelayedMessage(-8262, 55, "Urgent", CL.spawning:format(CL.big_add), 144379)
 	self:Bar(144800, 16.3, CL.small_adds)
 	self:Bar(144563, 43.6) -- Imprison
-	if self:Heroic() then
+	if self:Mythic() then
 		self:Bar(145215, 29) -- Banishment
 	end
 end
@@ -273,7 +273,7 @@ do
 		if not self:LFR() then
 			self:CDBar(144358, 10.5) -- Wounded Pride, 10-11.2
 		end
-		if self:Heroic() then
+		if self:Mythic() then
 			self:Bar(145215, 37.4) -- Banishment
 		end
 		self:Bar(144563, 53) -- Imprison

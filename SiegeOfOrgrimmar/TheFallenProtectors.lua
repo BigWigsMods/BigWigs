@@ -114,7 +114,7 @@ function mod:OnEngage()
 	darkMeditationTimer = nil
 	infernoTarget, infernoTimer = nil, nil
 	self:OpenProximity("proximity", 5) -- this might not be needed in LFR
-	self:Berserk(self:Heroic() and 600 or 900)
+	self:Berserk(self:Mythic() and 600 or 900)
 	self:Bar(144396, 7) -- Vengeful Strikes
 	self:CDBar(143019, 18) -- Corrupted Brew
 	self:CDBar(143027, 44) -- Clash
@@ -143,7 +143,7 @@ do
 			self:CancelTimer(darkMeditationTimer)
 			darkMeditationTimer = nil
 		end
-		if not self:Heroic() then
+		if not self:Mythic() then
 			--self:CDBar(143027, ) -- Clash
 		end
 		self:CDBar(143491, 30) -- Calamity
@@ -155,7 +155,7 @@ do
 		if not self:Tank() then
 			darkMeditationTimer = self:ScheduleRepeatingTimer(warnDarkMeditation, 3)
 		end
-		if not self:Heroic() then
+		if not self:Mythic() then
 			self:StopBar(143027) -- Clash
 		end
 		self:StopBar(143491) -- Calamity
@@ -167,7 +167,7 @@ end
 function mod:Calamity(args)
 	self:CDBar(args.spellId, 40)
 	self:Bar(args.spellId, 5, CL.cast:format(args.spellName))
-	if self:Heroic() then
+	if self:Mythic() then
 		self:Message(args.spellId, "Attention", nil, ("%s (%d%%)"):format(CL.casting:format(args.spellName), hcCalamityCount))
 		hcCalamityCount = hcCalamityCount + 10
 	else
@@ -303,14 +303,14 @@ end
 
 function mod:HeIntermission(args)
 	self:StopBar(143330) -- Gouge
-	if not self:Heroic() then
+	if not self:Mythic() then
 		self:StopBar(143491) -- Calamity
 		self:StopBar(143027) -- Clash
 	end
 end
 
 function mod:HeIntermissionEnd(args)
-	if not self:Heroic() then
+	if not self:Mythic() then
 		--self:CDBar(143491, ) -- Calamity
 		--self:CDBar(143027, ) -- Clash
 	end
@@ -412,7 +412,7 @@ end
 
 function mod:Clash(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, self:Heroic() and 50 or 46)
+	self:CDBar(args.spellId, self:Mythic() and 50 or 46)
 end
 
 do
@@ -470,7 +470,7 @@ function mod:RookIntermission(args)
 	self:StopBar(143027) -- Clash
 	self:StopBar(144396) -- Vengeful Strikes
 	self:StopBar(143019) -- Corrupted Brew
-	if not self:Heroic() then
+	if not self:Mythic() then
 		self:StopBar(143491) -- Calamity
 	end
 	self:CDBar(-7958, 9) -- Defiled Ground (first cast not limited to her tank, obviously)
@@ -481,7 +481,7 @@ end
 function mod:RookIntermissionEnd(args)
 	self:StopBar(-7958) -- Defiled Ground
 	self:OpenProximity("proximity", 5)
-	if not self:Heroic() then
+	if not self:Mythic() then
 		self:CDBar(143491, 5) -- Calamity
 		self:CDBar(143027, 57) -- Clash
 	end

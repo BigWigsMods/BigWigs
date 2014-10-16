@@ -141,7 +141,7 @@ function mod:Warmup(_, msg)
 end
 
 function mod:OnEngage()
-	if self:Heroic() then
+	if self:Mythic() then
 		self:Bar("towers", 6, L.tower_defender, 85214) -- random orc icon
 		self:ScheduleTimer(firstTowerAdd, 6)
 	else
@@ -236,7 +236,7 @@ function mod:SouthTower()
 	self:Message("towers", "Neutral", "Long", L.south_tower, L.towers_icon)
 	self:Bar("demolisher", 20, L.demolisher_message, L.demolisher_icon)
 
-	if self:Heroic() then
+	if self:Mythic() then
 		self:CancelTimer(towerAddTimer)
 		towerAddTimer = nil
 		self:Bar("towers", 35, L.tower_defender, 85214) -- random orc icon
@@ -251,7 +251,7 @@ function mod:NorthTower()
 	self:Message("towers", "Neutral", "Long", L.north_tower, L.towers_icon)
 	self:Bar("demolisher", 20, L.demolisher_message, L.demolisher_icon)
 
-	if self:Heroic() then
+	if self:Mythic() then
 		self:CancelTimer(towerAddTimer)
 		towerAddTimer = nil
 		self:StopBar(L.tower_defender)

@@ -605,7 +605,7 @@ function mod:EncaseInEmber(args)
 		self:Flash(148650) -- Strong Legs
 	end
 	self:TargetMessage(args.spellId, args.destName, "Important", self:Damager() and "Warning")
-	self:CDBar(args.spellId, self:Heroic() and 30 or 25)
+	self:CDBar(args.spellId, self:Mythic() and 30 or 25)
 end
 
 --Kaz'tik the Manipulator
@@ -648,13 +648,13 @@ do
 		wipe(redPlayers)
 		for i=1, GetNumGroupMembers() do
 			local name = GetRaidRosterInfo(i)
-			if not UnitIsUnit("player", name) and (UnitDebuff(name, mod:SpellName(142533)) or (mod:Heroic() and UnitDebuff(name, mod:SpellName(142534)))) then -- red or heroic and yellow
+			if not UnitIsUnit("player", name) and (UnitDebuff(name, mod:SpellName(142533)) or (mod:Mythic() and UnitDebuff(name, mod:SpellName(142534)))) then -- red or heroic and yellow
 				redPlayers[#redPlayers+1] = name
 			end
 		end
 		local myDebuff = UnitDebuff("player", mod:SpellName(142532)) or UnitDebuff("player", mod:SpellName(142533)) or UnitDebuff("player", mod:SpellName(142534)) -- blue, red, yellow
 		if myDebuff then
-			mod:OpenProximity(-8034, 10, matches[myDebuff][mod:Heroic() and "proximityH" or "proximityN"])
+			mod:OpenProximity(-8034, 10, matches[myDebuff][mod:Mythic() and "proximityH" or "proximityN"])
 		end
 		mod:Message(-8034, "Neutral", nil, CL.soon:format(mod:SpellName(-8034)))
 	end
@@ -672,7 +672,7 @@ do
 end
 
 function mod:CatalystsSuccess(args)
-	if self:Heroic() then -- on heroic they have flight time
+	if self:Mythic() then -- on heroic they have flight time
 		self:ScheduleTimer("CloseProximity", (args.spellId == 142729) and 14 or 4, -8034) -- you want proximity open for purple for full duration of the debuff -- timers might need some adjusting
 	else
 		self:CloseProximity(-8034)
@@ -779,7 +779,7 @@ function mod:ReadyToFight(args)
 		self:CDBar(143974, 20) -- Shield Bash
 	elseif mobId == 71153 then -- Hisek the Swarmkeeper
 		self:CDBar(-8073, 38, CL.count:format(self:SpellName(-8073), aimCounter)) -- Aim
-		if self:Heroic() then
+		if self:Mythic() then
 			self:CDBar(143243, 49) -- Rapid Fire
 		end
 	elseif mobId == 71157 then -- Xaril the Poisoned Mind

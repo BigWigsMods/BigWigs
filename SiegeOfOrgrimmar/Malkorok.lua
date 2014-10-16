@@ -70,8 +70,8 @@ function mod:OnEngage()
 	self:OpenProximity(142851, 5)
 	self:CDBar(142842, 67.7, CL.count:format(self:SpellName(142842), breathCounter)) -- Breath of Y'Shaarj
 	-- Seismic Slam / Adds
-	self:ScheduleTimer("Message", 4.5, 142851, "Urgent", "Info", CL.incoming:format(self:Heroic() and CL.adds or self:SpellName(142851)))
-	self:Bar(142851, 5, self:Heroic() and CL.count:format(CL.adds, slamCounter))
+	self:ScheduleTimer("Message", 4.5, 142851, "Urgent", "Info", CL.incoming:format(self:Mythic() and CL.adds or self:SpellName(142851)))
+	self:Bar(142851, 5, self:Mythic() and CL.count:format(CL.adds, slamCounter))
 end
 
 --------------------------------------------------------------------------------
@@ -136,8 +136,8 @@ function mod:ExpelMiasma() -- Blood Rage over
 	self:Bar(142826, 17, CL.count:format(self:SpellName(142826), smashCounter)) -- Arcing Smash
 	self:CDBar(142842, 72.2, CL.count:format(self:SpellName(142842), breathCounter)) -- Breath of Y'Shaarj
 	-- Seismic Slam / Adds
-	self:ScheduleTimer("Message", 9, 142851, "Urgent", "Info", CL.incoming:format(self:Heroic() and CL.adds or self:SpellName(142851)))
-	self:Bar(142851, 10, self:Heroic() and CL.count:format(CL.adds, slamCounter))
+	self:ScheduleTimer("Message", 9, 142851, "Urgent", "Info", CL.incoming:format(self:Mythic() and CL.adds or self:SpellName(142851)))
+	self:Bar(142851, 10, self:Mythic() and CL.count:format(CL.adds, slamCounter))
 end
 
 -- Non rage phase
@@ -160,16 +160,16 @@ function mod:BreathOfYShaarj(args)
 		self:CDBar(args.spellId, 69.8, CL.count:format(args.spellName, breathCounter))
 
 		-- Seismic Slam / Adds
-		self:ScheduleTimer("Message", 6.5, 142851, "Urgent", "Info", CL.incoming:format(self:Heroic() and CL.adds or self:SpellName(142851)))
-		self:Bar(142851, 7.5, self:Heroic() and CL.count:format(CL.adds, slamCounter))
+		self:ScheduleTimer("Message", 6.5, 142851, "Urgent", "Info", CL.incoming:format(self:Mythic() and CL.adds or self:SpellName(142851)))
+		self:Bar(142851, 7.5, self:Mythic() and CL.count:format(CL.adds, slamCounter))
 	end
 end
 
 function mod:SeismicSlam(args)
 	slamCounter = slamCounter + 1
 	if slamCounter > 3 then return end
-	self:ScheduleTimer("Message", 18.5, args.spellId, "Urgent", "Info", CL.incoming:format(self:Heroic() and CL.adds or args.spellName))
-	self:Bar(args.spellId, 19.5, self:Heroic() and CL.count:format(CL.adds, slamCounter))
+	self:ScheduleTimer("Message", 18.5, args.spellId, "Urgent", "Info", CL.incoming:format(self:Mythic() and CL.adds or args.spellName))
+	self:Bar(args.spellId, 19.5, self:Mythic() and CL.count:format(CL.adds, slamCounter))
 end
 
 function mod:ArcingSmash(args)

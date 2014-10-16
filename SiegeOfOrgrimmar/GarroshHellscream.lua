@@ -414,7 +414,7 @@ do
 end
 
 function mod:PowerIronStar(args)
-	self:Bar(args.spellId, self:Heroic() and 10 or 15)
+	self:Bar(args.spellId, self:Mythic() and 10 or 15)
 end
 
 function mod:IronStarRolling(_, _, _, _, spellId)
@@ -523,7 +523,7 @@ do
 			self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)
 			self:StopBar(CL.intermission)
 			self:Bar(144985, 48, CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
-			if self:Heroic() then
+			if self:Mythic() then
 				-- XXX lets try to improve this, because it looks like if it is not cast within 32 sec, then it is going to be closer to 40 than to 30 need more Transcriptor log
 				mindControl = nil
 				self:ScheduleTimer(mindControlMagic, 32, 145065)
