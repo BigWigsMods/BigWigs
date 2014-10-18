@@ -301,7 +301,7 @@ do
 
 		local players = GetNumGroupMembers()
 		if players ~= maxPlayers then
-			updater:Stop()
+			if updater then self:CancelTimer(updater) end
 
 			if repeatSync then
 				syncPowerList = {}
@@ -321,7 +321,7 @@ do
 				local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
 				roleColoredList[unit] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
 			end
-			updater:Play()
+			updater = plugin:ScheduleRepeatingTimer(UpdateDisplay, 2)
 		end
 
 		if repeatSync then
@@ -339,12 +339,6 @@ do
 				plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
 			end
 		end)
-
-		updater = display:CreateAnimationGroup()
-		updater:SetLooping("REPEAT")
-		updater:SetScript("OnLoop", UpdateDisplay)
-		local anim = updater:CreateAnimation()
-		anim:SetDuration(2)
 
 		local bg = display:CreateTexture(nil, "PARENT")
 		bg:SetAllPoints(display)
@@ -532,7 +526,8 @@ function plugin:Close()
 	end
 
 	if display then
-		updater:Stop()
+		if updater then self:CancelTimer(updater) end
+		updater = nil
 		display:UnregisterEvent("GROUP_ROSTER_UPDATE")
 		display:Hide()
 		BigWigs:ClearSyncListeners(self)
