@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Siegecrafter Blackfuse", 953, 865)
 if not mod then return end
-mod:RegisterEnableMob(71504)
+mod:RegisterEnableMob(71504, 72981) -- Siegecrafter Blackfuse, Aggron
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -75,7 +75,7 @@ function mod:GetOptions()
 		{-8195, "FLASH", "SAY", "ICON"}, "saw_blade_near_you", 145365, {143385, "TANK"}, -- Siegecrafter Blackfuse
 		-8199, 144208, 145444, -- Automated Shredders
 		-8202, -8207, 143639, {-8208, "FLASH", "SAY"}, 143856, 144466, {-8212, "FLASH"},
-		"berserk", "bosskill",
+		{146479, "FLASH", "SAY", "ICON"}, "berserk", "bosskill",
 	}, {
 		["custom_off_mine_marker"] = L.custom_off_mine_marker,
 		[-8408] = "heroic",
@@ -116,6 +116,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ProtectiveFrenzy", 145365)
 	self:Log("SPELL_CAST_START", "Sawblade", 143265)
 	self:Log("SPELL_CAST_SUCCESS", "SawbladeFallback", 143265)
+	-- Goro'dan (trash)
+	self:Log("SPELL_AURA_APPLIED", "Drillstorm", 146479)
+	self:Log("SPELL_AURA_REMOVED", "DrillstormRemoved", 146479)
 
 	self:Death("ShredderDied", 71591)
 	self:Death("Win", 71504)
@@ -248,15 +251,15 @@ function mod:Superheated(args)
 end
 
 function mod:RAID_BOSS_WHISPER(_, msg, sender)
-	if msg:find("Ability_Siege_Engineer_Superheated") then -- laser fixate
+	if msg:find("Ability_Siege_Engineer_Superheated", nil, true) then -- laser fixate
 		-- might wanna do syncing to get range message working
 		self:Message(-8208, "Personal", "Info", L.laser_on_you, 144040)
 		self:Flash(-8208)
 		self:Say(-8208, 143444) -- 143444 = "Laser"
-	elseif msg:find("Ability_Siege_Engineer_Detonate") then -- mine fixate
+	elseif msg:find("Ability_Siege_Engineer_Detonate", nil, true) then -- mine fixate
 		self:Message(-8212, "Personal", "Info", CL.you:format(sender))
 		self:Flash(-8212)
-	elseif msg:find("143266") then -- Sawblade
+	elseif msg:find("143266", nil, true) then -- Sawblade
 		-- this is faster than target scanning, hence why we do it
 		sawbladeTarget = UnitGUID("player")
 		self:Message(-8195, "Positive", "Info", CL.you:format(self:SpellName(143266)))
@@ -364,6 +367,25 @@ do
 		if args.destGUID ~= sawbladeTarget then
 			warnSawblade(self, args.destName, args.destGUID)
 		end
+	end
+end
+
+function mod:Drillstorm(args)
+	if args.sourceGUID ~= args.destGUID then -- Not the NPC
+		self:TargetMessage(args.spellId, args.destName, "Attention", "Alarm")
+		self:TargetBar(args.spellId, 15, args.destName)
+		self:PrimaryIcon(args.spellId, args.destName)
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+		end
+	end
+end
+
+function mod:DrillstormRemoved(args)
+	if args.sourceGUID ~= args.destGUID then -- Not the NPC
+		self:PrimaryIcon(args.spellId)
+		self:StopBar(args.spellId, args.destName)
 	end
 end
 
