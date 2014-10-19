@@ -32,7 +32,7 @@ local next, type = next, type
 -- XXX compat
 do
 	local _, _, _, toc = GetBuildInfo()
-	addon.isWOD = toc > 600000 and true
+	addon.isWOD = toc > 60000 and true
 end
 
 -------------------------------------------------------------------------------
