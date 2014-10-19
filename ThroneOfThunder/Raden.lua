@@ -212,17 +212,6 @@ function mod:VitaSensitivity(args)
 end
 
 do
-	local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
-	local function getDistance(unit1, unit2)
-		local tx, ty = GetPlayerMapPosition(unit1)
-		local px, py = GetPlayerMapPosition(unit2)
-
-		local dx, dy = (tx - px), (ty - py)
-		local distance = (dx * dx + dy * dy) ^ 0.5
-
-		return distance
-	end
-
 	local timer, last, player = nil, nil, nil
 	local function warnJumpTarget()
 		if not player then
@@ -231,12 +220,11 @@ do
 			return
 		end
 
-		SetMapToCurrentZone()
 		local furthest, highestDistance = nil, 0
 		for i=1, GetNumGroupMembers() do
 			local unit = ("raid%d"):format(i)
 			if UnitAffectingCombat(unit) and not UnitIsUnit(unit, player) then
-				local distance = getDistance(unit, player)
+				local distance = mod:Range(unit, player)
 				if distance > highestDistance then
 					highestDistance = distance
 					furthest = unit

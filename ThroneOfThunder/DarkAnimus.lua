@@ -218,17 +218,6 @@ end
 
 -- Matter Swap fun!
 do
-	local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
-	local function getDistance(unit1, unit2)
-		local tx, ty = GetPlayerMapPosition(unit1)
-		local px, py = GetPlayerMapPosition(unit2)
-
-		local dx, dy = (tx - px), (ty - py)
-		local distance = (dx * dx + dy * dy) ^ 0.5
-
-		return distance
-	end
-
 	local timer, last = nil, nil
 	local function warnSwapTarget()
 		local player = matterSwapTargets[1]
@@ -238,12 +227,11 @@ do
 			return
 		end
 
-		SetMapToCurrentZone()
 		local furthest, highestDistance = nil, 0
 		for i=1, GetNumGroupMembers() do
 			local unit = ("raid%d"):format(i)
 			if UnitAffectingCombat(unit) and not UnitIsUnit(unit, player) then -- filter dead people and outside groups
-				local distance = getDistance(unit, player)
+				local distance = mod:Range(unit, player)
 				if distance > highestDistance then
 					highestDistance = distance
 					furthest = unit
