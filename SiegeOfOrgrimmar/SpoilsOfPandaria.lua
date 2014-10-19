@@ -21,11 +21,11 @@ local prevEnrage = 0
 
 local function checkPlayerSide()
 	BigWigsLoader.SetMapToCurrentZone()
-	local cx, cy = GetPlayerMapPosition("player") -- XXX compat
+	local cy, cx = UnitPosition("player")
 	if cy == 0 then return 0 end
 
 	-- simplified cross product: mantid > 0 > mogu
-	return 0.04362700914 - (cx * 0.11017924547) + (cy * 0.04940152168)
+	return -27.2 * (5134.9 + cx) + 17.5 * (-1618.5 + cy)
 end
 
 --------------------------------------------------------------------------------
@@ -166,7 +166,7 @@ function mod:UNIT_POWER_FREQUENT(unit, powerType)
 			self:Message("crates", "Important", "Long", L.full_power, L.crates_icon)
 			massiveCrates = 2
 			stoutCrates = 6
-		else --if power > 25 then
+		else
 			local remaining = 50 - power
 			local small = remaining
 			small = max(0, small - (massiveCrates * 14))
