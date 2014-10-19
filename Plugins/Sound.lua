@@ -12,6 +12,7 @@ if not plugin then return end
 local media = LibStub("LibSharedMedia-3.0")
 local mType = media.MediaType and media.MediaType.SOUND or "sound"
 local soundList = nil
+local db, bwDb
 
 local sounds = {
 	Long = "BigWigs: Long",
@@ -22,7 +23,6 @@ local sounds = {
 	Victory = "BigWigs: Victory",
 }
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
-local BigWigs, GetSpellInfo, PlaySoundFile, PlaySound = BigWigs, GetSpellInfo, PlaySoundFile, PlaySound
 
 --------------------------------------------------------------------------------
 -- Options
@@ -116,9 +116,18 @@ end
 -- Initialization
 --
 
+local function updateProfile()
+	db = plugin.db.profile
+	bwDb = BigWigs.db.profile
+end
+
 local function shouldDisable() return plugin.db.profile.defaultonly end
 
 function plugin:OnRegister()
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	db = self.db.profile
+	bwDb = BigWigs.db.profile
+
 	media:Register(mType, "BigWigs: Long", "Interface\\AddOns\\BigWigs\\Sounds\\Long.ogg")
 	media:Register(mType, "BigWigs: Info", "Interface\\AddOns\\BigWigs\\Sounds\\Info.ogg")
 	media:Register(mType, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Sounds\\Alert.ogg")
@@ -190,38 +199,39 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Sound")
 end
 
-local function play(sound, overwrite)
-	if plugin.db.profile.defaultonly and not overwrite then
-		PlaySound("RaidWarning", "Master")
-	elseif type(sound) == "string" then
-		local s = plugin.db.profile.media[sound] and media:Fetch(mType, plugin.db.profile.media[sound]) or media:Fetch(mType, sound)
-		if type(s) == "string" then
-			PlaySoundFile(s, "Master")
-		end
-	end
-end
-
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-local function customSound(module, key, sound)
-	local sDb = plugin.db.profile[sound]
-	if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end
-	if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
-		return false
-	else
-		return sDb[module.name][key]
+do
+	local GetSpellInfo, PlaySoundFile, PlaySound, type = GetSpellInfo, PlaySoundFile, PlaySound, type
+	local function play(sound, overwrite)
+		if db.defaultonly and not overwrite then
+			PlaySound("RaidWarning", "Master")
+		elseif sound then
+			local path = db.media[sound] and media:Fetch(mType, db.media[sound]) or media:Fetch(mType, sound)
+			if path then
+				PlaySoundFile(path, "Master")
+			end
+		end
 	end
-end
 
-function plugin:BigWigs_Message(event, module, key, text, color, sound)
-	if not text or not sound or not BigWigs.db.profile.sound then return end
-	play(customSound(module, key, sound) or sound)
-end
+	function plugin:BigWigs_Message(event, module, key, text, color, sound)
+		if sound and bwDb.sound then
+			if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end
+			local sDb = db[sound]
+			if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
+				play(sound)
+			else
+				play(sDb[module.name][key])
+			end
+		end
+	end
 
-function plugin:BigWigs_Sound(event, sound, overwrite)
-	if not sound or not BigWigs.db.profile.sound then return end
-	play(sound, overwrite)
+	function plugin:BigWigs_Sound(event, sound, overwrite)
+		if sound and bwDb.sound then
+			play(sound, overwrite)
+		end
+	end
 end
 
