@@ -114,7 +114,7 @@ function mod:ENCOUNTER_END(_, id, name, diff, size, win)
 	-- Sometimes there's a long delay between the last IEEU and IsEncounterInProgress being false so use this instead.
 	if id == 1594 then
 		if win == 1 then
-			self:Win(true)
+			self:Win(nil, true)
 		else
 			self:Wipe()
 		end

@@ -75,7 +75,7 @@ end
 function mod:ENCOUNTER_END(_, id, name, diff, size, win)
 	if id == 1606 then
 		if win == 1 then
-			self:Win(true)
+			self:Win(nil, true)
 		else
 			self:Wipe()
 		end

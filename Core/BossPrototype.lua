@@ -511,7 +511,7 @@ do
 		end
 	end
 
-	function boss:Win(direct)
+	function boss:Win(args, direct)
 		if debug then dbg(self, ":Win") end
 		if direct or self.engageId then
 			self:Message("bosskill", "Positive", "Victory", AL:GetLocale("Big Wigs").defeated:format(self.displayName), false)
@@ -519,7 +519,6 @@ do
 			if self.OnWin then self:OnWin() end
 			self:SendMessage("BigWigs_OnBossWin", self)
 			self:Disable()
-			if not direct then self:Sync("Death", self.moduleName) end -- XXX temp backwards compat for non updaters
 		else
 			self:Sync("Death", self.moduleName)
 		end
