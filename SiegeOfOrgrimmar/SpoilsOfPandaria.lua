@@ -20,7 +20,6 @@ local stoutCrates = 6
 local prevEnrage = 0
 
 local function checkPlayerSide()
-	BigWigsLoader.SetMapToCurrentZone()
 	local cy, cx = UnitPosition("player")
 	if cy == 0 then return 0 end
 
@@ -195,11 +194,17 @@ do
 	end
 end
 
-function mod:BreathOfFire(args) -- XXX no position check, could use :GetUnitIdByGUID, strip "target" and do a range check?
-	local debuffed = UnitDebuff("player", self:SpellName(146217)) -- Keg Toss
-	self:Message(args.spellId, "Attention", debuffed and "Long")
-	if debuffed then
-		self:Flash(146217) -- flash again
+function mod:BreathOfFire(args)
+	-- can be on both sides so check range on someone targeting him
+	local unit = self:GetUnitIdByGUID(args.sourceGUID)
+	local player = unit and unit:match("^(.-)target$") -- should always be a player or nil
+
+	if not player or self:Range(player) < 30 then
+		self:Message(args.spellId, "Attention")
+		if UnitDebuff("player", self:SpellName(146217)) then -- Keg Toss
+			self:PlaySound(args.spellId, "Long")
+			self:Flash(146217) -- flash again
+		end
 	end
 end
 
