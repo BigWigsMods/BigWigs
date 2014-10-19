@@ -27,7 +27,7 @@ L.alphaOutdated = "Your alpha version of Big Wigs is out of date (/bwv)."
 L.extremelyOutdated = "\124cffff0000WARNING:\124r Your Big Wigs is over 120 revisions out of date!! Your version may have bugs, missing features, or completely incorrect timers. It is HIGHLY recommended you update."
 L.severelyOutdated = "\124cffff0000Your Big Wigs is over 300 revisions out of date! We HIGHLY recommend you update to prevent syncing issues with other players!\124r"
 
-L.tooltipHint = "|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fRight-Click|r to access options."
+L.tooltipHint = "|cffeda55fClick|r to reset all running modules.\n|cffeda55fAlt-Click|r to disable them.\n|cffeda55fRight-Click|r to access options."
 L.activeBossModules = "Active boss modules:"
 L.modulesReset = "All running modules have been reset."
 L.modulesDisabled = "All running modules have been disabled."
