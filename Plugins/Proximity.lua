@@ -52,6 +52,7 @@ local maxPlayers = 0
 local unitList = nil
 local blipList = {}
 local updater = false
+local functionToFire = nil
 local proxAnchor, proxTitle, proxCircle = nil, nil, nil
 
 -- Upvalues
@@ -229,7 +230,7 @@ do
 	--
 
 	function normalProximity()
-		if updater then CTimerAfter(0.05, normalProximity) else return end
+		if updater then CTimerAfter(0.05, functionToFire) else return end
 
 		local anyoneClose = 0
 
@@ -276,7 +277,7 @@ do
 	--
 
 	function targetProximity()
-		if updater then CTimerAfter(0.05, targetProximity) else return end
+		if updater then CTimerAfter(0.05, functionToFire) else return end
 
 		local srcY, srcX = UnitPosition("player")
 		local unitY, unitX = UnitPosition(proximityPlayer)
@@ -304,7 +305,7 @@ do
 	--
 
 	function multiTargetProximity()
-		if updater then CTimerAfter(0.05, multiTargetProximity) else return end
+		if updater then CTimerAfter(0.05, functionToFire) else return end
 
 		local anyoneClose = 0
 
@@ -340,7 +341,7 @@ do
 	--
 
 	function reverseProximity()
-		if updater then CTimerAfter(0.05, reverseProximity) else return end
+		if updater then CTimerAfter(0.05, functionToFire) else return end
 
 		local anyoneClose = 0
 
@@ -387,7 +388,7 @@ do
 	--
 
 	function reverseTargetProximity()
-		if updater then CTimerAfter(0.05, reverseTargetProximity) else return end
+		if updater then CTimerAfter(0.05, functionToFire) else return end
 
 		local srcY, srcX = UnitPosition("player")
 		local unitY, unitX = UnitPosition(proximityPlayer)
@@ -414,7 +415,7 @@ do
 	--
 
 	function reverseMultiTargetProximity()
-		if updater then CTimerAfter(0.05, reverseMultiTargetProximity) else return end
+		if updater then CTimerAfter(0.05, functionToFire) else return end
 
 		local anyoneClose = 0
 
@@ -910,6 +911,7 @@ function plugin:Close()
 
 	activeRange, activeRangeSquared = 0, 0
 	activeSpellID = nil
+	functionToFire = nil
 	proximityPlayer = nil
 	wipe(proximityPlayerTable)
 
@@ -936,7 +938,6 @@ function plugin:Open(range, module, key, player, isReverse)
 	updateBlipColors()
 	updateBlipIcons()
 
-	local functionToFire
 	if not player and not isReverse then
 		functionToFire = normalProximity
 	elseif player then
@@ -994,9 +995,11 @@ function plugin:Open(range, module, key, player, isReverse)
 	end
 
 	-- Start the show!
-	proxAnchor:Show()
-	updater = true
-	functionToFire()
+	CTimerAfter(0.2, function()
+		proxAnchor:Show()
+		updater = true
+		functionToFire()
+	end)
 end
 
 function plugin:Test()
