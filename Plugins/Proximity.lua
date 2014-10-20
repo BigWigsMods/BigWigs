@@ -996,9 +996,11 @@ function plugin:Open(range, module, key, player, isReverse)
 
 	-- Start the show!
 	CTimerAfter(0.2, function()
-		proxAnchor:Show()
-		updater = true
-		functionToFire()
+		if functionToFire then
+			proxAnchor:Show()
+			updater = true
+			functionToFire()
+		end
 	end)
 end
 
