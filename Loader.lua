@@ -317,7 +317,10 @@ do
 		end
 	end
 
-	SetCVar("Sound_NumChannels", 64) -- XXX temp until Blizz stops screwing with us
+	local num = tonumber(GetCVar("Sound_NumChannels"))
+	if num and num < 64 then
+		SetCVar("Sound_NumChannels", 64) -- XXX temp until Blizz stops screwing with us
+	end
 end
 
 function mod:PLAYER_LOGIN()
