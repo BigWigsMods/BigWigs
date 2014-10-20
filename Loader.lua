@@ -316,6 +316,8 @@ do
 			iterateWorldBosses(index, menu, strsplit(",", zones))
 		end
 	end
+
+	SetCVar("Sound_NumChannels", 64) -- XXX temp until Blizz stops screwing with us
 end
 
 function mod:PLAYER_LOGIN()
