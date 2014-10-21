@@ -922,86 +922,94 @@ function plugin:Close()
 	proxAnchor:Hide()
 end
 
-local abilityNameFormat = "|T%s:20:20:-5|t%s"
-function plugin:Open(range, module, key, player, isReverse)
-	if type(range) ~= "number" then print("Range needs to be a number!") return end
-	if not IsInGroup() then return end -- Solo runs of old content
-	self:Close()
-
-	local y, x = UnitPosition("player")
-	if x == 0 and y == 0 then print("No map data!") return end
-
-	activeRange = range
-	activeRangeSquared = range*range
-	proxAnchor:RegisterEvent("GROUP_ROSTER_UPDATE")
-	proxAnchor:RegisterEvent("RAID_TARGET_UPDATE")
-	updateBlipColors()
-	updateBlipIcons()
-
-	if not player and not isReverse then
-		functionToFire = normalProximity
-	elseif player then
-		if type(player) == "table" then
-			for i = 1, #player do
-				for j = 1, GetNumGroupMembers() do
-					if UnitIsUnit(player[i], unitList[j]) then
-						proximityPlayerTable[#proximityPlayerTable+1] = unitList[j]
-						break
-					end
-				end
+do
+	local function openProx()
+		if functionToFire then -- Check if proximity was closed before we even started
+			if updater then -- An updater shouldn't be running, cancel it and try again
+				updater = false
+				CTimerAfter(0.1, openProx)
+				return
 			end
-			if isReverse then
-				functionToFire = reverseMultiTargetProximity
-			else
-				functionToFire = multiTargetProximity
-			end
-		else
-			for i = 1, GetNumGroupMembers() do
-				if UnitIsUnit(player, unitList[i]) then
-					proximityPlayer = unitList[i]
-					break
-				end
-			end
-			if not proximityPlayer then self:Close() end -- Not found e.g. Mirror Image
-			if isReverse then
-				functionToFire = reverseTargetProximity
-			else
-				functionToFire = targetProximity
-			end
-		end
-	elseif isReverse then
-		functionToFire = reverseProximity
-	end
-
-	local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
-	local ppy = min(width, height) / (range * 3)
-	proxCircle:SetSize(ppy * range * 2, ppy * range * 2)
-
-	-- Update the ability name display
-	if module and key then
-		local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, key)
-		if type(icon) == "string" then
-			proxAnchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", icon, name)
-		else
-			proxAnchor.ability:SetText(name)
-		end
-	else
-		proxAnchor.ability:SetText(L.customRange)
-	end
-	if type(key) == "number" and key > 0 then -- GameTooltip doesn't do "journal" hyperlinks
-		activeSpellID = key
-	else
-		activeSpellID = nil
-	end
-
-	-- Start the show!
-	CTimerAfter(0.2, function()
-		if functionToFire then
 			proxAnchor:Show()
 			updater = true
 			functionToFire()
 		end
-	end)
+	end
+
+	function plugin:Open(range, module, key, player, isReverse)
+		if type(range) ~= "number" then print("Range needs to be a number!") return end
+		if not IsInGroup() then return end -- Solo runs of old content
+		self:Close()
+
+		local y, x = UnitPosition("player")
+		if x == 0 and y == 0 then print("No map data!") return end
+
+		activeRange = range
+		activeRangeSquared = range*range
+		proxAnchor:RegisterEvent("GROUP_ROSTER_UPDATE")
+		proxAnchor:RegisterEvent("RAID_TARGET_UPDATE")
+		updateBlipColors()
+		updateBlipIcons()
+
+		if not player and not isReverse then
+			functionToFire = normalProximity
+		elseif player then
+			if type(player) == "table" then
+				for i = 1, #player do
+					for j = 1, GetNumGroupMembers() do
+						if UnitIsUnit(player[i], unitList[j]) then
+							proximityPlayerTable[#proximityPlayerTable+1] = unitList[j]
+							break
+						end
+					end
+				end
+				if isReverse then
+					functionToFire = reverseMultiTargetProximity
+				else
+					functionToFire = multiTargetProximity
+				end
+			else
+				for i = 1, GetNumGroupMembers() do
+					if UnitIsUnit(player, unitList[i]) then
+						proximityPlayer = unitList[i]
+						break
+					end
+				end
+				if not proximityPlayer then self:Close() end -- Not found e.g. Mirror Image
+				if isReverse then
+					functionToFire = reverseTargetProximity
+				else
+					functionToFire = targetProximity
+				end
+			end
+		elseif isReverse then
+			functionToFire = reverseProximity
+		end
+
+		local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
+		local ppy = min(width, height) / (range * 3)
+		proxCircle:SetSize(ppy * range * 2, ppy * range * 2)
+
+		-- Update the ability name display
+		if module and key then
+			local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, key)
+			if type(icon) == "string" then
+				proxAnchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", icon, name)
+			else
+				proxAnchor.ability:SetText(name)
+			end
+		else
+			proxAnchor.ability:SetText(L.customRange)
+		end
+		if type(key) == "number" and key > 0 then -- GameTooltip doesn't do "journal" hyperlinks
+			activeSpellID = key
+		else
+			activeSpellID = nil
+		end
+
+		-- Start the show!
+		CTimerAfter(0.1, openProx)
+	end
 end
 
 function plugin:Test()
