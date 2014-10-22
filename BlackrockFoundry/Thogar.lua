@@ -210,17 +210,17 @@ function mod:StartTrainTimer(lane, count)
 	local length = floor(time - (GetTime() - engageTime))
 	if type ~= "random" or lane == 1 then -- only one bar for random trains
 		if type ~= "train" then -- no messages for the fast moving trains
-			self:DelayedMessage("trains", length, "Attention", CL.incoming:format(L[type]), false) -- Incoming Adds train!
+			self:DelayedMessage("trains", length-1, "Neutral", CL.incoming:format(L[type]), false) -- Incoming Adds train!
 		end
 		self:CDBar("trains", length, L.lane:format(type ~= "random" and lane or "?", L[type]), L[type.."_icon"]) -- Lane 1: Adds train
 	end
-	self:ScheduleTimer(checkLane, length, lane) -- gives you ~2s to move
+	self:ScheduleTimer(checkLane, length-1, lane) -- gives you ~2s to move
 	self:ScheduleTimer("StartTrainTimer", length, lane, count+1)
 end
 
 function mod:TrainYell(_, _, sender)
 	if sender == L.train then
-		self:DelayedMessage("trains", 4.5, "Attention", CL.incoming:format(L.train), false) -- Incoming Train!
+		self:DelayedMessage("trains", 4.5, "Neutral", CL.incoming:format(L.train), false) -- Incoming Train!
 	end
 end
 
