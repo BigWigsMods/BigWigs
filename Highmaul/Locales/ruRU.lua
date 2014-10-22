@@ -18,14 +18,14 @@ if L then
 	--L.berserker_trigger2 = "Kral'ach" --Kral'ach.... The darkness speaks.... A VOICE!
 	--L.berserker_trigger3 = "Graaagh!" --Graaagh! KAHL...  AHK... RAAHHHH!
 
-	--L.tectus = "Tectus"
-	--L.shard = "Shard"
-	--L.motes = "Motes"
+	L.adds_desc = "Таймеры, когда новые помощники вступят в бой."
 
 	L.custom_off_barrage_marker = "Маркировка Кристаллического залпа"
 	L.custom_off_barrage_marker_desc = "Отмечать людей с Кристаллическим залпом {rt1}{rt2}{rt3}{rt4}{rt5}, требуется быть помощником или лидером."
 
-	L.adds_desc = "Таймеры, когда новые помощники вступят в бой."
+	L.tectus = "Тектоник"
+	L.shard = "Осколок"
+	L.motes = "Частица"
 end
 
 L = BigWigs:NewBossLocale("Brackenspore", "ruRU")
