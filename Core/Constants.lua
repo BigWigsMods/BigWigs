@@ -94,7 +94,7 @@ do
 	function getSpellDescription(spellId)
 		if cache[spellId] then return cache[spellId] end
 		scanner:ClearLines()
-		scanner:SetHyperlink("spell:"..spellId)
+		scanner:SetHyperlink(("spell:%d"):format(spellId))
 		for i = scanner:NumLines(), 1, -1 do
 			local desc = lcache[i] and lcache[i]:GetText()
 			if desc then
@@ -102,6 +102,8 @@ do
 				return desc
 			end
 		end
+		BigWigs:Print(("Spell description scan returned a nil value for id %d, this shouldn't happen!"):format(spellId))
+		return ""
 	end
 end
 
