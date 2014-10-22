@@ -16,9 +16,11 @@ mod:RegisterEnableMob(77477, 77557, 77231) -- Marak the Blooded, Admiral Gar'an,
 local marak, sorka, garan = (EJ_GetSectionInfo(10033)), (EJ_GetSectionInfo(10030)), (EJ_GetSectionInfo(10025))
 local bossDeaths = 0
 local shipCount = 0
+local boatTimers = {} -- don't announce while on the boat, but track the cd times
 
 local function isOnABoat()
-	return false
+	local _, pos = UnitPosition("player")
+	return pos > 3200
 end
 
 --------------------------------------------------------------------------------
@@ -96,6 +98,7 @@ end
 function mod:OnEngage()
 	bossDeaths = 0
 	shipCount = 0
+	wipe(boatTimers)
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2", "boss3")
 
 	self:Bar(158078, 5) -- Blood Ritual
@@ -118,6 +121,14 @@ do
 			elseif power == 0 then
 				self:StopBar(158849) -- Warming Up
 				self:StopBar(L.bombardment)
+				-- restart timers
+				local t = GetTime()
+				for spellId, nextTime in next, boatTimers do
+					if nextTime > t then
+						self:CDBar(spellId, nextTime-t)
+					end
+				end
+				wipe(boatTimers)
 			end
 		else
 			local power = UnitPower(unit)
@@ -145,32 +156,53 @@ end
 
 -- Ship
 
+local function stopBars(mobId)
+	if mobId == 77477 or mobId == true then -- Marak
+		mod:StopBar(159724) -- Blood Ritual
+		mod:StopBar(158010) -- Heartseeker
+		mod:StopBar(156601) -- Sanguine Strikes
+	end
+	if mobId == 77557 or mobId == true then -- Gar'an
+		mod:StopBar(156631) -- Rapid Fire
+		mod:StopBar(164271) -- Penetrating Shot
+		mod:StopBar(158599) -- Deploy Turret
+	end
+	if mobId == 77231 or mobId == true then -- Sorka
+		mod:StopBar(155794) -- Blade Dash
+		mod:StopBar(156109) -- Convulsive Shadows
+	end
+end
+
+local function checkBoat()
+	if isOnABoat() then
+		stopBars(true)
+	end
+end
+
 function mod:Ship(msg, sender)
 	shipCount = shipCount + 1
 	self:Message("bombardment", "Neutral", "Info", L.ship:format(sender), false)
 	if sender == garan then
-		self:StopBar(156631) -- Rapid Fire
-		self:StopBar(164271) -- Penetrating Shot
-		self:StopBar(158599) -- Deploy Turret
+		stopBars(77557)
 	elseif sender == sorka then
-		self:StopBar(155794) -- Blade Dash
-		self:StopBar(156109) -- Convulsive Shadows
+		stopBars(77231)
 	elseif sender == marak then
-		self:StopBar(159724) -- Blood Ritual
-		self:StopBar(158010) -- Heartseeker
-		self:StopBar(156601) -- Sanguine Strikes
+		stopBars(77477)
 	end
 	if shipCount < 3 then
 		self:Bar("bombardment", 198, 137266, L.ship_icon) -- Jump to Ship
 	end
+	self:ScheduleTimer(checkBoat, 6)
 end
 
 function mod:BombardmentAlpha(args)
+	if isOnABoat() then return end
 	self:Message("bombardment", "Neutral", nil, args.spellId)
 	self:CDBar("bombardment", 18, L.bombardment, L.bombardment_icon)
 end
 
 function mod:BombardmentOmega(args)
+	if isOnABoat() then return end
 	self:Message("bombardment", "Neutral", nil, args.spellId)
 end
 
@@ -189,7 +221,7 @@ end
 -- Gar'an
 
 function mod:RAID_BOSS_WHISPER(_, msg, sender)
-	if msg:find("156626", nil, true) then
+	if msg:find("156626", nil, true) then -- Rapid Fire
 		local text = CL.you:format(self:SpellName(156631))
 		self:Message(156631, "Personal", "Alarm", text)
 		self:Bar(156631, 10.5, text)
@@ -199,6 +231,10 @@ end
 
 function mod:RapidFire(args)
 	self:PrimaryIcon(args.spellId, args.destName)
+	if isOnABoat() then
+		boatTimers[args.spellId] = GetTime() + 31.6
+		return
+	end
 	if not self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Urgent")
 	end
@@ -206,17 +242,28 @@ function mod:RapidFire(args)
 end
 
 function mod:IncendiaryDevice(args)
+	if isOnABoat() then
+		return
+	end
 	self:Message(args.spellId, "Important")
 end
 
 function mod:PenetratingShot(args)
 	self:SecondaryIcon(args.spellId, args.destName)
+	if isOnABoat() then
+		boatTimers[args.spellId] = GetTime() + 22
+		return
+	end
 	self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
 	self:TargetBar(args.spellId, 8, args.destName)
 	self:CDBar(args.spellId, 22) -- 22-36
 end
 
 function mod:DeployTurret(args)
+	if isOnABoat() then
+		boatTimers[args.spellId] = GetTime() + 22
+		return
+	end
 	self:Message(args.spellId, "Attention")
 	self:CDBar(args.spellId, 22) -- 22-43 (?!)
 end
@@ -224,22 +271,33 @@ end
 -- Sorka
 
 function mod:BladeDash(args)
+	if isOnABoat() then
+		boatTimers[args.spellId] = GetTime() + 20
+		return
+	end
 	self:Message(args.spellId, "Attention")
 	self:Bar(args.spellId, 20)
 end
 
 function mod:ConvulsiveShadows(args)
-	if self:Dispeller("magic", nil, 156109) then
-		if isOnABoat() then
-			boatTimers[args.spellId] = GetTime() + 46
-			return
-		end
-		self:TargetMessage(args.spellId, args.destName, "Urgent")
+	local dispeller = self:Dispeller("magic", nil, 156109)
+	if dispeller and isOnABoat() then
+		boatTimers[args.spellId] = GetTime() + 46
+		return
+	end
+	if dispeller or self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Info")
+	end
+	if dispeller then
 		self:Bar(args.spellId, 46)
 	end
 end
 
 function mod:DarkHunt(args)
+	if isOnABoat() then
+		--boatTimers[args.spellId] = GetTime() + 13
+		return
+	end
 	self:TargetMessage(args.spellId, args.destName, "Attention")
 	self:TargetBar(args.spellId, 8, args.destName)
 	--self:Bar(args.spellId, 13) --13.3 14.5
@@ -248,6 +306,10 @@ end
 -- Marak
 
 function mod:BloodRitual(args)
+	if isOnABoat() then
+		boatTimers[args.spellId] = GetTime() + 12
+		return
+	end
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Alert")
 	self:Bar(args.spellId, 12)
 end
@@ -255,7 +317,9 @@ end
 do
 	local targets, scheduled = mod:NewTargetList(), nil
 	local function warnTargets(spellId)
-		mod:TargetMessage(spellId, targets, "Urgent", "Alert")
+		if not isOnABoat() then
+			mod:TargetMessage(spellId, targets, "Urgent", "Alert")
+		end
 		scheduled = nil
 	end
 	function mod:HeartseekerApplied(args)
@@ -268,7 +332,11 @@ do
 			SetRaidTarget(args.destName, #targets)
 		end
 		if not scheduled then
-			self:Bar(args.spellId, 51)
+			if isOnABoat() then
+				boatTimers[args.spellId] = GetTime() + 51
+			else
+				self:Bar(args.spellId, 51)
+			end
 			scheduled = self:ScheduleTimer(warnTargets, 0.1, args.spellId)
 		end
 	end
@@ -286,18 +354,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 70628 then -- Permanent Feign Death
 		local mobId = self:MobId(UnitGUID(unit))
-		if mobId == 77477 then -- Marak
-			self:StopBar(159724) -- Blood Ritual
-			self:StopBar(158010) -- Heartseeker
-			self:StopBar(156601) -- Sanguine Strikes
-		elseif mobId == 77557 then -- Gar'an
-			self:StopBar(156631) -- Rapid Fire
-			self:StopBar(164271) -- Penetrating Shot
-			self:StopBar(158599) -- Deploy Turret
-		elseif mobId == 77231 then -- Sorka
-			self:StopBar(155794) -- Blade Dash
-			self:StopBar(156109) -- Convulsive Shadows
-		end
+		stopBars(mobId)
 	end
 end
 
