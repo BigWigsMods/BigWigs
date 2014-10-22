@@ -898,6 +898,7 @@ end
 
 function plugin:Close()
 	updater = false
+	functionToFire = nil
 
 	proxAnchor:UnregisterEvent("GROUP_ROSTER_UPDATE")
 	proxAnchor:UnregisterEvent("RAID_TARGET_UPDATE")
@@ -911,7 +912,6 @@ function plugin:Close()
 
 	activeRange, activeRangeSquared = 0, 0
 	activeSpellID = nil
-	functionToFire = nil
 	proximityPlayer = nil
 	wipe(proximityPlayerTable)
 
@@ -923,13 +923,11 @@ function plugin:Close()
 end
 
 do
+	local hardCount, softCount = 0, 0
 	local function openProx()
-		if functionToFire then -- Check if proximity was closed before we even started
-			if updater then -- An updater shouldn't be running, cancel it and try again
-				updater = false
-				CTimerAfter(0.1, openProx)
-				return
-			end
+		softCount = softCount + 1
+		-- Check if proximity was closed before we even started, or if another has been opened in the 0.1s we were waiting
+		if functionToFire and softCount == hardCount then
 			proxAnchor:Show()
 			updater = true
 			functionToFire()
@@ -946,6 +944,7 @@ do
 
 		activeRange = range
 		activeRangeSquared = range*range
+		hardCount = hardCount + 1
 		proxAnchor:RegisterEvent("GROUP_ROSTER_UPDATE")
 		proxAnchor:RegisterEvent("RAID_TARGET_UPDATE")
 		updateBlipColors()
