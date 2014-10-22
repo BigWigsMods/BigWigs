@@ -89,8 +89,8 @@ end
 function mod:OnEngage()
 	wipe(marked)
 	--self:CDBar(162346, 6) -- Crystalline Barrage
-	self:CDBar("adds", 10, -10061, L.earthwarper_icon) -- Earthwarper
-	self:CDBar("adds", 20, -10062, L.berserker_icon) -- Berserker
+	self:CDBar("adds", 11, -10061, L.earthwarper_icon) -- Earthwarper
+	self:CDBar("adds", 21, -10062, L.berserker_icon) -- Berserker
 end
 
 --------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ do
 end
 
 function mod:CrystallineBarrage(args)
-	--self:CDBar(args.spellId, 20)
+	--self:CDBar(args.spellId, 20.5)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:Flash(args.spellId)

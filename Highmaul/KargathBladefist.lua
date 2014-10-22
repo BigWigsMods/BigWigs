@@ -21,6 +21,8 @@ local hurled = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.tiger_trigger = ""
+
 	L.blade_dance_bar = "Dancing"
 end
 L = mod:GetLocale()
@@ -54,7 +56,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "MaulingBrewDamage", 159413)
 	self:Log("SPELL_CAST_START", "VileBreath", 160521)
 	-- Mythic
-	--self:Log("SPELL_AURA_APPLIED", "CrowdFavorite", 163370, 163369, 163368, 163366)
+	--self:Emote("TigerSpawn", L.tiger_trigger)
 	self:Log("SPELL_AURA_APPLIED", "OnTheHunt", 162497)
 
 	self:Death("Win", 79459)
@@ -64,11 +66,16 @@ function mod:OnEngage()
 	self:CDBar(159113, 37) -- Impale
 	--self:CDBar(158986, 48) -- Berserker Rush
 	self:CDBar(159947, 90) -- Chain Hurl
+	self:Bar(162497, 110, -9436, 162497) -- Ravenous Bloodmaw
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:TigerSpawn()
+	self:Bar(162497, 110, -9436, 162497) -- Ravenous Bloodmaw
+end
 
 function mod:OnTheHunt(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", self:SpellName(-9436)) -- Ravenous Bloodmaw

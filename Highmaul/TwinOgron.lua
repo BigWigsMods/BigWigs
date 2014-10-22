@@ -16,7 +16,6 @@ mod:RegisterEnableMob(78238, 78237) -- Pol, Phemos
 local bossDeaths = 0
 local quakeCount = 0
 local volatilityCount = 1
-local nextPhemo = 0
 
 local function GetBossUnit(guid)
 	for i=1, 3 do
@@ -54,7 +53,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{143834, "TANK_HEALER"}, {158134, "ICON", "SAY", "FLASH"}, {158093, "FLASH"}, 158385,
+		{143834, "TANK_HEALER"}, {158134, "ICON", "SAY", "FLASH"}, 158093, 158385,
 		{158521, "TANK_HEALER"}, {167200, "TANK"}, 157943, 158057, 158200, {158241, "FLASH"}, {163372, "FLASH", "PROXIMITY"}, "custom_off_volatility_marker",
 		"berserk", "bosskill"
 	}, {
@@ -95,11 +94,11 @@ function mod:OnEngage()
 	bossDeaths = 0
 	quakeCount = 0
 	volatilityCount = 1
-	nextPhemo = 158200
-	self:CDBar(158200, 12) -- Quake
+	self:CDBar(158200, 11) -- Quake
 	self:CDBar(143834, 22) -- Shield Bash
 	--self:CDBar(158521, 26) -- Double Slash
 	self:CDBar(158134, 34) -- Shield Charge
+	self:CDBar(157943, 40) -- Whirlwind
 	if self:Mythic() then
 		self:Bar(163372, 65) -- Arcane Volatility
 	end
@@ -126,52 +125,9 @@ function mod:ShieldBash(args)
 	self:CDBar(args.spellId, 23)
 end
 
-do
-	-- XXX target scanning doesn't work /sadface i'll leave it here for now, though
-	local timer = nil
-
-	local function warnShieldCharge(self, name, guid)
-		self:PrimaryIcon(158134, name)
-		if self:Me(guid) then
-			self:Say(158134)
-			self:Flash(158134)
-		elseif self:Range(name) < 11 then
-			self:RangeMessage(158134)
-			self:Flash(158134)
-			return
-		end
-		self:TargetMessage(158134, name, "Urgent", "Alarm")
-	end
-
-	function mod:ShieldCharge(args)
-		if timer then
-			self:Message(args.spellId, "Urgent", "Alarm")
-			self:CancelTimer(timer)
-			timer = nil
-		end
-		self:CDBar(158093, 27) -- Interrupting Shout
-	end
-
-	local UnitGUID, UnitDetailedThreatSituation = UnitGUID, UnitDetailedThreatSituation
-	local function scanner(self)
-		for i=1, 5 do
-			local boss = ("boss%d"):format(i)
-			if self:MobId(UnitGUID(boss)) == 78238 then
-				local bossTarget = boss.."target"
-				local guid = UnitGUID(bossTarget)
-				if guid and (not UnitDetailedThreatSituation(bossTarget, boss) and not self:Tank(bossTarget)) then
-					local name = self:UnitName(bossTarget)
-					warnShieldCharge(self, name, guid)
-					self:CancelTimer(timer)
-					timer = nil
-				end
-				return
-			end
-		end
-	end
-	function mod:ShieldChargeScan()
-		timer = self:ScheduleRepeatingTimer(scanner, 0.05, self)
-	end
+function mod:ShieldCharge(args)
+	self:Message(args.spellId, "Urgent", "Alarm")
+	self:CDBar(158093, 27) -- Interrupting Shout
 end
 
 do
@@ -206,11 +162,10 @@ do
 		count = 0
 		self:Message(args.spellId, "Urgent", nil, CL.incoming:format(args.spellName))
 		self:CDBar(158134, 27) -- Shield Charge
-		self:ScheduleTimer("ShieldChargeScan", 20)
 	end
 	function mod:PulverizeCast(args)
 		count = count + 1
-		self:Message(158385, "Urgent", "Alert", CL.count(args.spellName, count))
+		self:Message(158385, "Urgent", "Info", CL.count(args.spellName, count))
 	end
 end
 
@@ -228,23 +183,18 @@ end
 
 function mod:Whirlwind(args)
 	self:Message(args.spellId, "Attention")
-	if nextPhemo == args.spellId then
-		self:CDBar(158057, 33) -- Enfeebling Roar
-		nextPhemo = 158057
-	end
+	self:CDBar(args.spellId, 60)
 end
 
 function mod:EnfeeblingRoar(args)
 	self:Message(args.spellId, "Attention", "Alert")
 	self:CDBar(158200, 33, CL.count:format(self:SpellName(158200), quakeCount+1)) -- Quake
-	nextPhemo = 158200
 end
 
 function mod:Quake(args)
 	quakeCount = quakeCount + 1
 	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(CL.count:format(args.spellName, quakeCount)))
-	self:CDBar(157943, 33) -- Whirlwind
-	nextPhemo = 157943
+	self:CDBar(158057, 56) -- Enfeebling Roar
 end
 
 function mod:QuakeChannel(args)
@@ -257,7 +207,6 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
-			self:Flash(args.spellId)
 			prev = t
 		end
 	end
@@ -268,7 +217,7 @@ do
 	local targets, isOnMe, timer = {}, nil, nil
 
 	function mod:ArcaneVolatility()
-		self:Message(163372, "Urgent")
+		self:Message(163372, "Neutral")
 		local t = times[volatilityCount]
 		if t then
 			self:CDBar(163372, t)
