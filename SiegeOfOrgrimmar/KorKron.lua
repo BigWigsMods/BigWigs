@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Kor'kron Dark Shaman", 953, 856)
 if not mod then return end
 mod:RegisterEnableMob(71859, 71858, 71923, 71921) -- Earthbreaker Haromm, Wavebinder Kardris, Bloodclaw, Darkfang
---mod.engageId = 1606
+mod.engageId = 1606
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -49,9 +49,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:RegisterEvent("ENCOUNTER_END")
-
 	-- Heroic
 	self:Log("SPELL_AURA_APPLIED", "IronPrison", 144330)
 	self:Log("SPELL_CAST_START", "IronTomb", 144328)
@@ -70,16 +67,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "ToxicStormDamage", 144017)
 	-- General
 	self:Log("SPELL_CAST_SUCCESS", "Bloodlust", 144302)
-end
-
-function mod:ENCOUNTER_END(_, id, name, diff, size, win)
-	if id == 1606 then
-		if win == 1 then
-			self:Win(nil, true)
-		else
-			self:Wipe()
-		end
-	end
 end
 
 function mod:OnEngage()

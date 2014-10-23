@@ -6,6 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Siegecrafter Blackfuse", 953, 865)
 if not mod then return end
 mod:RegisterEnableMob(71504, 72981) -- Siegecrafter Blackfuse, Aggron
+mod.engageId = 1601
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -87,8 +88,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	-- heroic
 	self:Log("SPELL_CAST_SUCCESS", "Overcharge", 145774)
 	-- The Assembly Line
@@ -121,7 +120,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "DrillstormRemoved", 146479)
 
 	self:Death("ShredderDied", 71591)
-	self:Death("Win", 71504)
 end
 
 function mod:OnEngage()

@@ -157,13 +157,13 @@ end
 --
 
 function plugin:BigWigs_OnBossEngage(event, module, diff)
-	if module.encounterId and module.zoneId and diff and difficultyTable[diff] and not module.worldBoss then -- Raid restricted for now
-		activeDurations[module.encounterId] = GetTime()
+	if module.journalId and module.zoneId and diff and difficultyTable[diff] and not module.worldBoss then -- Raid restricted for now
+		activeDurations[module.journalId] = GetTime()
 
 		local sDB = BigWigsStatisticsDB
 		if not sDB[module.zoneId] then sDB[module.zoneId] = {} end
-		if not sDB[module.zoneId][module.encounterId] then sDB[module.zoneId][module.encounterId] = {} end
-		sDB = sDB[module.zoneId][module.encounterId]
+		if not sDB[module.zoneId][module.journalId] then sDB[module.zoneId][module.journalId] = {} end
+		sDB = sDB[module.zoneId][module.journalId]
 		if not sDB[difficultyTable[diff]] then sDB[difficultyTable[diff]] = {} end
 
 		local best = sDB[difficultyTable[diff]].best
@@ -174,9 +174,9 @@ function plugin:BigWigs_OnBossEngage(event, module, diff)
 end
 
 function plugin:BigWigs_OnBossWin(event, module)
-	if module.encounterId and activeDurations[module.encounterId] then
-		local elapsed = GetTime()-activeDurations[module.encounterId]
-		local sDB = BigWigsStatisticsDB[module.zoneId][module.encounterId][difficultyTable[module:Difficulty()]]
+	if module.journalId and activeDurations[module.journalId] then
+		local elapsed = GetTime()-activeDurations[module.journalId]
+		local sDB = BigWigsStatisticsDB[module.zoneId][module.journalId][difficultyTable[module:Difficulty()]]
 
 		if self.db.profile.printKills then
 			BigWigs:ScheduleTimer("Print", 1, L.bossDefeatDurationPrint:format(module.displayName, SecondsToTime(elapsed)))
@@ -193,13 +193,13 @@ function plugin:BigWigs_OnBossWin(event, module)
 			sDB.best = elapsed
 		end
 
-		activeDurations[module.encounterId] = nil
+		activeDurations[module.journalId] = nil
 	end
 end
 
 function plugin:BigWigs_OnBossWipe(event, module)
-	if module.encounterId and activeDurations[module.encounterId] then
-		local elapsed = GetTime()-activeDurations[module.encounterId]
+	if module.journalId and activeDurations[module.journalId] then
+		local elapsed = GetTime()-activeDurations[module.journalId]
 
 		if elapsed > 30 then -- Fight must last longer than 30 seconds to be an actual wipe worth noting
 			if self.db.profile.printWipes then
@@ -207,12 +207,12 @@ function plugin:BigWigs_OnBossWipe(event, module)
 			end
 
 			if self.db.profile.saveWipes then
-				local sDB = BigWigsStatisticsDB[module.zoneId][module.encounterId][difficultyTable[module:Difficulty()]]
+				local sDB = BigWigsStatisticsDB[module.zoneId][module.journalId][difficultyTable[module:Difficulty()]]
 				sDB.wipes = sDB.wipes and sDB.wipes + 1 or 1
 			end
 		end
 
-		activeDurations[module.encounterId] = nil
+		activeDurations[module.journalId] = nil
 	end
 end
 

@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Spoils of Pandaria", 953, 870)
 if not mod then return end
 mod:RegisterEnableMob(73152, 73720, 71512) -- Storeroom Guard ( trash guy ), Mogu Spoils, Mantid Spoils
---mod.engageId = 1594
+mod.engageId = 1594
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -81,9 +81,6 @@ function mod:OnRegister() -- XXX check out replacing this with the chest id
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:RegisterEvent("ENCOUNTER_END")
-
 	-- Crate of Panderan Relics
 	self:Log("SPELL_DAMAGE", "PathOfBlossoms", 146257)
 	self:Log("SPELL_CAST_START", "BreathOfFire", 146222)
@@ -107,18 +104,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "SetToBlowRemoved", 145987)
 
 	self:Yell("Warmup", L.start_trigger)
-	self:Yell("Win", L.win_trigger)
-end
-
-function mod:ENCOUNTER_END(_, id, name, diff, size, win)
-	-- Sometimes there's a long delay between the last IEEU and IsEncounterInProgress being false so use this instead.
-	if id == 1594 then
-		if win == 1 then
-			self:Win(nil, true)
-		else
-			self:Wipe()
-		end
-	end
 end
 
 function mod:Warmup()
@@ -126,7 +111,6 @@ function mod:Warmup()
 end
 
 function mod:OnEngage()
-	self:UnregisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	sparkCounter = 0
 	prevEnrage = 0
 	massiveCrates = 2

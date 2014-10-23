@@ -47,8 +47,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	-- Rage Phase
 	self:Log("SPELL_AURA_APPLIED", "DisplacedEnergyApplied", 142913)
 	self:Log("SPELL_AURA_REMOVED", "DisplacedEnergyRemoved", 142913)

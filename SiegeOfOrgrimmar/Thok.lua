@@ -6,6 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Thok the Bloodthirsty", 953, 851)
 if not mod then return end
 mod:RegisterEnableMob(71529)
+mod.engageId = 1599
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -52,8 +53,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	-- heroic
 	self:Log("SPELL_AURA_APPLIED", "YetCharge", 148145)
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "PrisonerTracker")
@@ -78,8 +77,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TankDebuff", 143766, 143780, 143773, 143767)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "TankDebuffCasts", "boss1")
 
-	self:Death("Win", 71529)
-	self:Death("Deaths", 73526) -- Starved Yeti
+	self:Death("YetiDeath", 73526) -- Starved Yeti
 end
 
 function mod:OnEngage()
@@ -255,11 +253,9 @@ function mod:TankDebuff(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", not self:Me(args.destGUID) and "Warning")
 end
 
-function mod:Deaths(args)
-	if args.mobId == 73526 then -- Starved Yeti
-		self:CancelTimer(yetiChargeTimer)
-		yetiChargeTimer = nil
-		heroicAdd = nil
-	end
+function mod:YetiDeath(args)
+	self:CancelTimer(yetiChargeTimer)
+	yetiChargeTimer = nil
+	heroicAdd = nil
 end
 

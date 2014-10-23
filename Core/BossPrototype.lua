@@ -14,7 +14,7 @@ local pName = UnitName("player")
 local bossUtilityFrame = CreateFrame("Frame")
 local enabledModules = {}
 local allowedEvents = {}
-local difficulty = 3
+local difficulty = 16 -- Mythic
 local UpdateDispelStatus = nil
 local myGUID = nil
 local myRole = nil
@@ -109,7 +109,12 @@ function boss:OnEnable()
 	if self.SetupOptions then self:SetupOptions() end
 	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 
-	if IsEncounterInProgress() then
+	if self.engageId then
+		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+		self:RegisterEvent("ENCOUNTER_END", "EncounterEnds")
+	end
+
+	if IsEncounterInProgress() and (not self.lastWipe or GetTime()-self.lastWipe > 2) then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
 		self:CheckBossStatus("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
 	end
 
@@ -500,6 +505,10 @@ do
 
 		if debug then dbg(self, ":Engage") end
 
+		if self.engageId then
+			self:UnregisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+		end
+
 		if not noEngage or noEngage ~= "NoEngage" then
 			updateData()
 
@@ -513,7 +522,7 @@ do
 
 	function boss:Win(args, direct)
 		if debug then dbg(self, ":Win") end
-		if direct or self.engageId then
+		if direct then
 			self:Message("bosskill", "Positive", "Victory", AL:GetLocale("Big Wigs").defeated:format(self.displayName), false)
 			self.lastKill = GetTime() -- Add the kill time for the enable check.
 			if self.OnWin then self:OnWin() end
@@ -527,6 +536,7 @@ do
 	end
 
 	function boss:Wipe()
+		self.lastWipe = GetTime() -- Add the wipe time for the engage check.
 		self:Reboot(true)
 		if self.OnWipe then self:OnWipe() end
 	end
@@ -561,6 +571,16 @@ do
 
 		self.scheduledScansCounter[func] = 0
 		self.scheduledScans[func] = self:ScheduleRepeatingTimer(bossScanner, 0.05, self, func, tankCheckExpiry, guid)
+	end
+end
+
+function addon:EncounterEnds(event, id, name, difficulty, size, status)
+	if self.engageId == id and self.enabledState then
+		if status == 1 then
+			self:Win(nil, true)
+		elseif status == 0 then
+			self:Wipe()
+		end
 	end
 end
 

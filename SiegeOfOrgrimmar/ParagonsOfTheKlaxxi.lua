@@ -9,6 +9,7 @@ mod:RegisterEnableMob(
 	71161, 71157, 71156, 71155, -- Kil'ruk the Wind-Reaver, Xaril the Poisoned Mind, Kaz'tik the Manipulator, Korven the Prime
 	71160, 71154, 71152, 71158, 71153 -- Iyyokuk the Lucid, Ka'roz the Locust, Skeer the Bloodseeker, Rik'kal the Dissector, Hisek the Swarmkeeper
 )
+mod.engageId = 1593
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -16,7 +17,6 @@ mod:RegisterEnableMob(
 
 local UnitDetailedThreatSituation, UnitExists, UnitIsUnit, UnitDebuff, UnitGUID = UnitDetailedThreatSituation, UnitExists, UnitIsUnit, UnitDebuff, UnitGUID
 
-local deathCounter = 0
 local function getBossByMobId(mobId)
 	for i=1, 5 do
 		if mod:MobId(UnitGUID("boss"..i)) == mobId then
@@ -142,7 +142,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Log("SPELL_AURA_REMOVED", "ReadyToFight", 143542)
 
 	--Kil'ruk the Wind-Reaver
@@ -196,13 +195,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "RapidFire", 143243)
 
 	self:Death("ParasiteDeaths", 71578)
-	self:Death("Deaths", 71161, 71157, 71156, 71155, 71160, 71154, 71152, 71158, 71153)
+	self:Death("ParagonDeaths", 71161, 71157, 71156, 71155, 71160, 71154, 71152, 71158, 71153)
 end
 
 function mod:OnEngage()
 	self:Berserk(720)
 	catalystProximityHandler = nil
-	deathCounter = 0
 	results = {
 		mantid = {}, sword = {}, staff = {}, drum = {}, bomb = {},
 		red = {}, purple = {}, blue = {}, green = {}, yellow = {},
@@ -815,7 +813,7 @@ function mod:ParasiteDeaths(args)
 	end
 end
 
-function mod:Deaths(args)
+function mod:ParagonDeaths(args)
 	if args.mobId == 71152 then --Skeer the Bloodseeker
 		self:StopBar(143280) -- Bloodletting
 	elseif args.mobId == 71154 then --Ka'roz the Locust
@@ -847,11 +845,6 @@ function mod:Deaths(args)
 		self:StopBar(143339) -- Injection
 	elseif args.mobId == 71160 then -- Iyyokuk the Lucid
 		self:StopBar(CL.count:format(self:SpellName(142514), calculateCounter))
-	end
-
-	deathCounter = deathCounter + 1
-	if deathCounter == 9 then
-		self:Win()
 	end
 end
 

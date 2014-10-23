@@ -59,8 +59,6 @@ function mod:OnBossEnable()
 		self:OpenAltPower("altpower", 144343) -- Pride
 	end
 
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	-- heroic
 	self:Log("SPELL_AURA_REMOVED", "WeakenedResolveOver", 147207)
 	self:Log("SPELL_AURA_APPLIED", "WeakenedResolveBegin", 147207)

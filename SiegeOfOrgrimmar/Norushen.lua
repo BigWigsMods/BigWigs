@@ -6,6 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Norushen", 953, 866)
 if not mod then return end
 mod:RegisterEnableMob(72276, 71977, 71976, 71967) -- Amalgam of Corruption, Manifestation of Corruption, Essence of Corruption, Norushen
+mod.engageId = 1624
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -51,7 +52,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	if IsEncounterInProgress() then
 		self:OpenAltPower("altpower", 147800, "AZ", true) -- Corruption
 	end
@@ -76,7 +76,6 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 
 	self:RegisterEvent("ENCOUNTER_START")
-	self:RegisterEvent("ENCOUNTER_END")
 
 	self:AddSyncListener("BlindHatred")
 	self:AddSyncListener("InsideBigAddDeath", 0)
@@ -97,16 +96,6 @@ end
 function mod:ENCOUNTER_START(_, id)
 	if id == 1624 then
 		self:Bar("warmup", 26, COMBAT, "ability_titankeeper_quarantine")
-	end
-end
-
-function mod:ENCOUNTER_END(_, id, name, diff, size, win)
-	if id == 1624 then
-		if win == 1 then
-			self:Win(nil, true)
-		else
-			self:Wipe()
-		end
 	end
 end
 

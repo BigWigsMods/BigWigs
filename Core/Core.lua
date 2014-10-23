@@ -89,25 +89,11 @@ end
 -- Engage handler
 --
 
-function addon:ENCOUNTER_START(_, id, name)
+function addon:ENCOUNTER_START(_, id)
 	for _, module in next, bossCore.modules do
 		if module.engageId == id then
-			if not module:IsEnabled() then module:Enable() end
-			module:Engage()
-		end
-	end
-end
-
-function addon:ENCOUNTER_END(_, id, name, difficulty, size, win)
-	for _, module in next, bossCore.modules do
-		if module.engageId == id then
-			if not module:IsEnabled() then
-				return
-			elseif win == 1 then
-				module:Win()
-			elseif win == 0 then
-				module:Wipe()
-			end
+			if not module.enabledState then module:Enable() end
+			--module:Engage() -- No engaging until Blizzard fixes this event
 		end
 	end
 end
@@ -562,7 +548,6 @@ function addon:NewBossLocale(name, locale, default) return AL:NewLocale(("%s_%s"
 
 do
 	local errorDeprecatedNew = "%q is using the deprecated :New() API. Please tell the author to fix it for Big Wigs 3."
-	local errorDeprecatedZone = "%q is using the old way of registering zones (%s), tell the author to fix it for Big Wigs 3.7."
 	local errorAlreadyRegistered = "%q already exists as a module in Big Wigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch."
 
 	-- either you get me the hell out of these woods, or you'll know how my
@@ -573,14 +558,10 @@ do
 		self:Print(errorDeprecatedNew:format(module))
 	end
 
-	local function new(core, module, zoneId, encounterId, ...)
+	local function new(core, module, zoneId, journalId, ...)
 		if core:GetModule(module, true) then
 			addon:Print(errorAlreadyRegistered:format(module))
 		else
-			if type(zoneId) == "string" then
-				addon:Print(errorDeprecatedZone:format(module, tostring(zoneId)))
-				return
-			end
 			local m = core:NewModule(module, ...)
 
 			-- Embed callback handler
@@ -593,7 +574,7 @@ do
 			m.UnregisterEvent = addon.UnregisterEvent
 
 			m.zoneId = zoneId
-			m.encounterId = encounterId
+			m.journalId = journalId
 			return m, CL
 		end
 	end
@@ -704,8 +685,8 @@ do
 	end
 
 	function addon:RegisterBossModule(module)
-		if module.encounterId then
-			module.displayName = EJ_GetEncounterInfo(module.encounterId)
+		if module.journalId then
+			module.displayName = EJ_GetEncounterInfo(module.journalId)
 		end
 		if not module.displayName then module.displayName = module.moduleName end
 

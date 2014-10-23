@@ -6,6 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Garrosh Hellscream", 953, 869)
 if not mod then return end
 mod:RegisterEnableMob(71865)
+mod.engageId = 1623
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -101,7 +102,6 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", "IronStarRolling", "boss1", "boss2", "boss3")
 
@@ -138,7 +138,6 @@ function mod:OnBossEnable()
 
 	self:Death("EngineerDeath", 71984) -- Siege Engineer
 	self:Death("RiderDeath", 71983) -- Farseer Wolf Rider
-	self:Death("Win", 71865) -- Garrosh
 end
 
 function mod:OnEngage(diff)

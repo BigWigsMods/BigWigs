@@ -53,8 +53,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_CAST_SUCCESS", "MineArming", 144718) -- Detonation Sequence
 	-- Siege mode
 	self:Log("SPELL_PERIODIC_DAMAGE", "ExplosiveTar", 144498)
