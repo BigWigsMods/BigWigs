@@ -7,13 +7,13 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Hans'gar and Franzok", 988, 1155)
 if not mod then return end
 mod:RegisterEnableMob(76973, 76974) -- Hans'gar, Franzok
---mod.engageId = 1693
+mod.engageId = 1693
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local bossDeaths = 0
+
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -58,7 +58,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	bossDeaths = 0
 	self:CDBar(160838, 45) -- Disrupting Roar
 end
 
@@ -105,13 +104,6 @@ do
 			self:Flash(args.spellId)
 			prev = t
 		end
-	end
-end
-
-function mod:Deaths(args)
-	bossDeaths = bossDeaths + 1
-	if bossDeaths > 1 then
-		self:Win()
 	end
 end
 

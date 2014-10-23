@@ -7,14 +7,13 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("The Iron Maidens", 988, 1203)
 if not mod then return end
 mod:RegisterEnableMob(77477, 77557, 77231) -- Marak the Blooded, Admiral Gar'an, Enforcer Sorka
---mod.engageId = 1695
+mod.engageId = 1695
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
 local marak, sorka, garan = (EJ_GetSectionInfo(10033)), (EJ_GetSectionInfo(10030)), (EJ_GetSectionInfo(10025))
-local bossDeaths = 0
 local shipCount = 0
 local boatTimers = {} -- don't announce while on the boat, but track the cd times
 
@@ -67,7 +66,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
 
 	self:Log("SPELL_AURA_APPLIED", "IronWill", 159336)
@@ -91,12 +89,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BombardmentOmega", 157886)
 	self:Log("SPELL_PERIODIC_DAMAGE", "CorruptedBloodDamage", 158683)
 	self:Log("SPELL_PERIODIC_MISSED", "CorruptedBloodDamage", 158683)
-
-	self:Death("Deaths", 77477, 77557, 77231)
 end
 
 function mod:OnEngage()
-	bossDeaths = 0
 	shipCount = 0
 	wipe(boatTimers)
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2", "boss3")
@@ -355,13 +350,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 70628 then -- Permanent Feign Death
 		local mobId = self:MobId(UnitGUID(unit))
 		stopBars(mobId)
-	end
-end
-
-function mod:Deaths(args)
-	bossDeaths = bossDeaths + 1
-	if bossDeaths > 2 then
-		self:Win()
 	end
 end
 

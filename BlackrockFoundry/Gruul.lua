@@ -43,8 +43,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_CAST_START", "InfernoSlice", 155080)
 	self:Log("SPELL_CAST_START", "OverheadSmash", 155301)
 	self:Log("SPELL_AURA_APPLIED", "OverwhelmingBlows", 155078)
@@ -58,8 +56,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "CaveInDamage", 173192)
 	self:Log("SPELL_PERIODIC_MISSED", "CaveInDamage", 173192)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-
-	self:Death("Win", 76877)
 end
 
 function mod:OnEngage()

@@ -7,7 +7,7 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Flamebender Ka'graz", 988, 1123)
 if not mod then return end
 mod:RegisterEnableMob(76814, 77337) -- Flamebender Ka'graz, Aknor Steelbringer
---mod.engageId = 1689
+mod.engageId = 1689
 
 
 --------------------------------------------------------------------------------
@@ -49,8 +49,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	-- Aknor
 	self:Log("SPELL_CAST_START", "DevastatingSlam", 156018)
 	self:Log("SPELL_CAST_START", "DropHammer", 156040)
@@ -73,7 +71,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Rekindle", 155064)
 
 	--self:Death("AknorDeath", 77337) -- Aknor Steelbringer
-	self:Death("Win", 76814)
 end
 
 function mod:OnEngage()

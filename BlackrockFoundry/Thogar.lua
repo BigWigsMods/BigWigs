@@ -7,7 +7,7 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Operator Thogar", 988, 1147)
 if not mod then return end
 mod:RegisterEnableMob(76906, 80791) -- Operator Thogar, Grom'kar Man-at-Arms
---mod.engageId = 1622
+mod.engageId = 1622
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -149,8 +149,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_AURA_APPLIED", "Enkindle", 155921)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Enkindle", 155921)
 	self:Log("SPELL_CAST_START", "PulseGrenade", 155864)
@@ -164,7 +162,6 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_AURA_APPLIED_DOSE", "ObliterationDamage", 156494)
 
 	self:Death("Deaths", 80791) -- Grom'kar Man-at-Arms
-	self:Death("Win", 76906)
 end
 
 function mod:OnEngage()

@@ -7,7 +7,7 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Blackhand", 988, 959)
 if not mod then return end
 mod:RegisterEnableMob(77325)
---mod.engageId = 1704
+mod.engageId = 1704
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -49,7 +49,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	self:Log("SPELL_CAST_START", "ShatteringSmash", 155992, 159142)
@@ -65,8 +64,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SlagEruption", 156928)
 	self:Log("SPELL_CAST_START", "MassiveShatteringSmash", 158054)
 	self:Log("SPELL_AURA_APPLIED", "AttachSlagBombs", 157000)
-
-	self:Death("Win", 77325)
 end
 
 function mod:OnEngage()

@@ -7,7 +7,7 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Beastlord Darmac", 988, 1122)
 if not mod then return end
 mod:RegisterEnableMob(76865)
---mod.engageId = 1694
+mod.engageId = 1694
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -99,7 +99,6 @@ function mod:OnBossEnable()
 
 	self:Death("SpearDeath", 76796) -- Heavy Spear
 	self:Death("Deaths", 76884, 76874, 76945, 76946) -- Cruelfang, Dreadwing, Ironcrusher, Faultline
-	self:Death("Win", 76865) -- Beastlord Darmac
 end
 
 function mod:OnEngage(diff)
@@ -156,7 +155,7 @@ local function deactivateMount(mobId)
 end
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	self:CheckBossStatus()
+	self:CheckForEncounterEngage()
 	wipe(currentBosses)
 	for i=1, 5 do
 		local unit = ("boss%d"):format(i)

@@ -7,7 +7,7 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Kromog", 988, 1162)
 if not mod then return end
 mod:RegisterEnableMob(77692)
---mod.engageId = 1713
+mod.engageId = 1713
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -34,8 +34,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "WarpedArmor", 156766)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WarpedArmor", 156766)
@@ -48,8 +46,6 @@ function mod:OnBossEnable()
 	-- Mythic
 	self:Log("SPELL_CAST_SUCCESS", "TremblingEarth", 173917)
 	self:Log("SPELL_CAST_START", "CallOfTheMountain", 158217)
-
-	self:Death("Win", 77692)
 end
 
 function mod:OnEngage()
