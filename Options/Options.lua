@@ -398,7 +398,7 @@ function options:OnEnable()
 	local tmp, tmpZone = {}, {}
 	for k in next, BigWigsLoader:GetZoneMenus() do
 		local zone = translateZoneID(k)
-		if zone and k ~= 988 and k ~= 994 and k ~= 962 then -- XXX compat
+		if zone and (BigWigs.isWOD or (k ~= 988 and k ~= 994 and k ~= 962)) then -- XXX compat
 			tmp[zone] = k
 			tmpZone[#tmpZone+1] = zone
 		end
