@@ -56,7 +56,7 @@ do
 
 	function addon:RegisterEvent(event, func)
 		if type(event) ~= "string" then error((noEvent):format(self.moduleName)) end
-		if (not func and not self[event]) or (type(func) == "string" and not self[func]) then error((noFunc):format(self.moduleName, func or event)) end
+		if (not func and not self[event]) or (type(func) == "string" and not self[func]) then error((noFunc):format(self.moduleName or "?", func or event)) end
 		if not eventMap[event] then eventMap[event] = {} end
 		eventMap[event][self] = func or event
 		bwUtilityFrame:RegisterEvent(event)
@@ -496,7 +496,6 @@ function addon:OnEnable()
 	self:RegisterEvent("CINEMATIC_START")
 
 	self:RegisterEvent("ENCOUNTER_START")
-	self:RegisterEvent("ENCOUNTER_END")
 
 	pluginCore:Enable()
 	bossCore:Enable()
@@ -511,7 +510,6 @@ function addon:OnDisable()
 	self:UnregisterMessage("BigWigs_AddonMessage")
 
 	self:UnregisterEvent("ENCOUNTER_START")
-	self:UnregisterEvent("ENCOUNTER_END")
 
 	zoneChanged() -- Unregister zone events
 	bossCore:Disable()

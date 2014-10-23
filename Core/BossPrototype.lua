@@ -574,7 +574,7 @@ do
 	end
 end
 
-function addon:EncounterEnds(event, id, name, difficulty, size, status)
+function boss:EncounterEnds(event, id, name, difficulty, size, status)
 	if self.engageId == id and self.enabledState then
 		if status == 1 then
 			self:Win(nil, true)
