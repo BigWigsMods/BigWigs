@@ -86,7 +86,7 @@ do
 end
 
 -------------------------------------------------------------------------------
--- Engage handler
+-- ENCOUNTER event handler
 --
 
 function addon:ENCOUNTER_START(_, id)
