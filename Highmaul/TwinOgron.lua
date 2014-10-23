@@ -7,13 +7,12 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Twin Ogron", 994, 1148)
 if not mod then return end
 mod:RegisterEnableMob(78238, 78237) -- Pol, Phemos
---mod.engageId = 1719
+mod.engageId = 1719
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local bossDeaths = 0
 local quakeCount = 0
 local volatilityCount = 1
 
@@ -64,8 +63,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	-- Pol
 	self:Log("SPELL_CAST_START", "ShieldBash", 143834)
 	self:Log("SPELL_CAST_START", "ShieldCharge", 158134)
@@ -86,12 +83,9 @@ function mod:OnBossEnable()
 	self:Emote("ArcaneVolatility", "163372") -- Mythic
 	self:Log("SPELL_AURA_APPLIED", "ArcaneVolatilityApplied", 163372) -- Mythic
 	self:Log("SPELL_AURA_REMOVED", "ArcaneVolatilityRemoved", 163372) -- Mythic
-
-	self:Death("Deaths", 78238, 78237) -- Pol, Phemos
 end
 
 function mod:OnEngage()
-	bossDeaths = 0
 	quakeCount = 0
 	volatilityCount = 1
 	self:CDBar(158200, 11) -- Quake
@@ -110,13 +104,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:Deaths(args)
-	bossDeaths = bossDeaths + 1
-	if bossDeaths > 1 then
-		self:Win()
-	end
-end
 
 -- Pol
 

@@ -7,7 +7,7 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Tectus", 994, 1195)
 if not mod then return end
 mod:RegisterEnableMob(78948)
---mod.engageId = 1722
+mod.engageId = 1722
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -62,8 +62,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	-- Tectus
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Accretion", 162288)
 	self:Log("SPELL_AURA_APPLIED", "CrystallineBarrage", 162346)
@@ -82,8 +80,6 @@ function mod:OnBossEnable()
 	-- Berserker
 	self:Yell("Berserker", L.berserker_trigger1, L.berserker_trigger2, L.berserker_trigger3)
 	self:Log("SPELL_CAST_START", "RavingAssault", 163312)
-
-	self:Death("Win", 78948)
 end
 
 function mod:OnEngage()

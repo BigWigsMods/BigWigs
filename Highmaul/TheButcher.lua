@@ -7,7 +7,7 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("The Butcher", 994, 971)
 if not mod then return end
 mod:RegisterEnableMob(77404)
---mod.engageId = 1706
+mod.engageId = 1706
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -46,8 +46,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "BoundingCleave", "boss1")
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Cleaver", 156147)
 	self:Log("SPELL_AURA_APPLIED", "Tenderizer", 156151)
@@ -59,8 +57,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "AddSpawn", 163051) -- Paleobomb
 	self:Log("SPELL_PERIODIC_DAMAGE", "PaleVitriolDamage", 163046)
 	self:Log("SPELL_PERIODIC_MISSED", "PaleVitriolDamage", 163046)
-
-	self:Death("Win", 77404)
 end
 
 function mod:OnEngage()

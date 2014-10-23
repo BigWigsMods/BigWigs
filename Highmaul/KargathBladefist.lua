@@ -7,7 +7,7 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Kargath Bladefist", 994, 1128)
 if not mod then return end
 mod:RegisterEnableMob(78714)
---mod.engageId = 1721
+mod.engageId = 1721
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -61,8 +61,6 @@ function mod:OnBossEnable()
 	--self:Emote("TigerSpawn", L.tiger_trigger)
 	self:Log("SPELL_AURA_APPLIED", "OnTheHunt", 162497)
 	--self:Log("SPELL_AURA_APPLIED", "ArenaSweeper", 177776)
-
-	self:Death("Win", 79459)
 end
 
 function mod:OnEngage()
@@ -81,7 +79,7 @@ end
 --
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	self:CheckBossStatus()
+	self:CheckForEncounterEngage()
 	if self:Mythic() then
 		for i=1, 5 do
 			local guid = UnitGUID(("boss%d"):format(i))

@@ -7,7 +7,7 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Imperator Mar'gok", 994, 1197)
 if not mod then return end
 mod:RegisterEnableMob(77428)
---mod.engageId = 1705
+mod.engageId = 1705
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -53,8 +53,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Phases", "boss1")
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcceleratedAssault", 159515)
 	self:Log("SPELL_CAST_START", "ArcaneWrath", 156238, 163988, 163989, 163990) -- Arcane Wrath, Displacement, Fortification, Replication
@@ -72,8 +70,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 157763)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushArmor", 158553)
 	self:Log("SPELL_CAST_SUCCESS", "KickToTheFace", 158563)
-
-	self:Death("Win", 77428)
 end
 
 function mod:OnEngage()

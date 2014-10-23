@@ -7,7 +7,7 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Ko'ragh", 994, 1153)
 if not mod then return end
 mod:RegisterEnableMob(79015)
---mod.engageId = 1691
+mod.engageId = 1691
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -42,8 +42,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_AURA_APPLIED", "VulnerabilityApplied", 160734)
 	self:Log("SPELL_AURA_REMOVED", "VulnerabilityRemoved", 160734)
 	self:Log("SPELL_CAST_START", "ExpelMagicShadow", 162184)
@@ -52,8 +50,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ExpelMagicFrost", 172747)
 	--self:Log("SPELL_CAST_SUCCESS", "SuppressionField", 161328)
 	self:Yell("SuppressionField", L.suppression_field_trigger1, L.suppression_field_trigger2, L.suppression_field_trigger3, L.suppression_field_trigger4)
-
-	self:Death("Win", 79015)
 end
 
 function mod:OnEngage()
