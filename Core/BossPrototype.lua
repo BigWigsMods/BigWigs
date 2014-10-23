@@ -110,12 +110,12 @@ function boss:OnEnable()
 	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 
 	if self.engageId then
-		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
 		self:RegisterEvent("ENCOUNTER_END", "EncounterEnds")
 	end
 
 	if IsEncounterInProgress() and (not self.lastWipe or GetTime()-self.lastWipe > 2) then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
-		self:CheckBossStatus("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
+		self:CheckForEncounterEngage("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
 	end
 
 	self:SendMessage("BigWigs_OnBossEnable", self)
@@ -391,13 +391,9 @@ do
 		end
 	end
 
-	function boss:CheckBossStatus(noEngage)
+	function boss:CheckForEncounterEngage(noEngage)
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
-		if not hasBoss and self.isEngaged then
-			if debug then dbg(self, ":CheckBossStatus wipeCheck scheduled.") end
-			self:ScheduleTimer(wipeCheck, 3, self)
-		elseif not self.isEngaged and hasBoss then
-			if debug then dbg(self, ":CheckBossStatus Engage called.") end
+		if not self.isEngaged and hasBoss then
 			local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4") or UnitGUID("boss5")
 			local module = core:GetEnableMobs()[self:MobId(guid)]
 			local modType = type(module)
@@ -416,6 +412,17 @@ do
 				end
 				if not self.isEngaged then self:Disable() end
 			end
+		end
+	end
+
+	function boss:CheckBossStatus()
+		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
+		if not hasBoss and self.isEngaged then
+			if debug then dbg(self, ":CheckBossStatus wipeCheck scheduled.") end
+			self:ScheduleTimer(wipeCheck, 3, self)
+		elseif not self.isEngaged and hasBoss then
+			if debug then dbg(self, ":CheckBossStatus Engage called.") end
+			self:CheckForEncounterEngage()
 		end
 		if debug then dbg(self, ":CheckBossStatus called with no result. Engaged = "..tostring(self.isEngaged).." hasBoss = "..tostring(hasBoss)) end
 	end
@@ -504,10 +511,6 @@ do
 		CombatLogClearEntries()
 
 		if debug then dbg(self, ":Engage") end
-
-		if self.engageId then
-			self:UnregisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-		end
 
 		if not noEngage or noEngage ~= "NoEngage" then
 			updateData()
