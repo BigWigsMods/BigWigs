@@ -301,7 +301,7 @@ do
 
 		local players = GetNumGroupMembers()
 		if players ~= maxPlayers then
-			if updater then self:CancelTimer(updater) end
+			if updater then plugin:CancelTimer(updater) end
 
 			if repeatSync then
 				syncPowerList = {}
