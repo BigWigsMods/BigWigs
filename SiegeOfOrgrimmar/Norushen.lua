@@ -212,7 +212,7 @@ function mod:OnSync(sync, rest, player)
 			self:CDBar("big_adds", 5, L.big_add:format(bigAddSpawnCounter), 147082)
 		end
 		percent = percent - 10
-	elseif sync == "OutsideBigAddDeath" and rest and rest ~= "" then -- XXX backwards compat
+	elseif sync == "OutsideBigAddDeath" and rest then
 		if bigAddKills[rest] then return else bigAddKills[rest] = true end -- Custom throttle to catch 2 big adds dieing outside at the same time
 		bigAddKillCounter = bigAddKillCounter + 1
 		if bigAddKillCounter > bigAddSpawnCounter then
@@ -230,7 +230,7 @@ end
 
 function mod:Deaths(args)
 	if args.mobId == 71977 then -- Big add inside (Manifestation of Corruption)
-		self:Sync("InsideBigAddDeath")
+		self:Sync("InsideBigAddDeath", args.destGUID)
 	elseif args.mobId == 72264 then -- Big add outside (Unleashed Manifestation of Corruption)
 		self:Sync("OutsideBigAddDeath", args.destGUID)
 	end
