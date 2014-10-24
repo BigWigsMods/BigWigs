@@ -74,8 +74,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Phase2", 146179) -- Phase 2, "Frayed"
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 
-	self:RegisterEvent("ENCOUNTER_START")
-
 	self:AddSyncListener("BlindHatred")
 	self:AddSyncListener("InsideBigAddDeath", 0)
 	self:AddSyncListener("OutsideBigAddDeath", 0)
@@ -88,14 +86,7 @@ function mod:OnBossEnable()
 end
 
 function mod:Warmup()
-	-- Backup for ENCOUNTER_START not always firing.
 	self:Bar("warmup", 26, COMBAT, "ability_titankeeper_quarantine")
-end
-
-function mod:ENCOUNTER_START(_, id)
-	if id == 1624 then
-		self:Bar("warmup", 26, COMBAT, "ability_titankeeper_quarantine")
-	end
 end
 
 function mod:OnEngage()
