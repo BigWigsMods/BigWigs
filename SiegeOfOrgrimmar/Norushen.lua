@@ -13,7 +13,6 @@ mod.engageId = 1624
 --
 
 local bigAddSpawnCounter, bigAddKillCounter = 0, 0
-local throttlePlayers = {} -- Throttle users that have BW & DBM installed >.>
 local bigAddKills = {}
 local percent = 50
 
@@ -104,7 +103,6 @@ function mod:OnEngage()
 	self:Berserk(self:LFR() and 600 or 418)
 	self:Bar(145226, 25) -- Blind Hatred
 	wipe(bigAddKills)
-	wipe(throttlePlayers)
 	percent = 50
 	self:OpenAltPower("altpower", 147800, "AZ", true) -- Corruption
 end
@@ -182,19 +180,16 @@ function mod:UnleashCorruption()
 	self:Sync("Phase2BigAddSpawn") -- Big adds spawning outside in p2
 end
 
-function mod:OnSync(sync, rest, player)
+function mod:OnSync(sync, rest)
 	if sync == "BlindHatred" then
 		self:Message(145226, "Important", "Long")
 		self:Bar(145226, 60)
 	elseif sync == "Phase2" then
 		self:Message("stages", "Neutral", "Warning", CL.phase:format(2), 146179)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
-	elseif sync == "InsideBigAddDeath" then
-		local t = GetTime()
-		if throttlePlayers[player] and (t - throttlePlayers[player]) < 5 then
-			return
-		end
-		throttlePlayers[player] = t
+	elseif sync == "InsideBigAddDeath" and rest then
+		-- Custom throttle to work around a really rare bug in the encounter where the normal phase will sometimes merge with the "inside" phase and everyone sees the death event of the add, rather than the 1 person.
+		if bigAddKills[rest] then return else bigAddKills[rest] = true end
 
 		bigAddSpawnCounter = bigAddSpawnCounter + 1
 		if self:LFR() then
@@ -214,6 +209,7 @@ function mod:OnSync(sync, rest, player)
 		percent = percent - 10
 	elseif sync == "OutsideBigAddDeath" and rest then
 		if bigAddKills[rest] then return else bigAddKills[rest] = true end -- Custom throttle to catch 2 big adds dieing outside at the same time
+
 		bigAddKillCounter = bigAddKillCounter + 1
 		if bigAddKillCounter > bigAddSpawnCounter then
 			bigAddSpawnCounter = bigAddKillCounter -- Compensate for no boss mod players (LFR) :[
@@ -222,9 +218,9 @@ function mod:OnSync(sync, rest, player)
 	end
 end
 
-function mod:OnDBMSync(_, player, prefix, _, _, event)
+function mod:OnDBMSync(_, _, prefix, _, _, event, guid)
 	if prefix == "M" and event == "ManifestationDied" then
-		self:OnSync("InsideBigAddDeath", nil, player)
+		self:OnSync("InsideBigAddDeath", guid)
 	end
 end
 
