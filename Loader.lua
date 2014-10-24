@@ -638,11 +638,11 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 			public:SendMessage("BigWigs_AddonMessage", bwPrefix, bwMsg, sender)
 		end
 	elseif prefix == "D4" then
-		local dbmPrefix, arg1, arg2, arg3 = strsplit("\t", msg)
+		local dbmPrefix, arg1, arg2, arg3, arg4 = strsplit("\t", msg)
 		if dbmPrefix == "V" or dbmPrefix == "H" then
 			self:DBM_VersionCheck(dbmPrefix, Ambiguate(sender, "none"), arg1, arg2, arg3)
 		elseif dbmPrefix == "U" or dbmPrefix == "PT" or dbmPrefix == "M" or dbmPrefix == "BT" then
-			public:SendMessage("DBM_AddonMessage", Ambiguate(sender, "none"), dbmPrefix, arg1, arg2, arg3)
+			public:SendMessage("DBM_AddonMessage", Ambiguate(sender, "none"), dbmPrefix, arg1, arg2, arg3, arg4)
 		end
 	end
 end

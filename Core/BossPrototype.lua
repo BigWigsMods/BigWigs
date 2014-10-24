@@ -114,7 +114,7 @@ function boss:OnEnable()
 		self:RegisterEvent("ENCOUNTER_END", "EncounterEnds")
 	end
 
-	if IsEncounterInProgress() and (not self.lastWipe or GetTime()-self.lastWipe > 2) then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
+	if IsEncounterInProgress() and (not self.lastWipe or GetTime()-self.lastWipe > 5) then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
 		self:CheckForEncounterEngage("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
 	end
 

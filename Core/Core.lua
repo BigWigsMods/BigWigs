@@ -355,7 +355,6 @@ end
 -- Since this is from addon comms, it's the only place where we allow the module NAME to be passed, instead of the
 -- actual module object. ALL other APIs should take module objects as arguments.
 local function coreSync(sync, moduleName, sender)
-	if not moduleName then return end
 	if sync == "EnableModule" then
 		local module = addon:GetBossModule(moduleName, true)
 		if sender ~= pName and module then
@@ -391,8 +390,9 @@ do
 		local sync, rest = message:match("(%S+)%s*(.*)$")
 		if sync and registered[sync] then
 			local t = GetTime()
+			if rest == "" then rest = nil end
 			if sync == "BossEngaged" then
-				if not times[sync] or t > (times[sync] + 2) then
+				if rest and (not times[sync] or t > (times[sync] + 2)) then
 					local m = addon:GetBossModule(rest, true)
 					if not m or m.isEngaged or m.engageId or not m:IsEnabled() then
 						-- print(bossEngagedSyncError:format(rest, nick))
@@ -404,8 +404,7 @@ do
 					m:Engage()
 				end
 			elseif sync == "EnableModule" or sync == "Death" then
-				if sync == "Death" and (rest == "Norushen" or (rest == "Paragons of the Klaxxi" and nick ~= pName)) then return end -- XXX temp till WoW v6.x
-				if not times[sync] or t > (times[sync] + 2) then
+				if rest and (not times[sync] or t > (times[sync] + 2)) then
 					coreSync(sync, rest, nick)
 					times[sync] = t
 				end
