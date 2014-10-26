@@ -219,24 +219,19 @@ do
 		[152] = true, -- Garrosh defeat
 	}
 
-	-- We can't :HookScript as we need to prevent the movie starting to play in the first place
-	local origMovieHandler = MovieFrame:GetScript("OnEvent")
-	MovieFrame:SetScript("OnEvent", function(frame, event, id, ...)
-		if event == "PLAY_MOVIE" and knownMovies[id] and addon.db.profile.blockmovies then
+	function addon:PLAY_MOVIE(_, id)
+		if knownMovies[id] and addon.db.profile.blockmovies then
 			if not addon.db.global.seenmovies then
 				addon.db.global.seenmovies = {}
 			end
 			if addon.db.global.seenmovies[id] then
 				addon:Print(L.movieBlocked)
-				return MovieFrame_OnMovieFinished(frame)
+				MovieFrame:Hide()
 			else
 				addon.db.global.seenmovies[id] = true
-				return origMovieHandler(frame, event, id, ...)
 			end
-		else
-			return origMovieHandler(frame, event, id, ...)
 		end
-	end)
+	end
 
 	-- Cinematic handling
 	local cinematicZones = {
@@ -493,6 +488,7 @@ function addon:OnEnable()
 	self:RegisterMessage("BigWigs_AddonMessage", chatMsgAddon)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
 	self:RegisterEvent("CINEMATIC_START")
+	self:RegisterEvent("PLAY_MOVIE")
 
 	self:RegisterEvent("ENCOUNTER_START")
 
@@ -506,6 +502,7 @@ end
 function addon:OnDisable()
 	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:UnregisterEvent("CINEMATIC_START")
+	self:UnregisterEvent("PLAY_MOVIE")
 	self:UnregisterMessage("BigWigs_AddonMessage")
 
 	self:UnregisterEvent("ENCOUNTER_START")
