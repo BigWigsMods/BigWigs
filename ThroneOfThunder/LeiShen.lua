@@ -14,6 +14,8 @@ local phase = 1
 local tooCloseForOvercharged = nil
 local adds = {}
 local markerTimer = nil
+local diffusionTimer = nil
+local ballLightningTimer = nil
 local marksUsed = {}
 local activeProximityAbilities = {}
 local thunderstruckCounter = 1
@@ -125,8 +127,10 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(self:LFR() and 900 or 720) -- XXX normal is assumed
+	self:Berserk(900) -- 15 on LFR, more than 14 on 10N. Berserk has only been seen on wowhead in LFR. Let's just go with 15 everywhere, but it might be more.
 	markerTimer = nil
+	diffusionTimer = nil
+	ballLightningTimer = nil
 	phase = 1
 	tooCloseForOvercharged = nil
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
@@ -339,6 +343,7 @@ do
 		mod:Message(spellId, "Attention", nil, CL["soon"]:format(mod:SpellName(136620)))
 		activeProximityAbilities[3] = true
 		updateProximity()
+		ballLightningTimer = nil
 	end
 	function mod:SummonBallLightning(args)
 		local t = GetTime()
@@ -349,7 +354,7 @@ do
 				activeProximityAbilities[4] = true
 				updateProximity()
 			end
-			self:ScheduleTimer(warnBallsSoon, 41, args.spellId)-- reopen it when new balls are about to come
+			ballLightningTimer = self:ScheduleTimer(warnBallsSoon, 41, args.spellId)-- reopen it when new balls are about to come
 			self:Bar(args.spellId, 46, 136620)
 			self:Message(args.spellId, "Attention", nil, 136620)
 		end
@@ -372,7 +377,6 @@ local function warnDiffusionChainSoon(intermission)
 end
 
 function mod:IntermissionEnd(msg)
-	self:CancelAllTimers()
 	self:StopBar(139011) -- Helm of Command -- heroic
 	self:StopBar(136295) -- Overcharged
 	self:StopBar(135695) -- Static Shock
@@ -420,7 +424,14 @@ end
 
 function mod:IntermissionStart(args)
 	stopConduitAbilityBars()
-	self:CancelAllTimers()
+	if diffusionTimer then
+		self:CancelTimer(diffusionTimer)
+		diffusionTimer = nil
+	end
+	if ballLightningTimer then
+		self:CancelTimer(ballLightningTimer)
+		ballLightningTimer = nil
+	end
 	self:StopBar(135150) -- Crashing Thunder
 	self:StopBar(134912) -- Decapitate
 	self:StopBar(135095) -- Thunderstruck
@@ -433,7 +444,7 @@ function mod:IntermissionStart(args)
 	if diff == 3 or diff == 5 or diff == 7 then -- 10 mans and assume LFR too
 		if isConduitAlive(68398) then self:CDBar(135695, 18) end -- Static Shock
 		if isConduitAlive(68697) then self:CDBar(136295, 7) end -- Overcharged
-		if isConduitAlive(68698) then self:CDBar(136366, 20) end -- Bouncing Bolt
+		if isConduitAlive(68698) then self:CDBar(136366, 8.5) end -- Bouncing Bolt
 		if isConduitAlive(68696) then
 			self:CDBar(135991, 7)
 			self:ScheduleTimer(warnDiffusionChainSoon, 2, true)
@@ -450,7 +461,7 @@ function mod:IntermissionStart(args)
 	if self:Heroic() then
 		self:Bar(139011, 14) -- Helm of Command
 	end
-	self:Bar("stages", 45, CL.intermission, args.spellId)
+	self:Bar("stages", 47, CL.intermission, args.spellId)
 	self:Message("stages", "Neutral", "Info", CL.intermission, false)
 	self:DelayedMessage("stages", 40, "Positive", L["last_inermission_ability"])
 end
@@ -568,7 +579,7 @@ do
 end
 
 do
-	local diffusionList, timer = mod:NewTargetList(), nil
+	local diffusionList = mod:NewTargetList()
 	function mod:DiffusionChainDamage(args) -- XXX consider syncing, or figure out why sometimes the list is empty
 		for i, player in next, diffusionList do -- can hit the same person multiple times apparently
 			if player:find(args.destName, nil, true) then
@@ -586,11 +597,11 @@ do
 		end
 		if intermission then
 			mod:Bar(135991, 25)
-			mod:ScheduleTimer(warnDiffusionChainSoon, 20, true)
+			diffusionTimer = mod:ScheduleTimer(warnDiffusionChainSoon, 20, true)
 		else
 			if phase == 1 or not mod:Heroic() then stopConduitAbilityBars() end
 			mod:Bar(135991, 40)
-			timer = mod:ScheduleTimer(warnDiffusionChainSoon, 30)
+			diffusionTimer = mod:ScheduleTimer(warnDiffusionChainSoon, 30)
 		end
 		activeProximityAbilities[2] = nil
 		updateProximity()
@@ -604,8 +615,10 @@ do
 		end
 	end
 	function mod:DiffusionChainRemoved() -- on conduit/lei shen
-		self:CancelTimer(timer)
-		timer = nil
+		if diffusionTimer then
+			self:CancelTimer(diffusionTimer)
+			diffusionTimer = nil
+		end
 		activeProximityAbilities[2] = nil
 		updateProximity()
 	end
