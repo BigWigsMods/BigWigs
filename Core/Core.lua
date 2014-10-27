@@ -30,10 +30,7 @@ local SendAddonMessage = BigWigsLoader.SendAddonMessage
 local next, type = next, type
 
 -- XXX compat
-do
-	local v = GetBuildInfo()
-	addon.isWOD = v == "6.0.3" and true
-end
+addon.isWOD = IsTestBuild()
 
 -------------------------------------------------------------------------------
 -- Event handling
