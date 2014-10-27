@@ -130,7 +130,11 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 		self:Bar("spore_shooter", 60, spellId, L.spore_shooter_icon)
 	elseif spellId == 163141 then -- Mind Fungus
 		self:Message("mind_fungus", "Attention", nil, spellId, L.mind_fungus_icon)
-		self:Bar("mind_fungus", 30, spellId, L.mind_fungus_icon)
+		if self:Mythic() then
+			self:Bar("mind_fungus", 30, spellId, L.mind_fungus_icon) -- XXX This may also be changed
+		else
+			self:CDBar("mind_fungus", 51, spellId, L.mind_fungus_icon) -- 51.1, 58.6, 55.5, 55, 61.5, 59.5
+		end
 	elseif spellId == 163142 then -- Evolved Fungus (Fungal Flesh-Eater)
 		self:Message("flesh_eater", "Urgent", self:Tank() and "Info", CL.spawning:format(CL.big_add), L.flesh_eater_icon)
 		self:Bar("flesh_eater", 120, CL.big_add, L.flesh_eater_icon)
