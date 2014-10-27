@@ -30,7 +30,7 @@ local SendAddonMessage = BigWigsLoader.SendAddonMessage
 local next, type = next, type
 
 -- XXX compat
-addon.isWOD = IsTestBuild()
+addon.isWOD = GetExpansionLevel() == 5
 
 -------------------------------------------------------------------------------
 -- Event handling
