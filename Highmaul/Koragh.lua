@@ -7,7 +7,7 @@ if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Ko'ragh", 994, 1153)
 if not mod then return end
 mod:RegisterEnableMob(79015)
-mod.engageId = 1691
+mod.engageId = 1723
 
 --------------------------------------------------------------------------------
 -- Locals
