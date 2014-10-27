@@ -95,8 +95,6 @@ function mod:OnEngage()
 	self:CDBar(157943, 40) -- Whirlwind
 	if self:Mythic() then
 		self:Bar(163372, 65) -- Arcane Volatility
-	end
-	if not self:LFR() then
 		self:Berserk(420) -- Mythic time, normal unconfirmed
 	end
 end
@@ -152,7 +150,7 @@ do
 	end
 	function mod:PulverizeCast(args)
 		count = count + 1
-		self:Message(158385, "Urgent", "Info", CL.count(args.spellName, count))
+		self:Message(158385, "Urgent", "Info", CL.count:format(args.spellName, count))
 	end
 end
 
