@@ -94,8 +94,8 @@ local boss = {}
 core:GetModule("Bosses"):SetDefaultModulePrototype(boss)
 function boss:IsBossModule() return true end
 function boss:OnInitialize() core:RegisterBossModule(self) end
-function boss:OnEnable()
-	if debug then dbg(self, "OnEnable()") end
+function boss:OnEnable(isWipe)
+	if debug then dbg(self, isWipe and "OnEnable() via Wipe()" or "OnEnable()") end
 
 	updateData()
 
@@ -114,14 +114,14 @@ function boss:OnEnable()
 		self:RegisterEvent("ENCOUNTER_END", "EncounterEnds")
 	end
 
-	if IsEncounterInProgress() and (not self.lastWipe or GetTime()-self.lastWipe > 5) then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
+	if IsEncounterInProgress() and not isWipe then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
 		self:CheckForEncounterEngage("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
 	end
 
 	self:SendMessage("BigWigs_OnBossEnable", self)
 end
-function boss:OnDisable()
-	if debug then dbg(self, "OnDisable()") end
+function boss:OnDisable(isWipe)
+	if debug then dbg(self, isWipe and "OnDisable() via Wipe()" or "OnDisable()") end
 	if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 
 	-- Update enabled modules list
@@ -174,8 +174,9 @@ function boss:Reboot(isWipe)
 		-- Devs, in 99% of cases you'll want to use OnBossWipe
 		self:SendMessage("BigWigs_OnBossWipe", self)
 	end
-	self:Disable()
-	self:Enable()
+	self:OnDisable(isWipe)
+	self:CancelAllTimers()
+	self:OnEnable(isWipe)
 end
 
 function boss:NewLocale(locale, default) return AL:NewLocale(self.name, locale, default, "raw") end
@@ -539,7 +540,6 @@ do
 	end
 
 	function boss:Wipe()
-		self.lastWipe = GetTime() -- Add the wipe time for the engage check.
 		self:Reboot(true)
 		if self.OnWipe then self:OnWipe() end
 	end
