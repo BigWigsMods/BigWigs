@@ -13,7 +13,6 @@ mod.engageId = 1723
 -- Locals
 --
 
-local fieldCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -53,7 +52,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	fieldCount = 1
 	-- pretty consistant early cast for fire, but everything else is all over the place :\
 	--self:CDBar(162185, 7) -- Expel Magic: Fire
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
@@ -78,10 +76,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 160734 then -- Vulnerability
 		self:Message(spellId, "Positive", nil, CL.removed:format(self:SpellName(156803))) -- Nullification Barrier removed!
 		self:Bar(spellId, 20)
-		fieldCount = 1
 		self:StopBar(161328) -- Suppression Field
 	elseif spellId == 156803 then -- Nullification Barrier
 		self:Message(160734, "Positive", nil, spellName)
+		--self:CDBar(160734, 12)
 		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 	end
 end
@@ -118,8 +116,7 @@ function mod:SuppressionField(msg, sender, _, _, target)
 		self:Say(161328)
 	end
 	self:TargetMessage(161328, target, "Attention", "Alarm")
-	self:CDBar(161328, fieldCount == 2 and 15 or 20)  -- 21.7 15.7 19.6 / 21.8 15.6 / 19.7 15.2 20.5
-	fieldCount = fieldCount + 1
+	self:CDBar(161328, 15)
 end
 
 do
