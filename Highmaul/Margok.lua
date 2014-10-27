@@ -56,7 +56,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Phases", "boss1")
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcceleratedAssault", 159515)
 	self:Log("SPELL_CAST_START", "ArcaneWrath", 156238, 163988, 163989, 163990) -- Arcane Wrath, Displacement, Fortification, Replication
-	self:Log("SPELL_AURA_APPLIED", "ArcaneWrathApplied", 156225, 16400, 164005, 164006) -- Branded
+	self:Log("SPELL_AURA_APPLIED", "ArcaneWrathApplied", 156225, 164004, 164005, 164006) -- Branded
 	self:Log("SPELL_CAST_START", "DestructiveResonance", 156467, 164075, 164076, 164077)
 	self:Log("SPELL_CAST_START", "ArcaneAberration", 156471, 164299, 164301, 164303)
 	self:Log("SPELL_AURA_APPLIED", "MarkOfChaosApplied", 158605, 164176, 164178, 164191)
