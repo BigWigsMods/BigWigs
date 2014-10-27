@@ -109,7 +109,7 @@ function mod:CrystallineBarrage(args)
 		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:Flash(args.spellId)
 	end
-	if self.profile.custom_off_barrage_marker then
+	if self.db.profile.custom_off_barrage_marker then
 		for i=1, 5 do
 			if not marked[i] then
 				SetRaidTarget(args.destName, i)
@@ -121,7 +121,7 @@ function mod:CrystallineBarrage(args)
 end
 
 function mod:CrystallineBarrageRemoved(args)
-	if self.profile.custom_off_barrage_marker then
+	if self.db.profile.custom_off_barrage_marker then
 		SetRaidTarget(args.destName, 0)
 		for i=1, 5 do
 			if marked[i] == args.destName then
