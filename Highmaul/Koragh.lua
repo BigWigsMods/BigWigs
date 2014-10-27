@@ -36,7 +36,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		160734, {161328, "SAY", "FLASH"}, {162184, "HEALER"}, {162185, "PROXIMITY"}, {162186, "ICON", "FLASH"}, 172747,
+		160734, {161328, "SAY", "FLASH"}, {162184, "HEALER"}, {162185, "PROXIMITY"}, {162186, "ICON", "FLASH", "SAY"}, 172747,
 		"bosskill"
 	}
 end
@@ -81,6 +81,7 @@ function mod:ExpelMagicArcane(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
+		self:Say(args.spellId)
 	end
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
 	self:TargetBar(args.spellId, 10, args.destName)
