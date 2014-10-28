@@ -582,7 +582,7 @@ function boss:EncounterEnds(event, id, name, difficulty, size, status)
 		if status == 1 then
 			self:Win(nil, true)
 		elseif status == 0 then
-			self:Wipe()
+			self:ScheduleTimer("Wipe", 6) -- XXX Delayed for now due to issues with certain encounters and using IEEU for engage. Can be removed if we swap to ENCOUNTER_START.
 		end
 	end
 end
