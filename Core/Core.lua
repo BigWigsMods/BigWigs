@@ -217,27 +217,25 @@ do
 	}
 
 	function addon:PLAY_MOVIE(_, id)
-		if knownMovies[id] and addon.db.profile.blockmovies then
-			if not addon.db.global.seenmovies then
-				addon.db.global.seenmovies = {}
-			end
-			if addon.db.global.seenmovies[id] then
-				addon:Print(L.movieBlocked)
+		if knownMovies[id] and self.db.profile.blockmovies then
+			if self.db.global.watchedMovies[id] then
+				self:Print(L.movieBlocked)
 				MovieFrame:Hide()
 			else
-				addon.db.global.seenmovies[id] = true
+				self.db.global.watchedMovies[id] = true
 			end
 		end
 	end
 
 	-- Cinematic handling
 	local cinematicZones = {
-		[875.1] = true, -- Gate of the Setting Sun gate breach
-		[930.3] = true, -- Tortos cave entry -- Doesn't work, apparently Blizzard don't want us to skip this..?
-		[930.7] = true, -- Ra-Den room opening
-		[953.2] = true, -- After Immerseus, entry to Fallen Protectors
-		[953.9] = true, [953.8] = true, -- Blackfuse room opening
-		[953.12] = true, -- Heroic Garrosh Phase 4
+		["875:1"] = true, -- Gate of the Setting Sun gate breach
+		["930:3"] = true, -- Tortos cave entry -- Doesn't work, apparently Blizzard don't want us to skip this..?
+		["930:7"] = true, -- Ra-Den room opening
+		["953:2"] = true, -- After Immerseus, entry to Fallen Protectors
+		["953:8"] = true, -- Blackfuse room opening, in Thok area
+		["953:9"] = true, -- Blackfuse room opening
+		["953:12"] = true, -- Heroic Garrosh Phase 4
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
@@ -264,21 +262,16 @@ do
 	function addon:CINEMATIC_START()
 		if self.db.profile.blockmovies then
 			SetMapToCurrentZone()
-
-			if not self.db.global.seenmovies then
-				self.db.global.seenmovies = {}
-			end
-
 			local areaId = GetCurrentMapAreaID() or 0
 			local areaLevel = GetCurrentMapDungeonLevel() or 0
-			local id = tonumber(("%d.%d"):format(areaId, areaLevel))
+			local id = ("%d:%d"):format(areaId, areaLevel)
 
 			if cinematicZones[id] then
-				if self.db.global.seenmovies[id] then
+				if self.db.global.watchedMovies[id] then
 					self:Print(L.movieBlocked)
 					CinematicFrame_CancelCinematic()
 				else
-					self.db.global.seenmovies[id] = true
+					self.db.global.watchedMovies[id] = true
 				end
 			end
 		end
@@ -455,6 +448,7 @@ function addon:OnInitialize()
 		},
 		global = {
 			optionShiftIndexes = {},
+			watchedMovies = {},
 		},
 	}
 	local db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
@@ -467,7 +461,17 @@ function addon:OnInitialize()
 	db.RegisterCallback(self, "OnProfileCopied", profileUpdate)
 	db.RegisterCallback(self, "OnProfileReset", profileUpdate)
 	self.db = db
-	self.db.profile.customDBMbars = nil -- XXX temp cleanup
+
+	-- XXX temp cleanup
+	if self.db.global.seenmovies then
+		if self.db.global.seenmovies[152] then self.db.global.watchedMovies[152] = true end
+		if self.db.global.seenmovies[953.2] then self.db.global.watchedMovies["953:2"] = true end
+		if self.db.global.seenmovies[953.8] then self.db.global.watchedMovies["953:8"] = true end
+		if self.db.global.seenmovies[953.9] then self.db.global.watchedMovies["953:9"] = true end
+		if self.db.global.seenmovies[953.12] then self.db.global.watchedMovies["953:12"] = true end
+		self.db.global.seenmovies = nil
+	end
+	--
 
 	self:RegisterBossOption("bosskill", L.bosskill, L.bosskill_desc, nil, "Interface\\Icons\\ability_rogue_feigndeath")
 	self:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, "Interface\\Icons\\spell_shadow_unholyfrenzy")
