@@ -288,12 +288,13 @@ do
 		setDot(dx, dy, blipList[1])
 		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(1, 0, 0)
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
+			if not db.sound then return end
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
-			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
 		else
 			proxCircle:SetVertexColor(0, 1, 0)
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 0)
@@ -328,6 +329,7 @@ do
 			proxCircle:SetVertexColor(0, 1, 0)
 		else
 			proxCircle:SetVertexColor(1, 0, 0)
+			if not db.sound then return end
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
@@ -401,12 +403,13 @@ do
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
 		else
 			proxCircle:SetVertexColor(1, 0, 0)
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 0)
+			if not db.sound then return end
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
 			end
-			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 0)
 		end
 	end
 
