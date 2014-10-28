@@ -213,10 +213,6 @@ function mod:OnEngage()
 	wipe(parasites)
 	calculateCounter = 1
 	aimCounter = 1
-	-- Sometimes there's a long delay between the last IEEU and IsEncounterInProgress being false so use this as a backup.
-	self:StopWipeCheck()
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "StartWipeCheck")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "StopWipeCheck")
 end
 
 --------------------------------------------------------------------------------
@@ -671,14 +667,13 @@ end
 
 function mod:CatalystsSuccess(args)
 	if self:Mythic() then -- on heroic they have flight time
-		self:ScheduleTimer("CloseProximity", (args.spellId == 142729) and 14 or 4, -8034) -- you want proximity open for purple for full duration of the debuff -- timers might need some adjusting
+		self:ScheduleTimer("CloseProximity", args.spellId == 142729 and 14 or 4, -8034) -- you want proximity open for purple for full duration of the debuff -- timers might need some adjusting
 	else
 		self:CloseProximity(-8034)
 	end
 end
 
 function mod:ToxicInjectionsRemoved(args)
-	-- XXX keep an eye out if this conflicts with some other proximity
 	if self:Me(args.destGUID) then
 		self:CloseProximity(-8034)
 	end
