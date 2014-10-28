@@ -69,13 +69,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(159219, 30) -- Necrotic Breath
-	self:Bar(159996, 90) -- Infesting Spores
-	self:CDBar("mind_fungus", 10, L.mind_fungus, L.mind_fungus_icon) -- Mind Fungus
+	self:Bar(159219, 32) -- Necrotic Breath
+	self:Bar(159996, 45) -- Infesting Spores
+	self:CDBar("mind_fungus", 11, L.mind_fungus, L.mind_fungus_icon) -- Mind Fungus
 	self:CDBar("spore_shooter", 20, L.spore_shooter, L.spore_shooter_icon) -- Spore Shooter
 	self:CDBar("flesh_eater", 32, CL.big_add, L.flesh_eater_icon) -- Fungal Flesh-Eater
-	self:CDBar("living_mushroom", 60, L.living_mushroom, L.living_mushroom_icon) -- Living Mushroom
-	self:CDBar("rejuvenating_mushroom", 80, L.rejuvenating_mushroom, L.rejuvenating_mushroom_icon) -- Rejuvenating Mushroom
+	self:CDBar("living_mushroom", 18, L.living_mushroom, L.living_mushroom_icon) -- Living Mushroom
+	self:CDBar("rejuvenating_mushroom", 82, L.rejuvenating_mushroom, L.rejuvenating_mushroom_icon) -- Rejuvenating Mushroom
 	self:Berserk(600) -- LFR enrage
 end
 
@@ -85,6 +85,7 @@ end
 
 function mod:CallOfTheTides(args)
 	self:Message(args.spellId, "Urgent")
+	self:CDBar(args.spellId, 21) -- 21-32
 end
 
 do
@@ -106,16 +107,17 @@ end
 
 function mod:NecroticBreath(args)
 	self:Message(args.spellId, "Urgent", "Warning")
-	self:Bar(args.spellId, 30)
+	self:Bar(args.spellId, 32)
 end
 
 function mod:InfestingSpores(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	self:Bar(args.spellId, 103)
+	self:Bar(args.spellId, 65)
 end
 
 function mod:Decay(args)
 	self:Message(args.spellId, "Personal", not self:Healer() and "Alert", CL.casting:format(args.spellName))
+	self:Bar(args.spellId, 10)
 end
 
 function mod:FungusSpawns(unit, spellName, _, _, spellId)
@@ -130,20 +132,16 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 		self:Bar("spore_shooter", 60, spellId, L.spore_shooter_icon)
 	elseif spellId == 163141 then -- Mind Fungus
 		self:Message("mind_fungus", "Attention", nil, spellId, L.mind_fungus_icon)
-		if self:Mythic() then
-			self:Bar("mind_fungus", 30, spellId, L.mind_fungus_icon) -- XXX This may also be changed
-		else
-			self:CDBar("mind_fungus", 51, spellId, L.mind_fungus_icon) -- 51.1, 58.6, 55.5, 55, 61.5, 59.5
-		end
+		self:Bar("mind_fungus", 30, spellId, L.mind_fungus_icon)
 	elseif spellId == 163142 then -- Evolved Fungus (Fungal Flesh-Eater)
 		self:Message("flesh_eater", "Urgent", self:Tank() and "Info", CL.spawning:format(CL.big_add), L.flesh_eater_icon)
 		self:Bar("flesh_eater", 120, CL.big_add, L.flesh_eater_icon)
 	elseif spellId == 160022 then -- Living Mushroom
 		self:Message("living_mushroom", "Positive", self:Healer() and "Info", spellId, L.living_mushroom_icon)
-		self:Bar("living_mushroom", 60, spellId, L.living_mushroom_icon)
+		self:Bar("living_mushroom", 58, spellId, L.living_mushroom_icon)
 	elseif spellId == 160021 then -- Rejuvenating Mushroom
 		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Info", spellId, L.rejuvenating_mushroom_icon)
-		self:Bar("rejuvenating_mushroom", 145, spellId, L.rejuvenating_mushroom_icon)
+		self:Bar("rejuvenating_mushroom", 135, spellId, L.rejuvenating_mushroom_icon)
 	elseif spellId == 163794 then  -- Exploding Fungus (Mythic)
 		self:Message(spellId, "Urgent")
 		self:Bar(spellId, 5)
