@@ -210,7 +210,7 @@ function mod:OnSync(sync, rest)
 end
 
 function mod:OnDBMSync(_, _, prefix, _, _, event, guid)
-	if prefix == "M" and event == "ManifestationDied" then
+	if prefix == "M" and event == "ManifestationDied" and guid ~= "" then
 		self:OnSync("InsideBigAddDeath", guid)
 	end
 end
