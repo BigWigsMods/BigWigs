@@ -23,7 +23,6 @@ local desecrateCounter = 1
 local phase = 1
 local waveTimer, waveCounter = nil, 1
 local whirlingCounter = 1
-local mindControl = nil
 local bombardmentCounter, maliceCounter = 1, 1
 local hopeTimer = nil
 
@@ -272,7 +271,6 @@ function mod:GrippingDespair(args)
 end
 
 function mod:MindControl(args)
-	mindControl = true
 	self:Message(145065, "Urgent", "Alert", CL.casting:format(mod:SpellName(67229)))
 	if phase == 3 then
 		self:Bar(145065, (mcCounter == 1) and 35 or 42, 67229, 145065) -- "Mind Control" text
@@ -462,12 +460,6 @@ do
 	local warnPower = 25
 	local abilities = { [25] = mod:SpellName(144985), [50] = mod:SpellName(67229), [75] = mod:SpellName(144748), [100] = mod:SpellName(145183) }
 
-	local function mindControlMagic(spellId)
-		if not mindControl then -- there has not been an MC for more than 32 sec
-			mod:Bar(spellId, 8, 67229, spellId) -- "Mind Control" text
-		end
-	end
-
 	local annihilateCounter = 1
 	function mod:Annihilate(args)
 		self:Message(args.spellId, "Attention", nil, CL.casting:format(CL.count:format(args.spellName, annihilateCounter)))
@@ -521,16 +513,9 @@ do
 			desecrateCounter = 1
 			self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)
 			self:StopBar(CL.intermission)
-			self:Bar(144985, 48, CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
-			if self:Mythic() then
-				-- XXX lets try to improve this, because it looks like if it is not cast within 32 sec, then it is going to be closer to 40 than to 30 need more Transcriptor log
-				mindControl = nil
-				self:ScheduleTimer(mindControlMagic, 32, 145065)
-				self:Bar(145065, 31, 67229, 145065) -- Mind Control
-			else
-				self:Bar(145065, 29, 67229, 145065) -- Mind Control
-			end
-			self:CDBar(144758, 21) -- Desecrate -- on mythic 21-23
+			self:Bar(144985, 45, CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
+			self:Bar(145065, 29, 67229, 145065) -- Mind Control
+			self:CDBar(144758, 20) -- Desecrate
 		elseif spellId == 146984 then -- phase 4 Enter Realm of Garrosh
 			phase = 4
 			self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)
