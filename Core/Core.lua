@@ -229,6 +229,7 @@ do
 
 	-- Cinematic handling
 	local cinematicZones = {
+		["800:1"] = true, -- Firelands bridge lowering
 		["875:1"] = true, -- Gate of the Setting Sun gate breach
 		["930:3"] = true, -- Tortos cave entry -- Doesn't work, apparently Blizzard don't want us to skip this..?
 		["930:7"] = true, -- Ra-Den room opening
