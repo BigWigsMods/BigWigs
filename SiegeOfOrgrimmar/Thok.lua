@@ -190,6 +190,7 @@ function mod:BloodFrenzyPhase()
 	self:StopBar(143780) -- Acid Breath
 	self:StopBar(143773) -- Freezing Breath
 	self:StopBar(143767) -- Scorching Breath
+	self:StopBar(-7963) -- Deafening Screech
 	self:CloseProximity("proximity")
 	self:Message(-7981, "Neutral", "Long")
 end
@@ -231,9 +232,7 @@ do
 	local accTimes = {10.9, 7.2, 4.8, 3.6}
 	function mod:Acceleration(args)
 		accCount = args.amount or 1
-		if self:LFR() then
-			self:CDBar(-7963, 18)
-		elseif accTimes[accCount] then -- Beyond this is too short a timer to care (2.1-2.4)
+		if accTimes[accCount] then -- Beyond this is too short a timer to care (2.1-2.4)
 			self:Bar(-7963, accTimes[accCount])
 		end
 		if accCount < 6 or accCount % 3 == 0 then
