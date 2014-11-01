@@ -642,7 +642,7 @@ do
 		wipe(redPlayers)
 		for i=1, GetNumGroupMembers() do
 			local name = GetRaidRosterInfo(i)
-			if not UnitIsUnit("player", name) and (UnitDebuff(name, mod:SpellName(142533)) or (mod:Mythic() and UnitDebuff(name, mod:SpellName(142534)))) then -- red or heroic and yellow
+			if not UnitIsUnit("player", name) and (UnitDebuff(name, mod:SpellName(142533)) or (mod:Mythic() and UnitDebuff(name, mod:SpellName(142534)))) then -- red or mythic and yellow
 				redPlayers[#redPlayers+1] = name
 			end
 		end
@@ -666,7 +666,7 @@ do
 end
 
 function mod:CatalystsSuccess(args)
-	if self:Mythic() then -- on heroic they have flight time
+	if self:Mythic() then -- on mythic they have flight time
 		self:ScheduleTimer("CloseProximity", args.spellId == 142729 and 14 or 4, -8034) -- you want proximity open for purple for full duration of the debuff -- timers might need some adjusting
 	else
 		self:CloseProximity(-8034)

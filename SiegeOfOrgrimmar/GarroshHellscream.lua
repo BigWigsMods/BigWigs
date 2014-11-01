@@ -96,7 +96,7 @@ function mod:GetOptions(CL)
 		[145065] = -8307, -- phase 2
 		[-8325] = -8319, -- phase 3
 		["custom_off_minion_marker"] = L.custom_off_minion_marker,
-		[147209] = ("%s (%s)"):format(CL.stage:format(4), CL.heroic),
+		[147209] = ("%s (%s)"):format(CL.stage:format(4), CL.mythic),
 		[144758] = "general",
 	}
 end
@@ -530,7 +530,7 @@ do
 			else
 				self:Bar(145065, 29, 67229, 145065) -- Mind Control
 			end
-			self:CDBar(144758, 21) -- Desecrate -- on heroic 21-23
+			self:CDBar(144758, 21) -- Desecrate -- on mythic 21-23
 		elseif spellId == 146984 then -- phase 4 Enter Realm of Garrosh
 			phase = 4
 			self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)

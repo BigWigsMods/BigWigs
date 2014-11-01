@@ -1,7 +1,7 @@
 --[[
 TODO:
 	improve timers by checking how they interact with different Desperate Measures -- Sun Tenderheart fixed, other two still need fixing
-	fix Corrupted Brew timer (in heroic every 2 casts it gets .5s faster) Clash and Vengeful Strikes probably delay it, too
+	fix Corrupted Brew timer (in mythic every 2 casts it gets .5s faster) Clash and Vengeful Strikes probably delay it, too
 	need some data from normal for starting timers at intermission ends
 ]]--
 

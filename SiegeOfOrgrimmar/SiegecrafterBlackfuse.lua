@@ -79,7 +79,7 @@ function mod:GetOptions()
 		{146479, "FLASH", "SAY", "ICON"}, "berserk", "bosskill",
 	}, {
 		["custom_off_mine_marker"] = L.custom_off_mine_marker,
-		[-8408] = "heroic",
+		[-8408] = "mythic",
 		[-8195] = -8194, -- Siegecrafter Blackfuse
 		[-8199] = -8199, -- Automated Shredders
 		[-8202] = -8202, -- The Assembly Line
@@ -88,7 +88,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	-- heroic
+	-- Mythic
 	self:Log("SPELL_CAST_SUCCESS", "Overcharge", 145774)
 	-- The Assembly Line
 	self:Emote("AssemblyLine", L.assembly_line_trigger)
@@ -138,8 +138,8 @@ end
 -- Event Handlers
 --
 
--- heroic
--- marking
+-- Mythic
+-- Marking
 do
 	local function setMark(unit, guid)
 		for mark = 1, 8 do

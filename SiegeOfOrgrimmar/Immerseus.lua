@@ -24,7 +24,7 @@ function mod:GetOptions()
 		{143295, "FLASH"}, 143309, 143020, 143469, 143436,
 		"berserk", "bosskill",
 	}, {
-		[143574] = "heroic",
+		[143574] = "mythic",
 		[143295] = "general",
 	}
 end
@@ -36,11 +36,11 @@ function mod:VerifyEnable(unit)
 end
 
 function mod:OnBossEnable()
-	-- heroic
+	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "SwellingCorruption", 143574)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SwellingCorruption", 143574)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShaCorruption", 143579)
-	-- normal
+	-- Normal
 	self:Log("SPELL_CAST_START", "CorrosiveBlast", 143436) -- not tank only so people know when to not walk in front of the boss
 	self:Log("SPELL_AURA_APPLIED", "CorrosiveBlastStack", 143436)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CorrosiveBlastStack", 143436)
@@ -67,7 +67,7 @@ end
 -- Event Handlers
 --
 
--- heroic
+-- Mythic
 function mod:SwellingCorruption(args)
 	self:Message(args.spellId, "Attention", "Alert")
 	self:CDBar(args.spellId, 77)

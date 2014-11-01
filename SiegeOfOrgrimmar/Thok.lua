@@ -13,7 +13,7 @@ mod.engageId = 1599
 --
 local accCount = 0
 local yetiChargeTimer
-local heroicAdd
+local mythicAdd
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -44,7 +44,7 @@ function mod:GetOptions()
 		{143766, "TANK"}, {143780, "TANK"}, {143767, "TANK"}, {143773, "TANK"},
 		"proximity", "berserk", "bosskill",
 	}, {
-		[148145] = "heroic",
+		[148145] = "mythic",
 		[-7963] = -7960, -- stage 1
 		[-7981] = -7961, -- stage 2
 		[143766] = INLINE_TANK_ICON..TANK,
@@ -53,7 +53,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	-- heroic
+	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "YetCharge", 148145)
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "PrisonerTracker")
 	-- stage 2
@@ -83,11 +83,11 @@ end
 function mod:OnEngage()
 	if self:Mythic() then
 		yetiChargeTimer = nil
-		heroicAdd = nil
+		mythicAdd = nil
 	end
 	accCount = 0
 	self:Berserk(600)
-	self:OpenProximity("proximity", 10) -- Too close to another group. Tactic dependant - needed for heroic
+	self:OpenProximity("proximity", 10) -- Too close to another group. Tactic dependant - needed for mythic
 	self:CDBar(-7963, self:LFR() and 18 or 14) -- Deafening Screech
 	self:CDBar(143766, 12, 143426, 143766) -- Fearsome Roar with correct icon
 end
@@ -96,13 +96,13 @@ end
 -- Event Handlers
 --
 
--- heroic
+-- Mythic
 
 function mod:PrisonerTracker(_, _, sender)
 	if sender == L.npc_akolik then
-		heroicAdd = "bats"
+		mythicAdd = "bats"
 	elseif sender == L.npc_waterspeaker_gorai then
-		heroicAdd = "yeti"
+		mythicAdd = "yeti"
 	end
 end
 
@@ -142,14 +142,14 @@ end
 
 do
 	local function checkPrisonerKilled()
-		if heroicAdd then
+		if mythicAdd then
 			-- XXX maybe add scheduled message once we know exact timer (videos)
 			-- timer still need verification and still looking for a better event to start bars (don't seem to be any)
-			if heroicAdd == "bats" then
+			if mythicAdd == "bats" then
 				mod:CDBar("adds", 12, mod:SpellName(-8584), 24733) -- bat icon
-			elseif heroicAdd == "yeti" then
+			elseif mythicAdd == "yeti" then
 				mod:CDBar("adds", 10, mod:SpellName(-8582), 26010) -- yeti icon
-				heroicAdd = nil
+				mythicAdd = nil
 			end
 		end
 	end
@@ -256,6 +256,6 @@ end
 function mod:YetiDeath(args)
 	self:CancelTimer(yetiChargeTimer)
 	yetiChargeTimer = nil
-	heroicAdd = nil
+	mythicAdd = nil
 end
 

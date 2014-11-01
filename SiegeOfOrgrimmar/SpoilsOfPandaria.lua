@@ -58,7 +58,7 @@ function mod:GetOptions()
 		{146217, "FLASH"}, 146222, 146257, -- Crate of Panderan Relics
 		"proximity", {"crates", "TANK"}, {"warmup", "EMPHASIZE"}, "berserk", "bosskill",
 	}, {
-		[146815] = CL.heroic,
+		[146815] = "mythic",
 		[145288] = -8434, -- Mogu crate
 		[145987] = -8439, -- Mantid crate
 		[146217] = -8366, -- Crate of Panderan Relics

@@ -48,7 +48,7 @@ function mod:GetOptions()
 		{146595, "PROXIMITY"}, 144400, -8257, {-8258, "FLASH"}, {146817, "FLASH", "PROXIMITY"}, -8270, {144351, "DISPEL"}, {144358, "TANK", "FLASH", "EMPHASIZE"}, -8262, 144800, 144563, -8349,
 		"altpower", "berserk", "bosskill",
 	}, {
-		[145215] = "heroic",
+		[145215] = "mythic",
 		["custom_off_titan_mark"] = L.custom_off_titan_mark,
 		[146595] = "general",
 	}
@@ -59,11 +59,11 @@ function mod:OnBossEnable()
 		self:OpenAltPower("altpower", 144343) -- Pride
 	end
 
-	-- heroic
+	-- Mythic
 	self:Log("SPELL_AURA_REMOVED", "WeakenedResolveOver", 147207)
 	self:Log("SPELL_AURA_APPLIED", "WeakenedResolveBegin", 147207)
 	self:Log("SPELL_AURA_APPLIED", "Banishment", 145215)
-	-- normal
+	-- Normal
 	self:Log("SPELL_CAST_START", "UnleashedStart", 144832)
 	self:Log("SPELL_CAST_SUCCESS", "Unleashed", 144832)
 	self:Log("SPELL_AURA_APPLIED", "ImprisonApplied", 144574, 144684, 144683, 144636)
@@ -107,7 +107,7 @@ end
 -- Event Handlers
 --
 
--- heroic
+-- Mythic
 do
 	local function warnWeakenedResolve(spellId, spellName)
 		if not UnitAffectingCombat("player") then

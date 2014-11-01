@@ -44,7 +44,7 @@ function mod:GetOptions()
 		"custom_off_mine_marks",
 		"stages", -8183, "berserk", "bosskill",
 	}, {
-		[-8181] = "heroic",
+		[-8181] = "mythic",
 		[-8179] = -8177,
 		[144485] = -8178,
 		["custom_off_mine_marks"] = L.custom_off_mine_marks,

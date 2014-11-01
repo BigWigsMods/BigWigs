@@ -41,7 +41,7 @@ function mod:GetOptions()
 		{144005, "FLASH", "SAY"}, {143990, "FLASH", "ICON"}, 143973, -- Wavebinder Kardris
 		-8124, 144302, "berserk", "bosskill",
 	}, {
-		[144330] = "heroic",
+		[144330] = "mythic",
 		[144215] = -8128, -- Earthbreaker Haromm
 		[144005] = -8134, -- Wavebinder Kardris
 		[-8124] = "general",
@@ -49,7 +49,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	-- Heroic
+	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "IronPrison", 144330)
 	self:Log("SPELL_CAST_START", "IronTomb", 144328)
 	-- Earthbreaker Haromm
@@ -81,7 +81,7 @@ end
 -- Event Handlers
 --
 
--- Heroic
+-- Mythic
 
 function mod:IronTomb(args)
 	self:Bar(args.spellId, 31)

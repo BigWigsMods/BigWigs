@@ -233,9 +233,9 @@ do
 		["930:3"] = true, -- Tortos cave entry -- Doesn't work, apparently Blizzard don't want us to skip this..?
 		["930:7"] = true, -- Ra-Den room opening
 		["953:2"] = true, -- After Immerseus, entry to Fallen Protectors
-		["953:8"] = true, -- Blackfuse room opening, in Thok area
-		["953:9"] = true, -- Blackfuse room opening
-		["953:12"] = true, -- Heroic Garrosh Phase 4
+		["953:8"] = true, -- Blackfuse room opening, just outside the door
+		["953:9"] = true, -- Blackfuse room opening, in Thok area
+		["953:12"] = true, -- Mythic Garrosh Phase 4
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.

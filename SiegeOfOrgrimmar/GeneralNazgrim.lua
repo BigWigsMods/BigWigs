@@ -77,7 +77,7 @@ local addsNormal = { -- shaman 2, 4, 5, 7, 8, 9
 	L.rogue.." - "..L.shaman.." - "..L.mage,
 	L.mage.." - "..L.warrior.." - "..L.rogue,
 }
-local addsHeroic = { -- shaman 2, 3, 5, 6, 8, 9
+local addsMythic = { -- shaman 2, 3, 5, 6, 8, 9
 	L.mage.." - "..L.rogue.." - "..L.warrior,
 	L.rogue.." - "..L.hunter.." - "..L.shaman,
 	L.mage.." - "..L.shaman.." - "..L.warrior,
@@ -102,7 +102,7 @@ function mod:GetOptions()
 		-7920, {-7933, "FLASH"}, {143475, "FLASH", "ICON"}, "chain_heal", 143474, {143431, "DISPEL"}, "arcane_shock",
 		{143494, "TANK_HEALER"}, {143638, "HEALER"}, -7915, "proximity", "berserk", "bosskill",
 	}, {
-		[143502] = "heroic",
+		[143502] = "mythic",
 		[143484] = -7909,
 		["custom_off_bonecracker_marks"] = L.custom_off_bonecracker_marks,
 		[-7920] = -7920,
@@ -111,7 +111,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	-- heroic
+	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "HuntersMark", 143882)
 	self:Log("SPELL_CAST_START", "Execute", 143502)
 	-- Adds
@@ -155,7 +155,7 @@ end
 -- Event Handlers
 --
 
--- heroic
+-- Mythic
 function mod:HuntersMark(args)
 	self:PrimaryIcon(-7947, args.destName)
 	if self:Me(args.destGUID) then
@@ -234,7 +234,7 @@ function mod:ExtraAdds()
 end
 
 function mod:Adds()
-	local mobs = self:Mythic() and addsHeroic[addWaveCounter] or addsNormal[addWaveCounter]
+	local mobs = self:Mythic() and addsMythic[addWaveCounter] or addsNormal[addWaveCounter]
 	if addWaveCounter == 10 then
 		self:Message(-7920, "Neutral", "Long", L.add_wave:format(L.final_wave, addWaveCounter, mobs))
 	else
