@@ -639,13 +639,48 @@ function boss:Range(player, otherPlayer)
 		local distanceSquared = UnitDistanceSquared(player)
 		return distanceSquared == 0 and 200 or distanceSquared ^ 0.5
 	else
-		local tx, ty = UnitPosition(player)
-		local px, py = UnitPosition(otherPlayer)
+		local ty, tx = UnitPosition(player)
+		local py, px = UnitPosition(otherPlayer)
 		local dx = tx - px
 		local dy = ty - py
 		local distance = (dx * dx + dy * dy) ^ 0.5
 		return distance
 	end
+end
+
+-------------------------------------------------------------------------------
+-- Group checking
+--
+
+-- XXX proposed
+function boss:GroupCount()
+	return GetNumGroupMembers() ~= 0 and GetNumGroupMembers() or 1 -- 0 means we're not in a group so return 1 for soloing
+end
+
+-- XXX proposed
+do
+	local raidList = {}
+	for i = 1, 40 do
+		raidList[i] = format("raid%d", i)
+	end
+
+	local partyList = {}
+	partyList[1] = "player"
+	for i = 1, 4 do
+		partyList[i+1] = format("party%d", i)
+	end
+
+	function boss:GroupUnit(i)
+		return IsInRaid() and raidList[i] or partyList[i]
+	end
+
+	--[[function boss:GetRaidList()
+		return raidList
+	end
+
+	function boss:GetPartyList()
+		return partyList
+	end]]
 end
 
 -------------------------------------------------------------------------------
