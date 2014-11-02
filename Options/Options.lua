@@ -812,9 +812,7 @@ do
 
 	function listAbilitiesInChat(widget)
 		local module = widget:GetUserData("module")
-		local channel = nil
-		if UnitInRaid("player") then channel = "RAID"
-		elseif GetNumSubgroupMembers() > 0 then channel = "PARTY" end
+		local channel = IsInRaid() and "RAID" or IsInGroup() and "PARTY"
 		local abilities = {}
 		local header = nil
 		output(channel, "Big Wigs: ", module.displayName or module.moduleName or module.name)
