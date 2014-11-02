@@ -189,12 +189,11 @@ do
 		wipe(everyoneElse)
 		-- seems easier than table searching/removing/inserting. multi-target should take a name-keyed table ;[
 		if not mod.isEngaged then return end -- This can run after wipe, so check if the encounter is engaged
-		for i=1, GetNumGroupMembers() do
-			local name = GetRaidRosterInfo(i)
-			if UnitDebuff(name, spellName) then
+		for unit in mod:IterateGroup() do
+			if UnitDebuff(unit, spellName) then
 				debuffs = true
-			elseif UnitAffectingCombat(name) then -- XXX doesn't update for bres/ss/reincarnate
-				everyoneElse[#everyoneElse+1] = name
+			elseif UnitAffectingCombat(unit) then -- XXX doesn't update for bres/ss/reincarnate
+				everyoneElse[#everyoneElse+1] = mod:UnitName(unit)
 			end
 		end
 		if not debuffs then

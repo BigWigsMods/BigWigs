@@ -228,8 +228,7 @@ do
 		end
 
 		local furthest, highestDistance = nil, 0
-		for i=1, GetNumGroupMembers() do
-			local unit = ("raid%d"):format(i)
+		for unit in mod:IterateGroup() do
 			if UnitAffectingCombat(unit) and not UnitIsUnit(unit, player) then -- filter dead people and outside groups
 				local distance = mod:Range(unit, player)
 				if distance > highestDistance then

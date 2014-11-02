@@ -292,11 +292,10 @@ do
 		end
 
 		local warned = nil
-		for i=1, GetNumGroupMembers() do
-			local unit = GetRaidRosterInfo(i)
+		for unit in self:IterateGroup() do
 			local power = UnitPower(unit, 10)
 			if power == 100 then
-				mindcontrolled[#mindcontrolled+1] = unit
+				mindcontrolled[#mindcontrolled+1] = self:UnitName(unit)
 				if not scheduled then
 					scheduled = self:ScheduleTimer(warnOvercome, 0.1)
 				end

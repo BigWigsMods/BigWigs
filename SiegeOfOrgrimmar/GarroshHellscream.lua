@@ -427,8 +427,7 @@ do
 	local hope, courage, faith = mod:SpellName(149004), mod:SpellName(148983), mod:SpellName(148994)
 	local hopeList = mod:NewTargetList()
 	local function announceHopeless()
-		for i=1, GetNumGroupMembers() do
-			local unit = ("raid%d"):format(i)
+		for unit in mod:IterateGroup() do
 			if UnitAffectingCombat(unit) and not UnitDebuff(unit, hope) and not UnitDebuff(unit, courage) and not UnitDebuff(unit, faith) then
 				hopeList[#hopeList+1] = mod:UnitName(unit)
 			end

@@ -235,24 +235,24 @@ do
 	-- The tracking spells are cast when first going active (10s after emote) and when the beam jumps after someone dies.
 	-- Even though they're SPELL_CAST_SUCCESS, they don't provide the target ;[
 	local function findDebuff(spellName, spellId)
-		for i=1, GetNumGroupMembers() do
-			local name = GetRaidRosterInfo(i)
-			if UnitDebuff(name, spellName) then
+		for unit in mod:IterateGroup() do
+			if UnitDebuff(unit, spellName) then
+				local name = mod:UnitName(unit)
 				if spellId == 139202 then
 					if blueController ~= name then
 						mod:TargetMessage(-6891, name, "Neutral", "Warning", L["blue_beam"], spellId, true)
-						mark(name, 6)
+						mark(unit, 6)
 						blueController = name
-						if UnitIsUnit(name, "player") then
+						if UnitIsUnit(unit, "player") then
 							mod:Flash(-6891)
 						end
 					end
 				elseif spellId == 139204 then
 					if redController ~= name then
 						mod:TargetMessage(-6891, name, "Neutral", "Warning", L["red_beam"], spellId, true)
-						mark(name, 7)
+						mark(unit, 7)
 						redController = name
-						if UnitIsUnit(name, "player") then
+						if UnitIsUnit(unit, "player") then
 							mod:Flash(-6891)
 						end
 					end

@@ -145,9 +145,8 @@ do
 	local function warnStrike(notBoss)
 		local player = UnitDebuff("boss1target", strike) and "boss1target"
 		if not player then -- Most of the time this won't run as boss1target works
-			for i=1, GetNumGroupMembers() do
-				local id = ("raid%d"):format(i)
-				player = UnitDebuff(id, strike) and id
+			for unit in mod:IterateGroup() do
+				player = UnitDebuff(unit, strike) and unit
 				if player then break end
 			end
 		end

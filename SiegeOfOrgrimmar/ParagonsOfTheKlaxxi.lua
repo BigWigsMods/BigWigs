@@ -548,10 +548,10 @@ local function iyyokukSelected()
 
 	if mod.db.profile.custom_off_edge_marks then
 		if not raidParsed then
-			for i = 1, GetNumGroupMembers() do
-				local name = GetRaidRosterInfo(i)
-				shape, color, number = parseDebuff(name)
+			for unit in mod:IterateGroup() do
+				shape, color, number = parseDebuff(unit)
 				if shape then
+					local name = mod:UnitName(unit)
 					results[shape][name] = true
 					results[color][name] = true
 					results[number][name] = true
@@ -561,10 +561,10 @@ local function iyyokukSelected()
 		end
 
 		local count = 1
-		for i = 1, GetNumGroupMembers() do
-			local name = GetRaidRosterInfo(i)
+		for unit in mod:IterateGroup() do
+			local name = mod:UnitName(unit)
 			if (results.shape and results[results.shape][name]) or (results.color and results[results.color][name]) or (results.number and results[results.number][name]) then
-				SetRaidTarget(name, count)
+				SetRaidTarget(unit, count)
 				count = count + 1
 				if count > 8 then break end
 			end
@@ -640,10 +640,9 @@ do
 	}
 	local function handleCatalystProximity()
 		wipe(redPlayers)
-		for i=1, GetNumGroupMembers() do
-			local name = GetRaidRosterInfo(i)
-			if not UnitIsUnit("player", name) and (UnitDebuff(name, mod:SpellName(142533)) or (mod:Mythic() and UnitDebuff(name, mod:SpellName(142534)))) then -- red or mythic and yellow
-				redPlayers[#redPlayers+1] = name
+		for unit in mod:IterateGroup() do
+			if not UnitIsUnit("player", unit) and (UnitDebuff(unit, mod:SpellName(142533)) or (mod:Mythic() and UnitDebuff(unit, mod:SpellName(142534)))) then -- red or mythic and yellow
+				redPlayers[#redPlayers+1] = mod:UnitName(unit)
 			end
 		end
 		local myDebuff = UnitDebuff("player", mod:SpellName(142532)) or UnitDebuff("player", mod:SpellName(142533)) or UnitDebuff("player", mod:SpellName(142534)) -- blue, red, yellow
