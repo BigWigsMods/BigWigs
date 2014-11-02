@@ -652,12 +652,6 @@ end
 -- Group checking
 --
 
--- XXX proposed
-function boss:GroupCount()
-	return GetNumGroupMembers() ~= 0 and GetNumGroupMembers() or 1 -- 0 means we're not in a group so return 1 for soloing
-end
-
--- XXX proposed
 do
 	local raidList = {}
 	for i = 1, 40 do
@@ -665,17 +659,20 @@ do
 	end
 	local partyList = {"player", "party1", "party2", "party3", "party4"}
 
-	function boss:GroupUnit(i)
-		return IsInRaid() and raidList[i] or partyList[i]
+	local i = 0
+	local size = 1
+	local function iter(a)
+		i = i + 1
+		if i <= size then
+			return a[i]
+		end
 	end
 
-	--[[function boss:GetRaidList()
-		return raidList
+	function boss:IterateGroup()
+		i = 0
+		size = GetNumGroupMembers() > 0 and GetNumGroupMembers() or 1
+		return iter, (IsInRaid() and raidList or partyList)
 	end
-
-	function boss:GetPartyList()
-		return partyList
-	end]]
 end
 
 -------------------------------------------------------------------------------
