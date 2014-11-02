@@ -663,12 +663,7 @@ do
 	for i = 1, 40 do
 		raidList[i] = format("raid%d", i)
 	end
-
-	local partyList = {}
-	partyList[1] = "player"
-	for i = 1, 4 do
-		partyList[i+1] = format("party%d", i)
-	end
+	local partyList = {"player", "party1", "party2", "party3", "party4"}
 
 	function boss:GroupUnit(i)
 		return IsInRaid() and raidList[i] or partyList[i]
