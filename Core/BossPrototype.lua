@@ -430,21 +430,16 @@ do
 end
 
 do
-	local t = nil
-	local function buildTable()
-		t = {
-			"boss1", "boss2", "boss3", "boss4", "boss5",
-			"target", "targettarget",
-			"focus", "focustarget",
-			"party1target", "party2target", "party3target", "party4target",
-			"mouseover", "mouseovertarget"
-		}
-		for i = 1, 25 do t[#t+1] = format("raid%dtarget", i) end
-		buildTable = nil
-	end
+	local unitTable = {
+		"boss1", "boss2", "boss3", "boss4", "boss5",
+		"target", "targettarget",
+		"focus", "focustarget",
+		"party1target", "party2target", "party3target", "party4target",
+		"mouseover", "mouseovertarget"
+	}
+	for i = 1, 40 do unitTable[#unitTable+1] = format("raid%dtarget", i) end
 	local function findTargetByGUID(id)
-		if not t then buildTable() end
-		for i, unit in next, t do
+		for i, unit in next, unitTable do
 			local guid = UnitGUID(unit)
 			if guid and not UnitIsPlayer(unit) then
 				if type(id) == "number" then
