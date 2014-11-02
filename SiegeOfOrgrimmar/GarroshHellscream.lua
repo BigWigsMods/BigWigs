@@ -536,7 +536,7 @@ end
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	if self:MobId(UnitGUID(unitId)) ~= 71865 then return end
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-	if (hp < 16 and phase == 1) or (hp < 13 and phase == 2) then -- 10%
+	if hp < 16 then -- 10%
 		self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2", "boss3")
 	end
