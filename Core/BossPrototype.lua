@@ -246,17 +246,19 @@ do
 		if allowedEvents[event] then
 			if event == "UNIT_DIED" then
 				local _, _, _, _, _, id = strsplit("-", destGUID)
-				local mobId = tonumber(id) or 1
-				for i = #enabledModules, 1, -1 do
-					local self = enabledModules[i]
-					local m = eventMap[self][event]
-					if m and m[mobId] then
-						local func = m[mobId]
-						args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags = mobId, destGUID, destName, destFlags, args.destRaidFlags
-						if type(func) == "function" then
-							func(args)
-						else
-							self[func](self, args)
+				local mobId = tonumber(id)
+				if mobId then
+					for i = #enabledModules, 1, -1 do
+						local self = enabledModules[i]
+						local m = eventMap[self][event]
+						if m and m[mobId] then
+							local func = m[mobId]
+							args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags = mobId, destGUID, destName, destFlags, args.destRaidFlags
+							if type(func) == "function" then
+								func(args)
+							else
+								self[func](self, args)
+							end
 						end
 					end
 				end
@@ -444,7 +446,7 @@ do
 			if guid and not UnitIsPlayer(unit) then
 				if type(id) == "number" then
 					local _, _, _, _, _, id = strsplit("-", guid)
-					guid = tonumber(id) or 1
+					guid = tonumber(id)
 				end
 				if guid == id then return unit end
 			end

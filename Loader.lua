@@ -751,7 +751,7 @@ do
 		if guid then
 			local _, _, _, _, _, id = strsplit("-", guid)
 			local mobId = tonumber(id)
-			if worldBosses[mobId] then
+			if mobId and worldBosses[mobId] then
 				local id = worldBosses[mobId]
 				if InCombatLockdown() or UnitAffectingCombat("player") then
 					if not queueLoad[id] then

@@ -133,7 +133,7 @@ end
 local function targetCheck(unit)
 	if not UnitName(unit) or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
 	local _, _, _, _, _, mobId = strsplit("-", (UnitGUID(unit)))
-	local id = tonumber(mobId) or 1
+	local id = tonumber(mobId)
 	if id and enablemobs[id] then
 		targetSeen(unit, enablemobs[id], id)
 	end
