@@ -668,7 +668,7 @@ do
 				return t[i]
 			end
 		end
-		return iter, (IsInRaid() and raidList or partyList)
+		return iter, IsInRaid() and raidList or partyList
 	end
 end
 
