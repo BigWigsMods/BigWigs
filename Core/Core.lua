@@ -237,6 +237,7 @@ do
 		["953:8"] = true, -- Blackfuse room opening, just outside the door
 		["953:9"] = true, -- Blackfuse room opening, in Thok area
 		["953:12"] = true, -- Mythic Garrosh Phase 4
+		["969:2"] = true, -- Shadowmoon Burial Grounds, final boss introduction
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
