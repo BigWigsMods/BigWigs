@@ -655,11 +655,9 @@ do
 		"raid31", "raid32", "raid33", "raid34", "raid35", "raid36", "raid37", "raid38", "raid39", "raid40"
 	}
 	local partyList = {"player", "party1", "party2", "party3", "party4"}
-
-	local GetNumGroupMembers = GetNumGroupMembers
-	local IsInRaid = IsInRaid
+	local GetNumGroupMembers, IsInRaid = GetNumGroupMembers, IsInRaid
 	function boss:IterateGroup()
-		local num = GetNumGroupMembers()
+		local num = GetNumGroupMembers() or 0
 		local i = 0
 		local size = num > 0 and num+1 or 2
 		local function iter(t)
