@@ -656,21 +656,18 @@ do
 	}
 	local partyList = {"player", "party1", "party2", "party3", "party4"}
 
-	local i = 0
-	local size = 1
-	local function iter(a)
-		i = i + 1
-		if i <= size then
-			return a[i]
-		end
-	end
-
 	local GetNumGroupMembers = GetNumGroupMembers
 	local IsInRaid = IsInRaid
 	function boss:IterateGroup()
-		i = 0
 		local num = GetNumGroupMembers()
-		size = num > 0 and num or 1
+		local i = 0
+		local size = num > 0 and num+1 or 2
+		local function iter(t)
+			i = i + 1
+			if i < size then
+				return t[i]
+			end
+		end
 		return iter, (IsInRaid() and raidList or partyList)
 	end
 end
