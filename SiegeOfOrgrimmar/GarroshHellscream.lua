@@ -85,7 +85,7 @@ function mod:GetOptions(CL)
 		145065, {144985, "FLASH"}, {145183, "TANK"}, -- phase 2
 		-8325, -- phase 3
 		"custom_off_minion_marker",
-		{147209, "FLASH", "ICON"}, 147235, "bombardment", {147665, "FLASH", "ICON"}, {"clump_check", "FLASH"}, "manifest_rage", -- phase 4 .. fix descriptions
+		{147209, "FLASH", "ICON", "SAY"}, 147235, "bombardment", {147665, "FLASH", "ICON"}, {"clump_check", "FLASH"}, "manifest_rage", -- phase 4
 		{144758, "SAY", "FLASH", "ICON"},
 		"stages", "berserk", "bosskill",
 	}, {
@@ -232,6 +232,7 @@ function mod:MaliceApplied(args)
 	self:TargetBar(args.spellId, 14, args.destName)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
+		self:Say(args.spellId)
 	end
 	maliceCounter = maliceCounter + 1
 	self:Bar(args.spellId, 30, CL.count:format(args.spellName, maliceCounter))
