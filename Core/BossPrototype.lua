@@ -4,8 +4,8 @@
 
 local AL = LibStub("AceLocale-3.0")
 local L = AL:GetLocale("Big Wigs: Common")
-local UnitExists, UnitAffectingCombat, GetSpellInfo, UnitGUID = UnitExists, UnitAffectingCombat, GetSpellInfo, UnitGUID
-local UnitDistanceSquared, UnitPosition = UnitDistanceSquared, UnitPosition
+local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared
+local EJ_GetSectionInfo, GetSpellInfo = EJ_GetSectionInfo, GetSpellInfo
 local format, sub, gsub, band = string.format, string.sub, string.gsub, bit.band
 local type, next, tonumber = type, next, tonumber
 local core = BigWigs
@@ -441,10 +441,11 @@ do
 	}
 	for i = 1, 40 do unitTable[#unitTable+1] = format("raid%dtarget", i) end
 	local function findTargetByGUID(id)
+		local isNumber = type(id) == "number"
 		for i, unit in next, unitTable do
 			local guid = UnitGUID(unit)
 			if guid and not UnitIsPlayer(unit) then
-				if type(id) == "number" then
+				if isNumber then
 					local _, _, _, _, _, id = strsplit("-", guid)
 					guid = tonumber(id)
 				end
