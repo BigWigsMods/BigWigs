@@ -20,7 +20,7 @@ if L then
 	L.custom_off_titan_mark_desc = "给受到泰坦之赐的玩家使用 {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}{rt7}{rt8} 进行标记，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 
 	L.custom_off_fragment_mark = "被腐蚀的碎片标记"
-	L.custom_off_fragment_mark_desc = "使用 {rt8}{rt7}{rt6} 标记被腐蚀的碎片，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。\n在25人模式中，这将与泰坦之赐标记冲突。|r"
+	L.custom_off_fragment_mark_desc = "使用 {rt8}{rt7} 标记被腐蚀的碎片，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 end
 
 L = BigWigs:NewBossLocale("Galakras", "zhCN")

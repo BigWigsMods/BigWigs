@@ -32,7 +32,7 @@ if L then
 	L.custom_off_titan_mark_icon = 1
 
 	L.custom_off_fragment_mark = "Corrupted Fragment marker"
-	L.custom_off_fragment_mark_desc = "Mark the Corrupted Fragments with {rt8}{rt7}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.\nIn 25 player mode, this will conflict with the Gift of the Titans marker.|r"
+	L.custom_off_fragment_mark_desc = "Mark the Corrupted Fragments with {rt8}{rt7}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.custom_off_fragment_mark_icon = 8
 end
 L = mod:GetLocale()
@@ -141,7 +141,7 @@ do
 			mobTbl[guid] = true
 			SetRaidTarget(unit, counter)
 			counter = counter - 1
-			if counter == 5 or mod:Difficulty() == 5 then
+			if counter == 6 then
 				mod:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 				mod:UnregisterEvent("UNIT_TARGET")
 			end
