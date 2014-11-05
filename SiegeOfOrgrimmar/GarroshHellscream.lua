@@ -85,7 +85,7 @@ function mod:GetOptions(CL)
 		145065, {144985, "FLASH"}, {145183, "TANK"}, -- phase 2
 		-8325, -- phase 3
 		"custom_off_minion_marker",
-		{147209, "FLASH", "ICON", "SAY"}, 147235, "bombardment", {147665, "FLASH", "ICON"}, {"clump_check", "FLASH"}, "manifest_rage", -- phase 4
+		{147209, "FLASH", "ICON", "SAY"}, 147235, "bombardment", {147665, "FLASH", "ICON"}, {"clump_check", "FLASH", "PROXIMITY"}, "manifest_rage", -- phase 4
 		{144758, "SAY", "FLASH", "ICON"},
 		"stages", "berserk", "bosskill",
 	}, {
@@ -258,6 +258,8 @@ do
 		bombardmentCounter = bombardmentCounter + 1
 		self:Bar("bombardment", 13, CL.casting:format(args.spellName), args.spellId)
 		self:Bar("clump_check", 3, 147126) -- Clump Check
+		self:OpenProximity("clump_check", 10)
+		self:ScheduleTimer("CloseProximity", 13, "clump_check")
 	end
 end
 
