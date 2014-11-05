@@ -74,7 +74,7 @@ function mod:OnEngage()
 	wipe(marksUsed)
 	ashCounter = 1
 	hpWarned = 1
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "TotemWarn", "boss1")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "TotemWarn", "boss1", "boss2") -- Check both as one may get out of range when using the splitting tactic
 end
 
 --------------------------------------------------------------------------------
