@@ -143,7 +143,7 @@ function mod:OnEngage(diff)
 	waveCounter = 1
 	waveTimer = self:ScheduleTimer("NewWave", 2)
 	self:Bar(-8292, 2, nil, 144582)
-	self:Berserk(self:LFR() and 1500 or 1080)
+	self:Berserk(1500)
 	self:Bar(144758, 11) -- Desecrate
 	self:Bar(-8298, 20, nil, 144616) -- Siege Engineer
 	self:Bar(-8294, 30, nil, 144584) -- Farseer
@@ -290,7 +290,7 @@ function mod:Warsong(args)
 end
 
 do
-	local waveTimers = { 43, 45 } -- XXX need more data
+	local waveTimers = { 43, 45 }
 	function mod:NewWave()
 		self:Message(-8292, "Attention", nil, nil, 144582)
 		self:Bar(-8292, waveTimers[waveCounter] or 40, nil, 144582)
