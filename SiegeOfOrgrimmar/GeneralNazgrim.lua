@@ -165,7 +165,7 @@ function mod:HuntersMark(args)
 end
 
 function mod:Execute(args)
-	self:Message(args.spellId, "Important", "Warning", CL.casting:format(args.spellName)) -- XXX need feedback if this sound works fine with the other sounds
+	self:Message(args.spellId, "Important", "Warning", CL.casting:format(args.spellName))
 	self:CDBar(args.spellId, 18) -- varies a bit due to ability casts
 	if UnitIsUnit("player", "boss1target") then -- poor mans target check
 		self:Flash(args.spellId)

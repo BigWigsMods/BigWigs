@@ -290,7 +290,7 @@ function mod:Warsong(args)
 end
 
 do
-	local waveTimers = { 43, 45 }
+	local waveTimers = { 43, 45 } -- XXX need more data
 	function mod:NewWave()
 		self:Message(-8292, "Attention", nil, nil, 144582)
 		self:Bar(-8292, waveTimers[waveCounter] or 40, nil, 144582)

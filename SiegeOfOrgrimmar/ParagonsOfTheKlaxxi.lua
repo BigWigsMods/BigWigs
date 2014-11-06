@@ -594,7 +594,6 @@ end
 
 function mod:EncaseInEmber(args)
 	if UnitDebuff("player", self:SpellName(148650)) then
-		-- XXX for pulse, maybe should add a custom option description so people know to turn pulse on for this, or turn it on by default?
 		self:Flash(148650) -- Strong Legs
 	end
 	self:TargetMessage(args.spellId, args.destName, "Important", self:Damager() and "Warning")

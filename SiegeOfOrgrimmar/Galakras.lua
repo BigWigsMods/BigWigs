@@ -81,6 +81,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_SAY", "Warmup")
+	self:RegisterEvent("RAID_BOSS_WHISPER")
 
 	if self.db.profile.custom_off_shaman_marker then
 		-- Shaman marking, enabled here for trash
@@ -159,6 +160,11 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:RAID_BOSS_WHISPER(_, msg)
+	-- RAID_BOSS_WHISPER#Galakras is hit! Nice shot!#Anti-Air Turret#0#true
+	self:Message("stages", "Personal", nil, msg, "achievement_boss_galakras")
+end
 
 --Galakras
 function mod:FlamesOfGalakrondStacking(args)
