@@ -72,7 +72,9 @@ function mod:OnEngage(diff)
 		totemTime = 30 -- LFR
 	end
 	self:Bar(116174, totemTime, L["totem_message"]:format(totemCounter))
-	self:Bar(116272, self:Heroic() and 71 or 65, L["banish_message"])
+	if not self:Solo() then
+		self:Bar(116272, self:Heroic() and 71 or 65, L["banish_message"])
+	end
 	if not self:LFR() then
 		self:Berserk(360)
 	end
