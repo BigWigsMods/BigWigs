@@ -18,7 +18,8 @@ local difficulty = 16 -- Mythic
 local UpdateDispelStatus = nil
 local myGUID = nil
 local myRole = nil
-local updateData = function()
+local solo = false
+local updateData = function(module)
 	myGUID = UnitGUID("player")
 
 	local tree = GetSpecialization()
@@ -31,6 +32,16 @@ local updateData = function()
 
 	local _, _, diff = GetInstanceInfo()
 	difficulty = diff
+
+	solo = true
+	local _, _, _, mapId = UnitPosition("player")
+	for unit in module:IterateGroup() do
+		local _, _, _, tarMapId = UnitPosition(unit)
+		if not UnitIsUnit("player", unit) and tarMapId == mapId then
+			solo = false
+			break
+		end
+	end
 
 	UpdateDispelStatus()
 end
@@ -97,7 +108,7 @@ function boss:OnInitialize() core:RegisterBossModule(self) end
 function boss:OnEnable(isWipe)
 	if debug then dbg(self, isWipe and "OnEnable() via Wipe()" or "OnEnable()") end
 
-	updateData()
+	updateData(self)
 
 	-- Update enabled modules list
 	for i = #enabledModules, 1, -1 do
@@ -512,7 +523,7 @@ do
 		if debug then dbg(self, ":Engage") end
 
 		if not noEngage or noEngage ~= "NoEngage" then
-			updateData()
+			updateData(self)
 
 			if self.OnEngage then
 				self:OnEngage(difficulty)
@@ -644,6 +655,10 @@ function boss:Range(player, otherPlayer)
 		local distance = (dx * dx + dy * dy) ^ 0.5
 		return distance
 	end
+end
+
+function boss:Solo()
+	return solo
 end
 
 -------------------------------------------------------------------------------
