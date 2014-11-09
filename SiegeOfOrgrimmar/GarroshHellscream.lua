@@ -496,7 +496,9 @@ do
 				if hopeTimer then self:CancelTimer(hopeTimer) end
 				desecrateCounter = 1
 				self:Bar(144758, 10) -- Desecrate
-				self:Bar(145065, 15, 67229, 145065) -- Mind Control
+				if not self:Solo() then
+					self:Bar(145065, 15, 67229, 145065) -- Mind Control
+				end
 				self:Bar(144985, 30, CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
 				self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3")
 				-- warn for empowered abilities
@@ -516,7 +518,9 @@ do
 			self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)
 			self:StopBar(CL.intermission)
 			self:Bar(144985, 45, CL.count:format(self:SpellName(144985), whirlingCounter)) -- Whirling Corruption
-			self:Bar(145065, 29, 67229, 145065) -- Mind Control
+			if not self:Solo() then
+				self:Bar(145065, 29, 67229, 145065) -- Mind Control
+			end
 			self:CDBar(144758, 20) -- Desecrate
 		elseif spellId == 146984 then -- phase 4 Enter Realm of Garrosh
 			phase = 4
@@ -559,22 +563,22 @@ do
 		self:TargetMessage(144758, name, "Urgent", "Alarm")
 	end
 
-	local phase2DesecrateTimers = {36, 45, 36}
 	function mod:Desecrate(args)
 		self:GetBossTarget(bossTarget, 1, args.sourceGUID)
 
-		local cd = 41
+		local cd = 40
 		if phase == 2 then
-			local diff = self:Difficulty()
-			if diff == 3 or diff == 5 then -- 10 man
-				cd = phase2DesecrateTimers[desecrateCounter] or 45
+			if desecrateCounter > 3 then
+				cd = 0 -- Only enough time for 3 in phase 2 between each intermission
 			else
-				cd = 35
+				cd = 35 -- XXX the 3rd Desecrate during p2 only (desecrateCounter==2) always aligns with Whirling and which he casts first seems random. Choosing Whirling will delay that Desecrate. Fix?
 			end
 		elseif phase == 3 then
-			cd = (desecrateCounter == 1) and 35 or 25
+			cd = desecrateCounter == 1 and 34 or 25
 		end
-		self:CDBar(144758, cd)
+		if cd > 0 then
+			self:CDBar(144758, cd)
+		end
 		desecrateCounter = desecrateCounter + 1
 	end
 end
