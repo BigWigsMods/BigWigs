@@ -582,7 +582,7 @@ do
 		if not self.scheduledScans then self.scheduledScans = {} self.scheduledScansCounter = {} end
 
 		self.scheduledScansCounter[func] = 0
-		self.scheduledScans[func] = self:ScheduleRepeatingTimer(bossScanner, 0.05, self, func, IsInGroup() and tankCheckExpiry or 0.1, guid) -- Tiny allowance when solo
+		self.scheduledScans[func] = self:ScheduleRepeatingTimer(bossScanner, 0.05, self, func, solo and 0.1 or tankCheckExpiry, guid) -- Tiny allowance when solo
 	end
 end
 
