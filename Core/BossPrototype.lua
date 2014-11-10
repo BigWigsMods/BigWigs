@@ -4,7 +4,7 @@
 
 local AL = LibStub("AceLocale-3.0")
 local L = AL:GetLocale("Big Wigs: Common")
-local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared
+local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected
 local EJ_GetSectionInfo, GetSpellInfo = EJ_GetSectionInfo, GetSpellInfo
 local format, sub, gsub, band = string.format, string.sub, string.gsub, bit.band
 local type, next, tonumber = type, next, tonumber
@@ -37,7 +37,7 @@ local updateData = function(module)
 	local _, _, _, mapId = UnitPosition("player")
 	for unit in module:IterateGroup() do
 		local _, _, _, tarMapId = UnitPosition(unit)
-		if tarMapId == mapId and myGUID ~= UnitGUID(unit) then
+		if tarMapId == mapId and myGUID ~= UnitGUID(unit) and UnitIsConnected(unit) then
 			solo = false
 			break
 		end
