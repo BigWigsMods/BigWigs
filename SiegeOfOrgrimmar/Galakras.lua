@@ -242,7 +242,7 @@ function mod:SouthTower()
 		self:Bar("towers", 35, L.tower_defender, 85214) -- random orc icon
 		self:ScheduleTimer(firstTowerAdd, 35)
 	else
-		self:Bar("towers", 150, L.north_tower, L.towers_icon) -- XXX verify
+		self:Bar("towers", 150, L.north_tower, L.towers_icon) -- Mythic one seems random
 	end
 end
 

@@ -13,6 +13,7 @@ mod.engageId = 1602
 --
 
 local blastCounter = 1
+local reformScheduler = nil
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -54,6 +55,7 @@ end
 
 function mod:OnEngage()
 	blastCounter = 1
+	reformScheduler = nil
 
 	self:Berserk(600)
 	self:Bar(143309, 20.8) -- Swirl
@@ -103,6 +105,9 @@ function mod:Splits()
 	self:StopBar(143436) -- Corrosive Blast
 	self:StopBar(143574) -- Swelling Corruption
 	self:Message(143020, "Neutral")
+	-- Reform, 60 seconds is the maximum time he'll stay under when trying to do the "No More Tears" (id:8536) achievement.
+	-- If he was under for 35 seconds, assume we're trying to do the achievement, and show a bar for the remaining 25 seconds.
+	reformScheduler = self:ScheduleTimer("Bar", 35, 143469, 25)
 end
 
 function mod:Reform()
@@ -110,6 +115,11 @@ function mod:Reform()
 	self:Message(143469, "Neutral", nil, ("%s (%d%%)"):format(self:SpellName(143469), UnitPower("boss1")))
 	self:Bar(143309, 24) -- Swirl 24.1 - 24.9
 	self:Bar(143436, 14) -- Corrosive Blast 13.6 - 15.2
+	if reformScheduler then
+		self:CancelTimer(reformScheduler)
+		reformScheduler = nil
+		self:StopBar(143469) -- Reform, assuming it was started
+	end
 	if self:Mythic() then
 		self:CDBar(143574, 10) -- Swelling Corruption
 	end
