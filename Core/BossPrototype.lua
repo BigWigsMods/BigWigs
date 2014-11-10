@@ -37,7 +37,7 @@ local updateData = function(module)
 	local _, _, _, mapId = UnitPosition("player")
 	for unit in module:IterateGroup() do
 		local _, _, _, tarMapId = UnitPosition(unit)
-		if not UnitIsUnit("player", unit) and tarMapId == mapId then
+		if tarMapId == mapId and myGUID ~= UnitGUID(unit) then
 			solo = false
 			break
 		end
@@ -858,13 +858,13 @@ end
 
 -- PROXIMITY
 function boss:OpenProximity(key, range, player, isReverse)
-	if checkFlag(self, key, C.PROXIMITY) then
+	if not solo and checkFlag(self, key, C.PROXIMITY) then
 		self:SendMessage("BigWigs_ShowProximity", self, range, key, player, isReverse)
 	end
 end
 
 function boss:CloseProximity(key)
-	if checkFlag(self, key or "proximity", C.PROXIMITY) then
+	if not solo and checkFlag(self, key or "proximity", C.PROXIMITY) then
 		self:SendMessage("BigWigs_HideProximity", self, key or "proximity")
 	end
 end
