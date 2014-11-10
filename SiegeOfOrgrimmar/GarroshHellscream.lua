@@ -365,7 +365,7 @@ do
 			if whirlingCounter < 4 then -- Only enough time for 3 during p2
 				self:Bar(144985, 50, CL.count:format(self:SpellName(144985), whirlingCounter))
 			end
-			if desecrateCounter == 2 and whirlingCounter == 3 then -- Whirling arrived first, delay Desecrate to the end of the cast
+			if desecrateCounter == 3 and whirlingCounter == 3 then -- Whirling arrived first, delay Desecrate to the end of the cast
 				self:CDBar(144758, 8.5) -- Desecrate, delayed by Whirling: 2.5s cast and 6s channel = 8.5s
 			end
 		else
@@ -584,7 +584,7 @@ do
 			if desecrateCounter > 3 then
 				cd = 0 -- Only enough time for 3 in phase 2 between each intermission
 			else
-				 -- The 3rd Desecrate during p2 only (desecrateCounter==2) always aligns with Whirling and which he casts first seems random.
+				 -- The 3rd Desecrate (during p2 only) always aligns with Whirling and which he casts first seems random.
 				 -- Choosing Whirling will delay that Desecrate. We "fix" this by starting a new Desecrate timer in the Whirling function if Whirling arrived first.
 				cd = 35
 			end
