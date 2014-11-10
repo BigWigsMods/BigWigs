@@ -296,7 +296,7 @@ function mod:Adds(_, _, unit, _, _, target)
 		elseif UnitIsPlayer(target) then
 			self:Message("adds", "Attention", "Info", CL.incoming:format(L.adds), L.adds_icon)
 			addsCounter = addsCounter + 1
-			if (addsCounter + 1) % 4  == 0 then
+			if (addsCounter + 1) % 4 == 0 then
 				self:DelayedMessage("drakes", 55, "Attention", CL.incoming:format(L.drakes), L.drakes_icon, "Info")
 				self:Bar("adds", 110, L.adds, L.adds_icon)
 			else

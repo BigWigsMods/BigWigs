@@ -76,7 +76,7 @@ function mod:OnEngage()
 	phase = 1
 	mineCount = 1
 	wipe(fixateList)
-	self:Bar(156238, 6)  -- Arcane Wrath
+	self:Bar(156238, 6) -- Arcane Wrath
 	self:Bar(156467, 15) -- Destructive Resonance
 	self:Bar(156471, 25) -- Arcane Aberration
 	self:Bar(158605, 35) -- Mark of Chaos
@@ -112,7 +112,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 			self:StopBar(157349) -- Force Nova
 		end
 	elseif spellId == 158012 or spellId == 157964 then -- Power of Fortification, Replication (Phase start)
-		self:CDBar(156238, 8)  -- Arcane Wrath
+		self:CDBar(156238, 8) -- Arcane Wrath
 		self:CDBar(156467, 18) -- Destructive Resonance
 		self:CDBar(158605, 28) -- Arcane Aberration
 		self:CDBar(156471, 38) -- Mark of Chaos

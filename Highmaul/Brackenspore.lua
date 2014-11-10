@@ -142,7 +142,7 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 	elseif spellId == 160021 then -- Rejuvenating Mushroom
 		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Info", spellId, L.rejuvenating_mushroom_icon)
 		self:Bar("rejuvenating_mushroom", 135, spellId, L.rejuvenating_mushroom_icon)
-	elseif spellId == 163794 then  -- Exploding Fungus (Mythic)
+	elseif spellId == 163794 then -- Exploding Fungus (Mythic)
 		self:Message(spellId, "Urgent")
 		self:Bar(spellId, 5)
 	end

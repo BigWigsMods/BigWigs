@@ -142,7 +142,7 @@ end
 function mod:OnEngage(diff)
 	waveCounter = 1
 	waveTimer = self:ScheduleTimer("NewWave", 2)
-	self:Bar(-8292, 2, nil, 144582)
+	self:Bar(-8292, 2, nil, 144582) -- Kor'kron Warbringer aka add waves
 	self:Berserk(1500)
 	self:Bar(144758, 11) -- Desecrate
 	self:Bar(-8298, 20, nil, 144616) -- Siege Engineer
@@ -389,7 +389,7 @@ end
 
 do
 	local farseerTimers = { 50, 50, 40 } -- XXX need more data
-	--  cat Transcriptor.lua | sed "s/\t//g" | cut -d ' ' -f 2-300 | grep -E "(YELL].*Farseers)|(DED.*144489)|(DED.*144866)"
+	-- cat Transcriptor.lua | sed "s/\t//g" | cut -d ' ' -f 2-300 | grep -E "(YELL].*Farseers)|(DED.*144489)|(DED.*144866)"
 	function mod:Farseer()
 		self:Message(-8294, "Urgent", self:Damager() and "Alert", nil, 144584)
 		self:Bar(-8294, farseerTimers[farseerCounter] or 40, nil, 144584) -- chain lightning icon cuz that is some shaman spell

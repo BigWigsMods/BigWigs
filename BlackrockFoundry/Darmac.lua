@@ -371,7 +371,7 @@ do
 			self:Bar(args.spellId, 20)
 			scheduled = self:ScheduleTimer(warnConflag, 0.1, args.spellId)
 		end
-		if self.db.profile.custom_off_conflag_marker and conflagMark < 4  then
+		if self.db.profile.custom_off_conflag_marker and conflagMark < 4 then
 			SetRaidTarget(args.destName, conflagMark)
 			conflagMark = conflagMark + 1
 		end

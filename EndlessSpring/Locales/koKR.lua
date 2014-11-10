@@ -21,7 +21,7 @@ L = BigWigs:NewBossLocale("Lei Shi", "koKR")
 if L then
 	L.hp_to_go = "%d%% 이동"
 
-	L.special = "다음 특별한 능력"  -- 숨기, 저리 가!
+	L.special = "다음 특별한 능력" -- 숨기, 저리 가!
 	L.special_desc = "다음 특별한 능력을 경고합니다."
 
 	L.custom_off_addmarker = "수호병 공격대 아이콘"
@@ -45,8 +45,8 @@ if L then
 	L.ability_cd = "능력 재사용 대기시간 바"
 	L.ability_cd_desc = "다음 가능한 능력을 표시합니다."
 
-	L.strike_or_spout = "집념의 일격이나 혼비백산"  -- Strike or Spout
-	L.huddle_or_spout_or_strike = "혼비백산이나 집념의 일격이나 용오름"  -- Huddle or Spout or Strike
+	L.strike_or_spout = "집념의 일격이나 혼비백산" -- Strike or Spout
+	L.huddle_or_spout_or_strike = "혼비백산이나 집념의 일격이나 용오름" -- Huddle or Spout or Strike
 
 	--L.custom_off_huddle = "Huddle marker"
 	--L.custom_off_huddle_desc = "To help healing assignments, mark the people who have huddle in terror on them with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader."
