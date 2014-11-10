@@ -147,7 +147,7 @@ do
 			--self:CDBar(143027, ) -- Clash
 		end
 		self:CDBar(143491, 30) -- Calamity
-		if if self:Dispeller("magic", nil, 143446) then
+		if self:Dispeller("magic", nil, 143446) then
 			self:CDBar(143446, 17) -- Bane
 		end
 	end
