@@ -49,6 +49,7 @@ local activeSpellID = nil
 local proximityPlayer = nil
 local proximityPlayerTable = {}
 local maxPlayers = 0
+local myGUID = nil
 local unitList = nil
 local blipList = {}
 local updater = false
@@ -60,7 +61,7 @@ local CTimerAfter = BigWigsLoader.CTimerAfter
 local UnitPosition, GetPlayerFacing = UnitPosition, GetPlayerFacing
 local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetNumGroupMembers, GetTime
 local IsInRaid, InCombatLockdown = IsInRaid, InCombatLockdown
-local UnitIsDead, UnitIsUnit, UnitClass = UnitIsDead, UnitIsUnit, UnitClass
+local UnitIsDead, UnitIsUnit, UnitGUID, UnitClass = UnitIsDead, UnitIsUnit, UnitGUID, UnitClass
 local min, pi, cos, sin = math.min, math.pi, math.cos, math.sin
 local format = string.format
 
@@ -234,15 +235,15 @@ do
 
 		local anyoneClose = 0
 
-		local srcY, srcX = UnitPosition("player")
+		local srcY, srcX, _, mapId = UnitPosition("player")
 		for i = 1, maxPlayers do
 			local n = unitList[i]
-			local unitY, unitX = UnitPosition(n)
+			local unitY, unitX, _, tarMapId = UnitPosition(n)
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			if range < activeRangeSquared*2.5 then
-				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
+			if mapId == tarMapId and range < activeRangeSquared*2.5 then
+				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[i])
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
@@ -347,15 +348,15 @@ do
 
 		local anyoneClose = 0
 
-		local srcY, srcX = UnitPosition("player")
+		local srcY, srcX, _, mapId = UnitPosition("player")
 		for i = 1, maxPlayers do
 			local n = unitList[i]
-			local unitY, unitX = UnitPosition(n)
+			local unitY, unitX, _, tarMapId = UnitPosition(n)
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			if range < activeRangeSquared*2.5 then
-				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
+			if mapId == tarMapId and range < activeRangeSquared*2.5 then
+				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[i])
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
@@ -945,6 +946,7 @@ do
 		local y, x = UnitPosition("player")
 		if x == 0 and y == 0 then print("No map data!") return end
 
+		myGUID = UnitGUID("player")
 		activeRange = range
 		activeRangeSquared = range*range
 		hardCount = hardCount + 1
