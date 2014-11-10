@@ -150,7 +150,11 @@ function mod:OnEngage(diff)
 	self:Bar(144821, 22) -- Warsong
 	farseerCounter = 1
 	engineerCounter = 1
+	desecrateCounter = 1
+	whirlingCounter = 1
+	mcCounter = 1
 	phase = 1
+	bombardmentCounter, maliceCounter = 1, 1
 	wipe(markableMobs)
 	wipe(marksUsed)
 	markTimer = nil
@@ -357,7 +361,16 @@ do
 		self:Flash(144985)
 		self:Message(144985, "Important", "Long", CL.count:format(args.spellName, whirlingCounter))
 		whirlingCounter = whirlingCounter + 1
-		self:Bar(144985, 50, CL.count:format(self:SpellName(144985), whirlingCounter))
+		if phase == 2 then
+			if whirlingCounter < 4 then -- Only enough time for 3 during p2
+				self:Bar(144985, 50, CL.count:format(self:SpellName(144985), whirlingCounter))
+			end
+			if desecrateCounter == 2 and whirlingCounter == 3 then -- Whirling arrived first, delay Desecrate to the end of the cast
+				self:CDBar(144758, 8.5) -- Desecrate, delayed by Whirling: 2.5s cast and 6s channel = 8.5s
+			end
+		else
+			self:Bar(144985, 50, CL.count:format(self:SpellName(144985), whirlingCounter))
+		end
 
 		if args.spellId == 145037 and self.db.profile.custom_off_minion_marker then
 			wipe(markableMobs)
@@ -571,7 +584,9 @@ do
 			if desecrateCounter > 3 then
 				cd = 0 -- Only enough time for 3 in phase 2 between each intermission
 			else
-				cd = 35 -- XXX the 3rd Desecrate during p2 only (desecrateCounter==2) always aligns with Whirling and which he casts first seems random. Choosing Whirling will delay that Desecrate. Fix?
+				 -- The 3rd Desecrate during p2 only (desecrateCounter==2) always aligns with Whirling and which he casts first seems random.
+				 -- Choosing Whirling will delay that Desecrate. We "fix" this by starting a new Desecrate timer in the Whirling function if Whirling arrived first.
+				cd = 35
 			end
 		elseif phase == 3 then
 			cd = desecrateCounter == 1 and 34 or 25
