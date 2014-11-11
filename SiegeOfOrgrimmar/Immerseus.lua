@@ -127,7 +127,7 @@ end
 
 function mod:Swirl(args)
 	self:Message(args.spellId, "Important", "Long")
-	--self:Bar(args.spellId, 13, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, 13, CL.cast:format(args.spellName))
 	self:Bar(args.spellId, 53)
 end
 
