@@ -278,13 +278,13 @@ function mod:GrippingDespair(args)
 end
 
 function mod:MindControl(args)
-	self:Message(145065, "Urgent", "Alert", CL.casting:format(mod:SpellName(67229)))
+	self:Message(145065, "Urgent", "Alert", 67229, 145065) -- 67229 = "Mind Control"
 	if phase == 3 then
-		self:Bar(145065, (mcCounter == 1) and 35 or 42, 67229, 145065) -- "Mind Control" text
-		mcCounter = mcCounter + 1 -- XXX might need more data
-	else
-		self:Bar(145065, 45, 67229, 145065) -- "Mind Control" text
+		self:Bar(145065, (mcCounter == 1) and 35 or 42, 67229, 145065) -- 67229 = "Mind Control"
+	elseif mcCounter < 3 then -- Only enough time for 3 in phase 2 between each intermission
+		self:Bar(145065, 45, 67229, 145065) -- 67229 = "Mind Control"
 	end
+	mcCounter = mcCounter + 1
 end
 
 -- Phase 1
@@ -362,7 +362,7 @@ do
 		self:Message(144985, "Important", "Long", CL.count:format(args.spellName, whirlingCounter))
 		whirlingCounter = whirlingCounter + 1
 		if phase == 2 then
-			if whirlingCounter < 4 then -- Only enough time for 3 during p2
+			if whirlingCounter < 4 then -- Only enough time for 3 in phase 2 between each intermission
 				self:Bar(144985, 50, CL.count:format(self:SpellName(144985), whirlingCounter))
 			end
 			if desecrateCounter == 3 and whirlingCounter == 3 then -- Whirling arrived first, delay Desecrate to the end of the cast
@@ -506,8 +506,9 @@ do
 			hopeTimer = false
 		elseif spellId == 144956 then -- Jump To Ground -- exiting intermission
 			if phase == 2 then
-				if hopeTimer then self:CancelTimer(hopeTimer) end
+				if hopeTimer then self:CancelTimer(hopeTimer) hopeTimer = nil end
 				desecrateCounter = 1
+				mcCounter = 1
 				self:Bar(144758, 10) -- Desecrate
 				if not self:Solo() then
 					self:Bar(145065, 15, 67229, 145065) -- Mind Control
@@ -525,6 +526,7 @@ do
 				warnPower = 25
 			end
 		elseif spellId == 145647 then -- Realm of Y'Shaarj -- phase 3
+			if hopeTimer then self:CancelTimer(hopeTimer) hopeTimer = nil end
 			phase = 3
 			mcCounter = 1
 			desecrateCounter = 1
@@ -582,7 +584,7 @@ do
 		local cd = 40
 		if phase == 2 then
 			if desecrateCounter > 3 then
-				cd = 0 -- Only enough time for 3 in phase 2 between each intermission
+				cd = 0 -- Only enough time for 4 in phase 2 between each intermission
 			else
 				 -- The 3rd Desecrate (during p2 only) always aligns with Whirling and which he casts first seems random.
 				 -- Choosing Whirling will delay that Desecrate. We "fix" this by starting a new Desecrate timer in the Whirling function if Whirling arrived first.
