@@ -45,7 +45,7 @@ function mod:GetOptions()
 	return {
 		145215, 147207, "custom_off_fragment_mark",
 		"custom_off_titan_mark",
-		{146595, "PROXIMITY"}, 144400, -8257, {-8258, "FLASH"}, {146817, "FLASH", "PROXIMITY"}, -8270, {144351, "DISPEL"}, {144358, "TANK", "FLASH", "EMPHASIZE"}, -8262, 144800, 144563, -8349,
+		{146595, "PROXIMITY"}, 144400, -8257, {-8258, "FLASH"}, {146817, "FLASH", "PROXIMITY"}, -8270, {144351, "DISPEL"}, {144358, "TANK", "FLASH", "EMPHASIZE"}, -8262, 144800, 144563, 144832, -8349,
 		"altpower", "berserk", "bosskill",
 	}, {
 		[145215] = "mythic",
@@ -169,7 +169,8 @@ do
 end
 
 -- normal
-function mod:UnleashedStart()
+function mod:UnleashedStart(args)
+	self:Message(args.spellId, "Neutral", "Info", "30% - ".. CL.casting:format(args.spellName))
 	if not self:LFR() then
 		self:CDBar(144358, 11) -- Wounded Pride
 	end
@@ -183,7 +184,7 @@ end
 
 function mod:Unleashed() -- Final Gift
 	self:StopBar(146595) -- Gift of the Titans
-	self:Message(-8349, "Neutral", "Info")
+	self:Message(-8349, "Neutral", "Info") -- Final Gift
 	self:Bar(144400, 74, CL.count:format(self:SpellName(144400), swellingPrideCounter)) -- Swelling Pride
 	self:Bar(-8262, 60, CL.big_add, 144379)
 	self:DelayedMessage(-8262, 55, "Urgent", CL.spawning:format(CL.big_add), 144379)
@@ -196,8 +197,8 @@ end
 
 function mod:UNIT_HEALTH_FREQUENT(unitId)
 	local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-	if hp < 33 then -- 30%
-		self:Message(-8349, "Neutral", "Info", CL.soon:format(self:SpellName(-8349)))
+	if hp < 34 then -- 30%
+		self:Message(144832, "Neutral", "Info", CL.soon:format(self:SpellName(144832))) -- Unleashed
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end
