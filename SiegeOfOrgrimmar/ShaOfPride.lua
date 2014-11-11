@@ -277,8 +277,9 @@ do
 		end
 		self:Bar(144563, 53) -- Imprison
 		self:Bar(-8262, 60, CL.big_add, 144379) -- when the add is actually up
+		self:DelayedMessage(-8262, 55, "Urgent", CL.soon:format(CL.big_add), 144379)
+		self:DelayedMessage(-8262, 60, "Urgent", CL.spawning:format(CL.big_add), 144379, self:Damager() and "Alert")
 		self:Bar(144800, 25.6, CL.small_adds)
-		self:DelayedMessage(-8262, 55, "Urgent", CL.spawning:format(CL.big_add), 144379, self:Damager() and "Alert")
 
 		-- lets do some fancy stuff
 		local playerPower = UnitPower("player", 10)
