@@ -18,9 +18,7 @@ mod.engageId = 1622
 
 local towerAddTimer = nil
 local addsCounter = 0
--- marking
-local marksUsed
-local mobTbl
+local prevMarkedMob = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -54,8 +52,8 @@ if L then
 	L.drakes_icon = "ability_mount_drake_proto"
 
 	L.custom_off_shaman_marker = "Shaman marker"
-	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the shamans is the fastest way to mark them.|r"
-	L.custom_off_shaman_marker_icon = 1
+	L.custom_off_shaman_marker_desc = "To help interrupt assignments, mark the Dragonmaw Tidal Shamans with {rt8}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the shamans is the fastest way to mark them.|r"
+	L.custom_off_shaman_marker_icon = 8
 end
 L = mod:GetLocale()
 
@@ -82,14 +80,6 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_SAY", "Warmup")
 	self:RegisterEvent("RAID_BOSS_WHISPER")
-
-	if self.db.profile.custom_off_shaman_marker then
-		-- Shaman marking, enabled here for trash
-		if not marksUsed then marksUsed, mobTbl = {}, {} end
-		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
-		self:RegisterEvent("UNIT_TARGET")
-		self:Death("ShamanDeath", 72367, 72958)
-	end
 
 	-- Foot Soldiers
 	self:Log("SPELL_CAST_START", "ChainHeal", 146757, 146728)
@@ -147,13 +137,10 @@ function mod:OnEngage()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "Adds")
 
 	if self.db.profile.custom_off_shaman_marker then
-		-- Shaman marking, also enabled here for people turning the feature on after the module is enabled
-		if not marksUsed then marksUsed, mobTbl = {}, {} end
-		wipe(marksUsed)
-		wipe(mobTbl)
+		prevMarkedMob = nil
 		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
 		self:RegisterEvent("UNIT_TARGET")
-		self:Death("ShamanDeath", 72367, 72958)
+		self:Death("ShamanDeath", 72958)
 	end
 end
 
@@ -309,34 +296,13 @@ function mod:Adds(_, _, unit, _, _, target)
 	end
 end
 
--- marking
-do
-	local UnitGUID = UnitGUID
-	function mod:UNIT_TARGET(event, firedUnit)
-		local unit = firedUnit and firedUnit.."target" or "mouseover"
-		local guid = UnitGUID(unit)
-		if guid and not mobTbl[guid] then
-			local mobId = self:MobId(guid)
-			if mobId == 72367 or mobId == 72958 then
-				for i = 1, 5 do
-					if not marksUsed[i] then
-						marksUsed[i] = guid
-						mobTbl[guid] = true
-						SetRaidTarget(unit, i)
-						break
-					end
-				end
-			end
-		end
-	end
-
-	function mod:ShamanDeath(args)
-		mobTbl[args.destGUID] = nil
-		for i = 1, 5 do
-			if marksUsed[i] == args.destGUID then
-				marksUsed[i] = nil
-				break
-			end
+function mod:UNIT_TARGET(event, firedUnit)
+	local unit = firedUnit and firedUnit.."target" or "mouseover"
+	local guid = UnitGUID(unit)
+	if guid and guid ~= prevMarkedMob then
+		if self:MobId(guid) == 72958 then
+			prevMarkedMob = guid
+			SetRaidTarget(unit, 8)
 		end
 	end
 end
