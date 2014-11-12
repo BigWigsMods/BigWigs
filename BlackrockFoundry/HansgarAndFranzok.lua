@@ -3,7 +3,6 @@
 -- Module Declaration
 --
 
-if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Hans'gar and Franzok", 988, 1155)
 if not mod then return end
 mod:RegisterEnableMob(76973, 76974) -- Hans'gar, Franzok

@@ -3,7 +3,6 @@
 -- Module Declaration
 --
 
-if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Kargath Bladefist", 994, 1128)
 if not mod then return end
 mod:RegisterEnableMob(78714)

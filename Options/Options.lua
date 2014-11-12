@@ -398,7 +398,7 @@ function options:OnEnable()
 	local tmp, tmpZone = {}, {}
 	for k in next, BigWigsLoader:GetZoneMenus() do
 		local zone = translateZoneID(k)
-		if zone and (BigWigs.isWOD or (k ~= 988 and k ~= 994 and k ~= 962)) then -- XXX compat
+		if zone then
 			tmp[zone] = k
 			tmpZone[#tmpZone+1] = zone
 		end
@@ -1295,8 +1295,8 @@ do
 		BigWigs_BurningCrusade = "Big Wigs ".. EJ_GetTierInfo(2),
 		BigWigs_WrathOfTheLichKing = "Big Wigs ".. EJ_GetTierInfo(3),
 		BigWigs_Cataclysm = "Big Wigs ".. EJ_GetTierInfo(4),
-		BigWigs_MistsOfPandaria = BigWigs.isWOD and "Big Wigs ".. EJ_GetTierInfo(5) or "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(5) .."|r", -- XXX compat
-		BigWigs_WarlordsOfDraenor = BigWigs.isWOD and "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r" or false, -- XXX compat
+		BigWigs_MistsOfPandaria = "Big Wigs ".. EJ_GetTierInfo(5),
+		BigWigs_WarlordsOfDraenor = "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r",
 		LittleWigs = "Little Wigs",
 	}
 

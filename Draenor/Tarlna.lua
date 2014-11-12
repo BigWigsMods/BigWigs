@@ -3,7 +3,6 @@
 -- Module Declaration
 --
 
-if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Tarlna the Ageless", 949, 1211)
 if not mod then return end
 mod:RegisterEnableMob(81535)

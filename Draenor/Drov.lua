@@ -3,7 +3,6 @@
 -- Module Declaration
 --
 
-if not BigWigs.isWOD then return end -- XXX compat
 local mod, CL = BigWigs:NewBoss("Drov the Ruiner", 949, 1212)
 if not mod then return end
 mod:RegisterEnableMob(81252)
