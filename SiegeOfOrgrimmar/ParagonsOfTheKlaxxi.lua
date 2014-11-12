@@ -44,6 +44,7 @@ local markableMobs = {}
 local marksUsed = {}
 local markTimer = nil
 local catalystProximityHandler = nil
+local dissectorRikkalDead = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -213,6 +214,7 @@ function mod:OnEngage()
 	wipe(parasites)
 	calculateCounter = 1
 	aimCounter = 1
+	dissectorRikkalDead = nil
 end
 
 --------------------------------------------------------------------------------
@@ -250,9 +252,6 @@ do
 	function mod:Prey(args)
 		if not parasites[args.destGUID] then
 			parasiteCounter = parasiteCounter - 1
-			if parasiteCounter < 0 then
-				BigWigs:Print("The parasite count went below 0 for some reason. If this is a Flex raid, please tell the Big Wigs authors how many people were in the raid so we can correct the counter.")
-			end
 			parasites[args.destGUID] = true
 			if self:Me(args.sourceGUID) then
 				self:Message(143339, "Positive", "Info", L.you_ate:format(parasiteCounter))
@@ -358,7 +357,7 @@ do
 		end
 	end
 	function mod:InjectionRemoved(args)
-		if getBossByMobId(71158) then -- no more parasites spawn when boss is dead
+		if not dissectorRikkalDead then -- no more parasites spawn when boss is dead
 			parasiteCounter = parasiteCounter + 5
 			self:Message(143339, "Attention", nil, L.parasites_up:format(parasiteCounter), 99315) -- spell called parasite, worm look like icon
 		end
@@ -448,7 +447,6 @@ do
 				mod:Message(143701, "Personal", "Info", CL.you:format(mod:SpellName(143701)))
 				mod:Flash(143701)
 				mod:Say(143701)
-				-- add range stuff
 			else
 				if mod:Range(target) < 10 then
 					mod:RangeMessage(143701)
@@ -472,7 +470,7 @@ function mod:CalculationRemoved(args)
 	if not results.shape and not results.color and not results.number then return end -- No Fiery Edge yet, so the table is not populated
 	for k, v in pairs(results) do
 		if type(v) == "table" then
-			v[args.destName] = nil -- we don't have to do name parsing magic for LFR ppl because GetRaidRosterInfo returs servered names too
+			v[args.destName] = nil
 		end
 	end
 end
@@ -574,9 +572,9 @@ end
 function mod:CHAT_MSG_MONSTER_EMOTE(_, _, sender)
 	-- Iyyokuk only have one MONSTER_EMOTE so this should be a safe method rather than having to translate the msg
 	if sender == self:SpellName(-8012) then -- hopefully no weird naming missmatch in different localization like for "Xaril the Poisoned Mind" vs "Xaril the Poisoned-Mind"
-		self:Message(-8055, "Attention", nil, CL.count:format(self:SpellName(142514), calculateCounter), 142514)
+		self:Message(-8055, "Attention", nil, CL.count:format(self:SpellName(142514), calculateCounter), 142514) -- 142514 = "Calculate"
 		calculateCounter = calculateCounter + 1
-		self:Bar(-8055, 35, CL.count:format(self:SpellName(142514), calculateCounter), 142514) -- Calculate
+		self:CDBar(-8055, 35, CL.count:format(self:SpellName(142514), calculateCounter), 142514) -- 142514 = "Calculate"
 		self:ScheduleTimer(iyyokukSelected, 0.2)
 	end
 end
@@ -829,6 +827,7 @@ function mod:ParagonDeaths(args)
 		self:StopBar(-8073) --Aim
 		self:StopBar(143243) --Rapid Fire
 	elseif args.mobId == 71158 then --Rik'kal the Dissector
+		dissectorRikkalDead = true
 		self:StopBar(CL.count:format(self:SpellName(143337), mutateCastCounter)) -- Mutate
 		if injectionTarget then
 			self:CancelDelayedMessage(L.injection_over_soon:format(injectionTarget))
