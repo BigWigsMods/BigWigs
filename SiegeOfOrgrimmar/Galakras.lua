@@ -140,7 +140,6 @@ function mod:OnEngage()
 		prevMarkedMob = nil
 		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
 		self:RegisterEvent("UNIT_TARGET")
-		self:Death("ShamanDeath", 72958)
 	end
 end
 
@@ -299,11 +298,9 @@ end
 function mod:UNIT_TARGET(event, firedUnit)
 	local unit = firedUnit and firedUnit.."target" or "mouseover"
 	local guid = UnitGUID(unit)
-	if guid and guid ~= prevMarkedMob then
-		if self:MobId(guid) == 72958 then
-			prevMarkedMob = guid
-			SetRaidTarget(unit, 8)
-		end
+	if guid and guid ~= prevMarkedMob and self:MobId(guid) == 72958 then
+		prevMarkedMob = guid
+		SetRaidTarget(unit, 8)
 	end
 end
 
