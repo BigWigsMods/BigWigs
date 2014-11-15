@@ -157,18 +157,20 @@ end
 --
 
 function plugin:BigWigs_OnBossEngage(event, module, diff)
-	if module.journalId and module.zoneId and diff and difficultyTable[diff] and not module.worldBoss then -- Raid restricted for now
+	if module.journalId and module.zoneId and not module.worldBoss then -- Raid restricted for now
 		activeDurations[module.journalId] = GetTime()
 
-		local sDB = BigWigsStatisticsDB
-		if not sDB[module.zoneId] then sDB[module.zoneId] = {} end
-		if not sDB[module.zoneId][module.journalId] then sDB[module.zoneId][module.journalId] = {} end
-		sDB = sDB[module.zoneId][module.journalId]
-		if not sDB[difficultyTable[diff]] then sDB[difficultyTable[diff]] = {} end
+		if diff and difficultyTable[diff] then
+			local sDB = BigWigsStatisticsDB
+			if not sDB[module.zoneId] then sDB[module.zoneId] = {} end
+			if not sDB[module.zoneId][module.journalId] then sDB[module.zoneId][module.journalId] = {} end
+			sDB = sDB[module.zoneId][module.journalId]
+			if not sDB[difficultyTable[diff]] then sDB[difficultyTable[diff]] = {} end
 
-		local best = sDB[difficultyTable[diff]].best
-		if self.db.profile.showBar and best then
-			self:SendMessage("BigWigs_StartBar", self, nil, L.bestTimeBar, best, "Interface\\Icons\\spell_holy_borrowedtime")
+			local best = sDB[difficultyTable[diff]].best
+			if self.db.profile.showBar and best then
+				self:SendMessage("BigWigs_StartBar", self, nil, L.bestTimeBar, best, "Interface\\Icons\\spell_holy_borrowedtime")
+			end
 		end
 	end
 end
@@ -176,21 +178,24 @@ end
 function plugin:BigWigs_OnBossWin(event, module)
 	if module.journalId and activeDurations[module.journalId] then
 		local elapsed = GetTime()-activeDurations[module.journalId]
-		local sDB = BigWigsStatisticsDB[module.zoneId][module.journalId][difficultyTable[module:Difficulty()]]
 
 		if self.db.profile.printKills then
 			BigWigs:ScheduleTimer("Print", 1, L.bossDefeatDurationPrint:format(module.displayName, SecondsToTime(elapsed)))
 		end
 
-		if self.db.profile.saveKills then
-			sDB.kills = sDB.kills and sDB.kills + 1 or 1
-		end
-
-		if self.db.profile.saveBestKill and (not sDB.best or elapsed < sDB.best) then
-			if self.db.profile.printNewBestKill and sDB.best then
-				BigWigs:ScheduleTimer("Print", 1.1, ("%s (-%s)"):format(L.newBestTime, SecondsToTime(sDB.best-elapsed)))
+		local diff = module:Difficulty()
+		if difficultyTable[diff] then
+			local sDB = BigWigsStatisticsDB[module.zoneId][module.journalId][difficultyTable[diff]]
+			if self.db.profile.saveKills then
+				sDB.kills = sDB.kills and sDB.kills + 1 or 1
 			end
-			sDB.best = elapsed
+
+			if self.db.profile.saveBestKill and (not sDB.best or elapsed < sDB.best) then
+				if self.db.profile.printNewBestKill and sDB.best then
+					BigWigs:ScheduleTimer("Print", 1.1, ("%s (-%s)"):format(L.newBestTime, SecondsToTime(sDB.best-elapsed)))
+				end
+				sDB.best = elapsed
+			end
 		end
 
 		activeDurations[module.journalId] = nil
@@ -206,8 +211,9 @@ function plugin:BigWigs_OnBossWipe(event, module)
 				BigWigs:Print(L.bossWipeDurationPrint:format(module.displayName, SecondsToTime(elapsed)))
 			end
 
-			if self.db.profile.saveWipes then
-				local sDB = BigWigsStatisticsDB[module.zoneId][module.journalId][difficultyTable[module:Difficulty()]]
+			local diff = module:Difficulty()
+			if difficultyTable[diff] and self.db.profile.saveWipes then
+				local sDB = BigWigsStatisticsDB[module.zoneId][module.journalId][difficultyTable[diff]]
 				sDB.wipes = sDB.wipes and sDB.wipes + 1 or 1
 			end
 		end
