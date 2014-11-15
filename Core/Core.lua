@@ -234,6 +234,7 @@ do
 		["953:8"] = true, -- Blackfuse room opening, just outside the door
 		["953:9"] = true, -- Blackfuse room opening, in Thok area
 		["953:12"] = true, -- Mythic Garrosh Phase 4
+		["964:1"] = true, -- Bloodmaul Slag Mines, activating bridge to Roltall
 		["969:2"] = true, -- Shadowmoon Burial Grounds, final boss introduction
 	}
 
