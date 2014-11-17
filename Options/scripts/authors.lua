@@ -45,10 +45,11 @@ numberOfCommits.root = nil
 -- Remove authors, we don't need to be listed twice!
 numberOfCommits.funkydude = nil
 numberOfCommits.nebula169 = nil
--- Maat uses two logins
-numberOfCommits.Maat = nil
-numberOfCommits.maat = nil
 
+
+-- Maat has two logins
+numberOfCommits.Maat = numberOfCommits.maat + numberOfCommits.Maat
+numberOfCommits.maat = nil
 -- Wetxius has two logins
 numberOfCommits.Wetxius = numberOfCommits.Wetxius + numberOfCommits.wetxius
 numberOfCommits.wetxius = nil

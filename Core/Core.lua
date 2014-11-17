@@ -236,6 +236,7 @@ do
 		["953:12"] = true, -- Mythic Garrosh Phase 4
 		["964:1"] = true, -- Bloodmaul Slag Mines, activating bridge to Roltall
 		["969:2"] = true, -- Shadowmoon Burial Grounds, final boss introduction
+		-- 984:1 is Auchindoun, but it unfortunately has 2 cinematics. 1 before the first boss and 1 before the last boss. Workaround?
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
