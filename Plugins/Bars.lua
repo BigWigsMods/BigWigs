@@ -1530,7 +1530,7 @@ do
 		end
 
 		if timerTbl then
-			for i = 1, 7 do
+			for i = 1, #timerTbl do
 				plugin:CancelTimer(timerTbl[i])
 			end
 			if seconds == 0 then
@@ -1550,18 +1550,22 @@ do
 		plugin:SendMessage("BigWigs_Message", nil, nil, L.breakAnnounce:format(seconds/60), "Attention", "Long", "Interface\\Icons\\inv_misc_fork&knife")
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.breakBar, seconds, "Interface\\Icons\\inv_misc_fork&knife")
 
-		local half = seconds / 2
-		local m = half % 60
-		local halfMin = (half - m) / 60
-		timerTbl = {
-			plugin:ScheduleTimer("SendMessage", half + m, "BigWigs_Message", nil, nil, L.breakMinutes:format(halfMin), "Positive", nil, "Interface\\Icons\\inv_misc_fork&knife"),
-			plugin:ScheduleTimer("SendMessage", seconds - 60, "BigWigs_Message", nil, nil, L.breakMinutes:format(1), "Positive", nil, "Interface\\Icons\\inv_misc_fork&knife"),
+		timerTbl = {			
 			plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", nil, nil, L.breakSeconds:format(30), "Urgent", nil, "Interface\\Icons\\inv_misc_fork&knife"),
 			plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", nil, nil, L.breakSeconds:format(10), "Urgent", nil, "Interface\\Icons\\inv_misc_fork&knife"),
 			plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", nil, nil, L.breakSeconds:format(5), "Important", nil, "Interface\\Icons\\inv_misc_fork&knife"),
 			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", nil, nil, L.breakFinished, "Important", "Long", "Interface\\Icons\\inv_misc_fork&knife"),
 			plugin:ScheduleTimer(function() BigWigs3DB.breakTime = nil timerTbl = nil end, seconds)
 		}
+		if seconds > 119 then -- 2min
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 60, "BigWigs_Message", nil, nil, L.breakMinutes:format(1), "Positive", nil, "Interface\\Icons\\inv_misc_fork&knife")
+		end
+		if seconds > 239 then -- 4min
+			local half = seconds / 2
+			local m = half % 60
+			local halfMin = (half - m) / 60
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", half + m, "BigWigs_Message", nil, nil, L.breakMinutes:format(halfMin), "Positive", nil, "Interface\\Icons\\inv_misc_fork&knife")
+		end
 	end
 end
 
