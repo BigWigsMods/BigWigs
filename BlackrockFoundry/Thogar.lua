@@ -124,7 +124,7 @@ if L then
 	L.big_add_train_icon = "warrior_talent_icon_skirmisher" -- one dude standing alone
 	L.cannon_train = "Cannon train"
 	L.cannon_train_icon = "ability_vehicle_siegeenginecannon" -- cannon ball, duh
-	L.deforester = EJ_GetSectionInfo(10329)
+	L.deforester = mod:SpellName(-10329)
 	L.deforester_icon = "spell_shaman_lavasurge"
 	L.random = "Random trains"
 	L.random_icon = "ability_foundryraid_traindeath"

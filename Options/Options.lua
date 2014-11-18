@@ -829,23 +829,23 @@ do
 			end
 			if type(o) == "number" then
 				if o > 0 then
-					local l = GetSpellLink(o)
-					if currentSize + #l + 1 > 255 then
+					local link = GetSpellLink(o)
+					if currentSize + #link + 1 > 255 then
 						printList(channel, header, abilities)
 						wipe(abilities)
 						currentSize = 0
 					end
-					abilities[#abilities + 1] = l
-					currentSize = currentSize + #l + 1
+					abilities[#abilities + 1] = link
+					currentSize = currentSize + #link + 1
 				else
-					local l = select(9, EJ_GetSectionInfo(-o))
-					if currentSize + #l + 1 > 255 then
+					local _, _, _, _, _, _, _, _, link = EJ_GetSectionInfo(-o)
+					if currentSize + #link + 1 > 255 then
 						printList(channel, header, abilities)
 						wipe(abilities)
 						currentSize = 0
 					end
-					abilities[#abilities + 1] = l
-					currentSize = currentSize + #l + 1
+					abilities[#abilities + 1] = link
+					currentSize = currentSize + #link + 1
 				end
 			end
 		end

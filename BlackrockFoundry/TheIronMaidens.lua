@@ -32,7 +32,7 @@ if L then
 	L.ship = "Jump to Ship: %s" -- 137266
 	L.ship_icon = "ability_vehicle_siegeenginecannon"
 
-	L.bombardment = GetSpellInfo(147135)
+	L.bombardment = mod:SpellName(147135)
 	L.bombardment_desc = select(2, EJ_GetSectionInfo(10019))
 	L.bombardment_icon = "ability_ironmaidens_bombardment"
 

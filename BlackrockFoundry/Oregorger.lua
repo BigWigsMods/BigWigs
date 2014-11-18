@@ -12,8 +12,6 @@ mod.engageId = 1696
 -- Locals
 --
 
-local feedingFrenzy = EJ_GetSectionInfo(9968)
-local berserk = GetSpellInfo(26662)
 local barrageCount = 1
 local frenzyCount = 1
 
@@ -79,9 +77,9 @@ function mod:UNIT_POWER_FREQUENT(unit)
 	local power = UnitPower(unit)
 	if power < 21 then
 		if frenzyCount > 1 then
-			self:Message("berserk", "Important", nil, CL.soon:format(berserk), false)
+			self:Message("berserk", "Important", nil, CL.soon:format(self:SpellName(26662)), false) -- Berserk
 		else
-			self:Message("stages", "Neutral", nil, CL.soon:format(feedingFrenzy), false)
+			self:Message("stages", "Neutral", nil, CL.soon:format(self:SpellName(-9968)), false) -- Feeding Frenzy
 		end
 		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", unit)
 	end
@@ -154,7 +152,7 @@ function mod:FeedingFrenzy(unit, spellName, _, _, spellId)
 		self:StopBar(156203) -- Retched Blackrock
 		self:StopBar(156390) -- Explosive Shard
 
-		self:Message("stages", "Positive", "Long", feedingFrenzy, false)
+		self:Message("stages", "Positive", "Long", self:SpellName(-9968), false) -- Feeding Frenzy
 	end
 end
 
@@ -170,7 +168,7 @@ function mod:HungerDriveRemoved(args)
 	frenzyCount = frenzyCount + 1
 
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
-	self:Message("stages", "Positive", "Long", CL.over:format(feedingFrenzy), false)
+	self:Message("stages", "Positive", "Long", CL.over:format(self:SpellName(-9968)), false) -- Feeding Frenzy
 	self:CDBar(156203, 6) -- Retched Blackrock
 	self:CDBar(156390, 9) -- Explosive Shard
 	self:CDBar(156240, 12) -- Acid Torrent
@@ -186,7 +184,7 @@ function mod:RollingFuryApplied(args)
 end
 
 function mod:Insane()
-	self:Message("berserk", "Important", "Alarm", CL.custom_end:format(self.displayName, berserk), 26662)
+	self:Message("berserk", "Important", "Alarm", CL.custom_end:format(self.displayName, self:SpellName(26662)), 26662) -- Berserk
 	self:UnregisterUnitEvent("UNIT_SPELLCAST_START", "boss1")
 end
 
