@@ -824,13 +824,11 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and not warnedThisZone[id] and zoneAddon ~= "BigWigs_MistsOfPandaria" then -- XXX compat
-			if not IsAddOnEnabled(zoneAddon) then
-				warnedThisZone[id] = true
-				local msg = L.missingAddOn:format(zoneAddon)
-				sysprint(msg)
-				RaidNotice_AddMessage(RaidWarningFrame, msg:gsub("|", "\124"), {r=1,g=1,b=1}) -- XXX wowace packager doesn't keep my escape codes and RW doesn't like pipes :(
-			end
+		if zoneAddon and not warnedThisZone[id] and zoneAddon ~= "BigWigs_MistsOfPandaria" and not IsAddOnEnabled(zoneAddon) then -- XXX compat
+			warnedThisZone[id] = true
+			local msg = L.missingAddOn:format(zoneAddon)
+			sysprint(msg)
+			RaidNotice_AddMessage(RaidWarningFrame, msg:gsub("|", "\124"), {r=1,g=1,b=1}) -- XXX wowace packager doesn't keep my escape codes and RW doesn't like pipes :(
 		end
 	end
 end

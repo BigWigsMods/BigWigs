@@ -1343,7 +1343,7 @@ do
 
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
-		local parent = BigWigsLoader.zoneTbl[zoneId] and addonNameToHeader[BigWigsLoader.zoneTbl[zoneId]] or addonNameToHeader.BigWigs_WarlordsOfDraenor or addonNameToHeader.BigWigs_MistsOfPandaria -- XXX compat
+		local parent = BigWigsLoader.zoneTbl[zoneId] and addonNameToHeader[BigWigsLoader.zoneTbl[zoneId]] or addonNameToHeader.BigWigs_WarlordsOfDraenor
 		local panel, justCreated = self:GetPanel(zoneName, parent, zoneId)
 		if justCreated then
 			panel:SetScript("OnShow", onZoneShow)
@@ -1374,7 +1374,7 @@ do
 			local name = module.subPanelOptions.name
 			local options = module.subPanelOptions.options
 			acr:RegisterOptionsTable(key, options, true)
-			acd:AddToBlizOptions(key, name, "Big Wigs")
+			module.subPanelOptionsPanel = acd:AddToBlizOptions(key, name, "Big Wigs")
 		end
 	end
 end
