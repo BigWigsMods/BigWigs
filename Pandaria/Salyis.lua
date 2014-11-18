@@ -31,10 +31,13 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Emote("CannonBarrage", "spell:121600")
-	self:Emote("Stomp", "spell:121787")
 	self:Yell("Engage", L.engage_yell)
 
+	self:Emote("CannonBarrage", "121600")
+	self:Emote("Stomp", "121787")
+
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 62346) --Galleon
 end
 
@@ -48,13 +51,13 @@ end
 --
 
 function mod:CannonBarrage()
-	self:Message(121600, "Urgent", nil, CL["incoming"]:format(self:SpellName(121600))) -- Cannon Barrage
-	self:Bar(121600, 60) -- Cannon Barrage
+	self:Message(121600, "Urgent", nil, CL["incoming"]:format(self:SpellName(121600)))
+	self:Bar(121600, 60)
 end
 
 function mod:Stomp()
-	self:Message(121787, "Important", "Alarm", CL["incoming"]:format(self:SpellName(121787))) -- Stomp
-	self:Bar(121787, 60) -- Stomp
-	self:DelayedMessage(-6200, 10, "Attention", CL["incoming"]:format(self:SpellName(-6200)), 121747) -- Impaling Throw icon
+	self:Message(121787, "Important", "Alarm", CL["incoming"]:format(self:SpellName(121787)))
+	self:Bar(121787, 60)
+	self:DelayedMessage(-6200, 10, "Attention", CL["adds"], 121747) -- Salyin Warmonger
 end
 
