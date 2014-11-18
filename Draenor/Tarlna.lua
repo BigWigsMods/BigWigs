@@ -55,7 +55,7 @@ end
 
 function mod:Genesis(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, 8, CL.cast:format(args.spellName))
 end
 
 function mod:GrowMandragora(args)
