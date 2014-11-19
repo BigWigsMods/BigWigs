@@ -103,6 +103,7 @@ local function onResize(self, width, height)
 		local range = activeRange > 0 and activeRange or 10
 		local pixperyard = min(width, height) / (range*3)
 		proxCircle:SetSize(range*2*pixperyard, range*2*pixperyard)
+		proxAnchor.rangePulse:SetSize(range*2*pixperyard, range*2*pixperyard)
 	end
 end
 
@@ -220,6 +221,7 @@ do
 		setDot(0, 10, blipList[5])
 		local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
 		local pixperyard = min(width, height) / 30
+		proxAnchor.rangePulse:SetSize(pixperyard * 20, pixperyard * 20)
 		proxCircle:SetSize(pixperyard * 20, pixperyard * 20)
 		proxCircle:SetVertexColor(1,0,0)
 		proxCircle:Show()
@@ -626,6 +628,64 @@ do
 		proxAnchor.rangeCircle = rangeCircle
 		proxCircle = rangeCircle
 
+		local rangePulse = proxAnchor:CreateTexture(nil, "ARTWORK")
+		rangePulse:SetPoint("CENTER")
+		rangePulse:SetAtlas("GarrLanding-CircleGlow")
+		rangePulse:SetBlendMode("ADD")
+		rangePulse:Hide()
+		proxAnchor.rangePulse = rangePulse
+
+		local function showAnimParent(frame) frame:GetParent():Show() end
+		local function hideAnimParent(frame) frame:GetParent():Hide() end
+
+		-- Push outwards
+		local animGroupOutbound = rangePulse:CreateAnimationGroup()
+		animGroupOutbound:SetLooping("REPEAT")
+		animGroupOutbound:SetScript("OnPlay", showAnimParent)
+		animGroupOutbound:SetScript("OnStop", hideAnimParent)
+		animGroupOutbound:SetScript("OnFinished", hideAnimParent)
+		local alpha1Out = animGroupOutbound:CreateAnimation("Alpha")
+		alpha1Out:SetOrder(1)
+		alpha1Out:SetDuration(0.5)
+		alpha1Out:SetFromAlpha(0)
+		alpha1Out:SetToAlpha(1)
+		local alpha2Out = animGroupOutbound:CreateAnimation("Alpha")
+		alpha2Out:SetOrder(1)
+		alpha2Out:SetStartDelay(0.5)
+		alpha2Out:SetDuration(1)
+		alpha2Out:SetFromAlpha(1)
+		alpha2Out:SetToAlpha(0)
+		local scaleOut = animGroupOutbound:CreateAnimation("Scale")
+		scaleOut:SetOrder(1)
+		scaleOut:SetFromScale(0.75,0.75)
+		scaleOut:SetToScale(1.3,1.3)
+		scaleOut:SetDuration(1)
+		proxAnchor.rangePulseAnimOut = animGroupOutbound
+
+		-- Pull inwards
+		local animGroupInbound = rangePulse:CreateAnimationGroup()
+		animGroupInbound:SetLooping("REPEAT")
+		animGroupInbound:SetScript("OnPlay", showAnimParent)
+		animGroupInbound:SetScript("OnStop", hideAnimParent)
+		animGroupInbound:SetScript("OnFinished", hideAnimParent)
+		local alpha1In = animGroupInbound:CreateAnimation("Alpha")
+		alpha1In:SetOrder(1)
+		alpha1In:SetDuration(0.5)
+		alpha1In:SetFromAlpha(0)
+		alpha1In:SetToAlpha(1)
+		local alpha2In = animGroupInbound:CreateAnimation("Alpha")
+		alpha2In:SetOrder(1)
+		alpha2In:SetStartDelay(0.5)
+		alpha2In:SetDuration(1)
+		alpha2In:SetFromAlpha(1)
+		alpha2In:SetToAlpha(0)
+		local scaleIn = animGroupInbound:CreateAnimation("Scale")
+		scaleIn:SetOrder(1)
+		scaleIn:SetFromScale(1.5,1.5)
+		scaleIn:SetToScale(1,1)
+		scaleIn:SetDuration(1)
+		proxAnchor.rangePulseAnimIn = animGroupInbound
+
 		local playerDot = proxAnchor:CreateTexture(nil, "OVERLAY")
 		playerDot:SetSize(32, 32)
 		playerDot:SetTexture("Interface\\Minimap\\MinimapArrow")
@@ -923,6 +983,7 @@ function plugin:Close()
 	proxAnchor.ability:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName)
 	-- Just in case we were the last target of configure mode, reset the background color.
 	proxAnchor.background:SetTexture(0, 0, 0, 0.3)
+	proxAnchor.rangePulseAnimOut:Stop()
 	proxAnchor:Hide()
 end
 
@@ -993,6 +1054,7 @@ do
 		local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
 		local ppy = min(width, height) / (range * 3)
 		proxCircle:SetSize(ppy * range * 2, ppy * range * 2)
+		proxAnchor.rangePulse:SetSize(ppy * range * 2, ppy * range * 2)
 
 		-- Update the ability name display
 		if module and key then
@@ -1023,6 +1085,7 @@ function plugin:Test()
 	end
 	testDots()
 	proxAnchor:Show()
+	proxAnchor.rangePulseAnimOut:Play()
 end
 
 -------------------------------------------------------------------------------

@@ -1550,7 +1550,7 @@ do
 		plugin:SendMessage("BigWigs_Message", nil, nil, L.breakAnnounce:format(seconds/60), "Attention", "Long", "Interface\\Icons\\inv_misc_fork&knife")
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.breakBar, seconds, "Interface\\Icons\\inv_misc_fork&knife")
 
-		timerTbl = {			
+		timerTbl = {
 			plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", nil, nil, L.breakSeconds:format(30), "Urgent", nil, "Interface\\Icons\\inv_misc_fork&knife"),
 			plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", nil, nil, L.breakSeconds:format(10), "Urgent", nil, "Interface\\Icons\\inv_misc_fork&knife"),
 			plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", nil, nil, L.breakSeconds:format(5), "Important", nil, "Interface\\Icons\\inv_misc_fork&knife"),
