@@ -3,7 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs", true)
 local names = {}
 local descriptions = {}
 
-local GetSpellInfo, GetSpellDescription, EJ_GetSectionInfo = GetSpellInfo, GetSpellDescription, EJ_GetSectionInfo
+local GetSpellInfo, GetSpellDescription, EJ_GetSectionInfo = GetSpellInfo, GetSpellDescription, BigWigsLoader.EJ_GetSectionInfo
 local type = type
 
 -- Option bitflags

@@ -63,6 +63,7 @@ public.SetMapToCurrentZone = SetMapToCurrentZone
 public.SendAddonMessage = SendAddonMessage
 public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
+public.EJ_GetSectionInfo = EJ_GetSectionInfo
 
 -- Version
 local usersAlpha = {}
@@ -411,6 +412,12 @@ do
 		BigWigs_DragonSoul = "BigWigs_Cataclysm",
 		BigWigs_Firelands = "BigWigs_Cataclysm",
 		BigWigs_Throne = "BigWigs_Cataclysm",
+		--BigWigs_EndlessSpring = "BigWigs_MistsOfPandaria",
+		--BigWigs_HeartOfFear = "BigWigs_MistsOfPandaria",
+		--BigWigs_Mogushan = "BigWigs_MistsOfPandaria",
+		--BigWigs_Pandaria = "BigWigs_MistsOfPandaria",
+		--BigWigs_SiegeOfOrgrimmar = "BigWigs_MistsOfPandaria",
+		--BigWigs_ThroneOfThunder = "BigWigs_MistsOfPandaria",
 		LittleWigs_ShadoPanMonastery = "LittleWigs",
 		LittleWigs_ScarletHalls = "LittleWigs",
 		LittleWigs_ScarletMonastery = "LittleWigs",

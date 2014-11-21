@@ -29,7 +29,7 @@ if L then
 	L.start_trigger_alliance = "Well done! Landing parties, form up! Footmen to the front!"
 	L.start_trigger_horde = "Well done. The first brigade has made landfall."
 
-	L.demolisher, L.demolisher_desc = EJ_GetSectionInfo(8533)
+	L.demolisher, L.demolisher_desc = BigWigsLoader.EJ_GetSectionInfo(8533)
 	L.demolisher_message = "Demolisher"
 	L.demolisher_icon = 125914
 
@@ -48,7 +48,7 @@ if L then
 	L.warlord_zaela = "Warlord Zaela"
 
 	L.drakes = "Proto-Drakes"
-	L.drakes_desc = select(2, EJ_GetSectionInfo(8586))
+	L.drakes_desc = select(2, BigWigsLoader.EJ_GetSectionInfo(8586))
 	L.drakes_icon = "ability_mount_drake_proto"
 
 	L.custom_off_shaman_marker = "Shaman marker"
