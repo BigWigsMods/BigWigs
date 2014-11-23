@@ -5,7 +5,7 @@
 local AL = LibStub("AceLocale-3.0")
 local L = AL:GetLocale("Big Wigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected
-local EJ_GetSectionInfo, GetSpellInfo = BigWigsLoader.EJ_GetSectionInfo, GetSpellInfo
+local EJ_GetSectionInfo, GetSpellInfo = EJ_GetSectionInfo, GetSpellInfo
 local format, sub, gsub, band = string.format, string.sub, string.gsub, bit.band
 local type, next, tonumber = type, next, tonumber
 local core = BigWigs

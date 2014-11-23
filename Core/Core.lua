@@ -617,7 +617,7 @@ do
 					if v > 0 then
 						module.optionHeaders[k] = GetSpellInfo(v)
 					else
-						module.optionHeaders[k] = BigWigsLoader.EJ_GetSectionInfo(-v)
+						module.optionHeaders[k] = EJ_GetSectionInfo(-v)
 					end
 				end
 			end
@@ -661,7 +661,7 @@ do
 						if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
 						module.toggleDefaults[n] = bitflags
 					else
-						local n = BigWigsLoader.EJ_GetSectionInfo(-v)
+						local n = EJ_GetSectionInfo(-v)
 						if not n then error(("Invalid ej ID %d in the toggleOptions for module %s."):format(-v, module.name)) end
 						module.toggleDefaults[v] = bitflags
 					end

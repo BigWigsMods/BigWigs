@@ -63,7 +63,6 @@ public.SetMapToCurrentZone = SetMapToCurrentZone
 public.SendAddonMessage = SendAddonMessage
 public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
-public.EJ_GetSectionInfo = EJ_GetSectionInfo
 
 -- Version
 local usersAlpha = {}
