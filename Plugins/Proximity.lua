@@ -54,7 +54,7 @@ local unitList = nil
 local blipList = {}
 local updater = false
 local functionToFire = nil
-local proxAnchor, proxTitle, proxCircle = nil, nil, nil
+local proxAnchor, proxTitle, proxCircle, proxPulseOut, proxPulseIn = nil, nil, nil, nil, nil
 
 -- Upvalues
 local CTimerAfter = BigWigsLoader.CTimerAfter
@@ -292,6 +292,9 @@ do
 		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(1, 0, 0)
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
+			if not proxPulseOut.playing then
+				proxPulseOut:Play()
+			end
 			if not db.sound then return end
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
@@ -301,6 +304,9 @@ do
 		else
 			proxCircle:SetVertexColor(0, 1, 0)
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 0)
+			if proxPulseOut.playing then
+				proxPulseOut:Stop()
+			end
 		end
 	end
 
@@ -330,8 +336,14 @@ do
 
 		if anyoneClose == 0 then
 			proxCircle:SetVertexColor(0, 1, 0)
+			if proxPulseOut.playing then
+				proxPulseOut:Stop()
+			end
 		else
 			proxCircle:SetVertexColor(1, 0, 0)
+			if not proxPulseOut.playing then
+				proxPulseOut:Play()
+			end
 			if not db.sound then return end
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
@@ -404,9 +416,15 @@ do
 		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(0, 1, 0)
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
+			if proxPulseIn.playing then
+				proxPulseIn:Stop()
+			end
 		else
 			proxCircle:SetVertexColor(1, 0, 0)
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 0)
+			if not proxPulseIn.playing then
+				proxPulseIn:Play()
+			end
 			if not db.sound then return end
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
@@ -442,8 +460,20 @@ do
 
 		if anyoneClose == 0 then
 			proxCircle:SetVertexColor(1, 0, 0)
+			if not proxPulseIn.playing then
+				proxPulseIn:Play()
+			end
+			if not db.sound then return end
+			local t = GetTime()
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
+			end
 		else
 			proxCircle:SetVertexColor(0, 1, 0)
+			if proxPulseIn.playing then
+				proxPulseIn:Stop()
+			end
 		end
 	end
 end
@@ -635,8 +665,8 @@ do
 		rangePulse:Hide()
 		proxAnchor.rangePulse = rangePulse
 
-		local function showAnimParent(frame) frame:GetParent():Show() end
-		local function hideAnimParent(frame) frame:GetParent():Hide() end
+		local function showAnimParent(frame) frame:GetParent():Show() frame.playing = true end
+		local function hideAnimParent(frame) frame:GetParent():Hide() frame.playing = nil end
 
 		-- Push outwards
 		local animGroupOutbound = rangePulse:CreateAnimationGroup()
@@ -661,6 +691,7 @@ do
 		scaleOut:SetToScale(1.3,1.3)
 		scaleOut:SetDuration(1)
 		proxAnchor.rangePulseAnimOut = animGroupOutbound
+		proxPulseOut = animGroupOutbound
 
 		-- Pull inwards
 		local animGroupInbound = rangePulse:CreateAnimationGroup()
@@ -685,6 +716,7 @@ do
 		scaleIn:SetToScale(1,1)
 		scaleIn:SetDuration(1)
 		proxAnchor.rangePulseAnimIn = animGroupInbound
+		proxPulseIn = animGroupInbound
 
 		local playerDot = proxAnchor:CreateTexture(nil, "OVERLAY")
 		playerDot:SetSize(32, 32)
@@ -983,7 +1015,8 @@ function plugin:Close()
 	proxAnchor.ability:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName)
 	-- Just in case we were the last target of configure mode, reset the background color.
 	proxAnchor.background:SetTexture(0, 0, 0, 0.3)
-	proxAnchor.rangePulseAnimOut:Stop()
+	proxPulseIn:Stop()
+	proxPulseOut:Stop()
 	proxAnchor:Hide()
 end
 
@@ -1085,7 +1118,7 @@ function plugin:Test()
 	end
 	testDots()
 	proxAnchor:Show()
-	proxAnchor.rangePulseAnimOut:Play()
+	proxPulseOut:Play()
 end
 
 -------------------------------------------------------------------------------
