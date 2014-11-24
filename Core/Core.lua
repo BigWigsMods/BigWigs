@@ -76,6 +76,7 @@ do
 		addon:ClearSyncListeners(module) -- Also remove sync events
 	end
 	addon:RegisterMessage("BigWigs_OnBossDisable", UnregisterAllEvents)
+	addon:RegisterMessage("BigWigs_OnBossReboot", UnregisterAllEvents)
 	addon:RegisterMessage("BigWigs_OnPluginDisable", UnregisterAllEvents)
 end
 

@@ -791,6 +791,7 @@ do
 		self:RegisterMessage("BigWigs_ShowProximity")
 		self:RegisterMessage("BigWigs_HideProximity", "Close")
 		self:RegisterMessage("BigWigs_OnBossDisable")
+		self:RegisterMessage("BigWigs_OnBossReboot", "BigWigs_OnBossDisable")
 
 		self:RegisterMessage("BigWigs_StartConfigureMode")
 		self:RegisterMessage("BigWigs_StopConfigureMode")
@@ -985,7 +986,7 @@ do
 		self:Open(range, module, ...)
 	end
 
-	function plugin:BigWigs_OnBossDisable(event, module, optionKey)
+	function plugin:BigWigs_OnBossDisable(event, module)
 		if module ~= opener then return end
 		self:Close()
 	end

@@ -544,6 +544,7 @@ do
 		end
 	end
 	public.RegisterMessage(mod, "BigWigs_OnBossDisable", UnregisterAllMessages)
+	public.RegisterMessage(mod, "BigWigs_OnBossReboot", UnregisterAllMessages)
 	public.RegisterMessage(mod, "BigWigs_OnPluginDisable", UnregisterAllMessages)
 	public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
 	public.RegisterMessage(mod, "BigWigs_CoreLoaded")
