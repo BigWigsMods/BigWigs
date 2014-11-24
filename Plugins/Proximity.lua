@@ -209,16 +209,11 @@ do
 	end
 
 	testDots = function()
-		for i = 1, 40 do
-			blipList[i].isShown = nil
-			blipList[i]:Hide()
-		end
-
-		setDot(10, 10, blipList[1])
-		setDot(5, 0, blipList[2])
-		setDot(3, 10, blipList[3])
-		setDot(-9, -7, blipList[4])
-		setDot(0, 10, blipList[5])
+		setDot(10, 10, blipList["raid1"])
+		setDot(5, 0, blipList["raid2"])
+		setDot(3, 10, blipList["raid3"])
+		setDot(-9, -7, blipList["raid4"])
+		setDot(0, 10, blipList["raid5"])
 		local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
 		local pixperyard = min(width, height) / 30
 		proxAnchor.rangePulse:SetSize(pixperyard * 20, pixperyard * 20)
@@ -246,17 +241,17 @@ do
 			local range = dx * dx + dy * dy
 			if mapId == tarMapId and range < activeRangeSquared*2.5 then
 				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
-					setDot(dx, dy, blipList[i])
+					setDot(dx, dy, blipList[n])
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
 					end
-				elseif blipList[i].isShown then -- A unit may die next to us
-					blipList[i]:Hide()
-					blipList[i].isShown = nil
+				elseif blipList[n].isShown then -- A unit may die next to us
+					blipList[n]:Hide()
+					blipList[n].isShown = nil
 				end
-			elseif blipList[i].isShown then
-				blipList[i]:Hide()
-				blipList[i].isShown = nil
+			elseif blipList[n].isShown then
+				blipList[n]:Hide()
+				blipList[n].isShown = nil
 			end
 		end
 
@@ -288,7 +283,7 @@ do
 		local dx = unitX - srcX
 		local dy = unitY - srcY
 		local range = dx * dx + dy * dy
-		setDot(dx, dy, blipList[1])
+		setDot(dx, dy, blipList[proximityPlayer])
 		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(1, 0, 0)
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
@@ -326,7 +321,7 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			setDot(dx, dy, blipList[i])
+			setDot(dx, dy, blipList[player])
 			if range <= activeRangeSquared then
 				anyoneClose = anyoneClose + 1
 			end
@@ -371,17 +366,17 @@ do
 			local range = dx * dx + dy * dy
 			if mapId == tarMapId and range < activeRangeSquared*2.5 then
 				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
-					setDot(dx, dy, blipList[i])
+					setDot(dx, dy, blipList[n])
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
 					end
-				elseif blipList[i].isShown then -- A unit may die next to us
-					blipList[i]:Hide()
-					blipList[i].isShown = nil
+				elseif blipList[n].isShown then -- A unit may die next to us
+					blipList[n]:Hide()
+					blipList[n].isShown = nil
 				end
-			elseif blipList[i].isShown then
-				blipList[i]:Hide()
-				blipList[i].isShown = nil
+			elseif blipList[n].isShown then
+				blipList[n]:Hide()
+				blipList[n].isShown = nil
 			end
 		end
 
@@ -412,7 +407,7 @@ do
 		local dx = unitX - srcX
 		local dy = unitY - srcY
 		local range = dx * dx + dy * dy
-		setDot(dx, dy, blipList[1])
+		setDot(dx, dy, blipList[proximityPlayer])
 		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(0, 1, 0)
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
@@ -450,7 +445,7 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			setDot(dx, dy, blipList[i])
+			setDot(dx, dy, blipList[player])
 			if range <= activeRangeSquared then
 				anyoneClose = anyoneClose + 1
 			end
@@ -481,7 +476,7 @@ end
 local function updateBlipIcons()
 	for i = 1, maxPlayers do
 		local n = unitList[i]
-		local blip = blipList[i]
+		local blip = blipList[n]
 		local icon = GetRaidTargetIndex(n)
 		if icon and not blip.hasIcon then
 			blip:SetTexture(format("Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d.blp", icon))
@@ -511,7 +506,7 @@ local function updateBlipColors()
 	for i = 1, maxPlayers do
 		local n = unitList[i]
 		if not GetRaidTargetIndex(n) then
-			local blip = blipList[i]
+			local blip = blipList[n]
 			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
 			local _, class = UnitClass(n)
 			if class then
@@ -759,11 +754,19 @@ do
 
 		proxAnchor:Hide()
 
+		local rList = plugin:GetRaidList()
 		for i = 1, 40 do
 			local blip = proxAnchor:CreateTexture(nil, "OVERLAY")
 			blip:SetSize(16, 16)
 			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
-			blipList[i] = blip
+			blipList[rList[i]] = blip
+		end
+		local pList = plugin:GetPartyList()
+		for i = 1, 5 do
+			local blip = proxAnchor:CreateTexture(nil, "OVERLAY")
+			blip:SetSize(16, 16)
+			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
+			blipList[pList[i]] = blip
 		end
 
 		proxAnchor:SetScript("OnEvent", function(_, event)
@@ -999,10 +1002,10 @@ function plugin:Close()
 	proxAnchor:UnregisterEvent("GROUP_ROSTER_UPDATE")
 	proxAnchor:UnregisterEvent("RAID_TARGET_UPDATE")
 
-	for i = 1, 40 do
-		if blipList[i].isShown then
-			blipList[i].isShown = nil
-			blipList[i]:Hide()
+	for k,v in next, blipList do
+		if v.isShown then
+			v.isShown = nil
+			v:Hide()
 		end
 	end
 
