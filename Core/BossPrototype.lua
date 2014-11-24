@@ -129,7 +129,9 @@ function boss:OnEnable(isWipe)
 		self:CheckForEncounterEngage("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
 	end
 
-	self:SendMessage("BigWigs_OnBossEnable", self)
+	if not isWipe then
+		self:SendMessage("BigWigs_OnBossEnable", self)
+	end
 end
 function boss:OnDisable(isWipe)
 	if debug then dbg(self, isWipe and "OnDisable() via Wipe()" or "OnDisable()") end
@@ -172,7 +174,9 @@ function boss:OnDisable(isWipe)
 	self.isWiping = nil
 	self.isEngaged = nil
 
-	self:SendMessage("BigWigs_OnBossDisable", self)
+	if not isWipe then
+		self:SendMessage("BigWigs_OnBossDisable", self)
+	end
 end
 function boss:GetOption(spellId)
 	return self.db.profile[spells[spellId]]
