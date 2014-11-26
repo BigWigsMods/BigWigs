@@ -24,7 +24,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.custom_off_energy_marks = "Displaced Energy marker"
 	L.custom_off_energy_marks_desc = "To help dispelling assignments, mark the people who have Displaced Energy on them with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
-	L.custom_off_energy_marks_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1"
+	L.custom_off_energy_marks_icon = 1
 end
 L = mod:GetLocale()
 

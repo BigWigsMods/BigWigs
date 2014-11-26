@@ -41,7 +41,7 @@ if L then
 
 	L.no_meditative_field = "You're not in the bubble!"
 
-	L.intermission = mod:SpellName(-7940) -- Desperate Measures
+	L.intermission = -7940 -- Desperate Measures
 	L.intermission_desc = "Warnings for when the bosses use Desperate Measures."
 
 	L.inferno_self = "Inferno Strike on you"

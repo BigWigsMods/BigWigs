@@ -38,7 +38,7 @@ if L then
 
 	L.phase_3_end_trigger = "You think you have WON?"
 
-	L.clump_check = mod:SpellName(147126) -- "Clump Check"
+	L.clump_check = 147126 -- "Clump Check"
 	L.clump_check_desc = "Check every 3 seconds during bombardment for clumped up players, if a clump is found a Kor'kron Iron Star will spawn."
 	L.clump_check_warning = "Clump found: Star Incoming!"
 	L.clump_check_icon = 147126
@@ -49,13 +49,13 @@ if L then
 
 	L.empowered_message = "%s is now empowered!"
 
-	L.ironstar_impact = mod:SpellName(144653) -- "Iron Star Impact"
+	L.ironstar_impact = 144653 -- "Iron Star Impact"
 	L.ironstar_impact_desc = "A timer bar for when the Iron Star will impact the wall at the other side."
 	L.ironstar_impact_icon = 144653
 	L.ironstar_rolling = "Iron Star Rolling!"
 
-	L.chain_heal = mod:SpellName(144583) -- "Ancestral Chain Heal"
-	L.chain_heal_desc = "Heals a friendly target for 40% of their max health, chaining to nearby friendly targets."
+	L.chain_heal = 144583 -- "Ancestral Chain Heal"
+	L.chain_heal_desc = "{focus}Heals a friendly target for 40% of their max health, chaining to nearby friendly targets."
 	L.chain_heal_icon = 144583
 	L.chain_heal_message = "Your focus is casting Chain Heal!"
 	L.chain_heal_bar = "Focus: Chain Heal"
@@ -71,7 +71,6 @@ if L then
 	L.custom_off_minion_marker_icon = 1
 end
 L = mod:GetLocale()
-L.chain_heal_desc = CL.focus_only..L.chain_heal_desc
 
 --------------------------------------------------------------------------------
 -- Initialization

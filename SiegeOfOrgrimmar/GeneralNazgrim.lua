@@ -47,17 +47,17 @@ if L then
 	L.warrior = "|cFFC79C6E"..LOCALIZED_CLASS_NAMES_MALE.WARRIOR.."|r"
 	L.hunter = "|cFFABD473"..LOCALIZED_CLASS_NAMES_MALE.HUNTER.."|r"
 
-	L.chain_heal, L.chain_heal_desc = EJ_GetSectionInfo(7935)
+	L.chain_heal = -7935 -- Empowered Chain Heal
+	L.chain_heal_desc = "{focus}{-7935}"
 	L.chain_heal_icon = "spell_nature_healingwavegreater"
 	L.chain_heal_message = "Your focus is casting Chain Heal!"
 
-	L.arcane_shock, L.arcane_shock_desc = EJ_GetSectionInfo(7928)
+	L.arcane_shock = -7928 -- Arcane Shock
+	L.arcane_shock_desc = "{focus}{-7928}"
 	L.arcane_shock_icon = "spell_arcane_invocation"
 	L.arcane_shock_message = "Your focus is casting Arcane Shock!"
 end
 L = mod:GetLocale()
-L.chain_heal_desc = CL.focus_only..L.chain_heal_desc
-L.arcane_shock_desc = CL.focus_only..L.arcane_shock_desc
 
 local stances = {
 	[143589] = L.battle,

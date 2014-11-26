@@ -26,7 +26,7 @@ if L then
 
 	L.custom_off_mist_marks = "Toxic Mist marker"
 	L.custom_off_mist_marks_desc = "To help healing assignments, mark the people who have Toxic Mist on them with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
-	L.custom_off_mist_marks_icon = "Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_1"
+	L.custom_off_mist_marks_icon = 1
 end
 L = mod:GetLocale()
 
