@@ -4,7 +4,7 @@ local names = {}
 local descriptions = {}
 
 local GetSpellInfo, GetSpellDescription, EJ_GetSectionInfo = GetSpellInfo, GetSpellDescription, EJ_GetSectionInfo
-local type = type
+local type, gsub = type, gsub
 
 -- Option bitflags
 local coreToggles = { "BAR", "MESSAGE", "ICON", "PULSE", "SOUND", "SAY", "PROXIMITY", "FLASH", "ME_ONLY", "EMPHASIZE", "TANK", "HEALER", "TANK_HEALER", "DISPEL", "ALTPOWER" }
@@ -98,6 +98,15 @@ local function getRoleStrings(module, key)
 	return "", ""
 end
 
+local function replaceSpellId(msg)
+	local id = tonumber(msg)
+	if id > 0 then
+		return GetSpellInfo(id)
+	else
+		return EJ_GetSectionInfo(-id)
+	end
+end
+
 function BigWigs:GetBossOptionDetails(module, bossOption)
 	local customBossOptions = BigWigs:GetCustomBossOptions()
 	local option = bossOption
@@ -117,8 +126,31 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 
 			local L = module:GetLocale(true)
 			local title, description = L[option], L[option .. "_desc"]
-			if title then title = title..roleIcon end
-			if description then description = roleDesc..(description):gsub("{rt(%d)}", "\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%1.blp:15\124t") end
+			if title then
+				if type(title) == "number" then
+					if not description then description = title end -- Allow a nil description to mean the same id as the title, if title is a number.
+
+					if title > 0 then
+						title = GetSpellInfo(title)
+					else
+						title = EJ_GetSectionInfo(-title)
+					end
+				else
+					title = gsub(title, "{(%-?%d-)}", replaceSpellId) -- Allow embedding an id in a string.
+				end
+				title = title..roleIcon
+			end
+			if description then
+				if type(description) == "number" then
+					if description > 0 then
+						description = GetSpellDescription(description)
+					else
+						local _, d = EJ_GetSectionInfo(-description)
+						description = d
+					end
+				end
+				description = roleDesc.. gsub(description, "{rt(%d)}", "\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%1.blp:15\124t")
+			end
 			local icon = L[option .. "_icon"]
 			if icon == option .. "_icon" then icon = nil end
 			if type(icon) == "number" then
