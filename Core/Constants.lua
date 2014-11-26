@@ -100,12 +100,21 @@ local function getRoleStrings(module, key)
 	return "", ""
 end
 
-local function replaceSpellId(msg)
+local function replaceIdWithName(msg)
 	local id = tonumber(msg)
 	if id > 0 then
 		return GetSpellInfo(id)
 	else
 		return EJ_GetSectionInfo(-id)
+	end
+end
+local function replaceIdWithDescription(msg)
+	local id = tonumber(msg)
+	if id > 0 then
+		return GetSpellDescription(id)
+	else
+		local _, d = EJ_GetSectionInfo(-id)
+		return d
 	end
 end
 
@@ -131,27 +140,17 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			if title then
 				if type(title) == "number" then
 					if not description then description = title end -- Allow a nil description to mean the same id as the title, if title is a number.
-
-					if title > 0 then
-						title = GetSpellInfo(title)
-					else
-						title = EJ_GetSectionInfo(-title)
-					end
+					title = replaceIdWithName(title)
 				else
-					title = gsub(title, "{(%-?%d-)}", replaceSpellId) -- Allow embedding an id in a string.
+					title = gsub(title, "{(%-?%d-)}", replaceIdWithName) -- Allow embedding an id in a string.
 				end
 				title = title..roleIcon
 			end
 			if description then
 				if type(description) == "number" then
-					if description > 0 then
-						description = GetSpellDescription(description)
-					else
-						local _, d = EJ_GetSectionInfo(-description)
-						description = d
-					end
+					description = replaceIdWithDescription(description)
 				else
-					description = gsub(description, "{(%-?%d-)}", replaceSpellId) -- Allow embedding an id in a string.
+					description = gsub(description, "{(%-?%d-)}", replaceIdWithDescription) -- Allow embedding an id in a string.
 					description = gsub(description, "{focus}", CL.focus_only) -- Allow embedding the focus prefix.
 				end
 				description = roleDesc.. gsub(description, "{rt(%d)}", "\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%1.blp:15\124t")
