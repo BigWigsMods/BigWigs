@@ -863,7 +863,11 @@ end
 -- PROXIMITY
 function boss:OpenProximity(key, range, player, isReverse)
 	if not solo and checkFlag(self, key, C.PROXIMITY) then
-		self:SendMessage("BigWigs_ShowProximity", self, range, key, player, isReverse)
+		if type(key) == "number" then
+			self:SendMessage("BigWigs_ShowProximity", self, range, key, player, isReverse, spells[key], icons[key])
+		else
+			self:SendMessage("BigWigs_ShowProximity", self, range, key, player, isReverse)
+		end
 	end
 end
 

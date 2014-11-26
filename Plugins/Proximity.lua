@@ -1036,7 +1036,7 @@ do
 		end
 	end
 
-	function plugin:Open(range, module, key, player, isReverse)
+	function plugin:Open(range, module, key, player, isReverse, spellName, spellIcon)
 		if type(range) ~= "number" then print("Range needs to be a number!") return end
 		if not IsInGroup() then return end -- Solo runs of old content
 		self:Close()
@@ -1095,16 +1095,20 @@ do
 
 		-- Update the ability name display
 		if module and key then
-			local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, key)
-			if type(icon) == "string" then
-				proxAnchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", icon, name)
+			if spellName then
+				proxAnchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", spellIcon, spellName)
 			else
-				proxAnchor.ability:SetText(name)
+				local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, key)
+				if type(icon) == "string" then
+					proxAnchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", icon, name)
+				else
+					proxAnchor.ability:SetText(name)
+				end
 			end
 		else
 			proxAnchor.ability:SetText(L.customRange)
 		end
-		if type(key) == "number" and key > 0 then -- GameTooltip doesn't do "journal" hyperlinks
+		if spellName and key > 0 then -- GameTooltip doesn't do "journal" hyperlinks
 			activeSpellID = key
 		else
 			activeSpellID = nil
