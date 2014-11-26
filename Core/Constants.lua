@@ -151,8 +151,8 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 						description = d
 					end
 				else
-					title = gsub(title, "{(%-?%d-)}", replaceSpellId) -- Allow embedding an id in a string.
-					title = gsub(title, "{focus}", CL.focus_only) -- Allow embedding the focus prefix.
+					description = gsub(description, "{(%-?%d-)}", replaceSpellId) -- Allow embedding an id in a string.
+					description = gsub(description, "{focus}", CL.focus_only) -- Allow embedding the focus prefix.
 				end
 				description = roleDesc.. gsub(description, "{rt(%d)}", "\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%1.blp:15\124t")
 			end
