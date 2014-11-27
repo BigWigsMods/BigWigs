@@ -14,22 +14,22 @@ mod.engageId = 1720
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.spore_shooter = EJ_GetSectionInfo(9987)
-	L.spore_shooter_desc = select(2, EJ_GetSectionInfo(9988))
+	L.spore_shooter = -9987
+	L.spore_shooter_desc = -9988
 	L.spore_shooter_icon = "Ability_Creature_Disease_03"
 
-	L.mind_fungus, L.mind_fungus_desc = EJ_GetSectionInfo(9986)
+	L.mind_fungus = -9986
 	L.mind_fungus_icon = "inv_mushroom_10"
 
-	L.flesh_eater, L.flesh_eater_desc = EJ_GetSectionInfo(9995)
+	L.flesh_eater = -9995
 	L.flesh_eater_icon = "Ability_Creature_Disease_02"
 
-	L.living_mushroom = EJ_GetSectionInfo(9989)
-	L.living_mushroom_desc = select(2, EJ_GetSectionInfo(9990))
+	L.living_mushroom = -9989
+	L.living_mushroom_desc = -9990
 	L.living_mushroom_icon = "inv_misc_starspecklemushroom"
 
-	L.rejuvenating_mushroom = EJ_GetSectionInfo(9991)
-	L.rejuvenating_mushroom_desc = select(2, EJ_GetSectionInfo(9992))
+	L.rejuvenating_mushroom = -9991
+	L.rejuvenating_mushroom_desc = -9992
 	L.rejuvenating_mushroom_icon = "Spell_Magic_ManaGain"
 
 	L.creeping_moss_heal = "Creeping Moss under BOSS (healing)"

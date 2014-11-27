@@ -22,7 +22,7 @@ local fixateList = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.volatile_anomaly, L.volatile_anomaly_desc = EJ_GetSectionInfo(9919)
+	L.volatile_anomaly = -9919
 	L.volatile_anomaly_icon = "spell_arcane_arcane04"
 
 	L.custom_off_fixate_marker = "Fixate Marker"

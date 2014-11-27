@@ -24,7 +24,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.molten_torrent_self = "Molten Torrent on you"
 	L.molten_torrent_self_desc = "Special countdown when Molten Torrent is on you."
-	L.molten_torrent_self_icon = 154932
+	L.molten_torrent_self_icon = "spell_burningbladeshaman_molten_torrent"
 	L.molten_torrent_self_bar = "You explode!"
 end
 L = mod:GetLocale()

@@ -22,8 +22,8 @@ local frenzied = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.frenzy, L.frenzy_desc = EJ_GetSectionInfo(8862)
-	L.frenzy_icon = 156598
+	L.frenzy = -8862
+	L.frenzy_icon = "spell_shadow_unholyfrenzy"
 
 	L.adds_multiple = "Adds x%d"
 end

@@ -25,7 +25,7 @@ if L then
 
 	L.shard_explosion = "Explosive Shard Explosion"
 	L.shard_explosion_desc = "Separate emphasized bar for the explosion."
-	L.shard_explosion_icon = 156390
+	L.shard_explosion_icon = "6bf_explosive_shard"
 
 	L.hunger_drive_power = "%dx %s - %d ore to go!"
 end

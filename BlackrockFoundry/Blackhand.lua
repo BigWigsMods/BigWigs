@@ -20,7 +20,7 @@ local phase = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.siegemaker, L.siegemaker_desc = EJ_GetSectionInfo(9571)
+	L.siegemaker = -9571
 	L.siegemaker_icon = "ability_vehicle_siegeenginecharge"
 
 	L.custom_off_markedfordeath_marker = "Marked for Death marker"

@@ -12,7 +12,7 @@ mod.engageId = 1695
 -- Locals
 --
 
-local marak, sorka, garan = (EJ_GetSectionInfo(10033)), (EJ_GetSectionInfo(10030)), (EJ_GetSectionInfo(10025))
+local marak, sorka, garan = mod:SpellName(-10033), mod:SpellName(-10030), mod:SpellName(-10025)
 local shipCount = 0
 local boatTimers = {} -- don't announce while on the boat, but track the cd times
 
@@ -32,8 +32,8 @@ if L then
 	L.ship = "Jump to Ship: %s" -- 137266
 	L.ship_icon = "ability_vehicle_siegeenginecannon"
 
-	L.bombardment = mod:SpellName(147135)
-	L.bombardment_desc = select(2, EJ_GetSectionInfo(10019))
+	L.bombardment = 147135
+	L.bombardment_desc = -10019
 	L.bombardment_icon = "ability_ironmaidens_bombardment"
 
 	L.custom_off_heartseeker_marker = "Bloodsoaked Heartseeker marker"
