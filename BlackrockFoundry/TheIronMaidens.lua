@@ -12,7 +12,6 @@ mod.engageId = 1695
 -- Locals
 --
 
-local marak, sorka, garan = mod:SpellName(-10033), mod:SpellName(-10030), mod:SpellName(-10025)
 local shipCount = 0
 local boatTimers = {} -- don't announce while on the boat, but track the cd times
 
@@ -32,7 +31,7 @@ if L then
 	L.ship = "Jump to Ship: %s" -- 137266
 	L.ship_icon = "ability_vehicle_siegeenginecannon"
 
-	L.bombardment = 147135
+	L.bombardment = 147135 -- Bombardment
 	L.bombardment_desc = -10019
 	L.bombardment_icon = "ability_ironmaidens_bombardment"
 
@@ -57,9 +56,9 @@ function mod:GetOptions()
 		159336, "bosskill"
 	}, {
 		["bombardment"] = -10019, -- Dreadnaught
-		[156626] = garan, -- Gar'an
-		[155794] = sorka, -- Sorka
-		[159724] = marak, -- Marak
+		[156626] = -10025, -- Gar'an
+		[155794] = -10030, -- Sorka
+		[159724] = -10033, -- Marak
 		[159336] = "general"
 	}
 end
@@ -176,11 +175,11 @@ end
 function mod:Ship(msg, sender)
 	shipCount = shipCount + 1
 	self:Message("bombardment", "Neutral", "Info", L.ship:format(sender), false)
-	if sender == garan then
+	if sender == self:SpellName(-10025) then -- Gar'an
 		stopBars(77557)
-	elseif sender == sorka then
+	elseif sender == self:SpellName(-10030) then -- Sorka
 		stopBars(77231)
-	elseif sender == marak then
+	elseif sender == self:SpellName(-10033) then -- Marak
 		stopBars(77477)
 	end
 	if shipCount < 3 then

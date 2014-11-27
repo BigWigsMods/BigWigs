@@ -22,7 +22,7 @@ local frenzied = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.frenzy = -8862
+	L.frenzy = -8862 -- Frenzy
 	L.frenzy_icon = "spell_shadow_unholyfrenzy"
 
 	L.adds_multiple = "Adds x%d"
