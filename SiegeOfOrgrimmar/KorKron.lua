@@ -231,12 +231,12 @@ function mod:Bloodlust(args)
 end
 
 do
-	local hpWarn = { 87, 68, 53, 28, 0 } -- Poisonmist, Foulstream, Ashflare, Bloodlust. 0 to prevent errors, saves on having a hpWarn[hpWarned] existence check being called every time it fires
-	local warnings = { mod:SpellName(-8125), mod:SpellName(-8126), mod:SpellName(-8127), mod:SpellName(-8120) }
+	local hpWarn = { 87, 68, 53, 28, 0 } -- Last is 0 to prevent errors, saves on having a hpWarn[hpWarned] existence check being called every time it fires
+	local warnings = { -8125, -8126, -8127, -8120 } -- Poisonmist, Foulstream, Ashflare, Bloodlust.
 	function mod:TotemWarn(unit)
 		local hp = UnitHealth(unit)/UnitHealthMax(unit) * 100
 		if hp < hpWarn[hpWarned] then
-			local msg = CL.soon:format(warnings[hpWarned])
+			local msg = CL.soon:format(self:SpellName(warnings[hpWarned]))
 			hpWarned = hpWarned + 1
 			self:Message(-8124, "Neutral", "Info", msg, false)
 			if hpWarned > 4 then

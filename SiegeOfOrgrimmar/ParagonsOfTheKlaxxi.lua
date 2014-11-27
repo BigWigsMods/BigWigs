@@ -25,7 +25,6 @@ local function getBossByMobId(mobId)
 	end
 end
 local blueToxin, redToxin, yellowToxin = ("|cFF0033FF%s|r"):format(mod:SpellName(142532)), ("|cFFFF0000%s|r"):format(mod:SpellName(142533)),("|cFFFFFF00%s|r"):format(mod:SpellName(142534))
-local chooseCatalyst = mod:SpellName(-8036)
 local results = {
 	mantid = {}, sword = {}, staff = {}, ring = {}, amber = {},
 	red = {}, purple = {}, blue = {}, green = {}, yellow = {},
@@ -648,14 +647,14 @@ do
 		mod:Message(-8034, "Neutral", nil, CL.soon:format(mod:SpellName(-8034)))
 	end
 	function mod:Catalysts(args)
-		self:CDBar(-8034, 25, chooseCatalyst)
+		self:CDBar(-8034, 25, -8036, -8034) -- Choose Catalyst
 		local myDebuff = UnitDebuff("player", mod:SpellName(142532)) or UnitDebuff("player", mod:SpellName(142533)) or UnitDebuff("player", mod:SpellName(142534)) -- blue, red, yellow
 		self:Message(-8034, "Neutral", "Alert", (myDebuff and matches[myDebuff][args.spellId]) and L.catalyst_match:format(matches[myDebuff][args.spellId]) or args.spellName, args.spellId)
 		self:CancelTimer(catalystProximityHandler) -- stop our previous timer it should have happened by now, but first one is tricky, so be safe and just stop it, 2nd one will be accurate
 		catalystProximityHandler = self:ScheduleTimer(handleCatalystProximity, 20)
 	end
 	function mod:ToxicInjection(args)
-		self:CDBar(-8034, 18, chooseCatalyst)
+		self:CDBar(-8034, 18, -8036, -8034) -- Choose Catalyst
 		catalystProximityHandler = self:ScheduleTimer(handleCatalystProximity, 13) -- nothing should be scheduled at this point since this happens before ANYTHING so we don't overwrite any timer
 	end
 end
@@ -771,7 +770,7 @@ function mod:ReadyToFight(args)
 			self:CDBar(143243, 49) -- Rapid Fire
 		end
 	elseif mobId == 71157 then -- Xaril the Poisoned Mind
-		self:Bar(-8034, 21, chooseCatalyst)
+		self:Bar(-8034, 21, -8036, -8034) -- Choose Catalyst
 	elseif mobId == 71154 then -- Ka'roz the Locust
 		self:Bar(143701, 11) -- Whirling
 		self:Bar(143759, 35) -- Hurl Amber
@@ -815,7 +814,7 @@ function mod:ParagonDeaths(args)
 	elseif args.mobId == 71156 then --Kaz'tik the Manipulator
 		self:StopBar(142671) -- Mesmerize
 	elseif args.mobId == 71157 then --Xaril the Poisoned Mind
-		self:StopBar(chooseCatalyst)
+		self:StopBar(-8036) -- Choose Catalyst
 		self:CloseProximity(-8034)
 		self:CancelTimer(catalystProximityHandler)
 		catalystProximityHandler = nil
