@@ -333,6 +333,7 @@ function mod:PLAYER_LOGIN()
 	local _, class = UnitClass("player")
 	if class == "WARRIOR" then -- Handle Gladiator Stance
 		bwFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
+		bwFrame:RegisterEvent("PLAYER_TALENT_UPDATE")
 	end
 	RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
@@ -582,6 +583,7 @@ function mod:ACTIVE_TALENT_GROUP_CHANGED()
 	end
 end
 mod.UPDATE_SHAPESHIFT_FORM = mod.ACTIVE_TALENT_GROUP_CHANGED
+mod.PLAYER_TALENT_UPDATE = mod.ACTIVE_TALENT_GROUP_CHANGED
 
 -- Merged LFG_ProposalTime addon by Freebaser
 do
