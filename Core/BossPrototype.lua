@@ -198,16 +198,13 @@ end
 -- Localization
 --
 
-function boss:NewLocale()
+function boss:GetLocale()
 	if not self.localization then
 		self.localization = {}
-		return self.localization
 	end
-end
-
-function boss:GetLocale()
 	return self.localization
 end
+boss.NewLocale = boss.GetLocale
 
 -------------------------------------------------------------------------------
 -- Enable triggers
