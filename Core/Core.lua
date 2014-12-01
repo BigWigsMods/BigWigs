@@ -539,7 +539,16 @@ function addon:GetCustomBossOptions()
 	return customBossOptions
 end
 
-function addon:NewBossLocale(name, locale, default) return AL:NewLocale(("%s_%s"):format(bossCore.name, name), locale, default, true) end
+do
+	local L = GetLocale()
+	if L == "enGB" then L = "enUS" end
+	function addon:NewBossLocale(moduleName, locale)
+		local module = addon:GetBossModule(moduleName, true)
+		if module and L == locale then
+			return module:GetLocale()
+		end
+	end
+end
 
 -------------------------------------------------------------------------------
 -- Module handling

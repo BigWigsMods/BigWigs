@@ -2,8 +2,8 @@
 -- Prototype
 --
 
-local AL = LibStub("AceLocale-3.0")
-local L = AL:GetLocale("Big Wigs: Common")
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+local BW_L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected
 local EJ_GetSectionInfo, GetSpellInfo = EJ_GetSectionInfo, GetSpellInfo
 local format, sub, gsub, band = string.format, string.sub, string.gsub, bit.band
@@ -194,8 +194,20 @@ function boss:Reboot(isWipe)
 	self:OnEnable(isWipe)
 end
 
-function boss:NewLocale(locale, default) return AL:NewLocale(self.name, locale, default, "raw") end
-function boss:GetLocale(state) return AL:GetLocale(self.name, state) end
+-------------------------------------------------------------------------------
+-- Localization
+--
+
+function boss:NewLocale()
+	if not self.localization then
+		self.localization = {}
+		return self.localization
+	end
+end
+
+function boss:GetLocale()
+	return self.localization
+end
 
 -------------------------------------------------------------------------------
 -- Enable triggers
@@ -540,7 +552,7 @@ do
 	function boss:Win(args, direct)
 		if debug then dbg(self, ":Win") end
 		if direct then
-			self:Message("bosskill", "Positive", "Victory", AL:GetLocale("Big Wigs").defeated:format(self.displayName), false)
+			self:Message("bosskill", "Positive", "Victory", BW_L.defeated:format(self.displayName), false)
 			self.lastKill = GetTime() -- Add the kill time for the enable check.
 			if self.OnWin then self:OnWin() end
 			self:SendMessage("BigWigs_OnBossWin", self)
