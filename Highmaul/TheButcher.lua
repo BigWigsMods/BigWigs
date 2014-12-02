@@ -51,6 +51,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Tenderizer", 156151)
 	self:Log("SPELL_CAST_START", "Cleave", 156157)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GushingWounds", 156152)
+	self:Log("SPELL_AURA_REMOVED", "GushingWoundsRemoved", 156152)
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 156598)
 	--Mythic
 	self:Log("SPELL_CAST_SUCCESS", "AddSpawn", 163051) -- Paleobomb
@@ -142,6 +143,13 @@ end
 function mod:GushingWounds(args)
 	if self:Me(args.destGUID) and args.amount > 2 then
 		self:StackMessage(args.spellId, args.destName, args.amount, "Personal", "Alarm")
+		self:TargetBar(args.spellId, 15, args.destName)
+	end
+end
+
+function mod:GushingWoundsRemoved(args)
+	if self:Me(args.destGUID) then
+		self:StopBar(args.spellId, args.destName)
 	end
 end
 
@@ -157,7 +165,7 @@ function mod:Frenzy(args)
 	self:Message("frenzy", "Important", "Alarm", L.frenzy_icon)
 	frenzied = true
 	-- gains power faster while frenzied
-	local left = 100 - UnitPower("boss1") * (10/3) -- this isn't quite right
+	local left = (100 - UnitPower("boss1")) * 0.3
 	self:Bar(-8860, left) -- Bounding Cleave
 end
 
