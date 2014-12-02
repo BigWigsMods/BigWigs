@@ -25,10 +25,12 @@ local function GetBossUnit(guid)
 end
 
 local function GetBossCastTime(guid)
-	local unit = GetBossUnit(guid) or ""
-	local spell, _, _, _, _, endTime = UnitCastingInfo(unit)
-	if spell then
-		return endTime / 1000 - GetTime()
+	local unit = GetBossUnit(guid)
+	if unit then
+		local spell, _, _, _, _, endTime = UnitCastingInfo(unit)
+		if spell then
+			return endTime / 1000 - GetTime()
+		end
 	end
 	return 0
 end

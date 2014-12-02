@@ -122,12 +122,12 @@ do
 	local function warn(spellId)
 		if suppressionTarget then
 			if UnitIsUnit("player", suppressionTarget) then
-				mod:Flash(161328)
-				mod:Say(161328)
+				mod:Flash(spellId)
+				mod:Say(spellId)
 			end
-			mod:TargetMessage(161328, suppressionTarget, "Attention", "Alarm")
+			mod:TargetMessage(spellId, suppressionTarget, "Attention", "Alarm")
 		else
-			mod:Message(161328, "Attention")
+			mod:Message(spellId, "Attention")
 		end
 	end
 
@@ -137,7 +137,7 @@ do
 		self:ScheduleTimer(warn, 0.1, args.spellId)
 	end
 
-	function mod:SuppressionField(msg, sender, _, _, target)
+	function mod:SuppressionField(_, _, _, _, target)
 		suppressionTarget = target
 	end
 end
