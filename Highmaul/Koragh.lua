@@ -9,17 +9,21 @@ mod:RegisterEnableMob(79015)
 mod.engageId = 1723
 
 --------------------------------------------------------------------------------
--- Locals
---
-
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.suppression_field_trigger1 = "Quiet!"
+	L.suppression_field_trigger2 = "I will tear you in half!"
+	L.suppression_field_trigger3 = "I will crush you!"
+	L.suppression_field_trigger4 = "Silence!"
+
 	L.fire_bar = "Everyone Explodes!"
+
+	L.custom_off_fel_marker = "Expel Magic: Fel Marker"
+	L.custom_off_fel_marker_desc = "Mark Expel Magic: Fel targets with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_fel_marker_icon = 1
 end
 L = mod:GetLocale()
 
@@ -29,7 +33,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		163472,
+		163472, 172895, "custom_off_fel_marker",
 		161242, 160734, {161328, "SAY", "FLASH"}, {162184, "HEALER"}, {162185, "PROXIMITY"}, {162186, "ICON", "FLASH", "SAY"}, 172747,
 		"bosskill"
 	}, {
@@ -45,14 +49,19 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ExpelMagicFire", 162185)
 	self:Log("SPELL_AURA_APPLIED", "ExpelMagicArcane", 162186)
 	self:Log("SPELL_CAST_START", "ExpelMagicFrost", 172747)
-	self:Log("SPELL_CAST_SUCCESS", "SuppressionField", 161328)
+	self:Yell("SuppressionField", L.suppression_field_trigger1, L.suppression_field_trigger2, L.suppression_field_trigger3, L.suppression_field_trigger4)
+	self:Log("SPELL_CAST_SUCCESS", "SuppressionFieldCast", 161328) -- fallback to fire the timer if the triggers are localized
 	-- Mythic
+	self:Log("SPELL_AURA_APPLIED", "ExpelMagicFelCast", 172895)
+	self:Log("SPELL_AURA_APPLIED", "ExpelMagicFelApplied", 172895)
+	self:Log("SPELL_AURA_REMOVED", "ExpelMagicFelRemoved", 172895)
 	self:Log("SPELL_AURA_APPLIED", "DominatingPower", 163472)
 end
 
 function mod:OnEngage()
-	-- pretty consistant early cast for fire, but everything else is all over the place :\
-	--self:CDBar(162185, 7) -- Expel Magic: Fire
+	if self:Mythic() then
+		self:CDBar(172895, 8) -- Expel Magic: Fel
+	end
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
 
@@ -73,12 +82,12 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 160734 then -- Vulnerability
-		self:Message(spellId, "Positive", nil, CL.removed:format(self:SpellName(156803))) -- Nullification Barrier removed!
+		self:Message(spellId, "Positive", "Long", CL.removed:format(self:SpellName(156803))) -- Nullification Barrier removed!
 		self:Bar(spellId, 20)
 		self:StopBar(161328) -- Suppression Field
+		self:StopBar(172895) -- Expel Magic: Fel
 	elseif spellId == 156803 then -- Nullification Barrier
 		self:Message(160734, "Positive", nil, spellName)
-		--self:CDBar(160734, 12)
 		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 	end
 end
@@ -108,14 +117,29 @@ function mod:ExpelMagicFrost(args)
 	self:Message(args.spellId, "Attention") --, self:Dispeller("magic") and "Info"
 end
 
-function mod:SuppressionField(msg, sender, _, _, target)
-	-- shooooould incorporate trample into the warning since he charges to the target, hmm
-	if self:Me(target) then
-		self:Flash(161328)
-		self:Say(161328)
+do
+	local suppressionTarget = nil
+	local function warn(spellId)
+		if suppressionTarget then
+			if UnitIsUnit("player", suppressionTarget) then
+				mod:Flash(161328)
+				mod:Say(161328)
+			end
+			mod:TargetMessage(161328, suppressionTarget, "Attention", "Alarm")
+		else
+			mod:Message(161328, "Attention")
+		end
 	end
-	self:TargetMessage(161328, target, "Attention", "Alarm")
-	self:CDBar(161328, 15)
+
+	function mod:SuppressionFieldCast(args)
+		self:CDBar(args.spellId, 15)
+		suppressionTarget = nil
+		self:ScheduleTimer(warn, 0.1, args.spellId)
+	end
+
+	function mod:SuppressionField(msg, sender, _, _, target)
+		suppressionTarget = target
+	end
 end
 
 do
@@ -133,6 +157,35 @@ do
 end
 
 -- Mythic
+
+do
+	local marks = 0
+	function mod:ExpelMagicFelCast(args)
+		self:Bar(args.spellId, 15.7) -- seems like a static timer, not based on absorbed damage
+		marks = 0
+	end
+
+	function mod:ExpelMagicFelApplied(args)
+		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
+			self:TargetBar(args.spellId, 12, args.destName)
+			self:Say(args.spellId)
+		end
+		if self.db.profile.custom_off_fel_marker then
+			marks = marks + 1
+			SetRaidTarget(args.destName, marks)
+		end
+	end
+
+	function mod:ExpelMagicFelRemoved(args)
+		if self:Me(args.destName) then
+			self:StopBar(args.spellId, args.destName)
+		end
+		if self.db.profile.custom_off_fel_marker then
+			SetRaidTarget(args.destName, 0)
+		end
+	end
+end
 
 do
 	local list, scheduled = mod:NewTargetList(), nil

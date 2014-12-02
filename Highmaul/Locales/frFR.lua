@@ -47,6 +47,9 @@ if L then
 	--L.suppression_field_trigger4 = "Silence!"
 
 	L.fire_bar = "Tout le monde explose !"
+
+	--L.custom_off_fel_marker = "Expel Magic: Fel Marker"
+	--L.custom_off_fel_marker_desc = "Mark Expel Magic: Fel targets with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "frFR")
