@@ -155,14 +155,14 @@ end
 
 function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if hp < 34 then
-		self:Message("frenzy", "Neutral", "Info", CL.soon:format(L.frenzy), false)
+	if hp < 36 then
+		self:Message("frenzy", "Neutral", "Info", CL.soon:format(self:SpellName(-8862)), false)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 	end
 end
 
 function mod:Frenzy(args)
-	self:Message("frenzy", "Important", "Alarm", L.frenzy_icon)
+	self:Message("frenzy", "Important", "Alarm", args.spellName, L.frenzy_icon)
 	frenzied = true
 	-- gains power faster while frenzied
 	local left = (100 - UnitPower("boss1")) * 0.3
