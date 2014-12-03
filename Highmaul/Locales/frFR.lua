@@ -30,7 +30,8 @@ end
 
 L = BigWigs:NewBossLocale("Brackenspore", "frFR")
 if L then
-	L.creeping_moss_heal = "Mousse rampante sous le BOSS (soigne)"
+	--L.creeping_moss_boss_heal = "Mousse rampante sous le BOSS (soigne)"
+	--L.creeping_moss_add_heal = "Moss under BIG ADD (healing)"
 end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "frFR")

@@ -32,7 +32,8 @@ if L then
 	L.rejuvenating_mushroom_desc = -9992 -- Rejuvenating Spores
 	L.rejuvenating_mushroom_icon = "Spell_Magic_ManaGain"
 
-	L.creeping_moss_heal = "Creeping Moss under BOSS (healing)"
+	L.creeping_moss_boss_heal = "Moss under BOSS (healing)"
+	L.creeping_moss_add_heal = "Moss under BIG ADD (healing)"
 end
 L = mod:GetLocale()
 
@@ -88,13 +89,19 @@ function mod:CallOfTheTides(args)
 end
 
 do
-	local prev = 0
+	local prevAdd = 0
+	local prevBoss = 0
 	function mod:CreepingMossHeal(args)
 		local t = GetTime()
-		local mobId = self:MobId(args.destGUID)
-		if self:Tank() and not self:LFR() and (mobId == 78491 or mobId == 79092) and t-prev > 1 then -- Brackenspore or Fungal Flesh-Eater
-			self:Message(args.spellId, "Important", "Alarm", L.creeping_moss_heal)
-			prev = t
+		if self:Tank() and not self:LFR() and t-prev > 2 then
+			local mobId = self:MobId(args.destGUID)
+			if mobId == 78491 then -- Brackenspore
+				self:Message(args.spellId, "Important", "Info", L.creeping_moss_boss_heal)
+				prevBoss = t
+			elseif or mobId == 79092 then -- Fungal Flesh-Eater
+				self:Message(args.spellId, "Important", "Info", L.creeping_moss_add_heal)
+				prevAdd = t
+			end
 		end
 	end
 end
@@ -133,13 +140,13 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 		self:Message("mind_fungus", "Attention", nil, spellId, L.mind_fungus_icon)
 		self:CDBar("mind_fungus", 51, spellId, L.mind_fungus_icon) -- 51.1, 58.6, 55.5, 55, 61.5, 59.5
 	elseif spellId == 163142 then -- Evolved Fungus (Fungal Flesh-Eater)
-		self:Message("flesh_eater", "Urgent", self:Tank() and "Info", CL.spawning:format(CL.big_add), L.flesh_eater_icon)
+		self:Message("flesh_eater", "Urgent", self:Tank() and "Long", CL.spawning:format(CL.big_add), L.flesh_eater_icon)
 		self:Bar("flesh_eater", 120, CL.big_add, L.flesh_eater_icon)
 	elseif spellId == 160022 then -- Living Mushroom
-		self:Message("living_mushroom", "Positive", self:Healer() and "Info", spellId, L.living_mushroom_icon)
+		self:Message("living_mushroom", "Positive", self:Healer() and "Long", spellId, L.living_mushroom_icon)
 		self:Bar("living_mushroom", 58, spellId, L.living_mushroom_icon)
 	elseif spellId == 160021 then -- Rejuvenating Mushroom
-		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Info", spellId, L.rejuvenating_mushroom_icon)
+		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Long", spellId, L.rejuvenating_mushroom_icon)
 		self:Bar("rejuvenating_mushroom", 135, spellId, L.rejuvenating_mushroom_icon)
 	elseif spellId == 163794 then -- Exploding Fungus (Mythic)
 		self:Message(spellId, "Urgent")
