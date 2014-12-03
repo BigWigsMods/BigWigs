@@ -10,16 +10,6 @@ mod.otherMenu = 962
 mod.worldBoss = 81252
 
 --------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:NewLocale("enUS", true)
-if L then
-
-end
-L = mod:GetLocale()
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -30,19 +20,18 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
 	self:Log("SPELL_CAST_START", "ColossalSlam", 175791)
 	self:Log("SPELL_CAST_START", "GigaSmash", 175953)
 	self:Log("SPELL_CAST_START", "CallOfEarth", 175827)
 	self:Log("SPELL_AURA_APPLIED", "AcidBreath", 175915)
 
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 81252)
 end
 
 function mod:OnEngage()
-
+	--
 end
 
 --------------------------------------------------------------------------------
@@ -50,7 +39,7 @@ end
 --
 
 function mod:ColossalSlam(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
+	self:Message(args.spellId, "Important", "Alarm")
 end
 
 function mod:GigaSmash(args)
