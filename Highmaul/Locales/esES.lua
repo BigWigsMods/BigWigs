@@ -14,9 +14,9 @@ if L then
 	--L.earthwarper_trigger1 = "Yjj'rmr" -- Yjj'rmr... Xzzolos...
 	--L.earthwarper_trigger2 = "Yes, Tectus" -- Yes, Tectus. Bend to... our master's... will....
 	--L.earthwarper_trigger3 = "You do not understand!" -- You do not understand! This one must not....
-	--L.berserker_trigger1 = "MASTER!" -- MASTER! I COME FOR YOU!
+	L.berserker_trigger1 = "¡AMO!" -- ¡AMO! ¡VOY HACIA TI!
 	--L.berserker_trigger2 = "Kral'ach" --Kral'ach.... The darkness speaks.... A VOICE!
-	--L.berserker_trigger3 = "Graaagh!" --Graaagh! KAHL...  AHK... RAAHHHH!
+	L.berserker_trigger3 = "Graaagh!" --Graaagh! KAHL...  AHK... RAAHHHH!
 
 	L.tectus = "Tectus"
 	L.shard = "Esquirla"
