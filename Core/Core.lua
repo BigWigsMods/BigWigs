@@ -240,6 +240,7 @@ do
 		-- 984:1 is Auchindoun, but it unfortunately has 2 cinematics. 1 before the first boss and 1 before the last boss. Workaround?
 		["993:2"] = true, -- Grimrail Depot, boarding the train
 		["993:4"] = true, -- Grimrail Depot, destroying the train
+		["994:3"] = true, -- Highmaul, Kargath Death
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
