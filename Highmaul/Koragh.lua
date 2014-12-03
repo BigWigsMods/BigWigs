@@ -33,8 +33,18 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		163472, 172895, "custom_off_fel_marker",
-		161242, 160734, {161328, "SAY", "FLASH"}, {162184, "HEALER"}, {162185, "PROXIMITY"}, {162186, "ICON", "FLASH", "SAY"}, 172747,
+		-- Mythic
+		163472, -- Dominating Power
+		172895, -- Expel Magic: Fel
+		"custom_off_fel_marker",
+		-- General
+		161242, -- Caustic Energy
+		160734, -- Vulnerability
+		{161328, "SAY", "FLASH"}, -- Suppression Field
+		{162184, "HEALER"}, -- Expel Magic: Shadow
+		{162185, "PROXIMITY"}, -- Expel Magic: Fire
+		{162186, "TANK", "ICON", "FLASH", "SAY"}, -- Expel Magic: Arcane
+		172747, -- Expel Magic: Frost
 		"bosskill"
 	}, {
 		[163472] = "mythic",
@@ -47,7 +57,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CausticEnergy", 161242)
 	self:Log("SPELL_CAST_START", "ExpelMagicShadow", 162184)
 	self:Log("SPELL_CAST_SUCCESS", "ExpelMagicFire", 162185)
-	self:Log("SPELL_AURA_APPLIED", "ExpelMagicArcane", 162186)
+	self:Log("SPELL_CAST_START", "ExpelMagicArcaneStart", 162186)
+	self:Log("SPELL_CAST_SUCCESS", "ExpelMagicArcaneApplied", 162186) -- Faster than _APPLIED
+	self:Log("SPELL_AURA_REMOVED", "ExpelMagicArcaneRemoved", 162186)
 	self:Log("SPELL_CAST_START", "ExpelMagicFrost", 172747)
 	self:Yell("SuppressionField", L.suppression_field_trigger1, L.suppression_field_trigger2, L.suppression_field_trigger3, L.suppression_field_trigger4)
 	self:Log("SPELL_CAST_SUCCESS", "SuppressionFieldCast", 161328) -- fallback to fire the timer if the triggers are localized
@@ -73,8 +85,8 @@ function mod:UNIT_POWER_FREQUENT(unit, powerType)
 	if powerType == "ALTERNATE" then
 		local power = UnitPower(unit, 10)
 		if power < 25 then -- XXX probably need to tweak this (~10s)
+			self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", unit)
 			self:Message(160734, "Neutral", "Info", CL.soon:format(self:SpellName(160734)))
-			self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1")
 			-- Knockback at 0 power, Vulnerability 4s later
 		end
 	end
@@ -88,7 +100,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(172895) -- Expel Magic: Fel
 	elseif spellId == 156803 then -- Nullification Barrier
 		self:Message(160734, "Positive", nil, spellName)
-		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
+		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, unit)
 	end
 end
 
@@ -96,21 +108,29 @@ function mod:ExpelMagicShadow(args)
 	self:Message(args.spellId, "Attention", "Alert")
 end
 
-function mod:ExpelMagicArcane(args)
+function mod:ExpelMagicArcaneStart(args)
+	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
+end
+
+function mod:ExpelMagicArcaneApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
 	end
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, self:Tank())
 	self:TargetBar(args.spellId, 10, args.destName)
+end
+
+function mod:ExpelMagicArcaneRemoved(args)
+	self:PrimaryIcon(args.spellId)
 end
 
 function mod:ExpelMagicFire(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	self:Bar(args.spellId, 10, L.fire_bar)
 	self:OpenProximity(args.spellId, 5)
-	self:ScheduleTimer("CloseProximity", 10, args.spellId)
+	self:ScheduleTimer("CloseProximity", 10.5, args.spellId)
 end
 
 function mod:ExpelMagicFrost(args)
