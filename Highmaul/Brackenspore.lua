@@ -14,14 +14,14 @@ mod.engageId = 1720
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.spore_shooter = -9987 -- Spore Shooter
+	L.spore_shooter = ("{-9987} (%s)"):format(CL.small_adds) -- Spore Shooter
 	L.spore_shooter_desc = -9988 -- Spore Shoot
 	L.spore_shooter_icon = "Ability_Creature_Disease_03"
 
 	L.mind_fungus = -9986 -- Mind Fungus
 	L.mind_fungus_icon = "inv_mushroom_10"
 
-	L.flesh_eater = -9995 -- Fungul Flesh-Eater
+	L.flesh_eater = ("{-9995} (%s)"):format(CL.big_add) -- Fungul Flesh-Eater
 	L.flesh_eater_icon = "Ability_Creature_Disease_02"
 
 	L.living_mushroom = -9989 -- Living Mushroom
@@ -72,7 +72,7 @@ function mod:OnEngage()
 	self:Bar(159219, 32) -- Necrotic Breath
 	self:Bar(159996, 45) -- Infesting Spores
 	self:CDBar("mind_fungus", 10, L.mind_fungus, L.mind_fungus_icon) -- Mind Fungus
-	self:CDBar("spore_shooter", 20, L.spore_shooter, L.spore_shooter_icon) -- Spore Shooter
+	self:CDBar("spore_shooter", 20, CL.small_adds, L.spore_shooter_icon) -- Spore Shooter
 	self:CDBar("flesh_eater", 32, CL.big_add, L.flesh_eater_icon) -- Fungal Flesh-Eater
 	self:CDBar("living_mushroom", 18, L.living_mushroom, L.living_mushroom_icon) -- Living Mushroom
 	self:CDBar("rejuvenating_mushroom", 82, L.rejuvenating_mushroom, L.rejuvenating_mushroom_icon) -- Rejuvenating Mushroom
@@ -134,8 +134,8 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 			self:Flash(spellId)
 		end
 	elseif spellId == 163594 then -- Spore Shooter
-		self:Message("spore_shooter", "Attention", nil, spellId, L.spore_shooter_icon)
-		self:Bar("spore_shooter", 60, spellId, L.spore_shooter_icon)
+		self:Message("spore_shooter", "Attention", nil, CL.small_adds, L.spore_shooter_icon)
+		self:Bar("spore_shooter", 60, CL.small_adds, L.spore_shooter_icon)
 	elseif spellId == 163141 then -- Mind Fungus
 		self:Message("mind_fungus", "Attention", nil, spellId, L.mind_fungus_icon)
 		self:CDBar("mind_fungus", 51, spellId, L.mind_fungus_icon) -- 51.1, 58.6, 55.5, 55, 61.5, 59.5
