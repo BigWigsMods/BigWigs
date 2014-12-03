@@ -206,10 +206,10 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 		-- Warnings for 85%, 65%, 45%, and 25% for mythic
 		if (phase == 1 and hp < 90) or (phase == 2 and hp < 70) or (phase == 3 and hp < 50) or (phase == 4 and hp < 30) then
 			phase = phase + 1
-			self:Message("stages", "Neutral", "Info", L.next_mount, false)
 			if phase > (self:Mythic() and 4 or 3) then
 				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2")
 			end
+			self:Message("stages", "Neutral", "Info", L.next_mount, false)
 		end
 	end
 end

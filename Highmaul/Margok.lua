@@ -91,12 +91,12 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if self:Mythic() then
 		if (phase == 1 and hp < 71) or (phase == 2 and hp < 38) then -- phases at 66% and 33%
-			self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
+			self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
 		end
 	elseif (phase == 1 and hp < 90) or (phase == 2 and hp < 60) or (phase == 3 and hp < 30) then -- phases at 85%, 55%, and 25%
-		self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
+		self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
 	end
 end
 
@@ -202,14 +202,14 @@ do
 	local timer = nil
 	local function nextAdd(self)
 		self:Message("volatile_anomaly", "Attention", "Info", CL.incoming:format(self:SpellName(L.volatile_anomaly)), L.volatile_anomaly_icon)
-		self:Bar("volatile_anomaly", 12, self:SpellName(L.volatile_anomaly), L.volatile_anomaly_icon)
+		self:Bar("volatile_anomaly", 12, L.volatile_anomaly, L.volatile_anomaly_icon)
 		timer = self:ScheduleTimer(nextAdd, 12, self)
 	end
 
 	function mod:IntermissionStart(args)
 		self:Message("stages", "Neutral", nil, CL.intermission, false)
 		self:Bar("stages", 65, CL.intermission, "spell_arcane_blast")
-		self:Bar("volatile_anomaly", 14, self:SpellName(L.volatile_anomaly), L.volatile_anomaly_icon)
+		self:Bar("volatile_anomaly", 14, L.volatile_anomaly, L.volatile_anomaly_icon)
 		self:ScheduleTimer(nextAdd, 14, self)
 	end
 
