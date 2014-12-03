@@ -53,8 +53,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{143834, "TANK_HEALER"}, {158134, "ICON", "SAY", "FLASH"}, 158093, 158385,
-		{158521, "TANK_HEALER"}, {167200, "TANK"}, 157943, 158057, 158200, {158241, "FLASH"}, {163372, "FLASH", "PROXIMITY"}, "custom_off_volatility_marker",
+		{143834, "TANK"}, {158134, "ICON", "SAY", "FLASH"}, 158093, 158385,
+		{158521, "TANK"}, {167200, "TANK"}, 157943, 158057, 158200, {158241, "FLASH"}, {163372, "FLASH", "PROXIMITY"}, "custom_off_volatility_marker",
 		"berserk", "bosskill"
 	}, {
 		[143834] = -9595, -- Pol
@@ -107,8 +107,10 @@ end
 -- Pol
 
 function mod:ShieldBash(args)
-	self:Message(args.spellId, "Urgent")
-	self:CDBar(args.spellId, 23)
+	if UnitDetailedThreatSituation("player", GetBossUnit(args.sourceGUID)) or not self:Tank() then
+		self:Message(args.spellId, "Urgent")
+		self:CDBar(args.spellId, 23)
+	end
 end
 
 function mod:ShieldCharge(args)
@@ -163,8 +165,10 @@ function mod:ArcaneWound(args)
 end
 
 function mod:DoubleSlash(args)
-	self:Message(args.spellId, "Attention")
-	--self:CDBar(args.spellId, 25) -- all over the place 10-34s
+	if UnitDetailedThreatSituation("player", GetBossUnit(args.sourceGUID)) or not self:Tank() then
+		self:Message(args.spellId, "Attention")
+		self:CDBar(args.spellId, 28) -- XXX all over the place
+	end
 end
 
 function mod:Whirlwind(args)
@@ -180,7 +184,7 @@ end
 function mod:Quake(args)
 	quakeCount = quakeCount + 1
 	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(CL.count:format(args.spellName, quakeCount)))
-	self:CDBar(158057, 56) -- Enfeebling Roar
+	self:CDBar(158057, 66) -- Enfeebling Roar
 end
 
 function mod:QuakeChannel(args)
