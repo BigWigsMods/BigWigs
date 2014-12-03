@@ -86,9 +86,9 @@ function mod:OnEngage()
 	--self:CDBar(162346, 6) -- Crystalline Barrage
 	self:CDBar("adds", 11, -10061, L.earthwarper_icon) -- Earthwarper
 	self:CDBar("adds", 21, -10062, L.berserker_icon) -- Berserker
-	
+
 	if not self:LFR() then
-		self:Berserk(480)
+		self:Berserk(600)
 	end
 end
 
