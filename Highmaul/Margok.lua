@@ -201,15 +201,15 @@ end
 do
 	local timer = nil
 	local function nextAdd(self)
-		self:Message("volatile_anomaly", "Attention", "Info", CL.incoming:format(L.volatile_anomaly), L.volatile_anomaly_icon)
-		self:Bar("volatile_anomaly", 12, L.volatile_anomaly, L.volatile_anomaly_icon)
+		self:Message("volatile_anomaly", "Attention", "Info", CL.incoming:format(self:SpellName(L.volatile_anomaly)), L.volatile_anomaly_icon)
+		self:Bar("volatile_anomaly", 12, self:SpellName(L.volatile_anomaly), L.volatile_anomaly_icon)
 		timer = self:ScheduleTimer(nextAdd, 12, self)
 	end
 
 	function mod:IntermissionStart(args)
 		self:Message("stages", "Neutral", nil, CL.intermission, false)
 		self:Bar("stages", 65, CL.intermission, "spell_arcane_blast")
-		self:Bar("volatile_anomaly", 14, L.volatile_anomaly, L.volatile_anomaly_icon)
+		self:Bar("volatile_anomaly", 14, self:SpellName(L.volatile_anomaly), L.volatile_anomaly_icon)
 		self:ScheduleTimer(nextAdd, 14, self)
 	end
 
