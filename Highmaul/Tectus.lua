@@ -52,7 +52,7 @@ function mod:GetOptions()
 	return {
 		{162894, "TANK"}, {162892, "TANK"}, 162968,
 		163312,
-		{162288, "TANK"}, {162346, "FLASH"}, "custom_off_barrage_marker", 162475, "adds", "bosskill",
+		{162288, "TANK"}, {162346, "FLASH"}, "custom_off_barrage_marker", 162475, "adds", "berserk", "bosskill",
 	}, {
 		[162894] = -10061, -- Earthwarper
 		[163312] = -10062, -- Berserker
