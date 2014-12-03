@@ -145,7 +145,7 @@ end
 do
 	local list, scheduled = mod:NewTargetList(), nil
 	local function warn(spellId)
-		mod:TargetMessage(spellId, list, "Attention")
+		mod:TargetMessage(spellId, list, "Positive")
 		scheduled = nil
 	end
 	function mod:CausticEnergy(args)
