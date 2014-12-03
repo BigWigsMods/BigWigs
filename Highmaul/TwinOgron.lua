@@ -173,7 +173,7 @@ end
 
 function mod:Whirlwind(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 60)
+	self:CDBar(args.spellId, 100)
 end
 
 function mod:EnfeeblingRoar(args)
