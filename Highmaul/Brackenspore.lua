@@ -93,12 +93,12 @@ do
 	local prevBoss = 0
 	function mod:CreepingMossHeal(args)
 		local t = GetTime()
-		if self:Tank() and not self:LFR() and t-prev > 2 then
+		if self:Tank() and not self:LFR() then
 			local mobId = self:MobId(args.destGUID)
-			if mobId == 78491 then -- Brackenspore
+			if t-prevBoss > 2 and mobId == 78491 then -- Brackenspore
 				self:Message(args.spellId, "Important", "Info", L.creeping_moss_boss_heal)
 				prevBoss = t
-			elseif mobId == 79092 then -- Fungal Flesh-Eater
+			elseif t-prevAdd > 2 and mobId == 79092 then -- Fungal Flesh-Eater
 				self:Message(args.spellId, "Important", "Info", L.creeping_moss_add_heal)
 				prevAdd = t
 			end
