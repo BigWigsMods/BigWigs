@@ -98,7 +98,7 @@ do
 			if mobId == 78491 then -- Brackenspore
 				self:Message(args.spellId, "Important", "Info", L.creeping_moss_boss_heal)
 				prevBoss = t
-			elseif or mobId == 79092 then -- Fungal Flesh-Eater
+			elseif mobId == 79092 then -- Fungal Flesh-Eater
 				self:Message(args.spellId, "Important", "Info", L.creeping_moss_add_heal)
 				prevAdd = t
 			end
