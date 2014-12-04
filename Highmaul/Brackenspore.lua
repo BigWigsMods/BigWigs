@@ -22,7 +22,7 @@ if L then
 	L.mind_fungus_icon = "inv_mushroom_10"
 
 	L.flesh_eater = ("{-9995} (%s)"):format(CL.big_add) -- Fungul Flesh-Eater
-	L.flesh_eater_desc = -9995
+	L.flesh_eater_desc = -9997 -- Flesh Eater
 	L.flesh_eater_icon = "Ability_Creature_Disease_02"
 
 	L.living_mushroom = -9989 -- Living Mushroom
@@ -100,7 +100,7 @@ do
 				self:Message(args.spellId, "Important", "Info", L.creeping_moss_boss_heal)
 				prevBoss = t
 			elseif t-prevAdd > 2 and mobId == 79092 then -- Fungal Flesh-Eater
-				self:Message(args.spellId, "Important", "Info", L.creeping_moss_add_heal)
+				self:Message(args.spellId, "Important", nil, L.creeping_moss_add_heal)
 				prevAdd = t
 			end
 		end
