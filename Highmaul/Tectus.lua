@@ -88,7 +88,7 @@ function mod:OnEngage()
 	self:CDBar("adds", 21, -10062, L.berserker_icon) -- Berserker
 
 	if not self:LFR() then
-		self:Berserk(600)
+		self:Berserk(self:Mythic() and 480 or 600)
 	end
 end
 
