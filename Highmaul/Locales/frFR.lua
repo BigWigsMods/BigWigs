@@ -1,21 +1,21 @@
 local L = BigWigs:NewBossLocale("Kargath Bladefist", "frFR")
 if not L then return end
 if L then
-	--L.blade_dance_bar = "Dancing"
+	L.blade_dance_bar = "Danse"
 end
 
 L = BigWigs:NewBossLocale("The Butcher", "frFR")
 if L then
-	--L.adds_multiple = "Adds x%d"
+	L.adds_multiple = "Adds x%d"
 end
 
 L = BigWigs:NewBossLocale("Tectus", "frFR")
 if L then
-	--L.earthwarper_trigger1 = "Yjj'rmr" -- Yjj'rmr... Xzzolos...
-	--L.earthwarper_trigger2 = "Yes, Tectus" -- Yes, Tectus. Bend to... our master's... will....
-	--L.earthwarper_trigger3 = "You do not understand!" -- You do not understand! This one must not....
-	--L.berserker_trigger1 = "MASTER!" -- MASTER! I COME FOR YOU!
-	--L.berserker_trigger2 = "Kral'ach" --Kral'ach.... The darkness speaks.... A VOICE!
+	L.earthwarper_trigger1 = "Yjj'rmr" -- Yjj'rmr... Xzzolos... -- à vérifier
+	L.earthwarper_trigger2 = "Oui, Tectus" -- Yes, Tectus. Bend to... our master's... will.... -- à vérifier
+	L.earthwarper_trigger3 = "Vous ne comprenez pas !" -- You do not understand! This one must not.... -- à vérifier
+	L.berserker_trigger1 = "MAÎTRE !" -- MASTER! I COME FOR YOU! -- à vérifier
+	L.berserker_trigger2 = "Kral'ach" --Kral'ach.... The darkness speaks.... A VOICE! -- à vérifier
 	--L.berserker_trigger3 = "Graaagh!" --Graaagh! KAHL...  AHK... RAAHHHH!
 
 	L.tectus = "Tectus"
@@ -30,8 +30,8 @@ end
 
 L = BigWigs:NewBossLocale("Brackenspore", "frFR")
 if L then
-	--L.creeping_moss_boss_heal = "Mousse rampante sous le BOSS (soigne)"
-	--L.creeping_moss_add_heal = "Moss under BIG ADD (healing)"
+	L.creeping_moss_boss_heal = "Mousse sous le BOSS (soigne)"
+	L.creeping_moss_add_heal = "Mousse sous le MANGE-CHAIR (soigne)"
 end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "frFR")
@@ -42,15 +42,15 @@ end
 
 L = BigWigs:NewBossLocale("Ko'ragh", "frFR")
 if L then
-	--L.suppression_field_trigger1 = "Quiet!"
-	--L.suppression_field_trigger2 = "I will tear you in half!"
-	--L.suppression_field_trigger3 = "I will crush you!"
-	--L.suppression_field_trigger4 = "Silence!"
+	L.suppression_field_trigger1 = "Taisez-vous !" -- à vérifier
+	L.suppression_field_trigger2 = "Je vous réduirai en pièces !" -- à vérifier
+	L.suppression_field_trigger3 = "Je vous écraserai !" -- à vérifier
+	L.suppression_field_trigger4 = "Silence !" -- à vérifier
 
 	L.fire_bar = "Tout le monde explose !"
 
-	--L.custom_off_fel_marker = "Expel Magic: Fel Marker"
-	--L.custom_off_fel_marker_desc = "Mark Expel Magic: Fel targets with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_fel_marker = "Marquage Projection de magie : Gangrène"
+	L.custom_off_fel_marker_desc = "Marque les cibles de Projection de magie : Gangrène avec {rt1}{rt2}{rt3}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "frFR")
