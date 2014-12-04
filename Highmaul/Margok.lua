@@ -37,7 +37,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{159515, "TANK"}, 156238, 156467, 156471, {158605, "ICON", "PROXIMITY", "FLASH", "SAY"}, 157349,
+		{159515, "TANK"}, {156238, "ICON"}, 156467, 156471, {158605, "ICON", "PROXIMITY", "FLASH", "SAY"}, 157349,
 		"volatile_anomaly",
 		{157801, "DISPEL"}, {157763, "FLASH"}, "custom_off_fixate_marker",
 		{158553, "TANK"}, {158563, "TANK"},
@@ -141,8 +141,11 @@ end
 function mod:ArcaneWrathApplied(args)
 	-- custom marking? replication makes it geometric so after three jumps we'd be capped
 	-- also might be worth doing a proximity at some point as the jump range lowers (200->100->50->25->13)
+	if args.spellId ~= 164006 then -- Replication
+		self:SecondaryIcon(156238, args.destName)
+	end
 	if self:Me(args.destGUID) then
-		self:Message(156238, "Personal", "Alarm", CL.you:format(self:SpellName(156238)))
+		self:Message(156238, "Personal", "Alarm", CL.you:format(CL.count:format(self:SpellName(156238), args.amount or 1)))
 	end
 end
 
