@@ -22,6 +22,7 @@ if L then
 	L.mind_fungus_icon = "inv_mushroom_10"
 
 	L.flesh_eater = ("{-9995} (%s)"):format(CL.big_add) -- Fungul Flesh-Eater
+	L.flesh_eater_desc = -9995
 	L.flesh_eater_icon = "Ability_Creature_Disease_02"
 
 	L.living_mushroom = -9989 -- Living Mushroom
