@@ -6,17 +6,17 @@ end
 
 L = BigWigs:NewBossLocale("Oregorger", "deDE")
 if L then
-	--L.berserk_trigger = "Oregorger has gone insane from hunger!"
+	L.berserk_trigger = "Der Hunger hat Erzfresser in den Wahnsinn getrieben!"
 
-	--L.shard_explosion = "Explosive Shard Explosion"
-	--L.shard_explosion_desc = "Separate emphasized bar for the explosion."
+	L.shard_explosion = "Explosiver Splitter Explosion"
+	L.shard_explosion_desc = "Separate hervorgehobene Leiste für die Explosion."
 
-	--L.hunger_drive_power = "%dx %s - %d ore to go!"
+	L.hunger_drive_power = "%dx %s - %d Erz übrig!"
 end
 
 L = BigWigs:NewBossLocale("The Blast Furnace", "deDE")
 if L then
-	--L.heat_increased_message = "Heat increased! Blast every %ss"
+	L.heat_increased_message = "Hitze erhöht! Flammenzunge alle %s Sek."
 end
 
 L = BigWigs:NewBossLocale("Hans'gar and Franzok", "deDE")
@@ -26,9 +26,9 @@ end
 
 L = BigWigs:NewBossLocale("Flamebender Ka'graz", "deDE")
 if L then
-	--L.molten_torrent_self = "Molten Torrent on you"
-	--L.molten_torrent_self_desc = "Special countdown when Molten Torrent is on you."
-	--L.molten_torrent_self_bar = "You explode!"
+	L.molten_torrent_self = "Geschmolzene Sturzflut auf Dir"
+	L.molten_torrent_self_desc = "Spezieller Countdown für die Geschmolzene Sturzflut auf Dir."
+	L.molten_torrent_self_bar = "Du explodierst!"
 end
 
 L = BigWigs:NewBossLocale("Kromog", "deDE")
@@ -38,45 +38,45 @@ end
 
 L = BigWigs:NewBossLocale("Beastlord Darmac", "deDE")
 if L then
-	--L.next_mount = "Mounting soon!"
+	L.next_mount = "Aufsitzen bald!"
 
-	--L.custom_off_pinned_marker = "Pin Down marker"
-	--L.custom_off_pinned_marker_desc = "Mark pinning spears with {rt8}{rt7}{rt6}{rt5}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the spears is the fastest way to mark them.|r"
+	L.custom_off_pinned_marker = "Festnageln markieren"
+	L.custom_off_pinned_marker_desc = "Markiert die festnagelnden Speere mit {rt8}{rt7}{rt6}{rt5}{rt4}, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r\n|cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über die Speere.|r"
 
-	--L.custom_off_conflag_marker = "Conflagration marker"
-	--L.custom_off_conflag_marker_desc = "Mark conflagration targets with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_conflag_marker = "Großbrand markieren"
+	L.custom_off_conflag_marker_desc = "Markiert die Ziele von Großbrand mit {rt1}{rt2}{rt3}, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
 end
 
 L = BigWigs:NewBossLocale("Operator Thogar", "deDE")
 if L then
-	--L.cauterizing_bolt_message = "Your focus is casting Cauterizing Bolt!"
+	L.cauterizing_bolt_message = "Dein Fokusziel wirkt Kauterisierender Blitz!"
 
-	--L.trains = "Train warnings"
-	--L.trains_desc = "Shows timers and messages for each lane for when the next train is coming. Lanes are numbered from the boss to the entrace, ie, Boss 1 2 3 4 Entrance."
+	L.trains = "Zugwarnungen"
+	L.trains_desc = "Zeigt Timer und Warnungen für die auf den Gleisen ankommenden Züge an. Die Gleise sind vom Boss zum Eingang folgendermaßen durchnummeriert: Boss 1 2 3 4 Eingang."
 
-	--L.lane = "Lane %s: %s"
-	--L.train = "Train"
-	--L.adds_train = "Adds train"
-	--L.big_add_train = "Big add train"
-	--L.cannon_train = "Cannon train"
-	--L.random = "Random trains"
+	L.lane = "Gleis %s: %s"
+	L.train = "Zug"
+	L.adds_train = "Zug mit Adds"
+	L.big_add_train = "Zug mit großem Add"
+	L.cannon_train = "Kanonen-Zug"
+	L.random = "Zufällige Züge"
 end
 
 L = BigWigs:NewBossLocale("The Iron Maidens", "deDE")
 if L then
-	--L.ship_trigger = "prepares to man the Dreadnaught's Main Cannon!"
+	L.ship_trigger = "bereitet sich darauf vor, die Hauptkanone des Schlachtschiffs zu bemannen!"
 
-	--L.ship = "Jump to Ship: %s"
+	L.ship = "Springe aufs Schiff: %s"
 
-	--L.custom_off_heartseeker_marker = "Bloodsoaked Heartseeker marker"
-	--L.custom_off_heartseeker_marker_desc = "Marks Heartseeker targets with {rt1}{rt2}{rt3}, requires promoted or leader."
+	L.custom_off_heartseeker_marker = "Bluttriefender Herzsucher markieren"
+	L.custom_off_heartseeker_marker_desc = "Markiert die Ziele von Bluttriefender Herzsucher mit {rt1}{rt2}{rt3}, benötigt Leiter oder Assistent."
 
-	--L.power_message = "%d Iron Fury!"
+	L.power_message = "%d Eiserne Wut!"
 end
 
 L = BigWigs:NewBossLocale("Blackhand", "deDE")
 if L then
-	--L.custom_off_markedfordeath_marker = "Marked for Death marker"
-	--L.custom_off_markedfordeath_marker_desc = "Mark Marked for Death targets with {rt1}{rt2}, requires promoted or leader."
+	L.custom_off_markedfordeath_marker = "Todesurteil markieren"
+	L.custom_off_markedfordeath_marker_desc = "Markiert die Ziele von Todesurteil mit {rt1}{rt2}, benötigt Leiter oder Assistent."
 end
 
