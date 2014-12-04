@@ -89,11 +89,11 @@ end
 function mod:OnEngage()
 	quakeCount = 0
 	volatilityCount = 1
-	self:CDBar(158200, 11) -- Quake
+	self:CDBar(158200, 12) -- Quake
 	self:CDBar(143834, 22) -- Shield Bash
 	--self:CDBar(158521, 26) -- Double Slash
 	self:CDBar(158134, 34) -- Shield Charge
-	self:CDBar(157943, 40) -- Whirlwind
+	self:CDBar(157943, 42) -- Whirlwind
 	if self:Mythic() then
 		self:Bar(163372, 65) -- Arcane Volatility
 		self:Berserk(420) -- Mythic time, normal unconfirmed
@@ -159,11 +159,6 @@ end
 
 -- Phemos
 
-function mod:ArcaneWound(args)
-	-- XXX this isn't applied terribly often, buggy or just ment to be a minor annoyance?
-	self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
-end
-
 function mod:DoubleSlash(args)
 	if UnitDetailedThreatSituation("player", GetBossUnit(args.sourceGUID)) or not self:Tank() then
 		self:Message(args.spellId, "Attention")
@@ -171,20 +166,25 @@ function mod:DoubleSlash(args)
 	end
 end
 
+function mod:ArcaneWound(args)
+	-- XXX this isn't applied terribly often, buggy or just ment to be a minor annoyance?
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+end
+
 function mod:Whirlwind(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 100)
+	self:CDBar(158057, 31) -- Enfeebling Roar
 end
 
 function mod:EnfeeblingRoar(args)
 	self:Message(args.spellId, "Attention", "Alert")
-	self:CDBar(158200, 33, CL.count:format(self:SpellName(158200), quakeCount+1)) -- Quake
+	self:CDBar(158200, 31, CL.count:format(self:SpellName(158200), quakeCount+1)) -- Quake
 end
 
 function mod:Quake(args)
 	quakeCount = quakeCount + 1
 	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(CL.count:format(args.spellName, quakeCount)))
-	self:CDBar(158057, 66) -- Enfeebling Roar
+	self:CDBar(157943, 31) -- Whirlwind
 end
 
 function mod:QuakeChannel(args)
