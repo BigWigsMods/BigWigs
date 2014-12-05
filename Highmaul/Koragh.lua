@@ -33,11 +33,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		-- Mythic
+		--[[ Mythic ]]--
 		163472, -- Dominating Power
 		172895, -- Expel Magic: Fel
 		"custom_off_fel_marker",
-		-- General
+		--[[ General ]]--
 		161242, -- Caustic Energy
 		160734, -- Vulnerability
 		{161328, "SAY", "FLASH"}, -- Suppression Field

@@ -53,13 +53,27 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{143834, "TANK"}, {158134, "ICON", "SAY", "FLASH"}, 158093, 158385,
-		{158521, "TANK"}, {167200, "TANK"}, 157943, 158057, 158200, {158241, "FLASH"}, {163372, "FLASH", "PROXIMITY"}, "custom_off_volatility_marker",
-		"berserk", "bosskill"
+		--[[ Pol ]]--
+		{143834, "TANK"}, -- Shield Bash
+		{158134, "ICON", "SAY", "FLASH"}, -- Shield Charge
+		158093, -- Interrupting Shout
+		158385, -- Pulverize
+		--[[ Phemos ]]--
+		{158521, "TANK"}, -- Double Slash
+		{167200, "TANK"}, -- Arcane Wound
+		157943, -- Whirlwind
+		158057, -- Enfeebling Roar
+		158200, -- Quake
+		{158241, "FLASH"}, -- Blaze
+		{163372, "FLASH", "PROXIMITY"}, -- Arcane Volatility
+		"custom_off_volatility_marker",
+		--[[ General ]]--
+		"berserk",
+		"bosskill"
 	}, {
 		[143834] = -9595, -- Pol
 		[158521] = -9590, -- Phemos
-		["berserk"] = "general"
+		berserk = "general"
 	}
 end
 
