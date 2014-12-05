@@ -21,7 +21,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ColossalBlow", 175973)
-	self:Log("SPELL_CAST_START", "Genesis", 175979)
+	self:Log("SPELL_CAST_START", "Genesis", 175979, 169613) -- XXX need to verify only 169613 is used now
 	self:Log("SPELL_CAST_SUCCESS", "GrowMandragora", 176013)
 	self:Log("SPELL_CAST_SUCCESS", "SavageVines", 176001)
 
@@ -44,7 +44,7 @@ end
 
 function mod:Genesis(args)
 	self:Message(args.spellId, "Attention", "Long")
-	self:Bar(args.spellId, 8, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, 17, CL.cast:format(args.spellName))
 end
 
 function mod:GrowMandragora(args)
