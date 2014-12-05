@@ -29,6 +29,6 @@
 ## X-Category: Raid
 ## X-BigWigs-LoadOn-ZoneId: 994
 
-locales.xml
 modules.xml
+locales.xml
 
