@@ -24,6 +24,10 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.volatile_anomaly = -9919 -- Volatile Anomaly
 	L.volatile_anomaly_icon = "spell_arcane_arcane04"
+	
+	L.arcane_wrath = "{156238} ({156225})" -- Arcane Wrath (Branded)
+	L.arcane_wrath_desc = 156238
+	L.arcane_wrath_icon = 156238
 
 	L.custom_off_fixate_marker = "Fixate Marker"
 	L.custom_off_fixate_marker_desc = "Mark Gorian Warmage's Fixate targets with {rt1}{rt2}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
@@ -37,7 +41,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{159515, "TANK"}, {156238, "ICON"}, 156467, 156471, {158605, "ICON", "PROXIMITY", "FLASH", "SAY"}, 157349,
+		{159515, "TANK"}, {"arcane_wrath", "ICON", "SAY"}, 156467, 156471, {158605, "ICON", "PROXIMITY", "FLASH", "SAY"}, 157349,
 		"volatile_anomaly",
 		{157801, "DISPEL"}, {157763, "FLASH"}, "custom_off_fixate_marker",
 		{158553, "TANK"}, {158563, "TANK"},
@@ -55,7 +59,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Phases", "boss1")
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcceleratedAssault", 159515)
 	self:Log("SPELL_CAST_START", "ArcaneWrath", 156238, 163988, 163989, 163990) -- Arcane Wrath, Displacement, Fortification, Replication
-	self:Log("SPELL_AURA_APPLIED", "ArcaneWrathApplied", 156225, 164004, 164005, 164006) -- Branded
+	self:Log("SPELL_AURA_APPLIED", "Branded", 156225, 164004, 164005, 164006) -- Branded
 	self:Log("SPELL_CAST_START", "DestructiveResonance", 156467, 164075, 164076, 164077)
 	self:Log("SPELL_CAST_START", "ArcaneAberration", 156471, 164299, 164301, 164303)
 	self:Log("SPELL_AURA_APPLIED", "MarkOfChaosApplied", 158605, 164176, 164178, 164191)
@@ -75,7 +79,7 @@ function mod:OnEngage()
 	phase = 1
 	mineCount = 1
 	wipe(fixateList)
-	self:Bar(156238, 6) -- Arcane Wrath
+	self:Bar("arcane_wrath", 6, 156238) -- Arcane Wrath
 	self:Bar(156467, 15) -- Destructive Resonance
 	self:Bar(156471, 25) -- Arcane Aberration
 	self:Bar(158605, 35) -- Mark of Chaos
@@ -116,7 +120,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 			self:StopBar(157349) -- Force Nova
 		end
 	elseif spellId == 158012 or spellId == 157964 then -- Power of Fortification, Replication (Phase start)
-		self:CDBar(156238, 8) -- Arcane Wrath
+		self:CDBar("arcane_wrath", 8, 156238) -- Arcane Wrath
 		self:CDBar(156467, 18) -- Destructive Resonance
 		self:CDBar(158605, 28) -- Arcane Aberration
 		self:CDBar(156471, 38) -- Mark of Chaos
@@ -134,18 +138,20 @@ function mod:AcceleratedAssault(args)
 end
 
 function mod:ArcaneWrath(args)
-	self:Message(156238, "Urgent", self:Healer() and "Alert")
-	self:Bar(156238, 50) -- XXX first transform messes with the timer (+5-10s)
+	self:Message("arcane_wrath", "Urgent", self:Healer() and "Alert", 156238)
+	self:Bar("arcane_wrath", 50, 156238) -- XXX first transform messes with the timer (+5-10s)
 end
 
-function mod:ArcaneWrathApplied(args)
+function mod:Branded(args)
 	-- custom marking? replication makes it geometric so after three jumps we'd be capped
 	-- also might be worth doing a proximity at some point as the jump range lowers (200->100->50->25->13)
 	if args.spellId ~= 164006 then -- Replication
-		self:SecondaryIcon(156238, args.destName)
+		self:SecondaryIcon("arcane_wrath", args.destName)
 	end
 	if self:Me(args.destGUID) then
-		self:Message(156238, "Personal", "Alarm", CL.you:format(CL.count:format(self:SpellName(156238), args.amount or 1)))
+		local text = CL.count:format(self:SpellName(156225), args.amount or 1) -- Branded
+		self:Message("arcane_wrath", "Personal", "Alarm", CL.you:format(text), 156238)
+		self:Say(text)
 	end
 end
 
