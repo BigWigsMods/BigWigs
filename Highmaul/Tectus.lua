@@ -96,13 +96,10 @@ end
 -- Event Handlers
 --
 
-do
-	local prev = 0
-	function mod:Accretion(args)
-		local t = GetTime()
-		if self:MobId(args.sourceGUID) ~= 80557 and args.amount > 3 and t-prev > 5 then
-			self:Message(args.spellId, "Attention", nil, CL.count:format(args.spellName, args.amount))
-		end
+function mod:Accretion(args)
+	if self:MobId(args.sourceGUID) ~= 80557 and UnitGUID("target") == args.sourceGUID and args.amount > 3 then
+		local raidIcon = CombatLog_String_GetIcon(args.sourceRaidFlags)
+		self:Message(args.spellId, "Attention", nil, raidIcon..CL.count:format(args.spellName, args.amount))
 	end
 end
 
