@@ -173,18 +173,18 @@ end
 
 function mod:Whirlwind(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(158057, 31) -- Enfeebling Roar
+	self:CDBar(158057, not self:Heroic() and 33 or 31) -- Enfeebling Roar
 end
 
 function mod:EnfeeblingRoar(args)
 	self:Message(args.spellId, "Attention", "Alert")
-	self:CDBar(158200, 31, CL.count:format(self:SpellName(158200), quakeCount+1)) -- Quake
+	self:CDBar(158200, not self:Heroic() and 33 or 31, CL.count:format(self:SpellName(158200), quakeCount+1)) -- Quake
 end
 
 function mod:Quake(args)
 	quakeCount = quakeCount + 1
 	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(CL.count:format(args.spellName, quakeCount)))
-	self:CDBar(157943, 31) -- Whirlwind
+	self:CDBar(157943, not self:Heroic() and 33 or 31) -- Whirlwind
 end
 
 function mod:QuakeChannel(args)
