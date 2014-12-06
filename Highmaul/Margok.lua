@@ -149,7 +149,8 @@ function mod:Branded(args)
 		self:SecondaryIcon("arcane_wrath", args.destName)
 	end
 	if self:Me(args.destGUID) then
-		local text = CL.count:format(self:SpellName(156225), args.amount or 1) -- Branded
+		local _, _, _, amount = UnitDebuff(args.destName, args.spellName)
+		local text = amount > 1 and CL.count:format(self:SpellName(156225), amount) or self:SpellName(156225) -- Branded
 		self:Message("arcane_wrath", "Personal", "Alarm", CL.you:format(text), 156238)
 		self:Say("arcane_wrath", text)
 	end
