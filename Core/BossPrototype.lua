@@ -11,6 +11,7 @@ local type, next, tonumber = type, next, tonumber
 local core = BigWigs
 local C = core.C
 local pName = UnitName("player")
+local hasVoice = GetAddOnEnableState(pName, "BigWigs_Voice") > 0
 local bossUtilityFrame = CreateFrame("Frame")
 local enabledModules = {}
 local allowedEvents = {}
@@ -910,6 +911,9 @@ function boss:Message(key, color, sound, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
 		local textType = type(text)
 		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, sound, icon ~= false and icons[icon or textType == "number" and text or key])
+		if hasVoice and checkFlag(self, key, C.VOICE) then
+			self:SendMessage("BigWigs_Voice", key)
+		end
 	end
 end
 
@@ -974,6 +978,9 @@ do
 				if not checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then wipe(player) return end
 			end
 			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, sound, texture)
+			if hasVoice and sound and checkFlag(self, key, C.VOICE) then
+				self:SendMessage("BigWigs_Voice", key)
+			end
 			wipe(player)
 		else
 			if not player then
@@ -985,11 +992,17 @@ do
 			if UnitIsUnit(player, "player") then
 				if checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then
 					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", sound, texture)
+					if hasVoice and checkFlag(self, key, C.VOICE) then
+						self:SendMessage("BigWigs_Voice", key)
+					end
 				end
 			else
 				if checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
 					-- Change color and remove sound (if not alwaysPlaySound) when warning about effects on other players
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color == "Personal" and "Important" or color, alwaysPlaySound and sound, texture)
+					if hasVoice and alwaysPlaySound and checkFlag(self, key, C.VOICE) then
+						self:SendMessage("BigWigs_Voice", key)
+					end
 				end
 			end
 		end
@@ -1092,6 +1105,9 @@ end
 function boss:PlaySound(key, sound)
 	if not checkFlag(self, key, C.MESSAGE) then return end
 	self:SendMessage("BigWigs_Sound", sound)
+	if hasVoice and checkFlag(self, key, C.VOICE) then
+		self:SendMessage("BigWigs_Voice", key)
+	end
 end
 
 -- Examples of API use in a module:

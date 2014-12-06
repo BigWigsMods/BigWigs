@@ -605,6 +605,8 @@ do
 
 	local defaultToggles = nil
 
+	local hasVoice = GetAddOnEnableState(pName, "BigWigs_Voice") > 0
+
 	local function setupOptions(module)
 		if not C then C = addon.C end
 		if not defaultToggles then
@@ -614,7 +616,7 @@ do
 				proximity = C.PROXIMITY,
 				altpower = C.ALTPOWER,
 			}, {__index = function(self, key)
-				return C.BAR + C.MESSAGE
+				return C.BAR + C.MESSAGE + (hasVoice and C.VOICE or 0)
 			end})
 		end
 

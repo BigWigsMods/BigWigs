@@ -117,6 +117,8 @@ L.TANK_HEALER = "Tank & Healer Only"
 L.TANK_HEALER_desc = "Some abilities are only important for tanks and healers. If you want to see warnings for this ability regardless of your role, disable this option."
 L.DISPEL = "Dispeller Only"
 L.DISPEL_desc = "If you want to see warnings for this ability even when you cannot dispel it, disable this option."
+L.VOICE = "Voice"
+L.VOICE_desc = "If you have a voice addon installed, this option will enable it to play a sound file that speaks this warning out loud for you."
 
 L.advanced = "Advanced options"
 L.back = "<< Back"
