@@ -104,7 +104,7 @@ function mod:Accretion(args)
 end
 
 function mod:CrystallineBarrage(args)
-	--self:CDBar(args.spellId, 20.5)
+	--self:CDBar(args.spellId, 30.5)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:Flash(args.spellId)

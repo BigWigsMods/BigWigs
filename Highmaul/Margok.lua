@@ -151,7 +151,7 @@ function mod:Branded(args)
 	if self:Me(args.destGUID) then
 		local text = CL.count:format(self:SpellName(156225), args.amount or 1) -- Branded
 		self:Message("arcane_wrath", "Personal", "Alarm", CL.you:format(text), 156238)
-		self:Say(text)
+		self:Say("arcane_wrath", text, true)
 	end
 end
 
