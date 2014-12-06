@@ -387,7 +387,6 @@ function options:OnEnable()
 		self:Register("BigWigs_PluginRegistered", name, module)
 	end
 
-	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 
