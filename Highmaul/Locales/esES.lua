@@ -30,8 +30,8 @@ end
 
 L = BigWigs:NewBossLocale("Brackenspore", "esES")
 if L then
-	--L.creeping_moss_boss_heal = "Musgo trepador debajo del jefe (sanando)"
-	--L.creeping_moss_add_heal = "Moss under BIG ADD (healing)"
+	L.creeping_moss_boss_heal = "Musgo debajo del jefe (sanando)"
+	L.creeping_moss_add_heal = "Musgo debajo del ADD GRANDE (sanando)"
 end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "esES")
@@ -42,10 +42,10 @@ end
 
 L = BigWigs:NewBossLocale("Ko'ragh", "esES")
 if L then
-	--L.suppression_field_trigger1 = "Quiet!"
-	--L.suppression_field_trigger2 = "I will tear you in half!"
-	--L.suppression_field_trigger3 = "I will crush you!"
-	--L.suppression_field_trigger4 = "Silence!"
+	L.suppression_field_trigger1 = "¡Callad!"
+	L.suppression_field_trigger2 = "¡Os partiré en dos!"
+	L.suppression_field_trigger3 = "¡Os aplastaré!"
+	L.suppression_field_trigger4 = "¡Silencio!"
 
 	L.fire_bar = "Todo el mundo explota!"
 
