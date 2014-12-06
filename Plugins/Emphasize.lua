@@ -31,116 +31,116 @@ plugin.defaultDB = {
 }
 
 do
-	local pluginOptions = nil
-	function plugin:GetPluginConfig()
-		if not pluginOptions then
-			pluginOptions = {
-				type = "group",
-				get = function(info) return plugin.db.profile[info[#info]] end,
+	local disabled = function() return plugin.db.profile.disabled end
+	plugin.pluginOptions = {
+		type = "group",
+		name = L.superEmphasize,
+		get = function(info) return plugin.db.profile[info[#info]] end,
+		set = function(info, value)
+			plugin.db.profile[info[#info]] = value
+			if plugin.anchorEmphasizedCountdownText then
+				plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline)
+			end
+		end,
+		args = {
+			heading = {
+				type = "description",
+				name = L.superEmphasizeDesc,
+				order = 0.1,
+				width = "full",
+				--fontSize = "medium",
+			},
+			disabled = {
+				type = "toggle",
+				name = L.disabled,
+				desc = L.superEmphasizeDisableDesc,
+				order = 0.5,
+				width = "full",
+			},
+			font = {
+				type = "select",
+				name = L.font,
+				order = 1,
+				values = media:List("font"),
+				itemControl = "DDI-Font",
+				get = function()
+					for i, v in next, media:List("font") do
+						if v == plugin.db.profile.font then return i end
+					end
+				end,
 				set = function(info, value)
-					plugin.db.profile[info[#info]] = value
+					local list = media:List("font")
+					plugin.db.profile.font = list[value]
 					if plugin.anchorEmphasizedCountdownText then
 						plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline)
 					end
 				end,
-				disabled = function() return plugin.db.profile.disabled end,
-				args = {
-
-					heading = {
-						type = "description",
-						name = L.superEmphasizeDesc,
-						order = 0.1,
-						width = "full",
-						--fontSize = "medium",
-					},
-					disabled = {
-						type = "toggle",
-						name = L.disabled,
-						desc = L.superEmphasizeDisableDesc,
-						order = 0.5,
-						width = "full",
-						disabled = false,
-					},
-					font = {
-						type = "select",
-						name = L.font,
-						order = 1,
-						values = media:List("font"),
-						itemControl = "DDI-Font",
-						get = function()
-							for i, v in next, media:List("font") do
-								if v == plugin.db.profile.font then return i end
-							end
-						end,
-						set = function(info, value)
-							local list = media:List("font")
-							plugin.db.profile.font = list[value]
-							if plugin.anchorEmphasizedCountdownText then
-								plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline)
-							end
-						end,
-					},
-					outline = {
-						type = "select",
-						name = L.outline,
-						order = 2,
-						values = {
-							NONE = L.none,
-							OUTLINE = L.thin,
-							THICKOUTLINE = L.thick,
-						},
-					},
-					fontSize = {
-						type = "range",
-						name = L.fontSize,
-						order = 3,
-						max = 40,
-						min = 8,
-						step = 1,
-						width = "full",
-					},
-					fontColor = {
-						order = 4,
-						type = "color",
-						name = L.fontColor,
-						get = function(info)
-							return plugin.db.profile[info[#info]].r, plugin.db.profile[info[#info]].g, plugin.db.profile[info[#info]].b
-						end,
-						set = function(info, r, g, b)
-							plugin.db.profile[info[#info]].r, plugin.db.profile[info[#info]].g, plugin.db.profile[info[#info]].b = r, g, b
-							if plugin.anchorEmphasizedCountdownText then
-								plugin.anchorEmphasizedCountdownText:SetTextColor(r, g, b)
-							end
-						end,
-					},
-					monochrome = {
-						type = "toggle",
-						name = L.monochrome,
-						desc = L.monochromeDesc,
-						order = 5,
-					},
-					newline = {
-						type = "description",
-						name = "\n",
-						order = 5.5,
-					},
-					upper = {
-						type = "toggle",
-						name = L.uppercase,
-						desc = L.uppercaseDesc,
-						order = 6,
-					},
-					countdown = {
-						type = "toggle",
-						name = L.countdown,
-						desc = L.countdownDesc,
-						order = 7,
-					},
+				disabled = disabled,
+			},
+			outline = {
+				type = "select",
+				name = L.outline,
+				order = 2,
+				values = {
+					NONE = L.none,
+					OUTLINE = L.thin,
+					THICKOUTLINE = L.thick,
 				},
-			}
-		end
-		return pluginOptions
-	end
+				disabled = disabled,
+			},
+			fontSize = {
+				type = "range",
+				name = L.fontSize,
+				order = 3,
+				max = 40,
+				min = 8,
+				step = 1,
+				width = "full",
+				disabled = disabled,
+			},
+			fontColor = {
+				order = 4,
+				type = "color",
+				name = L.fontColor,
+				get = function(info)
+					return plugin.db.profile[info[#info]].r, plugin.db.profile[info[#info]].g, plugin.db.profile[info[#info]].b
+				end,
+				set = function(info, r, g, b)
+					plugin.db.profile[info[#info]].r, plugin.db.profile[info[#info]].g, plugin.db.profile[info[#info]].b = r, g, b
+					if plugin.anchorEmphasizedCountdownText then
+						plugin.anchorEmphasizedCountdownText:SetTextColor(r, g, b)
+					end
+				end,
+				disabled = disabled,
+			},
+			monochrome = {
+				type = "toggle",
+				name = L.monochrome,
+				desc = L.monochromeDesc,
+				order = 5,
+				disabled = disabled,
+			},
+			newline = {
+				type = "description",
+				name = "\n",
+				order = 5.5,
+			},
+			upper = {
+				type = "toggle",
+				name = L.uppercase,
+				desc = L.uppercaseDesc,
+				order = 6,
+				disabled = disabled,
+			},
+			countdown = {
+				type = "toggle",
+				name = L.countdown,
+				desc = L.countdownDesc,
+				order = 7,
+				disabled = disabled,
+			},
+		},
+	}
 end
 
 local function updateProfile()

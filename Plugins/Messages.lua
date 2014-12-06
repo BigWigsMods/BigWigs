@@ -95,22 +95,32 @@ LibStub("LibSink-2.0"):Embed(fakeEmphasizeMessageAddon)
 
 plugin.pluginOptions = {
 	type = "group",
-	name = L.output,
+	name = "Messages",
 	childGroups = "tab",
 	args = {
-		normal = plugin:GetSinkAce3OptionsDataTable(),
-		emphasized = fakeEmphasizeMessageAddon:GetSinkAce3OptionsDataTable(),
+		output = {
+			type = "group",
+			name = L.output,
+			order = 2,
+			childGroups = "tab",
+			args = {
+				normal = plugin:GetSinkAce3OptionsDataTable(),
+				emphasized = fakeEmphasizeMessageAddon:GetSinkAce3OptionsDataTable(),
+			},
+		}
 	},
 }
-plugin.pluginOptions.args.normal.name = L.normalMessages
-plugin.pluginOptions.args.normal.order = 1
-plugin.pluginOptions.args.emphasized.name = L.emphasizedMessages
-plugin.pluginOptions.args.emphasized.order = 2
+plugin.pluginOptions.args.output.args.normal.name = L.normalMessages
+plugin.pluginOptions.args.output.args.normal.order = 1
+plugin.pluginOptions.args.output.args.normal.disabled = nil
+plugin.pluginOptions.args.output.args.emphasized.name = L.emphasizedMessages
+plugin.pluginOptions.args.output.args.emphasized.order = 2
+plugin.pluginOptions.args.output.args.emphasized.disabled = nil
 -- Kill chat outputs
-plugin.pluginOptions.args.normal.args.Channel = nil
-plugin.pluginOptions.args.emphasized.args.Channel = nil
-plugin.pluginOptions.args.normal.args.ChatFrame = nil
-plugin.pluginOptions.args.emphasized.args.ChatFrame = nil
+plugin.pluginOptions.args.output.args.normal.args.Channel = nil
+plugin.pluginOptions.args.output.args.emphasized.args.Channel = nil
+plugin.pluginOptions.args.output.args.normal.args.ChatFrame = nil
+plugin.pluginOptions.args.output.args.emphasized.args.ChatFrame = nil
 
 local function updateProfile()
 	db = plugin.db.profile
@@ -338,123 +348,120 @@ do
 			font:ClearAllPoints()
 		end
 	end
-	local pluginOptions = nil
-	function plugin:GetPluginConfig()
-		if not pluginOptions then
-			pluginOptions = {
-				type = "group",
-				get = function(info) return plugin.db.profile[info[#info]] end,
-				set = function(info, value) plugin.db.profile[info[#info]] = value end,
-				args = {
-					font = {
-						type = "select",
-						name = L.font,
-						order = 1,
-						values = media:List("font"),
-						itemControl = "DDI-Font",
-						get = function()
-							for i, v in next, media:List("font") do
-								if v == plugin.db.profile.font then return i end
-							end
-						end,
-						set = function(info, value)
-							local list = media:List("font")
-							plugin.db.profile.font = list[value]
-						end,
-					},
-					outline = {
-						type = "select",
-						name = L.outline,
-						order = 2,
-						values = {
-							NONE = L.none,
-							OUTLINE = L.thin,
-							THICKOUTLINE = L.thick,
-						},
-					},
-					align = {
-						type = "select",
-						name = L.align,
-						values = {
-							LEFT = L.left,
-							CENTER = L.center,
-							RIGHT = L.right,
-						},
-						width = "half",
-						style = "radio",
-						order = 3,
-						set = updateAnchor,
-					},
-					fontSize = {
-						type = "range",
-						name = L.fontSize,
-						order = 4,
-						max = 40,
-						min = 8,
-						step = 1,
-						width = "full",
-					},
-					usecolors = {
-						type = "toggle",
-						name = L.useColors,
-						desc = L.useColorsDesc,
-						order = 5,
-					},
-					useicons = {
-						type = "toggle",
-						name = L.useIcons,
-						desc = L.useIconsDesc,
-						order = 6,
-					},
-					growUpwards = {
-						type = "toggle",
-						name = L.growingUpwards,
-						desc = L.growingUpwardsDesc,
-						order = 7,
-						set = updateAnchor,
-					},
-					monochrome = {
-						type = "toggle",
-						name = L.monochrome,
-						desc = L.monochromeDesc,
-						order = 8,
-					},
-				--	classcolor = {
-				--		type = "toggle",
-				--		name = L.classColors,
-				--		desc = L.classColorsDesc,
-				--		order = 9,
-				--	},
-					newline1 = {
-						type = "description",
-						name = "\n",
-						order = 10,
-					},
-					displaytime = {
-						type = "range",
-						name = L.displayTime,
-						desc = L.displayTimeDesc,
-						min = 1,
-						max = 30,
-						step = 0.5,
-						order = 11,
-						set = updateMessageTimers,
-					},
-					fadetime = {
-						type = "range",
-						name = L.fadeTime,
-						desc = L.fadeTimeDesc,
-						min = 1,
-						max = 30,
-						step = 0.5,
-						order = 12,
-						set = updateMessageTimers,
-					},
+
+	plugin.pluginOptions.args.more = {
+		type = "group",
+		name = "Custom",
+		order = 1,
+		get = function(info) return plugin.db.profile[info[#info]] end,
+		set = function(info, value) plugin.db.profile[info[#info]] = value end,
+		args = {
+			font = {
+				type = "select",
+				name = L.font,
+				order = 1,
+				values = media:List("font"),
+				itemControl = "DDI-Font",
+				get = function()
+					for i, v in next, media:List("font") do
+						if v == plugin.db.profile.font then return i end
+					end
+				end,
+				set = function(info, value)
+					local list = media:List("font")
+					plugin.db.profile.font = list[value]
+				end,
+			},
+			outline = {
+				type = "select",
+				name = L.outline,
+				order = 2,
+				values = {
+					NONE = L.none,
+					OUTLINE = L.thin,
+					THICKOUTLINE = L.thick,
 				},
-			}
-		end
-		return pluginOptions
-	end
+			},
+			align = {
+				type = "select",
+				name = L.align,
+				values = {
+					LEFT = L.left,
+					CENTER = L.center,
+					RIGHT = L.right,
+				},
+				width = "half",
+				style = "radio",
+				order = 3,
+				set = updateAnchor,
+			},
+			fontSize = {
+				type = "range",
+				name = L.fontSize,
+				order = 4,
+				max = 40,
+				min = 8,
+				step = 1,
+				width = "full",
+			},
+			usecolors = {
+				type = "toggle",
+				name = L.useColors,
+				desc = L.useColorsDesc,
+				order = 5,
+			},
+			useicons = {
+				type = "toggle",
+				name = L.useIcons,
+				desc = L.useIconsDesc,
+				order = 6,
+			},
+			growUpwards = {
+				type = "toggle",
+				name = L.growingUpwards,
+				desc = L.growingUpwardsDesc,
+				order = 7,
+				set = updateAnchor,
+			},
+			monochrome = {
+				type = "toggle",
+				name = L.monochrome,
+				desc = L.monochromeDesc,
+				order = 8,
+			},
+		--	classcolor = {
+		--		type = "toggle",
+		--		name = L.classColors,
+		--		desc = L.classColorsDesc,
+		--		order = 9,
+		--	},
+			newline1 = {
+				type = "description",
+				name = "\n",
+				order = 10,
+			},
+			displaytime = {
+				type = "range",
+				name = L.displayTime,
+				desc = L.displayTimeDesc,
+				min = 1,
+				max = 30,
+				step = 0.5,
+				order = 11,
+				set = updateMessageTimers,
+			},
+			fadetime = {
+				type = "range",
+				name = L.fadeTime,
+				desc = L.fadeTimeDesc,
+				min = 1,
+				max = 30,
+				step = 0.5,
+				order = 12,
+				set = updateMessageTimers,
+			},
+		},
+	}
 end
 
 -------------------------------------------------------------------------------

@@ -520,299 +520,294 @@ local clickOptions = {
 
 local function shouldDisable() return not plugin.db.profile.interceptMouse end
 
-plugin.subPanelOptions = {
-	key = "Big Wigs: Clickable Bars",
-	name = L.clickableBars,
-	options = {
-		name = L.clickableBars,
-		type = "group",
-		childGroups = "tab",
-		get = function(i) return plugin.db.profile[i[#i]] end,
-		set = function(i, value)
-			local key = i[#i]
-			plugin.db.profile[key] = value
-			if key == "interceptMouse" then
-				plugin:RefixClickIntercepts()
-			end
-		end,
-		args = {
-			heading = {
-				type = "description",
-				name = L.clickableBarsDesc,
-				order = 1,
-				width = "full",
-				fontSize = "medium",
-			},
-			interceptMouse = {
-				type = "toggle",
-				name = L.enable,
-				desc = L.interceptMouseDesc,
-				order = 2,
-				width = "full",
-			},
-			onlyInterceptOnKeypress = {
-				type = "toggle",
-				name = L.modifierKey,
-				desc = L.modifierKeyDesc,
-				order = 3,
-				disabled = shouldDisable,
-			},
-			interceptKey = {
-				type = "select",
-				name = L.modifier,
-				desc = L.modifierDesc,
-				values = {
-					CTRL = CTRL_KEY_TEXT or "Ctrl",
-					ALT = ALT_KEY or "Alt",
-					SHIFT = SHIFT_KEY_TEXT or "Shift",
+plugin.pluginOptions = {
+	type = "group",
+	name = "Bars",
+	childGroups = "tab",
+	args = {
+		custom = {
+			type = "group",
+			name = "Custom",
+			order = 1,
+			get = function(info)
+				local key = info[#info]
+				if key == "texture" then
+					for i, v in next, media:List("statusbar") do
+						if v == db.texture then return i end
+					end
+				elseif key == "font" then
+					for i, v in next, media:List("font") do
+						if v == db.font then return i end
+					end
+				end
+				return db[key]
+			end,
+			set = function(info, value)
+				local key = info[#info]
+				if key == "texture" then
+					local list = media:List("statusbar")
+					db.texture = list[value]
+				elseif key == "font" then
+					local list = media:List("font")
+					db.font = list[value]
+				elseif key == "barStyle" then
+					plugin:SetBarStyle(value)
+				else
+					db[key] = value
+				end
+			end,
+			args = {
+				font = {
+					type = "select",
+					name = L.font,
+					order = 1,
+					values = media:List("font"),
+					--width = "full",
+					itemControl = "DDI-Font",
 				},
-				order = 4,
-				disabled = function()
-					return not plugin.db.profile.interceptMouse or not plugin.db.profile.onlyInterceptOnKeypress
-				end,
+				outline = {
+					type = "select",
+					name = L.outline,
+					order = 2,
+					values = {
+						NONE = L.none,
+						OUTLINE = L.thin,
+						THICKOUTLINE = L.thick,
+					},
+					--width = "full",
+				},
+				fontSize = {
+					type = "range",
+					name = L.fontSize,
+					order = 3,
+					max = 40,
+					min = 6,
+					step = 1,
+					--width = "full",
+				},
+				monochrome = {
+					type = "toggle",
+					name = L.monochrome,
+					desc = L.monochromeDesc,
+					order = 3.5,
+				},
+				texture = {
+					type = "select",
+					name = L.texture,
+					order = 4,
+					values = media:List("statusbar"),
+					--width = "full",
+					itemControl = "DDI-Statusbar",
+				},
+				barStyle = {
+					type = "select",
+					name = L.style,
+					order = 5,
+					values = barStyleRegister,
+					--width = "full",
+				},
+				align = {
+					type = "select",
+					name = L.align,
+					values = {
+						LEFT = L.left,
+						CENTER = L.center,
+						RIGHT = L.right,
+					},
+					style = "radio",
+					width = "half",
+					order = 6,
+				},
+				icon = {
+					type = "toggle",
+					name = L.icon,
+					desc = L.iconDesc,
+					order = 7,
+					width = "half",
+				},
+				time = {
+					type = "toggle",
+					name = L.time,
+					desc = L.timeDesc,
+					order = 8,
+					width = "half",
+				},
+				fill = {
+					type = "toggle",
+					name = L.fill,
+					desc = L.fillDesc,
+					order = 9,
+					width = "half",
+					set = function(info, value)
+						local key = info[#info]
+						db[key] = value
+						-- XXX broaden this to all options
+						for k in next, normalAnchor.bars do
+							k:SetFill(value)
+						end
+						for k in next, emphasizeAnchor.bars do
+							k:SetFill(value)
+						end
+					end,
+				},
 			},
-			left = {
-				type = "group",
-				name = KEY_BUTTON1 or "Left",
-				order = 10,
-				args = clickOptions,
-				disabled = shouldDisable,
-				get = function(info) return plugin.db.profile.LeftButton[info[#info]] end,
-				set = function(info, value) plugin.db.profile.LeftButton[info[#info]] = value end,
+		},
+		normal = {
+			type = "group",
+			name = L.regularBars,
+			width = "full",
+			args = {
+				growup = {
+					type = "toggle",
+					name = L.growingUpwards,
+					desc = L.growingUpwardsDesc,
+					order = 1,
+				},
+				scale = {
+					type = "range",
+					name = L.scale,
+					min = 0.2,
+					max = 2.0,
+					step = 0.1,
+					order = 2,
+					width = "full",
+				},
 			},
-			middle = {
-				type = "group",
-				name = KEY_BUTTON3 or "Middle",
-				order = 11,
-				args = clickOptions,
-				disabled = shouldDisable,
-				get = function(info) return plugin.db.profile.MiddleButton[info[#info]] end,
-				set = function(info, value) plugin.db.profile.MiddleButton[info[#info]] = value end,
+			order = 2,
+		},
+		emphasize = {
+			type = "group",
+			name = L.emphasizedBars,
+			width = "full",
+			args = {
+				emphasize = {
+					type = "toggle",
+					name = L.enable,
+					order = 1,
+					width = "half",
+				},
+				emphasizeMove = {
+					type = "toggle",
+					name = L.move,
+					desc = L.moveDesc,
+					order = 2,
+					width = "half",
+				},
+				emphasizeRestart = {
+					type = "toggle",
+					name = L.restart,
+					desc = L.restartDesc,
+					order = 3,
+					width = "half",
+					disabled = function() return not db.emphasizeMove end,
+				},
+				emphasizeGrowup = {
+					type = "toggle",
+					name = L.growingUpwards,
+					desc = L.growingUpwardsDesc,
+					order = 4,
+				},
+				emphasizeTime = {
+					type = "range",
+					name = L.emphasizeAt,
+					order = 5,
+					min = 6,
+					max = 20,
+					step = 1,
+					width = "full",
+				},
+				emphasizeScale = {
+					type = "range",
+					name = L.scale,
+					order = 6,
+					min = 0.2,
+					max = 2.0,
+					step = 0.1,
+					width = "full",
+				},
 			},
-			right = {
-				type = "group",
-				name = KEY_BUTTON2 or "Right",
-				order = 12,
-				args = clickOptions,
-				disabled = shouldDisable,
-				get = function(info) return plugin.db.profile.RightButton[info[#info]] end,
-				set = function(info, value) plugin.db.profile.RightButton[info[#info]] = value end,
+			order = 3,
+		},
+		clicking = {
+			name = L.clickableBars,
+			type = "group",
+			order = 4,
+			childGroups = "tab",
+			get = function(i) return plugin.db.profile[i[#i]] end,
+			set = function(i, value)
+				local key = i[#i]
+				plugin.db.profile[key] = value
+				if key == "interceptMouse" then
+					plugin:RefixClickIntercepts()
+				end
+			end,
+			args = {
+				heading = {
+					type = "description",
+					name = L.clickableBarsDesc,
+					order = 1,
+					width = "full",
+					fontSize = "medium",
+				},
+				interceptMouse = {
+					type = "toggle",
+					name = L.enable,
+					desc = L.interceptMouseDesc,
+					order = 2,
+					width = "full",
+				},
+				onlyInterceptOnKeypress = {
+					type = "toggle",
+					name = L.modifierKey,
+					desc = L.modifierKeyDesc,
+					order = 3,
+					disabled = shouldDisable,
+				},
+				interceptKey = {
+					type = "select",
+					name = L.modifier,
+					desc = L.modifierDesc,
+					values = {
+						CTRL = CTRL_KEY_TEXT or "Ctrl",
+						ALT = ALT_KEY or "Alt",
+						SHIFT = SHIFT_KEY_TEXT or "Shift",
+					},
+					order = 4,
+					disabled = function()
+						return not plugin.db.profile.interceptMouse or not plugin.db.profile.onlyInterceptOnKeypress
+					end,
+				},
+				left = {
+					type = "group",
+					name = KEY_BUTTON1 or "Left",
+					order = 10,
+					args = clickOptions,
+					disabled = shouldDisable,
+					get = function(info) return plugin.db.profile.LeftButton[info[#info]] end,
+					set = function(info, value) plugin.db.profile.LeftButton[info[#info]] = value end,
+				},
+				middle = {
+					type = "group",
+					name = KEY_BUTTON3 or "Middle",
+					order = 11,
+					args = clickOptions,
+					disabled = shouldDisable,
+					get = function(info) return plugin.db.profile.MiddleButton[info[#info]] end,
+					set = function(info, value) plugin.db.profile.MiddleButton[info[#info]] = value end,
+				},
+				right = {
+					type = "group",
+					name = KEY_BUTTON2 or "Right",
+					order = 12,
+					args = clickOptions,
+					disabled = shouldDisable,
+					get = function(info) return plugin.db.profile.RightButton[info[#info]] end,
+					set = function(info, value) plugin.db.profile.RightButton[info[#info]] = value end,
+				},
 			},
 		},
 	},
 }
-
-do
-	local pluginOptions = nil
-	function plugin:GetPluginConfig()
-		if not pluginOptions then
-			pluginOptions = {
-				type = "group",
-				get = function(info)
-					local key = info[#info]
-					if key == "texture" then
-						for i, v in next, media:List("statusbar") do
-							if v == db.texture then return i end
-						end
-					elseif key == "font" then
-						for i, v in next, media:List("font") do
-							if v == db.font then return i end
-						end
-					end
-					return db[key]
-				end,
-				set = function(info, value)
-					local key = info[#info]
-					if key == "texture" then
-						local list = media:List("statusbar")
-						db.texture = list[value]
-					elseif key == "font" then
-						local list = media:List("font")
-						db.font = list[value]
-					elseif key == "barStyle" then
-						plugin:SetBarStyle(value)
-					else
-						db[key] = value
-					end
-				end,
-				args = {
-					font = {
-						type = "select",
-						name = L.font,
-						order = 1,
-						values = media:List("font"),
-						--width = "full",
-						itemControl = "DDI-Font",
-					},
-					outline = {
-						type = "select",
-						name = L.outline,
-						order = 2,
-						values = {
-							NONE = L.none,
-							OUTLINE = L.thin,
-							THICKOUTLINE = L.thick,
-						},
-						--width = "full",
-					},
-					fontSize = {
-						type = "range",
-						name = L.fontSize,
-						order = 3,
-						max = 40,
-						min = 6,
-						step = 1,
-						--width = "full",
-					},
-					monochrome = {
-						type = "toggle",
-						name = L.monochrome,
-						desc = L.monochromeDesc,
-						order = 3.5,
-					},
-					texture = {
-						type = "select",
-						name = L.texture,
-						order = 4,
-						values = media:List("statusbar"),
-						--width = "full",
-						itemControl = "DDI-Statusbar",
-					},
-					barStyle = {
-						type = "select",
-						name = L.style,
-						order = 5,
-						values = barStyleRegister,
-						--width = "full",
-					},
-					align = {
-						type = "select",
-						name = L.align,
-						values = {
-							LEFT = L.left,
-							CENTER = L.center,
-							RIGHT = L.right,
-						},
-						style = "radio",
-						width = "half",
-						order = 6,
-					},
-					icon = {
-						type = "toggle",
-						name = L.icon,
-						desc = L.iconDesc,
-						order = 7,
-						width = "half",
-					},
-					time = {
-						type = "toggle",
-						name = L.time,
-						desc = L.timeDesc,
-						order = 8,
-						width = "half",
-					},
-					fill = {
-						type = "toggle",
-						name = L.fill,
-						desc = L.fillDesc,
-						order = 9,
-						width = "half",
-						set = function(info, value)
-							local key = info[#info]
-							db[key] = value
-							-- XXX broaden this to all options
-							for k in next, normalAnchor.bars do
-								k:SetFill(value)
-							end
-							for k in next, emphasizeAnchor.bars do
-								k:SetFill(value)
-							end
-						end,
-					},
-					normal = {
-						type = "group",
-						name = L.regularBars,
-						inline = true,
-						width = "full",
-						args = {
-							growup = {
-								type = "toggle",
-								name = L.growingUpwards,
-								desc = L.growingUpwardsDesc,
-								order = 1,
-							},
-							scale = {
-								type = "range",
-								name = L.scale,
-								min = 0.2,
-								max = 2.0,
-								step = 0.1,
-								order = 2,
-								width = "full",
-							},
-						},
-						order = 10,
-					},
-					emphasize = {
-						type = "group",
-						name = L.emphasizedBars,
-						inline = true,
-						width = "full",
-						args = {
-							emphasize = {
-								type = "toggle",
-								name = L.enable,
-								order = 1,
-								width = "half",
-							},
-							emphasizeMove = {
-								type = "toggle",
-								name = L.move,
-								desc = L.moveDesc,
-								order = 2,
-								width = "half",
-							},
-							emphasizeRestart = {
-								type = "toggle",
-								name = L.restart,
-								desc = L.restartDesc,
-								order = 3,
-								width = "half",
-								disabled = function() return not db.emphasizeMove end,
-							},
-							emphasizeGrowup = {
-								type = "toggle",
-								name = L.growingUpwards,
-								desc = L.growingUpwardsDesc,
-								order = 4,
-							},
-							emphasizeTime = {
-								type = "range",
-								name = L.emphasizeAt,
-								order = 5,
-								min = 6,
-								max = 20,
-								step = 1,
-								width = "full",
-							},
-							emphasizeScale = {
-								type = "range",
-								name = L.scale,
-								order = 6,
-								min = 0.2,
-								max = 2.0,
-								step = 0.1,
-								width = "full",
-							},
-						},
-						order = 11,
-					},
-				},
-			}
-		end
-		return pluginOptions
-	end
-end
 
 --------------------------------------------------------------------------------
 -- Bar arrangement

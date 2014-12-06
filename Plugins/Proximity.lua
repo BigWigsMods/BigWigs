@@ -834,144 +834,144 @@ function plugin:BigWigs_SetConfigureTarget(event, module)
 end
 
 do
-	local pluginOptions = nil
-	function plugin:GetPluginConfig()
-		if not pluginOptions then
-			pluginOptions = {
+	local disabled = function() return plugin.db.profile.disabled end
+	plugin.pluginOptions = {
+		name = L.proximity_name,
+		type = "group",
+		get = function(info)
+			local key = info[#info]
+			if key == "font" then
+				for i, v in next, media:List("font") do
+					if v == db.font then return i end
+				end
+			elseif key == "soundName" then
+				for i, v in next, media:List("sound") do
+					if v == db.soundName then return i end
+				end
+			else
+				return db[key]
+			end
+		end,
+		set = function(info, value)
+			local key = info[#info]
+			if key == "font" then
+				db.font = media:List("font")[value]
+			elseif key == "soundName" then
+				db.soundName = media:List("sound")[value]
+			else
+				db[key] = value
+			end
+			plugin:RestyleWindow()
+		end,
+		args = {
+			disabled = {
+				type = "toggle",
+				name = L.disabled,
+				desc = L.disabledDisplayDesc,
+				order = 1,
+			},
+			lock = {
+				type = "toggle",
+				name = L.lock,
+				desc = L.lockDesc,
+				order = 2,
+				disabled = disabled,
+			},
+			font = {
+				type = "select",
+				name = L.font,
+				order = 4,
+				values = media:List("font"),
+				width = "full",
+				itemControl = "DDI-Font",
+				disabled = disabled,
+			},
+			fontSize = {
+				type = "range",
+				name = L.fontSize,
+				order = 5,
+				max = 40,
+				min = 8,
+				step = 1,
+				width = "full",
+				disabled = disabled,
+			},
+			soundName = {
+				type = "select",
+				name = L.sound,
+				order = 6,
+				values = media:List("sound"),
+				width = "full",
+				itemControl = "DDI-Sound"
+				--disabled = disabled,
+			},
+			soundDelay = {
+				type = "range",
+				name = L.soundDelay,
+				desc = L.soundDelayDesc,
+				order = 7,
+				max = 10,
+				min = 1,
+				step = 1,
+				width = "full",
+				disabled = disabled,
+			},
+			showHide = {
 				type = "group",
+				name = L.showHide,
+				inline = true,
+				order = 10,
 				get = function(info)
 					local key = info[#info]
-					if key == "font" then
-						for i, v in next, media:List("font") do
-							if v == db.font then return i end
-						end
-					elseif key == "soundName" then
-						for i, v in next, media:List("sound") do
-							if v == db.soundName then return i end
-						end
-					else
-						return db[key]
-					end
+					return db.objects[key]
 				end,
 				set = function(info, value)
 					local key = info[#info]
-					if key == "font" then
-						db.font = media:List("font")[value]
-					elseif key == "soundName" then
-						db.soundName = media:List("sound")[value]
-					else
-						db[key] = value
-					end
+					db.objects[key] = value
 					plugin:RestyleWindow()
 				end,
-				disabled = function() return plugin.db.profile.disabled end,
+				disabled = disabled,
 				args = {
-					disabled = {
+					title = {
 						type = "toggle",
-						name = L.disabled,
-						desc = L.disabledDisplayDesc,
+						name = L.title,
+						desc = L.titleDesc,
 						order = 1,
-						disabled = false,
 					},
-					lock = {
+					background = {
 						type = "toggle",
-						name = L.lock,
-						desc = L.lockDesc,
+						name = L.background,
+						desc = L.backgroundDesc,
 						order = 2,
 					},
-					font = {
-						type = "select",
-						name = L.font,
+					sound = {
+						type = "toggle",
+						name = L.soundButton,
+						desc = L.soundButtonDesc,
+						order = 3,
+					},
+					close = {
+						type = "toggle",
+						name = L.closeButton,
+						desc = L.closeButtonDesc,
 						order = 4,
-						values = media:List("font"),
-						width = "full",
-						itemControl = "DDI-Font",
 					},
-					fontSize = {
-						type = "range",
-						name = L.fontSize,
+					ability = {
+						type = "toggle",
+						name = L.abilityName,
+						desc = L.abilityNameDesc,
 						order = 5,
-						max = 40,
-						min = 8,
-						step = 1,
-						width = "full",
 					},
-					soundName = {
-						type = "select",
-						name = L.sound,
+					tooltip = {
+						type = "toggle",
+						name = L.tooltip,
+						desc = L.tooltipDesc,
 						order = 6,
-						values = media:List("sound"),
-						width = "full",
-						itemControl = "DDI-Sound"
-					},
-					soundDelay = {
-						type = "range",
-						name = L.soundDelay,
-						desc = L.soundDelayDesc,
-						order = 7,
-						max = 10,
-						min = 1,
-						step = 1,
-						width = "full",
-					},
-					showHide = {
-						type = "group",
-						name = L.showHide,
-						inline = true,
-						order = 10,
-						get = function(info)
-							local key = info[#info]
-							return db.objects[key]
-						end,
-						set = function(info, value)
-							local key = info[#info]
-							db.objects[key] = value
-							plugin:RestyleWindow()
-						end,
-						args = {
-							title = {
-								type = "toggle",
-								name = L.title,
-								desc = L.titleDesc,
-								order = 1,
-							},
-							background = {
-								type = "toggle",
-								name = L.background,
-								desc = L.backgroundDesc,
-								order = 2,
-							},
-							sound = {
-								type = "toggle",
-								name = L.soundButton,
-								desc = L.soundButtonDesc,
-								order = 3,
-							},
-							close = {
-								type = "toggle",
-								name = L.closeButton,
-								desc = L.closeButtonDesc,
-								order = 4,
-							},
-							ability = {
-								type = "toggle",
-								name = L.abilityName,
-								desc = L.abilityNameDesc,
-								order = 5,
-							},
-							tooltip = {
-								type = "toggle",
-								name = L.tooltip,
-								desc = L.tooltipDesc,
-								order = 6,
-							}
-						},
 					},
 				},
-			}
-		end
-		return pluginOptions
-	end
+			},
+		},
+	}
 end
 
 -------------------------------------------------------------------------------

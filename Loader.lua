@@ -107,7 +107,7 @@ do
 end
 
 -- GLOBALS: ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, CreateFrame, CUSTOM_CLASS_COLORS, error, GetAddOnEnableState, GetAddOnInfo
--- GLOBALS: GetAddOnMetadata, GetInstanceInfo, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GRAY_FONT_COLOR, InCombatLockdown, INTERFACEOPTIONS_ADDONCATEGORIES
+-- GLOBALS: GetAddOnMetadata, GetInstanceInfo, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GRAY_FONT_COLOR, InCombatLockdown
 -- GLOBALS: InterfaceOptionsFrameOkay, IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInInstance, IsInRaid, IsPartyLFG, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, message, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, SetMapByID, strsplit
 -- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
@@ -1067,39 +1067,6 @@ SlashCmdList.BigWigsVersion = function()
 	if #ugly > 0 then print(L.outOfDate, unpack(ugly)) end
 	if #crazy > 0 then print(L.dbmUsers, unpack(crazy)) end
 	if #bad > 0 then print(L.noBossMod, unpack(bad)) end
-end
-
------------------------------------------------------------------------
--- Interface options
---
-
-do
-	local frame = CreateFrame("Frame", nil, UIParent)
-	frame.name = "Big Wigs"
-	frame:Hide()
-	public.RemoveInterfaceOptions = function()
-		for k, f in next, INTERFACEOPTIONS_ADDONCATEGORIES do
-			if f == frame then
-				tremove(INTERFACEOPTIONS_ADDONCATEGORIES, k)
-				break
-			end
-		end
-		frame:SetScript("OnShow", nil)
-		public.RemoveInterfaceOptions = nil
-	end
-	frame:SetScript("OnShow", function()
-		if not BigWigsOptions and (InCombatLockdown() or UnitAffectingCombat("player")) then
-			sysprint(L.blizzRestrictionsConfig)
-			return
-		end
-
-		public:RemoveInterfaceOptions()
-		loadCoreAndOpenOptions()
-		InterfaceOptionsFrameOkay:Click()
-		loadCoreAndOpenOptions()
-	end)
-
-	InterfaceOptions_AddCategory(frame)
 end
 
 BigWigsLoader = public -- Set global

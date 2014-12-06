@@ -37,13 +37,6 @@ local soundModule
 local showToggleOptions, getAdvancedToggleOption = nil, nil
 local zoneModules = {}
 
-local pluginOptions = {
-	name = L.customizeBtn,
-	type = "group",
-	childGroups = "tab",
-	args = {},
-}
-
 local acOptions = {
 	type = "group",
 	name = "Big Wigs",
@@ -65,207 +58,219 @@ local acOptions = {
 		},
 		configure = {
 			type = "execute",
-			name = L.configureBtnName,
-			desc = L.configureBtnDesc,
+			name = "Toggle Anchors",
+			desc = "Toggle Anchors",
 			func = function()
-				InterfaceOptionsFrameOkay:Click()
 				if not BigWigs:IsEnabled() then BigWigs:Enable() end
-				options:SendMessage("BigWigs_StartConfigureMode")
-				options:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
+				if options:InConfigureMode() then
+					options:SendMessage("BigWigs_StopConfigureMode")
+				else
+					options:SendMessage("BigWigs_StartConfigureMode")
+					options:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
+				end
 			end,
 			order = 11,
 			width = "double",
 		},
-		customize = {
+		test = {
 			type = "execute",
-			name = L.customizeBtn,
+			name = "Spawn Test Bars",
+			desc = "test",
 			func = function()
-				InterfaceOptionsFrame_OpenToCategory(L.customizeBtn)
-				InterfaceOptionsFrame_OpenToCategory(L.customizeBtn)
+				BigWigs:Test()
 			end,
-			order = 11.5,
+			order = 11.2,
+			width = "double",
 		},
-		separator = {
-			type = "description",
-			name = " ",
-			order = 12,
-			width = "full",
+		general = {
+			order = 20,
+			type = "group",
+			name = "General",
+			childGroups = "tab",
+			args = {
+				main = {
+					name = "Main",
+					order = 1,
+					type = "group",
+					args = {
+						minimap = {
+							type = "toggle",
+							name = L.minimapIcon,
+							desc = L.minimapToggle,
+							order = 13,
+							get = function() return not BigWigs3IconDB.hide end,
+							set = function(info, v)
+								if v then
+									BigWigs3IconDB.hide = nil
+									icon:Show("BigWigs")
+								else
+									BigWigs3IconDB.hide = true
+									icon:Hide("BigWigs")
+								end
+							end,
+							hidden = function() return not icon end,
+							width = "full",
+						},
+						separator2 = {
+							type = "description",
+							name = " ",
+							order = 14,
+							width = "full",
+						},
+						sound = {
+							type = "toggle",
+							name = L.sound,
+							desc = L.soundDesc,
+							order = 21,
+							width = "half",
+						},
+						flash = {
+							type = "toggle",
+							name = L.flashScreen,
+							desc = L.flashScreenDesc,
+							order = 22,
+						},
+						raidicon = {
+							type = "toggle",
+							name = L.raidIcons,
+							desc = L.raidIconsDesc,
+							set = function(info, value)
+								local key = info[#info]
+								local plugin = BigWigs:GetPlugin("Raid Icons")
+								plugin:Disable()
+								BigWigs.db.profile[key] = value
+								options:SendMessage("BigWigs_CoreOptionToggled", key, value)
+								plugin:Enable()
+							end,
+							order = 24,
+						},
+						chat = {
+							type = "toggle",
+							name = L.chatMessages,
+							desc = L.chatMessagesDesc,
+							order = 25,
+							width = "full",
+							get = function() return BigWigs:GetPlugin("Messages").db.profile.chat end,
+							set = function(_, v) BigWigs:GetPlugin("Messages").db.profile.chat = v end,
+						},
+						separator3 = {
+							type = "description",
+							name = " ",
+							order = 30,
+							width = "full",
+						},
+						showBlizzardWarnings = {
+							type = "toggle",
+							name = L.showBlizzWarnings,
+							desc = L.showBlizzWarningsDesc,
+							set = function(info, value)
+								local key = info[#info]
+								local plugin = BigWigs:GetPlugin("BossBlock")
+								plugin:Disable()
+								BigWigs.db.profile[key] = value
+								options:SendMessage("BigWigs_CoreOptionToggled", key, value)
+								plugin:Enable()
+							end,
+							order = 31,
+							width = "full",
+						},
+						showZoneMessages = {
+							type = "toggle",
+							name = L.zoneMessages,
+							desc = L.zoneMessagesDesc,
+							order = 32,
+							width = "full",
+						},
+						blockmovies = {
+							type = "toggle",
+							name = L.blockMovies,
+							desc = L.blockMoviesDesc,
+							order = 33,
+							width = "full",
+						},
+						separator4 = {
+							type = "description",
+							name = " ",
+							order = 40,
+							width = "full",
+						},
+						fakeDBMVersion = {
+							type = "toggle",
+							name = L.dbmFaker,
+							desc = L.dbmFakerDesc,
+							order = 41,
+							width = "full",
+						},
+						slashDescTitle = {
+							type = "description",
+							name = "\n".. L.slashDescTitle,
+							fontSize = "large",
+							order = 43,
+							width = "full",
+						},
+						slashDescPull = {
+							type = "description",
+							name = "  ".. L.slashDescPull,
+							fontSize = "medium",
+							order = 44,
+							width = "full",
+						},
+						slashDescBreak = {
+							type = "description",
+							name = "  ".. L.slashDescBreak,
+							fontSize = "medium",
+							order = 45,
+							width = "full",
+						},
+						slashDescBar = {
+							type = "description",
+							name = "  ".. L.slashDescRaidBar,
+							fontSize = "medium",
+							order = 46,
+							width = "full",
+						},
+						slashDescLocalBar = {
+							type = "description",
+							name = "  ".. L.slashDescLocalBar,
+							fontSize = "medium",
+							order = 47,
+							width = "full",
+						},
+						slashDescRange = {
+							type = "description",
+							name = "  ".. L.slashDescRange,
+							fontSize = "medium",
+							order = 48,
+							width = "full",
+						},
+						slashDescVersion = {
+							type = "description",
+							name = "  ".. L.slashDescVersion,
+							fontSize = "medium",
+							order = 49,
+							width = "full",
+						},
+						slashDescConfig = {
+							type = "description",
+							name = "  ".. L.slashDescConfig,
+							fontSize = "medium",
+							order = 50,
+							width = "full",
+						},
+					},
+				},
+				profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db),
+			},
 		},
-		minimap = {
-			type = "toggle",
-			name = L.minimapIcon,
-			desc = L.minimapToggle,
-			order = 13,
-			get = function() return not BigWigs3IconDB.hide end,
-			set = function(info, v)
-				if v then
-					BigWigs3IconDB.hide = nil
-					icon:Show("BigWigs")
-				else
-					BigWigs3IconDB.hide = true
-					icon:Hide("BigWigs")
-				end
-			end,
-			hidden = function() return not icon end,
-			width = "full",
-		},
-		separator2 = {
-			type = "description",
-			name = " ",
-			order = 14,
-			width = "full",
-		},
-		sound = {
-			type = "toggle",
-			name = L.sound,
-			desc = L.soundDesc,
-			order = 21,
-			width = "half",
-		},
-		flash = {
-			type = "toggle",
-			name = L.flashScreen,
-			desc = L.flashScreenDesc,
-			order = 22,
-		},
-		raidicon = {
-			type = "toggle",
-			name = L.raidIcons,
-			desc = L.raidIconsDesc,
-			set = function(info, value)
-				local key = info[#info]
-				local plugin = BigWigs:GetPlugin("Raid Icons")
-				plugin:Disable()
-				BigWigs.db.profile[key] = value
-				options:SendMessage("BigWigs_CoreOptionToggled", key, value)
-				plugin:Enable()
-			end,
-			order = 24,
-		},
-		chat = {
-			type = "toggle",
-			name = L.chatMessages,
-			desc = L.chatMessagesDesc,
-			order = 25,
-			width = "full",
-			get = function() return BigWigs:GetPlugin("Messages").db.profile.chat end,
-			set = function(_, v) BigWigs:GetPlugin("Messages").db.profile.chat = v end,
-		},
-		separator3 = {
-			type = "description",
-			name = " ",
-			order = 30,
-			width = "full",
-		},
-		showBlizzardWarnings = {
-			type = "toggle",
-			name = L.showBlizzWarnings,
-			desc = L.showBlizzWarningsDesc,
-			set = function(info, value)
-				local key = info[#info]
-				local plugin = BigWigs:GetPlugin("BossBlock")
-				plugin:Disable()
-				BigWigs.db.profile[key] = value
-				options:SendMessage("BigWigs_CoreOptionToggled", key, value)
-				plugin:Enable()
-			end,
-			order = 31,
-			width = "full",
-		},
-		showZoneMessages = {
-			type = "toggle",
-			name = L.zoneMessages,
-			desc = L.zoneMessagesDesc,
-			order = 32,
-			width = "full",
-		},
-		blockmovies = {
-			type = "toggle",
-			name = L.blockMovies,
-			desc = L.blockMoviesDesc,
-			order = 33,
-			width = "full",
-		},
-		separator4 = {
-			type = "description",
-			name = " ",
-			order = 40,
-			width = "full",
-		},
-		fakeDBMVersion = {
-			type = "toggle",
-			name = L.dbmFaker,
-			desc = L.dbmFakerDesc,
-			order = 41,
-			width = "full",
-		},
-		slashDescTitle = {
-			type = "description",
-			name = "\n".. L.slashDescTitle,
-			fontSize = "large",
-			order = 43,
-			width = "full",
-		},
-		slashDescPull = {
-			type = "description",
-			name = "  ".. L.slashDescPull,
-			fontSize = "medium",
-			order = 44,
-			width = "full",
-		},
-		slashDescBreak = {
-			type = "description",
-			name = "  ".. L.slashDescBreak,
-			fontSize = "medium",
-			order = 45,
-			width = "full",
-		},
-		slashDescBar = {
-			type = "description",
-			name = "  ".. L.slashDescRaidBar,
-			fontSize = "medium",
-			order = 46,
-			width = "full",
-		},
-		slashDescLocalBar = {
-			type = "description",
-			name = "  ".. L.slashDescLocalBar,
-			fontSize = "medium",
-			order = 47,
-			width = "full",
-		},
-		slashDescRange = {
-			type = "description",
-			name = "  ".. L.slashDescRange,
-			fontSize = "medium",
-			order = 48,
-			width = "full",
-		},
-		slashDescVersion = {
-			type = "description",
-			name = "  ".. L.slashDescVersion,
-			fontSize = "medium",
-			order = 49,
-			width = "full",
-		},
-		slashDescConfig = {
-			type = "description",
-			name = "  ".. L.slashDescConfig,
-			fontSize = "medium",
-			order = 50,
-			width = "full",
-		},
+		---pluginOptions = {
+		---	name = L.customizeBtn,
+		---	type = "group",
+		---	childGroups = "tab",
+		---	args = {},
+		---}
 	},
 }
-
-local profileOptions
-local function getProfileOptions()
-	if not profileOptions then
-		profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db)
-		LibStub("LibDualSpec-1.0"):EnhanceOptions(profileOptions, BigWigs.db)
-	end
-	return profileOptions
-end
+LibStub("LibDualSpec-1.0"):EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
 
 local function translateZoneID(id)
 	if not id or type(id) ~= "number" then return end
@@ -289,95 +294,86 @@ local function findPanel(name, parent)
 end
 
 function options:OnInitialize()
-	if BigWigsLoader.RemoveInterfaceOptions then
-		BigWigsLoader:RemoveInterfaceOptions()
-	end
-
-	acr:RegisterOptionsTable("BigWigs", acOptions, true)
-	local mainOpts = acd:AddToBlizOptions("BigWigs", "Big Wigs")
-	mainOpts:HookScript("OnShow", function()
-		BigWigs:Enable()
-		local p = findPanel("Big Wigs")
-		if p and p.element.collapsed then OptionsListButtonToggle_OnClick(p.toggle) end
-	end)
-
-	local about = self:GetPanel(L.about, "Big Wigs")
-	about:SetScript("OnShow", function(frame)
-		local fields = {
-			L.developers,
-			L.license,
-			L.website,
-			L.contact,
-		}
-		local fieldData = {
-			"Funkydude, Maat, Nebula169",
-			L.allRightsReserved,
-			"http://www.wowace.com/addons/big-wigs/",
-			L.ircChannel,
-		}
-		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-		title:SetPoint("TOPLEFT", 16, -16)
-		title:SetText(L.about)
-
-		local subtitle = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-		subtitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
-		subtitle:SetWidth(frame:GetWidth() - 24)
-		subtitle:SetJustifyH("LEFT")
-		subtitle:SetJustifyV("TOP")
-		local noteKey = "Notes"
-		if GetAddOnMetadata("BigWigs", "Notes-" .. GetLocale()) then noteKey = "Notes-" .. GetLocale() end
-		local notes = GetAddOnMetadata("BigWigs", noteKey)
-		subtitle:SetText(notes .. " |cff44ff44" .. BigWigsLoader:GetReleaseString() .. "|r")
-
-		local anchor = nil
-		for i, field in next, fields do
-			local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-			title:SetWidth(120)
-			if not anchor then
-				title:SetPoint("TOPLEFT", subtitle, "BOTTOMLEFT", 0, -16)
-			else
-				title:SetPoint("TOP", anchor, "BOTTOM", 0, -6)
-				title:SetPoint("LEFT", subtitle)
-			end
-			title:SetNonSpaceWrap(true)
-			title:SetJustifyH("LEFT")
-			title:SetText(field)
-			local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-			detail:SetPoint("TOPLEFT", title, "TOPRIGHT")
-			detail:SetWidth(frame:GetWidth() - 144)
-			detail:SetJustifyH("LEFT")
-			detail:SetJustifyV("TOP")
-			detail:SetText(fieldData[i])
-
-			anchor = detail
-		end
-		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-		title:SetPoint("TOP", anchor, "BOTTOM", 0, -16)
-		title:SetPoint("LEFT", subtitle)
-		title:SetWidth(frame:GetWidth() - 24)
-		title:SetJustifyH("LEFT")
-		title:SetJustifyV("TOP")
-		title:SetText(L.thanks)
-		local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-		detail:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -4)
-		detail:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -24, -24)
-		detail:SetJustifyH("LEFT")
-		detail:SetJustifyV("TOP")
-		detail:SetText(BIGWIGS_AUTHORS)
-
-		frame:SetScript("OnShow", nil)
-	end)
-
-	acr:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions, true)
-	acd:AddToBlizOptions("Big Wigs: Plugins", L.customizeBtn, "Big Wigs")
-
-	acr:RegisterOptionsTable("Big Wigs: Profiles", getProfileOptions, true)
-	acd:AddToBlizOptions("Big Wigs: Profiles", L.profiles, "Big Wigs")
+	acr:RegisterOptionsTable("BigWigs", acOptions)
+	acd:SetDefaultSize("BigWigs", 858,660)
+	--local mainOpts = acd:AddToBlizOptions("BigWigs", "Big Wigs")
+	--mainOpts:HookScript("OnShow", function()
+	--	BigWigs:Enable()
+	--	local p = findPanel("Big Wigs")
+	--	if p and p.element.collapsed then OptionsListButtonToggle_OnClick(p.toggle) end
+	--end)
+    --
+	--local about = self:GetPanel(L.about, "Big Wigs")
+	--about:SetScript("OnShow", function(frame)
+	--	local fields = {
+	--		L.developers,
+	--		L.license,
+	--		L.website,
+	--		L.contact,
+	--	}
+	--	local fieldData = {
+	--		"Funkydude, Maat, Nebula169",
+	--		L.allRightsReserved,
+	--		"http://www.wowace.com/addons/big-wigs/",
+	--		L.ircChannel,
+	--	}
+	--	local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+	--	title:SetPoint("TOPLEFT", 16, -16)
+	--	title:SetText(L.about)
+    --
+	--	local subtitle = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+	--	subtitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
+	--	subtitle:SetWidth(frame:GetWidth() - 24)
+	--	subtitle:SetJustifyH("LEFT")
+	--	subtitle:SetJustifyV("TOP")
+	--	local noteKey = "Notes"
+	--	if GetAddOnMetadata("BigWigs", "Notes-" .. GetLocale()) then noteKey = "Notes-" .. GetLocale() end
+	--	local notes = GetAddOnMetadata("BigWigs", noteKey)
+	--	subtitle:SetText(notes .. " |cff44ff44" .. BigWigsLoader:GetReleaseString() .. "|r")
+    --
+	--	local anchor = nil
+	--	for i, field in next, fields do
+	--		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	--		title:SetWidth(120)
+	--		if not anchor then
+	--			title:SetPoint("TOPLEFT", subtitle, "BOTTOMLEFT", 0, -16)
+	--		else
+	--			title:SetPoint("TOP", anchor, "BOTTOM", 0, -6)
+	--			title:SetPoint("LEFT", subtitle)
+	--		end
+	--		title:SetNonSpaceWrap(true)
+	--		title:SetJustifyH("LEFT")
+	--		title:SetText(field)
+	--		local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+	--		detail:SetPoint("TOPLEFT", title, "TOPRIGHT")
+	--		detail:SetWidth(frame:GetWidth() - 144)
+	--		detail:SetJustifyH("LEFT")
+	--		detail:SetJustifyV("TOP")
+	--		detail:SetText(fieldData[i])
+    --
+	--		anchor = detail
+	--	end
+	--	local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	--	title:SetPoint("TOP", anchor, "BOTTOM", 0, -16)
+	--	title:SetPoint("LEFT", subtitle)
+	--	title:SetWidth(frame:GetWidth() - 24)
+	--	title:SetJustifyH("LEFT")
+	--	title:SetJustifyV("TOP")
+	--	title:SetText(L.thanks)
+	--	local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+	--	detail:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -4)
+	--	detail:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -24, -24)
+	--	detail:SetJustifyH("LEFT")
+	--	detail:SetJustifyV("TOP")
+	--	detail:SetText(BIGWIGS_AUTHORS)
+    --
+	--	frame:SetScript("OnShow", nil)
+	--end)
 
 	colorModule = BigWigs:GetPlugin("Colors")
 	soundModule = BigWigs:GetPlugin("Sounds")
-	acr:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
-	acr:RegisterOptionsTable("Big Wigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
+	acr:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"))
+	acr:RegisterOptionsTable("Big Wigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"))
 end
 
 function options:OnEnable()
@@ -420,8 +416,7 @@ function options:Open()
 		end
 	end
 	if not InterfaceOptionsFrame:IsShown() then
-		InterfaceOptionsFrame_OpenToCategory("Big Wigs")
-		InterfaceOptionsFrame_OpenToCategory("Big Wigs")
+		acd:Open("BigWigs")
 	end
 end
 
@@ -430,101 +425,13 @@ end
 --
 
 do
-	local frame = nil
-	local plugins = {}
-	local tabs = nil
-	local tabSection = nil
 	local configMode = nil
-	local acId = "Big Wigs Configure Mode Plugin %s"
-
-	local function widgetSelect(widget, callback, tab)
-		if widget:GetUserData("tab") == tab then return end
-		local plugin = BigWigs:GetPlugin(tab)
-		if not plugin then return end
-		widget:SetUserData("tab", tab)
-		acd:Open(acId:format(tab), tabSection)
-		local scroll = widget:GetUserData("scroll")
-		scroll:PerformLayout()
-		options:SendMessage("BigWigs_SetConfigureTarget", plugin)
-	end
-	local function onTestClick() BigWigs:Test() end
-	local function onResetClick() options:SendMessage("BigWigs_ResetPositions") end
-	local function createPluginFrame()
-		if frame then return end
-		frame = AceGUI:Create("Window")
-		frame:EnableResize(nil)
-		frame:SetWidth(450)
-		frame:SetHeight(515)
-		frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 12, -12)
-		frame:SetTitle(L.configure)
-		frame:SetCallback("OnClose", function(widget, callback)
-			options:SendMessage("BigWigs_StopConfigureMode")
-		end)
-		frame:SetLayout("Fill")
-
-		local scroll = AceGUI:Create("ScrollFrame")
-		scroll:SetLayout("Flow")
-		scroll:SetFullWidth(true)
-
-		local test = AceGUI:Create("Button")
-		test:SetText(L.test)
-		test:SetCallback("OnClick", onTestClick)
-		test:SetFullWidth(true)
-
-		local reset = AceGUI:Create("Button")
-		reset:SetText(L.resetPositions)
-		reset:SetCallback("OnClick", onResetClick)
-		reset:SetFullWidth(true)
-
-		scroll:AddChildren(test, reset)
-		for name, module in BigWigs:IteratePlugins() do
-			if module.GetPluginConfig then
-				plugins[#plugins + 1] = {
-					value = name,
-					text = module.displayName or name,
-				}
-				acr:RegisterOptionsTable(acId:format(name), module:GetPluginConfig(), true)
-			end
-		end
-		tabs = AceGUI:Create("TabGroup")
-		tabs:SetTabs(plugins)
-		tabs:SetCallback("OnGroupSelected", widgetSelect)
-		tabs:SetUserData("tab", "")
-		tabs:SetUserData("scroll", scroll)
-		tabs:SetFullWidth(true)
-
-		tabSection = AceGUI:Create("SimpleGroup")
-		tabSection:SetFullWidth(true)
-		tabs:AddChild(tabSection)
-
-		scroll:AddChild(tabs)
-		frame:AddChild(scroll)
-	end
-	function options:BigWigs_SetConfigureTarget(event, module)
-		if frame then
-			tabs:SelectTab(module:GetName())
-		end
-	end
-
 	function options:InConfigureMode() return configMode end
 	function options:BigWigs_StartConfigureMode(event, hideFrame)
 		configMode = true
-		if not hideFrame then
-			createPluginFrame()
-			frame:Show()
-			frame:PerformLayout()
-		end
 	end
-
 	function options:BigWigs_StopConfigureMode()
 		configMode = nil
-		if frame then
-			frame:ReleaseChildren()
-			frame:Hide()
-			frame:Release()
-		end
-		frame = nil
-		wipe(plugins)
 	end
 end
 
@@ -1367,7 +1274,7 @@ do
 			end
 		end
 		if module.pluginOptions then
-			pluginOptions.args[module.name] = module.pluginOptions
+			acOptions.args[module.name] = module.pluginOptions
 		end
 		if module.subPanelOptions then
 			local key = module.subPanelOptions.key
