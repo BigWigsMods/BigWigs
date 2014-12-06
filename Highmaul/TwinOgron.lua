@@ -111,6 +111,8 @@ function mod:OnEngage()
 	if self:Mythic() then
 		self:Bar(163372, 65) -- Arcane Volatility
 		self:Berserk(420) -- Mythic time, normal unconfirmed
+	else
+		self:Berserk(480)
 	end
 end
 
