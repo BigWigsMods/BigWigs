@@ -16,7 +16,7 @@ do
 	colorize = setmetatable({}, { __index =
 		function(self, key)
 			if not r then r, g, b = GameFontNormal:GetTextColor() end
-			self[key] = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. key .. "|r"
+			self[key] = string.format("|cff%02x%02x%02x%s|r", r * 255, g * 255, b * 255, key)
 			return self[key]
 		end
 	})
@@ -37,6 +37,7 @@ local soundModule
 local showToggleOptions, getAdvancedToggleOption = nil, nil
 local zoneModules = {}
 
+local getOptions
 local acOptions = {
 	type = "group",
 	name = "Big Wigs",
@@ -85,179 +86,171 @@ local acOptions = {
 		general = {
 			order = 20,
 			type = "group",
-			name = "General",
-			childGroups = "tab",
+			name = "Big Wigs",
 			args = {
-				main = {
-					name = "Main",
-					order = 1,
-					type = "group",
-					args = {
-						minimap = {
-							type = "toggle",
-							name = L.minimapIcon,
-							desc = L.minimapToggle,
-							order = 13,
-							get = function() return not BigWigs3IconDB.hide end,
-							set = function(info, v)
-								if v then
-									BigWigs3IconDB.hide = nil
-									icon:Show("BigWigs")
-								else
-									BigWigs3IconDB.hide = true
-									icon:Hide("BigWigs")
-								end
-							end,
-							hidden = function() return not icon end,
-							width = "full",
-						},
-						separator2 = {
-							type = "description",
-							name = " ",
-							order = 14,
-							width = "full",
-						},
-						sound = {
-							type = "toggle",
-							name = L.sound,
-							desc = L.soundDesc,
-							order = 21,
-							width = "half",
-						},
-						flash = {
-							type = "toggle",
-							name = L.flashScreen,
-							desc = L.flashScreenDesc,
-							order = 22,
-						},
-						raidicon = {
-							type = "toggle",
-							name = L.raidIcons,
-							desc = L.raidIconsDesc,
-							set = function(info, value)
-								local key = info[#info]
-								local plugin = BigWigs:GetPlugin("Raid Icons")
-								plugin:Disable()
-								BigWigs.db.profile[key] = value
-								options:SendMessage("BigWigs_CoreOptionToggled", key, value)
-								plugin:Enable()
-							end,
-							order = 24,
-						},
-						chat = {
-							type = "toggle",
-							name = L.chatMessages,
-							desc = L.chatMessagesDesc,
-							order = 25,
-							width = "full",
-							get = function() return BigWigs:GetPlugin("Messages").db.profile.chat end,
-							set = function(_, v) BigWigs:GetPlugin("Messages").db.profile.chat = v end,
-						},
-						separator3 = {
-							type = "description",
-							name = " ",
-							order = 30,
-							width = "full",
-						},
-						showBlizzardWarnings = {
-							type = "toggle",
-							name = L.showBlizzWarnings,
-							desc = L.showBlizzWarningsDesc,
-							set = function(info, value)
-								local key = info[#info]
-								local plugin = BigWigs:GetPlugin("BossBlock")
-								plugin:Disable()
-								BigWigs.db.profile[key] = value
-								options:SendMessage("BigWigs_CoreOptionToggled", key, value)
-								plugin:Enable()
-							end,
-							order = 31,
-							width = "full",
-						},
-						showZoneMessages = {
-							type = "toggle",
-							name = L.zoneMessages,
-							desc = L.zoneMessagesDesc,
-							order = 32,
-							width = "full",
-						},
-						blockmovies = {
-							type = "toggle",
-							name = L.blockMovies,
-							desc = L.blockMoviesDesc,
-							order = 33,
-							width = "full",
-						},
-						separator4 = {
-							type = "description",
-							name = " ",
-							order = 40,
-							width = "full",
-						},
-						fakeDBMVersion = {
-							type = "toggle",
-							name = L.dbmFaker,
-							desc = L.dbmFakerDesc,
-							order = 41,
-							width = "full",
-						},
-						slashDescTitle = {
-							type = "description",
-							name = "\n".. L.slashDescTitle,
-							fontSize = "large",
-							order = 43,
-							width = "full",
-						},
-						slashDescPull = {
-							type = "description",
-							name = "  ".. L.slashDescPull,
-							fontSize = "medium",
-							order = 44,
-							width = "full",
-						},
-						slashDescBreak = {
-							type = "description",
-							name = "  ".. L.slashDescBreak,
-							fontSize = "medium",
-							order = 45,
-							width = "full",
-						},
-						slashDescBar = {
-							type = "description",
-							name = "  ".. L.slashDescRaidBar,
-							fontSize = "medium",
-							order = 46,
-							width = "full",
-						},
-						slashDescLocalBar = {
-							type = "description",
-							name = "  ".. L.slashDescLocalBar,
-							fontSize = "medium",
-							order = 47,
-							width = "full",
-						},
-						slashDescRange = {
-							type = "description",
-							name = "  ".. L.slashDescRange,
-							fontSize = "medium",
-							order = 48,
-							width = "full",
-						},
-						slashDescVersion = {
-							type = "description",
-							name = "  ".. L.slashDescVersion,
-							fontSize = "medium",
-							order = 49,
-							width = "full",
-						},
-						slashDescConfig = {
-							type = "description",
-							name = "  ".. L.slashDescConfig,
-							fontSize = "medium",
-							order = 50,
-							width = "full",
-						},
-					},
+				minimap = {
+					type = "toggle",
+					name = L.minimapIcon,
+					desc = L.minimapToggle,
+					order = 13,
+					get = function() return not BigWigs3IconDB.hide end,
+					set = function(info, v)
+						if v then
+							BigWigs3IconDB.hide = nil
+							icon:Show("BigWigs")
+						else
+							BigWigs3IconDB.hide = true
+							icon:Hide("BigWigs")
+						end
+					end,
+					hidden = function() return not icon end,
+					width = "full",
+				},
+				separator2 = {
+					type = "description",
+					name = " ",
+					order = 14,
+					width = "full",
+				},
+				sound = {
+					type = "toggle",
+					name = L.sound,
+					desc = L.soundDesc,
+					order = 21,
+					width = "half",
+				},
+				flash = {
+					type = "toggle",
+					name = L.flashScreen,
+					desc = L.flashScreenDesc,
+					order = 22,
+				},
+				raidicon = {
+					type = "toggle",
+					name = L.raidIcons,
+					desc = L.raidIconsDesc,
+					set = function(info, value)
+						local key = info[#info]
+						local plugin = BigWigs:GetPlugin("Raid Icons")
+						plugin:Disable()
+						BigWigs.db.profile[key] = value
+						options:SendMessage("BigWigs_CoreOptionToggled", key, value)
+						plugin:Enable()
+					end,
+					order = 24,
+				},
+				chat = {
+					type = "toggle",
+					name = L.chatMessages,
+					desc = L.chatMessagesDesc,
+					order = 25,
+					width = "full",
+					get = function() return BigWigs:GetPlugin("Messages").db.profile.chat end,
+					set = function(_, v) BigWigs:GetPlugin("Messages").db.profile.chat = v end,
+				},
+				separator3 = {
+					type = "description",
+					name = " ",
+					order = 30,
+					width = "full",
+				},
+				showBlizzardWarnings = {
+					type = "toggle",
+					name = L.showBlizzWarnings,
+					desc = L.showBlizzWarningsDesc,
+					set = function(info, value)
+						local key = info[#info]
+						local plugin = BigWigs:GetPlugin("BossBlock")
+						plugin:Disable()
+						BigWigs.db.profile[key] = value
+						options:SendMessage("BigWigs_CoreOptionToggled", key, value)
+						plugin:Enable()
+					end,
+					order = 31,
+					width = "full",
+				},
+				showZoneMessages = {
+					type = "toggle",
+					name = L.zoneMessages,
+					desc = L.zoneMessagesDesc,
+					order = 32,
+					width = "full",
+				},
+				blockmovies = {
+					type = "toggle",
+					name = L.blockMovies,
+					desc = L.blockMoviesDesc,
+					order = 33,
+					width = "full",
+				},
+				separator4 = {
+					type = "description",
+					name = " ",
+					order = 40,
+					width = "full",
+				},
+				fakeDBMVersion = {
+					type = "toggle",
+					name = L.dbmFaker,
+					desc = L.dbmFakerDesc,
+					order = 41,
+					width = "full",
+				},
+				slashDescTitle = {
+					type = "description",
+					name = "\n".. L.slashDescTitle,
+					fontSize = "large",
+					order = 43,
+					width = "full",
+				},
+				slashDescPull = {
+					type = "description",
+					name = "  ".. L.slashDescPull,
+					fontSize = "medium",
+					order = 44,
+					width = "full",
+				},
+				slashDescBreak = {
+					type = "description",
+					name = "  ".. L.slashDescBreak,
+					fontSize = "medium",
+					order = 45,
+					width = "full",
+				},
+				slashDescBar = {
+					type = "description",
+					name = "  ".. L.slashDescRaidBar,
+					fontSize = "medium",
+					order = 46,
+					width = "full",
+				},
+				slashDescLocalBar = {
+					type = "description",
+					name = "  ".. L.slashDescLocalBar,
+					fontSize = "medium",
+					order = 47,
+					width = "full",
+				},
+				slashDescRange = {
+					type = "description",
+					name = "  ".. L.slashDescRange,
+					fontSize = "medium",
+					order = 48,
+					width = "full",
+				},
+				slashDescVersion = {
+					type = "description",
+					name = "  ".. L.slashDescVersion,
+					fontSize = "medium",
+					order = 49,
+					width = "full",
+				},
+				slashDescConfig = {
+					type = "description",
+					name = "  ".. L.slashDescConfig,
+					fontSize = "medium",
+					order = 50,
+					width = "full",
 				},
 			},
 		},
@@ -293,9 +286,10 @@ end
 
 function options:OnInitialize()
 	acOptions.args.general.args.profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db)
+	acOptions.args.general.args.profileOptions.order = 1
 	LibStub("LibDualSpec-1.0"):EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
 
-	acr:RegisterOptionsTable("BigWigs", acOptions, true)
+	acr:RegisterOptionsTable("BigWigs", getOptions, true)
 	acd:SetDefaultSize("BigWigs", 858,660)
 	--local mainOpts = acd:AddToBlizOptions("BigWigs", "Big Wigs")
 	--mainOpts:HookScript("OnShow", function()
@@ -1261,7 +1255,7 @@ do
 end
 
 do
-	local registered = {}
+	local registered, registry = {}, {}
 	function options:Register(message, moduleName, module)
 		if registered[module.name] then return end
 		registered[module.name] = true
@@ -1274,15 +1268,28 @@ do
 			end
 		end
 		if module.pluginOptions then
-			acOptions.args[module.name] = module.pluginOptions
+			acOptions.args.general.args[module.name] = module.pluginOptions
 		end
 		if module.subPanelOptions then
 			local key = module.subPanelOptions.key
 			local name = "BigWigs_".. module.subPanelOptions.name -- XXX temp
 			local options = module.subPanelOptions.options
-			acr:RegisterOptionsTable(key, options, true)
-			module.subPanelOptionsPanel = acd:AddToBlizOptions(key, name)
+			--acr:RegisterOptionsTable(key, options, true)
+			--module.subPanelOptionsPanel = acd:AddToBlizOptions(key, name)
+
+			if type(options) == "function" then
+				registry[key] = options
+			else
+				acOptions.args[key] = options
+			end
 		end
+	end
+
+	function getOptions()
+		for key, options in next, registry do
+			acOptions.args[key] = options()
+		end
+		return acOptions
 	end
 end
 
