@@ -33,6 +33,7 @@ local AceGUI = LibStub("AceGUI-3.0")
 
 local colorModule
 local soundModule
+local translateZoneID
 
 local showToggleOptions, getAdvancedToggleOption = nil, nil
 local zoneModules = {}
@@ -90,8 +91,18 @@ local acOptions = {
 			descStyle = "", -- kill tooltip
 			func = function()
 				acd:Close("BigWigs")
-				InterfaceOptionsFrame_OpenToCategory("Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r")
-				InterfaceOptionsFrame_OpenToCategory("Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r")
+				for name, module in BigWigs:IterateBossModules() do
+					if module:IsEnabled() then
+						local menu = translateZoneID(module.otherMenu) or translateZoneID(module.zoneId)
+						if not menu then return end
+						InterfaceOptionsFrame_OpenToCategory(options:GetZonePanel(module.otherMenu or module.zoneId))
+						InterfaceOptionsFrame_OpenToCategory(options:GetZonePanel(module.otherMenu or module.zoneId))
+					end
+				end
+				if not InterfaceOptionsFrame:IsShown() then
+					InterfaceOptionsFrame_OpenToCategory("Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r")
+					InterfaceOptionsFrame_OpenToCategory("Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r")
+				end
 			end,
 			order = 4,
 			width = "half",
@@ -270,7 +281,7 @@ local acOptions = {
 	},
 }
 
-local function translateZoneID(id)
+function translateZoneID(id)
 	if not id or type(id) ~= "number" then return end
 	local name
 	if id < 10 then
@@ -408,17 +419,7 @@ function options:OnEnable()
 end
 
 function options:Open()
-	for name, module in BigWigs:IterateBossModules() do
-		if module:IsEnabled() then
-			local menu = translateZoneID(module.otherMenu) or translateZoneID(module.zoneId)
-			if not menu then return end
-			InterfaceOptionsFrame_OpenToCategory(self:GetZonePanel(module.otherMenu or module.zoneId))
-			InterfaceOptionsFrame_OpenToCategory(self:GetZonePanel(module.otherMenu or module.zoneId))
-		end
-	end
-	if not InterfaceOptionsFrame:IsShown() then
-		acd:Open("BigWigs")
-	end
+	acd:Open("BigWigs")
 end
 
 -------------------------------------------------------------------------------
