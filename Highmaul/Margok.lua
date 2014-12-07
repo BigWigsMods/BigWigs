@@ -143,7 +143,7 @@ function mod:ArcaneWrath(args)
 end
 
 function mod:Branded(args)
-	-- custom marking? replication makes it geometric so after three jumps we'd be capped
+	-- custom marking? need two marks (the first jump replicates)
 	if args.spellId ~= 164006 then -- Replication
 		self:SecondaryIcon(156225, args.destName)
 	end
@@ -152,7 +152,7 @@ function mod:Branded(args)
 	local jumpDistance = (args.spellId ~= 164005 and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
 
 	if self:Me(args.destGUID) then
-		brandedOnMe = args.spellName
+		brandedOnMe = args.spellId
 		local text = self:SpellName(156225)
 		if jumpDistance < 50 then
 			text = L.branded_say:format(self:SpellName(156225), amount, jumpDistance)
@@ -218,8 +218,8 @@ function mod:MarkOfChaosRemoved(args)
 	self:PrimaryIcon(158605)
 	self:CloseProximity()
 	if brandedOnMe then
-		local _, _, _, amount = UnitDebuff("player", brandedOnMe)
-		local jumpDistance = (args.spellId ~= 164005 and 0.75 or 0.5)^(amount - 1) * 200
+		local _, _, _, amount = UnitDebuff("player", self:SpellName(brandedOnMe))
+		local jumpDistance = (brandedOnMe ~= 164005 and 0.75 or 0.5)^(amount - 1) * 200
 		if jumpDistance < 50 then
 			self:Proximity(156225, jumpDistance)
 		end
