@@ -155,9 +155,9 @@ function mod:Branded(args)
 		brandedOnMe = args.spellId
 		local text = self:SpellName(156225)
 		if jumpDistance < 50 then
-			text = L.branded_say:format(self:SpellName(156225), amount, jumpDistance)
-		else
-			text = CL.count:format(self:SpellName(156225), amount)
+			text = L.branded_say:format(text, amount, jumpDistance)
+		elseif amount > 1 then
+			text = CL.count:format(text, amount)
 		end
 		self:Say(156225, text)
 		if jumpDistance < 50 and not markOfChaosTarget then
