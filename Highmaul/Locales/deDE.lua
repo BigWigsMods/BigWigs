@@ -55,6 +55,8 @@ end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "deDE")
 if L then
+	--L.branded_say = "%s (%d) %dy"
+
 	L.custom_off_fixate_marker = "Fixieren markieren"
 	L.custom_off_fixate_marker_desc = "Markiert die Ziele von Fixieren mit {rt1}{rt2}, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
 end

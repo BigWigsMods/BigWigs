@@ -55,6 +55,8 @@ end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "ruRU")
 if L then
+	--L.branded_say = "%s (%d) %dy"
+
 	L.custom_off_fixate_marker = "Маркировка Сосредоточение внимания"
 	L.custom_off_fixate_marker_desc = "Отмечать цели Горианских боевых магов метками {rt1}{rt2}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
 end

@@ -55,6 +55,8 @@ end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "frFR")
 if L then
+	--L.branded_say = "%s (%d) %dy"
+
 	L.custom_off_fixate_marker = "Marquage Fixer"
 	L.custom_off_fixate_marker_desc = "Marque les cibles de Fixer du Mage de guerre gorien avec {rt1}{rt2}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 end
