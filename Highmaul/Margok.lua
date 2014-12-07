@@ -122,8 +122,8 @@ function mod:Phases(unit, spellName, _, _, spellId)
 	elseif spellId == 158012 or spellId == 157964 then -- Power of Fortification, Replication (Phase start)
 		self:CDBar(156238, 8) -- Arcane Wrath
 		self:CDBar(156467, 18) -- Destructive Resonance
-		self:CDBar(158605, 28) -- Arcane Aberration
-		self:CDBar(156471, 38) -- Mark of Chaos
+		self:CDBar(156471, 28) -- Arcane Aberration
+		self:CDBar(158605, 38) -- Mark of Chaos
 		self:CDBar(157349, 48) -- Force Nova
 		if spellId ~= 157964 then -- Replication is the last phase
 			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
@@ -142,29 +142,44 @@ function mod:ArcaneWrath(args)
 	self:Bar(156238, 50) -- XXX first transform messes with the timer (+5-10s)
 end
 
-function mod:Branded(args)
-	-- custom marking? need two marks (the first jump replicates)
-	if args.spellId ~= 164006 then -- Replication
-		self:SecondaryIcon(156225, args.destName)
-	end
-
-	local _, _, _, amount = UnitDebuff(args.destName, args.spellName)
-	local jumpDistance = (args.spellId == 164005 and 0.75 or 0.5)^((amount or 1) - 1) * 200 -- Fortification takes longer to get rid of
-
-	if self:Me(args.destGUID) then
-		brandedOnMe = args.spellId
-		local text = self:SpellName(156225)
-		if jumpDistance < 50 then
-			text = L.branded_say:format(text, amount, jumpDistance)
-		elseif amount > 1 then
-			text = CL.count:format(text, amount)
+do
+	local function printTarget(self, amount, option, spellId, destName, spellName, destGUID)
+		if not amount then
+			local _
+			_, _, _, amount = UnitDebuff(self:Me(destGUID) and "player" or args.destName, args.spellName)
 		end
-		self:Say(156225, text)
-		if jumpDistance < 50 and not markOfChaosTarget then
-			self:OpenProximity(156225, jumpDistance)
+		if not amount then BigWigs:Print("Not enough delay for Branded scan, tell a dev!") return end
+
+		local jumpDistance = (spellId == 164005 and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
+
+		if self:Me(destGUID) then
+			brandedOnMe = spellId
+			local text = self:SpellName(option)
+			if jumpDistance < 50 then
+				text = L.branded_say:format(text, amount, jumpDistance)
+			elseif amount > 1 then
+				text = CL.count:format(text, amount)
+			end
+			self:Say(option, text)
+			if jumpDistance < 50 and not markOfChaosTarget then
+				self:OpenProximity(option, jumpDistance)
+			end
+		end
+		self:TargetMessage(option, args.destName, "Attention", nil, L.branded_say:format(self:SpellName(option), amount, jumpDistance))
+	end
+	function mod:Branded(args)
+		-- custom marking? need two marks (the first jump replicates)
+		if args.spellId ~= 164006 then -- Replication
+			self:SecondaryIcon(156225, args.destName)
+		end
+
+		local _, _, _, amount = UnitDebuff(self:Me(args.destGUID) and "player" or args.destName, args.spellName)
+		if not amount then
+			self:ScheduleTimer(printTarget, 0.4, self, nil, 156225, args.spellId, args.destName, args.spellName, args.destGUID)
+		else
+			printTarget(self, amount, 156225, args.spellId, args.destName, args.spellName, args.destGUID)
 		end
 	end
-	self:TargetMessage(156225, args.destName, "Attention", nil, L.branded_say:format(self:SpellName(156225), amount, jumpDistance))
 end
 
 function mod:BrandedRemoved(args)
@@ -213,15 +228,36 @@ function mod:MarkOfChaosApplied(args)
 	self:TargetMessage(158605, args.destName, "Urgent", "Alarm", nil, nil, true)
 end
 
-function mod:MarkOfChaosRemoved(args)
-	markOfChaosTarget = nil
-	self:PrimaryIcon(158605)
-	self:CloseProximity(158605)
-	if brandedOnMe then
-		local _, _, _, amount = UnitDebuff("player", self:SpellName(brandedOnMe))
-		local jumpDistance = (brandedOnMe == 164005 and 0.75 or 0.5)^(amount - 1) * 200
-		if jumpDistance < 50 then
-			self:OpenProximity(156225, jumpDistance)
+do
+	local function delayOpen(self)
+		if brandedOnMe then
+			local _, _, _, amount = UnitDebuff("player", self:SpellName(brandedOnMe))
+			if not amount then
+				BigWigs:Print("Not enough delay for opening proximity, tell a dev!")
+				return
+			end
+
+			local jumpDistance = (brandedOnMe == 164005 and 0.75 or 0.5)^(amount - 1) * 200
+			if jumpDistance < 50 then
+				self:OpenProximity(156225, jumpDistance)
+			end
+		end
+	end
+	function mod:MarkOfChaosRemoved(args)
+		markOfChaosTarget = nil
+		self:PrimaryIcon(158605)
+		self:CloseProximity(158605)
+		if brandedOnMe then
+			local _, _, _, amount = UnitDebuff("player", self:SpellName(brandedOnMe))
+			if not amount then
+				self:ScheduleTimer(delayOpen, 0.4, self)
+				return
+			end
+
+			local jumpDistance = (brandedOnMe == 164005 and 0.75 or 0.5)^((amount or 1) - 1) * 200
+			if jumpDistance < 50 then
+				self:OpenProximity(156225, jumpDistance)
+			end
 		end
 	end
 end
