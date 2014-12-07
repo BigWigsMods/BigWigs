@@ -87,6 +87,7 @@ local acOptions = {
 			type = "execute",
 			name = BOSSES:gsub(":", ""),
 			--desc = "Bosses",
+			descStyle = "", -- kill tooltip
 			func = function()
 				acd:Close("BigWigs")
 				InterfaceOptionsFrame_OpenToCategory("Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r")
