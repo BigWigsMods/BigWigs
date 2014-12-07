@@ -54,7 +54,7 @@ local acOptions = {
 			type = "description",
 			name = L.introduction,
 			fontSize = "medium",
-			order = 10,
+			order = 1,
 			width = "full",
 		},
 		anchors = {
@@ -70,7 +70,7 @@ local acOptions = {
 					options:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
 				end
 			end,
-			order = 11,
+			order = 2,
 			width = "double",
 		},
 		testing = {
@@ -80,8 +80,20 @@ local acOptions = {
 			func = function()
 				BigWigs:Test()
 			end,
-			order = 11.2,
+			order = 3,
 			width = "double",
+		},
+		bosses = {
+			type = "execute",
+			name = BOSSES:gsub(":", ""),
+			--desc = "Bosses",
+			func = function()
+				acd:Close("BigWigs")
+				InterfaceOptionsFrame_OpenToCategory("Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r")
+				InterfaceOptionsFrame_OpenToCategory("Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r")
+			end,
+			order = 4,
+			width = "half",
 		},
 		general = {
 			order = 20,
