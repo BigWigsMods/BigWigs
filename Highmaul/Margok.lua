@@ -40,7 +40,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{159515, "TANK"}, 156238, {156225, "ICON", "PROXIMITY", "SAY"}, 156467, 156471, {158605, "ICON", "PROXIMITY", "FLASH", "SAY"}, 157349,
+		{159515, "TANK"}, 156238, {156225, "ICON", "PROXIMITY", "SAY", "ME_ONLY"}, 156467, 156471, {158605, "ICON", "PROXIMITY", "FLASH", "SAY"}, 157349,
 		"volatile_anomaly",
 		{157801, "DISPEL"}, {157763, "FLASH"}, "custom_off_fixate_marker",
 		{158553, "TANK"}, {158563, "TANK"},
@@ -149,7 +149,7 @@ function mod:Branded(args)
 	end
 
 	local _, _, _, amount = UnitDebuff(args.destName, args.spellName)
-	local jumpDistance = (args.spellId ~= 164005 and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
+	local jumpDistance = (args.spellId == 164005 and 0.75 or 0.5)^((amount or 1) - 1) * 200 -- Fortification takes longer to get rid of
 
 	if self:Me(args.destGUID) then
 		brandedOnMe = args.spellId
@@ -219,7 +219,7 @@ function mod:MarkOfChaosRemoved(args)
 	self:CloseProximity(158605)
 	if brandedOnMe then
 		local _, _, _, amount = UnitDebuff("player", self:SpellName(brandedOnMe))
-		local jumpDistance = (brandedOnMe ~= 164005 and 0.75 or 0.5)^(amount - 1) * 200
+		local jumpDistance = (brandedOnMe == 164005 and 0.75 or 0.5)^(amount - 1) * 200
 		if jumpDistance < 50 then
 			self:OpenProximity(156225, jumpDistance)
 		end
