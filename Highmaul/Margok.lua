@@ -14,6 +14,7 @@ mod.engageId = 1705
 
 local phase = 1
 local mineCount = 1
+local markOfChaosTarget, brandedOnMe = nil, nil
 local fixateList = {}
 
 --------------------------------------------------------------------------------
@@ -22,12 +23,10 @@ local fixateList = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.branded_say = "%s (%d) %dy"
+
 	L.volatile_anomaly = -9919 -- Volatile Anomaly
 	L.volatile_anomaly_icon = "spell_arcane_arcane04"
-	
-	L.arcane_wrath = "{156238} ({156225})" -- Arcane Wrath (Branded)
-	L.arcane_wrath_desc = 156238
-	L.arcane_wrath_icon = 156238
 
 	L.custom_off_fixate_marker = "Fixate Marker"
 	L.custom_off_fixate_marker_desc = "Mark Gorian Warmage's Fixate targets with {rt1}{rt2}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
@@ -41,7 +40,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{159515, "TANK"}, {"arcane_wrath", "ICON", "SAY"}, 156467, 156471, {158605, "ICON", "PROXIMITY", "FLASH", "SAY"}, 157349,
+		{159515, "TANK"}, 156238, {156225, "ICON", "PROXIMITY", "SAY"}, 156467, 156471, {158605, "ICON", "PROXIMITY", "FLASH", "SAY"}, 157349,
 		"volatile_anomaly",
 		{157801, "DISPEL"}, {157763, "FLASH"}, "custom_off_fixate_marker",
 		{158553, "TANK"}, {158563, "TANK"},
@@ -71,15 +70,16 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Slow", 157801)
 	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 157763)
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 157763)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushArmor", 158553)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushArmor", 158553) -- XXX 10s cast, 4s debuff?
 	self:Log("SPELL_CAST_SUCCESS", "KickToTheFace", 158563)
 end
 
 function mod:OnEngage()
 	phase = 1
 	mineCount = 1
+	markOfChaosTarget, brandedOnMe = nil, nil
 	wipe(fixateList)
-	self:Bar("arcane_wrath", 6, 156238) -- Arcane Wrath
+	self:Bar(156238, 6)  -- Arcane Wrath
 	self:Bar(156467, 15) -- Destructive Resonance
 	self:Bar(156471, 25) -- Arcane Aberration
 	self:Bar(158605, 35) -- Mark of Chaos
@@ -120,7 +120,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 			self:StopBar(157349) -- Force Nova
 		end
 	elseif spellId == 158012 or spellId == 157964 then -- Power of Fortification, Replication (Phase start)
-		self:CDBar("arcane_wrath", 8, 156238) -- Arcane Wrath
+		self:CDBar(156238, 8) -- Arcane Wrath
 		self:CDBar(156467, 18) -- Destructive Resonance
 		self:CDBar(158605, 28) -- Arcane Aberration
 		self:CDBar(156471, 38) -- Mark of Chaos
@@ -138,21 +138,41 @@ function mod:AcceleratedAssault(args)
 end
 
 function mod:ArcaneWrath(args)
-	self:Message("arcane_wrath", "Urgent", self:Healer() and "Alert", 156238)
-	self:Bar("arcane_wrath", 50, 156238) -- XXX first transform messes with the timer (+5-10s)
+	self:Message(156238, "Urgent", self:Healer() and "Alert")
+	self:Bar(156238, 50) -- XXX first transform messes with the timer (+5-10s)
 end
 
 function mod:Branded(args)
 	-- custom marking? replication makes it geometric so after three jumps we'd be capped
-	-- also might be worth doing a proximity at some point as the jump range lowers (200->100->50->25->13)
 	if args.spellId ~= 164006 then -- Replication
-		self:SecondaryIcon("arcane_wrath", args.destName)
+		self:SecondaryIcon(156225, args.destName)
 	end
+
+	local _, _, _, amount = UnitDebuff(args.destName, args.spellName)
+	local jumpDistance = (args.spellId ~= 164005 and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
+
 	if self:Me(args.destGUID) then
-		local _, _, _, amount = UnitDebuff(args.destName, args.spellName)
-		local text = amount > 1 and CL.count:format(self:SpellName(156225), amount) or self:SpellName(156225) -- Branded
-		self:Message("arcane_wrath", "Personal", "Alarm", CL.you:format(text), 156238)
-		self:Say("arcane_wrath", text)
+		brandedOnMe = args.spellName
+		local text = self:SpellName(156225)
+		if jumpDistance < 50 then
+			text = L.branded_say:format(self:SpellName(156225), amount, jumpDistance)
+		else
+			text = CL.count:format(self:SpellName(156225), amount)
+		end
+		self:Say(156225, text)
+		if jumpDistance < 50 and not markOfChaosTarget then
+			self:Proximity(156225, jumpDistance)
+		end
+	end
+	self:TargetMessage(156225, args.destName, "Attention", nil, L.branded_say:format(self:SpellName(156225), amount, jumpDistance))
+end
+
+function mod:BrandedRemoved(args)
+	if self:Me(args.destGUID) then
+		brandedOnMe = nil
+		if not markOfChaosTarget then
+			self:CloseProximity()
+		end
 	end
 end
 
@@ -174,6 +194,7 @@ function mod:ArcaneAberration(args)
 end
 
 function mod:MarkOfChaosApplied(args)
+	markOfChaosTarget = args.destName
 	self:PrimaryIcon(158605, args.destName)
 	self:TargetBar(158605, 8, args.destName)
 	self:Bar(158605, 50)
@@ -193,8 +214,16 @@ function mod:MarkOfChaosApplied(args)
 end
 
 function mod:MarkOfChaosRemoved(args)
+	markOfChaosTarget = nil
 	self:PrimaryIcon(158605)
-	self:CloseProximity(158605)
+	self:CloseProximity()
+	if brandedOnMe then
+		local _, _, _, amount = UnitDebuff("player", brandedOnMe)
+		local jumpDistance = (args.spellId ~= 164005 and 0.75 or 0.5)^(amount - 1) * 200
+		if jumpDistance < 50 then
+			self:Proximity(156225, jumpDistance)
+		end
+	end
 end
 
 function mod:ForceNova(args)
@@ -242,7 +271,7 @@ function mod:FixateApplied(args)
 		self:Flash(args.spellId)
 	end
 	if self.db.profile.custom_off_fixate_marker then
-		local index = next(fixateList) == 1 and 2 or 1
+		local index = next(fixateList) and 2 or 1
 		fixateList[args.destName] = index
 		SetRaidTarget(args.destName, index)
 	end
