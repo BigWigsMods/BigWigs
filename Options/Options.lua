@@ -50,17 +50,17 @@ local acOptions = {
 		options:SendMessage("BigWigs_CoreOptionToggled", key, value)
 	end,
 	args = {
-		heading = {
+		introduction = {
 			type = "description",
 			name = L.introduction,
 			fontSize = "medium",
 			order = 10,
 			width = "full",
 		},
-		configure = {
+		anchors = {
 			type = "execute",
-			name = "Toggle Anchors",
-			desc = "Toggle Anchors",
+			name = L.toggleAnchorsBtn,
+			desc = L.toggleAnchorsBtn_desc,
 			func = function()
 				if not BigWigs:IsEnabled() then BigWigs:Enable() end
 				if options:InConfigureMode() then
@@ -73,10 +73,10 @@ local acOptions = {
 			order = 11,
 			width = "double",
 		},
-		test = {
+		testing = {
 			type = "execute",
-			name = "Spawn Test Bars",
-			desc = "test",
+			name = L.testBarsBtn,
+			desc = L.testBarsBtn_desc,
 			func = function()
 				BigWigs:Test()
 			end,
@@ -254,12 +254,6 @@ local acOptions = {
 				},
 			},
 		},
-		---pluginOptions = {
-		---	name = L.customizeBtn,
-		---	type = "group",
-		---	childGroups = "tab",
-		---	args = {},
-		---}
 	},
 }
 

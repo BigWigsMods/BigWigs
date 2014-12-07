@@ -49,11 +49,11 @@ L.coreAddonDisabled = "Big Wigs won't function properly since the addon %s is di
 L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
 
 -- Options.lua
-L.customizeBtn = "Customize ..."
-L.profiles = "Profiles"
 L.introduction = "Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group."
-L.configureBtnName = "Move & Configure >>> Bars/Messages/..."
-L.configureBtnDesc = "Closes the interface options window and lets you configure displays for things like bars and messages.\n\nIf you want to customize more behind-the-scenes things, you can expand Big Wigs in the left tree and find the 'Customize ...' subsection."
+L.toggleAnchorsBtn = "Toggle Anchors"
+L.toggleAnchorsBtn_desc = "Toggle showing or hiding of all the anchors."
+L.testBarsBtn = "Create Test Bar"
+L.testBarsBtn_desc = "Creates a bar for you to test your current display settings with."
 L.sound = "Sound"
 L.soundDesc = "Messages might come with a sound. Some people find it easier to listen for these after they've learned which sound goes with which message, as opposed to reading the actual messages.\n\n|cffff4411Even when off, the default raid warning sound might be played by incoming raid warnings from other players. That sound, however, is different from the sounds we use.|r"
 L.showBlizzWarnings = "Show Blizzard warnings"
