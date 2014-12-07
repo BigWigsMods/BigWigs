@@ -1,5 +1,7 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "enUS", true)
 
+L.general = "General"
+
 -----------------------------------------------------------------------
 -- AltPower.lua
 --

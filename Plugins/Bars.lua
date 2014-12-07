@@ -522,7 +522,7 @@ do
 	local function shouldDisable() return not plugin.db.profile.interceptMouse end
 	plugin.pluginOptions = {
 		type = "group",
-		name = "Bars",
+		name = L.bars,
 		childGroups = "tab",
 		get = function(info)
 			local key = info[#info]
@@ -554,7 +554,7 @@ do
 		args = {
 			custom = {
 				type = "group",
-				name = "Custom",
+				name = L.general,
 				order = 1,
 				args = {
 					font = {
