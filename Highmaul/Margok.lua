@@ -161,7 +161,7 @@ function mod:Branded(args)
 		end
 		self:Say(156225, text)
 		if jumpDistance < 50 and not markOfChaosTarget then
-			self:Proximity(156225, jumpDistance)
+			self:OpenProximity(156225, jumpDistance)
 		end
 	end
 	self:TargetMessage(156225, args.destName, "Attention", nil, L.branded_say:format(self:SpellName(156225), amount, jumpDistance))
@@ -171,7 +171,7 @@ function mod:BrandedRemoved(args)
 	if self:Me(args.destGUID) then
 		brandedOnMe = nil
 		if not markOfChaosTarget then
-			self:CloseProximity()
+			self:CloseProximity(156225)
 		end
 	end
 end
@@ -216,12 +216,12 @@ end
 function mod:MarkOfChaosRemoved(args)
 	markOfChaosTarget = nil
 	self:PrimaryIcon(158605)
-	self:CloseProximity()
+	self:CloseProximity(158605)
 	if brandedOnMe then
 		local _, _, _, amount = UnitDebuff("player", self:SpellName(brandedOnMe))
 		local jumpDistance = (brandedOnMe ~= 164005 and 0.75 or 0.5)^(amount - 1) * 200
 		if jumpDistance < 50 then
-			self:Proximity(156225, jumpDistance)
+			self:OpenProximity(156225, jumpDistance)
 		end
 	end
 end
