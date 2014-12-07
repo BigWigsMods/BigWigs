@@ -259,7 +259,6 @@ local acOptions = {
 						},
 					},
 				},
-				profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db),
 			},
 		},
 		---pluginOptions = {
@@ -270,7 +269,6 @@ local acOptions = {
 		---}
 	},
 }
-LibStub("LibDualSpec-1.0"):EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
 
 local function translateZoneID(id)
 	if not id or type(id) ~= "number" then return end
@@ -294,6 +292,9 @@ local function findPanel(name, parent)
 end
 
 function options:OnInitialize()
+	acOptions.args.general.args.profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db)
+	LibStub("LibDualSpec-1.0"):EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
+
 	acr:RegisterOptionsTable("BigWigs", acOptions)
 	acd:SetDefaultSize("BigWigs", 858,660)
 	--local mainOpts = acd:AddToBlizOptions("BigWigs", "Big Wigs")
