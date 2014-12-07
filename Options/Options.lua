@@ -295,7 +295,7 @@ function options:OnInitialize()
 	acOptions.args.general.args.profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db)
 	LibStub("LibDualSpec-1.0"):EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
 
-	acr:RegisterOptionsTable("BigWigs", acOptions)
+	acr:RegisterOptionsTable("BigWigs", acOptions, true)
 	acd:SetDefaultSize("BigWigs", 858,660)
 	--local mainOpts = acd:AddToBlizOptions("BigWigs", "Big Wigs")
 	--mainOpts:HookScript("OnShow", function()
@@ -373,8 +373,8 @@ function options:OnInitialize()
 
 	colorModule = BigWigs:GetPlugin("Colors")
 	soundModule = BigWigs:GetPlugin("Sounds")
-	acr:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"))
-	acr:RegisterOptionsTable("Big Wigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"))
+	acr:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
+	acr:RegisterOptionsTable("Big Wigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
 end
 
 function options:OnEnable()
@@ -1266,7 +1266,7 @@ do
 		if registered[module.name] then return end
 		registered[module.name] = true
 		if (module.toggleOptions or module.GetOptions) and not module:IsBossModule() then
-			local panel, created = self:GetPanel(moduleName, "Big Wigs")
+			local panel, created = self:GetPanel("BigWigs_".. moduleName) -- XXX temp
 			if created then
 				panel:SetScript("OnShow", onZoneShow)
 				panel:SetScript("OnHide", onZoneHide)
@@ -1278,10 +1278,10 @@ do
 		end
 		if module.subPanelOptions then
 			local key = module.subPanelOptions.key
-			local name = module.subPanelOptions.name
+			local name = "BigWigs_".. module.subPanelOptions.name -- XXX temp
 			local options = module.subPanelOptions.options
 			acr:RegisterOptionsTable(key, options, true)
-			module.subPanelOptionsPanel = acd:AddToBlizOptions(key, name, "Big Wigs")
+			module.subPanelOptionsPanel = acd:AddToBlizOptions(key, name)
 		end
 	end
 end
