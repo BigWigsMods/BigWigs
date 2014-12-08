@@ -191,6 +191,7 @@ do
 		local _, _, _, amount = UnitDebuff(self:Me(args.destGUID) and "player" or args.destName, args.spellName)
 		if not amount then
 			self:ScheduleTimer(printTarget, 0.4, self, nil, 156225, args.spellId, args.destName, args.spellName, args.destGUID)
+			BigWigs:Print("Branded was nil, tell a dev!")
 		else
 			printTarget(self, amount, 156225, args.spellId, args.destName, args.spellName, args.destGUID)
 		end
