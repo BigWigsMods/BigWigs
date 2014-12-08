@@ -95,7 +95,7 @@ LibStub("LibSink-2.0"):Embed(fakeEmphasizeMessageAddon)
 
 plugin.pluginOptions = {
 	type = "group",
-	name = "Messages",
+	name = L.messages,
 	childGroups = "tab",
 	args = {
 		output = {
