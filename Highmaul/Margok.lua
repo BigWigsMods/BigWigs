@@ -40,16 +40,31 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{159515, "TANK"}, 156238, {156225, "ICON", "PROXIMITY", "SAY", "ME_ONLY"}, 156467, 156471, {158605, "ICON", "PROXIMITY", "FLASH", "SAY"}, 157349,
+		--[[ Imperator Mar'gok ]]--
+		{159515, "TANK"}, -- Accelerated Assault
+		156238, -- Arcane Wrath
+		{156225, "ICON", "PROXIMITY", "SAY", "ME_ONLY"}, -- Branded
+		156467, -- Destructive Resonance
+		156471, -- Summon Arcane Aberration
+		{158605, "ICON", "PROXIMITY", "FLASH", "SAY"}, -- Mark of Chaos
+		157349, -- Force Nova
+		--[[ Intermission ]]--
 		"volatile_anomaly",
-		{157801, "DISPEL"}, {157763, "FLASH"}, "custom_off_fixate_marker",
-		{158553, "TANK"}, {158563, "TANK"},
-		"stages", "bosskill"
+		--[[ Gorian Warmage ]]--
+		{157801, "DISPEL"}, -- Slow
+		{157763, "FLASH"}, -- Fixate
+		"custom_off_fixate_marker",
+		--[[ Gorian Reaver ]]--
+		{158553, "TANK"}, -- Crush Armor
+		{158563, "TANK"}, -- Kick to the Face
+		--[[ General ]]--
+		"stages",
+		"bosskill"
 	}, {
 		[159515] = mod.displayName,
 		["volatile_anomaly"] = "intermission",
-		[157801] = -9922,
-		[158553] = -9921,
+		[157801] = -9922, -- Gorian Warmage
+		[158553] = -9921, -- Gorian Reaver
 		["stages"] = "general",
 	}
 end
@@ -254,7 +269,7 @@ do
 				return
 			end
 
-			local jumpDistance = (brandedOnMe == 164005 and 0.75 or 0.5)^((amount or 1) - 1) * 200
+			local jumpDistance = (brandedOnMe == 164005 and 0.75 or 0.5)^(amount - 1) * 200
 			if jumpDistance < 50 then
 				self:OpenProximity(156225, jumpDistance)
 			end
@@ -296,7 +311,7 @@ end
 
 function mod:Slow(args)
 	if self:Dispeller("magic", nil, args.spellId) then
-		self:TargetMessage(args.spellId, args.destName, "Attention", "Alert", nil, true)
+		self:TargetMessage(args.spellId, args.destName, "Attention", "Alert", nil, nil, true)
 	end
 end
 
