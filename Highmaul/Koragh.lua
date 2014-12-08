@@ -73,10 +73,10 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(161612, 90) -- Overwhelming Energy (should probably cancel this if it's going to go off during rune phase)
+	self:Bar(161612, 36) -- Overwhelming Energy
 	if self:Mythic() then
 		self:CDBar(172895, 8) -- Expel Magic: Fel
-		self:Bar(163472, 120) -- Dominating Power
+		--self:Bar(163472, 90) -- Dominating Power
 	end
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
@@ -183,7 +183,7 @@ end
 function mod:OverwhelmingEnergy(args)
 	if self:Me(args.destGUID) and UnitPower("player", 10) > 0 then -- check alternate power, too
 		self:Message(spellId, "Positive", "Warning") -- green to keep it different looking
-		self:Bar(args.spellId, 30)
+		self:Bar(args.spellId, 30) -- XXX in mythic, don't fire this bar if it's going to cause mcs
 	end
 end
 
