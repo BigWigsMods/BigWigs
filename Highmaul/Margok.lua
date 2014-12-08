@@ -14,7 +14,7 @@ mod.engageId = 1705
 
 local phase = 1
 local mineCount = 1
-local markOfChaosTarget, brandedOnMe = nil, nil
+local markOfChaosTarget, brandedOnMe, fixateOnMe = nil, nil, nil
 local fixateList = {}
 
 --------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ function mod:GetOptions()
 		"volatile_anomaly",
 		--[[ Gorian Warmage ]]--
 		{157801, "DISPEL"}, -- Slow
-		{157763, "FLASH"}, -- Fixate
+		{157763, "PROXIMITY", "FLASH"}, -- Fixate
 		"custom_off_fixate_marker",
 		--[[ Gorian Reaver ]]--
 		{158553, "TANK"}, -- Crush Armor
@@ -79,6 +79,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "DestructiveResonance", 156467, 164075, 164076, 164077)
 	self:Log("SPELL_CAST_START", "ArcaneAberration", 156471, 164299, 164301, 164303)
 	self:Log("SPELL_CAST_START", "MarkOfChaos", 158605, 164176, 164178, 164191)
+	self:Log("SPELL_AURA_APPLIED", "MarkOfChaosApplied", 158605, 164176, 164178, 164191)
 	self:Log("SPELL_AURA_REMOVED", "MarkOfChaosRemoved", 158605, 164176, 164178, 164191)
 	self:Log("SPELL_CAST_START", "ForceNova", 157349, 164232, 164235, 164240)
 	-- Intermission
@@ -94,7 +95,7 @@ end
 function mod:OnEngage()
 	phase = 1
 	mineCount = 1
-	markOfChaosTarget, brandedOnMe = nil, nil
+	markOfChaosTarget, brandedOnMe, fixateOnMe = nil, nil, nil
 	wipe(fixateList)
 	self:Bar(156238, 6)  -- Arcane Wrath
 	self:Bar(156467, 15) -- Destructive Resonance
@@ -138,7 +139,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 			self:StopBar(157349) -- Force Nova
 		end
 	elseif spellId == 158012 or spellId == 157964 then -- Power of Fortification, Replication (Phase start)
-		self:CDBar(156238, 8) -- Arcane Wrath
+		self:CDBar(156238, 8)  -- Arcane Wrath
 		self:CDBar(156467, 18) -- Destructive Resonance
 		self:CDBar(156471, 28) -- Arcane Aberration
 		self:CDBar(158605, 38) -- Mark of Chaos
@@ -191,6 +192,9 @@ function mod:BrandedRemoved(args)
 		if not markOfChaosTarget then
 			self:CloseProximity(156225)
 		end
+		if fixateOnMe then
+			self:OpenProximity(157763, 8)
+		end
 	end
 end
 
@@ -225,29 +229,30 @@ function mod:ArcaneAberration(args)
 end
 
 do
-	local isFortification = nil
 	local function printTarget(self, name, guid)
-		markOfChaosTarget = name
-		self:PrimaryIcon(158605, name)
-		self:TargetBar(158605, 10, name)
-		if self:Me(guid) then
-			self:Flash(158605)
-			self:OpenProximity(158605, 35)
-			if isFortification then -- Fortification (you're rooted)
-				self:Say(158605)
-			end
-		else
-			if isFortification and self:Range(name) < 35 then -- Fortification (target rooted)
-				self:Flash(158605)
-			end
-			self:OpenProximity(158605, 35, name)
-		end
 		self:TargetMessage(158605, name, "Urgent", "Alarm", nil, nil, true)
 	end
 	function mod:MarkOfChaos(args)
 		self:Bar(158605, 51) -- 51-52 with some random cases of 55
-		isFortification = args.spellId == 164178
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
+	end
+end
+
+function mod:MarkOfChaosApplied(args)
+	markOfChaosTarget = args.destName
+	self:PrimaryIcon(158605, args.destName)
+	self:TargetBar(158605, 8, args.destName)
+	if self:Me(args.destGUID) then
+		self:Flash(158605)
+		self:OpenProximity(158605, 35)
+		if args.spellId == 164178 then -- Fortification (you're rooted)
+			self:Say(158605)
+		end
+	else
+		if args.spellId == 164178 and self:Range(args.destName) < 35 then -- Fortification (target rooted)
+			self:Flash(158605)
+		end
+		self:OpenProximity(158605, 35, args.destName)
 	end
 end
 
@@ -261,6 +266,8 @@ function mod:MarkOfChaosRemoved(args)
 		if jumpDistance < 50 then
 			self:OpenProximity(156225, jumpDistance)
 		end
+	elseif fixateOnMe then -- because you might be keeping one alive?
+		self:OpenProximity(157763, 8)
 	end
 end
 
@@ -304,9 +311,13 @@ end
 
 function mod:FixateApplied(args)
 	if self:Me(args.destGUID) then
+		fixateOnMe = true
 		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:TargetBar(args.spellId, 15, args.destName)
 		self:Flash(args.spellId)
+		if not markOfChaosTarget then
+			self:OpenProximity(args.spellId, 8)
+		end
 	end
 	if self.db.profile.custom_off_fixate_marker then
 		local index = next(fixateList) and 2 or 1
@@ -316,9 +327,13 @@ function mod:FixateApplied(args)
 end
 
 function mod:FixateRemoved(args)
+	if self:Me(args.destGUID) and not markOfChaosTarget then
+		fixateOnMe = nil
+		self:CloseProximity(args.spellId, 8)
+	end
 	if self.db.profile.custom_off_fixate_marker then
-		SetRaidTarget(args.destName, 0)
 		fixateList[args.destName] = nil
+		SetRaidTarget(args.destName, 0)
 	end
 end
 
