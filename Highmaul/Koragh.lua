@@ -73,8 +73,10 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:Bar(161612, 90) -- Overwhelming Energy (should probably cancel this if it's going to go off during rune phase)
 	if self:Mythic() then
 		self:CDBar(172895, 8) -- Expel Magic: Fel
+		self:Bar(163472, 120) -- Dominating Power
 	end
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
@@ -223,9 +225,9 @@ do
 		scheduled = nil
 	end
 	function mod:DominatingPower(args)
-		--self:TargetBar(args.spellId, 60, args.destName)
 		list[#list+1] = args.destName
 		if not scheduled then
+			self:Bar(args.spellId, 60)
 			scheduled = self:ScheduleTimer(warn, 0.2, args.spellId)
 		end
 	end
