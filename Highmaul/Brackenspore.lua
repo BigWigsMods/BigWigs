@@ -44,14 +44,28 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		163755, 163794,
-		"spore_shooter", "mind_fungus", "flesh_eater", 160013,
-		"living_mushroom", "rejuvenating_mushroom",
-		{164125, "FLASH"}, {163241, "TANK"}, {159219, "TANK_HEALER"}, 159996, "berserk", "bosskill"
+		--[[ Mythic ]]--
+		163755, -- Call of the Tides
+		163794, -- Exploding Fungus
+		--[[ Hostile Fungus ]]--
+		"spore_shooter", -- Small Adds
+		"mind_fungus", -- Bad Shroom (Reduced casting speed)
+		"flesh_eater", -- Big Add
+		160013, -- Decay
+		--[[ Beneficial Mushrooms ]]--
+		"living_mushroom", -- Good Shroom (Heals units in 20yd)
+		"rejuvenating_mushroom", -- Good Shroom (Increased haste and Mana regen)
+		--[[ General ]]--
+		{164125, "FLASH"}, -- Creeping Moss
+		{163241, "TANK"}, -- Rot
+		{159219, "TANK_HEALER"}, -- Necrotic Breath
+		159996, -- Infesting Spores
+		"berserk",
+		"bosskill"
 	}, {
 		[163755] = "mythic",
-		["spore_shooter"] = -9993,
-		["living_mushroom"] = -9998,
+		["spore_shooter"] = -9993, -- Hostile Fungus
+		["living_mushroom"] = -9998, -- Beneficial Mushrooms
 		[164125] = "general"
 	}
 end

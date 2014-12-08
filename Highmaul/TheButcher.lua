@@ -35,9 +35,18 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		-10228, {163046, "FLASH"},
-		{156147, "TANK"}, {156151, "TANK_HEALER"}, 156157, 156152, {-8860, "PROXIMITY"}, "frenzy",
-		"berserk", "bosskill"
+		--[[ Mythic ]] --
+		-10228, -- Night-Twisted Cadaver
+		{163046, "FLASH"}, -- Pale Vitriol
+		--[[ General ]]--
+		{156147, "TANK"}, -- The Cleaver
+		{156151, "TANK_HEALER"}, -- The Tenderizer
+		156157, -- Cleave
+		156152, -- Gushing Wounds
+		{-8860, "PROXIMITY"}, -- Bounding Cleave
+		"frenzy",
+		"berserk",
+		"bosskill"
 	}, {
 		[-10228] = "mythic",
 		[156147] = "general"

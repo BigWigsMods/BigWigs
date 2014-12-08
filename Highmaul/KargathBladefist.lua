@@ -33,8 +33,20 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		-9396, {162497, "FLASH"}, --177776,
-		-9394, {159113, "TANK_HEALER"}, 159250, {158986, "SAY", "ICON", "FLASH"}, 159947, 159413, 159311, 160521, "bosskill"
+		--[[ Mythic ]]--
+		-9396, -- Ravenous Bloodmaw
+		{162497, "FLASH"}, -- On the Hunt
+		--177776, -- Arena Sweeper
+		--[[ General ]]--
+		-9394, -- Fire Pillar
+		{159113, "TANK_HEALER"}, -- Impale
+		159250, -- Blade Dance
+		{158986, "SAY", "ICON", "FLASH"}, -- Berserker Rush
+		159947, -- Chain Hurl
+		159413, -- Mauling Brew
+		159311, -- Flame Jet
+		160521, -- Vile Breath
+		"bosskill"
 	}, {
 		[-9396] = "mythic",
 		[-9394] = "general"

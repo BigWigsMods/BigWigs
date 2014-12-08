@@ -50,12 +50,23 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{162894, "TANK"}, {162892, "TANK"}, 162968,
-		163312,
-		{162288, "TANK"}, {162346, "FLASH"}, "custom_off_barrage_marker", 162475, "adds", "berserk", "bosskill",
+		--[[ Night-Twisted Earthwarper ]]--
+		{162894, "TANK"}, -- Gift of Earth
+		{162892, "TANK"}, -- Petrification
+		162968, -- Earthen Flechettes
+		--[[ Night-Twisted Berserker ]]--
+		163312, -- Raving Assault
+		--[[ General ]]--
+		{162288, "TANK"}, -- Accretion
+		{162346, "FLASH"}, -- Crystalline Barrage
+		"custom_off_barrage_marker",
+		162475, -- Tectonic Upheaval
+		"adds",
+		"berserk",
+		"bosskill",
 	}, {
-		[162894] = -10061, -- Earthwarper
-		[163312] = -10062, -- Berserker
+		[162894] = -10061, -- Night-Twisted Earthwarper
+		[163312] = -10062, -- Night-Twisted Berserker
 		[162288] = "general",
 	}
 end
