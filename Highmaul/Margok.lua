@@ -161,7 +161,7 @@ do
 	local function printTarget(self, amount, option, spellId, destName, spellName, destGUID)
 		if not amount then
 			local _
-			_, _, _, amount = UnitDebuff(self:Me(destGUID) and "player" or args.destName, args.spellName)
+			_, _, _, amount = UnitDebuff(self:Me(destGUID) and "player" or destName, spellName)
 		end
 		if not amount then BigWigs:Print("Not enough delay for Branded scan, tell a dev!") return end
 
@@ -180,7 +180,7 @@ do
 				self:OpenProximity(option, jumpDistance)
 			end
 		end
-		self:TargetMessage(option, args.destName, "Attention", nil, L.branded_say:format(self:SpellName(option), amount, jumpDistance))
+		self:TargetMessage(option, destName, "Attention", nil, L.branded_say:format(self:SpellName(option), amount, jumpDistance))
 	end
 	function mod:Branded(args)
 		-- custom marking? need two marks (the first jump replicates)
