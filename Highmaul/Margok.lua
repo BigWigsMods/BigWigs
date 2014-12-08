@@ -78,12 +78,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "BrandedRemoved", 156225, 164004, 164005, 164006)
 	self:Log("SPELL_CAST_START", "DestructiveResonance", 156467, 164075, 164076, 164077)
 	self:Log("SPELL_CAST_START", "ArcaneAberration", 156471, 164299, 164301, 164303)
-	self:Log("SPELL_AURA_APPLIED", "MarkOfChaosApplied", 158605, 164176, 164178, 164191)
+	self:Log("SPELL_CAST_START", "MarkOfChaos", 158605, 164176, 164178, 164191)
 	self:Log("SPELL_AURA_REMOVED", "MarkOfChaosRemoved", 158605, 164176, 164178, 164191)
 	self:Log("SPELL_CAST_START", "ForceNova", 157349, 164232, 164235, 164240)
 	-- Intermission
-	self:Log("SPELL_AURA_APPLIED", "IntermissionStart", 174057) -- Arcane Power
-	self:Log("SPELL_AURA_REMOVED", "IntermissionEnd", 174057)
+	self:Log("SPELL_AURA_APPLIED", "IntermissionStart", 174057, 157289) -- Arcane Protection
+	self:Log("SPELL_AURA_REMOVED", "IntermissionEnd", 174057, 157289)
 	self:Log("SPELL_AURA_APPLIED", "Slow", 157801)
 	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 157763)
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 157763)
@@ -99,7 +99,7 @@ function mod:OnEngage()
 	self:Bar(156238, 6)  -- Arcane Wrath
 	self:Bar(156467, 15) -- Destructive Resonance
 	self:Bar(156471, 25) -- Arcane Aberration
-	self:Bar(158605, 35) -- Mark of Chaos
+	self:Bar(158605, 34) -- Mark of Chaos
 	self:Bar(157349, 45) -- Force Nova
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
@@ -127,6 +127,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		mineCount = 1
 
 		if spellId == 164336 then -- no intermission for Displacement
+			 -- XXX first transform messes with timers, typically adding ~10s
 			self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
 			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 		else
@@ -156,7 +157,7 @@ end
 
 function mod:ArcaneWrath(args)
 	self:Message(156238, "Urgent", self:Healer() and "Alert")
-	self:Bar(156238, 50) -- XXX first transform messes with the timer (+5-10s)
+	self:Bar(156238, 50)
 end
 
 function mod:Branded(args)
@@ -168,7 +169,7 @@ function mod:Branded(args)
 	local _, _, _, amount = UnitDebuff(args.destName, args.spellName)
 	local jumpDistance = (args.spellId == 164005 and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
 
-	if self:Me(args.destGUID) then
+	if self:Me(args.destGUID) and not self:LFR() then
 		brandedOnMe = args.spellId
 		local text = self:SpellName(156225)
 		if jumpDistance < 50 then
@@ -194,10 +195,23 @@ function mod:BrandedRemoved(args)
 end
 
 do
-	local mineTimes = { 15, 19, 15 } -- patterns!
+	local mineTimes = {
+		[3] = { 24, 15.8, 24, 19.4, 28, 23 },
+		[4] = { 24, },
+	}
+	-- 24.3
+	-- 20.7 19.4 20.6 15.8 15.8 20.7
+	-- 24.2 15.8 24.3 19.4 27.9 23.1
+	-- 24.3 24.3 15.8
+
+	-- 24.3
+	-- 15.9 15.8 15.8 20.6 15.8 24.3 15.8
+	-- 24.3 15.8 24.2 19.4 28.0 23.1
+	-- 24.3 15.8 24.2 19.5
 	function mod:DestructiveResonance(args)
 		self:Message(156467, "Urgent")
-		self:CDBar(156467, phase == 1 and 24 or mineTimes[mineCount]) -- XXX rp during first transform seems to add 3s to the timer (second cd being 27 pretty consistently)
+		local t = not self:Mythic() and mineTimes[phase] and mineTimes[phase][mineCount] or 15
+		self:CDBar(156467, phase == 1 and 24 or t)
 		if phase > 1 then
 			mineCount = mineCount + 1
 			if mineCount > 3 then mineCount = 1 end
@@ -206,28 +220,35 @@ do
 end
 
 function mod:ArcaneAberration(args)
-	self:Message(156471, "Urgent", self:Tank() and "Info")
-	self:CDBar(156471, 50)
+	self:Message(156471, "Urgent", not self:Healer() and "Info")
+	self:CDBar(156471, 46) -- 46 or 51
 end
 
-function mod:MarkOfChaosApplied(args)
-	markOfChaosTarget = args.destName
-	self:PrimaryIcon(158605, args.destName)
-	self:TargetBar(158605, 8, args.destName)
-	self:Bar(158605, 50)
-	if self:Me(args.destGUID) then
-		self:Flash(158605)
-		self:OpenProximity(158605, 35)
-		if args.spellId == 164178 then -- Fortification (you're rooted)
-			self:Say(158605)
-		end
-	else
-		if args.spellId == 164178 and self:Range(args.destName) < 35 then -- Fortification (target rooted)
+do
+	local isFortification = nil
+	local function printTarget(self, name, guid)
+		markOfChaosTarget = name
+		self:PrimaryIcon(158605, name)
+		self:TargetBar(158605, 10, name)
+		if self:Me(guid) then
 			self:Flash(158605)
+			self:OpenProximity(158605, 35)
+			if isFortification then -- Fortification (you're rooted)
+				self:Say(158605)
+			end
+		else
+			if isFortification and self:Range(name) < 35 then -- Fortification (target rooted)
+				self:Flash(158605)
+			end
+			self:OpenProximity(158605, 35, name)
 		end
-		self:OpenProximity(158605, 35, args.destName)
+		self:TargetMessage(158605, name, "Urgent", "Alarm", nil, nil, true)
 	end
-	self:TargetMessage(158605, args.destName, "Urgent", "Alarm", nil, nil, true)
+	function mod:MarkOfChaos(args)
+		self:Bar(158605, 51) -- 51-52 with some random cases of 55
+		isFortification = args.spellId == 164178
+		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
+	end
 end
 
 function mod:MarkOfChaosRemoved(args)
@@ -264,7 +285,7 @@ do
 
 	function mod:IntermissionStart(args)
 		self:Message("stages", "Neutral", nil, CL.intermission, false)
-		self:Bar("stages", 65, CL.intermission, "spell_arcane_blast")
+		self:Bar("stages", args.spellId == 174057 and 65 or 60, CL.intermission, "spell_arcane_blast")
 		self:Bar("volatile_anomaly", 14, L.volatile_anomaly, L.volatile_anomaly_icon)
 		self:ScheduleTimer(nextAdd, 14, self)
 	end
@@ -302,9 +323,7 @@ function mod:FixateRemoved(args)
 end
 
 function mod:CrushArmor(args)
-	if args.amount % 2 == 0 then -- XXX no idea how fast this stacks
-		self:StackMessage(args.spellId, args.destName, args.amount, "Attention") -- args.amount > 2 and "Warning"
-	end
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 2 and "Warning")
 end
 
 function mod:KickToTheFace(args)
