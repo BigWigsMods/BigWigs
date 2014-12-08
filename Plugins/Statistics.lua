@@ -49,87 +49,89 @@ plugin.defaultDB = {
 	showBar = true,
 }
 
-local function checkDisabled() return not plugin.db.profile.enabled end
-plugin.pluginOptions = {
-	name = "Statistics",
-	type = "group",
-	childGroups = "tab",
-	get = function(i) return plugin.db.profile[i[#i]] end,
-	set = function(i, value) plugin.db.profile[i[#i]] = value end,
-	args = {
-		heading = {
-			type = "description",
-			name = L.bossStatsDescription.."\n\n",
-			order = 1,
-			width = "full",
-			fontSize = "medium",
-		},
-		enabled = {
-			type = "toggle",
-			name = L.enableStats,
-			order = 2,
-			width = "full",
-			set = function(i, value)
-				plugin.db.profile[i[#i]] = value
-				plugin:Disable()
-				plugin:Enable()
-			end,
-		},
-		printGroup = {
-			type = "group",
-			name = L.chatMessages,
-			order = 3,
-			disabled = checkDisabled,
-			inline = true,
-			args = {
-				printWipes = {
-					type = "toggle",
-					name = L.printWipeOption,
-					order = 1,
-				},
-				printKills = {
-					type = "toggle",
-					name = L.printDefeatOption,
-					order = 2,
-				},
-				printNewBestKill = {
-					type = "toggle",
-					name = L.printBestTimeOption,
-					order = 3,
-					disabled = function() return not plugin.db.profile.saveBestKill or not plugin.db.profile.enabled end,
+do
+	local function checkDisabled() return not plugin.db.profile.enabled end
+	plugin.pluginOptions = {
+		name = LibStub("AceLocale-3.0"):GetLocale("Big Wigs").statistics,
+		type = "group",
+		childGroups = "tab",
+		get = function(i) return plugin.db.profile[i[#i]] end,
+		set = function(i, value) plugin.db.profile[i[#i]] = value end,
+		args = {
+			heading = {
+				type = "description",
+				name = L.bossStatsDescription.."\n\n",
+				order = 1,
+				width = "full",
+				fontSize = "medium",
+			},
+			enabled = {
+				type = "toggle",
+				name = L.enableStats,
+				order = 2,
+				width = "full",
+				set = function(i, value)
+					plugin.db.profile[i[#i]] = value
+					plugin:Disable()
+					plugin:Enable()
+				end,
+			},
+			printGroup = {
+				type = "group",
+				name = L.chatMessages,
+				order = 3,
+				disabled = checkDisabled,
+				inline = true,
+				args = {
+					printWipes = {
+						type = "toggle",
+						name = L.printWipeOption,
+						order = 1,
+					},
+					printKills = {
+						type = "toggle",
+						name = L.printDefeatOption,
+						order = 2,
+					},
+					printNewBestKill = {
+						type = "toggle",
+						name = L.printBestTimeOption,
+						order = 3,
+						disabled = function() return not plugin.db.profile.saveBestKill or not plugin.db.profile.enabled end,
+					},
 				},
 			},
+			saveKills = {
+				type = "toggle",
+				name = L.countDefeats,
+				order = 4,
+				disabled = checkDisabled,
+				width = "full",
+			},
+			saveWipes = {
+				type = "toggle",
+				name = L.countWipes,
+				order = 5,
+				disabled = checkDisabled,
+				width = "full",
+			},
+			saveBestKill = {
+				type = "toggle",
+				name = L.recordBestTime,
+				order = 6,
+				disabled = checkDisabled,
+				width = "full",
+			},
+			showBar = {
+				type = "toggle",
+				name = L.createTimeBar,
+				order = 7,
+				disabled = checkDisabled,
+				width = "full",
+			},
 		},
-		saveKills = {
-			type = "toggle",
-			name = L.countDefeats,
-			order = 4,
-			disabled = checkDisabled,
-			width = "full",
-		},
-		saveWipes = {
-			type = "toggle",
-			name = L.countWipes,
-			order = 5,
-			disabled = checkDisabled,
-			width = "full",
-		},
-		saveBestKill = {
-			type = "toggle",
-			name = L.recordBestTime,
-			order = 6,
-			disabled = checkDisabled,
-			width = "full",
-		},
-		showBar = {
-			type = "toggle",
-			name = L.createTimeBar,
-			order = 7,
-			disabled = checkDisabled,
-			width = "full",
-		},
-	},
-}
+	}
+end
 
 -------------------------------------------------------------------------------
 -- Initialization
