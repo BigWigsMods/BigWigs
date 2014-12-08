@@ -39,6 +39,7 @@ function mod:GetOptions()
 		"custom_off_fel_marker",
 		--[[ General ]]--
 		161242, -- Caustic Energy
+		161612, -- Overwhelming Energy
 		160734, -- Vulnerability
 		{161328, "SAY", "FLASH"}, -- Suppression Field
 		{162184, "HEALER"}, -- Expel Magic: Shadow
@@ -55,6 +56,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "CausticEnergy", 161242)
+	self:Log("SPELL_CAST_SUCCESS", "OverwhelmingEnergy", 161612)
 	self:Log("SPELL_CAST_START", "ExpelMagicShadow", 162184)
 	self:Log("SPELL_CAST_SUCCESS", "ExpelMagicFire", 162185)
 	self:Log("SPELL_CAST_START", "ExpelMagicArcaneStart", 162186)
@@ -86,7 +88,7 @@ function mod:UNIT_POWER_FREQUENT(unit, powerType)
 		local power = UnitPower(unit, 10)
 		if power < 25 then -- XXX probably need to tweak this (~10s)
 			self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", unit)
-			self:Message(160734, "Neutral", "Info", CL.soon:format(self:SpellName(160734)))
+			self:Message(160734, "Neutral", "Info", CL.soon:format(self:SpellName(160734))) -- Vulnerability soon!
 			-- Knockback at 0 power, Vulnerability 4s later
 		end
 	end
@@ -176,6 +178,13 @@ do
 	end
 end
 
+function mod:OverwhelmingEnergy(args)
+	if self:Me(args.destGUID) and UnitPower("player", 10) > 0 then -- check alternate power, too
+		self:Message(spellId, "Positive", "Warning") -- green to keep it different looking
+		self:Bar(args.spellId, 30)
+	end
+end
+
 -- Mythic
 
 do
@@ -214,6 +223,7 @@ do
 		scheduled = nil
 	end
 	function mod:DominatingPower(args)
+		--self:TargetBar(args.spellId, 60, args.destName)
 		list[#list+1] = args.destName
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warn, 0.2, args.spellId)
