@@ -960,7 +960,14 @@ do
 	function boss:StackMessage(key, player, stack, color, sound, text, icon)
 		if checkFlag(self, key, C.MESSAGE) then
 			local textType = type(text)
-			self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], coloredNames[player]), color, sound, icon ~= false and icons[icon or textType == "number" and text or key])
+			if player == pName then
+				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, stack or 1, textType == "string" and text or spells[text or key]), "Personal", sound, icon ~= false and icons[icon or textType == "number" and text or key])
+			else
+				self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], coloredNames[player]), color, sound, icon ~= false and icons[icon or textType == "number" and text or key])
+			end
+			if hasVoice and sound and checkFlag(self, key, C.VOICE) then
+				self:SendMessage("BigWigs_Voice", key)
+			end
 		end
 	end
 
@@ -989,7 +996,7 @@ do
 				end
 				return
 			end
-			if UnitIsUnit(player, "player") then
+			if player == pName then
 				if checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then
 					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", sound, texture)
 					if hasVoice and checkFlag(self, key, C.VOICE) then
