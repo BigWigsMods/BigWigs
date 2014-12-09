@@ -76,7 +76,7 @@ function mod:OnEngage()
 	self:Bar(161612, 36) -- Overwhelming Energy
 	if self:Mythic() then
 		self:CDBar(172895, 8) -- Expel Magic: Fel
-		--self:Bar(163472, 90) -- Dominating Power
+		self:Bar(163472, 90) -- Dominating Power
 	end
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
