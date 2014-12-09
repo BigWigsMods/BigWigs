@@ -1043,7 +1043,7 @@ function boss:TargetBar(key, length, player, text, icon)
 		self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), length, icons[icon or textType == "number" and text or key])
 		return
 	end
-	if UnitIsUnit(player, "player") then
+	if player == pName then
 		local msg = format(L.you, textType == "string" and text or spells[text or key])
 		if checkFlag(self, key, C.BAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
@@ -1058,7 +1058,7 @@ end
 
 function boss:StopBar(text, player)
 	if player then
-		if UnitIsUnit(player, "player") then
+		if player == pName then
 			local msg = format(L.you, type(text) == "number" and spells[text] or text)
 			self:SendMessage("BigWigs_StopBar", self, msg)
 			self:SendMessage("BigWigs_StopEmphasize", self, msg)
