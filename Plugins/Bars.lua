@@ -1511,6 +1511,7 @@ do
 		timer = plugin:ScheduleRepeatingTimer(printPull, 1)
 		plugin:SendMessage("BigWigs_Message", nil, nil, L.pullIn:format(timeLeft), "Attention", "Long")
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.pull, seconds, "Interface\\Icons\\ability_warrior_charge")
+		plugin:SendMessage("BigWigs_StartPull", plugin, seconds, nick, isDBM)
 	end
 end
 
