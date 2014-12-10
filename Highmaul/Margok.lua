@@ -212,6 +212,7 @@ function mod:Branded(args)
 end
 
 function mod:BrandedRemoved(args)
+	self:SecondaryIcon(156225)
 	if self:Me(args.destGUID) then
 		brandedOnMe = nil
 		self:CloseProximity(156225)
