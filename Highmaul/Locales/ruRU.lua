@@ -59,5 +59,8 @@ if L then
 
 	L.custom_off_fixate_marker = "Маркировка Сосредоточение внимания"
 	L.custom_off_fixate_marker_desc = "Отмечать цели Горианских боевых магов метками {rt1}{rt2}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r"
+
+	--L.custom_off_branded_marker = "Branded Marker"
+	--L.custom_off_branded_marker_desc = "Mark Branded targets with {rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"	
 end
 

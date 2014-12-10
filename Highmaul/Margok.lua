@@ -15,7 +15,7 @@ mod.engageId = 1705
 local phase = 1
 local mineCount = 1
 local markOfChaosTarget, brandedOnMe, fixateOnMe, replicatingNova = nil, nil, nil, nil
-local fixateList = {}
+local fixateMarks, brandedMarks = {}, {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -31,6 +31,10 @@ if L then
 	L.custom_off_fixate_marker = "Fixate Marker"
 	L.custom_off_fixate_marker_desc = "Mark Gorian Warmage's Fixate targets with {rt1}{rt2}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.custom_off_fixate_marker_icon = 1
+
+	L.custom_on_branded_marker = "Branded Marker"
+	L.custom_on_branded_marker_desc = "Mark Branded targets with {rt3}{rt4}, requires promoted or leader."
+	L.custom_on_branded_marker_icon = 3
 end
 L = mod:GetLocale()
 
@@ -43,7 +47,8 @@ function mod:GetOptions()
 		--[[ Imperator Mar'gok ]]--
 		{159515, "TANK"}, -- Accelerated Assault
 		156238, -- Arcane Wrath
-		{156225, "ICON", "PROXIMITY", "SAY", "ME_ONLY"}, -- Branded
+		{156225, "PROXIMITY", "SAY", "ME_ONLY"}, -- Branded
+		"custom_on_branded_marker",
 		156467, -- Destructive Resonance
 		156471, -- Summon Arcane Aberration
 		{158605, "ICON", "PROXIMITY", "FLASH", "SAY"}, -- Mark of Chaos
@@ -96,7 +101,8 @@ function mod:OnEngage()
 	phase = 1
 	mineCount = 1
 	markOfChaosTarget, brandedOnMe, fixateOnMe, replicatingNova = nil, nil, nil, nil
-	wipe(fixateList)
+	wipe(fixateMarks)
+	wipe(brandedMarks)
 	self:Bar(156238, 6)  -- Arcane Wrath
 	self:Bar(156467, 15) -- Destructive Resonance
 	self:Bar(156471, 25) -- Arcane Aberration
@@ -185,38 +191,55 @@ end
 function mod:ArcaneWrath(args)
 	self:Message(156238, "Urgent", self:Healer() and "Alert")
 	self:Bar(156238, 50)
+	wipe(brandedMarks)
 end
 
-function mod:Branded(args)
-	-- custom marking? need two marks (the first jump replicates)
-	if args.spellId ~= 164006 then -- Replication
-		self:SecondaryIcon(156225, args.destName)
-	end
-
-	local _, _, _, amount = UnitDebuff(args.destName, args.spellName)
-	if not amount then amount = 1 end
-	local jumpDistance = (args.spellId == 164005 and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
-
-	if self:Me(args.destGUID) and not self:LFR() then
-		brandedOnMe = args.spellId
-		local text = self:SpellName(156225)
-		if jumpDistance < 50 then
-			text = L.branded_say:format(text, amount, jumpDistance)
-		elseif amount > 1 then
-			text = CL.count:format(text, amount)
+do
+	local scheduled = nil
+	local function mark()
+		-- custom_on so try and keep the marks in the same order (just in case)
+		sort(brandedMarks)
+		for index, name in ipairs(brandedMarks) do
+			SetRaidTarget(name, index + 2)
 		end
-		self:Say(156225, text)
-		updateProximity()
+		scheduled = nil
 	end
-	self:TargetMessage(156225, args.destName, "Attention", nil, L.branded_say:format(self:SpellName(156225), amount, jumpDistance))
+
+	function mod:Branded(args)
+		brandedMarks[#brandedMarks+1] = args.destName
+
+		local _, _, _, amount = UnitDebuff(args.destName, args.spellName)
+		if not amount then amount = 1 end
+		local jumpDistance = (args.spellId == 164005 and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
+
+		if self:Me(args.destGUID) and not self:LFR() then
+			brandedOnMe = args.spellId
+			local text = self:SpellName(156225)
+			if jumpDistance < 50 then
+				text = L.branded_say:format(text, amount, jumpDistance)
+			elseif amount > 1 then
+				text = CL.count:format(text, amount)
+			end
+			self:Say(156225, text)
+			updateProximity()
+		end
+		self:TargetMessage(156225, args.destName, "Attention", nil, L.branded_say:format(self:SpellName(156225), amount, jumpDistance))
+
+		if self.db.profile.custom_on_branded_marker and not scheduled then
+			scheduled = self:ScheduleTimer(mark, 0.2)
+		end
+	end
 end
 
 function mod:BrandedRemoved(args)
-	self:SecondaryIcon(156225)
+	tDeleteItem(brandedMarks, args.destName)
 	if self:Me(args.destGUID) then
 		brandedOnMe = nil
 		self:CloseProximity(156225)
 		updateProximity()
+	end
+	if self.db.profile.custom_on_branded_marker then
+		SetRaidTarget(args.destName, 0)
 	end
 end
 
@@ -285,7 +308,7 @@ end
 do
 	local function replicatingNovaStop()
 		replicatingNova = nil
-		self:CloseProximity(157349)
+		mod:CloseProximity(157349)
 		updateProximity()
 	end
 	function mod:ForceNova(args)
@@ -343,8 +366,8 @@ function mod:FixateApplied(args)
 		updateProximity()
 	end
 	if self.db.profile.custom_off_fixate_marker then
-		local index = next(fixateList) and 2 or 1
-		fixateList[args.destName] = index
+		local index = next(fixateMarks) and 2 or 1
+		fixateMarks[args.destName] = index
 		SetRaidTarget(args.destName, index)
 	end
 end
@@ -356,7 +379,7 @@ function mod:FixateRemoved(args)
 		updateProximity()
 	end
 	if self.db.profile.custom_off_fixate_marker then
-		fixateList[args.destName] = nil
+		fixateMarks[args.destName] = nil
 		SetRaidTarget(args.destName, 0)
 	end
 end
