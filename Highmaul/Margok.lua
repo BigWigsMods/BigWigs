@@ -57,7 +57,7 @@ function mod:GetOptions()
 		"volatile_anomaly",
 		--[[ Gorian Warmage ]]--
 		{157801, "DISPEL"}, -- Slow
-		{157763, "PROXIMITY", "FLASH"}, -- Fixate
+		{157763, "PROXIMITY", "FLASH", "SAY"}, -- Fixate
 		"custom_off_fixate_marker",
 		--[[ Gorian Reaver ]]--
 		{158553, "TANK"}, -- Crush Armor
@@ -363,6 +363,7 @@ function mod:FixateApplied(args)
 		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:TargetBar(args.spellId, 15, args.destName)
 		self:Flash(args.spellId)
+		self:Say(args.spellId)
 		updateProximity()
 	end
 	if self.db.profile.custom_off_fixate_marker then
