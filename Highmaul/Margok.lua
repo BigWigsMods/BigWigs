@@ -32,9 +32,9 @@ if L then
 	L.custom_off_fixate_marker_desc = "Mark Gorian Warmage's Fixate targets with {rt1}{rt2}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.custom_off_fixate_marker_icon = 1
 
-	L.custom_on_branded_marker = "Branded Marker"
-	L.custom_on_branded_marker_desc = "Mark Branded targets with {rt3}{rt4}, requires promoted or leader."
-	L.custom_on_branded_marker_icon = 3
+	L.custom_off_branded_marker = "Branded Marker"
+	L.custom_off_branded_marker_desc = "Mark Branded targets with {rt3}{rt4}, requires promoted or leader."
+	L.custom_off_branded_marker_icon = 3
 end
 L = mod:GetLocale()
 
@@ -48,7 +48,7 @@ function mod:GetOptions()
 		{159515, "TANK"}, -- Accelerated Assault
 		156238, -- Arcane Wrath
 		{156225, "PROXIMITY", "SAY", "ME_ONLY"}, -- Branded
-		"custom_on_branded_marker",
+		"custom_off_branded_marker",
 		156467, -- Destructive Resonance
 		156471, -- Summon Arcane Aberration
 		{158605, "ICON", "PROXIMITY", "FLASH", "SAY"}, -- Mark of Chaos
@@ -225,7 +225,7 @@ do
 		end
 		self:TargetMessage(156225, args.destName, "Attention", nil, L.branded_say:format(self:SpellName(156225), amount, jumpDistance))
 
-		if self.db.profile.custom_on_branded_marker and not scheduled then
+		if self.db.profile.custom_off_branded_marker and not scheduled then
 			scheduled = self:ScheduleTimer(mark, 0.2)
 		end
 	end
@@ -238,7 +238,7 @@ function mod:BrandedRemoved(args)
 		self:CloseProximity(156225)
 		updateProximity()
 	end
-	if self.db.profile.custom_on_branded_marker then
+	if self.db.profile.custom_off_branded_marker then
 		SetRaidTarget(args.destName, 0)
 	end
 end
