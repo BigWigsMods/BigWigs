@@ -14,7 +14,6 @@ mod.engageId = 1706
 
 local cleaveCount = 1
 local addCount = 1
-local frenzied = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -69,7 +68,6 @@ end
 function mod:OnEngage()
 	cleaveCount = 1
 	addCount = 1
-	frenzied = nil
 	self:Bar(156151, 7) -- Tenderizer
 	self:Bar(-8860, 60) -- Bounding Cleave
 	if self:Mythic() then
@@ -114,7 +112,8 @@ do
 end
 
 function mod:BoundingCleave(_, spellName, _, _, spellId)
-	if spellId == 156197 then -- Bounding Cleave (knockback)
+	if spellId == 156197 or spellId == 156257 then -- Bounding Cleave (knockback)
+		local frenzied = spellId == 156257 and true
 		cleaveCount = 1
 		self:Message(-8860, "Urgent", "Alert")
 		self:Bar(-8860, frenzied and 30 or 60) -- Bounding Cleave
@@ -164,7 +163,6 @@ end
 
 function mod:Frenzy(args)
 	self:Message("frenzy", "Important", "Alarm", args.spellName, L.frenzy_icon)
-	frenzied = true
 	-- gains power faster while frenzied
 	local left = (100 - UnitPower("boss1")) * 0.3
 	self:Bar(-8860, left) -- Bounding Cleave
