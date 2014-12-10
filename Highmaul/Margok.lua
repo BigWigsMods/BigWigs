@@ -117,6 +117,7 @@ local function updateProximity()
 	end
 	if brandedOnMe then
 		local _, _, _, amount = UnitDebuff("player", mod:SpellName(brandedOnMe))
+		if not amount then amount = 1 end
 		local jumpDistance = (brandedOnMe == 164005 and 0.75 or 0.5)^(amount - 1) * 200
 		if jumpDistance < 50 then
 			mod:OpenProximity(156225, jumpDistance)
@@ -176,7 +177,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 end
 
 function mod:AcceleratedAssault(args)
-	if args.amount > 5 and args.amount % 3 == 0 then -- at 5 it stacks every second
+	if args.amount > 6 and args.amount % 3 == 0 then -- at 5 it stacks every second
 		self:Message(args.spellId, "Attention", "Warning", CL.count:format(args.spellName, args.amount))
 	end
 end
@@ -193,6 +194,7 @@ function mod:Branded(args)
 	end
 
 	local _, _, _, amount = UnitDebuff(args.destName, args.spellName)
+	if not amount then amount = 1 end
 	local jumpDistance = (args.spellId == 164005 and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
 
 	if self:Me(args.destGUID) and not self:LFR() then
@@ -282,6 +284,7 @@ end
 do
 	local function replicatingNovaStop()
 		replicatingNova = nil
+		self:CloseProximity(157349)
 		updateProximity()
 	end
 	function mod:ForceNova(args)
