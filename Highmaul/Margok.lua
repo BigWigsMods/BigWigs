@@ -13,7 +13,7 @@ mod.engageId = 1705
 --
 
 local phase = 1
-local mineCount = 1
+local mineCount, novaCount, aberrationCount = 1, 1, 1
 local markOfChaosTarget, brandedOnMe, fixateOnMe, replicatingNova = nil, nil, nil, nil
 local fixateMarks, brandedMarks = {}, {}
 
@@ -99,7 +99,7 @@ end
 
 function mod:OnEngage()
 	phase = 1
-	mineCount = 1
+	mineCount, novaCount, aberrationCount = 1, 1, 1
 	markOfChaosTarget, brandedOnMe, fixateOnMe, replicatingNova = nil, nil, nil, nil
 	wipe(fixateMarks)
 	wipe(brandedMarks)
@@ -157,7 +157,7 @@ end
 function mod:Phases(unit, spellName, _, _, spellId)
 	if spellId == 164336 or spellId == 164751 or spellId == 164810 then -- Teleport to Displacement, Fortification, Replication (Phase end)
 		phase = phase + 1
-		mineCount = 1
+		mineCount, novaCount, aberrationCount = 1, 1, 1
 
 		if spellId == 164336 then -- no intermission for Displacement
 			 -- XXX first transform messes with timers, typically adding ~10s
@@ -258,19 +258,18 @@ do
 	-- 24.3 15.8 24.2 19.4 28.0 23.1
 	-- 24.3 15.8 24.2 19.5
 	function mod:DestructiveResonance(args)
-		self:Message(156467, "Urgent")
+		local sound = self:Healer() or self:Damager() == "RANGED"
+		self:Message(156467, "Urgent", sound and "Warning")
 		local t = not self:Mythic() and mineTimes[phase] and mineTimes[phase][mineCount] or 15
 		self:CDBar(156467, phase == 1 and 24 or t)
-		if phase > 1 then
-			mineCount = mineCount + 1
-			if mineCount > 3 then mineCount = 1 end
-		end
+		mineCount = mineCount + 1
 	end
 end
 
 function mod:ArcaneAberration(args)
 	self:Message(156471, "Urgent", not self:Healer() and "Info")
-	self:CDBar(156471, 46) -- 46 or 51
+	self:CDBar(156471, aberrationCount == 1 and 46 or 51)
+	aberrationCount = aberrationCount + 1
 end
 
 do
@@ -313,14 +312,15 @@ do
 	end
 	function mod:ForceNova(args)
 		self:Message(157349, "Urgent")
-		self:CDBar(157349, 50) -- sometimes 45 or 54, but usually 50+/-1
+		self:CDBar(157349, novaCount == 1 and 46 or 51)
 		if args.spellId == 164235 then -- Fortification (three novas)
-			self:Bar(157349, 8, args.spellName)
-			self:ScheduleTimer("Bar", 8, 157349, 8, args.spellName)
+			self:Bar(157349, 10.5, args.spellName)
+			self:ScheduleTimer("Bar", 8, 157349, 10.5, args.spellName)
 		elseif args.spellId == 164240 then -- Replication (aoe damage on hit)
 			replicatingNova = self:ScheduleTimer(replicatingNovaStop, 8) -- XXX how long should the proximity be open?
 			updateProximity()
 		end
+		novaCount = novaCount + 1
 	end
 end
 
