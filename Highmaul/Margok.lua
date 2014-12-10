@@ -183,7 +183,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 end
 
 function mod:AcceleratedAssault(args)
-	if args.amount > 6 and args.amount % 3 == 0 then -- at 5 it stacks every second
+	if args.amount > 5 and args.amount % 3 == 0 then -- at 5 it stacks every second
 		self:Message(args.spellId, "Attention", "Warning", CL.count:format(args.spellName, args.amount))
 	end
 end
@@ -312,7 +312,7 @@ do
 	end
 	function mod:ForceNova(args)
 		self:Message(157349, "Urgent")
-		self:CDBar(157349, novaCount == 1 and 46 or 51)
+		self:CDBar(157349, novaCount == 1 and 46 or 50)
 		if args.spellId == 164235 then -- Fortification (three novas)
 			self:Bar(157349, 10.5, args.spellName)
 			self:ScheduleTimer("Bar", 8, 157349, 10.5, args.spellName)
