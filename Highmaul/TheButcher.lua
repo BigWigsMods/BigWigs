@@ -39,7 +39,6 @@ function mod:GetOptions()
 		-10228, -- Night-Twisted Cadaver
 		{163046, "FLASH"}, -- Pale Vitriol
 		--[[ General ]]--
-		{156147, "TANK"}, -- The Cleaver
 		{156151, "TANK_HEALER"}, -- The Tenderizer
 		156157, -- Cleave
 		156152, -- Gushing Wounds
@@ -49,13 +48,12 @@ function mod:GetOptions()
 		"bosskill"
 	}, {
 		[-10228] = "mythic",
-		[156147] = "general"
+		[156151] = "general"
 	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "BoundingCleave", "boss1")
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Cleaver", 156147)
 	self:Log("SPELL_AURA_APPLIED", "Tenderizer", 156151)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Tenderizer", 156151)
 	self:Log("SPELL_CAST_START", "Cleave", 156157, 156293)
@@ -128,12 +126,6 @@ function mod:BoundingCleave(_, spellName, _, _, spellId)
 			self:OpenProximity(-8860, 10) -- XXX no idea on clump size, 10yds should be safe
 			self:ScheduleTimer("CloseProximity", frenzied and 5 or 8, -8860)
 		end
-	end
-end
-
-function mod:Cleaver(args)
-	if args.amount % 2 == 0 then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
 	end
 end
 
