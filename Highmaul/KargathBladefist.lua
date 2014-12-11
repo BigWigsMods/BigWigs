@@ -12,8 +12,8 @@ mod.engageId = 1721
 -- Locals
 --
 
-local tigers = {}
 local hurled = nil
+local tigers = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -75,6 +75,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	hurled = nil
 	self:Bar(-9394, 20) -- Flame Pillar
 	self:CDBar(159113, 37) -- Impale
 	self:CDBar(158986, 54) -- Berserker Rush
@@ -134,7 +135,7 @@ do
 			self:Say(158986)
 			self:Flash(158986)
 		end
-		self:TargetMessage(158986, name, "Important", "Alarm", nil, nil, true)
+		self:TargetMessage(158986, name, "Important", "Long", nil, nil, true)
 	end
 	function mod:BerserkerRush(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
