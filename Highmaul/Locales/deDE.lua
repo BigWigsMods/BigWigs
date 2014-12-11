@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.blade_dance_bar = "Tanzen"
 
-	--L.arena_sweeper_desc = "Timer for getting knocked out of the stadium stands after you've been Chain Hurled."
+	L.arena_sweeper_desc = "Timer für das Schleudern von der Tribüne nachdem Ihr durch Kettenschleudern hinaufgeworfen wurdet."
 end
 
 L = BigWigs:NewBossLocale("The Butcher", "deDE")
@@ -57,12 +57,12 @@ end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "deDE")
 if L then
-	--L.branded_say = "%s (%d) %dy"
+	L.branded_say = "%s (%d) %dm"
 
 	L.custom_off_fixate_marker = "Fixieren markieren"
 	L.custom_off_fixate_marker_desc = "Markiert die Ziele von Fixieren mit {rt1}{rt2}, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
 
-	--L.custom_off_branded_marker = "Branded Marker"
-	--L.custom_off_branded_marker_desc = "Mark Branded targets with {rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"	
+	L.custom_off_branded_marker = "Gebrandmarkt markieren"
+	L.custom_off_branded_marker_desc = "Markiert die Ziele von Gebrandmarkt mit {rt3}{rt4}, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"	
 end
 
