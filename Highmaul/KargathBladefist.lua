@@ -13,7 +13,7 @@ mod.engageId = 1721
 --
 
 local tigers = {}
-local sweeperCount = 0
+local hurled = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -21,9 +21,11 @@ local sweeperCount = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.tiger_trigger = ""
-
 	L.blade_dance_bar = "Dancing"
+
+	L.arena_sweeper = 177776
+	L.arena_sweeper_desc = "Timer for getting knocked out of the stadium stands after you've been Chain Hurled."
+	L.arena_sweeper_icon = "ability_kick"
 end
 L = mod:GetLocale()
 
@@ -36,7 +38,7 @@ function mod:GetOptions()
 		--[[ Mythic ]]--
 		-9396, -- Ravenous Bloodmaw
 		{162497, "FLASH"}, -- On the Hunt
-		--177776, -- Arena Sweeper
+		"arena_sweeper", -- Arena Sweeper
 		--[[ General ]]--
 		-9394, -- Fire Pillar
 		{159113, "TANK_HEALER"}, -- Impale
@@ -69,15 +71,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "MaulingBrewDamage", 159413)
 	self:Log("SPELL_CAST_START", "VileBreath", 160521)
 	-- Mythic
-	--self:Emote("TigerSpawn", L.tiger_trigger)
 	self:Log("SPELL_AURA_APPLIED", "OnTheHunt", 162497)
-	--self:Log("SPELL_AURA_APPLIED", "ArenaSweeper", 177776)
 end
 
 function mod:OnEngage()
 	self:Bar(-9394, 20) -- Flame Pillar
 	self:CDBar(159113, 37) -- Impale
-	self:CDBar(158986, 48) -- Berserker Rush
+	self:CDBar(158986, 54) -- Berserker Rush
 	self:CDBar(159947, 90) -- Chain Hurl
 	if self:Mythic() then
 		wipe(tigers)
@@ -94,7 +94,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	if self:Mythic() then
 		for i=1, 5 do
 			local guid = UnitGUID(("boss%d"):format(i))
-			if guid and self:MobId(guid) == 79296 and not tigers[guid] then -- or 80474?
+			if guid and self:MobId(guid) == 79296 and not tigers[guid] then
 				tigers[guid] = true
 				self:Message(-9396, "Neutral", nil, nil, false) -- Ravenous Bloodmaw
 				self:Bar(-9396, 110, nil, "ability_druid_tigersroar")
@@ -107,13 +107,6 @@ function mod:OnTheHunt(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
-	end
-end
-
-function mod:ArenaSweeper(args)
-	--sweeperCount = sweeperCount + 1 -- odd clockwise, even anti-clockwise
-	if UnitDebuff("player", self:SpellName(159213)) then -- Monster's Brawl (hurled)
-		self:Message(args.spellId, "Urgent", "Alert", CL.incoming(args.spellName))
 	end
 end
 
@@ -145,20 +138,24 @@ do
 	end
 	function mod:BerserkerRush(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
-		-- cd is 45-70 :\
+		self:CDBar(158986, 46) -- cd is 46/51 :\
 	end
-end
-
-function mod:FlamePillar(args)
-	self:Bar(-9394, 20)
 end
 
 function mod:BerserkerRushRemoved(args)
 	self:PrimaryIcon(args.spellId)
 end
 
+function mod:FlamePillar(args)
+	self:Bar(-9394, 20)
+end
+
 do
 	local hurlList, scheduled = mod:NewTargetList(), nil
+
+	local function knockdown()
+		hurled = nil
+	end
 
 	local function printTargets(spellId)
 		mod:TargetMessage(spellId, hurlList, "Attention")
@@ -168,13 +165,15 @@ do
 	function mod:ChainHurl(args)
 		self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
 		self:Bar(args.spellId, 3.4)
-		--sweeperCount = 0
 	end
 
 	function mod:ChainHurlApplied(args)
 		hurlList[#hurlList+1] = args.destName
 		if self:Me(args.destGUID) then
-			--self:Bar(177776, 44) -- Arena Sweeper
+			hurled = true
+			self:Bar("arena_sweeper", 55, L.arena_sweeper, L.arena_sweeper_icon)
+			self:DelayedMessage("arena_sweeper", 55, "Urgent", CL.incoming:format(self:SpellName(L.arena_sweeper)), false, "Info")
+			self:ScheduleTimer(knockdown, 65)
 		end
 		if not scheduled then
 			self:Bar(args.spellId, 103)
@@ -206,7 +205,7 @@ do
 end
 
 function mod:VileBreath(args)
-	if UnitDebuff("player", self:SpellName(159213)) then -- Monster's Brawl (hurled)
+	if hurled then
 		self:Message(args.spellId, "Attention", "Alarm")
 	end
 end
