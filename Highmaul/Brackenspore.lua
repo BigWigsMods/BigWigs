@@ -9,6 +9,11 @@ mod:RegisterEnableMob(78491)
 mod.engageId = 1720
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+local decayCount = 0
+
+--------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -92,6 +97,7 @@ function mod:OnEngage()
 	self:CDBar("living_mushroom", 18, L.living_mushroom, L.living_mushroom_icon) -- Living Mushroom
 	self:CDBar("rejuvenating_mushroom", 82, L.rejuvenating_mushroom, L.rejuvenating_mushroom_icon) -- Rejuvenating Mushroom
 	self:Berserk(600) -- LFR enrage
+	decayCount = 0
 end
 
 --------------------------------------------------------------------------------
@@ -136,9 +142,12 @@ function mod:InfestingSpores(args)
 	self:Bar(args.spellId, 65)
 end
 
-function mod:Decay(args)
-	self:Message(args.spellId, "Personal", not self:Healer() and "Alert", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 10)
+do
+	function mod:Decay(args)
+		decayCount = decayCount + 1
+		self:Message(args.spellId, "Personal", not self:Healer() and "Alert", CL.casting:format(args.spellName, decayCount))
+		self:Bar(args.spellId, 10, CL.count:format(args.spellName, decayCount))
+	end
 end
 
 function mod:FungusSpawns(unit, spellName, _, _, spellId)
@@ -168,4 +177,3 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 		self:Bar(spellId, 5)
 	end
 end
-
