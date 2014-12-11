@@ -9,12 +9,6 @@ mod:RegisterEnableMob(76973, 76974) -- Hans'gar, Franzok
 mod.engageId = 1693
 
 --------------------------------------------------------------------------------
--- Locals
---
-
-
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -35,8 +29,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_CAST_START", "CripplingSuplex", 156938)
 	self:Log("SPELL_AURA_APPLIED", "ShatteredVertebrae", 157139)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShatteredVertebrae", 157139)

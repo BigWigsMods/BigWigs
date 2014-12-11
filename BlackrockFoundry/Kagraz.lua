@@ -48,6 +48,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+
 	-- Aknor
 	self:Log("SPELL_CAST_START", "DevastatingSlam", 156018)
 	self:Log("SPELL_CAST_START", "DropHammer", 156040)
@@ -83,7 +85,7 @@ end
 --
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	self:CheckBossStatus()
+	self:CheckForEncounterEngage()
 	-- XXX wolves don't have UNIT_DIED or other events to indicate they were killed afaik
 	if wolvesActive then
 		for i=1, 5 do

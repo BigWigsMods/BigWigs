@@ -32,7 +32,7 @@ if L then
 	L.ship_icon = "ability_vehicle_siegeenginecannon"
 
 	L.bombardment = 147135 -- Bombardment
-	L.bombardment_desc = -10019
+	L.bombardment_desc = -10019 -- The Dreadnaught
 	L.bombardment_icon = "ability_ironmaidens_bombardment"
 
 	L.custom_off_heartseeker_marker = "Bloodsoaked Heartseeker marker"
