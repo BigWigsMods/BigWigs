@@ -157,7 +157,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < 36 then
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
-		self:Message("frenzy", "Neutral", "Info", CL.soon:format(self:SpellName(L.frenzy)), false)
+		self:Message("frenzy", "Neutral", nil, CL.soon:format(self:SpellName(L.frenzy)), false)
 	end
 end
 
