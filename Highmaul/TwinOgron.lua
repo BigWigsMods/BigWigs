@@ -18,26 +18,6 @@ local volatilityCount = 1
 local volatilityOnMe = nil
 local volatilityTargets = {}
 
-local function GetBossUnit(guid)
-	for i=1, 3 do
-		local unit = ("boss%d"):format(i)
-		if UnitGUID(unit) == guid then
-			return unit
-		end
-	end
-end
-
-local function GetBossCastTime(guid)
-	local unit = GetBossUnit(guid)
-	if unit then
-		local spell, _, _, _, _, endTime = UnitCastingInfo(unit)
-		if spell then
-			return endTime / 1000 - GetTime()
-		end
-	end
-	return 0
-end
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -56,6 +36,10 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		--[[ Mythic ]]--
+		163297,
+		{163372, "FLASH", "PROXIMITY", "SAY"}, -- Arcane Volatility
+		"custom_off_volatility_marker",
 		--[[ Pol ]]--
 		{143834, "TANK"}, -- Shield Bash
 		158134, -- Shield Charge
@@ -68,12 +52,11 @@ function mod:GetOptions()
 		158057, -- Enfeebling Roar
 		158200, -- Quake
 		{158241, "FLASH"}, -- Blaze
-		{163372, "FLASH", "PROXIMITY", "SAY"}, -- Arcane Volatility
-		"custom_off_volatility_marker",
 		--[[ General ]]--
 		"berserk",
 		"bosskill"
 	}, {
+		[163297] = "mythic",
 		[143834] = -9595, -- Pol
 		[158521] = -9590, -- Phemos
 		berserk = "general"
@@ -101,6 +84,7 @@ function mod:OnBossEnable()
 	self:Emote("ArcaneVolatility", "163372") -- Mythic
 	self:Log("SPELL_AURA_APPLIED", "ArcaneVolatilityApplied", 163372) -- Mythic
 	self:Log("SPELL_AURA_REMOVED", "ArcaneVolatilityRemoved", 163372) -- Mythic
+	self:Log("SPELL_AURA_APPLIED", "ArcaneTwisted", 163297) -- Mythic
 end
 
 function mod:OnEngage()
@@ -115,8 +99,9 @@ function mod:OnEngage()
 	self:CDBar(158134, 34) -- Shield Charge
 	self:CDBar(157943, 42) -- Whirlwind
 	if self:Mythic() then
+		self:Bar(163297, 23) -- Arcane Twisted
 		self:Bar(163372, 65) -- Arcane Volatility
-		self:Berserk(420) -- Mythic time, normal unconfirmed
+		self:Berserk(420)
 	else
 		self:Berserk(480)
 	end
@@ -129,10 +114,12 @@ end
 local function updateProximity()
 	-- pulverize > arcane volatility
 	-- open in reverse order so if you disable one it doesn't block others from showing
-	if volatilityOnMe then
-		mod:OpenProximity(163372, 8)
-	elseif #volatilityTargets > 0 then
-		mod:OpenProximity(163372, 8, volatilityTargets)
+	if mod:Mythic() then
+		if volatilityOnMe then
+			mod:OpenProximity(163372, 8)
+		elseif #volatilityTargets > 0 then
+			mod:OpenProximity(163372, 8, volatilityTargets)
+		end
 	end
 	if pulverizeProximity then
 		mod:OpenProximity(158385, 4)
@@ -147,7 +134,7 @@ end
 -- Pol
 
 function mod:ShieldBash(args)
-	if UnitDetailedThreatSituation("player", GetBossUnit(args.sourceGUID)) or not self:Tank() then
+	if UnitDetailedThreatSituation("player", self:GetUnitIdByGUID(args.sourceGUID)) or not self:Tank() then
 		self:Message(args.spellId, "Urgent")
 		self:CDBar(args.spellId, 23)
 	end
@@ -161,7 +148,6 @@ end
 do
 	local prev = 0
 	function mod:ArcaneCharge(args)
-		-- XXX doesn't always happen on Shield Charge?
 		local t = GetTime()
 		if t-prev > 10 then
 			self:Message(158134, "Urgent", nil, 163336)
@@ -172,11 +158,13 @@ do
 end
 
 function mod:InterruptingShout(args)
-	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
-	local cast = GetBossCastTime(args.sourceGUID)
-	if cast > 1 then
+	local _, _, _, _, _, endTime = UnitCastingInfo(self:GetUnitIdByGUID(args.sourceGUID))
+	local cast = endTime and (endTime / 1000 - GetTime()) or 0
+	if cast > 1.5 then
 		self:Bar(args.spellId, cast, CL.cast:format(args.spellName))
 	end
+
+	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
 	if self:Healer() or self:Damager() == "RANGED" then
 		self:PlaySound(args.spellId, "Long")
 		self:Flash(args.spellId)
@@ -206,7 +194,7 @@ end
 -- Phemos
 
 function mod:DoubleSlash(args)
-	if UnitDetailedThreatSituation("player", GetBossUnit(args.sourceGUID)) or not self:Tank() then
+	if UnitDetailedThreatSituation("player", self:GetUnitIdByGUID(args.sourceGUID)) or not self:Tank() then
 		self:Message(args.spellId, "Attention")
 		self:CDBar(args.spellId, 28) -- XXX all over the place
 	end
@@ -242,7 +230,7 @@ do
 	function mod:BlazeDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 			prev = t
 		end
 	end
@@ -250,7 +238,6 @@ end
 
 do
 	local times = { 60, 22, 45, 50, 89 } -- every 60 energy (either boss)... almost ;[
-
 	function mod:ArcaneVolatility()
 		self:Message(163372, "Neutral")
 		local t = times[volatilityCount]
@@ -290,5 +277,10 @@ do
 			SetRaidTarget(args.destName, 0)
 		end
 	end
+end
+
+function mod:ArcaneTwisted(args)
+	self:TargetMessage(args.spellId, args.destName, "Neutral")
+	self:Bar(args.spellId, 55)
 end
 
