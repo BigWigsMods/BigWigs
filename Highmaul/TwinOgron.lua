@@ -58,7 +58,7 @@ function mod:GetOptions()
 	return {
 		--[[ Pol ]]--
 		{143834, "TANK"}, -- Shield Bash
-		{158134, "ICON", "SAY", "FLASH"}, -- Shield Charge
+		158134, -- Shield Charge
 		158093, -- Interrupting Shout
 		{158385, "PROXIMITY"}, -- Pulverize
 		--[[ Phemos ]]--
@@ -68,7 +68,7 @@ function mod:GetOptions()
 		158057, -- Enfeebling Roar
 		158200, -- Quake
 		{158241, "FLASH"}, -- Blaze
-		{163372, "FLASH", "PROXIMITY"}, -- Arcane Volatility
+		{163372, "FLASH", "PROXIMITY", "SAY"}, -- Arcane Volatility
 		"custom_off_volatility_marker",
 		--[[ General ]]--
 		"berserk",
@@ -269,6 +269,7 @@ do
 			volatilityOnMe = true
 			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 			self:Flash(args.spellId)
+			self:Say(args.spellId)
 		end
 		updateProximity()
 		if self.db.profile.custom_off_volatility_marker and #volatilityTargets < 5 then

@@ -139,7 +139,7 @@ do
 	end
 	function mod:BerserkerRush(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
-		self:CDBar(158986, 46) -- cd is 46/51 :\
+		self:CDBar(args.spellId, 46) -- cd is 46/51 :\
 	end
 end
 
