@@ -2,6 +2,8 @@
 if not L then return end
 if L then
 	L.blade_dance_bar = "칼춤 도는 중"
+
+	--L.arena_sweeper_desc = "Timer for getting knocked out of the stadium stands after you've been Chain Hurled."
 end
 
 L = BigWigs:NewBossLocale("The Butcher", "koKR")
