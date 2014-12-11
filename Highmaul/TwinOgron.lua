@@ -13,7 +13,10 @@ mod.engageId = 1719
 --
 
 local quakeCount = 0
+local pulverizeProximity = nil
 local volatilityCount = 1
+local volatilityOnMe = nil
+local volatilityTargets = {}
 
 local function GetBossUnit(guid)
 	for i=1, 3 do
@@ -57,7 +60,7 @@ function mod:GetOptions()
 		{143834, "TANK"}, -- Shield Bash
 		{158134, "ICON", "SAY", "FLASH"}, -- Shield Charge
 		158093, -- Interrupting Shout
-		158385, -- Pulverize
+		{158385, "PROXIMITY"}, -- Pulverize
 		--[[ Phemos ]]--
 		{158521, "TANK"}, -- Double Slash
 		{167200, "TANK"}, -- Arcane Wound
@@ -102,7 +105,10 @@ end
 
 function mod:OnEngage()
 	quakeCount = 0
+	pulverizeProximity = nil
 	volatilityCount = 1
+	volatilityOnMe = nil
+	wipe(volatilityTargets)
 	self:CDBar(158200, 12) -- Quake
 	self:CDBar(143834, 22) -- Shield Bash
 	--self:CDBar(158521, 26) -- Double Slash
@@ -119,6 +125,24 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function updateProximity()
+	-- pulverize > arcane volatility
+	-- open in reverse order so if you disable one it doesn't block others from showing
+	if volatilityOnMe then
+		mod:OpenProximity(163372, 8)
+	elseif #volatilityTargets > 0 then
+		mod:OpenProximity(163372, 8, volatilityTargets)
+	end
+	if pulverizeProximity then
+		mod:OpenProximity(158385, 4)
+	end
+end
+
+local function openPulverizeProximity()
+	pulverizeProximity = true
+	updateProximity()
+end
 
 -- Pol
 
@@ -158,6 +182,7 @@ function mod:InterruptingShout(args)
 		self:Flash(args.spellId)
 	end
 	self:CDBar(158385, 27) -- Pulverize
+	self:ScheduleTimer(openPulverizeProximity, 25) -- gives you ~5s to spread out
 end
 
 do
@@ -170,6 +195,11 @@ do
 	function mod:PulverizeCast(args)
 		count = count + 1
 		self:Message(158385, "Urgent", "Info", CL.count:format(args.spellName, count))
+		if count > 1 then
+			pulverizeProximity = nil
+			self:CloseProximity(158385)
+			updateProximity()
+		end
 	end
 end
 
@@ -220,7 +250,6 @@ end
 
 do
 	local times = { 60, 22, 45, 50, 89 } -- every 60 energy (either boss)... almost ;[
-	local targets, isOnMe, timer = {}, nil, nil
 
 	function mod:ArcaneVolatility()
 		self:Message(163372, "Neutral")
@@ -228,35 +257,35 @@ do
 		if t then
 			self:CDBar(163372, t)
 		end
-		wipe(targets)
-		isOnMe = nil
-		timer = self:ScheduleTimer("CloseProximity", 7, 163372)
-		self:OpenProximity(163372, 8, targets)
+		volatilityCount = volatilityCount + 1
+		wipe(volatilityTargets)
+		volatilityOnMe = nil
 	end
 
 	function mod:ArcaneVolatilityApplied(args)
+		-- was kind of staggered, hence not scheduling and doing everything at once
 		self:TargetBar(args.spellId, 6, args.destName)
 		if self:Me(args.destGUID) then
+			volatilityOnMe = true
 			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 			self:Flash(args.spellId)
-			self:OpenProximity(args.spellId, 8)
-			isOnMe = true
-			self:CancelTimer(timer)
-		elseif not isOnMe then
-			self:OpenProximity(args.spellId, 8, targets)
 		end
-		if self.db.profile.custom_off_volatility_marker and #targets < 5 then
-			targets[#targets+1] = args.destName
-			SetRaidTarget(args.destName, #targets)
+		updateProximity()
+		if self.db.profile.custom_off_volatility_marker and #volatilityTargets < 5 then
+			volatilityTargets[#volatilityTargets+1] = args.destName
+			SetRaidTarget(args.destName, #volatilityTargets)
 		end
 	end
 
 	function mod:ArcaneVolatilityRemoved(args)
+		tDeleteItem(volatilityTargets, args.destName)
 		self:StopBar(args.spellId, args.destName)
 		if self:Me(args.destGUID) then
+			volatilityOnMe = nil
 			self:CloseProximity(args.spellId)
 		end
-		if tContains(targets, args.destName) then
+		updateProximity()
+		if self.db.profile.custom_off_volatility_marker then
 			SetRaidTarget(args.destName, 0)
 		end
 	end
