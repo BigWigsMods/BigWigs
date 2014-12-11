@@ -118,13 +118,13 @@ function boss:OnEnable(isWipe)
 	end
 	enabledModules[#enabledModules+1] = self
 
-	if self.SetupOptions then self:SetupOptions() end
-	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
-
 	if self.engageId then
 		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
 		self:RegisterEvent("ENCOUNTER_END", "EncounterEnds")
 	end
+
+	if self.SetupOptions then self:SetupOptions() end
+	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 
 	if IsEncounterInProgress() and not isWipe then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
 		self:CheckForEncounterEngage("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
