@@ -24,6 +24,10 @@ local volatilityTargets = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.volatility_self = CL.you:format(mod:SpellName(163372))
+	L.volatility_self_desc = "Options for when the Arcane Volatility debuff is on you."
+	L.volatility_self_icon = 163372
+
 	L.custom_off_volatility_marker = "Arcane Volatility marker"
 	L.custom_off_volatility_marker_desc = "Marks targets of Arcane Volatility with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader."
 	L.custom_off_volatility_marker_icon = 1
@@ -38,7 +42,8 @@ function mod:GetOptions()
 	return {
 		--[[ Mythic ]]--
 		163297,
-		{163372, "FLASH", "PROXIMITY", "SAY"}, -- Arcane Volatility
+		{163372, "PROXIMITY"}, -- Arcane Volatility
+		{"volatility_self", "FLASH", "SAY", "EMPHASIZE"},
 		"custom_off_volatility_marker",
 		--[[ Pol ]]--
 		{143834, "TANK"}, -- Shield Bash
@@ -127,6 +132,7 @@ local function updateProximity()
 end
 
 local function openPulverizeProximity()
+	mod:Message(158385, "Urgent", "Info", CL.soon:format(mod:SpellName(158385)))
 	pulverizeProximity = true
 	updateProximity()
 end
@@ -170,20 +176,20 @@ function mod:InterruptingShout(args)
 		self:Flash(args.spellId)
 	end
 	self:CDBar(158385, 27) -- Pulverize
-	self:ScheduleTimer(openPulverizeProximity, 25) -- gives you ~5s to spread out
+	self:ScheduleTimer(openPulverizeProximity, 23) -- gives you ~7s to spread out
 end
 
 do
 	local count = 0
 	function mod:Pulverize(args)
 		count = 0
-		self:Message(args.spellId, "Urgent", nil, CL.incoming:format(args.spellName))
+		self:Message(158385, "Urgent", "Info", CL.count:format(args.spellName, 1))
 		self:CDBar(158134, 27) -- Shield Charge
 	end
 	function mod:PulverizeCast(args)
 		count = count + 1
-		self:Message(158385, "Urgent", "Info", CL.count:format(args.spellName, count))
 		if count > 1 then
+			self:Message(158385, "Urgent", "Info", CL.count:format(args.spellName, count))
 			pulverizeProximity = nil
 			self:CloseProximity(158385)
 			updateProximity()
@@ -249,14 +255,31 @@ do
 		volatilityOnMe = nil
 	end
 
+	local timeLeft, timer = 8, nil
+	local function sayCountdown()
+		timeLeft = timeLeft - 1
+		if timeLeft < 6 then
+			mod:Say("volatility_self", timeLeft, true)
+			if timeLeft < 2 then
+				mod:CancelTimer(timer)
+			end
+		end
+	end
+
 	function mod:ArcaneVolatilityApplied(args)
 		-- was kind of staggered, hence not scheduling and doing everything at once
-		self:TargetBar(args.spellId, 6, args.destName)
 		if self:Me(args.destGUID) then
+			timeLeft = 8
 			volatilityOnMe = true
-			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
-			self:Flash(args.spellId)
-			self:Say(args.spellId)
+			self:Message("volatility_self", "Personal", "Alarm", CL.you:format(args.spellName))
+			self:Flash("volatility_self", args.spellId)
+			self:Say("volatility_self", args.spellId)
+			self:TargetBar("volatility_self", 8, args.destName, args.spellId)
+			if not self:LFR() then -- Don't spam in LFR
+				timer = self:ScheduleRepeatingTimer(sayCountdown, 1)
+			end
+		else
+			self:TargetBar(args.spellId, 8, args.destName)
 		end
 		updateProximity()
 		if self.db.profile.custom_off_volatility_marker and #volatilityTargets < 5 then
