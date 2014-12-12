@@ -64,7 +64,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ExpelMagicArcaneRemoved", 162186)
 	self:Log("SPELL_CAST_START", "ExpelMagicFrost", 172747)
 	self:Yell("SuppressionField", L.suppression_field_trigger1, L.suppression_field_trigger2, L.suppression_field_trigger3, L.suppression_field_trigger4)
-	self:Log("SPELL_CAST_SUCCESS", "SuppressionFieldCast", 161328) -- fallback to fire the timer if the triggers are localized
+	self:Log("SPELL_CAST_SUCCESS", "SuppressionFieldCast", 161328) -- fallback to fire the timer if the triggers aren't localized
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "ExpelMagicFelCast", 172895)
 	self:Log("SPELL_AURA_APPLIED", "ExpelMagicFelApplied", 172895)
@@ -181,9 +181,9 @@ do
 end
 
 function mod:OverwhelmingEnergy(args)
+	self:Bar(args.spellId, 30) -- XXX in mythic, don't fire this bar if it's going to cause mcs
 	if self:Me(args.destGUID) and UnitPower("player", 10) > 0 then -- check alternate power, too
 		self:Message(spellId, "Positive", "Warning") -- green to keep it different looking
-		self:Bar(args.spellId, 30) -- XXX in mythic, don't fire this bar if it's going to cause mcs
 	end
 end
 
