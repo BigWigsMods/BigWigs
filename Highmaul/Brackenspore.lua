@@ -11,7 +11,7 @@ mod.engageId = 1720
 --------------------------------------------------------------------------------
 -- Locals
 --
-local decayCount = 0
+local decayCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -97,7 +97,7 @@ function mod:OnEngage()
 	self:CDBar("living_mushroom", 18, L.living_mushroom, L.living_mushroom_icon) -- Living Mushroom
 	self:CDBar("rejuvenating_mushroom", 82, L.rejuvenating_mushroom, L.rejuvenating_mushroom_icon) -- Rejuvenating Mushroom
 	self:Berserk(600) -- LFR enrage
-	decayCount = 0
+	decayCount = 1
 end
 
 --------------------------------------------------------------------------------
@@ -142,12 +142,10 @@ function mod:InfestingSpores(args)
 	self:Bar(args.spellId, 65)
 end
 
-do
-	function mod:Decay(args)
-		decayCount = decayCount + 1
-		self:Message(args.spellId, "Personal", not self:Healer() and "Alert", CL.casting:format(args.spellName, decayCount))
-		self:Bar(args.spellId, 10, CL.count:format(args.spellName, decayCount))
-	end
+function mod:Decay(args)
+	self:Message(args.spellId, "Personal", not self:Healer() and "Alert", CL.casting:format(CL.count:format(args.spellName, decayCount)))
+	decayCount = decayCount + 1
+	self:Bar(args.spellId, 10, CL.count:format(args.spellName, decayCount))
 end
 
 function mod:FungusSpawns(unit, spellName, _, _, spellId)
@@ -166,6 +164,7 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 	elseif spellId == 163142 then -- Evolved Fungus (Fungal Flesh-Eater)
 		self:Message("flesh_eater", "Urgent", self:Tank() and "Long", CL.spawning:format(CL.big_add), L.flesh_eater_icon)
 		self:Bar("flesh_eater", 120, CL.big_add, L.flesh_eater_icon)
+		decayCount = 1
 	elseif spellId == 160022 then -- Living Mushroom
 		self:Message("living_mushroom", "Positive", self:Healer() and "Long", spellId, L.living_mushroom_icon)
 		self:Bar("living_mushroom", 58, spellId, L.living_mushroom_icon)
