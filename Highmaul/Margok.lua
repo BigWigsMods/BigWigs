@@ -93,8 +93,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Slow", 157801)
 	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 157763)
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 157763)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushArmor", 158553) -- XXX 10s cast, 4s debuff?
+	self:Log("SPELL_AURA_APPLIED", "CrushArmor", 158553) -- XXX 10s cast, 4s debuff?
+	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushArmor", 158553)
 	self:Log("SPELL_CAST_SUCCESS", "KickToTheFace", 158563)
+
+	self:Death("ReaverDeath", 78549) -- Gorian Reaver
 end
 
 function mod:OnEngage()
@@ -330,8 +333,8 @@ do
 	local timer, intermissionEnd = nil, 0
 	local function nextAdd(self)
 		self:Message("volatile_anomaly", "Attention", "Info", CL.incoming:format(self:SpellName(L.volatile_anomaly)), L.volatile_anomaly_icon)
-		self:Bar("volatile_anomaly", 12, L.volatile_anomaly, L.volatile_anomaly_icon)
 		if GetTime() + 12 < intermissionEnd then -- instead of counting
+			self:Bar("volatile_anomaly", 12, L.volatile_anomaly, L.volatile_anomaly_icon)
 			timer = self:ScheduleTimer(nextAdd, 12, self)
 		end
 	end
@@ -343,10 +346,15 @@ do
 		self:Bar("stages", intermissionTime, CL.intermission, "spell_arcane_blast")
 		self:Bar("volatile_anomaly", 14, L.volatile_anomaly, L.volatile_anomaly_icon)
 		self:ScheduleTimer(nextAdd, 14, self)
+		if args.spellId == 157289 then -- second intermission
+			self:CDBar(158563, 29) -- Kick to the Face
+		end
 	end
 
 	function mod:IntermissionEnd(args)
 		self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
+		-- just in case
+		self:StopBar(L.volatile_anomaly)
 		self:CancelTimer(timer)
 	end
 end
@@ -387,9 +395,16 @@ end
 
 function mod:CrushArmor(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 2 and "Warning")
+	self:Bar(args.spellId, 6)
 end
 
 function mod:KickToTheFace(args)
 	self:Message(args.spellId, "Urgent", "Warning")
+	self:Bar(args.spellId, 20)
+end
+
+function mod:ReaverDeath(args)
+	self:StopBar(158553)
+	self:StopBar(158563)
 end
 
