@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.blade_dance_bar = "Danse"
 
-	--L.arena_sweeper_desc = "Timer for getting knocked out of the stadium stands after you've been Chain Hurled."
+	L.arena_sweeper_desc = "Délai avant d'être expulsé des gradins après Projection de chaîne."
 end
 
 L = BigWigs:NewBossLocale("The Butcher", "frFR")
@@ -57,12 +57,12 @@ end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "frFR")
 if L then
-	--L.branded_say = "%s (%d) %dy"
+	L.branded_say = "%s (%d) %dm"
 
 	L.custom_off_fixate_marker = "Marquage Fixer"
 	L.custom_off_fixate_marker_desc = "Marque les cibles de Fixer du Mage de guerre gorien avec {rt1}{rt2}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 
-	--L.custom_off_branded_marker = "Branded Marker"
-	--L.custom_off_branded_marker_desc = "Mark Branded targets with {rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"	
+	L.custom_off_branded_marker = "Marquage Marqué"
+	L.custom_off_branded_marker_desc = "Marque les cibles de Marqué avec {rt3}{rt4}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
 end
 
