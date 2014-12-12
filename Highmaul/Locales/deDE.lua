@@ -38,6 +38,8 @@ end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "deDE")
 if L then
+	L.volatility_self_desc = "Optionen für den Schwächungszauber Arkane Flüchtigkeit auf Dir."
+
 	L.custom_off_volatility_marker = "Arkane Flüchtigkeit markieren"
 	L.custom_off_volatility_marker_desc = "Markiert die Ziele von Arkane Flüchtigkeit mit {rt1}{rt2}{rt3}{rt4}, benötigt Leiter oder Assistent."
 end
