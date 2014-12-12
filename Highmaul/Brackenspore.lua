@@ -12,6 +12,7 @@ mod.engageId = 1720
 -- Locals
 --
 local decayCount = 1
+local infestingSporesCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -98,6 +99,7 @@ function mod:OnEngage()
 	self:CDBar("rejuvenating_mushroom", 82, L.rejuvenating_mushroom, L.rejuvenating_mushroom_icon) -- Rejuvenating Mushroom
 	self:Berserk(600) -- LFR enrage
 	decayCount = 1
+	infestingSporesCount = 1
 end
 
 --------------------------------------------------------------------------------
@@ -138,8 +140,9 @@ function mod:NecroticBreath(args)
 end
 
 function mod:InfestingSpores(args)
-	self:Message(args.spellId, "Important", "Alarm")
-	self:Bar(args.spellId, 65)
+	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(CL.count:format(args.spellName, infestingSporesCount)))
+	infestingSporesCount = infestingSporesCount + 1
+	self:Bar(args.spellId, 65, CL.count:format(args.spellName, infestingSporesCount))
 end
 
 function mod:Decay(args)
