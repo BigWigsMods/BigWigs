@@ -255,32 +255,41 @@ do
 		volatilityOnMe = nil
 	end
 
-	local timeLeft, timer = 8, nil
+	local timeLeft, timer = 6, nil
 	local function sayCountdown()
 		timeLeft = timeLeft - 1
-		if timeLeft < 6 then
-			mod:Say("volatility_self", timeLeft, true)
-			if timeLeft < 2 then
-				mod:CancelTimer(timer)
-			end
+		mod:Say("volatility_self", timeLeft, true)
+		if timeLeft < 2 then
+			mod:CancelTimer(timer)
 		end
 	end
 
+	local list, scheduled = mod:NewTargetList(), nil
+	local function warn(spellId)
+		if not volatilityOnMe then
+			mod:TargetMessage(spellId, list, "Important")
+		end
+		wipe(list)
+		scheduled = nil
+	end
 	function mod:ArcaneVolatilityApplied(args)
-		-- was kind of staggered, hence not scheduling and doing everything at once
+		list[#list+1] = args.destName
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warn, 1, args.spellId)
+		end
 		if self:Me(args.destGUID) then
-			timeLeft = 8
+			timeLeft = 6
 			volatilityOnMe = true
-			self:Message("volatility_self", "Personal", "Alarm", CL.you:format(args.spellName))
+			self:Message("volatility_self", "Personal", "Warning", CL.you:format(args.spellName))
 			self:Flash("volatility_self", args.spellId)
 			self:Say("volatility_self", args.spellId)
-			self:TargetBar("volatility_self", 8, args.destName, args.spellId)
+			self:TargetBar("volatility_self", 6, args.destName, args.spellId)
 			timer = self:ScheduleRepeatingTimer(sayCountdown, 1)
 		else
-			self:TargetBar(args.spellId, 8, args.destName)
+			self:TargetBar(args.spellId, 6, args.destName)
 		end
 		updateProximity()
-		if self.db.profile.custom_off_volatility_marker and #volatilityTargets < 5 then
+		if self.db.profile.custom_off_volatility_marker then
 			volatilityTargets[#volatilityTargets+1] = args.destName
 			SetRaidTarget(args.destName, #volatilityTargets)
 		end
@@ -292,6 +301,7 @@ do
 		if self:Me(args.destGUID) then
 			volatilityOnMe = nil
 			self:CloseProximity(args.spellId)
+			self:CancelTimer(timer)
 		end
 		updateProximity()
 		if self.db.profile.custom_off_volatility_marker then
