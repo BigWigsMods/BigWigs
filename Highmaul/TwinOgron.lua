@@ -14,9 +14,12 @@ mod.engageId = 1719
 
 local quakeCount = 0
 local pulverizeProximity = nil
+local arcaneTwisted = nil
 local volatilityCount = 1
 local volatilityOnMe = nil
 local volatilityTargets = {}
+local polInterval = 26
+local phemosInterval = 31
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -72,7 +75,6 @@ function mod:OnBossEnable()
 	-- Pol
 	self:Log("SPELL_CAST_START", "ShieldBash", 143834)
 	self:Log("SPELL_CAST_START", "ShieldCharge", 158134)
-	self:Log("SPELL_CAST_START", "ArcaneCharge", 163336) -- Mythic
 	self:Log("SPELL_CAST_START", "InterruptingShout", 158093)
 	self:Log("SPELL_CAST_SUCCESS", "Pulverize", 158385)
 	self:Log("SPELL_CAST_START", "PulverizeCast", 157952, 158415, 158419) -- 1.58s cast
@@ -95,17 +97,20 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	polInterval = (self:Mythic() and 69 or self:Heroic() and 78 or 84) / 3 -- 23/26/28
+	phemosInterval = (self:Mythic() and 84 or self:Heroic() and 93 or 99) / 3 -- 28/31/33
 	quakeCount = 0
 	pulverizeProximity = nil
+	arcaneTwisted = nil
 	volatilityCount = 1
 	wipe(volatilityTargets)
 	self:CDBar(158200, 12) -- Quake
 	self:CDBar(143834, 22) -- Shield Bash
 	--self:CDBar(158521, 26) -- Double Slash
-	self:CDBar(158134, 34) -- Shield Charge
-	self:CDBar(157943, 42) -- Whirlwind
+	self:CDBar(158134, polInterval + 10) -- Shield Charge
+	self:CDBar(157943, phemosInterval + 10) -- Whirlwind
 	if self:Mythic() then
-		self:Bar(163297, 23) -- Arcane Twisted
+		self:Bar(163297, 33) -- Arcane Twisted
 		self:Bar(163372, 62) -- Arcane Volatility
 		self:Berserk(420)
 	else
@@ -150,20 +155,14 @@ function mod:ShieldBash(args)
 end
 
 function mod:ShieldCharge(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
-	self:CDBar(158093, 27) -- Interrupting Shout
-end
-
-do
-	local prev = 0
-	function mod:ArcaneCharge(args)
-		local t = GetTime()
-		if t-prev > 10 then
-			self:Message(158134, "Urgent", nil, 163336)
-			self:CDBar(158134, 5, 163336)
-			prev = t
-		end
+	self:Bar(args.spellId, 3)
+	if arcaneTwisted == self.sourceGUID then
+		self:Message(args.spellId, "Urgent", "Alarm", ("%s (%s)"):format(args.spellName, STRING_SCHOOL_ARCANE)) -- Shield Charge (Arcane)
+		self:Bar(args.spellId, 4, 163336) -- Arcane Charge
+	else
+		self:Message(args.spellId, "Urgent", "Alarm")
 	end
+	self:CDBar(158093, polInterval) -- Interrupting Shout
 end
 
 function mod:InterruptingShout(args)
@@ -178,8 +177,8 @@ function mod:InterruptingShout(args)
 		self:PlaySound(args.spellId, "Long")
 		self:Flash(args.spellId)
 	end
-	self:CDBar(158385, 27) -- Pulverize
-	self:ScheduleTimer(openPulverizeProximity, 23) -- gives you ~7s to spread out
+	self:CDBar(158385, polInterval) -- Pulverize
+	self:ScheduleTimer(openPulverizeProximity, polInterval-4) -- gives you ~7s to spread out
 end
 
 do
@@ -187,7 +186,7 @@ do
 	function mod:Pulverize(args)
 		count = 0
 		self:Message(158385, "Urgent", "Info", CL.count:format(args.spellName, 1))
-		self:CDBar(158134, 27) -- Shield Charge
+		self:CDBar(158134, polInterval) -- Shield Charge
 	end
 	function mod:PulverizeCast(args)
 		count = count + 1
@@ -215,19 +214,23 @@ function mod:ArcaneWound(args)
 end
 
 function mod:Whirlwind(args)
-	self:Message(args.spellId, "Attention")
-	self:CDBar(158057, self:Normal() and 33 or 31) -- Enfeebling Roar
+	if arcaneTwisted == self.sourceGUID then
+		self:Message(args.spellId, "Attention", "Alert", ("%s (%s)"):format(args.spellName, STRING_SCHOOL_ARCANE)) -- Whirlwind (Arcane)
+	else
+		self:Message(args.spellId, "Attention")
+	end
+	self:CDBar(158057, phemosInterval) -- Enfeebling Roar
 end
 
 function mod:EnfeeblingRoar(args)
 	self:Message(args.spellId, "Attention", "Alert")
-	self:CDBar(158200, self:Normal() and 33 or 31, CL.count:format(self:SpellName(158200), quakeCount+1)) -- Quake
+	self:CDBar(158200, phemosInterval, CL.count:format(self:SpellName(158200), quakeCount+1)) -- Quake
 end
 
 function mod:Quake(args)
 	quakeCount = quakeCount + 1
 	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(CL.count:format(args.spellName, quakeCount)))
-	self:CDBar(157943, self:Normal() and 33 or 31) -- Whirlwind
+	self:CDBar(157943, phemosInterval) -- Whirlwind
 end
 
 function mod:QuakeChannel(args)
@@ -307,6 +310,7 @@ end
 
 function mod:ArcaneTwisted(args)
 	self:TargetMessage(args.spellId, args.destName, "Neutral")
-	self:Bar(args.spellId, 55)
+	self:Bar(args.spellId, 55, args.destName)
+	arcaneTwisted = args.destGUID
 end
 
