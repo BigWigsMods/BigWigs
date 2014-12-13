@@ -86,10 +86,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "QuakeChannel", 158200)
 	self:Log("SPELL_AURA_APPLIED", "BlazeDamage", 158241)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BlazeDamage", 158241)
-	self:Emote("ArcaneVolatility", "163372") -- Mythic
-	self:Log("SPELL_AURA_APPLIED", "ArcaneVolatilityApplied", 163372) -- Mythic
-	self:Log("SPELL_AURA_REMOVED", "ArcaneVolatilityRemoved", 163372) -- Mythic
-	self:Log("SPELL_AURA_APPLIED", "ArcaneTwisted", 163297) -- Mythic
+	--Mythic
+	self:Log("SPELL_AURA_APPLIED", "ArcaneTwisted", 163297)
+	--self:Emote("ArcaneVolatility", "163372")
+	self:Log("SPELL_CAST_SUCCESS", "ArcaneVolatility", 163372)
+	self:Log("SPELL_AURA_APPLIED", "ArcaneVolatilityApplied", 163372)
+	self:Log("SPELL_AURA_REMOVED", "ArcaneVolatilityRemoved", 163372)
 end
 
 function mod:OnEngage()
@@ -104,7 +106,7 @@ function mod:OnEngage()
 	self:CDBar(157943, 42) -- Whirlwind
 	if self:Mythic() then
 		self:Bar(163297, 23) -- Arcane Twisted
-		self:Bar(163372, 65) -- Arcane Volatility
+		self:Bar(163372, 62) -- Arcane Volatility
 		self:Berserk(420)
 	else
 		self:Berserk(480)
@@ -123,6 +125,8 @@ local function updateProximity()
 			mod:OpenProximity(163372, 8)
 		elseif #volatilityTargets > 0 then
 			mod:OpenProximity(163372, 8, volatilityTargets)
+		else
+			mod:CloseProximity(163372)
 		end
 	end
 	if pulverizeProximity then
@@ -242,15 +246,33 @@ do
 end
 
 do
-	local times = { 60, 22, 45, 50, 89 } -- every 60 energy (either boss)... almost ;[
-	function mod:ArcaneVolatility()
+	local times = { 8.5, 6, 46, 7, 16, 8.5, 6, 40, 131, 9.5, 140, 8.5, 6 } -- good for 7min
+	local scheduled = nil
+	local function warn(spellId)
+		mod:Message(spellId, "Neutral")
 		local t = times[volatilityCount]
 		if t then
-			self:CDBar(163372, t)
+			mod:CDBar(spellId, t)
 		end
 		volatilityCount = volatilityCount + 1
-		wipe(volatilityTargets)
-		volatilityOnMe = nil
+		updateProximity()
+		scheduled = nil
+	end
+	function mod:ArcaneVolatility(args)
+		-- cast on everyone at the same time, but the debuffs end up getting applied over .8s or so
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warn, 0.2, args.spellId)
+		end
+		if self:Me(args.destGUID) then
+			volatilityOnMe = true
+			self:Message("volatility_self", "Personal", "Warning", CL.you:format(args.spellName))
+			self:Flash("volatility_self", args.spellId)
+			self:Say("volatility_self", args.spellId)
+		end
+		volatilityTargets[#volatilityTargets+1] = args.destName
+		if self.db.profile.custom_off_volatility_marker then
+			SetRaidTarget(args.destName, #volatilityTargets)
+		end
 	end
 
 	local timeLeft, timer = 6, nil
@@ -261,45 +283,19 @@ do
 			mod:CancelTimer(timer)
 		end
 	end
-
-	local list, scheduled = mod:NewTargetList(), nil
-	local function warn(spellId)
-		if not volatilityOnMe then
-			mod:TargetMessage(spellId, list, "Neutral")
-		end
-		wipe(list)
-		scheduled = nil
-	end
-
 	function mod:ArcaneVolatilityApplied(args)
-		list[#list+1] = args.destName
-		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 1, args.spellId)
-		end
 		if self:Me(args.destGUID) then
 			timeLeft = 6
-			volatilityOnMe = true
-			self:Message("volatility_self", "Personal", "Warning", CL.you:format(args.spellName))
-			self:Flash("volatility_self", args.spellId)
-			self:Say("volatility_self", args.spellId)
 			self:TargetBar("volatility_self", 6, args.destName, args.spellId)
 			timer = self:ScheduleRepeatingTimer(sayCountdown, 1)
-		else
-			self:TargetBar(args.spellId, 6, args.destName)
-		end
-		updateProximity()
-		if self.db.profile.custom_off_volatility_marker then
-			volatilityTargets[#volatilityTargets+1] = args.destName
-			SetRaidTarget(args.destName, #volatilityTargets)
 		end
 	end
 
 	function mod:ArcaneVolatilityRemoved(args)
 		tDeleteItem(volatilityTargets, args.destName)
-		self:StopBar(args.spellId, args.destName)
 		if self:Me(args.destGUID) then
+			self:StopBar(args.spellId, args.destName)
 			volatilityOnMe = nil
-			self:CloseProximity(args.spellId)
 			self:CancelTimer(timer)
 		end
 		updateProximity()
