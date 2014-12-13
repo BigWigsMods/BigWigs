@@ -184,7 +184,7 @@ end
 function mod:OverwhelmingEnergy(args)
 	self:Bar(args.spellId, 30, L.overwhelming_energy_bar) -- XXX in mythic, don't fire this bar if it's going to cause mcs
 	if self:Me(args.destGUID) and UnitPower("player", 10) > 0 then -- check alternate power, too
-		self:Message(spellId, "Positive", "Warning") -- green to keep it different looking
+		self:Message(args.spellId, "Positive", "Warning") -- green to keep it different looking
 	end
 end
 
