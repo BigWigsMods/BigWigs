@@ -96,7 +96,6 @@ function mod:OnEngage()
 	quakeCount = 0
 	pulverizeProximity = nil
 	volatilityCount = 1
-	volatilityOnMe = nil
 	wipe(volatilityTargets)
 	self:CDBar(158200, 12) -- Quake
 	self:CDBar(143834, 22) -- Shield Bash
@@ -245,7 +244,6 @@ end
 do
 	local times = { 60, 22, 45, 50, 89 } -- every 60 energy (either boss)... almost ;[
 	function mod:ArcaneVolatility()
-		self:Message(163372, "Neutral")
 		local t = times[volatilityCount]
 		if t then
 			self:CDBar(163372, t)
@@ -267,11 +265,12 @@ do
 	local list, scheduled = mod:NewTargetList(), nil
 	local function warn(spellId)
 		if not volatilityOnMe then
-			mod:TargetMessage(spellId, list, "Important")
+			mod:TargetMessage(spellId, list, "Neutral")
 		end
 		wipe(list)
 		scheduled = nil
 	end
+
 	function mod:ArcaneVolatilityApplied(args)
 		list[#list+1] = args.destName
 		if not scheduled then
