@@ -97,12 +97,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	polInterval = (self:Mythic() and 69 or self:Heroic() and 78 or 84) / 3 -- 23/26/28
-	phemosInterval = (self:Mythic() and 84 or self:Heroic() and 93 or 99) / 3 -- 28/31/33
+	polInterval = self:Mythic() and 23 or self:Heroic() and 26 or 28
+	phemosInterval = self:Mythic() and 28 or self:Heroic() and 31 or 33
 	quakeCount = 0
 	pulverizeProximity = nil
 	arcaneTwisted = nil
 	volatilityCount = 1
+	volatilityOnMe = nil
 	wipe(volatilityTargets)
 	self:CDBar(158200, 12) -- Quake
 	self:CDBar(143834, 22) -- Shield Bash
@@ -156,7 +157,7 @@ end
 
 function mod:ShieldCharge(args)
 	self:Bar(args.spellId, 3)
-	if arcaneTwisted == self.sourceGUID then
+	if arcaneTwisted == args.sourceGUID then
 		self:Message(args.spellId, "Urgent", "Alarm", ("%s (%s)"):format(args.spellName, STRING_SCHOOL_ARCANE)) -- Shield Charge (Arcane)
 		self:Bar(args.spellId, 4, 163336) -- Arcane Charge
 	else
@@ -214,7 +215,7 @@ function mod:ArcaneWound(args)
 end
 
 function mod:Whirlwind(args)
-	if arcaneTwisted == self.sourceGUID then
+	if arcaneTwisted == args.sourceGUID then
 		self:Message(args.spellId, "Attention", "Alert", ("%s (%s)"):format(args.spellName, STRING_SCHOOL_ARCANE)) -- Whirlwind (Arcane)
 	else
 		self:Message(args.spellId, "Attention")
