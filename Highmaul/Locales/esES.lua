@@ -38,6 +38,8 @@ end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "esES") or BigWigs:NewBossLocale("Twin Ogron", "esMX")
 if L then
+	--L.volatility_self_desc = "Options for when the Arcane Volatility debuff is on you."
+
 	L.custom_off_volatility_marker = "Marcador de Volatilidad Arcana"
 	L.custom_off_volatility_marker_desc = "Marca los jugadores afectados por Volatilidad Arcana con {rt1}{rt2}{rt3}{rt4}, requiere ayudante o líder."
 end
@@ -50,6 +52,7 @@ if L then
 	L.suppression_field_trigger4 = "¡Silencio!"
 
 	L.fire_bar = "Todo el mundo explota!"
+	--L.overwhelming_energy_bar = "Balls hit"
 
 	L.custom_off_fel_marker = "Marcador de Expulsar magia: Vil"
 	L.custom_off_fel_marker_desc = "Marca los jugadores afectados por Expulsar magia: Vil con {rt1}{rt2}{rt3}, requiere ayudante o líder.\n|cFFFF0000Sólo 1 persona en la raid debería tener activada esta opción para prevenir conflictos con las marcas.|r"

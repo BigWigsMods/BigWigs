@@ -38,6 +38,8 @@ end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "zhCN")
 if L then
+	--L.volatility_self_desc = "Options for when the Arcane Volatility debuff is on you."
+
 	--L.custom_off_volatility_marker = "Arcane Volatility marker"
 	--L.custom_off_volatility_marker_desc = "Marks targets of Arcane Volatility with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader."
 end
@@ -49,7 +51,8 @@ if L then
 	--L.suppression_field_trigger3 = "I will crush you!"
 	--L.suppression_field_trigger4 = "Silence!"
 
-	--L.fire_bar = "Everyone Explodes!"
+	--L.fire_bar = "Everyone explodes!"
+	--L.overwhelming_energy_bar = "Balls hit"
 
 	--L.custom_off_fel_marker = "Expel Magic: Fel Marker"
 	--L.custom_off_fel_marker_desc = "Mark Expel Magic: Fel targets with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"

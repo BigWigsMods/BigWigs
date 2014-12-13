@@ -38,6 +38,8 @@ end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "koKR")
 if L then
+	--L.volatility_self_desc = "Options for when the Arcane Volatility debuff is on you."
+
 	L.custom_off_volatility_marker = "불안정한 비전 징표 설정"
 	L.custom_off_volatility_marker_desc = "불안정한 징표의 대상을 {rt1}{rt2}{rt3}{rt4}의 징표로 설정합니다. 공격대장이거나 권한이 필요합니다."
 end
@@ -50,6 +52,7 @@ if L then
 	L.suppression_field_trigger4 = "침묵!"
 
 	L.fire_bar = "모두 폭발합니다!!"
+	--L.overwhelming_energy_bar = "Balls hit"
 
 	--L.custom_off_fel_marker = "Expel Magic: Fel Marker"
 	--L.custom_off_fel_marker_desc = "Mark Expel Magic: Fel targets with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"

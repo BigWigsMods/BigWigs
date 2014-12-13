@@ -275,9 +275,7 @@ do
 			self:Flash("volatility_self", args.spellId)
 			self:Say("volatility_self", args.spellId)
 			self:TargetBar("volatility_self", 8, args.destName, args.spellId)
-			if not self:LFR() then -- Don't spam in LFR
-				timer = self:ScheduleRepeatingTimer(sayCountdown, 1)
-			end
+			timer = self:ScheduleRepeatingTimer(sayCountdown, 1)
 		else
 			self:TargetBar(args.spellId, 8, args.destName)
 		end

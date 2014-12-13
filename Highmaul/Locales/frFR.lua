@@ -38,6 +38,8 @@ end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "frFR")
 if L then
+	--L.volatility_self_desc = "Options for when the Arcane Volatility debuff is on you."
+
 	L.custom_off_volatility_marker = "Marquage Volatilité arcanique"
 	L.custom_off_volatility_marker_desc = "Marque les cibles de Volatilité arcanique avec {rt1}{rt2}{rt3}{rt4}. Nécessite d'être assistant ou chef de raid."
 end
@@ -50,6 +52,7 @@ if L then
 	L.suppression_field_trigger4 = "Silence !" -- à vérifier
 
 	L.fire_bar = "Tout le monde explose !"
+	--L.overwhelming_energy_bar = "Balls hit"
 
 	L.custom_off_fel_marker = "Marquage Projection de magie : Gangrène"
 	L.custom_off_fel_marker_desc = "Marque les cibles de Projection de magie : Gangrène avec {rt1}{rt2}{rt3}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
