@@ -3,12 +3,12 @@ if not L then return end
 if L then
 	L.blade_dance_bar = "Danza"
 
-	--L.arena_sweeper_desc = "Timer for getting knocked out of the stadium stands after you've been Chain Hurled."
+	L.arena_sweeper_desc = "Tiempo antes de ser lanzado fuera del estadio después del Lanzamiendo de cadena."
 end
 
 L = BigWigs:NewBossLocale("The Butcher", "esES") or BigWigs:NewBossLocale("The Butcher", "esMX")
 if L then
-	--L.adds_multiple = "Adds x%d"
+	L.adds_multiple = "Adds x%d"
 end
 
 L = BigWigs:NewBossLocale("Tectus", "esES") or BigWigs:NewBossLocale("Tectus", "esMX")
@@ -38,7 +38,7 @@ end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "esES") or BigWigs:NewBossLocale("Twin Ogron", "esMX")
 if L then
-	--L.volatility_self_desc = "Options for when the Arcane Volatility debuff is on you."
+	L.volatility_self_desc = "Opciones para cuando te afecte el debuff de Volatilidad Arcana."
 
 	L.custom_off_volatility_marker = "Marcador de Volatilidad Arcana"
 	L.custom_off_volatility_marker_desc = "Marca los jugadores afectados por Volatilidad Arcana con {rt1}{rt2}{rt3}{rt4}, requiere ayudante o líder."
@@ -52,7 +52,7 @@ if L then
 	L.suppression_field_trigger4 = "¡Silencio!"
 
 	L.fire_bar = "Todo el mundo explota!"
-	--L.overwhelming_energy_bar = "Balls hit"
+	L.overwhelming_energy_bar = "Bolas golpean"
 
 	L.custom_off_fel_marker = "Marcador de Expulsar magia: Vil"
 	L.custom_off_fel_marker_desc = "Marca los jugadores afectados por Expulsar magia: Vil con {rt1}{rt2}{rt3}, requiere ayudante o líder.\n|cFFFF0000Sólo 1 persona en la raid debería tener activada esta opción para prevenir conflictos con las marcas.|r"
@@ -60,12 +60,12 @@ end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "esES") or BigWigs:NewBossLocale("Imperator Mar'gok", "esMX")
 if L then
-	--L.branded_say = "%s (%d) %dy"
+	L.branded_say = "%s (%d) %dm"
 
 	L.custom_off_fixate_marker = "Marcador de Fijar"
 	L.custom_off_fixate_marker_desc = "Marca los objetivos de los Magos de guerra gorianos Fijar con {rt1}{rt2}, requiere ayudante o líder.\n|cFFFF0000Sólo 1 persona en la raid debería tener activada esta opción para prevenir conflictos con las marcas.|r"
 
-	--L.custom_off_branded_marker = "Branded Marker"
-	--L.custom_off_branded_marker_desc = "Mark Branded targets with {rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"	
+	L.custom_off_branded_marker = "Marcador de Marcado"
+	L.custom_off_branded_marker_desc = "Marca los jugadores con Marcado con {rt3}{rt4}, requiere ayudante o líder.\n|cFFFF0000Sólo 1 persona en la raid debería tener activada esta opción para prevenir conflictos con las marcas.|r"	
 end
 
