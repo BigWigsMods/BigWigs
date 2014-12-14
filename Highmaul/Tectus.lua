@@ -147,7 +147,7 @@ do
 	function mod:CrystallineBarrageDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(162346, "Personal", "Alarm", CL.underyou:format(args.spellName))
 			prev = t
 		end
 	end
