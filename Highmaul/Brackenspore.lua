@@ -102,7 +102,10 @@ function mod:OnEngage()
 	self:CDBar("flesh_eater", 32, CL.big_add, L.flesh_eater_icon) -- Fungal Flesh-Eater
 	self:CDBar("living_mushroom", 18, L.living_mushroom, L.living_mushroom_icon) -- Living Mushroom
 	self:CDBar("rejuvenating_mushroom", 82, L.rejuvenating_mushroom, L.rejuvenating_mushroom_icon) -- Rejuvenating Mushroom
-	self:Berserk(600) -- LFR enrage
+	if self:Mythic() then
+		self:CDBar("mythic_ability", 25, L.mythic_ability, L.mythic_ability_icon)
+	end
+	self:Berserk(600)
 	decayCount = 1
 	infestingSporesCount = 1
 end
@@ -113,7 +116,7 @@ end
 
 function mod:CallOfTheTides(args)
 	self:Message(args.spellId, "Urgent")
-	self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon)
+	self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon) -- delayed by other casts, can be 20-30s
 end
 
 do
@@ -176,7 +179,7 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 	elseif spellId == 163794 then -- Exploding Fungus (Mythic)
 		self:Message(spellId, "Urgent")
 		self:Bar(spellId, 7)
-		self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon)
+		self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon) -- delayed by other casts, can be 20-30s
 	end
 end
 
