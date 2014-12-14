@@ -394,7 +394,8 @@ function mod:FixateRemoved(args)
 end
 
 function mod:CrushArmor(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 2 and "Warning")
+	local amount = args.amount or 1
+	self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
 	self:Bar(args.spellId, 6)
 end
 
