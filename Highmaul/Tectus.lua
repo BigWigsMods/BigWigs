@@ -58,7 +58,7 @@ function mod:GetOptions()
 		163312, -- Raving Assault
 		--[[ General ]]--
 		{162288, "TANK"}, -- Accretion
-		{162346, "FLASH"}, -- Crystalline Barrage
+		{162346, "FLASH", "SAY"}, -- Crystalline Barrage
 		"custom_off_barrage_marker",
 		162475, -- Tectonic Upheaval
 		"adds",
@@ -119,6 +119,7 @@ function mod:CrystallineBarrage(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:Flash(args.spellId)
+		self:Say(args.spellId, 120361) -- 120361 = "Barrage"
 	end
 	if self.db.profile.custom_off_barrage_marker then
 		for i=1, 5 do
