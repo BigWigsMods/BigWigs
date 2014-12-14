@@ -161,7 +161,7 @@ do
 		local id = self:MobId(args.sourceGUID)
 		if id ~= 80557 or t-prev > 5 then -- not Mote or first Mote cast in 5s
 			local raidIcon = CombatLog_String_GetIcon(args.sourceRaidFlags)
-			self:Message(args.spellId, "Positive", nil, CL.other:format(raidIcon .. names[id], args.spellName))
+			self:Message(args.spellId, "Positive", "Long", CL.other:format(raidIcon .. names[id], args.spellName))
 			if id == 80557 then prev = t end
 		end
 	end
@@ -178,7 +178,7 @@ end
 -- Adds
 
 function mod:Earthwarper(args)
-	self:Message("adds", "Attention", "Info", -10061, false)
+	self:Message("adds", "Attention", "Info", -10061, false) -- Night-Twisted Earthwarper
 	self:CDBar("adds", 41, -10061, L.earthwarper_icon)
 	self:CDBar(162894, 10) -- Gift of Earth
 	self:CDBar(162968, 15) -- Earthen Flechettes
