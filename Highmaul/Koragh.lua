@@ -67,7 +67,7 @@ function mod:OnBossEnable()
 	self:Yell("SuppressionField", L.suppression_field_trigger1, L.suppression_field_trigger2, L.suppression_field_trigger3, L.suppression_field_trigger4)
 	self:Log("SPELL_CAST_SUCCESS", "SuppressionFieldCast", 161328) -- fallback to fire the timer if the triggers aren't localized
 	-- Mythic
-	self:Log("SPELL_AURA_APPLIED", "ExpelMagicFelCast", 172895)
+	self:Log("SPELL_CAST_START", "ExpelMagicFelCast", 172895)
 	self:Log("SPELL_AURA_APPLIED", "ExpelMagicFelApplied", 172895)
 	self:Log("SPELL_AURA_REMOVED", "ExpelMagicFelRemoved", 172895)
 	self:Log("SPELL_AURA_APPLIED", "DominatingPower", 163472)
@@ -106,6 +106,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 156803 then -- Nullification Barrier
 		self:Message(160734, "Positive", nil, spellName)
 		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, unit)
+		if self:Mythic() then
+			self:Bar(172895, 6) -- Expel Magic: Fel
+		end
 	end
 end
 
@@ -193,7 +196,7 @@ end
 do
 	local marks = 0
 	function mod:ExpelMagicFelCast(args)
-		self:Bar(args.spellId, 15.7) -- seems like a static timer, not based on absorbed damage
+		self:CDBar(args.spellId, 15.7) -- 15-18
 		marks = 0
 	end
 
