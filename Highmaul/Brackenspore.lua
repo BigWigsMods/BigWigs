@@ -181,7 +181,7 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 		self:CDBar("rejuvenating_mushroom", 120, spellId, L.rejuvenating_mushroom_icon) -- spawns most of the time just after 2min, sometimes delayed by boss casts (?)
 	elseif spellId == 163794 then -- Exploding Fungus (Mythic)
 		self:Message(spellId, "Urgent")
-		self:Bar(spellId, 5)
+		self:Bar(spellId, 7)
 		self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon)
 	end
 end
