@@ -55,7 +55,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Mythic ]]--
-		{163755, "FLASH"}, -- Call of the Tides
+		163755, -- Call of the Tides
 		{163794, "FLASH"}, -- Exploding Fungus
 		"mythic_ability",
 		--[[ Hostile Fungus ]]--
@@ -67,7 +67,7 @@ function mod:GetOptions()
 		"living_mushroom", -- Good Shroom (Heals units in 20yd)
 		"rejuvenating_mushroom", -- Good Shroom (Increased haste and Mana regen)
 		--[[ General ]]--
-		{164125, "FLASH"}, -- Creeping Moss
+		{164125, "TANK", "FLASH"}, -- Creeping Moss
 		{163241, "TANK"}, -- Rot
 		{159219, "TANK_HEALER"}, -- Necrotic Breath
 		159996, -- Infesting Spores
@@ -116,24 +116,16 @@ end
 
 function mod:CallOfTheTides(args)
 	self:Message(args.spellId, "Urgent")
-	self:Flash(args.spellId)
-	self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon) -- delayed by other casts, can be 20-30s
+	self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon) -- can be delayed by other casts
 end
 
-do
-	local prevAdd = 0
-	local prevBoss = 0
-	function mod:CreepingMossHeal(args)
-		local t = GetTime()
-		if self:Tank() and not self:LFR() then
-			local mobId = self:MobId(args.destGUID)
-			if t-prevBoss > 2 and mobId == 78491 then -- Brackenspore
-				self:Message(args.spellId, "Important", "Info", L.creeping_moss_boss_heal)
-				prevBoss = t
-			elseif t-prevAdd > 2 and mobId == 79092 then -- Fungal Flesh-Eater
-				self:Message(args.spellId, "Important", nil, L.creeping_moss_add_heal)
-				prevAdd = t
-			end
+function mod:CreepingMossHeal(args)
+	if not self:LFR() then
+		local mobId = self:MobId(args.destGUID)
+		if mobId == 78491 then -- Brackenspore
+			self:Message(args.spellId, "Important", "Info", L.creeping_moss_boss_heal)
+		elseif mobId == 79092 then -- Fungal Flesh-Eater
+			self:Message(args.spellId, "Important", nil, L.creeping_moss_add_heal)
 		end
 	end
 end
@@ -150,6 +142,7 @@ end
 
 function mod:InfestingSpores(args)
 	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(CL.count:format(args.spellName, infestingSporesCount)))
+	--self:Bar(args.spellId, 15, ("<%s>"):format(args.spellName)) -- 2s cast + 10s duration + 3s remaining debuff
 	infestingSporesCount = infestingSporesCount + 1
 	self:Bar(args.spellId, 58, CL.count:format(args.spellName, infestingSporesCount))
 end
@@ -181,7 +174,7 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 		self:Message(spellId, "Urgent")
 		self:Flash(spellId)
 		self:Bar(spellId, 7)
-		self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon) -- delayed by other casts, can be 20-30s
+		self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon) -- can be delayed by other casts
 	end
 end
 
