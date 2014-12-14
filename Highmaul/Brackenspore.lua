@@ -142,13 +142,13 @@ end
 function mod:InfestingSpores(args)
 	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(CL.count:format(args.spellName, infestingSporesCount)))
 	infestingSporesCount = infestingSporesCount + 1
-	self:Bar(args.spellId, 65, CL.count:format(args.spellName, infestingSporesCount))
+	self:Bar(args.spellId, 58, CL.count:format(args.spellName, infestingSporesCount))
 end
 
 function mod:Decay(args)
 	self:Message(args.spellId, "Personal", not self:Healer() and "Alert", CL.casting:format(CL.count:format(args.spellName, decayCount)))
 	decayCount = decayCount + 1
-	self:Bar(args.spellId, 10, CL.count:format(args.spellName, decayCount))
+	self:Bar(args.spellId, 9.5, CL.count:format(args.spellName, decayCount))
 end
 
 function mod:FungusSpawns(unit, spellName, _, _, spellId)
@@ -163,7 +163,7 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 		self:Bar("spore_shooter", 60, CL.small_adds, L.spore_shooter_icon)
 	elseif spellId == 163141 then -- Mind Fungus
 		self:Message("mind_fungus", "Attention", nil, spellId, L.mind_fungus_icon)
-		self:CDBar("mind_fungus", 51, spellId, L.mind_fungus_icon) -- 51.1, 58.6, 55.5, 55, 61.5, 59.5
+		self:CDBar("mind_fungus", self:Mythic() and 30 or 51, spellId, L.mind_fungus_icon) -- 51.1, 58.6, 55.5, 55, 61.5, 59.5
 	elseif spellId == 163142 then -- Evolved Fungus (Fungal Flesh-Eater)
 		self:Message("flesh_eater", "Urgent", self:Tank() and "Long", CL.spawning:format(CL.big_add), L.flesh_eater_icon)
 		self:Bar("flesh_eater", 120, CL.big_add, L.flesh_eater_icon)
@@ -173,7 +173,7 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 		self:Bar("living_mushroom", 58, spellId, L.living_mushroom_icon)
 	elseif spellId == 160021 then -- Rejuvenating Mushroom
 		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Long", spellId, L.rejuvenating_mushroom_icon)
-		self:Bar("rejuvenating_mushroom", 135, spellId, L.rejuvenating_mushroom_icon)
+		self:CDBar("rejuvenating_mushroom", 120, spellId, L.rejuvenating_mushroom_icon) -- spawns most of the time just after 2min, sometimes delayed by boss casts (?)
 	elseif spellId == 163794 then -- Exploding Fungus (Mythic)
 		self:Message(spellId, "Urgent")
 		self:Bar(spellId, 5)
