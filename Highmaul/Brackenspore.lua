@@ -67,7 +67,7 @@ function mod:GetOptions()
 		"living_mushroom", -- Good Shroom (Heals units in 20yd)
 		"rejuvenating_mushroom", -- Good Shroom (Increased haste and Mana regen)
 		--[[ General ]]--
-		{164125, "TANK", "FLASH"}, -- Creeping Moss
+		{164125, "TANK"}, -- Creeping Moss
 		{163241, "TANK"}, -- Rot
 		{159219, "TANK_HEALER"}, -- Necrotic Breath
 		159996, -- Infesting Spores
