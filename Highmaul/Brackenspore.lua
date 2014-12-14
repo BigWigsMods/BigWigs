@@ -55,8 +55,8 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Mythic ]]--
-		163755, -- Call of the Tides
-		163794, -- Exploding Fungus
+		{163755, "FLASH"}, -- Call of the Tides
+		{163794, "FLASH"}, -- Exploding Fungus
 		"mythic_ability",
 		--[[ Hostile Fungus ]]--
 		"spore_shooter", -- Small Adds
@@ -116,6 +116,7 @@ end
 
 function mod:CallOfTheTides(args)
 	self:Message(args.spellId, "Urgent")
+	self:Flash(args.spellId)
 	self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon) -- delayed by other casts, can be 20-30s
 end
 
@@ -178,6 +179,7 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 		self:CDBar("rejuvenating_mushroom", 120, spellId, L.rejuvenating_mushroom_icon) -- spawns most of the time just after 2min, sometimes delayed by boss casts (?)
 	elseif spellId == 163794 then -- Exploding Fungus (Mythic)
 		self:Message(spellId, "Urgent")
+		self:Flash(spellId)
 		self:Bar(spellId, 7)
 		self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon) -- delayed by other casts, can be 20-30s
 	end
