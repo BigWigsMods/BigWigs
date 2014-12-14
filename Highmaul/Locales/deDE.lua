@@ -32,8 +32,8 @@ end
 
 L = BigWigs:NewBossLocale("Brackenspore", "deDE")
 if L then
-	--L.mythic_ability = "Next special ability"
-	--L.mythic_ability_desc = "Cooldown timer for the next Call of the Tides or Exploding Fungus"
+	L.mythic_ability = "Nächste Spezialfähigkeit"
+	L.mythic_ability_desc = "Zeigt Timer für die Abklingzeiten des nächsten Rufs der Gezeiten oder Explodierenden Pilzes an."
 
 	L.creeping_moss_boss_heal = "Moos unter dem BOSS (Heilung)"
 	L.creeping_moss_add_heal = "Moos unter GROSSEM ADD (Heilung)"
