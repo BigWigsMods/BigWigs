@@ -157,13 +157,7 @@ function mod:Decay(args)
 end
 
 function mod:FungusSpawns(unit, spellName, _, _, spellId)
-	if spellId == 164125 then -- Creeping Moss
-		local flamethrower = UnitBuff("player", self:SpellName(163322))
-		self:Message(spellId, "Urgent", flamethrower and "Warning")
-		if flamethrower then
-			self:Flash(spellId)
-		end
-	elseif spellId == 163594 then -- Spore Shooter
+	if spellId == 163594 then -- Spore Shooter
 		self:Message("spore_shooter", "Attention", nil, CL.small_adds, L.spore_shooter_icon)
 		self:Bar("spore_shooter", 60, CL.small_adds, L.spore_shooter_icon)
 	elseif spellId == 163141 then -- Mind Fungus
