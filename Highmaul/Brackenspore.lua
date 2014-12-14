@@ -20,6 +20,10 @@ local infestingSporesCount = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.mythic_ability = "Next special ability"
+	L.mythic_ability_desc = "Cooldown timer for the next Call of the Tides or Exploding Fungus"
+	L.mythic_ability_icon = "achievement_boss_highmaul_fungalgiant"
+
 	L.spore_shooter = ("{-9987} (%s)"):format(CL.small_adds) -- Spore Shooter
 	L.spore_shooter_desc = -9988 -- Spore Shoot
 	L.spore_shooter_icon = "Ability_Creature_Disease_03"
@@ -53,6 +57,7 @@ function mod:GetOptions()
 		--[[ Mythic ]]--
 		163755, -- Call of the Tides
 		163794, -- Exploding Fungus
+		"mythic_ability",
 		--[[ Hostile Fungus ]]--
 		"spore_shooter", -- Small Adds
 		"mind_fungus", -- Bad Shroom (Reduced casting speed)
@@ -108,7 +113,7 @@ end
 
 function mod:CallOfTheTides(args)
 	self:Message(args.spellId, "Urgent")
-	self:CDBar(args.spellId, 21) -- 21-32
+	self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon)
 end
 
 do
@@ -177,5 +182,7 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 	elseif spellId == 163794 then -- Exploding Fungus (Mythic)
 		self:Message(spellId, "Urgent")
 		self:Bar(spellId, 5)
+		self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon)
 	end
 end
+

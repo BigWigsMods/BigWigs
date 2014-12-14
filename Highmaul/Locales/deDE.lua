@@ -32,6 +32,9 @@ end
 
 L = BigWigs:NewBossLocale("Brackenspore", "deDE")
 if L then
+	--L.mythic_ability = "Next special ability"
+	--L.mythic_ability_desc = "Cooldown timer for the next Call of the Tides or Exploding Fungus"
+
 	L.creeping_moss_boss_heal = "Moos unter dem BOSS (Heilung)"
 	L.creeping_moss_add_heal = "Moos unter GROSSEM ADD (Heilung)"
 end
@@ -66,6 +69,6 @@ if L then
 	L.custom_off_fixate_marker_desc = "Markiert die Ziele von Fixieren mit {rt1}{rt2}, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
 
 	L.custom_off_branded_marker = "Gebrandmarkt markieren"
-	L.custom_off_branded_marker_desc = "Markiert die Ziele von Gebrandmarkt mit {rt3}{rt4}, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"	
+	L.custom_off_branded_marker_desc = "Markiert die Ziele von Gebrandmarkt mit {rt3}{rt4}, benötigt Leiter oder Assistent.\n|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r"
 end
 
