@@ -50,7 +50,7 @@ end
 L = BigWigs:NewBossLocale("Ko'ragh", "frFR")
 if L then
 	L.fire_bar = "Tout le monde explose !"
-	--L.overwhelming_energy_bar = "Balls hit"
+	--L.overwhelming_energy_bar = "Balls hit (%d)"
 
 	L.custom_off_fel_marker = "Marquage Projection de magie : Gangrène"
 	L.custom_off_fel_marker_desc = "Marque les cibles de Projection de magie : Gangrène avec {rt1}{rt2}{rt3}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"

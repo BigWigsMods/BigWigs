@@ -50,7 +50,7 @@ end
 L = BigWigs:NewBossLocale("Ko'ragh", "itIT")
 if L then
 	--L.fire_bar = "Everyone explodes!"
-	--L.overwhelming_energy_bar = "Balls hit"
+	--L.overwhelming_energy_bar = "Balls hit (%d)"
 
 	--L.custom_off_fel_marker = "Expel Magic: Fel Marker"
 	--L.custom_off_fel_marker_desc = "Mark Expel Magic: Fel targets with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"

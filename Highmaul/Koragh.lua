@@ -13,6 +13,8 @@ mod.engageId = 1723
 --
 
 local allowSuppression = false
+local ballCount = 1
+local nextBall, nextMC = 0, 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -21,7 +23,7 @@ local allowSuppression = false
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.fire_bar = "Everyone explodes!"
-	L.overwhelming_energy_bar = "Balls hit"
+	L.overwhelming_energy_bar = "Balls hit (%d)"
 
 	L.volatile_anomaly = -9629 -- Volatile Anomalies
 	L.volatile_anomaly_icon = "spell_arcane_arcane04"
@@ -82,9 +84,12 @@ end
 
 function mod:OnEngage()
 	allowSuppression = false
-	self:Bar(161612, 36, L.overwhelming_energy_bar) -- Overwhelming Energy
+	ballCount = 1
+	nextBall = GetTime() + 36
+	self:Bar(161612, 36, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Energy
 	if self:Mythic() then
 		self:CDBar(172895, 8) -- Expel Magic: Fel
+		nextMC = GetTime() + 90
 		self:Bar(163472, 90) -- Dominating Power
 	end
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
@@ -125,7 +130,17 @@ do
 			self:StopBar(172895) -- Expel Magic: Fel
 
 			count = 0
-			self:ScheduleTimer(nextAdd, 1, self) 
+			self:ScheduleTimer(nextAdd, 1, self)
+
+			local t = GetTime()
+			if nextBall-t > 5 then
+				nextBall = nextBall + 20
+				self:CDBar(161612, nextBall-t, L.overwhelming_energy_bar:format(ballCount))
+			end
+			if self:Mythic() and nextMC-t > 5 then -- really need to combine these
+				nextMC = nextMC + 20
+				self:CDBar(163472, nextMC-t)
+			end
 		elseif spellId == 156803 then -- Nullification Barrier
 			self:Message(160734, "Positive", nil, spellName)
 			self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, unit)
@@ -200,20 +215,22 @@ end
 
 do
 	local list, scheduled = mod:NewTargetList(), nil
-	local function warn(spellId)
-		mod:TargetMessage(spellId, list, "Positive")
+	local function warn(self, spellId)
+		self:TargetMessage(spellId, list, "Positive")
 		scheduled = nil
 	end
 	function mod:CausticEnergy(args)
 		list[#list+1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 0.2, args.spellId)
+			scheduled = self:ScheduleTimer(warn, 0.2, self, args.spellId)
 		end
 	end
 end
 
 function mod:OverwhelmingEnergy(args)
-	self:Bar(args.spellId, 30, L.overwhelming_energy_bar) -- XXX in mythic, don't fire this bar if it's going to cause mcs
+	ballCount = ballCount + 1
+	nextBall = GetTime() + 30
+	self:Bar(args.spellId, 30, L.overwhelming_energy_bar:format(ballCount)) -- XXX in mythic, don't fire this bar if it's going to cause mcs
 	if self:Me(args.destGUID) and UnitPower("player", 10) > 0 then -- check alternate power, too
 		self:Message(args.spellId, "Positive", "Warning") -- green to keep it different looking
 	end
@@ -225,7 +242,7 @@ do
 	local marks = 0
 	function mod:ExpelMagicFelCast(args)
 		self:Message(args.spellId, "Attention")
-		self:CDBar(args.spellId, 15.7) -- 15-18
+		self:CDBar(args.spellId, 15.7) -- 15-18, mostly 15.7
 		marks = 0
 	end
 
@@ -254,15 +271,16 @@ end
 
 do
 	local list, scheduled = mod:NewTargetList(), nil
-	local function warn(spellId)
-		mod:TargetMessage(spellId, list, "Urgent")
+	local function warn(self, spellId)
+		self:TargetMessage(spellId, list, "Urgent")
 		scheduled = nil
 	end
 	function mod:DominatingPower(args)
 		list[#list+1] = args.destName
 		if not scheduled then
+			nextMC = GetTime() + 60
 			self:Bar(args.spellId, 60)
-			scheduled = self:ScheduleTimer(warn, 0.2, args.spellId)
+			scheduled = self:ScheduleTimer(warn, 0.2, self, args.spellId)
 		end
 	end
 end
