@@ -128,11 +128,11 @@ local function updateProximity()
 		local _, _, _, amount = UnitDebuff("player", mod:SpellName(brandedOnMe))
 		if not amount then
 			BigWigs:Print("For some reason the proximity check failed on you, tell a developer!")
-			amount = 1
-		end
-		local jumpDistance = (brandedOnMe == 164005 and 0.75 or 0.5)^(amount - 1) * 200
-		if jumpDistance < 50 then
-			mod:OpenProximity(156225, jumpDistance)
+		else
+			local jumpDistance = (brandedOnMe == 164005 and 0.75 or 0.5)^(amount - 1) * 200
+			if jumpDistance < 50 then
+				mod:OpenProximity(156225, jumpDistance)
+			end
 		end
 	end
 	if fixateOnMe then
@@ -229,14 +229,14 @@ do
 			)
 			local _, _, h, w = GetNetStats()
 			BigWigs:Print(("The debuff scan failed, tell a developer! Latency: %d/%d"):format(h, w))
-			amount = 1
+			amount = 0 -- don't show count or distance
 		end
 		local jumpDistance = (args.spellId == 164005 and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
 
 		if self:Me(args.destGUID) and not self:LFR() then
 			brandedOnMe = args.spellId
 			local text = self:SpellName(156225)
-			if jumpDistance < 50 then
+			if amount > 0 and jumpDistance < 50 then
 				text = L.branded_say:format(text, amount, jumpDistance)
 			elseif amount > 1 then
 				text = CL.count:format(text, amount)
@@ -244,7 +244,7 @@ do
 			self:Say(156225, text)
 			updateProximity()
 		end
-		self:TargetMessage(156225, args.destName, "Attention", nil, L.branded_say:format(self:SpellName(156225), amount, jumpDistance))
+		self:TargetMessage(156225, args.destName, "Attention", nil, amount > 0 and L.branded_say:format(self:SpellName(156225), amount, jumpDistance))
 
 		if self.db.profile.custom_off_branded_marker and not scheduled then
 			scheduled = self:ScheduleTimer(mark, 0.2)
@@ -269,19 +269,10 @@ do
 		[3] = { 24, 15.8, 24, 19.4, 28, 23 },
 		[4] = { 24, },
 	}
-	-- 24.3
-	-- 20.7 19.4 20.6 15.8 15.8 20.7
-	-- 24.2 15.8 24.3 19.4 27.9 23.1
-	-- 24.3 24.3 15.8
-
-	-- 24.3
-	-- 15.9 15.8 15.8 20.6 15.8 24.3 15.8
-	-- 24.3 15.8 24.2 19.4 28.0 23.1
-	-- 24.3 15.8 24.2 19.5
 	function mod:DestructiveResonance(args)
 		local sound = self:Healer() or self:Damager() == "RANGED"
 		self:Message(156467, "Urgent", sound and "Warning")
-		local t = not self:Mythic() and mineTimes[phase] and mineTimes[phase][mineCount] or 15
+		local t = not self:Mythic() and mineTimes[phase] and mineTimes[phase][mineCount] or 15.8
 		self:CDBar(156467, phase == 1 and 24 or t)
 		mineCount = mineCount + 1
 	end
@@ -308,11 +299,13 @@ function mod:MarkOfChaosApplied(args)
 	self:PrimaryIcon(158605, args.destName)
 	self:TargetBar(158605, 8, args.destName)
 	if self:Me(args.destGUID) then
+		self:Message(158605, "Personal", "Alarm", CL.you:format(self:SpellName(158605))) -- warn again for the tank in case the cast target changed
 		self:Flash(158605)
 		if args.spellId == 164178 then -- Fortification (you're rooted)
 			self:Say(158605)
 		end
 	elseif args.spellId == 164178 and self:Range(args.destName) < 35 then -- Fortification (target rooted)
+		self:RangeMessage(158605)
 		self:Flash(158605)
 	end
 	updateProximity()
