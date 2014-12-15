@@ -39,7 +39,7 @@ function mod:GetOptions()
 	return {
 		--[[ Mythic ]]--
 		163472, -- Dominating Power
-		172895, -- Expel Magic: Fel
+		{172895, "FLASH", "SAY"}, -- Expel Magic: Fel
 		"custom_off_fel_marker",
 		--[[ Intermission ]]--
 		161242, -- Caustic Energy
@@ -47,7 +47,7 @@ function mod:GetOptions()
 		160734, -- Vulnerability
 		"volatile_anomaly",
 		--[[ General ]]--
-		{161328, "SAY", "FLASH"}, -- Suppression Field
+		{161328, "FLASH", "SAY"}, -- Suppression Field
 		{162184, "HEALER"}, -- Expel Magic: Shadow
 		{162185, "PROXIMITY"}, -- Expel Magic: Fire
 		{162186, "TANK", "ICON", "FLASH", "SAY"}, -- Expel Magic: Arcane
@@ -234,6 +234,7 @@ do
 		if self:Me(args.destGUID) then
 			self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
 			self:TargetBar(args.spellId, 12, args.destName)
+			self:Flash(args.spellId)
 			self:Say(args.spellId)
 		end
 		if self.db.profile.custom_off_fel_marker then
