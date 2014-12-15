@@ -51,7 +51,7 @@ function mod:GetOptions()
 		{161328, "FLASH", "SAY"}, -- Suppression Field
 		{162185, "PROXIMITY"}, -- Expel Magic: Fire
 		{162186, "TANK", "ICON", "FLASH", "SAY"}, -- Expel Magic: Arcane
-		172747, -- Expel Magic: Frost
+		{172747, "FLASH", "SAY"}, -- Expel Magic: Frost
 		{162184, "HEALER"}, -- Expel Magic: Shadow
 		"bosskill"
 	}, {
@@ -167,6 +167,10 @@ function mod:ExpelMagicFire(args)
 end
 
 function mod:ExpelMagicFrost(args)
+	if UnitIsUnit("player", "boss1target") then
+		self:Flash(args.spellId)
+		self:Say(args.spellId)
+	end
 	self:Message(args.spellId, "Neutral")
 	self:Bar(args.spellId, 21.5, ("<%s>"):format(self:SpellName(84721)), 84721) -- Frozen Orb
 	self:Bar(args.spellId, 60)
