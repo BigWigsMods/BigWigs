@@ -42,21 +42,21 @@ function mod:GetOptions()
 		{172895, "FLASH", "SAY"}, -- Expel Magic: Fel
 		"custom_off_fel_marker",
 		--[[ Intermission ]]--
-		161242, -- Caustic Energy
-		161612, -- Overwhelming Energy
 		160734, -- Vulnerability
+		161242, -- Caustic Energy
 		"volatile_anomaly",
 		--[[ General ]]--
+		161612, -- Overwhelming Energy
 		{161328, "FLASH", "SAY"}, -- Suppression Field
-		{162184, "HEALER"}, -- Expel Magic: Shadow
 		{162185, "PROXIMITY"}, -- Expel Magic: Fire
 		{162186, "TANK", "ICON", "FLASH", "SAY"}, -- Expel Magic: Arcane
 		172747, -- Expel Magic: Frost
+		{162184, "HEALER"}, -- Expel Magic: Shadow
 		"bosskill"
 	}, {
 		[163472] = "mythic",
-		[161242] = "intermission",
-		[161328] = "general",
+		[160734] = "intermission",
+		[161612] = "general",
 	}
 end
 
