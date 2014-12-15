@@ -20,8 +20,8 @@ local infestingSporesCount = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.mythic_ability = "Next special ability"
-	L.mythic_ability_desc = "Cooldown timer for the next Call of the Tides or Exploding Fungus"
+	L.mythic_ability = "Special Ability"
+	L.mythic_ability_desc = "Show a timer bar for the next Call of the Tides or Exploding Fungus arriving."
 	L.mythic_ability_icon = "achievement_boss_highmaul_fungalgiant"
 
 	L.spore_shooter = ("{-9987} (%s)"):format(CL.small_adds) -- Spore Shooter
