@@ -70,7 +70,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ExpelMagicArcaneApplied", 162186) -- Faster than _APPLIED
 	self:Log("SPELL_AURA_REMOVED", "ExpelMagicArcaneRemoved", 162186)
 	self:Log("SPELL_CAST_START", "ExpelMagicFrost", 172747)
-	self:Yell("SuppressionField", L.suppression_field_trigger1, L.suppression_field_trigger2, L.suppression_field_trigger3, L.suppression_field_trigger4)
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "SuppressionFieldYell")
 	self:Log("SPELL_CAST_SUCCESS", "SuppressionFieldCast", 161328) -- fallback to fire the timer if the triggers aren't localized
 	-- Mythic
 	self:Log("SPELL_CAST_START", "ExpelMagicFelCast", 172895)
@@ -172,29 +172,29 @@ end
 
 do
 	local suppressionTarget = nil
-	local function warn(spellId)
+	local function warn(self, spellId)
 		if suppressionTarget then
 			if UnitIsUnit("player", suppressionTarget) then
-				mod:Flash(spellId)
-				mod:Say(spellId)
-			elseif mod:Range(suppressionTarget) < 10 then -- actually 8 yards
-				mod:RangeMessage(spellId)
-				mod:Flash(spellId)
+				self:Flash(spellId)
+				self:Say(spellId)
+			elseif self:Range(suppressionTarget) < 10 then -- actually 8 yards
+				self:RangeMessage(spellId)
+				self:Flash(spellId)
 				return
 			end
-			mod:TargetMessage(spellId, suppressionTarget, "Attention", "Alarm")
+			self:TargetMessage(spellId, suppressionTarget, "Attention", "Alarm")
 		else
-			mod:Message(spellId, "Attention")
+			self:Message(spellId, "Attention")
 		end
 	end
 
 	function mod:SuppressionFieldCast(args)
 		self:CDBar(args.spellId, 15)
 		suppressionTarget = nil
-		self:ScheduleTimer(warn, 0.1, args.spellId)
+		self:ScheduleTimer(warn, 0.1, self, args.spellId)
 	end
 
-	function mod:SuppressionField(_, _, _, _, target)
+	function mod:SuppressionFieldYell(_, _, _, _, _, target)
 		suppressionTarget = target
 	end
 end
