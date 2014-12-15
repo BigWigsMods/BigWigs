@@ -9,16 +9,17 @@ mod:RegisterEnableMob(79015)
 mod.engageId = 1723
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local allowSuppression = false
+
+--------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.suppression_field_trigger1 = "Quiet!"
-	L.suppression_field_trigger2 = "I will tear you in half!"
-	L.suppression_field_trigger3 = "I will crush you!"
-	L.suppression_field_trigger4 = "Silence!"
-
 	L.fire_bar = "Everyone explodes!"
 	L.overwhelming_energy_bar = "Balls hit"
 
@@ -80,6 +81,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	allowSuppression = false
 	self:Bar(161612, 36, L.overwhelming_energy_bar) -- Overwhelming Energy
 	if self:Mythic() then
 		self:CDBar(172895, 8) -- Expel Magic: Fel
@@ -107,7 +109,7 @@ do
 	local count = 0
 	local function nextAdd(self)
 		count = count + 1
-		self:Message("volatile_anomaly", "Attention", "Info", L.volatile_anomaly, L.volatile_anomaly_icon)
+		self:Message("volatile_anomaly", "Attention", "Info", ("%s %d/3"):format(self:SpellName(L.volatile_anomaly), count), L.volatile_anomaly_icon)
 		if count < 3 then
 			self:Bar("volatile_anomaly", 8, L.volatile_anomaly, L.volatile_anomaly_icon)
 			self:ScheduleTimer(nextAdd, 8, self)
@@ -171,31 +173,24 @@ function mod:ExpelMagicFrost(args)
 end
 
 do
-	local suppressionTarget = nil
-	local function warn(self, spellId)
-		if suppressionTarget then
+	function mod:SuppressionFieldCast(args)
+		allowSuppression = true
+		self:CDBar(args.spellId, 15)
+	end
+
+	function mod:SuppressionFieldYell(_, _, _, _, _, suppressionTarget)
+		if allowSuppression then
+			allowSuppression = false
 			if UnitIsUnit("player", suppressionTarget) then
-				self:Flash(spellId)
-				self:Say(spellId)
+				self:Flash(161328)
+				self:Say(161328)
 			elseif self:Range(suppressionTarget) < 10 then -- actually 8 yards
-				self:RangeMessage(spellId)
-				self:Flash(spellId)
+				self:RangeMessage(161328)
+				self:Flash(161328)
 				return
 			end
-			self:TargetMessage(spellId, suppressionTarget, "Attention", "Alarm")
-		else
-			self:Message(spellId, "Attention")
+			self:TargetMessage(161328, suppressionTarget, "Attention", "Alarm")
 		end
-	end
-
-	function mod:SuppressionFieldCast(args)
-		self:CDBar(args.spellId, 15)
-		suppressionTarget = nil
-		self:ScheduleTimer(warn, 0.1, self, args.spellId)
-	end
-
-	function mod:SuppressionFieldYell(_, _, _, _, _, target)
-		suppressionTarget = target
 	end
 end
 

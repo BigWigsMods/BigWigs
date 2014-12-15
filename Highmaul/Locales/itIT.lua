@@ -49,11 +49,6 @@ end
 
 L = BigWigs:NewBossLocale("Ko'ragh", "itIT")
 if L then
-	--L.suppression_field_trigger1 = "Quiet!"
-	--L.suppression_field_trigger2 = "I will tear you in half!"
-	--L.suppression_field_trigger3 = "I will crush you!"
-	--L.suppression_field_trigger4 = "Silence!"
-
 	--L.fire_bar = "Everyone explodes!"
 	--L.overwhelming_energy_bar = "Balls hit"
 

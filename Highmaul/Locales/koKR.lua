@@ -49,12 +49,7 @@ end
 
 L = BigWigs:NewBossLocale("Ko'ragh", "koKR")
 if L then
-	L.suppression_field_trigger1 = "조용히 해!"
-	L.suppression_field_trigger2 = "반으로 찢어주마!"
-	L.suppression_field_trigger3 = "박살내주마!"
-	L.suppression_field_trigger4 = "침묵!"
-
-	L.fire_bar = "모두 폭발합니다!!"
+	L.fire_bar = "모두 폭발합니다!"
 	--L.overwhelming_energy_bar = "Balls hit"
 
 	--L.custom_off_fel_marker = "Expel Magic: Fel Marker"
