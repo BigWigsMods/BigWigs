@@ -252,20 +252,20 @@ end
 do
 	local times = { 8.5, 6, 46, 7, 16, 8.5, 6, 40, 131, 9.5, 140, 8.5, 6 } -- good for 7min
 	local scheduled = nil
-	local function warn(spellId)
-		mod:Message(spellId, "Neutral")
-		local t = times[volatilityCount]
-		if t then
-			mod:CDBar(spellId, t)
-		end
-		volatilityCount = volatilityCount + 1
+	local function delayUpdate()
 		updateProximity()
 		scheduled = nil
 	end
 	function mod:ArcaneVolatility(args)
 		-- cast on everyone at the same time, but the debuffs end up getting applied over .8s or so
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 0.2, args.spellId)
+			self:Message(args.spellId, "Neutral")
+			local t = times[volatilityCount]
+			if t then
+				self:CDBar(args.spellId, t)
+			end
+			volatilityCount = volatilityCount + 1
+			scheduled = self:ScheduleTimer(delayUpdate, 0.2)
 		end
 		if self:Me(args.destGUID) then
 			volatilityOnMe = true
