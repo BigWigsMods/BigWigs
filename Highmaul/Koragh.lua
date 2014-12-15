@@ -22,6 +22,9 @@ if L then
 	L.fire_bar = "Everyone explodes!"
 	L.overwhelming_energy_bar = "Balls hit"
 
+	L.volatile_anomaly = -9629 -- Volatile Anomalies
+	L.volatile_anomaly_icon = "spell_arcane_arcane04"
+
 	L.custom_off_fel_marker = "Expel Magic: Fel Marker"
 	L.custom_off_fel_marker_desc = "Mark Expel Magic: Fel targets with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.custom_off_fel_marker_icon = 1
@@ -38,10 +41,12 @@ function mod:GetOptions()
 		163472, -- Dominating Power
 		172895, -- Expel Magic: Fel
 		"custom_off_fel_marker",
-		--[[ General ]]--
+		--[[ Intermission ]]--
 		161242, -- Caustic Energy
 		161612, -- Overwhelming Energy
 		160734, -- Vulnerability
+		"volatile_anomaly",
+		--[[ General ]]--
 		{161328, "SAY", "FLASH"}, -- Suppression Field
 		{162184, "HEALER"}, -- Expel Magic: Shadow
 		{162185, "PROXIMITY"}, -- Expel Magic: Fire
@@ -50,12 +55,13 @@ function mod:GetOptions()
 		"bosskill"
 	}, {
 		[163472] = "mythic",
-		[161242] = "general",
+		[161242] = "intermission",
+		[161328] = "general",
 	}
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Intermission", "boss1")
 	self:Log("SPELL_AURA_APPLIED", "CausticEnergy", 161242)
 	self:Log("SPELL_CAST_SUCCESS", "OverwhelmingEnergy", 161612)
 	self:Log("SPELL_CAST_START", "ExpelMagicShadow", 162184)
@@ -97,17 +103,33 @@ function mod:UNIT_POWER_FREQUENT(unit, powerType)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 160734 then -- Vulnerability
-		self:Message(spellId, "Positive", "Long", CL.removed:format(self:SpellName(156803))) -- Nullification Barrier removed!
-		self:Bar(spellId, 20)
-		self:StopBar(161328) -- Suppression Field
-		self:StopBar(172895) -- Expel Magic: Fel
-	elseif spellId == 156803 then -- Nullification Barrier
-		self:Message(160734, "Positive", nil, spellName)
-		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, unit)
-		if self:Mythic() then
-			self:Bar(172895, 6) -- Expel Magic: Fel
+do
+	local count = 0
+	local function nextAdd(self)
+		count = count + 1
+		self:Message("volatile_anomaly", "Attention", "Info", L.volatile_anomaly, L.volatile_anomaly_icon)
+		if count < 3 then
+			self:Bar("volatile_anomaly", 8, L.volatile_anomaly, L.volatile_anomaly_icon)
+			self:ScheduleTimer(nextAdd, 8, self)
+		end
+	end
+
+	function mod:Intermission(unit, spellName, _, _, spellId)
+		if spellId == 160734 then -- Vulnerability
+			self:Message(spellId, "Positive", "Long", CL.removed:format(self:SpellName(156803))) -- Nullification Barrier removed!
+			self:Bar(spellId, 20)
+			self:StopBar(161328) -- Suppression Field
+			self:StopBar(172747) -- Expel Magic: Frost
+			self:StopBar(172895) -- Expel Magic: Fel
+
+			count = 0
+			self:ScheduleTimer(nextAdd, 1, self) 
+		elseif spellId == 156803 then -- Nullification Barrier
+			self:Message(160734, "Positive", nil, spellName)
+			self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, unit)
+			if self:Mythic() then
+				self:Bar(172895, 6) -- Expel Magic: Fel
+			end
 		end
 	end
 end
@@ -118,6 +140,7 @@ end
 
 function mod:ExpelMagicArcaneStart(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
+	self:Bar(args.spellId, 26.7)
 end
 
 function mod:ExpelMagicArcaneApplied(args)
@@ -142,7 +165,9 @@ function mod:ExpelMagicFire(args)
 end
 
 function mod:ExpelMagicFrost(args)
-	self:Message(args.spellId, "Attention") --, self:Dispeller("magic") and "Info"
+	self:Message(args.spellId, "Neutral")
+	self:Bar(args.spellId, 21.5, ("<%s>"):format(self:SpellName(84721)), 84721) -- Frozen Orb
+	self:Bar(args.spellId, 60)
 end
 
 do
@@ -152,6 +177,10 @@ do
 			if UnitIsUnit("player", suppressionTarget) then
 				mod:Flash(spellId)
 				mod:Say(spellId)
+			elseif mod:Range(suppressionTarget) < 10 then -- actually 8 yards
+				mod:RangeMessage(spellId)
+				mod:Flash(spellId)
+				return
 			end
 			mod:TargetMessage(spellId, suppressionTarget, "Attention", "Alarm")
 		else
@@ -196,6 +225,7 @@ end
 do
 	local marks = 0
 	function mod:ExpelMagicFelCast(args)
+		self:Message(args.spellId, "Attention")
 		self:CDBar(args.spellId, 15.7) -- 15-18
 		marks = 0
 	end
