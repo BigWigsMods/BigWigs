@@ -249,15 +249,18 @@ do
 		local fortification = args.spellId == 164005 or (self:Mythic() and phase == 3)
 		local jumpDistance = (fortification and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
 
-		if self:Me(args.destGUID) and not self:LFR() then
+		if self:Me(args.destGUID) then
 			brandedOnMe = args.spellId
-			local text = self:SpellName(156225)
-			if amount > 0 and jumpDistance < 50 then
-				text = L.branded_say:format(text, amount, jumpDistance)
-			elseif amount > 1 then
-				text = CL.count:format(text, amount)
+			self:TargetBar(156225, 4, args.destName)
+			if not self:LFR() then
+				local text = self:SpellName(156225)
+				if amount > 0 and jumpDistance < 50 then
+					text = L.branded_say:format(text, amount, jumpDistance)
+				elseif amount > 1 then
+					text = CL.count:format(text, amount)
+				end
+				self:Say(156225, text)
 			end
-			self:Say(156225, text)
 			updateProximity()
 		end
 		self:TargetMessage(156225, args.destName, "Attention", nil, amount > 0 and L.branded_say:format(self:SpellName(156225), amount, jumpDistance))
@@ -272,6 +275,7 @@ function mod:BrandedRemoved(args)
 	tDeleteItem(brandedMarks, args.destName)
 	if self:Me(args.destGUID) then
 		brandedOnMe = nil
+		self:StopBar(156225, args.destName)
 		self:CloseProximity(156225)
 		updateProximity()
 	end
