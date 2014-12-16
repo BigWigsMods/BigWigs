@@ -181,14 +181,22 @@ function mod:ExpelMagicFire(args)
 	self:ScheduleTimer("CloseProximity", 10.5, args.spellId)
 end
 
-function mod:ExpelMagicFrost(args)
-	if UnitIsUnit("player", "boss1target") then
-		self:Flash(args.spellId)
-		self:Say(args.spellId)
+do
+	local function printTarget(self, name, guid)
+		if self:Me(guid) then
+			self:Flash(172747)
+			self:Say(172747)
+		end
+		if self:Range(name) < 30 then
+			self:PlaySound(172747, "Alarm")
+		end
 	end
-	self:Message(args.spellId, "Neutral")
-	self:Bar(args.spellId, 21.5, ("<%s>"):format(self:SpellName(84721)), 84721) -- Frozen Orb
-	self:Bar(args.spellId, 60)
+	function mod:ExpelMagicFrost(args)
+		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
+		self:Message(args.spellId, "Neutral")
+		self:Bar(args.spellId, 21.5, ("<%s>"):format(self:SpellName(84721)), 84721) -- Frozen Orb
+		self:Bar(args.spellId, 60)
+	end
 end
 
 do
@@ -227,12 +235,19 @@ do
 	end
 end
 
-function mod:OverwhelmingEnergy(args)
-	ballCount = ballCount + 1
-	nextBall = GetTime() + 30
-	self:Bar(args.spellId, 30, L.overwhelming_energy_bar:format(ballCount)) -- XXX in mythic, don't fire this bar if it's going to cause mcs
-	if self:Me(args.destGUID) and UnitPower("player", 10) > 0 then -- check alternate power, too
-		self:Message(args.spellId, "Positive", "Warning") -- green to keep it different looking
+do
+	local prev = 0
+	function mod:OverwhelmingEnergy(args)
+		if self:Me(args.destGUID) and UnitPower("player", 10) > 0 then -- check alternate power, too
+			self:Message(args.spellId, "Positive", "Warning") -- green to keep it different looking
+		end
+		local t = GetTime()
+		if t-prev > 10 then
+			ballCount = ballCount + 1
+			nextBall = GetTime() + 30
+			self:Bar(args.spellId, 30, L.overwhelming_energy_bar:format(ballCount)) -- XXX in mythic, don't fire this bar if it's going to cause mcs
+			prev = t
+		end
 	end
 end
 
