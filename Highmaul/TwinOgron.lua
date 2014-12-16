@@ -274,9 +274,11 @@ do
 			self:Flash("volatility_self", args.spellId)
 			self:Say("volatility_self", args.spellId)
 		end
-		volatilityTargets[#volatilityTargets+1] = args.destName
-		if self.db.profile.custom_off_volatility_marker then
-			SetRaidTarget(args.destName, #volatilityTargets)
+		if not tContains(volatilityTargets, args.destName) then
+			volatilityTargets[#volatilityTargets+1] = args.destName
+			if self.db.profile.custom_off_volatility_marker then
+				SetRaidTarget(args.destName, #volatilityTargets)
+			end
 		end
 	end
 

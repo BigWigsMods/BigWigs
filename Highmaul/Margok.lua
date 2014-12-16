@@ -409,7 +409,7 @@ function mod:FixateApplied(args)
 	elseif self:Dispeller("magic", nil, 157801) and UnitDebuff(args.destName, self:SpellName(157801)) then -- check if they have Slow and warn again
 		self:TargetMessage(157801, args.destName, "Important", "Alert", L.slow_fixate, nil, true)
 	end
-	if self.db.profile.custom_off_fixate_marker then
+	if self.db.profile.custom_off_fixate_marker and not fixateMarks[args.destName] then
 		local index = next(fixateMarks) and 2 or 1
 		fixateMarks[args.destName] = index
 		SetRaidTarget(args.destName, index)
