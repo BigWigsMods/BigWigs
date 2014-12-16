@@ -58,6 +58,7 @@ function mod:GetOptions()
 		--[[ Gorian Warmage ]]--
 		{157801, "DISPEL"}, -- Slow
 		{157763, "PROXIMITY", "FLASH", "SAY"}, -- Fixate
+		178468, -- Nether Energy (Mythic)
 		"custom_off_fixate_marker",
 		--[[ Gorian Reaver ]]--
 		{158553, "TANK"}, -- Crush Armor
@@ -96,6 +97,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CrushArmor", 158553) -- XXX 10s cast, 4s debuff?
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushArmor", 158553)
 	self:Log("SPELL_CAST_SUCCESS", "KickToTheFace", 158563)
+	-- Mythic
+	self:Log("SPELL_AURA_APPLIED_DOSE", "NetherEnergy", 178468)
 
 	self:Death("ReaverDeath", 78549) -- Gorian Reaver
 end
@@ -151,11 +154,11 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if self:Mythic() then
 		if (phase == 1 and hp < 71) or (phase == 2 and hp < 38) then -- phases at 66% and 33%
-			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 			self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
 		end
 	elseif (phase == 1 and hp < 90) or (phase == 2 and hp < 60) or (phase == 3 and hp < 30) then -- phases at 85%, 55%, and 25%
-		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 		self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
 	end
 end
@@ -168,7 +171,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		if spellId == 164336 then -- no intermission for Displacement
 			 -- XXX first transform messes with timers, typically adding ~10s
 			self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
-			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, unit)
 		else
 			self:StopBar(156238) -- Arcane Wrath
 			self:StopBar(156467) -- Destructive Resonance
@@ -183,7 +186,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:CDBar(158605, 38) -- Mark of Chaos
 		self:CDBar(157349, 48) -- Force Nova
 		if spellId ~= 157964 then -- Replication is the last phase
-			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, unit)
 		end
 	end
 end
@@ -231,7 +234,8 @@ do
 			BigWigs:Print(("The debuff scan failed, tell a developer! Latency: %d/%d"):format(h, w))
 			amount = 0 -- don't show count or distance
 		end
-		local jumpDistance = (args.spellId == 164005 and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
+		local fortification = args.spellId == 164005 or (self:Mythic() and phase == 3)
+		local jumpDistance = (fortification and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
 
 		if self:Me(args.destGUID) and not self:LFR() then
 			brandedOnMe = args.spellId
@@ -401,6 +405,12 @@ function mod:FixateRemoved(args)
 	if self.db.profile.custom_off_fixate_marker then
 		fixateMarks[args.destName] = nil
 		SetRaidTarget(args.destName, 0)
+	end
+end
+
+function mod:NetherEnergy(args)
+	if UnitGUID("target") == args.destGUID and args.amount > 2 then
+		self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, args.amount))
 	end
 end
 
