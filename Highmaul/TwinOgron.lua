@@ -93,6 +93,7 @@ function mod:OnBossEnable()
 	--self:Emote("ArcaneVolatility", "163372")
 	self:Log("SPELL_CAST_SUCCESS", "ArcaneVolatility", 163372)
 	self:Log("SPELL_AURA_APPLIED", "ArcaneVolatilityApplied", 163372)
+	self:Log("SPELL_AURA_REFRESH", "ArcaneVolatilityApplied", 163372)
 	self:Log("SPELL_AURA_REMOVED", "ArcaneVolatilityRemoved", 163372)
 end
 

@@ -96,6 +96,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "IntermissionEnd", 174057, 157289)
 	self:Log("SPELL_AURA_APPLIED", "Slow", 157801)
 	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 157763)
+	self:Log("SPELL_AURA_REFRESH", "FixateApplied", 157763)
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 157763)
 	self:Log("SPELL_AURA_APPLIED", "CrushArmor", 158553) -- XXX 10s cast, 4s debuff?
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushArmor", 158553)
