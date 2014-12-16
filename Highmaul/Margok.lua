@@ -14,6 +14,7 @@ mod.engageId = 1705
 
 local phase = 1
 local mineCount, novaCount, aberrationCount = 1, 1, 1
+local addDeathWarned = nil
 local markOfChaosTarget, brandedOnMe, fixateOnMe, replicatingNova = nil, nil, nil, nil
 local fixateMarks, brandedMarks = {}, {}
 
@@ -24,6 +25,8 @@ local fixateMarks, brandedMarks = {}, {}
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.branded_say = "%s (%d) %dy"
+	L.add_death_soon = "Add dying soon!"
+	L.slow_fixate = "Slow+Fixate"
 
 	L.volatile_anomaly = -9919 -- Volatile Anomaly
 	L.volatile_anomaly_icon = "spell_arcane_arcane04"
@@ -107,6 +110,7 @@ function mod:OnEngage()
 	phase = 1
 	mineCount, novaCount, aberrationCount = 1, 1, 1
 	markOfChaosTarget, brandedOnMe, fixateOnMe, replicatingNova = nil, nil, nil, nil
+	addDeathWarned = nil
 	wipe(fixateMarks)
 	wipe(brandedMarks)
 	self:Bar(156238, 6)  -- Arcane Wrath
@@ -151,15 +155,22 @@ local function updateProximity()
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unit)
+	local mobId = self:MobId(UnitGUID(unit))
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if self:Mythic() then
-		if (phase == 1 and hp < 71) or (phase == 2 and hp < 38) then -- phases at 66% and 33%
+	if mobId == 77428 then
+		if self:Mythic() then
+			if (phase == 1 and hp < 71) or (phase == 2 and hp < 38) then -- phases at 66% and 33%
+				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
+				self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
+			end
+		elseif (phase == 1 and hp < 90) or (phase == 2 and hp < 60) or (phase == 3 and hp < 30) then -- phases at 85%, 55%, and 25%
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 			self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
 		end
-	elseif (phase == 1 and hp < 90) or (phase == 2 and hp < 60) or (phase == 3 and hp < 30) then -- phases at 85%, 55%, and 25%
+	elseif mobId == 77879 and not addDeathWarned and hp < 30 then -- Displacement
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
-		self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
+		self:Message(156471, "Attention", "Warning", L.add_death_soon)
+		addDeathWarned = true
 	end
 end
 
@@ -283,14 +294,21 @@ do
 end
 
 function mod:ArcaneAberration(args)
-	self:Message(156471, "Urgent", not self:Healer() and "Info")
-	self:CDBar(156471, aberrationCount == 1 and 46 or 51)
+	self:Message(156471, "Urgent", not self:Healer() and "Info", CL.add_spawned)
+	self:CDBar(156471, aberrationCount == 1 and 46 or 51, -9945, 156471) -- Arcane Aberration
 	aberrationCount = aberrationCount + 1
+	if args.spellId == 164299 or (self:Mythic() and phase == 2) then -- Displacing
+		addDeathWarned = nil
+		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss2")
+	end
 end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(158605, name, "Urgent", "Alarm", nil, nil, true)
+		self:Message(158605, "Urgent", self:Tank() and "Alarm", CL.casting:format(CL.on:format(self:SpellName(158605), name)))
+		if self:Me(guid) then
+			self:Flash(158605)
+		end
 	end
 	function mod:MarkOfChaos(args)
 		self:Bar(158605, 51) -- 51-52 with some random cases of 55
@@ -301,9 +319,9 @@ end
 function mod:MarkOfChaosApplied(args)
 	markOfChaosTarget = args.destName
 	self:PrimaryIcon(158605, args.destName)
+	self:TargetMessage(158605, args.destName, "Urgent", "Alarm") -- warn again for the tank in case the cast target changed
 	self:TargetBar(158605, 8, args.destName)
 	if self:Me(args.destGUID) then
-		self:Message(158605, "Personal", "Alarm", CL.you:format(self:SpellName(158605))) -- warn again for the tank in case the cast target changed
 		self:Flash(158605)
 		if args.spellId == 164178 then -- Fortification (you're rooted)
 			self:Say(158605)
@@ -345,32 +363,31 @@ end
 -- Intermission
 
 do
-	local timer, intermissionEnd = nil, 0
+	local count = 0
 	local function nextAdd(self)
 		self:Message("volatile_anomaly", "Attention", "Info", CL.incoming:format(self:SpellName(L.volatile_anomaly)), L.volatile_anomaly_icon)
-		if GetTime() + 12 < intermissionEnd then -- instead of counting
+		count = count - 1
+		if count > 0 then
 			self:Bar("volatile_anomaly", 12, L.volatile_anomaly, L.volatile_anomaly_icon)
-			timer = self:ScheduleTimer(nextAdd, 12, self)
+			self:ScheduleTimer(nextAdd, 12, self)
 		end
 	end
 
 	function mod:IntermissionStart(args)
-		self:Message("stages", "Neutral", nil, CL.intermission, false)
-		local intermissionTime = args.spellId == 174057 and 65 or 60
-		intermissionEnd = GetTime() + intermissionTime
-		self:Bar("stages", intermissionTime, CL.intermission, "spell_arcane_blast")
+		local first = args.spellId == 174057
+		self:Message("stages", "Neutral", nil, ("%d%% - %s"):format(self:Mythic() and (first and 66 or 33) or (first and 55 or 25), CL.intermission), false)
+		self:Bar("stages", first and 65 or 60, CL.intermission, "spell_arcane_blast")
 		self:Bar("volatile_anomaly", 14, L.volatile_anomaly, L.volatile_anomaly_icon)
+		count = first and 5 or 4
 		self:ScheduleTimer(nextAdd, 14, self)
-		if args.spellId == 157289 then -- second intermission
+		if not first then
+			self:ScheduleTimer("Message", 15, "stages", "Neutral", "Info", -9921, false) -- Gorian Reaver
 			self:CDBar(158563, 29) -- Kick to the Face
 		end
 	end
 
 	function mod:IntermissionEnd(args)
 		self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
-		-- just in case
-		self:StopBar(L.volatile_anomaly)
-		self:CancelTimer(timer)
 	end
 end
 
@@ -388,6 +405,8 @@ function mod:FixateApplied(args)
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
 		updateProximity()
+	elseif self:Dispeller("magic", nil, 157801) and UnitDebuff(args.destName, self:SpellName(157801)) then -- check if they have Slow and warn again
+		self:TargetMessage(157801, args.destName, "Important", "Alert", L.slow_fixate, nil, true)
 	end
 	if self.db.profile.custom_off_fixate_marker then
 		local index = next(fixateMarks) and 2 or 1
