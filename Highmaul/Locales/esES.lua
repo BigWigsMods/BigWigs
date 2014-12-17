@@ -59,6 +59,8 @@ end
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "esES") or BigWigs:NewBossLocale("Imperator Mar'gok", "esMX")
 if L then
 	L.branded_say = "%s (%d) %dm"
+	L.add_death_soon = "Add a punto de morir!"
+	L.slow_fixate = "Lento+Fijado"
 
 	L.custom_off_fixate_marker = "Marcador de Fijar"
 	L.custom_off_fixate_marker_desc = "Marca los objetivos de los Magos de guerra gorianos Fijar con {rt1}{rt2}, requiere ayudante o líder.\n|cFFFF0000Sólo 1 persona en la raid debería tener activada esta opción para prevenir conflictos con las marcas.|r"
