@@ -207,6 +207,7 @@ end
 
 do
 	local knownMovies = {
+		[16] = true, -- Lich King death
 		[73] = true, -- Ultraxion death
 		[74] = true, -- DeathwingSpine engage
 		[75] = true, -- DeathwingSpine death
