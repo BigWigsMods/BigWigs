@@ -58,6 +58,8 @@ end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "deDE")
 if L then
+	--L.phase4_trigger = "You know nothing of the power you meddle with"
+
 	L.branded_say = "%s (%d) %dm"
 	L.add_death_soon = "Add stirbt bald!"
 	L.slow_fixate = "Verlangsamen + Fixieren"

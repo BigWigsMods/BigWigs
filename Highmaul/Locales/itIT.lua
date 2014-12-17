@@ -58,7 +58,11 @@ end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "itIT")
 if L then
+	--L.phase4_trigger = "You know nothing of the power you meddle with"
+
 	--L.branded_say = "%s (%d) %dy"
+	--L.add_death_soon = "Add dying soon!"
+	--L.slow_fixate = "Slow+Fixate"
 
 	--L.custom_off_fixate_marker = "Fixate Marker"
 	--L.custom_off_fixate_marker_desc = "Mark Gorian Warmage's Fixate targets with {rt1}{rt2}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
