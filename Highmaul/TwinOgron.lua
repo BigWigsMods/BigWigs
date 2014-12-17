@@ -251,7 +251,7 @@ do
 end
 
 do
-	local times = { 8.5, 6, 46, 7, 16, 8.5, 6, 40, 131, 9.5, 140, 8.5, 6 } -- good for 7min
+	local times = { 8.5, 6, 46, 7, 16, 8.5, 6, 40, 131, 9.5, 56.5, 8.5, 6 }
 	local scheduled = nil
 	local function delayUpdate()
 		updateProximity()
