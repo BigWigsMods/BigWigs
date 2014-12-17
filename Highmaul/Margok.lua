@@ -13,10 +13,10 @@ mod.engageId = 1705
 --
 
 local phase = 1
-local mineCount, novaCount, aberrationCount = 1, 1, 1
+local mineCount, novaCount, aberrationCount, nightCount = 1, 1, 1, 1
 local addDeathWarned = nil
-local markOfChaosTarget, brandedOnMe, fixateOnMe, replicatingNova = nil, nil, nil, nil
-local fixateMarks, brandedMarks = {}, {}
+local markOfChaosTarget, brandedOnMe, fixateOnMe, replicatingNova, gazeOnMe = nil, nil, nil, nil, nil
+local fixateMarks, brandedMarks, gazeTargets = {}, {}, {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -24,6 +24,8 @@ local fixateMarks, brandedMarks = {}, {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.phase4_trigger = "You know nothing of the power you meddle with"
+
 	L.branded_say = "%s (%d) %dy"
 	L.add_death_soon = "Add dying soon!"
 	L.slow_fixate = "Slow+Fixate"
@@ -47,6 +49,14 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		--[[ Mythic ]]--
+		178607, -- Dark Star
+		165102, -- Infinite Darkness
+		165116, -- Entropy
+		165876, -- Enveloping Night
+		165243, -- Glimpse of Madness
+		{165595, "PROXIMITY", "FLASH", "SAY"}, -- Gaze of the Abyss
+		{176533, "FLASH"}, -- Growing Darkness
 		--[[ Imperator Mar'gok ]]--
 		{159515, "TANK"}, -- Accelerated Assault
 		156238, -- Arcane Wrath
@@ -70,6 +80,7 @@ function mod:GetOptions()
 		"stages",
 		"bosskill"
 	}, {
+		[178607] = "mythic",
 		[159515] = mod.displayName,
 		["volatile_anomaly"] = "intermission",
 		[157801] = -9922, -- Gorian Warmage
@@ -103,6 +114,18 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "KickToTheFace", 158563)
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED_DOSE", "NetherEnergy", 178468)
+	self:Yell("Phase4", L.phase4_trigger)
+	self:Log("SPELL_CAST_START", "GlimpseOfMadness", 165243)
+	self:Log("SPELL_CAST_START", "EnvelopingNight", 165876)
+	self:Log("SPELL_AURA_APPLIED", "InfiniteDarkness", 165102)
+	self:Log("SPELL_AURA_APPLIED", "Entropy", 165116)
+	self:Log("SPELL_AURA_APPLIED", "GazeOfTheAbyssApplied", 165595)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "GazeOfTheAbyssApplied", 165595)
+	self:Log("SPELL_AURA_REMOVED", "GazeOfTheAbyssRemoved", 165595)
+	self:Log("SPELL_AURA_APPLIED", "GazeClosestApplied", 176537)
+	self:Log("SPELL_AURA_REMOVED", "GazeClosestRemoved", 176537)
+	self:Log("SPELL_AURA_APPLIED", "GrowingDarkness", 176533)
+	self:Log("SPELL_PERIODIC_DAMAGE", "GrowingDarkness", 176533)
 
 	self:Death("ReaverDeath", 78549) -- Gorian Reaver
 end
@@ -127,6 +150,18 @@ end
 --
 
 local function updateProximity()
+	-- Gaze of the Abyss
+	if mod:Mythic() and phase == 4 then
+		if gazeOnMe then
+			mod:OpenProximity(165595, 8)
+		elseif #gazeTargets > 0 then
+			mod:OpenProximity(165595, 8, gazeTargets)
+		else
+			mod:CloseProximity(165595)
+		end
+		return
+	end
+
 	-- mark of chaos > fixate > branded > nova
 	-- open in reverse order so if you disable one it doesn't block others from showing
 	if replicatingNova then
@@ -154,6 +189,156 @@ local function updateProximity()
 		end
 	end
 end
+
+-- Mythic
+
+function mod:Phase4()
+	phase = phase + 1
+	nightCount = 1
+	gazeOnMe = true
+	wipe(gazeTargets)
+	self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
+	--self:CDBar("adds", 30) -- Night-Twisted adds (repeating timer)
+	self:CDBar(165102, 47) -- Infinite Darkness
+	self:CDBar(165243, 53) -- Glimpse of Madness
+	self:CDBar(178607, 64) -- Dark Star
+	self:CDBar(165876, 90, CL.count:format(self:SpellName(165876), nightCount)) -- Enveloping Night
+	self:DelayedMessage(165876, 80, "Important", CL.soon:format(CL.count:format(self:SpellName(165876), nightCount)), false, "Info")
+end
+
+do
+	local list, scheduled = mod:NewTargetList(), nil
+	local function warn(self, spellId)
+		self:TargetMessage(spellId, list, "Attention", self:Healer() and "Alert", nil, nil, true)
+		scheduled = nil
+	end
+	function mod:InfiniteDarkness(args)
+		-- magic debuff on 3 players, causes Entropy when dispelled
+		list[#list + 1] = args.destName
+		if not scheduled then
+			self:CDBar(args.spellId, 62)
+			scheduled = self:ScheduleTimer(warn, 0.2, self, args.spellId)
+		end
+	end
+end
+
+function mod:Entropy(args)
+	if self:Me(args.destName) then
+		local text = args.amount and args.amount > 0 and ("%s +%d"):format(args.spellName, args.amount) or nil -- XXX shooould have an amount
+		self:Message(args.spellId, "Positive", nil, text)
+		self:Bar(args.spellId, 10) -- XXX just refresh the bar, might not be useful!
+	end
+end
+
+function mod:EntropyRemoved(args)
+	if self:Me(args.destName) and not UnitDebuff("player", args.spellName) then
+		-- all gone
+		self:StopBar(args.spellId)
+	end
+end
+
+function mod:DarkStar(args)
+	self:Message(args.spellId, "Urgent", "Alarm")
+	self:Bar(args.spellId, 7, ("<%s>"):format(args.spellName))
+	self:CDBar(args.spellId, 60)
+end
+
+function mod:EnvelopingNight(args)
+	self:Message(args.spellId, "Important", "Long", CL.count:format(args.spellName, nightCount))
+	self:Bar(args.spellId, 3, CL.cast:format(CL.count:format(args.spellName, nightCount)))
+	nightCount = nightCount + 1
+	self:CDBar(args.spellId, 63, CL.count:format(args.spellName, nightCount))
+	self:DelayedMessage(args.spellId, 53, "Important", CL.soon:format(CL.count:format(args.spellName, nightCount)), false, "Info")
+end
+
+function mod:GlimpseOfMadness(args)
+	self:Message(args.spellId, "Attention")
+	self:CDBar(args.spellId, 27)
+end
+
+do -- GazeOfTheAbyss
+	-- i may be trying to be too clever here, but hopefully i over-engineered it enough to play nice
+	-- only show the proximity for people that aren't targeted by an add (debuff will fall off)
+
+	-- debuff scanning because the two add debuffs have the same name :\
+	local function checkDebuff(unit, id)
+		if select(11, UnitDebuff(unit, (GetSpellInfo(id)))) == id then return true end -- only one?
+		for i = 1, 10 do
+			if select(11, UnitDebuff(unit, i)) == id then return true end
+		end
+	end
+
+	local timeLeft, timer = 10, nil
+	local function sayCountdown(self)
+		timeLeft = timeLeft - 1
+		if timeLeft < 5 then
+			self:Say(165595, timeLeft, true)
+			if timeLeft > 3 then
+				self:Flash(165595)
+			end
+			if timeLeft < 2 then
+				self:CancelTimer(timer)
+			end
+		end
+	end
+
+	function mod:GazeOfTheAbyssApplied(args)
+		if self:Me(args.destGUID) then
+			gazeOnMe = true
+			self:StackMessage(args.spellId, args.destName, args.amount, "Personal")
+			if args.amount and args.amount > 2 then
+				self:PlaySound(args.spellId, "Warning")
+			end
+			self:TargetBar(args.spellId, 10, args.destName)
+
+			self:CancelTimer(timer)
+			timeLeft = 10
+			timer = self:ScheduleRepeatingTimer(sayCountdown, 1, self)
+
+			updateProximity()
+		elseif not checkDebuff(args.destName, 176537) and not tContains(gazeTargets, args.destName) then -- no "closest" debuff and not currently tracked (failsafe)
+			gazeTargets[#gazeTargets + 1] = args.destName
+			updateProximity()
+		end
+	end
+
+	function mod:GazeOfTheAbyssRemoved(args)
+		if self:Me(args.destGUID) then
+			gazeOnMe = nil
+			self:StopBar(args.spellId, args.destName)
+			self:CancelTimer(timer)
+			self:CloseProximity(args.spellId)
+		end
+		tDeleteItem(gazeTargets, args.destName)
+		updateProximity()
+	end
+
+	function mod:GazeClosestApplied(args)
+		tDeleteItem(gazeTargets, args.destName)
+		updateProximity()
+	end
+
+	function mod:GazeClosestRemoved(args)
+		if checkDebuff(args.destName, 165595) and not tContains(gazeTargets, args.destName) then -- the explody debuff
+			gazeTargets[#gazeTargets + 1] = args.destName
+			updateProximity()
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:GrowingDarkness(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 2 then
+			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName)) -- you ded, so ded.
+			self:Flash(args.spellId)
+			prev = t
+		end
+	end
+end
+
+-- General
 
 function mod:UNIT_HEALTH_FREQUENT(unit)
 	local mobId = self:MobId(UnitGUID(unit))
