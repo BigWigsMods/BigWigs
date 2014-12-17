@@ -32,8 +32,8 @@ end
 
 L = BigWigs:NewBossLocale("Brackenspore", "esES") or BigWigs:NewBossLocale("Brackenspore", "esMX")
 if L then
-	--L.mythic_ability = "Special Ability"
-	--L.mythic_ability_desc = "Show a timer bar for the next Call of the Tides or Exploding Fungus arriving."
+	L.mythic_ability = "Habilidad especial"
+	L.mythic_ability_desc = "Mostrar una barra con el tiempo para la siguiente Llamada de las mareas u Hongo explosivo."
 
 	L.creeping_moss_boss_heal = "Musgo debajo del jefe (sanando)"
 	L.creeping_moss_add_heal = "Musgo debajo del ADD GRANDE (sanando)"
@@ -68,6 +68,6 @@ if L then
 	L.custom_off_fixate_marker_desc = "Marca los objetivos de los Magos de guerra gorianos Fijar con {rt1}{rt2}, requiere ayudante o líder.\n|cFFFF0000Sólo 1 persona en la raid debería tener activada esta opción para prevenir conflictos con las marcas.|r"
 
 	L.custom_off_branded_marker = "Marcador de Marcado"
-	L.custom_off_branded_marker_desc = "Marca los jugadores con Marcado con {rt3}{rt4}, requiere ayudante o líder.\n|cFFFF0000Sólo 1 persona en la raid debería tener activada esta opción para prevenir conflictos con las marcas.|r"	
+	L.custom_off_branded_marker_desc = "Marca los jugadores que tienen Marcado con {rt3}{rt4}, requiere ayudante o líder.\n|cFFFF0000Sólo 1 persona en la raid debería tener activada esta opción para prevenir conflictos con las marcas.|r"	
 end
 
