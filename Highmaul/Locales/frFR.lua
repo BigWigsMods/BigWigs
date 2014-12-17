@@ -32,8 +32,8 @@ end
 
 L = BigWigs:NewBossLocale("Brackenspore", "frFR")
 if L then
-	--L.mythic_ability = "Special Ability"
-	--L.mythic_ability_desc = "Show a timer bar for the next Call of the Tides or Exploding Fungus arriving."
+	L.mythic_ability = "Technique spéciale"
+	L.mythic_ability_desc = "Affiche une barre de délai pour l'arrivée du prochain Appel des marées ou Détonation fongique."
 
 	L.creeping_moss_boss_heal = "Mousse sous le BOSS (soigne)"
 	L.creeping_moss_add_heal = "Mousse sous le MANGE-CHAIR (soigne)"
@@ -41,7 +41,7 @@ end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "frFR")
 if L then
-	--L.volatility_self_desc = "Options for when the Arcane Volatility debuff is on you."
+	L.volatility_self_desc = "Options pour quand l'affaiblissement Volatilité arcanique est sur vous."
 
 	L.custom_off_volatility_marker = "Marquage Volatilité arcanique"
 	L.custom_off_volatility_marker_desc = "Marque les cibles de Volatilité arcanique avec {rt1}{rt2}{rt3}{rt4}. Nécessite d'être assistant ou chef de raid."
@@ -50,7 +50,7 @@ end
 L = BigWigs:NewBossLocale("Ko'ragh", "frFR")
 if L then
 	L.fire_bar = "Tout le monde explose !"
-	--L.overwhelming_energy_bar = "Balls hit (%d)"
+	L.overwhelming_energy_bar = "Impact des boules (%d)"
 
 	L.custom_off_fel_marker = "Marquage Projection de magie : Gangrène"
 	L.custom_off_fel_marker_desc = "Marque les cibles de Projection de magie : Gangrène avec {rt1}{rt2}{rt3}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
@@ -61,8 +61,8 @@ if L then
 	--L.phase4_trigger = "You know nothing of the power you meddle with"
 
 	L.branded_say = "%s (%d) %dm"
-	--L.add_death_soon = "Add dying soon!"
-	--L.slow_fixate = "Slow+Fixate"
+	L.add_death_soon = "Mort de l'add imminente !"
+	L.slow_fixate = "Lenteur+Fixer"
 
 	L.custom_off_fixate_marker = "Marquage Fixer"
 	L.custom_off_fixate_marker_desc = "Marque les cibles de Fixer du Mage de guerre gorien avec {rt1}{rt2}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r"
