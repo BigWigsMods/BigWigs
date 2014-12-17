@@ -331,7 +331,7 @@ do
 	function mod:GrowingDarkness(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName)) -- you ded, so ded.
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName)) -- you ded, so ded.
 			self:Flash(args.spellId)
 			prev = t
 		end
@@ -355,7 +355,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 		end
 	elseif mobId == 77879 and not addDeathWarned and hp < 30 then -- Displacement
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
-		self:Message(156471, "Attention", "Warning", L.add_death_soon)
+		self:Message(156471, "Attention", "Info", L.add_death_soon)
 		addDeathWarned = true
 	end
 end
@@ -495,9 +495,11 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:Message(158605, "Urgent", self:Tank() and "Alarm", CL.casting:format(CL.on:format(self:SpellName(158605), name)))
 		if self:Me(guid) then
+			self:Message(158605, "Personal", "Alarm", CL.casting:format(CL.you:format(self:SpellName(158605))))
 			self:Flash(158605)
+		else
+			self:Message(158605, "Urgent", nil, CL.casting:format(CL.on:format(self:SpellName(158605), name)))
 		end
 	end
 	function mod:MarkOfChaos(args)
@@ -509,7 +511,7 @@ end
 function mod:MarkOfChaosApplied(args)
 	markOfChaosTarget = args.destName
 	self:PrimaryIcon(158605, args.destName)
-	self:TargetMessage(158605, args.destName, "Urgent", "Alarm") -- warn again for the tank in case the cast target changed
+	self:TargetMessage(158605, args.destName, "Urgent", "Alarm") -- warn again in case the cast target changed
 	self:TargetBar(158605, 8, args.destName)
 	if self:Me(args.destGUID) then
 		self:Flash(158605)
@@ -517,7 +519,6 @@ function mod:MarkOfChaosApplied(args)
 			self:Say(158605)
 		end
 	elseif args.spellId == 164178 and self:Range(args.destName) < 35 then -- Fortification (target rooted)
-		self:RangeMessage(158605)
 		self:Flash(158605)
 	end
 	updateProximity()
@@ -553,11 +554,11 @@ end
 -- Intermission
 
 do
-	local count = 0
+	local count, maxCount = 0, 0
 	local function nextAdd(self)
-		self:Message("volatile_anomaly", "Attention", "Info", CL.incoming:format(self:SpellName(L.volatile_anomaly)), L.volatile_anomaly_icon)
-		count = count - 1
-		if count > 0 then
+		count = count + 1
+		self:Message("volatile_anomaly", "Attention", "Info", ("%s %d/%d"):format(self:SpellName(L.volatile_anomaly), count, maxCount), L.volatile_anomaly_icon)
+		if count < maxCount then
 			self:Bar("volatile_anomaly", 12, L.volatile_anomaly, L.volatile_anomaly_icon)
 			self:ScheduleTimer(nextAdd, 12, self)
 		end
@@ -568,10 +569,10 @@ do
 		self:Message("stages", "Neutral", nil, ("%d%% - %s"):format(self:Mythic() and (first and 66 or 33) or (first and 55 or 25), CL.intermission), false)
 		self:Bar("stages", first and 65 or 60, CL.intermission, "spell_arcane_blast")
 		self:Bar("volatile_anomaly", 14, L.volatile_anomaly, L.volatile_anomaly_icon)
-		count = first and 5 or 4
+		count, maxCount = 0, first and 5 or 4
 		self:ScheduleTimer(nextAdd, 14, self)
 		if not first then
-			self:ScheduleTimer("Message", 15, "stages", "Neutral", "Info", -9921, false) -- Gorian Reaver
+			self:ScheduleTimer("Message", 14, "stages", "Neutral", "Info", -9921, false) -- Gorian Reaver
 			self:CDBar(158563, 29) -- Kick to the Face
 		end
 	end
