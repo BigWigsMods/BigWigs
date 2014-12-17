@@ -97,7 +97,7 @@ end
 function mod:OnEngage()
 	self:Bar(159219, 32) -- Necrotic Breath
 	self:Bar(159996, 45) -- Infesting Spores
-	self:DelayedMessage(159996, 40, "Important", CL.soon:format(mod:SpellName(159996)), "Info")
+	self:DelayedMessage(159996, 40, "Important", CL.soon:format(mod:SpellName(159996)))
 	self:CDBar("mind_fungus", 10, L.mind_fungus, L.mind_fungus_icon) -- Mind Fungus
 	self:CDBar("spore_shooter", 20, CL.small_adds, L.spore_shooter_icon) -- Spore Shooter
 	self:CDBar("flesh_eater", 32, CL.big_add, L.flesh_eater_icon) -- Fungal Flesh-Eater
@@ -146,7 +146,7 @@ function mod:InfestingSpores(args)
 	self:Bar(args.spellId, 12, CL.cast:format(args.spellName)) -- 2s cast + 10s channel
 	infestingSporesCount = infestingSporesCount + 1
 	self:Bar(args.spellId, 58, CL.count:format(args.spellName, infestingSporesCount)) -- happens at 100 energy
-	self:DelayedMessage(args.spellId, 53, "Important", CL.soon:format(args.spellName), "Info")
+	self:DelayedMessage(args.spellId, 53, "Important", CL.soon:format(args.spellName))
 end
 
 function mod:Decay(args)
