@@ -394,6 +394,16 @@ function mod:AcceleratedAssault(args)
 	end
 end
 
+function mod:ArcaneAberration(args)
+	self:Message(156471, "Urgent", not self:Healer() and "Info", CL.add_spawned)
+	self:CDBar(156471, aberrationCount == 1 and 46 or 51, -9945, 156471) -- Arcane Aberration
+	aberrationCount = aberrationCount + 1
+	if args.spellId == 164299 or (self:Mythic() and phase == 2) then -- Displacing
+		addDeathWarned = nil
+		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss2")
+	end
+end
+
 function mod:ArcaneWrath(args)
 	self:Message(156238, "Urgent", self:Healer() and "Alert")
 	self:Bar(156238, 50)
@@ -483,13 +493,23 @@ do
 	end
 end
 
-function mod:ArcaneAberration(args)
-	self:Message(156471, "Urgent", not self:Healer() and "Info", CL.add_spawned)
-	self:CDBar(156471, aberrationCount == 1 and 46 or 51, -9945, 156471) -- Arcane Aberration
-	aberrationCount = aberrationCount + 1
-	if args.spellId == 164299 or (self:Mythic() and phase == 2) then -- Displacing
-		addDeathWarned = nil
-		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss2")
+do
+	local function replicatingNovaStop()
+		replicatingNova = nil
+		mod:CloseProximity(157349)
+		updateProximity()
+	end
+	function mod:ForceNova(args)
+		self:Message(157349, "Urgent")
+		self:CDBar(157349, novaCount == 1 and 46 or 50)
+		if args.spellId == 164235 then -- Fortification (three novas)
+			self:Bar(157349, 10.5, args.spellName)
+			self:ScheduleTimer("Bar", 8, 157349, 10.5, args.spellName)
+		elseif args.spellId == 164240 then -- Replication (aoe damage on hit)
+			replicatingNova = self:ScheduleTimer(replicatingNovaStop, 8) -- XXX how long should the proximity be open?
+			updateProximity()
+		end
+		novaCount = novaCount + 1
 	end
 end
 
@@ -531,26 +551,6 @@ function mod:MarkOfChaosRemoved(args)
 	updateProximity()
 end
 
-do
-	local function replicatingNovaStop()
-		replicatingNova = nil
-		mod:CloseProximity(157349)
-		updateProximity()
-	end
-	function mod:ForceNova(args)
-		self:Message(157349, "Urgent")
-		self:CDBar(157349, novaCount == 1 and 46 or 50)
-		if args.spellId == 164235 then -- Fortification (three novas)
-			self:Bar(157349, 10.5, args.spellName)
-			self:ScheduleTimer("Bar", 8, 157349, 10.5, args.spellName)
-		elseif args.spellId == 164240 then -- Replication (aoe damage on hit)
-			replicatingNova = self:ScheduleTimer(replicatingNovaStop, 8) -- XXX how long should the proximity be open?
-			updateProximity()
-		end
-		novaCount = novaCount + 1
-	end
-end
-
 -- Intermission
 
 do
@@ -582,6 +582,7 @@ do
 	end
 end
 
+-- Warmage
 function mod:Slow(args)
 	if self:Dispeller("magic", nil, args.spellId) then
 		self:TargetMessage(args.spellId, args.destName, "Attention", "Alert", nil, nil, true)
@@ -624,6 +625,7 @@ function mod:NetherEnergy(args)
 	end
 end
 
+-- Reaver
 function mod:CrushArmor(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
