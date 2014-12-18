@@ -24,7 +24,7 @@ if L then
 	L.shard = "碎片"
 	L.motes = "微粒"
 
-	L.custom_off_barrage_marker = 晶化弹幕标记"
+	L.custom_off_barrage_marker = "晶化弹幕标记"
 	L.custom_off_barrage_marker_desc = "使用 {rt1}{rt2}{rt3}{rt4}{rt5} 标记晶化弹幕，需要权限。"
 
 	L.adds_desc = "新的增援进入战斗计时器。"
@@ -35,7 +35,7 @@ if L then
 	L.mythic_ability = "特殊技能"
 	L.mythic_ability_desc = "当下一潮汐之唤或爆炸蘑菇到来时显示计时器。"
 
-	L.creeping_moss_boss_heal = 苔藓>治疗< 首领"
+	L.creeping_moss_boss_heal = "苔藓>治疗< 首领"
 	L.creeping_moss_add_heal = "苔藓>治疗< 大型增援"
 end
 
