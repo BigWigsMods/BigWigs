@@ -174,7 +174,7 @@ local function updateProximity()
 		else
 			local jumpDistance = (brandedOnMe == 164005 and 0.75 or 0.5)^(amount - 1) * 200
 			if jumpDistance < 50 then
-				mod:OpenProximity(156225, jumpDistance)
+				mod:OpenProximity(156225, max(5, jumpDistance))
 			end
 		end
 	end
@@ -523,7 +523,7 @@ do
 		end
 	end
 	function mod:MarkOfChaos(args)
-		self:Bar(158605, 51) -- 51-52 with some random cases of 55
+		self:Bar(158605, 51)
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
 	end
 end
@@ -559,7 +559,7 @@ do
 		count = count + 1
 		self:Message("volatile_anomaly", "Attention", "Info", ("%s %d/%d"):format(self:SpellName(L.volatile_anomaly), count, maxCount), L.volatile_anomaly_icon)
 		if count < maxCount then
-			self:Bar("volatile_anomaly", 12, L.volatile_anomaly, L.volatile_anomaly_icon)
+			self:Bar("volatile_anomaly", 12, CL.count:format(self:SpellName(L.volatile_anomaly), count+1), L.volatile_anomaly_icon)
 			self:ScheduleTimer(nextAdd, 12, self)
 		end
 	end
@@ -568,8 +568,8 @@ do
 		local first = args.spellId == 174057
 		self:Message("stages", "Neutral", nil, ("%d%% - %s"):format(self:Mythic() and (first and 66 or 33) or (first and 55 or 25), CL.intermission), false)
 		self:Bar("stages", first and 65 or 60, CL.intermission, "spell_arcane_blast")
-		self:Bar("volatile_anomaly", 14, L.volatile_anomaly, L.volatile_anomaly_icon)
 		count, maxCount = 0, first and 5 or 4
+		self:Bar("volatile_anomaly", 14, CL.count:format(self:SpellName(L.volatile_anomaly), 1), L.volatile_anomaly_icon)
 		self:ScheduleTimer(nextAdd, 14, self)
 		if not first then
 			self:ScheduleTimer("Message", 14, "stages", "Neutral", "Info", -9921, false) -- Gorian Reaver
