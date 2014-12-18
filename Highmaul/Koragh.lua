@@ -102,10 +102,10 @@ end
 function mod:UNIT_POWER_FREQUENT(unit, powerType)
 	if powerType == "ALTERNATE" then
 		local power = UnitPower(unit, 10)
-		if power < 25 then -- XXX probably need to tweak this (~10s)
+		if power < 25 then
 			self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", unit)
 			self:Message(160734, "Neutral", "Info", CL.soon:format(self:SpellName(160734))) -- Vulnerability soon!
-			-- Knockback at 0 power, Vulnerability 4s later
+			-- Knockback at 0 power, Vulnerability ~4s later
 		end
 	end
 end
@@ -116,7 +116,7 @@ do
 		count = count + 1
 		self:Message("volatile_anomaly", "Attention", "Info", ("%s %d/3"):format(self:SpellName(L.volatile_anomaly), count), L.volatile_anomaly_icon)
 		if count < 3 then
-			self:Bar("volatile_anomaly", 8, L.volatile_anomaly, L.volatile_anomaly_icon)
+			self:Bar("volatile_anomaly", 8, CL.count:format(self:SpellName(L.volatile_anomaly), count+1), L.volatile_anomaly_icon)
 			self:ScheduleTimer(nextAdd, 8, self)
 		end
 	end
@@ -145,7 +145,7 @@ do
 			self:Message(160734, "Positive", nil, spellName)
 			self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, unit)
 			if self:Mythic() then
-				self:Bar(172895, 6) -- Expel Magic: Fel
+				self:CDBar(172895, 6) -- Expel Magic: Fel
 			end
 		end
 	end
@@ -157,7 +157,7 @@ end
 
 function mod:ExpelMagicArcaneStart(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 26.7)
+	self:CDBar(args.spellId, 26.7)
 end
 
 function mod:ExpelMagicArcaneApplied(args)
