@@ -1,59 +1,59 @@
 local L = BigWigs:NewBossLocale("Kargath Bladefist", "zhCN")
 if not L then return end
 if L then
-	--L.blade_dance_bar = "Dancing"
+	L.blade_dance_bar = "刃舞"
 
-	--L.arena_sweeper_desc = "Timer for getting knocked out of the stadium stands after you've been Chain Hurled."
+	L.arena_sweeper_desc = "获取被锁链投掷后击飞出竞技场平台计时器。"
 end
 
 L = BigWigs:NewBossLocale("The Butcher", "zhCN")
 if L then
-	--L.adds_multiple = "Adds x%d"
+	L.adds_multiple = "增援 >%d<波"
 end
 
 L = BigWigs:NewBossLocale("Tectus", "zhCN")
 if L then
-	--L.earthwarper_trigger1 = "Yjj'rmr" -- Yjj'rmr... Xzzolos...
-	--L.earthwarper_trigger2 = "Yes, Tectus" -- Yes, Tectus. Bend to... our master's... will....
-	--L.earthwarper_trigger3 = "You do not understand!" -- You do not understand! This one must not....
+	L.earthwarper_trigger1 = "Yjj'rmr……Xzzolos……"
+	L.earthwarper_trigger2 = "对，泰克图斯。臣服于……主人的……意志吧……"
+	L.earthwarper_trigger3 = "你不明白！我们不能停下……！"
 	--L.berserker_trigger1 = "MASTER!" -- MASTER! I COME FOR YOU!
-	--L.berserker_trigger2 = "Kral'ach" --Kral'ach.... The darkness speaks.... A VOICE!
+	L.berserker_trigger2 = "卡拉克……黑暗在低语……有个声音！"
 	--L.berserker_trigger3 = "Graaagh!" --Graaagh! KAHL...  AHK... RAAHHHH!
 
-	--L.tectus = "Tectus"
-	--L.shard = "Shard"
-	--L.motes = "Motes"
+	L.tectus = "泰克图斯"
+	L.shard = "碎片"
+	L.motes = "微粒"
 
-	--L.custom_off_barrage_marker = "Crystalline Barrage marker"
-	--L.custom_off_barrage_marker_desc = "Marks targets of Crystalline Barrage with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
+	L.custom_off_barrage_marker = 晶化弹幕标记"
+	L.custom_off_barrage_marker_desc = "使用 {rt1}{rt2}{rt3}{rt4}{rt5} 标记晶化弹幕，需要权限。"
 
-	--L.adds_desc = "Timers for when new adds enter the fight."
+	L.adds_desc = "新的增援进入战斗计时器。"
 end
 
 L = BigWigs:NewBossLocale("Brackenspore", "zhCN")
 if L then
-	--L.mythic_ability = "Special Ability"
-	--L.mythic_ability_desc = "Show a timer bar for the next Call of the Tides or Exploding Fungus arriving."
+	L.mythic_ability = "特殊技能"
+	L.mythic_ability_desc = "当下一潮汐之唤或爆炸蘑菇到来时显示计时器。"
 
-	--L.creeping_moss_boss_heal = "Moss under BOSS (healing)"
-	--L.creeping_moss_add_heal = "Moss under BIG ADD (healing)"
+	L.creeping_moss_boss_heal = 苔藓>治疗< 首领"
+	L.creeping_moss_add_heal = "苔藓>治疗< 大型增援"
 end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "zhCN")
 if L then
-	--L.volatility_self_desc = "Options for when the Arcane Volatility debuff is on you."
+	L.volatility_self_desc = "当你受到奥能动荡减益时选项。"
 
-	--L.custom_off_volatility_marker = "Arcane Volatility marker"
-	--L.custom_off_volatility_marker_desc = "Marks targets of Arcane Volatility with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader."
+	L.custom_off_volatility_marker = "奥能动荡标记"
+	L.custom_off_volatility_marker_desc = "使用 {rt1}{rt2}{rt3}{rt4} 标记奥能动荡，需要权限。"
 end
 
 L = BigWigs:NewBossLocale("Ko'ragh", "zhCN")
 if L then
-	--L.fire_bar = "Everyone explodes!"
-	--L.overwhelming_energy_bar = "Balls hit (%d)"
+	L.fire_bar = "全体爆炸！"
+	L.overwhelming_energy_bar = "溢流能量攻击 (%d)"
 
-	--L.custom_off_fel_marker = "Expel Magic: Fel Marker"
-	--L.custom_off_fel_marker_desc = "Mark Expel Magic: Fel targets with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_fel_marker = "魔能散射：邪能标记"
+	L.custom_off_fel_marker_desc = "使用 {rt1}{rt2}{rt3} 标记魔能散射：邪能，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "zhCN")
