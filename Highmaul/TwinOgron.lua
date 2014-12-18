@@ -77,7 +77,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ShieldCharge", 158134)
 	self:Log("SPELL_CAST_START", "InterruptingShout", 158093)
 	self:Log("SPELL_CAST_SUCCESS", "Pulverize", 158385)
-	self:Log("SPELL_CAST_START", "PulverizeCast", 157952, 158415, 158419) -- 1.58s cast
+	self:Log("SPELL_CAST_START", "PulverizeCast", 158415, 158419)
 	-- Phemos
 	self:Log("SPELL_CAST_START", "DoubleSlash", 158521)
 	self:Log("SPELL_AURA_APPLIED", "ArcaneWound", 167200) -- Mythic
@@ -186,18 +186,19 @@ end
 do
 	local count = 0
 	function mod:Pulverize(args)
-		count = 0
-		self:Message(158385, "Urgent", "Info", CL.count:format(args.spellName, 1))
+		count = 1
+		-- skip the first actual cast (157952) in favor of announcing it at the start of the sequence to give people more time to spread out
+		self:Message(158385, "Urgent", "Info", CL.count:format(args.spellName, count))
+		self:Bar(158385, 3.1, CL.cast:format(CL.count:format(args.spellName, count)))
 		self:CDBar(158134, polInterval) -- Shield Charge
 	end
 	function mod:PulverizeCast(args)
 		count = count + 1
-		if count > 1 then
-			self:Message(158385, "Urgent", "Info", CL.count:format(args.spellName, count))
-			pulverizeProximity = nil
-			self:CloseProximity(158385)
-			updateProximity()
-		end
+		self:Message(158385, "Urgent", "Info", CL.count:format(args.spellName, count))
+		self:Bar(158385, count == 2 and 2.7 or 4.1, CL.cast:format(CL.count:format(args.spellName, count)))
+		pulverizeProximity = nil
+		self:CloseProximity(158385)
+		updateProximity()
 	end
 end
 
@@ -225,6 +226,12 @@ function mod:Whirlwind(args)
 end
 
 function mod:EnfeeblingRoar(args)
+	local _, _, _, _, _, endTime = UnitCastingInfo(self:GetUnitIdByGUID(args.sourceGUID))
+	local cast = endTime and (endTime / 1000 - GetTime()) or 0
+	if cast > 1.5 then
+		self:Bar(args.spellId, cast, CL.cast:format(args.spellName))
+	end
+
 	self:Message(args.spellId, "Attention", "Alert")
 	self:CDBar(158200, phemosInterval, CL.count:format(self:SpellName(158200), quakeCount+1)) -- Quake
 end
