@@ -14,6 +14,7 @@ mod.engageId = 1721
 
 local hurled = nil
 local tigers = {}
+local berserkerRushPlayer = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -61,7 +62,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FlamePillar", 159202)
 	self:Log("SPELL_CAST_START", "Impale", 159113)
 	self:Log("SPELL_AURA_APPLIED", "BladeDance", 159250)
-	self:Log("SPELL_CAST_START", "BerserkerRush", 158986)
+	self:Log("SPELL_CAST_START", "BerserkerRushCast", 158986)
+	self:Log("SPELL_AURA_APPLIED", "BerserkerRushAppliedFallback", 158986)
 	self:Log("SPELL_AURA_REMOVED", "BerserkerRushRemoved", 158986)
 	self:Log("SPELL_CAST_START", "ChainHurl", 159947)
 	self:Log("SPELL_AURA_APPLIED", "ChainHurlApplied", 159947)
@@ -76,6 +78,7 @@ end
 
 function mod:OnEngage()
 	hurled = nil
+	berserkerRushPlayer = nil
 	self:Bar(-9394, 20) -- Flame Pillar
 	self:CDBar(159113, 37) -- Impale
 	self:CDBar(158986, 54) -- Berserker Rush
@@ -130,6 +133,7 @@ end
 
 do
 	local function printTarget(self, name, guid)
+		berserkerRushPlayer = guid
 		self:PrimaryIcon(158986, name)
 		if self:Me(guid) then
 			self:Say(158986)
@@ -137,13 +141,21 @@ do
 		end
 		self:TargetMessage(158986, name, "Important", "Long", nil, nil, true)
 	end
-	function mod:BerserkerRush(args)
+	function mod:BerserkerRushAppliedFallback(args)
+		-- Kargath will rarely drop his target (bug?) and swap to another one mid cast.
+		-- Doing so fires APPLIED, but not a SPELL_CAST event. This is our fallback for it.
+		if args.destGUID ~= berserkerRushPlayer then
+			printTarget(self, args.destName, args.destGUID)
+		end
+	end
+	function mod:BerserkerRushCast(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
 		self:CDBar(args.spellId, 46) -- cd is 46/51 :\
 	end
 end
 
 function mod:BerserkerRushRemoved(args)
+	berserkerRushPlayer = nil
 	self:PrimaryIcon(args.spellId)
 end
 
