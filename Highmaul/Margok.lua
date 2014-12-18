@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Imperator Mar'gok", 994, 1197)
 if not mod then return end
-mod:RegisterEnableMob(77428)
+mod:RegisterEnableMob(77428, 78623) -- Imperator Mar'gok, Cho'gall (Mythic)
 mod.engageId = 1705
 
 --------------------------------------------------------------------------------
