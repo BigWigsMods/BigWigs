@@ -290,18 +290,20 @@ do
 	end
 
 	local timeLeft, timer = 6, nil
-	local function sayCountdown()
+	local function sayCountdown(self)
 		timeLeft = timeLeft - 1
-		mod:Say("volatility_self", timeLeft, true)
-		if timeLeft < 2 then
-			mod:CancelTimer(timer)
+		self:Say("volatility_self", timeLeft, true)
+		if timeLeft < 2 and timer then
+			self:CancelTimer(timer)
+			timer = nil
 		end
 	end
 	function mod:ArcaneVolatilityApplied(args)
 		if self:Me(args.destGUID) then
+			if timer then self:CancelTimer(timer) end
 			timeLeft = 6
-			self:TargetBar("volatility_self", 6, args.destName, args.spellId)
 			timer = self:ScheduleRepeatingTimer(sayCountdown, 1)
+			self:TargetBar("volatility_self", 6, self)
 		end
 	end
 
@@ -310,7 +312,10 @@ do
 		if self:Me(args.destGUID) then
 			self:StopBar(args.spellId, args.destName)
 			volatilityOnMe = nil
-			self:CancelTimer(timer)
+			if timer then
+				self:CancelTimer(timer)
+				timer = nil
+			end
 		end
 		updateProximity()
 		if self.db.profile.custom_off_volatility_marker then
