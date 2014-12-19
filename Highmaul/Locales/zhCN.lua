@@ -25,7 +25,7 @@ if L then
 	L.motes = "微粒"
 
 	L.custom_off_barrage_marker = "晶化弹幕标记"
-	L.custom_off_barrage_marker_desc = "使用 {rt1}{rt2}{rt3}{rt4}{rt5} 标记晶化弹幕，需要权限。"
+	L.custom_off_barrage_marker_desc = "使用 {rt1}{rt2}{rt3}{rt4}{rt5} 标记晶化弹幕目标，需要权限。"
 
 	L.adds_desc = "新的增援进入战斗计时器。"
 end
@@ -44,7 +44,7 @@ if L then
 	L.volatility_self_desc = "当你受到奥能动荡减益时选项。"
 
 	L.custom_off_volatility_marker = "奥能动荡标记"
-	L.custom_off_volatility_marker_desc = "使用 {rt1}{rt2}{rt3}{rt4} 标记奥能动荡，需要权限。"
+	L.custom_off_volatility_marker_desc = "使用 {rt1}{rt2}{rt3}{rt4} 标记奥能动荡目标，需要权限。"
 end
 
 L = BigWigs:NewBossLocale("Ko'ragh", "zhCN")
@@ -58,16 +58,16 @@ end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "zhCN")
 if L then
-	--L.phase4_trigger = "You know nothing of the power you meddle with"
+	L.phase4_trigger = "你根本不了解你所染指的力量，马尔高克。"
 
-	--L.branded_say = "%s (%d) %dy"
-	--L.add_death_soon = "Add dying soon!"
-	--L.slow_fixate = "Slow+Fixate"
+	L.branded_say = "%s (%d) %d码"
+	L.add_death_soon = "即将 奥术畸兽！"
+	L.slow_fixate = "减速+锁定"
 
-	--L.custom_off_fixate_marker = "Fixate Marker"
-	--L.custom_off_fixate_marker_desc = "Mark Gorian Warmage's Fixate targets with {rt1}{rt2}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_fixate_marker = "锁定标记"
+	L.custom_off_fixate_marker_desc = "使用 {rt1}{rt2} 标记高里亚战争法师的锁定目标，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
 
-	--L.custom_off_branded_marker = "Branded Marker"
-	--L.custom_off_branded_marker_desc = "Mark Branded targets with {rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"	
+	L.custom_off_branded_marker = "烙印标记"
+	L.custom_off_branded_marker_desc = "使用 {rt3}{rt4} 标记烙印目标，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"	
 end
 
