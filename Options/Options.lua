@@ -1263,7 +1263,7 @@ do
 end
 
 do
-	local registered, registry = {}, {}
+	local registered, subPanelRegistry, pluginRegistry = {}, {}, {}
 	function options:Register(message, moduleName, module)
 		if registered[module.name] then return end
 		registered[module.name] = true
@@ -1276,7 +1276,11 @@ do
 			end
 		end
 		if module.pluginOptions then
-			acOptions.args.general.args[module.name] = module.pluginOptions
+			if type(module.pluginOptions) == "function" then
+				pluginRegistry[module.name] = module.pluginOptions
+			else
+				acOptions.args.general.args[module.name] = module.pluginOptions
+			end
 		end
 		if module.subPanelOptions then
 			local key = module.subPanelOptions.key
@@ -1286,7 +1290,7 @@ do
 			--module.subPanelOptionsPanel = acd:AddToBlizOptions(key, name)
 
 			if type(options) == "function" then
-				registry[key] = options
+				subPanelRegistry[key] = options
 			else
 				acOptions.args[key] = options
 			end
@@ -1294,7 +1298,10 @@ do
 	end
 
 	function getOptions()
-		for key, options in next, registry do
+		for key, options in next, pluginRegistry do
+			acOptions.args.general.args[key] = options()
+		end
+		for key, options in next, subPanelRegistry do
 			acOptions.args[key] = options()
 		end
 		return acOptions
