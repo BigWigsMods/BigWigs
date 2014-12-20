@@ -5,8 +5,8 @@
 local plugin = BigWigs:NewPlugin("BossBlock")
 if not plugin then return end
 
--------------------------------------------------------------------------------
--- Event Handlers
+--------------------------------------------------------------------------------
+-- Initialization
 --
 
 function plugin:OnPluginEnable()
@@ -18,6 +18,10 @@ function plugin:OnPluginEnable()
 		self:BigWigs_OnBossEngage()
 	end
 end
+
+-------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function plugin:BigWigs_OnBossEngage()
 	if not BigWigs.db.profile.showBlizzardWarnings then
