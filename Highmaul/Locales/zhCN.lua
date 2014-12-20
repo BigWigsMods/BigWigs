@@ -16,7 +16,7 @@ if L then
 	L.earthwarper_trigger1 = "Yjj'rmr……Xzzolos……"
 	L.earthwarper_trigger2 = "对，泰克图斯。臣服于……主人的……意志吧……"
 	L.earthwarper_trigger3 = "你不明白！我们不能停下……！"
-	--L.berserker_trigger1 = "MASTER!" -- MASTER! I COME FOR YOU!
+	L.berserker_trigger1 = "主人！我来见你了！"
 	L.berserker_trigger2 = "卡拉克……黑暗在低语……有个声音！"
 	--L.berserker_trigger3 = "Graaagh!" --Graaagh! KAHL...  AHK... RAAHHHH!
 
@@ -51,7 +51,7 @@ L = BigWigs:NewBossLocale("Ko'ragh", "zhCN")
 if L then
 	L.fire_bar = "全体爆炸！"
 	L.overwhelming_energy_bar = "溢流能量攻击 (%d)"
-	--L.overwhelming_energy_mc_bar = "MC balls hit (%d)"
+	L.overwhelming_energy_mc_bar = "史诗溢流能量攻击 (%d)"
 
 	L.custom_off_fel_marker = "魔能散射：邪能标记"
 	L.custom_off_fel_marker_desc = "使用 {rt1}{rt2}{rt3} 标记魔能散射：邪能，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
