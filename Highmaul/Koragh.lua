@@ -24,6 +24,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.fire_bar = "Everyone explodes!"
 	L.overwhelming_energy_bar = "Balls hit (%d)"
+	L.overwhelming_energy_mc_bar = "MC balls hit (%d)"
 
 	L.volatile_anomaly = -9629 -- Volatile Anomalies
 	L.volatile_anomaly_icon = "spell_arcane_arcane04"
@@ -97,7 +98,6 @@ function mod:OnEngage()
 	if self:Mythic() then
 		self:CDBar(172895, 8) -- Expel Magic: Fel
 		nextMC = t + 90
-		self:Bar(163472, 90) -- Dominating Power
 	end
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
@@ -149,14 +149,18 @@ do
 			nextFrost = nextFrost + 24
 			self:CDBar(172747, nextFrost-t) -- Expel Magic: Frost
 
-			-- once the balls start dropping, they don't stop (mostly? >.>)
+			-- once the balls start dropping (at around 5s), they don't stop (mostly? >.>)
+			if self:Mythic() and nextMC-t > 4 then
+				nextMC = nextMC + 24
+			end
 			if nextBall-t > 4 then
 				nextBall = nextBall + 24
-				self:CDBar(161612, nextBall-t, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Enery
-			end
-			if self:Mythic() and nextMC-t > 4 then -- really need to combine this w/ balls (just don't trust the counting to not fuck up)
-				nextMC = nextMC + 24
-				self:CDBar(163472, nextMC-t) -- Dominating Power
+				if self:Mythic() and abs(nextBall-nextMC) < 5 then -- XXX still worried about these getting out of sync
+					nextMC = nextBall
+					self:CDBar(161612, nextBall-t, L.overwhelming_energy_mc_bar:format(ballCount), 163472) -- Overwhelming Enery / Dominating Power icon
+				else
+					self:CDBar(161612, nextBall-t, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Enery
+				end
 			end
 		elseif spellId == 156803 then -- Nullification Barrier
 			self:Message(160734, "Positive", nil, spellName)
@@ -254,13 +258,19 @@ do
 	local prev = 0
 	function mod:OverwhelmingEnergy(args)
 		if self:Me(args.destGUID) and UnitPower("player", 10) > 0 then -- check alternate power, too
-			self:Message(161612, "Positive", "Warning") -- green to keep it different looking
+			self:Message(161612, "Positive", "Warning", CL.count:format(args.spellName, ballCount+1)) -- green to keep it different looking
 		end
 		local t = GetTime()
 		if t-prev > 10 then
 			ballCount = ballCount + 1
-			nextBall = GetTime() + 30
-			self:Bar(161612, 30, L.overwhelming_energy_bar:format(ballCount)) -- XXX in mythic, don't fire this bar if it's going to cause mcs
+			nextBall = t + 30
+			if self:Mythic() and nextMC-t < 35 then -- XXX still worried about these getting out of sync
+				nextMC = nextBall
+				self:CDBar(161612, 30, L.overwhelming_energy_mc_bar:format(ballCount), 163472) -- Overwhelming Enery / Dominating Power icon
+				self:Message(163472, "Urgent", nil, CL.custom_sec:format(self:SpellName(163472), 30)) -- Dominating Power soon!
+			else
+				self:CDBar(161612, 30, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Enery
+			end
 			prev = t
 		end
 	end
@@ -269,23 +279,26 @@ end
 -- Mythic
 
 do
-	local marks = 0
+	local count, isOnMe = 0, nil
 	function mod:ExpelMagicFelCast(args)
-		self:Message(args.spellId, "Attention")
 		self:CDBar(args.spellId, 15.7) -- 15-18, mostly 15.7
-		marks = 0
+		count = 0
+		isOnMe = nil
 	end
 
 	function mod:ExpelMagicFelApplied(args)
+		count = count + 1
 		if self:Me(args.destGUID) then
+			isOnMe = true
 			self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
 			self:TargetBar(args.spellId, 12, args.destName)
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
+		elseif count == 3 and not isOnMe then
+			self:Message(args.spellId, "Attention")
 		end
 		if self.db.profile.custom_off_fel_marker then
-			marks = marks + 1
-			SetRaidTarget(args.destName, marks)
+			SetRaidTarget(args.destName, count)
 		end
 	end
 
@@ -309,7 +322,6 @@ do
 		list[#list+1] = args.destName
 		if not scheduled then
 			nextMC = GetTime() + 60
-			self:Bar(args.spellId, 60)
 			scheduled = self:ScheduleTimer(warn, 0.2, self, args.spellId)
 		end
 	end

@@ -51,6 +51,7 @@ L = BigWigs:NewBossLocale("Ko'ragh", "zhCN")
 if L then
 	L.fire_bar = "全体爆炸！"
 	L.overwhelming_energy_bar = "溢流能量攻击 (%d)"
+	--L.overwhelming_energy_mc_bar = "MC balls hit (%d)"
 
 	L.custom_off_fel_marker = "魔能散射：邪能标记"
 	L.custom_off_fel_marker_desc = "使用 {rt1}{rt2}{rt3} 标记魔能散射：邪能，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r"
