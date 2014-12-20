@@ -14,7 +14,7 @@ mod.engageId = 1723
 
 local allowSuppression = false
 local ballCount = 1
-local nextBall, nextMC = 0, 0
+local nextBall, nextMC, nextFrost, nextArcane = 0, 0, 0, 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -85,11 +85,16 @@ end
 function mod:OnEngage()
 	allowSuppression = false
 	ballCount = 1
-	nextBall = GetTime() + 36
+	local t = GetTime()
+	nextArcane = t + 30
+	self:Bar(162186, 30)
+	nextFrost = t + 40
+	self:Bar(172747, 40) -- guess, first charge phase is usually happening when it would come off cd
+	nextBall = t + 36
 	self:Bar(161612, 36, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Energy
 	if self:Mythic() then
 		self:CDBar(172895, 8) -- Expel Magic: Fel
-		nextMC = GetTime() + 90
+		nextMC = t + 90
 		self:Bar(163472, 90) -- Dominating Power
 	end
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
@@ -126,19 +131,29 @@ do
 			self:Message(spellId, "Positive", "Long", CL.removed:format(self:SpellName(156803))) -- Nullification Barrier removed!
 			self:Bar(spellId, 20)
 			self:StopBar(161328) -- Suppression Field
+			self:StopBar(162186) -- Expel Magic: Arcane
 			self:StopBar(172747) -- Expel Magic: Frost
 			self:StopBar(172895) -- Expel Magic: Fel
 
 			count = 0
 			self:ScheduleTimer(nextAdd, 1, self)
 
+			-- this is all guess-work! cds seem to pause for the duration of Vulnerability
+			-- plus the time he takes to run to the middle of the room?
 			local t = GetTime()
-			if nextBall-t > 5 then
-				nextBall = nextBall + 20
+			nextArcane = nextArcane + 24
+			self:CDBar(162186, nextArcane-t)
+
+			nextFrost = nextFrost + 24
+			self:CDBar(172747, nextFrost-t)
+
+			-- once the balls start dropping, they don't stop (mostly? >.>)
+			if nextBall-t > 4 then
+				nextBall = nextBall + 24
 				self:CDBar(161612, nextBall-t, L.overwhelming_energy_bar:format(ballCount))
 			end
-			if self:Mythic() and nextMC-t > 5 then -- really need to combine these
-				nextMC = nextMC + 20
+			if self:Mythic() and nextMC-t > 4 then -- really need to combine this w/ balls (just don't trust the counting to not fuck up)
+				nextMC = nextMC + 24
 				self:CDBar(163472, nextMC-t)
 			end
 		elseif spellId == 156803 then -- Nullification Barrier
@@ -157,6 +172,7 @@ end
 
 function mod:ExpelMagicArcaneStart(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
+	nextArcane = GetTime() + 26.7
 	self:CDBar(args.spellId, 26.7)
 end
 
@@ -187,14 +203,12 @@ do
 			self:Flash(172747)
 			self:Say(172747)
 		end
-		if self:Range(name) < 30 then
-			self:PlaySound(172747, "Alarm")
-		end
+		self:TargetMessage(172747, name, "Neutral", "Alarm", nil, nil, self:Range(name) < 30)
 	end
 	function mod:ExpelMagicFrost(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
-		self:Message(args.spellId, "Neutral")
 		self:Bar(args.spellId, 21.5, ("<%s>"):format(self:SpellName(84721)), 84721) -- Frozen Orb
+		nextFrost = GetTime() + 60
 		self:Bar(args.spellId, 60)
 	end
 end
@@ -204,7 +218,6 @@ do
 		allowSuppression = true
 		self:CDBar(args.spellId, 15)
 	end
-
 	function mod:SuppressionFieldYell(_, _, _, _, _, suppressionTarget)
 		if allowSuppression then
 			allowSuppression = false
