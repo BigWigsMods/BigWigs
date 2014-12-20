@@ -107,7 +107,7 @@ do
 end
 
 -- GLOBALS: ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, CreateFrame, CUSTOM_CLASS_COLORS, error, GetAddOnEnableState, GetAddOnInfo
--- GLOBALS: GetAddOnMetadata, GetInstanceInfo, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GRAY_FONT_COLOR, InCombatLockdown
+-- GLOBALS: GetAddOnMetadata, GetInstanceInfo, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetTime, GRAY_FONT_COLOR, InCombatLockdown
 -- GLOBALS: InterfaceOptionsFrameOkay, IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInInstance, IsInRaid, IsPartyLFG, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, message, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, SetMapByID, strsplit
 -- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
@@ -585,9 +585,9 @@ mod.UPDATE_SHAPESHIFT_FORM = mod.ACTIVE_TALENT_GROUP_CHANGED
 
 -- Merged LFG_ProposalTime addon by Freebaser
 do
-	local timeLeft
+	local prev
 	function mod:LFG_PROPOSAL_SHOW()
-		if not timeLeft then
+		if not prev then
 			local BD = {
 				bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
 				tile = true,
@@ -618,16 +618,16 @@ do
 			timerBar.text = timerBar:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 			timerBar.text:SetPoint("CENTER", timerBar, "CENTER")
 
-			timeLeft = 40
-			timerBar:SetScript("OnUpdate", function(frame, elapsed)
-				timeLeft = timeLeft - elapsed
+			prev = GetTime() + 40
+			timerBar:SetScript("OnUpdate", function(f)
+				local timeLeft = prev - GetTime()
 				if timeLeft > 0 then
-					frame:SetValue(timeLeft)
-					frame.text:SetFormattedText("Big Wigs: %.1f", timeLeft)
+					f:SetValue(timeLeft)
+					f.text:SetFormattedText("Big Wigs: %.1f", timeLeft)
 				end
 			end)
 
-			self.LFG_PROPOSAL_SHOW = function() timeLeft = 40 end
+			self.LFG_PROPOSAL_SHOW = function() timeLeft = GetTime() + 40 end
 		end
 	end
 end
