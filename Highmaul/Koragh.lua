@@ -254,7 +254,7 @@ do
 	local prev = 0
 	function mod:OverwhelmingEnergy(args)
 		if self:Me(args.destGUID) and UnitPower("player", 10) > 0 then -- check alternate power, too
-			self:Message(args.spellId, "Positive", "Warning") -- green to keep it different looking
+			self:Message(161612, "Positive", "Warning") -- green to keep it different looking
 		end
 		local t = GetTime()
 		if t-prev > 10 then
