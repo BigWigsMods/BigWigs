@@ -67,6 +67,8 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Intermission", "boss1")
 	self:Log("SPELL_AURA_APPLIED", "CausticEnergy", 161242)
 	self:Log("SPELL_CAST_SUCCESS", "OverwhelmingEnergy", 161612)
+	self:Log("SPELL_DAMAGE", "OverwhelmingEnergy", 161576)
+	self:Log("SPELL_ABSORBED", "OverwhelmingEnergy", 161576)
 	self:Log("SPELL_CAST_START", "ExpelMagicShadow", 162184)
 	self:Log("SPELL_CAST_SUCCESS", "ExpelMagicFire", 162185)
 	self:Log("SPELL_CAST_START", "ExpelMagicArcaneStart", 162186)
@@ -87,9 +89,9 @@ function mod:OnEngage()
 	ballCount = 1
 	local t = GetTime()
 	nextArcane = t + 30
-	self:Bar(162186, 30)
+	self:Bar(162186, 30) -- Expel Magic: Arcane
 	nextFrost = t + 40
-	self:Bar(172747, 40) -- guess, first charge phase is usually happening when it would come off cd
+	self:Bar(172747, 40) -- Expel Magic: Frost -- guess, first charge phase is usually happening when it would come off cd
 	nextBall = t + 36
 	self:Bar(161612, 36, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Energy
 	if self:Mythic() then
@@ -142,19 +144,19 @@ do
 			-- plus the time he takes to run to the middle of the room?
 			local t = GetTime()
 			nextArcane = nextArcane + 24
-			self:CDBar(162186, nextArcane-t)
+			self:CDBar(162186, nextArcane-t) -- Expel Magic: Arcane
 
 			nextFrost = nextFrost + 24
-			self:CDBar(172747, nextFrost-t)
+			self:CDBar(172747, nextFrost-t) -- Expel Magic: Frost
 
 			-- once the balls start dropping, they don't stop (mostly? >.>)
 			if nextBall-t > 4 then
 				nextBall = nextBall + 24
-				self:CDBar(161612, nextBall-t, L.overwhelming_energy_bar:format(ballCount))
+				self:CDBar(161612, nextBall-t, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Enery
 			end
 			if self:Mythic() and nextMC-t > 4 then -- really need to combine this w/ balls (just don't trust the counting to not fuck up)
 				nextMC = nextMC + 24
-				self:CDBar(163472, nextMC-t)
+				self:CDBar(163472, nextMC-t) -- Dominating Power
 			end
 		elseif spellId == 156803 then -- Nullification Barrier
 			self:Message(160734, "Positive", nil, spellName)
@@ -258,7 +260,7 @@ do
 		if t-prev > 10 then
 			ballCount = ballCount + 1
 			nextBall = GetTime() + 30
-			self:Bar(args.spellId, 30, L.overwhelming_energy_bar:format(ballCount)) -- XXX in mythic, don't fire this bar if it's going to cause mcs
+			self:Bar(161612, 30, L.overwhelming_energy_bar:format(ballCount)) -- XXX in mythic, don't fire this bar if it's going to cause mcs
 			prev = t
 		end
 	end
