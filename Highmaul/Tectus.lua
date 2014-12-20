@@ -58,7 +58,7 @@ function mod:GetOptions()
 		163312, -- Raving Assault
 		--[[ General ]]--
 		{162288, "TANK"}, -- Accretion
-		{162346, "FLASH", "SAY"}, -- Crystalline Barrage
+		{162346, "FLASH", "SAY", "ME_ONLY"}, -- Crystalline Barrage
 		"custom_off_barrage_marker",
 		162475, -- Tectonic Upheaval
 		"adds",
@@ -114,19 +114,31 @@ function mod:Accretion(args)
 	end
 end
 
-function mod:CrystallineBarrage(args)
-	--self:CDBar(args.spellId, 30.5)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
-		self:Flash(args.spellId)
-		self:Say(args.spellId, 120361) -- 120361 = "Barrage"
+do
+	local list, scheduled = mod:NewTargetList(), nil
+	local function warn(self, spellId)
+		self:TargetMessage(spellId, list, "Positive") -- ME_ONLY by default, too spammy
+		scheduled = nil
 	end
-	if self.db.profile.custom_off_barrage_marker then
-		for i=1, 5 do
-			if not marked[i] then
-				SetRaidTarget(args.destName, i)
-				marked[i] = args.destName
-				break
+	function mod:CrystallineBarrage(args)
+		--self:CDBar(args.spellId, 30.5)
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+			self:Say(args.spellId, 120361) -- 120361 = "Barrage"
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		else
+			list[#list+1] = args.destName
+			if not scheduled then
+				scheduled = self:ScheduleTimer(warn, 0.2, self, args.spellId)
+			end
+		end
+		if self.db.profile.custom_off_barrage_marker then
+			for i=1, 5 do
+				if not marked[i] then
+					SetRaidTarget(args.destName, i)
+					marked[i] = args.destName
+					break
+				end
 			end
 		end
 	end
