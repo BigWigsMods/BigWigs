@@ -441,11 +441,11 @@ do
 			BigWigs:Print(("The debuff scan failed, tell a developer! Latency: %d/%d"):format(h, w))
 			amount = 0 -- don't show count or distance
 		end
-		local fortification = args.spellId == 164005 or (self:Mythic() and phase == 3)
-		local jumpDistance = (fortification and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
+		local isFortification = args.spellId == 164005 or (self:Mythic() and phase == 3)
+		local jumpDistance = (isFortification and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
 
 		if self:Me(args.destGUID) then
-			brandedOnMe = args.spellId
+			brandedOnMe = isFortification and 164005 or args.spellId
 			self:TargetBar(156225, 4, args.destName)
 			if not self:LFR() then
 				local text = self:SpellName(156225)
@@ -502,10 +502,10 @@ do
 	function mod:ForceNova(args)
 		self:Message(157349, "Urgent")
 		self:CDBar(157349, novaCount == 1 and 46 or 50)
-		if args.spellId == 164235 then -- Fortification (three novas)
+		if args.spellId == 164235 or (self:Mythic() and phase == 3) then -- Fortification (three novas)
 			self:Bar(157349, 10.5, args.spellName)
 			self:ScheduleTimer("Bar", 8, 157349, 10.5, args.spellName)
-		elseif args.spellId == 164240 then -- Replication (aoe damage on hit)
+		elseif args.spellId == 164240 or (self:Mythic() and phase == 1) then -- Replication (aoe damage on hit)
 			replicatingNova = self:ScheduleTimer(replicatingNovaStop, 8) -- XXX how long should the proximity be open?
 			updateProximity()
 		end
@@ -533,12 +533,13 @@ function mod:MarkOfChaosApplied(args)
 	self:PrimaryIcon(158605, args.destName)
 	self:TargetMessage(158605, args.destName, "Urgent", "Alarm") -- warn again in case the cast target changed
 	self:TargetBar(158605, 8, args.destName)
+	local isFortification = args.spellId == 164178 or (self:Mythic() and phase == 3)
 	if self:Me(args.destGUID) then
 		self:Flash(158605)
-		if args.spellId == 164178 then -- Fortification (you're rooted)
+		if isFortification then -- Fortification (you're rooted)
 			self:Say(158605)
 		end
-	elseif args.spellId == 164178 and self:Range(args.destName) < 35 then -- Fortification (target rooted)
+	elseif isFortification and self:Range(args.destName) < 35 then -- Fortification (target rooted)
 		self:Flash(158605)
 	end
 	updateProximity()
