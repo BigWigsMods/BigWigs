@@ -51,7 +51,7 @@ L = BigWigs:NewBossLocale("Ko'ragh", "esES") or BigWigs:NewBossLocale("Ko'ragh",
 if L then
 	L.fire_bar = "Todo el mundo explota!"
 	L.overwhelming_energy_bar = "Bolas golpean (%d)"
-	--L.overwhelming_energy_mc_bar = "MC balls hit (%d)"
+	L.overwhelming_energy_mc_bar = "MC bolas golpean (%d)"
 
 	L.custom_off_fel_marker = "Marcador de Expulsar magia: Vil"
 	L.custom_off_fel_marker_desc = "Marca los jugadores afectados por Expulsar magia: Vil con {rt1}{rt2}{rt3}, requiere ayudante o líder.\n|cFFFF0000Sólo 1 persona en la raid debería tener activada esta opción para prevenir conflictos con las marcas.|r"
