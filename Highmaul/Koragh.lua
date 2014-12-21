@@ -24,7 +24,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.fire_bar = "Everyone explodes!"
 	L.overwhelming_energy_bar = "Balls hit (%d)"
-	L.overwhelming_energy_mc_bar = "MC balls hit (%d)"
+	L.dominating_power_bar = "MC balls hit (%d)"
 
 	L.volatile_anomaly = -9629 -- Volatile Anomalies
 	L.volatile_anomaly_icon = "spell_arcane_arcane04"
@@ -157,7 +157,7 @@ do
 				nextBall = nextBall + 24
 				if self:Mythic() and abs(nextBall-nextMC) < 5 then -- XXX still worried about these getting out of sync
 					nextMC = nextBall
-					self:CDBar(161612, nextBall-t, L.overwhelming_energy_mc_bar:format(ballCount), 163472) -- Overwhelming Enery / Dominating Power icon
+					self:CDBar(163472, nextBall-t, L.dominating_power_bar:format(ballCount)) -- Dominating Power
 				else
 					self:CDBar(161612, nextBall-t, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Enery
 				end
@@ -205,11 +205,14 @@ end
 
 do
 	local function printTarget(self, name, guid)
+		local inRange = self:Range(name) < 30
 		if self:Me(guid) then
 			self:Flash(172747)
 			self:Say(172747)
+		elseif inRange then
+			self:Flash(172747)
 		end
-		self:TargetMessage(172747, name, "Neutral", "Alarm", nil, nil, self:Range(name) < 30)
+		self:TargetMessage(172747, name, "Neutral", "Alarm", nil, nil, inRange)
 	end
 	function mod:ExpelMagicFrost(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
@@ -262,12 +265,14 @@ do
 		end
 		local t = GetTime()
 		if t-prev > 10 then
+			self:StopBar(L.overwhelming_energy_bar:format(ballCount))
+			self:StopBar(L.dominating_power_bar:format(ballCount))
 			ballCount = ballCount + 1
 			nextBall = t + 30
 			if self:Mythic() and nextMC-t < 35 then -- XXX still worried about these getting out of sync
 				nextMC = nextBall
-				self:CDBar(161612, 30, L.overwhelming_energy_mc_bar:format(ballCount), 163472) -- Overwhelming Enery / Dominating Power icon
-				self:Message(163472, "Urgent", nil, CL.custom_sec:format(self:SpellName(163472), 30)) -- Dominating Power soon!
+				self:CDBar(163472, 30, L.dominating_power_bar:format(ballCount)) -- Dominating Power
+				self:Message(163472, "Urgent", nil, CL.custom_sec:format(self:SpellName(163472), 30)) -- Dominating Power in 30 sec!
 			else
 				self:CDBar(161612, 30, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Enery
 			end
