@@ -301,7 +301,7 @@ do
 		if self:Me(args.destGUID) then
 			if timer then self:CancelTimer(timer) end
 			timeLeft = 6
-			timer = self:ScheduleRepeatingTimer(sayCountdown, 1)
+			timer = self:ScheduleRepeatingTimer(sayCountdown, 1, self)
 			self:TargetBar("volatility_self", 6, self)
 		end
 	end
