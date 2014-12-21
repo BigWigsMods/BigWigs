@@ -38,7 +38,7 @@ function mod:GetOptions()
 	return {
 		--[[ Mythic ]]--
 		-9396, -- Ravenous Bloodmaw
-		{162497, "FLASH"}, -- On the Hunt
+		{162497, "FLASH", "SAY"}, -- On the Hunt
 		"arena_sweeper", -- Arena Sweeper
 		--[[ General ]]--
 		-9394, -- Fire Pillar
@@ -111,6 +111,7 @@ function mod:OnTheHunt(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
+		self:Say(args.spellId)
 	end
 end
 
