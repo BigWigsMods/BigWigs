@@ -117,10 +117,10 @@ end
 do
 	local function printTarget(self, name, guid)
 		self:TargetMessage(159113, name, "Urgent", "Warning", nil, nil, true)
-		self:TargetBar(159113, 8.8, name) -- cast+channel
+		self:TargetBar(159113, 10.2, name) -- cast+channel (10.25 - 0.05)
 	end
 	function mod:Impale(args)
-		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
+		self:GetBossTarget(printTarget, 0, args.sourceGUID)
 		self:CDBar(args.spellId, 43) -- delayed by chain hurl/berserker rush
 	end
 end
