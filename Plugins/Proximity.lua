@@ -265,7 +265,7 @@ do
 			local t = GetTime()
 			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
-				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
+				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName, true)
 			end
 		end
 	end
@@ -294,7 +294,7 @@ do
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
-				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
+				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName, true)
 			end
 		else
 			proxCircle:SetVertexColor(0, 1, 0)
@@ -343,7 +343,7 @@ do
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
-				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
+				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName, true)
 			end
 		end
 	end
@@ -388,7 +388,7 @@ do
 			local t = GetTime()
 			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
-				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
+				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName, true)
 			end
 		else
 			proxCircle:SetVertexColor(0, 1, 0)
@@ -424,7 +424,7 @@ do
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
-				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
+				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName, true)
 			end
 		end
 	end
@@ -462,7 +462,7 @@ do
 			local t = GetTime()
 			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
-				plugin:SendMessage("BigWigs_Sound", db.soundName, true)
+				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName, true)
 			end
 		else
 			proxCircle:SetVertexColor(0, 1, 0)

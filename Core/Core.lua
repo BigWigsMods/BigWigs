@@ -312,7 +312,8 @@ do
 				addon:Print(L.test .." - ".. (pulseColor or "") ..L.FLASH.. (pulseColor and "|r" or "") .." - ".. L.PULSE ..": |T".. messages[key] ..":15:15:0:0:64:64:4:60:4:60|t")
 			end
 			if sound then addon:Print(L.test .." - ".. L.sound ..": ".. sound) end
-			addon:SendMessage("BigWigs_Message", addon, key, color..": "..key, color, sound, messages[key])
+			addon:SendMessage("BigWigs_Message", addon, key, color..": "..key, color, messages[key])
+			addon:SendMessage("BigWigs_Sound", addon, key, sound)
 			messages[key] = nil
 		end
 	end
@@ -470,11 +471,6 @@ function addon:OnInitialize()
 
 	-- XXX temp cleanup
 	if self.db.global.seenmovies then
-		if self.db.global.seenmovies[152] then self.db.global.watchedMovies[152] = true end
-		if self.db.global.seenmovies[953.2] then self.db.global.watchedMovies["953:2"] = true end
-		if self.db.global.seenmovies[953.8] then self.db.global.watchedMovies["953:8"] = true end
-		if self.db.global.seenmovies[953.9] then self.db.global.watchedMovies["953:9"] = true end
-		if self.db.global.seenmovies[953.12] then self.db.global.watchedMovies["953:12"] = true end
 		self.db.global.seenmovies = nil
 	end
 	--

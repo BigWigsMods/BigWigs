@@ -910,9 +910,13 @@ end
 function boss:Message(key, color, sound, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
 		local textType = type(text)
-		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, sound, icon ~= false and icons[icon or textType == "number" and text or key])
-		if sound and hasVoice and checkFlag(self, key, C.VOICE) then
-			self:SendMessage("BigWigs_Voice", key)
+		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, icon ~= false and icons[icon or textType == "number" and text or key])
+		if sound then
+			if hasVoice and checkFlag(self, key, C.VOICE) then
+				self:SendMessage("BigWigs_Voice", self, key, sound)
+			else
+				self:SendMessage("BigWigs_Sound", self, key, sound)
+			end
 		end
 	end
 end
@@ -920,7 +924,8 @@ end
 function boss:RangeMessage(key, color, sound, text, icon)
 	if not checkFlag(self, key, C.MESSAGE) then return end
 	local textType = type(text)
-	self:SendMessage("BigWigs_Message", self, key, format(L.near, textType == "string" and text or spells[text or key]), color == nil and "Personal" or color, sound == nil and "Alarm" or sound, icon ~= false and icons[icon or textType == "number" and text or key])
+	self:SendMessage("BigWigs_Message", self, key, format(L.near, textType == "string" and text or spells[text or key]), color == nil and "Personal" or color, icon ~= false and icons[icon or textType == "number" and text or key])
+	self:SendMessage("BigWigs_Sound", self, sound == nil and "Alarm" or sound)
 end
 
 do
@@ -961,12 +966,16 @@ do
 		if checkFlag(self, key, C.MESSAGE) then
 			local textType = type(text)
 			if player == pName then
-				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, stack or 1, textType == "string" and text or spells[text or key]), "Personal", sound, icon ~= false and icons[icon or textType == "number" and text or key])
+				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, stack or 1, textType == "string" and text or spells[text or key]), "Personal", icon ~= false and icons[icon or textType == "number" and text or key])
 			else
-				self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], coloredNames[player]), color, sound, icon ~= false and icons[icon or textType == "number" and text or key])
+				self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], coloredNames[player]), color, icon ~= false and icons[icon or textType == "number" and text or key])
 			end
-			if sound and hasVoice and checkFlag(self, key, C.VOICE) then
-				self:SendMessage("BigWigs_Voice", key)
+			if sound then
+				if hasVoice and checkFlag(self, key, C.VOICE) then
+					self:SendMessage("BigWigs_Voice", self, key, sound)
+				else
+					self:SendMessage("BigWigs_Sound", self, key, sound)
+				end
 			end
 		end
 	end
@@ -984,31 +993,42 @@ do
 			else
 				if not checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then wipe(player) return end
 			end
-			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, sound, texture)
-			if sound and hasVoice and checkFlag(self, key, C.VOICE) then
-				self:SendMessage("BigWigs_Voice", key)
+			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
+			if sound then
+				if hasVoice and checkFlag(self, key, C.VOICE) then
+					self:SendMessage("BigWigs_Voice", self, key, sound)
+				else
+					self:SendMessage("BigWigs_Sound", self, key, sound)
+				end
 			end
 			wipe(player)
 		else
 			if not player then
 				if checkFlag(self, key, C.MESSAGE) then
-					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, "???"), color == "Personal" and "Important" or color, alwaysPlaySound and sound, texture)
+					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, "???"), color == "Personal" and "Important" or color, texture)
+					if alwaysPlaySound then
+						self:SendMessage("BigWigs_Sound", self, key, sound)
+					end
 				end
 				return
 			end
 			if player == pName then
 				if checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then
-					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", sound, texture)
+					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
 					if hasVoice and checkFlag(self, key, C.VOICE) then
-						self:SendMessage("BigWigs_Voice", key)
+						self:SendMessage("BigWigs_Voice", self, key, sound, true)
+					else
+						self:SendMessage("BigWigs_Sound", self, key, sound)
 					end
 				end
 			else
 				if checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
 					-- Change color and remove sound (if not alwaysPlaySound) when warning about effects on other players
-					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color == "Personal" and "Important" or color, alwaysPlaySound and sound, texture)
+					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color == "Personal" and "Important" or color, texture)
 					if alwaysPlaySound and hasVoice and checkFlag(self, key, C.VOICE) then
-						self:SendMessage("BigWigs_Voice", key)
+						self:SendMessage("BigWigs_Voice", self, key, sound)
+					elseif alwaysPlaySound then
+						self:SendMessage("BigWigs_Sound", self, key, sound)
 					end
 				end
 			end
@@ -1111,9 +1131,10 @@ end
 
 function boss:PlaySound(key, sound)
 	if not checkFlag(self, key, C.MESSAGE) then return end
-	self:SendMessage("BigWigs_Sound", sound)
 	if hasVoice and checkFlag(self, key, C.VOICE) then
-		self:SendMessage("BigWigs_Voice", key)
+		self:SendMessage("BigWigs_Voice", self, key, sound)
+	else
+		self:SendMessage("BigWigs_Sound", self, key, sound)
 	end
 end
 

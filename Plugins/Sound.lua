@@ -195,7 +195,6 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_Sound")
 end
 
@@ -205,32 +204,30 @@ end
 
 do
 	local GetSpellInfo, PlaySoundFile, PlaySound, type = GetSpellInfo, PlaySoundFile, PlaySound, type
-	local function play(sound, overwrite)
-		if db.defaultonly and not overwrite then
-			PlaySound("RaidWarning", "Master")
-		elseif sound then
-			local path = db.media[sound] and media:Fetch(mType, db.media[sound]) or media:Fetch(mType, sound)
-			if path then
-				PlaySoundFile(path, "Master")
-			end
-		end
-	end
-
-	function plugin:BigWigs_Message(event, module, key, text, color, sound)
-		if sound and bwDb.sound then
-			if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end
+	function plugin:BigWigs_Sound(event, module, key, sound, overwrite)
+		if bwDb.sound then
 			local sDb = db[sound]
 			if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
-				play(sound)
+				if db.defaultonly and not overwrite then
+					PlaySound("RaidWarning", "Master")
+				else
+					local path = db.media[sound] and media:Fetch(mType, db.media[sound]) or media:Fetch(mType, sound)
+					if path then
+						PlaySoundFile(path, "Master")
+					end
+				end
 			else
-				play(sDb[module.name][key])
+				if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end -- XXX temp until we start storing these as spell ids instead of translated text
+				local newSound = sDb[module.name][key]
+				if db.defaultonly and not overwrite then
+					PlaySound("RaidWarning", "Master")
+				else
+					local path = db.media[newSound] and media:Fetch(mType, db.media[newSound]) or media:Fetch(mType, newSound)
+					if path then
+						PlaySoundFile(path, "Master")
+					end
+				end
 			end
-		end
-	end
-
-	function plugin:BigWigs_Sound(event, sound, overwrite)
-		if sound and bwDb.sound then
-			play(sound, overwrite)
 		end
 	end
 end

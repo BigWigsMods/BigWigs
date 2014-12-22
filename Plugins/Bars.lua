@@ -1469,7 +1469,7 @@ do
 		if seconds == 0 then
 			plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
 		else
-			timers[id] = plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", false, false, L.timerFinished:format(nick, barText), "Attention", false, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+			timers[id] = plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, false, L.timerFinished:format(nick, barText), "Attention", "Interface\\Icons\\INV_Misc_PocketWatch_01")
 			plugin:SendMessage("BigWigs_StartBar", plugin, id, nick..": "..barText, seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 		end
 	end
@@ -1483,9 +1483,10 @@ do
 		if timeLeft == 0 then
 			plugin:CancelTimer(timer)
 			timer = nil
-			plugin:SendMessage("BigWigs_Message", nil, nil, L.pulling, "Attention", "Alarm", "Interface\\Icons\\ability_warrior_charge")
+			plugin:SendMessage("BigWigs_Message", plugin, nil, L.pulling, "Attention", "Interface\\Icons\\ability_warrior_charge")
+			plugin:SendMessage("BigWigs_Sound", plugin, nil, "Alarm")
 		elseif timeLeft < 11 then
-			plugin:SendMessage("BigWigs_Message", nil, nil, L.pullIn:format(timeLeft), "Attention")
+			plugin:SendMessage("BigWigs_Message", plugin, nil, L.pullIn:format(timeLeft), "Attention")
 			if timeLeft < 6 and BigWigs.db.profile.sound then
 				PlaySoundFile(("Interface\\AddOns\\BigWigs\\Sounds\\%d.ogg"):format(timeLeft), "Master")
 			end
@@ -1509,7 +1510,8 @@ do
 		end
 		BigWigs:Print(L.pullStarted:format(isDBM and "DBM" or "Big Wigs", nick))
 		timer = plugin:ScheduleRepeatingTimer(printPull, 1)
-		plugin:SendMessage("BigWigs_Message", nil, nil, L.pullIn:format(timeLeft), "Attention", "Long")
+		plugin:SendMessage("BigWigs_Message", plugin, nil, L.pullIn:format(timeLeft), "Attention")
+		plugin:SendMessage("BigWigs_Sound", plugin, nil, "Long")
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.pull, seconds, "Interface\\Icons\\ability_warrior_charge")
 		plugin:SendMessage("BigWigs_StartPull", plugin, seconds, nick, isDBM)
 	end
@@ -1545,24 +1547,26 @@ do
 		end
 
 		BigWigs:Print(L.breakStarted:format(isDBM and "DBM" or "Big Wigs", nick))
-		plugin:SendMessage("BigWigs_Message", nil, nil, L.breakAnnounce:format(seconds/60), "Attention", "Long", "Interface\\Icons\\inv_misc_fork&knife")
+		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakAnnounce:format(seconds/60), "Attention", "Interface\\Icons\\inv_misc_fork&knife")
+		plugin:SendMessage("BigWigs_Sound", plugin, nil, "Long")
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.breakBar, seconds, "Interface\\Icons\\inv_misc_fork&knife")
 
 		timerTbl = {
-			plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", nil, nil, L.breakSeconds:format(30), "Urgent", nil, "Interface\\Icons\\inv_misc_fork&knife"),
-			plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", nil, nil, L.breakSeconds:format(10), "Urgent", nil, "Interface\\Icons\\inv_misc_fork&knife"),
-			plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", nil, nil, L.breakSeconds:format(5), "Important", nil, "Interface\\Icons\\inv_misc_fork&knife"),
-			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", nil, nil, L.breakFinished, "Important", "Long", "Interface\\Icons\\inv_misc_fork&knife"),
+			plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", plugin, nil, L.breakSeconds:format(30), "Urgent", "Interface\\Icons\\inv_misc_fork&knife"),
+			plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", plugin, nil, L.breakSeconds:format(10), "Urgent", "Interface\\Icons\\inv_misc_fork&knife"),
+			plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", plugin, nil, L.breakSeconds:format(5), "Important", "Interface\\Icons\\inv_misc_fork&knife"),
+			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, nil, L.breakFinished, "Important", "Interface\\Icons\\inv_misc_fork&knife"),
+			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Sound", plugin, nil, "Long"),
 			plugin:ScheduleTimer(function() BigWigs3DB.breakTime = nil timerTbl = nil end, seconds)
 		}
 		if seconds > 119 then -- 2min
-			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 60, "BigWigs_Message", nil, nil, L.breakMinutes:format(1), "Positive", nil, "Interface\\Icons\\inv_misc_fork&knife")
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 60, "BigWigs_Message", nil, nil, L.breakMinutes:format(1), "Positive", "Interface\\Icons\\inv_misc_fork&knife")
 		end
 		if seconds > 239 then -- 4min
 			local half = seconds / 2
 			local m = half % 60
 			local halfMin = (half - m) / 60
-			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", half + m, "BigWigs_Message", nil, nil, L.breakMinutes:format(halfMin), "Positive", nil, "Interface\\Icons\\inv_misc_fork&knife")
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", half + m, "BigWigs_Message", nil, nil, L.breakMinutes:format(halfMin), "Positive", "Interface\\Icons\\inv_misc_fork&knife")
 		end
 	end
 end
