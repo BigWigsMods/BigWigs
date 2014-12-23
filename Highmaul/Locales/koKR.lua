@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.blade_dance_bar = "칼춤 도는 중"
 
-	--L.arena_sweeper_desc = "Timer for getting knocked out of the stadium stands after you've been Chain Hurled."
+	L.arena_sweeper_desc = "사슬 던지기로 인하여 관중석으로 내동댕이쳐진 이후 관중들에 의하여 쫓겨나기까지의 시간을 표시"
 end
 
 L = BigWigs:NewBossLocale("The Butcher", "koKR")
@@ -32,16 +32,16 @@ end
 
 L = BigWigs:NewBossLocale("Brackenspore", "koKR")
 if L then
-	--L.mythic_ability = "Special Ability"
-	--L.mythic_ability_desc = "Show a timer bar for the next Call of the Tides or Exploding Fungus arriving."
+	L.mythic_ability = "특수 기술"
+	L.mythic_ability_desc = "다음 해일의 부름이나 곰팡이 폭발이 오기 까지의 시간을 표시해주는 바를 표시합니다."
 
 	L.creeping_moss_boss_heal = "보스 아래에 덩굴 이끼가 있습니다 (치유 중)"
-	--L.creeping_moss_add_heal = "Moss under BIG ADD (healing)"
+	L.creeping_moss_add_heal = "큰 쫄 아래에 덩굴 이끼가 있습니다 (healing)"
 end
 
 L = BigWigs:NewBossLocale("Twin Ogron", "koKR")
 if L then
-	--L.volatility_self_desc = "Options for when the Arcane Volatility debuff is on you."
+	L.volatility_self_desc = "당신에게 불안정한 비전 디버프가 걸려있을 때의 옵션Options for when the Arcane Volatility debuff is on you."
 
 	L.custom_off_volatility_marker = "불안정한 비전 징표 설정"
 	L.custom_off_volatility_marker_desc = "불안정한 징표의 대상을 {rt1}{rt2}{rt3}{rt4}의 징표로 설정합니다. 공격대장이거나 권한이 필요합니다."
@@ -50,25 +50,25 @@ end
 L = BigWigs:NewBossLocale("Ko'ragh", "koKR")
 if L then
 	L.fire_bar = "모두 폭발합니다!"
-	--L.overwhelming_energy_bar = "Balls hit (%d)"
-	--L.dominating_power_bar = "MC balls hit (%d)"
+	L.overwhelming_energy_bar = "구체가 떨어짐 (%d)"
+	L.dominating_power_bar = "정신 지배 구체가 떨어짐 (%d)"
 
-	--L.custom_off_fel_marker = "Expel Magic: Fel Marker"
-	--L.custom_off_fel_marker_desc = "Mark Expel Magic: Fel targets with {rt1}{rt2}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_fel_marker = "마법 방출: 악마 징표 설정"
+	L.custom_off_fel_marker_desc = "마법 방출: 악마의 대상을 {rt1}{rt2}{rt3}의 징표로 설정합니다.\n|cFFFF0000징표 설정에서 문제가 발생하는 것을 막기 위해 공격대에서 오직 1명만 이 옵션을 활성화해야 합니다.|r"
 end
 
 L = BigWigs:NewBossLocale("Imperator Mar'gok", "koKR")
 if L then
-	--L.phase4_trigger = "You know nothing of the power you meddle with"
+	L.phase4_trigger = "마르고크, 넌 그 힘에 대해 아무것도 모른다."
 
-	--L.branded_say = "%s (%d) %dy"
-	--L.add_death_soon = "Add dying soon!"
+	L.branded_say = "%s (%d) %d미터"
+	L.add_death_soon = "쫄이 곧 죽습니다!"
 	--L.slow_fixate = "Slow+Fixate"
 
 	L.custom_off_fixate_marker = "시선집중 징표 설정"
 	L.custom_off_fixate_marker_desc = "고리안 전투마법사의 시선 집중의 대상을 {rt1}{rt2}의 징표로 설정합니다.\n|cFFFF0000징표 설정에서 문제가 발생하는 것을 막기 위해 공격대에서 오직 1명만 이 옵션을 활성화해야 합니다.|r"
 
-	--L.custom_off_branded_marker = "Branded Marker"
-	--L.custom_off_branded_marker_desc = "Mark Branded targets with {rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"	
+	L.custom_off_branded_marker = "낙인 징표 설정"
+	L.custom_off_branded_marker_desc = "낙인의 대상을 {rt3}{rt4}의 징표로 설정합니다.\n|cFFFF0000징표 설정에서 문제가 발생하는 것을 막기 위해 공격대에서 오직 1명만 이 옵션을 활성화해야 합니다.|r"	
 end
 
