@@ -47,9 +47,7 @@ end
 function mod:CallOfEarth(args)
 	self:Message(args.spellId, "Attention")
 	self:CDBar(args.spellId, 90.5)
-	 -- Actual channel is 20s but the CLEU event lags way behind the UNIT event.
-	 -- Unsure if that's how it's designed or if 100 players was affecting it.
-	self:Bar(args.spellId, 17.3, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, 20, CL.cast:format(args.spellName))
 end
 
 function mod:AcidBreath(args)
