@@ -139,7 +139,7 @@ function mod:OnEngage()
 	wipe(brandedMarks)
 	self:Bar(156238, 6)  -- Arcane Wrath
 	self:Bar(156467, 15) -- Destructive Resonance
-	self:Bar(156471, 25) -- Arcane Aberration
+	self:Bar(156471, 25, -9945, 156471) -- Arcane Aberration
 	self:Bar(158605, 34) -- Mark of Chaos
 	self:Bar(157349, 45) -- Force Nova
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
@@ -379,7 +379,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 	elseif spellId == 158012 or spellId == 157964 then -- Power of Fortification, Replication (Phase start)
 		self:CDBar(156238, 8)  -- Arcane Wrath
 		self:CDBar(156467, 18) -- Destructive Resonance
-		self:CDBar(156471, 28) -- Arcane Aberration
+		self:CDBar(156471, 28, -9945, 156471) -- Arcane Aberration
 		self:CDBar(158605, 38) -- Mark of Chaos
 		self:CDBar(157349, 48) -- Force Nova
 		if spellId ~= 157964 then -- Replication is the last phase
@@ -395,7 +395,7 @@ function mod:AcceleratedAssault(args)
 end
 
 function mod:ArcaneAberration(args)
-	self:Message(156471, "Urgent", not self:Healer() and "Info", CL.add_spawned)
+	self:Message(156471, "Attention", not self:Healer() and "Info", CL.add_spawned)
 	self:CDBar(156471, aberrationCount == 1 and 46 or 51, -9945, 156471) -- Arcane Aberration
 	aberrationCount = aberrationCount + 1
 	if args.spellId == 164299 or (self:Mythic() and phase == 2) then -- Displacing
@@ -486,7 +486,7 @@ do
 	}
 	function mod:DestructiveResonance(args)
 		local sound = self:Healer() or self:Damager() == "RANGED"
-		self:Message(156467, "Urgent", sound and "Warning")
+		self:Message(156467, "Important", sound and "Warning")
 		local t = not self:Mythic() and mineTimes[phase] and mineTimes[phase][mineCount] or 15.8
 		self:CDBar(156467, phase == 1 and 24 or t)
 		mineCount = mineCount + 1
