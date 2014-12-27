@@ -171,6 +171,7 @@ local function updateProximity()
 		local _, _, _, amount = UnitDebuff("player", mod:SpellName(brandedOnMe))
 		if not amount then
 			BigWigs:Print("For some reason the proximity check failed on you, tell a developer!")
+			self:ScheduleTimer(error, 0.5, "BigWigs: For some reason the proximity check failed on you, tell a developer!")
 		else
 			local jumpDistance = (brandedOnMe == 164005 and 0.75 or 0.5)^(amount - 1) * 200
 			if jumpDistance < 50 then
@@ -390,7 +391,7 @@ end
 
 function mod:AcceleratedAssault(args)
 	if args.amount > 5 and args.amount % 3 == 0 then -- at 5 it stacks every second
-		self:Message(args.spellId, "Attention", "Warning", CL.count:format(args.spellName, args.amount))
+		self:StackMessage(args.spellId, self:UnitName("boss1target"), args.amount, "Attention", "Warning")
 	end
 end
 
@@ -431,14 +432,17 @@ do
 					local _, _, _, a = UnitDebuff(dst, spl)
 					if a then
 						BigWigs:Print("The debuff scan worked after a delay, tell a developer!")
+						self:ScheduleTimer(error, 0.5, "BigWigs: The debuff scan worked after a delay, tell a developer!")
 					else
 						BigWigs:Print("The debuff scan failed even after a delay, tell a developer!")
+						self:ScheduleTimer(error, 0.5, "BigWigs: The debuff scan failed even after a delay, tell a developer!")
 					end
 				end,
 				0.4, self:Me(args.destGUID) and "player" or args.destName, args.spellName
 			)
 			local _, _, h, w = GetNetStats()
 			BigWigs:Print(("The debuff scan failed, tell a developer! Latency: %d/%d"):format(h, w))
+			self:ScheduleTimer(error, 0.5, ("BigWigs: The debuff scan failed, tell a developer! Latency: %d/%d"):format(h, w))
 			amount = 0 -- don't show count or distance
 		end
 		local isFortification = args.spellId == 164005 or (self:Mythic() and phase == 3)
@@ -449,7 +453,7 @@ do
 			self:TargetBar(156225, 4, args.destName)
 			if not self:LFR() then
 				local text = self:SpellName(156225)
-				if amount > 0 and jumpDistance < 50 then
+				if amount > 0 and jumpDistance < 100 then
 					text = L.branded_say:format(text, amount, jumpDistance)
 				elseif amount > 1 then
 					text = CL.count:format(text, amount)
