@@ -41,7 +41,7 @@ function mod:GetOptions()
 		{156151, "TANK_HEALER"}, -- The Tenderizer
 		156157, -- Cleave
 		156152, -- Gushing Wounds
-		{-8860, "PROXIMITY"}, -- Bounding Cleave
+		-8860, -- Bounding Cleave
 		"frenzy",
 		"berserk",
 		"bosskill"
@@ -71,7 +71,7 @@ function mod:OnEngage()
 	self:Bar(156151, 7) -- Tenderizer
 	self:Bar(-8860, 60) -- Bounding Cleave
 	if self:Mythic() then
-		self:Bar(-10228, 18, CL.add, "spell_shadow_corpseexplode")
+		self:Bar(-10228, 18, L.adds_multiple:format(1), "spell_shadow_corpseexplode")
 	end
 	if not self:LFR() then
 		self:Berserk(self:Mythic() and 240 or 300)
@@ -88,7 +88,7 @@ do
 	function mod:AddSpawn()
 		local t = GetTime()
 		if t-prev > 5 then
-			-- every four waves adds another add: 3x1, 4x2, 4x3 (might cap/reset, my logs only get to 190s or so)
+			-- every four waves adds another add: 3x1, 4x2, 4x3, etc
 			local num = floor(addCount / 4) + 1
 			self:Message(-10228, "Attention", nil, CL.spawning:format(L.adds_multiple:format(num)), "spell_shadow_corpseexplode")
 			addCount = addCount + 1
@@ -119,12 +119,6 @@ function mod:BoundingCleave(_, spellName, _, _, spellId)
 		self:Bar(-8860, frenzied and 30 or 60) -- Bounding Cleave
 		self:CDBar(156157, frenzied and 5 or 8) -- Cleave
 		self:CDBar(156151, 17) -- Tenderizer
-
-		local _, _, _, stacks = UnitDebuff("player", self:SpellName(156152)) -- Gushing Wounds
-		if stacks and stacks > 3 then
-			self:OpenProximity(-8860, 10) -- XXX no idea on clump size, 10yds should be safe
-			self:ScheduleTimer("CloseProximity", frenzied and 5 or 8, -8860)
-		end
 	end
 end
 
