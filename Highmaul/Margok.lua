@@ -171,7 +171,7 @@ local function updateProximity()
 		local _, _, _, amount = UnitDebuff("player", mod:SpellName(brandedOnMe))
 		if not amount then
 			BigWigs:Print("For some reason the proximity check failed on you, tell a developer!")
-			self:ScheduleTimer(error, 0.5, "BigWigs: For some reason the proximity check failed on you, tell a developer!")
+			mod:ScheduleTimer(error, 0.5, "BigWigs: For some reason the proximity check failed on you, tell a developer!")
 		else
 			local jumpDistance = (brandedOnMe == 164005 and 0.75 or 0.5)^(amount - 1) * 200
 			if jumpDistance < 50 then
