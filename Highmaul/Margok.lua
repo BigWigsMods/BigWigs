@@ -157,10 +157,7 @@ local function updateProximity()
 			mod:OpenProximity(165595, 8)
 		elseif #gazeTargets > 0 then
 			mod:OpenProximity(165595, 8, gazeTargets)
-		else
-			mod:CloseProximity(165595)
 		end
-		return
 	end
 
 	-- mark of chaos > fixate > branded > nova
@@ -200,13 +197,14 @@ local function stopBars(self)
 	self:StopBar(-9945)  -- Arcane Aberration
 	self:StopBar(158605) -- Mark of Chaos
 	self:StopBar(157349) -- Force Nova
+	-- XXX replicatingNova could be open for some extra amount of time
 end
 
 function mod:Phase4()
 	self:ScheduleTimer(stopBars, 10, self)
 	phase = phase + 1
 	nightCount = 1
-	gazeOnMe = true
+	gazeOnMe = nil
 	wipe(gazeTargets)
 	self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
 	--self:CDBar("adds", 32) -- Night-Twisted adds (repeating timer)
@@ -314,23 +312,30 @@ do -- GazeOfTheAbyss
 	end
 
 	function mod:GazeOfTheAbyssRemoved(args)
+		tDeleteItem(gazeTargets, args.destName)
 		if self:Me(args.destGUID) then
 			gazeOnMe = nil
 			self:StopBar(args.spellId, args.destName)
 			self:CancelTimer(timer)
 			self:CloseProximity(args.spellId)
+		elseif #gazeTargets == 0 and not gazeOnMe then
+			self:CloseProximity(args.spellId)
 		end
-		tDeleteItem(gazeTargets, args.destName)
 		updateProximity()
 	end
 
 	function mod:GazeClosestApplied(args)
+		if self:Me(args.destGUID) and gazeOnMe then return end
+
 		tDeleteItem(gazeTargets, args.destName)
+		if #gazeTargets == 0 and not gazeOnMe then
+			self:CloseProximity(args.spellId)
+		end
 		updateProximity()
 	end
 
 	function mod:GazeClosestRemoved(args)
-		if checkDebuff(args.destName, 165595) and not tContains(gazeTargets, args.destName) then -- the explody debuff
+		if not self:Me(args.destGUID) and checkDebuff(args.destName, 165595) and not tContains(gazeTargets, args.destName) then -- the explody debuff
 			gazeTargets[#gazeTargets + 1] = args.destName
 			updateProximity()
 		end
@@ -520,7 +525,7 @@ do
 			self:Bar(157349, 10.5, args.spellName)
 			self:ScheduleTimer("Bar", 8, 157349, 10.5, args.spellName)
 		elseif args.spellId == 164240 or (self:Mythic() and phase == 1) then -- Replication (aoe damage on hit)
-			replicatingNova = self:ScheduleTimer(replicatingNovaStop, 8) -- XXX how long should the proximity be open?
+			replicatingNova = self:ScheduleTimer(replicatingNovaStop, (self:Mythic() and phase == 3) and 26 or 8) -- keep it open longer for fortification+replication
 			updateProximity()
 		end
 		novaCount = novaCount + 1
