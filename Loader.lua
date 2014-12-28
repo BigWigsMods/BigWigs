@@ -457,13 +457,19 @@ do
 	local L = GetLocale()
 	if L == "ptBR" then
 		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Brazilian Portuguese (ptBR)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
+	elseif L == "zhTW" then
+		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Traditional Chinese (zhTW)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
+	elseif L == "ruRU" then
+		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Russian (ruRU)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
+	elseif L == "itIT" then
+		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Italian (itIT)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
 	end
 
 	CTimerAfter(11, function()
-		local _, _, _, _, _, _, year = GetAchievementInfo(8482) -- Mythic Garrosh
-		if year == 13 and (L == "enUS" or L == "enGB") then
-			sysprint("We're looking for a new end-game raider to join our developer team! See [goo.gl/aajTfo] for more info.")
-		end
+		--local _, _, _, _, _, _, year = GetAchievementInfo(8482) -- Mythic Garrosh
+		--if year == 13 and (L == "enUS" or L == "enGB") then
+		--	sysprint("We're looking for a new end-game raider to join our developer team! See [goo.gl/aajTfo] for more info.")
+		--end
 		for _, msg in next, delayedMessages do
 			sysprint(msg)
 		end

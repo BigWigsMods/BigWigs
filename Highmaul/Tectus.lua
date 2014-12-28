@@ -20,14 +20,6 @@ local marked = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	--L.pillar_trigger = "RISE, MOUNTAINS!"
-	L.earthwarper_trigger1 = "Yjj'rmr" -- Yjj'rmr... Xzzolos...
-	L.earthwarper_trigger2 = "Yes, Tectus" -- Yes, Tectus. Bend to... our master's... will....
-	L.earthwarper_trigger3 = "You do not understand!" -- You do not understand! This one must not....
-	L.berserker_trigger1 = "MASTER!" -- MASTER! I COME FOR YOU!
-	L.berserker_trigger2 = "Kral'ach" --Kral'ach.... The darkness speaks.... A VOICE!
-	L.berserker_trigger3 = "Graaagh!" --Graaagh! KAHL...  AHK... RAAHHHH!
-
 	L.adds = CL.adds
 	L.adds_desc = "Timers for when new adds enter the fight."
 
@@ -35,12 +27,8 @@ if L then
 	L.custom_off_barrage_marker_desc = "Marks targets of Crystalline Barrage with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
 	L.custom_off_barrage_marker_icon = 1
 
-	L.tectus = "Tectus"
 	L.shard = "Shard"
 	L.motes = "Motes"
-
-	L.earthwarper_icon = "spell_shadow_raisedead" -- there's no pale orcish spell icons :(
-	L.berserker_icon = "ability_warrior_endlessrage" -- angry orc
 end
 L = mod:GetLocale()
 
@@ -81,22 +69,22 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "TectonicUpheaval", 162475)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Split", "boss1", "boss2", "boss3")
 	-- Earthwarper
-	self:Yell("Earthwarper", L.earthwarper_trigger1, L.earthwarper_trigger2, L.earthwarper_trigger3)
 	self:Log("SPELL_CAST_START", "GiftOfEarth", 162894)
 	self:Log("SPELL_AURA_APPLIED", "Petrification", 162892)
 	self:Log("SPELL_CAST_START", "EarthenFlechettes", 162968)
 	self:Log("SPELL_DAMAGE", "EarthenFlechettesDamage", 162968)
 	self:Log("SPELL_MISSED", "EarthenFlechettesDamage", 162968)
 	-- Berserker
-	self:Yell("Berserker", L.berserker_trigger1, L.berserker_trigger2, L.berserker_trigger3)
 	self:Log("SPELL_CAST_START", "RavingAssault", 163312)
 end
 
 function mod:OnEngage()
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "NewAdd")
+
 	wipe(marked)
 	--self:CDBar(162346, 6) -- Crystalline Barrage
-	self:CDBar("adds", 11, -10061, L.earthwarper_icon) -- Earthwarper
-	self:CDBar("adds", 21, -10062, L.berserker_icon) -- Berserker
+	self:CDBar("adds", 11, -10061, "spell_shadow_raisedead") -- Earthwarper
+	self:CDBar("adds", 21, -10062, "ability_warrior_endlessrage") -- Berserker
 
 	if not self:LFR() then
 		self:Berserk(self:Mythic() and 480 or 600)
@@ -168,7 +156,7 @@ end
 
 do
 	local prev = 0
-	local names = { [78948] = L.tectus, [80551] = L.shard, [80557] = L.motes }
+	local names = { [78948] = mod.displayName, [80551] = L.shard, [80557] = L.motes }
 	function mod:TectonicUpheaval(args)
 		local t = GetTime()
 		local id = self:MobId(args.sourceGUID)
@@ -190,11 +178,17 @@ end
 
 -- Adds
 
-function mod:Earthwarper(args)
-	self:Message("adds", "Attention", "Info", -10061, false) -- Night-Twisted Earthwarper
-	self:CDBar("adds", 41, -10061, L.earthwarper_icon)
-	self:CDBar(162894, 10) -- Gift of Earth
-	self:CDBar(162968, 15) -- Earthen Flechettes
+function mod:NewAdd(event, msg, unit)
+	if unit == self:SpellName(-10061) then -- Night-Twisted Earthwarper
+		self:Message("adds", "Attention", "Info", -10061, false)
+		self:CDBar("adds", 41, -10061, "spell_shadow_raisedead")
+		self:CDBar(162894, 10) -- Gift of Earth
+		self:CDBar(162968, 15) -- Earthen Flechettes
+	elseif unit == self:SpellName(-10062) then -- Night-Twisted Berserker
+		self:Message("adds", "Attention", "Info", -10062, false)
+		self:CDBar("adds", 41, -10062, "ability_warrior_endlessrage")
+		self:CDBar(163312, 13) -- Raving Assault (~10s + 3s cast)
+	end
 end
 
 function mod:GiftOfEarth(args)
@@ -220,12 +214,6 @@ do
 			prev = t
 		end
 	end
-end
-
-function mod:Berserker(args)
-	self:Message("adds", "Attention", "Info", -10062, false)
-	self:CDBar("adds", 41, -10062, L.berserker_icon)
-	self:CDBar(163312, 13) -- Raving Assault (~10s + 3s cast)
 end
 
 function mod:RavingAssault(args)
