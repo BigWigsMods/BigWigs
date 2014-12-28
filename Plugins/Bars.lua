@@ -281,12 +281,12 @@ do
 		bd:SetBackdrop(backdrop)
 
 		if C then
-			bd:SetBackdropColor(unpack(C.media.backdropcolor))
-			bd:SetBackdropBorderColor(unpack(C.media.bordercolor))
+			bd:SetBackdropColor(unpack(C.Medias.BackdropColor))
+			bd:SetBackdropBorderColor(unpack(C.Medias.BorderColor))
 			bd:SetOutside(bar)
 		else
 			bd:SetBackdropColor(0.1,0.1,0.1,0.8)
-			bd:SetBackdropBorderColor(0.6,0.6,0.6)
+			bd:SetBackdropBorderColor(0.5,0.5,0.5)
 			bd:ClearAllPoints()
 			bd:SetPoint("TOPLEFT", bar, "TOPLEFT", -2, 2)
 			bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 2, -2)
