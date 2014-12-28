@@ -633,7 +633,7 @@ do
 				end
 			end)
 
-			self.LFG_PROPOSAL_SHOW = function() timeLeft = GetTime() + 40 end
+			self.LFG_PROPOSAL_SHOW = function() prev = GetTime() + 40 end
 		end
 	end
 end
