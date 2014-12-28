@@ -131,7 +131,7 @@ do
 	function mod:Intermission(unit, spellName, _, _, spellId)
 		if spellId == 160734 then -- Vulnerability
 			self:Message(spellId, "Positive", "Long", CL.removed:format(self:SpellName(156803))) -- Nullification Barrier removed!
-			self:Bar(spellId, 20)
+			self:Bar(spellId, 20) -- Vulnerability
 			self:StopBar(161328) -- Suppression Field
 			self:StopBar(162186) -- Expel Magic: Arcane
 			self:StopBar(172747) -- Expel Magic: Frost
@@ -260,14 +260,14 @@ end
 do
 	local prev = 0
 	function mod:OverwhelmingEnergy(args)
-		if self:Me(args.destGUID) and UnitPower("player", 10) > 0 then -- check alternate power, too
-			self:Message(161612, "Positive", "Warning", CL.count:format(args.spellName, ballCount+1)) -- green to keep it different looking
-		end
 		local t = GetTime()
 		if t-prev > 10 then
 			self:StopBar(L.overwhelming_energy_bar:format(ballCount))
 			self:StopBar(L.dominating_power_bar:format(ballCount))
 			ballCount = ballCount + 1
+			if UnitPower("player", 10) > 0 then -- has alternate power (soaking)
+				self:Message(161612, "Positive", "Warning", CL.count:format(args.spellName, ballCount)) -- green to keep it different looking
+			end
 			nextBall = t + 30
 			if self:Mythic() and nextMC-t < 35 then -- XXX still worried about these getting out of sync
 				nextMC = nextBall
