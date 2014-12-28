@@ -116,6 +116,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "NetherEnergy", 178468)
 	self:Yell("Phase4", L.phase4_trigger)
 	self:Log("SPELL_CAST_START", "GlimpseOfMadness", 165243)
+	self:Log("SPELL_CAST_START", "DarkStar", 178607)
 	self:Log("SPELL_CAST_START", "EnvelopingNight", 165876)
 	self:Log("SPELL_AURA_APPLIED", "InfiniteDarkness", 165102)
 	self:Log("SPELL_AURA_APPLIED", "Entropy", 165116)
@@ -193,13 +194,22 @@ end
 
 -- Mythic
 
+local function stopBars(self)
+	self:StopBar(156238) -- Arcane Wrath
+	self:StopBar(156467) -- Destructive Resonance
+	self:StopBar(-9945)  -- Arcane Aberration
+	self:StopBar(158605) -- Mark of Chaos
+	self:StopBar(157349) -- Force Nova
+end
+
 function mod:Phase4()
+	self:ScheduleTimer(stopBars, 10, self)
 	phase = phase + 1
 	nightCount = 1
 	gazeOnMe = true
 	wipe(gazeTargets)
 	self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
-	--self:CDBar("adds", 30) -- Night-Twisted adds (repeating timer)
+	--self:CDBar("adds", 32) -- Night-Twisted adds (repeating timer)
 	self:CDBar(165102, 47) -- Infinite Darkness
 	self:CDBar(165243, 53) -- Glimpse of Madness
 	self:CDBar(178607, 64) -- Dark Star
@@ -290,10 +300,10 @@ do -- GazeOfTheAbyss
 			if args.amount and args.amount > 2 then
 				self:PlaySound(args.spellId, "Warning")
 			end
-			self:TargetBar(args.spellId, 10, args.destName)
+			self:TargetBar(args.spellId, 15, args.destName)
 
 			self:CancelTimer(timer)
-			timeLeft = 10
+			timeLeft = 15
 			timer = self:ScheduleRepeatingTimer(sayCountdown, 1, self)
 
 			updateProximity()
@@ -523,7 +533,7 @@ do
 			self:Message(158605, "Personal", "Alarm", CL.casting:format(CL.you:format(self:SpellName(158605))))
 			self:Flash(158605)
 		else
-			self:Message(158605, "Urgent", nil, CL.casting:format(CL.on:format(self:SpellName(158605), name)))
+			self:Message(158605, "Urgent", nil, CL.casting:format(self:SpellName(158605)))
 		end
 	end
 	function mod:MarkOfChaos(args)
