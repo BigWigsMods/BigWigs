@@ -277,7 +277,7 @@ do -- GazeOfTheAbyss
 		end
 	end
 
-	local timeLeft, timer = 10, nil
+	local timeLeft, timer = 15, nil
 	local function sayCountdown(self)
 		timeLeft = timeLeft - 1
 		if timeLeft < 5 then
@@ -522,8 +522,8 @@ do
 		self:Message(157349, "Urgent")
 		self:CDBar(157349, novaCount == 1 and 46 or 50)
 		if args.spellId == 164235 or (self:Mythic() and phase == 3) then -- Fortification (three novas)
-			self:Bar(157349, 10.5, args.spellName)
-			self:ScheduleTimer("Bar", 8, 157349, 10.5, args.spellName)
+			self:Bar(157349, 10.5, 164235) -- 164235 = Force Nova: Fortification
+			self:ScheduleTimer("Bar", 10.5, 157349, 8, 164235)
 		elseif args.spellId == 164240 or (self:Mythic() and phase == 1) then -- Replication (aoe damage on hit)
 			replicatingNova = self:ScheduleTimer(replicatingNovaStop, (self:Mythic() and phase == 3) and 26 or 8) -- keep it open longer for fortification+replication
 			updateProximity()
@@ -538,7 +538,7 @@ do
 			self:Message(158605, "Personal", "Alarm", CL.casting:format(CL.you:format(self:SpellName(158605))))
 			self:Flash(158605)
 		else
-			self:Message(158605, "Urgent", nil, CL.casting:format(self:SpellName(158605)))
+			self:Message(158605, "Urgent", nil, CL.casting:format(CL.on:format(self:SpellName(158605), name)))
 		end
 	end
 	function mod:MarkOfChaos(args)
