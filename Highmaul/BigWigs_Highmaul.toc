@@ -1,15 +1,15 @@
 ## Interface: 60000
 
 ## Title: Big Wigs [|cffeda55fHighmaul|r]
-## Title-deDE: Big Wigs [|cffeda55fHighmaul|r]
-## Title-esES: Big Wigs [|cffeda55fHighmaul|r]
-## Title-esMX: Big Wigs [|cffeda55fHighmaul|r]
+## Title-deDE: Big Wigs [|cffeda55fHochfels|r]
+## Title-esES: Big Wigs [|cffeda55fOgrópolis|r]
+## Title-esMX: Big Wigs [|cffeda55fOgrópolis|r]
 ## Title-frFR: Big Wigs [|cffeda55fCognefort|r]
 ## Title-ruRU: Big Wigs [|cffeda55fВерховный Молот|r]
 ## Title-zhCN: Big Wigs [|cffeda55f悬槌堡|r]
 ## Title-zhTW: Big Wigs [|cffeda55f天槌|r]
 ## Title-itIT: Big Wigs [|cffeda55fAltomaglio|r]
-## Title-ptBR: Big Wigs [|cffeda55fHighmaul|r]
+## Title-ptBR: Big Wigs [|cffeda55fMalho Imponente|r]
 ## Title-koKR: Big Wigs [|cffeda55fHighmaul|r]
 ## Notes: Big Wigs Modules for Highmaul.
 ## Notes-deDE: Big Wigs Modules for Highmaul.
