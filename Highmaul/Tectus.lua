@@ -27,6 +27,7 @@ if L then
 	L.custom_off_barrage_marker_desc = "Marks targets of Crystalline Barrage with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
 	L.custom_off_barrage_marker_icon = 1
 
+	L.tectus = EJ_GetEncounterInfo(1195)
 	L.shard = "Shard"
 	L.motes = "Motes"
 end
@@ -39,7 +40,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Night-Twisted Earthwarper ]]--
-		{162894, "TANK"}, -- Gift of Earth
+		{162894}, -- Gift of Earth
 		{162892, "TANK"}, -- Petrification
 		162968, -- Earthen Flechettes
 		--[[ Night-Twisted Berserker ]]--
@@ -156,7 +157,7 @@ end
 
 do
 	local prev = 0
-	local names = { [78948] = mod.displayName, [80551] = L.shard, [80557] = L.motes }
+	local names = { [78948] = L.tectus, [80551] = L.shard, [80557] = L.motes }
 	function mod:TectonicUpheaval(args)
 		local t = GetTime()
 		local id = self:MobId(args.sourceGUID)
