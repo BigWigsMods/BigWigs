@@ -285,7 +285,7 @@ do
 			bd:SetBackdropBorderColor(unpack(C.Medias.BorderColor))
 			bd:SetOutside(bar)
 		else
-			bd:SetBackdropColor(0.1,0.1,0.1,0.8)
+			bd:SetBackdropColor(0.1,0.1,0.1)
 			bd:SetBackdropBorderColor(0.5,0.5,0.5)
 			bd:ClearAllPoints()
 			bd:SetPoint("TOPLEFT", bar, "TOPLEFT", -2, 2)
@@ -329,7 +329,7 @@ do
 
 	barStyles.TukUI = {
 		apiVersion = 1,
-		version = 2,
+		version = 3,
 		GetSpacing = function(bar) return 7 end,
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
