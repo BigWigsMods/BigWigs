@@ -583,8 +583,8 @@ end
 do
 	local count = 1
 	local function nextAdd(self)
-		count = count + 1
 		self:Message("volatile_anomaly", "Attention", "Info", ("%s %d/6"):format(self:SpellName(L.volatile_anomaly), count), L.volatile_anomaly_icon)
+		count = count + 1
 		if count < 6 then
 			self:Bar("volatile_anomaly", 12, CL.count:format(self:SpellName(L.volatile_anomaly), count+1), L.volatile_anomaly_icon)
 			self:ScheduleTimer(nextAdd, 12, self)
@@ -598,7 +598,7 @@ do
 		count = 1
 		self:ScheduleTimer(nextAdd, 2, self)
 		if not first then
-			self:ScheduleTimer("Message", 4, "stages", "Neutral", "Info", -9921, false) -- Gorian Reaver
+			self:ScheduleTimer("Message", 5, "stages", "Neutral", "Info", -9921, false) -- Gorian Reaver
 			self:CDBar(158563, 29) -- Kick to the Face
 		end
 	end
