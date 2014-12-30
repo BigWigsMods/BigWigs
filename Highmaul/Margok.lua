@@ -16,6 +16,7 @@ local phase = 1
 local mineCount, novaCount, aberrationCount, nightCount = 1, 1, 1, 1
 local addDeathWarned = nil
 local markOfChaosTarget, brandedOnMe, fixateOnMe, replicatingNova, gazeOnMe = nil, nil, nil, nil, nil
+local novaTimer = nil
 local fixateMarks, brandedMarks, gazeTargets = {}, {}, {}
 
 --------------------------------------------------------------------------------
@@ -197,6 +198,8 @@ local function stopBars(self)
 	self:StopBar(CL.count:format(self:SpellName(-9945), aberrationCount))  -- Arcane Aberration
 	self:StopBar(158605) -- Mark of Chaos
 	self:StopBar(157349) -- Force Nova
+	self:StopBar(164235) -- Force Nova: Fortification
+	self:CancelTimer(novaTimer)
 	-- XXX replicatingNova could be open for some extra amount of time
 end
 
@@ -369,7 +372,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 			self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
 		end
-	elseif mobId == 77879 and not addDeathWarned and hp < 30 then -- Displacement
+	elseif mobId == 77879 and not addDeathWarned and hp < 30 then -- Displacing Arcane Aberration
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 		self:Message(156471, "Attention", "Info", L.add_death_soon)
 		addDeathWarned = true
@@ -388,9 +391,12 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		else
 			self:StopBar(156238) -- Arcane Wrath
 			self:StopBar(156467) -- Destructive Resonance
-			self:StopBar(156471) -- Arcane Aberration
+			self:StopBar(CL.count:format(self:SpellName(-9945), aberrationCount)) -- Arcane Aberration
 			self:StopBar(158605) -- Mark of Chaos
 			self:StopBar(157349) -- Force Nova
+			self:StopBar(164235) -- Force Nova: Fortification
+			self:CancelTimer(novaTimer)
+			self:Bar("volatile_anomaly", spellId == 164751 and 9 or 12, CL.count:format(self:SpellName(L.volatile_anomaly), 1), L.volatile_anomaly_icon)
 		end
 	elseif spellId == 158012 or spellId == 157964 then -- Power of Fortification, Replication (Phase start)
 		self:CDBar(156238, 8)  -- Arcane Wrath
@@ -524,7 +530,7 @@ do
 		self:CDBar(157349, novaCount == 1 and 46 or 50)
 		if args.spellId == 164235 or (self:Mythic() and phase == 3) then -- Fortification (three novas)
 			self:Bar(157349, 10.5, 164235) -- 164235 = Force Nova: Fortification
-			self:ScheduleTimer("Bar", 10.5, 157349, 8, 164235)
+			novaTimer = self:ScheduleTimer("Bar", 10.5, 157349, 8, 164235)
 		elseif args.spellId == 164240 or (self:Mythic() and phase == 1) then -- Replication (aoe damage on hit)
 			replicatingNova = self:ScheduleTimer(replicatingNovaStop, (self:Mythic() and phase == 3) and 26 or 8) -- keep it open longer for fortification+replication
 			updateProximity()
@@ -575,11 +581,11 @@ end
 -- Intermission
 
 do
-	local count, maxCount = 0, 0
+	local count = 1
 	local function nextAdd(self)
 		count = count + 1
-		self:Message("volatile_anomaly", "Attention", "Info", ("%s %d/%d"):format(self:SpellName(L.volatile_anomaly), count, maxCount), L.volatile_anomaly_icon)
-		if count < maxCount then
+		self:Message("volatile_anomaly", "Attention", "Info", ("%s %d/6"):format(self:SpellName(L.volatile_anomaly), count), L.volatile_anomaly_icon)
+		if count < 6 then
 			self:Bar("volatile_anomaly", 12, CL.count:format(self:SpellName(L.volatile_anomaly), count+1), L.volatile_anomaly_icon)
 			self:ScheduleTimer(nextAdd, 12, self)
 		end
@@ -589,11 +595,10 @@ do
 		local first = args.spellId == 174057
 		self:Message("stages", "Neutral", nil, ("%d%% - %s"):format(self:Mythic() and (first and 66 or 33) or (first and 55 or 25), CL.intermission), false)
 		self:Bar("stages", first and 65 or 60, CL.intermission, "spell_arcane_blast")
-		count, maxCount = 0, first and 5 or 4
-		self:Bar("volatile_anomaly", 14, CL.count:format(self:SpellName(L.volatile_anomaly), 1), L.volatile_anomaly_icon)
-		self:ScheduleTimer(nextAdd, 14, self)
+		count = 1
+		self:ScheduleTimer(nextAdd, 2, self)
 		if not first then
-			self:ScheduleTimer("Message", 14, "stages", "Neutral", "Info", -9921, false) -- Gorian Reaver
+			self:ScheduleTimer("Message", 4, "stages", "Neutral", "Info", -9921, false) -- Gorian Reaver
 			self:CDBar(158563, 29) -- Kick to the Face
 		end
 	end
