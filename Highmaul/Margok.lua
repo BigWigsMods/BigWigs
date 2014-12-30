@@ -583,10 +583,10 @@ end
 do
 	local count = 1
 	local function nextAdd(self)
-		self:Message("volatile_anomaly", "Attention", "Info", ("%s %d/6"):format(self:SpellName(L.volatile_anomaly), count), L.volatile_anomaly_icon)
 		count = count + 1
+		self:DelayedMessage("volatile_anomaly", 12, "Attention", ("%s %d/6"):format(self:SpellName(L.volatile_anomaly), count), L.volatile_anomaly_icon, "Info")
+		self:Bar("volatile_anomaly", 12, CL.count:format(self:SpellName(L.volatile_anomaly), count), L.volatile_anomaly_icon)
 		if count < 6 then
-			self:Bar("volatile_anomaly", 12, CL.count:format(self:SpellName(L.volatile_anomaly), count+1), L.volatile_anomaly_icon)
 			self:ScheduleTimer(nextAdd, 12, self)
 		end
 	end
@@ -596,6 +596,8 @@ do
 		self:Message("stages", "Neutral", nil, ("%d%% - %s"):format(self:Mythic() and (first and 66 or 33) or (first and 55 or 25), CL.intermission), false)
 		self:Bar("stages", first and 65 or 60, CL.intermission, "spell_arcane_blast")
 		count = 1
+		self:DelayedMessage("volatile_anomaly", 2, "Attention", ("%s %d/6"):format(self:SpellName(L.volatile_anomaly), count), L.volatile_anomaly_icon, "Info")
+		-- bar is started in :Phases
 		self:ScheduleTimer(nextAdd, 2, self)
 		if not first then
 			self:ScheduleTimer("Message", 5, "stages", "Neutral", "Info", -9921, false) -- Gorian Reaver
