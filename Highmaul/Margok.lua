@@ -140,7 +140,7 @@ function mod:OnEngage()
 	wipe(brandedMarks)
 	self:Bar(156238, 6)  -- Arcane Wrath
 	self:Bar(156467, 15) -- Destructive Resonance
-	self:Bar(156471, 25, -9945, 156471) -- Arcane Aberration
+	self:Bar(156471, 25, CL.count:format(self:SpellName(-9945), aberrationCount), 156471) -- Arcane Aberration
 	self:Bar(158605, 34) -- Mark of Chaos
 	self:Bar(157349, 45) -- Force Nova
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
@@ -194,7 +194,7 @@ end
 local function stopBars(self)
 	self:StopBar(156238) -- Arcane Wrath
 	self:StopBar(156467) -- Destructive Resonance
-	self:StopBar(-9945)  -- Arcane Aberration
+	self:StopBar(CL.count:format(self:SpellName(-9945), aberrationCount))  -- Arcane Aberration
 	self:StopBar(158605) -- Mark of Chaos
 	self:StopBar(157349) -- Force Nova
 	-- XXX replicatingNova could be open for some extra amount of time
@@ -210,8 +210,8 @@ function mod:Phase4()
 	--self:CDBar("adds", 32) -- Night-Twisted adds (repeating timer)
 	self:CDBar(165102, 47) -- Infinite Darkness
 	self:CDBar(165243, 53) -- Glimpse of Madness
-	self:CDBar(178607, 64) -- Dark Star
-	self:CDBar(165876, 90, CL.count:format(self:SpellName(165876), nightCount)) -- Enveloping Night
+	self:CDBar(178607, 63) -- Dark Star
+	self:CDBar(165876, 89, CL.count:format(self:SpellName(165876), nightCount)) -- Enveloping Night
 	self:DelayedMessage(165876, 80, "Important", CL.soon:format(CL.count:format(self:SpellName(165876), nightCount)), false, "Info")
 end
 
@@ -232,15 +232,15 @@ do
 end
 
 function mod:Entropy(args)
-	if self:Me(args.destName) then
-		local text = args.amount and args.amount > 0 and ("%s +%d"):format(args.spellName, args.amount) or nil -- XXX shooould have an amount
+	if self:Me(args.destGUID) then
+		local text = args.amount and args.amount > 0 and ("%s +%s"):format(args.spellName, BreakUpLargeNumbers(args.amount)) or nil -- XXX shooould have an amount
 		self:Message(args.spellId, "Positive", nil, text)
 		self:Bar(args.spellId, 10) -- XXX just refresh the bar, might not be useful!
 	end
 end
 
 function mod:EntropyRemoved(args)
-	if self:Me(args.destName) and not UnitDebuff("player", args.spellName) then
+	if self:Me(args.destGUID) and not UnitDebuff("player", args.spellName) then
 		-- all gone
 		self:StopBar(args.spellId)
 	end
@@ -395,7 +395,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 	elseif spellId == 158012 or spellId == 157964 then -- Power of Fortification, Replication (Phase start)
 		self:CDBar(156238, 8)  -- Arcane Wrath
 		self:CDBar(156467, 18) -- Destructive Resonance
-		self:CDBar(156471, 28, -9945, 156471) -- Arcane Aberration
+		self:CDBar(156471, 28, CL.count:format(self:SpellName(-9945), aberrationCount), 156471) -- Arcane Aberration
 		self:CDBar(158605, 38) -- Mark of Chaos
 		self:CDBar(157349, 48) -- Force Nova
 		if spellId ~= 157964 then -- Replication is the last phase
@@ -411,9 +411,10 @@ function mod:AcceleratedAssault(args)
 end
 
 function mod:ArcaneAberration(args)
-	self:Message(156471, "Attention", not self:Healer() and "Info", CL.add_spawned)
-	self:CDBar(156471, aberrationCount == 1 and 46 or 51, -9945, 156471) -- Arcane Aberration
+	self:StopBar(CL.count:format(self:SpellName(-9945), aberrationCount)) -- just to be safe
+	self:Message(156471, "Attention", not self:Healer() and "Info", CL.count:format(CL.add_spawned, aberrationCount))
 	aberrationCount = aberrationCount + 1
+	self:CDBar(156471, aberrationCount == 1 and 46 or 51, CL.count:format(self:SpellName(-9945), aberrationCount), 156471) -- Arcane Aberration
 	if args.spellId == 164299 or (self:Mythic() and phase == 2) then -- Displacing
 		addDeathWarned = nil
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss2")
