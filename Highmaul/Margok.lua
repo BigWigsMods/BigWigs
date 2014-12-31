@@ -166,17 +166,8 @@ local function updateProximity()
 	if replicatingNova then
 		mod:OpenProximity(157349, 4)
 	end
-	if brandedOnMe then
-		local _, _, _, amount = UnitDebuff("player", mod:SpellName(brandedOnMe))
-		if not amount then
-			BigWigs:Print("For some reason the proximity check failed on you, tell a developer!")
-			mod:ScheduleTimer(error, 0.5, "BigWigs: For some reason the proximity check failed on you, tell a developer!")
-		else
-			local jumpDistance = (brandedOnMe == 164005 and 0.75 or 0.5)^(amount - 1) * 200
-			if jumpDistance < 50 then
-				mod:OpenProximity(156225, max(5, jumpDistance))
-			end
-		end
+	if brandedOnMe and brandedOnMe < 40 then
+		mod:OpenProximity(156225, max(5, brandedOnMe))
 	end
 	if fixateOnMe then
 		mod:OpenProximity(157763, 8)
@@ -211,7 +202,7 @@ function mod:Phase4()
 	wipe(gazeTargets)
 	self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
 	--self:CDBar("adds", 32) -- Night-Twisted adds (repeating timer)
-	self:CDBar(165102, 47) -- Infinite Darkness
+	self:CDBar(165102, 46) -- Infinite Darkness
 	self:CDBar(165243, 53) -- Glimpse of Madness
 	self:CDBar(178607, 63) -- Dark Star
 	self:CDBar(165876, 89, CL.count:format(self:SpellName(165876), nightCount)) -- Enveloping Night
@@ -471,7 +462,6 @@ do
 		local jumpDistance = (isFortification and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
 
 		if self:Me(args.destGUID) then
-			brandedOnMe = isFortification and 164005 or args.spellId
 			self:TargetBar(156225, 4, args.destName)
 			if not self:LFR() then
 				local text = self:SpellName(156225)
@@ -482,7 +472,10 @@ do
 				end
 				self:Say(156225, text)
 			end
-			updateProximity()
+			if amount > 0 then
+				brandedOnMe = jumpDistance
+				updateProximity()
+			end
 		end
 		self:TargetMessage(156225, args.destName, "Attention", nil, amount > 0 and L.branded_say:format(self:SpellName(156225), amount, jumpDistance))
 
