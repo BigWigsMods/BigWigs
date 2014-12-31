@@ -216,7 +216,6 @@ do
 		scheduled = nil
 	end
 	function mod:InfiniteDarkness(args)
-		-- magic debuff on 3 players, causes Entropy when dispelled
 		list[#list + 1] = args.destName
 		if not scheduled then
 			self:CDBar(args.spellId, 62)
@@ -260,7 +259,7 @@ function mod:GlimpseOfMadness(args)
 end
 
 do -- GazeOfTheAbyss
-	-- i may be trying to be too clever here, but hopefully i over-engineered it enough to play nice
+	-- I may be trying to be too clever here, but hopefully I over-engineered it enough to play nice
 	-- only show the proximity for people that aren't targeted by an add (debuff will fall off)
 
 	-- debuff scanning because the two add debuffs have the same name :\
@@ -288,10 +287,8 @@ do -- GazeOfTheAbyss
 	function mod:GazeOfTheAbyssApplied(args)
 		if self:Me(args.destGUID) then
 			gazeOnMe = true
-			self:StackMessage(args.spellId, args.destName, args.amount, "Personal")
-			if args.amount and args.amount > 2 then
-				self:PlaySound(args.spellId, "Warning")
-			end
+			local amount = args.amount or 1
+			self:StackMessage(args.spellId, args.destName, amount, "Personal", amount > 2 and "Warning")
 			self:TargetBar(args.spellId, 15, args.destName)
 
 			self:CancelTimer(timer)
@@ -299,7 +296,7 @@ do -- GazeOfTheAbyss
 			timer = self:ScheduleRepeatingTimer(sayCountdown, 1, self)
 
 			updateProximity()
-		elseif not checkDebuff(args.destName, 176537) and not tContains(gazeTargets, args.destName) then -- no "closest" debuff and not currently tracked (failsafe)
+		elseif not checkDebuff(args.destName, 176537) and not tContains(gazeTargets, args.destName) then -- no "closest" debuff and not currently tracked
 			gazeTargets[#gazeTargets + 1] = args.destName
 			updateProximity()
 		end
@@ -319,7 +316,11 @@ do -- GazeOfTheAbyss
 	end
 
 	function mod:GazeClosestApplied(args)
-		if self:Me(args.destGUID) and gazeOnMe then return end
+		if self:Me(args.destGUID) then
+			--self:Message(165595, "Personal", "Alarm", "Glimpse targeting YOU!")
+			--self:Flash(165595)
+			if gazeOnMe then return end
+		end
 
 		tDeleteItem(gazeTargets, args.destName)
 		if #gazeTargets == 0 and not gazeOnMe then
@@ -329,7 +330,7 @@ do -- GazeOfTheAbyss
 	end
 
 	function mod:GazeClosestRemoved(args)
-		if not self:Me(args.destGUID) and checkDebuff(args.destName, 165595) and not tContains(gazeTargets, args.destName) then -- the explody debuff
+		if not self:Me(args.destGUID) and checkDebuff(args.destName, 165595) and not tContains(gazeTargets, args.destName) then -- check explody debuff
 			gazeTargets[#gazeTargets + 1] = args.destName
 			updateProximity()
 		end
@@ -427,7 +428,6 @@ end
 do
 	local scheduled = nil
 	local function mark()
-		-- custom_on so try and keep the marks in the same order (just in case)
 		sort(brandedMarks)
 		for index, name in ipairs(brandedMarks) do
 			SetRaidTarget(name, index + 2)
@@ -542,8 +542,8 @@ do
 		end
 	end
 	function mod:MarkOfChaos(args)
-		self:Bar(158605, 51)
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
+		self:Bar(158605, 51)
 	end
 end
 

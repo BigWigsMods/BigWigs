@@ -53,7 +53,7 @@ function mod:GetOptions()
 		161612, -- Overwhelming Energy
 		{161328, "FLASH", "SAY"}, -- Suppression Field
 		{162185, "PROXIMITY"}, -- Expel Magic: Fire
-		{162186, "TANK", "ICON", "FLASH", "SAY"}, -- Expel Magic: Arcane
+		{162186, "TANK", "ICON", "PROXIMITY", "FLASH", "SAY"}, -- Expel Magic: Arcane
 		{172747, "FLASH", "SAY"}, -- Expel Magic: Frost
 		{162184, "HEALER"}, -- Expel Magic: Shadow
 		"bosskill"
@@ -176,10 +176,19 @@ function mod:ExpelMagicShadow(args)
 	self:Message(args.spellId, "Attention", "Alert")
 end
 
-function mod:ExpelMagicArcaneStart(args)
-	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
-	nextArcane = GetTime() + 26.7
-	self:CDBar(args.spellId, 26.7)
+do
+	local function printTarget(self, name, guid)
+		if self:Me(guid) then
+			self:Message(162186, "Personal", "Warning", CL.casting:format(CL.you:format(self:SpellName(162186))))
+		else
+			self:Message(162186, "Urgent", "Warning", CL.casting:format(CL.on:format(self:SpellName(162186), name)))
+		end
+	end
+	function mod:ExpelMagicArcaneStart(args)
+		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
+		nextArcane = GetTime() + 26.7
+		self:CDBar(args.spellId, 26.7)
+	end
 end
 
 function mod:ExpelMagicArcaneApplied(args)
@@ -187,6 +196,7 @@ function mod:ExpelMagicArcaneApplied(args)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
+		self:OpenProximity(args.spellId, 5)
 	end
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, self:Tank())
 	self:TargetBar(args.spellId, 10, args.destName)
@@ -194,6 +204,13 @@ end
 
 function mod:ExpelMagicArcaneRemoved(args)
 	self:PrimaryIcon(args.spellId)
+	self:StopBar(args.spellId, args.destName)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
+		if UnitDebuff("player", self:SpellName(162185)) then -- Expel Magic: Fire
+			self:OpenProximity(162185, 5)
+		end
+	end
 end
 
 function mod:ExpelMagicFire(args)

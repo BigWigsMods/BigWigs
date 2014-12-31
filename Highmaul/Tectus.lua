@@ -67,6 +67,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "CrystallineBarrageRemoved", 162346)
 	self:Log("SPELL_PERIODIC_DAMAGE", "CrystallineBarrageDamage", 162370)
 	self:Log("SPELL_PERIODIC_MISSED", "CrystallineBarrageDamage", 162370)
+	self:Log("SPELL_ABSORBED", "CrystallineBarrageDamage", 162370)
 	self:Log("SPELL_CAST_START", "TectonicUpheaval", 162475)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Split", "boss1", "boss2", "boss3")
 	-- Earthwarper
