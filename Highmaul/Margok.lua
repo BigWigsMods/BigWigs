@@ -191,7 +191,12 @@ local function stopBars(self)
 	self:StopBar(157349) -- Force Nova
 	self:StopBar(164235) -- Force Nova: Fortification
 	self:CancelTimer(novaTimer)
-	-- XXX replicatingNova could be open for some extra amount of time
+	if replicatingNova then
+		self:CancelTimer(replicatingNova)
+		replicatingNova = nil
+		self:CloseProximity(157349)
+		updateProximity()
+	end
 end
 
 function mod:Phase4()
@@ -201,7 +206,7 @@ function mod:Phase4()
 	gazeOnMe = nil
 	wipe(gazeTargets)
 	self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
-	--self:CDBar("adds", 32) -- Night-Twisted adds (repeating timer)
+	--self:CDBar("adds", 32) -- Night-Twisted adds (30s repeating timer)
 	self:CDBar(165102, 46) -- Infinite Darkness
 	self:CDBar(165243, 53) -- Glimpse of Madness
 	self:CDBar(178607, 63) -- Dark Star
