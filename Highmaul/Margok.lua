@@ -444,6 +444,9 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		if spellId ~= 157964 or self:Mythic() then -- Replication is the last phase
 			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, unit)
 		end
+		if spellId == 157964 and self:Mythic() then
+			self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "Phase4")
+		end
 	end
 end
 
