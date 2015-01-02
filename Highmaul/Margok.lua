@@ -14,6 +14,7 @@ mod.engageId = 1705
 
 local phase = 1
 local mineCount, novaCount, aberrationCount, nightCount = 1, 1, 1, 1
+local p1times = {}
 local addDeathWarned = nil
 local markOfChaosTarget, brandedOnMe, fixateOnMe, replicatingNova, gazeOnMe = nil, nil, nil, nil, nil
 local novaTimer = nil
@@ -125,7 +126,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "KickToTheFace", 158563)
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED_DOSE", "NetherEnergy", 178468)
-	self:Yell("Phase4", L.phase4_trigger)
 	self:Log("SPELL_CAST_START", "GlimpseOfMadness", 165243)
 	self:Log("SPELL_CAST_START", "DarkStar", 178607)
 	self:Log("SPELL_CAST_START", "EnvelopingNight", 165876)
@@ -149,6 +149,15 @@ function mod:OnEngage()
 	addDeathWarned = nil
 	wipe(fixateMarks)
 	wipe(brandedMarks)
+	if not self:Mythic() then
+		-- doing too much of this shit! wtb self:AddBarTime(text, time)
+		local t = GetTime()
+		p1times[156238] = t + 6
+		p1times[156467] = t + 15
+		p1times[156471] = t + 25
+		p1times[158605] = t + 34
+		p1times[157349] = t + 45
+	end
 	self:Bar(156238, 6)  -- Arcane Wrath
 	self:Bar(156467, 15) -- Destructive Resonance
 	self:Bar(156471, 25, CL.count:format(self:SpellName(-9945), aberrationCount), 156471) -- Arcane Aberration
@@ -221,9 +230,14 @@ do
 		self:ScheduleTimer(nextAdd, 30, self) -- could use ScheduleRepeatingTimer, but the first time had to be special and ruin it :(
 	end
 
-	function mod:Phase4()
+	local chogall = EJ_GetEncounterInfo(167) -- from Bastion of Twilight
+	function mod:Phase4(event, msg, unit)
+		if unit ~= chogall then return end
+		self:UnregisterEvent(event)
+		if phase == 4 then return end -- y u no unregistered
+
 		self:ScheduleTimer(startPhase, 10, self)
-		phase = phase + 1
+		phase = 4
 		nightCount = 1
 		gazeOnMe = nil
 		wipe(gazeTargets)
@@ -396,12 +410,19 @@ end
 function mod:Phases(unit, spellName, _, _, spellId)
 	if spellId == 164336 or spellId == 164751 or spellId == 164810 then -- Teleport to Displacement, Fortification, Replication (Phase end)
 		phase = phase + 1
-		mineCount, novaCount, aberrationCount = 1, 1, 1
+		mineCount, novaCount = 1, 1
 
 		if spellId == 164336 then -- no intermission for Displacement
-			 -- XXX first transform messes with timers, typically adding ~10s
 			self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
 			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, unit)
+			 -- first power just pauses the cds for ~10s
+			local t = GetTime()
+			self:CDBar(156238, p1times[156238]+10-t) -- Arcane Wrath
+			self:CDBar(156467, p1times[156467]+10-t) -- Destructive Resonance
+			self:CDBar(156471, p1times[156471]+10-t, CL.count:format(self:SpellName(-9945), aberrationCount), 156471) -- Arcane Aberration
+			self:CDBar(158605, p1times[158605]+10-t) -- Mark of Chaos
+			self:CDBar(157349, p1times[157349]+10-t) -- Force Nova
+			wipe(p1times)
 		else
 			self:StopBar(156238) -- Arcane Wrath
 			self:StopBar(156467) -- Destructive Resonance
@@ -410,6 +431,8 @@ function mod:Phases(unit, spellName, _, _, spellId)
 			self:StopBar(157349) -- Force Nova
 			self:StopBar(164235) -- Force Nova: Fortification
 			self:CancelTimer(novaTimer)
+
+			aberrationCount = 1
 			self:Bar("volatile_anomaly", spellId == 164751 and 9 or 12, CL.count:format(self:SpellName(L.volatile_anomaly), 1), L.volatile_anomaly_icon)
 		end
 	elseif spellId == 158012 or spellId == 157964 then -- Power of Fortification, Replication (Phase start)
@@ -434,10 +457,13 @@ function mod:ArcaneAberration(args)
 	self:StopBar(CL.count:format(self:SpellName(-9945), aberrationCount)) -- just to be safe
 	self:Message(156471, "Attention", not self:Healer() and "Info", CL.count:format(CL.add_spawned, aberrationCount))
 	aberrationCount = aberrationCount + 1
-	self:CDBar(156471, aberrationCount == 1 and 46 or 51, CL.count:format(self:SpellName(-9945), aberrationCount), 156471) -- Arcane Aberration
+	self:CDBar(156471, aberrationCount == 2 and 46 or 51, CL.count:format(self:SpellName(-9945), aberrationCount), 156471) -- Arcane Aberration
 	if args.spellId == 164299 or (self:Mythic() and phase == 2) then -- Displacing
 		addDeathWarned = nil
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss2")
+	end
+	if not self:Mythic() and phase == 1 then
+		p1times[156471] = GetTime() + 46
 	end
 end
 
@@ -445,6 +471,9 @@ function mod:ArcaneWrath(args)
 	self:Message(156238, "Urgent", self:Healer() and "Alert")
 	self:Bar(156238, 50)
 	wipe(brandedMarks)
+	if not self:Mythic() and phase == 1 then
+		p1times[156238] = GetTime() + 50
+	end
 end
 
 do
@@ -531,6 +560,9 @@ do
 		local t = not self:Mythic() and mineTimes[phase] and mineTimes[phase][mineCount] or 15.8
 		self:CDBar(156467, phase == 1 and 24 or t)
 		mineCount = mineCount + 1
+		if not self:Mythic() and phase == 1 then
+			p1times[156467] = GetTime() + 24
+		end
 	end
 end
 
@@ -543,6 +575,9 @@ do
 	function mod:ForceNova(args)
 		self:Message(157349, "Urgent")
 		self:CDBar(157349, novaCount == 1 and 46 or 50)
+		if not self:Mythic() and phase == 1 then
+			p1times[157349] = GetTime() + (novaCount == 1 and 46 or 50)
+		end
 		if args.spellId == 164235 or (self:Mythic() and phase == 3) then -- Fortification (three novas)
 			self:Bar(157349, 10.5, 164235) -- 164235 = Force Nova: Fortification
 			novaTimer = self:ScheduleTimer("Bar", 10.5, 157349, 8, 164235)
@@ -566,6 +601,9 @@ do
 	function mod:MarkOfChaos(args)
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
 		self:Bar(158605, 51)
+		if not self:Mythic() and phase == 1 then
+			p1times[158605] = GetTime() + 51
+		end
 	end
 end
 
