@@ -31,6 +31,14 @@ if L then
 	L.add_death_soon = "Add dying soon!"
 	L.slow_fixate = "Slow+Fixate"
 
+	L.gaze_target = 176537 -- Gaze of the Abyss (needed a string key so it doesn't conflict with 165595)
+	L.gaze_target_icon = 176537
+	L.gaze_target_message = "Glimpse targeting YOU!"
+
+	L.adds = "Night-Twisted Faithful" -- XXX CL.adds?
+	L.adds_desc = "Timers for when Night-Twisted Faithful enter the fight."
+	L.adds_icon = "spell_shadow_raisedead"
+
 	L.volatile_anomaly = -9919 -- Volatile Anomaly
 	L.volatile_anomaly_icon = "spell_arcane_arcane04"
 
@@ -56,7 +64,9 @@ function mod:GetOptions()
 		165116, -- Entropy
 		165876, -- Enveloping Night
 		165243, -- Glimpse of Madness
-		{165595, "PROXIMITY", "FLASH", "SAY"}, -- Gaze of the Abyss
+		{"gaze_target", "FLASH"},
+		{165595, "PROXIMITY", "SAY"}, -- Gaze of the Abyss
+		"adds",
 		{176533, "FLASH"}, -- Growing Darkness
 		--[[ Imperator Mar'gok ]]--
 		{159515, "TANK"}, -- Accelerated Assault
@@ -183,35 +193,45 @@ end
 
 -- Mythic
 
-local function stopBars(self)
-	self:StopBar(156238) -- Arcane Wrath
-	self:StopBar(156467) -- Destructive Resonance
-	self:StopBar(CL.count:format(self:SpellName(-9945), aberrationCount))  -- Arcane Aberration
-	self:StopBar(158605) -- Mark of Chaos
-	self:StopBar(157349) -- Force Nova
-	self:StopBar(164235) -- Force Nova: Fortification
-	self:CancelTimer(novaTimer)
-	if replicatingNova then
-		self:CancelTimer(replicatingNova)
-		replicatingNova = nil
-		self:CloseProximity(157349)
-		updateProximity()
+do
+	local function startPhase(self)
+		self:StopBar(156238) -- Arcane Wrath
+		self:StopBar(156467) -- Destructive Resonance
+		self:StopBar(CL.count:format(self:SpellName(-9945), aberrationCount))  -- Arcane Aberration
+		self:StopBar(158605) -- Mark of Chaos
+		self:StopBar(157349) -- Force Nova
+		self:StopBar(164235) -- Force Nova: Fortification
+		self:CancelTimer(novaTimer)
+		if replicatingNova then
+			self:CancelTimer(replicatingNova)
+			replicatingNova = nil
+			self:CloseProximity(157349)
+			updateProximity()
+		end
+		-- p4 stuff goooooo
+		self:CDBar(165102, 36) -- Infinite Darkness
+		self:CDBar(165243, 43) -- Glimpse of Madness
+		self:CDBar(178607, 53) -- Dark Star
+		self:CDBar(165876, 79, CL.count:format(self:SpellName(165876), nightCount)) -- Enveloping Night
 	end
-end
 
-function mod:Phase4()
-	self:ScheduleTimer(stopBars, 10, self)
-	phase = phase + 1
-	nightCount = 1
-	gazeOnMe = nil
-	wipe(gazeTargets)
-	self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
-	--self:CDBar("adds", 32) -- Night-Twisted adds (30s repeating timer)
-	self:CDBar(165102, 46) -- Infinite Darkness
-	self:CDBar(165243, 53) -- Glimpse of Madness
-	self:CDBar(178607, 63) -- Dark Star
-	self:CDBar(165876, 89, CL.count:format(self:SpellName(165876), nightCount)) -- Enveloping Night
-	self:DelayedMessage(165876, 80, "Important", CL.soon:format(CL.count:format(self:SpellName(165876), nightCount)), false, "Info")
+	local function nextAdd(self)
+		self:Message("adds", "Attention", "Info", CL.incoming:format(CL.adds), L.adds_icon)
+		self:Bar("adds", 30, CL.adds, L.adds_icon)
+		self:ScheduleTimer(nextAdd, 30, self) -- could use ScheduleRepeatingTimer, but the first time had to be special and ruin it :(
+	end
+
+	function mod:Phase4()
+		self:ScheduleTimer(startPhase, 10, self)
+		phase = phase + 1
+		nightCount = 1
+		gazeOnMe = nil
+		wipe(gazeTargets)
+		self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
+		self:CDBar("adds", 32, CL.adds, L.adds_icon)
+		self:ScheduleTimer(nextAdd, 32, self)
+		self:DelayedMessage(165876, 80, "Important", CL.soon:format(CL.count:format(self:SpellName(165876), nightCount)), false, "Info")
+	end
 end
 
 do
@@ -247,20 +267,20 @@ end
 function mod:DarkStar(args)
 	self:Message(args.spellId, "Urgent", "Alarm")
 	self:Bar(args.spellId, 7, ("<%s>"):format(args.spellName))
-	self:CDBar(args.spellId, 60)
+	self:Bar(args.spellId, 60)
 end
 
 function mod:EnvelopingNight(args)
 	self:Message(args.spellId, "Important", "Long", CL.count:format(args.spellName, nightCount))
 	self:Bar(args.spellId, 3, CL.cast:format(CL.count:format(args.spellName, nightCount)))
 	nightCount = nightCount + 1
-	self:CDBar(args.spellId, 63, CL.count:format(args.spellName, nightCount))
+	self:Bar(args.spellId, 63, CL.count:format(args.spellName, nightCount))
 	self:DelayedMessage(args.spellId, 53, "Important", CL.soon:format(CL.count:format(args.spellName, nightCount)), false, "Info")
 end
 
 function mod:GlimpseOfMadness(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 27)
+	self:Bar(args.spellId, 27)
 end
 
 do -- GazeOfTheAbyss
@@ -280,9 +300,6 @@ do -- GazeOfTheAbyss
 		timeLeft = timeLeft - 1
 		if timeLeft < 5 then
 			self:Say(165595, timeLeft, true)
-			if timeLeft > 3 then
-				self:Flash(165595)
-			end
 			if timeLeft < 2 then
 				self:CancelTimer(timer)
 			end
@@ -322,8 +339,8 @@ do -- GazeOfTheAbyss
 
 	function mod:GazeClosestApplied(args)
 		if self:Me(args.destGUID) then
-			--self:Message(165595, "Personal", "Alarm", "Glimpse targeting YOU!")
-			--self:Flash(165595)
+			self:Message("gaze_target", "Personal", "Alarm", L.gaze_target_message, 176537)
+			self:Flash("gaze_target")
 			if gazeOnMe then return end
 		end
 
@@ -361,7 +378,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if mobId == 77428 then
 		if self:Mythic() then
-			if (phase == 1 and hp < 71) or (phase == 2 and hp < 38) then -- phases at 66% and 33%
+			if (phase == 1 and hp < 71) or (phase == 2 and hp < 38)  or (phase == 3 and hp < 10) then -- phases at 66% and 33% and 5%
 				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 				self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
 			end
@@ -401,7 +418,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:CDBar(156471, 28, CL.count:format(self:SpellName(-9945), aberrationCount), 156471) -- Arcane Aberration
 		self:CDBar(158605, 38) -- Mark of Chaos
 		self:CDBar(157349, 48) -- Force Nova
-		if spellId ~= 157964 then -- Replication is the last phase
+		if spellId ~= 157964 or self:Mythic() then -- Replication is the last phase
 			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, unit)
 		end
 	end
