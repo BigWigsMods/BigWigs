@@ -1111,7 +1111,7 @@ end
 function boss:BarTimeLeft(text)
 	local bars = core:GetPlugin("Bars")
 	if bars then
-		return bars:GetBarTimeLeft(self, text)
+		return bars:GetBarTimeLeft(self, type(text) == "number" and spells[text] or text)
 	end
 	return 0
 end
