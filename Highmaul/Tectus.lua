@@ -174,7 +174,9 @@ function mod:Split(unit, spellName, _, _, spellId)
 	if spellId == 140562 then -- Break Player Targetting (cast when Tectus/Shards die)
 		self:StopBar(-10061) -- Earthwarper
 		self:StopBar(-10062) -- Berserker
-		self:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+		if not self:Mythic() then
+			self:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+		end
 		--self:CDBar(162346, 8) -- Crystalline Barrage 7-12s, then every ~20s, 2-5s staggered
 	end
 end
