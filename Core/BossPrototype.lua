@@ -1091,6 +1091,32 @@ function boss:StopBar(text, player)
 	end
 end
 
+function boss:PauseBar(text, player)
+	if player then
+		if player == pName then
+			local msg = format(L.you, type(text) == "number" and spells[text] or text)
+			self:SendMessage("BigWigs_PauseBar", self, msg)
+		else
+			self:SendMessage("BigWigs_PauseBar", self, format(L.other, type(text) == "number" and spells[text] or text, gsub(player, "%-.+", "*")))
+		end
+	else
+		self:SendMessage("BigWigs_PauseBar", self, type(text) == "number" and spells[text] or text)
+	end
+end
+
+function boss:ResumeBar(text, player)
+	if player then
+		if player == pName then
+			local msg = format(L.you, type(text) == "number" and spells[text] or text)
+			self:SendMessage("BigWigs_ResumeBar", self, msg)
+		else
+			self:SendMessage("BigWigs_ResumeBar", self, format(L.other, type(text) == "number" and spells[text] or text, gsub(player, "%-.+", "*")))
+		end
+	else
+		self:SendMessage("BigWigs_ResumeBar", self, type(text) == "number" and spells[text] or text)
+	end
+end
+
 -- ICONS
 function boss:PrimaryIcon(key, player)
 	if key and not checkFlag(self, key, C.ICON) then return end
