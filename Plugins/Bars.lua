@@ -1159,7 +1159,7 @@ do
 end
 
 --------------------------------------------------------------------------------
--- Stopping bars
+-- Pausing bars
 --
 
 function plugin:PauseBar(_, module, text)
@@ -1177,6 +1177,7 @@ function plugin:PauseBar(_, module, text)
 		end
 	end
 end
+
 function plugin:ResumeBar(_, module, text)
 	if not normalAnchor then return end
 	for k in next, normalAnchor.bars do
@@ -1192,6 +1193,10 @@ function plugin:ResumeBar(_, module, text)
 		end
 	end
 end
+
+--------------------------------------------------------------------------------
+-- Stopping bars
+--
 
 function plugin:StopSpecificBar(_, module, text)
 	if not normalAnchor then return end
@@ -1229,6 +1234,25 @@ function plugin:StopModuleBars(_, module)
 		end
 	end
 	if dirty then rearrangeBars(emphasizeAnchor) end
+end
+
+--------------------------------------------------------------------------------
+-- Bar utility functions
+--
+
+function plugin:GetBarTimeLeft(text)
+	if not normalAnchor then return end
+	for k in next, normalAnchor.bars do
+		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
+			return k.remaining
+		end
+	end
+	for k in next, emphasizeAnchor.bars do
+		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
+			return k.remaining
+		end
+	end
+	return 0
 end
 
 --------------------------------------------------------------------------------

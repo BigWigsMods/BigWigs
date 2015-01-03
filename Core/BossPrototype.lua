@@ -1091,30 +1091,29 @@ function boss:StopBar(text, player)
 	end
 end
 
-function boss:PauseBar(text, player)
-	if player then
-		if player == pName then
-			local msg = format(L.you, type(text) == "number" and spells[text] or text)
-			self:SendMessage("BigWigs_PauseBar", self, msg)
-		else
-			self:SendMessage("BigWigs_PauseBar", self, format(L.other, type(text) == "number" and spells[text] or text, gsub(player, "%-.+", "*")))
+function boss:PauseBar(text)
+	local msg = type(text) == "number" and spells[text] or text
+	self:SendMessage("BigWigs_PauseBar", self, msg)
+	self:SendMessage("BigWigs_StopEmphasize", self, msg)
+end
+
+function boss:ResumeBar(text)
+	local msg = type(text) == "number" and spells[text] or text
+	self:SendMessage("BigWigs_ResumeBar", self, msg)
+	if checkFlag(self, key, C.EMPHASIZE) then
+		local barTime = self:BarTimeLeft(msg)
+		if barTime > 0 then
+			self:SendMessage("BigWigs_StartEmphasize", self, msg, barTime)
 		end
-	else
-		self:SendMessage("BigWigs_PauseBar", self, type(text) == "number" and spells[text] or text)
 	end
 end
 
-function boss:ResumeBar(text, player)
-	if player then
-		if player == pName then
-			local msg = format(L.you, type(text) == "number" and spells[text] or text)
-			self:SendMessage("BigWigs_ResumeBar", self, msg)
-		else
-			self:SendMessage("BigWigs_ResumeBar", self, format(L.other, type(text) == "number" and spells[text] or text, gsub(player, "%-.+", "*")))
-		end
-	else
-		self:SendMessage("BigWigs_ResumeBar", self, type(text) == "number" and spells[text] or text)
+function boss:BarTimeLeft(text)
+	local bars = core:GetPlugin("Bars")
+	if bars then
+		return bars:GetBarTimeLeft(text)
 	end
+	return 0
 end
 
 -- ICONS
