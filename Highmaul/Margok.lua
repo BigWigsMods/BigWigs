@@ -230,9 +230,8 @@ do
 		self:ScheduleTimer(nextAdd, 30, self) -- could use ScheduleRepeatingTimer, but the first time had to be special and ruin it :(
 	end
 
-	local chogall = EJ_GetEncounterInfo(167) -- from Bastion of Twilight
 	function mod:Phase4(event, msg, unit)
-		if unit ~= chogall then return end
+		if unit ~= EJ_GetEncounterInfo(167) then return end -- Cho'gall from Bastion of Twilight
 		self:UnregisterEvent(event)
 		if phase == 4 then return end -- y u no unregistered
 
