@@ -178,13 +178,15 @@ end
 
 do
 	local function printTarget(self, name, guid)
+		self:TargetMessage(158605, name, "Urgent", "Warning", CL.casting:format(self:SpellName(162186)))
 		if self:Me(guid) then
 			self:Message(162186, "Personal", "Warning", CL.casting:format(CL.you:format(self:SpellName(162186))))
 		else
-			self:Message(162186, "Urgent", "Warning", CL.casting:format(CL.on:format(self:SpellName(162186), name)))
+			self:Message(162186, "Urgent", "Warning", CL.casting:format(CL.on:format(self:SpellName(162186), self:ColorName(name))))
 		end
 	end
 	function mod:ExpelMagicArcaneStart(args)
+		--self:TargetMessage(158605, self:UnitName("boss1target"), "Urgent", "Warning", CL.casting:format(args.spellName))
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
 		nextArcane = GetTime() + 26.7
 		self:CDBar(args.spellId, 26.7)

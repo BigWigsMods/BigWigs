@@ -37,7 +37,7 @@ if L then
 	L.gaze_target_message = "Glimpse targeting YOU!"
 
 	L.adds = "Night-Twisted Faithful" -- XXX CL.adds?
-	L.adds_desc = "Timers for when Night-Twisted Faithful enter the fight."
+	L.adds_desc = "Timer for when Night-Twisted Faithful enter the fight."
 	L.adds_icon = "spell_shadow_raisedead"
 
 	L.volatile_anomaly = -9919 -- Volatile Anomaly
@@ -86,7 +86,8 @@ function mod:GetOptions()
 		178468, -- Nether Energy (Mythic)
 		"custom_off_fixate_marker",
 		--[[ Gorian Reaver ]]--
-		{158553, "TANK"}, -- Crush Armor
+		-9921, -- Gorian Reaver
+		{158553, "TANK_HEALER"}, -- Crush Armor
 		{158563, "TANK"}, -- Kick to the Face
 		--[[ General ]]--
 		"stages",
@@ -96,7 +97,7 @@ function mod:GetOptions()
 		[159515] = mod.displayName,
 		["volatile_anomaly"] = "intermission",
 		[157801] = -9922, -- Gorian Warmage
-		[158553] = -9921, -- Gorian Reaver
+		[-9921] = -9921, -- Gorian Reaver
 		["stages"] = "general",
 	}
 end
@@ -121,7 +122,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 157763)
 	self:Log("SPELL_AURA_REFRESH", "FixateApplied", 157763)
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 157763)
-	self:Log("SPELL_AURA_APPLIED", "CrushArmor", 158553) -- XXX 10s cast, 4s debuff?
+	self:Log("SPELL_AURA_APPLIED", "CrushArmor", 158553)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushArmor", 158553)
 	self:Log("SPELL_CAST_SUCCESS", "KickToTheFace", 158563)
 	-- Mythic
@@ -150,7 +151,6 @@ function mod:OnEngage()
 	wipe(fixateMarks)
 	wipe(brandedMarks)
 	if not self:Mythic() then
-		-- doing too much of this shit! wtb self:AddBarTime(text, time)
 		local t = GetTime()
 		p1times[156238] = t + 6
 		p1times[156467] = t + 15
@@ -267,13 +267,12 @@ function mod:Entropy(args)
 	if self:Me(args.destGUID) then
 		local text = args.amount and args.amount > 0 and ("%s +%s"):format(args.spellName, BreakUpLargeNumbers(args.amount)) or nil -- XXX shooould have an amount
 		self:Message(args.spellId, "Positive", nil, text)
-		self:Bar(args.spellId, 10) -- XXX just refresh the bar, might not be useful!
+		self:Bar(args.spellId, 10)
 	end
 end
 
 function mod:EntropyRemoved(args)
-	if self:Me(args.destGUID) and not UnitDebuff("player", args.spellName) then
-		-- all gone
+	if self:Me(args.destGUID) then
 		self:StopBar(args.spellId)
 	end
 end
@@ -433,7 +432,12 @@ function mod:Phases(unit, spellName, _, _, spellId)
 			self:CancelTimer(novaTimer)
 
 			aberrationCount = 1
-			self:Bar("volatile_anomaly", spellId == 164751 and 9 or 12, CL.count:format(self:SpellName(L.volatile_anomaly), 1), L.volatile_anomaly_icon)
+			self:Bar("volatile_anomaly", spellId == 164810 and 12 or 9, CL.count:format(self:SpellName(L.volatile_anomaly), 1), L.volatile_anomaly_icon)
+			if spellId == 164810 then
+				self:Bar(-9921, 16, nil, "ability_warrior_shieldbreak") -- Gorian Reaver
+				self:DelayedMessage(-9921, 16, "Neutral", nil, false, "Info")
+				self:ScheduleTimer("CDBar", 16, 158563, 26) -- Kick to the Face
+			end
 		end
 	elseif spellId == 158012 or spellId == 157964 then -- Power of Fortification, Replication (Phase start)
 		self:CDBar(156238, 8)  -- Arcane Wrath
@@ -596,12 +600,15 @@ do
 	local function printTarget(self, name, guid)
 		if self:Me(guid) then
 			self:Message(158605, "Personal", "Alarm", CL.casting:format(CL.you:format(self:SpellName(158605))))
-			self:Flash(158605)
+			if phase == 3 or (self:Mythic() and phase == 2) then -- Fortification
+				self:Flash(158605)
+			end
 		else
-			self:Message(158605, "Urgent", nil, CL.casting:format(CL.on:format(self:SpellName(158605), name)))
+			self:Message(158605, "Urgent", nil, CL.casting:format(CL.on:format(self:SpellName(158605), self:ColorName(name))))
 		end
 	end
 	function mod:MarkOfChaos(args)
+		--self:TargetMessage(158605, self:UnitName("boss1target"), "Urgent", "Warning", CL.casting:format(self:SpellName(158605)))
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
 		self:Bar(158605, 51)
 		if not self:Mythic() and phase == 1 then
@@ -653,12 +660,8 @@ do
 		self:Bar("stages", first and 65 or 60, CL.intermission, "spell_arcane_blast")
 		count = 1
 		self:DelayedMessage("volatile_anomaly", 2, "Attention", ("%s %d/6"):format(self:SpellName(L.volatile_anomaly), count), L.volatile_anomaly_icon, "Info")
-		-- bar is started in :Phases
+		-- first add bar is started in :Phases
 		self:ScheduleTimer(nextAdd, 2, self)
-		if not first then
-			self:ScheduleTimer("Message", 5, "stages", "Neutral", "Info", -9921, false) -- Gorian Reaver
-			self:CDBar(158563, 29) -- Kick to the Face
-		end
 	end
 
 	function mod:IntermissionEnd(args)
@@ -712,13 +715,13 @@ end
 -- Reaver
 function mod:CrushArmor(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
-	self:Bar(args.spellId, 6)
+	self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Alarm")
+	self:CDBar(args.spellId, 10) -- 9.7-15.9
 end
 
 function mod:KickToTheFace(args)
 	self:Message(args.spellId, "Urgent", "Warning")
-	self:Bar(args.spellId, 20)
+	self:CDBar(args.spellId, 20) -- 20-30
 end
 
 function mod:ReaverDeath(args)
