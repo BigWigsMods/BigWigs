@@ -178,7 +178,6 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(158605, name, "Urgent", "Warning", CL.casting:format(self:SpellName(162186)))
 		if self:Me(guid) then
 			self:Message(162186, "Personal", "Warning", CL.casting:format(CL.you:format(self:SpellName(162186))))
 		else
