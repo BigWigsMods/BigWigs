@@ -67,7 +67,7 @@ function mod:GetOptions()
 		165243, -- Glimpse of Madness
 		{"gaze_target", "FLASH"},
 		{165595, "PROXIMITY", "SAY"}, -- Gaze of the Abyss
-		"adds",
+		"adds", -- Night-Twisted Faithful
 		{176533, "FLASH"}, -- Growing Darkness
 		--[[ Imperator Mar'gok ]]--
 		{159515, "TANK"}, -- Accelerated Assault
@@ -206,7 +206,7 @@ do
 	local function startPhase(self)
 		self:StopBar(156238) -- Arcane Wrath
 		self:StopBar(156467) -- Destructive Resonance
-		self:StopBar(CL.count:format(self:SpellName(-9945), aberrationCount))  -- Arcane Aberration
+		self:StopBar(CL.count:format(self:SpellName(-9945), aberrationCount)) -- Arcane Aberration
 		self:StopBar(158605) -- Mark of Chaos
 		self:StopBar(157349) -- Force Nova
 		self:StopBar(164235) -- Force Nova: Fortification
@@ -390,7 +390,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if mobId == 77428 then
 		if self:Mythic() then
-			if (phase == 1 and hp < 71) or (phase == 2 and hp < 38)  or (phase == 3 and hp < 10) then -- phases at 66% and 33% and 5%
+			if (phase == 1 and hp < 71) or (phase == 2 and hp < 38) or (phase == 3 and hp < 10) then -- phases at 66% and 33% and 5%
 				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 				self:Message("stages", "Neutral", "Info", CL.soon:format(CL.phase:format(phase+1)), false)
 			end
@@ -433,9 +433,9 @@ function mod:Phases(unit, spellName, _, _, spellId)
 			aberrationCount = 1
 			self:Bar("volatile_anomaly", spellId == 164810 and 12 or 9, CL.count:format(self:SpellName(L.volatile_anomaly), 1), L.volatile_anomaly_icon)
 			if spellId == 164810 then
-				self:Bar(-9921, 16, nil, "ability_warrior_shieldbreak") -- Gorian Reaver
-				self:DelayedMessage(-9921, 16, "Neutral", nil, false, "Info")
-				self:ScheduleTimer("CDBar", 16, 158563, 26) -- Kick to the Face
+				self:Bar(-9921, 15, nil, "ability_warrior_shieldbreak") -- Gorian Reaver
+				self:DelayedMessage(-9921, 15, "Neutral", nil, false, "Info")
+				self:ScheduleTimer("CDBar", 15, 158563, 27) -- Kick to the Face
 			end
 		end
 	elseif spellId == 158012 or spellId == 157964 then -- Power of Fortification, Replication (Phase start)

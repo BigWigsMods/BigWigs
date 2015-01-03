@@ -85,8 +85,8 @@ function mod:OnEngage()
 
 	wipe(marked)
 	--self:CDBar(162346, 6) -- Crystalline Barrage
-	self:CDBar("adds", 11, -10061, "spell_shadow_raisedead") -- Earthwarper
-	self:CDBar("adds", 21, -10062, "ability_warrior_endlessrage") -- Berserker
+	self:CDBar("adds", 14, -10061, "spell_shadow_raisedead") -- Earthwarper
+	self:CDBar("adds", 24, -10062, "ability_warrior_endlessrage") -- Berserker
 
 	if not self:LFR() then
 		self:Berserk(self:Mythic() and 480 or 600)
