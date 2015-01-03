@@ -458,11 +458,11 @@ do
 	if L == "ptBR" then
 		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Brazilian Portuguese (ptBR)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
 	elseif L == "zhTW" then
-		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Traditional Chinese (zhTW)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
+	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Traditional Chinese (zhTW)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
 	elseif L == "ruRU" then
-		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Russian (ruRU)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
+	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Russian (ruRU)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
 	elseif L == "itIT" then
-		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Italian (itIT)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
+	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Italian (itIT)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
 	end
 
 	CTimerAfter(11, function()
@@ -488,7 +488,7 @@ do
 	local DBMdotDisplayVersion = "6.0.10" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
 	function mod:DBM_VersionCheck(prefix, sender, revision, releaseRevision, displayVersion)
 		if prefix == "H" and (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
-			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale(), IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale().."\t".."true", IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		elseif prefix == "V" then
 			usersDBM[sender] = displayVersion
 			-- If there are people with newer versions than us, suddenly we've upgraded!
