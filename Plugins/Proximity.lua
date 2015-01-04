@@ -1076,6 +1076,7 @@ do
 		end
 
 		if not functionToFire then
+			self:Close()
 			return
 		end
 

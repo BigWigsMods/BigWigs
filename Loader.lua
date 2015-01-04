@@ -462,7 +462,7 @@ do
 	elseif L == "ruRU" then
 	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Russian (ruRU)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
 	elseif L == "itIT" then
-	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Italian (itIT)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
+		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Italian (itIT)? Check out our easy translator tool: http://www.wowace.com/addons/big-wigs/localization/"
 	end
 
 	CTimerAfter(11, function()
