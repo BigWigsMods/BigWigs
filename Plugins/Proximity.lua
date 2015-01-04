@@ -53,6 +53,7 @@ local myGUID = nil
 local unitList = nil
 local blipList = {}
 local updater = false
+local updateTimer = nil
 local functionToFire = nil
 local proxAnchor, proxTitle, proxCircle, proxPulseOut, proxPulseIn = nil, nil, nil, nil, nil
 
@@ -999,6 +1000,8 @@ end
 function plugin:Close()
 	updater = false
 	functionToFire = nil
+	self:CancelTimer(updateTimer)
+	updateTimer = nil
 
 	proxAnchor:UnregisterEvent("GROUP_ROSTER_UPDATE")
 	proxAnchor:UnregisterEvent("RAID_TARGET_UPDATE")
@@ -1025,29 +1028,13 @@ function plugin:Close()
 end
 
 do
-	local hardCount, softCount = 0, 0
-	local function openProx()
-		softCount = softCount + 1
-		-- Check if proximity was closed before we even started, or if another has been opened in the 0.1s we were waiting
-		if functionToFire and softCount == hardCount then
-			proxAnchor:Show()
-			updater = true
-			functionToFire()
-		end
-	end
-
-	function plugin:Open(range, module, key, player, isReverse, spellName, spellIcon)
-		if type(range) ~= "number" then print("Range needs to be a number!") return end
-		if not IsInGroup() then return end -- Solo runs of old content
+	local function openProx(self, range, module, key, player, isReverse, spellName, spellIcon)
 		self:Close()
-
-		local y, x = UnitPosition("player")
-		if x == 0 and y == 0 then print("No map data!") return end
 
 		myGUID = UnitGUID("player")
 		activeRange = range
 		activeRangeSquared = range*range
-		hardCount = hardCount + 1
+
 		proxAnchor:RegisterEvent("GROUP_ROSTER_UPDATE")
 		proxAnchor:RegisterEvent("RAID_TARGET_UPDATE")
 		updateBlipColors()
@@ -1088,6 +1075,10 @@ do
 			functionToFire = reverseProximity
 		end
 
+		if not functionToFire then
+			return
+		end
+
 		local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
 		local ppy = min(width, height) / (range * 3)
 		proxCircle:SetSize(ppy * range * 2, ppy * range * 2)
@@ -1115,7 +1106,20 @@ do
 		end
 
 		-- Start the show!
-		CTimerAfter(0.1, openProx)
+		proxAnchor:Show()
+		updater = true
+		functionToFire()
+	end
+
+	function plugin:Open(range, module, key, player, isReverse, spellName, spellIcon)
+		if type(range) ~= "number" then print("Range needs to be a number!") return end
+		if not IsInGroup() then return end -- Solo runs of old content
+
+		local y, x = UnitPosition("player")
+		if x == 0 and y == 0 then print("No map data!") return end
+
+		self:CancelTimer(updateTimer)
+		updateTimer = self:ScheduleTimer(openProx, 0.1, self, range, module, key, player, isReverse, spellName, spellIcon)
 	end
 end
 
