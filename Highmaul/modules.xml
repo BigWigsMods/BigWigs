@@ -8,6 +8,7 @@
 <Script file="TwinOgron.lua"/>
 <Script file="Koragh.lua"/>
 <Script file="Margok.lua"/>
+<Script file="Trash.lua"/>
 
 </Ui>
 
