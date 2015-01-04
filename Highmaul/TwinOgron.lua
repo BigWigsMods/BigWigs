@@ -86,8 +86,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EnfeeblingRoar", 158057)
 	self:Log("SPELL_CAST_START", "Quake", 158200)
 	self:Log("SPELL_CAST_SUCCESS", "QuakeChannel", 158200)
-	self:Log("SPELL_AURA_APPLIED", "BlazeDamage", 158241)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "BlazeDamage", 158241)
+	self:Log("SPELL_AURA_APPLIED", "BlazeApplied", 158241)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "BlazeApplied", 158241)
 	--Mythic
 	self:Log("SPELL_AURA_APPLIED", "ArcaneTwisted", 163297)
 	self:Log("SPELL_CAST_SUCCESS", "ArcaneVolatility", 163372)
@@ -245,14 +245,9 @@ function mod:QuakeChannel(args)
 	self:Bar(args.spellId, 12, CL.cast:format(CL.count:format(args.spellName, quakeCount)))
 end
 
-do
-	local prev = 0
-	function mod:BlazeDamage(args)
-		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 2 then
-			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
-			prev = t
-		end
+function mod:BlazeApplied(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 	end
 end
 
