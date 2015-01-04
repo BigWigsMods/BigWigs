@@ -103,10 +103,10 @@ do
 	local prev = 0
 	function mod:PaleVitriolDamage(args)
 		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 2 then
+		if self:Me(args.destGUID) and t-prev > 1 then
+			prev = t
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 			self:Flash(args.spellId)
-			prev = t
 		end
 	end
 end

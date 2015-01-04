@@ -202,9 +202,9 @@ do
 	local prev = 0
 	function mod:MaulingBrewDamage(args)
 		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 2 then
-			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
+		if self:Me(args.destGUID) and t-prev > 1 then
 			prev = t
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -213,9 +213,9 @@ do
 	local prev = 0
 	function mod:FlameJetDamage(args)
 		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 2 then
-			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
+		if self:Me(args.destGUID) and t-prev > 1 then
 			prev = t
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 		end
 	end
 end

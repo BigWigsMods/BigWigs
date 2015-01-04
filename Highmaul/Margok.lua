@@ -139,6 +139,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "GazeClosestRemoved", 176537)
 	self:Log("SPELL_AURA_APPLIED", "GrowingDarkness", 176533)
 	self:Log("SPELL_PERIODIC_DAMAGE", "GrowingDarkness", 176533)
+	self:Log("SPELL_PERIODIC_MISSED", "GrowingDarkness", 176533)
 
 	self:Death("ReaverDeath", 78549) -- Gorian Reaver
 end
@@ -375,10 +376,10 @@ do
 	local prev = 0
 	function mod:GrowingDarkness(args)
 		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 2 then
+		if self:Me(args.destGUID) and t-prev > 1 then
+			prev = t
 			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName)) -- you ded, so ded.
 			self:Flash(args.spellId)
-			prev = t
 		end
 	end
 end
