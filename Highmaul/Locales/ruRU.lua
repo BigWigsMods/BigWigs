@@ -34,3 +34,8 @@ if L then
 --@localization(locale="ruRU", namespace="Highmaul/Margok", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
+L = BigWigs:NewBossLocale("Highmaul Trash", "ruRU")
+if L then
+--@localization(locale="ruRU", namespace="Highmaul/Trash", format="lua_additive_table", handle-unlocalized="ignore")@
+end
+
