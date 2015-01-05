@@ -137,9 +137,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "GazeOfTheAbyssRemoved", 165595)
 	self:Log("SPELL_AURA_APPLIED", "GazeClosestApplied", 176537)
 	self:Log("SPELL_AURA_REMOVED", "GazeClosestRemoved", 176537)
-	self:Log("SPELL_AURA_APPLIED", "GrowingDarkness", 176533)
-	self:Log("SPELL_PERIODIC_DAMAGE", "GrowingDarkness", 176533)
-	self:Log("SPELL_PERIODIC_MISSED", "GrowingDarkness", 176533)
+	self:Log("SPELL_AURA_APPLIED", "GrowingDarknessDamage", 176525)
 
 	self:Death("ReaverDeath", 78549) -- Gorian Reaver
 end
@@ -374,7 +372,7 @@ end
 
 do
 	local prev = 0
-	function mod:GrowingDarkness(args)
+	function mod:GrowingDarknessDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1 then
 			prev = t
