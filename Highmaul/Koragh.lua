@@ -12,9 +12,10 @@ mod.engageId = 1723
 -- Locals
 --
 
-local allowSuppression = false
+local allowSuppression = nil
+local intermission = nil
+local nextMC = 0
 local ballCount = 1
-local nextBall, nextMC, nextFrost, nextArcane = 0, 0, 0, 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -86,18 +87,15 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	allowSuppression = false
+	allowSuppression = nil
+	intermission = nil
 	ballCount = 1
-	local t = GetTime()
-	nextArcane = t + 30
 	self:Bar(162186, 30) -- Expel Magic: Arcane
-	nextFrost = t + 40
 	self:Bar(172747, 40) -- Expel Magic: Frost -- guess, first charge phase is usually happening when it would come off cd
-	nextBall = t + 36
 	self:Bar(161612, 36, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Energy
 	if self:Mythic() then
 		self:CDBar(172895, 8) -- Expel Magic: Fel
-		nextMC = t + 90
+		nextMC = GetTime() + 90
 	end
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
@@ -129,45 +127,36 @@ do
 	end
 
 	function mod:Intermission(unit, spellName, _, _, spellId)
-		if spellId == 160734 then -- Vulnerability
+		if spellId == 174856 then -- Knockback
+			intermission = true
+			self:StopBar(161328) -- Suppression Field
+			self:StopBar(172895) -- Expel Magic: Fel
+			-- cds pause for the duration of Vulnerability
+			self:PauseBar(162186) -- Expel Magic: Arcane
+			self:PauseBar(172747) -- Expel Magic: Frost
+			-- once the balls start dropping, they don't stop
+			-- XXX need to find out when they actually drop and if they'll still drop between Knockback and Vulnerability
+			if self:Mythic() and self:BarTimeLeft(L.dominating_power_bar:format(ballCount)) > 5 then
+				self:PauseBar(163472, L.dominating_power_bar:format(ballCount))
+			elseif self:BarTimeLeft(L.overwhelming_energy_bar:format(ballCount)) > 5 then
+				self:PauseBar(161612, L.overwhelming_energy_bar:format(ballCount))
+			end
+		elseif spellId == 160734 then -- Vulnerability
 			self:Message(spellId, "Positive", "Long", CL.removed:format(self:SpellName(156803))) -- Nullification Barrier removed!
 			self:Bar(spellId, 20) -- Vulnerability
-			self:StopBar(161328) -- Suppression Field
-			self:StopBar(162186) -- Expel Magic: Arcane
-			self:StopBar(172747) -- Expel Magic: Frost
-			self:StopBar(172895) -- Expel Magic: Fel
-
 			count = 0
 			self:ScheduleTimer(nextAdd, 1, self)
-
-			-- this is all guess-work! cds seem to pause for the duration of Vulnerability
-			-- plus the time he takes to run to the middle of the room?
-			local t = GetTime()
-			nextArcane = nextArcane + 24
-			self:CDBar(162186, nextArcane-t) -- Expel Magic: Arcane
-
-			nextFrost = nextFrost + 24
-			self:CDBar(172747, nextFrost-t) -- Expel Magic: Frost
-
-			-- once the balls start dropping (at around 5s), they don't stop (mostly? >.>)
-			if self:Mythic() and nextMC-t > 4 then
-				nextMC = nextMC + 24
-			end
-			if nextBall-t > 4 then
-				nextBall = nextBall + 24
-				if self:Mythic() and abs(nextBall-nextMC) < 5 then -- XXX still worried about these getting out of sync
-					nextMC = nextBall
-					self:CDBar(163472, nextBall-t, L.dominating_power_bar:format(ballCount)) -- Dominating Power
-				else
-					self:CDBar(161612, nextBall-t, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Enery
-				end
-			end
 		elseif spellId == 156803 then -- Nullification Barrier
+			intermission = nil
 			self:Message(160734, "Positive", nil, spellName)
-			self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, unit)
+			self:ResumeBar(162186) -- Expel Magic: Arcane
+			self:ResumeBar(172747) -- Expel Magic: Frost
+			self:ResumeBar(163472, L.dominating_power_bar:format(ballCount))
+			self:ResumeBar(161612, L.overwhelming_energy_bar:format(ballCount))
 			if self:Mythic() then
 				self:CDBar(172895, 6) -- Expel Magic: Fel
 			end
+			self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, unit)
 		end
 	end
 end
@@ -187,7 +176,6 @@ do
 	function mod:ExpelMagicArcaneStart(args)
 		--self:TargetMessage(158605, self:UnitName("boss1target"), "Urgent", "Warning", CL.casting:format(args.spellName))
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
-		nextArcane = GetTime() + 26.7
 		self:CDBar(args.spellId, 26.7)
 	end
 end
@@ -235,7 +223,6 @@ do
 	function mod:ExpelMagicFrost(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
 		self:Bar(args.spellId, 21.5, ("<%s>"):format(self:SpellName(84721)), 84721) -- Frozen Orb
-		nextFrost = GetTime() + 60
 		self:Bar(args.spellId, 60)
 	end
 end
@@ -284,15 +271,20 @@ do
 			self:StopBar(L.dominating_power_bar:format(ballCount))
 			ballCount = ballCount + 1
 			if UnitPower("player", 10) > 0 then -- has alternate power (soaking)
-				self:Message(161612, "Positive", "Warning", CL.count:format(args.spellName, ballCount)) -- green to keep it different looking
+				if intermission then
+					self:DelayedMessage(161612, 30, "Positive", CL.count:format(args.spellName, ballCount), 161612, "Warning")
+				else
+					self:Message(161612, "Positive", "Warning", CL.count:format(args.spellName, ballCount)) -- green to keep it different looking
+				end
 			end
-			nextBall = t + 30
+
+			local cd = intermission and 60 or 30 -- doesn't actually start the cd until the next time they would have hit if falling during the intermission
 			if self:Mythic() and nextMC-t < 35 then -- XXX still worried about these getting out of sync
-				nextMC = nextBall
-				self:CDBar(163472, 30, L.dominating_power_bar:format(ballCount)) -- Dominating Power
-				self:Message(163472, "Urgent", nil, CL.custom_sec:format(self:SpellName(163472), 30)) -- Dominating Power in 30 sec!
+				nextMC = t + cd
+				self:CDBar(163472, cd, L.dominating_power_bar:format(ballCount)) -- Dominating Power
+				self:DelayedMessage(163472, cd-10, "Urgent", CL.soon:format(self:SpellName(163472))) -- Dominating Power soon!
 			else
-				self:CDBar(161612, 30, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Enery
+				self:CDBar(161612, cd, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Enery
 			end
 			prev = t
 		end
