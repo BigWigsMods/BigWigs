@@ -8,7 +8,7 @@ if not mod then return end
 mod.displayName = CL.trash
 mod:RegisterEnableMob(
 	86072, -- Oro
-	-- Wild Flames mob
+	86329 -- Breaker Ritualist
 )
 
 --------------------------------------------------------------------------------
@@ -23,6 +23,7 @@ mod:RegisterEnableMob(
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.oro = "Oro"
+	L.ritualist = "Breaker Ritualist"
 end
 L = mod:GetLocale()
 
@@ -36,7 +37,7 @@ function mod:GetOptions()
 		{173827, "FLASH"}, -- Wild Flames
 	}, {
 		[172066] = L.oro,
-		--[173827] = L.oro,
+		[173827] = L.ritualist,
 	}
 end
 
@@ -48,7 +49,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "WildFlames", 173827)
 	self:Log("SPELL_PERIODIC_MISSED", "WildFlames", 173827)
 
-	self:Death("DisableOnCombatExit", 86072)
+	self:Death("DisableOnCombatExit", 86072, 86329) -- Oro, Breaker Ritualist
 end
 
 --------------------------------------------------------------------------------
@@ -75,10 +76,15 @@ function mod:RadiatingPoisonRemoved(args)
 	end
 end
 
-function mod:WildFlames(args)
-	if self:Me(args.destGUID) then
-		self:Flash(args.spellId)
-		self:Message(args.spellId, "Urgent", "Alert", CL.underyou:format(args.destName))
+do
+	local prev = 0
+	function mod:WildFlames(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1 then
+			prev = t
+			self:Flash(args.spellId)
+			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
 	end
 end
 
