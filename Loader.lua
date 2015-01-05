@@ -499,7 +499,7 @@ do
 		if prefix == "H" and (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
 			if timer then timer:Cancel() end
 			prevUpgradedUser = nil
-			timer = CTimerNewTicker(3.5, sendMsg, 1)
+			timer = CTimerNewTicker(3.2, sendMsg, 1)
 		elseif prefix == "V" then
 			usersDBM[sender] = displayVersion
 			-- If there are people with newer versions than us, suddenly we've upgraded!
@@ -717,13 +717,13 @@ do
 
 	function mod:VersionCheck(prefix, message, sender)
 		if prefix == "VR" or prefix == "VQ" then
-			if prefix == "VQ" then
+			if prefix == "VQ" and not (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
 				if timer then timer:Cancel() end
 				timer = CTimerNewTicker(3, sendMsg, 1)
 			end
 			message = tonumber(message)
 			-- XXX The > 13k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
-			if not message or message == 0 or message > 13500 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
+			if not message or message == 0 or message > 13700 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
 			usersRelease[sender] = message
 			usersAlpha[sender] = nil
 			if message > highestReleaseRevision then highestReleaseRevision = message end
@@ -731,13 +731,13 @@ do
 				printOutOfDate(usersRelease, 0)
 			end
 		elseif prefix == "VRA" or prefix == "VQA" then
-			if prefix == "VQA" then
+			if prefix == "VQA" and not (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
 				if timer then timer:Cancel() end
 				timer = CTimerNewTicker(3, sendMsg, 1)
 			end
 			message = tonumber(message)
 			-- XXX The > 13k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
-			if not message or message == 0 or message > 13500 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
+			if not message or message == 0 or message > 13700 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
 			if message > highestAlphaRevision then highestAlphaRevision = message end
