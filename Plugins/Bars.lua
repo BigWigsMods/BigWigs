@@ -699,7 +699,6 @@ do
 						desc = L.restartDesc,
 						order = 3,
 						width = "half",
-						disabled = function() return not db.emphasizeMove end,
 					},
 					emphasizeGrowup = {
 						type = "toggle",
@@ -1464,9 +1463,9 @@ function plugin:EmphasizeBar(bar)
 		normalAnchor.bars[bar] = nil
 		emphasizeAnchor.bars[bar] = true
 		bar:Set("bigwigs:anchor", emphasizeAnchor)
-		if db.emphasizeRestart then
-			bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
-		end
+	end
+	if db.emphasizeRestart then
+		bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
 	end
 	local module = bar:Get("bigwigs:module")
 	local key = bar:Get("bigwigs:option")
