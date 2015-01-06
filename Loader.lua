@@ -717,7 +717,7 @@ do
 
 	function mod:VersionCheck(prefix, message, sender)
 		if prefix == "VR" or prefix == "VQ" then
-			if prefix == "VQ" and not (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
+			if prefix == "VQ" then
 				if timer then timer:Cancel() end
 				timer = CTimerNewTicker(3, sendMsg, 1)
 			end
@@ -731,7 +731,7 @@ do
 				printOutOfDate(usersRelease, 0)
 			end
 		elseif prefix == "VRA" or prefix == "VQA" then
-			if prefix == "VQA" and not (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
+			if prefix == "VQA" then
 				if timer then timer:Cancel() end
 				timer = CTimerNewTicker(3, sendMsg, 1)
 			end
