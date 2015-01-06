@@ -14,7 +14,6 @@ mod.engageId = 1723
 
 local allowSuppression = nil
 local intermission = nil
-local nextMC = 0
 local ballCount = 1
 
 --------------------------------------------------------------------------------
@@ -95,7 +94,6 @@ function mod:OnEngage()
 	self:Bar(161612, 36, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Energy
 	if self:Mythic() then
 		self:CDBar(172895, 8) -- Expel Magic: Fel
-		nextMC = GetTime() + 90
 	end
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
@@ -135,9 +133,10 @@ do
 			self:PauseBar(162186) -- Expel Magic: Arcane
 			self:PauseBar(172747) -- Expel Magic: Frost
 			-- once the balls start dropping, they don't stop
-			-- XXX need to find out when they actually drop and if they'll still drop between Knockback and Vulnerability
+			-- XXX need to find out if they can drop between Knockback and Vulnerability
 			if self:Mythic() and self:BarTimeLeft(L.dominating_power_bar:format(ballCount)) > 5 then
 				self:PauseBar(163472, L.dominating_power_bar:format(ballCount))
+				self:CancelDelayedMessage(CL.soon:format(self:SpellName(163472)))
 			elseif self:BarTimeLeft(L.overwhelming_energy_bar:format(ballCount)) > 5 then
 				self:PauseBar(161612, L.overwhelming_energy_bar:format(ballCount))
 			end
@@ -151,7 +150,13 @@ do
 			self:Message(160734, "Positive", nil, spellName)
 			self:ResumeBar(162186) -- Expel Magic: Arcane
 			self:ResumeBar(172747) -- Expel Magic: Frost
-			self:ResumeBar(163472, L.dominating_power_bar:format(ballCount))
+			if self:Mythic() then
+				self:ResumeBar(163472, L.dominating_power_bar:format(ballCount))
+				local cd = self:BarTimeLeft(L.dominating_power_bar:format(ballCount))
+				if cd > 10 then
+					self:DelayedMessage(163472, cd-10, "Urgent", CL.soon:format(self:SpellName(163472))) -- Dominating Power soon!
+				end
+			end
 			self:ResumeBar(161612, L.overwhelming_energy_bar:format(ballCount))
 			if self:Mythic() then
 				self:CDBar(172895, 6) -- Expel Magic: Fel
@@ -279,8 +284,7 @@ do
 			end
 
 			local cd = intermission and 60 or 30 -- doesn't actually start the cd until the next time they would have hit if falling during the intermission
-			if self:Mythic() and nextMC-t < 35 then -- XXX still worried about these getting out of sync
-				nextMC = t + cd
+			if self:Mythic() and ballCount % 2 == 0 then
 				self:CDBar(163472, cd, L.dominating_power_bar:format(ballCount)) -- Dominating Power
 				self:DelayedMessage(163472, cd-10, "Urgent", CL.soon:format(self:SpellName(163472))) -- Dominating Power soon!
 			else
@@ -336,7 +340,6 @@ do
 	function mod:DominatingPower(args)
 		list[#list+1] = args.destName
 		if not scheduled then
-			nextMC = GetTime() + 60
 			scheduled = self:ScheduleTimer(warn, 0.2, self, args.spellId)
 		end
 	end
