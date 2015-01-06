@@ -139,6 +139,7 @@ do
 				self:CancelDelayedMessage(CL.soon:format(self:SpellName(163472)))
 			elseif self:BarTimeLeft(L.overwhelming_energy_bar:format(ballCount)) > 5 then
 				self:PauseBar(161612, L.overwhelming_energy_bar:format(ballCount))
+				self:CancelDelayedMessage(CL.soon:format(self:SpellName(161612)))
 			end
 		elseif spellId == 160734 then -- Vulnerability
 			self:Message(spellId, "Positive", "Long", CL.removed:format(self:SpellName(156803))) -- Nullification Barrier removed!
@@ -154,10 +155,16 @@ do
 				self:ResumeBar(163472, L.dominating_power_bar:format(ballCount))
 				local cd = self:BarTimeLeft(L.dominating_power_bar:format(ballCount))
 				if cd > 10 then
-					self:DelayedMessage(163472, cd-10, "Urgent", CL.soon:format(self:SpellName(163472))) -- Dominating Power soon!
+					self:DelayedMessage(163472, cd-10, "Urgent", CL.soon:format(self:SpellName(163472)), 163472) -- Dominating Power soon!
 				end
 			end
 			self:ResumeBar(161612, L.overwhelming_energy_bar:format(ballCount))
+			if UnitPower("player", 10) > 0 then -- has alternate power (soaking)
+				local cd = self:BarTimeLeft(L.overwhelming_energy_bar:format(ballCount))
+				if cd > 10 and UnitPower("player", 10) > 0 then
+					self:DelayedMessage(161612, cd-10, "Positive", CL.soon:format(self:SpellName(161612)), 161612, "Warning") -- Overwhelming Enery soon!
+				end
+			end
 			if self:Mythic() then
 				self:CDBar(172895, 6) -- Expel Magic: Fel
 			end
@@ -216,14 +223,15 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		local inRange = self:Range(name) < 30
 		if self:Me(guid) then
 			self:Flash(172747)
 			self:Say(172747)
-		elseif inRange then
+			self:PlaySound(172747, "Alarm")
+		elseif self:Range(name) < 30 then
 			self:Flash(172747)
+			self:PlaySound(172747, "Alarm")
 		end
-		self:TargetMessage(172747, name, "Neutral", "Alarm", nil, nil, inRange)
+		self:TargetMessage(172747, name, "Neutral")
 	end
 	function mod:ExpelMagicFrost(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
@@ -239,7 +247,7 @@ do
 	end
 	function mod:SuppressionFieldYell(_, _, _, _, _, suppressionTarget)
 		if allowSuppression then
-			allowSuppression = false
+			allowSuppression = nil
 			if UnitIsUnit("player", suppressionTarget) then
 				self:Flash(161328)
 				self:Say(161328)
@@ -272,25 +280,18 @@ do
 	function mod:OverwhelmingEnergy(args)
 		local t = GetTime()
 		if t-prev > 10 then
-			self:StopBar(L.overwhelming_energy_bar:format(ballCount))
-			self:StopBar(L.dominating_power_bar:format(ballCount))
+			prev = t
 			ballCount = ballCount + 1
-			if UnitPower("player", 10) > 0 then -- has alternate power (soaking)
-				if intermission then
-					self:DelayedMessage(161612, 30, "Positive", CL.count:format(args.spellName, ballCount), 161612, "Warning")
-				else
-					self:Message(161612, "Positive", "Warning", CL.count:format(args.spellName, ballCount)) -- green to keep it different looking
-				end
-			end
-
 			local cd = intermission and 60 or 30 -- doesn't actually start the cd until the next time they would have hit if falling during the intermission
 			if self:Mythic() and ballCount % 2 == 0 then
 				self:CDBar(163472, cd, L.dominating_power_bar:format(ballCount)) -- Dominating Power
 				self:DelayedMessage(163472, cd-10, "Urgent", CL.soon:format(self:SpellName(163472))) -- Dominating Power soon!
 			else
 				self:CDBar(161612, cd, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Enery
+				if UnitPower("player", 10) > 0 then -- has alternate power (soaking)
+					self:DelayedMessage(161612, cd-10, "Positive", CL.soon:format(args.spellName), 161612, "Warning") -- Overwhelming Enery soon!
+				end
 			end
-			prev = t
 		end
 	end
 end
