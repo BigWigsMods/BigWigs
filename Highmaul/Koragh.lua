@@ -162,15 +162,15 @@ do
 			if self:Mythic() then
 				self:ResumeBar(163472, L.dominating_power_bar:format(ballCount))
 				local cd = self:BarTimeLeft(L.dominating_power_bar:format(ballCount))
-				if cd > 10 then
-					self:DelayedMessage(163472, cd-10, "Urgent", CL.soon:format(self:SpellName(163472)), 163472) -- Dominating Power soon!
+				if cd > 0 then
+					self:DelayedMessage(163472, cd-6, "Urgent", CL.soon:format(self:SpellName(163472)), 163472) -- Dominating Power soon!
 				end
 			end
 			self:ResumeBar(161612, L.overwhelming_energy_bar:format(ballCount))
 			if UnitPower("player", 10) > 0 then -- has alternate power (soaking)
 				local cd = self:BarTimeLeft(L.overwhelming_energy_bar:format(ballCount))
-				if cd > 10 and UnitPower("player", 10) > 0 then
-					self:DelayedMessage(161612, cd-10, "Positive", CL.soon:format(self:SpellName(161612)), 161612, "Warning") -- Overwhelming Energy soon!
+				if cd > 0 then
+					self:DelayedMessage(161612, cd-6, "Positive", CL.soon:format(self:SpellName(161612)), 161612, "Warning") -- Overwhelming Energy soon!
 				end
 			end
 			self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, unit)
@@ -292,11 +292,11 @@ do
 			local cd = intermission and 60 or 30 -- doesn't actually start the cd until the next time they would have hit if falling during the intermission
 			if self:Mythic() and ballCount % 2 == 0 then
 				self:CDBar(163472, cd, L.dominating_power_bar:format(ballCount)) -- Dominating Power
-				self:DelayedMessage(163472, cd-10, "Urgent", CL.soon:format(self:SpellName(163472))) -- Dominating Power soon!
+				self:DelayedMessage(163472, cd-6, "Urgent", CL.soon:format(self:SpellName(163472))) -- Dominating Power soon!
 			else
 				self:CDBar(161612, cd, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Energy
 				if UnitPower("player", 10) > 0 then -- has alternate power (soaking)
-					self:DelayedMessage(161612, cd-10, "Positive", CL.soon:format(args.spellName), 161612, "Warning") -- Overwhelming Energy soon!
+					self:DelayedMessage(161612, cd-6, "Positive", CL.soon:format(args.spellName), 161612, "Warning") -- Overwhelming Energy soon!
 				end
 			end
 		end
