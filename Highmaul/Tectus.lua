@@ -61,6 +61,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	--self:Log("SPELL_CAST_SUCCESS", "AddsSpawn", 181113) -- XXX 6.1
 	-- Tectus
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Accretion", 162288)
 	self:Log("SPELL_AURA_APPLIED", "CrystallineBarrage", 162346)
@@ -194,6 +195,21 @@ function mod:NewAdd(event, msg, unit)
 		self:CDBar(163312, 13) -- Raving Assault (~10s + 3s cast)
 	end
 end
+
+-- XXX for patch 6.1
+-- The CDs *might* need adapted due to the event being slightly earlier than the yell
+--function mod:AddsSpawn(args)
+--	if self:MobId(args.sourceGUID) == 80599 then -- Night-Twisted Earthwarper
+--		self:Message("adds", "Attention", "Info", -10061, false)
+--		self:CDBar("adds", 41, -10061, "spell_shadow_raisedead")
+--		self:CDBar(162894, 10) -- Gift of Earth
+--		self:CDBar(162968, 15) -- Earthen Flechettes
+--	elseif self:MobId(args.sourceGUID) == 80822 then -- Night-Twisted Berserker
+--		self:Message("adds", "Attention", "Info", -10062, false)
+--		self:CDBar("adds", 41, -10062, "ability_warrior_endlessrage")
+--		self:CDBar(163312, 13) -- Raving Assault (~10s + 3s cast)
+--	end
+--end
 
 function mod:GiftOfEarth(args)
 	self:Message(args.spellId, "Urgent", "Alert")

@@ -138,6 +138,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GazeClosestApplied", 176537)
 	self:Log("SPELL_AURA_REMOVED", "GazeClosestRemoved", 176537)
 	self:Log("SPELL_AURA_APPLIED", "GrowingDarknessDamage", 176525)
+	--self:Log("SPELL_CAST_SUCCESS", "ChogallSpawn", 181113) -- XXX 6.1
 
 	self:Death("ReaverDeath", 78549) -- Gorian Reaver
 end
@@ -244,6 +245,11 @@ do
 		self:ScheduleTimer(nextAdd, 32, self)
 		self:DelayedMessage(165876, 80, "Important", CL.soon:format(CL.count:format(self:SpellName(165876), nightCount)), false, "Info")
 	end
+
+	-- XXX for patch 6.1
+	--function mod:ChogallSpawn(args)
+	--	
+	--end
 end
 
 do

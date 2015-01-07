@@ -52,6 +52,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	--self:Log("SPELL_CAST_SUCCESS", "BoundingCleave", 156197, 156257) -- XXX 6.1
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "BoundingCleave", "boss1")
 	self:Log("SPELL_AURA_APPLIED", "Tenderizer", 156151)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Tenderizer", 156151)
@@ -121,6 +122,16 @@ function mod:BoundingCleave(_, spellName, _, _, spellId)
 		self:CDBar(156151, 17) -- Tenderizer
 	end
 end
+
+-- XXX for patch 6.1
+--function mod:BoundingCleave(args)
+--	local frenzied = args.spellId == 156257 and true
+--	cleaveCount = 1
+--	self:Message(-8860, "Urgent", "Alert")
+--	self:Bar(-8860, frenzied and 30 or 60) -- Bounding Cleave
+--	self:CDBar(156157, frenzied and 5 or 8) -- Cleave
+--	self:CDBar(156151, 17) -- Tenderizer
+--end
 
 function mod:Tenderizer(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", args.amount and "Warning")
