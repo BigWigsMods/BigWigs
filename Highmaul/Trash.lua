@@ -37,6 +37,7 @@ function mod:GetOptions()
 	return {
 		{172066, "FLASH", "PROXIMITY", "SAY"}, -- Radiating Poison
 		{175654, "FLASH"}, -- Rune of Disintegration
+		{175636, "FLASH", "PROXIMITY", "SAY"}, -- Rune of Destruction
 		{173827, "FLASH"}, -- Wild Flames
 	}, {
 		[172066] = L.oro,
@@ -52,6 +53,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "RuneOfDisintegration", 175654)
 	self:Log("SPELL_PERIODIC_DAMAGE", "RuneOfDisintegration", 175654)
 	self:Log("SPELL_PERIODIC_MISSED", "RuneOfDisintegration", 175654)
+
+	self:Log("SPELL_AURA_APPLIED", "RuneOfDestruction", 175636)
+	self:Log("SPELL_AURA_REMOVED", "RuneOfDestructionRemoved", 175636)
 
 	self:Log("SPELL_AURA_APPLIED", "WildFlames", 173827)
 	self:Log("SPELL_PERIODIC_DAMAGE", "WildFlames", 173827)
@@ -93,6 +97,22 @@ do
 			self:Flash(args.spellId)
 			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
+	end
+end
+
+function mod:RuneOfDestruction(args)
+	self:TargetBar(args.spellId, 15, args.destName)
+	if self:Me(args.destGUID) then
+		self:Flash(args.spellId)
+		self:OpenProximity(args.spellId, 6)
+		self:Say(args.spellId)
+	end
+end
+
+function mod:RuneOfDestructionRemoved(args)
+	self:StopBar(args.spellId, args.destName)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
 	end
 end
 
