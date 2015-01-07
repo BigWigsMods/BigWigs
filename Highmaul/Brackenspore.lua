@@ -11,6 +11,7 @@ mod.engageId = 1720
 --------------------------------------------------------------------------------
 -- Locals
 --
+
 local decayCount = 1
 local infestingSporesCount = 1
 
@@ -20,7 +21,7 @@ local infestingSporesCount = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.mythic_ability = "Special Ability"
+	L.mythic_ability = "Special ability"
 	L.mythic_ability_desc = "Show a timer bar for the next Call of the Tides or Exploding Fungus arriving."
 	L.mythic_ability_icon = "achievement_boss_highmaul_fungalgiant"
 
@@ -89,9 +90,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "NecroticBreath", 159219)
 	self:Log("SPELL_CAST_START", "InfestingSpores", 159996)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "FungusSpawns", "boss1")
+	self:Log("SPELL_CAST_SUCCESS", "SporeShooter", 163594)
 	self:Log("SPELL_CAST_START", "Decay", 160013)
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "CallOfTheTides", 163755)
+	self:Log("SPELL_CAST_SUCCESS", "ExplodingFungus", 163794)
 end
 
 function mod:OnEngage()
@@ -117,6 +120,13 @@ end
 
 function mod:CallOfTheTides(args)
 	self:Message(args.spellId, "Urgent")
+	self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon) -- can be delayed by other casts
+end
+
+function mod:ExplodingFungus(args)
+	self:Message(args.spellId, "Urgent")
+	self:Flash(args.spellId)
+	self:Bar(args.spellId, 7)
 	self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon) -- can be delayed by other casts
 end
 
@@ -155,11 +165,13 @@ function mod:Decay(args)
 	self:Bar(args.spellId, 9.5, CL.count:format(args.spellName, decayCount))
 end
 
+function mod:SporeShooter(args)
+	self:Message("spore_shooter", "Attention", nil, CL.small_adds, L.spore_shooter_icon)
+	self:Bar("spore_shooter", 60, CL.small_adds, L.spore_shooter_icon)
+end
+
 function mod:FungusSpawns(unit, spellName, _, _, spellId)
-	if spellId == 163594 then -- Spore Shooter
-		self:Message("spore_shooter", "Attention", nil, CL.small_adds, L.spore_shooter_icon)
-		self:Bar("spore_shooter", 60, CL.small_adds, L.spore_shooter_icon)
-	elseif spellId == 163141 then -- Mind Fungus
+	if spellId == 163141 then -- Mind Fungus
 		self:Message("mind_fungus", "Attention", nil, spellId, L.mind_fungus_icon)
 		self:CDBar("mind_fungus", self:Mythic() and 30 or 51, spellId, L.mind_fungus_icon) -- 51.1, 58.6, 55.5, 55, 61.5, 59.5
 	elseif spellId == 163142 then -- Evolved Fungus (Fungal Flesh-Eater)
@@ -172,11 +184,6 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 	elseif spellId == 160021 then -- Rejuvenating Mushroom
 		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Long", spellId, L.rejuvenating_mushroom_icon)
 		self:CDBar("rejuvenating_mushroom", 120, spellId, L.rejuvenating_mushroom_icon) -- spawns most of the time just after 2min, sometimes delayed by boss casts (?)
-	elseif spellId == 163794 then -- Exploding Fungus (Mythic)
-		self:Message(spellId, "Urgent")
-		self:Flash(spellId)
-		self:Bar(spellId, 7)
-		self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon) -- can be delayed by other casts
 	end
 end
 
