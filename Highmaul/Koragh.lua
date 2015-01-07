@@ -89,9 +89,11 @@ function mod:OnEngage()
 	allowSuppression = nil
 	intermission = nil
 	ballCount = 1
+	self:Bar(162185, 6)  -- Expel Magic: Fire
 	self:Bar(162186, 30) -- Expel Magic: Arcane
-	self:Bar(172747, 40) -- Expel Magic: Frost -- guess, first charge phase is usually happening when it would come off cd
 	self:Bar(161612, 36, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Energy
+	self:Bar(172747, 40) -- Expel Magic: Frost
+	self:Bar(162184, 55) -- Expel Magic: Shadow
 	if self:Mythic() then
 		self:CDBar(172895, 8) -- Expel Magic: Fel
 	end
@@ -127,17 +129,19 @@ do
 	function mod:Intermission(unit, spellName, _, _, spellId)
 		if spellId == 174856 then -- Knockback
 			intermission = true
-			self:StopBar(161328) -- Suppression Field
-			self:StopBar(172895) -- Expel Magic: Fel
 			-- cds pause for the duration of Vulnerability
+			self:PauseBar(161328) -- Suppression Field
+			self:PauseBar(162184) -- Expel Magic: Shadow
+			self:PauseBar(162185) -- Expel Magic: Fire
 			self:PauseBar(162186) -- Expel Magic: Arcane
 			self:PauseBar(172747) -- Expel Magic: Frost
+			self:PauseBar(172895) -- Expel Magic: Fel
 			-- once the balls start dropping, they don't stop
 			-- XXX need to find out if they can drop between Knockback and Vulnerability
-			if self:Mythic() and self:BarTimeLeft(L.dominating_power_bar:format(ballCount)) > 5 then
+			if self:Mythic() and self:BarTimeLeft(L.dominating_power_bar:format(ballCount)) > 6 then
 				self:PauseBar(163472, L.dominating_power_bar:format(ballCount))
 				self:CancelDelayedMessage(CL.soon:format(self:SpellName(163472)))
-			elseif self:BarTimeLeft(L.overwhelming_energy_bar:format(ballCount)) > 5 then
+			elseif self:BarTimeLeft(L.overwhelming_energy_bar:format(ballCount)) > 6 then
 				self:PauseBar(161612, L.overwhelming_energy_bar:format(ballCount))
 				self:CancelDelayedMessage(CL.soon:format(self:SpellName(161612)))
 			end
@@ -149,8 +153,12 @@ do
 		elseif spellId == 156803 then -- Nullification Barrier
 			intermission = nil
 			self:Message(160734, "Positive", nil, spellName)
+			self:ResumeBar(161328) -- Suppression Field
+			self:ResumeBar(162184) -- Expel Magic: Shadow
+			self:ResumeBar(162185) -- Expel Magic: Fire
 			self:ResumeBar(162186) -- Expel Magic: Arcane
 			self:ResumeBar(172747) -- Expel Magic: Frost
+			self:ResumeBar(172895) -- Expel Magic: Fel
 			if self:Mythic() then
 				self:ResumeBar(163472, L.dominating_power_bar:format(ballCount))
 				local cd = self:BarTimeLeft(L.dominating_power_bar:format(ballCount))
@@ -162,11 +170,8 @@ do
 			if UnitPower("player", 10) > 0 then -- has alternate power (soaking)
 				local cd = self:BarTimeLeft(L.overwhelming_energy_bar:format(ballCount))
 				if cd > 10 and UnitPower("player", 10) > 0 then
-					self:DelayedMessage(161612, cd-10, "Positive", CL.soon:format(self:SpellName(161612)), 161612, "Warning") -- Overwhelming Enery soon!
+					self:DelayedMessage(161612, cd-10, "Positive", CL.soon:format(self:SpellName(161612)), 161612, "Warning") -- Overwhelming Energy soon!
 				end
-			end
-			if self:Mythic() then
-				self:CDBar(172895, 6) -- Expel Magic: Fel
 			end
 			self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, unit)
 		end
@@ -175,6 +180,7 @@ end
 
 function mod:ExpelMagicShadow(args)
 	self:Message(args.spellId, "Attention", "Alert")
+	self:CDBar(args.spellId, 63) -- 63-65
 end
 
 do
@@ -216,6 +222,7 @@ end
 
 function mod:ExpelMagicFire(args)
 	self:Message(args.spellId, "Important", "Alarm")
+	self:CDBar(args.spellId, 63) -- 63-65
 	self:Bar(args.spellId, 10, L.fire_bar)
 	self:OpenProximity(args.spellId, 5)
 	self:ScheduleTimer("CloseProximity", 10.5, args.spellId)
@@ -287,9 +294,9 @@ do
 				self:CDBar(163472, cd, L.dominating_power_bar:format(ballCount)) -- Dominating Power
 				self:DelayedMessage(163472, cd-10, "Urgent", CL.soon:format(self:SpellName(163472))) -- Dominating Power soon!
 			else
-				self:CDBar(161612, cd, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Enery
+				self:CDBar(161612, cd, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Energy
 				if UnitPower("player", 10) > 0 then -- has alternate power (soaking)
-					self:DelayedMessage(161612, cd-10, "Positive", CL.soon:format(args.spellName), 161612, "Warning") -- Overwhelming Enery soon!
+					self:DelayedMessage(161612, cd-10, "Positive", CL.soon:format(args.spellName), 161612, "Warning") -- Overwhelming Energy soon!
 				end
 			end
 		end
