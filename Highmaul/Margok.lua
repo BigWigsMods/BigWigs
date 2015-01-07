@@ -13,7 +13,7 @@ mod.engageId = 1705
 --
 
 local phase = 1
-local mineCount, novaCount, aberrationCount, nightCount = 1, 1, 1, 1
+local mineCount, novaCount, aberrationCount, nightCount, glimpseCount = 1, 1, 1, 1, 1
 local p1times = {}
 local addDeathWarned = nil
 local markOfChaosTarget, brandedOnMe, fixateOnMe, replicatingNova, gazeOnMe = nil, nil, nil, nil, nil
@@ -239,6 +239,7 @@ do
 		self:ScheduleTimer(startPhase, 10, self)
 		phase = 4
 		nightCount = 1
+		glimpseCount = 1
 		gazeOnMe = nil
 		wipe(gazeTargets)
 		self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
@@ -297,8 +298,9 @@ function mod:EnvelopingNight(args)
 end
 
 function mod:GlimpseOfMadness(args)
-	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 27)
+	self:Message(args.spellId, "Attention", "Info", CL.count:format(args.spellName, glimpseCount))
+	glimpseCount = glimpseCount + 1
+	self:Bar(args.spellId, 27, CL.count:format(args.spellName, glimpseCount))
 end
 
 do -- GazeOfTheAbyss
