@@ -5,7 +5,7 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local BW_L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected
-local EJ_GetSectionInfo, GetSpellInfo = EJ_GetSectionInfo, GetSpellInfo
+local EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture = EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture
 local format, sub, gsub, band = string.format, string.sub, string.gsub, bit.band
 local type, next, tonumber = type, next, tonumber
 local core = BigWigs
@@ -63,10 +63,10 @@ local eventMap = setmetatable({}, metaMap)
 local unitEventMap = setmetatable({}, metaMap)
 local icons = setmetatable({}, {__index =
 	function(self, key)
-		local _, value
+		local value
 		if type(key) == "number" then
 			if key > 0 then
-				_, _, value = GetSpellInfo(key)
+				value = GetSpellTexture(key)
 				if not value then
 					core:Print(format("An invalid spell id (%d) is being used in a bar/message.", key))
 				end
