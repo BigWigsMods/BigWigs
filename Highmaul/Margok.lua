@@ -103,8 +103,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "PhaseEnd", "boss1")
-	self:Log("SPELL_AURA_APPLIED", "PhaseStart", 158012, 157964) -- Power of Fortification, Replication
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Phases", "boss1")
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcceleratedAssault", 159515)
 	-- Spell, Spell: Displacement, Spell: Fortification, Spell: Replication
 	self:Log("SPELL_CAST_START", "ArcaneWrath", 156238, 163988, 163989, 163990)
@@ -413,8 +412,8 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	end
 end
 
-function mod:PhaseEnd(unit, spellName, _, _, spellId)
-	if spellId == 164336 or spellId == 164751 or spellId == 164810 then -- Teleport to Displacement, Fortification, Replication
+function mod:Phases(unit, spellName, _, _, spellId)
+	if spellId == 164336 or spellId == 164751 or spellId == 164810 then -- Teleport to Displacement, Fortification, Replication (Phase end)
 		phase = phase + 1
 		mineCount, novaCount = 1, 1
 
@@ -446,20 +445,18 @@ function mod:PhaseEnd(unit, spellName, _, _, spellId)
 				self:ScheduleTimer("CDBar", 15, 158563, 27) -- Kick to the Face
 			end
 		end
-	end
-end
-
-function mod:PhaseStart(args)
-	self:CDBar(156238, 8)  -- Arcane Wrath
-	self:CDBar(156467, 18) -- Destructive Resonance
-	self:CDBar(156471, 28, CL.count:format(self:SpellName(-9945), aberrationCount)) -- Arcane Aberration
-	self:CDBar(158605, 38) -- Mark of Chaos
-	self:CDBar(157349, 48) -- Force Nova
-	if args.spellId ~= 157964 or self:Mythic() then -- Replication is the last phase
-		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
-	end
-	if args.spellId == 157964 and self:Mythic() then
-		self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "Phase4")
+	elseif spellId == 158012 or spellId == 157964 then -- Power of Fortification, Replication (Phase start)
+		self:CDBar(156238, 8)  -- Arcane Wrath
+		self:CDBar(156467, 18) -- Destructive Resonance
+		self:CDBar(156471, 28, CL.count:format(self:SpellName(-9945), aberrationCount), 156471) -- Arcane Aberration
+		self:CDBar(158605, 38) -- Mark of Chaos
+		self:CDBar(157349, 48) -- Force Nova
+		if spellId ~= 157964 or self:Mythic() then -- Replication is the last phase
+			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, unit)
+		end
+		if spellId == 157964 and self:Mythic() then
+			self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "Phase4")
+		end
 	end
 end
 
