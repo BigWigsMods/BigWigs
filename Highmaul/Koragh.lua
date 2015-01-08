@@ -158,6 +158,7 @@ function mod:BarrierRemoved(args)
 end
 
 function mod:BarrierApplied(args)
+	if not self.isEngaged then return end -- Prevent this running when he gains the shield on engage, but before encounter engage events fire. 
 	intermission = nil
 	self:Message(160734, "Positive", nil, args.spellName)
 	self:ResumeBar(161328) -- Suppression Field
