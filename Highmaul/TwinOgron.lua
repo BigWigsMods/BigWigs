@@ -55,7 +55,7 @@ function mod:GetOptions()
 		{158385, "PROXIMITY"}, -- Pulverize
 		--[[ Phemos ]]--
 		{158521, "TANK"}, -- Double Slash
-		{167200, "TANK"}, -- Arcane Wound
+		{167200, "TANK_HEALER"}, -- Arcane Wound
 		157943, -- Whirlwind
 		158057, -- Enfeebling Roar
 		158200, -- Quake
@@ -230,8 +230,7 @@ function mod:DoubleSlash(args)
 end
 
 function mod:ArcaneWound(args)
-	-- XXX this isn't applied terribly often, buggy or just ment to be a minor annoyance?
-	self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+	self:TargetMessage(args.spellId, args.destName, args.amount, "Neutral")
 end
 
 function mod:Whirlwind(args)
