@@ -14,7 +14,7 @@ mod.engageId = 1719
 
 local quakeCount = 0
 local pulverizeProximity = nil
-local arcaneTwisted = nil
+local arcaneTwisted, arcaneTwistedTime = nil, nil
 local volatilityCount = 1
 local volatilityOnMe = nil
 local volatilityTargets = {}
@@ -107,11 +107,10 @@ function mod:OnEngage()
 	wipe(volatilityTargets)
 	self:CDBar(158200, 12) -- Quake
 	self:CDBar(143834, 22) -- Shield Bash
-	--self:CDBar(158521, 26) -- Double Slash
+	self:CDBar(158521, 26) -- Double Slash
 	self:CDBar(158134, polInterval + 10) -- Shield Charge
-	self:CDBar(157943, phemosInterval + 10) -- Whirlwind
 	if self:Mythic() then
-		self:Bar(163297, 33) -- Arcane Twisted
+		arcaneTwistedTime = GetTime() + 33
 		self:Bar(163372, 62) -- Arcane Volatility
 		self:Berserk(420)
 	else
@@ -122,6 +121,14 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function isNextEmpowered(guid, nextCast)
+	if not arcaneTwisted then
+		return mod:MobId(guid) == 78237 -- Phemos is first (cheating, but works)
+	end
+	local t = GetTime() + nextCast
+	return (arcaneTwisted ~= guid and arcaneTwistedTime < t) or (arcaneTwisted == guid and arcaneTwistedTime > t)
+end
 
 local function updateProximity()
 	-- pulverize > arcane volatility
@@ -151,7 +158,11 @@ end
 function mod:ShieldBash(args)
 	if UnitDetailedThreatSituation("player", self:GetUnitIdByGUID(args.sourceGUID)) or not self:Tank() then
 		self:Message(args.spellId, "Urgent")
-		self:CDBar(args.spellId, 23)
+		if self:Mythic() and isNextEmpowered(args.sourceGUID, 23) then
+			self:CDBar(args.spellId, 23, ("%s (%s)"):format(args.spellName, STRING_SCHOOL_ARCANE))
+		else
+			self:CDBar(args.spellId, 23)
+		end
 	end
 end
 
@@ -189,7 +200,11 @@ do
 		-- skip the first actual cast (157952) in favor of announcing it at the start of the sequence to give people more time to spread out
 		self:Message(158385, "Urgent", "Info", CL.count:format(args.spellName, count))
 		self:Bar(158385, 3.1, ("<%s>"):format(CL.count:format(args.spellName, count)))
-		self:CDBar(158134, polInterval) -- Shield Charge
+		if self:Mythic() and isNextEmpowered(args.sourceGUID, polInterval) then
+			self:CDBar(158134, polInterval, ("%s (%s)"):format(self:SpellName(158134), STRING_SCHOOL_ARCANE)) -- Shield Charge (Arcane)
+		else
+			self:CDBar(158134, polInterval) -- Shield Charge
+		end
 	end
 	function mod:PulverizeCast(args)
 		count = count + 1
@@ -206,7 +221,11 @@ end
 function mod:DoubleSlash(args)
 	if UnitDetailedThreatSituation("player", self:GetUnitIdByGUID(args.sourceGUID)) or not self:Tank() then
 		self:Message(args.spellId, "Attention")
-		self:CDBar(args.spellId, 28) -- XXX all over the place
+		if self:Mythic() and isNextEmpowered(args.sourceGUID, 27) then
+			self:CDBar(args.spellId, 27, ("%s (%s)"):format(args.spellName, STRING_SCHOOL_ARCANE))
+		else
+			self:CDBar(args.spellId, 27) -- XXX all over the place, due to channeling?
+		end
 	end
 end
 
@@ -238,7 +257,11 @@ end
 function mod:Quake(args)
 	quakeCount = quakeCount + 1
 	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(CL.count:format(args.spellName, quakeCount)))
-	self:CDBar(157943, phemosInterval) -- Whirlwind
+	if self:Mythic() and isNextEmpowered(args.sourceGUID, phemosInterval) then
+		self:CDBar(157943, phemosInterval, ("%s (%s)"):format(self:SpellName(157943), STRING_SCHOOL_ARCANE)) -- Whirlwind (Arcane)
+	else
+		self:CDBar(157943, phemosInterval) -- Whirlwind
+	end
 end
 
 function mod:QuakeChannel(args)
@@ -320,7 +343,7 @@ end
 
 function mod:ArcaneTwisted(args)
 	self:TargetMessage(args.spellId, args.destName, "Neutral")
-	self:Bar(args.spellId, 55, args.destName)
 	arcaneTwisted = args.destGUID
+	arcaneTwistedTime = GetTime() + 55
 end
 
