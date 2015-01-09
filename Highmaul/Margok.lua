@@ -167,6 +167,21 @@ function mod:OnEngage()
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
+function mod:OnBossDisable()
+	if self.db.profile.custom_off_branded_marker then
+		for _, player in next, brandedMarks do
+			SetRaidTarget(player, 0)
+		end
+		wipe(brandedMarks)
+	end
+	if self.db.profile.custom_off_fixate_marker then
+		for player in next, fixateMarks do
+			SetRaidTarget(player, 0)
+		end
+		wipe(fixateMarks)
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --

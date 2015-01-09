@@ -93,6 +93,15 @@ function mod:OnEngage()
 	end
 end
 
+function mod:OnBossDisable()
+	if self.db.profile.custom_off_barrage_marker then
+		for _, player in next, marked do
+			SetRaidTarget(player, 0)
+		end
+		wipe(marked)
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --

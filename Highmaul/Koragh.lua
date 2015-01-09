@@ -15,6 +15,7 @@ mod.engageId = 1723
 local allowSuppression = nil
 local intermission = nil
 local ballCount = 1
+local felMarks = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -91,15 +92,25 @@ function mod:OnEngage()
 	allowSuppression = nil
 	intermission = nil
 	ballCount = 1
-	self:Bar(162185, 6)  -- Expel Magic: Fire
-	self:Bar(162186, 30) -- Expel Magic: Arcane
+	self:CDBar(162185, 6)  -- Expel Magic: Fire
+	self:CDBar(162186, 30) -- Expel Magic: Arcane
 	self:Bar(161612, 36, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Energy
-	self:Bar(172747, 40) -- Expel Magic: Frost
-	self:Bar(162184, 55) -- Expel Magic: Shadow
+	self:CDBar(172747, 40) -- Expel Magic: Frost
+	self:CDBar(162184, 55) -- Expel Magic: Shadow
 	if self:Mythic() then
+		wipe(felMarks)
 		self:CDBar(172895, 8) -- Expel Magic: Fel
 	end
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
+end
+
+function mod:OnBossDisable()
+	if self:Mythic() and self.db.profile.custom_off_fel_marker then
+		for _, player in next, felMarks do
+			SetRaidTarget(player, 0)
+		end
+		wipe(felMarks)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -127,7 +138,6 @@ do
 			self:ScheduleTimer(nextAdd, 8, self)
 		end
 	end
-
 	function mod:Vulnerability(unit, spellName, _, _, spellId)
 		if spellId == 160734 then -- Vulnerability
 			self:Message(spellId, "Positive", "Long", CL.removed:format(self:SpellName(156803))) -- Nullification Barrier removed!
@@ -166,8 +176,8 @@ function mod:BarrierApplied(args)
 	self:ResumeBar(162185) -- Expel Magic: Fire
 	self:ResumeBar(162186) -- Expel Magic: Arcane
 	self:ResumeBar(172747) -- Expel Magic: Frost
-	self:ResumeBar(172895) -- Expel Magic: Fel
 	if self:Mythic() then
+		self:ResumeBar(172895) -- Expel Magic: Fel
 		self:ResumeBar(163472, L.dominating_power_bar:format(ballCount))
 		local cd = self:BarTimeLeft(L.dominating_power_bar:format(ballCount))
 		if cd > 0 then
@@ -194,7 +204,7 @@ do
 		if self:Me(guid) then
 			self:Message(162186, "Personal", "Warning", CL.casting:format(CL.you:format(self:SpellName(162186))))
 		else
-			self:Message(162186, "Urgent", "Warning", CL.casting:format(CL.on:format(self:SpellName(162186), self:ColorName(name))))
+			self:Message(162186, "Urgent", "Warning", CL.casting:format(self:SpellName(162186)))
 		end
 	end
 	function mod:ExpelMagicArcaneStart(args)
@@ -249,7 +259,7 @@ do
 	function mod:ExpelMagicFrost(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
 		self:Bar(args.spellId, 21.5, ("<%s>"):format(self:SpellName(84721)), 84721) -- Frozen Orb
-		self:Bar(args.spellId, 60)
+		self:CDBar(args.spellId, 60)
 	end
 end
 
@@ -312,30 +322,38 @@ end
 -- Mythic
 
 do
-	local count, isOnMe = 0, nil
+	local scheduled, isOnMe = nil, nil
 	function mod:ExpelMagicFelCast(args)
 		self:CDBar(args.spellId, 15.7) -- 15-18, mostly 15.7
-		count = 0
+		wipe(felMarks)
 		isOnMe = nil
 	end
 
+	local function warn(self, spellId)
+		if not isOnMe then
+			self:Message(spellId, "Attention")
+		end
+		scheduled = nil
+	end
 	function mod:ExpelMagicFelApplied(args)
-		count = count + 1
+		felMarks[#felMarks+1] = args.destName
 		if self:Me(args.destGUID) then
 			isOnMe = true
 			self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
 			self:TargetBar(args.spellId, 12, args.destName)
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
-		elseif count == 3 and not isOnMe then
-			self:Message(args.spellId, "Attention")
+		end
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warn, 0.3, self, args.spellId)
 		end
 		if self.db.profile.custom_off_fel_marker then
-			SetRaidTarget(args.destName, count)
+			SetRaidTarget(args.destName, #felMarks)
 		end
 	end
 
 	function mod:ExpelMagicFelRemoved(args)
+		tDeleteItem(felMarks, args.destName)
 		if self:Me(args.destName) then
 			self:StopBar(args.spellId, args.destName)
 		end
