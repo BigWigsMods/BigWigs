@@ -324,6 +324,7 @@ do -- GazeOfTheAbyss
 	-- only show the proximity for people that aren't targeted by an add (debuff will fall off)
 
 	-- debuff scanning because the two add debuffs have the same name :\
+
 	-- XXX fixed for 6.1, renamed to "Eyes of the Abyss" FIXME
 	local function checkDebuff(unit, id)
 		if select(11, UnitDebuff(unit, (GetSpellInfo(id)))) == id then return true end -- only one?
@@ -465,6 +466,11 @@ function mod:PhaseEnd(unit, spellName, _, _, spellId)
 		end
 	end
 end
+
+-- XXX for patch 6.1
+--function mod:PhaseEnd(args)
+--	
+--end
 
 function mod:PhaseStart(args)
 	if not self.isEngaged then return end -- In Mythic mode he gains this when he's floating around the room before engage.

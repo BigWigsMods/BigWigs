@@ -109,7 +109,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 end
 
 -- XXX for patch 6.1
---function mod:CatSpawn(args)
+--function mod:CatSpawn()
 --	self:Message(-9396, "Neutral", nil, nil, false) -- Ravenous Bloodmaw
 --	self:Bar(-9396, 110, nil, "ability_druid_tigersroar")
 --end

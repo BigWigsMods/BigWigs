@@ -35,9 +35,12 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		--[[ Oro ]]--
 		{172066, "FLASH", "PROXIMITY", "SAY"}, -- Radiating Poison
+		--[[ Gorian Runemaster ]]--
 		{175654, "FLASH"}, -- Rune of Disintegration
 		{175636, "FLASH", "PROXIMITY", "SAY"}, -- Rune of Destruction
+		--[[ Breaker Ritualist ]]--
 		{173827, "FLASH"}, -- Wild Flames
 	}, {
 		[172066] = L.oro,
@@ -77,7 +80,9 @@ function mod:RadiatingPoison(args)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:OpenProximity(args.spellId, 10)
-		self:Say(args.spellId)
+		if not self:LFR() then
+			self:Say(args.spellId)
+		end
 	end
 end
 
@@ -105,7 +110,9 @@ function mod:RuneOfDestruction(args)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:OpenProximity(args.spellId, 6)
-		self:Say(args.spellId)
+		if not self:LFR() then
+			self:Say(args.spellId)
+		end
 	end
 end
 
