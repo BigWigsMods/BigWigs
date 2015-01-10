@@ -66,6 +66,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	--self:Log("SPELL_AURA_APPLIED", "Vulnerability", 160734) -- XXX 6.1
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Vulnerability", "boss1")
 	self:Log("SPELL_AURA_REMOVED", "BarrierRemoved", 156803)
 	self:Log("SPELL_AURA_APPLIED", "BarrierApplied", 156803)
@@ -146,6 +147,13 @@ do
 			self:ScheduleTimer(nextAdd, 1, self)
 		end
 	end
+	-- XXX for patch 6.1
+	--function mod:Vulnerability(args)
+	--	self:Message(args.spellId, "Positive", "Long", CL.removed:format(self:SpellName(156803))) -- Nullification Barrier removed!
+	--	self:Bar(args.spellId, 20)
+	--	count = 0
+	--	self:ScheduleTimer(nextAdd, 1, self)
+	--end
 end
 
 function mod:BarrierRemoved(args)

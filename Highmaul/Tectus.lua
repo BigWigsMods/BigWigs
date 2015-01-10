@@ -62,6 +62,7 @@ end
 
 function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_SUCCESS", "AddsSpawn", 181113) -- XXX 6.1
+	--self:Log("SPELL_CAST_SUCCESS", "BossUnitKilled", 181089) -- XXX 6.1
 	-- Tectus
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Accretion", 162288)
 	self:Log("SPELL_AURA_APPLIED", "CrystallineBarrage", 162346)
@@ -189,6 +190,16 @@ function mod:Split(unit, spellName, _, _, spellId)
 		--self:CDBar(162346, 8) -- Crystalline Barrage 7-12s, then every ~20s, 2-5s staggered
 	end
 end
+
+-- XXX for patch 6.1
+-- Was probably not even worth adding this but warcraftlogs might be happier about it
+--function mod:BossUnitKilled()
+--	if not self:Mythic() then
+--		self:StopBar(-10061) -- Earthwarper
+--		self:StopBar(-10062) -- Berserker
+--	end
+--end
+
 
 -- Adds
 
