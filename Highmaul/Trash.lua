@@ -9,7 +9,9 @@ mod.displayName = CL.trash
 mod:RegisterEnableMob(
 	86072, -- Oro
 	81272, -- Gorian Runemaster
-	86329 -- Breaker Ritualist
+	82528, -- Gorian Arcanist
+	86326, -- Breaker Ritualist <Breaker of Frost>
+	86329 -- Breaker Ritualist <Breaker of Fire>
 )
 
 --------------------------------------------------------------------------------
@@ -25,6 +27,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.oro = "Oro"
 	L.runemaster = "Gorian Runemaster"
+	L.arcanist = "Gorian Arcanist"
 	L.ritualist = "Breaker Ritualist"
 end
 L = mod:GetLocale()
@@ -40,11 +43,15 @@ function mod:GetOptions()
 		--[[ Gorian Runemaster ]]--
 		{175654, "FLASH"}, -- Rune of Disintegration
 		{175636, "FLASH", "PROXIMITY", "SAY"}, -- Rune of Destruction
+		--[[ Gorian Arcanist ]]--
+		{166200, "FLASH", "PROXIMITY", "SAY"}, -- Arcane Volatility
 		--[[ Breaker Ritualist ]]--
 		{173827, "FLASH"}, -- Wild Flames
+		{174404, "FLASH", "PROXIMITY", "SAY"}, -- Frozen Core
 	}, {
 		[172066] = L.oro,
 		[175654] = L.runemaster,
+		[166200] = L.arcanist,
 		[173827] = L.ritualist,
 	}
 end
@@ -60,20 +67,28 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "RuneOfDestruction", 175636)
 	self:Log("SPELL_AURA_REMOVED", "RuneOfDestructionRemoved", 175636)
 
+	self:Log("SPELL_AURA_APPLIED", "ArcaneVolatility", 166200)
+	self:Log("SPELL_AURA_REMOVED", "ArcaneVolatilityRemoved", 166200)
+
 	self:Log("SPELL_AURA_APPLIED", "WildFlames", 173827)
 	self:Log("SPELL_PERIODIC_DAMAGE", "WildFlames", 173827)
 	self:Log("SPELL_PERIODIC_MISSED", "WildFlames", 173827)
 
-	self:Death("DisableOnCombatExit", 86072, 86329, 81272) -- Oro, Breaker Ritualist, Gorian Runemaster
+	self:Log("SPELL_AURA_APPLIED", "FrozenCore", 174404)
+	self:Log("SPELL_AURA_REMOVED", "FrozenCoreRemoved", 174404)
+
+	--self:Death("DisableOnCombatExit", 86072, 86326, 86329, 81272, 82528) -- Oro, Breaker Ritualist <Breaker of Frost>, Breaker Ritualist <Breaker of Fire>, Gorian Runemaster, Gorian Arcanist
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:DisableOnCombatExit()
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "Disable")
-end
+--function mod:DisableOnCombatExit()
+--	self:RegisterEvent("PLAYER_REGEN_ENABLED", "Disable")
+--end
+
+--[[ Oro ]]--
 
 function mod:RadiatingPoison(args)
 	self:TargetBar(args.spellId, 40, args.destName)
@@ -92,6 +107,8 @@ function mod:RadiatingPoisonRemoved(args)
 		self:CloseProximity(args.spellId)
 	end
 end
+
+--[[ Gorian Runemaster ]]--
 
 do
 	local prev = 0
@@ -123,6 +140,28 @@ function mod:RuneOfDestructionRemoved(args)
 	end
 end
 
+--[[ Gorian Arcanist ]]--
+
+function mod:ArcaneVolatility(args)
+	--self:TargetBar(args.spellId, 6, args.destName)
+	if self:Me(args.destGUID) then
+		self:Flash(args.spellId)
+		self:OpenProximity(args.spellId, 8)
+		if not self:LFR() then
+			self:Say(args.spellId)
+		end
+	end
+end
+
+function mod:ArcaneVolatilityRemoved(args)
+	--self:StopBar(args.spellId, args.destName)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
+	end
+end
+
+--[[ Breaker Ritualist ]]--
+
 do
 	local prev = 0
 	function mod:WildFlames(args)
@@ -132,6 +171,24 @@ do
 			self:Flash(args.spellId)
 			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
+	end
+end
+
+function mod:FrozenCore(args)
+	self:TargetBar(args.spellId, 20, args.destName)
+	if self:Me(args.destGUID) then
+		self:Flash(args.spellId)
+		self:OpenProximity(args.spellId, 8)
+		if not self:LFR() then
+			self:Say(args.spellId)
+		end
+	end
+end
+
+function mod:FrozenCoreRemoved(args)
+	self:StopBar(args.spellId, args.destName)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
 	end
 end
 
