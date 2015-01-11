@@ -123,8 +123,8 @@ function mod:OnBossDisable()
 		for _, player in next, volatilityTargets do
 			SetRaidTarget(player, 0)
 		end
-		wipe(volatilityTargets)
 	end
+	wipe(volatilityTargets)
 end
 
 --------------------------------------------------------------------------------
