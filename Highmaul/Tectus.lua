@@ -115,13 +115,15 @@ function mod:Accretion(args)
 end
 
 do
-	local list, scheduled = mod:NewTargetList(), nil
+	local list, scheduled, throttle = mod:NewTargetList(), nil, {}
 	local function warn(self, spellId)
 		self:TargetMessage(spellId, list, "Positive") -- ME_ONLY by default, too spammy
 		scheduled = nil
 	end
 	function mod:CrystallineBarrage(args)
 		--self:CDBar(args.spellId, 30.5)
+		if throttle[args.destGUID] then return end
+		throttle[args.destGUID] = true
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId, 120361) -- 120361 = "Barrage"
@@ -131,6 +133,9 @@ do
 			if not scheduled then
 				scheduled = self:ScheduleTimer(warn, 0.2, self, args.spellId)
 			end
+		end
+		if not throttle.timer then
+			throttle.timer = self:ScheduleTimer(wipe, 3, throttle)
 		end
 		if self.db.profile.custom_off_barrage_marker then
 			for i=1, 5 do
