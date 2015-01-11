@@ -239,7 +239,7 @@ function mod:DoubleSlash(args)
 end
 
 function mod:ArcaneWound(args)
-	self:TargetMessage(args.spellId, args.destName, args.amount, "Neutral")
+	self:TargetMessage(args.spellId, args.destName, "Neutral")
 end
 
 function mod:Whirlwind(args)
