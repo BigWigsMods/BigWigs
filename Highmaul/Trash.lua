@@ -57,6 +57,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterMessage("BigWigs_OnBossEngage", "Disable")
+
 	self:Log("SPELL_AURA_APPLIED", "RadiatingPoison", 172066)
 	self:Log("SPELL_AURA_REMOVED", "RadiatingPoisonRemoved", 172066)
 
@@ -76,17 +78,11 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "FrozenCore", 174404)
 	self:Log("SPELL_AURA_REMOVED", "FrozenCoreRemoved", 174404)
-
-	--self:Death("DisableOnCombatExit", 86072, 86326, 86329, 81272, 82528) -- Oro, Breaker Ritualist <Breaker of Frost>, Breaker Ritualist <Breaker of Fire>, Gorian Runemaster, Gorian Arcanist
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
---function mod:DisableOnCombatExit()
---	self:RegisterEvent("PLAYER_REGEN_ENABLED", "Disable")
---end
 
 --[[ Oro ]]--
 
