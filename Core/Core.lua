@@ -451,7 +451,6 @@ function addon:OnInitialize()
 			showZoneMessages = true,
 			blockmovies = true,
 			fakeDBMVersion = false,
-			autoRole = true,
 		},
 		global = {
 			optionShiftIndexes = {},

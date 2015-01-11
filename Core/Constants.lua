@@ -5,7 +5,7 @@ local BigWigs = BigWigs
 local names = {}
 local descriptions = {}
 
-local GetSpellInfo, GetSpellDescription, EJ_GetSectionInfo = GetSpellInfo, GetSpellDescription, EJ_GetSectionInfo
+local GetSpellInfo, GetSpellTexture, GetSpellDescription, EJ_GetSectionInfo = GetSpellInfo, GetSpellTexture, GetSpellDescription, EJ_GetSectionInfo
 local type, next, tonumber, gsub, lshift, band = type, next, tonumber, gsub, bit.lshift, bit.band
 
 -- Option bitflags
@@ -158,12 +158,12 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			local icon = L[option .. "_icon"]
 			if icon == option .. "_icon" then icon = nil end
 			if type(icon) == "number" then
-				local _
 				if icon > 10 then
-					_, _, icon = GetSpellInfo(icon)
+					icon = GetSpellTexture(icon)
 				elseif icon > 0 then
 					icon = ("Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d"):format(icon)
 				else
+					local _
 					_, _, _, icon = EJ_GetSectionInfo(-icon)
 				end
 				if not icon then

@@ -12,7 +12,6 @@ mod.engageId = 1622
 -- Locals
 --
 
-local grenade = GetSpellInfo(135592)
 local engageTime = 0
 -- times are for when the train is about to enter the room, ~5s after the door opens
 local trainData = {
@@ -164,7 +163,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:CDBar(155864, 6, grenade) -- Pulse Grenade
+	self:CDBar(155864, 6, 135592, 155864) -- Pulse Grenade, 135592 = "Grenade"
 	self:CDBar(155921, 16) -- Enkindle
 	engageTime = GetTime()
 	-- bar for each lane seemed to make the most sense
@@ -237,7 +236,7 @@ end
 
 function mod:PulseGrenade(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 16, grenade)
+	self:CDBar(args.spellId, 16, 135592, args.spellId) -- 135592 = "Grenade"
 end
 
 function mod:PulseGrenadeDamage(args)

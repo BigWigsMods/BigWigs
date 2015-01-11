@@ -107,7 +107,7 @@ function plugin:SetSoundOptions(name, key, flags)
 	wipe(keyTable)
 	keyTable[1] = name
 	keyTable[2] = key
-	if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end
+	if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end -- XXX temp 6.1 store as id
 	local t = addKey(soundOptions, keyTable)
 	return t
 end
@@ -217,7 +217,7 @@ do
 					end
 				end
 			else
-				if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end -- XXX temp until we start storing these as spell ids instead of translated text
+				if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end -- XXX temp 6.1 store as id
 				local newSound = sDb[module.name][key]
 				if db.defaultonly and not overwrite then
 					PlaySound("RaidWarning", "Master")

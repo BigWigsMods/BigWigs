@@ -23,7 +23,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "The orb explodes!"
 
-	L.matterswap = GetSpellInfo(139919)
+	L.matterswap = 139919
 	L.matterswap_desc = "A player with Matter Swap is far away from you. You will swap places with them if they are dispelled."
 	L.matterswap_message = "You are furthest for Matter Swap!"
 	L.matterswap_icon = 138618

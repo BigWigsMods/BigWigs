@@ -460,11 +460,18 @@ do
 	local unitTable = {
 		"boss1", "boss2", "boss3", "boss4", "boss5",
 		"target", "targettarget",
+		"mouseover", "mouseovertarget",
 		"focus", "focustarget",
 		"party1target", "party2target", "party3target", "party4target",
-		"mouseover", "mouseovertarget"
+		"raid1target", "raid2target", "raid3target", "raid4target", "raid5target",
+		"raid6target", "raid7target", "raid8target", "raid9target", "raid10target",
+		"raid11target", "raid12target", "raid13target", "raid14target", "raid15target",
+		"raid16target", "raid17target", "raid18target", "raid19target", "raid20target",
+		"raid21target", "raid22target", "raid23target", "raid24target", "raid25target",
+		"raid26target", "raid27target", "raid28target", "raid29target", "raid30target",
+		"raid31target", "raid32target", "raid33target", "raid34target", "raid35target",
+		"raid36target", "raid37target", "raid38target", "raid39target", "raid40target"
 	}
-	for i = 1, 40 do unitTable[#unitTable+1] = format("raid%dtarget", i) end
 	local function findTargetByGUID(id)
 		local isNumber = type(id) == "number"
 		for i, unit in next, unitTable do
@@ -773,7 +780,7 @@ do
 	end
 	function boss:Dispeller(dispelType, isOffensive, key)
 		if key then
-			if type(key) == "number" and key > 0 then key = spells[key] end
+			if type(key) == "number" and key > 0 then key = spells[key] end -- XXX temp 6.1 store as id
 			if band(self.db.profile[key], C.DISPEL) ~= C.DISPEL then return true end
 		end
 		if isOffensive then
@@ -836,7 +843,7 @@ do
 		if type(key) == "nil" then core:Print(format(nilKeyError, self.name)) return end
 		if type(flag) ~= "number" then core:Print(format(invalidFlagError, self.name, type(flag), tostring(flag))) return end
 		if silencedOptions[key] then return end
-		if type(key) == "number" and key > 0 then key = spells[key] end
+		if type(key) == "number" and key > 0 then key = spells[key] end -- XXX temp 6.1 store as id
 		if type(self.db) ~= "table" then core:Print(format(noDBError, self.name)) return end
 		if type(self.db.profile[key]) ~= "number" then
 			if not self.toggleDefaults[key] then
