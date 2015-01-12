@@ -322,10 +322,12 @@ do
 	local timeLeft, timer = 6, nil
 	local function sayCountdown(self)
 		timeLeft = timeLeft - 1
-		self:Say("volatility_self", timeLeft, true)
-		if timeLeft < 2 and timer then
-			self:CancelTimer(timer)
-			timer = nil
+		if timeLeft < 4 then
+			self:Say("volatility_self", timeLeft, true)
+			if timeLeft < 2 and timer then
+				self:CancelTimer(timer)
+				timer = nil
+			end
 		end
 	end
 	function mod:ArcaneVolatilityApplied(args)
