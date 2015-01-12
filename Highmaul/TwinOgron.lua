@@ -44,7 +44,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Mythic ]]--
-		163297,
+		163297, -- Arcane Twisted
 		{163372, "PROXIMITY"}, -- Arcane Volatility
 		{"volatility_self", "FLASH", "SAY", "EMPHASIZE"},
 		"custom_off_volatility_marker",
