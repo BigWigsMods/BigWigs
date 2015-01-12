@@ -84,6 +84,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ArcaneWound", 167200) -- Mythic
 	self:Log("SPELL_CAST_START", "Whirlwind", 157943)
 	self:Log("SPELL_CAST_START", "EnfeeblingRoar", 158057)
+	self:Log("SPELL_AURA_APPLIED", "EnfeeblingRoarApplied", 158026)
 	self:Log("SPELL_CAST_START", "Quake", 158200)
 	self:Log("SPELL_CAST_SUCCESS", "QuakeChannel", 158200)
 	self:Log("SPELL_AURA_APPLIED", "BlazeApplied", 158241)
@@ -101,16 +102,14 @@ function mod:OnEngage()
 	phemosInterval = self:Mythic() and 28 or self:Heroic() and 31 or 33
 	quakeCount = 0
 	pulverizeProximity = nil
-	arcaneTwisted = nil
-	volatilityCount = 1
-	volatilityOnMe = nil
-	wipe(volatilityTargets)
 	self:CDBar(158200, 12) -- Quake
 	self:CDBar(143834, 22) -- Shield Bash
 	self:CDBar(158521, 26) -- Double Slash
 	self:CDBar(158134, polInterval + 10) -- Shield Charge
 	if self:Mythic() then
-		arcaneTwistedTime = GetTime() + 33
+		wipe(volatilityTargets)
+		volatilityCount, volatilityOnMe = 1, nil
+		arcaneTwisted, arcaneTwistedTime = nil, GetTime() + 33
 		self:Bar(163372, 62) -- Arcane Volatility
 		self:Berserk(420)
 	else
@@ -119,12 +118,14 @@ function mod:OnEngage()
 end
 
 function mod:OnBossDisable()
-	if self.db.profile.custom_off_volatility_marker then
-		for _, player in next, volatilityTargets do
-			SetRaidTarget(player, 0)
+	if self:Mythic() then
+		if self.db.profile.custom_off_volatility_marker then
+			for _, player in next, volatilityTargets do
+				SetRaidTarget(player, 0)
+			end
 		end
+		wipe(volatilityTargets)
 	end
-	wipe(volatilityTargets)
 end
 
 --------------------------------------------------------------------------------
@@ -260,6 +261,13 @@ function mod:EnfeeblingRoar(args)
 
 	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
 	self:CDBar(158200, phemosInterval, CL.count:format(self:SpellName(158200), quakeCount+1)) -- Quake
+end
+
+function mod:EnfeeblingRoarApplied(args)
+	if self:Me(args.destGUID) then
+		local value = select(16, UnitDebuff("player", args.spellName))
+		self:Message(158057, "Attention", nil, ("%s: %d%%"):format(args.spellName, value))
+	end
 end
 
 function mod:Quake(args)
