@@ -135,7 +135,7 @@ function mod:CreepingMossHeal(args)
 		local mobId = self:MobId(args.destGUID)
 		if mobId == 78491 then -- Brackenspore
 			self:Message(args.spellId, "Important", "Info", L.creeping_moss_boss_heal)
-		elseif mobId == 79092 then -- Fungal Flesh-Eater
+		elseif mobId == 79092 and decayCount > 1 then -- Fungal Flesh-Eater. If decayCount is 1 it probably just spawned on moss, so don't bother warning.
 			self:Message(args.spellId, "Important", nil, L.creeping_moss_add_heal)
 		end
 	end
@@ -166,13 +166,13 @@ function mod:Decay(args)
 end
 
 function mod:SporeShooter(args)
-	self:Message("spore_shooter", "Attention", nil, CL.small_adds, L.spore_shooter_icon)
+	self:Message("spore_shooter", "Attention", self:Damager() and "Info", CL.small_adds, L.spore_shooter_icon)
 	self:Bar("spore_shooter", 60, CL.small_adds, L.spore_shooter_icon)
 end
 
 function mod:FungusSpawns(unit, spellName, _, _, spellId)
 	if spellId == 163141 then -- Mind Fungus
-		self:Message("mind_fungus", "Attention", nil, spellId, L.mind_fungus_icon)
+		self:Message("mind_fungus", "Attention", self:Damager() and "Long", spellId, L.mind_fungus_icon)
 		self:CDBar("mind_fungus", self:Mythic() and 30 or 51, spellId, L.mind_fungus_icon) -- 51.1, 58.6, 55.5, 55, 61.5, 59.5
 	elseif spellId == 163142 then -- Evolved Fungus (Fungal Flesh-Eater)
 		self:Message("flesh_eater", "Urgent", self:Tank() and "Long", CL.spawning:format(CL.big_add), L.flesh_eater_icon)
