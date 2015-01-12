@@ -89,7 +89,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "QuakeChannel", 158200)
 	self:Log("SPELL_AURA_APPLIED", "BlazeApplied", 158241)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BlazeApplied", 158241)
-	--Mythic
+	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "ArcaneTwisted", 163297)
 	self:Log("SPELL_CAST_SUCCESS", "ArcaneVolatility", 163372)
 	self:Log("SPELL_AURA_APPLIED", "ArcaneVolatilityApplied", 163372)
@@ -141,24 +141,21 @@ local function isNextEmpowered(guid, nextCast)
 end
 
 local function updateProximity()
-	-- pulverize > arcane volatility
+	-- arcane volatility on you > pulverize > arcane volatility
 	-- open in reverse order so if you disable one it doesn't block others from showing
-	if mod:Mythic() then
-		if volatilityOnMe then
-			mod:OpenProximity(163372, 8)
-		elseif #volatilityTargets > 0 then
-			mod:OpenProximity(163372, 8, volatilityTargets)
-		else
-			mod:CloseProximity(163372)
-		end
+	if #volatilityTargets > 0 then
+		mod:OpenProximity(163372, 8, volatilityTargets)
 	end
 	if pulverizeProximity then
 		mod:OpenProximity(158385, 4)
 	end
+	if volatilityOnMe then
+		mod:OpenProximity(163372, 8)
+	end
 end
 
 local function openPulverizeProximity()
-	mod:Message(158385, "Urgent", "Info", CL.soon:format(mod:SpellName(158385)))
+	mod:Message(158385, "Urgent", "Alarm", CL.soon:format(mod:SpellName(158385)))
 	pulverizeProximity = true
 	updateProximity()
 end
@@ -200,7 +197,7 @@ function mod:InterruptingShout(args)
 		self:Flash(args.spellId)
 	end
 	self:CDBar(158385, polInterval) -- Pulverize
-	self:ScheduleTimer(openPulverizeProximity, polInterval-4) -- gives you ~7s to spread out
+	self:ScheduleTimer(openPulverizeProximity, polInterval-2) -- gives you ~5s to spread out
 end
 
 do
@@ -343,12 +340,15 @@ do
 	function mod:ArcaneVolatilityRemoved(args)
 		tDeleteItem(volatilityTargets, args.destName)
 		if self:Me(args.destGUID) then
-			self:StopBar(args.spellId, args.destName)
+			self:StopBar(67735, args.destName)
 			volatilityOnMe = nil
+			self:CloseProximity(args.spellId)
 			if timer then
 				self:CancelTimer(timer)
 				timer = nil
 			end
+		elseif #volatilityTargets == 0 then
+			self:CloseProximity(args.spellId)
 		end
 		updateProximity()
 		if self.db.profile.custom_off_volatility_marker then
