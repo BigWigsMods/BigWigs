@@ -216,7 +216,6 @@ do
 		end
 	end
 	function mod:ExpelMagicArcaneStart(args)
-		--self:TargetMessage(158605, self:UnitName("boss1target"), "Urgent", "Warning", CL.casting:format(args.spellName))
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
 		self:CDBar(args.spellId, 26.7)
 	end
@@ -227,7 +226,7 @@ function mod:ExpelMagicArcaneApplied(args)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
-		self:OpenProximity(args.spellId, 5)
+		self:OpenProximity(args.spellId, 8)
 	end
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, self:Tank())
 	self:TargetBar(args.spellId, 10, args.destName)
@@ -239,7 +238,7 @@ function mod:ExpelMagicArcaneRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
 		if UnitDebuff("player", self:SpellName(162185)) then -- Expel Magic: Fire
-			self:OpenProximity(162185, 5)
+			self:OpenProximity(162185, 6)
 		end
 	end
 end
@@ -248,7 +247,7 @@ function mod:ExpelMagicFire(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	self:CDBar(args.spellId, 63) -- 63-65
 	self:Bar(args.spellId, 10, L.fire_bar)
-	self:OpenProximity(args.spellId, 5)
+	self:OpenProximity(args.spellId, 6)
 	self:ScheduleTimer("CloseProximity", 10.5, args.spellId)
 end
 
