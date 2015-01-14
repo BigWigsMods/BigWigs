@@ -298,9 +298,9 @@ do
 		local a = bar:Get("bigwigs:anchor")
 		local key = bar.candyBarLabel:GetText()
 		if a and messages[key] then
-			local color = colors[math.random(1, #colors)]
-			local sound = sounds[math.random(1, #sounds)]
-			if random(1, 2) == 2 then
+			local color = colors[random(1, #colors)]
+			local sound = sounds[random(1, #sounds)]
+			if random(1, 3) == 2 then
 				addon:SendMessage("BigWigs_Flash", addon, key)
 				addon:SendMessage("BigWigs_Pulse", addon, key, messages[key])
 				local colors = addon:GetPlugin("Colors", true)
@@ -332,7 +332,7 @@ do
 			if not messages[spell] then break end
 		end
 
-		local time = math.random(11, 30)
+		local time = random(11, 30)
 		messages[spell] = icon
 
 		addon:SendMessage("BigWigs_StartBar", addon, spell, spell, time, icon)
