@@ -641,7 +641,6 @@ do
 			timerBar.text = timerBar:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 			timerBar.text:SetPoint("CENTER", timerBar, "CENTER")
 
-			prev = GetTime() + 40
 			timerBar:SetScript("OnUpdate", function(f)
 				local timeLeft = prev - GetTime()
 				if timeLeft > 0 then
@@ -650,7 +649,11 @@ do
 				end
 			end)
 
-			self.LFG_PROPOSAL_SHOW = function() prev = GetTime() + 40 end
+			self.LFG_PROPOSAL_SHOW = function()
+				prev = GetTime() + 40
+				PlaySoundFile("Sound\\Interface\\levelup2.ogg", "Master") -- Play in Master for those that have SFX off or very low.
+			end
+			self:LFG_PROPOSAL_SHOW()
 		end
 	end
 end
