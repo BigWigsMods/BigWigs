@@ -98,9 +98,11 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	decayCount = 1
+	infestingSporesCount = 1
 	self:Bar(159219, 32) -- Necrotic Breath
 	self:Bar(159996, 45) -- Infesting Spores
-	self:DelayedMessage(159996, 40, "Important", CL.soon:format(mod:SpellName(159996)))
+	self:DelayedMessage(159996, 40, "Important", CL.soon:format(CL.count:format(self:SpellName(159996), infestingSporesCount)))
 	self:CDBar("mind_fungus", 10, L.mind_fungus, L.mind_fungus_icon) -- Mind Fungus
 	self:CDBar("spore_shooter", 20, CL.small_adds, L.spore_shooter_icon) -- Spore Shooter
 	self:CDBar("flesh_eater", 32, CL.big_add, L.flesh_eater_icon) -- Fungal Flesh-Eater
@@ -110,8 +112,6 @@ function mod:OnEngage()
 		self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon)
 	end
 	self:Berserk(600)
-	decayCount = 1
-	infestingSporesCount = 1
 end
 
 --------------------------------------------------------------------------------
@@ -156,7 +156,7 @@ function mod:InfestingSpores(args)
 	self:Bar(args.spellId, 12, CL.cast:format(args.spellName)) -- 2s cast + 10s channel
 	infestingSporesCount = infestingSporesCount + 1
 	self:Bar(args.spellId, 58, CL.count:format(args.spellName, infestingSporesCount)) -- happens at 100 energy
-	self:DelayedMessage(args.spellId, 53, "Important", CL.soon:format(args.spellName))
+	self:DelayedMessage(args.spellId, 53, "Important", CL.soon:format(CL.count:format(args.spellName, infestingSporesCount)))
 end
 
 function mod:Decay(args)
