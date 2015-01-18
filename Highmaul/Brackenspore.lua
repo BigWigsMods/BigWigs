@@ -178,19 +178,19 @@ end
 
 function mod:FungusSpawns(unit, spellName, _, _, spellId)
 	if spellId == 163141 then -- Mind Fungus
-		self:Message("mind_fungus", "Attention", self:Damager() and "Long", spellId, L.mind_fungus_icon)
-		self:CDBar("mind_fungus", self:Mythic() and 30 or 51, spellId, L.mind_fungus_icon) -- 51.1, 58.6, 55.5, 55, 61.5, 59.5
+		self:Message("mind_fungus", "Attention", self:Damager() and "Long", spellName, L.mind_fungus_icon)
+		self:CDBar("mind_fungus", self:Mythic() and 30 or 51, spellName, L.mind_fungus_icon) -- 51.1, 58.6, 55.5, 55, 61.5, 59.5
 	elseif spellId == 163142 then -- Evolved Fungus (Fungal Flesh-Eater)
 		self:Message("flesh_eater", "Urgent", self:Tank() and "Long", CL.spawning:format(CL.big_add), L.flesh_eater_icon)
 		self:Bar("flesh_eater", 120, CL.big_add, L.flesh_eater_icon)
 		decayCount = 1
 	elseif spellId == 160022 then -- Living Mushroom
-		self:Message("living_mushroom", "Positive", self:Healer() and "Long", CL.count:format(self:SpellName(spellId), livingMushroomCount), L.living_mushroom_icon)
+		self:Message("living_mushroom", "Positive", self:Healer() and "Long", CL.count:format(spellName, livingMushroomCount), L.living_mushroom_icon)
 		livingMushroomCount = livingMushroomCount + 1
-		self:Bar("living_mushroom", 58, CL.count:format(self:SpellName(spellId), livingMushroomCount), L.living_mushroom_icon)
+		self:Bar("living_mushroom", 58, CL.count:format(spellName, livingMushroomCount), L.living_mushroom_icon)
 	elseif spellId == 160021 then -- Rejuvenating Mushroom
-		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Info", spellId, L.rejuvenating_mushroom_icon)
-		self:CDBar("rejuvenating_mushroom", 120, spellId, L.rejuvenating_mushroom_icon) -- spawns most of the time just after 2min, sometimes delayed by boss casts (?)
+		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Info", spellName, L.rejuvenating_mushroom_icon)
+		self:CDBar("rejuvenating_mushroom", 120, spellName, L.rejuvenating_mushroom_icon) -- spawns most of the time just after 2min, sometimes delayed by boss casts (?)
 	end
 end
 
