@@ -2,6 +2,10 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "enUS", true)
 
 L.general = "General"
 
+L.positionX = "X Position"
+L.positionY = "Y Position"
+L.positionDesc = "Type in the box or move the slider if you need exact positioning from the anchor."
+
 -----------------------------------------------------------------------
 -- AltPower.lua
 --

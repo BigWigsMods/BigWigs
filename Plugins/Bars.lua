@@ -550,6 +550,8 @@ do
 			else
 				db[key] = value
 			end
+			BigWigsAnchor:RefixPosition()
+			BigWigsEmphasizeAnchor:RefixPosition()
 		end,
 		args = {
 			custom = {
@@ -562,7 +564,6 @@ do
 						name = L.font,
 						order = 1,
 						values = media:List("font"),
-						--width = "full",
 						itemControl = "DDI-Font",
 					},
 					outline = {
@@ -574,7 +575,6 @@ do
 							OUTLINE = L.thin,
 							THICKOUTLINE = L.thick,
 						},
-						--width = "full",
 					},
 					fontSize = {
 						type = "range",
@@ -583,7 +583,6 @@ do
 						max = 40,
 						min = 6,
 						step = 1,
-						--width = "full",
 					},
 					monochrome = {
 						type = "toggle",
@@ -596,7 +595,6 @@ do
 						name = L.texture,
 						order = 4,
 						values = media:List("statusbar"),
-						--width = "full",
 						itemControl = "DDI-Statusbar",
 					},
 					barStyle = {
@@ -604,7 +602,6 @@ do
 						name = L.style,
 						order = 5,
 						values = barStyleRegister,
-						--width = "full",
 					},
 					align = {
 						type = "select",
@@ -655,7 +652,7 @@ do
 			normal = {
 				type = "group",
 				name = L.regularBars,
-				width = "full",
+				order = 2,
 				args = {
 					growup = {
 						type = "toggle",
@@ -670,35 +667,51 @@ do
 						max = 2.0,
 						step = 0.1,
 						order = 2,
+						width = "double",
+					},
+					BigWigsAnchor_x = {
+						type = "range",
+						name = L.positionX,
+						desc = L.positionDesc,
+						min = 0,
+						max = 2048,
+						step = 1,
+						order = 3,
+						width = "full",
+					},
+					BigWigsAnchor_y = {
+						type = "range",
+						name = L.positionY,
+						desc = L.positionDesc,
+						min = 0,
+						max = 2048,
+						step = 1,
+						order = 4,
 						width = "full",
 					},
 				},
-				order = 2,
 			},
 			emphasize = {
 				type = "group",
 				name = L.emphasizedBars,
-				width = "full",
+				order = 3,
 				args = {
 					emphasize = {
 						type = "toggle",
 						name = L.enable,
 						order = 1,
-						width = "half",
 					},
 					emphasizeMove = {
 						type = "toggle",
 						name = L.move,
 						desc = L.moveDesc,
 						order = 2,
-						width = "half",
 					},
 					emphasizeRestart = {
 						type = "toggle",
 						name = L.restart,
 						desc = L.restartDesc,
 						order = 3,
-						width = "half",
 					},
 					emphasizeGrowup = {
 						type = "toggle",
@@ -713,7 +726,6 @@ do
 						min = 6,
 						max = 20,
 						step = 1,
-						width = "full",
 					},
 					emphasizeScale = {
 						type = "range",
@@ -722,6 +734,25 @@ do
 						min = 0.2,
 						max = 2.0,
 						step = 0.1,
+					},
+					BigWigsEmphasizeAnchor_x = {
+						type = "range",
+						name = L.positionX,
+						desc = L.positionDesc,
+						min = 0,
+						max = 2048,
+						step = 1,
+						order = 7,
+						width = "full",
+					},
+					BigWigsEmphasizeAnchor_y = {
+						type = "range",
+						name = L.positionY,
+						desc = L.positionDesc,
+						min = 0,
+						max = 2048,
+						step = 1,
+						order = 8,
 						width = "full",
 					},
 				},
@@ -892,7 +923,7 @@ end
 
 local defaultPositions = {
 	BigWigsAnchor = {"CENTER", "UIParent", "CENTER", 0, -120},
-	BigWigsEmphasizeAnchor = {"TOP", RaidWarningFrame, "BOTTOM", 0, -35}, --Below the default BigWigs message frame
+	BigWigsEmphasizeAnchor = {"TOP", RaidWarningFrame, "BOTTOM", 0, -35}, --Below the Blizzard "Raid Warning" frame
 }
 
 local function onDragHandleMouseDown(self) self:GetParent():StartSizing("BOTTOMRIGHT") end
@@ -907,6 +938,7 @@ local function onDragStop(self)
 	local s = self:GetEffectiveScale()
 	db[self.x] = self:GetLeft() * s
 	db[self.y] = self:GetTop() * s
+	LibStub("AceConfigRegistry-3.0"):NotifyChange("BigWigs") -- Are we looking at the X/Y options in the GUI and dragging the bars? Update the GUI!
 end
 
 local function createAnchor(frameName, title)
