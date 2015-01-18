@@ -24,6 +24,7 @@ if L then
 	L.mythic_ability = "Special ability"
 	L.mythic_ability_desc = "Show a timer bar for the next Call of the Tides or Exploding Fungus arriving."
 	L.mythic_ability_icon = "achievement_boss_highmaul_fungalgiant"
+	L.mythic_ability_wave = "Incoming Wave!"
 
 	L.spore_shooter = ("{-9987} (%s)"):format(CL.small_adds) -- Spore Shooter
 	L.spore_shooter_desc = -9988 -- Spore Shoot
@@ -56,7 +57,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Mythic ]]--
-		163755, -- Call of the Tides
+		{163755, "FLASH"}, -- Call of the Tides
 		{163794, "FLASH"}, -- Exploding Fungus
 		"mythic_ability",
 		--[[ Hostile Fungus ]]--
@@ -109,7 +110,7 @@ function mod:OnEngage()
 	self:CDBar("living_mushroom", 18, L.living_mushroom, L.living_mushroom_icon) -- Living Mushroom
 	self:CDBar("rejuvenating_mushroom", 82, L.rejuvenating_mushroom, L.rejuvenating_mushroom_icon) -- Rejuvenating Mushroom
 	if self:Mythic() then
-		self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon)
+		self:CDBar("mythic_ability", 22, L.mythic_ability, L.mythic_ability_icon)
 	end
 	self:Berserk(600)
 end
@@ -119,7 +120,10 @@ end
 --
 
 function mod:CallOfTheTides(args)
-	self:Message(args.spellId, "Urgent")
+	self:Message(args.spellId, "Urgent", "Alarm", L.mythic_ability_wave)
+	self:Flash(args.spellId)
+	self:ScheduleTimer("Message", 3, args.spellId, "Urgent", "Alarm", L.mythic_ability_wave)
+	self:ScheduleTimer("Message", 6, args.spellId, "Urgent", "Alarm", L.mythic_ability_wave)
 	self:CDBar("mythic_ability", 20, L.mythic_ability, L.mythic_ability_icon) -- can be delayed by other casts
 end
 
@@ -143,7 +147,7 @@ end
 
 function mod:Rot(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 4 and "Warning")
+	self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 3 and "Warning")
 end
 
 function mod:NecroticBreath(args)
