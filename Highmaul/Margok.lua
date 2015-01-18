@@ -14,7 +14,6 @@ mod.engageId = 1705
 
 local phase = 1
 local mineCount, novaCount, aberrationCount, nightCount, glimpseCount = 1, 1, 1, 1, 1
-local p1times = {}
 local addDeathWarned = nil
 local markOfChaosTarget, brandedOnMe, fixateOnMe, replicatingNova, gazeOnMe = nil, nil, nil, nil, nil
 local novaTimer = nil
@@ -105,6 +104,7 @@ end
 function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_SUCCESS", "PhaseEnd", 181089) -- XXX 6.1
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "PhaseEnd", "boss1")
+	self:Log("SPELL_AURA_APPLIED", "DisplacementPhaseStart", 158013) -- Power of Displacement
 	self:Log("SPELL_AURA_APPLIED", "PhaseStart", 158012, 157964) -- Power of Fortification, Replication
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcceleratedAssault", 159515)
 	-- Spell, Spell: Displacement, Spell: Fortification, Spell: Replication
@@ -152,14 +152,6 @@ function mod:OnEngage()
 	addDeathWarned = nil
 	wipe(fixateMarks)
 	wipe(brandedMarks)
-	if not self:Mythic() then
-		local t = GetTime()
-		p1times[156238] = t + 6
-		p1times[156467] = t + 15
-		p1times[156471] = t + 25
-		p1times[158605] = t + 34
-		p1times[157349] = t + 45
-	end
 	self:Bar(156238, 6)  -- Arcane Wrath
 	self:Bar(156467, 15) -- Destructive Resonance
 	self:Bar(156471, 25, CL.count:format(self:SpellName(-9945), aberrationCount), 156471) -- Arcane Aberration
@@ -439,14 +431,13 @@ function mod:PhaseEnd(unit, spellName, _, _, spellId)
 		if spellId == 164336 then -- short intermission for Displacement
 			self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
 			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, unit)
-			 -- first power just pauses the cds for a few seconds
-			local t = GetTime()
-			self:CDBar(156238, p1times[156238]+3.6-t) -- Arcane Wrath
-			self:CDBar(156467, p1times[156467]+3.6-t) -- Destructive Resonance
-			self:CDBar(156471, p1times[156471]+3.6-t, CL.count:format(self:SpellName(-9945), aberrationCount), 156471) -- Arcane Aberration
-			self:CDBar(158605, p1times[158605]+3.6-t) -- Mark of Chaos
-			self:CDBar(157349, p1times[157349]+3.6-t) -- Force Nova
-			wipe(p1times)
+			-- attempt #4 it seems more like paused if < 10, then starts casting with a 3s cd to get caught up with expired spells
+			self:StopBar(156467) -- Destructive Resonance
+			if self:BarTimeLeft(156238) < 13 then self:PauseBar(156238) end
+			if self:BarTimeLeft(156467) < 13 then self:PauseBar(156467) end
+			if self:BarTimeLeft(CL.count:format(self:SpellName(-9945), aberrationCount)) < 15 then self:PauseBar(156471, CL.count:format(self:SpellName(-9945), aberrationCount)) end
+			if self:BarTimeLeft(158605) < 13 then self:PauseBar(158605) end
+			if self:BarTimeLeft(157349) < 13 then self:PauseBar(157349) end
 		else
 			self:StopBar(156238) -- Arcane Wrath
 			self:StopBar(156467) -- Destructive Resonance
@@ -471,6 +462,14 @@ end
 --function mod:PhaseEnd(args)
 --	
 --end
+
+function mod:DisplacementPhaseStart(args)
+	self:ResumeBar(156238) -- Arcane Wrath
+	self:CDBar(156467, 15) -- Destructive Resonance
+	self:ResumeBar(156471, CL.count:format(self:SpellName(-9945), aberrationCount)) -- Arcane Aberration
+	self:ResumeBar(158605) -- Mark of Chaos
+	self:ResumeBar(157349) -- Force Nova
+end
 
 function mod:PhaseStart(args)
 	if not self.isEngaged then return end -- In Mythic mode he gains this when he's floating around the room before engage.
@@ -503,18 +502,12 @@ function mod:ArcaneAberration(args)
 		addDeathWarned = nil
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss2")
 	end
-	if not self:Mythic() and phase == 1 then
-		p1times[156471] = GetTime() + 46
-	end
 end
 
 function mod:ArcaneWrath(args)
 	self:Message(156238, "Urgent", self:Healer() and "Alert")
 	self:Bar(156238, 50)
 	wipe(brandedMarks)
-	if not self:Mythic() and phase == 1 then
-		p1times[156238] = GetTime() + 50
-	end
 end
 
 do
@@ -601,9 +594,6 @@ do
 		local t = not self:Mythic() and mineTimes[phase] and mineTimes[phase][mineCount] or 15.8
 		self:CDBar(156467, phase == 1 and 24 or t)
 		mineCount = mineCount + 1
-		if not self:Mythic() and phase == 1 then
-			p1times[156467] = GetTime() + 24
-		end
 	end
 end
 
@@ -616,9 +606,6 @@ do
 	function mod:ForceNova(args)
 		self:Message(157349, "Urgent")
 		self:CDBar(157349, novaCount == 1 and 46 or 50)
-		if not self:Mythic() and phase == 1 then
-			p1times[157349] = GetTime() + (novaCount == 1 and 46 or 50)
-		end
 		if args.spellId == 164235 or (self:Mythic() and phase == 3) then -- Fortification (three novas)
 			self:Bar(157349, 10.5, 164235) -- 164235 = Force Nova: Fortification
 			novaTimer = self:ScheduleTimer("Bar", 10.5, 157349, 8, 164235)
@@ -644,10 +631,7 @@ do
 	function mod:MarkOfChaos(args)
 		--self:TargetMessage(158605, self:UnitName("boss1target"), "Urgent", "Warning", CL.casting:format(self:SpellName(158605)))
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
-		self:Bar(158605, 51)
-		if not self:Mythic() and phase == 1 then
-			p1times[158605] = GetTime() + 51
-		end
+		self:Bar(158605, 51) -- XXX sometimes 50, sometimes 55, but mostly 51
 	end
 end
 
