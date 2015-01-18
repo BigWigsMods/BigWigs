@@ -12,7 +12,8 @@ mod.engageId = 1722
 -- Locals
 --
 
-local marked = {}
+local barrageMarked = {}
+local barrageThrottle = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -84,7 +85,8 @@ end
 function mod:OnEngage()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "NewAdd")
 
-	wipe(marked)
+	wipe(barrageMarked)
+	wipe(barrageThrottle)
 	--self:CDBar(162346, 6) -- Crystalline Barrage
 	self:CDBar("adds", 14, -10061, "spell_shadow_raisedead") -- Earthwarper
 	self:CDBar("adds", 24, -10062, "ability_warrior_endlessrage") -- Berserker
@@ -96,10 +98,10 @@ end
 
 function mod:OnBossDisable()
 	if self.db.profile.custom_off_barrage_marker then
-		for _, player in next, marked do
+		for _, player in next, barrageMarked do
 			SetRaidTarget(player, 0)
 		end
-		wipe(marked)
+		wipe(barrageMarked)
 	end
 end
 
@@ -115,15 +117,15 @@ function mod:Accretion(args)
 end
 
 do
-	local list, scheduled, throttle = mod:NewTargetList(), nil, {}
+	local list, scheduled = mod:NewTargetList(), nil
 	local function warn(self, spellId)
 		self:TargetMessage(spellId, list, "Positive") -- ME_ONLY by default, too spammy
 		scheduled = nil
 	end
 	function mod:CrystallineBarrage(args)
 		--self:CDBar(args.spellId, 30.5)
-		if throttle[args.destGUID] then return end
-		throttle[args.destGUID] = true
+		if barrageThrottle[args.destGUID] then return end
+		barrageThrottle[args.destGUID] = true
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId, 120361) -- 120361 = "Barrage"
@@ -134,14 +136,14 @@ do
 				scheduled = self:ScheduleTimer(warn, 0.2, self, args.spellId)
 			end
 		end
-		if not throttle.timer then
-			throttle.timer = self:ScheduleTimer(wipe, 3, throttle)
+		if not barrageThrottle.timer then
+			barrageThrottle.timer = self:ScheduleTimer(wipe, 3, barrageThrottle)
 		end
 		if self.db.profile.custom_off_barrage_marker then
 			for i=1, 5 do
-				if not marked[i] then
+				if not barrageMarked[i] then
 					SetRaidTarget(args.destName, i)
-					marked[i] = args.destName
+					barrageMarked[i] = args.destName
 					break
 				end
 			end
@@ -153,8 +155,8 @@ function mod:CrystallineBarrageRemoved(args)
 	if self.db.profile.custom_off_barrage_marker then
 		SetRaidTarget(args.destName, 0)
 		for i=1, 5 do
-			if marked[i] == args.destName then
-				marked[i] = nil
+			if barrageMarked[i] == args.destName then
+				barrageMarked[i] = nil
 			end
 		end
 	end
@@ -167,6 +169,7 @@ do
 		if self:Me(args.destGUID) and t-prev > 1 then
 			prev = t
 			self:Message(162346, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Flash(162346)
 		end
 	end
 end
@@ -197,7 +200,6 @@ function mod:Split(unit, spellName, _, _, spellId)
 end
 
 -- XXX for patch 6.1
--- Was probably not even worth adding this but warcraftlogs might be happier about it
 --function mod:BossUnitKilled()
 --	if not self:Mythic() then
 --		self:StopBar(-10061) -- Earthwarper
