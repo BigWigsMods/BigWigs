@@ -14,6 +14,7 @@ mod.engageId = 1720
 
 local decayCount = 1
 local infestingSporesCount = 1
+local livingMushroomCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -22,7 +23,7 @@ local infestingSporesCount = 1
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.mythic_ability = "Special ability"
-	L.mythic_ability_desc = "Show a timer bar for the next Call of the Tides or Exploding Fungus arriving."
+	L.mythic_ability_desc = "Show a timer bar for the next Call of the Tides or Exploding Fungus."
 	L.mythic_ability_icon = "achievement_boss_highmaul_fungalgiant"
 	L.mythic_ability_wave = "Incoming Wave!"
 
@@ -101,6 +102,7 @@ end
 function mod:OnEngage()
 	decayCount = 1
 	infestingSporesCount = 1
+	livingMushroomCount = 1
 	self:Bar(159219, 32) -- Necrotic Breath
 	self:Bar(159996, 45) -- Infesting Spores
 	self:DelayedMessage(159996, 40, "Important", CL.soon:format(CL.count:format(self:SpellName(159996), infestingSporesCount)))
@@ -183,10 +185,11 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 		self:Bar("flesh_eater", 120, CL.big_add, L.flesh_eater_icon)
 		decayCount = 1
 	elseif spellId == 160022 then -- Living Mushroom
-		self:Message("living_mushroom", "Positive", self:Healer() and "Long", spellId, L.living_mushroom_icon)
-		self:Bar("living_mushroom", 58, spellId, L.living_mushroom_icon)
+		self:Message("living_mushroom", "Positive", self:Healer() and "Long", CL.count:format(self:SpellName(spellId), livingMushroomCount), L.living_mushroom_icon)
+		livingMushroomCount = livingMushroomCount + 1
+		self:Bar("living_mushroom", 58, CL.count:format(self:SpellName(spellId), livingMushroomCount), L.living_mushroom_icon)
 	elseif spellId == 160021 then -- Rejuvenating Mushroom
-		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Long", spellId, L.rejuvenating_mushroom_icon)
+		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Info", spellId, L.rejuvenating_mushroom_icon)
 		self:CDBar("rejuvenating_mushroom", 120, spellId, L.rejuvenating_mushroom_icon) -- spawns most of the time just after 2min, sometimes delayed by boss casts (?)
 	end
 end
