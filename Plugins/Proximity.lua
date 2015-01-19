@@ -681,7 +681,7 @@ do
 		alpha2Out:SetToAlpha(0)
 		local scaleOut = animGroupOutbound:CreateAnimation("Scale")
 		scaleOut:SetOrder(1)
-		scaleOut:SetFromScale(0.75,0.75)
+		scaleOut:SetFromScale(0.4,0.4)
 		scaleOut:SetToScale(1.3,1.3)
 		scaleOut:SetDuration(1)
 		proxAnchor.rangePulseAnimOut = animGroupOutbound
@@ -707,7 +707,7 @@ do
 		local scaleIn = animGroupInbound:CreateAnimation("Scale")
 		scaleIn:SetOrder(1)
 		scaleIn:SetFromScale(1.5,1.5)
-		scaleIn:SetToScale(1,1)
+		scaleIn:SetToScale(0.5,0.5)
 		scaleIn:SetDuration(1)
 		proxAnchor.rangePulseAnimIn = animGroupInbound
 		proxPulseIn = animGroupInbound
