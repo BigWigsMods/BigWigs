@@ -15,6 +15,10 @@ mod.engageId = 1720
 local decayCount = 1
 local infestingSporesCount = 1
 local livingMushroomCount = 1
+-- marking
+local markableMobs = {}
+local marksUsed = {}
+local markTimer = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -26,6 +30,10 @@ if L then
 	L.mythic_ability_desc = "Show a timer bar for the next Call of the Tides or Exploding Fungus."
 	L.mythic_ability_icon = "achievement_boss_highmaul_fungalgiant"
 	L.mythic_ability_wave = "Incoming Wave!"
+
+	L.custom_off_spore_shooter_marker = "Spore Shooter marker"
+	L.custom_off_spore_shooter_marker_desc = "Mark Spore Shooters with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the mobs is the fastest way to mark them.|r"
+	L.custom_off_spore_shooter_marker_icon = 1
 
 	L.spore_shooter = ("{-9987} (%s)"):format(CL.small_adds) -- Spore Shooter
 	L.spore_shooter_desc = -9988 -- Spore Shoot
@@ -63,6 +71,7 @@ function mod:GetOptions()
 		"mythic_ability",
 		--[[ Hostile Fungus ]]--
 		"spore_shooter", -- Small Adds
+		"custom_off_spore_shooter_marker",
 		"mind_fungus", -- Bad Shroom (Reduced casting speed)
 		"flesh_eater", -- Big Add
 		160013, -- Decay
@@ -85,14 +94,16 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "CreepingMossHeal", 164125)
-	self:Log("SPELL_PERIODIC_HEAL", "CreepingMossHeal", 164125)
+	self:Log("SPELL_AURA_APPLIED", "CreepingMossHeal", 164125, 165494)
+	self:Log("SPELL_PERIODIC_HEAL", "CreepingMossHeal", 164125, 165494)
 	self:Log("SPELL_AURA_APPLIED", "Rot", 163241)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Rot", 163241)
 	self:Log("SPELL_CAST_START", "NecroticBreath", 159219)
 	self:Log("SPELL_CAST_START", "InfestingSpores", 159996)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "FungusSpawns", "boss1")
 	self:Log("SPELL_CAST_SUCCESS", "SporeShooter", 163594)
+	self:Log("SPELL_CAST_START", "SporeShoot", 160254)
+	self:Death("SporeShooterDeath", 79183)
 	self:Log("SPELL_CAST_START", "Decay", 160013)
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "CallOfTheTides", 163755)
@@ -115,6 +126,13 @@ function mod:OnEngage()
 		self:CDBar("mythic_ability", 22, L.mythic_ability, L.mythic_ability_icon)
 	end
 	self:Berserk(600)
+	-- marking
+	wipe(markableMobs)
+	wipe(marksUsed)
+	markTimer = nil
+	if self.db.profile.custom_off_spore_shooter_marker then
+		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -174,6 +192,67 @@ end
 function mod:SporeShooter(args)
 	self:Message("spore_shooter", "Attention", self:Damager() and "Info", CL.small_adds, L.spore_shooter_icon)
 	self:Bar("spore_shooter", 60, CL.small_adds, L.spore_shooter_icon)
+end
+
+-- marking
+do
+	local function mark(unit, guid)
+		for i = 1, 4 do
+			if not marksUsed[i] then
+				SetRaidTarget(unit, i)
+				markableMobs[guid] = "marked"
+				marksUsed[i] = guid
+				return
+			end
+		end
+	end
+
+	local function markMobs(self)
+		local continue
+		for guid in next, markableMobs do
+			if markableMobs[guid] == true then
+				local unit = self:GetUnitIdByGUID(guid)
+				if unit then
+					mark(unit, guid)
+				else
+					continue = true
+				end
+			end
+		end
+		if not continue or not self.db.profile.custom_off_spore_shooter_marker then
+			self:CancelTimer(markTimer)
+			markTimer = nil
+		end
+	end
+
+	function mod:UPDATE_MOUSEOVER_UNIT()
+		local guid = UnitGUID("mouseover")
+		if guid and self:MobId(guid) == 79183 and markableMobs[guid] ~= "marked" then
+			mark("mouseover", guid)
+		end
+	end
+
+	-- first cast of Spore Shoot is ~3s after they spawn
+	function mod:SporeShoot(args)
+		if self.db.profile.custom_off_spore_shooter_marker and not markableMobs[args.destGUID] then
+			markableMobs[args.destGUID] = true
+			if not markTimer then
+				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.2, self)
+			end
+		end
+	end
+
+	function mod:SporeShooterDeath(args)
+		if self.db.profile.custom_off_spore_shooter_marker then
+			markableMobs[args.destGUID] = nil
+			for i = 1, 4 do
+				if marksUsed[i] == args.destGUID then
+					marksUsed[i] = nil
+					break
+				end
+			end
+		end
+	end
 end
 
 function mod:FungusSpawns(unit, spellName, _, _, spellId)
