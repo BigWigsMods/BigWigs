@@ -4,6 +4,7 @@ L.general = "General"
 
 L.positionX = "X Position"
 L.positionY = "Y Position"
+L.positionExact = "Exact Positioning"
 L.positionDesc = "Type in the box or move the slider if you need exact positioning from the anchor."
 
 -----------------------------------------------------------------------
