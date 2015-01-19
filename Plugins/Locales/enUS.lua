@@ -95,6 +95,13 @@ L.breakSeconds = "Break ends in %d |4second:seconds;!"
 L.breakFinished = "Break time is now over!"
 
 -----------------------------------------------------------------------
+-- BossBlock.lua
+--
+
+L.bossBlock = "Boss Block"
+L.bossBlockDesc = "Configure the various things you can block during a boss encounter."
+
+-----------------------------------------------------------------------
 -- Colors.lua
 --
 
