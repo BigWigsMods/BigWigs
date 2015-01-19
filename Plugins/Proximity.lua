@@ -90,6 +90,7 @@ local function onDragStop(self)
 	local s = self:GetEffectiveScale()
 	db.posx = self:GetLeft() * s
 	db.posy = self:GetTop() * s
+	plugin:UpdateGUI() -- Update X/Y if GUI is open.
 end
 local function OnDragHandleMouseDown(self) self.frame:StartSizing("BOTTOMRIGHT") end
 local function OnDragHandleMouseUp(self, button) self.frame:StopMovingOrSizing() end
@@ -162,6 +163,19 @@ function plugin:RestyleWindow()
 	else
 		locked = true
 		unlockDisplay()
+	end
+
+	if proxAnchor then
+		local x = db.posx
+		local y = db.posy
+		if x and y then
+			local s = proxAnchor:GetEffectiveScale()
+			proxAnchor:ClearAllPoints()
+			proxAnchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+		else
+			proxAnchor:ClearAllPoints()
+			proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
+		end
 	end
 end
 
@@ -532,23 +546,7 @@ local function updateProfile()
 		db.fontSize = size
 	end
 
-	if proxAnchor then
-		proxAnchor:SetWidth(db.width)
-		proxAnchor:SetHeight(db.height)
-
-		local x = db.posx
-		local y = db.posy
-		if x and y then
-			local s = proxAnchor:GetEffectiveScale()
-			proxAnchor:ClearAllPoints()
-			proxAnchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-		else
-			proxAnchor:ClearAllPoints()
-			proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
-		end
-
-		plugin:RestyleWindow()
-	end
+	plugin:RestyleWindow()
 end
 
 local function resetAnchor()
@@ -740,17 +738,6 @@ do
 		tex:SetBlendMode("ADD")
 		tex:SetPoint("CENTER", drag)
 
-		local x = db.posx
-		local y = db.posy
-		if x and y then
-			local s = proxAnchor:GetEffectiveScale()
-			proxAnchor:ClearAllPoints()
-			proxAnchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-		else
-			proxAnchor:ClearAllPoints()
-			proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
-		end
-
 		plugin:RestyleWindow()
 
 		proxAnchor:Hide()
@@ -881,7 +868,7 @@ do
 			font = {
 				type = "select",
 				name = L.font,
-				order = 4,
+				order = 3,
 				values = media:List("font"),
 				width = "full",
 				itemControl = "DDI-Font",
@@ -890,7 +877,7 @@ do
 			fontSize = {
 				type = "range",
 				name = L.fontSize,
-				order = 5,
+				order = 4,
 				max = 40,
 				min = 8,
 				step = 1,
@@ -900,7 +887,7 @@ do
 			soundName = {
 				type = "select",
 				name = L.sound,
-				order = 6,
+				order = 5,
 				values = media:List("sound"),
 				width = "full",
 				itemControl = "DDI-Sound"
@@ -910,7 +897,7 @@ do
 				type = "range",
 				name = L.soundDelay,
 				desc = L.soundDelayDesc,
-				order = 7,
+				order = 6,
 				max = 10,
 				min = 1,
 				step = 1,
@@ -921,7 +908,7 @@ do
 				type = "group",
 				name = L.showHide,
 				inline = true,
-				order = 10,
+				order = 7,
 				get = function(info)
 					local key = info[#info]
 					return db.objects[key]
@@ -968,6 +955,34 @@ do
 						name = L.tooltip,
 						desc = L.tooltipDesc,
 						order = 6,
+					},
+				},
+			},
+			exactPositioning = {
+				type = "group",
+				name = L.positionExact,
+				order = 8,
+				inline = true,
+				args = {
+					posx = {
+						type = "range",
+						name = L.positionX,
+						desc = L.positionDesc,
+						min = 0,
+						max = 2048,
+						step = 1,
+						order = 1,
+						width = "full",
+					},
+					posy = {
+						type = "range",
+						name = L.positionY,
+						desc = L.positionDesc,
+						min = 0,
+						max = 2048,
+						step = 1,
+						order = 2,
+						width = "full",
 					},
 				},
 			},
