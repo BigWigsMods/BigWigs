@@ -75,7 +75,6 @@ local OnOptionToggled = nil -- Function invoked when the proximity option is tog
 --
 
 local function updateSoundButton()
-	if not proxAnchor then return end
 	proxAnchor.sound:SetNormalTexture(db.sound and unmute or mute)
 end
 
@@ -147,6 +146,8 @@ end
 local function onControlLeave() GameTooltip:Hide() end
 
 function plugin:RestyleWindow()
+	if not proxAnchor then return end
+
 	updateSoundButton()
 	for k, v in next, db.objects do
 		if proxAnchor[k] then
@@ -165,17 +166,15 @@ function plugin:RestyleWindow()
 		unlockDisplay()
 	end
 
-	if proxAnchor then
-		local x = db.posx
-		local y = db.posy
-		if x and y then
-			local s = proxAnchor:GetEffectiveScale()
-			proxAnchor:ClearAllPoints()
-			proxAnchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-		else
-			proxAnchor:ClearAllPoints()
-			proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
-		end
+	local x = db.posx
+	local y = db.posy
+	if x and y then
+		local s = proxAnchor:GetEffectiveScale()
+		proxAnchor:ClearAllPoints()
+		proxAnchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+	else
+		proxAnchor:ClearAllPoints()
+		proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
 	end
 end
 
