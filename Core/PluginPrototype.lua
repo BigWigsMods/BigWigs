@@ -56,3 +56,10 @@ do
 	end
 end
 
+function plugin:UpdateGUI()
+	local acr = LibStub("AceConfigRegistry-3.0", true)
+	if acr then
+		acr:NotifyChange("BigWigs")
+	end
+end
+

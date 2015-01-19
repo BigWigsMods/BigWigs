@@ -954,7 +954,7 @@ local function onDragStop(self)
 	local s = self:GetEffectiveScale()
 	db[self.x] = self:GetLeft() * s
 	db[self.y] = self:GetTop() * s
-	LibStub("AceConfigRegistry-3.0"):NotifyChange("BigWigs") -- Are we looking at the X/Y options in the GUI and dragging the bars? Update the GUI!
+	plugin:UpdateGUI() -- Update X/Y if GUI is open.
 end
 
 local function createAnchor(frameName, title)

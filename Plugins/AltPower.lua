@@ -57,6 +57,19 @@ local function colorize(power)
 end
 
 function plugin:RestyleWindow(dirty)
+	if not display then return end
+
+	local x = db.posx
+	local y = db.posy
+	if x and y then
+		local s = display:GetEffectiveScale()
+		display:ClearAllPoints()
+		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+	else
+		display:ClearAllPoints()
+		display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
+	end
+
 	if db.lock then
 		display:SetMovable(false)
 		display:RegisterForDrag()
@@ -71,6 +84,7 @@ function plugin:RestyleWindow(dirty)
 			local s = self:GetEffectiveScale()
 			db.posx = self:GetLeft() * s
 			db.posy = self:GetTop() * s
+			plugin:UpdateGUI() -- Update X/Y if GUI is open.
 		end)
 	end
 
@@ -172,7 +186,7 @@ do
 				type = "group",
 				name = L.showHide,
 				inline = true,
-				order = 5,
+				order = 7,
 				get = function(info)
 					local key = info[#info]
 					return db.objects[key]
@@ -221,6 +235,34 @@ do
 					}
 				},
 			},]]
+			exactPositioning = {
+				type = "group",
+				name = L.positionExact,
+				order = 8,
+				inline = true,
+				args = {
+					posx = {
+						type = "range",
+						name = L.positionX,
+						desc = L.positionDesc,
+						min = 0,
+						max = 2048,
+						step = 1,
+						order = 1,
+						width = "full",
+					},
+					posy = {
+						type = "range",
+						name = L.positionY,
+						desc = L.positionDesc,
+						min = 0,
+						max = 2048,
+						step = 1,
+						order = 2,
+						width = "full",
+					},
+				},
+			},
 		},
 	}
 end
@@ -252,20 +294,7 @@ local function updateProfile()
 		db.fontOutline = flags
 	end
 
-	if display then
-		local x = db.posx
-		local y = db.posy
-		if x and y then
-			local s = display:GetEffectiveScale()
-			display:ClearAllPoints()
-			display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-		else
-			display:ClearAllPoints()
-			display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
-		end
-
-		plugin:RestyleWindow()
-	end
+	plugin:RestyleWindow()
 end
 
 function plugin:OnPluginEnable()
@@ -388,17 +417,6 @@ do
 				text:SetPoint("TOP", display.text[i-2], "BOTTOM")
 			end
 			display.text[i] = text
-		end
-
-		local x = db.posx
-		local y = db.posy
-		if x and y then
-			local s = display:GetEffectiveScale()
-			display:ClearAllPoints()
-			display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-		else
-			display:ClearAllPoints()
-			display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
 		end
 
 		display:SetScript("OnEvent", GROUP_ROSTER_UPDATE)
