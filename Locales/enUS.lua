@@ -16,8 +16,6 @@ L.warmup_desc = "Time until combat with the boss starts."
 
 L.already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%s|r) already exists as a module in Big Wigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch."
 
-L.movieBlocked = "You've seen this movie before, skipping it."
-
 -- Loader / Options.lua
 L.officialRelease = "You are running an official release of Big Wigs %s (revision %d)"
 L.alphaRelease = "You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"
@@ -56,8 +54,6 @@ L.testBarsBtn = "Create Test Bar"
 L.testBarsBtn_desc = "Creates a bar for you to test your current display settings with."
 L.sound = "Sound"
 L.soundDesc = "Messages might come with a sound. Some people find it easier to listen for these after they've learned which sound goes with which message, as opposed to reading the actual messages.\n\n|cffff4411Even when off, the default raid warning sound might be played by incoming raid warnings from other players. That sound, however, is different from the sounds we use.|r"
-L.showBlizzWarnings = "Show Blizzard warnings"
-L.showBlizzWarningsDesc = "Blizzard provides their own messages for some abilities on some encounters. In our opinion, these messages are both way too long and descriptive. We try to produce smaller, more fitting messages that do not interfere with the gameplay, and that don't tell you specifically what to do.\n\n|cffff4411When off, Blizzards warnings will not be shown in the middle of the screen, but they will still show in your chat frame.|r"
 L.flashScreen = "Flash Screen"
 L.flashScreenDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash the screen."
 L.raidIcons = "Raid icons"
@@ -71,8 +67,6 @@ L.colors = "Colors"
 L.selectEncounter = "Select encounter"
 L.listAbilities = "List abilities in group chat"
 
-L.blockMovies = "Block boss movies"
-L.blockMoviesDesc = "After you've seen a boss movie once, Big Wigs will prevent it from playing again."
 L.dbmFaker = "Pretend I'm using DBM"
 L.dbmFakerDesc = "If a DBM user does a version check to see who's using DBM, they will see you on the list. Useful for guilds that force using DBM."
 L.chatMessages = "Chat frame messages"

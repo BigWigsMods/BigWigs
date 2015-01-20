@@ -172,10 +172,6 @@ local function zoneChanged()
 		addon:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 		addon:UnregisterEvent("UNIT_TARGET")
 	end
-
-	if id == 953 and addon.db.profile.blockmovies then -- Siege of Orgrimmar
-		addon:SiegeOfOrgrimmarCinematics()
-	end
 end
 
 do
@@ -199,89 +195,6 @@ do
 	function addon:RegisterEnableYell(module, ...) add(module.moduleName, enableyells, ...) end
 	function addon:GetEnableMobs() return enablemobs end
 	function addon:GetEnableYells() return enableyells end
-end
-
--------------------------------------------------------------------------------
--- Movie Blocking
---
-
-do
-	local knownMovies = {
-		[16] = true, -- Lich King death
-		[73] = true, -- Ultraxion death
-		[74] = true, -- DeathwingSpine engage
-		[75] = true, -- DeathwingSpine death
-		[76] = true, -- DeathwingMadness death
-		[152] = true, -- Garrosh defeat
-	}
-
-	function addon:PLAY_MOVIE(_, id)
-		if knownMovies[id] and self.db.profile.blockmovies then
-			if self.db.global.watchedMovies[id] then
-				self:Print(L.movieBlocked)
-				MovieFrame:Hide()
-			else
-				self.db.global.watchedMovies[id] = true
-			end
-		end
-	end
-
-	-- Cinematic handling
-	local cinematicZones = {
-		["800:1"] = true, -- Firelands bridge lowering
-		["875:1"] = true, -- Gate of the Setting Sun gate breach
-		["930:3"] = true, -- Tortos cave entry -- Doesn't work, apparently Blizzard don't want us to skip this..?
-		["930:7"] = true, -- Ra-Den room opening
-		["953:2"] = true, -- After Immerseus, entry to Fallen Protectors
-		["953:8"] = true, -- Blackfuse room opening, just outside the door
-		["953:9"] = true, -- Blackfuse room opening, in Thok area
-		["953:12"] = true, -- Mythic Garrosh Phase 4
-		["964:1"] = true, -- Bloodmaul Slag Mines, activating bridge to Roltall
-		["969:2"] = true, -- Shadowmoon Burial Grounds, final boss introduction
-		-- 984:1 is Auchindoun, but it unfortunately has 2 cinematics. 1 before the first boss and 1 before the last boss. Workaround?
-		["993:2"] = true, -- Grimrail Depot, boarding the train
-		["993:4"] = true, -- Grimrail Depot, destroying the train
-		["994:3"] = true, -- Highmaul, Kargath Death
-	}
-
-	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
-	function addon:SiegeOfOrgrimmarCinematics()
-		local hasItem
-		for i = 105930, 105935 do -- Vision of Time items
-			local _, _, cd = GetItemCooldown(i)
-			if cd > 0 then hasItem = true end -- Item is found in our inventory
-		end
-		if hasItem and not self.SiegeOfOrgrimmarCinematicsFrame then
-			local tbl = {[149370] = true, [149371] = true, [149372] = true, [149373] = true, [149374] = true, [149375] = true}
-			self.SiegeOfOrgrimmarCinematicsFrame = CreateFrame("Frame")
-			-- frame:UNIT_SPELLCAST_SUCCEEDED:player:Vision of Time Scene 2::227:149371:
-			self.SiegeOfOrgrimmarCinematicsFrame:SetScript("OnEvent", function(_, _, _, _, _, _, spellId)
-				if tbl[spellId] then
-					addon:UnregisterEvent("CINEMATIC_START")
-					addon:ScheduleTimer("RegisterEvent", 10, "CINEMATIC_START")
-				end
-			end)
-			self.SiegeOfOrgrimmarCinematicsFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
-		end
-	end
-
-	function addon:CINEMATIC_START()
-		if self.db.profile.blockmovies then
-			SetMapToCurrentZone()
-			local areaId = GetCurrentMapAreaID() or 0
-			local areaLevel = GetCurrentMapDungeonLevel() or 0
-			local id = ("%d:%d"):format(areaId, areaLevel)
-
-			if cinematicZones[id] then
-				if self.db.global.watchedMovies[id] then
-					self:Print(L.movieBlocked)
-					CinematicFrame_CancelCinematic()
-				else
-					self.db.global.watchedMovies[id] = true
-				end
-			end
-		end
-	end
 end
 
 -------------------------------------------------------------------------------
@@ -447,9 +360,7 @@ function addon:OnInitialize()
 			sound = true,
 			raidicon = true,
 			flash = true,
-			showBlizzardWarnings = false,
 			showZoneMessages = true,
-			blockmovies = true,
 			fakeDBMVersion = false,
 		},
 		global = {
@@ -472,6 +383,12 @@ function addon:OnInitialize()
 	if self.db.global.seenmovies then
 		self.db.global.seenmovies = nil
 	end
+	if self.db.profile.showBlizzardWarnings then
+		self.db.profile.showBlizzardWarnings = nil
+	end
+	if self.db.profile.blockmovies then
+		self.db.profile.blockmovies = nil
+	end
 	--
 
 	self:RegisterBossOption("bosskill", L.bosskill, L.bosskill_desc, nil, "Interface\\Icons\\ability_rogue_feigndeath")
@@ -489,8 +406,6 @@ end
 function addon:OnEnable()
 	self:RegisterMessage("BigWigs_AddonMessage", chatMsgAddon)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
-	self:RegisterEvent("CINEMATIC_START")
-	self:RegisterEvent("PLAY_MOVIE")
 
 	self:RegisterEvent("ENCOUNTER_START")
 
@@ -503,8 +418,6 @@ end
 
 function addon:OnDisable()
 	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
-	self:UnregisterEvent("CINEMATIC_START")
-	self:UnregisterEvent("PLAY_MOVIE")
 	self:UnregisterMessage("BigWigs_AddonMessage")
 
 	self:UnregisterEvent("ENCOUNTER_START")

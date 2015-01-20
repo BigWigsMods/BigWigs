@@ -178,33 +178,11 @@ local acOptions = {
 					order = 30,
 					width = "full",
 				},
-				showBlizzardWarnings = {
-					type = "toggle",
-					name = L.showBlizzWarnings,
-					desc = L.showBlizzWarningsDesc,
-					set = function(info, value)
-						local key = info[#info]
-						local plugin = BigWigs:GetPlugin("BossBlock")
-						plugin:Disable()
-						BigWigs.db.profile[key] = value
-						options:SendMessage("BigWigs_CoreOptionToggled", key, value)
-						plugin:Enable()
-					end,
-					order = 31,
-					width = "full",
-				},
 				showZoneMessages = {
 					type = "toggle",
 					name = L.zoneMessages,
 					desc = L.zoneMessagesDesc,
 					order = 32,
-					width = "full",
-				},
-				blockmovies = {
-					type = "toggle",
-					name = L.blockMovies,
-					desc = L.blockMoviesDesc,
-					order = 33,
 					width = "full",
 				},
 				separator4 = {

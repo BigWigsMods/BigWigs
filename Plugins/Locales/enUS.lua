@@ -99,6 +99,7 @@ L.breakFinished = "Break time is now over!"
 
 L.bossBlock = "Boss Block"
 L.bossBlockDesc = "Configure the various things you can block during a boss encounter."
+L.movieBlocked = "You've seen this movie before, skipping it."
 
 -----------------------------------------------------------------------
 -- Colors.lua
