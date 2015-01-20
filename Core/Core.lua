@@ -380,15 +380,9 @@ function addon:OnInitialize()
 	self.db = db
 
 	-- XXX temp cleanup
-	if self.db.global.seenmovies then
-		self.db.global.seenmovies = nil
-	end
-	if self.db.profile.showBlizzardWarnings then
-		self.db.profile.showBlizzardWarnings = nil
-	end
-	if self.db.profile.blockmovies then
-		self.db.profile.blockmovies = nil
-	end
+	self.db.global.seenmovies = nil
+	self.db.profile.showBlizzardWarnings = nil
+	self.db.profile.blockmovies = nil
 	--
 
 	self:RegisterBossOption("bosskill", L.bosskill, L.bosskill_desc, nil, "Interface\\Icons\\ability_rogue_feigndeath")
