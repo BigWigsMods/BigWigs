@@ -158,9 +158,9 @@ function mod:CreepingMossHeal(args)
 	if not self:LFR() then
 		local mobId = self:MobId(args.destGUID)
 		if mobId == 78491 then -- Brackenspore
-			self:Message(args.spellId, "Important", "Info", L.creeping_moss_boss_heal)
+			self:Message(164125, "Important", "Info", L.creeping_moss_boss_heal)
 		elseif mobId == 79092 and decayCount > 1 then -- Fungal Flesh-Eater. If decayCount is 1 it probably just spawned on moss, so don't bother warning.
-			self:Message(args.spellId, "Important", nil, L.creeping_moss_add_heal)
+			self:Message(164125, "Important", nil, L.creeping_moss_add_heal)
 		end
 	end
 end
