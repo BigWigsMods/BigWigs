@@ -108,35 +108,51 @@ end
 -- Event Handlers
 --
 
-function plugin:BigWigs_OnBossEngage()
-	if self.db.profile.blockEmotes then
-		RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_EMOTE")
-		RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_WHISPER")
+do
+	local unregisteredEvents = {}
+	local function KillEvent(frame, event)
+		if frame:IsEventRegistered(event) then
+			frame:UnregisterEvent(event)
+			unregisteredEvents[event] = true
+		end
 	end
-	if self.db.profile.blockGarrison then
-		AlertFrame:UnregisterEvent("GARRISON_MISSION_FINISHED")
+	local function RestoreEvent(frame, event)
+		if unregisteredEvents[event] then
+			frame:RegisterEvent(event)
+			unregisteredEvents[event] = nil
+		end
 	end
-	if self.db.profile.blockGuildChallenge then
-		AlertFrame:UnregisterEvent("GUILD_CHALLENGE_COMPLETED")
-	end
-	if self.db.profile.blockSpellErrors then
-		UIErrorsFrame:UnregisterEvent("UI_ERROR_MESSAGE")
-	end
-end
 
-function plugin:BigWigs_OnBossWin()
-	if self.db.profile.blockEmotes then
-		RaidBossEmoteFrame:RegisterEvent("RAID_BOSS_EMOTE")
-		RaidBossEmoteFrame:RegisterEvent("RAID_BOSS_WHISPER")
+	function plugin:BigWigs_OnBossEngage()
+		if self.db.profile.blockEmotes then
+			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
+			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+		end
+		if self.db.profile.blockGarrison then
+			KillEvent(AlertFrame, "GARRISON_MISSION_FINISHED")
+		end
+		if self.db.profile.blockGuildChallenge then
+			KillEvent(AlertFrame, "GUILD_CHALLENGE_COMPLETED")
+		end
+		if self.db.profile.blockSpellErrors then
+			KillEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
+		end
 	end
-	if self.db.profile.blockGarrison then
-		AlertFrame:RegisterEvent("GARRISON_MISSION_FINISHED")
-	end
-	if self.db.profile.blockGuildChallenge then
-		AlertFrame:RegisterEvent("GUILD_CHALLENGE_COMPLETED")
-	end
-	if self.db.profile.blockSpellErrors then
-		UIErrorsFrame:RegisterEvent("UI_ERROR_MESSAGE")
+
+	function plugin:BigWigs_OnBossWin()
+		if self.db.profile.blockEmotes then
+			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
+			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+		end
+		if self.db.profile.blockGarrison then
+			RestoreEvent(AlertFrame, "GARRISON_MISSION_FINISHED")
+		end
+		if self.db.profile.blockGuildChallenge then
+			RestoreEvent(AlertFrame, "GUILD_CHALLENGE_COMPLETED")
+		end
+		if self.db.profile.blockSpellErrors then
+			RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
+		end
 	end
 end
 
