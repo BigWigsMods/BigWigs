@@ -189,7 +189,8 @@ function mod:InfestingSpores(args)
 end
 
 function mod:Decay(args)
-	self:Message(args.spellId, "Personal", not self:Healer() and "Alert", CL.casting:format(CL.count:format(args.spellName, decayCount)))
+	local playSound = self:Damager() or (self:Tank() and self:MobId(UnitGUID("target")) == 79092)
+	self:Message(args.spellId, "Personal", playSound and "Alert", CL.casting:format(CL.count:format(args.spellName, decayCount)))
 	decayCount = decayCount + 1
 	self:Bar(args.spellId, 9.5, CL.count:format(args.spellName, decayCount))
 end
