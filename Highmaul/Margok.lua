@@ -464,6 +464,7 @@ end
 --end
 
 function mod:DisplacementPhaseStart(args)
+	if not self.isEngaged then return end -- In Mythic mode he gains this when he's floating around the room before engage.
 	self:ResumeBar(156238) -- Arcane Wrath
 	self:CDBar(156467, 15) -- Destructive Resonance
 	self:ResumeBar(156471, CL.count:format(self:SpellName(-9945), aberrationCount)) -- Arcane Aberration
