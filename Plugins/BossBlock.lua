@@ -156,12 +156,8 @@ do
 	end
 end
 
--------------------------------------------------------------------------------
--- Movie Blocking
---
-
 do
-	-- Movie handling
+	-- Movie blocking
 	local knownMovies = {
 		[16] = true, -- Lich King death
 		[73] = true, -- Ultraxion death
@@ -184,7 +180,7 @@ do
 end
 
 do
-	-- Cinematic handling
+	-- Cinematic blocking
 	local cinematicZones = {
 		["800:1"] = true, -- Firelands bridge lowering
 		["875:1"] = true, -- Gate of the Setting Sun gate breach
