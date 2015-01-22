@@ -201,12 +201,13 @@ function mod:UNIT_TARGET(_, firedUnit)
 	local unit = firedUnit and firedUnit.."target" or "mouseover"
 	local guid = UnitGUID(unit)
 	if self:MobId(guid) == 79183 and not markableMobs[guid] then
-		for i = 1, 4 do
+		local n = self:Mythic() and 4 or 2
+		for i = 1, n do
 			if not marksUsed[i] then
 				SetRaidTarget(unit, i)
 				markableMobs[guid] = true
 				marksUsed[i] = guid
-				if i == 4 then
+				if i == n then
 					self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 					self:UnregisterEvent("UNIT_TARGET")
 				end
