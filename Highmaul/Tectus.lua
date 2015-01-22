@@ -28,6 +28,10 @@ if L then
 	L.custom_off_barrage_marker_desc = "Marks targets of Crystalline Barrage with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
 	L.custom_off_barrage_marker_icon = 1
 
+	L.custom_on_shard_marker = "Shard of Tectus marker"
+	L.custom_on_shard_marker_desc = "Marks the 2 shards of tectus that spawn with {rt8}{rt7}, requires promoted or leader."
+	L.custom_on_shard_marker_icon = 8
+
 	L.tectus = EJ_GetEncounterInfo(1195)
 	L.shard = "Shard"
 	L.motes = "Motes"
@@ -48,6 +52,7 @@ function mod:GetOptions()
 		163312, -- Raving Assault
 		--[[ General ]]--
 		{162288, "TANK"}, -- Accretion
+		"custom_on_shard_marker",
 		{162346, "FLASH", "SAY", "ME_ONLY"}, -- Crystalline Barrage
 		"custom_off_barrage_marker",
 		162475, -- Tectonic Upheaval
@@ -83,6 +88,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "NewAdd")
 
 	wipe(barrageMarked)
@@ -108,6 +115,26 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	if self.db.profile.custom_on_shard_marker then
+		local first
+		for i = 1, 5 do
+			local unit = ("boss%d"):format(i)
+			local id = self:MobId(UnitGUID(unit))
+			if id == 80551 then -- Shard of Tectus
+				if not first then
+					first = unit
+				else
+					SetRaidTarget(first, 8)
+					SetRaidTarget(unit, 7)
+					self:UnregisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+					return
+				end
+			end
+		end
+	end
+end
 
 function mod:Accretion(args)
 	if self:MobId(args.sourceGUID) ~= 80557 and UnitGUID("target") == args.sourceGUID and args.amount > 3 then
