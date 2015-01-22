@@ -18,7 +18,6 @@ local livingMushroomCount = 1
 -- marking
 local markableMobs = {}
 local marksUsed = {}
-local markTimer = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -108,8 +107,6 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_SUCCESS", "LivingMushroom", 160022) -- XXX 6.1
 
 	self:Log("SPELL_CAST_SUCCESS", "SporeShooter", 163594) -- Small Adds
-	self:Log("SPELL_CAST_START", "SporeShoot", 160254)
-	self:Death("SporeShooterDeath", 79183)
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "CallOfTheTides", 163755)
 	self:Log("SPELL_CAST_SUCCESS", "ExplodingFungus", 163794)
@@ -131,13 +128,6 @@ function mod:OnEngage()
 		self:CDBar("mythic_ability", 22, L.mythic_ability, L.mythic_ability_icon)
 	end
 	self:Berserk(600)
-	-- marking
-	wipe(markableMobs)
-	wipe(marksUsed)
-	markTimer = nil
-	if self.db.profile.custom_off_spore_shooter_marker then
-		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-	end
 end
 
 --------------------------------------------------------------------------------
@@ -198,64 +188,29 @@ end
 function mod:SporeShooter(args)
 	self:Message("spore_shooter", "Attention", self:Damager() and "Info", CL.small_adds, L.spore_shooter_icon)
 	self:Bar("spore_shooter", 60, CL.small_adds, L.spore_shooter_icon)
+	if self.db.profile.custom_off_spore_shooter_marker then -- Marking
+		wipe(markableMobs)
+		wipe(marksUsed)
+		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
+		self:RegisterEvent("UNIT_TARGET")
+	end
 end
 
--- marking
-do
-	local function mark(unit, guid)
+-- Small add marking
+function mod:UNIT_TARGET(_, firedUnit)
+	local unit = firedUnit and firedUnit.."target" or "mouseover"
+	local guid = UnitGUID(unit)
+	if self:MobId(guid) == 79183 and not markableMobs[guid] then
 		for i = 1, 4 do
 			if not marksUsed[i] then
 				SetRaidTarget(unit, i)
-				markableMobs[guid] = "marked"
+				markableMobs[guid] = true
 				marksUsed[i] = guid
+				if i == 4 then
+					self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+					self:UnregisterEvent("UNIT_TARGET")
+				end
 				return
-			end
-		end
-	end
-
-	local function markMobs(self)
-		local continue
-		for guid in next, markableMobs do
-			if markableMobs[guid] == true then
-				local unit = self:GetUnitIdByGUID(guid)
-				if unit then
-					mark(unit, guid)
-				else
-					continue = true
-				end
-			end
-		end
-		if not continue or not self.db.profile.custom_off_spore_shooter_marker then
-			self:CancelTimer(markTimer)
-			markTimer = nil
-		end
-	end
-
-	function mod:UPDATE_MOUSEOVER_UNIT()
-		local guid = UnitGUID("mouseover")
-		if guid and self:MobId(guid) == 79183 and markableMobs[guid] ~= "marked" then
-			mark("mouseover", guid)
-		end
-	end
-
-	-- first cast of Spore Shoot is ~3s after they spawn
-	function mod:SporeShoot(args)
-		if self.db.profile.custom_off_spore_shooter_marker and not markableMobs[args.destGUID] then
-			markableMobs[args.destGUID] = true
-			if not markTimer then
-				markTimer = self:ScheduleRepeatingTimer(markMobs, 0.2, self)
-			end
-		end
-	end
-
-	function mod:SporeShooterDeath(args)
-		if self.db.profile.custom_off_spore_shooter_marker then
-			markableMobs[args.destGUID] = nil
-			for i = 1, 4 do
-				if marksUsed[i] == args.destGUID then
-					marksUsed[i] = nil
-					break
-				end
 			end
 		end
 	end

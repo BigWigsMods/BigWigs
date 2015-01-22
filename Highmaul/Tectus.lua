@@ -29,7 +29,7 @@ if L then
 	L.custom_off_barrage_marker_icon = 1
 
 	L.custom_on_shard_marker = "Shard of Tectus marker"
-	L.custom_on_shard_marker_desc = "Marks the 2 shards of tectus that spawn with {rt8}{rt7}, requires promoted or leader."
+	L.custom_on_shard_marker_desc = "Marks the 2 'Shard of Tectus' that spawn with {rt8}{rt7}, requires promoted or leader."
 	L.custom_on_shard_marker_icon = 8
 
 	L.tectus = EJ_GetEncounterInfo(1195)
