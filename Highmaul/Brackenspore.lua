@@ -179,7 +179,7 @@ function mod:InfestingSpores(args)
 end
 
 function mod:Decay(args)
-	local playSound = self:Damager() or (self:Tank() and self:MobId(UnitGUID("target")) == 79092)
+	local playSound = self:Damager() or (self:Tank() and UnitGUID("target") == args.sourceGUID)
 	self:Message(args.spellId, "Personal", playSound and "Alert", CL.casting:format(CL.count:format(args.spellName, decayCount)))
 	decayCount = decayCount + 1
 	self:Bar(args.spellId, 9.5, CL.count:format(args.spellName, decayCount))
@@ -229,7 +229,7 @@ function mod:FungusSpawns(unit, spellName, _, _, spellId)
 		self:Message("living_mushroom", "Positive", self:Healer() and "Long", CL.count:format(spellName, livingMushroomCount), L.living_mushroom_icon)
 		livingMushroomCount = livingMushroomCount + 1
 		self:Bar("living_mushroom", 58, CL.count:format(spellName, livingMushroomCount), L.living_mushroom_icon)
-	elseif spellId == 160021 then -- Rejuvenating Mushroom
+	elseif spellId == 177820 then -- Rejuvenating Mushroom
 		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Info", spellName, L.rejuvenating_mushroom_icon)
 		self:CDBar("rejuvenating_mushroom", 120, spellName, L.rejuvenating_mushroom_icon) -- spawns most of the time just after 2min, sometimes delayed by boss casts (?)
 	end
