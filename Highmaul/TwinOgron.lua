@@ -292,10 +292,10 @@ end
 do
 	local times = { 8.5, 6, 46, 7, 16, 8.5, 6, 40, 131, 9.5, 56.5, 8.5, 6 }
 	function mod:ArcaneVolatility()
-		self:Message(args.spellId, "Neutral")
+		self:Message(163372, "Neutral")
 		local t = times[volatilityCount]
 		if t then
-			self:CDBar(args.spellId, t)
+			self:CDBar(163372, t)
 		end
 		volatilityCount = volatilityCount + 1
 	end
