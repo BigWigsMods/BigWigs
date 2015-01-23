@@ -21,6 +21,8 @@ local volatilityTargets = {}
 local polInterval = 26
 local phemosInterval = 31
 
+local STRING_SCHOOL_ARCANE = STRING_SCHOOL_ARCANE
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -91,7 +93,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BlazeApplied", 158241)
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "ArcaneTwisted", 163297)
-	self:Log("SPELL_CAST_SUCCESS", "ArcaneVolatility", 163372)
+	self:Emote("ArcaneVolatility", "163372")
 	self:Log("SPELL_AURA_APPLIED", "ArcaneVolatilityApplied", 163372)
 	self:Log("SPELL_AURA_REFRESH", "ArcaneVolatilityApplied", 163372)
 	self:Log("SPELL_AURA_REMOVED", "ArcaneVolatilityRemoved", 163372)
@@ -155,7 +157,7 @@ local function updateProximity()
 end
 
 local function openPulverizeProximity()
-	mod:Message(158385, "Urgent", "Alarm", CL.soon:format(mod:SpellName(158385)))
+	mod:Message(158385, "Urgent", "Alarm", CL.incoming:format(mod:SpellName(158385)))
 	pulverizeProximity = true
 	updateProximity()
 end
@@ -289,36 +291,17 @@ end
 
 do
 	local times = { 8.5, 6, 46, 7, 16, 8.5, 6, 40, 131, 9.5, 56.5, 8.5, 6 }
-	local scheduled = nil
-	local function delayUpdate()
-		updateProximity()
-		scheduled = nil
+	function mod:ArcaneVolatility()
+		self:Message(args.spellId, "Neutral")
+		local t = times[volatilityCount]
+		if t then
+			self:CDBar(args.spellId, t)
+		end
+		volatilityCount = volatilityCount + 1
 	end
-	function mod:ArcaneVolatility(args)
-		-- cast on everyone at the same time, but the debuffs end up getting applied over .8s or so
-		if not scheduled then
-			self:Message(args.spellId, "Neutral")
-			local t = times[volatilityCount]
-			if t then
-				self:CDBar(args.spellId, t)
-			end
-			volatilityCount = volatilityCount + 1
-			scheduled = self:ScheduleTimer(delayUpdate, 0.2)
-		end
-		if self:Me(args.destGUID) then
-			volatilityOnMe = true
-			self:Message("volatility_self", "Personal", "Warning", CL.you:format(args.spellName))
-			self:Flash("volatility_self", args.spellId)
-			self:Say("volatility_self", args.spellId)
-		end
-		if not tContains(volatilityTargets, args.destName) then
-			volatilityTargets[#volatilityTargets+1] = args.destName
-			if self.db.profile.custom_off_volatility_marker then
-				SetRaidTarget(args.destName, #volatilityTargets)
-			end
-		end
-	end
+end
 
+do
 	local timeLeft, timer = 6, nil
 	local function sayCountdown(self)
 		timeLeft = timeLeft - 1
@@ -330,13 +313,25 @@ do
 			end
 		end
 	end
+
 	function mod:ArcaneVolatilityApplied(args)
 		if self:Me(args.destGUID) then
 			if timer then self:CancelTimer(timer) end
 			timeLeft = 6
 			timer = self:ScheduleRepeatingTimer(sayCountdown, 1, self)
 			self:TargetBar("volatility_self", 6, args.destName, 67735, args.spellId) -- 67735 = "Volatility"
+			volatilityOnMe = true
+			self:Message("volatility_self", "Personal", "Warning", CL.you:format(args.spellName))
+			self:Flash("volatility_self", args.spellId)
+			self:Say("volatility_self", args.spellId)
 		end
+		if not tContains(volatilityTargets, args.destName) then -- SPELL_AURA_REFRESH
+			volatilityTargets[#volatilityTargets+1] = args.destName
+			if self.db.profile.custom_off_volatility_marker then
+				SetRaidTarget(args.destName, #volatilityTargets)
+			end
+		end
+		updateProximity()
 	end
 
 	function mod:ArcaneVolatilityRemoved(args)
