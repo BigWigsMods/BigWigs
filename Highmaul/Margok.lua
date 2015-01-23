@@ -644,9 +644,7 @@ function mod:MarkOfChaosApplied(args)
 	local isFortification = args.spellId == 164178 or (self:Mythic() and phase == 3)
 	if self:Me(args.destGUID) then
 		self:Flash(158605)
-		if isFortification then -- Fortification (you're rooted)
-			self:Say(158605)
-		end
+		self:Say(158605)
 	elseif isFortification and self:Range(args.destName) < 35 then -- Fortification (target rooted)
 		self:Flash(158605)
 	end
