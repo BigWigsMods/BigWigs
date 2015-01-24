@@ -24,7 +24,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		160838, {153470, "HEALER"}, {158166, "HEALER"}, 156938, 157139, {155818, "FLASH"}, "bosskill"
+		160838,
+		{153470, "HEALER"},
+		{158166, "HEALER"},
+		156938,
+		157139,
+		{155818, "FLASH"},
+		"bosskill"
 	}
 end
 
@@ -44,8 +50,6 @@ function mod:OnBossEnable()
 	--   Searing Plates 161570 18-32ish & 78-87ish
 	--   Stamping Presses 158139 48-62ish & 87+ with both bosses down
 	--   Smart Stampers 162124 (Mythic)
-
-	self:Death("Deaths", 76973, 76974)
 end
 
 function mod:OnEngage()
