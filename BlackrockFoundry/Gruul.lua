@@ -15,6 +15,7 @@ mod.engageId = 1691
 local rampaging = nil
 local smashCount = 1
 local slamCount = 1
+local sliceCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -65,8 +66,8 @@ end
 
 function mod:OnEngage()
 	rampaging = nil
-	smashCount, slamCount = 1, 1
-	self:Bar(155080, 14) -- Inferno Slice
+	smashCount, slamCount, sliceCount = 1, 1, 1
+	self:Bar(155080, 14, CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
 	self:CDBar(155539, 105) -- Destructive Rampage (105-115)
 	-- XXX not sure about these... can cast either first around 22s, then the second varies (30~43s), then they stablize
 	--self:CDBar(155326, 22) -- Petrifying Slam
@@ -87,13 +88,20 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 end
 
 function mod:InfernoSlice(args)
-	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
-	self:CDBar(args.spellId, 17.5) -- slice x6 then rampage
+	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(CL.count:format(args.spellName, sliceCount)))
+	sliceCount = sliceCount + 1
+	self:CDBar(args.spellId, 17.5, CL.count:format(args.spellName, sliceCount)) -- slice x6 then rampage
 end
 
 function mod:OverwhelmingBlows(args)
-	if self:Me(args.destGUI) or (self:Tank() and self:Tank(args.destName)) then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+	if self:Tank() and self:Tank(args.destName) then
+		local amount = args.amount or 1
+		if amount % 2 == 0 then -- stacks every 3s
+			self:StackMessage(args.spellId, args.destName, amount, "Attention")
+		end
+	elseif self:Me(args.destGUID) then -- you're too close!
+		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+		self:Flash(args.spellId)
 	end
 end
 
@@ -156,7 +164,7 @@ function mod:DestructiveRampage(args)
 	self:Message(args.spellId, "Important")
 	self:Bar(args.spellId, 30)
 	rampaging = true
-	self:StopBar(155080) -- Inferno Slice
+	self:StopBar(CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
 	self:StopBar(155326) -- Petrifying Slam
 	self:StopBar(155301) -- Overhead Smash
 end
@@ -165,8 +173,8 @@ function mod:DestructiveRampageOver(args)
 	self:Message(args.spellId, "Positive", "Info", CL.over:format(args.spellName))
 	self:Bar(args.spellId, self:LFR() and 115 or 80)
 	rampaging = nil
-	smashCount, slamCount = 1, 1
-	self:Bar(155080, 17) -- Inferno Slice
+	smashCount, slamCount, sliceCount = 1, 1, 1
+	self:Bar(155080, 17, CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
 	self:Bar(155326, 25.3) -- Petrifying Slam
 	self:Bar(155301, 46) -- Overhead Smash
 end
