@@ -66,9 +66,9 @@ function mod:OnEngage()
 	rampaging = nil
 	smashCount, slamCount, sliceCount = 1, 1, 1
 	self:Bar(155080, 14.5, CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
-	self:CDBar(155539, 102) -- Destructive Rampage
 	self:CDBar(155301, 22) -- Overhead Smash
 	self:CDBar(155326, 27) -- Petrifying Slam
+	self:CDBar(155539, 102) -- Destructive Rampage
 	if self:Mythic() then
 		self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Flare", "boss1")
 		self:CDBar(165300, 6) -- Flare
@@ -101,7 +101,7 @@ end
 
 function mod:OverheadSmash(args)
 	if rampaging then return end
-	self:Message(args.spellId, "Attention")
+	self:Message(args.spellId, "Attention", "Info")
 	smashCount = smashCount + 1
 	if smashCount < 4 then -- smash smash smash rampage
 		self:CDBar(args.spellId, smashCount == 1 and 21 or 34)

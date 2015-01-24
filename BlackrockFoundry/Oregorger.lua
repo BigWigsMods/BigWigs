@@ -37,8 +37,17 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{156240, "TANK_HEALER"}, {173471, "TANK"}, {156203, "SAY", "FLASH"}, {156390, "FLASH"}, {"shard_explosion", "EMPHASIZE"}, 156877, 155819, 155898,
-		"stages", "berserk", "bosskill"
+		{156240, "TANK_HEALER"}, -- Acid Torrent
+		{173471, "TANK"}, -- Acid Maw
+		{156203, "SAY", "FLASH"}, -- Retched Blackrock
+		{156390, "FLASH"}, -- Explosive Shard
+		{"shard_explosion", "EMPHASIZE"}, -- shard is easy to miss, help melee out
+		156877, -- Blackrock Barrage
+		155819, -- Hunger Drive
+		155898, -- Rolling Fury
+		"stages",
+		"berserk",
+		"bosskill"
 	}
 end
 
@@ -50,7 +59,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "RetchedBlackrockDamage", 156203)
 	self:Log("SPELL_CAST_SUCCESS", "ExplosiveShard", 156390)
 	self:Log("SPELL_AURA_APPLIED", "BlackrockSpines", 156834)
-	self:Log("SPELL_CAST_START", "BlackrockBarrage", 156877)
+	self:Log("SPELL_CAST_START", "BlackrockBarrage", 156877, 173459)
 	self:Emote("Insane", L.berserk_trigger)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_START", "EarthshakingStomp", "boss1") -- backup for the yell (1s after the emote)
 	-- Phase 2
@@ -66,6 +75,7 @@ function mod:OnEngage()
 	self:CDBar(156203, 6) -- Retched Blackrock
 	self:CDBar(156390, 9) -- Explosive Shard
 	self:CDBar(156240, 12) -- Acid Torrent
+	self:CDBar(156877, 14) -- Blackrock Barrage
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
 
@@ -87,7 +97,7 @@ end
 
 function mod:AcidTorrent(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:CDBar(args.spellId, 12) -- 11-14
+	self:CDBar(args.spellId, 12) -- 13-17
 end
 
 function mod:AcidMaw(args)
@@ -110,7 +120,7 @@ do
 	end
 	function mod:RetchedBlackrock(args)
 		self:GetBossTarget(printTarget, 0.2, args.sourceGUID)
-		self:CDBar(156203, 15) -- 15-19
+		self:CDBar(156203, 20)
 	end
 end
 
@@ -131,16 +141,17 @@ function mod:ExplosiveShard(args)
 		self:Message(args.spellId, "Urgent", "Alarm")
 		self:CDBar(args.spellId, 12)
 		self:Flash(args.spellId)
-		self:Bar("shard_explosion", 3.4, 84474, "spell_shadow_mindbomb") -- "Explosion" with a bomb icon
+		self:Bar("shard_explosion", 3.5, 84474, "spell_shadow_mindbomb") -- "Explosion" with a bomb icon
 	end
 end
 
 function mod:BlackrockSpines(args)
 	barrageCount = 1
+	self:CDBar(156877, 21) -- Blackrock Barrage
 end
 
 function mod:BlackrockBarrage(args)
-	self:Message(args.spellId, "Urgent", not self:Healer() and "Alert", CL.count:format(args.spellName, barrageCount))
+	self:Message(156877, "Urgent", not self:Healer() and "Alert", CL.count:format(args.spellName, barrageCount))
 	barrageCount = barrageCount + 1
 end
 
@@ -151,13 +162,14 @@ function mod:FeedingFrenzy(unit, spellName, _, _, spellId)
 		self:StopBar(156240) -- Acid Torrent
 		self:StopBar(156203) -- Retched Blackrock
 		self:StopBar(156390) -- Explosive Shard
+		self:StopBar(156877) -- Blackrock Barrage
 
 		self:Message("stages", "Positive", "Long", self:SpellName(-9968), false) -- Feeding Frenzy
 	end
 end
 
 function mod:HungerDriveApplied(args)
-	if args.amount % 5 == 0 then -- every 15s
+	if args.amount % 5 == 0 then -- warn every 15s
 		local power = UnitPower("boss1")
 		self:Message(args.spellId, "Attention", nil, L.hunger_drive_power:format(args.amount, args.spellName, 100-power))
 	end
@@ -172,6 +184,7 @@ function mod:HungerDriveRemoved(args)
 	self:CDBar(156203, 6) -- Retched Blackrock
 	self:CDBar(156390, 9) -- Explosive Shard
 	self:CDBar(156240, 12) -- Acid Torrent
+	self:CDBar(156877, 14) -- Blackrock Barrage
 end
 
 function mod:RollingFuryRemoved(args)
