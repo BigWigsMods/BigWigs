@@ -71,6 +71,9 @@ function mod:OnEngage()
 	-- XXX not sure about these... can cast either first around 22s, then the second varies (30~43s), then they stablize
 	--self:CDBar(155326, 22) -- Petrifying Slam
 	--self:CDBar(155301, 30) -- Overhead Smash
+	if self:Mythic() then
+		self:CDBar(165300, 6) -- Flare
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -91,7 +94,7 @@ end
 function mod:OverwhelmingBlows(args)
 	if self:Tank(args.destName) then
 		--self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
-	else -- you're too close!
+	elseif self:Me(args.destGUID) then -- you're too close!
 		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:Flash(args.spellId)
 	end
