@@ -1005,10 +1005,10 @@ do
 
 	function plugin:BigWigs_OnBossDisable(event, module)
 		if module ~= opener then return end
-		if event == "BigWigs_OnBossDisable" then
+		if event == "BigWigs_OnBossDisable" then -- Fully close on a boss win/disable
 			customProximityOpen = nil
 			self:Close(true)
-		else
+		else -- Reopen custom proximity when a spell ends or on a boss wipe
 			self:Close()
 		end
 	end
@@ -1137,7 +1137,7 @@ do
 		local y, x = UnitPosition("player")
 		if x == 0 and y == 0 then print("No map data!") return end
 
-		functionToFire = nil
+		functionToFire = nil -- Kill previous updater
 		self:CancelTimer(updateTimer)
 		updateTimer = self:ScheduleTimer(openProx, 0.1, self, range, module, key, player, isReverse, spellName, spellIcon)
 	end
@@ -1167,7 +1167,7 @@ SlashCmdList.BigWigs_Proximity = function(input)
 			plugin:Close(true)
 			customProximityOpen = range
 			plugin:Open(range)
-			BigWigs:Print("NOTICE: Custom Proximity will now automatically reopen itself after a boss ability has finished using it.")
+			BigWigs:Print("NOTICE: Custom Proximity will now automatically reopen itself after a boss ability has finished using it.") -- XXX temp
 		else
 			customProximityOpen = nil
 			plugin:Close(true)
