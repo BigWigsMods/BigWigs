@@ -52,9 +52,9 @@ local maxPlayers = 0
 local myGUID = nil
 local unitList = nil
 local blipList = {}
-local updater = false
 local updateTimer = nil
 local functionToFire = nil
+local customProximityOpen = nil
 local proxAnchor, proxTitle, proxCircle, proxPulseOut, proxPulseIn = nil, nil, nil, nil, nil
 
 -- Upvalues
@@ -242,7 +242,7 @@ do
 	--
 
 	function normalProximity()
-		if updater then CTimerAfter(0.05, functionToFire) else return end
+		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
 		local anyoneClose = 0
 
@@ -289,7 +289,7 @@ do
 	--
 
 	function targetProximity()
-		if updater then CTimerAfter(0.05, functionToFire) else return end
+		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
 		local srcY, srcX = UnitPosition("player")
 		local unitY, unitX = UnitPosition(proximityPlayer)
@@ -324,7 +324,7 @@ do
 	--
 
 	function multiTargetProximity()
-		if updater then CTimerAfter(0.05, functionToFire) else return end
+		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
 		local anyoneClose = 0
 
@@ -367,7 +367,7 @@ do
 	--
 
 	function reverseProximity()
-		if updater then CTimerAfter(0.05, functionToFire) else return end
+		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
 		local anyoneClose = 0
 
@@ -414,7 +414,7 @@ do
 	--
 
 	function reverseTargetProximity()
-		if updater then CTimerAfter(0.05, functionToFire) else return end
+		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
 		local srcY, srcX = UnitPosition("player")
 		local unitY, unitX = UnitPosition(proximityPlayer)
@@ -448,7 +448,7 @@ do
 	--
 
 	function reverseMultiTargetProximity()
-		if updater then CTimerAfter(0.05, functionToFire) else return end
+		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
 		local anyoneClose = 0
 
@@ -613,7 +613,8 @@ do
 		close:SetScript("OnLeave", onControlLeave)
 		close:SetScript("OnClick", function()
 			BigWigs:Print(L.toggleDisplayPrint)
-			plugin:Close()
+			customProximityOpen = nil
+			plugin:Close(true)
 		end)
 		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
 		proxAnchor.close = close
@@ -776,9 +777,9 @@ do
 		if createAnchor then createAnchor() createAnchor = nil end
 
 		self:RegisterMessage("BigWigs_ShowProximity")
-		self:RegisterMessage("BigWigs_HideProximity", "Close")
-		self:RegisterMessage("BigWigs_OnBossDisable")
+		self:RegisterMessage("BigWigs_HideProximity", "BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_OnBossReboot", "BigWigs_OnBossDisable")
+		self:RegisterMessage("BigWigs_OnBossDisable")
 
 		self:RegisterMessage("BigWigs_StartConfigureMode")
 		self:RegisterMessage("BigWigs_StopConfigureMode")
@@ -789,7 +790,8 @@ do
 end
 
 function plugin:OnPluginDisable()
-	self:Close()
+	customProximityOpen = nil
+	self:Close(true)
 end
 
 -------------------------------------------------------------------------------
@@ -809,7 +811,7 @@ function plugin:BigWigs_StopConfigureMode()
 	if db.lock then
 		proxAnchor:EnableMouse(false) -- Mouse disabled whilst locked, but we enable it in test mode. Re-disable it.
 	end
-	self:Close()
+	self:Close(true)
 end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
@@ -1003,7 +1005,12 @@ do
 
 	function plugin:BigWigs_OnBossDisable(event, module)
 		if module ~= opener then return end
-		self:Close()
+		if event == "BigWigs_OnBossDisable" then
+			customProximityOpen = nil
+			self:Close(true)
+		else
+			self:Close()
+		end
 	end
 end
 
@@ -1011,8 +1018,7 @@ end
 -- API
 --
 
-function plugin:Close()
-	updater = false
+function plugin:Close(noReopen)
 	functionToFire = nil
 	self:CancelTimer(updateTimer)
 	updateTimer = nil
@@ -1039,11 +1045,30 @@ function plugin:Close()
 	proxPulseIn:Stop()
 	proxPulseOut:Stop()
 	proxAnchor:Hide()
+	if not noReopen and customProximityOpen then
+		self:Open(customProximityOpen)
+	end
 end
 
 do
 	local function openProx(self, range, module, key, player, isReverse, spellName, spellIcon)
-		self:Close()
+		-- Update the ability name display
+		if module and key then
+			self:Close(true) -- Not a custom range, close
+
+			if spellName then
+				proxAnchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", spellIcon, spellName)
+			else
+				local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, key)
+				if type(icon) == "string" then
+					proxAnchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", icon, name)
+				else
+					proxAnchor.ability:SetText(name)
+				end
+			end
+		else
+			proxAnchor.ability:SetText(L.customRange)
+		end
 
 		myGUID = UnitGUID("player")
 		activeRange = range
@@ -1075,14 +1100,9 @@ do
 				for i = 1, GetNumGroupMembers() do
 					if UnitIsUnit(player, unitList[i]) then
 						proximityPlayer = unitList[i]
+						functionToFire = isReverse and reverseTargetProximity or targetProximity -- Only set the function if we found the unit
 						break
 					end
-				end
-				if not proximityPlayer then self:Close() end -- Not found e.g. Mirror Image
-				if isReverse then
-					functionToFire = reverseTargetProximity
-				else
-					functionToFire = targetProximity
 				end
 			end
 		elseif isReverse then
@@ -1099,21 +1119,6 @@ do
 		proxCircle:SetSize(ppy * range * 2, ppy * range * 2)
 		proxAnchor.rangePulse:SetSize(ppy * range * 2, ppy * range * 2)
 
-		-- Update the ability name display
-		if module and key then
-			if spellName then
-				proxAnchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", spellIcon, spellName)
-			else
-				local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, key)
-				if type(icon) == "string" then
-					proxAnchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", icon, name)
-				else
-					proxAnchor.ability:SetText(name)
-				end
-			end
-		else
-			proxAnchor.ability:SetText(L.customRange)
-		end
 		if spellName and key > 0 then -- GameTooltip doesn't do "journal" hyperlinks
 			activeSpellID = key
 		else
@@ -1122,7 +1127,6 @@ do
 
 		-- Start the show!
 		proxAnchor:Show()
-		updater = true
 		functionToFire()
 	end
 
@@ -1133,13 +1137,14 @@ do
 		local y, x = UnitPosition("player")
 		if x == 0 and y == 0 then print("No map data!") return end
 
+		functionToFire = nil
 		self:CancelTimer(updateTimer)
 		updateTimer = self:ScheduleTimer(openProx, 0.1, self, range, module, key, player, isReverse, spellName, spellIcon)
 	end
 end
 
 function plugin:Test()
-	self:Close()
+	self:Close(true)
 	if db.lock then
 		proxAnchor:EnableMouse(true) -- Mouse disabled whilst locked, enable it in test mode
 	end
@@ -1159,9 +1164,13 @@ SlashCmdList.BigWigs_Proximity = function(input)
 		print("Usage: /proximity 1-100")
 	else
 		if range > 0 then
+			plugin:Close(true)
+			customProximityOpen = range
 			plugin:Open(range)
+			BigWigs:Print("NOTICE: Custom Proximity will now automatically reopen itself after a boss ability has finished using it.")
 		else
-			plugin:Close()
+			customProximityOpen = nil
+			plugin:Close(true)
 		end
 	end
 end
