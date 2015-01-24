@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Gruul", 988, 1161)
 if not mod then return end
 mod:RegisterEnableMob(76877)
---mod.engageId = 1691
+mod.engageId = 1691
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -33,7 +33,13 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		165300,
-		155080, 155301, {155078, "FLASH"}, {155326, "PROXIMITY"}, 155730, 155539, {173192, "FLASH"},
+		155080,
+		155301,
+		{155078, "FLASH"},
+		{155326, "PROXIMITY"},
+		155730,
+		155539,
+		{173192, "FLASH"},
 		"bosskill"
 	}, {
 		[165300] = "mythic",
