@@ -92,11 +92,8 @@ function mod:InfernoSlice(args)
 end
 
 function mod:OverwhelmingBlows(args)
-	if self:Tank(args.destName) then
-		--self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
-	elseif self:Me(args.destGUID) then -- you're too close!
-		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
-		self:Flash(args.spellId)
+	if self:Me(args.destGUI) or (self:Tank() and self:Tank(args.destName)) then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
 	end
 end
 
@@ -179,9 +176,9 @@ do
 	function mod:CaveInDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 3 then
+			prev = t
 			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 			self:Flash(args.spellId)
-			prev = t
 		end
 	end
 end

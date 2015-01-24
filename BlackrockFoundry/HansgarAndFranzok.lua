@@ -44,6 +44,7 @@ function mod:OnBossEnable()
 	-- Hans'gar
 	self:Log("SPELL_CAST_START", "RupturedEardrums", 158166)
 	-- Environmental Threats
+	self:Log("SPELL_AURA_APPLIED", "ScorchingBurnsDamage", 155818)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ScorchingBurnsDamage", 155818)
 	self:Log("SPELL_PERIODIC_MISSED", "ScorchingBurnsDamage", 155818)
 	-- not sure how these work, it's not exactly rage based.. or maybe it is but is delayed
@@ -95,9 +96,9 @@ do
 	function mod:ScorchingBurnsDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
+			prev = t
 			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 			self:Flash(args.spellId)
-			prev = t
 		end
 	end
 end
