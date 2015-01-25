@@ -58,7 +58,7 @@ function mod:OnEngage()
 	self:CDBar(153470, 20) -- Skullcracker
 	self:CDBar(160838, 45) -- Disrupting Roar
 
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phases", "boss1", "boss2")
+	--self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phases", "boss1")
 	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", "JumpBack", "boss1", "boss2")
 end
 
@@ -78,14 +78,14 @@ do
 	function mod:Phases(unit)
 		local hp = UnitHealth(unit) / UnitHealthMax(unit)
 		if (phase == 1 and hp < 89) or (phase == 2 and hp < 58) or (phase == 3 and hp < 28) then -- 85%, 55%, 25%
-			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2")
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 			self:Message("stages", "Neutral", "Info", CL.soon:format(phaseThreats[phase]), false)
 		end
 	end
 
 	-- XXX this fires waaaaay before UNIT_TARGETABLE_CHANGED
 	function mod:JumpAway(unit, spellName, _, _, spellId)
-		if spellId == 156220 or spellId == 156883 then -- Tactical Retreat (jumped away)
+		if UnitExists(unit) and (spellId == 156220 or spellId == 156883) then -- Tactical Retreat (jumped away)
 			self:Message("stages", "Neutral", "Info", phaseThreats[phase], false)
 			if self:MobId(UnitGUID(unit)) == 76974 then -- Franzok
 				self:StopBar(153470) -- Skullcracker
@@ -99,7 +99,7 @@ do
 			if phase < 3 then
 				self:Message("stages", "Neutral", "Info", CL.over:format(phaseThreats[phase]), false)
 				phase = phase + 1
-				self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phases", "boss1", "boss2")
+				--self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phases", "boss1")
 				--[[
 				-- paused? cds are all over the place when he comes back
 				if self:MobId(UnitGUID(unit)) == 76974 then -- Franzok
