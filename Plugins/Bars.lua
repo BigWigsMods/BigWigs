@@ -1609,6 +1609,7 @@ do
 				timeLeft = 0
 				BigWigs:Print(L.pullStopped:format(nick))
 				plugin:SendMessage("BigWigs_StopBar", plugin, L.pull)
+				plugin:SendMessage("BigWigs_StopPull", plugin, seconds, nick, isDBM)
 				return
 			end
 		end
@@ -1642,6 +1643,7 @@ do
 				BigWigs3DB.breakTime = nil
 				BigWigs:Print(L.breakStopped:format(nick))
 				plugin:SendMessage("BigWigs_StopBar", plugin, L.breakBar)
+				plugin:SendMessage("BigWigs_StopBreak", plugin, seconds, nick, isDBM, reboot)
 				return
 			end
 		end
@@ -1651,9 +1653,6 @@ do
 		end
 
 		BigWigs:Print(L.breakStarted:format(isDBM and "DBM" or "Big Wigs", nick))
-		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakMinutes:format(seconds/60), "Attention", "Interface\\Icons\\inv_misc_fork&knife")
-		plugin:SendMessage("BigWigs_Sound", plugin, nil, "Long")
-		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.breakBar, seconds, "Interface\\Icons\\inv_misc_fork&knife")
 
 		timerTbl = {
 			plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", plugin, nil, L.breakSeconds:format(30), "Urgent", "Interface\\Icons\\inv_misc_fork&knife"),
@@ -1672,6 +1671,11 @@ do
 			local halfMin = (half - m) / 60
 			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", half + m, "BigWigs_Message", plugin, nil, L.breakMinutes:format(halfMin), "Positive", "Interface\\Icons\\inv_misc_fork&knife")
 		end
+
+		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakMinutes:format(seconds/60), "Attention", "Interface\\Icons\\inv_misc_fork&knife")
+		plugin:SendMessage("BigWigs_Sound", plugin, nil, "Long")
+		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.breakBar, seconds, "Interface\\Icons\\inv_misc_fork&knife")
+		plugin:SendMessage("BigWigs_StartBreak", plugin, seconds, nick, isDBM, reboot)
 	end
 end
 

@@ -111,6 +111,8 @@ end
 do
 	local unregisteredEvents = {}
 	local function KillEvent(frame, event)
+		-- The user might be running an addon that permanently unregisters one of these events.
+		-- Let's check that before we go re-registering that event and screwing with that addon.
 		if frame:IsEventRegistered(event) then
 			frame:UnregisterEvent(event)
 			unregisteredEvents[event] = true

@@ -961,56 +961,58 @@ end
 -- LDB Plugin
 --
 
-local ldb11 = LibStub("LibDataBroker-1.1", true)
-if ldb11 then
-	ldb = ldb11:NewDataObject("BigWigs", {
-		type = "launcher",
-		label = "Big Wigs",
-		icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled",
-	})
+do
+	local ldb11 = LibStub("LibDataBroker-1.1", true)
+	if ldb11 then
+		ldb = ldb11:NewDataObject("BigWigs", {
+			type = "launcher",
+			label = "Big Wigs",
+			icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled",
+		})
 
-	function ldb.OnClick(self, button)
-		if button == "RightButton" then
-			loadCoreAndOpenOptions()
-		else
-			loadAndEnableCore()
-			if IsAltKeyDown() then
-				if IsControlKeyDown() then
-					BigWigs:Disable()
+		function ldb.OnClick(self, button)
+			if button == "RightButton" then
+				loadCoreAndOpenOptions()
+			else
+				loadAndEnableCore()
+				if IsAltKeyDown() then
+					if IsControlKeyDown() then
+						BigWigs:Disable()
+					else
+						for name, module in BigWigs:IterateBossModules() do
+							if module:IsEnabled() then module:Disable() end
+						end
+						sysprint(L.modulesDisabled)
+					end
 				else
 					for name, module in BigWigs:IterateBossModules() do
-						if module:IsEnabled() then module:Disable() end
+						if module:IsEnabled() then module:Reboot() end
 					end
-					sysprint(L.modulesDisabled)
+					sysprint(L.modulesReset)
 				end
-			else
-				for name, module in BigWigs:IterateBossModules() do
-					if module:IsEnabled() then module:Reboot() end
-				end
-				sysprint(L.modulesReset)
 			end
 		end
-	end
 
-	function ldb.OnTooltipShow(tt)
-		tt:AddLine("Big Wigs")
-		local h = nil
-		if BigWigs and BigWigs:IsEnabled() then
-			local added = nil
-			for name, module in BigWigs:IterateBossModules() do
-				if module:IsEnabled() then
-					if not added then
-						tt:AddLine(L.activeBossModules, 1, 1, 1)
-						added = true
+		function ldb.OnTooltipShow(tt)
+			tt:AddLine("Big Wigs")
+			local h = nil
+			if BigWigs and BigWigs:IsEnabled() then
+				local added = nil
+				for name, module in BigWigs:IterateBossModules() do
+					if module:IsEnabled() then
+						if not added then
+							tt:AddLine(L.activeBossModules, 1, 1, 1)
+							added = true
+						end
+						tt:AddLine(module.displayName)
 					end
-					tt:AddLine(module.displayName)
 				end
 			end
+			for i, v in next, tooltipFunctions do
+				v(tt)
+			end
+			tt:AddLine(L.tooltipHint, 0.2, 1, 0.2, 1)
 		end
-		for i, v in next, tooltipFunctions do
-			v(tt)
-		end
-		tt:AddLine(L.tooltipHint, 0.2, 1, 0.2, 1)
 	end
 end
 
