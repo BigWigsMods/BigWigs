@@ -116,7 +116,7 @@ function mod:OnEngage()
 	decayCount = 1
 	infestingSporesCount = 1
 	livingMushroomCount = 1
-	self:Bar(159219, 32) -- Necrotic Breath
+	self:Bar(159219, 30) -- Necrotic Breath
 	self:Bar(159996, 45) -- Infesting Spores
 	self:DelayedMessage(159996, 40, "Important", CL.soon:format(CL.count:format(self:SpellName(159996), infestingSporesCount)))
 	self:CDBar("mind_fungus", 10, L.mind_fungus, L.mind_fungus_icon) -- Mind Fungus
