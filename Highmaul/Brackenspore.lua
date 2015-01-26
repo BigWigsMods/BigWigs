@@ -103,7 +103,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "FungusSpawns", "boss1")
 	--self:Log("SPELL_CAST_SUCCESS", "MindFungus", 163141) -- XXX 6.1
 	--self:Log("SPELL_CAST_SUCCESS", "EvolvedFungus", 163142) -- Big Add -- XXX 6.1
-	--self:Log("SPELL_CAST_SUCCESS", "RejuvenatingMushroom", 160021) -- XXX 6.1
+	--self:Log("SPELL_CAST_SUCCESS", "RejuvenatingMushroom", 177820) -- XXX 6.1
 	--self:Log("SPELL_CAST_SUCCESS", "LivingMushroom", 160022) -- XXX 6.1
 
 	self:Log("SPELL_CAST_SUCCESS", "SporeShooter", 163594) -- Small Adds
