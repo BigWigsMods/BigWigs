@@ -28,8 +28,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.ship_trigger = "prepares to man the Dreadnaught's Main Cannon!"
 
-	L.ship = "Jump to Ship: %s" -- 137266
-	L.ship_icon = "ability_vehicle_siegeenginecannon"
+	L.ship = "Jump to Ship: %s" -- 137266 = Jump to Ship, but doesn't seem to be translated
 
 	L.bombardment = 147135 -- Bombardment
 	L.bombardment_desc = -10019 -- The Dreadnaught
@@ -82,7 +81,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "HeartseekerRemoved", 158010)
 	self:Log("SPELL_AURA_APPLIED", "SanguineStrikes", 156601)
 	-- Ship
-	self:Emote("Ship", L.ship_trigger) -- 10/40/70 power
+	self:Emote("ShipPhase", L.ship_trigger) -- 10/40/70 power
+	--self:Log("SPELL_CAST_SUCCESS", "ShipPhase", 181089) -- XXX 6.1
 	self:Log("SPELL_CAST_SUCCESS", "BombardmentAlpha", 157854)
 	self:Log("SPELL_CAST_SUCCESS", "BombardmentOmega", 157886)
 	self:Log("SPELL_PERIODIC_DAMAGE", "CorruptedBloodDamage", 158683)
@@ -97,7 +97,7 @@ function mod:OnEngage()
 	self:Bar(158078, 5) -- Blood Ritual
 	self:Bar(155794, 11) -- Blade Dash
 	self:Bar(156626, 19) -- Rapid Fire
-	self:Bar("bombardment", 60, 137266, L.ship_icon) -- Jump to Ship
+	self:Bar("bombardment", 60, 137266, "ability_vehicle_siegeenginecannon") -- Jump to Ship
 end
 
 --------------------------------------------------------------------------------
@@ -172,7 +172,20 @@ local function checkBoat()
 	end
 end
 
-function mod:Ship(msg, sender)
+--[[
+-- XXX 6.1
+function mod:ShipPhase(args)
+	shipCount = shipCount + 1
+	self:Message("bombardment", "Neutral", "Info", L.ship:format(args.sourceName), false)
+	stopBars(self:MobId(args.sourceGUID))
+	if shipCount < 3 then
+		self:Bar("bombardment", 198, 137266, "ability_vehicle_siegeenginecannon") -- Jump to Ship
+	end
+	self:ScheduleTimer(checkBoat, 6)
+end
+--]]
+
+function mod:ShipPhase(msg, sender)
 	shipCount = shipCount + 1
 	self:Message("bombardment", "Neutral", "Info", L.ship:format(sender), false)
 	if sender == self:SpellName(-10025) then -- Gar'an
@@ -183,7 +196,7 @@ function mod:Ship(msg, sender)
 		stopBars(77477)
 	end
 	if shipCount < 3 then
-		self:Bar("bombardment", 198, 137266, L.ship_icon) -- Jump to Ship
+		self:Bar("bombardment", 198, 137266, "ability_vehicle_siegeenginecannon") -- Jump to Ship
 	end
 	self:ScheduleTimer(checkBoat, 6)
 end
