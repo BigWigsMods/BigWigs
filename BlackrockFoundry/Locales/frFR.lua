@@ -66,7 +66,7 @@ L = BigWigs:NewBossLocale("The Iron Maidens", "frFR")
 if L then
 	--L.ship_trigger = "prepares to man the Dreadnaught's Main Cannon!"
 
-	L.ship = "Saut vers le navire : %s"
+	L.ship = "Saut vers le navire"
 
 	L.custom_off_heartseeker_marker = "Marquage Crève-cœur imprégné de sang"
 	L.custom_off_heartseeker_marker_desc = "Marque les cibles des crèves-cœurs avec {rt1}{rt2}{rt3}. Nécessite d'être assistant ou chef de raid."

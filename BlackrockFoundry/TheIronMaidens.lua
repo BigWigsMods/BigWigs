@@ -28,7 +28,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.ship_trigger = "prepares to man the Dreadnaught's Main Cannon!"
 
-	L.ship = "Jump to Ship: %s" -- 137266 = Jump to Ship, but doesn't seem to be translated
+	L.ship = "Jump to Ship" -- 137266 = Jump to Ship, but doesn't seem to be translated
 
 	L.bombardment = 147135 -- Bombardment
 	L.bombardment_desc = -10019 -- The Dreadnaught
@@ -176,10 +176,10 @@ end
 -- XXX 6.1
 function mod:ShipPhase(args)
 	shipCount = shipCount + 1
-	self:Message("bombardment", "Neutral", "Info", L.ship:format(args.sourceName), false)
+	self:Message("bombardment", "Neutral", "Info", L.other:format(L.ship, args.sourceName), false)
 	stopBars(self:MobId(args.sourceGUID))
 	if shipCount < 3 then
-		self:Bar("bombardment", 198, 137266, "ability_vehicle_siegeenginecannon") -- Jump to Ship
+		self:Bar("bombardment", 198, L.ship, "ability_vehicle_siegeenginecannon")
 	end
 	self:ScheduleTimer(checkBoat, 6)
 end
@@ -187,7 +187,7 @@ end
 
 function mod:ShipPhase(msg, sender)
 	shipCount = shipCount + 1
-	self:Message("bombardment", "Neutral", "Info", L.ship:format(sender), false)
+	self:Message("bombardment", "Neutral", "Info", L.other:format(L.ship, sender), false)
 	if sender == self:SpellName(-10025) then -- Gar'an
 		stopBars(77557)
 	elseif sender == self:SpellName(-10030) then -- Sorka
@@ -196,7 +196,7 @@ function mod:ShipPhase(msg, sender)
 		stopBars(77477)
 	end
 	if shipCount < 3 then
-		self:Bar("bombardment", 198, 137266, "ability_vehicle_siegeenginecannon") -- Jump to Ship
+		self:Bar("bombardment", 198, L.ship, "ability_vehicle_siegeenginecannon")
 	end
 	self:ScheduleTimer(checkBoat, 6)
 end

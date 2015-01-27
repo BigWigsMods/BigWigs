@@ -66,7 +66,7 @@ L = BigWigs:NewBossLocale("The Iron Maidens", "deDE")
 if L then
 	L.ship_trigger = "bereitet sich darauf vor, die Hauptkanone des Schlachtschiffs zu bemannen!"
 
-	L.ship = "Springe aufs Schiff: %s"
+	L.ship = "Springe aufs Schiff"
 
 	L.custom_off_heartseeker_marker = "Bluttriefender Herzsucher markieren"
 	L.custom_off_heartseeker_marker_desc = "Markiert die Ziele von Bluttriefender Herzsucher mit {rt1}{rt2}{rt3}, benötigt Leiter oder Assistent."

@@ -66,7 +66,7 @@ L = BigWigs:NewBossLocale("The Iron Maidens", "koKR")
 if L then
 	L.ship_trigger = "무쌍호 주 대포를 쏠 준비를 합니다!"
 
-	L.ship = "배로 점프: %s"
+	L.ship = "배로 점프"
 
 	L.custom_off_heartseeker_marker = "피에 젖은 심장추적자 징표 설정"
 	L.custom_off_heartseeker_marker_desc = "피에 젖은 심장추적자의 대상을 {rt1}{rt2}{rt3}의 징표로 설정합니다. 공격대장이거나 권한이 필요합니다."

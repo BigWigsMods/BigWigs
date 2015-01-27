@@ -66,7 +66,7 @@ L = BigWigs:NewBossLocale("The Iron Maidens", "zhCN")
 if L then
 	--L.ship_trigger = "prepares to man the Dreadnaught's Main Cannon!"
 
-	--L.ship = "Jump to Ship: %s"
+	--L.ship = "Jump to Ship"
 
 	--L.custom_off_heartseeker_marker = "Bloodsoaked Heartseeker marker"
 	--L.custom_off_heartseeker_marker_desc = "Marks Heartseeker targets with {rt1}{rt2}{rt3}, requires promoted or leader."
