@@ -63,7 +63,7 @@ function mod:OnBossEnable()
 	-- Stage 1
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
 	self:Log("SPELL_AURA_APPLIED", "PinnedDown", 154960)
-	self:Log("SPELL_SUMMON", "SpearSummon", 154956)
+	self:Log("SPELL_SUMMON", "SpearSummon", 154956) -- no cast event, so I choose you!
 	self:Log("SPELL_CAST_START", "CallThePack", 154975)
 
 	-- Stage 2
@@ -77,11 +77,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_MISSED", "InfernoBreathDamage", 154989)
 	self:Log("SPELL_AURA_APPLIED", "ConflagrationApplied", 154981)
 	self:Log("SPELL_AURA_REMOVED", "ConflagrationRemoved", 154981)
-	self:Log("SPELL_AURA_APPLIED", "SearedFlesh", 155030)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SearedFlesh", 155030)
 	-- Ironcrusher
 	self:Log("SPELL_CAST_SUCCESS", "Stampede", 155247)
-	self:Log("SPELL_AURA_APPLIED", "CrushArmor", 155236)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushArmor", 155236)
 	-- Faultline
 	self:Log("SPELL_CAST_START", "CannonballBarrage", 155284)
@@ -96,7 +94,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "FlameInfusionDamage", 155657)
 	self:Log("SPELL_PERIODIC_MISSED", "FlameInfusionDamage", 155657)
 
-	self:Death("SpearDeath", 76796) -- Heavy Spear
 	self:Death("Deaths", 76884, 76874, 76945, 76946) -- Cruelfang, Dreadwing, Ironcrusher, Faultline
 end
 
@@ -104,16 +101,12 @@ function mod:OnEngage(diff)
 	phase = 1
 	wipe(activatedMounts)
 	wipe(spearList)
-	wipe(marksUsed)
 	markTimer = nil
 
 	self:Bar(154975, 8) -- Call the Pack
 	self:Bar(154960, 11) -- Pin Down
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2")
-	if self.db.profile.custom_off_pinned_marker then
-		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-	end
 end
 
 --------------------------------------------------------------------------------
@@ -159,7 +152,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	for i=1, 5 do
 		local unit = ("boss%d"):format(i)
 		local mobId = self:MobId(UnitGUID(unit))
-		if mobId > 0 and mobId ~= 76865 then
+		if mobId > 1 and mobId ~= 76865 then
 			currentBosses[mobId] = true
 			if activatedMounts[mobId] == nil then
 				self:StopBar(155061) -- Rend and Tear
@@ -239,54 +232,34 @@ end
 
 do
 	-- spear marking
-	local function mark(unit, guid)
-		for mark=8, 4, -1 do
-			if not marksUsed[mark] then
-				SetRaidTarget(unit, mark)
-				spearList[guid] = mark
-				marksUsed[mark] = guid
-				return
-			end
-		end
-	end
-
-	local function markSpears()
-		local continue = nil
-		for guid, m in next, spearList do
-			if m == true then
-				local unit = mod:GetUnitIdByGUID(guid)
-				if unit then
-					mark(unit, guid)
-				else
-					continue = true
+	function mod:UNIT_TARGET(_, firedUnit)
+		local unit = firedUnit and firedUnit.."target" or "mouseover"
+		local guid = UnitGUID(unit)
+		if spearList[guid] then
+			for i = 8, 4, -1 do
+				if not marksUsed[i] then
+					SetRaidTarget(unit, i)
+					spearList[guid] = nil
+					marksUsed[i] = guid
+					if not next(spearList) then
+						self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+						self:UnregisterEvent("UNIT_TARGET")
+					end
+					return
 				end
 			end
-		end
-		if not continue or not mod.db.profile.custom_off_pinned_marker then
-			mod:CancelTimer(markTimer)
-			markTimer = nil
-		end
-	end
-
-	function mod:UPDATE_MOUSEOVER_UNIT()
-		local guid = UnitGUID("mouseover")
-		if guid and spearList[guid] == true then
-			mark("mouseover", guid)
-		end
-	end
-
-	function mod:SpearDeath(args)
-		local mark = spearList[args.destGUID]
-		if mark then
-			marksUsed[mark] = nil
-			spearList[args.destGUID] = nil
 		end
 	end
 
 	local pinnedList, scheduled = mod:NewTargetList(), nil
-	local function warnSpear(spellId)
+	local function warnSpear(self, spellId)
 		if #pinnedList > 0 then
-			mod:TargetMessage(spellId, pinnedList, "Important", "Alarm", nil, nil, true)
+			self:TargetMessage(spellId, pinnedList, "Important", "Alarm", nil, nil, true)
+		end
+		if self.db.profile.custom_off_pinned_marker then
+			wipe(marksUsed)
+			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
+			self:RegisterEvent("UNIT_TARGET")
 		end
 		scheduled = nil
 	end
@@ -296,18 +269,15 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, 155365) -- Pin Down
 		end
-		if not spearList[args.sourceGUID] then
+		if self.db.profile.custom_off_pinned_marker and not spearList[args.sourceGUID] then
 			spearList[args.sourceGUID] = true
-			if self.db.profile.custom_off_pinned_marker and not markTimer then
-				markTimer = self:ScheduleRepeatingTimer(markSpears, 0.2)
-			end
 		end
 	end
 
 	function mod:SpearSummon(args)
 		if not scheduled then
 			self:CDBar(154960, 20)
-			scheduled = self:ScheduleTimer(warnSpear, 0.2, 154960)
+			scheduled = self:ScheduleTimer(warnSpear, 0.1, self, 154960)
 		end
 	end
 end
@@ -328,8 +298,8 @@ do
 		end
 		local t = GetTime()
 		if t-prev > 10 then -- XXX can hit multiple people at staggered times
-			self:CDBar(args.spellId, 12) -- 12-16
 			prev = t
+			self:CDBar(args.spellId, 12) -- 12-16
 		end
 	end
 end
@@ -348,18 +318,17 @@ do
 	function mod:InfernoBreathDamage(args)
 		local t = GetTime()
 		if t-prev > 3 and self:Me(args.destGUID) then
+			prev = t
 			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 			self:Flash(args.spellId)
-			prev = t
 		end
 	end
 end
 
 do
 	local conflagList, conflagMark, scheduled = mod:NewTargetList(), 8, nil
-
-	local function warnConflag(spellId)
-		mod:TargetMessage(spellId, conflagList, "Urgent", mod:Dispeller("magic") and "Info")
+	local function warnConflag(self, spellId)
+		self:TargetMessage(spellId, conflagList, "Urgent", self:Dispeller("magic") and "Info")
 		scheduled = nil
 	end
 
@@ -368,7 +337,7 @@ do
 		if not scheduled then
 			conflagMark = 1
 			self:Bar(args.spellId, 20)
-			scheduled = self:ScheduleTimer(warnConflag, 0.1, args.spellId)
+			scheduled = self:ScheduleTimer(warnConflag, 0.1, self, args.spellId)
 		end
 		if self.db.profile.custom_off_conflag_marker and conflagMark < 4 then
 			SetRaidTarget(args.destName, conflagMark)
@@ -384,9 +353,8 @@ do
 end
 
 function mod:SearedFlesh(args)
-	local amount = args.amount or 1
-	if amount % 3 == 0 then
-		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 5 and "Warning")
+	if args.amount % 3 == 0 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 5 and "Warning")
 	end
 end
 
@@ -396,9 +364,8 @@ function mod:Stampede(args)
 end
 
 function mod:CrushArmor(args)
-	local amount = args.amount or 1
-	if amount % 2 == 0 then
-		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
+	if args.amount % 2 == 0 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 2 and "Warning")
 	end
 end
 
@@ -411,8 +378,8 @@ do
 	function mod:EpicenterDamage(args)
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then
-			self:Message(159044, "Personal", "Alarm", CL.underyou:format(args.spellName))
 			prev = t
+			self:Message(159044, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -424,8 +391,8 @@ do
 	function mod:ShrapnelDamage(args)
 		local t = GetTime()
 		if t-prev > 3 and self:Me(args.destGUID) then
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 			prev = t
+			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -435,8 +402,8 @@ do
 	function mod:FlameInfusionDamage(args)
 		local t = GetTime()
 		if t-prev > 3 and self:Me(args.destGUID) then
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 			prev = t
+			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end

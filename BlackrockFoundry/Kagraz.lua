@@ -187,7 +187,7 @@ end
 
 function mod:Rekindle(args)
 	self:TargetMessage(args.spellId, args.sourceName, "Positive", "Warning")
-	self:Bar(args.spellId, 6)
+	self:Bar(args.spellId, 8)
 end
 
 function mod:BlazingRadiance(args)
