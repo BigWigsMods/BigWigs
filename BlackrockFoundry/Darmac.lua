@@ -41,19 +41,38 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{154960, "SAY"}, "custom_off_pinned_marker", 154975,
-		{155061, "TANK"}, 155198,
-		{155030, "TANK"}, {154989, "FLASH"}, {154981, "HEALER"}, "custom_off_conflag_marker", 155499, 155657,
-		{155236, "TANK"}, 155222, 155247,
-		155284, 159044, 155826,
-		"stages", "proximity", "berserk", "bosskill",
+		--[[ Cruelfang ]]--
+		{155061, "TANK"}, -- Rend and Tear
+		155198, -- Savage Howl
+		--[[ Dreadwing ]]--
+		{155030, "TANK"}, -- Seared Flesh
+		{154989, "FLASH"}, -- Inferno Breath
+		{154981, "HEALER"}, -- Conflagration
+		"custom_off_conflag_marker",
+		155499, -- Shrapnel
+		155657, -- Flame Infusion
+		--[[ Ironcrusher ]]--
+		{155236, "TANK"}, -- Crush Armor
+		155222, -- Tantrum
+		155247, -- Stampede
+		--[[ Faultline ]]--
+		155284, -- Cannonball Barrage
+		159044, -- Epicenter
+		--155321, -- Unstoppable
+		--[[ General ]]--
+		{154960, "SAY"}, -- Pinned Down
+		"custom_off_pinned_marker",
+		154975, -- Call the Pack
+		"stages",
+		"proximity",
+		"berserk",
+		"bosskill",
 	}, {
-		[154960] = -9298, -- Stage 1
 		[155061] = -9301, -- Cruelfang
 		[155030] = -9302, -- Dreadwing
 		[155236] = -9303, -- Ironcrusher
 		[155284] = ("%s (%s)"):format(self:SpellName(-9304), CL.mythic), -- Faultline (Mythic)
-		["stages"] = "general",
+		[154960] = "general",
 	}
 end
 
@@ -86,7 +105,8 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_SUCCESS", "Epicenter", 159044, 162277)
 	self:Log("SPELL_PERIODIC_DAMAGE", "EpicenterDamage", 159044, 162277)
 	self:Log("SPELL_PERIODIC_MISSED", "EpicenterDamage", 159044, 162277)
-	--self:Log("SPELL_CAST_SUCCESS", "Unsteady", 155826, 162276)
+	--self:Log("SPELL_AURA_APPLIED", "Unstoppable", 155321)
+	--self:Log("SPELL_AURA_APPLIED_DOSE", "Unstoppable", 155321)
 
 	-- Stage 3
 	self:Log("SPELL_DAMAGE", "ShrapnelDamage", 155499)
@@ -223,8 +243,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(155499, 25)
 	elseif spellId == 159044 or spellId == 162277 then -- Epicenter (Faultline/Darmac)
 		self:Message(159044, "Attention")
-	elseif spellId == 155826 or spellId == 162276 then -- Unsteady (Faultline/Darmac)
-		self:Message(155826, "Attention")
 	end
 end
 
@@ -382,6 +400,11 @@ do
 			self:Message(159044, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
+end
+
+function mod:Unstoppable(args)
+	self:Message(args.spellId, "Attention", nil, CL.count:format(args.spellName, args.amount or 1))
+	self:Bar(args.spellId, 15)
 end
 
 -- Stage 3
