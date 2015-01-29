@@ -14,6 +14,8 @@ mod.engageId = 1722
 
 local barrageMarked = {}
 local barrageThrottle = {}
+local pillarWarned = {}
+local first = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -29,7 +31,7 @@ if L then
 	L.custom_off_barrage_marker_icon = 1
 
 	L.custom_on_shard_marker = "Shard of Tectus marker"
-	L.custom_on_shard_marker_desc = "Marks the 2 'Shard of Tectus' that spawn with {rt8}{rt7}, requires promoted or leader."
+	L.custom_on_shard_marker_desc = "Marks the two Shard of Tectus that spawn with {rt8}{rt7}, requires promoted or leader."
 	L.custom_on_shard_marker_icon = 8
 
 	L.tectus = EJ_GetEncounterInfo(1195)
@@ -55,6 +57,7 @@ function mod:GetOptions()
 		"custom_on_shard_marker",
 		{162346, "FLASH", "SAY", "ME_ONLY"}, -- Crystalline Barrage
 		"custom_off_barrage_marker",
+		162518, -- Earthen Pillar
 		162475, -- Tectonic Upheaval
 		"adds",
 		"berserk",
@@ -76,7 +79,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "CrystallineBarrageDamage", 162370)
 	self:Log("SPELL_PERIODIC_MISSED", "CrystallineBarrageDamage", 162370)
 	self:Log("SPELL_CAST_START", "TectonicUpheaval", 162475)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Split", "boss1", "boss2", "boss3")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Split", "boss1")
 	-- Earthwarper
 	self:Log("SPELL_CAST_START", "GiftOfEarth", 162894)
 	self:Log("SPELL_AURA_APPLIED", "Petrification", 162892)
@@ -88,12 +91,14 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-
+	self:RegisterEvent("UNIT_TARGETABLE_CHANGED")
+	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "NewAdd")
 
+	first = nil
 	wipe(barrageMarked)
 	wipe(barrageThrottle)
+	wipe(pillarWarned)
 	--self:CDBar(162346, 6) -- Crystalline Barrage
 	self:CDBar("adds", 14, -10061, "spell_shadow_raisedead") -- Earthwarper
 	self:CDBar("adds", 24, -10062, "ability_warrior_endlessrage") -- Berserker
@@ -116,21 +121,35 @@ end
 -- Event Handlers
 --
 
-function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	if self.db.profile.custom_on_shard_marker then
-		local first
-		for i = 1, 5 do
-			local unit = ("boss%d"):format(i)
-			local id = self:MobId(UnitGUID(unit))
-			if id == 80551 then -- Shard of Tectus
-				if not first then
-					first = unit
-				else
-					SetRaidTarget(first, 8)
-					SetRaidTarget(unit, 7)
-					self:UnregisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-					return
-				end
+function mod:UNIT_TARGETABLE_CHANGED(_, unit)
+	if UnitExists(unit) then
+		if self.db.profile.custom_on_shard_marker and self:MobId(UnitGUID(unit)) == 80551 then
+			if not first the
+				first = unit
+			else
+				SetRaidTarget(first, 8)
+				SetRaidTarget(unit, 7)
+			end
+		end
+		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, unit)
+	elseif not unit:find("arena", nil, true) then
+		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", unit)
+	end
+end
+
+do
+	local prev = 0
+	function mod:UNIT_POWER_FREQUENT(unit)
+		local power = UnitPower(unit)
+		if power == 1 then
+			pillarWarned[unit] = nil
+		elseif (power > 18 and not pillarWarned[unit]) or (self:Mythic() and power > 43 and pillarWarned[unit] < 2) then -- ~5s warning
+			pillarWarned[unit] = (pillarWarned[unit] or 0) + 1
+			local t = GetTime()
+			local isMote = self:MobId(UnitGUID(unit)) == 80557
+			if not isMote or t-prev > 5 then -- not Mote or first Mote cast in 5s
+				self:Message(162518, "Important", "Warning", CL.soon:format(self:SpellName(162518)))
+				if isMote then prev = t end
 			end
 		end
 	end
