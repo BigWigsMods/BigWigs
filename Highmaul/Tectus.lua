@@ -124,7 +124,7 @@ end
 function mod:UNIT_TARGETABLE_CHANGED(_, unit)
 	if UnitExists(unit) then
 		if self.db.profile.custom_on_shard_marker and self:MobId(UnitGUID(unit)) == 80551 then
-			if not first the
+			if not first then
 				first = unit
 			else
 				SetRaidTarget(first, 8)
