@@ -13,6 +13,7 @@ mod.engageId = 1691
 --
 
 local rampaging = nil
+local first = nil
 local smashCount = 1
 local slamCount = 1
 local sliceCount = 1
@@ -23,7 +24,7 @@ local sliceCount = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.first_ability = "Smash or Slam"
 end
 L = mod:GetLocale()
 
@@ -33,9 +34,6 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		--[[ Mythic ]]--
-		165300, -- Flare
-		--[[ General ]]--
 		155080, -- Inferno Slice
 		155301, -- Overhead Smash
 		{155078, "FLASH"}, -- Overwhelming Blows
@@ -43,14 +41,14 @@ function mod:GetOptions()
 		155539, -- Destructive Rampage
 		{173192, "FLASH"}, -- Cave In
 		"bosskill"
-	}, {
-		[165300] = "mythic",
-		[155080] = "general"
 	}
 end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "InfernoSlice", 155080)
+	self:Log("SPELL_CAST_SUCCESS", "InfernoSliceSuccess", 155080)
+	self:Log("SPELL_AURA_APPLIED", "InfernoSliceApplied", 155080)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "InfernoSliceApplied", 155080)
 	self:Log("SPELL_CAST_START", "OverheadSmash", 155301)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingBlows", 155078)
 	self:Log("SPELL_AURA_APPLIED", "PetrifyingSlam", 155323)
@@ -64,32 +62,45 @@ end
 
 function mod:OnEngage()
 	rampaging = nil
+	first = nil
 	smashCount, slamCount, sliceCount = 1, 1, 1
-	self:Bar(155080, 14.5, CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
-	self:CDBar(155301, 22) -- Overhead Smash
-	self:CDBar(155326, 27) -- Petrifying Slam
-	self:CDBar(155539, 102) -- Destructive Rampage
-	if self:Mythic() then
-		self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Flare", "boss1")
-		self:CDBar(165300, 6) -- Flare
-	end
+	self:Bar(155080, self:Mythic() and 9.5 or 14.5, CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
+	self:CDBar(155539, 102) -- Destructive Rampage XXX other spells seem to take precedence over this when their cds finish first (ie, queueing the casts), pushing Rampage back
+	-- XXX it seems that one of these is picked to cast first, slam tends to be sooner, smash can be either 21 or 27 (or 30?)
+	self:CDBar(155301, 21, L.first_ability, "ability_kilruk_reave") -- what to use for a key? z.z
+	self:CDBar(155326, 21, L.first_ability, "ability_kilruk_reave") -- both!?
+	--self:CDBar(155301, 21) -- Overhead Smash
+	--self:CDBar(155326, 21) -- Petrifying Slam
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:Flare(_, spellName, _, _, spellId)
-	if spellId == 165303 then -- Flare (Mythic)
-		self:CDBar(165300, 6)
+do
+	local targets = 0
+	local function checkTargets(self, spellId)
+		-- gains 50% of his rage if he hits less than 4 targets
+		self:Bar(spellId, targets < 4 and 5.4 or 10.4, CL.count:format(self:SpellName(spellId), sliceCount))
 	end
-end
 
-function mod:InfernoSlice(args)
-	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(CL.count:format(args.spellName, sliceCount)))
-	sliceCount = sliceCount + 1
-	if sliceCount < 7 then
-		self:Bar(args.spellId, 17, CL.count:format(args.spellName, sliceCount)) -- slice x6 then rampage
+	function mod:InfernoSlice(args)
+		self:StopBar(CL.count:format(args.spellName, sliceCount)) -- just in case
+		self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(CL.count:format(args.spellName, sliceCount)))
+		sliceCount = sliceCount + 1
+		targets = 0
+	end
+
+	function mod:InfernoSliceSuccess(args)
+		if not self:Mythic() then
+			self:Bar(args.spellId, 15, CL.count:format(args.spellName, sliceCount))
+		else
+			self:ScheduleTimer(checkTargets, 0.1, self, args.spellId)
+		end
+	end
+
+	function mod:InfernoSliceApplied(args)
+		targets = targets + 1
 	end
 end
 
@@ -104,7 +115,11 @@ function mod:OverheadSmash(args)
 	self:Message(args.spellId, "Attention", "Info")
 	smashCount = smashCount + 1
 	if smashCount < 4 then -- smash smash smash rampage
-		self:CDBar(args.spellId, smashCount == 1 and 21 or 34)
+		self:CDBar(args.spellId, 21)
+	end
+	if not first then
+		self:CDBar(155326, 15) -- Petrifying Slam XXX uncommonly second, not sure how predictable this is
+		first = true
 	end
 end
 
@@ -128,6 +143,10 @@ do
 			wipe(petrifyTargets)
 			petrifyOnMe = nil
 			scheduled = self:ScheduleTimer(openProximity, 0.1, self)
+			if not first then
+				self:CDBar(155301, 21) -- Overhead Smash 21-24
+				first = true
+			end
 		end
 		petrifyTargets[#petrifyTargets+1] = args.destName
 		if self:Me(args.destGUID) then
