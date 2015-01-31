@@ -81,7 +81,7 @@ do
 	local targets = 0
 	local function checkTargets(self, spellId)
 		-- gains 50% of his rage if he hits less than 4 targets
-		self:Bar(spellId, targets < 4 and 5.4 or 10.4, CL.count:format(self:SpellName(spellId), sliceCount))
+		self:Bar(spellId, targets < 4 and 5 or 10, CL.count:format(self:SpellName(spellId), sliceCount))
 	end
 
 	function mod:InfernoSlice(args)
