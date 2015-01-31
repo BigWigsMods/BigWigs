@@ -40,16 +40,12 @@ function mod:GetOptions()
 		-10325, -- Primal Elementalist
 		-10324, -- Slag Elemental
 		155186, {176121, "SAY", "FLASH"}, -- Firecaller
-		155209, {155242, "TANK"}, {155223, "FLASH"}, 163776, -- Heart of the Mountain
+		155209, {155242, "TANK"}, {155223, "FLASH"}, -- Heart of the Mountain
 		"stages", "bosskill"
 	}, {
 		[-9650] = CL.adds,
-		--[155179] = -9649,
-		--[160379] = -9648,
 		[156937] = -9640, -- Foreman Feldspar
 		[-10325] = -9655, -- Primal Elementalist
-		--[-10324] = -9657,
-		--[155186] = -9659,
 		[155209] = -9641, -- Heart of the Mountain
 	}
 end
@@ -80,19 +76,16 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_SUCCESS", "Melt", 155225) -- 7.2-10.8
 	self:Log("SPELL_PERIODIC_DAMAGE", "MeltDamage", 155223)
 	self:Log("SPELL_PERIODIC_MISSED", "MeltDamage", 155223)
-	self:Log("SPELL_AURA_APPLIED", "CoolingDown", 156880)
-	self:Log("SPELL_AURA_APPLIED", "Superheated", 163776)
 
 	self:Death("Deaths", 76808, 76815) -- Heat Regulator, Primal Elementalist
 end
 
 function mod:OnEngage()
 	regulatorDeaths, shamanDeaths = 0, 0
-	blastTime = 25 -- 4 energy/s
+	blastTime = self:LFR() and 30 or 25 -- 4 energy/s
 	wipe(volatileFireTargets)
 
 	self:Bar(155209, blastTime) -- Blast
-	self:Bar(-9650, 55, nil, 155181) -- Bellows Operator
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
 
@@ -108,7 +101,7 @@ do
 		local t = GetTime()
 		if t-prev > 5 then
 			self:Message(-9650, "Attention", "Info") -- Bellows Operator
-			self:Bar(-9650, 60, nil, 155181)
+			self:Bar(-9650, 64, nil, 155181)
 			prev = t
 		end
 	end
@@ -210,8 +203,9 @@ do
 	function mod:UNIT_POWER_FREQUENT(unit, powerType)
 		if powerType == "ALTERNATE" then
 			-- energy rate is based on altpower, 1 = 4/s, 100 = 20/s
+			-- LFR's floor was 3.333/s (30s cast)
 			local altpower = UnitPower(unit, 10)
-			local ps = max(4, floor(altpower/5))
+			local ps = max(self:LFR() and (10/3) or 4, floor(altpower/5)) -- XXX this probably isn't right anymore :\
 			local newTime = ceil(100/ps)
 
 			-- adjust Blast timer
@@ -251,24 +245,6 @@ do
 			prev = t
 		end
 	end
-end
-
-function mod:CoolingDown(args)
-	-- losing 1 altpower/3s
-	local altpower = UnitPower("boss1", 10)
-	local t = floor(altpower/3)
-	self:Bar(163776, t) -- Superheated
-end
-
-function mod:Superheated(args)
-	self:Message(args.spellId, "Important", "Warning")
-
-	self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1")
-	blastTime = 5 -- 20 energy/s
-
-	local power = UnitPower("boss1")
-	local t = ceil((100-power)/20)
-	self:Bar(155209, t) -- Blast
 end
 
 
