@@ -13,6 +13,8 @@ mod.engageId = 1693
 --
 
 local phase = 1
+local bossAway = nil
+local stamperWarned = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -20,7 +22,8 @@ local phase = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	--L.hansgar_return_trigger = "Wait till they get a load of me."
+	--L.franzok_return_trigger = "Hah, you think that was good? You just wait!"
 end
 L = mod:GetLocale()
 
@@ -30,6 +33,9 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		--[[ Mythic ]]--
+		162124, -- Smart Stampers
+		--[[ General ]]--
 		160838, -- Disrupting Roar
 		{153470, "HEALER"}, -- Skullcracker
 		156938, -- Crippling Suplex
@@ -37,6 +43,9 @@ function mod:GetOptions()
 		{155818, "FLASH"}, -- Scorching Burns
 		"stages",
 		"bosskill"
+	}, {
+		[162124] = "mythic",
+		[160838] = "general"
 	}
 end
 
@@ -51,20 +60,33 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "ScorchingBurnsDamage", 155818)
 	self:Log("SPELL_PERIODIC_MISSED", "ScorchingBurnsDamage", 155818)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "JumpAway", "boss1", "boss2")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "JumpBack")
+	self:Log("SPELL_AURA_APPLIED", "SmartStampers", 162124)
 end
 
 function mod:OnEngage()
 	phase = 1
+	bossAway = nil
 	self:CDBar(153470, 20) -- Skullcracker
 	self:CDBar(160838, 45) -- Disrupting Roar
+	if self:Mythic() then
+		stamperWarned = nil
+		self:Bar(162124, 13) -- Smart Stampers
+	end
 
 	--self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phases", "boss1")
-	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", "JumpBack", "boss1", "boss2")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:SmartStampers(args)
+	if not stamperWarned then
+		stamperWarned = true
+		self:Message(args.spellId, "Neutral", "Alert", args.spellName) -- Smart Stampers
+	end
+end
 
 -- Phase fuckery
 do
@@ -82,10 +104,9 @@ do
 			self:Message("stages", "Neutral", "Info", CL.soon:format(phaseThreats[phase]), false)
 		end
 	end
-
-	-- XXX this fires waaaaay before UNIT_TARGETABLE_CHANGED
 	function mod:JumpAway(unit, spellName, _, _, spellId)
-		if UnitExists(unit) and (spellId == 156220 or spellId == 156883) then -- Tactical Retreat (jumped away)
+		if spellId == 156220 then -- Tactical Retreat (jumped away)
+			bossAway = UnitName(unit)
 			self:Message("stages", "Neutral", "Info", phaseThreats[phase], false)
 			if self:MobId(UnitGUID(unit)) == 76974 then -- Franzok
 				self:StopBar(153470) -- Skullcracker
@@ -94,8 +115,11 @@ do
 		end
 	end
 
-	function mod:JumpBack(unit)
-		if UnitExists(unit) then -- jumped back  
+	function mod:JumpBack(_, msg, unit, _, _, target)
+		-- bleh locales, i'll just start with the sender check approach instead of waiting for funky to switch it later >.>
+		-- atleast they yell pretty close to when UNIT_TARGETABLE_CHANGED use to fire
+		if bossAway == unit and not target then -- jumped back
+			bossAway = nil
 			if phase < 3 then
 				self:Message("stages", "Neutral", "Info", CL.over:format(phaseThreats[phase]), false)
 				phase = phase + 1
@@ -107,6 +131,10 @@ do
 					self:CDBar(160838, 46) -- Disrupting Roar
 				end
 				--]]
+				if self:Mythic() then
+					stamperWarned = nil
+					self:Bar(162124, 13) -- Smart Stampers
+				end
 			else
 				-- phase 3, Searing while Hans'gar is up, then Stamping when he jumps back down
 				self:Message("stages", "Neutral", "Info", self:SpellName(158139), false) -- Stamping Presses
