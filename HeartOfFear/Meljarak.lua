@@ -48,7 +48,7 @@ function mod:GetOptions()
 		-6554, {122064, "FLASH", "SAY"}, {122125, "FLASH"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
 		122409,
 		{122149, "DISPEL"}, "mending",
-		122406, {122224, "FLASH", "EMPHASIZE"}, {121896, "FLASH"}, {131830, "SAY", "FLASH", "PROXIMITY"}, "recklessness",
+		122406, {122224, "FLASH"}, {121896, "FLASH"}, {131830, "SAY", "FLASH", "PROXIMITY"}, "recklessness",
 		"stages", "berserk", "bosskill",
 	}, {
 		[-6554] = "heroic",
