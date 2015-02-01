@@ -179,8 +179,9 @@ function boss:OnDisable(isWipe)
 		self:SendMessage("BigWigs_OnBossDisable", self)
 	end
 end
-function boss:GetOption(spellId)
-	return self.db.profile[spells[spellId]]
+function boss:GetOption(key)
+	if type(key) == "number" and key > 0 then key = spells[key] end -- XXX temp 6.1 store as id
+	return self.db.profile[key]
 end
 function boss:Reboot(isWipe)
 	if debug then dbg(self, ":Reboot()") end
@@ -862,6 +863,9 @@ do
 		if band(fullKey, C.HEALER) == C.HEALER and not self:Healer() then return end
 		if band(fullKey, C.TANK_HEALER) == C.TANK_HEALER and not self:Tank() and not self:Healer() then return end
 		return band(fullKey, flag) == flag
+	end
+	function boss:CheckOption(key, flag)
+		return checkFlag(self, key, C[flag])
 	end
 end
 
