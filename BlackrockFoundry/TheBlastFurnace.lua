@@ -87,6 +87,13 @@ function mod:OnEngage()
 
 	self:Bar(155209, blastTime) -- Blast
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
+
+	local last = 0
+	self:ScheduleRepeatingTimer(function()
+		local power, altpower = UnitPower("boss1"), UnitPower("boss1", 10)
+		ChatFrame3:AddMessage(("power gain/s    %d    %d"):format(altpower, power-last))
+		last = power
+	end, 1)
 end
 
 --------------------------------------------------------------------------------
@@ -130,7 +137,7 @@ end
 function mod:Defense(args)
 	-- warn the tank
 	local unit = self:GetUnitIdByGUID(args.sourceGUID)
-	if self:Tank() and not unit or UnitDetailedThreatSituation("player", unit) then
+	if self:Tank() and (not unit or UnitDetailedThreatSituation("player", unit)) then
 		self:Message(args.spellId, "Urgent")
 	end
 end
@@ -199,6 +206,13 @@ end
 -- Heart of the Mountain
 
 do
+	local rate = {	
+	00 30
+	25 20
+	50 15
+	75 9
+	100 6
+	}
 	local warned = nil
 	function mod:UNIT_POWER_FREQUENT(unit, powerType)
 		if powerType == "ALTERNATE" then
