@@ -52,8 +52,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "OverheadSmash", 155301)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingBlows", 155078)
 	self:Log("SPELL_AURA_APPLIED", "PetrifyingSlam", 155323)
-	self:Log("SPELL_AURA_APPLIED", "PetrifiedApplied", 155506)
-	self:Log("SPELL_AURA_REMOVED", "PetrifiedRemoved", 155506)
 	self:Log("SPELL_AURA_APPLIED", "DestructiveRampage", 155539)
 	self:Log("SPELL_AURA_REMOVED", "DestructiveRampageOver", 155539)
 	self:Log("SPELL_PERIODIC_DAMAGE", "CaveInDamage", 173192)
@@ -128,9 +126,10 @@ do
 	local function openProximity(self)
 		if not petrifyOnMe then
 			self:Message(155326, "Urgent", "Alert") -- Petrifying Slam
-			self:Bar(155326, 10, 155530) -- Shatter
+			self:Bar(155326, 9, 155530) -- Shatter
 			self:OpenProximity(155326, 8, petrifyTargets)
 		end
+		self:ScheduleTimer("CloseProximity", 9, 155326)
 		scheduled = nil
 	end
 
@@ -142,7 +141,7 @@ do
 			end
 			wipe(petrifyTargets)
 			petrifyOnMe = nil
-			scheduled = self:ScheduleTimer(openProximity, 0.1, self)
+			scheduled = self:ScheduleTimer(openProximity, 0.2, self)
 			if not first then
 				self:CDBar(155301, 21) -- Overhead Smash 21-24
 				first = true
@@ -152,21 +151,10 @@ do
 		if self:Me(args.destGUID) then
 			self:Message(155326, "Personal", "Alarm", CL.you:format(args.spellName))
 			self:Bar(155326, 7, 155506) -- Petrified
+			-- XXX Shattering Roar is 2s after Petrified, don't think it merits another bar
 			self:OpenProximity(155326, 8)
 			petrifyOnMe = true
 		end
-	end
-
-	function mod:PetrifiedApplied(args)
-		-- don't need proximity after getting stunned (everyone in mythic)
-		if not petrifyOnMe then
-			self:CloseProximity(155326)
-		end
-	end
-
-	function mod:PetrifiedRemoved(args)
-		-- and close it for everyone else when they get shattered
-		self:CloseProximity(155326)
 	end
 end
 
