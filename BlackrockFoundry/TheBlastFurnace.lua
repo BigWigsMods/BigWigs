@@ -130,7 +130,7 @@ end
 function mod:Defense(args)
 	-- warn the tank
 	local unit = self:GetUnitIdByGUID(args.sourceGUID)
-	if self:Tank() and UnitDetailedThreatSituation("player", unit) then
+	if self:Tank() and not unit or UnitDetailedThreatSituation("player", unit) then
 		self:Message(args.spellId, "Urgent")
 	end
 end
@@ -202,11 +202,18 @@ do
 	local warned = nil
 	function mod:UNIT_POWER_FREQUENT(unit, powerType)
 		if powerType == "ALTERNATE" then
-			-- energy rate is based on altpower, 1 = 4/s, 100 = 20/s
-			-- LFR's floor was 3.333/s (30s cast)
+			-- energy rate is based on altpower
 			local altpower = UnitPower(unit, 10)
-			local ps = max(self:LFR() and (10/3) or 4, floor(altpower/5)) -- XXX this probably isn't right anymore :\
-			local newTime = ceil(100/ps)
+			local newTime = 30
+			if altpower == 100 then
+				newTime = 6
+			elseif altpower > 74 then
+				newTime = 9
+			elseif altpower > 49 then
+				newTime = 15
+			elseif altpower > 24 then
+				newTime = 20
+			end
 
 			-- adjust Blast timer
 			if newTime ~= blastTime then
@@ -214,15 +221,16 @@ do
 					self:Message(155209, "Attention", nil, L.heat_increased_message:format(newTime))
 				end
 				blastTime = newTime
-				local t = ceil((100-UnitPower(unit))/ps)
+				local t = ceil((100-UnitPower(unit))/(100/newTime))
 				self:Bar(155209, t)
 			end
 			return
 		end
-
 		local power = UnitPower(unit)
 		if power > 80 and power < 100 and not warned then
-			self:Message(155209, "Urgent", "Alarm", CL.soon:format(self:SpellName(155209)))
+			if blastTime > 10 then
+				self:Message(155209, "Urgent", "Alarm", CL.soon:format(self:SpellName(155209)))
+			end
 			warned = true
 		elseif power == 100 and warned then
 			self:Bar(155209, blastTime)

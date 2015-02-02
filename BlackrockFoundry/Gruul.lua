@@ -65,7 +65,7 @@ function mod:OnEngage()
 	first = nil
 	smashCount, slamCount, sliceCount = 1, 1, 1
 	self:Bar(155080, self:Mythic() and 9.5 or 14.5, CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
-	self:CDBar(155539, 102) -- Destructive Rampage XXX other spells seem to take precedence over this when their cds finish first (ie, queueing the casts), pushing Rampage back
+	self:CDBar(155539, 105) -- Destructive Rampage XXX seems he'll always wait for 6 (8 or 9? in mythic) Inferno Slices
 	-- XXX it seems that one of these is picked to cast first, slam tends to be sooner, smash can be either 21 or 27 (or 30?)
 	self:CDBar(155301, 21, L.first_ability, "ability_kilruk_reave") -- what to use for a key? z.z
 	self:CDBar(155326, 21, L.first_ability, "ability_kilruk_reave") -- both!?
@@ -181,7 +181,7 @@ end
 
 function mod:DestructiveRampageOver(args)
 	self:Message(args.spellId, "Positive", "Info", CL.over:format(args.spellName))
-	self:CDBar(args.spellId, 105)
+	self:CDBar(args.spellId, 113)
 	rampaging = nil
 	smashCount, slamCount, sliceCount = 1, 1, 1
 	self:Bar(155080, 17, CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
