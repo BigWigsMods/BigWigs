@@ -194,7 +194,7 @@ do
 		["953:12"] = true, -- Mythic Garrosh Phase 4
 		["964:1"] = true, -- Bloodmaul Slag Mines, activating bridge to Roltall
 		["969:2"] = true, -- Shadowmoon Burial Grounds, final boss introduction
-		-- 984:1 is Auchindoun, but it unfortunately has 2 cinematics. 1 before the first boss and 1 before the last boss. Workaround?
+		["984:1"] = {false, -1, true}, -- Auchindoun has 2 cinematics. 1 before the first boss and 1 after the 3rd boss.
 		["993:2"] = true, -- Grimrail Depot, boarding the train
 		["993:4"] = true, -- Grimrail Depot, destroying the train
 		["994:3"] = true, -- Highmaul, Kargath Death
@@ -229,11 +229,27 @@ do
 			local id = ("%d:%d"):format(areaId, areaLevel)
 
 			if cinematicZones[id] then
-				if BigWigs.db.global.watchedMovies[id] then
-					BigWigs:Print(L.movieBlocked)
-					CinematicFrame_CancelCinematic()
+				if type(cinematicZones[id]) == "table" then -- For zones with more than 1 cinematic per floor
+					if not BigWigs.db.global.watchedMovies[id] then BigWigs.db.global.watchedMovies[id] = {} end
+					for i=#cinematicZones[id], 1, -1 do -- In reverse so for example: we don't trigger off the first boss when at the third boss
+						local _, _, done = C_Scenario.GetCriteriaInfoByStep(1,i)
+						if done == cinematicZones[id][i] then
+							if BigWigs.db.global.watchedMovies[id][i] then
+								BigWigs:Print(L.movieBlocked)
+								CinematicFrame_CancelCinematic()
+							else
+								BigWigs.db.global.watchedMovies[id][i] = true
+							end
+							return
+						end
+					end
 				else
-					BigWigs.db.global.watchedMovies[id] = true
+					if BigWigs.db.global.watchedMovies[id] then
+						BigWigs:Print(L.movieBlocked)
+						CinematicFrame_CancelCinematic()
+					else
+						BigWigs.db.global.watchedMovies[id] = true
+					end
 				end
 			end
 		end
