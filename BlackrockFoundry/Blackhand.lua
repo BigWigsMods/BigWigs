@@ -36,9 +36,9 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		156425, {156401, "FLASH"},
-		"siegemaker",
+		"siegemaker", {156653, "SAY"},
 		156928, {157000, "FLASH"},
-		{155992, "TANK_HEALER"}, {156096, "FLASH"}, "custom_off_markedfordeath_marker", 156107, 156030, "stages", "bosskill"
+		155992, {156096, "FLASH"}, "custom_off_markedfordeath_marker", 156107, 156030, "stages", "bosskill"
 	}, {
 		[156425] = -8814,
 		["siegemaker"] = -8816,
@@ -58,7 +58,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "MoltenSlagDamage", 156401)
 	self:Log("SPELL_PERIODIC_MISSED", "MoltenSlagDamage", 156401)
 	-- Stage 2
-	self:Emote("Siegemaker", L.siegemaker)
+	self:Log("SPELL_CAST_SUCCESS", "Siegemaker", 156667) -- Blackiron Plating
+	self:Log("SPELL_AURA_APPLIED", "Fixate", 156653)
 	-- Stage 3
 	self:Log("SPELL_CAST_START", "SlagEruption", 156928)
 	self:Log("SPELL_CAST_START", "MassiveShatteringSmash", 158054)
@@ -78,7 +79,7 @@ end
 --
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 156998 then -- Throw Slag Bombs
+	if spellId == 156991 or spellId == 156998 then -- Throw Slag Bombs
 		self:Message(156030, "Attention")
 		self:Bar(156030, 25)
 	elseif spellId == 161347 then -- Jump To Second Floor
@@ -87,7 +88,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(156107) -- Impaling Throw
 
 		phase = 2
-		self:Message("stages", "Neutral", nil, CL.stage:format(phase))
+		self:Message("stages", "Neutral", nil, CL.stage:format(phase), false)
 		self:Bar(156030, 12) -- Throw Slag Bombs
 		self:Bar("siegemaker", 16, L.siegemaker, L.siegemaker_icon)
 		self:Bar(155992, 25) -- Shattering Smash
@@ -99,7 +100,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(156107) -- Impaling Throw
 
 		phase = 3
-		self:Message("stages", "Neutral", nil, CL.stage:format(phase))
+		self:Message("stages", "Neutral", nil, CL.stage:format(phase), false)
 		self:Bar(157000, 12) -- Attach Slag Bombs
 		self:Bar(156096, 16) -- Marked for Death
 		self:Bar(155992, 25) -- Shattering Smash
@@ -142,9 +143,12 @@ end
 
 -- Stage 1
 
+local massiveDemolition = mod:SpellName(156479) -- Massive Demolition
 function mod:Demolition()
 	self:Message(156425, "Urgent", "Alert")
-	self:Bar(156425, 6, 156479) -- Massive Demolition
+	self:Bar(156425, 6, CL.count:format(massiveDemolition, 1))
+	self:ScheduleTimer("Bar", 5, 156425, 6, CL.count:format(massiveDemolition, 2))
+	self:ScheduleTimer("Bar", 10, 156425, 6, CL.count:format(massiveDemolition, 3))
 	self:Bar(156425, 45.5)
 end
 
@@ -161,9 +165,14 @@ end
 
 -- Stage 2
 
-function mod:Siegemaker()
+function mod:Siegemaker(args)
 	self:Message("siegemaker", "Attention")
 	self:Bar("siegemaker", 50)
+end
+
+function mod:Fixate(args)
+	self:TargetMessage(args.spellId, "Attention", "Alert")
+	self:Say(args.spellId)
 end
 
 -- Stage 3
