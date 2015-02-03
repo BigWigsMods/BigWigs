@@ -152,6 +152,7 @@ do
 	end
 	function mod:MoltenTorrentRemoved(args)
 		moltenTorrentOnMe = nil
+		self:CloseProximity(args.spellId)
 	end
 end
 
