@@ -52,7 +52,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "ShatteringSmash", 155992, 159142)
 	self:Log("SPELL_AURA_APPLIED", "MarkedForDeathApplied", 156096)
-	self:Log("SPELL_AURA_APPLIED", "MarkedForDeathRemoved", 156096)
+	self:Log("SPELL_AURA_REMOVED", "MarkedForDeathRemoved", 156096)
 	-- Stage 1
 	self:Emote("Demolition", "156425")
 	self:Log("SPELL_PERIODIC_DAMAGE", "MoltenSlagDamage", 156401)
@@ -114,14 +114,14 @@ end
 
 do
 	local list, scheduled = mod:NewTargetList(), nil
-	local function warnTargets(spellId)
-		mod:TargetMessage(spellId, list, phase == 3 and "Important" or "Attention", "Alarm", nil, nil, phase == 3)
+	local function warn(self, spellId)
+		self:TargetMessage(spellId, list, phase == 3 and "Important" or "Attention", "Alarm", nil, nil, phase == 3)
 		scheduled = nil
 	end
 
 	function mod:MarkedForDeathApplied(args)
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnTargets, 0.1, args.spellId)
+			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
 			self:Bar(156107, 5) -- Impaling Throw
 			self:Bar(args.spellId, phase == 3 and 21 or 16)
 		end
@@ -177,7 +177,6 @@ end
 
 -- Stage 3
 
-
 function mod:MassiveShatteringSmash(args)
 	self:Message(155992, "Urgent", "Warning")
 	self:Bar(155992, 25)
@@ -191,9 +190,9 @@ do
 	end
 	function mod:AttachSlagBombs(args)
 		if not scheduled then
+			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
 			self:Bar(args.spellId, 5, 157015) -- Slag Bomb
 			self:Bar(args.spellId, 25)
-			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
 		end
 		list[#list+1] = args.destName
 		if self:Me(args.destGUID) then
