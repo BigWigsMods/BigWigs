@@ -37,7 +37,7 @@ function mod:GetOptions()
 	return {
 		156425, {156401, "FLASH"},
 		"siegemaker", {156653, "SAY"},
-		156928, {157000, "FLASH"},
+		156928, {157000, "FLASH", "SAY"},
 		155992, {156096, "FLASH"}, "custom_off_markedfordeath_marker", 156107, 156030, "stages", "bosskill"
 	}, {
 		[156425] = -8814,
@@ -157,7 +157,7 @@ do
 	function mod:MoltenSlagDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 			prev = t
 		end
 	end
@@ -185,18 +185,20 @@ end
 
 do
 	local list, scheduled = mod:NewTargetList(), nil
-	local function warnTargets(spellId)
-		mod:TargetMessage(spellId, list, "Urgent", "Alert", nil, nil, true)
+	local function warn(self, spellId)
+		self:TargetMessage(spellId, list, "Urgent", "Alert", nil, nil, true)
 		scheduled = nil
 	end
 	function mod:AttachSlagBombs(args)
 		if not scheduled then
 			self:Bar(args.spellId, 5, 157015) -- Slag Bomb
 			self:Bar(args.spellId, 25)
+			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
 		end
 		list[#list+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
+			self:Say(args.spellId)
 		end
 	end
 end
