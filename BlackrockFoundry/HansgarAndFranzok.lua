@@ -146,14 +146,14 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 156220 then -- Tactical Retreat (Hans'gar jumped away)
 		self:JumpAway(unit)
-	elseif spellId == 156546 then -- Crippling Suplex
-		self:TargetMessage(156938, UnitName(unit.."target"), "Urgent", self:Tank() and "Warning" or "Alarm")
-		self:Bar(156938, 5.5)
+	elseif spellId == 156546 or spellId == 156542 then -- Crippling Suplex (tank picked up)
+		self:TargetMessage(156938, UnitName(unit.."target"), "Important", (self:Tank() or self:Healer()) and "Warning" or "Alarm")
+		self:Bar(156938, 9) -- 8.7-9.5 until damage taken 
 	end
 end
 
 function mod:CripplingSuplex(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
+	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
 	self:Bar(157139, 8) -- Shattered Vertebrae
 end
 
