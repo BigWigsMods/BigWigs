@@ -15,6 +15,7 @@ mod.engageId = 1689
 
 local wolvesActive = nil
 local moltenTorrentOnMe = nil
+local blazingTarget = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -36,7 +37,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		156018, 156040,
-		155318, 156724, {154932, "ICON", "FLASH", "SAY", "PROXIMITY"}, {"molten_torrent_self", "SAY"}, 155776, {155277, "ICON", "FLASH", "PROXIMITY"}, 155493, {163284, "TANK"},
+		155318, 156724, {154932, "ICON", "FLASH", "SAY", "PROXIMITY"}, {"molten_torrent_self", "SAY"}, 155776, {155277, "ICON", "SAY", "FLASH", "PROXIMITY"}, 155493, {163284, "TANK"},
 		{154952, "FLASH"}, {154950, "TANK"}, {155074, "TANK_HEALER"}, 155064,
 		"berserk", "bosskill"
 	}, {
@@ -60,8 +61,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "MoltenTorrentApplied", 154932)
 	self:Log("SPELL_AURA_REMOVED", "MoltenTorrentRemoved", 154932)
 	self:Log("SPELL_CAST_SUCCESS", "CinderWolves", 155776)
-	self:Log("SPELL_CAST_SUCCESS", "BlazingRadiance", 155277)
-	self:Log("SPELL_CAST_START", "Firestorm", 155493)
+	self:Log("SPELL_AURA_APPLIED", "BlazingRadiance", 155277)
 	self:Log("SPELL_AURA_APPLIED", "RisingFlames", 163284)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RisingFlames", 163284)
 	-- Cinder Wolves
@@ -75,8 +75,10 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(155318, 12) -- Lava Slash
-	self:Bar(154938, 30) -- Molten Torrent
+	wolvesActive = nil
+	moltenTorrentOnMe, blazingTarget = nil, nil
+	self:Bar(155318, 11) -- Lava Slash
+	self:Bar(154938, 31) -- Molten Torrent
 	self:Bar(155776, 60) -- Summon Cinder Wolves
 end
 
@@ -109,6 +111,15 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 163644 then -- Summon Enchanted Armaments
 		self:Message(156724, "Attention")
 		self:Bar(156724, self:Mythic() and 20 or 45)
+	elseif spellId == 155564 then -- Firestorm
+		self:Message(155493, "Important", "Long")
+		self:Bar(155493, 14, CL.cast:format(spellName))
+
+		self:StopBar(155277) -- Blazing Radiance
+		self:Bar(156724, 18) -- Summon Enchanted Armaments
+		self:Bar(155318, 28) -- Lava Slash
+		self:Bar(154932, 47) -- Molten Torrent
+		self:Bar(155776, 76) -- Cinder Wolves
 	end
 end
 
@@ -151,8 +162,13 @@ do
 		end
 	end
 	function mod:MoltenTorrentRemoved(args)
-		moltenTorrentOnMe = nil
-		self:CloseProximity(args.spellId)
+		if self:Me(args.destGUID) then
+			moltenTorrentOnMe = nil
+			self:CloseProximity(args.spellId)
+			if blazingTarget then
+				self:OpenProximity(155277, 10, blazingTarget)
+			end
+		end
 	end
 end
 
@@ -160,9 +176,9 @@ function mod:CinderWolves(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	wolvesActive = true
 
-	self:Bar(155277, 33) -- Blazing Radiance
-	self:Bar(155493, 64) -- Firestorm
-	self:DelayedMessage(155493, 50, "Neutral", CL.soon:format(self:SpellName(155493)), nil, "Info") -- Firestorm
+	self:Bar(155277, 32) -- Blazing Radiance
+	self:Bar(155493, 62) -- Firestorm
+	self:DelayedMessage(155493, 55, "Neutral", CL.soon:format(self:SpellName(155493)), nil, "Info") -- Firestorm
 end
 
 function mod:Fixate(args)
@@ -194,8 +210,10 @@ end
 function mod:BlazingRadiance(args)
 	self:Bar(args.spellId, 12)
 	self:PrimaryIcon(args.spellId, args.destName)
+	blazingTarget = args.destName
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
+		self:Say(args.spellId)
 		self:OpenProximity(args.spellId, 10)
 	else
 		if not moltenTorrentOnMe then
@@ -212,18 +230,10 @@ end
 
 function mod:BlazingRadianceRemoved(args)
 	self:PrimaryIcon(args.spellId)
+	blazingTarget = nil
 	if not moltenTorrentOnMe then
 		self:CloseProximity(args.spellId)
 	end
-end
-
-function mod:Firestorm(args)
-	self:Message(args.spellId, "Important", "Long")
-	self:Bar(args.spellId, 12, CL.cast:format(args.spellName))
-
-	self:StopBar(155277) -- Blazing Radiance
-	self:Bar(154932, 44) -- Molten Torrent
-	self:Bar(155776, 74) -- Cinder Wolves
 end
 
 function mod:RisingFlames(args)
