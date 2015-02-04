@@ -232,6 +232,7 @@ function mod:RAID_BOSS_WHISPER(_, msg, sender)
 		self:Message(156631, "Personal", "Alarm", text)
 		self:Bar(156631, 10.5, text)
 		self:Flash(156631)
+		self:Say(156631)
 	end
 end
 
@@ -262,7 +263,7 @@ function mod:PenetratingShot(args)
 	end
 	self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
 	self:TargetBar(args.spellId, 8, args.destName)
-	self:CDBar(args.spellId, 22) -- 22-36
+	self:CDBar(args.spellId, 30) -- 22-36
 end
 
 function mod:DeployTurret(args)
@@ -313,11 +314,11 @@ end
 
 function mod:BloodRitual(args)
 	if isOnABoat() then
-		boatTimers[args.spellId] = GetTime() + 12
+		boatTimers[args.spellId] = GetTime() + 20
 		return
 	end
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Alert")
-	self:Bar(args.spellId, 12)
+	self:Bar(args.spellId, 20)
 end
 
 do
@@ -339,9 +340,9 @@ do
 		end
 		if not scheduled then
 			if isOnABoat() then
-				boatTimers[args.spellId] = GetTime() + 51
+				boatTimers[args.spellId] = GetTime() + 70
 			else
-				self:Bar(args.spellId, 51)
+				self:CDBar(args.spellId, 70)
 			end
 			scheduled = self:ScheduleTimer(warnTargets, 0.1, args.spellId)
 		end
