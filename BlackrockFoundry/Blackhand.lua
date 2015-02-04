@@ -129,13 +129,13 @@ do
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 		end
-		if self.profile.custom_off_markedfordeath_marker then
+		if self.db.profile.custom_off_markedfordeath_marker then
 			SetRaidTarget(args.destName, #list)
 		end
 	end
 
 	function mod:MarkedForDeathRemoved(args)
-		if self.profile.custom_off_markedfordeath_marker then
+		if self.db.profile.custom_off_markedfordeath_marker then
 			SetRaidTarget(args.destName, 0)
 		end
 	end
@@ -166,7 +166,7 @@ end
 -- Stage 2
 
 function mod:Siegemaker(args)
-	self:Message("siegemaker", "Attention")
+	self:Message("siegemaker", "Attention", nil, L.siegemaker, L.siegemaker_icon)
 	self:Bar("siegemaker", 50)
 end
 
