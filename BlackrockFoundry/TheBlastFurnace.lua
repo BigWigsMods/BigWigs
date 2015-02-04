@@ -14,7 +14,7 @@ mod.engageId = 1690
 
 local regulatorDeaths = 0
 local shamanDeaths = 0
-local blastTime = 25
+local blastTime = 30
 local volatileFireTargets = {}
 
 --------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ function mod:GetOptions()
 		156937, {175104, "TANK_HEALER"}, {156932, "FLASH"}, -- Foreman Feldspar
 		-10325, {155173, "DISPEL"}, -- Primal Elementalist
 		-10324, -- Slag Elemental
-		155186, {176121, "PROXIMITY", "FLASH"}, -- Firecaller
+		155186, {176121, "SAY", "PROXIMITY", "FLASH"}, -- Firecaller
 		155209, {155242, "TANK"}, {155223, "FLASH"}, -- Heart of the Mountain
 		"stages", "bosskill"
 	}, {
@@ -155,6 +155,9 @@ function mod:VolatileFireApplied(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:Bar(args.spellId, 8, CL.you:format(args.spellName))
+		if not self:LFR() then
+			self:Say(args.spellId)
+		end
 		self:Flash(args.spellId)
 		self:OpenProximity(args.spellId, 8)
 	end
