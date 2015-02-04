@@ -62,6 +62,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "MoltenTorrentRemoved", 154932)
 	self:Log("SPELL_CAST_SUCCESS", "CinderWolves", 155776)
 	self:Log("SPELL_AURA_APPLIED", "BlazingRadiance", 155277)
+	self:Log("SPELL_AURA_REMOVED", "BlazingRadianceRemoved", 155277)
 	self:Log("SPELL_AURA_APPLIED", "RisingFlames", 163284)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RisingFlames", 163284)
 	-- Cinder Wolves

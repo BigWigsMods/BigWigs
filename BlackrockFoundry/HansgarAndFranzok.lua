@@ -13,7 +13,6 @@ mod.engageId = 1693
 --
 
 local phase = 1
-local bossAway = nil
 local stamperWarned = nil
 
 --------------------------------------------------------------------------------
@@ -59,14 +58,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ScorchingBurnsDamage", 155818)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ScorchingBurnsDamage", 155818)
 	self:Log("SPELL_PERIODIC_MISSED", "ScorchingBurnsDamage", 155818)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "JumpAway", "boss1", "boss2")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "JumpBack")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
 	self:Log("SPELL_AURA_APPLIED", "SmartStampers", 162124)
 end
 
 function mod:OnEngage()
 	phase = 1
-	bossAway = nil
 	self:CDBar(153470, 20) -- Skullcracker
 	self:CDBar(160838, 45) -- Disrupting Roar
 	if self:Mythic() then
@@ -74,7 +71,8 @@ function mod:OnEngage()
 		self:Bar(162124, 13) -- Smart Stampers
 	end
 
-	--self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phases", "boss1")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phases", "boss1")
+	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", "Jumps", "boss1", "boss2")
 end
 
 --------------------------------------------------------------------------------
@@ -88,6 +86,14 @@ function mod:SmartStampers(args)
 	end
 end
 
+function mod:Phases(unit)
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	if (phase == 1 and hp < 87) or (phase == 2 and hp < 57) or (phase == 3 and hp < 27) then -- 85%, 55%, 25%
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
+		self:Message(156938, "Urgent", "Info", CL.soon:format(self:SpellName(156938)), false)
+	end
+end
+
 -- Phase fuckery
 do
 	local phaseThreats = {
@@ -97,29 +103,17 @@ do
 		--mod:SpellName(158139), -- Stamping Presses (Hans'gar returns)
 	}
 
-	function mod:Phases(unit)
-		local hp = UnitHealth(unit) / UnitHealthMax(unit)
-		if (phase == 1 and hp < 89) or (phase == 2 and hp < 58) or (phase == 3 and hp < 28) then -- 85%, 55%, 25%
-			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
-			self:Message("stages", "Neutral", "Info", CL.soon:format(phaseThreats[phase]), false)
-		end
-	end
-	function mod:JumpAway(unit, spellName, _, _, spellId)
-		if spellId == 156220 then -- Tactical Retreat (jumped away)
-			bossAway = UnitName(unit)
-			self:Message("stages", "Neutral", "Info", phaseThreats[phase], false)
-			if self:MobId(UnitGUID(unit)) == 76974 then -- Franzok
-				self:StopBar(153470) -- Skullcracker
-				self:StopBar(160838) -- Disrupting Roar
-			end
+	function mod:JumpAway(unit)
+		self:Message("stages", "Neutral", "Info", phaseThreats[phase], false)
+		if self:MobId(UnitGUID(unit)) == 76974 then -- Franzok
+			self:StopBar(153470) -- Skullcracker
+			self:StopBar(160838) -- Disrupting Roar
 		end
 	end
 
-	function mod:JumpBack(_, msg, unit, _, _, target)
-		-- bleh locales, i'll just start with the sender check approach instead of waiting for funky to switch it later >.>
-		-- atleast they yell pretty close to when UNIT_TARGETABLE_CHANGED use to fire
-		if bossAway == unit and not target then -- jumped back
-			bossAway = nil
+	function mod:Jumps(unit)
+		if UnitExists(unit) then -- jumped back  
+			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phases", "boss1")
 			if phase < 3 then
 				self:Message("stages", "Neutral", "Info", CL.over:format(phaseThreats[phase]), false)
 				phase = phase + 1
@@ -139,12 +133,27 @@ do
 				-- phase 3, Searing while Hans'gar is up, then Stamping when he jumps back down
 				self:Message("stages", "Neutral", "Info", self:SpellName(158139), false) -- Stamping Presses
 			end
+		elseif self:MobId(UnitGUID(unit)) == 76974 then -- Franzok jumped away (doesn't Tactical Retreat anymore?)
+			self:Message("stages", "Neutral", "Info", phaseThreats[phase], false)
+			if self:MobId(UnitGUID(unit)) == 76974 then -- Franzok
+				self:StopBar(153470) -- Skullcracker
+				self:StopBar(160838) -- Disrupting Roar
+			end
 		end
 	end
 end
 
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 156220 then -- Tactical Retreat (Hans'gar jumped away)
+		self:JumpAway(unit)
+	elseif spellId == 156546 then -- Crippling Suplex
+		self:TargetMessage(156938, UnitName(unit.."target"), "Urgent", self:Tank() and "Warning" or "Alarm")
+		self:Bar(156938, 5.5)
+	end
+end
+
 function mod:CripplingSuplex(args)
-	self:Message(args.spellId, "Urgent", self:Tank() and "Warning" or "Alarm")
+	self:Message(args.spellId, "Urgent", "Alarm")
 	self:Bar(157139, 8) -- Shattered Vertebrae
 end
 
