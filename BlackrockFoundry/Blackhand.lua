@@ -167,7 +167,7 @@ end
 
 function mod:Siegemaker(args)
 	self:Message("siegemaker", "Attention", nil, L.siegemaker, L.siegemaker_icon)
-	self:Bar("siegemaker", 50)
+	self:Bar("siegemaker", 50, L.siegemaker, L.siegemaker_icon)
 end
 
 function mod:Fixate(args)
