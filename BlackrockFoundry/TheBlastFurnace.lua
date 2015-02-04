@@ -35,11 +35,10 @@ function mod:GetOptions()
 	return {
 		-9650, -- Bellows Operator
 		155179, {155192, "FLASH"}, -- Furnace Engineer
-		{160379, "TANK"}, -- Security Guard
 		156937, {175104, "TANK_HEALER"}, {156932, "FLASH"}, -- Foreman Feldspar
-		-10325, -- Primal Elementalist
+		-10325, {155173, "DISPEL"}, -- Primal Elementalist
 		-10324, -- Slag Elemental
-		155186, {176121, "SAY", "FLASH"}, -- Firecaller
+		155186, {176121, "PROXIMITY", "FLASH"}, -- Firecaller
 		155209, {155242, "TANK"}, {155223, "FLASH"}, -- Heart of the Mountain
 		"stages", "bosskill"
 	}, {
@@ -52,8 +51,9 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Loading", 155181) -- Bellows Operator
-	self:Log("SPELL_CAST_START", "Defense", 160379) -- Security Guard
-	self:Log("SPELL_AURA_APPLIED", "ShieldsDown", 158345) -- Primal Elementalist
+	-- Primal Elementalist
+	self:Log("SPELL_AURA_APPLIED", "ShieldsDown", 158345) 
+	self:Log("SPELL_AURA_APPLIED", "ReactiveEarthShield", 155173)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 155196) -- Slag Elemental
 	-- Furnace Engineer
 	self:Log("SPELL_CAST_START", "Repair", 155179)
@@ -62,7 +62,7 @@ function mod:OnBossEnable()
 	-- Firecaller
 	self:Log("SPELL_CAST_START", "CauterizeWounds", 155186)
 	self:Log("SPELL_AURA_APPLIED", "VolatileFireApplied", 176121)
-	--self:Log("SPELL_AURA_REMOVED", "VolatileFireRemoved", 176121)
+	self:Log("SPELL_AURA_REMOVED", "VolatileFireRemoved", 176121)
 	-- Foreman Feldspar
 	self:Log("SPELL_CAST_START", "Pyroclasm", 156937)
 	self:Log("SPELL_AURA_APPLIED", "MeltArmor", 175104)
@@ -82,7 +82,7 @@ end
 
 function mod:OnEngage()
 	regulatorDeaths, shamanDeaths = 0, 0
-	blastTime = self:LFR() and 30 or 25 -- 4 energy/s
+	blastTime = 30
 	wipe(volatileFireTargets)
 
 	self:Bar(155209, blastTime) -- Blast
@@ -127,14 +127,6 @@ function mod:BombRemoved(args)
 	end
 end
 
-function mod:Defense(args)
-	-- warn the tank
-	local unit = self:GetUnitIdByGUID(args.sourceGUID)
-	if self:Tank() and (not unit or UnitDetailedThreatSituation("player", unit)) then
-		self:Message(args.spellId, "Urgent")
-	end
-end
-
 -- Primal Elementalist
 
 function mod:ShieldsDown(args)
@@ -149,27 +141,28 @@ function mod:Fixate(args)
 	end
 end
 
+function mod:ReactiveEarthShield(args)
+	if self:Dispeller("magic", nil, args.spellId) then
+		self:Message(args.spellId, "Urgent", "Info")
+	end
+end
+
 function mod:CauterizeWounds(args)
 	self:Message(args.spellId, "Urgent", not self:Healer() and "Alert")
 end
 
-do
-	local list, scheduled = mod:NewTargetList(), nil
-	local function warnTargets(spellId)
-		mod:TargetMessage(spellId, list, "Urgent", "Alarm")
-		scheduled = nil
+function mod:VolatileFireApplied(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+		self:Bar(args.spellId, 8, CL.you:format(args.spellName))
+		self:Flash(args.spellId)
+		self:OpenProximity(args.spellId, 8)
 	end
-	function mod:VolatileFireApplied(args)
-		if self:Me(args.destGUID) then
-			if not self:LFR() then
-				self:Say(args.spellId)
-			end
-			self:Flash(args.spellId)
-		end
-		list[#list+1] = args.destName
-		if not scheduled then
-			scheduled = self:ScheduleTimer(warnTargets, 0.1, args.spellId)
-		end
+end
+
+function mod:VolatileFireRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
 	end
 end
 
@@ -226,13 +219,14 @@ do
 			end
 			return
 		end
+
 		local power = UnitPower(unit)
 		if power > 80 and power < 100 and not warned then
 			if blastTime > 10 then
 				self:Message(155209, "Urgent", "Alarm", CL.soon:format(self:SpellName(155209)))
 			end
 			warned = true
-		elseif power == 100 and warned then
+		elseif power == 0 and warned then
 			self:Bar(155209, blastTime)
 			warned = nil
 		end
