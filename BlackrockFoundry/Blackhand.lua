@@ -172,7 +172,9 @@ end
 
 function mod:Fixate(args)
 	self:TargetMessage(args.spellId, "Attention", "Alert")
-	self:Say(args.spellId)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+	end
 end
 
 -- Stage 3
