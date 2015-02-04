@@ -109,7 +109,7 @@ end
 
 function mod:ShatteringSmash(args)
 	self:Message(155992, "Urgent", "Warning")
-	self:Bar(155992, 30)
+	self:Bar(155992, 45)
 end
 
 do
