@@ -41,7 +41,7 @@ function mod:GetOptions()
 		{173471, "TANK"}, -- Acid Maw
 		{156203, "SAY", "FLASH"}, -- Retched Blackrock
 		{156390, "FLASH"}, -- Explosive Shard
-		{"shard_explosion", "EMPHASIZE"}, -- shard is easy to miss, help melee out
+		{"shard_explosion"}, -- shard is easy to miss, help melee out
 		156877, -- Blackrock Barrage
 		155819, -- Hunger Drive
 		155898, -- Rolling Fury
