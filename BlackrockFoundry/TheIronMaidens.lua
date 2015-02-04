@@ -258,12 +258,12 @@ end
 function mod:PenetratingShot(args)
 	self:SecondaryIcon(args.spellId, args.destName)
 	if isOnABoat() then
-		boatTimers[args.spellId] = GetTime() + 22
+		boatTimers[args.spellId] = GetTime() + 30
 		return
 	end
 	self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
 	self:TargetBar(args.spellId, 8, args.destName)
-	self:CDBar(args.spellId, 30) -- 22-36
+	self:Bar(args.spellId, 30)
 end
 
 function mod:DeployTurret(args)
@@ -272,7 +272,7 @@ function mod:DeployTurret(args)
 		return
 	end
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 22) -- 22-43 (?!)
+	--self:CDBar(args.spellId, 22) -- 17-43 (?!)
 end
 
 -- Sorka
@@ -289,14 +289,14 @@ end
 function mod:ConvulsiveShadows(args)
 	local dispeller = self:Dispeller("magic", nil, 156109)
 	if dispeller and isOnABoat() then
-		boatTimers[args.spellId] = GetTime() + 46
+		boatTimers[args.spellId] = GetTime() + 56
 		return
 	end
 	if dispeller or self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Urgent", "Info")
 	end
 	if dispeller then
-		self:Bar(args.spellId, 46)
+		self:Bar(args.spellId, 56)
 	end
 end
 
@@ -307,7 +307,7 @@ function mod:DarkHunt(args)
 	end
 	self:TargetMessage(args.spellId, args.destName, "Attention")
 	self:TargetBar(args.spellId, 8, args.destName)
-	--self:Bar(args.spellId, 13) --13.3 14.5
+	--self:CDBar(args.spellId, 13) -- 13.39-15.89
 end
 
 -- Marak
