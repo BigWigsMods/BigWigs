@@ -6,7 +6,7 @@ end
 
 L = BigWigs:NewBossLocale("Oregorger", "frFR")
 if L then
-	--L.berserk_trigger = "Oregorger has gone insane from hunger!"
+	L.berserk_trigger = "La faim rend Mangeroc fou furieux !" -- à vérifier
 
 	L.shard_explosion = "Explosion de Eclat explosif"
 	L.shard_explosion_desc = "Barre mise en évidence séparée pour l'explosion."
@@ -64,7 +64,7 @@ end
 
 L = BigWigs:NewBossLocale("The Iron Maidens", "frFR")
 if L then
-	--L.ship_trigger = "prepares to man the Dreadnaught's Main Cannon!"
+	L.ship_trigger = "s'apprête à employer le canon principal du cuirassier !" -- à vérifier
 
 	L.ship = "Saut vers le navire"
 
