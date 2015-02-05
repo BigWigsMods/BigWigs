@@ -24,8 +24,18 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		173917, -9706,
-		{156766, "TANK"}, {156852, "HEALER"}, 156704, 157592, -9702, 157060, 157054, 156861, "berserk", "bosskill"
+		173917,
+		-9706,
+		{156766, "TANK"},
+		{156852, "HEALER"},
+		156704,
+		157592,
+		-9702,
+		157060,
+		157054,
+		156861,
+		"berserk",
+		"bosskill"
 	}, {
 		[173917] = "mythic",
 		[156766] = "general"

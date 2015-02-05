@@ -129,9 +129,9 @@ do
 	function mod:RetchedBlackrockDamage(args)
 		local t = GetTime()
 		if self:Me(args.spellId) and t-prev > 2 then
+			prev = t
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 			self:Flash(args.spellId)
-			prev = t
 		end
 	end
 end

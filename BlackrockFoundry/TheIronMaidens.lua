@@ -48,11 +48,21 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"bombardment", {158683, "FLASH"},
-		{156626, "ICON", "FLASH"}, {164271, "ICON"}, 158599,
-		155794, {156109, "DISPEL"}, 158315,
-		159724, {158010, "FLASH"}, "custom_off_heartseeker_marker", 156601,
-		159336, "bosskill"
+		"bombardment",
+		{158683, "FLASH"},
+		{156626,
+		"ICON", "FLASH"},
+		{164271, "ICON"},
+		158599,
+		155794,
+		{156109, "DISPEL"},
+		158315,
+		159724,
+		{158010, "FLASH"},
+		"custom_off_heartseeker_marker",
+		156601,
+		159336,
+		"bosskill"
 	}, {
 		["bombardment"] = -10019, -- Dreadnaught
 		[156626] = -10025, -- Gar'an
@@ -139,10 +149,10 @@ do
 	function mod:IronWill(args)
 		local t = GetTime()
 		if t-prev > 5 then
+			prev = t
 			self:Message(args.spellId, "Important", "Alarm")
 			self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2", "boss3")
 			self:StopBar(137266) -- Jump to Ship
-			prev = t
 		end
 	end
 end
@@ -217,9 +227,9 @@ do
 	function mod:CorruptedBloodDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
+			prev = t
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 			self:Flash(args.spellId)
-			prev = t
 		end
 	end
 end

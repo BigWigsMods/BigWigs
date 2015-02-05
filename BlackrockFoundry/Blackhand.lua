@@ -35,10 +35,19 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		156425, {156401, "FLASH"},
-		"siegemaker", {156653, "SAY"},
-		156928, {157000, "FLASH", "SAY"},
-		155992, {156096, "FLASH"}, "custom_off_markedfordeath_marker", 156107, 156030, "stages", "bosskill"
+		156425,
+		{156401, "FLASH"},
+		"siegemaker",
+		{156653, "SAY"},
+		156928,
+		{157000, "FLASH", "SAY"},
+		155992,
+		{156096, "FLASH"},
+		"custom_off_markedfordeath_marker",
+		156107,
+		156030,
+		"stages",
+		"bosskill"
 	}, {
 		[156425] = -8814,
 		["siegemaker"] = -8816,
@@ -157,8 +166,8 @@ do
 	function mod:MoltenSlagDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
-			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 			prev = t
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 		end
 	end
 end

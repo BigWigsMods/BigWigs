@@ -34,13 +34,21 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		-9650, -- Bellows Operator
-		155179, {155192, "FLASH"}, -- Furnace Engineer
-		156937, {175104, "TANK_HEALER"}, {156932, "FLASH"}, -- Foreman Feldspar
-		-10325, {155173, "DISPEL"}, -- Primal Elementalist
+		155179,
+		{155192, "FLASH"}, -- Furnace Engineer
+		156937,
+		{175104, "TANK_HEALER"},
+		{156932, "FLASH"}, -- Foreman Feldspar
+		-10325,
+		{155173, "DISPEL"}, -- Primal Elementalist
 		-10324, -- Slag Elemental
-		155186, {176121, "SAY", "PROXIMITY", "FLASH"}, -- Firecaller
-		155209, {155242, "TANK"}, {155223, "FLASH"}, -- Heart of the Mountain
-		"stages", "bosskill"
+		155186,
+		{176121, "SAY", "PROXIMITY", "FLASH"}, -- Firecaller
+		155209,
+		{155242, "TANK"},
+		{155223, "FLASH"}, -- Heart of the Mountain
+		"stages",
+		"bosskill"
 	}, {
 		[-9650] = CL.adds,
 		[156937] = -9640, -- Foreman Feldspar
@@ -100,9 +108,9 @@ do
 	function mod:Loading(args)
 		local t = GetTime()
 		if t-prev > 5 then
+			prev = t
 			self:Message(-9650, "Attention", "Info") -- Bellows Operator
 			self:Bar(-9650, 64, nil, 155181)
-			prev = t
 		end
 	end
 end
@@ -185,9 +193,9 @@ do
 	function mod:RuptureDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
+			prev = t
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 			self:Flash(args.spellId)
-			prev = t
 		end
 	end
 end
@@ -245,9 +253,9 @@ do
 	function mod:MeltDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
+			prev = t
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 			self:Flash(args.spellId)
-			prev = t
 		end
 	end
 end

@@ -36,10 +36,22 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		156018, 156040,
-		155318, 156724, {154932, "ICON", "FLASH", "SAY", "PROXIMITY"}, {"molten_torrent_self", "SAY"}, 155776, {155277, "ICON", "SAY", "FLASH", "PROXIMITY"}, 155493, {163284, "TANK"},
-		{154952, "FLASH"}, {154950, "TANK"}, {155074, "TANK_HEALER"}, 155064,
-		"berserk", "bosskill"
+		156018,
+		156040,
+		155318,
+		156724,
+		{154932, "ICON", "FLASH", "SAY", "PROXIMITY"},
+		{"molten_torrent_self", "SAY"},
+		155776,
+		{155277, "ICON", "SAY", "FLASH", "PROXIMITY"},
+		155493,
+		{163284, "TANK"},
+		{154952, "FLASH"},
+		{154950, "TANK"},
+		{155074, "TANK_HEALER"},
+		155064,
+		"berserk",
+		"bosskill"
 	}, {
 		[156018] = -9354, -- Aknor Steelbringer
 		[155318] = -9350, -- Ka'graz
