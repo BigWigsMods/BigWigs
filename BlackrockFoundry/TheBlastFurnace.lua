@@ -106,7 +106,7 @@ function mod:OnEngage()
 end
 
 function mod:OnBossDisable()
-	wipe(volatilityTargets)
+	wipe(volatileFireTargets)
 	wipe(bombTargets)
 end
 
@@ -152,10 +152,10 @@ end
 
 function mod:Bomb(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Positive", "Alarm", CL.you:format(args.spellName)) -- is good thing
-		self:TargetBar(args.spellId, 15, args.destName)
-		self:Flash(args.spellId)
-		self:Say(args.spellId)
+		self:Message(155192, "Positive", "Alarm", CL.you:format(args.spellName)) -- is good thing
+		self:TargetBar(155192, 15, args.destName)
+		self:Flash(155192)
+		self:Say(155192)
 		bombOnMe = true
 	end
 	if not tContains(bombTargets, args.destName) then -- SPELL_AURA_REFRESH
@@ -197,7 +197,7 @@ function mod:Fixate(args)
 	if self:Me(args.destGUID) then
 		self:Message(-10324, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:Flash(-10324)
-		self:Say(args.spellId)
+		self:Say(-10324)
 	end
 end
 
@@ -346,8 +346,8 @@ end
 
 function mod:Melt(args)
 	if self:Me(args.destGUID) then
-		self:Message(-10324, "Personal", "Alarm", CL.you:format(args.spellName))
-		self:Flash(-10324)
-		self:Say(args.spellId)
+		self:Message(155223, "Personal", "Alarm", CL.you:format(args.spellName))
+		self:Flash(155223)
+		self:Say(155223)
 	end
 end
