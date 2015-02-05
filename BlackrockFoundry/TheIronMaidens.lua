@@ -176,7 +176,7 @@ end
 -- XXX 6.1
 function mod:ShipPhase(args)
 	shipCount = shipCount + 1
-	self:Message("bombardment", "Neutral", "Info", L.other:format(L.ship, args.sourceName), false)
+	self:Message("bombardment", "Neutral", "Info", CL.other:format(L.ship, args.sourceName), false)
 	stopBars(self:MobId(args.sourceGUID))
 	if shipCount < 3 then
 		self:Bar("bombardment", 198, L.ship, "ability_vehicle_siegeenginecannon")
@@ -187,7 +187,7 @@ end
 
 function mod:ShipPhase(msg, sender)
 	shipCount = shipCount + 1
-	self:Message("bombardment", "Neutral", "Info", L.other:format(L.ship, sender), false)
+	self:Message("bombardment", "Neutral", "Info", CL.other:format(L.ship, sender), false)
 	if sender == self:SpellName(-10025) then -- Gar'an
 		stopBars(77557)
 	elseif sender == self:SpellName(-10030) then -- Sorka
