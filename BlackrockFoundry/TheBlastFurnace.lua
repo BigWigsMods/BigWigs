@@ -15,7 +15,10 @@ mod.engageId = 1690
 local regulatorDeaths = 0
 local shamanDeaths = 0
 local blastTime = 30
+local volatileFireOnMe = nil
 local volatileFireTargets = {}
+local bombOnMe = nil
+local bombTargets = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -35,18 +38,18 @@ function mod:GetOptions()
 	return {
 		-9650, -- Bellows Operator
 		155179,
-		{155192, "FLASH"}, -- Furnace Engineer
+		{155192, "SAY", "PROXIMITY", "FLASH"}, -- Furnace Engineer
 		156937,
 		{175104, "TANK_HEALER"},
 		{156932, "FLASH"}, -- Foreman Feldspar
 		-10325,
 		{155173, "DISPEL"}, -- Primal Elementalist
-		-10324, -- Slag Elemental
+		{-10324, "SAY"}, -- Slag Elemental
 		155186,
 		{176121, "SAY", "PROXIMITY", "FLASH"}, -- Firecaller
 		155209,
 		{155242, "TANK"},
-		{155223, "FLASH"}, -- Heart of the Mountain
+		{155223, "SAY", "FLASH"}, -- Heart of the Mountain
 		"stages",
 		"bosskill"
 	}, {
@@ -65,8 +68,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 155196) -- Slag Elemental
 	-- Furnace Engineer
 	self:Log("SPELL_CAST_START", "Repair", 155179)
-	self:Log("SPELL_AURA_APPLIED", "Bomb", 155192)
-	self:Log("SPELL_AURA_REMOVED", "BombRemoved", 155192)
+	self:Log("SPELL_AURA_APPLIED", "Bomb", 155192, 176123) -- 2nd is the bomb from stack after the engineer is dead
+	self:Log("SPELL_AURA_REMOVED", "BombRemoved", 155192, 176123)
 	-- Firecaller
 	self:Log("SPELL_CAST_START", "CauterizeWounds", 155186)
 	self:Log("SPELL_AURA_APPLIED", "VolatileFireApplied", 176121)
@@ -82,6 +85,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Heat", 155242)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Heat", 155242)
 	--self:Log("SPELL_CAST_SUCCESS", "Melt", 155225) -- 7.2-10.8
+	self:Log("SPELL_AURA_APPLIED", "Melt", 155225) -- player will spawn puddle when the debuff expires
 	self:Log("SPELL_PERIODIC_DAMAGE", "MeltDamage", 155223)
 	self:Log("SPELL_PERIODIC_MISSED", "MeltDamage", 155223)
 
@@ -91,15 +95,40 @@ end
 function mod:OnEngage()
 	regulatorDeaths, shamanDeaths = 0, 0
 	blastTime = 30
+	
 	wipe(volatileFireTargets)
-
+	wipe(bombTargets)
+	volatileFireOnMe = nil
+	bombOnMe = nil
+	
 	self:Bar(155209, blastTime) -- Blast
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
+end
+
+function mod:OnBossDisable()
+	wipe(volatilityTargets)
+	wipe(bombTargets)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function updateProximity()
+	-- open in reverse order so if you disable one it doesn't block others from showing
+	if #volatileFireTargets > 0 then
+		mod:OpenProximity(176121, 8, volatileFireTargets)
+	end
+	if #bombTargets > 0 then -- someone shouldn't be standing there without a bomb, so this might not be needed
+		mod:OpenProximity(155192, 8, bombTargets) -- how big is the radius? i have no idea
+	end
+	if volatileFireOnMe then
+		mod:OpenProximity(176121, 8)
+	end
+	if bombOnMe then
+		mod:OpenProximity(155192, 8) -- how big is the radius? i have no idea
+	end
+end
 
 -- Adds
 
@@ -126,13 +155,29 @@ function mod:Bomb(args)
 		self:Message(args.spellId, "Positive", "Alarm", CL.you:format(args.spellName)) -- is good thing
 		self:TargetBar(args.spellId, 15, args.destName)
 		self:Flash(args.spellId)
+		self:Say(args.spellId)
+		bombOnMe = true
 	end
+	if not tContains(bombTargets, args.destName) then -- SPELL_AURA_REFRESH
+		bombTargets[#bombTargets+1] = args.destName
+	end
+	
+	updateProximity()
 end
 
 function mod:BombRemoved(args)
 	if self:Me(args.destGUID) then
 		self:StopBar(args.spellId, args.destName)
+		self:CloseProximity(args.spellId)
+		bombOnMe = nil
 	end
+	tDeleteItem(bombTargets, args.destName)
+	
+	if #bombTargets == 0 then
+		self:CloseProximity(args.spellId)
+	end
+	
+	updateProximity()
 end
 
 -- Primal Elementalist
@@ -140,12 +185,19 @@ end
 function mod:ShieldsDown(args)
 	self:Message(-10325, "Positive", "Info", CL.removed:format(self:SpellName(155176))) -- Damage Shield Removed!
 	self:Bar(-10325, 25)
+	
+	for i = 1,5 do -- i have no idea if this works
+		if UnitAura("boss"..i, self:SpellName(158345)) then  -- Look for Shield Down Buff
+			SetRaidTarget("boss"..i, 8)
+		end 
+	end
 end
 
 function mod:Fixate(args)
 	if self:Me(args.destGUID) then
 		self:Message(-10324, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:Flash(-10324)
+		self:Say(args.spellId)
 	end
 end
 
@@ -167,14 +219,28 @@ function mod:VolatileFireApplied(args)
 			self:Say(args.spellId)
 		end
 		self:Flash(args.spellId)
-		self:OpenProximity(args.spellId, 8)
+		volatileFireOnMe = true
 	end
+	
+	if not tContains(volatileFireTargets, args.destName) then -- SPELL_AURA_REFRESH
+		volatileFireTargets[#volatileFireTargets+1] = args.destName
+	end
+	
+	updateProximity()
 end
 
 function mod:VolatileFireRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
+		volatileFireOnMe = nil
 	end
+	tDeleteItem(volatileFireTargets, args.destName)
+	
+	if #volatileFireTargets == 0 then
+		self:CloseProximity(args.spellId)
+	end
+	
+	updateProximity()
 end
 
 -- Foreman Feldspar
@@ -278,3 +344,10 @@ function mod:Deaths(args)
 	end
 end
 
+function mod:Melt(args)
+	if self:Me(args.destGUID) then
+		self:Message(-10324, "Personal", "Alarm", CL.you:format(args.spellName))
+		self:Flash(-10324)
+		self:Say(args.spellId)
+	end
+end
