@@ -229,7 +229,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 155365 then -- Pin Down
-		self:Message(154960, "Urgent", "Warning", CL.incoming:format(spellName))
+		self:Message(154960, "Urgent", (self:Healer() or self:Damager() == "RANGED") and "Warning", CL.incoming:format(spellName))
 	elseif spellId == 155221 then -- Iron Crusher's Tantrum
 		self:Message(155222, "Attention", nil, CL.count:format(spellName, tantrumCount))
 		tantrumCount = tantrumCount + 1
@@ -323,7 +323,7 @@ do
 end
 
 function mod:SavageHowl(args)
-	self:Message(args.spellId, "Important", self:Dispeller("ENRAGE", true) and "Alert")
+	self:Message(args.spellId, "Important", self:Dispeller("enrage", true) and "Alert")
 	self:Bar(args.spellId, 26)
 end
 
@@ -372,7 +372,7 @@ end
 
 function mod:SearedFlesh(args)
 	if args.amount % 3 == 0 then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 5 and "Warning")
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 8 and "Warning")
 	end
 end
 

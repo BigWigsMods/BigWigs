@@ -122,7 +122,7 @@ if L then
 	L.big_add_train = "Big add train"
 	L.big_add_train_icon = "warrior_talent_icon_skirmisher" -- one dude standing alone
 	L.cannon_train = "Cannon train"
-	L.cannon_train_icon = "ability_vehicle_siegeenginecannon" -- cannon ball, duh
+	L.cannon_train_icon = "ability_vehicle_siegeenginecannon" -- cannon ball
 	L.deforester = -10329 -- Deforester
 	L.deforester_icon = "spell_shaman_lavasurge"
 	L.random = "Random trains"
@@ -213,8 +213,8 @@ function mod:StartTrainTimer(lane, count)
 	self:ScheduleTimer("StartTrainTimer", length, lane, count+1)
 end
 
-function mod:TrainYell(_, _, sender)
-	if sender == L.train then
+function mod:TrainYell(_, _, _, _, _, target)
+	if target == L.train then
 		self:DelayedMessage("trains", 4.5, "Neutral", CL.incoming:format(L.train), false) -- Incoming Train!
 	end
 end
@@ -230,7 +230,7 @@ end
 -- General
 
 function mod:Enkindle(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Warning")
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount and "Warning")
 	self:CDBar(args.spellId, 16)
 end
 

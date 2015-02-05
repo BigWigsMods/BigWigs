@@ -239,8 +239,8 @@ end
 
 function mod:RisingFlames(args)
 	local amount = args.amount or 1
-	if amount % 3 == 0 then -- XXX no idea when we should warn for stacks
-		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 8 and "Warning")
+	if amount % 3 == 0 then
+		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 5 and "Warning")
 	end
 end
 
