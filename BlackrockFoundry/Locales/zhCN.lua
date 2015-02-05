@@ -9,7 +9,7 @@ if L then
 	L.berserk_trigger = "奥尔高格" -- Oregorger has gone insane from hunger! PH
 
 	L.shard_explosion = "爆裂残片爆炸"
-	L.shard_explosion_desc = "爆裂残片分散醒目计时条。"
+	L.shard_explosion_desc = "爆裂残片分散计时条，如你是近战职业希望启用爆裂残片冷却。"
 
 	L.hunger_drive_power = "%d层 >%s< - %d矿石剩余！"
 end
@@ -55,7 +55,7 @@ if L then
 	L.trains = "火车警报"
 	L.trains_desc = "当下一次火车到来时显示每条车道计时器和信息。车道标记为从首领到入口顺序，如：首领 1234 入口。"
 
-	L.lane = "车道%s：%s"
+	L.lane = "轨道%s：%s"
 	L.train = "火车"
 	L.adds_train = "火车增援"
 	L.big_add_train = "大型火车增援"
