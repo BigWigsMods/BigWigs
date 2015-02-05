@@ -194,7 +194,7 @@ do
 		["953:12"] = true, -- Mythic Garrosh Phase 4
 		["964:1"] = true, -- Bloodmaul Slag Mines, activating bridge to Roltall
 		["969:2"] = true, -- Shadowmoon Burial Grounds, final boss introduction
-		["984:1"] = {false, -1, true}, -- Auchindoun has 2 cinematics. 1 before the first boss and 1 after the 3rd boss.
+		["984:1"] = {false, -1, true}, -- Auchindoun has 2 cinematics. One before the 1st boss (false) and one after the 3rd boss (true), 2nd arg is garbage for the iterator to work.
 		["993:2"] = true, -- Grimrail Depot, boarding the train
 		["993:4"] = true, -- Grimrail Depot, destroying the train
 		["994:3"] = true, -- Highmaul, Kargath Death

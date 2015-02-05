@@ -1212,13 +1212,13 @@ end
 function plugin:PauseBar(_, module, text)
 	if not normalAnchor then return end
 	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
+		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			k:Pause()
 			return
 		end
 	end
 	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
+		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			k:Pause()
 			return
 		end
@@ -1228,13 +1228,13 @@ end
 function plugin:ResumeBar(_, module, text)
 	if not normalAnchor then return end
 	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
+		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			k:Resume()
 			return
 		end
 	end
 	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
+		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			k:Resume()
 			return
 		end
@@ -1249,14 +1249,14 @@ function plugin:StopSpecificBar(_, module, text)
 	if not normalAnchor then return end
 	local dirty = nil
 	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
+		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			k:Stop()
 			dirty = true
 		end
 	end
 	if dirty then rearrangeBars(normalAnchor) dirty = nil end
 	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
+		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			k:Stop()
 			dirty = true
 		end
@@ -1290,12 +1290,12 @@ end
 function plugin:GetBarTimeLeft(module, text)
 	if not normalAnchor then return end
 	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
+		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			return k.remaining
 		end
 	end
 	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:module") == module and k.candyBarLabel:GetText() == text then
+		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			return k.remaining
 		end
 	end
@@ -1363,7 +1363,7 @@ end
 -- Super Emphasize the clicked bar
 clickHandlers.emphasize = function(bar)
 	-- Add 0.2sec here to catch messages for this option triggered when the bar ends.
-	plugin:SendMessage("BigWigs_TempSuperEmphasize", bar:Get("bigwigs:module"), bar:Get("bigwigs:option"), bar.candyBarLabel:GetText(), bar.remaining)
+	plugin:SendMessage("BigWigs_TempSuperEmphasize", bar:Get("bigwigs:module"), bar:Get("bigwigs:option"), bar:GetLabel(), bar.remaining)
 end
 
 -- Report the bar status to the active group type (raid, party, solo)
@@ -1387,7 +1387,7 @@ do
 		end
 	end
 	clickHandlers.report = function(bar)
-		local text = ("%s: %s"):format(bar.candyBarLabel:GetText(), timeDetails(bar.remaining))
+		local text = ("%s: %s"):format(bar:GetLabel(), timeDetails(bar.remaining))
 		SendChatMessage(text, (IsInGroup(2) and "INSTANCE_CHAT") or (IsInRaid() and "RAID") or (IsInGroup() and "PARTY") or "SAY")
 	end
 end
