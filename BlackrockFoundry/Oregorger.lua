@@ -24,7 +24,7 @@ if L then
 	L.berserk_trigger = "Oregorger has gone insane from hunger!"
 
 	L.shard_explosion = "Explosive Shard Explosion"
-	L.shard_explosion_desc = "Separate emphasized bar for the explosion."
+	L.shard_explosion_desc = "A separate bar for the explosion that you may wish to enable countdown for if you are a melee class."
 	L.shard_explosion_icon = "6bf_explosive_shard"
 
 	L.hunger_drive_power = "%dx %s - %d ore to go!"
@@ -137,11 +137,14 @@ do
 end
 
 function mod:ExplosiveShard(args)
-	if self:Tank() or self:Damager() == "MELEE" then -- ranged don't need to worry about this
+	if self:Damager() == "MELEE" then -- ranged don't need to worry about this
 		self:Message(args.spellId, "Urgent", "Alarm")
 		self:CDBar(args.spellId, 12)
 		self:Flash(args.spellId)
 		self:Bar("shard_explosion", 3.5, 84474, "spell_shadow_mindbomb") -- "Explosion" with a bomb icon
+	end
+	if self:Tank() then
+		self:Message(args.spellId, "Urgent")
 	end
 end
 
