@@ -150,8 +150,13 @@ end
 
 local function zoneChanged()
 	if not IsInInstance() then
-		for _, module in next, bossCore.modules do
-			if module.isEngaged then module:Wipe() end
+		-- We may be hearthing whilst a module is enabled and engaged, only wipe if we're a ghost (released spirit from an old zone).
+		if UnitIsDeadOrGhost("player") then
+			for _, module in next, bossCore.modules do
+				if module.isEngaged then
+					module:Wipe()
+				end
+			end
 		end
 	else
 		SetMapToCurrentZone() -- Hack because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.
