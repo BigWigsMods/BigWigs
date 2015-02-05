@@ -35,23 +35,27 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		156425,
-		{156401, "FLASH"},
+		--[[ Stage One: The Blackrock Forge ]]--
+		156425, -- Demolition
+		{156401, "FLASH"}, -- Molten Slag
+		--[[ Stage Two: Storage Warehouse ]]--
 		"siegemaker",
-		{156653, "SAY"},
-		156928,
-		{157000, "FLASH", "SAY"},
-		155992,
-		{156096, "FLASH"},
+		{156653, "SAY"}, -- Fixate
+		--[[ Stage Three: Iron Crucible ]]--
+		156928, -- Slag Eruption
+		{157000, "FLASH", "SAY"}, -- Attach Slag Bombs
+		--[[ General ]]--
+		155992, -- Shattering Smash
+		{156096, "FLASH"}, -- Marked for Death
 		"custom_off_markedfordeath_marker",
-		156107,
-		156030,
+		156107, -- Impaling Throw
+		156030, -- Throw Slag Bombs
 		"stages",
 		"bosskill"
 	}, {
-		[156425] = -8814,
-		["siegemaker"] = -8816,
-		[156928] = -8818,
+		[156425] = -8814, -- Stage One: The Blackrock Forge
+		["siegemaker"] = -8816, -- Stage Two: Storage Warehouse
+		[156928] = -8818, -- Stage Three: Iron Crucible
 		[155992] = "general"
 	}
 end

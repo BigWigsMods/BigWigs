@@ -136,16 +136,21 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		--156494, 164380,
-		163753,
-		160140,
-		{159481, "ICON", "FLASH"}, --, "custom_off_firemender_marker"
-		{155921, "TANK"},
-		{155864, "FLASH"},
+		--[[ Mythic ]]--
+		--156494,
+		--164380,
+		--[[ Reinforcements ]]--
+		163753, -- Iron Bellow
+		160140, -- Cauterizing Bolt
+		{159481, "ICON", "FLASH"}, -- Delayed Siege Bomb
+		--"custom_off_firemender_marker",
+		--[[ General ]]--
+		{155921, "TANK"}, -- Enkindle
+		{155864, "FLASH"}, -- Prototype Pulse Grenade
 		{"trains", "FLASH"},
 		"bosskill",
 	}, {
-		[156494] = "mythic",
+		--[156494] = "mythic",
 		[163753] = -9537, -- Reinforcements
 		[155921] = "general",
 	}

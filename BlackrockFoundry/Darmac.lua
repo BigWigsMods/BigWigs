@@ -55,7 +55,7 @@ function mod:GetOptions()
 		{155236, "TANK"}, -- Crush Armor
 		155222, -- Tantrum
 		155247, -- Stampede
-		--[[ Faultline ]]--
+		--[[ Faultline (Mythic) ]]--
 		155284, -- Cannonball Barrage
 		159044, -- Epicenter
 		--155321, -- Unstoppable
