@@ -279,8 +279,6 @@ do
 
 					if override then
 						loadOnZone[override][#loadOnZone[override] + 1] = addon
-					else
-						if not menus[zoneOrBoss] then menus[zoneOrBoss] = true end
 					end
 				else
 					worldBosses[zoneOrBoss] = currentZone
