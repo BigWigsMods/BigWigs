@@ -161,9 +161,9 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Enkindle", 155921)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Enkindle", 155921)
-	self:Log("SPELL_CAST_START", "PulseGrenade", 155864)
-	self:Log("SPELL_AURA_APPLIED", "PulseGrenadeDamage", 155864)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "PulseGrenadeDamage", 155864)
+	self:Log("SPELL_CAST_SUCCESS", "PulseGrenade", 155864)
+	self:Log("SPELL_AURA_APPLIED", "PulseGrenadeDamage", 165195)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "PulseGrenadeDamage", 165195)
 	self:Log("SPELL_CAST_START", "IronBellow", 163753)
 	self:Log("SPELL_CAST_START", "CauterizingBolt", 160140)
 	self:Log("SPELL_AURA_APPLIED", "DelayedSiegeBomb", 159481)
@@ -253,8 +253,8 @@ end
 
 function mod:PulseGrenadeDamage(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
-		self:Flash(args.spellId)
+		self:Message(155864, "Personal", "Alarm", CL.underyou:format(self:SpellName(135592))) -- 135592 = "Grenade"
+		self:Flash(155864)
 	end
 end
 

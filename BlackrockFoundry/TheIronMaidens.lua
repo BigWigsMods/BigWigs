@@ -107,7 +107,7 @@ function mod:OnEngage()
 	self:Bar(158078, 5) -- Blood Ritual
 	self:Bar(155794, 11) -- Blade Dash
 	self:Bar(156626, 19) -- Rapid Fire
-	self:Bar("bombardment", 60, 137266, "ability_vehicle_siegeenginecannon") -- Jump to Ship
+	self:Bar("bombardment", 60, L.ship, "ability_vehicle_siegeenginecannon") -- Jump to Ship
 end
 
 --------------------------------------------------------------------------------
@@ -152,7 +152,7 @@ do
 			prev = t
 			self:Message(args.spellId, "Important", "Alarm")
 			self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2", "boss3")
-			self:StopBar(137266) -- Jump to Ship
+			self:StopBar(L.ship) -- Jump to Ship
 		end
 	end
 end
