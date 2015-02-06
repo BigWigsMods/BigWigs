@@ -41,6 +41,7 @@ function mod:GetOptions()
 		--[[ Stage Two: Storage Warehouse ]]--
 		"siegemaker",
 		{156653, "SAY"}, -- Fixate
+		156667, -- Blackiron Plating
 		--[[ Stage Three: Iron Crucible ]]--
 		156928, -- Slag Eruption
 		{157000, "FLASH", "SAY"}, -- Attach Slag Bombs
@@ -67,11 +68,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "MarkedForDeathApplied", 156096)
 	self:Log("SPELL_AURA_REMOVED", "MarkedForDeathRemoved", 156096)
 	-- Stage 1
-	self:Emote("Demolition", "156425")
 	self:Log("SPELL_PERIODIC_DAMAGE", "MoltenSlagDamage", 156401)
 	self:Log("SPELL_PERIODIC_MISSED", "MoltenSlagDamage", 156401)
 	-- Stage 2
 	self:Log("SPELL_CAST_SUCCESS", "Siegemaker", 156667) -- Blackiron Plating
+	self:Log("SPELL_AURA_REMOVED", "BlackironPlatingRemoved", 156667) -- Blackiron Plating
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 156653)
 	-- Stage 3
 	self:Log("SPELL_CAST_START", "SlagEruption", 156928)
@@ -83,7 +84,7 @@ function mod:OnEngage()
 	phase = 1
 	self:Bar(156030, 6) -- Throw Slag Bombs
 	self:Bar(156425, 15.5) -- Demolition
-	self:Bar(155992, 20) -- Shattering Smash
+	self:CDBar(155992, 21) -- Shattering Smash
 	self:Bar(156096, 36) -- Marked for Death
 end
 
@@ -95,6 +96,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 156991 or spellId == 156998 then -- Throw Slag Bombs
 		self:Message(156030, "Attention")
 		self:Bar(156030, 25)
+	elseif spellId == 156425 then -- Demolition
+		self:Message(spellId, "Urgent", "Alert")
+		local massiveDemolition = self:SpellName(156479) -- Massive Demolition
+		self:Bar(spellId, 6, CL.count:format(massiveDemolition, 1))
+		self:ScheduleTimer("Bar", 5, spellId, 6, CL.count:format(massiveDemolition, 2))
+		self:ScheduleTimer("Bar", 10, spellId, 6, CL.count:format(massiveDemolition, 3))
+		self:Bar(spellId, 45.5)
 	elseif spellId == 161347 then -- Jump To Second Floor
 		self:StopBar(156425) -- Demolition
 		self:StopBar(156479) -- Massive Demolition
@@ -122,7 +130,7 @@ end
 
 function mod:ShatteringSmash(args)
 	self:Message(155992, "Urgent", "Warning")
-	self:Bar(155992, 45)
+	self:CDBar(155992, 45)
 end
 
 do
@@ -156,15 +164,6 @@ end
 
 -- Stage 1
 
-local massiveDemolition = mod:SpellName(156479) -- Massive Demolition
-function mod:Demolition()
-	self:Message(156425, "Urgent", "Alert")
-	self:Bar(156425, 6, CL.count:format(massiveDemolition, 1))
-	self:ScheduleTimer("Bar", 5, 156425, 6, CL.count:format(massiveDemolition, 2))
-	self:ScheduleTimer("Bar", 10, 156425, 6, CL.count:format(massiveDemolition, 3))
-	self:Bar(156425, 45.5)
-end
-
 do
 	local prev = 0
 	function mod:MoltenSlagDamage(args)
@@ -183,6 +182,10 @@ function mod:Siegemaker(args)
 	self:Bar("siegemaker", 50, L.siegemaker, L.siegemaker_icon)
 end
 
+function mod:BlackironPlatingRemoved(args)
+	self:Message(args.spellId, "Attention", "Info", CL.removed:format(args.spellName))
+end
+
 function mod:Fixate(args)
 	self:TargetMessage(args.spellId, "Attention", "Alert")
 	if self:Me(args.destGUID) then
@@ -194,7 +197,7 @@ end
 
 function mod:MassiveShatteringSmash(args)
 	self:Message(155992, "Urgent", "Warning")
-	self:Bar(155992, 25)
+	self:CDBar(155992, 25)
 end
 
 do
