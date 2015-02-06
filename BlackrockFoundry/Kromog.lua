@@ -9,6 +9,12 @@ mod:RegisterEnableMob(77692)
 mod.engageId = 1713
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local breathCount = 3
+
+--------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -27,7 +33,7 @@ function mod:GetOptions()
 		173917,
 		-9706,
 		{156766, "TANK"},
-		{156852, "HEALER"},
+		156852,
 		156704,
 		157592,
 		-9702,
@@ -58,12 +64,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	breathCount = 3 -- only 2 casts before the first Grasping Earth
 	-- XXX all of the timers for this module are probably shit, need more logs
 	self:CDBar(156852, 9) -- Stone Breath
-	self:CDBar(156766, 16) -- Warped Armor
-	self:CDBar(156704, 22) -- Slam
-	self:CDBar(157592, 30) -- Rippling Smash
-	self:CDBar(157060, 50) -- Grasping Earth
+	self:CDBar(156766, 14) -- Warped Armor
+	self:CDBar(157592, 23) -- Rippling Smash
+	self:CDBar(156704, 39) -- Slam
+	self:CDBar(157060, 54) -- Grasping Earth
 	if self:Mythic() then
 		self:CDBar(173917, 81) -- Trembling Earth
 	end
@@ -106,38 +113,41 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 function mod:WarpedArmor(args)
-	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount and "Warning") -- swap at 2 or 3 stacks
 	self:CDBar(args.spellId, 14)
 end
 
 function mod:StoneBreath(args)
 	self:Message(args.spellId, "Urgent")
-	self:CDBar(args.spellId, 26)
+	breathCount = breathCount + 1
+	if breathCount < 5 then
+		self:CDBar(args.spellId, 24)
+	end
 end
 
 function mod:Slam(args)
-	self:Message(args.spellId, "Urgent", self:Damager() == "MELEE" and "Alarm", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Urgent", (self:Tank() or self:Damager() == "MELEE") and "Alarm", CL.casting:format(args.spellName))
 	self:CDBar(args.spellId, 24)
 end
 
 function mod:RipplingSmash(args)
 	self:Message(args.spellId, "Urgent", "Alert")
-	self:CDBar(args.spellId, self:Mythic() and 41 or 22)
+	self:CDBar(args.spellId, self:Mythic() and 41 or 24) -- 22-29
 	-- XXX second cast is always skipped in mythic, it comes off cd during a stone breath->pillars->call combo
 	-- next cast happens 72-88s after pillars, so what happened to the third cast? sigh.
 end
 
 function mod:GraspingEarth(args)
 	self:Message(args.spellId, "Positive", "Info")
-	self:CDBar(args.spellId, 114)
+	self:CDBar(args.spellId, 112) -- 112-114
 	self:CDBar(157054, 13) -- Thundering Blows
 
+	breathCount = 1
 	self:StopBar(156766) -- Warped Armor
 	self:StopBar(156704) -- Slam
 	self:StopBar(157592) -- Rippling Smash
 
-	self:CDBar(156852, 26) -- Stone Breath
+	self:CDBar(156852, 31) -- Stone Breath
 end
 
 function mod:ThunderingBlows(args)
