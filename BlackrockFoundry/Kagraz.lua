@@ -36,20 +36,23 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		156018,
-		156040,
-		155318,
-		156724,
-		{154932, "ICON", "FLASH", "SAY", "PROXIMITY"},
+		--[[ Aknor Steelbringer ]]--
+		156018, -- Devastating Slam
+		156040, -- Drop the Hammer
+		--[[ Ka'graz ]]--
+		155318, -- Lava Slash
+		-9352, -- Summon Enchanted Armaments
+		{154932, "ICON", "FLASH", "SAY", "PROXIMITY"}, -- Molten Torrent
 		{"molten_torrent_self", "SAY"},
-		155776,
-		{155277, "ICON", "SAY", "FLASH", "PROXIMITY"},
-		155493,
-		{163284, "TANK"},
-		{154952, "FLASH"},
-		{154950, "TANK"},
-		{155074, "TANK_HEALER"},
-		155064,
+		155776, -- Summon Cinder Wolves
+		{155277, "ICON", "SAY", "FLASH", "PROXIMITY"}, -- Blazing Radiance
+		155493, -- Firestorm
+		{163284, "TANK"}, -- Rising Flames
+		--[[ Cinder Wolf ]]--
+		{154952, "FLASH"}, -- Fixate
+		{154950, "TANK"}, -- Overheated
+		{155074, "TANK_HEALER"}, -- Charring Breath
+		155064, -- Rekindle
 		"berserk",
 		"bosskill"
 	}, {
@@ -65,7 +68,7 @@ function mod:OnBossEnable()
 
 	-- Aknor
 	self:Log("SPELL_CAST_START", "DevastatingSlam", 156018)
-	self:Log("SPELL_CAST_START", "DropHammer", 156040)
+	self:Log("SPELL_CAST_START", "DropTheHammer", 156040)
 	-- Ka'graz
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_DAMAGE", "LavaSlashDamage", 155318)
@@ -122,14 +125,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Message(155318, "Urgent")
 		self:Bar(155318, 14.5)
 	elseif spellId == 163644 then -- Summon Enchanted Armaments
-		self:Message(156724, "Attention")
-		self:Bar(156724, self:Mythic() and 20 or 45)
+		self:Message(-9352, "Attention")
+		self:Bar(-9352, self:Mythic() and 20 or 45)
 	elseif spellId == 155564 then -- Firestorm
 		self:Message(155493, "Important", "Long")
 		self:Bar(155493, 14, CL.cast:format(spellName))
 
 		self:StopBar(155277) -- Blazing Radiance
-		self:Bar(156724, 18) -- Summon Enchanted Armaments
+		self:Bar(-9352, 18) -- Summon Enchanted Armaments
 		self:Bar(155318, 28) -- Lava Slash
 		self:Bar(154932, 47) -- Molten Torrent
 		self:Bar(155776, 76) -- Cinder Wolves
@@ -211,7 +214,7 @@ end
 function mod:CharringBreath(args)
 	local amount = args.amount or 1
 	if self:Mythic() or amount % 2 == 0 then
-		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > (self:Mythic() and 2 or 7) and "Warning")
+		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
 	end
 end
 
@@ -263,7 +266,7 @@ function mod:DevastatingSlam(args)
 	--self:CDBar(args.spellId, 6) -- 6-10.9
 end
 
-function mod:DropHammer(args)
+function mod:DropTheHammer(args)
 	self:Message(args.spellId, "Attention")
 	--self:CDBar(args.spellId, 11) -- 11.3-14.4
 end
