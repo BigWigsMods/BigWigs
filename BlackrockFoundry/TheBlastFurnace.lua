@@ -26,6 +26,10 @@ local bombTargets = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.custom_on_shieldsdown_marker = "Shields Down marker"
+	L.custom_on_shieldsdown_marker_desc = "Mark a vulnerable Primal Elementalist with {rt8}, requires promoted or leader."
+	L.custom_on_shieldsdown_marker_icon = 8
+
 	L.heat_increased_message = "Heat increased! Blast every %ss"
 end
 L = mod:GetLocale()
@@ -36,40 +40,46 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		--[[ Adds ]]--
 		-9650, -- Bellows Operator
-		155179,
-		{155192, "SAY", "PROXIMITY", "FLASH"}, -- Furnace Engineer
-		156937,
-		{175104, "TANK_HEALER"},
-		{156932, "FLASH"}, -- Foreman Feldspar
-		-10325,
-		{155173, "DISPEL"}, -- Primal Elementalist
-		{-10324, "SAY"}, -- Slag Elemental
-		155186,
-		{176121, "SAY", "PROXIMITY", "FLASH"}, -- Firecaller
-		155209,
-		{155242, "TANK"},
-		{155223, "SAY", "FLASH"}, -- Heart of the Mountain
+		155179, -- Repair (Furnace Engineer)
+		{155192, "SAY", "PROXIMITY", "FLASH"}, -- Bomb (Furnace Engineer)
+		--[[ Foreman Feldspar ]]--
+		156937, -- Pyroclasm
+		{175104, "TANK_HEALER"}, -- Melt Armor
+		{156932, "SAY", "FLASH"}, -- Rupture
+		--[[ Primal Elementalist ]]--
+		-10325, -- Shields Down
+		"custom_on_shieldsdown_marker",
+		{155173, "DISPEL"}, -- Reactive Earth Shield
+		{-10324, "SAY"}, -- Fixate (Slag Elemental)
+		155186, -- Cauterize Wounds (Firecaller)
+		{176121, "SAY", "PROXIMITY", "FLASH"}, -- Volatile Fire (Firecaller)
+		--[[ Heart of the Mountain ]]--
+		155209, -- Blast
+		{155242, "TANK"}, -- Heat
+		{155223, "SAY", "FLASH"}, -- Melt
 		"stages",
 		"bosskill"
 	}, {
 		[-9650] = CL.adds,
 		[156937] = -9640, -- Foreman Feldspar
 		[-10325] = -9655, -- Primal Elementalist
-		[155209] = -9641, -- Heart of the Mountain
+		[155209] = -10808, -- Heart of the Mountain
 	}
 end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Loading", 155181) -- Bellows Operator
 	-- Primal Elementalist
-	self:Log("SPELL_AURA_APPLIED", "ShieldsDown", 158345) 
+	self:Log("SPELL_AURA_APPLIED", "ShieldsDown", 158345)
+	self:Log("SPELL_AURA_APPLIED", "DamageShield", 155176)
 	self:Log("SPELL_AURA_APPLIED", "ReactiveEarthShield", 155173)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 155196) -- Slag Elemental
 	-- Furnace Engineer
 	self:Log("SPELL_CAST_START", "Repair", 155179)
-	self:Log("SPELL_AURA_APPLIED", "Bomb", 155192, 176123) -- 2nd is the bomb from stack after the engineer is dead
-	self:Log("SPELL_AURA_REMOVED", "BombRemoved", 155192, 176123)
+	self:Log("SPELL_AURA_APPLIED", "Bomb", 155192, 174716) -- Bomb, Cluster of Lit Bombs
+	self:Log("SPELL_AURA_REMOVED", "BombRemoved", 155192, 174716)
 	-- Firecaller
 	self:Log("SPELL_CAST_START", "CauterizeWounds", 155186)
 	self:Log("SPELL_AURA_APPLIED", "VolatileFireApplied", 176121)
@@ -78,7 +88,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Pyroclasm", 156937)
 	self:Log("SPELL_AURA_APPLIED", "MeltArmor", 175104)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "MeltArmor", 175104)
-	--self:Log("SPELL_CAST_START", "Rupture", 156934) -- 22-27.8
+	self:Log("SPELL_AURA_APPLIED", "Rupture", 156934)
 	self:Log("SPELL_PERIODIC_DAMAGE", "RuptureDamage", 156932)
 	self:Log("SPELL_PERIODIC_MISSED", "RuptureDamage", 156932)
 	-- Heart of the Mountain
@@ -95,12 +105,12 @@ end
 function mod:OnEngage()
 	regulatorDeaths, shamanDeaths = 0, 0
 	blastTime = 30
-	
+
 	wipe(volatileFireTargets)
 	wipe(bombTargets)
 	volatileFireOnMe = nil
 	bombOnMe = nil
-	
+
 	self:Bar(155209, blastTime) -- Blast
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
@@ -153,7 +163,12 @@ end
 function mod:Bomb(args)
 	if self:Me(args.destGUID) then
 		self:Message(155192, "Positive", "Alarm", CL.you:format(args.spellName)) -- is good thing
-		self:TargetBar(155192, 15, args.destName)
+		local t = 15
+		if args.spellId == 174716 then -- from the bomb sack
+			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+			t = expires - GetTime()
+		end
+		self:TargetBar(155192, t, args.destName)
 		self:Flash(155192)
 		self:Say(155192)
 		bombOnMe = true
@@ -161,7 +176,7 @@ function mod:Bomb(args)
 	if not tContains(bombTargets, args.destName) then -- SPELL_AURA_REFRESH
 		bombTargets[#bombTargets+1] = args.destName
 	end
-	
+
 	updateProximity()
 end
 
@@ -172,11 +187,11 @@ function mod:BombRemoved(args)
 		bombOnMe = nil
 	end
 	tDeleteItem(bombTargets, args.destName)
-	
+
 	if #bombTargets == 0 then
 		self:CloseProximity(args.spellId)
 	end
-	
+
 	updateProximity()
 end
 
@@ -185,11 +200,27 @@ end
 function mod:ShieldsDown(args)
 	self:Message(-10325, "Positive", "Info", CL.removed:format(self:SpellName(155176))) -- Damage Shield Removed!
 	self:Bar(-10325, 25)
-	
-	for i = 1,5 do -- i have no idea if this works
-		if UnitAura("boss"..i, self:SpellName(158345)) then  -- Look for Shield Down Buff
-			SetRaidTarget("boss"..i, 8)
-		end 
+
+	if self.db.profile.custom_on_shieldsdown_marker then
+		for i = 1, 5 do -- i have no idea if this works
+			local boss = ("boss%d"):format(i)
+			if UnitBuff(boss, args.spellName) then  -- Shields Down
+				SetRaidTarget(boss, 8)
+				break
+			end
+		end
+	end
+end
+
+function mod:DamageShield(args)
+	if self.db.profile.custom_on_shieldsdown_marker then
+		for i = 1, 5 do
+			local boss = ("boss%d"):format(i)
+			if UnitGUID(boss) == args.sourceGUID and GetRaidTargetIndex(boss) == 8 then
+				SetRaidTarget(boss, 0)
+				break
+			end
+		end
 	end
 end
 
@@ -221,11 +252,11 @@ function mod:VolatileFireApplied(args)
 		self:Flash(args.spellId)
 		volatileFireOnMe = true
 	end
-	
+
 	if not tContains(volatileFireTargets, args.destName) then -- SPELL_AURA_REFRESH
 		volatileFireTargets[#volatileFireTargets+1] = args.destName
 	end
-	
+
 	updateProximity()
 end
 
@@ -235,11 +266,11 @@ function mod:VolatileFireRemoved(args)
 		volatileFireOnMe = nil
 	end
 	tDeleteItem(volatileFireTargets, args.destName)
-	
+
 	if #volatileFireTargets == 0 then
 		self:CloseProximity(args.spellId)
 	end
-	
+
 	updateProximity()
 end
 
@@ -252,6 +283,15 @@ end
 function mod:MeltArmor(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention")
 	self:Bar(args.spellId, 10)
+end
+
+function mod:Rupture(args)
+	if self:Me(args.destGUID) then
+		self:Message(156932, "Personal", "Alarm", CL.you:format(args.spellName))
+		self:Bar(156932, 5, CL.you:format(args.spellName))
+		self:Flash(156932)
+		self:Say(156932)
+	end
 end
 
 do
