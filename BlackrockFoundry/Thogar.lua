@@ -15,7 +15,7 @@ mod.engageId = 1692
 local engageTime = 0
 -- times are for when the train is about to enter the room, ~5s after the door opens
 local trainData = {
-	-- heroic data, covers 7min of the fight
+	-- heroic data, covers 7:46 of the fight
 	[1] = {
 		{ 32, "adds_train"},
 		{107, "train"},
@@ -25,6 +25,7 @@ local trainData = {
 		{272, "train"},
 		{307, "cannon_train", 4},
 		{407, "train"},
+		{417, "cannon_train"},
 	},
 	[2] = {
 		{ 27, "train"},
@@ -37,6 +38,8 @@ local trainData = {
 		{317, "train"},
 		{342, "train"},
 		{372, "adds_train", 3},
+		{457, "train"},
+		{459, "big_add_train", 3},
 	},
 	[3] = {
 		{ 47, "train"},
@@ -45,7 +48,8 @@ local trainData = {
 		{217, "train"},
 		{277, "train"},
 		{372, "big_add_train", 2},
-		{387, "train"},
+		{442, "train"},
+		{459, "big_add_train", 2},
 	},
 	[4] = {
 		{ 17, "train"},
@@ -54,12 +58,10 @@ local trainData = {
 		{197, "adds_train"},
 		{252, "cannon_train", 2},
 		{307, "cannon_train", 1},
-		{417, "cannon_train"},
+		{387, "train"},
+		{417, "adds_train"},
+		{467, "train"},
 	},
-	-- really wish I recorded this attempt ;[
-	--{442, "train"},
-	--{457, "big_add_train"},
-	--{467, "train"},
 }
 
 local trainDataMythic = {
