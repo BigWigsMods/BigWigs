@@ -82,6 +82,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RisingFlames", 163284)
 	-- Cinder Wolves
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 154952)
+	self:Log("SPELL_AURA_REMOVED", "FixateOver", 154952)
 	self:Log("SPELL_AURA_APPLIED", "Overheated", 154950)
 	self:Log("SPELL_AURA_APPLIED", "CharringBreath", 155074)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CharringBreath", 155074)
@@ -203,6 +204,10 @@ function mod:Fixate(args)
 		self:Flash(args.spellId)
 	end
 	self:TargetBar(args.spellId, 10, args.destName)
+end
+
+function mod:FixateOver(args)
+	self:StopBar(args.spellId, args.destName)
 end
 
 function mod:Overheated(args)
