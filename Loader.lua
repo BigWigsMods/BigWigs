@@ -85,6 +85,10 @@ local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the cor
 local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
+local fakeWorldZones = { -- Probably not needed, but let's be safe
+	[466]=true, -- Outland
+	[862]=true, -- Pandaria
+}
 
 do
 	local c = "BigWigs_Classic"
@@ -96,10 +100,10 @@ do
 
 	public.zoneTbl = {
 		[696]=c, [755]=c,
-		[775]=bc, [780]=bc, [779]=bc, [776]=bc, [465]=bc, [473]=bc, [799]=bc, [782]=bc, [466]=bc,
+		[775]=bc, [780]=bc, [779]=bc, [776]=bc, [799]=bc, [782]=bc, [466]=bc,
 		[604]=wotlk, [543]=wotlk, [535]=wotlk, [529]=wotlk, [527]=wotlk, [532]=wotlk, [531]=wotlk, [609]=wotlk, [718]=wotlk,
 		[752]=cata, [758]=cata, [754]=cata, [824]=cata, [800]=cata, [773]=cata,
-		[896]=mop, [897]=mop, [886]=mop, [930]=mop, [953]=mop, [807]=mop, [809]=mop, [928]=mop, [929]=mop, [951]=mop, [862]=mop,
+		[896]=mop, [897]=mop, [886]=mop, [930]=mop, [953]=mop, [862]=mop,
 
 		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw, [919]=lw, -- MoP
 		[964]=lw, [969]=lw, [984]=lw, [987]=lw, [989]=lw, [993]=lw, [995]=lw, [1008]=lw -- WoD
@@ -245,15 +249,19 @@ do
 			local zone = tonumber(rawZone:trim())
 			if zone then
 				-- register the zone for enabling.
-				enableZones[zone] = true
-
-				if not loadOnZone[zone] then loadOnZone[zone] = {} end
-				loadOnZone[zone][#loadOnZone[zone] + 1] = addon
-
-				if override then
-					loadOnZone[override][#loadOnZone[override] + 1] = addon
-				else
+				if fakeWorldZones[zone] then
 					if not menus[zone] then menus[zone] = true end
+				else
+					enableZones[zone] = true
+
+					if not loadOnZone[zone] then loadOnZone[zone] = {} end
+					loadOnZone[zone][#loadOnZone[zone] + 1] = addon
+
+					if override then
+						loadOnZone[override][#loadOnZone[override] + 1] = addon
+					else
+						if not menus[zone] then menus[zone] = true end
+					end
 				end
 			else
 				local name = GetAddOnInfo(addon)
@@ -755,8 +763,7 @@ end
 
 do
 	local queueLoad = {}
-	-- Kazzak, Doomwalker, Salyis's Warband, Sha of Anger, Nalak, Oondasta, Ordos
-	local warnedThisZone = {[465]=true,[473]=true,[807]=true,[809]=true,[928]=true,[929]=true,[951]=true} -- World Bosses
+	local warnedThisZone = {}
 	function mod:PLAYER_REGEN_ENABLED()
 		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		bwFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
@@ -857,7 +864,7 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and not warnedThisZone[id] and zoneAddon ~= "BigWigs_MistsOfPandaria" and not IsAddOnEnabled(zoneAddon) then -- XXX compat
+		if zoneAddon and not fakeWorldZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 			warnedThisZone[id] = true
 			local msg = L.missingAddOn:format(zoneAddon)
 			sysprint(msg)
