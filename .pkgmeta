@@ -21,12 +21,6 @@ move-folders:
     BigWigs/Core: BigWigs_Core
     BigWigs/Options: BigWigs_Options
     BigWigs/Plugins: BigWigs_Plugins
-    BigWigs/Mogushan: BigWigs_Mogushan
-    BigWigs/HeartOfFear: BigWigs_HeartOfFear
-    BigWigs/EndlessSpring: BigWigs_EndlessSpring
-    BigWigs/Pandaria: BigWigs_Pandaria
-    BigWigs/ThroneOfThunder: BigWigs_ThroneOfThunder
-    BigWigs/SiegeOfOrgrimmar: BigWigs_SiegeOfOrgrimmar
     BigWigs/Highmaul: BigWigs_Highmaul
     BigWigs/BlackrockFoundry: BigWigs_BlackrockFoundry
     BigWigs/Draenor: BigWigs_Draenor
