@@ -16,7 +16,7 @@ do
 	colorize = setmetatable({}, { __index =
 		function(self, key)
 			if not r then r, g, b = GameFontNormal:GetTextColor() end
-			self[key] = string.format("|cff%02x%02x%02x%s|r", r * 255, g * 255, b * 255, key)
+			self[key] = ("|cff%02x%02x%02x%s|r"):format(r * 255, g * 255, b * 255, key)
 			return self[key]
 		end
 	})
@@ -717,13 +717,17 @@ do
 			if type(o) == "number" then
 				if o > 0 then
 					local link = GetSpellLink(o)
-					if currentSize + #link + 1 > 255 then
-						printList(channel, header, abilities)
-						wipe(abilities)
-						currentSize = 0
+					if not link then
+						BigWigs:Print(("Failed to fetch the link for spell id %d."):format(key))
+					else
+						if currentSize + #link + 1 > 255 then
+							printList(channel, header, abilities)
+							wipe(abilities)
+							currentSize = 0
+						end
+						abilities[#abilities + 1] = link
+						currentSize = currentSize + #link + 1
 					end
-					abilities[#abilities + 1] = link
-					currentSize = currentSize + #link + 1
 				else
 					local _, _, _, _, _, _, _, _, link = EJ_GetSectionInfo(-o)
 					if currentSize + #link + 1 > 255 then
@@ -743,7 +747,7 @@ end
 local function SecondsToTime(time)
 	local m = floor(time/60)
 	local s = mod(time, 60)
-	return format("%d:%02d", m, s)
+	return ("%d:%02d"):format(m, s)
 end
 
 local function populateToggleOptions(widget, module)
