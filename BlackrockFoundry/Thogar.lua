@@ -12,6 +12,7 @@ mod.engageId = 1692
 -- Locals
 --
 
+local bombTargets = {}
 local engageTime = 0
 -- times are for when the train is about to enter the room, ~5s after the door opens
 local trainData = {
@@ -144,7 +145,7 @@ function mod:GetOptions()
 		--[[ Reinforcements ]]--
 		163753, -- Iron Bellow
 		160140, -- Cauterizing Bolt
-		{159481, "ICON", "FLASH"}, -- Delayed Siege Bomb
+		{159481, "ICON", "FLASH", "SAY"}, -- Delayed Siege Bomb
 		--"custom_off_firemender_marker",
 		--[[ General ]]--
 		{155921, "TANK"}, -- Enkindle
@@ -167,6 +168,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "IronBellow", 163753)
 	self:Log("SPELL_CAST_START", "CauterizingBolt", 160140)
 	self:Log("SPELL_AURA_APPLIED", "DelayedSiegeBomb", 159481)
+	self:Log("SPELL_AURA_REMOVED", "DelayedSiegeBombRemoved", 159481)
 	-- Mythic
 	--self:Log("SPELL_AURA_APPLIED", "ObliterationDamage", 156494)
 	--self:Log("SPELL_AURA_APPLIED_DOSE", "ObliterationDamage", 156494)
@@ -175,11 +177,12 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	wipe(bombTargets)
 	self:CDBar(155864, 6, 135592, 155864) -- Pulse Grenade, 135592 = "Grenade"
 	self:CDBar(155921, 16) -- Enkindle
 	engageTime = GetTime()
 	-- bar for each lane seemed to make the most sense
-	for i=1, 4 do
+	for i = 1, 4 do
 		self:StartTrainTimer(i, 1)
 	end
 end
@@ -268,13 +271,23 @@ function mod:CauterizingBolt(args)
 end
 
 function mod:DelayedSiegeBomb(args)
-	self:PrimaryIcon(args.spellId, args.destName)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Alarm")
+	local icon = next(bombTargets) == "PrimaryIcon" and "SecondaryIcon" or "PrimaryIcon"
+	bombTargets[args.destName] = icon
+	self[icon](self, args.spellId, args.destName)
+
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
 	if self:Me(args.destGUID) then
-		self:TargetBar(args.spellId, 6, args.destName)
 		self:Flash(args.spellId)
+		self:Say(args.spellId, 119342) -- 119342 = Bombs
 	end
-	--self:Bar(args.spellId, 12) -- until cannon train leaves
+end
+
+function mod:DelayedSiegeBombRemoved(args)
+	local icon = bombTargets[args.destName]
+	if icon then
+		self[icon](self, args.spellId)
+		bombTargets[args.destName] = nil
+	end
 end
 
 function mod:Deaths(args)

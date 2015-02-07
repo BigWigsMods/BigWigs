@@ -216,7 +216,7 @@ do
 		list[#list+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
-			self:Say(args.spellId)
+			self:Say(args.spellId, 157015) -- 157015 = Slag Bomb
 		end
 	end
 end
