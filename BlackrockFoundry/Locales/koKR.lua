@@ -16,7 +16,12 @@ end
 
 L = BigWigs:NewBossLocale("The Blast Furnace", "koKR")
 if L then
+	--L.custom_on_shieldsdown_marker = "Shields Down marker"
+	--L.custom_on_shieldsdown_marker_desc = "Mark a vulnerable Primal Elementalist with {rt8}, requires promoted or leader."
+
 	L.heat_increased_message = "열기가 증가합니다! %s초마다 폭파합니다."
+
+	--L.bombs_dropped = "Bombs dropped!"
 end
 
 L = BigWigs:NewBossLocale("Hans'gar and Franzok", "koKR")
