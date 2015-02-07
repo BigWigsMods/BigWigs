@@ -25,7 +25,7 @@ local trainData = {
 		{272, "train"},
 		{307, "cannon_train", 4},
 		{407, "train"},
-		{417, "cannon_train"},
+		{417, "cannon_train", 4},
 	},
 	[2] = {
 		{ 27, "train"},
@@ -59,7 +59,7 @@ local trainData = {
 		{252, "cannon_train", 2},
 		{307, "cannon_train", 1},
 		{387, "train"},
-		{417, "adds_train"},
+		{417, "adds_train", 1},
 		{467, "train"},
 	},
 }
@@ -200,7 +200,7 @@ local function checkLane(warnLane)
 
 	if lane == warnLane then
 		mod:PlaySound("trains", "Info")
-		mod:Flash("trains", L.trains_icon) -- XXX too much?
+		mod:Flash("trains", L.trains_icon)
 	end
 end
 
@@ -216,7 +216,7 @@ function mod:StartTrainTimer(lane, count)
 	local time, type = unpack(info)
 	local length = floor(time - (GetTime() - engageTime))
 	if type ~= "random" or lane == 1 then -- only one bar for random trains
-		if type ~= "train" then -- no messages for the fast moving trains
+		if type ~= "train" then -- no messages for the non-stop trains
 			self:DelayedMessage("trains", length-1, "Neutral", CL.incoming:format(L[type]), false) -- Incoming Adds train!
 		end
 		self:CDBar("trains", length, L.lane:format(type ~= "random" and lane or "?", L[type]), L[type.."_icon"]) -- Lane 1: Adds train

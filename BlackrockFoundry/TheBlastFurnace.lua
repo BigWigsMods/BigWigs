@@ -204,7 +204,7 @@ end
 
 function mod:ShieldsDown(args)
 	self:Message(-10325, "Positive", "Info", CL.removed:format(self:SpellName(155176))) -- Damage Shield Removed!
-	self:Bar(-10325, 30)
+	self:Bar(-10325, self:Normal() and 40 or 30)
 
 	if self.db.profile.custom_on_shieldsdown_marker then
 		for i = 1, 5 do -- i have no idea if this works
@@ -233,7 +233,7 @@ function mod:Fixate(args)
 	if self:Me(args.destGUID) then
 		self:Message(-10324, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:Flash(-10324)
-		self:Say(-10324)
+		--self:Say(-10324)
 	end
 end
 
@@ -349,6 +349,7 @@ do
 		local power = UnitPower(unit)
 		if power > 80 and power < 100 and not warned then
 			if blastTime > 10 then
+				-- XXX added this because there is an emote for it, not sure if needed since we have a bar
 				self:Message(155209, "Urgent", "Alarm", CL.soon:format(self:SpellName(155209)))
 			end
 			warned = true
@@ -360,7 +361,8 @@ do
 end
 
 function mod:Heat(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Warning")
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount and "Warning")
+	self:Bar(args.spellId, 10)
 end
 
 do
