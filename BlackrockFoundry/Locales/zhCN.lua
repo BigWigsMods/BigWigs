@@ -16,12 +16,12 @@ end
 
 L = BigWigs:NewBossLocale("The Blast Furnace", "zhCN")
 if L then
-	--L.custom_on_shieldsdown_marker = "Shields Down marker"
-	--L.custom_on_shieldsdown_marker_desc = "Mark a vulnerable Primal Elementalist with {rt8}, requires promoted or leader."
+	L.custom_on_shieldsdown_marker = "护盾消失标记"
+	--L.custom_on_shieldsdown_marker_desc = "使用 {rt8} 标记一个容易遭受伤害的元素尊者，需要权限。"
 
 	L.heat_increased_message = "高热提高！每%s秒冲击！"
 
-	--L.bombs_dropped = "Bombs dropped!"
+	L.bombs_dropped = "炸弹 掉落！"
 end
 
 L = BigWigs:NewBossLocale("Hans'gar and Franzok", "zhCN")
