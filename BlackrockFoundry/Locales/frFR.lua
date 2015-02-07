@@ -16,12 +16,12 @@ end
 
 L = BigWigs:NewBossLocale("The Blast Furnace", "frFR")
 if L then
-	--L.custom_on_shieldsdown_marker = "Shields Down marker"
-	--L.custom_on_shieldsdown_marker_desc = "Mark a vulnerable Primal Elementalist with {rt8}, requires promoted or leader."
+	L.custom_on_shieldsdown_marker = "Marquage Boucliers dissipés"
+	L.custom_on_shieldsdown_marker_desc = "Marque une Élémentariste primordiale vulnérable avec {rt8}. Nécessite d'être assistant ou chef de raid."
 
 	L.heat_increased_message = "La Chaleur augmente ! Explosion toutes les %ss"
 
-	--L.bombs_dropped = "Bombs dropped!"
+	L.bombs_dropped = "Bombes lâchées !"
 end
 
 L = BigWigs:NewBossLocale("Hans'gar and Franzok", "frFR")
@@ -43,7 +43,7 @@ end
 
 L = BigWigs:NewBossLocale("Beastlord Darmac", "frFR")
 if L then
-	--L.next_mount = "Mounting imminent !"
+	L.next_mount = "Mise en selle imminente !"
 
 	L.custom_off_pinned_marker = "Marquage Clouer au sol"
 	L.custom_off_pinned_marker_desc = "Marque les cibles de Clouer au sol avec {rt8}{rt7}{rt6}{rt5}{rt4}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement toutes les mines est le moyen le plus rapide de les marquer.|r"
