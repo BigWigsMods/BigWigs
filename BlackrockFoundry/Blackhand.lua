@@ -125,6 +125,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(157000, 12) -- Attach Slag Bombs
 		self:Bar(156096, 16) -- Marked for Death
 		self:Bar(155992, 25) -- Shattering Smash
+		self:Bar(156928, 30.5) -- Slag Eruption
 	end
 end
 
@@ -220,8 +221,8 @@ do
 	end
 end
 
-function mod:SlagEruption(args) -- 4:51 5:56
+function mod:SlagEruption(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 65)
+	self:Bar(args.spellId, 33)
 end
 
