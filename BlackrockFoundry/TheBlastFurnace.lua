@@ -31,6 +31,8 @@ if L then
 	L.custom_on_shieldsdown_marker_icon = 8
 
 	L.heat_increased_message = "Heat increased! Blast every %ss"
+
+	L.bombs_dropped = "Bombs dropped!"
 end
 L = mod:GetLocale()
 
@@ -53,6 +55,7 @@ function mod:GetOptions()
 		"custom_on_shieldsdown_marker",
 		{155173, "DISPEL"}, -- Reactive Earth Shield
 		{-10324, "SAY"}, -- Fixate (Slag Elemental)
+		176133, -- Slag Bomb (Slag Elemental)
 		155186, -- Cauterize Wounds (Firecaller)
 		{176121, "SAY", "PROXIMITY", "FLASH"}, -- Volatile Fire (Firecaller)
 		--[[ Heart of the Mountain ]]--
@@ -75,7 +78,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShieldsDown", 158345)
 	self:Log("SPELL_AURA_APPLIED", "DamageShield", 155176)
 	self:Log("SPELL_AURA_APPLIED", "ReactiveEarthShield", 155173)
-	self:Log("SPELL_AURA_APPLIED", "Fixate", 155196) -- Slag Elemental
+	-- Slag Elemental
+	self:Log("SPELL_AURA_APPLIED", "Fixate", 155196) 
+	self:Log("SPELL_CAST_START", "SlagBomb", 176133)
 	-- Furnace Engineer
 	self:Log("SPELL_CAST_START", "Repair", 155179)
 	self:Log("SPELL_AURA_APPLIED", "Bomb", 155192, 174716) -- Bomb, Cluster of Lit Bombs
@@ -99,7 +104,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "MeltDamage", 155223)
 	self:Log("SPELL_PERIODIC_MISSED", "MeltDamage", 155223)
 
-	self:Death("Deaths", 76808, 76815) -- Heat Regulator, Primal Elementalist
+	self:Death("Deaths", 76808, 76815, 88820) -- Heat Regulator, Primal Elementalist, Furnace Engineer
 end
 
 function mod:OnEngage()
@@ -199,7 +204,7 @@ end
 
 function mod:ShieldsDown(args)
 	self:Message(-10325, "Positive", "Info", CL.removed:format(self:SpellName(155176))) -- Damage Shield Removed!
-	self:Bar(-10325, 25)
+	self:Bar(-10325, 30)
 
 	if self.db.profile.custom_on_shieldsdown_marker then
 		for i = 1, 5 do -- i have no idea if this works
@@ -230,6 +235,10 @@ function mod:Fixate(args)
 		self:Flash(-10324)
 		self:Say(-10324)
 	end
+end
+
+function mod:SlagBomb(args)
+	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
 end
 
 function mod:ReactiveEarthShield(args)
@@ -368,7 +377,11 @@ end
 
 
 function mod:Deaths(args)
-	if args.mobId == 76808 then
+	if args.modId == 88820 then
+		if regulatorDeaths < 2 then -- p1: pick up bombs
+			self:Message("bombs", "Positive", "Info", L.bombs_dropped, 155192) 
+		end
+	elseif args.mobId == 76808 then
 		regulatorDeaths = regulatorDeaths + 1
 		self:Message("stages", "Neutral", "Info", CL.mob_killed:format(args.destName, regulatorDeaths, 2), false)
 		if regulatorDeaths > 1 then
