@@ -40,6 +40,7 @@ function mod:GetOptions()
 		{155326, "PROXIMITY"}, -- Petrifying Slam
 		155539, -- Destructive Rampage
 		{173192, "FLASH"}, -- Cave In
+		"berserk",
 		"bosskill"
 	}
 end
