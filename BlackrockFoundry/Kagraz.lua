@@ -16,6 +16,7 @@ mod.engageId = 1689
 local wolvesActive = nil
 local moltenTorrentOnMe = nil
 local blazingTarget = nil
+local firestormCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -94,6 +95,7 @@ end
 function mod:OnEngage()
 	wolvesActive = nil
 	moltenTorrentOnMe, blazingTarget = nil, nil
+	firestormCount = 1
 	self:Bar(155318, 11) -- Lava Slash
 	self:Bar(154938, 31) -- Molten Torrent
 	self:Bar(155776, 60) -- Summon Cinder Wolves
@@ -129,7 +131,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Message(-9352, "Attention")
 		self:Bar(-9352, self:Mythic() and 20 or 45)
 	elseif spellId == 155564 then -- Firestorm
-		self:Message(155493, "Important", "Long")
+		self:Message(155493, "Important", "Long", CL.count:format(self:SpellName(155493), firestormCount))
+		firestormCount = firestormCount + 1
 		self:Bar(155493, 14, CL.cast:format(spellName))
 
 		self:StopBar(155277) -- Blazing Radiance
@@ -194,7 +197,7 @@ function mod:CinderWolves(args)
 	wolvesActive = true
 
 	self:Bar(155277, 32) -- Blazing Radiance
-	self:Bar(155493, 62) -- Firestorm
+	self:Bar(155493, 62, CL.count:format(self:SpellName(155493), firestormCount)) -- Firestorm
 	self:DelayedMessage(155493, 55, "Neutral", CL.soon:format(self:SpellName(155493)), nil, "Info") -- Firestorm
 end
 
