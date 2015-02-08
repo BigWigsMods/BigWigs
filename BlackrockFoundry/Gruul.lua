@@ -69,7 +69,6 @@ function mod:OnEngage()
 	self:CDBar(155326, 21, L.first_ability, "ability_kilruk_reave") -- both!?
 	--self:CDBar(155301, 21) -- Overhead Smash
 	--self:CDBar(155326, 21) -- Petrifying Slam
-	self:Berserk(360)
 	self:Berserk(self:Normal() and 480 or 360) --Normal: 8min, Heroic: 6min
 end
 
