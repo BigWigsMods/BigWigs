@@ -93,7 +93,7 @@ end
 --
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 156991 or spellId == 156998 then -- Throw Slag Bombs
+	if spellId == 156991 then -- Throw Slag Bombs
 		self:Message(156030, "Attention")
 		self:Bar(156030, 25)
 	elseif spellId == 156425 then -- Demolition
