@@ -188,7 +188,7 @@ function mod:BlackironPlatingRemoved(args)
 end
 
 function mod:Fixate(args)
-	self:TargetMessage(args.spellId, "Attention", "Alert")
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Alert")
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
