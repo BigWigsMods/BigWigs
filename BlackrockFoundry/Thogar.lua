@@ -15,6 +15,38 @@ mod.engageId = 1692
 local bombTargets = {}
 local engageTime = 0
 -- times are for when the train is about to enter the room, ~5s after the door opens
+--[[
+	17 4
+	27 2
+	32 1
+	47 3
+	52 4
+	77 2
+	82 3
+	107 1
+	122 2&3
+	162 1&4
+	172 1
+	187 2
+	197 4
+	217 3
+	227 2
+	237 1
+	252 2&4
+	272 1
+	277 3
+	307 1&4
+	317 2
+	342 2
+	372 2&3
+	387 4
+	407 1
+	417 1&4
+	433 2
+	442 3
+	459 2&3
+	467 4
+]]
 local trainData = {
 	-- heroic data, covers 7:46 of the fight
 	[1] = {
@@ -33,12 +65,12 @@ local trainData = {
 		{ 77, "train"},
 		{122, "adds_train", 3},
 		{187, "train"},
-		{197, "train"},
 		{227, "train"},
 		{252, "big_add_train", 4},
 		{317, "train"},
 		{342, "train"},
 		{372, "adds_train", 3},
+		{433, "train"},
 		{457, "train"},
 		{459, "big_add_train", 3},
 	},
