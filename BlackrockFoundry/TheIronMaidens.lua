@@ -48,20 +48,26 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		--[[ Dreadnaught ]]--
 		"bombardment",
-		{158683, "FLASH"},
-		{156626,
-		"ICON", "FLASH"},
-		{164271, "ICON"},
-		158599,
-		155794,
-		{156109, "DISPEL"},
-		158315,
-		159724,
-		{158010, "FLASH"},
+		{158683, "FLASH"}, -- Corrupted Blood
+		158708, -- Earthen Barrier
+		158692, -- Deadly Throw
+		--[[ Gar'an ]]--
+		{156626, "ICON", "FLASH"}, -- Rapid Fire
+		{164271, "ICON"}, -- Penetrating Shot
+		158599, -- Deploy Turret
+		--[[ Sorka ]]--
+		155794, -- Blade Dash
+		{156109, "DISPEL"}, -- Convulsive Shadows
+		158315, -- Dark Hunt
+		--[[ Marak ]]--
+		159724, -- Blood Ritual
+		{158010, "FLASH"}, -- Heartseeker
 		"custom_off_heartseeker_marker",
-		156601,
-		159336,
+		156601, -- Sanguine Strikes
+		-- [[ General ]]--
+		159336, -- Iron Will
 		"bosskill"
 	}, {
 		["bombardment"] = -10019, -- Dreadnaught
@@ -97,6 +103,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BombardmentOmega", 157886)
 	self:Log("SPELL_PERIODIC_DAMAGE", "CorruptedBloodDamage", 158683)
 	self:Log("SPELL_PERIODIC_MISSED", "CorruptedBloodDamage", 158683)
+	self:Log("SPELL_CAST_START", "EarthenBarrier", 158708)
+	self:Log("SPELL_CAST_START", "DeadlyThrow", 158692)
 end
 
 function mod:OnEngage()
@@ -150,7 +158,7 @@ do
 		local t = GetTime()
 		if t-prev > 5 then
 			prev = t
-			self:Message(args.spellId, "Important", "Alarm")
+			self:Message(args.spellId, "Important", "Long")
 			self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1", "boss2", "boss3")
 			self:StopBar(L.ship) -- Jump to Ship
 		end
@@ -230,6 +238,25 @@ do
 			prev = t
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 			self:Flash(args.spellId)
+		end
+	end
+end
+
+function mod:EarthenBarrier(args)
+	if isOnABoat() then
+		self:Message(args.spellId, "Urgent", "Alert")
+		self:CDBar(args.spellId, 10)
+	end
+end
+
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage(158692, name, "Urgent", "Alert")
+	end
+	function mod:DeadlyThrow(args)
+		if isOnABoat() then
+			self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
+			self:Bar(args.spellId, 13)
 		end
 	end
 end
@@ -365,7 +392,7 @@ do
 end
 
 function mod:SanguineStrikes(args)
-	self:Message(args.spellId, "Important", "Warning")
+	self:Message(args.spellId, "Important")
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
