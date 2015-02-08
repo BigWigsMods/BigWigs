@@ -162,7 +162,7 @@ do
 		elseif spellId == 156546 or spellId == 156542 then -- Crippling Suplex (tank picked up)
 			self:TargetMessage(156938, UnitName(unit.."target"), "Important", (self:Tank() or self:Healer()) and "Warning" or "Alarm")
 			self:Bar(156938, 9) -- 8.7-9.5 until damage taken 
-		elseif spellId == 157922 then -- Jump Slam. 157923 might be more stable but fires mid air (still useful)
+		elseif spellId == 157923 then -- Jump Slam. -- XXX This id is midair: Test 157922 which is earlier but might be unstable.
 			self:GetBossTarget(printTarget, 0.5, UnitGUID(unit))
 		end
 	end
