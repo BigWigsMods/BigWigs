@@ -40,6 +40,7 @@ function mod:GetOptions()
 		156938, -- Crippling Suplex
 		157139, -- Shattered Vertebrae
 		{155818, "FLASH"}, -- Scorching Burns
+		{155747, "FLASH", "SAY"}, -- Body Slam
 		"stages",
 		"bosskill"
 	}, {
@@ -143,12 +144,27 @@ do
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 156220 then -- Tactical Retreat (Hans'gar jumped away)
-		self:JumpAway(unit)
-	elseif spellId == 156546 or spellId == 156542 then -- Crippling Suplex (tank picked up)
-		self:TargetMessage(156938, UnitName(unit.."target"), "Important", (self:Tank() or self:Healer()) and "Warning" or "Alarm")
-		self:Bar(156938, 9) -- 8.7-9.5 until damage taken 
+do
+	local function printTarget(self, name, guid)
+		if self:Me(guid) then
+			self:Say(155747)
+			self:Flash(155747)
+		elseif self:Range(name) < 10 then
+			self:RangeMessage(155747)
+			self:Flash(155747)
+			return
+		end
+		self:TargetMessage(155747, name, "Attention", "Alarm")
+	end
+	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+		if spellId == 156220 then -- Tactical Retreat (Hans'gar jumped away)
+			self:JumpAway(unit)
+		elseif spellId == 156546 or spellId == 156542 then -- Crippling Suplex (tank picked up)
+			self:TargetMessage(156938, UnitName(unit.."target"), "Important", (self:Tank() or self:Healer()) and "Warning" or "Alarm")
+			self:Bar(156938, 9) -- 8.7-9.5 until damage taken 
+		elseif spellId == 157922 then -- Jump Slam. 157923 might be more stable but fires mid air (still useful)
+			self:GetBossTarget(printTarget, 0.5, UnitGUID(unit))
+		end
 	end
 end
 
