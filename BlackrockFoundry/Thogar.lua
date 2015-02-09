@@ -60,6 +60,7 @@ local trainData = {
 		{407, "train"},
 		{417, "cannon_train", 4},
 		{467, "train"},
+		{497, "train"},
 	},
 	[2] = {
 		{ 27, "train"},
@@ -97,6 +98,7 @@ local trainData = {
 		{387, "train"},
 		{417, "adds_train", 1},
 		{467, "train"},
+		{497, "train"},
 	},
 }
 
