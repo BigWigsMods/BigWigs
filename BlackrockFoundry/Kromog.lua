@@ -74,7 +74,7 @@ function mod:OnEngage()
 	if self:Mythic() then
 		self:CDBar(173917, 81) -- Trembling Earth
 	end
-	self:Berserk(600)
+	self:Berserk(self:Normal() and 480 or 600)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 

@@ -125,6 +125,7 @@ function mod:OnEngage(diff)
 
 	self:Bar(154975, 8) -- Call the Pack
 	self:Bar(154960, 11) -- Pin Down
+	self:Berserk(720)
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2")
 end
