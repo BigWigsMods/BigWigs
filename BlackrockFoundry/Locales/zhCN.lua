@@ -6,7 +6,7 @@ end
 
 L = BigWigs:NewBossLocale("Oregorger", "zhCN")
 if L then
-	L.berserk_trigger = "奥尔高格" -- Oregorger has gone insane from hunger! PH
+	L.berserk_trigger = "奥尔高格饿了，他要吃更多的黑石矿石！"
 
 	L.shard_explosion = "爆裂残片爆炸"
 	L.shard_explosion_desc = "爆裂残片分散计时条，如你是近战职业希望启用爆裂残片冷却。"
@@ -21,7 +21,7 @@ if L then
 
 	L.heat_increased_message = "高热提高！每%s秒冲击！"
 
-	L.bombs_dropped = "炸弹 掉落！ (%d)"
+	L.bombs_dropped = "炸弹 掉落！(%d)"
 end
 
 L = BigWigs:NewBossLocale("Hans'gar and Franzok", "zhCN")
