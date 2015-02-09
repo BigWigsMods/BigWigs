@@ -21,7 +21,7 @@ if L then
 
 	L.heat_increased_message = "Hitze erhöht! Flammenzunge alle %s Sek."
 
-	--L.bombs_dropped = "Bombs dropped!"
+	--L.bombs_dropped = "Bombs dropped! (%d)"
 end
 
 L = BigWigs:NewBossLocale("Hans'gar and Franzok", "deDE")

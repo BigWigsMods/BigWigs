@@ -19,6 +19,7 @@ local volatileFireOnMe = nil
 local volatileFireTargets = {}
 local bombOnMe = nil
 local bombTargets = {}
+local engineerBombs = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,7 +33,7 @@ if L then
 
 	L.heat_increased_message = "Heat increased! Blast every %ss"
 
-	L.bombs_dropped = "Bombs dropped!"
+	L.bombs_dropped = "Bombs dropped! (%d)"
 end
 L = mod:GetLocale()
 
@@ -46,6 +47,7 @@ function mod:GetOptions()
 		-9650, -- Bellows Operator
 		155179, -- Repair (Furnace Engineer)
 		{155192, "SAY", "PROXIMITY", "FLASH"}, -- Bomb (Furnace Engineer)
+		174731, -- Cluster of Lit Bombs (Furnace Engineer)
 		--[[ Foreman Feldspar ]]--
 		156937, -- Pyroclasm
 		{175104, "TANK_HEALER"}, -- Melt Armor
@@ -79,7 +81,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DamageShield", 155176)
 	self:Log("SPELL_AURA_APPLIED", "ReactiveEarthShield", 155173)
 	-- Slag Elemental
-	self:Log("SPELL_AURA_APPLIED", "Fixate", 155196) 
+	self:Log("SPELL_AURA_APPLIED", "Fixate", 155196)
 	self:Log("SPELL_CAST_START", "SlagBomb", 176133)
 	-- Furnace Engineer
 	self:Log("SPELL_CAST_START", "Repair", 155179)
@@ -104,7 +106,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "MeltDamage", 155223)
 	self:Log("SPELL_PERIODIC_MISSED", "MeltDamage", 155223)
 
-	self:Death("Deaths", 76808, 76815, 88820) -- Heat Regulator, Primal Elementalist, Furnace Engineer
+	self:Death("Deaths", 76808, 76815, 88820, 76810) -- Heat Regulator, Primal Elementalist, Furnace Engineer x2
 end
 
 function mod:OnEngage()
@@ -115,6 +117,7 @@ function mod:OnEngage()
 	wipe(bombTargets)
 	volatileFireOnMe = nil
 	bombOnMe = nil
+	wipe(engineerBombs)
 
 	self:Bar(155209, blastTime) -- Blast
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
@@ -166,6 +169,8 @@ function mod:Repair(args)
 end
 
 function mod:Bomb(args)
+	engineerBombs[args.sourceGUID] = (engineerBombs[args.sourceGUID] or 5) - 1
+
 	if self:Me(args.destGUID) then
 		self:Message(155192, "Positive", "Alarm", CL.you:format(args.spellName)) -- is good thing
 		local t = 15
@@ -379,9 +384,11 @@ end
 
 
 function mod:Deaths(args)
-	if args.mobId == 88820 then
+	if args.mobId == 88820 or args.mobId == 76810 then
 		if regulatorDeaths < 2 then -- p1: pick up bombs
-			self:Message("bombs", "Positive", "Info", L.bombs_dropped, 155192) 
+			local bombs = engineerBombs[args.destGUID] or 5
+			self:Message(174731, "Positive", "Info", L.bombs_dropped:format(bombs))
+			engineerBombs[args.sourceGUID] = nil
 		end
 	elseif args.mobId == 76808 then
 		regulatorDeaths = regulatorDeaths + 1
