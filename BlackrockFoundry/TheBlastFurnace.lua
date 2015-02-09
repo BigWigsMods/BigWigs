@@ -247,7 +247,7 @@ function mod:SlagBomb(args)
 end
 
 function mod:ReactiveEarthShield(args)
-	if self:Dispeller("magic", nil, args.spellId) then
+	if self:MobId(args.destGUID) == "76815" and self:Dispeller("magic", nil, args.spellId) then
 		self:Message(args.spellId, "Urgent", "Info")
 	end
 end
