@@ -72,6 +72,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "DropTheHammer", 156040)
 	-- Ka'graz
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+	self:Log("SPELL_AURA_APPLIED", "LavaSlashDamage", 155314)
 	self:Log("SPELL_DAMAGE", "LavaSlashDamage", 155318)
 	self:Log("SPELL_MISSED", "LavaSlashDamage", 155318)
 	self:Log("SPELL_AURA_APPLIED", "MoltenTorrentApplied", 154932)
@@ -147,9 +148,9 @@ do
 	local prev = 0
 	function mod:LavaSlashDamage(args)
 		local t = GetTime()
-		if t-prev > 3 and self:Me(args.destGUID) then
+		if t-prev > 1.5 and self:Me(args.destGUID) then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(155318, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end
