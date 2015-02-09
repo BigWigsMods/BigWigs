@@ -379,7 +379,7 @@ end
 
 
 function mod:Deaths(args)
-	if args.modId == 88820 then
+	if args.mobId == 88820 then
 		if regulatorDeaths < 2 then -- p1: pick up bombs
 			self:Message("bombs", "Positive", "Info", L.bombs_dropped, 155192) 
 		end
