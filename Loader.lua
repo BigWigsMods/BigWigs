@@ -464,7 +464,7 @@ do
 	if L == "ptBR" then
 	--	delayedMessages[#delayedMessages+1] = "We *really* need help translating Big Wigs! Think you can help us? Please check out our translator website: goo.gl/nwR5cy"
 	elseif L == "zhTW" then
-		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Traditional Chinese (zhTW)? Check out our easy translator tool: goo.gl/nwR5cy"
+	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Traditional Chinese (zhTW)? Check out our easy translator tool: goo.gl/nwR5cy"
 	elseif L == "ruRU" then
 	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Russian (ruRU)? Check out our easy translator tool: goo.gl/nwR5cy"
 	elseif L == "itIT" then
