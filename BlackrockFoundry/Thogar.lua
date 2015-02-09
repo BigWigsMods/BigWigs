@@ -45,7 +45,8 @@ local engageTime = 0
 	433 2
 	442 3
 	459 2&3
-	467 4
+	467 1&4
+	487 2&3
 ]]
 local trainData = {
 	-- heroic data, covers 7:46 of the fight
@@ -59,6 +60,7 @@ local trainData = {
 		{307, "cannon_train", 4},
 		{407, "train"},
 		{417, "cannon_train", 4},
+		{467, "train"},
 	},
 	[2] = {
 		{ 27, "train"},
@@ -73,6 +75,7 @@ local trainData = {
 		{433, "train"},
 		{457, "train"},
 		{459, "big_add_train", 3},
+		{487, "adds_train", 3},
 	},
 	[3] = {
 		{ 47, "train"},
@@ -83,6 +86,7 @@ local trainData = {
 		{372, "big_add_train", 2},
 		{442, "train"},
 		{459, "big_add_train", 2},
+		{487, "adds_train", 2},
 	},
 	[4] = {
 		{ 17, "train"},
