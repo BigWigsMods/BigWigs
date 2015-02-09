@@ -12,7 +12,6 @@ mod.engageId = 1692
 -- Locals
 --
 
-local bombTargets = {}
 local engageTime = 0
 -- times are for when the train is about to enter the room, ~5s after the door opens
 --[[
@@ -181,7 +180,7 @@ function mod:GetOptions()
 		--[[ Reinforcements ]]--
 		163753, -- Iron Bellow
 		160140, -- Cauterizing Bolt
-		{159481, "ICON", "FLASH", "SAY"}, -- Delayed Siege Bomb
+		{159481, "FLASH", "SAY"}, -- Delayed Siege Bomb
 		--"custom_off_firemender_marker",
 		--[[ General ]]--
 		{155921, "TANK"}, -- Enkindle
@@ -204,7 +203,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "IronBellow", 163753)
 	self:Log("SPELL_CAST_START", "CauterizingBolt", 160140)
 	self:Log("SPELL_AURA_APPLIED", "DelayedSiegeBomb", 159481)
-	self:Log("SPELL_AURA_REMOVED", "DelayedSiegeBombRemoved", 159481)
 	-- Mythic
 	--self:Log("SPELL_AURA_APPLIED", "ObliterationDamage", 156494)
 	--self:Log("SPELL_AURA_APPLIED_DOSE", "ObliterationDamage", 156494)
@@ -213,7 +211,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	wipe(bombTargets)
 	self:CDBar(155864, 6, 135592, 155864) -- Pulse Grenade, 135592 = "Grenade"
 	self:CDBar(155921, 16) -- Enkindle
 	engageTime = GetTime()
@@ -286,7 +283,7 @@ function mod:Enkindle(args)
 end
 
 function mod:PulseGrenade(args)
-	self:Message(args.spellId, "Attention")
+	self:Message(args.spellId, "Attention", nil, 135592, args.spellId) -- 135592 = "Grenade"
 	self:CDBar(args.spellId, 16, 135592, args.spellId) -- 135592 = "Grenade"
 end
 
@@ -307,22 +304,10 @@ function mod:CauterizingBolt(args)
 end
 
 function mod:DelayedSiegeBomb(args)
-	local icon = next(bombTargets) == "PrimaryIcon" and "SecondaryIcon" or "PrimaryIcon"
-	bombTargets[args.destName] = icon
-	self[icon](self, args.spellId, args.destName)
-
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Say(args.spellId, 119342) -- 119342 = Bombs
-	end
-end
-
-function mod:DelayedSiegeBombRemoved(args)
-	local icon = bombTargets[args.destName]
-	if icon then
-		self[icon](self, args.spellId)
-		bombTargets[args.destName] = nil
 	end
 end
 
