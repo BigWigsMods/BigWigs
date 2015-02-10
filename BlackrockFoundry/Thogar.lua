@@ -308,11 +308,12 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(159481, name, "Attention", "Warning")
-		self:TargetBar(159481, 11, name) -- also serves as a cd bar
+		-- 119342 = Bombs
+		self:TargetMessage(159481, name, "Attention", "Warning", 119342, 159481)
+		self:TargetBar(159481, 11, name, 119342, 159481) -- also serves as a cd bar
 		if self:Me(guid) then
 			self:Flash(159481)
-			self:Say(159481, 119342) -- 119342 = Bombs
+			self:Say(159481, 119342)
 		end
 	end
 	function mod:DelayedSiegeBomb(args)
@@ -321,7 +322,7 @@ do
 end
 
 function mod:DelayedSiegeBombRemoved(args)
-	self:StopBar(159481, args.destName)
+	self:StopBar(119342, args.destName)
 end
 
 function mod:Deaths(args)
