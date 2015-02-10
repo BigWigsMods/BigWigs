@@ -204,7 +204,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PulseGrenadeDamage", 165195)
 	self:Log("SPELL_CAST_START", "IronBellow", 163753)
 	self:Log("SPELL_CAST_START", "CauterizingBolt", 160140)
-	self:Log("SPELL_AURA_APPLIED", "DelayedSiegeBomb", 159481)
+	self:Log("SPELL_CAST_START", "DelayedSiegeBomb", 159481)
+	self:Log("SPELL_AURA_REMOVED", "DelayedSiegeBombRemoved", 159481)
 	-- Mythic
 	--self:Log("SPELL_AURA_APPLIED", "ObliterationDamage", 156494)
 	--self:Log("SPELL_AURA_APPLIED_DOSE", "ObliterationDamage", 156494)
@@ -305,12 +306,22 @@ function mod:CauterizingBolt(args)
 	self:Message(args.spellId, "Important", "Alert")
 end
 
-function mod:DelayedSiegeBomb(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
-	if self:Me(args.destGUID) then
-		self:Flash(args.spellId)
-		self:Say(args.spellId, 119342) -- 119342 = Bombs
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage(159481, name, "Attention", "Warning")
+		self:TargetBar(159481, 11, name) -- also serves as a cd bar
+		if self:Me(guid) then
+			self:Flash(159481)
+			self:Say(159481, 119342) -- 119342 = Bombs
+		end
 	end
+	function mod:DelayedSiegeBomb(args)
+		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
+	end
+end
+
+function mod:DelayedSiegeBombRemoved(args)
+	self:StopBar(159481, args.destName)
 end
 
 function mod:Deaths(args)
