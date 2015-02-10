@@ -17,7 +17,7 @@ end
 L = BigWigs:NewBossLocale("The Blast Furnace", "zhCN")
 if L then
 	L.custom_on_shieldsdown_marker = "护盾消失标记"
-	--L.custom_on_shieldsdown_marker_desc = "使用 {rt8} 标记一个容易遭受伤害的元素尊者，需要权限。"
+	L.custom_on_shieldsdown_marker_desc = "使用 {rt8} 标记一个容易遭受伤害的元素尊者，需要权限。"
 
 	L.heat_increased_message = "高热提高！每%s秒冲击！"
 
