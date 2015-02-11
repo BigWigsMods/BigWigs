@@ -316,8 +316,20 @@ do
 			self:Say(159481, 119342)
 		end
 	end
+
+	local function scan(self, unit, elapsed)
+		local guid = UnitGUID(unit)
+		if guid then
+			printTarget(self, self:UnitName(unit), guid)
+		end
+		elapsed = elapsed + 0.05
+		if elapsed < 0.25 then self:ScheduleTimer(scan, 0.05, self, unit, elapsed) end
+	end
+
 	function mod:DelayedSiegeBomb(args)
-		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
+		--self:GetBossTarget(printTarget, 0.2, args.sourceGUID)
+		local unit = self:GetUnitIdByGUID(args.sourceGUID)
+		if unit then self:ScheduleTimer(scan, 0.05, self, unit.."target", 0) end
 	end
 end
 
