@@ -97,7 +97,7 @@ function mod:OnEngage()
 	wolvesActive = nil
 	moltenTorrentOnMe, blazingTarget = nil, nil
 	firestormCount = 1
-	self:Bar(155318, 11) -- Lava Slash
+	--self:Bar(155318, 11) -- Lava Slash
 	self:Bar(154938, 31) -- Molten Torrent
 	self:Bar(155776, 60) -- Summon Cinder Wolves
 end
@@ -127,7 +127,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 154914 then -- Lava Slash
 		self:Message(155318, "Urgent")
-		self:Bar(155318, 14.5)
+		--self:Bar(155318, 14.5)
 	elseif spellId == 163644 then -- Summon Enchanted Armaments
 		self:Message(-9352, "Attention")
 		self:Bar(-9352, self:Mythic() and 20 or 45)
@@ -136,9 +136,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		firestormCount = firestormCount + 1
 		self:Bar(155493, 14, CL.cast:format(spellName))
 
-		self:StopBar(155277) -- Blazing Radiance
+		--self:StopBar(155277) -- Blazing Radiance
 		self:Bar(-9352, 18) -- Summon Enchanted Armaments
-		self:Bar(155318, 28) -- Lava Slash
+		--self:Bar(155318, 28) -- Lava Slash
 		self:Bar(154932, 47) -- Molten Torrent
 		self:Bar(155776, 76) -- Cinder Wolves
 	end
@@ -197,7 +197,7 @@ function mod:CinderWolves(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	wolvesActive = true
 
-	self:Bar(155277, 32) -- Blazing Radiance
+	--self:Bar(155277, 32) -- Blazing Radiance
 	self:Bar(155493, 62, CL.count:format(self:SpellName(155493), firestormCount)) -- Firestorm
 	self:DelayedMessage(155493, 55, "Neutral", CL.soon:format(self:SpellName(155493)), nil, "Info") -- Firestorm
 end
@@ -233,7 +233,7 @@ function mod:Rekindle(args)
 end
 
 function mod:BlazingRadiance(args)
-	self:Bar(args.spellId, 12)
+	--self:Bar(args.spellId, 12)
 	self:PrimaryIcon(args.spellId, args.destName)
 	blazingTarget = args.destName
 	if self:Me(args.destGUID) then
