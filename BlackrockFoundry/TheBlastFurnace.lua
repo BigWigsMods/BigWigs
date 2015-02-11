@@ -65,6 +65,7 @@ function mod:GetOptions()
 		{155242, "TANK"}, -- Heat
 		{155223, "SAY", "FLASH"}, -- Melt
 		"stages",
+		"berserk",
 		"bosskill"
 	}, {
 		[-9650] = CL.adds,
@@ -121,6 +122,9 @@ function mod:OnEngage()
 
 	self:Bar(155209, blastTime) -- Blast
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
+	if not self:LFR() then 
+		self:Berserk(780) -- XXX not sure if 13min in Mythic aswell
+	end
 end
 
 function mod:OnBossDisable()

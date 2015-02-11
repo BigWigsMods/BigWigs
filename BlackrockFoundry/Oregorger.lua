@@ -101,9 +101,7 @@ function mod:AcidTorrent(args)
 end
 
 function mod:AcidMaw(args)
-	if args.amount > 2 then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Warning")
-	end
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 2 and "Warning")
 end
 
 do

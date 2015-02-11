@@ -207,7 +207,9 @@ function mod:Fixate(args)
 		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:Flash(args.spellId)
 	end
-	self:TargetBar(args.spellId, 10, args.destName)
+	if self:Healer() or self:Damager() == "RANGED" then
+		self:TargetBar(args.spellId, 10, args.destName)
+	end
 end
 
 function mod:FixateOver(args)
