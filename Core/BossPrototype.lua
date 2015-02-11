@@ -581,7 +581,7 @@ do
 	local bossTargets = {"boss1target", "boss2target", "boss3target", "boss4target", "boss5target"}
 	local UnitDetailedThreatSituation = UnitDetailedThreatSituation
 	local function bossScanner(self, func, tankCheckExpiry, guid)
-		local elapsed = self.scheduledScansCounter[func] + 0.05
+		local elapsed = self.scheduledScansCounter[guid] + 0.05
 
 		for i = 1, 5 do
 			local boss = bosses[i]
@@ -590,21 +590,32 @@ do
 				local playerGUID = UnitGUID(bossTarget)
 				if playerGUID and ((not UnitDetailedThreatSituation(bossTarget, boss) and not self:Tank(bossTarget)) or elapsed > tankCheckExpiry) then
 					local name = self:UnitName(bossTarget)
-					self:CancelTimer(self.scheduledScans[func])
+					self:CancelTimer(self.scheduledScans[guid])
 					func(self, name, playerGUID, elapsed)
+					self.scheduledScans[guid] = nil
 				end
 				break
 			end
 		end
 
-		if elapsed > 0.8 then self:CancelTimer(self.scheduledScans[func]) end
-		self.scheduledScansCounter[func] = elapsed
+		if elapsed > 0.8 then
+			self:CancelTimer(self.scheduledScans[guid])
+			self.scheduledScans[guid] = nil
+		end
+
+		self.scheduledScansCounter[guid] = elapsed
 	end
 	function boss:GetBossTarget(func, tankCheckExpiry, guid)
-		if not self.scheduledScans then self.scheduledScans = {} self.scheduledScansCounter = {} end
+		if not self.scheduledScans then
+			self.scheduledScans, self.scheduledScansCounter = {}, {}
+		end
 
-		self.scheduledScansCounter[func] = 0
-		self.scheduledScans[func] = self:ScheduleRepeatingTimer(bossScanner, 0.05, self, func, solo and 0.1 or tankCheckExpiry, guid) -- Tiny allowance when solo
+		if self.scheduledScans[guid] then
+			self:CancelTimer(self.scheduledScans[guid]) -- Should never be needed, safety
+		end
+
+		self.scheduledScansCounter[guid] = 0
+		self.scheduledScans[guid] = self:ScheduleRepeatingTimer(bossScanner, 0.05, self, func, solo and 0.1 or tankCheckExpiry, guid) -- Tiny allowance when solo
 	end
 end
 
