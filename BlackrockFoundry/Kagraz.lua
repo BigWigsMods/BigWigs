@@ -129,15 +129,15 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Message(155318, "Urgent")
 		--self:Bar(155318, 14.5)
 	elseif spellId == 163644 then -- Summon Enchanted Armaments
-		self:Message(-9352, "Attention")
-		self:Bar(-9352, self:Mythic() and 20 or 45)
+		self:Message(-9352, "Attention", nil, 175007, "inv_sword_1h_firelandsraid_d_04")
+		self:Bar(-9352, self:Mythic() and 20 or 46, 175007, "inv_sword_1h_firelandsraid_d_04")
 	elseif spellId == 155564 then -- Firestorm
 		self:Message(155493, "Important", "Long", CL.count:format(self:SpellName(155493), firestormCount))
 		firestormCount = firestormCount + 1
 		self:Bar(155493, 14, CL.cast:format(spellName))
 
 		--self:StopBar(155277) -- Blazing Radiance
-		self:Bar(-9352, 18) -- Summon Enchanted Armaments
+		self:Bar(-9352, 18, 175007, "inv_sword_1h_firelandsraid_d_04") -- Summon Enchanted Armaments
 		--self:Bar(155318, 28) -- Lava Slash
 		self:Bar(154932, 47) -- Molten Torrent
 		self:Bar(155776, 76) -- Cinder Wolves
