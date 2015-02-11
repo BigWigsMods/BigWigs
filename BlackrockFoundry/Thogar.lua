@@ -317,13 +317,14 @@ do
 		end
 	end
 
-	local function scan(self, unit, elapsed)
-		local guid = UnitGUID(unit)
+	local function scan(self, target, elapsed)
+		local guid = UnitGUID(target)
 		if guid then
-			printTarget(self, self:UnitName(unit), guid)
+			printTarget(self, self:UnitName(target), guid)
+			return
 		end
 		elapsed = elapsed + 0.05
-		if elapsed < 0.25 then self:ScheduleTimer(scan, 0.05, self, unit, elapsed) end
+		if elapsed < 0.25 then self:ScheduleTimer(scan, 0.05, self, target, elapsed) end
 	end
 
 	function mod:DelayedSiegeBomb(args)
