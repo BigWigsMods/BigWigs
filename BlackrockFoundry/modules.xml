@@ -11,6 +11,7 @@
 <Script file="Kromog.lua"/>
 <Script file="TheIronMaidens.lua"/>
 <Script file="Blackhand.lua"/>
+<Script file="Trash.lua"/>
 
 </Ui>
 
