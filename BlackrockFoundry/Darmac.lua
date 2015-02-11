@@ -87,8 +87,8 @@ function mod:OnBossEnable()
 
 	-- Stage 2
 	-- Cruelfang
-	self:Log("SPELL_AURA_APPLIED", "RendAndTear", 155061)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "RendAndTear", 155061)
+	self:Log("SPELL_AURA_APPLIED", "RendAndTear", 155061, 162283)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "RendAndTear", 155061, 162283)
 	self:Log("SPELL_CAST_START", "SavageHowl", 155198)
 	-- Dreadwing
 	self:Emote("InfernoBreath", "154989")
@@ -155,7 +155,7 @@ local function deactivateMount(mobId)
 		activatedMounts[mobId] = false
 		mod:StopBar(155247) -- Stampede
 
-		tantrumCount = 1
+		--tantrumCount = 1
 		mod:CDBar(155222, 23, CL.count:format(mod:SpellName(155222), tantrumCount)) -- Tantrum
 	elseif mobId == 76946 then -- Faultline (Mythic)
 		activatedMounts[mobId] = false
@@ -193,7 +193,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 				elseif mobId == 76945 then -- Ironcrusher
 					tantrumCount = 1
 					self:CDBar(155247, 15) -- Stampede
-					self:CDBar(155222, 30, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
+					self:CDBar(155222, 25, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
 				elseif mobId == 76946 then -- Faultline (Mythic)
 					--
 				end
@@ -232,10 +232,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 155365 then -- Pin Down
 		self:Message(154960, "Urgent", (self:Healer() or self:Damager() == "RANGED") and "Warning", CL.incoming:format(spellName))
 	elseif spellId == 155221 then -- Iron Crusher's Tantrum
+		self:StopBar(CL.count:format(spellName, tantrumCount))
 		self:Message(155222, "Attention", nil, CL.count:format(spellName, tantrumCount))
 		tantrumCount = tantrumCount + 1
-		self:CDBar(155222, 26, CL.count:format(spellName, tantrumCount))
+		self:CDBar(155222, 23, CL.count:format(spellName, tantrumCount))
 	elseif spellId == 155520 then -- Darmac's Tantrum
+		self:StopBar(CL.count:format(spellName, tantrumCount))
 		self:Message(155222, "Attention", nil, CL.count:format(spellName, tantrumCount))
 		tantrumCount = tantrumCount + 1
 		self:CDBar(155222, 23, CL.count:format(spellName, tantrumCount))
@@ -313,12 +315,12 @@ do
 	function mod:RendAndTear(args)
 		if self:Tank(args.destName) then
 			local amount = args.amount or 1
-			self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
+			self:StackMessage(155061, args.destName, amount, "Attention", amount > 2 and "Warning")
 		end
 		local t = GetTime()
 		if t-prev > 10 then -- XXX can hit multiple people at staggered times
 			prev = t
-			self:CDBar(args.spellId, 12) -- 12-16
+			self:CDBar(155061, 12) -- 12-16
 		end
 	end
 end
