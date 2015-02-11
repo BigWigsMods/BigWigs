@@ -86,10 +86,10 @@ end
 function mod:UNIT_POWER_FREQUENT(unit)
 	local power = UnitPower(unit)
 	if power < 21 then
-		if frenzyCount > 1 then
-			self:Message("berserk", "Important", nil, CL.soon:format(self:SpellName(26662)), false) -- Berserk
+		if frenzyCount > 2 then
+			self:Message("berserk", "Important", "Info", CL.soon:format(self:SpellName(26662)), false) -- Berserk soon!
 		else
-			self:Message("stages", "Neutral", nil, CL.soon:format(self:SpellName(-9968)), false) -- Feeding Frenzy
+			self:Message("stages", "Neutral", "Info", CL.soon:format(self:SpellName(-9968)), false) -- Feeding Frenzy soon!
 		end
 		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", unit)
 	end
@@ -102,7 +102,7 @@ end
 
 function mod:AcidMaw(args)
 	if args.amount % 2 == 0 then -- 6s cd, 8s duration
-		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Warning")
 	end
 end
 
