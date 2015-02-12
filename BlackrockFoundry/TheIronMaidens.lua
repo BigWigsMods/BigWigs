@@ -54,7 +54,7 @@ function mod:GetOptions()
 		158708, -- Earthen Barrier
 		158692, -- Deadly Throw
 		--[[ Gar'an ]]--
-		{156626, "ICON", "FLASH"}, -- Rapid Fire
+		{156631, "ICON", "SAY", "FLASH"}, -- Rapid Fire
 		{164271, "ICON"}, -- Penetrating Shot
 		158599, -- Deploy Turret
 		--[[ Sorka ]]--
