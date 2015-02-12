@@ -56,9 +56,8 @@ function mod:GetOptions()
 		155222, -- Tantrum
 		155247, -- Stampede
 		--[[ Faultline (Mythic) ]]--
-		155284, -- Cannonball Barrage
-		159044, -- Epicenter
-		--155321, -- Unstoppable
+		159043, -- Epicenter
+		155321, -- Unstoppable
 		--[[ General ]]--
 		{154960, "SAY"}, -- Pinned Down
 		"custom_off_pinned_marker",
@@ -101,12 +100,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Stampede", 155247)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushArmor", 155236)
 	-- Faultline
-	self:Log("SPELL_CAST_START", "CannonballBarrage", 155284)
-	--self:Log("SPELL_CAST_SUCCESS", "Epicenter", 159044, 162277)
+	self:Log("SPELL_CAST_START", "Epicenter", 159043, 159045)
 	self:Log("SPELL_PERIODIC_DAMAGE", "EpicenterDamage", 159044, 162277)
 	self:Log("SPELL_PERIODIC_MISSED", "EpicenterDamage", 159044, 162277)
-	--self:Log("SPELL_AURA_APPLIED", "Unstoppable", 155321)
-	--self:Log("SPELL_AURA_APPLIED_DOSE", "Unstoppable", 155321)
+	self:Log("SPELL_AURA_APPLIED", "Unstoppable", 155321)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Unstoppable", 155321)
 
 	-- Stage 3
 	self:Log("SPELL_DAMAGE", "ShrapnelDamage", 155499)
@@ -159,6 +157,9 @@ local function deactivateMount(mobId)
 		mod:CDBar(155222, 23, CL.count:format(mod:SpellName(155222), tantrumCount)) -- Tantrum
 	elseif mobId == 76946 then -- Faultline (Mythic)
 		activatedMounts[mobId] = false
+		mod:StopBar(159043) -- Epicenter
+
+		mod:CDBar(155321, 12) -- Unstoppable
 	end
 	if activatedMounts[76884] == false then
 		openProxitiy()
@@ -244,8 +245,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 155497 then -- Superheated Shrapnel
 		self:Message(155499, "Urgent")
 		self:CDBar(155499, 25)
-	elseif spellId == 159044 or spellId == 162277 then -- Epicenter (Faultline/Darmac)
-		self:Message(159044, "Attention")
 	end
 end
 
@@ -390,8 +389,9 @@ function mod:CrushArmor(args)
 	end
 end
 
-function mod:CannonballBarrage(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
+function mod:Epicenter(args)
+	self:Message(159043, "Urgent")
+	self:CDBar(159043, 19)
 end
 
 do
@@ -400,7 +400,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then
 			prev = t
-			self:Message(159044, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(159043, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end
