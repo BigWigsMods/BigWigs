@@ -63,7 +63,8 @@ function mod:GetOptions()
 		--[[ Heart of the Mountain ]]--
 		155209, -- Blast
 		{155242, "TANK"}, -- Heat
-		{155223, "SAY", "FLASH"}, -- Melt
+		{155225, "SAY", "FLASH"}, -- Melt
+		163776, -- Superheated
 		"stages",
 		"berserk",
 		"bosskill"
@@ -102,10 +103,10 @@ function mod:OnBossEnable()
 	-- Heart of the Mountain
 	self:Log("SPELL_AURA_APPLIED", "Heat", 155242)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Heat", 155242)
-	--self:Log("SPELL_CAST_SUCCESS", "Melt", 155225) -- 7.2-10.8
 	self:Log("SPELL_AURA_APPLIED", "Melt", 155225) -- player will spawn puddle when the debuff expires
 	self:Log("SPELL_PERIODIC_DAMAGE", "MeltDamage", 155223)
 	self:Log("SPELL_PERIODIC_MISSED", "MeltDamage", 155223)
+	self:Log("SPELL_AURA_APPLIED", "Superheated", 163776)
 
 	self:Death("Deaths", 76808, 76815, 88820, 76810) -- Heat Regulator, Primal Elementalist, Furnace Engineer x2
 end
@@ -318,7 +319,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
 			self:Flash(args.spellId)
 		end
 	end
@@ -374,15 +375,38 @@ function mod:Heat(args)
 	self:Bar(args.spellId, 10)
 end
 
+function mod:Melt(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+		self:Bar(args.spellId, 6, CL.you:format(args.spellName))
+		self:Flash(args.spellId)
+		self:Say(args.spellId)
+	end
+end
+
 do
 	local prev = 0
 	function mod:MeltDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
-			self:Flash(args.spellId)
+			self:Message(155225, "Personal", "Info", CL.underyou:format(args.spellName))
+			self:Flash(155225)
 		end
+	end
+end
+
+function mod:Superheated(args)
+	self:Message(args.spellId, "Important", "Long")
+
+	self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1")
+
+	-- adjust Blast timer
+	local newTime = 6
+	if blastTime ~= newTime then
+		blastTime = newTime
+		local t = ceil((100-UnitPower("boss1"))/(100/newTime))
+		self:Bar(155209, t) -- Blast
 	end
 end
 
@@ -392,7 +416,7 @@ function mod:Deaths(args)
 		if regulatorDeaths < 2 then -- p1: pick up bombs
 			local bombs = engineerBombs[args.destGUID] or 5
 			self:Message(174731, "Positive", "Info", L.bombs_dropped:format(bombs))
-			engineerBombs[args.sourceGUID] = nil
+			engineerBombs[args.destGUID] = nil
 		end
 	elseif args.mobId == 76808 then
 		regulatorDeaths = regulatorDeaths + 1
@@ -407,13 +431,5 @@ function mod:Deaths(args)
 		if shamanDeaths > 3 then
 			-- The Fury is free! (after the next Blast cast?)
 		end
-	end
-end
-
-function mod:Melt(args)
-	if self:Me(args.destGUID) then
-		self:Message(155223, "Personal", "Alarm", CL.you:format(args.spellName))
-		self:Flash(155223)
-		self:Say(155223)
 	end
 end
