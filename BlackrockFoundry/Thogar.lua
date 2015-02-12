@@ -48,7 +48,7 @@ local engageTime = 0
 	487 2&3
 ]]
 local trainData = {
-	-- heroic data, covers 7:46 of the fight
+	-- heroic data
 	[1] = {
 		{ 32, "adds_train"},
 		{107, "train"},
@@ -103,39 +103,88 @@ local trainData = {
 }
 
 local trainDataMythic = {
-	-- covers 3min of the fight
+	-- mythic data
 	[1] = {
-		{ 18, "deforester"},
-		{ 62, "random"},
-		{ 78, "cannon_train", 4},
-		{158, "train"},
-		{173, "random"},
-		{194, "random"},
+		{ 17, "deforester"},
+		{ 57, "random"},
+		{ 72, "random"},
+		{ 82, "cannon_train", 4},
+		{172, "train", 4},
+		{177, "deforester", 4},
+		{217, "random"},
+		{232, "random"},
+		{246, "big_add_train", 4},
+		{262, "deforester"},
+		{322, "train", 4},
+		{347, "random"},
+		{363, "random"},
+		{370, "cannon_train", 4},
+		{412, "train", 4},
+		{427, "adds_train", 4},
+		{467, "big_add_train"},
+		{477, "random"},
+		{491, "random"},
 	},
 	[2] = {
 		{ 23, "train"},
-		{ 62, "random"},
-		{ 83, "train"},
-		{113, "train"},
-		{133, "adds_train", 3},
-		{173, "random"},
-		{194, "random"},
+		{ 57, "random"},
+		{ 72, "random"},
+		{ 97, "train"},
+		{146, "adds_train", 3},
+		{199, "train", 3},
+		{217, "random"},
+		{232, "random"},
+		{267, "train", 3},
+		{288, "train", 3},
+		{302, "adds_train", 3},
+		{333, "train", 3},
+		{347, "random"},
+		{363, "random"},
+		{393, "deforester", 3},
+		{427, "train"},
+		{452, "train"},
+		{477, "random"},
+		{491, "random"},
 	},
 	[3] = {
 		{ 37, "train"},
-		{ 62, "random"},
-		{ 98, "train"},
-		{133, "adds_train", 2},
-		{173, "random"},
-		{194, "random"},
+		{ 57, "random"},
+		{ 72, "random"},
+		{ 112, "train"},
+		{146, "adds_train", 2},
+		{187, "train"},
+		{199, "train", 2},
+		{217, "random"},
+		{232, "random"},
+		{267, "train", 2},
+		{288, "train", 2},
+		{302, "big_add_train", 2},
+		{333, "train", 2},
+		{347, "random"},
+		{363, "random"},
+		{393, "deforester", 2},
+		{442, "deforester"},
+		{477, "random"},
+		{491, "random"},
 	},
 	[4] = {
 		{ 12, "big_add_train"},
-		{ 62, "random"},
-		{ 78, "cannon_train", 1},
-		{158, "train"},
-		{173, "random"},
-		{194, "random"},
+		{ 57, "random"},
+		{ 72, "random"},
+		{ 84, "cannon_train", 1},
+		{172, "train", 1},
+		{177, "deforester", 1},
+		{217, "random"},
+		{232, "random"},
+		{246, "cannon_train", 1},
+		{322, "train", 1},
+		{347, "random"},
+		{363, "random"},
+		{370, "adds_train", 1},
+		{412, "train", 1},
+		{427, "deforester", 1},
+		{477, "random"},
+		{491, "random"},
 	},
 }
 
@@ -156,19 +205,22 @@ if L then
 
 	L.lane = "Lane %s: %s"
 	L.train = "Train"
-	L.train_icon = "achievement_dungeon_blackrockdepot" -- chooo chooooo
 	L.adds_train = "Adds train"
-	L.adds_train_icon = "warrior_talent_icon_furyintheblood" -- angry orc face
 	L.big_add_train = "Big add train"
-	L.big_add_train_icon = "warrior_talent_icon_skirmisher" -- one dude standing alone
 	L.cannon_train = "Cannon train"
-	L.cannon_train_icon = "ability_vehicle_siegeenginecannon" -- cannon ball
 	L.deforester = -10329 -- Deforester
-	L.deforester_icon = "spell_shaman_lavasurge"
 	L.random = "Random trains"
-	L.random_icon = "ability_foundryraid_traindeath"
 end
 L = mod:GetLocale()
+
+local icons = { -- pull these out of the locale table
+	train = "achievement_dungeon_blackrockdepot",
+	adds_train = "warrior_talent_icon_furyintheblood", -- angry orc face
+	big_add_train = "warrior_talent_icon_skirmisher", -- one dude standing alone
+	cannon_train_icon = "ability_vehicle_siegeenginecannon",
+	deforester_icon = "spell_shaman_lavasurge",
+	random = "ability_foundryraid_traindeath",
+}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -176,21 +228,17 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		--[[ Mythic ]]--
-		--156494,
-		--164380,
 		--[[ Reinforcements ]]--
 		163753, -- Iron Bellow
 		160140, -- Cauterizing Bolt
-		{159481, "FLASH", "SAY"}, -- Delayed Siege Bomb
+		{159481, "FLASH", "SAY"}, -- Delayed Siege Bomb (Bombs)
 		--"custom_off_firemender_marker",
 		--[[ General ]]--
 		{155921, "TANK"}, -- Enkindle
-		{155864, "FLASH"}, -- Prototype Pulse Grenade
+		{155864, "FLASH"}, -- Prototype Pulse Grenade (Grenade)
 		{"trains", "FLASH"},
 		"bosskill",
 	}, {
-		--[156494] = "mythic",
 		[163753] = -9537, -- Reinforcements
 		[155921] = "general",
 	}
@@ -206,9 +254,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CauterizingBolt", 160140)
 	self:Log("SPELL_CAST_START", "DelayedSiegeBomb", 159481)
 	self:Log("SPELL_AURA_REMOVED", "DelayedSiegeBombRemoved", 159481)
-	-- Mythic
-	--self:Log("SPELL_AURA_APPLIED", "ObliterationDamage", 156494)
-	--self:Log("SPELL_AURA_APPLIED_DOSE", "ObliterationDamage", 156494)
 
 	self:Death("Deaths", 80791) -- Grom'kar Man-at-Arms
 end
@@ -220,6 +265,16 @@ function mod:OnEngage()
 	-- bar for each lane seemed to make the most sense
 	for i = 1, 4 do
 		self:StartTrainTimer(i, 1)
+	end
+	-- 15s warning on splits
+	local split = self:SpellName(143020)
+	if not self:Mythic() then
+		self:DelayedMessage("trains", 107, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15))
+		self:DelayedMessage("trains", 357, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15))
+		self:DelayedMessage("trains", 444, "Neutral", CL.custom_sec:format(CL.count:format(split, 3), 15))
+	else
+		self:DelayedMessage("trains", 131, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15))
+		self:DelayedMessage("trains", 287, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15))
 	end
 end
 
@@ -247,8 +302,7 @@ function mod:StartTrainTimer(lane, count)
 	local data = self:Mythic() and trainDataMythic or trainData
 	local info = data and data[lane][count]
 	if not info then
-		-- all out of lane data, just announce every yell
-		self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "TrainYell")
+		-- all out of lane data
 		return
 	end
 
@@ -258,16 +312,10 @@ function mod:StartTrainTimer(lane, count)
 		if type ~= "train" then -- no messages for the non-stop trains
 			self:DelayedMessage("trains", length-1, "Neutral", CL.incoming:format(L[type]), false) -- Incoming Adds train!
 		end
-		self:CDBar("trains", length, L.lane:format(type ~= "random" and lane or "?", L[type]), L[type.."_icon"]) -- Lane 1: Adds train
+		self:CDBar("trains", length, L.lane:format(type ~= "random" and lane or "?", L[type]), icons[type]) -- Lane 1: Adds train
 	end
 	self:ScheduleTimer(checkLane, length-1, lane) -- gives you ~2s to move
 	self:ScheduleTimer("StartTrainTimer", length, lane, count+1)
-end
-
-function mod:TrainYell(_, _, _, _, _, target)
-	if target == L.train then
-		self:DelayedMessage("trains", 4.5, "Neutral", CL.incoming:format(L.train), false) -- Incoming Train!
-	end
 end
 
 -- Mythic
@@ -285,9 +333,16 @@ function mod:Enkindle(args)
 	self:CDBar(args.spellId, 16)
 end
 
-function mod:PulseGrenade(args)
-	self:Message(args.spellId, "Attention", nil, 135592, args.spellId) -- 135592 = "Grenade"
-	self:CDBar(args.spellId, 16, 135592, args.spellId) -- 135592 = "Grenade"
+do
+	local prev = 0
+	function mod:PulseGrenade(args)
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:Message(args.spellId, "Attention", nil, 135592, args.spellId) -- 135592 = "Grenade"
+			self:CDBar(args.spellId, 16, 135592, args.spellId) -- 135592 = "Grenade"
+		end
+	end
 end
 
 function mod:PulseGrenadeDamage(args)
