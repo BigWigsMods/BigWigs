@@ -55,15 +55,15 @@ function mod:GetOptions()
 		158692, -- Deadly Throw
 		--[[ Gar'an ]]--
 		{156631, "ICON", "SAY", "FLASH"}, -- Rapid Fire
-		{164271, "ICON"}, -- Penetrating Shot
+		{164271, "ICON", "SAY", "FLASH"}, -- Penetrating Shot
 		158599, -- Deploy Turret
 		--[[ Sorka ]]--
 		155794, -- Blade Dash
 		{156109, "DISPEL"}, -- Convulsive Shadows
 		158315, -- Dark Hunt
 		--[[ Marak ]]--
-		159724, -- Blood Ritual
-		{158010, "FLASH"}, -- Heartseeker
+		{159724, "SAY", "FLASH"}, -- Blood Ritual
+		{158010, "SAY", "FLASH"}, -- Heartseeker
 		"custom_off_heartseeker_marker",
 		156601, -- Sanguine Strikes
 		-- [[ General ]]--
@@ -298,8 +298,15 @@ function mod:PenetratingShot(args)
 		boatTimers[args.spellId] = GetTime() + 30
 		return
 	end
-	self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
-	self:TargetBar(args.spellId, 8, args.destName)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:Flash(args.spellId)
+		self:Bar(args.spellId, self:Normal() and 8 or 6, CL.you:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+	else
+		self:TargetBar(args.spellId, self:Normal() and 8 or 6, args.destName)
+		self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
+	end
 	self:Bar(args.spellId, 30)
 end
 
@@ -354,7 +361,15 @@ function mod:BloodRitual(args)
 		boatTimers[args.spellId] = GetTime() + 20
 		return
 	end
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Alert")
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:Flash(args.spellId)
+		self:Bar(args.spellId, 5, CL.you:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Alert", CL.you:format(args.spellName))
+	else
+		self:TargetBar(args.spellId, 5, args.destName)
+		self:TargetMessage(args.spellId, args.destName, "Attention")
+	end
 	self:Bar(args.spellId, 20)
 end
 
@@ -372,6 +387,7 @@ do
 		if self:Me(args.spellId) then
 			self:TargetBar(args.spellId, 5, args.destName)
 			self:Flash(args.spellId)
+			self:Say(args.spellId)
 		end
 		if self.db.profile.custom_off_heartseeker_marker then
 			SetRaidTarget(args.destName, #targets)
