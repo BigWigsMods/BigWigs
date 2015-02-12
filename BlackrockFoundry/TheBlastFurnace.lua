@@ -56,7 +56,7 @@ function mod:GetOptions()
 		-10325, -- Shields Down
 		"custom_on_shieldsdown_marker",
 		{155173, "DISPEL"}, -- Reactive Earth Shield
-		{-10324, "SAY"}, -- Fixate (Slag Elemental)
+		-10324, -- Fixate (Slag Elemental)
 		176133, -- Slag Bomb (Slag Elemental)
 		155186, -- Cauterize Wounds (Firecaller)
 		{176121, "SAY", "PROXIMITY", "FLASH"}, -- Volatile Fire (Firecaller)
@@ -243,7 +243,6 @@ function mod:Fixate(args)
 	if self:Me(args.destGUID) then
 		self:Message(-10324, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:Flash(-10324)
-		--self:Say(-10324)
 	end
 end
 

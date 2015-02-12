@@ -217,8 +217,8 @@ local icons = { -- pull these out of the locale table
 	train = "achievement_dungeon_blackrockdepot",
 	adds_train = "warrior_talent_icon_furyintheblood", -- angry orc face
 	big_add_train = "warrior_talent_icon_skirmisher", -- one dude standing alone
-	cannon_train_icon = "ability_vehicle_siegeenginecannon",
-	deforester_icon = "spell_shaman_lavasurge",
+	cannon_train = "ability_vehicle_siegeenginecannon",
+	deforester = "spell_shaman_lavasurge",
 	random = "ability_foundryraid_traindeath",
 }
 
