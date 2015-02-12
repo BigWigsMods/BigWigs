@@ -364,6 +364,7 @@ do
 		if not isOnABoat() then
 			mod:TargetMessage(spellId, targets, "Urgent", "Alert")
 		end
+		wipe(targets)
 		scheduled = nil
 	end
 	function mod:HeartseekerApplied(args)
