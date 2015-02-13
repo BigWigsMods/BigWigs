@@ -65,7 +65,7 @@ if L then
 	L.adds_train = "火车增援"
 	L.big_add_train = "大型火车增援"
 	L.cannon_train = "火炮火车"
-	--L.deforester = "Deforester" -- /dump (EJ_GetSectionInfo(10329))
+	L.deforester = "伐林者"
 	L.random = "随机火车"
 end
 
