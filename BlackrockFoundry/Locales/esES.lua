@@ -64,6 +64,7 @@ if L then
 	L.adds_train = "Tren de adds"
 	L.big_add_train = "Tren de add grande"
 	L.cannon_train = "Tren del cañón"
+	--L.deforester = "Deforester" -- /dump (EJ_GetSectionInfo(10329))
 	L.random = "Trenes aleatorios"
 end
 

@@ -65,6 +65,7 @@ if L then
 	--L.adds_train = "Adds train"
 	--L.big_add_train = "Big add train"
 	--L.cannon_train = "Cannon train"
+	--L.deforester = "Deforester" -- /dump (EJ_GetSectionInfo(10329))
 	--L.random = "Random trains"
 end
 

@@ -65,6 +65,7 @@ if L then
 	L.adds_train = "Поезд с мобами"
 	L.big_add_train = "Большой поезд с мобами"
 	L.cannon_train = "Поезд с пушкой"
+	--L.deforester = "Deforester" -- /dump (EJ_GetSectionInfo(10329))
 	L.random = "Случайные поезда"
 end
 

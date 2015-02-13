@@ -208,7 +208,7 @@ if L then
 	L.adds_train = "Adds train"
 	L.big_add_train = "Big add train"
 	L.cannon_train = "Cannon train"
-	L.deforester = -10329 -- Deforester
+	L.deforester = "Deforester" -- /dump (EJ_GetSectionInfo(10329))
 	L.random = "Random trains"
 end
 L = mod:GetLocale()
