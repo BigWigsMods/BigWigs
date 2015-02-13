@@ -6,12 +6,12 @@ end
 
 L = BigWigs:NewBossLocale("Oregorger", "ruRU")
 if L then
-	--L.berserk_trigger = "Oregorger has gone insane from hunger!"
+	--L.berserk_trigger = "Рудожуй обезумел от голода!"
 
 	L.shard_explosion = "Подрыв Взрывчатого осколка"
 	L.shard_explosion_desc = "Отдельный увеличенный таймер для взрыва."
 
-	L.hunger_drive_power = "%dx %s - %d ore to go!"
+	L.hunger_drive_power = "%dx %s - %d руды осталось!"
 end
 
 L = BigWigs:NewBossLocale("The Blast Furnace", "ruRU")
@@ -43,7 +43,7 @@ end
 
 L = BigWigs:NewBossLocale("Beastlord Darmac", "ruRU")
 if L then
-	--L.next_mount = "Mounting soon!"
+	L.next_mount = "Скоро прыжок на зверя!"
 
 	L.custom_off_pinned_marker = "Маркировка Пригвождения к земле"
 	L.custom_off_pinned_marker_desc = "На Пригвожденных к земле будут поставлены метки {rt8}{rt7}{rt6}{rt5}{rt4}, требуется быть помощником или лидером.\n|cFFFF0000Только 1 человек в рейде должен включить эту опцию, чтобы предотвратить конфликты.|r\n|cFFADFF2FСОВЕТ: Если вы выбраны для этой задачи, быстро проведите указателем мыши по целям, метки сразу же поставятся.|r"
