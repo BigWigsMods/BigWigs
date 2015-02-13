@@ -42,7 +42,7 @@ function mod:GetOptions()
 		{155818, "FLASH"}, -- Scorching Burns
 		{155747, "FLASH", "SAY"}, -- Body Slam
 		"stages",
-		"berkserk",
+		"berserk",
 		"bosskill"
 	}, {
 		[162124] = "mythic",
