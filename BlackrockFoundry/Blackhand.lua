@@ -94,8 +94,10 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 156991 then -- Throw Slag Bombs
-		self:Message(156030, "Attention")
-		self:Bar(156030, 25)
+		if phase < 3 then
+			self:Message(156030, "Attention")
+			self:Bar(156030, 25)
+		end
 	elseif spellId == 156425 then -- Demolition
 		self:Message(spellId, "Urgent", "Alert")
 		local massiveDemolition = self:SpellName(156479) -- Massive Demolition
@@ -112,7 +114,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Message("stages", "Neutral", nil, CL.stage:format(phase), false)
 		self:Bar(156030, 12) -- Throw Slag Bombs
 		self:Bar("siegemaker", 16, L.siegemaker, L.siegemaker_icon)
-		self:Bar(155992, 25) -- Shattering Smash
+		self:Bar(155992, 23) -- Shattering Smash
 		self:Bar(156096, 26) -- Marked for Death
 
 	elseif spellId == 161348 then -- Jump To Third Floor
@@ -124,8 +126,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Message("stages", "Neutral", nil, CL.stage:format(phase), false)
 		self:Bar(157000, 12) -- Attach Slag Bombs
 		self:Bar(156096, 16) -- Marked for Death
-		self:Bar(155992, 25) -- Shattering Smash
-		self:Bar(156928, 30.5) -- Slag Eruption
+		self:Bar(155992, 26) -- Shattering Smash
+		self:Bar(156928, 31.5) -- Slag Eruption
 	end
 end
 
@@ -209,12 +211,12 @@ do
 	end
 	function mod:AttachSlagBombs(args)
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
-			self:Bar(args.spellId, 5, 157015) -- Slag Bomb
+			scheduled = self:ScheduleTimer(warn, 0.6, self, args.spellId)
 			self:Bar(args.spellId, 25)
 		end
 		list[#list+1] = args.destName
 		if self:Me(args.destGUID) then
+			self:TargetBar(args.spellId, 5, args.destName, 157015) -- Slag Bomb
 			self:Flash(args.spellId)
 			self:Say(args.spellId, 157015) -- 157015 = Slag Bomb
 		end

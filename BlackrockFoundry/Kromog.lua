@@ -65,7 +65,6 @@ end
 
 function mod:OnEngage()
 	breathCount = 3 -- only 2 casts before the first Grasping Earth
-	-- XXX all of the timers for this module are probably shit, need more logs
 	self:CDBar(156852, 9) -- Stone Breath
 	self:CDBar(156766, 14) -- Warped Armor
 	self:CDBar(157592, 23) -- Rippling Smash
