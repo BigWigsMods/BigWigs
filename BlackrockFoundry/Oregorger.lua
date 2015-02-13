@@ -14,6 +14,7 @@ mod.engageId = 1696
 
 local barrageCount = 1
 local frenzyCount = 1
+local torrentCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -72,9 +73,10 @@ end
 
 function mod:OnEngage()
 	frenzyCount = 1
+	torrentCount = 1
 	self:CDBar(156203, 6) -- Retched Blackrock
 	self:CDBar(156390, 9) -- Explosive Shard
-	self:CDBar(156240, 12) -- Acid Torrent
+	self:CDBar(156240, 12, CL.count:format(self:SpellName(156240), torrentCount)) -- Acid Torrent
 	self:CDBar(156877, 14) -- Blackrock Barrage
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
@@ -96,8 +98,9 @@ function mod:UNIT_POWER_FREQUENT(unit)
 end
 
 function mod:AcidTorrent(args)
-	self:Message(args.spellId, "Important", "Warning")
-	self:CDBar(args.spellId, 12) -- 13-17
+	self:Message(args.spellId, "Important", "Warning", CL.count:format(args.spellName, torrentCount))
+	torrentCount = torrentCount + 1
+	self:CDBar(args.spellId, 12, CL.count:format(args.spellName, torrentCount)) -- 13-17
 end
 
 function mod:AcidMaw(args)
@@ -160,7 +163,7 @@ end
 
 function mod:FeedingFrenzy(unit, spellName, _, _, spellId)
 	if spellId == 165127 then -- Hunger Drive
-		self:StopBar(156240) -- Acid Torrent
+		self:StopBar(CL.count:format(self:SpellName(156240), torrentCount)) -- Acid Torrent
 		self:StopBar(156203) -- Retched Blackrock
 		self:StopBar(156390) -- Explosive Shard
 		self:StopBar(156877) -- Blackrock Barrage
@@ -179,12 +182,13 @@ end
 function mod:HungerDriveRemoved(args)
 	self:StopBar(155898) -- Rolling Fury
 	frenzyCount = frenzyCount + 1
+	torrentCount = 1
 
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 	self:Message("stages", "Positive", "Long", CL.over:format(self:SpellName(-9968)), false) -- Feeding Frenzy
 	self:CDBar(156203, 6) -- Retched Blackrock
 	self:CDBar(156390, 9) -- Explosive Shard
-	self:CDBar(156240, 12) -- Acid Torrent
+	self:CDBar(156240, 12, CL.count:format(self:SpellName(156240), torrentCount)) -- Acid Torrent
 	self:CDBar(156877, 14) -- Blackrock Barrage
 end
 
