@@ -89,7 +89,7 @@ if L then
 	L.custom_off_markedfordeath_marker_desc = "Marque les cibles de Désigné pour mourir avec {rt1}{rt2}. Nécessite d'être assistant ou chef de raid."
 end
 
-L = BigWigs:NewBossLocale("Trash", "frFR")
+L = BigWigs:NewBossLocale("Blackrock Foundry Trash", "frFR")
 if L then
 	L.gnasher = "Grinceur sombréclat"
 	L.furnace = "Tuyau d’échappement du haut-fourneau"
