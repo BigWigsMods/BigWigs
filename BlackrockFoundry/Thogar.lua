@@ -269,12 +269,12 @@ function mod:OnEngage()
 	-- 15s warning on splits
 	local split = self:SpellName(143020)
 	if not self:Mythic() then
-		self:DelayedMessage("trains", 107, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15))
-		self:DelayedMessage("trains", 357, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15))
-		self:DelayedMessage("trains", 444, "Neutral", CL.custom_sec:format(CL.count:format(split, 3), 15))
+		self:DelayedMessage("trains", 106, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15))
+		self:DelayedMessage("trains", 356, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15))
+		self:DelayedMessage("trains", 443, "Neutral", CL.custom_sec:format(CL.count:format(split, 3), 15))
 	else
-		self:DelayedMessage("trains", 131, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15))
-		self:DelayedMessage("trains", 287, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15))
+		self:DelayedMessage("trains", 130, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15))
+		self:DelayedMessage("trains", 286, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15))
 	end
 end
 
@@ -298,6 +298,7 @@ local function checkLane(warnLane)
 	end
 end
 
+local randomCount = 0
 function mod:StartTrainTimer(lane, count)
 	local data = self:Mythic() and trainDataMythic or trainData
 	local info = data and data[lane][count]
@@ -308,14 +309,22 @@ function mod:StartTrainTimer(lane, count)
 
 	local time, type = unpack(info)
 	local length = floor(time - (GetTime() - engageTime))
-	if type ~= "random" or lane == 1 then -- only one bar for random trains
+	if type ~= "random" then
 		if type ~= "train" then -- no messages for the non-stop trains
 			self:DelayedMessage("trains", length-1, "Neutral", CL.incoming:format(L[type]), false) -- Incoming Adds train!
 		end
 		self:CDBar("trains", length, L.lane:format(type ~= "random" and lane or "?", L[type]), icons[type]) -- Lane 1: Adds train
+		self:ScheduleTimer("StartTrainTimer", length, lane, count+1)
+		self:ScheduleTimer(checkLane, length-1, lane) -- gives you ~2s to move
+	else -- random
+		if lane == 1 then -- only show one bar
+			local pad = strrep(" ", randomCount) -- hack so i can have two bars/messages for the same thing up
+			self:DelayedMessage("trains", length-5, "Neutral", CL.soon:format(L[type])..pad, false) -- Random trains soon!
+			self:CDBar("trains", length, L[type]..pad, icons[type]) -- Random trains
+			randomCount = 1 - randomCount
+		end
+		self:StartTrainTimer(lane, count+1)
 	end
-	self:ScheduleTimer(checkLane, length-1, lane) -- gives you ~2s to move
-	self:ScheduleTimer("StartTrainTimer", length, lane, count+1)
 end
 
 -- Mythic
