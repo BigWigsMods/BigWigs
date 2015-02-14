@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Gruul", "frFR")
 if not L then return end
 if L then
-
+	L.first_ability = "Frappe ou Heurt"
 end
 
 L = BigWigs:NewBossLocale("Oregorger", "frFR")
@@ -54,6 +54,9 @@ end
 
 L = BigWigs:NewBossLocale("Operator Thogar", "frFR")
 if L then
+	L.custom_off_firemender_marker = "Marquage Garde-feu grom’kar"
+	L.custom_off_firemender_marker_desc = "Marque les Gardes-feu grom’kar avec {rt1}{rt2}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement toutes les mines est le moyen le plus rapide de les marquer.|r"
+
 	L.cauterizing_bolt_message = "Votre focalisation incante Eclair cautérisant !"
 
 	L.trains = "Alertes Train"
@@ -64,7 +67,7 @@ if L then
 	--L.adds_train = "Adds train"
 	--L.big_add_train = "Big add train"
 	--L.cannon_train = "Cannon train"
-	--L.deforester = "Deforester" -- /dump (EJ_GetSectionInfo(10329))
+	L.deforester = "Abatteur d'arbres" -- /dump (EJ_GetSectionInfo(10329))
 	L.random = "Trains aléatoires"
 end
 
@@ -85,4 +88,10 @@ if L then
 	L.custom_off_markedfordeath_marker = "Marquage Désigné pour mourir"
 	L.custom_off_markedfordeath_marker_desc = "Marque les cibles de Désigné pour mourir avec {rt1}{rt2}. Nécessite d'être assistant ou chef de raid."
 end
+
+L = BigWigs:NewBossLocale("Trash", "frFR")
+if L then
+	L.gnasher = "Grinceur sombréclat"
+	L.furnace = "Tuyau d’échappement du haut-fourneau"
+	end
 
