@@ -42,7 +42,7 @@ function mod:GetOptions()
 		{155818, "FLASH"}, -- Scorching Burns
 		{155747, "FLASH", "SAY"}, -- Body Slam
 		"stages",
-		"berserk",
+		--"berserk",
 		"bosskill"
 	}, {
 		[162124] = "mythic",
@@ -71,7 +71,7 @@ function mod:OnEngage()
 	if self:Mythic() then
 		stamperWarned = nil
 		self:Bar(162124, 13) -- Smart Stampers
-		self:Berserk(360)
+		--self:Berserk(360)
 	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phases", "boss1")
