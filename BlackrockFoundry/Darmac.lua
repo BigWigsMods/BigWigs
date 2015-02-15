@@ -147,6 +147,7 @@ local function deactivateMount(mobId)
 	elseif mobId == 76874 then -- Dreadwing
 		activatedMounts[mobId] = false
 		mod:StopBar(154981) -- Conflag
+		mod:StopBar(154989)
 
 		mod:CDBar(155499, 15) -- Superheated Shrapnel
 	elseif mobId == 76945 then -- Ironcrusher
@@ -330,7 +331,8 @@ function mod:SavageHowl(args)
 end
 
 function mod:InfernoBreath()
-	self:Message(154989, "Urgent", "Alert", CL.incoming:format(self:SpellName(154989)))
+	self:Message(154989, "Urgent", "Alert", self:SpellName(154989))
+	self:CDBar(154989, 20)
 end
 
 do
