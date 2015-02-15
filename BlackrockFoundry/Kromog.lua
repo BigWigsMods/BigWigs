@@ -30,8 +30,10 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		--[[ Mythic ]]--
 		173917,
 		-9706,
+		--[[ General ]]--
 		{156766, "TANK"},
 		156852,
 		156704,
@@ -143,6 +145,7 @@ function mod:GraspingEarth(args)
 	self:StopBar(156704) -- Slam
 	self:StopBar(157592) -- Rippling Smash
 
+	self:StopBar(CL.count:format(self:SpellName(156852), breathCount))
 	breathCount = 1
 	self:CDBar(156852, 31, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
 end
