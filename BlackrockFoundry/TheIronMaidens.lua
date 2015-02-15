@@ -255,7 +255,7 @@ do
 	end
 	function mod:DeadlyThrow(args)
 		if isOnABoat() then
-			self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
+			self:GetUnitTarget(printTarget, 0.2, args.sourceGUID)
 			self:Bar(args.spellId, 13)
 		end
 	end
