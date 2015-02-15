@@ -12,7 +12,7 @@ mod.engageId = 1713
 -- Locals
 --
 
-local breathCount = 3
+local breathCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -64,12 +64,12 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	breathCount = 3 -- only 2 casts before the first Grasping Earth
-	self:CDBar(156852, 9) -- Stone Breath
+	breathCount = 1
+	self:CDBar(156852, 9, CL.count:format(args.spellName, breathCount)) -- Stone Breath
 	self:CDBar(156766, 14) -- Warped Armor
 	self:CDBar(157592, 23) -- Rippling Smash
 	self:CDBar(156704, 39) -- Slam
-	self:CDBar(157060, 54) -- Grasping Earth
+	self:CDBar(157060, 50) -- Grasping Earth
 	if self:Mythic() then
 		self:CDBar(173917, 81) -- Trembling Earth
 	end
@@ -117,11 +117,9 @@ function mod:WarpedArmor(args)
 end
 
 function mod:StoneBreath(args)
-	self:Message(args.spellId, "Urgent")
+	self:Message(args.spellId, "Urgent", nil, CL.casting:format(CL.count:format(args.spellName, breathCount)))
 	breathCount = breathCount + 1
-	if breathCount < 5 then
-		self:CDBar(args.spellId, 24)
-	end
+	self:CDBar(args.spellId, 24, CL.count:format(args.spellName, breathCount))
 end
 
 function mod:Slam(args)
@@ -141,7 +139,6 @@ function mod:GraspingEarth(args)
 	self:CDBar(args.spellId, 112) -- 112-114
 	self:CDBar(157054, 13) -- Thundering Blows
 
-	breathCount = 1
 	self:StopBar(156766) -- Warped Armor
 	self:StopBar(156704) -- Slam
 	self:StopBar(157592) -- Rippling Smash
