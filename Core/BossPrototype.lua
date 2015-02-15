@@ -475,7 +475,8 @@ do
 	}
 	local function findTargetByGUID(id)
 		local isNumber = type(id) == "number"
-		for i, unit in next, unitTable do
+		for i = 1, #unitTable do
+			local unit = unitTable[i]
 			local guid = UnitGUID(unit)
 			if guid and not UnitIsPlayer(unit) then
 				if isNumber then
@@ -487,6 +488,42 @@ do
 		end
 	end
 	function boss:GetUnitIdByGUID(id) return findTargetByGUID(id) end
+
+	local function unitScanner(self, func, tankCheckExpiry, guid)
+		local elapsed = self.scheduledScansCounter[guid] + 0.05
+
+		local unit = findTargetByGUID(guid)
+		if unit then
+			local unitTarget = unit.."target"
+			local playerGUID = UnitGUID(unitTarget)
+			if playerGUID and ((not UnitDetailedThreatSituation(unitTarget, unit) and not self:Tank(unitTarget)) or elapsed > tankCheckExpiry) then
+				local name = self:UnitName(unitTarget)
+				self:CancelTimer(self.scheduledScans[guid])
+				func(self, name, playerGUID, elapsed)
+				self.scheduledScans[guid] = nil
+			end
+		end
+
+		if elapsed > 0.8 then
+			self:CancelTimer(self.scheduledScans[guid])
+			self.scheduledScans[guid] = nil
+		end
+
+		self.scheduledScansCounter[guid] = elapsed
+	end
+
+	function boss:GetUnitTarget(func, tankCheckExpiry, guid)
+		if not self.scheduledScans then
+			self.scheduledScans, self.scheduledScansCounter = {}, {}
+		end
+
+		if self.scheduledScans[guid] then
+			self:CancelTimer(self.scheduledScans[guid]) -- Should never be needed, safety
+		end
+
+		self.scheduledScansCounter[guid] = 0
+		self.scheduledScans[guid] = self:ScheduleRepeatingTimer(unitScanner, 0.05, self, func, solo and 0.1 or tankCheckExpiry, guid) -- Tiny allowance when solo
+	end
 
 	local function scan(self)
 		for mobId, entry in next, core:GetEnableMobs() do
