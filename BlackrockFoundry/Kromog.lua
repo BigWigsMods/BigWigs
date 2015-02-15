@@ -65,7 +65,7 @@ end
 
 function mod:OnEngage()
 	breathCount = 1
-	self:CDBar(156852, 9, CL.count:format(args.spellName, breathCount)) -- Stone Breath
+	self:CDBar(156852, 9, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
 	self:CDBar(156766, 14) -- Warped Armor
 	self:CDBar(157592, 23) -- Rippling Smash
 	self:CDBar(156704, 39) -- Slam
@@ -86,7 +86,7 @@ end
 function mod:TremblingEarth(args)
 	self:Message(args.spellId, "Attention")
 	self:Bar(-9706, 26) -- Call of the Mountain
-	self:CDBar(156852, 61) -- Stone Breath
+	self:CDBar(156852, 61, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
 	self:CDBar(157592, 72) -- Rippling Smash
 end
 
@@ -143,7 +143,8 @@ function mod:GraspingEarth(args)
 	self:StopBar(156704) -- Slam
 	self:StopBar(157592) -- Rippling Smash
 
-	self:CDBar(156852, 31) -- Stone Breath
+	breathCount = 1
+	self:CDBar(156852, 31, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
 end
 
 function mod:ThunderingBlows(args)
