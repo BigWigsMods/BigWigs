@@ -43,9 +43,11 @@ local engageTime = 0
 	417 1&4
 	433 2
 	442 3
-	459 2&3
+	462 3
 	467 1&4
-	487 2&3
+	487 3
+	490 2
+	495 1
 ]]
 local trainData = {
 	-- heroic data
@@ -60,7 +62,7 @@ local trainData = {
 		{407, "train"},
 		{417, "cannon_train", 4},
 		{467, "train"},
-		{497, "train"},
+		{495, "train"},
 	},
 	[2] = {
 		{ 27, "train"},
@@ -73,9 +75,7 @@ local trainData = {
 		{342, "train"},
 		{372, "adds_train", 3},
 		{433, "train"},
-		{457, "train"},
-		{459, "big_add_train", 3},
-		{487, "adds_train", 3},
+		{490, "train"},
 	},
 	[3] = {
 		{ 47, "train"},
@@ -85,8 +85,8 @@ local trainData = {
 		{277, "train"},
 		{372, "big_add_train", 2},
 		{442, "train"},
-		{459, "big_add_train", 2},
-		{487, "adds_train", 2},
+		{462, "adds_train"},
+		{487, "train"},
 	},
 	[4] = {
 		{ 17, "train"},
@@ -98,7 +98,6 @@ local trainData = {
 		{387, "train"},
 		{417, "adds_train", 1},
 		{467, "train"},
-		{497, "train"},
 	},
 }
 
