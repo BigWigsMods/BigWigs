@@ -42,6 +42,7 @@ function mod:GetOptions()
 		"siegemaker",
 		{156653, "SAY"}, -- Fixate
 		156667, -- Blackiron Plating
+		{156728, "PROXIMITY"},
 		--[[ Stage Three: Iron Crucible ]]--
 		156928, -- Slag Eruption
 		{157000, "FLASH", "SAY"}, -- Attach Slag Bombs
@@ -116,11 +117,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar("siegemaker", 16, L.siegemaker, L.siegemaker_icon)
 		self:Bar(155992, 23) -- Shattering Smash
 		self:Bar(156096, 26) -- Marked for Death
+		self:OpenProximity(156728, 7)
 
 	elseif spellId == 161348 then -- Jump To Third Floor
 		self:StopBar(156030) -- Throw Slag Bombs
 		self:StopBar(L.siegemaker)
 		self:StopBar(156107) -- Impaling Throw
+		self:CloseProximity(156728)
 
 		phase = 3
 		self:Message("stages", "Neutral", nil, CL.stage:format(phase), false)
