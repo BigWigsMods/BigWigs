@@ -73,7 +73,7 @@ function mod:OnEngage()
 	self:CDBar(156704, 39) -- Slam
 	self:CDBar(157060, 50) -- Grasping Earth
 	if self:Mythic() then
-		self:CDBar(173917, 81) -- Trembling Earth
+		self:CDBar(173917, 82) -- Trembling Earth
 	end
 	self:Berserk(540)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
@@ -90,6 +90,7 @@ function mod:TremblingEarth(args)
 	self:Bar(-9706, 26) -- Call of the Mountain
 	self:CDBar(156852, 61, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
 	self:CDBar(157592, 72) -- Rippling Smash
+	self:CDBar(173917, 180) -- Trembling Earth
 end
 
 function mod:CallOfTheMountain(args)
@@ -146,14 +147,12 @@ function mod:GraspingEarth(args)
 	self:StopBar(157592) -- Rippling Smash
 
 	self:StopBar(CL.count:format(self:SpellName(156852), breathCount))
-	breathCount = 1
 	self:CDBar(156852, 31, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
 end
 
 function mod:ThunderingBlows(args)
 	self:Message(args.spellId, "Important", nil, CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 7, CL.cast:format(args.spellName))
-
 end
 
 function mod:Frenzy(args)
