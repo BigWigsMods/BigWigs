@@ -494,7 +494,7 @@ local function updateBlipIcons()
 		local icon = GetRaidTargetIndex(n)
 		if icon and not blip.hasIcon then
 			blip:SetTexture(format("Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d.blp", icon))
-			blip:SetDrawLayer("OVERLAY", 1)
+			blip:SetVertexColor(1,1,1) -- Remove color
 			blip.hasIcon = true
 		elseif not icon and blip.hasIcon then
 			blip.hasIcon = nil
@@ -506,7 +506,6 @@ local function updateBlipIcons()
 			else
 				blip:SetVertexColor(0.5, 0.5, 0.5) -- Gray if UnitClass returns nil
 			end
-			blip:SetDrawLayer("OVERLAY", 0)
 		end
 	end
 end
@@ -529,7 +528,6 @@ local function updateBlipColors()
 			else
 				blip:SetVertexColor(0.5, 0.5, 0.5) -- Gray if UnitClass returns nil
 			end
-			blip:SetDrawLayer("OVERLAY", 0)
 		end
 	end
 end
