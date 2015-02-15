@@ -55,7 +55,7 @@ end
 L = BigWigs:NewBossLocale("Operator Thogar", "zhCN")
 if L then
 	L.custom_off_firemender_marker = "格罗姆卡控火师标记"
-	L.custom_off_firemender_marker_desc = "使用 {rt1}{rt2} 标记格罗姆卡控火师，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r\n|cFFADFF2F提示：如果团队选择你打开此选项，鼠标快速指向是标记他们的最快方式。|r"
+	L.custom_off_firemender_marker_desc = "使用 {rt1}{rt2}{rt3}{rt4} 标记格罗姆卡控火师，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r\n|cFFADFF2F提示：如果团队选择你打开此选项，鼠标快速指向是标记他们的最快方式。|r"
 
 	L.trains = "火车警报"
 	L.trains_desc = "当下一次火车到来时显示每条车道计时器和信息。车道标记为从首领到入口顺序，如：首领 1234 入口。"
