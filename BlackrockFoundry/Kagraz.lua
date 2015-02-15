@@ -17,6 +17,7 @@ local wolvesActive = nil
 local moltenTorrentOnMe = nil
 local blazingTarget = nil
 local firestormCount = 1
+local fixateOnMe = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -95,7 +96,7 @@ end
 
 function mod:OnEngage()
 	wolvesActive = nil
-	moltenTorrentOnMe, blazingTarget = nil, nil
+	moltenTorrentOnMe, blazingTarget, fixateOnMe = nil, nil, nil
 	firestormCount = 1
 	--self:Bar(155318, 11) -- Lava Slash
 	self:Bar(154938, 31) -- Molten Torrent
@@ -202,13 +203,25 @@ function mod:CinderWolves(args)
 	self:DelayedMessage(155493, 55, "Neutral", CL.soon:format(self:SpellName(155493)), nil, "Info") -- Firestorm
 end
 
-function mod:Fixate(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
-		self:Flash(args.spellId)
+do
+	local scheduled = nil
+	local function startBar(self, spellId)
+		if not fixateOnMe and (self:Healer() or self:Damager() == "RANGED") then
+			self:Bar(spellId, 10)
+		end
+		fixateOnMe = nil
+		scheduled = nil
 	end
-	if self:Healer() or self:Damager() == "RANGED" then
-		self:TargetBar(args.spellId, 10, args.destName)
+	function mod:Fixate(args)
+		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+			self:TargetBar(args.spellId, 10, args.destName)
+			self:Flash(args.spellId)
+			fixateOnMe = true
+		end
+		if not scheduled then
+			scheduled = self:ScheduleTimer(startBar, 0.1, self, args.spellId)
+		end
 	end
 end
 
