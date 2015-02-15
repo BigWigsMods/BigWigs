@@ -112,7 +112,7 @@ do
 		if self:Me(guid) then
 			self:Say(156203)
 			self:Flash(156203)
-		elseif self:Range(name) < 10 then
+		elseif self:Range(name) < 9 then
 			self:RangeMessage(156203)
 			self:Flash(156203)
 			return

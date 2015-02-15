@@ -195,10 +195,9 @@ local trainDataMythic = {
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.custom_off_firemender_marker = "Grom'kar Firemender marker"
-	L.custom_off_firemender_marker_desc = "Marks Firemenders with {rt1}{rt2}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the mobs is the fastest way to mark them.|r"
+	L.custom_off_firemender_marker_desc = "Marks Firemenders with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the mobs is the fastest way to mark them.|r"
 	L.custom_off_firemender_marker_icon = 1
 
-	-- XXX suggest marking lanes using star, circle, diamond, triangle? could put the the charm in the bar and message to help identify
 	L.trains = "Train warnings"
 	L.trains_desc = "Shows timers and messages for each lane for when the next train is coming. Lanes are numbered from the boss to the entrace, ie, Boss 1 2 3 4 Entrance."
 	L.trains_icon = "achievement_dungeon_blackrockdepot"
@@ -324,14 +323,6 @@ function mod:StartTrainTimer(lane, count)
 			randomCount = 1 - randomCount
 		end
 		self:StartTrainTimer(lane, count+1)
-	end
-end
-
--- Mythic
-
-function mod:ObliterationDamage(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName)) -- OBLITERATION under YOU! lol
 	end
 end
 

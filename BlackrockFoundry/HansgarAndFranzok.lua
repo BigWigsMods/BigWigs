@@ -134,7 +134,7 @@ do
 				end
 			else
 				-- phase 3, Searing while Hans'gar is up, then Stamping when he jumps back down
-				self:Message("stages", "Neutral", "Info", self:SpellName(158139), false) -- Stamping Presses
+				self:Message("stages", "Neutral", "Info", CL.soon:format(self:SpellName(158139)), false) -- Stamping Presses
 			end
 		elseif self:MobId(UnitGUID(unit)) == 76974 then -- Franzok jumped away (doesn't Tactical Retreat anymore?)
 			self:Message("stages", "Neutral", "Info", phaseThreats[phase], false)
