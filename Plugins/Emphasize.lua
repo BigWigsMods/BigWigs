@@ -51,6 +51,69 @@ local voices = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\9.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\10.ogg",
 	},
+	["Heroes: Deutsch"] = {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\5.ogg",
+	},
+	["Heroes: English"] = {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\5.ogg",
+	},
+	["Heroes: Español"] = {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\5.ogg",
+	},
+	["Heroes: Français"] = {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\5.ogg",
+	},
+	["Heroes: Русский"] = {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\5.ogg",
+	},
+	["Heroes: Italiano"] = {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\5.ogg",
+	},
+	["Heroes: Português"] = {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\5.ogg",
+	},
+	["Heroes: 中国"] = {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\5.ogg",
+	},
+	["Heroes: 中國"] = {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\5.ogg",
+	},
 }
 local voiceList = {}
 for k in next, voices do voiceList[k] = k end
@@ -59,18 +122,33 @@ for k in next, voices do voiceList[k] = k end
 -- Options
 --
 
-plugin.defaultDB = {
-	upper = true,
-	countdown = true,
-	font = nil,
-	outline = "THICKOUTLINE",
-	fontSize = 32,
-	fontColor = { r = 1, g = 0, b = 0 },
-	disabled = false,
-	voice = "Amy",
-	countdownTime = 5,
-	Countdown = {},
-}
+do
+	local voiceMap = {
+		enUS = "Amy",
+		enGB = "Amy",
+		deDE = "Heroes: Deutsch",
+		esES = "Heroes: Español",
+		frFR = "Heroes: Français",
+		ruRU = "Heroes: Русский",
+		itIT = "Heroes: Italiano",
+		ptBR = "Heroes: Português",
+		zhCN = "Heroes: 中国",
+		zhTW = "Heroes: 中國",
+	}
+
+	plugin.defaultDB = {
+		upper = true,
+		countdown = true,
+		font = nil,
+		outline = "THICKOUTLINE",
+		fontSize = 32,
+		fontColor = { r = 1, g = 0, b = 0 },
+		disabled = false,
+		voice = voiceMap[GetLocale()],
+		countdownTime = 5,
+		Countdown = {},
+	}
+end
 
 local function createOptions()
 	local disabled = function() return plugin.db.profile.disabled end
@@ -269,14 +347,15 @@ function plugin:OnPluginEnable()
 end
 
 do
-	local errorMismatchedData = "The given voice data does not seem to be correct."
+	local errorBadName = ":RegisterVoice name must be a string."
+	local errorBadTable = ":RegisterVoice data must be a table with 5-10 voice entries."
 	local errorAlreadyExist = "Trying to register %q as a voice, but it already exists."
 	function plugin:RegisterVoice(name, data)
-		if type(name) ~= "string" then error(errorMismatchedData) end
-		if type(data) ~= "table" or #data < 5 then error(errorMismatchedData) end
+		if type(name) ~= "string" then error(errorBadName) end
+		if type(data) ~= "table" or #data < 5 or #data > 10 then error(errorBadTable) end
 		if voices[name] then error(errorAlreadyExist:format(name)) end
 		voices[name] = {}
-		for i = 1, 10 do voices[name][i] = data[i] end
+		for i = 1, #data do voices[name][i] = data[i] end
 		voiceList[name] = name
 	end
 end
