@@ -105,7 +105,7 @@ end
 
 function mod:CallOfTheMountainBar(args)
 	if callOfTheMountainCount < 4 then
-		self:Bar(-9706, 6.5, CL.cast:format(CL.count:format(self:SpellName(-9706), callOfTheMountainCount)))
+		self:Bar(-9706, 6.5, CL.count:format(self:SpellName(-9706), callOfTheMountainCount))
 	end
 end
 
