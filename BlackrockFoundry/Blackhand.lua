@@ -117,13 +117,17 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar("siegemaker", 16, L.siegemaker, L.siegemaker_icon)
 		self:Bar(155992, 23) -- Shattering Smash
 		self:Bar(156096, 26) -- Marked for Death
-		self:OpenProximity(156728, 7)
+		if self:Healer() or self:Damager() == "RANGED" then
+			self:OpenProximity(156728, 7)
+		end
 
 	elseif spellId == 161348 then -- Jump To Third Floor
 		self:StopBar(156030) -- Throw Slag Bombs
 		self:StopBar(L.siegemaker)
 		self:StopBar(156107) -- Impaling Throw
-		self:CloseProximity(156728)
+		if self:Healer() or self:Damager() == "RANGED" then
+			self:CloseProximity(156728)
+		end
 
 		phase = 3
 		self:Message("stages", "Neutral", nil, CL.stage:format(phase), false)
