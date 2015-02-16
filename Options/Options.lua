@@ -487,7 +487,7 @@ end
 local function getSlaveToggle(label, desc, key, module, flag, master)
 	local toggle = AceGUI:Create("CheckBox")
 	toggle:SetLabel(colorize[label])
-	if flag == C.MESSAGE or flag == C.ME_ONLY or flag == C.FLASH or flag == C.PULSE then
+	if flag == C.MESSAGE or flag == C.ME_ONLY or flag == C.FLASH or flag == C.PULSE or flag == C.EMPHASIZE or flag == C.COUNTDOWN then
 		toggle:SetRelativeWidth(0.5)
 	else
 		toggle:SetFullWidth(true)
@@ -540,7 +540,18 @@ local function advancedToggles(dbKey, module, check)
 			end
 		end
 	end
-	advancedOptions[#advancedOptions + 1] = getSlaveToggle(L.EMPHASIZE, L.EMPHASIZE_desc, dbKey, module, C.EMPHASIZE, check)
+
+	local emphasizeGroup = AceGUI:Create("InlineGroup")
+	emphasizeGroup:SetLayout("Flow")
+	emphasizeGroup:SetFullWidth(true)
+
+	local emphasize = getSlaveToggle(L.EMPHASIZE, L.EMPHASIZE_desc, dbKey, module, C.EMPHASIZE, check)
+	emphasizeGroup:AddChild(emphasize)
+
+	local countdown = getSlaveToggle(L.COUNTDOWN, L.COUNTDOWN_desc, dbKey, module, C.COUNTDOWN, check)
+	emphasizeGroup:AddChild(countdown)
+
+	advancedOptions[#advancedOptions + 1] = emphasizeGroup
 
 	return unpack(advancedOptions)
 end
@@ -560,7 +571,7 @@ local function advancedTabSelect(widget, callback, tab)
 		local group = AceGUI:Create("SimpleGroup")
 		group:SetFullWidth(true)
 		widget:AddChild(group)
-		soundModule:SetSoundOptions(module.name, key, module.toggleDefaults[key])
+		soundModule:SetSoundOptions(module.name, key, module.db.profile[key])
 		acd:Open("Big Wigs: Sounds Override", group)
 	elseif tab == "colors" then
 		local group = AceGUI:Create("SimpleGroup")

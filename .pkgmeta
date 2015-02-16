@@ -35,3 +35,5 @@ ignore:
   - Sounds/VictoryLong.wav
   - Sounds/12345_countdown_source.wav
   - Sounds/Info.mp3
+  - Sounds/David/countdown.wav
+  - Sounds/Jim/countdown.wav

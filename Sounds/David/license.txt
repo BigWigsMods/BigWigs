@@ -1,0 +1,4 @@
+License: http://creativecommons.org/publicdomain/zero/1.0/
+Author: davidbain
+Source: http://www.freesound.org/people/davidbain/sounds/259705/
+Modifications: Sound cut into separate sound files, converted to Ogg format

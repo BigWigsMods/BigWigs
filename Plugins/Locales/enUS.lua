@@ -143,11 +143,13 @@ L.superEmphasize = "Super Emphasize"
 L.superEmphasizeDesc = "Boosts related messages or bars of a specific boss encounter ability.\n\nHere you configure exactly what should happen when you toggle on the Super Emphasize option in the advanced section for a boss encounter ability.\n\n|cffff4411Note that Super Emphasize is off by default for all abilities.|r\n"
 L.uppercase = "UPPERCASE"
 L.uppercaseDesc = "Uppercases all messages related to a super emphasized option."
-L.doubleSize = "Double size"
-L.doubleSizeDesc = "Doubles the size of super emphasized bars and messages."
-L.countdown = "Countdown"
-L.countdownDesc = "If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."
 L.superEmphasizeDisableDesc = "Disable Super Emphasize for all modules that use it."
+L.textCountdown = "Text countdown"
+L.textCountdownDesc = "Show a visual counter during a count down."
+L.countdownColor = "Countdown color"
+L.countdownVoice = "Countdown voice"
+L.countdownTest = "Test countdown"
+L.countdownAt = "Countdown at... (seconds)"
 
 -----------------------------------------------------------------------
 -- Messages.lua

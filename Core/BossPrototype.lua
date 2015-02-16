@@ -1101,8 +1101,8 @@ function boss:Bar(key, length, text, icon)
 	if checkFlag(self, key, C.BAR) then
 		self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key])
 	end
-	if checkFlag(self, key, C.EMPHASIZE) then
-		self:SendMessage("BigWigs_StartEmphasize", self, textType == "string" and text or spells[text or key], length)
+	if checkFlag(self, key, C.COUNTDOWN) then
+		self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
 	end
 end
 
@@ -1111,8 +1111,8 @@ function boss:CDBar(key, length, text, icon)
 	if checkFlag(self, key, C.BAR) then
 		self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key], true)
 	end
-	if checkFlag(self, key, C.EMPHASIZE) then
-		self:SendMessage("BigWigs_StartEmphasize", self, textType == "string" and text or spells[text or key], length)
+	if checkFlag(self, key, C.COUNTDOWN) then
+		self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
 	end
 end
 
@@ -1127,8 +1127,8 @@ function boss:TargetBar(key, length, player, text, icon)
 		if checkFlag(self, key, C.BAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
 		end
-		if checkFlag(self, key, C.EMPHASIZE) then
-			self:SendMessage("BigWigs_StartEmphasize", self, msg, length)
+		if checkFlag(self, key, C.COUNTDOWN) then
+			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
 		end
 	elseif not checkFlag(self, key, C.ME_ONLY) and checkFlag(self, key, C.BAR) then
 		self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], gsub(player, "%-.+", "*")), length, icons[icon or textType == "number" and text or key])
@@ -1159,10 +1159,10 @@ end
 function boss:ResumeBar(key, text)
 	local msg = text or spells[key]
 	self:SendMessage("BigWigs_ResumeBar", self, msg)
-	if checkFlag(self, key, C.EMPHASIZE) then
+	if checkFlag(self, key, C.COUNTDOWN) then
 		local length = self:BarTimeLeft(msg)
 		if length > 0 then
-			self:SendMessage("BigWigs_StartEmphasize", self, msg, length)
+			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
 		end
 	end
 end

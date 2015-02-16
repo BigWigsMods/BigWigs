@@ -1,0 +1,4 @@
+License: http://creativecommons.org/publicdomain/zero/1.0/
+Author: tekgnosis
+Source: http://www.freesound.org/people/tekgnosis/sounds/151268/
+Modifications: Sound cut into separate sound files, converted to Ogg format
