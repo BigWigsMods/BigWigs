@@ -31,17 +31,17 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Mythic ]]--
-		173917,
-		-9706,
+		173917, -- Rune of Trembling Earth
+		-9706, -- Call of the Mountain
 		--[[ General ]]--
-		{156766, "TANK"},
-		156852,
-		156704,
-		157592,
-		-9702,
-		157060,
-		157054,
-		156861,
+		{156766, "TANK"}, -- Warped Armor
+		156852, -- Stone Breath
+		156704, -- Slam
+		157592, -- Rippling Smash
+		-9702, -- Rune of Crushing Earth
+		157060, -- Rune of Grasping Earth
+		157054, -- Thundering Blows
+		156861, -- Frenzy
 		"berserk",
 		"bosskill"
 	}, {
@@ -146,7 +146,6 @@ function mod:GraspingEarth(args)
 	self:StopBar(156704) -- Slam
 	self:StopBar(157592) -- Rippling Smash
 
-	self:StopBar(CL.count:format(self:SpellName(156852), breathCount))
 	self:CDBar(156852, 31, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
 end
 
