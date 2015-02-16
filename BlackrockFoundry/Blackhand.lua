@@ -13,6 +13,7 @@ mod.engageId = 1704
 --
 
 local phase = 1
+local massiveSmashProximity = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -26,6 +27,10 @@ if L then
 	L.custom_off_markedfordeath_marker = "Marked for Death marker"
 	L.custom_off_markedfordeath_marker_desc = "Mark Marked for Death targets with {rt1}{rt2}, requires promoted or leader."
 	L.custom_off_markedfordeath_marker_icon = 1
+	
+	L.custom_off_massivesmash_marker = "Massive Shattering Smash marker"
+	L.custom_off_massivesmash_marker_desc = "Mark the tank getting hit with Massive Shattering Smash with {rt6}, requires promoted or leader."
+	L.custom_off_massivesmash_marker_icon = 6
 end
 L = mod:GetLocale()
 
@@ -42,10 +47,12 @@ function mod:GetOptions()
 		"siegemaker",
 		{156653, "SAY"}, -- Fixate
 		156667, -- Blackiron Plating
-		{156728, "PROXIMITY"},
+		{156728, "PROXIMITY"}, -- Explosive Round
 		--[[ Stage Three: Iron Crucible ]]--
 		156928, -- Slag Eruption
 		{157000, "FLASH", "SAY"}, -- Attach Slag Bombs
+		{158054, "PROXIMITY"}, -- Massive Shattering Smash
+		"custom_off_massivesmash_marker",
 		--[[ General ]]--
 		155992, -- Shattering Smash
 		{156096, "FLASH"}, -- Marked for Death
@@ -79,10 +86,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SlagEruption", 156928)
 	self:Log("SPELL_CAST_START", "MassiveShatteringSmash", 158054)
 	self:Log("SPELL_AURA_APPLIED", "AttachSlagBombs", 157000)
+	self:Log("SPELL_ENERGIZE", "SmashReschedule", 104915)
 end
 
 function mod:OnEngage()
 	phase = 1
+	massiveSmashProximity = nil
 	self:Bar(156030, 6) -- Throw Slag Bombs
 	self:Bar(156425, 15.5) -- Demolition
 	self:CDBar(155992, 21) -- Shattering Smash
@@ -118,7 +127,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(155992, 23) -- Shattering Smash
 		self:Bar(156096, 26) -- Marked for Death
 		if self:Healer() or self:Damager() == "RANGED" then
-			self:OpenProximity(156728, 7)
+			self:OpenProximity(156728, 7) -- Explosive Round
 		end
 
 	elseif spellId == 161348 then -- Jump To Third Floor
@@ -126,14 +135,15 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(L.siegemaker)
 		self:StopBar(156107) -- Impaling Throw
 		if self:Healer() or self:Damager() == "RANGED" then
-			self:CloseProximity(156728)
+			self:CloseProximity(156728) -- Explosive Round
 		end
 
 		phase = 3
 		self:Message("stages", "Neutral", nil, CL.stage:format(phase), false)
 		self:Bar(157000, 12) -- Attach Slag Bombs
 		self:Bar(156096, 16) -- Marked for Death
-		self:Bar(155992, 26) -- Shattering Smash
+		self:Bar(158054, 26) -- Massive Shattering Smash
+		self:ScheduleTimer(OpenSmashProximity, 23)
 		self:Bar(156928, 31.5) -- Slag Eruption
 	end
 end
@@ -205,9 +215,47 @@ end
 
 -- Stage 3
 
-function mod:MassiveShatteringSmash(args)
-	self:Message(155992, "Urgent", "Warning")
-	self:CDBar(155992, 25)
+do
+	local scheduled, oldIcon, tankName = nil, nil, nil
+	local function OpenSmashProximity()
+		if not massiveSmashProximity then
+			if self.db.profile.custom_off_massivesmash_marker then
+				tankName = UnitName("boss1target")
+				oldIcon = GetRaidTargetIndex(tankName)
+				SetRaidTarget(tankName, 6)
+			end
+
+			self:OpenProximity(158054, 6, tankName, true)
+			massiveSmashProximity = true
+			self:ScheduleTimer(CloseSmashProximity, 5)
+		end
+	end
+
+	local function CloseSmashProximity()
+		if self.db.profile.custom_off_massivesmash_marker then
+			SetRaidTarget(tankName, oldIcon or 0)
+			tankName = nil
+			oldIcon = nil
+		end
+
+		self:CloseProximity(158054)
+		massiveSmashProximity = nil
+	end
+
+	function mod:SmashReschedule(args)
+		if scheduled then
+			self:CancelTimer(scheduled)
+		end
+		local nextSmash = (100-UnitPower("boss1"))/4
+		scheduled = self:ScheduleTimer(OpenSmashProximity, nextSmash-3)
+		self:CDBar(158054, nextSmash)
+	end
+
+	function mod:MassiveShatteringSmash(args)
+		self:Message(args.spellId, "Urgent", "Warning")
+		self:CDBar(args.spellId, 25)
+		scheduled = self:ScheduleTimer(OpenSmashProximity, 22) -- 3 sec before + 2 sec cast should be enough
+	end
 end
 
 do
