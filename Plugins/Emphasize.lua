@@ -124,10 +124,9 @@ for k in next, voices do voiceList[k] = k end
 
 do
 	local voiceMap = {
-		enUS = "Amy",
-		enGB = "Amy",
 		deDE = "Heroes: Deutsch",
 		esES = "Heroes: Español",
+		esMX = "Heroes: Español",
 		frFR = "Heroes: Français",
 		ruRU = "Heroes: Русский",
 		itIT = "Heroes: Italiano",
@@ -144,7 +143,7 @@ do
 		fontSize = 32,
 		fontColor = { r = 1, g = 0, b = 0 },
 		disabled = false,
-		voice = voiceMap[GetLocale()],
+		voice = voiceMap[GetLocale()] or "Amy",
 		countdownTime = 5,
 		Countdown = {},
 	}
@@ -341,6 +340,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StartEmphasize")
 	self:RegisterMessage("BigWigs_StopEmphasize")
 	self:RegisterMessage("BigWigs_TempSuperEmphasize")
+	self:RegisterMessage("BigWigs_PlayCountdownNumber")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
 	createOptions()
@@ -421,5 +421,13 @@ function plugin:BigWigs_TempSuperEmphasize(_, module, key, text, time)
 	if not module or not key or text == "" then return end
 	temporaryEmphasizes[key] = GetTime() + time
 	self:BigWigs_StartEmphasize(nil, module, key, text, time)
+end
+
+function plugin:BigWigs_PlayCountdownNumber(_, module, num)
+	local voice = self.db.profile.voice
+	local sound = voices[voice] and voices[voice][num]
+	if sound then
+		PlaySoundFile(sound, "Master")
+	end
 end
 

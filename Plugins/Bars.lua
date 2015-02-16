@@ -1592,7 +1592,7 @@ do
 		elseif timeLeft < 11 then
 			plugin:SendMessage("BigWigs_Message", plugin, nil, L.pullIn:format(timeLeft), "Attention")
 			if timeLeft < 6 and BigWigs.db.profile.sound then
-				PlaySoundFile(("Interface\\AddOns\\BigWigs\\Sounds\\Amy\\%d.ogg"):format(timeLeft), "Master")
+				plugin:SendMessage("BigWigs_PlayCountdownNumber", plugin, timeLeft)
 			end
 		end
 	end
