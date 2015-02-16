@@ -14,6 +14,7 @@ mod.engageId = 1704
 
 local phase = 1
 local massiveSmashProximity = nil
+local oldIcon, tankName = nil, nil -- Massive Shattering Smash marker
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -87,6 +88,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "MassiveShatteringSmash", 158054)
 	self:Log("SPELL_AURA_APPLIED", "AttachSlagBombs", 157000)
 	self:Log("SPELL_ENERGIZE", "SmashReschedule", 104915)
+end
+
+function mod:OnBossDisable()
+	if self.db.profile.custom_off_massivesmash_marker then
+		SetRaidTarget(tankName, oldIcon or 0)
+		tankName = nil
+		oldIcon = nil
+	end
 end
 
 function mod:OnEngage()
@@ -216,7 +225,7 @@ end
 -- Stage 3
 
 do
-	local scheduled, oldIcon, tankName = nil, nil, nil
+	local scheduled = nil
 	local function OpenSmashProximity()
 		if not massiveSmashProximity then
 			if self.db.profile.custom_off_massivesmash_marker then

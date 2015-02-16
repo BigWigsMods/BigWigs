@@ -85,5 +85,8 @@ L = BigWigs:NewBossLocale("Blackhand", "ruRU")
 if L then
 	L.custom_off_markedfordeath_marker = "Маркировка Метки смерти"
 	L.custom_off_markedfordeath_marker_desc = "Отмечать людей с Меткой смерти {rt1}{rt2}, требуется быть помощником или лидером."
+
+	--L.custom_off_massivesmash_marker = "Massive Shattering Smash marker"
+	--L.custom_off_massivesmash_marker_desc = "Mark the tank getting hit with Massive Shattering Smash with {rt6}, requires promoted or leader."
 end
 

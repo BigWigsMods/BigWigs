@@ -84,5 +84,8 @@ L = BigWigs:NewBossLocale("Blackhand", "deDE")
 if L then
 	L.custom_off_markedfordeath_marker = "Todesurteil markieren"
 	L.custom_off_markedfordeath_marker_desc = "Markiert die Ziele von Todesurteil mit {rt1}{rt2}, benötigt Leiter oder Assistent."
+
+	--L.custom_off_massivesmash_marker = "Massive Shattering Smash marker"
+	--L.custom_off_massivesmash_marker_desc = "Mark the tank getting hit with Massive Shattering Smash with {rt6}, requires promoted or leader."
 end
 

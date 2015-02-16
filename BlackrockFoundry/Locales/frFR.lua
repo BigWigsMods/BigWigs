@@ -87,6 +87,9 @@ L = BigWigs:NewBossLocale("Blackhand", "frFR")
 if L then
 	L.custom_off_markedfordeath_marker = "Marquage Désigné pour mourir"
 	L.custom_off_markedfordeath_marker_desc = "Marque les cibles de Désigné pour mourir avec {rt1}{rt2}. Nécessite d'être assistant ou chef de raid."
+
+	--L.custom_off_massivesmash_marker = "Massive Shattering Smash marker"
+	--L.custom_off_massivesmash_marker_desc = "Mark the tank getting hit with Massive Shattering Smash with {rt6}, requires promoted or leader."
 end
 
 L = BigWigs:NewBossLocale("Blackrock Foundry Trash", "frFR")
