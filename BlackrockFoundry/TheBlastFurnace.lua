@@ -76,6 +76,13 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable()
+	local _, x = UnitPosition("player")
+	if x > 3475 then
+		return true
+	end
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Loading", 155181) -- Bellows Operator
 	-- Primal Elementalist
