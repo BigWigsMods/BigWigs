@@ -16,16 +16,16 @@ plugin.displayName = L.superEmphasize
 local temporaryEmphasizes = {}
 local voices = {
 	["Amy"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\5.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\6.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\7.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\8.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\9.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\10.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\5.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\6.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\7.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\8.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\9.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\10.ogg",
 	},
 	["David"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\David\\1.ogg",
