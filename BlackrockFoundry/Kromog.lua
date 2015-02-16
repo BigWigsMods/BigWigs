@@ -69,8 +69,8 @@ function mod:OnEngage()
 	breathCount = 1
 	self:CDBar(156852, 9, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
 	self:CDBar(156766, 14) -- Warped Armor
-	self:CDBar(157592, 23) -- Rippling Smash
-	self:CDBar(156704, 39) -- Slam
+	--self:CDBar(157592, 23) -- Rippling Smash -- Varies between 23 and 38 seconds...
+	--self:CDBar(156704, 17) -- Slam -- Varies between 15 and 30 seconds...
 	self:CDBar(157060, 50) -- Grasping Earth
 	if self:Mythic() then
 		self:CDBar(173917, 82) -- Trembling Earth
