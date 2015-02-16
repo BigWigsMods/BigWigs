@@ -13,6 +13,7 @@ mod.engageId = 1713
 --
 
 local breathCount = 1
+local callOfTheMountainCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -63,10 +64,12 @@ function mod:OnBossEnable()
 	-- Mythic
 	self:Log("SPELL_CAST_SUCCESS", "TremblingEarth", 173917)
 	self:Log("SPELL_CAST_START", "CallOfTheMountain", 158217)
+	self:Log("SPELL_CAST_SUCCESS", "CallOfTheMountainBar", 158217)
 end
 
 function mod:OnEngage()
 	breathCount = 1
+	callOfTheMountainCount = 1
 	self:CDBar(156852, 9, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
 	self:CDBar(156766, 14) -- Warped Armor
 	--self:CDBar(157592, 23) -- Rippling Smash -- Varies between 23 and 38 seconds...
@@ -86,15 +89,24 @@ end
 -- Mythic
 
 function mod:TremblingEarth(args)
+	callOfTheMountainCount = 1
 	self:Message(args.spellId, "Attention")
-	self:Bar(-9706, 26) -- Call of the Mountain
 	self:CDBar(156852, 61, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
 	self:CDBar(157592, 72) -- Rippling Smash
 	self:CDBar(173917, 180) -- Trembling Earth
+	self:Bar(173917, 25, CL.cast:format(self:SpellName(173917)))
 end
 
 function mod:CallOfTheMountain(args)
-	self:Message(-9706, "Important")
+	self:Message(-9706, "Important", nil, CL.casting:format(CL.count:format(self:SpellName(-9706), callOfTheMountainCount)))
+	self:Bar(-9706, 5, CL.cast:format(CL.count:format(self:SpellName(-9706), callOfTheMountainCount)))
+	callOfTheMountainCount = callOfTheMountainCount + 1
+end
+
+function mod:CallOfTheMountainBar(args)
+	if callOfTheMountainCount < 4 then
+		self:Bar(-9706, 6.5, CL.cast:format(CL.count:format(self:SpellName(-9706), callOfTheMountainCount)))
+	end
 end
 
 -- General
