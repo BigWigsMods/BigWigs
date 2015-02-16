@@ -28,10 +28,12 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.ship_trigger = "prepares to man the Dreadnaught's Main Cannon!"
 
-	L.ship = "Jump to Ship" -- 137266 = Jump to Ship, but doesn't seem to be translated
+	L.ship = "Jump to Ship"
+	L.ship_desc = -10019 -- The Dreadnaught
+	L.ship_icon = "ability_vehicle_siegeenginecannon"
 
 	L.bombardment = 147135 -- Bombardment
-	L.bombardment_desc = -10019 -- The Dreadnaught
+	L.bombardment_desc = -10854 -- Bombardment Pattern
 	L.bombardment_icon = "ability_ironmaidens_bombardment"
 
 	L.custom_off_heartseeker_marker = "Bloodsoaked Heartseeker marker"
@@ -49,6 +51,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Dreadnaught ]]--
+		"ship",
 		"bombardment",
 		{158683, "FLASH"}, -- Corrupted Blood
 		158708, -- Earthen Barrier
@@ -70,8 +73,8 @@ function mod:GetOptions()
 		159336, -- Iron Will
 		"bosskill"
 	}, {
-		["bombardment"] = -10019, -- Dreadnaught
-		[156626] = -10025, -- Gar'an
+		["ship"] = -10019, -- Dreadnaught
+		[156631] = -10025, -- Gar'an
 		[155794] = -10030, -- Sorka
 		[159724] = -10033, -- Marak
 		[159336] = "general"
@@ -115,7 +118,7 @@ function mod:OnEngage()
 	self:Bar(158078, 5) -- Blood Ritual
 	self:Bar(155794, 11) -- Blade Dash
 	self:Bar(156626, 19) -- Rapid Fire
-	self:Bar("bombardment", 60, L.ship, "ability_vehicle_siegeenginecannon") -- Jump to Ship
+	self:Bar("ship", 60, L.ship, L.ship_icon) -- Jump to Ship
 end
 
 --------------------------------------------------------------------------------
@@ -194,10 +197,10 @@ end
 -- XXX 6.1
 function mod:ShipPhase(args)
 	shipCount = shipCount + 1
-	self:Message("bombardment", "Neutral", "Info", CL.other:format(L.ship, args.sourceName), false)
+	self:Message("ship", "Neutral", "Info", CL.other:format(L.ship, args.sourceName), false)
 	stopBars(self:MobId(args.sourceGUID))
 	if shipCount < 3 then
-		self:Bar("bombardment", 198, L.ship, "ability_vehicle_siegeenginecannon")
+		self:Bar("ship", 198, L.ship, L.ship_icon)
 	end
 	self:ScheduleTimer(checkBoat, 6)
 end
@@ -205,7 +208,7 @@ end
 
 function mod:ShipPhase(msg, sender)
 	shipCount = shipCount + 1
-	self:Message("bombardment", "Neutral", "Info", CL.other:format(L.ship, sender), false)
+	self:Message("ship", "Neutral", "Info", CL.other:format(L.ship, sender), false)
 	if sender == self:SpellName(-10025) then -- Gar'an
 		stopBars(77557)
 	elseif sender == self:SpellName(-10030) then -- Sorka
@@ -214,7 +217,7 @@ function mod:ShipPhase(msg, sender)
 		stopBars(77477)
 	end
 	if shipCount < 3 then
-		self:Bar("bombardment", 198, L.ship, "ability_vehicle_siegeenginecannon")
+		self:Bar("ship", 198, L.ship, L.ship_icon)
 	end
 	self:ScheduleTimer(checkBoat, 6)
 end
@@ -234,7 +237,7 @@ do
 	local prev = 0
 	function mod:CorruptedBloodDamage(args)
 		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 2 then
+		if self:Me(args.destGUID) and t-prev > 1 then
 			prev = t
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 			self:Flash(args.spellId)
@@ -251,7 +254,7 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(158692, name, "Urgent", "Alert")
+		self:TargetMessage(158692, name, "Urgent", "Alert", nil, nil, self:Tank())
 	end
 	function mod:DeadlyThrow(args)
 		if isOnABoat() then
@@ -361,16 +364,13 @@ function mod:BloodRitual(args)
 		boatTimers[args.spellId] = GetTime() + 20
 		return
 	end
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:Flash(args.spellId)
-		self:Bar(args.spellId, 5, CL.you:format(args.spellName))
-		self:Message(args.spellId, "Personal", "Alert", CL.you:format(args.spellName))
-	else
-		self:TargetBar(args.spellId, 5, args.destName)
-		self:TargetMessage(args.spellId, args.destName, "Attention")
-	end
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Alert", nil, nil, self:Tank())
 	self:Bar(args.spellId, 20)
+	if self:Me(args.destGUID) then
+		self:TargetBar(args.spellId, 5, args.destName)
+		self:Flash(args.spellId)
+		self:Say(args.spellId)
+	end
 end
 
 do
