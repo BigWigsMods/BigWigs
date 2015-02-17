@@ -358,6 +358,18 @@ function mod:PLAYER_LOGIN()
 
 	public.RegisterMessage(self, "BigWigs_CoreOptionToggled", "UpdateDBMFaking")
 	if BigWigs3DB then
+		--if not BigWigs3DB.has61reset then -- XXX 6.1 reset for DB change
+		--	for k,v in next, BigWigs3DB.namespaces do
+		--		if k:find("BigWigs_Bosses_", nil, true) or k == "BigWigs_Plugins_Super Emphasize" or k == "BigWigs_Plugins_Colors" or k == "BigWigs_Plugins_Sounds" then
+		--			--BigWigs3DB.namespaces[k] = nil
+		--		end
+		--	end
+		--	CTimerAfter(7, function()
+		--		sysprint(L.temp61Reset)
+		--	end)
+		--	--BigWigs3DB.has61reset = true
+		--end
+
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
 		if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
 			local name = UnitName("player")

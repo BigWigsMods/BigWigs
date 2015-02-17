@@ -1,5 +1,7 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "enUS", true, "raw")
 
+L.temp61Reset = "Due to a change in making my database more efficient, your custom colors, sounds and boss-specific settings will have reset, sorry :(" -- XXX temp 6.1
+
 -- Core.lua
 L.defeated = "%s has been defeated"
 
