@@ -48,7 +48,7 @@ function mod:GetOptions()
 		--[[ Mythic ]]--
 		163297, -- Arcane Twisted
 		{163372, "PROXIMITY"}, -- Arcane Volatility
-		{"volatility_self", "FLASH", "SAY", "EMPHASIZE"},
+		{"volatility_self", "FLASH", "SAY", "EMPHASIZE", "COUNTDOWN"},
 		"custom_off_volatility_marker",
 		--[[ Pol ]]--
 		{143834, "TANK"}, -- Shield Bash
