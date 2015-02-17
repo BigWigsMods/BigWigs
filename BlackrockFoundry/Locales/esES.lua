@@ -85,7 +85,7 @@ if L then
 	L.custom_off_markedfordeath_marker = "Marcador de Marcado para morir"
 	L.custom_off_markedfordeath_marker_desc = "Marca los objetivos de Marcado para morir con {rt1}{rt2}, requiere ayudante o líder."
 
-	--L.custom_off_massivesmash_marker = "Massive Shattering Smash marker"
-	--L.custom_off_massivesmash_marker_desc = "Mark the tank getting hit with Massive Shattering Smash with {rt6}, requires promoted or leader."
+	L.custom_off_massivesmash_marker = "Marcador de Machaque devastador masivo"
+	L.custom_off_massivesmash_marker_desc = "Marca el tanque que ha sido golpeado por el Machaque devastador masivo con {rt6}, requiere ayudante o líder."
 end
 
