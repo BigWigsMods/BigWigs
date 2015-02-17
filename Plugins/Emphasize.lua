@@ -129,33 +129,31 @@ for k in next, voices do voiceList[k] = k end
 -- Options
 --
 
-do
-	local voiceMap = {
-		deDE = "Heroes: Deutsch",
-		esES = "Heroes: Español",
-		esMX = "Heroes: Español",
-		frFR = "Heroes: Français",
-		ruRU = "Heroes: Русский",
-		koKR = "Heroes: 한국어",
-		itIT = "Heroes: Italiano",
-		ptBR = "Heroes: Português",
-		zhCN = "Heroes: 简体中文",
-		zhTW = "Heroes: 繁體中文",
-	}
+local voiceMap = {
+	deDE = "Heroes: Deutsch",
+	esES = "Heroes: Español",
+	esMX = "Heroes: Español",
+	frFR = "Heroes: Français",
+	ruRU = "Heroes: Русский",
+	koKR = "Heroes: 한국어",
+	itIT = "Heroes: Italiano",
+	ptBR = "Heroes: Português",
+	zhCN = "Heroes: 简体中文",
+	zhTW = "Heroes: 繁體中文",
+}
 
-	plugin.defaultDB = {
-		upper = true,
-		countdown = true,
-		font = nil,
-		outline = "THICKOUTLINE",
-		fontSize = 32,
-		fontColor = { r = 1, g = 0, b = 0 },
-		disabled = false,
-		voice = voiceMap[GetLocale()] or "Amy",
-		countdownTime = 5,
-		Countdown = {},
-	}
-end
+plugin.defaultDB = {
+	upper = true,
+	countdown = true,
+	font = nil,
+	outline = "THICKOUTLINE",
+	fontSize = 32,
+	fontColor = { r = 1, g = 0, b = 0 },
+	disabled = false,
+	voice = voiceMap[GetLocale()] or "Amy",
+	countdownTime = 5,
+	Countdown = {},
+}
 
 local function createOptions()
 	local disabled = function() return plugin.db.profile.disabled end
@@ -337,6 +335,9 @@ end
 local function updateProfile()
 	if not plugin.db.profile.font then
 		plugin.db.profile.font = media:GetDefault("font")
+	end
+	if not voices[plugin.db.profile.voice] then
+		plugin.db.profile.voice = voiceMap[GetLocale()] or "Amy"
 	end
 end
 
