@@ -86,6 +86,14 @@ local voices = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\4.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\5.ogg",
 	},
+	["Heroes: 한국어"] = {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\5.ogg",
+	},
+	}
 	["Heroes: Italiano"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\2.ogg",
@@ -100,14 +108,14 @@ local voices = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\4.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\5.ogg",
 	},
-	["Heroes: 中国"] = {
+	["Heroes: 简体中文"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\3.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\4.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\5.ogg",
 	},
-	["Heroes: 中國"] = {
+	["Heroes: 繁體中文"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\3.ogg",
@@ -129,10 +137,11 @@ do
 		esMX = "Heroes: Español",
 		frFR = "Heroes: Français",
 		ruRU = "Heroes: Русский",
+		koKR = "Heroes: 한국어",
 		itIT = "Heroes: Italiano",
 		ptBR = "Heroes: Português",
-		zhCN = "Heroes: 中国",
-		zhTW = "Heroes: 中國",
+		zhCN = "Heroes: 简体中文",
+		zhTW = "Heroes: 繁體中文",
 	}
 
 	plugin.defaultDB = {
