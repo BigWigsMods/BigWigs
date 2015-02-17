@@ -93,7 +93,6 @@ local voices = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\4.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\5.ogg",
 	},
-	}
 	["Heroes: Italiano"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\2.ogg",
