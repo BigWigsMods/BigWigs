@@ -268,12 +268,12 @@ function mod:OnEngage()
 	-- 15s warning on splits
 	local split = self:SpellName(143020)
 	if not self:Mythic() then
-		self:DelayedMessage("trains", 106, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15))
-		self:DelayedMessage("trains", 356, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15))
-		self:DelayedMessage("trains", 443, "Neutral", CL.custom_sec:format(CL.count:format(split, 3), 15))
+		self:DelayedMessage("trains", 106, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15), false, "Long")
+		self:DelayedMessage("trains", 356, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15), false, "Long")
+		self:DelayedMessage("trains", 443, "Neutral", CL.custom_sec:format(CL.count:format(split, 3), 15), false, "Long")
 	else
-		self:DelayedMessage("trains", 130, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15))
-		self:DelayedMessage("trains", 286, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15))
+		self:DelayedMessage("trains", 130, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15), false, "Long")
+		self:DelayedMessage("trains", 286, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15), false, "Long")
 	end
 end
 
@@ -398,7 +398,7 @@ do
 			sayBombCount(self, args.destName)
 		end
 	end
-	
+
 	function mod:DelayedSiegeBombRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelTimer(timer)
