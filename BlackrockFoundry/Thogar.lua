@@ -368,7 +368,7 @@ do
 		if self:Me(guid) then
 			self:Flash(159481)
 			self:Say(159481, 119342)
-			self:TargetBar(159481, 4.9, name, CL.count:format(self:GetSpellName(155192), 1)) -- 155192 = "Bomb"
+			self:TargetBar(159481, 4.9, name, CL.count:format(self:SpellName(155192), 1)) -- 155192 = "Bomb"
 		else
 			self:TargetBar(159481, 11, name, 119342, 159481) -- also serves as a cd bar
 		end
@@ -383,10 +383,10 @@ do
 	local timer, bombCount = nil, 1
 	local function sayBombCount(self, name)
 		-- 155192 = "Bomb"
-		self:Say(159481, CL.count:format(self:GetSpellName(155192), bombCount), true)
+		self:Say(159481, CL.count:format(self:SpellName(155192), bombCount), true)
 		bombCount = bombCount + 1
 		if bombCount < 4 then
-			self:TargetBar(159481, bombCount == 3 and 2.8 or 3, name, CL.count:format(self:GetSpellName(155192), bombCount))
+			self:TargetBar(159481, 3, name, CL.count:format(self:SpellName(155192), bombCount))
 			timer = self:ScheduleTimer(sayBombCount, bombCount == 3 and 2.8 or 3, self, name)
 		end
 	end
@@ -403,7 +403,7 @@ do
 		if self:Me(args.destGUID) then
 			self:CancelTimer(timer)
 			timer = nil
-			self:StopBar(CL.count:format(self:GetSpellName(155192), bombCount), args.destName)
+			self:StopBar(CL.count:format(self:SpellName(155192), bombCount), args.destName)
 		else
 			self:StopBar(119342, args.destName)
 		end
