@@ -83,10 +83,14 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "SuppressionFieldYell")
 	self:Log("SPELL_CAST_SUCCESS", "SuppressionFieldCast", 161328) -- fallback to fire the timer if the triggers aren't localized
 	-- Mythic
+	self:Log("SPELL_AURA_APPLIED", "DominatingPower", 163472)
 	self:Log("SPELL_CAST_START", "ExpelMagicFelCast", 172895)
 	self:Log("SPELL_AURA_APPLIED", "ExpelMagicFelApplied", 172895)
 	self:Log("SPELL_AURA_REMOVED", "ExpelMagicFelRemoved", 172895)
-	self:Log("SPELL_AURA_APPLIED", "DominatingPower", 163472)
+
+	self:Log("SPELL_AURA_APPLIED", "ExpelMagicFelDamage", 172917)
+	self:Log("SPELL_PERIODIC_DAMAGE", "ExpelMagicFelDamage", 172917)
+	self:Log("SPELL_PERIODIC_MISSED", "ExpelMagicFelDamage", 172917)
 end
 
 function mod:OnEngage()
@@ -366,6 +370,18 @@ do
 		end
 		if self.db.profile.custom_off_fel_marker then
 			SetRaidTarget(args.destName, 0)
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:ExpelMagicFelDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Flash(172895)
+			self:Message(172895, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
