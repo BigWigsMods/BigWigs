@@ -152,7 +152,7 @@ function mod:OnEngage()
 	addDeathWarned = nil
 	wipe(fixateMarks)
 	wipe(brandedMarks)
-	self:Bar(156238, 6)  -- Arcane Wrath
+	self:Bar(156238, 6) -- Arcane Wrath
 	self:Bar(156467, 15) -- Destructive Resonance
 	self:Bar(156471, 25, CL.count:format(self:SpellName(-9945), aberrationCount), 156471) -- Arcane Aberration
 	self:Bar(158605, 34) -- Mark of Chaos
@@ -474,7 +474,7 @@ end
 
 function mod:PhaseStart(args)
 	if not self.isEngaged then return end -- In Mythic mode he gains this when he's floating around the room before engage.
-	self:CDBar(156238, 8)  -- Arcane Wrath
+	self:CDBar(156238, 8) -- Arcane Wrath
 	self:CDBar(156467, 18) -- Destructive Resonance
 	self:CDBar(156471, 28, CL.count:format(self:SpellName(-9945), aberrationCount)) -- Arcane Aberration
 	self:CDBar(158605, 38) -- Mark of Chaos

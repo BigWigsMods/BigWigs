@@ -130,7 +130,7 @@ function mod:OnEngage()
 
 	self:Bar(155209, blastTime) -- Blast
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
-	if not self:LFR() then 
+	if not self:LFR() then
 		self:Berserk(780) -- XXX not sure if 13min in Mythic aswell
 	end
 end
@@ -226,7 +226,7 @@ function mod:ShieldsDown(args)
 	if self.db.profile.custom_on_shieldsdown_marker then
 		for i = 1, 5 do -- i have no idea if this works
 			local boss = ("boss%d"):format(i)
-			if UnitBuff(boss, args.spellName) then  -- Shields Down
+			if UnitBuff(boss, args.spellName) then -- Shields Down
 				SetRaidTarget(boss, 8)
 				break
 			end

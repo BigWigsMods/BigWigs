@@ -93,7 +93,7 @@ function mod:OnEngage()
 	allowSuppression = nil
 	intermission = nil
 	ballCount = 1
-	self:CDBar(162185, 6)  -- Expel Magic: Fire
+	self:CDBar(162185, 6) -- Expel Magic: Fire
 	self:CDBar(162186, 30) -- Expel Magic: Arcane
 	self:Bar(161612, 36, L.overwhelming_energy_bar:format(ballCount)) -- Overwhelming Energy
 	self:CDBar(172747, 40) -- Expel Magic: Frost

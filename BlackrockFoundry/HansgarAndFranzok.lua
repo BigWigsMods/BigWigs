@@ -115,7 +115,7 @@ do
 	end
 
 	function mod:Jumps(unit)
-		if UnitExists(unit) then -- jumped back  
+		if UnitExists(unit) then -- jumped back
 			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phases", "boss1")
 			if phase < 3 then
 				self:Message("stages", "Neutral", "Info", CL.over:format(phaseThreats[phase]), false)
@@ -163,7 +163,7 @@ do
 			self:JumpAway(unit)
 		elseif spellId == 156546 or spellId == 156542 then -- Crippling Suplex (tank picked up)
 			self:TargetMessage(156938, UnitName(unit.."target"), "Important", (self:Tank() or self:Healer()) and "Warning" or "Alarm")
-			self:Bar(156938, 9) -- 8.7-9.5 until damage taken 
+			self:Bar(156938, 9) -- 8.7-9.5 until damage taken
 		elseif spellId == 157923 then -- Jump Slam. -- XXX This id is midair: Test 157922 which is earlier but might be unstable.
 			self:GetBossTarget(printTarget, 0.5, UnitGUID(unit))
 		end
