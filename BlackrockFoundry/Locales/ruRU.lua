@@ -71,7 +71,7 @@ end
 
 L = BigWigs:NewBossLocale("The Iron Maidens", "ruRU")
 if L then
-	--L.ship_trigger = "prepares to man the Dreadnaught's Main Cannon!"
+	L.ship_trigger = "готовится занять позицию у главного орудия дредноута!"
 
 	L.ship = "Прыжок на корабль"
 
