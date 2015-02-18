@@ -51,9 +51,9 @@ function mod:GetOptions()
 		{156728, "PROXIMITY"}, -- Explosive Round
 		--[[ Stage Three: Iron Crucible ]]--
 		{158054, "PROXIMITY"}, -- Massive Shattering Smash
+		"custom_off_massivesmash_marker",
 		156928, -- Slag Eruption
 		{157000, "FLASH", "SAY"}, -- Attach Slag Bombs
-		"custom_off_massivesmash_marker",
 		--[[ General ]]--
 		155992, -- Shattering Smash
 		{156096, "FLASH"}, -- Marked for Death
@@ -65,7 +65,7 @@ function mod:GetOptions()
 	}, {
 		[156425] = -8814, -- Stage One: The Blackrock Forge
 		["siegemaker"] = -8816, -- Stage Two: Storage Warehouse
-		[156928] = -8818, -- Stage Three: Iron Crucible
+		[158054] = -8818, -- Stage Three: Iron Crucible
 		[155992] = "general"
 	}
 end
