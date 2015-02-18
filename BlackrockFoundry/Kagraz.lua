@@ -97,7 +97,7 @@ end
 function mod:OnEngage()
 	wolvesActive = nil
 	moltenTorrentOnMe, fixateOnMe = nil, nil
-	blazingTargets = {}
+	wipe(blazingTargets)
 	firestormCount = 1
 	--self:Bar(155318, 11) -- Lava Slash
 	self:Bar(154938, 31) -- Molten Torrent
@@ -249,9 +249,9 @@ function mod:Rekindle(args)
 end
 
 do
-	local list, scheduled = mod:NewTargetList(), nil
+	local scheduled = nil
 	local function warnTargets(self, spellId)
-		self:TargetMessage(spellId, list, "Attention", "Alert")
+		self:TargetMessage(spellId, self:ColorName(blazingTargets), "Attention", "Alert")
 		if not moltenTorrentOnMe then
 			self:OpenProximity(spellId, 10, blazingTargets)
 		end
@@ -267,7 +267,6 @@ do
 			self:Say(args.spellId)
 			self:OpenProximity(args.spellId, 10)
 		end
-		list[#list+1] = args.destName
 		blazingTargets[#blazingTargets+1] = args.destName
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnTargets, 0.1, self, args.spellId)
