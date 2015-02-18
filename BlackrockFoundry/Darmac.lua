@@ -294,7 +294,7 @@ end
 
 function mod:CallThePack(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 31.5) -- can be delayed
+	self:CDBar(args.spellId, self:Normal() and 40 or 30) -- can be delayed
 end
 
 -- Stage 2
