@@ -208,6 +208,8 @@ if L then
 	L.cannon_train = "Cannon train"
 	L.deforester = "Deforester" -- /dump (EJ_GetSectionInfo(10329))
 	L.random = "Random trains"
+
+	L.bomb_say_count = "Bomb #%s"
 end
 L = mod:GetLocale()
 
@@ -251,6 +253,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "IronBellow", 163753)
 	self:Log("SPELL_CAST_START", "CauterizingBolt", 160140)
 	self:Log("SPELL_CAST_START", "DelayedSiegeBomb", 159481)
+	self:Log("SPELL_AURA_APPLIED", "DelayedSiegeBombApplied", 159481)
 	self:Log("SPELL_AURA_REMOVED", "DelayedSiegeBombRemoved", 159481)
 
 	self:Death("Deaths", 80791) -- Grom'kar Man-at-Arms
@@ -364,10 +367,12 @@ do
 	local function printTarget(self, name, guid)
 		-- 119342 = Bombs
 		self:TargetMessage(159481, name, "Attention", "Warning", 119342, 159481)
-		self:TargetBar(159481, 11, name, 119342, 159481) -- also serves as a cd bar
 		if self:Me(guid) then
 			self:Flash(159481)
 			self:Say(159481, 119342)
+			self:TargetBar(159481, 4.8, name, L.bomb_say_count:format(1))
+		else
+			self:TargetBar(159481, 11, name, 119342, 159481) -- also serves as a cd bar
 		end
 	end
 
@@ -376,8 +381,37 @@ do
 	end
 end
 
-function mod:DelayedSiegeBombRemoved(args)
-	self:StopBar(119342, args.destName)
+do
+	local timer, bombCount = nil, 1
+	local function sayBombCount(self, args)
+		self:Say(159481, L.bomb_say_count:format(bombCount), true)
+		bombCount = bombCount + 1
+		if bombCount < 4 then
+			self:TargetBar(159481, 3, args.destName, L.bomb_say_count:format(bombCount))
+			timer = self:ScheduleTimer(sayBombCount, 3, self, args)
+		end
+	end
+
+	function mod:DelayedSiegeBombApplied(args)
+		if self:Me(args.destGUID) then
+			if timer then self:CancelTimer(timer) end
+			bombCount = 1
+			self:Say(159481, L.bomb_say_count:format(bombCount), true)
+			timer = self:ScheduleTimer(sayBombCount, 3, self, args)
+			bombCount = bombCount + 1
+			self:TargetBar(159481, 3, args.destName, L.bomb_say_count:format(bombCount))
+		end
+	end
+	
+	function mod:DelayedSiegeBombRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelTimer(timer)
+			timer = nil
+			self:StopBar(L.bomb_say_count:format(bombCount), args.destName)
+		else
+			self:StopBar(119342, args.destName)
+		end
+	end
 end
 
 function mod:Deaths(args)
