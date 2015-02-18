@@ -336,8 +336,16 @@ local function updateProfile()
 	if not plugin.db.profile.font then
 		plugin.db.profile.font = media:GetDefault("font")
 	end
+	-- Reset invalid voice selections
 	if not voices[plugin.db.profile.voice] then
 		plugin.db.profile.voice = voiceMap[GetLocale()] or "English: Amy"
+	end
+	for boss, tbl in next, plugin.db.profile.Countdown do
+		for ability, chosenVoice in next, tbl do
+			if not voices[chosenVoice] then
+				plugin.db.profile.Countdown[boss][ability] = nil
+			end
+		end
 	end
 end
 
