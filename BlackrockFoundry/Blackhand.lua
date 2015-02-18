@@ -50,9 +50,9 @@ function mod:GetOptions()
 		156667, -- Blackiron Plating
 		{156728, "PROXIMITY"}, -- Explosive Round
 		--[[ Stage Three: Iron Crucible ]]--
+		{158054, "PROXIMITY"}, -- Massive Shattering Smash
 		156928, -- Slag Eruption
 		{157000, "FLASH", "SAY"}, -- Attach Slag Bombs
-		{158054, "PROXIMITY"}, -- Massive Shattering Smash
 		"custom_off_massivesmash_marker",
 		--[[ General ]]--
 		155992, -- Shattering Smash
@@ -86,7 +86,7 @@ function mod:OnBossEnable()
 	-- Stage 3
 	self:Log("SPELL_CAST_START", "SlagEruption", 156928)
 	self:Log("SPELL_CAST_START", "MassiveShatteringSmash", 158054)
-	self:Log("SPELL_AURA_APPLIED", "AttachSlagBombs", 157000)
+	self:Log("SPELL_AURA_APPLIED", "AttachSlagBombs", 157000, 159179)
 	self:Log("SPELL_ENERGIZE", "SmashReschedule", 104915)
 end
 
@@ -110,6 +110,31 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function closeSmashProximity(self)
+	if self.db.profile.custom_off_massivesmash_marker then
+		SetRaidTarget(tankName, oldIcon or 0)
+		tankName = nil
+		oldIcon = nil
+	end
+
+	self:CloseProximity(158054)
+	massiveSmashProximity = nil
+end
+
+local function openSmashProximity(self)
+	if not massiveSmashProximity then
+		if self.db.profile.custom_off_massivesmash_marker then
+			tankName = UnitName("boss1target")
+			oldIcon = GetRaidTargetIndex(tankName)
+			SetRaidTarget(tankName, 6)
+		end
+
+		self:OpenProximity(158054, 6, tankName, true)
+		massiveSmashProximity = true
+		self:ScheduleTimer(closeSmashProximity, 5, self)
+	end
+end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 156991 then -- Throw Slag Bombs
@@ -152,7 +177,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(157000, 12) -- Attach Slag Bombs
 		self:Bar(156096, 16) -- Marked for Death
 		self:Bar(158054, 26) -- Massive Shattering Smash
-		self:ScheduleTimer(OpenSmashProximity, 23)
+		self:ScheduleTimer(openSmashProximity, 23, self)
 		self:Bar(156928, 31.5) -- Slag Eruption
 	end
 end
@@ -226,63 +251,38 @@ end
 
 do
 	local scheduled = nil
-	local function OpenSmashProximity()
-		if not massiveSmashProximity then
-			if self.db.profile.custom_off_massivesmash_marker then
-				tankName = UnitName("boss1target")
-				oldIcon = GetRaidTargetIndex(tankName)
-				SetRaidTarget(tankName, 6)
-			end
-
-			self:OpenProximity(158054, 6, tankName, true)
-			massiveSmashProximity = true
-			self:ScheduleTimer(CloseSmashProximity, 5)
-		end
-	end
-
-	local function CloseSmashProximity()
-		if self.db.profile.custom_off_massivesmash_marker then
-			SetRaidTarget(tankName, oldIcon or 0)
-			tankName = nil
-			oldIcon = nil
-		end
-
-		self:CloseProximity(158054)
-		massiveSmashProximity = nil
-	end
-
 	function mod:SmashReschedule(args)
 		if scheduled then
 			self:CancelTimer(scheduled)
 		end
 		local nextSmash = (100-UnitPower("boss1"))/4
-		scheduled = self:ScheduleTimer(OpenSmashProximity, nextSmash-3)
+		scheduled = self:ScheduleTimer(openSmashProximity, nextSmash-3, self)
 		self:CDBar(158054, nextSmash)
 	end
 
 	function mod:MassiveShatteringSmash(args)
 		self:Message(args.spellId, "Urgent", "Warning")
 		self:CDBar(args.spellId, 25)
-		scheduled = self:ScheduleTimer(OpenSmashProximity, 22) -- 3 sec before + 2 sec cast should be enough
+		scheduled = self:ScheduleTimer(openSmashProximity, 22, self) -- 3 sec before + 2 sec cast should be enough
 	end
 end
 
 do
 	local list, scheduled = mod:NewTargetList(), nil
-	local function warn(self, spellId)
-		self:TargetMessage(spellId, list, "Urgent", "Alert", nil, nil, true)
+	local function warnTargets(self)
+		self:TargetMessage(157000, list, "Urgent", "Alert", nil, nil, true)
 		scheduled = nil
 	end
 	function mod:AttachSlagBombs(args)
-		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 0.6, self, args.spellId)
-			self:Bar(args.spellId, 25)
-		end
 		list[#list+1] = args.destName
 		if self:Me(args.destGUID) then
-			self:TargetBar(args.spellId, 5, args.destName, 157015) -- Slag Bomb
-			self:Flash(args.spellId)
-			self:Say(args.spellId, 157015) -- 157015 = Slag Bomb
+			self:TargetBar(157000, 5, args.destName, 157015) -- Slag Bomb
+			self:Flash(157000)
+			self:Say(157000, 157015) -- 157015 = Slag Bomb
+		end
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warnTargets, 1, self)
+			self:Bar(157000, 25)
 		end
 	end
 end
