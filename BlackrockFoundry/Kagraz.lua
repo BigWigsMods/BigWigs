@@ -15,7 +15,7 @@ mod.engageId = 1689
 
 local wolvesActive = nil
 local moltenTorrentOnMe = nil
-local blazingTarget = nil
+local blazingTargets = {}
 local firestormCount = 1
 local fixateOnMe = nil
 
@@ -96,7 +96,8 @@ end
 
 function mod:OnEngage()
 	wolvesActive = nil
-	moltenTorrentOnMe, blazingTarget, fixateOnMe = nil, nil, nil
+	moltenTorrentOnMe, fixateOnMe = nil, nil
+	blazingTargets = {}
 	firestormCount = 1
 	--self:Bar(155318, 11) -- Lava Slash
 	self:Bar(154938, 31) -- Molten Torrent
@@ -170,7 +171,6 @@ do
 		self:TargetMessage(args.spellId, args.destName, "Positive", "Warning") -- positive for wanting to stack
 		self:Bar(args.spellId, 14.5)
 		self:SecondaryIcon(args.spellId, args.destName)
-		self:ScheduleTimer("SecondaryIcon", 5, args.spellId)
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
@@ -184,11 +184,12 @@ do
 		end
 	end
 	function mod:MoltenTorrentRemoved(args)
+		self:SecondaryIcon(args.spellId)
 		if self:Me(args.destGUID) then
 			moltenTorrentOnMe = nil
 			self:CloseProximity(args.spellId)
-			if blazingTarget then
-				self:OpenProximity(155277, 10, blazingTarget)
+			if #blazingTargets > 0 then
+				self:OpenProximity(155277, 10, blazingTargets)
 			end
 		end
 	end
@@ -247,31 +248,38 @@ function mod:Rekindle(args)
 	self:Bar(args.spellId, 8)
 end
 
-function mod:BlazingRadiance(args)
-	--self:Bar(args.spellId, 12)
-	self:PrimaryIcon(args.spellId, args.destName)
-	blazingTarget = args.destName
-	if self:Me(args.destGUID) then
-		self:Flash(args.spellId)
-		self:Say(args.spellId)
-		self:OpenProximity(args.spellId, 10)
-	else
+do
+	local scheduled = nil
+	local function warnTargets(self, spellId)
+		self:TargetMessage(spellId, self:ColorName(blazingTargets), "Attention", "Alert")
 		if not moltenTorrentOnMe then
-			self:OpenProximity(args.spellId, 10, args.destName)
+			self:OpenProximity(spellId, 10, blazingTargets)
 		end
-		if self:Range(args.destName) < 10 then
-			self:RangeMessage(args.spellId)
+		scheduled = nil
+	end
+	function mod:BlazingRadiance(args)
+		--self:Bar(args.spellId, 12)
+		if not self:Mythic() then
+			self:PrimaryIcon(args.spellId, args.destName)
+		end
+		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
-			return
+			self:Say(args.spellId)
+			self:OpenProximity(args.spellId, 10)
+		end
+		blazingTargets[#blazingTargets+1] = args.destName
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warnTargets, 0.1, self, args.spellId)
 		end
 	end
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Alert")
 end
 
 function mod:BlazingRadianceRemoved(args)
-	self:PrimaryIcon(args.spellId)
-	blazingTarget = nil
-	if not moltenTorrentOnMe then
+	if not self:Mythic() then
+		self:PrimaryIcon(args.spellId)
+	end
+	tDeleteItem(blazingTargets, args.destName)
+	if not moltenTorrentOnMe and #blazingTargets == 0 then
 		self:CloseProximity(args.spellId)
 	end
 end
