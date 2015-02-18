@@ -257,7 +257,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:CDBar(155864, 6, 135592, 155864) -- Pulse Grenade, 135592 = "Grenade"
+	self:CDBar(155864, 7, 135592, 155864) -- Pulse Grenade, 135592 = "Grenade"
 	self:CDBar(155921, 16) -- Enkindle
 	engageTime = GetTime()
 	-- bar for each lane seemed to make the most sense
@@ -339,7 +339,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:Message(args.spellId, "Attention", nil, 135592, args.spellId) -- 135592 = "Grenade"
-			self:CDBar(args.spellId, 16, 135592, args.spellId) -- 135592 = "Grenade"
+			self:CDBar(args.spellId, 12, 135592, args.spellId) -- 135592 = "Grenade"
 		end
 	end
 end
