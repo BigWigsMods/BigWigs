@@ -1017,8 +1017,17 @@ do
 		return setmetatable({}, mt)
 	end
 
+	local tmp = {}
 	function boss:ColorName(player)
-		return coloredNames[player]
+		if type(player) == "table" then
+			wipe(tmp)
+			for i, v in ipairs(player) do
+				tmp[i] = coloredNames[v]
+			end
+			return tmp
+		else
+			return coloredNames[player]
+		end
 	end
 
 	function boss:StackMessage(key, player, stack, color, sound, text, icon)
