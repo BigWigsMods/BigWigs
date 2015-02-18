@@ -242,6 +242,13 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable()
+	local y = UnitPosition("player")
+	if y > 430 then
+		return true
+	end
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Enkindle", 155921)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Enkindle", 155921)
