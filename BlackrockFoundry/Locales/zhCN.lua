@@ -67,8 +67,6 @@ if L then
 	L.cannon_train = "火炮火车"
 	L.deforester = "伐林者"
 	L.random = "随机火车"
-
-	--L.bomb_say_count = "Bomb #%s"
 end
 
 L = BigWigs:NewBossLocale("The Iron Maidens", "zhCN")

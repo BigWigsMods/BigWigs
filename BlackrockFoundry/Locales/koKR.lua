@@ -67,8 +67,6 @@ if L then
 	L.cannon_train = "대포 기차"
 	L.deforester = "삼림방화포" -- /dump (EJ_GetSectionInfo(10329))
 	L.random = "무작위 기차"
-
-	--L.bomb_say_count = "Bomb #%s"
 end
 
 L = BigWigs:NewBossLocale("The Iron Maidens", "koKR")

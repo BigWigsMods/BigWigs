@@ -208,8 +208,6 @@ if L then
 	L.cannon_train = "Cannon train"
 	L.deforester = "Deforester" -- /dump (EJ_GetSectionInfo(10329))
 	L.random = "Random trains"
-
-	L.bomb_say_count = "Bomb #%s"
 end
 L = mod:GetLocale()
 
@@ -370,7 +368,7 @@ do
 		if self:Me(guid) then
 			self:Flash(159481)
 			self:Say(159481, 119342)
-			self:TargetBar(159481, 4.8, name, L.bomb_say_count:format(1))
+			self:TargetBar(159481, 4.9, name, CL.count:format(self:GetSpellName(155192), 1)) -- 155192 = "Bomb"
 		else
 			self:TargetBar(159481, 11, name, 119342, 159481) -- also serves as a cd bar
 		end
@@ -383,12 +381,13 @@ end
 
 do
 	local timer, bombCount = nil, 1
-	local function sayBombCount(self, args)
-		self:Say(159481, L.bomb_say_count:format(bombCount), true)
+	local function sayBombCount(self, name)
+		-- 155192 = "Bomb"
+		self:Say(159481, CL.count:format(self:GetSpellName(155192), bombCount), true)
 		bombCount = bombCount + 1
 		if bombCount < 4 then
-			self:TargetBar(159481, 3, args.destName, L.bomb_say_count:format(bombCount))
-			timer = self:ScheduleTimer(sayBombCount, 3, self, args)
+			self:TargetBar(159481, bombCount == 3 and 2.8 or 3, name, CL.count:format(self:GetSpellName(155192), bombCount))
+			timer = self:ScheduleTimer(sayBombCount, bombCount == 3 and 2.8 or 3, self, name)
 		end
 	end
 
@@ -396,10 +395,7 @@ do
 		if self:Me(args.destGUID) then
 			if timer then self:CancelTimer(timer) end
 			bombCount = 1
-			self:Say(159481, L.bomb_say_count:format(bombCount), true)
-			timer = self:ScheduleTimer(sayBombCount, 3, self, args)
-			bombCount = bombCount + 1
-			self:TargetBar(159481, 3, args.destName, L.bomb_say_count:format(bombCount))
+			sayBombCount(self, args.destName)
 		end
 	end
 	
@@ -407,7 +403,7 @@ do
 		if self:Me(args.destGUID) then
 			self:CancelTimer(timer)
 			timer = nil
-			self:StopBar(L.bomb_say_count:format(bombCount), args.destName)
+			self:StopBar(CL.count:format(self:GetSpellName(155192), bombCount), args.destName)
 		else
 			self:StopBar(119342, args.destName)
 		end
