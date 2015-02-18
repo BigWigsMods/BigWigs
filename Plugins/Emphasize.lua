@@ -15,7 +15,7 @@ plugin.displayName = L.superEmphasize
 
 local temporaryEmphasizes = {}
 local voices = {
-	["Amy"] = {
+	["English: Amy"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\3.ogg",
@@ -27,7 +27,7 @@ local voices = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\9.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\10.ogg",
 	},
-	["David"] = {
+	["English: David"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\David\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\David\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\David\\3.ogg",
@@ -39,7 +39,7 @@ local voices = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\David\\9.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\David\\10.ogg",
 	},
-	["Jim"] = {
+	["English: Jim"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\3.ogg",
@@ -51,70 +51,70 @@ local voices = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\9.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\10.ogg",
 	},
-	["Heroes: Deutsch"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\5.ogg",
-	},
-	["Heroes: English"] = {
+	["English: Heroes of the Storm"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\3.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\4.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\5.ogg",
 	},
-	["Heroes: Español"] = {
+	["Deutsch: Heroes of the Storm"] = {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\5.ogg",
+	},
+	["Español: Heroes of the Storm"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\3.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\4.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\5.ogg",
 	},
-	["Heroes: Français"] = {
+	["Français: Heroes of the Storm"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\3.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\4.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\5.ogg",
 	},
-	["Heroes: Русский"] = {
+	["Русский: Heroes of the Storm"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\3.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\4.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\5.ogg",
 	},
-	["Heroes: 한국어"] = {
+	["한국어: Heroes of the Storm"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\3.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\4.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\5.ogg",
 	},
-	["Heroes: Italiano"] = {
+	["Italiano: Heroes of the Storm"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\3.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\4.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\5.ogg",
 	},
-	["Heroes: Português"] = {
+	["Português: Heroes of the Storm"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\3.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\4.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\5.ogg",
 	},
-	["Heroes: 简体中文"] = {
+	["简体中文: Heroes of the Storm"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\3.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\4.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\5.ogg",
 	},
-	["Heroes: 繁體中文"] = {
+	["繁體中文: Heroes of the Storm"] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\3.ogg",
@@ -130,16 +130,16 @@ for k in next, voices do voiceList[k] = k end
 --
 
 local voiceMap = {
-	deDE = "Heroes: Deutsch",
-	esES = "Heroes: Español",
-	esMX = "Heroes: Español",
-	frFR = "Heroes: Français",
-	ruRU = "Heroes: Русский",
-	koKR = "Heroes: 한국어",
-	itIT = "Heroes: Italiano",
-	ptBR = "Heroes: Português",
-	zhCN = "Heroes: 简体中文",
-	zhTW = "Heroes: 繁體中文",
+	deDE = "Deutsch: Heroes of the Storm",
+	esES = "Español: Heroes of the Storm",
+	esMX = "Español: Heroes of the Storm",
+	frFR = "Français: Heroes of the Storm",
+	ruRU = "Русский: Heroes of the Storm",
+	koKR = "한국어: Heroes of the Storm",
+	itIT = "Italiano: Heroes of the Storm",
+	ptBR = "Português: Heroes of the Storm",
+	zhCN = "简体中文: Heroes of the Storm",
+	zhTW = "繁體中文: Heroes of the Storm",
 }
 
 plugin.defaultDB = {
@@ -150,7 +150,7 @@ plugin.defaultDB = {
 	fontSize = 32,
 	fontColor = { r = 1, g = 0, b = 0 },
 	disabled = false,
-	voice = voiceMap[GetLocale()] or "Amy",
+	voice = voiceMap[GetLocale()] or "English: Amy",
 	countdownTime = 5,
 	Countdown = {},
 }
@@ -337,7 +337,7 @@ local function updateProfile()
 		plugin.db.profile.font = media:GetDefault("font")
 	end
 	if not voices[plugin.db.profile.voice] then
-		plugin.db.profile.voice = voiceMap[GetLocale()] or "Amy"
+		plugin.db.profile.voice = voiceMap[GetLocale()] or "English: Amy"
 	end
 end
 
