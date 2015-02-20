@@ -32,6 +32,10 @@ if L then
 	L.ship_desc = -10019 -- The Dreadnaught
 	L.ship_icon = "ability_vehicle_siegeenginecannon"
 
+	L.warming_up = 158849
+	L.warming_up_desc = 158849
+	L.warming_up_icon = "spell_fire_selfdestruct"
+
 	L.bombardment = 147135 -- Bombardment
 	L.bombardment_desc = -10854 -- Bombardment Pattern
 	L.bombardment_icon = "ability_ironmaidens_bombardment"
@@ -52,10 +56,11 @@ function mod:GetOptions()
 	return {
 		--[[ Dreadnaught ]]--
 		"ship",
+		"warming_up",
 		"bombardment",
 		{158683, "FLASH"}, -- Corrupted Blood
 		158708, -- Earthen Barrier
-		158692, -- Deadly Throw
+		{158692, "ICON"}, -- Deadly Throw
 		--[[ Gar'an ]]--
 		{156631, "ICON", "SAY", "FLASH"}, -- Rapid Fire
 		{164271, "ICON", "SAY", "FLASH"}, -- Penetrating Shot
@@ -88,6 +93,7 @@ function mod:OnBossEnable()
 	-- Gar'an
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 	self:Log("SPELL_AURA_APPLIED", "RapidFire", 156631)
+	self:Log("SPELL_AURA_REMOVED", "RapidFireRemoved", 156631)
 	self:Log("SPELL_AURA_APPLIED", "PenetratingShot", 164271)
 	self:Log("SPELL_CAST_START", "DeployTurret", 158599)
 	-- Sorka
@@ -108,6 +114,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "CorruptedBloodDamage", 158683)
 	self:Log("SPELL_CAST_START", "EarthenBarrier", 158708)
 	self:Log("SPELL_CAST_START", "DeadlyThrow", 158692)
+	self:Log("SPELL_CAST_SUCCESS", "DeadlyThrowOver", 158692)
 end
 
 function mod:OnEngage()
@@ -131,9 +138,9 @@ do
 		if powerType == "ALTERNATE" then
 			local power = UnitPower(unit, 10)
 			if power == 1 then
-				self:Bar("bombardment", 88, 158849, "inv_elemental_primal_fire") -- Warming Up
+				self:Bar("warming_up", 88, L.warming_up, L.warming_up_icon)
 			elseif power == 0 then
-				self:StopBar(158849) -- Warming Up
+				self:StopBar(L.warming_up)
 				self:StopBar(L.bombardment)
 				-- restart timers
 				local t = GetTime()
@@ -223,14 +230,20 @@ function mod:ShipPhase(msg, sender)
 end
 
 function mod:BombardmentAlpha(args)
-	if isOnABoat() then return end
-	self:Message("bombardment", "Neutral", nil, args.spellId)
-	self:CDBar("bombardment", 18, L.bombardment, L.bombardment_icon)
+	if isOnABoat() then
+		self:Bar("bombardment", 11, CL.count:format(self:SpellName(157884), 1), "ability_ironmaidens_incindiarydevice") -- Detonation Sequence (1)
+	else
+		self:Message("bombardment", "Neutral", nil, args.spellId)
+		self:CDBar("bombardment", 18, L.bombardment, L.bombardment_icon)
+	end
 end
 
 function mod:BombardmentOmega(args)
-	if isOnABoat() then return end
-	self:Message("bombardment", "Neutral", nil, args.spellId)
+	if isOnABoat() then
+		self:Bar("bombardment", 11, CL.count:format(self:SpellName(157884), 2), "ability_ironmaidens_incindiarydevice") -- Detonation Sequence (2)
+	else
+		self:Message("bombardment", "Neutral", nil, args.spellId)
+	end
 end
 
 do
@@ -255,12 +268,16 @@ end
 do
 	local function printTarget(self, name, guid)
 		self:TargetMessage(158692, name, "Urgent", "Alert", nil, nil, self:Tank())
+		self:SecondaryIcon(158692, name)
 	end
 	function mod:DeadlyThrow(args)
 		if isOnABoat() then
 			self:GetUnitTarget(printTarget, 0.2, args.sourceGUID)
 			self:Bar(args.spellId, 13)
 		end
+	end
+	function mod:DeadlyThrowOver(args)
+		self:SecondaryIcon(158692)
 	end
 end
 
@@ -288,6 +305,10 @@ function mod:RapidFire(args)
 	self:Bar(args.spellId, 31.6)
 end
 
+function mod:RapidFireRemoved(args)
+	self:PrimaryIcon(args.spellId)
+end
+
 function mod:IncendiaryDevice(args)
 	if isOnABoat() then
 		return
@@ -302,24 +323,19 @@ function mod:PenetratingShot(args)
 		return
 	end
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:Flash(args.spellId)
-		self:Bar(args.spellId, self:Normal() and 8 or 6, CL.you:format(args.spellName))
 		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+		self:Flash(args.spellId)
+		self:Say(args.spellId)
 	else
-		self:TargetBar(args.spellId, self:Normal() and 8 or 6, args.destName)
 		self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
 	end
+	self:TargetBar(args.spellId, self:Normal() and 8 or 6, args.destName)
 	self:Bar(args.spellId, 30)
 end
 
 function mod:DeployTurret(args)
-	if isOnABoat() then
-		boatTimers[args.spellId] = GetTime() + 22
-		return
-	end
 	self:Message(args.spellId, "Attention")
-	--self:CDBar(args.spellId, 22) -- 17-43 (?!)
+	--self:CDBar(args.spellId, 20) -- 19.8-22.6
 end
 
 -- Sorka
@@ -348,10 +364,6 @@ function mod:ConvulsiveShadows(args)
 end
 
 function mod:DarkHunt(args)
-	if isOnABoat() then
-		--boatTimers[args.spellId] = GetTime() + 13
-		return
-	end
 	self:TargetMessage(args.spellId, args.destName, "Attention")
 	self:TargetBar(args.spellId, 8, args.destName)
 	--self:CDBar(args.spellId, 13) -- 13.39-15.89
