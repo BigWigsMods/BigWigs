@@ -124,8 +124,9 @@ end
 
 local function openSmashProximity(self)
 	if not massiveSmashProximity then
+		tankName = UnitName("boss1target")
+
 		if self.db.profile.custom_off_massivesmash_marker then
-			tankName = UnitName("boss1target")
 			oldIcon = GetRaidTargetIndex(tankName)
 			SetRaidTarget(tankName, 6)
 		end
