@@ -9,7 +9,7 @@ mod.displayName = CL.trash
 mod:RegisterEnableMob(
 	78978, -- Darkshard Gnasher
 	79208, -- Blackrock Enforcer
-	76906, -- Operator Thogar, alternative for Blast Furnace Exhaust
+	76906 -- Operator Thogar, alternative for Blast Furnace Exhaust
 	--87366 -- Blast Furnace Exhaust
 )
 
