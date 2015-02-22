@@ -60,7 +60,7 @@ function mod:GetOptions()
 		"bombardment",
 		{158683, "FLASH"}, -- Corrupted Blood
 		158708, -- Earthen Barrier
-		{158692, "ICON"}, -- Deadly Throw
+		158692, -- Deadly Throw
 		--[[ Gar'an ]]--
 		{156631, "ICON", "SAY", "FLASH"}, -- Rapid Fire
 		{164271, "ICON", "SAY", "FLASH"}, -- Penetrating Shot
@@ -70,7 +70,7 @@ function mod:GetOptions()
 		{156109, "DISPEL"}, -- Convulsive Shadows
 		158315, -- Dark Hunt
 		--[[ Marak ]]--
-		{159724, "SAY", "FLASH"}, -- Blood Ritual
+		{159724, "ICON", "SAY", "FLASH"}, -- Blood Ritual
 		{158010, "SAY", "FLASH"}, -- Heartseeker
 		"custom_off_heartseeker_marker",
 		156601, -- Sanguine Strikes
@@ -95,6 +95,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "RapidFire", 156631)
 	self:Log("SPELL_AURA_REMOVED", "RapidFireRemoved", 156631)
 	self:Log("SPELL_AURA_APPLIED", "PenetratingShot", 164271)
+	self:Log("SPELL_AURA_REMOVED", "PenetratingShotRemoved", 164271)
 	self:Log("SPELL_CAST_START", "DeployTurret", 158599)
 	-- Sorka
 	self:Log("SPELL_CAST_START", "BladeDash", 155794)
@@ -102,6 +103,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DarkHunt", 158315)
 	-- Marak
 	self:Log("SPELL_AURA_APPLIED", "BloodRitual", 159724)
+	self:Log("SPELL_AURA_REMOVED", "BloodRitualRemoved", 159724)
 	self:Log("SPELL_AURA_APPLIED", "HeartseekerApplied", 158010)
 	self:Log("SPELL_AURA_REMOVED", "HeartseekerRemoved", 158010)
 	self:Log("SPELL_AURA_APPLIED", "SanguineStrikes", 156601)
@@ -114,7 +116,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "CorruptedBloodDamage", 158683)
 	self:Log("SPELL_CAST_START", "EarthenBarrier", 158708)
 	self:Log("SPELL_CAST_START", "DeadlyThrow", 158692)
-	self:Log("SPELL_CAST_SUCCESS", "DeadlyThrowOver", 158692)
 end
 
 function mod:OnEngage()
@@ -268,16 +269,12 @@ end
 do
 	local function printTarget(self, name, guid)
 		self:TargetMessage(158692, name, "Urgent", "Alert", nil, nil, self:Tank())
-		self:SecondaryIcon(158692, name)
 	end
 	function mod:DeadlyThrow(args)
 		if isOnABoat() then
 			self:GetUnitTarget(printTarget, 0.2, args.sourceGUID)
 			self:Bar(args.spellId, 13)
 		end
-	end
-	function mod:DeadlyThrowOver(args)
-		self:SecondaryIcon(158692)
 	end
 end
 
@@ -293,20 +290,22 @@ function mod:RAID_BOSS_WHISPER(_, msg, sender)
 	end
 end
 
-function mod:RapidFire(args)
-	self:PrimaryIcon(args.spellId, args.destName)
-	if isOnABoat() then
-		boatTimers[args.spellId] = GetTime() + 31.6
-		return
+do
+	function mod:RapidFire(args)
+		self:PrimaryIcon(args.spellId, args.destName)
+		if isOnABoat() then
+			boatTimers[args.spellId] = GetTime() + 31.6
+			return
+		end
+		if not self:Me(args.destGUID) then
+			self:TargetMessage(args.spellId, args.destName, "Urgent")
+		end
+		self:Bar(args.spellId, 31.6)
 	end
-	if not self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Urgent")
-	end
-	self:Bar(args.spellId, 31.6)
-end
 
-function mod:RapidFireRemoved(args)
-	self:PrimaryIcon(args.spellId)
+	function mod:RapidFireRemoved(args)
+		self:PrimaryIcon(args.spellId)
+	end
 end
 
 function mod:IncendiaryDevice(args)
@@ -316,21 +315,27 @@ function mod:IncendiaryDevice(args)
 	self:Message(args.spellId, "Important")
 end
 
-function mod:PenetratingShot(args)
-	self:SecondaryIcon(args.spellId, args.destName)
-	if isOnABoat() then
-		boatTimers[args.spellId] = GetTime() + 30
-		return
+do
+	function mod:PenetratingShot(args)
+		self:PrimaryIcon(args.spellId, args.destName)
+		if isOnABoat() then
+			boatTimers[args.spellId] = GetTime() + 30
+			return
+		end
+		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+		else
+			self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
+		end
+		self:TargetBar(args.spellId, self:Normal() and 8 or 6, args.destName)
+		self:Bar(args.spellId, 30)
 	end
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
-		self:Flash(args.spellId)
-		self:Say(args.spellId)
-	else
-		self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
+
+	function mod:PenetratingShotRemoved(args)
+		self:PrimaryIcon(args.spellId)
 	end
-	self:TargetBar(args.spellId, self:Normal() and 8 or 6, args.destName)
-	self:Bar(args.spellId, 30)
 end
 
 function mod:DeployTurret(args)
@@ -371,17 +376,24 @@ end
 
 -- Marak
 
-function mod:BloodRitual(args)
-	if isOnABoat() then
-		boatTimers[args.spellId] = GetTime() + 20
-		return
+do
+	function mod:BloodRitual(args)
+		self:SecondaryIcon(args.spellId, args.destName)
+		if isOnABoat() then
+			boatTimers[args.spellId] = GetTime() + 20
+			return
+		end
+		self:TargetMessage(args.spellId, args.destName, "Attention", "Alert", nil, nil, self:Tank())
+		self:Bar(args.spellId, 20)
+		if self:Me(args.destGUID) then
+			self:TargetBar(args.spellId, 5, args.destName)
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+		end
 	end
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Alert", nil, nil, self:Tank())
-	self:Bar(args.spellId, 20)
-	if self:Me(args.destGUID) then
-		self:TargetBar(args.spellId, 5, args.destName)
-		self:Flash(args.spellId)
-		self:Say(args.spellId)
+
+	function mod:BloodRitualRemoved(args)
+		self:SecondaryIcon(args.spellId)
 	end
 end
 
