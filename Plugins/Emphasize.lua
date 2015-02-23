@@ -401,7 +401,7 @@ do
 				for i = 2, self.db.profile.countdownTime do
 					local t = i + 0.3
 					if time <= t then break end
-					timers[text][i] = self:ScheduleTimer(printEmph, time-t, i, name, key)
+					timers[text][i] = module:ScheduleTimer(printEmph, time-t, i, name, key)
 				end
 			end
 		end
