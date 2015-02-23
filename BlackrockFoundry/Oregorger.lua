@@ -15,6 +15,7 @@ mod.engageId = 1696
 local barrageCount = 1
 local frenzyCount = 1
 local torrentCount = 1
+local hasGoneBerserk = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -22,8 +23,6 @@ local torrentCount = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.berserk_trigger = "Oregorger has gone insane from hunger!"
-
 	L.shard_explosion = "Explosive Shard Explosion"
 	L.shard_explosion_desc = "A separate bar for the explosion that you may wish to enable countdown for if you are a melee class."
 	L.shard_explosion_icon = "6bf_explosive_shard"
@@ -61,8 +60,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ExplosiveShard", 156390)
 	self:Log("SPELL_AURA_APPLIED", "BlackrockSpines", 156834)
 	self:Log("SPELL_CAST_START", "BlackrockBarrage", 156877, 173459)
-	self:Emote("Insane", L.berserk_trigger)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_START", "EarthshakingStomp", "boss1") -- backup for the yell (1s after the emote)
+	self:Log("SPELL_CAST_START", "StartBerserk", 159958) -- Earthshaking Stomp
 	-- Phase 2
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "FeedingFrenzy", "boss1")
 	self:Log("SPELL_AURA_APPLIED_DOSE", "HungerDriveApplied", 155819)
@@ -74,6 +72,7 @@ end
 function mod:OnEngage()
 	frenzyCount = 1
 	torrentCount = 1
+	hasGoneBerserk = nil
 	self:CDBar(156203, 6) -- Retched Blackrock
 	self:CDBar(156390, 9) -- Explosive Shard
 	self:CDBar(156240, 12, CL.count:format(self:SpellName(156240), torrentCount)) -- Acid Torrent
@@ -201,14 +200,10 @@ function mod:RollingFuryApplied(args)
 	self:StopBar(args.spellId)
 end
 
-function mod:Insane()
-	self:Message("berserk", "Important", "Alarm", CL.custom_end:format(self.displayName, self:SpellName(26662)), 26662) -- Berserk
-	self:UnregisterUnitEvent("UNIT_SPELLCAST_START", "boss1")
-end
-
-function mod:EarthshakingStomp(_, spellName, _, _, spellId)
-	if spellId == 159958 then
-		self:Insane()
+function mod:StartBerserk()
+	if not hasGoneBerserk then
+		hasGoneBerserk = true
+		self:Message("berserk", "Important", "Alarm", CL.custom_end:format(self.displayName, self:SpellName(26662)), 26662) -- Berserk
 	end
 end
 

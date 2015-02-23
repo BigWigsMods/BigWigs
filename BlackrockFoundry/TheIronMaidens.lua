@@ -34,7 +34,7 @@ if L then
 
 	L.warming_up = 158849
 	L.warming_up_desc = 158849
-	L.warming_up_icon = "spell_fire_selfdestruct"
+	L.warming_up_icon = "spell_fire_selfdestruct" -- 158849 doesn't have an icon
 
 	L.bombardment = 147135 -- Bombardment
 	L.bombardment_desc = -10854 -- Bombardment Pattern
