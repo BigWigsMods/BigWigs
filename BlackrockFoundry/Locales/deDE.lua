@@ -24,21 +24,11 @@ if L then
 	--L.bombs_dropped = "Bombs dropped! (%d)"
 end
 
-L = BigWigs:NewBossLocale("Hans'gar and Franzok", "deDE")
-if L then
-
-end
-
 L = BigWigs:NewBossLocale("Flamebender Ka'graz", "deDE")
 if L then
 	L.molten_torrent_self = "Geschmolzene Sturzflut auf Dir"
 	L.molten_torrent_self_desc = "Spezieller Countdown für die Geschmolzene Sturzflut auf Dir."
 	L.molten_torrent_self_bar = "Du explodierst!"
-end
-
-L = BigWigs:NewBossLocale("Kromog", "deDE")
-if L then
-
 end
 
 L = BigWigs:NewBossLocale("Beastlord Darmac", "deDE")

@@ -25,21 +25,11 @@ if L then
 	L.bombs_dropped = "폭탄이 떨어졌습니다! (%d)"
 end
 
-L = BigWigs:NewBossLocale("Hans'gar and Franzok", "koKR")
-if L then
-
-end
-
 L = BigWigs:NewBossLocale("Flamebender Ka'graz", "koKR")
 if L then
 	L.molten_torrent_self = "나에게 시전한 녹아내린 격류"
 	L.molten_torrent_self_desc = "녹아내린 격류의 대상이 당신일 때 특수 카운트를 해줍니다."
 	L.molten_torrent_self_bar = "폭발합니다!"
-end
-
-L = BigWigs:NewBossLocale("Kromog", "koKR")
-if L then
-
 end
 
 L = BigWigs:NewBossLocale("Beastlord Darmac", "koKR")

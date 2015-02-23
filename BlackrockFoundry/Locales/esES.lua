@@ -24,21 +24,11 @@ if L then
 	L.bombs_dropped = "¡Bombas arrojadas! (%d)"
 end
 
-L = BigWigs:NewBossLocale("Hans'gar and Franzok", "esES") or BigWigs:NewBossLocale("Hans'gar and Franzok", "esMX")
-if L then
-
-end
-
 L = BigWigs:NewBossLocale("Flamebender Ka'graz", "esES") or BigWigs:NewBossLocale("Flamebender Ka'graz", "esMX")
 if L then
 	L.molten_torrent_self = "Torrente de magma en ti"
 	L.molten_torrent_self_desc = "Cuenta atrás especial cuando Torrente de magma te afecte."
 	L.molten_torrent_self_bar = "¡Explotas!"
-end
-
-L = BigWigs:NewBossLocale("Kromog", "esES") or BigWigs:NewBossLocale("Kromog", "esMX")
-if L then
-
 end
 
 L = BigWigs:NewBossLocale("Beastlord Darmac", "esES") or BigWigs:NewBossLocale("Beastlord Darmac", "esMX")

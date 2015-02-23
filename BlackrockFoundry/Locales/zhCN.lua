@@ -24,21 +24,11 @@ if L then
 	L.bombs_dropped = "炸弹 掉落！(%d)"
 end
 
-L = BigWigs:NewBossLocale("Hans'gar and Franzok", "zhCN")
-if L then
-
-end
-
 L = BigWigs:NewBossLocale("Flamebender Ka'graz", "zhCN")
 if L then
 	L.molten_torrent_self = "自身熔岩激流"
 	L.molten_torrent_self_desc = "当你中了熔岩激流时显示特殊冷却。"
 	L.molten_torrent_self_bar = ">你< 爆炸！"
-end
-
-L = BigWigs:NewBossLocale("Kromog", "zhCN")
-if L then
-
 end
 
 L = BigWigs:NewBossLocale("Beastlord Darmac", "zhCN")

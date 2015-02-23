@@ -16,17 +16,6 @@ local phase = 1
 local stamperWarned = nil
 
 --------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:NewLocale("enUS", true)
-if L then
-	--L.hansgar_return_trigger = "Wait till they get a load of me."
-	--L.franzok_return_trigger = "Hah, you think that was good? You just wait!"
-end
-L = mod:GetLocale()
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 

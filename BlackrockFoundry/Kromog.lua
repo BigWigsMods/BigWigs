@@ -16,16 +16,6 @@ local breathCount = 1
 local callOfTheMountainCount = 1
 
 --------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:NewLocale("enUS", true)
-if L then
-
-end
-L = mod:GetLocale()
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 
