@@ -90,14 +90,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_ENERGIZE", "SmashReschedule", 104915)
 end
 
-function mod:OnBossDisable()
-	if self.db.profile.custom_off_massivesmash_marker then
-		SetRaidTarget(tankName, oldIcon or 0)
-		tankName = nil
-		oldIcon = nil
-	end
-end
-
 function mod:OnEngage()
 	phase = 1
 	massiveSmashProximity = nil
@@ -105,6 +97,14 @@ function mod:OnEngage()
 	self:Bar(156425, 15.5) -- Demolition
 	self:CDBar(155992, 21) -- Shattering Smash
 	self:Bar(156096, 36) -- Marked for Death
+end
+
+function mod:OnBossDisable()
+	if self.db.profile.custom_off_massivesmash_marker and tankName then
+		SetRaidTarget(tankName, oldIcon or 0)
+		tankName = nil
+		oldIcon = nil
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -185,7 +185,7 @@ end
 
 function mod:ShatteringSmash(args)
 	self:Message(155992, "Urgent", "Warning")
-	self:CDBar(155992, 45)
+	self:CDBar(155992, phase == 1 and 30 or 45)
 end
 
 do
