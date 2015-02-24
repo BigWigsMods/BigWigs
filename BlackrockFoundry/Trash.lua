@@ -39,7 +39,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Ogron Hauler ]]--
-		{175765, "TANK"} -- Overhead Smash
+		{175765, "TANK"}, -- Overhead Smash
 		--[[ Darkshard Gnasher ]]--
 		{159632, "FLASH"}, -- Insatiable Hunger
 		--[[ Blackrock Enforcer ]]--
