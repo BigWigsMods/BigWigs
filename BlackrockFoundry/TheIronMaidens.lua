@@ -409,16 +409,16 @@ end
 
 do
 	local targets, scheduled = mod:NewTargetList(), nil
-	local function warnTargets(spellId)
+	local function warnTargets(self, spellId)
 		if not isOnABoat() then
-			mod:TargetMessage(spellId, targets, "Urgent", "Alert")
+			self:TargetMessage(spellId, targets, "Urgent", "Alert")
 		end
 		wipe(targets)
 		scheduled = nil
 	end
 	function mod:HeartseekerApplied(args)
 		targets[#targets+1] = args.destName
-		if self:Me(args.spellId) then
+		if self:Me(args.destGUID) then
 			self:TargetBar(args.spellId, 5, args.destName)
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
@@ -432,7 +432,7 @@ do
 			else
 				self:CDBar(args.spellId, 70)
 			end
-			scheduled = self:ScheduleTimer(warnTargets, 0.1, args.spellId)
+			scheduled = self:ScheduleTimer(warnTargets, 0.1, self, args.spellId)
 		end
 	end
 	function mod:HeartseekerRemoved(args)
