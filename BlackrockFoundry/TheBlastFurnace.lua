@@ -44,7 +44,6 @@ if L then
 
 	L.bombs_dropped = "Bombs dropped! (%d)"
 
-	-- XXX shove me onto wowace
 	L.operator = "Bellows Operator spawns"
 	L.operator_desc = "During phase one, 2 Bellows Operators will repeatedly spawn, 1 on each side of the room."
 	L.operator_icon = 155181 -- inv_gizmo_fuelcell
