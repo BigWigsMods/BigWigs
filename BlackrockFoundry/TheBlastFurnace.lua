@@ -168,7 +168,7 @@ function mod:OnEngage()
 	wipe(engineerBombs)
 
 	self:Bar(155209, blastTime) -- Blast
-	local timer = self:LFR() and 65 or self:Mythic() and 40 or 55
+	local timer = self:LFR() and 65 or self:Mythic() and 40 or self:Heroic() and 55 or 60
 	self:CDBar("engineer", timer, -9649, L.engineer_icon) -- Furnace Engineer
 	self:CDBar("guard", timer, -10803, L.guard_icon) -- Security Guard
 	engiTimer = self:ScheduleTimer("EngineerRepeater", timer)
@@ -230,8 +230,10 @@ function mod:SecurityRepeater() -- Guards
 		timer = regulatorDeaths > 1 and 70 or 60
 	elseif self:Mythic() then
 		timer = regulatorDeaths > 1 and 40 or 30
-	else
+	elseif self:Heroic() then
 		timer = regulatorDeaths > 1 and 55 or 45
+	else
+		timer = regulatorDeaths > 1 and 60 or 50
 	end
 	securityTimer = self:ScheduleTimer("SecurityRepeater", timer)
 	self:Message("guard", "Attention", "Info", CL.spawning:format(self:SpellName(-10803)), L.guard_icon) -- Security Guard
@@ -261,7 +263,7 @@ do
 	end
 
 	function mod:FirecallerRepeater()
-		local timer = self:LFR() and 75 or self:Mythic() and 45 or 55
+		local timer = self:LFR() and 75 or self:Mythic() and 45 or self:Heroic() and 55 or 65
 		firecallerTimer = self:ScheduleTimer("FirecallerRepeater", timer)
 
 		if self.db.profile.custom_off_firecaller_marker then
@@ -284,7 +286,7 @@ end
 do
 	-- Engineers
 	function mod:EngineerRepeater()
-		local timer = self:LFR() and 35 or self:Mythic() and 35 or 40
+		local timer = self:Heroic() and 40 or 35
 		engiTimer = self:ScheduleTimer("EngineerRepeater", timer)
 		self:Message("engineer", "Attention", "Info", CL.spawning:format(self:SpellName(-9649)), L.engineer_icon) -- Furnace Engineer
 		self:CDBar("engineer", timer, -9649, L.engineer_icon) -- Furnace Engineer
@@ -430,7 +432,7 @@ function mod:MeltArmor(args)
 end
 
 function mod:Rupture(args)
-	self:TargetMessage(args.spellId, "Urgent", "Alarm")
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
 	if self:Me(args.destGUID) then
 		self:Bar(args.spellId, 5, CL.you:format(args.spellName))
 		self:Flash(args.spellId)
