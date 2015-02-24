@@ -211,7 +211,6 @@ do
 	local GetSpellInfo, PlaySoundFile, PlaySound, type = GetSpellInfo, PlaySoundFile, PlaySound, type
 	function plugin:BigWigs_Sound(event, module, key, sound, overwrite)
 		if bwDb.sound then
-			if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end -- XXX temp 6.1 store as id
 			local sDb = db[sound]
 			if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
 				if db.defaultonly and not overwrite then

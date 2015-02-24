@@ -180,7 +180,6 @@ function boss:OnDisable(isWipe)
 	end
 end
 function boss:GetOption(key)
-	if type(key) == "number" and key > 0 then key = spells[key] end -- XXX temp 6.1 store as id
 	return self.db.profile[key]
 end
 function boss:Reboot(isWipe)
@@ -829,7 +828,6 @@ do
 	end
 	function boss:Dispeller(dispelType, isOffensive, key)
 		if key then
-			if type(key) == "number" and key > 0 then key = spells[key] end -- XXX temp 6.1 store as id
 			if band(self.db.profile[key], C.DISPEL) ~= C.DISPEL then return true end
 		end
 		if isOffensive then
@@ -892,7 +890,6 @@ do
 		if type(key) == "nil" then core:Print(format(nilKeyError, self.name)) return end
 		if type(flag) ~= "number" then core:Print(format(invalidFlagError, self.name, type(flag), tostring(flag))) return end
 		if silencedOptions[key] then return end
-		if type(key) == "number" and key > 0 then key = spells[key] end -- XXX temp 6.1 store as id
 		if type(self.db) ~= "table" then core:Print(format(noDBError, self.name)) return end
 		if type(self.db.profile[key]) ~= "number" then
 			if not self.toggleDefaults[key] then

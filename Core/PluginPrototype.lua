@@ -27,7 +27,6 @@ function plugin:IsBossModule() return end
 do
 	local C = core.C
 	function plugin:CheckOption(key, flag)
-		if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end -- XXX temp 6.1 store as id
 		return self.db.profile[key] and bit.band(self.db.profile[key], C[flag]) == C[flag]
 	end
 end

@@ -229,7 +229,6 @@ plugin.pluginOptions.args.resetAll = {
 local white = { 1, 1, 1 }
 function plugin:GetColorTable(hint, module, key)
 	if not self.db.profile[hint] then return white end
-	if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end -- XXX temp 6.1 store as id
 	local name
 	if not module or not key then
 		name = plugin.name

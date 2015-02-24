@@ -396,7 +396,6 @@ do
 			if time > 1.3 then
 				if not timers[text] then timers[text] = {} end
 				local name = module.name
-				if type(key) == "number" and key > 0 then key = GetSpellInfo(key) end -- XXX temp 6.1 store as id
 				timers[text][1] = module:ScheduleTimer(printEmph, time-1.3, 1, name, key, text)
 				for i = 2, self.db.profile.countdownTime do
 					local t = i + 0.3

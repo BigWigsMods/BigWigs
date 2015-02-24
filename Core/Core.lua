@@ -596,7 +596,7 @@ do
 					if v > 0 then
 						local n = GetSpellInfo(v)
 						if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
-						module.toggleDefaults[n] = bitflags -- XXX temp 6.1 store as id (change to v)
+						module.toggleDefaults[v] = bitflags
 					else
 						local n = EJ_GetSectionInfo(-v)
 						if not n then error(("Invalid ej ID %d in the toggleOptions for module %s."):format(-v, module.name)) end
