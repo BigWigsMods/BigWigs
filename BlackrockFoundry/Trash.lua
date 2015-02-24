@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Blackrock Foundry Trash", 988)
 if not mod then return end
 mod.displayName = CL.trash
 mod:RegisterEnableMob(
+	87719, -- Ogron Hauler
 	78978, -- Darkshard Gnasher
 	79208, -- Blackrock Enforcer
 	76906 -- Operator Thogar, alternative for Blast Furnace Exhaust
@@ -24,6 +25,7 @@ mod:RegisterEnableMob(
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.hauler = "Ogron Hauler"
 	L.gnasher = "Darkshard Gnasher"
 	L.enforcer = "Blackrock Enforcer"
 	L.furnace = "Blast Furnace Exhaust"
@@ -36,6 +38,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		--[[ Ogron Hauler ]]--
+		{175765, "TANK"} -- Overhead Smash
 		--[[ Darkshard Gnasher ]]--
 		{159632, "FLASH"}, -- Insatiable Hunger
 		--[[ Blackrock Enforcer ]]--
@@ -43,6 +47,7 @@ function mod:GetOptions()
 		--[[ Blast Furnace Exhaust ]]--
 		{174773, "FLASH"}, -- Exhaust Fumes
 	}, {
+		[175765] = L.hauler,
 		[159632] = L.gnasher,
 		[160260] = L.enforcer,
 		[174773] = L.furnace,
@@ -51,6 +56,9 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterMessage("BigWigs_OnBossEngage", "Disable")
+	self:Death("Disable", 87719) -- Ogron Hauler
+
+	self:Log("SPELL_AURA_APPLIED", "OverheadSmash", 175765)
 
 	self:Log("SPELL_AURA_APPLIED", "InsatiableHunger", 159632)
 	self:Log("SPELL_AURA_REMOVED", "InsatiableHungerRemoved", 159632)
@@ -67,6 +75,15 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+--[[ Ogron Hauler ]]--
+
+function mod:OverheadSmash(args)
+	if self:Tank(args.destName) then
+		self:TargetBar(args.spellId, 10, args.destName)
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
+	end
+end
 
 --[[ Darkshard Gnasher ]]--
 
