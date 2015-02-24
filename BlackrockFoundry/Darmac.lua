@@ -14,6 +14,7 @@ mod.engageId = 1694
 
 local phase = 1
 local tantrumCount = 1
+local conflagMark = 1
 local activatedMounts, currentBosses = {}, {}
 local spearList, spearMarksUsed = {}, {}
 local pinnedList = mod:NewTargetList()
@@ -117,6 +118,7 @@ end
 
 function mod:OnEngage(diff)
 	phase = 1
+	conflagMark = 1
 	wipe(activatedMounts)
 	wipe(pinnedList)
 
@@ -337,18 +339,21 @@ do
 end
 
 do
-	local conflagList, conflagMark, scheduled = mod:NewTargetList(), 8, nil
+	local conflagList, scheduled = mod:NewTargetList(), nil
 	local function warnConflag(self, spellId)
 		self:TargetMessage(spellId, conflagList, "Urgent", self:Dispeller("magic") and "Info")
 		scheduled = nil
+	end
+	local function resetCount()
+		conflagMark = 1
 	end
 
 	function mod:ConflagrationApplied(args)
 		conflagList[#conflagList+1] = args.destName
 		if not scheduled then
-			conflagMark = 1
 			self:Bar(args.spellId, 20)
-			scheduled = self:ScheduleTimer(warnConflag, 0.1, self, args.spellId)
+			self:ScheduleTimer(resetCount, 10)
+			scheduled = self:ScheduleTimer(warnConflag, 0.4, self, args.spellId)
 		end
 		if self.db.profile.custom_off_conflag_marker and conflagMark < 4 then
 			SetRaidTarget(args.destName, conflagMark)
