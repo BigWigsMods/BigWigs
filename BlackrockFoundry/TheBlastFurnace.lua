@@ -85,7 +85,7 @@ function mod:GetOptions()
 		--[[ Foreman Feldspar ]]--
 		156937, -- Pyroclasm
 		{175104, "TANK_HEALER"}, -- Melt Armor
-		{156932, "SAY", "FLASH"}, -- Rupture
+		{156934, "SAY", "FLASH"}, -- Rupture
 		--[[ Primal Elementalist ]]--
 		-10325, -- Shields Down
 		"custom_on_shieldsdown_marker",
@@ -425,11 +425,11 @@ function mod:MeltArmor(args)
 end
 
 function mod:Rupture(args)
+	self:TargetMessage(args.spellId, "Urgent", "Alarm")
 	if self:Me(args.destGUID) then
-		self:Message(156932, "Personal", "Alarm", CL.you:format(args.spellName))
-		self:Bar(156932, 5, CL.you:format(args.spellName))
-		self:Flash(156932)
-		self:Say(156932)
+		self:Bar(args.spellId, 5, CL.you:format(args.spellName))
+		self:Flash(args.spellId)
+		self:Say(args.spellId)
 	end
 end
 
@@ -439,8 +439,8 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
-			self:Flash(args.spellId)
+			self:Message(156934, "Personal", "Info", CL.underyou:format(args.spellName))
+			self:Flash(156934)
 		end
 	end
 end
