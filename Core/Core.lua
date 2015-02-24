@@ -355,13 +355,14 @@ do
 	end
 end
 
-function addon:RAID_BOSS_WHISPER(_, msg) -- Purely for Transcriptor assisting logging purposes.
+function addon:RAID_BOSS_WHISPER(_, msg) -- Purely for Transcriptor to assist in logging purposes.
 	if IsInGroup() then
-		if msg:len() < 225 then -- Safety
+		local len = msg:len()
+		if len < 230 then -- Safety
 			SendAddonMessage("Transcriptor", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		else
 			local id = msg:match("spell:%d+") or ""
-			self:Print("Detected a boss whisper larger than 225 characters. "..id)
+			self:Print(("Detected a boss whisper with %d characters. %s"):format(len, id))
 		end
 	end
 end
