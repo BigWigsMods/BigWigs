@@ -180,8 +180,8 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			if not spellName then error(("Invalid option %d in module %s."):format(option, module.name)) end
 			local desc = GetSpellDescription(option)
 			if not desc then BigWigs:Print(("No spell description was returned for id %d!"):format(option)) desc = "" end
-			local roleIcon, roleDesc = getRoleStrings(module, spellName)
-			return spellName, spellName..roleIcon, roleDesc..desc, icon
+			local roleIcon, roleDesc = getRoleStrings(module, option)
+			return option, spellName..roleIcon, roleDesc..desc, icon
 		else
 			-- This is an EncounterJournal ID
 			local title, description, _, abilityIcon, displayInfo = EJ_GetSectionInfo(-option)
