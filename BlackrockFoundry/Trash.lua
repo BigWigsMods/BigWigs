@@ -59,6 +59,7 @@ function mod:OnBossEnable()
 	self:Death("Disable", 87719) -- Ogron Hauler
 
 	self:Log("SPELL_AURA_APPLIED", "OverheadSmash", 175765)
+	self:Log("SPELL_AURA_REMOVED", "OverheadSmashRemoved", 175765)
 
 	self:Log("SPELL_AURA_APPLIED", "InsatiableHunger", 159632)
 	self:Log("SPELL_AURA_REMOVED", "InsatiableHungerRemoved", 159632)
@@ -82,6 +83,12 @@ function mod:OverheadSmash(args)
 	if self:Tank(args.destName) then
 		self:TargetBar(args.spellId, 10, args.destName)
 		self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
+	end
+end
+
+function mod:OverheadSmashRemoved(args)
+	if self:Tank(args.destName) then
+		self:StopBar(args.spellId, args.destName)
 	end
 end
 
