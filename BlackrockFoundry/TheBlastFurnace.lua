@@ -297,20 +297,26 @@ do
 		end
 	end
 
+	local prev = 0
 	function mod:Bomb(args)
 		engineerBombs[args.sourceGUID] = (engineerBombs[args.sourceGUID] or 5) - 1
 
 		if self:Me(args.destGUID) then
-			self:Message(155192, "Positive", "Alarm", CL.you:format(args.spellName)) -- is good thing
 			local t = 15
 			if args.spellId == 174716 then -- from the bomb sack
 				local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 				t = expires - GetTime()
 			end
 			self:TargetBar(155192, t, args.destName)
-			self:Flash(155192)
-			self:Say(155192)
 			bombOnMe = true
+
+			local t = GetTime()
+			if t-prev > 3 then
+				prev = t
+				self:Message(155192, "Positive", "Alarm", CL.you:format(args.spellName)) -- is good thing
+				self:Flash(155192)
+				self:Say(155192)
+			end
 		end
 		if not tContains(bombTargets, args.destName) then -- SPELL_AURA_REFRESH
 			bombTargets[#bombTargets+1] = args.destName
