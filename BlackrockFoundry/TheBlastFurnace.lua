@@ -169,10 +169,11 @@ function mod:OnEngage()
 	wipe(engineerBombs)
 
 	self:Bar(155209, blastTime) -- Blast
-	self:CDBar("engineer", 55, -9649, L.engineer_icon) -- Furnace Engineer
-	self:CDBar("guard", 55, -10803, L.guard_icon) -- Security Guard
-	engiTimer = self:ScheduleTimer("EngineerRepeater", 55)
-	securityTimer = self:ScheduleTimer("SecurityRepeater", 55)
+	local timer = self:LFR() and 65 or self:Mythic() and 40 or 55
+	self:CDBar("engineer", timer, -9649, L.engineer_icon) -- Furnace Engineer
+	self:CDBar("guard", timer, -10803, L.guard_icon) -- Security Guard
+	engiTimer = self:ScheduleTimer("EngineerRepeater", timer)
+	securityTimer = self:ScheduleTimer("SecurityRepeater", timer)
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 	if not self:LFR() then
 		self:Berserk(780) -- XXX not sure if 13min in Mythic aswell
@@ -225,7 +226,14 @@ do
 end
 
 function mod:SecurityRepeater() -- Guards
-	local timer = regulatorDeaths > 1 and 55 or 45
+	local timer
+	if self:LFR() then
+		timer = regulatorDeaths > 1 and 70 or 60
+	elseif self:Mythic() then
+		timer = regulatorDeaths > 1 and 40 or 30
+	else
+		timer = regulatorDeaths > 1 and 55 or 45
+	end
 	securityTimer = self:ScheduleTimer("SecurityRepeater", timer)
 	self:Message("guard", "Attention", "Info", CL.spawning:format(self:SpellName(-10803)), L.guard_icon) -- Security Guard
 	self:CDBar("guard", timer, -10803, L.guard_icon) -- Security Guard
@@ -254,7 +262,8 @@ do
 	end
 
 	function mod:FirecallerRepeater()
-		firecallerTimer = self:ScheduleTimer("FirecallerRepeater", 55)
+		local timer = self:LFR() and 75 or self:Mythic() and 45 or 55
+		firecallerTimer = self:ScheduleTimer("FirecallerRepeater", timer)
 
 		if self.db.profile.custom_off_firecaller_marker then
 			wipe(firecallerMarksUsed)
@@ -263,7 +272,7 @@ do
 		end
 
 		self:Message("firecaller", "Attention", "Info", CL.spawning:format(self:SpellName(-9659)), L.firecaller_icon) -- Firecaller
-		self:CDBar("firecaller", 55, -9659, L.firecaller_icon) -- Firecaller
+		self:CDBar("firecaller", timer, -9659, L.firecaller_icon) -- Firecaller
 	end
 
 	function mod:CauterizeWounds(args)
@@ -276,9 +285,10 @@ end
 do
 	-- Engineers
 	function mod:EngineerRepeater()
-		engiTimer = self:ScheduleTimer("EngineerRepeater", 40)
+		local timer = self:LFR() and 35 or self:Mythic() and 35 or 40
+		engiTimer = self:ScheduleTimer("EngineerRepeater", timer)
 		self:Message("engineer", "Attention", "Info", CL.spawning:format(self:SpellName(-9649)), L.engineer_icon) -- Furnace Engineer
-		self:CDBar("engineer", 40, -9649, L.engineer_icon) -- Furnace Engineer
+		self:CDBar("engineer", timer, -9649, L.engineer_icon) -- Furnace Engineer
 	end
 
 	function mod:Repair(args)
@@ -534,6 +544,7 @@ function mod:Deaths(args)
 		if regulatorDeaths > 1 then
 			-- Primalists spawn
 			self:StopBar(-9650) -- Bellows Operator
+			self:StopBar(-9649) -- Furnace Engineer
 			self:CancelTimer(engiTimer)
 			self:CancelTimer(securityTimer)
 			self:CDBar("guard", 70, -10803, L.guard_icon) -- Security Guard
