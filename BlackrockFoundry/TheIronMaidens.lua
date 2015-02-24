@@ -67,7 +67,7 @@ function mod:GetOptions()
 		158599, -- Deploy Turret
 		--[[ Sorka ]]--
 		155794, -- Blade Dash
-		{156109, "DISPEL"}, -- Convulsive Shadows
+		{156109, "FLASH", "DISPEL"}, -- Convulsive Shadows
 		158315, -- Dark Hunt
 		--[[ Marak ]]--
 		{159724, "ICON", "SAY", "FLASH"}, -- Blood Ritual
@@ -98,8 +98,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "PenetratingShotRemoved", 164271)
 	self:Log("SPELL_CAST_START", "DeployTurret", 158599)
 	-- Sorka
-	self:Log("SPELL_CAST_START", "BladeDash", 155794)
-	self:Log("SPELL_CAST_SUCCESS", "ConvulsiveShadows", 156109)
+	self:Log("SPELL_CAST_SUCCESS", "BladeDash", 155794)
+	self:Log("SPELL_CAST_START", "ConvulsiveShadows", 156109)
 	self:Log("SPELL_AURA_APPLIED", "DarkHunt", 158315)
 	-- Marak
 	self:Log("SPELL_AURA_APPLIED", "BloodRitual", 159724)
@@ -347,24 +347,34 @@ end
 
 function mod:BladeDash(args)
 	if isOnABoat() then
-		boatTimers[args.spellId] = GetTime() + 20
+		boatTimers[args.spellId] = GetTime() + 18
 		return
 	end
-	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 20)
+	self:TargetMessage(args.spellId, args.destName, "Attention")
+	self:Bar(args.spellId, 18)
 end
 
-function mod:ConvulsiveShadows(args)
-	local dispeller = self:Dispeller("magic", nil, 156109)
-	if dispeller and isOnABoat() then
-		boatTimers[args.spellId] = GetTime() + 56
-		return
+do
+	local dispeller = nil
+	local function printTarget(self, name, guid)
+		if dispeller or self:Me(guid) then
+			self:TargetMessage(156109, name, "Urgent", "Info")
+		end
+		if self:Me(guid) then
+			self:Flash(156109)
+		end
 	end
-	if dispeller or self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Urgent", "Info")
-	end
-	if dispeller then
-		self:Bar(args.spellId, 56)
+
+	function mod:ConvulsiveShadows(args)
+		dispeller = self:Dispeller("magic", nil, args.spellId)
+		if dispeller and isOnABoat() then
+			boatTimers[args.spellId] = GetTime() + 56
+			return
+		end
+		self:GetBossTarget(printTarget, 0.2, args.sourceGUID)
+		if dispeller then
+			self:Bar(args.spellId, 56)
+		end
 	end
 end
 
