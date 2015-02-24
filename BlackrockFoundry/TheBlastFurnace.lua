@@ -565,6 +565,8 @@ function mod:Deaths(args)
 			-- The Fury is free! (after the next Blast cast?)
 			self:CancelTimer(securityTimer)
 			self:CancelTimer(firecallerTimer)
+			self:StopBar(-10803) -- Security Guard
+			self:StopBar(-9659) -- Firecaller
 		end
 	end
 end
