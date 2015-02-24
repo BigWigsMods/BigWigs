@@ -15,11 +15,16 @@ mod.engageId = 1690
 local regulatorDeaths = 0
 local shamanDeaths = 0
 local blastTime = 30
+local firstOperators = nil
 local volatileFireOnMe = nil
 local volatileFireTargets = {}
 local bombOnMe = nil
 local bombTargets = {}
 local engineerBombs = {}
+local engiTimer = nil
+local securityTimer = nil
+local firecallerTimer = nil
+local markedFirecallers = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -31,9 +36,30 @@ if L then
 	L.custom_on_shieldsdown_marker_desc = "Mark a vulnerable Primal Elementalist with {rt8}, requires promoted or leader."
 	L.custom_on_shieldsdown_marker_icon = 8
 
+	L.custom_off_firecaller_marker = "Firecaller marker"
+	L.custom_off_firecaller_marker_desc = "Mark Firecallers with {rt7}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the mobs is the fastest way to mark them.|r"
+	L.custom_off_firecaller_marker_icon = 6
+
 	L.heat_increased_message = "Heat increased! Blast every %ss"
 
 	L.bombs_dropped = "Bombs dropped! (%d)"
+
+	-- XXX shove me onto wowace
+	L.operator = "Bellows Operator spawns"
+	L.operator_desc = "During phase one, 2 Bellows Operators will repeatedly spawn on each side of the room."
+	L.operator_icon = 155181 -- inv_gizmo_fuelcell
+
+	L.engineer = "Furnace Engineer spawns"
+	L.engineer_desc = "During phase one, 2 Furnace Engineers will repeatedly spawn on each side of the room."
+	L.engineer_icon = 63603 -- inv_misc_wrench_02
+
+	L.guard = "Security Guard spawns"
+	L.guard_desc = "During phase one, 2 Security Guards will repeatedly spawn on each side of the room. During phase two, 1 Security Guard will repeatedly spawn at the entrance of the room."
+	L.guard_icon = 160382 -- inv_shield_32
+
+	L.firecaller = "Firecaller spawns"
+	L.firecaller_desc = "During phase two, 2 Firecallers will repeatedly spawn on each side of the room."
+	L.firecaller_icon = 24826 -- spell_fire_incinerate
 end
 L = mod:GetLocale()
 
@@ -44,10 +70,18 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Adds ]]--
-		-9650, -- Bellows Operator
-		155179, -- Repair (Furnace Engineer)
-		{155192, "SAY", "PROXIMITY", "FLASH"}, -- Bomb (Furnace Engineer)
-		174731, -- Cluster of Lit Bombs (Furnace Engineer)
+		"operator", -- Bellows Operator
+		{"guard", "TANK"}, -- Security Guard
+		--[[ Firecaller ]]--
+		"firecaller", -- Firecaller
+		155186, -- Cauterize Wounds
+		{176121, "SAY", "PROXIMITY", "FLASH"}, -- Volatile Fire
+		"custom_off_firecaller_marker",
+		--[[ Furnace Engineer ]]--
+		"engineer", -- Furnace Engineer
+		155179, -- Repair
+		{155192, "SAY", "PROXIMITY", "FLASH"}, -- Bomb
+		174731, -- Cluster of Lit Bombs
 		--[[ Foreman Feldspar ]]--
 		156937, -- Pyroclasm
 		{175104, "TANK_HEALER"}, -- Melt Armor
@@ -56,23 +90,27 @@ function mod:GetOptions()
 		-10325, -- Shields Down
 		"custom_on_shieldsdown_marker",
 		{155173, "DISPEL"}, -- Reactive Earth Shield
-		-10324, -- Fixate (Slag Elemental)
-		176133, -- Slag Bomb (Slag Elemental)
-		155186, -- Cauterize Wounds (Firecaller)
-		{176121, "SAY", "PROXIMITY", "FLASH"}, -- Volatile Fire (Firecaller)
+		--[[ Slag Elemental ]]--
+		-10324, -- Fixate
+		176133, -- Slag Bomb
 		--[[ Heart of the Mountain ]]--
 		155209, -- Blast
 		{155242, "TANK"}, -- Heat
 		{155225, "SAY", "FLASH"}, -- Melt
 		163776, -- Superheated
+		--[[ General ]]--
 		"stages",
 		"berserk",
 		"bosskill"
 	}, {
-		[-9650] = CL.adds,
+		["operator"] = CL.adds,
+		["firecaller"] = -9659, -- Firecaller
+		["engineer"] = -9649, -- Furnace Engineer
 		[156937] = -9640, -- Foreman Feldspar
 		[-10325] = -9655, -- Primal Elementalist
+		[-10324] = -9657, -- Slag Elemental
 		[155209] = -10808, -- Heart of the Mountain
+		["stages"] = "general",
 	}
 end
 
@@ -122,13 +160,19 @@ function mod:OnEngage()
 	regulatorDeaths, shamanDeaths = 0, 0
 	blastTime = 30
 
+	wipe(markedFirecallers) -- Save guids for the entire fight so we never re-mark
 	wipe(volatileFireTargets)
 	wipe(bombTargets)
 	volatileFireOnMe = nil
 	bombOnMe = nil
+	firstOperators = nil
 	wipe(engineerBombs)
 
 	self:Bar(155209, blastTime) -- Blast
+	self:CDBar("engineer", 55, -9649, L.engineer_icon) -- Furnace Engineer
+	self:CDBar("guard", 55, -10803, L.guard_icon) -- Security Guard
+	engiTimer = self:ScheduleTimer("EngineerRepeater", 55)
+	securityTimer = self:ScheduleTimer("SecurityRepeater", 55)
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 	if not self:LFR() then
 		self:Berserk(780) -- XXX not sure if 13min in Mythic aswell
@@ -163,58 +207,122 @@ end
 -- Adds
 
 do
+	-- Operators
 	local prev = 0
 	function mod:Loading(args)
 		local t = GetTime()
 		if t-prev > 5 then
 			prev = t
-			self:Message(-9650, "Attention", "Info") -- Bellows Operator
-			self:Bar(-9650, 64, nil, 155181)
+			if not firstOperators then
+				firstOperators = true
+				self:CDBar("operator", 53, -9650, L.operator_icon) -- Bellows Operator
+			else
+				self:Message("operator", "Attention", "Info", CL.incoming:format(self:SpellName(-9650)), L.operator_icon) -- Bellows Operator
+				self:CDBar("operator", 58, -9650, L.operator_icon) -- Bellows Operator
+			end
 		end
 	end
 end
 
-function mod:Repair(args)
-	if not self:Healer() then
-		self:Message(args.spellId, "Personal", "Alert", CL.other:format(args.sourceName, args.spellName))
-	end
+function mod:SecurityRepeater() -- Guards
+	local timer = regulatorDeaths > 1 and 55 or 45
+	securityTimer = self:ScheduleTimer("SecurityRepeater", timer)
+	self:Message("guard", "Attention", "Info", CL.spawning:format(self:SpellName(-10803)), L.guard_icon) -- Security Guard
+	self:CDBar("guard", timer, -10803, L.guard_icon) -- Security Guard
 end
 
-function mod:Bomb(args)
-	engineerBombs[args.sourceGUID] = (engineerBombs[args.sourceGUID] or 5) - 1
-
-	if self:Me(args.destGUID) then
-		self:Message(155192, "Positive", "Alarm", CL.you:format(args.spellName)) -- is good thing
-		local t = 15
-		if args.spellId == 174716 then -- from the bomb sack
-			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
-			t = expires - GetTime()
+do
+	-- Firecallers
+	local firecallerMarksUsed = {}
+	function mod:UNIT_TARGET(_, firedUnit)
+		local unit = firedUnit and firedUnit.."target" or "mouseover"
+		local guid = UnitGUID(unit)
+		if self:MobId(guid) == 76821 and not markedFirecallers[guid] then
+			for i = 7, 6, -1 do
+				if not firecallerMarksUsed[i] then
+					SetRaidTarget(unit, i)
+					firecallerMarksUsed[i] = guid
+					markedFirecallers[guid] = true
+					if i == 6 then
+						self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+						self:UnregisterEvent("UNIT_TARGET")
+					end
+					return
+				end
+			end
 		end
-		self:TargetBar(155192, t, args.destName)
-		self:Flash(155192)
-		self:Say(155192)
-		bombOnMe = true
-	end
-	if not tContains(bombTargets, args.destName) then -- SPELL_AURA_REFRESH
-		bombTargets[#bombTargets+1] = args.destName
 	end
 
-	updateProximity()
+	function mod:FirecallerRepeater()
+		firecallerTimer = self:ScheduleTimer("FirecallerRepeater", 55)
+
+		if self.db.profile.custom_off_firecaller_marker then
+			wipe(firecallerMarksUsed)
+			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
+			self:RegisterEvent("UNIT_TARGET")
+		end
+
+		self:Message("firecaller", "Attention", "Info", CL.spawning:format(self:SpellName(-9659)), L.firecaller_icon) -- Firecaller
+		self:CDBar("firecaller", 55, -9659, L.firecaller_icon) -- Firecaller
+	end
+
+	function mod:CauterizeWounds(args)
+		if UnitGUID("target") == args.sourceGUID or UnitGUID("focus") == args.sourceGUID then
+			self:Message(args.spellId, "Urgent", not self:Healer() and "Alert")
+		end
+	end
 end
 
-function mod:BombRemoved(args)
-	if self:Me(args.destGUID) then
-		self:StopBar(args.spellId, args.destName)
-		self:CloseProximity(args.spellId)
-		bombOnMe = nil
-	end
-	tDeleteItem(bombTargets, args.destName)
-
-	if #bombTargets == 0 then
-		self:CloseProximity(args.spellId)
+do
+	-- Engineers
+	function mod:EngineerRepeater()
+		engiTimer = self:ScheduleTimer("EngineerRepeater", 40)
+		self:Message("engineer", "Attention", "Info", CL.spawning:format(self:SpellName(-9649)), L.engineer_icon) -- Furnace Engineer
+		self:CDBar("engineer", 40, -9649, L.engineer_icon) -- Furnace Engineer
 	end
 
-	updateProximity()
+	function mod:Repair(args)
+		if not self:Healer() then
+			self:Message(args.spellId, "Personal", "Alert", CL.other:format(args.sourceName, args.spellName))
+		end
+	end
+
+	function mod:Bomb(args)
+		engineerBombs[args.sourceGUID] = (engineerBombs[args.sourceGUID] or 5) - 1
+
+		if self:Me(args.destGUID) then
+			self:Message(155192, "Positive", "Alarm", CL.you:format(args.spellName)) -- is good thing
+			local t = 15
+			if args.spellId == 174716 then -- from the bomb sack
+				local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+				t = expires - GetTime()
+			end
+			self:TargetBar(155192, t, args.destName)
+			self:Flash(155192)
+			self:Say(155192)
+			bombOnMe = true
+		end
+		if not tContains(bombTargets, args.destName) then -- SPELL_AURA_REFRESH
+			bombTargets[#bombTargets+1] = args.destName
+		end
+
+		updateProximity()
+	end
+
+	function mod:BombRemoved(args)
+		if self:Me(args.destGUID) then
+			self:StopBar(args.spellId, args.destName)
+			self:CloseProximity(args.spellId)
+			bombOnMe = nil
+		end
+		tDeleteItem(bombTargets, args.destName)
+
+		if #bombTargets == 0 then
+			self:CloseProximity(args.spellId)
+		end
+
+		updateProximity()
+	end
 end
 
 -- Primal Elementalist
@@ -261,10 +369,6 @@ function mod:ReactiveEarthShield(args)
 	if self:MobId(args.destGUID) == "76815" and self:Dispeller("magic", nil, args.spellId) then
 		self:Message(args.spellId, "Urgent", "Info")
 	end
-end
-
-function mod:CauterizeWounds(args)
-	self:Message(args.spellId, "Urgent", not self:Healer() and "Alert")
 end
 
 function mod:VolatileFireApplied(args)
@@ -430,12 +534,20 @@ function mod:Deaths(args)
 		if regulatorDeaths > 1 then
 			-- Primalists spawn
 			self:StopBar(-9650) -- Bellows Operator
+			self:CancelTimer(engiTimer)
+			self:CancelTimer(securityTimer)
+			self:CDBar("guard", 70, -10803, L.guard_icon) -- Security Guard
+			securityTimer = self:ScheduleTimer("SecurityRepeater", 70)
+			self:CDBar("firecaller", 75, -9659, L.firecaller_icon) -- Firecaller
+			firecallerTimer = self:ScheduleTimer("FirecallerRepeater", 75)
 		end
 	elseif args.mobId == 76815 then
 		shamanDeaths = shamanDeaths + 1
 		self:Message("stages", "Neutral", "Info", CL.mob_killed:format(args.destName, shamanDeaths, 4), false)
 		if shamanDeaths > 3 then
 			-- The Fury is free! (after the next Blast cast?)
+			self:CancelTimer(securityTimer)
+			self:CancelTimer(firecallerTimer)
 		end
 	end
 end
