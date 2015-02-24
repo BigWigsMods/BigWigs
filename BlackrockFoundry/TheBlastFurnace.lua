@@ -46,19 +46,19 @@ if L then
 
 	-- XXX shove me onto wowace
 	L.operator = "Bellows Operator spawns"
-	L.operator_desc = "During phase one, 2 Bellows Operators will repeatedly spawn on each side of the room."
+	L.operator_desc = "During phase one, 2 Bellows Operators will repeatedly spawn, 1 on each side of the room."
 	L.operator_icon = 155181 -- inv_gizmo_fuelcell
 
 	L.engineer = "Furnace Engineer spawns"
-	L.engineer_desc = "During phase one, 2 Furnace Engineers will repeatedly spawn on each side of the room."
+	L.engineer_desc = "During phase one, 2 Furnace Engineers will repeatedly spawn, 1 on each side of the room."
 	L.engineer_icon = 63603 -- inv_misc_wrench_02
 
 	L.guard = "Security Guard spawns"
-	L.guard_desc = "During phase one, 2 Security Guards will repeatedly spawn on each side of the room. During phase two, 1 Security Guard will repeatedly spawn at the entrance of the room."
+	L.guard_desc = "During phase one, 2 Security Guards will repeatedly spawn, 1 on each side of the room. During phase two, 1 Security Guard will repeatedly spawn at the entrance of the room."
 	L.guard_icon = 160382 -- inv_shield_32
 
 	L.firecaller = "Firecaller spawns"
-	L.firecaller_desc = "During phase two, 2 Firecallers will repeatedly spawn on each side of the room."
+	L.firecaller_desc = "During phase two, 2 Firecallers will repeatedly spawn, 1 on each side of the room."
 	L.firecaller_icon = 24826 -- spell_fire_incinerate
 end
 L = mod:GetLocale()
