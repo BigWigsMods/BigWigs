@@ -57,6 +57,14 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:Log("SPELL_AURA_APPLIED", "FlameJetDamage", 159311)
+	self:Log("SPELL_PERIODIC_DAMAGE", "FlameJetDamage", 159311)
+	self:Log("SPELL_PERIODIC_MISSED", "FlameJetDamage", 159311)
+
+	self:Log("SPELL_AURA_APPLIED", "MaulingBrewDamage", 159413)
+	self:Log("SPELL_PERIODIC_DAMAGE", "MaulingBrewDamage", 159413)
+	self:Log("SPELL_PERIODIC_MISSED", "MaulingBrewDamage", 159413)
+
 	self:Log("SPELL_AURA_APPLIED", "FirePillar", 159202) -- Flame Jet
 	self:Log("SPELL_CAST_START", "Impale", 159113)
 	self:Log("SPELL_AURA_APPLIED", "BladeDance", 159250)
@@ -65,10 +73,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "BerserkerRushRemoved", 158986)
 	self:Log("SPELL_CAST_START", "ChainHurl", 159947)
 	self:Log("SPELL_AURA_APPLIED", "ChainHurlApplied", 159947)
-	self:Log("SPELL_PERIODIC_DAMAGE", "FlameJetDamage", 159311)
-	self:Log("SPELL_PERIODIC_MISSED", "FlameJetDamage", 159311)
-	self:Log("SPELL_PERIODIC_DAMAGE", "MaulingBrewDamage", 159413)
-	self:Log("SPELL_PERIODIC_MISSED", "MaulingBrewDamage", 159413)
 	self:Log("SPELL_CAST_START", "VileBreath", 160521)
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "OnTheHunt", 162497)
