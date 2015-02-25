@@ -31,8 +31,6 @@ if L then
 	L.add_death_soon = "Add dying soon!"
 	L.slow_fixate = "Slow+Fixate"
 
-	L.gaze_target_message = "Glimpse targeting YOU!"
-
 	L.adds = "Night-Twisted Faithful"
 	L.adds_desc = "Timer for when Night-Twisted Faithful enter the fight."
 	L.adds_icon = "spell_shadow_raisedead"
@@ -62,7 +60,7 @@ function mod:GetOptions()
 		165116, -- Entropy
 		165876, -- Enveloping Night
 		165243, -- Glimpse of Madness
-		{176537, "FLASH"},
+		{176537, "FLASH"}, -- Eyes of the Abyss
 		{165595, "PROXIMITY", "SAY"}, -- Gaze of the Abyss
 		"adds", -- Night-Twisted Faithful
 		{176533, "FLASH"}, -- Growing Darkness
@@ -100,8 +98,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	--self:Log("SPELL_CAST_SUCCESS", "PhaseEnd", 181089) -- XXX 6.1
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "PhaseEnd", "boss1")
+	self:Log("SPELL_CAST_SUCCESS", "PhaseEnd", 181089) -- Encounter Event
 	self:Log("SPELL_AURA_APPLIED", "DisplacementPhaseStart", 158013) -- Power of Displacement
 	self:Log("SPELL_AURA_APPLIED", "PhaseStart", 158012, 157964) -- Power of Fortification, Replication
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcceleratedAssault", 159515)
@@ -357,14 +354,14 @@ do -- Gaze/Eyes of the Abyss
 
 	function mod:EyesOfTheAbyssApplied(args)
 		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Personal", "Alarm", L.gaze_target_message, 176537)
+			self:Message(args.spellId, "Personal", "Alarm", 167536, args.spellId) -- 167536 = "Eyes"
 			self:Flash(args.spellId)
 			if gazeOnMe then return end
 		end
 
 		tDeleteItem(gazeTargets, args.destName)
 		if #gazeTargets == 0 and not gazeOnMe then
-			self:CloseProximity(165595)
+			self:CloseProximity(165595) -- Gaze of the Abyss
 		end
 		updateProximity()
 	end
@@ -411,45 +408,38 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	end
 end
 
-function mod:PhaseEnd(unit, spellName, _, _, spellId)
-	if spellId == 164336 or spellId == 164751 or spellId == 164810 then -- Teleport to Displacement, Fortification, Replication
-		phase = phase + 1
+function mod:PhaseEnd()
+	phase = phase + 1
 
-		if spellId == 164336 then -- short intermission for Displacement
-			self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
-			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, unit)
-			-- attempt #4 it seems more like paused if < 10, then starts casting with a 3s cd to get caught up with expired spells
-			self:StopBar(156467) -- Destructive Resonance
-			if self:BarTimeLeft(156238) < 13 then self:PauseBar(156238) end
-			if self:BarTimeLeft(156467) < 13 then self:PauseBar(156467) end
-			if self:BarTimeLeft(CL.count:format(self:SpellName(-9945), aberrationCount)) < 15 then self:PauseBar(156471, CL.count:format(self:SpellName(-9945), aberrationCount)) end
-			if self:BarTimeLeft(158605) < 13 then self:PauseBar(158605) end
-			if self:BarTimeLeft(157349) < 13 then self:PauseBar(157349) end
-		else
-			self:StopBar(156238) -- Arcane Wrath
-			self:StopBar(156467) -- Destructive Resonance
-			self:StopBar(CL.count:format(self:SpellName(-9945), aberrationCount)) -- Arcane Aberration
-			self:StopBar(158605) -- Mark of Chaos
-			self:StopBar(157349) -- Force Nova
-			self:StopBar(164235) -- Force Nova: Fortification
-			self:CancelTimer(novaTimer)
+	if phase == 2 then -- short intermission for Displacement
+		self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
+		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+		-- attempt #4 it seems more like paused if < 10, then starts casting with a 3s cd to get caught up with expired spells
+		self:StopBar(156467) -- Destructive Resonance
+		if self:BarTimeLeft(156238) < 13 then self:PauseBar(156238) end
+		if self:BarTimeLeft(156467) < 13 then self:PauseBar(156467) end
+		if self:BarTimeLeft(CL.count:format(self:SpellName(-9945), aberrationCount)) < 15 then self:PauseBar(156471, CL.count:format(self:SpellName(-9945), aberrationCount)) end
+		if self:BarTimeLeft(158605) < 13 then self:PauseBar(158605) end
+		if self:BarTimeLeft(157349) < 13 then self:PauseBar(157349) end
+	else
+		self:StopBar(156238) -- Arcane Wrath
+		self:StopBar(156467) -- Destructive Resonance
+		self:StopBar(CL.count:format(self:SpellName(-9945), aberrationCount)) -- Arcane Aberration
+		self:StopBar(158605) -- Mark of Chaos
+		self:StopBar(157349) -- Force Nova
+		self:StopBar(164235) -- Force Nova: Fortification
+		self:CancelTimer(novaTimer)
 
-			mineCount, novaCount, aberrationCount = 1, 1, 1
-			self:Bar("volatile_anomaly", spellId == 164810 and 12 or 9, CL.count:format(self:SpellName(L.volatile_anomaly), 1), L.volatile_anomaly_icon)
-			if spellId == 164810 then
-				self:Bar(-9921, 15, nil, "ability_warrior_shieldbreak") -- Gorian Reaver
-				self:DelayedMessage(-9921, 15, "Neutral", nil, false, "Info")
-				-- Kick can vary, think it's similar to Brackenspore's big adds where they'll wait until after they melee someone to start their abilities
-				self:ScheduleTimer("CDBar", 15, 158563, 25) -- Kick to the Face
-			end
+		mineCount, novaCount, aberrationCount = 1, 1, 1
+		self:Bar("volatile_anomaly", phase == 4 and 12 or 9, CL.count:format(self:SpellName(L.volatile_anomaly), 1), L.volatile_anomaly_icon)
+		if phase == 4 then
+			self:Bar(-9921, 15, nil, "ability_warrior_shieldbreak") -- Gorian Reaver
+			self:DelayedMessage(-9921, 15, "Neutral", nil, false, "Info")
+			-- Kick can vary, think it's similar to Brackenspore's big adds where they'll wait until after they melee someone to start their abilities
+			self:ScheduleTimer("CDBar", 15, 158563, 25) -- Kick to the Face
 		end
 	end
 end
-
--- XXX for patch 6.1
---function mod:PhaseEnd(args)
---	
---end
 
 function mod:DisplacementPhaseStart(args)
 	if not self:Mythic() then
