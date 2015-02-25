@@ -139,7 +139,7 @@ do
 		if not scheduled then
 			slamCount = slamCount + 1
 			if slamCount < 3 then -- slam slam rampage
-				self:CDBar(args.spellId, 61) -- 61-64
+				self:CDBar(155326, 61) -- 61-64
 			end
 			wipe(petrifyTargets)
 			petrifyOnMe = nil
