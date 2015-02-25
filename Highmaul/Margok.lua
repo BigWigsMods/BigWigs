@@ -422,8 +422,9 @@ function mod:PhaseEnd()
 		self:CancelTimer(novaTimer)
 
 		mineCount, novaCount, aberrationCount = 1, 1, 1
-		self:Bar("volatile_anomaly", phase == 4 and 12 or 9, CL.count:format(self:SpellName(L.volatile_anomaly), 1), L.volatile_anomaly_icon)
-		if phase == 4 then
+		local phaseToCheck = self:Mythic() and 3 or 4
+		self:Bar("volatile_anomaly", phase == phaseToCheck and 12 or 9, CL.count:format(self:SpellName(L.volatile_anomaly), 1), L.volatile_anomaly_icon)
+		if phase == phaseToCheck then
 			self:Bar(-9921, 15, nil, "ability_warrior_shieldbreak") -- Gorian Reaver
 			self:DelayedMessage(-9921, 15, "Neutral", nil, false, "Info")
 			-- Kick can vary, think it's similar to Brackenspore's big adds where they'll wait until after they melee someone to start their abilities
