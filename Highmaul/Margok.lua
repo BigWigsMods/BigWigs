@@ -135,7 +135,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "EyesOfTheAbyssApplied", 176537)
 	self:Log("SPELL_AURA_REMOVED", "EyesOfTheAbyssRemoved", 176537)
 	self:Log("SPELL_AURA_APPLIED", "GrowingDarknessDamage", 176525)
-	--self:Log("SPELL_CAST_SUCCESS", "ChogallSpawn", 181113) -- XXX 6.1
+	self:Log("SPELL_CAST_SUCCESS", "ChogallSpawn", 181113) -- Encounter Spawn
 
 	self:Death("ReaverDeath", 78549) -- Gorian Reaver
 end
@@ -234,27 +234,20 @@ do
 		self:ScheduleTimer(nextAdd, 30, self) -- could use ScheduleRepeatingTimer, but the first time had to be special and ruin it :(
 	end
 
-	function mod:Phase4(event, msg, unit)
-		if unit ~= EJ_GetEncounterInfo(167) then return end -- Cho'gall from Bastion of Twilight
-		self:UnregisterEvent(event)
-		if phase == 4 then return end -- y u no unregistered
-
-		self:ScheduleTimer(startPhase, 10, self)
-		phase = 4
-		nightCount = 1
-		glimpseCount = 1
-		gazeOnMe = nil
-		wipe(gazeTargets)
-		self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
-		self:CDBar("adds", 32, CL.adds, L.adds_icon)
-		self:ScheduleTimer(nextAdd, 32, self)
-		self:DelayedMessage(165876, 80, "Important", CL.soon:format(CL.count:format(self:SpellName(165876), nightCount)), false, "Info")
+	function mod:ChogallSpawn(args)
+		if self:MobId(args.sourceGUID) == 78623 then -- Cho'gall
+			self:ScheduleTimer(startPhase, 10, self)
+			phase = 4
+			nightCount = 1
+			glimpseCount = 1
+			gazeOnMe = nil
+			wipe(gazeTargets)
+			self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
+			self:CDBar("adds", 32, CL.adds, L.adds_icon)
+			self:ScheduleTimer(nextAdd, 32, self)
+			self:DelayedMessage(165876, 80, "Important", CL.soon:format(CL.count:format(self:SpellName(165876), nightCount)), false, "Info")
+		end
 	end
-
-	-- XXX for patch 6.1
-	--function mod:ChogallSpawn(args)
-	--	
-	--end
 end
 
 do
@@ -354,7 +347,7 @@ do -- Gaze/Eyes of the Abyss
 
 	function mod:EyesOfTheAbyssApplied(args)
 		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Personal", "Alarm", 167536, args.spellId) -- 167536 = "Eyes"
+			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(self:SpellName(167536)), args.spellId) -- 167536 = "Eyes"
 			self:Flash(args.spellId)
 			if gazeOnMe then return end
 		end
@@ -460,9 +453,6 @@ function mod:PhaseStart(args)
 	self:CDBar(157349, 48) -- Force Nova
 	if args.spellId ~= 157964 or self:Mythic() then -- Replication is the last phase
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
-	end
-	if args.spellId == 157964 and self:Mythic() then
-		self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "Phase4")
 	end
 end
 
