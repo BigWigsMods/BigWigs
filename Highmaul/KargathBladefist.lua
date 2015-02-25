@@ -57,8 +57,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-
 	self:Log("SPELL_AURA_APPLIED", "FirePillar", 159202) -- Flame Jet
 	self:Log("SPELL_CAST_START", "Impale", 159113)
 	self:Log("SPELL_AURA_APPLIED", "BladeDance", 159250)
@@ -74,7 +72,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "VileBreath", 160521)
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "OnTheHunt", 162497)
-	--self:Log("SPELL_CAST_SUCCESS", "CatSpawn", 181113) -- XXX 6.1
+	self:Log("SPELL_CAST_SUCCESS", "CatSpawn", 181113) -- Encounter Spawn
 end
 
 function mod:OnEngage()
@@ -94,25 +92,10 @@ end
 -- Event Handlers
 --
 
-function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	self:CheckForEncounterEngage()
-	if self:Mythic() then
-		for i=1, 5 do
-			local guid = UnitGUID(("boss%d"):format(i))
-			if guid and self:MobId(guid) == 79296 and not tigers[guid] then
-				tigers[guid] = true
-				self:Message(-9396, "Neutral", nil, nil, false) -- Ravenous Bloodmaw
-				self:Bar(-9396, 110, nil, "ability_druid_tigersroar")
-			end
-		end
-	end
+function mod:CatSpawn()
+	self:Message(-9396, "Neutral", nil, nil, false) -- Ravenous Bloodmaw
+	self:Bar(-9396, 110, nil, "ability_druid_tigersroar")
 end
-
--- XXX for patch 6.1
---function mod:CatSpawn()
---	self:Message(-9396, "Neutral", nil, nil, false) -- Ravenous Bloodmaw
---	self:Bar(-9396, 110, nil, "ability_druid_tigersroar")
---end
 
 function mod:OnTheHunt(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")

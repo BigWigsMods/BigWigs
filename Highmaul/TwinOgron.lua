@@ -93,7 +93,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BlazeApplied", 158241)
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "ArcaneTwisted", 163297)
-	self:Emote("ArcaneVolatility", "163372")
+	self:Log("SPELL_CAST_SUCCESS", "ArcaneVolatility", 163372)
 	self:Log("SPELL_AURA_APPLIED", "ArcaneVolatilityApplied", 163372)
 	self:Log("SPELL_AURA_REFRESH", "ArcaneVolatilityApplied", 163372)
 	self:Log("SPELL_AURA_REMOVED", "ArcaneVolatilityRemoved", 163372)
@@ -290,14 +290,19 @@ function mod:BlazeApplied(args)
 end
 
 do
+	local prev = 0
 	local times = { 8.5, 6, 46, 7, 16, 8.5, 6, 40, 131, 9.5, 56.5, 8.5, 6 }
-	function mod:ArcaneVolatility()
-		self:Message(163372, "Neutral")
-		local t = times[volatilityCount]
-		if t then
-			self:CDBar(163372, t)
+	function mod:ArcaneVolatility(args)
+		local t = GetTime()
+		if t-prev > 4 then -- Fired once per player
+			prev = t
+			self:Message(args.spellId, "Neutral")
+			local t = times[volatilityCount]
+			if t then
+				self:CDBar(args.spellId, t)
+			end
+			volatilityCount = volatilityCount + 1
 		end
-		volatilityCount = volatilityCount + 1
 	end
 end
 

@@ -66,8 +66,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	--self:Log("SPELL_AURA_APPLIED", "Vulnerability", 160734) -- XXX 6.1
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Vulnerability", "boss1")
+	self:Log("SPELL_AURA_APPLIED", "Vulnerability", 160734)
 	self:Log("SPELL_AURA_REMOVED", "BarrierRemoved", 156803)
 	self:Log("SPELL_AURA_APPLIED", "BarrierApplied", 156803)
 	self:Log("SPELL_AURA_APPLIED", "CausticEnergy", 161242)
@@ -81,7 +80,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ExpelMagicArcaneRemoved", 162186)
 	self:Log("SPELL_CAST_START", "ExpelMagicFrost", 172747)
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "SuppressionFieldYell")
-	self:Log("SPELL_CAST_SUCCESS", "SuppressionFieldCast", 161328) -- fallback to fire the timer if the triggers aren't localized
+	self:Log("SPELL_CAST_SUCCESS", "SuppressionFieldCast", 161328)
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "DominatingPower", 163472)
 	self:Log("SPELL_CAST_START", "ExpelMagicFelCast", 172895)
@@ -143,25 +142,17 @@ do
 			self:ScheduleTimer(nextAdd, 8, self)
 		end
 	end
-	function mod:Vulnerability(unit, spellName, _, _, spellId)
-		if spellId == 160734 then -- Vulnerability
-			self:Message(spellId, "Positive", "Long", CL.removed:format(self:SpellName(156803))) -- Nullification Barrier removed!
-			self:Bar(spellId, 20)
-			count = 0
-			self:ScheduleTimer(nextAdd, 1, self)
-		end
+	function mod:Vulnerability(args)
+		self:Message(args.spellId, "Positive", "Long")
+		self:Bar(args.spellId, 20)
+		count = 0
+		self:ScheduleTimer(nextAdd, 1, self)
 	end
-	-- XXX for patch 6.1
-	--function mod:Vulnerability(args)
-	--	self:Message(args.spellId, "Positive", "Long", CL.removed:format(self:SpellName(156803))) -- Nullification Barrier removed!
-	--	self:Bar(args.spellId, 20)
-	--	count = 0
-	--	self:ScheduleTimer(nextAdd, 1, self)
-	--end
 end
 
 function mod:BarrierRemoved(args)
 	intermission = true
+	self:Message(160734, "Positive", nil, CL.removed:format(args.spellName)) -- Nullification Barrier removed!
 	-- cds pause for the duration of the shield charging phase
 	self:PauseBar(161328) -- Suppression Field
 	self:PauseBar(162184) -- Expel Magic: Shadow
@@ -276,7 +267,7 @@ end
 
 do
 	function mod:SuppressionFieldCast(args)
-		allowSuppression = true
+		allowSuppression = true -- Faster than registering/unregistering the yell
 		self:CDBar(args.spellId, 15)
 	end
 	function mod:SuppressionFieldYell(_, _, _, _, _, suppressionTarget)
