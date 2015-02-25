@@ -35,7 +35,7 @@ if L then
 	L.gaze_target_icon = 176537
 	L.gaze_target_message = "Glimpse targeting YOU!"
 
-	L.adds = "Night-Twisted Faithful" -- XXX check for translation after 6.1 (on wowace)
+	L.adds = "Night-Twisted Faithful"
 	L.adds_desc = "Timer for when Night-Twisted Faithful enter the fight."
 	L.adds_icon = "spell_shadow_raisedead"
 

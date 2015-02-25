@@ -28,7 +28,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.ship_trigger = "prepares to man the Dreadnaught's Main Cannon!"
 
-	L.ship = "Jump to Ship" -- XXX Check if 137266 is translated in 6.1
+	L.ship = "Jump to Ship" -- XXX Check if 137266 is translated in wowNext
 	L.ship_desc = -10019 -- The Dreadnaught
 	L.ship_icon = "ability_vehicle_siegeenginecannon"
 

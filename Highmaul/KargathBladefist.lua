@@ -59,7 +59,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 
-	self:Log("SPELL_AURA_APPLIED", "FlamePillar", 159202)
+	self:Log("SPELL_AURA_APPLIED", "FirePillar", 159202) -- Flame Jet
 	self:Log("SPELL_CAST_START", "Impale", 159113)
 	self:Log("SPELL_AURA_APPLIED", "BladeDance", 159250)
 	self:Log("SPELL_CAST_START", "BerserkerRushCast", 158986)
@@ -80,7 +80,7 @@ end
 function mod:OnEngage()
 	hurled = nil
 	berserkerRushPlayer = nil
-	self:Bar(-9394, 20) -- Flame Pillar
+	self:Bar(-9394, 20) -- Fire Pillar
 	self:CDBar(159113, 37) -- Impale
 	self:CDBar(158986, 54) -- Berserker Rush
 	self:CDBar(159947, 90) -- Chain Hurl
@@ -167,8 +167,8 @@ function mod:BerserkerRushRemoved(args)
 	self:PrimaryIcon(args.spellId)
 end
 
-function mod:FlamePillar(args)
-	self:Bar(-9394, 20)
+function mod:FirePillar(args)
+	self:Bar(-9394, 20) -- Fire Pillar
 end
 
 do

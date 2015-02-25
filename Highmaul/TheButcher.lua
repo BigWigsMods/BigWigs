@@ -41,7 +41,7 @@ function mod:GetOptions()
 		{156151, "TANK_HEALER"}, -- The Tenderizer
 		156157, -- Cleave
 		156152, -- Gushing Wounds
-		-8860, -- Bounding Cleave
+		156197, -- Bounding Cleave
 		"frenzy",
 		"berserk",
 		"bosskill"
@@ -52,8 +52,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	--self:Log("SPELL_CAST_SUCCESS", "BoundingCleave", 156197, 156257) -- XXX 6.1
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "BoundingCleave", "boss1")
+	self:Log("SPELL_CAST_SUCCESS", "BoundingCleave", 156197, 156257)
 	self:Log("SPELL_AURA_APPLIED", "Tenderizer", 156151)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Tenderizer", 156151)
 	self:Log("SPELL_CAST_START", "Cleave", 156157, 156293)
@@ -70,7 +69,7 @@ function mod:OnEngage()
 	cleaveCount = 1
 	addCount = 1
 	self:Bar(156151, 7) -- Tenderizer
-	self:Bar(-8860, 60) -- Bounding Cleave
+	self:Bar(156197, 60) -- Bounding Cleave
 	if self:Mythic() then
 		self:Bar(-10228, 18, L.adds_multiple:format(1), "spell_shadow_corpseexplode")
 	end
@@ -112,26 +111,14 @@ do
 	end
 end
 
-function mod:BoundingCleave(_, spellName, _, _, spellId)
-	if spellId == 156197 or spellId == 156257 then -- Bounding Cleave (knockback)
-		local frenzied = spellId == 156257 and true
-		cleaveCount = 1
-		self:Message(-8860, "Urgent", "Alert")
-		self:Bar(-8860, frenzied and 30 or 60) -- Bounding Cleave
-		self:CDBar(156157, frenzied and 5 or 8) -- Cleave
-		self:CDBar(156151, 17) -- Tenderizer
-	end
+function mod:BoundingCleave(args)
+	local frenzied = args.spellId == 156257 and true
+	cleaveCount = 1
+	self:Message(156197, "Urgent", "Alert")
+	self:Bar(156197, frenzied and 30 or 60) -- Bounding Cleave
+	self:CDBar(156157, frenzied and 5 or 8) -- Cleave
+	self:CDBar(156151, 17) -- Tenderizer
 end
-
--- XXX for patch 6.1
---function mod:BoundingCleave(args)
---	local frenzied = args.spellId == 156257 and true
---	cleaveCount = 1
---	self:Message(-8860, "Urgent", "Alert")
---	self:Bar(-8860, frenzied and 30 or 60) -- Bounding Cleave
---	self:CDBar(156157, frenzied and 5 or 8) -- Cleave
---	self:CDBar(156151, 17) -- Tenderizer
---end
 
 function mod:Tenderizer(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", args.amount and "Warning")
@@ -170,6 +157,6 @@ function mod:Frenzy(args)
 	self:Message("frenzy", "Important", "Alarm", args.spellName, L.frenzy_icon)
 	-- gains power faster while frenzied
 	local left = (100 - UnitPower("boss1")) * 0.3
-	self:Bar(-8860, left) -- Bounding Cleave
+	self:Bar(156197, left) -- Bounding Cleave
 end
 

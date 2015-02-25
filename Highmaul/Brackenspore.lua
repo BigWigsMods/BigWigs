@@ -100,11 +100,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Decay", 160013)
 	self:Log("SPELL_CAST_START", "NecroticBreath", 159219)
 	self:Log("SPELL_CAST_START", "InfestingSpores", 159996)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "FungusSpawns", "boss1")
-	--self:Log("SPELL_CAST_SUCCESS", "MindFungus", 163141) -- XXX 6.1
-	--self:Log("SPELL_CAST_SUCCESS", "EvolvedFungus", 163142) -- Big Add -- XXX 6.1
-	--self:Log("SPELL_CAST_SUCCESS", "RejuvenatingMushroom", 177820) -- XXX 6.1
-	--self:Log("SPELL_CAST_SUCCESS", "LivingMushroom", 160022) -- XXX 6.1
+	self:Log("SPELL_CAST_SUCCESS", "SummonMindFungus", 163141)
+	self:Log("SPELL_CAST_SUCCESS", "SummonFungalFleshEater", 163142) -- Big Add
+	self:Log("SPELL_SUMMON", "LivingMushroom", 160022)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "RejuvenatingMushroom", "boss1")
+	--self:Log("SPELL_CAST_SUCCESS", "RejuvenatingMushroom", 177820) -- XXX Thanks to our IDIOTIC screwup in asking for the wrong id to be shown, this somehow didn't make 6.1
 
 	self:Log("SPELL_CAST_SUCCESS", "SporeShooter", 163594) -- Small Adds
 	-- Mythic
@@ -217,36 +217,23 @@ function mod:UNIT_TARGET(_, firedUnit)
 	end
 end
 
-function mod:FungusSpawns(unit, spellName, _, _, spellId)
-	if spellId == 163141 then -- Mind Fungus
-		self:Message("mind_fungus", "Attention", self:Damager() and "Long", spellName, L.mind_fungus_icon)
-		self:CDBar("mind_fungus", self:Mythic() and 30 or 51, spellName, L.mind_fungus_icon) -- 51.1, 58.6, 55.5, 55, 61.5, 59.5
-	elseif spellId == 163142 then -- Evolved Fungus (Fungal Flesh-Eater)
-		self:Message("flesh_eater", "Urgent", self:Tank() and "Long", CL.spawning:format(CL.big_add), L.flesh_eater_icon)
-		self:Bar("flesh_eater", 120, CL.big_add, L.flesh_eater_icon)
-		decayCount = 1
-	elseif spellId == 160022 then -- Living Mushroom
-		self:Message("living_mushroom", "Positive", self:Healer() and "Long", CL.count:format(spellName, livingMushroomCount), L.living_mushroom_icon)
-		livingMushroomCount = livingMushroomCount + 1
-		self:Bar("living_mushroom", 58, CL.count:format(spellName, livingMushroomCount), L.living_mushroom_icon)
-	elseif spellId == 177820 then -- Rejuvenating Mushroom
+function mod:RejuvenatingMushroom(unit, spellName, _, _, spellId)
+	if spellId == 177820 then -- Rejuvenating Mushroom
 		self:Message("rejuvenating_mushroom", "Positive", self:Healer() and "Info", spellName, L.rejuvenating_mushroom_icon)
 		self:CDBar("rejuvenating_mushroom", 120, spellName, L.rejuvenating_mushroom_icon) -- spawns most of the time just after 2min, sometimes delayed by boss casts (?)
 	end
 end
 
--- XXX for patch 6.1
---function mod:MindFungus(args)
---	self:Message("mind_fungus", "Attention", self:Damager() and "Long", args.spellName, L.mind_fungus_icon)
---	self:CDBar("mind_fungus", self:Mythic() and 30 or 51, args.spellName, L.mind_fungus_icon) -- 51.1, 58.6, 55.5, 55, 61.5, 59.5
---end
+function mod:SummonMindFungus()
+	self:Message("mind_fungus", "Attention", self:Damager() and "Long", L.mind_fungus, L.mind_fungus_icon)
+	self:CDBar("mind_fungus", self:Mythic() and 30 or 51, L.mind_fungus, L.mind_fungus_icon) -- 51.1, 58.6, 55.5, 55, 61.5, 59.5
+end
 
--- XXX for patch 6.1
---function mod:EvolvedFungus()
---	self:Message("flesh_eater", "Urgent", self:Tank() and "Long", CL.spawning:format(CL.big_add), L.flesh_eater_icon)
---	self:Bar("flesh_eater", 120, CL.big_add, L.flesh_eater_icon)
---	decayCount = 1
---end
+function mod:SummonFungalFleshEater()
+	self:Message("flesh_eater", "Urgent", self:Tank() and "Long", CL.spawning:format(CL.big_add), L.flesh_eater_icon)
+	self:Bar("flesh_eater", 120, CL.big_add, L.flesh_eater_icon)
+	decayCount = 1
+end
 
 -- XXX for patch 6.1
 --function mod:RejuvenatingMushroom(args)
@@ -254,10 +241,9 @@ end
 --	self:CDBar("rejuvenating_mushroom", 120, args.spellName, L.rejuvenating_mushroom_icon) -- spawns most of the time just after 2min, sometimes delayed by boss casts (?)
 --end
 
--- XXX for patch 6.1
---function mod:LivingMushroom(args)
---	self:Message("living_mushroom", "Positive", self:Healer() and "Long", CL.count:format(args.spellName, livingMushroomCount), L.living_mushroom_icon)
---	livingMushroomCount = livingMushroomCount + 1
---	self:Bar("living_mushroom", 58, CL.count:format(args.spellName, livingMushroomCount), L.living_mushroom_icon)
---end
+function mod:LivingMushroom(args)
+	self:Message("living_mushroom", "Positive", self:Healer() and "Long", CL.count:format(args.spellName, livingMushroomCount), L.living_mushroom_icon)
+	livingMushroomCount = livingMushroomCount + 1
+	self:Bar("living_mushroom", 58, CL.count:format(args.spellName, livingMushroomCount), L.living_mushroom_icon)
+end
 
