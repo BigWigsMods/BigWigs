@@ -31,8 +31,6 @@ if L then
 	L.add_death_soon = "Add dying soon!"
 	L.slow_fixate = "Slow+Fixate"
 
-	L.gaze_target = 176537 -- Gaze of the Abyss (needed a string key so it doesn't conflict with 165595)
-	L.gaze_target_icon = 176537
 	L.gaze_target_message = "Glimpse targeting YOU!"
 
 	L.adds = "Night-Twisted Faithful"
@@ -64,7 +62,7 @@ function mod:GetOptions()
 		165116, -- Entropy
 		165876, -- Enveloping Night
 		165243, -- Glimpse of Madness
-		{"gaze_target", "FLASH"},
+		{176537, "FLASH"},
 		{165595, "PROXIMITY", "SAY"}, -- Gaze of the Abyss
 		"adds", -- Night-Twisted Faithful
 		{176533, "FLASH"}, -- Growing Darkness
@@ -359,14 +357,14 @@ do -- Gaze/Eyes of the Abyss
 
 	function mod:EyesOfTheAbyssApplied(args)
 		if self:Me(args.destGUID) then
-			self:Message("gaze_target", "Personal", "Alarm", L.gaze_target_message, 176537)
-			self:Flash("gaze_target")
+			self:Message(args.spellId, "Personal", "Alarm", L.gaze_target_message, 176537)
+			self:Flash(args.spellId)
 			if gazeOnMe then return end
 		end
 
 		tDeleteItem(gazeTargets, args.destName)
 		if #gazeTargets == 0 and not gazeOnMe then
-			self:CloseProximity(args.spellId)
+			self:CloseProximity(165595)
 		end
 		updateProximity()
 	end
@@ -441,7 +439,7 @@ function mod:PhaseEnd(unit, spellName, _, _, spellId)
 			if spellId == 164810 then
 				self:Bar(-9921, 15, nil, "ability_warrior_shieldbreak") -- Gorian Reaver
 				self:DelayedMessage(-9921, 15, "Neutral", nil, false, "Info")
-				-- XXX Kick can vary, think it's similar to Brackenspore's big adds where they'll wait until after they melee someone to start their abilities
+				-- Kick can vary, think it's similar to Brackenspore's big adds where they'll wait until after they melee someone to start their abilities
 				self:ScheduleTimer("CDBar", 15, 158563, 25) -- Kick to the Face
 			end
 		end
@@ -516,25 +514,7 @@ do
 		brandedMarks[#brandedMarks+1] = args.destName
 
 		local _, _, _, amount = UnitDebuff(self:Me(args.destGUID) and "player" or args.destName, args.spellName)
-		if not amount then
-			self:ScheduleTimer(
-				function(dst, spl)
-					local _, _, _, a = UnitDebuff(dst, spl)
-					if a then
-						BigWigs:Print("The debuff scan worked after a delay, tell a developer!")
-						self:ScheduleTimer(error, 0.5, "BigWigs: The debuff scan worked after a delay, tell a developer!")
-					else
-						BigWigs:Print("The debuff scan failed even after a delay, tell a developer!")
-						self:ScheduleTimer(error, 0.5, "BigWigs: The debuff scan failed even after a delay, tell a developer!")
-					end
-				end,
-				0.4, self:Me(args.destGUID) and "player" or args.destName, args.spellName
-			)
-			local _, _, h, w = GetNetStats()
-			BigWigs:Print(("The debuff scan failed, tell a developer! Latency: %d/%d"):format(h, w))
-			self:ScheduleTimer(error, 0.5, ("BigWigs: The debuff scan failed, tell a developer! Latency: %d/%d"):format(h, w))
-			amount = 0 -- don't show count or distance
-		end
+		if not amount then amount = 0 end -- don't show count or distance (never got any reports of this happening, but just to make sure)
 		local isFortification = args.spellId == 164005 or (self:Mythic() and phase == 3)
 		local jumpDistance = (isFortification and 0.75 or 0.5)^(amount - 1) * 200 -- Fortification takes longer to get rid of
 
@@ -621,7 +601,7 @@ do
 	end
 	function mod:MarkOfChaos(args)
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
-		self:Bar(158605, 51) -- XXX sometimes 50, sometimes 55, but mostly 51
+		self:Bar(158605, 51) -- sometimes 50, sometimes 55, but mostly 51
 	end
 end
 
