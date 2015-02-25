@@ -25,8 +25,6 @@ local fixateMarks, brandedMarks, gazeTargets = {}, {}, {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.phase4_trigger = "You know nothing of the power you meddle with"
-
 	L.branded_say = "%s (%d) %dy"
 	L.add_death_soon = "Add dying soon!"
 	L.slow_fixate = "Slow+Fixate"
