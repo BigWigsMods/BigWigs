@@ -315,13 +315,6 @@ do -- Gaze/Eyes of the Abyss
 	-- I may be trying to be too clever here, but hopefully I over-engineered it enough to play nice
 	-- only show the proximity for people that aren't targeted by an add (debuff will fall off)
 
-	local function checkDebuff(unit, id)
-		if select(11, UnitDebuff(unit, (GetSpellInfo(id)))) == id then return true end -- only one?
-		for i = 1, 10 do
-			if select(11, UnitDebuff(unit, i)) == id then return true end
-		end
-	end
-
 	local timeLeft, timer = 15, nil
 	local function sayCountdown(self)
 		timeLeft = timeLeft - 1
@@ -345,7 +338,7 @@ do -- Gaze/Eyes of the Abyss
 			timer = self:ScheduleRepeatingTimer(sayCountdown, 1, self)
 
 			updateProximity()
-		elseif not checkDebuff(args.destName, 176537) and not tContains(gazeTargets, args.destName) then -- no "closest" debuff and not currently tracked
+		elseif not UnitDebuff(args.destName, self:SpellName(176537)) and not tContains(gazeTargets, args.destName) then -- no "closest" debuff and not currently tracked
 			gazeTargets[#gazeTargets + 1] = args.destName
 			updateProximity()
 		end
@@ -379,7 +372,7 @@ do -- Gaze/Eyes of the Abyss
 	end
 
 	function mod:EyesOfTheAbyssRemoved(args)
-		if not self:Me(args.destGUID) and checkDebuff(args.destName, 165595) and not tContains(gazeTargets, args.destName) then -- check explody debuff
+		if not self:Me(args.destGUID) and UnitDebuff(args.destName, self:SpellName(165595)) and not tContains(gazeTargets, args.destName) then -- check explody debuff
 			gazeTargets[#gazeTargets + 1] = args.destName
 			updateProximity()
 		end
@@ -423,7 +416,6 @@ end
 function mod:PhaseEnd(unit, spellName, _, _, spellId)
 	if spellId == 164336 or spellId == 164751 or spellId == 164810 then -- Teleport to Displacement, Fortification, Replication
 		phase = phase + 1
-		mineCount, novaCount = 1, 1
 
 		if spellId == 164336 then -- short intermission for Displacement
 			self:Message("stages", "Neutral", "Long", CL.phase:format(phase), false)
@@ -444,12 +436,13 @@ function mod:PhaseEnd(unit, spellName, _, _, spellId)
 			self:StopBar(164235) -- Force Nova: Fortification
 			self:CancelTimer(novaTimer)
 
-			aberrationCount = 1
+			mineCount, novaCount, aberrationCount = 1, 1, 1
 			self:Bar("volatile_anomaly", spellId == 164810 and 12 or 9, CL.count:format(self:SpellName(L.volatile_anomaly), 1), L.volatile_anomaly_icon)
 			if spellId == 164810 then
 				self:Bar(-9921, 15, nil, "ability_warrior_shieldbreak") -- Gorian Reaver
 				self:DelayedMessage(-9921, 15, "Neutral", nil, false, "Info")
-				self:ScheduleTimer("CDBar", 15, 158563, 27) -- Kick to the Face
+				-- XXX Kick can vary, think it's similar to Brackenspore's big adds where they'll wait until after they melee someone to start their abilities
+				self:ScheduleTimer("CDBar", 15, 158563, 25) -- Kick to the Face
 			end
 		end
 	end
@@ -461,12 +454,13 @@ end
 --end
 
 function mod:DisplacementPhaseStart(args)
-	if not self.isEngaged then return end -- In Mythic mode he gains this when he's floating around the room before engage.
-	self:ResumeBar(156238) -- Arcane Wrath
-	self:CDBar(156467, 15) -- Destructive Resonance
-	self:ResumeBar(156471, CL.count:format(self:SpellName(-9945), aberrationCount)) -- Arcane Aberration
-	self:ResumeBar(158605) -- Mark of Chaos
-	self:ResumeBar(157349) -- Force Nova
+	if not self:Mythic() then
+		self:ResumeBar(156238) -- Arcane Wrath
+		self:CDBar(156467, 15) -- Destructive Resonance
+		self:ResumeBar(156471, CL.count:format(self:SpellName(-9945), aberrationCount)) -- Arcane Aberration
+		self:ResumeBar(158605) -- Mark of Chaos
+		self:ResumeBar(157349) -- Force Nova
+	end
 end
 
 function mod:PhaseStart(args)
@@ -584,13 +578,12 @@ end
 do
 	local mineTimes = {
 		[3] = { 24, 15.8, 24, 19.4, 28, 23 },
-		[4] = { 24, },
 	}
 	function mod:DestructiveResonance(args)
 		local sound = self:Healer() or self:Damager() == "RANGED"
 		self:Message(156467, "Important", sound and "Warning")
-		local t = not self:Mythic() and mineTimes[phase] and mineTimes[phase][mineCount] or 15.8
-		self:CDBar(156467, phase == 1 and 24 or t)
+		local t = mineCount == 1 and 24 or (not self:Mythic() and mineTimes[phase] and mineTimes[phase][mineCount]) or 15.8
+		self:CDBar(156467, t)
 		mineCount = mineCount + 1
 	end
 end
@@ -627,7 +620,6 @@ do
 		end
 	end
 	function mod:MarkOfChaos(args)
-		--self:TargetMessage(158605, self:UnitName("boss1target"), "Urgent", "Warning", CL.casting:format(self:SpellName(158605)))
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
 		self:Bar(158605, 51) -- XXX sometimes 50, sometimes 55, but mostly 51
 	end
@@ -674,7 +666,7 @@ do
 		self:Bar("stages", first and 65 or 60, CL.intermission, "spell_arcane_blast")
 		count = 1
 		self:DelayedMessage("volatile_anomaly", 2, "Attention", ("%s %d/6"):format(self:SpellName(L.volatile_anomaly), count), L.volatile_anomaly_icon, "Info")
-		-- first add bar is started in :Phases
+		-- first add bar is started in :PhaseEnd
 		self:ScheduleTimer(nextAdd, 2, self)
 	end
 
