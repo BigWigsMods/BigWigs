@@ -123,9 +123,9 @@ function mod:OnEngage()
 	wipe(boatTimers)
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2", "boss3")
 
-	self:Bar(158078, 5) -- Blood Ritual
+	self:Bar(159724, 5) -- Blood Ritual
 	self:Bar(155794, 11) -- Blade Dash
-	self:Bar(156626, 19) -- Rapid Fire
+	self:Bar(156631, 19) -- Rapid Fire
 	self:Bar("ship", 60, L.ship, L.ship_icon) -- Jump to Ship
 end
 
