@@ -137,8 +137,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GazeOfTheAbyssApplied", 165595)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GazeOfTheAbyssApplied", 165595)
 	self:Log("SPELL_AURA_REMOVED", "GazeOfTheAbyssRemoved", 165595)
-	self:Log("SPELL_AURA_APPLIED", "GazeClosestApplied", 176537) -- XXX 6.1 renamed to Eyes of the Abyss
-	self:Log("SPELL_AURA_REMOVED", "GazeClosestRemoved", 176537) -- XXX 6.1 renamed to Eyes of the Abyss
+	self:Log("SPELL_AURA_APPLIED", "EyesOfTheAbyssApplied", 176537)
+	self:Log("SPELL_AURA_REMOVED", "EyesOfTheAbyssRemoved", 176537)
 	self:Log("SPELL_AURA_APPLIED", "GrowingDarknessDamage", 176525)
 	--self:Log("SPELL_CAST_SUCCESS", "ChogallSpawn", 181113) -- XXX 6.1
 
@@ -311,13 +311,10 @@ function mod:GlimpseOfMadness(args)
 	self:Bar(args.spellId, 27, CL.count:format(args.spellName, glimpseCount))
 end
 
-do -- GazeOfTheAbyss
+do -- Gaze/Eyes of the Abyss
 	-- I may be trying to be too clever here, but hopefully I over-engineered it enough to play nice
 	-- only show the proximity for people that aren't targeted by an add (debuff will fall off)
 
-	-- debuff scanning because the two add debuffs have the same name :\
-
-	-- XXX fixed for 6.1, renamed to "Eyes of the Abyss" FIXME
 	local function checkDebuff(unit, id)
 		if select(11, UnitDebuff(unit, (GetSpellInfo(id)))) == id then return true end -- only one?
 		for i = 1, 10 do
@@ -367,7 +364,7 @@ do -- GazeOfTheAbyss
 		updateProximity()
 	end
 
-	function mod:GazeClosestApplied(args)
+	function mod:EyesOfTheAbyssApplied(args)
 		if self:Me(args.destGUID) then
 			self:Message("gaze_target", "Personal", "Alarm", L.gaze_target_message, 176537)
 			self:Flash("gaze_target")
@@ -381,7 +378,7 @@ do -- GazeOfTheAbyss
 		updateProximity()
 	end
 
-	function mod:GazeClosestRemoved(args)
+	function mod:EyesOfTheAbyssRemoved(args)
 		if not self:Me(args.destGUID) and checkDebuff(args.destName, 165595) and not tContains(gazeTargets, args.destName) then -- check explody debuff
 			gazeTargets[#gazeTargets + 1] = args.destName
 			updateProximity()
