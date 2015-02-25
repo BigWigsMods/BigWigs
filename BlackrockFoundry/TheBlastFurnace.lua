@@ -328,14 +328,14 @@ do
 
 	function mod:BombRemoved(args)
 		if self:Me(args.destGUID) then
-			self:StopBar(args.spellId, args.destName)
-			self:CloseProximity(args.spellId)
+			self:StopBar(155192, args.destName)
+			self:CloseProximity(155192)
 			bombOnMe = nil
 		end
 		tDeleteItem(bombTargets, args.destName)
 
 		if #bombTargets == 0 then
-			self:CloseProximity(args.spellId)
+			self:CloseProximity(155192)
 		end
 
 		updateProximity()
