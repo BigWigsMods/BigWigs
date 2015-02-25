@@ -26,7 +26,7 @@ function mod:GetOptions()
 		--[[ General ]]--
 		160838, -- Disrupting Roar
 		{153470, "HEALER"}, -- Skullcracker
-		156938, -- Crippling Suplex
+		{156938, "TANK_HEALER"}, -- Crippling Suplex
 		157139, -- Shattered Vertebrae
 		{155818, "FLASH"}, -- Scorching Burns
 		{155747, "FLASH", "SAY"}, -- Body Slam
@@ -63,7 +63,6 @@ function mod:OnEngage()
 		--self:Berserk(360)
 	end
 
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phases", "boss1")
 	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", "Jumps", "boss1", "boss2")
 end
 
@@ -75,14 +74,6 @@ function mod:SmartStampers(args)
 	if not stamperWarned then
 		stamperWarned = true
 		self:Message(args.spellId, "Neutral", "Alert", args.spellName) -- Smart Stampers
-	end
-end
-
-function mod:Phases(unit)
-	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if (phase == 1 and hp < 87) or (phase == 2 and hp < 57) or (phase == 3 and hp < 27) then -- 85%, 55%, 25%
-		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
-		self:Message(156938, "Urgent", "Info", CL.soon:format(self:SpellName(156938)), false)
 	end
 end
 
@@ -151,8 +142,7 @@ do
 		if spellId == 156220 then -- Tactical Retreat (Hans'gar jumped away)
 			self:JumpAway(unit)
 		elseif spellId == 156546 or spellId == 156542 then -- Crippling Suplex (tank picked up)
-			self:TargetMessage(156938, UnitName(unit.."target"), "Important", (self:Tank() or self:Healer()) and "Warning" or "Alarm")
-			self:Bar(156938, 9) -- 8.7-9.5 until damage taken
+			self:TargetMessage(156938, UnitName(unit.."target"), "Important", "Alarm", nil, nil, true)
 		elseif spellId == 157923 then -- Jump Slam. -- XXX This id is midair: Test 157922 which is earlier but might be unstable.
 			self:GetBossTarget(printTarget, 0.5, UnitGUID(unit))
 		end
@@ -160,8 +150,8 @@ do
 end
 
 function mod:CripplingSuplex(args)
-	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
-	self:Bar(157139, 8) -- Shattered Vertebrae
+	self:Message(args.spellId, "Important", "Warning", CL.casting:format(args.spellName))
+	self:Bar(args.spellId, 3)
 end
 
 function mod:ShatteredVertebrae(args)
