@@ -291,7 +291,9 @@ do
 
 	local prev = 0
 	function mod:Bomb(args)
-		engineerBombs[args.sourceGUID] = (engineerBombs[args.sourceGUID] or 5) - 1
+		if args.spellId ~= 159558 then -- mc bombs don't count?
+			engineerBombs[args.sourceGUID] = (engineerBombs[args.sourceGUID] or 5) - 1
+		end
 
 		if self:Me(args.destGUID) then
 			local t = GetTime()
