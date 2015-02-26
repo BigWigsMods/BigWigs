@@ -96,7 +96,6 @@ do
 
 	function mod:Jumps(unit)
 		if UnitExists(unit) then -- jumped back
-			self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "Phases", "boss1")
 			if phase < 3 then
 				self:Message("stages", "Neutral", "Info", CL.over:format(phaseThreats[phase]), false)
 				phase = phase + 1
