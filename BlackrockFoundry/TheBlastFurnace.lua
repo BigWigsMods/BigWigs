@@ -132,7 +132,7 @@ function mod:OnBossEnable()
 	-- Furnace Engineer
 	self:Log("SPELL_CAST_START", "Repair", 155179)
 	self:Log("SPELL_AURA_APPLIED", "Bomb", 155192, 174716, 159558) -- Bomb, Cluster of Lit Bombs, MC'd Engineer Bomb
-	self:Log("SPELL_AURA_REMOVED", "BombRemoved", 155192, 174716)
+	self:Log("SPELL_AURA_REMOVED", "BombRemoved", 155192, 174716, 159558)
 	-- Firecaller
 	self:Log("SPELL_CAST_START", "CauterizeWounds", 155186)
 	self:Log("SPELL_AURA_APPLIED", "VolatileFireApplied", 176121)
@@ -478,7 +478,7 @@ do
 		if power > 80 and power < 100 and not warned then
 			if blastTime > 10 then
 				-- XXX added this because there is an emote for it, not sure if needed since we have a bar
-				self:Message(155209, "Urgent", "Alarm", CL.soon:format(self:SpellName(155209)))
+				self:Message(155209, "Urgent", self:Healer() and "Alarm", CL.soon:format(self:SpellName(155209)))
 			end
 			warned = true
 		elseif power == 0 and warned then
@@ -533,7 +533,9 @@ function mod:Deaths(args)
 	if args.mobId == 88820 or args.mobId == 76810 then
 		if regulatorDeaths < 2 then -- p1: pick up bombs
 			local bombs = engineerBombs[args.destGUID] or 5
-			self:Message(174731, "Positive", "Info", L.bombs_dropped:format(bombs))
+			if bombs > 0 then
+				self:Message(174731, "Positive", "Info", L.bombs_dropped:format(bombs))
+			end
 			engineerBombs[args.destGUID] = nil
 		end
 	elseif args.mobId == 76808 then
