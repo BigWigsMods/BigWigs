@@ -131,7 +131,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SlagBomb", 176133)
 	-- Furnace Engineer
 	self:Log("SPELL_CAST_START", "Repair", 155179)
-	self:Log("SPELL_AURA_APPLIED", "Bomb", 155192, 174716) -- Bomb, Cluster of Lit Bombs
+	self:Log("SPELL_AURA_APPLIED", "Bomb", 155192, 174716, 159558) -- Bomb, Cluster of Lit Bombs, MC'd Engineer Bomb
 	self:Log("SPELL_AURA_REMOVED", "BombRemoved", 155192, 174716)
 	-- Firecaller
 	self:Log("SPELL_CAST_START", "CauterizeWounds", 155186)
@@ -147,7 +147,7 @@ function mod:OnBossEnable()
 	-- Heart of the Mountain
 	self:Log("SPELL_AURA_APPLIED", "Heat", 155242)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Heat", 155242)
-	self:Log("SPELL_AURA_APPLIED", "Melt", 155225) -- player will spawn puddle when the debuff expires
+	self:Log("SPELL_AURA_APPLIED", "Melt", 155225)
 	self:Log("SPELL_PERIODIC_DAMAGE", "MeltDamage", 155223)
 	self:Log("SPELL_PERIODIC_MISSED", "MeltDamage", 155223)
 	self:Log("SPELL_AURA_APPLIED", "Superheated", 163776)
@@ -294,15 +294,15 @@ do
 		engineerBombs[args.sourceGUID] = (engineerBombs[args.sourceGUID] or 5) - 1
 
 		if self:Me(args.destGUID) then
-			local t = 15
+			local t = GetTime()
+			local cd = 15
 			if args.spellId == 174716 then -- from the bomb sack
 				local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
-				t = expires - GetTime()
+				cd = expires - t
 			end
-			self:TargetBar(155192, t, args.destName)
+			self:TargetBar(155192, cd, args.destName)
 			bombOnMe = true
 
-			local t = GetTime()
 			if t-prev > 3 then
 				prev = t
 				self:Message(155192, "Positive", "Alarm", CL.you:format(args.spellName)) -- is good thing
