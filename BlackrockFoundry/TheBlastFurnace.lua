@@ -225,16 +225,7 @@ do
 end
 
 function mod:SecurityRepeater() -- Guards
-	local timer
-	if self:LFR() then
-		timer = regulatorDeaths > 1 and 70 or 60
-	elseif self:Mythic() then
-		timer = regulatorDeaths > 1 and 40 or 30
-	elseif self:Heroic() then
-		timer = regulatorDeaths > 1 and 40 or 30
-	else
-		timer = regulatorDeaths > 1 and 60 or 50
-	end
+	local timer = regulatorDeaths > 1 and 40 or 30
 	securityTimer = self:ScheduleTimer("SecurityRepeater", timer)
 	self:Message("guard", "Attention", "Info", CL.spawning:format(self:SpellName(-10803)), L.guard_icon) -- Security Guard
 	self:CDBar("guard", timer, -10803, L.guard_icon) -- Security Guard
@@ -263,7 +254,7 @@ do
 	end
 
 	function mod:FirecallerRepeater()
-		local timer = self:LFR() and 75 or self:Mythic() and 45 or self:Heroic() and 45 or 65
+		local timer = 45
 		firecallerTimer = self:ScheduleTimer("FirecallerRepeater", timer)
 
 		if self.db.profile.custom_off_firecaller_marker then
