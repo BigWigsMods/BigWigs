@@ -100,7 +100,7 @@ function mod:OnEngage()
 	wipe(blazingTargets)
 	firestormCount = 1
 	--self:Bar(155318, 11) -- Lava Slash
-	self:Bar(154938, 31) -- Molten Torrent
+	self:Bar(154932, 31) -- Molten Torrent
 	self:Bar(155776, 60) -- Summon Cinder Wolves
 end
 
