@@ -214,7 +214,7 @@ do
 
 	local function barStopped(event, bar)
 		local a = bar:Get("bigwigs:anchor")
-		local key = bar.candyBarLabel:GetText()
+		local key = bar:GetLabel()
 		if a and messages[key] then
 			local color = colors[random(1, #colors)]
 			local sound = sounds[random(1, #sounds)]
