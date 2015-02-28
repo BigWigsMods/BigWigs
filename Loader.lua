@@ -240,7 +240,11 @@ do
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Slash")
 			if meta then
-				_G["SLASH_"..name.."1"] = meta
+				local slash1, slash2 = meta:split(",")
+				_G["SLASH_"..name.."1"] = slash1
+				if slash2 then
+					_G["SLASH_"..name.."2"] = slash2:gsub(" ", "")
+				end
 				SlashCmdList[name] = function()
 					if name:find("BigWigs", nil, true) then
 						loadCoreAndOpenOptions() -- Attempting to be smart. Only load core & config if it's a BW plugin.
@@ -248,7 +252,7 @@ do
 					LoadAddOn(name) -- Load the addon/plugin
 					-- Run the slash command again, which should have been overwritten by the author to show the config.
 					local editbox = ChatEdit_GetActiveWindow()
-					editbox:SetText(meta)
+					editbox:SetText(slash1)
 					ChatEdit_ParseText(editbox, 1) -- This will cause a stack overflow (loop) if authors don't overwrite it.
 					-- To overwrite it, in your addon/plugin run the following code, do NOT delay it with OnInitialize/OnEnable/etc.
 					-- if hash_SlashCmdList["/myslash"] then
