@@ -255,8 +255,8 @@ do
 					editbox:SetText(slash1)
 					ChatEdit_ParseText(editbox, 1) -- This will cause a stack overflow (loop) if authors don't overwrite it.
 					-- To overwrite it, in your addon/plugin run the following code, do NOT delay it with OnInitialize/OnEnable/etc.
-					-- if hash_SlashCmdList["/myslash"] then
-					-- 	hash_SlashCmdList["/myslash"] = nil
+					-- if hash_SlashCmdList["/MYSLASH"] then -- Must be uppercase
+					-- 	hash_SlashCmdList["/MYSLASH"] = nil -- Remove previous slash handler
 					-- end
 					-- SLASH_MyFullAddOnName1" = "/myslash"
 					-- SlashCmdList.MyFullAddOnName = myConfigFunction
