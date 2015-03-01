@@ -100,7 +100,6 @@ function mod:GetOptions()
 		--[[ General ]]--
 		"stages",
 		"berserk",
-		"bosskill"
 	}, {
 		["operator"] = CL.adds,
 		["firecaller"] = -9659, -- Firecaller

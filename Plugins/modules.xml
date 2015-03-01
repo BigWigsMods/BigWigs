@@ -13,6 +13,7 @@
 <Script file="Flash.lua"/>
 <Script file="Emphasize.lua"/>
 <Script file="Statistics.lua"/>
+<Script file="Victory.lua"/>
 
 </Ui>
 

@@ -67,7 +67,6 @@ function mod:GetOptions()
 		"stages",
 		"proximity",
 		"berserk",
-		"bosskill",
 	}, {
 		[155061] = -9301, -- Cruelfang
 		[155030] = -9302, -- Dreadwing

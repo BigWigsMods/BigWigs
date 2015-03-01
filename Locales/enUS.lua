@@ -3,10 +3,6 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "enUS", true, "raw")
 L.temp61Reset = "Due to a change in making my database more efficient, your custom colors, sounds and boss-specific settings will have reset, sorry :(" -- XXX temp 6.1
 
 -- Core.lua
-L.defeated = "%s has been defeated"
-
-L.bosskill = "Boss death"
-L.bosskill_desc = "Announce when the boss has been defeated."
 L.berserk = "Berserk"
 L.berserk_desc = "Show a bar and timed warnings for when the boss will go berserk."
 L.altpower = "Alternate power display"

@@ -61,7 +61,6 @@ function mod:GetOptions()
 		156107, -- Impaling Throw
 		156030, -- Throw Slag Bombs
 		"stages",
-		"bosskill"
 	}, {
 		[156425] = -8814, -- Stage One: The Blackrock Forge
 		["siegemaker"] = -8816, -- Stage Two: Storage Warehouse

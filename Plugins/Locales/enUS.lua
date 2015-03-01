@@ -276,3 +276,9 @@ L.recordBestTime = "Remember Best Time"
 L.createTimeBar = "Show 'Best Time' bar"
 L.bestTimeBar = "Best Time"
 
+-----------------------------------------------------------------------
+-- Victory.lua
+--
+
+L.defeated = "%s has been defeated"
+

@@ -47,7 +47,6 @@ function mod:GetOptions()
 		155898, -- Rolling Fury
 		"stages",
 		"berserk",
-		"bosskill"
 	}
 end
 

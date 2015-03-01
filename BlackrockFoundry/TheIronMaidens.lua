@@ -76,7 +76,6 @@ function mod:GetOptions()
 		156601, -- Sanguine Strikes
 		-- [[ General ]]--
 		159336, -- Iron Will
-		"bosskill"
 	}, {
 		["ship"] = -10019, -- Dreadnaught
 		[156631] = -10025, -- Gar'an

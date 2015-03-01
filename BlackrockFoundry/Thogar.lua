@@ -235,7 +235,6 @@ function mod:GetOptions()
 		{155921, "TANK"}, -- Enkindle
 		{155864, "FLASH"}, -- Prototype Pulse Grenade (Grenade)
 		{"trains", "FLASH"},
-		"bosskill",
 	}, {
 		[163753] = -9537, -- Reinforcements
 		[155921] = "general",

@@ -32,7 +32,6 @@ function mod:GetOptions()
 		{155747, "FLASH", "SAY"}, -- Body Slam
 		"stages",
 		--"berserk",
-		"bosskill"
 	}, {
 		[162124] = "mythic",
 		[160838] = "general"

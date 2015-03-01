@@ -273,7 +273,6 @@ local function coreSync(sync, moduleName, sender)
 	elseif sync == "Death" then
 		local mod = addon:GetBossModule(moduleName, true)
 		if mod and not mod.engageId and mod:IsEnabled() then
-			mod:Message("bosskill", "Positive", "Victory", L.defeated:format(mod.displayName), false)
 			mod.lastKill = GetTime() -- Add the kill time for the enable check.
 			if mod.OnWin then mod:OnWin() end
 			mod:SendMessage("BigWigs_OnBossWin", mod)
@@ -402,7 +401,7 @@ function addon:OnInitialize()
 	self.db.profile.blockmovies = nil
 	--
 
-	self:RegisterBossOption("bosskill", L.bosskill, L.bosskill_desc, nil, "Interface\\Icons\\ability_rogue_feigndeath")
+	self:RegisterBossOption("bosskill", "Old", "Remove me")
 	self:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, "Interface\\Icons\\spell_shadow_unholyfrenzy")
 	self:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, "Interface\\Icons\\spell_arcane_invocation")
 	self:RegisterBossOption("stages", L.stages, L.stages_desc)

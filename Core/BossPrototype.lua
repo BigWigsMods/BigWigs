@@ -3,7 +3,6 @@
 --
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
-local BW_L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected
 local EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture = EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture
 local format, sub, gsub, band = string.format, string.sub, string.gsub, bit.band
@@ -594,7 +593,6 @@ do
 	function boss:Win(args, direct)
 		if debug then dbg(self, ":Win") end
 		if direct then
-			self:Message("bosskill", "Positive", "Victory", BW_L.defeated:format(self.displayName), false)
 			self.lastKill = GetTime() -- Add the kill time for the enable check.
 			if self.OnWin then self:OnWin() end
 			self:SendMessage("BigWigs_OnBossWin", self)
@@ -828,7 +826,9 @@ do
 	end
 	function boss:Dispeller(dispelType, isOffensive, key)
 		if key then
-			if band(self.db.profile[key], C.DISPEL) ~= C.DISPEL then return true end
+			local o = self.db.profile[key]
+			if not o then core:Print(format("Module %s uses %q as a dispel lookup, but it doesn't exist in the module options.", self.name, key)) return end
+			if band(o, C.DISPEL) ~= C.DISPEL then return true end
 		end
 		if isOffensive then
 			if offDispel:find(dispelType, nil, true) then

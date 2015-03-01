@@ -41,7 +41,6 @@ function mod:GetOptions()
 		155539, -- Destructive Rampage
 		{173192, "FLASH"}, -- Cave In
 		"berserk",
-		"bosskill"
 	}
 end
 

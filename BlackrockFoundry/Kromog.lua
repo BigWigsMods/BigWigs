@@ -34,7 +34,6 @@ function mod:GetOptions()
 		157054, -- Thundering Blows
 		156861, -- Frenzy
 		"berserk",
-		"bosskill"
 	}, {
 		[173917] = "mythic",
 		[156766] = "general"
