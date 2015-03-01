@@ -240,7 +240,7 @@ do
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Slash")
 			if meta then
-				local slash1, slash2 = meta:split(",")
+				local slash1, slash2 = strsplit(",", meta)
 				_G["SLASH_"..name.."1"] = slash1
 				if slash2 then
 					_G["SLASH_"..name.."2"] = slash2:gsub(" ", "")
