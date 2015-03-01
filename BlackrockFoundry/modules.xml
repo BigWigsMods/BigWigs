@@ -1,15 +1,15 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
+<Script file="Darmac.lua"/>
 <Script file="Gruul.lua"/>
 <Script file="Oregorger.lua"/>
-<Script file="Darmac.lua"/>
-<Script file="Kagraz.lua"/>
 <Script file="HansgarAndFranzok.lua"/>
+<Script file="Kagraz.lua"/>
 <Script file="Thogar.lua"/>
-<Script file="TheBlastFurnace.lua"/>
 <Script file="Kromog.lua"/>
 <Script file="TheIronMaidens.lua"/>
+<Script file="TheBlastFurnace.lua"/>
 <Script file="Blackhand.lua"/>
 <Script file="Trash.lua"/>
 
