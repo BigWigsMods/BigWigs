@@ -221,7 +221,7 @@ do
 	for i = 1, GetNumAddOns() do
 		local name = GetAddOnInfo(i)
 		local enabled = IsAddOnEnabled(i)
-		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
+		if enabled then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
 				loadOnCoreEnabled[#loadOnCoreEnabled + 1] = i
@@ -262,7 +262,7 @@ do
 					-- SlashCmdList.MyFullAddOnName = myConfigFunction
 				end
 			end
-		elseif not enabled and reqFuncAddons[name] then
+		elseif reqFuncAddons[name] then
 			sysprint(L.coreAddonDisabled:format(name))
 		end
 	end
