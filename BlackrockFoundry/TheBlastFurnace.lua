@@ -297,8 +297,8 @@ do
 		if self:Me(args.destGUID) then
 			local t = GetTime()
 			local cd = 15
-			if args.spellId == 174716 then -- from the bomb sack
-				local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+			if expires and expires > 0 then
 				cd = expires - t
 			end
 			self:TargetBar(155192, cd, args.destName)
