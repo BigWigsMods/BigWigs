@@ -136,9 +136,10 @@ local function load(obj, index)
 
 	local name = GetAddOnInfo(index)
 	if loadOnSlash[name] then
-		-- Remove our slash handler stub reference
-		for _, slash in next, loadOnSlash[name] do
-			hash_SlashCmdList[slash:upper()] = nil
+		if not IsAddOnLoaded(index) then -- check if we need remove our slash handler stub
+			for _, slash in next, loadOnSlash[name] do
+				hash_SlashCmdList[slash:upper()] = nil
+			end
 		end
 		loadOnSlash[name] = nil
 	end
