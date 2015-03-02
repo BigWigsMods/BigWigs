@@ -193,16 +193,16 @@ end
 local function updateProximity()
 	-- open in reverse order so if you disable one it doesn't block others from showing
 	if #volatileFireTargets > 0 then
-		mod:OpenProximity(176121, 8, volatileFireTargets)
+		mod:OpenProximity(176121, 9, volatileFireTargets)
 	end
 	if #bombTargets > 0 then -- someone shouldn't be standing there without a bomb, so this might not be needed
-		mod:OpenProximity(155192, 8, bombTargets) -- how big is the radius? i have no idea
+		mod:OpenProximity(155192, 9, bombTargets) -- how big is the radius? i have no idea
 	end
 	if volatileFireOnMe then
-		mod:OpenProximity(176121, 8)
+		mod:OpenProximity(176121, 9)
 	end
 	if bombOnMe then
-		mod:OpenProximity(155192, 8) -- how big is the radius? i have no idea
+		mod:OpenProximity(155192, 9) -- how big is the radius? i have no idea
 	end
 end
 
