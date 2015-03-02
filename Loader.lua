@@ -134,19 +134,18 @@ end
 local function load(obj, index)
 	if obj then return true end
 
-	local name = GetAddOnInfo(index)
-	if loadOnSlash[name] then
+	if loadOnSlash[index] then
 		if not IsAddOnLoaded(index) then -- check if we need remove our slash handler stub
-			for _, slash in next, loadOnSlash[name] do
+			for _, slash in next, loadOnSlash[index] do
 				hash_SlashCmdList[slash:upper()] = nil
 			end
 		end
-		loadOnSlash[name] = nil
+		loadOnSlash[index] = nil
 	end
 
 	local loaded, reason = LoadAddOn(index)
 	if not loaded then
-		sysprint(ADDON_LOAD_FAILED:format(name, _G["ADDON_"..reason]))
+		sysprint(ADDON_LOAD_FAILED:format(GetAddOnInfo(index), _G["ADDON_"..reason]))
 	end
 	return loaded
 end
@@ -250,21 +249,21 @@ do
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Slash")
 			if meta then
-				loadOnSlash[name] = {}
+				loadOnSlash[i] = {}
 				local tbl = {strsplit(",", meta)}
 				for j=1, #tbl do
 					local v = tbl[j]:trim()
 					_G["SLASH_"..name..j] = v
-					loadOnSlash[name][j] = v
+					loadOnSlash[i][j] = v
 				end
-				local slash = loadOnSlash[name][1]
+				local slash = loadOnSlash[i][1]
 				SlashCmdList[name] = function(text)
 					if name:find("BigWigs", nil, true) then
 						-- Attempting to be smart. Only load core & config if it's a BW plugin.
 						loadAndEnableCore()
 						load(BigWigsOptions, "BigWigs_Options")
 					end
-					load(nil, name) -- Load the addon/plugin
+					load(nil, i) -- Load the addon/plugin
 					-- Run the slash command again, which should have been overwritten by the author to show the config.
 					-- To overwrite it, in your addon/plugin run the following code, do NOT delay it with OnInitialize/OnEnable/etc.
 					-- SLASH_MyFullAddOnName1" = "/myslash"
