@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("The Butcher", 994, 971)
 if not mod then return end
 mod:RegisterEnableMob(77404)
-mod.engageId = 1706
+--mod.engageId = 1706
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -51,6 +51,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:Death("Win", 77404)
+
 	self:Log("SPELL_CAST_SUCCESS", "BoundingCleave", 156197, 156257)
 	self:Log("SPELL_AURA_APPLIED", "Tenderizer", 156151)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Tenderizer", 156151)

@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Gruul", 988, 1161)
 if not mod then return end
 mod:RegisterEnableMob(76877)
-mod.engageId = 1691
+--mod.engageId = 1691
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -45,6 +45,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:Death("Win", 76877)
+
 	self:Log("SPELL_CAST_START", "InfernoSlice", 155080)
 	self:Log("SPELL_CAST_SUCCESS", "InfernoSliceSuccess", 155080)
 	self:Log("SPELL_AURA_APPLIED", "InfernoSliceApplied", 155080)

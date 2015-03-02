@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Imperator Mar'gok", 994, 1197)
 if not mod then return end
 mod:RegisterEnableMob(77428, 78623) -- Imperator Mar'gok, Cho'gall (Mythic)
-mod.engageId = 1705
+--mod.engageId = 1705
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -95,6 +95,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+
 	self:Log("SPELL_CAST_SUCCESS", "PhaseEnd", 181089) -- Encounter Event
 	self:Log("SPELL_AURA_APPLIED", "DisplacementPhaseStart", 158013) -- Power of Displacement
 	self:Log("SPELL_AURA_APPLIED", "PhaseStart", 158012, 157964) -- Power of Fortification, Replication
@@ -138,6 +140,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:Death("Win", self:Mythic() and 78623 or 77428)
+
 	phase = 1
 	mineCount, novaCount, aberrationCount = 1, 1, 1
 	markOfChaosTarget, brandedOnMe, fixateOnMe, replicatingNova = nil, nil, nil, nil

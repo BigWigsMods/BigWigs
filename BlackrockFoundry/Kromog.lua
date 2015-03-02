@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Kromog", 988, 1162)
 if not mod then return end
 mod:RegisterEnableMob(77692)
-mod.engageId = 1713
+--mod.engageId = 1713
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -41,6 +41,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:Death("Win", 77692)
+
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "WarpedArmor", 156766)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WarpedArmor", 156766)

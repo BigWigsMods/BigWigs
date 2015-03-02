@@ -101,7 +101,7 @@ local enablezones, enablemobs, enableyells = {}, {}, {}
 local monitoring = nil
 
 local function enableBossModule(module, noSync)
-	if not module:IsEnabled() then
+	if not module:IsEnabled() and (not module.lastKill or (GetTime() - module.lastKill) > 150) then
 		module:Enable()
 		if not noSync and not module.worldBoss then
 			module:Sync("EnableModule", module:GetName())
@@ -112,8 +112,7 @@ end
 local function shouldReallyEnable(unit, moduleName, mobId)
 	local module = bossCore:GetModule(moduleName)
 	if not module or module:IsEnabled() then return end
-	-- If we pass the Verify Enable func (or it doesn't exist) and it's been > 150 seconds since the module was disabled, then enable it.
-	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId)) and (not module.lastKill or (GetTime() - module.lastKill) > 150) then
+	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId)) then
 		enableBossModule(module)
 	end
 end
@@ -257,30 +256,6 @@ do
 	end
 end
 
-
--------------------------------------------------------------------------------
--- Core syncs
---
-
--- Since this is from addon comms, it's the only place where we allow the module NAME to be passed, instead of the
--- actual module object. ALL other APIs should take module objects as arguments.
-local function coreSync(sync, moduleName, sender)
-	if sync == "EnableModule" then
-		local module = addon:GetBossModule(moduleName, true)
-		if sender ~= pName and module then
-			enableBossModule(module, true)
-		end
-	elseif sync == "Death" then
-		local mod = addon:GetBossModule(moduleName, true)
-		if mod and not mod.engageId and mod:IsEnabled() then
-			mod.lastKill = GetTime() -- Add the kill time for the enable check.
-			if mod.OnWin then mod:OnWin() end
-			mod:SendMessage("BigWigs_OnBossWin", mod)
-			mod:Disable()
-		end
-	end
-end
-
 -------------------------------------------------------------------------------
 -- Communication
 --
@@ -290,7 +265,6 @@ do
 	local times = {}
 	local registered = {
 		BossEngaged = true,
-		Death = true,
 		EnableModule = true,
 	}
 
@@ -312,9 +286,12 @@ do
 					-- print("Engaging " .. tostring(rest) .. " based on engage sync from " .. tostring(nick) .. ".")
 					m:Engage()
 				end
-			elseif sync == "EnableModule" or sync == "Death" then
+			elseif sync == "EnableModule" then
 				if rest and (not times[sync] or t > (times[sync] + 2)) then
-					coreSync(sync, rest, nick)
+					local module = addon:GetBossModule(rest, true)
+					if nick ~= pName and module then
+						enableBossModule(module, true)
+					end
 					times[sync] = t
 				end
 			else

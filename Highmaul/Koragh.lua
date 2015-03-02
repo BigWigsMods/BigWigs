@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Ko'ragh", 994, 1153)
 if not mod then return end
 mod:RegisterEnableMob(79015)
-mod.engageId = 1723
+--mod.engageId = 1723
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -65,6 +65,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:Death("Win", 79015)
+
 	self:Log("SPELL_AURA_APPLIED", "Vulnerability", 160734)
 	self:Log("SPELL_AURA_REMOVED", "BarrierRemoved", 156803)
 	self:Log("SPELL_AURA_APPLIED", "BarrierApplied", 156803)

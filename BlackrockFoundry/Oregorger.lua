@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Oregorger", 988, 1202)
 if not mod then return end
 mod:RegisterEnableMob(77182)
-mod.engageId = 1696
+--mod.engageId = 1696
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -51,6 +51,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:Death("Win", 77182)
+
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcidMaw", 173471)
 	self:Log("SPELL_CAST_START", "AcidTorrent", 156240)
 	self:Log("SPELL_CAST_START", "RetchedBlackrock", 156179)

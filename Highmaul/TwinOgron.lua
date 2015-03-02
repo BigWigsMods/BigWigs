@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Twin Ogron", 994, 1148)
 if not mod then return end
 mod:RegisterEnableMob(78238, 78237) -- Pol, Phemos
-mod.engageId = 1719
+--mod.engageId = 1719
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -73,6 +73,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:Death("Win", 78237)
+
 	-- Pol
 	self:Log("SPELL_CAST_START", "ShieldBash", 143834)
 	self:Log("SPELL_CAST_START", "ShieldCharge", 158134)
