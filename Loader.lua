@@ -252,10 +252,10 @@ do
 			if meta then
 				loadOnSlash[name] = {}
 				local tbl = {strsplit(",", meta)}
-				for i=1, #tbl do
-					local v = tbl[i]:trim()
-					_G["SLASH_"..name..i] = v
-					loadOnSlash[name][i] = v
+				for j=1, #tbl do
+					local v = tbl[j]:trim()
+					_G["SLASH_"..name..j] = v
+					loadOnSlash[name][j] = v
 				end
 				local slash = loadOnSlash[name][1]
 				SlashCmdList[name] = function(text)
@@ -270,7 +270,7 @@ do
 					-- SLASH_MyFullAddOnName1" = "/myslash"
 					-- SlashCmdList.MyFullAddOnName = myConfigFunction
 					local editbox = ChatEdit_GetActiveWindow()
-					editbox:SetText(slash.." "..text)
+					editbox:SetText(text == "" and slash or slash.." "..text)
 					ChatEdit_ParseText(editbox, 1)
 				end
 			end
