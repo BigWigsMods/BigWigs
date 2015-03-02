@@ -15,7 +15,10 @@ mod.worldBoss = 81535
 
 function mod:GetOptions()
 	return {
-		175973, 175979, 176013, {176004, "DISPEL"}, "bosskill"
+		175973, -- Colossal Blow
+		175979, -- Genesis
+		176013, -- Grow Untamed Mandragora
+		{176004, "DISPEL"} -- Savage Vines
 	}
 end
 

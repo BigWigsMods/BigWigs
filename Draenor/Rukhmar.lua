@@ -28,7 +28,6 @@ function mod:GetOptions()
 		{167615, "TANK"}, -- Pierce Armor
 		167679, -- Solar Breath
 		167647, -- Loose Quills
-		"bosskill"
 	}
 end
 

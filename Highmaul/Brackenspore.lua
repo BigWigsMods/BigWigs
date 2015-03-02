@@ -83,7 +83,6 @@ function mod:GetOptions()
 		{159219, "TANK_HEALER"}, -- Necrotic Breath
 		159996, -- Infesting Spores
 		"berserk",
-		"bosskill"
 	}, {
 		[163755] = "mythic",
 		["spore_shooter"] = -9993, -- Hostile Fungus

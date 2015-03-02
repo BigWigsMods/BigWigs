@@ -84,7 +84,6 @@ function mod:GetOptions()
 		{158563, "TANK"}, -- Kick to the Face
 		--[[ General ]]--
 		"stages",
-		"bosskill"
 	}, {
 		[178607] = "mythic",
 		[159515] = mod.displayName,

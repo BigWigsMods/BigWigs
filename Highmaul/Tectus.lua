@@ -61,7 +61,6 @@ function mod:GetOptions()
 		162475, -- Tectonic Upheaval
 		"adds",
 		"berserk",
-		"bosskill",
 	}, {
 		[162894] = -10061, -- Night-Twisted Earthwarper
 		[163312] = -10062, -- Night-Twisted Berserker

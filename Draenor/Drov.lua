@@ -18,7 +18,6 @@ function mod:GetOptions()
 		175791, -- Colossal Slam
 		175827, -- Call of Earth
 		{175915, "FLASH"}, -- Acid Breath
-		"bosskill"
 	}
 end
 

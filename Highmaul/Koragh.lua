@@ -57,7 +57,6 @@ function mod:GetOptions()
 		{162186, "TANK", "ICON", "PROXIMITY", "FLASH", "SAY"}, -- Expel Magic: Arcane
 		{172747, "FLASH", "SAY"}, -- Expel Magic: Frost
 		{162184, "HEALER"}, -- Expel Magic: Shadow
-		"bosskill"
 	}, {
 		[163472] = "mythic",
 		[160734] = "intermission",

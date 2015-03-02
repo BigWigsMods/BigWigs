@@ -49,7 +49,6 @@ function mod:GetOptions()
 		159413, -- Mauling Brew
 		159311, -- Flame Jet
 		160521, -- Vile Breath
-		"bosskill"
 	}, {
 		[-9396] = "mythic",
 		[-9394] = "general"

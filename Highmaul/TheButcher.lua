@@ -44,7 +44,6 @@ function mod:GetOptions()
 		156197, -- Bounding Cleave
 		"frenzy",
 		"berserk",
-		"bosskill"
 	}, {
 		[-10228] = "mythic",
 		[156151] = "general"

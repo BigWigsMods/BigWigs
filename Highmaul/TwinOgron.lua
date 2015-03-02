@@ -64,7 +64,6 @@ function mod:GetOptions()
 		{158241, "FLASH"}, -- Blaze
 		--[[ General ]]--
 		"berserk",
-		"bosskill"
 	}, {
 		[163297] = "mythic",
 		[143834] = -9595, -- Pol
