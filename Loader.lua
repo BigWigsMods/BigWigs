@@ -82,6 +82,7 @@ local highestAlphaRevision = BIGWIGS_RELEASE_TYPE == ALPHA and MY_BIGWIGS_REVISI
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the core is loaded
+local loadOnSlash = {} -- BigWigs modulepacks that can load from a chat command
 local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
@@ -132,9 +133,18 @@ end
 
 local function load(obj, index)
 	if obj then return true end
+
+	local name = GetAddOnInfo(index)
+	if loadOnSlash[name] then
+		-- Remove our slash handler stub reference
+		for _, slash in next, loadOnSlash[name] do
+			hash_SlashCmdList[slash:upper()] = nil
+		end
+		loadOnSlash[name] = nil
+	end
+
 	local loaded, reason = LoadAddOn(index)
 	if not loaded then
-		local name = GetAddOnInfo(index)
 		sysprint(ADDON_LOAD_FAILED:format(name, _G["ADDON_"..reason]))
 	end
 	return loaded
@@ -220,8 +230,7 @@ do
 
 	for i = 1, GetNumAddOns() do
 		local name = GetAddOnInfo(i)
-		local enabled = IsAddOnEnabled(i)
-		if enabled then
+		if IsAddOnEnabled(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
 				loadOnCoreEnabled[#loadOnCoreEnabled + 1] = i
@@ -240,26 +249,28 @@ do
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Slash")
 			if meta then
-				local slash1, slash2 = strsplit(",", meta)
-				_G["SLASH_"..name.."1"] = slash1
-				if slash2 then
-					_G["SLASH_"..name.."2"] = slash2:gsub(" ", "")
+				loadOnSlash[name] = {}
+				local tbl = {strsplit(",", meta)}
+				for i=1, #tbl do
+					local v = tbl[i]:trim()
+					_G["SLASH_"..name..i] = v
+					loadOnSlash[name][i] = v
 				end
+				local slash = loadOnSlash[name][1]
 				SlashCmdList[name] = function(text)
 					if name:find("BigWigs", nil, true) then
-						loadCoreAndOpenOptions() -- Attempting to be smart. Only load core & config if it's a BW plugin.
+						-- Attempting to be smart. Only load core & config if it's a BW plugin.
+						loadAndEnableCore()
+						load(BigWigsOptions, "BigWigs_Options")
 					end
-					LoadAddOn(name) -- Load the addon/plugin
+					load(nil, name) -- Load the addon/plugin
 					-- Run the slash command again, which should have been overwritten by the author to show the config.
-					local editbox = ChatEdit_GetActiveWindow()
-					editbox:SetText(slash1.. " " ..text)
-					ChatEdit_ParseText(editbox, 1) -- This will cause a stack overflow (loop) if authors don't overwrite it.
 					-- To overwrite it, in your addon/plugin run the following code, do NOT delay it with OnInitialize/OnEnable/etc.
-					-- if hash_SlashCmdList["/MYSLASH"] then -- Must be uppercase
-					-- 	hash_SlashCmdList["/MYSLASH"] = nil -- Remove previous slash handler
-					-- end
 					-- SLASH_MyFullAddOnName1" = "/myslash"
 					-- SlashCmdList.MyFullAddOnName = myConfigFunction
+					local editbox = ChatEdit_GetActiveWindow()
+					editbox:SetText(slash.." "..text)
+					ChatEdit_ParseText(editbox, 1)
 				end
 			end
 		elseif reqFuncAddons[name] then
