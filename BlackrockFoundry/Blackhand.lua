@@ -26,7 +26,7 @@ if L then
 	L.siegemaker_icon = "ability_vehicle_siegeenginecharge"
 
 	L.custom_off_markedfordeath_marker = "Marked for Death marker"
-	L.custom_off_markedfordeath_marker_desc = "Mark Marked for Death targets with {rt1}{rt2}, requires promoted or leader."
+	L.custom_off_markedfordeath_marker_desc = "Mark Marked for Death targets with {rt1}{rt2}{rt3}, requires promoted or leader."
 	L.custom_off_markedfordeath_marker_icon = 1
 
 	L.custom_off_massivesmash_marker = "Massive Shattering Smash marker"
