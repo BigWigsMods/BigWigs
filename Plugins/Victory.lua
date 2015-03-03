@@ -54,10 +54,20 @@ plugin.pluginOptions = {
 			type = "select",
 			name = L.victorySound,
 			order = 2,
+			get = function(info)
+				for i, v in next, media:List(media.MediaType.SOUND) do
+					if v == plugin.db.profile[info[#info]] then
+						return i
+					end
+				end
+			end,
+			set = function(info, value)
+				plugin.db.profile[info[#info]] = media:List(media.MediaType.SOUND)[value]
+			end,
 			values = media:List(media.MediaType.SOUND),
 			width = "full",
 			itemControl = "DDI-Sound",
-		}
+		},
 		messages = {
 			type = "group",
 			name = L.victoryMessages,
