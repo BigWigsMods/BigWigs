@@ -49,8 +49,8 @@ function mod:GetOptions()
 		--[[ Blast Furnace Exhaust ]]--
 		{174773, "FLASH"}, -- Exhaust Fumes
 		--[[ Forgemistress Flamehand ]]--
-		{175583, "FLASH", "SAY", "PROXIMITY"}
-		{175594, "TANK"}
+		{175583, "FLASH", "SAY", "PROXIMITY"},
+		{175594, "TANK"},
 	}, {
 		[175765] = L.hauler,
 		[159632] = L.gnasher,
