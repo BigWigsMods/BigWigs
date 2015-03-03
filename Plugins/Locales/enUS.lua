@@ -246,7 +246,6 @@ L.Info = "Info"
 L.Alert = "Alert"
 L.Long = "Long"
 L.Warning = "Warning"
-L.Victory = "Victory"
 
 L.Beware = "Beware (Algalon)"
 L.FlagTaken = "Flag Taken (PvP)"
@@ -280,5 +279,11 @@ L.bestTimeBar = "Best Time"
 -- Victory.lua
 --
 
+L.Victory = "Victory"
+L.victoryHeader = "Configure the actions that should be taken after you defeat a boss encounter."
+L.victorySound = "Play a victory sound"
+L.victoryMessages = "Show boss defeat messages"
+L.victoryMessageBigWigs = "Show the Big Wigs message"
+L.victoryMessageBlizzard = "Show the Blizzard message"
 L.defeated = "%s has been defeated"
 

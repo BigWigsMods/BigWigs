@@ -20,7 +20,6 @@ local sounds = {
 	Alert = "BigWigs: Alert",
 	Alarm = "BigWigs: Alarm",
 	Warning = "BigWigs: Raid Warning",
-	Victory = "BigWigs: Victory",
 }
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
@@ -36,7 +35,6 @@ plugin.defaultDB = {
 		Alert = "BigWigs: Alert",
 		Alarm = "BigWigs: Alarm",
 		Warning = "BigWigs: Raid Warning",
-		Victory = "BigWigs: Victory",
 	},
 }
 
@@ -123,22 +121,19 @@ end
 local function updateProfile()
 	db = plugin.db.profile
 	bwDb = BigWigs.db.profile
+	db.media.Victory = nil -- XXX temp cleanup
 end
 
 local function shouldDisable() return plugin.db.profile.defaultonly end
 
 function plugin:OnRegister()
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	db = self.db.profile
-	bwDb = BigWigs.db.profile
+	updateProfile()
 
 	media:Register(mType, "BigWigs: Long", "Interface\\AddOns\\BigWigs\\Sounds\\Long.ogg")
 	media:Register(mType, "BigWigs: Info", "Interface\\AddOns\\BigWigs\\Sounds\\Info.ogg")
 	media:Register(mType, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Sounds\\Alert.ogg")
 	media:Register(mType, "BigWigs: Alarm", "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.ogg")
-	media:Register(mType, "BigWigs: Victory", "Interface\\AddOns\\BigWigs\\Sounds\\Victory.ogg")
-	media:Register(mType, "BigWigs: Victory Long", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryLong.ogg")
-	media:Register(mType, "BigWigs: Victory Classic", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryClassic.ogg")
 	media:Register(mType, "BigWigs: 5", "Interface\\AddOns\\BigWigs\\Sounds\\Amy\\5.ogg")
 	media:Register(mType, "BigWigs: 4", "Interface\\AddOns\\BigWigs\\Sounds\\Amy\\4.ogg")
 	media:Register(mType, "BigWigs: 3", "Interface\\AddOns\\BigWigs\\Sounds\\Amy\\3.ogg")
@@ -168,34 +163,32 @@ function plugin:OnRegister()
 			width = "full",
 			itemControl = "DDI-Sound",
 		}
-		if k ~= "Victory" then
-			soundOptions.args[k] = {
-				name = n,
-				get = function(info)
-					local name, key = unpack(info.arg)
-					local optionName = info[#info]
-					for i, v in next, soundList do
-						-- If no custom sound exists for this option, fall back to global sound option
-						if v == (plugin.db.profile[optionName] and plugin.db.profile[optionName][name] and plugin.db.profile[optionName][name][key] or plugin.db.profile.media[optionName]) then
-							return i
-						end
+		soundOptions.args[k] = {
+			name = n,
+			get = function(info)
+				local name, key = unpack(info.arg)
+				local optionName = info[#info]
+				for i, v in next, soundList do
+					-- If no custom sound exists for this option, fall back to global sound option
+					if v == (plugin.db.profile[optionName] and plugin.db.profile[optionName][name] and plugin.db.profile[optionName][name][key] or plugin.db.profile.media[optionName]) then
+						return i
 					end
-				end,
-				set = function(info, value)
-					local name, key = unpack(info.arg)
-					local optionName = info[#info]
-					if not plugin.db.profile[optionName] then plugin.db.profile[optionName] = {} end
-					if not plugin.db.profile[optionName][name] then plugin.db.profile[optionName][name] = {} end
-					plugin.db.profile[optionName][name][key] = soundList[value]
-					-- We don't cleanup/reset the DB as someone may have a custom global sound but wish to use the default sound on a specific option
-				end,
-				type = "select",
-				values = soundList,
-				order = 2,
-				width = "full",
-				itemControl = "DDI-Sound",
-			}
-		end
+				end
+			end,
+			set = function(info, value)
+				local name, key = unpack(info.arg)
+				local optionName = info[#info]
+				if not plugin.db.profile[optionName] then plugin.db.profile[optionName] = {} end
+				if not plugin.db.profile[optionName][name] then plugin.db.profile[optionName][name] = {} end
+				plugin.db.profile[optionName][name][key] = soundList[value]
+				-- We don't cleanup/reset the DB as someone may have a custom global sound but wish to use the default sound on a specific option
+			end,
+			type = "select",
+			values = soundList,
+			order = 2,
+			width = "full",
+			itemControl = "DDI-Sound",
+		}
 	end
 end
 

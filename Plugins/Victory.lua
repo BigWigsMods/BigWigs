@@ -10,19 +10,24 @@ if not plugin then return end
 --
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
+local media = LibStub("LibSharedMedia-3.0")
+
+media:Register(media.MediaType.SOUND, "BigWigs: Victory", "Interface\\AddOns\\BigWigs\\Sounds\\Victory.ogg")
+media:Register(media.MediaType.SOUND, "BigWigs: Victory Long", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryLong.ogg")
+media:Register(media.MediaType.SOUND, "BigWigs: Victory Classic", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryClassic.ogg")
 
 -------------------------------------------------------------------------------
 -- Options
 --
 
 plugin.defaultDB = {
-	sound = true,
+	soundName = "BigWigs: Victory",
 	blizzMsg = true,
 	bigwigsMsg = true,
 }
 
 plugin.pluginOptions = {
-	name = "Victory",
+	name = L.Victory,
 	type = "group",
 	childGroups = "tab",
 	get = function(i) return plugin.db.profile[i[#i]] end,
@@ -40,33 +45,34 @@ plugin.pluginOptions = {
 	args = {
 		heading = {
 			type = "description",
-			name = "Configure the actions that should be taken after you defeat a boss encounter.".."\n\n",
+			name = L.victoryHeader.."\n\n",
 			order = 1,
 			width = "full",
 			fontSize = "medium",
 		},
-		sound = {
-			type = "toggle",
-			name = "Play the Victory sound",
+		soundName = {
+			type = "select",
+			name = L.victorySound,
 			order = 2,
+			values = media:List(media.MediaType.SOUND),
 			width = "full",
-		},
+			itemControl = "DDI-Sound",
+		}
 		messages = {
 			type = "group",
-			name = "Show boss defeat messages",
-			desc = "The Victory sound is configurable in the Sound options.",
+			name = L.victoryMessages,
 			order = 3,
 			inline = true,
 			args = {
 				bigwigsMsg = {
 					type = "toggle",
-					name = "Show the Big Wigs message",
+					name = L.victoryMessageBigWigs,
 					order = 1,
 					width = "full",
 				},
 				blizzMsg = {
 					type = "toggle",
-					name = "Show the Blizzard message",
+					name = L.victoryMessageBlizzard,
 					order = 2,
 					width = "full",
 				},
@@ -80,6 +86,7 @@ plugin.pluginOptions = {
 --
 
 function plugin:OnPluginEnable()
+	self.db.profile.sound = nil -- XXX temp cleanup
 	if not self.db.profile.blizzMsg then
 		BossBanner:UnregisterEvent("BOSS_KILL")
 	end
@@ -94,8 +101,9 @@ function plugin:BigWigs_OnBossWin(event, module)
 	if self.db.profile.bigwigsMsg then
 		self:SendMessage("BigWigs_Message", self, nil, L.defeated:format(module.displayName), "Positive")
 	end
-	if self.db.profile.sound then
-		self:SendMessage("BigWigs_Sound", self, nil, "Victory")
+	local name = self.db.profile.soundName
+	if name ~= "None" then
+		PlaySoundFile(media:Fetch(media.MediaType.SOUND, name), "Master")
 	end
 end
 
