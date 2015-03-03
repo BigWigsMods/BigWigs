@@ -142,7 +142,8 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 156991 then -- Throw Slag Bombs
 		if phase < 3 then
-			self:Message(156030, "Attention")
+			local warn = self:Tank() or self:Damager() == "MELEE"
+			self:Message(156030, "Attention", warn and "Long")
 			self:Bar(156030, 25)
 		end
 	elseif spellId == 156425 then -- Demolition
@@ -152,13 +153,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:ScheduleTimer("Bar", 5, spellId, 6, CL.count:format(massiveDemolition, 2))
 		self:ScheduleTimer("Bar", 10, spellId, 6, CL.count:format(massiveDemolition, 3))
 		self:Bar(spellId, 45.5)
-	elseif spellId == 161347 then -- Jump To Second Floor
+	elseif spellId == 161347 then -- Jump To Second Floor, after reaching middle, entering p2
 		self:StopBar(156425) -- Demolition
 		self:StopBar(156479) -- Massive Demolition
 		self:StopBar(156107) -- Impaling Throw
 
-		phase = 2
-		self:Message("stages", "Neutral", nil, CL.stage:format(phase), false)
 		self:Bar(156030, 12) -- Throw Slag Bombs
 		self:Bar("siegemaker", 16, L.siegemaker, L.siegemaker_icon)
 		self:Bar(155992, 23) -- Shattering Smash
@@ -167,6 +166,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:OpenProximity(156728, 7) -- Explosive Round
 		end
 
+	elseif spellId == 158021 then -- Marked for Death Clear, before running to middle of room, starting p2
+		if phase == 1 then
+			phase = 2
+			self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
+		end
 	elseif spellId == 161348 then -- Jump To Third Floor
 		self:StopBar(156030) -- Throw Slag Bombs
 		self:StopBar(L.siegemaker)
@@ -176,7 +180,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		end
 
 		phase = 3
-		self:Message("stages", "Neutral", nil, CL.stage:format(phase), false)
+		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
 		self:Bar(157000, 12) -- Attach Slag Bombs
 		self:Bar(156096, 16) -- Marked for Death
 		self:Bar(158054, 26) -- Massive Shattering Smash
