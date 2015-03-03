@@ -77,12 +77,14 @@ plugin.pluginOptions = {
 				bigwigsMsg = {
 					type = "toggle",
 					name = L.victoryMessageBigWigs,
+					desc = L.victoryMessageBigWigsDesc,
 					order = 1,
 					width = "full",
 				},
 				blizzMsg = {
 					type = "toggle",
 					name = L.victoryMessageBlizzard,
+					desc = L.victoryMessageBlizzardDesc,
 					order = 2,
 					width = "full",
 				},

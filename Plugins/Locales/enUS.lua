@@ -284,6 +284,8 @@ L.victoryHeader = "Configure the actions that should be taken after you defeat a
 L.victorySound = "Play a victory sound"
 L.victoryMessages = "Show boss defeat messages"
 L.victoryMessageBigWigs = "Show the Big Wigs message"
+L.victoryMessageBigWigsDesc = "The Big Wigs message is a simple \"boss has been defeated\" message."
 L.victoryMessageBlizzard = "Show the Blizzard message"
+L.victoryMessageBlizzardDesc = "The Blizzard message is a very large \"boss has been defeated\" animation in the middle of your screen."
 L.defeated = "%s has been defeated"
 
