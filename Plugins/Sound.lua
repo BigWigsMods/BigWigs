@@ -134,11 +134,6 @@ function plugin:OnRegister()
 	media:Register(mType, "BigWigs: Info", "Interface\\AddOns\\BigWigs\\Sounds\\Info.ogg")
 	media:Register(mType, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Sounds\\Alert.ogg")
 	media:Register(mType, "BigWigs: Alarm", "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.ogg")
-	media:Register(mType, "BigWigs: 5", "Interface\\AddOns\\BigWigs\\Sounds\\Amy\\5.ogg")
-	media:Register(mType, "BigWigs: 4", "Interface\\AddOns\\BigWigs\\Sounds\\Amy\\4.ogg")
-	media:Register(mType, "BigWigs: 3", "Interface\\AddOns\\BigWigs\\Sounds\\Amy\\3.ogg")
-	media:Register(mType, "BigWigs: 2", "Interface\\AddOns\\BigWigs\\Sounds\\Amy\\2.ogg")
-	media:Register(mType, "BigWigs: 1", "Interface\\AddOns\\BigWigs\\Sounds\\Amy\\1.ogg")
 
 	-- Ingame sounds that DBM uses for DBM converts
 	media:Register(mType, "BigWigs: [DBM] ".. L.FlagTaken, "Sound\\Spells\\PVPFlagTaken.ogg")
