@@ -82,6 +82,7 @@ function mod:OnBossEnable()
 
 	-- Stage 1
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
+	self:Log("SPELL_CAST_SUCCESS", "PinDown", 155365)
 	self:Log("SPELL_AURA_APPLIED", "PinnedDown", 154960)
 	self:Log("SPELL_CAST_START", "CallThePack", 154975)
 
@@ -232,23 +233,12 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 155365 then -- Pin Down
-		self:Message(154960, "Urgent", (self:Healer() or self:Damager() == "RANGED") and "Warning", CL.incoming:format(spellName))
-		self:CDBar(154960, 20)
-		if self.db.profile.custom_off_pinned_marker then
-			wipe(spearMarksUsed)
-			wipe(spearList)
-			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
-			self:RegisterEvent("UNIT_TARGET")
-			self:ScheduleTimer("UnregisterEvent", 10, "UPDATE_MOUSEOVER_UNIT")
-			self:ScheduleTimer("UnregisterEvent", 10, "UNIT_TARGET")
-		end
-	elseif spellId == 155221 then -- Iron Crusher's Tantrum
+	if spellId == 155221 then -- Tantrum, from Iron Crusher
 		self:StopBar(CL.count:format(spellName, tantrumCount))
 		self:Message(155222, "Attention", nil, CL.count:format(spellName, tantrumCount))
 		tantrumCount = tantrumCount + 1
 		self:CDBar(155222, 23, CL.count:format(spellName, tantrumCount))
-	elseif spellId == 155520 then -- Darmac's Tantrum
+	elseif spellId == 155520 then -- Tantrum, from Darmac
 		self:StopBar(CL.count:format(spellName, tantrumCount))
 		self:Message(155222, "Attention", nil, CL.count:format(spellName, tantrumCount))
 		tantrumCount = tantrumCount + 1
@@ -290,6 +280,19 @@ do
 
 		if self.db.profile.custom_off_pinned_marker and not spearList[args.sourceGUID] then -- One spear can hit multiple people, so don't overwrite existing entries
 			spearList[args.sourceGUID] = true
+		end
+	end
+
+	function mod:PinDown(args)
+		self:Message(154960, "Urgent", (self:Healer() or self:Damager() == "RANGED") and "Warning", CL.incoming:format(args.spellName))
+		self:CDBar(154960, 20)
+		if self.db.profile.custom_off_pinned_marker then
+			wipe(spearMarksUsed)
+			wipe(spearList)
+			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
+			self:RegisterEvent("UNIT_TARGET")
+			self:ScheduleTimer("UnregisterEvent", 10, "UPDATE_MOUSEOVER_UNIT")
+			self:ScheduleTimer("UnregisterEvent", 10, "UNIT_TARGET")
 		end
 	end
 end
