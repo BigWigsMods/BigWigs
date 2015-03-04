@@ -12,7 +12,7 @@ if not plugin then return end
 local media = LibStub("LibSharedMedia-3.0")
 local mType = media.MediaType and media.MediaType.SOUND or "sound"
 local soundList = nil
-local db, bwDb
+local db
 
 local sounds = {
 	Long = "BigWigs: Long",
@@ -28,7 +28,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 --
 
 plugin.defaultDB = {
-	defaultonly = false,
+	sound = true,
 	media = {
 		Long = "BigWigs: Long",
 		Info = "BigWigs: Info",
@@ -54,12 +54,12 @@ plugin.pluginOptions = {
 		plugin.db.profile.media[sound] = soundList[value]
 	end,
 	args = {
-		default = {
+		sound = {
 			type = "toggle",
-			name = "|cfffed000".. L.defaultOnly .."|r",
-			desc = L.soundDefaultDescription,
-			get = function(info) return plugin.db.profile.defaultonly end,
-			set = function(info, v) plugin.db.profile.defaultonly = v end,
+			name = "|cfffed000".. L.sound .."|r",
+			desc = L.soundDesc,
+			get = function() return plugin.db.profile.sound end,
+			set = function(info, v) plugin.db.profile.sound = v end,
 			order = 1,
 			width = "full",
 			descStyle = "inline",
@@ -120,11 +120,11 @@ end
 
 local function updateProfile()
 	db = plugin.db.profile
-	bwDb = BigWigs.db.profile
 	db.media.Victory = nil -- XXX temp cleanup
+	db.defaultonly = nil -- XXX temp cleanup
 end
 
-local function shouldDisable() return plugin.db.profile.defaultonly end
+local function shouldDisable() return not plugin.db.profile.sound end
 
 function plugin:OnRegister()
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
@@ -196,28 +196,20 @@ end
 --
 
 do
-	local GetSpellInfo, PlaySoundFile, PlaySound, type = GetSpellInfo, PlaySoundFile, PlaySound, type
-	function plugin:BigWigs_Sound(event, module, key, sound, overwrite)
-		if bwDb.sound then
+	local PlaySoundFile = PlaySoundFile
+	function plugin:BigWigs_Sound(event, module, key, sound)
+		if db.sound then
 			local sDb = db[sound]
 			if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
-				if db.defaultonly and not overwrite then
-					PlaySound("RaidWarning", "Master")
-				else
-					local path = db.media[sound] and media:Fetch(mType, db.media[sound]) or media:Fetch(mType, sound)
-					if path then
-						PlaySoundFile(path, "Master")
-					end
+				local path = db.media[sound] and media:Fetch(mType, db.media[sound]) or media:Fetch(mType, sound)
+				if path then
+					PlaySoundFile(path, "Master")
 				end
 			else
 				local newSound = sDb[module.name][key]
-				if db.defaultonly and not overwrite then
-					PlaySound("RaidWarning", "Master")
-				else
-					local path = db.media[newSound] and media:Fetch(mType, db.media[newSound]) or media:Fetch(mType, newSound)
-					if path then
-						PlaySoundFile(path, "Master")
-					end
+				local path = db.media[newSound] and media:Fetch(mType, db.media[newSound]) or media:Fetch(mType, newSound)
+				if path then
+					PlaySoundFile(path, "Master")
 				end
 			end
 		end

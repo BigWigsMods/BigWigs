@@ -194,7 +194,6 @@ L.fadeTimeDesc = "How long to fade out a message, in seconds"
 L.customRange = "Custom range indicator"
 L.proximityTitle = "%d yd / %d |4player:players;" -- yd = yards (short)
 L.proximity_name = "Proximity"
-L.sound = "Sound"
 L.soundDelay = "Sound delay"
 L.soundDelayDesc = "Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."
 
@@ -236,9 +235,6 @@ L.secondaryDesc = "The second raid target icon that a encounter script should us
 -- Sound.lua
 --
 
-L.defaultOnly = "Default only"
-L.soundDefaultDescription = "With this option set, Big Wigs will only use the default Blizzard raid warning sound for messages that come with a sound alert. Note that only some messages from encounter scripts will trigger a sound alert."
-
 L.Sounds = "Sounds"
 
 L.Alarm = "Alarm"
@@ -251,6 +247,9 @@ L.Beware = "Beware (Algalon)"
 L.FlagTaken = "Flag Taken (PvP)"
 L.Destruction = "Destruction (Kil'jaeden)"
 L.RunAway = "Run Away Little Girl (Big Bad Wolf)"
+
+L.sound = "Sound"
+L.soundDesc = "Messages might come with a sound. Some people find it easier to listen for these after they've learned which sound goes with which message, as opposed to reading the actual messages."
 
 L.customSoundDesc = "Play the selected custom sound instead of the one supplied by the module"
 L.resetAllCustomSound = "If you've customized sounds for any boss encounter settings, this button will reset ALL of them so the sounds defined here will be used instead."

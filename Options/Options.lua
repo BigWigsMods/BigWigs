@@ -136,13 +136,6 @@ local acOptions = {
 					order = 14,
 					width = "full",
 				},
-				sound = {
-					type = "toggle",
-					name = L.sound,
-					desc = L.soundDesc,
-					order = 21,
-					width = "half",
-				},
 				flash = {
 					type = "toggle",
 					name = L.flashScreen,

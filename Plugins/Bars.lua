@@ -1601,7 +1601,8 @@ do
 			plugin:SendMessage("BigWigs_Sound", plugin, nil, "Alarm")
 		elseif timeLeft < 11 then
 			plugin:SendMessage("BigWigs_Message", plugin, nil, L.pullIn:format(timeLeft), "Attention")
-			if timeLeft < 6 and BigWigs.db.profile.sound then
+			local module = BigWigs:GetPlugin("Sounds", true)
+			if timeLeft < 6 and module and module.db.profile.sound then
 				plugin:SendMessage("BigWigs_PlayCountdownNumber", plugin, timeLeft)
 			end
 		end
