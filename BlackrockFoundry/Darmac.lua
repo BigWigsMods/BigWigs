@@ -15,7 +15,6 @@ mod:RegisterEnableMob(76865)
 local phase = 1
 local tantrumCount = 1
 local conflagMark = 1
-local activatedMounts, currentBosses = {}, {}
 local spearList, spearMarksUsed = {}, {}
 local pinnedList = mod:NewTargetList()
 
@@ -77,7 +76,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Death("Win", 76865)
 
 	-- Stage 1
@@ -92,7 +91,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RendAndTear", 155061, 162283)
 	self:Log("SPELL_CAST_START", "SavageHowl", 155198)
 	-- Dreadwing
-	self:Emote("InfernoBreath", "154989")
 	self:Log("SPELL_DAMAGE", "InfernoBreathDamage", 154989)
 	self:Log("SPELL_MISSED", "InfernoBreathDamage", 154989)
 	self:Log("SPELL_AURA_APPLIED", "ConflagrationApplied", 154981)
@@ -120,7 +118,6 @@ end
 function mod:OnEngage(diff)
 	phase = 1
 	conflagMark = 1
-	wipe(activatedMounts)
 	wipe(pinnedList)
 
 	self:Bar(154975, 8) -- Call the Pack
@@ -128,94 +125,70 @@ function mod:OnEngage(diff)
 	self:Berserk(720)
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2")
+	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-local function openProxitiy()
-	if mod:Healer() or mod:Damager() == "RANGED" then
-		mod:OpenProximity("proximity", 8)
-	end
-end
-
-local function deactivateMount(mobId)
-	if mobId == 76884 then -- Cruelfang
-		activatedMounts[mobId] = false
-		mod:StopBar(155198) -- Savage Howl
-
-		mod:CDBar(155061, 12) -- Rend and Tear
-	elseif mobId == 76874 then -- Dreadwing
-		activatedMounts[mobId] = false
-		mod:StopBar(154981) -- Conflag
-		mod:StopBar(154989)
-
-		mod:CDBar(155499, 15) -- Superheated Shrapnel
-	elseif mobId == 76945 then -- Ironcrusher
-		activatedMounts[mobId] = false
-		mod:StopBar(155247) -- Stampede
-
-		--tantrumCount = 1
-		mod:CDBar(155222, 23, CL.count:format(mod:SpellName(155222), tantrumCount)) -- Tantrum
-	elseif mobId == 76946 then -- Faultline (Mythic)
-		activatedMounts[mobId] = false
-		mod:StopBar(159043) -- Epicenter
-
-		mod:CDBar(155321, 12) -- Unstoppable
-	end
-	if activatedMounts[76884] == false then
-		openProxitiy()
-	else
-		mod:CloseProximity()
-	end
-end
-
-function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	self:CheckBossStatus()
-	wipe(currentBosses)
-	for i=1, 5 do
-		local unit = ("boss%d"):format(i)
-		local mobId = self:MobId(UnitGUID(unit))
-		if mobId > 1 and mobId ~= 76865 then
-			currentBosses[mobId] = true
-			if activatedMounts[mobId] == nil then
-				self:StopBar(155061) -- Rend and Tear
-				self:StopBar(CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
-				self:StopBar(155499) -- Superheated Shrapnel
-				self:CloseProximity()
-
-				activatedMounts[mobId] = true
-				self:Message("stages", "Neutral", "Info", (UnitName(unit)), false)
-
-				if mobId == 76884 then -- Cruelfang
-					self:CDBar(155061, 13) -- Rend and Tear
-					self:CDBar(155198, 17) -- Savage Howl
-					openProxitiy()
-				elseif mobId == 76874 then -- Dreadwing
-					self:CDBar(154981, 12) -- Conflag
-				elseif mobId == 76945 then -- Ironcrusher
-					tantrumCount = 1
-					self:CDBar(155247, 15) -- Stampede
-					self:CDBar(155222, 25, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
-				elseif mobId == 76946 then -- Faultline (Mythic)
-					--
-				end
-			end
-		end
-	end
-	-- Darmac dismounts at 40% in Mythic
-	if self:Mythic() then
-		for mobId, active in next, activatedMounts do
-			if active and not currentBosses[mobId] then
-				deactivateMount(mobId)
-			end
-		end
-	end
-end
-
 function mod:Deaths(args)
-	deactivateMount(args.mobId)
+	local mobId = args.mobId
+	if mobId == 76884 then -- Cruelfang
+		self:StopBar(155198) -- Savage Howl
+
+		self:CDBar(155061, 12) -- Rend and Tear
+	elseif mobId == 76874 then -- Dreadwing
+		self:StopBar(154981) -- Conflag
+		self:StopBar(154989) -- Inferno Breath
+
+		self:CDBar(155499, 15) -- Superheated Shrapnel
+	elseif mobId == 76945 then -- Ironcrusher
+		self:StopBar(155247) -- Stampede
+
+		self:CDBar(155222, 23, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
+	elseif mobId == 76946 then -- Faultline (Mythic)
+		self:StopBar(159043) -- Epicenter
+
+		self:CDBar(155321, 12) -- Unstoppable
+	end
+
+	-- 155458 = Cunning of the Wolf (check for if he'll use Rend and Tear)
+	self:CloseProximity()
+	if UnitBuff("boss1", self:SpellName(155458)) and (self:Healer() or self:Damager() == "RANGED") then
+		self:OpenProximity("proximity", 8)
+	end
+end
+
+function mod:UNIT_TARGETABLE_CHANGED(unit)
+	if not UnitExists(unit) then -- Mount
+		self:StopBar(155061) -- Rend and Tear
+		self:StopBar(155499) -- Superheated Shrapnel
+		self:StopBar(CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
+
+		self:Message("stages", "Neutral", "Info", UnitName("boss2"), false)
+
+		local mobId = self:MobId(UnitGUID("boss2"))
+		if mobId == 76884 then -- Cruelfang
+			self:CDBar(155061, 13) -- Rend and Tear
+			self:CDBar(155198, 17) -- Savage Howl
+			if self:Healer() or self:Damager() == "RANGED" then
+				self:OpenProximity("proximity", 8)
+			end
+		elseif mobId == 76874 then -- Dreadwing
+			self:CDBar(154989, 5) -- Inferno Breath
+			self:CDBar(154981, 12) -- Conflag
+		elseif mobId == 76945 then -- Ironcrusher
+			tantrumCount = 1
+			self:CDBar(155247, 15) -- Stampede
+			self:CDBar(155222, 25, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
+		elseif mobId == 76946 then -- Faultline (Mythic)
+			self:CDBar(159043, 7) -- Epicenter
+			self:CDBar(155321, 11) -- Unstoppable
+		end
+	else -- Dismount
+		self:Message("stages", "Neutral", "Info", 45874, false) -- 45874 = Mount Dismount
+	end
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unit)
@@ -243,6 +216,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Message(155222, "Attention", nil, CL.count:format(spellName, tantrumCount))
 		tantrumCount = tantrumCount + 1
 		self:CDBar(155222, 23, CL.count:format(spellName, tantrumCount))
+	elseif spellId == 155423 then -- Face Random Non-Tank (Inferno Breath)
+		self:Message(154989, "Urgent", "Alert")
+		self:CDBar(154989, 20)
 	elseif spellId == 155497 then -- Superheated Shrapnel
 		self:Message(155499, "Urgent")
 		self:CDBar(155499, 25)
@@ -312,7 +288,7 @@ do
 			self:StackMessage(155061, args.destName, amount, "Attention", amount > 2 and "Warning")
 		end
 		local t = GetTime()
-		if t-prev > 10 then -- XXX can hit multiple people at staggered times
+		if t-prev > 10 then -- can hit multiple people at staggered times
 			prev = t
 			self:CDBar(155061, 12) -- 12-16
 		end
@@ -322,11 +298,6 @@ end
 function mod:SavageHowl(args)
 	self:Message(args.spellId, "Important", self:Dispeller("enrage", true) and "Alert")
 	self:Bar(args.spellId, 26)
-end
-
-function mod:InfernoBreath()
-	self:Message(154989, "Urgent", "Alert", self:SpellName(154989))
-	self:CDBar(154989, 20)
 end
 
 do
