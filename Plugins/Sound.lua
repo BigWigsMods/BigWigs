@@ -56,7 +56,7 @@ plugin.pluginOptions = {
 	args = {
 		sound = {
 			type = "toggle",
-			name = "|cfffed000".. L.sound .."|r",
+			name = L.sound,
 			desc = L.soundDesc,
 			get = function() return plugin.db.profile.sound end,
 			set = function(info, v) plugin.db.profile.sound = v end,
