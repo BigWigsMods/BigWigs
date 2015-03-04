@@ -59,22 +59,18 @@ end
 function mod:OnBossEnable()
 	self:RegisterMessage("BigWigs_OnBossEngage", "Disable")
 
+	self:Log("SPELL_AURA_APPLIED", "BadStuffUnderYou", 175654, 173827) -- Rune of Disintegration, Wild Flames
+	self:Log("SPELL_PERIODIC_DAMAGE", "BadStuffUnderYou", 175654, 173827)
+	self:Log("SPELL_PERIODIC_MISSED", "BadStuffUnderYou", 175654, 173827)
+
 	self:Log("SPELL_AURA_APPLIED", "RadiatingPoison", 172066)
 	self:Log("SPELL_AURA_REMOVED", "RadiatingPoisonRemoved", 172066)
-
-	self:Log("SPELL_AURA_APPLIED", "RuneOfDisintegration", 175654)
-	self:Log("SPELL_PERIODIC_DAMAGE", "RuneOfDisintegration", 175654)
-	self:Log("SPELL_PERIODIC_MISSED", "RuneOfDisintegration", 175654)
 
 	self:Log("SPELL_AURA_APPLIED", "RuneOfDestruction", 175636)
 	self:Log("SPELL_AURA_REMOVED", "RuneOfDestructionRemoved", 175636)
 
 	self:Log("SPELL_AURA_APPLIED", "ArcaneVolatility", 166200)
 	self:Log("SPELL_AURA_REMOVED", "ArcaneVolatilityRemoved", 166200)
-
-	self:Log("SPELL_AURA_APPLIED", "WildFlames", 173827)
-	self:Log("SPELL_PERIODIC_DAMAGE", "WildFlames", 173827)
-	self:Log("SPELL_PERIODIC_MISSED", "WildFlames", 173827)
 
 	self:Log("SPELL_AURA_APPLIED", "FrozenCore", 174404)
 	self:Log("SPELL_AURA_REMOVED", "FrozenCoreRemoved", 174404)
@@ -83,6 +79,18 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local prev = 0
+	function mod:BadStuffUnderYou(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Flash(args.spellId)
+			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
+	end
+end
 
 --[[ Oro ]]--
 
@@ -106,18 +114,6 @@ function mod:RadiatingPoisonRemoved(args)
 end
 
 --[[ Gorian Runemaster ]]--
-
-do
-	local prev = 0
-	function mod:RuneOfDisintegration(args)
-		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 1 then
-			prev = t
-			self:Flash(args.spellId)
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
-		end
-	end
-end
 
 function mod:RuneOfDestruction(args)
 	self:TargetBar(args.spellId, 15, args.destName)
@@ -160,18 +156,6 @@ function mod:ArcaneVolatilityRemoved(args)
 end
 
 --[[ Breaker Ritualist ]]--
-
-do
-	local prev = 0
-	function mod:WildFlames(args)
-		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 1 then
-			prev = t
-			self:Flash(args.spellId)
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
-		end
-	end
-end
 
 function mod:FrozenCore(args)
 	self:TargetBar(args.spellId, 20, args.destName)
