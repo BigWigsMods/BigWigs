@@ -25,6 +25,7 @@ local engiTimer = nil
 local securityTimer = nil
 local firecallerTimer = nil
 local markedFirecallers = {}
+local fixateOnMe = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -43,6 +44,7 @@ if L then
 	L.heat_increased_message = "Heat increased! Blast every %ss"
 
 	L.bombs_dropped = "Bombs dropped! (%d)"
+	L.bombs_dropped_p2 = "Engineer killed, bombs dropped!"
 
 	L.operator = "Bellows Operator spawns"
 	L.operator_desc = "During phase one, 2 Bellows Operators will repeatedly spawn, 1 on each side of the room."
@@ -91,6 +93,8 @@ function mod:GetOptions()
 		{155173, "DISPEL"}, -- Reactive Earth Shield
 		--[[ Slag Elemental ]]--
 		-10324, -- Fixate
+		{177744, "PROXIMITY"}, -- Burn on fixated target (Mythic)
+		176141, -- Hardened Slag (Mythic)
 		176133, -- Slag Bomb
 		--[[ Heart of the Mountain ]]--
 		155209, -- Blast
@@ -130,10 +134,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ReactiveEarthShield", 155173)
 	-- Slag Elemental
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 155196)
+	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 155196)
 	self:Log("SPELL_CAST_START", "SlagBomb", 176133)
+	self:Log("SPELL_AURA_REMOVED", "HardenedSlagRemoved", 176141) -- Mythic
 	-- Furnace Engineer
 	self:Log("SPELL_CAST_START", "Repair", 155179)
 	self:Log("SPELL_AURA_APPLIED", "Bomb", 155192, 174716, 159558) -- Bomb, Cluster of Lit Bombs, MC'd Engineer Bomb
+	self:Log("SPELL_AURA_REFRESH", "Bomb", 155192, 174716, 159558)
 	self:Log("SPELL_AURA_REMOVED", "BombRemoved", 155192, 174716, 159558)
 	-- Firecaller
 	self:Log("SPELL_CAST_START", "CauterizeWounds", 155186)
@@ -168,6 +175,7 @@ function mod:OnEngage()
 	bombOnMe = nil
 	firstOperators = nil
 	wipe(engineerBombs)
+	fixateOnMe = nil
 
 	self:Bar(155209, blastTime) -- Blast
 	local timer = self:LFR() and 65 or self:Mythic() and 40 or self:Heroic() and 55 or 60
@@ -197,6 +205,9 @@ local function updateProximity()
 	end
 	if #bombTargets > 0 then -- someone shouldn't be standing there without a bomb, so this might not be needed
 		mod:OpenProximity(155192, 9, bombTargets) -- how big is the radius? i have no idea
+	end
+	if mod:Mythic() and fixateOnMe then
+		mod:OpenProximity(177744, 5)
 	end
 	if volatileFireOnMe then
 		mod:OpenProximity(176121, 9)
@@ -341,10 +352,10 @@ end
 
 function mod:ShieldsDown(args)
 	self:Message(-10325, "Positive", "Info", CL.removed:format(self:SpellName(155176))) -- Damage Shield Removed!
-	self:Bar(-10325, self:Normal() and 40 or 30)
+	self:Bar(-10325, self:Mythic() and 20 or self:Normal() and 40 or 30)
 
 	if self.db.profile.custom_on_shieldsdown_marker then
-		for i = 1, 5 do -- i have no idea if this works
+		for i = 2, 5 do -- boss1 is always Heart of the Mountain
 			local boss = ("boss%d"):format(i)
 			if UnitBuff(boss, args.spellName) then -- Shields Down
 				SetRaidTarget(boss, 8)
@@ -356,7 +367,7 @@ end
 
 function mod:DamageShield(args)
 	if self.db.profile.custom_on_shieldsdown_marker then
-		for i = 1, 5 do
+		for i = 2, 5 do -- boss1 is always Heart of the Mountain
 			local boss = ("boss%d"):format(i)
 			if UnitGUID(boss) == args.sourceGUID and GetRaidTargetIndex(boss) == 8 then
 				SetRaidTarget(boss, 0)
@@ -370,11 +381,25 @@ function mod:Fixate(args)
 	if self:Me(args.destGUID) then
 		self:Message(-10324, "Personal", "Alarm", CL.you:format(args.spellName))
 		self:Flash(-10324)
+		fixateOnMe = true
 	end
+	updateProximity()
+end
+
+function mod:FixateRemoved(args)
+	if self:Me(args.destGUID) then
+		fixateOnMe = nil
+		self:CloseProximity(177744)
+	end
+	updateProximity()
 end
 
 function mod:SlagBomb(args)
 	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
+end
+
+function mod:HardenedSlagRemoved(args)
+	self:Message(args.spellId, "Positive", nil, CL.removed:format(args.spellName))
 end
 
 function mod:ReactiveEarthShield(args)
@@ -536,12 +561,14 @@ end
 function mod:Deaths(args)
 	if args.mobId == 88820 or args.mobId == 76810 then
 		if regulatorDeaths < 2 then -- p1: pick up bombs
-			local bombs = engineerBombs[args.destGUID] or 5
+			local bombs = self:Mythic() and 3 or engineerBombs[args.destGUID] or 5
 			if bombs > 0 then
 				self:Message(174731, "Positive", "Info", L.bombs_dropped:format(bombs))
 			end
 			engineerBombs[args.destGUID] = nil
-		end
+		else -- p2: care
+			self:Message(174731, "Important", nil, L.bombs_dropped_p2)
+ 		end
 	elseif args.mobId == 76808 then
 		regulatorDeaths = regulatorDeaths + 1
 		self:Message("stages", "Neutral", "Info", CL.mob_killed:format(args.destName, regulatorDeaths, 2), false)
@@ -558,6 +585,7 @@ function mod:Deaths(args)
 		end
 	elseif args.mobId == 76815 then
 		shamanDeaths = shamanDeaths + 1
+		self:StopBar(-10325) -- Shields down
 		self:Message("stages", "Neutral", "Info", CL.mob_killed:format(args.destName, shamanDeaths, 4), false)
 		if shamanDeaths > 3 then
 			-- The Fury is free! (after the next Blast cast?)
