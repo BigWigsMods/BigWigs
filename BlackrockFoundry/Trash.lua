@@ -11,6 +11,7 @@ mod:RegisterEnableMob(
 	80423, -- Thunderlord Beast-Tender
 	78978, -- Darkshard Gnasher
 	79208, -- Blackrock Enforcer
+	80708, -- Iron Taskmaster
 	76906, -- Operator Thogar, alternative for Blast Furnace Exhaust (87366)
 	87989 -- Forgemistress Flamehand
 )
@@ -25,6 +26,7 @@ if L then
 	L.beasttender = "Thunderlord Beast-Tender"
 	L.gnasher = "Darkshard Gnasher"
 	L.enforcer = "Blackrock Enforcer"
+	L.taskmaster = "Iron Taskmaster"
 	L.furnace = "Blast Furnace Exhaust"
 	L.mistress = "Forgemistress Flamehand"
 end
@@ -44,6 +46,8 @@ function mod:GetOptions()
 		{159632, "FLASH"}, -- Insatiable Hunger
 		--[[ Blackrock Enforcer ]]--
 		{160260, "FLASH"}, -- Fire Bomb
+		--[[ Iron Taskmaster ]]--
+		163121 -- Held to Task
 		--[[ Blast Furnace Exhaust ]]--
 		{174773, "FLASH"}, -- Exhaust Fumes
 		--[[ Forgemistress Flamehand ]]--
@@ -54,6 +58,7 @@ function mod:GetOptions()
 		[162663] = L.beasttender,
 		[159632] = L.gnasher,
 		[160260] = L.enforcer,
+		[163121] = L.taskmaster,
 		[174773] = L.furnace,
 		[175583] = L.mistress,
 	}
@@ -72,6 +77,8 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "InsatiableHunger", 159632)
 	self:Log("SPELL_AURA_REMOVED", "InsatiableHungerRemoved", 159632)
+
+	self:Log("SPELL_AURA_APPLIED", "HeldToTask", 163121)
 
 	self:Log("SPELL_CAST_START", "LivingBlazeCast", 175583)
 	self:Log("SPELL_AURA_APPLIED", "LivingBlaze", 175583)
@@ -126,6 +133,16 @@ function mod:InsatiableHungerRemoved(args)
 	self:StopBar(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Positive", nil, CL.over:format(args.spellName))
+	end
+end
+
+--[[ Iron Taskmaster ]]--
+
+function mod:HeldToTask(args)
+	if self:Dispeller("enrage", true) then
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning")
+	else
+		self:TargetMessage(args.spellId, args.destName, "Attention")
 	end
 end
 
