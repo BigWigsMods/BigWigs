@@ -181,6 +181,7 @@ function mod:OnEngage()
 	local timer = self:LFR() and 65 or self:Mythic() and 40 or self:Heroic() and 55 or 60
 	self:CDBar("engineer", timer, -9649, L.engineer_icon) -- Furnace Engineer
 	self:CDBar("guard", timer, -10803, L.guard_icon) -- Security Guard
+	self:CDBar("operator", timer+0.5, -9650, L.operator_icon) -- Bellows Operator
 	engiTimer = self:ScheduleTimer("EngineerRepeater", timer)
 	securityTimer = self:ScheduleTimer("SecurityRepeater", timer)
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
@@ -228,10 +229,10 @@ do
 			prev = t
 			if not firstOperators then
 				firstOperators = true
-				self:CDBar("operator", 54, -9650, L.operator_icon) -- Bellows Operator
+				-- We fire the first bar on engage, this event fires a few seconds after engage
 			else
 				self:Message("operator", "Attention", "Info", CL.incoming:format(self:SpellName(-9650)), L.operator_icon) -- Bellows Operator
-				self:CDBar("operator", 58, -9650, L.operator_icon) -- Bellows Operator
+				self:CDBar("operator", 59, -9650, L.operator_icon) -- Bellows Operator
 			end
 		end
 	end
