@@ -61,11 +61,15 @@ function mod:GetOptions()
 		156107, -- Impaling Throw
 		156030, -- Throw Slag Bombs
 		"stages",
+		--[[ Mythic ]]--
+		163008, -- Massive Explosion
+		162585, -- Falling Debris
 	}, {
 		[156425] = -8814, -- Stage One: The Blackrock Forge
 		["siegemaker"] = -8816, -- Stage Two: Storage Warehouse
 		[158054] = -8818, -- Stage Three: Iron Crucible
-		[155992] = "general"
+		[155992] = "general",
+		[163008] = "mythic",
 	}
 end
 
@@ -90,6 +94,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "MassiveShatteringSmash", 158054)
 	self:Log("SPELL_AURA_APPLIED", "AttachSlagBombs", 157000, 159179)
 	self:Log("SPELL_ENERGIZE", "SmashReschedule", 104915)
+	-- Mythic
+	self:Log("SPELL_CAST_START", "MassiveExplosion", 163008)
+	self:Log("SPELL_CAST_SUCCESS", "FallingDebris", 162579)
 end
 
 function mod:OnEngage()
@@ -191,7 +198,7 @@ end
 
 function mod:ShatteringSmash(args)
 	self:Message(155992, "Urgent", "Warning")
-	self:CDBar(155992, phase == 1 and 30 or 45)
+	self:CDBar(155992, self:Mythic() and 30 or phase == 1 and 30 or 45)
 end
 
 do
@@ -297,5 +304,16 @@ end
 function mod:SlagEruption(args)
 	self:Message(args.spellId, "Attention")
 	self:Bar(args.spellId, 33)
+end
+
+function mod:MassiveExplosion(args)
+	self:Message(args.spellId, "Urgent", "Alarm")
+	self:Bar(args.spellId, 5)
+end
+
+function mod:FallingDebris(args)
+	self:Message(162585, "Important", "Alarm")
+	self:Bar(162585, 40)
+	self:Bar(162585, 6, CL.cast:format(args.spellName))
 end
 
