@@ -47,7 +47,7 @@ function mod:GetOptions()
 		--[[ Blackrock Enforcer ]]--
 		{160260, "FLASH"}, -- Fire Bomb
 		--[[ Iron Taskmaster ]]--
-		163121 -- Held to Task
+		163121, -- Held to Task
 		--[[ Blast Furnace Exhaust ]]--
 		{174773, "FLASH"}, -- Exhaust Fumes
 		--[[ Forgemistress Flamehand ]]--

@@ -228,7 +228,7 @@ do
 			prev = t
 			if not firstOperators then
 				firstOperators = true
-				self:CDBar("operator", 53, -9650, L.operator_icon) -- Bellows Operator
+				self:CDBar("operator", 54, -9650, L.operator_icon) -- Bellows Operator
 			else
 				self:Message("operator", "Attention", "Info", CL.incoming:format(self:SpellName(-9650)), L.operator_icon) -- Bellows Operator
 				self:CDBar("operator", 58, -9650, L.operator_icon) -- Bellows Operator
