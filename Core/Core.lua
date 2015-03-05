@@ -625,6 +625,10 @@ do
 			module.OnRegister = nil
 		end
 		self:SendMessage("BigWigs_PluginRegistered", module.moduleName, module)
+
+		if pluginCore:IsEnabled() then
+			module:Enable() -- Support LoD plugins that load after we're enabled (e.g. zone based)
+		end
 	end
 end
 
