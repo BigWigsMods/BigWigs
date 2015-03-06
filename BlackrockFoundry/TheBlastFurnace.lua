@@ -397,6 +397,7 @@ end
 
 function mod:SlagBomb(args)
 	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
+	self:Bar(args.spellId, 2, CL.cast:format(args.spellName))
 end
 
 function mod:HardenedSlagRemoved(args)
