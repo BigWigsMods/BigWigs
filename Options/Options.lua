@@ -687,6 +687,7 @@ end
 
 local listAbilitiesInChat = nil
 do
+	local SendChatMessage = BigWigsLoader.SendChatMessage
 	local function output(channel, ...)
 		if channel then
 			SendChatMessage(strjoin(" ", ...), channel)

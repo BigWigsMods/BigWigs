@@ -55,12 +55,13 @@ local tooltipFunctions = {}
 local next, tonumber = next, tonumber
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
 
--- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
+-- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 local GetCurrentMapAreaID = GetCurrentMapAreaID
 local SetMapToCurrentZone = SetMapToCurrentZone
 public.GetCurrentMapAreaID = GetCurrentMapAreaID
 public.SetMapToCurrentZone = SetMapToCurrentZone
 public.SendAddonMessage = SendAddonMessage
+public.SendChatMessage = SendChatMessage
 public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
 

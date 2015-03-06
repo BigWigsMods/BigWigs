@@ -1386,6 +1386,7 @@ do
 			return tformat3:format(floor(t + .5))
 		end
 	end
+	local SendChatMessage = BigWigsLoader.SendChatMessage
 	clickHandlers.report = function(bar)
 		local text = ("%s: %s"):format(bar:GetLabel(), timeDetails(bar.remaining))
 		SendChatMessage(text, (IsInGroup(2) and "INSTANCE_CHAT") or (IsInRaid() and "RAID") or (IsInGroup() and "PARTY") or "SAY")
