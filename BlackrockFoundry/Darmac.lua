@@ -137,20 +137,20 @@ function mod:Deaths(args)
 	if mobId == 76884 then -- Cruelfang
 		self:StopBar(155198) -- Savage Howl
 
-		self:CDBar(155061, 12) -- Rend and Tear
+		self:CDBar(155061, 20) -- Rend and Tear
 	elseif mobId == 76874 then -- Dreadwing
 		self:StopBar(154981) -- Conflag
 		self:StopBar(154989) -- Inferno Breath
 
-		self:CDBar(155499, 15) -- Superheated Shrapnel
+		self:CDBar(155499, 12) -- Superheated Shrapnel
 	elseif mobId == 76945 then -- Ironcrusher
 		self:StopBar(155247) -- Stampede
 
-		self:CDBar(155222, 23, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
+		self:CDBar(155222, 22, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
 	elseif mobId == 76946 then -- Faultline (Mythic)
 		self:StopBar(159043) -- Epicenter
 
-		self:CDBar(155321, 12) -- Unstoppable
+		self:CDBar(155321, 21) -- Unstoppable
 	end
 
 	-- 155458 = Cunning of the Wolf (check for if he'll use Rend and Tear)
@@ -219,8 +219,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 155423 then -- Face Random Non-Tank (Inferno Breath)
 		self:Message(154989, "Urgent", "Alert")
 		self:CDBar(154989, 20)
-	elseif spellId == 155497 then -- Superheated Shrapnel
-		self:Message(155499, "Urgent")
+	elseif spellId == 155603 then -- Face Random Non-Tank (Superheated Shrapnel)
+		self:Message(155499, "Urgent", "Alert")
 		self:CDBar(155499, 25)
 	end
 end
