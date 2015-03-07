@@ -54,12 +54,10 @@ local ldb = nil
 local tooltipFunctions = {}
 local next, tonumber = next, tonumber
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
+local IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone = IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone
+local GetAreaMapInfo, GetInstanceInfo = GetAreaMapInfo, GetInstanceInfo
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
-local GetCurrentMapAreaID = GetCurrentMapAreaID
-local SetMapToCurrentZone = SetMapToCurrentZone
-local GetAreaMapInfo = GetAreaMapInfo
-local GetInstanceInfo = GetInstanceInfo
 public.GetCurrentMapAreaID = GetCurrentMapAreaID
 public.SetMapToCurrentZone = SetMapToCurrentZone
 public.GetAreaMapInfo = GetAreaMapInfo
@@ -127,7 +125,7 @@ end
 
 -- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, CreateFrame, CUSTOM_CLASS_COLORS, error, GetAddOnEnableState, GetAddOnInfo
 -- GLOBALS: GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetSpellInfo, GetTime, GRAY_FONT_COLOR, InCombatLockdown
--- GLOBALS: InterfaceOptionsFrameOkay, IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInInstance, IsInRaid, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
+-- GLOBALS: InterfaceOptionsFrameOkay, IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInRaid, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, message, PlaySoundFile, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, SetMapByID, strsplit
 -- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
 -- GLOBALS: SLASH_BigWigsVersion1, UnitBuff, wipe, WorldMapFrame
@@ -884,9 +882,8 @@ do
 
 	function mod:ZONE_CHANGED_NEW_AREA()
 		-- Zone checking
-		local inside = IsInInstance()
 		local id
-		if not inside then
+		if not IsInInstance() then
 			if WorldMapFrame:IsShown() then
 				local prevId = GetCurrentMapAreaID()
 				SetMapToCurrentZone()
@@ -998,7 +995,14 @@ function mod:BigWigs_CoreEnabled()
 	loadAddons(loadOnCoreEnabled)
 
 	-- core is enabled, unconditionally load the zones
-	loadZone(GetCurrentMapAreaID())
+	local id
+	if not IsInInstance() then
+		id = GetCurrentMapAreaID()
+	else
+		local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
+		id = instanceId
+	end
+	loadZone(id)
 end
 
 function mod:BigWigs_CoreDisabled()

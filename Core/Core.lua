@@ -404,8 +404,13 @@ function addon:OnEnable()
 
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 
-	pluginCore:Enable()
-	bossCore:Enable()
+	if IsLoggedIn() then
+		pluginCore:Enable()
+		bossCore:Enable()
+		self.PLAYER_LOGIN = nil
+	else
+		self:RegisterEvent("PLAYER_LOGIN")
+	end
 
 	zoneChanged()
 	self:SendMessage("BigWigs_CoreEnabled")
@@ -424,6 +429,13 @@ function addon:OnDisable()
 	pluginCore:Disable()
 	monitoring = nil
 	self:SendMessage("BigWigs_CoreDisabled")
+end
+
+function addon:PLAYER_LOGIN()
+	-- Delay enabling until we're fully logged in
+	pluginCore:Enable()
+	bossCore:Enable()
+	self.PLAYER_LOGIN = nil
 end
 
 function addon:Print(msg)
