@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("The Blast Furnace", 988, 1154)
 if not mod then return end
 mod:RegisterEnableMob(76809, 76808, 76806, 76815) -- Foreman Feldspar, Heat Regulator, Heart of the Mountain, Primal Elementalist
---mod.engageId = 1690
+mod.engageId = 1690
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -124,9 +124,6 @@ function mod:VerifyEnable()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:Death("Win", 76806)
-
 	self:Log("SPELL_AURA_APPLIED", "Loading", 155181) -- Bellows Operator
 	-- Primal Elementalist
 	self:Log("SPELL_AURA_APPLIED", "ShieldsDown", 158345)

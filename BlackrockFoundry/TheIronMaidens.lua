@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("The Iron Maidens", 988, 1203)
 if not mod then return end
 mod:RegisterEnableMob(77477, 77557, 77231) -- Marak the Blooded, Admiral Gar'an, Enforcer Sorka
---mod.engageId = 1695
+mod.engageId = 1695
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -14,7 +14,6 @@ mod:RegisterEnableMob(77477, 77557, 77231) -- Marak the Blooded, Admiral Gar'an,
 
 local shipCount = 0
 local boatTimers = {} -- don't announce while on the boat, but track the cd times
-local deathCount = 0
 
 local function isOnABoat()
 	local _, pos = UnitPosition("player")
@@ -87,7 +86,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Death("Deaths", 77477, 77557, 77231)
 
 	self:Log("SPELL_AURA_APPLIED", "IronWill", 159336)
@@ -120,7 +118,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	deathCount = 0
 	shipCount = 0
 	wipe(boatTimers)
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2", "boss3")
@@ -449,10 +446,6 @@ function mod:SanguineStrikes(args)
 end
 
 function mod:Deaths(args)
-	deathCount = deathCount + 1
-	if deathCount > 2 then
-		self:Win()
-		return
-	end
 	stopBars(args.mobId)
 end
+

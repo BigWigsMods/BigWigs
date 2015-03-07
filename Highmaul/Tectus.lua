@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Tectus", 994, 1195)
 if not mod then return end
 mod:RegisterEnableMob(78948)
---mod.engageId = 1722
+mod.engageId = 1722
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -69,9 +69,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:Death("Win", 78948)
-
 	self:Log("SPELL_CAST_SUCCESS", "AddsSpawn", 181113) -- Encounter Spawn
 	self:Log("SPELL_CAST_SUCCESS", "BossUnitKilled", 181089) -- Encounter Event
 	-- Tectus

@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Kargath Bladefist", 994, 1128)
 if not mod then return end
 mod:RegisterEnableMob(78714)
---mod.engageId = 1721
+mod.engageId = 1721
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -56,9 +56,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:Death("Win", 78714)
-
 	self:Log("SPELL_AURA_APPLIED", "FlameJetDamage", 159311)
 	self:Log("SPELL_PERIODIC_DAMAGE", "FlameJetDamage", 159311)
 	self:Log("SPELL_PERIODIC_MISSED", "FlameJetDamage", 159311)

@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Hans'gar and Franzok", 988, 1155)
 if not mod then return end
 mod:RegisterEnableMob(76973, 76974) -- Hans'gar, Franzok
---mod.engageId = 1693
+mod.engageId = 1693
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -39,9 +39,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:Death("Win", 76974)
-
 	self:Log("SPELL_CAST_START", "CripplingSuplex", 156938)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShatteredVertebrae", 157139)
 	-- Franzok

@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Brackenspore", 994, 1196)
 if not mod then return end
 mod:RegisterEnableMob(78491)
---mod.engageId = 1720
+mod.engageId = 1720
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -92,9 +92,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:Death("Win", 78491)
-
 	self:Log("SPELL_AURA_APPLIED", "CreepingMossHeal", 164125, 165494)
 	self:Log("SPELL_PERIODIC_HEAL", "CreepingMossHeal", 164125, 165494)
 	self:Log("SPELL_AURA_APPLIED", "Rot", 163241)

@@ -6,7 +6,8 @@
 local mod, CL = BigWigs:NewBoss("Flamebender Ka'graz", 988, 1123)
 if not mod then return end
 mod:RegisterEnableMob(76814, 77337) -- Flamebender Ka'graz, Aknor Steelbringer
---mod.engageId = 1689
+mod.engageId = 1689
+
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -65,7 +66,6 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-	self:Death("Win", 76814)
 
 	-- Aknor
 	self:Log("SPELL_CAST_START", "DevastatingSlam", 156018)
@@ -108,7 +108,7 @@ end
 --
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	self:CheckBossStatus()
+	self:CheckForEncounterEngage()
 	-- XXX wolves don't have UNIT_DIED or other events to indicate they were killed afaik
 	if wolvesActive then
 		for i=1, 5 do

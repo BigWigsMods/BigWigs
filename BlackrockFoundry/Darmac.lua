@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Beastlord Darmac", 988, 1122)
 if not mod then return end
 mod:RegisterEnableMob(76865)
---mod.engageId = 1694
+mod.engageId = 1694
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -76,9 +76,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:Death("Win", 76865)
-
 	-- Stage 1
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
 	self:Log("SPELL_CAST_SUCCESS", "PinDown", 155365)
