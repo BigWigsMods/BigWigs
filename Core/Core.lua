@@ -148,6 +148,7 @@ local function unitTargetChanged(event, target)
 end
 
 local function zoneChanged()
+	local id
 	if not IsInInstance() then
 		-- We may be hearthing whilst a module is enabled and engaged, only wipe if we're a ghost (released spirit from an old zone).
 		if UnitIsDeadOrGhost("player") then
@@ -156,11 +157,19 @@ local function zoneChanged()
 					module:Wipe()
 				end
 			end
+		elseif WorldMapFrame:IsShown() then
+			local prevId = GetCurrentMapAreaID()
+			SetMapToCurrentZone()
+			id = GetCurrentMapAreaID()
+			SetMapByID(prevId)
+		else
+			SetMapToCurrentZone()
+			id = GetCurrentMapAreaID()
 		end
 	else
-		SetMapToCurrentZone() -- Hack because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.
+		local _, _, _, myId = UnitPosition("player")
+		id = myId
 	end
-	local id = GetCurrentMapAreaID()
 	if enablezones[id] then
 		if not monitoring then
 			monitoring = true
@@ -603,8 +612,9 @@ do
 
 		self:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 
-		if not enablezones[module.zoneId] then
-			enablezones[module.zoneId] = true
+		local id = module.worldBoss and module.zoneId or GetAreaMapInfo(module.zoneId)
+		if not enablezones[id] then
+			enablezones[id] = true
 			-- We fire zoneChanged() as a backup for LoD users. In rare cases,
 			-- ZONE_CHANGED_NEW_AREA fires before the first module can add its zoneId into the table,
 			-- resulting in a failed check to register UPDATE_MOUSEOVER_UNIT, etc.

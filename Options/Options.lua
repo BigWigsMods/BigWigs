@@ -1091,9 +1091,10 @@ end
 
 local function onZoneShow(frame)
 	local zoneId = frame.id
+	local instanceId = GetAreaMapInfo(zoneId)
 
 	-- Make sure all the bosses for this zone are loaded.
-	BigWigsLoader:LoadZone(zoneId)
+	BigWigsLoader:LoadZone(instanceId)
 
 	-- Does this zone have a module list?
 	local moduleList = BigWigsLoader:GetZoneMenus()[zoneId]
@@ -1239,7 +1240,8 @@ do
 
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
-		local parent = BigWigsLoader.zoneTbl[zoneId] and addonNameToHeader[BigWigsLoader.zoneTbl[zoneId]] or addonNameToHeader.BigWigs_WarlordsOfDraenor
+		local instanceId = GetAreaMapInfo(zoneId)
+		local parent = BigWigsLoader.zoneTbl[instanceId] and addonNameToHeader[BigWigsLoader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_WarlordsOfDraenor
 		local panel, justCreated = self:GetPanel(zoneName, parent, zoneId)
 		if justCreated then
 			panel:SetScript("OnShow", onZoneShow)

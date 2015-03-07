@@ -100,7 +100,7 @@ do
 	local mop = "BigWigs_MistsOfPandaria"
 	local lw = "LittleWigs"
 
-	public.zoneTbl = {
+	local tbl = {
 		[696]=c, [755]=c,
 		[775]=bc, [780]=bc, [779]=bc, [776]=bc, [799]=bc, [782]=bc, [466]=bc,
 		[604]=wotlk, [543]=wotlk, [535]=wotlk, [529]=wotlk, [527]=wotlk, [532]=wotlk, [531]=wotlk, [609]=wotlk, [718]=wotlk,
@@ -110,6 +110,15 @@ do
 		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw, [919]=lw, -- MoP
 		[964]=lw, [969]=lw, [984]=lw, [987]=lw, [989]=lw, [993]=lw, [995]=lw, [1008]=lw -- WoD
 	}
+
+	public.zoneTbl = {}
+	for k,v in next, tbl do
+		if fakeWorldZones[k] then
+			public.zoneTbl[k] = v
+		else
+			public.zoneTbl[GetAreaMapInfo(k)] = v
+		end
+	end
 end
 
 -- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, CreateFrame, CUSTOM_CLASS_COLORS, error, GetAddOnEnableState, GetAddOnInfo
@@ -288,10 +297,11 @@ do
 				if fakeWorldZones[zone] then
 					if not menus[zone] then menus[zone] = true end
 				else
-					enableZones[zone] = true
+					local instanceId = GetAreaMapInfo(zone)
+					enableZones[instanceId] = true
 
-					if not loadOnZone[zone] then loadOnZone[zone] = {} end
-					loadOnZone[zone][#loadOnZone[zone] + 1] = addon
+					if not loadOnZone[instanceId] then loadOnZone[instanceId] = {} end
+					loadOnZone[instanceId][#loadOnZone[instanceId] + 1] = addon
 
 					if override then
 						loadOnZone[override][#loadOnZone[override] + 1] = addon
@@ -365,7 +375,9 @@ do
 	end
 end
 
-function mod:PLAYER_LOGIN()
+function mod:ADDON_LOADED(addon)
+	if addon ~= "BigWigs" then return end
+
 	bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 	bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
@@ -436,8 +448,9 @@ function mod:PLAYER_LOGIN()
 
 	self:GROUP_ROSTER_UPDATE()
 	self:ZONE_CHANGED_NEW_AREA()
-	bwFrame:UnregisterEvent("PLAYER_LOGIN")
-	self.PLAYER_LOGIN = nil
+
+	bwFrame:UnregisterEvent("ADDON_LOADED")
+	self.ADDON_LOADED = nil
 end
 
 -- Various temporary printing stuff
@@ -638,7 +651,7 @@ end
 bwFrame:SetScript("OnEvent", function(frame, event, ...)
 	mod[event](mod, ...)
 end)
-bwFrame:RegisterEvent("PLAYER_LOGIN")
+bwFrame:RegisterEvent("ADDON_LOADED")
 
 -- Role Updating
 function mod:ACTIVE_TALENT_GROUP_CHANGED()
@@ -869,14 +882,19 @@ do
 		-- Zone checking
 		local inside = IsInInstance()
 		local id
-		if not inside and WorldMapFrame:IsShown() then
-			local prevId = GetCurrentMapAreaID()
-			SetMapToCurrentZone()
-			id = GetCurrentMapAreaID()
-			SetMapByID(prevId)
+		if not inside then
+			if WorldMapFrame:IsShown() then
+				local prevId = GetCurrentMapAreaID()
+				SetMapToCurrentZone()
+				id = GetCurrentMapAreaID()
+				SetMapByID(prevId)
+			else
+				SetMapToCurrentZone()
+				id = GetCurrentMapAreaID()
+			end
 		else
-			SetMapToCurrentZone()
-			id = GetCurrentMapAreaID()
+			local _, _, _, myId = UnitPosition("player")
+			id = myId
 		end
 
 		-- Module loading
@@ -949,7 +967,7 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		enableZones[module.zoneId] = "world"
 		worldBosses[module.worldBoss] = module.zoneId
 	else
-		enableZones[module.zoneId] = true
+		enableZones[GetAreaMapInfo(module.zoneId)] = true
 	end
 
 	local id = module.otherMenu or module.zoneId
