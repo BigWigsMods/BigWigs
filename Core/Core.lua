@@ -4,9 +4,10 @@ addon:SetEnabledState(false)
 addon:SetDefaultModuleState(false)
 
 -- Embed callback handler
-addon.RegisterMessage = BigWigsLoader.RegisterMessage
-addon.UnregisterMessage = BigWigsLoader.UnregisterMessage
-addon.SendMessage = BigWigsLoader.SendMessage
+local loader = BigWigsLoader
+addon.RegisterMessage = loader.RegisterMessage
+addon.UnregisterMessage = loader.UnregisterMessage
+addon.SendMessage = loader.SendMessage
 
 local GetSpellInfo = GetSpellInfo
 
@@ -22,9 +23,11 @@ local bwUtilityFrame = CreateFrame("Frame")
 local bossCore, pluginCore
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
-local GetCurrentMapAreaID = BigWigsLoader.GetCurrentMapAreaID
-local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
-local SendAddonMessage = BigWigsLoader.SendAddonMessage
+local GetCurrentMapAreaID = loader.GetCurrentMapAreaID
+local SetMapToCurrentZone = loader.SetMapToCurrentZone
+local SendAddonMessage = loader.SendAddonMessage
+local GetAreaMapInfo = loader.GetAreaMapInfo
+local GetInstanceInfo = loader.GetInstanceInfo
 
 -- Upvalues
 local next, type = next, type
@@ -167,8 +170,8 @@ local function zoneChanged()
 			id = GetCurrentMapAreaID()
 		end
 	else
-		local _, _, _, myId = UnitPosition("player")
-		id = myId
+		local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
+		id = instanceId
 	end
 	if enablezones[id] then
 		if not monitoring then

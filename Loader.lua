@@ -58,8 +58,12 @@ local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = SendAddonMessa
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 local GetCurrentMapAreaID = GetCurrentMapAreaID
 local SetMapToCurrentZone = SetMapToCurrentZone
+local GetAreaMapInfo = GetAreaMapInfo
+local GetInstanceInfo = GetInstanceInfo
 public.GetCurrentMapAreaID = GetCurrentMapAreaID
 public.SetMapToCurrentZone = SetMapToCurrentZone
+public.GetAreaMapInfo = GetAreaMapInfo
+public.GetInstanceInfo = GetInstanceInfo
 public.SendAddonMessage = SendAddonMessage
 public.SendChatMessage = SendChatMessage
 public.CTimerAfter = CTimerAfter
@@ -122,7 +126,7 @@ do
 end
 
 -- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, CreateFrame, CUSTOM_CLASS_COLORS, error, GetAddOnEnableState, GetAddOnInfo
--- GLOBALS: GetAddOnMetadata, GetInstanceInfo, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetSpellInfo, GetTime, GRAY_FONT_COLOR, InCombatLockdown
+-- GLOBALS: GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetSpellInfo, GetTime, GRAY_FONT_COLOR, InCombatLockdown
 -- GLOBALS: InterfaceOptionsFrameOkay, IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInInstance, IsInRaid, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, message, PlaySoundFile, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, SetMapByID, strsplit
 -- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
@@ -893,8 +897,8 @@ do
 				id = GetCurrentMapAreaID()
 			end
 		else
-			local _, _, _, myId = UnitPosition("player")
-			id = myId
+			local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
+			id = instanceId
 		end
 
 		-- Module loading

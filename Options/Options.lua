@@ -31,6 +31,9 @@ local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 
+local loader = BigWigsLoader
+local GetAreaMapInfo = loader.GetAreaMapInfo
+
 local colorModule
 local soundModule
 local translateZoneID
@@ -313,7 +316,7 @@ function options:OnInitialize()
 	--	local noteKey = "Notes"
 	--	if GetAddOnMetadata("BigWigs", "Notes-" .. GetLocale()) then noteKey = "Notes-" .. GetLocale() end
 	--	local notes = GetAddOnMetadata("BigWigs", noteKey)
-	--	subtitle:SetText(notes .. " |cff44ff44" .. BigWigsLoader:GetReleaseString() .. "|r")
+	--	subtitle:SetText(notes .. " |cff44ff44" .. loader:GetReleaseString() .. "|r")
     --
 	--	local anchor = nil
 	--	for i, field in next, fields do
@@ -375,7 +378,7 @@ function options:OnEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 
 	local tmp, tmpZone = {}, {}
-	for k in next, BigWigsLoader:GetZoneMenus() do
+	for k in next, loader:GetZoneMenus() do
 		local zone = translateZoneID(k)
 		if zone then
 			tmp[zone] = k
@@ -687,7 +690,7 @@ end
 
 local listAbilitiesInChat = nil
 do
-	local SendChatMessage = BigWigsLoader.SendChatMessage
+	local SendChatMessage = loader.SendChatMessage
 	local function output(channel, ...)
 		if channel then
 			SendChatMessage(strjoin(" ", ...), channel)
@@ -1094,10 +1097,10 @@ local function onZoneShow(frame)
 	local instanceId = GetAreaMapInfo(zoneId)
 
 	-- Make sure all the bosses for this zone are loaded.
-	BigWigsLoader:LoadZone(instanceId)
+	loader:LoadZone(instanceId)
 
 	-- Does this zone have a module list?
-	local moduleList = BigWigsLoader:GetZoneMenus()[zoneId]
+	local moduleList = loader:GetZoneMenus()[zoneId]
 
 	-- This zone has no modules, nor is the panel related to a module.
 	if not moduleList and not frame.module then
@@ -1241,7 +1244,7 @@ do
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
 		local instanceId = GetAreaMapInfo(zoneId)
-		local parent = BigWigsLoader.zoneTbl[instanceId] and addonNameToHeader[BigWigsLoader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_WarlordsOfDraenor
+		local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_WarlordsOfDraenor
 		local panel, justCreated = self:GetPanel(zoneName, parent, zoneId)
 		if justCreated then
 			panel:SetScript("OnShow", onZoneShow)
