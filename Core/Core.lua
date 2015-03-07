@@ -90,8 +90,10 @@ end
 function addon:ENCOUNTER_START(_, id)
 	for _, module in next, bossCore.modules do
 		if module.engageId == id then
-			if not module.enabledState then module:Enable() end
-			--module:Engage() -- No engaging until Blizzard fixes this event
+			if not module.enabledState then
+				module:Enable()
+				module:Engage()
+			end
 		end
 	end
 end
