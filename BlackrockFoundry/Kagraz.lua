@@ -220,7 +220,7 @@ do
 			fixateOnMe = true
 		end
 		if not scheduled then
-			scheduled = self:ScheduleTimer(startBar, 0.1, self, args.spellId)
+			scheduled = self:ScheduleTimer(startBar, 0.2, self, args.spellId)
 		end
 	end
 end
@@ -268,7 +268,7 @@ do
 		end
 		blazingTargets[#blazingTargets+1] = args.destName
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnTargets, 0.1, self, args.spellId)
+			scheduled = self:ScheduleTimer(warnTargets, 0.2, self, args.spellId)
 		end
 	end
 end

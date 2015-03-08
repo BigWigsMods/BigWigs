@@ -431,7 +431,7 @@ do
 			else
 				self:CDBar(args.spellId, 70)
 			end
-			scheduled = self:ScheduleTimer(warnTargets, 0.1, self, args.spellId)
+			scheduled = self:ScheduleTimer(warnTargets, 0.2, self, args.spellId)
 		end
 	end
 	function mod:HeartseekerRemoved(args)

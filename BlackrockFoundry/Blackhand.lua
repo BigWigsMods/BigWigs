@@ -259,7 +259,7 @@ do
 
 	function mod:MarkedForDeathApplied(args)
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
+			scheduled = self:ScheduleTimer(warn, 0.2, self, args.spellId)
 			self:Bar(156107, 5) -- Impaling Throw
 			self:Bar(args.spellId, phase == 3 and 21 or 16)
 		end

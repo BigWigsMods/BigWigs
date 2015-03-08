@@ -94,7 +94,7 @@ do
 		if not self:Mythic() then
 			self:Bar(args.spellId, 15, CL.count:format(args.spellName, sliceCount))
 		else
-			self:ScheduleTimer(checkTargets, 0.1, self, args.spellId)
+			self:ScheduleTimer(checkTargets, 0.2, self, args.spellId)
 		end
 	end
 
