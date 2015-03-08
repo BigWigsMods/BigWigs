@@ -54,6 +54,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcidMaw", 173471)
 	self:Log("SPELL_CAST_START", "AcidTorrent", 156240)
 	self:Log("SPELL_CAST_START", "RetchedBlackrock", 156179)
+	self:Log("SPELL_AURA_APPLIED", "RetchedBlackrockDamage", 156203)
 	self:Log("SPELL_PERIODIC_DAMAGE", "RetchedBlackrockDamage", 156203)
 	self:Log("SPELL_PERIODIC_MISSED", "RetchedBlackrockDamage", 156203)
 	self:Log("SPELL_CAST_SUCCESS", "ExplosiveShard", 156390)
@@ -127,7 +128,7 @@ do
 	local prev = 0
 	function mod:RetchedBlackrockDamage(args)
 		local t = GetTime()
-		if self:Me(args.spellId) and t-prev > 2 then
+		if self:Me(args.destGUID) and t-prev > 2 then
 			prev = t
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 			self:Flash(args.spellId)
