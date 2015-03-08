@@ -658,8 +658,7 @@ bwFrame:RegisterEvent("ADDON_LOADED")
 -- Role Updating
 function mod:ACTIVE_TALENT_GROUP_CHANGED()
 	if IsInGroup() then
-		local _, _, diff = GetInstanceInfo()
-		if IsPartyLFG() and diff ~= 14 then return end
+		if IsPartyLFG() then return end
 
 		local tree = GetSpecialization()
 		if not tree then return end -- No spec selected
