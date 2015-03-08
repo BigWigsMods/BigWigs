@@ -410,12 +410,18 @@ end
 function mod:VolatileFireApplied(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
-		self:Bar(args.spellId, 8, CL.you:format(args.spellName))
 		if not self:LFR() then
 			self:Say(args.spellId)
 		end
 		self:Flash(args.spellId)
 		volatileFireOnMe = true
+
+		local cd, t = 8, GetTime()
+		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+		if expires and expires > 0 then
+			cd = expires - t
+		end
+		self:Bar(args.spellId, cd, CL.you:format(args.spellName))
 	end
 
 	if not tContains(volatileFireTargets, args.destName) then -- SPELL_AURA_REFRESH
