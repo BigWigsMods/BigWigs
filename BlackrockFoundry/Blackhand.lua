@@ -240,7 +240,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(158054, 26, CL.count:format(self:SpellName(128270), smashCount)) -- Massive Shattering Smash, 128270 = "Smash"
 		self:ScheduleTimer(openSmashProximity, 23, self)
 		self:Bar(156928, 31.5) -- Slag Eruption
-		self:Bar(162585, 12) -- Falling Debris
+		if self:Mythic() then
+			self:Bar(162585, 12) -- Falling Debris
+		end
 	end
 end
 
