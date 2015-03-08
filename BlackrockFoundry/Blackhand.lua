@@ -160,7 +160,7 @@ local function closeSmashProximity(self)
 		self:CloseProximity(158054)
 		massiveSmashProximity = nil
 	end
-	mod:UnregisterUnitEvent("UNIT_TARGET", "boss1")
+	mod:UnregisterUnitEvent("UNIT_TARGET", nil, "boss1")
 end
 
 local function openSmashProximity(self)
@@ -177,7 +177,7 @@ local function openSmashProximity(self)
 			massiveSmashProximity = true
 		end
 		self:ScheduleTimer(closeSmashProximity, 5, self)
-		mod:RegisterUnitEvent("UNIT_TARGET", "boss1")
+		mod:RegisterUnitEvent("UNIT_TARGET", nil, "boss1")
 	end
 end
 
