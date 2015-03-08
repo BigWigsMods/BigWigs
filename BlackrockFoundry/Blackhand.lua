@@ -13,6 +13,7 @@ mod.engageId = 1704
 --
 
 local phase = 1
+local smashCount = 1
 local massiveSmashProximity = nil
 local oldIcon, tankName = nil, nil -- Massive Shattering Smash marker
 
@@ -56,7 +57,7 @@ function mod:GetOptions()
 		{157000, "FLASH", "SAY"}, -- Attach Slag Bombs
 		--[[ General ]]--
 		155992, -- Shattering Smash
-		{156096, "FLASH"}, -- Marked for Death
+		{156096, "FLASH", "SAY"}, -- Marked for Death
 		"custom_off_markedfordeath_marker",
 		156107, -- Impaling Throw
 		156030, -- Throw Slag Bombs
@@ -98,11 +99,12 @@ end
 
 function mod:OnEngage()
 	phase = 1
+	smashCount = 1
 	massiveSmashProximity = nil
 	self:Bar(156030, 6) -- Throw Slag Bombs
 	self:Bar(156425, 15.5) -- Demolition
-	self:CDBar(155992, 21) -- Shattering Smash
 	self:Bar(156096, 36) -- Marked for Death
+	self:CDBar(155992, 21, CL.count:format(self:SpellName(128270), smashCount)) -- Shattering Smash, 128270 = "Smash"
 end
 
 function mod:OnBossDisable()
@@ -189,18 +191,27 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 156425 then -- Demolition
 		self:Message(spellId, "Urgent", "Alert")
 		local massiveDemolition = self:SpellName(156479) -- Massive Demolition
+		local mythic = self:Mythic()
 		self:Bar(spellId, 6, CL.count:format(massiveDemolition, 1))
 		self:ScheduleTimer("Bar", 5, spellId, 6, CL.count:format(massiveDemolition, 2))
-		self:ScheduleTimer("Bar", 10, spellId, 6, CL.count:format(massiveDemolition, 3))
-		self:Bar(spellId, 45.5)
+		if mythic then
+			self:ScheduleTimer("Bar", 7, spellId, 6, CL.count:format(massiveDemolition, 3))
+			self:ScheduleTimer("Bar", 9, spellId, 6, CL.count:format(massiveDemolition, 4))
+		else
+			self:ScheduleTimer("Bar", 10, spellId, 6, CL.count:format(massiveDemolition, 3))
+		end
+		self:Bar(spellId, mythic and 30 or 45.5)
 	elseif spellId == 161347 then -- Jump To Second Floor, after reaching middle, entering p2
+		self:StopBar(CL.count:format(self:SpellName(128270), smashCount)) -- Shattering Smash (Smash)
+		smashCount = 1
+
 		self:StopBar(156425) -- Demolition
 		self:StopBar(156479) -- Massive Demolition
 		self:StopBar(156107) -- Impaling Throw
 
 		self:Bar(156030, 12) -- Throw Slag Bombs
 		self:Bar("siegemaker", 16, L.siegemaker, L.siegemaker_icon)
-		self:Bar(155992, 23) -- Shattering Smash
+		self:CDBar(155992, self:Mythic() and 18.5 or 22, CL.count:format(self:SpellName(128270), smashCount)) -- Shattering Smash, 128270 = "Smash"
 		self:Bar(156096, 26) -- Marked for Death
 		if self:Healer() or self:Damager() == "RANGED" then
 			self:OpenProximity(156728, 7) -- Explosive Round
@@ -212,6 +223,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
 		end
 	elseif spellId == 161348 then -- Jump To Third Floor
+		self:StopBar(CL.count:format(self:SpellName(128270), smashCount)) -- Shattering Smash (Smash)
+		smashCount = 1
+		phase = 3
+
 		self:StopBar(156030) -- Throw Slag Bombs
 		self:StopBar(L.siegemaker)
 		self:StopBar(156107) -- Impaling Throw
@@ -219,19 +234,20 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:CloseProximity(156728) -- Explosive Round
 		end
 
-		phase = 3
 		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
 		self:Bar(157000, 12) -- Attach Slag Bombs
 		self:Bar(156096, 16) -- Marked for Death
-		self:Bar(158054, 26) -- Massive Shattering Smash
+		self:CDBar(158054, 26, CL.count:format(self:SpellName(128270), smashCount)) -- Massive Shattering Smash, 128270 = "Smash"
 		self:ScheduleTimer(openSmashProximity, 23, self)
 		self:Bar(156928, 31.5) -- Slag Eruption
+		self:Bar(162585, 12) -- Falling Debris
 	end
 end
 
 function mod:ShatteringSmash(args)
-	self:Message(155992, "Urgent", "Warning")
-	self:CDBar(155992, self:Mythic() and 30 or phase == 1 and 30 or 45)
+	self:Message(155992, "Urgent", "Warning", CL.count:format(self:SpellName(128270), smashCount)) -- 128270 = "Smash"
+	smashCount = smashCount + 1
+	self:CDBar(155992, self:Mythic() and 30 or phase == 2 and 45 or 30, CL.count:format(self:SpellName(128270), smashCount)) -- 128270 = "Smash"
 end
 
 do
@@ -250,6 +266,7 @@ do
 		list[#list+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
+			self:Say(args.spellId)
 		end
 		if self.db.profile.custom_off_markedfordeath_marker then
 			SetRaidTarget(args.destName, #list)
@@ -308,8 +325,9 @@ do
 	end
 
 	function mod:MassiveShatteringSmash(args)
-		self:Message(args.spellId, "Urgent", "Warning")
-		self:CDBar(args.spellId, 25)
+		self:Message(args.spellId, "Urgent", "Warning", CL.count:format(self:SpellName(128270), smashCount)) -- 128270 = "Smash"
+		smashCount = smashCount + 1
+		self:CDBar(args.spellId, 25, CL.count:format(self:SpellName(128270), smashCount)) -- 128270 = "Smash"
 		scheduled = self:ScheduleTimer(openSmashProximity, 22, self) -- 3 sec before + 2 sec cast should be enough
 	end
 end
