@@ -901,13 +901,13 @@ do
 
 		-- Module loading
 		if enableZones[id] then
-			if enableZones[id] == "world" then
+			if not inside and enableZones[id] == "world" then
 				if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:InConfigureMode()) and (not BigWigs3DB or not BigWigs3DB.breakTime) then
 					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first
 				end
 				bwFrame:RegisterEvent("UNIT_TARGET")
 				self:UNIT_TARGET("player")
-			else
+			elseif inside then
 				bwFrame:UnregisterEvent("UNIT_TARGET")
 				if not IsEncounterInProgress() and (InCombatLockdown() or UnitAffectingCombat("player")) then
 					if not queueLoad[id] then
