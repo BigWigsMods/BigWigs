@@ -353,47 +353,54 @@ end
 -- Initialization
 --
 
-function addon:OnInitialize()
-	local defaults = {
-		profile = {
-			raidicon = true,
-			flash = true,
-			showZoneMessages = true,
-			fakeDBMVersion = false,
-		},
-		global = {
-			optionShiftIndexes = {},
-			watchedMovies = {},
-		},
-	}
-	local db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
-	LibStub("LibDualSpec-1.0"):EnhanceDatabase(db, "BigWigs3DB")
+do
+	local function initDb(self)
+		local defaults = {
+			profile = {
+				raidicon = true,
+				flash = true,
+				showZoneMessages = true,
+				fakeDBMVersion = false,
+			},
+			global = {
+				optionShiftIndexes = {},
+				watchedMovies = {},
+			},
+		}
+		local db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
+		LibStub("LibDualSpec-1.0"):EnhanceDatabase(db, "BigWigs3DB")
 
-	local function profileUpdate()
-		addon:SendMessage("BigWigs_ProfileUpdate")
+		local function profileUpdate()
+			addon:SendMessage("BigWigs_ProfileUpdate")
+		end
+		db.RegisterCallback(self, "OnProfileChanged", profileUpdate)
+		db.RegisterCallback(self, "OnProfileCopied", profileUpdate)
+		db.RegisterCallback(self, "OnProfileReset", profileUpdate)
+		self.db = db
+
+		-- XXX temp cleanup
+		self.db.global.seenmovies = nil
+		self.db.profile.showBlizzardWarnings = nil
+		self.db.profile.blockmovies = nil
+		self.db.profile.sound = nil
+		--
+
+		initDb = nil
 	end
-	db.RegisterCallback(self, "OnProfileChanged", profileUpdate)
-	db.RegisterCallback(self, "OnProfileCopied", profileUpdate)
-	db.RegisterCallback(self, "OnProfileReset", profileUpdate)
-	self.db = db
 
-	-- XXX temp cleanup
-	self.db.global.seenmovies = nil
-	self.db.profile.showBlizzardWarnings = nil
-	self.db.profile.blockmovies = nil
-	self.db.profile.sound = nil
-	--
+	local addonName = ...
+	if addonName == "BigWigs_Core" then
+		initDb(addon) -- LoD user
+	end
 
-	self:RegisterBossOption("bosskill", "Old", "Remove me")
-	self:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, "Interface\\Icons\\spell_shadow_unholyfrenzy")
-	self:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, "Interface\\Icons\\spell_arcane_invocation")
-	self:RegisterBossOption("stages", L.stages, L.stages_desc)
-	self:RegisterBossOption("warmup", L.warmup, L.warmup_desc)
+	function addon:OnInitialize()
+		if initDb then initDb(self) end
 
-	-- This should ALWAYS be the last action of OnInitialize, it will trigger the loader to
-	-- enable other packs that want to be loaded when the core loads.
-	self:SendMessage("BigWigs_CoreLoaded")
-	self.OnInitialize = nil
+		-- This should ALWAYS be the last action of OnInitialize, it will trigger the loader to
+		-- enable other packs that want to be loaded when the core loads.
+		self:SendMessage("BigWigs_CoreLoaded")
+		self.OnInitialize = nil
+	end
 end
 
 function addon:OnEnable()
@@ -447,11 +454,20 @@ end
 -- Well .. except the module API, obviously.
 --
 
-function addon:RegisterBossOption(key, name, desc, func, icon)
-	if customBossOptions[key] then
-		error("The custom boss option %q has already been registered."):format(key)
+do
+	function addon:RegisterBossOption(key, name, desc, func, icon)
+		if customBossOptions[key] then
+			error("The custom boss option %q has already been registered."):format(key)
+		end
+		customBossOptions[key] = { name, desc, func, icon }
 	end
-	customBossOptions[key] = { name, desc, func, icon }
+
+	-- Adding core generic toggles
+	addon:RegisterBossOption("bosskill", "Old", "Remove me")
+	addon:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, "Interface\\Icons\\spell_shadow_unholyfrenzy")
+	addon:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, "Interface\\Icons\\spell_arcane_invocation")
+	addon:RegisterBossOption("stages", L.stages, L.stages_desc)
+	addon:RegisterBossOption("warmup", L.warmup, L.warmup_desc)
 end
 
 function addon:GetCustomBossOptions()
@@ -687,4 +703,3 @@ function pluginCore:OnDisable()
 end
 
 BigWigs = addon -- Set global
-
