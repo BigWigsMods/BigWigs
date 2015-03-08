@@ -883,7 +883,8 @@ do
 	function mod:ZONE_CHANGED_NEW_AREA()
 		-- Zone checking
 		local id
-		if not IsInInstance() then
+		local inside = IsInInstance()
+		if not inside then
 			if WorldMapFrame:IsShown() then
 				local prevId = GetCurrentMapAreaID()
 				SetMapToCurrentZone()
@@ -935,7 +936,7 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and not fakeWorldZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
+		if zoneAddon and inside and not fakeWorldZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 			warnedThisZone[id] = true
 			local msg = L.missingAddOn:format(zoneAddon)
 			sysprint(msg)
