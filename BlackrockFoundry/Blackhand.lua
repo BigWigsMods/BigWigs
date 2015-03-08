@@ -266,7 +266,7 @@ do
 		list[#list+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
-			self:Say(args.spellId)
+			self:Say(args.spellId, 28836) -- 28836 = "Mark"
 		end
 		if self.db.profile.custom_off_markedfordeath_marker then
 			SetRaidTarget(args.destName, #list)
