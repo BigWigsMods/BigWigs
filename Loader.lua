@@ -125,7 +125,7 @@ end
 
 -- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, CreateFrame, CUSTOM_CLASS_COLORS, error, GetAddOnEnableState, GetAddOnInfo
 -- GLOBALS: GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetSpellInfo, GetTime, GRAY_FONT_COLOR, InCombatLockdown
--- GLOBALS: InterfaceOptionsFrameOkay, IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInRaid, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
+-- GLOBALS: InterfaceOptionsFrameOkay, IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInRaid, IsLoggedIn, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, message, PlaySoundFile, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, SetMapByID, strsplit
 -- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
 -- GLOBALS: SLASH_BigWigsVersion1, UnitBuff, wipe, WorldMapFrame
@@ -531,7 +531,7 @@ do
 	elseif L == "ruRU" then
 	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Russian (ruRU)? Check out our easy translator tool: goo.gl/nwR5cy"
 	elseif L == "itIT" then
-		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Italian (itIT)? Check out our easy translator tool: goo.gl/nwR5cy"
+	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Italian (itIT)? Check out our easy translator tool: goo.gl/nwR5cy"
 	elseif L == "deDE" then
 	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into German (deDE)? Check out our easy translator tool: goo.gl/nwR5cy"
 	elseif L == "koKR" then
@@ -909,7 +909,7 @@ do
 				self:UNIT_TARGET("player")
 			elseif inside then
 				bwFrame:UnregisterEvent("UNIT_TARGET")
-				if not IsEncounterInProgress() and (InCombatLockdown() or UnitAffectingCombat("player")) then
+				if not IsEncounterInProgress() and IsLoggedIn() and (InCombatLockdown() or UnitAffectingCombat("player")) then
 					if not queueLoad[id] then
 						queueLoad[id] = "unloaded"
 						bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
