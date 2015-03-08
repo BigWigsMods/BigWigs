@@ -341,9 +341,9 @@ do
 	function mod:AttachSlagBombs(args)
 		list[#list+1] = args.destName
 		if self:Me(args.destGUID) then
-			self:TargetBar(157000, 5, args.destName, 157015) -- Slag Bomb
+			self:TargetBar(157000, 5, args.destName, 155192, 157000) -- 155192 = Bomb
 			self:Flash(157000)
-			self:Say(157000, 157015) -- 157015 = Slag Bomb
+			self:Say(157000, 155192) -- 155192 = Bomb
 		end
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnTargets, 1, self)
