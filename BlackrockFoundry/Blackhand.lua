@@ -117,29 +117,65 @@ end
 -- Event Handlers
 --
 
-local function closeSmashProximity(self)
-	if self.db.profile.custom_off_massivesmash_marker then
-		SetRaidTarget(tankName, oldIcon or 0)
-		tankName = nil
-		oldIcon = nil
+function mod:UNIT_TARGET(unit)
+	if not tankName then -- He had no target when we tried to open proximity
+		tankName = UnitName("boss1target")
+
+		if not tankName then return end
+
+		if self.db.profile.custom_off_massivesmash_marker then
+			oldIcon = GetRaidTargetIndex(tankName)
+			SetRaidTarget(tankName, 6)
+		end
+	else -- We already have a tank
+		local bossTargetName = UnitName("boss1target")
+		if bossTargetName ~= tankName then -- new tank
+			if self.db.profile.custom_off_massivesmash_marker then
+				SetRaidTarget(tankName, oldIcon or 0) -- restore old icon
+				tankName = bossTargetName -- mark new tank
+				oldIcon = GetRaidTargetIndex(tankName)
+				SetRaidTarget(tankName, 6)
+			else
+				tankName = UnitName("boss1target")
+			end
+		else -- same tank, we don't need to do anything
+			return
+		end
 	end
 
-	self:CloseProximity(158054)
-	massiveSmashProximity = nil
+	self:OpenProximity(158054, 6, tankName, true)
+	massiveSmashProximity = true
+end
+
+local function closeSmashProximity(self)
+	if massiveSmashProximity then
+		if self.db.profile.custom_off_massivesmash_marker then
+			SetRaidTarget(tankName, oldIcon or 0)
+			tankName = nil
+			oldIcon = nil
+		end
+
+		self:CloseProximity(158054)
+		massiveSmashProximity = nil
+	end
+	mod:UnregisterUnitEvent("UNIT_TARGET", "boss1")
 end
 
 local function openSmashProximity(self)
 	if not massiveSmashProximity then
 		tankName = UnitName("boss1target")
 
-		if self.db.profile.custom_off_massivesmash_marker then
-			oldIcon = GetRaidTargetIndex(tankName)
-			SetRaidTarget(tankName, 6)
-		end
+		if tankName then
+			if self.db.profile.custom_off_massivesmash_marker then
+				oldIcon = GetRaidTargetIndex(tankName)
+				SetRaidTarget(tankName, 6)
+			end
 
-		self:OpenProximity(158054, 6, tankName, true)
-		massiveSmashProximity = true
+			self:OpenProximity(158054, 6, tankName, true)
+			massiveSmashProximity = true
+		end
 		self:ScheduleTimer(closeSmashProximity, 5, self)
+		mod:RegisterUnitEvent("UNIT_TARGET", "boss1")
 	end
 end
 
