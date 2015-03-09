@@ -89,9 +89,10 @@ local loadOnSlash = {} -- BigWigs modulepacks that can load from a chat command
 local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
-local fakeWorldZones = { -- Probably not needed, but let's be safe
+local fakeWorldZones = { -- Fake world zones used for world boss translations and loading
 	[466]=true, -- Outland
 	[862]=true, -- Pandaria
+	[962]=true, -- Draenor
 }
 
 do
@@ -113,6 +114,7 @@ do
 		[964]=lw, [969]=lw, [984]=lw, [987]=lw, [989]=lw, [993]=lw, [995]=lw, [1008]=lw -- WoD
 	}
 
+	public.fakeWorldZones = fakeWorldZones
 	public.zoneTbl = {}
 	for k,v in next, tbl do
 		if fakeWorldZones[k] then
@@ -296,20 +298,16 @@ do
 			local zone = tonumber(rawZone:trim())
 			if zone then
 				-- register the zone for enabling.
-				if fakeWorldZones[zone] then
-					if not menus[zone] then menus[zone] = true end
+				local instanceId = fakeWorldZones[zone] and zone or GetAreaMapInfo(zone)
+				enableZones[instanceId] = true
+
+				if not loadOnZone[instanceId] then loadOnZone[instanceId] = {} end
+				loadOnZone[instanceId][#loadOnZone[instanceId] + 1] = addon
+
+				if override then
+					loadOnZone[override][#loadOnZone[override] + 1] = addon
 				else
-					local instanceId = GetAreaMapInfo(zone)
-					enableZones[instanceId] = true
-
-					if not loadOnZone[instanceId] then loadOnZone[instanceId] = {} end
-					loadOnZone[instanceId][#loadOnZone[instanceId] + 1] = addon
-
-					if override then
-						loadOnZone[override][#loadOnZone[override] + 1] = addon
-					else
-						if not menus[zone] then menus[zone] = true end
-					end
+					if not menus[zone] then menus[zone] = true end
 				end
 			else
 				local name = GetAddOnInfo(addon)

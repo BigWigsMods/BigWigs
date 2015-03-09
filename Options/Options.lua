@@ -33,6 +33,7 @@ local AceGUI = LibStub("AceGUI-3.0")
 
 local loader = BigWigsLoader
 local GetAreaMapInfo = loader.GetAreaMapInfo
+local fakeWorldZones = loader.fakeWorldZones
 
 local colorModule
 local soundModule
@@ -1094,7 +1095,7 @@ end
 
 local function onZoneShow(frame)
 	local zoneId = frame.id
-	local instanceId = GetAreaMapInfo(zoneId)
+	local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
 
 	-- Make sure all the bosses for this zone are loaded.
 	loader:LoadZone(instanceId)
@@ -1243,7 +1244,7 @@ do
 
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
-		local instanceId = GetAreaMapInfo(zoneId)
+		local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
 		local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_WarlordsOfDraenor
 		local panel, justCreated = self:GetPanel(zoneName, parent, zoneId)
 		if justCreated then
