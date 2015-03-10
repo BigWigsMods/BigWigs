@@ -1095,10 +1095,12 @@ end
 
 local function onZoneShow(frame)
 	local zoneId = frame.id
-	local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
+	if zoneId then
+		local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
 
-	-- Make sure all the bosses for this zone are loaded.
-	loader:LoadZone(instanceId)
+		-- Make sure all the bosses for this zone are loaded.
+		loader:LoadZone(instanceId)
+	end
 
 	-- Does this zone have a module list?
 	local moduleList = loader:GetZoneMenus()[zoneId]
