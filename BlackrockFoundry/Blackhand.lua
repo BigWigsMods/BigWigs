@@ -193,11 +193,15 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		local massiveDemolition = self:SpellName(156479) -- Massive Demolition
 		local mythic = self:Mythic()
 		self:Bar(spellId, 6, CL.count:format(massiveDemolition, 1))
-		self:ScheduleTimer("Bar", 5, spellId, 6, CL.count:format(massiveDemolition, 2))
 		if mythic then
-			self:ScheduleTimer("Bar", 7, spellId, 6, CL.count:format(massiveDemolition, 3))
+			self:ScheduleTimer("Bar", 3, spellId, 6, CL.count:format(massiveDemolition, 2))
+			self:ScheduleTimer("Message", 3, spellId, "Urgent", "Alert", CL.count:format(massiveDemolition, 2))
+			self:ScheduleTimer("Bar", 6, spellId, 6, CL.count:format(massiveDemolition, 3))
+			self:ScheduleTimer("Message", 6, spellId, "Urgent", "Alert", CL.count:format(massiveDemolition, 3))
 			self:ScheduleTimer("Bar", 9, spellId, 6, CL.count:format(massiveDemolition, 4))
+			self:ScheduleTimer("Message", 9, spellId, "Urgent", "Alert", CL.count:format(massiveDemolition, 4))
 		else
+			self:ScheduleTimer("Bar", 5, spellId, 6, CL.count:format(massiveDemolition, 2))
 			self:ScheduleTimer("Bar", 10, spellId, 6, CL.count:format(massiveDemolition, 3))
 		end
 		self:Bar(spellId, mythic and 30 or 45.5)
