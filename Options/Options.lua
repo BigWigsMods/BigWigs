@@ -362,6 +362,8 @@ function options:OnInitialize()
 	soundModule = BigWigs:GetPlugin("Sounds")
 	acr:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
 	acr:RegisterOptionsTable("Big Wigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
+
+	self.OnInitialize = nil
 end
 
 function options:OnEnable()
@@ -391,10 +393,12 @@ function options:OnEnable()
 		local zone = tmpZone[i]
 		self:GetZonePanel(tmp[zone])
 	end
-end
 
-function options:Open()
-	acd:Open("BigWigs")
+	function self:Open()
+		acd:Open("BigWigs")
+	end
+	self:Open()
+	self.OnEnable = nil
 end
 
 -------------------------------------------------------------------------------

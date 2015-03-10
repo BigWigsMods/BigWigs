@@ -193,8 +193,9 @@ local function loadCoreAndOpenOptions()
 	end
 	loadAndEnableCore()
 	load(BigWigsOptions, "BigWigs_Options")
-	if not BigWigsOptions then return end
-	BigWigsOptions:Open()
+	if BigWigsOptions and BigWigsOptions.Open then
+		BigWigsOptions:Open()
+	end
 end
 
 -----------------------------------------------------------------------
