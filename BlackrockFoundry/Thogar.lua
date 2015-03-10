@@ -50,7 +50,59 @@ local engageTime = 0
 	495 1
 ]]
 local trainData = {
-	-- heroic data
+	-- heroic/normal data
+	[1] = {
+		{ 32, "adds_train"},
+		{107, "train"},
+		{162, "train"},
+		{172, "cannon_train"},
+		{237, "train"},
+		{272, "train"},
+		{307, "cannon_train", 4},
+		{407, "train"},
+		{417, "cannon_train", 4},
+		{467, "train"},
+		{495, "train"},
+	},
+	[2] = {
+		{ 27, "train"},
+		{ 77, "train"},
+		{122, "adds_train", 3},
+		{187, "train"},
+		{227, "train"},
+		{252, "big_add_train", 4},
+		{317, "train"},
+		{342, "train"},
+		{372, "adds_train", 3},
+		{433, "train"},
+		{490, "train"},
+	},
+	[3] = {
+		{ 47, "train"},
+		{ 82, "big_add_train"},
+		{122, "adds_train", 2},
+		{217, "train"},
+		{277, "train"},
+		{372, "big_add_train", 2},
+		{442, "train"},
+		{462, "adds_train"},
+		{487, "train"},
+	},
+	[4] = {
+		{ 17, "train"},
+		{ 52, "cannon_train"},
+		{162, "train"},
+		{197, "adds_train"},
+		{252, "cannon_train", 2},
+		{307, "cannon_train", 1},
+		{387, "train"},
+		{417, "adds_train", 1},
+		{467, "train"},
+	},
+}
+
+local trainDataLFR = {
+	-- LFR data
 	[1] = {
 		{ 32, "adds_train"},
 		{107, "train"},
@@ -273,13 +325,13 @@ function mod:OnEngage()
 	end
 	-- 15s warning on splits
 	local split = self:SpellName(143020)
-	if not self:Mythic() then
+	if self:Mythic() then
+		self:DelayedMessage("trains", 130, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15), false, "Long")
+		self:DelayedMessage("trains", 286, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15), false, "Long")
+	elseif not self:LFR() then
 		self:DelayedMessage("trains", 106, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15), false, "Long")
 		self:DelayedMessage("trains", 356, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15), false, "Long")
 		self:DelayedMessage("trains", 443, "Neutral", CL.custom_sec:format(CL.count:format(split, 3), 15), false, "Long")
-	else
-		self:DelayedMessage("trains", 130, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15), false, "Long")
-		self:DelayedMessage("trains", 286, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15), false, "Long")
 	end
 end
 
@@ -305,7 +357,7 @@ end
 
 local randomCount = 0
 function mod:StartTrainTimer(lane, count)
-	local data = self:Mythic() and trainDataMythic or trainData
+	local data = self:Mythic() and trainDataMythic or self:LFR() and trainDataLFR or trainData
 	local info = data and data[lane][count]
 	if not info then
 		-- all out of lane data
