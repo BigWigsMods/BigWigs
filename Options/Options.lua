@@ -394,6 +394,7 @@ function options:OnEnable()
 		self:GetZonePanel(tmp[zone])
 	end
 
+	if self.OnInitialize then print("BigWigs: WARNING, CONFIG INITIALIZATION DID NOT FIRE!") end
 	function self:Open()
 		acd:Open("BigWigs")
 	end
