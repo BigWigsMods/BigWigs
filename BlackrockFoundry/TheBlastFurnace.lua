@@ -12,6 +12,7 @@ mod.engageId = 1690
 -- Locals
 --
 
+local startTime = nil
 local regulatorDeaths = 0
 local shamanDeaths = 0
 local blastTime = 30
@@ -162,6 +163,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	startTime = GetTime()
 	regulatorDeaths, shamanDeaths = 0, 0
 	blastTime = 30
 
@@ -598,6 +600,9 @@ function mod:Deaths(args)
 			self:CancelTimer(firecallerTimer)
 			self:StopBar(-10803) -- Security Guard
 			self:StopBar(-9659) -- Firecaller
+			if startTime then
+				self:Bar(163776, 600-(GetTime()-startTime))
+			end
 		end
 	end
 end
