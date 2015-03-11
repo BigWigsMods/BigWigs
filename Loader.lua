@@ -479,6 +479,7 @@ do
 		BigWigs_DragonSoul = "BigWigs_Cataclysm",
 		BigWigs_Firelands = "BigWigs_Cataclysm",
 		BigWigs_Throne = "BigWigs_Cataclysm",
+		bigwigs_zonozzicons = "BigWigs_Cataclysm",
 		BigWigs_EndlessSpring = "BigWigs_MistsOfPandaria",
 		BigWigs_HeartOfFear = "BigWigs_MistsOfPandaria",
 		BigWigs_Mogushan = "BigWigs_MistsOfPandaria",
