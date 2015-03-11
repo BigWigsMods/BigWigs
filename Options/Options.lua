@@ -401,7 +401,6 @@ function options:OnEnable()
 	function self:Open()
 		acd:Open("BigWigs")
 	end
-	self:Open()
 	self.OnEnable = nil
 end
 

@@ -151,7 +151,7 @@ local function load(obj, index)
 	if loadOnSlash[index] then
 		if not IsAddOnLoaded(index) then -- check if we need remove our slash handler stub
 			for _, slash in next, loadOnSlash[index] do
-				hash_SlashCmdList[slash:upper()] = nil
+				hash_SlashCmdList[slash] = nil
 			end
 		end
 		loadOnSlash[index] = nil
@@ -193,7 +193,7 @@ local function loadCoreAndOpenOptions()
 	end
 	loadAndEnableCore()
 	load(BigWigsOptions, "BigWigs_Options")
-	if BigWigsOptions and BigWigsOptions.Open then
+	if BigWigsOptions then
 		BigWigsOptions:Open()
 	end
 end
@@ -267,25 +267,28 @@ do
 				loadOnSlash[i] = {}
 				local tbl = {strsplit(",", meta)}
 				for j=1, #tbl do
-					local v = tbl[j]:trim()
-					_G["SLASH_"..name..j] = v
-					loadOnSlash[i][j] = v
-				end
-				local slash = loadOnSlash[i][1]
-				SlashCmdList[name] = function(text)
-					if name:find("BigWigs", nil, true) then
-						-- Attempting to be smart. Only load core & config if it's a BW plugin.
-						loadAndEnableCore()
-						load(BigWigsOptions, "BigWigs_Options")
+					local slash = tbl[j]:trim():upper()
+					_G["SLASH_"..slash..1] = slash
+					SlashCmdList[slash] = function(text)
+						if name:find("BigWigs", nil, true) then
+							-- Attempting to be smart. Only load core & config if it's a BW plugin.
+							loadAndEnableCore()
+							load(BigWigsOptions, "BigWigs_Options")
+						end
+						if load(nil, i) then -- Load the addon/plugin
+							-- Call the slash command again, which should have been set by the addon.
+							-- Authors, do NOT delay setting it in OnInitialize/OnEnable/etc.
+							ChatFrame_ImportAllListsToHash()
+							local func = hash_SlashCmdList[slash]
+							if func then
+								func(text)
+							else
+								-- Addon didn't register the slash command for whatever reason, print the default invalid slash message.
+								sysprint(HELP_TEXT_SIMPLE)
+							end
+						end
 					end
-					load(nil, i) -- Load the addon/plugin
-					-- Run the slash command again, which should have been overwritten by the author to show the config.
-					-- To overwrite it, in your addon/plugin run the following code, do NOT delay it with OnInitialize/OnEnable/etc.
-					-- SLASH_MyFullAddOnName1" = "/myslash"
-					-- SlashCmdList.MyFullAddOnName = myConfigFunction
-					local editbox = ChatEdit_GetActiveWindow()
-					editbox:SetText(text == "" and slash or slash.." "..text)
-					ChatEdit_ParseText(editbox, 1)
+					loadOnSlash[i][j] = v
 				end
 			end
 		elseif reqFuncAddons[name] then
