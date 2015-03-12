@@ -160,7 +160,7 @@ local function closeSmashProximity(self)
 		self:CloseProximity(158054)
 		massiveSmashProximity = nil
 	end
-	mod:UnregisterUnitEvent("UNIT_TARGET", nil, "boss1")
+	self:UnregisterUnitEvent("UNIT_TARGET", "boss1")
 end
 
 local function openSmashProximity(self)
@@ -177,7 +177,7 @@ local function openSmashProximity(self)
 			massiveSmashProximity = true
 		end
 		self:ScheduleTimer(closeSmashProximity, 5, self)
-		mod:RegisterUnitEvent("UNIT_TARGET", nil, "boss1")
+		self:RegisterUnitEvent("UNIT_TARGET", nil, "boss1")
 	end
 end
 
@@ -204,7 +204,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:ScheduleTimer("Bar", 5, spellId, 6, CL.count:format(massiveDemolition, 2))
 			self:ScheduleTimer("Bar", 10, spellId, 6, CL.count:format(massiveDemolition, 3))
 		end
-		self:Bar(spellId, mythic and 30 or 45.5)
+		self:Bar(spellId, mythic and 30.5 or 45.5)
 	elseif spellId == 161347 then -- Jump To Second Floor, after reaching middle, entering p2
 		self:StopBar(CL.count:format(self:SpellName(128270), smashCount)) -- Shattering Smash (Smash)
 		smashCount = 1
@@ -329,7 +329,6 @@ do
 		scheduled = self:ScheduleTimer(openSmashProximity, nextSmash-3, self)
 		self:CDBar(158054, nextSmash)
 	end
-
 	function mod:MassiveShatteringSmash(args)
 		self:Message(args.spellId, "Urgent", "Warning", CL.count:format(self:SpellName(128270), smashCount)) -- 128270 = "Smash"
 		smashCount = smashCount + 1
