@@ -18,7 +18,7 @@ function mod:GetOptions()
 		175973, -- Colossal Blow
 		175979, -- Genesis
 		176013, -- Grow Untamed Mandragora
-		{176004, "DISPEL"} -- Savage Vines
+		{176001, "DISPEL"} -- Savage Vines
 	}
 end
 
