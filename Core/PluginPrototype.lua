@@ -4,7 +4,7 @@ local core = BigWigs
 local plugin = {}
 core:GetModule("Plugins"):SetDefaultModulePrototype(plugin)
 
-function plugin:OnInitialize()
+function plugin:Initialize()
 	core:RegisterPlugin(self)
 end
 

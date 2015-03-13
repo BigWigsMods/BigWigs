@@ -84,7 +84,6 @@ local highestAlphaRevision = BIGWIGS_RELEASE_TYPE == ALPHA and MY_BIGWIGS_REVISI
 -- Loading
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
-local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the core is loaded
 local loadOnSlash = {} -- BigWigs modulepacks that can load from a chat command
 local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
@@ -202,7 +201,7 @@ end
 -- Version listing functions
 --
 
-local function versionTooltipFunc(tt)
+tooltipFunctions[#tooltipFunctions+1] = function(tt)
 	local add, i = nil, 0
 	for player, version in next, usersRelease do
 		i = i + 1
@@ -249,10 +248,6 @@ do
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
 				loadOnCoreEnabled[#loadOnCoreEnabled + 1] = i
-			end
-			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreLoaded")
-			if meta then
-				loadOnCoreLoaded[#loadOnCoreLoaded + 1] = i
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-ZoneId")
 			if meta then
@@ -398,17 +393,12 @@ function mod:ADDON_LOADED(addon)
 	RegisterAddonMessagePrefix("BigWigs")
 	RegisterAddonMessagePrefix("D4") -- DBM
 
-	public.RegisterMessage(self, "BigWigs_CoreEnabled")
-	public.RegisterMessage(self, "BigWigs_CoreDisabled")
-
 	local icon = LibStub("LibDBIcon-1.0", true)
 	if icon and ldb then
 		if not BigWigs3IconDB then BigWigs3IconDB = {} end
 		icon:Register("BigWigs", ldb, BigWigs3IconDB)
 	end
-	public:RegisterTooltipInfo(versionTooltipFunc)
 
-	public.RegisterMessage(self, "BigWigs_CoreOptionToggled", "UpdateDBMFaking")
 	if BigWigs3DB then
 		if not BigWigs3DB.has61reset then -- XXX 6.1 reset for DB change
 			for k,v in next, BigWigs3DB.namespaces do
@@ -441,20 +431,24 @@ function mod:ADDON_LOADED(addon)
 				end
 			end
 		end
-
-		-- Break timer restoration
-		if BigWigs3DB.breakTime then
-			load(BigWigs, "BigWigs_Core")
-			BigWigs:Enable()
-		end
 	end
 	self:UpdateDBMFaking(nil, "fakeDBMVersion", self.isFakingDBM)
+
+	-- Do not change the ordering of the following initialization process. It is required for SVN and LoD functionality.
+	public:SendMessage("Private_InitLoader")
+
+	function self:ADDON_LOADED()
+		public:SendMessage("Private_InitModules")
+	end
 
 	self:GROUP_ROSTER_UPDATE()
 	self:ZONE_CHANGED_NEW_AREA()
 
-	bwFrame:UnregisterEvent("ADDON_LOADED")
-	self.ADDON_LOADED = nil
+	-- Break timer restoration
+	if BigWigs3DB and BigWigs3DB.breakTime then
+		load(BigWigs, "BigWigs_Core")
+		BigWigs:Enable()
+	end
 end
 
 -- Various temporary printing stuff
@@ -646,7 +640,9 @@ do
 	public.RegisterMessage(mod, "BigWigs_OnBossReboot", UnregisterAllMessages)
 	public.RegisterMessage(mod, "BigWigs_OnPluginDisable", UnregisterAllMessages)
 	public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
-	public.RegisterMessage(mod, "BigWigs_CoreLoaded")
+	public.RegisterMessage(mod, "BigWigs_CoreOptionToggled", "UpdateDBMFaking")
+	public.RegisterMessage(mod, "BigWigs_CoreEnabled")
+	public.RegisterMessage(mod, "BigWigs_CoreDisabled")
 end
 
 -----------------------------------------------------------------------
@@ -1012,10 +1008,6 @@ function mod:BigWigs_CoreDisabled()
 	if ldb then
 		ldb.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled"
 	end
-end
-
-function mod:BigWigs_CoreLoaded()
-	loadAddons(loadOnCoreLoaded)
 end
 
 -----------------------------------------------------------------------

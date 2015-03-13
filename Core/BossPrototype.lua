@@ -105,7 +105,7 @@ local spells = setmetatable({}, {__index =
 local boss = {}
 core:GetModule("Bosses"):SetDefaultModulePrototype(boss)
 function boss:IsBossModule() return true end
-function boss:OnInitialize() core:RegisterBossModule(self) end
+function boss:Initialize() core:RegisterBossModule(self) end
 function boss:OnEnable(isWipe)
 	if debug then dbg(self, isWipe and "OnEnable() via Wipe()" or "OnEnable()") end
 

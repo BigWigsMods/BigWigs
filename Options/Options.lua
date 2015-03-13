@@ -277,7 +277,7 @@ local function findPanel(name, parent)
 	end
 end
 
-function options:OnInitialize()
+function options:Initialize()
 	acOptions.args.general.args.profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db)
 	acOptions.args.general.args.profileOptions.order = 1
 	LibStub("LibDualSpec-1.0"):EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
@@ -363,7 +363,8 @@ function options:OnInitialize()
 	acr:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
 	acr:RegisterOptionsTable("Big Wigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
 
-	self.OnInitialize = nil
+	self:UnregisterMessage("Private_InitCore")
+	self.Initialize = nil
 end
 
 function options:OnEnable()
@@ -394,14 +395,11 @@ function options:OnEnable()
 		self:GetZonePanel(tmp[zone])
 	end
 
-	if self.OnInitialize then
-		print("BigWigs: WARNING, CONFIG INITIALIZATION DID NOT FIRE!")
-		error("BigWigs: WARNING, CONFIG INITIALIZATION DID NOT FIRE!")
-	end
-	function self:Open()
-		acd:Open("BigWigs")
-	end
 	self.OnEnable = nil
+end
+
+function self:Open()
+	acd:Open("BigWigs")
 end
 
 -------------------------------------------------------------------------------
@@ -1311,4 +1309,13 @@ do
 end
 
 BigWigsOptions = options -- Set global
+
+do
+	local addonName = ...
+	if addonName == "BigWigs_Options" then
+		options:Initialize()
+	else
+		options:RegisterMessage("Private_InitCore", "Initialize")
+	end
+end
 

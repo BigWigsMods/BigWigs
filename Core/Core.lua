@@ -353,8 +353,19 @@ end
 -- Initialization
 --
 
+local initModules = {}
 do
-	local function initDb(self)
+	local function InitializeModules()
+		for i = 1, #initModules do
+			local module = initModules[i]
+			module:Initialize()
+			initModules[i] = nil
+		end
+	end
+
+	function addon:Initialize()
+		self:UnregisterMessage("Private_InitLoader")
+
 		local defaults = {
 			profile = {
 				raidicon = true,
@@ -385,21 +396,11 @@ do
 		self.db.profile.sound = nil
 		--
 
-		initDb = nil
-	end
+		self:RegisterMessage("Private_InitModules", InitializeModules)
+		InitializeModules()
 
-	local addonName = ...
-	if addonName == "BigWigs_Core" then
-		initDb(addon) -- LoD user
-	end
-
-	function addon:OnInitialize()
-		if initDb then initDb(self) end
-
-		-- This should ALWAYS be the last action of OnInitialize, it will trigger the loader to
-		-- enable other packs that want to be loaded when the core loads.
-		self:SendMessage("BigWigs_CoreLoaded")
-		self.OnInitialize = nil
+		self.Initialize = nil
+		self:SendMessage("Private_InitCore")
 	end
 end
 
@@ -506,6 +507,7 @@ do
 			addon:Print(errorAlreadyRegistered:format(module))
 		else
 			local m = core:NewModule(module, ...)
+			initModules[#initModules+1] = m
 
 			-- Embed callback handler
 			m.RegisterMessage = addon.RegisterMessage
@@ -703,3 +705,4 @@ function pluginCore:OnDisable()
 end
 
 BigWigs = addon -- Set global
+
