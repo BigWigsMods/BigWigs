@@ -149,14 +149,12 @@ plugin.defaultDB = {
 	outline = "THICKOUTLINE",
 	fontSize = 32,
 	fontColor = { r = 1, g = 0, b = 0 },
-	disabled = false,
 	voice = voiceMap[GetLocale()] or "English: Amy",
 	countdownTime = 5,
 	Countdown = {},
 }
 
 local function createOptions()
-	local disabled = function() return plugin.db.profile.disabled end
 	local get = function(info) return plugin.db.profile[info[#info]] end
 	local set = function(info, value)
 		plugin.db.profile[info[#info]] = value
@@ -174,31 +172,16 @@ local function createOptions()
 			get = get,
 			set = set,
 			args = {
-				--[[
-				disabled = {
-					type = "toggle",
-					name = L.disabled,
-					desc = L.superEmphasizeDisableDesc,
-					order = 0.1,
-				},
-				separator1 = {
-					name = "",
-					type = "description",
-					order = 0.2,
-				},
-				--]]
 				countdownTime = {
 					name = L.countdownAt,
 					type = "range", min = 5, max = 10, step = 1,
 					order = 0.5,
-					disabled = disabled,
 				},
 				countdown = {
 					type = "toggle",
 					name = L.textCountdown,
 					desc = L.textCountdownDesc,
 					order = 0.6,
-					disabled = disabled,
 				},
 				fontColor = {
 					type = "color",
@@ -213,7 +196,7 @@ local function createOptions()
 						end
 					end,
 					order = 0.7,
-					disabled = function() return plugin.db.profile.disabled or not plugin.db.profile.countdown end,
+					disabled = function() return not plugin.db.profile.countdown end,
 				},
 				font = {
 					type = "select",
@@ -233,7 +216,6 @@ local function createOptions()
 							plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline)
 						end
 					end,
-					disabled = disabled,
 				},
 				outline = {
 					type = "select",
@@ -244,28 +226,24 @@ local function createOptions()
 						OUTLINE = L.thin,
 						THICKOUTLINE = L.thick,
 					},
-					disabled = disabled,
 				},
 				fontSize = {
 					type = "range",
 					name = L.fontSize,
 					order = 3,
 					max = 40, min = 8, step = 1,
-					disabled = disabled,
 				},
 				upper = {
 					type = "toggle",
 					name = L.uppercase,
 					desc = L.uppercaseDesc,
 					order = 4,
-					disabled = disabled,
 				},
 				monochrome = {
 					type = "toggle",
 					name = L.monochrome,
 					desc = L.monochromeDesc,
 					order = 5,
-					disabled = disabled,
 				},
 			},
 		}
@@ -287,7 +265,6 @@ local function createOptions()
 			set = set,
 			order = 5,
 			width = "full",
-			disabled = disabled,
 		}
 		sModule.pluginOptions.args.voiceTest = {
 			name = L.countdownTest,
@@ -295,7 +272,6 @@ local function createOptions()
 			handler = plugin,
 			func = "TestEmphasize",
 			order = 6,
-			disabled = disabled,
 		}
 
 		-- ability options
@@ -333,6 +309,7 @@ local function createOptions()
 end
 
 local function updateProfile()
+	plugin.db.profile.disabled = nil -- XXX temp clean up
 	if not plugin.db.profile.font then
 		plugin.db.profile.font = media:GetDefault("font")
 	end
@@ -385,7 +362,7 @@ do
 		if sound then
 			PlaySoundFile(sound, "Master")
 		end
-		if not plugin.db.profile.disabled and plugin.db.profile.countdown then
+		if plugin.db.profile.countdown then
 			plugin:SendMessage("BigWigs_EmphasizedCountdownMessage", num)
 		end
 		if text and timers[text] then wipe(timers[text]) end
@@ -395,8 +372,7 @@ do
 			self:BigWigs_StopEmphasize(nil, module, text)
 			if time > 1.3 then
 				if not timers[text] then timers[text] = {} end
-				local name = module.name
-				timers[text][1] = module:ScheduleTimer(printEmph, time-1.3, 1, name, key, text)
+				timers[text][1] = module:ScheduleTimer(printEmph, time-1.3, 1, module.name, key, text)
 				for i = 2, self.db.profile.countdownTime do
 					local t = i + 0.3
 					if time <= t then break end
@@ -425,7 +401,7 @@ do
 end
 
 function plugin:IsSuperEmphasized(module, key)
-	if not module or not key or self.db.profile.disabled then return end
+	if not module or not key then return end
 	if temporaryEmphasizes[key] and temporaryEmphasizes[key] > GetTime() then return true else temporaryEmphasizes[key] = nil end
 	if module == BigWigs then -- test bars
 		return math.random(1,2) == 2
