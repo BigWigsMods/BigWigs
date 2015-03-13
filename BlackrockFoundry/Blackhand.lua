@@ -268,6 +268,11 @@ do
 			scheduled = self:ScheduleTimer(warn, 0.2, self, args.spellId)
 			self:Bar(156107, 5) -- Impaling Throw
 			self:Bar(args.spellId, phase == 3 and 21 or 16)
+			-- won't cast Shattering Smash while Marked for Death is out (will also sometimes cast Slag Bombs first)
+			local smashTime = self:BarTimeLeft(CL.count:format(self:SpellName(128270), smashCount))
+			if smashTime < 6 then
+				self:CDBar(155992, 6, CL.count:format(self:SpellName(128270), smashCount))
+			end
 		end
 		list[#list+1] = args.destName
 		if self:Me(args.destGUID) then
