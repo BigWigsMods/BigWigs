@@ -180,9 +180,11 @@ local function loadZone(zone)
 end
 
 local function loadAndEnableCore()
-	load(BigWigs, "BigWigs_Core")
+	local loaded = load(BigWigs, "BigWigs_Core")
 	if not BigWigs then return end
+	loadAddons(loadOnCoreEnabled)
 	BigWigs:Enable()
+	return loaded
 end
 
 local function loadCoreAndOpenOptions()
@@ -446,8 +448,7 @@ function mod:ADDON_LOADED(addon)
 
 	-- Break timer restoration
 	if BigWigs3DB and BigWigs3DB.breakTime then
-		load(BigWigs, "BigWigs_Core")
-		BigWigs:Enable()
+		loadAndEnableCore()
 	end
 end
 
@@ -835,7 +836,7 @@ do
 
 		local shouldPrint = false
 		for k,v in next, queueLoad do
-			if v == "unloaded" and load(BigWigs, "BigWigs_Core") then
+			if v == "unloaded" and loadAndEnableCore() then
 				shouldPrint = true
 				queueLoad[k] = "loaded"
 				if BigWigs:IsEnabled() and loadOnZone[k] then
@@ -866,7 +867,7 @@ do
 					end
 				else
 					queueLoad[id] = "loaded"
-					if load(BigWigs, "BigWigs_Core") then
+					if loadAndEnableCore() then
 						if BigWigs:IsEnabled() then
 							loadZone(id)
 						else
@@ -915,7 +916,7 @@ do
 					end
 				else
 					queueLoad[id] = "loaded"
-					if load(BigWigs, "BigWigs_Core") then
+					if loadAndEnableCore() then
 						if BigWigs:IsEnabled() and loadOnZone[id] then
 							loadZone(id)
 						else
@@ -990,18 +991,6 @@ function mod:BigWigs_CoreEnabled()
 	-- Core is loaded, nil these to force checking BigWigs.db.profile.option
 	self.isFakingDBM = nil
 	self.isShowingZoneMessages = nil
-
-	loadAddons(loadOnCoreEnabled)
-
-	-- core is enabled, unconditionally load the zones
-	local id
-	if not IsInInstance() then
-		id = GetCurrentMapAreaID()
-	else
-		local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
-		id = instanceId
-	end
-	loadZone(id)
 end
 
 function mod:BigWigs_CoreDisabled()
