@@ -119,13 +119,13 @@ local trainDataLFR = {
 	[2] = {
 		{ 27, "train"},
 		{ 77, "train"},
-		{122, "adds_train", 3},
+	--	{122, "adds_train", 3}, -- No split in LFR
 		{187, "train"},
 		{227, "train"},
 		{252, "big_add_train", 4},
 		{317, "train"},
 		{342, "train"},
-		{372, "adds_train", 3},
+	--	{372, "adds_train", 3}, -- Guessed
 		{433, "train"},
 		{490, "train"},
 	},
