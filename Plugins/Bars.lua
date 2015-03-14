@@ -550,8 +550,10 @@ do
 			else
 				db[key] = value
 			end
-			BigWigsAnchor:RefixPosition()
-			BigWigsEmphasizeAnchor:RefixPosition()
+			if BigWigsAnchor then
+				BigWigsAnchor:RefixPosition()
+				BigWigsEmphasizeAnchor:RefixPosition()
+			end
 		end,
 		args = {
 			custom = {
