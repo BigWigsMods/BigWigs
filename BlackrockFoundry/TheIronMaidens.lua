@@ -291,7 +291,9 @@ end
 
 do
 	function mod:RapidFire(args)
-		self:PrimaryIcon(args.spellId, args.destName)
+		if not self:LFR() then
+			self:PrimaryIcon(args.spellId, args.destName)
+		end
 		if isOnABoat() then
 			boatTimers[args.spellId] = GetTime() + 31.6
 			return
@@ -303,7 +305,9 @@ do
 	end
 
 	function mod:RapidFireRemoved(args)
-		self:PrimaryIcon(args.spellId)
+		if not self:LFR() then
+			self:PrimaryIcon(args.spellId)
+		end
 	end
 end
 
@@ -316,7 +320,9 @@ end
 
 do
 	function mod:PenetratingShot(args)
-		self:PrimaryIcon(args.spellId, args.destName)
+		if not self:LFR() then
+			self:PrimaryIcon(args.spellId, args.destName)
+		end
 		if isOnABoat() then
 			boatTimers[args.spellId] = GetTime() + 30
 			return
@@ -333,7 +339,9 @@ do
 	end
 
 	function mod:PenetratingShotRemoved(args)
-		self:PrimaryIcon(args.spellId)
+		if not self:LFR() then
+			self:PrimaryIcon(args.spellId)
+		end
 	end
 end
 
@@ -387,7 +395,9 @@ end
 
 do
 	function mod:BloodRitual(args)
-		self:SecondaryIcon(args.spellId, args.destName)
+		if not self:LFR() then
+			self:SecondaryIcon(args.spellId, args.destName)
+		end
 		if isOnABoat() then
 			boatTimers[args.spellId] = GetTime() + 20
 			return
@@ -402,7 +412,9 @@ do
 	end
 
 	function mod:BloodRitualRemoved(args)
-		self:SecondaryIcon(args.spellId)
+		if not self:LFR() then
+			self:SecondaryIcon(args.spellId)
+		end
 	end
 end
 
