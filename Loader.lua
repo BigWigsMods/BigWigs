@@ -441,9 +441,16 @@ function mod:ADDON_LOADED(addon)
 	end
 	self:UpdateDBMFaking(nil, "fakeDBMVersion", self.isFakingDBM)
 
-	-- Do not change the ordering of the following initialization process. It is required for SVN and LoD functionality.
 	public:SendMessage("Private_InitLoader")
+end
 
+-- We can't do our addon loading in ADDON_LOADED as the target addons may be registering that
+-- which would break that event for those addons. Use this event instead.
+function mod:UPDATE_FLOATING_CHAT_WINDOWS()
+	bwFrame:UnregisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
+	self.UPDATE_FLOATING_CHAT_WINDOWS = nil
+
+	-- Do not change the ordering of the following initialization process. It is required for SVN and LoD functionality.
 	function self:ADDON_LOADED()
 		public:SendMessage("Private_InitModules")
 	end
@@ -538,7 +545,7 @@ do
 	elseif L == "deDE" then
 	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into German (deDE)? Check out our easy translator tool: goo.gl/nwR5cy"
 	elseif L == "koKR" then
-		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Korean (koKR)? Check out our easy translator tool: goo.gl/nwR5cy"
+	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Korean (koKR)? Check out our easy translator tool: goo.gl/nwR5cy"
 	end
 
 	CTimerAfter(11, function()
@@ -659,6 +666,7 @@ bwFrame:SetScript("OnEvent", function(frame, event, ...)
 	mod[event](mod, ...)
 end)
 bwFrame:RegisterEvent("ADDON_LOADED")
+bwFrame:RegisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
 
 -- Role Updating
 function mod:ACTIVE_TALENT_GROUP_CHANGED()
