@@ -148,7 +148,7 @@ local function load(obj, index)
 	if obj then return true end
 
 	if loadOnSlash[index] then
-		if not IsAddOnLoaded(index) then -- check if we need remove our slash handler stub
+		if not IsAddOnLoaded(index) then -- Check if we need remove our slash handler stub.
 			for _, slash in next, loadOnSlash[index] do
 				hash_SlashCmdList[slash] = nil
 			end
@@ -281,15 +281,20 @@ do
 								func(text)
 							else
 								-- Addon didn't register the slash command for whatever reason, print the default invalid slash message.
-								sysprint(HELP_TEXT_SIMPLE)
+								local info = ChatTypeInfo["SYSTEM"]
+								DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT_SIMPLE, info.r, info.g, info.b, info.id)
 							end
 						end
 					end
-					loadOnSlash[i][j] = v
+					loadOnSlash[i][j] = slash
 				end
 			end
 		elseif reqFuncAddons[name] then
 			sysprint(L.coreAddonDisabled:format(name))
+		end
+
+		if next(loadOnSlash) then
+			ChatFrame_ImportAllListsToHash() -- Add our slashes to the hash.
 		end
 	end
 
