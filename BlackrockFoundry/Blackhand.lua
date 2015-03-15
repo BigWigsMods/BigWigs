@@ -120,21 +120,22 @@ end
 --
 
 function mod:UNIT_TARGET(unit)
-	if not tankName then -- He had no target when we tried to open proximity
-		tankName = UnitName("boss1target")
+	local newTarget = UnitName("boss1target")
+	-- No target or target isn't a tank
+	if not newTarget or not self:Tank(newTarget) then return end
 
-		if not tankName then return end
+	if not tankName then -- He had no target when we tried to open proximity
+		tankName = newTarget
 
 		if self.db.profile.custom_off_massivesmash_marker then
 			oldIcon = GetRaidTargetIndex(tankName)
 			SetRaidTarget(tankName, 6)
 		end
 	else -- We already have a tank
-		local bossTargetName = UnitName("boss1target")
-		if bossTargetName ~= tankName then -- new tank
+		if newTarget ~= tankName then -- new tank
 			if self.db.profile.custom_off_massivesmash_marker then
 				SetRaidTarget(tankName, oldIcon or 0) -- restore old icon
-				tankName = bossTargetName -- mark new tank
+				tankName = newTarget -- mark new tank
 				oldIcon = GetRaidTargetIndex(tankName)
 				SetRaidTarget(tankName, 6)
 			else
