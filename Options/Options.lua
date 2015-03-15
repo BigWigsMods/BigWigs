@@ -277,94 +277,105 @@ local function findPanel(name, parent)
 	end
 end
 
-function options:Initialize()
-	acOptions.args.general.args.profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db)
-	acOptions.args.general.args.profileOptions.order = 1
-	LibStub("LibDualSpec-1.0"):EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
+do
+	local addonName = ...
+	local f = CreateFrame("Frame")
+	f:RegisterEvent("ADDON_LOADED")
+	local function Initialize(_, _, addon)
+		if addon ~= addonName then return end
+		if not loader.hasLoaded then BigWigs:Print("Weird, the options loaded before the loader.") end -- XXX temp
+		if not BigWigs.hasLoaded then BigWigs:Print("Weird, the options loaded before the core.") end -- XXX temp
 
-	acr:RegisterOptionsTable("BigWigs", getOptions, true)
-	acd:SetDefaultSize("BigWigs", 858,660)
-	--local mainOpts = acd:AddToBlizOptions("BigWigs", "Big Wigs")
-	--mainOpts:HookScript("OnShow", function()
-	--	BigWigs:Enable()
-	--	local p = findPanel("Big Wigs")
-	--	if p and p.element.collapsed then OptionsListButtonToggle_OnClick(p.toggle) end
-	--end)
-    --
-	--local about = self:GetPanel(L.about, "Big Wigs")
-	--about:SetScript("OnShow", function(frame)
-	--	local fields = {
-	--		L.developers,
-	--		L.license,
-	--		L.website,
-	--		L.contact,
-	--	}
-	--	local fieldData = {
-	--		"Funkydude, Maat, Nebula169",
-	--		L.allRightsReserved,
-	--		"http://www.wowace.com/addons/big-wigs/",
-	--		L.ircChannel,
-	--	}
-	--	local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-	--	title:SetPoint("TOPLEFT", 16, -16)
-	--	title:SetText(L.about)
-    --
-	--	local subtitle = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-	--	subtitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
-	--	subtitle:SetWidth(frame:GetWidth() - 24)
-	--	subtitle:SetJustifyH("LEFT")
-	--	subtitle:SetJustifyV("TOP")
-	--	local noteKey = "Notes"
-	--	if GetAddOnMetadata("BigWigs", "Notes-" .. GetLocale()) then noteKey = "Notes-" .. GetLocale() end
-	--	local notes = GetAddOnMetadata("BigWigs", noteKey)
-	--	subtitle:SetText(notes .. " |cff44ff44" .. loader:GetReleaseString() .. "|r")
-    --
-	--	local anchor = nil
-	--	for i, field in next, fields do
-	--		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-	--		title:SetWidth(120)
-	--		if not anchor then
-	--			title:SetPoint("TOPLEFT", subtitle, "BOTTOMLEFT", 0, -16)
-	--		else
-	--			title:SetPoint("TOP", anchor, "BOTTOM", 0, -6)
-	--			title:SetPoint("LEFT", subtitle)
-	--		end
-	--		title:SetNonSpaceWrap(true)
-	--		title:SetJustifyH("LEFT")
-	--		title:SetText(field)
-	--		local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-	--		detail:SetPoint("TOPLEFT", title, "TOPRIGHT")
-	--		detail:SetWidth(frame:GetWidth() - 144)
-	--		detail:SetJustifyH("LEFT")
-	--		detail:SetJustifyV("TOP")
-	--		detail:SetText(fieldData[i])
-    --
-	--		anchor = detail
-	--	end
-	--	local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-	--	title:SetPoint("TOP", anchor, "BOTTOM", 0, -16)
-	--	title:SetPoint("LEFT", subtitle)
-	--	title:SetWidth(frame:GetWidth() - 24)
-	--	title:SetJustifyH("LEFT")
-	--	title:SetJustifyV("TOP")
-	--	title:SetText(L.thanks)
-	--	local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-	--	detail:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -4)
-	--	detail:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -24, -24)
-	--	detail:SetJustifyH("LEFT")
-	--	detail:SetJustifyV("TOP")
-	--	detail:SetText(BIGWIGS_AUTHORS)
-    --
-	--	frame:SetScript("OnShow", nil)
-	--end)
+		acOptions.args.general.args.profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db)
+		acOptions.args.general.args.profileOptions.order = 1
+		LibStub("LibDualSpec-1.0"):EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
 
-	colorModule = BigWigs:GetPlugin("Colors")
-	soundModule = BigWigs:GetPlugin("Sounds")
-	acr:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
-	acr:RegisterOptionsTable("Big Wigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
+		acr:RegisterOptionsTable("BigWigs", getOptions, true)
+		acd:SetDefaultSize("BigWigs", 858,660)
+		--local mainOpts = acd:AddToBlizOptions("BigWigs", "Big Wigs")
+		--mainOpts:HookScript("OnShow", function()
+		--	BigWigs:Enable()
+		--	local p = findPanel("Big Wigs")
+		--	if p and p.element.collapsed then OptionsListButtonToggle_OnClick(p.toggle) end
+		--end)
+		--
+		--local about = self:GetPanel(L.about, "Big Wigs")
+		--about:SetScript("OnShow", function(frame)
+		--	local fields = {
+		--		L.developers,
+		--		L.license,
+		--		L.website,
+		--		L.contact,
+		--	}
+		--	local fieldData = {
+		--		"Funkydude, Maat, Nebula169",
+		--		L.allRightsReserved,
+		--		"http://www.wowace.com/addons/big-wigs/",
+		--		L.ircChannel,
+		--	}
+		--	local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+		--	title:SetPoint("TOPLEFT", 16, -16)
+		--	title:SetText(L.about)
+		--
+		--	local subtitle = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+		--	subtitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
+		--	subtitle:SetWidth(frame:GetWidth() - 24)
+		--	subtitle:SetJustifyH("LEFT")
+		--	subtitle:SetJustifyV("TOP")
+		--	local noteKey = "Notes"
+		--	if GetAddOnMetadata("BigWigs", "Notes-" .. GetLocale()) then noteKey = "Notes-" .. GetLocale() end
+		--	local notes = GetAddOnMetadata("BigWigs", noteKey)
+		--	subtitle:SetText(notes .. " |cff44ff44" .. loader:GetReleaseString() .. "|r")
+		--
+		--	local anchor = nil
+		--	for i, field in next, fields do
+		--		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+		--		title:SetWidth(120)
+		--		if not anchor then
+		--			title:SetPoint("TOPLEFT", subtitle, "BOTTOMLEFT", 0, -16)
+		--		else
+		--			title:SetPoint("TOP", anchor, "BOTTOM", 0, -6)
+		--			title:SetPoint("LEFT", subtitle)
+		--		end
+		--		title:SetNonSpaceWrap(true)
+		--		title:SetJustifyH("LEFT")
+		--		title:SetText(field)
+		--		local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+		--		detail:SetPoint("TOPLEFT", title, "TOPRIGHT")
+		--		detail:SetWidth(frame:GetWidth() - 144)
+		--		detail:SetJustifyH("LEFT")
+		--		detail:SetJustifyV("TOP")
+		--		detail:SetText(fieldData[i])
+		--
+		--		anchor = detail
+		--	end
+		--	local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+		--	title:SetPoint("TOP", anchor, "BOTTOM", 0, -16)
+		--	title:SetPoint("LEFT", subtitle)
+		--	title:SetWidth(frame:GetWidth() - 24)
+		--	title:SetJustifyH("LEFT")
+		--	title:SetJustifyV("TOP")
+		--	title:SetText(L.thanks)
+		--	local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+		--	detail:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -4)
+		--	detail:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -24, -24)
+		--	detail:SetJustifyH("LEFT")
+		--	detail:SetJustifyV("TOP")
+		--	detail:SetText(BIGWIGS_AUTHORS)
+		--
+		--	frame:SetScript("OnShow", nil)
+		--end)
 
-	self:UnregisterMessage("Private_InitCore")
-	self.Initialize = nil
+		colorModule = BigWigs:GetPlugin("Colors")
+		soundModule = BigWigs:GetPlugin("Sounds")
+		acr:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
+		acr:RegisterOptionsTable("Big Wigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
+
+		f:UnregisterEvent("ADDON_LOADED")
+		-- Wait with nilling, we don't know how many addons will load during this same execution.
+		loader.CTimerAfter(5, function() f:SetScript("OnEvent", nil) end)
+	end
+	f:SetScript("OnEvent", Initialize)
 end
 
 function options:OnEnable()
@@ -1309,13 +1320,4 @@ do
 end
 
 BigWigsOptions = options -- Set global
-
-do
-	local addonName = ...
-	if addonName == "BigWigs_Options" then
-		options:Initialize()
-	else
-		options:RegisterMessage("Private_InitCore", "Initialize")
-	end
-end
 

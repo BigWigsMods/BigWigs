@@ -441,7 +441,9 @@ function mod:ADDON_LOADED(addon)
 	end
 	self:UpdateDBMFaking(nil, "fakeDBMVersion", self.isFakingDBM)
 
-	public:SendMessage("Private_InitLoader")
+	bwFrame:UnregisterEvent("ADDON_LOADED")
+	self.ADDON_LOADED = nil
+	public.hasLoaded = true -- XXX temp
 end
 
 -- We can't do our addon loading in ADDON_LOADED as the target addons may be registering that
@@ -449,11 +451,6 @@ end
 function mod:UPDATE_FLOATING_CHAT_WINDOWS()
 	bwFrame:UnregisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
 	self.UPDATE_FLOATING_CHAT_WINDOWS = nil
-
-	-- Do not change the ordering of the following initialization process. It is required for SVN and LoD functionality.
-	function self:ADDON_LOADED()
-		public:SendMessage("Private_InitModules")
-	end
 
 	self:GROUP_ROSTER_UPDATE()
 	self:ZONE_CHANGED_NEW_AREA()

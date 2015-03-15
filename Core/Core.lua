@@ -363,8 +363,10 @@ do
 		end
 	end
 
-	function addon:Initialize()
-		self:UnregisterMessage("Private_InitLoader")
+	local addonName = ...
+	function addon:ADDON_LOADED(_, addon)
+		if addon ~= addonName then return end
+		if not loader.hasLoaded then self:Print("Weird, the core loaded before the loader.") end -- XXX temp
 
 		local defaults = {
 			profile = {
@@ -396,12 +398,10 @@ do
 		self.db.profile.sound = nil
 		--
 
-		self:RegisterMessage("Private_InitModules", InitializeModules)
-		InitializeModules()
-
-		self.Initialize = nil
-		self:SendMessage("Private_InitCore")
+		self.ADDON_LOADED = InitializeModules
+		self.hasLoaded = true -- XXX temp
 	end
+	addon:RegisterEvent("ADDON_LOADED")
 end
 
 function addon:OnEnable()

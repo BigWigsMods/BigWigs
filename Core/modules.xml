@@ -5,7 +5,6 @@
 <Script file="Constants.lua"/>
 <Script file="BossPrototype.lua"/>
 <Script file="PluginPrototype.lua"/>
-<Script file="Init.lua"/>
 
 </Ui>
 
