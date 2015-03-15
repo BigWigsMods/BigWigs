@@ -192,13 +192,13 @@ function mod:LivingBlazeCast(args)
 end
 
 function mod:LivingBlaze(args)
-	self:TargetBar(args.spellId, 10, args.destName)
 	if self:Me(args.destGUID) then
 		if not self:LFR() then
 			self:Say(args.spellId)
 		end
 		self:OpenProximity(args.spellId, 6)
 		self:Flash(args.spellId)
+		self:TargetBar(args.spellId, 10, args.destName)
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
 	end
 end
@@ -212,8 +212,8 @@ function mod:LivingBlazeRemoved(args)
 end
 
 function mod:Burning(args)
-	if args.amount % 2 == 0 then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent", args.amount > 6 and "Warning")
+	if args.amount % 3 == 0 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent")
 	end
 end
 
