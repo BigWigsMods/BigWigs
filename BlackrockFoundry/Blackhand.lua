@@ -206,12 +206,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		end
 		self:Bar(spellId, mythic and 30.5 or 45.5)
 	elseif spellId == 161347 then -- Jump To Second Floor, after reaching middle, entering p2
-		self:StopBar(CL.count:format(self:SpellName(128270), smashCount)) -- Shattering Smash (Smash)
 		smashCount = 1
-
-		self:StopBar(156425) -- Demolition
-		self:StopBar(156479) -- Massive Demolition
-		self:StopBar(156107) -- Impaling Throw
 
 		self:Bar(156030, 12) -- Throw Slag Bombs
 		self:Bar("siegemaker", 16, L.siegemaker, L.siegemaker_icon)
@@ -223,6 +218,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 
 	elseif spellId == 158021 then -- Marked for Death Clear, before running to middle of room, starting p2
 		if phase == 1 then
+			self:StopBar(CL.count:format(self:SpellName(128270), smashCount)) -- Shattering Smash (Smash)
+			self:StopBar(156425) -- Demolition
+			self:StopBar(156107) -- Impaling Throw
+			self:StopBar(156096) -- Marked for Death
+			self:StopBar(156030) -- Throw Slag Bombs
+
 			phase = 2
 			self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
 		end
@@ -332,7 +333,7 @@ do
 		end
 		local nextSmash = (100-UnitPower("boss1"))/4
 		scheduled = self:ScheduleTimer(openSmashProximity, nextSmash-3, self)
-		self:CDBar(158054, nextSmash)
+		self:CDBar(158054, nextSmash, CL.count:format(self:SpellName(128270), smashCount)) -- 128270 = "Smash"
 	end
 	function mod:MassiveShatteringSmash(args)
 		self:Message(args.spellId, "Urgent", "Warning", CL.count:format(self:SpellName(128270), smashCount)) -- 128270 = "Smash"
