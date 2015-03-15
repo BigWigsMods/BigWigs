@@ -14,41 +14,7 @@ mod.engageId = 1692
 
 local engageTime = 0
 -- times are for when the train is about to enter the room, ~5s after the door opens
---[[
-	17 4
-	27 2
-	32 1
-	47 3
-	52 4
-	77 2
-	82 3
-	107 1
-	122 2&3
-	162 1&4
-	172 1
-	187 2
-	197 4
-	217 3
-	227 2
-	237 1
-	252 2&4
-	272 1
-	277 3
-	307 1&4
-	317 2
-	342 2
-	372 2&3
-	387 4
-	407 1
-	417 1&4
-	433 2
-	442 3
-	462 3
-	467 1&4
-	487 3
-	490 2
-	495 1
-]]
+
 local trainData = {
 	-- heroic/normal data
 	[1] = {
@@ -331,7 +297,6 @@ function mod:OnEngage()
 	elseif not self:LFR() then
 		self:DelayedMessage("trains", 106, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15), false, "Long")
 		self:DelayedMessage("trains", 356, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15), false, "Long")
-		self:DelayedMessage("trains", 443, "Neutral", CL.custom_sec:format(CL.count:format(split, 3), 15), false, "Long")
 	end
 end
 
