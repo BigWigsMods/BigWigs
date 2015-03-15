@@ -259,15 +259,11 @@ function mod:ShatteringSmash(args)
 end
 
 do
-	local list, scheduled = mod:NewTargetList(), nil
-	local function warn(self, spellId)
-		self:TargetMessage(spellId, list, phase == 3 and "Important" or "Attention", "Alarm", nil, nil, phase == 3)
-		scheduled = nil
-	end
-
+	local list = mod:NewTargetList()
 	function mod:MarkedForDeathApplied(args)
-		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 0.2, self, args.spellId)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, phase == 3 and "Important" or "Attention", "Alarm", nil, nil, phase == 3)
 			self:Bar(156107, 5) -- Impaling Throw
 			self:Bar(args.spellId, phase == 3 and 21 or 16)
 			-- won't cast Shattering Smash while Marked for Death is out (will also sometimes cast Slag Bombs first)
@@ -276,7 +272,7 @@ do
 				self:CDBar(155992, 6, CL.count:format(self:SpellName(128270), smashCount))
 			end
 		end
-		list[#list+1] = args.destName
+
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId, 28836) -- 28836 = "Mark"
@@ -345,21 +341,18 @@ do
 end
 
 do
-	local list, scheduled = mod:NewTargetList(), nil
-	local function warnTargets(self)
-		self:TargetMessage(157000, list, "Urgent", "Alert", nil, nil, true)
-		scheduled = nil
-	end
+	local list = mod:NewTargetList()
 	function mod:AttachSlagBombs(args)
 		list[#list+1] = args.destName
 		if self:Me(args.destGUID) then
-			self:TargetBar(157000, 5, args.destName, 155192, 157000) -- 155192 = Bomb
+			local bomb = self:SpellName(155192) -- Bomb
+			self:TargetBar(157000, 5, args.destName, bomb) 
 			self:Flash(157000)
-			self:Say(157000, 155192) -- 155192 = Bomb
+			self:Say(157000, bomb)
 		end
-		if not scheduled then
-			scheduled = self:ScheduleTimer(warnTargets, 1, self)
+		if #list == 1 then
 			self:Bar(157000, 25)
+			self:ScheduleTimer("TargetMessage", 1, 157000, list, "Urgent", "Alert", nil, nil, true)
 		end
 	end
 end
