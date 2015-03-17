@@ -13,7 +13,7 @@ mod.engageId = 1704
 --
 
 local phase = 1
-local smashCount = 1
+local smashCount, markCount = 1, 1
 local massiveSmashProximity = nil
 local oldIcon, tankName = nil, nil -- Massive Shattering Smash marker
 
@@ -208,11 +208,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(spellId, mythic and 30.5 or 45.5)
 	elseif spellId == 161347 then -- Jump To Second Floor, after reaching middle, entering p2
 		smashCount = 1
+		markCount = 1
 
 		self:Bar(156030, 12) -- Throw Slag Bombs
 		self:Bar("siegemaker", 16, L.siegemaker, L.siegemaker_icon)
 		self:CDBar(155992, self:Mythic() and 18.5 or 22, CL.count:format(self:SpellName(128270), smashCount)) -- Shattering Smash, 128270 = "Smash"
-		self:Bar(156096, 26) -- Marked for Death
+		self:Bar(156096, 26, CL.count:format(self:SpellName(156096), 1)) -- Marked for Death
 		if self:Healer() or self:Damager() == "RANGED" then
 			self:OpenProximity(156728, 7) -- Explosive Round
 		end
@@ -235,6 +236,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 
 		self:StopBar(156030) -- Throw Slag Bombs
 		self:StopBar(L.siegemaker)
+		self:StopBar(CL.count:format(self:SpellName(156096), markCount)) -- Marked for Death
 		self:StopBar(156107) -- Impaling Throw
 		if self:Healer() or self:Damager() == "RANGED" then
 			self:CloseProximity(156728) -- Explosive Round
@@ -263,9 +265,11 @@ do
 	function mod:MarkedForDeathApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, phase == 3 and "Important" or "Attention", "Alarm", nil, nil, phase == 3)
+			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, phase == 3 and "Important" or "Attention", "Alarm", phase == 2 and CL.count:format(args.spellName, markCount), nil, phase == 3)
 			self:Bar(156107, 5) -- Impaling Throw
-			self:Bar(args.spellId, phase == 3 and 21 or 16)
+			markCount = markCount + 1
+			if markCount > 3 then markCount = 1 end
+			self:Bar(args.spellId, phase == 3 and 21 or 16, phase == 2 and CL.count:format(args.spellName, markCount))
 			-- won't cast Shattering Smash while Marked for Death is out (will also sometimes cast Slag Bombs first)
 			local smashTime = self:BarTimeLeft(CL.count:format(self:SpellName(128270), smashCount))
 			if smashTime < 6 then
