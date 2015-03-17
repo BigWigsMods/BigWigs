@@ -85,13 +85,13 @@ local trainDataLFR = {
 	[2] = {
 		{ 27, "train"},
 		{ 77, "train"},
-	--	{122, "adds_train", 3}, -- No split in LFR
+	--	{122, "adds_train", 3}, -- No first split in LFR
 		{187, "train"},
 		{227, "train"},
 		{252, "big_add_train", 4},
 		{317, "train"},
 		{342, "train"},
-	--	{372, "adds_train", 3}, -- Guessed
+		{372, "adds_train", 3},
 		{433, "train"},
 		{490, "train"},
 	},
@@ -294,8 +294,10 @@ function mod:OnEngage()
 	if self:Mythic() then
 		self:DelayedMessage("trains", 130, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15), false, "Long")
 		self:DelayedMessage("trains", 286, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15), false, "Long")
-	elseif not self:LFR() then
-		self:DelayedMessage("trains", 106, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15), false, "Long")
+	else
+		if not self:LFR() then
+			self:DelayedMessage("trains", 106, "Neutral", CL.custom_sec:format(CL.count:format(split, 1), 15), false, "Long")
+		end
 		self:DelayedMessage("trains", 356, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15), false, "Long")
 	end
 end
