@@ -48,10 +48,11 @@ function mod:GetOptions()
 		--[[ Dreadwing ]]--
 		{155030, "TANK"}, -- Seared Flesh
 		{154989, "FLASH"}, -- Inferno Breath
+		{156824, "FLASH"}, -- Inferno Pyre
 		{154981, "HEALER"}, -- Conflagration
 		"custom_off_conflag_marker",
 		155499, -- Shrapnel
-		155657, -- Flame Infusion
+		{155657, "FLASH"}, -- Flame Infusion
 		--[[ Ironcrusher ]]--
 		{155236, "TANK"}, -- Crush Armor
 		155222, -- Tantrum
@@ -63,6 +64,7 @@ function mod:GetOptions()
 		{154960, "SAY"}, -- Pinned Down
 		"custom_off_pinned_marker",
 		154975, -- Call the Pack
+		{156823, "FLASH"}, -- Superheated Scrap
 		"stages",
 		"proximity",
 		"berserk",
@@ -106,8 +108,8 @@ function mod:OnBossEnable()
 	-- Stage 3
 	self:Log("SPELL_DAMAGE", "ShrapnelDamage", 155499)
 	self:Log("SPELL_MISSED", "ShrapnelDamage", 155499)
-	self:Log("SPELL_PERIODIC_DAMAGE", "FlameInfusionDamage", 155657)
-	self:Log("SPELL_PERIODIC_MISSED", "FlameInfusionDamage", 155657)
+	self:Log("SPELL_PERIODIC_DAMAGE", "BadStuffUnderYou", 155657, 156823, 156824) -- Flame Infusion, Superheated Scrap, Inferno Pyre
+	self:Log("SPELL_PERIODIC_MISSED", "BadStuffUnderYou", 155657, 156823, 156824)
 
 	self:Death("Deaths", 76884, 76874, 76945, 76946) -- Cruelfang, Dreadwing, Ironcrusher, Faultline
 end
@@ -392,10 +394,11 @@ end
 
 do
 	local prev = 0
-	function mod:FlameInfusionDamage(args)
+	function mod:BadStuffUnderYou(args)
 		local t = GetTime()
-		if t-prev > 3 and self:Me(args.destGUID) then
+		if t-prev > 2 and self:Me(args.destGUID) then
 			prev = t
+			self:Flash(args.spellId)
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
