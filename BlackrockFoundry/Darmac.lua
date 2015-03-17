@@ -119,7 +119,7 @@ function mod:OnEngage(diff)
 	conflagMark = 1
 	wipe(pinnedList)
 
-	self:Bar(154975, 8) -- Call the Pack
+	self:Bar(154975, self:LFR() and 18 or self:Normal() and 18 or 8) -- Call the Pack
 	self:Bar(154960, 11) -- Pinned Down
 	self:Berserk(720)
 
@@ -274,7 +274,7 @@ end
 
 function mod:CallThePack(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, self:Normal() and 40 or 30) -- can be delayed
+	self:CDBar(args.spellId, self:LFR() and 40 or self:Normal() and 40 or 30) -- can be delayed
 end
 
 -- Stage 2
