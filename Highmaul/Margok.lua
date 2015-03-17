@@ -84,6 +84,7 @@ function mod:GetOptions()
 		{158563, "TANK"}, -- Kick to the Face
 		--[[ General ]]--
 		"stages",
+		"berserk",
 	}, {
 		[178607] = "mythic",
 		[159515] = mod.displayName,
@@ -150,6 +151,9 @@ function mod:OnEngage()
 	self:Bar(158605, 34) -- Mark of Chaos
 	self:Bar(157349, 45) -- Force Nova
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	if self:LFR() then
+		self:Berserk(900)
+	end
 end
 
 function mod:OnBossDisable()
