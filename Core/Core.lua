@@ -399,6 +399,7 @@ do
 		--
 
 		self.ADDON_LOADED = InitializeModules
+		InitializeModules()
 		self.hasLoaded = true -- XXX temp
 	end
 	addon:RegisterEvent("ADDON_LOADED")
