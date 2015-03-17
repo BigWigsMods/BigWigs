@@ -92,6 +92,7 @@ function mod:OnBossEnable()
 	-- Dreadwing
 	self:Log("SPELL_DAMAGE", "InfernoBreathDamage", 154989)
 	self:Log("SPELL_MISSED", "InfernoBreathDamage", 154989)
+	self:Log("SPELL_CAST_SUCCESS", "Conflagration", 155399)
 	self:Log("SPELL_AURA_APPLIED", "ConflagrationApplied", 154981)
 	self:Log("SPELL_AURA_REMOVED", "ConflagrationRemoved", 154981)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SearedFlesh", 155030)
@@ -312,26 +313,18 @@ do
 end
 
 do
-	local conflagList, scheduled = mod:NewTargetList(), nil
-	local function warnConflag(self, spellId)
-		self:TargetMessage(spellId, conflagList, "Urgent", self:Dispeller("magic") and "Info")
-		scheduled = nil
-	end
-	local function resetCount()
+	function mod:Conflagration(args)
 		conflagMark = 1
+		self:Bar(154981, 20)
 	end
 
 	function mod:ConflagrationApplied(args)
-		conflagList[#conflagList+1] = args.destName
-		if not scheduled then
-			self:Bar(args.spellId, 20)
-			self:ScheduleTimer(resetCount, 10)
-			scheduled = self:ScheduleTimer(warnConflag, 0.4, self, args.spellId)
-		end
 		if self.db.profile.custom_off_conflag_marker and conflagMark < 4 then
 			SetRaidTarget(args.destName, conflagMark)
 			conflagMark = conflagMark + 1
 		end
+		-- Time between applications can be so long that delaying is pointless.
+		self:TargetMessage(args.spellId, args.destName, "Urgent", self:Dispeller("magic") and "Info")
 	end
 
 	function mod:ConflagrationRemoved(args)
