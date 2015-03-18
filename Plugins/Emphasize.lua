@@ -362,7 +362,7 @@ do
 	local function printEmph(num, name, key, text)
 		local voice = plugin.db.profile.Countdown[name] and plugin.db.profile.Countdown[name][key] or plugin.db.profile.voice
 		local sound = voices[voice] and voices[voice][num]
-		if sound then
+		if sound and sound ~= "None"  then
 			PlaySoundFile(sound, "Master")
 		end
 		if plugin.db.profile.countdown then
@@ -421,7 +421,7 @@ end
 function plugin:BigWigs_PlayCountdownNumber(_, module, num)
 	local voice = self.db.profile.voice
 	local sound = voices[voice] and voices[voice][num]
-	if sound then
+	if sound and sound ~= "None" then
 		PlaySoundFile(sound, "Master")
 	end
 end
