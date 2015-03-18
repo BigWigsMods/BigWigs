@@ -15,7 +15,7 @@ plugin.displayName = L.superEmphasize
 
 local temporaryEmphasizes = {}
 local voices = {
-	["None"] = {
+	[L.none] = {
 		"Interface\\AddOns\\BigWigs\\Sounds\\None.ogg",
 	},
 	["English: Amy"] = {
