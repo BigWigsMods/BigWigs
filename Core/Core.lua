@@ -414,9 +414,7 @@ function addon:OnEnable()
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 
 	if IsLoggedIn() then
-		pluginCore:Enable()
-		bossCore:Enable()
-		self.PLAYER_LOGIN = nil
+		self:PLAYER_LOGIN()
 	else
 		self:RegisterEvent("PLAYER_LOGIN")
 	end
