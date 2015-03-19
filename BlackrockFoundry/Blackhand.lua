@@ -13,7 +13,7 @@ mod.engageId = 1704
 --
 
 local phase = 1
-local smashCount, markCount = 1, 1
+local smashCount, markCount, siegemakerCount = 1, 1, 1
 local massiveSmashProximity = nil
 local oldIcon, tankName = nil, nil -- Massive Shattering Smash marker
 
@@ -209,9 +209,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 161347 then -- Jump To Second Floor, after reaching middle, entering p2
 		smashCount = 1
 		markCount = 1
+		siegemakerCount = 1
 
 		self:Bar(156030, 12) -- Throw Slag Bombs
-		self:Bar("siegemaker", 16, L.siegemaker, L.siegemaker_icon)
+		self:Bar("siegemaker", 16, CL.count:format(L.siegemaker, siegemakerCount), L.siegemaker_icon)
 		self:CDBar(155992, self:Mythic() and 18.5 or 22, CL.count:format(self:SpellName(128270), smashCount)) -- Shattering Smash, 128270 = "Smash"
 		self:Bar(156096, 26, CL.count:format(self:SpellName(156096), 1)) -- Marked for Death
 		if self:Healer() or self:Damager() == "RANGED" then
@@ -235,7 +236,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		phase = 3
 
 		self:StopBar(156030) -- Throw Slag Bombs
-		self:StopBar(L.siegemaker)
+		self:StopBar(CL.count:format(L.siegemaker, siegemakerCount))
 		self:StopBar(CL.count:format(self:SpellName(156096), markCount)) -- Marked for Death
 		self:StopBar(156107) -- Impaling Throw
 		if self:Healer() or self:Damager() == "RANGED" then
@@ -268,7 +269,7 @@ do
 			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, phase == 3 and "Important" or "Attention", "Alarm", phase == 2 and CL.count:format(args.spellName, markCount), nil, phase == 3)
 			self:Bar(156107, 5) -- Impaling Throw
 			markCount = markCount + 1
-			if markCount > 3 then markCount = 1 end
+			if markCount > 3 and not self:Mythic() then markCount = 1 end
 			self:Bar(args.spellId, phase == 3 and 21 or 16, phase == 2 and CL.count:format(args.spellName, markCount))
 			-- won't cast Shattering Smash while Marked for Death is out (will also sometimes cast Slag Bombs first)
 			local smashTime = self:BarTimeLeft(CL.count:format(self:SpellName(128270), smashCount))
@@ -309,8 +310,9 @@ end
 -- Stage 2
 
 function mod:Siegemaker(args)
-	self:Message("siegemaker", "Attention", nil, L.siegemaker, L.siegemaker_icon)
-	self:Bar("siegemaker", 50, L.siegemaker, L.siegemaker_icon)
+	self:Message("siegemaker", "Attention", nil, CL.count(L.siegemaker, siegemakerCount), L.siegemaker_icon)
+	siegemakerCount = siegemakerCount + 1
+	self:Bar("siegemaker", 50, CL.count(L.siegemaker, siegemakerCount), L.siegemaker_icon)
 end
 
 function mod:BlackironPlatingRemoved(args)
@@ -350,7 +352,7 @@ do
 		list[#list+1] = args.destName
 		if self:Me(args.destGUID) then
 			local bomb = self:SpellName(155192) -- Bomb
-			self:TargetBar(157000, 5, args.destName, bomb) 
+			self:TargetBar(157000, 5, args.destName, bomb)
 			self:Flash(157000)
 			self:Say(157000, bomb)
 		end
