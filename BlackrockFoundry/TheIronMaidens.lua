@@ -419,14 +419,7 @@ do
 end
 
 do
-	local targets, scheduled = mod:NewTargetList(), nil
-	local function warnTargets(self, spellId)
-		if not isOnABoat() then
-			self:TargetMessage(spellId, targets, "Urgent", "Alert")
-		end
-		wipe(targets)
-		scheduled = nil
-	end
+	local targets = mod:NewTargetList()
 	function mod:HeartseekerApplied(args)
 		targets[#targets+1] = args.destName
 		if self:Me(args.destGUID) then
@@ -437,13 +430,13 @@ do
 		if self.db.profile.custom_off_heartseeker_marker then
 			SetRaidTarget(args.destName, #targets)
 		end
-		if not scheduled then
+		if #targets == 1 then
 			if isOnABoat() then
 				boatTimers[args.spellId] = GetTime() + 70
 			else
 				self:CDBar(args.spellId, 70)
+				self:ScheduleTimer("TargetMessage", 0.2, args.spellId, targets, "Urgent", "Alert")
 			end
-			scheduled = self:ScheduleTimer(warnTargets, 0.2, self, args.spellId)
 		end
 	end
 	function mod:HeartseekerRemoved(args)
