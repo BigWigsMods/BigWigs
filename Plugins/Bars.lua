@@ -1448,10 +1448,8 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	bar:Set("bigwigs:anchor", normalAnchor)
 	bar:Set("bigwigs:option", key)
 	bar:SetColor(colors:GetColor("barColor", module, key))
-	bar.candyBarLabel:SetTextColor(colors:GetColor("barText", module, key))
-	bar.candyBarDuration:SetTextColor(colors:GetColor("barText", module, key))
-	bar.candyBarLabel:SetShadowColor(colors:GetColor("barTextShadow", module, key))
-	bar.candyBarDuration:SetShadowColor(colors:GetColor("barTextShadow", module, key))
+	bar:SetTextColor(colors:GetColor("barText", module, key))
+	bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
 	bar.candyBarLabel:SetJustifyH(db.align)
 
 	local flags = nil
