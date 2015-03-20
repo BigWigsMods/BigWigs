@@ -212,7 +212,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		siegemakerCount = 1
 
 		self:Bar(156030, 12) -- Throw Slag Bombs
-		self:Bar("siegemaker", 16, CL.count:format(L.siegemaker, siegemakerCount), L.siegemaker_icon)
+		self:Bar("siegemaker", 16, CL.count:format(self:SpellName(L.siegemaker), siegemakerCount), L.siegemaker_icon)
 		self:CDBar(155992, self:Mythic() and 18.5 or 22, CL.count:format(self:SpellName(128270), smashCount)) -- Shattering Smash, 128270 = "Smash"
 		self:Bar(156096, 26, CL.count:format(self:SpellName(156096), 1)) -- Marked for Death
 		if self:Healer() or self:Damager() == "RANGED" then
@@ -236,7 +236,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		phase = 3
 
 		self:StopBar(156030) -- Throw Slag Bombs
-		self:StopBar(CL.count:format(L.siegemaker, siegemakerCount))
+		self:StopBar(CL.count:format(self:SpellName(L.siegemaker), siegemakerCount))
 		self:StopBar(CL.count:format(self:SpellName(156096), markCount)) -- Marked for Death
 		self:StopBar(156107) -- Impaling Throw
 		if self:Healer() or self:Damager() == "RANGED" then
@@ -310,9 +310,9 @@ end
 -- Stage 2
 
 function mod:Siegemaker(args)
-	self:Message("siegemaker", "Attention", nil, CL.count(L.siegemaker, siegemakerCount), L.siegemaker_icon)
+	self:Message("siegemaker", "Attention", nil, CL.count:format(self:SpellName(L.siegemaker), siegemakerCount), L.siegemaker_icon)
 	siegemakerCount = siegemakerCount + 1
-	self:Bar("siegemaker", 50, CL.count(L.siegemaker, siegemakerCount), L.siegemaker_icon)
+	self:Bar("siegemaker", 50, CL.count:format(self:SpellName(L.siegemaker), siegemakerCount), L.siegemaker_icon)
 end
 
 function mod:BlackironPlatingRemoved(args)
