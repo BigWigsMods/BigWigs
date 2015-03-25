@@ -211,9 +211,13 @@ local trainDataMythic = {
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.custom_off_firemender_marker = "Grom'kar Firemender marker"
-	L.custom_off_firemender_marker_desc = "Marks Firemenders with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, quickly mousing over the mobs is the fastest way to mark them.|r"
-	L.custom_off_firemender_marker_icon = 1
+	L.custom_on_firemender_marker = "Grom'kar Firemender marker"
+	L.custom_on_firemender_marker_desc = "Marks Grom'kar Firemender with {rt7}, requires promoted or leader."
+	L.custom_on_firemender_marker_icon = 7
+
+	L.custom_on_manatarms_marker = "Grom'kar Man-at-Arms marker"
+	L.custom_on_manatarms_marker_desc = "Marks Man-at-Arms with {rt8}, requires promoted or leader."
+	L.custom_on_manatarms_marker_icon = 8
 
 	L.trains = "Train warnings"
 	L.trains_desc = "Shows timers and messages for each lane for when the next train is coming. Lanes are numbered from the boss to the entrace, ie, Boss 1 2 3 4 Entrance."
@@ -245,10 +249,11 @@ local icons = { -- pull these out of the locale table
 function mod:GetOptions()
 	return {
 		--[[ Reinforcements ]]--
+		"custom_on_manatarms_marker",
+		"custom_on_firemender_marker",
 		163753, -- Iron Bellow
 		160140, -- Cauterizing Bolt
 		{159481, "FLASH", "SAY"}, -- Delayed Siege Bomb (Bombs)
-		--"custom_off_firemender_marker",
 		--[[ General ]]--
 		{155921, "TANK"}, -- Enkindle
 		{155864, "FLASH"}, -- Prototype Pulse Grenade (Grenade)
@@ -300,11 +305,24 @@ function mod:OnEngage()
 		end
 		self:DelayedMessage("trains", 356, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15), false, "Long")
 	end
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	for i = 1, 5 do
+		local unit = ("boss%d"):format(i)
+		local id = self:MobId(UnitGUID(unit))
+		if id == 80791 and self:GetOption("custom_on_manatarms_marker") then -- Grom'kar Man-at-Arms
+			SetRaidTarget(unit, 8)
+		elseif id == 77487 and self:GetOption("custom_on_firemender_marker") then -- Grom'kar Firemender
+			SetRaidTarget(unit, 7)
+		end
+	end
+end
 
 local function checkLane(warnLane)
 	if not UnitAffectingCombat("player") then return end
