@@ -513,13 +513,13 @@ do
 		if IsAddOnEnabled(i) and not IsAddOnLoadOnDemand(i) then
 			for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
 				local meta = select(j, GetAddOnOptionalDependencies(i))
-				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
+				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins" or meta == "BigWigs_Options") then
 					delayedMessages[#delayedMessages+1] = "The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!"
 				end
 			end
 			for j = 1, select("#", GetAddOnDependencies(i)) do
 				local meta = select(j, GetAddOnDependencies(i))
-				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
+				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins" or meta == "BigWigs_Options") then
 					delayedMessages[#delayedMessages+1] = "The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!"
 				end
 			end
