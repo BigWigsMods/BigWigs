@@ -124,6 +124,10 @@ function mod:OnEngage(diff)
 	self:Bar(154960, 11) -- Pinned Down
 	self:Berserk(720)
 
+	if self:Healer() or self:Damager() == "RANGED" then
+		self:OpenProximity("proximity", 8)
+	end
+
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2")
 	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", nil, "boss1")
 end
@@ -152,12 +156,6 @@ function mod:Deaths(args)
 
 		self:CDBar(155321, 21) -- Unstoppable
 	end
-
-	-- 155458 = Cunning of the Wolf (check for if he'll use Rend and Tear)
-	self:CloseProximity()
-	if UnitBuff("boss1", self:SpellName(155458)) and (self:Healer() or self:Damager() == "RANGED") then
-		self:OpenProximity("proximity", 8)
-	end
 end
 
 function mod:UNIT_TARGETABLE_CHANGED(unit)
@@ -172,9 +170,6 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 		if mobId == 76884 then -- Cruelfang
 			self:CDBar(155061, 13) -- Rend and Tear
 			self:CDBar(155198, 17) -- Savage Howl
-			if self:Healer() or self:Damager() == "RANGED" then
-				self:OpenProximity("proximity", 8)
-			end
 		elseif mobId == 76874 then -- Dreadwing
 			self:CDBar(154989, 5) -- Inferno Breath
 			self:CDBar(154981, 12) -- Conflag

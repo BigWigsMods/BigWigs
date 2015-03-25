@@ -44,7 +44,7 @@ local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 
 local inConfigMode = nil
-local activeRange, activeRangeSquared = 0, 0
+local activeRange, activeRangeRadius, activeRangeSquared, activeRangeSquaredTwoFive = 0, 0, 0, 0
 local activeSpellID = nil
 local proximityPlayer = nil
 local proximityPlayerTable = {}
@@ -63,8 +63,8 @@ local UnitPosition, GetPlayerFacing = UnitPosition, GetPlayerFacing
 local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetNumGroupMembers, GetTime
 local IsInRaid, InCombatLockdown = IsInRaid, InCombatLockdown
 local UnitIsDead, UnitIsUnit, UnitGUID, UnitClass = UnitIsDead, UnitIsUnit, UnitGUID, UnitClass
-local min, pi, cos, sin = math.min, math.pi, math.cos, math.sin
-local format = string.format
+local min, cos, sin, format = math.min, math.cos, math.sin, string.format
+local piDoubled = 6.2831853071796
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
@@ -100,11 +100,11 @@ local function onResize(self, width, height)
 	if inConfigMode then
 		testDots()
 	else
-		local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
 		local range = activeRange > 0 and activeRange or 10
 		local pixperyard = min(width, height) / (range*3)
-		proxCircle:SetSize(range*2*pixperyard, range*2*pixperyard)
-		proxAnchor.rangePulse:SetSize(range*2*pixperyard, range*2*pixperyard)
+		local size = range*2*pixperyard
+		proxCircle:SetSize(size, size)
+		proxAnchor.rangePulse:SetSize(size, size)
 	end
 end
 
@@ -187,18 +187,11 @@ do
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
 
 	-- dx and dy are in yards
-	-- class is player class
 	-- facing is radians with 0 being north, counting up clockwise
-	local setDot = function(dx, dy, blip)
-		local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
-		local range = activeRange > 0 and activeRange or 10
-		-- range * 3, so we have 3x radius space
-		local pixperyard = min(width, height) / (range * 3)
-
+	local setDot = function(dx, dy, blip, width, height, playerSine, playerCosine, pixperyard)
 		-- rotate relative to player facing
-		local rotangle = (2 * pi) - GetPlayerFacing()
-		local x = (-1 * dx * cos(rotangle)) - (dy * sin(rotangle))
-		local y = (-1 * dx * sin(rotangle)) + (dy * cos(rotangle))
+		local x = (-1 * dx * playerCosine) - (dy * playerSine)
+		local y = (-1 * dx * playerSine) + (dy * playerCosine)
 
 		x = x * pixperyard
 		y = y * pixperyard
@@ -223,16 +216,23 @@ do
 	end
 
 	testDots = function()
-		setDot(10, 10, blipList["raid1"])
-		setDot(5, 0, blipList["raid2"])
-		setDot(3, 10, blipList["raid3"])
-		setDot(-9, -7, blipList["raid4"])
-		setDot(0, 10, blipList["raid5"])
-		local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
-		local pixperyard = min(width, height) / 30
-		proxAnchor.rangePulse:SetSize(pixperyard * 20, pixperyard * 20)
-		proxCircle:SetSize(pixperyard * 20, pixperyard * 20)
+		local rotangle = piDoubled - GetPlayerFacing()
+		local sine = sin(rotangle)
+		local cosine = cos(rotangle)
+
+		local width, height = db.width, db.height
+		local pixperyard = min(width, height) / 30 -- divide by range * 3, using 10 for testing, 10*3=30
+		local size = pixperyard * 20
+		proxAnchor.rangePulse:SetSize(size, size)
+		proxCircle:SetSize(size, size)
 		proxCircle:SetVertexColor(1,0,0)
+
+		setDot(10, 10, blipList["raid1"], width, height, sine, cosine, pixperyard)
+		setDot(5, 0, blipList["raid2"], width, height, sine, cosine, pixperyard)
+		setDot(3, 10, blipList["raid3"], width, height, sine, cosine, pixperyard)
+		setDot(-9, -7, blipList["raid4"], width, height, sine, cosine, pixperyard)
+		setDot(0, 10, blipList["raid5"], width, height, sine, cosine, pixperyard)
+
 		proxCircle:Show()
 		proxAnchor.playerDot:Show()
 	end
@@ -245,6 +245,11 @@ do
 		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
 		local anyoneClose = 0
+		local width, height = db.width, db.height
+		local pixperyard = min(width, height) / activeRangeRadius
+		local rotangle = piDoubled - GetPlayerFacing()
+		local sine = sin(rotangle)
+		local cosine = cos(rotangle)
 
 		local srcY, srcX, _, mapId = UnitPosition("player")
 		for i = 1, maxPlayers do
@@ -253,9 +258,9 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			if mapId == tarMapId and range < activeRangeSquared*2.5 then
+			if mapId == tarMapId and range < activeRangeSquaredTwoFive then
 				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
-					setDot(dx, dy, blipList[n])
+					setDot(dx, dy, blipList[n], width, height, sine, cosine, pixperyard)
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
 					end
@@ -291,13 +296,19 @@ do
 	function targetProximity()
 		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
+		local width, height = db.width, db.height
+		local pixperyard = min(width, height) / activeRangeRadius
+		local rotangle = piDoubled - GetPlayerFacing()
+		local sine = sin(rotangle)
+		local cosine = cos(rotangle)
+
 		local srcY, srcX = UnitPosition("player")
 		local unitY, unitX = UnitPosition(proximityPlayer)
 
 		local dx = unitX - srcX
 		local dy = unitY - srcY
 		local range = dx * dx + dy * dy
-		setDot(dx, dy, blipList[proximityPlayer])
+		setDot(dx, dy, blipList[proximityPlayer], width, height, sine, cosine, pixperyard)
 		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(1, 0, 0)
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
@@ -327,6 +338,11 @@ do
 		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
 		local anyoneClose = 0
+		local width, height = db.width, db.height
+		local pixperyard = min(width, height) / activeRangeRadius
+		local rotangle = piDoubled - GetPlayerFacing()
+		local sine = sin(rotangle)
+		local cosine = cos(rotangle)
 
 		local srcY, srcX = UnitPosition("player")
 		for i = 1, #proximityPlayerTable do
@@ -335,7 +351,7 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			setDot(dx, dy, blipList[player])
+			setDot(dx, dy, blipList[player], width, height, sine, cosine, pixperyard)
 			if range <= activeRangeSquared then
 				anyoneClose = anyoneClose + 1
 			end
@@ -370,6 +386,11 @@ do
 		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
 		local anyoneClose = 0
+		local width, height = db.width, db.height
+		local pixperyard = min(width, height) / activeRangeRadius
+		local rotangle = piDoubled - GetPlayerFacing()
+		local sine = sin(rotangle)
+		local cosine = cos(rotangle)
 
 		local srcY, srcX, _, mapId = UnitPosition("player")
 		for i = 1, maxPlayers do
@@ -378,9 +399,9 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			if mapId == tarMapId and range < activeRangeSquared*2.5 then
+			if mapId == tarMapId and range < activeRangeSquaredTwoFive then
 				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
-					setDot(dx, dy, blipList[n])
+					setDot(dx, dy, blipList[n], width, height, sine, cosine, pixperyard)
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
 					end
@@ -416,12 +437,18 @@ do
 	function reverseTargetProximity()
 		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
+		local width, height = db.width, db.height
+		local pixperyard = min(width, height) / activeRangeRadius
+		local rotangle = piDoubled - GetPlayerFacing()
+		local sine = sin(rotangle)
+		local cosine = cos(rotangle)
+
 		local srcY, srcX = UnitPosition("player")
 		local unitY, unitX = UnitPosition(proximityPlayer)
 		local dx = unitX - srcX
 		local dy = unitY - srcY
 		local range = dx * dx + dy * dy
-		setDot(dx, dy, blipList[proximityPlayer])
+		setDot(dx, dy, blipList[proximityPlayer], width, height, sine, cosine, pixperyard)
 		if range <= activeRangeSquared then
 			proxCircle:SetVertexColor(0, 1, 0)
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
@@ -451,6 +478,11 @@ do
 		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
 		local anyoneClose = 0
+		local width, height = db.width, db.height
+		local pixperyard = min(width, height) / activeRangeRadius
+		local rotangle = piDoubled - GetPlayerFacing()
+		local sine = sin(rotangle)
+		local cosine = cos(rotangle)
 
 		local srcY, srcX = UnitPosition("player")
 		for i = 1, #proximityPlayerTable do
@@ -459,7 +491,7 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			setDot(dx, dy, blipList[player])
+			setDot(dx, dy, blipList[player], width, height, sine, cosine, pixperyard)
 			if range <= activeRangeSquared then
 				anyoneClose = anyoneClose + 1
 			end
@@ -549,12 +581,12 @@ end
 local function resetAnchor()
 	proxAnchor:ClearAllPoints()
 	proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
-	proxAnchor:SetWidth(plugin.defaultDB.width)
-	proxAnchor:SetHeight(plugin.defaultDB.height)
+	db.width = plugin.defaultDB.width
+	db.height = plugin.defaultDB.height
+	proxAnchor:SetWidth(db.width)
+	proxAnchor:SetHeight(db.height)
 	db.posx = nil
 	db.posy = nil
-	db.width = nil
-	db.height = nil
 end
 
 -------------------------------------------------------------------------------
@@ -570,8 +602,8 @@ end
 do
 	local createAnchor = function()
 		proxAnchor = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
-		proxAnchor:SetWidth(db.width or plugin.defaultDB.width)
-		proxAnchor:SetHeight(db.height or plugin.defaultDB.height)
+		proxAnchor:SetWidth(db.width)
+		proxAnchor:SetHeight(db.height)
 		proxAnchor:SetMinResize(100, 30)
 		proxAnchor:SetClampedToScreen(true)
 		proxAnchor:EnableMouse(true)
@@ -582,7 +614,7 @@ do
 		end)
 
 		local tooltipFrame = CreateFrame("Frame", nil, proxAnchor)
-		tooltipFrame:SetWidth(db.width or plugin.defaultDB.width)
+		tooltipFrame:SetWidth(db.width)
 		tooltipFrame:SetHeight(40)
 		tooltipFrame:SetPoint("BOTTOM", proxAnchor, "TOP")
 		tooltipFrame:SetScript("OnEnter", function(self)
@@ -1031,7 +1063,7 @@ function plugin:Close(noReopen)
 		end
 	end
 
-	activeRange, activeRangeSquared = 0, 0
+	activeRange, activeRangeRadius, activeRangeSquared, activeRangeSquaredTwoFive = 0, 0, 0, 0
 	activeSpellID = nil
 	proximityPlayer = nil
 	wipe(proximityPlayerTable)
@@ -1070,7 +1102,9 @@ do
 
 		myGUID = UnitGUID("player")
 		activeRange = range
+		activeRangeRadius = range * 3 -- activeRange * 3, so we have 3x radius space
 		activeRangeSquared = range*range
+		activeRangeSquaredTwoFive = activeRangeSquared * 2.5
 
 		proxAnchor:RegisterEvent("GROUP_ROSTER_UPDATE")
 		proxAnchor:RegisterEvent("RAID_TARGET_UPDATE")
@@ -1112,10 +1146,10 @@ do
 			return
 		end
 
-		local width, height = proxAnchor:GetWidth(), proxAnchor:GetHeight()
-		local ppy = min(width, height) / (range * 3)
-		proxCircle:SetSize(ppy * range * 2, ppy * range * 2)
-		proxAnchor.rangePulse:SetSize(ppy * range * 2, ppy * range * 2)
+		local ppy = min(db.width, db.height) / (range * 3)
+		local size = ppy * range * 2
+		proxCircle:SetSize(size, size)
+		proxAnchor.rangePulse:SetSize(size, size)
 
 		if spellName and key > 0 then -- GameTooltip doesn't do "journal" hyperlinks
 			activeSpellID = key
@@ -1129,11 +1163,11 @@ do
 	end
 
 	function plugin:Open(range, module, key, player, isReverse, spellName, spellIcon)
-		if type(range) ~= "number" then print("Range needs to be a number!") return end
+		if type(range) ~= "number" then BigWigs:Print("Proximity range needs to be a number!") return end
 		if not IsInGroup() then return end -- Solo runs of old content
 
 		local y, x = UnitPosition("player")
-		if x == 0 and y == 0 then print("No map data!") return end
+		if x == 0 and y == 0 then BigWigs:Print("No player position available for proximity!") return end
 
 		functionToFire = nil -- Kill previous updater
 		self:CancelTimer(updateTimer)
@@ -1165,7 +1199,6 @@ SlashCmdList.BigWigs_Proximity = function(input)
 			plugin:Close(true)
 			customProximityOpen = range
 			plugin:Open(range)
-			BigWigs:Print("NOTICE: Custom Proximity will now automatically reopen itself after a boss ability has finished using it.") -- XXX temp
 		else
 			customProximityOpen = nil
 			plugin:Close(true)
