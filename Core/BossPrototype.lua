@@ -961,11 +961,14 @@ function boss:DelayedMessage(key, delay, color, text, icon, sound)
 end
 
 function boss:Message(key, color, sound, text, icon)
-	if not icon and icon ~= false and type(key) == "string" then -- XXX temp
-		BigWigs:Print(("Message '%s' doesn't have an icon set."):format(type(text) == "string" and text or spells[text or key]))
-	end
 	if checkFlag(self, key, C.MESSAGE) then
 		local textType = type(text)
+
+		local temp = (icon ~= false and icon) or (textType == "number" and text) or key
+		if temp == key and type(key) == "string" then
+			BigWigs:Print(("Message '%s' doesn't have an icon set."):format(textType == "string" and text or spells[text or key])) -- XXX temp
+		end
+
 		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, icon ~= false and icons[icon or textType == "number" and text or key])
 		if sound then
 			if hasVoice and checkFlag(self, key, C.VOICE) then
