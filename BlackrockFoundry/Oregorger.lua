@@ -58,7 +58,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "RetchedBlackrockDamage", 156203)
 	self:Log("SPELL_PERIODIC_MISSED", "RetchedBlackrockDamage", 156203)
 	self:Log("SPELL_CAST_SUCCESS", "ExplosiveShard", 156390)
-	self:Log("SPELL_AURA_APPLIED", "BlackrockSpines", 156834)
+	self:Log("SPELL_CAST_SUCCESS", "BlackrockSpines", 156834)
 	self:Log("SPELL_CAST_START", "BlackrockBarrage", 156877, 173459)
 	self:Log("SPELL_CAST_START", "StartBerserk", 159958) -- Earthshaking Stomp
 	-- Phase 2
