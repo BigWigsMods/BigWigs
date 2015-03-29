@@ -961,7 +961,7 @@ function boss:DelayedMessage(key, delay, color, text, icon, sound)
 end
 
 function boss:Message(key, color, sound, text, icon)
-	if not icon and icon ~= false then -- XXX temp
+	if not icon and icon ~= false and type(key) == "string" then -- XXX temp
 		BigWigs:Print(("Message '%s' doesn't have an icon set."):format(type(text) == "string" and text or spells[text or key]))
 	end
 	if checkFlag(self, key, C.MESSAGE) then
