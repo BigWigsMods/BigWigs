@@ -124,7 +124,7 @@ function mod:OnEngage(diff)
 	self:Bar(154960, 11) -- Pinned Down
 	self:Berserk(720)
 
-	if self:Healer() or self:Damager() == "RANGED" then
+	if not self:LFR() and (self:Healer() or self:Damager() == "RANGED") then
 		self:OpenProximity("proximity", 8)
 	end
 
