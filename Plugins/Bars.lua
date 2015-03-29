@@ -1600,6 +1600,8 @@ do
 			timer = nil
 			plugin:SendMessage("BigWigs_Message", plugin, nil, L.pulling, "Attention", "Interface\\Icons\\ability_warrior_charge")
 			plugin:SendMessage("BigWigs_Sound", plugin, nil, "Alarm")
+		elseif timeLeft > 2 and IsEncounterInProgress() then -- Cancel the pull timer if we ninja pulled
+			startPull(0, COMBAT)
 		elseif timeLeft < 11 then
 			plugin:SendMessage("BigWigs_Message", plugin, nil, L.pullIn:format(timeLeft), "Attention")
 			local module = BigWigs:GetPlugin("Sounds", true)
@@ -1609,7 +1611,7 @@ do
 		end
 	end
 	function startPull(seconds, nick, isDBM)
-		if (not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player")) or IsEncounterInProgress() then return end
+		if (not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player")) or (IsEncounterInProgress() and nick ~= COMBAT) then return end
 		seconds = tonumber(seconds)
 		if not seconds or seconds < 0 or seconds > 60 then return end
 		seconds = floor(seconds)
