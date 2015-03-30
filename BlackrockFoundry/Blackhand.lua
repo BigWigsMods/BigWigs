@@ -16,6 +16,7 @@ local phase = 1
 local smashCount, markCount, siegemakerCount = 1, 1, 1
 local massiveSmashProximity = nil
 local oldIcon, tankName = nil, nil -- Massive Shattering Smash marker
+local slagBombTimer = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -54,7 +55,7 @@ function mod:GetOptions()
 		{158054, "PROXIMITY"}, -- Massive Shattering Smash
 		"custom_off_massivesmash_marker",
 		156928, -- Slag Eruption
-		{157000, "FLASH", "SAY"}, -- Attach Slag Bombs
+		{157000, "FLASH", "SAY", "PROXIMITY"}, -- Attach Slag Bombs
 		--[[ General ]]--
 		155992, -- Shattering Smash
 		{156096, "FLASH", "SAY"}, -- Marked for Death
@@ -91,6 +92,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SlagEruption", 156928)
 	self:Log("SPELL_CAST_START", "MassiveShatteringSmash", 158054)
 	self:Log("SPELL_AURA_APPLIED", "AttachSlagBombs", 157000, 159179)
+	self:Log("SPELL_AURA_REMOVED", "AttachSlagBombsOver", 157000, 159179)
 	self:Log("SPELL_ENERGIZE", "SmashReschedule", 104915)
 	-- Mythic
 	self:Log("SPELL_CAST_START", "MassiveExplosion", 163008)
@@ -101,6 +103,7 @@ function mod:OnEngage()
 	phase = 1
 	smashCount = 1
 	massiveSmashProximity = nil
+	slagBombTimer = nil
 	self:Bar(156030, 6) -- Throw Slag Bombs
 	self:Bar(156425, 15.5) -- Demolition
 	self:Bar(156096, 36) -- Marked for Death
@@ -355,10 +358,21 @@ do
 			self:TargetBar(157000, 5, args.destName, bomb)
 			self:Flash(157000)
 			self:Say(157000, bomb)
+			self:OpenProximity(157000, 10)
 		end
-		if #list == 1 then
+		local count = #list
+		if count == 1 then
+			self:PlaySound(157000, "Alert") -- Play sound ASAP
 			self:Bar(157000, 25)
-			self:ScheduleTimer("TargetMessage", 1, 157000, list, "Urgent", "Alert", nil, nil, true)
+			slagBombTimer = self:ScheduleTimer("TargetMessage", 1.8, 157000, list, "Urgent")
+		elseif count == 3 then
+			self:CancelTimer(slagBombTimer)
+			self:TargetMessage(157000, list, "Urgent")
+		end
+	end
+	function mod:AttachSlagBombsOver(args)
+		if self:Me(args.destGUID) then
+			self:CloseProximity(157000)
 		end
 	end
 end
