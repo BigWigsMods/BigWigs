@@ -964,7 +964,7 @@ function boss:Message(key, color, sound, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
 		local textType = type(text)
 
-		local temp = (icon ~= false and icon) or (textType == "number" and text) or key
+		local temp = (icon == false and 0) or (icon ~= false and icon) or (textType == "number" and text) or key
 		if temp == key and type(key) == "string" then
 			BigWigs:Print(("Message '%s' doesn't have an icon set."):format(textType == "string" and text or spells[text or key])) -- XXX temp
 		end
