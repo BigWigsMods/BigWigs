@@ -193,7 +193,7 @@ do
 			self:Say(args.spellId)
 			if not self:LFR() then
 				timeLeft = 6
-				self:Bar("molten_torrent_self", timeLeft, 140996, args.spellId) -- 140996 = Explosion
+				self:Bar("molten_torrent_self", timeLeft, L.molten_torrent_self_bar, args.spellId)
 				if timer then self:CancelTimer(timer) end
 				timer = self:ScheduleRepeatingTimer(countdown, 1, self)
 			end
