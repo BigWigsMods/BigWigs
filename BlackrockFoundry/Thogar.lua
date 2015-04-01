@@ -259,7 +259,7 @@ function mod:GetOptions()
 		{155864, "FLASH"}, -- Prototype Pulse Grenade (Grenade)
 		{"trains", "FLASH"},
 	}, {
-		[163753] = -9537, -- Reinforcements
+		["custom_on_manatarms_marker"] = -9537, -- Reinforcements
 		[155921] = "general",
 	}
 end

@@ -18,6 +18,7 @@ local moltenTorrentOnMe = nil
 local blazingTargets = {}
 local firestormCount = 1
 local fixateOnMe = nil
+local wolvesMarker, wolvesMarked = 3, {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -29,6 +30,10 @@ if L then
 	L.molten_torrent_self_desc = "Special countdown when Molten Torrent is on you."
 	L.molten_torrent_self_icon = "spell_burningbladeshaman_molten_torrent"
 	L.molten_torrent_self_bar = "You explode!"
+
+	L.custom_off_wolves_marker = "Cinder Wolves marker"
+	L.custom_off_wolves_marker_desc = "Mark Cinder Wolves with {rt3}{rt4}{rt5}{rt6}, requires promoted or leader."
+	L.custom_off_wolves_marker_icon = 3
 end
 L = mod:GetLocale()
 
@@ -45,12 +50,13 @@ function mod:GetOptions()
 		155318, -- Lava Slash
 		-9352, -- Summon Enchanted Armaments
 		{154932, "ICON", "FLASH", "SAY", "PROXIMITY"}, -- Molten Torrent
-		{"molten_torrent_self", "SAY"},
+		{"molten_torrent_self", "SAY", "COUNTDOWN"},
 		155776, -- Summon Cinder Wolves
 		{155277, "ICON", "SAY", "FLASH", "PROXIMITY"}, -- Blazing Radiance
 		155493, -- Firestorm
 		{163284, "TANK"}, -- Rising Flames
 		--[[ Cinder Wolf ]]--
+		"custom_off_wolves_marker",
 		{154952, "FLASH"}, -- Fixate
 		{154950, "TANK"}, -- Overheated
 		{155074, "TANK_HEALER"}, -- Charring Breath
@@ -59,7 +65,7 @@ function mod:GetOptions()
 	}, {
 		[156018] = -9354, -- Aknor Steelbringer
 		[155318] = -9350, -- Ka'graz
-		[154952] = -9345, -- Cinder Wolf
+		["custom_off_wolves_marker"] = -9345, -- Cinder Wolf
 		["berserk"] = "general"
 	}
 end
@@ -96,6 +102,8 @@ end
 function mod:OnEngage()
 	wolvesActive = nil
 	moltenTorrentOnMe, fixateOnMe = nil, nil
+	wolvesMarker = 3
+	wipe(wolvesMarked)
 	wipe(blazingTargets)
 	firestormCount = 1
 	--self:Bar(155318, 11) -- Lava Slash
@@ -109,14 +117,22 @@ end
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	self:CheckForEncounterEngage()
-	-- XXX wolves don't have UNIT_DIED or other events to indicate they were killed afaik
-	if wolvesActive then
-		for i=1, 5 do
-			local unit = ("boss%d"):format(i)
-			if self:MobId(UnitGUID(unit)) == 76794 then
-				return
+	local hasWolf = false
+	for i=1, 5 do
+		local unit = ("boss%d"):format(i)
+		local guid = UnitGUID(unit)
+		if self:MobId(guid) == 76794 then
+			hasWolf = true
+			if self:GetOption("custom_off_wolves_marker") and not wolvesMarked[guid] then
+				wolvesMarked[guid] = true
+				SetRaidTarget(unit, wolvesMarker)
+				wolvesMarker = wolvesMarker + 1
 			end
 		end
+	end
+
+	-- XXX wolves don't have UNIT_DIED or other events to indicate they were killed afaik
+	if wolvesActive and not hasWolf then
 		-- still here so no wolves up!
 		wolvesActive = nil
 		self:StopBar(154952) -- Fixate
@@ -157,10 +173,12 @@ do
 end
 
 do
-	local timeLeft, timer, timeLeft = 5, nil
+	local timeLeft, timer, timeLeft = 6, nil
 	local function countdown(self)
 		timeLeft = timeLeft - 1
-		self:Say("molten_torrent_self", timeLeft, true)
+		if timeLeft < 5 then
+			self:Say("molten_torrent_self", timeLeft, true)
+		end
 		if timeLeft < 2 then
 			self:CancelTimer(timer)
 			timer = nil
@@ -174,7 +192,8 @@ do
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 			if not self:LFR() then
-				timeLeft = 5
+				timeLeft = 6
+				self:Bar("molten_torrent_self", timeLeft, 140996, args.spellId) -- 140996 = Explosion
 				if timer then self:CancelTimer(timer) end
 				timer = self:ScheduleRepeatingTimer(countdown, 1, self)
 			end
@@ -195,8 +214,13 @@ do
 end
 
 function mod:CinderWolves(args)
-	self:Message(args.spellId, "Important", "Alarm")
 	wolvesActive = true
+	if self:GetOption("custom_off_wolves_marker") then
+		wolvesMarker = 3
+		wipe(wolvesMarked)
+	end
+
+	self:Message(args.spellId, "Important", "Alarm")
 
 	--self:Bar(155277, 32) -- Blazing Radiance
 	self:Bar(155493, 62, CL.count:format(self:SpellName(155493), firestormCount)) -- Firestorm
