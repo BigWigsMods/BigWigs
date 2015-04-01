@@ -139,16 +139,12 @@ end
 
 --[[ Slagshop Brute ]]--
 
-do
-	local function printTarget(self, player, guid)
-		if self:Me(guid) then -- Only if it's targetting you
-			self:Message(175993, "Important", "Warning")
-			self:Bar(175993, 8)
-			self:Flash(175993)
-		end
-	end
-	function mod:LumberingStrength(args)
-		self:GetUnitTarget(printTarget, 0, args.destGUID)
+function mod:LumberingStrength(args)
+	local unit = self:GetUnitIdByGUID(args.destGUID)
+	if unit and UnitDetailedThreatSituation("player", unit) then -- Can't use target scan as the mob clears its target during cast
+		self:Message(175993, "Important", "Warning")
+		self:Bar(175993, 8)
+		self:Flash(175993)
 	end
 end
 
