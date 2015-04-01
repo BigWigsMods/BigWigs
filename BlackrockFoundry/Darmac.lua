@@ -341,9 +341,7 @@ function mod:Stampede(args)
 end
 
 function mod:CrushArmor(args)
-	if args.amount % 2 == 0 then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 2 and "Warning")
-	end
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 2 and "Warning")
 end
 
 function mod:Epicenter(args)
