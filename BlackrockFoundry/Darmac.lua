@@ -47,11 +47,12 @@ function mod:GetOptions()
 		155198, -- Savage Howl
 		--[[ Dreadwing ]]--
 		{155030, "TANK"}, -- Seared Flesh
-		{154989, "FLASH"}, -- Inferno Breath
+		{154989, "FLASH", "SAY"}, -- Inferno Breath
 		{156824, "FLASH"}, -- Inferno Pyre
 		{154981, "HEALER"}, -- Conflagration
 		"custom_off_conflag_marker",
-		155499, -- Shrapnel
+		{155499, "FLASH", "SAY"}, -- Superheated Shrapnel
+		{156823, "FLASH"}, -- Superheated Scrap
 		{155657, "FLASH"}, -- Flame Infusion
 		--[[ Ironcrusher ]]--
 		{155236, "TANK"}, -- Crush Armor
@@ -64,7 +65,6 @@ function mod:GetOptions()
 		{154960, "SAY"}, -- Pinned Down
 		"custom_off_pinned_marker",
 		154975, -- Call the Pack
-		{156823, "FLASH"}, -- Superheated Scrap
 		"stages",
 		"proximity",
 		"berserk",
@@ -90,8 +90,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RendAndTear", 155061, 162283)
 	self:Log("SPELL_CAST_START", "SavageHowl", 155198)
 	-- Dreadwing
-	self:Log("SPELL_DAMAGE", "InfernoBreathDamage", 154989)
-	self:Log("SPELL_MISSED", "InfernoBreathDamage", 154989)
 	self:Log("SPELL_CAST_SUCCESS", "Conflagration", 155399)
 	self:Log("SPELL_AURA_APPLIED", "ConflagrationApplied", 154981)
 	self:Log("SPELL_AURA_REMOVED", "ConflagrationRemoved", 154981)
@@ -107,8 +105,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Unstoppable", 155321)
 
 	-- Stage 3
-	self:Log("SPELL_DAMAGE", "ShrapnelDamage", 155499)
-	self:Log("SPELL_MISSED", "ShrapnelDamage", 155499)
 	self:Log("SPELL_PERIODIC_DAMAGE", "BadStuffUnderYou", 155657, 156823, 156824) -- Flame Infusion, Superheated Scrap, Inferno Pyre
 	self:Log("SPELL_PERIODIC_MISSED", "BadStuffUnderYou", 155657, 156823, 156824)
 
@@ -190,7 +186,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	if self:MobId(UnitGUID(unit)) == 76865 then
 		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 		-- Warnings for 85%, 65%, 45%, and 25% for mythic
-		if (phase == 1 and hp < 90) or (phase == 2 and hp < 70) or (phase == 3 and hp < 50) or (phase == 4 and hp < 30) then
+		if (phase == 1 and hp < 90) or (phase == 2 and hp < 71) or (phase == 3 and hp < 50) or (phase == 4 and hp < 30) then
 			phase = phase + 1
 			if phase > (self:Mythic() and 4 or 3) then
 				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2")
@@ -200,23 +196,42 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 155221 then -- Tantrum, from Iron Crusher
-		self:StopBar(CL.count:format(spellName, tantrumCount))
-		self:Message(155222, "Attention", nil, CL.count:format(spellName, tantrumCount))
-		tantrumCount = tantrumCount + 1
-		self:CDBar(155222, 23, CL.count:format(spellName, tantrumCount))
-	elseif spellId == 155520 then -- Tantrum, from Darmac
-		self:StopBar(CL.count:format(spellName, tantrumCount))
-		self:Message(155222, "Attention", nil, CL.count:format(spellName, tantrumCount))
-		tantrumCount = tantrumCount + 1
-		self:CDBar(155222, 23, CL.count:format(spellName, tantrumCount))
-	elseif spellId == 155423 then -- Face Random Non-Tank (Inferno Breath)
-		self:Message(154989, "Urgent", "Alert")
-		self:CDBar(154989, 20)
-	elseif spellId == 155603 then -- Face Random Non-Tank (Superheated Shrapnel)
-		self:Message(155499, "Urgent", "Alert")
-		self:CDBar(155499, 25)
+do
+	local function printBossBreathTarget(self, name, guid)
+		if self:Me(guid) then
+			self:Say(155499, 18584) -- 18584 = Breath
+			self:Flash(155499)
+		end
+	end
+	local function printMountBreathTarget(self, name, guid)
+		if self:Me(guid) then
+			self:Say(154989, 18584) -- 18584 = Breath
+			self:Flash(154989)
+		end
+	end
+
+	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+		if spellId == 155221 then -- Tantrum, from Iron Crusher
+			self:StopBar(CL.count:format(spellName, tantrumCount))
+			self:Message(155222, "Attention", nil, CL.count:format(spellName, tantrumCount))
+			tantrumCount = tantrumCount + 1
+			self:CDBar(155222, 23, CL.count:format(spellName, tantrumCount))
+		elseif spellId == 155520 then -- Tantrum, from Darmac
+			self:StopBar(CL.count:format(spellName, tantrumCount))
+			self:Message(155222, "Attention", nil, CL.count:format(spellName, tantrumCount))
+			tantrumCount = tantrumCount + 1
+			self:CDBar(155222, 23, CL.count:format(spellName, tantrumCount))
+		elseif spellId == 155423 then -- Face Random Non-Tank (Inferno Breath by Dreadwing)
+			local guid = UnitGUID(unit) or -1
+			self:GetBossTarget(printMountBreathTarget, 0.3, guid)
+			self:Message(154989, "Urgent", "Alert")
+			self:CDBar(154989, 20)
+		elseif spellId == 155603 then -- Face Random Non-Tank (Superheated Shrapnel by Darmac)
+			local guid = UnitGUID(unit) or -1
+			self:GetBossTarget(printBossBreathTarget, 0.3, guid)
+			self:Message(155499, "Urgent", "Alert")
+			self:CDBar(155499, 25)
+		end
 	end
 end
 
@@ -296,18 +311,6 @@ function mod:SavageHowl(args)
 end
 
 do
-	local prev = 0
-	function mod:InfernoBreathDamage(args)
-		local t = GetTime()
-		if t-prev > 3 and self:Me(args.destGUID) then
-			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
-			self:Flash(args.spellId)
-		end
-	end
-end
-
-do
 	function mod:Conflagration(args)
 		conflagMark = 1
 		self:Bar(154981, 20)
@@ -366,17 +369,6 @@ function mod:Unstoppable(args)
 end
 
 -- Stage 3
-
-do
-	local prev = 0
-	function mod:ShrapnelDamage(args)
-		local t = GetTime()
-		if t-prev > 3 and self:Me(args.destGUID) then
-			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
-		end
-	end
-end
 
 do
 	local prev = 0
