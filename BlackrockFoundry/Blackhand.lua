@@ -123,7 +123,7 @@ end
 --
 
 function mod:UNIT_TARGET(unit)
-	local newTarget = UnitName("boss1target")
+	local newTarget = self:UnitName("boss1target")
 	-- No target or target isn't a tank
 	if not newTarget or not self:Tank(newTarget) then return end
 
@@ -142,7 +142,7 @@ function mod:UNIT_TARGET(unit)
 				oldIcon = GetRaidTargetIndex(tankName)
 				SetRaidTarget(tankName, 6)
 			else
-				tankName = UnitName("boss1target")
+				tankName = self:UnitName("boss1target")
 			end
 		else -- same tank, we don't need to do anything
 			return
@@ -169,7 +169,7 @@ end
 
 local function openSmashProximity(self)
 	if not massiveSmashProximity then
-		tankName = UnitName("boss1target")
+		tankName = self:UnitName("boss1target")
 
 		if tankName then
 			if self.db.profile.custom_off_massivesmash_marker then
