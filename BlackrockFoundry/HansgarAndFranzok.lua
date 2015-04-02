@@ -63,6 +63,7 @@ function mod:OnEngage()
 	end
 
 	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", "Jumps", "boss1", "boss2")
+	self:ScheduleTimer("RegisterUnitEvent", 5, "UNIT_TARGET", "BodySlamTarget", "boss1", "boss2") -- 5s grace period
 end
 
 --------------------------------------------------------------------------------
@@ -124,26 +125,28 @@ do
 	end
 end
 
-do
-	local function printTarget(self, name, guid)
-		if self:Me(guid) then
-			self:Say(155747)
-			self:Flash(155747)
-		elseif self:Range(name) < 10 then
-			self:RangeMessage(155747)
-			self:Flash(155747)
-			return
-		end
-		self:TargetMessage(155747, name, "Attention", "Alarm")
+function mod:BodySlamTarget(unit)
+	local target = unit.."target"
+	local name = self:UnitName(target)
+	if not name or self:Tank(name) or UnitDetailedThreatSituation(unit, target) then return end
+
+	local guid = UnitGUID(target)
+	if self:Me(guid) then
+		self:Say(155747)
+		self:Flash(155747)
+	elseif self:Range(name) < 10 then
+		self:RangeMessage(155747)
+		self:Flash(155747)
+		return
 	end
-	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-		if spellId == 156220 then -- Tactical Retreat (Hans'gar jumped away)
-			self:JumpAway(unit)
-		elseif spellId == 156546 or spellId == 156542 then -- Crippling Suplex (tank picked up)
-			self:TargetMessage(156938, UnitName(unit.."target"), "Important", "Alarm", nil, nil, true)
-		elseif spellId == 157923 then -- Jump Slam. -- XXX This id is midair: Test 157922 which is earlier but might be unstable.
-			self:GetBossTarget(printTarget, 0.5, UnitGUID(unit))
-		end
+	self:TargetMessage(155747, name, "Attention", "Alarm")
+end
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 156220 then -- Tactical Retreat (Hans'gar jumped away)
+		self:JumpAway(unit)
+	elseif spellId == 156546 or spellId == 156542 then -- Crippling Suplex (tank picked up)
+		self:TargetMessage(156938, self:UnitName(unit.."target"), "Important", "Alarm", nil, nil, true)
 	end
 end
 
