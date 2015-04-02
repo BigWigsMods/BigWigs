@@ -191,9 +191,9 @@ do
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
+			timeLeft = 6
+			self:Bar("molten_torrent_self", timeLeft, L.molten_torrent_self_bar, args.spellId)
 			if not self:LFR() then
-				timeLeft = 6
-				self:Bar("molten_torrent_self", timeLeft, L.molten_torrent_self_bar, args.spellId)
 				if timer then self:CancelTimer(timer) end
 				timer = self:ScheduleRepeatingTimer(countdown, 1, self)
 			end
@@ -282,7 +282,7 @@ do
 	end
 	function mod:BlazingRadiance(args)
 		--self:Bar(args.spellId, 12)
-		if not self:Mythic() then
+		if not self:Mythic() then -- Multiple targets in Mythic
 			self:PrimaryIcon(args.spellId, args.destName)
 		end
 		if self:Me(args.destGUID) then
