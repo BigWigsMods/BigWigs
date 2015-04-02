@@ -173,7 +173,7 @@ function mod:DestructiveRampageOver(args)
 	self:CDBar(args.spellId, 113)
 	rampaging = nil
 	smashCount, slamCount, sliceCount = 1, 1, 1
-	self:Bar(155080, 17, CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
+	self:Bar(155080, self:Mythic() and 14 or 17, CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
 	self:CDBar(155326, 25) -- Petrifying Slam
 	self:CDBar(155301, 31) -- Overhead Smash
 end
