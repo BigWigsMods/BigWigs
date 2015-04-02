@@ -14,7 +14,8 @@ mod:RegisterEnableMob(
 	78978, -- Darkshard Gnasher
 	79208, -- Blackrock Enforcer
 	80708, -- Iron Taskmaster
-	76906, -- Operator Thogar, alternative for Blast Furnace Exhaust (87366)
+	78832, -- Grom'kar Man-at-Arms, alternative for Blast Furnace Exhaust (87366)
+	84860, -- Iron Earthbinder
 	87989 -- Forgemistress Flamehand
 )
 
@@ -32,6 +33,7 @@ if L then
 	L.enforcer = "Blackrock Enforcer"
 	L.taskmaster = "Iron Taskmaster"
 	L.furnace = "Blast Furnace Exhaust"
+	L.earthbinder = "Iron Earthbinder"
 	L.mistress = "Forgemistress Flamehand"
 
 	L.furnace_msg1 = "Hmm, kinda toasty isn't it?"
@@ -48,6 +50,7 @@ function mod:GetOptions()
 	return {
 		--[[ Workshop Guardian ]]--
 		{175643, "FLASH"}, -- Spinning Blade
+		{175624, "HEALER"}, -- Grievous Mortal Wounds
 		--[[ Ogron Hauler ]]--
 		{175765, "TANK"}, -- Overhead Smash
 		--[[ Thunderlord Beast-Tender ]]--
@@ -63,9 +66,11 @@ function mod:GetOptions()
 		177806, -- Furnace Flame (via furnace next to Taskmaster)
 		--[[ Blast Furnace Exhaust ]]--
 		{174773, "FLASH"}, -- Exhaust Fumes
+		--[[ Iron Earthbinder ]]--
+		{171613, "FLASH"}, -- Inferno Totem
 		--[[ Forgemistress Flamehand ]]--
-		{175583, "FLASH", "SAY", "PROXIMITY"},
-		{175594, "TANK"},
+		{175583, "FLASH", "SAY", "PROXIMITY"}, -- Living Blaze
+		{175594, "TANK"}, -- Burning
 	}, {
 		[175643] = L.guardian,
 		[175765] = L.hauler,
@@ -75,6 +80,7 @@ function mod:GetOptions()
 		[160260] = L.enforcer,
 		[163121] = L.taskmaster,
 		[174773] = L.furnace,
+		[171613] = L.earthbinder,
 		[175583] = L.mistress,
 	}
 end
@@ -87,6 +93,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "BadStuffUnderYou", 175643, 162663, 160260, 174773)
 	self:Log("SPELL_PERIODIC_MISSED", "BadStuffUnderYou", 175643, 162663, 160260, 174773)
 
+	self:Log("SPELL_AURA_APPLIED", "GrievousMortalWounds", 175624)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "GrievousMortalWounds", 175624)
+	self:Log("SPELL_AURA_REMOVED", "GrievousMortalWoundsRemoved", 175624)
+
 	self:Log("SPELL_AURA_APPLIED", "OverheadSmash", 175765)
 	self:Log("SPELL_AURA_REMOVED", "OverheadSmashRemoved", 175765)
 
@@ -97,6 +107,8 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "HeldToTask", 163121)
 	self:Log("SPELL_AURA_APPLIED", "FurnaceFlameFun", 177806)
+
+	self:Log("SPELL_CAST_SUCCESS", "InfernoTotem", 171613)
 
 	self:Log("SPELL_CAST_START", "LivingBlazeCast", 175583)
 	self:Log("SPELL_AURA_APPLIED", "LivingBlaze", 175583)
@@ -119,6 +131,29 @@ do
 			self:Flash(args.spellId)
 			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
+	end
+end
+
+--[[ Workshop Guardian ]]--
+
+do
+	local scheduledPrints = {}
+	function mod:GrievousMortalWounds(args)
+		-- The multiple NPCs can apply this simultaneously, so throttle it
+		if scheduledPrints[args.destGUID] then
+			self:CancelTimer(scheduledPrints[args.destGUID])
+		end
+
+		local wound = self:SpellName(16405) -- Wound
+		scheduledPrints[args.destGUID] = self:ScheduleTimer("StackMessage", 0.2, args.spellId, args.destName, args.amount, "Urgent", "Warning", wound, nil, true)
+		self:TargetBar(args.spellId, 60, args.destName, wound)
+	end
+
+	function mod:GrievousMortalWoundsRemoved(args)
+		scheduledPrints[args.destGUID] = nil
+		local wound = self:SpellName(16405) -- Wound
+		self:StopBar(wound, args.destName)
+		self:Message(args.spellId, "Positive", nil, CL.other:format(CL.removed:format(wound), self:ColorName(args.destName)))
 	end
 end
 
@@ -179,6 +214,13 @@ function mod:FurnaceFlameFun(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Positive", nil, L[("furnace_msg%d"):format(random(1,3))])
 	end
+end
+
+--[[ Iron Earthbinder ]]--
+
+function mod:InfernoTotem(args)
+	self:Message(args.spellId, "Urgent", "Warning")
+	self:Flash(args.spellId)
 end
 
 --[[ Forgemistress Flamehand ]]--
