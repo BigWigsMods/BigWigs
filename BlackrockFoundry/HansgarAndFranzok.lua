@@ -26,10 +26,10 @@ function mod:GetOptions()
 		--[[ General ]]--
 		160838, -- Disrupting Roar
 		{153470, "HEALER"}, -- Skullcracker
-		{156938, "TANK_HEALER"}, -- Crippling Suplex
+		{156938, "TANK_HEALER", "FLASH"}, -- Crippling Suplex
 		157139, -- Shattered Vertebrae
 		{155818, "FLASH"}, -- Scorching Burns
-		{155747, "FLASH", "SAY"}, -- Body Slam
+		{155747, "SAY"}, -- Body Slam
 		"stages",
 		--"berserk",
 	}, {
@@ -132,10 +132,8 @@ function mod:BodySlamTarget(unit)
 
 	if self:Me(guid) then
 		self:Say(155747)
-		self:Flash(155747)
 	elseif self:Range(target) < 10 then
 		self:RangeMessage(155747)
-		self:Flash(155747)
 		return
 	end
 	self:TargetMessage(155747, self:UnitName(target), "Attention", "Alarm")
@@ -151,6 +149,7 @@ end
 
 function mod:CripplingSuplex(args)
 	self:Message(args.spellId, self:Tank() and "Personal" or "Important", "Warning", CL.casting:format(args.spellName))
+	self:Flash(args.spellId)
 	self:Bar(args.spellId, 3)
 end
 
