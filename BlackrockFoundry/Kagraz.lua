@@ -14,8 +14,6 @@ mod.engageId = 1689
 --
 
 local wolvesActive = nil
-local moltenTorrentOnMe = nil
-local blazingTargets = {}
 local firestormCount = 1
 local fixateOnMe = nil
 local wolvesMarker, wolvesMarked = 3, {}
@@ -61,12 +59,13 @@ function mod:GetOptions()
 		{154950, "TANK"}, -- Overheated
 		{155074, "TANK_HEALER"}, -- Charring Breath
 		155064, -- Rekindle
+		"proximity",
 		"berserk",
 	}, {
 		[156018] = -9354, -- Aknor Steelbringer
 		[155318] = -9350, -- Ka'graz
 		["custom_off_wolves_marker"] = -9345, -- Cinder Wolf
-		["berserk"] = "general"
+		["proximity"] = "general"
 	}
 end
 
@@ -101,13 +100,15 @@ end
 
 function mod:OnEngage()
 	wolvesActive = nil
-	moltenTorrentOnMe, fixateOnMe = nil, nil
+	fixateOnMe = nil
 	wolvesMarker = 3
 	wipe(wolvesMarked)
-	wipe(blazingTargets)
 	firestormCount = 1
 	if self:Healer() or self:Damager() == "RANGED" then
 		self:Bar(155318, 11) -- Lava Slash
+		if not self:LFR() then
+			self:OpenProximity("proximity", 6)
+		end
 	end
 	self:Bar(154932, 31) -- Molten Torrent
 	self:Bar(155776, 60) -- Summon Cinder Wolves
@@ -204,16 +205,14 @@ do
 				timer = self:ScheduleRepeatingTimer(countdown, 1, self)
 			end
 			self:OpenProximity(args.spellId, 8, nil, true)
-			moltenTorrentOnMe = true
 		end
 	end
 	function mod:MoltenTorrentRemoved(args)
 		self:SecondaryIcon(args.spellId)
 		if self:Me(args.destGUID) then
-			moltenTorrentOnMe = nil
 			self:CloseProximity(args.spellId)
-			if #blazingTargets > 0 then
-				self:OpenProximity(155277, 10, blazingTargets)
+			if not self:LFR() and (self:Healer() or self:Damager() == "RANGED") then
+				self:OpenProximity("proximity", 6)
 			end
 		end
 	end
@@ -278,38 +277,35 @@ function mod:Rekindle(args)
 end
 
 do
-	local scheduled = nil
-	local function warnTargets(self, spellId)
-		self:TargetMessage(spellId, self:ColorName(blazingTargets), "Attention", "Alert")
-		if not moltenTorrentOnMe then
-			self:OpenProximity(spellId, 10, blazingTargets)
-		end
-		scheduled = nil
-	end
+	local blazingTargets = mod:NewTargetList()
 	function mod:BlazingRadiance(args)
 		--self:Bar(args.spellId, 12)
-		if not self:Mythic() then -- Multiple targets in Mythic
-			self:PrimaryIcon(args.spellId, args.destName)
-		end
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 			self:OpenProximity(args.spellId, 10)
 		end
-		blazingTargets[#blazingTargets+1] = args.destName
-		if not scheduled then
-			scheduled = self:ScheduleTimer(warnTargets, 0.2, self, args.spellId)
+		if self:Mythic() then -- Multiple targets in Mythic
+			blazingTargets[#blazingTargets+1] = args.destName
+			if #blazingTargets == 1 then
+				self:ScheduleTimer("TargetMessage", 0.2, args.spellId, blazingTargets, "Attention", "Alert")
+			end
+		else
+			self:TargetMessage(args.spellId, args.destName, "Attention", "Alert")
+			self:PrimaryIcon(args.spellId, args.destName)
 		end
 	end
-end
 
-function mod:BlazingRadianceRemoved(args)
-	if not self:Mythic() then
-		self:PrimaryIcon(args.spellId)
-	end
-	tDeleteItem(blazingTargets, args.destName)
-	if not moltenTorrentOnMe and #blazingTargets == 0 then
-		self:CloseProximity(args.spellId)
+	function mod:BlazingRadianceRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CloseProximity(args.spellId)
+			if not self:LFR() and (self:Healer() or self:Damager() == "RANGED") then
+				self:OpenProximity("proximity", 6)
+			end
+		end
+		if not self:Mythic() then
+			self:PrimaryIcon(args.spellId)
+		end
 	end
 end
 
