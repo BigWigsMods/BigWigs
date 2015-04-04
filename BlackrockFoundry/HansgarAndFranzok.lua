@@ -63,7 +63,7 @@ function mod:OnEngage()
 	end
 
 	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", "Jumps", "boss1", "boss2")
-	self:ScheduleTimer("RegisterUnitEvent", 5, "UNIT_TARGET", "BodySlamTarget", "boss1", "boss2") -- 5s grace period
+	self:RegisterUnitEvent("UNIT_TARGET", "BodySlamTarget", "boss1", "boss2")
 end
 
 --------------------------------------------------------------------------------
@@ -127,31 +127,30 @@ end
 
 function mod:BodySlamTarget(unit)
 	local target = unit.."target"
-	local name = self:UnitName(target)
-	if not name or self:Tank(name) or UnitDetailedThreatSituation(unit, target) then return end
-
 	local guid = UnitGUID(target)
+	if not guid or UnitDetailedThreatSituation(target, unit) ~= false or self:MobId(guid) ~= 1 then return end
+
 	if self:Me(guid) then
 		self:Say(155747)
 		self:Flash(155747)
-	elseif self:Range(name) < 10 then
+	elseif self:Range(target) < 10 then
 		self:RangeMessage(155747)
 		self:Flash(155747)
 		return
 	end
-	self:TargetMessage(155747, name, "Attention", "Alarm")
+	self:TargetMessage(155747, self:UnitName(target), "Attention", "Alarm")
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 156220 then -- Tactical Retreat (Hans'gar jumped away)
 		self:JumpAway(unit)
 	elseif spellId == 156546 or spellId == 156542 then -- Crippling Suplex (tank picked up)
-		self:TargetMessage(156938, self:UnitName(unit.."target"), "Important", "Alarm", nil, nil, true)
+		self:Message(156938, "Important", "Alarm", CL.soon:format(spellName))
 	end
 end
 
 function mod:CripplingSuplex(args)
-	self:Message(args.spellId, "Important", "Warning", CL.casting:format(args.spellName))
+	self:Message(args.spellId, self:Tank() and "Personal" or "Important", "Warning", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 3)
 end
 
@@ -162,10 +161,13 @@ function mod:ShatteredVertebrae(args)
 end
 
 function mod:DisruptingRoar(args)
-	local _, _, _, _, _, endTime = UnitCastingInfo(self:GetUnitIdByGUID(args.sourceGUID))
-	local cast = endTime and (endTime / 1000 - GetTime()) or 0
-	if cast > 1 then
-		self:Bar(args.spellId, cast, CL.cast:format(args.spellName))
+	local unit = self:GetUnitIdByGUID(args.sourceGUID)
+	if unit then
+		local _, _, _, _, _, endTime = UnitCastingInfo(unit)
+		local cast = endTime and (endTime / 1000 - GetTime()) or 0
+		if cast > 1 then
+			self:Bar(args.spellId, cast, CL.cast:format(args.spellName))
+		end
 	end
 
 	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
