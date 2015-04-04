@@ -164,7 +164,8 @@ end
 -- Pol
 
 function mod:ShieldBash(args)
-	if UnitDetailedThreatSituation("player", self:GetUnitIdByGUID(args.sourceGUID)) or not self:Tank() then
+	local unit = self:GetUnitIdByGUID(args.sourceGUID)
+	if (unit and UnitDetailedThreatSituation("player", unit)) or not self:Tank() then -- Exclude the tank tanking Phemos
 		self:Message(args.spellId, "Urgent")
 		if self:Mythic() and isNextEmpowered(args.sourceGUID, 23) then
 			self:CDBar(args.spellId, 23, ("%s (%s)"):format(args.spellName, STRING_SCHOOL_ARCANE))
@@ -227,7 +228,8 @@ end
 -- Phemos
 
 function mod:DoubleSlash(args)
-	if UnitDetailedThreatSituation("player", self:GetUnitIdByGUID(args.sourceGUID)) or not self:Tank() then
+	local unit = self:GetUnitIdByGUID(args.sourceGUID)
+	if (unit and UnitDetailedThreatSituation("player", unit)) or not self:Tank() then -- Exclude the tank tanking Pol
 		self:Message(args.spellId, "Attention")
 		if self:Mythic() and isNextEmpowered(args.sourceGUID, 27) then
 			self:CDBar(args.spellId, 27, ("%s (%s)"):format(args.spellName, STRING_SCHOOL_ARCANE))
