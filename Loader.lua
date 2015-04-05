@@ -542,7 +542,7 @@ do
 	elseif L == "deDE" then
 	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into German (deDE)? Check out our easy translator tool: goo.gl/nwR5cy"
 	elseif L == "koKR" then
-		delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Korean (koKR)? Check out our easy translator tool: goo.gl/nwR5cy"
+	--	delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Korean (koKR)? Check out our easy translator tool: goo.gl/nwR5cy"
 	end
 
 	CTimerAfter(11, function()

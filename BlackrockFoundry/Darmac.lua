@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Beastlord Darmac", 988, 1122)
 if not mod then return end
-mod:RegisterEnableMob(76865)
+mod:RegisterEnableMob(76865, 76884, 76874, 76945, 76946) -- Darmac, Cruelfang, Dreadwing, Ironcrusher, Faultline (Mythic)
 mod.engageId = 1694
 
 --------------------------------------------------------------------------------
@@ -142,6 +142,9 @@ function mod:Deaths(args)
 		self:StopBar(154981) -- Conflag
 		self:StopBar(154989) -- Inferno Breath
 
+		self:RegisterUnitEvent("UNIT_TARGET", "BreathTarget", "boss1")
+		self:UnregisterUnitEvent("UNIT_TARGET", "boss2")
+
 		self:CDBar(155499, 12) -- Superheated Shrapnel
 	elseif mobId == 76945 then -- Ironcrusher
 		self:StopBar(155247) -- Stampede
@@ -169,6 +172,7 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 		elseif mobId == 76874 then -- Dreadwing
 			self:CDBar(154989, 5) -- Inferno Breath
 			self:CDBar(154981, 12) -- Conflag
+			self:RegisterUnitEvent("UNIT_TARGET", "BreathTarget", "boss2")
 		elseif mobId == 76945 then -- Ironcrusher
 			tantrumCount = 1
 			self:CDBar(155247, 15) -- Stampede
@@ -197,17 +201,38 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 do
-	local function printBossBreathTarget(self, name, guid)
-		if self:Me(guid) then
-			self:Say(155499, 18584) -- 18584 = Breath
-			self:Flash(155499)
+	local aboutToCast = false
+	-- The behaviour for this ability is odd in that the boss will swap target to
+	-- the player it is going to cast the ability on, and then drop its target immediately
+	-- afterwards. Use this method to minimize the chance of missing the target.
+	function mod:BreathTarget(unit)
+		local target = unit.."target"
+		local guid = UnitGUID(target)
+
+		if not guid then
+			if aboutToCast then -- There's a ~5% chance he won't target anyone, show a generic message
+				aboutToCast = false
+				self:Message(unit == "boss1" and 155499 or 154989, "Urgent", "Alert")
+			else
+				return
+			end
 		end
-	end
-	local function printMountBreathTarget(self, name, guid)
+
+		if UnitDetailedThreatSituation(target, unit) ~= false or self:MobId(guid) ~= 1 then return end
+
+		aboutToCast = false
+		local name = self:UnitName(target)
+		local currentBreathId = unit == "boss1" and 155499 or 154989
+
 		if self:Me(guid) then
-			self:Say(154989, 18584) -- 18584 = Breath
-			self:Flash(154989)
+			self:Say(currentBreathId, 18584) -- 18584 = Breath
+			self:Flash(currentBreathId)
+		elseif self:Range(name) < 10 then
+			self:RangeMessage(currentBreathId, "Personal", "Alert")
+			self:Flash(currentBreathId)
+			return
 		end
+		self:TargetMessage(currentBreathId, name, "Urgent", "Alert")
 	end
 
 	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
@@ -222,14 +247,10 @@ do
 			tantrumCount = tantrumCount + 1
 			self:CDBar(155222, 23, CL.count:format(spellName, tantrumCount))
 		elseif spellId == 155423 then -- Face Random Non-Tank (Inferno Breath by Dreadwing)
-			local guid = UnitGUID(unit) or -1
-			self:GetBossTarget(printMountBreathTarget, 0.3, guid)
-			self:Message(154989, "Urgent", "Alert")
+			aboutToCast = true
 			self:CDBar(154989, 20)
 		elseif spellId == 155603 then -- Face Random Non-Tank (Superheated Shrapnel by Darmac)
-			local guid = UnitGUID(unit) or -1
-			self:GetBossTarget(printBossBreathTarget, 0.3, guid)
-			self:Message(155499, "Urgent", "Alert")
+			aboutToCast = true
 			self:CDBar(155499, 25)
 		end
 	end
