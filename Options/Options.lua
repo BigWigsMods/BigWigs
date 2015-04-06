@@ -1278,22 +1278,13 @@ do
 	function options:Register(message, moduleName, module)
 		if registered[module.name] then return end
 		registered[module.name] = true
-		if (module.toggleOptions or module.GetOptions) and not module:IsBossModule() then
-			local panel, created = self:GetPanel("BigWigs_".. moduleName) -- XXX temp
-			if created then
-				panel:SetScript("OnShow", onZoneShow)
-				panel:SetScript("OnHide", onZoneHide)
-				panel.module = module
-			end
-		end
 		if module.pluginOptions then
 			if type(module.pluginOptions) == "function" then
 				pluginRegistry[module.name] = module.pluginOptions
 			else
 				acOptions.args.general.args[module.name] = module.pluginOptions
 			end
-		end
-		if module.subPanelOptions then
+		elseif module.subPanelOptions then
 			local key = module.subPanelOptions.key
 			local name = "BigWigs_".. module.subPanelOptions.name -- XXX temp
 			local options = module.subPanelOptions.options
