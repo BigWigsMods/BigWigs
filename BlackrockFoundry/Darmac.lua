@@ -231,7 +231,7 @@ do
 			self:Flash(currentBreathId)
 			return
 		end
-		self:TargetMessage(currentBreathId, self:UnitName(target), "Urgent", "Alert")
+		self:TargetMessage(currentBreathId, self:UnitName(target), "Urgent", "Alert", nil, nil, true)
 	end
 
 	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
