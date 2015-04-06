@@ -1286,11 +1286,7 @@ do
 			end
 		elseif module.subPanelOptions then
 			local key = module.subPanelOptions.key
-			local name = "BigWigs_".. module.subPanelOptions.name -- XXX temp
 			local options = module.subPanelOptions.options
-			--acr:RegisterOptionsTable(key, options, true)
-			--module.subPanelOptionsPanel = acd:AddToBlizOptions(key, name)
-
 			if type(options) == "function" then
 				subPanelRegistry[key] = options
 			else
