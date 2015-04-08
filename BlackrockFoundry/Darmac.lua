@@ -151,6 +151,7 @@ function mod:Deaths(args)
 
 		self:CDBar(155222, 22, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
 	elseif mobId == 76946 then -- Faultline (Mythic)
+		self:RegisterUnitEvent("UNIT_TARGET", "BreathTarget", "boss1")
 		self:StopBar(159043) -- Epicenter
 
 		self:CDBar(155321, 21) -- Unstoppable
@@ -178,6 +179,7 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 			self:CDBar(155247, 15) -- Stampede
 			self:CDBar(155222, 25, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
 		elseif mobId == 76946 then -- Faultline (Mythic)
+			self:UnregisterUnitEvent("UNIT_TARGET", "boss1")
 			self:CDBar(159043, 7) -- Epicenter
 			self:CDBar(155321, 11) -- Unstoppable
 		end
