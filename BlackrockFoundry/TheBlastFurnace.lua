@@ -434,17 +434,20 @@ function mod:VolatileFireApplied(args)
 end
 
 function mod:VolatileFireRemoved(args)
-	if self:Me(args.destGUID) and not UnitDebuff("player", args.spellName) then --Check if player has a 2nd debuff before closing proximity
-		self:CloseProximity(args.spellId)
-		volatileFireOnMe = nil
-	end
-	tDeleteItem(volatileFireTargets, args.destName)
+	if not UnitDebuff(args.destName, args.spellName) then -- Check if player has a 2nd debuff before closing proximity
+		if self:Me(args.destGUID) then
+			self:CloseProximity(args.spellId)
+			volatileFireOnMe = nil
+		end
 
-	if #volatileFireTargets == 0 then
-		self:CloseProximity(args.spellId)
-	end
+		tDeleteItem(volatileFireTargets, args.destName)
 
-	updateProximity()
+		if #volatileFireTargets == 0 then
+			self:CloseProximity(args.spellId)
+		end
+
+		updateProximity()
+	end
 end
 
 -- Foreman Feldspar
