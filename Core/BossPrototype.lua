@@ -653,7 +653,11 @@ end
 function boss:EncounterEnds(event, id, name, difficulty, size, status)
 	if self.engageId == id and self.enabledState then
 		if status == 1 then
-			self:Win()
+			if self.journalId then
+				self:Win() -- BW boss module
+			else
+				self:Disable() -- Custom boss module
+			end
 		elseif status == 0 then
 			self:ScheduleTimer("Wipe", 6) -- XXX Delayed for now due to issues with certain encounters and using IEEU for engage. Can be removed if we swap to ENCOUNTER_START.
 		end
