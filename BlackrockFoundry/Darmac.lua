@@ -215,9 +215,8 @@ do
 			if aboutToCast then -- There's a ~5% chance he won't target anyone, show a generic message
 				aboutToCast = false
 				self:Message(unit == "boss1" and 155499 or 154989, "Urgent", "Alert")
-			else
-				return
 			end
+			return
 		end
 
 		if UnitDetailedThreatSituation(target, unit) ~= false or self:MobId(guid) ~= 1 then return end
