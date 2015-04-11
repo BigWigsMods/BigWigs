@@ -1244,6 +1244,21 @@ function boss:AddSyncListener(sync, throttle)
 	core:AddSyncListener(self, sync, throttle)
 end
 
+function boss:CancelBerserk(seconds)
+	local berserk = spells[26662]
+	self:StopBar(berserk)
+	self:CancelDelayedMessage(format(L.custom_min, berserk, 1))
+	self:CancelDelayedMessage(format(L.custom_sec, berserk, 30))
+	self:CancelDelayedMessage(format(L.custom_sec, berserk, 10))
+	self:CancelDelayedMessage(format(L.custom_sec, berserk, 5))
+	self:CancelDelayedMessage(format(L.custom_end, self.displayName, berserk))
+
+	local half = seconds / 2
+	local m = half % 60
+	local halfMin = (half - m) / 60
+	self:CancelDelayedMessage(format(L.custom_min, berserk, halfMin))
+end
+
 function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, customFinalMessage)
 	local boss = customBoss or self.displayName
 	local key = "berserk"
