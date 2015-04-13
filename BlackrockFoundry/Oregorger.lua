@@ -16,6 +16,7 @@ local barrageCount = 1
 local frenzyCount = 1
 local torrentCount = 1
 local hasGoneBerserk = nil
+local crashCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -35,7 +36,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions()
+function mod:GetOptions(CL)
 	return {
 		{156240, "TANK_HEALER"}, -- Acid Torrent
 		{173471, "TANK"}, -- Acid Maw
@@ -45,8 +46,13 @@ function mod:GetOptions()
 		156877, -- Blackrock Barrage
 		155819, -- Hunger Drive
 		155898, -- Rolling Fury
+		155897, -- Earthshaking Collision
 		"stages",
 		"berserk",
+	}, {
+		[156240] = CL.phase:format(1),
+		[155819] = CL.phase:format(2),
+		["stages"] = "general",
 	}
 end
 
@@ -67,11 +73,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "HungerDriveRemoved", 155819)
 	self:Log("SPELL_AURA_REMOVED", "RollingFuryRemoved", 155898)
 	self:Log("SPELL_AURA_APPLIED", "RollingFuryApplied", 155898)
+	self:Log("SPELL_CAST_SUCCESS", "EarthshakingCollision", 155897)
 end
 
 function mod:OnEngage()
 	frenzyCount = 1
 	torrentCount = 1
+	crashCount = 0
 	hasGoneBerserk = nil
 	self:CDBar(156203, 6) -- Retched Blackrock
 	self:CDBar(156390, 9) -- Explosive Shard
@@ -162,6 +170,7 @@ end
 
 function mod:FeedingFrenzy(unit, spellName, _, _, spellId)
 	if spellId == 165127 then -- Hunger Drive
+		crashCount = 0
 		self:StopBar(CL.count:format(self:SpellName(156240), torrentCount)) -- Acid Torrent
 		self:StopBar(156203) -- Retched Blackrock
 		self:StopBar(156390) -- Explosive Shard
@@ -205,5 +214,9 @@ function mod:StartBerserk()
 		hasGoneBerserk = true
 		self:Message("berserk", "Important", "Alarm", CL.custom_end:format(self.displayName, self:SpellName(26662)), 26662) -- Berserk
 	end
+end
+
+function mod:EarthshakingCollision(args)
+	self:Message(args.spellId, "Attention", nil, CL.count:format(args.spellName, crashCount))
 end
 
