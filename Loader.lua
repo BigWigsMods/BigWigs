@@ -103,7 +103,7 @@ do
 	local lw = "LittleWigs"
 
 	local tbl = {
-		[696]=c, [755]=c,
+		[696]=c, [755]=c, [766]=c, [717]=c,
 		[775]=bc, [780]=bc, [779]=bc, [776]=bc, [799]=bc, [782]=bc, [466]=bc,
 		[604]=wotlk, [543]=wotlk, [535]=wotlk, [529]=wotlk, [527]=wotlk, [532]=wotlk, [531]=wotlk, [609]=wotlk, [718]=wotlk,
 		[752]=cata, [758]=cata, [754]=cata, [824]=cata, [800]=cata, [773]=cata,
