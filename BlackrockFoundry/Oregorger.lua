@@ -217,6 +217,7 @@ function mod:StartBerserk()
 end
 
 function mod:EarthshakingCollision(args)
+	crashCount = crashCount + 1
 	self:Message(args.spellId, "Attention", nil, CL.count:format(args.spellName, crashCount))
 end
 
