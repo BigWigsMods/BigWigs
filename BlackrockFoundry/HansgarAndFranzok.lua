@@ -50,6 +50,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "ScorchingBurnsDamage", 155818)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
 	self:Log("SPELL_AURA_APPLIED", "SmartStampers", 162124)
+	self:Log("SPELL_AURA_REMOVED", "SmartStampersRemoved", 162124)
 end
 
 function mod:OnEngage()
@@ -73,7 +74,14 @@ end
 function mod:SmartStampers(args)
 	if not stamperWarned then
 		stamperWarned = true
-		self:Message(args.spellId, "Neutral", "Alert", args.spellName) -- Smart Stampers
+		self:Message(args.spellId, "Neutral", "Alert")
+	end
+end
+
+function mod:SmartStampersRemoved(args)
+	if stamperWarned then
+		stamperWarned = nil
+		self:Message(args.spellId, "Neutral", "Alert", CL.over:format(args.spellName))
 	end
 end
 
@@ -108,7 +116,6 @@ do
 				end
 				--]]
 				if self:Mythic() then
-					stamperWarned = nil
 					self:Bar(162124, 13) -- Smart Stampers
 				end
 			else
