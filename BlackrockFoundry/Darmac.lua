@@ -15,6 +15,7 @@ mod.engageId = 1694
 local phase = 1
 local tantrumCount = 1
 local conflagMark = 1
+local mountId = nil
 local spearList, spearMarksUsed = {}, {}
 local pinnedList = mod:NewTargetList()
 
@@ -79,7 +80,7 @@ end
 
 function mod:OnBossEnable()
 	-- Stage 1
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
 	self:Log("SPELL_CAST_SUCCESS", "PinDown", 155365)
 	self:Log("SPELL_AURA_APPLIED", "PinnedDown", 154960)
 	self:Log("SPELL_CAST_START", "CallThePack", 154975)
@@ -114,6 +115,7 @@ end
 function mod:OnEngage(diff)
 	phase = 1
 	conflagMark = 1
+	tantrumCount = 1
 	wipe(pinnedList)
 
 	self:Bar(154975, self:LFR() and 18 or self:Normal() and 18 or 8) -- Call the Pack
@@ -124,7 +126,7 @@ function mod:OnEngage(diff)
 		self:OpenProximity("proximity", 8)
 	end
 
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", nil, "boss1")
 end
 
@@ -143,7 +145,9 @@ function mod:Deaths(args)
 		self:StopBar(154989) -- Inferno Breath
 
 		self:RegisterUnitEvent("UNIT_TARGET", "BreathTarget", "boss1")
-		self:UnregisterUnitEvent("UNIT_TARGET", "boss2")
+		if mountId then
+			self:UnregisterUnitEvent("UNIT_TARGET", mountId)
+		end
 
 		self:CDBar(155499, 12) -- Superheated Shrapnel
 	elseif mobId == 76945 then -- Ironcrusher
@@ -164,20 +168,29 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 		self:StopBar(155499) -- Superheated Shrapnel
 		self:StopBar(CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
 
-		self:Message("stages", "Neutral", "Info", UnitName("boss2"), false)
+		mountId = nil
+		for i = 2, 5 do
+			local unit = ("boss%d"):format(i)
+			local mobId = self:MobId(UnitGUID(unit))
+			if mobId == 76884 or mobId == 76874 or mobId == 76945 or mobId == 76946 then -- Cruelfang, Dreadwing, Ironcrusher, Faultline
+				mountId = unit
+				break
+			end
+		end
+		self:Message("stages", "Neutral", "Info", mountId and UnitName(mountId) or self:SpellName(169650), false) -- 169650 = Mounted
+		if not mountId then return end -- rip initial timers with 4x Chimearon pets
 
-		local mobId = self:MobId(UnitGUID("boss2"))
+		local mobId = self:MobId(UnitGUID(mountId))
 		if mobId == 76884 then -- Cruelfang
 			self:CDBar(155061, 13) -- Rend and Tear
 			self:CDBar(155198, 17) -- Savage Howl
 		elseif mobId == 76874 then -- Dreadwing
 			self:CDBar(154989, 5) -- Inferno Breath
 			self:CDBar(154981, 12) -- Conflag
-			self:RegisterUnitEvent("UNIT_TARGET", "BreathTarget", "boss2")
+			self:RegisterUnitEvent("UNIT_TARGET", "BreathTarget", mountId)
 		elseif mobId == 76945 then -- Ironcrusher
-			tantrumCount = 1
 			self:CDBar(155247, 15) -- Stampede
-			self:CDBar(155222, 25, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
+			self:CDBar(155222, 25, CL.count:format(self:SpellName(155222), 1)) -- Tantrum
 		elseif mobId == 76946 then -- Faultline (Mythic)
 			self:UnregisterUnitEvent("UNIT_TARGET", "boss1")
 			self:CDBar(159043, 7) -- Epicenter
@@ -189,13 +202,13 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unit)
-	if self:MobId(UnitGUID(unit)) == 76865 then
+	if self:MobId(UnitGUID(unit)) == 76865 then -- Darmac
 		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 		-- Warnings for 85%, 65%, 45%, and 25% for mythic
 		if (phase == 1 and hp < 90) or (phase == 2 and hp < 71) or (phase == 3 and hp < 50) or (phase == 4 and hp < 30) then
 			phase = phase + 1
 			if phase > (self:Mythic() and 4 or 3) then
-				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1", "boss2")
+				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 			end
 			self:Message("stages", "Neutral", "Info", L.next_mount, false)
 		end
@@ -247,6 +260,10 @@ do
 			tantrumCount = tantrumCount + 1
 			self:CDBar(155222, 23, CL.count:format(spellName, tantrumCount))
 		elseif spellId == 155423 then -- Face Random Non-Tank (Inferno Breath by Dreadwing)
+			if not mountId then
+				self:RegisterUnitEvent("UNIT_TARGET", "BreathTarget", unit)
+				mountId = unit
+			end
 			aboutToCast = true
 			self:CDBar(154989, 20)
 		elseif spellId == 155603 then -- Face Random Non-Tank (Superheated Shrapnel by Darmac)
