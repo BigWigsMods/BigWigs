@@ -563,8 +563,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "13486" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "6.1.5" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
+	local DBMdotRevision = "13591" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "6.1.6" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -811,8 +811,8 @@ do
 				timer = CTimerNewTicker(3, sendMsg, 1)
 			end
 			message = tonumber(message)
-			-- XXX The > 13k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
-			if not message or message == 0 or message > 13700 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
+			-- The > 14k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
+			if not message or message == 0 or message > 14000 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
 			usersRelease[sender] = message
 			usersAlpha[sender] = nil
 			if message > highestReleaseRevision then highestReleaseRevision = message end
@@ -825,8 +825,8 @@ do
 				timer = CTimerNewTicker(3, sendMsg, 1)
 			end
 			message = tonumber(message)
-			-- XXX The > 13k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
-			if not message or message == 0 or message > 13700 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
+			-- The > 14k check is a hack for now until I find out what addon is sending a stupidly large version (20032). This is probably being done to farm BW versions, when a version of 0 should be used.
+			if not message or message == 0 or message > 14000 then return end -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
 			if message > highestAlphaRevision then highestAlphaRevision = message end
