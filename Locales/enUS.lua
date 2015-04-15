@@ -33,6 +33,7 @@ L.upToDate = "Up to date:"
 L.outOfDate = "Out of date:"
 L.dbmUsers = "DBM users:"
 L.noBossMod = "No boss mod:"
+L.offline = "Offline"
 
 L.blizzRestrictionsZone = "Waiting until combat ends to finish loading due to Blizzard combat restrictions."
 L.finishedLoading = "Combat has ended, Big Wigs has now finished loading."

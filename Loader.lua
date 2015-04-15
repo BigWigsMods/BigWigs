@@ -1166,7 +1166,7 @@ SlashCmdList.BigWigsVersion = function()
 			usesBossMod = true
 		end
 		if not usesBossMod then
-			bad[#bad+1] = coloredNameVersion(player)
+			bad[#bad+1] = coloredNameVersion(player, UnitIsConnected(player) == false and L.offline)
 		end
 	end
 
