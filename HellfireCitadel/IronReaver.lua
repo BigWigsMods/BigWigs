@@ -110,33 +110,33 @@ do
 end
 
 do
-	local prev = 0
+	local prev1, prev2, prev3, prev4 = 0, 0, 0, 0
 	function mod:UNIT_SPELLCAST_SUCCEEDED(event, unit, spellName, _, _, spellId)
 		if spellName == "Volatile Firebomb" or spellId == 182534 then
 			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
+			if t-prev1 > 5 then
+				prev1 = t
 				self:Message(182534, "Important", "Alarm", "Volatile Firebomb exlodes in 45sec")
 				self:Bar(182534, 45, "Volatile Firebomb EXPLODES")
 			end
 		elseif spellName == "Burning Firebomb" or spellId == 186667 then
 			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
+			if t-prev2 > 5 then
+				prev2 = t
 				self:Message(186667, "Important", "Alarm", "Burning Firebomb exlodes in 40sec")
 				self:Bar(186667, 40, "Burning Firebomb EXPLODES")
 			end
 		elseif spellName == "Reactive Firebomb" or spellId == 186676 then
 			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
+			if t-prev3 > 5 then
+				prev3 = t
 				self:Message(186667, "Important", "Alarm", "Reactive Firebomb - Tank jump on it")
 				self:Bar(186667, 30, "Reactive Firebomb EXPLODES")
 			end
 		elseif spellName == "Quick-Fuse Firebomb" or spellId == 186652 then
 			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
+			if t-prev4 > 5 then
+				prev4 = t
 				self:Message(186652, "Important", "Alarm", "Quick-Fuse Firebomb explodes in 20sec")
 				self:Bar(186652, 20, "Quick-Fuse Firebomb EXPLODES")
 			end
