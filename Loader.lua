@@ -306,15 +306,17 @@ do
 			if zone then
 				-- register the zone for enabling.
 				local instanceId = fakeWorldZones[zone] and zone or GetAreaMapInfo(zone)
-				enableZones[instanceId] = true
+				if instanceId then -- Protect live client from beta client ids
+					enableZones[instanceId] = true
 
-				if not loadOnZone[instanceId] then loadOnZone[instanceId] = {} end
-				loadOnZone[instanceId][#loadOnZone[instanceId] + 1] = addon
+					if not loadOnZone[instanceId] then loadOnZone[instanceId] = {} end
+					loadOnZone[instanceId][#loadOnZone[instanceId] + 1] = addon
 
-				if override then
-					loadOnZone[override][#loadOnZone[override] + 1] = addon
-				else
-					if not menus[zone] then menus[zone] = true end
+					if override then
+						loadOnZone[override][#loadOnZone[override] + 1] = addon
+					else
+						if not menus[zone] then menus[zone] = true end
+					end
 				end
 			else
 				local name = GetAddOnInfo(addon)
