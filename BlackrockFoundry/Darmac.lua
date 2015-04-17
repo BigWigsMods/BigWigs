@@ -221,20 +221,19 @@ do
 	-- the player it is going to cast the ability on, and then drop its target immediately
 	-- afterwards. Use this method to minimize the chance of missing the target.
 	function mod:BreathTarget(unit)
+		if not aboutToCast then return end
+		aboutToCast = false
+
 		local target = unit.."target"
 		local guid = UnitGUID(target)
 
 		if not guid then
-			if aboutToCast then -- There's a ~5% chance he won't target anyone, show a generic message
-				aboutToCast = false
-				self:Message(unit == "boss1" and 155499 or 154989, "Urgent", "Alert")
-			end
+			self:Message(unit == "boss1" and 155499 or 154989, "Urgent", "Alert") -- There's a ~5% chance he won't target anyone, show a generic message
 			return
 		end
 
 		if UnitDetailedThreatSituation(target, unit) ~= false or self:MobId(guid) ~= 1 then return end
 
-		aboutToCast = false
 		local currentBreathId = unit == "boss1" and 155499 or 154989
 
 		if self:Me(guid) then
