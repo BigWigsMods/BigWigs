@@ -13,7 +13,7 @@ if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Iron Reaver", 1026, 1425)
 if not mod then return end
 mod:RegisterEnableMob(90284)
---mod.engageId = 1000000
+mod.engageId = 1785
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -38,7 +38,8 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{182108, "ICON", "PROXIMITY", "FLASH", "SAY"}, -- Artillery
-		182022, -- Pounding
+		182020, -- Pounding
+		185282, -- Barrage
 		182001, -- Unstable Orb
 		182362, -- Falling Slam
 		182534, -- Volatile Firebomb
@@ -50,25 +51,22 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_AURA_APPLIED", "Artillery", 182108)
 	self:Log("SPELL_AURA_REMOVED", "ArtilleryRemoved", 182108)
-	self:Log("SPELL_CAST_START", "Pounding", 182022)
+	self:Log("SPELL_AURA_APPLIED", "Pounding", 182020)
+	self:Log("SPELL_CAST_START", "Barrage", 185282)
 	self:Log("SPELL_CAST_SUCCESS", "UnstableOrb", 182001)
 	self:Log("SPELL_CAST_SUCCESS", "FallingSlam", 182362)
 
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- Firebombs are hidden casts, will they be on the boss frames is the question. One would hope so.
 
 	self:Log("SPELL_AURA_APPLIED", "UnstableOrbDamage", 182001)
-	self:Log("SPELL_PERIODIC_DAMAGE", "UnstableOrbDamage", 182001)
-	self:Log("SPELL_PERIODIC_MISSED", "UnstableOrbDamage", 182001)
-
-	self:Death("Win", 90284)
+	--self:Log("SPELL_PERIODIC_DAMAGE", "UnstableOrbDamage", 182001)
+	--self:Log("SPELL_PERIODIC_MISSED", "UnstableOrbDamage", 182001)
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Iron Reaver (Beta) Engaged")
+	self:Message("berserk", "Neutral", nil, "Iron Reaver (Beta) Engaged", false)
 end
 
 --------------------------------------------------------------------------------
@@ -95,6 +93,11 @@ end
 function mod:Pounding(args)
 	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 6)
+end
+
+function mod:Barrage(args)
+	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
+	self:Bar(args.spellId, 4)
 end
 
 do
