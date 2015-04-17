@@ -1,7 +1,6 @@
 
 -- Notes --
 -- Falling Slam target scan?
--- Immolation under you?
 -- Will Blitz have a cast (target scan)?
 
 --------------------------------------------------------------------------------
@@ -37,36 +36,42 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{182108, "ICON", "PROXIMITY", "FLASH", "SAY"}, -- Artillery
+		{182280, "ICON", "PROXIMITY", "FLASH", "SAY"}, -- Artillery
 		182020, -- Pounding
 		185282, -- Barrage
 		182001, -- Unstable Orb
-		182362, -- Falling Slam
+		182074, -- Immolation
+		182066, -- Falling Slam
 		182534, -- Volatile Firebomb
 		186667, -- Burning Firebomb
 		186676, -- Reactive Firebomb
 		186652, -- Quick-Fuse Firebomb
+		"proximity",
 		"berserk",
 	}
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "Artillery", 182108)
-	self:Log("SPELL_AURA_REMOVED", "ArtilleryRemoved", 182108)
+	self:Log("SPELL_AURA_APPLIED", "Artillery", 182280)
+	self:Log("SPELL_AURA_REMOVED", "ArtilleryRemoved", 182280)
 	self:Log("SPELL_AURA_APPLIED", "Pounding", 182020)
 	self:Log("SPELL_CAST_START", "Barrage", 185282)
 	self:Log("SPELL_CAST_SUCCESS", "UnstableOrb", 182001)
-	self:Log("SPELL_CAST_SUCCESS", "FallingSlam", 182362)
+	self:Log("SPELL_CAST_START", "FallingSlam", 182066)
 
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- Firebombs are hidden casts, will they be on the boss frames is the question. One would hope so.
 
 	self:Log("SPELL_AURA_APPLIED", "UnstableOrbDamage", 182001)
-	--self:Log("SPELL_PERIODIC_DAMAGE", "UnstableOrbDamage", 182001)
-	--self:Log("SPELL_PERIODIC_MISSED", "UnstableOrbDamage", 182001)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "UnstableOrbDamage", 182001)
+	self:Log("SPELL_AURA_APPLIED", "ImmolationDamage", 182074)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ImmolationDamage", 182074)
 end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Iron Reaver (Beta) Engaged", false)
+	if self:Healer() or self:Damager() == "RANGED" then
+		self:OpenProximity("proximity", 8)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -75,6 +80,7 @@ end
 
 function mod:Artillery(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	self:TargetBar(args.spellId, 13, args.destName)
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:OpenProximity(args.spellId, 20)
 	if self:Me(args.destGUID) then
@@ -85,8 +91,12 @@ end
 
 function mod:ArtilleryRemoved(args)
 	self:PrimaryIcon(args.spellId)
+	self:StopBar(args.spellName, args.destName)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
+		if self:Healer() or self:Damager() == "RANGED" then
+			self:OpenProximity("proximity", 8)
+		end
 	end
 end
 
@@ -160,11 +170,23 @@ end
 
 do
 	local prev = 0
+	function mod:ImmolationDamage(args)
+		local t = GetTime()
+		if t-prev > 2 and self:Me(args.destGUID) then
+			prev = t
+			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+		end
+	end
+end
+
+do
+	local prev = 0
 	function mod:FallingSlam(args)
 		local t = GetTime()
 		if t-prev > 5 then
 			prev = t
 			self:Message(args.spellId, "Important")
+			self:Bar(args.spellId, 6)
 		end
 	end
 end
