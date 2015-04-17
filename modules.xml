@@ -33,6 +33,9 @@
 <Include file="BlackrockFoundry\modules.xml"/>
 <Include file="BlackrockFoundry\locales.xml"/>
 
+<Include file="HellfireCitadel\modules.xml"/>
+<Include file="HellfireCitadel\locales.xml"/>
+
 <Include file="Highmaul\modules.xml"/>
 <Include file="Highmaul\locales.xml"/>
 <!--@end-debug@-->

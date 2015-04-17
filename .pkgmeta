@@ -23,6 +23,7 @@ move-folders:
     BigWigs/Plugins: BigWigs_Plugins
     BigWigs/Highmaul: BigWigs_Highmaul
     BigWigs/BlackrockFoundry: BigWigs_BlackrockFoundry
+    BigWigs/HellfireCitadel: BigWigs_HellfireCitadel
     BigWigs/Draenor: BigWigs_Draenor
 
 ignore:
