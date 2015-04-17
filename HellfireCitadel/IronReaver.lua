@@ -42,6 +42,8 @@ function mod:GetOptions()
 		182001, -- Unstable Orb
 		182074, -- Immolation
 		182066, -- Falling Slam
+		179889, -- Blitz
+		182055, -- Full Charge
 		182534, -- Volatile Firebomb
 		186667, -- Burning Firebomb
 		186676, -- Reactive Firebomb
@@ -58,6 +60,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Barrage", 185282)
 	self:Log("SPELL_CAST_SUCCESS", "UnstableOrb", 182001)
 	self:Log("SPELL_CAST_START", "FallingSlam", 182066)
+	self:Log("SPELL_CAST_START", "Blitz", 179889)
+	self:Log("SPELL_CAST_START", "FullCharge", 182055)
 
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- Firebombs are hidden casts, will they be on the boss frames is the question. One would hope so.
 
@@ -82,8 +86,8 @@ function mod:Artillery(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
 	self:TargetBar(args.spellId, 13, args.destName)
 	self:PrimaryIcon(args.spellId, args.destName)
-	self:OpenProximity(args.spellId, 20)
 	if self:Me(args.destGUID) then
+		self:OpenProximity(args.spellId, 20)
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
 	end
@@ -187,6 +191,30 @@ do
 			prev = t
 			self:Message(args.spellId, "Important")
 			self:Bar(args.spellId, 6)
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:Blitz(args)
+		local t = GetTime()
+		if t-prev > 5 then
+			prev = t
+			self:Message(args.spellId, "Important", "Info")
+			self:Bar(args.spellId, 1.5)
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:FullCharge(args)
+		local t = GetTime()
+		if t-prev > 5 then
+			prev = t
+			self:Message(args.spellId, "Important", "Info")
+			self:Bar(args.spellId, 3)
 		end
 	end
 end
