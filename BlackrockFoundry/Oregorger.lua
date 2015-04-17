@@ -15,8 +15,8 @@ mod.engageId = 1696
 local barrageCount = 1
 local frenzyCount = 1
 local torrentCount = 1
+local rollCount = 1
 local hasGoneBerserk = nil
-local crashCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -28,7 +28,7 @@ if L then
 	L.shard_explosion_desc = "A separate bar for the explosion that you may wish to enable countdown for if you are a melee class."
 	L.shard_explosion_icon = "6bf_explosive_shard"
 
-	L.hunger_drive_power = "%dx %s - %d ore to go!"
+	L.roll_message = "Roll %d - %d ore to go!"
 end
 L = mod:GetLocale()
 
@@ -44,14 +44,12 @@ function mod:GetOptions(CL)
 		{156390, "FLASH"}, -- Explosive Shard
 		{"shard_explosion"}, -- shard is easy to miss, help melee out
 		156877, -- Blackrock Barrage
-		155819, -- Hunger Drive
 		155898, -- Rolling Fury
-		155897, -- Earthshaking Collision
 		"stages",
 		"berserk",
 	}, {
 		[156240] = CL.phase:format(1),
-		[155819] = CL.phase:format(2),
+		[155898] = CL.phase:format(2),
 		["stages"] = "general",
 	}
 end
@@ -69,17 +67,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "StartBerserk", 159958) -- Earthshaking Stomp
 	-- Phase 2
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "FeedingFrenzy", "boss1")
-	self:Log("SPELL_AURA_APPLIED_DOSE", "HungerDriveApplied", 155819)
 	self:Log("SPELL_AURA_REMOVED", "HungerDriveRemoved", 155819)
 	self:Log("SPELL_AURA_REMOVED", "RollingFuryRemoved", 155898)
 	self:Log("SPELL_AURA_APPLIED", "RollingFuryApplied", 155898)
-	self:Log("SPELL_CAST_SUCCESS", "EarthshakingCollision", 155897)
 end
 
 function mod:OnEngage()
 	frenzyCount = 1
 	torrentCount = 1
-	crashCount = 0
 	hasGoneBerserk = nil
 	self:CDBar(156203, 6) -- Retched Blackrock
 	self:CDBar(156390, 9) -- Explosive Shard
@@ -170,30 +165,22 @@ end
 
 function mod:FeedingFrenzy(unit, spellName, _, _, spellId)
 	if spellId == 165127 then -- Hunger Drive
-		crashCount = 0
 		self:StopBar(CL.count:format(self:SpellName(156240), torrentCount)) -- Acid Torrent
 		self:StopBar(156203) -- Retched Blackrock
 		self:StopBar(156390) -- Explosive Shard
 		self:StopBar(156877) -- Blackrock Barrage
 
+		rollCount = 1
 		self:Message("stages", "Positive", "Long", self:SpellName(-9968), false) -- Feeding Frenzy
-	end
-end
-
-function mod:HungerDriveApplied(args)
-	if args.amount % 5 == 0 then -- warn every 15s
-		local power = UnitPower("boss1")
-		self:Message(args.spellId, "Attention", nil, L.hunger_drive_power:format(args.amount, args.spellName, 100-power))
+		self:CDBar(155898, 3.5, CL.count:format(self:SpellName(155898), rollCount)) -- Rolling Fury
 	end
 end
 
 function mod:HungerDriveRemoved(args)
-	self:StopBar(155898) -- Rolling Fury
 	frenzyCount = frenzyCount + 1
 	torrentCount = 1
 
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
-	self:Message("stages", "Positive", "Long", CL.over:format(self:SpellName(-9968)), false) -- Feeding Frenzy
 	self:CDBar(156203, 6) -- Retched Blackrock
 	self:CDBar(156390, 9) -- Explosive Shard
 	self:CDBar(156240, 12, CL.count:format(self:SpellName(156240), torrentCount)) -- Acid Torrent
@@ -201,12 +188,20 @@ function mod:HungerDriveRemoved(args)
 end
 
 function mod:RollingFuryRemoved(args)
-	-- rolls for ~6s then pauses for ~4s. too spammy for a roll message, but maybe show a bar for the pause? 3-5s
-	self:CDBar(args.spellId, 4)
+	-- rolls then pauses for ~4s
+	local remaining = 100 - UnitPower("boss1")
+	if remaining > 0 then
+		self:Message(args.spellId, "Attention", nil, L.roll_message:format(rollCount, remaining))
+		rollCount = rollCount + 1
+		self:CDBar(args.spellId, 3.5, CL.count:format(args.spellName, rollCount))
+	else
+		self:StopBar(CL.count:format(args.spellName, rollCount))
+		self:Message("stages", "Positive", "Long", CL.over:format(self:SpellName(-9968)), false) -- Feeding Frenzy over!
+	end
 end
 
 function mod:RollingFuryApplied(args)
-	self:StopBar(args.spellId)
+	self:StopBar(CL.count:format(args.spellName, rollCount))
 end
 
 function mod:StartBerserk()
@@ -214,10 +209,5 @@ function mod:StartBerserk()
 		hasGoneBerserk = true
 		self:Message("berserk", "Important", "Alarm", CL.custom_end:format(self.displayName, self:SpellName(26662)), 26662) -- Berserk
 	end
-end
-
-function mod:EarthshakingCollision(args)
-	crashCount = crashCount + 1
-	self:Message(args.spellId, "Attention", nil, CL.count:format(args.spellName, crashCount))
 end
 

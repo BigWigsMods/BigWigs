@@ -39,6 +39,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	stamperWarned = nil
 	self:Log("SPELL_CAST_START", "CripplingSuplex", 156938)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShatteredVertebrae", 157139)
 	-- Franzok
