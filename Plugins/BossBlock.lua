@@ -126,7 +126,7 @@ do
 	end
 
 	function plugin:BigWigs_OnBossEngage()
-		if self.db.profile.blockEmotes then
+		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
 		end
