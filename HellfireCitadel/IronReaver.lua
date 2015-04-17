@@ -8,7 +8,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Iron Reaver", 10000)
+local mod, CL = BigWigs:NewBoss("Iron Reaver", 1026, 1425)
 if not mod then return end
 mod:RegisterEnableMob(90284)
 --mod.engageId = 1000000
