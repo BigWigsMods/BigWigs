@@ -47,8 +47,6 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "InfernoSlice", 155080)
 	self:Log("SPELL_CAST_SUCCESS", "InfernoSliceSuccess", 155080)
-	self:Log("SPELL_AURA_APPLIED", "InfernoSliceApplied", 155080)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "InfernoSliceApplied", 155080)
 	self:Log("SPELL_CAST_START", "OverheadSmash", 155301)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingBlows", 155078)
 	self:Log("SPELL_AURA_APPLIED", "PetrifyingSlam", 155323)
@@ -77,29 +75,23 @@ end
 --
 
 do
-	local targets = 0
-	local function checkTargets(self, spellId)
+	local function sliceBar(self, spellId, spellName)
 		-- gains 50% of his rage if he hits less than 4 targets
-		self:Bar(spellId, targets < 4 and 5 or 10, CL.count:format(self:SpellName(spellId), sliceCount))
+		self:Bar(spellId, UnitPower("boss1") > 49 and 5 or 10, CL.count:format(spellName, sliceCount))
 	end
 
 	function mod:InfernoSlice(args)
 		self:StopBar(CL.count:format(args.spellName, sliceCount)) -- just in case
 		self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(CL.count:format(args.spellName, sliceCount)))
 		sliceCount = sliceCount + 1
-		targets = 0
 	end
 
 	function mod:InfernoSliceSuccess(args)
 		if not self:Mythic() then
 			self:Bar(args.spellId, 15, CL.count:format(args.spellName, sliceCount))
 		else
-			self:ScheduleTimer(checkTargets, 0.2, self, args.spellId)
+			self:ScheduleTimer(sliceBar, 0.5, self, args.spellId, args.spellName)
 		end
-	end
-
-	function mod:InfernoSliceApplied(args)
-		targets = targets + 1
 	end
 end
 
@@ -173,7 +165,7 @@ function mod:DestructiveRampageOver(args)
 	self:CDBar(args.spellId, 113)
 	rampaging = nil
 	smashCount, slamCount, sliceCount = 1, 1, 1
-	self:Bar(155080, self:Mythic() and 14 or 17, CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
+	self:Bar(155080, self:Mythic() and 13 or 17, CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
 	self:CDBar(155326, 25) -- Petrifying Slam
 	self:CDBar(155301, 31) -- Overhead Smash
 end
