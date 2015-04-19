@@ -222,7 +222,7 @@ do
 	local modMissingFunction = "Module %q got the event %q (%d), but it doesn't know how to handle it."
 	local missingArgument = "Missing required argument when adding a listener to %q."
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
-	local invalidId = "Module %q tried to register an invalid spell id (%d) to event %q."
+	local invalidId = "Module %q tried to register an invalid spell id (%s) to event %q."
 
 	function boss:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, ...)
 		if eventMap[self][event][msg] then
@@ -314,12 +314,10 @@ do
 		if not eventMap[self][event] then eventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
 			local id = (select(i, ...))
-			if type(id) == "number" then
-				if not GetSpellInfo(id) then
-					core:Print(format(invalidId, self.moduleName, id, event))
-				else
-					eventMap[self][event][id] = func
-				end
+			if (type(id) == "number" and GetSpellInfo(id)) or id == "*" then
+				eventMap[self][event][id] = func
+			else
+				core:Print(format(invalidId, self.moduleName, tostring(id), event))
 			end
 		end
 		allowedEvents[event] = true
