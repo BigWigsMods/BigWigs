@@ -363,9 +363,13 @@ do
 		end
 	end
 
+	local function profileUpdate()
+		addon:SendMessage("BigWigs_ProfileUpdate")
+	end
+
 	local addonName = ...
-	function addon:ADDON_LOADED(_, addon)
-		if addon ~= addonName then return end
+	function addon:ADDON_LOADED(_, name)
+		if name ~= addonName then return end
 		if not loader.hasLoaded then self:Print("Weird, the core loaded before the loader.") end -- XXX temp
 
 		local defaults = {
@@ -383,9 +387,6 @@ do
 		local db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
 		LibStub("LibDualSpec-1.0"):EnhanceDatabase(db, "BigWigs3DB")
 
-		local function profileUpdate()
-			addon:SendMessage("BigWigs_ProfileUpdate")
-		end
 		db.RegisterCallback(self, "OnProfileChanged", profileUpdate)
 		db.RegisterCallback(self, "OnProfileCopied", profileUpdate)
 		db.RegisterCallback(self, "OnProfileReset", profileUpdate)
