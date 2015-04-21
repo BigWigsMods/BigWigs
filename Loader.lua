@@ -109,8 +109,10 @@ do
 		[752]=cata, [758]=cata, [754]=cata, [824]=cata, [800]=cata, [773]=cata,
 		[896]=mop, [897]=mop, [886]=mop, [930]=mop, [953]=mop, [862]=mop,
 
+		[756]=lw, -- Classic
 		[710]=lw, [722]=lw, [723]=lw, [724]=lw, [725]=lw, [726]=lw, [727]=lw, [728]=lw, [729]=lw, [730]=lw, [731]=lw, [732]=lw, [733]=lw, [734]=lw, [797]=lw, [798]=lw, -- TBC
 		[520]=lw, [521]=lw, [522]=lw, [523]=lw, [524]=lw, [525]=lw, [526]=lw, [528]=lw, [530]=lw, [533]=lw, [534]=lw, [536]=lw, [542]=lw, [601]=lw, [602]=lw, [603]=lw, -- WotLK
+		-- Cataclysm
 		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw, [919]=lw, -- MoP
 		[964]=lw, [969]=lw, [984]=lw, [987]=lw, [989]=lw, [993]=lw, [995]=lw, [1008]=lw -- WoD
 	}
@@ -519,6 +521,7 @@ do
 		LittleWigs_Stratholme = "LittleWigs",
 		LittleWigs_Storm_Peaks = "LittleWigs",
 		["LittleWigs_Zul'Drak"] = "LittleWigs",
+		LittleWigs_Cataclysm = "LittleWigs",
 		BigWigs_TayakIcons = "BigWigs",
 		BigWigs_PizzaBar = "BigWigs",
 		BigWigs_ShaIcons = "BigWigs",
@@ -548,7 +551,7 @@ do
 
 		if old[name] then
 			delayedMessages[#delayedMessages+1] = L.removeAddon:format(name, old[name])
-			message(L.removeAddon:format(name, old[name]))
+			--message(L.removeAddon:format(name, old[name]))
 		end
 	end
 
