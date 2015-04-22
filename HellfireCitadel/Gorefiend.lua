@@ -47,7 +47,7 @@ function mod:GetOptions()
 		182601, -- Fel Fury
 		181582, -- Bellowing Shout
 		--[[ Gorebound Construct ]]--
-		{185038, "SAY", "FLASH"}, -- Hunger for Life
+		{180148, "SAY", "FLASH"}, -- Hunger for Life
 		--[[ Gorebound Spirit ]]--
 		187814, -- Raging Charge
 		{185189, "TANK"}, -- Fel Flames
@@ -57,7 +57,7 @@ function mod:GetOptions()
 	}, {
 		[179977] = self.displayName, -- Gorefiend
 		[182601] = -11378, -- Enraged Spirit
-		[185038] = -11018, -- Gorebound Construct
+		[180148] = -11018, -- Gorebound Construct
 		[187814] = -11020, -- Gorebound Spirit
 		["proximity"] = "general",
 	}
@@ -78,13 +78,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShadowOfDeath", 179864)
 	self:Log("SPELL_CAST_START", "CrushingDarkness", 182788)
 	self:Log("SPELL_CAST_START", "BellowingShout", 181582)
-	self:Log("SPELL_AURA_APPLIED", "HungerForLife", 185038)
+	self:Log("SPELL_AURA_APPLIED", "HungerForLife", 180148)
 	self:Log("SPELL_CAST_START", "RagingCharge", 187814)
 
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FelFlames", 185189)
 
 	self:Log("SPELL_AURA_APPLIED", "DoomWellDamage", 179995)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomWellDamage", 179995)
+	self:Log("SPELL_PERIODIC_DAMAGE", "DoomWellDamage", 179995)
+	self:Log("SPELL_PERIODIC_MISSED", "DoomWellDamage", 179995)
 	self:Log("SPELL_AURA_APPLIED", "FelFuryDamage", 182601)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FelFuryDamage", 182601)
 end
@@ -211,9 +212,9 @@ do
 	local prev = 0
 	function mod:DoomWellDamage(args)
 		local t = GetTime()
-		if t-prev > 2 and self:Me(args.destGUID) then
+		if t-prev > 1.5 and self:Me(args.destGUID) then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -236,7 +237,7 @@ function mod:BellowingShout(args)
 end
 
 function mod:HungerForLife(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", self:Damager() and "Warning", nil, nil, self:Damager() and true)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
