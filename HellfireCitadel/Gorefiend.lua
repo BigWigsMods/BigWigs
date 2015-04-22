@@ -231,7 +231,7 @@ end
 
 function mod:BellowingShout(args)
 	if UnitGUID("target") == args.sourceGUID or UnitGUID("focus") == args.sourceGUID then
-		self:Message(args.spellId, "Important", not self:Healer() and "Alert", CL.casting(args.spellName))
+		self:Message(args.spellId, "Important", not self:Healer() and "Alert", CL.casting:format(args.spellName))
 	end
 end
 
