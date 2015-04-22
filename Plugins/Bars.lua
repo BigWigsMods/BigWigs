@@ -1719,6 +1719,7 @@ end
 -- Slashcommand
 --
 
+local SendAddonMessage = BigWigsLoader.SendAddonMessage
 do
 	local times
 	SlashCmdList.BIGWIGSRAIDBAR = function(input)
