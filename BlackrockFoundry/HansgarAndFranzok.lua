@@ -39,7 +39,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	stamperWarned = nil
+	stamperWarned = nil -- Don't warn if it fades after the module reboots
+
 	self:Log("SPELL_CAST_START", "CripplingSuplex", 156938)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShatteredVertebrae", 157139)
 	-- Franzok
@@ -56,12 +57,11 @@ end
 
 function mod:OnEngage()
 	phase = 1
+	stamperWarned = nil
 	self:CDBar(153470, 20) -- Skullcracker
 	self:CDBar(160838, 45) -- Disrupting Roar
 	if self:Mythic() then
-		stamperWarned = nil
 		self:Bar(162124, 13) -- Smart Stampers
-		--self:Berserk(360)
 	end
 
 	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", "Jumps", "boss1", "boss2")
