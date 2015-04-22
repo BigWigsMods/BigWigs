@@ -10,8 +10,8 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Gorefiend", 1026, 1372)
 if not mod then return end
-mod:RegisterEnableMob(91809)
---mod.engageId = 0
+mod:RegisterEnableMob(90199, 91809) -- 90199 in beta
+mod.engageId = 1783
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -64,8 +64,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_AURA_APPLIED", "TouchOfDoom", 179977)
 	self:Log("SPELL_AURA_REMOVED", "TouchOfDoomRemoved", 179977)
 	self:Log("SPELL_AURA_APPLIED", "SharedFateRoot", 179909)
@@ -89,8 +87,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomWellDamage", 179995)
 	self:Log("SPELL_AURA_APPLIED", "FelFuryDamage", 182601)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FelFuryDamage", 182601)
-
-	self:Death("Kill", 91809)
 end
 
 function mod:OnEngage()
@@ -196,9 +192,15 @@ function mod:DigestRemoved(args)
 	end
 end
 
-function mod:ShadowOfDeath(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
-	self:TargetBar(args.spellId, 5, args.destName)
+do
+	local list = mod:NewTargetList()
+	function mod:ShadowOfDeath(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Urgent", "Alarm")
+		end
+		self:TargetBar(args.spellId, 5, args.destName)
+	end
 end
 
 function mod:CrushingDarkness(args)
