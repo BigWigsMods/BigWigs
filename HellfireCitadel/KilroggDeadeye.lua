@@ -12,14 +12,14 @@ if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Kilrogg Deadeye", 1026, 1396)
 if not mod then return end
 mod:RegisterEnableMob(90378)
---mod.engageId = 0
+mod.engageId = 1786
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local phase = 1
 local deathThroesCount = 0
+local mobCollector = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -66,8 +66,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_AURA_APPLIED", "HeartSeeker", 180372)
 	self:Log("SPELL_CAST_START", "VisionOfDeath", 182428)
 	self:Log("SPELL_CAST_START", "DeathThroes", 180224)
@@ -83,14 +81,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FelBlaze", 180618)
 
 	self:Log("SPELL_CAST_START", "CinderBreath", 180033)
-
-	self:Death("Kill", 90378)
 end
 
 function mod:OnEngage()
 	deathThroesCount = 0
+	wipe(mobCollector)
 	self:Message("berserk", "Neutral", nil, "Kilrogg (beta) engaged", false)
 	self:OpenAltPower("altpower", 182159) -- Fel Corruption
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 end
 
 function mod:Kill()
@@ -102,11 +100,33 @@ end
 -- Event Handlers
 --
 
+do
+	local adds = {
+		[93369] = "Hulking Terror",
+		[90521] = "Salivating Bloodthirster",
+		[90477] = "Blood Globule",
+	}
+	function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+		for i = 1, 5 do
+			local guid = UnitGUID("boss"..i)
+			if guid and not mobCollector[guid] then
+				mobCollector[guid] = true
+				local id = self:MobId(guid)
+				if adds[id] then
+					self:Message("berserk", "Neutral", nil, adds[id], false)
+				end
+			end
+		end
+	end
+end
+
 --[[ Kilrogg Deadeye ]]--
 
 do
 	local list = mod:NewTargetList()
 	function mod:HeartSeeker(args)
+		if self:MobId(args.destGUID) == 90378 then return end
+
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Important", "Alarm")
@@ -165,15 +185,33 @@ end
 
 --[[ Hellblaze Imp ]]--
 
-function mod:FelBlaze(args)
-	self:Message(args.spellId, "Attention", "Long")
-	self:Bar(args.spellId, 10)
+do
+	local prev = 0
+	function mod:FelBlaze(args)
+		if UnitBuff("player", self:SpellName(185458)) then -- Vision of Death
+			local t = GetTime()
+			if t-prev > 1 then
+				prev = t
+				self:Message(args.spellId, "Attention", "Long")
+				self:Bar(args.spellId, 10)
+			end
+		end
+	end
 end
 
 --[[ Hellblaze Mistress ]]--
 
-function mod:CinderBreath(args)
-	self:Message(args.spellId, "Attention", "Long")
-	self:Bar(args.spellId, 4.5)
+do
+	local prev = 0
+	function mod:CinderBreath(args)
+		if UnitBuff("player", self:SpellName(185458)) then -- Vision of Death
+			local t = GetTime()
+			if t-prev > 1 then
+				prev = t
+				self:Message(args.spellId, "Attention", "Long")
+				self:Bar(args.spellId, 4.5)
+			end
+		end
+	end
 end
 
