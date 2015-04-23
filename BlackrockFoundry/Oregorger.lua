@@ -38,7 +38,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		{156240, "TANK_HEALER"}, -- Acid Torrent
+		156240, -- Acid Torrent
 		{173471, "TANK"}, -- Acid Maw
 		{156203, "SAY", "FLASH"}, -- Retched Blackrock
 		{156390, "FLASH"}, -- Explosive Shard
