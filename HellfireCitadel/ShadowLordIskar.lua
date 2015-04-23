@@ -1,6 +1,6 @@
 
 -- Notes --
--- Fel Chakram target?
+-- Fel beam fixate
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -10,8 +10,8 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Shadow-Lord Iskar", 1026, 1433)
 if not mod then return end
-mod:RegisterEnableMob(90316, 91591) -- XXX hopefuly one is right
---mod.engageId = 0
+mod:RegisterEnableMob(90316, 91591) -- 90316 in beta
+mod.engageId = 1788
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -35,20 +35,19 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{181956, "SAY"}, -- Phantasmal Winds
+		181956, -- Phantasmal Winds
 		182323, -- Phantasmal Wounds
 		{181824, "SAY", "PROXIMITY"}, -- Phantasmal Corruption
-		181753, -- Fel Bomb
+		{181753, "SAY"}, -- Fel Bomb
 		{181912, "FLASH"}, -- Focused Blast
 		{182582, "SAY"}, -- Fel Incineration
 		181827, -- Fel Conduit
+		{182200, "SAY"}, -- Fel Chakram
 		"berserk",
 	}
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_AURA_APPLIED", "PhantasmalWinds", 185757, 181957)
 	self:Log("SPELL_AURA_APPLIED", "PhantasmalWounds", 182325)
 	self:Log("SPELL_AURA_APPLIED", "PhantasmalCorruption", 181824, 187990)
@@ -56,6 +55,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FelBomb", 181753)
 	self:Log("SPELL_CAST_START", "FocusedBlast", 181912)
 	self:Log("SPELL_CAST_START", "FelConduit", 181827, 187998)
+	self:Log("SPELL_AURA_APPLIED", "FelChakram", 182200, 182178)
 
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 end
@@ -74,9 +74,6 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.2, 181956, list, "Attention")
-		end
-		if self:Me(args.destGUID) then
-			self:Say(181956)
 		end
 	end
 end
@@ -107,13 +104,10 @@ function mod:PhantasmalCorruptionRemoved(args)
 	self:StopBar(args.spellName, args.destName)
 end
 
-do
-	local list = mod:NewTargetList()
-	function mod:FelBomb(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention")
-		end
+function mod:FelBomb(args)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert")
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
 	end
 end
 
@@ -131,6 +125,19 @@ function mod:RAID_BOSS_WHISPER(event, msg)
 	if msg:find(self:SpellName(182582)) then
 		self:Message(182582, "Personal", "Alarm", CL.you:format(self:SpellName(182582)))
 		self:Say(182582)
+	end
+end
+
+do
+	local list = mod:NewTargetList()
+	function mod:FelChakram(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.2, 182200, list, "Attention", "Alert")
+		end
+		if self:Me(args.destGUID) then
+			self:Say(182200)
+		end
 	end
 end
 
