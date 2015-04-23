@@ -884,12 +884,12 @@ do
 	local notNumberError   = "Module %s tried to access %q, but in the database it's a %s."
 	local nilKeyError      = "Module %s tried to check the bitflags for a nil option key."
 	local invalidFlagError = "Module %s tried to check for an invalid flag type %q (%q). Flags must be bits."
-	local noDBError        = "Module %s does not have a .db property, which is weird. %s"
+	local noDBError        = "Module %s does not have a .db property, which is weird. (%s) (%s)"
 	checkFlag = function(self, key, flag)
 		if type(key) == "nil" then core:Print(format(nilKeyError, self.name)) return end
 		if type(flag) ~= "number" then core:Print(format(invalidFlagError, self.name, type(flag), tostring(flag))) return end
 		if silencedOptions[key] then return end
-		if type(self.db) ~= "table" then local msg = format(noDBError, self.name, self.hasInit and "(hasInit)" or "(noInit)") core:Print(msg) error(msg) return end
+		if type(self.db) ~= "table" then local msg = format(noDBError, self.name, self.hasInit and "hasInit" or "noInit", self.SetupOptions and "hasOpts" or "noOpts") core:Print(msg) error(msg) return end
 		if type(self.db.profile[key]) ~= "number" then
 			if not self.toggleDefaults[key] then
 				core:Print(format(noDefaultError, self.name, key))
