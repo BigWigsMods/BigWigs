@@ -42,7 +42,7 @@ function mod:GetOptions()
 		181973, -- Feast of Souls
 		181295, -- Digest
 		179864, -- Shadow of Death
-		182788, -- Crushing Darkness
+		--182788, -- Crushing Darkness
 		--[[ Enraged Spirit ]]--
 		182601, -- Fel Fury
 		181582, -- Bellowing Shout
@@ -76,7 +76,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Digest", 181295)
 	self:Log("SPELL_AURA_REMOVED", "DigestRemoved", 181295)
 	self:Log("SPELL_AURA_APPLIED", "ShadowOfDeath", 179864)
-	self:Log("SPELL_CAST_START", "CrushingDarkness", 182788)
+	--self:Log("SPELL_CAST_START", "CrushingDarkness", 182788) -- 180016 hidden, but do we care about warning for it?
 	self:Log("SPELL_CAST_START", "BellowingShout", 181582)
 	self:Log("SPELL_AURA_APPLIED", "HungerForLife", 180148)
 	self:Log("SPELL_CAST_START", "RagingCharge", 187814)
@@ -93,6 +93,7 @@ end
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Gorefiend (beta) engaged", false)
 	self:OpenProximity("proximity", 5) -- XXX Tie this to Surging Shadows?
+	self:Bar(179909, 18) -- Shared Fate
 end
 
 function mod:Kill()
@@ -129,6 +130,7 @@ function mod:TouchOfDoomRemoved(args)
 end
 
 function mod:SharedFateRoot(args)
+	self:Bar(args.spellId, 29)
 	fatePlayer = args.destName
 	if self:Me(args.destGUID) then
 		self:Say(179909, 135484) -- 135484 = "Rooted"
@@ -204,9 +206,9 @@ do
 	end
 end
 
-function mod:CrushingDarkness(args)
-	self:Message(args.spellId, "Important", "Info", CL.incoming:format(args.spellName))
-end
+--function mod:CrushingDarkness(args)
+--	self:Message(args.spellId, "Important", "Info", CL.incoming:format(args.spellName))
+--end
 
 do
 	local prev = 0

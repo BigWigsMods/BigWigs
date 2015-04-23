@@ -1,7 +1,7 @@
 
 -- Notes --
--- Fel Rupture is instant? (and is hidden?)
--- Globules spawn instantly on APPLIED?
+-- Fel Rupture is instant on death
+-- Death throes timer is whack
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -87,13 +87,12 @@ function mod:OnEngage()
 	deathThroesCount = 0
 	wipe(mobCollector)
 	self:Message("berserk", "Neutral", nil, "Kilrogg (beta) engaged", false)
+	self:CDBar(182428, 60) -- Vision of Death
+	self:CDBar(180372, 25) -- Heart Seeker
+	self:CDBar(180199, 12) -- Shred Armor
 	self:OpenAltPower("altpower", 182159) -- Fel Corruption
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-end
-
-function mod:Kill()
-	self:Message("berserk", "Neutral", nil, "Kilrogg (beta) killed", false)
-	self:Wipe()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
 end
 
 --------------------------------------------------------------------------------
@@ -118,6 +117,12 @@ do
 			end
 		end
 	end
+
+	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+		if spellId == 182012 then -- Max Health Increase
+			self:Message("berserk", "Neutral", nil, adds[93369], false)
+		end
+	end
 end
 
 --[[ Kilrogg Deadeye ]]--
@@ -130,6 +135,7 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Important", "Alarm")
+			self:CDBar(args.spellId, 30) -- 30-35
 		end
 		if self:Me(args.destGUID) then
 			self:TargetBar(args.spellId, 5, args.destName)
@@ -141,7 +147,8 @@ end
 
 function mod:VisionOfDeath(args)
 	self:Message(args.spellId, "Positive", "Long")
-	self:Bar(args.spellId, 8)
+	self:Bar(args.spellId, 8, CL.cast:format(args.spellName))
+	self:CDBar(args.spellId, 75) -- XXX exact?
 end
 
 function mod:DeathThroes(args)
@@ -152,7 +159,7 @@ end
 
 function mod:ShredArmor(args)
 	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 1.7)
+	self:CDBar(args.spellId, 18) -- 18-27
 end
 
 function mod:ShreddedArmor(args) -- Tank Failed

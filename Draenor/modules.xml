@@ -4,6 +4,7 @@
 <Script file="Drov.lua"/>
 <Script file="Tarlna.lua"/>
 <Script file="Rukhmar.lua"/>
+<Script file="Kazzak.lua"/>
 
 </Ui>
 

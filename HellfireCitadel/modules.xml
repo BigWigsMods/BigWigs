@@ -2,8 +2,10 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="IronReaver.lua"/>
+<Script file="Kormrok.lua"/>
 <Script file="KilroggDeadeye.lua"/>
 <Script file="Gorefiend.lua"/>
+<Script file="ShadowLordIskar.lua"/>
 
 </Ui>
 
