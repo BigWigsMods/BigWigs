@@ -11,8 +11,8 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Kormrok", 1026, 1392)
 if not mod then return end
-mod:RegisterEnableMob(90435, 90776) -- XXX hopefuly one is right
---mod.engageId = 0
+mod:RegisterEnableMob(90435, 90776) -- 90435 on beta
+mod.engageId = 1787
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -43,7 +43,7 @@ function mod:GetOptions()
 		181297, -- Empowered Explosive Runes
 		181299, -- Grasping Hands
 		181300, -- Dragging Hands
-		180593, -- Pound
+		{180244, "PROXIMITY"}, -- Pound
 		181305, -- Swat
 		181345, -- Foul Crush
 		186882, -- Enrage
@@ -52,14 +52,13 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveBurst", 181306)
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveBurstRemoved", 181306)
 	self:Log("SPELL_CAST_START", "ShadowWaves", 181292, 181293)
 	self:Log("SPELL_CAST_START", "ExplosiveRunes", 181296, 181297)
 	self:Log("SPELL_CAST_START", "GraspingHands", 181299, 181300)
-	self:Log("SPELL_CAST_START", "Pound", 180593, 180244)
+	self:Log("SPELL_CAST_START", "Pound", 180244)
+	self:Log("SPELL_AURA_REMOVED", "PoundOver", 180244)
 	self:Log("SPELL_CAST_START", "Swat", 181305, 187165)
 	self:Log("SPELL_AURA_APPLIED", "FoulCrush", 181345)
 	self:Log("SPELL_AURA_APPLIED", "Enrage", 186882)
@@ -67,6 +66,7 @@ end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Kormrok (beta) engaged", false)
+	self:CDBar(180244, 50) -- Pound
 	poundCount = 0
 end
 
@@ -108,8 +108,13 @@ end
 
 function mod:Pound(args)
 	poundCount = poundCount + 1
-	self:Message(180593, "Urgent", "Alert", CL.count:format(args.spellName, poundCount))
-	self:Bar(180593, 9, CL.count:format(args.spellName, poundCount))
+	self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, poundCount))
+	self:Bar(args.spellId, 9, CL.count:format(args.spellName, poundCount))
+	self:OpenProximity(args.spellId, 5) -- 4 + 1 safety
+end
+
+function mod:PoundOver(args)
+	self:CloseProximity(args.spellId)
 end
 
 function mod:Swat(args)
