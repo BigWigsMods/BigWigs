@@ -2,7 +2,7 @@
 -- Notes --
 -- Fel Explosions cast/aura? (hidden)
 -- Wake of Destruction?
--- Fel Crystal Damage id
+-- Latent energy
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -13,7 +13,7 @@ if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Fel Lord Zakuun", 1026, 1391)
 if not mod then return end
 mod:RegisterEnableMob(89890, 90108) -- Fel Lord Zakuun, Fel Axe
---mod.engageId = 1777
+mod.engageId = 1777
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -41,7 +41,7 @@ function mod:GetOptions()
 		179671, -- Heavily Armed
 		179407, -- Disembodied
 		179583, -- Rumbling Fissure
-		179620, -- Fel Crystal
+		181653, -- Fel Crystal
 		{181508, "SAY"}, -- Seed of Destruction
 		179681, -- Enrage
 		"berserk",
@@ -49,8 +49,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_AURA_APPLIED", "Befouled", 179711)
 	self:Log("SPELL_AURA_REMOVED", "BefouledRemoved", 179711)
 	self:Log("SPELL_AURA_APPLIED", "HeavilyArmed", 179671)
@@ -59,9 +57,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SeedOfDestruction", 181508, 181515)
 	self:Log("SPELL_AURA_APPLIED", "Enrage", 179681)
 
-	self:Log("SPELL_AURA_APPLIED", "FelCrystalDamage", 179620)
-	self:Log("SPELL_PERIODIC_DAMAGE", "FelCrystalDamage", 179620)
-	self:Log("SPELL_PERIODIC_MISSED", "FelCrystalDamage", 179620)
+	self:Log("SPELL_AURA_APPLIED", "FelCrystalDamage", 181653)
+	self:Log("SPELL_PERIODIC_DAMAGE", "FelCrystalDamage", 181653)
+	self:Log("SPELL_PERIODIC_MISSED", "FelCrystalDamage", 181653)
 end
 
 function mod:OnEngage()
@@ -127,7 +125,7 @@ do
 		local t = GetTime()
 		if t-prev > 1.5 and self:Me(args.destGUID) then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 		end
 	end
 end
