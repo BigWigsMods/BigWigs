@@ -12,13 +12,14 @@ if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Tyrant Velhari", 1026, 1394)
 if not mod then return end
 mod:RegisterEnableMob(90269, 93439) -- XXX hopefuly one is right
---mod.engageId = 0
+mod.engageId = 1784
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
 local phase = 1
+local mobCollector = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -60,8 +61,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-
 	self:Log("SPELL_CAST_START", "EnforcersOnslaught", 180004)
 	self:Log("SPELL_CAST_START", "AnnihilatingStrike", 180260)
 	self:Log("SPELL_CAST_START", "InfernalTempest", 180300)
@@ -82,6 +81,8 @@ end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Tyrant Velhari (beta) engaged", false)
+	wipe(mobCollector)
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 end
 
 --------------------------------------------------------------------------------
@@ -98,7 +99,6 @@ do
 		[91303] = -11170,
 	}
 	function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-		self:CheckBossStatus()
 		for i = 1, 5 do
 			local guid = UnitGUID("boss"..i)
 			if guid and not mobCollector[guid] then
@@ -172,7 +172,7 @@ do
 end
 
 function mod:EdictOfCondemnation(args)
-	self:TargetBar(182459, 9)
+	self:TargetBar(182459, 9, args.destName)
 	self:TargetMessage(182459, args.destName, "Important", "Warning", nil, nil, true)
 	if self:Me(args.destGUID) then
 		self:Say(182459)
