@@ -75,8 +75,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SealOfDecay", 180000)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SealOfDecay", 180000)
 	self:Log("SPELL_AURA_APPLIED", "TouchOfHarm", 180166, 185237)
-	self:Log("SPELL_AURA_APPLIED", "EdictOfCondemnation", 182459, 185241)
-	self:Log("SPELL_AURA_REMOVED", "EdictOfCondemnationRemoved", 182459, 185241)
+	self:Log("SPELL_AURA_APPLIED", "EdictOfCondemnation", 182459)
+	self:Log("SPELL_AURA_REMOVED", "EdictOfCondemnationRemoved", 182459)
 end
 
 function mod:OnEngage()
@@ -179,21 +179,31 @@ do
 	end
 end
 
-function mod:EdictOfCondemnation(args)
-	self:TargetBar(182459, 9, args.destName)
-	self:TargetMessage(182459, args.destName, "Important", "Warning", nil, nil, true)
-	if self:Me(args.destGUID) then
-		self:Say(182459)
-		self:OpenProximity(182459, 10) -- This will need to be dynamically updated for an ever-shrinking range
-	else
-		self:OpenProximity(182459, 10, args.destName, true)
+do
+	local timer1, timer2 = nil, nil
+	function mod:EdictOfCondemnation(args)
+		self:TargetBar(args.spellId, 9, args.destName)
+		self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+			self:OpenProximity(args.spellId, 30)
+			timer1 = self:ScheduleTimer("OpenProximity", 3, args.spellId, 20)
+			timer2 = self:ScheduleTimer("OpenProximity", 6, args.spellId, 10)
+		else
+			self:OpenProximity(args.spellId, 30, args.destName, true)
+			timer1 = self:ScheduleTimer("OpenProximity", 3, args.spellId, 20, args.destName, true)
+			timer2 = self:ScheduleTimer("OpenProximity", 6, args.spellId, 10, args.destName, true)
+		end
+		self:PrimaryIcon(args.spellId, args.destName)
 	end
-	self:PrimaryIcon(182459, args.destName)
-end
 
-function mod:EdictOfCondemnationRemoved(args)
-	self:CloseProximity(182459)
-	self:PrimaryIcon(182459)
-	self:StopBar(args.spellName, args.destName)
+	function mod:EdictOfCondemnationRemoved(args)
+		self:CancelTimer(timer1)
+		self:CancelTimer(timer2)
+		timer1, timer2 = nil, nil
+		self:CloseProximity(args.spellId)
+		self:PrimaryIcon(args.spellId)
+		self:StopBar(args.spellName, args.destName)
+	end
 end
 
