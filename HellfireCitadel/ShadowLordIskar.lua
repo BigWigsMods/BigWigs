@@ -43,6 +43,7 @@ function mod:GetOptions()
 		{182582, "SAY"}, -- Fel Incineration
 		181827, -- Fel Conduit
 		{182200, "SAY"}, -- Fel Chakram
+		"stages",
 		"berserk",
 	}
 end
@@ -56,6 +57,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FocusedBlast", 181912)
 	self:Log("SPELL_CAST_START", "FelConduit", 181827, 187998)
 	self:Log("SPELL_AURA_APPLIED", "FelChakram", 182200, 182178)
+	self:Log("SPELL_CAST_START", "Stage2", 181873) -- Shadow Escape
 
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 end
@@ -83,7 +85,7 @@ do
 	function mod:PhantasmalWounds(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, 182323, list, "Attention")
+			self:ScheduleTimer("TargetMessage", 1, 182323, list, "Attention")
 		end
 	end
 end
@@ -139,5 +141,9 @@ do
 			self:Say(182200)
 		end
 	end
+end
+
+function mod:Stage2() -- Shadow Escape
+	self:Message("stages", "Neutral", "Info", CL.stage:format(2), false)
 end
 

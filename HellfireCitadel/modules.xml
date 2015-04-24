@@ -6,6 +6,8 @@
 <Script file="KilroggDeadeye.lua"/>
 <Script file="Gorefiend.lua"/>
 <Script file="ShadowLordIskar.lua"/>
+<Script file="FelLordZakuun.lua"/>
+<Script file="TyrantVelhari.lua"/>
 
 </Ui>
 
