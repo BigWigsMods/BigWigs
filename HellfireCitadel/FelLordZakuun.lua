@@ -12,8 +12,8 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Fel Lord Zakuun", 1026, 1391)
 if not mod then return end
-mod:RegisterEnableMob(91394) -- XXX not hopeful for this
---mod.engageId = 0
+mod:RegisterEnableMob(89890, 90108) -- Fel Lord Zakuun, Fel Axe
+--mod.engageId = 1777
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -40,7 +40,7 @@ function mod:GetOptions()
 		{179711, "PROXIMITY", "SAY"}, -- Befouled
 		179671, -- Heavily Armed
 		179407, -- Disembodied
-		179582, -- Rumbling Fissure
+		179583, -- Rumbling Fissure
 		179620, -- Fel Crystal
 		{181508, "SAY"}, -- Seed of Destruction
 		179681, -- Enrage
@@ -55,7 +55,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "BefouledRemoved", 179711)
 	self:Log("SPELL_AURA_APPLIED", "HeavilyArmed", 179671)
 	self:Log("SPELL_AURA_APPLIED", "Disembodied", 179407)
-	self:Log("SPELL_CAST_SUCCESS", "RumblingFissure", 179582)
+	self:Log("SPELL_CAST_START", "RumblingFissure", 179583)
 	self:Log("SPELL_AURA_APPLIED", "SeedOfDestruction", 181508, 181515)
 	self:Log("SPELL_AURA_APPLIED", "Enrage", 179681)
 
@@ -101,7 +101,7 @@ function mod:Disembodied(args)
 end
 
 function mod:RumblingFissure(args)
-	self:Message(args.spellId, args.destName, "Urgent", "Info")
+	self:Message(args.spellId, "Urgent", "Info")
 end
 
 do
