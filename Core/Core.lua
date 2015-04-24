@@ -356,10 +356,20 @@ end
 local initModules = {}
 do
 	local function InitializeModules()
-		for i = 1, #initModules do
+		local count = #initModules
+		local hasModules = count > 0
+		for i = 1, count do
 			local module = initModules[i]
 			module:Initialize()
 			initModules[i] = nil
+		end
+		-- For LoD users
+		-- ZONE_CHANGED_NEW_AREA > LoadAddOn
+		-- ADDON_LOADED > InitializeModules
+		-- We're in a brand new zone that loaded a new addon and added modules.
+		-- Now force a zone check to be able to enable those modules.
+		if hasModules then
+			zoneChanged()
 		end
 	end
 
@@ -648,10 +658,6 @@ do
 		local id = module.worldBoss and module.zoneId or GetAreaMapInfo(module.zoneId)
 		if not enablezones[id] then
 			enablezones[id] = true
-			-- We fire zoneChanged() as a backup for LoD users. In rare cases,
-			-- ZONE_CHANGED_NEW_AREA fires before the first module can add its zoneId into the table,
-			-- resulting in a failed check to register UPDATE_MOUSEOVER_UNIT, etc.
-			zoneChanged()
 		end
 	end
 
