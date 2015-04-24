@@ -105,7 +105,7 @@ local spells = setmetatable({}, {__index =
 local boss = {}
 core:GetModule("Bosses"):SetDefaultModulePrototype(boss)
 function boss:IsBossModule() return true end
-function boss:Initialize() self.hasInit = true core:RegisterBossModule(self) end -- XXX temp var
+function boss:Initialize() core:RegisterBossModule(self) end
 function boss:OnEnable(isWipe)
 	if debug then dbg(self, isWipe and "OnEnable() via Wipe()" or "OnEnable()") end
 
@@ -884,19 +884,19 @@ do
 	local notNumberError   = "Module %s tried to access %q, but in the database it's a %s."
 	local nilKeyError      = "Module %s tried to check the bitflags for a nil option key."
 	local invalidFlagError = "Module %s tried to check for an invalid flag type %q (%q). Flags must be bits."
-	local noDBError        = "Module %s does not have a .db property, which is weird. (%s) (%s)"
+	local noDBError        = "Module %s does not have a .db property, which is weird."
 	checkFlag = function(self, key, flag)
-		if type(key) == "nil" then core:Print(format(nilKeyError, self.name)) return end
-		if type(flag) ~= "number" then core:Print(format(invalidFlagError, self.name, type(flag), tostring(flag))) return end
+		if type(key) == "nil" then core:Print(format(nilKeyError, self.moduleName)) return end
+		if type(flag) ~= "number" then core:Print(format(invalidFlagError, self.moduleName, type(flag), tostring(flag))) return end
 		if silencedOptions[key] then return end
-		if type(self.db) ~= "table" then local msg = format(noDBError, self.name, self.hasInit and "hasInit" or "noInit", self.SetupOptions and "hasOpts" or "noOpts") core:Print(msg) error(msg) return end
+		if type(self.db) ~= "table" then local msg = format(noDBError, self.moduleName) core:Print(msg) error(msg) return end
 		if type(self.db.profile[key]) ~= "number" then
 			if not self.toggleDefaults[key] then
-				core:Print(format(noDefaultError, self.name, key))
+				core:Print(format(noDefaultError, self.moduleName, key))
 				return
 			end
 			if debug then
-				core:Print(format(notNumberError, self.name, key, type(self.db.profile[key])))
+				core:Print(format(notNumberError, self.moduleName, key, type(self.db.profile[key])))
 				return
 			end
 			self.db.profile[key] = self.toggleDefaults[key]
