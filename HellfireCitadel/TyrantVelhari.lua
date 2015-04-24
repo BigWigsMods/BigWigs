@@ -11,7 +11,7 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Tyrant Velhari", 1026, 1394)
 if not mod then return end
-mod:RegisterEnableMob(90269, 93439) -- XXX hopefuly one is right
+mod:RegisterEnableMob(90269, 93439) -- 90269 on beta
 mod.engageId = 1784
 
 --------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ function mod:GetOptions()
 	return {
 		--[[ Stage One: Oppression ]]--
 		180004, -- Enforcer's Onslaught
-		180260, -- Annihilating Strike
+		{180260, "SAY"}, -- Annihilating Strike
 		{180300, "FLASH", "PROXIMITY"}, -- Infernal Tempest
 		--[[ Stage Two: Contempt ]]--
 		180533, -- Tainted Shadows
@@ -117,9 +117,17 @@ function mod:EnforcersOnslaught(args)
 	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
 end
 
-function mod:AnnihilatingStrike(args)
-	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 3)
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage(180260, name, "Attention", "Info", nil, nil, true)
+		if self:Me(guid) then
+			self:Say(180260)
+		end
+	end
+	function mod:AnnihilatingStrike(args)
+		self:GetBossTarget(printTarget, 0.2, args.sourceGUID)
+		self:Bar(args.spellId, 3)
+	end
 end
 
 function mod:InfernalTempest(args)
