@@ -13,6 +13,7 @@ mod.engageId = 1695
 --
 
 local shipCount = 0
+local barrierCount = 0
 local boatTimers = {} -- don't announce while on the boat, but track the cd times
 
 local function isOnABoat()
@@ -119,6 +120,7 @@ end
 
 function mod:OnEngage()
 	shipCount = 0
+	barrierCount = 0
 	wipe(boatTimers)
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1", "boss2", "boss3")
 
@@ -259,8 +261,9 @@ do
 end
 
 function mod:EarthenBarrier(args)
+	barrierCount = barrierCount + 1
 	if isOnABoat() then
-		self:Message(args.spellId, "Urgent", "Alert")
+		self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, barrierCount))
 		self:CDBar(args.spellId, 10)
 	end
 end
