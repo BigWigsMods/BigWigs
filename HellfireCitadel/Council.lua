@@ -51,8 +51,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_AURA_APPLIED", "MarkOfTheNecromancer", 184449, 184450, 184676, 185065, 185066, 185074, 187183)
 	self:Log("SPELL_CAST_START", "Reap", 184476)
 	self:Log("SPELL_CAST_START", "NightmareVisage", 184657)

@@ -13,7 +13,7 @@ if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Mannoroth", 1026, 1395)
 if not mod then return end
 mod:RegisterEnableMob(91305, 94362, 91409, 91349, 91369) -- Fel Iron Summoner, ...
---mod.engageId = 0
+mod.engageId = 1795
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -42,7 +42,7 @@ function mod:GetOptions()
 		181799, -- Shadowforce
 		181948, -- Empowered Fel Hellstorm
 		{181275, "SAY", "ICON", "FLASH"}, -- Curse of the Legion
-		181119, -- Doom Spike -- XXX Tank only?
+		{181119, "TANK"}, -- Doom Spike
 		181126, -- Shadow Bolt Volley
 		181735, -- Felseeker
 		{183377, "TANK"}, -- Glaive Thrust
@@ -52,8 +52,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_AURA_APPLIED", "MarkOfDoom", 181099)
 	self:Log("SPELL_AURA_REMOVED", "MarkOfDoomRemoved", 181099)
 	self:Log("SPELL_CAST_START", "MannorothsGazeCast", 181597, 182006)
@@ -62,7 +60,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Shadowforce", 181799, 182084)
 	self:Log("SPELL_AURA_APPLIED", "CurseOfTheLegion", 181275)
 	self:Log("SPELL_AURA_REMOVED", "CurseOfTheLegionRemoved", 181275)
-	self:Log("SPELL_AURA_APPLIED", "DoomSpike", 181119)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomSpike", 181119)
 	self:Log("SPELL_CAST_START", "ShadowBoltVolley", 181126)
 	self:Log("SPELL_CAST_START", "Felseeker", 181738, 181792, 181793)
@@ -143,7 +140,9 @@ function mod:CurseOfTheLegionRemoved(args)
 end
 
 function mod:DoomSpike(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent")
+	if args.amount % 3 == 0 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent")
+	end
 end
 
 function mod:ShadowBoltVolley(args)
