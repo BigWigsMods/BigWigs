@@ -357,18 +357,17 @@ local initModules = {}
 do
 	local function InitializeModules()
 		local count = #initModules
-		local hasModules = count > 0
-		for i = 1, count do
-			local module = initModules[i]
-			module:Initialize()
-			initModules[i] = nil
-		end
-		-- For LoD users
-		-- ZONE_CHANGED_NEW_AREA > LoadAddOn
-		-- ADDON_LOADED > InitializeModules
-		-- We're in a brand new zone that loaded a new addon and added modules.
-		-- Now force a zone check to be able to enable those modules.
-		if hasModules then
+		if count > 0 then
+			for i = 1, count do
+				local module = initModules[i]
+				module:Initialize()
+				initModules[i] = nil
+			end
+			-- For LoD users
+			-- ZONE_CHANGED_NEW_AREA > LoadAddOn
+			-- ADDON_LOADED > InitializeModules
+			-- We're in a brand new zone that loaded a new addon and added modules.
+			-- Now force a zone check to be able to enable those modules.
 			zoneChanged()
 		end
 	end
@@ -619,7 +618,7 @@ do
 						module.toggleDefaults[v] = bitflags
 					else
 						local n = EJ_GetSectionInfo(-v)
-						if not n then error(("Invalid ej ID %d in the toggleOptions for module %s."):format(-v, module.name)) end
+						if not n then error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
 						module.toggleDefaults[v] = bitflags
 					end
 				end
