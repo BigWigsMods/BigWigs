@@ -49,6 +49,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:Log("SPELL_CAST_SUCCESS", "Foul", 179709) -- Applies Befouled on targets
 	self:Log("SPELL_AURA_APPLIED", "Befouled", 179711)
 	self:Log("SPELL_AURA_REMOVED", "BefouledRemoved", 179711)
 	self:Log("SPELL_AURA_APPLIED", "HeavilyArmed", 179671)
@@ -69,6 +70,10 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Foul()
+	self:CDBar(179711, 39)
+end
 
 do
 	local list = mod:NewTargetList()
@@ -96,10 +101,12 @@ end
 
 function mod:Disembodied(args)
 	self:TargetMessage(args.spellId, args.destName, "Important")
+	self:Bar(args.spellId, 40)
 end
 
 function mod:RumblingFissure(args)
 	self:Message(args.spellId, "Urgent", "Info")
+	self:Bar(args.spellId, 40)
 end
 
 do
@@ -107,6 +114,7 @@ do
 	function mod:SeedOfDestruction(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
+			self:CDBar(args.spellId, 15)
 			self:ScheduleTimer("TargetMessage", 0.2, 181508, list, "Attention", "Alarm")
 		end
 		if self:Me(args.destGUID) then

@@ -1,6 +1,5 @@
 
 -- Notes --
--- Warn for the different energy buffs?
 -- Bother with Fel Touch?
 
 --------------------------------------------------------------------------------
@@ -46,6 +45,9 @@ function mod:GetOptions()
 		{180244, "PROXIMITY"}, -- Pound
 		181305, -- Swat
 		181345, -- Foul Crush
+		180115, -- Shadow Energy
+		180116, -- Explosive Energy
+		180117, -- Foul Energy
 		186882, -- Enrage
 		"berserk",
 	}
@@ -61,6 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "PoundOver", 180244)
 	self:Log("SPELL_CAST_START", "Swat", 181305, 187165)
 	self:Log("SPELL_AURA_APPLIED", "FoulCrush", 181345)
+	self:Log("SPELL_AURA_APPLIED", "EnergyBuffs", 180115, 180116, 180117) -- Shadow Energy, Explosive Energy, Foul Energy
 	self:Log("SPELL_AURA_APPLIED", "Enrage", 186882)
 end
 
@@ -129,6 +132,10 @@ do
 			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention")
 		end
 	end
+end
+
+function mod:EnergyBuffs(args)
+	self:Message(args.spellId, "Positive")
 end
 
 function mod:Enrage(args)
