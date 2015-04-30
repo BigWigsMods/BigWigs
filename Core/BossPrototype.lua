@@ -4,7 +4,7 @@
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected
-local EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture = EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture
+local EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture, IsSpellKnown = EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture, IsSpellKnown
 local SendChatMessage = BigWigsLoader.SendChatMessage
 local format, sub, gsub, band = string.format, string.sub, string.gsub, bit.band
 local type, next, tonumber = type, next, tonumber
