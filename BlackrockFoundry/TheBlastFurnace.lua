@@ -159,7 +159,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "MeltDamage", 155223)
 	self:Log("SPELL_AURA_APPLIED", "Superheated", 163776)
 
-	self:Death("Deaths", 76808, 76815, 88820, 76810) -- Heat Regulator, Primal Elementalist, Furnace Engineer x2
+	self:Death("RegulatorDeath", 76808) -- Heat Regulator
+	self:Death("ElementalistDeath", 76815) -- Primal Elementalist
+	self:Death("EngineerDeath", 88820, 76810) -- Furnace Engineer
 end
 
 function mod:OnEngage()
@@ -404,8 +406,8 @@ function mod:HardenedSlagRemoved(args)
 end
 
 function mod:ReactiveEarthShield(args)
-	if self:MobId(args.destGUID) == "76815" and self:Dispeller("magic", nil, args.spellId) then
-		self:Message(args.spellId, "Urgent", "Info")
+	if self:MobId(args.destGUID) == 76815 and self:Dispeller("magic", nil, args.spellId) then
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, true)
 	end
 end
 
@@ -567,45 +569,47 @@ function mod:Superheated(args)
 	end
 end
 
+function mod:RegulatorDeath(args)
+	regulatorDeaths = regulatorDeaths + 1
+	self:Message("stages", "Neutral", "Info", CL.mob_killed:format(args.destName, regulatorDeaths, 2), false)
+	if regulatorDeaths > 1 then
+		-- Primalists spawn
+		self:StopBar(-9650) -- Bellows Operator
+		self:StopBar(-9649) -- Furnace Engineer
+		self:CancelTimer(engiTimer)
+		self:CancelTimer(securityTimer)
+		self:CDBar("guard", 70, -10803, L.guard_icon) -- Security Guard
+		securityTimer = self:ScheduleTimer("SecurityRepeater", 70)
+		self:CDBar("firecaller", 75, -9659, L.firecaller_icon) -- Firecaller
+		firecallerTimer = self:ScheduleTimer("FirecallerRepeater", 75)
+	end
+end
 
-function mod:Deaths(args)
-	if args.mobId == 88820 or args.mobId == 76810 then
-		if regulatorDeaths < 2 then -- p1: pick up bombs
-			local bombs = self:Mythic() and 3 or engineerBombs[args.destGUID] or 5
-			if bombs > 0 then
-				self:Message(174731, "Positive", "Info", L.bombs_dropped:format(bombs))
-			end
-			engineerBombs[args.destGUID] = nil
-		else -- p2: care
-			self:Message(174731, "Important", nil, L.bombs_dropped_p2)
- 		end
-	elseif args.mobId == 76808 then
-		regulatorDeaths = regulatorDeaths + 1
-		self:Message("stages", "Neutral", "Info", CL.mob_killed:format(args.destName, regulatorDeaths, 2), false)
-		if regulatorDeaths > 1 then
-			-- Primalists spawn
-			self:StopBar(-9650) -- Bellows Operator
-			self:StopBar(-9649) -- Furnace Engineer
-			self:CancelTimer(engiTimer)
-			self:CancelTimer(securityTimer)
-			self:CDBar("guard", 70, -10803, L.guard_icon) -- Security Guard
-			securityTimer = self:ScheduleTimer("SecurityRepeater", 70)
-			self:CDBar("firecaller", 75, -9659, L.firecaller_icon) -- Firecaller
-			firecallerTimer = self:ScheduleTimer("FirecallerRepeater", 75)
-		end
-	elseif args.mobId == 76815 then
-		shamanDeaths = shamanDeaths + 1
-		self:StopBar(-10325) -- Shields down
-		self:Message("stages", "Neutral", "Info", CL.mob_killed:format(args.destName, shamanDeaths, 4), false)
-		if shamanDeaths > 3 then
-			-- The Fury is free! (after the next Blast cast?)
-			self:CancelTimer(securityTimer)
-			self:CancelTimer(firecallerTimer)
-			self:StopBar(-10803) -- Security Guard
-			self:StopBar(-9659) -- Firecaller
-			if startTime then
-				self:Bar(163776, 600-(GetTime()-startTime))
-			end
+function mod:ElementalistDeath(args)
+	shamanDeaths = shamanDeaths + 1
+	self:StopBar(-10325) -- Shields down
+	self:Message("stages", "Neutral", "Info", CL.mob_killed:format(args.destName, shamanDeaths, 4), false)
+	if shamanDeaths > 3 then
+		-- The Fury is free! (after the next Blast cast?)
+		self:CancelTimer(securityTimer)
+		self:CancelTimer(firecallerTimer)
+		self:StopBar(-10803) -- Security Guard
+		self:StopBar(-9659) -- Firecaller
+		if startTime then
+			self:Bar(163776, 600-(GetTime()-startTime))
 		end
 	end
 end
+
+function mod:EngineerDeath(args)
+	if regulatorDeaths < 2 then -- p1: pick up bombs
+		local bombs = self:Mythic() and 3 or engineerBombs[args.destGUID] or 5
+		if bombs > 0 then
+			self:Message(174731, "Positive", "Info", L.bombs_dropped:format(bombs))
+		end
+		engineerBombs[args.destGUID] = nil
+	else -- p2: care
+		self:Message(174731, "Important", nil, L.bombs_dropped_p2)
+ 	end
+end
+
