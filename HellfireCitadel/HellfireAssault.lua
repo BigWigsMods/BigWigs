@@ -11,8 +11,8 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Hellfire Assault", 1026, 1426)
 if not mod then return end
-mod:RegisterEnableMob(95068, 94515, 93023)
---mod.engageId = 0
+mod:RegisterEnableMob(95068, 94515, 93023) -- 93023 on beta
+mod.engageId = 1778
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -36,7 +36,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{184369, "FLASH", "SAY"}, -- Howling Axe
+		{184370, "FLASH", "SAY"}, -- Howling Axe
 		184394, -- Shockwave
 		185090, -- Inspiring Presence
 		{184243, "TANK"}, -- Slam
@@ -55,18 +55,16 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
-	self:Log("SPELL_AURA_APPLIED", "HowlingAxe", 184369)
+	self:Log("SPELL_CAST_SUCCESS", "HowlingAxe", 184370) -- 184369 is hidden
 	self:Log("SPELL_CAST_START", "Shockwave", 184394)
-	self:Log("SPELL_AURA_APPLIED", "InspiringPresence", 185090)
+	--self:Log("SPELL_AURA_APPLIED", "InspiringPresence", 185090)
 	self:Log("SPELL_AURA_APPLIED", "Slam", 184243)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Slam", 184243)
 	self:Log("SPELL_CAST_START", "Cower", 184238)
 	self:Log("SPELL_CAST_START", "Repair", 185816)
 	self:Log("SPELL_AURA_APPLIED", "ConductedShockPulse", 185806)
 	self:Log("SPELL_CAST_START", "Metamorphosis", 181968)
-	self:Log("SPELL_CAST_START", "FelfireVolley", 180417, 183452)
+	--self:Log("SPELL_CAST_START", "FelfireVolley", 180417, 183452)
 	self:Log("SPELL_CAST_START", "SiegeNova", 188576, 188579, 181094, 180945)
 	self:Log("SPELL_CAST_START", "ArtilleryBlast", 185649, 180080)
 	self:Log("SPELL_CAST_START", "Flameorb", 186845)
