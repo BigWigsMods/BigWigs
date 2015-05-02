@@ -83,7 +83,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
 	self:Log("SPELL_CAST_SUCCESS", "PinDown", 155365)
 	self:Log("SPELL_AURA_APPLIED", "PinnedDown", 154960)
-	self:Log("SPELL_CAST_START", "CallThePack", 154975)
+	self:Log("SPELL_CAST_SUCCESS", "CallThePack", 154975)
 
 	-- Stage 2
 	-- Cruelfang
@@ -118,7 +118,7 @@ function mod:OnEngage(diff)
 	tantrumCount = 1
 	wipe(pinnedList)
 
-	self:Bar(154975, self:LFR() and 18 or self:Normal() and 18 or 8) -- Call the Pack
+	self:Bar(154975, (self:LFR() or self:Normal()) and 19.5 or 9.5) -- Call the Pack
 	self:Bar(154960, 11) -- Pinned Down
 	self:Berserk(720)
 
@@ -322,7 +322,7 @@ end
 
 function mod:CallThePack(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, self:LFR() and 40 or self:Normal() and 40 or 30) -- can be delayed
+	self:CDBar(args.spellId, (self:LFR() or self:Normal()) and 40 or 30) -- can be delayed
 end
 
 -- Stage 2
@@ -411,7 +411,7 @@ do
 	local prev = 0
 	function mod:BadStuffUnderYou(args)
 		local t = GetTime()
-		if t-prev > 2 and self:Me(args.destGUID) then
+		if t-prev > 0.5 and self:Me(args.destGUID) then
 			prev = t
 			self:Flash(args.spellId)
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
