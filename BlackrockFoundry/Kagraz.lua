@@ -261,7 +261,7 @@ end
 function mod:Overheated(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
 	self:Bar(args.spellId, 20)
-	--self:CDBar(155074, 5) -- Charring Breath
+	self:CDBar(155074, 5) -- Charring Breath
 end
 
 function mod:CharringBreath(args)
@@ -269,6 +269,7 @@ function mod:CharringBreath(args)
 	if self:Mythic() or amount % 2 == 0 then
 		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
 	end
+	self:CDBar(args.spellId, 5.5)
 end
 
 function mod:Rekindle(args)
