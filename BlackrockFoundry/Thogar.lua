@@ -288,7 +288,7 @@ end
 
 function mod:OnEngage()
 	self:CDBar(155864, 7, 135592, 155864) -- Pulse Grenade, 135592 = "Grenade"
-	self:CDBar(155921, 16) -- Enkindle
+	self:CDBar(155921, 4) -- Enkindle
 	engageTime = GetTime()
 	-- bar for each lane seemed to make the most sense
 	for i = 1, 4 do
@@ -373,7 +373,7 @@ end
 
 function mod:Enkindle(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount and "Warning")
-	self:CDBar(args.spellId, 16)
+	self:CDBar(args.spellId, 12)
 end
 
 do
