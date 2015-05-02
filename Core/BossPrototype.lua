@@ -822,6 +822,13 @@ do
 			-- Nature's Cure (Resto Druid), Remove Corruption (Druid), Purify Spirit (Shaman), Remove Curse (Mage)
 			defDispel = defDispel .. "curse,"
 		end
+		for i = 2, NUM_GLYPH_SLOTS, 2 do -- 2/4/6 = major glyphs
+			local _, _, _, spellId = GetGlyphSocketInfo(i)
+			if spellId == 58375 or spellId == 58631 then
+				-- Glyph of Shield Slam (Warrior), Glyph of Icy Touch (Death Knight)
+				offDispel = offDispel .. "magic,"
+			end
+		end
 	end
 	function boss:Dispeller(dispelType, isOffensive, key)
 		if key then
