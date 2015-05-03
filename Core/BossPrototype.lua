@@ -652,12 +652,12 @@ function boss:EncounterEnds(event, id, name, difficulty, size, status)
 	if self.engageId == id and self.enabledState then
 		if status == 1 then
 			if self.journalId then
-				self:Win() -- BW boss module
+				self:Win() -- Official boss module
 			else
-				self:Disable() -- Custom boss module
+				self:Disable() -- Custom external boss module
 			end
 		elseif status == 0 then
-			self:ScheduleTimer("Wipe", 6) -- XXX Delayed for now due to issues with certain encounters and using IEEU for engage. Can be removed if we swap to ENCOUNTER_START.
+			self:ScheduleTimer("Wipe", 5) -- Delayed for now due to issues with certain encounters and using IEEU for engage.
 		end
 	end
 end
@@ -822,7 +822,7 @@ do
 			-- Nature's Cure (Resto Druid), Remove Corruption (Druid), Purify Spirit (Shaman), Remove Curse (Mage)
 			defDispel = defDispel .. "curse,"
 		end
-		for i = 2, NUM_GLYPH_SLOTS, 2 do -- 2/4/6 = major glyphs
+		for i = 2, 6, 2 do -- 2/4/6 = major glyphs, NUM_GLYPH_SLOTS = 6
 			local _, _, _, spellId = GetGlyphSocketInfo(i)
 			if spellId == 58375 or spellId == 58631 then
 				-- Glyph of Shield Slam (Warrior), Glyph of Icy Touch (Death Knight)
