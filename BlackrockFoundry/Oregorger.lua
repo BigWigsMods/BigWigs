@@ -66,7 +66,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BlackrockBarrage", 156877, 173459)
 	self:Log("SPELL_CAST_START", "StartBerserk", 159958) -- Earthshaking Stomp
 	-- Phase 2
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "FeedingFrenzy", "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_REMOVED", "HungerDriveRemoved", 155819)
 	self:Log("SPELL_AURA_REMOVED", "RollingFuryRemoved", 155898)
 	self:Log("SPELL_AURA_APPLIED", "RollingFuryApplied", 155898)
@@ -76,9 +76,9 @@ function mod:OnEngage()
 	frenzyCount = 1
 	torrentCount = 1
 	hasGoneBerserk = nil
-	self:CDBar(156203, 6) -- Retched Blackrock
+	self:CDBar(156203, 7) -- Retched Blackrock
 	self:CDBar(156390, 9) -- Explosive Shard
-	self:CDBar(156240, 12, CL.count:format(self:SpellName(156240), torrentCount)) -- Acid Torrent
+	self:CDBar(156240, 10.7, CL.count:format(self:SpellName(156240), torrentCount)) -- Acid Torrent
 	self:CDBar(156877, 14) -- Blackrock Barrage
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
@@ -102,7 +102,7 @@ end
 function mod:AcidTorrent(args)
 	self:Message(args.spellId, "Important", "Warning", CL.count:format(args.spellName, torrentCount))
 	torrentCount = torrentCount + 1
-	self:CDBar(args.spellId, 12, CL.count:format(args.spellName, torrentCount)) -- 13-17
+	self:CDBar(args.spellId, 12.5, CL.count:format(args.spellName, torrentCount)) -- 12.6-16
 end
 
 function mod:AcidMaw(args)
@@ -123,7 +123,7 @@ do
 	end
 	function mod:RetchedBlackrock(args)
 		self:GetBossTarget(printTarget, 0.2, args.sourceGUID)
-		self:CDBar(156203, 20)
+		self:CDBar(156203, 15.8) -- 15.8-23.7
 	end
 end
 
@@ -142,7 +142,7 @@ end
 function mod:ExplosiveShard(args)
 	if self:Damager() == "MELEE" then -- ranged don't need to worry about this
 		self:Message(args.spellId, "Urgent", "Alarm")
-		self:CDBar(args.spellId, 12)
+		self:CDBar(args.spellId, 12) -- 12-20
 		self:Flash(args.spellId)
 		self:Bar("shard_explosion", 3.5, 84474, "spell_shadow_mindbomb") -- "Explosion" with a bomb icon
 	end
@@ -163,8 +163,8 @@ end
 
 -- Phase 2
 
-function mod:FeedingFrenzy(unit, spellName, _, _, spellId)
-	if spellId == 165127 then -- Hunger Drive
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 165127 then -- Hunger Drive, entering phase 2
 		self:StopBar(CL.count:format(self:SpellName(156240), torrentCount)) -- Acid Torrent
 		self:StopBar(156203) -- Retched Blackrock
 		self:StopBar(156390) -- Explosive Shard
@@ -176,13 +176,13 @@ function mod:FeedingFrenzy(unit, spellName, _, _, spellId)
 	end
 end
 
-function mod:HungerDriveRemoved(args)
+function mod:HungerDriveRemoved(args) -- Entering phase 1
 	frenzyCount = frenzyCount + 1
 	torrentCount = 1
 
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
-	self:CDBar(156203, 6) -- Retched Blackrock
-	self:CDBar(156390, 9) -- Explosive Shard
+	self:CDBar(156203, 4.9) -- Retched Blackrock
+	self:CDBar(156390, 7) -- Explosive Shard
 	self:CDBar(156240, 12, CL.count:format(self:SpellName(156240), torrentCount)) -- Acid Torrent
 	self:CDBar(156877, 14) -- Blackrock Barrage
 end
