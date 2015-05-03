@@ -1,7 +1,6 @@
 
 -- Notes --
--- Fel Orb targetting
--- Charge target
+
 
 --------------------------------------------------------------------------------
 -- Module Declaration

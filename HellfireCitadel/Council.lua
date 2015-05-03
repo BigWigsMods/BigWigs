@@ -18,7 +18,7 @@ mod.engageId = 1798
 -- Locals
 --
 
-local horrorCount = 0
+local horrorCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -51,7 +51,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "MarkOfTheNecromancer", 184449, 184450, 184676, 185065, 185066, 185074, 187183)
+	self:Log("SPELL_CAST_SUCCESS", "MarkOfTheNecromancer", 184449)
 	self:Log("SPELL_CAST_START", "Reap", 184476)
 	self:Log("SPELL_CAST_START", "NightmareVisage", 184657)
 	--self:Log("SPELL_CAST_SUCCESS", "WailingHorror", 184681)
@@ -70,22 +70,18 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	horrorCount = 0
+	horrorCount = 1
 	self:Berserk(600)
+	self:Bar(184681, 76, CL.count:format(self:SpellName(184681), horrorCount)) -- Wailing Horror
+	self:Bar(184358, 30) -- Fel Rage
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-do
-	local list = mod:NewTargetList()
-	function mod:MarkOfTheNecromancer(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 1, 184449, list, "Attention", "Alarm")
-		end
-	end
+function mod:MarkOfTheNecromancer(args)
+	self:Message(args.spellId, "Attention")
 end
 
 function mod:Reap(args)
@@ -111,12 +107,13 @@ end
 
 --function mod:WailingHorror(args)
 --	horrorCount = horrorCount + 1
---	self:Message(args.spellId, "Positive", "Alert", CL.count:format(args.spellName, horrorCount))
+--	self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, horrorCount))
 --end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg:find("184681", nil, true) then
+		self:Message(184681, "Urgent", "Alert", CL.count:format(self:SpellName(184681), horrorCount))
 		horrorCount = horrorCount + 1
-		self:Message(184681, "Positive", "Alert", CL.count:format(self:SpellName(184681), horrorCount))
+		self:Bar(184681, 151, CL.count:format(self:SpellName(184681), horrorCount))
 	end
 end
 
@@ -138,7 +135,7 @@ end
 
 function mod:MirrorImages(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 45)
+	self:Bar(args.spellId, 50)
 end
 
 do
