@@ -266,9 +266,7 @@ end
 
 function mod:CharringBreath(args)
 	local amount = args.amount or 1
-	if self:Mythic() or amount % 2 == 0 then
-		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
-	end
+	self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
 	self:CDBar(args.spellId, 5.5)
 end
 
