@@ -120,7 +120,7 @@ function boss:OnEnable(isWipe)
 
 	if self.engageId then
 		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
-		self:RegisterEvent("ENCOUNTER_END", "EncounterEnds")
+		self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
 	end
 
 	if self.SetupOptions then self:SetupOptions() end
@@ -648,7 +648,7 @@ do
 	end
 end
 
-function boss:EncounterEnds(event, id, name, difficulty, size, status)
+function boss:EncounterEnd(event, id, name, difficulty, size, status)
 	if self.engageId == id and self.enabledState then
 		if status == 1 then
 			if self.journalId then
@@ -659,6 +659,7 @@ function boss:EncounterEnds(event, id, name, difficulty, size, status)
 		elseif status == 0 then
 			self:ScheduleTimer("Wipe", 5) -- Delayed for now due to issues with certain encounters and using IEEU for engage.
 		end
+		self:SendMessage("BigWigs_EncounterEnd", self, id, name, difficulty, size, status) -- Do NOT use this for wipe detection, use BigWigs_OnBossWipe.
 	end
 end
 
