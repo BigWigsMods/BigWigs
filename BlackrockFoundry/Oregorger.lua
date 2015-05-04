@@ -63,7 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "RetchedBlackrockDamage", 156203)
 	self:Log("SPELL_CAST_SUCCESS", "ExplosiveShard", 156390)
 	self:Log("SPELL_CAST_SUCCESS", "BlackrockSpines", 156834)
-	self:Log("SPELL_CAST_START", "BlackrockBarrage", 156877, 173459)
+	self:Log("SPELL_CAST_START", "BlackrockBarrage", 156877, 173459) -- Heroic & Mythic (1.5s), Normal & LFR (2s)
 	self:Log("SPELL_CAST_START", "StartBerserk", 159958) -- Earthshaking Stomp
 	-- Phase 2
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
@@ -142,7 +142,6 @@ end
 function mod:ExplosiveShard(args)
 	if self:Damager() == "MELEE" then -- ranged don't need to worry about this
 		self:Message(args.spellId, "Urgent", "Alarm")
-		self:CDBar(args.spellId, 12) -- 12-20
 		self:Flash(args.spellId)
 		self:Bar("shard_explosion", 3.5, 84474, "spell_shadow_mindbomb") -- "Explosion" with a bomb icon
 	end
@@ -153,7 +152,7 @@ end
 
 function mod:BlackrockSpines(args)
 	barrageCount = 1
-	self:CDBar(156877, 21) -- Blackrock Barrage
+	self:CDBar(156877, 20.7) -- Blackrock Barrage, 20.7-23.3
 end
 
 function mod:BlackrockBarrage(args)
