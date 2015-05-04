@@ -24,10 +24,6 @@ local hasGoneBerserk = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.shard_explosion = "Explosive Shard Explosion"
-	L.shard_explosion_desc = "A separate bar for the explosion that you may wish to enable countdown for if you are a melee class."
-	L.shard_explosion_icon = "6bf_explosive_shard"
-
 	L.roll_message = "Roll %d - %d ore to go!"
 end
 L = mod:GetLocale()
@@ -42,7 +38,6 @@ function mod:GetOptions(CL)
 		{173471, "TANK"}, -- Acid Maw
 		{156203, "SAY", "FLASH"}, -- Retched Blackrock
 		{156390, "FLASH"}, -- Explosive Shard
-		{"shard_explosion"}, -- shard is easy to miss, help melee out
 		156877, -- Blackrock Barrage
 		155898, -- Rolling Fury
 		"stages",
@@ -143,7 +138,7 @@ function mod:ExplosiveShard(args)
 	if self:Damager() == "MELEE" then -- ranged don't need to worry about this
 		self:Message(args.spellId, "Urgent", "Alarm")
 		self:Flash(args.spellId)
-		self:Bar("shard_explosion", 3.5, 84474, "spell_shadow_mindbomb") -- "Explosion" with a bomb icon
+		self:Bar(args.spellId, 3.5, 84474, "spell_shadow_mindbomb") -- "Explosion" with a bomb icon
 	end
 	if self:Tank() then
 		self:Message(args.spellId, "Urgent")
