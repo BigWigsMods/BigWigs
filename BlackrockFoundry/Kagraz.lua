@@ -13,7 +13,6 @@ mod.engageId = 1689
 -- Locals
 --
 
-local wolvesActive = nil
 local firestormCount = 1
 local fixateOnMe = nil
 local wolvesMarker, wolvesMarked = 3, {}
@@ -70,8 +69,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-
 	-- Aknor
 	self:Log("SPELL_CAST_START", "DevastatingSlam", 156018)
 	self:Log("SPELL_CAST_START", "DropTheHammer", 156040)
@@ -91,19 +88,21 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 154952)
 	self:Log("SPELL_AURA_REMOVED", "FixateOver", 154952)
 	self:Log("SPELL_AURA_APPLIED", "Overheated", 154950)
+	self:Log("SPELL_CAST_SUCCESS", "CharringBreathCast", 155074)
 	self:Log("SPELL_AURA_APPLIED", "CharringBreath", 155074)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CharringBreath", 155074)
 	self:Log("SPELL_CAST_START", "Rekindle", 155064)
+	self:Log("SPELL_CAST_SUCCESS", "WolfDies", 181089) -- Encounter Event
 
 	--self:Death("AknorDeath", 77337) -- Aknor Steelbringer
 end
 
 function mod:OnEngage()
-	wolvesActive = nil
 	fixateOnMe = nil
 	wolvesMarker = 3
 	wipe(wolvesMarked)
 	firestormCount = 1
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	if self:Healer() or self:Damager() == "RANGED" then
 		self:Bar(155318, 11) -- Lava Slash
 		if not self:LFR() then
@@ -119,28 +118,29 @@ end
 --
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	self:CheckForEncounterEngage()
-	local hasWolf = false
-	for i=1, 5 do
-		local unit = ("boss%d"):format(i)
-		local guid = UnitGUID(unit)
-		if self:MobId(guid) == 76794 then
-			hasWolf = true
-			if self:GetOption("custom_off_wolves_marker") and not wolvesMarked[guid] then
+	if self:GetOption("custom_off_wolves_marker") then
+		for i=1, 5 do
+			local unit = ("boss%d"):format(i)
+			local guid = UnitGUID(unit)
+			if guid and not wolvesMarked[guid] and self:MobId(guid) == 76794 then
 				wolvesMarked[guid] = true
 				SetRaidTarget(unit, wolvesMarker)
 				wolvesMarker = wolvesMarker + 1
 			end
 		end
 	end
+end
 
-	-- XXX wolves don't have UNIT_DIED or other events to indicate they were killed afaik
-	if wolvesActive and not hasWolf then
-		-- still here so no wolves up!
-		wolvesActive = nil
-		self:StopBar(154952) -- Fixate
-		self:StopBar(154950) -- Overheated
-		self:StopBar(155064) -- Rekindle
+do
+	local prev = 0
+	function mod:WolfDies()
+		local t = GetTime()
+		if t-prev > 5 then -- They all die at the same time
+			prev = t
+			self:StopBar(154952) -- Fixate
+			self:StopBar(154950) -- Overheated
+			self:StopBar(155064) -- Rekindle
+		end
 	end
 end
 
@@ -219,7 +219,6 @@ do
 end
 
 function mod:CinderWolves(args)
-	wolvesActive = true
 	if self:GetOption("custom_off_wolves_marker") then
 		wolvesMarker = 3
 		wipe(wolvesMarked)
@@ -261,13 +260,18 @@ end
 function mod:Overheated(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
 	self:Bar(args.spellId, 20)
-	self:CDBar(155074, 5) -- Charring Breath
+	self:CDBar(155074, 6) -- Charring Breath
+end
+
+function mod:CharringBreathCast(args)
+	self:CDBar(args.spellId, 6)
 end
 
 function mod:CharringBreath(args)
-	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
-	self:CDBar(args.spellId, 5.5)
+	if self:Tank(args.destName) then
+		local amount = args.amount or 1
+		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
+	end
 end
 
 function mod:Rekindle(args)
