@@ -236,6 +236,8 @@ L.secondaryDesc = "The second raid target icon that a encounter script should us
 --
 
 L.respawn = "Respawn"
+L.showRespawnBar = "Show respawn bar"
+L.showRespawnBarDesc = "Show a bar after you wipe on a boss displaying the time until the boss respawns."
 
 -----------------------------------------------------------------------
 -- Sound.lua

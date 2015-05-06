@@ -12,6 +12,34 @@ if not plugin then return end
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
 -------------------------------------------------------------------------------
+-- Options
+--
+
+plugin.defaultDB = {
+	respawnBar = true,
+}
+
+plugin.pluginOptions = {
+	name = L.respawn,
+	type = "group",
+	childGroups = "tab",
+	get = function(i) return plugin.db.profile[i[#i]] end,
+	set = function(i, value)
+		local n = i[#i]
+		plugin.db.profile[n] = value
+	end,
+	args = {
+		respawnBar = {
+			type = "toggle",
+			name = L.showRespawnBar,
+			desc = L.showRespawnBarDesc,
+			order = 1,
+			width = "full",
+		},
+	},
+}
+
+-------------------------------------------------------------------------------
 -- Initialization
 --
  
@@ -24,7 +52,7 @@ end
 --
 
 function plugin:BigWigs_EncounterEnd(event, module, id, name, difficulty, size, status)
-	if status == 0 and module.respawnTime then
+	if status == 0 and module.respawnTime and self.db.profile.respawnBar then
 		self:SendMessage("BigWigs_StartBar", self, nil, L.respawn, module.respawnTime, "Interface\\Icons\\achievement_bg_returnxflags_def_wsg")
 	end
 end
