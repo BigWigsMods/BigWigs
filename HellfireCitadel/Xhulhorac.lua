@@ -72,6 +72,7 @@ function mod:OnEngage()
 	wipe(mobCollector)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:CDBar(186271, 8) -- Fel Strike
+	self:CDBar(186407, 15) -- Fel Surge
 end
 
 --------------------------------------------------------------------------------
@@ -97,6 +98,7 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention", "Alarm")
+			self:CDBar(args.spellId, 30) -- XXX Fel Surge
 		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
@@ -124,6 +126,7 @@ end
 
 function mod:FelblazeFlurry_WitheringGaze(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
+	self:CDBar(args.spellId, 15) -- XXX Felblaze Flurry
 end
 
 function mod:Strike(args)
