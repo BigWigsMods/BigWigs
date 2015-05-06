@@ -10,8 +10,8 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Xhul'horac", 1026, 1447)
 if not mod then return end
-mod:RegisterEnableMob(93068, 94521)
---mod.engageId = 0
+mod:RegisterEnableMob(93068)
+mod.engageId = 1800
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -45,7 +45,6 @@ function mod:GetOptions()
 		186500, -- Chains of Fel
 		{186448, "TANK"}, -- Felblaze Flurry
 		{186785, "TANK"}, -- Withering Gaze
-		186532, -- Fel Orb
 		{186271, "TANK_HEALER"}, -- Fel Strike
 		{186292, "TANK_HEALER"}, -- Void Strike
 		187204, -- Overwhelming Chaos
@@ -54,8 +53,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	-- XXX this stacking may not work out in all cases
 	self:Log("SPELL_AURA_APPLIED", "Touched", 186134, 186135) -- Feltouched, Voidtouched
 	self:Log("SPELL_AURA_APPLIED", "Felsinged_WastingVoid", 186073, 186063) -- Felsinged, Wasting Void
@@ -65,7 +62,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ChainsOfFel", 186500)
 	self:Log("SPELL_AURA_APPLIED", "FelblazeFlurry_WitheringGaze", 186448, 186785) -- Felblaze Flurry, Withering Gaze
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FelblazeFlurry_WitheringGaze", 186448, 186785) -- Felblaze Flurry, Withering Gaze
-	self:Log("SPELL_CAST_START", "FelOrb", 186532)
 	self:Log("SPELL_CAST_START", "Strike", 186271, 186292) -- Fel Strike, Void Strike
 	self:Log("SPELL_AURA_APPLIED", "OverwhelmingChaos", 187204)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingChaos", 187204)
@@ -75,6 +71,7 @@ function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Xhul'horac (beta) engaged", false)
 	wipe(mobCollector)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+	self:CDBar(186271, 8) -- Fel Strike
 end
 
 --------------------------------------------------------------------------------
@@ -120,6 +117,7 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Urgent", "Alarm")
+			self:CDBar(args.spellId, 23)
 		end
 	end
 end
@@ -128,12 +126,9 @@ function mod:FelblazeFlurry_WitheringGaze(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
 end
 
-function mod:FelOrb(args)
-	self:Message(args.spellId, "Attention", nil, CL.incoming:format(args.spellName))
-end
-
 function mod:Strike(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
+	self:CDBar(args.spellId, 14.5) -- XXX Fel Strike
 end
 
 function mod:OverwhelmingChaos(args)
@@ -143,7 +138,6 @@ end
 do
 	local adds = {
 		[94185] = -11691, -- Vanguard Akkelion
-		[94231] = -11694, -- Wild Pyromaniac
 		[94239] = -11688, -- Omnus
 		[94397] = -11714, -- Unstable Voidfiend
 	}
