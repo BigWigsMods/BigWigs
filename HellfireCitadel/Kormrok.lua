@@ -36,8 +36,8 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{181306, "PROXIMITY", "FLASH", "SAY"}, -- Explosive Burst
-		181292, -- Shadow Waves
-		181293, -- Empowered Shadow Waves
+		181292, -- Fel Outpouring
+		181293, -- Empowered Fel Outpouring
 		181296, -- Explosive Runes
 		181297, -- Empowered Explosive Runes
 		181299, -- Grasping Hands
@@ -56,7 +56,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveBurst", 181306)
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveBurstRemoved", 181306)
-	self:Log("SPELL_CAST_START", "ShadowWaves", 181292, 181293)
+	self:Log("SPELL_CAST_START", "FelOutpouring", 181292, 181293)
 	self:Log("SPELL_CAST_START", "ExplosiveRunes", 181296, 181297)
 	self:Log("SPELL_CAST_START", "GraspingHands", 181299, 181300)
 	self:Log("SPELL_CAST_START", "Pound", 180244)
@@ -95,7 +95,7 @@ function mod:ExplosiveBurstRemoved(args)
 	self:CloseProximity(args.spellId)
 end
 
-function mod:ShadowWaves(args)
+function mod:FelOutpouring(args)
 	self:Message(args.spellId, "Attention", "Long")
 	self:Bar(args.spellId, 3)
 end

@@ -3,15 +3,17 @@
 
 <Script file="HellfireAssault.lua"/>
 <Script file="IronReaver.lua"/>
-<Script file="Council.lua"/>
 <Script file="Kormrok.lua"/>
+<Script file="Council.lua"/>
 <Script file="KilroggDeadeye.lua"/>
 <Script file="Gorefiend.lua"/>
 <Script file="ShadowLordIskar.lua"/>
-<Script file="FelLordZakuun.lua"/>
 <Script file="Socrethar.lua"/>
+<Script file="FelLordZakuun.lua"/>
+<Script file="Xhulhorac.lua"/>
 <Script file="TyrantVelhari.lua"/>
 <Script file="Mannoroth.lua"/>
+<Script file="Archimonde.lua"/>
 
 </Ui>
 

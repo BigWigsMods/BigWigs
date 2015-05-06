@@ -1,0 +1,163 @@
+
+-- Notes --
+
+
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
+
+if not IsTestBuild() then return end
+
+local mod, CL = BigWigs:NewBoss("Xhul'horac", 1026, 1447)
+if not mod then return end
+mod:RegisterEnableMob(93068, 94521)
+--mod.engageId = 0
+
+--------------------------------------------------------------------------------
+-- Locals
+--
+
+local phase = 1
+local mobCollector = {}
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
+-- Initialization
+--
+
+function mod:GetOptions()
+	return {
+		186134, -- Feltouched
+		186135, -- Voidtouched
+		186073, -- Felsinged
+		186063, -- Wasting Void
+		{186407, "SAY", "PROXIMITY", "FLASH"}, -- Fel Surge
+		{186333, "SAY", "PROXIMITY", "FLASH"}, -- Void Surge
+		186500, -- Chains of Fel
+		{186448, "TANK"}, -- Felblaze Flurry
+		{186785, "TANK"}, -- Withering Gaze
+		186532, -- Fel Orb
+		{186271, "TANK_HEALER"}, -- Fel Strike
+		{186292, "TANK_HEALER"}, -- Void Strike
+		187204, -- Overwhelming Chaos
+		"berserk",
+	}
+end
+
+function mod:OnBossEnable()
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+
+	-- XXX this stacking may not work out in all cases
+	self:Log("SPELL_AURA_APPLIED", "Touched", 186134, 186135) -- Feltouched, Voidtouched
+	self:Log("SPELL_AURA_APPLIED", "Felsinged_WastingVoid", 186073, 186063) -- Felsinged, Wasting Void
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Felsinged_WastingVoid", 186073, 186063) -- Felsinged, Wasting Void
+	self:Log("SPELL_AURA_APPLIED", "Surge", 186407, 186333) -- Fel Surge, Void Surge
+	self:Log("SPELL_AURA_REMOVED", "SurgeRemoved", 186407, 186333) -- Fel Surge, Void Surge
+	self:Log("SPELL_AURA_APPLIED", "ChainsOfFel", 186500)
+	self:Log("SPELL_AURA_APPLIED", "FelblazeFlurry_WitheringGaze", 186448, 186785) -- Felblaze Flurry, Withering Gaze
+	self:Log("SPELL_AURA_APPLIED_DOSE", "FelblazeFlurry_WitheringGaze", 186448, 186785) -- Felblaze Flurry, Withering Gaze
+	self:Log("SPELL_CAST_START", "FelOrb", 186532)
+	self:Log("SPELL_CAST_START", "Strike", 186271, 186292) -- Fel Strike, Void Strike
+	self:Log("SPELL_AURA_APPLIED", "OverwhelmingChaos", 187204)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingChaos", 187204)
+end
+
+function mod:OnEngage()
+	self:Message("berserk", "Neutral", nil, "Xhul'horac (beta) engaged", false)
+	wipe(mobCollector)
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+end
+
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
+
+function mod:Touched(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Long")
+		self:TargetBar(args.spellId, 15, args.destName)
+	end
+end
+
+function mod:Felsinged_WastingVoid(args)
+	if self:Me(args.destGUID) then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Personal")
+	end
+end
+
+do
+	local list = mod:NewTargetList()
+	function mod:Surge(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention", "Alarm")
+		end
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+			self:OpenProximity(args.spellId, 10) -- Open to debate
+		end
+	end
+end
+
+function mod:SurgeRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
+	end
+end
+
+do
+	local list = mod:NewTargetList()
+	function mod:ChainsOfFel(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Urgent", "Alarm")
+		end
+	end
+end
+
+function mod:FelblazeFlurry_WitheringGaze(args)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
+end
+
+function mod:FelOrb(args)
+	self:Message(args.spellId, "Attention", nil, CL.incoming:format(args.spellName))
+end
+
+function mod:Strike(args)
+	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
+end
+
+function mod:OverwhelmingChaos(args)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
+end
+
+do
+	local adds = {
+		[94185] = -11691, -- Vanguard Akkelion
+		[94231] = -11694, -- Wild Pyromaniac
+		[94239] = -11688, -- Omnus
+		[94397] = -11714, -- Unstable Voidfiend
+	}
+	function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+		for i = 1, 5 do
+			local guid = UnitGUID("boss"..i)
+			if guid and not mobCollector[guid] then
+				mobCollector[guid] = true
+				local id = self:MobId(guid)
+				if adds[id] then
+					self:Message("berserk", "Neutral", nil, CL.spawning:format(self:SpellName(adds[id])), false)
+				end
+			end
+		end
+	end
+end
+
