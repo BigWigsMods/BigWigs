@@ -48,6 +48,7 @@ function mod:GetOptions()
 		{186271, "TANK_HEALER"}, -- Fel Strike
 		{186292, "TANK_HEALER"}, -- Void Strike
 		187204, -- Overwhelming Chaos
+		186546, -- Black Hole
 		"berserk",
 	}
 end
@@ -65,6 +66,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Strike", 186271, 186292) -- Fel Strike, Void Strike
 	self:Log("SPELL_AURA_APPLIED", "OverwhelmingChaos", 187204)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingChaos", 187204)
+	self:Log("SPELL_CAST_START", "BlackHole", 186546)
 end
 
 function mod:OnEngage()
@@ -98,7 +100,7 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention", "Alarm")
-			self:CDBar(args.spellId, 30) -- XXX Fel Surge
+			self:CDBar(args.spellId, 30)
 		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
@@ -126,16 +128,21 @@ end
 
 function mod:FelblazeFlurry_WitheringGaze(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
-	self:CDBar(args.spellId, 15) -- XXX Felblaze Flurry
+	self:CDBar(args.spellId, 15)
 end
 
 function mod:Strike(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
-	self:CDBar(args.spellId, 14.5) -- XXX Fel Strike
+	self:CDBar(args.spellId, 14.5)
 end
 
 function mod:OverwhelmingChaos(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
+end
+
+function mod:BlackHole(args)
+	self:Message(args.spellId, "Urgent", "Info", CL.incoming:format(args.spellName))
+	self:CDBar(args.spellId, 29)
 end
 
 do
