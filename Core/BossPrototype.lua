@@ -657,6 +657,7 @@ function boss:EncounterEnd(event, id, name, difficulty, size, status)
 				self:Disable() -- Custom external boss module
 			end
 		elseif status == 0 then
+			self:SendMessage("BigWigs_StopBars", self)
 			self:ScheduleTimer("Wipe", 5) -- Delayed for now due to issues with certain encounters and using IEEU for engage.
 		end
 		self:SendMessage("BigWigs_EncounterEnd", self, id, name, difficulty, size, status) -- Do NOT use this for wipe detection, use BigWigs_OnBossWipe.
