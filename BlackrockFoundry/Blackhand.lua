@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Blackhand", 988, 959)
 if not mod then return end
 mod:RegisterEnableMob(77325)
 mod.engageId = 1704
-mod.resetTime = 29.5
+mod.respawnTime = 29.5
 
 --------------------------------------------------------------------------------
 -- Locals

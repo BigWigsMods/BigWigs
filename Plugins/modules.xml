@@ -7,12 +7,12 @@
 <Script file="Messages.lua"/>
 <Script file="Bars.lua"/>
 <Script file="BossBlock.lua"/>
-<Script file="BossReset.lua"/>
 <Script file="InfoBox.lua"/>
 <Script file="RaidIcon.lua"/>
 <Script file="Proximity.lua"/>
 <Script file="Flash.lua"/>
 <Script file="Emphasize.lua"/>
+<Script file="Respawn.lua"/>
 <Script file="Statistics.lua"/>
 <Script file="Victory.lua"/>
 

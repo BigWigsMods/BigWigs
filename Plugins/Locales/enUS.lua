@@ -232,6 +232,12 @@ L.secondary = "Secondary"
 L.secondaryDesc = "The second raid target icon that a encounter script should use."
 
 -----------------------------------------------------------------------
+-- Respawn.lua
+--
+
+L.respawn = "Respawn"
+
+-----------------------------------------------------------------------
 -- Sound.lua
 --
 
