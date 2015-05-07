@@ -5,6 +5,7 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected
 local EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture, IsSpellKnown = EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture, IsSpellKnown
+local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local SendChatMessage = BigWigsLoader.SendChatMessage
 local format, sub, gsub, band = string.format, string.sub, string.gsub, bit.band
 local type, next, tonumber = type, next, tonumber
@@ -17,8 +18,7 @@ local enabledModules = {}
 local allowedEvents = {}
 local difficulty = 0
 local UpdateDispelStatus = nil
-local myGUID = nil
-local myRole = nil
+local myGUID, myRole, myDamagerRole = nil, nil, nil
 local solo = false
 local updateData = function(module)
 	myGUID = UnitGUID("player")
@@ -26,8 +26,24 @@ local updateData = function(module)
 	local tree = GetSpecialization()
 	if tree then
 		myRole = GetSpecializationRole(tree)
+		myDamagerRole = nil
 		if IsSpellKnown(152276) and UnitBuff("player", (GetSpellInfo(156291))) then -- Gladiator Stance
 			myRole = "DAMAGER"
+		end
+		if myRole == "DAMAGER" then
+			local _, class = UnitClass("player")
+			if
+				class == "MAGE" or class == "WARLOCK" or class == "HUNTER" or (class == "DRUID" and tree == 1) or
+				(class == "PRIEST" and tree == 3) or (class == "SHAMAN" and tree == 1)
+			then
+				myDamagerRole = "RANGED"
+			elseif
+				class == "ROGUE" or class == "WARRIOR" or (class == "DEATHKNIGHT" and tree ~= 1) or
+				(class == "PALADIN" and tree == 3) or (class == "DRUID" and tree == 2) or (class == "SHAMAN" and tree == 2) or
+				(class == "MONK" and tree == 3)
+			then
+				myDamagerRole = "MELEE"
+			end
 		end
 	end
 
@@ -772,28 +788,20 @@ function boss:Tank(unit)
 	end
 end
 
-function boss:Healer()
-	return myRole == "HEALER"
+function boss:Healer(unit)
+	if unit then
+		return UnitGroupRolesAssigned(unit) == "HEALER"
+	else
+		return myRole == "HEALER"
+	end
 end
 
-function boss:Damager()
-	if myRole ~= "DAMAGER" then return end
-	local role
-	local _, class = UnitClass("player")
-	local tree = GetSpecialization()
-	if
-		class == "MAGE" or class == "WARLOCK" or class == "HUNTER" or (class == "DRUID" and tree == 1) or
-		(class == "PRIEST" and tree == 3) or (class == "SHAMAN" and tree == 1)
-	then
-		role = "RANGED"
-	elseif
-		class == "ROGUE" or class == "WARRIOR" or (class == "DEATHKNIGHT" and tree ~= 1) or
-		(class == "PALADIN" and tree == 3) or (class == "DRUID" and tree == 2) or (class == "SHAMAN" and tree == 2) or
-		(class == "MONK" and tree == 3)
-	then
-		role = "MELEE"
+function boss:Damager(unit)
+	if unit then
+		return UnitGroupRolesAssigned(unit) == "DAMAGER"
+	else
+		return myDamagerRole
 	end
-	return role
 end
 
 do
