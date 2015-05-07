@@ -1,4 +1,3 @@
-
 -- Notes --
 -- Bother with Fel Touch?
 
@@ -18,7 +17,7 @@ mod.engageId = 1787
 --
 
 local poundCount = 0
-
+local tankDebuffCount = 0
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -60,6 +59,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ExplosiveRunes", 181296, 181297)
 	self:Log("SPELL_CAST_START", "GraspingHands", 181299, 181300)
 	self:Log("SPELL_CAST_START", "Pound", 180244)
+	self:Log('SPELL_CAST_SUCCESS', 'FoulCrushSuccess', 181307)
 	self:Log("SPELL_AURA_REMOVED", "PoundOver", 180244)
 	self:Log("SPELL_CAST_START", "Swat", 181305, 187165)
 	self:Log("SPELL_AURA_APPLIED", "FoulCrush", 181345)
@@ -69,8 +69,9 @@ end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Kormrok (beta) engaged", false)
-	self:CDBar(180244, 50) -- Pound
+	self:CDBar(180244, 38) -- Pound
 	poundCount = 0
+	tankDebuffCount = 0
 end
 
 --------------------------------------------------------------------------------
@@ -78,6 +79,8 @@ end
 --
 
 function mod:ExplosiveBurst(args)
+	tankDebuffCount = tankDebuffCount + 1
+	self:Bar(args.spellId, tankDebuffCount%2==0 and 32 or 42)
 	self:TargetBar(args.spellId, 10, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
 	self:PrimaryIcon(args.spellId, args.destName)
@@ -88,6 +91,12 @@ function mod:ExplosiveBurst(args)
 	else
 		self:OpenProximity(args.spellId, 40, args.destName)
 	end
+end
+
+function mod:FoulCrushSuccess(args)
+	tankDebuffCount = tankDebuffCount + 1
+	self:Bar(args.spellId, tankDebuffCount%2==0 and 32 or 42)
+	self:Message(args.spellId, "Urgent", self:Tank() and "Warning", "Foul Crush on tank!")
 end
 
 function mod:ExplosiveBurstRemoved(args)
@@ -112,6 +121,7 @@ end
 function mod:Pound(args)
 	poundCount = poundCount + 1
 	self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, poundCount))
+	self:CDBar(args.spellId, 40)
 	self:Bar(args.spellId, 9, CL.count:format(args.spellName, poundCount))
 	self:OpenProximity(args.spellId, 5) -- 4 + 1 safety
 end
@@ -121,6 +131,8 @@ function mod:PoundOver(args)
 end
 
 function mod:Swat(args)
+	tankDebuffCount = tankDebuffCount + 1
+	self:Bar(args.spellId, tankDebuffCount%2==0 and 32 or 42)
 	self:Message(181305, "Urgent", self:Tank() and "Warning", "Swat on tank!")
 end
 
@@ -141,4 +153,3 @@ end
 function mod:Enrage(args)
 	self:Message(args.spellId, "Positive")
 end
-
