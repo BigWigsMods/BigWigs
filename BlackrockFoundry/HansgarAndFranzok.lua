@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Hans'gar and Franzok", 988, 1155)
 if not mod then return end
 mod:RegisterEnableMob(76973, 76974) -- Hans'gar, Franzok
 mod.engageId = 1693
+--mod.respawnTime = 30 -- 27-30 standard 30 when reset during stampers, shorter otherwise?
 
 --------------------------------------------------------------------------------
 -- Locals

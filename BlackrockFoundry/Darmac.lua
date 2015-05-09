@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Beastlord Darmac", 988, 1122)
 if not mod then return end
 mod:RegisterEnableMob(76865, 76884, 76874, 76945, 76946) -- Darmac, Cruelfang, Dreadwing, Ironcrusher, Faultline (Mythic)
 mod.engageId = 1694
-mod.respawnTime = 31 -- ~1s
+mod.respawnTime = 30 -- ~1s
 
 --------------------------------------------------------------------------------
 -- Locals

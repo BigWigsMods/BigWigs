@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("The Iron Maidens", 988, 1203)
 if not mod then return end
 mod:RegisterEnableMob(77477, 77557, 77231) -- Marak the Blooded, Admiral Gar'an, Enforcer Sorka
 mod.engageId = 1695
+mod.respawnTime = 29.5
 
 --------------------------------------------------------------------------------
 -- Locals

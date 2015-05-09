@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Flamebender Ka'graz", 988, 1123)
 if not mod then return end
 mod:RegisterEnableMob(76814, 77337) -- Flamebender Ka'graz, Aknor Steelbringer
 mod.engageId = 1689
-
+mod.respawnTime = 29.5
 
 --------------------------------------------------------------------------------
 -- Locals

@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Operator Thogar", 988, 1147)
 if not mod then return end
 mod:RegisterEnableMob(76906, 80791) -- Operator Thogar, Grom'kar Man-at-Arms
 mod.engageId = 1692
+mod.respawnTime = 29.5
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -279,6 +280,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PulseGrenadeDamage", 165195)
 	self:Log("SPELL_CAST_START", "IronBellow", 163753)
 	self:Log("SPELL_CAST_START", "CauterizingBolt", 160140)
+	--self:Log("SPELL_AURA_APPLIED", "CauterizingBoltApplied", 160140)
 	self:Log("SPELL_CAST_START", "DelayedSiegeBomb", 159481)
 	self:Log("SPELL_AURA_APPLIED", "DelayedSiegeBombApplied", 159481)
 	self:Log("SPELL_AURA_REMOVED", "DelayedSiegeBombRemoved", 159481)
@@ -373,7 +375,7 @@ end
 
 function mod:Enkindle(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount and "Warning")
-	self:CDBar(args.spellId, 12)
+	self:CDBar(args.spellId, 12) -- can be delayed by Pulse Grenade for ~2s
 end
 
 do
@@ -402,6 +404,12 @@ end
 
 function mod:CauterizingBolt(args)
 	self:Message(args.spellId, "Important", "Alert")
+end
+
+function mod:CauterizingBoltApplied(args)
+	if UnitGUID("target") == args.destGUID and self:Dispeller("magic", true) then
+		self:TargetMessage(args.spellId, args.destName, "Important", "Alert")
+	end
 end
 
 do
