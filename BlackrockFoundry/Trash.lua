@@ -11,6 +11,7 @@ mod:RegisterEnableMob(
 	87719, -- Ogron Hauler
 	80423, -- Thunderlord Beast-Tender
 	87780, -- Slagshop Brute
+	81114, -- Gronnling Laborer
 	78978, -- Darkshard Gnasher
 	79208, -- Blackrock Enforcer
 	80708, -- Iron Taskmaster
@@ -29,6 +30,7 @@ if L then
 	L.hauler = "Ogron Hauler"
 	L.beasttender = "Thunderlord Beast-Tender"
 	L.brute = "Slagshop Brute"
+	L.gronnling = "Gronnling Laborer"
 	L.gnasher = "Darkshard Gnasher"
 	L.enforcer = "Blackrock Enforcer"
 	L.taskmaster = "Iron Taskmaster"
@@ -57,6 +59,8 @@ function mod:GetOptions()
 		{162663, "FLASH"}, -- Electrical Storm
 		--[[ Slagshop Brute ]]--
 		{175993, "FLASH"}, -- Lumbering Strength
+		--[[ Gronnling Laborer ]]--
+		18501, -- Enrage
 		--[[ Darkshard Gnasher ]]--
 		{159632, "FLASH"}, -- Insatiable Hunger
 		--[[ Blackrock Enforcer ]]--
@@ -76,6 +80,7 @@ function mod:GetOptions()
 		[175765] = L.hauler,
 		[162663] = L.beasttender,
 		[175993] = L.brute,
+		[18501] = L.gronnling,
 		[159632] = L.gnasher,
 		[160260] = L.enforcer,
 		[163121] = L.taskmaster,
@@ -101,6 +106,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "OverheadSmashRemoved", 175765)
 
 	self:Log("SPELL_AURA_APPLIED", "LumberingStrength", 175993)
+
+	self:Log("SPELL_AURA_APPLIED", "Enrage", 18501)
 
 	self:Log("SPELL_AURA_APPLIED", "InsatiableHunger", 159632)
 	self:Log("SPELL_AURA_REMOVED", "InsatiableHungerRemoved", 159632)
@@ -181,6 +188,12 @@ function mod:LumberingStrength(args)
 		self:Bar(175993, 8)
 		self:Flash(175993)
 	end
+end
+
+--[[ Gronnling Laborer ]]--
+
+function mod:Enrage(args)
+	self:TargetMessage(args.spellId, args.destName, "Attention", self:Dispeller("enrage", true) and "Alert")
 end
 
 --[[ Darkshard Gnasher ]]--
