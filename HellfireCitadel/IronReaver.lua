@@ -13,6 +13,7 @@ local mod, CL = BigWigs:NewBoss("Iron Reaver", 1026, 1425)
 if not mod then return end
 mod:RegisterEnableMob(90284)
 mod.engageId = 1785
+mod.respawnTime = 5
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -59,7 +60,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ArtilleryRemoved", 182280)
 	self:Log("SPELL_AURA_APPLIED", "Pounding", 182020)
 	self:Log("SPELL_CAST_START", "Barrage", 185282)
-	self:Log("SPELL_CAST_SUCCESS", "UnstableOrb", 182001)
 	self:Log("SPELL_CAST_START", "FallingSlam", 182066)
 	self:Log("SPELL_CAST_START", "Blitz", 179889)
 	self:Log("SPELL_CAST_START", "FullCharge", 182055)

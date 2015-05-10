@@ -664,7 +664,7 @@ do
 	end
 end
 
-function boss:EncounterEnd(event, id, name, difficulty, size, status)
+function boss:EncounterEnd(event, id, name, diff, size, status)
 	if self.engageId == id and self.enabledState then
 		if status == 1 then
 			if self.journalId then
@@ -676,7 +676,7 @@ function boss:EncounterEnd(event, id, name, difficulty, size, status)
 			self:SendMessage("BigWigs_StopBars", self)
 			self:ScheduleTimer("Wipe", 5) -- Delayed for now due to issues with certain encounters and using IEEU for engage.
 		end
-		self:SendMessage("BigWigs_EncounterEnd", self, id, name, difficulty, size, status) -- Do NOT use this for wipe detection, use BigWigs_OnBossWipe.
+		self:SendMessage("BigWigs_EncounterEnd", self, id, name, diff, size, status) -- Do NOT use this for wipe detection, use BigWigs_OnBossWipe.
 	end
 end
 

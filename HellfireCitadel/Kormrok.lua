@@ -9,7 +9,7 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Kormrok", 1026, 1392)
 if not mod then return end
-mod:RegisterEnableMob(90435, 90776) -- 90435 on beta
+mod:RegisterEnableMob(90435)
 mod.engageId = 1787
 
 --------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ExplosiveRunes", 181296, 181297)
 	self:Log("SPELL_CAST_START", "GraspingHands", 181299, 181300)
 	self:Log("SPELL_CAST_START", "Pound", 180244)
-	self:Log('SPELL_CAST_SUCCESS', 'FoulCrushSuccess', 181307)
+	self:Log("SPELL_CAST_SUCCESS", "FoulCrushSuccess", 181307)
 	self:Log("SPELL_AURA_REMOVED", "PoundOver", 180244)
 	self:Log("SPELL_CAST_START", "Swat", 181305, 187165)
 	self:Log("SPELL_AURA_APPLIED", "FoulCrush", 181345)
@@ -80,7 +80,7 @@ end
 
 function mod:ExplosiveBurst(args)
 	tankDebuffCount = tankDebuffCount + 1
-	self:Bar(args.spellId, tankDebuffCount%2==0 and 32 or 42)
+	self:Bar(args.spellId, tankDebuffCount % 2 == 0 and 32 or 42)
 	self:TargetBar(args.spellId, 10, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
 	self:PrimaryIcon(args.spellId, args.destName)
@@ -95,8 +95,8 @@ end
 
 function mod:FoulCrushSuccess(args)
 	tankDebuffCount = tankDebuffCount + 1
-	self:Bar(args.spellId, tankDebuffCount%2==0 and 32 or 42)
-	self:Message(args.spellId, "Urgent", self:Tank() and "Warning", "Foul Crush on tank!")
+	self:Bar(args.spellId, tankDebuffCount % 2 == 0 and 32 or 42)
+	self:Message(args.spellId, "Urgent", self:Tank() and "Warning", "Foul Crush on tank!") -- XXX
 end
 
 function mod:ExplosiveBurstRemoved(args)
@@ -133,8 +133,8 @@ end
 
 function mod:Swat(args)
 	tankDebuffCount = tankDebuffCount + 1
-	self:Bar(181305, tankDebuffCount%2==0 and 32 or 42)
-	self:Message(181305, "Urgent", self:Tank() and "Warning", "Swat on tank!")
+	self:Bar(181305, tankDebuffCount % 2 == 0 and 32 or 42)
+	self:Message(181305, "Urgent", self:Tank() and "Warning", "Swat on tank!") -- XXX
 end
 
 do
@@ -154,3 +154,4 @@ end
 function mod:Enrage(args)
 	self:Message(args.spellId, "Positive")
 end
+
