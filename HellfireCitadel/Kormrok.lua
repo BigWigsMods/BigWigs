@@ -69,7 +69,7 @@ end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Kormrok (beta) engaged", false)
-	self:CDBar(180244, 38) -- Pound
+	self:CDBar(180244, 39) -- Pound
 	poundCount = 0
 	tankDebuffCount = 0
 end
@@ -105,17 +105,18 @@ function mod:ExplosiveBurstRemoved(args)
 end
 
 function mod:FelOutpouring(args)
-	self:Message(args.spellId, "Attention", "Long")
-	self:Bar(args.spellId, 3)
+	self:Message(181292, "Attention", "Long")
+	self:Bar(181292, 3)
 end
 
 function mod:ExplosiveRunes(args)
-	self:Message(args.spellId, "Important", "Info", CL.incoming:format(args.spellName))
-	self:Bar(args.spellId, 4)
+	self:Message(181296, "Important", "Info", CL.incoming:format(args.spellName))
+	self:Bar(181296, 4, CL.cast:format(args.spellName))
+	self:Bar(181296, 48)
 end
 
 function mod:GraspingHands(args)
-	self:Message(args.spellId, "Important", "Info", CL.incoming:format(args.spellName))
+	self:Message(181299, "Important", "Info", CL.incoming:format(args.spellName))
 end
 
 function mod:Pound(args)
@@ -132,7 +133,7 @@ end
 
 function mod:Swat(args)
 	tankDebuffCount = tankDebuffCount + 1
-	self:Bar(args.spellId, tankDebuffCount%2==0 and 32 or 42)
+	self:Bar(181305, tankDebuffCount%2==0 and 32 or 42)
 	self:Message(181305, "Urgent", self:Tank() and "Warning", "Swat on tank!")
 end
 
