@@ -20,6 +20,7 @@ mod.engageId = 1784
 
 local phase = 1
 local mobCollector = {}
+local annihilatingStrikeCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -44,12 +45,15 @@ function mod:GetOptions()
 		--[[ Stage Two: Contempt ]]--
 		180533, -- Tainted Shadows
 		180025, -- Harbinger's Mending
+		180526, -- Font of Corruption
 		--[[ Stage Three: Malice ]]--
 		180608, -- Gavel of the Tyrant
 		180040, -- Sovereign's Ward
+		
 		--[[ General ]]--
 		{180000, "TANK"}, -- Seal of Decay
 		180166, -- Touch of Harm
+		
 		{182459, "SAY", "PROXIMITY", "ICON"}, -- Edict of Condemnation
 		"berserk",
 	}, {
@@ -63,7 +67,10 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EnforcersOnslaught", 180004)
 	self:Log("SPELL_CAST_START", "AnnihilatingStrike", 180260)
-	self:Log("SPELL_CAST_START", "InfernalTempest", 180300)
+	self:Log("SPELL_CAST_START", "InfernalTempestStart", 180300)
+	self:Log("SPELL_CAST_SUCCESS", "InfernalTempestEnd", 180300)
+	
+	self:Log("SPELL_CAST_SUCCESS", "FontOfCorruption", 180526)
 
 	self:Log("SPELL_CAST_START", "TaintedShadows", 180533)
 	self:Log("SPELL_CAST_START", "HarbingersMending", 180025, 181990)
@@ -77,12 +84,23 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "TouchOfHarm", 180166, 185237)
 	self:Log("SPELL_AURA_APPLIED", "EdictOfCondemnation", 182459)
 	self:Log("SPELL_AURA_REMOVED", "EdictOfCondemnationRemoved", 182459)
+	
+	self:Log("SPELL_CAST_SUCCESS", "AuraOfContempt", 179986) -- Phase 2
+	self:Log("SPELL_CAST_SUCCESS", "AuraOfMalice", 179991) -- Phase 3
+		
+	self:Death("Deaths", 90270, 90271)
 end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Tyrant Velhari (beta) engaged", false)
 	wipe(mobCollector)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+	
+	self:Bar(180300, 40) -- Infernal Tempest
+	self:Bar(180260, 10) -- Annihilating Strike
+	self:Bar(180128, 57.7) -- Edict of Condemnation
+	self:Bar(180166, 16) -- Touch of Harm
+	
 end
 
 --------------------------------------------------------------------------------
@@ -114,6 +132,7 @@ end
 
 -- Stage 1
 function mod:EnforcersOnslaught(args)
+	self:CDBar(args.spellId, 14.6)
 	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
 end
 
@@ -125,19 +144,33 @@ do
 		end
 	end
 	function mod:AnnihilatingStrike(args)
+		annihilatingStrikeCount = annihilatingStrikeCount + 1
 		self:GetBossTarget(printTarget, 0.2, args.sourceGUID)
-		self:Bar(args.spellId, 3)
+		self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+		self:Bar(args.spellId, annihilatingStrikeCount % 3 == 0 and 20 or 10) -- 3 strikes between infernal tempests
 	end
 end
 
-function mod:InfernalTempest(args)
-	self:Message(args.spellId, "Attention", "Warning", ("%s - SPREAD OUT"):format(args.spellName))
-	self:Bar(args.spellId, 6.5)
-	self:OpenProximity(args.spellId, 5)
-	self:ScheduleTimer("CloseProximity", 6.5, args.spellId)
+function mod:InfernalTempestStart(args)
+	self:Message(args.spellId, "Attention", "Warning", CL.incoming:format(args.spellName))
+	self:Bar(args.spellId, 6.5, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, 40)
+	self:OpenProximity(args.spellId, 3) -- 2+1 for safety
+	
+end
+
+function mod:InfernalTempestEnd(args)
+	self:CloseProximity(args.spellId)
 end
 
 -- Stage 2
+
+function mod:AuraOfContempt()
+	self:StopBar(180300) -- Infernal Tempest
+	self:StopBar(180260) -- Annihilating Strike
+	self:Bar(180526, 22) -- Font of Corruption, 2sec cast + 20sec timer
+end
+
 do
 	local function printTarget(self, name, guid)
 		self:TargetMessage(180533, name, "Important", "Alert")
@@ -148,6 +181,7 @@ do
 end
 
 function mod:HarbingersMending(args)
+	self:CDBar(180025, 11)
 	self:Message(180025, "Attention", "Info", CL.casting:format(args.spellName))
 end
 
@@ -155,8 +189,21 @@ function mod:HarbingersMendingApplied(args)
 	self:TargetMessage(180025, args.destName, "Attention", "Info", nil, nil, true)
 end
 
+function mod:FontOfCorruption(args)
+	self:Message(args.spellId, "Attention", "Info", args.spellName)
+	self:Bar(180526, 20)
+	-- mayby add font of corruption targets?
+end
+
 -- Stage 3
+
+function mod:AuraOfMalice()
+	self:StopBar(180526) -- Font of Corruption
+	self:Bar(180608 ,30) -- Gavel of the Tyrant
+end
+
 function mod:GavelOfTheTyrant(args)
+	self:Bar(args.spellId, 40) -- from heroic logs
 	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
 end
 
@@ -165,6 +212,14 @@ function mod:SovereignsWard(args)
 end
 
 -- General
+
+function mod:Deaths(args) 
+	if args.mobId == 90270 then 
+		self:StopBar(180004) -- Enforcers Onslaught
+	else
+		self:StopBar(180025) -- Harbingers Mending
+	end
+end
 function mod:SealOfDecay(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent")
 end
@@ -182,6 +237,7 @@ end
 do
 	local timer1, timer2 = nil, nil
 	function mod:EdictOfCondemnation(args)
+		self:Bar(args.spellId, 60)
 		self:TargetBar(args.spellId, 9, args.destName)
 		self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
 		if self:Me(args.destGUID) then
