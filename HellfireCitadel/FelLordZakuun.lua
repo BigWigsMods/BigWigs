@@ -40,10 +40,12 @@ function mod:GetOptions()
 		{179711, "PROXIMITY", "SAY"}, -- Befouled
 		179671, -- Heavily Armed
 		179407, -- Disembodied
-		179583, -- Rumbling Fissure
+		179583, -- Rumbling Fissures
 		181653, -- Fel Crystal
 		{181508, "SAY"}, -- Seed of Destruction
 		179681, -- Enrage
+		179406, -- Soul Cleave
+		189009, -- Cavitation
 		"berserk",
 	}
 end
@@ -54,10 +56,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "BefouledRemoved", 179711)
 	self:Log("SPELL_AURA_APPLIED", "HeavilyArmed", 179671)
 	self:Log("SPELL_AURA_APPLIED", "Disembodied", 179407)
-	self:Log("SPELL_CAST_START", "RumblingFissure", 179583)
+	self:Log("SPELL_CAST_SUCCESS", "RumblingFissures", 179583)
 	self:Log("SPELL_AURA_APPLIED", "SeedOfDestruction", 181508, 181515)
 	self:Log("SPELL_AURA_APPLIED", "Enrage", 179681)
-
+	self:Log("SPELL_CAST_SUCCESS", "Cavitation", 189009)
+	self:Log("SPELL_AURA_APPLIED", "DisarmedApplied", 179667) -- phase 2 trigger, could also use Throw Axe _success, but throw axe doesn't have cleu event for phase ending?
+	self:Log("SPELL_AURA_REMOVED", "DisarmedRemoved", 179667) -- phase 2 untrigger
+	self:Log("SPELL_CAST_SUCCESS", "SoulCleave", 179406)
 	self:Log("SPELL_AURA_APPLIED", "FelCrystalDamage", 181653)
 	self:Log("SPELL_PERIODIC_DAMAGE", "FelCrystalDamage", 181653)
 	self:Log("SPELL_PERIODIC_MISSED", "FelCrystalDamage", 181653)
@@ -65,14 +70,46 @@ end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Fel Lord Zakuun (beta) engaged", false)
+	if self:Mythic() or self:Tank() then
+		self:Bar(179406, 28.5) -- Soul Cleave
+	end
+	self:Bar(189009, 36.5) -- Cavitation
+	self:Bar(179583, 7) -- Rumbling Fissures
+	self:Bar(179709, 16) -- Foul
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+function mod:SoulCleave(args)
+	if self:Mythic() or self:Tank() then
+		self:Bar(args.spellId, 40.2)
+	end
+end
+
+function mod:DisarmedApplied(args)
+	self:Message(args.spellId, "Attention", "Info", CL.phase:format(2))
+	self:CDBar(args.spellId, 33.5) -- approx for phase ending
+	self:Bar(181515, 9) -- Seed of Destruction
+	self:Bar(178583, self:BarTimeLeft(179583) + 40) -- Rumbling Fissures
+	if self:Mythic() or self:Tank() then
+		self:Bar(179406, self:BarTimeLeft(179406) + 30) -- Soul Cleave
+	end
+	self:Bar(189009, self:BarTimeLeft(189009) + 40) -- Cavitation
+end
+
+function mod:DisarmedRemoved(args)
+	self:Message(args.spellId, "Attention", "Info", CL.phase:format(1))
+	self:StopBar(181515) -- Seed of Destruction
+end
+
+function mod:Cavitation(args)
+	self:Message(args.spellId, "Attention", "Info", args.spellName)
+	self:Bar(args.spellId, 40)
+end
 
 function mod:Foul()
-	self:CDBar(179711, 39)
+	self:CDBar(179711, 40)
 end
 
 do
@@ -104,7 +141,7 @@ function mod:Disembodied(args)
 	self:Bar(args.spellId, 40)
 end
 
-function mod:RumblingFissure(args)
+function mod:RumblingFissures(args)
 	self:Message(args.spellId, "Urgent", "Info")
 	self:Bar(args.spellId, 40)
 end
@@ -114,7 +151,8 @@ do
 	function mod:SeedOfDestruction(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:CDBar(args.spellId, 15)
+			self:CDBar(args.spellId, 14.5)
+			self:Bar(args.spellId, 5, 84474)
 			self:ScheduleTimer("TargetMessage", 0.2, 181508, list, "Attention", "Alarm")
 		end
 		if self:Me(args.destGUID) then
