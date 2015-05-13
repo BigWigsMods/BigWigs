@@ -18,7 +18,24 @@ mod.engageId = 1783
 --
 
 local phase = 1
-
+local fatePlayer
+local shadowOfDeathInfo = {
+	["icon"] = {
+		["tank"] = INLINE_TANK_ICON,
+		["healer"] = INLINE_HEALER_ICON,
+		["dps"] = INLINE_DAMAGER_ICON,
+	},
+	["heroic"] = {
+		["tank"] = 60,
+		["healer"] = 36,
+		["dps"] = 36,
+	},
+	["mythic"] = {
+		["tank"] = 60,
+		["healer"] = 45,
+		["dps"] = 27,
+	},
+}
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -88,12 +105,19 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "DoomWellDamage", 179995)
 	self:Log("SPELL_AURA_APPLIED", "FelFuryDamage", 182601)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FelFuryDamage", 182601)
+	self:Log("SPELL_AURA_REMOVED", "GoreboundFortitude", 185982) -- Add spawning on the 'real' realm
+	self:Death("GoreboundSpiritDeath", 90570)
 end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Gorefiend (beta) engaged", false)
 	self:OpenProximity("proximity", 5) -- XXX Tie this to Surging Shadows?
 	self:Bar(179909, 18) -- Shared Fate
+	self:Bar(179864, 3, shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
+	self:Bar(179864, self:Mythic() and 13 or 9, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
+	self:Bar(179864, self:Mythic() and 30 or 26, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death
+	self:Bar(181973, 123) -- Feast of Souls, based on heroic logs
+	self:Bar(179977, 9.5) -- Touch of Doom
 end
 
 function mod:Kill()
@@ -108,6 +132,7 @@ end
 do
 	local list = mod:NewTargetList()
 	function mod:TouchOfDoom(args)
+		self:Bar(args.spellId, 25)
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Important", "Alarm")
@@ -120,6 +145,12 @@ do
 		end
 	end
 end
+function mod:GoreboundSpiritDeath(args)
+	self:StopBar(181582) -- Bellowing Shout
+end
+function mod:GoreboundFortitude(args)
+	self:Message(185982, "Attention", "Info", CL.spawning:format(args.sourceName)) -- Add spawning to the 'real' realm
+end
 
 function mod:TouchOfDoomRemoved(args)
 	if self:Me(args.destGUID) then
@@ -130,7 +161,7 @@ function mod:TouchOfDoomRemoved(args)
 end
 
 function mod:SharedFateRoot(args)
-	self:Bar(args.spellId, 29)
+	self:CDBar(args.spellId, 25) -- 25 - 29
 	fatePlayer = args.destName
 	if self:Me(args.destGUID) then
 		self:Say(179909, 135484) -- 135484 = "Rooted"
@@ -169,20 +200,33 @@ end
 function mod:FeastOfSoulsStart(args)
 	self:Message(args.spellId, "Attention", "Long", ("%s - Weakened for ~1 min!"):format(args.spellName))
 	self:Bar(args.spellId, 60, self:SpellName(117847)) -- Weakened
+	-- cancel timers
+	self:StopBar(shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864))
+	self:StopBar(shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864))
+	self:StopBar(shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864))
+	self:StopBar(179909) -- Shared Fate
+	self:StopBar(179977) -- Touch of Doom
+	
 end
 
 function mod:FeastOfSoulsOver(args)
 	self:Message(args.spellId, "Attention", nil, CL.over:format(self:SpellName(117847))) -- Weakened
 	self:StopBar(117847) -- If it finishes early due to failing
+	self:Bar(args.spellId, 123) -- Based on pull->first feast
+	self:Bar(179864, 2,shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death 
+	self:Bar(179864, 13, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
+	self:Bar(179864, 36, shadowOfDeathInfo.icon.healer" "..self:SpellName(179864)) -- Healer Shadow of Death, XXX mayby the timer is based on difficulty?(36/45), i don't have enough data to confirm
 end
 
 function mod:Digest(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Attention", "Long", CL.custom_sec:format(args.spellName, 40))
-		self:DelayedMessage(args.spellId, 20, "Attention", CL.custom_sec:format(args.spellName, 20))
-		self:DelayedMessage(args.spellId, 30, "Attention", CL.custom_sec:format(args.spellName, 10))
-		self:DelayedMessage(args.spellId, 35, "Urgent", CL.custom_sec:format(args.spellName, 5))
-		self:Bar(args.spellId, 40)
+		self:Message(args.spellId, "Attention", "Long", CL.custom_sec:format(args.spellName, self:Mythic() and 30 or 40))
+		if not self:Mythic() then -- you don't have any control over it on mythic
+			self:DelayedMessage(args.spellId, 20, "Attention", CL.custom_sec:format(args.spellName, 20))
+			self:DelayedMessage(args.spellId, 30, "Attention", CL.custom_sec:format(args.spellName, 10))
+			self:DelayedMessage(args.spellId, 35, "Urgent", CL.custom_sec:format(args.spellName, 5))
+		end
+		self:Bar(args.spellId, self:Mythic() and 30 or 40)
 	end
 end
 
@@ -203,6 +247,8 @@ do
 			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Urgent", "Alarm")
 		end
 		self:TargetBar(args.spellId, 5, args.destName)
+		local role = self:Tank(args.destName) and "tank" or self:Healer(args.destName) and "healer" or "dps"
+		self:Bar(179864, shadowOfDeathInfo[self:Mythic() and "mythic" or "heroic"][role], shadowOfDeathInfo.icon[role].." "..args.spellName)
 	end
 end
 
@@ -233,6 +279,7 @@ do
 end
 
 function mod:BellowingShout(args)
+	self:CDBar(args.spellId, 13.5)
 	if UnitGUID("target") == args.sourceGUID or UnitGUID("focus") == args.sourceGUID then
 		self:Message(args.spellId, "Important", not self:Healer() and "Alert", CL.casting:format(args.spellName))
 	end
