@@ -51,12 +51,12 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Workshop Guardian ]]--
-		{175643, "FLASH"}, -- Spinning Blade
+		175643, -- Spinning Blade
 		{175624, "HEALER"}, -- Grievous Mortal Wounds
 		--[[ Ogron Hauler ]]--
 		{175765, "TANK"}, -- Overhead Smash
 		--[[ Thunderlord Beast-Tender ]]--
-		{162663, "FLASH"}, -- Electrical Storm
+		162663, -- Electrical Storm
 		--[[ Slagshop Brute ]]--
 		{175993, "FLASH"}, -- Lumbering Strength
 		--[[ Gronnling Laborer ]]--
@@ -64,12 +64,12 @@ function mod:GetOptions()
 		--[[ Darkshard Gnasher ]]--
 		{159632, "FLASH"}, -- Insatiable Hunger
 		--[[ Blackrock Enforcer ]]--
-		{160260, "FLASH"}, -- Fire Bomb
+		160260, -- Fire Bomb
 		--[[ Iron Taskmaster ]]--
 		163121, -- Held to Task
 		177806, -- Furnace Flame (via furnace next to Taskmaster)
 		--[[ Blast Furnace Exhaust ]]--
-		{174773, "FLASH"}, -- Exhaust Fumes
+		174773, -- Exhaust Fumes
 		--[[ Iron Earthbinder ]]--
 		{171613, "FLASH"}, -- Inferno Totem
 		--[[ Forgemistress Flamehand ]]--
@@ -107,12 +107,11 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "LumberingStrength", 175993)
 
-	self:Log("SPELL_AURA_APPLIED", "Enrage", 18501)
+	self:Log("SPELL_AURA_APPLIED", "Enrage", 18501, 163121) -- Enrage, Held to Task
 
 	self:Log("SPELL_AURA_APPLIED", "InsatiableHunger", 159632)
 	self:Log("SPELL_AURA_REMOVED", "InsatiableHungerRemoved", 159632)
 
-	self:Log("SPELL_AURA_APPLIED", "HeldToTask", 163121)
 	self:Log("SPELL_AURA_APPLIED", "FurnaceFlameFun", 177806)
 
 	self:Log("SPELL_CAST_SUCCESS", "InfernoTotem", 171613)
@@ -135,9 +134,16 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Flash(args.spellId)
 			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
+	end
+end
+
+function mod:Enrage(args) -- Enrage / Held to Task
+	if self:Dispeller("enrage", true) then
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
+	else
+		self:TargetMessage(args.spellId, args.destName, "Attention")
 	end
 end
 
@@ -190,12 +196,6 @@ function mod:LumberingStrength(args)
 	end
 end
 
---[[ Gronnling Laborer ]]--
-
-function mod:Enrage(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", self:Dispeller("enrage", true) and "Alert")
-end
-
 --[[ Darkshard Gnasher ]]--
 
 function mod:InsatiableHunger(args)
@@ -214,14 +214,6 @@ function mod:InsatiableHungerRemoved(args)
 end
 
 --[[ Iron Taskmaster ]]--
-
-function mod:HeldToTask(args)
-	if self:Dispeller("enrage", true) then
-		self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
-	else
-		self:TargetMessage(args.spellId, args.destName, "Attention")
-	end
-end
 
 function mod:FurnaceFlameFun(args)
 	if self:Me(args.destGUID) then
