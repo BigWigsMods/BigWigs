@@ -19,6 +19,11 @@ if L then
 --@localization(locale="itIT", namespace="BlackrockFoundry/Kagraz", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
+L = BigWigs:NewBossLocale("Kromog", "itIT")
+if L then
+--@localization(locale="itIT", namespace="BlackrockFoundry/Kromog", format="lua_additive_table", handle-unlocalized="ignore")@
+end
+
 L = BigWigs:NewBossLocale("Beastlord Darmac", "itIT")
 if L then
 --@localization(locale="itIT", namespace="BlackrockFoundry/Darmac", format="lua_additive_table", handle-unlocalized="ignore")@

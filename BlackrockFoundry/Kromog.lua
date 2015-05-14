@@ -15,6 +15,20 @@ mod.respawnTime = 29.5
 
 local breathCount = 1
 local callOfTheMountainCount = 1
+local tank1Skull, tank2Cross = nil, nil
+local handsMarks = {}
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.custom_off_hands_marker = "Grasping Earth tank marker"
+	L.custom_off_hands_marker_desc = "Mark the Grasping Earth that picks up the tanks with {rt7}{rt8}, requires promoted or leader."
+	L.custom_off_hands_marker_icon = 8
+end
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -32,6 +46,7 @@ function mod:GetOptions()
 		157592, -- Rippling Smash
 		-9702, -- Rune of Crushing Earth
 		157060, -- Rune of Grasping Earth
+		"custom_off_hands_marker",
 		157054, -- Thundering Blows
 		156861, -- Frenzy
 		"berserk",
@@ -39,6 +54,23 @@ function mod:GetOptions()
 		[173917] = "mythic",
 		[156766] = "general"
 	}
+end
+
+local function updateTanks(self)
+	if self:GetOption("custom_off_hands_marker") then
+		local _, _, _, myMapId = UnitPosition("player")
+		for unit in self:IterateGroup() do
+			local _, _, _, tarMapId = UnitPosition(unit)
+			if tarMapId == myMapId and self:Tank(unit) then
+				if not tank1Skull then
+					tank1Skull = UnitGUID(unit)
+				else
+					tank2Cross = UnitGUID(unit)
+					break
+				end
+			end
+		end
+	end
 end
 
 function mod:OnBossEnable()
@@ -50,16 +82,20 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "RipplingSmash", 157592)
 	self:Log("SPELL_CAST_START", "GraspingEarth", 157060)
 	self:Log("SPELL_CAST_START", "ThunderingBlows", 157054)
+	self:Log("SPELL_AURA_REMOVED", "ThunderingBlowsOver", 157054)
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 156861)
 	-- Mythic
 	self:Log("SPELL_CAST_SUCCESS", "TremblingEarth", 173917)
 	self:Log("SPELL_CAST_START", "CallOfTheMountain", 158217)
 	self:Log("SPELL_CAST_SUCCESS", "CallOfTheMountainBar", 158217)
+
+	updateTanks(self) -- Backup for disconnecting mid-combat
 end
 
 function mod:OnEngage()
 	breathCount = 1
 	callOfTheMountainCount = 1
+	tank1Skull, tank2Cross = nil, nil
 	self:CDBar(156852, 9, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
 	self:CDBar(156766, 14) -- Warped Armor
 	--self:CDBar(157592, 23) -- Rippling Smash -- Varies between 23 and 38 seconds...
@@ -70,6 +106,8 @@ function mod:OnEngage()
 	end
 	self:Berserk(540)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+
+	updateTanks(self)
 end
 
 --------------------------------------------------------------------------------
@@ -139,16 +177,48 @@ function mod:RipplingSmash(args)
 	-- next cast happens 72-88s after pillars, so what happened to the third cast? sigh.
 end
 
-function mod:GraspingEarth(args)
-	self:Message(args.spellId, "Positive", "Info")
-	self:CDBar(args.spellId, 112) -- 112-114
-	self:CDBar(157054, 13) -- Thundering Blows
+do
+	function mod:UNIT_TARGET(_, firedUnit)
+		local unit = firedUnit and firedUnit.."target" or "mouseover"
+		local guid = UnitGUID(unit)
+		if not handsMarks[guid] and self:MobId(guid) == 77893 then -- Grasping Earth
+			local unitTarget = unit.."target"
+			local tarGuid = UnitGUID(unitTarget)
+			if tarGuid then
+				handsMarks[guid] = true
+				if tarGuid == tank1Skull then
+					SetRaidTarget(unit, 8)
+				elseif tarGuid == tank2Cross then
+					SetRaidTarget(unit, 7)
+				end
+			end
+		end
+	end
 
-	self:StopBar(156766) -- Warped Armor
-	self:StopBar(156704) -- Slam
-	self:StopBar(157592) -- Rippling Smash
+	function mod:GraspingEarth(args)
+		self:Message(args.spellId, "Positive", "Info")
+		self:CDBar(args.spellId, 112) -- 112-114
+		self:CDBar(157054, 13) -- Thundering Blows
 
-	self:CDBar(156852, 31, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
+		self:StopBar(156766) -- Warped Armor
+		self:StopBar(156704) -- Slam
+		self:StopBar(157592) -- Rippling Smash
+
+		self:CDBar(156852, 31, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
+
+		if self:GetOption("custom_off_hands_marker") then
+			wipe(handsMarks)
+			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
+			self:RegisterEvent("UNIT_TARGET")
+		end
+	end
+
+	function mod:ThunderingBlowsOver()
+		if self:GetOption("custom_off_hands_marker") then
+			self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+			self:UnregisterEvent("UNIT_TARGET")
+		end
+	end
 end
 
 function mod:ThunderingBlows(args)
