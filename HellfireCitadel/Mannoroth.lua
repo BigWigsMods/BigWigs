@@ -157,7 +157,7 @@ end
 
 function mod:Felseeker(args)
 	if args.spellId == 181738 then
-		self:Message(181735, "Positive", "Alert", ("%s (%d) %d yards"):format(args.spellName, 3, 35))
+		self:Message(181735, "Positive", "Alert", ("%s (%d) %d yards"):format(args.spellName, 3, 30))
 	elseif args.spellId == 181792 then
 		self:Message(181735, "Positive", "Alert", ("%s (%d) %d yards"):format(args.spellName, 2, 20))
 	else
