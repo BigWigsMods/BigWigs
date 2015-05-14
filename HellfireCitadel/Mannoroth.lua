@@ -142,7 +142,7 @@ end
 function mod:CurseOfTheLegionRemoved(args)
 	self:StopBar(args.spellName, args.destName)
 	self:PrimaryIcon(args.spellId)
-	self:Message(args.spellId, "Important", "Warning", CL.spawning:format("Doom Lord"))
+	self:Message(args.spellId, "Important", "Warning", CL.spawned:format(self:SpellName(-11813))) -- Doom Lord
 end
 
 function mod:DoomSpike(args)

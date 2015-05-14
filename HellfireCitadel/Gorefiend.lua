@@ -149,7 +149,7 @@ function mod:GoreboundSpiritDeath(args)
 	self:StopBar(181582) -- Bellowing Shout
 end
 function mod:GoreboundFortitude(args)
-	self:Message(185982, "Attention", "Info", CL.spawning:format(args.sourceName)) -- Add spawning to the 'real' realm
+	self:Message(185982, "Attention", "Info", CL.spawned:format(args.sourceName)) -- Add spawning to the 'real' realm
 end
 
 function mod:TouchOfDoomRemoved(args)

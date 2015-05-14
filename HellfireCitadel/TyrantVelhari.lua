@@ -121,7 +121,7 @@ do
 				mobCollector[guid] = true
 				local id = self:MobId(guid)
 				if adds[id] then
-					self:Message("berserk", "Neutral", nil, CL.spawning:format(self:SpellName(adds[id])), false)
+					self:Message("berserk", "Neutral", nil, CL.spawned:format(self:SpellName(adds[id])), false)
 				end
 			end
 		end
