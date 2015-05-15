@@ -91,17 +91,17 @@ do
 end
 
 function mod:PhantasmalCorruption(args)
-	self:TargetBar(args.spellId, 10, args.destName)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert")
+	self:TargetBar(181824, 10, args.destName)
+	self:TargetMessage(181824, args.destName, "Urgent", "Alert")
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:OpenProximity(args.spellId, 15) -- XXX verify obliteration range
+		self:Say(181824)
+		self:OpenProximity(181824, 15) -- XXX verify obliteration range
 	end
 end
 
 function mod:PhantasmalCorruptionRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CloseProximity(args.spellId)
+		self:CloseProximity(181824)
 	end
 	self:StopBar(args.spellName, args.destName)
 end
