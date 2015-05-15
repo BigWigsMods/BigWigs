@@ -45,6 +45,7 @@ function mod:GetOptions()
 		{186123, "SAY", "PROXIMITY"}, -- Wrought Chaos
 		{185014, "SAY", "PROXIMITY"}, -- Focused Chaos
 		183586, -- Doomfire
+		183254, -- Allure of Flames
 		"berserk",
 	}
 end
@@ -64,6 +65,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "WroughtChaosRemoved", 186123)
 	self:Log("SPELL_AURA_APPLIED", "FocusedChaos", 185014)
 	self:Log("SPELL_AURA_REMOVED", "FocusedChaosRemoved", 185014)
+	self:Log("SPELL_CAST_START", "AllureOfFlames", 183254)
 
 	self:Log("SPELL_AURA_APPLIED", "DoomfireDamage", 183586)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomfireDamage", 183586)
@@ -71,7 +73,9 @@ end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Archimonde (beta) engaged", false)
-	self:Bar(183817, 41.1) -- Fel Burst
+	self:Bar(183817, 41) -- Fel Burst
+	self:Bar(183828, 15.4) -- Death Brand
+	self:Bar(183254, 30) -- Allure of Flames
 end
 
 --------------------------------------------------------------------------------
@@ -112,7 +116,7 @@ function mod:NetherBanishRemoved(args)
 end
 
 function mod:FelBurst(args)
-	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
+	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
 	self:Bar(args.spellId, 2)
 end
 
@@ -188,6 +192,10 @@ function mod:FocusedChaosRemoved(args)
 	if self:Me(args.destGUID) then
 		--self:CloseProximity(args.spellId)
 	end
+end
+
+function mod:AllureOfFlames(args)
+	self:Message(args.spellId, "Urgent")
 end
 
 do
