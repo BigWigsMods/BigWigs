@@ -10,8 +10,8 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Archimonde", 1026, 1438)
 if not mod then return end
-mod:RegisterEnableMob(91331, 91557)
---mod.engageId = 0
+mod:RegisterEnableMob(91331, 91557) -- 91331 on beta
+mod.engageId = 1799
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -44,18 +44,18 @@ function mod:GetOptions()
 		{189895, "SAY", "PROXIMITY"}, -- Void Star Fixate
 		{186123, "SAY", "PROXIMITY"}, -- Wrought Chaos
 		{185014, "SAY", "PROXIMITY"}, -- Focused Chaos
+		183586, -- Doomfire
 		"berserk",
 	}
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_AURA_APPLIED", "ShackledTorment", 184964)
-	self:Log("SPELL_AURA_APPLIED", "DeathBrand", 183828)
+	self:Log("SPELL_CAST_START", "DeathBrand", 183828)
 	self:Log("SPELL_AURA_APPLIED", "NetherBanish", 186961)
 	self:Log("SPELL_AURA_REMOVED", "NetherBanishRemoved", 186961)
 	self:Log("SPELL_CAST_START", "FelBurst", 183817)
+	self:Log("SPELL_AURA_APPLIED", "FelBurstApplied", 183634)
 	self:Log("SPELL_AURA_APPLIED", "DemonicHavoc", 183865)
 	self:Log("SPELL_AURA_APPLIED", "DoomfireFixate", 182879)
 	self:Log("SPELL_AURA_APPLIED", "VoidStarFixate", 189895)
@@ -64,10 +64,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "WroughtChaosRemoved", 186123)
 	self:Log("SPELL_AURA_APPLIED", "FocusedChaos", 185014)
 	self:Log("SPELL_AURA_REMOVED", "FocusedChaosRemoved", 185014)
+
+	self:Log("SPELL_AURA_APPLIED", "DoomfireDamage", 183586)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomfireDamage", 183586)
 end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Archimonde (beta) engaged", false)
+	self:Bar(183817, 41.1) -- Fel Burst
 end
 
 --------------------------------------------------------------------------------
@@ -114,6 +118,16 @@ end
 
 do
 	local list = mod:NewTargetList()
+	function mod:FelBurstApplied(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.2, 183817, list, "Attention")
+		end
+	end
+end
+
+do
+	local list = mod:NewTargetList()
 	function mod:DemonicHavoc(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
@@ -123,16 +137,16 @@ do
 end
 
 function mod:DoomfireFixate(args)
+	self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
 		self:TargetBar(args.spellId, 10, args.destName)
 		self:Say(args.spellId)
 	end
 end
 
 function mod:VoidStarFixate(args)
+	self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
 		self:Say(args.spellId)
 		self:OpenProximity(args.spellId, 15)
 	end
@@ -173,6 +187,17 @@ function mod:FocusedChaosRemoved(args)
 	self:StopBar(args.spellName, args.destName)
 	if self:Me(args.destGUID) then
 		--self:CloseProximity(args.spellId)
+	end
+end
+
+do
+	local prev = 0
+	function mod:DoomfireDamage(args)
+		local t = GetTime()
+		if t-prev > 2 and self:Me(args.destGUID) then
+			prev = t
+			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+		end
 	end
 end
 
