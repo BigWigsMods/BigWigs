@@ -46,7 +46,8 @@ function mod:GetOptions()
 		182392, -- Shadow Bolt Volley
 		{182769, "SAY", "FLASH"}, -- Ghastly Fixation
 		182218, -- Felblaze Residue
-		{181288, "SAY"}, -- Fel Prison
+		181288, -- Fel Prison
+		180008, -- Reverberating Blow
 		"berserk",
 	}
 end
@@ -63,6 +64,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ShadowBoltVolley", 182392)
 	self:Log("SPELL_AURA_APPLIED", "GhastlyFixation", 182769)
 	self:Log("SPELL_CAST_START", "FelPrison", 181288)
+	self:Log("SPELL_CAST_START", "ReverberatingBlow", 180008)
 
 	self:Log("SPELL_AURA_APPLIED", "FelblazeResidueDamage", 182218)
 	self:Log("SPELL_PERIODIC_DAMAGE", "FelblazeResidueDamage", 182218)
@@ -158,17 +160,8 @@ function mod:GhastlyFixation(args)
 	end
 end
 
-do
-	local function printTarget(self, name, guid)
-		self:TargetMessage(181288, name, "Urgent", "Alert")
-		if self:Me(guid) then
-			self:Say(181288)
-		end
-	end
-	function mod:FelPrison(args)
-		self:GetBossTarget(printTarget, 0.2, args.sourceGUID)
-		--self:Bar(args.spellId, 3)
-	end
+function mod:FelPrison(args)
+	self:Message(args.spellName, "Urgent", "Alarm")
 end
 
 do
@@ -180,5 +173,9 @@ do
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
+end
+
+function mod:ReverberatingBlow(args)
+	self:Message(args.spellName, "Urgent", "Info")
 end
 
