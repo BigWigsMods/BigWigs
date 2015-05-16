@@ -1,6 +1,9 @@
 
 -- Notes --
 -- Nether Banish has conflicting descriptions
+-- Phase Transitions
+-- - P2 Start (70%): Yell "I grow tired of this pointless game. You face the immortal Legion, scourge of a thousand worlds."
+-- - P3 Start (40%): Yell "Enough! Your meaningless struggle ends now!"
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -35,7 +38,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		184964, -- Shackled Torment
+		{184964, "SAY", "FLASH"}, -- Shackled Torment
 		183828, -- Death Brand
 		{186961, "ICON", "SAY", "PROXIMITY"}, -- Nether Banish
 		183817, -- Fel Burst
@@ -46,6 +49,7 @@ function mod:GetOptions()
 		{185014, "SAY", "PROXIMITY"}, -- Focused Chaos
 		183586, -- Doomfire
 		183254, -- Allure of Flames
+		185590, -- Desecrate
 		"berserk",
 	}
 end
@@ -66,6 +70,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FocusedChaos", 185014)
 	self:Log("SPELL_AURA_REMOVED", "FocusedChaosRemoved", 185014)
 	self:Log("SPELL_CAST_START", "AllureOfFlames", 183254)
+	self:Log("SPELL_CAST_START", "Desecrate", 185590)
 
 	self:Log("SPELL_AURA_APPLIED", "DoomfireDamage", 183586)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomfireDamage", 183586)
@@ -73,9 +78,10 @@ end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Archimonde (beta) engaged", false)
-	self:Bar(183817, 41) -- Fel Burst
+	self:Bar(183817, 41)   -- Fel Burst
 	self:Bar(183828, 15.4) -- Death Brand
-	self:Bar(183254, 30) -- Allure of Flames
+	self:Bar(183254, 30)   -- Allure of Flames
+	self:CDBar(185590, 45) -- Desecrate   Timers Min: 38.9/Avg: 60.0/Max: 74.6 (avg 45s on later pulls)
 end
 
 --------------------------------------------------------------------------------
@@ -88,6 +94,12 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention", "Alarm")
+		end
+		self:CDBar(args.spellId, 32) -- Min: 31.8/Avg: 34.5/Max: 43.8
+		
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
 		end
 	end
 end
@@ -118,6 +130,7 @@ end
 function mod:FelBurst(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
 	self:Bar(args.spellId, 2)
+	self:ScheduleTimer("CDBar", 2, args.spellId, 51) -- Min: 52.8/Avg: 59.5/Max: 72
 end
 
 do
@@ -196,6 +209,7 @@ end
 
 function mod:AllureOfFlames(args)
 	self:Message(args.spellId, "Urgent")
+	self:CDBar(args.spellId, 48) -- Min: 47.5/Avg: 49.8/Max: 54.1
 end
 
 do
@@ -207,5 +221,10 @@ do
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
+end
+
+function mod:Desecrate(args)
+	self:Message(args.spellId, "Attention", "Alarm")
+	self:CDBar(args.spellId, 27) -- Min: 26.8/Avg: 29.2/Max: 33.4
 end
 
