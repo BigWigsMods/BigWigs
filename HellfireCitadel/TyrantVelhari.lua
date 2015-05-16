@@ -96,7 +96,7 @@ function mod:OnEngage()
 
 	self:Bar(180300, 40) -- Infernal Tempest
 	self:Bar(180260, 10) -- Annihilating Strike
-	self:Bar(180128, 57.7) -- Edict of Condemnation
+	self:Bar(182459, 57.7) -- Edict of Condemnation
 	self:Bar(180166, 16) -- Touch of Harm
 
 end
