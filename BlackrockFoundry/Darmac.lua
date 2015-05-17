@@ -98,6 +98,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SearedFlesh", 155030)
 	-- Ironcrusher
 	self:Log("SPELL_CAST_SUCCESS", "Stampede", 155247)
+	self:Log("SPELL_AURA_APPLIED", "CrushArmor", 155236)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushArmor", 155236)
 	-- Faultline
 	self:Log("SPELL_CAST_START", "Epicenter", 159043, 159045)
@@ -382,7 +383,7 @@ function mod:Stampede(args)
 end
 
 function mod:CrushArmor(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount > 2 and "Warning")
+	self:StackMessage(args.spellId, args.destName, args.amount, "Attention", args.amount and "Warning")
 end
 
 function mod:Epicenter(args)
