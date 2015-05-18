@@ -120,7 +120,7 @@ function mod:FocusedBlast(args)
 end
 
 function mod:FelConduit(args)
-	self:Message(args.spellId, "Important", "Long", CL.casting:format(args.spellName))
+	self:Message(181827, "Important", "Long", CL.casting:format(args.spellName))
 end
 
 function mod:RAID_BOSS_WHISPER(event, msg)
