@@ -258,7 +258,7 @@ function mod:FixateOver(args)
 end
 
 function mod:Overheated(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Info", nil, nil, true)
 	self:Bar(args.spellId, 20)
 	self:CDBar(155074, 6) -- Charring Breath
 end
