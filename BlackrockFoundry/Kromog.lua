@@ -122,18 +122,17 @@ function mod:TremblingEarth(args)
 	self:CDBar(156852, 61, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
 	self:CDBar(157592, 72) -- Rippling Smash
 	self:CDBar(173917, 180) -- Trembling Earth
-	self:Bar(173917, 25, CL.cast:format(self:SpellName(173917)))
+	self:Bar(-9706, 30, CL.count:format(self:SpellName(-9706), callOfTheMountainCount)) -- Call of the Mountain
 end
 
 function mod:CallOfTheMountain(args)
 	self:Message(-9706, "Important", nil, CL.casting:format(CL.count:format(self:SpellName(-9706), callOfTheMountainCount)))
-	self:Bar(-9706, 5, CL.cast:format(CL.count:format(self:SpellName(-9706), callOfTheMountainCount)))
 	callOfTheMountainCount = callOfTheMountainCount + 1
 end
 
 function mod:CallOfTheMountainBar(args)
 	if callOfTheMountainCount < 4 then
-		self:Bar(-9706, 6.5, CL.count:format(self:SpellName(-9706), callOfTheMountainCount))
+		self:Bar(-9706, 11.5, CL.count:format(self:SpellName(-9706), callOfTheMountainCount))
 	end
 end
 
