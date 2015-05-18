@@ -43,6 +43,7 @@ function mod:GetOptions()
 		{182582, "SAY"}, -- Fel Incineration
 		181827, -- Fel Conduit
 		{182200, "SAY"}, -- Fel Chakram
+		{185510, "SAY"}, -- Dark Bindings
 		"stages",
 		"berserk",
 	}
@@ -57,6 +58,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FocusedBlast", 181912)
 	self:Log("SPELL_CAST_START", "FelConduit", 181827, 187998)
 	self:Log("SPELL_AURA_APPLIED", "FelChakram", 182200, 182178)
+	self:Log("SPELL_AURA_APPLIED", "DarkBindings", 185510)
 	self:Log("SPELL_CAST_START", "Stage2", 181873) -- Shadow Escape
 
 	self:RegisterEvent("RAID_BOSS_WHISPER")
@@ -86,6 +88,19 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 1, 182323, list, "Attention")
+		end
+	end
+end
+
+do
+	local list = mod:NewTargetList()
+	function mod:DarkBindings(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 1, 185510, list, "Attention")
+		end
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
 		end
 	end
 end
