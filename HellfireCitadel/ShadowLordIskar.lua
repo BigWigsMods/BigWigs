@@ -17,7 +17,8 @@ mod.engageId = 1788
 -- Locals
 --
 
-local poundCount = 0
+local poundCount = 0 --???
+local shadowEscapeCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -45,6 +46,7 @@ function mod:GetOptions()
 		181827, -- Fel Conduit
 		{182200, "SAY"}, -- Fel Chakram
 		{185510, "SAY"}, -- Dark Bindings
+		185345, -- Shadow Riposte
 		"stages",
 		"berserk",
 	}
@@ -52,6 +54,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "EyeOfAnzu", 179202)
+	self:Log("SPELL_CAST_SUCCESS", "PhantasmalWindsSuccess", 181956)
 	self:Log("SPELL_AURA_APPLIED", "PhantasmalWinds", 185757, 181957)
 	self:Log("SPELL_AURA_APPLIED", "PhantasmalWounds", 182325)
 	self:Log("SPELL_AURA_APPLIED", "PhantasmalCorruption", 181824, 187990)
@@ -59,21 +62,40 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FelBomb", 181753)
 	self:Log("SPELL_CAST_START", "FocusedBlast", 181912)
 	self:Log("SPELL_CAST_START", "FelConduit", 181827, 187998)
-	self:Log("SPELL_AURA_APPLIED", "FelChakram", 182200, 182178)
+	self:Log("SPELL_AURA_APPLIED", "FelChakramApplied", 182200, 182178)
+	self:Log("SPELL_CAST_START", "FelChakramStart", 182216)
 	self:Log("SPELL_CAST_START", "DarkBindingsCast", 185510)
 	self:Log("SPELL_AURA_APPLIED", "DarkBindings", 185510)
 	self:Log("SPELL_CAST_START", "Stage2", 181873) -- Shadow Escape
+	self:Log("SPELL_CAST_START", "ShadowRiposte", 185345)
+	--self:Death("Deaths", 91543, 93625) --Corrupted Talonpriest,Phantasmal Resonance
 
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Shadow-Lord Iskar (beta) engaged", false)
+	if self:Mythic() then
+		self:CDBar(185345, 9.5) -- Shadow Riposte
+	end
+	self:CDBar(181956, 16) -- Phantasmal Winds
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+--function mod:Deaths(args)
+	--cancel timers from the adds if needed
+--end
+
+function mod:ShadowRiposte(args)
+	self:CDBar(args.spellId, 27)
+end
+
+function mod:PhantasmalWindsSuccess(args)
+	self:CDBar(args.spellId, 35.5)
+end
 
 function mod:EyeOfAnzu(args)
 	self:TargetMessage(args.spellId, args.destName, "Positive", self:Me(args.destGUID) and "Info")
@@ -145,7 +167,7 @@ end
 
 do
 	local list = mod:NewTargetList()
-	function mod:FelChakram(args)
+	function mod:FelChakramApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.2, 182200, list, "Attention", "Alert")
@@ -154,6 +176,10 @@ do
 			self:Say(182200)
 		end
 	end
+end
+
+function mod:FelChakramStart(args)
+	self:CDBar(182200, 34)
 end
 
 function mod:DarkBindingsCast(args)
@@ -174,5 +200,8 @@ do
 end
 
 function mod:Stage2() -- Shadow Escape
-	self:Message("stages", "Neutral", "Info", CL.stage:format(2), false)
+	self:Message("stages", "Neutral", "Info", CL.stage:format(shadowEscapeCount), false)
+	shadowEscapeCount = shadowEscapeCount + 1 -- For different adds and their timers if needed
+	self:StopBar(185345) -- Shadow Riposte
+	self:StopBar(181956) -- Phantasmal Winds
 end
