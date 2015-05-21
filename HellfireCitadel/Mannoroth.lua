@@ -48,6 +48,8 @@ function mod:GetOptions()
 		181735, -- Felseeker
 		{183377, "TANK"}, -- Glaive Thrust
 		{181359, "TANK"}, -- Massive Blast
+		{181354, "TANK"}, -- Glaive Combo
+		181557, -- Fel Hellstorm
 		"stages",
 		"berserk",
 	} -- XXX separate by stages
@@ -59,6 +61,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "MannorothsGazeCast", 181597, 182006)
 	self:Log("SPELL_AURA_APPLIED", "MannorothsGaze", 181597, 182006)
 	self:Log("SPELL_CAST_START", "Shadowforce", 181799, 182084)
+	self:Log("SPELL_CAST_SUCCESS", "CurseOfTheLegionSuccess", 181275) --if _applied 'misses'
 	self:Log("SPELL_AURA_APPLIED", "CurseOfTheLegion", 181275)
 	self:Log("SPELL_AURA_REMOVED", "CurseOfTheLegionRemoved", 181275)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomSpike", 181119)
@@ -67,6 +70,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EmpoweredFelseeker", 182077, 182076, 182040)
 	self:Log("SPELL_CAST_START", "GlaiveThrust", 183377, 185831)
 	self:Log("SPELL_AURA_APPLIED", "MassiveBlast", 181359, 185821)
+	self:Log("SPELL_CAST_SUCCESS", "FelHellstorm", 181557)
 
 	self:Log("SPELL_DAMAGE", "FelHellstormDamage", 181566)
 	self:Log("SPELL_MISSED", "FelHellstormDamage", 181566)
@@ -78,6 +82,13 @@ end
 function mod:OnEngage()
 	portalsClosed = 0
 	self:Message("berserk", "Neutral", nil, "Mannoroth (beta) engaged", false)
+	if self:Mythic() then
+		self:Bar(108508, 17.5) -- Mannoroth's Fury
+		-- XXX mayby the timers are the same in other modes on p2 start?
+		self:CDBar(181735, 57) -- Felseeker
+		self:CDBar(181354, 43) -- Glaive Combo
+		self:CDBar(181557, 30) -- Fel Hellstorm
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -111,6 +122,10 @@ function mod:MannorothsGazeCast(args)
 	self:Message(181597, "Attention", "Info", CL.casting:format(args.spellName))
 end
 
+function mod:FelHellstorm(args)
+	self:CDBar(args.spellId, 36)
+end
+
 do
 	local list = mod:NewTargetList()
 	function mod:MannorothsGaze(args)
@@ -129,6 +144,10 @@ function mod:Shadowforce(args)
 	self:Bar(181799, 8, args.spellName)
 end
 
+function mod:CurseOfTheLegionSuccess(args)
+	self:Bar(args.spellId, 65)
+end
+
 function mod:CurseOfTheLegion(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Alarm")
 	self:TargetBar(args.spellId, 20, args.destName)
@@ -143,6 +162,7 @@ function mod:CurseOfTheLegionRemoved(args)
 	self:StopBar(args.spellName, args.destName)
 	self:PrimaryIcon(args.spellId)
 	self:Message(args.spellId, "Important", "Warning", CL.spawned:format(self:SpellName(-11813))) -- Doom Lord
+	self:Bar(181099, 12) -- Mark of Doom
 end
 
 function mod:DoomSpike(args)
@@ -212,8 +232,15 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 182263 then -- P3 Transform
 		self:Message("stages", "Neutral", "Info", CL.stage:format(3), false)
+		self:CDBar(181735, 53) -- Felseeker
+		self:CDBar(181354, 36) -- Glaive Combo
+		self:Bar(181799, 24) -- Shadowforce
 	elseif spellId == 185690 then -- P4 Transform
 		self:Message("stages", "Neutral", "Info", CL.stage:format(4), false)
+	elseif spellId == 181735 then -- Felseeker
+		self:CDBar(181735, 50)
+	elseif spellId == 181354 then -- Glaive Combo
+		self:CDBar(181354, 31) -- 31-34
 	end
 end
 
