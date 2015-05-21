@@ -188,11 +188,25 @@ end
 --[[ Slagshop Brute ]]--
 
 function mod:LumberingStrength(args)
-	local unit = self:GetUnitIdByGUID(args.destGUID)
-	if unit and UnitDetailedThreatSituation("player", unit) then -- Can't use target scan as the mob clears its target during cast
-		self:Message(175993, "Important", "Warning")
-		self:Bar(175993, 8)
-		self:Flash(175993)
+	local icon = CombatLog_String_GetIcon(args.destRaidFlags)
+	local warn = false
+	local npcUnit = self:GetUnitIdByGUID(args.destGUID)
+	if npcUnit then
+		for unit in self:IterateGroup() do
+			if UnitDetailedThreatSituation(unit, npcUnit) then
+				warn = true
+				-- NPC gains the buff and chases the tank. We try to warn which tank is being chased.
+				self:TargetMessage(args.spellId, self:UnitName(unit), "Important", "Warning", icon .. args.spellName)
+				if self:Me(UnitGUID(unit)) then
+					self:Flash(args.spellId)
+				end
+				break
+			end
+		end
+	end
+	self:Bar(args.spellId, 8, icon .. args.spellName)
+	if not warn then
+		self:Message(args.spellId, "Important", nil, icon .. args.spellName)
 	end
 end
 
