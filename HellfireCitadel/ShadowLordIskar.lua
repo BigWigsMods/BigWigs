@@ -204,4 +204,5 @@ function mod:Stage2() -- Shadow Escape
 	shadowEscapeCount = shadowEscapeCount + 1 -- For different adds and their timers if needed
 	self:StopBar(185345) -- Shadow Riposte
 	self:StopBar(181956) -- Phantasmal Winds
+	self:StopBar(182200) -- Fel Chakram
 end
