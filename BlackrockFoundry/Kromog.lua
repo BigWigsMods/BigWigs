@@ -27,6 +27,10 @@ if L then
 	L.custom_off_hands_marker = "Grasping Earth tank marker"
 	L.custom_off_hands_marker_desc = "Mark the Grasping Earth that picks up the tanks with {rt7}{rt8}, requires promoted or leader."
 	L.custom_off_hands_marker_icon = 8
+
+	L.prox = "Tank Proximity"
+	L.prox_desc = "Open a 15 yard proximity showing the other tanks to help you deal with the |cff66bbffFists of Stone|r ability."
+	L.prox_icon = 162349
 end
 L = mod:GetLocale()
 
@@ -46,9 +50,10 @@ function mod:GetOptions()
 		157592, -- Rippling Smash
 		-9702, -- Rune of Crushing Earth
 		157060, -- Rune of Grasping Earth
-		"custom_off_hands_marker",
 		157054, -- Thundering Blows
 		156861, -- Frenzy
+		"custom_off_hands_marker",
+		{"prox", "TANK", "PROXIMITY"},
 		"berserk",
 	}, {
 		[173917] = "mythic",
@@ -57,19 +62,26 @@ function mod:GetOptions()
 end
 
 local function updateTanks(self)
-	if self:GetOption("custom_off_hands_marker") then
-		local _, _, _, myMapId = UnitPosition("player")
-		for unit in self:IterateGroup() do
-			local _, _, _, tarMapId = UnitPosition(unit)
-			if tarMapId == myMapId and self:Tank(unit) then
+	local _, _, _, myMapId = UnitPosition("player")
+	local tbl = {}
+	for unit in self:IterateGroup() do
+		local _, _, _, tarMapId = UnitPosition(unit)
+		if tarMapId == myMapId and self:Tank(unit) then
+			local guid = UnitGUID(unit)
+			if not self:Me(guid) then
+				tbl[#tbl+1] = self:UnitName(unit)
+			end
+			if self:GetOption("custom_off_hands_marker") then
 				if not tank1Skull then
-					tank1Skull = UnitGUID(unit)
-				else
-					tank2Cross = UnitGUID(unit)
-					break
+					tank1Skull = guid
+				elseif not tank2Cross then
+					tank2Cross = guid
 				end
 			end
 		end
+	end
+	if tbl[1] then
+		self:OpenProximity("prox", 15, tbl, true)
 	end
 end
 
@@ -89,7 +101,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CallOfTheMountain", 158217)
 	self:Log("SPELL_CAST_SUCCESS", "CallOfTheMountainBar", 158217)
 
-	updateTanks(self) -- Backup for disconnecting mid-combat
+	if IsEncounterInProgress() then
+		updateTanks(self) -- Backup for disconnecting mid-combat
+	end
 end
 
 function mod:OnEngage()
