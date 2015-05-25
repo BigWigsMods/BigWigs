@@ -231,30 +231,20 @@ function mod:CinderWolves(args)
 	self:DelayedMessage(155493, 55, "Neutral", CL.soon:format(self:SpellName(155493)), nil, "Info") -- Firestorm
 end
 
-do
-	local scheduled = nil
-	local function startBar(self, spellId)
-		if not fixateOnMe and (self:Healer() or self:Damager() == "RANGED") then
-			self:Bar(spellId, 10)
-		end
-		fixateOnMe = nil
-		scheduled = nil
-	end
-	function mod:Fixate(args)
-		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
-			self:TargetBar(args.spellId, 10, args.destName)
-			self:Flash(args.spellId)
-			fixateOnMe = true
-		end
-		if not scheduled then
-			scheduled = self:ScheduleTimer(startBar, 0.2, self, args.spellId)
-		end
+function mod:Fixate(args)
+	if self:Me(args.destGUID) and not fixateOnMe then -- Multiple debuffs, warn for the first.
+		fixateOnMe = true
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		self:Flash(args.spellId)
+		-- If we want a personal bar we will need to compensate for multiple debuffs
 	end
 end
 
 function mod:FixateOver(args)
-	self:StopBar(args.spellId, args.destName)
+	if self:Me(args.destGUID) and not UnitDebuff("player", args.spellName) then
+		fixateOnMe = nil
+		self:Message(args.spellId, "Personal", "Alarm", CL.over:format(args.spellName))
+	end
 end
 
 function mod:Overheated(args)
