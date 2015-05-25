@@ -262,7 +262,8 @@ end
 function mod:ShatteringSmash(args)
 	self:Message(155992, "Urgent", "Warning", CL.count:format(self:SpellName(128270), smashCount)) -- 128270 = "Smash"
 	smashCount = smashCount + 1
-	self:CDBar(155992, self:Mythic() and 30 or phase == 2 and 45 or 30, CL.count:format(self:SpellName(128270), smashCount)) -- 128270 = "Smash"
+	local cd = self:Mythic() and 30 or phase == 2 and 45 or (phase == 1 and smashCount == 2 and 35) or 30 -- this is getting a bit unwieldy
+	self:CDBar(155992, cd, CL.count:format(self:SpellName(128270), smashCount)) -- 128270 = "Smash"
 end
 
 do
