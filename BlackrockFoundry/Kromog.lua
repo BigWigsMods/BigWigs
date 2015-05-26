@@ -63,13 +63,13 @@ end
 
 local function updateTanks(self)
 	local _, _, _, myMapId = UnitPosition("player")
-	local tbl = {}
+	local tankList = {}
 	for unit in self:IterateGroup() do
 		local _, _, _, tarMapId = UnitPosition(unit)
 		if tarMapId == myMapId and self:Tank(unit) then
 			local guid = UnitGUID(unit)
 			if not self:Me(guid) then
-				tbl[#tbl+1] = self:UnitName(unit)
+				tankList[#tankList+1] = unit
 			end
 			if self:GetOption("custom_off_hands_marker") then
 				if not tank1Skull then
@@ -80,8 +80,8 @@ local function updateTanks(self)
 			end
 		end
 	end
-	if tbl[1] then
-		self:OpenProximity("prox", 15, tbl, true)
+	if tankList[1] then
+		self:OpenProximity("prox", 15, tankList, true)
 	end
 end
 
