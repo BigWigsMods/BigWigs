@@ -46,7 +46,7 @@ plugin.defaultDB = {
 	printKills = true,
 	printWipes = true,
 	printNewBestKill = true,
-	showBar = true,
+	showBar = false,
 }
 
 do
