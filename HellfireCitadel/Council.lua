@@ -1,8 +1,4 @@
 
--- Notes --
--- Demolishing Leap is instant?
--- Fel Blade is instant or hidden
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -37,22 +33,25 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		-- Dia Darkwhisper
+		--[[ Dia Darkwhisper ]]--
 		184449, -- Mark of the Necromancer
 		184476, -- Reap
 		{184657, "TANK_HEALER"}, -- Nightmare Visage
 		184681, -- Wailing Horror
-		
-		--Gurtogg Bloodboil
+		--[[ Gurtogg Bloodboil ]]--
 		{184358, "ICON"}, -- Fel Rage
 		184355, -- Bloodboil
 		{184847, "TANK"}, -- Acidic Wound
 		184365, -- Demolishing Leap
-		
-		-- Blademaster Jubei'thos
+		--[[ Blademaster Jubei'thos ]]--
 		--183210, -- Fel Blade
 		183885, -- Mirror Images
 		"berserk",
+	}, {
+		[184449] = -11489, -- Dia Darkwhisper
+		[184358] = -11490, -- Gurtogg Bloodboil
+		[183885] = -11488, -- Blademaster Jubei'thos
+		["berserk"] = "general",
 	}
 end
 
@@ -62,7 +61,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Reap", 184476)
 	self:Log("SPELL_CAST_START", "NightmareVisage", 184657)
 	--self:Log("SPELL_CAST_SUCCESS", "WailingHorror", 184681)
-	
+
 	self:Log("SPELL_AURA_APPLIED", "ReapDamage", 184652)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ReapDamage", 184652)
 	self:Log("SPELL_PERIODIC_MISSED", "ReapDamage", 184652)
@@ -78,9 +77,8 @@ function mod:OnBossEnable()
 	-- Blademaster Jubei'thos
 	--self:Log("SPELL_CAST_SUCCESS", "FelBlade", 183210) -- XXX not sure if usefull, mayby?
 	self:Log("SPELL_CAST_SUCCESS", "MirrorImages", 183885)
-	
+
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	
 end
 
 function mod:OnEngage()
@@ -88,11 +86,10 @@ function mod:OnEngage()
 	self:Berserk(600)
 	self:Bar(184681, 76, CL.count:format(self:SpellName(184681), horrorCount)) -- Wailing Horror
 	self:Bar(184358, 30) -- Gurtogg Bloodboil : Fel Rage
-	self:Bar(184449, 7.5) -- Dia Darkwhisper : Mark of the Necromancer
-	self:Bar(184476, 67.5) -- Dia Darkwhisper : Reap
-	self:Bar(183885, 154) -- Blademaster Jubei'thos : Mirror Images
-	self:CDBar(184365, 225) -- Gurtogg Bloodboil : Demonishing Leap 225-228
-	
+	self:CDBar(184449, 6.3) -- Dia Darkwhisper : Mark of the Necromancer, 6.3-7.5
+	self:CDBar(184476, 67.5) -- Dia Darkwhisper : Reap
+	self:CDBar(183885, 153.3) -- Blademaster Jubei'thos : Mirror Images
+	self:CDBar(184365, 225) -- Gurtogg Bloodboil : Demonishing Leap, 225-228
 end
 
 --------------------------------------------------------------------------------
@@ -118,7 +115,7 @@ end
 
 function mod:MarkOfTheNecromancer(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 65)
+	self:CDBar(args.spellId, 65)
 end
 
 function mod:Reap(args)
@@ -183,7 +180,7 @@ end
 
 function mod:MirrorImages(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 50)
+	self:Bar(args.spellId, self:LFR() and 150 or 50) -- XXX 75.5 after 30% (LFR)?
 end
 
 do

@@ -73,7 +73,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShreddedArmor", 180200)
 	self:Log("SPELL_AURA_APPLIED", "CleansingAura", 187089)
 
-	self:Log("SPELL_CAST_SUCCESS", "BloodthirsterSpawn", 181113) -- Encounter Spawn
+	--self:Log("SPELL_CAST_SUCCESS", "BloodthirsterSpawn", 181113) -- Encounter Spawn
 
 	self:Log("SPELL_CAST_START", "RendingHowl", 183917)
 	self:Log("SPELL_CAST_START", "SavageStrikes", 180163)
@@ -89,7 +89,7 @@ function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Kilrogg (beta) engaged", false)
 	self:CDBar(182428, 60) -- Vision of Death
 	self:CDBar(180372, 25) -- Heart Seeker
-	self:CDBar(180199, 12) -- Shred Armor
+	self:CDBar(180199, 10.8) -- Shred Armor
 	self:OpenAltPower("altpower", 182159) -- Fel Corruption
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
@@ -101,9 +101,10 @@ end
 
 do
 	local adds = {
-		[93369] = "Hulking Terror",
-		[90521] = "Salivating Bloodthirster",
-		[90477] = "Blood Globule",
+		[93369] = -11269, -- Hulking Terror
+		[90521] = -11266, -- Salivating Bloodthirster
+		[90477] = -11261, -- Blood Globule
+		[90513] = -11263, -- Fel Blood Globule
 	}
 	function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		for i = 1, 5 do
@@ -112,7 +113,7 @@ do
 				mobCollector[guid] = true
 				local id = self:MobId(guid)
 				if adds[id] then
-					self:Message("berserk", "Neutral", nil, adds[id], false)
+					self:Message("berserk", "Neutral", "Info", self:SpellName(adds[id]), false)
 				end
 			end
 		end
@@ -120,7 +121,7 @@ do
 
 	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		if spellId == 182012 then -- Max Health Increase
-			self:Message("berserk", "Neutral", nil, adds[93369], false)
+			self:Message("berserk", "Neutral", "Info", self:SpellName(-11269), false) -- Hulking Terror
 		end
 	end
 end
@@ -135,7 +136,7 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Important", "Alarm")
-			self:CDBar(args.spellId, 30) -- 30-35
+			self:CDBar(args.spellId, 25.5) -- 25.5-32.9
 		end
 		if self:Me(args.destGUID) then
 			self:TargetBar(args.spellId, 5, args.destName)
@@ -148,7 +149,7 @@ end
 function mod:VisionOfDeath(args)
 	self:Message(args.spellId, "Positive", "Long")
 	self:Bar(args.spellId, 8, CL.cast:format(args.spellName))
-	self:CDBar(args.spellId, 75) -- XXX exact?
+	self:CDBar(args.spellId, 75.5) -- 75.5-84.2
 end
 
 function mod:DeathThroes(args)
@@ -173,16 +174,16 @@ end
 
 --[[ Salivating Bloodthirster ]]--
 
-function mod:BloodthirsterSpawn(args)
-	if self:MobId(args.sourceGUID) == 93369 then -- Salivating Bloodthirster
-		self:Message(-11266, "Attention", "Info")
-	end
-end
+--function mod:BloodthirsterSpawn(args)
+--	if self:MobId(args.sourceGUID) == 93369 then -- Salivating Bloodthirster
+--		self:Message(-11266, "Attention", "Info")
+--	end
+--end
 
 --[[ Hulking Terror ]]--
 
 function mod:RendingHowl(args)
-	self:Message(args.spellId, "Urgent", not self:Healer() and "Info", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
 end
 
 function mod:SavageStrikes(args)

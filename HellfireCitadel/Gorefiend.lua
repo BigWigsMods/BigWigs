@@ -10,13 +10,14 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Gorefiend", 1026, 1372)
 if not mod then return end
-mod:RegisterEnableMob(90199, 91809) -- 90199 in beta
+mod:RegisterEnableMob(90199)
 mod.engageId = 1783
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
+local fixateOnMe = nil
 local phase = 1
 local fatePlayer
 local shadowOfDeathInfo = {
@@ -53,7 +54,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Gorefiend ]]--
-		{179977, "PROXIMITY", "FLASH", "SAY"}, -- Touch of Doom
+		{189434, "PROXIMITY", "FLASH", "SAY"}, -- Touch of Doom
 		179995, -- Doom Well
 		{179909, "PROXIMITY", "SAY", "ICON"}, -- Shared Fate
 		181973, -- Feast of Souls
@@ -64,7 +65,7 @@ function mod:GetOptions()
 		182601, -- Fel Fury
 		181582, -- Bellowing Shout
 		--[[ Gorebound Construct ]]--
-		{180148, "SAY", "FLASH"}, -- Hunger for Life
+		{180148, "FLASH"}, -- Hunger for Life
 		--[[ Gorebound Spirit ]]--
 		187814, -- Raging Charge
 		{185189, "TANK"}, -- Fel Flames
@@ -72,7 +73,7 @@ function mod:GetOptions()
 		"proximity",
 		"berserk",
 	}, {
-		[179977] = self.displayName, -- Gorefiend
+		[189434] = self.displayName, -- Gorefiend
 		[182601] = -11378, -- Enraged Spirit
 		[180148] = -11018, -- Gorebound Construct
 		[187814] = -11020, -- Gorebound Spirit
@@ -81,8 +82,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "TouchOfDoom", 179977)
-	self:Log("SPELL_AURA_REMOVED", "TouchOfDoomRemoved", 179977)
+	self:Log("SPELL_AURA_APPLIED", "TouchOfDoom", 189434)
+	self:Log("SPELL_AURA_REMOVED", "TouchOfDoomRemoved", 189434)
 	self:Log("SPELL_AURA_APPLIED", "SharedFateRoot", 179909)
 	self:Log("SPELL_AURA_REMOVED", "SharedFateRootRemoved", 179909)
 	self:Log("SPELL_AURA_APPLIED", "SharedFateRun", 179908)
@@ -96,6 +97,7 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_START", "CrushingDarkness", 182788) -- 180016 hidden, but do we care about warning for it?
 	self:Log("SPELL_CAST_START", "BellowingShout", 181582)
 	self:Log("SPELL_AURA_APPLIED", "HungerForLife", 180148)
+	self:Log("SPELL_AURA_REMOVED", "HungerForLifeOver", 180148)
 	self:Log("SPELL_CAST_START", "RagingCharge", 187814)
 
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FelFlames", 185189)
@@ -110,6 +112,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	fixateOnMe = nil
 	self:Message("berserk", "Neutral", nil, "Gorefiend (beta) engaged", false)
 	self:OpenProximity("proximity", 5) -- XXX Tie this to Surging Shadows?
 	self:Bar(179909, 18) -- Shared Fate
@@ -117,12 +120,7 @@ function mod:OnEngage()
 	self:Bar(179864, self:Mythic() and 13 or 9, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
 	self:Bar(179864, self:Mythic() and 30 or 26, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death
 	self:Bar(181973, 123) -- Feast of Souls, based on heroic logs
-	self:Bar(179977, 9.5) -- Touch of Doom
-end
-
-function mod:Kill()
-	self:Message("berserk", "Neutral", nil, "Gorefiend (beta) killed", false)
-	self:Wipe()
+	self:CDBar(189434, 8.3) -- Touch of Doom
 end
 
 --------------------------------------------------------------------------------
@@ -132,10 +130,10 @@ end
 do
 	local list = mod:NewTargetList()
 	function mod:TouchOfDoom(args)
-		self:Bar(args.spellId, 25)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Important", "Alarm")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important", "Alarm")
+			self:Bar(args.spellId, 25)
 		end
 		if self:Me(args.destGUID) then
 			self:TargetBar(args.spellId, 8, args.destName)
@@ -149,7 +147,8 @@ function mod:GoreboundSpiritDeath(args)
 	self:StopBar(181582) -- Bellowing Shout
 end
 function mod:GoreboundFortitude(args)
-	self:Message(185982, "Attention", "Info", CL.spawned:format(args.sourceName)) -- Add spawning to the 'real' realm
+	-- XXX fix option
+	self:Message("berserk", "Attention", "Info", CL.spawned:format(args.sourceName), false) -- Add spawning to the 'real' realm
 end
 
 function mod:TouchOfDoomRemoved(args)
@@ -165,7 +164,7 @@ function mod:SharedFateRoot(args)
 	fatePlayer = args.destName
 	if self:Me(args.destGUID) then
 		self:Say(179909, 135484) -- 135484 = "Rooted"
-		self:Message(179909, "Positive", "Alert", ("%s: You are rooted!"):format(args.spellName))
+		self:Message(179909, "Positive", "Alert", ("%s: You are rooted!"):format(args.spellName)) -- XXX fixme
 	else
 		self:TargetMessage(179909, fatePlayer, "Positive", nil, self:SpellName(135484)) -- 135484 = "Rooted"
 	end
@@ -179,7 +178,7 @@ end
 
 function mod:SharedFateRun(args)
 	if self:Me(args.destGUID) then
-		self:Message(179909, "Urgent", "Alert", ("%s: Run to %s"):format(args.spellName, fatePlayer and self:ColorName(fatePlayer) or "rooted player"))
+		self:Message(179909, "Urgent", "Alert", ("%s: Run to %s"):format(args.spellName, fatePlayer and self:ColorName(fatePlayer) or "rooted player")) -- XXX fixme
 		if fatePlayer then
 			self:OpenProximity(179909, 6, fatePlayer, true)
 		end
@@ -205,17 +204,16 @@ function mod:FeastOfSoulsStart(args)
 	self:StopBar(shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864))
 	self:StopBar(shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864))
 	self:StopBar(179909) -- Shared Fate
-	self:StopBar(179977) -- Touch of Doom
-	
+	self:StopBar(189434) -- Touch of Doom
 end
 
 function mod:FeastOfSoulsOver(args)
 	self:Message(args.spellId, "Attention", nil, CL.over:format(self:SpellName(117847))) -- Weakened
 	self:StopBar(117847) -- If it finishes early due to failing
 	self:Bar(args.spellId, 123) -- Based on pull->first feast
-	self:Bar(179864, 2,shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death 
+	self:Bar(179864, 2,shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
 	self:Bar(179864, 13, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
-	self:Bar(179864, 36, shadowOfDeathInfo.icon.healer" "..self:SpellName(179864)) -- Healer Shadow of Death, XXX mayby the timer is based on difficulty?(36/45), i don't have enough data to confirm
+	self:Bar(179864, 36, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death, XXX mayby the timer is based on difficulty?(36/45), i don't have enough data to confirm
 end
 
 function mod:Digest(args)
@@ -244,9 +242,12 @@ do
 	function mod:ShadowOfDeath(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Urgent", "Alarm")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Urgent", "Alarm")
 		end
-		self:TargetBar(args.spellId, 5, args.destName)
+		if self:Me(args.destGUID) then
+			self:TargetBar(args.spellId, 5, args.destName)
+		end
+
 		local role = self:Tank(args.destName) and "tank" or self:Healer(args.destName) and "healer" or "dps"
 		self:Bar(179864, shadowOfDeathInfo[self:Mythic() and "mythic" or "heroic"][role], shadowOfDeathInfo.icon[role].." "..args.spellName)
 	end
@@ -286,10 +287,17 @@ function mod:BellowingShout(args)
 end
 
 function mod:HungerForLife(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
-	if self:Me(args.destGUID) then
+	if self:Me(args.destGUID) and not fixateOnMe then -- Multiple debuffs, warn for the first.
+		fixateOnMe = true
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
 		self:Flash(args.spellId)
-		self:Say(args.spellId)
+	end
+end
+
+function mod:HungerForLifeOver(args)
+	if self:Me(args.destGUID) and not UnitDebuff("player", args.spellName) then
+		fixateOnMe = nil
+		self:Message(args.spellId, "Personal", "Alarm", CL.over:format(args.spellName))
 	end
 end
 
