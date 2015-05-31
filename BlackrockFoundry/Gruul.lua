@@ -14,6 +14,7 @@ mod.respawnTime = 29.5
 --
 
 local rampaging = nil
+local sliceTimer = nil
 local first = nil
 local smashCount = 1
 local slamCount = 1
@@ -60,6 +61,7 @@ end
 function mod:OnEngage()
 	rampaging = nil
 	first = nil
+	sliceTimer = nil
 	smashCount, slamCount, sliceCount = 1, 1, 1
 	self:Bar(155080, self:Mythic() and 9.5 or 14.5, CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
 	self:CDBar(155539, 105) -- Destructive Rampage XXX seems he'll always wait for 6 (8 or 9? in mythic) Inferno Slices
@@ -78,6 +80,7 @@ end
 do
 	local function sliceBar(self, spellId, spellName)
 		-- gains 50% of his rage if he hits less than 4 targets
+		sliceTimer = nil
 		self:Bar(spellId, UnitPower("boss1") > 49 and 5 or 10, CL.count:format(spellName, sliceCount))
 	end
 
@@ -91,7 +94,7 @@ do
 		if not self:Mythic() then
 			self:Bar(args.spellId, 15, CL.count:format(args.spellName, sliceCount))
 		else
-			self:ScheduleTimer(sliceBar, 0.5, self, args.spellId, args.spellName)
+			sliceTimer = self:ScheduleTimer(sliceBar, 0.5, self, args.spellId, args.spellName)
 		end
 	end
 end
@@ -152,16 +155,19 @@ do
 	end
 end
 
-function mod:DestructiveRampage(args)
+function mod:DestructiveRampage(args) -- Phase 2
 	self:Message(args.spellId, "Important", "Long")
 	self:Bar(args.spellId, 30)
 	rampaging = true
+	if sliceTimer then
+		self:CancelTimer(sliceTimer)
+	end
 	self:StopBar(CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
 	self:StopBar(155326) -- Petrifying Slam
 	self:StopBar(155301) -- Overhead Smash
 end
 
-function mod:DestructiveRampageOver(args)
+function mod:DestructiveRampageOver(args) -- Phase 2 over
 	self:Message(args.spellId, "Positive", "Info", CL.over:format(args.spellName))
 	self:CDBar(args.spellId, 113)
 	rampaging = nil
