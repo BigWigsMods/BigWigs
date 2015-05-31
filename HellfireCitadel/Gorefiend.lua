@@ -54,7 +54,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Gorefiend ]]--
-		{189434, "PROXIMITY", "FLASH", "SAY"}, -- Touch of Doom
+		{179977, "PROXIMITY", "FLASH", "SAY"}, -- Touch of Doom
 		179995, -- Doom Well
 		{179909, "PROXIMITY", "SAY", "ICON"}, -- Shared Fate
 		181973, -- Feast of Souls
@@ -73,7 +73,7 @@ function mod:GetOptions()
 		"proximity",
 		"berserk",
 	}, {
-		[189434] = self.displayName, -- Gorefiend
+		[179977] = self.displayName, -- Gorefiend
 		[182601] = -11378, -- Enraged Spirit
 		[180148] = -11018, -- Gorebound Construct
 		[187814] = -11020, -- Gorebound Spirit
@@ -82,8 +82,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "TouchOfDoom", 189434)
-	self:Log("SPELL_AURA_REMOVED", "TouchOfDoomRemoved", 189434)
+	self:Log("SPELL_AURA_APPLIED", "TouchOfDoom", 189434, 179977) -- LFR, all others
+	self:Log("SPELL_AURA_REMOVED", "TouchOfDoomRemoved", 189434, 179977) -- LFR, all others
 	self:Log("SPELL_AURA_APPLIED", "SharedFateRoot", 179909)
 	self:Log("SPELL_AURA_REMOVED", "SharedFateRootRemoved", 179909)
 	self:Log("SPELL_AURA_APPLIED", "SharedFateRun", 179908)
@@ -120,7 +120,7 @@ function mod:OnEngage()
 	self:Bar(179864, self:Mythic() and 13 or 9, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
 	self:Bar(179864, self:Mythic() and 30 or 26, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death
 	self:Bar(181973, 123) -- Feast of Souls, based on heroic logs
-	self:CDBar(189434, 8.3) -- Touch of Doom
+	self:CDBar(179977, 8.3) -- Touch of Doom
 end
 
 --------------------------------------------------------------------------------
@@ -204,7 +204,7 @@ function mod:FeastOfSoulsStart(args)
 	self:StopBar(shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864))
 	self:StopBar(shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864))
 	self:StopBar(179909) -- Shared Fate
-	self:StopBar(189434) -- Touch of Doom
+	self:StopBar(179977) -- Touch of Doom
 end
 
 function mod:FeastOfSoulsOver(args)
