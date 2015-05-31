@@ -50,12 +50,12 @@ function mod:GetOptions()
 		--[[ Dreadwing ]]--
 		{155030, "TANK"}, -- Seared Flesh
 		{154989, "FLASH", "SAY"}, -- Inferno Breath
-		{156824, "FLASH"}, -- Inferno Pyre
+		156824, -- Inferno Pyre
 		{154981, "HEALER"}, -- Conflagration
 		"custom_off_conflag_marker",
 		{155499, "FLASH", "SAY"}, -- Superheated Shrapnel
-		{156823, "FLASH"}, -- Superheated Scrap
-		{155657, "FLASH"}, -- Flame Infusion
+		156823, -- Superheated Scrap
+		155657, -- Flame Infusion
 		--[[ Ironcrusher ]]--
 		{155236, "TANK"}, -- Crush Armor
 		155222, -- Tantrum
@@ -64,7 +64,7 @@ function mod:GetOptions()
 		159043, -- Epicenter
 		155321, -- Unstoppable
 		--[[ General ]]--
-		{154960, "SAY"}, -- Pinned Down
+		{154960, "SAY", "FLASH"}, -- Pinned Down
 		"custom_off_pinned_marker",
 		154975, -- Call the Pack
 		"stages",
@@ -309,8 +309,12 @@ do
 	end
 
 	function mod:PinDown(args)
-		self:Message(154960, "Urgent", (self:Healer() or self:Damager() == "RANGED") and "Warning", CL.incoming:format(args.spellName))
+		local ranged = self:Healer() or self:Damager() == "RANGED"
+		self:Message(154960, "Urgent", ranged and "Warning", CL.incoming:format(args.spellName))
 		self:CDBar(154960, 20)
+		if ranged then
+			self:Flash(154960)
+		end
 		if self.db.profile.custom_off_pinned_marker then
 			wipe(spearMarksUsed)
 			wipe(spearList)
@@ -415,7 +419,6 @@ do
 		local t = GetTime()
 		if t-prev > 0.5 and self:Me(args.destGUID) then
 			prev = t
-			self:Flash(args.spellId)
 			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
