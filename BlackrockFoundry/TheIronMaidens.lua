@@ -157,8 +157,14 @@ do
 		else
 			local power = UnitPower(unit)
 			if power == prev then return end
-			if power == 30 or power == 100 then
-				self:Message(159336, "Neutral", "Info", L.power_message:format(power), false)
+			if power == 27 then
+				if self:Dispeller("magic", nil, 156109) then
+					self:CDBar(156109, 22) -- Convulsive Shadows
+				end
+				self:CDBar(164271, 21) -- Penetrating Shot
+				self:CDBar(158010, 32) -- Bloodsoaked Heartseeker 32-35
+			elseif power == 30 or power == 100 then
+				self:Message(159336, "Neutral", "Long", L.power_message:format(power), false)
 			end
 			prev = power
 		end
