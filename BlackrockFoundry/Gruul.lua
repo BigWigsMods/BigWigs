@@ -38,7 +38,7 @@ function mod:GetOptions()
 	return {
 		155080, -- Inferno Slice
 		155301, -- Overhead Smash
-		{155078, "FLASH"}, -- Overwhelming Blows
+		155078, -- Overwhelming Blows
 		{155326, "PROXIMITY"}, -- Petrifying Slam
 		155539, -- Destructive Rampage
 		{173192, "FLASH"}, -- Cave In

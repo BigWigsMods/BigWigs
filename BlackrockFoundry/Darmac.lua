@@ -111,7 +111,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "BadStuffUnderYou", 155657, 156823, 156824) -- Flame Infusion, Superheated Scrap, Inferno Pyre
 	self:Log("SPELL_PERIODIC_MISSED", "BadStuffUnderYou", 155657, 156823, 156824)
 
-	self:Death("Deaths", 76884, 76874, 76945, 76946) -- Cruelfang, Dreadwing, Ironcrusher, Faultline
+	self:Death("CruelfangDies", 76884)
+	self:Death("DreadwingDies", 76874)
+	self:Death("IroncrusherDies", 76945)
+	self:Death("FaultlineDies", 76946)
 end
 
 function mod:OnEngage(diff)
@@ -136,32 +139,31 @@ end
 -- Event Handlers
 --
 
-function mod:Deaths(args)
-	local mobId = args.mobId
-	if mobId == 76884 then -- Cruelfang
-		self:StopBar(155198) -- Savage Howl
+function mod:CruelfangDies() -- Wolf
+	self:StopBar(155198) -- Savage Howl
+	self:CDBar(155061, 20) -- Rend and Tear
+end
 
-		self:CDBar(155061, 20) -- Rend and Tear
-	elseif mobId == 76874 then -- Dreadwing
-		self:StopBar(154981) -- Conflag
-		self:StopBar(154989) -- Inferno Breath
+function mod:DreadwingDies() -- Rylak
+	self:StopBar(154981) -- Conflag
+	self:StopBar(154989) -- Inferno Breath
+	self:CDBar(155499, 12) -- Superheated Shrapnel
 
-		self:RegisterUnitEvent("UNIT_TARGET", "BreathTarget", "boss1")
-		if mountId then
-			self:UnregisterUnitEvent("UNIT_TARGET", mountId)
-		end
-
-		self:CDBar(155499, 12) -- Superheated Shrapnel
-	elseif mobId == 76945 then -- Ironcrusher
-		self:StopBar(155247) -- Stampede
-
-		self:CDBar(155222, 22, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
-	elseif mobId == 76946 then -- Faultline (Mythic)
-		self:RegisterUnitEvent("UNIT_TARGET", "BreathTarget", "boss1")
-		self:StopBar(159043) -- Epicenter
-
-		self:CDBar(155321, 21) -- Unstoppable
+	self:RegisterUnitEvent("UNIT_TARGET", "BreathTarget", "boss1")
+	if mountId then
+		self:UnregisterUnitEvent("UNIT_TARGET", mountId)
 	end
+end
+
+function mod:IroncrusherDies() -- Elekk
+	self:StopBar(155247) -- Stampede
+	self:CDBar(155222, 22, CL.count:format(self:SpellName(155222), tantrumCount)) -- Tantrum
+end
+
+function mod:FaultlineDies() -- Mythic Clefthoof
+	self:RegisterUnitEvent("UNIT_TARGET", "BreathTarget", "boss1")
+	self:StopBar(159043) -- Epicenter
+	self:CDBar(155321, 21) -- Unstoppable
 end
 
 function mod:UNIT_TARGETABLE_CHANGED(unit)
@@ -270,6 +272,11 @@ do
 		elseif spellId == 155603 then -- Face Random Non-Tank (Superheated Shrapnel by Darmac)
 			aboutToCast = true
 			self:CDBar(155499, 25)
+		elseif spellId == 155385 or spellId == 155515 then -- Rend and Tear first jump casts (Cruelfang, Darmac)
+			self:CDBar(155061, 12) -- Rend and Tear, 12-16
+			if self:Tank() or self:Damager() == "MELEE" then
+				self:Message(155061, "Urgent", nil, CL.incoming:format(self:SpellName(155061)))
+			end
 		end
 	end
 end
@@ -333,18 +340,9 @@ end
 
 -- Stage 2
 
-do
-	local prev = 0
-	function mod:RendAndTear(args)
-		if self:Tank(args.destName) then
-			local amount = args.amount or 1
-			self:StackMessage(155061, args.destName, amount, "Attention", amount > 2 and "Warning")
-		end
-		local t = GetTime()
-		if t-prev > 10 then -- can hit multiple people at staggered times
-			prev = t
-			self:CDBar(155061, 12) -- 12-16
-		end
+function mod:RendAndTear(args)
+	if self:Tank(args.destName) then
+		self:StackMessage(155061, args.destName, args.amount, "Attention", args.amount and "Warning")
 	end
 end
 
