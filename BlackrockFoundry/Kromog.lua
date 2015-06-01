@@ -91,7 +91,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WarpedArmor", 156766)
 	self:Log("SPELL_CAST_SUCCESS", "StoneBreath", 156852)
 	self:Log("SPELL_CAST_START", "Slam", 156704)
-	self:Log("SPELL_CAST_START", "RipplingSmash", 157592)
+	self:Log("SPELL_CAST_START", "RipplingSmash", 157592, 173813) -- Standard smash, Mythic Call of the Mountain smash
 	self:Log("SPELL_CAST_START", "GraspingEarth", 157060)
 	self:Log("SPELL_CAST_START", "ThunderingBlows", 157054)
 	self:Log("SPELL_AURA_REMOVED", "ThunderingBlowsOver", 157054)
@@ -184,8 +184,10 @@ function mod:Slam(args)
 end
 
 function mod:RipplingSmash(args)
-	self:Message(args.spellId, "Urgent", "Alert")
-	self:CDBar(args.spellId, self:Mythic() and 41 or 24) -- 22-29
+	self:Message(157592, "Urgent", "Alert")
+	if args.spellId == 157592 then
+		self:CDBar(args.spellId, self:Mythic() and 41 or 24) -- 22-29
+	end
 	-- XXX second cast is always skipped in mythic, it comes off cd during a stone breath->pillars->call combo
 	-- next cast happens 72-88s after pillars, so what happened to the third cast? sigh.
 end
