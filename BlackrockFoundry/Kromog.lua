@@ -135,7 +135,7 @@ end
 function mod:TremblingEarth(args)
 	callOfTheMountainCount = 1
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 25, L.destroy_pillars)
+	self:Bar(args.spellId, 25, L.destroy_pillars)
 	self:Bar(158217, 31, CL.count:format(self:SpellName(158217), callOfTheMountainCount)) -- Call of the Mountain
 end
 
