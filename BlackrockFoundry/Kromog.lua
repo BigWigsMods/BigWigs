@@ -31,6 +31,8 @@ if L then
 	L.prox = "Tank Proximity"
 	L.prox_desc = "Open a 15 yard proximity showing the other tanks to help you deal with the |cff66bbffFists of Stone|r ability."
 	L.prox_icon = 162349
+
+	L.destroy_pillars = "Destroy Pillars"
 end
 L = mod:GetLocale()
 
@@ -42,7 +44,7 @@ function mod:GetOptions()
 	return {
 		--[[ Mythic ]]--
 		173917, -- Rune of Trembling Earth
-		-9706, -- Call of the Mountain
+		158217, -- Call of the Mountain
 		--[[ General ]]--
 		{156766, "TANK"}, -- Warped Armor
 		156852, -- Stone Breath
@@ -98,8 +100,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 156861)
 	-- Mythic
 	self:Log("SPELL_CAST_SUCCESS", "TremblingEarth", 173917)
-	self:Log("SPELL_CAST_START", "CallOfTheMountain", 158217)
-	self:Log("SPELL_CAST_SUCCESS", "CallOfTheMountainBar", 158217)
+	self:Log("SPELL_CAST_START", "CallOfTheMountainStart", 158217)
+	self:Log("SPELL_CAST_SUCCESS", "CallOfTheMountainSuccess", 158217)
 
 	if IsEncounterInProgress() then
 		updateTanks(self) -- Backup for disconnecting mid-combat
@@ -133,20 +135,22 @@ end
 function mod:TremblingEarth(args)
 	callOfTheMountainCount = 1
 	self:Message(args.spellId, "Attention")
-	self:CDBar(156852, 61, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
-	self:CDBar(157592, 72) -- Rippling Smash
-	self:CDBar(173917, 180) -- Trembling Earth
-	self:Bar(-9706, 30, CL.count:format(self:SpellName(-9706), callOfTheMountainCount)) -- Call of the Mountain
+	self:CDBar(args.spellId, 25, L.destroy_pillars)
+	self:Bar(158217, 31, CL.count:format(self:SpellName(158217), callOfTheMountainCount)) -- Call of the Mountain
 end
 
-function mod:CallOfTheMountain(args)
-	self:Message(-9706, "Important", nil, CL.casting:format(CL.count:format(self:SpellName(-9706), callOfTheMountainCount)))
+function mod:CallOfTheMountainStart(args)
+	self:Message(args.spellId, "Important", nil, CL.casting:format(CL.count:format(args.spellName, callOfTheMountainCount)))
 	callOfTheMountainCount = callOfTheMountainCount + 1
 end
 
-function mod:CallOfTheMountainBar(args)
+function mod:CallOfTheMountainSuccess(args)
 	if callOfTheMountainCount < 4 then
-		self:Bar(-9706, 11.5, CL.count:format(self:SpellName(-9706), callOfTheMountainCount))
+		self:Bar(args.spellId, 12, CL.count:format(args.spellName, callOfTheMountainCount))
+	else -- Last Call of the Mountain ends, start other ability bars
+		self:CDBar(173917, 125) -- Trembling Earth
+		self:CDBar(157592, 17) -- Rippling Smash
+		self:CDBar(156852, 6, CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
 	end
 end
 
