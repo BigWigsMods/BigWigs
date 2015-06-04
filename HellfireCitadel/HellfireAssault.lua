@@ -13,8 +13,9 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Hellfire Assault", 1026, 1426)
 if not mod then return end
-mod:RegisterEnableMob(95068, 94515, 93023) -- 93023 on beta
+mod:RegisterEnableMob(93023, 90019, 90018) -- Siegemaster Mar'tak, Reinforced Hellfire Door, Hellfire Cannon
 mod.engageId = 1778
+mod.respawnTime = 11
 
 --------------------------------------------------------------------------------
 -- Locals
