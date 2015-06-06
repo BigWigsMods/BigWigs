@@ -140,7 +140,7 @@ function mod:TremblingEarth(args)
 end
 
 function mod:CallOfTheMountainStart(args)
-	self:Message(args.spellId, "Important", nil, CL.casting:format(CL.count:format(args.spellName, callOfTheMountainCount)))
+	self:Message(args.spellId, "Important", nil, CL.count:format(args.spellName, callOfTheMountainCount))
 	callOfTheMountainCount = callOfTheMountainCount + 1
 end
 
