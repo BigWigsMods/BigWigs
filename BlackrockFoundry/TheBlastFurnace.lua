@@ -168,7 +168,7 @@ end
 function mod:OnEngage()
 	startTime = GetTime()
 	regulatorDeaths, shamanDeaths = 0, 0
-	blastTime = 30
+	blastTime = self:Mythic() and 25 or 30
 
 	wipe(markedFirecallers) -- Save guids for the entire fight so we never re-mark
 	wipe(volatileFireTargets)
@@ -493,15 +493,15 @@ do
 		if powerType == "ALTERNATE" then
 			-- energy rate is based on altpower
 			local altpower = UnitPower(unit, 10)
-			local newTime = 30
+			local newTime = self:Mythic() and 25 or 30
 			if altpower == 100 then
-				newTime = 6
+				newTime = self:Mythic() and 5 or 6
 			elseif altpower > 74 then
-				newTime = 9
+				newTime = self:Mythic() and 8 or 9
 			elseif altpower > 49 then
-				newTime = 15
+				newTime = self:Mythic() and 12 or 15
 			elseif altpower > 24 then
-				newTime = 20
+				newTime = self:Mythic() and 18 or 20
 			end
 
 			-- adjust Blast timer
@@ -562,7 +562,7 @@ function mod:Superheated(args)
 	self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", "boss1")
 
 	-- adjust Blast timer
-	local newTime = 6
+	local newTime = self:Mythic() and 5 or 6
 	if blastTime ~= newTime then
 		blastTime = newTime
 		local t = ceil((100-UnitPower("boss1"))/(100/newTime))
