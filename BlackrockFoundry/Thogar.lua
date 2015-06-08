@@ -231,6 +231,8 @@ if L then
 	L.cannon_train = "Cannon train"
 	L.deforester = "Deforester" -- /dump (EJ_GetSectionInfo(10329))
 	L.random = "Random trains"
+
+	L.train_you = "Train on your lane! (%d)"
 end
 L = mod:GetLocale()
 
@@ -257,7 +259,7 @@ function mod:GetOptions()
 		{159481, "FLASH", "SAY"}, -- Delayed Siege Bomb (Bombs)
 		--[[ General ]]--
 		{155921, "TANK"}, -- Enkindle
-		{155864, "FLASH"}, -- Prototype Pulse Grenade (Grenade)
+		{155864, "SAY"}, -- Prototype Pulse Grenade (Grenade)
 		{"trains", "FLASH"},
 	}, {
 		["custom_on_manatarms_marker"] = -9537, -- Reinforcements
@@ -308,6 +310,7 @@ function mod:OnEngage()
 		self:DelayedMessage("trains", 356, "Neutral", CL.custom_sec:format(CL.count:format(split, 2), 15), false, "Long")
 	end
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+	self:RegisterUnitEvent("UNIT_TARGET", "GrenadeTarget", "boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -327,7 +330,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 end
 
 local function checkLane(warnLane)
-	if not UnitAffectingCombat("player") then return end
+	if UnitIsDead("player") then return end
 	-- nice square room!
 	local lane = 0
 	local pos = UnitPosition("player")
@@ -337,7 +340,7 @@ local function checkLane(warnLane)
 	elseif pos < 553.8 then	lane = 3 end
 
 	if lane == warnLane then
-		mod:PlaySound("trains", "Info")
+		mod:Message("trains", "Personal", "Info", L.train_you:format(lane), false)
 		mod:Flash("trains", L.trains_icon)
 	end
 end
@@ -379,12 +382,26 @@ function mod:Enkindle(args)
 end
 
 do
+	function mod:GrenadeTarget(unit)
+		local target = unit.."target"
+		local guid = UnitGUID(target)
+		if not guid or UnitDetailedThreatSituation(target, unit) ~= false or self:MobId(guid) ~= 1 then return end
+
+		local grenade = self:SpellName(135592) -- Grenade
+		if self:Me(guid) and not self:LFR() then
+			self:Say(155864, grenade)
+		elseif self:Range(target) < 9 then
+			self:RangeMessage(155864, "Personal", "Alarm", grenade)
+			return
+		end
+		self:TargetMessage(155864, self:UnitName(target), "Attention", nil, grenade)
+	end
+
 	local prev = 0
 	function mod:PulseGrenade(args)
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Attention", nil, 135592, args.spellId) -- 135592 = "Grenade"
 			self:CDBar(args.spellId, 12, 135592, args.spellId) -- 135592 = "Grenade"
 		end
 	end
@@ -393,7 +410,6 @@ end
 function mod:PulseGrenadeDamage(args)
 	if self:Me(args.destGUID) then
 		self:Message(155864, "Personal", "Alarm", CL.underyou:format(self:SpellName(135592))) -- 135592 = "Grenade"
-		self:Flash(155864)
 	end
 end
 
