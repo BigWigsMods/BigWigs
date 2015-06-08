@@ -133,6 +133,12 @@ end
 -- Mythic
 
 function mod:TremblingEarth(args)
+	self:StopBar(CL.count:format(self:SpellName(156852), breathCount)) -- Stone Breath
+	self:StopBar(157592) -- Rippling Smash
+	self:StopBar(156766) -- Warped Armor
+	self:StopBar(156704) -- Slam
+	self:StopBar(args.spellId)
+
 	callOfTheMountainCount = 1
 	self:Message(args.spellId, "Attention")
 	self:Bar(args.spellId, 25, L.destroy_pillars)
