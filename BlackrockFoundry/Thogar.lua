@@ -282,7 +282,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PulseGrenadeDamage", 165195)
 	self:Log("SPELL_CAST_START", "IronBellow", 163753)
 	self:Log("SPELL_CAST_START", "CauterizingBolt", 160140)
-	--self:Log("SPELL_AURA_APPLIED", "CauterizingBoltApplied", 160140)
+	self:Log("SPELL_AURA_APPLIED", "CauterizingBoltApplied", 160140)
 	self:Log("SPELL_CAST_START", "DelayedSiegeBomb", 159481)
 	self:Log("SPELL_AURA_APPLIED", "DelayedSiegeBombApplied", 159481)
 	self:Log("SPELL_AURA_REMOVED", "DelayedSiegeBombRemoved", 159481)
@@ -390,7 +390,7 @@ do
 		local grenade = self:SpellName(135592) -- Grenade
 		if self:Me(guid) and not self:LFR() then
 			self:Say(155864, grenade)
-		elseif self:Range(target) < 9 then
+		elseif self:Range(target) < 10 then
 			self:RangeMessage(155864, "Personal", "Alarm", grenade)
 			return
 		end
@@ -424,7 +424,7 @@ end
 
 function mod:CauterizingBoltApplied(args)
 	if UnitGUID("target") == args.destGUID and self:Dispeller("magic", true) then
-		self:TargetMessage(args.spellId, args.destName, "Important", "Alert")
+		self:TargetMessage(args.spellId, args.destName, "Important", "Alert", nil, nil, true)
 	end
 end
 
@@ -436,8 +436,6 @@ do
 			self:Flash(159481)
 			self:Say(159481, 119342)
 			self:TargetBar(159481, 4.9, name, CL.count:format(self:SpellName(155192), 1)) -- 155192 = "Bomb"
-		else
-			self:TargetBar(159481, 11, name, 119342, 159481) -- also serves as a cd bar
 		end
 	end
 
