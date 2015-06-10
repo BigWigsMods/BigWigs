@@ -7,8 +7,6 @@
 -- Module Declaration
 --
 
-if not IsTestBuild() then return end
-
 local mod, CL = BigWigs:NewBoss("Tyrant Velhari", 1026, 1394)
 if not mod then return end
 mod:RegisterEnableMob(90269, 93439) -- 90269 on beta

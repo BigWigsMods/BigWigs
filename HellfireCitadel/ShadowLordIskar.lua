@@ -6,8 +6,6 @@
 -- Module Declaration
 --
 
-if not IsTestBuild() then return end
-
 local mod, CL = BigWigs:NewBoss("Shadow-Lord Iskar", 1026, 1433)
 if not mod then return end
 mod:RegisterEnableMob(90316, 91591) -- 90316 in beta
