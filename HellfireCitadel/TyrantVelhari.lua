@@ -7,6 +7,8 @@
 -- Module Declaration
 --
 
+--if not IsTestBuild() then return end
+
 local mod, CL = BigWigs:NewBoss("Tyrant Velhari", 1026, 1394)
 if not mod then return end
 mod:RegisterEnableMob(90269, 93439) -- 90269 on beta
@@ -43,13 +45,13 @@ function mod:GetOptions()
 		--[[ Stage Two: Contempt ]]--
 		180533, -- Tainted Shadows
 		180025, -- Harbinger's Mending
-		180526, -- Font of Corruption
+		{180526, "SAY", "FLASH"}, -- Font of Corruption
 		--[[ Stage Three: Malice ]]--
 		180608, -- Gavel of the Tyrant
 		180040, -- Sovereign's Ward
 		--[[ General ]]--
 		{180000, "TANK"}, -- Seal of Decay
-		180166, -- Touch of Harm
+		{185237, "FLASH"}, -- Touch of Harm
 		{182459, "SAY", "PROXIMITY", "ICON"}, -- Edict of Condemnation
 		"berserk",
 	}, {
@@ -66,7 +68,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "InfernalTempestStart", 180300)
 	self:Log("SPELL_CAST_SUCCESS", "InfernalTempestEnd", 180300)
 
-	self:Log("SPELL_CAST_SUCCESS", "FontOfCorruption", 180526)
+	self:Log("SPELL_AURA_APPLIED", "FontOfCorruption", 180526)
 
 	self:Log("SPELL_CAST_START", "TaintedShadows", 180533)
 	self:Log("SPELL_CAST_START", "HarbingersMending", 180025, 181990)
@@ -77,9 +79,10 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "SealOfDecay", 180000)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SealOfDecay", 180000)
-	self:Log("SPELL_AURA_APPLIED", "TouchOfHarm", 180166, 185237)
-	self:Log("SPELL_AURA_APPLIED", "EdictOfCondemnation", 182459)
-	self:Log("SPELL_AURA_REMOVED", "EdictOfCondemnationRemoved", 182459)
+	self:Log("SPELL_AURA_APPLIED", "TouchOfHarmOriginal", 185237, 180166) -- Caster: Boss; MythicID, HeroicID XXX add normal and lfr ids ::if:: they are different
+	self:Log("SPELL_AURA_APPLIED", "TouchOfHarmJumper", 185238, 180164) -- Dispelled version, caster: Environment; MythicID, HeroicID XXX add normal and lfr ids ::if:: they are different
+	self:Log("SPELL_AURA_APPLIED", "EdictOfCondemnation", 182459,185241)
+	self:Log("SPELL_AURA_REMOVED", "EdictOfCondemnationRemoved", 182459, 185241)
 
 	self:Log("SPELL_CAST_SUCCESS", "AuraOfContempt", 179986) -- Phase 2
 	self:Log("SPELL_CAST_SUCCESS", "AuraOfMalice", 179991) -- Phase 3
@@ -94,8 +97,8 @@ function mod:OnEngage()
 
 	self:Bar(180300, 40) -- Infernal Tempest
 	self:Bar(180260, 10) -- Annihilating Strike
-	self:Bar(182459, 57.7) -- Edict of Condemnation
-	self:Bar(180166, 16) -- Touch of Harm
+	self:Bar(182459, 57) -- Edict of Condemnation
+	self:Bar(185237, 16) -- Touch of Harm
 
 end
 
@@ -128,7 +131,7 @@ end
 
 -- Stage 1
 function mod:EnforcersOnslaught(args)
-	self:CDBar(args.spellId, 14.6)
+	self:CDBar(args.spellId, 11)
 	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
 end
 
@@ -187,8 +190,14 @@ end
 
 function mod:FontOfCorruption(args)
 	self:Message(args.spellId, "Attention", "Info", args.spellName)
-	self:Bar(180526, 20)
+	self:Bar(args.spellId, 20)
 	-- mayby add font of corruption targets?
+	
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		self:Flash(args.spellId)
+		self:Say(args.spellId)
+	end
 end
 
 -- Stage 3
@@ -220,42 +229,46 @@ function mod:SealOfDecay(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent")
 end
 
-do
-	local list = mod:NewTargetList()
-	function mod:TouchOfHarm(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, 180166, list, "Attention", "Alarm")
-		end
+function mod:TouchOfHarmOriginal(args)
+	self:Bar(185237,45)
+	self:TargetMessage(185237, args.destName, "Urgent", "Alarm")
+	if self:Me(args.destGUID) then
+		self:Flash(185237)
+	end
+end
+
+function mod:TouchOfHarmJumper(args)
+	self:TargetMessage(185237, args.destName, "Urgent", "Alarm")
+	if self:Me(args.destGUID) then
+		self:Flash(185237)
 	end
 end
 
 do
 	local timer1, timer2 = nil, nil
 	function mod:EdictOfCondemnation(args)
-		self:Bar(args.spellId, 60)
-		self:TargetBar(args.spellId, 9, args.destName)
-		self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
+		self:Bar(182459, 60)
+		self:TargetBar(182459, 9, args.destName)
+		self:TargetMessage(182459, args.destName, "Important", "Warning", nil, nil, true)
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:OpenProximity(args.spellId, 30)
-			timer1 = self:ScheduleTimer("OpenProximity", 3, args.spellId, 20)
-			timer2 = self:ScheduleTimer("OpenProximity", 6, args.spellId, 10)
+			self:Say(182459)
+			self:OpenProximity(182459, 30)
+			timer1 = self:ScheduleTimer("OpenProximity", 3, 182459, 20)
+			timer2 = self:ScheduleTimer("OpenProximity", 6, 182459, 10)
 		else
-			self:OpenProximity(args.spellId, 30, args.destName, true)
-			timer1 = self:ScheduleTimer("OpenProximity", 3, args.spellId, 20, args.destName, true)
-			timer2 = self:ScheduleTimer("OpenProximity", 6, args.spellId, 10, args.destName, true)
+			self:OpenProximity(182459, 30, args.destName, true)
+			timer1 = self:ScheduleTimer("OpenProximity", 3, 182459, 20, args.destName, true)
+			timer2 = self:ScheduleTimer("OpenProximity", 6, 182459, 10, args.destName, true)
 		end
-		self:PrimaryIcon(args.spellId, args.destName)
+		self:PrimaryIcon(182459, args.destName)
 	end
 
 	function mod:EdictOfCondemnationRemoved(args)
 		self:CancelTimer(timer1)
 		self:CancelTimer(timer2)
 		timer1, timer2 = nil, nil
-		self:CloseProximity(args.spellId)
-		self:PrimaryIcon(args.spellId)
+		self:CloseProximity(182459)
+		self:PrimaryIcon(182459)
 		self:StopBar(args.spellName, args.destName)
 	end
 end
-
