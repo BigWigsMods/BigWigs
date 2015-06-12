@@ -9,24 +9,6 @@
 
 <Include file="Options\modules.xml"/>
 
-<Include file="Pandaria\modules.xml"/>
-<Include file="Pandaria\locales.xml"/>
-
-<Include file="Mogushan\modules.xml"/>
-<Include file="Mogushan\locales.xml"/>
-
-<Include file="HeartOfFear\modules.xml"/>
-<Include file="HeartOfFear\locales.xml"/>
-
-<Include file="EndlessSpring\modules.xml"/>
-<Include file="EndlessSpring\locales.xml"/>
-
-<Include file="ThroneOfThunder\modules.xml"/>
-<Include file="ThroneOfThunder\locales.xml"/>
-
-<Include file="SiegeOfOrgrimmar\modules.xml"/>
-<Include file="SiegeOfOrgrimmar\locales.xml"/>
-
 <Include file="Draenor\modules.xml"/>
 <Include file="Draenor\locales.xml"/>
 
