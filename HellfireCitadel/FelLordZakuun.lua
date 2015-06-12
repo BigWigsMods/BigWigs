@@ -8,6 +8,8 @@
 -- Module Declaration
 --
 
+if GetBuildInfo() ~= "6.2.0" then return end
+
 local mod, CL = BigWigs:NewBoss("Fel Lord Zakuun", 1026, 1391)
 if not mod then return end
 mod:RegisterEnableMob(89890, 90108) -- Fel Lord Zakuun, Fel Axe

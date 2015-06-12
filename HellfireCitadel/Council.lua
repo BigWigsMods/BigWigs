@@ -3,6 +3,8 @@
 -- Module Declaration
 --
 
+if GetBuildInfo() ~= "6.2.0" then return end
+
 local mod, CL = BigWigs:NewBoss("Hellfire High Council", 1026, 1432)
 if not mod then return end
 mod:RegisterEnableMob(92142, 92144, 92146) -- Blademaster Jubei'thos, Dia Darkwhisper, Gurtogg Bloodboil

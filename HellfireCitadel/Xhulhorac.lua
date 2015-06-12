@@ -6,6 +6,8 @@
 -- Module Declaration
 --
 
+if GetBuildInfo() ~= "6.2.0" then return end
+
 local mod, CL = BigWigs:NewBoss("Xhul'horac", 1026, 1447)
 if not mod then return end
 mod:RegisterEnableMob(93068)

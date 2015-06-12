@@ -9,6 +9,8 @@
 -- Module Declaration
 --
 
+if GetBuildInfo() ~= "6.2.0" then return end
+
 local mod, CL = BigWigs:NewBoss("Hellfire Assault", 1026, 1426)
 if not mod then return end
 mod:RegisterEnableMob(93023, 90019, 90018) -- Siegemaster Mar'tak, Reinforced Hellfire Door, Hellfire Cannon

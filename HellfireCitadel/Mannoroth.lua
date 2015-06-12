@@ -7,6 +7,8 @@
 -- Module Declaration
 --
 
+if GetBuildInfo() ~= "6.2.0" then return end
+
 local mod, CL = BigWigs:NewBoss("Mannoroth", 1026, 1395)
 if not mod then return end
 mod:RegisterEnableMob(91305, 94362, 91409, 91349, 91369) -- Fel Iron Summoner, 91349 on beta
