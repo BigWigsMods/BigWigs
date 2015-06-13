@@ -41,7 +41,7 @@ function mod:GetOptions()
 		{184964, "SAY", "FLASH"}, -- Shackled Torment
 		183828, -- Death Brand
 		{186961, "ICON", "SAY", "PROXIMITY"}, -- Nether Banish
-		183817, -- Shadow Burst
+		183817, -- Shadowfel Burst
 		183865, -- Demonic Havoc
 		{182879, "SAY"}, -- Doomfire Fixate
 		{189895, "SAY", "PROXIMITY"}, -- Void Star Fixate
@@ -59,8 +59,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "DeathBrand", 183828)
 	self:Log("SPELL_AURA_APPLIED", "NetherBanish", 186961)
 	self:Log("SPELL_AURA_REMOVED", "NetherBanishRemoved", 186961)
-	self:Log("SPELL_CAST_START", "ShadowBurst", 183817)
-	self:Log("SPELL_AURA_APPLIED", "ShadowBurstApplied", 183634)
+	self:Log("SPELL_CAST_START", "ShadowfelBurst", 183817)
+	self:Log("SPELL_AURA_APPLIED", "ShadowfelBurstApplied", 183634)
 	self:Log("SPELL_AURA_APPLIED", "DemonicHavoc", 183865)
 	self:Log("SPELL_AURA_APPLIED", "DoomfireFixate", 182879)
 	self:Log("SPELL_AURA_APPLIED", "VoidStarFixate", 189895)
@@ -78,7 +78,7 @@ end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Archimonde (beta) engaged", false)
-	self:Bar(183817, 41) -- Shadow Burst
+	self:Bar(183817, 41) -- Shadowfel Burst
 	self:Bar(183254, 30) -- Allure of Flames
 	self:Bar(183828, 15.4) -- Death Brand
 	self:CDBar(185590, 45) -- Desecrate, Timers Min: 38.9/Avg: 60.0/Max: 74.6 (avg 45s on later pulls)
@@ -127,7 +127,7 @@ function mod:NetherBanishRemoved(args)
 	end
 end
 
-function mod:ShadowBurst(args)
+function mod:ShadowfelBurst(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
 	self:Bar(args.spellId, 2)
 	self:ScheduleTimer("CDBar", 2, args.spellId, 51) -- Min: 52.8/Avg: 59.5/Max: 72
@@ -135,7 +135,7 @@ end
 
 do
 	local list = mod:NewTargetList()
-	function mod:ShadowBurstApplied(args)
+	function mod:ShadowfelBurstApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.2, 183817, list, "Attention")
