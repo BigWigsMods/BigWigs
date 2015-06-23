@@ -1,13 +1,7 @@
 
--- Notes --
--- Remove tainted shadows?
--- Warn for font of corruption?
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-
-if GetBuildInfo() ~= "6.2.0" then return end
 
 local mod, CL = BigWigs:NewBoss("Tyrant Velhari", 1026, 1394)
 if not mod then return end
@@ -28,7 +22,7 @@ local annihilatingStrikeCount = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.add_warnings = "Add Spawn Warnings"
 end
 L = mod:GetLocale()
 
@@ -42,18 +36,20 @@ function mod:GetOptions()
 		180004, -- Enforcer's Onslaught
 		{180260, "SAY"}, -- Annihilating Strike
 		{180300, "FLASH", "PROXIMITY"}, -- Infernal Tempest
+		-11155, -- Ancient Enforcer
 		--[[ Stage Two: Contempt ]]--
 		180533, -- Tainted Shadows
 		180025, -- Harbinger's Mending
 		{180526, "SAY", "FLASH"}, -- Font of Corruption
+		-11163, -- Ancient Harbinger
 		--[[ Stage Three: Malice ]]--
 		180608, -- Gavel of the Tyrant
 		180040, -- Sovereign's Ward
+		-11170, -- Ancient Sovereign
 		--[[ General ]]--
 		{180000, "TANK"}, -- Seal of Decay
 		{185237, "FLASH"}, -- Touch of Harm
 		{182459, "SAY", "PROXIMITY", "ICON"}, -- Edict of Condemnation
-		"berserk",
 	}, {
 		[180004] = -11151, -- Stage One: Oppression
 		[180533] = -11158, -- Stage Two: Contempt
@@ -91,7 +87,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Tyrant Velhari (beta) engaged", false)
 	wipe(mobCollector)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 
@@ -108,21 +103,21 @@ end
 
 do
 	local adds = {
-		[90270] = -11155,
-		[91304] = -11155,
-		[91302] = -11163,
-		[90271] = -11163,
-		[90272] = -11170,
-		[91303] = -11170,
+		[90270] = -11155, -- Ancient Enforcer
+		[91304] = -11155, -- Ancient Enforcer
+		[91302] = -11163, -- Ancient Harbinger
+		[90271] = -11163, -- Ancient Harbinger
+		[90272] = -11170, -- Ancient Sovereign
+		[91303] = -11170, -- Ancient Sovereign
 	}
 	function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		for i = 1, 5 do
 			local guid = UnitGUID("boss"..i)
 			if guid and not mobCollector[guid] then
 				mobCollector[guid] = true
-				local id = self:MobId(guid)
-				if adds[id] then
-					self:Message("berserk", "Neutral", nil, CL.spawned:format(self:SpellName(adds[id])), false)
+				local id = adds[self:MobId(guid)]
+				if id then
+					self:Message(id, "Neutral", nil, CL.spawned:format(self:SpellName(id)), false)
 				end
 			end
 		end

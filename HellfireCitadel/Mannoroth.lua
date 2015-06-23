@@ -1,13 +1,7 @@
 
--- Notes --
--- Glaive combo is hidden
--- Fel streak is instant?
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-
-if GetBuildInfo() ~= "6.2.0" then return end
 
 local mod, CL = BigWigs:NewBoss("Mannoroth", 1026, 1395)
 if not mod then return end
@@ -51,7 +45,6 @@ function mod:GetOptions()
 		{181354, "TANK"}, -- Glaive Combo
 		181557, -- Fel Hellstorm
 		"stages",
-		"berserk",
 	} -- XXX separate by stages
 end
 
@@ -81,10 +74,9 @@ end
 
 function mod:OnEngage()
 	portalsClosed = 0
-	self:Message("berserk", "Neutral", nil, "Mannoroth (beta) engaged", false)
 	if self:Mythic() then
 		self:Bar(108508, 17.5) -- Mannoroth's Fury
-		-- XXX mayby the timers are the same in other modes on p2 start?
+		-- XXX maybe the timers are the same in other modes on p2 start?
 		self:CDBar(181735, 57) -- Felseeker
 		self:CDBar(181354, 43) -- Glaive Combo
 		self:CDBar(181557, 30) -- Fel Hellstorm

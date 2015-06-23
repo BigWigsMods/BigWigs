@@ -1,12 +1,7 @@
 
--- Notes --
--- Surging Shadows is a constant "keep spread out"?
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-
-if GetBuildInfo() ~= "6.2.0" then return end
 
 local mod, CL = BigWigs:NewBoss("Gorefiend", 1026, 1372)
 if not mod then return end
@@ -43,7 +38,8 @@ local shadowOfDeathInfo = {
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.fate_root_you = "Shared Fate - You are rooted!"
+	L.fate_you = "Shared Fate! - Rooted player is %s"
 end
 L = mod:GetLocale()
 
@@ -71,7 +67,6 @@ function mod:GetOptions()
 		{185189, "TANK"}, -- Fel Flames
 		--[[ General ]]--
 		"proximity",
-		"berserk",
 	}, {
 		[179977] = self.displayName, -- Gorefiend
 		[182601] = -11378, -- Enraged Spirit
@@ -113,7 +108,6 @@ end
 
 function mod:OnEngage()
 	fixateOnMe = nil
-	self:Message("berserk", "Neutral", nil, "Gorefiend (beta) engaged", false)
 	self:OpenProximity("proximity", 5) -- XXX Tie this to Surging Shadows?
 	self:Bar(179909, 18) -- Shared Fate
 	self:Bar(179864, 3, shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
@@ -148,7 +142,7 @@ function mod:GoreboundSpiritDeath(args)
 end
 function mod:GoreboundFortitude(args)
 	-- XXX fix option
-	self:Message("berserk", "Attention", "Info", CL.spawned:format(args.sourceName), false) -- Add spawning to the 'real' realm
+	--self:Message("berserk", "Attention", "Info", CL.spawned:format(args.sourceName), false) -- Add spawning to the 'real' realm
 end
 
 function mod:TouchOfDoomRemoved(args)
@@ -164,8 +158,9 @@ function mod:SharedFateRoot(args)
 	fatePlayer = args.destName
 	if self:Me(args.destGUID) then
 		self:Say(179909, 135484) -- 135484 = "Rooted"
-		self:Message(179909, "Positive", "Alert", ("%s: You are rooted!"):format(args.spellName)) -- XXX fixme
+		self:Message(179909, "Personal", "Alert", L.fate_root_you)
 	else
+		-- XXX show this to everyone?
 		self:TargetMessage(179909, fatePlayer, "Positive", nil, self:SpellName(135484)) -- 135484 = "Rooted"
 	end
 	self:PrimaryIcon(179909, fatePlayer)
@@ -178,9 +173,11 @@ end
 
 function mod:SharedFateRun(args)
 	if self:Me(args.destGUID) then
-		self:Message(179909, "Urgent", "Alert", ("%s: Run to %s"):format(args.spellName, fatePlayer and self:ColorName(fatePlayer) or "rooted player")) -- XXX fixme
-		if fatePlayer then
+		if fatePlayer then -- XXX will the root always be first in the combat log?
+			self:Message(179909, "Urgent", "Alert", L.fate_you:format(self:ColorName(fatePlayer))
 			self:OpenProximity(179909, 6, fatePlayer, true)
+		else
+			self:TargetMessage(179909, args.destName, "Personal", "Alert")
 		end
 	end
 end
@@ -197,8 +194,9 @@ function mod:FeastOfSouls(args)
 end
 
 function mod:FeastOfSoulsStart(args)
-	self:Message(args.spellId, "Attention", "Long", ("%s - Weakened for ~1 min!"):format(args.spellName))
-	self:Bar(args.spellId, 60, self:SpellName(117847)) -- Weakened
+	local weakened = self:SpellName(117847)
+	self:Message(args.spellId, "Attention", "Long", ("%s - %s"):format(args.spellName, weakened))
+	self:Bar(args.spellId, 60, weakened)
 	-- cancel timers
 	self:StopBar(shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864))
 	self:StopBar(shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864))
@@ -213,7 +211,7 @@ function mod:FeastOfSoulsOver(args)
 	self:Bar(args.spellId, 123) -- Based on pull->first feast
 	self:Bar(179864, 2,shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
 	self:Bar(179864, 13, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
-	self:Bar(179864, 36, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death, XXX mayby the timer is based on difficulty?(36/45), i don't have enough data to confirm
+	self:Bar(179864, 36, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death, XXX maybe the timer is based on difficulty?(36/45), i don't have enough data to confirm
 end
 
 function mod:Digest(args)
@@ -315,5 +313,4 @@ function mod:FelFlames(args)
 		self:StackMessage(args.spellId, args.destName, args.amount, "Positive") -- XXX
 	end
 end
-
 

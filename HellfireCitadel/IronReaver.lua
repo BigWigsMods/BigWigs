@@ -1,13 +1,7 @@
 
--- Notes --
--- Falling Slam target scan?
--- Will Blitz have a cast (target scan)?
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-
-if GetBuildInfo() ~= "6.2.0" then return end
 
 local mod, CL = BigWigs:NewBoss("Iron Reaver", 1026, 1425)
 if not mod then return end

@@ -1,12 +1,7 @@
 
--- Notes --
--- Fel beam fixate
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-
-if GetBuildInfo() ~= "6.2.0" then return end
 
 local mod, CL = BigWigs:NewBoss("Shadow-Lord Iskar", 1026, 1433)
 if not mod then return end
@@ -48,7 +43,6 @@ function mod:GetOptions()
 		{185510, "SAY"}, -- Dark Bindings
 		185345, -- Shadow Riposte
 		"stages",
-		"berserk",
 	}
 end
 
@@ -74,7 +68,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Shadow-Lord Iskar (beta) engaged", false)
 	if self:Mythic() then
 		self:CDBar(185345, 9.5) -- Shadow Riposte
 	end

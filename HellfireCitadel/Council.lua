@@ -3,8 +3,6 @@
 -- Module Declaration
 --
 
-if GetBuildInfo() ~= "6.2.0" then return end
-
 local mod, CL = BigWigs:NewBoss("Hellfire High Council", 1026, 1432)
 if not mod then return end
 mod:RegisterEnableMob(92142, 92144, 92146) -- Blademaster Jubei'thos, Dia Darkwhisper, Gurtogg Bloodboil
@@ -75,7 +73,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "DemonishingLeapRemoved", 184365)
 	self:Log("SPELL_CAST_SUCCESS", "DemonishingLeapSuccess", 184365)
 	-- Blademaster Jubei'thos
-	--self:Log("SPELL_CAST_SUCCESS", "FelBlade", 183210) -- XXX not sure if usefull, mayby?
+	--self:Log("SPELL_CAST_SUCCESS", "FelBlade", 183210) -- XXX not sure if useful
 	self:Log("SPELL_CAST_SUCCESS", "MirrorImages", 183885)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -166,7 +164,7 @@ end
 
 function mod:BloodboilDose(args)
 	if self:Mythic() and self:Me(args.destGUID) then
-		if args.amount >= 3 then -- XXX mayby change 3 to something else?
+		if args.amount >= 3 then -- XXX change 3 to something else?
 			self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, args.amount))
 		end
 	end

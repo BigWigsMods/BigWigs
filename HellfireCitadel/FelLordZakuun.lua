@@ -1,14 +1,7 @@
 
--- Notes --
--- Fel Explosions cast/aura? (hidden)
--- Wake of Destruction?
--- Latent energy
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-
-if GetBuildInfo() ~= "6.2.0" then return end
 
 local mod, CL = BigWigs:NewBoss("Fel Lord Zakuun", 1026, 1391)
 if not mod then return end
@@ -46,7 +39,6 @@ function mod:GetOptions()
 		179681, -- Enrage
 		179406, -- Soul Cleave
 		189009, -- Cavitation
-		"berserk",
 	}
 end
 
@@ -69,7 +61,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Fel Lord Zakuun (beta) engaged", false)
 	if self:Mythic() or self:Tank() then
 		self:Bar(179406, 28.5) -- Soul Cleave
 	end

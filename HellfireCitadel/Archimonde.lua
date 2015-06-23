@@ -9,8 +9,6 @@
 -- Module Declaration
 --
 
-if GetBuildInfo() ~= "6.2.0" then return end
-
 local mod, CL = BigWigs:NewBoss("Archimonde", 1026, 1438)
 if not mod then return end
 mod:RegisterEnableMob(91331, 91557) -- 91331 on beta
@@ -50,7 +48,6 @@ function mod:GetOptions()
 		183586, -- Doomfire
 		183254, -- Allure of Flames
 		185590, -- Desecrate
-		"berserk",
 	}
 end
 
@@ -77,7 +74,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Archimonde (beta) engaged", false)
 	self:Bar(183817, 41) -- Shadowfel Burst
 	self:Bar(183254, 30) -- Allure of Flames
 	self:Bar(183828, 15.4) -- Death Brand

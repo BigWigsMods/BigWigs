@@ -1,11 +1,7 @@
--- Notes --
--- Bother with Fel Touch?
 
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-
-if GetBuildInfo() ~= "6.2.0" then return end
 
 local mod, CL = BigWigs:NewBoss("Kormrok", 1026, 1392)
 if not mod then return end
@@ -55,7 +51,6 @@ function mod:GetOptions()
 		180117, -- Foul Energy
 		186882, -- Enrage
 		"stages",
-		"berserk",
 	}
 end
 
@@ -77,7 +72,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Kormrok (beta) engaged", false)
 	poundCount = 0
 	tankDebuffCount = 1
 	empCounts = {
@@ -196,7 +190,7 @@ function mod:FoulCrush(args)
 	else -- phase will change before next cast
 		self:CDBar(args.spellId, 40, self:SpellName(156260), "inv_shield_17") -- Tank Boom XXX mayby change it? i love it tho.
 	end
-	self:Message(args.spellId, "Urgent", self:Tank() and "Warning", "Foul Crush on tank!") -- XXX
+	self:Message(args.spellId, "Urgent", self:Tank() and "Warning") -- XXX change to target?
 end
 
 function mod:Swat(args)

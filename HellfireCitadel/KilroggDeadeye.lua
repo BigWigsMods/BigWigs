@@ -1,13 +1,7 @@
 
--- Notes --
--- Fel Rupture is instant on death
--- Death throes timer is whack
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-
-if GetBuildInfo() ~= "6.2.0" then return end
 
 local mod, CL = BigWigs:NewBoss("Kilrogg Deadeye", 1026, 1396)
 if not mod then return end
@@ -27,7 +21,7 @@ local mobCollector = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.add_warnings = "Add Spawn Warnings"
 end
 L = mod:GetLocale()
 
@@ -43,8 +37,6 @@ function mod:GetOptions()
 		180224, -- Death Throes
 		{180199, "TANK"}, -- Shred Armor
 		187089, -- Cleansing Aura
-		--[[ Salivating Bloodthirster ]]--
-		-11266, -- Salivating Bloodthirster
 		--[[ Hulking Terror ]]--
 		183917, -- Rending Howl
 		180163, -- Savage Strikes
@@ -52,15 +44,19 @@ function mod:GetOptions()
 		180618, -- Fel Blaze
 		--[[ Hellblaze Mistress ]]--
 		180033, -- Cinder Breath
+		--[[ Add Spawn Warnings ]]--
+		-11269, -- Hulking Terror
+		-11266, -- Salivating Bloodthirster
+		-11261, -- Blood Globule
+		-11263, -- Fel Blood Globule
 		--[[ General ]]--
 		"altpower",
-		"berserk",
 	}, {
 		[180372] = self.displayName, -- Kilrogg Deadeye
-		[-11266] = -11266, -- Salivating Bloodthirster
 		[183917] = -11269, -- Hulking Terror
 		[180618] = -11274, -- Hellblaze Imp
 		[180033] = -11278, -- Hellblaze Mistress
+		[-11266] = L.add_warnings,
 		["altpower"] = "general",
 	}
 end
@@ -86,7 +82,6 @@ end
 function mod:OnEngage()
 	deathThroesCount = 0
 	wipe(mobCollector)
-	self:Message("berserk", "Neutral", nil, "Kilrogg (beta) engaged", false)
 	self:CDBar(182428, 60) -- Vision of Death
 	self:CDBar(180372, 25) -- Heart Seeker
 	self:CDBar(180199, 10.8) -- Shred Armor
@@ -111,9 +106,9 @@ do
 			local guid = UnitGUID("boss"..i)
 			if guid and not mobCollector[guid] then
 				mobCollector[guid] = true
-				local id = self:MobId(guid)
-				if adds[id] then
-					self:Message("berserk", "Neutral", "Info", self:SpellName(adds[id]), false)
+				local id = adds[self:MobId(guid)]
+				if id then
+					self:Message(id, "Neutral", "Info", self:SpellName(id), false)
 				end
 			end
 		end
@@ -121,7 +116,7 @@ do
 
 	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		if spellId == 182012 then -- Max Health Increase
-			self:Message("berserk", "Neutral", "Info", self:SpellName(-11269), false) -- Hulking Terror
+			self:Message(-11269, "Neutral", "Info", self:SpellName(-11269), false) -- Hulking Terror
 		end
 	end
 end
@@ -198,9 +193,9 @@ do
 	function mod:FelBlaze(args)
 		if UnitBuff("player", self:SpellName(185458)) then -- Vision of Death
 			local t = GetTime()
-			if t-prev > 1 then
+			if t-prev > 3 then
 				prev = t
-				self:Message(args.spellId, "Attention", "Long")
+				self:Message(args.spellId, "Attention")
 				self:Bar(args.spellId, 10)
 			end
 		end
@@ -214,9 +209,9 @@ do
 	function mod:CinderBreath(args)
 		if UnitBuff("player", self:SpellName(185458)) then -- Vision of Death
 			local t = GetTime()
-			if t-prev > 1 then
+			if t-prev > 3 then
 				prev = t
-				self:Message(args.spellId, "Attention", "Long")
+				self:Message(args.spellId, "Attention")
 				self:Bar(args.spellId, 4.5)
 			end
 		end

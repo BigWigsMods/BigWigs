@@ -1,12 +1,7 @@
 
--- Notes --
-
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-
-if GetBuildInfo() ~= "6.2.0" then return end
 
 local mod, CL = BigWigs:NewBoss("Xhul'horac", 1026, 1447)
 if not mod then return end
@@ -49,7 +44,10 @@ function mod:GetOptions()
 		{186292, "TANK_HEALER"}, -- Void Strike
 		187204, -- Overwhelming Chaos
 		186546, -- Black Hole
-		"berserk",
+		-11691, -- Vanguard Akkelion
+		-11688, -- Omnus
+		-11714, -- Unstable Voidfiend
+		-- XXX fix by stage
 	}
 end
 
@@ -70,7 +68,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Xhul'horac (beta) engaged", false)
 	wipe(mobCollector)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:CDBar(186271, 8) -- Fel Strike
@@ -156,9 +153,9 @@ do
 			local guid = UnitGUID("boss"..i)
 			if guid and not mobCollector[guid] then
 				mobCollector[guid] = true
-				local id = self:MobId(guid)
-				if adds[id] then
-					self:Message("berserk", "Neutral", nil, CL.spawned:format(self:SpellName(adds[id])), false)
+				local id = adds[self:MobId(guid)]
+				if id then
+					self:Message(id, "Neutral", nil, CL.spawned:format(self:SpellName(id)), false)
 				end
 			end
 		end

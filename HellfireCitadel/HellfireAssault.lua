@@ -1,15 +1,11 @@
 
 -- Notes --
--- Bore damage?
--- Burn?
 -- vehicleData could be delayed a litte, since it takes some time between spawning and being attackable
 -- some adds spawn from the vehicles, so we may not need 2 bars for one event (but skipping the add spawn looks weird too)
 
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-
-if GetBuildInfo() ~= "6.2.0" then return end
 
 local mod, CL = BigWigs:NewBoss("Hellfire Assault", 1026, 1426)
 if not mod then return end
@@ -193,7 +189,6 @@ function mod:GetOptions()
 		185021, -- Call to Arms (Transporter)
 		"siegevehicles",
 		"adds",
-		"berserk",
 	}
 end
 
@@ -219,8 +214,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Hellfire Assault (beta) engaged", false)
-
 	engageTime = GetTime()
 
 	self:Bar(184369, 7) -- Howling Axe
@@ -377,3 +370,4 @@ function mod:Deaths(args)
 		self:StopBar(185021) -- Call To Arms
 	end
 end
+

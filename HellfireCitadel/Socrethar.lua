@@ -1,12 +1,7 @@
 
--- Notes --
-
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-
-if GetBuildInfo() ~= "6.2.0" then return end
 
 local mod, CL = BigWigs:NewBoss("Socrethar the Eternal", 1026, 1427)
 if not mod then return end
@@ -57,7 +52,6 @@ function mod:GetOptions()
 		-11462, -- Haunting Soul
 		--"phases",
 		"stages",
-		"berserk",
 	}
 end
 
@@ -90,7 +84,6 @@ function mod:OnEngage()
 	dominanceCount = 0
 	apocalypseCount = 0
 	ghostGUIDS = {}
-	self:Message("berserk", "Neutral", nil, "Socrethar (beta) engaged", false)
 	self:CDBar(181288, 48) -- Fel Prison
 	self:CDBar(180008, 7) -- Reverberating Blow
 	self:CDBar(189627, 13) -- Volatile Fel Orb
