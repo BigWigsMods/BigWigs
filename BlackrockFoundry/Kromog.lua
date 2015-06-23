@@ -198,7 +198,7 @@ function mod:RipplingSmash(args)
 	if args.spellId == 157592 then
 		self:CDBar(args.spellId, self:Mythic() and 41 or 24) -- 22-29
 	end
-	-- XXX second cast is always skipped in mythic, it comes off cd during a stone breath->pillars->call combo
+	-- second cast is always skipped in mythic, it comes off cd during a stone breath->pillars->call combo
 	-- next cast happens 72-88s after pillars, so what happened to the third cast? sigh.
 end
 

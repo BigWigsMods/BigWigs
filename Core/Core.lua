@@ -379,7 +379,6 @@ do
 	local addonName = ...
 	function addon:ADDON_LOADED(_, name)
 		if name ~= addonName then return end
-		if not loader.hasLoaded then self:Print("Weird, the core loaded before the loader.") end -- XXX temp
 
 		local defaults = {
 			profile = {
@@ -410,7 +409,6 @@ do
 
 		self.ADDON_LOADED = InitializeModules
 		InitializeModules()
-		self.hasLoaded = true -- XXX temp
 	end
 	addon:RegisterEvent("ADDON_LOADED")
 end

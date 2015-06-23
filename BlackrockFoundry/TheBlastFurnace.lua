@@ -518,10 +518,6 @@ do
 
 		local power = UnitPower(unit)
 		if power > 80 and power < 100 and not warned then
-			if blastTime > 10 then
-				-- XXX added this because there is an emote for it, not sure if needed since we have a bar
-				self:Message(155209, "Urgent", self:Healer() and "Alarm", CL.soon:format(self:SpellName(155209)))
-			end
 			warned = true
 		elseif power == 0 and warned then
 			self:Bar(155209, blastTime)

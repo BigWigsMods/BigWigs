@@ -64,8 +64,8 @@ function mod:OnEngage()
 	sliceTimer = nil
 	smashCount, slamCount, sliceCount = 1, 1, 1
 	self:Bar(155080, self:Mythic() and 9.5 or 14.5, CL.count:format(self:SpellName(155080), sliceCount)) -- Inferno Slice
-	self:CDBar(155539, 105) -- Destructive Rampage XXX seems he'll always wait for 6 (8 or 9? in mythic) Inferno Slices
-	-- XXX it seems that one of these is picked to cast first, slam tends to be sooner, smash can be either 21 or 27 (or 30?)
+	self:CDBar(155539, 105) -- Destructive Rampage. Seems he'll always wait for 6 (8 or 9? in mythic) Inferno Slices
+	-- it seems that one of these is picked to cast first, slam tends to be sooner, smash can be either 21 or 27 (or 30?)
 	self:CDBar(155301, 21, L.first_ability, "ability_kilruk_reave") -- what to use for a key? z.z
 	self:CDBar(155326, 21, L.first_ability, "ability_kilruk_reave") -- both!?
 	--self:CDBar(155301, 21) -- Overhead Smash
@@ -113,7 +113,7 @@ function mod:OverheadSmash(args)
 		self:CDBar(args.spellId, 21)
 	end
 	if not first then
-		self:CDBar(155326, 15) -- Petrifying Slam XXX uncommonly second, not sure how predictable this is
+		self:CDBar(155326, 15) -- Petrifying Slam. Uncommonly second, not sure how predictable this is
 		first = true
 	end
 end
@@ -148,7 +148,7 @@ do
 		if self:Me(args.destGUID) then
 			self:Message(155326, "Personal", "Alarm", CL.you:format(args.spellName))
 			self:Bar(155326, 7, 155506) -- Petrified
-			-- XXX Shattering Roar is 2s after Petrified, don't think it merits another bar
+			-- Shattering Roar is 2s after Petrified, don't think it merits another bar
 			self:OpenProximity(155326, 8)
 			petrifyOnMe = true
 		end

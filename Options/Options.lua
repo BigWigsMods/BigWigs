@@ -283,8 +283,6 @@ do
 	f:RegisterEvent("ADDON_LOADED")
 	local function Initialize(_, _, addon)
 		if addon ~= addonName then return end
-		if not loader.hasLoaded then BigWigs:Print("Weird, the options loaded before the loader.") end -- XXX temp
-		if not BigWigs.hasLoaded then BigWigs:Print("Weird, the options loaded before the core.") end -- XXX temp
 
 		acOptions.args.general.args.profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db)
 		acOptions.args.general.args.profileOptions.order = 1
