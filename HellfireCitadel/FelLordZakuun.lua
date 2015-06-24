@@ -39,6 +39,7 @@ function mod:GetOptions()
 		179681, -- Enrage
 		179406, -- Soul Cleave
 		189009, -- Cavitation
+		179667, -- Disarmed
 	}
 end
 
@@ -66,7 +67,7 @@ function mod:OnEngage()
 	end
 	self:Bar(189009, 36.5) -- Cavitation
 	self:Bar(179583, 7) -- Rumbling Fissures
-	self:Bar(179709, 16) -- Foul
+	self:Bar(179711, 16, 179709) -- Foul
 end
 
 --------------------------------------------------------------------------------
@@ -79,10 +80,10 @@ function mod:SoulCleave(args)
 end
 
 function mod:DisarmedApplied(args)
-	self:Message(args.spellId, "Attention", "Info", CL.phase:format(2))
+	self:Message(args.spellId, "Attention", "Info")
 	self:CDBar(args.spellId, 33.5) -- approx for phase ending
-	self:Bar(181515, 9) -- Seed of Destruction
-	self:Bar(178583, self:BarTimeLeft(179583) + 40) -- Rumbling Fissures
+	self:Bar(181508, 9) -- Seed of Destruction
+	self:Bar(179583, self:BarTimeLeft(179583) + 40) -- Rumbling Fissures
 	if self:Mythic() or self:Tank() then
 		self:Bar(179406, self:BarTimeLeft(179406) + 30) -- Soul Cleave
 	end
@@ -90,8 +91,8 @@ function mod:DisarmedApplied(args)
 end
 
 function mod:DisarmedRemoved(args)
-	self:Message(args.spellId, "Attention", "Info", CL.phase:format(1))
-	self:StopBar(181515) -- Seed of Destruction
+	self:Message(args.spellId, "Attention", "Info", CL.over:format(args.spellName))
+	self:StopBar(181508) -- Seed of Destruction
 end
 
 function mod:Cavitation(args)
@@ -142,12 +143,12 @@ do
 	function mod:SeedOfDestruction(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:CDBar(args.spellId, 14.5)
-			self:Bar(args.spellId, 5, 84474)
+			self:CDBar(181508, 14.5)
+			self:Bar(181508, 5, 84474) -- 84474 = "Explosion"
 			self:ScheduleTimer("TargetMessage", 0.2, 181508, list, "Attention", "Alarm")
 		end
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+			self:Say(181508)
 		end
 	end
 end
