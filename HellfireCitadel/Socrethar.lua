@@ -50,7 +50,7 @@ function mod:GetOptions()
 		-11456, -- Sargerei Dominator
 		-11778, -- Voracious Soulstalker
 		-11462, -- Haunting Soul
-		--"phases",
+		182038, -- Shattered Defenses
 		"stages",
 	}
 end
@@ -143,7 +143,7 @@ do
 end
 
 function mod:FelPrison(args)
-	self:Message(args.spellName, "Urgent", "Alarm")
+	self:Message(args.spellId, "Urgent", "Alarm")
 end
 
 do
@@ -158,7 +158,7 @@ do
 end
 
 function mod:ReverberatingBlow(args)
-	self:Message(args.spellName, "Urgent", "Info")
+	self:Message(args.spellId, "Urgent", "Info")
 	self:CDBar(args.spellId, 17)
 end
 
