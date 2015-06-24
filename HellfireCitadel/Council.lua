@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Hellfire High Council", 1026, 1432)
 if not mod then return end
 mod:RegisterEnableMob(92142, 92144, 92146) -- Blademaster Jubei'thos, Dia Darkwhisper, Gurtogg Bloodboil
 mod.engageId = 1798
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -69,9 +70,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Bloodboil", 184355)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BloodboilDose", 184355)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcidicWound", 184847)
-	self:Log("SPELL_AURA_APPLIED", "DemonishingLeapApplied", 184365)
-	self:Log("SPELL_AURA_REMOVED", "DemonishingLeapRemoved", 184365)
-	self:Log("SPELL_CAST_SUCCESS", "DemonishingLeapSuccess", 184365)
+	self:Log("SPELL_AURA_APPLIED", "DemolishingLeapApplied", 184365)
+	self:Log("SPELL_AURA_REMOVED", "DemolishingLeapRemoved", 184365)
+	self:Log("SPELL_CAST_SUCCESS", "DemolishingLeapSuccess", 184365)
 	-- Blademaster Jubei'thos
 	--self:Log("SPELL_CAST_SUCCESS", "FelBlade", 183210) -- XXX not sure if useful
 	self:Log("SPELL_CAST_SUCCESS", "MirrorImages", 183885)
@@ -82,26 +83,26 @@ end
 function mod:OnEngage()
 	horrorCount = 1
 	self:Berserk(600)
-	self:Bar(184681, 76, CL.count:format(self:SpellName(184681), horrorCount)) -- Wailing Horror
+	self:Bar(184681, 75, CL.count:format(self:SpellName(184681), horrorCount)) -- Wailing Horror
 	self:Bar(184358, 30) -- Gurtogg Bloodboil : Fel Rage
 	self:CDBar(184449, 6.3) -- Dia Darkwhisper : Mark of the Necromancer, 6.3-7.5
-	self:CDBar(184476, 67.5) -- Dia Darkwhisper : Reap
+	self:CDBar(184476, 54.6) -- Dia Darkwhisper : Reap
 	self:CDBar(183885, 153.3) -- Blademaster Jubei'thos : Mirror Images
-	self:CDBar(184365, 225) -- Gurtogg Bloodboil : Demonishing Leap, 225-228
+	self:CDBar(184365, 225) -- Gurtogg Bloodboil : Demolishing Leap, 225-228
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:DemonishingLeapApplied(args)
+function mod:DemolishingLeapApplied(args)
 	self:Bar(args.spellId, 5.8, CL.count:format(args.spellName, leapCount))
 end
 
-function mod:DemonishingLeapRemoved(args)
+function mod:DemolishingLeapRemoved(args)
 	self:StopBar(CL.count:format(args.spellId, leapCount))
 end
 
-function mod:DemonishingLeapSuccess(args)
+function mod:DemolishingLeapSuccess(args)
 	leapCount = leapCount + 1
 	self:Bar(args.spellId, 5.8, CL.count:format(args.spellName, leapCount))
 end
@@ -113,13 +114,13 @@ end
 
 function mod:MarkOfTheNecromancer(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 65)
+	self:CDBar(args.spellId, 60) -- 60-63
 end
 
 function mod:Reap(args)
 	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
-	self:CDBar(args.spellId, 64.5) -- 64.5 - 69
+	self:CDBar(args.spellId, 60) -- 60-65.5
 end
 
 function mod:FelRage(args)
