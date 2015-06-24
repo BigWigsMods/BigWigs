@@ -36,21 +36,28 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{182280, "PROXIMITY", "FLASH", "SAY"}, -- Artillery
+		--[[ Ground Operation ]]--
 		182020, -- Pounding
 		185282, -- Barrage
 		182001, -- Unstable Orb
-		182074, -- Immolation
-		182066, -- Falling Slam
 		179889, -- Blitz
 		182055, -- Full Charge
+		--[[ Air Operation ]]--
 		181999, -- Firebomb
 		--182534, -- Volatile Firebomb
 		--186667, -- Burning Firebomb
 		--186676, -- Reactive Firebomb
 		--186652, -- Quick-Fuse Firebomb
+		182066, -- Falling Slam
+		--[[ General ]]--
+		{182280, "PROXIMITY", "FLASH", "SAY"}, -- Artillery
+		182074, -- Immolation
 		"proximity",
 		"berserk",
+	}, {
+		[182020] = -11393, -- Ground Operation
+		[181999] = -11394, -- Air Operation
+		[182280] = "general",
 	}
 end
 
@@ -65,8 +72,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FullCharge", 182055)
 	self:Log("SPELL_CAST_START", "Firebomb", 181999)
 
-	self:Log("SPELL_AURA_APPLIED", "UnstableOrbDamage", 182001)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "UnstableOrbDamage", 182001)
+	self:Log("SPELL_AURA_APPLIED", "UnstableOrb", 182001)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "UnstableOrb", 182001)
 	self:Log("SPELL_AURA_APPLIED", "ImmolationDamage", 182074)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ImmolationDamage", 182074)
 end
@@ -82,6 +89,7 @@ function mod:OnEngage()
 	self:Bar(185282, 13.3, CL.count:format(self:SpellName(185282), barrageCount)) -- Barrage
 	self:Bar(182020, 34.4, CL.count:format(self:SpellName(182020), poundingCount)) -- Pounding
 	self:Bar(179889, 64.3) -- Blitz
+	self:Bar(182055, 139) -- Full Charge
 	if self:Healer() or self:Damager() == "RANGED" then
 		self:OpenProximity("proximity", 8)
 	end
@@ -151,11 +159,14 @@ end
 
 do
 	local prev = 0
-	function mod:UnstableOrbDamage(args)
-		local t = GetTime()
-		if t-prev > 2 and self:Me(args.destGUID) then
-			prev = t
+	function mod:UnstableOrb(args)
+		if self:Me(args.destGUID) then
 			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+		end
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:Bar(args.spellId, 24)
 		end
 	end
 end
@@ -172,8 +183,9 @@ do
 end
 
 function mod:FallingSlam(args)
+	self:StopBar(182066) -- Falling Slam (just incase)
 	self:Message(args.spellId, "Important", "Info")
-	self:Bar(args.spellId, 6)
+	self:Bar(args.spellId, 6, ("<%s>"):format(args.spellName))
 end
 
 function mod:FallingSlamSuccess(args)
@@ -182,27 +194,32 @@ function mod:FallingSlamSuccess(args)
 	barrageCount = 1
 	poundingCount = 1
 	artilleryCount = 1
-	self:Bar(179889, 63.3) -- Blitz
-	self:Bar(185282, 12.3) -- Barrage
-	self:Bar(182020, 33.3) -- Pounding
+	self:Bar(179889, 65.8) -- Blitz
+	self:Bar(185282, 14.8) -- Barrage
+	self:Bar(182020, 35.8) -- Pounding
 	--self:Bar(182280, 9.3) -- Artillery APPLICATION
+	self:Bar(182055, 140) -- Full Charge
 end
 
 function mod:Blitz(args)
 	self:Message(args.spellId, "Important", "Info")
-	if blitzCount == 2 then -- Blitz is casted twice each cooldown, filter out the first cast.
-		self:Bar(args.spellId, 58.3)
+	if blitzCount == 2 then -- Blitz is casted twice each cooldown, show the bar after the second
+		self:Bar(args.spellId, 58)
+		blitzCount = 1
 	end
 	blitzCount = blitzCount + 1
 end
 
 function mod:FullCharge(args)
+	self:StopBar(182001) -- Unstable Orb
+	self:StopBar(179889) -- Blitz
+
 	phase = 2
 	firebombCount = 1
 	self:Message(args.spellId, "Important", "Info")
-	self:Bar(args.spellId, 3)
 	--self:Bar(182280, 9) -- Artillery APPLICATION
 	self:Bar(181999, 11, CL.count:format(self:SpellName(181999), firebombCount)) -- Firebomb
+	self:Bar(182066, 54) -- Falling Slam
 end
 
 function mod:Firebomb(args)
