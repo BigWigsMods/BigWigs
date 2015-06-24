@@ -174,7 +174,7 @@ end
 function mod:SharedFateRun(args)
 	if self:Me(args.destGUID) then
 		if fatePlayer then -- XXX will the root always be first in the combat log?
-			self:Message(179909, "Urgent", "Alert", L.fate_you:format(self:ColorName(fatePlayer))
+			self:Message(179909, "Urgent", "Alert", L.fate_you:format(self:ColorName(fatePlayer)))
 			self:OpenProximity(179909, 6, fatePlayer, true)
 		else
 			self:TargetMessage(179909, args.destName, "Personal", "Alert")
