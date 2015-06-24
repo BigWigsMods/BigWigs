@@ -185,7 +185,7 @@ end
 function mod:FallingSlam(args)
 	self:StopBar(182066) -- Falling Slam (just incase)
 	self:Message(args.spellId, "Important", "Info")
-	self:Bar(args.spellId, 6, ("<%s>"):format(args.spellName))
+	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
 end
 
 function mod:FallingSlamSuccess(args)
