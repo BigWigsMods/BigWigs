@@ -172,23 +172,30 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		--[[ Mar'tak ]]--
 		{184369, "FLASH", "SAY"}, -- Howling Axe
 		184394, -- Shockwave
 		185090, -- Inspiring Presence
+		--[[ Reinforcements ]]--
+		"adds",
 		{184243, "TANK"}, -- Slam
 		184238, -- Cower!
 		185816, -- Repair
 		185806, -- Conducted Shock Pulse
 		181968, -- Metamorphosis
 		180417, -- Felfire Volley
+		--[[ Siege Vehicles ]]--
+		"siegevehicles",
 		180945, -- Siege Nova
 		--186845, -- Flameorb  got removed?!
 		188101, -- Belch Flame
 		180184, -- Crush
 		190748, -- Cannonball (Grute)
 		185021, -- Call to Arms (Transporter)
-		"siegevehicles",
-		"adds",
+	}, {
+		[184369] = -11484, -- Mar'tak
+		["adds"] = -11406, -- Reinforcements
+		["siegevehicles"] = -11428, -- Siege Vehicles
 	}
 end
 
