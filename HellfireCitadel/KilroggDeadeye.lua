@@ -13,6 +13,7 @@ mod.engageId = 1786
 --
 
 local deathThroesCount = 0
+local visionCount = 1
 local mobCollector = {}
 
 --------------------------------------------------------------------------------
@@ -32,7 +33,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Kilrogg Deadeye ]]--
-		{180372, "FLASH", "SAY"}, -- Heart Seeker
+		{188929, "FLASH", "SAY"}, -- Heart Seeker
 		182428, -- Vision of Death
 		180224, -- Death Throes
 		{180199, "TANK"}, -- Shred Armor
@@ -52,7 +53,7 @@ function mod:GetOptions()
 		--[[ General ]]--
 		"altpower",
 	}, {
-		[180372] = self.displayName, -- Kilrogg Deadeye
+		[188929] = self.displayName, -- Kilrogg Deadeye
 		[183917] = -11269, -- Hulking Terror
 		[180618] = -11274, -- Hellblaze Imp
 		[180033] = -11278, -- Hellblaze Mistress
@@ -62,7 +63,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "HeartSeeker", 180372)
+	self:Log("SPELL_AURA_APPLIED", "HeartSeeker", 188929)
 	self:Log("SPELL_CAST_START", "VisionOfDeath", 182428)
 	self:Log("SPELL_CAST_START", "DeathThroes", 180224)
 	self:Log("SPELL_CAST_START", "ShredArmor", 180199)
@@ -81,9 +82,10 @@ end
 
 function mod:OnEngage()
 	deathThroesCount = 0
+	visionCount = 1
 	wipe(mobCollector)
-	self:CDBar(182428, 60) -- Vision of Death
-	self:CDBar(180372, 25) -- Heart Seeker
+	self:CDBar(182428, 60, CL.count:format(self:SpellName(182428), visionCount)) -- Vision of Death
+	self:CDBar(188929, 25) -- Heart Seeker
 	self:CDBar(180199, 10.8) -- Shred Armor
 	self:OpenAltPower("altpower", 182159) -- Fel Corruption
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
@@ -142,9 +144,10 @@ do
 end
 
 function mod:VisionOfDeath(args)
-	self:Message(args.spellId, "Positive", "Long")
-	self:Bar(args.spellId, 8, CL.cast:format(args.spellName))
-	self:CDBar(args.spellId, 75.5) -- 75.5-84.2
+	self:Message(args.spellId, "Positive", "Long", CL.count:format(args.spellName, visionCount))
+	self:Bar(args.spellId, 8, CL.cast:format(CL.count:format(args.spellName, visionCount)))
+	visionCount = visionCount + 1
+	self:CDBar(args.spellId, 75.5, CL.count:format(args.spellName, visionCount)) -- 75.5-84.2
 end
 
 function mod:DeathThroes(args)
@@ -217,4 +220,3 @@ do
 		end
 	end
 end
-
