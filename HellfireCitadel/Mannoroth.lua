@@ -138,13 +138,13 @@ do
 	end
 end
 
-function Imps(args)
+function mod:Imps(args)
 	if phase == 2 then
 		self:CDBar(args.spellId, 30)
 	end
 end
 
-function Inferno(args)
+function mod:Inferno(args)
 	if phase > 1 then
 		self:CDBar(args.spellId, 35)
 	end
@@ -267,4 +267,3 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(181180, 28) -- Inferno
 	end
 end
-
