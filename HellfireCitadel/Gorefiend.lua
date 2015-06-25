@@ -83,7 +83,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "SharedFateRootRemoved", 179909)
 	self:Log("SPELL_AURA_APPLIED", "SharedFateRun", 179908)
 	self:Log("SPELL_AURA_REMOVED", "SharedFateRunRemoved", 179908)
-	self:Log("SPELL_CAST_START", "FeastOfSouls", 181973)
 	self:Log("SPELL_AURA_APPLIED", "FeastOfSoulsStart", 181973)
 	self:Log("SPELL_AURA_REMOVED", "FeastOfSoulsOver", 181973)
 	self:Log("SPELL_AURA_APPLIED", "Digest", 181295)
@@ -161,7 +160,7 @@ function mod:SharedFateRoot(args)
 		self:Message(179909, "Personal", "Alert", L.fate_root_you)
 	else
 		-- XXX show this to everyone?
-		self:TargetMessage(179909, fatePlayer, "Positive", nil, self:SpellName(135484)) -- 135484 = "Rooted"
+		self:TargetMessage(179909, fatePlayer, "Attention", nil, self:SpellName(135484)) -- 135484 = "Rooted"
 	end
 	self:PrimaryIcon(179909, fatePlayer)
 end
@@ -189,14 +188,10 @@ function mod:SharedFateRunRemoved(args)
 	end
 end
 
-function mod:FeastOfSouls(args)
-	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
-end
-
 function mod:FeastOfSoulsStart(args)
-	local weakened = self:SpellName(117847)
-	self:Message(args.spellId, "Attention", "Long", ("%s - %s"):format(args.spellName, weakened))
-	self:Bar(args.spellId, 60, weakened)
+	self:CloseProximity("proximity")
+	self:Message(args.spellId, "Positive", "Long")
+	self:Bar(args.spellId, 60, self:SpellName(117847))
 	-- cancel timers
 	self:StopBar(shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864))
 	self:StopBar(shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864))
@@ -206,7 +201,8 @@ function mod:FeastOfSoulsStart(args)
 end
 
 function mod:FeastOfSoulsOver(args)
-	self:Message(args.spellId, "Attention", nil, CL.over:format(self:SpellName(117847))) -- Weakened
+	self:OpenProximity("proximity", 5)
+	self:Message(args.spellId, "Positive", nil, CL.over:format(self:SpellName(117847))) -- Weakened
 	self:StopBar(117847) -- If it finishes early due to failing
 	self:Bar(args.spellId, 123) -- Based on pull->first feast
 	self:Bar(179864, 2,shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
