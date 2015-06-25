@@ -20,7 +20,7 @@ local empCounts = {
 	["shadow"] = 0,
 	["isFirst"] = true, -- is it first 'special' cast?
 	["current"] = 0, -- 0:NONE, 1:EXPLOSIVE, 2:FOUL, 3:SHADOW
-	["hiddenPound"] = 1, 
+	["hiddenPound"] = 1,
 }
 --------------------------------------------------------------------------------
 -- Localization
@@ -41,10 +41,9 @@ function mod:GetOptions()
 		{181306, "PROXIMITY", "FLASH", "SAY"}, -- Explosive Burst
 		181292, -- Fel Outpouring
 		181296, -- Explosive Runes
-		181299, -- Grasping Hands
+		{181299, "PROXIMITY"}, -- Grasping Hands
 		{180244, "PROXIMITY"}, -- Pound
 		181305, -- Swat
-		181306, -- Explosive Burst
 		181307, -- Foul Crush
 		180115, -- Shadow Energy
 		180116, -- Explosive Energy
@@ -55,16 +54,17 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-
 	self:Log("SPELL_CAST_SUCCESS", "FelOutpouring", 181292, 181293) -- Normal, Empowered - HAS TO BE _SUCCESS FOR MYTHIC MODULE
 	self:Log("SPELL_CAST_START", "ExplosiveRunes", 181296, 181297) -- Normal, Empowered - HAS TO BE _START FOR MYTHIC MODULE
+	self:Log("SPELL_CAST_START", "GraspingHandsStart", 181299, 181300)
 	self:Log("SPELL_CAST_SUCCESS", "GraspingHands", 181299, 181300) -- Normal, Empowered - HAS TO BE _SUCCESS FOR MYTHIC MODULE
 	self:Log("SPELL_CAST_SUCCESS", "Pound", 180244)
+	self:Log("SPELL_CAST_START", "PoundStart", 180244)
 	self:Log("SPELL_AURA_REMOVED", "PoundOver", 180244)
 	self:Log("SPELL_CAST_SUCCESS", "FoulCrush", 181307)
 	self:Log("SPELL_CAST_SUCCESS", "Swat", 181305)
 	self:Log("SPELL_CAST_SUCCESS", "ExplosiveBurst", 181306)
-	self:Log("SPELL_AURA_REMOVED", "ExplosiveBurstRemoved", 181306)	
+	self:Log("SPELL_AURA_REMOVED", "ExplosiveBurstRemoved", 181306)
 	self:Log("SPELL_AURA_APPLIED", "ShadowEnergy", 180115)
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveEnergy", 180116)
 	self:Log("SPELL_AURA_APPLIED", "FoulEnergy", 180117)
@@ -80,7 +80,7 @@ function mod:OnEngage()
 		["shadow"] = 0,
 		["isFirst"] = true, -- is it first 'special' cast?
 		["current"] = 0, -- 0:NONE, 1:EXPLOSIVE, 2:FOUL, 3:SHADOW
-		["hiddenPound"] = 1, 
+		["hiddenPound"] = 1,
 	}
 	self:CDBar("stages", 12.5, self:SpellName(105543), "inv_misc_cauldron_arcane")
 end
@@ -224,14 +224,19 @@ function mod:ExplosiveRunes(args)
 	self:Message(181296, "Important", "Info", CL.incoming:format(args.spellName))
 end
 
+function mod:GraspingHandsStart(args)
+	self:OpenProximity(181299, 4) -- 2 sec cast might not be enough to spread, might want to show on countdown
+end
+
 function mod:GraspingHands(args)
 	if empCounts.isFirst then
 		empCounts.isFirst = false
 		self:Bar(181299, 90, self:SpellName(181300))-- Draggind Hands
-	else 
+	else
 		self:CDBar(181299, (empCounts.current == 3 and 65) or (empCounts.current == 1 and 82) or 54, empCounts.foul > 0 and self:SpellName(181300) or nil) -- Grasping Hands / Draggind Hands
 	end
 	self:Message(181299, "Important", "Info", CL.incoming:format(args.spellName))
+	self:CloseProximity(181299)
 end
 
 function mod:Pound(args)
@@ -247,7 +252,7 @@ function mod:Pound(args)
 end
 
 function mod:PoundStart(args)
-	self:Bar(args.spellId, 4, CL.casting:format(args.spellName, poundCount))
+	self:Bar(args.spellId, 4, CL.cast:format(CL.count:format(args.spellName, poundCount)))
 	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName, poundCount))
 	self:OpenProximity(args.spellId, 5) -- 4 + 1 safety
 end
