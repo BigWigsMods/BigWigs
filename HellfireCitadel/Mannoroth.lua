@@ -13,6 +13,7 @@ mod.engageId = 1795
 --
 
 local portalsClosed = 0
+local phase = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -44,6 +45,9 @@ function mod:GetOptions()
 		{181359, "TANK"}, -- Massive Blast
 		{181354, "TANK"}, -- Glaive Combo
 		181557, -- Fel Hellstorm
+		181255, -- Imps
+		181180, -- Inferno
+		
 		"stages",
 	} -- XXX separate by stages
 end
@@ -64,6 +68,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "GlaiveThrust", 183377, 185831)
 	self:Log("SPELL_AURA_APPLIED", "MassiveBlast", 181359, 185821)
 	self:Log("SPELL_CAST_SUCCESS", "FelHellstorm", 181557)
+	self:Log("SPELL_SUMMON", "Imps", 181255)
+	self:Log("SPELL_SUMMON", "Inferno", 181180)
 
 	self:Log("SPELL_DAMAGE", "FelHellstormDamage", 181566)
 	self:Log("SPELL_MISSED", "FelHellstormDamage", 181566)
@@ -74,6 +80,7 @@ end
 
 function mod:OnEngage()
 	portalsClosed = 0
+	phase = 1
 	if self:Mythic() then
 		self:Bar(108508, 17.5) -- Mannoroth's Fury
 		-- XXX maybe the timers are the same in other modes on p2 start?
@@ -128,6 +135,18 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(181597, args.spellName)
 		end
+	end
+end
+
+function Imps(args)
+	if phase == 2 then
+		self:CDBar(args.spellId, 30)
+	end
+end
+
+function Inferno(args)
+	if phase > 1 then
+		self:CDBar(args.spellId, 35)
 	end
 end
 
@@ -217,6 +236,7 @@ do
 		self:Message("stages", "Neutral", nil, tbl[args.spellId], false)
 		if portalsClosed == 3 then
 			self:ScheduleTimer("Message", 1, "stages", "Neutral", "Info", CL.stage:format(2), false)
+			phase = 2
 		end
 	end
 end
@@ -227,12 +247,24 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(181735, 53) -- Felseeker
 		self:CDBar(181354, 36) -- Glaive Combo
 		self:Bar(181799, 24) -- Shadowforce
+		self:StopBar(181255) -- Imps
+		self:StopBar(181180) -- Inferno
+		phase = 3
 	elseif spellId == 185690 then -- P4 Transform
 		self:Message("stages", "Neutral", "Info", CL.stage:format(4), false)
+		self:StopBar(181180) -- Inferno
+		phase = 4
+		self:StopBar(181255)
+		self:StopBar(181180)
 	elseif spellId == 181735 then -- Felseeker
 		self:CDBar(181735, 50)
 	elseif spellId == 181354 then -- Glaive Combo
 		self:CDBar(181354, 31) -- 31-34
+	elseif spellId == 181301 then -- Summon Adds:P2 
+		self:Bar(181255, 25) -- Fel Imp-losion
+		self:Bar(181180, 48) -- Inferno
+	elseif spellId == 182262 then -- Summon Adds:P3
+		self:Bar(181180, 28) -- Inferno
 	end
 end
 
