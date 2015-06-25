@@ -21,13 +21,18 @@ local engageTime = 0
 local vehicleData = {
 	-- normal / heroic
 	[1] = { -- left
-
+		{169.3, "artillery"},
 	},
 	[2] = { -- center
-
+		{38.7, "flamebelcher"},
+		{110.0, "crusher"},
+		{233.7, "demolisher"},
+		{285.2, "flamebelcher"},
+		{395.5, "demolisher"},
+		{416.8, "flamebelcher"},
 	},
 	[3] = { -- right
-
+		{350.0, "artillery"},
 	},
 }
 
@@ -70,13 +75,34 @@ local vehicleDataMythic = { -- SPELL_AURA_APPLIED 180927
 local addData = {
 	-- normal / heroic
 	[1] = { -- left
-
+		{ 32, "berserker"},
+		{76, "adds"},
+		{121, "berserker"},
+		{176, "dragoons"},
+		{307, "adds"},
+		{348, "berserker"},
+		{380, "adds"},
 	},
 	[2] = { -- center
-
+		{ 18, "dragoons"},
+		{200, "adds"},
+		{231, "dragoons"},
+		{274, "adds"},
+		{402, "berserker"},
+		{448, "adds"},
 	},
 	[3] = { -- right
-
+		{ 36, "adds"},
+		{ 47, "adds"},
+		{ 93, "berserker"},
+		{110, "adds"},
+		{161, "adds"},
+		{232, "adds"},
+		{244, "berserker"},
+		{281, "adds"},
+		{318, "adds"},
+		{342, "dragoons"},
+		{406, "berserker"},
 	},
 }
 
