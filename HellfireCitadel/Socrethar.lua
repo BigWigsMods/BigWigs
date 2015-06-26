@@ -35,23 +35,35 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		188692, -- Unstoppable Tenacity
-		183331, -- Exert Dominance
-		183329, -- Apocalypse
-		{189627, "SAY"}, -- Volatile Fel Orb
+		--[[ Soulbound Construct ]]--
+		180008, -- Reverberating Blow
+		182038, -- Shattered Defenses
+		{180221, "SAY"}, -- Volatile Fel Orb
 		{182051, "SAY"}, -- Felblaze Charge
-		184053, -- Fel Barrier
-		{184124, "SAY", "PROXIMITY", "FLASH"}, -- Gift of the Man'ari
-		182392, -- Shadow Bolt Volley
-		{182769, "SAY", "FLASH"}, -- Ghastly Fixation
 		182218, -- Felblaze Residue
 		181288, -- Fel Prison
-		180008, -- Reverberating Blow
-		-11456, -- Sargerei Dominator
+		-- Voracious Soulstalker (Mythic)
 		-11778, -- Voracious Soulstalker
+		188692, -- Unstoppable Tenacity
+		--[[ Socrethar and friends ]]--
+		-- Socrethar
+		183331, -- Exert Dominance
+		183329, -- Apocalypse
+		-- Sargerei Dominator
+		-11456, -- Sargerei Dominator
+		184053, -- Fel Barrier
+		{184124, "SAY", "PROXIMITY", "FLASH"}, -- Gift of the Man'ari
+		-- Sargerei Shadowcaller
+		182392, -- Shadow Bolt Volley
+		-- Haunting Soul
 		-11462, -- Haunting Soul
-		182038, -- Shattered Defenses
+		{182769, "SAY", "FLASH"}, -- Ghastly Fixation
+		--[[ General ]]--
 		"stages",
+	}, {
+		[180008] = ("%s (%s)"):format(mod:SpellName(-11446), CL.phase:format(1)), -- Soulbound Construct (Phase 1)
+		[183331] = ("%s (%s)"):format(mod:SpellName(-11451), CL.phase:format(2)), -- Socrethar and the Sargerei (Phase 2)
+		["stages"] = "general",
 	}
 end
 
@@ -86,7 +98,7 @@ function mod:OnEngage()
 	ghostGUIDS = {}
 	self:CDBar(181288, 48) -- Fel Prison
 	self:CDBar(180008, 7) -- Reverberating Blow
-	self:CDBar(189627, 13) -- Volatile Fel Orb
+	self:CDBar(180221, 13) -- Volatile Fel Orb
 	self:CDBar(182051, 29) -- Felblaze Charge
 	if self:Mythic() then
 		self:Bar(-11778, 20, addFormat:format(addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
@@ -118,14 +130,14 @@ do
 			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention", "Alarm")
 		end
 	end
-end 
+end
 
 function mod:VolatileFelOrb(args)
-	self:CDBar(args.spellId, 30)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	self:CDBar(180221, 30)
+	self:TargetMessage(180221, args.destName, "Urgent", "Alarm")
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:Flash(args.spellId)
+		self:Say(180221)
+		self:Flash(180221)
 	end
 end
 
@@ -167,12 +179,12 @@ end
 function mod:EjectSoul() -- Phase 2 Start
 	-- Stop P1 bars
 	self:StopBar(180008) -- Reverberating Blow
-	self:StopBar(189627) -- Volatile Fel Orb
+	self:StopBar(180221) -- Volatile Fel Orb
 	self:StopBar(182051) -- Felblaze Charge
 	self:StopBar(181288) -- Fel Prison
 	self:StopBar(addFormat:format(addCount)) -- Voracious Soulstalker
 	-- Start P2 bars
-	self:Bar("stages", 7, self:SpellName(180258), "achievement_boss_hellfire_socrethar") -- Construct is Good
+	self:Bar("stages", 7, 180258, "achievement_boss_hellfire_socrethar") -- Construct is Good
 	self:Bar(-11456, 24, nil, "achievement_boss_kiljaedan") -- Sargerei Dominator
 	self:CDBar(-11462, 30, nil, "achievement_halloween_ghost_01") -- Haunting Soul
 	self:CDBar(183329, 52) -- Apocalypse
@@ -218,7 +230,7 @@ end
 function mod:GhastlyFixation(args)
 	if args.sourceGUID and not ghostGUIDS[args.sourceGUID] then
 		ghostGUIDS[args.sourceGUID] = true
-		self:CDBar(-11462, 30, self:SpellName(-11462), "achievement_halloween_ghost_01")
+		self:CDBar(-11462, 30, nil, "achievement_halloween_ghost_01")
 	end
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
@@ -249,7 +261,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		--Start P1 bars
 		self:Message("stages", "Neutral", "Long", CL.phase:format(1), false)
 		self:CDBar(181288, 45) -- Fel Prison
-		self:CDBar(189627, 7) -- Volatile Fel Orb
+		self:CDBar(180221, 7) -- Volatile Fel Orb
 		self:CDBar(182051, 25) -- Felblaze Charge
 		if self:Mythic() then
 			self:CDBar(-11778, 15, addFormat:format(addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
