@@ -61,6 +61,7 @@ function mod:GetOptions()
 		{182769, "SAY", "FLASH"}, -- Ghastly Fixation
 		--[[ General ]]--
 		"stages",
+		"berserk",
 	}, {
 		[180008] = ("%s (%s)"):format(mod:SpellName(-11446), CL.phase:format(1)), -- Soulbound Construct (Phase 1)
 		[183331] = ("%s (%s)"):format(mod:SpellName(-11451), CL.phase:format(2)), -- Socrethar and the Sargerei (Phase 2)
@@ -105,6 +106,7 @@ function mod:OnEngage()
 	if self:Mythic() then
 		self:Bar(-11778, 20, addFormat:format(addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
 	end
+	self:Berserk(641)
 end
 
 --------------------------------------------------------------------------------
