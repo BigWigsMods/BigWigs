@@ -18,6 +18,7 @@ local isHostile = true -- is Soulbound Construct hostile or friendly
 local addCount = 1
 local addFormat = CL.add.." #%d"
 local ghostGUIDS = {}
+local dominatorCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -96,6 +97,7 @@ function mod:OnEngage()
 	dominanceCount = 0
 	apocalypseCount = 0
 	ghostGUIDS = {}
+	dominatorCount = 1
 	self:CDBar(181288, 48) -- Fel Prison
 	self:CDBar(180008, 7) -- Reverberating Blow
 	self:CDBar(180221, 13) -- Volatile Fel Orb
@@ -125,9 +127,11 @@ end
 do
 	local list = mod:NewTargetList()
 	function mod:ShatteredDefense(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention", "Alarm")
+		if isHostile then
+			list[#list+1] = args.destName
+			if #list == 1 then
+				self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention", "Alarm")
+			end
 		end
 	end
 end
@@ -156,6 +160,7 @@ end
 
 function mod:FelPrison(args)
 	self:Message(args.spellId, "Urgent", "Alarm")
+	self:CDBar(args.spellId, 45)
 end
 
 do
@@ -192,7 +197,8 @@ function mod:EjectSoul() -- Phase 2 Start
 end
 
 function mod:FelBarrier(args)
-	self:CDBar(-11456, 70, nil, "achievement_boss_kiljaedan") -- Sargerei Dominator
+	dominatorCount = dominatorCount + 1
+	self:CDBar(-11456, dominatorCount%2 == 0 and 170 or 140, nil, "achievement_boss_kiljaedan") -- Sargerei Dominator, XXX i only have data for 3 dominators and they are 140 -> 170 -> 140, just assuming it repeats
 	self:CDBar(184124, 11) -- Gift Of The Manari
 	self:TargetMessage(args.spellId, args.destName, "Positive")
 end
