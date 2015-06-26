@@ -200,7 +200,7 @@ function mod:ExplosiveRunes(args)
 end
 
 function mod:GraspingHandsStart(args)
-	self:OpenProximity(181299, 4) -- 2 sec cast might not be enough to spread, might want to show on countdown
+	self:OpenProximity(181299, 4)
 end
 
 function mod:GraspingHands(args)
@@ -211,7 +211,7 @@ function mod:GraspingHands(args)
 		self:CDBar(181299, (phase == 3 and 65) or (phase == 1 and 82) or 54, foulCount > 0 and self:SpellName(181300) or nil) -- Grasping Hands / Dragging Hands
 	end
 	self:Message(181299, "Important", nil, CL.incoming:format(args.spellName))
-	self:CloseProximity(181299)
+	self:ScheduleTimer("CloseProximity", 4, 181299) -- Hands spawn delayed and you still have time to move
 end
 
 function mod:Pound(args)
