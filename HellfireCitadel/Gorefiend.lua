@@ -106,8 +106,8 @@ function mod:OnBossEnable()
 end
 
 local function showProximity()
-	if self:Healer() or self:Damager() == "RANGED" then
-		self:OpenProximity("proximity", 5) -- XXX Tie this to Surging Shadows?
+	if mod:Healer() or mod:Damager() == "RANGED" then
+		mod:OpenProximity("proximity", 5) -- XXX Tie this to Surging Shadows?
 	end
 end
 
