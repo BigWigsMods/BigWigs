@@ -45,8 +45,8 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Foul", 179709) -- Applies Befouled on targets
-	self:Log("SPELL_AURA_APPLIED", "Befouled", 179711)
-	self:Log("SPELL_AURA_REMOVED", "BefouledRemoved", 179711)
+	self:Log("SPELL_AURA_APPLIED", "Befouled", 189030)
+	self:Log("SPELL_AURA_REMOVED", "BefouledRemoved", 189032) -- 189030 = red, 31 = yellow, 32 = green, this might fail if green gets skipped
 	self:Log("SPELL_AURA_APPLIED", "HeavilyArmed", 179671)
 	self:Log("SPELL_AURA_APPLIED", "Disembodied", 179407)
 	self:Log("SPELL_CAST_SUCCESS", "RumblingFissures", 179583)
@@ -109,18 +109,18 @@ do
 	function mod:Befouled(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention", "Alarm")
+			self:ScheduleTimer("TargetMessage", 0.2, 179711, list, "Attention", "Alarm")
 		end
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:OpenProximity(args.spellId, 10)
+			self:Say(179711)
+			self:OpenProximity(179711, 6)
 		end
 	end
 end
 
 function mod:BefouledRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CloseProximity(args.spellId)
+		self:CloseProximity(179711)
 	end
 end
 
