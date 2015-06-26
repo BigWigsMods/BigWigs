@@ -105,9 +105,15 @@ function mod:OnBossEnable()
 	self:Death("GoreboundSpiritDeath", 90570)
 end
 
+local function showProximity()
+	if self:Healer() or self:Damager() == "RANGED" then
+		self:OpenProximity("proximity", 5) -- XXX Tie this to Surging Shadows?
+	end
+end
+
 function mod:OnEngage()
 	fixateOnMe = nil
-	self:OpenProximity("proximity", 5) -- XXX Tie this to Surging Shadows?
+	showProximity()
 	self:Bar(179909, 18) -- Shared Fate
 	self:Bar(179864, 3, shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
 	self:Bar(179864, self:Mythic() and 13 or 9, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
@@ -147,7 +153,7 @@ end
 function mod:TouchOfDoomRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
-		self:OpenProximity("proximity", 5)
+		showProximity()
 		self:StopBar(args.spellName, args.destName)
 	end
 end
@@ -184,7 +190,7 @@ end
 function mod:SharedFateRunRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(179909)
-		self:OpenProximity("proximity", 5)
+		showProximity()
 	end
 end
 
@@ -201,7 +207,7 @@ function mod:FeastOfSoulsStart(args)
 end
 
 function mod:FeastOfSoulsOver(args)
-	self:OpenProximity("proximity", 5)
+	showProximity()
 	self:Message(args.spellId, "Positive", nil, CL.over:format(self:SpellName(117847))) -- Weakened
 	self:StopBar(117847) -- If it finishes early due to failing
 	self:Bar(args.spellId, 123) -- Based on pull->first feast
