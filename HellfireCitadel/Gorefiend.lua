@@ -52,7 +52,7 @@ function mod:GetOptions()
 		--[[ Gorefiend ]]--
 		{179977, "PROXIMITY", "FLASH", "SAY"}, -- Touch of Doom
 		179995, -- Doom Well
-		{179909, "PROXIMITY", "SAY", "ICON"}, -- Shared Fate
+		{179909, "PROXIMITY", "FLASH", "SAY", "ICON"}, -- Shared Fate
 		181973, -- Feast of Souls
 		181295, -- Digest
 		179864, -- Shadow of Death
@@ -181,6 +181,7 @@ function mod:SharedFateRun(args)
 		if fatePlayer then -- XXX will the root always be first in the combat log?
 			self:Message(179909, "Urgent", "Alert", L.fate_you:format(self:ColorName(fatePlayer)))
 			self:OpenProximity(179909, 6, fatePlayer, true)
+			self:Flash(179909)
 		else
 			self:TargetMessage(179909, args.destName, "Personal", "Alert")
 		end
@@ -218,22 +219,24 @@ end
 
 function mod:Digest(args)
 	if self:Me(args.destGUID) then
+		self:CloseProximity("proximity")
 		self:Message(args.spellId, "Attention", "Long", CL.custom_sec:format(args.spellName, self:Mythic() and 30 or 40))
 		if not self:Mythic() then -- you don't have any control over it on mythic
 			self:DelayedMessage(args.spellId, 20, "Attention", CL.custom_sec:format(args.spellName, 20))
-			self:DelayedMessage(args.spellId, 30, "Attention", CL.custom_sec:format(args.spellName, 10))
-			self:DelayedMessage(args.spellId, 35, "Urgent", CL.custom_sec:format(args.spellName, 5))
+			self:DelayedMessage(args.spellId, 30, "Attention", CL.custom_sec:format(args.spellName, 10), nil, "Alert")
+			self:DelayedMessage(args.spellId, 35, "Urgent", CL.custom_sec:format(args.spellName, 5), nil, "Alert")
 		end
-		self:Bar(args.spellId, self:Mythic() and 30 or 40)
+		self:TargetBar(args.spellId, self:Mythic() and 30 or 40, args.destName)
 	end
 end
 
 function mod:DigestRemoved(args)
 	if self:Me(args.destGUID) then
+		showProximity()
 		self:CancelDelayedMessage(CL.custom_sec:format(args.spellName, 20))
 		self:CancelDelayedMessage(CL.custom_sec:format(args.spellName, 10))
 		self:CancelDelayedMessage(CL.custom_sec:format(args.spellName, 5))
-		self:StopBar(args.spellName)
+		self:StopBar(args.spellName, args.destName)
 	end
 end
 
