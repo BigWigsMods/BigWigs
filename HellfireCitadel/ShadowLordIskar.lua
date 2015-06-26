@@ -34,7 +34,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Phase 1 ]]--
-		{182200, "SAY"}, -- Fel Chakram
+		{182200, "SAY", "FLASH"}, -- Fel Chakram
 		181956, -- Phantasmal Winds
 		"custom_off_wind_marker",
 		182323, -- Phantasmal Wounds
@@ -71,9 +71,17 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DarkBindings", 185510)
 	self:Log("SPELL_CAST_START", "Stage2", 181873) -- Shadow Escape
 	self:Log("SPELL_CAST_START", "ShadowRiposte", 185345)
-	--self:Death("Deaths", 91543, 93625) --Corrupted Talonpriest, Phantasmal Resonance
+
+	self:Log("SPELL_AURA_APPLIED", "FelFireDamage", 182600)
+	self:Log("SPELL_PERIODIC_DAMAGE", "FelFireDamage", 182600)
+	self:Log("SPELL_PERIODIC_MISSED", "FelFireDamage", 182600)
 
 	self:RegisterEvent("RAID_BOSS_WHISPER")
+
+	--self:Death("Deaths", 91543, 93625) --Corrupted Talonpriest, Phantasmal Resonance
+	self:Death("PriestDeath", 91543) -- Corrupted Talonpriest
+	self:Death("WardenDeath", 91541) -- Shadowfel Warden
+	self:Death("RavenDeath", 91539) -- Fel Raven
 end
 
 function mod:OnEngage()
@@ -83,6 +91,7 @@ function mod:OnEngage()
 		self:CDBar(185345, 9.5) -- Shadow Riposte
 	end
 	self:CDBar(181956, 16) -- Phantasmal Winds
+	self:Bar(182200, 6) -- Fel Chakram
 end
 
 --------------------------------------------------------------------------------
@@ -144,6 +153,7 @@ function mod:PhantasmalCorruption(args)
 		self:Say(181824)
 		self:OpenProximity(181824, 15) -- XXX verify obliteration range
 	end
+	self:CDBar(181824, 16)
 end
 
 function mod:PhantasmalCorruptionRemoved(args)
@@ -158,16 +168,19 @@ function mod:FelBomb(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
+	self:Bar(args.spellId, 18.4)
 end
 
 function mod:FocusedBlast(args)
-	self:Message(args.spellId, "Important", "Long", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Important", nil, CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 12)
-	self:Flash(args.spellId)
+	self:DelayedMessage(args.spellId, 9, "Important", CL.incoming:format(args.spellName), nil, "Long")
+	self:ScheduleTimer("Flash", 9, args.spellId)
 end
 
 function mod:FelConduit(args)
 	self:Message(181827, "Urgent", "Alert")
+	self:Bar(181827, 15.9)
 end
 
 function mod:RAID_BOSS_WHISPER(event, msg)
@@ -187,6 +200,7 @@ do
 		end
 		if self:Me(args.destGUID) then
 			self:Say(182200)
+			self:Flash(182200)
 		end
 	end
 end
@@ -214,7 +228,33 @@ function mod:Stage2() -- Shadow Escape
 	self:StopBar(185345) -- Shadow Riposte
 	self:StopBar(181956) -- Phantasmal Winds
 	self:StopBar(182200) -- Fel Chakram
+	self:Bar("stages", 40, CL.phase:format(1))
+
 	-- event for when Iskar is attackable again?
 	self:DelayedMessage("stages", 40, "Neutral", CL.phase:format(1), false, "Info")
-	self:Bar("stages", 40, CL.phase:format(1))
+	self:ScheduleTimer("Bar", 40, 182200, 6) -- Fel Chakram
+end
+
+do
+	local prev = 0
+	function mod:FelFireDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Flash(182582)
+			self:Message(182582, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
+	end
+end
+
+function mod:PriestDeath(args)
+	self:StopBar(181753) -- Fel Bomb
+end
+
+function mod:WardenDeath(args)
+	self:StopBar(181827) -- Fel Conduit
+end
+
+function mod:RavenDeath(args)
+	self:StopBar(181827) -- Fel Conduit
 end
