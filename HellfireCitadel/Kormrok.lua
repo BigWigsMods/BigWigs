@@ -14,14 +14,11 @@ mod.engageId = 1787
 
 local poundCount = 0
 local tankDebuffCount = 1
-local empCounts = {
-	["explosive"] = 0,
-	["foul"] = 0,
-	["shadow"] = 0,
-	["isFirst"] = true, -- is it first 'special' cast?
-	["current"] = 0, -- 0:NONE, 1:EXPLOSIVE, 2:FOUL, 3:SHADOW
-	["hiddenPound"] = 1,
-}
+local isFirstSpecial = true
+local hiddenPound = 1
+local phase = 0 -- 0:NONE, 1:EXPLOSIVE, 2:FOUL, 3:SHADOW
+local explosiveCount, foulCount, shadowCount = 0, 0, 0
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -38,16 +35,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{181306, "PROXIMITY", "FLASH", "SAY"}, -- Explosive Burst
-		181292, -- Fel Outpouring
-		181296, -- Explosive Runes
-		{181299, "PROXIMITY"}, -- Grasping Hands
-		{180244, "PROXIMITY"}, -- Pound
-		181305, -- Swat
 		181307, -- Foul Crush
-		180115, -- Shadow Energy
-		180116, -- Explosive Energy
-		180117, -- Foul Energy
+		{181306, "PROXIMITY", "FLASH", "SAY"}, -- Explosive Burst
+		{181305, "TANK_HEALER"}, -- Swat
+		181299, -- Grasping Hands
+		181296, -- Explosive Runes
+		181292, -- Fel Outpouring
+		{180244, "PROXIMITY"}, -- Pound
 		186882, -- Enrage
 		"stages",
 	}
@@ -72,17 +66,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	phase = 0
+	explosiveCount, foulCount, shadowCount = 0, 0, 0
 	poundCount = 0
 	tankDebuffCount = 1
-	empCounts = {
-		["explosive"] = 0,
-		["foul"] = 0,
-		["shadow"] = 0,
-		["isFirst"] = true, -- is it first 'special' cast?
-		["current"] = 0, -- 0:NONE, 1:EXPLOSIVE, 2:FOUL, 3:SHADOW
-		["hiddenPound"] = 1,
-	}
-	self:CDBar("stages", 12.5, self:SpellName(105543), "inv_misc_cauldron_arcane")
+	isFirstSpecial = true
+	hiddenPound = 1
+	self:CDBar("stages", 12.5, 180068) -- Leap
 end
 
 --------------------------------------------------------------------------------
@@ -90,69 +80,54 @@ end
 --
 
 function mod:ShadowEnergy(args)
-	-- Cancel old timers and change/reset locals
 	self:SendMessage("BigWigs_StopBars", self)
-	empCounts.shadow = 4
-	if not self:Mythic() then -- easier to do a mythic test here instead in the bars
-		empCounts.foul = 0
-		empCounts.explosive = 0
-	end
-	empCounts.current = 3
-	empCounts.isFirst = true
-	empCounts.hiddenPound = 1
+	shadowCount = 4
+	phase = 3
+	isFirstSpecial = true
+	hiddenPound = 1
 	tankDebuffCount = 1
-	-- Start new timers
-	self:Message("stages", "Positive", "Info", args.spellName, false)
-	self:Bar(181292, 14, self:SpellName(181293)) -- [Empowered] Fel Outpouring
+
+	self:Message("stages", "Neutral", "Info", args.spellName, false)
+	self:Bar(181292, 14, 181293) -- Empowered Fel Outpouring
 	self:Bar(181305, 31) -- Swat
-	self:Bar(180244, 41) -- Pound
-	self:Bar(181296, 55, empCounts.explosive > 0 and self:SpellName(181297) or nil) -- [Empowered] Explosive Runes
-	self:Bar(181299, 71, empCounts.foul > 0 and self:SpellName(181300) or nil)-- Grasping Hands / Draggind Hands
-	self:CDBar("stages", 124, self:SpellName(105543), "inv_misc_cauldron_arcane")
+	self:CDBar(180244, 41) -- Pound
+	self:Bar(181296, 55, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
+	self:Bar(181299, 71, foulCount > 0 and 181300)-- Grasping Hands / Dragging Hands
+	self:CDBar("stages", 124, 180068) -- Leap
 end
 
 function mod:ExplosiveEnergy(args)
-	-- Cancel old timers and change/reset locals
 	self:SendMessage("BigWigs_StopBars", self)
-	empCounts.explosive = 4
-	if not self:Mythic() then -- easier to do a mythic test here instead in the bars
-		empCounts.shadow = 0
-		empCounts.foul = 0
-	end
-	empCounts.current = 1
+	explosiveCount = 4
+	phase = 1
+	isFirstSpecial = true
+	hiddenPound = 1
 	tankDebuffCount = 1
-	empCounts.isFirst = true
-	empCounts.hiddenPound = 1
-	-- Start new timers
-	self:Message("stages", "Positive", "Info", args.spellName, false)
-	self:Bar(181296, 13, self:SpellName(181297)) -- [Empowered] Explosive Runes
+
+	self:Message("stages", "Neutral", "Info", args.spellName, false)
+	self:Bar(181296, 13, 181297) -- Empowered Explosive Runes
 	self:Bar(181306, 21) -- Explosive Burst
-	self:Bar(180244, 31) -- Pound
-	self:Bar(181299, 43, empCounts.foul > 0 and self:SpellName(181299) or nil)-- Grasping Hands / Draggind Hands
-	self:Bar(181292, 62, empCounts.shadow > 0 and self:SpellName(181293) or nil) -- [Empowered] Fel Outpouring
-	self:CDBar("stages", 114, self:SpellName(105543), "inv_misc_cauldron_arcane")
+	self:CDBar(180244, 31) -- Pound
+	self:Bar(181299, 43, foulCount > 0 and 181300) -- Grasping Hands / Dragging Hands
+	self:Bar(181292, 62, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
+	self:CDBar("stages", 114, 180068) -- Leap
 end
 
 function mod:FoulEnergy(args)
-	-- Cancel old timers and change/reset locals
 	self:SendMessage("BigWigs_StopBars", self)
-	empCounts.foul = 4
-	if not self:Mythic() then -- easier to do a mythic test here instead in the bars
-		empCounts.explosive = 0
-		empCounts.shadow = 0
-	end
-	empCounts.current = 2
-	empCounts.isFirst = true
-	empCounts.hiddenPound = 1
+	foulCount = 4
+	phase = 2
+	isFirstSpecial = true
+	hiddenPound = 1
 	tankDebuffCount = 1
-	-- Start new timers
-	self:Message("stages", "Positive", "Info", args.spellName, false)
-	self:Bar(181299, 13, self:SpellName(181300))-- Grasping Hands / Draggind Hands
+
+	self:Message("stages", "Neutral", "Info", args.spellName, false)
+	self:Bar(181299, 13, 181300) -- Dragging Hands
 	self:Bar(181307, 21) -- Foul Crush
-	self:Bar(180244, 31) -- Pound
-	self:Bar(181292, 46, empCounts.shadow > 0 and self:SpellName(181293) or nil) -- [Empowered] Fel Outpouring
-	self:Bar(181296, 69, empCounts.explosive > 0 and self:SpellName(181297) or nil) -- [Empowered] Explosive Runes
-	self:CDBar("stages", 114, self:SpellName(105543), "inv_misc_cauldron_arcane")
+	self:CDBar(180244, 31) -- Pound
+	self:Bar(181292, 46, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
+	self:Bar(181296, 69, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
+	self:CDBar("stages", 114, 180068) -- Leap
 end
 
 function mod:ExplosiveBurst(args)
@@ -162,7 +137,7 @@ function mod:ExplosiveBurst(args)
 	elseif tankDebuffCount == 3 then
 		self:Bar(args.spellId, 42)
 	else -- phase will change before next cast
-		self:CDBar(args.spellId, 40, self:SpellName(156260), "inv_shield_17") -- Tank Boom XXX mayby change it? i love it tho.
+		self:CDBar(args.spellId, 40, 156260, "inv_shield_17") -- Tank Boom XXX mayby change it? i love it tho.
 	end
 	self:TargetBar(args.spellId, 10, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
@@ -188,40 +163,40 @@ function mod:FoulCrush(args)
 	elseif tankDebuffCount == 3 then
 		self:Bar(args.spellId, 32)
 	else -- phase will change before next cast
-		self:CDBar(args.spellId, 40, self:SpellName(156260), "inv_shield_17") -- Tank Boom XXX mayby change it? i love it tho.
+		self:CDBar(args.spellId, 40, 156260, "inv_shield_17") -- Tank Boom XXX mayby change it? i love it tho.
 	end
-	self:Message(args.spellId, "Urgent", self:Tank() and "Warning") -- XXX change to target?
+	self:TargetMessage(args.spellId, args.destName, "Urgent", self:Tank() and "Warning")
 end
 
 function mod:Swat(args)
 	tankDebuffCount = tankDebuffCount + 1
-	if tankDebuffCount <= 3 then
+	if tankDebuffCount < 4 then
 		self:Bar(args.spellId, 32)
 	else -- phase will change before next cast
-		self:CDBar(args.spellId, 50, self:SpellName(156260), "inv_shield_17") -- Tank Boom XXX mayby change it? i love it tho.
+		self:CDBar(args.spellId, 50, 156260, "inv_shield_17") -- Tank Boom XXX mayby change it? i love it tho.
 	end
-	self:Message(args.spellId, "Attention", nil, args.spellName)
+	self:Message(args.spellId, "Attention", self:Tank() and "Warning", args.spellName)
 end
 
 function mod:FelOutpouring(args)
-	if empCounts.isFirst then
-		empCounts.isFirst = false
-		self:Bar(181292, 90, self:SpellName(181293)) -- Empowered Fel Outpouring
-		self:Message(181292, "Attention", "Long", self:SpellName(181293))
+	if isFirstSpecial then
+		isFirstSpecial = nil
+		self:Bar(181292, 90, 181293) -- Empowered Fel Outpouring
+		self:Message(181292, "Attention", "Long", 181293)
 	else
-		self:CDBar(181292, empCounts.current == 2 and 82 or 66 ,empCounts.shadow > 0 and self:SpellName(181293) or nil) -- [Empowered] Fel Outpouring
-		self:Message(181292, "Attention", "Long", self:SpellName(args.spellId))
+		self:CDBar(181292, phase == 2 and 82 or 66, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
+		self:Message(181292, "Attention", "Long", args.spellId)
 	end
 end
 
 function mod:ExplosiveRunes(args)
-	if empCounts.isFirst then
-		empCounts.isFirst = false
-		self:Bar(181296, 90, self:SpellName(181297)) -- [Empowered] Explosive Runes
+	if isFirstSpecial then
+		isFirstSpecial = nil
+		self:Bar(181296, 90, 181297) -- [Empowered] Explosive Runes
 	else
-		self:CDBar(181296, (empCounts.current == 1 and 121) or (empCounts.current == 3 and 70) or 56, empCounts.explosive > 1 and self:SpellName(181297) or nil) -- [Empowered] Explosive Runes
+		self:CDBar(181296, (phase == 1 and 121) or (phase == 3 and 70) or 56, explosiveCount > 1 and 181297) -- [Empowered] Explosive Runes
 	end
-	self:Message(181296, "Important", "Info", CL.incoming:format(args.spellName))
+	self:Message(181296, "Urgent", "Info", CL.incoming:format(args.spellName))
 end
 
 function mod:GraspingHandsStart(args)
@@ -229,22 +204,23 @@ function mod:GraspingHandsStart(args)
 end
 
 function mod:GraspingHands(args)
-	if empCounts.isFirst then
-		empCounts.isFirst = false
-		self:Bar(181299, 90, self:SpellName(181300))-- Draggind Hands
+	if isFirstSpecial then
+		isFirstSpecial = nil
+		self:Bar(181299, 90, 181300) -- Dragging Hands
 	else
-		self:CDBar(181299, (empCounts.current == 3 and 65) or (empCounts.current == 1 and 82) or 54, empCounts.foul > 0 and self:SpellName(181300) or nil) -- Grasping Hands / Draggind Hands
+		self:CDBar(181299, (phase == 3 and 65) or (phase == 1 and 82) or 54, foulCount > 0 and self:SpellName(181300) or nil) -- Grasping Hands / Dragging Hands
 	end
-	self:Message(181299, "Important", "Info", CL.incoming:format(args.spellName))
+	self:Message(181299, "Important", nil, CL.incoming:format(args.spellName))
 	self:CloseProximity(181299)
 end
 
 function mod:Pound(args)
-	empCounts.hiddenPound = empCounts.hiddenPound + 1
-	if empCounts.hiddenPound == 2 then -- i don't want to use poundCount % 2 == 0, becouse if for some reason boss decides to skip a pound, then it would mess up everything, empCounts.hiddenPound is reseted in every phase
-		self:Bar(args.spellId, empCounts.current == 3 and 42 or 52)
+	hiddenPound = hiddenPound + 1
+	if hiddenPound == 2 then
+			-- i don't want to use poundCount % 2 == 0, becouse if for some reason boss decides to skip a pound, then it would mess up everything
+		self:Bar(args.spellId, phase == 3 and 42 or 52)
 	else
-		self:CDBar(args.spellId, empCounts.current == 3 and 40 or 62)
+		self:CDBar(args.spellId, phase == 3 and 40 or 62)
 	end
 	poundCount = poundCount + 1
 	self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, poundCount))
@@ -261,16 +237,6 @@ function mod:PoundOver(args)
 	self:CloseProximity(args.spellId)
 end
 
-do
-	local list = mod:NewTargetList()
-	function mod:FoulCrush(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention")
-		end
-	end
-end
-
 function mod:Enrage(args)
-	self:Message(args.spellId, "Positive")
+	self:Message(args.spellId, "Important")
 end
