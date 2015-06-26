@@ -119,6 +119,7 @@ end
 
 function mod:MannorothsGazeCast(args)
 	self:Message(181597, "Attention", "Info", CL.casting:format(args.spellName))
+	self:Bar(181597, 47, args.spellName)
 end
 
 function mod:FelHellstorm(args)
@@ -152,7 +153,8 @@ end
 
 function mod:Shadowforce(args)
 	self:Message(181799, "Important", "Long", CL.casting:format(args.spellName))
-	self:Bar(181799, 8, args.spellName)
+	self:Bar(181799, 8, CL.cast:format(args.spellName))
+	self:CDBar(181799, 52, args.spellName)
 end
 
 function mod:CurseOfTheLegionSuccess(args)
@@ -237,6 +239,12 @@ do
 		if portalsClosed == 3 then
 			self:ScheduleTimer("Message", 1, "stages", "Neutral", "Info", CL.stage:format(2), false)
 			phase = 2
+			if not self:Mythic() then -- already starting mythic timers on :OnEnage()
+				self:CDBar(181557, 33) -- Fel Hellstorm
+				self:CDBar(181597, 40) -- Mannoroth's Gaze
+				self:CDBar(181354, 45) -- Glaive Combo
+				self:CDBar(181735, 60) -- Felseeker
+			end
 		end
 	end
 end
@@ -244,22 +252,32 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 182263 then -- P3 Transform
 		self:Message("stages", "Neutral", "Info", CL.stage:format(3), false)
-		self:CDBar(181735, 53) -- Felseeker
-		self:CDBar(181354, 36) -- Glaive Combo
-		self:Bar(181799, 24) -- Shadowforce
 		self:StopBar(181255) -- Imps
 		self:StopBar(181180) -- Inferno
 		phase = 3
+		self:CDBar(181557, 24) -- Fel Hellstorm
+		self:CDBar(181799, 30) -- Shadowforce
+		self:CDBar(181354, 36) -- Glaive Combo
+		self:CDBar(181597, 40) -- Mannoroth's Gaze
+		self:CDBar(181735, 60) -- Felseeker
 	elseif spellId == 185690 then -- P4 Transform
 		self:Message("stages", "Neutral", "Info", CL.stage:format(4), false)
-		self:StopBar(181180) -- Inferno
 		phase = 4
-		self:StopBar(181255)
-		self:StopBar(181180)
+		self:StopBar(181180) -- Inferno
+		self:StopBar(181557) -- Fel Hellstorm
+		self:StopBar(181597) -- Mannoroth's Gaze
+		self:StopBar(181799) -- Shadowforce
+		self:StopBar(181735) -- Felseeker
+		self:StopBar(181354) -- Glaive Combo
+		self:CDBar(181557, 14, 181948) -- Empowered Fel Hellstorm
+		self:CDBar(181354, 23, 187347) -- Empowered Glaive Combo
+		self:CDBar(181597, 30, 182006) -- Empowered Mannoroth's Gaze
+		self:CDBar(181799, 45, 182084) -- Empowered Shadowforce
+		self:CDBar(181735, 60, 182077) -- Empowered Felseeker
 	elseif spellId == 181735 then -- Felseeker
-		self:CDBar(181735, 50)
+		self:CDBar(181735, 50, phase == 4 and 182077) -- [Empowered] Felseeker
 	elseif spellId == 181354 then -- Glaive Combo
-		self:CDBar(181354, 31) -- 31-34
+		self:CDBar(181354, 31, phase == 4 and 187347) -- [Empowered] Glaive Combo
 	elseif spellId == 181301 then -- Summon Adds:P2 
 		self:Bar(181255, 25) -- Fel Imp-losion
 		self:Bar(181180, 48) -- Inferno
