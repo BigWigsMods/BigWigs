@@ -153,16 +153,19 @@ function mod:RumblingFissures(args)
 end
 
 do
-	local list, isOnMe = mod:NewTargetList(), nil
+	local list, isOnMe = {}, nil
+	local player = mod:UnitName("player")
 	local function seedSay(self, spellName)
 		if isOnMe then
 			table.sort(list)
-			for i = 1,#list do
-				if list[i] == self:UnitName("player") then
-					self:Say(181508, L.seed:format(i), true)
-					self:Message(181508, "Positive", nil, CL.you:format(L.seed:format(i)))
-					break
+			for i = 1, #list do
+				local target = list[i]
+				if target == player then
+					local seed = L.seed:format(i)
+					self:Say(181508, seed, true)
+					self:Message(181508, "Positive", nil, CL.you:format(seed))
 				end
+				list[i] = self:ColorName(target)
 			end
 		end
 		self:TargetMessage(181508, list, "Attention", "Alarm")
@@ -170,14 +173,15 @@ do
 	end
 
 	function mod:SeedOfDestruction(args)
+		if self:Me(args.destGUID) then
+			isOnMe = true
+		end
+
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:CDBar(181508, 14.5)
 			self:Bar(181508, 5, 84474) -- 84474 = "Explosion"
-			self:ScheduleTimer(seedSay, 0.2, self, args.spellName)
-		end
-		if self:Me(args.destGUID) then
-			isOnMe = true
+			self:ScheduleTimer(seedSay, 0.3, self, args.spellName)
 		end
 	end
 end
