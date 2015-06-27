@@ -249,7 +249,7 @@ function mod:Stage2() -- Shadow Escape
 	self:StopBar(185345) -- Shadow Riposte
 	self:StopBar(181956) -- Phantasmal Winds
 	self:StopBar(182200) -- Fel Chakram
-	self:Bar("stages", 40, CL.phase:format(1))
+	self:Bar("stages", 40, CL.phase:format(1), "achievement_boss_hellfire_felarakkoa")
 
 	-- event for when Iskar is attackable again?
 	self:DelayedMessage("stages", 40, "Neutral", CL.phase:format(1), false, "Info")
