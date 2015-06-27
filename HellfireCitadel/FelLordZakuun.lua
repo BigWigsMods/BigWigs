@@ -20,7 +20,7 @@ local phase = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.seed = "Seed"
 end
 L = mod:GetLocale()
 
@@ -45,8 +45,8 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Foul", 179709) -- Applies Befouled on targets
-	self:Log("SPELL_AURA_APPLIED", "Befouled", 189030)
-	self:Log("SPELL_AURA_REMOVED", "BefouledRemoved", 189032) -- 189030 = red, 31 = yellow, 32 = green, this might fail if green gets skipped
+	self:Log("SPELL_AURA_APPLIED", "Befouled", 189030, 189031, 189032) -- 189030 = red, 31 = yellow, 32 = green
+	self:Log("SPELL_AURA_REMOVED", "BefouledRemovedCheck", 189032, 189031, 189032)
 	self:Log("SPELL_AURA_APPLIED", "HeavilyArmed", 179671)
 	self:Log("SPELL_AURA_APPLIED", "Disembodied", 179407)
 	self:Log("SPELL_CAST_SUCCESS", "RumblingFissures", 179583)
@@ -107,22 +107,31 @@ function mod:Foul()
 end
 
 do
-	local list = mod:NewTargetList()
+	local list, removedTimer = mod:NewTargetList(), nil
 	function mod:Befouled(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.2, 179711, list, "Attention", "Alarm")
 		end
 		if self:Me(args.destGUID) then
+			if removedTimer then
+				self:CancelTimer(removedTimer)
+				removedTimer = nil
+			end
 			self:Say(179711)
 			self:OpenProximity(179711, 6)
 		end
 	end
-end
 
-function mod:BefouledRemoved(args)
-	if self:Me(args.destGUID) then
+	local function BefouledRemoved(self)
+		self:Message(179711, "Personal", "Info", CL.removed(self:SpellName(179711)))
 		self:CloseProximity(179711)
+	end
+
+	function mod:BefouledRemovedCheck(args)
+		if self:Me(args.destGUID) then
+			removedTimer = self:ScheduleTimer(BefouledRemoved, 0.2, self)
+		end
 	end
 end
 
@@ -141,7 +150,25 @@ function mod:RumblingFissures(args)
 end
 
 do
-	local list = mod:NewTargetList()
+	-- XXX Ugly, but compatible with DBM. Might change it to sorting the lists when I catch mysticalos. ~elvador
+	local list, scheduled = mod:NewTargetList(), nil
+	local function seedSay(self)
+		scheduled = nil
+
+		local unit = "raid%d"
+		local seeds = 0
+		for i = 1,30 do
+			if UnitDebuff(unit:format(i), mod:SpellName(181508)) then
+				seeds = seeds + 1
+				if UnitIsUnit(unit:format(i), "player") then
+					self:Say(181508, CL.count:format(L.seed, seeds), true)
+					mod:Message(181508, "Positive", nil, CL.you:format(CL.count:format(L.seed, seeds)))
+					break
+				end
+			end
+		end
+	end
+
 	function mod:SeedOfDestruction(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
@@ -149,8 +176,11 @@ do
 			self:Bar(181508, 5, 84474) -- 84474 = "Explosion"
 			self:ScheduleTimer("TargetMessage", 0.2, 181508, list, "Attention", "Alarm")
 		end
+
 		if self:Me(args.destGUID) then
-			self:Say(181508)
+			if not scheduled then
+				scheduled = self:ScheduleTimer(seedSay, 0.2, self, args.spellId)
+			end
 		end
 	end
 end
