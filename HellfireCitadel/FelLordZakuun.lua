@@ -154,13 +154,12 @@ end
 
 do
 	local list, isOnMe = {}, nil
-	local player = mod:UnitName("player")
 	local function seedSay(self, spellName)
 		if isOnMe then
 			table.sort(list)
 			for i = 1, #list do
 				local target = list[i]
-				if target == player then
+				if target == isOnMe then
 					local seed = L.seed:format(i)
 					self:Say(181508, seed, true)
 					self:Message(181508, "Positive", nil, CL.you:format(seed))
@@ -174,7 +173,7 @@ do
 
 	function mod:SeedOfDestruction(args)
 		if self:Me(args.destGUID) then
-			isOnMe = true
+			isOnMe = args.destName
 		end
 
 		list[#list+1] = args.destName
