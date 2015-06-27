@@ -57,7 +57,7 @@ function mod:GetOptions()
 		182392, -- Shadow Bolt Volley
 		-- Haunting Soul
 		-11462, -- Haunting Soul
-		{182769, "SAY", "FLASH"}, -- Ghastly Fixation
+		{182769, "FLASH"}, -- Ghastly Fixation
 		--[[ General ]]--
 		"stages",
 		"berserk",
@@ -239,7 +239,6 @@ function mod:GhastlyFixation(args)
 	end
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
-		self:Say(args.spellId)
 		self:Flash(args.spellId)
 	end
 end
