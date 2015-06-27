@@ -48,6 +48,7 @@ function mod:GetOptions()
 		183586, -- Doomfire
 		183254, -- Allure of Flames
 		185590, -- Desecrate
+		182225, -- Rain of Chaos
 	}
 end
 
@@ -68,9 +69,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FocusedChaosRemoved", 185014)
 	self:Log("SPELL_CAST_START", "AllureOfFlames", 183254)
 	self:Log("SPELL_CAST_START", "Desecrate", 185590)
+	self:Log("SPELL_CAST_SUCCESS", "RainOfChaos", 182225)
 
 	self:Log("SPELL_AURA_APPLIED", "DoomfireDamage", 183586)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomfireDamage", 183586)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 end
 
 function mod:OnEngage()
@@ -100,27 +103,24 @@ do
 	end
 end
 
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 190117 then -- Allow Phase 2 Spells
+		self:CDBar(186123, 7) -- Wrought Chaos
+		self:CDBar(184964, 27) -- Shackled Torment
+		self:CDBar(183828, 38) -- Death Brand
+		self:CDBar(183254, 44) -- Allure of Flames
+	elseif spellId == 190118 then -- Allow Phase 3 Spells
+		self:StopBar(183254) -- Allure of Flames
+		self:StopBar(183828) -- Death Brand
+		self:CDBar(186961, 13) -- Nether Banish
+		self:CDBar(186123, 27) -- Wrought Chaos
+		self:CDBar(184964, 57.5) -- Shackled Torment
+	end
+end
+
 function mod:DeathBrand(args)
 	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 2.5)
-end
-
-function mod:NetherBanish(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
-	self:TargetBar(args.spellId, 7, args.destName)
-	self:PrimaryIcon(args.spellId, args.destName)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:OpenProximity(args.spellId, 30, nil, true) -- XXX EJ says 10yd tank only, spell says 30yd any player
-	end
-end
-
-function mod:NetherBanishRemoved(args)
-	self:StopBar(args.spellName, args.destName)
-	self:PrimaryIcon(args.spellId)
-	if self:Me(args.destGUID) then
-		self:CloseProximity(args.spellId)
-	end
+	self:CDBar(args.spellId, 42)
 end
 
 function mod:ShadowfelBurst(args)
@@ -157,19 +157,7 @@ function mod:DoomfireFixate(args)
 	end
 end
 
-function mod:VoidStarFixate(args)
-	self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:OpenProximity(args.spellId, 15)
-	end
-end
 
-function mod:VoidStarFixateRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CloseProximity(args.spellId)
-	end
-end
 
 function mod:WroughtChaos(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Info")
@@ -224,3 +212,42 @@ function mod:Desecrate(args)
 	self:CDBar(args.spellId, 27) -- Min: 26.8/Avg: 29.2/Max: 33.4
 end
 
+-- Phase 3
+
+function mod:RainOfChaos(args)
+	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
+	self:Bar(args.spellId, 62)
+end
+
+function mod:NetherBanish(args)
+	self:CDBar(args.spellId, 62)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
+	self:TargetBar(args.spellId, 7, args.destName)
+	self:PrimaryIcon(args.spellId, args.destName)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:OpenProximity(args.spellId, 30, nil, true) -- XXX EJ says 10yd tank only, spell says 30yd any player
+	end
+end
+
+function mod:NetherBanishRemoved(args)
+	self:StopBar(args.spellName, args.destName)
+	self:PrimaryIcon(args.spellId)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
+	end
+end
+
+function mod:VoidStarFixate(args)
+	self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:OpenProximity(args.spellId, 15)
+	end
+end
+
+function mod:VoidStarFixateRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
+	end
+end
