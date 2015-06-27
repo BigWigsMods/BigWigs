@@ -118,8 +118,7 @@ do
 				self:Say(179711)
 				self:OpenProximity(179711, 6)
 			end
-		end
-		if self:Me(args.destGUID) then
+		elseif self:Me(args.destGUID) then -- Yellow or Green AND on Me
 			if removedTimer then
 				self:CancelTimer(removedTimer)
 				removedTimer = nil
