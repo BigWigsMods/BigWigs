@@ -78,10 +78,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 
-	--self:Death("Deaths", 91543, 93625) --Corrupted Talonpriest, Phantasmal Resonance
-	self:Death("PriestDeath", 91543) -- Corrupted Talonpriest
-	self:Death("WardenDeath", 91541) -- Shadowfel Warden
-	self:Death("RavenDeath", 91539) -- Fel Raven
+	self:Death("Deaths", 91543, 91541, 91539, 93625) -- Corrupted Talonpriest, Shadowfel Warden, Fel Raven, Phantasmal Resonance
 end
 
 function mod:OnEngage()
@@ -98,14 +95,22 @@ end
 -- Event Handlers
 --
 
---function mod:Deaths(args)
-	--cancel timers from the adds if needed
---end
+function mod:Deaths(args)
+	if args.mobId == 91543 then -- Corrupted Talonpriest
+		self:StopBar(181753) -- Fel Bomb
+	elseif args.mobId == 91541 then -- Shadowfel Warden
+		self:StopBar(181827) -- Fel Conduit
+	elseif args.mobId == 91539 then -- Fel Raven
+		self:StopBar(181824) -- Phantasmal Corruption
+	elseif args.mobId == 93625 then -- Phantasmal Resonance
+		self:StopBar(185510) -- Dark Bindings
+	end
+end
 
 function mod:EyeOfAnzu(args)
 	self:TargetMessage(args.spellId, args.destName, "Positive")
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "Info")
+		self:PlaySound(args.spellId, #windTargets > 0 and "Warning" or "Info")
 		self:Say(args.spellId)
 		self:Flash(args.spellId)
 	end
@@ -116,15 +121,31 @@ function mod:ShadowRiposte(args)
 end
 
 function mod:PhantasmalWinds(args)
-	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 35.5)
 	wipe(windTargets)
 end
 
-function mod:PhantasmalWindsApplied(args)
-	windTargets[#windTargets + 1] = args.destName
-	if self.db.profile.custom_off_wind_marker then
-		SetRaidTarget(args.destName, #windTargets)
+do
+	local isOnMe = nil, nil
+	local function warn(self, spellName)
+		if isOnMe then
+			self:Message(181956, "Personal" , "Alarm", CL.you:format(spellName))
+			isOnMe = nil
+		else
+			self:Message(181956, "Attention", UnitBuff("player", self:SpellName(179202)) and "Warning")
+		end
+	end
+	function mod:PhantasmalWindsApplied(args)
+		windTargets[#windTargets + 1] = args.destName
+		if #windTargets == 1 then
+			self:ScheduleTimer(warn, 0.2, self, args.spellName)
+			self:CDBar(181956, 36)
+		end
+		if self:Me(args.destGUID) then
+			isOnMe = true
+		end
+		if self.db.profile.custom_off_wind_marker then
+			SetRaidTarget(args.destName, #windTargets)
+		end
 	end
 end
 
@@ -132,7 +153,6 @@ function mod:PhantasmalWindsRemoved(args)
 	if self.db.profile.custom_off_wind_marker then
 		SetRaidTarget(args.destName, 0)
 	end
-	windTargets[args.destName] = nil
 end
 
 do
@@ -151,7 +171,7 @@ function mod:PhantasmalCorruption(args)
 	self:TargetMessage(181824, args.destName, "Urgent", "Alert")
 	if self:Me(args.destGUID) then
 		self:Say(181824)
-		self:OpenProximity(181824, 15) -- XXX verify obliteration range
+		self:OpenProximity(181824, 8) -- XXX verify range (spell says 5 yards)
 	end
 	self:CDBar(181824, 16)
 end
@@ -160,7 +180,7 @@ function mod:PhantasmalCorruptionRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(181824)
 	end
-	self:StopBar(args.spellName, args.destName)
+	self:StopBar(181824, args.destName)
 end
 
 function mod:FelBomb(args)
@@ -245,16 +265,4 @@ do
 			self:Message(182582, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
-end
-
-function mod:PriestDeath(args)
-	self:StopBar(181753) -- Fel Bomb
-end
-
-function mod:WardenDeath(args)
-	self:StopBar(181827) -- Fel Conduit
-end
-
-function mod:RavenDeath(args)
-	self:StopBar(181827) -- Fel Conduit
 end
