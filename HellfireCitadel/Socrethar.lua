@@ -208,7 +208,7 @@ end
 
 function mod:ExertDominance(args)
 	dominanceCount = dominanceCount + 1
-	self:Message(args.spellId, "Attention", nil, CL.count:format(args.spellName, dominanceCount))
+	self:Message(args.spellId, "Attention", self:Interrupter(args.sourceGUID) and "Alert", CL.count:format(args.spellName, dominanceCount))
 end
 
 function mod:Apocalypse(args)
