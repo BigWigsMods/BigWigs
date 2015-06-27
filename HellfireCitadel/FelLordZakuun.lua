@@ -123,14 +123,14 @@ do
 		end
 	end
 
-	local function BefouledRemoved(self)
-		self:Message(179711, "Personal", "Info", CL.removed(self:SpellName(179711)))
+	local function BefouledRemoved(self, spellName)
+		self:Message(179711, "Personal", "Info", CL.removed:format(spellName))
 		self:CloseProximity(179711)
 	end
 
 	function mod:BefouledRemovedCheck(args)
 		if self:Me(args.destGUID) then
-			removedTimer = self:ScheduleTimer(BefouledRemoved, 0.2, self)
+			removedTimer = self:ScheduleTimer(BefouledRemoved, 0.2, self, args.spellName)
 		end
 	end
 end
@@ -161,7 +161,7 @@ do
 					seedCount = seedCount + 1
 					if self:Me(UnitGUID(unit)) then
 						self:Say(181508, L.seed:format(seedCount), true)
-						mod:Message(181508, "Positive", nil, CL.you:format(L.seed:format(seedCount)))
+						self:Message(181508, "Positive", nil, CL.you:format(L.seed:format(seedCount)))
 						break
 					end
 				end
