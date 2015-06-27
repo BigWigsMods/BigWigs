@@ -20,7 +20,7 @@ local phase = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.seed = "Seed"
+	L.seed = "Seed (%d)"
 end
 L = mod:GetLocale()
 
@@ -151,22 +151,24 @@ end
 
 do
 	-- XXX Ugly, but compatible with DBM. Might change it to sorting the lists when I catch mysticalos. ~elvador
-	local list, scheduled = mod:NewTargetList(), nil
-	local function seedSay(self)
-		scheduled = nil
-
-		local unit = "raid%d"
-		local seeds = 0
-		for i = 1,30 do
-			if UnitDebuff(unit:format(i), mod:SpellName(181508)) then
-				seeds = seeds + 1
-				if UnitIsUnit(unit:format(i), "player") then
-					self:Say(181508, CL.count:format(L.seed, seeds), true)
-					mod:Message(181508, "Positive", nil, CL.you:format(CL.count:format(L.seed, seeds)))
-					break
+	local list, isOnMe = mod:NewTargetList(), nil
+	local function seedSay(self, spellName)
+		if isOnMe then
+			local seedCount = 0
+			for i = 1, 30 do
+				local unit = ("raid%d"):format(i)
+				if UnitDebuff(unit, spellName) then
+					seedCount = seedCount + 1
+					if self:Me(UnitGUID(unit)) then
+						self:Say(181508, L.seed:format(seedCount), true)
+						mod:Message(181508, "Positive", nil, CL.you:format(L.seed:format(seedCount)))
+						break
+					end
 				end
 			end
 		end
+		self:TargetMessage(181508, list, "Attention", "Alarm")
+		isOnMe = nil
 	end
 
 	function mod:SeedOfDestruction(args)
@@ -174,13 +176,10 @@ do
 		if #list == 1 then
 			self:CDBar(181508, 14.5)
 			self:Bar(181508, 5, 84474) -- 84474 = "Explosion"
-			self:ScheduleTimer("TargetMessage", 0.2, 181508, list, "Attention", "Alarm")
+			self:ScheduleTimer(seedSay, 0.2, self, args.spellName)
 		end
-
 		if self:Me(args.destGUID) then
-			if not scheduled then
-				scheduled = self:ScheduleTimer(seedSay, 0.2, self, args.spellId)
-			end
+			isOnMe = true
 		end
 	end
 end
