@@ -17,7 +17,7 @@ local bossUtilityFrame = CreateFrame("Frame")
 local enabledModules = {}
 local allowedEvents = {}
 local difficulty = 0
-local UpdateDispelStatus = nil
+local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
 local myGUID, myRole, myDamagerRole = nil, nil, nil
 local solo = false
 local updateData = function(module)
@@ -61,6 +61,7 @@ local updateData = function(module)
 	end
 
 	UpdateDispelStatus()
+	UpdateInterruptStatus()
 end
 
 -------------------------------------------------------------------------------
@@ -855,6 +856,39 @@ do
 				return true
 			end
 		end
+	end
+end
+
+do
+	local canInterrupt = false
+	local spellList = {
+		106839, -- Skull Bash (Druid)
+		116705, -- Spear Hand Strike (Monk)
+		147362, -- Counter Shot (Hunter)
+		78675, -- Solar Beam (Druid)
+		57994, -- Wind Shear (Shaman)
+		47528, -- Mind Freeze (Death Knight)
+		96231, -- Rebuke (Paladin)
+		15487, -- Silence (Priest)
+		2139, -- Counterspell (Mage)
+		1766, -- Kick (Rogue)
+		6552, -- Pummel (Warrior)
+	}
+	function UpdateInterruptStatus()
+		canInterrupt = false
+		for i = 1, #spellList do
+			local spell = spellList[i]
+			if IsSpellKnown(spell) then
+				canInterrupt = spell -- XXX check for cooldown also?
+			end
+		end
+	end
+	function boss:Interrupter(guid)
+		-- We will probably need to make this smarter
+		if canInterrupt and guid and (UnitGUID("target") == guid or UnitGUID("focus") == guid) then
+			return true
+		end
+		return canInterrupt
 	end
 end
 
