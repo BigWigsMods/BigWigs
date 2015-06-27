@@ -153,25 +153,18 @@ function mod:RumblingFissures(args)
 end
 
 do
-	-- XXX Ugly, but compatible with DBM. Might change it to sorting the lists when I catch mysticalos. ~elvador
 	local list, isOnMe = mod:NewTargetList(), nil
 	local function seedSay(self, spellName)
-		--[[
 		if isOnMe then
-			local seedCount = 0
-			for i = 1, 30 do
-				local unit = ("raid%d"):format(i)
-				if UnitDebuff(unit, spellName) then
-					seedCount = seedCount + 1
-					if self:Me(UnitGUID(unit)) then
-						self:Say(181508, L.seed:format(seedCount), true)
-						self:Message(181508, "Positive", nil, CL.you:format(L.seed:format(seedCount)))
-						break
-					end
+			table.sort(list)
+			for i = 1,#list do
+				if list[i] == self:UnitName("player") then
+					self:Say(181508, L.seed:format(i), true)
+					self:Message(181508, "Positive", nil, CL.you:format(L.seed:format(i)))
+					break
 				end
 			end
 		end
-		]]
 		self:TargetMessage(181508, list, "Attention", "Alarm")
 		isOnMe = nil
 	end
@@ -185,7 +178,6 @@ do
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = true
-			self:Say(181508)
 		end
 	end
 end
