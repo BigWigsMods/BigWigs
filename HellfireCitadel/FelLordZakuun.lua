@@ -68,6 +68,7 @@ function mod:OnEngage()
 	self:Bar(189009, 36.5) -- Cavitation
 	self:Bar(179583, 7) -- Rumbling Fissures
 	self:Bar(179711, 16, 179709) -- Foul
+	self:Bar(179667, 87) -- P2/Disarmed
 end
 
 --------------------------------------------------------------------------------
@@ -93,6 +94,7 @@ end
 function mod:DisarmedRemoved(args)
 	self:Message(args.spellId, "Attention", "Info", CL.over:format(args.spellName))
 	self:StopBar(181508) -- Seed of Destruction
+	self:Bar(179667, 85) -- P2/Disarmed
 end
 
 function mod:Cavitation(args)
