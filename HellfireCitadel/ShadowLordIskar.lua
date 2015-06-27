@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Shadow-Lord Iskar", 1026, 1433)
 if not mod then return end
-mod:RegisterEnableMob(90316, 91591) -- 90316 in beta
+mod:RegisterEnableMob(90316, 91591) -- 91591 = ?
 mod.engageId = 1788
 
 --------------------------------------------------------------------------------
@@ -129,10 +129,10 @@ do
 	local function warn(self, spellName)
 		if isOnMe then
 			self:Message(181956, "Personal" , "Alarm", CL.you:format(spellName))
-			isOnMe = nil
 		else
 			self:Message(181956, "Attention", UnitBuff("player", self:SpellName(179202)) and "Warning")
 		end
+		isOnMe = nil
 	end
 	function mod:PhantasmalWindsApplied(args)
 		windTargets[#windTargets + 1] = args.destName
@@ -153,6 +153,7 @@ function mod:PhantasmalWindsRemoved(args)
 	if self.db.profile.custom_off_wind_marker then
 		SetRaidTarget(args.destName, 0)
 	end
+	tDeleteItem(windTargets, args.destName)
 end
 
 do
