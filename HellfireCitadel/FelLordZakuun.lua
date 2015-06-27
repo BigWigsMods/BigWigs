@@ -109,17 +109,21 @@ end
 do
 	local list, removedTimer = mod:NewTargetList(), nil
 	function mod:Befouled(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, 179711, list, "Attention", "Alarm")
+		if args.spellId == 189030 then -- Red debuff gets applied initially
+			list[#list+1] = args.destName
+			if #list == 1 then
+				self:ScheduleTimer("TargetMessage", 0.2, 179711, list, "Attention", "Alarm")
+			end
+			if self:Me(args.destGUID) then
+				self:Say(179711)
+				self:OpenProximity(179711, 6)
+			end
 		end
 		if self:Me(args.destGUID) then
 			if removedTimer then
 				self:CancelTimer(removedTimer)
 				removedTimer = nil
 			end
-			self:Say(179711)
-			self:OpenProximity(179711, 6)
 		end
 	end
 
@@ -153,6 +157,7 @@ do
 	-- XXX Ugly, but compatible with DBM. Might change it to sorting the lists when I catch mysticalos. ~elvador
 	local list, isOnMe = mod:NewTargetList(), nil
 	local function seedSay(self, spellName)
+		--[[
 		if isOnMe then
 			local seedCount = 0
 			for i = 1, 30 do
@@ -167,6 +172,7 @@ do
 				end
 			end
 		end
+		]]
 		self:TargetMessage(181508, list, "Attention", "Alarm")
 		isOnMe = nil
 	end
@@ -180,6 +186,7 @@ do
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = true
+			self:Say(181508)
 		end
 	end
 end
