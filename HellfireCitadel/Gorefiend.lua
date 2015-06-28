@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Gorefiend", 1026, 1372)
 if not mod then return end
 mod:RegisterEnableMob(90199)
 mod.engageId = 1783
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -22,7 +23,6 @@ local shadowOfDeathInfo = {
 		["dps"] = INLINE_DAMAGER_ICON,
 	},
 	["heroic"] = {
-		["tank"] = 60,
 		["healer"] = 36,
 		["dps"] = 36,
 	},
@@ -54,7 +54,7 @@ function mod:GetOptions()
 		179995, -- Doom Well
 		{179909, "PROXIMITY", "FLASH", "SAY", "ICON"}, -- Shared Fate
 		181973, -- Feast of Souls
-		181295, -- Digest
+		{181295, "COUNTDOWN"}, -- Digest
 		179864, -- Shadow of Death
 		--182788, -- Crushing Darkness
 		--[[ Enraged Spirit ]]--
@@ -63,6 +63,7 @@ function mod:GetOptions()
 		--[[ Gorebound Construct ]]--
 		{180148, "FLASH"}, -- Hunger for Life
 		--[[ Gorebound Spirit ]]--
+		-11020, -- Gorebound Spirit
 		187814, -- Raging Charge
 		{185189, "TANK"}, -- Fel Flames
 		--[[ General ]]--
@@ -71,7 +72,7 @@ function mod:GetOptions()
 		[179977] = self.displayName, -- Gorefiend
 		[182601] = -11378, -- Enraged Spirit
 		[180148] = -11018, -- Gorebound Construct
-		[187814] = -11020, -- Gorebound Spirit
+		[-11020] = -11020, -- Gorebound Spirit
 		["proximity"] = "general",
 	}
 end
@@ -142,12 +143,14 @@ do
 		end
 	end
 end
+
 function mod:GoreboundSpiritDeath(args)
 	self:StopBar(181582) -- Bellowing Shout
 end
-function mod:GoreboundFortitude(args)
-	-- XXX fix option
-	--self:Message("berserk", "Attention", "Info", CL.spawned:format(args.sourceName), false) -- Add spawning to the 'real' realm
+
+function mod:GoreboundFortitude()
+	-- Enraged Spirit moving to the 'real' realm (becomes Gorebound Spirit)
+	self:Message(-11020, "Neutral", self:Tank() and "Warning" or "Info", CL.spawning:format(self:SpellName(-11020)), false)
 end
 
 function mod:TouchOfDoomRemoved(args)
@@ -243,16 +246,22 @@ end
 do
 	local list = mod:NewTargetList()
 	function mod:ShadowOfDeath(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Urgent", "Alarm")
-		end
 		if self:Me(args.destGUID) then
 			self:TargetBar(args.spellId, 5, args.destName)
 		end
 
 		local role = self:Tank(args.destName) and "tank" or self:Healer(args.destName) and "healer" or "dps"
-		self:Bar(179864, shadowOfDeathInfo[self:Mythic() and "mythic" or "heroic"][role], shadowOfDeathInfo.icon[role].." "..args.spellName)
+		local text = shadowOfDeathInfo.icon[role].." "..args.spellName
+
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Urgent", "Alarm", text)
+
+			local timer = shadowOfDeathInfo[self:Mythic() and "mythic" or "heroic"][role]
+			if timer then
+				self:Bar(179864, timer, text)
+			end
+		end
 	end
 end
 
