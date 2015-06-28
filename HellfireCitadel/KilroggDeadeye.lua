@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Kilrogg Deadeye", 1026, 1396)
 if not mod then return end
 mod:RegisterEnableMob(90378)
 mod.engageId = 1786
+mod.respawnTime = 14
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -67,7 +68,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "VisionOfDeath", 182428)
 	self:Log("SPELL_CAST_START", "DeathThroes", 180224)
 	self:Log("SPELL_CAST_START", "ShredArmor", 180199)
-	self:Log("SPELL_AURA_APPLIED", "ShreddedArmor", 180200)
 	self:Log("SPELL_AURA_APPLIED", "CleansingAura", 187089)
 
 	--self:Log("SPELL_CAST_SUCCESS", "BloodthirsterSpawn", 181113) -- Encounter Spawn
@@ -157,13 +157,10 @@ function mod:DeathThroes(args)
 end
 
 function mod:ShredArmor(args)
-	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
-	self:CDBar(args.spellId, 18) -- 18-27
-end
-
-function mod:ShreddedArmor(args) -- Tank Failed
-	self:TargetMessage(180199, args.destName, "Important", nil, args.spellId)
-	self:TargetBar(180199, 30, args.destName, args.spellId)
+	if UnitDetailedThreatSituation("player", "boss1") then
+		self:Message(args.spellId, "Important", "Warning")
+	end
+	self:CDBar(args.spellId, 17) -- 17s but can be delayed by other abilities
 end
 
 function mod:CleansingAura(args)
