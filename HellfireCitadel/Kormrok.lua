@@ -182,7 +182,7 @@ end
 function mod:Pound(args)
 	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName, poundCount))
 	poundCount = poundCount + 1
-	self:CDBar(args.spellId, phase == 3 and (54 * enrageMod) or (68 * enrageMod), CL.count:format(args.spellName, poundCount))
+	self:CDBar(args.spellId, phase == 3 and ((50 * enrageMod) + 4) or ((62 * enrageMod) + 4), CL.count:format(args.spellName, poundCount))
 	self:OpenProximity(args.spellId, 5) -- 4 + 1 safety
 end
 

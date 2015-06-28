@@ -253,7 +253,7 @@ function mod:Stage2() -- Shadow Escape
 
 	-- event for when Iskar is attackable again?
 	self:DelayedMessage("stages", 40, "Neutral", CL.phase:format(1), false, "Info")
-	self:ScheduleTimer("Bar", 40, 182200, 6) -- Fel Chakram
+	self:ScheduleTimer("CDBar", 40, 182200, 5.5) -- Fel Chakram (doesn't always happen?)
 end
 
 do
