@@ -24,6 +24,12 @@ if L then
 	L.doomLord = "Doom Lord portal closed!"
 	L.imp = "Imp portal closed!"
 	L.infernal = "Infernal portal closed!"
+
+	L.gaze = "Gaze (%d)"
+
+	L.custom_off_gaze_marker = "Gaze marker"
+	L.custom_off_gaze_marker_desc = "Mark Gaze targets with {rt1}{rt2}{rt3}, requires promoted or leader."
+	L.custom_off_gaze_marker_icon = 1
 end
 L = mod:GetLocale()
 
@@ -47,7 +53,7 @@ function mod:GetOptions()
 		181557, -- Fel Hellstorm
 		181255, -- Imps
 		181180, -- Inferno
-		
+
 		"stages",
 	} -- XXX separate by stages
 end
@@ -57,6 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "MarkOfDoomRemoved", 181099)
 	self:Log("SPELL_CAST_START", "MannorothsGazeCast", 181597, 182006)
 	self:Log("SPELL_AURA_APPLIED", "MannorothsGaze", 181597, 182006)
+	self:Log("SPELL_AURA_APPLIED", "MannorothsGazeRemoved", 181597, 182006)
 	self:Log("SPELL_CAST_START", "Shadowforce", 181799, 182084)
 	self:Log("SPELL_CAST_SUCCESS", "CurseOfTheLegionSuccess", 181275) --if _applied 'misses'
 	self:Log("SPELL_AURA_APPLIED", "CurseOfTheLegion", 181275)
@@ -127,14 +134,39 @@ function mod:FelHellstorm(args)
 end
 
 do
-	local list = mod:NewTargetList()
+	local list, isOnMe = {}, nil
+	local function gazeSay(self, spellName)
+		table.sort(list)
+		for i = 1, #list do
+			local target = list[i]
+			if target == isOnMe then
+				local gaze = L.gaze:format(i)
+				self:Say(181597, gaze, true)
+				self:Message(181597, "Positive", nil, CL.you:format(gaze))
+			end
+			if self:GetOption("custom_off_gaze_marker") then
+				SetRaidTarget(target, i)
+			end
+			list[i] = self:ColorName(target)
+		end
+		self:TargetMessage(181597, list, "Attention", "Alarm")
+		isOnMe = nil
+	end
+
 	function mod:MannorothsGaze(args)
+		if self:Me(args.destGUID) then
+			isOnMe = args.destName
+		end
+
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.5, 181597, list, "Attention", "Alarm", args.spellName)
+			self:ScheduleTimer(gazeSay, 0.3, self, args.spellName)
 		end
-		if self:Me(args.destGUID) then
-			self:Say(181597, args.spellName)
+	end
+
+	function mod:MannorothsGazeRemoved(args)
+		if self:GetOption("custom_off_gaze_marker") then
+			SetRaidTarget(args.destName, 0)
 		end
 	end
 end
@@ -278,7 +310,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(181735, 50, phase == 4 and 182077) -- [Empowered] Felseeker
 	elseif spellId == 181354 then -- Glaive Combo
 		self:CDBar(181354, 31, phase == 4 and 187347) -- [Empowered] Glaive Combo
-	elseif spellId == 181301 then -- Summon Adds:P2 
+	elseif spellId == 181301 then -- Summon Adds:P2
 		self:Bar(181255, 25) -- Fel Imp-losion
 		self:Bar(181180, 48) -- Inferno
 	elseif spellId == 182262 then -- Summon Adds:P3
