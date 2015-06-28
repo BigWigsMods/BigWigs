@@ -298,6 +298,6 @@ function mod:VoidStarFixateRemoved(args)
 end
 
 function mod:DemonicFeedback(args)
-	self:Message(183377, "Attention", "Warning", args.spellName)
+	self:Message(args.spellId, "Attention", "Warning")
 	self:CDBar(args.spellId, 37)
 end
