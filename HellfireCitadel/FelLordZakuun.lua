@@ -21,6 +21,10 @@ local phase = 1
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.seed = "Seed (%d)"
+
+	L.custom_off_seed_marker = "Seed of Destruction marker"
+	L.custom_off_seed_marker_desc = "Mark Seed of Destruction targets with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
+	L.custom_off_seed_marker_icon = 1
 end
 L = mod:GetLocale()
 
@@ -36,6 +40,7 @@ function mod:GetOptions()
 		179583, -- Rumbling Fissures
 		181653, -- Fel Crystal
 		{181508, "SAY"}, -- Seed of Destruction
+		"custom_off_seed_marker",
 		179681, -- Enrage
 		179406, -- Soul Cleave
 		189009, -- Cavitation
@@ -51,6 +56,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Disembodied", 179407)
 	self:Log("SPELL_CAST_SUCCESS", "RumblingFissures", 179583)
 	self:Log("SPELL_AURA_APPLIED", "SeedOfDestruction", 181508, 181515)
+	self:Log("SPELL_AURA_REMOVED", "SeedOfDestructionRemoved", 181508, 181515)
 	self:Log("SPELL_AURA_APPLIED", "Enrage", 179681)
 	self:Log("SPELL_CAST_SUCCESS", "Cavitation", 189009)
 	self:Log("SPELL_AURA_APPLIED", "DisarmedApplied", 179667) -- phase 2 trigger, could also use Throw Axe _success, but throw axe doesn't have cleu event for phase ending?
@@ -164,6 +170,9 @@ do
 					self:Say(181508, seed, true)
 					self:Message(181508, "Positive", nil, CL.you:format(seed))
 				end
+				if self:GetOption("custom_off_seed_marker") then
+					SetRaidTarget(target, i)
+				end
 				list[i] = self:ColorName(target)
 			end
 		end
@@ -181,6 +190,12 @@ do
 			self:CDBar(181508, 14.5)
 			self:Bar(181508, 5, 84474) -- 84474 = "Explosion"
 			self:ScheduleTimer(seedSay, 0.3, self, args.spellName)
+		end
+	end
+
+	function mod:SeedOfDestructionRemoved(args)
+		if self:GetOption("custom_off_seed_marker") then
+			SetRaidTarget(args.destName, 0)
 		end
 	end
 end
