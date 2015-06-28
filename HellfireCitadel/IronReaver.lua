@@ -119,7 +119,7 @@ do
 			-- Commented out for now
 		end
 		if self:Me(args.destGUID) then
-			self:OpenProximity(args.spellId, 20)
+			self:OpenProximity(args.spellId, 40)
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 		end
