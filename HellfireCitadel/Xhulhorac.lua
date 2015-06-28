@@ -65,6 +65,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "OverwhelmingChaos", 187204)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingChaos", 187204)
 	self:Log("SPELL_CAST_START", "BlackHole", 186546)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 end
 
 function mod:OnEngage()
@@ -135,6 +136,7 @@ end
 
 function mod:OverwhelmingChaos(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
+	self:Bar(args.spellId, 10, CL.count:format(args.spellName, args.amount+1))
 end
 
 function mod:BlackHole(args)
@@ -162,3 +164,10 @@ do
 	end
 end
 
+
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 187209 then -- Overwhelming Chaos
+		self:Bar(187204, 10)
+	end
+end
