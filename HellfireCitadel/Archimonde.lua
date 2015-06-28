@@ -26,7 +26,9 @@ local phase = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.custom_off_torment_marker = "Shackled Torment marker"
+	L.custom_off_torment_marker_desc = "Mark Shackled Torment targets with {rt1}{rt2}{rt3}, requires promoted or leader."
+	L.custom_off_torment_marker_icon = 1
 end
 L = mod:GetLocale()
 
@@ -55,6 +57,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShackledTorment", 184964)
+	self:Log("SPELL_AURA_REMOVED", "ShackledTormentRemoved", 184964)
 	self:Log("SPELL_CAST_START", "DeathBrand", 183828)
 	self:Log("SPELL_AURA_APPLIED", "NetherBanish", 186961)
 	self:Log("SPELL_AURA_REMOVED", "NetherBanishRemoved", 186961)
@@ -92,17 +95,41 @@ end
 --
 
 do
-	local list = mod:NewTargetList()
+	local list, isOnMe = {}, nil
+	local function tormentSay(self, spellName)
+		table.sort(list)
+		for i = 1, #list do
+			local target = list[i]
+			if target == isOnMe then
+				local torment = CL.count:format(self:SpellName(187553), i) -- 187553 = "Torment"
+				self:Say(184964, torment, true)
+				self:Flash(184964)
+				self:Message(184964, "Positive", nil, CL.you:format(torment))
+			end
+			if self:GetOption("custom_off_torment_marker") then
+				SetRaidTarget(target, i)
+			end
+			list[i] = self:ColorName(target)
+		end
+		self:TargetMessage(184964, list, "Attention", "Alarm")
+		isOnMe = nil
+	end
+
 	function mod:ShackledTorment(args)
+		if self:Me(args.destGUID) then
+			isOnMe = args.destName
+		end
+
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention", "Alarm")
+			self:CDBar(args.spellId, 32) -- Min: 31.8/Avg: 34.5/Max: 43.8
+			self:ScheduleTimer(tormentSay, 0.3, self, args.spellName)
 		end
-		self:CDBar(args.spellId, 32) -- Min: 31.8/Avg: 34.5/Max: 43.8
-		
-		if self:Me(args.destGUID) then
-			self:Flash(args.spellId)
-			self:Say(args.spellId)
+	end
+
+	function mod:ShackledTormentRemoved(args)
+		if self:GetOption("custom_off_torment_marker") then
+			SetRaidTarget(args.destName, 0)
 		end
 	end
 end
