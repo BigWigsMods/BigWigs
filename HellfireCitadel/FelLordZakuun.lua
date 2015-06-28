@@ -39,7 +39,7 @@ function mod:GetOptions()
 		179407, -- Disembodied
 		179583, -- Rumbling Fissures
 		181653, -- Fel Crystal
-		{181508, "SAY"}, -- Seed of Destruction
+		{181508, "SAY", "FLASH"}, -- Seed of Destruction
 		"custom_off_seed_marker",
 		179681, -- Enrage
 		179406, -- Soul Cleave
@@ -167,6 +167,7 @@ do
 			if target == isOnMe then
 				local seed = L.seed:format(i)
 				self:Say(181508, seed, true)
+				self:Flash(181508)
 				self:Message(181508, "Positive", nil, CL.you:format(seed))
 			end
 			if self:GetOption("custom_off_seed_marker") then
