@@ -183,18 +183,20 @@ function mod:HarbingersMendingApplied(args)
 	self:TargetMessage(180025, args.destName, "Attention", "Info", nil, nil, true)
 end
 
-function mod:FontOfCorruption(args)
-	self:Message(args.spellId, "Attention", "Info", args.spellName)
-	self:Bar(args.spellId, 20)
-	-- mayby add font of corruption targets?
-	
-	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
-		self:Flash(args.spellId)
-		self:Say(args.spellId)
+do
+	local list = mod:NewTargetList()
+	function mod:FontOfCorruption(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Info")
+			self:Bar(args.spellId, 20)
+		end
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+		end
 	end
 end
-
 -- Stage 3
 
 function mod:AuraOfMalice()
