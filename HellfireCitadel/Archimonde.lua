@@ -49,6 +49,7 @@ function mod:GetOptions()
 		183254, -- Allure of Flames
 		185590, -- Desecrate
 		182225, -- Rain of Chaos
+		{187180, "PROXIMITY"}, -- Demonic Feedback
 	}
 end
 
@@ -70,6 +71,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "AllureOfFlames", 183254)
 	self:Log("SPELL_CAST_START", "Desecrate", 185590)
 	self:Log("SPELL_CAST_SUCCESS", "RainOfChaos", 182225)
+	self:Log("SPELL_CAST_SUCCESS", "DemonicFeedback", 187180)
+	self:Log("SPELL_AURA_APPLIED", "NetherBanishApplied", 186952) -- for Twisting Nether tracking
+	self:Log("SPELL_AURA_REMOVED", "NetherBanishRemoved", 186952) -- for Twisting Nether tracking
 
 	self:Log("SPELL_AURA_APPLIED", "DoomfireDamage", 183586)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomfireDamage", 183586)
@@ -114,7 +118,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(183828) -- Death Brand
 		self:CDBar(186961, 13) -- Nether Banish
 		self:CDBar(186123, 27) -- Wrought Chaos
+		self:CDBar(187180, 35) -- Demonic Feedback
 		self:CDBar(184964, 57.5) -- Shackled Torment
+		self:OpenProximity(187180, 7) -- Demonic Feedback XXX: Schedule it ~10sec before the timer
 	end
 end
 
@@ -229,6 +235,16 @@ function mod:NetherBanish(args)
 		self:OpenProximity(args.spellId, 30, nil, true) -- XXX EJ says 10yd tank only, spell says 30yd any player
 	end
 end
+function mod:NetherBanishApplied(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(187180)
+	end
+end
+function mod:NetherBanishRemoved(args)
+	if self:Me(args.destGUID) then
+		self:OpenProximity(187180, 6)
+	end
+end
 
 function mod:NetherBanishRemoved(args)
 	self:StopBar(args.spellName, args.destName)
@@ -250,4 +266,9 @@ function mod:VoidStarFixateRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
 	end
+end
+
+function mod:DemonicFeedback(args)
+	self:Message(183377, "Attention", "Warning", args.spellName)
+	self:CDBar(args.spellId, 37)
 end
