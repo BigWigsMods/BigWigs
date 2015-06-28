@@ -12,7 +12,7 @@ mod.engageId = 1787
 -- Locals
 --
 
-local poundCount = 0
+local poundCount = 1
 local tankDebuffCount = 1
 local phase = 0 -- 0:NONE, 1:EXPLOSIVE, 2:FOUL, 3:SHADOW
 local explosiveCount, foulCount, shadowCount = 0, 0, 0
@@ -51,8 +51,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ExplosiveRunes", 181296, 181297) -- Normal, Empowered - HAS TO BE _START FOR MYTHIC MODULE
 	self:Log("SPELL_CAST_START", "GraspingHandsStart", 181299, 181300)
 	self:Log("SPELL_CAST_SUCCESS", "GraspingHands", 181299, 181300) -- Normal, Empowered - HAS TO BE _SUCCESS FOR MYTHIC MODULE
-	self:Log("SPELL_CAST_SUCCESS", "Pound", 180244)
-	self:Log("SPELL_CAST_START", "PoundStart", 180244)
+	self:Log("SPELL_CAST_START", "Pound", 180244)
 	self:Log("SPELL_AURA_REMOVED", "PoundOver", 180244)
 	self:Log("SPELL_CAST_SUCCESS", "FoulCrush", 181307)
 	self:Log("SPELL_CAST_SUCCESS", "Swat", 181305)
@@ -67,7 +66,7 @@ end
 function mod:OnEngage()
 	phase = 0
 	explosiveCount, foulCount, shadowCount = 0, 0, 0
-	poundCount = 0
+	poundCount = 1
 	tankDebuffCount = 1
 	enrageMod = 1
 	self:CDBar("stages", 10, 180068) -- Leap
@@ -166,7 +165,7 @@ function mod:FelOutpouring(args)
 end
 
 function mod:ExplosiveRunes(args)
-	self:Message(181296, "Urgent", "Info", CL.incoming:format(args.spellName), args.spellId)
+	self:Message(181296, "Urgent", "Info", args.spellId)
 	self:CDBar(181296, 108 * enrageMod, explosiveCount > 1 and 181297) -- [Empowered] Explosive Runes
 end
 
@@ -175,22 +174,16 @@ function mod:GraspingHandsStart(args)
 end
 
 function mod:GraspingHands(args)
-	self:Message(181299, "Important", nil, CL.incoming:format(args.spellName), args.spellId)
+	self:Message(181299, "Important", nil, args.spellId)
 	self:CDBar(181299, 108 * enrageMod, foulCount > 0 and 181300) -- Grasping Hands / Dragging Hands
 	self:ScheduleTimer("CloseProximity", 4, 181299) -- Hands spawn delayed and you still have time to move
 end
 
-function mod:PoundStart(args)
-	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName, poundCount))
-	self:Bar(args.spellId, 4, CL.cast:format(CL.count:format(args.spellName, poundCount)))
-	self:OpenProximity(args.spellId, 5) -- 4 + 1 safety
-end
-
 function mod:Pound(args)
+	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName, poundCount))
 	poundCount = poundCount + 1
-	self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, poundCount))
-	self:Bar(args.spellId, 5, CL.count:format(args.spellName, poundCount))
-	self:CDBar(args.spellId, phase == 3 and (50 * enrageMod) or (62 * enrageMod))
+	self:CDBar(args.spellId, phase == 3 and (54 * enrageMod) or (68 * enrageMod), CL.count:format(args.spellName, poundCount))
+	self:OpenProximity(args.spellId, 5) -- 4 + 1 safety
 end
 
 function mod:PoundOver(args)
