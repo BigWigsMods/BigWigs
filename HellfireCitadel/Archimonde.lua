@@ -61,8 +61,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShackledTorment", 184964)
 	self:Log("SPELL_AURA_REMOVED", "ShackledTormentRemoved", 184964)
 	self:Log("SPELL_CAST_START", "DeathBrand", 183828)
-	self:Log("SPELL_AURA_APPLIED", "NetherBanish", 186961)
-	self:Log("SPELL_AURA_REMOVED", "NetherBanishRemoved", 186961)
+	self:Log("SPELL_AURA_APPLIED", "TankNetherBanish", 186961)
+	self:Log("SPELL_AURA_REMOVED", "TankNetherBanishRemoved", 186961)
 	self:Log("SPELL_CAST_START", "ShadowfelBurst", 183817)
 	self:Log("SPELL_AURA_APPLIED", "ShadowfelBurstApplied", 183634)
 	self:Log("SPELL_AURA_APPLIED", "DemonicHavoc", 183865)
@@ -254,32 +254,34 @@ function mod:RainOfChaos(args)
 	self:Bar(args.spellId, 62)
 end
 
-function mod:NetherBanish(args)
+function mod:TankNetherBanish(args)
 	self:CDBar(args.spellId, 62)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
 	self:TargetBar(args.spellId, 7, args.destName)
 	self:PrimaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
-		self:OpenProximity(args.spellId, 30, nil, true) -- XXX EJ says 10yd tank only, spell says 30yd any player
-	end
-end
-function mod:NetherBanishApplied(args)
-	if self:Me(args.destGUID) then
-		self:CloseProximity(187180)
-	end
-end
-function mod:NetherBanishRemoved(args)
-	if self:Me(args.destGUID) then
-		self:OpenProximity(187180, 6)
+		self:OpenProximity(args.spellId, 8, nil, true)
 	end
 end
 
-function mod:NetherBanishRemoved(args)
+function mod:TankNetherBanishRemoved(args)
 	self:StopBar(args.spellName, args.destName)
 	self:PrimaryIcon(args.spellId)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
+	end
+end
+
+function mod:NetherBanishApplied(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
+	end
+end
+
+function mod:NetherBanishRemoved(args)
+	if self:Me(args.destGUID) then
+		self:OpenProximity(args.spellId, 6)
 	end
 end
 
