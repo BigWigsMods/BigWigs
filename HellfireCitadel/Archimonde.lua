@@ -27,7 +27,7 @@ local phase = 1
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.custom_off_torment_marker = "Shackled Torment marker"
-	L.custom_off_torment_marker_desc = "Mark Shackled Torment targets with {rt1}{rt2}{rt3}, requires promoted or leader."
+	L.custom_off_torment_marker_desc = "Mark the Shackled Torment targets with {rt1}{rt2}{rt3}, requires promoted or leader."
 	L.custom_off_torment_marker_icon = 1
 end
 L = mod:GetLocale()
@@ -39,6 +39,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{184964, "SAY", "FLASH"}, -- Shackled Torment
+		"custom_off_torment_marker",
 		183828, -- Death Brand
 		{186961, "ICON", "SAY", "PROXIMITY"}, -- Nether Banish
 		183817, -- Shadowfel Burst
@@ -102,7 +103,7 @@ do
 			local target = list[i]
 			if target == isOnMe then
 				local torment = CL.count:format(self:SpellName(187553), i) -- 187553 = "Torment"
-				self:Say(184964, torment, true)
+				self:Say(184964, torment)
 				self:Flash(184964)
 				self:Message(184964, "Positive", nil, CL.you:format(torment))
 			end

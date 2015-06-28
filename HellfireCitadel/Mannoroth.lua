@@ -28,7 +28,7 @@ if L then
 	L.gaze = "Gaze (%d)"
 
 	L.custom_off_gaze_marker = "Gaze marker"
-	L.custom_off_gaze_marker_desc = "Mark Gaze targets with {rt1}{rt2}{rt3}, requires promoted or leader."
+	L.custom_off_gaze_marker_desc = "Mark the targets of Mannoroth's Gaze with {rt1}{rt2}{rt3}, requires promoted or leader."
 	L.custom_off_gaze_marker_icon = 1
 end
 L = mod:GetLocale()
@@ -41,6 +41,7 @@ function mod:GetOptions()
 	return {
 		{181099, "PROXIMITY", "FLASH", "SAY"}, -- Mark of Doom
 		{181597, "SAY"}, -- Mannoroth's Gaze
+		"custom_off_gaze_marker",
 		181799, -- Shadowforce
 		181566, -- Fel Hellstorm
 		{181275, "SAY", "ICON", "FLASH"}, -- Curse of the Legion
@@ -141,7 +142,7 @@ do
 			local target = list[i]
 			if target == isOnMe then
 				local gaze = L.gaze:format(i)
-				self:Say(181597, gaze, true)
+				self:Say(181597, gaze)
 				self:Message(181597, "Positive", nil, CL.you:format(gaze))
 			end
 			if self:GetOption("custom_off_gaze_marker") then

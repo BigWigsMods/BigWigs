@@ -166,7 +166,7 @@ do
 			local target = list[i]
 			if target == isOnMe then
 				local seed = L.seed:format(i)
-				self:Say(181508, seed, true)
+				self:Say(181508, seed)
 				self:Flash(181508)
 				self:Message(181508, "Positive", nil, CL.you:format(seed))
 			end
