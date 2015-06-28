@@ -135,8 +135,9 @@ function mod:Strike(args)
 end
 
 function mod:OverwhelmingChaos(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
-	self:Bar(args.spellId, 10, CL.count:format(args.spellName, args.amount+1))
+	local amount = args.amount or 1
+	self:StackMessage(args.spellId, args.destName, amount, "Important")
+	self:Bar(args.spellId, 10, CL.count:format(args.spellName, amount+1))
 end
 
 function mod:BlackHole(args)
