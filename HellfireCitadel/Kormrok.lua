@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Kormrok", 1026, 1392)
 if not mod then return end
 mod:RegisterEnableMob(90435)
 mod.engageId = 1787
+mod.respawnTime = 14
 
 --------------------------------------------------------------------------------
 -- Locals
