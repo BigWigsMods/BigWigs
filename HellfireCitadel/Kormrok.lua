@@ -18,6 +18,7 @@ local tankDebuffCount = 1
 local phase = 0 -- 0:NONE, 1:EXPLOSIVE, 2:FOUL, 3:SHADOW
 local explosiveCount, foulCount, shadowCount = 0, 0, 0
 local enrageMod = 1
+local isPounding = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -70,6 +71,7 @@ function mod:OnEngage()
 	poundCount = 1
 	tankDebuffCount = 1
 	enrageMod = 1
+	isPounding = nil
 	self:CDBar("stages", 10, 180068) -- Leap
 end
 
@@ -141,7 +143,9 @@ end
 
 function mod:ExplosiveBurstRemoved(args)
 	self:PrimaryIcon(args.spellId)
-	self:CloseProximity(args.spellId)
+	if not isPounding then
+		self:CloseProximity(args.spellId)
+	end
 end
 
 function mod:FoulCrush(args)
@@ -181,6 +185,7 @@ function mod:GraspingHands(args)
 end
 
 function mod:Pound(args)
+	isPounding = true
 	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName, poundCount))
 	poundCount = poundCount + 1
 	self:CDBar(args.spellId, phase == 3 and ((50 * enrageMod) + 4) or ((62 * enrageMod) + 4), CL.count:format(args.spellName, poundCount))
@@ -189,6 +194,7 @@ end
 
 function mod:PoundOver(args)
 	self:CloseProximity(args.spellId)
+	isPounding = nil
 end
 
 function mod:Enrage(args)
