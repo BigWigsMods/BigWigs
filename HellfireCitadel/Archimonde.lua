@@ -53,6 +53,7 @@ function mod:GetOptions()
 		185590, -- Desecrate
 		182225, -- Rain of Chaos
 		{187180, "PROXIMITY"}, -- Demonic Feedback
+		186952, -- Nether Banish
 	}
 end
 
