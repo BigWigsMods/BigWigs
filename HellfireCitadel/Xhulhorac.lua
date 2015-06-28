@@ -164,10 +164,10 @@ do
 	end
 end
 
-
-
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 187209 then -- Overwhelming Chaos
 		self:Bar(187204, 10)
+		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
 	end
 end
+
