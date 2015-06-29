@@ -98,6 +98,7 @@ end
 
 function mod:DemolishingLeapStart(args)
 	-- Start initial bar on buff gain (happens once) then every other bar on spell completion
+	self:Message(184366, "Important", nil, CL.incoming:format(args.spellName))
 	leapCount = leapCount + 1
 	self:Bar(184366, 5.8, CL.count:format(args.spellName, leapCount))
 end
