@@ -5,14 +5,16 @@
 
 local mod, CL = BigWigs:NewBoss("Shadow-Lord Iskar", 1026, 1433)
 if not mod then return end
-mod:RegisterEnableMob(90316, 91591) -- 91591 = ?
+mod:RegisterEnableMob(90316)
 mod.engageId = 1788
+mod.respawnTime = 20
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
 local shadowEscapeCount = 1
+local nextPhase, nextPhaseSoon = 70, 75.5
 local windTargets = {}
 
 --------------------------------------------------------------------------------
@@ -22,7 +24,7 @@ local windTargets = {}
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.custom_off_wind_marker = "Phantasmal Winds marker"
-	L.custom_off_wind_marker_desc = "Marks Phantasmal Winds targets with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
+	L.custom_off_wind_marker_desc = "Marks Phantasmal Winds targets with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.custom_off_wind_marker_icon = 1
 end
 L = mod:GetLocale()
@@ -83,12 +85,14 @@ end
 
 function mod:OnEngage()
 	shadowEscapeCount = 1
+	nextPhase, nextPhaseSoon = 70, 75.5
 	wipe(windTargets)
 	if self:Mythic() then
 		self:CDBar(185345, 9.5) -- Shadow Riposte
 	end
 	self:CDBar(181956, 16) -- Phantasmal Winds
 	self:Bar(182200, 6) -- Fel Chakram
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -244,12 +248,14 @@ do
 end
 
 function mod:Stage2() -- Shadow Escape
-	self:Message("stages", "Neutral", "Info", CL.phase:format(2), false)
+	self:Message("stages", "Neutral", "Info", ("%d%% - %s"):format(nextPhase, CL.phase:format(2)), false)
+	nextPhase = nextPhase - 25
 	shadowEscapeCount = shadowEscapeCount + 1 -- For different adds and their timers if needed
 	self:StopBar(185345) -- Shadow Riposte
 	self:StopBar(181956) -- Phantasmal Winds
 	self:StopBar(182200) -- Fel Chakram
 	self:Bar("stages", 40, CL.phase:format(1), "achievement_boss_hellfire_felarakkoa")
+	self:CDBar(181753, 15.5) -- Fel Bomb, 15.5-17.4
 
 	-- event for when Iskar is attackable again?
 	self:DelayedMessage("stages", 40, "Neutral", CL.phase:format(1), false, "Info")
@@ -262,9 +268,19 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Flash(182582)
 			self:Message(182582, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
+	end
+end
+
+function mod:UNIT_HEALTH_FREQUENT(unit)
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	if hp < nextPhaseSoon then
+		nextPhaseSoon = nextPhaseSoon - 25
+		if nextPhaseSoon < 40 then then
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
+		end
+		self:Message("stages", "Neutral", nil, CL.soon:format(CL.phase:format(2)), false)
 	end
 end
 
