@@ -277,7 +277,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextPhaseSoon then
 		nextPhaseSoon = nextPhaseSoon - 25
-		if nextPhaseSoon < 40 then then
+		if nextPhaseSoon < 40 then
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 		end
 		self:Message("stages", "Neutral", nil, CL.soon:format(CL.phase:format(2)), false)
