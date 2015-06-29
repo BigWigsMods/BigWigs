@@ -245,6 +245,7 @@ end
 
 function mod:AuraOfMalice()
 	self:StopBar(180526) -- Font of Corruption
+	self:CloseProximity(180526)
 	self:Bar(180608, 40) -- Gavel of the Tyrant
 	self:Bar(180600, 10) -- Bulwark of the Tyrant
 end
