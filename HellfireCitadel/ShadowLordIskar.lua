@@ -16,6 +16,7 @@ mod.respawnTime = 20
 local shadowEscapeCount = 1
 local nextPhase, nextPhaseSoon = 70, 75.5
 local windTargets = {}
+local eyeTarget = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -86,6 +87,7 @@ end
 function mod:OnEngage()
 	shadowEscapeCount = 1
 	nextPhase, nextPhaseSoon = 70, 75.5
+	eyeTarget = nil
 	wipe(windTargets)
 	if self:Mythic() then
 		self:CDBar(185345, 9.5) -- Shadow Riposte
@@ -112,8 +114,9 @@ function mod:Deaths(args)
 end
 
 function mod:EyeOfAnzu(args)
+	eyeTarget = args.destGUID
 	self:TargetMessage(args.spellId, args.destName, "Positive")
-	if self:Me(args.destGUID) then
+	if self:Me(eyeTarget) then
 		self:PlaySound(args.spellId, #windTargets > 0 and "Warning" or "Info")
 		self:Say(args.spellId)
 		self:Flash(args.spellId)
@@ -172,11 +175,13 @@ do
 end
 
 function mod:PhantasmalCorruption(args)
-	self:TargetBar(181824, 10, args.destName)
-	self:TargetMessage(181824, args.destName, "Urgent", "Alert")
-	if self:Me(args.destGUID) then
-		self:Say(181824)
-		self:OpenProximity(181824, 8) -- XXX verify range (spell says 5 yards)
+	if args.destGUID ~= eyeTarget then
+		self:TargetBar(181824, 10, args.destName)
+		self:TargetMessage(181824, args.destName, "Urgent", "Alert")
+		if self:Me(args.destGUID) then
+			self:Say(181824)
+			self:OpenProximity(181824, 8) -- XXX verify range (spell says 5 yards)
+		end
 	end
 	self:CDBar(181824, 16)
 end
