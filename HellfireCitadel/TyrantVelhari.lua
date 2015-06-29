@@ -16,6 +16,7 @@ mod.respawnTime = 45
 local phase = 1
 local mobCollector = {}
 local annihilatingStrikeCount = 0
+local bulwarkCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -45,6 +46,7 @@ function mod:GetOptions()
 		-11163, -- Ancient Harbinger
 		--[[ Stage Three: Malice ]]--
 		180608, -- Gavel of the Tyrant
+		{180600, "FLASH"}, -- Bulwark of the Tyrant
 		180040, -- Sovereign's Ward
 		-11170, -- Ancient Sovereign
 		--[[ General ]]--
@@ -72,6 +74,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "HarbingersMendingApplied", 180025, 181990)
 
 	self:Log("SPELL_CAST_START", "GavelOfTheTyrant", 180608)
+	self:Log("SPELL_CAST_SUCCESS", "BulwarkOfTheTyrant", 180600)
 	self:Log("SPELL_AURA_APPLIED", "SovereignsWard", 180040)
 
 	self:Log("SPELL_AURA_APPLIED", "SealOfDecay", 180000)
@@ -83,6 +86,10 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_SUCCESS", "AuraOfContempt", 179986) -- Phase 2
 	self:Log("SPELL_CAST_SUCCESS", "AuraOfMalice", 179991) -- Phase 3
+
+	self:Log("SPELL_AURA_APPLIED", "DespoiledGroundDamage", 180604)
+	self:Log("SPELL_PERIODIC_DAMAGE", "DespoiledGroundDamage", 180604)
+	self:Log("SPELL_PERIODIC_MISSED", "DespoiledGroundDamage", 180604)
 
 	self:Death("Deaths", 90270, 90271)
 end
@@ -96,6 +103,8 @@ function mod:OnEngage()
 	self:Bar(182459, 57) -- Edict of Condemnation
 	self:Bar(185237, 16) -- Touch of Harm
 
+	annihilatingStrikeCount = 0
+	bulwarkCount = 0
 end
 
 --------------------------------------------------------------------------------
@@ -202,12 +211,19 @@ end
 
 function mod:AuraOfMalice()
 	self:StopBar(180526) -- Font of Corruption
-	self:Bar(180608, 30) -- Gavel of the Tyrant
+	self:Bar(180608, 40) -- Gavel of the Tyrant
+	self:Bar(180600, 10) -- Bulwark of the Tyrant
 end
 
 function mod:GavelOfTheTyrant(args)
 	self:Bar(args.spellId, 40) -- from heroic logs
 	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
+end
+
+function mod:BulwarkOfTheTyrant(args)
+	bulwarkCount = bulwarkCount + 1
+	self:Message(args.spellId, "Attention", "Info")
+	self:Bar(args.spellId, bulwarkCount % 3 == 0 and 20 or 10) -- 3 bulwarks between gavel
 end
 
 function mod:SovereignsWard(args)
@@ -270,3 +286,17 @@ do
 		self:StopBar(args.spellName, args.destName)
 	end
 end
+
+
+do
+	local prev = 0
+	function mod:DespoiledGroundDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Flash(180600)
+			self:Message(180600, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
+	end
+end
+
