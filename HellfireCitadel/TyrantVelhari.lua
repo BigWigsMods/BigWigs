@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Tyrant Velhari", 1026, 1394)
 if not mod then return end
 mod:RegisterEnableMob(90269, 93439) -- 90269 on beta
 mod.engageId = 1784
-mod.respawnTime = 45
+mod.respawnTime = 40
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -18,6 +18,7 @@ local mobCollector = {}
 local annihilatingStrikeCount = 0
 local bulwarkCount = 0
 local inverseFontTargets = {}
+local fontOnMe = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -223,6 +224,7 @@ do
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
+			fontOnMe = true
 		end
 		tDeleteItem(inverseFontTargets, args.destName)
 		updateProximity()
@@ -230,6 +232,9 @@ do
 end
 
 function mod:FontOfCorruptionRemoved(args)
+	if self:Me(args.destGUID) then
+		fontOnMe = nil
+	end
 	if not tContains(inverseFontTargets, args.destName) then
 		inverseFontTargets[#inverseFontTargets+1] = args.destName
 	end
