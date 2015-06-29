@@ -149,7 +149,7 @@ do
 	end
 	function mod:AnnihilatingStrike(args)
 		annihilatingStrikeCount = annihilatingStrikeCount + 1
-		self:GetBossTarget(printTarget, 0.2, args.sourceGUID)
+		self:GetBossTarget(printTarget, 0.7, args.sourceGUID)
 		self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
 		self:Bar(args.spellId, annihilatingStrikeCount % 3 == 0 and 20 or 10) -- 3 strikes between infernal tempests
 	end
