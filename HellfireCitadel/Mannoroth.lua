@@ -318,3 +318,4 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(181180, 28) -- Inferno
 	end
 end
+

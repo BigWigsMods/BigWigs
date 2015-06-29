@@ -272,3 +272,4 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		end
 	end
 end
+

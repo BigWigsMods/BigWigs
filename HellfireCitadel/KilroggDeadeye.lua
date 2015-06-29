@@ -70,8 +70,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ShredArmor", 180199)
 	self:Log("SPELL_AURA_APPLIED", "CleansingAura", 187089)
 
-	--self:Log("SPELL_CAST_SUCCESS", "BloodthirsterSpawn", 181113) -- Encounter Spawn
-
 	self:Log("SPELL_CAST_START", "RendingHowl", 183917)
 	self:Log("SPELL_CAST_START", "SavageStrikes", 180163)
 
@@ -167,14 +165,6 @@ function mod:CleansingAura(args)
 	self:TargetMessage(args.spellId, args.destName, "Positive")
 end
 
---[[ Salivating Bloodthirster ]]--
-
---function mod:BloodthirsterSpawn(args)
---	if self:MobId(args.sourceGUID) == 93369 then -- Salivating Bloodthirster
---		self:Message(-11266, "Attention", "Info")
---	end
---end
-
 --[[ Hulking Terror ]]--
 
 function mod:RendingHowl(args)
@@ -217,3 +207,4 @@ do
 		end
 	end
 end
+

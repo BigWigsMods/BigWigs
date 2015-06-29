@@ -201,3 +201,4 @@ function mod:Enrage(args)
 	enrageMod = 0.84
 	self:Message(args.spellId, "Important")
 end
+

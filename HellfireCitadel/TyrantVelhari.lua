@@ -207,6 +207,7 @@ do
 		end
 	end
 end
+
 -- Stage 3
 
 function mod:AuraOfMalice()
@@ -286,7 +287,6 @@ do
 		self:StopBar(args.spellName, args.destName)
 	end
 end
-
 
 do
 	local prev = 0
