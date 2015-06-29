@@ -48,7 +48,7 @@ function mod:GetOptions()
 		{181824, "SAY", "PROXIMITY"}, -- Phantasmal Corruption
 		{185510, "SAY"}, -- Dark Bindings
 		--[[ General ]]--
-		{179202, "SAY", "FLASH"}, -- Eye of Anzu
+		{179202, "FLASH"}, -- Eye of Anzu
 		185345, -- Shadow Riposte
 		{182582, "SAY"}, -- Fel Incineration
 		"stages",
@@ -118,7 +118,6 @@ function mod:EyeOfAnzu(args)
 	self:TargetMessage(args.spellId, args.destName, "Positive")
 	if self:Me(eyeTarget) then
 		self:PlaySound(args.spellId, #windTargets > 0 and "Warning" or "Info")
-		self:Say(args.spellId)
 		self:Flash(args.spellId)
 	end
 end
@@ -177,7 +176,7 @@ end
 function mod:PhantasmalCorruption(args)
 	if args.destGUID ~= eyeTarget then
 		self:TargetBar(181824, 10, args.destName)
-		self:TargetMessage(181824, args.destName, "Urgent", "Alert")
+		self:TargetMessage(181824, args.destName, "Urgent", "Warning", nil, nil, true)
 		if self:Me(args.destGUID) then
 			self:Say(181824)
 			self:OpenProximity(181824, 8) -- XXX verify range (spell says 5 yards)
