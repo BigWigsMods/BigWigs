@@ -14,6 +14,7 @@
 <Script file="TyrantVelhari.lua"/>
 <Script file="Mannoroth.lua"/>
 <Script file="Archimonde.lua"/>
+<Script file="Trash.lua"/>
 
 </Ui>
 
