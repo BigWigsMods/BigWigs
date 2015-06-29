@@ -14,7 +14,7 @@ mod.respawnTime = 30
 --
 
 local horrorCount = 1
-local leapCount = 1
+local leapCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -41,7 +41,7 @@ function mod:GetOptions()
 		{184358, "ICON"}, -- Fel Rage
 		184355, -- Bloodboil
 		{184847, "TANK"}, -- Acidic Wound
-		184365, -- Demolishing Leap
+		184366, -- Demolishing Leap
 		--[[ Blademaster Jubei'thos ]]--
 		--183210, -- Fel Blade
 		183885, -- Mirror Images
@@ -70,9 +70,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Bloodboil", 184355)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BloodboilDose", 184355)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcidicWound", 184847)
-	self:Log("SPELL_AURA_APPLIED", "DemolishingLeapApplied", 184365)
-	self:Log("SPELL_AURA_REMOVED", "DemolishingLeapRemoved", 184365)
-	self:Log("SPELL_CAST_SUCCESS", "DemolishingLeapSuccess", 184365)
+	self:Log("SPELL_AURA_APPLIED", "DemolishingLeapStart", 184365)
+	self:Log("SPELL_CAST_SUCCESS", "DemolishingLeapStart", 184366)
+	self:Log("SPELL_AURA_REMOVED", "DemolishingLeapStop", 184365)
 	-- Blademaster Jubei'thos
 	--self:Log("SPELL_CAST_SUCCESS", "FelBlade", 183210) -- XXX not sure if useful
 	self:Log("SPELL_CAST_SUCCESS", "MirrorImages", 183885)
@@ -82,29 +82,29 @@ end
 
 function mod:OnEngage()
 	horrorCount = 1
+	leapCount = 0
 	self:Berserk(600)
 	self:Bar(184681, 75, CL.count:format(self:SpellName(184681), horrorCount)) -- Wailing Horror
 	self:Bar(184358, 30) -- Gurtogg Bloodboil : Fel Rage
 	self:CDBar(184449, 6.3) -- Dia Darkwhisper : Mark of the Necromancer, 6.3-7.5
 	self:CDBar(184476, 54.6) -- Dia Darkwhisper : Reap
 	self:CDBar(183885, 153.3) -- Blademaster Jubei'thos : Mirror Images
-	self:CDBar(184365, 225) -- Gurtogg Bloodboil : Demolishing Leap, 225-228
+	self:CDBar(184366, 225) -- Gurtogg Bloodboil : Demolishing Leap, 225-228
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:DemolishingLeapApplied(args)
-	self:Bar(args.spellId, 5.8, CL.count:format(args.spellName, leapCount))
-end
 
-function mod:DemolishingLeapRemoved(args)
-	self:StopBar(CL.count:format(args.spellId, leapCount))
-end
-
-function mod:DemolishingLeapSuccess(args)
+function mod:DemolishingLeapStart(args)
+	-- Start initial bar on buff gain (happens once) then every other bar on spell completion
 	leapCount = leapCount + 1
-	self:Bar(args.spellId, 5.8, CL.count:format(args.spellName, leapCount))
+	self:Bar(184366, 5.8, CL.count:format(args.spellName, leapCount))
+end
+
+function mod:DemolishingLeapStop(args)
+	self:StopBar(CL.count:format(args.spellName, leapCount))
+	leapCount = 0
 end
 
 --function mod:FelBlade(args)
