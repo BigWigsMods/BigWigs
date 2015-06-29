@@ -17,6 +17,7 @@ local phase = 1
 local mobCollector = {}
 local annihilatingStrikeCount = 0
 local bulwarkCount = 0
+local inverseFontTargets = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -42,7 +43,7 @@ function mod:GetOptions()
 		--[[ Stage Two: Contempt ]]--
 		180533, -- Tainted Shadows
 		180025, -- Harbinger's Mending
-		{180526, "SAY", "FLASH"}, -- Font of Corruption
+		{180526, "SAY", "FLASH", "PROXIMITY"}, -- Font of Corruption
 		-11163, -- Ancient Harbinger
 		--[[ Stage Three: Malice ]]--
 		180608, -- Gavel of the Tyrant
@@ -68,6 +69,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "InfernalTempestEnd", 180300)
 
 	self:Log("SPELL_AURA_APPLIED", "FontOfCorruption", 180526)
+	self:Log("SPELL_AURA_REMOVED", "FontOfCorruptionRemoved", 180526)
 
 	self:Log("SPELL_CAST_START", "TaintedShadows", 180533)
 	self:Log("SPELL_CAST_START", "HarbingersMending", 180025, 181990)
@@ -105,11 +107,28 @@ function mod:OnEngage()
 
 	annihilatingStrikeCount = 0
 	bulwarkCount = 0
+
+	-- Adding all players to a list, since they are the "bad" players to Font targets (for proximity)
+	local _, _, _, mapId = UnitPosition("player")
+	for unit in self:IterateGroup() do
+		local _, _, _, tarMapId = UnitPosition(unit)
+		if tarMapId == mapId then
+			inverseFontTargets[#inverseFontTargets+1] = self:UnitName(unit)
+		end
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function updateProximity()
+	if fontOnMe and #inverseFontTargets > 0 then -- stack near other font of corruptions
+		mod:OpenProximity(180526, 5, inverseFontTargets)
+	else -- stay away from all others
+		mod:OpenProximity(180526, 5)
+	end
+end
 
 do
 	local adds = {
@@ -205,9 +224,22 @@ do
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 		end
+		tDeleteItem(inverseFontTargets, args.destName)
+		updateProximity()
 	end
 end
+<<<<<<< .mine
 
+function mod:FontOfCorruptionRemoved(args)
+	if not tContains(inverseFontTargets, args.destName) then
+		inverseFontTargets[#inverseFontTargets+1] = args.destName
+	end
+	updateProximity()
+end
+
+=======
+
+>>>>>>> .r13291
 -- Stage 3
 
 function mod:AuraOfMalice()
