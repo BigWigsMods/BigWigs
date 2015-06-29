@@ -192,8 +192,6 @@ function mod:DoomfireFixate(args)
 	end
 end
 
-
-
 function mod:WroughtChaos(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Info")
 	self:TargetBar(args.spellId, 5, args.destName)
@@ -275,13 +273,13 @@ end
 
 function mod:NetherBanishApplied(args)
 	if self:Me(args.destGUID) then
-		self:CloseProximity(args.spellId)
+		self:CloseProximity(187180) -- Demonic Feedback
 	end
 end
 
 function mod:NetherBanishRemoved(args)
 	if self:Me(args.destGUID) then
-		self:OpenProximity(args.spellId, 6)
+		self:OpenProximity(187180, 6) -- Demonic Feedback
 	end
 end
 
@@ -303,3 +301,4 @@ function mod:DemonicFeedback(args)
 	self:Message(args.spellId, "Attention", "Warning")
 	self:CDBar(args.spellId, 37)
 end
+
