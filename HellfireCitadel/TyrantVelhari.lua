@@ -228,7 +228,6 @@ do
 		updateProximity()
 	end
 end
-<<<<<<< .mine
 
 function mod:FontOfCorruptionRemoved(args)
 	if not tContains(inverseFontTargets, args.destName) then
@@ -237,9 +236,6 @@ function mod:FontOfCorruptionRemoved(args)
 	updateProximity()
 end
 
-=======
-
->>>>>>> .r13291
 -- Stage 3
 
 function mod:AuraOfMalice()
