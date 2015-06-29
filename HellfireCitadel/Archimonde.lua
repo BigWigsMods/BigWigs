@@ -54,6 +54,7 @@ function mod:GetOptions()
 		182225, -- Rain of Chaos
 		{187180, "PROXIMITY"}, -- Demonic Feedback
 		186952, -- Nether Banish
+		182826, -- Doomfire
 	}
 end
 
@@ -79,6 +80,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DemonicFeedback", 187180)
 	self:Log("SPELL_AURA_APPLIED", "NetherBanishApplied", 186952) -- for Twisting Nether tracking
 	self:Log("SPELL_AURA_REMOVED", "NetherBanishRemoved", 186952) -- for Twisting Nether tracking
+	self:Log("SPELL_SUMMON", "Doomfire", 182826)
 
 	self:Log("SPELL_AURA_APPLIED", "DoomfireDamage", 183586)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomfireDamage", 183586)
@@ -138,6 +140,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 190117 then -- Allow Phase 2 Spells
+		self:StopBar(182826) -- Doomfire
 		self:CDBar(186123, 7) -- Wrought Chaos
 		self:CDBar(184964, 27) -- Shackled Torment
 		self:CDBar(183828, 38) -- Death Brand
@@ -151,6 +154,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(184964, 57.5) -- Shackled Torment
 		self:OpenProximity(187180, 7) -- Demonic Feedback XXX: Schedule it ~10sec before the timer
 	end
+end
+
+function mod:Doomfire(args)
+	self:CDBar(args.spellId, 42)
 end
 
 function mod:DeathBrand(args)
@@ -301,4 +308,3 @@ function mod:DemonicFeedback(args)
 	self:Message(args.spellId, "Attention", "Warning")
 	self:CDBar(args.spellId, 37)
 end
-
