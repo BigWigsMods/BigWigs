@@ -49,10 +49,10 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "FelOutpouring", 181292, 181293) -- Normal, Empowered - HAS TO BE _SUCCESS FOR MYTHIC MODULE
-	self:Log("SPELL_CAST_START", "ExplosiveRunes", 181296, 181297) -- Normal, Empowered - HAS TO BE _START FOR MYTHIC MODULE
+	self:Log("SPELL_CAST_SUCCESS", "FelOutpouring", 181292, 181293) -- Normal, Empowered
+	self:Log("SPELL_CAST_START", "ExplosiveRunes", 181296, 181297) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "GraspingHandsStart", 181299, 181300)
-	self:Log("SPELL_CAST_SUCCESS", "GraspingHands", 181299, 181300) -- Normal, Empowered - HAS TO BE _SUCCESS FOR MYTHIC MODULE
+	self:Log("SPELL_CAST_SUCCESS", "GraspingHands", 181299, 181300) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "Pound", 180244)
 	self:Log("SPELL_AURA_REMOVED", "PoundOver", 180244)
 	self:Log("SPELL_CAST_SUCCESS", "FoulCrush", 181307)
@@ -78,6 +78,8 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+-- Phases
 
 function mod:ShadowEnergy(args)
 	self:SendMessage("BigWigs_StopBars", self)
@@ -124,6 +126,8 @@ function mod:FoulEnergy(args)
 	self:CDBar("stages", 133 * enrageMod, 180068) -- Leap
 end
 
+-- Tank Debuffs
+
 function mod:ExplosiveBurst(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
 	self:TargetBar(args.spellId, 10, args.destName)
@@ -164,14 +168,18 @@ function mod:Swat(args)
 	end
 end
 
+-- Phase Abilities
+
 function mod:FelOutpouring(args)
+	shadowCount = shadowCount - 1
 	self:Message(181292, "Attention", "Long", args.spellId)
 	self:CDBar(181292, 108 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
 end
 
 function mod:ExplosiveRunes(args)
+	explosiveCount = explosiveCount - 1
 	self:Message(181296, "Urgent", "Info", args.spellId)
-	self:CDBar(181296, 108 * enrageMod, explosiveCount > 1 and 181297) -- [Empowered] Explosive Runes
+	self:CDBar(181296, 108 * enrageMod, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
 end
 
 function mod:GraspingHandsStart(args)
@@ -179,6 +187,7 @@ function mod:GraspingHandsStart(args)
 end
 
 function mod:GraspingHands(args)
+	foulCount = foulCount - 1
 	self:Message(181299, "Important", nil, args.spellId)
 	self:CDBar(181299, 108 * enrageMod, foulCount > 0 and 181300) -- Grasping Hands / Dragging Hands
 	self:ScheduleTimer("CloseProximity", 4, 181299) -- Hands spawn delayed and you still have time to move
@@ -199,6 +208,6 @@ end
 
 function mod:Enrage(args)
 	enrageMod = 0.84
-	self:Message(args.spellId, "Important")
+	self:Message(args.spellId, "Important", "Alarm")
 end
 
