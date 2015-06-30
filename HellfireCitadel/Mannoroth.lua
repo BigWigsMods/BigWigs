@@ -64,7 +64,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "MarkOfDoomRemoved", 181099)
 	self:Log("SPELL_CAST_START", "MannorothsGazeCast", 181597, 182006)
 	self:Log("SPELL_AURA_APPLIED", "MannorothsGaze", 181597, 182006)
-	self:Log("SPELL_AURA_APPLIED", "MannorothsGazeRemoved", 181597, 182006)
+	self:Log("SPELL_AURA_REMOVED", "MannorothsGazeRemoved", 181597, 182006)
 	self:Log("SPELL_CAST_START", "Shadowforce", 181799, 182084)
 	self:Log("SPELL_CAST_SUCCESS", "CurseOfTheLegionSuccess", 181275) --if _applied 'misses'
 	self:Log("SPELL_AURA_APPLIED", "CurseOfTheLegion", 181275)
