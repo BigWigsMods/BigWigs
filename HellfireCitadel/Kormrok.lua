@@ -88,7 +88,7 @@ function mod:ShadowEnergy(args)
 	self:Message("stages", "Neutral", "Info", args.spellName, false)
 	self:Bar(181292, 16 * enrageMod, 181293) -- Empowered Fel Outpouring
 	self:Bar(181305, 38 * enrageMod) -- Swat
-	self:CDBar(180244, 49 * enrageMod) -- Pound
+	self:CDBar(180244, 46 * enrageMod) -- Pound
 	self:Bar(181296, 63 * enrageMod, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
 	self:Bar(181299, 85 * enrageMod, foulCount > 0 and 181300)-- Grasping Hands / Dragging Hands
 	self:CDBar("stages", 133 * enrageMod, 180068) -- Leap
@@ -103,7 +103,7 @@ function mod:ExplosiveEnergy(args)
 	self:Message("stages", "Neutral", "Info", args.spellName, false)
 	self:Bar(181296, 13 * enrageMod, 181297) -- Empowered Explosive Runes
 	self:Bar(181306, 25 * enrageMod) -- Explosive Burst
-	self:CDBar(180244, 36 * enrageMod) -- Pound
+	self:CDBar(180244, 33 * enrageMod) -- Pound
 	self:Bar(181299, 53 * enrageMod, foulCount > 0 and 181300) -- Grasping Hands / Dragging Hands
 	self:Bar(181292, 74 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
 	self:CDBar("stages", 133 * enrageMod, 180068) -- Leap
@@ -118,7 +118,7 @@ function mod:FoulEnergy(args)
 	self:Message("stages", "Neutral", "Info", args.spellName, false)
 	self:Bar(181299, 13 * enrageMod, 181300) -- Dragging Hands
 	self:Bar(181307, 25 * enrageMod) -- Foul Crush
-	self:CDBar(180244, 36 * enrageMod) -- Pound
+	self:CDBar(180244, 33 * enrageMod) -- Pound
 	self:Bar(181292, 46 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
 	self:Bar(181296, 69 * enrageMod, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
 	self:CDBar("stages", 133 * enrageMod, 180068) -- Leap
@@ -188,7 +188,7 @@ function mod:Pound(args)
 	isPounding = true
 	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName, poundCount))
 	poundCount = poundCount + 1
-	self:CDBar(args.spellId, (58 * enrageMod) + 4, CL.count:format(args.spellName, poundCount)) -- +4 for the cast time before the channel (doesn't cast faster)
+	self:CDBar(args.spellId, enrageMod == 1 and 62 or 42, CL.count:format(args.spellName, poundCount)) -- success->start = 57.97 / 37.97 enraged + 4 for cast = our times
 	self:OpenProximity(args.spellId, 5) -- 4 + 1 safety
 end
 
