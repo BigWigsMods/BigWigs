@@ -70,7 +70,7 @@ function mod:OnEngage()
 	explosiveCount, foulCount, shadowCount = 0, 0, 0
 	poundCount = 1
 	tankDebuffCount = 1
-	enrageMod = 1
+	enrageMod = self:Mythic() and 0.84 or 1
 	isPounding = nil
 	self:CDBar("stages", 10, 180068) -- Leap
 end
@@ -188,7 +188,7 @@ function mod:Pound(args)
 	isPounding = true
 	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName, poundCount))
 	poundCount = poundCount + 1
-	self:CDBar(args.spellId, phase == 3 and ((50 * enrageMod) + 4) or ((62 * enrageMod) + 4), CL.count:format(args.spellName, poundCount))
+	self:CDBar(args.spellId, phase == 3 and (50 * enrageMod) or (62 * enrageMod), CL.count:format(args.spellName, poundCount))
 	self:OpenProximity(args.spellId, 5) -- 4 + 1 safety
 end
 
