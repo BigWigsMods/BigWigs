@@ -188,7 +188,7 @@ function mod:Pound(args)
 	isPounding = true
 	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName, poundCount))
 	poundCount = poundCount + 1
-	self:CDBar(args.spellId, phase == 3 and (50 * enrageMod) or (62 * enrageMod), CL.count:format(args.spellName, poundCount))
+	self:CDBar(args.spellId, (58 * enrageMod) + 4, CL.count:format(args.spellName, poundCount)) -- +4 for the cast time before the channel (doesn't cast faster)
 	self:OpenProximity(args.spellId, 5) -- 4 + 1 safety
 end
 
