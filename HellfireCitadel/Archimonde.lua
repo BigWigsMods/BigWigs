@@ -55,6 +55,7 @@ function mod:GetOptions()
 		{187180, "PROXIMITY"}, -- Demonic Feedback
 		186952, -- Nether Banish
 		182826, -- Doomfire
+		"stages",
 	}
 end
 
@@ -140,12 +141,14 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 190117 then -- Allow Phase 2 Spells
+		self:Message("stages", "Neutral", "Long", CL.phase:format(2), false)
 		self:StopBar(182826) -- Doomfire
 		self:CDBar(186123, 7) -- Wrought Chaos
 		self:CDBar(184964, 27) -- Shackled Torment
 		self:CDBar(183828, 38) -- Death Brand
 		self:CDBar(183254, 44) -- Allure of Flames
 	elseif spellId == 190118 then -- Allow Phase 3 Spells
+		self:Message("stages", "Neutral", "Long", CL.phase:format(3), false)
 		self:StopBar(183254) -- Allure of Flames
 		self:StopBar(183828) -- Death Brand
 		self:CDBar(186961, 13) -- Nether Banish
