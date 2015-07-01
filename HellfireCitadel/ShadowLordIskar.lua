@@ -52,6 +52,7 @@ function mod:GetOptions()
 		185345, -- Shadow Riposte
 		{182582, "SAY"}, -- Fel Incineration
 		"stages",
+		"berserk",
 	}, {
 		[182200] = CL.phase:format(1),
 		[181912] = CL.phase:format(2),
@@ -94,6 +95,7 @@ function mod:OnEngage()
 	end
 	self:CDBar(181956, 16) -- Phantasmal Winds
 	self:Bar(182200, 6) -- Fel Chakram
+	self:Berserk(540)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
@@ -281,7 +283,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextPhaseSoon then
 		nextPhaseSoon = nextPhaseSoon - 25
-		if nextPhaseSoon < 40 then
+		if nextPhaseSoon < 20 then
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 		end
 		self:Message("stages", "Neutral", nil, CL.soon:format(CL.phase:format(2)), false)
