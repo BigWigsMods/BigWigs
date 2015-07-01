@@ -51,7 +51,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Foul", 179709) -- Applies Befouled on targets
 	self:Log("SPELL_AURA_APPLIED", "Befouled", 189030, 189031, 189032) -- 189030 = red, 31 = yellow, 32 = green
-	self:Log("SPELL_AURA_REMOVED", "BefouledRemovedCheck", 189032, 189031, 189032)
+	self:Log("SPELL_AURA_REMOVED", "BefouledRemovedCheck", 189030, 189031, 189032)
 	self:Log("SPELL_AURA_APPLIED", "HeavilyArmed", 179671)
 	self:Log("SPELL_AURA_APPLIED", "Disembodied", 179407)
 	self:Log("SPELL_CAST_SUCCESS", "RumblingFissures", 179583)
