@@ -19,6 +19,8 @@ mod.engageId = 1799
 --
 
 local phase = 1
+local currentTorment = 0
+local maxTorment = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -26,6 +28,7 @@ local phase = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.torment = "Shackled Torment removed (%d/%d)"
 	L.custom_off_torment_marker = "Shackled Torment marker"
 	L.custom_off_torment_marker_desc = "Mark the Shackled Torment targets with {rt1}{rt2}{rt3}, requires promoted or leader."
 	L.custom_off_torment_marker_icon = 1
@@ -93,6 +96,9 @@ function mod:OnEngage()
 	self:Bar(183254, 30) -- Allure of Flames
 	self:Bar(183828, 15.4) -- Death Brand
 	self:CDBar(185590, 45) -- Desecrate, Timers Min: 38.9/Avg: 60.0/Max: 74.6 (avg 45s on later pulls)
+
+	currentTorment = 0
+	maxTorment = 0
 end
 
 --------------------------------------------------------------------------------
@@ -117,7 +123,6 @@ do
 			list[i] = self:ColorName(target)
 		end
 		self:TargetMessage(184964, list, "Attention", "Alarm")
-		isOnMe = nil
 	end
 
 	function mod:ShackledTorment(args)
@@ -126,6 +131,9 @@ do
 		end
 
 		list[#list+1] = args.destName
+		currentTorment = currentTorment + 1
+		maxTorment = currentTorment > maxTorment and currentTorment or maxTorment
+
 		if #list == 1 then
 			self:CDBar(args.spellId, 32) -- Min: 31.8/Avg: 34.5/Max: 43.8
 			self:ScheduleTimer(tormentSay, 0.3, self, args.spellName)
@@ -135,6 +143,12 @@ do
 	function mod:ShackledTormentRemoved(args)
 		if self:GetOption("custom_off_torment_marker") then
 			SetRaidTarget(args.destName, 0)
+		end
+		currentTorment = currentTorment - 1
+		self:Message(args.spellId, "Neutral", isOnMe and "Info", L.torment:format(maxTorment-currentTorment, maxTorment))
+		maxTorment = currentTorment > 0 and maxTorment or 0
+		if self:Me(args.destGUID) then
+			isOnMe = nil
 		end
 	end
 end
@@ -170,8 +184,8 @@ end
 
 function mod:ShadowfelBurst(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
-	self:Bar(args.spellId, 2)
-	self:ScheduleTimer("CDBar", 2, args.spellId, 51) -- Min: 52.8/Avg: 59.5/Max: 72
+	self:Bar(args.spellId, 2, CL.cast:format(args.spellId))
+	self:ScheduleTimer("Bar", 2, args.spellId, 58.8)
 end
 
 do
@@ -235,7 +249,7 @@ function mod:FocusedChaosRemoved(args)
 end
 
 function mod:AllureOfFlames(args)
-	self:Message(args.spellId, "Urgent")
+	self:Message(args.spellId, "Urgent", "Alert")
 	self:CDBar(args.spellId, 48) -- Min: 47.5/Avg: 49.8/Max: 54.1
 end
 
