@@ -1108,13 +1108,18 @@ do
 
 		if type(player) == "table" then
 			local list = table.concat(player, ", ")
+			local meOnly = checkFlag(self, key, C.ME_ONLY)
 			if not list:find(pName, nil, true) then
-				if not checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then wipe(player) return end
+				if not checkFlag(self, key, C.MESSAGE) or meOnly then wipe(player) return end
 				if not alwaysPlaySound then sound = nil end
 			else
-				if not checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then wipe(player) return end
+				if not checkFlag(self, key, C.MESSAGE) and not meOnly then wipe(player) return end
 			end
-			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
+			if meOnly then
+				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
+			else
+				self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
+			end
 			if sound then
 				if hasVoice and checkFlag(self, key, C.VOICE) then
 					self:SendMessage("BigWigs_Voice", self, key, sound)
