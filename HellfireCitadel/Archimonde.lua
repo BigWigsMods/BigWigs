@@ -81,7 +81,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "AllureOfFlames", 183254)
 	self:Log("SPELL_CAST_START", "Desecrate", 185590)
 	self:Log("SPELL_CAST_SUCCESS", "RainOfChaos", 182225)
-	self:Log("SPELL_CAST_SUCCESS", "DemonicFeedback", 187180)
+	self:Log("SPELL_CAST_START", "DemonicFeedback", 187180)
 	self:Log("SPELL_AURA_APPLIED", "NetherBanishApplied", 186952) -- for Twisting Nether tracking
 	self:Log("SPELL_AURA_REMOVED", "NetherBanishRemoved", 186952) -- for Twisting Nether tracking
 	self:Log("SPELL_SUMMON", "Doomfire", 182826)
@@ -322,6 +322,6 @@ function mod:VoidStarFixateRemoved(args)
 end
 
 function mod:DemonicFeedback(args)
-	self:Message(args.spellId, "Attention", "Warning")
+	self:Message(args.spellId, "Attention", "Warning", CL.casting:format(args.spellName))
 	self:CDBar(args.spellId, 37)
 end
