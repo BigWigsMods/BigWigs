@@ -83,7 +83,7 @@ end
 
 function mod:ShadowEnergy(args)
 	self:SendMessage("BigWigs_StopBars", self)
-	shadowCount = self:Normal() and 2 or 4
+	shadowCount = self:Normal() and 2 or self:Heroic() and 3 or 4
 	phase = 3
 	tankDebuffCount = 1
 
@@ -98,7 +98,7 @@ end
 
 function mod:ExplosiveEnergy(args)
 	self:SendMessage("BigWigs_StopBars", self)
-	explosiveCount = self:Normal() and 2 or 4
+	explosiveCount = self:Normal() and 2 or self:Heroic() and 3 or 4
 	phase = 1
 	tankDebuffCount = 1
 
@@ -113,7 +113,7 @@ end
 
 function mod:FoulEnergy(args)
 	self:SendMessage("BigWigs_StopBars", self)
-	foulCount = self:Normal() and 2 or 4
+	foulCount = self:Normal() and 2 or self:Heroic() and 3 or 4
 	phase = 2
 	tankDebuffCount = 1
 
