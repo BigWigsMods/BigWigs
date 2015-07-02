@@ -85,6 +85,7 @@ function mod:OnEngage()
 	artilleryCount = 1
 	blitzCount = 1
 	poundingCount = 1
+	firebombCount = 1
 	self:Berserk(600)
 	--self:Bar(182280, 10.3) -- Artillery APPLICATION
 	self:Bar(185282, 13.3, CL.count:format(self:SpellName(185282), barrageCount)) -- Barrage
