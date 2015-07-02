@@ -83,22 +83,22 @@ end
 
 function mod:ShadowEnergy(args)
 	self:SendMessage("BigWigs_StopBars", self)
-	shadowCount = 4
+	shadowCount = self:Normal() and 2 or 4
 	phase = 3
 	tankDebuffCount = 1
 
 	self:Message("stages", "Neutral", "Info", args.spellName, false)
 	self:Bar(181292, 16 * enrageMod, 181293) -- Empowered Fel Outpouring
 	self:Bar(181305, 38 * enrageMod) -- Swat
-	self:CDBar(180244, 46 * enrageMod) -- Pound
+	self:CDBar(180244, 45 * enrageMod) -- Pound
 	self:Bar(181296, 63 * enrageMod, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
 	self:Bar(181299, 85 * enrageMod, foulCount > 0 and 181300)-- Grasping Hands / Dragging Hands
-	self:CDBar("stages", 133 * enrageMod, 180068) -- Leap
+	self:CDBar("stages", 145 * enrageMod, 180068) -- Leap
 end
 
 function mod:ExplosiveEnergy(args)
 	self:SendMessage("BigWigs_StopBars", self)
-	explosiveCount = 4
+	explosiveCount = self:Normal() and 2 or 4
 	phase = 1
 	tankDebuffCount = 1
 
@@ -113,16 +113,16 @@ end
 
 function mod:FoulEnergy(args)
 	self:SendMessage("BigWigs_StopBars", self)
-	foulCount = 4
+	foulCount = self:Normal() and 2 or 4
 	phase = 2
 	tankDebuffCount = 1
 
 	self:Message("stages", "Neutral", "Info", args.spellName, false)
-	self:Bar(181299, 13 * enrageMod, 181300) -- Dragging Hands
+	self:Bar(181299, 15 * enrageMod, 181300) -- Dragging Hands
 	self:Bar(181307, 25 * enrageMod) -- Foul Crush
 	self:CDBar(180244, 33 * enrageMod) -- Pound
-	self:Bar(181292, 46 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
-	self:Bar(181296, 69 * enrageMod, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
+	self:Bar(181292, 54 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
+	self:Bar(181296, 83 * enrageMod, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
 	self:CDBar("stages", 133 * enrageMod, 180068) -- Leap
 end
 
@@ -197,7 +197,7 @@ function mod:Pound(args)
 	isPounding = true
 	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName, poundCount))
 	poundCount = poundCount + 1
-	self:CDBar(args.spellId, enrageMod == 1 and 62 or 42, CL.count:format(args.spellName, poundCount)) -- success->start = 57.97 / 37.97 enraged + 4 for cast = our times
+	self:CDBar(args.spellId, phase == 3 and (50 * enrageMod) or (62 * enrageMod), CL.count:format(args.spellName, poundCount)) -- start->start = 50 / 42 enraged for shadow, 62 / 52 enraged for other
 	self:OpenProximity(args.spellId, 5) -- 4 + 1 safety
 end
 
@@ -207,7 +207,7 @@ function mod:PoundOver(args)
 end
 
 function mod:Enrage(args)
-	enrageMod = 0.84
+	enrageMod = self:Mythic() and 0.62 or 0.84 -- 0.62 is not 100% accurate - if it's too inaccurate, we have to do separate mythic times
 	self:Message(args.spellId, "Important", "Alarm")
 end
 
