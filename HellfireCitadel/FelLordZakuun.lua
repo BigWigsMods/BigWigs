@@ -13,6 +13,7 @@ mod.engageId = 1777
 --
 
 local enraged = nil
+local phaseEnd = 0
 local cleaveCount = 1
 
 --------------------------------------------------------------------------------
@@ -73,6 +74,7 @@ end
 
 function mod:OnEngage()
 	enraged = nil
+	phaseEnd = GetTime() + 87 -- used to prevent starting new bars the phase change would stop
 	cleaveCount = 1
 	self:Bar(179406, 25.5, CL.count:format(self:SpellName(179406), cleaveCount)) -- Soul Cleave
 	self:Bar(189009, 36.5) -- Cavitation
@@ -88,7 +90,9 @@ end
 function mod:SoulCleave(args)
 	self:Message(args.spellId, "Attention", nil, CL.casting:format(CL.count(args.spellName, cleaveCount))) -- 3s cast
 	cleaveCount = cleaveCount + 1
-	self:Bar(args.spellId, 40, CL.count(args.spellName, cleaveCount))
+	if not phaseEnd or phaseEnd-GetTime() > 40 then
+		self:Bar(args.spellId, 40, CL.count(args.spellName, cleaveCount))
+	end
 end
 
 function mod:DisarmedApplied(args) -- Phase 2
@@ -96,6 +100,7 @@ function mod:DisarmedApplied(args) -- Phase 2
 	self:StopBar(189009) -- Cavitation
 	self:StopBar(179583) -- Rumbling Fissures
 	self:StopBar(179711) -- Befouled
+	phaseEnd = GetTime() + 34
 	self:Message("stages", "Neutral", "Long", 179667, false) -- Disarmed
 	self:CDBar("stages", 34, 179670) -- Armed (Phase 1)
 	self:Bar(181508, 9) -- Seed of Destruction
@@ -107,6 +112,7 @@ function mod:DisarmedRemoved(args) -- Phase 1
 	self:StopBar(179670) -- Armed
 	self:StopBar(181508) -- Seed of Destruction
 	cleaveCount = 1
+	phaseEnd = GetTime() + 85
 	self:Message("stages", "Neutral", "Long", CL.over:format(args.spellName), false) -- Disarmed Over!
 	self:Bar("stages", 85, 179667) -- Disarmed (Phase 2)
 	self:Bar(179583, 4) -- Rumbling Fissures
@@ -117,7 +123,9 @@ end
 
 function mod:Cavitation(args)
 	self:Message(args.spellId, "Urgent", "Alarm", args.spellName)
-	self:Bar(args.spellId, 40)
+	if not phaseEnd or phaseEnd-GetTime() > 40 then
+		self:Bar(args.spellId, 40)
+	end
 end
 
 do
@@ -127,7 +135,9 @@ do
 			list[#list+1] = args.destName
 			if #list == 1 then
 				self:ScheduleTimer("TargetMessage", 0.2, 179711, list, "Attention", "Alert")
-				self:CDBar(179711, 40)
+				if not phaseEnd or phaseEnd-GetTime() > 40 then
+					self:CDBar(179711, 40)
+				end
 			end
 			if self:Me(args.destGUID) then
 				self:Say(179711)
@@ -195,7 +205,11 @@ do
 
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:CDBar(181508, enraged and 40 or 14.5)
+			if enraged then
+				self:CDBar(181508, 40)
+			elseif phaseEnd-GetTime() > 14.5 then
+				self:CDBar(181508, 14.5)
+			end
 			self:Bar(181508, 5, 84474) -- 84474 = "Explosion"
 			self:ScheduleTimer(seedSay, 0.3, self, args.spellName)
 		end
@@ -210,8 +224,9 @@ end
 
 function mod:Enrage(args)
 	enraged = true
+	phaseEnd = nil
 	self:StopBar(179667) -- Disarmed
-	self:StopBar(CL.count(self:SpellName(179406), cleaveCount))
+	self:StopBar(CL.count(self:SpellName(179406), cleaveCount)) -- Soul Cleave
 	self:Message("stages", "Important", "Long", args.spellId) -- Enrage (Phase 3)
 	self:Bar(179583, 5) -- Rumbling Fissures
 	self:Bar(179711, 17) -- Befouled
