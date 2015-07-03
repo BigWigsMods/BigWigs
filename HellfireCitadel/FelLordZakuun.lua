@@ -12,7 +12,8 @@ mod.engageId = 1777
 -- Locals
 --
 
-local phase = 1
+local enraged = nil
+local cleaveCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -34,25 +35,28 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{179711, "PROXIMITY", "SAY"}, -- Befouled
-		179671, -- Heavily Armed
-		179407, -- Disembodied
+		--[[ Armed ]]--
 		179583, -- Rumbling Fissures
-		181653, -- Fel Crystal
+		179406, -- Soul Cleave
+		179407, -- Disembodied
+		189009, -- Cavitation
+		{179711, "PROXIMITY", "SAY"}, -- Befouled
+		--[[ Disarmed ]]--
 		{181508, "SAY", "FLASH"}, -- Seed of Destruction
 		"custom_off_seed_marker",
-		179681, -- Enrage
-		179406, -- Soul Cleave
-		189009, -- Cavitation
-		179667, -- Disarmed
+		--[[ General ]]--
+		-11104, -- Fel Crystal (181653's description is blank for some reason)
+		"stages",
+	}, {
+		[179583] = -11095, --("%s (%s)"):format(mod:SpellName(-11095), CL.phase:format(1)), -- Armed (Phase 1)
+		[181508] = -11840, --("%s (%s)"):format(mod:SpellName(-11840), CL.phase:format(2)), -- Disarmed (Phase 2)
+		[-11104] = "general"
 	}
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "Foul", 179709) -- Applies Befouled on targets
 	self:Log("SPELL_AURA_APPLIED", "Befouled", 189030, 189031, 189032) -- 189030 = red, 31 = yellow, 32 = green
 	self:Log("SPELL_AURA_REMOVED", "BefouledRemovedCheck", 189030, 189031, 189032)
-	self:Log("SPELL_AURA_APPLIED", "HeavilyArmed", 179671)
 	self:Log("SPELL_AURA_APPLIED", "Disembodied", 179407)
 	self:Log("SPELL_CAST_SUCCESS", "RumblingFissures", 179583)
 	self:Log("SPELL_AURA_APPLIED", "SeedOfDestruction", 181508, 181515)
@@ -61,55 +65,59 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Cavitation", 189009)
 	self:Log("SPELL_AURA_APPLIED", "DisarmedApplied", 179667) -- phase 2 trigger, could also use Throw Axe _success, but throw axe doesn't have cleu event for phase ending?
 	self:Log("SPELL_AURA_REMOVED", "DisarmedRemoved", 179667) -- phase 2 untrigger
-	self:Log("SPELL_CAST_SUCCESS", "SoulCleave", 179406)
+	self:Log("SPELL_CAST_START", "SoulCleave", 179406)
 	self:Log("SPELL_AURA_APPLIED", "FelCrystalDamage", 181653)
 	self:Log("SPELL_PERIODIC_DAMAGE", "FelCrystalDamage", 181653)
 	self:Log("SPELL_PERIODIC_MISSED", "FelCrystalDamage", 181653)
 end
 
 function mod:OnEngage()
-	if self:Mythic() or self:Tank() then
-		self:Bar(179406, 28.5) -- Soul Cleave
-	end
+	enraged = nil
+	cleaveCount = 1
+	self:Bar(179406, 25.5, CL.count:format(self:SpellName(179406), cleaveCount)) -- Soul Cleave
 	self:Bar(189009, 36.5) -- Cavitation
 	self:Bar(179583, 7) -- Rumbling Fissures
-	self:Bar(179711, 16, 179709) -- Foul
-	self:Bar(179667, 87) -- P2/Disarmed
+	self:Bar(179711, 16) -- Befouled
+	self:Bar("stages", 87, 179667) -- Disarmed (Phase 2)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
 function mod:SoulCleave(args)
-	if self:Mythic() or self:Tank() then
-		self:Bar(args.spellId, 40)
-	end
+	self:Message(args.spellId, "Attention", nil, CL.casting:format(CL.count(args.spellName, cleaveCount))) -- 3s cast
+	cleaveCount = cleaveCount + 1
+	self:Bar(args.spellId, 40, CL.count(args.spellName, cleaveCount))
 end
 
-function mod:DisarmedApplied(args)
-	self:Message(args.spellId, "Attention", "Info")
-	self:CDBar(args.spellId, 33.5) -- approx for phase ending
+function mod:DisarmedApplied(args) -- Phase 2
+	self:StopBar(CL.count(self:SpellName(179406), cleaveCount))
+	self:StopBar(189009) -- Cavitation
+	self:StopBar(179583) -- Rumbling Fissures
+	self:StopBar(179711) -- Befouled
+	self:Message("stages", "Neutral", "Long", 179667, false) -- Disarmed
+	self:CDBar("stages", 34, 179670) -- Armed (Phase 1)
 	self:Bar(181508, 9) -- Seed of Destruction
-	self:Bar(179583, self:BarTimeLeft(179583) + 40) -- Rumbling Fissures
-	if self:Mythic() or self:Tank() then
-		self:Bar(179406, self:BarTimeLeft(179406) + 30) -- Soul Cleave
-	end
-	self:Bar(189009, self:BarTimeLeft(189009) + 40) -- Cavitation
 end
 
-function mod:DisarmedRemoved(args)
-	self:Message(args.spellId, "Attention", "Info", CL.over:format(args.spellName))
+function mod:DisarmedRemoved(args) -- Phase 1
+	if enraged then return end -- Enrage starts the phase 3 timers
+
+	self:StopBar(179670) -- Armed
 	self:StopBar(181508) -- Seed of Destruction
-	self:Bar(179667, 85) -- P2/Disarmed
+	cleaveCount = 1
+	self:Message("stages", "Neutral", "Long", CL.over:format(args.spellName), false) -- Disarmed Over!
+	self:Bar("stages", 85, 179667) -- Disarmed (Phase 2)
+	self:Bar(179583, 4) -- Rumbling Fissures
+	self:Bar(179711, 16) -- Befouled
+	self:Bar(179406, 24, CL.count(self:SpellName(179406), cleaveCount)) -- Soul Cleave
+	self:Bar(189009, 33) -- Cavitation
 end
 
 function mod:Cavitation(args)
-	self:Message(args.spellId, "Attention", "Info", args.spellName)
+	self:Message(args.spellId, "Urgent", "Alarm", args.spellName)
 	self:Bar(args.spellId, 40)
-end
-
-function mod:Foul()
-	self:CDBar(179711, 40)
 end
 
 do
@@ -118,7 +126,8 @@ do
 		if args.spellId == 189030 then -- Red debuff gets applied initially
 			list[#list+1] = args.destName
 			if #list == 1 then
-				self:ScheduleTimer("TargetMessage", 0.2, 179711, list, "Attention", "Alarm")
+				self:ScheduleTimer("TargetMessage", 0.2, 179711, list, "Attention", "Alert")
+				self:CDBar(179711, 40)
 			end
 			if self:Me(args.destGUID) then
 				self:Say(179711)
@@ -144,13 +153,13 @@ do
 	end
 end
 
-function mod:HeavilyArmed(args)
-	self:Message(args.spellId, "Positive", self:Tank() and "Warning")
-end
-
 function mod:Disembodied(args)
-	self:TargetMessage(args.spellId, args.destName, "Important")
-	self:Bar(args.spellId, 15)
+	if self:Mythic() then
+		self:Bar(args.spellId, 15)
+	else
+		self:TargetMessage(args.spellId, args.destName, "Important")
+		self:TargetBar(args.spellId, 15, args.destName)
+	end
 end
 
 function mod:RumblingFissures(args)
@@ -186,7 +195,7 @@ do
 
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:CDBar(181508, 14.5)
+			self:CDBar(181508, enraged and 40 or 14.5)
 			self:Bar(181508, 5, 84474) -- 84474 = "Explosion"
 			self:ScheduleTimer(seedSay, 0.3, self, args.spellName)
 		end
@@ -200,7 +209,14 @@ do
 end
 
 function mod:Enrage(args)
-	self:Message(args.spellId, "Important", "Long")
+	enraged = true
+	self:StopBar(179667) -- Disarmed
+	self:StopBar(CL.count(self:SpellName(179406), cleaveCount))
+	self:Message("stages", "Important", "Long", args.spellId) -- Enrage (Phase 3)
+	self:Bar(179583, 5) -- Rumbling Fissures
+	self:Bar(179711, 17) -- Befouled
+	self:Bar(181508, 27) -- Seed of Destruction
+	self:Bar(189009, 36.5) -- Cavitation
 end
 
 do
@@ -209,7 +225,7 @@ do
 		local t = GetTime()
 		if t-prev > 1.5 and self:Me(args.destGUID) then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+			self:Message(-11104, "Personal", "Alarm", CL.you:format(args.spellName))
 		end
 	end
 end
