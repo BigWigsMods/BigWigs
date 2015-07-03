@@ -42,10 +42,10 @@ function mod:GetOptions()
 		--[[ Hulking Terror ]]--
 		183917, -- Rending Howl
 		180163, -- Savage Strikes
-		--[[ Hellblaze Imp ]]--
-		180618, -- Fel Blaze
-		--[[ Hellblaze Mistress ]]--
-		180033, -- Cinder Breath
+		--[[ Visions of Death ]]--
+		180618, -- Fel Blaze (Hellblaze Imp)
+		180033, -- Cinder Breath (Hellblaze Mistress)
+		180570, -- Fel Flames (Hellblaze Fiend)
 		--[[ Add Spawn Warnings ]]--
 		-11269, -- Hulking Terror
 		-11266, -- Salivating Bloodthirster
@@ -56,9 +56,8 @@ function mod:GetOptions()
 	}, {
 		[188929] = self.displayName, -- Kilrogg Deadeye
 		[183917] = -11269, -- Hulking Terror
-		[180618] = -11274, -- Hellblaze Imp
-		[180033] = -11278, -- Hellblaze Mistress
-		[-11266] = L.add_warnings,
+		[180618] = 182428, -- Visions of Death (adds)
+		[-11269] = L.add_warnings,
 		["altpower"] = "general",
 	}
 end
