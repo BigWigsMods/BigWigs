@@ -46,12 +46,12 @@ function mod:GetOptions()
 		{181508, "SAY", "FLASH"}, -- Seed of Destruction
 		"custom_off_seed_marker",
 		--[[ General ]]--
-		-11104, -- Fel Crystal (181653's description is blank for some reason)
+		179620, -- Fel Crystal (181653's description is blank at the moment, wowhead is wrong)
 		"stages",
 	}, {
 		[179583] = -11095, --("%s (%s)"):format(mod:SpellName(-11095), CL.phase:format(1)), -- Armed (Phase 1)
 		[181508] = -11840, --("%s (%s)"):format(mod:SpellName(-11840), CL.phase:format(2)), -- Disarmed (Phase 2)
-		[-11104] = "general"
+		[179620] = "general"
 	}
 end
 
@@ -242,7 +242,7 @@ do
 		local t = GetTime()
 		if t-prev > 1.5 and self:Me(args.destGUID) then
 			prev = t
-			self:Message(-11104, "Personal", "Alarm", CL.you:format(args.spellName))
+			self:Message(179620, "Personal", "Alarm", CL.you:format(args.spellName))
 		end
 	end
 end
