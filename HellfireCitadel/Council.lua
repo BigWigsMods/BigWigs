@@ -87,7 +87,7 @@ function mod:OnEngage()
 	self:Bar(184681, 75, CL.count:format(self:SpellName(184681), horrorCount)) -- Wailing Horror
 	self:Bar(184358, 30) -- Gurtogg Bloodboil : Fel Rage
 	self:CDBar(184449, 6.3) -- Dia Darkwhisper : Mark of the Necromancer, 6.3-7.5
-	self:CDBar(184476, 54.6) -- Dia Darkwhisper : Reap
+	self:CDBar(184476, 67) -- Dia Darkwhisper : Reap, 66-69
 	self:CDBar(183885, 153.3) -- Blademaster Jubei'thos : Mirror Images
 	self:CDBar(184366, 225) -- Gurtogg Bloodboil : Demolishing Leap, 225-228
 end
@@ -121,7 +121,7 @@ end
 function mod:Reap(args)
 	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
-	self:CDBar(args.spellId, 60) -- 60-65.5
+	self:CDBar(args.spellId, 65) -- 65-72 pretty inconsistent
 end
 
 function mod:FelRage(args)
