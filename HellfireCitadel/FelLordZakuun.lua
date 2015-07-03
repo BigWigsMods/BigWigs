@@ -90,7 +90,7 @@ end
 function mod:SoulCleave(args)
 	self:Message(args.spellId, "Attention", nil, CL.casting:format(CL.count(args.spellName, cleaveCount))) -- 3s cast
 	cleaveCount = cleaveCount + 1
-	if not phaseEnd or phaseEnd-GetTime() > 40 then
+	if phaseEnd-GetTime() > 40 then
 		self:Bar(args.spellId, 40, CL.count(args.spellName, cleaveCount))
 	end
 end
@@ -123,7 +123,7 @@ end
 
 function mod:Cavitation(args)
 	self:Message(args.spellId, "Urgent", "Alarm", args.spellName)
-	if not phaseEnd or phaseEnd-GetTime() > 40 then
+	if phaseEnd-GetTime() > 40 then
 		self:Bar(args.spellId, 40)
 	end
 end
@@ -135,7 +135,7 @@ do
 			list[#list+1] = args.destName
 			if #list == 1 then
 				self:ScheduleTimer("TargetMessage", 0.2, 179711, list, "Attention", "Alert")
-				if not phaseEnd or phaseEnd-GetTime() > 40 then
+				if phaseEnd-GetTime() > 40 then
 					self:CDBar(179711, 40)
 				end
 			end
@@ -164,10 +164,12 @@ do
 end
 
 function mod:Disembodied(args)
+	if self:Tank(args.destName) then
+		self:TargetMessage(args.spellId, args.destName, "Important", self:Tank() and "Warning")
+	end
 	if self:Mythic() then
 		self:Bar(args.spellId, 15)
 	else
-		self:TargetMessage(args.spellId, args.destName, "Important")
 		self:TargetBar(args.spellId, 15, args.destName)
 	end
 end
@@ -224,7 +226,7 @@ end
 
 function mod:Enrage(args)
 	enraged = true
-	phaseEnd = nil
+	phaseEnd = math.huge
 	self:StopBar(179667) -- Disarmed
 	self:StopBar(CL.count(self:SpellName(179406), cleaveCount)) -- Soul Cleave
 	self:Message("stages", "Important", "Long", args.spellId) -- Enrage (Phase 3)
