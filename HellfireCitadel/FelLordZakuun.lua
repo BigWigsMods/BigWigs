@@ -88,15 +88,15 @@ end
 --
 
 function mod:SoulCleave(args)
-	self:Message(args.spellId, "Attention", nil, CL.casting:format(CL.count(args.spellName, cleaveCount))) -- 3s cast
+	self:Message(args.spellId, "Attention", nil, CL.casting:format(CL.count:format(args.spellName, cleaveCount))) -- 3s cast
 	cleaveCount = cleaveCount + 1
 	if phaseEnd-GetTime() > 40 then
-		self:Bar(args.spellId, 40, CL.count(args.spellName, cleaveCount))
+		self:Bar(args.spellId, 40, CL.count:format(args.spellName, cleaveCount))
 	end
 end
 
 function mod:DisarmedApplied(args) -- Phase 2
-	self:StopBar(CL.count(self:SpellName(179406), cleaveCount))
+	self:StopBar(CL.count:format(self:SpellName(179406), cleaveCount))
 	self:StopBar(189009) -- Cavitation
 	self:StopBar(179583) -- Rumbling Fissures
 	self:StopBar(179711) -- Befouled
@@ -117,7 +117,7 @@ function mod:DisarmedRemoved(args) -- Phase 1
 	self:Bar("stages", 85, 179667) -- Disarmed (Phase 2)
 	self:Bar(179583, 4) -- Rumbling Fissures
 	self:Bar(179711, 16) -- Befouled
-	self:Bar(179406, 24, CL.count(self:SpellName(179406), cleaveCount)) -- Soul Cleave
+	self:Bar(179406, 24, CL.count:format(self:SpellName(179406), cleaveCount)) -- Soul Cleave
 	self:Bar(189009, 33) -- Cavitation
 end
 
@@ -228,7 +228,7 @@ function mod:Enrage(args)
 	enraged = true
 	phaseEnd = math.huge
 	self:StopBar(179667) -- Disarmed
-	self:StopBar(CL.count(self:SpellName(179406), cleaveCount)) -- Soul Cleave
+	self:StopBar(CL.count:format(self:SpellName(179406), cleaveCount)) -- Soul Cleave
 	self:Message("stages", "Important", "Long", args.spellId) -- Enrage (Phase 3)
 	self:Bar(179583, 5) -- Rumbling Fissures
 	self:Bar(179711, 17) -- Befouled
