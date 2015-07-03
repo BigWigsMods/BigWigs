@@ -82,7 +82,7 @@ end
 --
 function mod:SoulCleave(args)
 	if self:Mythic() or self:Tank() then
-		self:Bar(args.spellId, 40.2)
+		self:Bar(args.spellId, 40)
 	end
 end
 
@@ -150,7 +150,7 @@ end
 
 function mod:Disembodied(args)
 	self:TargetMessage(args.spellId, args.destName, "Important")
-	self:Bar(args.spellId, 40)
+	self:Bar(args.spellId, 15)
 end
 
 function mod:RumblingFissures(args)
