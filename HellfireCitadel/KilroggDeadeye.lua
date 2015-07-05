@@ -129,7 +129,7 @@ do
 
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Important", "Alarm")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important", "Alarm")
 			self:CDBar(args.spellId, 25.5) -- 25.5-32.9
 		end
 		if self:Me(args.destGUID) then

@@ -271,7 +271,7 @@ do
 	function mod:HowlingAxe(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention", "Alarm")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alarm")
 		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
@@ -324,7 +324,7 @@ do
 	function mod:ConductedShockPulse(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention")
 		end
 	end
 end

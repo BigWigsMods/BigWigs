@@ -145,7 +145,7 @@ do
 	function mod:PhantasmalWindsApplied(args)
 		windTargets[#windTargets + 1] = args.destName
 		if #windTargets == 1 then
-			self:ScheduleTimer(warn, 0.2, self, args.spellName)
+			self:ScheduleTimer(warn, 0.3, self, args.spellName)
 			self:CDBar(181956, 36)
 		end
 		if self:Me(args.destGUID) then
@@ -245,7 +245,7 @@ do
 	function mod:DarkBindings(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, 185510, list, "Attention")
+			self:ScheduleTimer("TargetMessage", 0.3, 185510, list, "Attention")
 		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)

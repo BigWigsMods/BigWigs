@@ -132,7 +132,7 @@ do
 		if isHostile then
 			list[#list+1] = args.destName
 			if #list == 1 then
-				self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention", "Alarm")
+				self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alarm")
 			end
 		end
 	end
@@ -226,7 +226,7 @@ do
 	function mod:GiftOfTheManari(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Attention", "Alarm")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alarm")
 		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
