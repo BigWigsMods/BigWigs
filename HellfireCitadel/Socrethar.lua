@@ -22,6 +22,18 @@ local addFormat = CL.add.." #%d"
 local ghostGUIDS = {}
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.dominator = -11456
+	L.dominator_desc = "Warnings for when the Sargerei Dominator spawns."
+	L.dominator_icon = "achievement_boss_kiljaedan"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -42,8 +54,7 @@ function mod:GetOptions()
 		183331, -- Exert Dominance
 		183329, -- Apocalypse
 		-- Sargerei Dominator
-		-11456, -- Sargerei Dominator
-		184053, -- Fel Barrier
+		"dominator", -- Sargerei Dominator
 		{184124, "SAY", "PROXIMITY", "FLASH"}, -- Gift of the Man'ari
 		-- Sargerei Shadowcaller
 		182392, -- Shadow Bolt Volley
@@ -183,20 +194,20 @@ function mod:EjectSoul() -- Phase 2 Start
 	self:StopBar(addFormat:format(addCount)) -- Voracious Soulstalker
 	-- Start P2 bars
 	self:Bar("stages", 7, 180258, "achievement_boss_hellfire_socrethar") -- Construct is Good
-	self:Bar(-11456, 24, nil, "achievement_boss_kiljaedan") -- Sargerei Dominator
+	self:Bar("dominator", 24, L.dominator, L.dominator_icon) -- Sargerei Dominator
 	self:CDBar(-11462, 30, nil, "achievement_halloween_ghost_01") -- Haunting Soul
 	self:CDBar(183329, 52) -- Apocalypse
 	self:Message("stages", "Neutral", "Long", CL.phase:format(2), false)
 end
 
-function mod:FelBarrier(args)
+function mod:FelBarrier()
 	dominatorCount = dominatorCount + 1
-	self:CDBar(-11456, self:Mythic() and 130 or (dominatorCount % 2 == 0 and 70 or 60), nil, "achievement_boss_kiljaedan") -- Sargerei Dominator
+	self:CDBar("dominator", self:Mythic() and 130 or (dominatorCount % 2 == 0 and 70 or 60), L.dominator, L.dominator_icon) -- Sargerei Dominator
+	self:Message("dominator", "Neutral", "Warning", L.dominator, L.dominator_icon)
 	self:CDBar(184124, 5) -- Gift of the Man'ari
-	self:TargetMessage(args.spellId, args.destName, "Positive")
 end
 
-function mod:FelBarrierRemoved(args)
+function mod:FelBarrierRemoved()
 	self:StopBar(184124) -- Gift of the Man'ari
 end
 
@@ -253,7 +264,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 180257 then -- Construct is Evil (back to phase 1)
 		isHostile = true
 		--Stop P2 bars
-		self:StopBar(-11456) -- Sargerei Dominator
+		self:StopBar(L.dominator) -- Sargerei Dominator
 		self:StopBar(-11462) -- Haunting Soul
 		self:StopBar(183329) -- Apocalypse
 		--Start P1 bars
