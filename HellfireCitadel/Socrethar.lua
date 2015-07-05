@@ -201,13 +201,13 @@ end
 
 function mod:FelBarrier(args)
 	dominatorCount = dominatorCount + 1
-	self:CDBar(-11456, (self:Mythic() and 130) or (dominatorCount % 2 == 0 and 70) or 60, nil, "achievement_boss_kiljaedan") -- Sargerei Dominator
-	--self:CDBar(184124, 11) -- Gift Of The Manari XXX goes out when they spawn/shield boss, doesn't seem like they cast it again
+	self:CDBar(-11456, self:Mythic() and 130 or (dominatorCount % 2 == 0 and 70 or 60), nil, "achievement_boss_kiljaedan") -- Sargerei Dominator
+	self:CDBar(184124, 5) -- Gift of the Man'ari
 	self:TargetMessage(args.spellId, args.destName, "Positive")
 end
 
 function mod:FelBarrierRemoved(args)
-	--self:StopBar(184124)
+	self:StopBar(184124) -- Gift of the Man'ari
 end
 
 function mod:ExertDominance(args)
