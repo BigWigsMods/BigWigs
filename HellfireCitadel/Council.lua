@@ -59,7 +59,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "MarkOfTheNecromancer", 184449)
 	self:Log("SPELL_CAST_START", "Reap", 184476)
 	self:Log("SPELL_CAST_START", "NightmareVisage", 184657)
-	--self:Log("SPELL_CAST_SUCCESS", "WailingHorror", 184681)
 
 	self:Log("SPELL_AURA_APPLIED", "ReapDamage", 184652)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ReapDamage", 184652)
@@ -74,7 +73,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DemolishingLeapStart", 184366)
 	self:Log("SPELL_AURA_REMOVED", "DemolishingLeapStop", 184365)
 	-- Blademaster Jubei'thos
-	--self:Log("SPELL_CAST_SUCCESS", "FelBlade", 183210) -- XXX not sure if useful
 	self:Log("SPELL_CAST_SUCCESS", "MirrorImages", 183885)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -108,11 +106,6 @@ function mod:DemolishingLeapStop(args)
 	leapCount = 0
 end
 
---function mod:FelBlade(args)
---	self:Message(args.spellId, "Attention")
---	self:Bar(args.spellId, 26)
---end
-
 function mod:MarkOfTheNecromancer(args)
 	self:Message(args.spellId, "Attention")
 	self:CDBar(args.spellId, 60) -- 60-63
@@ -141,10 +134,6 @@ function mod:NightmareVisage(args)
 	self:CDBar(args.spellId, 32) -- 32 - 35
 end
 
---function mod:WailingHorror(args)
---	horrorCount = horrorCount + 1
---	self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, horrorCount))
---end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg:find("184681", nil, true) then
 		self:Message(184681, "Urgent", "Alert", CL.count:format(self:SpellName(184681), horrorCount))
@@ -166,7 +155,7 @@ end
 
 function mod:BloodboilDose(args)
 	if self:Mythic() and self:Me(args.destGUID) then
-		if args.amount >= 3 then -- XXX change 3 to something else?
+		if args.amount > 2 then -- XXX change 3 to something else?
 			self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, args.amount))
 		end
 	end
