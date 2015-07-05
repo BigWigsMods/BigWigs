@@ -132,6 +132,9 @@ do
 		end
 		if self.db.profile.blockGarrison then
 			KillEvent(AlertFrame, "GARRISON_MISSION_FINISHED")
+			KillEvent(AlertFrame, "GARRISON_BUILDING_ACTIVATABLE")
+			KillEvent(AlertFrame, "GARRISON_FOLLOWER_ADDED")
+			KillEvent(AlertFrame, "GARRISON_RANDOM_MISSION_ADDED")
 		end
 		if self.db.profile.blockGuildChallenge then
 			KillEvent(AlertFrame, "GUILD_CHALLENGE_COMPLETED")
@@ -148,6 +151,9 @@ do
 		end
 		if self.db.profile.blockGarrison then
 			RestoreEvent(AlertFrame, "GARRISON_MISSION_FINISHED")
+			RestoreEvent(AlertFrame, "GARRISON_BUILDING_ACTIVATABLE")
+			RestoreEvent(AlertFrame, "GARRISON_FOLLOWER_ADDED")
+			RestoreEvent(AlertFrame, "GARRISON_RANDOM_MISSION_ADDED")
 		end
 		if self.db.profile.blockGuildChallenge then
 			RestoreEvent(AlertFrame, "GUILD_CHALLENGE_COMPLETED")
