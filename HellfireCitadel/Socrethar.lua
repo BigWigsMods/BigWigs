@@ -194,7 +194,7 @@ end
 -- Phase 2
 
 function mod:EjectSoul() -- Phase 2 Start
-	dominatorCount = 0
+	dominatorCount, dominanceCount = 0, 0
 	-- Stop P1 bars
 	self:StopBar(180008) -- Reverberating Blow
 	self:StopBar(180221) -- Volatile Fel Orb
@@ -203,7 +203,7 @@ function mod:EjectSoul() -- Phase 2 Start
 	self:StopBar(addFormat:format(addCount)) -- Voracious Soulstalker
 	-- Start P2 bars
 	self:Bar("stages", 7, 180258, "achievement_boss_hellfire_socrethar") -- Construct is Good
-	self:Bar("portals", 140, L.portals, L.portals_icon) -- Sargerei Dominator
+	self:Bar("portals", 140, L.portals, L.portals_icon) -- Portals Move
 	self:DelayedMessage("portals", 140, "Neutral", L.portals_msg, L.portals_icon, "Info")
 	self:Bar("dominator", 24, L.dominator, L.dominator_icon) -- Sargerei Dominator
 	self:CDBar(-11462, 30, nil, "achievement_halloween_ghost_01") -- Haunting Soul
