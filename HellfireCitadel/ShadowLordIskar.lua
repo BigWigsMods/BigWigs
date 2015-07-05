@@ -151,14 +151,14 @@ do
 		if self:Me(args.destGUID) then
 			isOnMe = true
 		end
-		if self.db.profile.custom_off_wind_marker then
+		if self:GetOption("custom_off_wind_marker") then
 			SetRaidTarget(args.destName, #windTargets)
 		end
 	end
 end
 
 function mod:PhantasmalWindsRemoved(args)
-	if self.db.profile.custom_off_wind_marker then
+	if self:GetOption("custom_off_wind_marker") then
 		SetRaidTarget(args.destName, 0)
 	end
 	tDeleteItem(windTargets, args.destName)

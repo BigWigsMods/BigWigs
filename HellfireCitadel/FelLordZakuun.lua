@@ -13,7 +13,7 @@ mod.engageId = 1777
 --
 
 local enraged = nil
-local phaseEnd = 0
+local phaseEnd = math.huge
 local cleaveCount = 1
 
 --------------------------------------------------------------------------------
@@ -167,11 +167,7 @@ function mod:Disembodied(args)
 	if self:Tank(args.destName) then
 		self:TargetMessage(args.spellId, args.destName, "Important", self:Tank() and "Warning")
 	end
-	if self:Mythic() then
-		self:Bar(args.spellId, 15)
-	else
-		self:TargetBar(args.spellId, 15, args.destName)
-	end
+	self:Bar(args.spellId, 15)
 end
 
 function mod:RumblingFissures(args)
@@ -228,6 +224,7 @@ function mod:Enrage(args)
 	enraged = true
 	phaseEnd = math.huge
 	self:StopBar(179667) -- Disarmed
+	self:StopBar(179670) -- Armed
 	self:StopBar(CL.count:format(self:SpellName(179406), cleaveCount)) -- Soul Cleave
 	self:Message("stages", "Important", "Long", args.spellId) -- Enrage (Phase 3)
 	self:Bar(179583, 5) -- Rumbling Fissures
