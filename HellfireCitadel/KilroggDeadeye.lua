@@ -167,7 +167,7 @@ end
 --[[ Hulking Terror ]]--
 
 function mod:RendingHowl(args)
-	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Urgent", self:Interrupter(args.sourceGUID) and "Alert", CL.casting:format(args.spellName))
 end
 
 function mod:SavageStrikes(args)

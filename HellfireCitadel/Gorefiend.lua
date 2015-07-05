@@ -293,8 +293,8 @@ end
 
 function mod:BellowingShout(args)
 	self:CDBar(args.spellId, 13.5)
-	if UnitGUID("target") == args.sourceGUID or UnitGUID("focus") == args.sourceGUID then
-		self:Message(args.spellId, "Important", not self:Healer() and "Alert", CL.casting:format(args.spellName))
+	if self:Interrupter(args.sourceGUID) then
+		self:Message(args.spellId, "Important", "Alert", CL.casting:format(args.spellName))
 	end
 end
 
