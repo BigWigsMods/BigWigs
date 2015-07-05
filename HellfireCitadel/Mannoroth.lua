@@ -27,7 +27,7 @@ if L then
 
 	L.gaze = "Gaze (%d)"
 
-	L.custom_off_gaze_marker = "Gaze marker"
+	L.custom_off_gaze_marker = "Mannoroth's Gaze marker"
 	L.custom_off_gaze_marker_desc = "Mark the targets of Mannoroth's Gaze with {rt1}{rt2}{rt3}, requires promoted or leader."
 	L.custom_off_gaze_marker_icon = 1
 end

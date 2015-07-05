@@ -28,7 +28,7 @@ local maxTorment = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.torment = "Shackled Torment removed (%d/%d)"
+	L.torment_removed = "Shackled Torment removed (%d/%d)"
 	L.custom_off_torment_marker = "Shackled Torment marker"
 	L.custom_off_torment_marker_desc = "Mark the Shackled Torment targets with {rt1}{rt2}{rt3}, requires promoted or leader."
 	L.custom_off_torment_marker_icon = 1
@@ -145,7 +145,7 @@ do
 			SetRaidTarget(args.destName, 0)
 		end
 		currentTorment = currentTorment - 1
-		self:Message(args.spellId, "Neutral", isOnMe and "Info", L.torment:format(maxTorment-currentTorment, maxTorment))
+		self:Message(args.spellId, "Neutral", isOnMe and "Info", L.torment_removed:format(maxTorment-currentTorment, maxTorment))
 		maxTorment = currentTorment > 0 and maxTorment or 0
 		if self:Me(args.destGUID) then
 			isOnMe = nil

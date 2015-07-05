@@ -25,7 +25,7 @@ if L then
 	L.seed = "Seed (%d)"
 
 	L.custom_off_seed_marker = "Seed of Destruction marker"
-	L.custom_off_seed_marker_desc = "Mark Seed of Destruction targets with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
+	L.custom_off_seed_marker_desc = "Mark the Seed of Destruction targets with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
 	L.custom_off_seed_marker_icon = 1
 end
 L = mod:GetLocale()
