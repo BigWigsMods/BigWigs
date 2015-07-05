@@ -19,6 +19,11 @@ if L then
 --@localization(locale="zhCN", namespace="HellfireCitadel/ShadowLordIskar", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
+L = BigWigs:NewBossLocale("Socrethar the Eternal", "zhCN")
+if L then
+--@localization(locale="zhCN", namespace="HellfireCitadel/Socrethar", format="lua_additive_table", handle-unlocalized="ignore")@
+end
+
 L = BigWigs:NewBossLocale("Fel Lord Zakuun", "zhCN")
 if L then
 --@localization(locale="zhCN", namespace="HellfireCitadel/FelLordZakuun", format="lua_additive_table", handle-unlocalized="ignore")@
