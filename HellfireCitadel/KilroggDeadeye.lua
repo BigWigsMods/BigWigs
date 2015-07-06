@@ -13,7 +13,7 @@ mod.respawnTime = 14
 -- Locals
 --
 
-local deathThroesCount = 0
+local deathThroesCount = 1
 local visionCount = 1
 local mobCollector = {}
 
@@ -78,7 +78,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	deathThroesCount = 0
+	deathThroesCount = 1
 	visionCount = 1
 	wipe(mobCollector)
 	self:CDBar(182428, 60, CL.count:format(self:SpellName(182428), visionCount)) -- Vision of Death
@@ -148,9 +148,10 @@ function mod:VisionOfDeath(args)
 end
 
 function mod:DeathThroes(args)
-	deathThroesCount = deathThroesCount + 1
 	self:Message(args.spellId, "Urgent", "Long", CL.count:format(args.spellName, deathThroesCount))
-	self:Bar(args.spellId, 9, CL.count:format(args.spellName, deathThroesCount))
+	self:Bar(args.spellId, 7, CL.cast:format(CL.count:format(args.spellName, deathThroesCount))) -- 1s Cast + 6s Channel
+	deathThroesCount = deathThroesCount + 1
+	self:CDBar(args.spellId, 40, CL.count:format(args.spellName, deathThroesCount))
 end
 
 function mod:ShredArmor(args)
