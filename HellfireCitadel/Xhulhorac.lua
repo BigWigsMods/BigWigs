@@ -13,6 +13,7 @@ mod.engageId = 1800
 --
 
 local phase = 1
+local blackHoleCount = 1
 local mobCollector = {}
 
 --------------------------------------------------------------------------------
@@ -71,6 +72,7 @@ end
 
 function mod:OnEngage()
 	phase = 1
+	blackHoleCount = 1
 	wipe(mobCollector)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:CDBar(186271, 8) -- Fel Strike
@@ -170,24 +172,23 @@ function mod:OverwhelmingChaos(args)
 end
 
 function mod:BlackHole(args)
-	self:Message(args.spellId, "Urgent", "Info", CL.incoming:format(args.spellName))
-	self:CDBar(args.spellId, 29)
+	blackHoleCount = blackHoleCount + 1
+	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
+	self:CDBar(args.spellId, blackHoleCount % 2 == 0 and 30 or 40) -- 30, 40, 30 is as long a p2 as i've seen
 end
 
-do
-	local adds = {
-		[94185] = -11691, -- Vanguard Akkelion
-		[94239] = -11688, -- Omnus
-	}
-	function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-		for i = 1, 5 do
-			local guid = UnitGUID("boss"..i)
-			if guid and not mobCollector[guid] then
-				mobCollector[guid] = true
-				local id = adds[self:MobId(guid)]
-				if id then
-					self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(id)), false)
-				end
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	for i = 1, 5 do
+		local guid = UnitGUID("boss"..i)
+		if guid and not mobCollector[guid] then
+			mobCollector[guid] = true
+			local mobId = self:MobId(guid)
+			if mobId == 94185 then -- Vanguard Akkelion
+				self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(-11691)), false)
+				self:CDBar(186500, 31) -- Chains of Fel 31-36
+			elseif mobId == 94239 then -- Omnus
+				self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(-11688)), false)
+				self:CDBar(186546, 18) -- Black Hole
 			end
 		end
 	end
