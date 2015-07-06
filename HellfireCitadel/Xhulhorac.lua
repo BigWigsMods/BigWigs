@@ -76,7 +76,7 @@ function mod:OnEngage()
 	wipe(mobCollector)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:CDBar(186271, 8) -- Fel Strike
-	self:CDBar(186407, 15) -- Fel Surge
+	self:CDBar(186407, 19) -- Fel Surge 19-24
 end
 
 --------------------------------------------------------------------------------
@@ -84,14 +84,14 @@ end
 --
 
 function mod:Deaths(args)
-	if args.mobId == 94185 then
+	if args.mobId == 94185 then -- Vanguard Akkelion
 		self:StopBar(186271) -- Fel Strike
 		self:StopBar(186407) -- Fel Surge
 		self:StopBar(186448) -- Felblaze Flurry
 		self:StopBar(186500) -- Chains of Fel
 		phase = 2
 		self:Message("stages", "Neutral", "Info", CL.phase:format(2), false)
-	elseif args.mobId == 94239 then
+	elseif args.mobId == 94239 then -- Omnus
 		self:StopBar(186292) -- Void Strike
 		self:StopBar(186333) -- Void Surge
 		self:StopBar(186785) -- Withering Gaze
@@ -119,7 +119,15 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alarm")
-			self:CDBar(args.spellId, 30)
+			if phase < 3 then
+				self:CDBar(args.spellId, 30)
+			else -- alternates
+				if args.spellId == 186407 then -- Fel Surge
+					self:CDBar(186333, 10) -- Void Surge
+				else -- Void Surge
+					self:CDBar(186407, 20) -- Fel Surge
+				end
+			end
 		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
@@ -157,12 +165,21 @@ end
 
 function mod:FelStrike(args)
 	self:Message(186271, "Urgent", "Warning", CL.casting:format(args.spellName))
-	self:CDBar(186271, phase == 3 and 15 or 16) -- 15.8
+	if phase < 3 then
+		self:CDBar(186271, 16) -- 15.8
+	else -- alternates
+		self:CDBar(186292, 8) -- Void Strike
+	end
 end
 
 function mod:VoidStrike(args)
 	self:Message(186292, "Urgent", "Warning", CL.casting:format(args.spellName))
-	self:CDBar(186292, phase == 3 and 15 or 17) -- 17.1/18.2
+	if phase < 3 then
+		self:CDBar(186292, 17) -- 17.1/18.2
+	else -- alternates
+		self:CDBar(186271, 7) -- Fel Strike
+	end
+
 end
 
 function mod:OverwhelmingChaos(args)
