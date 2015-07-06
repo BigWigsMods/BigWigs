@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Fel Lord Zakuun", 1026, 1391)
 if not mod then return end
 mod:RegisterEnableMob(89890, 90108) -- Fel Lord Zakuun, Fel Axe
 mod.engageId = 1777
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -15,6 +16,7 @@ mod.engageId = 1777
 local enraged = nil
 local phaseEnd = math.huge
 local cleaveCount = 1
+local tankList = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -27,6 +29,10 @@ if L then
 	L.custom_off_seed_marker = "Seed of Destruction marker"
 	L.custom_off_seed_marker_desc = "Mark the Seed of Destruction targets with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
 	L.custom_off_seed_marker_icon = 1
+
+	L.tank_proximity = "Tank Proximity"
+	L.tank_proximity_desc = "Open a 5 yard proximity showing the other tanks to help you deal with the Heavy Handed & Heavily Armed abilities."
+	L.tank_proximity_icon = 156138 -- Heavy Handed / ability_butcher_heavyhanded
 end
 L = mod:GetLocale()
 
@@ -48,6 +54,7 @@ function mod:GetOptions()
 		--[[ General ]]--
 		179620, -- Fel Crystal (181653's description is blank at the moment, wowhead is wrong)
 		"stages",
+		{"tank_proximity", "TANK", "PROXIMITY"},
 	}, {
 		[179583] = -11095, --("%s (%s)"):format(mod:SpellName(-11095), CL.phase:format(1)), -- Armed (Phase 1)
 		[181508] = -11840, --("%s (%s)"):format(mod:SpellName(-11840), CL.phase:format(2)), -- Disarmed (Phase 2)
@@ -55,7 +62,24 @@ function mod:GetOptions()
 	}
 end
 
+local function updateTanks(self)
+	local _, _, _, myMapId = UnitPosition("player")
+	for unit in self:IterateGroup() do
+		local _, _, _, tarMapId = UnitPosition(unit)
+		if tarMapId == myMapId and self:Tank(unit) then
+			local guid = UnitGUID(unit)
+			if not self:Me(guid) then
+				tankList[#tankList+1] = unit
+			end
+		end
+	end
+end
+
 function mod:OnBossEnable()
+	if IsEncounterInProgress() and self:Tank() then
+		updateTanks(self) -- Backup for disconnecting mid-combat
+	end
+
 	self:Log("SPELL_AURA_APPLIED", "Befouled", 189030, 189031, 189032) -- 189030 = red, 31 = yellow, 32 = green
 	self:Log("SPELL_AURA_REMOVED", "BefouledRemovedCheck", 189030, 189031, 189032)
 	self:Log("SPELL_AURA_APPLIED", "Disembodied", 179407)
@@ -76,11 +100,16 @@ function mod:OnEngage()
 	enraged = nil
 	phaseEnd = GetTime() + 87 -- used to prevent starting new bars the phase change would stop
 	cleaveCount = 1
+	wipe(tankList)
 	self:Bar(179406, 25.5, CL.count:format(self:SpellName(179406), cleaveCount)) -- Soul Cleave
 	self:Bar(189009, 36.5) -- Cavitation
 	self:Bar(179583, 7) -- Rumbling Fissures
 	self:Bar(179711, 16) -- Befouled
 	self:Bar("stages", 87, 179667, "ability_butcher_heavyhanded") -- Disarmed (Phase 2)
+
+	if self:Tank() then
+		updateTanks(self)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -104,6 +133,10 @@ function mod:DisarmedApplied(args) -- Phase 2
 	self:Message("stages", "Neutral", "Long", 179667, false) -- Disarmed
 	self:CDBar("stages", 34, 179670) -- Armed (Phase 1)
 	self:Bar(181508, 9) -- Seed of Destruction
+
+	if tankList[1] then
+		self:OpenProximity("tank_proximity", 5, tankList, true)
+	end
 end
 
 function mod:DisarmedRemoved(args) -- Phase 1
@@ -119,6 +152,10 @@ function mod:DisarmedRemoved(args) -- Phase 1
 	self:Bar(179711, 16) -- Befouled
 	self:Bar(179406, 24, CL.count:format(self:SpellName(179406), cleaveCount)) -- Soul Cleave
 	self:Bar(189009, 33) -- Cavitation
+
+	if tankList[1] then
+		self:CloseProximity("tank_proximity")
+	end
 end
 
 function mod:Cavitation(args)
@@ -167,7 +204,11 @@ function mod:Disembodied(args)
 	if self:Tank(args.destName) then
 		self:TargetMessage(args.spellId, args.destName, "Important", self:Tank() and "Warning")
 	end
-	self:Bar(args.spellId, 15)
+	if self:Mythic() then
+		self:Bar(args.spellId, 15) -- Multiple targets on Mythic
+	else
+		self:TargetBar(args.spellId, 15, args.destName)
+	end
 end
 
 function mod:RumblingFissures(args)
@@ -231,6 +272,10 @@ function mod:Enrage(args)
 	self:Bar(179711, 17) -- Befouled
 	self:Bar(181508, 27) -- Seed of Destruction
 	self:Bar(189009, 36.5) -- Cavitation
+
+	if tankList[1] then
+		self:OpenProximity("tank_proximity", 5, tankList, true)
+	end
 end
 
 do

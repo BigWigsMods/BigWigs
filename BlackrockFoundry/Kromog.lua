@@ -29,8 +29,8 @@ if L then
 	L.custom_off_hands_marker_icon = 8
 
 	L.prox = "Tank Proximity"
-	L.prox_desc = "Open a 15 yard proximity showing the other tanks to help you deal with the |cff66bbffFists of Stone|r ability."
-	L.prox_icon = 162349
+	L.prox_desc = "Open a 15 yard proximity showing the other tanks to help you deal with the Fists of Stone ability."
+	L.prox_icon = 162349 -- Fists of Stone / warrior_talent_icon_singlemindedfury
 
 	L.destroy_pillars = "Destroy Pillars"
 end
@@ -88,6 +88,10 @@ local function updateTanks(self)
 end
 
 function mod:OnBossEnable()
+	if IsEncounterInProgress() then
+		updateTanks(self) -- Backup for disconnecting mid-combat
+	end
+
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "WarpedArmor", 156766)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WarpedArmor", 156766)
@@ -102,10 +106,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "TremblingEarth", 173917)
 	self:Log("SPELL_CAST_START", "CallOfTheMountainStart", 158217)
 	self:Log("SPELL_CAST_SUCCESS", "CallOfTheMountainSuccess", 158217)
-
-	if IsEncounterInProgress() then
-		updateTanks(self) -- Backup for disconnecting mid-combat
-	end
 end
 
 function mod:OnEngage()
