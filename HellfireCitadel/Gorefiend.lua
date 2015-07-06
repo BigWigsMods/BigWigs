@@ -23,13 +23,13 @@ local shadowOfDeathInfo = {
 		["dps"] = INLINE_DAMAGER_ICON,
 	},
 	["heroic"] = {
-		["healer"] = 36,
-		["dps"] = 36,
+		["healer"] = 36, -- only 2 times per phase (although a 3rd would fit in)
+		["dps"] = 36, -- only 3 times per phase (although a 4th would fit in)
 	},
 	["mythic"] = {
 		["tank"] = 60,
-		["healer"] = 45,
-		["dps"] = 27,
+		["healer"] = 46, -- only 2 times per phase (although a 3rd would fit in)
+		["dps"] = 27, -- only 4 times per phase (although a 5th would fit in)
 	},
 }
 --------------------------------------------------------------------------------
@@ -117,9 +117,9 @@ function mod:OnEngage()
 	fixateOnMe = nil
 	showProximity()
 	self:Bar(179909, 18) -- Shared Fate
-	self:Bar(179864, 3, shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
-	self:Bar(179864, self:Mythic() and 13 or 9, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
-	self:Bar(179864, self:Mythic() and 30 or 26, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death
+	self:Bar(179864, self:Mythic() and 3 or 2, shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
+	self:Bar(179864, self:Mythic() and 9 or 13, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
+	self:Bar(179864, self:Mythic() and 20 or 30, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death
 	self:Bar(181973, 123) -- Feast of Souls, based on heroic logs
 	self:CDBar(179977, 8.3) -- Touch of Doom
 end
@@ -215,9 +215,9 @@ function mod:FeastOfSoulsOver(args)
 	self:Message(args.spellId, "Positive", nil, CL.over:format(self:SpellName(117847))) -- Weakened
 	self:StopBar(117847) -- If it finishes early due to failing
 	self:Bar(args.spellId, 123) -- Based on pull->first feast
-	self:Bar(179864, 2,shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
-	self:Bar(179864, 13, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
-	self:Bar(179864, 36, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death, XXX maybe the timer is based on difficulty?(36/45), i don't have enough data to confirm
+	self:Bar(179864, self:Mythic() and 3 or 2, shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
+	self:Bar(179864, self:Mythic() and 9 or 13, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
+	self:Bar(179864, self:Mythic() and 20 or 30, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death
 end
 
 function mod:Digest(args)
