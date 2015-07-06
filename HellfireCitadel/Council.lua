@@ -159,7 +159,7 @@ end
 
 function mod:MirrorImages(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, self:LFR() and 150 or 50) -- XXX 75.5 after 30% (LFR)?
+	self:Bar(args.spellId, 153)
 end
 
 do
