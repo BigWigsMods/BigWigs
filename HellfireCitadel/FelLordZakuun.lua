@@ -80,7 +80,7 @@ function mod:OnEngage()
 	self:Bar(189009, 36.5) -- Cavitation
 	self:Bar(179583, 7) -- Rumbling Fissures
 	self:Bar(179711, 16) -- Befouled
-	self:Bar("stages", 87, 179667) -- Disarmed (Phase 2)
+	self:Bar("stages", 87, 179667, "ability_butcher_heavyhanded") -- Disarmed (Phase 2)
 end
 
 --------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ function mod:DisarmedRemoved(args) -- Phase 1
 	cleaveCount = 1
 	phaseEnd = GetTime() + 85
 	self:Message("stages", "Neutral", "Long", CL.over:format(args.spellName), false) -- Disarmed Over!
-	self:Bar("stages", 85, 179667) -- Disarmed (Phase 2)
+	self:Bar("stages", 85, 179667, "ability_butcher_heavyhanded") -- Disarmed (Phase 2)
 	self:Bar(179583, 4) -- Rumbling Fissures
 	self:Bar(179711, 16) -- Befouled
 	self:Bar(179406, 24, CL.count:format(self:SpellName(179406), cleaveCount)) -- Soul Cleave
@@ -208,7 +208,7 @@ do
 			elseif phaseEnd-GetTime() > 14.5 then
 				self:CDBar(181508, 14.5)
 			end
-			self:Bar(181508, 5, 84474) -- 84474 = "Explosion"
+			self:Bar(181508, 5, 84474, "spell_shadow_seedofdestruction") -- 84474 = "Explosion"
 			self:ScheduleTimer(seedSay, 0.3, self, args.spellName)
 		end
 	end
