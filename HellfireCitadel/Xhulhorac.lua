@@ -21,23 +21,29 @@ local mobCollector = {}
 
 function mod:GetOptions()
 	return {
+		--[[ Phase 1 ]]--
+		{186271, "TANK_HEALER"}, -- Fel Strike
+		{186407, "SAY", "PROXIMITY", "FLASH"}, -- Fel Surge
+		{186448, "TANK"}, -- Felblaze Flurry
+		186500, -- Chains of Fel
+		--[[ Phase 2 ]]--
+		{186292, "TANK_HEALER"}, -- Void Strike
+		{186333, "SAY", "PROXIMITY", "FLASH"}, -- Void Surge
+		{186785, "TANK"}, -- Withering Gaze
+		186546, -- Black Hole
+		--[[ Phase 4 ]]--
+		187204, -- Overwhelming Chaos
+		--[[ General ]]--
 		186134, -- Feltouched
 		186135, -- Voidtouched
 		186073, -- Felsinged
 		186063, -- Wasting Void
-		{186407, "SAY", "PROXIMITY", "FLASH"}, -- Fel Surge
-		{186333, "SAY", "PROXIMITY", "FLASH"}, -- Void Surge
-		186500, -- Chains of Fel
-		{186448, "TANK"}, -- Felblaze Flurry
-		{186785, "TANK"}, -- Withering Gaze
-		{186271, "TANK_HEALER"}, -- Fel Strike
-		{186292, "TANK_HEALER"}, -- Void Strike
-		187204, -- Overwhelming Chaos
-		186546, -- Black Hole
-		-11691, -- Vanguard Akkelion
-		-11688, -- Omnus
-		-11714, -- Unstable Voidfiend
-		-- XXX fix by stage
+		"stages",
+	}, {
+		[186271] = CL.phase:format(1),
+		[186292] = CL.phase:format(2),
+		[187204] = CL.phase:format(4),
+		[186134] = "general",
 	}
 end
 
@@ -49,16 +55,22 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Surge", 186407, 186333) -- Fel Surge, Void Surge
 	self:Log("SPELL_AURA_REMOVED", "SurgeRemoved", 186407, 186333) -- Fel Surge, Void Surge
 	self:Log("SPELL_AURA_APPLIED", "ChainsOfFel", 186500)
-	self:Log("SPELL_AURA_APPLIED", "FelblazeFlurry_WitheringGaze", 186448, 186785) -- Felblaze Flurry, Withering Gaze
-	self:Log("SPELL_AURA_APPLIED_DOSE", "FelblazeFlurry_WitheringGaze", 186448, 186785) -- Felblaze Flurry, Withering Gaze
-	self:Log("SPELL_CAST_START", "Strike", 186271, 186292) -- Fel Strike, Void Strike
+	self:Log("SPELL_AURA_APPLIED", "FelblazeFlurry", 186448) -- Felblaze Flurry
+	self:Log("SPELL_AURA_APPLIED_DOSE", "FelblazeFlurry", 186448) -- Felblaze Flurry
+	self:Log("SPELL_AURA_APPLIED", "WitheringGaze", 186785) -- Withering Gaze
+	self:Log("SPELL_AURA_APPLIED_DOSE", "WitheringGaze", 186785) -- Withering Gaze
+	self:Log("SPELL_CAST_START", "FelStrike", 186271, 190223) -- Fel Strike XXX 186271 still used?
+	self:Log("SPELL_CAST_START", "VoidStrike", 186292, 190224) -- Void Strike XXX 186292 still used?
 	self:Log("SPELL_AURA_APPLIED", "OverwhelmingChaos", 187204)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingChaos", 187204)
 	self:Log("SPELL_CAST_START", "BlackHole", 186546)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+
+	self:Death("Deaths", 94185, 94239) -- Vanguard Akkelion, Omnus
 end
 
 function mod:OnEngage()
+	phase = 1
 	wipe(mobCollector)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:CDBar(186271, 8) -- Fel Strike
@@ -69,10 +81,27 @@ end
 -- Event Handlers
 --
 
+function mod:Deaths(args)
+	if args.mobId == 94185 then
+		self:StopBar(186271) -- Fel Strike
+		self:StopBar(186407) -- Fel Surge
+		self:StopBar(186448) -- Felblaze Flurry
+		self:StopBar(186500) -- Chains of Fel
+		phase = 2
+		self:Message("stages", "Neutral", "Info", CL.phase:format(2), false)
+	elseif args.mobId == 94239 then
+		self:StopBar(186292) -- Void Strike
+		self:StopBar(186333) -- Void Surge
+		self:StopBar(186785) -- Withering Gaze
+		self:StopBar(186546) -- Black Hole
+		phase = 3
+		self:Message("stages", "Neutral", "Info", CL.phase:format(3), false)
+	end
+end
+
 function mod:Touched(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Long")
-		self:TargetBar(args.spellId, 15, args.destName)
+		self:Message(args.spellId, "Personal", "Long", CL.you:format(args.spellName))
 	end
 end
 
@@ -109,25 +138,35 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Urgent", "Alarm")
-			self:CDBar(args.spellId, 23)
+			self:CDBar(args.spellId, 34) -- rarely (consistently) 31, mostly 34
 		end
 	end
 end
 
-function mod:FelblazeFlurry_WitheringGaze(args)
+function mod:FelblazeFlurry(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
-	self:CDBar(args.spellId, 15)
+	self:CDBar(args.spellId, 17)
 end
 
-function mod:Strike(args)
-	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
-	self:CDBar(args.spellId, 14.5)
+function mod:WitheringGaze(args)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
+	self:CDBar(args.spellId, 24)
+end
+
+function mod:FelStrike(args)
+	self:Message(186271, "Urgent", "Warning", CL.casting:format(args.spellName))
+	self:CDBar(186271, phase == 3 and 15 or 16) -- 15.8
+end
+
+function mod:VoidStrike(args)
+	self:Message(186292, "Urgent", "Warning", CL.casting:format(args.spellName))
+	self:CDBar(186292, phase == 3 and 15 or 17) -- 17.1/18.2
 end
 
 function mod:OverwhelmingChaos(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "Important")
-	self:Bar(args.spellId, 10, CL.count:format(args.spellName, amount+1))
+	self:Bar(args.spellId, 10, CL.count:format(args.spellName, amount + 1))
 end
 
 function mod:BlackHole(args)
@@ -139,7 +178,6 @@ do
 	local adds = {
 		[94185] = -11691, -- Vanguard Akkelion
 		[94239] = -11688, -- Omnus
-		[94397] = -11714, -- Unstable Voidfiend
 	}
 	function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		for i = 1, 5 do
@@ -148,7 +186,7 @@ do
 				mobCollector[guid] = true
 				local id = adds[self:MobId(guid)]
 				if id then
-					self:Message(id, "Neutral", nil, CL.spawned:format(self:SpellName(id)), false)
+					self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(id)), false)
 				end
 			end
 		end
@@ -157,8 +195,13 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 187209 then -- Overwhelming Chaos
-		self:Bar(187204, 10)
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
+		self:StopBar(186271) -- Fel Strike
+		self:StopBar(186407) -- Fel Surge
+		self:StopBar(186292) -- Void Strike
+		self:StopBar(186333) -- Void Surge
+		self:Message("stages", "Neutral", "Info", CL.phase:format(4), false)
+		self:Bar(187204, 10) -- Overwhelming Chaos
 	end
 end
 
