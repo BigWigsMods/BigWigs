@@ -259,8 +259,12 @@ do
 		if isOnMe then
 			local linked = isOnMe % 2 == 0 and (isOnMe - 1) or (isOnMe + 1)
 			local player = list[linked]
-			self:Message(185510, "Personal", "Alarm", L.chained_message:format(self:ColorName(player)))
-			self:OpenProximity(185510, 5, player, true) -- do tanks get chained? might interfere with Corruption
+			if player then
+				self:Message(185510, "Personal", "Alarm", L.chained_message:format(self:ColorName(player)))
+				self:OpenProximity(185510, 5, player, true) -- do tanks get chained? might interfere with Corruption
+			else
+				self:Message(185510, "Personal", "Alarm", CL.you:format(spellName))
+			end
 		end
 		-- special target message handling
 		for i = 1, #list do list[i] = self:ColorName(list[i]) end
