@@ -125,9 +125,14 @@ function mod:EyeOfAnzu(args)
 	end
 end
 
-function mod:ShadowRiposte(args)
-	--XXX GetBossTarget and warn
-	self:CDBar(args.spellId, 27)
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage(185345, name, "Important", "Long") -- Warning is used in Eye+Winds events, so Long here to be distinct
+	end
+	function mod:ShadowRiposte(args)
+		self:GetBossTarget(printTarget, 0.3, args.sourceGUID)
+		self:CDBar(args.spellId, 27)
+	end
 end
 
 function mod:PhantasmalWinds(args)
@@ -140,7 +145,7 @@ do
 		if isOnMe then
 			self:Message(181956, "Personal" , "Alarm", CL.you:format(spellName))
 		else
-			self:Message(181956, "Attention", UnitBuff("player", self:SpellName(179202)) and "Warning")
+			self:Message(181956, "Attention", UnitBuff("player", self:SpellName(179202)) and "Warning") -- Warning if you have the Eye
 		end
 		isOnMe = nil
 	end
