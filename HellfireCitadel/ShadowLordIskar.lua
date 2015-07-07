@@ -96,9 +96,10 @@ function mod:OnEngage()
 	if self:Mythic() then
 		self:CDBar(185345, 9.5) -- Shadow Riposte
 	end
-	self:Bar(182200, 5.5) -- Fel Chakram
-	self:CDBar(181956, 17) -- Phantasmal Winds
-	self:CDBar(182323, 25) -- Phantasmal Wounds
+	-- normal modifier 1.25 for all CDs?
+	self:Bar(182200, self:Normal() and 6.5 or 5.5) -- Fel Chakram
+	self:CDBar(181956, self:Normal() and 21 or 17) -- Phantasmal Winds
+	self:CDBar(182323, self:Normal() and 34 or 25) -- Phantasmal Wounds
 	self:Berserk(540)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
@@ -156,7 +157,7 @@ do
 		windTargets[#windTargets + 1] = args.destName
 		if #windTargets == 1 then
 			self:ScheduleTimer(warn, 0.3, self, args.spellName)
-			self:CDBar(181956, 36)
+			self:CDBar(181956, self:Normal() and 45 or 36)
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = true
@@ -181,7 +182,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:Message(182323, "Urgent")
-			self:CDBar(182323, 28)
+			self:CDBar(182323, self:Normal() and 40 or 28)
 		end
 	end
 end
@@ -195,7 +196,7 @@ function mod:PhantasmalCorruption(args)
 			self:OpenProximity(181824, 8) -- XXX verify range (spell says 5 yards)
 		end
 	end
-	self:CDBar(181824, 16)
+	self:CDBar(181824, self:Normal() and 19.5 or 16)
 end
 
 function mod:PhantasmalCorruptionRemoved(args)
@@ -210,7 +211,7 @@ function mod:FelBomb(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
-	self:Bar(args.spellId, 18.4)
+	self:Bar(args.spellId, self:Normal() and 23 or 18.4)
 end
 
 function mod:FocusedBlast(args)
@@ -222,7 +223,7 @@ end
 
 function mod:FelConduit(args)
 	self:Message(181827, "Urgent", "Alert")
-	self:Bar(181827, 15.9)
+	self:Bar(181827, self:Normal() and 19.3 or 15.9)
 end
 
 function mod:RAID_BOSS_WHISPER(event, msg)
@@ -306,12 +307,12 @@ function mod:Stage2(args) -- Shadow Escape
 	self:ScheduleTimer("Stage1", 40) -- event for when Iskar is attackable again?
 	self:Bar("stages", 40, CL.phase:format(1), "achievement_boss_hellfire_felarakkoa")
 	self:Bar(181912, 20) -- Focused Blast
-	self:CDBar(181753, 15.5) -- Fel Bomb, 15.5-17.4
+	self:CDBar(181753, self:Normal() and 21 or 15.5) -- Fel Bomb, 15.5-17.4
 	if shadowEscapeCount > 1 then -- Fel Warden
-		self:Bar(181827, 6) -- Fel Conduit
+		self:Bar(181827, self:Normal() and 7 or 6) -- Fel Conduit
 	end
 	if shadowEscapeCount > 2 then -- Fel Raven
-		self:Bar(181824, 22) -- Phantasmal Corruption
+		self:Bar(181824, self:Normal() and 27 or 22) -- Phantasmal Corruption
 	end
 	if self:Mythic() then
 		self:Bar(185510, 21) -- Dark Bindings
@@ -324,7 +325,7 @@ function mod:Stage1() -- Shadow Escape over
 	if self:Mythic() then
 		self:CDBar(185345, 10.5) -- Shadow Riposte
 	end
-	self:CDBar(182200, 5.5) -- Fel Chakram (doesn't always happen?)
+	self:CDBar(182200, self:Normal() and 10 or 5.5) -- Fel Chakram (doesn't always happen?)
 	--self:CDBar(181956, 20) -- Phantasmal Winds
 	--self:CDBar(182323, 22) -- Phantasmal Wounds
 end
