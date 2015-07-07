@@ -24,6 +24,8 @@ local eyeTarget = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.chained_message = "You are chained to %s!"
+
 	L.custom_off_wind_marker = "Phantasmal Winds marker"
 	L.custom_off_wind_marker_desc = "Marks Phantasmal Winds targets with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.custom_off_wind_marker_icon = 1
@@ -47,7 +49,7 @@ function mod:GetOptions()
 		{181753, "SAY"}, -- Fel Bomb
 		181827, -- Fel Conduit
 		{181824, "SAY", "PROXIMITY"}, -- Phantasmal Corruption
-		{185510, "SAY"}, -- Dark Bindings
+		{185510, "SAY", "PROXIMITY"}, -- Dark Bindings
 		--[[ General ]]--
 		{179202, "FLASH"}, -- Eye of Anzu
 		{182582, "SAY"}, -- Fel Incineration
@@ -74,6 +76,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FelChakram", 182200, 182178)
 	self:Log("SPELL_CAST_START", "DarkBindingsCast", 185510)
 	self:Log("SPELL_AURA_APPLIED", "DarkBindings", 185510)
+	self:Log("SPELL_AURA_REMOVED", "DarkBindingsRemoved", 185510)
 	self:Log("SPELL_CAST_START", "Stage2", 181873) -- Shadow Escape
 	self:Log("SPELL_CAST_START", "ShadowRiposte", 185345)
 	self:Log("SPELL_AURA_APPLIED", "FelFireDamage", 182600)
@@ -250,14 +253,40 @@ function mod:DarkBindingsCast(args)
 end
 
 do
-	local list = mod:NewTargetList()
+	local list = {}
+	local isOnMe = nil
+	local function warn(self, spellName)
+		if isOnMe then
+			local linked = isOnMe % 2 == 0 and (isOnMe - 1) or (isOnMe + 1)
+			local player = list[linked]
+			self:Message(185510, "Personal", "Alarm", L.chained_message:format(self:ColorName(player)))
+			self:OpenProximity(185510, 5, player, true) -- do tanks get chained? might interfere with Corruption
+		end
+		-- special target message handling
+		for i = 1, #list do list[i] = self:ColorName(list[i]) end
+		if #list == 6 then
+			local message = ("%s:%s, %s:%s, %s:%s"):format(list[1], list[2], list[3], list[4], list[5], list[6])
+			self:Message(185510, "Attention", nil, L.other:format(spellName, message))
+			wipe(list)
+		else -- just in case
+			self:TargetMessage(185510, list, "Attention")
+		end
+		isOnMe = nil
+	end
 	function mod:DarkBindings(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, 185510, list, "Attention")
+			self:ScheduleTimer(warn, 0.3, self, args.spellName)
 		end
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+			isOnMe = #list
+			self:Say(args.spellId, CL.count:format(args.spellName, #list))
+		end
+	end
+	function mod:DarkBindingsRemoved(args)
+		if self:Me(args.destGUID) then
+			--self:Message(185510, "Positive", "Info", CL.removed:format(args.spellName))
+			self:CloseProximity(185510)
 		end
 	end
 end
