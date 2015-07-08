@@ -250,13 +250,16 @@ function mod:DarkBindingsCast(args)
 	self:Bar(args.spellId, 34)
 end
 
-function mod:DarkBindings(args)
-	list[#list+1] = args.destName
-	if #list == 1 then
-		self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention")
-	end
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
+do
+	local list = mod:NewTargetList()
+	function mod:DarkBindings(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention")
+		end
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+		end
 	end
 end
 
