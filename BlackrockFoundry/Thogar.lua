@@ -470,7 +470,7 @@ do
 			timer = nil
 			self:StopBar(CL.count:format(self:SpellName(155192), bombCount), args.destName)
 		else
-			self:StopBar(119342, args.destName)
+			self:StopBar(119342, args.destName) -- 119342 = Bombs
 		end
 	end
 end

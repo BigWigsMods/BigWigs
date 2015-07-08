@@ -137,7 +137,7 @@ function mod:TremblingEarth(args)
 	self:StopBar(157592) -- Rippling Smash
 	self:StopBar(156766) -- Warped Armor
 	self:StopBar(156704) -- Slam
-	self:StopBar(args.spellId)
+	self:StopBar(args.spellName)
 
 	callOfTheMountainCount = 1
 	self:Message(args.spellId, "Attention")

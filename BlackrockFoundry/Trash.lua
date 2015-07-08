@@ -181,7 +181,7 @@ end
 
 function mod:OverheadSmashRemoved(args)
 	if self:Tank(args.destName) then
-		self:StopBar(args.spellId, args.destName)
+		self:StopBar(args.spellName, args.destName)
 	end
 end
 
@@ -221,7 +221,7 @@ function mod:InsatiableHunger(args)
 end
 
 function mod:InsatiableHungerRemoved(args)
-	self:StopBar(args.spellId, args.destName)
+	self:StopBar(args.spellName, args.destName)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Positive", nil, CL.over:format(args.spellName))
 	end
@@ -261,7 +261,7 @@ function mod:LivingBlaze(args)
 end
 
 function mod:LivingBlazeRemoved(args)
-	self:StopBar(args.spellId, args.destName)
+	self:StopBar(args.spellName, args.destName)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Positive", nil, CL.over:format(args.spellName))
 		self:CloseProximity(args.spellId)
