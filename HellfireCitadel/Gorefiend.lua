@@ -31,6 +31,23 @@ local shadowOfDeathInfo = {
 		["healer"] = 46, -- only 2 times per phase (although a 3rd would fit in)
 		["dps"] = 27, -- only 4 times per phase (although a 5th would fit in)
 	},
+	["count"] = {
+		["tank"] = 0,
+		["healer"] = 0,
+		["dps"] = 0,
+	},
+	["maxCount"] = {
+		["heroic"] = {
+			["tank"] = 1,
+			["healer"] = 2,
+			["dps"] = 3,
+		},
+		["mythic"] = {
+			["tank"] = 2,
+			["healer"] = 2,
+			["dps"] = 4,
+		},
+	}
 }
 --------------------------------------------------------------------------------
 -- Localization
@@ -122,6 +139,10 @@ function mod:OnEngage()
 	self:Bar(179864, self:Mythic() and 20 or 30, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death
 	self:Bar(181973, 123) -- Feast of Souls, based on heroic logs
 	self:CDBar(179977, 8.3) -- Touch of Doom
+
+	shadowOfDeathInfo.count.tank = 0
+	shadowOfDeathInfo.count.dps = 0
+	shadowOfDeathInfo.count.healer = 0
 end
 
 --------------------------------------------------------------------------------
@@ -218,6 +239,10 @@ function mod:FeastOfSoulsOver(args)
 	self:Bar(179864, self:Mythic() and 3 or 2, shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
 	self:Bar(179864, self:Mythic() and 9 or 13, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
 	self:Bar(179864, self:Mythic() and 20 or 30, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death
+
+	shadowOfDeathInfo.count.tank = 0
+	shadowOfDeathInfo.count.dps = 0
+	shadowOfDeathInfo.count.healer = 0
 end
 
 function mod:Digest(args)
@@ -257,9 +282,16 @@ do
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Urgent", "Alarm", text)
 
-			local timer = shadowOfDeathInfo[self:Mythic() and "mythic" or "heroic"][role]
-			if timer then
-				self:Bar(179864, timer, text)
+			local count = shadowOfDeathInfo.count[role]
+			count = count + 1
+			shadowOfDeathInfo.count[role] = count
+			local maxCount = shadowOfDeathInfo.maxCount[self:Mythic() and "mythic" or "heroic"][role]
+
+			if count < maxCount then
+				local timer = shadowOfDeathInfo[self:Mythic() and "mythic" or "heroic"][role]
+				if timer then
+					self:Bar(179864, timer, text)
+				end
 			end
 		end
 	end
