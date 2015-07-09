@@ -16,6 +16,7 @@ mod.respawnTime = 30
 local fixateOnMe = nil
 local phase = 1
 local fatePlayer
+local fateCount = 1
 local shadowOfDeathInfo = {
 	["icon"] = {
 		["tank"] = INLINE_TANK_ICON,
@@ -132,6 +133,7 @@ end
 
 function mod:OnEngage()
 	fixateOnMe = nil
+	fateCount = 1
 	showProximity()
 	self:Bar(179909, 18) -- Shared Fate
 	self:Bar(179864, self:Mythic() and 3 or 2, shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
@@ -183,16 +185,24 @@ function mod:TouchOfDoomRemoved(args)
 	end
 end
 
-function mod:SharedFateRoot(args)
-	self:CDBar(args.spellId, 25) -- 25 - 29
-	fatePlayer = args.destName
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId, 135484) -- 135484 = "Rooted"
-		self:Message(args.spellId, "Personal", "Alert", L.fate_root_you)
-	else
-		self:TargetMessage(args.spellId, fatePlayer, "Attention", nil, self:SpellName(135484)) -- 135484 = "Rooted"
+do
+	local timers = {0, 28, 25, 22}
+	function mod:SharedFateRoot(args)
+		fatePlayer = args.destName
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId, 135484) -- 135484 = "Rooted"
+			self:Message(args.spellId, "Personal", "Alert", L.fate_root_you)
+		else
+			self:TargetMessage(args.spellId, fatePlayer, "Attention", nil, self:SpellName(135484)) -- 135484 = "Rooted"
+		end
+		self:PrimaryIcon(args.spellId, fatePlayer)
+
+		fateCount = fateCount + 1
+		local timer = timers[fateCount]
+		if timer then
+			self:CDBar(args.spellId, timer)
+		end
 	end
-	self:PrimaryIcon(args.spellId, fatePlayer)
 end
 
 function mod:SharedFateRootRemoved(args)
@@ -239,7 +249,9 @@ function mod:FeastOfSoulsOver(args)
 	self:Bar(179864, self:Mythic() and 3 or 2, shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
 	self:Bar(179864, self:Mythic() and 9 or 13, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
 	self:Bar(179864, self:Mythic() and 20 or 30, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death
+	self:CDBar(179909, 19) -- Shared Fate
 
+	fateCount = 1
 	shadowOfDeathInfo.count.tank = 0
 	shadowOfDeathInfo.count.dps = 0
 	shadowOfDeathInfo.count.healer = 0
