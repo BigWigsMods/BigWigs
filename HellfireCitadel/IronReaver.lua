@@ -19,6 +19,7 @@ local barrageCount = 1
 local blitzCount = 1
 local poundingCount = 1
 local firebombCount = 1
+local orbCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -76,6 +77,7 @@ function mod:OnEngage()
 	blitzCount = 1
 	poundingCount = 1
 	firebombCount = 1
+	orbCount = 1
 	self:Berserk(600)
 	--self:Bar(182280, self:Easy() and 23.3 or 10.3) -- Artillery APPLICATION
 	self:Bar(185282, 13.3, CL.count:format(self:SpellName(185282), barrageCount)) -- Barrage
@@ -164,7 +166,12 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Bar(args.spellId, 24)
+			orbCount = orbCount + 1
+			local timer = 24
+			if orbCount == 2 then
+				timer = 18
+			end
+			self:Bar(args.spellId, timer)
 		end
 	end
 end
@@ -191,6 +198,8 @@ function mod:FallingSlamSuccess(args)
 	barrageCount = 1
 	poundingCount = 1
 	--artilleryCount = 1
+	orbCount = 1
+	self:Bar(182001, 9) -- Unstable Orb 9-11
 	self:Bar(179889, 65.8) -- Blitz
 	self:Bar(185282, 14.8) -- Barrage
 	self:Bar(182020, 35.8) -- Pounding
