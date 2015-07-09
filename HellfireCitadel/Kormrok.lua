@@ -49,9 +49,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Swat", 181305)
 	self:Log("SPELL_CAST_SUCCESS", "ExplosiveBurst", 181306)
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveBurstRemoved", 181306)
-	self:Log("SPELL_AURA_APPLIED", "ShadowEnergy", 180115, 186879) -- Normal, Enraged
-	self:Log("SPELL_AURA_APPLIED", "ExplosiveEnergy", 180116, 186880) -- Normal, Enraged
-	self:Log("SPELL_AURA_APPLIED", "FoulEnergy", 180117, 186881) -- Normal, Enraged
+	self:Log("SPELL_AURA_APPLIED", "ShadowEnergy", 180115, 186879, 189197) -- Normal, Enraged, Normal(LFR)
+	self:Log("SPELL_AURA_APPLIED", "ExplosiveEnergy", 180116, 186880, 189198) -- Normal, Enraged, Normal (LFR)
+	self:Log("SPELL_AURA_APPLIED", "FoulEnergy", 180117, 186881, 189199) -- Normal, Enraged, Normal (LFR)
 	self:Log("SPELL_AURA_APPLIED", "Enrage", 186882)
 end
 
@@ -73,7 +73,7 @@ end
 
 function mod:ShadowEnergy(args)
 	self:SendMessage("BigWigs_StopBars", self)
-	shadowCount = self:Normal() and 2 or self:Heroic() and 3 or 4
+	shadowCount = self:Normal() and 2 or self:Mythic() and 4 or 3
 	phase = 3
 	tankDebuffCount = 1
 
@@ -88,7 +88,7 @@ end
 
 function mod:ExplosiveEnergy(args)
 	self:SendMessage("BigWigs_StopBars", self)
-	explosiveCount = self:Normal() and 2 or self:Heroic() and 3 or 4
+	explosiveCount = self:Normal() and 2 or self:Mythic() and 4 or 3
 	phase = 1
 	tankDebuffCount = 1
 
@@ -103,7 +103,7 @@ end
 
 function mod:FoulEnergy(args)
 	self:SendMessage("BigWigs_StopBars", self)
-	foulCount = self:Normal() and 2 or self:Heroic() and 3 or 4
+	foulCount = self:Normal() and 2 or self:Mythic() and 4 or 3
 	phase = 2
 	tankDebuffCount = 1
 
