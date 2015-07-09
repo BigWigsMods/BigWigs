@@ -31,8 +31,8 @@ function mod:GetOptions()
 		{189595, "FLASH"}, -- Protocol: Crowd Control
 		{189533, "TANK"}, -- Sever Soul
 	}, {
-		[189595] = L.peacekeeper
-		[189533] = L.eloah
+		[189595] = L.peacekeeper,
+		[189533] = L.eloah,
 	}
 end
 
