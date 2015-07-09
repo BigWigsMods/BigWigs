@@ -199,7 +199,7 @@ function mod:FallingSlamSuccess(args)
 	poundingCount = 1
 	--artilleryCount = 1
 	orbCount = 1
-	self:Bar(182001, 9) -- Unstable Orb 9-11
+	self:CDBar(182001, 9) -- Unstable Orb 9-11
 	self:Bar(179889, 65.8) -- Blitz
 	self:Bar(185282, 14.8) -- Barrage
 	self:Bar(182020, 35.8) -- Pounding
