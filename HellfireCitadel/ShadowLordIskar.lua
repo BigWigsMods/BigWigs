@@ -97,7 +97,7 @@ function mod:OnEngage()
 	self:Bar(182200, self:Normal() and 6.5 or 5.5) -- Fel Chakram
 	self:CDBar(181956, self:Normal() and 21 or 17) -- Phantasmal Winds
 	self:CDBar(182323, self:Normal() and 34 or 25) -- Phantasmal Wounds
-	self:Berserk(self:Normal() and 480 or 540)
+	self:Berserk(self:Heroic() and 540 or 480)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
