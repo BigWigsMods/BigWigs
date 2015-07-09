@@ -185,7 +185,7 @@ end
 
 function mod:Pound(args)
 	isPounding = true
-	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName, poundCount))
+	self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, poundCount))
 	poundCount = poundCount + 1
 	self:CDBar(args.spellId, phase == 3 and (50 * enrageMod) or (62 * enrageMod), CL.count:format(args.spellName, poundCount)) -- start->start = 50 / 42 enraged for shadow, 62 / 52 enraged for other
 	self:OpenProximity(args.spellId, 5) -- 4 + 1 safety
