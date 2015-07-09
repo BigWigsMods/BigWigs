@@ -697,6 +697,10 @@ function boss:Normal()
 	return difficulty == 1 or difficulty == 3 or difficulty == 4 or difficulty == 14
 end
 
+function boss:Easy()
+	return difficulty == 14 or difficulty == 17 -- New normal mode or new LFR mode
+end
+
 function boss:Heroic()
 	return difficulty == 2 or difficulty == 5 or difficulty == 6 or difficulty == 15
 end
