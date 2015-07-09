@@ -123,7 +123,7 @@ function mod:OnEngage(diff)
 	tantrumCount = 1
 	wipe(pinnedList)
 
-	self:Bar(154975, (self:LFR() or self:Normal()) and 19.5 or 9.5) -- Call the Pack
+	self:Bar(154975, self:Easy() and 19.5 or 9.5) -- Call the Pack
 	self:Bar(154960, 11) -- Pinned Down
 	self:Berserk(720)
 
@@ -335,7 +335,7 @@ end
 
 function mod:CallThePack(args)
 	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, (self:LFR() or self:Normal()) and 40 or 30) -- can be delayed
+	self:CDBar(args.spellId, self:Easy() and 40 or 30) -- can be delayed
 end
 
 -- Stage 2

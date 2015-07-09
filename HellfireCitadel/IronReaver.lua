@@ -15,7 +15,7 @@ mod.respawnTime = 36 -- 30s respawn & 6s activation
 
 local phase = 1
 local barrageCount = 1
-local artilleryCount = 1
+--local artilleryCount = 1
 local blitzCount = 1
 local poundingCount = 1
 local firebombCount = 1
@@ -72,12 +72,12 @@ end
 function mod:OnEngage()
 	phase = 1
 	barrageCount = 1
-	artilleryCount = 1
+	--artilleryCount = 1
 	blitzCount = 1
 	poundingCount = 1
 	firebombCount = 1
 	self:Berserk(600)
-	--self:Bar(182280, 10.3) -- Artillery APPLICATION
+	--self:Bar(182280, self:Easy() and 23.3 or 10.3) -- Artillery APPLICATION
 	self:Bar(185282, 13.3, CL.count:format(self:SpellName(185282), barrageCount)) -- Barrage
 	self:Bar(182020, 34.4, CL.count:format(self:SpellName(182020), poundingCount)) -- Pounding
 	self:Bar(179889, 64.3) -- Blitz
@@ -92,7 +92,8 @@ end
 --
 
 do
-	-- local timers = {9, 30, 15, 9, 24, 15} -- 15s during p2
+	-- local timers = {0, 9, 30, 15, 9, 24, 15} -- 15s during p2
+	-- local timersNormalLFR = {0, 39, 15, 33, 15} -- 15s during p2
 	local list = mod:NewTargetList()
 	function mod:Artillery(args)
 		if phase == 2 then
@@ -108,6 +109,11 @@ do
 			-- Expiry is the real concern, are application timers important enough
 			-- to potentially distract/confuse from expiry timers?
 			-- Commented out for now
+			--artilleryCount = artilleryCount + 1
+			--local timer = self:Easy() and timersNormalLFR[artilleryCount] or timers[artilleryCount]
+			--if timer then
+			--	self:Bar(args.spellId, timer)
+			--end
 		end
 		if self:Me(args.destGUID) then
 			self:OpenProximity(args.spellId, 40)
@@ -175,9 +181,8 @@ do
 end
 
 function mod:FallingSlam(args)
-	self:StopBar(182066) -- Falling Slam (just incase)
 	self:Message(args.spellId, "Important", "Info")
-	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, self:Easy() and 9 or 6, CL.cast:format(args.spellName))
 end
 
 function mod:FallingSlamSuccess(args)
@@ -185,11 +190,11 @@ function mod:FallingSlamSuccess(args)
 	blitzCount = 1
 	barrageCount = 1
 	poundingCount = 1
-	artilleryCount = 1
+	--artilleryCount = 1
 	self:Bar(179889, 65.8) -- Blitz
 	self:Bar(185282, 14.8) -- Barrage
 	self:Bar(182020, 35.8) -- Pounding
-	--self:Bar(182280, 9.3) -- Artillery APPLICATION
+	--self:Bar(182280, self:Easy() and 11.7 or 9.3) -- Artillery APPLICATION
 	self:Bar(182055, 140) -- Full Charge
 end
 
@@ -197,14 +202,12 @@ function mod:Blitz(args)
 	self:Message(args.spellId, "Important", "Info")
 	if blitzCount == 2 then -- Blitz is casted twice each cooldown, show the bar after the second
 		self:Bar(args.spellId, 58)
-		blitzCount = 1
 	end
 	blitzCount = blitzCount + 1
 end
 
 function mod:FullCharge(args)
 	self:StopBar(182001) -- Unstable Orb
-	self:StopBar(179889) -- Blitz
 
 	phase = 2
 	firebombCount = 1
