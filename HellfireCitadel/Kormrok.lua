@@ -39,14 +39,14 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "FelOutpouring", 181292, 181293) -- Normal, Empowered
+	self:Log("SPELL_CAST_START", "FelOutpouring", 181292, 181293) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "ExplosiveRunes", 181296, 181297) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "GraspingHandsStart", 181299, 181300)
 	self:Log("SPELL_CAST_SUCCESS", "GraspingHands", 181299, 181300) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "Pound", 180244)
 	self:Log("SPELL_AURA_REMOVED", "PoundOver", 180244)
 	self:Log("SPELL_CAST_SUCCESS", "FoulCrush", 181307)
-	self:Log("SPELL_CAST_SUCCESS", "Swat", 181305)
+	self:Log("SPELL_CAST_START", "Swat", 181305)
 	self:Log("SPELL_CAST_SUCCESS", "ExplosiveBurst", 181306)
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveBurstRemoved", 181306)
 	self:Log("SPELL_AURA_APPLIED", "ShadowEnergy", 180115, 186879, 189197) -- Normal, Enraged, Normal(LFR)
