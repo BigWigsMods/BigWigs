@@ -41,8 +41,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FelOutpouring", 181292, 181293) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "ExplosiveRunes", 181296, 181297) -- Normal, Empowered
-	self:Log("SPELL_CAST_START", "GraspingHandsStart", 181299, 181300)
-	self:Log("SPELL_CAST_SUCCESS", "GraspingHands", 181299, 181300) -- Normal, Empowered
+	self:Log("SPELL_CAST_START", "GraspingHands", 181299, 181300) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "Pound", 180244)
 	self:Log("SPELL_AURA_REMOVED", "PoundOver", 180244)
 	self:Log("SPELL_CAST_SUCCESS", "FoulCrush", 181307)
@@ -123,8 +122,8 @@ function mod:FoulEnergy(args)
 	self:Message("stages", "Neutral", "Info", args.spellName, false)
 
 	if args.spellId == 189199 then -- LFR
-		self:Bar(181299, 14) -- Grasping Hands
-		self:Bar(181307, 22) -- Foul Crush
+		self:Bar(181299, 10) -- Grasping Hands
+		self:Bar(181307, 20) -- Foul Crush
 		self:Bar(180244, 30, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
 		self:CDBar("stages", 92, 180068) -- Leap
 	else
@@ -217,14 +216,10 @@ function mod:ExplosiveRunes(args)
 	end
 end
 
-function mod:GraspingHandsStart(args)
-	self:OpenProximity(181299, 4)
-end
-
 function mod:GraspingHands(args)
 	foulCount = foulCount - 1
 	self:Message(181299, "Important", nil, args.spellId)
-	self:ScheduleTimer("CloseProximity", 4, 181299) -- Hands spawn delayed and you still have time to move
+	self:OpenProximity(181299, 4)
 	if self:LFR() then
 		if foulCount > 0 then
 			self:CDBar(args.spellId, 35) -- No Empowered (Dragging) on LFR
@@ -232,6 +227,7 @@ function mod:GraspingHands(args)
 	else
 		self:CDBar(181299, 108 * enrageMod, foulCount > 0 and 181300) -- Grasping Hands / Dragging Hands
 	end
+	self:ScheduleTimer("CloseProximity", 6, 181299) -- Hands spawn delayed and you still have time to move
 end
 
 function mod:Pound(args)
