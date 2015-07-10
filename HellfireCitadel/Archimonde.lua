@@ -184,7 +184,7 @@ end
 
 function mod:ShadowfelBurst(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
-	self:Bar(args.spellId, 2, CL.cast:format(args.spellId))
+	self:Bar(args.spellId, 2, CL.cast:format(args.spellName))
 	self:ScheduleTimer("Bar", 2, args.spellId, 58.8)
 end
 
