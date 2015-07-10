@@ -99,7 +99,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "FelblazeResidueDamage", 182218)
 	self:Log("SPELL_PERIODIC_MISSED", "FelblazeResidueDamage", 182218)
 	self:Log("SPELL_CAST_SUCCESS", "EjectSoul", 183023) -- Phase 2
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
+	self:Log("SPELL_AURA_REMOVED", "IncompleteBindingRemoved", 190466) -- Phase 1
 end
 
 function mod:OnEngage()
@@ -194,6 +194,7 @@ end
 -- Phase 2
 
 function mod:EjectSoul() -- Phase 2 Start
+	isHostile = false
 	dominatorCount, dominanceCount = 0, 0
 	-- Stop P1 bars
 	self:StopBar(180008) -- Reverberating Blow
@@ -271,25 +272,20 @@ function mod:ShadowBoltVolley(args)
 	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 180258 then -- Construct is Good
-		isHostile = false
-	elseif spellId == 180257 then -- Construct is Evil (back to phase 1)
-		isHostile = true
-		--Stop P2 bars
-		self:StopBar(L.dominator) -- Sargerei Dominator
-		self:StopBar(L.portals) -- Portals Move
-		self:CancelDelayedMessage(L.portals_msg)
-		self:StopBar(-11462) -- Haunting Soul
-		self:StopBar(183329) -- Apocalypse
-		--Start P1 bars
-		self:Message("stages", "Neutral", "Long", CL.phase:format(1), false)
-		self:CDBar(181288, 45) -- Fel Prison
-		self:CDBar(180221, 7) -- Volatile Fel Orb
-		self:CDBar(182051, 25) -- Felblaze Charge
-		if self:Mythic() then
-			self:CDBar(-11778, 15, addFormat:format(addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
-		end
+function mod:IncompleteBindingRemoved(args) -- Phase 2 End
+	isHostile = true
+	-- Stop P2 bars
+	self:StopBar(L.dominator) -- Sargerei Dominator
+	self:StopBar(L.portals) -- Portals Move
+	self:CancelDelayedMessage(L.portals_msg)
+	self:StopBar(-11462) -- Haunting Soul
+	self:StopBar(183329) -- Apocalypse
+	-- Start P1 bars
+	self:Message("stages", "Neutral", "Long", CL.phase:format(1), false)
+	self:CDBar(181288, 46) -- Fel Prison
+	self:CDBar(180221, 8) -- Volatile Fel Orb
+	self:CDBar(182051, 26) -- Felblaze Charge
+	if self:Mythic() then
+		self:CDBar(-11778, 16, addFormat:format(addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
 	end
 end
-
