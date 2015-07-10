@@ -15,8 +15,7 @@ mod.respawnTime = 40
 
 local phase = 1
 local mobCollector = {}
-local annihilatingStrikeCount = 0
-local bulwarkCount = 0
+local strikeCount = 0
 local mendingCount = 1
 local inverseFontTargets = {}
 local fontOnMe = nil
@@ -93,17 +92,17 @@ function mod:OnEngage()
 	wipe(mobCollector)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 
+	self:Bar(180260, 10, CL.count:format(self:SpellName(180260), 1)) -- Annihilating Strike
 	self:Bar(180300, 40) -- Infernal Tempest
-	self:Bar(180260, 10) -- Annihilating Strike
 	self:Bar(182459, 57) -- Edict of Condemnation
 	self:Bar(185237, 16) -- Touch of Harm
 
-	annihilatingStrikeCount = 0
-	bulwarkCount = 0
+	strikeCount = 0
 	mendingCount = 1
 	phase = 1
 
 	-- Adding all players to a list, since they are the "bad" players to Font targets (for proximity)
+	wipe(inverseFontTargets)
 	local _, _, _, mapId = UnitPosition("player")
 	for unit in self:IterateGroup() do
 		local _, _, _, tarMapId = UnitPosition(unit)
@@ -170,16 +169,20 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(180260, name, "Attention", "Info", nil, nil, true)
+		local count = strikeCount > 0 and strikeCount or 3 -- delayed
+		self:TargetMessage(180260, name, "Attention", "Info", CL.count:format(self:SpellName(180260), count), nil, nil, true)
 		if self:Me(guid) then
 			self:Say(180260)
 		end
 	end
 	function mod:AnnihilatingStrike(args)
-		annihilatingStrikeCount = annihilatingStrikeCount + 1
+		strikeCount = strikeCount + 1
 		self:GetBossTarget(printTarget, 0.7, args.sourceGUID)
-		self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
-		self:Bar(args.spellId, annihilatingStrikeCount % 3 == 0 and 20 or 10) -- 3 strikes between infernal tempests
+		self:Bar(args.spellId, 3, CL.cast:format(CL.count:format(args.spellName, strikeCount)))
+		if strikeCount > 2 then
+			strikeCount = 0
+		end
+		self:Bar(args.spellId, strikeCount == 0 and 20 or 10, CL.count:format(args.spellName, strikeCount + 1)) -- 3 strikes between infernal tempests
 	end
 end
 
@@ -198,20 +201,28 @@ end
 -- Stage 2
 
 function mod:AuraOfContempt()
-	phase = 2
-	self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)
+	self:StopBar(CL.count:format(self:SpellName(180260), strikeCount)) -- Annihilating Strike
 	self:StopBar(180300) -- Infernal Tempest
-	self:StopBar(180260) -- Annihilating Strike
+	phase = 2
+	strikeCount = 0
+	self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)
+	self:Bar(180533, 5) -- Tainted Shadows
 	self:Bar(180526, 22) -- Font of Corruption, 2sec cast + 20sec timer
 	updateProximity()
 end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(180533, name, "Important", "Alert")
+		local count = strikeCount > 0 and strikeCount or 3 -- delayed
+		self:TargetMessage(180533, name, "Important", "Alert", CL.count:format(self:SpellName(180533), count))
 	end
 	function mod:TaintedShadows(args)
+		strikeCount = strikeCount + 1
 		self:GetUnitTarget(printTarget, 0.2, args.sourceGUID)
+		if strikeCount > 2 then
+			strikeCount = 0
+		end
+		self:Bar(args.spellId, strikeCount == 0 and 10 or 5, CL.count:format(args.spellName, strikeCount + 1)) -- 3 shadows between font
 	end
 end
 
@@ -256,12 +267,14 @@ end
 -- Stage 3
 
 function mod:AuraOfMalice()
-	phase = 3
-	self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)
+	self:StopBar(CL.count:format(self:SpellName(180533), strikeCount)) -- Tainted Shadows
 	self:StopBar(180526) -- Font of Corruption
 	self:CloseProximity(180526)
-	self:Bar(180608, 40) -- Gavel of the Tyrant
+	phase = 3
+	strikeCount = 0
+	self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)
 	self:Bar(180600, 10) -- Bulwark of the Tyrant
+	self:Bar(180608, 40) -- Gavel of the Tyrant
 	updateProximity()
 end
 
@@ -271,9 +284,12 @@ function mod:GavelOfTheTyrant(args)
 end
 
 function mod:BulwarkOfTheTyrant(args)
-	bulwarkCount = bulwarkCount + 1
-	self:Message(args.spellId, "Attention", "Info")
-	self:Bar(args.spellId, bulwarkCount % 3 == 0 and 20 or 10) -- 3 bulwarks between gavel
+	strikeCount = strikeCount + 1
+	self:Message(args.spellId, "Attention", "Info", CL.count:format(args.spellName, strikeCount))
+	if strikeCount > 2 then
+		strikeCount = 0
+	end
+	self:Bar(args.spellId, strikeCount == 0 and 20 or 10, CL.count:format(args.spellName, strikeCount + 1)) -- 3 bulwarks between gavel
 end
 
 function mod:SovereignsWard(args)
@@ -290,7 +306,8 @@ function mod:Deaths(args)
 	end
 end
 function mod:SealOfDecay(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent")
+	local amount = args.amount or 1
+	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 2 and "Warning")
 end
 
 function mod:TouchOfHarmOriginal(args)
