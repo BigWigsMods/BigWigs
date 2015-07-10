@@ -18,6 +18,8 @@ local tankDebuffCount = 1
 local phase = 0 -- 0:NONE, 1:EXPLOSIVE, 2:FOUL, 3:SHADOW
 local explosiveCount, foulCount, shadowCount = 0, 0, 0
 local enrageMod = 1
+local isPounding = nil
+local ranged = mod:Healer() or mod:Damager() == "RANGED"
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -28,10 +30,10 @@ function mod:GetOptions()
 		181307, -- Foul Crush
 		{181306, "PROXIMITY", "FLASH", "SAY"}, -- Explosive Burst
 		{181305, "TANK_HEALER"}, -- Swat
-		181299, -- Grasping Hands
+		{181299, "PROXIMITY"}, -- Grasping Hands
 		181296, -- Explosive Runes
 		181292, -- Fel Outpouring
-		180244, -- Pound
+		{180244, "PROXIMITY"}, -- Pound
 		186882, -- Enrage
 		"stages",
 		"proximity",
@@ -43,6 +45,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ExplosiveRunes", 181296, 181297) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "GraspingHands", 181299, 181300) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "Pound", 180244)
+	self:Log("SPELL_AURA_REMOVED", "PoundOver", 180244)
 	self:Log("SPELL_CAST_SUCCESS", "FoulCrush", 181307)
 	self:Log("SPELL_CAST_START", "Swat", 181305)
 	self:Log("SPELL_CAST_SUCCESS", "ExplosiveBurst", 181306)
@@ -59,8 +62,12 @@ function mod:OnEngage()
 	poundCount = 1
 	tankDebuffCount = 1
 	enrageMod = self:Mythic() and 0.84 or 1
+	isPounding = nil
 	self:CDBar("stages", 10, 180068) -- Leap
-	self:OpenProximity("proximity", 4)
+	if self:Healer() or self:Damager() == "RANGED" then
+		ranged = true
+		self:OpenProximity("proximity", 4)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -161,7 +168,9 @@ end
 function mod:ExplosiveBurstRemoved(args)
 	self:PrimaryIcon(args.spellId)
 	self:CloseProximity(args.spellId)
-	self:OpenProximity("proximity", 4)
+	if isPounding then
+		self:OpenProximity(180244, 5) -- 4 + 1 safety
+	end
 end
 
 function mod:FoulCrush(args)
@@ -214,19 +223,30 @@ function mod:ExplosiveRunes(args)
 	end
 end
 
-function mod:GraspingHands(args)
-	foulCount = foulCount - 1
-	self:Message(181299, "Important", nil, args.spellId)
-	if self:LFR() then
-		if foulCount > 0 then
-			self:CDBar(args.spellId, 35) -- No Empowered (Dragging) on LFR
+do
+	local function closeProx(self, id)
+		self:CloseProximity(id)
+		if ranged then
+			self:OpenProximity("proximity", 4)
 		end
-	else
-		self:CDBar(181299, 108 * enrageMod, foulCount > 0 and 181300) -- Grasping Hands / Dragging Hands
+	end
+	function mod:GraspingHands(args)
+		foulCount = foulCount - 1
+		self:Message(181299, "Important", nil, args.spellId)
+		self:OpenProximity(181299, 4)
+		if self:LFR() then
+			if foulCount > 0 then
+				self:CDBar(args.spellId, 35) -- No Empowered (Dragging) on LFR
+			end
+		else
+			self:CDBar(181299, 108 * enrageMod, foulCount > 0 and 181300) -- Grasping Hands / Dragging Hands
+		end
+		self:ScheduleTimer(closeProx, 6, self, 181299) -- Hands spawn delayed and you still have time to move
 	end
 end
 
 function mod:Pound(args)
+	isPounding = true
 	self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, poundCount))
 	poundCount = poundCount + 1
 	if self:LFR() then
@@ -235,6 +255,15 @@ function mod:Pound(args)
 		end
 	else
 		self:CDBar(args.spellId, phase == 3 and (50 * enrageMod) or (62 * enrageMod), CL.count:format(args.spellName, poundCount)) -- start->start = 50 / 42 enraged for shadow, 62 / 52 enraged for other
+	end
+	self:OpenProximity(args.spellId, 5) -- 4 + 1 safety
+end
+
+function mod:PoundOver(args)
+	self:CloseProximity(args.spellId)
+	isPounding = nil
+	if ranged then
+		self:OpenProximity("proximity", 4)
 	end
 end
 
