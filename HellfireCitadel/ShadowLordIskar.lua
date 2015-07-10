@@ -119,9 +119,9 @@ end
 
 function mod:EyeOfAnzu(args)
 	eyeTarget = args.destGUID
-	self:TargetMessage(args.spellId, args.destName, "Positive")
+	--self:TargetMessage(args.spellId, args.destName, "Positive") -- XXX info display instead?
 	if self:Me(eyeTarget) then
-		self:PlaySound(args.spellId, #windTargets > 0 and "Warning" or "Info")
+		self:TargetMessage(args.spellId, args.destName, "Personal", #windTargets > 0 and "Warning" or "Info")
 		self:Flash(args.spellId)
 	end
 end
