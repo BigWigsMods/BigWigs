@@ -15,6 +15,7 @@ mod.respawnTime = 30
 
 local horrorCount = 1
 local leapCount = 0
+local felRageCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -71,6 +72,7 @@ end
 function mod:OnEngage()
 	horrorCount = 1
 	leapCount = 0
+	felRageCount = 1
 	self:Berserk(600)
 	self:Bar(184681, 75, CL.count:format(self:SpellName(184681), horrorCount)) -- Wailing Horror
 	self:Bar(184358, 30) -- Gurtogg Bloodboil : Fel Rage
@@ -107,10 +109,19 @@ function mod:Reap(args)
 	self:CDBar(args.spellId, 65) -- 65-72 pretty inconsistent
 end
 
-function mod:FelRage(args)
-	self:TargetMessage(184358, args.destName, "Urgent", "Warning")
-	self:TargetBar(184358, 25, args.destName)
-	self:PrimaryIcon(184358, args.destName)
+do
+	timers = {0, 65, 75, 83} -- approx. dependend on something
+	function mod:FelRage(args)
+		self:TargetMessage(184358, args.destName, "Urgent", "Warning")
+		self:TargetBar(184358, 25, args.destName)
+		self:PrimaryIcon(184358, args.destName)
+
+		felRageCount = felRageCount + 1
+		local timer = timers[felRageCount]
+		if timer then
+			self:CDBar(args.spellId, timer)
+		end
+	end
 end
 
 function mod:FelRageRemoved(args)
