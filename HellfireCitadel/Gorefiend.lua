@@ -367,8 +367,6 @@ do
 end
 
 function mod:FelFlames(args)
-	if args.amount % 2 == 0 then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Positive", args.amount > 5 and "Warning")
-	end
+	self:StackMessage(args.spellId, args.destName, args.amount, "Positive", args.amount > 3 and "Warning")
 end
 
