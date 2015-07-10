@@ -83,11 +83,11 @@ function mod:ShadowEnergy(args)
 		self:Bar(180244, 40, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
 		self:CDBar("stages", 122, 180068) -- Leap
 	else
-		self:Bar(181292, 16 * enrageMod, 181293) -- Empowered Fel Outpouring
-		self:Bar(181305, 38 * enrageMod) -- Swat
+		self:Bar(181292, 13 * enrageMod, 181293) -- Empowered Fel Outpouring
+		self:Bar(181305, 37 * enrageMod) -- Swat
 		self:CDBar(180244, 45 * enrageMod, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
 		self:Bar(181296, 63 * enrageMod, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
-		self:Bar(181299, 85 * enrageMod, foulCount > 0 and 181300)-- Grasping Hands / Dragging Hands
+		self:Bar(181299, 83 * enrageMod, foulCount > 0 and 181300)-- Grasping Hands / Dragging Hands
 		self:CDBar("stages", 145 * enrageMod, 180068) -- Leap
 	end
 end
@@ -108,8 +108,8 @@ function mod:ExplosiveEnergy(args)
 		self:Bar(181296, 13 * enrageMod, 181297) -- Empowered Explosive Runes
 		self:Bar(181306, 25 * enrageMod) -- Explosive Burst
 		self:CDBar(180244, 33 * enrageMod, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
-		self:Bar(181299, 53 * enrageMod, foulCount > 0 and 181300) -- Grasping Hands / Dragging Hands
-		self:Bar(181292, 74 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
+		self:Bar(181299, 51 * enrageMod, foulCount > 0 and 181300) -- Grasping Hands / Dragging Hands
+		self:Bar(181292, 71 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
 		self:CDBar("stages", 133 * enrageMod, 180068) -- Leap
 	end
 end
@@ -127,10 +127,10 @@ function mod:FoulEnergy(args)
 		self:Bar(180244, 30, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
 		self:CDBar("stages", 92, 180068) -- Leap
 	else
-		self:Bar(181299, 15 * enrageMod, 181300) -- Dragging Hands
+		self:Bar(181299, 13 * enrageMod, 181300) -- Dragging Hands
 		self:Bar(181307, 25 * enrageMod) -- Foul Crush
 		self:CDBar(180244, 33 * enrageMod, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
-		self:Bar(181292, 54 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
+		self:Bar(181292, 51 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
 		self:Bar(181296, 83 * enrageMod, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
 		self:CDBar("stages", 133 * enrageMod, 180068) -- Leap
 	end
