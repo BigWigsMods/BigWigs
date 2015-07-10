@@ -81,12 +81,12 @@ function mod:ShadowEnergy(args)
 	if args.spellId == 189197 then -- LFR
 		self:Bar(181292, 13) -- Fel Outpouring
 		self:Bar(181305, 31) -- Swat
-		self:CDBar(180244, 40) -- Pound
+		self:CDBar(180244, 40, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
 		--self:CDBar("stages", 145 * enrageMod, 180068) -- Leap
 	else
 		self:Bar(181292, 16 * enrageMod, 181293) -- Empowered Fel Outpouring
 		self:Bar(181305, 38 * enrageMod) -- Swat
-		self:CDBar(180244, 45 * enrageMod) -- Pound
+		self:CDBar(180244, 45 * enrageMod, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
 		self:Bar(181296, 63 * enrageMod, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
 		self:Bar(181299, 85 * enrageMod, foulCount > 0 and 181300)-- Grasping Hands / Dragging Hands
 		self:CDBar("stages", 145 * enrageMod, 180068) -- Leap
@@ -103,12 +103,12 @@ function mod:ExplosiveEnergy(args)
 	if args.spellId == 189198 then -- LFR
 		self:Bar(181296, 10) -- Explosive Runes
 		self:Bar(181306, 20) -- Explosive Burst
-		self:CDBar(180244, 30) -- Pound
+		self:CDBar(180244, 30, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
 		self:CDBar("stages", 92, 180068) -- Leap
 	else
 		self:Bar(181296, 13 * enrageMod, 181297) -- Empowered Explosive Runes
 		self:Bar(181306, 25 * enrageMod) -- Explosive Burst
-		self:CDBar(180244, 33 * enrageMod) -- Pound
+		self:CDBar(180244, 33 * enrageMod, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
 		self:Bar(181299, 53 * enrageMod, foulCount > 0 and 181300) -- Grasping Hands / Dragging Hands
 		self:Bar(181292, 74 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
 		self:CDBar("stages", 133 * enrageMod, 180068) -- Leap
@@ -125,12 +125,12 @@ function mod:FoulEnergy(args)
 	if args.spellId == 189199 then -- LFR
 		self:Bar(181299, 14) -- Grasping Hands
 		self:Bar(181307, 22) -- Foul Crush
-		self:CDBar(180244, 30) -- Pound
+		self:CDBar(180244, 30, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
 		self:CDBar("stages", 92, 180068) -- Leap
 	else
 		self:Bar(181299, 15 * enrageMod, 181300) -- Dragging Hands
 		self:Bar(181307, 25 * enrageMod) -- Foul Crush
-		self:CDBar(180244, 33 * enrageMod) -- Pound
+		self:CDBar(180244, 33 * enrageMod, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
 		self:Bar(181292, 54 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
 		self:Bar(181296, 83 * enrageMod, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
 		self:CDBar("stages", 133 * enrageMod, 180068) -- Leap
@@ -239,7 +239,9 @@ function mod:Pound(args)
 	self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, poundCount))
 	poundCount = poundCount + 1
 	if self:LFR() then
-		self:CDBar(args.spellId, phase == 3 and 35 or 25, CL.count:format(args.spellName, poundCount))
+		if poundCount % 2 == 0 then -- Only 2 per phase
+			self:CDBar(args.spellId, phase == 3 and 35 or 25, CL.count:format(args.spellName, poundCount))
+		end
 	else
 		self:CDBar(args.spellId, phase == 3 and (50 * enrageMod) or (62 * enrageMod), CL.count:format(args.spellName, poundCount)) -- start->start = 50 / 42 enraged for shadow, 62 / 52 enraged for other
 	end
