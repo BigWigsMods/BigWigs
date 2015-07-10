@@ -80,6 +80,7 @@ function mod:OnEngage()
 	orbCount = 1
 	self:Berserk(600)
 	--self:Bar(182280, self:Easy() and 23.3 or 10.3) -- Artillery APPLICATION
+	self:Bar(182001, 8.5) -- Unstable Orb
 	self:Bar(185282, 13.3, CL.count:format(self:SpellName(185282), barrageCount)) -- Barrage
 	self:Bar(182020, 34.4, CL.count:format(self:SpellName(182020), poundingCount)) -- Pounding
 	self:Bar(179889, 64.3) -- Blitz
