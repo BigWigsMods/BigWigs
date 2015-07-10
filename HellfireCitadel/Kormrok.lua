@@ -79,10 +79,10 @@ function mod:ShadowEnergy(args)
 	self:Message("stages", "Neutral", "Info", args.spellName, false)
 
 	if args.spellId == 189197 then -- LFR
-		self:Bar(181292, 13) -- Fel Outpouring
-		self:Bar(181305, 31) -- Swat
-		self:CDBar(180244, 40, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
-		--self:CDBar("stages", 145 * enrageMod, 180068) -- Leap
+		self:Bar(181292, 10) -- Fel Outpouring
+		self:Bar(181305, 30) -- Swat
+		self:Bar(180244, 40, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
+		self:CDBar("stages", 122, 180068) -- Leap
 	else
 		self:Bar(181292, 16 * enrageMod, 181293) -- Empowered Fel Outpouring
 		self:Bar(181305, 38 * enrageMod) -- Swat
@@ -103,7 +103,7 @@ function mod:ExplosiveEnergy(args)
 	if args.spellId == 189198 then -- LFR
 		self:Bar(181296, 10) -- Explosive Runes
 		self:Bar(181306, 20) -- Explosive Burst
-		self:CDBar(180244, 30, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
+		self:Bar(180244, 30, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
 		self:CDBar("stages", 92, 180068) -- Leap
 	else
 		self:Bar(181296, 13 * enrageMod, 181297) -- Empowered Explosive Runes
@@ -125,7 +125,7 @@ function mod:FoulEnergy(args)
 	if args.spellId == 189199 then -- LFR
 		self:Bar(181299, 14) -- Grasping Hands
 		self:Bar(181307, 22) -- Foul Crush
-		self:CDBar(180244, 30, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
+		self:Bar(180244, 30, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
 		self:CDBar("stages", 92, 180068) -- Leap
 	else
 		self:Bar(181299, 15 * enrageMod, 181300) -- Dragging Hands
@@ -183,9 +183,9 @@ function mod:Swat(args)
 	self:Message(args.spellId, "Attention", self:Tank() and "Warning", args.spellName)
 	tankDebuffCount = tankDebuffCount + 1
 	if self:LFR() then
-		--if tankDebuffCount == 2 then -- Only time for 1 more in LFR
-		--	self:Bar(args.spellId, 50)
-		--end
+		if tankDebuffCount == 2 then -- Only time for 1 more in LFR
+			self:Bar(args.spellId, 60)
+		end
 	elseif tankDebuffCount < 4 then
 		self:Bar(args.spellId, 38 * enrageMod)
 	end
