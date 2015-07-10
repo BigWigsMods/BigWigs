@@ -126,7 +126,7 @@ function mod:FoulEnergy(args)
 		self:Bar(181299, 14) -- Grasping Hands
 		self:Bar(181307, 22) -- Foul Crush
 		self:CDBar(180244, 30) -- Pound
-		self:CDBar("stages", and 92, 180068) -- Leap
+		self:CDBar("stages", 92, 180068) -- Leap
 	else
 		self:Bar(181299, 15 * enrageMod, 181300) -- Dragging Hands
 		self:Bar(181307, 25 * enrageMod) -- Foul Crush
