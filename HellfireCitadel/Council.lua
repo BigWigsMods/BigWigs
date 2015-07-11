@@ -17,6 +17,12 @@ local horrorCount = 1
 local leapCount = 0
 local felRageCount = 1
 
+local diaIsDead = false
+local gurtoggIsDead = false
+local jubeiIsDead = false
+local nextAbility = 0 -- 1: horror, 2: mirror, 3: leap
+local nextAbilityTime = 0
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -65,21 +71,65 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "DemolishingLeapStop", 184365)
 	-- Blademaster Jubei'thos
 	self:Log("SPELL_CAST_SUCCESS", "MirrorImages", 183885)
+	
+	self:Death("DiaDeath", 92144)
+	self:Death("GurtoggDeath", 92146)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
+end
+
+local function startHorrorCD(self, remaining)
+	if diaIsDead and jubeiIsDead and gurtoggIsDead then return end
+	remaining = remaining or 75
+	if diaIsDead then
+		startMirrorCD(self, remaining)
+	else
+		self:CDBar(184681, remaining, CL.count:format(self:SpellName(184681), horrorCount)) -- Wailing Horror
+		nextAbility = 1
+		nextAbilityTime = GetTime() + remaining
+	end
+end
+
+local function startMirrorCD(self, remaining)
+	if diaIsDead and jubeiIsDead and gurtoggIsDead then return end
+	remaining = remaining or 78
+	if jubeiIsDead then
+		startLeapCD(self, remaining)
+	else
+		self:CDBar(183885, remaining) -- Mirror Images
+		nextAbility = 2
+		nextAbilityTime = GetTime() + remaining
+	end
+end
+
+local function startLeapCD(self, remaining)
+	if diaIsDead and jubeiIsDead and gurtoggIsDead then return end
+	remaining = remaining or 72
+	if gurtoggIsDead then
+		startHorrorCD(self, remaining)
+	else
+		self:CDBar(184366, remaining) -- Demolishing Leap
+		nextAbility = 3
+		nextAbilityTime = GetTime() + remaining
+	end
 end
 
 function mod:OnEngage()
 	horrorCount = 1
 	leapCount = 0
 	felRageCount = 1
+
+	diaIsDead = false
+	gurtoggIsDead = false
+	jubeiIsDead = false
+	nextAbility = 1
+
 	self:Berserk(600)
-	self:Bar(184681, 75, CL.count:format(self:SpellName(184681), horrorCount)) -- Wailing Horror
+	startHorrorCD(self)
 	self:Bar(184358, 30) -- Gurtogg Bloodboil : Fel Rage
 	self:CDBar(184449, 6.3) -- Dia Darkwhisper : Mark of the Necromancer, 6.3-7.5
 	self:CDBar(184476, 67) -- Dia Darkwhisper : Reap, 66-69
-	self:CDBar(183885, 153.3) -- Blademaster Jubei'thos : Mirror Images
-	self:CDBar(184366, 225) -- Gurtogg Bloodboil : Demolishing Leap, 225-228
 end
 
 --------------------------------------------------------------------------------
@@ -91,6 +141,9 @@ function mod:DemolishingLeapStart(args)
 	self:Message(184366, "Important", nil, CL.incoming:format(args.spellName))
 	leapCount = leapCount + 1
 	self:Bar(184366, 5.8, CL.count:format(args.spellName, leapCount))
+	if args.spellId == 184365 then
+		startHorrorCD(self)
+	end
 end
 
 function mod:DemolishingLeapStop(args)
@@ -119,7 +172,7 @@ do
 		felRageCount = felRageCount + 1
 		local timer = timers[felRageCount]
 		if timer then
-			self:CDBar(args.spellId, timer)
+			self:CDBar(184358, timer)
 		end
 	end
 end
@@ -139,7 +192,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg:find("184681", nil, true) then
 		self:Message(184681, "Urgent", "Alert", CL.count:format(self:SpellName(184681), horrorCount))
 		horrorCount = horrorCount + 1
-		self:Bar(184681, 151, CL.count:format(self:SpellName(184681), horrorCount))
+		startMirrorCD(self)
 	end
 end
 
@@ -170,7 +223,7 @@ end
 
 function mod:MirrorImages(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, 153)
+	startLeapCD(self)
 end
 
 do
@@ -184,3 +237,29 @@ do
 	end
 end
 
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 190607 then -- Ghostly, Blademaster Jubei'thos dies
+		jubeiIsDead = true
+		if nextAbility == 2 then -- mirror
+			startLeapCD(self, nextAbilityTime - GetTime())
+			self:StopBar(183885) -- Mirror Images
+		end
+	end
+end
+
+function mod:DiaDeath(args)
+	diaIsDead = true
+	if nextAbility == 1 then -- horror
+		startMirrorCD(self, nextAbilityTime - GetTime())
+		self:StopBar(CL.count:format(self:SpellName(184681), horrorCount)) -- Wailing Horror
+	end
+end
+
+function mod:GurtoggDeath(args)
+	gurtoggIsDead = true
+	if nextAbility == 3 then -- leap
+		startHorrorCD(self, nextAbilityTime - GetTime())
+		self:StopBar(184366) -- Demolishing Leap
+	end
+	self:StopBar(184358) -- Fel Rage
+end
