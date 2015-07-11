@@ -250,7 +250,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 190306 then -- Activate Fel Portal
 		self:Bar("imps", 14.5, L.imps, L.imps_icon)
 
-	elseif spellId == 187196 -- Fel Feedback (Vanguard Akkelion Spawned)
+	elseif spellId == 187196 then -- Fel Feedback (Vanguard Akkelion Spawned)
 		self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(-11691)), false)
 		self:CDBar(186500, 31) -- Chains of Fel 31-36
 		self:CDBar(186448, 12) -- Felblaze Flurry
