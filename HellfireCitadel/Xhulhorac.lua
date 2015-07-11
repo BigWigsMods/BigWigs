@@ -89,7 +89,6 @@ function mod:OnEngage()
 	phase = 1
 	blackHoleCount = 1
 	wipe(mobCollector)
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:CDBar(186271, 8) -- Fel Strike
 	self:CDBar(186407, 19) -- Fel Surge 19-24
 end
@@ -134,7 +133,7 @@ do
 			local t = GetTime()
 			if t-prev > 1 then
 				prev = t
-				self:Bar("imps", 24.5, L.imps, L.imps_icon)
+				self:CDBar("imps", 24, L.imps, L.imps_icon)
 			end
 		end
 	end
@@ -148,7 +147,7 @@ do
 			local t = GetTime()
 			if t-prev > 1 then
 				prev = t
-				self:Bar("voidfiend", 24.5, L.voidfiend, L.voidfiend_icon)
+				self:CDBar("voidfiend", 27, L.voidfiend, L.voidfiend_icon)
 			end
 		end
 	end
@@ -247,31 +246,22 @@ function mod:BlackHole(args)
 	self:CDBar(186546, args.spellId == 189779 and 30 or blackHoleCount % 2 == 0 and 30 or 40) -- 30, 40, 30 is as long a p2 as i've seen
 end
 
-function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	for i = 1, 5 do
-		local guid = UnitGUID("boss"..i)
-		if guid and not mobCollector[guid] then
-			mobCollector[guid] = true
-			local mobId = self:MobId(guid)
-			if mobId == 94185 then -- Vanguard Akkelion
-				self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(-11691)), false)
-				self:CDBar(186500, 31) -- Chains of Fel 31-36
-				self:CDBar(186448, 12) -- Felblaze Flurry
-			elseif mobId == 94239 then -- Omnus
-				self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(-11688)), false)
-				self:CDBar(186546, 18) -- Black Hole
-				self:CDBar(186785, 6) -- Withering Gaze
-			end
-		end
-	end
-end
-
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 190306 then -- Activate Fel Portal
 		self:Bar("imps", 14.5, L.imps, L.imps_icon)
 
+	elseif spellId == 187196 -- Fel Feedback (Vanguard Akkelion Spawned)
+		self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(-11691)), false)
+		self:CDBar(186500, 31) -- Chains of Fel 31-36
+		self:CDBar(186448, 12) -- Felblaze Flurry
+
 	elseif spellId == 190307 then -- Activate Void Portal
 		self:Bar("voidfiend", 14.5, L.voidfiend, L.voidfiend_icon)
+
+	elseif spellId == 189806 then -- Void Feedback (Omnus Spawned)
+		self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(-11688)), false)
+		self:CDBar(186546, 18) -- Black Hole
+		self:CDBar(186785, 6) -- Withering Gaze
 
 	elseif spellId == 187209 then -- Overwhelming Chaos
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
