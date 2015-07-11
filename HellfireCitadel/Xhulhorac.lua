@@ -97,6 +97,34 @@ end
 -- Event Handlers
 --
 
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 190306 then -- Activate Fel Portal
+		self:Bar("imps", 14.5, L.imps, L.imps_icon)
+
+	elseif spellId == 187196 then -- Fel Feedback (Vanguard Akkelion Spawned)
+		self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(-11691)), false)
+		self:CDBar(186500, 31) -- Chains of Fel 31-36
+		self:CDBar(186448, 12) -- Felblaze Flurry
+
+	elseif spellId == 190307 then -- Activate Void Portal
+		self:Bar("voidfiend", 14.5, L.voidfiend, L.voidfiend_icon)
+
+	elseif spellId == 189806 then -- Void Feedback (Omnus Spawned)
+		self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(-11688)), false)
+		self:CDBar(186546, 18) -- Black Hole
+		self:CDBar(186785, 6) -- Withering Gaze
+
+	elseif spellId == 187209 then -- Overwhelming Chaos
+		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
+		self:StopBar(186271) -- Fel Strike
+		self:StopBar(186407) -- Fel Surge
+		self:StopBar(186292) -- Void Strike
+		self:StopBar(186333) -- Void Surge
+		self:Message("stages", "Neutral", "Info", CL.phase:format(4), false)
+		self:Bar(187204, 10) -- Overwhelming Chaos
+	end
+end
+
 function mod:Deaths(args)
 	if args.mobId == 94185 then -- Vanguard Akkelion
 		self:StopBar(186271) -- Fel Strike
@@ -147,7 +175,7 @@ do
 			local t = GetTime()
 			if t-prev > 1 then
 				prev = t
-				self:CDBar("voidfiend", 27, L.voidfiend, L.voidfiend_icon)
+				self:CDBar("voidfiend", 27, L.voidfiend, L.voidfiend_icon) -- circles spawn around ~24s, adds land after another 3.5s
 			end
 		end
 	end
@@ -194,27 +222,6 @@ function mod:SurgeRemoved(args)
 	end
 end
 
-do
-	local list = mod:NewTargetList()
-	function mod:ChainsOfFel(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, 186500, list, "Urgent", "Alarm")
-			self:CDBar(186500, 33)
-		end
-	end
-end
-
-function mod:FelblazeFlurry(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
-	self:CDBar(args.spellId, 17)
-end
-
-function mod:WitheringGaze(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
-	self:CDBar(args.spellId, 24)
-end
-
 function mod:FelStrike(args)
 	self:Message(186271, "Urgent", "Warning", CL.casting:format(args.spellName))
 	if phase < 3 then
@@ -231,13 +238,27 @@ function mod:VoidStrike(args)
 	else -- alternates
 		self:CDBar(186271, 7) -- Fel Strike
 	end
-
 end
 
-function mod:OverwhelmingChaos(args)
-	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Important")
-	self:Bar(args.spellId, 10, CL.count:format(args.spellName, amount + 1))
+function mod:FelblazeFlurry(args)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
+	self:CDBar(args.spellId, 17)
+end
+
+do
+	local list = mod:NewTargetList()
+	function mod:ChainsOfFel(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, 186500, list, "Urgent", "Alarm")
+			self:CDBar(186500, 33)
+		end
+	end
+end
+
+function mod:WitheringGaze(args)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
+	self:CDBar(args.spellId, 24)
 end
 
 function mod:BlackHole(args)
@@ -246,31 +267,8 @@ function mod:BlackHole(args)
 	self:CDBar(186546, args.spellId == 189779 and 30 or blackHoleCount % 2 == 0 and 30 or 40) -- 30, 40, 30 is as long a p2 as i've seen
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 190306 then -- Activate Fel Portal
-		self:Bar("imps", 14.5, L.imps, L.imps_icon)
-
-	elseif spellId == 187196 then -- Fel Feedback (Vanguard Akkelion Spawned)
-		self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(-11691)), false)
-		self:CDBar(186500, 31) -- Chains of Fel 31-36
-		self:CDBar(186448, 12) -- Felblaze Flurry
-
-	elseif spellId == 190307 then -- Activate Void Portal
-		self:Bar("voidfiend", 14.5, L.voidfiend, L.voidfiend_icon)
-
-	elseif spellId == 189806 then -- Void Feedback (Omnus Spawned)
-		self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(-11688)), false)
-		self:CDBar(186546, 18) -- Black Hole
-		self:CDBar(186785, 6) -- Withering Gaze
-
-	elseif spellId == 187209 then -- Overwhelming Chaos
-		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
-		self:StopBar(186271) -- Fel Strike
-		self:StopBar(186407) -- Fel Surge
-		self:StopBar(186292) -- Void Strike
-		self:StopBar(186333) -- Void Surge
-		self:Message("stages", "Neutral", "Info", CL.phase:format(4), false)
-		self:Bar(187204, 10) -- Overwhelming Chaos
-	end
+function mod:OverwhelmingChaos(args)
+	local amount = args.amount or 1
+	self:StackMessage(args.spellId, args.destName, amount, "Important")
+	self:Bar(args.spellId, 10, CL.count:format(args.spellName, amount + 1))
 end
-
