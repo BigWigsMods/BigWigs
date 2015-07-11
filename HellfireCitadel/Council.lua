@@ -110,7 +110,7 @@ function mod:Reap(args)
 end
 
 do
-	timers = {0, 65, 75, 83} -- approx. dependend on something
+	local timers = {0, 65, 75, 83} -- approx. dependend on something
 	function mod:FelRage(args)
 		self:TargetMessage(184358, args.destName, "Urgent", "Warning")
 		self:TargetBar(184358, 25, args.destName)
