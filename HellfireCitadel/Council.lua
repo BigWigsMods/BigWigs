@@ -31,7 +31,7 @@ function mod:GetOptions()
 	return {
 		--[[ Dia Darkwhisper ]]--
 		184449, -- Mark of the Necromancer
-		184476, -- Reap
+		{184476, "SAY", "PROXIMITY"}, -- Reap
 		{184657, "TANK_HEALER"}, -- Nightmare Visage
 		184681, -- Wailing Horror
 		--[[ Gurtogg Bloodboil ]]--
@@ -55,6 +55,7 @@ function mod:OnBossEnable()
 	-- Dia Darkwhisper
 	self:Log("SPELL_CAST_SUCCESS", "MarkOfTheNecromancer", 184449)
 	self:Log("SPELL_CAST_START", "Reap", 184476)
+	self:Log("SPELL_CAST_SUCCESS", "ReapOver", 184476)
 	self:Log("SPELL_CAST_START", "NightmareVisage", 184657)
 
 	self:Log("SPELL_AURA_APPLIED", "ReapDamage", 184652)
@@ -71,7 +72,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "DemolishingLeapStop", 184365)
 	-- Blademaster Jubei'thos
 	self:Log("SPELL_CAST_SUCCESS", "MirrorImages", 183885)
-	
+
 	self:Death("DiaDeath", 92144)
 	self:Death("GurtoggDeath", 92146)
 
@@ -157,9 +158,17 @@ function mod:MarkOfTheNecromancer(args)
 end
 
 function mod:Reap(args)
+	if UnitDebuff("player", self:SpellName(184449)) then -- Mark of the Necromancer
+		self:Say(args.spellId)
+		self:OpenProximity(args.spellId, 5) -- 5 yard guess
+	end
 	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
 	self:CDBar(args.spellId, 65) -- 65-72 pretty inconsistent
+end
+
+function mod:ReapOver(args)
+	self:CloseProximity(args.spellId)
 end
 
 do
@@ -263,3 +272,4 @@ function mod:GurtoggDeath(args)
 	end
 	self:StopBar(184358) -- Fel Rage
 end
+
