@@ -109,24 +109,24 @@ function mod:Reap(args)
 	self:CDBar(args.spellId, 65) -- 65-72 pretty inconsistent
 end
 
-do
-	local timers = {0, 65, 75, 83} -- approx. dependend on something
-	function mod:FelRage(args)
-		self:TargetMessage(184358, args.destName, "Urgent", "Warning")
-		self:TargetBar(184358, 25, args.destName)
-		self:PrimaryIcon(184358, args.destName)
+function mod:FelRage(args)
+	self:TargetMessage(184358, args.destName, "Urgent", "Warning")
+	self:TargetBar(184358, 25, args.destName)
+	self:PrimaryIcon(184358, args.destName)
+	felRageCount = felRageCount + 1
+end
 
-		felRageCount = felRageCount + 1
+do
+	local timers = {0, 40, 50, 58} -- approx. depends on something
+	function mod:FelRageRemoved(args)
+		self:StopBar(args.spellName, args.destName)
+		self:PrimaryIcon(184358)
+
 		local timer = timers[felRageCount]
 		if timer then
 			self:CDBar(args.spellId, timer)
 		end
 	end
-end
-
-function mod:FelRageRemoved(args)
-	self:StopBar(args.spellName, args.destName)
-	self:PrimaryIcon(184358)
 end
 
 function mod:NightmareVisage(args)
