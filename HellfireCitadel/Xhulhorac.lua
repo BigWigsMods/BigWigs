@@ -17,6 +17,17 @@ local blackHoleCount = 1
 local mobCollector = {}
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.imps, L.imps_desc, L.imps_icon = -11694, 186532, "spell_shadow_summonimp"
+	L.voidfiend, L.voidfiend_desc, L.voidfiend_icon = -11714, 188939, "spell_shadow_summonvoidwalker"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -39,6 +50,8 @@ function mod:GetOptions()
 		186135, -- Voidtouched
 		186073, -- Felsinged
 		186063, -- Wasting Void
+		"imps", -- Wild Pyromaniac
+		"voidfiend", -- Unstable Voidfiend
 		"stages",
 	}, {
 		[186271] = CL.phase:format(1),
@@ -55,7 +68,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Felsinged_WastingVoid", 186073, 186063) -- Felsinged, Wasting Void
 	self:Log("SPELL_AURA_APPLIED", "Surge", 186407, 186333) -- Fel Surge, Void Surge
 	self:Log("SPELL_AURA_REMOVED", "SurgeRemoved", 186407, 186333) -- Fel Surge, Void Surge
-	self:Log("SPELL_AURA_APPLIED", "ChainsOfFel", 186500)
+	self:Log("SPELL_AURA_APPLIED", "ChainsOfFel", 186500, 189775) -- Normal, Empowered
 	self:Log("SPELL_AURA_APPLIED", "FelblazeFlurry", 186448) -- Felblaze Flurry
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FelblazeFlurry", 186448) -- Felblaze Flurry
 	self:Log("SPELL_AURA_APPLIED", "WitheringGaze", 186785) -- Withering Gaze
@@ -64,7 +77,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "VoidStrike", 186292, 190224) -- Void Strike XXX 186292 still used?
 	self:Log("SPELL_AURA_APPLIED", "OverwhelmingChaos", 187204)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingChaos", 187204)
-	self:Log("SPELL_CAST_START", "BlackHole", 186546)
+	self:Log("SPELL_CAST_START", "BlackHole", 186546, 189779) -- Normal, Empowered
+	self:Log("SPELL_CAST_START", "FelOrb", 186532)
+	self:Log("SPELL_CAST_START", "Voidstep", 188939)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	self:Death("Deaths", 94185, 94239) -- Vanguard Akkelion, Omnus
@@ -91,6 +106,11 @@ function mod:Deaths(args)
 		self:StopBar(186500) -- Chains of Fel
 		phase = 2
 		self:Message("stages", "Neutral", "Info", CL.phase:format(2), false)
+		self:CDBar(186292, 20) -- Void Strike
+		self:CDBar(186333, 28) -- Void Surge
+		if self:Mythic() then
+			self:CDBar(186500, 30) -- Empowered Chains of Fel
+		end
 	elseif args.mobId == 94239 then -- Omnus
 		self:StopBar(186292) -- Void Strike
 		self:StopBar(186333) -- Void Surge
@@ -98,6 +118,39 @@ function mod:Deaths(args)
 		self:StopBar(186546) -- Black Hole
 		phase = 3
 		self:Message("stages", "Neutral", "Info", CL.phase:format(3), false)
+		-- self:CDBar(186292, 4) -- Void Strike
+		-- self:CDBar(186333, 28) -- Void Surge
+		if self:Mythic() then
+			self:CDBar(186546, 21) -- Empowered Black Hole
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:FelOrb(args)
+		if not mobCollector[args.sourceGUID] then
+			mobCollector[args.sourceGUID] = true
+			local t = GetTime()
+			if t-prev > 1 then
+				prev = t
+				self:Bar("imps", 24.5, L.imps, L.imps_icon)
+			end
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:Voidstep(args)
+		if not mobCollector[args.sourceGUID] then
+			mobCollector[args.sourceGUID] = true
+			local t = GetTime()
+			if t-prev > 1 then
+				prev = t
+				self:Bar("voidfiend", 24.5, L.voidfiend, L.voidfiend_icon)
+			end
+		end
 	end
 end
 
@@ -147,8 +200,8 @@ do
 	function mod:ChainsOfFel(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Urgent", "Alarm")
-			self:CDBar(args.spellId, 34) -- rarely (consistently) 31, mostly 34
+			self:ScheduleTimer("TargetMessage", 0.3, 186500, list, "Urgent", "Alarm")
+			self:CDBar(186500, 33)
 		end
 	end
 end
@@ -190,8 +243,8 @@ end
 
 function mod:BlackHole(args)
 	blackHoleCount = blackHoleCount + 1
-	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
-	self:CDBar(args.spellId, blackHoleCount % 2 == 0 and 30 or 40) -- 30, 40, 30 is as long a p2 as i've seen
+	self:Message(186546, "Urgent", "Alert", CL.incoming:format(self:SpellName(186546)))
+	self:CDBar(186546, args.spellId == 189779 and 30 or blackHoleCount % 2 == 0 and 30 or 40) -- 30, 40, 30 is as long a p2 as i've seen
 end
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
@@ -203,16 +256,24 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			if mobId == 94185 then -- Vanguard Akkelion
 				self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(-11691)), false)
 				self:CDBar(186500, 31) -- Chains of Fel 31-36
+				self:CDBar(186448, 12) -- Felblaze Flurry
 			elseif mobId == 94239 then -- Omnus
 				self:Message("stages", "Neutral", nil, CL.spawned:format(self:SpellName(-11688)), false)
 				self:CDBar(186546, 18) -- Black Hole
+				self:CDBar(186785, 6) -- Withering Gaze
 			end
 		end
 	end
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 187209 then -- Overwhelming Chaos
+	if spellId == 190306 then -- Activate Fel Portal
+		self:Bar("imps", 14.5, L.imps, L.imps_icon)
+
+	elseif spellId == 190307 then -- Activate Void Portal
+		self:Bar("voidfiend", 14.5, L.voidfiend, L.voidfiend_icon)
+
+	elseif spellId == 187209 then -- Overwhelming Chaos
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
 		self:StopBar(186271) -- Fel Strike
 		self:StopBar(186407) -- Fel Surge
