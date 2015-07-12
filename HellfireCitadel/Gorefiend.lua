@@ -50,6 +50,9 @@ local shadowOfDeathInfo = {
 		},
 	}
 }
+local playersNotInBelly = {}
+local digestOnMe = nil
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -127,12 +130,13 @@ end
 
 local function showProximity()
 	if mod:Healer() or mod:Damager() == "RANGED" then
-		mod:OpenProximity("proximity", 5) -- XXX Tie this to Surging Shadows?
+		mod:OpenProximity("proximity", 5, playersNotInBelly) -- XXX Tie this to Surging Shadows?
 	end
 end
 
 function mod:OnEngage()
 	fixateOnMe = nil
+	digestOnMe = nil
 	fateCount = 1
 	showProximity()
 	self:Bar(179909, 18) -- Shared Fate
@@ -145,6 +149,16 @@ function mod:OnEngage()
 	shadowOfDeathInfo.count.tank = 0
 	shadowOfDeathInfo.count.dps = 0
 	shadowOfDeathInfo.count.healer = 0
+
+	wipe(playersNotInBelly)
+	-- Adding all players so we can remove them when they enter the belly
+	local _, _, _, mapId = UnitPosition("player")
+	for unit in self:IterateGroup() do
+		local _, _, _, tarMapId = UnitPosition(unit)
+		if tarMapId == mapId then
+			playersNotInBelly[#playersNotInBelly+1] = self:UnitName(unit)
+		end
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -258,7 +272,10 @@ function mod:FeastOfSoulsOver(args)
 end
 
 function mod:Digest(args)
+	-- They are in the belly now, so we don't need to show them in proximity
+	tDeleteItem(playersNotInBelly, args.destName)
 	if self:Me(args.destGUID) then
+		digestOnMe = true
 		self:CloseProximity("proximity")
 		self:Message(args.spellId, "Attention", "Long", CL.custom_sec:format(args.spellName, self:Mythic() and 30 or 40))
 		if not self:Mythic() then -- you don't have any control over it on mythic
@@ -267,16 +284,26 @@ function mod:Digest(args)
 			self:DelayedMessage(args.spellId, 35, "Urgent", CL.custom_sec:format(args.spellName, 5), nil, "Alert")
 		end
 		self:TargetBar(args.spellId, self:Mythic() and 30 or 40, args.destName)
+	else -- update proximity with new list
+		showProximity()
 	end
 end
 
 function mod:DigestRemoved(args)
+	-- They are out of the belly, so show them in proximity again
+	if not tContains(playersNotInBelly, args.destName) then
+		playersNotInBelly[#playersNotInBelly+1] = args.destName
+	end
+
 	if self:Me(args.destGUID) then
+		digestOnMe = nil
 		showProximity()
 		self:CancelDelayedMessage(CL.custom_sec:format(args.spellName, 20))
 		self:CancelDelayedMessage(CL.custom_sec:format(args.spellName, 10))
 		self:CancelDelayedMessage(CL.custom_sec:format(args.spellName, 5))
 		self:StopBar(args.spellName, args.destName)
+	elseif not digestOnMe then
+		showProximity()
 	end
 end
 
