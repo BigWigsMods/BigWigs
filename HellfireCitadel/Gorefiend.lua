@@ -155,7 +155,7 @@ function mod:OnEngage()
 	local _, _, _, mapId = UnitPosition("player")
 	for unit in self:IterateGroup() do
 		local _, _, _, tarMapId = UnitPosition(unit)
-		if tarMapId == mapId then
+		if tarMapId == mapId and not UnitIsUnit("player", unit) and UnitIsConnected(unit) then
 			playersNotInBelly[#playersNotInBelly+1] = self:UnitName(unit)
 		end
 	end
@@ -284,7 +284,7 @@ function mod:Digest(args)
 			self:DelayedMessage(args.spellId, 35, "Urgent", CL.custom_sec:format(args.spellName, 5), nil, "Alert")
 		end
 		self:TargetBar(args.spellId, self:Mythic() and 30 or 40, args.destName)
-	else -- update proximity with new list
+	elseif not digestOnMe then -- update proximity with new list if we are not in the belly
 		showProximity()
 	end
 end
