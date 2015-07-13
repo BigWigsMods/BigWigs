@@ -29,6 +29,11 @@ if L then
 --@localization(locale="deDE", namespace="HellfireCitadel/FelLordZakuun", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
+L = BigWigs:NewBossLocale("Tyrant Velhari", "deDE")
+if L then
+--@localization(locale="deDE", namespace="HellfireCitadel/TyrantVelhari", format="lua_additive_table", handle-unlocalized="ignore")@
+end
+
 L = BigWigs:NewBossLocale("Mannoroth", "deDE")
 if L then
 --@localization(locale="deDE", namespace="HellfireCitadel/Mannoroth", format="lua_additive_table", handle-unlocalized="ignore")@

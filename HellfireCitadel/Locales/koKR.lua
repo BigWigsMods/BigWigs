@@ -29,6 +29,11 @@ if L then
 --@localization(locale="koKR", namespace="HellfireCitadel/FelLordZakuun", format="lua_additive_table", handle-unlocalized="ignore")@
 end
 
+L = BigWigs:NewBossLocale("Tyrant Velhari", "koKR")
+if L then
+--@localization(locale="koKR", namespace="HellfireCitadel/TyrantVelhari", format="lua_additive_table", handle-unlocalized="ignore")@
+end
+
 L = BigWigs:NewBossLocale("Mannoroth", "koKR")
 if L then
 --@localization(locale="koKR", namespace="HellfireCitadel/Mannoroth", format="lua_additive_table", handle-unlocalized="ignore")@
