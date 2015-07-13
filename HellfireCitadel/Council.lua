@@ -22,6 +22,7 @@ local gurtoggIsDead = false
 local jubeiIsDead = false
 local nextAbility = 0 -- 1: horror, 2: mirror, 3: leap
 local nextAbilityTime = 0
+local startHorrorCD, startMirrorCD, startLeapCD
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -80,42 +81,6 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
 end
 
-local function startHorrorCD(self, remaining)
-	if diaIsDead and jubeiIsDead and gurtoggIsDead then return end
-	remaining = remaining or 75
-	if diaIsDead then
-		startMirrorCD(self, remaining)
-	else
-		self:CDBar(184681, remaining, CL.count:format(self:SpellName(184681), horrorCount)) -- Wailing Horror
-		nextAbility = 1
-		nextAbilityTime = GetTime() + remaining
-	end
-end
-
-local function startMirrorCD(self, remaining)
-	if diaIsDead and jubeiIsDead and gurtoggIsDead then return end
-	remaining = remaining or 78
-	if jubeiIsDead then
-		startLeapCD(self, remaining)
-	else
-		self:CDBar(183885, remaining) -- Mirror Images
-		nextAbility = 2
-		nextAbilityTime = GetTime() + remaining
-	end
-end
-
-local function startLeapCD(self, remaining)
-	if diaIsDead and jubeiIsDead and gurtoggIsDead then return end
-	remaining = remaining or 72
-	if gurtoggIsDead then
-		startHorrorCD(self, remaining)
-	else
-		self:CDBar(184366, remaining) -- Demolishing Leap
-		nextAbility = 3
-		nextAbilityTime = GetTime() + remaining
-	end
-end
-
 function mod:OnEngage()
 	horrorCount = 1
 	leapCount = 0
@@ -137,19 +102,33 @@ end
 -- Event Handlers
 --
 
-function mod:DemolishingLeapStart(args)
-	-- Start initial bar on buff gain (happens once) then every other bar on spell completion
-	self:Message(184366, "Important", nil, CL.incoming:format(args.spellName))
-	leapCount = leapCount + 1
-	self:Bar(184366, 5.8, CL.count:format(args.spellName, leapCount))
-	if args.spellId == 184365 then
-		startHorrorCD(self)
+do
+	function startLeapCD(self, remaining)
+		if diaIsDead and jubeiIsDead and gurtoggIsDead then return end
+		remaining = remaining or 72
+		if gurtoggIsDead then
+			startHorrorCD(self, remaining)
+		else
+			self:CDBar(184366, remaining) -- Demolishing Leap
+			nextAbility = 3
+			nextAbilityTime = GetTime() + remaining
+		end
 	end
-end
 
-function mod:DemolishingLeapStop(args)
-	self:StopBar(CL.count:format(args.spellName, leapCount))
-	leapCount = 0
+	function mod:DemolishingLeapStart(args)
+		-- Start initial bar on buff gain (happens once) then every other bar on spell completion
+		self:Message(184366, "Important", nil, CL.incoming:format(args.spellName))
+		leapCount = leapCount + 1
+		self:Bar(184366, 5.8, CL.count:format(args.spellName, leapCount))
+		if args.spellId == 184365 then
+			startHorrorCD(self)
+		end
+	end
+
+	function mod:DemolishingLeapStop(args)
+		self:StopBar(CL.count:format(args.spellName, leapCount))
+		leapCount = 0
+	end
 end
 
 function mod:MarkOfTheNecromancer(args)
@@ -197,11 +176,25 @@ function mod:NightmareVisage(args)
 	self:CDBar(args.spellId, 32) -- 32 - 35
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if msg:find("184681", nil, true) then
-		self:Message(184681, "Urgent", "Alert", CL.count:format(self:SpellName(184681), horrorCount))
-		horrorCount = horrorCount + 1
-		startMirrorCD(self)
+do
+	function startHorrorCD(self, remaining)
+		if diaIsDead and jubeiIsDead and gurtoggIsDead then return end
+		remaining = remaining or 75
+		if diaIsDead then
+			startMirrorCD(self, remaining)
+		else
+			self:CDBar(184681, remaining, CL.count:format(self:SpellName(184681), horrorCount)) -- Wailing Horror
+			nextAbility = 1
+			nextAbilityTime = GetTime() + remaining
+		end
+	end
+
+	function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
+		if msg:find("184681", nil, true) then
+			self:Message(184681, "Urgent", "Alert", CL.count:format(self:SpellName(184681), horrorCount))
+			horrorCount = horrorCount + 1
+			startMirrorCD(self)
+		end
 	end
 end
 
@@ -230,9 +223,23 @@ function mod:AcidicWound(args)
 	end
 end
 
-function mod:MirrorImages(args)
-	self:Message(args.spellId, "Attention")
-	startLeapCD(self)
+do
+	function startMirrorCD(self, remaining)
+		if diaIsDead and jubeiIsDead and gurtoggIsDead then return end
+		remaining = remaining or 78
+		if jubeiIsDead then
+			startLeapCD(self, remaining)
+		else
+			self:CDBar(183885, remaining) -- Mirror Images
+			nextAbility = 2
+			nextAbilityTime = GetTime() + remaining
+		end
+	end
+
+	function mod:MirrorImages(args)
+		self:Message(args.spellId, "Attention")
+		startLeapCD(self)
+	end
 end
 
 do
