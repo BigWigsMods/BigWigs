@@ -61,9 +61,10 @@ local proxAnchor, proxTitle, proxCircle, proxPulseOut, proxPulseIn = nil, nil, n
 local CTimerAfter = BigWigsLoader.CTimerAfter
 local UnitPosition, GetPlayerFacing = UnitPosition, GetPlayerFacing
 local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetNumGroupMembers, GetTime
-local IsInRaid, InCombatLockdown = IsInRaid, InCombatLockdown
-local UnitIsDead, UnitIsUnit, UnitGUID, UnitClass = UnitIsDead, UnitIsUnit, UnitGUID, UnitClass
+local IsInRaid, IsInGroup, InCombatLockdown = IsInRaid, IsInGroup, InCombatLockdown
+local UnitIsDead, UnitIsUnit, UnitGUID, UnitClass, UnitInPhase = UnitIsDead, UnitIsUnit, UnitGUID, UnitClass, UnitInPhase
 local min, cos, sin, format = math.min, math.cos, math.sin, string.format
+local next, type, tonumber, wipe = next, type, tonumber, wipe
 local piDoubled = 6.2831853071796
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
@@ -258,7 +259,7 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			if mapId == tarMapId and range < activeRangeSquaredTwoFive and not UnitInPhase(n) then
+			if mapId == tarMapId and range < activeRangeSquaredTwoFive and UnitInPhase(n) then
 				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[n], width, height, sine, cosine, pixperyard)
 					if range <= activeRangeSquared then
@@ -399,7 +400,7 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			if mapId == tarMapId and range < activeRangeSquaredTwoFive and not UnitInPhase(n) then
+			if mapId == tarMapId and range < activeRangeSquaredTwoFive and UnitInPhase(n) then
 				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[n], width, height, sine, cosine, pixperyard)
 					if range <= activeRangeSquared then
@@ -1193,7 +1194,7 @@ SlashCmdList.BigWigs_Proximity = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	local range = tonumber(input)
 	if not range then
-		print("Usage: /proximity 1-100")
+		BigWigs:Print("Usage: /proximity 1-100") -- XXX translate
 	else
 		if range > 0 then
 			plugin:Close(true)
