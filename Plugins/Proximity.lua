@@ -258,7 +258,7 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			if mapId == tarMapId and range < activeRangeSquaredTwoFive then
+			if mapId == tarMapId and range < activeRangeSquaredTwoFive and not UnitInPhase(n) then
 				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[n], width, height, sine, cosine, pixperyard)
 					if range <= activeRangeSquared then
@@ -399,7 +399,7 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			if mapId == tarMapId and range < activeRangeSquaredTwoFive then
+			if mapId == tarMapId and range < activeRangeSquaredTwoFive and not UnitInPhase(n) then
 				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[n], width, height, sine, cosine, pixperyard)
 					if range <= activeRangeSquared then
