@@ -140,8 +140,10 @@ function mod:Reap(args)
 	if UnitDebuff("player", self:SpellName(184449)) then -- Mark of the Necromancer
 		self:Say(args.spellId)
 		self:OpenProximity(args.spellId, 5) -- 5 yard guess
+		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+	else
+		self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
 	end
-	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
 	self:CDBar(args.spellId, 65) -- 65-72 pretty inconsistent
 end
