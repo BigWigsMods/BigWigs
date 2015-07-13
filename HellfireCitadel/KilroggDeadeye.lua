@@ -67,6 +67,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "VisionOfDeath", 182428)
 	self:Log("SPELL_CAST_START", "DeathThroes", 180224)
 	self:Log("SPELL_CAST_START", "ShredArmor", 180199)
+	self:Log("SPELL_AURA_APPLIED", "ShreddedArmor", 180200)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ShreddedArmor", 180200)
 	self:Log("SPELL_AURA_APPLIED", "CleansingAura", 187089)
 
 	self:Log("SPELL_CAST_START", "RendingHowl", 183917)
@@ -159,6 +161,10 @@ function mod:ShredArmor(args)
 		self:Message(args.spellId, "Important", "Warning")
 	end
 	self:CDBar(args.spellId, 17) -- 17s but can be delayed by other abilities
+end
+
+function mod:ShreddedArmor(args) -- Tank Failed
+	self:StackMessage(180199, args.destName, args.amount, "Important", nil, args.spellId)
 end
 
 function mod:CleansingAura(args)
