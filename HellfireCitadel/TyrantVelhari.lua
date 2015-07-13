@@ -115,7 +115,7 @@ function mod:OnEngage()
 	local _, _, _, mapId = UnitPosition("player")
 	for unit in self:IterateGroup() do
 		local _, _, _, tarMapId = UnitPosition(unit)
-		if tarMapId == mapId and not UnitIsUnit("player", unit) then
+		if tarMapId == mapId and not UnitIsUnit("player", unit) and UnitIsConnected(unit) then
 			inverseFontTargets[#inverseFontTargets+1] = self:UnitName(unit)
 		end
 	end
