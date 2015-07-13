@@ -9,6 +9,7 @@ mod.displayName = CL.trash
 mod:RegisterEnableMob(
 	94806, -- Fel Hellweaver, summons 94857 (Orb of Destruction) non-targetable
 	94284, -- Fiery Enkindler
+	94995, -- Graggra
 	95630, -- Construct Peacekeeper
 	95614 -- Binder Eloah
 )
@@ -21,6 +22,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.orb = "Orb of Destruction"
 	L.enkindler = "Fiery Enkindler"
+	L.graggra = "Graggra"
 	L.peacekeeper = "Construct Peacekeeper"
 	L.eloah = "Binder Eloah"
 end
@@ -34,11 +36,16 @@ function mod:GetOptions()
 	return {
 		188072, -- Fel Destruction
 		{187110, "PROXIMITY", "SAY"}, -- Focused Fire
+		--187099, -- Residual Shadows
+		{188476, "TANK"}, -- Bad Breath
+		{188448, "PROXIMITY"}, -- Blazing Fel Touch
+		{188510, "SAY"}, -- Graggra Smash
 		{189595, "FLASH"}, -- Protocol: Crowd Control
 		{189533, "TANK"}, -- Sever Soul
 	}, {
 		[188072] = L.orb,
 		[187110] = L.enkindler,
+		[188476] = L.graggra,
 		[189595] = L.peacekeeper,
 		[189533] = L.eloah,
 	}
@@ -52,6 +59,15 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "FocusedFire", 187110)
 	self:Log("SPELL_AURA_REMOVED", "FocusedFireRemoved", 187110)
+
+	self:Log("SPELL_CAST_START", "BadBreathCasting", 188476)
+	self:Log("SPELL_AURA_APPLIED", "BadBreath", 188476)
+	self:Log("SPELL_AURA_REFRESH", "BadBreath", 188476)
+
+	self:Log("SPELL_AURA_APPLIED", "BlazingFelTouch", 188448)
+	self:Log("SPELL_AURA_REMOVED", "BlazingFelTouchRemoved", 188448)
+
+	self:Log("SPELL_AURA_APPLIED", "GraggraSmash", 188510)
 
 	self:Log("SPELL_CAST_START", "ProtocolCrowdControl", 189595)
 
@@ -91,6 +107,38 @@ function mod:FocusedFireRemoved(args)
 		self:CloseProximity(args.spellId)
 		self:StopBar(args.spellName, args.destName)
 	end
+end
+
+--[[ Graggra ]]--
+
+function mod:BadBreathCasting(args)
+	self:Message(args.spellId, "Urgent")
+end
+
+function mod:BadBreath(args)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
+end
+
+function mod:BlazingFelTouch(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		self:OpenProximity(args.spellId, 6, nil, true)
+	end
+end
+
+function mod:BlazingFelTouchRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", "Alarm", CL.over:format(args.spellName))
+		self:CloseProximity(args.spellId)
+	end
+end
+
+function mod:GraggraSmash(args)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+	end
+	self:TargetBar(args.spellId, 5, args.destName)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Alarm")
 end
 
 --[[ Construct Peacekeeper ]]--
