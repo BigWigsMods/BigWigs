@@ -14,7 +14,6 @@ mod.respawnTime = 40
 --
 
 local phase = 1
-local mobCollector = {}
 local strikeCount = 0
 local mendingCount = 1
 local inverseFontTargets = {}
@@ -69,7 +68,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EnforcersOnslaught", 180004)
 	self:Log("SPELL_CAST_START", "AnnihilatingStrike", 180260)
 	self:Log("SPELL_CAST_START", "InfernalTempestStart", 180300)
-	self:Log("SPELL_CAST_SUCCESS", "InfernalTempestEnd", 180300)
+	self:Log("SPELL_AURA_REMOVED", "InfernalTempestEnd", 180300)
 	-- Phase 2
 	self:Log("SPELL_CAST_SUCCESS", "AuraOfContempt", 179986)
 	self:Log("SPELL_AURA_APPLIED", "FontOfCorruption", 180526)
@@ -93,13 +92,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "EdictOfCondemnation", 182459, 185241)
 	self:Log("SPELL_AURA_REMOVED", "EdictOfCondemnationRemoved", 182459, 185241)
 
+	self:Log("SPELL_CAST_SUCCESS", "ThunderousCrashAddSpawn", 181227)
 	self:Death("Deaths", 90270, 90271) -- Ancient Enforcer, Ancient Harbinger
 end
 
 function mod:OnEngage()
-	wipe(mobCollector)
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-
 	self:Bar(180260, 10, CL.count:format(self:SpellName(180260), 1)) -- Annihilating Strike
 	self:Bar(185237, 16) -- Touch of Harm
 	self:Bar(180300, 40) -- Infernal Tempest
@@ -125,31 +122,16 @@ end
 -- Event Handlers
 --
 
-do
-	local adds = {
-		[90270] = -11155, -- Ancient Enforcer
-		[91304] = -11155, -- Ancient Enforcer
-		[91302] = -11163, -- Ancient Harbinger
-		[90271] = -11163, -- Ancient Harbinger
-		[90272] = -11170, -- Ancient Sovereign
-		[91303] = -11170, -- Ancient Sovereign
-	}
-	function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-		for i = 1, 5 do
-			local guid = UnitGUID("boss"..i)
-			if guid and not mobCollector[guid] then
-				mobCollector[guid] = true
-				local id = adds[self:MobId(guid)]
-				if id then
-					self:Message(id, "Neutral", nil, CL.spawned:format(self:SpellName(id)), false)
-					if id == -11155 then
-						self:Bar(180004, 12) -- Enforcer's Onslaught
-					elseif id == -11163 then
-						self:Bar(180025, 15, CL.count:format(self:SpellName(180025), 1)) -- Harbinger's Mending
-					end
-				end
-			end
-		end
+function mod:ThunderousCrashAddSpawn(args)
+	local id = self:MobId(args.sourceGUID)
+	if id == 90270 then
+		self:Message(-11155, "Neutral", nil, "90% - ".. CL.spawned:format(self:SpellName(-11155)), false)
+		self:Bar(180004, 12) -- Enforcer's Onslaught
+	elseif id == 90271 then
+		self:Message(-11163, "Neutral", nil, "60% - ".. CL.spawned:format(self:SpellName(-11163)), false)
+		self:Bar(180025, 15, CL.count:format(self:SpellName(180025), 1)) -- Harbinger's Mending
+	elseif id == 90272 then
+		self:Message(-11170, "Neutral", nil, "30% - ".. CL.spawned:format(self:SpellName(-11170)), false)
 	end
 end
 
@@ -205,7 +187,7 @@ function mod:AuraOfContempt()
 	self:StopBar(180300) -- Infernal Tempest
 	phase = 2
 	strikeCount = 0
-	self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)
+	self:Message("stages", "Neutral", nil, "70% - ".. CL.phase:format(phase), false)
 	self:Bar(180533, 5) -- Tainted Shadows
 	self:Bar(180526, 22) -- Font of Corruption, 20sec timer + 2sec cast
 end
@@ -287,7 +269,7 @@ function mod:AuraOfMalice()
 	self:StopBar(180526) -- Font of Corruption
 	phase = 3
 	strikeCount = 0
-	self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)
+	self:Message("stages", "Neutral", nil, "40% - ".. CL.phase:format(phase), false)
 	self:Bar(180600, 10) -- Bulwark of the Tyrant
 	self:Bar(180608, 40) -- Gavel of the Tyrant
 end
@@ -358,3 +340,4 @@ function mod:EdictOfCondemnationRemoved(args)
 	self:StopBar(args.spellName, args.destName)
 	self:PrimaryIcon(182459)
 end
+
