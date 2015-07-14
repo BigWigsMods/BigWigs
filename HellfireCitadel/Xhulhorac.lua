@@ -75,7 +75,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WitheringGaze", 186785)
 	self:Log("SPELL_CAST_START", "FelStrike", 190223)
 	self:Log("SPELL_CAST_START", "VoidStrike", 190224)
-	self:Log("SPELL_CAST_SUCCESS", "Striked", 190223, 190224) -- Fel, Void
+	self:Log("SPELL_CAST_SUCCESS", "Striked", 186271, 186292) -- Fel, Void
 	self:Log("SPELL_AURA_APPLIED", "OverwhelmingChaos", 187204)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingChaos", 187204)
 	self:Log("SPELL_CAST_START", "BlackHole", 186546, 189779) -- Normal, Empowered
@@ -246,9 +246,10 @@ end
 
 function mod:Striked(args)
 	if phase > 2 then
-		self:TargetMessage(args.spellId, args.destName, "Attention")
-		if self:Tank() and not self:Me(args.destGUID) then -- don't spam long for non-tanks that enable strike warnings
-			self:PlaySound(args.spellId, "Long")
+		local spellId = args.spellId == 186271 and 190223 or 190224 -- 186271 -> 190223 (Fel), 186292 -> 190224 (Void)
+		self:TargetMessage(spellId, args.destName, "Attention")
+		if self:Tank() and not self:Me(args.destGUID) then -- don't spam long for non-tanks that enable strike me
+			self:PlaySound(spellId, "Long")
 		end
 	end
 end
