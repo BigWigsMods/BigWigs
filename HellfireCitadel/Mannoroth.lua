@@ -94,11 +94,11 @@ function mod:OnEngage()
 	phase = 1
 	curseCount = 1
 	if self:Mythic() then
-		self:Bar('stages', 15.5, 108508) -- Mannoroth's Fury
+		self:Bar("stages", 15.5, 108508) -- Mannoroth's Fury
 		self:CDBar(181275, 24) -- Curse of the Legion
-		self:CDBar(181735, 57) -- Felseeker
-		self:CDBar(181354, 43) -- Glaive Combo
 		self:CDBar(181557, 30) -- Fel Hellstorm
+		self:CDBar(181354, 43) -- Glaive Combo
+		self:CDBar(181735, 57) -- Felseeker
 		self:Bar(181255, 46.5) -- Imps
 		self:Bar(181180, 70) -- Infernals
 	end
@@ -327,8 +327,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(181354) -- Glaive Combo
 		self:CDBar(181557, 14, 181948) -- Empowered Fel Hellstorm
 		self:CDBar(181354, 23, 187347) -- Empowered Glaive Combo
-		self:CDBar(181597, 30, 182006) -- Empowered Mannoroth's Gaze
 		self:CDBar(181799, 45, 182084) -- Empowered Shadowforce
+		self:CDBar(181597, 30, 182006) -- Empowered Mannoroth's Gaze
 		self:CDBar(181735, 60, 182077) -- Empowered Felseeker
 		if self:Mythic() then
 			self:Bar(186362, 5) -- Wrath of Gul'dan
@@ -339,7 +339,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 181354 then -- Glaive Combo
 		self:CDBar(181354, 30.5, phase == 4 and 187347) -- [Empowered] Glaive Combo
 	elseif spellId == 181301 then -- Summon Adds: P2 & Mythic P3
-		self:StopBar(181255) -- Imps
 		self:Bar(181255, 25) -- Fel Imp-losion
 		if self:Mythic() then
 			self:StopBar(CL.count:format(self:SpellName(181275), curseCount))
