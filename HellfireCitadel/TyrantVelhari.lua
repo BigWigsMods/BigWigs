@@ -13,7 +13,6 @@ mod.respawnTime = 40
 -- Locals
 --
 
-local mobCollector = {}
 local phase = 1
 local strikeCount = 0
 local mendingCount = 1
@@ -98,8 +97,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	wipe(mobCollector)
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:Bar(180260, 10, CL.count:format(self:SpellName(180260), 1)) -- Annihilating Strike
 	self:Bar(185237, 16) -- Touch of Harm
@@ -126,22 +124,17 @@ end
 -- Event Handlers
 --
 
-function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	for i = 1, 5 do
-		local guid = UnitGUID("boss"..i)
-		if guid and not mobCollector[guid] then
-			mobCollector[guid] = true
-			local id = self:MobId(guid)
-			if id == 90270 then
-				self:Message(-11155, "Neutral", nil, "90% - ".. CL.spawned:format(self:SpellName(-11155)), false)
-				self:Bar(180004, 12) -- Enforcer's Onslaught
-			elseif id == 90271 then
-				self:Message(-11163, "Neutral", nil, "60% - ".. CL.spawned:format(self:SpellName(-11163)), false)
-				self:Bar(180025, 15, CL.count:format(self:SpellName(180025), 1)) -- Harbinger's Mending
-			elseif id == 90272 then
-				self:Message(-11170, "Neutral", nil, "30% - ".. CL.spawned:format(self:SpellName(-11170)), false)
-				self:Bar(180040, 14) -- Sovereign's Ward
-			end
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, text, sender, _, _, target)
+	if target == self.displayName then -- Tyrant Velhari (target is blank for spell cast emotes)
+		if sender == self:SpellName(-11155) then -- Ancient Enforcer
+			self:Message(-11155, "Neutral", nil, "90% - ".. CL.spawned:format(self:SpellName(-11155)), false)
+			self:CDBar(180004, 13) -- Enforcer's Onslaught, 13-15
+		elseif sender == self:SpellName(-11163) then -- Ancient Harbinger
+			self:Message(-11163, "Neutral", nil, "60% - ".. CL.spawned:format(self:SpellName(-11163)), false)
+			self:Bar(180025, 16, CL.count:format(self:SpellName(180025), 1)) -- Harbinger's Mending
+		elseif sender == self:SpellName(-11170) then -- Ancient Sovereign
+			self:Message(-11170, "Neutral", nil, "30% - ".. CL.spawned:format(self:SpellName(-11170)), false)
+			self:Bar(180040, 14) -- Sovereign's Ward
 		end
 	end
 end
