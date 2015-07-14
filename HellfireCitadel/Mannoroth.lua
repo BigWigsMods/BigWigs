@@ -14,6 +14,7 @@ mod.engageId = 1795
 
 local portalsClosed = 0
 local phase = 1
+local curseCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -54,6 +55,7 @@ function mod:GetOptions()
 		181557, -- Fel Hellstorm
 		181255, -- Imps
 		181180, -- Inferno
+		{186362, "SAY", "FLASH"}, -- Wrath of Gul'dan
 
 		"stages",
 	} -- XXX separate by stages
@@ -78,6 +80,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "FelHellstorm", 181557)
 	self:Log("SPELL_SUMMON", "Imps", 181255)
 	self:Log("SPELL_SUMMON", "Inferno", 181180)
+	self:Log("SPELL_AURA_APPLIED", "WrathOfGuldan", 186362)
 
 	self:Log("SPELL_DAMAGE", "FelHellstormDamage", 181566)
 	self:Log("SPELL_MISSED", "FelHellstormDamage", 181566)
@@ -89,12 +92,15 @@ end
 function mod:OnEngage()
 	portalsClosed = 0
 	phase = 1
+	curseCount = 1
 	if self:Mythic() then
-		self:Bar(108508, 17.5) -- Mannoroth's Fury
-		-- XXX maybe the timers are the same in other modes on p2 start?
+		self:Bar('stages', 15.5, 108508) -- Mannoroth's Fury
+		self:CDBar(181275, 24) -- Curse of the Legion
 		self:CDBar(181735, 57) -- Felseeker
 		self:CDBar(181354, 43) -- Glaive Combo
 		self:CDBar(181557, 30) -- Fel Hellstorm
+		self:Bar(181255, 46.5) -- Imps
+		self:Bar(181180, 70) -- Infernals
 	end
 end
 
@@ -110,7 +116,7 @@ do
 			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Attention", "Alarm")
 		end
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+			self:Say(args.spellId, CL.count:format(args.spellName, #list))
 			self:TargetBar(args.spellId, 15, args.destName)
 			self:OpenProximity(args.spellId, 20)
 			self:Flash(args.spellId)
@@ -173,14 +179,28 @@ do
 end
 
 function mod:Imps(args)
-	if phase == 2 then
-		self:CDBar(args.spellId, 30)
+	if phase > 1 then
+		self:CDBar(args.spellId, self:Mythic() and 49 or 30)
 	end
 end
 
 function mod:Inferno(args)
 	if phase > 1 then
-		self:CDBar(args.spellId, 35)
+		self:CDBar(args.spellId, self:Mythic() and 55 or 35)
+	end
+end
+
+do
+	local list = mod:NewTargetList()
+	function mod:WrathOfGuldan(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Attention", "Alarm")
+		end
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId, CL.count:format(args.spellName, #list))
+			self:Flash(args.spellId)
+		end
 	end
 end
 
@@ -191,11 +211,12 @@ function mod:Shadowforce(args)
 end
 
 function mod:CurseOfTheLegionSuccess(args)
-	self:Bar(args.spellId, 65)
+	curseCount = curseCount + 1
+	self:Bar(args.spellId, 65, CL.count:format(args.spellName, curseCount))
 end
 
 function mod:CurseOfTheLegion(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Alarm")
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Alarm", CL.count:format(args.spellName, curseCount))
 	self:TargetBar(args.spellId, 20, args.destName)
 	self:PrimaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
@@ -284,19 +305,21 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 182263 then -- P3 Transform
+		-- ~7s before: CHAT_MSG_MONSTER_YELL#Fear not, Mannoroth. The fel gift empowers you... Make them suffer!#Gul'dan
 		self:Message("stages", "Neutral", "Info", CL.stage:format(3), false)
-		self:StopBar(181255) -- Imps
-		self:StopBar(181180) -- Inferno
 		phase = 3
 		self:CDBar(181557, 24) -- Fel Hellstorm
 		self:CDBar(181799, 30) -- Shadowforce
 		self:CDBar(181354, 36) -- Glaive Combo
 		self:CDBar(181597, 40) -- Mannoroth's Gaze
 		self:CDBar(181735, 60) -- Felseeker
+		if self:Mythic() then
+			self:Bar(186362, 5) -- Wrath of Gul'dan
+		end
 	elseif spellId == 185690 then -- P4 Transform
+		-- ~8s before: CHAT_MSG_MONSTER_YELL#These mortals cannot be this strong. Gul'dan, do something!#Mannoroth
 		self:Message("stages", "Neutral", "Info", CL.stage:format(4), false)
 		phase = 4
-		self:StopBar(181180) -- Inferno
 		self:StopBar(181557) -- Fel Hellstorm
 		self:StopBar(181597) -- Mannoroth's Gaze
 		self:StopBar(181799) -- Shadowforce
@@ -307,15 +330,29 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(181597, 30, 182006) -- Empowered Mannoroth's Gaze
 		self:CDBar(181799, 45, 182084) -- Empowered Shadowforce
 		self:CDBar(181735, 60, 182077) -- Empowered Felseeker
+		if self:Mythic() then
+			self:Bar(186362, 5) -- Wrath of Gul'dan
+			self:Bar(181255, 19) -- Fel Imp-losion
+		end
 	elseif spellId == 181735 then -- Felseeker
 		self:CDBar(181735, 50, phase == 4 and 182077) -- [Empowered] Felseeker
 	elseif spellId == 181354 then -- Glaive Combo
-		self:CDBar(181354, 31, phase == 4 and 187347) -- [Empowered] Glaive Combo
-	elseif spellId == 181301 then -- Summon Adds:P2
+		self:CDBar(181354, 30.5, phase == 4 and 187347) -- [Empowered] Glaive Combo
+	elseif spellId == 181301 then -- Summon Adds: P2 & Mythic P3
+		self:StopBar(181255) -- Imps
 		self:Bar(181255, 25) -- Fel Imp-losion
-		self:Bar(181180, 48) -- Inferno
-	elseif spellId == 182262 then -- Summon Adds:P3
+		if self:Mythic() then
+			self:StopBar(CL.count:format(self:SpellName(181275), curseCount))
+			self:Bar(181275, 45) -- Curse of the Legion
+			curseCount = 1
+		else
+			self:Bar(181180, 48) -- Inferno
+		end
+	elseif spellId == 182262 then -- Summon Adds: P3
+		self:StopBar(181255) -- Imps
 		self:Bar(181180, 28) -- Inferno
+	--elseif spellId == 181156 then -- Mythic: 1st Summon adds when Mannoroth spawns at ~17sec, not sure what it actually does (Doomguards?)
+
 	end
 end
 
