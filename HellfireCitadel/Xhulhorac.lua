@@ -115,7 +115,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(186546, 18) -- Black Hole
 		self:CDBar(186785, 6) -- Withering Gaze
 
-	elseif spellId == 187209 then -- Overwhelming Chaos
+	elseif spellId == 187209 then -- Overwhelming Chaos (cast to gain the p4 buff, which just stacks on its own)
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
 		self:StopBar(190223) -- Fel Strike
 		self:StopBar(186407) -- Fel Surge
@@ -176,7 +176,7 @@ do
 			local t = GetTime()
 			if t-prev > 1 then
 				prev = t
-				self:CDBar("voidfiend", 27, L.voidfiend, L.voidfiend_icon) -- circles spawn around ~24s, adds land after another 3.5s
+				self:CDBar("voidfiend", 24, L.voidfiend, L.voidfiend_icon) -- circles spawn around ~24s, adds land after another 3.5s
 			end
 		end
 	end
