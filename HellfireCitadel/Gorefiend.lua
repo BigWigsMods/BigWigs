@@ -156,14 +156,14 @@ do
 	function mod:TouchOfDoom(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important", "Alarm")
-			self:Bar(args.spellId, 25)
+			self:ScheduleTimer("TargetMessage", 0.3, 179977, list, "Important", "Alarm")
+			self:Bar(179977, 25)
 		end
 		if self:Me(args.destGUID) then
-			self:TargetBar(args.spellId, 8, args.destName)
-			self:OpenProximity(args.spellId, 20) -- XXX Range is up for debate
-			self:Flash(args.spellId)
-			self:Say(args.spellId)
+			self:TargetBar(179977, 8, args.destName)
+			self:OpenProximity(179977, 20) -- XXX Range is up for debate
+			self:Flash(179977)
+			self:Say(179977)
 		end
 	end
 end
