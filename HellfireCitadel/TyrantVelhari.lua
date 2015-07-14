@@ -81,22 +81,25 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "GavelOfTheTyrant", 180608)
 	self:Log("SPELL_CAST_SUCCESS", "BulwarkOfTheTyrant", 180600)
 	self:Log("SPELL_AURA_APPLIED", "SovereignsWard", 180040)
+	self:Log("SPELL_AURA_REMOVED", "SovereignsWardRemoved", 180040)
 	self:Log("SPELL_AURA_APPLIED", "DespoiledGroundDamage", 180604)
 	self:Log("SPELL_PERIODIC_DAMAGE", "DespoiledGroundDamage", 180604)
 	self:Log("SPELL_PERIODIC_MISSED", "DespoiledGroundDamage", 180604)
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "SealOfDecay", 180000)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SealOfDecay", 180000)
-	self:Log("SPELL_AURA_APPLIED", "TouchOfHarm", 185237, 180166) -- Mythic, Heroic XXX may need normal and lfr ids
-	self:Log("SPELL_AURA_APPLIED", "TouchOfHarmJumper", 185238, 180164) -- Mythic, Heroic (Dispelled version)  XXX may need normal and lfr ids
+	self:Log("SPELL_AURA_APPLIED", "TouchOfHarm", 185237, 180166) -- Mythic, Heroic/Normal
+	self:Log("SPELL_AURA_APPLIED", "TouchOfHarmJumper", 185238, 180164) -- Mythic, Heroic/Normal (Dispelled version)
 	self:Log("SPELL_AURA_APPLIED", "EdictOfCondemnation", 182459, 185241)
 	self:Log("SPELL_AURA_REMOVED", "EdictOfCondemnationRemoved", 182459, 185241)
 
-	self:Log("SPELL_CAST_SUCCESS", "ThunderousCrashAddSpawn", 181227)
-	self:Death("Deaths", 90270, 90271) -- Ancient Enforcer, Ancient Harbinger
+	self:Death("Deaths", 90270, 90271, 90272) -- Ancient Enforcer, Ancient Harbinger, Ancient Sovereign
 end
 
 function mod:OnEngage()
+	wipe(mobCollector)
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+
 	self:Bar(180260, 10, CL.count:format(self:SpellName(180260), 1)) -- Annihilating Strike
 	self:Bar(185237, 16) -- Touch of Harm
 	self:Bar(180300, 40) -- Infernal Tempest
@@ -122,24 +125,33 @@ end
 -- Event Handlers
 --
 
-function mod:ThunderousCrashAddSpawn(args)
-	local id = self:MobId(args.sourceGUID)
-	if id == 90270 then
-		self:Message(-11155, "Neutral", nil, "90% - ".. CL.spawned:format(self:SpellName(-11155)), false)
-		self:Bar(180004, 12) -- Enforcer's Onslaught
-	elseif id == 90271 then
-		self:Message(-11163, "Neutral", nil, "60% - ".. CL.spawned:format(self:SpellName(-11163)), false)
-		self:Bar(180025, 15, CL.count:format(self:SpellName(180025), 1)) -- Harbinger's Mending
-	elseif id == 90272 then
-		self:Message(-11170, "Neutral", nil, "30% - ".. CL.spawned:format(self:SpellName(-11170)), false)
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	for i = 1, 5 do
+		local guid = UnitGUID("boss"..i)
+		if guid and not mobCollector[guid] then
+			mobCollector[guid] = true
+			mobId = self:MobId(guid)
+			if mobId == 90270 then
+				self:Message(-11155, "Neutral", nil, "90% - ".. CL.spawned:format(self:SpellName(-11155)), false)
+				self:Bar(180004, 12) -- Enforcer's Onslaught
+			elseif mobId == 90271 then
+				self:Message(-11163, "Neutral", nil, "60% - ".. CL.spawned:format(self:SpellName(-11163)), false)
+				self:Bar(180025, 15, CL.count:format(self:SpellName(180025), 1)) -- Harbinger's Mending
+			elseif id == 90272 then
+				self:Message(-11170, "Neutral", nil, "30% - ".. CL.spawned:format(self:SpellName(-11170)), false)
+				self:Bar(180040, 14) -- Sovereign's Ward
+			end
+		end
 	end
 end
 
 function mod:Deaths(args)
-	if args.mobId == 90270 then -- Ancient Enforcer
+	if args.mobId == 90270 then
 		self:StopBar(180004) -- Enforcer's Onslaught
-	elseif args.mobId == 90271 then -- Ancient Harbinger
+	elseif args.mobId == 90271 then
 		self:StopBar(CL.count:format(self:SpellName(180025), mendingCount)) -- Harbinger's Mending
+	elseif args.mobId == 90272 then
+		self:StopBar(180040) -- Sovereign's Ward
 	end
 end
 
@@ -147,7 +159,7 @@ end
 
 function mod:EnforcersOnslaught(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, self:Mythic() and 11 or 18)
+	self:Bar(args.spellId, self:Mythic() and 11 or 18) -- 18.2-18.7
 end
 
 do
@@ -195,7 +207,7 @@ end
 function mod:HarbingersMending(args)
 	self:Message(180025, "Attention", self:Interrupter() and "Alert", CL.casting:format(CL.count:format(args.spellName, mendingCount)))
 	mendingCount = mendingCount + 1
-	self:Bar(180025, 11, CL.count:format(args.spellName, mendingCount))
+	self:Bar(180025, self:Normal() and 16 or 11, CL.count:format(args.spellName, mendingCount))
 end
 
 function mod:HarbingersMendingApplied(args)
@@ -276,6 +288,11 @@ end
 
 function mod:SovereignsWard(args)
 	self:Message(args.spellId, "Urgent", "Long")
+	self:Bar(args.spellId, 25)
+end
+
+function mod:SovereignsWardRemoved(args)
+	self:Message(args.spellId, "Positive", nil, CL.removed:format(args.spellName))
 end
 
 function mod:BulwarkOfTheTyrant(args)
