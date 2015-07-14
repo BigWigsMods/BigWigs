@@ -13,11 +13,12 @@ mod.respawnTime = 40
 -- Locals
 --
 
+local mobCollector = {}
 local phase = 1
 local strikeCount = 0
 local mendingCount = 1
 local inverseFontTargets = {}
-local fontOnMe = nil
+local fontOnMe, edictOnMe, tempestActive = nil, nil, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -53,7 +54,7 @@ function mod:GetOptions()
 		--[[ General ]]--
 		{180000, "TANK"}, -- Seal of Decay
 		{185237, "FLASH"}, -- Touch of Harm
-		{182459, "SAY", "ICON"}, -- Edict of Condemnation
+		{182459, "SAY", "PROXIMITY", "ICON"}, -- Edict of Condemnation
 		"stages",
 	}, {
 		[180260] = -11151, -- Stage One: Oppression
@@ -108,9 +109,9 @@ function mod:OnEngage()
 	strikeCount = 0
 	mendingCount = 1
 	phase = 1
+	fontOnMe, edictOnMe, tempestActive = nil, nil, nil
 
 	-- Adding all players to a list, since they are the "bad" players to Font targets (for proximity)
-	fontOnMe = nil
 	wipe(inverseFontTargets)
 	local _, _, _, mapId = UnitPosition("player")
 	for unit in self:IterateGroup() do
@@ -130,11 +131,11 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		local guid = UnitGUID("boss"..i)
 		if guid and not mobCollector[guid] then
 			mobCollector[guid] = true
-			mobId = self:MobId(guid)
-			if mobId == 90270 then
+			local id = self:MobId(guid)
+			if id == 90270 then
 				self:Message(-11155, "Neutral", nil, "90% - ".. CL.spawned:format(self:SpellName(-11155)), false)
 				self:Bar(180004, 12) -- Enforcer's Onslaught
-			elseif mobId == 90271 then
+			elseif id == 90271 then
 				self:Message(-11163, "Neutral", nil, "60% - ".. CL.spawned:format(self:SpellName(-11163)), false)
 				self:Bar(180025, 15, CL.count:format(self:SpellName(180025), 1)) -- Harbinger's Mending
 			elseif id == 90272 then
@@ -185,11 +186,17 @@ function mod:InfernalTempestStart(args)
 	self:Message(args.spellId, "Important", "Long", CL.incoming:format(args.spellName))
 	self:Bar(args.spellId, 6.5, CL.cast:format(args.spellName))
 	self:Bar(args.spellId, 40)
-	self:OpenProximity(args.spellId, 3) -- 2+1 for safety
+	if not edictOnMe then
+		self:OpenProximity(args.spellId, 4) -- 2+2 for safety
+	end
+	tempestActive = true
 end
 
 function mod:InfernalTempestEnd(args)
-	self:CloseProximity(args.spellId)
+	if not edictOnMe then
+		self:CloseProximity(args.spellId)
+	end
+	tempestActive = nil
 end
 
 -- Stage 2
@@ -226,7 +233,7 @@ do
 	local list = mod:NewTargetList()
 	local function updateProximity(self, spellId)
 		self:TargetMessage(spellId, list, "Important", "Alarm")
-		if fontOnMe then -- stack near other fonts of corruption / away from the raid
+		if fontOnMe and not edictOnMe then -- stack near other fonts of corruption / away from the raid
 			self:OpenProximity(spellId, 5, inverseFontTargets)
 		end
 	end
@@ -246,7 +253,7 @@ do
 			end
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
-			fontOnMe = true
+			fontOnMe = self:CheckOption(args.spellId, "PROXIMITY")
 		else
 			tDeleteItem(inverseFontTargets, args.destName)
 		end
@@ -256,14 +263,16 @@ end
 do
 	local scheduled = nil
 	local function updateProximity(self, spellId)
-		if fontOnMe then -- stack near other fonts of corruption / away from the raid
+		if fontOnMe and not edictOnMe then -- stack near other fonts of corruption / away from the raid
 			self:OpenProximity(spellId, 5, inverseFontTargets)
 		end
 		scheduled = nil
 	end
 	function mod:FontOfCorruptionRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CloseProximity(args.spellId)
+			if fontOnMe and not edictOnMe then
+				self:CloseProximity(args.spellId)
+			end
 			fontOnMe = nil
 		elseif not tContains(inverseFontTargets, args.destName) then
 			inverseFontTargets[#inverseFontTargets + 1] = args.destName
@@ -332,7 +341,7 @@ function mod:TouchOfHarm(args)
 	self:TargetMessage(185237, args.destName, "Urgent")
 	self:Bar(185237, 45)
 	if self:Me(args.destGUID) then
-		self:Flash(185237) -- why is this flash?
+		self:Flash(185237)
 	end
 end
 
@@ -343,18 +352,36 @@ function mod:TouchOfHarmJumper(args)
 	end
 end
 
-function mod:EdictOfCondemnation(args)
-	self:TargetMessage(182459, args.destName, "Important", "Warning", nil, nil, true)
-	self:TargetBar(182459, 9, args.destName)
-	self:Bar(182459, 60)
-	if self:Me(args.destGUID) then
-		self:Say(182459)
+do
+	local timer1, timer2 = nil, nil
+	function mod:EdictOfCondemnation(args)
+		self:TargetMessage(182459, args.destName, "Important", "Warning", nil, nil, true)
+		self:TargetBar(182459, 9, args.destName)
+		self:Bar(182459, 60)
+		self:PrimaryIcon(182459, args.destName)
+		if self:Me(args.destGUID) then
+			self:Say(182459)
+			self:OpenProximity(182459, 30, nil, true)
+			timer1 = self:ScheduleTimer("OpenProximity", 3.5, 182459, 20, nil, true)
+			timer2 = self:ScheduleTimer("OpenProximity", 6.5, 182459, 10, nil, true)
+			edictOnMe = self:CheckOption(182459, "PROXIMITY")
+		end
 	end
-	self:PrimaryIcon(182459, args.destName)
-end
 
-function mod:EdictOfCondemnationRemoved(args)
-	self:StopBar(args.spellName, args.destName)
-	self:PrimaryIcon(182459)
+	function mod:EdictOfCondemnationRemoved(args)
+		self:StopBar(args.spellName, args.destName)
+		self:PrimaryIcon(182459)
+		if self:Me(args.destGUID) then
+			self:CancelTimer(timer1)
+			self:CancelTimer(timer2)
+			self:CloseProximity(182459)
+			if tempestActive then -- both active shortly after 2m
+				self:OpenProximity(180300, 4)
+			elseif fontOnMe then
+				self:OpenProximity(180526, 5, inverseFontTargets)
+			end
+			edictOnMe = nil
+		end
+	end
 end
 
