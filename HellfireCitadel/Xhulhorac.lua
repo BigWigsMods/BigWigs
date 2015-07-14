@@ -35,12 +35,12 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ Phase 1 ]]--
-		{190223, "TANK_HEALER"}, -- Fel Strike
+		{190223, "TANK"}, -- Fel Strike
 		{186407, "SAY", "PROXIMITY", "FLASH"}, -- Fel Surge
 		{186448, "TANK"}, -- Felblaze Flurry
 		186500, -- Chains of Fel
 		--[[ Phase 2 ]]--
-		{190224, "TANK_HEALER"}, -- Void Strike
+		{190224, "TANK"}, -- Void Strike
 		{186333, "SAY", "PROXIMITY", "FLASH"}, -- Void Surge
 		{186785, "TANK"}, -- Withering Gaze
 		186546, -- Black Hole
@@ -75,6 +75,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WitheringGaze", 186785)
 	self:Log("SPELL_CAST_START", "FelStrike", 190223)
 	self:Log("SPELL_CAST_START", "VoidStrike", 190224)
+	self:Log("SPELL_CAST_SUCCESS", "Striked", 190223, 190224) -- Fel, Void
 	self:Log("SPELL_AURA_APPLIED", "OverwhelmingChaos", 187204)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingChaos", 187204)
 	self:Log("SPELL_CAST_START", "BlackHole", 186546, 189779) -- Normal, Empowered
@@ -184,7 +185,7 @@ end
 
 function mod:Touched(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Long", CL.you:format(args.spellName))
+		self:Message(args.spellId, "Personal", not self:Tank() and "Long", CL.you:format(args.spellName))
 	end
 end
 
@@ -224,26 +225,31 @@ function mod:SurgeRemoved(args)
 end
 
 function mod:FelStrike(args)
-	self:Message(args.spellId, "Urgent")
+	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
 	if phase < 3 then
 		self:CDBar(args.spellId, 16) -- 15.8
 	else -- alternates
-		if self:Tank() then
-			self:PlaySound(args.spellId, "Warning")
-		end
+		self:PlaySound(args.spellId, "Warning")
 		self:CDBar(190224, 8) -- Void Strike
 	end
 end
 
 function mod:VoidStrike(args)
-	self:Message(args.spellId, "Urgent")
+	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
 	if phase < 3 then
 		self:CDBar(args.spellId, 17) -- 17.1/18.2
 	else -- alternates
-		if self:Tank() then
-			self:PlaySound(args.spellId, "Warning")
-		end
+		self:PlaySound(args.spellId, "Warning")
 		self:CDBar(190223, 7) -- Fel Strike
+	end
+end
+
+function mod:Striked(args)
+	if phase > 2 then
+		self:TargetMessage(args.spellId, args.destName, "Attention")
+		if self:Tank() and not self:Me(args.destGUID) then -- don't spam long for non-tanks that enable strike warnings
+			self:PlaySound(args.spellId, "Long")
+		end
 	end
 end
 
