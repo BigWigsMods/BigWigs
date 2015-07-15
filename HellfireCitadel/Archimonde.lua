@@ -41,24 +41,30 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		-- P1
+		{182826, "SAY"}, -- Doomfire
+		183817, -- Shadowfel Burst
+		185590, -- Desecrate
+		-- P2
 		{184964, "SAY", "FLASH"}, -- Shackled Torment
 		"custom_off_torment_marker",
-		183828, -- Death Brand
-		{186961, "ICON", "SAY", "PROXIMITY"}, -- Nether Banish
-		183817, -- Shadowfel Burst
-		183865, -- Demonic Havoc
-		{182879, "SAY"}, -- Doomfire Fixate
-		{189895, "SAY", "PROXIMITY"}, -- Void Star Fixate
 		{186123, "SAY", "PROXIMITY"}, -- Wrought Chaos
 		{185014, "SAY", "PROXIMITY"}, -- Focused Chaos
-		183586, -- Doomfire
-		183254, -- Allure of Flames
-		185590, -- Desecrate
-		182225, -- Rain of Chaos
+		183865, -- Demonic Havoc
+		-- P3
 		{187180, "PROXIMITY"}, -- Demonic Feedback
-		186952, -- Nether Banish
-		182826, -- Doomfire
+		{186961, "ICON", "SAY", "PROXIMITY"}, -- Nether Banish
+		{189894, "SAY", "PROXIMITY"}, -- Void Star Fixate
+		182225, -- Rain of Chaos
+		-- General
+		183254, -- Allure of Flames
+		183828, -- Death Brand
 		"stages",
+	}, {
+		[182826] = -11577,
+		[184964] = -11590,
+		[187180] = -11599,
+		[183254] = "general",
 	}
 end
 
@@ -85,25 +91,102 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "NetherBanishApplied", 186952) -- for Twisting Nether tracking
 	self:Log("SPELL_AURA_REMOVED", "NetherBanishRemoved", 186952) -- for Twisting Nether tracking
 	self:Log("SPELL_SUMMON", "Doomfire", 182826)
-
 	self:Log("SPELL_AURA_APPLIED", "DoomfireDamage", 183586)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomfireDamage", 183586)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 end
 
 function mod:OnEngage()
-	self:Bar(183817, 41) -- Shadowfel Burst
-	self:Bar(183254, 30) -- Allure of Flames
-	self:Bar(183828, 15.4) -- Death Brand
-	self:CDBar(185590, 45) -- Desecrate, Timers Min: 38.9/Avg: 60.0/Max: 74.6 (avg 45s on later pulls)
-
 	currentTorment = 0
 	maxTorment = 0
+
+	self:Bar(183828, 15.4) -- Death Brand
+	self:Bar(183254, 30) -- Allure of Flames
+	self:Bar(183817, 41) -- Shadowfel Burst
+	--self:CDBar(185590, 45) -- Desecrate XXX initial cast hp based
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 190117 then -- Allow Phase 2 Spells
+		self:Message("stages", "Neutral", "Long", CL.phase:format(2), false)
+		self:StopBar(182826) -- Doomfire
+		self:CDBar(186123, 7) -- Wrought Chaos
+		self:CDBar(184964, 27) -- Shackled Torment
+		self:CDBar(183828, 38) -- Death Brand
+		self:CDBar(183254, 44) -- Allure of Flames
+	elseif spellId == 190118 then -- Allow Phase 3 Spells
+		self:Message("stages", "Neutral", "Long", CL.phase:format(3), false)
+		self:StopBar(183254) -- Allure of Flames
+		self:StopBar(183828) -- Death Brand
+		self:CDBar(186961, 13) -- Nether Banish
+		self:CDBar(186123, 27) -- Wrought Chaos
+		self:CDBar(187180, 35) -- Demonic Feedback
+		self:CDBar(184964, 57.5) -- Shackled Torment
+		self:OpenProximity(187180, 7) -- Demonic Feedback XXX: Schedule it ~10sec before the timer
+	end
+end
+
+function mod:AllureOfFlames(args)
+	self:Message(args.spellId, "Urgent", "Alert")
+	self:CDBar(args.spellId, 48) -- Min: 47.5/Avg: 49.8/Max: 54.1
+end
+
+function mod:DeathBrand(args)
+	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
+	self:CDBar(args.spellId, 42)
+end
+
+-- Phase 1
+
+function mod:Doomfire(args)
+	self:CDBar(args.spellId, 42)
+end
+
+function mod:DoomfireFixate(args)
+	self:TargetMessage(182826, args.destName, "Personal", "Alarm")
+	if self:Me(args.destGUID) then
+		self:TargetBar(182826, 10, args.destName)
+		self:Say(182826)
+	end
+end
+
+do
+	local prev = 0
+	function mod:DoomfireDamage(args)
+		local t = GetTime()
+		if t-prev > 2 and self:Me(args.destGUID) then
+			prev = t
+			self:Message(182826, "Personal", "Alarm", CL.underyou:format(args.spellName))
+		end
+	end
+end
+
+function mod:ShadowfelBurst(args)
+	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
+	self:Bar(args.spellId, 2, CL.cast:format(args.spellName))
+	self:ScheduleTimer("Bar", 2, args.spellId, 58.8)
+end
+
+do
+	local list = mod:NewTargetList()
+	function mod:ShadowfelBurstApplied(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, 183817, list, "Attention")
+		end
+	end
+end
+
+function mod:Desecrate(args)
+	self:Message(args.spellId, "Attention", "Alarm")
+	self:CDBar(args.spellId, 27) -- Min: 26.8/Avg: 29.2/Max: 33.4
+end
+
+-- Phase 2
 
 do
 	local list, isOnMe = {}, nil
@@ -153,51 +236,6 @@ do
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 190117 then -- Allow Phase 2 Spells
-		self:Message("stages", "Neutral", "Long", CL.phase:format(2), false)
-		self:StopBar(182826) -- Doomfire
-		self:CDBar(186123, 7) -- Wrought Chaos
-		self:CDBar(184964, 27) -- Shackled Torment
-		self:CDBar(183828, 38) -- Death Brand
-		self:CDBar(183254, 44) -- Allure of Flames
-	elseif spellId == 190118 then -- Allow Phase 3 Spells
-		self:Message("stages", "Neutral", "Long", CL.phase:format(3), false)
-		self:StopBar(183254) -- Allure of Flames
-		self:StopBar(183828) -- Death Brand
-		self:CDBar(186961, 13) -- Nether Banish
-		self:CDBar(186123, 27) -- Wrought Chaos
-		self:CDBar(187180, 35) -- Demonic Feedback
-		self:CDBar(184964, 57.5) -- Shackled Torment
-		self:OpenProximity(187180, 7) -- Demonic Feedback XXX: Schedule it ~10sec before the timer
-	end
-end
-
-function mod:Doomfire(args)
-	self:CDBar(args.spellId, 42)
-end
-
-function mod:DeathBrand(args)
-	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
-	self:CDBar(args.spellId, 42)
-end
-
-function mod:ShadowfelBurst(args)
-	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
-	self:Bar(args.spellId, 2, CL.cast:format(args.spellName))
-	self:ScheduleTimer("Bar", 2, args.spellId, 58.8)
-end
-
-do
-	local list = mod:NewTargetList()
-	function mod:ShadowfelBurstApplied(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, 183817, list, "Attention")
-		end
-	end
-end
-
 do
 	local list = mod:NewTargetList()
 	function mod:DemonicHavoc(args)
@@ -205,14 +243,6 @@ do
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alarm")
 		end
-	end
-end
-
-function mod:DoomfireFixate(args)
-	self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
-	if self:Me(args.destGUID) then
-		self:TargetBar(args.spellId, 10, args.destName)
-		self:Say(args.spellId)
 	end
 end
 
@@ -246,27 +276,6 @@ function mod:FocusedChaosRemoved(args)
 	if self:Me(args.destGUID) then
 		--self:CloseProximity(args.spellId)
 	end
-end
-
-function mod:AllureOfFlames(args)
-	self:Message(args.spellId, "Urgent", "Alert")
-	self:CDBar(args.spellId, 48) -- Min: 47.5/Avg: 49.8/Max: 54.1
-end
-
-do
-	local prev = 0
-	function mod:DoomfireDamage(args)
-		local t = GetTime()
-		if t-prev > 2 and self:Me(args.destGUID) then
-			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
-		end
-	end
-end
-
-function mod:Desecrate(args)
-	self:Message(args.spellId, "Attention", "Alarm")
-	self:CDBar(args.spellId, 27) -- Min: 26.8/Avg: 29.2/Max: 33.4
 end
 
 -- Phase 3
@@ -308,16 +317,16 @@ function mod:NetherBanishRemoved(args)
 end
 
 function mod:VoidStarFixate(args)
-	self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+	self:TargetMessage(189894, args.destName, "Personal", "Alarm")
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:OpenProximity(args.spellId, 15)
+		self:Say(189894)
+		self:OpenProximity(189894, 15)
 	end
 end
 
 function mod:VoidStarFixateRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CloseProximity(args.spellId)
+		self:CloseProximity(189894)
 	end
 end
 
@@ -325,3 +334,4 @@ function mod:DemonicFeedback(args)
 	self:Message(args.spellId, "Attention", "Warning", CL.casting:format(args.spellName))
 	self:CDBar(args.spellId, 37)
 end
+

@@ -103,8 +103,8 @@ function mod:OnEngage()
 		self:CDBar(181275, 24) -- Curse of the Legion
 		self:CDBar(181557, 30) -- Fel Hellstorm
 		self:CDBar(181354, 43) -- Glaive Combo
+		self:Bar(181255, 46.5) -- Fel Imp-losion
 		self:CDBar(181735, 57) -- Felseeker
-		self:Bar(181255, 46.5) -- Imps
 		self:Bar(181180, 70) -- Infernals
 	end
 end
