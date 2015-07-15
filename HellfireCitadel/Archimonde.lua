@@ -21,6 +21,8 @@ mod.engageId = 1799
 local phase = 1
 local currentTorment = 0
 local maxTorment = 0
+local chaosCount = 0
+local chaosSource, chaosTarget = "", ""
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -29,6 +31,8 @@ local maxTorment = 0
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.torment_removed = "Shackled Torment removed (%d/%d)"
+	L.chaos_bar = "%s -> %s"
+
 	L.custom_off_torment_marker = "Shackled Torment marker"
 	L.custom_off_torment_marker_desc = "Mark the Shackled Torment targets with {rt1}{rt2}{rt3}, requires promoted or leader."
 	L.custom_off_torment_marker_icon = 1
@@ -49,7 +53,6 @@ function mod:GetOptions()
 		{184964, "SAY", "FLASH"}, -- Shackled Torment
 		"custom_off_torment_marker",
 		{186123, "SAY"}, -- Wrought Chaos
-		{185014, "SAY"}, -- Focused Chaos
 		183865, -- Demonic Havoc
 		-- P3
 		{187180, "PROXIMITY"}, -- Demonic Feedback
@@ -59,6 +62,7 @@ function mod:GetOptions()
 		-- General
 		183254, -- Allure of Flames
 		183828, -- Death Brand
+		{183864, "TANK"}, -- Shadow Blast
 		"stages",
 	}, {
 		[182826] = -11577,
@@ -72,6 +76,8 @@ function mod:OnBossEnable()
 	-- P1
 	self:Log("SPELL_CAST_START", "AllureOfFlames", 183254)
 	self:Log("SPELL_CAST_START", "DeathBrand", 183828)
+	self:Log("SPELL_AURA_APPLIED", "ShadowBlast", 183864)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowBlast", 183864)
 	self:Log("SPELL_SUMMON", "Doomfire", 182826)
 	self:Log("SPELL_AURA_APPLIED", "DoomfireDamage", 183586)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomfireDamage", 183586)
@@ -82,10 +88,10 @@ function mod:OnBossEnable()
 	-- P2
 	self:Log("SPELL_AURA_APPLIED", "ShackledTorment", 184964)
 	self:Log("SPELL_AURA_REMOVED", "ShackledTormentRemoved", 184964)
+	self:Log("SPELL_CAST_SUCCESS", "WroughtChaosCast", 184265)
 	self:Log("SPELL_AURA_APPLIED", "WroughtChaos", 186123)
-	self:Log("SPELL_AURA_REMOVED", "WroughtChaosRemoved", 186123)
 	self:Log("SPELL_AURA_APPLIED", "FocusedChaos", 185014)
-	self:Log("SPELL_AURA_REMOVED", "FocusedChaosRemoved", 185014)
+	self:Log("SPELL_AURA_REMOVED", "WroughtChaosRemoved", 186123)
 	self:Log("SPELL_AURA_APPLIED", "DemonicHavoc", 183865)
 	-- P3
 	self:Log("SPELL_CAST_START", "DemonicFeedback", 187180)
@@ -142,6 +148,11 @@ end
 function mod:DeathBrand(args)
 	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
 	self:CDBar(args.spellId, 42)
+end
+
+function mod:ShadowBlast(args)
+	local amount = args.amount or 1
+	self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
 end
 
 -- Phase 1
@@ -250,36 +261,32 @@ do
 	end
 end
 
-function mod:WroughtChaos(args)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Info")
-	self:TargetBar(args.spellId, 5, args.destName)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		--self:OpenProximity(args.spellId, 10, FOCUSEDCHAOS, true)
-	end
+function mod:WroughtChaosCast(args)
+	chaosCount = 0
 end
 
-function mod:WroughtChaosRemoved(args)
-	self:StopBar(args.spellName, args.destName)
+function mod:WroughtChaos(args)
+	chaosCount = chaosCount + 1
+	chaosSource = self:ColorName(args.destName)
 	if self:Me(args.destGUID) then
-		--self:CloseProximity(args.spellId)
+		self:Say(args.spellId)
 	end
 end
 
 function mod:FocusedChaos(args)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Info")
-	self:TargetBar(args.spellId, 5, args.destName)
+	chaosTarget = self:ColorName(args.destName)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		--self:OpenProximity(args.spellId, 10, WROUGHTCHAOS, true)
+		self:Say(186123, args.spellName)
 	end
+
+	local spell = CL.count:format(self:SpellName(186123), chaosCount)
+	local targets = L.chaos_bar:format(chaosSource, chaosTarget)
+	self:Message(186123, args.destName, "Important", "Info", CL.other:format(spell, targets)) -- Wrought Chaos (1): Player -> Player
+	self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, targets)) -- (1) Player -> Player
 end
 
-function mod:FocusedChaosRemoved(args)
-	self:StopBar(args.spellName, args.destName)
-	if self:Me(args.destGUID) then
-		--self:CloseProximity(args.spellId)
-	end
+function mod:WroughtChaosRemoved(args)
+	self:StopBar(("(%d) %s"):format(chaosCount, L.chaos_bar:format(chaosSource, chaosTarget)))
 end
 
 -- Phase 3
