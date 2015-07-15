@@ -48,8 +48,8 @@ function mod:GetOptions()
 		-- P2
 		{184964, "SAY", "FLASH"}, -- Shackled Torment
 		"custom_off_torment_marker",
-		{186123, "SAY", "PROXIMITY"}, -- Wrought Chaos
-		{185014, "SAY", "PROXIMITY"}, -- Focused Chaos
+		{186123, "SAY"}, -- Wrought Chaos
+		{185014, "SAY"}, -- Focused Chaos
 		183865, -- Demonic Havoc
 		-- P3
 		{187180, "PROXIMITY"}, -- Demonic Feedback
@@ -69,31 +69,35 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "ShackledTorment", 184964)
-	self:Log("SPELL_AURA_REMOVED", "ShackledTormentRemoved", 184964)
+	-- P1
+	self:Log("SPELL_CAST_START", "AllureOfFlames", 183254)
 	self:Log("SPELL_CAST_START", "DeathBrand", 183828)
-	self:Log("SPELL_AURA_APPLIED", "TankNetherBanish", 186961)
-	self:Log("SPELL_AURA_REMOVED", "TankNetherBanishRemoved", 186961)
+	self:Log("SPELL_SUMMON", "Doomfire", 182826)
+	self:Log("SPELL_AURA_APPLIED", "DoomfireDamage", 183586)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomfireDamage", 183586)
+	self:Log("SPELL_AURA_APPLIED", "DoomfireFixate", 182879)
 	self:Log("SPELL_CAST_START", "ShadowfelBurst", 183817)
 	self:Log("SPELL_AURA_APPLIED", "ShadowfelBurstApplied", 183634)
-	self:Log("SPELL_AURA_APPLIED", "DemonicHavoc", 183865)
-	self:Log("SPELL_AURA_APPLIED", "DoomfireFixate", 182879)
-	self:Log("SPELL_AURA_APPLIED", "VoidStarFixate", 189895)
-	self:Log("SPELL_AURA_REMOVED", "VoidStarFixateRemoved", 189895)
+	self:Log("SPELL_CAST_START", "Desecrate", 185590)
+	-- P2
+	self:Log("SPELL_AURA_APPLIED", "ShackledTorment", 184964)
+	self:Log("SPELL_AURA_REMOVED", "ShackledTormentRemoved", 184964)
 	self:Log("SPELL_AURA_APPLIED", "WroughtChaos", 186123)
 	self:Log("SPELL_AURA_REMOVED", "WroughtChaosRemoved", 186123)
 	self:Log("SPELL_AURA_APPLIED", "FocusedChaos", 185014)
 	self:Log("SPELL_AURA_REMOVED", "FocusedChaosRemoved", 185014)
-	self:Log("SPELL_CAST_START", "AllureOfFlames", 183254)
-	self:Log("SPELL_CAST_START", "Desecrate", 185590)
-	self:Log("SPELL_CAST_SUCCESS", "RainOfChaos", 182225)
+	self:Log("SPELL_AURA_APPLIED", "DemonicHavoc", 183865)
+	-- P3
 	self:Log("SPELL_CAST_START", "DemonicFeedback", 187180)
+	self:Log("SPELL_AURA_APPLIED", "TankNetherBanish", 186961)
+	self:Log("SPELL_AURA_REMOVED", "TankNetherBanishRemoved", 186961)
+	self:Log("SPELL_AURA_APPLIED", "VoidStarFixate", 189895)
+	self:Log("SPELL_AURA_REMOVED", "VoidStarFixateRemoved", 189895)
 	self:Log("SPELL_AURA_APPLIED", "NetherBanishApplied", 186952) -- for Twisting Nether tracking
 	self:Log("SPELL_AURA_REMOVED", "NetherBanishRemoved", 186952) -- for Twisting Nether tracking
-	self:Log("SPELL_SUMMON", "Doomfire", 182826)
-	self:Log("SPELL_AURA_APPLIED", "DoomfireDamage", 183586)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomfireDamage", 183586)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+	self:Log("SPELL_CAST_SUCCESS", "RainOfChaos", 182225)
+
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Phases", "boss1")
 end
 
 function mod:OnEngage()
@@ -110,7 +114,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:Phases(unit, spellName, _, _, spellId)
 	if spellId == 190117 then -- Allow Phase 2 Spells
 		self:Message("stages", "Neutral", "Long", CL.phase:format(2), false)
 		self:StopBar(182826) -- Doomfire
