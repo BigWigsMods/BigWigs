@@ -89,7 +89,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SealOfDecay", 180000)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SealOfDecay", 180000)
 	self:Log("SPELL_AURA_APPLIED", "TouchOfHarm", 185237, 180166) -- Mythic, Heroic/Normal
-	self:Log("SPELL_AURA_APPLIED", "TouchOfHarmJumper", 185238, 180164) -- Mythic, Heroic/Normal (Dispelled version)
+	self:Log("SPELL_AURA_APPLIED", "TouchOfHarmDispelled", 185238, 180164) -- Mythic, Heroic/Normal
 	self:Log("SPELL_AURA_APPLIED", "EdictOfCondemnation", 182459, 185241)
 	self:Log("SPELL_AURA_REMOVED", "EdictOfCondemnationRemoved", 182459, 185241)
 
@@ -125,7 +125,7 @@ end
 --
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, text, sender, _, _, target)
-	if target == self.displayName then -- Tyrant Velhari (target is blank for spell cast emotes)
+	if target == self.displayName then -- Tyrant Velhari (target is blank for Ancient spell cast emotes)
 		if sender == self:SpellName(-11155) then -- Ancient Enforcer
 			self:Message(-11155, "Neutral", nil, "90% - ".. CL.spawned:format(self:SpellName(-11155)), false)
 			self:CDBar(180004, 13) -- Enforcer's Onslaught, 13-15
@@ -140,11 +140,11 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, text, sender, _, _, target)
 end
 
 function mod:Deaths(args)
-	if args.mobId == 90270 then
+	if args.mobId == 90270 then -- Ancient Enforcer
 		self:StopBar(180004) -- Enforcer's Onslaught
-	elseif args.mobId == 90271 then
+	elseif args.mobId == 90271 then -- Ancient Harbinger
 		self:StopBar(CL.count:format(self:SpellName(180025), mendingCount)) -- Harbinger's Mending
-	elseif args.mobId == 90272 then
+	elseif args.mobId == 90272 then -- Ancient Sovereign
 		self:StopBar(180040) -- Sovereign's Ward
 	end
 end
@@ -158,7 +158,7 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		local count = strikeCount > 0 and strikeCount or 3 -- delayed
+		local count = strikeCount > 0 and strikeCount or 3 -- off because of GetBossTarget
 		self:TargetMessage(180260, name, "Attention", "Info", CL.count:format(self:SpellName(180260), count), nil, nil, true)
 		if self:Me(guid) then
 			self:Say(180260)
@@ -331,6 +331,7 @@ function mod:SealOfDecay(args)
 end
 
 function mod:TouchOfHarm(args)
+	-- if someone really wants sound on this, changing Font to Long and using Alarm here would work
 	self:TargetMessage(185237, args.destName, "Urgent")
 	self:Bar(185237, 45)
 	if self:Me(args.destGUID) then
@@ -338,7 +339,7 @@ function mod:TouchOfHarm(args)
 	end
 end
 
-function mod:TouchOfHarmJumper(args)
+function mod:TouchOfHarmDispelled(args)
 	self:TargetMessage(185237, args.destName, "Urgent")
 	if self:Me(args.destGUID) then
 		self:Flash(185237)
@@ -348,7 +349,7 @@ end
 do
 	local timer1, timer2 = nil, nil
 	function mod:EdictOfCondemnation(args)
-		self:TargetMessage(182459, args.destName, "Important", "Warning", nil, nil, true)
+		self:TargetMessage(182459, args.destName, "Important", not self:Tank() and "Warning", nil, nil, true)
 		self:TargetBar(182459, 9, args.destName)
 		self:Bar(182459, 60)
 		self:PrimaryIcon(182459, args.destName)
