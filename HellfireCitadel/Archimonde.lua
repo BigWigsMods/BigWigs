@@ -21,8 +21,6 @@ mod.engageId = 1799
 local phase = 1
 local currentTorment = 0
 local maxTorment = 0
-local chaosCount = 0
-local chaosSource, chaosTarget = "", ""
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -261,32 +259,42 @@ do
 	end
 end
 
-function mod:WroughtChaosCast(args)
-	chaosCount = 0
-end
+do
+	local chaosCount = 0
+	local chaosSource, chaosTarget = "", ""
 
-function mod:WroughtChaos(args)
-	chaosCount = chaosCount + 1
-	chaosSource = self:ColorName(args.destName)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-	end
-end
-
-function mod:FocusedChaos(args)
-	chaosTarget = self:ColorName(args.destName)
-	if self:Me(args.destGUID) then
-		self:Say(186123, args.spellName)
+	function mod:WroughtChaosCast(args)
+		chaosCount = 0
 	end
 
-	local spell = CL.count:format(self:SpellName(186123), chaosCount)
-	local targets = L.chaos_bar:format(chaosSource, chaosTarget)
-	self:Message(186123, args.destName, "Important", "Info", CL.other:format(spell, targets)) -- Wrought Chaos (1): Player -> Player
-	self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, targets)) -- (1) Player -> Player
-end
+	function mod:WroughtChaos(args)
+		chaosSource = self:ColorName(args.destName)
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+		end
+	end
 
-function mod:WroughtChaosRemoved(args)
-	self:StopBar(("(%d) %s"):format(chaosCount, L.chaos_bar:format(chaosSource, chaosTarget)))
+	function mod:FocusedChaos(args)
+		chaosTarget = self:ColorName(args.destName)
+		if self:Me(args.destGUID) then
+			self:Say(186123, args.spellName)
+		end
+
+		chaosCount = chaosCount + 1
+		local spell = CL.count:format(self:SpellName(186123), chaosCount)
+		if not self:Mythic() then
+			local targets = L.chaos_bar:format(chaosSource, chaosTarget)
+			self:Message(186123, args.destName, "Important", "Info", CL.other:format(spell, targets)) -- Wrought Chaos (1): Player -> Player
+			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, targets)) -- (1) Player -> Player
+		else
+			self:Message(186123, "Important", "Info", spell)
+			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, args.spellName)) -- (1) Focused Chaos
+		end
+	end
+
+	function mod:WroughtChaosRemoved(args)
+		self:StopBar(("(%d) %s"):format(chaosCount, L.chaos_bar:format(chaosSource, chaosTarget)))
+	end
 end
 
 -- Phase 3
