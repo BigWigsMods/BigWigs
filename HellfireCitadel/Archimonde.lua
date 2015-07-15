@@ -11,7 +11,7 @@
 
 local mod, CL = BigWigs:NewBoss("Archimonde", 1026, 1438)
 if not mod then return end
-mod:RegisterEnableMob(91331, 91557) -- 91331 on beta
+mod:RegisterEnableMob(91331)
 mod.engageId = 1799
 
 --------------------------------------------------------------------------------
