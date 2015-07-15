@@ -27,6 +27,7 @@ if L then
 	L.infernal = "Infernal portal closed!"
 
 	L.gaze = "Gaze (%d)"
+	L.felseeker_message = "%s (%d) %dy" -- same as Margok's branded_say
 
 	L.custom_off_gaze_marker = "Mannoroth's Gaze marker"
 	L.custom_off_gaze_marker_desc = "Mark the targets of Mannoroth's Gaze with {rt1}{rt2}{rt3}, requires promoted or leader."
@@ -40,51 +41,55 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{181099, "PROXIMITY", "FLASH", "SAY"}, -- Mark of Doom
+		--[[ Mannoroth ]]--
+		181799, -- Shadowforce
+		{181354, "TANK"}, -- Glaive Combo
+		{181359, "TANK"}, -- Massive Blast
+		181557, -- Fel Hellstorm
 		{181597, "SAY"}, -- Mannoroth's Gaze
 		"custom_off_gaze_marker",
-		181799, -- Shadowforce
-		181566, -- Fel Hellstorm
+		181735, -- Felseeker
+		{186362, "SAY", "FLASH"}, -- Wrath of Gul'dan
+		--[[ Adds ]]--
 		{181275, "SAY", "ICON", "FLASH"}, -- Curse of the Legion
 		{181119, "TANK"}, -- Doom Spike
+		{181099, "PROXIMITY", "FLASH", "SAY"}, -- Mark of Doom
 		181126, -- Shadow Bolt Volley
-		181735, -- Felseeker
-		{183377, "TANK"}, -- Glaive Thrust
-		{181359, "TANK"}, -- Massive Blast
-		{181354, "TANK"}, -- Glaive Combo
-		181557, -- Fel Hellstorm
-		181255, -- Imps
+		181255, -- Fel Imp-losion
 		181180, -- Inferno
-		{186362, "SAY", "FLASH"}, -- Wrath of Gul'dan
-
+		--[[ General ]]--
 		"stages",
-	} -- XXX separate by stages
+	}, {
+		[181799] = mod.displayName,
+		[181275] = "adds",
+		["stages"] = "general",
+	}
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "MarkOfDoom", 181099)
-	self:Log("SPELL_AURA_REMOVED", "MarkOfDoomRemoved", 181099)
 	self:Log("SPELL_CAST_START", "MannorothsGazeCast", 181597, 182006)
 	self:Log("SPELL_AURA_APPLIED", "MannorothsGaze", 181597, 182006)
 	self:Log("SPELL_AURA_REMOVED", "MannorothsGazeRemoved", 181597, 182006)
 	self:Log("SPELL_CAST_START", "Shadowforce", 181799, 182084)
-	self:Log("SPELL_CAST_SUCCESS", "CurseOfTheLegionSuccess", 181275) --if _applied 'misses'
-	self:Log("SPELL_AURA_APPLIED", "CurseOfTheLegion", 181275)
-	self:Log("SPELL_AURA_REMOVED", "CurseOfTheLegionRemoved", 181275)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomSpike", 181119)
-	self:Log("SPELL_CAST_START", "ShadowBoltVolley", 181126)
-	self:Log("SPELL_CAST_START", "Felseeker", 181793, 181792, 181738)
+	self:Log("SPELL_CAST_START", "Felseeker", 181793, 181792, 181738) -- 10, 20, 30 yds
 	self:Log("SPELL_CAST_START", "EmpoweredFelseeker", 182077, 182076, 182040)
 	self:Log("SPELL_CAST_START", "GlaiveThrust", 183377, 185831)
 	self:Log("SPELL_AURA_APPLIED", "MassiveBlast", 181359, 185821)
 	self:Log("SPELL_CAST_SUCCESS", "FelHellstorm", 181557)
-	self:Log("SPELL_SUMMON", "Imps", 181255)
-	self:Log("SPELL_SUMMON", "Inferno", 181180)
-	self:Log("SPELL_AURA_APPLIED", "WrathOfGuldan", 186362)
-
 	self:Log("SPELL_DAMAGE", "FelHellstormDamage", 181566)
 	self:Log("SPELL_MISSED", "FelHellstormDamage", 181566)
-
+	-- Adds
+	self:Log("SPELL_CAST_SUCCESS", "CurseOfTheLegionSuccess", 181275) -- APPLIED can miss
+	self:Log("SPELL_AURA_APPLIED", "CurseOfTheLegion", 181275)
+	self:Log("SPELL_AURA_REMOVED", "CurseOfTheLegionRemoved", 181275)
+	self:Log("SPELL_AURA_APPLIED", "MarkOfDoom", 181099)
+	self:Log("SPELL_AURA_REMOVED", "MarkOfDoomRemoved", 181099)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomSpike", 181119)
+	self:Log("SPELL_CAST_START", "ShadowBoltVolley", 181126)
+	self:Log("SPELL_SUMMON", "FelImplosion", 181255)
+	self:Log("SPELL_SUMMON", "Inferno", 181180)
+	-- General
+	self:Log("SPELL_AURA_APPLIED", "WrathOfGuldan", 186362)
 	self:Log("SPELL_AURA_REMOVED", "P1PortalClosed", 185147, 185175, 182212) -- Doom Lords, Imps, Infernals
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 end
@@ -93,7 +98,7 @@ function mod:OnEngage()
 	portalsClosed = 0
 	phase = 1
 	curseCount = 1
-	if self:Mythic() then
+	if self:Mythic() then -- non-mythic starts after the portals close
 		self:Bar("stages", 15.5, 108508) -- Mannoroth's Fury
 		self:CDBar(181275, 24) -- Curse of the Legion
 		self:CDBar(181557, 30) -- Fel Hellstorm
@@ -107,6 +112,8 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+-- Adds
 
 do
 	local list = mod:NewTargetList()
@@ -131,13 +138,55 @@ function mod:MarkOfDoomRemoved(args)
 	end
 end
 
+function mod:DoomSpike(args)
+	if args.amount % 3 == 0 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent")
+	end
+end
+
+function mod:ShadowBoltVolley(args)
+	self:Message(args.spellId, "Positive", nil, CL.casting:format(args.spellName))
+end
+
+function mod:FelImplosion(args)
+	if phase > 1 then
+		self:CDBar(args.spellId, self:Mythic() and 49 or 30)
+	end
+end
+
+function mod:Inferno(args)
+	if phase > 1 then
+		self:CDBar(args.spellId, self:Mythic() and 55 or 35)
+	end
+end
+
+-- Mannoroth
+
+do
+	local list = mod:NewTargetList()
+	function mod:WrathOfGuldan(args)
+		list[#list + 1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Attention", "Alarm")
+		end
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId, CL.count:format(args.spellName, #list))
+			self:Flash(args.spellId)
+		end
+	end
+end
+
+function mod:GlaiveThrust(args)
+	self:Message(181354, "Attention", "Warning", args.spellName)
+end
+
+function mod:MassiveBlast(args)
+	self:TargetMessage(181359, args.destName, "Attention", nil, args.spellName)
+end
+
 function mod:MannorothsGazeCast(args)
 	self:Message(181597, "Attention", "Info", CL.casting:format(args.spellName))
 	self:Bar(181597, 47, args.spellName)
-end
-
-function mod:FelHellstorm(args)
-	self:CDBar(args.spellId, 36)
 end
 
 do
@@ -178,32 +227,6 @@ do
 	end
 end
 
-function mod:Imps(args)
-	if phase > 1 then
-		self:CDBar(args.spellId, self:Mythic() and 49 or 30)
-	end
-end
-
-function mod:Inferno(args)
-	if phase > 1 then
-		self:CDBar(args.spellId, self:Mythic() and 55 or 35)
-	end
-end
-
-do
-	local list = mod:NewTargetList()
-	function mod:WrathOfGuldan(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Attention", "Alarm")
-		end
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count:format(args.spellName, #list))
-			self:Flash(args.spellId)
-		end
-	end
-end
-
 function mod:Shadowforce(args)
 	self:Message(181799, "Important", "Long", CL.casting:format(args.spellName))
 	self:Bar(181799, 8, CL.cast:format(args.spellName))
@@ -212,7 +235,9 @@ end
 
 function mod:CurseOfTheLegionSuccess(args)
 	curseCount = curseCount + 1
-	self:Bar(args.spellId, 65, CL.count:format(args.spellName, curseCount))
+	if self:Mythic() then
+		self:Bar(args.spellId, 65, CL.count:format(args.spellName, curseCount))
+	end
 end
 
 function mod:CurseOfTheLegion(args)
@@ -232,23 +257,13 @@ function mod:CurseOfTheLegionRemoved(args)
 	self:Bar(181099, 12) -- Mark of Doom
 end
 
-function mod:DoomSpike(args)
-	if args.amount % 3 == 0 then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent")
-	end
-end
-
-function mod:ShadowBoltVolley(args)
-	self:Message(args.spellId, "Positive", nil, CL.casting:format(args.spellName))
-end
-
 function mod:Felseeker(args)
-	if args.spellId == 181738 then
-		self:Message(181735, "Positive", "Alert", ("%s (%d) %d yards"):format(args.spellName, 3, 30))
+	if args.spellId == 181793 then
+		self:Message(181735, "Positive", "Alert", L.felseeker_message:format(args.spellName, 1, 10))
 	elseif args.spellId == 181792 then
-		self:Message(181735, "Positive", "Alert", ("%s (%d) %d yards"):format(args.spellName, 2, 20))
-	else
-		self:Message(181735, "Positive", "Alert", ("%s (%d) %d yards"):format(args.spellName, 1, 10))
+		self:Message(181735, "Positive", "Alert", L.felseeker_message:format(args.spellName, 2, 20))
+	elseif args.spellId == 181738 then
+		self:Message(181735, "Positive", "Alert", L.felseeker_message:format(args.spellName, 3, 30))
 	end
 end
 
@@ -257,17 +272,13 @@ function mod:EmpoweredFelseeker(args)
 		self:Message(181735, "Positive", "Alert", CL.count:format(args.spellName, 1))
 	elseif args.spellId == 182076 then
 		self:Message(181735, "Positive", "Alert", CL.count:format(args.spellName, 2))
-	else
+	elseif args.spellId == 182040 then
 		self:Message(181735, "Positive", "Alert", CL.count:format(args.spellName, 3))
 	end
 end
 
-function mod:GlaiveThrust(args)
-	self:Message(183377, "Attention", "Warning", args.spellName)
-end
-
-function mod:MassiveBlast(args)
-	self:TargetMessage(181359, args.destName, "Attention", nil, args.spellName)
+function mod:FelHellstorm(args)
+	self:CDBar(args.spellId, 36)
 end
 
 do
@@ -276,10 +287,12 @@ do
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+			self:Message(181557, "Personal", "Alarm", CL.you:format(args.spellName))
 		end
 	end
 end
+
+-- Phases
 
 do
 	local tbl = {
@@ -304,7 +317,23 @@ do
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 182263 then -- P3 Transform
+	--181156 = Summon Adds: Mythic, when Mannoroth spawns at ~17sec, not sure what it actually does (Doomguards?)
+
+	if spellId == 181301 then -- Summon Adds: P2 & Mythic P3
+		self:Bar(181255, 25) -- Fel Imp-losion
+		if self:Mythic() then
+			self:StopBar(CL.count:format(self:SpellName(181275), curseCount))
+			curseCount = 1
+			self:Bar(181275, 45, CL.count:format(self:SpellName(181275), curseCount)) -- Curse of the Legion
+		else
+			self:Bar(181180, 48) -- Inferno
+		end
+
+	elseif spellId == 182262 then -- Summon Adds: P3
+		self:StopBar(181255) -- Fel Imp-losion
+		self:Bar(181180, 28) -- Inferno
+
+	elseif spellId == 182263 then -- P3 Transform
 		-- ~7s before: CHAT_MSG_MONSTER_YELL#Fear not, Mannoroth. The fel gift empowers you... Make them suffer!#Gul'dan
 		self:Message("stages", "Neutral", "Info", CL.stage:format(3), false)
 		phase = 3
@@ -316,6 +345,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		if self:Mythic() then
 			self:Bar(186362, 5) -- Wrath of Gul'dan
 		end
+
 	elseif spellId == 185690 then -- P4 Transform
 		-- ~8s before: CHAT_MSG_MONSTER_YELL#These mortals cannot be this strong. Gul'dan, do something!#Mannoroth
 		self:Message("stages", "Neutral", "Info", CL.stage:format(4), false)
@@ -334,23 +364,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:Bar(186362, 5) -- Wrath of Gul'dan
 			self:Bar(181255, 19) -- Fel Imp-losion
 		end
+
 	elseif spellId == 181735 then -- Felseeker
 		self:CDBar(181735, 50, phase == 4 and 182077) -- [Empowered] Felseeker
+
 	elseif spellId == 181354 then -- Glaive Combo
 		self:CDBar(181354, 30.5, phase == 4 and 187347) -- [Empowered] Glaive Combo
-	elseif spellId == 181301 then -- Summon Adds: P2 & Mythic P3
-		self:Bar(181255, 25) -- Fel Imp-losion
-		if self:Mythic() then
-			self:StopBar(CL.count:format(self:SpellName(181275), curseCount))
-			self:Bar(181275, 45) -- Curse of the Legion
-			curseCount = 1
-		else
-			self:Bar(181180, 48) -- Inferno
-		end
-	elseif spellId == 182262 then -- Summon Adds: P3
-		self:StopBar(181255) -- Imps
-		self:Bar(181180, 28) -- Inferno
-	--elseif spellId == 181156 then -- Mythic: 1st Summon adds when Mannoroth spawns at ~17sec, not sure what it actually does (Doomguards?)
 
 	end
 end
