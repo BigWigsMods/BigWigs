@@ -267,6 +267,10 @@ end
 
 function mod:DiaDeath(args)
 	diaIsDead = true
+	self:StopBar(184476) -- Reap
+	self:StopBar(184449) -- Mark of the Necromancer
+	self:StopBar(184657) -- Nightmare Visage
+	self:StopBar(CL.cast:format(self:SpellName(184657))) -- Nightmare Visage cast
 	if nextAbility == 1 then -- horror
 		startMirrorCD(self, nextAbilityTime - GetTime())
 		self:StopBar(CL.count:format(self:SpellName(184681), horrorCount)) -- Wailing Horror
