@@ -16,6 +16,7 @@ mod.respawnTime = 14
 local poundCount = 1
 local tankDebuffCount = 1
 local phase = 0 -- 0:NONE, 1:EXPLOSIVE, 2:FOUL, 3:SHADOW
+local phaseAbilityCount = 0
 local explosiveCount, foulCount, shadowCount = 0, 0, 0
 local enrageMod = 1
 local isPounding = nil
@@ -58,6 +59,7 @@ end
 
 function mod:OnEngage()
 	phase = 0
+	phaseAbilityCount = 0
 	explosiveCount, foulCount, shadowCount = 0, 0, 0
 	poundCount = 1
 	tankDebuffCount = 1
@@ -80,6 +82,7 @@ function mod:ShadowEnergy(args)
 	self:SendMessage("BigWigs_StopBars", self)
 	shadowCount = self:Normal() and 2 or self:Mythic() and 4 or 3
 	phase = 3
+	phaseAbilityCount = 0
 	tankDebuffCount = 1
 	self:Message("stages", "Neutral", "Info", args.spellName, false)
 
@@ -102,6 +105,7 @@ function mod:ExplosiveEnergy(args)
 	self:SendMessage("BigWigs_StopBars", self)
 	explosiveCount = self:Normal() and 2 or self:Mythic() and 4 or 3
 	phase = 1
+	phaseAbilityCount = 0
 	tankDebuffCount = 1
 	self:Message("stages", "Neutral", "Info", args.spellName, false)
 
@@ -124,6 +128,7 @@ function mod:FoulEnergy(args)
 	self:SendMessage("BigWigs_StopBars", self)
 	foulCount = self:Normal() and 2 or self:Mythic() and 4 or 3
 	phase = 2
+	phaseAbilityCount = 0
 	tankDebuffCount = 1
 	self:Message("stages", "Neutral", "Info", args.spellName, false)
 
@@ -201,24 +206,26 @@ end
 
 function mod:FelOutpouring(args)
 	shadowCount = shadowCount - 1
+	phaseAbilityCount = phaseAbilityCount + 1
 	self:Message(181292, "Attention", "Long", args.spellId)
 	if self:LFR() then
 		if shadowCount > 0 then
 			self:CDBar(args.spellId, 45) -- No Empowered on LFR
 		end
-	else
+	elseif phase == 3 and phaseAbilityCount == 1 then -- Shadow
 		self:CDBar(181292, 108 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
 	end
 end
 
 function mod:ExplosiveRunes(args)
 	explosiveCount = explosiveCount - 1
+	phaseAbilityCount = phaseAbilityCount + 1
 	self:Message(181296, "Urgent", "Info", args.spellId)
 	if self:LFR() then
 		if explosiveCount > 0 then
 			self:CDBar(args.spellId, 35) -- No Empowered on LFR
 		end
-	else
+	elseif phase == 1 and phaseAbilityCount == 1 then -- Explosive
 		self:CDBar(181296, 108 * enrageMod, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
 	end
 end
@@ -232,13 +239,14 @@ do
 	end
 	function mod:GraspingHands(args)
 		foulCount = foulCount - 1
+		phaseAbilityCount = phaseAbilityCount + 1
 		self:Message(181299, "Important", nil, args.spellId)
 		self:OpenProximity(181299, 4)
 		if self:LFR() then
 			if foulCount > 0 then
 				self:CDBar(args.spellId, 35) -- No Empowered (Dragging) on LFR
 			end
-		else
+		elseif phase == 2 and phaseAbilityCount == 1 then -- Foul
 			self:CDBar(181299, 108 * enrageMod, foulCount > 0 and 181300) -- Grasping Hands / Dragging Hands
 		end
 		self:ScheduleTimer(closeProx, 6, self, 181299) -- Hands spawn delayed and you still have time to move
@@ -249,12 +257,12 @@ function mod:Pound(args)
 	isPounding = true
 	self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, poundCount))
 	poundCount = poundCount + 1
-	if self:LFR() then
-		if poundCount % 2 == 0 then -- Only 2 per phase
-			self:CDBar(args.spellId, phase == 3 and 35 or 25, CL.count:format(args.spellName, poundCount))
+	if poundCount % 2 == 0 then -- Only 2 per phase
+		if self:LFR() then
+				self:CDBar(args.spellId, phase == 3 and 35 or 25, CL.count:format(args.spellName, poundCount))
+		else
+			self:CDBar(args.spellId, phase == 3 and (50 * enrageMod) or (62 * enrageMod), CL.count:format(args.spellName, poundCount)) -- start->start = 50 / 42 enraged for shadow, 62 / 52 enraged for other
 		end
-	else
-		self:CDBar(args.spellId, phase == 3 and (50 * enrageMod) or (62 * enrageMod), CL.count:format(args.spellName, poundCount)) -- start->start = 50 / 42 enraged for shadow, 62 / 52 enraged for other
 	end
 	self:OpenProximity(args.spellId, 5) -- 4 + 1 safety
 end
