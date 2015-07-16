@@ -149,7 +149,7 @@ function mod:OmnusDies()
 	self:StopBar(186785) -- Withering Gaze
 	self:StopBar(186546) -- Black Hole
 	phase = 3
-	self:Message("stages", "Neutral", "Info", "35% - ".. CL.phase:format(3), false)
+	self:Message("stages", "Neutral", self:Tank() and "Long" or "Info", "35% - ".. CL.phase:format(3), false)
 	-- self:CDBar(190224, 4) -- Void Strike
 	-- self:CDBar(186333, 28) -- Void Surge
 	if self:Mythic() then
@@ -216,6 +216,7 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:OpenProximity(args.spellId, 10) -- Open to debate
+			self:Flash(args.spellId)
 		end
 	end
 end
@@ -227,21 +228,19 @@ function mod:SurgeRemoved(args)
 end
 
 function mod:FelStrike(args)
-	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	if phase < 3 then
 		self:CDBar(args.spellId, 16) -- 15.8
 	else -- alternates
-		self:PlaySound(args.spellId, "Warning")
 		self:CDBar(190224, 8) -- Void Strike
 	end
 end
 
 function mod:VoidStrike(args)
-	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	if phase < 3 then
 		self:CDBar(args.spellId, 17) -- 17.1/18.2
 	else -- alternates
-		self:PlaySound(args.spellId, "Warning")
 		self:CDBar(190223, 7) -- Fel Strike
 	end
 end
@@ -250,7 +249,7 @@ function mod:Striked(args)
 	if phase > 2 then
 		local spellId = args.spellId == 186271 and 190223 or 190224 -- 186271 -> 190223 (Fel), 186292 -> 190224 (Void)
 		self:TargetMessage(spellId, args.destName, "Attention")
-		if self:Tank() and not self:Me(args.destGUID) then -- don't spam long for non-tanks that enable strike me
+		if self:Tank() and not self:Me(args.destGUID) then -- don't spam long for non-tanks that enable strike
 			self:PlaySound(spellId, "Long")
 		end
 	end
