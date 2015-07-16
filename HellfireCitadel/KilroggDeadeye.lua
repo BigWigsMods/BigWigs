@@ -84,6 +84,7 @@ function mod:OnEngage()
 	visionCount = 1
 	wipe(mobCollector)
 	self:CDBar(182428, 60, CL.count:format(self:SpellName(182428), visionCount)) -- Vision of Death
+	self:CDBar(180224, 40, CL.count:format(self:SpellName(180224), deathThroesCount)) -- Death Throes
 	self:CDBar(188929, 25) -- Heart Seeker
 	self:CDBar(180199, 10.8) -- Shred Armor
 	self:OpenAltPower("altpower", 182159) -- Fel Corruption
