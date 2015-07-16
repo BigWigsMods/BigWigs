@@ -54,7 +54,7 @@ end
 
 function mod:OnBossEnable()
 	-- Dia Darkwhisper
-	self:Log("SPELL_CAST_SUCCESS", "MarkOfTheNecromancer", 184449)
+	self:Log("SPELL_CAST_SUCCESS", "MarkOfTheNecromancer", 184449, 184676) -- 184676: 30%-cast
 	self:Log("SPELL_CAST_START", "Reap", 184476)
 	self:Log("SPELL_CAST_SUCCESS", "ReapOver", 184476)
 	self:Log("SPELL_CAST_START", "NightmareVisage", 184657)
@@ -132,8 +132,13 @@ do
 end
 
 function mod:MarkOfTheNecromancer(args)
-	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 60) -- 60-63
+	self:Message(184449, "Attention")
+	if args.spellId == 184449 then
+		self:CDBar(184449, 60) -- 60-63
+	else -- 30%-cast
+		self:StopBar(184476) -- Reap
+		self:StopBar(184449) -- Mark of the Necromancer
+	end
 end
 
 function mod:Reap(args)
@@ -267,8 +272,6 @@ end
 
 function mod:DiaDeath(args)
 	diaIsDead = true
-	self:StopBar(184476) -- Reap
-	self:StopBar(184449) -- Mark of the Necromancer
 	self:StopBar(184657) -- Nightmare Visage
 	self:StopBar(CL.cast:format(self:SpellName(184657))) -- Nightmare Visage cast
 	if nextAbility == 1 then -- horror
