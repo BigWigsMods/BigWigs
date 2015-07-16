@@ -270,6 +270,7 @@ do
 	function mod:WroughtChaos(args)
 		chaosSource = self:ColorName(args.destName)
 		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
 			self:Say(args.spellId)
 		end
 	end
@@ -277,6 +278,7 @@ do
 	function mod:FocusedChaos(args)
 		chaosTarget = self:ColorName(args.destName)
 		if self:Me(args.destGUID) then
+			self:Message(186123, "Positive", "Info", CL.you:format(args.spellName))
 			self:Say(186123, args.spellName)
 		end
 
@@ -284,10 +286,10 @@ do
 		local spell = CL.count:format(self:SpellName(186123), chaosCount)
 		if not self:Mythic() then
 			local targets = L.chaos_bar:format(chaosSource, chaosTarget)
-			self:Message(186123, args.destName, "Important", "Info", CL.other:format(spell, targets)) -- Wrought Chaos (1): Player -> Player
+			self:Message(186123, args.destName, "Important", nil, CL.other:format(spell, targets)) -- Wrought Chaos (1): Player -> Player
 			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, targets)) -- (1) Player -> Player
 		else
-			self:Message(186123, "Important", "Info", spell)
+			self:Message(186123, "Important", nil, spell) -- Wrought Chaos (1)
 			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, args.spellName)) -- (1) Focused Chaos
 		end
 	end
