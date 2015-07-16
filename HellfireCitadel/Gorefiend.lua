@@ -250,6 +250,7 @@ function mod:FeastOfSoulsOver(args)
 	self:Bar(179864, self:Mythic() and 9 or 13, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
 	self:Bar(179864, self:Mythic() and 20 or 30, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death
 	self:CDBar(179909, 19) -- Shared Fate
+	self:Bar(179977, 9) -- Touch of Doom
 
 	fateCount = 1
 	shadowOfDeathInfo.count.tank = 0
