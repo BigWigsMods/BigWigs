@@ -164,9 +164,9 @@ function mod:ExplosiveBurst(args)
 	self:Flash(args.spellId)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
-		self:OpenProximity(args.spellId, 40)
+		self:OpenProximity(args.spellId, 30)
 	else
-		self:OpenProximity(args.spellId, 40, args.destName)
+		self:OpenProximity(args.spellId, 30, args.destName)
 	end
 end
 
