@@ -23,6 +23,8 @@ local mobCollector = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.killed = "%d Killed!" -- title case to match "%s Spawned!" (grumble grumble)
+
 	L.imps, L.imps_desc, L.imps_icon = -11694, 186532, "spell_shadow_summonimp"
 	L.voidfiend, L.voidfiend_desc, L.voidfiend_icon = -11714, 188939, "spell_shadow_summonvoidwalker"
 end
@@ -110,9 +112,17 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 
 	elseif spellId == 190307 then -- Activate Void Portal
 		self:Bar("voidfiend", 14.5, L.voidfiend, L.voidfiend_icon)
+		if self:Mythic() then
+			self:Message("stages", "Neutral", "Info", "85% - ".. CL.phase:format(2), false)
+			phase = 3 -- both portals up
+		end
 
 	elseif spellId == 189806 then -- Void Feedback (Omnus Spawned)
-		self:Message("stages", "Neutral", "Info", "60% - ".. CL.spawned:format(self:SpellName(-11688)), false)
+		if not self:Mythic() then
+			self:Message("stages", "Neutral", "Info", "60% - ".. CL.spawned:format(self:SpellName(-11688)), false)
+		else
+			self:Message("stages", "Neutral", "Info", "80% - ".. CL.spawned:format(self:SpellName(-11688)), false)
+		end
 		self:CDBar(186546, 18) -- Black Hole
 		self:CDBar(186785, 6) -- Withering Gaze
 
@@ -124,35 +134,40 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(186407) -- Fel Surge
 		self:StopBar(190224) -- Void Strike
 		self:StopBar(186333) -- Void Surge
-		self:Message("stages", "Neutral", "Info", "20% - ".. CL.phase:format(4), false)
+		phase = 4
+		self:Message("stages", "Neutral", "Info", "20% - ".. spellName, false)
 		self:Bar(187204, 10) -- Overwhelming Chaos
 	end
 end
 
-function mod:AkkelionDies()
-	self:StopBar(190223) -- Fel Strike
-	self:StopBar(186407) -- Fel Surge
+function mod:AkkelionDies(args)
 	self:StopBar(186448) -- Felblaze Flurry
 	self:StopBar(186500) -- Chains of Fel
-	phase = 2
-	self:Message("stages", "Neutral", "Info", "65% - ".. CL.phase:format(2), false)
-	self:CDBar(190224, 20) -- Void Strike
-	self:CDBar(186333, 28) -- Void Surge
-	if self:Mythic() then
+	if not self:Mythic() then
+		self:StopBar(190223) -- Fel Strike
+		self:StopBar(186407) -- Fel Surge
+		phase = 2
+		self:Message("stages", "Neutral", "Info", "65% - ".. CL.phase:format(2), false)
+		self:CDBar(190224, 20) -- Void Strike
+		self:CDBar(186333, 28) -- Void Surge
+	else
+		self:Message("stages", "Neutral", "Info", "50% - ".. L.killed:format(args.destName), false)
 		self:CDBar(186500, 30) -- Empowered Chains of Fel
 	end
 end
 
-function mod:OmnusDies()
-	self:StopBar(190224) -- Void Strike
-	self:StopBar(186333) -- Void Surge
+function mod:OmnusDies(args)
 	self:StopBar(186785) -- Withering Gaze
 	self:StopBar(186546) -- Black Hole
-	phase = 3
-	self:Message("stages", "Neutral", self:Tank() and "Long" or "Info", "35% - ".. CL.phase:format(3), false)
-	-- self:CDBar(190224, 4) -- Void Strike
-	-- self:CDBar(186333, 28) -- Void Surge
-	if self:Mythic() then
+	if not self:Mythic() then
+		self:StopBar(190224) -- Void Strike
+		self:StopBar(186333) -- Void Surge
+		phase = 3
+		self:Message("stages", "Neutral", self:Tank() and "Long" or "Info", "35% - ".. CL.phase:format(3), false)
+		-- self:CDBar(190224, 4) -- Void Strike
+		-- self:CDBar(186333, 28) -- Void Surge
+	else
+		self:Message("stages", "Neutral", "Info", "40% - ".. L.killed:format(args.destName), false)
 		self:CDBar(186546, 21) -- Empowered Black Hole
 	end
 end
