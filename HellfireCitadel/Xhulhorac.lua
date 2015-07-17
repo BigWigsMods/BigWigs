@@ -163,7 +163,7 @@ function mod:OmnusDies(args)
 		self:StopBar(190224) -- Void Strike
 		self:StopBar(186333) -- Void Surge
 		phase = 3
-		self:Message("stages", "Neutral", self:Tank() and "Long" or "Info", "35% - ".. CL.phase:format(3), false)
+		self:Message("stages", "Neutral", "Info", "35% - ".. CL.phase:format(3), false)
 		-- self:CDBar(190224, 4) -- Void Strike
 		-- self:CDBar(186333, 28) -- Void Surge
 	else
@@ -243,19 +243,21 @@ function mod:SurgeRemoved(args)
 end
 
 function mod:FelStrike(args)
-	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
 	if phase < 3 then
 		self:CDBar(args.spellId, 16) -- 15.8
 	else -- alternates
+		self:PlaySound(args.spellId, "Warning")
 		self:CDBar(190224, 8) -- Void Strike
 	end
 end
 
 function mod:VoidStrike(args)
-	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
 	if phase < 3 then
 		self:CDBar(args.spellId, 17) -- 17.1/18.2
 	else -- alternates
+		self:PlaySound(args.spellId, "Warning")
 		self:CDBar(190223, 7) -- Fel Strike
 	end
 end
