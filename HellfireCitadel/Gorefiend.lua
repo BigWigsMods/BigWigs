@@ -135,7 +135,9 @@ function mod:OnEngage()
 	fixateOnMe = nil
 	fateCount = 1
 	showProximity()
-	self:Bar(179909, 18) -- Shared Fate
+	if not self:LFR() then
+		self:Bar(179909, 18) -- Shared Fate
+	end
 	self:Bar(179864, self:Mythic() and 3 or 2, shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
 	self:Bar(179864, self:Mythic() and 9 or 13, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
 	self:Bar(179864, self:Mythic() and 20 or 30, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death
@@ -249,8 +251,10 @@ function mod:FeastOfSoulsOver(args)
 	self:Bar(179864, self:Mythic() and 3 or 2, shadowOfDeathInfo.icon.dps.." "..self:SpellName(179864)) -- DPS Shadow of Death
 	self:Bar(179864, self:Mythic() and 9 or 13, shadowOfDeathInfo.icon.tank.." "..self:SpellName(179864)) -- Tank Shadow of Death
 	self:Bar(179864, self:Mythic() and 20 or 30, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death
-	self:Bar(179909, 19) -- Shared Fate
 	self:Bar(179977, 9) -- Touch of Doom
+	if not self:LFR() then
+		self:Bar(179909, 19) -- Shared Fate
+	end
 
 	fateCount = 1
 	shadowOfDeathInfo.count.tank = 0
