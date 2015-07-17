@@ -16,6 +16,7 @@ mod.respawnTime = 30
 local dominanceCount = 0
 local apocalypseCount = 0
 local dominatorCount = 0
+local prisonCount = 0
 local isHostile = true -- is Soulbound Construct hostile or friendly
 local inBarrier = false
 local addCount = 1
@@ -93,6 +94,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ShadowBoltVolley", 182392)
 	self:Log("SPELL_AURA_APPLIED", "GhastlyFixation", 182769)
 	self:Log("SPELL_CAST_START", "FelPrison", 181288)
+	self:Log("SPELL_AURA_APPLIED", "FelPrisonApplied", 183017)
 	self:Log("SPELL_CAST_START", "ReverberatingBlow", 180008)
 	self:Log("SPELL_CAST_SUCCESS", "SocretharsContingency", 190776) -- add spawning
 	self:Log("SPELL_AURA_APPLIED", "FelblazeResidueDamage", 182218)
@@ -104,8 +106,6 @@ end
 
 function mod:OnEngage()
 	addCount = 1
-	dominanceCount = 0
-	apocalypseCount = 0
 	isHostile = true
 	inBarrier = false
 	ghostGUIDS = {}
@@ -177,6 +177,18 @@ end
 
 do
 	local prev = 0
+	function mod:FelPrisonApplied(args)
+		local t = GetTime()
+		if UnitInVehicle("player") and not UnitInRaid(args.destName) and t-prev > 5 then -- show for everyone or only construct? hmm
+			prev = t
+			prisonCount = prisonCount + 1
+			self:Bar(181288, 60, CL.count:format(args.spellName, prisonCount))
+		end
+	end
+end
+
+do
+	local prev = 0
 	function mod:FelblazeResidueDamage(args)
 		local t = GetTime()
 		if t-prev > 1.5 and self:Me(args.destGUID) then
@@ -195,7 +207,8 @@ end
 
 function mod:EjectSoul() -- Phase 2 Start
 	isHostile = false
-	dominatorCount, dominanceCount = 0, 0
+	dominatorCount, dominanceCount, apocalypseCount = 0, 0, 0
+	prisonCount = 0
 	-- Stop P1 bars
 	self:StopBar(180008) -- Reverberating Blow
 	self:StopBar(180221) -- Volatile Fel Orb
@@ -215,8 +228,8 @@ end
 function mod:FelBarrier()
 	inBarrier = true
 	dominatorCount = dominatorCount + 1
-	self:CDBar("dominator", self:Mythic() and 130 or (dominatorCount % 2 == 0 and 70 or 60), L.dominator, L.dominator_icon) -- Sargerei Dominator
-	self:Message("dominator", "Neutral", "Warning", L.dominator, L.dominator_icon)
+	self:Message("dominator", "Neutral", "Warning", CL.count:format(L.dominator, dominatorCount), L.dominator_icon)
+	self:CDBar("dominator", self:Mythic() and 130 or (dominatorCount % 2 == 0 and 70 or 60), CL.count:format(L.dominator, dominatorCount + 1), L.dominator_icon) -- Sargerei Dominator
 	self:CDBar(184124, 5) -- Gift of the Man'ari
 end
 
