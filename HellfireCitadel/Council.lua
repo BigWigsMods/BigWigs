@@ -150,7 +150,7 @@ function mod:Reap(args)
 		self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
 	end
 	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
-	self:CDBar(args.spellId, 65) -- 65-72 pretty inconsistent
+	self:CDBar(args.spellId, 67) -- 67-68
 end
 
 function mod:ReapOver(args)
