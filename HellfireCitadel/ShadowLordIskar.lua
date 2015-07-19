@@ -17,6 +17,7 @@ local shadowEscapeCount = 0
 local nextPhase, nextPhaseSoon = 70, 75.5
 local windTargets = {}
 local eyeTarget = nil
+local remainingWinds, remainingWounds, remainingChakram, remainingRiposte = 0, 0, 0, 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -179,7 +180,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:Message(182323, "Urgent")
-			self:CDBar(182323, self:Normal() and 40 or 28)
+			self:CDBar(182323, self:Normal() and 40 or 33)
 		end
 	end
 end
@@ -264,15 +265,20 @@ do
 end
 
 function mod:Stage2() -- Shadow Escape
+	remainingRiposte = self:BarTimeLeft(185345)
+	remainingWinds = self:BarTimeLeft(181956)
+	remainingChakram = self:BarTimeLeft(182200)
+	remainingWounds = self:BarTimeLeft(182323)
 	self:StopBar(185345) -- Shadow Riposte
 	self:StopBar(181956) -- Phantasmal Winds
 	self:StopBar(182200) -- Fel Chakram
+	self:StopBar(182323) -- Phantasmal Wounds
 	shadowEscapeCount = shadowEscapeCount + 1
 
 	self:Message("stages", "Neutral", "Info", ("%d%% - %s"):format(nextPhase, CL.phase:format(2)), false)
 	nextPhase = nextPhase - 25
-	self:ScheduleTimer("Stage1", 40) -- event for when Iskar is attackable again?
-	self:Bar("stages", 40, CL.phase:format(1), "achievement_boss_hellfire_felarakkoa")
+	self:ScheduleTimer("Stage1", self:Normal() and 50 or 40) -- event for when Iskar is attackable again?
+	self:Bar("stages", self:Normal() and 50 or 40, CL.phase:format(1), "achievement_boss_hellfire_felarakkoa")
 	self:Bar(181912, 20) -- Focused Blast
 	self:CDBar(181753, self:Normal() and 21 or 15.5) -- Fel Bomb, 15.5-17.4
 	if shadowEscapeCount > 1 then -- Fel Warden
@@ -290,11 +296,11 @@ function mod:Stage1() -- Shadow Escape over
 	self:StopBar(181912) -- Focused Blast
 	self:Message("stages", "Neutral", "Info", CL.phase:format(1), false)
 	if self:Mythic() then
-		self:CDBar(185345, 10.5) -- Shadow Riposte
+		self:CDBar(185345, remainingRiposte) -- Shadow Riposte
 	end
-	self:CDBar(182200, self:Normal() and 10 or 5.5) -- Fel Chakram (doesn't always happen?)
-	--self:CDBar(181956, 20) -- Phantasmal Winds
-	--self:CDBar(182323, 22) -- Phantasmal Wounds
+	self:CDBar(182200, remainingChakram) -- Fel Chakram, very inconsistent
+	self:CDBar(181956, remainingWinds) -- Phantasmal Winds
+	self:CDBar(182323, remainingWounds) -- Phantasmal Wounds
 end
 
 do
