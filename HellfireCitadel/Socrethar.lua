@@ -53,6 +53,7 @@ function mod:GetOptions()
 		{182051, "SAY"}, -- Felblaze Charge
 		182218, -- Felblaze Residue
 		181288, -- Fel Prison
+		188693, -- Apocalyptic Felburst
 		-- Voracious Soulstalker (Mythic)
 		-11778, -- Voracious Soulstalker
 		188692, -- Unstoppable Tenacity
@@ -102,6 +103,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "FelblazeResidueDamage", 182218)
 	self:Log("SPELL_CAST_SUCCESS", "EjectSoul", 183023) -- Phase 2
 	self:Log("SPELL_AURA_REMOVED", "IncompleteBindingRemoved", 190466) -- Phase 1
+	self:Log("SPELL_CAST_SUCCESS", "ApocalypticFelburst", 188693)
 end
 
 function mod:OnEngage()
@@ -115,6 +117,7 @@ function mod:OnEngage()
 	self:CDBar(182051, 29) -- Felblaze Charge
 	if self:Mythic() then
 		self:Bar(-11778, 20, addFormat:format(addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
+		self:Bar(188693, 34) -- Apocalyptic Felburst
 	end
 	self:Berserk(641)
 end
@@ -124,6 +127,11 @@ end
 --
 
 -- Phase 1
+
+function mod:ApocalypticFelburst(args)
+	self:Message(args.spellId, "Urgent", "Info")
+	--self:Bar(args.spellId, X) -- XXX no idea about the CD, need to go trough some WCL logs
+end
 
 function mod:SocretharsContingency(args)
 	self:Message(-11778, "Attention", nil, addFormat:format(addCount))
