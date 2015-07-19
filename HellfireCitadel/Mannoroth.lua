@@ -241,7 +241,7 @@ function mod:CurseOfTheLegionSuccess(args)
 end
 
 function mod:CurseOfTheLegion(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Alarm", CL.count:format(args.spellName, curseCount))
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Alarm", CL.count:format(args.spellName, curseCount-1))
 	self:TargetBar(args.spellId, 20, args.destName)
 	self:PrimaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
