@@ -23,7 +23,7 @@ local mobCollector = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.killed = "%d Killed!" -- title case to match "%s Spawned!" (grumble grumble)
+	L.killed = "%s killed!"
 
 	L.imps, L.imps_desc, L.imps_icon = -11694, 186532, "spell_shadow_summonimp"
 	L.voidfiend, L.voidfiend_desc, L.voidfiend_icon = -11714, 188939, "spell_shadow_summonvoidwalker"
