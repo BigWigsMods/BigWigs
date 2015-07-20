@@ -28,6 +28,11 @@ if L then
 	L.custom_off_wind_marker = "Phantasmal Winds marker"
 	L.custom_off_wind_marker_desc = "Marks Phantasmal Winds targets with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.custom_off_wind_marker_icon = 1
+
+	L.binding_removed = "Dark Binding removed (%d/%d)"
+	L.custom_off_binding_marker = "Dark Bindings marker"
+	L.custom_off_binding_marker_desc = "Marks Dark Bindings targets with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_binding_marker_icon = 1
 end
 L = mod:GetLocale()
 
@@ -52,6 +57,7 @@ function mod:GetOptions()
 		--[[ General ]]--
 		{179202, "FLASH"}, -- Eye of Anzu
 		{182582, "SAY"}, -- Fel Incineration
+		"custom_off_binding_marker",
 		"stages",
 		"berserk",
 	}, {
@@ -73,8 +79,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FocusedBlast", 181912)
 	self:Log("SPELL_CAST_START", "FelConduit", 181827, 187998)
 	self:Log("SPELL_AURA_APPLIED", "FelChakram", 182200, 182178)
-	self:Log("SPELL_CAST_START", "DarkBindingsCast", 185510)
+	self:Log("SPELL_CAST_START", "DarkBindingsCast", 185456)
 	self:Log("SPELL_AURA_APPLIED", "DarkBindings", 185510)
+	self:Log("SPELL_AURA_REMOVED", "DarkBindingsRemoved", 185510)
 	self:Log("SPELL_CAST_START", "Stage2", 181873) -- Shadow Escape
 	self:Log("SPELL_CAST_START", "ShadowRiposte", 185345)
 	self:Log("SPELL_AURA_APPLIED", "FelFireDamage", 182600)
@@ -246,20 +253,34 @@ do
 	end
 end
 
-function mod:DarkBindingsCast(args)
-	self:Message(args.spellId, "Urgent", "Info", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 34)
+function mod:DarkBindingsCast()
+	self:Message(185510, "Urgent", "Info", CL.casting:format(self:SpellName(185510))) -- Dark Bindings, actual cast is called "Chains of Despair"
+	self:Bar(185510, 30)
 end
 
 do
-	local list = mod:NewTargetList()
+	local list, removed = mod:NewTargetList(), 0
 	function mod:DarkBindings(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
+			removed = 0
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention")
 		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
+		end
+		if self:GetOption("custom_off_binding_marker") then
+			SetRaidTarget(args.destName, #list)
+		end
+	end
+
+	function mod:DarkBindingsRemoved(args)
+		removed = removed + 1
+		if self:GetOption("custom_off_binding_marker") then
+			SetRaidTarget(args.destName, 0)
+		end
+		if removed%2 == 0 then -- 2 events per removed binding (player a and player b)
+			mod:Message(args.spellId, "Neutral", nil, L.binding_removed:format(removed/2, 3))
 		end
 	end
 end
