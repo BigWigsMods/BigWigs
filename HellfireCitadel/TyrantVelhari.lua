@@ -65,6 +65,7 @@ end
 
 function mod:OnBossEnable()
 	-- Phase 1
+	self:Log("SPELL_AURA_APPLIED", "AuraOfOppression", 181718)
 	self:Log("SPELL_CAST_START", "EnforcersOnslaught", 180004)
 	self:Log("SPELL_CAST_START", "AnnihilatingStrike", 180260)
 	self:Log("SPELL_CAST_START", "InfernalTempestStart", 180300)
@@ -150,6 +151,10 @@ function mod:Deaths(args)
 end
 
 -- Stage 1
+
+function mod:AuraOfOppression()
+	self:Message("stages", "Neutral", nil, CL.phase:format(phase), false)
+end
 
 function mod:EnforcersOnslaught(args)
 	self:Message(args.spellId, "Attention")

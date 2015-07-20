@@ -214,7 +214,7 @@ end
 do
 	local list, isOnMe = {}, nil
 	local function gazeSay(self, spellName)
-		table.sort(list)
+		sort(list)
 		for i = 1, #list do
 			local target = list[i]
 			if target == isOnMe then

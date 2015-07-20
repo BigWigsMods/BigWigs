@@ -74,7 +74,6 @@ function mod:GetOptions()
 		181973, -- Feast of Souls
 		{181295, "COUNTDOWN"}, -- Digest
 		179864, -- Shadow of Death
-		--182788, -- Crushing Darkness
 		--[[ Enraged Spirit ]]--
 		182601, -- Fel Fury
 		181582, -- Bellowing Shout
@@ -107,7 +106,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Digest", 181295)
 	self:Log("SPELL_AURA_REMOVED", "DigestRemoved", 181295)
 	self:Log("SPELL_AURA_APPLIED", "ShadowOfDeath", 179864)
-	--self:Log("SPELL_CAST_START", "CrushingDarkness", 182788) -- 180016 hidden, but do we care about warning for it?
 
 	self:Log("SPELL_CAST_START", "BellowingShout", 181582)
 	self:Log("SPELL_AURA_APPLIED", "HungerForLife", 180148)
