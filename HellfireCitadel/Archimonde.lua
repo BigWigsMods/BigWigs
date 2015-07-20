@@ -21,6 +21,7 @@ mod.engageId = 1799
 local phase = 1
 local currentTorment = 0
 local maxTorment = 0
+local burstCount = 1
 local burstTimer = nil
 
 --------------------------------------------------------------------------------
@@ -108,6 +109,7 @@ end
 function mod:OnEngage()
 	currentTorment = 0
 	maxTorment = 0
+	burstCount = 1
 
 	self:Bar(182826, 6) -- Doomfire
 	self:Bar(183828, 15.4) -- Death Brand
@@ -185,7 +187,8 @@ end
 function mod:ShadowfelBurst(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
 	self:Bar(args.spellId, 2, CL.cast:format(args.spellName))
-	self:Bar(args.spellId, 61)
+	burstCount = burstCount + 1
+	self:Bar(args.spellId, burstCount == 2 and 61 or 56)
 	-- just in case timer is off
 	self:OpenProximity(args.spellId, 10)
 end
@@ -198,7 +201,7 @@ do
 			self:ScheduleTimer("TargetMessage", 0.3, 183817, list, "Attention")
 			self:CloseProximity(183817)
 			self:CancelTimer(burstTimer)
-			burstTimer = self:ScheduleTimer("OpenProximity", 55, 183817, 10)
+			burstTimer = self:ScheduleTimer("OpenProximity", burstCount == 2 and 56 or 51, 183817, 10)
 		end
 	end
 end
