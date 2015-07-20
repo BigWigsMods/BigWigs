@@ -76,8 +76,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "GlaiveThrust", 183377, 185831)
 	self:Log("SPELL_AURA_APPLIED", "MassiveBlast", 181359, 185821)
 	self:Log("SPELL_CAST_SUCCESS", "FelHellstorm", 181557)
-	self:Log("SPELL_DAMAGE", "FelHellstormDamage", 181566)
-	self:Log("SPELL_MISSED", "FelHellstormDamage", 181566)
 	-- Adds
 	self:Log("SPELL_CAST_SUCCESS", "CurseOfTheLegionSuccess", 181275) -- APPLIED can miss
 	self:Log("SPELL_AURA_APPLIED", "CurseOfTheLegion", 181275)
@@ -114,6 +112,30 @@ end
 --
 
 -- Adds
+
+function mod:CurseOfTheLegionSuccess(args)
+	curseCount = curseCount + 1
+	if self:Mythic() then
+		self:Bar(args.spellId, 65, CL.count:format(args.spellName, curseCount))
+	end
+end
+
+function mod:CurseOfTheLegion(args)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Alarm", CL.count:format(args.spellName, curseCount-1))
+	self:TargetBar(args.spellId, 20, args.destName)
+	self:PrimaryIcon(args.spellId, args.destName)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:Flash(args.spellId)
+	end
+end
+
+function mod:CurseOfTheLegionRemoved(args)
+	self:StopBar(args.spellName, args.destName)
+	self:PrimaryIcon(args.spellId)
+	self:Message(args.spellId, "Important", "Warning", CL.spawned:format(self:SpellName(-11813))) -- Doom Lord
+	self:Bar(181099, 12) -- Mark of Doom
+end
 
 do
 	local list = mod:NewTargetList()
@@ -177,11 +199,11 @@ do
 end
 
 function mod:GlaiveThrust(args)
-	self:Message(181354, "Attention", "Warning", args.spellName)
+	self:Message(181354, "Urgent", "Warning", args.spellName)
 end
 
 function mod:MassiveBlast(args)
-	self:TargetMessage(181359, args.destName, "Attention", nil, args.spellName)
+	self:TargetMessage(181359, args.destName, "Urgent", nil, args.spellName)
 end
 
 function mod:MannorothsGazeCast(args)
@@ -198,14 +220,16 @@ do
 			if target == isOnMe then
 				local gaze = L.gaze:format(i)
 				self:Say(181597, gaze)
-				self:Message(181597, "Positive", nil, CL.you:format(gaze))
+				self:Message(181597, "Personal", "Alarm", CL.you:format(gaze))
 			end
 			if self:GetOption("custom_off_gaze_marker") then
 				SetRaidTarget(target, i)
 			end
 			list[i] = self:ColorName(target)
 		end
-		self:TargetMessage(181597, list, "Attention", "Alarm")
+		if not isOnMe then
+			self:TargetMessage(181597, list, "Attention")
+		end
 		isOnMe = nil
 	end
 
@@ -233,30 +257,6 @@ function mod:Shadowforce(args)
 	self:CDBar(181799, 52, args.spellName)
 end
 
-function mod:CurseOfTheLegionSuccess(args)
-	curseCount = curseCount + 1
-	if self:Mythic() then
-		self:Bar(args.spellId, 65, CL.count:format(args.spellName, curseCount))
-	end
-end
-
-function mod:CurseOfTheLegion(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Alarm", CL.count:format(args.spellName, curseCount-1))
-	self:TargetBar(args.spellId, 20, args.destName)
-	self:PrimaryIcon(args.spellId, args.destName)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:Flash(args.spellId)
-	end
-end
-
-function mod:CurseOfTheLegionRemoved(args)
-	self:StopBar(args.spellName, args.destName)
-	self:PrimaryIcon(args.spellId)
-	self:Message(args.spellId, "Important", "Warning", CL.spawned:format(self:SpellName(-11813))) -- Doom Lord
-	self:Bar(181099, 12) -- Mark of Doom
-end
-
 function mod:Felseeker(args)
 	if args.spellId == 181793 then
 		self:Message(181735, "Positive", "Alert", L.felseeker_message:format(args.spellName, 1, 10))
@@ -279,17 +279,6 @@ end
 
 function mod:FelHellstorm(args)
 	self:CDBar(args.spellId, 36)
-end
-
-do
-	local prev = 0
-	function mod:FelHellstormDamage(args)
-		local t = GetTime()
-		if t-prev > 2 and self:Me(args.destGUID) then
-			prev = t
-			self:Message(181557, "Personal", "Alarm", CL.you:format(args.spellName))
-		end
-	end
 end
 
 -- Phases
