@@ -1,10 +1,4 @@
 
--- Notes --
--- Nether Banish has conflicting descriptions
--- Phase Transitions
--- - P2 Start (70%): Yell "I grow tired of this pointless game. You face the immortal Legion, scourge of a thousand worlds."
--- - P3 Start (40%): Yell "Enough! Your meaningless struggle ends now!"
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -116,6 +110,7 @@ function mod:OnEngage()
 	self:Bar(183254, 30) -- Allure of Flames
 	self:Bar(183817, 41) -- Shadowfel Burst
 	burstTimer = self:ScheduleTimer("OpenProximity", 36, 183817, 10)
+	-- Desecrate initial cast is at 85%
 end
 
 --------------------------------------------------------------------------------

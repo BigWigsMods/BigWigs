@@ -14,6 +14,7 @@ mod.respawnTime = 20
 --
 
 local shadowEscapeCount = 0
+local bindingsRemoved = 0
 local nextPhase, nextPhaseSoon = 70, 75.5
 local windTargets = {}
 local eyeTarget = nil
@@ -29,9 +30,9 @@ if L then
 	L.custom_off_wind_marker_desc = "Marks Phantasmal Winds targets with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.custom_off_wind_marker_icon = 1
 
-	L.binding_removed = "Dark Binding removed (%d/3)"
+	L.bindings_removed = "Bindings removed (%d/3)"
 	L.custom_off_binding_marker = "Dark Bindings marker"
-	L.custom_off_binding_marker_desc = "Marks Dark Bindings targets with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
+	L.custom_off_binding_marker_desc = "Mark the Dark Bindings targets with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.custom_off_binding_marker_icon = 1
 end
 L = mod:GetLocale()
@@ -90,8 +91,10 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 
-	self:Death("Deaths", 91543, 91541, 91539, 93625) -- Corrupted Talonpriest, Shadowfel Warden, Fel Raven, Phantasmal Resonance
-	self:Death("TrashDeaths", 93985, 93968, 93952) -- Corrupted Talonpriest, Shadowfel Warden, Fel Raven
+	self:Death("TalonpriestDeath", 91543, 93985) -- Bossfight, Trash
+	self:Death("WardenDeath", 91541, 93968) -- Bossfight, Trash
+	self:Death("RavenDeath", 91539, 93952) -- Bossfight, Trash
+	self:Death("ResonanceDeath", 93625) -- Phantasmal Resonance
 end
 
 function mod:OnEngage()
@@ -103,9 +106,9 @@ function mod:OnEngage()
 		self:CDBar(185345, 9.5) -- Shadow Riposte
 	end
 	-- normal modifier 1.25 for all CDs?
-	self:Bar(182200, self:Normal() and 6.5 or 5.5) -- Fel Chakram
-	self:CDBar(181956, self:Normal() and 21 or 17) -- Phantasmal Winds
-	self:CDBar(182323, self:Normal() and 34 or 25) -- Phantasmal Wounds
+	self:Bar(182200, self:Easy() and 6.5 or 5.5) -- Fel Chakram
+	self:CDBar(181956, self:Easy() and 21 or 17) -- Phantasmal Winds
+	self:CDBar(182323, self:Easy() and 34 or 25) -- Phantasmal Wounds
 	self:Berserk(self:Heroic() and 540 or 480)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
@@ -114,26 +117,20 @@ end
 -- Event Handlers
 --
 
-function mod:TrashDeaths(args)
-	if args.mobId == 93985 then -- Corrupted Talonpriest
-		self:StopBar(181753) -- Fel Bomb
-	elseif args.mobId == 93968 then -- Shadowfel Warden
-		self:StopBar(181827) -- Fel Conduit
-	elseif args.mobId == 93952 then -- Fel Raven
-		self:StopBar(181824) -- Phantasmal Corruption
-	end
+function mod:TalonpriestDeath() -- Corrupted Talonpriest
+	self:StopBar(181753) -- Fel Bomb
 end
 
-function mod:Deaths(args)
-	if args.mobId == 91543 then -- Corrupted Talonpriest
-		self:StopBar(181753) -- Fel Bomb
-	elseif args.mobId == 91541 then -- Shadowfel Warden
-		self:StopBar(181827) -- Fel Conduit
-	elseif args.mobId == 91539 then -- Fel Raven
-		self:StopBar(181824) -- Phantasmal Corruption
-	elseif args.mobId == 93625 then -- Phantasmal Resonance
-		self:StopBar(185510) -- Dark Bindings
-	end
+function mod:WardenDeath() -- Shadowfel Warden
+	self:StopBar(181827) -- Fel Conduit
+end
+
+function mod:RavenDeath() -- Fel Raven
+	self:StopBar(181824) -- Phantasmal Corruption
+end
+
+function mod:ResonanceDeath() -- Phantasmal Resonance
+	self:StopBar(185510) -- Dark Bindings
 end
 
 function mod:EyeOfAnzu(args)
@@ -173,7 +170,7 @@ do
 		windTargets[#windTargets + 1] = args.destName
 		if #windTargets == 1 then
 			self:ScheduleTimer(warn, 0.3, self, args.spellName)
-			self:CDBar(181956, self:Normal() and 45 or 36)
+			self:CDBar(181956, self:Easy() and 45 or 36)
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = true
@@ -198,7 +195,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:Message(182323, "Urgent")
-			self:CDBar(182323, self:Normal() and 40 or 33)
+			self:CDBar(182323, self:Easy() and 40 or 33)
 		end
 	end
 end
@@ -212,7 +209,7 @@ function mod:PhantasmalCorruption(args)
 			self:OpenProximity(181824, 8) -- XXX verify range (spell says 5 yards)
 		end
 	end
-	self:CDBar(181824, self:Normal() and 19.5 or 16)
+	self:CDBar(181824, self:Easy() and 19.5 or 16)
 end
 
 function mod:PhantasmalCorruptionRemoved(args)
@@ -227,7 +224,7 @@ function mod:FelBomb(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
-	self:Bar(args.spellId, self:Normal() and 23 or 18.4)
+	self:Bar(args.spellId, self:Easy() and 23 or 18.4)
 end
 
 function mod:FocusedBlast(args)
@@ -239,7 +236,7 @@ end
 
 function mod:FelConduit(args)
 	self:Message(181827, "Urgent", "Alert")
-	self:Bar(181827, self:Normal() and 19.3 or 15.9)
+	self:Bar(181827, self:Easy() and 19.3 or 15.9)
 end
 
 function mod:RAID_BOSS_WHISPER(event, msg)
@@ -265,16 +262,16 @@ do
 end
 
 function mod:DarkBindingsCast()
+	bindingsRemoved = 0
 	self:Message(185510, "Urgent", "Info", CL.casting:format(self:SpellName(185510))) -- Dark Bindings, actual cast is called "Chains of Despair"
 	self:Bar(185510, 30)
 end
 
 do
-	local list, removed = mod:NewTargetList(), 0
+	local list = mod:NewTargetList()
 	function mod:DarkBindings(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			removed = 0
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention")
 		end
 		if self:Me(args.destGUID) then
@@ -286,12 +283,12 @@ do
 	end
 
 	function mod:DarkBindingsRemoved(args)
-		removed = removed + 1
+		bindingsRemoved = bindingsRemoved + 1
 		if self:GetOption("custom_off_binding_marker") then
 			SetRaidTarget(args.destName, 0)
 		end
-		if removed % 2 == 0 then -- 2 events per removed binding (player a and player b)
-			self:Message(args.spellId, "Neutral", nil, L.binding_removed:format(removed/2))
+		if bindingsRemoved % 2 == 0 then -- 2 events per pair of bindings removed (player a and player b)
+			self:Message(args.spellId, "Neutral", nil, L.bindings_removed:format(bindingsRemoved/2))
 		end
 	end
 end
@@ -309,15 +306,15 @@ function mod:Stage2() -- Shadow Escape
 
 	self:Message("stages", "Neutral", "Info", ("%d%% - %s"):format(nextPhase, CL.phase:format(2)), false)
 	nextPhase = nextPhase - 25
-	self:ScheduleTimer("Stage1", self:Normal() and 50 or 40) -- event for when Iskar is attackable again?
-	self:Bar("stages", self:Normal() and 50 or 40, CL.phase:format(1), "achievement_boss_hellfire_felarakkoa")
+	self:ScheduleTimer("Stage1", self:Easy() and 50 or 40) -- event for when Iskar is attackable again?
+	self:Bar("stages", self:Easy() and 50 or 40, CL.phase:format(1), "achievement_boss_hellfire_felarakkoa")
 	self:Bar(181912, 20) -- Focused Blast
-	self:CDBar(181753, self:Normal() and 21 or 15.5) -- Fel Bomb, 15.5-17.4
+	self:CDBar(181753, self:Easy() and 21 or 15.5) -- Fel Bomb, 15.5-17.4
 	if shadowEscapeCount > 1 then -- Fel Warden
-		self:Bar(181827, self:Normal() and 7 or 6) -- Fel Conduit
+		self:Bar(181827, self:Easy() and 7 or 6) -- Fel Conduit
 	end
 	if shadowEscapeCount > 2 then -- Fel Raven
-		self:Bar(181824, self:Normal() and 27 or 22) -- Phantasmal Corruption
+		self:Bar(181824, self:Easy() and 27 or 22) -- Phantasmal Corruption
 	end
 	if self:Mythic() then
 		self:Bar(185510, 21) -- Dark Bindings
