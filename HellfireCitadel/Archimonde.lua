@@ -85,7 +85,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "WroughtChaosCast", 184265)
 	self:Log("SPELL_AURA_APPLIED", "WroughtChaos", 186123)
 	self:Log("SPELL_AURA_APPLIED", "FocusedChaos", 185014)
-	self:Log("SPELL_AURA_REMOVED", "WroughtChaosRemoved", 186123)
 	self:Log("SPELL_AURA_APPLIED", "DemonicHavoc", 183865)
 	-- P3
 	self:Log("SPELL_CAST_START", "DemonicFeedback", 187180)
@@ -218,14 +217,16 @@ do
 				local torment = CL.count:format(self:SpellName(187553), i) -- 187553 = "Torment"
 				self:Say(184964, torment)
 				self:Flash(184964)
-				self:Message(184964, "Positive", nil, CL.you:format(torment))
+				self:Message(184964, "Personal", "Alarm", CL.you:format(torment))
 			end
 			if self:GetOption("custom_off_torment_marker") then
 				SetRaidTarget(target, i)
 			end
 			list[i] = self:ColorName(target)
 		end
-		self:TargetMessage(184964, list, "Attention", "Alarm")
+		if not isOnMe then
+			self:TargetMessage(184964, list, "Attention")
+		end
 	end
 
 	function mod:ShackledTorment(args)
@@ -294,15 +295,11 @@ do
 		if not self:Mythic() then
 			local targets = L.chaos_bar:format(chaosSource, chaosTarget)
 			self:Message(186123, "Important", nil, CL.other:format(spell, targets)) -- Wrought Chaos (1): Player -> Player
-			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, targets)) -- (1) Player -> Player
+			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, targets), "spell_shadow_soulleech_1") -- (1) Player -> Player
 		else
 			self:Message(186123, "Important", nil, spell) -- Wrought Chaos (1)
-			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, args.spellName)) -- (1) Focused Chaos
+			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, args.spellName), "spell_shadow_soulleech_1") -- (1) Focused Chaos
 		end
-	end
-
-	function mod:WroughtChaosRemoved(args)
-		self:StopBar(("(%d) %s"):format(chaosCount, L.chaos_bar:format(chaosSource, chaosTarget)))
 	end
 end
 
