@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Archimonde", 1026, 1438)
 if not mod then return end
 mod:RegisterEnableMob(91331)
 mod.engageId = 1799
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals

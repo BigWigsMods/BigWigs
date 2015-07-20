@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Mannoroth", 1026, 1395)
 if not mod then return end
 mod:RegisterEnableMob(91305, 91241, 91349) -- Fel Iron Summoner, Doom Lord, Mannoroth
 mod.engageId = 1795
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -80,6 +81,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CurseOfTheLegionSuccess", 181275) -- APPLIED can miss
 	self:Log("SPELL_AURA_APPLIED", "CurseOfTheLegion", 181275)
 	self:Log("SPELL_AURA_REMOVED", "CurseOfTheLegionRemoved", 181275)
+	self:Log("SPELL_CAST_START", "MarkOfDoomCast", 181099)
 	self:Log("SPELL_AURA_APPLIED", "MarkOfDoom", 181099)
 	self:Log("SPELL_AURA_REMOVED", "MarkOfDoomRemoved", 181099)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomSpike", 181119)
@@ -139,10 +141,15 @@ end
 
 do
 	local list = mod:NewTargetList()
+	function mod:MarkOfDoomCast(args)
+		wipe(list)
+		self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
+	end
+
 	function mod:MarkOfDoom(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Attention", "Alarm")
+			self:ScheduleTimer("TargetMessage", 2, args.spellId, list, "Attention", "Alarm")
 		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, CL.count:format(args.spellName, #list))
@@ -206,14 +213,17 @@ function mod:MassiveBlast(args)
 	self:TargetMessage(181359, args.destName, "Urgent", nil, args.spellName)
 end
 
-function mod:MannorothsGazeCast(args)
-	self:Message(181597, "Attention", "Info", CL.casting:format(args.spellName))
-	self:Bar(181597, 47, args.spellName)
-end
-
 do
+	local timer = nil
+	function mod:MannorothsGazeCast(args)
+		timer = nil
+		self:Message(181597, "Attention", "Info", CL.casting:format(args.spellName))
+		self:Bar(181597, 47, args.spellName)
+	end
+
 	local list, isOnMe = {}, nil
 	local function gazeSay(self, spellName)
+		timer = nil
 		sort(list)
 		for i = 1, #list do
 			local target = list[i]
@@ -240,7 +250,10 @@ do
 
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer(gazeSay, 0.3, self, args.spellName)
+			timer = self:ScheduleTimer(gazeSay, 0.5, self, args.spellName)
+		elseif timer and #list == 3 then
+			self:CancelTimer(timer)
+			gazeSay(self, args.spellName)
 		end
 	end
 
@@ -327,7 +340,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Message("stages", "Neutral", "Info", CL.stage:format(3), false)
 		phase = 3
 		self:CDBar(181557, 24) -- Fel Hellstorm
-		self:CDBar(181799, 30) -- Shadowforce
+		self:CDBar(181799, 26.5) -- Shadowforce, 26.5-31
 		self:CDBar(181354, 36) -- Glaive Combo
 		self:CDBar(181597, 40) -- Mannoroth's Gaze
 		self:CDBar(181735, 60) -- Felseeker
