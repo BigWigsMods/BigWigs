@@ -29,7 +29,7 @@ if L then
 	L.custom_off_wind_marker_desc = "Marks Phantasmal Winds targets with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.custom_off_wind_marker_icon = 1
 
-	L.binding_removed = "Dark Binding removed (%d/%d)"
+	L.binding_removed = "Dark Binding removed (%d/3)"
 	L.custom_off_binding_marker = "Dark Bindings marker"
 	L.custom_off_binding_marker_desc = "Marks Dark Bindings targets with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r"
 	L.custom_off_binding_marker_icon = 1
@@ -54,10 +54,10 @@ function mod:GetOptions()
 		181827, -- Fel Conduit
 		{181824, "SAY", "PROXIMITY"}, -- Phantasmal Corruption
 		{185510, "SAY"}, -- Dark Bindings
+		"custom_off_binding_marker",
 		--[[ General ]]--
 		{179202, "FLASH"}, -- Eye of Anzu
 		{182582, "SAY"}, -- Fel Incineration
-		"custom_off_binding_marker",
 		"stages",
 		"berserk",
 	}, {
@@ -79,7 +79,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FocusedBlast", 181912)
 	self:Log("SPELL_CAST_START", "FelConduit", 181827, 187998)
 	self:Log("SPELL_AURA_APPLIED", "FelChakram", 182200, 182178)
-	self:Log("SPELL_CAST_START", "DarkBindingsCast", 185456)
+	self:Log("SPELL_CAST_START", "DarkBindingsCast", 185456) -- Chains of Despair
 	self:Log("SPELL_AURA_APPLIED", "DarkBindings", 185510)
 	self:Log("SPELL_AURA_REMOVED", "DarkBindingsRemoved", 185510)
 	self:Log("SPELL_CAST_START", "Stage2", 181873) -- Shadow Escape
@@ -279,8 +279,8 @@ do
 		if self:GetOption("custom_off_binding_marker") then
 			SetRaidTarget(args.destName, 0)
 		end
-		if removed%2 == 0 then -- 2 events per removed binding (player a and player b)
-			mod:Message(args.spellId, "Neutral", nil, L.binding_removed:format(removed/2, 3))
+		if removed % 2 == 0 then -- 2 events per removed binding (player a and player b)
+			self:Message(args.spellId, "Neutral", nil, L.binding_removed:format(removed/2))
 		end
 	end
 end
