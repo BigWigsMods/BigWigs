@@ -247,7 +247,7 @@ function mod:FelBarrier()
 	inBarrier = true
 	self:Message("dominator", "Neutral", "Warning", CL.count:format(self:SpellName(L.dominator), dominatorCount), L.dominator_icon)
 	dominatorCount = dominatorCount + 1
-	self:Bar("dominator", self:Mythic() and 130 or (dominatorCount % 2 == 0 and 70 or 60), CL.count:format(self:SpellName(L.dominator), dominatorCount + 1), L.dominator_icon) -- Sargerei Dominator
+	self:Bar("dominator", self:Mythic() and 130 or (dominatorCount % 2 == 0 and 70 or 60), CL.count:format(self:SpellName(L.dominator), dominatorCount), L.dominator_icon) -- Sargerei Dominator
 	self:CDBar(184124, 5) -- Gift of the Man'ari
 end
 
