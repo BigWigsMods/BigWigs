@@ -91,6 +91,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 
 	self:Death("Deaths", 91543, 91541, 91539, 93625) -- Corrupted Talonpriest, Shadowfel Warden, Fel Raven, Phantasmal Resonance
+	self:Death("TrashDeaths", 93985, 93968, 93952) -- Corrupted Talonpriest, Shadowfel Warden, Fel Raven
 end
 
 function mod:OnEngage()
@@ -112,6 +113,16 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:TrashDeaths(args)
+	if args.mobId == 93985 then -- Corrupted Talonpriest
+		self:StopBar(181753) -- Fel Bomb
+	elseif args.mobId == 93968 then -- Shadowfel Warden
+		self:StopBar(181827) -- Fel Conduit
+	elseif args.mobId == 93952 then -- Fel Raven
+		self:StopBar(181824) -- Phantasmal Corruption
+	end
+end
 
 function mod:Deaths(args)
 	if args.mobId == 91543 then -- Corrupted Talonpriest
