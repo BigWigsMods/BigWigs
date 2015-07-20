@@ -261,10 +261,10 @@ function mod:VoidStrike(args)
 end
 
 function mod:Striked(args)
-	if phase > 2 then
+	if phase > 2 and not self:Me(args.destGUID) then
 		local spellId = args.spellId == 186271 and 190223 or 190224 -- 186271 -> 190223 (Fel), 186292 -> 190224 (Void)
 		self:TargetMessage(spellId, args.destName, "Attention")
-		if self:Tank() and not self:Me(args.destGUID) then -- don't spam long for non-tanks that enable strike
+		if self:Tank() then -- don't spam long for non-tanks that enable strike
 			self:PlaySound(spellId, "Long")
 		end
 	end
