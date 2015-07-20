@@ -21,6 +21,7 @@ mod.engageId = 1799
 local phase = 1
 local currentTorment = 0
 local maxTorment = 0
+local burstTimer = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -28,7 +29,7 @@ local maxTorment = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.torment_removed = "Shackled Torment removed (%d/%d)"
+	L.torment_removed = "Torment removed (%d/%d)"
 	L.chaos_bar = "%s -> %s"
 
 	L.custom_off_torment_marker = "Shackled Torment marker"
@@ -45,7 +46,7 @@ function mod:GetOptions()
 	return {
 		-- P1
 		{182826, "SAY"}, -- Doomfire
-		183817, -- Shadowfel Burst
+		{183817, "PROXIMITY"}, -- Shadowfel Burst
 		185590, -- Desecrate
 		-- P2
 		{184964, "SAY", "FLASH"}, -- Shackled Torment
@@ -108,10 +109,11 @@ function mod:OnEngage()
 	currentTorment = 0
 	maxTorment = 0
 
+	self:Bar(182826, 6) -- Doomfire
 	self:Bar(183828, 15.4) -- Death Brand
 	self:Bar(183254, 30) -- Allure of Flames
 	self:Bar(183817, 41) -- Shadowfel Burst
-	--self:CDBar(185590, 45) -- Desecrate XXX initial cast hp based
+	burstTimer = self:ScheduleTimer("OpenProximity", 36, 183817, 10)
 end
 
 --------------------------------------------------------------------------------
@@ -120,8 +122,10 @@ end
 
 function mod:Phases(unit, spellName, _, _, spellId)
 	if spellId == 190117 then -- Allow Phase 2 Spells
-		self:Message("stages", "Neutral", "Long", CL.phase:format(2), false)
 		self:StopBar(182826) -- Doomfire
+		self:StopBar(183817) -- Shadowfel Burst
+		self:CancelTimer(burstTimer)
+		self:Message("stages", "Neutral", "Long", CL.phase:format(2), false)
 		self:CDBar(186123, 7) -- Wrought Chaos
 		self:CDBar(184964, 27) -- Shackled Torment
 		self:CDBar(183828, 38) -- Death Brand
@@ -181,7 +185,9 @@ end
 function mod:ShadowfelBurst(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
 	self:Bar(args.spellId, 2, CL.cast:format(args.spellName))
-	self:ScheduleTimer("Bar", 2, args.spellId, 58.8)
+	self:Bar(args.spellId, 61)
+	-- just in case timer is off
+	self:OpenProximity(args.spellId, 10)
 end
 
 do
@@ -190,6 +196,9 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, 183817, list, "Attention")
+			self:CloseProximity(183817)
+			self:CancelTimer(burstTimer)
+			burstTimer = self:ScheduleTimer("OpenProximity", 55, 183817, 10)
 		end
 	end
 end
@@ -204,7 +213,7 @@ end
 do
 	local list, isOnMe = {}, nil
 	local function tormentSay(self, spellName)
-		table.sort(list)
+		sort(list)
 		for i = 1, #list do
 			local target = list[i]
 			if target == isOnMe then
@@ -333,7 +342,7 @@ end
 
 function mod:NetherBanishRemoved(args)
 	if self:Me(args.destGUID) then
-		self:OpenProximity(187180, 6) -- Demonic Feedback
+		self:OpenProximity(187180, 7) -- Demonic Feedback
 	end
 end
 

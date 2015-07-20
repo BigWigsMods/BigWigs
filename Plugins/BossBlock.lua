@@ -173,6 +173,7 @@ do
 		[75] = true, -- DeathwingSpine death
 		[76] = true, -- DeathwingMadness death
 		[152] = true, -- Garrosh defeat
+		[294] = true, -- Archimonde portal
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
