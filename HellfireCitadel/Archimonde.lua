@@ -286,7 +286,7 @@ do
 		local spell = CL.count:format(self:SpellName(186123), chaosCount)
 		if not self:Mythic() then
 			local targets = L.chaos_bar:format(chaosSource, chaosTarget)
-			self:Message(186123, args.destName, "Important", nil, CL.other:format(spell, targets)) -- Wrought Chaos (1): Player -> Player
+			self:Message(186123, "Important", nil, CL.other:format(spell, targets)) -- Wrought Chaos (1): Player -> Player
 			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, targets)) -- (1) Player -> Player
 		else
 			self:Message(186123, "Important", nil, spell) -- Wrought Chaos (1)
