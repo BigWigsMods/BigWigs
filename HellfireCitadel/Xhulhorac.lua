@@ -39,12 +39,12 @@ function mod:GetOptions()
 		--[[ Phase 1 ]]--
 		{190223, "TANK"}, -- Fel Strike
 		{186407, "SAY", "PROXIMITY", "FLASH"}, -- Fel Surge
-		{186448, "TANK"}, -- Felblaze Flurry
+		{186453, "TANK_HEALER"}, -- Felblaze Flurry
 		186500, -- Chains of Fel
 		--[[ Phase 2 ]]--
 		{190224, "TANK"}, -- Void Strike
 		{186333, "SAY", "PROXIMITY", "FLASH"}, -- Void Surge
-		{186785, "TANK"}, -- Withering Gaze
+		{186783, "TANK_HEALER"}, -- Withering Gaze
 		186546, -- Black Hole
 		--[[ Phase 4 ]]--
 		187204, -- Overwhelming Chaos
@@ -71,10 +71,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Surge", 186407, 186333) -- Fel Surge, Void Surge
 	self:Log("SPELL_AURA_REMOVED", "SurgeRemoved", 186407, 186333) -- Fel Surge, Void Surge
 	self:Log("SPELL_AURA_APPLIED", "ChainsOfFel", 186500, 189775) -- Normal, Empowered
-	self:Log("SPELL_AURA_APPLIED", "FelblazeFlurry", 186448)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "FelblazeFlurry", 186448)
-	self:Log("SPELL_AURA_APPLIED", "WitheringGaze", 186785)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "WitheringGaze", 186785)
+	self:Log("SPELL_CAST_SUCCESS", "FelblazeFlurry", 186453)
+	self:Log("SPELL_CAST_SUCCESS", "WitheringGaze", 186783)
 	self:Log("SPELL_CAST_START", "FelStrike", 190223)
 	self:Log("SPELL_CAST_START", "VoidStrike", 190224)
 	self:Log("SPELL_CAST_SUCCESS", "Striked", 186271, 186292) -- Fel, Void
@@ -108,7 +106,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 187196 then -- Fel Feedback (Vanguard Akkelion Spawned)
 		self:Message("stages", "Neutral", "Info", "90% - ".. CL.spawned:format(self:SpellName(-11691)), false)
 		self:CDBar(186500, 31) -- Chains of Fel 31-36
-		self:CDBar(186448, 12) -- Felblaze Flurry
+		self:CDBar(186453, 12) -- Felblaze Flurry
 
 	elseif spellId == 190307 then -- Activate Void Portal
 		self:Bar("voidfiend", 14.5, L.voidfiend, L.voidfiend_icon)
@@ -124,7 +122,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:Message("stages", "Neutral", "Info", "80% - ".. CL.spawned:format(self:SpellName(-11688)), false)
 		end
 		self:CDBar(186546, 18) -- Black Hole
-		self:CDBar(186785, 6) -- Withering Gaze
+		self:CDBar(186783, 6) -- Withering Gaze
 
 	elseif spellId == 187209 then -- Overwhelming Chaos (cast to gain the p4 buff, which just stacks on its own)
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
@@ -141,7 +139,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 function mod:AkkelionDies(args)
-	self:StopBar(186448) -- Felblaze Flurry
+	self:StopBar(186453) -- Felblaze Flurry
 	self:StopBar(186500) -- Chains of Fel
 	if not self:Mythic() then
 		self:StopBar(190223) -- Fel Strike
@@ -157,7 +155,7 @@ function mod:AkkelionDies(args)
 end
 
 function mod:OmnusDies(args)
-	self:StopBar(186785) -- Withering Gaze
+	self:StopBar(186783) -- Withering Gaze
 	self:StopBar(186546) -- Black Hole
 	if not self:Mythic() then
 		self:StopBar(190224) -- Void Strike
@@ -273,7 +271,7 @@ function mod:Striked(args)
 end
 
 function mod:FelblazeFlurry(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
+	self:TargetMessage(args.spellId, args.destName, "Important")
 	self:CDBar(args.spellId, 17)
 end
 
@@ -289,8 +287,8 @@ do
 end
 
 function mod:WitheringGaze(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Important")
-	self:CDBar(args.spellId, 24)
+	self:TargetMessage(args.spellId, args.destName, "Important")
+	self:Bar(args.spellId, 24.3)
 end
 
 function mod:BlackHole(args)
