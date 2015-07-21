@@ -151,7 +151,7 @@ end
 
 function mod:EnforcersOnslaught(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, self:Mythic() and 11 or not self.isEngaged and 14 or 18) -- 18.2-18.7
+	self:Bar(args.spellId, self:Mythic() and 11 or 18) -- 18.2-18.7
 end
 
 do
