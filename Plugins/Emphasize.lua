@@ -311,7 +311,6 @@ local function createOptions()
 end
 
 local function updateProfile()
-	plugin.db.profile.disabled = nil -- XXX temp clean up
 	if not plugin.db.profile.font then
 		plugin.db.profile.font = media:GetDefault("font")
 	end

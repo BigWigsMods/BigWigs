@@ -120,8 +120,6 @@ end
 
 local function updateProfile()
 	db = plugin.db.profile
-	db.media.Victory = nil -- XXX temp cleanup
-	db.defaultonly = nil -- XXX temp cleanup
 end
 
 local function shouldDisable() return not plugin.db.profile.sound end

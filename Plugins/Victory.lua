@@ -98,7 +98,6 @@ plugin.pluginOptions = {
 --
 
 function plugin:OnPluginEnable()
-	self.db.profile.sound = nil -- XXX temp cleanup
 	if not self.db.profile.blizzMsg then
 		BossBanner:UnregisterEvent("BOSS_KILL")
 	end

@@ -413,17 +413,7 @@ function mod:ADDON_LOADED(addon)
 	end
 
 	if BigWigs3DB then
-		if not BigWigs3DB.has61reset then -- XXX 6.1 reset for DB change
-			for k,v in next, BigWigs3DB.namespaces do
-				if k:find("BigWigs_Bosses_", nil, true) or k == "BigWigs_Plugins_Super Emphasize" or k == "BigWigs_Plugins_Colors" or k == "BigWigs_Plugins_Sounds" then
-					BigWigs3DB.namespaces[k] = nil
-				end
-			end
-			CTimerAfter(7, function()
-				sysprint(L.temp61Reset)
-			end)
-			BigWigs3DB.has61reset = true
-		end
+		BigWigs3DB.has61reset = nil -- XXX temp cleanup
 
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
 		if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
@@ -583,8 +573,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "14050" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "6.2.4" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
+	local DBMdotRevision = "14116" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "6.2.5" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
