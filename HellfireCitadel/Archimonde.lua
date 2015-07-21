@@ -47,7 +47,7 @@ function mod:GetOptions()
 		-- P2
 		{184964, "SAY", "FLASH"}, -- Shackled Torment
 		"custom_off_torment_marker",
-		{186123, "SAY"}, -- Wrought Chaos
+		{186123, "SAY", "FLASH"}, -- Wrought Chaos
 		183865, -- Demonic Havoc
 		-- P3
 		{187180, "PROXIMITY"}, -- Demonic Feedback
@@ -108,8 +108,8 @@ function mod:OnEngage()
 	self:Bar(182826, 6) -- Doomfire
 	self:Bar(183828, 15.4) -- Death Brand
 	self:Bar(183254, 30) -- Allure of Flames
-	self:Bar(183817, 41) -- Shadowfel Burst
-	burstTimer = self:ScheduleTimer("OpenProximity", 36, 183817, 10)
+	self:Bar(183817, 43) -- Shadowfel Burst
+	burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", 36)
 	-- Desecrate initial cast is at 85%
 end
 
@@ -161,7 +161,7 @@ function mod:Doomfire(args)
 end
 
 function mod:DoomfireFixate(args)
-	self:TargetMessage(182826, args.destName, "Personal", "Alarm")
+	self:TargetMessage(182826, args.destName, "Important", "Alarm")
 	if self:Me(args.destGUID) then
 		self:TargetBar(182826, 10, args.destName)
 		self:Say(182826)
@@ -179,12 +179,16 @@ do
 	end
 end
 
+function mod:ShadowfelBurstSoon()
+	self:Message(183817, "Urgent", nil, CL.soon:format(self:SpellName(183817)))
+	self:OpenProximity(183817, 10)
+end
+
 function mod:ShadowfelBurst(args)
-	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
-	self:Bar(args.spellId, 2, CL.cast:format(args.spellName))
-	burstCount = burstCount + 1
-	self:Bar(args.spellId, burstCount == 2 and 61 or 56)
+	self:Message(args.spellId, "Urgent", "Warning")
 	-- just in case timer is off
+	self:Bar(args.spellId, 2)
+	self:CancelTimer(burstTimer)
 	self:OpenProximity(args.spellId, 10)
 end
 
@@ -194,9 +198,10 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, 183817, list, "Attention")
+			burstCount = burstCount + 1
+			self:Bar(args.spellId, burstCount == 2 and 61 or 56)
 			self:CloseProximity(183817)
-			self:CancelTimer(burstTimer)
-			burstTimer = self:ScheduleTimer("OpenProximity", burstCount == 2 and 56 or 51, 183817, 10)
+			burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", burstCount == 2 and 54 or 48)
 		end
 	end
 end
@@ -210,15 +215,15 @@ end
 
 do
 	local list, isOnMe = {}, nil
-	local function tormentSay(self, spellName)
+	local function tormentSay(self, spellId)
 		sort(list)
 		for i = 1, #list do
 			local target = list[i]
 			if target == isOnMe then
 				local torment = CL.count:format(self:SpellName(187553), i) -- 187553 = "Torment"
-				self:Say(184964, torment)
-				self:Flash(184964)
-				self:Message(184964, "Personal", "Alarm", CL.you:format(torment))
+				self:Say(spellId, torment)
+				self:Flash(spellId)
+				self:Message(spellId, "Personal", "Alarm", CL.you:format(torment))
 			end
 			if self:GetOption("custom_off_torment_marker") then
 				SetRaidTarget(target, i)
@@ -226,7 +231,7 @@ do
 			list[i] = self:ColorName(target)
 		end
 		if not isOnMe then
-			self:TargetMessage(184964, list, "Attention")
+			self:TargetMessage(spellId, list, "Attention")
 		else
 			wipe(list)
 		end
@@ -245,7 +250,7 @@ do
 		list[#list + 1] = args.destName
 		if #list == 1 then
 			self:CDBar(args.spellId, 32) -- Min: 31.8/Avg: 34.5/Max: 43.8
-			self:ScheduleTimer(tormentSay, 0.3, self, args.spellName)
+			self:ScheduleTimer(tormentSay, 0.3, self, args.spellId)
 		end
 	end
 
@@ -297,6 +302,7 @@ do
 		if self:Me(args.destGUID) then
 			self:Message(186123, "Positive", "Info", CL.you:format(args.spellName))
 			self:Say(186123, args.spellName)
+			--self:Flash(186123, args.spellId)
 		end
 
 		chaosCount = chaosCount + 1
