@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Tyrant Velhari", 1026, 1394)
 if not mod then return end
-mod:RegisterEnableMob(90269, 91521, 91522, 91520) -- Tyrant Velhari, Vindicator Bramu, Protector Bajunt, Adjunct Kuroh
+mod:RegisterEnableMob(90269)
 mod.engageId = 1784
 mod.respawnTime = 40
 
@@ -89,8 +89,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "DespoiledGroundDamage", 180604)
 	self:Log("SPELL_PERIODIC_MISSED", "DespoiledGroundDamage", 180604)
 	-- General
-	self:Log("SPELL_AURA_APPLIED", "SealOfDecay", 180000, 184986) -- Velhari, trash mobs
-	self:Log("SPELL_AURA_APPLIED_DOSE", "SealOfDecay", 180000, 184986) -- Velhari, trash mobs
+	self:Log("SPELL_AURA_APPLIED", "SealOfDecay", 180000)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "SealOfDecay", 180000)
 	self:Log("SPELL_AURA_APPLIED", "TouchOfHarm", 185237, 180166) -- Mythic, Heroic/Normal
 	self:Log("SPELL_AURA_APPLIED", "TouchOfHarmDispelled", 185238, 180164) -- Mythic, Heroic/Normal
 	self:Log("SPELL_AURA_APPLIED", "EdictOfCondemnation", 182459, 185241)
@@ -360,11 +360,7 @@ end
 
 function mod:SealOfDecay(args)
 	local amount = args.amount or 1
-	if self:MobId(args.sourceGUID) == 90269 then -- Tyrant Velhari
-		self:StackMessage(180000, args.destName, amount, "Urgent", amount > 2 and "Warning")
-	elseif amount % 3 == 0 then -- Vindicator Bramu / Protector Bajunt / Adjunct Kuroh (5% healing reduction/stack)
-		self:StackMessage(180000, args.destName, amount, "Urgent", amount > 10 and "Warning")
-	end
+	self:StackMessage(180000, args.destName, amount, "Urgent", amount > 2 and "Warning")
 end
 
 function mod:TouchOfHarm(args)

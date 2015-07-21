@@ -14,7 +14,7 @@ mod:RegisterEnableMob(
 	92038, -- Salivating Bloodthirster
 	95630, -- Construct Peacekeeper
 	95614, -- Binder Eloah
-	91520, -- Adjunct Kuroh
+	91520, 91521, 91522, -- Adjunct Kuroh, Vindicator Bramu, Protector Bajunt
 	92527 -- Dag'gorath
 	--94018 -- Shadow Burster
 )
@@ -97,7 +97,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SeverSoul", 189533)
 	self:Log("SPELL_AURA_REMOVED", "SeverSoulRemoved", 189533)
 
-	self:Log("SPELL_AURA_APPLIED", "SealOfDecay", 184986)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SealOfDecay", 184986)
 
 	self:Log("SPELL_AURA_APPLIED", "DemonicSacrifice", 186197)
@@ -220,7 +219,9 @@ end
 --[[ Adjunct Kuroh ]]--
 
 function mod:SealOfDecay(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+	if args.amount % 3 == 0 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Attention")
+	end
 end
 
 --[[ Dag'gorath ]]--
