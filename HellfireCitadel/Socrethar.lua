@@ -114,6 +114,8 @@ function mod:OnEngage()
 	isHostile = true
 	inBarrier = false
 	ghostGUIDS = {}
+	
+	self:Berserk(641)
 	self:CDBar(181288, 48) -- Fel Prison
 	self:CDBar(180008, 7) -- Reverberating Blow
 	self:CDBar(180221, 13) -- Volatile Fel Orb
@@ -122,7 +124,6 @@ function mod:OnEngage()
 		self:Bar(188693, 34, CL.count:format(self:SpellName(188693), felburstCount)) -- Apocalyptic Felburst
 		self:Bar(-11778, 20, addFormat:format(addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
 	end
-	self:Berserk(641)
 end
 
 --------------------------------------------------------------------------------

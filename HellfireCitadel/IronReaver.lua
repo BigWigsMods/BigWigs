@@ -78,7 +78,10 @@ function mod:OnEngage()
 	poundingCount = 1
 	firebombCount = 1
 	orbCount = 1
-	self:Berserk(600)
+
+	if not self:LFR() then -- LFR still only has two air phases
+		self:Berserk(600)
+	end
 	--self:Bar(182280, self:Easy() and 23.3 or 10.3) -- Artillery APPLICATION
 	self:Bar(182001, 8.5) -- Unstable Orb
 	self:Bar(185282, 13.3, CL.count:format(self:SpellName(185282), barrageCount)) -- Barrage
@@ -200,6 +203,7 @@ function mod:FallingSlamSuccess(args)
 	poundingCount = 1
 	--artilleryCount = 1
 	orbCount = 1
+
 	self:CDBar(182001, 9) -- Unstable Orb 9-11
 	self:Bar(179889, 65.8) -- Blitz
 	self:Bar(185282, 14.8) -- Barrage

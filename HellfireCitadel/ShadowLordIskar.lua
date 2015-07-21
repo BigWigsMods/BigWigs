@@ -102,6 +102,8 @@ function mod:OnEngage()
 	nextPhase, nextPhaseSoon = 70, 75.5
 	eyeTarget = nil
 	wipe(windTargets)
+
+	self:Berserk(self:Heroic() and 540 or 480)
 	if self:Mythic() then
 		self:CDBar(185345, 9.5) -- Shadow Riposte
 	end
@@ -109,7 +111,6 @@ function mod:OnEngage()
 	self:Bar(182200, self:Easy() and 6.5 or 5.5) -- Fel Chakram
 	self:CDBar(181956, self:Easy() and 21 or 17) -- Phantasmal Winds
 	self:CDBar(182323, self:Easy() and 34 or 25) -- Phantasmal Wounds
-	self:Berserk(self:Heroic() and 540 or 480)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
