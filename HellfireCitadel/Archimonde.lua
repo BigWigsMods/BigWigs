@@ -237,10 +237,12 @@ do
 			isOnMe = args.destName
 		end
 
-		list[#list+1] = args.destName
 		currentTorment = currentTorment + 1
-		maxTorment = currentTorment > maxTorment and currentTorment or maxTorment
+		if currentTorment > maxTorment then
+			maxTorment = currentTorment
+		end
 
+		list[#list + 1] = args.destName
 		if #list == 1 then
 			self:CDBar(args.spellId, 32) -- Min: 31.8/Avg: 34.5/Max: 43.8
 			self:ScheduleTimer(tormentSay, 0.3, self, args.spellName)
@@ -251,9 +253,13 @@ do
 		if self:GetOption("custom_off_torment_marker") then
 			SetRaidTarget(args.destName, 0)
 		end
+
 		currentTorment = currentTorment - 1
-		self:Message(args.spellId, "Neutral", isOnMe and "Info", L.torment_removed:format(maxTorment-currentTorment, maxTorment))
-		maxTorment = currentTorment > 0 and maxTorment or 0
+		self:Message(args.spellId, "Neutral", isOnMe and "Info", L.torment_removed:format(maxTorment - currentTorment, maxTorment))
+		if currentTorment == 0 then
+			maxTorment = 0
+		end
+
 		if self:Me(args.destGUID) then
 			isOnMe = nil
 		end
