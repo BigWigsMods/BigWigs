@@ -217,6 +217,7 @@ do
 	local timer = nil
 	function mod:MannorothsGazeCast(args)
 		timer = nil
+		wipe(list)
 		self:Message(181597, "Attention", "Info", CL.casting:format(args.spellName))
 		self:Bar(181597, 47, args.spellName)
 	end
@@ -240,7 +241,6 @@ do
 		if not isOnMe then
 			self:TargetMessage(181597, list, "Attention")
 		end
-		wipe(list)
 		isOnMe = nil
 	end
 

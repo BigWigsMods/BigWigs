@@ -227,8 +227,9 @@ do
 		end
 		if not isOnMe then
 			self:TargetMessage(184964, list, "Attention")
+		else
+			wipe(list)
 		end
-		wipe(list)
 	end
 
 	function mod:ShackledTorment(args)
