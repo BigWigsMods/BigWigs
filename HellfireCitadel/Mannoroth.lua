@@ -214,15 +214,14 @@ function mod:MassiveBlast(args)
 end
 
 do
-	local timer = nil
+	local list, isOnMe, timer = {}, nil, nil
 	function mod:MannorothsGazeCast(args)
-		timer = nil
+		timer, isOnMe = nil, nil
 		wipe(list)
 		self:Message(181597, "Attention", "Info", CL.casting:format(args.spellName))
 		self:Bar(181597, 47, args.spellName)
 	end
 
-	local list, isOnMe = {}, nil
 	local function gazeSay(self, spellName)
 		timer = nil
 		sort(list)
@@ -241,7 +240,6 @@ do
 		if not isOnMe then
 			self:TargetMessage(181597, list, "Attention")
 		end
-		isOnMe = nil
 	end
 
 	function mod:MannorothsGaze(args)
