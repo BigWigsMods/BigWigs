@@ -240,6 +240,7 @@ do
 		if not isOnMe then
 			self:TargetMessage(181597, list, "Attention")
 		end
+		wipe(list)
 		isOnMe = nil
 	end
 
