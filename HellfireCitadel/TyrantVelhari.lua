@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Tyrant Velhari", 1026, 1394)
 if not mod then return end
-mod:RegisterEnableMob(90269)
+mod:RegisterEnableMob(90269, 91521, 91522, 91520) -- Tyrant Velhari, Vindicator Bramu, Protector Bajunt, Adjunct Kuroh
 mod.engageId = 1784
 mod.respawnTime = 40
 
@@ -72,6 +72,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "InfernalTempestEnd", 180300)
 	-- Phase 2
 	self:Log("SPELL_CAST_SUCCESS", "AuraOfContempt", 179986)
+	self:Log("SPELL_AURA_APPLIED", "ContemptApplied", 179987)
+	self:Log("SPELL_AURA_REMOVED", "ContemptRemoved", 179987)
 	self:Log("SPELL_AURA_APPLIED", "FontOfCorruption", 180526)
 	self:Log("SPELL_AURA_REMOVED", "FontOfCorruptionRemoved", 180526)
 	self:Log("SPELL_CAST_START", "TaintedShadows", 180533)
@@ -87,8 +89,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "DespoiledGroundDamage", 180604)
 	self:Log("SPELL_PERIODIC_MISSED", "DespoiledGroundDamage", 180604)
 	-- General
-	self:Log("SPELL_AURA_APPLIED", "SealOfDecay", 180000)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "SealOfDecay", 180000)
+	self:Log("SPELL_AURA_APPLIED", "SealOfDecay", 180000, 184986) -- Velhari, trash mobs
+	self:Log("SPELL_AURA_APPLIED_DOSE", "SealOfDecay", 180000, 184986) -- Velhari, trash mobs
 	self:Log("SPELL_AURA_APPLIED", "TouchOfHarm", 185237, 180166) -- Mythic, Heroic/Normal
 	self:Log("SPELL_AURA_APPLIED", "TouchOfHarmDispelled", 185238, 180164) -- Mythic, Heroic/Normal
 	self:Log("SPELL_AURA_APPLIED", "EdictOfCondemnation", 182459, 185241)
@@ -98,27 +100,18 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	strikeCount = 0
+	mendingCount = 1
+	phase = 1
+	fontOnMe, edictOnMe, tempestActive = nil, nil, nil
+	wipe(inverseFontTargets)
 
 	self:Bar(180260, 10, CL.count:format(self:SpellName(180260), 1)) -- Annihilating Strike
 	self:Bar(185237, 16) -- Touch of Harm
 	self:Bar(180300, 40) -- Infernal Tempest
 	self:Bar(182459, 57) -- Edict of Condemnation
 
-	strikeCount = 0
-	mendingCount = 1
-	phase = 1
-	fontOnMe, edictOnMe, tempestActive = nil, nil, nil
-
-	-- Adding all players to a list, since they are the "bad" players to Font targets (for proximity)
-	wipe(inverseFontTargets)
-	local _, _, _, mapId = UnitPosition("player")
-	for unit in self:IterateGroup() do
-		local _, _, _, tarMapId = UnitPosition(unit)
-		if tarMapId == mapId and not UnitIsUnit("player", unit) and UnitIsConnected(unit) then
-			inverseFontTargets[#inverseFontTargets+1] = self:UnitName(unit)
-		end
-	end
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 end
 
 --------------------------------------------------------------------------------
@@ -158,7 +151,7 @@ end
 
 function mod:EnforcersOnslaught(args)
 	self:Message(args.spellId, "Attention")
-	self:Bar(args.spellId, self:Mythic() and 11 or 18) -- 18.2-18.7
+	self:Bar(args.spellId, self:Mythic() and 11 or not self.isEngaged and 14 or 18) -- 18.2-18.7
 end
 
 do
@@ -225,6 +218,41 @@ function mod:TaintedShadows(args)
 		strikeCount = 0
 	end
 	self:Bar(args.spellId, strikeCount == 0 and 10 or 5, CL.count:format(args.spellName, strikeCount + 1)) -- 3 shadows between font
+end
+
+function mod:ContemptApplied(args)
+	-- add players at the start of phase 2 or after getting a rez
+	if not self:Me(args.destGUID) then
+		inverseFontTargets[#inverseFontTargets + 1] = args.destName
+	end
+	if fontOnMe and not edictOnMe then
+		self:OpenProximity(180526, 5, inverseFontTargets)
+	end
+end
+
+do
+	local close, scheduled = nil, nil
+	local function updateProximity(self)
+		if fontOnMe and not edictOnMe then
+			if close then
+				self:CloseProximity(180526) -- lost our tracking method, don't die!
+			else
+				self:OpenProximity(180526, 5, inverseFontTargets)
+			end
+		end
+		close = nil
+		scheduled = nil
+	end
+	function mod:ContemptRemoved(args)
+		-- remove players at the end of phase 2 or if they die
+		tDeleteItem(inverseFontTargets, args.destName)
+		if self:Me(args.destGUID) then
+			close = true
+		end
+		if not scheduled then
+			scheduled = self:ScheduleTimer(updateProximity, 0.3, self)
+		end
+	end
 end
 
 do
@@ -332,7 +360,11 @@ end
 
 function mod:SealOfDecay(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 2 and "Warning")
+	if self:MobId(args.sourceGUID) == 90269 then -- Tyrant Velhari
+		self:StackMessage(180000, args.destName, amount, "Urgent", amount > 2 and "Warning")
+	elseif amount % 3 == 0 then -- Vindicator Bramu / Protector Bajunt / Adjunct Kuroh (5% healing reduction/stack)
+		self:StackMessage(180000, args.destName, amount, "Urgent", amount > 10 and "Warning")
+	end
 end
 
 function mod:TouchOfHarm(args)
