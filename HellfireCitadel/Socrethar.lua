@@ -21,7 +21,7 @@ local felburstCount = 1
 local isHostile = true -- is Soulbound Construct hostile or friendly
 local inBarrier = false
 local addCount = 1
-local addFormat = CL.add.." #%d"
+local addFormat = CL.add.." (%d)"
 local ghostGUIDS = {}
 
 --------------------------------------------------------------------------------
@@ -321,7 +321,7 @@ function mod:IncompleteBindingRemoved(args) -- Phase 2 End
 	self:CDBar(181288, 46) -- Fel Prison
 	self:CDBar(180221, 8) -- Volatile Fel Orb
 	self:CDBar(182051, 26) -- Felblaze Charge
-	self:CDBar(188693, 30, CL.count:format(self:SpellName(188693), felburstCount)) -- Apocalyptic Felburst, no idea if the timer is correct
+	self:CDBar(188693, 30, CL.count:format(self:SpellName(188693), felburstCount)) -- Apocalyptic Felburst, XXX no idea if the timer is correct
 	if self:Mythic() then
 		self:CDBar(-11778, 16, addFormat:format(addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
 	end
