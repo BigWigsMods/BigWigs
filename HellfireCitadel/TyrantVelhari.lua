@@ -222,7 +222,7 @@ end
 
 function mod:ContemptApplied(args)
 	-- add players at the start of phase 2 or after getting a rez
-	if not self:Me(args.destGUID) then
+	if not self:Me(args.destGUID) and not tContains(inverseFontTargets, args.destName) then
 		inverseFontTargets[#inverseFontTargets + 1] = args.destName
 	end
 	if fontOnMe and not edictOnMe then
@@ -234,8 +234,8 @@ do
 	local close, scheduled = nil, nil
 	local function updateProximity(self)
 		if fontOnMe and not edictOnMe then
-			if close then
-				self:CloseProximity(180526) -- lost our tracking method, don't die!
+			if close or #inverseFontTargets == 0 then
+				self:CloseProximity(180526)
 			else
 				self:OpenProximity(180526, 5, inverseFontTargets)
 			end
