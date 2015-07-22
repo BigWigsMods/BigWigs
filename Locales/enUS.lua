@@ -1,7 +1,5 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "enUS", true, "raw")
 
-L.temp61Reset = "Due to a change in making my database more efficient, your custom colors, sounds and boss-specific settings will have reset, sorry :(" -- XXX temp 6.1
-
 -- Core.lua
 L.berserk = "Berserk"
 L.berserk_desc = "Show a bar and timed warnings for when the boss will go berserk."
@@ -20,8 +18,8 @@ L.alphaRelease = "You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"
 L.sourceCheckout = "You are running a source checkout of Big Wigs %s directly from the repository."
 L.newReleaseAvailable = "There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."
 L.alphaOutdated = "Your alpha version of Big Wigs is out of date (/bwv)."
-L.extremelyOutdated = "\124cffff0000WARNING:\124r Your Big Wigs is over 120 revisions out of date!! Your version may have bugs, missing features, or completely incorrect timers. It is HIGHLY recommended you update."
-L.severelyOutdated = "\124cffff0000Your Big Wigs is over 300 revisions out of date! We HIGHLY recommend you update to prevent syncing issues with other players!\124r"
+L.extremelyOutdated = "\124cffff0000WARNING:\124r Your Big Wigs is over 80 revisions out of date!! Your version may have bugs, missing features, or completely incorrect timers. It is HIGHLY recommended you update."
+L.severelyOutdated = "\124cffff0000Your Big Wigs is over 150 revisions out of date!! We HIGHLY recommend you update to prevent syncing issues with other players!\124r"
 
 L.tooltipHint = "|cffeda55fClick|r to reset all running modules.\n|cffeda55fAlt-Click|r to disable them.\n|cffeda55fRight-Click|r to access options."
 L.activeBossModules = "Active boss modules:"
