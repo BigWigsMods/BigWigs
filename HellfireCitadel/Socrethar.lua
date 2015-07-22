@@ -13,11 +13,11 @@ mod.respawnTime = 30
 -- Locals
 --
 
-local dominanceCount = 0
-local apocalypseCount = 0
-local dominatorCount = 0
-local prisonCount = 0
-local felburstCount = 0
+local dominanceCount = 1
+local apocalypseCount = 1
+local dominatorCount = 1
+local prisonCount = 1
+local felburstCount = 1
 local isHostile = true -- is Soulbound Construct hostile or friendly
 local inBarrier = false
 local addCount = 1
@@ -87,6 +87,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShatteredDefense", 182038)
 	self:Log("SPELL_CAST_START", "ExertDominance", 183331)
 	self:Log("SPELL_CAST_START", "Apocalypse", 183329)
+	self:Log("SPELL_AURA_REMOVED", "ApocalypseEnd", 183329)
 	self:Log("SPELL_AURA_APPLIED", "VolatileFelOrb", 189627)
 	self:Log("SPELL_CAST_START", "FelblazeCharge", 182051)
 	self:Log("SPELL_CAST_START", "ApocalypticFelburst", 188693) -- P1
@@ -114,7 +115,7 @@ function mod:OnEngage()
 	isHostile = true
 	inBarrier = false
 	ghostGUIDS = {}
-	
+
 	self:Berserk(641)
 	self:CDBar(181288, 48) -- Fel Prison
 	self:CDBar(180008, 7) -- Reverberating Blow
@@ -200,8 +201,8 @@ do
 		local t = GetTime()
 		if UnitInVehicle("player") and not UnitInRaid(args.destName) and t-prev > 5 then -- show for everyone or only construct? hmm
 			prev = t
-			prisonCount = prisonCount + 1
 			self:Bar(181288, 60, CL.count:format(args.spellName, prisonCount))
+			prisonCount = prisonCount + 1
 		end
 	end
 end
@@ -226,8 +227,7 @@ end
 
 function mod:EjectSoul() -- Phase 2 Start
 	isHostile = false
-	dominatorCount, dominanceCount, apocalypseCount = 1, 0, 0
-	prisonCount = 0
+	dominatorCount, dominanceCount, apocalypseCount, prisonCount = 1, 1, 1, 1
 	-- Stop P1 bars
 	self:StopBar(180008) -- Reverberating Blow
 	self:StopBar(180221) -- Volatile Fel Orb
@@ -240,7 +240,7 @@ function mod:EjectSoul() -- Phase 2 Start
 	self:DelayedMessage("portals", 140, "Neutral", L.portals_msg, L.portals_icon, "Info")
 	self:Bar("dominator", 24, CL.count:format(self:SpellName(L.dominator), dominatorCount), L.dominator_icon) -- Sargerei Dominator
 	self:CDBar(-11462, 30, nil, "achievement_halloween_ghost_01") -- Haunting Soul
-	self:CDBar(183329, 52) -- Apocalypse
+	self:CDBar(183329, 51.5, CL.count:format(self:SpellName(183329), apocalypseCount)) -- Apocalypse
 	self:Message("stages", "Neutral", "Long", CL.phase:format(2), false)
 end
 
@@ -248,7 +248,7 @@ function mod:FelBarrier()
 	inBarrier = true
 	self:Message("dominator", "Neutral", "Warning", CL.count:format(self:SpellName(L.dominator), dominatorCount), L.dominator_icon)
 	dominatorCount = dominatorCount + 1
-	self:Bar("dominator", self:Mythic() and 130 or (dominatorCount % 2 == 0 and 70 or 60), CL.count:format(self:SpellName(L.dominator), dominatorCount), L.dominator_icon) -- Sargerei Dominator
+	self:Bar("dominator", self:Mythic() and 130 or (dominatorCount % 2 == 0 and 60 or 70), CL.count:format(self:SpellName(L.dominator), dominatorCount), L.dominator_icon) -- Sargerei Dominator
 	self:CDBar(184124, 5) -- Gift of the Man'ari
 end
 
@@ -258,14 +258,18 @@ function mod:FelBarrierRemoved()
 end
 
 function mod:ExertDominance(args)
-	dominanceCount = dominanceCount + 1
 	self:Message(args.spellId, "Attention", self:Interrupter(args.sourceGUID) and not inBarrier and "Alert", CL.count:format(args.spellName, dominanceCount))
+	dominanceCount = dominanceCount + 1
 end
 
 function mod:Apocalypse(args)
-	apocalypseCount = apocalypseCount + 1
 	self:Message(args.spellId, "Important", "Long", CL.count:format(args.spellName, apocalypseCount))
 	self:Bar(args.spellId, 12, CL.count:format(args.spellName, apocalypseCount))
+end
+
+function mod:ApocalypseEnd(args)
+	apocalypseCount = apocalypseCount + 1
+	self:CDBar(args.spellId, 36, CL.count:format(args.spellName, apocalypseCount)) -- 36-37.3
 end
 
 do
