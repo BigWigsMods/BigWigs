@@ -181,7 +181,7 @@ end
 
 function mod:ShadowfelBurstSoon()
 	self:Message(183817, "Urgent", nil, CL.soon:format(self:SpellName(183817)))
-	self:OpenProximity(183817, 10)
+	self:OpenProximity(183817, 9) -- 8+1 safety
 end
 
 function mod:ShadowfelBurst(args)
@@ -189,7 +189,7 @@ function mod:ShadowfelBurst(args)
 	-- just in case timer is off
 	self:Bar(args.spellId, 2)
 	self:CancelTimer(burstTimer)
-	self:OpenProximity(args.spellId, 10)
+	self:OpenProximity(args.spellId, 9) -- 8+1 safety
 end
 
 do
