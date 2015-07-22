@@ -14,9 +14,10 @@ mod:RegisterEnableMob(
 	92038, -- Salivating Bloodthirster
 	95630, -- Construct Peacekeeper
 	95614, -- Binder Eloah
+	93156, -- Eredar Faithbreaker
 	91520, 91521, 91522, -- Adjunct Kuroh, Vindicator Bramu, Protector Bajunt
-	92527 -- Dag'gorath
-	--94018 -- Shadow Burster
+	92527, -- Dag'gorath
+	94018 -- Shadow Burster
 )
 
 --------------------------------------------------------------------------------
@@ -32,9 +33,10 @@ if L then
 	L.bloodthirster = "Salivating Bloodthirster"
 	L.peacekeeper = "Construct Peacekeeper"
 	L.eloah = "Binder Eloah"
+	L.faithbreaker = "Eredar Faithbreaker"
 	L.kuroh = "Adjunct Kuroh"
 	L.daggorath = "Dag'gorath"
-	--L.burster = "Shadow Burster"
+	L.burster = "Shadow Burster"
 end
 L = mod:GetLocale()
 
@@ -54,9 +56,11 @@ function mod:GetOptions()
 		189612, -- Rending Howl
 		{189595, "FLASH"}, -- Protocol: Crowd Control
 		{189533, "TANK"}, -- Sever Soul
+		184587, -- Touch of Mortality
+		184621, -- Hellfire Blast
 		{184986, "TANK"}, -- Seal of Decay
 		{186197, "SAY"}, -- Demonic Sacrifice
-		--{186130, "SAY", "FLASH"}, -- Void Burst (via Void Blast 186127)
+		{186130, "SAY", "FLASH"}, -- Void Burst (via Void Blast 186127)
 	}, {
 		[188072] = L.orb,
 		[187110] = L.enkindler,
@@ -65,9 +69,10 @@ function mod:GetOptions()
 		[189612] = L.bloodthirster,
 		[189595] = L.peacekeeper,
 		[189533] = L.eloah,
+		[184587] = L.faithbreaker,
 		[184986] = L.kuroh,
 		[186197] = L.daggorath,
-		--[186130] = L.burster,
+		[186130] = L.burster,
 	}
 end
 
@@ -97,11 +102,16 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SeverSoul", 189533)
 	self:Log("SPELL_AURA_REMOVED", "SeverSoulRemoved", 189533)
 
+	self:Log("SPELL_AURA_APPLIED", "TouchOfMortality", 184587)
+	self:Log("SPELL_AURA_REMOVED", "TouchOfMortalityRemoved", 184587)
+	self:Log("SPELL_AURA_APPLIED", "HellfireBlast", 184621)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "HellfireBlast", 184621)
+
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SealOfDecay", 184986)
 
 	self:Log("SPELL_AURA_APPLIED", "DemonicSacrifice", 186197)
 
-	--self:Log("SPELL_CAST_SUCCESS", "VoidBlast", 186127)
+	self:Log("SPELL_CAST_SUCCESS", "VoidBlast", 186127)
 end
 
 --------------------------------------------------------------------------------
@@ -216,7 +226,28 @@ function mod:SeverSoulRemoved(args)
 	self:StopBar(args.spellName, args.destName)
 end
 
---[[ Adjunct Kuroh ]]--
+--[[ Eredar Faithbreaker ]]--
+
+function mod:TouchOfMortality(args)
+	if self:Me(args.destGUID) then
+		self:TargetBar(args.spellId, 9, args.destName)
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+	end
+end
+
+function mod:TouchOfMortalityRemoved(args)
+	if self:Me(args.destGUID) then
+		self:StopBar(args.spellName, args.destName)
+	end
+end
+
+function mod:HellfireBlast(args)
+	if self:Me(args.destGUID) then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Personal", "Info")
+	end
+end
+
+--[[ Adjunct Kuroh, Vindicator Bramu, Protector Bajunt ]]--
 
 function mod:SealOfDecay(args)
 	if args.amount % 3 == 0 then
@@ -234,7 +265,7 @@ function mod:DemonicSacrifice(args)
 end
 
 --[[ Shadow Burster ]]--
---[[
+
 function mod:VoidBlast(args)
 	local warn = false
 	local npcUnit = self:GetUnitIdByGUID(args.sourceGUID)
@@ -255,4 +286,4 @@ function mod:VoidBlast(args)
 	end
 	self:Flash(186130)
 end
-]]
+
