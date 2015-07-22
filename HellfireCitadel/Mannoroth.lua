@@ -281,15 +281,16 @@ end
 
 function mod:EmpoweredFelseeker(args)
 	if args.spellId == 182077 then
-		self:Message(181735, "Positive", "Alert", CL.count:format(args.spellName, 1))
+		self:Message(181735, "Positive", "Alert", L.felseeker_message:format(args.spellName, 1, 10))
 	elseif args.spellId == 182076 then
-		self:Message(181735, "Positive", "Alert", CL.count:format(args.spellName, 2))
+		self:Message(181735, "Positive", "Alert", L.felseeker_message:format(args.spellName, 2, 20))
 	elseif args.spellId == 182040 then
-		self:Message(181735, "Positive", "Alert", CL.count:format(args.spellName, 3))
+		self:Message(181735, "Positive", "Alert", L.felseeker_message:format(args.spellName, 3, 30))
 	end
 end
 
 function mod:FelHellstorm(args)
+	self:Message(args.spellId, "Attention")
 	self:CDBar(args.spellId, 36)
 end
 
