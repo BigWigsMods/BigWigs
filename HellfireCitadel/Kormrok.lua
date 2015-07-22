@@ -79,7 +79,6 @@ end
 -- Phases
 
 function mod:ShadowEnergy(args)
-	self:SendMessage("BigWigs_StopBars", self)
 	shadowCount = self:Normal() and 2 or self:Mythic() and 4 or 3
 	phase = 3
 	phaseAbilityCount = 0
@@ -102,7 +101,6 @@ function mod:ShadowEnergy(args)
 end
 
 function mod:ExplosiveEnergy(args)
-	self:SendMessage("BigWigs_StopBars", self)
 	explosiveCount = self:Normal() and 2 or self:Mythic() and 4 or 3
 	phase = 1
 	phaseAbilityCount = 0
@@ -125,7 +123,6 @@ function mod:ExplosiveEnergy(args)
 end
 
 function mod:FoulEnergy(args)
-	self:SendMessage("BigWigs_StopBars", self)
 	foulCount = self:Normal() and 2 or self:Mythic() and 4 or 3
 	phase = 2
 	phaseAbilityCount = 0
