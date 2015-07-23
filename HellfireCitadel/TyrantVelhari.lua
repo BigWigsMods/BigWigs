@@ -300,7 +300,7 @@ do
 				self:CloseProximity(args.spellId)
 			end
 			fontOnMe = nil
-		elseif not tContains(inverseFontTargets, args.destName) then
+		elseif not tContains(inverseFontTargets, args.destName) and phase == 2 then
 			inverseFontTargets[#inverseFontTargets + 1] = args.destName
 		end
 		if not scheduled then
