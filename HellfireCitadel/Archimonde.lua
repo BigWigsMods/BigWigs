@@ -121,6 +121,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 	if spellId == 190117 then -- Allow Phase 2 Spells
 		self:StopBar(182826) -- Doomfire
 		self:StopBar(183817) -- Shadowfel Burst
+		self:CloseProximity(183817) -- Shadowfel Burst
 		self:CancelTimer(burstTimer)
 		self:Message("stages", "Neutral", "Long", CL.phase:format(2), false)
 		self:CDBar(186123, 7) -- Wrought Chaos
@@ -199,7 +200,7 @@ do
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, 183817, list, "Attention")
 			burstCount = burstCount + 1
-			self:Bar(args.spellId, burstCount == 2 and 61 or 56)
+			self:Bar(183817, burstCount == 2 and 61 or 56)
 			self:CloseProximity(183817)
 			burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", burstCount == 2 and 54 or 48)
 		end
