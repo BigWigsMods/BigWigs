@@ -199,9 +199,16 @@ do
 	end
 end
 
-function mod:Touched(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", not self:Tank() and "Long", CL.you:format(args.spellName))
+do
+	local prev = 0
+	function mod:Touched(args)
+		if self:Me(args.destGUID) then
+			local t = GetTime()
+			if t-prev > 15 then
+				prev = t
+				self:Message(args.spellId, "Personal", not self:Tank() and "Long", CL.you:format(args.spellName))
+			end
+		end
 	end
 end
 
@@ -293,9 +300,9 @@ function mod:WitheringGaze(args)
 end
 
 function mod:BlackHole(args)
+	self:Message(186546, "Urgent", "Alert", CL.incoming:format(CL.count:format(self:SpellName(186546), blackHoleCount)))
 	blackHoleCount = blackHoleCount + 1
-	self:Message(186546, "Urgent", "Alert", CL.incoming:format(self:SpellName(186546)))
-	self:CDBar(186546, args.spellId == 189779 and 30 or blackHoleCount % 2 == 0 and 30 or 40) -- 30, 40, 30 is as long a p2 as i've seen
+	self:CDBar(186546, args.spellId == 189779 and 30 or blackHoleCount % 2 == 0 and 30 or 40, CL.count:format(args.spellName, blackHoleCount)) -- 30, 40, 30 is as long a p2 as i've seen
 end
 
 function mod:OverwhelmingChaos(args)
