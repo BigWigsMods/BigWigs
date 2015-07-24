@@ -304,21 +304,18 @@ do
 	end
 
 	function mod:WroughtChaos(args)
-		if not self:Mythic() then
-			chaosSource = self:ColorName(args.destName)
-			self:SecondaryIcon(args.spellId, args.destName)
-		end
 		if self:Me(args.destGUID) then
 			self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
 			self:Say(args.spellId)
 		end
+
+		if not self:Mythic() then
+			chaosSource = self:ColorName(args.destName)
+			self:SecondaryIcon(args.spellId, args.destName)
+		end
 	end
 
 	function mod:FocusedChaos(args)
-		if not self:Mythic() then
-			chaosTarget = self:ColorName(args.destName)
-			self:PrimaryIcon(186123, args.destName)
-		end
 		if self:Me(args.destGUID) then
 			self:Message(186123, "Positive", "Alarm", CL.you:format(args.spellName))
 			self:Say(186123, args.spellName)
@@ -327,6 +324,8 @@ do
 
 		if not self:Mythic() then
 			chaosCount = chaosCount + 1
+			chaosTarget = self:ColorName(args.destName)
+			self:PrimaryIcon(186123, args.destName)
 			if not banished then
 				local spell = CL.count:format(self:SpellName(186123), chaosCount)
 				local targets = L.chaos_bar:format(chaosSource, chaosTarget)

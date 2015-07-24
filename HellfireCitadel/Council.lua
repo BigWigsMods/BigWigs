@@ -77,18 +77,12 @@ function mod:OnBossEnable()
 	self:Death("DiaDeath", 92144)
 	self:Death("GurtoggDeath", 92146)
 
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
 end
 
 function mod:OnEngage()
-	horrorCount = 1
-	leapCount = 0
-	felRageCount = 1
-
-	diaIsDead = false
-	gurtoggIsDead = false
-	jubeiIsDead = false
+	horrorCount, leapCount, felRageCount = 1, 0, 1
+	diaIsDead, gurtoggIsDead, jubeiIsDead = false, false, false
 	nextAbility = 1
 
 	self:Berserk(600)
@@ -96,6 +90,8 @@ function mod:OnEngage()
 	self:Bar(184358, 30) -- Gurtogg Bloodboil : Fel Rage
 	self:CDBar(184449, 6.3) -- Dia Darkwhisper : Mark of the Necromancer, 6.3-7.5
 	self:CDBar(184476, 67) -- Dia Darkwhisper : Reap, 66-69
+
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 end
 
 --------------------------------------------------------------------------------
