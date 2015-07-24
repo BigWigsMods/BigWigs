@@ -347,8 +347,8 @@ do
 
 	function mod:FocusedChaosRemoved(args)
 		if chaosCount == 4 then
-			self:SecondaryIcon(args.spellId)
-			self:PrimaryIcon(args.spellId)
+			self:SecondaryIcon(186123)
+			self:PrimaryIcon(186123)
 		end
 	end
 end
