@@ -18,6 +18,7 @@ local currentTorment = 0
 local maxTorment = 0
 local burstCount = 1
 local burstTimer = nil
+local banished = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -41,13 +42,13 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		-- P1
-		{182826, "SAY"}, -- Doomfire
+		{182826, "ICON", "SAY"}, -- Doomfire
 		{183817, "PROXIMITY"}, -- Shadowfel Burst
 		185590, -- Desecrate
 		-- P2
 		{184964, "SAY", "FLASH"}, -- Shackled Torment
 		"custom_off_torment_marker",
-		{186123, "SAY", "FLASH"}, -- Wrought Chaos
+		{186123, "ICON", "SAY", "FLASH"}, -- Wrought Chaos
 		183865, -- Demonic Havoc
 		-- P3
 		{187180, "PROXIMITY"}, -- Demonic Feedback
@@ -70,7 +71,7 @@ end
 function mod:OnBossEnable()
 	-- P1
 	self:Log("SPELL_CAST_START", "AllureOfFlames", 183254)
-	self:Log("SPELL_CAST_START", "DeathBrand", 183828)
+	self:Log("SPELL_AURA_APPLIED", "DeathBrand", 183828)
 	self:Log("SPELL_AURA_APPLIED", "ShadowBlast", 183864)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowBlast", 183864)
 	self:Log("SPELL_SUMMON", "Doomfire", 182826)
@@ -86,6 +87,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "WroughtChaosCast", 184265)
 	self:Log("SPELL_AURA_APPLIED", "WroughtChaos", 186123)
 	self:Log("SPELL_AURA_APPLIED", "FocusedChaos", 185014)
+	self:Log("SPELL_AURA_REMOVED", "FocusedChaosRemoved", 185014)
 	self:Log("SPELL_AURA_APPLIED", "DemonicHavoc", 183865)
 	-- P3
 	self:Log("SPELL_CAST_START", "DemonicFeedback", 187180)
@@ -104,9 +106,10 @@ function mod:OnEngage()
 	currentTorment = 0
 	maxTorment = 0
 	burstCount = 1
+	banished = nil
 
 	self:Bar(182826, 6) -- Doomfire
-	self:Bar(183828, 15.4) -- Death Brand
+	self:Bar(183828, 18) -- Death Brand
 	self:Bar(183254, 30) -- Allure of Flames
 	self:Bar(183817, 43) -- Shadowfel Burst
 	burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", 36)
@@ -146,13 +149,13 @@ function mod:AllureOfFlames(args)
 end
 
 function mod:DeathBrand(args)
-	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
-	self:CDBar(args.spellId, 42)
+	self:TargetMessage(args.spellId, args.destName, "Attention", self:Tank() and "Warning")
+	self:CDBar(args.spellId, 43)
 end
 
 function mod:ShadowBlast(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning")
+	self:StackMessage(args.spellId, args.destName, amount, "Attention")
 end
 
 -- Phase 1
@@ -163,6 +166,7 @@ end
 
 function mod:DoomfireFixate(args)
 	self:TargetMessage(182826, args.destName, "Important", "Alarm")
+	self:PrimaryIcon(182826, args.destName)
 	if self:Me(args.destGUID) then
 		self:TargetBar(182826, 10, args.destName)
 		self:Say(182826)
@@ -202,7 +206,7 @@ do
 			burstCount = burstCount + 1
 			self:Bar(183817, burstCount == 2 and 61 or 56)
 			self:CloseProximity(183817)
-			burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", burstCount == 2 and 54 or 48)
+			burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", burstCount == 2 and 51 or 46)
 		end
 	end
 end
@@ -231,7 +235,7 @@ do
 			end
 			list[i] = self:ColorName(target)
 		end
-		if not isOnMe then
+		if not isOnMe and not banished then
 			self:TargetMessage(spellId, list, "Attention")
 		else
 			wipe(list)
@@ -291,7 +295,10 @@ do
 	end
 
 	function mod:WroughtChaos(args)
-		chaosSource = self:ColorName(args.destName)
+		if not self:Mythic() then
+			chaosSource = self:ColorName(args.destName)
+			self:SecondaryIcon(args.spellId, args.destName)
+		end
 		if self:Me(args.destGUID) then
 			self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
 			self:Say(args.spellId)
@@ -299,7 +306,10 @@ do
 	end
 
 	function mod:FocusedChaos(args)
-		chaosTarget = self:ColorName(args.destName)
+		if not self:Mythic() then
+			chaosTarget = self:ColorName(args.destName)
+			self:PrimaryIcon(186123, args.destName)
+		end
 		if self:Me(args.destGUID) then
 			self:Message(186123, "Positive", "Info", CL.you:format(args.spellName))
 			self:Say(186123, args.spellName)
@@ -308,13 +318,22 @@ do
 
 		chaosCount = chaosCount + 1
 		local spell = CL.count:format(self:SpellName(186123), chaosCount)
-		if not self:Mythic() then
-			local targets = L.chaos_bar:format(chaosSource, chaosTarget)
-			self:Message(186123, "Important", nil, CL.other:format(spell, targets)) -- Wrought Chaos (1): Player -> Player
-			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, targets), "spell_shadow_soulleech_1") -- (1) Player -> Player
-		else
-			self:Message(186123, "Important", nil, spell) -- Wrought Chaos (1)
-			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, args.spellName), "spell_shadow_soulleech_1") -- (1) Focused Chaos
+		if not banished then
+			if not self:Mythic() then
+				local targets = L.chaos_bar:format(chaosSource, chaosTarget)
+				self:Message(186123, "Important", nil, CL.other:format(spell, targets)) -- Wrought Chaos (1): Player -> Player
+				self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, targets), "spell_shadow_soulleech_1") -- (1) Player -> Player
+			else
+				self:Message(186123, "Important", nil, spell) -- Wrought Chaos (1)
+				self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, args.spellName), "spell_shadow_soulleech_1") -- (1) Focused Chaos
+			end
+		end
+	end
+
+	function mod:FocusedChaosRemoved(args)
+		if chaosCount == 4 then
+			self:SecondaryIcon(args.spellId)
+			self:PrimaryIcon(args.spellId)
 		end
 	end
 end
@@ -322,7 +341,9 @@ end
 -- Phase 3
 
 function mod:RainOfChaos(args)
-	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
+	if not banished then
+		self:Message(args.spellId, "Urgent", "Warning")
+	end
 	self:Bar(args.spellId, 62)
 end
 
@@ -347,18 +368,22 @@ end
 
 function mod:NetherBanishApplied(args)
 	if self:Me(args.destGUID) then
+		banished = true
 		self:CloseProximity(187180) -- Demonic Feedback
 	end
 end
 
 function mod:NetherBanishRemoved(args)
 	if self:Me(args.destGUID) then
+		banished = nil
 		self:OpenProximity(187180, 7) -- Demonic Feedback
 	end
 end
 
 function mod:VoidStarFixate(args)
-	self:TargetMessage(189894, args.destName, "Personal", "Alarm")
+	if banished then
+		self:TargetMessage(189894, args.destName, "Personal", "Alarm")
+	end
 	if self:Me(args.destGUID) then
 		self:Say(189894)
 		self:OpenProximity(189894, 15)
@@ -372,7 +397,9 @@ function mod:VoidStarFixateRemoved(args)
 end
 
 function mod:DemonicFeedback(args)
-	self:Message(args.spellId, "Attention", "Warning", CL.casting:format(args.spellName))
+	if not banished then
+		self:Message(args.spellId, "Attention", "Warning", CL.casting:format(args.spellName))
+	end
 	self:CDBar(args.spellId, 37)
 end
 
