@@ -204,7 +204,7 @@ do
 	function mod:Touched(args)
 		if self:Me(args.destGUID) then
 			local t = GetTime()
-			if t-prev > 15 then
+			if t-prev > 8 then -- Fire lasts 8 sec and keeps refreshing touched
 				prev = t
 				self:Message(args.spellId, "Personal", not self:Tank() and "Long", CL.you:format(args.spellName))
 			end
