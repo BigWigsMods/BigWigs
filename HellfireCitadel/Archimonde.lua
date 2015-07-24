@@ -106,13 +106,14 @@ function mod:OnEngage()
 	currentTorment = 0
 	maxTorment = 0
 	burstCount = 1
+	phase = 1
 	banished = nil
 
 	self:Bar(182826, 6) -- Doomfire
 	self:Bar(183828, 18) -- Death Brand
 	self:Bar(183254, 30) -- Allure of Flames
 	self:Bar(183817, 43) -- Shadowfel Burst
-	burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", 36)
+	burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", 33)
 	-- Desecrate initial cast is at 85%
 end
 
@@ -122,6 +123,7 @@ end
 
 function mod:Phases(unit, spellName, _, _, spellId)
 	if spellId == 190117 then -- Allow Phase 2 Spells
+		phase = 2
 		self:StopBar(182826) -- Doomfire
 		self:StopBar(183817) -- Shadowfel Burst
 		self:CloseProximity(183817) -- Shadowfel Burst
@@ -132,6 +134,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:CDBar(183828, 38) -- Death Brand
 		self:CDBar(183254, 44) -- Allure of Flames
 	elseif spellId == 190118 then -- Allow Phase 3 Spells
+		phase = 3
 		self:Message("stages", "Neutral", "Long", CL.phase:format(3), false)
 		self:StopBar(183254) -- Allure of Flames
 		self:StopBar(183828) -- Death Brand
@@ -161,7 +164,7 @@ end
 -- Phase 1
 
 function mod:Doomfire(args)
-	self:CDBar(args.spellId, 42)
+	self:CDBar(args.spellId, 42) -- seems to be either 42 46 42 or 42 42 49
 end
 
 function mod:DoomfireFixate(args)
@@ -202,7 +205,7 @@ do
 	function mod:ShadowfelBurstApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, 183817, list, "Attention")
+			self:ScheduleTimer("TargetMessage", 0.3, 183817, list, "Urgent")
 			burstCount = burstCount + 1
 			self:Bar(183817, burstCount == 2 and 61 or 56)
 			self:CloseProximity(183817)
@@ -254,7 +257,7 @@ do
 
 		list[#list + 1] = args.destName
 		if #list == 1 then
-			self:CDBar(args.spellId, 32) -- Min: 31.8/Avg: 34.5/Max: 43.8
+			self:CDBar(args.spellId, 32) -- p2 40.1, 36.5.. p2.5 31.6 ?
 			self:ScheduleTimer(tormentSay, 0.3, self, args.spellId)
 		end
 	end
@@ -287,11 +290,12 @@ do
 end
 
 do
-	local chaosCount = 0
+	local chaosCount, prev = 0, 0
 	local chaosSource, chaosTarget = "", ""
 
 	function mod:WroughtChaosCast(args)
 		chaosCount = 0
+		--self:CDBar(186123, 52)
 	end
 
 	function mod:WroughtChaos(args)
@@ -316,16 +320,23 @@ do
 			--self:Flash(186123, args.spellId)
 		end
 
-		chaosCount = chaosCount + 1
-		local spell = CL.count:format(self:SpellName(186123), chaosCount)
-		if not banished then
-			if not self:Mythic() then
+		if not self:Mythic() then
+			chaosCount = chaosCount + 1
+			if not banished then
+				local spell = CL.count:format(self:SpellName(186123), chaosCount)
 				local targets = L.chaos_bar:format(chaosSource, chaosTarget)
 				self:Message(186123, "Important", nil, CL.other:format(spell, targets)) -- Wrought Chaos (1): Player -> Player
 				self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, targets), "spell_shadow_soulleech_1") -- (1) Player -> Player
-			else
-				self:Message(186123, "Important", nil, spell) -- Wrought Chaos (1)
-				self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, args.spellName), "spell_shadow_soulleech_1") -- (1) Focused Chaos
+			end
+		else -- Mythic
+			local t = GetTime()
+			if t-prev > 2 then
+				prev = t
+				chaosCount = chaosCount + 1
+				if not banished then
+					self:Message(186123, "Important", nil, CL.count:format(self:SpellName(186123), chaosCount)) -- Wrought Chaos (1)
+					self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, args.spellName), "spell_shadow_soulleech_1") -- (1) Focused Chaos
+				end
 			end
 		end
 	end
