@@ -78,6 +78,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DoomfireDamage", 183586)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DoomfireDamage", 183586)
 	self:Log("SPELL_AURA_APPLIED", "DoomfireFixate", 182879)
+	self:Log("SPELL_AURA_REMOVED", "DoomfireFixateRemoved", 182879)
 	self:Log("SPELL_CAST_START", "ShadowfelBurst", 183817)
 	self:Log("SPELL_AURA_APPLIED", "ShadowfelBurstApplied", 183634)
 	self:Log("SPELL_CAST_START", "Desecrate", 185590)
@@ -174,6 +175,10 @@ function mod:DoomfireFixate(args)
 		self:TargetBar(182826, 10, args.destName)
 		self:Say(182826)
 	end
+end
+
+function mod:DoomfireFixateRemoved(args)
+	self:PrimaryIcon(182826)
 end
 
 do
@@ -284,7 +289,7 @@ do
 	function mod:DemonicHavoc(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alarm")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", self:Dispeller("magic") and "Alert", nil, nil, true)
 		end
 	end
 end
@@ -315,7 +320,7 @@ do
 			self:PrimaryIcon(186123, args.destName)
 		end
 		if self:Me(args.destGUID) then
-			self:Message(186123, "Positive", "Info", CL.you:format(args.spellName))
+			self:Message(186123, "Positive", "Alarm", CL.you:format(args.spellName))
 			self:Say(186123, args.spellName)
 			--self:Flash(186123, args.spellId)
 		end
@@ -353,7 +358,7 @@ end
 
 function mod:RainOfChaos(args)
 	if not banished then
-		self:Message(args.spellId, "Urgent", "Warning")
+		self:Message(args.spellId, "Urgent", "Alert")
 	end
 	self:Bar(args.spellId, 62)
 end
@@ -409,7 +414,7 @@ end
 
 function mod:DemonicFeedback(args)
 	if not banished then
-		self:Message(args.spellId, "Attention", "Warning", CL.casting:format(args.spellName))
+		self:Message(args.spellId, "Attention", "Warning")
 	end
 	self:CDBar(args.spellId, 37)
 end
