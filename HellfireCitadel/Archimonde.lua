@@ -236,7 +236,7 @@ do
 				local torment = CL.count:format(self:SpellName(187553), i) -- 187553 = "Torment"
 				self:Say(spellId, torment)
 				self:Flash(spellId)
-				self:Message(spellId, "Personal", "Alarm", CL.you:format(torment))
+				self:TargetMessage(spellId, target, "Personal", "Alarm", torment)
 			end
 			if self:GetOption("custom_off_torment_marker") then
 				SetRaidTarget(target, i)
@@ -305,19 +305,20 @@ do
 
 	function mod:WroughtChaos(args)
 		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
 			self:Say(args.spellId)
 		end
 
 		if not self:Mythic() then
 			chaosSource = self:ColorName(args.destName)
+			self:PrimaryIcon(arg.spellId)
 			self:SecondaryIcon(args.spellId, args.destName)
 		end
 	end
 
 	function mod:FocusedChaos(args)
 		if self:Me(args.destGUID) then
-			self:Message(186123, "Positive", "Alarm", CL.you:format(args.spellName))
+			self:TargetMessage(186123, args.destName, "Positive", "Alarm", args.spellId)
 			self:Say(186123, args.spellName)
 			--self:Flash(186123, args.spellId)
 		end
