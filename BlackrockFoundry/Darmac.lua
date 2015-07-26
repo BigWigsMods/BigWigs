@@ -274,7 +274,7 @@ do
 			self:CDBar(155499, 25)
 		elseif spellId == 155385 or spellId == 155515 then -- Rend and Tear first jump casts (Cruelfang, Darmac)
 			self:CDBar(155061, 12) -- Rend and Tear, 12-16
-			if self:Tank() or self:Damager() == "MELEE" then
+			if self:Melee() then
 				self:Message(155061, "Urgent", nil, CL.incoming:format(self:SpellName(155061)))
 			end
 		end

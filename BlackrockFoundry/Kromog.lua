@@ -189,7 +189,7 @@ function mod:StoneBreath(args)
 end
 
 function mod:Slam(args)
-	self:Message(args.spellId, "Urgent", (self:Tank() or self:Damager() == "MELEE") and "Alarm", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Urgent", self:Melee() and "Alarm", CL.casting:format(args.spellName))
 	self:CDBar(args.spellId, 24)
 end
 

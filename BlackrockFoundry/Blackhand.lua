@@ -189,8 +189,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 156991 then -- Throw Slag Bombs
 		if phase < 3 then
-			local warn = self:Tank() or self:Damager() == "MELEE"
-			self:Message(156030, "Attention", warn and "Long")
+			self:Message(156030, "Attention", self:Melee() and "Long")
 			self:Bar(156030, 25)
 		end
 	elseif spellId == 156425 then -- Demolition
