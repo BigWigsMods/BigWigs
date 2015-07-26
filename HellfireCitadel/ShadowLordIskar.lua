@@ -161,7 +161,7 @@ do
 	local isOnMe = nil, nil
 	local function warn(self, spellName)
 		if isOnMe then
-			self:Message(181956, "Personal" , "Alarm", CL.you:format(spellName))
+			self:TargetMessage(181956, args.destName, "Personal" , "Alarm")
 		else
 			self:Message(181956, "Attention", UnitBuff("player", self:SpellName(179202)) and "Warning") -- Warning if you have the Eye
 		end

@@ -132,7 +132,7 @@ end
 function mod:OnEngage()
 	fixateOnMe = nil
 	fateCount = 1
-	showProximity()
+
 	if not self:LFR() then
 		self:Bar(179909, 18) -- Shared Fate
 	end
@@ -141,6 +141,7 @@ function mod:OnEngage()
 	self:Bar(179864, self:Mythic() and 20 or 30, shadowOfDeathInfo.icon.healer.." "..self:SpellName(179864)) -- Healer Shadow of Death
 	self:Bar(181973, 123) -- Feast of Souls, based on heroic logs
 	self:CDBar(179977, 8.3) -- Touch of Doom
+	showProximity()
 
 	shadowOfDeathInfo.count.tank = 0
 	shadowOfDeathInfo.count.dps = 0

@@ -101,6 +101,7 @@ function mod:OnEngage()
 	phaseEnd = GetTime() + 87 -- used to prevent starting new bars the phase change would stop
 	cleaveCount = 1
 	wipe(tankList)
+
 	self:Bar(179406, 25.5, CL.count:format(self:SpellName(179406), cleaveCount)) -- Soul Cleave
 	self:Bar(189009, 36.5) -- Cavitation
 	self:Bar(179583, 7) -- Rumbling Fissures
@@ -226,7 +227,7 @@ do
 				local seed = L.seed:format(i)
 				self:Say(181508, seed)
 				self:Flash(181508)
-				self:Message(181508, "Positive", "Alarm", CL.you:format(seed))
+				self:TargetMessage(181508, target, "Positive", "Alarm", seed)
 			end
 			if self:GetOption("custom_off_seed_marker") then
 				SetRaidTarget(target, i)
