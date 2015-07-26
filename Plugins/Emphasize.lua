@@ -369,7 +369,7 @@ do
 		if text and timers[text] then wipe(timers[text]) end
 	end
 	function plugin:BigWigs_StartEmphasize(_, module, key, text, time)
-		if module and key and module:CheckOption(key, "COUNTDOWN") then
+		if module and module:CheckOption(key, "COUNTDOWN") then
 			self:BigWigs_StopEmphasize(nil, module, text)
 			if time > 1.3 then
 				if not timers[text] then timers[text] = {} end
@@ -407,7 +407,7 @@ function plugin:IsSuperEmphasized(module, key)
 	if module == BigWigs then -- test bars
 		return math.random(1,2) == 2
 	end
-	return module:CheckOption(key, "EMPHASIZE")
+	return module.CheckOption and module:CheckOption(key, "EMPHASIZE")
 end
 
 function plugin:BigWigs_TempSuperEmphasize(_, module, key, text, time)

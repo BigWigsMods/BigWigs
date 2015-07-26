@@ -897,6 +897,7 @@ do
 				order = 2,
 				disabled = disabled,
 			},
+			--[[
 			font = {
 				type = "select",
 				name = L.font,
@@ -916,6 +917,7 @@ do
 				width = "full",
 				disabled = disabled,
 			},
+			--]]
 			soundName = {
 				type = "select",
 				name = L.sound,

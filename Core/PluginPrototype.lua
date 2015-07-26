@@ -25,13 +25,6 @@ end
 function plugin:IsBossModule() return end
 
 do
-	local C = core.C
-	function plugin:CheckOption(key, flag)
-		return self.db.profile[key] and bit.band(self.db.profile[key], C[flag]) == C[flag]
-	end
-end
-
-do
 	local UnitName = UnitName
 	function plugin:UnitName(unit, trimServer)
 		local name, server = UnitName(unit)

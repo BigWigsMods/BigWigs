@@ -42,7 +42,7 @@ plugin.pluginOptions = {
 -------------------------------------------------------------------------------
 -- Initialization
 --
- 
+
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_EncounterEnd")
 end
