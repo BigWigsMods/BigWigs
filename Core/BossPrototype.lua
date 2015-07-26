@@ -785,6 +785,14 @@ end
 -- Role checking
 --
 
+function boss:Melee()
+	return myRole == "TANK" or myDamagerRole == "MELEE"
+end
+
+function boss:Ranged()
+	return myRole == "HEALER" or myDamagerRole == "RANGED"
+end
+
 function boss:Tank(unit)
 	if unit then
 		return GetPartyAssignment("MAINTANK", unit) or UnitGroupRolesAssigned(unit) == "TANK"
