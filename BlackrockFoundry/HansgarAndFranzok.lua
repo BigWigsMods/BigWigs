@@ -177,7 +177,7 @@ function mod:DisruptingRoar(args)
 	end
 
 	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
-	if self:Healer() or self:Damager() == "RANGED" then
+	if self:Ranged() then
 		self:PlaySound(args.spellId, "Long")
 		self:Flash(args.spellId)
 	end

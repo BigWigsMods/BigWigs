@@ -103,7 +103,7 @@ function mod:OnEngage()
 	wipe(wolvesMarked)
 	firestormCount = 1
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-	if self:Healer() or self:Damager() == "RANGED" then
+	if self:Ranged() then
 		self:Bar(155318, 11) -- Lava Slash
 		if not self:LFR() then
 			self:OpenProximity("proximity", 6)
@@ -147,7 +147,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 154914 then -- Lava Slash
 		self:Message(155318, "Urgent")
-		if self:Healer() or self:Damager() == "RANGED" then
+		if self:Ranged() then
 			self:Bar(155318, 14.5)
 		end
 	elseif spellId == 163644 then -- Summon Enchanted Armaments
@@ -160,7 +160,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 
 		--self:StopBar(155277) -- Blazing Radiance
 		self:Bar(-9352, 18, 175007, "inv_sword_1h_firelandsraid_d_04") -- Summon Enchanted Armaments
-		if self:Healer() or self:Damager() == "RANGED" then
+		if self:Ranged() then
 			self:Bar(155318, 28) -- Lava Slash
 		end
 		self:Bar(154932, 47) -- Molten Torrent
@@ -211,7 +211,7 @@ do
 		self:SecondaryIcon(args.spellId)
 		if self:Me(args.destGUID) then
 			self:CloseProximity(args.spellId)
-			if not self:LFR() and (self:Healer() or self:Damager() == "RANGED") then
+			if not self:LFR() and self:Ranged() then
 				self:OpenProximity("proximity", 6)
 			end
 		end
@@ -292,7 +292,7 @@ do
 	function mod:BlazingRadianceRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CloseProximity(args.spellId)
-			if not self:LFR() and (self:Healer() or self:Damager() == "RANGED") then
+			if not self:LFR() and self:Ranged() then
 				self:OpenProximity("proximity", 6)
 			end
 		end

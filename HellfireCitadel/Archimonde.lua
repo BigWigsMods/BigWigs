@@ -385,14 +385,18 @@ end
 function mod:NetherBanishApplied(args)
 	if self:Me(args.destGUID) then
 		banished = true
-		self:CloseProximity(187180) -- Demonic Feedback
+		if self:Ranged() then
+			self:CloseProximity(187180) -- Demonic Feedback
+		end
 	end
 end
 
 function mod:NetherBanishRemoved(args)
 	if self:Me(args.destGUID) then
 		banished = nil
-		self:OpenProximity(187180, 7) -- Demonic Feedback
+		if self:Ranged() then
+			self:OpenProximity(187180, 7) -- Demonic Feedback
+		end
 	end
 end
 

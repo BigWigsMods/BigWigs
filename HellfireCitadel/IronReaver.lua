@@ -88,7 +88,7 @@ function mod:OnEngage()
 	self:Bar(182020, 34.4, CL.count:format(self:SpellName(182020), poundingCount)) -- Pounding
 	self:Bar(179889, 64.3) -- Blitz
 	self:Bar(182055, 139) -- Full Charge
-	if self:Healer() or self:Damager() == "RANGED" then
+	if self:Ranged() then
 		self:OpenProximity("proximity", 8)
 	end
 end
@@ -133,7 +133,7 @@ function mod:ArtilleryRemoved(args)
 	self:StopBar(args.spellName, args.destName)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
-		if self:Healer() or self:Damager() == "RANGED" then
+		if self:Ranged() then
 			self:OpenProximity("proximity", 8)
 		end
 	end

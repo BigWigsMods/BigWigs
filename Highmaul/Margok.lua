@@ -542,8 +542,7 @@ do
 		[3] = { 24, 15.8, 24, 19.4, 28, 23 },
 	}
 	function mod:DestructiveResonance(args)
-		local sound = self:Healer() or self:Damager() == "RANGED"
-		self:Message(156467, "Important", sound and "Warning")
+		self:Message(156467, "Important", self:Ranged() and "Warning")
 		local t = mineCount == 1 and 24 or (not self:Mythic() and mineTimes[phase] and mineTimes[phase][mineCount]) or 15.8
 		self:CDBar(156467, t)
 		mineCount = mineCount + 1

@@ -219,7 +219,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar("siegemaker", 16, CL.count:format(self:SpellName(L.siegemaker), siegemakerCount), L.siegemaker_icon)
 		self:CDBar(155992, self:Mythic() and 18.5 or 22, CL.count:format(self:SpellName(128270), smashCount)) -- Shattering Smash, 128270 = "Smash"
 		self:Bar(156096, 26, CL.count:format(self:SpellName(156096), 1)) -- Marked for Death
-		if not self:LFR() and (self:Healer() or self:Damager() == "RANGED") then
+		if not self:LFR() and self:Ranged() then
 			self:OpenProximity(156728, 7) -- Explosive Round
 		end
 
@@ -243,7 +243,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(CL.count:format(self:SpellName(L.siegemaker), siegemakerCount))
 		self:StopBar(CL.count:format(self:SpellName(156096), markCount)) -- Marked for Death
 		self:StopBar(156107) -- Impaling Throw
-		if not self:LFR() and (self:Healer() or self:Damager() == "RANGED") then
+		if not self:LFR() and self:Ranged() then
 			self:CloseProximity(156728) -- Explosive Round
 		end
 

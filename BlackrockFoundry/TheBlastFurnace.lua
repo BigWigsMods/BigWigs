@@ -407,8 +407,8 @@ function mod:HardenedSlagRemoved(args)
 end
 
 function mod:ReactiveEarthShield(args)
-	if self:MobId(args.destGUID) == 76815 and self:Dispeller("magic", nil, args.spellId) then
-		self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, true)
+	if self:MobId(args.destGUID) == 76815 and self:Dispeller("magic", true, args.spellId) then
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert", nil, nil, true)
 	end
 end
 

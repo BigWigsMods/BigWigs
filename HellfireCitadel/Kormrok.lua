@@ -20,7 +20,6 @@ local phaseAbilityCount = 0
 local explosiveCount, foulCount, shadowCount = 0, 0, 0
 local enrageMod = 1
 local isPounding = nil
-local ranged = mod:Healer() or mod:Damager() == "RANGED"
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -66,8 +65,7 @@ function mod:OnEngage()
 	enrageMod = self:Mythic() and 0.84 or 1
 	isPounding = nil
 	self:CDBar("stages", 10, 180068) -- Leap
-	if self:Healer() or self:Damager() == "RANGED" then
-		ranged = true
+	if self:Ranged() then
 		self:OpenProximity("proximity", 4)
 	end
 end
@@ -230,7 +228,7 @@ end
 do
 	local function closeProx(self, id)
 		self:CloseProximity(id)
-		if ranged then
+		if self:Ranged() then
 			self:OpenProximity("proximity", 4)
 		end
 	end
@@ -267,7 +265,7 @@ end
 function mod:PoundOver(args)
 	self:CloseProximity(args.spellId)
 	isPounding = nil
-	if ranged then
+	if self:Ranged() then
 		self:OpenProximity("proximity", 4)
 	end
 end
