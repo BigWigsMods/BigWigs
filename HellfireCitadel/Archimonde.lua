@@ -88,7 +88,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "WroughtChaosCast", 184265)
 	self:Log("SPELL_AURA_APPLIED", "WroughtChaos", 186123)
 	self:Log("SPELL_AURA_APPLIED", "FocusedChaos", 185014)
-	self:Log("SPELL_AURA_REMOVED", "FocusedChaosRemoved", 185014)
 	self:Log("SPELL_AURA_APPLIED", "DemonicHavoc", 183865)
 	-- P3
 	self:Log("SPELL_CAST_START", "DemonicFeedback", 187180)
@@ -153,7 +152,7 @@ function mod:AllureOfFlames(args)
 end
 
 function mod:DeathBrand(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", self:Tank() and "Warning")
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning", nil, nil, self:Tank())
 	self:CDBar(args.spellId, 43)
 end
 
@@ -311,8 +310,9 @@ do
 
 		if not self:Mythic() then
 			chaosSource = self:ColorName(args.destName)
-			self:PrimaryIcon(arg.spellId)
-			self:SecondaryIcon(args.spellId, args.destName)
+			self:PrimaryIcon(args.spellId) -- Always clear before setting
+			self:SecondaryIcon(args.spellId)
+			self:ScheduleTimer("SecondaryIcon", 0.3, args.spellId, args.destName) -- Delay for potential latency with clearing the icons
 		end
 	end
 
@@ -326,7 +326,7 @@ do
 		if not self:Mythic() then
 			chaosCount = chaosCount + 1
 			chaosTarget = self:ColorName(args.destName)
-			self:PrimaryIcon(186123, args.destName)
+			self:ScheduleTimer("PrimaryIcon", 0.3, 186123, args.destName) -- Delay for potential latency with clearing the icons
 			if not banished then
 				local spell = CL.count:format(self:SpellName(186123), chaosCount)
 				local targets = L.chaos_bar:format(chaosSource, chaosTarget)
@@ -343,13 +343,6 @@ do
 					self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, args.spellName), "spell_shadow_soulleech_1") -- (1) Focused Chaos
 				end
 			end
-		end
-	end
-
-	function mod:FocusedChaosRemoved(args)
-		if chaosCount == 4 then
-			self:SecondaryIcon(186123)
-			self:PrimaryIcon(186123)
 		end
 	end
 end
