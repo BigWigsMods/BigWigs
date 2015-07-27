@@ -71,6 +71,7 @@ end
 function mod:OnBossEnable()
 	-- P1
 	self:Log("SPELL_CAST_START", "AllureOfFlames", 183254)
+	self:Log("SPELL_CAST_START", "DeathBrandCast", 183828)
 	self:Log("SPELL_AURA_APPLIED", "DeathBrand", 183828)
 	self:Log("SPELL_AURA_APPLIED", "ShadowBlast", 183864)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowBlast", 183864)
@@ -88,6 +89,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "WroughtChaosCast", 184265)
 	self:Log("SPELL_AURA_APPLIED", "WroughtChaos", 186123)
 	self:Log("SPELL_AURA_APPLIED", "FocusedChaos", 185014)
+	self:Log("SPELL_AURA_REMOVED", "FocusedChaosRemoved", 185014)
 	self:Log("SPELL_AURA_APPLIED", "DemonicHavoc", 183865)
 	-- P3
 	self:Log("SPELL_CAST_START", "DemonicFeedback", 187180)
@@ -149,6 +151,12 @@ end
 function mod:AllureOfFlames(args)
 	self:Message(args.spellId, "Urgent", "Alert")
 	self:CDBar(args.spellId, 48) -- Min: 47.5/Avg: 49.8/Max: 54.1
+end
+
+function mod:DeathBrandCast(args)
+	if self:Tank() then
+		self:Message(args.spellId, "Attention", "Warning", CL.casting:format(args.spellName))
+	end
 end
 
 function mod:DeathBrand(args)
@@ -343,6 +351,13 @@ do
 					self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, args.spellName), "spell_shadow_soulleech_1") -- (1) Focused Chaos
 				end
 			end
+		end
+	end
+
+	function mod:FocusedChaosRemoved(args)
+		if chaosCount == 4 then
+			self:SecondaryIcon(186123)
+			self:PrimaryIcon(186123)
 		end
 	end
 end
