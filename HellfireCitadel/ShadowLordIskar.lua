@@ -161,7 +161,7 @@ do
 	local isOnMe = nil, nil
 	local function warn(self, spellName)
 		if isOnMe then
-			self:TargetMessage(181956, args.destName, "Personal" , "Alarm")
+			self:TargetMessage(181956, isOnMe, "Personal" , "Alarm")
 		else
 			self:Message(181956, "Attention", UnitBuff("player", self:SpellName(179202)) and "Warning") -- Warning if you have the Eye
 		end
@@ -174,7 +174,7 @@ do
 			self:CDBar(181956, self:Easy() and 45 or 36)
 		end
 		if self:Me(args.destGUID) then
-			isOnMe = true
+			isOnMe = args.destName
 		end
 		if self:GetOption("custom_off_wind_marker") then
 			SetRaidTarget(args.destName, #windTargets)
