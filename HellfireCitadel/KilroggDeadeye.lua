@@ -87,6 +87,7 @@ function mod:OnEngage()
 	self:CDBar(180224, 40, CL.count:format(self:SpellName(180224), deathThroesCount)) -- Death Throes
 	self:CDBar(188929, 25) -- Heart Seeker
 	self:CDBar(180199, 10.8) -- Shred Armor
+	self:CDBar(-11269, 15) -- Hulking Terror
 	self:OpenAltPower("altpower", 182159) -- Fel Corruption
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
@@ -111,12 +112,15 @@ do
 				local id = adds[self:MobId(guid)]
 				if id then
 					self:Message(id, "Neutral", "Info", self:SpellName(id), false)
+					if id == -11269 then
+						self:CDBar(id, 70) -- Hulking Terror, 70-75
+					end
 				end
 			end
 		end
 	end
 
-	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId) -- Bloodthirster reaches the pool
 		if spellId == 182012 then -- Max Health Increase
 			self:Message(-11269, "Neutral", "Info", self:SpellName(-11269), false) -- Hulking Terror
 		end
