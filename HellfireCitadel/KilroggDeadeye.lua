@@ -113,7 +113,7 @@ do
 				if id then
 					self:Message(id, "Neutral", "Info", self:SpellName(id), false)
 					if id == -11269 then
-						self:CDBar(id, 70) -- Hulking Terror, 70-75
+						self:CDBar(id, 70, nil, "spell_nature_shamanrage") -- Hulking Terror, 70-75
 					end
 				end
 			end
