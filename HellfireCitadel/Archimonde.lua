@@ -234,8 +234,12 @@ do
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, 183817, list, "Urgent")
 			self:Bar(183817, burstCount == 2 and 61 or 56)
-			self:OpenProximity(183817, 8, args.destName)
-			self:ScheduleTimer("CloseProximity", 6, 183817)
+			if self:Melee() then
+				self:CloseProximity(183817)
+			else
+				self:OpenProximity(183817, 8, args.destName)
+				self:ScheduleTimer("CloseProximity", 6, 183817)
+			end
 		end
 	end
 end
