@@ -72,6 +72,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "MannorothsGaze", 181597, 182006)
 	self:Log("SPELL_AURA_REMOVED", "MannorothsGazeRemoved", 181597, 182006)
 	self:Log("SPELL_CAST_START", "Shadowforce", 181799, 182084)
+	self:Log("SPELL_AURA_APPLIED", "ShadowforceApplied", 181841, 182088)
 	self:Log("SPELL_CAST_START", "Felseeker", 181793, 181792, 181738) -- 10, 20, 30 yds
 	self:Log("SPELL_CAST_START", "EmpoweredFelseeker", 182077, 182076, 182040)
 	self:Log("SPELL_CAST_START", "GlaiveThrust", 183377, 185831)
@@ -230,7 +231,7 @@ do
 			if target == isOnMe then
 				local gaze = L.gaze:format(i)
 				self:Say(181597, gaze)
-				self:Message(181597, "Personal", "Alarm", CL.you:format(gaze))
+				self:TargetMessage(181597, target, "Personal", "Alarm", gaze)
 			end
 			if self:GetOption("custom_off_gaze_marker") then
 				SetRaidTarget(target, i)
@@ -265,8 +266,13 @@ end
 
 function mod:Shadowforce(args)
 	self:Message(181799, "Important", "Long", CL.casting:format(args.spellName))
-	self:Bar(181799, 8, CL.cast:format(args.spellName))
 	self:CDBar(181799, 52, args.spellName)
+end
+
+function mod:ShadowforceApplied(args)
+	if self:Me(args.destGUID) then
+		self:TargetBar(181799, 6, args.destName)
+	end
 end
 
 function mod:Felseeker(args)
