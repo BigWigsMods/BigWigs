@@ -125,7 +125,7 @@ end
 
 local function showProximity()
 	if mod:Ranged() then
-		mod:OpenProximity("proximity", 5) -- XXX Tie this to Surging Shadows?
+		mod:OpenProximity("proximity", 5)
 	end
 end
 
@@ -169,6 +169,14 @@ do
 	end
 end
 
+function mod:TouchOfDoomRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(179977)
+		showProximity()
+		self:StopBar(args.spellName, args.destName)
+	end
+end
+
 function mod:GoreboundSpiritDeath(args)
 	self:StopBar(181582) -- Bellowing Shout
 end
@@ -176,14 +184,6 @@ end
 function mod:GoreboundFortitude()
 	-- Enraged Spirit moving to the 'real' realm (becomes Gorebound Spirit)
 	self:Message(-11020, "Neutral", self:Tank() and "Warning" or "Info", CL.spawning:format(self:SpellName(-11020)), false)
-end
-
-function mod:TouchOfDoomRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CloseProximity(179977)
-		showProximity()
-		self:StopBar(args.spellName, args.destName)
-	end
 end
 
 do
