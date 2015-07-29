@@ -180,7 +180,7 @@ end
 
 function mod:TouchOfDoomRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CloseProximity(args.spellId)
+		self:CloseProximity(179977)
 		showProximity()
 		self:StopBar(args.spellName, args.destName)
 	end
