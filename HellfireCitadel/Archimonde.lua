@@ -165,7 +165,7 @@ function mod:AllureOfFlames(args)
 end
 
 function mod:DeathBrandCast(args)
-	if self:Tank() and self:Me(UnitGUID("boss1target")) then -- pre-warning for current tank
+	if self:Tank() then
 		self:Message(args.spellId, "Attention", "Warning", CL.casting:format(args.spellName))
 	end
 end
@@ -173,7 +173,7 @@ end
 function mod:DeathBrand(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention")
 	self:CDBar(args.spellId, 43)
-	if self:Tank() and not self:Me(args.destGUID) then --  taunt warning for other tank
+	if self:Tank() and not self:Me(args.destGUID) and not UnitDetailedThreatSituation("player", "boss1") then -- second taunt warning for other tank
 		self:PlaySound(args.spellId, "Warning")
 	end
 end
