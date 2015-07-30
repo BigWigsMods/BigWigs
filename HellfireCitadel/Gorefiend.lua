@@ -124,7 +124,7 @@ function mod:OnBossEnable()
 end
 
 local function showProximity()
-	if mod:Ranged() then
+	if mod:Ranged() and not self:LFR() then
 		mod:OpenProximity("proximity", 5)
 	end
 end
@@ -162,18 +162,22 @@ do
 		end
 		if self:Me(args.destGUID) then
 			self:TargetBar(179977, 8, args.destName)
-			self:OpenProximity(179977, 20) -- XXX Range is up for debate
-			self:Flash(179977)
-			self:Say(179977)
+			if not self:LFR() then
+				self:OpenProximity(179977, 20) -- XXX Range is up for debate
+				self:Flash(179977)
+				self:Say(179977)
+			end
 		end
 	end
 end
 
 function mod:TouchOfDoomRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CloseProximity(179977)
-		showProximity()
 		self:StopBar(args.spellName, args.destName)
+		if not self:LFR() then
+			self:CloseProximity(179977)
+			showProximity()
+		end
 	end
 end
 
