@@ -103,7 +103,9 @@ function mod:OnEngage()
 	eyeTarget = nil
 	wipe(windTargets)
 
-	self:Berserk(self:Heroic() and 540 or 480)
+	if not self:LFR() then
+		self:Berserk(self:Heroic() and 540 or 480)
+	end
 	if self:Mythic() then
 		self:CDBar(185345, 9.5) -- Shadow Riposte
 	end
