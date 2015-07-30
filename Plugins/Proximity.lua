@@ -54,7 +54,7 @@ local unitList = nil
 local blipList = {}
 local updateTimer = nil
 local functionToFire = nil
-local customProximityOpen = nil
+local customProximityOpen, customProximityTarget = nil, nil
 local proxAnchor, proxTitle, proxCircle, proxPulseOut, proxPulseIn = nil, nil, nil, nil, nil
 
 -- Upvalues
@@ -644,7 +644,7 @@ do
 		close:SetScript("OnLeave", onControlLeave)
 		close:SetScript("OnClick", function()
 			BigWigs:Print(L.toggleDisplayPrint)
-			customProximityOpen = nil
+			customProximityOpen, customProximityTarget = nil, nil
 			plugin:Close(true)
 		end)
 		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
@@ -821,7 +821,7 @@ do
 end
 
 function plugin:OnPluginDisable()
-	customProximityOpen = nil
+	customProximityOpen, customProximityTarget = nil, nil
 	self:Close(true)
 end
 
@@ -1039,7 +1039,7 @@ do
 	function plugin:BigWigs_OnBossDisable(event, module)
 		if module ~= opener then return end
 		if event == "BigWigs_OnBossDisable" then -- Fully close on a boss win/disable
-			customProximityOpen = nil
+			customProximityOpen, customProximityTarget = nil, nil
 			self:Close(true)
 		else -- Reopen custom proximity when a spell ends or on a boss wipe
 			self:Close()
@@ -1079,7 +1079,11 @@ function plugin:Close(noReopen)
 	proxPulseOut:Stop()
 	proxAnchor:Hide()
 	if not noReopen and customProximityOpen then
-		self:Open(customProximityOpen)
+		if customProximityTarget then
+			self:Open(customProximityOpen, nil, nil, customProximityTarget, true)
+		else
+			self:Open(customProximityOpen)
+		end
 	end
 end
 
@@ -1201,13 +1205,45 @@ SlashCmdList.BigWigs_Proximity = function(input)
 		if range > 0 then
 			plugin:Close(true)
 			customProximityOpen = range
+			customProximityTarget = nil
 			plugin:Open(range)
 		else
-			customProximityOpen = nil
+			customProximityOpen, customProximityTarget = nil, nil
 			plugin:Close(true)
 		end
 	end
 end
+
+SlashCmdList.BigWigs_ProximityTarget = function(input)
+	if not plugin:IsEnabled() then BigWigs:Enable() end
+	local range, targetstr = input:match("^(%d+)%s*(.*)$")
+	range = tonumber(range)
+	if not range then
+		BigWigs:Print("Usage: /rangetarget 1-100 [target1 target2 ...]") -- XXX translate
+	else
+		if range > 0 then
+			if #targetstr == 0 then
+				customProximityTarget = UnitName("target")
+			elseif targetstr:find("[, ]") then
+				customProximityTarget = {}
+				for target in targetstr:gmatch("[^, ]+") do
+					customProximityTarget[#customProximityTarget+1] = target
+				end
+			else
+				customProximityTarget = targetstr
+			end
+
+			plugin:Close(true)
+			customProximityOpen = range
+			plugin:Open(range, nil, nil, customProximityTarget, true)
+		else
+			customProximityOpen, customProximityTarget = nil, nil
+			plugin:Close(true)
+		end
+	end
+end
+
 SLASH_BigWigs_Proximity1 = "/proximity"
 SLASH_BigWigs_Proximity2 = "/range"
+SLASH_BigWigs_ProximityTarget1 = "/rangetarget"
 
