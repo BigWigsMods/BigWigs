@@ -456,6 +456,7 @@ function mod:DemonicFeedback(args)
 	if not banished then
 		self:Message(args.spellId, "Attention", "Warning")
 		self:OpenProximity(187180, 7)
+		self:ScheduleTimer("CloseProximity", 2, 187180)
 	end
 	self:CDBar(args.spellId, 37)
 
