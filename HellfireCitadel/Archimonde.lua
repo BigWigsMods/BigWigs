@@ -354,8 +354,7 @@ do
 			isOnMe = true
 		end
 		if isOnMe then
-			local targets = L.chaos_bar:format(args.sourceName, args.destName)
-			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, targets), "spell_shadow_soulleech_1") -- (1) Player -> Player
+			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, L.chaos_bar:format(args.sourceName, args.destName)), "spell_shadow_soulleech_1") -- (1) Player -> Player
 		end
 
 		if not self:Mythic() then
@@ -368,9 +367,8 @@ do
 
 			if not banished and not isOnMe then
 				local spell = CL.count:format(self:SpellName(186123), chaosCount)
-					local targets = L.chaos_bar:format(args.sourceName, args.destName)
-				self:Message(186123, "Important", nil, CL.other:format(spell, targets)) -- Wrought Chaos (1): Player -> Player
-				self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, targets), "spell_shadow_soulleech_1") -- (1) Player -> Player
+				self:Message(186123, "Important", nil, CL.other:format(spell, L.chaos_bar:format(self:ColorName(args.sourceName), self:ColorName(args.destName)))) -- Wrought Chaos (1): Player -> Player
+				self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, L.chaos_bar:format(args.sourceName, args.destName)), "spell_shadow_soulleech_1") -- (1) Player -> Player
 			end
 		end
 	end
