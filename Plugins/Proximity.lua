@@ -54,7 +54,7 @@ local unitList = nil
 local blipList = {}
 local updateTimer = nil
 local functionToFire = nil
-local customProximityOpen, customProximityTarget = nil, nil
+local customProximityOpen, customProximityTarget, customProximityReverse = nil, nil, nil
 local proxAnchor, proxTitle, proxCircle, proxPulseOut, proxPulseIn = nil, nil, nil, nil, nil
 
 -- Upvalues
@@ -644,7 +644,7 @@ do
 		close:SetScript("OnLeave", onControlLeave)
 		close:SetScript("OnClick", function()
 			BigWigs:Print(L.toggleDisplayPrint)
-			customProximityOpen, customProximityTarget = nil, nil
+			customProximityOpen, customProximityTarget, customProximityReverse = nil, nil, nil
 			plugin:Close(true)
 		end)
 		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
@@ -821,7 +821,7 @@ do
 end
 
 function plugin:OnPluginDisable()
-	customProximityOpen, customProximityTarget = nil, nil
+	customProximityOpen, customProximityTarget, customProximityReverse = nil, nil, nil
 	self:Close(true)
 end
 
@@ -1039,7 +1039,7 @@ do
 	function plugin:BigWigs_OnBossDisable(event, module)
 		if module ~= opener then return end
 		if event == "BigWigs_OnBossDisable" then -- Fully close on a boss win/disable
-			customProximityOpen, customProximityTarget = nil, nil
+			customProximityOpen, customProximityTarget, customProximityReverse = nil, nil, nil
 			self:Close(true)
 		else -- Reopen custom proximity when a spell ends or on a boss wipe
 			self:Close()
@@ -1079,11 +1079,7 @@ function plugin:Close(noReopen)
 	proxPulseOut:Stop()
 	proxAnchor:Hide()
 	if not noReopen and customProximityOpen then
-		if customProximityTarget then
-			self:Open(customProximityOpen, nil, nil, customProximityTarget, true)
-		else
-			self:Open(customProximityOpen)
-		end
+		self:Open(customProximityOpen, nil, nil, customProximityTarget, customProximityReverse)
 	end
 end
 
@@ -1198,17 +1194,19 @@ end
 
 SlashCmdList.BigWigs_Proximity = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
-	local range = tonumber(input)
+	local range, reverse = input:match("^(%d+)%s*(%S*)$")
+	range = tonumber(range)
 	if not range then
-		BigWigs:Print("Usage: /proximity 1-100") -- XXX translate
+		BigWigs:Print("Usage: /proximity 1-100 [true]") -- XXX translate
 	else
 		if range > 0 then
 			plugin:Close(true)
 			customProximityOpen = range
 			customProximityTarget = nil
-			plugin:Open(range)
+			customProximityReverse = reverse == "true"
+			plugin:Open(range, nil, nil, nil, customProximityReverse)
 		else
-			customProximityOpen, customProximityTarget = nil, nil
+			customProximityOpen, customProximityTarget, customProximityReverse = nil, nil, nil
 			plugin:Close(true)
 		end
 	end
@@ -1216,28 +1214,19 @@ end
 
 SlashCmdList.BigWigs_ProximityTarget = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
-	local range, targetstr = input:match("^(%d+)%s*(.*)$")
+	local range, target, reverse = input:match("^(%d+)%s*(%S*)%s*(%S*)$")
 	range = tonumber(range)
 	if not range then
-		BigWigs:Print("Usage: /rangetarget 1-100 [target1 target2 ...]") -- XXX translate
+		BigWigs:Print("Usage: /proximitytarget 1-100 player [true]") -- XXX translate
 	else
 		if range > 0 then
-			if #targetstr == 0 then
-				customProximityTarget = UnitName("target")
-			elseif targetstr:find("[, ]") then
-				customProximityTarget = {}
-				for target in targetstr:gmatch("[^, ]+") do
-					customProximityTarget[#customProximityTarget+1] = target
-				end
-			else
-				customProximityTarget = targetstr
-			end
-
 			plugin:Close(true)
 			customProximityOpen = range
-			plugin:Open(range, nil, nil, customProximityTarget, true)
+			customProximityTarget = target
+			customProximityReverse = reverse == "true"
+			plugin:Open(range, nil, nil, customProximityTarget, customProximityReverse)
 		else
-			customProximityOpen, customProximityTarget = nil, nil
+			customProximityOpen, customProximityTarget, customProximityReverse = nil, nil, nil
 			plugin:Close(true)
 		end
 	end
@@ -1245,5 +1234,6 @@ end
 
 SLASH_BigWigs_Proximity1 = "/proximity"
 SLASH_BigWigs_Proximity2 = "/range"
-SLASH_BigWigs_ProximityTarget1 = "/rangetarget"
+SLASH_BigWigs_ProximityTarget1 = "/proximitytarget"
+SLASH_BigWigs_ProximityTarget2 = "/rangetarget"
 
