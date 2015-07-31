@@ -54,7 +54,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Artillery", 182280)
-	self:Log("SPELL_AURA_REFRESH", "Artillery", 182280) -- Very rarely casted on the same person
+	self:Log("SPELL_AURA_REFRESH", "Artillery", 182280) -- Very rarely casted on the same person, usually due to deaths
 	self:Log("SPELL_AURA_REMOVED", "ArtilleryRemoved", 182280)
 	self:Log("SPELL_AURA_APPLIED", "Pounding", 182020)
 	self:Log("SPELL_CAST_START", "Barrage", 185282)
@@ -100,10 +100,10 @@ end
 do
 	-- local timers = {0, 9, 30, 15, 9, 24, 15} -- 15s during p2
 	-- local timersNormalLFR = {0, 39, 15, 33, 15} -- 15s during p2
-	local list = mod:NewTargetList()
+	local list = {}
 	function mod:Artillery(args)
 		if phase == 2 then
-			list[#list+1] = args.destName
+			list[#list+1] = self:ColorName(args.destName)
 			if #list == 1 then
 				self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Urgent", "Alarm")
 				self:Bar(args.spellId, 13)
@@ -111,6 +111,14 @@ do
 		else
 			self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
 			self:TargetBar(args.spellId, 13, args.destName)
+			if self:Melee() and not self:Me(args.destGUID) then
+				if not tContains(list, args.destName) then
+					list[#list+1] = args.destName
+				end
+				if not UnitDebuff("player", args.spellName) then -- Don't change proximity if it's on you and was applied to someone else also
+					self:OpenProximity(args.spellId, 40, list)
+				end
+			end
 			-- Do we care about application timers?
 			-- Expiry is the real concern, are application timers important enough
 			-- to potentially distract/confuse from expiry timers?
@@ -127,14 +135,26 @@ do
 			self:Say(args.spellId)
 		end
 	end
-end
 
-function mod:ArtilleryRemoved(args)
-	self:StopBar(args.spellName, args.destName)
-	if self:Me(args.destGUID) then
-		self:CloseProximity(args.spellId)
-		if self:Ranged() and not self:LFR() then
-			self:OpenProximity("proximity", 8)
+	function mod:ArtilleryRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CloseProximity(args.spellId)
+			if self:Ranged() and not self:LFR() then
+				self:OpenProximity("proximity", 8)
+			end
+		end
+		if phase == 1 then
+			self:StopBar(args.spellName, args.destName)
+			if self:Melee() then
+				tDeleteItem(list, args.destName)
+				if not UnitDebuff("player", args.spellName) then -- Don't change proximity if it's on you and expired on someone else
+					if #list == 0 then
+						self:CloseProximity(args.spellId)
+					else
+						self:OpenProximity(args.spellId, 40, list)
+					end
+				end
+			end
 		end
 	end
 end

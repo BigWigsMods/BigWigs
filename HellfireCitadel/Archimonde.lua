@@ -656,3 +656,4 @@ function mod:MarkOfTheLegion(args)
 	end
 	self:Bar(args.spellId, time)
 end
+
