@@ -19,7 +19,15 @@ local currentTorment, maxTorment = 0, 0
 local burstCount, burstTimer = 1, nil
 local banished = nil
 local feedbackSoon, feedbackTimer = nil, nil
-
+local p3Start = 0
+local timers = {
+	["dc"] = {9.6,11.5,13.5,132.5,134.5,136.5,227.5,229.5,231.5,283.5,285.5,287.5,335.5,337.6,339.5},
+	["infernals"] = {35,36,37,98,99,100,161,162,163,164,216,217,218,219,284,286,288,290,325,326,327,328,329},
+	["marks"] = {21.5,84.5,144.5,204.5,252.5,298.5,345.5},
+	["seething"] = {62.5,120.5,172.5,242.5,281.5,313.5},
+	["chaos"] = {51,109,185,263},
+	["twisted"] = {76.5,154.5,196.5,236.5,308.5},
+}
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -53,12 +61,19 @@ function mod:GetOptions()
 		"custom_off_torment_marker",
 		{186123, "ICON", "SAY", "FLASH"}, -- Wrought Chaos
 		183865, -- Demonic Havoc
+		-11603, -- Felborne Overfiend
 		-- P3
 		{187180, "PROXIMITY"}, -- Demonic Feedback
 		{186961, "ICON", "SAY", "PROXIMITY"}, -- Nether Banish
 		{189894, "SAY", "PROXIMITY"}, -- Void Star Fixate
 		{187255, "FLASH"}, -- Nether Storm
 		182225, -- Rain of Chaos
+		-- P3 (mythic)
+		190394, -- Dark Conduit
+		188514, -- Mark of the Legion
+		190703, -- Source Of Chaos
+		190506, -- Seething Corruption
+		190821, -- Twisted Darkness
 		-- General
 		183254, -- Allure of Flames
 		183828, -- Death Brand
@@ -97,16 +112,24 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DemonicHavoc", 183865)
 	self:Log("SPELL_AURA_APPLIED", "HeartOfArgus", 186662) -- Overfiend spawned (phase warning)
 	-- P3
+	self:Log("SPELL_AURA_APPLIED", "VoidStarFixate", 189895)
+	self:Log("SPELL_AURA_REMOVED", "VoidStarFixateRemoved", 189895)
+	-- P3 (non mythic)
 	self:Log("SPELL_CAST_START", "DemonicFeedback", 187180)
 	self:Log("SPELL_AURA_APPLIED", "TankNetherBanish", 186961)
 	self:Log("SPELL_AURA_REMOVED", "TankNetherBanishRemoved", 186961)
-	self:Log("SPELL_AURA_APPLIED", "VoidStarFixate", 189895)
-	self:Log("SPELL_AURA_REMOVED", "VoidStarFixateRemoved", 189895)
 	self:Log("SPELL_AURA_APPLIED", "NetherBanishApplied", 186952)
 	self:Log("SPELL_AURA_REMOVED", "NetherBanishRemoved", 186952)
 	self:Log("SPELL_CAST_SUCCESS", "RainOfChaos", 182225)
+	-- P3 (mythic)
+	self:Log("SPELL_SUMMON", "RainOfChaos", 187108)
+	self:Log("SPELL_CAST_SUCCESS", "TwistedDarkness", 190821)
+	self:Log("SPELL_CAST_SUCCESS", "SeethingCorruption", 190506)
+	self:Log("SPELL_CAST_SUCCESS", "SourceOfChaosSummon", 190686)
+	self:Log("SPELL_CAST_SUCCESS", "MarkOfTheLegion",188514)
+	self:Log("SPELL_CAST_SUCCESS", "DarkConduit", 190394)
+	-- General
 	self:Log("SPELL_PERIODIC_DAMAGE", "NetherStormDamage", 187255)
-
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Phases", "boss1")
 end
 
@@ -117,7 +140,7 @@ function mod:OnEngage()
 	nextPhaseSoon = 88
 	banished = nil
 	feedbackSoon = nil
-
+	p3Start = 0
 	self:Bar(182826, 6) -- Doomfire
 	self:Bar(183828, 18) -- Death Brand
 	self:Bar(183254, 30) -- Allure of Flames
@@ -156,6 +179,21 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:CDBar(187180, 35) -- Demonic Feedback
 		self:CDBar(184964, 57.5) -- Shackled Torment
 		feedbackTimer = self:ScheduleTimer("DemonicFeedbackSoon", 24)
+	elseif spellId == 190310 then -- Mythic Phase Combat Channel
+		self:StopBar(183254) -- Allure of Flames
+		self:StopBar(183828) -- Death Brand
+		self:StopBar(184964) -- Shackled Torment
+		self:StopBar(186123) -- Wrought Chaos
+		self:StopBar(-11603) -- Felborne Overfiend
+		phase = 3
+		self:Message("stages", "Neutral", "Long", CL.phase:format(3), false)
+		p3Start = GetTime()
+		self:Bar(190394, 9.5) -- Dark Conduit
+		self:Bar(188514, 21.5) -- Mark of the Legion
+		self:Bar(182225, 35) -- Rain of Chaos
+		self:Bar(190703, 53) -- Source of Chaos
+		self:Bar(190506, 62.5) -- Seething Corruption
+		self:Bar(190821, 76.5) -- Twisted Darkness
 	end
 end
 
@@ -418,14 +456,49 @@ do
 	end
 end
 
+function mod:Overfiend(args)
+	self:Message(-11603, "Positive", "Alert", CL.spawning:format(self:SpellName(-11603)), "spell_fire_felfirenova") -- XXX change icon(?)
+	self:Bar(-11603, 45, nil, "spell_fire_felfirenova") -- XXX change icon (?)
+end
+ 
 -- Phase 3
 
-function mod:RainOfChaos(args)
-	if not banished then
-		self:Message(args.spellId, "Urgent", "Alert")
+function mod:VoidStarFixate(args)
+	if banished then
+		self:TargetMessage(189894, args.destName, "Personal", "Alarm")
 	end
-	self:Bar(args.spellId, 62)
+	if self:Me(args.destGUID) then
+		self:Say(189894)
+		self:OpenProximity(189894, 15)
+	end
 end
+
+function mod:VoidStarFixateRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(189894)
+	end
+end
+
+function mod:RainOfChaos(args)
+	if self:Mythic() then
+		local time = 61
+		local p3Duration = GetTime() - p3Start
+		for _,v in ipairs(timers.infernals) do
+			if v > p3Duration+0.5 then
+				time = v-p3Duration
+				break
+			end
+		end
+		self:Bar(182225, time)
+	else
+		if not banished then
+			self:Message(args.spellId, "Urgent", "Alert")
+		end
+		self:Bar(args.spellId, 62)
+	end
+end
+
+-- Phase 3 (non mythic)
 
 function mod:TankNetherBanish(args)
 	self:CDBar(args.spellId, 62)
@@ -516,3 +589,70 @@ function mod:DemonicFeedback(args)
 	feedbackTimer = self:ScheduleTimer("DemonicFeedbackSoon", 28)
 end
 
+-- Phase 3 (mythic)
+
+function mod:DarkConduit(args)
+	self:Message(args.spellId, "Positive", "Alert")
+	local time = 60
+	local p3Duration = GetTime() - p3Start
+	for _,v in ipairs(timers.dc) do
+		if v > p3Duration+0.5 then
+			time = v-p3Duration
+			break
+		end
+	end
+	self:Bar(args.spellId, time)
+end
+
+function mod:TwistedDarkness(args)
+	self:Message(args.spellId, "Attention", "Alarm")
+	local time = 42
+	local p3Duration = GetTime() - p3Start
+	for _,v in ipairs(timers.twisted) do
+		if v > p3Duration+5 then
+			time = v-p3Duration
+			break
+		end
+	end
+	self:Bar(args.spellId, time)
+end
+
+function mod:SourceOfChaosSummon(args)
+	self:Message(190703, "Attention", "Alarm")
+	local time = 58
+	local p3Duration = GetTime() - p3Start
+	for _,v in ipairs(timers.chaos) do
+		if v > p3Duration+5 then
+			time = v-p3Duration
+			break
+		end
+	end
+	self:Bar(190703, time)
+end
+
+function mod:SeethingCorruption(args)
+	self:Message(args.spellId, "Urgent", "Alert")
+	local time = 58
+	local p3Duration = GetTime() - p3Start
+	for _,v in ipairs(timers.seething) do
+		if v > p3Duration+5 then
+			time = v-p3Duration
+			break
+		end
+	end
+	self:Bar(args.spellId, time)
+	self:Bar(args.spellId, 12, CL.cast:format(args.spellName))
+end
+
+function mod:MarkOfTheLegion(args)
+	self:Message(args.spellId, "Urgent", "Alert")
+	local time = 60
+	local p3Duration = GetTime() - p3Start
+	for _,v in ipairs(timers.marks) do
+		if v > p3Duration+5 then
+			time = v-p3Duration
+			break
+		end
+	end
+	self:Bar(args.spellId, time)
+end
