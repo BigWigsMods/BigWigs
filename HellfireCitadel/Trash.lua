@@ -18,6 +18,7 @@ mod:RegisterEnableMob(
 	91520, 91521, 91522, -- Adjunct Kuroh, Vindicator Bramu, Protector Bajunt
 	92527, -- Dag'gorath
 	94018, -- Shadow Burster
+	95813, -- Weaponlord Mehlkhior
 	95282, -- Azgalor
 	95280, -- Kaz'rogal
 	95408 -- Anetheron
@@ -40,6 +41,7 @@ if L then
 	L.kuroh = "Adjunct Kuroh"
 	L.daggorath = "Dag'gorath"
 	L.burster = "Shadow Burster"
+	L.weaponlord = "Weaponlord Mehlkhior"
 	L.azgalor = "Azgalor"
 	L.kazrogal = "Kaz'rogal"
 	L.anetheron = "Anetheron"
@@ -67,6 +69,7 @@ function mod:GetOptions()
 		{184986, "TANK"}, -- Seal of Decay
 		{186197, "SAY"}, -- Demonic Sacrifice
 		{186130, "SAY", "FLASH"}, -- Void Burst (via Void Blast 186127)
+		{190043, "TANK"}, -- Felblood Strike
 		{189538, "FLASH"}, -- Doom
 		189550, -- Rain of Fire
 		{189512, "SAY", "FLASH", "PROXIMITY"}, -- Mark of Kaz'rogal
@@ -86,6 +89,7 @@ function mod:GetOptions()
 		[184986] = L.kuroh,
 		[186197] = L.daggorath,
 		[186130] = L.burster,
+		[190043] = L.weaponlord,
 		[189538] = L.azgalor,
 		[189512] = L.kazrogal,
 		[189470] = L.anetheron,
@@ -128,6 +132,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DemonicSacrifice", 186197)
 
 	self:Log("SPELL_CAST_SUCCESS", "VoidBlast", 186127)
+
+	self:Log("SPELL_AURA_APPLIED_DOSE", "FelbloodStrike", 190043)
 
 	self:Log("SPELL_CAST_START", "DoomStart", 189538)
 	self:Log("SPELL_AURA_APPLIED", "Doom", 189538)
@@ -316,6 +322,12 @@ function mod:VoidBlast(args)
 		self:Message(186130, "Important", "Warning")
 	end
 	self:Flash(186130)
+end
+
+--[[ Weaponlord Mehlkhior ]]--
+
+function mod:FelbloodStrike(args)
+	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent")
 end
 
 --[[ Azgalor ]]--
