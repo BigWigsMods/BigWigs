@@ -1194,6 +1194,7 @@ end
 
 SlashCmdList.BigWigs_Proximity = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
+	input = input:lower()
 	local range, reverse = input:match("^(%d+)%s*(%S*)$")
 	range = tonumber(range)
 	if not range then
@@ -1214,9 +1215,10 @@ end
 
 SlashCmdList.BigWigs_ProximityTarget = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
+	input = input:lower()
 	local range, target, reverse = input:match("^(%d+)%s*(%S*)%s*(%S*)$")
 	range = tonumber(range)
-	if not range then
+	if not range or not target or (not UnitInRaid(target) and not UnitInParty(target)) then
 		BigWigs:Print("Usage: /proximitytarget 1-100 player [true]") -- XXX translate
 	else
 		if range > 0 then
