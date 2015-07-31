@@ -39,6 +39,10 @@ if L then
 	L.chaos_from = "%s from %s"
 	L.chaos_to = "%s to %s"
 
+	L.overfiend = -11603
+	L.overfiend_desc = 186662
+	L.overfiend_icon = 186662
+
 	L.custom_off_torment_marker = "Shackled Torment marker"
 	L.custom_off_torment_marker_desc = "Mark the Shackled Torment targets with {rt1}{rt2}{rt3}, requires promoted or leader."
 	L.custom_off_torment_marker_icon = 1
@@ -61,7 +65,7 @@ function mod:GetOptions()
 		"custom_off_torment_marker",
 		{186123, "ICON", "SAY", "FLASH"}, -- Wrought Chaos
 		183865, -- Demonic Havoc
-		-11603, -- Felborne Overfiend
+		"overfiend",
 		-- P3
 		{187180, "PROXIMITY"}, -- Demonic Feedback
 		{186961, "ICON", "SAY", "PROXIMITY"}, -- Nether Banish
@@ -83,6 +87,7 @@ function mod:GetOptions()
 		[182826] = -11577,
 		[184964] = -11590,
 		[187180] = -11599,
+		[190394] = "mythic",
 		[183254] = "general",
 	}
 end
@@ -122,7 +127,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "NetherBanishRemoved", 186952)
 	self:Log("SPELL_CAST_SUCCESS", "RainOfChaos", 182225)
 	-- P3 (mythic)
-	self:Log("SPELL_SUMMON", "RainOfChaos", 187108)
+	self:Log("SPELL_SUMMON", "InfernalSpawn", 187108)
 	self:Log("SPELL_CAST_SUCCESS", "TwistedDarkness", 190821)
 	self:Log("SPELL_CAST_SUCCESS", "SeethingCorruption", 190506)
 	self:Log("SPELL_CAST_SUCCESS", "SourceOfChaosSummon", 190686)
@@ -171,6 +176,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 	elseif spellId == 190118 then -- Allow Phase 3 Spells
 		self:StopBar(183254) -- Allure of Flames
 		self:StopBar(183828) -- Death Brand
+		self:StopBar(L.overfiend) -- Felborne Overfiend
 
 		phase = 3
 		self:Message("stages", "Neutral", "Long", "40% - " .. CL.phase:format(3), false)
@@ -184,7 +190,8 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:StopBar(183828) -- Death Brand
 		self:StopBar(184964) -- Shackled Torment
 		self:StopBar(186123) -- Wrought Chaos
-		self:StopBar(-11603) -- Felborne Overfiend
+		self:StopBar(L.overfiend) -- Felborne Overfiend
+
 		phase = 3
 		self:Message("stages", "Neutral", "Long", CL.phase:format(3), false)
 		p3Start = GetTime()
@@ -194,14 +201,6 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:Bar(190703, 53) -- Source of Chaos
 		self:Bar(190506, 62.5) -- Seething Corruption
 		self:Bar(190821, 76.5) -- Twisted Darkness
-	end
-end
-
-function mod:HeartOfArgus(args)
-	if phase < 2.5 then
-		phase = 2.5
-		self:Message("stages", "Neutral", "Info", CL.incoming:format(CL.adds))
-		-- always warn for Overfiends?
 	end
 end
 
@@ -456,45 +455,31 @@ do
 	end
 end
 
-function mod:Overfiend(args)
-	self:Message(-11603, "Positive", "Alert", CL.spawning:format(self:SpellName(-11603)), "spell_fire_felfirenova") -- XXX change icon(?)
-	self:Bar(-11603, 45, nil, "spell_fire_felfirenova") -- XXX change icon (?)
+function mod:HeartOfArgus(args)
+	self:Message("overfiend", "Positive", "Alert", CL.spawned:format(L.overfiend), false)
+	self:Bar("overfiend", 45, L.overfiend, L.overfiend_icon)
 end
- 
+
 -- Phase 3
 
-function mod:VoidStarFixate(args)
-	if banished then
-		self:TargetMessage(189894, args.destName, "Personal", "Alarm")
-	end
-	if self:Me(args.destGUID) then
-		self:Say(189894)
-		self:OpenProximity(189894, 15)
-	end
-end
-
-function mod:VoidStarFixateRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CloseProximity(189894)
-	end
-end
-
 function mod:RainOfChaos(args)
+	if not banished then
+		self:Message(args.spellId, "Urgent", "Alert")
+	end
+	self:Bar(args.spellId, 62)
+end
+
+function mod:InfernalSpawn(args)
 	if self:Mythic() then
 		local time = 61
 		local p3Duration = GetTime() - p3Start
-		for _,v in ipairs(timers.infernals) do
-			if v > p3Duration+0.5 then
-				time = v-p3Duration
+		for _, v in ipairs(timers.infernals) do
+			if v > p3Duration + 0.5 then
+				time = v - p3Duration
 				break
 			end
 		end
 		self:Bar(182225, time)
-	else
-		if not banished then
-			self:Message(args.spellId, "Urgent", "Alert")
-		end
-		self:Bar(args.spellId, 62)
 	end
 end
 
@@ -533,7 +518,7 @@ function mod:NetherBanishRemoved(args)
 		banished = nil
 		self:StopBar(189894) -- Void Star
 		if feedbackSoon then
-			self:Message(187180, "Attention", "Info", CL.soon:format(self:SpellName(187180)))
+			self:ScheduleTimer("Message", 1, 187180, "Attention", "Info", CL.soon:format(self:SpellName(187180))) -- loading screen delay
 			self:OpenProximity(187180, 7) -- Demonic Feedback
 		end
 	end
