@@ -20,7 +20,6 @@ local felRageCount = 1
 local diaIsDead = false
 local gurtoggIsDead = false
 local jubeiIsDead = false
-local reapActive = false
 local nextAbility = 0 -- 1: horror, 2: mirror, 3: leap
 local nextAbilityTime = 0
 local startHorrorCD, startMirrorCD, startLeapCD
@@ -56,7 +55,6 @@ end
 function mod:OnBossEnable()
 	-- Dia Darkwhisper
 	self:Log("SPELL_CAST_SUCCESS", "MarkOfTheNecromancer", 184449)
-	self:Log("SPELL_AURA_APPLIED", "MarkJumped", 184450, 185065, 185066)
 	self:Log("SPELL_CAST_START", "Reap", 184476)
 	self:Log("SPELL_CAST_SUCCESS", "ReapOver", 184476)
 	self:Log("SPELL_CAST_START", "NightmareVisage", 184657)
@@ -85,7 +83,6 @@ end
 function mod:OnEngage()
 	horrorCount, leapCount, felRageCount = 1, 0, 1
 	diaIsDead, gurtoggIsDead, jubeiIsDead = false, false, false
-	reapActive = false
 	nextAbility = 1
 
 	self:Berserk(600)
@@ -135,37 +132,37 @@ function mod:MarkOfTheNecromancer(args)
 	self:CDBar(args.spellId, 60) -- 60-63
 end
 
+do
+	local prev = 0
+	function mod:MarkOfTheNecromancerApplied(args)
+		if self:Me(args.destGUID) then
+			local t = GetTime()
+			if t-prev > 5 then -- If many people die or are dispelled, multiple debuffs can apply to you at the same time
+				prev = t
+				self:Say(184476)
+				self:OpenProximity(184476, 5) -- 5 yard guess
+				self:Message(184476, "Personal", "Alarm", ("%s (%s)"):format(CL.you:format(self:SpellName(184476)), self:SpellName(135856))) -- 135856 = Dispel
+			end
+		end
+	end
+end
+
 function mod:Reap(args)
-	reapActive = true
 	if UnitDebuff("player", self:SpellName(184449)) then -- Mark of the Necromancer
 		self:Say(args.spellId)
 		self:OpenProximity(args.spellId, 5) -- 5 yard guess
 		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
 	else
 		self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
+		self:Log("SPELL_AURA_APPLIED", "MarkOfTheNecromancerApplied", 184450, 185065, 185066)
 	end
 	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
 	self:CDBar(args.spellId, 67) -- 67-68
 end
 
 function mod:ReapOver(args)
-	reapActive = false
 	self:CloseProximity(args.spellId)
-end
-
-do
-	local prev = 0
-	function mod:MarkJumped(args)
-		if self:Me(args.destGUID) and reapActive then
-			local t = GetTime()
-			if t-prev > 5 then -- If it's multiple died/dispelled, multiple can jump to you at once
-				prev = t
-				self:Say(184476)
-				self:OpenProximity(184476, 5) -- 5 yard guess
-				self:Message(184476, "Personal", "Alarm", CL.you:format(self:SpellName(184476)))
-			end
-		end
-	end
+	self:RemoveLog("SPELL_AURA_APPLIED", 184450, 185065, 185066)
 end
 
 do
