@@ -330,7 +330,7 @@ do
 		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self][event] then eventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
-			local id = (select(i, ...))
+			local id = select(i, ...)
 			if (type(id) == "number" and GetSpellInfo(id)) or id == "*" then
 				eventMap[self][event][id] = func
 			else
@@ -340,6 +340,13 @@ do
 		allowedEvents[event] = true
 		bossUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		self:SendMessage("BigWigs_OnBossLog", self, event, ...)
+	end
+	function boss:RemoveLog(event, ...)
+		if not event then core:Print(format(missingArgument, self.moduleName)) return end
+		for i = 1, select("#", ...) do
+			local id = select(i, ...)
+			eventMap[self][event][id] = nil
+		end
 	end
 	function boss:Death(func, ...)
 		if not func then core:Print(format(missingArgument, self.moduleName)) return end
