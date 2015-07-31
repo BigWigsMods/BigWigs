@@ -14,6 +14,7 @@ mod.respawnTime = 30
 --
 
 local phase = 1
+local nextPhaseSoon = 0
 local currentTorment, maxTorment = 0, 0
 local burstCount, burstTimer = 1, nil
 local banished = nil
@@ -46,6 +47,7 @@ function mod:GetOptions()
 		{182826, "ICON", "SAY"}, -- Doomfire
 		{183817, "PROXIMITY"}, -- Shadowfel Burst
 		185590, -- Desecrate
+		183963, -- Light of the Naaru
 		-- P2
 		{184964, "SAY", "FLASH"}, -- Shackled Torment
 		"custom_off_torment_marker",
@@ -55,12 +57,12 @@ function mod:GetOptions()
 		{187180, "PROXIMITY"}, -- Demonic Feedback
 		{186961, "ICON", "SAY", "PROXIMITY"}, -- Nether Banish
 		{189894, "SAY", "PROXIMITY"}, -- Void Star Fixate
+		{187255, "FLASH"}, -- Nether Storm
 		182225, -- Rain of Chaos
 		-- General
 		183254, -- Allure of Flames
 		183828, -- Death Brand
 		{183864, "TANK"}, -- Shadow Blast
-		183963, -- Light of the Naaru
 		"stages",
 	}, {
 		[182826] = -11577,
@@ -93,15 +95,17 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FocusedChaos", 185014)
 	self:Log("SPELL_AURA_REMOVED", "FocusedChaosRemoved", 185014)
 	self:Log("SPELL_AURA_APPLIED", "DemonicHavoc", 183865)
+	self:Log("SPELL_AURA_APPLIED", "HeartOfArgus", 186662) -- Overfiend spawned (phase warning)
 	-- P3
 	self:Log("SPELL_CAST_START", "DemonicFeedback", 187180)
 	self:Log("SPELL_AURA_APPLIED", "TankNetherBanish", 186961)
 	self:Log("SPELL_AURA_REMOVED", "TankNetherBanishRemoved", 186961)
 	self:Log("SPELL_AURA_APPLIED", "VoidStarFixate", 189895)
 	self:Log("SPELL_AURA_REMOVED", "VoidStarFixateRemoved", 189895)
-	self:Log("SPELL_AURA_APPLIED", "NetherBanishApplied", 186952) -- for Twisting Nether tracking
-	self:Log("SPELL_AURA_REMOVED", "NetherBanishRemoved", 186952) -- for Twisting Nether tracking
+	self:Log("SPELL_AURA_APPLIED", "NetherBanishApplied", 186952)
+	self:Log("SPELL_AURA_REMOVED", "NetherBanishRemoved", 186952)
 	self:Log("SPELL_CAST_SUCCESS", "RainOfChaos", 182225)
+	self:Log("SPELL_PERIODIC_DAMAGE", "NetherStormDamage", 187255)
 
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "Phases", "boss1")
 end
@@ -110,6 +114,7 @@ function mod:OnEngage()
 	currentTorment, maxTorment = 0, 0
 	burstCount = 1
 	phase = 1
+	nextPhaseSoon = 88
 	banished = nil
 	feedbackSoon = nil
 
@@ -119,6 +124,7 @@ function mod:OnEngage()
 	self:Bar(183817, 43) -- Shadowfel Burst
 	burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", 33)
 	-- Desecrate initial cast is at 85%
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -134,7 +140,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:CancelTimer(burstTimer)
 
 		phase = 2
-		self:Message("stages", "Neutral", "Long", CL.phase:format(2), false)
+		self:Message("stages", "Neutral", "Long", "70% - " .. CL.phase:format(2), false)
 		self:CDBar(186123, 7) -- Wrought Chaos
 		self:CDBar(184964, 27) -- Shackled Torment
 		self:CDBar(183828, 38) -- Death Brand
@@ -144,12 +150,41 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:StopBar(183828) -- Death Brand
 
 		phase = 3
-		self:Message("stages", "Neutral", "Long", CL.phase:format(3), false)
+		self:Message("stages", "Neutral", "Long", "40% - " .. CL.phase:format(3), false)
 		self:CDBar(186961, 13) -- Nether Banish
 		self:CDBar(186123, 27) -- Wrought Chaos
 		self:CDBar(187180, 35) -- Demonic Feedback
 		self:CDBar(184964, 57.5) -- Shackled Torment
 		feedbackTimer = self:ScheduleTimer("DemonicFeedbackSoon", 24)
+	end
+end
+
+function mod:HeartOfArgus(args)
+	if phase < 2.5 then
+		phase = 2.5
+		self:Message("stages", "Neutral", "Info", CL.incoming:format(CL.adds))
+		-- always warn for Overfiends?
+	end
+end
+
+do
+	-- 3% seems to be about 20 seconds
+	local phaseMessage = {
+		[88] = mod:SpellName(185590), -- 85% Desecrate
+		[73] = CL.phase:format(2), -- 70%
+		[58] = CL.adds, -- 55% Vanguard of the Legion
+		[43] = CL.phase:format(3), -- 40%
+		[28] = mod:SpellName(182225), -- 25% Rain of Chaos
+	}
+	function mod:UNIT_HEALTH_FREQUENT(unit)
+		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		if hp < nextPhaseSoon then
+			self:Message("stages", "Neutral", "Info", CL.soon:format(phaseMessage[nextPhaseSoon]), false)
+			nextPhaseSoon = nextPhaseSoon - 15
+			if nextPhaseSoon < 30 then
+				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
+			end
+		end
 	end
 end
 
@@ -185,7 +220,7 @@ end
 -- Phase 1
 
 function mod:Doomfire(args)
-	self:CDBar(args.spellId, 42) -- seems to be either 42 46 42 or 42 42 49
+	self:CDBar(args.spellId, 42) -- seems to be either 42 46 42 or 42 42 49 depending on Desecrate
 end
 
 function mod:DoomfireFixate(args)
@@ -302,7 +337,9 @@ do
 		end
 
 		currentTorment = currentTorment - 1
-		self:Message(args.spellId, "Neutral", isOnMe and "Info", L.torment_removed:format(maxTorment - currentTorment, maxTorment))
+		if not banished then
+			self:Message(args.spellId, "Neutral", isOnMe and "Info", L.torment_removed:format(maxTorment - currentTorment, maxTorment))
+		end
 		if currentTorment == 0 then
 			maxTorment = 0
 		end
@@ -421,8 +458,22 @@ end
 function mod:NetherBanishRemoved(args)
 	if self:Me(args.destGUID) then
 		banished = nil
+		self:StopBar(189894) -- Void Star
 		if feedbackSoon then
+			self:Message(187180, "Attention", "Info", CL.soon:format(self:SpellName(187180)))
 			self:OpenProximity(187180, 7) -- Demonic Feedback
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:NetherStormDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 2 then
+			prev = t
+			self:Message(args.spellId, "Personal", "Info", CL.underyou:format(args.spellName))
+			self:Flash(args.spellId)
 		end
 	end
 end
@@ -430,6 +481,7 @@ end
 function mod:VoidStarFixate(args)
 	if banished then
 		self:TargetMessage(189894, args.destName, "Personal", "Alarm")
+		self:Bar(189894, 15.8)
 	end
 	if self:Me(args.destGUID) then
 		self:Say(189894)
@@ -458,7 +510,7 @@ function mod:DemonicFeedback(args)
 		self:OpenProximity(187180, 7)
 		self:ScheduleTimer("CloseProximity", 2, 187180)
 	end
-	self:CDBar(args.spellId, 37)
+	self:CDBar(args.spellId, 37) -- Rain of Chaos really messes with timers
 
 	self:CancelTimer(feedbackTimer)
 	feedbackTimer = self:ScheduleTimer("DemonicFeedbackSoon", 28)
