@@ -124,7 +124,7 @@ function mod:OnBossEnable()
 end
 
 local function showProximity()
-	if mod:Ranged() and not self:LFR() then
+	if mod:Ranged() and not mod:LFR() then
 		mod:OpenProximity("proximity", 5)
 	end
 end
