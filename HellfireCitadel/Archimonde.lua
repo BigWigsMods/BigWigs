@@ -234,7 +234,7 @@ end
 
 function mod:AllureOfFlames(args)
 	self:Message(args.spellId, "Urgent", "Alert")
-	self:CDBar(args.spellId, self:Mythic() and 50.5 or 48) -- Min: 47.5/Avg: 49.8/Max: 54.1, show timer for _success on mythic
+	self:CDBar(args.spellId, 48) -- Min: 47.5/Avg: 49.8/Max: 54.1
 end
 
 function mod:DeathBrandCast(args)
