@@ -191,6 +191,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:StopBar(184964) -- Shackled Torment
 		self:StopBar(186123) -- Wrought Chaos
 		self:StopBar(L.overfiend) -- Felborne Overfiend
+		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1") -- Ignore 40%, 25% warnings inside mythic P3 (50%->0%)
 
 		phase = 3
 		self:Message("stages", "Neutral", "Long", CL.phase:format(3), false)
