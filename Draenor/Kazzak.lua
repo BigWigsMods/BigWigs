@@ -8,6 +8,7 @@ if not mod then return end
 mod:RegisterEnableMob(94015)
 mod.otherMenu = 962
 mod.worldBoss = 94015
+--BOSS_KILL#1801#Supreme Lord Kazzak
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -16,26 +17,27 @@ mod.worldBoss = 94015
 function mod:GetOptions()
 	return {
 		187664, -- Fel Breath
-		187466, -- Supreme Doom
+		187471, -- Supreme Doom
 		{187668, "SAY", "PROXIMITY"}, -- Mark of Kazzak
+		187702, -- Twisted Reflection
 	}
 end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FelBreath", 187664)
 	self:Log("SPELL_AURA_REMOVED", "FelBreathRemoved", 187664)
-	self:Log("SPELL_CAST_START", "SupremeDoom", 187466)
+	self:Log("SPELL_AURA_APPLIED", "SupremeDoom", 187471)
 	self:Log("SPELL_AURA_APPLIED", "MarkOfKazzak", 187668)
 	self:Log("SPELL_AURA_REMOVED", "MarkOfKazzakRemoved", 187668)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
-	self:Death("Win", 94015)
+	self:RegisterEvent("RAID_BOSS_EMOTE")
+	self:RegisterEvent("BOSS_KILL")
 end
 
 function mod:OnEngage()
-	
+	self:CDBar(187471, 17) -- Supreme Doom
 end
 
 --------------------------------------------------------------------------------
@@ -44,7 +46,7 @@ end
 
 function mod:FelBreath(args)
 	if self:Tank(args.destName) then
-		self:TargetMessage(args.spellId, args.destName, "Attention", self:Tank() and "Alert")
+		self:TargetMessage(args.spellId, args.destName, "Urgent", self:Tank() and "Alert")
 		self:TargetBar(args.spellId, 30, args.destName)
 	end
 end
@@ -55,8 +57,15 @@ function mod:FelBreathRemoved(args)
 	end
 end
 
-function mod:SupremeDoom(args)
-	self:Message(args.spellId, "Important", "Info", CL.incoming:format(args.spellName))
+do
+	local list = mod:NewTargetList()
+	function mod:SupremeDoom(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Info", nil, nil, self:Healer())
+			self:CDBar(args.spellId, 51)
+		end
+	end
 end
 
 function mod:MarkOfKazzak(args)
@@ -72,6 +81,18 @@ function mod:MarkOfKazzakRemoved(args)
 	if self:Me(args.destGUID) then
 		self:StopBar(args.spellName, args.destName)
 		self:CloseProximity(args.spellId)
+	end
+end
+
+function mod:RAID_BOSS_EMOTE(event, msg)
+	if msg:find("187702", nil, true) then -- hidden cast, has unit event
+		self:Message(187702, "Important", "Long")
+	end
+end
+
+function mod:BOSS_KILL(event, id)
+	if id == 1801 then
+		self:Win()
 	end
 end
 
