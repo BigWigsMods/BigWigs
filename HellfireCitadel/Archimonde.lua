@@ -457,7 +457,7 @@ do
 end
 
 function mod:HeartOfArgus(args)
-	self:Message("overfiend", "Positive", "Alert", CL.spawned:format(L.overfiend), false)
+	self:Message("overfiend", "Positive", "Alert", CL.spawned:format(self:SpellName(L.overfiend)), false)
 	self:Bar("overfiend", 45, L.overfiend, L.overfiend_icon)
 end
 
