@@ -126,6 +126,9 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, text, sender, _, _, target)
 		elseif sender == self:SpellName(-11163) then -- Ancient Harbinger
 			self:Message(-11163, "Neutral", nil, "60% - ".. CL.spawned:format(self:SpellName(-11163)), false)
 			self:Bar(180025, 16, CL.count:format(self:SpellName(180025), 1)) -- Harbinger's Mending
+			if self:LFR() then
+				self:RegisterUnitEvent("UNIT_SPELLCAST_START", "HarbingersMendingLFR", "boss2")
+			end
 		elseif sender == self:SpellName(-11170) then -- Ancient Sovereign
 			self:Message(-11170, "Neutral", nil, "30% - ".. CL.spawned:format(self:SpellName(-11170)), false)
 			self:Bar(180040, 14) -- Sovereign's Ward
@@ -138,6 +141,9 @@ function mod:Deaths(args)
 		self:StopBar(180004) -- Enforcer's Onslaught
 	elseif args.mobId == 90271 then -- Ancient Harbinger
 		self:StopBar(CL.count:format(self:SpellName(180025), mendingCount)) -- Harbinger's Mending
+		if self:LFR() then
+			self:UnregisterUnitEvent("UNIT_SPELLCAST_START", "boss2")
+		end
 	elseif args.mobId == 90272 then -- Ancient Sovereign
 		self:StopBar(180040) -- Sovereign's Ward
 	end
@@ -206,6 +212,14 @@ function mod:HarbingersMending(args)
 	self:Message(180025, "Attention", self:Interrupter() and "Alert", CL.casting:format(CL.count:format(args.spellName, mendingCount)))
 	mendingCount = mendingCount + 1
 	self:Bar(180025, self:Normal() and 16 or 11, CL.count:format(args.spellName, mendingCount))
+end
+
+function mod:HarbingersMendingLFR(unit, spellName, _, _, spellId)
+	if spellId == 180025 then -- On LFR this event is hidden and lacking an icon, even though it's the same id :S
+		self:Message(spellId, "Attention", self:Interrupter() and "Alert", CL.casting:format(CL.count:format(spellName, mendingCount)))
+		mendingCount = mendingCount + 1
+		self:Bar(spellId, 25, CL.count:format(spellName, mendingCount))
+	end
 end
 
 function mod:HarbingersMendingApplied(args)
