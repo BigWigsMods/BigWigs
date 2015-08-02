@@ -250,7 +250,7 @@ do
 
 		list[#list+1] = args.destName
 		if #list == 1 then
-			timer = self:ScheduleTimer(gazeSay, 0.5, self, args.spellName)
+			timer = self:ScheduleTimer(gazeSay, 0.6, self, args.spellName) -- Large delays sometimes
 		elseif timer and #list == 3 then
 			self:CancelTimer(timer)
 			gazeSay(self, args.spellName)
