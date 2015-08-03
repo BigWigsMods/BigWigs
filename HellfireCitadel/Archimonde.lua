@@ -95,7 +95,8 @@ end
 function mod:OnBossEnable()
 	-- P1
 	self:Log("SPELL_AURA_APPLIED", "LightOfTheNaaru", 183963)
-	self:Log("SPELL_CAST_START", "AllureOfFlames", 183254)
+	self:Log("SPELL_CAST_START", "AllureOfFlamesCast", 183254)
+	self:Log("SPELL_CAST_SUCCESS", "AllureOfFlames", 183254)
 	self:Log("SPELL_CAST_START", "DeathBrandCast", 183828)
 	self:Log("SPELL_AURA_APPLIED", "DeathBrand", 183828)
 	self:Log("SPELL_AURA_APPLIED", "ShadowBlast", 183864)
@@ -147,7 +148,7 @@ function mod:OnEngage()
 	feedbackSoon = nil
 	p3Start = 0
 	self:Bar(182826, 6) -- Doomfire
-	self:Bar(183828, 18) -- Death Brand
+	self:Bar(183828, 15.5) -- Death Brand
 	self:Bar(183254, 30) -- Allure of Flames
 	self:Bar(183817, 43) -- Shadowfel Burst
 	burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", 33)
@@ -232,20 +233,24 @@ function mod:LightOfTheNaaru(args)
 	end
 end
 
+function mod:AllureOfFlamesCast(args)
+	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
+	self:CDBar(args.spellId, 48) -- Min: 47.5/Avg: 49.8/Max: 54.1
+end
+
 function mod:AllureOfFlames(args)
 	self:Message(args.spellId, "Urgent", "Alert")
-	self:CDBar(args.spellId, 48) -- Min: 47.5/Avg: 49.8/Max: 54.1
 end
 
 function mod:DeathBrandCast(args)
 	if self:Tank() then
 		self:Message(args.spellId, "Attention", "Warning", CL.casting:format(args.spellName))
 	end
+	self:CDBar(args.spellId, 43)
 end
 
 function mod:DeathBrand(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention")
-	self:CDBar(args.spellId, 43)
 	if self:Tank() and not self:Me(args.destGUID) and not UnitDetailedThreatSituation("player", "boss1") then -- second taunt warning for other tank
 		self:PlaySound(args.spellId, "Warning")
 	end
@@ -376,7 +381,7 @@ do
 
 		currentTorment = currentTorment - 1
 		if not banished then
-			self:Message(args.spellId, "Neutral", isOnMe and "Info", L.torment_removed:format(maxTorment - currentTorment, maxTorment))
+			self:TargetMessage(args.spellId, args.destName, "Neutral", isOnMe and "Info", L.torment_removed:format(maxTorment - currentTorment, maxTorment))
 		end
 		if currentTorment == 0 then
 			maxTorment = 0
