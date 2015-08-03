@@ -139,6 +139,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:StopBar(186333) -- Void Surge
 
 			self:Message("stages", "Neutral", "Info", "35% - ".. CL.phase:format(3), false)
+			-- Void Strike comes soon after (1-3s), then he switches to fel
+			self:CDBar(186407, 6) -- Fel Surge
 		end
 
 	elseif spellId == 187209 then -- Overwhelming Chaos (cast to gain the p4 buff, which just stacks on its own)
@@ -204,11 +206,11 @@ end
 do
 	local prev = 0
 	function mod:Touched(args)
-		if self:Me(args.destGUID) and not self:Tank() then
+		if self:Me(args.destGUID) then
 			local t = GetTime()
 			if t-prev > 8 then -- Fire lasts 8 sec and keeps refreshing touched
 				prev = t
-				self:Message(args.spellId, "Personal", "Long", CL.you:format(args.spellName))
+				self:Message(args.spellId, "Personal", not self:Tank() and "Long", CL.you:format(args.spellName))
 			end
 		end
 	end
