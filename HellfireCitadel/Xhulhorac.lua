@@ -13,7 +13,7 @@ mod.respawnTime = 30
 -- Locals
 --
 
-local phase = 1
+local felAndVoid = nil
 local blackHoleCount = 1
 local mobCollector = {}
 
@@ -89,7 +89,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	phase = 1
+	felAndVoid = nil
 	blackHoleCount = 1
 	wipe(mobCollector)
 	self:CDBar(190223, 8) -- Fel Strike
@@ -109,11 +109,18 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(186500, 31) -- Chains of Fel 31-36
 		self:CDBar(186453, 12) -- Felblaze Flurry
 
-	elseif spellId == 190307 then -- Activate Void Portal
+	elseif spellId == 190307 then -- Activate Void Portal (Phase 2)
 		self:Bar("voidfiend", 14.5, L.voidfiend, L.voidfiend_icon)
-		if self:Mythic() then
+		if not self:Mythic() then
+			self:StopBar(190223) -- Fel Strike
+			self:StopBar(186407) -- Fel Surge
+
+			self:Message("stages", "Neutral", "Info", "65% - ".. CL.phase:format(2), false)
+			self:CDBar(190224, 17) -- Void Strike
+			self:CDBar(186333, 24) -- Void Surge
+		else
+			felAndVoid = true -- both portals up
 			self:Message("stages", "Neutral", "Info", "85% - ".. CL.phase:format(2), false)
-			phase = 3 -- both portals up
 		end
 
 	elseif spellId == 189806 then -- Void Feedback (Omnus Spawned)
@@ -125,6 +132,15 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(186546, 18) -- Black Hole
 		self:CDBar(186783, 6) -- Withering Gaze
 
+	elseif spellId == 189047 then -- Shadowfel Phasing (Phase 3)
+		felAndVoid = true
+		if not self:Mythic() then
+			self:StopBar(190224) -- Void Strike
+			self:StopBar(186333) -- Void Surge
+
+			self:Message("stages", "Neutral", "Info", "35% - ".. CL.phase:format(3), false)
+		end
+
 	elseif spellId == 187209 then -- Overwhelming Chaos (cast to gain the p4 buff, which just stacks on its own)
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
 		self:StopBar(L.imps)
@@ -133,7 +149,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(186407) -- Fel Surge
 		self:StopBar(190224) -- Void Strike
 		self:StopBar(186333) -- Void Surge
-		phase = 4
+
 		self:Message("stages", "Neutral", "Info", "20% - ".. spellName, false)
 		self:Bar(187204, 10) -- Overwhelming Chaos
 	end
@@ -142,14 +158,7 @@ end
 function mod:AkkelionDies(args)
 	self:StopBar(186453) -- Felblaze Flurry
 	self:StopBar(186500) -- Chains of Fel
-	if not self:Mythic() then
-		self:StopBar(190223) -- Fel Strike
-		self:StopBar(186407) -- Fel Surge
-		phase = 2
-		self:Message("stages", "Neutral", "Info", "65% - ".. CL.phase:format(2), false)
-		self:CDBar(190224, 20) -- Void Strike
-		self:CDBar(186333, 28) -- Void Surge
-	else
+	if self:Mythic() then
 		self:Message("stages", "Neutral", "Info", "50% - ".. L.killed:format(args.destName), false)
 		self:CDBar(186500, 30) -- Empowered Chains of Fel
 	end
@@ -158,14 +167,7 @@ end
 function mod:OmnusDies(args)
 	self:StopBar(186783) -- Withering Gaze
 	self:StopBar(186546) -- Black Hole
-	if not self:Mythic() then
-		self:StopBar(190224) -- Void Strike
-		self:StopBar(186333) -- Void Surge
-		phase = 3
-		self:Message("stages", "Neutral", "Info", "35% - ".. CL.phase:format(3), false)
-		-- self:CDBar(190224, 4) -- Void Strike
-		-- self:CDBar(186333, 28) -- Void Surge
-	else
+	if self:Mythic() then
 		self:Message("stages", "Neutral", "Info", "40% - ".. L.killed:format(args.destName), false)
 		self:CDBar(186546, 21) -- Empowered Black Hole
 	end
@@ -202,11 +204,11 @@ end
 do
 	local prev = 0
 	function mod:Touched(args)
-		if self:Me(args.destGUID) then
+		if self:Me(args.destGUID) and not self:Tank() then
 			local t = GetTime()
 			if t-prev > 8 then -- Fire lasts 8 sec and keeps refreshing touched
 				prev = t
-				self:Message(args.spellId, "Personal", not self:Tank() and "Long", CL.you:format(args.spellName))
+				self:Message(args.spellId, "Personal", "Long", CL.you:format(args.spellName))
 			end
 		end
 	end
@@ -224,7 +226,7 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alarm")
-			if phase < 3 then
+			if not felAndVoid then
 				self:CDBar(args.spellId, 30)
 			else -- alternates
 				if args.spellId == 186407 then -- Fel Surge
@@ -250,9 +252,9 @@ end
 
 function mod:FelStrike(args)
 	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
-	if phase == 1 then
+	if not felAndVoid then
 		self:CDBar(args.spellId, 16) -- 15.8
-	elseif phase > 2 then -- alternates
+	else -- alternates
 		self:PlaySound(args.spellId, "Warning")
 		self:CDBar(190224, 8) -- Void Strike
 	end
@@ -260,7 +262,7 @@ end
 
 function mod:VoidStrike(args)
 	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
-	if phase < 3 then
+	if not felAndVoid then
 		self:CDBar(args.spellId, 17) -- 17.1/18.2
 	else -- alternates
 		self:PlaySound(args.spellId, "Warning")
@@ -269,7 +271,7 @@ function mod:VoidStrike(args)
 end
 
 function mod:Striked(args)
-	if phase > 2 and not self:Me(args.destGUID) then
+	if felAndVoid and not self:Me(args.destGUID) then
 		local spellId = args.spellId == 186271 and 190223 or 190224 -- 186271 -> 190223 (Fel), 186292 -> 190224 (Void)
 		self:TargetMessage(spellId, args.destName, "Attention")
 		if self:Tank() then -- don't spam long for non-tanks that enable strike
