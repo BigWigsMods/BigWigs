@@ -319,7 +319,7 @@ do
 			self:ScheduleTimer("TargetMessage", 0.3, 183817, list, "Urgent")
 			self:Bar(183817, burstCount == 2 and 61 or 56)
 			if self:Ranged() then
-				self:OpenProximity(183817, 8, args.destName)
+				self:OpenProximity(183817, 8, args.destName, true)
 				self:ScheduleTimer("CloseProximity", 6, 183817)
 			end
 		end
