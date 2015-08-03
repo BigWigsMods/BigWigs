@@ -470,20 +470,6 @@ function mod:RainOfChaos(args)
 	self:Bar(args.spellId, 62)
 end
 
-function mod:InfernalSpawn(args)
-	if self:Mythic() then
-		local time = 61
-		local p3Duration = GetTime() - p3Start
-		for _, v in ipairs(timers.infernals) do
-			if v > p3Duration + 0.5 then
-				time = v - p3Duration
-				break
-			end
-		end
-		self:Bar(182225, time)
-	end
-end
-
 -- Phase 3 (non mythic)
 
 function mod:TankNetherBanish(args)
@@ -576,6 +562,21 @@ function mod:DemonicFeedback(args)
 end
 
 -- Phase 3 (mythic)
+
+function mod:InfernalSpawn(args)
+	if self:Mythic() then
+		self:Message(182225, "Urgent", "Alert")
+		local time = 61
+		local p3Duration = GetTime() - p3Start
+		for _, v in ipairs(timers.infernals) do
+			if v > p3Duration + 0.5 then
+				time = v - p3Duration
+				break
+			end
+		end
+		self:Bar(182225, time)
+	end
+end
 
 function mod:DarkConduit(args)
 	self:Message(args.spellId, "Positive", "Alert")
