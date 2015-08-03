@@ -25,6 +25,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FelBreath", 187664)
+	self:Log("SPELL_AURA_REFRESH", "FelBreath", 187664)
 	self:Log("SPELL_AURA_REMOVED", "FelBreathRemoved", 187664)
 	self:Log("SPELL_AURA_APPLIED", "SupremeDoom", 187471)
 	self:Log("SPELL_AURA_APPLIED", "MarkOfKazzak", 187668)
