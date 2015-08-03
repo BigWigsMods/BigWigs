@@ -252,7 +252,7 @@ function mod:FelStrike(args)
 	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
 	if phase == 1 then
 		self:CDBar(args.spellId, 16) -- 15.8
-	elseif phase == 3 then -- alternates
+	elseif phase > 2 then -- alternates
 		self:PlaySound(args.spellId, "Warning")
 		self:CDBar(190224, 8) -- Void Strike
 	end
