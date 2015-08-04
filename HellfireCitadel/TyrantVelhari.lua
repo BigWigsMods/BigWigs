@@ -206,7 +206,7 @@ function mod:AuraOfContempt()
 	self:Message("stages", "Neutral", nil, "70% - ".. CL.phase:format(phase), false)
 	self:Bar(180533, 5, CL.count:format(self:SpellName(180533), 1)) -- Tainted Shadows
 	self:Bar(180526, 22) -- Font of Corruption, 20sec timer + 2sec cast
-	if self:Tank() then
+	if self:Tank() and not self:LFR() then
 		self:OpenProximity(180533, 5) -- Tainted Shadows
 	end
 end
@@ -219,9 +219,9 @@ end
 
 function mod:HarbingersMendingLFR(unit, spellName, _, _, spellId)
 	if spellId == 180025 then -- On LFR this event is hidden and lacking an icon, even though it's the same id :S
-		self:Message(spellId, "Attention", self:Interrupter() and "Alert", CL.casting:format(CL.count:format(spellName, mendingCount)))
+		self:Message(spellId, "Attention", self:Interrupter() and "Alert", CL.casting:format(CL.count:format(spellName, mendingCount)), "spell_shadow_shadowmend")
 		mendingCount = mendingCount + 1
-		self:Bar(spellId, 25, CL.count:format(spellName, mendingCount))
+		self:Bar(spellId, 25, CL.count:format(spellName, mendingCount), "spell_shadow_shadowmend")
 	end
 end
 
@@ -329,7 +329,7 @@ end
 -- Stage 3
 
 function mod:AuraOfMalice()
-	if self:Tank() then
+	if self:Tank() and not self:LFR() then
 		self:CloseProximity(180533) -- Tainted Shadows
 	end
 	self:StopBar(CL.count:format(self:SpellName(180533), strikeCount)) -- Tainted Shadows
