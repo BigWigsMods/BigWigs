@@ -319,7 +319,11 @@ do
 			self:ScheduleTimer("TargetMessage", 0.3, 183817, list, "Urgent")
 			self:Bar(183817, burstCount == 2 and 61 or 56)
 			if self:Ranged() then
-				self:OpenProximity(183817, 8, args.destName, true)
+				if self:Me(args.destGUID) then
+					self:OpenProximity(183817, 8, nil, true)
+				else
+					self:OpenProximity(183817, 8, args.destName, true)
+				end
 				self:ScheduleTimer("CloseProximity", 6, 183817)
 			end
 		end
@@ -334,8 +338,9 @@ end
 -- Phase 2
 
 do
-	local list, isOnMe = {}, nil
+	local list, isOnMe, timer = {}, nil, nil
 	local function tormentSay(self, spellId)
+		timer = nil
 		sort(list)
 		for i = 1, #list do
 			local target = list[i]
@@ -370,7 +375,10 @@ do
 		list[#list + 1] = args.destName
 		if #list == 1 then
 			self:CDBar(args.spellId, 32) -- p2 40.1, 36.5.. p2.5 31.6 ?
-			self:ScheduleTimer(tormentSay, 0.3, self, args.spellId)
+			timer = self:ScheduleTimer(tormentSay, 0.4, self, args.spellId)
+		elseif timer and #list == 3 then
+			self:CancelTimer(timer)
+			tormentSay(self, args.spellId)
 		end
 	end
 
@@ -379,7 +387,7 @@ do
 			SetRaidTarget(args.destName, 0)
 		end
 
-		currentTorment = currentTorment - 1
+		currentTorment = currentTorment - 1 -- Compensates for a shackle not being broken before the next 3 arrive (count the current total)
 		if not banished then
 			self:TargetMessage(args.spellId, args.destName, "Neutral", isOnMe and "Info", L.torment_removed:format(maxTorment - currentTorment, maxTorment))
 		end

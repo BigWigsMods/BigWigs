@@ -218,16 +218,17 @@ function mod:RumblingFissures(args)
 end
 
 do
-	local list, isOnMe = {}, nil
-	local function seedSay(self, spellName)
+	local list, isOnMe, timer = {}, nil, nil
+	local function seedSay(self, spellId)
+		timer = nil
 		sort(list)
 		for i = 1, #list do
 			local target = list[i]
 			if target == isOnMe then
 				local seed = L.seed:format(i)
-				self:Say(181508, seed)
-				self:Flash(181508)
-				self:TargetMessage(181508, target, "Positive", "Alarm", seed)
+				self:Say(spellId, seed)
+				self:Flash(spellId)
+				self:TargetMessage(spellId, target, "Positive", "Alarm", seed)
 			end
 			if self:GetOption("custom_off_seed_marker") then
 				SetRaidTarget(target, i)
@@ -235,7 +236,7 @@ do
 			list[i] = self:ColorName(target)
 		end
 		if not isOnMe then
-			self:TargetMessage(181508, list, "Attention")
+			self:TargetMessage(spellId, list, "Attention")
 		else
 			wipe(list)
 		end
@@ -255,7 +256,15 @@ do
 				self:CDBar(181508, 14.5)
 			end
 			self:Bar(181508, 5, 84474, "spell_shadow_seedofdestruction") -- 84474 = "Explosion"
-			self:ScheduleTimer(seedSay, 0.3, self, args.spellName)
+			timer = self:ScheduleTimer(seedSay, 0.4, self, 181508)
+		elseif self:Mythic() then
+			if timer and #list == 5 then
+				self:CancelTimer(timer)
+				seedSay(self, 181508)
+			end
+		elseif timer and #list == 3 then
+			self:CancelTimer(timer)
+			seedSay(self, 181508)
 		end
 	end
 
