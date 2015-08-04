@@ -41,7 +41,7 @@ function mod:GetOptions()
 		-11155, -- Ancient Enforcer
 		180004, -- Enforcer's Onslaught
 		--[[ Stage Two: Contempt ]]--
-		180533, -- Tainted Shadows
+		{180533, "PROXIMITY"}, -- Tainted Shadows
 		{180526, "SAY", "FLASH", "PROXIMITY"}, -- Font of Corruption
 		-11163, -- Ancient Harbinger
 		180025, -- Harbinger's Mending
@@ -204,8 +204,11 @@ function mod:AuraOfContempt()
 	phase = 2
 	strikeCount = 0
 	self:Message("stages", "Neutral", nil, "70% - ".. CL.phase:format(phase), false)
-	self:Bar(180533, 5) -- Tainted Shadows
+	self:Bar(180533, 5, CL.count:format(self:SpellName(180533), 1)) -- Tainted Shadows
 	self:Bar(180526, 22) -- Font of Corruption, 20sec timer + 2sec cast
+	if self:Tank() then
+		self:OpenProximity(180533, 5) -- Tainted Shadows
+	end
 end
 
 function mod:HarbingersMending(args)
@@ -326,6 +329,9 @@ end
 -- Stage 3
 
 function mod:AuraOfMalice()
+	if self:Tank() then
+		self:CloseProximity(180533) -- Tainted Shadows
+	end
 	self:StopBar(CL.count:format(self:SpellName(180533), strikeCount)) -- Tainted Shadows
 	self:StopBar(180526) -- Font of Corruption
 	phase = 3
