@@ -209,7 +209,7 @@ function mod:PhantasmalCorruption(args)
 		self:TargetMessage(181824, args.destName, "Urgent", "Warning", nil, nil, true)
 		if self:Me(args.destGUID) then
 			self:Say(181824)
-			self:OpenProximity(181824, 8) -- XXX verify range (spell says 5 yards)
+			self:OpenProximity(181824, 15) -- Range discovered from LFR testing
 		end
 	end
 	self:CDBar(181824, self:Easy() and 18 or 16)
