@@ -18,6 +18,7 @@ local apocalypseCount = 1
 local dominatorCount = 1
 local prisonCount = 1
 local felburstCount = 1
+local portalTimer = nil
 local isHostile = true -- is Soulbound Construct hostile or friendly
 local inBarrier = false
 local addCount = 1
@@ -97,6 +98,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GiftOfTheManari", 184124)
 	self:Log("SPELL_AURA_REMOVED", "GiftOfTheManariRemoved", 184124)
 	self:Log("SPELL_CAST_START", "ShadowBoltVolley", 182392)
+	self:Log("SPELL_CAST_SUCCESS", "GhastlyFixationSuccess", 182769)
 	self:Log("SPELL_AURA_APPLIED", "GhastlyFixation", 182769)
 	self:Log("SPELL_CAST_START", "FelPrison", 181288)
 	self:Log("SPELL_AURA_APPLIED", "FelPrisonApplied", 183017)
@@ -114,7 +116,8 @@ function mod:OnEngage()
 	felburstCount = 1
 	isHostile = true
 	inBarrier = false
-	ghostGUIDS = {}
+	portalTimer = nil
+	wipe(ghostGUIDS)
 
 	self:Berserk(641)
 	self:CDBar(181288, 48) -- Fel Prison
@@ -225,23 +228,31 @@ end
 
 -- Phase 2
 
-function mod:EjectSoul() -- Phase 2 Start
-	isHostile = false
-	dominatorCount, dominanceCount, apocalypseCount, prisonCount = 1, 1, 1, 1
-	-- Stop P1 bars
-	self:StopBar(180008) -- Reverberating Blow
-	self:StopBar(180221) -- Volatile Fel Orb
-	self:StopBar(182051) -- Felblaze Charge
-	self:StopBar(181288) -- Fel Prison
-	self:StopBar(addFormat:format(addCount)) -- Voracious Soulstalker
-	-- Start P2 bars
-	self:Bar("stages", 7, 180258, "achievement_boss_hellfire_socrethar") -- Construct is Good
-	self:Bar("portals", 140, L.portals, L.portals_icon) -- Portals Move
-	self:DelayedMessage("portals", 140, "Neutral", L.portals_msg, L.portals_icon, "Info")
-	self:Bar("dominator", 24, CL.count:format(self:SpellName(L.dominator), dominatorCount), L.dominator_icon) -- Sargerei Dominator
-	self:CDBar(-11462, 30, nil, "achievement_halloween_ghost_01") -- Haunting Soul
-	self:CDBar(183329, 51.5, CL.count:format(self:SpellName(183329), apocalypseCount)) -- Apocalypse
-	self:Message("stages", "Neutral", "Long", CL.phase:format(2), false)
+do
+	local function portalsMove(self)
+		self:Message("portals", "Neutral", "Info", L.portals_msg, L.portals_icon)
+		self:Bar("portals", 130, L.portals, L.portals_icon) -- Portals Move
+		self:CDBar(-11462, 23, nil, "achievement_halloween_ghost_01") -- Haunting Soul
+		portalTimer = self:ScheduleTimer(portalsMove, 130, self)
+	end
+	function mod:EjectSoul() -- Phase 2 Start
+		isHostile = false
+		dominatorCount, dominanceCount, apocalypseCount, prisonCount = 1, 1, 1, 1
+		-- Stop P1 bars
+		self:StopBar(180008) -- Reverberating Blow
+		self:StopBar(180221) -- Volatile Fel Orb
+		self:StopBar(182051) -- Felblaze Charge
+		self:StopBar(181288) -- Fel Prison
+		self:StopBar(addFormat:format(addCount)) -- Voracious Soulstalker
+		-- Start P2 bars
+		self:Bar("stages", 7, 180258, "achievement_boss_hellfire_socrethar") -- Construct is Good
+		self:Bar("portals", 138, L.portals, L.portals_icon) -- Portals Move
+		portalTimer = self:ScheduleTimer(portalsMove, 138, self)
+		self:Bar("dominator", 24, CL.count:format(self:SpellName(L.dominator), dominatorCount), L.dominator_icon) -- Sargerei Dominator
+		self:CDBar(-11462, 30, nil, "achievement_halloween_ghost_01") -- Haunting Soul
+		self:CDBar(183329, 51.5, CL.count:format(self:SpellName(183329), apocalypseCount)) -- Apocalypse
+		self:Message("stages", "Neutral", "Long", CL.phase:format(2), false)
+	end
 end
 
 function mod:FelBarrier()
@@ -290,11 +301,21 @@ do
 	end
 end
 
-function mod:GhastlyFixation(args)
-	if args.sourceGUID and not ghostGUIDS[args.sourceGUID] then
-		ghostGUIDS[args.sourceGUID] = true
-		self:CDBar(-11462, 30, nil, "achievement_halloween_ghost_01")
+do
+	local prev = 0
+	function mod:GhastlyFixationSuccess(args) -- Workaround the lack of a spawn event
+		local t = GetTime()
+		if t-prev > 5 and args.sourceGUID and not ghostGUIDS[args.sourceGUID] then
+			prev = t
+			ghostGUIDS[args.sourceGUID] = true
+			self:CDBar(-11462, 30, nil, "achievement_halloween_ghost_01")
+		elseif args.sourceGUID and not ghostGUIDS[args.sourceGUID] then -- Don't spam restart the bar
+			ghostGUIDS[args.sourceGUID] = true
+		end
 	end
+end
+
+function mod:GhastlyFixation(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
 		self:Flash(args.spellId)
@@ -314,18 +335,18 @@ end
 function mod:IncompleteBindingRemoved(args) -- Phase 2 End
 	isHostile = true
 	-- Stop P2 bars
-	self:StopBar(L.dominator) -- Sargerei Dominator
+	self:StopBar(CL.count:format(self:SpellName(L.dominator), dominatorCount)) -- Sargerei Dominator
 	self:StopBar(L.portals) -- Portals Move
-	self:CancelDelayedMessage(L.portals_msg)
+	self:CancelTimer(portalTimer)
 	self:StopBar(-11462) -- Haunting Soul
-	self:StopBar(183329) -- Apocalypse
+	self:StopBar(CL.count:format(self:SpellName(183329), apocalypseCount)) -- Apocalypse
 	-- Start P1 bars
 	self:Message("stages", "Neutral", "Long", CL.phase:format(1), false)
 	self:CDBar(181288, 46) -- Fel Prison
 	self:CDBar(180221, 8) -- Volatile Fel Orb
 	self:CDBar(182051, 26) -- Felblaze Charge
-	self:CDBar(188693, 30, CL.count:format(self:SpellName(188693), felburstCount)) -- Apocalyptic Felburst, XXX no idea if the timer is correct
 	if self:Mythic() then
+		self:CDBar(188693, 30, CL.count:format(self:SpellName(188693), felburstCount)) -- Apocalyptic Felburst, XXX no idea if the timer is correct
 		self:CDBar(-11778, 16, addFormat:format(addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
 	end
 end
