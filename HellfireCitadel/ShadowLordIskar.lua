@@ -110,7 +110,7 @@ function mod:OnEngage()
 		self:CDBar(185345, 9.5) -- Shadow Riposte
 	end
 	-- normal modifier 1.25 for all CDs?
-	self:Bar(182200, self:Easy() and 6.5 or 5.5) -- Fel Chakram
+	self:CDBar(182200, self:Easy() and 6.3 or 5.5) -- Fel Chakram
 	self:CDBar(181956, self:Easy() and 21 or 17) -- Phantasmal Winds
 	self:CDBar(182323, self:Easy() and 34 or 25) -- Phantasmal Wounds
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
@@ -212,7 +212,7 @@ function mod:PhantasmalCorruption(args)
 			self:OpenProximity(181824, 8) -- XXX verify range (spell says 5 yards)
 		end
 	end
-	self:CDBar(181824, self:Easy() and 19.5 or 16)
+	self:CDBar(181824, self:Easy() and 18 or 16)
 end
 
 function mod:PhantasmalCorruptionRemoved(args)
@@ -239,7 +239,7 @@ end
 
 function mod:FelConduit(args)
 	self:Message(181827, "Urgent", "Alert")
-	self:Bar(181827, self:Easy() and 19.3 or 15.9)
+	self:CDBar(181827, self:Easy() and 19.3 or 15.9)
 end
 
 function mod:RAID_BOSS_WHISPER(event, msg)
@@ -312,12 +312,12 @@ function mod:Stage2() -- Shadow Escape
 	self:ScheduleTimer("Stage1", self:Easy() and 50 or 40) -- event for when Iskar is attackable again?
 	self:Bar("stages", self:Easy() and 50 or 40, CL.phase:format(1), "achievement_boss_hellfire_felarakkoa")
 	self:Bar(181912, 20) -- Focused Blast
-	self:CDBar(181753, self:Easy() and 21 or 15.5) -- Fel Bomb, 15.5-17.4
+	self:CDBar(181753, self:Easy() and 18.6 or 15.5) -- Fel Bomb, 15.5-17.4
 	if shadowEscapeCount > 1 then -- Fel Warden
-		self:Bar(181827, self:Easy() and 7 or 6) -- Fel Conduit
+		self:CDBar(181827, self:Easy() and 7 or 6) -- Fel Conduit
 	end
 	if shadowEscapeCount > 2 then -- Fel Raven
-		self:Bar(181824, self:Easy() and 27 or 22) -- Phantasmal Corruption
+		self:CDBar(181824, self:Easy() and 26 or 22) -- Phantasmal Corruption
 	end
 	if self:Mythic() then
 		self:Bar(185510, 21) -- Dark Bindings
