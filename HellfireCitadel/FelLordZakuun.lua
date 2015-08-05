@@ -257,12 +257,7 @@ do
 			end
 			self:Bar(181508, 5, 84474, "spell_shadow_seedofdestruction") -- 84474 = "Explosion"
 			timer = self:ScheduleTimer(seedSay, 0.4, self, 181508)
-		elseif self:Mythic() then
-			if timer and #list == 5 then
-				self:CancelTimer(timer)
-				seedSay(self, 181508)
-			end
-		elseif timer and #list == 3 then
+		elseif self:Mythic() and timer and #list == 5 then
 			self:CancelTimer(timer)
 			seedSay(self, 181508)
 		end
