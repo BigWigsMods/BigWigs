@@ -24,7 +24,7 @@ local tankList = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.seed = "Seed (%d)"
+	L.seed = "Seed"
 
 	L.custom_off_seed_marker = "Seed of Destruction marker"
 	L.custom_off_seed_marker_desc = "Mark the Seed of Destruction targets with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
@@ -219,16 +219,17 @@ end
 
 do
 	local list, isOnMe, timer = {}, nil, nil
+	local seed_msg = ("%s (%%d\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%%d.blp:0\124t)"):format(L.seed)
+	local seed_say = ("%s (%%d{rt%%d})"):format(L.seed)
 	local function seedSay(self, spellId)
 		timer = nil
 		sort(list)
 		for i = 1, #list do
 			local target = list[i]
 			if target == isOnMe then
-				local seed = L.seed:format(i)
-				self:Say(spellId, seed)
+				self:Say(spellId, seed_say:format(i, i))
 				self:Flash(spellId)
-				self:TargetMessage(spellId, target, "Positive", "Alarm", seed)
+				self:TargetMessage(spellId, target, "Positive", "Alarm", seed_msg:format(i, i))
 			end
 			if self:GetOption("custom_off_seed_marker") then
 				SetRaidTarget(target, i)
@@ -257,7 +258,7 @@ do
 			end
 			self:Bar(181508, 5, 84474, "spell_shadow_seedofdestruction") -- 84474 = "Explosion"
 			timer = self:ScheduleTimer(seedSay, 0.4, self, 181508)
-		elseif self:Mythic() and timer and #list == 5 then
+		elseif self:Mythic() and timer and #list == 5 then -- Mythic only, seeds scale with players
 			self:CancelTimer(timer)
 			seedSay(self, 181508)
 		end
