@@ -346,7 +346,7 @@ function mod:IncompleteBindingRemoved(args) -- Phase 2 End
 	self:CDBar(180221, 8) -- Volatile Fel Orb
 	self:CDBar(182051, 26) -- Felblaze Charge
 	if self:Mythic() then
-		self:CDBar(188693, 30, CL.count:format(self:SpellName(188693), felburstCount)) -- Apocalyptic Felburst, XXX no idea if the timer is correct
+		self:CDBar(188693, 33, CL.count:format(self:SpellName(188693), felburstCount)) -- Apocalyptic Felburst
 		self:CDBar(-11778, 16, addFormat:format(addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
 	end
 end

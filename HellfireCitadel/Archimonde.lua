@@ -131,8 +131,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "InfernalSpawn", 187108)
 	self:Log("SPELL_CAST_SUCCESS", "TwistedDarkness", 190821)
 	self:Log("SPELL_CAST_SUCCESS", "SeethingCorruption", 190506)
-	self:Log("SPELL_CAST_SUCCESS", "SourceOfChaosSummon", 190686)
-	self:Log("SPELL_CAST_SUCCESS", "MarkOfTheLegion",188514)
+	self:Log("SPELL_CAST_SUCCESS", "SummonSourceOfChaos", 190686)
+	self:Log("SPELL_CAST_SUCCESS", "MarkOfTheLegion", 188514)
 	self:Log("SPELL_CAST_SUCCESS", "DarkConduit", 190394)
 	-- General
 	self:Log("SPELL_PERIODIC_DAMAGE", "NetherStormDamage", 187255)
@@ -617,7 +617,7 @@ function mod:TwistedDarkness(args)
 	self:Bar(args.spellId, time)
 end
 
-function mod:SourceOfChaosSummon(args)
+function mod:SummonSourceOfChaos(args)
 	self:Message(190703, "Attention", "Alarm")
 	local time = 58
 	local p3Duration = GetTime() - p3Start
