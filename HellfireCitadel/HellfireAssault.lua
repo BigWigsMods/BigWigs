@@ -19,20 +19,20 @@ mod.respawnTime = 36 -- 30s respawn & 6s activation
 local engageTime = 0
 
 local vehicleData = {
-	-- normal / heroic
+	-- normal / heroic, the data is from heroic, someone might need to do normal
 	[1] = { -- left
-		{169.3, "artillery"},
+		{137.6, "artillery"},
 	},
 	[2] = { -- center
-		{38.7, "flamebelcher"},
-		{110.0, "crusher"},
-		{233.7, "demolisher"},
-		{285.2, "flamebelcher"},
-		{395.5, "demolisher"},
-		{416.8, "flamebelcher"},
+		{38.0, "flamebelcher"},
+		{109.2, "crusher"},
+		{198.6, "demolisher"},
+		{234.9, "flamebelcher"},
+		{315.8, "demolisher"},
+		{355.2, "flamebelcher"},
 	},
 	[3] = { -- right
-		{350.0, "artillery"},
+		{296.2, "artillery"},
 	},
 }
 
@@ -50,63 +50,57 @@ local vehicleDataLFR = {
 
 local vehicleDataMythic = { -- SPELL_AURA_APPLIED 180927
 	[1] = { -- left
-		{56.4, "artillery"},
-		{73.5, "demolisher"},
-		{128.3, "flamebelcher"},
-		{173.0, "artillery"},
-		{302.9, "flamebelcher"},
-		{353.0, "demolisher"},
+		{56.0, "artillery"},
+		{73.7, "demolisher"},
+		{125.2, "flamebelcher"},
+		{161.4, "artillery"},
+		{276.9, "flamebelcher"},
+		{354.3, "demolisher"},
+		{388.9, "flamebelcher"},
+		{427.9, "demolisher"},
 	},
 	[2] = { -- center
-		{185.4, "transporter"},
-		{196.2, "crusher"},
-		{235.6, "demolisher"},
+		{173.5, "transporter"},
+		{180.5, "crusher"},
+		{204.2, "demolisher"},
 	},
 	[3] = { -- right
-		{53.9, "artillery"},
-		{80.8, "flamebelcher"},
-		{135.2, "demolisher"},
-		{180.8, "flamebelcher"},
-		{306.1, "artillery"},
+		{53.8, "artillery"},
+		{81.3, "flamebelcher"},
+		{132.2, "demolisher"},
+		{166.3, "flamebelcher"},
+		{277.6, "artillery"},
+		{361.2, "transporter"},
+		{395.9, "demolisher"},
+		{433.6, "flamebelcher"},
 	},
-	--	{361.1, "transporter"}, captured spawn event, but position unknown
 }
 
 local addData = {
-	-- normal / heroic
+	-- normal / heroic, from heroic, normal may be less. some spawns are random, so no splitting to sides
 	[1] = { -- left
-		{ 67, "adds"},
-		{ 76, "adds"},
-		{108, "adds"},
-		{119, "berserker"},
-		{140, "adds"},
-		{178, "berserker"},
-		{231, "berserker"},
-		{257, "adds"},
-		{267, "adds"},
-		{295, "adds"},
-		{399, "berserker"},
+
 	},
 	[2] = { -- center
 		{ 18, "dragoons"},
-		{ 30, "berserker"},
-		{ 82, "berserker"},
-		{104, "berserker"},
-		{225, "adds"}, -- earlier?
-		{367, "adds"},
-		{399, "adds"},
-	},
-	[3] = { -- right
 		{ 35, "adds"},
 		{ 44, "adds"},
-		{ 73, "adds"},
-		{142, "berserker"},
-		{153, "dragoons"},
-		{180, "adds"},
-		{295, "berserker"},
-		{304, "adds"},
-		{329, "dragoons"},
-		{367, "adds"},
+		{ 67, "adds"},
+		{ 99, "adds"},
+		{127, "adds"},
+		{139, "adds"},
+		{156, "adds"},
+		{182, "adds"},
+		{221, "adds"},
+		{233, "adds"},
+		{254, "adds"},
+		{281, "adds"},
+		{303, "adds"},
+		{341, "adds"},
+		{369, "adds"},
+	},
+	[3] = { -- right
+
 	},
 }
 
@@ -124,27 +118,29 @@ local addDataLFR = {
 
 local addDataMythic = {
 	[1] = { -- left
-		{ 19, "dragoons"}, -- dragoons
-		{ 35, "adds"}, -- 1 felcaster, 1 engineer, dragoons
 		{ 84, "adds"}, -- 2 felcaster, 1 berserker
-		{145, "adds"}, -- 2 engineers, 1 berserker
-		{268, "adds"}, -- 1 felcaster, 1 engineer, dragoons
-		{286, "adds"}, -- 1 felcaster, dragoons
-		{332, "adds"}, -- 2 felcaster, 1 berserker
+		{141, "adds"}, -- 2 engineers, 1 berserker
+		{364, "adds"}, -- 2 felcaster, dragoons
+		{403, "adds"}, -- 1 berserker, dragoons
+		{441, "adds"}, -- 1 berserker, 2 engineers
 	},
 	[2] = { -- center
+		{ 19, "dragoons"}, -- dragoons
 		{ 30, "berserker"}, -- 1 berserker
-		{195, "urogg"}, -- urogg, dragoons from transporter
-		{245, "grute"}, -- grute, 2 felcaster
-		{291, "berserker"}, -- 1 berserker
+		{ 34, "adds"}, -- 1 felcaster, 1 engineer, dragoons
+		{ 45, "adds"}, -- 2 felcaster
+		{195, "urogg"}, -- urogg, dragoons from transporter, felcasters and everything everywhere
+		{215, "grute"}, -- grute, 2 felcaster, dragoons
+		{254, "dragoons"}, -- dragoons
+		{261, "adds"}, -- 2 felcaster,  berserker
 	},
 	[3] = { -- right
-		{ 45, "adds"}, -- 2 felcaster
-		{ 96, "adds"}, -- 1 berserker, dragoons
-		{145, "adds"}, -- 1 berserker, 2 engineers
-		{258, "dragoons"}, -- dragoons
-		{301, "adds"}, -- 2 felcaster
-		{332, "adds"}, -- 1 felcaster, 1 berserker, 1 engineer, dragoons
+		{ 92, "adds"}, -- 1 berserker, dragoons
+		{141, "adds"}, -- 1 berserker, 2 engineers
+		{332, "adds"}, -- 1 felcaster, 1 engineer, dragoons
+		{364, "adds"}, -- 1 berserker
+		{403, "adds"}, -- 1 berserker, 2 felcaster
+		{441, "adds"}, -- 1 berserker, 2 felcaster
 	},
 }
 
