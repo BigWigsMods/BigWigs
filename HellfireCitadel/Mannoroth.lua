@@ -94,7 +94,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "P1PortalClosed", 185147, 185175, 182212) -- Doom Lords, Imps, Infernals
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
-	self:Death("Deaths", 91241) -- Doom Lord
+	self:Death("DoomLordDies", 91241) -- Doom Lord
 end
 
 function mod:OnEngage()
@@ -385,8 +385,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	end
 end
 
-function mod:Deaths(args)
-	if args.mobId == 91241 then -- Doom Lord
-		self:StopBar(181099) -- Mark of Doom
-	end
+function mod:DoomLordDies()
+	self:StopBar(181099) -- Mark of Doom
 end
+
