@@ -28,6 +28,7 @@ local timers = {
 	["chaos"] = {51,109,185,263},
 	["twisted"] = {76.5,154.5,196.5,236.5,308.5},
 }
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -46,6 +47,15 @@ if L then
 	L.custom_off_torment_marker = "Shackled Torment marker"
 	L.custom_off_torment_marker_desc = "Mark the Shackled Torment targets with {rt1}{rt2}{rt3}, requires promoted or leader."
 	L.custom_off_torment_marker_icon = 1
+
+	L.markofthelegion_self = "Mark of the Legion on you"
+	L.markofthelegion_self_desc = "Special countdown when Mark of the Legion is on you."
+	L.markofthelegion_self_icon = "spell_warlock_demonbolt"
+	L.markofthelegion_self_bar = "You explode!"
+
+	L.custom_off_legion_marker = "Mark of the Legion marker"
+	L.custom_off_legion_marker_desc = "Mark the Mark of the Legion targets with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader."
+	L.custom_off_legion_marker_icon = 1
 end
 L = mod:GetLocale()
 
@@ -74,7 +84,9 @@ function mod:GetOptions()
 		182225, -- Rain of Chaos
 		-- P3 (mythic)
 		190394, -- Dark Conduit
-		188514, -- Mark of the Legion
+		{187050, "SAY", "FLASH", "PROXIMITY"}, -- Mark of the Legion
+		{"markofthelegion_self", "SAY", "COUNTDOWN"},
+		"custom_off_legion_marker",
 		190703, -- Source Of Chaos
 		190506, -- Seething Corruption
 		190821, -- Twisted Darkness
@@ -95,6 +107,7 @@ end
 function mod:OnBossEnable()
 	-- P1
 	self:Log("SPELL_AURA_APPLIED", "LightOfTheNaaru", 183963)
+	self:Log("SPELL_AURA_REFRESH", "LightOfTheNaaru", 183963)
 	self:Log("SPELL_CAST_START", "AllureOfFlamesCast", 183254)
 	self:Log("SPELL_CAST_SUCCESS", "AllureOfFlames", 183254)
 	self:Log("SPELL_CAST_START", "DeathBrandCast", 183828)
@@ -132,7 +145,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "TwistedDarkness", 190821)
 	self:Log("SPELL_CAST_SUCCESS", "SeethingCorruption", 190506)
 	self:Log("SPELL_CAST_SUCCESS", "SummonSourceOfChaos", 190686)
-	self:Log("SPELL_CAST_SUCCESS", "MarkOfTheLegion", 188514)
+	self:Log("SPELL_CAST_SUCCESS", "MarkOfTheLegionCast", 188514)
+	self:Log("SPELL_AURA_APPLIED", "MarkOfTheLegion", 187050)
 	self:Log("SPELL_CAST_SUCCESS", "DarkConduit", 190394)
 	-- General
 	self:Log("SPELL_PERIODIC_DAMAGE", "NetherStormDamage", 187255)
@@ -227,14 +241,19 @@ do
 	end
 end
 
-function mod:LightOfTheNaaru(args)
-	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", self:Tank() and "Info")
+do
+	local prev = 0
+	function mod:LightOfTheNaaru(args)
+		local t = GetTime()
+		if t-prev > 5 and self:Me(args.destGUID) then
+			prev = t
+			self:TargetMessage(args.spellId, args.destName, "Personal", self:Tank() and "Info")
+		end
 	end
 end
 
 function mod:AllureOfFlamesCast(args)
-	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
+	self:Message(args.spellId, "Urgent", nil, CL.incoming:format(args.spellName))
 	self:CDBar(args.spellId, 48) -- Min: 47.5/Avg: 49.8/Max: 54.1
 end
 
@@ -485,22 +504,41 @@ end
 
 -- Phase 3 (non mythic)
 
-function mod:TankNetherBanish(args)
-	self:CDBar(args.spellId, 62)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
-	self:TargetBar(args.spellId, 7, args.destName)
-	self:PrimaryIcon(args.spellId, args.destName)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:OpenProximity(args.spellId, 8, nil, true)
+do
+	local timeLeft, countTimer = 7, nil
+	local function countdown(self, spellId)
+		timeLeft = timeLeft - 1
+		if timeLeft < 4 then
+			self:Say(spellId, timeLeft, true)
+			if timeLeft < 2 then
+				self:CancelTimer(countTimer)
+				countTimer = nil
+			end
+		end
 	end
-end
 
-function mod:TankNetherBanishRemoved(args)
-	self:StopBar(args.spellName, args.destName)
-	self:PrimaryIcon(args.spellId)
-	if self:Me(args.destGUID) then
-		self:CloseProximity(args.spellId)
+	function mod:TankNetherBanish(args)
+		self:CDBar(args.spellId, 62)
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
+		self:TargetBar(args.spellId, 7, args.destName)
+		self:PrimaryIcon(args.spellId, args.destName)
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+			self:OpenProximity(args.spellId, 8, nil, true)
+
+			timeLeft = 7
+			if countTimer then self:CancelTimer(countTimer) end
+			countTimer = self:ScheduleRepeatingTimer(countdown, 1, self, args.spellId)
+		end
+	end
+
+	function mod:TankNetherBanishRemoved(args)
+		self:StopBar(args.spellName, args.destName)
+		self:PrimaryIcon(args.spellId)
+		if self:Me(args.destGUID) then
+			if countTimer then self:CancelTimer(countTimer) end
+			self:CloseProximity(args.spellId)
+		end
 	end
 end
 
@@ -644,8 +682,7 @@ function mod:SeethingCorruption(args)
 	self:Bar(args.spellId, 12, CL.cast:format(args.spellName))
 end
 
-function mod:MarkOfTheLegion(args)
-	self:Message(args.spellId, "Urgent", "Alert")
+function mod:MarkOfTheLegionCast()
 	local time = 60
 	local p3Duration = GetTime() - p3Start
 	for _,v in ipairs(timers.marks) do
@@ -654,6 +691,87 @@ function mod:MarkOfTheLegion(args)
 			break
 		end
 	end
-	self:Bar(args.spellId, time)
+	self:Bar(187050, time)
+end
+
+do
+	local list, isOnMe, timer = {}, nil, nil
+	local function legionSay(self, spellId)
+		timer = nil
+		--sort(list) -- APPLIED should be in debuff remaining order, manually sort by debuff remaining if any issues show up
+		if not isOnMe then
+			self:OpenProximity(spellId, 10, list, true)
+		end
+		for i = 1, #list do
+			local target = list[i]
+			if target == isOnMe then
+				self:Say(spellId, L.count_rticon:format(self:SpellName(187553), i, i)) -- 28836 = "Mark"
+				self:Flash(spellId)
+				self:OpenProximity(spellId, 10, nil, true)
+				self:TargetMessage(spellId, target, "Personal", "Alarm", L.count_icon:format(self:SpellName(187553), i, i)) -- 28836 = "Mark"
+			end
+			if self:GetOption("custom_off_legion_marker") then
+				SetRaidTarget(target, i)
+			end
+			list[i] = self:ColorName(target)
+		end
+		if not isOnMe then
+			self:TargetMessage(spellId, list, "Attention")
+		else
+			wipe(list)
+		end
+	end
+
+	local timeLeft, countTimer = 5, nil
+	local function countdown(self)
+		timeLeft = timeLeft - 1
+		if timeLeft < 4 then
+			self:Say("markofthelegion_self", timeLeft, true)
+			if timeLeft < 2 then
+				self:CancelTimer(countTimer)
+				countTimer = nil
+			end
+		end
+	end
+
+	local function startCountdown(self)
+		if countTimer then self:CancelTimer(countTimer) end
+		countTimer = self:ScheduleRepeatingTimer(countdown, 1, self)
+	end
+
+	function mod:MarkOfTheLegion(args)
+		if self:Me(args.destGUID) then
+			isOnMe = args.destName
+			timeLeft = 5
+			local t = GetTime()
+			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+			if expires and expires > 0 then
+				timeLeft = expires - t
+			end
+			self:Bar("markofthelegion_self", timeLeft, L.markofthelegion_self_bar, args.spellId)
+			local flr = floor(timeLeft)
+			self:ScheduleTimer(startCountdown, timeLeft-flr, self)
+			timeLeft = flr
+		end
+
+		list[#list + 1] = args.destName
+		if #list == 1 then
+			timer = self:ScheduleTimer(legionSay, 0.4, self, args.spellId)
+		elseif timer and #list == 4 then
+			self:CancelTimer(timer)
+			legionSay(self, args.spellId)
+		end
+	end
+
+	function mod:MarkOfTheLegionCastRemoved(args)
+		if self:GetOption("custom_off_legion_marker") then
+			SetRaidTarget(args.destName, 0)
+		end
+
+		if not isOnMe or (isOnMe and self:Me(args.destGUID)) then
+			if countTimer then self:CancelTimer(countTimer) end
+			self:CloseProximity(args.spellId) -- Just close after first expiry if not on you
+		end
+	end
 end
 

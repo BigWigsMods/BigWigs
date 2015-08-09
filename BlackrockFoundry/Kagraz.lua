@@ -185,10 +185,10 @@ do
 		timeLeft = timeLeft - 1
 		if timeLeft < 5 then
 			self:Say("molten_torrent_self", timeLeft, true)
-		end
-		if timeLeft < 2 then
-			self:CancelTimer(timer)
-			timer = nil
+			if timeLeft < 2 then
+				self:CancelTimer(timer)
+				timer = nil
+			end
 		end
 	end
 	function mod:MoltenTorrentApplied(args)

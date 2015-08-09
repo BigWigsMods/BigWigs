@@ -219,17 +219,15 @@ end
 
 do
 	local list, isOnMe, timer = {}, nil, nil
-	local seed_msg = ("%s (%%d\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%%d.blp:0\124t)"):format(L.seed)
-	local seed_say = ("%s (%%d{rt%%d})"):format(L.seed)
 	local function seedSay(self, spellId)
 		timer = nil
 		sort(list)
 		for i = 1, #list do
 			local target = list[i]
 			if target == isOnMe then
-				self:Say(spellId, seed_say:format(i, i))
+				self:Say(spellId, L.count_rticon:format(L.seed, i, i))
 				self:Flash(spellId)
-				self:TargetMessage(spellId, target, "Positive", "Alarm", seed_msg:format(i, i))
+				self:TargetMessage(spellId, target, "Positive", "Alarm", L.count_icon:format(L.seed, i, i))
 			end
 			if self:GetOption("custom_off_seed_marker") then
 				SetRaidTarget(target, i)
