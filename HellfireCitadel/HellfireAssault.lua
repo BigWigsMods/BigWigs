@@ -9,7 +9,7 @@
 
 local mod, CL = BigWigs:NewBoss("Hellfire Assault", 1026, 1426)
 if not mod then return end
-mod:RegisterEnableMob(93023, 90019, 90018) -- Siegemaster Mar'tak, Reinforced Hellfire Door, Hellfire Cannon
+mod:RegisterEnableMob(93023, 90019) -- Siegemaster Mar'tak, Reinforced Hellfire Door
 mod.engageId = 1778
 mod.respawnTime = 36 -- 30s respawn & 6s activation
 
