@@ -35,6 +35,7 @@ function mod:GetOptions()
 	return {
 		--[[ Kilrogg Deadeye ]]--
 		{188929, "FLASH", "SAY"}, -- Heart Seeker
+		188852, -- Blood Splatter
 		182428, -- Vision of Death
 		180224, -- Death Throes
 		{180199, "TANK"}, -- Shred Armor
@@ -77,6 +78,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FelBlaze", 180618)
 
 	self:Log("SPELL_CAST_START", "CinderBreath", 180033)
+
+	self:Log("SPELL_AURA_APPLIED", "BloodSplatterDamage", 188852)
+	self:Log("SPELL_PERIODIC_DAMAGE", "BloodSplatterDamage", 188852)
+	self:Log("SPELL_PERIODIC_MISSED", "BloodSplatterDamage", 188852)
 end
 
 function mod:OnEngage()
@@ -143,6 +148,17 @@ do
 			self:TargetBar(args.spellId, 5, args.destName)
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:BloodSplatterDamage(args)
+		local t = GetTime()
+		if t-prev > 1.5 and self:Me(args.destGUID) then
+			prev = t
+			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end
