@@ -11,6 +11,12 @@ mod.worldBoss = 83746
 --BOSS_KILL#1755#Rukhmar, Sun-God of the Arakkoa
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local fixateOnMe = nil
+
+--------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -42,20 +48,33 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SolarBreath", 167679)
 	self:Log("SPELL_AURA_APPLIED", "LooseQuills", 167647)
 	self:Log("SPELL_AURA_REMOVED", "LooseQuillsOver", 167647)
+	self:Log("SPELL_AURA_APPLIED", "Fixate", 167757)
+	self:Log("SPELL_AURA_REMOVED", "FixateOver", 167757)
 
-	self:RegisterEvent("RAID_BOSS_WHISPER")
+	self:RegisterEvent("BOSS_KILL")
+end
 
-	self:Death("Win", 83746)
+function mod:OnEngage()
+	fixateOnMe = nil
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:RAID_BOSS_WHISPER()
-	-- RAID_BOSS_WHISPER_SYNC#|TInterface\\Icons\\ability_fixated_state_red:20|tA Phoenix has |cFFFF0000fixated|r on you! If it reaches you it will |cFFFF0000|Hspell:167630|h[Explode]|h|r!
-	self:Message(167757, "Personal", "Alarm", CL.you:format(self:SpellName(167757)))
-	self:Flash(167757)
+function mod:Fixate(args)
+	if self:Me(args.destGUID) and not fixateOnMe then -- Multiple debuffs, warn for the first.
+		fixateOnMe = true
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		self:Flash(args.spellId)
+	end
+end
+
+function mod:FixateOver(args)
+	if self:Me(args.destGUID) and not UnitDebuff("player", args.spellName) then
+		fixateOnMe = nil
+		self:Message(args.spellId, "Personal", "Alarm", CL.over:format(args.spellName))
+	end
 end
 
 function mod:PiercedArmor(args)
@@ -75,5 +94,11 @@ end
 
 function mod:LooseQuillsOver(args)
 	self:Message(args.spellId, "Attention", nil, CL.over:format(args.spellName))
+end
+
+function mod:BOSS_KILL(event, id)
+	if id == 1755 then
+		self:Win()
+	end
 end
 
