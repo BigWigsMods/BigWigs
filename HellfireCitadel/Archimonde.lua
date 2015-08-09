@@ -338,12 +338,14 @@ do
 			self:ScheduleTimer("TargetMessage", 0.3, 183817, list, "Urgent")
 			self:Bar(183817, burstCount == 2 and 61 or 56)
 			if self:Ranged() then
-				if self:Me(args.destGUID) then
-					self:OpenProximity(183817, 8, nil, true)
-				else
-					self:OpenProximity(183817, 8, args.destName, true)
-				end
 				self:ScheduleTimer("CloseProximity", 6, 183817)
+			end
+		end
+		if self:Ranged() then
+			if self:Me(args.destGUID) then
+				self:OpenProximity(183817, 8, nil, true)
+			elseif not UnitDebuff("player", args.spellName) then
+				self:OpenProximity(183817, 8, list, true)
 			end
 		end
 	end
