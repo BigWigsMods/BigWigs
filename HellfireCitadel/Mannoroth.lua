@@ -93,6 +93,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "WrathOfGuldan", 186362)
 	self:Log("SPELL_AURA_REMOVED", "P1PortalClosed", 185147, 185175, 182212) -- Doom Lords, Imps, Infernals
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+
+	self:Death("Deaths", 91241) -- Doom Lord
 end
 
 function mod:OnEngage()
@@ -145,6 +147,7 @@ do
 	function mod:MarkOfDoomCast(args)
 		wipe(list)
 		self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
+		self:CDBar(args.spellId, 30)
 	end
 
 	function mod:MarkOfDoom(args)
@@ -382,3 +385,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	end
 end
 
+function mod:Deaths(args)
+	if args.mobId == 91241 then -- Doom Lord
+		self:StopBar(181099) -- Mark of Doom
+	end
+end
