@@ -212,7 +212,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:Message("stages", "Neutral", "Long", CL.phase:format(3), false)
 		p3Start = GetTime()
 		self:Bar(190394, 9.5) -- Dark Conduit
-		self:Bar(188514, 21.5) -- Mark of the Legion
+		self:Bar(187050, 21.5) -- Mark of the Legion
 		self:Bar(182225, 35) -- Rain of Chaos
 		self:Bar(190703, 53) -- Source of Chaos
 		self:Bar(190506, 62.5) -- Seething Corruption
