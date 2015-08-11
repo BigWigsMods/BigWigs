@@ -12,6 +12,7 @@ mod:RegisterEnableMob(
 	94995, -- Graggra
 	92041, -- Bleeding Darkcaster
 	92038, -- Salivating Bloodthirster
+	93985, -- Corrupted Talonpriest
 	95630, -- Construct Peacekeeper
 	95614, -- Binder Eloah
 	93156, -- Eredar Faithbreaker
@@ -35,6 +36,7 @@ if L then
 	L.graggra = "Graggra"
 	L.darkcaster = "Bleeding Darkcaster"
 	L.bloodthirster = "Salivating Bloodthirster"
+	L.talonpriest = "Corrupted Talonpriest"
 	L.peacekeeper = "Construct Peacekeeper"
 	L.eloah = "Binder Eloah"
 	L.faithbreaker = "Eredar Faithbreaker"
@@ -62,6 +64,7 @@ function mod:GetOptions()
 		{188510, "SAY"}, -- Graggra Smash
 		{182644, "PROXIMITY", "SAY"}, -- Dark Fate
 		189612, -- Rending Howl
+		{179219, "PROXIMITY", "SAY"}, -- Phantasmal Fel Bomb
 		{189595, "FLASH"}, -- Protocol: Crowd Control
 		{189533, "TANK"}, -- Sever Soul
 		184587, -- Touch of Mortality
@@ -83,6 +86,7 @@ function mod:GetOptions()
 		[188476] = L.graggra,
 		[182644] = L.darkcaster,
 		[189612] = L.bloodthirster,
+		[179219] = L.talonpriest,
 		[189595] = L.peacekeeper,
 		[189533] = L.eloah,
 		[184587] = L.faithbreaker,
@@ -116,6 +120,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "DarkFateRemoved", 182644)
 
 	self:Log("SPELL_CAST_START", "RendingHowl", 189612)
+
+	self:Log("SPELL_AURA_APPLIED", "PhantasmalFelBomb", 179219)
+	self:Log("SPELL_AURA_REMOVED", "PhantasmalFelBombRemoved", 179219)
 
 	self:Log("SPELL_CAST_START", "ProtocolCrowdControl", 189595)
 
@@ -242,6 +249,32 @@ end
 function mod:RendingHowl(args)
 	if self:Interrupter(args.sourceGUID) then
 		self:Message(args.spellId, "Urgent", "Info")
+	end
+end
+
+--[[ Corrupted Talonpriest ]]--
+
+do
+	local list = mod:NewTargetList()
+	function mod:PhantasmalFelBomb(args)
+		if self:MobId(args.sourceGUID) == 93985 then -- Might be enabled during boss which we don't want warned
+			if self:Me(args.destGUID) then
+				self:TargetBar(args.spellId, 5, args.destName)
+				self:Say(args.spellId)
+				self:OpenProximity(args.spellId, 15) -- XXX verify range
+			end
+			list[#list+1] = args.destName
+			if #list == 1 then
+				self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alarm")
+			end
+		end
+	end
+
+	function mod:PhantasmalFelBombRemoved(args)
+		if self:Me(args.destGUID) and self:MobId(args.sourceGUID) == 93985 then
+			self:CloseProximity(args.spellId)
+			self:StopBar(args.spellName, args.destName)
+		end
 	end
 end
 
