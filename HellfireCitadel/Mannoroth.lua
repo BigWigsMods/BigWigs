@@ -16,6 +16,10 @@ mod.respawnTime = 30
 local portalsClosed = 0
 local phase = 1
 local curseCount = 1
+local markOfDoomOnMe = nil
+local markOfDoomTargets = {}
+local wrathOfGuldanOnMe = nil
+local wrathOfGuldanTargets = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -50,7 +54,9 @@ function mod:GetOptions()
 		{181597, "SAY"}, -- Mannoroth's Gaze
 		"custom_off_gaze_marker",
 		181735, -- Felseeker
-		{186362, "SAY", "FLASH"}, -- Wrath of Gul'dan
+		{186362, "PROXIMITY", "FLASH", "SAY"}, -- Wrath of Gul'dan
+		{190482, "SAY"},
+		190070,
 		--[[ Adds ]]--
 		{181275, "SAY", "ICON", "FLASH"}, -- Curse of the Legion
 		{181119, "TANK"}, -- Doom Spike
@@ -78,6 +84,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "GlaiveThrust", 183377, 185831)
 	self:Log("SPELL_AURA_APPLIED", "MassiveBlast", 181359, 185821)
 	self:Log("SPELL_CAST_SUCCESS", "FelHellstorm", 181557)
+	self:Log("SPELL_DAMAGE", "FelDamage", 190070) -- Overflowing Fel Energy
+	self:Log("SPELL_MISSED", "FelDamage", 190070) -- Overflowing Fel Energy
 	-- Adds
 	self:Log("SPELL_CAST_SUCCESS", "CurseOfTheLegionSuccess", 181275) -- APPLIED can miss
 	self:Log("SPELL_AURA_APPLIED", "CurseOfTheLegion", 181275)
@@ -91,6 +99,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Inferno", 181180)
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "WrathOfGuldan", 186362)
+	self:Log("SPELL_AURA_REMOVED", "WrathOfGuldanRemoved", 186362)
+	self:Log("SPELL_AURA_APPLIED", "GrippingShadows", 190482)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "GrippingShadows", 190482)
 	self:Log("SPELL_AURA_REMOVED", "P1PortalClosed", 185147, 185175, 182212) -- Doom Lords, Imps, Infernals
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
@@ -101,6 +112,10 @@ function mod:OnEngage()
 	portalsClosed = 0
 	phase = 1
 	curseCount = 1
+	wipe(markOfDoomTargets)
+	wipe(wrathOfGuldanTargets)
+	markOfDoomOnMe = nil
+	wrathOfGuldanOnMe = nil
 	if self:Mythic() then -- non-mythic starts after the portals close
 		self:Bar("stages", 15.5, 108508) -- Mannoroth's Fury
 		self:CDBar(181275, 24) -- Curse of the Legion
@@ -115,6 +130,22 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function updateProximity()
+	-- open in reverse order so if you disable one it doesn't block others from showing
+	if #markOfDoomTargets > 0 then
+		mod:OpenProximity(181099, 21, markOfDoomTargets) -- http://www.wowhead.com/spell=181102 says Radius: 20 yards
+	end
+	if #wrathOfGuldanTargets > 0 then
+		mod:OpenProximity(186362, 16, wrathOfGuldanTargets) -- http://www.wowhead.com/spell=186408 says Radius: 15 yards
+	end
+	if wrathOfGuldanOnMe then
+		mod:OpenProximity(186362, 16) -- http://www.wowhead.com/spell=186408 says Radius: 15 yards
+	end
+	if markOfDoomOnMe then
+		mod:OpenProximity(181099, 21) -- http://www.wowhead.com/spell=181102 says Radius: 20 yards
+	end
+end
 
 -- Adds
 
@@ -156,19 +187,34 @@ do
 			self:ScheduleTimer("TargetMessage", 2, args.spellId, list, "Attention", "Alarm")
 		end
 		if self:Me(args.destGUID) then
+			markOfDoomOnMe = true
 			self:Say(args.spellId, CL.count:format(args.spellName, #list))
 			self:TargetBar(args.spellId, 15, args.destName)
-			self:OpenProximity(args.spellId, 20)
 			self:Flash(args.spellId)
 		end
+
+		if not tContains(markOfDoomTargets, args.destName) then
+			markOfDoomTargets[#markOfDoomTargets+1] = args.destName
+		end
+
+		updateProximity()
 	end
 end
 
 function mod:MarkOfDoomRemoved(args)
 	if self:Me(args.destGUID) then
+		markOfDoomOnMe = nil
 		self:StopBar(args.spellName, args.destName)
 		self:CloseProximity(args.spellId)
 	end
+
+	tDeleteItem(markOfDoomTargets, args.destName)
+
+	if #markOfDoomTargets == 0 then
+		self:CloseProximity(args.spellId)
+	end
+
+	updateProximity()
 end
 
 function mod:DoomSpike(args)
@@ -203,8 +249,42 @@ do
 			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Attention", "Alarm")
 		end
 		if self:Me(args.destGUID) then
+			wrathOfGuldanOnMe = true
 			self:Say(args.spellId, CL.count:format(args.spellName, #list))
 			self:Flash(args.spellId)
+		end
+
+		if not tContains(wrathOfGuldanTargets, args.destName) then
+			wrathOfGuldanTargets[#wrathOfGuldanTargets+1] = args.destName
+		end
+
+		updateProximity()
+	end
+end
+
+function mod:WrathOfGuldanRemoved(args)
+	if self:Me(args.destGUID) then
+		wrathOfGuldanOnMe = nil
+		self:CloseProximity(args.spellId)
+	end
+
+	tDeleteItem(wrathOfGuldanTargets, args.destName)
+
+	if #wrathOfGuldanTargets == 0 then
+		self:CloseProximity(args.spellId)
+	end
+
+	updateProximity()
+end
+
+function mod:GrippingShadows(args)
+	if self:Me(args.destGUID) then
+		if not args.amount then
+			self:Message(args.spellId, "Personal", "Long", CL.you:format(args.spellName))
+		elseif args.amount > 5 and ((self:Tank() and args.amount % 4 == 2) or (not self:Tank() and args.amount % 2 == 0)) then
+			-- Say at 6 stacks and every 2 stacks (4 stacks for tanks)
+			self:Say(args.spellId, CL.count:format(args.spellName, args.amount))
+			self:Message(args.spellId, "Personal", nil, CL.you:format(CL.count(args.spellName, args.amount)))
 		end
 	end
 end
@@ -301,6 +381,17 @@ end
 function mod:FelHellstorm(args)
 	self:Message(args.spellId, "Attention")
 	self:CDBar(args.spellId, 36)
+end
+
+do
+	local prev = 0
+	function mod:FelDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(args.spellId, "Personal", "Alert", CL.you:format(args.spellName))
+		end
+	end
 end
 
 -- Phases
