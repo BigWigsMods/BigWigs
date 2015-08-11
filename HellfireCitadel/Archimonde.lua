@@ -147,6 +147,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SummonSourceOfChaos", 190686)
 	self:Log("SPELL_CAST_SUCCESS", "MarkOfTheLegionCast", 188514)
 	self:Log("SPELL_AURA_APPLIED", "MarkOfTheLegion", 187050)
+	self:Log("SPELL_AURA_REMOVED", "MarkOfTheLegionRemoved", 187050)
 	self:Log("SPELL_CAST_SUCCESS", "DarkConduit", 190394)
 	-- General
 	self:Log("SPELL_PERIODIC_DAMAGE", "NetherStormDamage", 187255)
@@ -765,7 +766,7 @@ do
 		end
 	end
 
-	function mod:MarkOfTheLegionCastRemoved(args)
+	function mod:MarkOfTheLegionRemoved(args)
 		if self:GetOption("custom_off_legion_marker") then
 			SetRaidTarget(args.destName, 0)
 		end
