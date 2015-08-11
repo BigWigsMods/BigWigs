@@ -55,8 +55,8 @@ function mod:GetOptions()
 		"custom_off_gaze_marker",
 		181735, -- Felseeker
 		{186362, "PROXIMITY", "FLASH", "SAY"}, -- Wrath of Gul'dan
-		{190482, "SAY"},
-		190070,
+		{190482, "SAY"}, -- Gripping Shadows
+		190070, -- Overflowing Fel Energy
 		--[[ Adds ]]--
 		{181275, "SAY", "ICON", "FLASH"}, -- Curse of the Legion
 		{181119, "TANK"}, -- Doom Spike
@@ -131,19 +131,17 @@ end
 -- Event Handlers
 --
 
-local function updateProximity()
-	-- open in reverse order so if you disable one it doesn't block others from showing
-	if #markOfDoomTargets > 0 then
-		mod:OpenProximity(181099, 21, markOfDoomTargets) -- http://www.wowhead.com/spell=181102 says Radius: 20 yards
-	end
-	if #wrathOfGuldanTargets > 0 then
-		mod:OpenProximity(186362, 16, wrathOfGuldanTargets) -- http://www.wowhead.com/spell=186408 says Radius: 15 yards
-	end
-	if wrathOfGuldanOnMe then
-		mod:OpenProximity(186362, 16) -- http://www.wowhead.com/spell=186408 says Radius: 15 yards
-	end
-	if markOfDoomOnMe then
-		mod:OpenProximity(181099, 21) -- http://www.wowhead.com/spell=181102 says Radius: 20 yards
+local function updateProximity(self)
+	local showMark = self:CheckOption(181099, "PROXIMITY") -- Mark of Doom http://www.wowhead.com/spell=181102 says Radius: 20 yards
+	local showWrath = self:CheckOption(186362, "PROXIMITY") -- Wrath of Gul'dan http://www.wowhead.com/spell=186408 says Radius: 15 yards
+	if showMark and markOfDoomOnMe then
+		self:OpenProximity(181099, 21)
+	elseif showMark and #markOfDoomTargets > 0 then
+		self:OpenProximity(181099, 21, markOfDoomTargets)
+	elseif showWrath and wrathOfGuldanOnMe then
+		self:OpenProximity(186362, 16)
+	elseif showWrath and #wrathOfGuldanTargets > 0 then
+		self:OpenProximity(186362, 16, wrathOfGuldanTargets)
 	end
 end
 
@@ -197,7 +195,7 @@ do
 			markOfDoomTargets[#markOfDoomTargets+1] = args.destName
 		end
 
-		updateProximity()
+		updateProximity(self)
 	end
 end
 
@@ -214,7 +212,7 @@ function mod:MarkOfDoomRemoved(args)
 		self:CloseProximity(args.spellId)
 	end
 
-	updateProximity()
+	updateProximity(self)
 end
 
 function mod:DoomSpike(args)
@@ -258,7 +256,7 @@ do
 			wrathOfGuldanTargets[#wrathOfGuldanTargets+1] = args.destName
 		end
 
-		updateProximity()
+		updateProximity(self)
 	end
 end
 
@@ -274,7 +272,7 @@ function mod:WrathOfGuldanRemoved(args)
 		self:CloseProximity(args.spellId)
 	end
 
-	updateProximity()
+	updateProximity(self)
 end
 
 function mod:GrippingShadows(args)
