@@ -282,7 +282,7 @@ function mod:GrippingShadows(args)
 		elseif args.amount > 5 and ((self:Tank() and args.amount % 4 == 2) or (not self:Tank() and args.amount % 2 == 0)) then
 			-- Say at 6 stacks and every 2 stacks (4 stacks for tanks)
 			self:Say(args.spellId, CL.count:format(args.spellName, args.amount))
-			self:Message(args.spellId, "Personal", nil, CL.you:format(CL.count(args.spellName, args.amount)))
+			self:Message(args.spellId, "Personal", nil, CL.you:format(CL.count:format(args.spellName, args.amount)))
 		end
 	end
 end
