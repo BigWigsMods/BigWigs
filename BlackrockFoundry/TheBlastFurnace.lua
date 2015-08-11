@@ -192,11 +192,6 @@ function mod:OnEngage()
 	end
 end
 
-function mod:OnBossDisable()
-	wipe(volatileFireTargets)
-	wipe(bombTargets)
-end
-
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
