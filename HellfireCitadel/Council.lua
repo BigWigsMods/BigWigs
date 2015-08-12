@@ -128,15 +128,21 @@ do
 end
 
 do
-	local list = mod:NewTargetList()
+	local count = 0
+	local function resetCount()
+		count = 0
+	end
+	
 	function mod:MarkOfTheNecromancer(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, 184449, list, "Attention")
+		count = count + 1
+		if count == 1 then
+			self:Message(184449, "Attention")
+			self:ScheduleTimer(resetCount, 0.3)
 
 			if args.spellId == 184676 then -- 30% Mark of the Necromancer
 				self:StopBar(184476) -- Reap
 				self:StopBar(184449) -- Mark of the Necromancer
+				self:RemoveLog("SPELL_AURA_APPLIED", 184449, 184676)
 			end
 		end
 	end
