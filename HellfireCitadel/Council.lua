@@ -54,7 +54,7 @@ end
 
 function mod:OnBossEnable()
 	-- Dia Darkwhisper
-	self:Log("SPELL_CAST_SUCCESS", "MarkOfTheNecromancer", 184449)
+	self:Log("SPELL_AURA_APPLIED", "MarkOfTheNecromancer", 184449, 184676) -- 184676: 30% Mark of the Necromancer
 	self:Log("SPELL_CAST_START", "Reap", 184476)
 	self:Log("SPELL_CAST_SUCCESS", "ReapOver", 184476)
 	self:Log("SPELL_CAST_START", "NightmareVisage", 184657)
@@ -127,9 +127,19 @@ do
 	end
 end
 
-function mod:MarkOfTheNecromancer(args)
-	self:Message(args.spellId, "Attention")
-	self:CDBar(args.spellId, 60) -- 60-63
+do
+	local list = mod:NewTargetList()
+	function mod:MarkOfTheNecromancer(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, 184449, list, "Attention")
+
+			if args.spellId == 184676 then -- 30% Mark of the Necromancer
+				self:StopBar(184476) -- Reap
+				self:StopBar(184449) -- Mark of the Necromancer
+			end
+		end
+	end
 end
 
 do
@@ -157,7 +167,8 @@ function mod:Reap(args)
 		self:Log("SPELL_AURA_APPLIED", "MarkOfTheNecromancerApplied", 184450, 185065, 185066)
 	end
 	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
-	self:CDBar(args.spellId, 67) -- 67-68
+	self:Bar(184449, 14) -- Mark of the Necromancer
+	self:CDBar(args.spellId, 66) -- 66-67
 end
 
 function mod:ReapOver(args)
@@ -166,7 +177,7 @@ function mod:ReapOver(args)
 end
 
 do
-	local timers = {0, 65, 75, 83} -- approx. depends on something
+	local timers = {0, 81.5, 62, 62} -- last time not confirmed
 	function mod:FelRage(args)
 		self:TargetMessage(184358, args.destName, "Urgent", "Warning")
 		self:TargetBar(184358, 25, args.destName)
@@ -275,10 +286,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			startLeapCD(self, nextAbilityTime - GetTime())
 			self:StopBar(183885) -- Mirror Images
 		end
-	elseif spellId == 187183 then -- 30% Mark of the Necromancer
-		self:Message(184449, "Attention")
-		self:StopBar(184476) -- Reap
-		self:StopBar(184449) -- Mark of the Necromancer
 	end
 end
 
