@@ -132,6 +132,7 @@ do
 	function mod:MarkOfTheNecromancer(args)
 		local t = GetTime()
 		if t-prev > 5 then
+			prev = t
 			self:Message(184449, "Attention")
 
 			if args.spellId == 184676 then -- 30% Mark of the Necromancer
