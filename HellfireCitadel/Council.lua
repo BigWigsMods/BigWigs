@@ -128,16 +128,11 @@ do
 end
 
 do
-	local count = 0
-	local function resetCount()
-		count = 0
-	end
-	
+	local prev = 0
 	function mod:MarkOfTheNecromancer(args)
-		count = count + 1
-		if count == 1 then
+		local t = GetTime()
+		if t-prev > 5 then
 			self:Message(184449, "Attention")
-			self:ScheduleTimer(resetCount, 0.3)
 
 			if args.spellId == 184676 then -- 30% Mark of the Necromancer
 				self:StopBar(184476) -- Reap
