@@ -255,23 +255,33 @@ end
 --[[ Corrupted Talonpriest ]]--
 
 do
-	local list = mod:NewTargetList()
+	local list, isOnMe = mod:NewTargetList(), nil
+	local function bombTargets(self, spellId)
+		-- Fel Bomb players also get Phantasmal Fel Bomb, don't warn if we have both. We already warn for Fel Bomb in the Iskar module.
+		if isOnMe and not UnitDebuff("player", self:SpellName(181753)) then -- Fel Bomb
+			self:TargetBar(spellId, 4.7, isOnMe)
+			self:Say(spellId)
+			self:OpenProximity(spellId, 15) -- XXX verify range
+		end
+		self:TargetMessage(spellId, list, "Attention", "Alarm")
+		isOnMe = nil
+	end
+
 	function mod:PhantasmalFelBomb(args)
 		if self:MobId(args.sourceGUID) == 93985 then -- Might be enabled during boss which we don't want warned
 			if self:Me(args.destGUID) then
-				self:TargetBar(args.spellId, 5, args.destName)
-				self:Say(args.spellId)
-				self:OpenProximity(args.spellId, 15) -- XXX verify range
+				isOnMe = args.destName
 			end
 			list[#list+1] = args.destName
 			if #list == 1 then
-				self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alarm")
+				self:ScheduleTimer(bombTargets, 0.3, self, args.spellId)
 			end
 		end
 	end
 
 	function mod:PhantasmalFelBombRemoved(args)
 		if self:Me(args.destGUID) and self:MobId(args.sourceGUID) == 93985 then
+			isOnMe = nil
 			self:CloseProximity(args.spellId)
 			self:StopBar(args.spellName, args.destName)
 		end
