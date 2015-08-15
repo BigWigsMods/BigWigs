@@ -25,6 +25,10 @@ if L then
 	L.frenzy_icon = "spell_shadow_unholyfrenzy"
 
 	L.adds_multiple = "Adds x%d"
+
+	L.tank_proximity = "Tank Proximity"
+	L.tank_proximity_desc = "Open a 5 yard proximity showing the other tanks to help you deal with the Heavy Handed ability."
+	L.tank_proximity_icon = 156138 -- Heavy Handed / ability_butcher_heavyhanded
 end
 L = mod:GetLocale()
 
@@ -39,6 +43,7 @@ function mod:GetOptions()
 		{163046, "FLASH"}, -- Pale Vitriol
 		--[[ General ]]--
 		{156151, "TANK_HEALER"}, -- The Tenderizer
+		{"tank_proximity", "TANK", "PROXIMITY"},
 		156157, -- Cleave
 		156152, -- Gushing Wounds
 		156197, -- Bounding Cleave
@@ -58,7 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GushingWounds", 156152)
 	self:Log("SPELL_AURA_REMOVED", "GushingWoundsRemoved", 156152)
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 156598)
-	--Mythic
+	-- Mythic
 	self:Log("SPELL_CAST_SUCCESS", "AddSpawn", 163051) -- Paleobomb
 	self:Log("SPELL_PERIODIC_DAMAGE", "PaleVitriolDamage", 163046)
 	self:Log("SPELL_PERIODIC_MISSED", "PaleVitriolDamage", 163046)
@@ -67,6 +72,7 @@ end
 function mod:OnEngage()
 	cleaveCount = 1
 	addCount = 1
+
 	self:Bar(156151, 7) -- Tenderizer
 	self:Bar(156197, 60) -- Bounding Cleave
 	if self:Mythic() then
@@ -76,6 +82,20 @@ function mod:OnEngage()
 		self:Berserk(self:Mythic() and 240 or 300)
 	end
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+
+	if self:Tank() then
+		local _, _, _, myMapId = UnitPosition("player")
+		local tankList = {}
+		for unit in self:IterateGroup() do
+			local _, _, _, tarMapId = UnitPosition(unit)
+			if tarMapId == myMapId and self:Tank(unit) and not self:Me(UnitGUID(unit)) then
+				tankList[#tankList+1] = unit
+			end
+		end
+		if tankList[1] then
+			self:OpenProximity("tank_proximity", 5, tankList, true)
+		end
+	end
 end
 
 --------------------------------------------------------------------------------

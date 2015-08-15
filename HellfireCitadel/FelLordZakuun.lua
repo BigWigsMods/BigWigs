@@ -62,24 +62,7 @@ function mod:GetOptions()
 	}
 end
 
-local function updateTanks(self)
-	local _, _, _, myMapId = UnitPosition("player")
-	for unit in self:IterateGroup() do
-		local _, _, _, tarMapId = UnitPosition(unit)
-		if tarMapId == myMapId and self:Tank(unit) then
-			local guid = UnitGUID(unit)
-			if not self:Me(guid) then
-				tankList[#tankList+1] = unit
-			end
-		end
-	end
-end
-
 function mod:OnBossEnable()
-	if IsEncounterInProgress() and self:Tank() then
-		updateTanks(self) -- Backup for disconnecting mid-combat
-	end
-
 	self:Log("SPELL_AURA_APPLIED", "Befouled", 189030, 189031, 189032) -- 189030 = red, 31 = yellow, 32 = green
 	self:Log("SPELL_AURA_REMOVED", "BefouledRemovedCheck", 189030, 189031, 189032)
 	self:Log("SPELL_AURA_APPLIED", "Disembodied", 179407)
@@ -100,7 +83,6 @@ function mod:OnEngage()
 	enraged = nil
 	phaseEnd = GetTime() + 87 -- used to prevent starting new bars the phase change would stop
 	cleaveCount = 1
-	wipe(tankList)
 
 	self:Bar(179406, 25.5, CL.count:format(self:SpellName(179406), cleaveCount)) -- Soul Cleave
 	self:Bar(189009, 36.5) -- Cavitation
@@ -109,7 +91,14 @@ function mod:OnEngage()
 	self:Bar("stages", 87, 179667, "ability_butcher_heavyhanded") -- Disarmed (Phase 2)
 
 	if self:Tank() then
-		updateTanks(self)
+		wipe(tankList)
+		local _, _, _, myMapId = UnitPosition("player")
+		for unit in self:IterateGroup() do
+			local _, _, _, tarMapId = UnitPosition(unit)
+			if tarMapId == myMapId and self:Tank(unit) and not self:Me(UnitGUID(unit)) then
+				tankList[#tankList+1] = unit
+			end
+		end
 	end
 end
 
