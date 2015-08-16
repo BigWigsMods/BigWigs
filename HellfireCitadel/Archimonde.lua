@@ -384,7 +384,7 @@ do
 			list[i] = self:ColorName(target)
 		end
 		if not isOnMe and not banished then
-			self:TargetMessage(spellId, list, "Attention")
+			self:TargetMessage(spellId, list, "Attention", self:Mythic() and "Alarm", nil, nil, self:Mythic())
 		else
 			wipe(list)
 		end
@@ -446,21 +446,19 @@ do
 
 	local function MythicChaos(self)
 		scheduled = nil
-		local unit = "raid%d"
 		local wroughtChaos = self:SpellName(186123) -- Wrought Chaos
 		local focusedChaos = self:SpellName(185014) -- Focused Chaos
-		for i = 1,20 do
-			local unitId = unit:format(i)
-			if UnitDebuff(unitId, wroughtChaos) then
+		for unit in self:IterateGroup() do
+			if UnitDebuff(unit, wroughtChaos) then
 				chaosFrom = chaosFrom + 1
-				if UnitIsUnit("player", unitId) then
+				if UnitIsUnit("player", unit) then
 					self:Message(186123, "Positive", "Info", L.chaosMessage:format(chaosFrom))
 					self:Say(186123, chaosFrom, true)
 					return
 				end
-			elseif UnitDebuff(unitId, focusedChaos) then -- if an odd number of players is alive on cast you do not get a debuff at all
+			elseif UnitDebuff(unit, focusedChaos) then -- if an odd number of players is alive on cast you do not get a debuff at all
 				chaosTo = chaosTo + 1
-				if UnitIsUnit("player", unitId) then
+				if UnitIsUnit("player", unit) then
 					self:Message(186123, "Positive", "Info", L.chaosMessage:format(chaosTo + 10))
 					self:Say(186123, chaosTo + 10, true)
 					return
@@ -475,14 +473,11 @@ do
 			if self:GetOption("custom_off_chaos_helper") then
 				chaosFrom = 0
 				chaosTo = 0
-				scheduled = self:ScheduleTimer("MythicChaos", 0.2, self)
+				scheduled = self:ScheduleTimer(MythicChaos, 0.2, self)
 			end
-			self:Bar(186123, 6, CL.count:format(args.spellName, 1))
-			self:ScheduleTimer("Message", 6, 186123, "Personal", nil, CL.count:format(args.spellName, 1))
-			self:ScheduleTimer("Bar", 6, 186123, 6, CL.count:format(args.spellName, 2))
-			self:ScheduleTimer("Message", 12, 186123, "Personal", nil, CL.count:format(args.spellName, 2))
-			self:ScheduleTimer("Bar", 12, 186123, 6, CL.count:format(args.spellName, 3))
+			self:Bar(186123, 18, CL.cast:format(args.spellName))
 			self:ScheduleTimer("Message", 18, 186123, "Personal", nil, CL.over:format(args.spellName))
+			self:CDBar(186123, 52) -- XXX nebula commented it out (2 lines below), dunno why - can only confirm for mythic
 		end
 		--self:CDBar(186123, 52)
 	end
