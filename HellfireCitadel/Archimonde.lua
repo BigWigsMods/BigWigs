@@ -384,7 +384,10 @@ do
 			list[i] = self:ColorName(target)
 		end
 		if not isOnMe and not banished then
-			self:TargetMessage(spellId, list, "Attention", self:Mythic() and "Alarm", nil, nil, self:Mythic())
+			self:TargetMessage(spellId, list, "Attention")
+			if self:Mythic() then
+				self:PlaySound(spellId, "Alarm")
+			end
 		else
 			wipe(list)
 		end
@@ -477,13 +480,15 @@ do
 			end
 			self:Bar(186123, 18, CL.cast:format(args.spellName))
 			self:ScheduleTimer("Message", 18, 186123, "Personal", nil, CL.over:format(args.spellName))
-			self:CDBar(186123, 52) -- XXX nebula commented it out (2 lines below), dunno why - can only confirm for mythic
+			self:ScheduleTimer("CDBar", 18, 186123, 34) -- XXX nebula commented it out (2 lines below), dunno why - can only confirm for mythic
 		end
 		--self:CDBar(186123, 52)
 	end
 
 	function mod:FocusedChaos(args)
 		if self:Mythic() then return end -- Mythic is being handled in WroughtChaosCast()
+
+		chaosCount = chaosCount + 1
 		isOnMe = nil
 
 		if self:Me(args.sourceGUID) then -- Wrought Chaos (1) to PLAYER
