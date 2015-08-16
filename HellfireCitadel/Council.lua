@@ -138,7 +138,6 @@ do
 			if args.spellId == 184676 then -- 30% Mark of the Necromancer
 				self:StopBar(184476) -- Reap
 				self:StopBar(184449) -- Mark of the Necromancer
-				self:RemoveLog("SPELL_AURA_APPLIED", 184449, 184676)
 			end
 		end
 	end
@@ -179,7 +178,7 @@ function mod:ReapOver(args)
 end
 
 do
-	local timers = {0, 81.5, 62, 62} -- last time not confirmed
+	local timers = {0, 67, 76, 82} -- pretty consistent now
 	function mod:FelRage(args)
 		self:TargetMessage(184358, args.destName, "Urgent", "Warning")
 		self:TargetBar(184358, 25, args.destName)
