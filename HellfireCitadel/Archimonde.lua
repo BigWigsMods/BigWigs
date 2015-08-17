@@ -739,13 +739,11 @@ function mod:MarkOfTheLegionCast()
 end
 
 do
-	local list, isOnMe, timer = {}, nil, nil
+	local list, proxList, isOnMe, timer = {}, {}, nil, nil
 	local function legionSay(self, spellId)
 		timer = nil
 		--sort(list) -- APPLIED should be in debuff remaining order, manually sort by debuff remaining if any issues show up
-		if not isOnMe then
-			self:OpenProximity(spellId, 10, list, true)
-		end
+		wipe(proxList)
 		for i = 1, #list do
 			local target = list[i]
 			if target == isOnMe then
@@ -757,10 +755,12 @@ do
 			if self:GetOption("custom_off_legion_marker") then
 				SetRaidTarget(target, i)
 			end
+			proxList[i] = target
 			list[i] = self:ColorName(target)
 		end
 		if not isOnMe then
 			self:TargetMessage(spellId, list, "Attention")
+			self:OpenProximity(spellId, 10, proxList, true)
 		else
 			wipe(list)
 		end
@@ -812,9 +812,23 @@ do
 			SetRaidTarget(args.destName, 0)
 		end
 
-		if not isOnMe or (isOnMe and self:Me(args.destGUID)) then
-			if countTimer then self:CancelTimer(countTimer) end
-			self:CloseProximity(args.spellId) -- Just close after first expiry if not on you
+		tDeleteItem(proxList, args.destName)
+		if isOnMe then
+			if self:Me(args.destGUID) then
+				isOnMe = nil
+				if countTimer then self:CancelTimer(countTimer) countTimer = nil end
+				if #proxList == 0 then
+					self:CloseProximity(args.spellId)
+				else
+					self:OpenProximity(args.spellId, 10, proxList, true)
+				end
+			end
+		else
+			if #proxList == 0 then
+				self:CloseProximity(args.spellId)
+			else
+				self:OpenProximity(args.spellId, 10, proxList, true)
+			end
 		end
 	end
 end
