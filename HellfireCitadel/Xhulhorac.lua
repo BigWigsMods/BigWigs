@@ -40,7 +40,7 @@ function mod:GetOptions()
 		{190223, "TANK"}, -- Fel Strike
 		{186407, "SAY", "PROXIMITY", "FLASH"}, -- Fel Surge
 		{186453, "TANK_HEALER"}, -- Felblaze Flurry
-		186500, -- Chains of Fel
+		{186490, "SAY", "FLASH"}, -- Chains of Fel
 		--[[ Phase 2 ]]--
 		{190224, "TANK"}, -- Void Strike
 		{186333, "SAY", "PROXIMITY", "FLASH"}, -- Void Surge
@@ -71,7 +71,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Felsinged_WastingVoid", 186073, 186063) -- Felsinged, Wasting Void
 	self:Log("SPELL_AURA_APPLIED", "Surge", 186407, 186333) -- Fel Surge, Void Surge
 	self:Log("SPELL_AURA_REMOVED", "SurgeRemoved", 186407, 186333) -- Fel Surge, Void Surge
-	self:Log("SPELL_AURA_APPLIED", "ChainsOfFel", 186500, 189775) -- Normal, Empowered
+	self:Log("SPELL_CAST_START", "ChainsOfFelCast", 186490, 189775) -- Normal, Empowered
+	self:Log("SPELL_AURA_APPLIED", "ChainsOfFel", 186500, 189777) -- Normal, Empowered
 	self:Log("SPELL_CAST_SUCCESS", "FelblazeFlurry", 186453)
 	self:Log("SPELL_CAST_SUCCESS", "WitheringGaze", 186783)
 	self:Log("SPELL_CAST_START", "FelStrike", 190223)
@@ -106,7 +107,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 
 	elseif spellId == 187196 then -- Fel Feedback (Vanguard Akkelion Spawned)
 		self:Message("stages", "Neutral", "Info", "90% - ".. CL.spawned:format(self:SpellName(-11691)), false)
-		self:CDBar(186500, 31) -- Chains of Fel 31-36
+		self:CDBar(186490, self:Mythic() and 55 or 33) -- Chains of Fel, to _start
 		self:CDBar(186453, 12) -- Felblaze Flurry
 
 	elseif spellId == 190307 then -- Activate Void Portal (Phase 2)
@@ -159,10 +160,10 @@ end
 
 function mod:AkkelionDies(args)
 	self:StopBar(186453) -- Felblaze Flurry
-	self:StopBar(186500) -- Chains of Fel
+	self:StopBar(186490) -- Chains of Fel
 	if self:Mythic() then
 		self:Message("stages", "Neutral", "Info", "50% - ".. L.killed:format(args.destName), false)
-		self:CDBar(186500, 30) -- Empowered Chains of Fel
+		self:CDBar(186490, 30) -- Empowered Chains of Fel
 	end
 end
 
@@ -288,12 +289,28 @@ function mod:FelblazeFlurry(args)
 end
 
 do
+	local function printTarget(self, name, guid)
+		self:TargetMessage(186490, name, "Urgent", "Alert", CL.casting:format(self:SpellName(184656))) -- 184656 = "Chains"
+		if self:Me(guid) then
+			self:Say(186490, 184656) -- Chains
+			self:Flash(186490) -- Flash for cast only
+		end
+	end
+	function mod:ChainsOfFelCast(args)
+		self:GetBossTarget(printTarget, 0.3, args.sourceGUID)
+		self:CDBar(186490, args.spellId == 186490 and 33 or 30)
+	end
+end
+
+do
 	local list = mod:NewTargetList()
 	function mod:ChainsOfFel(args)
+		if self:Me(args.destGUID) then
+			self:Say(186490, 184656) -- Chains
+		end
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, 186500, list, "Urgent", "Alarm")
-			self:CDBar(186500, 33)
+			self:ScheduleTimer("TargetMessage", 0.3, 186490, list, "Urgent", "Alarm", 184656, 186490) -- 184656 = "Chains"
 		end
 	end
 end
