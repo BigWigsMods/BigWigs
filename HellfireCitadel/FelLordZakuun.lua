@@ -96,7 +96,7 @@ function mod:OnEngage()
 		for unit in self:IterateGroup() do
 			local _, _, _, tarMapId = UnitPosition(unit)
 			if tarMapId == myMapId and self:Tank(unit) and not self:Me(UnitGUID(unit)) then
-				tankList[#tankList+1] = unit
+				tankList[#tankList+1] = self:UnitName(unit) -- Use name instead of unit directly as it can change midfight (generally LFR quitters)
 			end
 		end
 	end
