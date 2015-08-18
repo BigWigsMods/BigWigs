@@ -39,7 +39,6 @@ if L then
 	L.chaos_bar = "%s -> %s"
 	L.chaos_from = "%s from %s"
 	L.chaos_to = "%s to %s"
-	L.chaosMessage = "Your Chaos position: %d"
 
 	L.overfiend = -11603
 	L.overfiend_desc = 186662
@@ -58,9 +57,10 @@ if L then
 	L.custom_off_legion_marker_desc = "Mark the Mark of the Legion targets with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader."
 	L.custom_off_legion_marker_icon = 1
 
-	L.custom_off_chaos_helper = "Chaos helper"
-	L.custom_off_chaos_helper_desc = "" --xxx todo: say number to position yourself
-	L.custom_off_chaos_helper_icon = 185014 -- Focused Chaos
+	L.custom_off_chaos_helper = "Wrought Chaos helper"
+	L.custom_off_chaos_helper_desc = "For Mythic difficulty only, this feature will tell you what chaos number you are. Depending on what tactic you use, this feature may or may not be useful."
+	L.custom_off_chaos_helper_icon = 186123 -- spell_misc_zandalari_council_soulswap / Wrought Chaos
+	L.chaos_helper_message = "Your Chaos position: %d"
 end
 L = mod:GetLocale()
 
@@ -443,26 +443,23 @@ do
 end
 
 do
-	local chaosCount, prev, isOnMe = 0, 0, nil
-	local scheduled = nil
 	local chaosFrom, chaosTo = 0, 0
-
 	local function MythicChaos(self)
-		scheduled = nil
+		--xxx todo: say number to position yourself
 		local wroughtChaos = self:SpellName(186123) -- Wrought Chaos
 		local focusedChaos = self:SpellName(185014) -- Focused Chaos
 		for unit in self:IterateGroup() do
 			if UnitDebuff(unit, wroughtChaos) then
 				chaosFrom = chaosFrom + 1
 				if UnitIsUnit("player", unit) then
-					self:Message(186123, "Positive", "Info", L.chaosMessage:format(chaosFrom))
+					self:Message(186123, "Positive", "Info", L.chaos_helper_message:format(chaosFrom))
 					self:Say(186123, chaosFrom, true)
 					return
 				end
 			elseif UnitDebuff(unit, focusedChaos) then -- if an odd number of players is alive on cast you do not get a debuff at all
 				chaosTo = chaosTo + 1
 				if UnitIsUnit("player", unit) then
-					self:Message(186123, "Positive", "Info", L.chaosMessage:format(chaosTo + 10))
+					self:Message(186123, "Positive", "Info", L.chaos_helper_message:format(chaosTo + 10))
 					self:Say(186123, chaosTo + 10, true)
 					return
 				end
@@ -470,13 +467,14 @@ do
 		end
 	end
 
+	local chaosCount = 0
 	function mod:WroughtChaosCast(args)
 		chaosCount = 0
 		if self:Mythic() then
 			if self:GetOption("custom_off_chaos_helper") then
 				chaosFrom = 0
 				chaosTo = 0
-				scheduled = self:ScheduleTimer(MythicChaos, 0.2, self)
+				self:ScheduleTimer(MythicChaos, 0.2, self)
 			end
 			self:Bar(186123, 18, CL.cast:format(args.spellName))
 			self:ScheduleTimer("Message", 18, 186123, "Personal", nil, CL.over:format(args.spellName))
@@ -486,10 +484,10 @@ do
 	end
 
 	function mod:FocusedChaos(args)
-		if self:Mythic() then return end -- Mythic is being handled in WroughtChaosCast()
+		if self:Mythic() and self:GetOption("custom_off_chaos_helper") then return end -- Mythic is being handled in WroughtChaosCast()
 
+		local isOnMe = nil
 		chaosCount = chaosCount + 1
-		isOnMe = nil
 
 		if self:Me(args.sourceGUID) then -- Wrought Chaos (1) to PLAYER
 			local spell = CL.count:format(self:SpellName(186123), chaosCount)
@@ -516,7 +514,7 @@ do
 			self:ScheduleTimer("SecondaryIcon", 0.3, 186123, args.sourceName)
 			self:ScheduleTimer("PrimaryIcon", 0.3, 186123, args.destName)
 
-			if not banished and not isOnMe then
+			if not banished and not isOnMe and not self:CheckOption(186123, "ME_ONLY") then
 				local spell = CL.count:format(self:SpellName(186123), chaosCount)
 				self:Message(186123, "Important", nil, CL.other:format(spell, L.chaos_bar:format(self:ColorName(args.sourceName), self:ColorName(args.destName)))) -- Wrought Chaos (1): Player -> Player
 				self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, L.chaos_bar:format(args.sourceName:gsub("%-.+", "*"), args.destName:gsub("%-.+", "*"))), "spell_shadow_soulleech_1") -- (1) Player -> Player
