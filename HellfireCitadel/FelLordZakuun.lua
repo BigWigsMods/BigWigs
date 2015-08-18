@@ -214,9 +214,9 @@ do
 		for i = 1, #list do
 			local target = list[i]
 			if target == isOnMe then
-				self:Say(spellId, CL.count_rticon:format(L.seed, i, i))
+				self:Say(spellId, self:LFR() and L.seed or CL.count_rticon:format(L.seed, i, i))
 				self:Flash(spellId)
-				self:TargetMessage(spellId, target, "Positive", "Alarm", CL.count_icon:format(L.seed, i, i))
+				self:TargetMessage(spellId, target, "Positive", "Alarm", not self:LFR() and CL.count_icon:format(L.seed, i, i))
 			end
 			if self:GetOption("custom_off_seed_marker") then
 				SetRaidTarget(target, i)
