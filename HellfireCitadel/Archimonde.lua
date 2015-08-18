@@ -478,9 +478,8 @@ do
 			end
 			self:Bar(186123, 18, CL.cast:format(args.spellName))
 			self:ScheduleTimer("Message", 18, 186123, "Personal", nil, CL.over:format(args.spellName))
-			self:ScheduleTimer("CDBar", 18, 186123, 34) -- XXX nebula commented it out (2 lines below), dunno why - can only confirm for mythic
+			self:ScheduleTimer("CDBar", 18, 186123, 34)
 		end
-		--self:CDBar(186123, 52)
 	end
 
 	function mod:FocusedChaos(args)
@@ -503,7 +502,7 @@ do
 			isOnMe = true
 		end
 		if isOnMe then
-			self:Bar(186123, 5, ("(%d) %s"):format(chaosCount, L.chaos_bar:format(args.sourceName:gsub("%-.+", "*"), args.destName:gsub("%-.+", "*"))), "spell_shadow_soulleech_1") -- (1) Player -> Player
+			self:Bar(186123, self:Mythic() and 6 or 5, ("(%d) %s"):format(chaosCount, L.chaos_bar:format(args.sourceName:gsub("%-.+", "*"), args.destName:gsub("%-.+", "*"))), "spell_shadow_soulleech_1") -- (1) Player -> Player
 		end
 
 		if not self:Mythic() then
@@ -523,9 +522,12 @@ do
 	end
 
 	function mod:FocusedChaosRemoved(args)
-		if chaosCount == 4 then
+		if not self:Mythic() and chaosCount == 4 then
 			self:SecondaryIcon(186123)
 			self:PrimaryIcon(186123)
+
+			self:Message(186123, "Personal", nil, CL.over:format(self:SpellName(186123)))
+			self:CDBar(186123, 32) -- 52s cast to cast
 		end
 	end
 end
