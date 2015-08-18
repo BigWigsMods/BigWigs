@@ -483,7 +483,7 @@ do
 	end
 
 	function mod:FocusedChaos(args)
-		if self:Mythic() and self:GetOption("custom_off_chaos_helper") then return end -- Mythic is being handled in WroughtChaosCast()
+		if self:Mythic() and self:GetOption("custom_off_chaos_helper") then return end -- Mythic static position tactic handled in WroughtChaosCast
 
 		local isOnMe = nil
 		chaosCount = chaosCount + 1
@@ -491,14 +491,18 @@ do
 		if self:Me(args.sourceGUID) then -- Wrought Chaos (1) to PLAYER
 			local spell = CL.count:format(self:SpellName(186123), chaosCount)
 			self:TargetMessage(186123, args.sourceName, "Personal", "Info", L.chaos_to:format(self:SpellName(186123), self:ColorName(args.destName)))
-			self:Say(186123)
+			if not self:Mythic() then
+				self:Say(186123)
+			end
 			isOnMe = true
 		end
 		if self:Me(args.destGUID) then -- Focused Chaos (1) from PLAYER
 			local spell = CL.count:format(args.spellName, chaosCount)
 			self:TargetMessage(186123, args.destName, "Positive", "Alarm", L.chaos_from:format(args.spellName, self:ColorName(args.sourceName)), args.spellId)
-			self:Say(186123, args.spellName)
-			--self:Flash(186123, args.spellId)
+			if not self:Mythic() then
+				self:Say(186123, args.spellName)
+				--self:Flash(186123, args.spellId)
+			end
 			isOnMe = true
 		end
 		if isOnMe then
@@ -527,7 +531,7 @@ do
 			self:PrimaryIcon(186123)
 
 			self:Message(186123, "Personal", nil, CL.over:format(self:SpellName(186123)))
-			self:CDBar(186123, 32) -- 52s cast to cast
+			self:CDBar(186123, 32) -- 52s - 20s of tossing
 		end
 	end
 end
