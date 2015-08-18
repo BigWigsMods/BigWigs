@@ -325,19 +325,21 @@ function mod:ShadowfelBurstSoon()
 	end
 end
 
-function mod:ShadowfelBurst(args)
-	self:Message(args.spellId, "Urgent", "Warning")
-	if self:Ranged() then
-		self:OpenProximity(args.spellId, 9) -- 8+1 safety
-	end
-	burstCount = burstCount + 1
-	if burstTimer then
-		self:CancelTimer(burstTimer)
-	end
-	burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", burstCount == 2 and 53 or 48)
-end
-
 do
+	local proxList = {}
+	function mod:ShadowfelBurst(args)
+		burstCount = burstCount + 1
+		if self:Ranged() then
+			wipe(proxList)
+			self:OpenProximity(args.spellId, 9) -- 8+1 safety
+		end
+		self:Message(args.spellId, "Urgent", "Warning")
+		if burstTimer then
+			self:CancelTimer(burstTimer)
+		end
+		burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", burstCount == 2 and 53 or 48)
+	end
+
 	local list = mod:NewTargetList()
 	function mod:ShadowfelBurstApplied(args)
 		list[#list+1] = args.destName
@@ -349,10 +351,11 @@ do
 			end
 		end
 		if self:Ranged() then
+			proxList[#proxList+1] = args.destName
 			if self:Me(args.destGUID) then
 				self:OpenProximity(183817, 8, nil, true)
 			elseif not UnitDebuff("player", args.spellName) then
-				self:OpenProximity(183817, 8, list, true)
+				self:OpenProximity(183817, 8, proxList, true)
 			end
 		end
 	end
