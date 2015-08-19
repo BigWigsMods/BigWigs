@@ -16,6 +16,7 @@ mod.respawnTime = 30
 local phase = 1
 local nextPhaseSoon = 0
 local currentTorment, maxTorment = 0, 0
+local shadowsCount = 1
 local burstCount, burstTimer = 1, nil
 local banished = nil
 local feedbackSoon, feedbackTimer = nil, nil
@@ -88,6 +89,7 @@ function mod:GetOptions()
 		{189894, "SAY", "PROXIMITY"}, -- Void Star Fixate
 		{187255, "FLASH"}, -- Nether Storm
 		182225, -- Rain of Chaos
+		190050, -- Touch of Shadows
 		-- P3 (mythic)
 		190394, -- Dark Conduit
 		{187050, "SAY", "FLASH", "PROXIMITY"}, -- Mark of the Legion
@@ -141,6 +143,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "VoidStarFixateRemoved", 189895)
 	-- P3 (non mythic)
 	self:Log("SPELL_CAST_START", "DemonicFeedback", 187180)
+	self:Log("SPELL_CAST_START", "TouchOfShadows", 190050)
 	self:Log("SPELL_AURA_APPLIED", "TankNetherBanish", 186961)
 	self:Log("SPELL_AURA_REMOVED", "TankNetherBanishRemoved", 186961)
 	self:Log("SPELL_AURA_APPLIED", "NetherBanishApplied", 186952)
@@ -532,8 +535,6 @@ do
 		if not self:Mythic() and chaosCount == 4 then
 			self:SecondaryIcon(186123)
 			self:PrimaryIcon(186123)
-
-			self:Message(186123, "Personal", nil, CL.over:format(self:SpellName(186123)))
 			self:CDBar(186123, 32) -- 52s - 20s of tossing
 		end
 	end
@@ -554,6 +555,19 @@ function mod:RainOfChaos(args)
 end
 
 -- Phase 3 (non mythic)
+
+function mod:TouchOfShadows(args)
+	if banished then
+		if self:Interrupter(args.sourceGUID) then
+			self:Message(args.spellId, "Attention", "Long", CL.count:format(args.spellName, shadowsCount))
+		end
+		shadowsCount = shadowsCount + 1
+		if shadowsCount == 3 then
+			shadowsCount = 1
+		end
+		self:CDBar(args.spellId, 11, CL.count:format(args.spellName, shadowsCount))
+	end
+end
 
 do
 	local timeLeft, countTimer = 7, nil
@@ -596,6 +610,7 @@ end
 function mod:NetherBanishApplied(args)
 	if self:Me(args.destGUID) then
 		banished = true
+		shadowsCount = 1
 		if feedbackSoon then
 			self:CloseProximity(187180) -- Demonic Feedback
 		end
@@ -606,6 +621,7 @@ function mod:NetherBanishRemoved(args)
 	if self:Me(args.destGUID) then
 		banished = nil
 		self:StopBar(189894) -- Void Star
+		self:StopBar(CL.count:format(self:SpellName(190050), shadowsCount)) -- Touch of Shadows
 		if feedbackSoon then
 			self:ScheduleTimer("Message", 1, 187180, "Attention", "Info", CL.soon:format(self:SpellName(187180))) -- loading screen delay
 			self:OpenProximity(187180, 7) -- Demonic Feedback
