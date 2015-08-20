@@ -37,6 +37,14 @@ if L then
 	L.custom_off_gaze_marker = "Mannoroth's Gaze marker"
 	L.custom_off_gaze_marker_desc = "Mark the targets of Mannoroth's Gaze with {rt1}{rt2}{rt3}, requires promoted or leader."
 	L.custom_off_gaze_marker_icon = 1
+
+	L.custom_off_doom_marker = "Mark of Doom marker"
+	L.custom_off_doom_marker_desc = "On Mythic difficulty, mark the targets of Mark of Doom with {rt1}{rt2}{rt3}, requires promoted or leader."
+	L.custom_off_doom_marker_icon = 1
+
+	L.custom_off_wrath_marker = "Wrath of Gul'dan marker"
+	L.custom_off_wrath_marker_desc = "Mark the targets of Wrath of Gul'dan with {rt8}{rt7}{rt6}{rt5}{rt4}, requires promoted or leader."
+	L.custom_off_wrath_marker_icon = 8
 end
 L = mod:GetLocale()
 
@@ -55,12 +63,14 @@ function mod:GetOptions()
 		"custom_off_gaze_marker",
 		181735, -- Felseeker
 		{186362, "PROXIMITY", "FLASH", "SAY"}, -- Wrath of Gul'dan
+		"custom_off_wrath_marker",
 		{190482, "SAY"}, -- Gripping Shadows
 		190070, -- Overflowing Fel Energy
 		--[[ Adds ]]--
 		{181275, "SAY", "ICON", "FLASH"}, -- Curse of the Legion
 		{181119, "TANK"}, -- Doom Spike
 		{181099, "PROXIMITY", "FLASH", "SAY"}, -- Mark of Doom
+		"custom_off_doom_marker",
 		181126, -- Shadow Bolt Volley
 		181255, -- Fel Imp-losion
 		181180, -- Inferno
@@ -172,7 +182,7 @@ function mod:CurseOfTheLegionRemoved(args)
 end
 
 do
-	local list = mod:NewTargetList()
+	local list, timer = mod:NewTargetList(), nil
 	function mod:MarkOfDoomCast(args)
 		wipe(list)
 		self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
@@ -181,14 +191,30 @@ do
 
 	function mod:MarkOfDoom(args)
 		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 2, args.spellId, list, "Attention", "Alarm")
+		local count = #list
+
+		if count == 1 then
+			timer = self:ScheduleTimer("TargetMessage", 2, args.spellId, list, "Attention", "Alarm")
 		end
+
 		if self:Me(args.destGUID) then
-			markOfDoomOnMe = true
-			self:Say(args.spellId, CL.count:format(args.spellName, #list))
-			self:TargetBar(args.spellId, 15, args.destName)
+			self:CancelTimer(timer)
+			timer = nil
+			markOfDoomOnMe = self:Mythic() and CL.count_icon:format(self:SpellName(28836), count, count) or CL.count:format(self:SpellName(28836), count) -- 28836 = "Mark"
+			self:Say(args.spellId, self:Mythic() and CL.count_rticon:format(self:SpellName(28836), count, count) or CL.count:format(self:SpellName(28836), count))
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm", markOfDoomOnMe)
+			self:TargetBar(args.spellId, 15, args.destName, markOfDoomOnMe)
 			self:Flash(args.spellId)
+		end
+
+		if count == 3 and timer then -- After the :Me check as we might be the last player
+			self:CancelTimer(timer)
+			timer = nil
+			self:TargetMessage(args.spellId, list, "Attention", "Alarm")
+		end
+
+		if self:GetOption("custom_off_doom_marker") and self:Mythic() then
+			SetRaidTarget(args.destName, count)
 		end
 
 		if not tContains(markOfDoomTargets, args.destName) then
@@ -201,12 +227,16 @@ end
 
 function mod:MarkOfDoomRemoved(args)
 	if self:Me(args.destGUID) then
+		self:StopBar(markOfDoomOnMe, args.destName)
 		markOfDoomOnMe = nil
-		self:StopBar(args.spellName, args.destName)
 		self:CloseProximity(args.spellId)
 	end
 
 	tDeleteItem(markOfDoomTargets, args.destName)
+
+	if self:GetOption("custom_off_doom_marker") and self:Mythic() then
+		SetRaidTarget(args.destName, 0)
+	end
 
 	if #markOfDoomTargets == 0 then
 		self:CloseProximity(args.spellId)
@@ -240,16 +270,32 @@ end
 -- Mannoroth
 
 do
-	local list = mod:NewTargetList()
+	local list, timer = mod:NewTargetList(), nil
 	function mod:WrathOfGuldan(args)
 		list[#list + 1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Attention", "Alarm")
+		local count = #list
+		local reverseCount = 9-count
+		if count == 1 then
+			timer = self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Attention", "Alarm")
 		end
+
 		if self:Me(args.destGUID) then
 			wrathOfGuldanOnMe = true
-			self:Say(args.spellId, CL.count:format(args.spellName, #list))
+			self:CancelTimer(timer)
+			timer = nil
+			self:Say(args.spellId, CL.count_rticon:format(self:SpellName(170963), count, reverseCount)) -- 170963 = "Wrath"
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm", CL.count_icon:format(self:SpellName(170963), count, reverseCount))
 			self:Flash(args.spellId)
+		end
+
+		if count == 5 and timer then -- After the :Me check as we might be the last player
+			self:CancelTimer(timer)
+			timer = nil
+			self:TargetMessage(args.spellId, list, "Attention", "Alarm")
+		end
+
+		if self:GetOption("custom_off_wrath_marker") then
+			SetRaidTarget(args.destName, reverseCount)
 		end
 
 		if not tContains(wrathOfGuldanTargets, args.destName) then
@@ -267,6 +313,10 @@ function mod:WrathOfGuldanRemoved(args)
 	end
 
 	tDeleteItem(wrathOfGuldanTargets, args.destName)
+
+	if self:GetOption("custom_off_wrath_marker") then
+		SetRaidTarget(args.destName, 0)
+	end
 
 	if #wrathOfGuldanTargets == 0 then
 		self:CloseProximity(args.spellId)
@@ -331,7 +381,7 @@ do
 
 		list[#list+1] = args.destName
 		if #list == 1 then
-			timer = self:ScheduleTimer(gazeSay, 0.6, self, args.spellName) -- Large delays sometimes
+			timer = self:ScheduleTimer(gazeSay, 1, self, args.spellName) -- Large delays sometimes.
 		elseif timer and #list == 3 then
 			self:CancelTimer(timer)
 			gazeSay(self, args.spellName)
