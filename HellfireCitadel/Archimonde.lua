@@ -16,6 +16,7 @@ mod.respawnTime = 30
 local phase = 1
 local nextPhaseSoon = 0
 local currentTorment, maxTorment = 0, 0
+local tormentCount = 1
 local shadowsCount = 1
 local burstCount, burstTimer = 1, nil
 local banished = nil
@@ -166,6 +167,7 @@ end
 function mod:OnEngage()
 	currentTorment, maxTorment = 0, 0
 	burstCount = 1
+	tormentCount = 1
 	phase = 1
 	nextPhaseSoon = 88
 	banished = nil
@@ -195,7 +197,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		phase = 2
 		self:Message("stages", "Neutral", "Long", "70% - " .. CL.phase:format(2), false)
 		self:CDBar(186123, 7) -- Wrought Chaos
-		self:CDBar(184964, 27) -- Shackled Torment
+		self:CDBar(184964, 27, CL.count:format(self:SpellName(184964), tormentCount)) -- Shackled Torment
 		self:CDBar(183828, 38) -- Death Brand
 		self:CDBar(183254, 44) -- Allure of Flames
 	elseif spellId == 190118 then -- Allow Phase 3 Spells
@@ -208,12 +210,12 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:CDBar(186961, 13) -- Nether Banish
 		self:CDBar(186123, 27) -- Wrought Chaos
 		self:CDBar(187180, 35) -- Demonic Feedback
-		self:CDBar(184964, 57.5) -- Shackled Torment
+		self:CDBar(184964, 57.5, CL.count:format(self:SpellName(184964), tormentCount)) -- Shackled Torment
 		feedbackTimer = self:ScheduleTimer("DemonicFeedbackSoon", 24)
 	elseif spellId == 190310 then -- Mythic Phase Combat Channel
 		self:StopBar(183254) -- Allure of Flames
 		self:StopBar(183828) -- Death Brand
-		self:StopBar(184964) -- Shackled Torment
+		self:StopBar(CL.count:format(self:SpellName(184964), tormentCount)) -- Shackled Torment
 		self:StopBar(186123) -- Wrought Chaos
 		self:StopBar(L.overfiend) -- Felborne Overfiend
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1") -- Ignore 40%, 25% warnings inside mythic P3 (50%->0%)
@@ -390,13 +392,14 @@ do
 			list[i] = self:ColorName(target)
 		end
 		if not isOnMe and not banished then
-			self:TargetMessage(spellId, list, "Attention")
+			self:TargetMessage(spellId, list, "Attention", nil, CL.count:format(self:SpellName(spellId), tormentCount))
 			if self:Mythic() then
 				self:PlaySound(spellId, "Alarm")
 			end
 		else
 			wipe(list)
 		end
+		tormentCount = tormentCount + 1
 	end
 
 	function mod:ShackledTorment(args)
@@ -411,7 +414,7 @@ do
 
 		list[#list + 1] = args.destName
 		if #list == 1 then
-			self:CDBar(args.spellId, 32) -- p2 40.1, 36.5.. p2.5 31.6 ?
+			self:CDBar(args.spellId, 32, CL.count:format(args.spellName, tormentCount+1)) -- p2 40.1, 36.5.. p2.5 31.6 ?
 			timer = self:ScheduleTimer(tormentSay, 0.4, self, args.spellId)
 		elseif timer and #list == 3 then
 			self:CancelTimer(timer)
