@@ -205,6 +205,7 @@ do
 			self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm", markOfDoomOnMe)
 			self:TargetBar(args.spellId, 15, args.destName, markOfDoomOnMe)
 			self:Flash(args.spellId)
+			self:ScheduleTimer(wipe, 1, list)
 		end
 
 		if count == 3 and timer then -- After the :Me check as we might be the last player
@@ -286,6 +287,7 @@ do
 			self:Say(args.spellId, CL.count_rticon:format(self:SpellName(170963), count, reverseCount)) -- 170963 = "Wrath"
 			self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm", CL.count_icon:format(self:SpellName(170963), count, reverseCount))
 			self:Flash(args.spellId)
+			self:ScheduleTimer(wipe, 1, list)
 		end
 
 		if count == 5 and timer then -- After the :Me check as we might be the last player
