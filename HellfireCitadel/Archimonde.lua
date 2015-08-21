@@ -538,6 +538,9 @@ do
 		if not self:Mythic() and chaosCount == 4 then
 			self:SecondaryIcon(186123)
 			self:PrimaryIcon(186123)
+			if UnitDebuff("player", self:SpellName(184964)) then -- Shackled Torment
+				self:Message(186123, "Positive", "Info", CL.over:format(self:SpellName(186123))) -- Wrought Chaos
+			end
 			self:CDBar(186123, 32) -- 52s - 20s of tossing
 		end
 	end
@@ -545,7 +548,9 @@ end
 
 function mod:HeartOfArgus(args)
 	self:Message("overfiend", "Positive", "Alert", CL.spawned:format(self:SpellName(L.overfiend)), false)
-	self:Bar("overfiend", 45, L.overfiend, L.overfiend_icon)
+	if phase < 3 then -- they can spawn just before the transition happens then jump down and gain the buff after
+		self:Bar("overfiend", 45, L.overfiend, L.overfiend_icon)
+	end
 end
 
 -- Phase 3
