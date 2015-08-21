@@ -27,9 +27,9 @@ local wrathOfGuldanTargets = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L[185147] = "Doom Lord portal closed!",
-	L[185175] = "Imp portal closed!",
-	L[182212] = "Infernal portal closed!",
+	L[185147] = "Doom Lord portal closed!"
+	L[185175] = "Imp portal closed!"
+	L[182212] = "Infernal portal closed!"
 
 	L.gaze = "Gaze (%d)"
 	L.felseeker_message = "%s (%d) %dy" -- same as Margok's branded_say

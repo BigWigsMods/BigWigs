@@ -34,7 +34,6 @@ if L then
 	L.tank_proximity_desc = "Open a 5 yard proximity showing the other tanks to help you deal with the Heavy Handed & Heavily Armed abilities."
 	L.tank_proximity_icon = 156138 -- Heavy Handed / ability_butcher_heavyhanded
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
