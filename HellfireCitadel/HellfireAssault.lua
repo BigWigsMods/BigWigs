@@ -190,7 +190,6 @@ if L then
 	L.middle = "Middle: %s"
 	L.right  = "Right: %s"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

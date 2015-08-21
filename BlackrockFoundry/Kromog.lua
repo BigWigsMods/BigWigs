@@ -34,7 +34,6 @@ if L then
 
 	L.destroy_pillars = "Destroy Pillars"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

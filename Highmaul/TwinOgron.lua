@@ -37,7 +37,6 @@ if L then
 	L.custom_off_volatility_marker_desc = "Marks targets of Arcane Volatility with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader."
 	L.custom_off_volatility_marker_icon = 1
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

@@ -56,7 +56,6 @@ if L then
 	L.creeping_moss_boss_heal = "Moss under BOSS (healing)"
 	L.creeping_moss_add_heal = "Moss under BIG ADD (healing)"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

@@ -42,7 +42,6 @@ if L then
 	L.furnace_msg2 = "It's marshmallow time!"
 	L.furnace_msg3 = "This can't be good..."
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

@@ -44,7 +44,6 @@ if L then
 	L.custom_off_branded_marker_desc = "Mark Branded targets with {rt3}{rt4}, requires promoted or leader."
 	L.custom_off_branded_marker_icon = 3
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

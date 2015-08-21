@@ -27,7 +27,6 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.roll_message = "Roll %d - %d ore to go!"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

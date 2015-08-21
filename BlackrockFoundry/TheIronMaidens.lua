@@ -48,7 +48,6 @@ if L then
 
 	L.power_message = "%d Iron Fury!"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

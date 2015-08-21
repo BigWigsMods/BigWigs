@@ -234,7 +234,6 @@ if L then
 
 	L.train_you = "Train on your lane! (%d)"
 end
-L = mod:GetLocale()
 
 local icons = { -- pull these out of the locale table
 	train = "achievement_dungeon_blackrockdepot",

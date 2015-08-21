@@ -32,7 +32,6 @@ if L then
 	L.custom_off_wolves_marker_desc = "Mark Cinder Wolves with {rt3}{rt4}{rt5}{rt6}, requires promoted or leader."
 	L.custom_off_wolves_marker_icon = 3
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

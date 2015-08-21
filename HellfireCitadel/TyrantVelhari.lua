@@ -27,7 +27,6 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.font_removed_soon = "Your Font expires soon!"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

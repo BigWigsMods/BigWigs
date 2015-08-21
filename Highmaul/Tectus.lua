@@ -38,7 +38,6 @@ if L then
 	L.shard = "Shard"
 	L.motes = "Motes"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

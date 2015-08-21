@@ -28,7 +28,6 @@ if L then
 	L.imps, L.imps_desc, L.imps_icon = -11694, 186532, "spell_shadow_summonimp"
 	L.voidfiend, L.voidfiend_desc, L.voidfiend_icon = -11714, 188939, "spell_shadow_summonvoidwalker"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

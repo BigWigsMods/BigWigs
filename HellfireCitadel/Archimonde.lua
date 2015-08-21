@@ -64,7 +64,6 @@ if L then
 	L.custom_off_chaos_helper_icon = 186123 -- spell_misc_zandalari_council_soulswap / Wrought Chaos
 	L.chaos_helper_message = "Your Chaos position: %d"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

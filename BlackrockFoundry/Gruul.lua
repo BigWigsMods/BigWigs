@@ -28,7 +28,6 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.first_ability = "Smash or Slam"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

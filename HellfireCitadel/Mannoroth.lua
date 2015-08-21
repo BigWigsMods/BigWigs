@@ -27,9 +27,9 @@ local wrathOfGuldanTargets = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.doomLord = "Doom Lord portal closed!"
-	L.imp = "Imp portal closed!"
-	L.infernal = "Infernal portal closed!"
+	L[185147] = "Doom Lord portal closed!",
+	L[185175] = "Imp portal closed!",
+	L[182212] = "Infernal portal closed!",
 
 	L.gaze = "Gaze (%d)"
 	L.felseeker_message = "%s (%d) %dy" -- same as Margok's branded_say
@@ -46,7 +46,6 @@ if L then
 	L.custom_off_wrath_marker_desc = "Mark the targets of Wrath of Gul'dan with {rt8}{rt7}{rt6}{rt5}{rt4}, requires promoted or leader."
 	L.custom_off_wrath_marker_icon = 8
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -446,24 +445,17 @@ end
 
 -- Phases
 
-do
-	local tbl = {
-		[185147] = L.doomLord,
-		[185175] = L.imp,
-		[182212] = L.infernal,
-	}
-	function mod:P1PortalClosed(args)
-		portalsClosed = portalsClosed + 1
-		self:Message("stages", "Neutral", nil, tbl[args.spellId], false)
-		if portalsClosed == 3 then
-			self:ScheduleTimer("Message", 1, "stages", "Neutral", "Info", CL.stage:format(2), false)
-			phase = 2
-			if not self:Mythic() then -- already starting mythic timers on :OnEnage()
-				self:CDBar(181557, 33) -- Fel Hellstorm
-				self:CDBar(181597, 40) -- Mannoroth's Gaze
-				self:CDBar(181354, 45) -- Glaive Combo
-				self:CDBar(181735, 60) -- Felseeker
-			end
+function mod:P1PortalClosed(args)
+	portalsClosed = portalsClosed + 1
+	self:Message("stages", "Neutral", nil, L[args.spellId], false)
+	if portalsClosed == 3 then
+		self:ScheduleTimer("Message", 1, "stages", "Neutral", "Info", CL.stage:format(2), false)
+		phase = 2
+		if not self:Mythic() then -- already starting mythic timers on :OnEnage()
+			self:CDBar(181557, 33) -- Fel Hellstorm
+			self:CDBar(181597, 40) -- Mannoroth's Gaze
+			self:CDBar(181354, 45) -- Glaive Combo
+			self:CDBar(181735, 60) -- Felseeker
 		end
 	end
 end

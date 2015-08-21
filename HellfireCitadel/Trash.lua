@@ -48,7 +48,6 @@ if L then
 	L.kazrogal = "Kaz'rogal"
 	L.anetheron = "Anetheron"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

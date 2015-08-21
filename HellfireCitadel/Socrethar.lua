@@ -40,7 +40,6 @@ if L then
 	L.portals_msg = "The portals have moved!"
 	L.portals_icon = 109400 -- spell_arcane_portalorgrimmar / Portals
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

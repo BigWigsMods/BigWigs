@@ -25,7 +25,6 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.add_warnings = "Add Spawn Warnings"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

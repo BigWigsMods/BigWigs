@@ -59,7 +59,6 @@ if L then
 	L.fate_root_you = "Shared Fate - You are rooted!"
 	L.fate_you = "Shared Fate on YOU! - Root on %s"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

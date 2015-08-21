@@ -64,7 +64,6 @@ if L then
 	L.firecaller_desc = "During phase two, 2 Firecallers will repeatedly spawn, 1 on each side of the room."
 	L.firecaller_icon = 24826 -- spell_fire_incinerate / Infernal Fire
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

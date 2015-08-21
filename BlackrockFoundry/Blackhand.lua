@@ -36,7 +36,6 @@ if L then
 	L.custom_off_massivesmash_marker_desc = "Mark the tank getting hit with Massive Shattering Smash with {rt6}, requires promoted or leader."
 	L.custom_off_massivesmash_marker_icon = 6
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

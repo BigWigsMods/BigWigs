@@ -18,7 +18,6 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_yell = "You face the might of the Burning Legion!"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

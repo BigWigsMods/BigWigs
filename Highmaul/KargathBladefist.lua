@@ -28,7 +28,6 @@ if L then
 	L.arena_sweeper_desc = "Timer for getting knocked out of the stadium stands after you've been Chain Hurled."
 	L.arena_sweeper_icon = "ability_kick"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

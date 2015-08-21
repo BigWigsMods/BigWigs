@@ -30,7 +30,6 @@ if L then
 	L.arcanist = "Gorian Arcanist"
 	L.ritualist = "Breaker Ritualist"
 end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
