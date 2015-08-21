@@ -27,9 +27,9 @@ local wrathOfGuldanTargets = {}
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L[185147] = "Doom Lord portal closed!"
-	L[185175] = "Imp portal closed!"
-	L[182212] = "Infernal portal closed!"
+	L["185147"] = "Doom Lord portal closed!"
+	L["185175"] = "Imp portal closed!"
+	L["182212"] = "Infernal portal closed!"
 
 	L.gaze = "Gaze (%d)"
 	L.felseeker_message = "%s (%d) %dy" -- same as Margok's branded_say
@@ -447,7 +447,7 @@ end
 
 function mod:P1PortalClosed(args)
 	portalsClosed = portalsClosed + 1
-	self:Message("stages", "Neutral", nil, L[args.spellId], false)
+	self:Message("stages", "Neutral", nil, L[tostring(args.spellId)], false)
 	if portalsClosed == 3 then
 		self:ScheduleTimer("Message", 1, "stages", "Neutral", "Info", CL.stage:format(2), false)
 		phase = 2
