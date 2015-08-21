@@ -106,7 +106,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 
 	elseif spellId == 187196 then -- Fel Feedback (Vanguard Akkelion Spawned)
 		self:Message("stages", "Neutral", "Info", "90% - ".. CL.spawned:format(self:SpellName(-11691)), false)
-		self:CDBar(186490, self:Mythic() and 55 or 33) -- Chains of Fel, to _start
+		self:CDBar(186490, self:Mythic() and 57 or 33) -- Chains of Fel, to _start
 		self:CDBar(186453, 12) -- Felblaze Flurry
 
 	elseif spellId == 190307 then -- Activate Void Portal (Phase 2)
@@ -162,7 +162,7 @@ function mod:AkkelionDies(args)
 	self:StopBar(186490) -- Chains of Fel
 	if self:Mythic() then
 		self:Message("stages", "Neutral", "Info", "50% - ".. L.killed:format(args.destName), false)
-		self:CDBar(186490, 30) -- Empowered Chains of Fel
+		self:CDBar(186490, 27.5) -- (Empowered) Chains of Fel
 	end
 end
 
@@ -171,7 +171,8 @@ function mod:OmnusDies(args)
 	self:StopBar(186546) -- Black Hole
 	if self:Mythic() then
 		self:Message("stages", "Neutral", "Info", "40% - ".. L.killed:format(args.destName), false)
-		self:CDBar(186546, 21) -- Empowered Black Hole
+		self:CDBar(186546, 21) -- (Empowered) Black Hole
+		self:CDBar(186490, 27.5) -- (Empowered) Chains of Fel
 	end
 end
 
@@ -291,7 +292,7 @@ do
 	local function printTarget(self, name, guid)
 		self:TargetMessage(186490, name, "Urgent", "Alert", CL.casting:format(self:SpellName(184656))) -- 184656 = "Chains"
 		if self:Me(guid) then
-			self:Say(186490, 184656) -- Chains
+			self:Say(186490, 184656) -- 184656 = "Chains"
 			self:Flash(186490) -- Flash for cast only
 		end
 	end
@@ -305,7 +306,7 @@ do
 	local list = mod:NewTargetList()
 	function mod:ChainsOfFel(args)
 		if self:Me(args.destGUID) then
-			self:Say(186490, 184656) -- Chains
+			self:Say(186490, 184656) -- 184656 = "Chains"
 		end
 		list[#list+1] = args.destName
 		if #list == 1 then
