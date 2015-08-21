@@ -1,4 +1,5 @@
-﻿local L = BigWigs:NewBossLocale("Gruul", "koKR")
+﻿-- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
+local L = BigWigs:NewBossLocale("Gruul", "koKR")
 if not L then return end
 if L then
 --@localization(locale="koKR", namespace="BlackrockFoundry/Gruul", format="lua_additive_table", handle-unlocalized="ignore")@

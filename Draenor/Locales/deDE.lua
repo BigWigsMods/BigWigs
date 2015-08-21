@@ -1,12 +1,5 @@
-local L = BigWigs:NewBossLocale("Rukhmar", "deDE")
+-- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
+local L = BigWigs:NewBossLocale("Supreme Lord Kazzak", "deDE")
 if L then
+--@localization(locale="deDE", namespace="Draenor/SupremeLordKazzak", format="lua_additive_table", handle-unlocalized="ignore")@
 end
-
-L = BigWigs:NewBossLocale("Tarlna the Ageless", "deDE")
-if L then
-end
-
-L = BigWigs:NewBossLocale("Drov the Ruiner", "deDE")
-if L then
-end
-

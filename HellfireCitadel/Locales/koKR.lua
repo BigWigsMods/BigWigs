@@ -1,4 +1,5 @@
-﻿local L = BigWigs:NewBossLocale("Hellfire Assault", "koKR")
+﻿-- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
+local L = BigWigs:NewBossLocale("Hellfire Assault", "koKR")
 if not L then return end
 if L then
 --@localization(locale="koKR", namespace="HellfireCitadel/HellfireAssault", format="lua_additive_table", handle-unlocalized="ignore")@

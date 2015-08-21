@@ -11,6 +11,16 @@ mod.worldBoss = 94015
 --BOSS_KILL#1801#Supreme Lord Kazzak
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.engage_yell = "You face the might of the Burning Legion!"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -24,31 +34,44 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:Log("SPELL_CAST_SUCCESS", "FelBreathSuccess", 187664)
 	self:Log("SPELL_AURA_APPLIED", "FelBreath", 187664)
 	self:Log("SPELL_AURA_REFRESH", "FelBreath", 187664)
 	self:Log("SPELL_AURA_REMOVED", "FelBreathRemoved", 187664)
+	self:Log("SPELL_CAST_SUCCESS", "SupremeDoomSuccess", 187466)
 	self:Log("SPELL_AURA_APPLIED", "SupremeDoom", 187471)
 	self:Log("SPELL_AURA_APPLIED", "MarkOfKazzak", 187668)
 	self:Log("SPELL_AURA_REMOVED", "MarkOfKazzakRemoved", 187668)
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	if not GetLocale():find("^en") and L.engage_yell:find("^You face") then
+		self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	else
+		self:Yell("Engage", L.engage_yell)
+	end
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("RAID_BOSS_EMOTE")
 	self:RegisterEvent("BOSS_KILL")
 end
 
 function mod:OnEngage()
-	self:CDBar(187471, 17) -- Supreme Doom
+	self:CDBar(187471, 21) -- Supreme Doom
+	self:CDBar(187664, 12) -- Fel Breath
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function mod:FelBreathSuccess(args)
+	self:CDBar(args.spellId, 22)
+end
+
 function mod:FelBreath(args)
 	if self:Tank(args.destName) then
 		self:TargetMessage(args.spellId, args.destName, "Urgent", self:Tank() and "Alert")
-		self:TargetBar(args.spellId, 30, args.destName)
+		if self:Me(args.destGUID) then
+			self:TargetBar(args.spellId, 30, args.destName)
+		end
 	end
 end
 
@@ -58,13 +81,20 @@ function mod:FelBreathRemoved(args)
 	end
 end
 
+function mod:SupremeDoomSuccess(args)
+	self:CDBar(187471, 51) -- Supreme Doom
+	local cd = self:BarTimeLeft(187664) -- Fel Breath
+	if cd > 0 and cd < 10 then
+		self:CDBar(187664, 11) -- Fel Breath
+	end
+end
+
 do
 	local list = mod:NewTargetList()
 	function mod:SupremeDoom(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Info", nil, nil, self:Healer())
-			self:CDBar(args.spellId, 51)
 		end
 	end
 end
