@@ -170,7 +170,7 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(182051, name, "Urgent", "Alert")
+		self:TargetMessage(182051, name, "Urgent", "Alarm")
 		if self:Me(guid) then
 			self:Say(182051)
 		end
@@ -329,7 +329,9 @@ function mod:GiftOfTheManariRemoved(args)
 end
 
 function mod:ShadowBoltVolley(args)
-	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
+	if self:Interrupter(args.sourceGUID) then
+		self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
+	end
 end
 
 function mod:IncompleteBindingRemoved(args) -- Phase 2 End
