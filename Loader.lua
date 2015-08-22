@@ -799,7 +799,7 @@ do
 					if warnedReallyOutOfDate > 1 and not hasReallyWarned then
 						hasReallyWarned = true
 						sysprint(L.extremelyOutdated)
-						RaidNotice_AddMessage(RaidWarningFrame, (L.extremelyOutdated):gsub("|", "\124"), {r=1,g=1,b=1}) -- XXX wowace packager doesn't keep my escape codes and RW doesn't like pipes :(
+						RaidNotice_AddMessage(RaidWarningFrame, L.extremelyOutdated, {r=1,g=1,b=1})
 					end
 					if ((v-isAlpha) - MY_BIGWIGS_REVISION) > 150 then
 						warnedExtremelyOutOfDate = warnedExtremelyOutOfDate + 1
@@ -959,7 +959,7 @@ do
 			warnedThisZone[id] = true
 			local msg = L.missingAddOn:format(zoneAddon)
 			sysprint(msg)
-			RaidNotice_AddMessage(RaidWarningFrame, msg:gsub("|", "\124"), {r=1,g=1,b=1}) -- XXX wowace packager doesn't keep my escape codes and RW doesn't like pipes :(
+			RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
 		end
 	end
 end

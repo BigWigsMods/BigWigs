@@ -18,8 +18,8 @@ L.alphaRelease = "You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"
 L.sourceCheckout = "You are running a source checkout of Big Wigs %s directly from the repository."
 L.newReleaseAvailable = "There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."
 L.alphaOutdated = "Your alpha version of Big Wigs is out of date (/bwv)."
-L.extremelyOutdated = "\124cffff0000WARNING:\124r Your Big Wigs is over 80 revisions out of date!! Your version may have bugs, missing features, or completely incorrect timers. It is HIGHLY recommended you update."
-L.severelyOutdated = "\124cffff0000Your Big Wigs is over 150 revisions out of date!! We HIGHLY recommend you update to prevent syncing issues with other players!\124r"
+L.extremelyOutdated = "|cffff0000WARNING:|r Your Big Wigs is over 80 revisions out of date!! Your version may have bugs, missing features, or completely incorrect timers. It is HIGHLY recommended you update."
+L.severelyOutdated = "|cffff0000Your Big Wigs is over 150 revisions out of date!! We HIGHLY recommend you update to prevent syncing issues with other players!|r"
 
 L.tooltipHint = "|cffeda55fClick|r to reset all running modules.\n|cffeda55fAlt-Click|r to disable them.\n|cffeda55fRight-Click|r to access options."
 L.activeBossModules = "Active boss modules:"
@@ -37,7 +37,7 @@ L.blizzRestrictionsZone = "Waiting until combat ends to finish loading due to Bl
 L.finishedLoading = "Combat has ended, Big Wigs has now finished loading."
 L.blizzRestrictionsConfig = "Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."
 
-L.missingAddOn = "Please note that this zone requires the [\124cFF436EEE%s\124r] plugin for timers to be displayed."
+L.missingAddOn = "Please note that this zone requires the |cFF436EEE%s|r plugin for timers to be displayed."
 
 L.coreAddonDisabled = "Big Wigs won't function properly since the addon %s is disabled. You can enable it from the addon control panel at the character selection screen."
 
