@@ -674,7 +674,7 @@ function plugin:BigWigs_Message(event, module, key, text, color, icon)
 	if seModule and seModule:IsSuperEmphasized(module, key) then
 		if seModule.db.profile.upper then
 			text = text:upper()
-			text = text:gsub("(%d|)T", "%1t") -- Fix texture paths that need to end in lowercase |t
+			text = text:gsub("(:%d|)T", "%1t") -- Fix texture paths that need to end in lowercase |t
 		end
 		fakeEmphasizeMessageAddon:Pour(text, r, g, b)
 	else
