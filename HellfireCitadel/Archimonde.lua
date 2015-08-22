@@ -22,6 +22,8 @@ local burstCount, burstTimer = 1, nil
 local banished = nil
 local feedbackSoon, feedbackTimer = nil, nil
 local p3Start = 0
+local conduitCount = 0
+local markOfTheLegionCount = 0
 local timers = {
 	["dc"] = {9.6,11.5,13.5,132.5,134.5,136.5,227.5,229.5,231.5,283.5,285.5,287.5,335.5,337.6,339.5},
 	["infernals"] = {35,36,37,98,99,100,161,162,163,164,216,217,218,219,284,286,288,290,325,326,327,328,329},
@@ -172,6 +174,8 @@ function mod:OnEngage()
 	banished = nil
 	feedbackSoon = nil
 	p3Start = 0
+	conduitCount = 0
+	markOfTheLegionCount = 0
 	self:Bar(182826, 6) -- Doomfire
 	self:Bar(183828, 15.5) -- Death Brand
 	self:Bar(183254, 30) -- Allure of Flames
@@ -223,7 +227,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:Message("stages", "Neutral", "Long", CL.phase:format(3), false)
 		p3Start = GetTime()
 		self:Bar(190394, 9.5) -- Dark Conduit
-		self:Bar(187050, 21.5) -- Mark of the Legion
+		self:Bar(187050, 21.5, CL.count:format(self:SpellName(187050), markOfTheLegionCount + 1)) -- Mark of the Legion
 		self:Bar(182225, 35) -- Rain of Chaos
 		self:Bar(190703, 53) -- Source of Chaos
 		self:Bar(190506, 62.5) -- Seething Corruption
@@ -704,7 +708,8 @@ function mod:InfernalSpawn(args)
 end
 
 function mod:DarkConduit(args)
-	self:Message(args.spellId, "Positive", "Alert")
+	conduitCount = (conduitCount % 3) + 1
+	self:Message(args.spellId, "Positive", "Alert", CL.count:format(args.spellName, conduitCount))
 	local time = 60
 	local p3Duration = GetTime() - p3Start
 	for _,v in ipairs(timers.dc) do
@@ -756,7 +761,7 @@ function mod:SeethingCorruption(args)
 	self:Bar(args.spellId, 12, CL.cast:format(args.spellName))
 end
 
-function mod:MarkOfTheLegionCast()
+function mod:MarkOfTheLegionCast(args)
 	local time = 60
 	local p3Duration = GetTime() - p3Start
 	for _,v in ipairs(timers.marks) do
@@ -765,7 +770,8 @@ function mod:MarkOfTheLegionCast()
 			break
 		end
 	end
-	self:Bar(187050, time)
+	markOfTheLegionCount = markOfTheLegionCount + 1 -- Starting on 0
+	self:Bar(187050, time, CL.count:format(args.spellName, markOfTheLegionCount + 1)) -- +1 for the next one
 end
 
 do
@@ -789,7 +795,7 @@ do
 			list[i] = self:ColorName(target)
 		end
 		if not isOnMe then
-			self:TargetMessage(spellId, list, "Attention")
+			self:TargetMessage(spellId, list, "Attention", CL.count:format(self:SpellName(spellId), markOfTheLegionCount))
 			self:OpenProximity(spellId, 10, proxList, true)
 		else
 			wipe(list)
