@@ -777,10 +777,10 @@ do
 		for i = 1, #list do
 			local target = list[i]
 			if target == isOnMe then
-				self:Say(spellId, CL.count_rticon:format(self:SpellName(187553), i, i)) -- 28836 = "Mark"
+				self:Say(spellId, CL.count_rticon:format(self:SpellName(28836), i, i)) -- 28836 = "Mark"
 				self:Flash(spellId)
 				self:OpenProximity(spellId, 10, nil, true)
-				self:TargetMessage(spellId, target, "Personal", "Alarm", CL.count_icon:format(self:SpellName(187553), i, i)) -- 28836 = "Mark"
+				self:TargetMessage(spellId, target, "Personal", "Alarm", CL.count_icon:format(self:SpellName(28836), i, i)) -- 28836 = "Mark"
 			end
 			if self:GetOption("custom_off_legion_marker") then
 				SetRaidTarget(target, i)
