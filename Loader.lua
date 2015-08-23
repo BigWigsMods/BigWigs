@@ -748,6 +748,13 @@ do
 					f.text:SetFormattedText("Big Wigs: %.1f", timeLeft)
 				end
 			end)
+
+			-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
+			-- local name, addon = ...
+			-- if BigWigsLoader then
+			-- 	BigWigsLoader.RegisterMessage(addon, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
+			-- end
+			public:SendMessage("BigWigs_FrameCreated", timerBar, "QueueTimer")
 		end
 	end
 end
