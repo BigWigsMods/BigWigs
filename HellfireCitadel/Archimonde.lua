@@ -228,7 +228,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		p3Start = GetTime()
 		self:Bar(190394, 9.5) -- Dark Conduit
 		self:Bar(187050, 21.5, CL.count:format(self:SpellName(187050), markOfTheLegionCount + 1)) -- Mark of the Legion
-		self:Bar(182225, 35) -- Rain of Chaos
+		self:Bar(182225, 35, CL.count:format(self:SpellName(182225), 3)) -- Rain of Chaos
 		self:Bar(190703, 53) -- Source of Chaos
 		self:Bar(190506, 62.5) -- Seething Corruption
 		self:Bar(190821, 76.5) -- Twisted Darkness
@@ -697,13 +697,19 @@ function mod:InfernalSpawn(args)
 		self:Message(182225, "Urgent", "Alert")
 		local time = 61
 		local p3Duration = GetTime() - p3Start
+		local infernals = 3
 		for _, v in ipairs(timers.infernals) do
 			if v > p3Duration + 0.5 then
 				time = v - p3Duration
+				if v > 110 and v < 320 then
+					infernals = 4
+				elseif v > 320 then
+					infernals = 5
+				end
 				break
 			end
 		end
-		self:Bar(182225, time)
+		self:Bar(182225, time, CL.count:format(self:SpellName(182225), infernals))
 	end
 end
 
