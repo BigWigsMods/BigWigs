@@ -269,10 +269,7 @@ end
 
 function mod:ExertDominance(args)
 	self:Message(args.spellId, "Attention", self:Interrupter(args.sourceGUID) and not inBarrier and "Alert", CL.count:format(args.spellName, dominanceCount))
-	dominanceCount = dominanceCount + 1
-	if dominanceCount > 3 then
-		dominanceCount = 1
-	end
+	dominanceCount = (dominanceCount % 3) + 1
 end
 
 function mod:Apocalypse(args)

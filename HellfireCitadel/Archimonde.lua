@@ -23,7 +23,7 @@ local banished = nil
 local feedbackSoon, feedbackTimer = nil, nil
 local p3Start = 0
 local conduitCount = 0
-local markOfTheLegionCount = 0
+local markOfTheLegionCount = 1
 local timers = {
 	["dc"] = {9.6,11.5,13.5,132.5,134.5,136.5,227.5,229.5,231.5,283.5,285.5,287.5,335.5,337.6,339.5},
 	["infernals"] = {35,36,37,98,99,100,161,162,163,164,216,217,218,219,284,286,288,290,325,326,327,328,329},
@@ -175,7 +175,6 @@ function mod:OnEngage()
 	feedbackSoon = nil
 	p3Start = 0
 	conduitCount = 0
-	markOfTheLegionCount = 0
 	self:Bar(182826, 6) -- Doomfire
 	self:Bar(183828, 15.5) -- Death Brand
 	self:Bar(183254, 30) -- Allure of Flames
@@ -216,6 +215,10 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:CDBar(184964, 57.5, CL.count:format(self:SpellName(184964), tormentCount)) -- Shackled Torment
 		feedbackTimer = self:ScheduleTimer("DemonicFeedbackSoon", 24)
 	elseif spellId == 190310 then -- Mythic Phase Combat Channel
+		phase = 3
+		markOfTheLegionCount = 1
+		p3Start = GetTime()
+
 		self:StopBar(183254) -- Allure of Flames
 		self:StopBar(183828) -- Death Brand
 		self:StopBar(CL.count:format(self:SpellName(184964), tormentCount)) -- Shackled Torment
@@ -223,11 +226,9 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:StopBar(L.overfiend) -- Felborne Overfiend
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1") -- Ignore 40%, 25% warnings inside mythic P3 (50%->0%)
 
-		phase = 3
 		self:Message("stages", "Neutral", "Long", CL.phase:format(3), false)
-		p3Start = GetTime()
 		self:Bar(190394, 9.5) -- Dark Conduit
-		self:Bar(187050, 21.5, CL.count:format(self:SpellName(187050), markOfTheLegionCount + 1)) -- Mark of the Legion
+		self:Bar(187050, 21.5, CL.count:format(self:SpellName(187050), markOfTheLegionCount)) -- Mark of the Legion
 		self:Bar(182225, 35, CL.count:format(self:SpellName(182225), 3)) -- Rain of Chaos
 		self:Bar(190703, 53) -- Source of Chaos
 		self:Bar(190506, 62.5) -- Seething Corruption
@@ -776,8 +777,8 @@ function mod:MarkOfTheLegionCast(args)
 			break
 		end
 	end
-	markOfTheLegionCount = markOfTheLegionCount + 1 -- Starting on 0
-	self:Bar(187050, time, CL.count:format(args.spellName, markOfTheLegionCount + 1)) -- +1 for the next one
+	markOfTheLegionCount = markOfTheLegionCount + 1
+	self:Bar(187050, time, CL.count:format(args.spellName, markOfTheLegionCount))
 end
 
 do
@@ -801,7 +802,7 @@ do
 			list[i] = self:ColorName(target)
 		end
 		if not isOnMe then
-			self:TargetMessage(spellId, list, "Attention", CL.count:format(self:SpellName(spellId), markOfTheLegionCount))
+			self:TargetMessage(spellId, list, "Attention", CL.count:format(self:SpellName(spellId), markOfTheLegionCount-1))
 			self:OpenProximity(spellId, 10, proxList, true)
 		else
 			wipe(list)
