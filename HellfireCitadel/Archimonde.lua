@@ -715,21 +715,22 @@ do
 	end
 
 	function mod:InfernalSpawn(args)
+		local t = GetTime()
+		if t-prev > 30 then
+			count = 1
+			prev = t
+			wipe(infernals)
+		end
+		if self:GetOption("custom_off_infernal_marker") then
+			infernals[args.destGUID] = count
+			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
+			self:RegisterEvent("UNIT_TARGET")
+		end
+
 		if self:Mythic() then
 			local barTime = 61
 			local infernalAmount = 3
-			local t = GetTime()
-			if t-prev > 10 then
-				count = 1
-				prev = t
-				wipe(infernals)
-			end
 			local p3Duration = t - p3Start
-			if self:GetOption("custom_off_infernal_marker") then
-				infernals[args.destGUID] = count
-				self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
-				self:RegisterEvent("UNIT_TARGET")
-			end
 
 			for i = 1, #timers.infernals do
 				local v = timers.infernals[i]
@@ -745,8 +746,10 @@ do
 			end
 
 			self:Message(182225, "Urgent", "Alert", L.infernal_count:format(self:SpellName(182225), count, infernalAmount))
-			count = barTime > 10 and 1 or count + 1
+			count = barTime > 30 and 1 or count + 1
 			self:Bar(182225, barTime, L.infernal_count:format(self:SpellName(182225), count, infernalAmount))
+		else
+			count = count + 1
 		end
 	end
 end
