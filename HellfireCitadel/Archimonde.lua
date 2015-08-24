@@ -43,6 +43,7 @@ if L then
 	L.chaos_bar = "%s -> %s"
 	L.chaos_from = "%s from %s"
 	L.chaos_to = "%s to %s"
+	L.infernal_count = "%s (%d/%d)"
 
 	L.overfiend = -11603
 	L.overfiend_desc = 186662
@@ -60,6 +61,10 @@ if L then
 	L.custom_off_legion_marker = "Mark of the Legion marker"
 	L.custom_off_legion_marker_desc = "Mark the Mark of the Legion targets with {rt1}{rt2}{rt3}{rt4}, requires promoted or leader."
 	L.custom_off_legion_marker_icon = 1
+
+	L.custom_off_infernal_marker = "Infernal marker"
+	L.custom_off_infernal_marker_desc = "Mark the Infernals spawned by Rain of Chaos with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader."
+	L.custom_off_infernal_marker_icon = 1
 
 	L.custom_off_chaos_helper = "Wrought Chaos helper"
 	L.custom_off_chaos_helper_desc = "For Mythic difficulty only. This feature will tell you what chaos number you are, showing you a normal message and printing to say chat. Depending on what tactic you use, this feature may or may not be useful."
@@ -91,6 +96,7 @@ function mod:GetOptions()
 		{189894, "SAY", "PROXIMITY"}, -- Void Star Fixate
 		{187255, "FLASH"}, -- Nether Storm
 		182225, -- Rain of Chaos
+		"custom_off_infernal_marker",
 		190050, -- Touch of Shadows
 		-- P3 (mythic)
 		190394, -- Dark Conduit
@@ -693,24 +699,55 @@ end
 
 -- Phase 3 (mythic)
 
-function mod:InfernalSpawn(args)
-	if self:Mythic() then
-		self:Message(182225, "Urgent", "Alert")
-		local time = 61
-		local p3Duration = GetTime() - p3Start
-		local infernals = 3
-		for _, v in ipairs(timers.infernals) do
-			if v > p3Duration + 0.5 then
-				time = v - p3Duration
-				if v > 110 and v < 320 then
-					infernals = 4
-				elseif v > 320 then
-					infernals = 5
-				end
-				break
+do
+	local prev, count, infernals = 0, 1, {}
+	function mod:UNIT_TARGET(_, firedUnit)
+		local unit = firedUnit and firedUnit.."target" or "mouseover"
+		local guid = UnitGUID(unit)
+		if infernals[guid] then
+			SetRaidTarget(unit, infernals[guid])
+			infernals[guid] = nil
+			if not next(infernals) then
+				self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+				self:UnregisterEvent("UNIT_TARGET")
 			end
 		end
-		self:Bar(182225, time, CL.count:format(self:SpellName(182225), infernals))
+	end
+
+	function mod:InfernalSpawn(args)
+		if self:Mythic() then
+			local barTime = 61
+			local infernalAmount = 3
+			local t = GetTime()
+			if t-prev > 10 then
+				count = 1
+				prev = t
+				wipe(infernals)
+			end
+			local p3Duration = t - p3Start
+			if self:GetOption("custom_off_infernal_marker") then
+				infernals[args.destGUID] = count
+				self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "UNIT_TARGET")
+				self:RegisterEvent("UNIT_TARGET")
+			end
+
+			for i = 1, #timers.infernals do
+				local v = timers.infernals[i]
+				if v > p3Duration + 0.5 then
+					barTime = v - p3Duration
+					if v > 110 and v < 320 then
+						infernalAmount = 4
+					elseif v > 320 then
+						infernalAmount = 5
+					end
+					break
+				end
+			end
+
+			self:Message(182225, "Urgent", "Alert", L.infernal_count:format(self:SpellName(182225), count, infernalAmount))
+			count = barTime > 10 and 1 or count + 1
+			self:Bar(182225, barTime, L.infernal_count:format(self:SpellName(182225), count, infernalAmount))
+		end
 	end
 end
 
