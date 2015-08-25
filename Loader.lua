@@ -422,8 +422,10 @@ function mod:ADDON_LOADED(addon)
 			local realm = GetRealmName()
 			if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
 				local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
-				self.isFakingDBM = key.fakeDBMVersion
-				self.isShowingZoneMessages = key.showZoneMessages
+				if key then
+					self.isFakingDBM = key.fakeDBMVersion
+					self.isShowingZoneMessages = key.showZoneMessages
+				end
 			end
 		end
 		-- Cleanup function.
