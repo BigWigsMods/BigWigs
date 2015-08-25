@@ -352,7 +352,7 @@ do
 		if burstTimer then
 			self:CancelTimer(burstTimer)
 		end
-		burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", burstCount == 2 and 53 or 48)
+		burstTimer = self:ScheduleTimer("ShadowfelBurstSoon", (self:Mythic() and 44) or (burstCount == 2 and 53) or 48)
 	end
 
 	local list = mod:NewTargetList()
@@ -360,7 +360,7 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, 183817, list, "Urgent")
-			self:Bar(183817, burstCount == 2 and 61 or 56)
+			self:Bar(183817, (self:Mythic() and 52) or (burstCount == 2 and 61) or 56)
 			if self:Ranged() then
 				self:ScheduleTimer("CloseProximity", 6, 183817)
 			end
