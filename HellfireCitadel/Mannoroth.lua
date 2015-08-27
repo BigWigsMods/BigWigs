@@ -257,13 +257,13 @@ end
 
 function mod:FelImplosion(args)
 	if phase > 1 then
-		self:CDBar(args.spellId, self:Mythic() and 49 or 30)
+		self:CDBar(args.spellId, self:Mythic() and 49 or 38)
 	end
 end
 
 function mod:Inferno(args)
 	if phase > 1 then
-		self:CDBar(args.spellId, self:Mythic() and 55 or 35)
+		self:CDBar(args.spellId, (self:Mythic() and 55) or (phase == 2 and 45) or 35)
 	end
 end
 
@@ -481,10 +481,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		-- ~7s before: CHAT_MSG_MONSTER_YELL#Fear not, Mannoroth. The fel gift empowers you... Make them suffer!#Gul'dan
 		self:Message("stages", "Neutral", "Info", CL.stage:format(3), false)
 		phase = 3
-		self:CDBar(181557, 24) -- Fel Hellstorm
+		self:CDBar(181557, 22) -- Fel Hellstorm
 		self:CDBar(181799, 26.5) -- Shadowforce, 26.5-31
-		self:CDBar(181354, 36) -- Glaive Combo
-		self:CDBar(181597, 40) -- Mannoroth's Gaze
+		self:CDBar(181597, 37) -- Mannoroth's Gaze
+		self:CDBar(181354, 40) -- Glaive Combo
 		self:CDBar(181735, 60) -- Felseeker
 		if self:Mythic() then
 			self:Bar(186362, 5) -- Wrath of Gul'dan
@@ -499,10 +499,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(181799) -- Shadowforce
 		self:StopBar(181735) -- Felseeker
 		self:StopBar(181354) -- Glaive Combo
-		self:CDBar(181557, 14, 181948) -- Empowered Fel Hellstorm
+		self:CDBar(181557, 12, 181948) -- Empowered Fel Hellstorm
 		self:CDBar(181354, 23, 187347) -- Empowered Glaive Combo
-		self:CDBar(181799, 45, 182084) -- Empowered Shadowforce
-		self:CDBar(181597, 30, 182006) -- Empowered Mannoroth's Gaze
+		self:CDBar(181597, 27, 182006) -- Empowered Mannoroth's Gaze
+		self:CDBar(181799, 42, 182084) -- Empowered Shadowforce
 		self:CDBar(181735, 60, 182077) -- Empowered Felseeker
 		if self:Mythic() then
 			self:Bar(186362, 5) -- Wrath of Gul'dan
