@@ -23,6 +23,9 @@ plugin.defaultDB = {
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 plugin.displayName = L.bossBlock
+local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
+local GetCurrentMapAreaID = BigWigsLoader.GetCurrentMapAreaID
+local GetCurrentMapDungeonLevel = BigWigsLoader.GetCurrentMapDungeonLevel
 
 -------------------------------------------------------------------------------
 -- Options
