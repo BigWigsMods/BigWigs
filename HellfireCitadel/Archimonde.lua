@@ -21,9 +21,11 @@ local shadowsCount = 1
 local burstCount, burstTimer = 1, nil
 local banished = nil
 local feedbackSoon, feedbackTimer = nil, nil
+local mythicChaosMsg, mythicChaosBar = nil, nil
 local p3Start = 0
 local conduitCount = 0
 local markOfTheLegionCount = 1
+local infernalAmount = 3
 local timers = {
 	["dc"] = {9.6,11.5,13.5,132.5,134.5,136.5,227.5,229.5,231.5,283.5,285.5,287.5,335.5,337.6,339.5},
 	["infernals"] = {35,36,37,98,99,100,161,162,163,164,216,217,218,219,284,286,288,290,325,326,327,328,329},
@@ -223,19 +225,24 @@ function mod:Phases(unit, spellName, _, _, spellId)
 	elseif spellId == 190310 then -- Mythic Phase Combat Channel
 		phase = 3
 		markOfTheLegionCount = 1
+		infernalAmount = 3
 		p3Start = GetTime()
 
 		self:StopBar(183254) -- Allure of Flames
 		self:StopBar(183828) -- Death Brand
 		self:StopBar(CL.count:format(self:SpellName(184964), tormentCount)) -- Shackled Torment
 		self:StopBar(186123) -- Wrought Chaos
+		self:StopBar(CL.cast:format(self:SpellName(186123))) -- Wrought Chaos
+		self:CancelTimer(mythicChaosMsg)
+		self:CancelTimer(mythicChaosBar)
+		mythicChaosMsg, mythicChaosBar = nil, nil
 		self:StopBar(L.overfiend) -- Felborne Overfiend
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1") -- Ignore 40%, 25% warnings inside mythic P3 (50%->0%)
 
 		self:Message("stages", "Neutral", "Long", CL.phase:format(3), false)
 		self:Bar(190394, 9.5) -- Dark Conduit
 		self:Bar(187050, 21.5, CL.count:format(self:SpellName(187050), markOfTheLegionCount)) -- Mark of the Legion
-		self:Bar(182225, 35, CL.count:format(self:SpellName(182225), 3)) -- Rain of Chaos
+		self:Bar(182225, 35, L.infernal_count:format(self:SpellName(182225), markOfTheLegionCount, infernalAmount)) -- Rain of Chaos
 		self:Bar(190703, 53) -- Source of Chaos
 		self:Bar(190506, 62.5) -- Seething Corruption
 		self:Bar(190821, 76.5) -- Twisted Darkness
@@ -496,8 +503,8 @@ do
 				self:ScheduleTimer(MythicChaos, 0.2, self)
 			end
 			self:Bar(186123, 18, CL.cast:format(args.spellName))
-			self:ScheduleTimer("Message", 18, 186123, "Personal", nil, CL.over:format(args.spellName))
-			self:ScheduleTimer("CDBar", 18, 186123, 34)
+			mythicChaosMsg = self:ScheduleTimer("Message", 18, 186123, "Personal", nil, CL.over:format(args.spellName))
+			mythicChaosBar = self:ScheduleTimer("CDBar", 18, 186123, 34)
 		end
 	end
 
@@ -729,8 +736,8 @@ do
 
 		if self:Mythic() then
 			local barTime = 61
-			local infernalAmount = 3
 			local p3Duration = t - p3Start
+			self:Message(182225, "Urgent", "Alert", L.infernal_count:format(self:SpellName(182225), count, infernalAmount))
 
 			for i = 1, #timers.infernals do
 				local v = timers.infernals[i]
@@ -745,7 +752,6 @@ do
 				end
 			end
 
-			self:Message(182225, "Urgent", "Alert", L.infernal_count:format(self:SpellName(182225), count, infernalAmount))
 			count = barTime > 30 and 1 or count + 1
 			self:Bar(182225, barTime, L.infernal_count:format(self:SpellName(182225), count, infernalAmount))
 		else
@@ -824,8 +830,8 @@ end
 do
 	local list, proxList, isOnMe, timer = {}, {}, nil, nil
 	local function legionSay(self, spellId)
+		-- APPLIED should alawys be in debuff remaining order, manually sort by debuff remaining if any issues show up
 		timer = nil
-		--sort(list) -- APPLIED should be in debuff remaining order, manually sort by debuff remaining if any issues show up
 		wipe(proxList)
 		for i = 1, #list do
 			local target = list[i]
@@ -842,7 +848,7 @@ do
 			list[i] = self:ColorName(target)
 		end
 		if not isOnMe then
-			self:TargetMessage(spellId, list, "Attention", CL.count:format(self:SpellName(spellId), markOfTheLegionCount-1))
+			self:TargetMessage(spellId, list, "Attention", nil, CL.count:format(self:SpellName(spellId), markOfTheLegionCount-1))
 			self:OpenProximity(spellId, 10, proxList, true)
 		else
 			wipe(list)
