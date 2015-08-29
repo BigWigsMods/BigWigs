@@ -348,10 +348,11 @@ function mod:ShadowfelBurstSoon()
 end
 
 do
-	local proxList = {}
+	local proxList, isOnMe = {}, nil
 	function mod:ShadowfelBurst(args)
 		burstCount = burstCount + 1
 		if self:Ranged() then
+			isOnMe = nil
 			wipe(proxList)
 			self:OpenProximity(args.spellId, 9) -- 8+1 safety
 		end
@@ -375,8 +376,9 @@ do
 		if self:Ranged() then
 			proxList[#proxList+1] = args.destName
 			if self:Me(args.destGUID) then
+				isOnMe = true
 				self:OpenProximity(183817, 8, nil, true)
-			elseif not UnitDebuff("player", args.spellName) then
+			elseif not isOnMe then
 				self:OpenProximity(183817, 8, proxList, true)
 			end
 		end
