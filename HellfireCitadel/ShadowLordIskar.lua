@@ -149,8 +149,10 @@ do
 		self:TargetMessage(185345, name, "Important", "Long") -- Warning is used in Eye+Winds events, so Long here to be distinct
 	end
 	function mod:ShadowRiposte(args)
-		self:GetBossTarget(printTarget, 0.3, args.sourceGUID)
-		self:CDBar(args.spellId, 27)
+		if self:MobId(args.sourceGUID) == 90316 then -- prevent Dark Simulacrum from messing with the cd
+			self:GetBossTarget(printTarget, 0.3, args.sourceGUID)
+			self:CDBar(args.spellId, 27)
+		end
 	end
 end
 
