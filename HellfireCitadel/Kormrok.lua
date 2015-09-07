@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Kormrok", 1026, 1392)
 if not mod then return end
 mod:RegisterEnableMob(90435)
 mod.engageId = 1787
-mod.respawnTime = 14
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -27,6 +27,11 @@ local isPounding = nil
 
 function mod:GetOptions()
 	return {
+		--[[ Mythic ]]--
+		185686, -- Fiery Residue
+		185687, -- Foul Residue
+		181208, -- Shadow Residue
+		--[[ General ]]--
 		181307, -- Foul Crush
 		{181306, "PROXIMITY", "FLASH", "SAY"}, -- Explosive Burst
 		{181305, "TANK_HEALER"}, -- Swat
@@ -37,6 +42,9 @@ function mod:GetOptions()
 		186882, -- Enrage
 		"stages",
 		"proximity",
+	}, {
+		[185686] = "mythic",
+		[181307] = "general",
 	}
 end
 
@@ -54,6 +62,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveEnergy", 180116, 186880, 189198) -- Normal, Enraged, Normal (LFR)
 	self:Log("SPELL_AURA_APPLIED", "FoulEnergy", 180117, 186881, 189199) -- Normal, Enraged, Normal (LFR)
 	self:Log("SPELL_AURA_APPLIED", "Enrage", 186882)
+	self:Log("SPELL_AURA_APPLIED", "Residue", 185686, 185687, 181208)
+	self:Log("SPELL_PERIODIC_DAMAGE", "Residue", 185686, 185687, 181208)
+	self:Log("SPELL_PERIODIC_MISSED", "Residue", 185686, 185687, 181208)
 end
 
 function mod:OnEngage()
@@ -94,7 +105,7 @@ function mod:ShadowEnergy(args)
 		self:CDBar(180244, 45 * enrageMod, CL.count:format(self:SpellName(180244), poundCount)) -- Pound
 		self:Bar(181296, 63 * enrageMod, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
 		self:Bar(181299, 83 * enrageMod, foulCount > 0 and 181300)-- Grasping Hands / Dragging Hands
-		self:CDBar("stages", 145 * enrageMod, 180068) -- Leap
+		self:CDBar("stages", (self:Mythic() and 155 or 145) * enrageMod, 180068) -- Leap
 	end
 end
 
@@ -271,7 +282,17 @@ function mod:PoundOver(args)
 end
 
 function mod:Enrage(args)
-	enrageMod = self:Mythic() and 0.62 or 0.84 -- 0.62 is not 100% accurate - if it's too inaccurate, we have to do separate mythic times
+	enrageMod = self:Mythic() and 0.604 or 0.84 -- 0.604 is not 100% accurate - if it's too inaccurate, we have to do separate mythic times
 	self:Message(args.spellId, "Important", "Alarm")
+end
+
+do
+	local prev = 0
+	function mod:Residue(args)
+		if self:Me(args.destGUID) and GetTime()-prev > 2.5 then
+			prev = GetTime()
+			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+		end
+	end
 end
 
