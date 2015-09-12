@@ -22,7 +22,6 @@ local portalTimer = nil
 local isHostile = true -- is Soulbound Construct hostile or friendly
 local inBarrier = false
 local addCount = 1
-local addFormat = CL.add.." (%d)"
 local ghostGUIDS = {}
 
 --------------------------------------------------------------------------------
@@ -125,7 +124,7 @@ function mod:OnEngage()
 	self:CDBar(182051, 29) -- Felblaze Charge
 	if self:Mythic() then
 		self:Bar(188693, 34, CL.count:format(self:SpellName(188693), felburstCount)) -- Apocalyptic Felburst
-		self:Bar(-11778, 20, addFormat:format(addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
+		self:Bar(-11778, 20, CL.count:format(CL.add, addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
 	end
 end
 
@@ -136,9 +135,9 @@ end
 -- Phase 1
 
 function mod:SocretharsContingency(args)
-	self:Message(-11778, "Attention", nil, addFormat:format(addCount))
+	self:Message(-11778, "Attention", nil, CL.count:format(CL.add, addCount))
 	addCount = addCount + 1
-	self:Bar(-11778, 60, addFormat:format(addCount), "spell_shadow_summonfelhunter")
+	self:Bar(-11778, 60, CL.count:format(CL.add, addCount), "spell_shadow_summonfelhunter")
 end
 
 function mod:UnstoppableTenacity(args)
@@ -242,7 +241,7 @@ do
 		self:StopBar(180221) -- Volatile Fel Orb
 		self:StopBar(182051) -- Felblaze Charge
 		self:StopBar(181288) -- Fel Prison
-		self:StopBar(addFormat:format(addCount)) -- Voracious Soulstalker
+		self:StopBar(CL.count:format(CL.add, addCount)) -- Voracious Soulstalker
 		-- Start P2 bars
 		self:Bar("stages", 7, 180258, "achievement_boss_hellfire_socrethar") -- Construct is Good
 		self:Bar("portals", 138, L.portals, L.portals_icon) -- Portals Move
@@ -345,6 +344,6 @@ function mod:IncompleteBindingRemoved(args) -- Phase 2 End
 	self:CDBar(182051, 26) -- Felblaze Charge
 	if self:Mythic() then
 		self:CDBar(188693, 33, CL.count:format(self:SpellName(188693), felburstCount)) -- Apocalyptic Felburst
-		self:CDBar(-11778, 16, addFormat:format(addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
+		self:CDBar(-11778, 16, CL.count:format(CL.add, addCount), "spell_shadow_summonfelhunter") -- Voracious Soulstalker
 	end
 end
