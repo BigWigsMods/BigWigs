@@ -215,7 +215,7 @@ function mod:GetOptions()
 		--186845, -- Flameorb  got removed?!
 		188101, -- Belch Flame
 		180184, -- Crush
-		190748, -- Cannonball (Grute)
+		{190748, "FLASH", "SAY"}, -- Cannonball (Grute)
 		185021, -- Call to Arms (Transporter)
 	}, {
 		[184369] = -11484, -- Mar'tak
@@ -303,7 +303,9 @@ do
 end
 
 function mod:Slam(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "Urgent")
+	if self:Range(args.destName) < 42 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "Urgent")
+	end
 end
 
 function mod:Cower(args)
@@ -317,9 +319,11 @@ end
 do
 	local list = mod:NewTargetList()
 	function mod:ConductedShockPulse(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention")
+		if self:Range(args.destName) < 42 then
+			list[#list+1] = args.destName
+			if #list == 1 then
+				self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention")
+			end
 		end
 	end
 end
@@ -353,9 +357,18 @@ function mod:Crush(args)
 	self:Message(args.spellId, "Urgent", "Long", CL.incoming:format(args.spellName))
 end
 
-function mod:Cannonball(args)
-	self:Message(args.spellId, "Attention", "Info")
-	self:Bar(args.spellId, 12)
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage(190748, name, "Attention", "Info", nil, nil, true)
+		if self:Me(guid) then
+			self:Say(190748)
+			self:Flash(190748)
+		end
+	end
+	function mod:Cannonball(args)
+		self:GetBossTarget(printTarget, 0.3, args.sourceGUID)
+		self:Bar(args.spellId, 12)
+	end
 end
 
 function mod:StartVehicleTimer(lane, count)
