@@ -289,7 +289,7 @@ do
 		LibStub("LibDualSpec-1.0"):EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
 
 		acr:RegisterOptionsTable("BigWigs", getOptions, true)
-		acd:SetDefaultSize("BigWigs", 858,660)
+		acd:SetDefaultSize("BigWigs", 858, 660)
 		--local mainOpts = acd:AddToBlizOptions("BigWigs", "Big Wigs")
 		--mainOpts:HookScript("OnShow", function()
 		--	BigWigs:Enable()

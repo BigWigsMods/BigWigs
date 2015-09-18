@@ -243,8 +243,8 @@ do
 				self:CDBar(181508, 14.5)
 			end
 			self:Bar(181508, 5, 84474, "spell_shadow_seedofdestruction") -- 84474 = "Explosion"
-			timer = self:ScheduleTimer(seedSay, 0.4, self, 181508)
-		elseif self:Mythic() and timer and #list == 5 then -- Mythic only, seeds scale with players
+			timer = self:ScheduleTimer(seedSay, self:Mythic() and 1 or 0.4, self, 181508)
+		elseif timer and #list == 5 then -- Seeds scale with players on non-Mythic
 			self:CancelTimer(timer)
 			seedSay(self, 181508)
 		end
