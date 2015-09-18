@@ -140,6 +140,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ShadowfelBurst", 183817)
 	self:Log("SPELL_AURA_APPLIED", "ShadowfelBurstApplied", 183634)
 	self:Log("SPELL_CAST_START", "Desecrate", 185590)
+	self:Log("SPELL_CAST_SUCCESS", "Desecration", 183969) -- could also use something else, but i want to make sure it works so im copy pasting from wa
 	-- P2
 	self:Log("SPELL_AURA_APPLIED", "ShackledTorment", 184964)
 	self:Log("SPELL_AURA_REMOVED", "ShackledTormentRemoved", 184964)
@@ -201,6 +202,7 @@ function mod:Phases(unit, spellName, _, _, spellId)
 		self:StopBar(182826) -- Doomfire
 		self:StopBar(183817) -- Shadowfel Burst
 		self:StopBar(185590) -- Desecrate
+		self:StopBar(183963) -- Light of the Naaru
 		self:CloseProximity(183817) -- Shadowfel Burst
 		self:CancelTimer(burstTimer)
 
@@ -388,6 +390,10 @@ end
 function mod:Desecrate(args)
 	self:Message(args.spellId, "Attention", "Alarm")
 	self:CDBar(args.spellId, 27) -- Min: 26.8/Avg: 29.2/Max: 33.4
+end
+
+function mod:Desecration(args)
+	self:Bar(183963, 10) -- Light of the Naaru
 end
 
 -- Phase 2
