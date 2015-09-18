@@ -273,7 +273,7 @@ function mod:Digest(args)
 			self:DelayedMessage(args.spellId, 30, "Attention", CL.custom_sec:format(args.spellName, 10), nil, "Alert")
 			self:DelayedMessage(args.spellId, 35, "Urgent", CL.custom_sec:format(args.spellName, 5), nil, "Alert")
 		end
-		self:TargetBar(args.spellId, self:Mythic() and 30 or 40, args.destName)
+		self:TargetBar(args.spellId, self:Mythic() and 35 or 40, args.destName)
 	end
 end
 
