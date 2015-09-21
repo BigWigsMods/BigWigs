@@ -232,15 +232,12 @@ do
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alarm")
 		end
-
 	end
 end
 
 function mod:BloodboilDose(args)
-	if self:Mythic() and self:Me(args.destGUID) then
-		if args.amount > 2 then -- XXX change 3 to something else?
-			self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, args.amount))
-		end
+	if self:Me(args.destGUID) and args.amount > 2 and self:Mythic() then
+		self:Message(args.spellId, "Personal", "Alert", CL.you:format(CL.count:format(args.spellName, args.amount)))
 	end
 end
 
