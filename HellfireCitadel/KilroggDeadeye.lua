@@ -91,7 +91,7 @@ function mod:OnEngage()
 	self:CDBar(180224, 40, CL.count:format(self:SpellName(180224), deathThroesCount)) -- Death Throes
 	self:CDBar(188929, 25) -- Heart Seeker
 	self:CDBar(180199, 10.8) -- Shred Armor
-	self:CDBar(-11269, 15) -- Hulking Terror
+	self:CDBar(-11269, 15, nil, "spell_nature_shamanrage") -- Hulking Terror
 	self:OpenAltPower("altpower", 182159) -- Fel Corruption
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
