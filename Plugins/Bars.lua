@@ -1304,6 +1304,21 @@ function plugin:GetBarTimeLeft(module, text)
 	return 0
 end
 
+function plugin:GetRespawnTimeLeft()
+	if not normalAnchor then return end
+	for k in next, normalAnchor.bars do
+		if k:GetLabel() == L.respawn then
+			return k.remaining
+		end
+	end
+	for k in next, emphasizeAnchor.bars do
+		if k:GetLabel() == L.respawn then
+			return k.remaining
+		end
+	end
+	return 0
+end
+
 --------------------------------------------------------------------------------
 -- Clickable bars
 --
@@ -1762,6 +1777,10 @@ SlashCmdList.BIGWIGSPULL = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
 	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then -- Solo or leader/assist
+		local s, respawn = input:match("(%d-) (.*)")
+		if respawn and string.lower(respawn) == "true" then
+			input = plugin:GetRespawnTimeLeft() + tonumber(s)
+		end
 		local seconds = tonumber(input)
 		if not seconds or seconds < 0 or seconds > 60 then BigWigs:Print(L.wrongPullFormat) return end
 
