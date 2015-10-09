@@ -15,6 +15,7 @@ mod.respawnTime = 30
 
 local felAndVoid = nil
 local blackHoleCount = 1
+local impCount = 1
 local mobCollector = {}
 
 --------------------------------------------------------------------------------
@@ -102,7 +103,8 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 190306 then -- Activate Fel Portal
-		self:Bar("imps", 12, L.imps, L.imps_icon)
+		impCount = 1
+		self:Bar("imps", 12, CL.count:format(self:SpellName(L.imps), impCount), L.imps_icon)
 
 	elseif spellId == 187196 then -- Fel Feedback (Vanguard Akkelion Spawned)
 		self:Message("stages", "Neutral", "Info", "90% - ".. CL.spawned:format(self:SpellName(-11691)), false)
@@ -145,7 +147,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 
 	elseif spellId == 187209 then -- Overwhelming Chaos (cast to gain the p4 buff, which just stacks on its own)
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
-		self:StopBar(L.imps)
+		self:StopBar(CL.count:format(self:SpellName(L.imps), impCount))
 		self:StopBar(L.voidfiend)
 		self:StopBar(190223) -- Fel Strike
 		self:StopBar(186407) -- Fel Surge
@@ -184,7 +186,8 @@ do
 			local t = GetTime()
 			if t-prev > 1 then
 				prev = t
-				self:CDBar("imps", 22, L.imps, L.imps_icon)
+				impCount = impCount + 1
+				self:CDBar("imps", 22, CL.count:format(self:SpellName(L.imps), impCount), L.imps_icon)
 			end
 		end
 	end
