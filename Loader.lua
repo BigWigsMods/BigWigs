@@ -114,7 +114,7 @@ do
 		[756]=lw, -- Classic
 		[710]=lw, [722]=lw, [723]=lw, [724]=lw, [725]=lw, [726]=lw, [727]=lw, [728]=lw, [729]=lw, [730]=lw, [731]=lw, [732]=lw, [733]=lw, [734]=lw, [797]=lw, [798]=lw, -- TBC
 		[520]=lw, [521]=lw, [522]=lw, [523]=lw, [524]=lw, [525]=lw, [526]=lw, [528]=lw, [530]=lw, [533]=lw, [534]=lw, [536]=lw, [542]=lw, [601]=lw, [602]=lw, [603]=lw, -- WotLK
-		-- Cataclysm
+		[747]=lw, [757]=lw, [767]=lw, [768]=lw, [769]=lw, [820]=lw, -- Cataclysm
 		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw, [919]=lw, -- MoP
 		[964]=lw, [969]=lw, [984]=lw, [987]=lw, [989]=lw, [993]=lw, [995]=lw, [1008]=lw -- WoD
 	}
@@ -577,8 +577,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "14565" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "6.2.12" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
+	local DBMdotRevision = "14621" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "6.2.14" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
