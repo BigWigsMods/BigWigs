@@ -12,6 +12,7 @@ if not plugin then return end
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 local activeDurations = {}
 local difficultyTable = {false, false, "10", "25", "10h", "25h", "lfr", false, false, false, false, false, false, "normal", "heroic", "mythic", "LFR"}
+local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 
 --[[
 1. "Normal"
@@ -179,7 +180,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 		local elapsed = GetTime()-activeDurations[module.journalId]
 
 		if self.db.profile.printKills then
-			BigWigs:ScheduleTimer("Print", 1, L.bossDefeatDurationPrint:format(module.displayName, SecondsToTime(elapsed)))
+			BigWigs:ScheduleTimer("Print", 1, L.bossDefeatDurationPrint:format(module.displayName, elapsed < 1 and SPELL_DURATION_SEC:format(elapsed) or SecondsToTime(elapsed)))
 		end
 
 		local diff = module:Difficulty()
@@ -191,7 +192,8 @@ function plugin:BigWigs_OnBossWin(event, module)
 
 			if self.db.profile.saveBestKill and (not sDB.best or elapsed < sDB.best) then
 				if self.db.profile.printNewBestKill and sDB.best then
-					BigWigs:ScheduleTimer("Print", 1.1, ("%s (-%s)"):format(L.newBestTime, SecondsToTime(sDB.best-elapsed)))
+					local t = sDB.best-elapsed
+					BigWigs:ScheduleTimer("Print", 1.1, ("%s (-%s)"):format(L.newBestTime, t < 1 and SPELL_DURATION_SEC:format(t) or SecondsToTime(t)))
 				end
 				sDB.best = elapsed
 			end
