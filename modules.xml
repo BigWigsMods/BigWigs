@@ -20,6 +20,9 @@
 
 <Include file="Highmaul\modules.xml"/>
 <Include file="Highmaul\locales.xml"/>
+
+<Include file="Nightmare\modules.xml"/>
+<Include file="Nightmare\locales.xml"/>
 <!--@end-debug@-->
 </Ui>
 

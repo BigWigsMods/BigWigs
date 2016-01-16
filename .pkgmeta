@@ -27,6 +27,7 @@ move-folders:
     BigWigs/Draenor: BigWigs_Draenor
 
 ignore:
+  - Nightmare
   - Options/scripts
   - Sounds/Long.wav
   - Sounds/Alarm.wav

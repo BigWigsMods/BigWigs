@@ -1213,7 +1213,8 @@ do
 		BigWigs_WrathOfTheLichKing = "Big Wigs ".. EJ_GetTierInfo(3),
 		BigWigs_Cataclysm = "Big Wigs ".. EJ_GetTierInfo(4),
 		BigWigs_MistsOfPandaria = "Big Wigs ".. EJ_GetTierInfo(5),
-		BigWigs_WarlordsOfDraenor = "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r",
+		BigWigs_WarlordsOfDraenor = not loader.isLegion and "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r" or "Big Wigs ".. EJ_GetTierInfo(6),
+		BigWigs_Legion = loader.isLegion and "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r",
 		LittleWigs = "Little Wigs",
 	}
 
@@ -1261,7 +1262,7 @@ do
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
 		local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
-		local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_WarlordsOfDraenor
+		local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_WarlordsOfDraenor -- XXX LEGION update this to BigWigs_Legion
 		local panel, justCreated = self:GetPanel(zoneName, parent, zoneId)
 		if justCreated then
 			panel:SetScript("OnShow", onZoneShow)

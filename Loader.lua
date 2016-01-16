@@ -3,6 +3,9 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 local mod, public = {}, {}
 local bwFrame = CreateFrame("Frame")
 
+local isLegion = GetExpansionLevel() > 5 -- XXX LEGION
+public.isLegion = isLegion
+
 -----------------------------------------------------------------------
 -- Generate our version variables
 --
@@ -94,6 +97,7 @@ local fakeWorldZones = { -- Fake world zones used for world boss translations an
 	[466]=true, -- Outland
 	[862]=true, -- Pandaria
 	[962]=true, -- Draenor
+	--[000]=isLegion or nil, -- Legion -- XXX LEGION (main continent map area id)
 }
 
 do
@@ -102,6 +106,7 @@ do
 	local wotlk = "BigWigs_WrathOfTheLichKing"
 	local cata = "BigWigs_Cataclysm"
 	local mop = "BigWigs_MistsOfPandaria"
+	local wod = isLegion and "BigWigs_WarlordsOfDraenor" -- XXX LEGION
 	local lw = "LittleWigs"
 
 	local tbl = {
@@ -110,6 +115,7 @@ do
 		[604]=wotlk, [543]=wotlk, [535]=wotlk, [529]=wotlk, [527]=wotlk, [532]=wotlk, [531]=wotlk, [609]=wotlk, [718]=wotlk,
 		[752]=cata, [758]=cata, [754]=cata, [824]=cata, [800]=cata, [773]=cata,
 		[896]=mop, [897]=mop, [886]=mop, [930]=mop, [953]=mop, [862]=mop,
+		[994]=wod, [988]=wod, [1026]=wod, [948]=wod, [949]=wod, [945]=wod, [962]=wod,
 
 		[756]=lw, -- Classic
 		[710]=lw, [722]=lw, [723]=lw, [724]=lw, [725]=lw, [726]=lw, [727]=lw, [728]=lw, [729]=lw, [730]=lw, [731]=lw, [732]=lw, [733]=lw, [734]=lw, [797]=lw, [798]=lw, -- TBC
@@ -398,6 +404,7 @@ function mod:ADDON_LOADED(addon)
 
 	-- Role Updating
 	bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+	-- XXX LEGION: We can remove up all these Gladiator Stance special cases, it's gone in Legion
 	local _, class = UnitClass("player")
 	if class == "WARRIOR" then -- Handle Gladiator Stance
 		bwFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
@@ -492,6 +499,12 @@ do
 		BigWigs_Pandaria = "BigWigs_MistsOfPandaria",
 		BigWigs_SiegeOfOrgrimmar = "BigWigs_MistsOfPandaria",
 		BigWigs_ThroneOfThunder = "BigWigs_MistsOfPandaria",
+		-- XXX LEGION
+		BigWigs_Draenor = isLegion and "BigWigs_WarlordsOfDraenor",
+		BigWigs_Highmaul = isLegion and "BigWigs_WarlordsOfDraenor",
+		BigWigs_BlackrockFoundry = isLegion and "BigWigs_WarlordsOfDraenor",
+		BigWigs_HellfireCitadel = isLegion and "BigWigs_WarlordsOfDraenor",
+		-- XXX LEGION
 		LittleWigs_ShadoPanMonastery = "LittleWigs",
 		LittleWigs_ScarletHalls = "LittleWigs",
 		LittleWigs_ScarletMonastery = "LittleWigs",
@@ -773,6 +786,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 		if bwPrefix == "VR" or bwPrefix == "VRA" or bwPrefix == "VQ" or bwPrefix == "VQA" then
 			self:VersionCheck(bwPrefix, bwMsg, sender)
 		elseif bwPrefix then
+			if msg == "T:BWPull" or msg == "T:BWBreak" then loadAndEnableCore() end
 			public:SendMessage("BigWigs_AddonMessage", bwPrefix, bwMsg, sender)
 		end
 	elseif prefix == "D4" then
@@ -780,6 +794,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 		if dbmPrefix == "V" or dbmPrefix == "H" then
 			self:DBM_VersionCheck(dbmPrefix, Ambiguate(sender, "none"), arg1, arg2, arg3)
 		elseif dbmPrefix == "U" or dbmPrefix == "PT" or dbmPrefix == "M" or dbmPrefix == "BT" then
+			if dbmPrefix == "PT" or dbmPrefix == "BT" then loadAndEnableCore() end
 			public:SendMessage("DBM_AddonMessage", Ambiguate(sender, "none"), dbmPrefix, arg1, arg2, arg3, arg4)
 		end
 	end

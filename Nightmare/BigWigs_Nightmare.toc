@@ -1,0 +1,34 @@
+## Interface: 60200
+
+## Title: Big Wigs [|cffeda55fEmerald Nightmare|r]
+## Title-deDE: Big Wigs [|cffeda55fEmerald Nightmare|r]
+## Title-esES: Big Wigs [|cffeda55fEmerald Nightmare|r]
+## Title-esMX: Big Wigs [|cffeda55fEmerald Nightmare|r]
+## Title-frFR: Big Wigs [|cffeda55fEmerald Nightmare|r]
+## Title-ruRU: Big Wigs [|cffeda55fEmerald Nightmare|r]
+## Title-zhCN: Big Wigs [|cffeda55fEmerald Nightmare|r]
+## Title-zhTW: Big Wigs [|cffeda55fEmerald Nightmare|r]
+## Title-itIT: Big Wigs [|cffeda55fEmerald Nightmare|r]
+## Title-ptBR: Big Wigs [|cffeda55fEmerald Nightmare|r]
+## Title-koKR: Big Wigs [|cffeda55fEmerald Nightmare|r]
+## Notes: Big Wigs Emerald Nightmare Modules
+## Notes-deDE: Big Wigs Emerald Nightmare Modules
+## Notes-esES: Big Wigs Emerald Nightmare Modules
+## Notes-esMX: Big Wigs Emerald Nightmare Modules
+## Notes-frFR: Big Wigs Emerald Nightmare Modules
+## Notes-ruRU: Big Wigs Emerald Nightmare Modules
+## Notes-zhCN: Big Wigs Emerald Nightmare Modules
+## Notes-zhTW: Big Wigs Emerald Nightmare Modules
+## Notes-itIT: Big Wigs Emerald Nightmare Modules
+## Notes-ptBR: Big Wigs Emerald Nightmare Modules
+## Notes-koKR: Big Wigs Emerald Nightmare Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-ZoneId: 1520
+
+modules.xml
+locales.xml
+
