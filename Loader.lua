@@ -316,7 +316,7 @@ do
 			local zone = tonumber(rawZone:trim())
 			if zone then
 				-- register the zone for enabling.
-				local instanceId = fakeWorldZones[zone] and zone or GetAreaMapInfo(zone)
+				local instanceId = fakeWorldZones[zone] and zone or zone == 1520 and zone or GetAreaMapInfo(zone) -- XXX legion temp hack for no map id
 				if instanceId then -- Protect live client from beta client ids
 					enableZones[instanceId] = true
 
@@ -500,10 +500,10 @@ do
 		BigWigs_SiegeOfOrgrimmar = "BigWigs_MistsOfPandaria",
 		BigWigs_ThroneOfThunder = "BigWigs_MistsOfPandaria",
 		-- XXX LEGION
-		BigWigs_Draenor = isLegion and "BigWigs_WarlordsOfDraenor",
-		BigWigs_Highmaul = isLegion and "BigWigs_WarlordsOfDraenor",
-		BigWigs_BlackrockFoundry = isLegion and "BigWigs_WarlordsOfDraenor",
-		BigWigs_HellfireCitadel = isLegion and "BigWigs_WarlordsOfDraenor",
+		--BigWigs_Draenor = isLegion and "BigWigs_WarlordsOfDraenor",
+		--BigWigs_Highmaul = isLegion and "BigWigs_WarlordsOfDraenor",
+		--BigWigs_BlackrockFoundry = isLegion and "BigWigs_WarlordsOfDraenor",
+		--BigWigs_HellfireCitadel = isLegion and "BigWigs_WarlordsOfDraenor",
 		-- XXX LEGION
 		LittleWigs_ShadoPanMonastery = "LittleWigs",
 		LittleWigs_ScarletHalls = "LittleWigs",
@@ -590,8 +590,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "14672" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "6.2.15" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
+	local DBMdotRevision = "14720" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "6.2.17" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -1014,7 +1014,7 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		enableZones[module.zoneId] = "world"
 		worldBosses[module.worldBoss] = module.zoneId
 	else
-		enableZones[GetAreaMapInfo(module.zoneId)] = true
+		enableZones[module.zoneId == 1520 and module.zoneId or GetAreaMapInfo(module.zoneId)] = true -- XXX legion temp hack for no map id
 	end
 
 	local id = module.otherMenu or module.zoneId
