@@ -260,7 +260,8 @@ do
 				end
 			end)
 			fs.animFade = fs.anim:CreateAnimation("Alpha")
-			fs.animFade:SetChange(-1)
+			fs.animFade:SetFromAlpha(1)
+			fs.animFade:SetToAlpha(0)
 			fs.animFade:SetStartDelay(db.displaytime)
 			fs.animFade:SetDuration(db.fadetime)
 
@@ -273,7 +274,8 @@ do
 			icon.anim = icon:CreateAnimationGroup()
 			icon.anim:SetScript("OnFinished", function(self) self:GetParent():Hide() end)
 			icon.animFade = icon.anim:CreateAnimation("Alpha")
-			icon.animFade:SetChange(-1)
+			icon.animFade:SetFromAlpha(1)
+			icon.animFade:SetToAlpha(0)
 			icon.animFade:SetStartDelay(db.displaytime)
 			icon.animFade:SetDuration(db.fadetime)
 
@@ -334,7 +336,7 @@ do
 			end
 		end
 	end
-	local updateAnchor = function(info, value) 
+	local updateAnchor = function(info, value)
 		plugin.db.profile[info[#info]] = value
 		BWMessageFrame:ClearAllPoints()
 		local align = plugin.db.profile.align == "CENTER" and "" or db.align
@@ -583,7 +585,8 @@ do
 			updater:SetScript("OnFinished", function() frame:Hide() end)
 
 			local anim = updater:CreateAnimation("Alpha")
-			anim:SetChange(-1)
+			anim:SetFromAlpha(1)
+			anim:SetToAlpha(0)
 			anim:SetDuration(3.5)
 			anim:SetStartDelay(1.5)
 		end
@@ -627,7 +630,8 @@ do
 			updater:SetScript("OnFinished", function() frame:Hide() end)
 
 			local anim = updater:CreateAnimation("Alpha")
-			anim:SetChange(-1)
+			anim:SetFromAlpha(1)
+			anim:SetToAlpha(0)
 			anim:SetDuration(3.5)
 			anim:SetStartDelay(1.5)
 		end
