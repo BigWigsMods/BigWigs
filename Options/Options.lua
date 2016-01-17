@@ -263,7 +263,7 @@ function translateZoneID(id)
 		name = select(id * 2, GetMapContinents())
 	else
 		if id == 1520 then -- XXX Legion hack
-			name == "*Emerald Nightmare"
+			name = "*Emerald Nightmare"
 		else
 			name = GetMapNameByID(id)
 		end
