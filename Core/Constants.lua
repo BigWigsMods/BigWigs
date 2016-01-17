@@ -194,7 +194,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 				-- abilityIcon is always set but can be a zero-length string ("")
 				icon = abilityIcon
 			end
-			-- So the magic is the, if <icon> is a number, it should be a portrait.
+
 			local roleIcon, roleDesc = getRoleStrings(module, option)
 			return option, title..roleIcon, roleDesc..description, icon
 		end

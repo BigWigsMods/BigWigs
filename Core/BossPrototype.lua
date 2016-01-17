@@ -27,7 +27,7 @@ local updateData = function(module)
 	if tree then
 		myRole = GetSpecializationRole(tree)
 		myDamagerRole = nil
-		if IsSpellKnown(152276) and UnitBuff("player", (GetSpellInfo(156291))) then -- Gladiator Stance
+		if not BigWigsLoader.isLegion and IsSpellKnown(152276) and UnitBuff("player", (GetSpellInfo(156291))) then -- Gladiator Stance XXX legion
 			myRole = "DAMAGER"
 		end
 		if myRole == "DAMAGER" then
