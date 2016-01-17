@@ -104,8 +104,9 @@ local acOptions = {
 					end
 				end
 				if not InterfaceOptionsFrame:IsShown() then
-					InterfaceOptionsFrame_OpenToCategory("Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r")
-					InterfaceOptionsFrame_OpenToCategory("Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r")
+					local panel = loader.isLegion and "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r" or "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r" -- XXX Legion temp
+					InterfaceOptionsFrame_OpenToCategory(panel)
+					InterfaceOptionsFrame_OpenToCategory(panel)
 				end
 			end,
 			order = 4,
