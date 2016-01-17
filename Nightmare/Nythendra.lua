@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Nythendra", 1520)
 if not mod then return end
 mod:RegisterEnableMob(103160) -- fix me
 --mod.engageId = 1000000
+--mod.respawnTime = 0
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -16,11 +17,7 @@ mod:RegisterEnableMob(103160) -- fix me
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
-if L then
-
-end
-L = mod:GetLocale()
+local L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

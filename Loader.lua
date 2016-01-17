@@ -404,7 +404,7 @@ function mod:ADDON_LOADED(addon)
 
 	-- Role Updating
 	bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-	-- XXX LEGION: We can remove up all these Gladiator Stance special cases, it's gone in Legion
+	-- XXX LEGION: We can remove all these Gladiator Stance special cases, it's gone in Legion
 	local _, class = UnitClass("player")
 	if class == "WARRIOR" then -- Handle Gladiator Stance
 		bwFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
@@ -500,10 +500,10 @@ do
 		BigWigs_SiegeOfOrgrimmar = "BigWigs_MistsOfPandaria",
 		BigWigs_ThroneOfThunder = "BigWigs_MistsOfPandaria",
 		-- XXX LEGION
-		--BigWigs_Draenor = isLegion and "BigWigs_WarlordsOfDraenor",
-		--BigWigs_Highmaul = isLegion and "BigWigs_WarlordsOfDraenor",
-		--BigWigs_BlackrockFoundry = isLegion and "BigWigs_WarlordsOfDraenor",
-		--BigWigs_HellfireCitadel = isLegion and "BigWigs_WarlordsOfDraenor",
+		--BigWigs_Draenor = "BigWigs_WarlordsOfDraenor",
+		--BigWigs_Highmaul = "BigWigs_WarlordsOfDraenor",
+		--BigWigs_BlackrockFoundry = "BigWigs_WarlordsOfDraenor",
+		--BigWigs_HellfireCitadel = "BigWigs_WarlordsOfDraenor",
 		-- XXX LEGION
 		LittleWigs_ShadoPanMonastery = "LittleWigs",
 		LittleWigs_ScarletHalls = "LittleWigs",

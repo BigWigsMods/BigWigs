@@ -12,6 +12,7 @@ mod:RegisterEnableMob( -- fix me
 	102683  -- Emeriss
 )
 --mod.engageId = 1000000
+--mod.respawnTime = 0
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -21,11 +22,7 @@ mod:RegisterEnableMob( -- fix me
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
-if L then
-
-end
-L = mod:GetLocale()
+local L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

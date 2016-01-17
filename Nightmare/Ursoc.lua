@@ -27,10 +27,7 @@ local focusedGazeCount = 1
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
-if L then
-
-end
+local L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -130,7 +127,7 @@ end
 function mod:Unbalanced(args)
 	if self:Me(args.destGUID) then
 		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
-		t = expires - GetTime()
+		local t = expires - GetTime()
 		self:TargetBar(args.spellId, t, args.destName)
 	end
 end
