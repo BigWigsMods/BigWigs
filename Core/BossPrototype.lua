@@ -852,11 +852,13 @@ do
 			-- Nature's Cure (Resto Druid), Remove Corruption (Druid), Purify Spirit (Shaman), Remove Curse (Mage)
 			defDispel = defDispel .. "curse,"
 		end
-		for i = 2, 6, 2 do -- 2/4/6 = major glyphs, NUM_GLYPH_SLOTS = 6
-			local _, _, _, spellId = GetGlyphSocketInfo(i)
-			if spellId == 58375 or spellId == 58631 then
-				-- Glyph of Shield Slam (Warrior), Glyph of Icy Touch (Death Knight)
-				offDispel = offDispel .. "magic,"
+		if not BigWigsLoader.isLegion then -- XXX Legion removes glyphs
+			for i = 2, 6, 2 do -- 2/4/6 = major glyphs, NUM_GLYPH_SLOTS = 6
+				local _, _, _, spellId = GetGlyphSocketInfo(i)
+				if spellId == 58375 or spellId == 58631 then
+					-- Glyph of Shield Slam (Warrior), Glyph of Icy Touch (Death Knight)
+					offDispel = offDispel .. "magic,"
+				end
 			end
 		end
 	end
