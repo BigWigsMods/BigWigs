@@ -4,6 +4,7 @@
 -- - Only heroic timers (raid test 15.01.16)
 -- - Respawn time
 -- - Tuning sounds / message colors
+-- - Remove alpha engaged message
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -63,7 +64,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Ursoc (Beta) Engaged")
+	self:Message("berserk", "Neutral", nil, "Ursoc (Alpha) Engaged", 98204) -- Amani Battle Bear icon
 	cacophonyCount = 1
 	rendFleshCount = 1
 	focusedGazeCount = 1
@@ -103,8 +104,14 @@ end
 
 function mod:RendFlesh(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", (self:Tank() or self:Healer()) and "Info", CL.count:format(args.spellName, rendFleshCount))
+
+	-- This might be 12s for every difficulty, but we only know heroic alpha right now
+	local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+	local t = expires - GetTime()
+	self:TargetBar(args.spellId, t, args.destName, CL.count:format(args.spellName, rendFleshCount))
+
 	rendFleshCount = rendFleshCount + 1
-	self:Bar(204859, 20, CL.count:format(args.spellName, rendFleshCount))
+	self:Bar(args.spellId, 20, CL.count:format(args.spellName, rendFleshCount))
 end
 
 function mod:FocusedGaze(args)
@@ -126,6 +133,7 @@ end
 
 function mod:Unbalanced(args)
 	if self:Me(args.destGUID) then
+		-- This might be 50s for every difficulty, but we only know heroic alpha right now
 		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 		local t = expires - GetTime()
 		self:TargetBar(args.spellId, t, args.destName)
