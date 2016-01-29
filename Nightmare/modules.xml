@@ -6,4 +6,8 @@
 <Script file="Dragons.lua"/>
 <Script file="Xavius.lua"/>
 
+<!-- XXX Temp Workaround to load Suramar mod -->
+<Script file="Skorpyron.lua"/>
+<!-- XXX Temp Workaround to load Suramar mod -->
+
 </Ui>
