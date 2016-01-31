@@ -8,13 +8,15 @@
 
 local mod, CL = BigWigs:NewBoss("Nythendra", 1520)
 if not mod then return end
-mod:RegisterEnableMob(102672, 103160) -- fix me (i think 102672 is normal model and 103160 the model during Heart of the Swarm)
---mod.engageId = 1000000
---mod.respawnTime = 0
+mod:RegisterEnableMob(102672)
+mod.engageId = 1853
+mod.respawnTime = 30 -- might not be accurate
 
 --------------------------------------------------------------------------------
 -- Locals
 --
+
+local rotCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -38,65 +40,96 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "InfestedBreath", 202977) -- Pre alpha testing spellId
-	self:Log("SPELL_AURA_APPLIED", "Rot", 203096) -- Pre alpha testing spellId
-	self:Log("SPELL_AURA_REMOVED", "RotRemoved", 203096) -- Pre alpha testing spellId
-	self:Log("SPELL_AURA_APPLIED", "VolatileRot", 204463) -- Pre alpha testing spellId
-	self:Log("SPELL_CAST_START", "HeartOfTheSwarm", 203552) -- Pre alpha testing spellId
-	self:Log("SPELL_AURA_APPLIED", "InfestedGroundDamage", 203045) -- Pre alpha testing spellId
-	self:Log("SPELL_PERIODIC_DAMAGE", "InfestedGroundDamage", 203045) -- Pre alpha testing spellId
-	self:Log("SPELL_PERIODIC_MISSED", "InfestedGroundDamage", 203045) -- Pre alpha testing spellId
+	self:Log("SPELL_CAST_START", "InfestedBreath", 202977)
+	self:Log("SPELL_AURA_APPLIED", "Rot", 203096)
+	self:Log("SPELL_AURA_REMOVED", "RotRemoved", 203096)
+	self:Log("SPELL_AURA_APPLIED", "VolatileRot", 204463)
+	self:Log("SPELL_CAST_START", "HeartOfTheSwarm", 203552)
+	self:Log("SPELL_AURA_APPLIED", "InfestedGroundDamage", 203045)
+	self:Log("SPELL_PERIODIC_DAMAGE", "InfestedGroundDamage", 203045)
+	self:Log("SPELL_PERIODIC_MISSED", "InfestedGroundDamage", 203045)
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Nythendra (Alpha) Engaged (Pre Alpha Test Mod)", 23074) -- some red dragon icon
+	self:Message("berserk", "Neutral", nil, "Nythendra (Alpha) Engaged (Post Alpha Test Mod)", 23074) -- some red dragon icon
+	rotCount = 1
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
--- This function is from pre alpha testing. Please fix it or remove this comment if it's working
 function mod:InfestedBreath(args)
 	self:Message(args.spellId, "Urgent", "Alarm", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 7, CL.cast:format(args.spellName)) -- wowhead says cast time 2s + 5s channel
+	self:Bar(args.spellId, 7, CL.cast:format(args.spellName)) -- 2s cast time + 5s channel
+	self:CDBar(args.spellId, 37)  -- alpha heroic timing, did vary between 37-41, sometimes skipped (bug most likely)
 end
 
--- This function is from pre alpha testing. Please fix it or remove this comment if it's working
-function mod:Rot(args)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Alert", nil, nil, true)
-	self:TargetBar(args.spellId, 9, args.destName)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:Flash(args.spellId)
-		self:OpenProximity(args.spellId, 10)
+do
+	local playerList, proxList, isOnMe = mod:NewTargetList(), {}, nil
+	function mod:Rot(args)
+		if self:Me(args.destGUID) then
+			isOnMe = true
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+			self:TargetBar(args.spellId, 9, args.destName)
+			self:OpenProximity(args.spellId, 10)
+			self:ScheduleTimer("Say", 6, args.spellId, 3, true)
+			self:ScheduleTimer("Say", 7, args.spellId, 2, true)
+			self:ScheduleTimer("Say", 8, args.spellId, 1, true)
+		end
+
+		proxList[#proxList+1] = args.destName
+		if not isOnMe then
+			self:OpenProximity(args.spellId, 10, proxList)
+		end
+
+		playerList[#playerList+1] = args.destName
+		if #playerList == 1 then
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Alert")
+			rotCount = rotCount + 1
+			self:CDBar(args.spellId, rotCount == 2 and 34 or 21)  -- alpha heroic timing, 2. did vary between 34-37, 3. between 20-23
+		end
+	end
+
+	function mod:RotRemoved(args)
+		if self:Me(args.destGUID) then
+			isOnMe = nil
+			self:StopBar(args.spellName, args.destName)
+			self:CloseProximity(args.spellId)
+		end
+
+		tDeleteItem(proxList, args.destName)
+		if not isOnMe then -- Don't change proximity if it's on you and expired on someone else
+			if #proxList == 0 then
+				self:CloseProximity(args.spellId)
+			else
+				self:OpenProximity(args.spellId, 10, proxList)
+			end
+		end
 	end
 end
 
--- This function is from pre alpha testing. Please fix it or remove this comment if it's working
-function mod:RotRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CloseProximity(args.spellId)
-	end
-end
-
--- This function is from pre alpha testing. Please fix it or remove this comment if it's working
 function mod:VolatileRot(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, self:Tank())
 	self:TargetBar(args.spellId, 8, args.destName)
+	self:CDBar(args.spellId, 23) -- alpha heroic timing, did vary between 23-28
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:Flash(args.spellId)
 	end
 end
 
--- This function is from pre alpha testing. Please fix it or remove this comment if it's working
 function mod:HeartOfTheSwarm(args)
 	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 22.5, CL.cast:format(args.spellName)) -- wowhead says cast time 2.5s + 20s channel
+	self:Bar(args.spellId, 22.5, CL.cast:format(args.spellName)) -- 2.5s cast time + 20s channel
+	-- This is basically a phase, so start timers for next "normal" phase here
+	self:CDBar(args.spellId, 115) -- alpha heroic timing, did vary between 114-118
+	self:CDBar(203096, 37.5) -- Rot				22.5 + 15, alpha heroic timing
+	self:CDBar(204463, 47.5) -- Volatile Rot	22.5 + 25, alpha heroic timing, did vary between 22-30 (+22.5)
+	self:CDBar(202977, 61.5) -- Infested Breath	22.5 + 39, alpha heroic timing, did vary between 39-42 (+22.5)
 end
 
--- This function is from pre alpha testing. Please fix it or remove this comment if it's working
 do
 	local prev = 0
 	function mod:InfestedGroundDamage(args)
