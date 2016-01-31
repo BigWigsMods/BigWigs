@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 -- TODO List:
--- - The whole fight (this mod is based on dungeon journal / wowhead guessing)
+-- - difficulties other than heroic
+-- - timers are from alpha, some did highly vary
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -53,6 +54,7 @@ end
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Nythendra (Alpha) Engaged (Post Alpha Test Mod)", 23074) -- some red dragon icon
 	rotCount = 1
+	self:Berserk(720) -- 12 minutes on heroic, not kidding
 end
 
 --------------------------------------------------------------------------------
