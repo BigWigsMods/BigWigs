@@ -3,9 +3,9 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Xavius", 1520)
+local mod, CL = BigWigs:NewBoss("Star Augur Etraeus", 1530)
 if not mod then return end
-mod:RegisterEnableMob(103769) -- fix me
+mod:RegisterEnableMob(103758) -- fix me
 --mod.engageId = 1000000
 --mod.respawnTime = 0
 
@@ -33,7 +33,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Xavius (Alpha) Engaged")
+	self:Message("berserk", "Neutral", nil, "Star Augur Etraeus (Alpha) Engaged")
 end
 
 --------------------------------------------------------------------------------

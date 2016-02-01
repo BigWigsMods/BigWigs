@@ -38,7 +38,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Dragons of Nightmare (Beta) Engaged")
+	self:Message("berserk", "Neutral", nil, "Dragons of Nightmare (Alpha) Engaged")
 end
 
 --------------------------------------------------------------------------------
