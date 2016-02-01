@@ -265,6 +265,8 @@ function translateZoneID(id)
 	else
 		if id == 1520 then -- XXX Legion hack
 			name = "*Emerald Nightmare"
+		elseif id == 1530 then -- XXX Legion hack
+			name = "*Suramar"
 		else
 			name = GetMapNameByID(id)
 		end
