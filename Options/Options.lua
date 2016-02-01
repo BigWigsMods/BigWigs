@@ -1117,7 +1117,7 @@ end
 local function onZoneShow(frame)
 	local zoneId = frame.id
 	if zoneId then
-		local instanceId = fakeWorldZones[zoneId] and zoneId or zoneId == 1520 and zoneId or GetAreaMapInfo(zoneId) -- XXX legion temp hack for no map id
+		local instanceId = fakeWorldZones[zoneId] and zoneId or zoneId == 1520 and zoneId or zoneId == 1530 and zoneId or GetAreaMapInfo(zoneId) -- XXX legion temp hack for no map id
 
 		-- Make sure all the bosses for this zone are loaded.
 		loader:LoadZone(instanceId)
@@ -1268,7 +1268,7 @@ do
 
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
-		local instanceId = fakeWorldZones[zoneId] and zoneId or zoneId == 1520 and zoneId or GetAreaMapInfo(zoneId) -- XXX legion temp hack for no map id
+		local instanceId = fakeWorldZones[zoneId] and zoneId or zoneId == 1520 and zoneId or zoneId == 1530 and zoneId or GetAreaMapInfo(zoneId) -- XXX legion temp hack for no map id
 		local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or loader.isLegion and addonNameToHeader.BigWigs_Legion or addonNameToHeader.BigWigs_WarlordsOfDraenor -- XXX LEGION update this to BigWigs_Legion
 		local panel, justCreated = self:GetPanel(zoneName, parent, zoneId)
 		if justCreated then

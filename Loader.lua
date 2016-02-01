@@ -316,7 +316,7 @@ do
 			local zone = tonumber(rawZone:trim())
 			if zone then
 				-- register the zone for enabling.
-				local instanceId = fakeWorldZones[zone] and zone or zone == 1520 or zone == 1530 and zone or GetAreaMapInfo(zone) -- XXX legion temp hack for no map id
+				local instanceId = fakeWorldZones[zone] and zone or zone == 1520 and zone or zone == 1530 and zone or GetAreaMapInfo(zone) -- XXX legion temp hack for no map id
 				if instanceId then -- Protect live client from beta client ids
 					enableZones[instanceId] = true
 
