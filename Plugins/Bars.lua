@@ -1618,7 +1618,7 @@ do
 		elseif timeLeft > 2 and IsEncounterInProgress() then -- Cancel the pull timer if we ninja pulled
 			startPull(0, COMBAT)
 		elseif timeLeft < 11 then
-			plugin:SendMessage("BigWigs_Message", plugin, nil, L.pullIn:format(timeLeft), "Attention")
+			plugin:SendMessage("BigWigs_Message", plugin, nil, timeLeft, "Attention")
 			local module = BigWigs:GetPlugin("Sounds", true)
 			if timeLeft < 6 and module and module.db.profile.sound then
 				plugin:SendMessage("BigWigs_PlayCountdownNumber", plugin, timeLeft)
