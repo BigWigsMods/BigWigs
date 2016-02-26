@@ -1,5 +1,5 @@
 
-local BIGWIGS_AUTHORS = "rabbit, ammo, 7destiny, pettigrow, ananhaid, mojosdojo, Wetxius, jongt23, tekkub, fenlis, _yusaku_, shyva, StingerSoft, dynaletik, cwdg, gamefaq, yoshimo, sayclub, saroz, nevcairiel, s8095324, handdol, durcyn, chuanhsing, scorpio0920, kebinusan, Dynaletik, flyflame, zhTW, stanzilla, onyxmaster, MysticalOS, grimwald, lcf_hell, starinnia, chinkuwaila, arrowmaster, next96, tnt2ray, ackis, Leialyn, cremor, moonsorrow, jerry, fryguy, xinsonic, beerke, shari83, tsigo, hk2717, pigmonkey, ulic, mecdemort, Carlos, gnarfoz, a9012456, Cybersea, cronan, hyperactiveChipmunk, darchon, neriak, nirek, mikk, darkwings, hshh, otravi, yhpdoit, kjheng, AnarkiQ3, kergoth, dessa, ethancentaurai, Sayclub, erwanoops, Swix, Gothwin, illiaster, oojoo, nymbia, kyahx, valdriethien, phyber, oxman, profalbert, Traeumer, Zidomo, Anadale, tazmanyak, tain, thiana, ckknight, kemayo, zealotonastick, archarodim, coalado, silverwind, lucen, Adam77."
+--local BIGWIGS_AUTHORS = "rabbit, ammo, 7destiny, pettigrow, ananhaid, mojosdojo, Wetxius, jongt23, tekkub, fenlis, _yusaku_, shyva, StingerSoft, dynaletik, cwdg, gamefaq, yoshimo, sayclub, saroz, nevcairiel, s8095324, handdol, durcyn, chuanhsing, scorpio0920, kebinusan, Dynaletik, flyflame, zhTW, stanzilla, onyxmaster, MysticalOS, grimwald, lcf_hell, starinnia, chinkuwaila, arrowmaster, next96, tnt2ray, ackis, Leialyn, cremor, moonsorrow, jerry, fryguy, xinsonic, beerke, shari83, tsigo, hk2717, pigmonkey, ulic, mecdemort, Carlos, gnarfoz, a9012456, Cybersea, cronan, hyperactiveChipmunk, darchon, neriak, nirek, mikk, darkwings, hshh, otravi, yhpdoit, kjheng, AnarkiQ3, kergoth, dessa, ethancentaurai, Sayclub, erwanoops, Swix, Gothwin, illiaster, oojoo, nymbia, kyahx, valdriethien, phyber, oxman, profalbert, Traeumer, Zidomo, Anadale, tazmanyak, tain, thiana, ckknight, kemayo, zealotonastick, archarodim, coalado, silverwind, lucen, Adam77."
 
 local BigWigs = BigWigs
 local options = BigWigs:NewModule("Options")
@@ -40,7 +40,6 @@ local soundModule
 local translateZoneID
 
 local showToggleOptions, getAdvancedToggleOption = nil, nil
-local zoneModules = {}
 
 local getOptions
 local acOptions = {
@@ -480,7 +479,6 @@ local function masterOptionToggled(self, event, value)
 		-- we force a refresh of all checkboxes when enabling/disabling the master option.
 		if scrollFrame then
 			local dropdown = self:GetUserData("dropdown")
-			local module = self:GetUserData("module")
 			local bossOption = self:GetUserData("option")
 			scrollFrame:ReleaseChildren()
 			scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
@@ -645,8 +643,8 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	for i, key in next, BigWigs:GetRoleOptions() do
 		local flag = C[key]
 		if bit.band(module.toggleDefaults[dbKey], flag) == flag then
-			local name, desc = BigWigs:GetOptionDetails(key)
-			roleRestrictionCheckbox = getSlaveToggle(name, desc, dbKey, module, flag, check)
+			local roleName, roleDesc = BigWigs:GetOptionDetails(key)
+			roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check)
 		end
 	end
 
@@ -1244,15 +1242,15 @@ do
 			frame:Hide()
 			InterfaceOptions_AddCategory(frame)
 			if setScript then
-				frame:SetScript("OnShow", function(self)
+				frame:SetScript("OnShow", function(f)
 					BigWigs:Enable()
 					-- First we need to expand ourselves if collapsed.
-					local p = findPanel(self.name)
+					local p = findPanel(f.name)
 					if p and p.element.collapsed then OptionsListButtonToggle_OnClick(p.toggle) end
 					-- InterfaceOptionsFrameAddOns.buttons has changed here to include the zones
 					-- if we were collapsed.
 					-- So now we need to select the first zone.
-					p = findPanel(nil, self.name)
+					p = findPanel(nil, f.name)
 					if p then
 						InterfaceOptionsFrame_OpenToCategory(p.element.name)
 						InterfaceOptionsFrame_OpenToCategory(p.element.name)
@@ -1292,21 +1290,21 @@ do
 			end
 		elseif module.subPanelOptions then
 			local key = module.subPanelOptions.key
-			local options = module.subPanelOptions.options
-			if type(options) == "function" then
-				subPanelRegistry[key] = options
+			local opts = module.subPanelOptions.options
+			if type(opts) == "function" then
+				subPanelRegistry[key] = opts
 			else
-				acOptions.args[key] = options
+				acOptions.args[key] = opts
 			end
 		end
 	end
 
 	function getOptions()
-		for key, options in next, pluginRegistry do
-			acOptions.args.general.args[key] = options()
+		for key, opts in next, pluginRegistry do
+			acOptions.args.general.args[key] = opts()
 		end
-		for key, options in next, subPanelRegistry do
-			acOptions.args[key] = options()
+		for key, opts in next, subPanelRegistry do
+			acOptions.args[key] = opts()
 		end
 		return acOptions
 	end

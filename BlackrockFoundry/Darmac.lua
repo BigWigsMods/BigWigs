@@ -173,10 +173,10 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 
 		mountId = nil
 		for i = 2, 5 do
-			local unit = ("boss%d"):format(i)
-			local mobId = self:MobId(UnitGUID(unit))
+			local boss = ("boss%d"):format(i)
+			local mobId = self:MobId(UnitGUID(boss))
 			if mobId == 76884 or mobId == 76874 or mobId == 76945 or mobId == 76946 then -- Cruelfang, Dreadwing, Ironcrusher, Faultline
-				mountId = unit
+				mountId = boss
 				break
 			end
 		end

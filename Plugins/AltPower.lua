@@ -78,12 +78,12 @@ function plugin:RestyleWindow(dirty)
 	else
 		display:SetMovable(true)
 		display:RegisterForDrag("LeftButton")
-		display:SetScript("OnDragStart", function(self) self:StartMoving() end)
-		display:SetScript("OnDragStop", function(self)
-			self:StopMovingOrSizing()
-			local s = self:GetEffectiveScale()
-			db.posx = self:GetLeft() * s
-			db.posy = self:GetTop() * s
+		display:SetScript("OnDragStart", function(f) f:StartMoving() end)
+		display:SetScript("OnDragStop", function(f)
+			f:StopMovingOrSizing()
+			local s = f:GetEffectiveScale()
+			db.posx = f:GetLeft() * s
+			db.posy = f:GetTop() * s
 			plugin:UpdateGUI() -- Update X/Y if GUI is open.
 		end)
 	end

@@ -14,7 +14,6 @@ mod.respawnTime = 30
 --
 
 local fixateOnMe = nil
-local phase = 1
 local fatePlayer
 local fateCount = 1
 local shadowOfDeathInfo = {

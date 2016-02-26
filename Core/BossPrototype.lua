@@ -7,7 +7,7 @@ local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSqu
 local EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture, IsSpellKnown = EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture, IsSpellKnown
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local SendChatMessage = BigWigsLoader.SendChatMessage
-local format, find, sub, gsub, band = string.format, string.find, string.sub, string.gsub, bit.band
+local format, find, gsub, band = string.format, string.find, string.gsub, bit.band
 local type, next, tonumber = type, next, tonumber
 local core = BigWigs
 local C = core.C
@@ -236,7 +236,6 @@ function boss:RegisterEnableYell(...) core:RegisterEnableYell(self, ...) end
 --
 
 do
-	local modMissingFunction = "Module %q got the event %q (%d), but it doesn't know how to handle it."
 	local missingArgument = "Missing required argument when adding a listener to %q."
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
 	local invalidId = "Module %q tried to register an invalid spell id (%s) to event %q."
@@ -404,8 +403,8 @@ do
 			local unit = select(i, ...)
 			unitEventMap[self][event][unit] = nil
 			local keepRegistered
-			for i = #enabledModules, 1, -1 do
-				local m = unitEventMap[enabledModules[i]][event]
+			for j = #enabledModules, 1, -1 do
+				local m = unitEventMap[enabledModules[j]][event]
 				if m and m[unit] then
 					keepRegistered = true
 				end
@@ -501,8 +500,8 @@ do
 			local guid = UnitGUID(unit)
 			if guid and not UnitIsPlayer(unit) then
 				if isNumber then
-					local _, _, _, _, _, id = strsplit("-", guid)
-					guid = tonumber(id)
+					local _, _, _, _, _, mobId = strsplit("-", guid)
+					guid = tonumber(mobId)
 				end
 				if guid == id then return unit end
 			end
@@ -637,11 +636,11 @@ do
 		local elapsed = self.scheduledScansCounter[guid] + 0.05
 
 		for i = 1, 5 do
-			local boss = bosses[i]
-			if UnitGUID(boss) == guid then
+			local unit = bosses[i]
+			if UnitGUID(unit) == guid then
 				local bossTarget = bossTargets[i]
 				local playerGUID = UnitGUID(bossTarget)
-				if playerGUID and ((not UnitDetailedThreatSituation(bossTarget, boss) and not self:Tank(bossTarget)) or elapsed > tankCheckExpiry) then
+				if playerGUID and ((not UnitDetailedThreatSituation(bossTarget, unit) and not self:Tank(bossTarget)) or elapsed > tankCheckExpiry) then
 					local name = self:UnitName(bossTarget)
 					self:CancelTimer(self.scheduledScans[guid])
 					func(self, name, playerGUID, elapsed)
@@ -1322,7 +1321,7 @@ function boss:AddSyncListener(sync, throttle)
 end
 
 function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, customFinalMessage)
-	local boss = customBoss or self.displayName
+	local name = customBoss or self.displayName
 	local key = "berserk"
 
 	-- There are many Berserks, but we use 26662 because Brutallus uses this one.
@@ -1341,7 +1340,7 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, custo
 
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
-		self:Message(key, "Attention", nil, format(L.custom_start, boss, berserk, seconds / 60), false)
+		self:Message(key, "Attention", nil, format(L.custom_start, name, berserk, seconds / 60), false)
 	end
 
 	-- Half-way to enrage warning.

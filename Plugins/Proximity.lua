@@ -1092,7 +1092,7 @@ do
 			if spellName then
 				proxAnchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", spellIcon, spellName)
 			else
-				local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, key)
+				local _, name, _, icon = BigWigs:GetBossOptionDetails(module, key)
 				if type(icon) == "string" then
 					proxAnchor.ability:SetFormattedText("|T%s:20:20:-5:0:64:64:4:60:4:60|t%s", icon, name)
 				else

@@ -523,7 +523,7 @@ do
 		chaosCount = chaosCount + 1
 
 		if self:Me(args.sourceGUID) then -- Wrought Chaos (1) to PLAYER
-			local spell = CL.count:format(self:SpellName(186123), chaosCount)
+			--local spell = CL.count:format(self:SpellName(186123), chaosCount)
 			self:TargetMessage(186123, args.sourceName, "Personal", "Info", L.chaos_to:format(self:SpellName(186123), self:ColorName(args.destName)))
 			if not self:Mythic() then
 				self:Say(186123)
@@ -531,7 +531,7 @@ do
 			isOnMe = true
 		end
 		if self:Me(args.destGUID) then -- Focused Chaos (1) from PLAYER
-			local spell = CL.count:format(args.spellName, chaosCount)
+			--local spell = CL.count:format(args.spellName, chaosCount)
 			self:TargetMessage(186123, args.destName, "Positive", "Alarm", L.chaos_from:format(args.spellName, self:ColorName(args.sourceName)), args.spellId)
 			if not self:Mythic() then
 				self:Say(186123, args.spellName)

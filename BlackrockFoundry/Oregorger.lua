@@ -32,7 +32,7 @@ end
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		156240, -- Acid Torrent
 		{173471, "TANK"}, -- Acid Maw

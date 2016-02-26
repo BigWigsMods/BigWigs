@@ -179,7 +179,7 @@ do
 end
 
 do
-	local timeLeft, timer, timeLeft = 6, nil
+	local timeLeft, timer = 6, nil
 	local function countdown(self)
 		timeLeft = timeLeft - 1
 		if timeLeft < 5 then

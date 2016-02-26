@@ -161,7 +161,7 @@ function mod:PhantasmalWinds(args)
 end
 
 do
-	local isOnMe = nil, nil
+	local isOnMe = nil
 	local function warn(self, spellName)
 		if isOnMe then
 			self:TargetMessage(181956, isOnMe, "Personal" , "Alarm")

@@ -297,9 +297,9 @@ do
 		if t-prev > 4 then -- Fired once per player
 			prev = t
 			self:Message(args.spellId, "Neutral")
-			local t = times[volatilityCount]
-			if t then
-				self:CDBar(args.spellId, t)
+			local duration = times[volatilityCount]
+			if duration then
+				self:CDBar(args.spellId, duration)
 			end
 			volatilityCount = volatilityCount + 1
 		end
