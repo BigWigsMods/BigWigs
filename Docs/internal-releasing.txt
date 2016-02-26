@@ -8,21 +8,17 @@ pushing a new release to wowace/curse and wowinterface.
 1. Check that there are no open tickets on wowace that would affect a
    release.
 
-2. Check that BigWigs.toc in the root folder has the correct Version.
-   And, if not, update it and commit.
+2. Bump the BigWigs.toc version if required.
 
-3. Run the lua script under Options/scripts to update the credits if required.
-   And don't forget to commit it!
-
-4. Scan the code for any Lua comments starting with XXX and verify that
+3. Scan the code for any Lua comments starting with XXX and verify that
    these do not hinder the next release.
    (find . -name "*.lua" | xargs grep 'XXX' -n)
 
-5. Run the ingame Test, load the zone modules, and cycle through ALL the current 
+4. Run the ingame Test, load the zone modules, and cycle through ALL the current 
    boss mod config panels to make sure none error on display. If any core features
    have been changed, test them.
 
-6. Get a "go" from a Big Wigs developer.
+5. Get a "go" from a fellow team member.
 
  -> Release!
 

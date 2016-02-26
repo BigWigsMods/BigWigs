@@ -29,7 +29,6 @@ move-folders:
 ignore:
   - Nightmare
   - Suramar
-  - Options/scripts
   - Sounds/Long.wav
   - Sounds/Alarm.wav
   - Sounds/Alert.wav

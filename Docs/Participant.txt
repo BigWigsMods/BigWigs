@@ -1,5 +1,3 @@
-$Id$
-
 This document is intended for raid participants.
 
     When the fight begings
@@ -27,10 +25,10 @@ This bar is local to your client, and others won't be able to see it.
     Moving the bars and messages
 
 The bars and messages plugins for Big Wigs can be moved with an anchor that can
-be toggled on by clicking the "Configure" button in the main menu. After moving them,
+be toggled on by clicking the "Toggle Anchors" button in the main menu. After moving them,
 the test function can give you a few bars and messages to test your position
 and if you're fine with it.
 
 Remember that there are several bar textures available, as well as several
-output locations for the messages; for example SCT or MSBT.
+output locations for the messages.
 

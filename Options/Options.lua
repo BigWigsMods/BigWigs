@@ -1,6 +1,4 @@
 
---local BIGWIGS_AUTHORS = "rabbit, ammo, 7destiny, pettigrow, ananhaid, mojosdojo, Wetxius, jongt23, tekkub, fenlis, _yusaku_, shyva, StingerSoft, dynaletik, cwdg, gamefaq, yoshimo, sayclub, saroz, nevcairiel, s8095324, handdol, durcyn, chuanhsing, scorpio0920, kebinusan, Dynaletik, flyflame, zhTW, stanzilla, onyxmaster, MysticalOS, grimwald, lcf_hell, starinnia, chinkuwaila, arrowmaster, next96, tnt2ray, ackis, Leialyn, cremor, moonsorrow, jerry, fryguy, xinsonic, beerke, shari83, tsigo, hk2717, pigmonkey, ulic, mecdemort, Carlos, gnarfoz, a9012456, Cybersea, cronan, hyperactiveChipmunk, darchon, neriak, nirek, mikk, darkwings, hshh, otravi, yhpdoit, kjheng, AnarkiQ3, kergoth, dessa, ethancentaurai, Sayclub, erwanoops, Swix, Gothwin, illiaster, oojoo, nymbia, kyahx, valdriethien, phyber, oxman, profalbert, Traeumer, Zidomo, Anadale, tazmanyak, tain, thiana, ckknight, kemayo, zealotonastick, archarodim, coalado, silverwind, lucen, Adam77."
-
 local BigWigs = BigWigs
 local options = BigWigs:NewModule("Options")
 options:SetEnabledState(true)
