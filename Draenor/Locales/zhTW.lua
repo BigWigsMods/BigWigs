@@ -1,5 +1,5 @@
--- These localization strings are translated on WoWAce: http://www.wowace.com/addons/big-wigs/localization/
 local L = BigWigs:NewBossLocale("Supreme Lord Kazzak", "zhTW")
 if L then
---@localization(locale="zhTW", namespace="Draenor/SupremeLordKazzak", format="lua_additive_table", handle-unlocalized="ignore")@
+L.engage_yell = "面對燃燒軍團的力量吧！"
+
 end

@@ -1,4 +1,4 @@
-﻿local L = BigWigs:NewBossLocale("Skorpyron", "koKR")
+local L = BigWigs:NewBossLocale("Skorpyron", "koKR")
 if not L then return end
 if L then
 
