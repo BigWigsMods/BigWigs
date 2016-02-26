@@ -1,11 +1,14 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "koKR")
 if not L then return end
 
+--L.getNewRelease = "Your Big Wigs is old (/bwv) but you can easily update it using the Curse Client. Alternatively, you can update manually from curse.com or wowinterface.com."
+--L.warnTwoReleases = "Your Big Wigs is 2 releases out of date! Your version may have bugs, missing features, or completely incorrect timers. It is strongly recommended you update."
+--L.warnSeveralReleases = "|cffff0000Your Big Wigs is several releases out of date!! We HIGHLY recommend you update to prevent syncing issues with other players!|r"
+
 L.about = "정보"
 L.activeBossModules = "사용 중인 보스 모듈:"
 L.advanced = "고급 옵션"
 L.allRightsReserved = "모든 권리 보유"
-L.alphaOutdated = "사용 중인 Big Wigs 알파 버전의 업데이트가 필요합니다. (/bwv)."
 L.alphaRelease = "당신은 Big Wigs %s (revision %d) 의 알파 버전을 사용하고 있습니다."
 L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%d|r) 이미 Big Wigs 에서 보스 모듈로 존재하지만, 다시 등록이 필요합니다 (revision에 |cffffff00%d|r). 이 것은 일반적으로 애드온 업데이트 실패로 인하여 이 모듈이 당신의 애드온 폴더에 두개의 사본이 있는 것을 뜻합니다. 당신이 가지고 있는 Big Wigs 폴더의 삭제와 재설치를 권장합니다."
 L.altpower = "대체 기력 표시"
@@ -37,7 +40,6 @@ L.DISPEL_desc = "당신이 해제 가능한 능력일 경우 경고를 사용합
 L.dispeller = "|cFFFF0000해제 가능할 경우만 경고합니다.|r "
 L.EMPHASIZE = "특수 강조"
 L.EMPHASIZE_desc = "이 옵션을 활성화하면 이 기술과 관련이 있는 모든 메시지를 더 크고 잘 보이게 강조합니다. 강조된 메시지의 크기나 폰트는 메인 메뉴의 \"메시지\"에서 설정할 수 있습니다." -- Needs review
-L.extremelyOutdated = "|cffff0000경고:|r 당신의 Big Wigs가 80개 이상의 업데이트가 밀려있습니다.!! 이 버전에는 버그가 있거나, 없는 기능이 있거나, 타이머가 완전히 틀릴 수 있습니다. 업데이트를 강력하게 권장합니다."
 L.finishedLoading = "전투 종료, Big Wigs가 이제 로딩이 완료되었습니다."
 L.FLASH = "깜박임"
 L.FLASH_desc = "몇몇 능력이 다른 것보다 더 중요할 수 있습니다. 이 능력이 임박하거나 사용할 때 화면의 가장자리를 깜박이려면 이 옵션을 선택합니다."
@@ -68,7 +70,6 @@ L.missingAddOn = "이 지역에서 타이머를 보려면 |cFF436EEE%s|r 플러�
 L.modulesDisabled = "실행 중인 모든 모듈이 비활성되었습니다."
 L.modulesReset = "활성화된 모든 모듈이 초기화 되었습니다."
 L.mythic = "신화"
-L.newReleaseAvailable = "사용 가능한 Big Wigs의 새로운 버전이 있습니다(/bwv). curse.com, wowinterface.com, wowace.com를 방문하거나 Curse Updater를 통하여 새로운 버전을 찾아 사용할 수 있습니다."
 L.noBossMod = "이 보스에 대한 모듈이 없음:"
 L.norm10 = "10인 일반"
 L.norm25 = "25인 일반"
@@ -90,7 +91,6 @@ L.resetPositions = "위치 초기화"
 L.SAY = "일반 대화"
 L.SAY_desc = "당신이 기술에 걸렸을시 주변 사람들에게 일반 대화로 알립니다. 말풍선으로 쉽게 구별하기 좋습니다."
 L.selectEncounter = "교전 선택"
-L.severelyOutdated = "|cffff0000현재 사용하시는 Big Wigs의 버전이 최신보다 150 이상 뒤쳐져있습니다!! 다른 플레이어들과의 동기화와 관련하여 문제가 발생하는 것을 방지하기 위하여 업데이트를 할 것을 매우 권장해드립니다!|r"
 L.slashDescBreak = "|cFFFED000/break:|r 공격대에 휴식 타이머를 보냅니다."
 L.slashDescConfig = "|cFFFED000/bw:|r Big Wigs 설정을 엽니다."
 L.slashDescLocalBar = "|cFFFED000/localbar:|r 당신만 볼 수 있는 사용자 지정 바를 만듭니다."

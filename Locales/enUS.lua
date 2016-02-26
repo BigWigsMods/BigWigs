@@ -16,10 +16,9 @@ L.already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%s|r) alr
 L.officialRelease = "You are running an official release of Big Wigs %s (revision %d)"
 L.alphaRelease = "You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"
 L.sourceCheckout = "You are running a source checkout of Big Wigs %s directly from the repository."
-L.newReleaseAvailable = "There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."
-L.alphaOutdated = "Your alpha version of Big Wigs is out of date (/bwv)."
-L.extremelyOutdated = "|cffff0000WARNING:|r Your Big Wigs is over 80 revisions out of date!! Your version may have bugs, missing features, or completely incorrect timers. It is HIGHLY recommended you update."
-L.severelyOutdated = "|cffff0000Your Big Wigs is over 150 revisions out of date!! We HIGHLY recommend you update to prevent syncing issues with other players!|r"
+L.getNewRelease = "Your Big Wigs is old (/bwv) but you can easily update it using the Curse Client. Alternatively, you can update manually from curse.com or wowinterface.com."
+L.warnTwoReleases = "Your Big Wigs is 2 releases out of date! Your version may have bugs, missing features, or completely incorrect timers. It is strongly recommended you update."
+L.warnSeveralReleases = "|cffff0000Your Big Wigs is several releases out of date!! We HIGHLY recommend you update to prevent syncing issues with other players!|r"
 
 L.tooltipHint = "|cffeda55fClick|r to reset all running modules.\n|cffeda55fAlt-Click|r to disable them.\n|cffeda55fRight-Click|r to access options."
 L.activeBossModules = "Active boss modules:"

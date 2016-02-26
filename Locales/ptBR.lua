@@ -1,11 +1,14 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "ptBR")
 if not L then return end
 
+--L.getNewRelease = "Your Big Wigs is old (/bwv) but you can easily update it using the Curse Client. Alternatively, you can update manually from curse.com or wowinterface.com."
+--L.warnTwoReleases = "Your Big Wigs is 2 releases out of date! Your version may have bugs, missing features, or completely incorrect timers. It is strongly recommended you update."
+--L.warnSeveralReleases = "|cffff0000Your Big Wigs is several releases out of date!! We HIGHLY recommend you update to prevent syncing issues with other players!|r"
+
 L.about = "Sobre"
 L.activeBossModules = "Módulos de chefes ativos:"
 L.advanced = "Opções avançadas"
 L.allRightsReserved = "Todos os direitos reservados"
-L.alphaOutdated = "Sua versão alfa do Big Wigs está desatualizada (/bwv)."
 L.alphaRelease = "Você está usando uma VERSÃO ALFA do Big Wigs %s (revisão %d)"
 L.already_registered = "|cffff0000ATENÇÃO:|r |cff00ff00%s|r (|cffffff00%s|r) já existe este módulo BigWigs, isso normalmente significa que você tem 2 cópias desse módulo em sua pasta de AddOns, o que pode ter ocorrido devido a uma atualização mal sucedida. Recomenda-se deletar as pastas do BigWigs e reinstalar."
 L.altpower = "Exibir poder alternativo" -- Needs review
@@ -37,7 +40,6 @@ L.DISPEL_desc = "Se você preferir ser avisado desta habilidade, mesmo não pode
 L.dispeller = "|cFFFF0000Alerta apenas para quem pode remover.|"
 L.EMPHASIZE = "Enfatizar"
 L.EMPHASIZE_desc = "Habilitar isto irá enfatizar algumas mensagens associadas com esta habilidade, deixando-as maior e mais visíveis. Você pode colocar o tamanho e a fonte das mensagens enfatizadas no menu de opções em \"Mensagens\"" -- Needs review
-L.extremelyOutdated = "|cffff0000AVISO:|r Seu Big Wigs está a mais de 80 revisões desatualizado!! Sua versão pode ter erros, falta de recursos, ou temporizadores completamente incorretas. É altamente recomendado que você atualize."
 L.finishedLoading = "O combate terminou, Big Wigs agora terminou de ser carregado."
 L.FLASH = "Brilhar"
 L.FLASH_desc = "Algumas habilidades podem ser mais importante do que outras. Se você quer que sua tela pisque quando estas habilidades forem usadas ou iminentes, marque esta opção."
@@ -68,7 +70,6 @@ L.missingAddOn = "Por favor, note que esta zona requer o plugin |cFF436EEE%s|r p
 L.modulesDisabled = "Todos os módulos foram desativados."
 L.modulesReset = "Todos os módulos foram reiniciados."
 L.mythic = "Mítico"
-L.newReleaseAvailable = "Existe uma nova versão do Big Wigs disponível (/bwv). Você pode visitar curse.com, wowinterface.com, wowace.com ou usar o cliente do Curse para adquiri-la."
 L.noBossMod = "No boss mod:"
 L.norm10 = "10"
 L.norm25 = "25"
@@ -90,7 +91,6 @@ L.resetPositions = "Reiniciar posições"
 L.SAY = "Dizer"
 L.SAY_desc = "As bolhas de chat são fáceis de se ver. Big Wigs usará uma mensagem para anunciar as pessoas ao redor sobre um efeito em você."
 L.selectEncounter = "Selecionar encontro"
-L.severelyOutdated = "|cffff0000Seu Big Wigs está mais de 150 revisões desatualizado!! Nós recomendamos IMENSAMENTE que atualize para previnir problemas de sincronismo com outros jogadores!|r"
 L.slashDescBreak = "|cFFFED000/break:|r Envia um temporizador de intervalo para sua raide."
 L.slashDescConfig = "|cFFFED000/bw:|r abre a tela de configuração do Big Wigs"
 L.slashDescLocalBar = "|cFFFED000/localbar:|r Cria uma barra personalizada que apenas você verá"
