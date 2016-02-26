@@ -832,16 +832,17 @@ do
 		if prefix == "V" or prefix == "Q" then -- V = version response, Q = version query
 			local verString, hash = msg:match("^(%d+)%-(.+)$")
 			local version = tonumber(verString)
-			usersVersion[sender] = version
-			usersHash[sender] = hash
-			if version > highestFoundVersion then highestFoundVersion = version end
-			if version > BIGWIGS_VERSION then
-				printOutOfDate(usersVersion)
+			if version and version > 0 then -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
+				usersVersion[sender] = version
+				usersHash[sender] = hash
+				if version > highestFoundVersion then highestFoundVersion = version end
+				if version > BIGWIGS_VERSION then
+					printOutOfDate(usersVersion)
+				end
 			end
-		end
-		if prefix == "VQ" or prefix == "VQA" or prefix == "VR" or prefix == "VRA" then -- XXX temp, remove this entire statement
+		elseif prefix == "VQ" or prefix == "VQA" or prefix == "VR" or prefix == "VRA" then -- XXX temp, remove this entire statement
 			local version = tonumber(msg)
-			if not usersVersion[sender] or usersVersion[sender] < 5 then -- Don't overwrite v5 users when they send v4 versions
+			if version and version ~= 0 and not usersVersion[sender] or usersVersion[sender] < 5 then -- Don't overwrite v5 users when they send v4 versions
 				usersVersion[sender] = 4
 				usersHash[sender] = version
 			end
