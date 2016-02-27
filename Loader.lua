@@ -842,7 +842,7 @@ do
 			end
 		elseif prefix == "VQ" or prefix == "VQA" or prefix == "VR" or prefix == "VRA" then -- XXX temp, remove this entire statement
 			local version = tonumber(msg)
-			if version and version ~= 0 and not usersVersion[sender] or usersVersion[sender] < 5 then -- Don't overwrite v5 users when they send v4 versions
+			if version and version ~= 0 and (not usersVersion[sender] or usersVersion[sender] < 5) then -- Don't overwrite v5 users when they send v4 versions
 				usersVersion[sender] = 4
 				usersHash[sender] = version
 			end
