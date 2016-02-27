@@ -1,9 +1,9 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "frFR")
 if not L then return end
 
---L.getNewRelease = "Your Big Wigs is old (/bwv) but you can easily update it using the Curse Client. Alternatively, you can update manually from curse.com or wowinterface.com."
---L.warnTwoReleases = "Your Big Wigs is 2 releases out of date! Your version may have bugs, missing features, or completely incorrect timers. It is strongly recommended you update."
---L.warnSeveralReleases = "|cffff0000Your Big Wigs is several releases out of date!! We HIGHLY recommend you update to prevent syncing issues with other players!|r"
+L.getNewRelease = "Votre Big Wigs est ancien (/bwv), mais vous pouvez facilement le mettre à jour en utilisant le client Curse. Vous pouvez également le mettre à jour à partir de curse.com ou wowinterface.com."
+L.warnTwoReleases = "Votre Big Wigs est obsolète de 2 versions ! Votre version risque de contenir des bugs, des fonctionnalités manquantes, voire même des délais totalement incorrects. Il est recommandé de faire la mise à jour."
+L.warnSeveralReleases = "|cffff0000Votre Big Wigs est plusieurs versions derrière la plus récente !! Il est VIVEMENT recommandé d'effectuer la mise à jour afin d'éviter tout problème de synchronisation avec les autres joueurs !|r"
 
 L.about = "À propos"
 L.activeBossModules = "Modules de boss actifs :"
