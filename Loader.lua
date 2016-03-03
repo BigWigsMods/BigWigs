@@ -22,14 +22,14 @@ do
 	local RELEASE = "RELEASE"
 
 	local releaseType = RELEASE
-	local myGitHash = "@project-revision@" -- The ZIP packager will replase this with the git hash. -- XXX @project-hash@
+	local myGitHash = "@project-revision@" -- The ZIP packager will replace this with the Git hash. -- XXX @project-abbreviated-hash@
 	local releaseString = ""
 	--@alpha@
 	-- The following code will only be present in alpha ZIPs.
 	releaseType = ALPHA
 	--@end-alpha@
 
-	-- If we find "@" then we're running from git directly. 
+	-- If we find "@" then we're running from Git directly. 
 	if myGitHash:find("@", nil, true) then
 		myGitHash = "repo"
 		releaseType = REPO
