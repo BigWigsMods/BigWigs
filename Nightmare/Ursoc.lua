@@ -153,7 +153,7 @@ end
 
 function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if hp < 35 then
+	if hp < 35 then -- Blood Frenzy at 30%
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 		self:Message(198388, "Neutral", "Info", CL.soon:format(self:SpellName(198388))) -- Blood Frenzy
 	end

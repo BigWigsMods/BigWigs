@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - difficulties other than heroic
+-- - fix mythic stuff after testing
 -- - timers are from alpha, some did highly vary
 
 --------------------------------------------------------------------------------
@@ -31,16 +32,25 @@ local L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		--[[ General ]]--
 		202977, -- Infested Breath
 		{203096, "SAY", "FLASH", "PROXIMITY"}, -- Rot
 		{204463, "SAY", "FLASH"}, -- Volatile Rot
 		203552, -- Heart of the Swarm
 		203045, -- Infested Ground
 		"berserk",
+
+		--[[ Mythic ]]--
+		204504, -- Infested
+		205043, -- Infested Mind
+	},{
+		[202977] = "general",
+		[204504] = "mythic",
 	}
 end
 
 function mod:OnBossEnable()
+	--[[ General ]]--
 	self:Log("SPELL_CAST_START", "InfestedBreath", 202977)
 	self:Log("SPELL_AURA_APPLIED", "Rot", 203096)
 	self:Log("SPELL_AURA_REMOVED", "RotRemoved", 203096)
@@ -49,12 +59,20 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "InfestedGroundDamage", 203045)
 	self:Log("SPELL_PERIODIC_DAMAGE", "InfestedGroundDamage", 203045)
 	self:Log("SPELL_PERIODIC_MISSED", "InfestedGroundDamage", 203045)
+
+	--[[ Mythic ]]--
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Infested", 204504) -- also on hc, but i don't think it's relevant
+	self:Log("SPELL_AURA_APPLIED", "InfestedMind", 205043) -- pre alpha mythic testing spell id
 end
 
 function mod:OnEngage()
 	self:Message("berserk", "Neutral", nil, "Nythendra (Alpha) Engaged (Post Alpha Test Mod)", 23074) -- some red dragon icon
 	rotCount = 1
 	self:Berserk(720) -- 12 minutes on heroic, not kidding
+	self:CDBar(203096, 10.5) -- Rot
+	self:CDBar(204463, 22) -- Volatile Rot
+	self:CDBar(202977, 38) -- Infested Breath
+	self:CDBar(203552, 90) -- Heart of the Swarm
 end
 
 --------------------------------------------------------------------------------
@@ -142,3 +160,14 @@ do
 		end
 	end
 end
+
+function mod:Infested(args)
+	if self:Mythic() and self:Me(args.destGUID) and args.amount > 6 then
+		self:StackMessage(args.spellId, args.destName, amount, "Personal", "Warning")
+	end
+end
+
+function mod:InfestedMind(args)
+	self:TargetMessage(args.spellId, args.destName, "Important", "Alert")
+end
+
