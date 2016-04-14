@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Dragons of Nightmare", 1520)
+local mod, CL = BigWigs:NewBoss("Dragons of Nightmare", 1094, 1704)
 if not mod then return end
 mod:RegisterEnableMob( -- fix me
 	102679, -- Ysondre

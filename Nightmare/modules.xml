@@ -6,5 +6,7 @@
 <Script file="Dragons.lua"/>
 <Script file="Xavius.lua"/>
 <Script file="Ilgynoth.lua"/>
+<Script file="EleretheRenferal.lua"/>
+<Script file="Cenarius.lua"/>
 
 </Ui>

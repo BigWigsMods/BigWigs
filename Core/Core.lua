@@ -653,7 +653,7 @@ do
 
 		self:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 
-		local id = module.worldBoss and module.zoneId or module.zoneId == 1520 and module.zoneId or module.zoneId == 1530 and module.zoneId or GetAreaMapInfo(module.zoneId) -- XXX legion temp hack for no map id
+		local id = module.worldBoss and module.zoneId or GetAreaMapInfo(module.zoneId)
 		if not enablezones[id] then
 			enablezones[id] = true
 		end

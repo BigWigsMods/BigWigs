@@ -260,13 +260,7 @@ function translateZoneID(id)
 	if id < 10 then
 		name = select(id * 2, GetMapContinents())
 	else
-		if id == 1520 then -- XXX Legion hack
-			name = "*Emerald Nightmare"
-		elseif id == 1530 then -- XXX Legion hack
-			name = "*Suramar"
-		else
-			name = GetMapNameByID(id)
-		end
+		name = GetMapNameByID(id)
 	end
 	return name
 end
@@ -1113,7 +1107,7 @@ end
 local function onZoneShow(frame)
 	local zoneId = frame.id
 	if zoneId then
-		local instanceId = fakeWorldZones[zoneId] and zoneId or zoneId == 1520 and zoneId or zoneId == 1530 and zoneId or GetAreaMapInfo(zoneId) -- XXX legion temp hack for no map id
+		local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
 
 		-- Make sure all the bosses for this zone are loaded.
 		loader:LoadZone(instanceId)
@@ -1264,7 +1258,7 @@ do
 
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
-		local instanceId = fakeWorldZones[zoneId] and zoneId or zoneId == 1520 and zoneId or zoneId == 1530 and zoneId or GetAreaMapInfo(zoneId) -- XXX legion temp hack for no map id
+		local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
 		local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or loader.isLegion and addonNameToHeader.BigWigs_Legion or addonNameToHeader.BigWigs_WarlordsOfDraenor -- XXX LEGION update this to BigWigs_Legion
 		local panel, justCreated = self:GetPanel(zoneName, parent, zoneId)
 		if justCreated then

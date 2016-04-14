@@ -14,7 +14,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Spellblade Aluriel", 1033, 1530)
+local mod, CL = BigWigs:NewBoss("Spellblade Aluriel", 1033, 1751)
 if not mod then return end
 mod:RegisterEnableMob(104881)
 mod.engageId = 1871

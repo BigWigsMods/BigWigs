@@ -3,9 +3,9 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Gul'dan", 1033, 1737)
+local mod, CL = BigWigs:NewBoss("High Botanist Tel'arn", 1033, 1761)
 if not mod then return end
-mod:RegisterEnableMob(105503) -- fix me
+mod:RegisterEnableMob(109038) -- fix me
 --mod.engageId = 1000000
 --mod.respawnTime = 0
 
@@ -33,7 +33,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Gul'dan (Alpha) Engaged")
+	self:Message("berserk", "Neutral", nil, "High Botanist Tel'arn (Alpha) Engaged")
 end
 
 --------------------------------------------------------------------------------

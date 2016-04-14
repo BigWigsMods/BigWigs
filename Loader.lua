@@ -29,7 +29,7 @@ do
 	releaseType = ALPHA
 	--@end-alpha@
 
-	-- If we find "@" then we're running from Git directly. 
+	-- If we find "@" then we're running from Git directly.
 	if myGitHash:find("@", nil, true) then
 		myGitHash = "repo"
 		releaseType = REPO
@@ -297,7 +297,7 @@ do
 			local zone = tonumber(rawZone:trim())
 			if zone then
 				-- register the zone for enabling.
-				local instanceId = fakeWorldZones[zone] and zone or zone == 1520 and zone or zone == 1530 and zone or GetAreaMapInfo(zone) -- XXX legion temp hack for no map id
+				local instanceId = fakeWorldZones[zone] and zone or GetAreaMapInfo(zone)
 				if instanceId then -- Protect live client from beta client ids
 					enableZones[instanceId] = true
 
@@ -991,7 +991,7 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		enableZones[module.zoneId] = "world"
 		worldBosses[module.worldBoss] = module.zoneId
 	else
-		enableZones[module.zoneId == 1520 and module.zoneId or module.zoneId == 1530 and module.zoneId or GetAreaMapInfo(module.zoneId)] = true -- XXX legion temp hack for no map id
+		enableZones[GetAreaMapInfo(module.zoneId)] = true
 	end
 
 	local id = module.otherMenu or module.zoneId

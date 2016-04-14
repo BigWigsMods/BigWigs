@@ -9,7 +9,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Skorpyron", 1530) -- map was 1007 = Broken Isles in alpha, placeholder?!
+local mod, CL = BigWigs:NewBoss("Skorpyron", 1033, 1706)
 if not mod then return end
 mod:RegisterEnableMob(102263)
 mod.engageId = 1849
