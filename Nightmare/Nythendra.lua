@@ -1,14 +1,12 @@
 --------------------------------------------------------------------------------
 -- TODO List:
--- - difficulties other than heroic
--- - fix mythic stuff after testing
 -- - timers are from alpha, some did highly vary
 
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Nythendra", 1520)
+local mod, CL = BigWigs:NewBoss("Nythendra", 1094, 1703)
 if not mod then return end
 mod:RegisterEnableMob(102672)
 mod.engageId = 1853
@@ -43,6 +41,7 @@ function mod:GetOptions()
 		--[[ Mythic ]]--
 		204504, -- Infested
 		205043, -- Infested Mind
+		205070, -- Spread Infestation
 	},{
 		[202977] = "general",
 		[204504] = "mythic",
@@ -61,12 +60,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "InfestedGroundDamage", 203045)
 
 	--[[ Mythic ]]--
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Infested", 204504) -- also on hc, but i don't think it's relevant
-	self:Log("SPELL_AURA_APPLIED", "InfestedMind", 205043) -- pre alpha mythic testing spell id
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Infested", 204504) -- also on hc, but i don't think it's relevant there
+	self:Log("SPELL_AURA_APPLIED", "InfestedMind", 205043)
+	self:Log("SPELL_CAST_START", "SpreadInfestation", 205070)
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Nythendra (Alpha) Engaged (Post Alpha Test Mod)", 23074) -- some red dragon icon
+	self:Message("berserk", "Neutral", nil, "Nythendra (Alpha) Engaged (Post Mythic Test 1 Mod)", 23074) -- some red dragon icon
 	rotCount = 1
 	self:Berserk(720) -- 12 minutes on heroic, not kidding
 	self:CDBar(203096, 10.5) -- Rot
@@ -148,6 +148,7 @@ function mod:HeartOfTheSwarm(args)
 	self:CDBar(203096, 37.5) -- Rot				22.5 + 15, alpha heroic timing
 	self:CDBar(204463, 47.5) -- Volatile Rot	22.5 + 25, alpha heroic timing, did vary between 22-30 (+22.5)
 	self:CDBar(202977, 61.5) -- Infested Breath	22.5 + 39, alpha heroic timing, did vary between 39-42 (+22.5)
+	rotCount = 1
 end
 
 do
@@ -168,6 +169,13 @@ function mod:Infested(args)
 end
 
 function mod:InfestedMind(args)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Alert")
+	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
 end
+
+function mod:SpreadInfestation(args)
+	if not self:Me(args.sourceGUID) then -- can't interrupt yourself!
+		self:Message(args.spellId, "Attention", "Alert", CL.other:format(mod:ColorName(args.sourceName), CL.casting:format(args.spellName))) -- Player: Casting Spread Infestation!
+	end
+end
+
 
