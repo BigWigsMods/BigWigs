@@ -1,9 +1,11 @@
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Remove all unnecessary spellIds (guesses from wowhead) and throw in some args.spellId instead
+-- - Fix remaining spellId guesses
 -- - Respawn time
 -- - Tuning sounds / message colors
 -- - Remove alpha engaged message
+-- - check Power Overwhelming duration
+-- - fix stages (auras were hidden in the last testing)
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -12,13 +14,12 @@
 local mod, CL = BigWigs:NewBoss("Chronomatic Anomaly", 1033, 1725)
 if not mod then return end
 mod:RegisterEnableMob(105248) -- fix me
---mod.engageId = 1000000
+mod.engageId = 1865
 --mod.respawnTime = 0
 
 --------------------------------------------------------------------------------
 -- Locals
 --
-local temporalChargeOnMe = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,71 +33,91 @@ local L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		206607, -- Chronometric Particles
+		"stages", -- Speed: Slow / Normal / Fast
+		{206607, "TANK"}, -- Chronometric Particles
 		206614, -- Burst of Time
 		206609, -- Time Release
 		{206617, "SAY"}, -- Time Bomb
 		207871, -- Vortex (standing in stuff)
-		207063, -- Tachyon Burst
 		212099, -- Temporal Charge
-		{211927, "FLASH"}, -- Power Overwhelming
+		212115, -- Temporal Smash
+		211927, -- Power Overwhelming
 		207976, -- Full Power (Berserk?)
 		"berserk",
 	}
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "ChronometricParticles", 206607) -- Pre alpha test spellId
-	self:Log("SPELL_AURA_APPLIED_DOSE", "ChronometricParticles", 206607) -- Pre alpha test spellId
-	self:Log("SPELL_CAST_SUCCESS", "BurstOfTime", 206614, 214050, 206612, 206613, 214049) -- ALL THE (pre alpha) SPELLIDS!
-	self:Log("SPELL_AURA_APPLIED", "TimeRelease", 206608, 206609, 206610, 207051, 207052) -- Pre alpha test spellId, like all of them
-	self:Log("SPELL_AURA_APPLIED", "TimeBomb", 212845, 206618, 206617, 206615) -- Pre alpha test spellId, betting 1 curse point on 206617
-	self:Log("SPELL_AURA_APPLIED", "VortexDamage", 207871) -- Pre alpha test spellId
-	self:Log("SPELL_PERIODIC_DAMAGE", "VortexDamage", 207871) -- Pre alpha test spellId
-	self:Log("SPELL_PERIODIC_MISSED", "VortexDamage", 207871) -- Pre alpha test spellId
-	self:Log("SPELL_CAST_START", "TachyonBurst", 207063) -- Pre alpha test spellId
-	self:Log("SPELL_AURA_APPLIED", "TemporalCharge", 212099) -- Pre alpha test spellId
-	self:Log("SPELL_AURA_REMOVED", "TemporalChargeRemoved", 212099) -- Pre alpha test spellId
-	self:Log("SPELL_CAST_START", "PowerOverwhelming", 211927) -- Pre alpha test spellId
+	self:Log("SPELL_AURA_APPLIED", "Stages", 207011, 207012, 207013) -- Pre alpha test spellId
+	self:Log("SPELL_AURA_APPLIED", "ChronometricParticles", 206607)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ChronometricParticles", 206607)
+	self:Log("SPELL_CAST_SUCCESS", "BurstOfTime", 206614)
+	self:Log("SPELL_AURA_APPLIED", "TimeRelease", 206609)
+	self:Log("SPELL_AURA_REMOVED", "TimeReleaseRemoved", 206609)
+	self:Log("SPELL_AURA_APPLIED", "TimeBomb", 206617)
+	self:Log("SPELL_AURA_APPLIED", "VortexDamage", 207871)
+	self:Log("SPELL_PERIODIC_DAMAGE", "VortexDamage", 207871)
+	self:Log("SPELL_PERIODIC_MISSED", "VortexDamage", 207871)
+	self:Log("SPELL_AURA_APPLIED", "TemporalCharge", 212099)
+	self:Log("SPELL_AURA_APPLIED", "TemporalSmash", 212115)
+	self:Log("SPELL_CAST_START", "PowerOverwhelming", 211927)
 	self:Log("SPELL_AURA_APPLIED", "FullPower", 207976) -- Pre alpha test spellId
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Chronomatic Anomaly (Alpha) Engaged (Pre Alpha Test Mod)")
-	temporalChargeOnMe = nil
+	self:Message("berserk", "Neutral", nil, "Chronomatic Anomaly (Alpha) Engaged (Post Alpha Heroic Test Mod)")
+	self:Bar(211927, 60)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function mod:Stages(args)
+	self:Message("stages", "Neutral", "Info", args.spellName, args.spellId)
+end
+
 function mod:ChronometricParticles(args)
 	local amount = args.amount or 1
-	-- if amount > 7 or tank...
 	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 7 and "Warning") -- something bad happens at 10 stacks?!
 end
 
 function mod:BurstOfTime(args)
-	self:Message(206614, "Attention") -- might be spammy. like a lot of spam, dunno
+	self:Message(args.spellId, "Attention", "Alarm")
 end
 
-function mod:TimeRelease(args)
-	-- target needs to be healed, so message and bar should be healer and target only later
-	self:TargetMessage(206609, args.destName, "Urgent")
-	self:TargetBar(206609, 30, args.destName)
-	-- messages of absorb remaining, might be useful?
+do
+	local list = mod:NewTargetList()
+	function mod:TimeRelease(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Urgent")
+		end
+
+		if self:Me(args.destGUID) then
+			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+			if expires and expires > 0 then
+				local timeLeft = expires - GetTime()
+				self:TargetBar(args.spellId, timeLeft, args.destName)
+			end
+		end
+	end
+end
+
+function mod:TimeReleaseRemoved(args)
+	self:StopBar(args.spellId, args.destName)
 end
 
 function mod:TimeBomb(args)
 	local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
 	local remaining = expires-GetTime()
-	self:TargetMessage(206617, args.destName, "Important")
-	self:TargetBar(206617, remaining, args.destName)
+	self:TargetMessage(args.spellId, args.destName, "Important")
+	self:TargetBar(args.spellId, remaining, args.destName)
 
-	self:Say(206617)
-	self:ScheduleTimer("Say", remaining-3, 206617, 3, true)
-	self:ScheduleTimer("Say", remaining-2, 206617, 2, true)
-	self:ScheduleTimer("Say", remaining-1, 206617, 1, true)
+	self:Say(args.spellId)
+	self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
+	self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
+	self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
 end
 
 do
@@ -110,26 +131,17 @@ do
 	end
 end
 
-function mod:TachyonBurst(args)
-	self:Message(args.spellId, "Urgent", nil, CL.incoming:format(args.spellName))
-end
-
 function mod:TemporalCharge(args)
-	self:TargetMessage(args.spellId, args.spellName, "Positive")
-	temporalChargeOnMe = true
+	self:TargetMessage(args.spellId, args.destName, "Positive")
 end
 
-function mod:TemporalChargeRemoved(args)
-	temporalChargeOnMe = nil
+function mod:TemporalSmash(args)
+	self:Message(args.spellId, "Positive", "Info")
 end
 
 function mod:PowerOverwhelming(args)
 	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 5, CL.cast:format(args.spellName))
-	if temporalChargeOnMe then
-		self:Flash(args.spellId)
-		self:Message(args.spellId, "Personal", nil, "Move to the thing to stop the cast or something, just do it!") -- alpha message
-	end
+	self:Bar(args.spellId, 65, CL.cast:format(args.spellName))
 end
 
 function mod:FullPower(args)
