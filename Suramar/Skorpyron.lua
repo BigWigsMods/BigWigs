@@ -1,3 +1,5 @@
+if select(4, GetBuildInfo()) < 70000 then return end -- XXX legion check for live
+
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Figure out how Arcane Tether works (see comment on event handler)

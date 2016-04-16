@@ -1,3 +1,5 @@
+if select(4, GetBuildInfo()) < 70000 then return end -- XXX legion check for live
+
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Blood Frenzy not tested yet, only journal data

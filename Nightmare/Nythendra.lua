@@ -1,3 +1,5 @@
+if select(4, GetBuildInfo()) < 70000 then return end -- XXX legion check for live
+
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - timers are from alpha, some did highly vary
@@ -164,7 +166,7 @@ end
 
 function mod:Infested(args)
 	if self:Mythic() and self:Me(args.destGUID) and args.amount > 6 then
-		self:StackMessage(args.spellId, args.destName, amount, "Personal", "Warning")
+		self:StackMessage(args.spellId, args.destName, args.amount, "Personal", "Warning")
 	end
 end
 
@@ -177,5 +179,3 @@ function mod:SpreadInfestation(args)
 		self:Message(args.spellId, "Attention", "Alert", CL.other:format(mod:ColorName(args.sourceName), CL.casting:format(args.spellName))) -- Player: Casting Spread Infestation!
 	end
 end
-
-
