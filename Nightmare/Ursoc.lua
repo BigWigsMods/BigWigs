@@ -3,7 +3,7 @@ if select(4, GetBuildInfo()) < 70000 then return end -- XXX legion check for liv
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Blood Frenzy not tested yet, only journal data
--- - Only heroic timers (raid test 15.01.16)
+-- - Only heroic/mythic timers (raid test 15.01.16, 16.04.16)
 -- - Respawn time
 -- - Tuning sounds / message colors
 -- - Remove alpha engaged message
@@ -66,7 +66,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Ursoc (Alpha) Engaged", 98204) -- Amani Battle Bear icon
+	self:Message("berserk", "Neutral", nil, "Ursoc (Alpha) Engaged (Post Mythic Test Mod)", 98204) -- Amani Battle Bear icon
 	cacophonyCount = 1
 	rendFleshCount = 1
 	focusedGazeCount = 1
@@ -87,7 +87,11 @@ function mod:RoaringCacophony(args)
 end
 
 function mod:RoaringCacophonySuccess(args)
-	self:Message(args.spellId, "Urgent", "Alarm", CL.count:format(args.spellName, cacophonyCount))
+	local text = CL.count:format(args.spellName, cacophonyCount)
+	if self:Mythic() and cacophonyCount % 2 == 0 then
+		text = text.." - ".. CL.spawning:format(cacophonyCount == 2 and CL.add or CL.adds) -- this might be too long
+	end
+	self:Message(args.spellId, "Urgent", "Alarm", text)
 	cacophonyCount = cacophonyCount + 1
 	self:Bar(args.spellId, cacophonyCount % 2 == 0 and 10 or 30, CL.count:format(args.spellName, cacophonyCount))
 end
@@ -107,7 +111,7 @@ end
 function mod:RendFlesh(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", (self:Tank() or self:Healer()) and "Info", CL.count:format(args.spellName, rendFleshCount))
 
-	-- This might be 12s for every difficulty, but we only know heroic alpha right now
+	-- This might be 12s for every difficulty, but we only know heroic and mythic alpha right now
 	local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
 	local t = expires - GetTime()
 	self:TargetBar(args.spellId, t, args.destName, CL.count:format(args.spellName, rendFleshCount))
@@ -135,7 +139,7 @@ end
 
 function mod:Unbalanced(args)
 	if self:Me(args.destGUID) then
-		-- This might be 50s for every difficulty, but we only know heroic alpha right now
+		-- This might be 50s for every difficulty, but we only know heroic and mythic alpha right now
 		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 		local t = expires - GetTime()
 		self:TargetBar(args.spellId, t, args.destName)
