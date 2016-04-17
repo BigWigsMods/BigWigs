@@ -82,11 +82,13 @@ local icons = setmetatable({}, {__index =
 	function(self, key)
 		local value
 		if type(key) == "number" then
-			if key > 0 then
+			if key > 8 then
 				value = GetSpellTexture(key)
 				if not value then
 					core:Print(format("An invalid spell id (%d) is being used in a bar/message.", key))
 				end
+			elseif key > 0 then
+				value = format("Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d", key)
 			else
 				local _, _, _, abilityIcon = EJ_GetSectionInfo(-key)
 				if abilityIcon and abilityIcon:trim():len() > 0 then

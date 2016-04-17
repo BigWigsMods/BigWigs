@@ -158,7 +158,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			local icon = L[option .. "_icon"]
 			if icon == option .. "_icon" then icon = nil end
 			if type(icon) == "number" then
-				if icon > 10 then
+				if icon > 8 then
 					icon = GetSpellTexture(icon)
 				elseif icon > 0 then
 					icon = ("Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d"):format(icon)
