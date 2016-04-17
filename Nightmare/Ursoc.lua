@@ -4,7 +4,6 @@ if select(4, GetBuildInfo()) < 70000 then return end -- XXX legion check for liv
 -- TODO List:
 -- - Blood Frenzy not tested yet, only journal data
 -- - Only heroic/mythic timers (raid test 15.01.16, 16.04.16)
--- - Respawn time
 -- - Tuning sounds / message colors
 -- - Remove alpha engaged message
 
@@ -16,7 +15,7 @@ local mod, CL = BigWigs:NewBoss("Ursoc", 1094, 1667)
 if not mod then return end
 mod:RegisterEnableMob(100497)
 mod.engageId = 1841
--- mod.respawnTime = 0 -- TODO
+mod.respawnTime = 40
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -66,13 +65,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FocusedGazeRemoved", 198006)
 	self:Log("SPELL_AURA_APPLIED", "Unbalanced", 198108)
 	self:Log("SPELL_AURA_APPLIED", "MiasmaDamage", 205611)
-	self:Log("SPELL_PERIODIC_DAMAGE", "MiasmaDamage", 205611)
-	self:Log("SPELL_PERIODIC_MISSED", "MiasmaDamage", 205611)
+	self:Log("SPELL_DAMAGE", "MiasmaDamage", 212238)
+	self:Log("SPELL_MISSED", "MiasmaDamage", 212238)
+	self:Log("SPELL_ABSORBED", "MiasmaDamage", 212238)
 	self:Log("SPELL_AURA_APPLIED", "BloodFrenzy", 198388)
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Ursoc (Alpha) Engaged (Post Mythic Test Mod v2)", 98204) -- Amani Battle Bear icon
+	self:Message("berserk", "Neutral", nil, "Ursoc (Alpha) Engaged (Post Mythic Test Mod v3)", 98204) -- Amani Battle Bear icon
 	cacophonyCount = 1
 	rendFleshCount = 1
 	focusedGazeCount = 1
@@ -172,7 +172,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(205611, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
