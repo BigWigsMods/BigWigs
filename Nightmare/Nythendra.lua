@@ -2,7 +2,11 @@ if select(4, GetBuildInfo()) < 70000 then return end -- XXX legion check for liv
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - timers are from alpha, some did highly vary
+-- - the cd timers really suck on this fight
+-- - on mythic testing she started with p2 sometimes. i guess thats a bug, change timers if its intended
+-- - i assume that they changed a lot of timers after heroic testing.
+--   need some heroic data to verify that they've beed changed there also.
+-- - dont show bars for stuff that would happen during HeartOfTheSwarm
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -12,13 +16,14 @@ local mod, CL = BigWigs:NewBoss("Nythendra", 1094, 1703)
 if not mod then return end
 mod:RegisterEnableMob(102672)
 mod.engageId = 1853
-mod.respawnTime = 30 -- might not be accurate
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
 local rotCount = 1
+local mindControlledPlayers = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -64,12 +69,14 @@ function mod:OnBossEnable()
 	--[[ Mythic ]]--
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Infested", 204504) -- also on hc, but i don't think it's relevant there
 	self:Log("SPELL_AURA_APPLIED", "InfestedMind", 205043)
+	self:Log("SPELL_AURA_APPLIED", "InfestedMindRemoved", 205043)
 	self:Log("SPELL_CAST_START", "SpreadInfestation", 205070)
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Nythendra (Alpha) Engaged (Post Mythic Test 1 Mod)", 23074) -- some red dragon icon
+	self:Message("berserk", "Neutral", nil, "Nythendra (Alpha) Engaged (Post Mythic Test Mod v2)", 23074) -- some red dragon icon
 	rotCount = 1
+	mindControlledPlayers = 0
 	self:Berserk(720) -- 12 minutes on heroic, not kidding
 	self:CDBar(203096, 10.5) -- Rot
 	self:CDBar(204463, 22) -- Volatile Rot
@@ -84,7 +91,7 @@ end
 function mod:InfestedBreath(args)
 	self:Message(args.spellId, "Urgent", "Alarm", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 7, CL.cast:format(args.spellName)) -- 2s cast time + 5s channel
-	self:CDBar(args.spellId, 37)  -- alpha heroic timing, did vary between 37-41, sometimes skipped (bug most likely)
+	self:CDBar(args.spellId, 45)  -- alpha mythic timing
 end
 
 do
@@ -110,7 +117,8 @@ do
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Alert")
 			rotCount = rotCount + 1
-			self:CDBar(args.spellId, rotCount == 2 and 34 or 21)  -- alpha heroic timing, 2. did vary between 34-37, 3. between 20-23
+			--self:CDBar(args.spellId, rotCount == 2 and 34 or 21)  -- alpha heroic timing
+			self:CDBar(args.spellId, 44)  -- mythic testing only had 2 rots per phase
 		end
 	end
 
@@ -135,7 +143,7 @@ end
 function mod:VolatileRot(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, self:Tank())
 	self:TargetBar(args.spellId, 8, args.destName)
-	self:CDBar(args.spellId, 23) -- alpha heroic timing, did vary between 23-28
+	self:CDBar(args.spellId, 43) -- alpha mythic timing, cd was a lot less on heroic
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:Flash(args.spellId)
@@ -144,12 +152,12 @@ end
 
 function mod:HeartOfTheSwarm(args)
 	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 22.5, CL.cast:format(args.spellName)) -- 2.5s cast time + 20s channel
+	self:Bar(args.spellId, 23.7, CL.cast:format(args.spellName)) -- 3.7s cast time + 20s channel
 	-- This is basically a phase, so start timers for next "normal" phase here
-	self:CDBar(args.spellId, 115) -- alpha heroic timing, did vary between 114-118
-	self:CDBar(203096, 37.5) -- Rot				22.5 + 15, alpha heroic timing
-	self:CDBar(204463, 47.5) -- Volatile Rot	22.5 + 25, alpha heroic timing, did vary between 22-30 (+22.5)
-	self:CDBar(202977, 61.5) -- Infested Breath	22.5 + 39, alpha heroic timing, did vary between 39-42 (+22.5)
+	self:CDBar(args.spellId, 122) -- alpha mythic timing
+	self:CDBar(203096, 41.2) -- Rot, 23.7 + 17.5, alpha mythic timing
+	self:CDBar(204463, 52.7) -- Volatile Rot, 23.7 + 29, alpha mythic timing
+	self:CDBar(202977, 66.7) -- Infested Breath, 23.7 + 43, alpha mythic timing
 	rotCount = 1
 end
 
@@ -172,10 +180,16 @@ end
 
 function mod:InfestedMind(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
+	mindControlledPlayers = mindControlledPlayers + 1
 end
 
+function mod:InfestedMindRemoved(args)
+	mindControlledPlayers = mindControlledPlayers - 1
+end
+
+
 function mod:SpreadInfestation(args)
-	if not self:Me(args.sourceGUID) then -- can't interrupt yourself!
+	if not self:Me(args.sourceGUID) and mindControlledPlayers < 4 then -- TODO hardcoded anti spam check (for wipes): only warn if max 3 players are mind controlled
 		self:Message(args.spellId, "Attention", "Alert", CL.other:format(mod:ColorName(args.sourceName), CL.casting:format(args.spellName))) -- Player: Casting Spread Infestation!
 	end
 end
