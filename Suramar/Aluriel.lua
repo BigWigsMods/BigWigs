@@ -16,7 +16,7 @@ if select(4, GetBuildInfo()) < 70000 then return end -- XXX legion check for liv
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Spellblade Aluriel", 1033, 1751)
+local mod, CL = BigWigs:NewBoss("Spellblade Aluriel", 1088, 1751)
 if not mod then return end
 mod:RegisterEnableMob(104881)
 mod.engageId = 1871
@@ -132,7 +132,8 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, spellGUID, _)
+	local _, _, _, _, spellId, _ = strsplit("-", spellGUID) -- new uscs format: 3-[server id]-[instance id]-[zone uid]-[spell id]-[spell uid]
 	if spellId == 215455 then -- Arcane Orb
 		self:Message(213520, "Important")
 	elseif spellId == 213853 then -- Actually called "Mark of Frost" but indicating the frost adds spawn, XXX Alpha, check on live
