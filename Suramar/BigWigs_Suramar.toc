@@ -27,8 +27,7 @@
 ## Dependencies: BigWigs
 
 ## X-Category: Raid
-## X-BigWigs-LoadOn-ZoneId: 1033
+## X-BigWigs-LoadOn-ZoneId: 1088
 
 modules.xml
 locales.xml
-

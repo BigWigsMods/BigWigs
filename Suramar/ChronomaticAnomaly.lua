@@ -13,7 +13,7 @@ if select(4, GetBuildInfo()) < 70000 then return end -- XXX legion check for liv
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Chronomatic Anomaly", 1033, 1725)
+local mod, CL = BigWigs:NewBoss("Chronomatic Anomaly", 1088, 1725)
 if not mod then return end
 mod:RegisterEnableMob(105248) -- fix me
 mod.engageId = 1865

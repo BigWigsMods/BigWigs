@@ -4,7 +4,7 @@ if select(4, GetBuildInfo()) < 70000 then return end -- XXX legion check for liv
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Grand Magistrix Elisande", 1033, 1743)
+local mod, CL = BigWigs:NewBoss("Grand Magistrix Elisande", 1088, 1743)
 if not mod then return end
 mod:RegisterEnableMob(106643) -- fix me
 --mod.engageId = 1000000
@@ -40,4 +40,3 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
