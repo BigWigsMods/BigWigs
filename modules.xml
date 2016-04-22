@@ -24,8 +24,7 @@
 <Include file="Nightmare\modules.xml"/>
 <Include file="Nightmare\locales.xml"/>
 
-<Include file="Suramar\modules.xml"/>
-<Include file="Suramar\locales.xml"/>
+<Include file="Nighthold\modules.xml"/>
+<Include file="Nighthold\locales.xml"/>
 <!--@end-debug@-->
 </Ui>
-

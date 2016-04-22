@@ -28,7 +28,7 @@ move-folders:
 
 ignore:
   - Nightmare
-  - Suramar
+  - Nighthold
   - Sounds/Long.wav
   - Sounds/Alarm.wav
   - Sounds/Alert.wav
