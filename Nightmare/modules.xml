@@ -8,5 +8,6 @@
 <Script file="Ilgynoth.lua"/>
 <Script file="EleretheRenferal.lua"/>
 <Script file="Cenarius.lua"/>
+<Script file="Trash.lua"/>
 
 </Ui>
