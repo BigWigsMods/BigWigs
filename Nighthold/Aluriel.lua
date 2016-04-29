@@ -133,7 +133,7 @@ end
 --
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, spellGUID, _)
-	local _, _, _, _, spellId, _ = strsplit("-", spellGUID) -- new uscs format: 3-[server id]-[instance id]-[zone uid]-[spell id]-[spell uid]
+	local spellId = tonumber(select(5, strsplit("-", spellGUID)), 10) -- new uscs format: 3-[server id]-[instance id]-[zone uid]-[spell id]-[spell uid]
 	if spellId == 215455 then -- Arcane Orb
 		self:Message(213520, "Important")
 	elseif spellId == 213853 then -- Actually called "Mark of Frost" but indicating the frost adds spawn, XXX Alpha, check on live
@@ -149,7 +149,7 @@ function mod:AnnihilateCast(args)
 	self:Message(args.spellId, "Important", self:Tank() and "Alarm", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 8, CL.cast:format(args.spellName))
 	annihilateCount = annihilateCount + 1
-	self:Bar(args.spellId, timers[args.spellName][annihilateCount])
+	self:Bar(args.spellId, timers["Annihilate"][annihilateCount])
 end
 
 function mod:AnnihilateApplied(args)
