@@ -140,7 +140,7 @@ end
 
 function mod:SlamSuccess(args)
 	self:Message(args.spellId, "Important", nil)
-	if slamCount % 3 == 0 and slamCount < 12 then
+	if slamCount % 3 == 0 and slamCount < 10 then
 		self:Bar(args.spellId, 90, CL.count:format(L.smashingBridge, slamCount/3 + 1))
 	end
 	slamCount = slamCount + 1
