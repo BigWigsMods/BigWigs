@@ -100,7 +100,7 @@ end
 do
 	local brokenShardCheck, name = nil, mod:SpellName(204284)
 
-	function checkForBrokenShard()
+	local function checkForBrokenShard()
 		if not UnitDebuff("player", name) then
 			mod:Message(204284, "Personal", "Info", CL.no:format(name))
 			brokenShardCheck = mod:ScheduleTimer(checkForBrokenShard, 1)
