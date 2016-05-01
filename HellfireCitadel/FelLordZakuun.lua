@@ -48,7 +48,7 @@ function mod:GetOptions()
 		189009, -- Cavitation
 		{179711, "PROXIMITY", "SAY"}, -- Befouled
 		--[[ Disarmed ]]--
-		{181508, "SAY", "FLASH"}, -- Seed of Destruction
+		{181508, "SAY", "FLASH", "PULSE"}, -- Seed of Destruction
 		"custom_off_seed_marker",
 		--[[ General ]]--
 		179620, -- Fel Crystal (181653's description is blank at the moment, wowhead is wrong)
@@ -214,7 +214,7 @@ do
 			local target = list[i]
 			if target == isOnMe then
 				self:Say(spellId, self:LFR() and L.seed or CL.count_rticon:format(L.seed, i, i))
-				self:Flash(spellId)
+				self:Flash(spellId, i)
 				self:TargetMessage(spellId, target, "Positive", "Alarm", not self:LFR() and CL.count_icon:format(L.seed, i, i))
 			end
 			if self:GetOption("custom_off_seed_marker") then
@@ -284,4 +284,3 @@ do
 		end
 	end
 end
-
