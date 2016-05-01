@@ -145,7 +145,6 @@ do
 	local playerList = mod:NewTargetList()
 	function mod:NightmareBlade(args)
 		if self:Me(args.destGUID) then
-			isOnMe = true
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 		end
