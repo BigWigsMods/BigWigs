@@ -25,10 +25,10 @@ move-folders:
     BigWigs/BlackrockFoundry: BigWigs_BlackrockFoundry
     BigWigs/HellfireCitadel: BigWigs_HellfireCitadel
     BigWigs/Draenor: BigWigs_Draenor
+    BigWigs/Nighthold: BigWigs_Nighthold
+    BigWigs/Nightmare: BigWigs_Nightmare
 
 ignore:
-  - Nightmare
-  - Nighthold
   - Sounds/Long.wav
   - Sounds/Alarm.wav
   - Sounds/Alert.wav
