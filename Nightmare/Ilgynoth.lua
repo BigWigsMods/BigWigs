@@ -121,7 +121,7 @@ function mod:Fixate(args)
 	end
 end
 
-function mod:Fixate(args)
+function mod:FixateRemoved(args)
 	if self:Me(args.destGUID) then
 		fixateOnMe = nil
 	end
