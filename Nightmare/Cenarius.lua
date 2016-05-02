@@ -93,7 +93,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "NightmareBramblesApplied", 210290) -- untested
 	self:Log("SPELL_AURA_APPLIED", "DestructiveNightmares", 210617) -- wisp spawn
 	self:Log("SPELL_AURA_APPLIED", "DreadThorns", 210346)
-	self:Log("SPELL_AURA_APPLIED", "DreadThornsRemoved", 210346)
+	self:Log("SPELL_AURA_REMOVED", "DreadThornsRemoved", 210346)
 	self:Log("SPELL_AURA_APPLIED", "CorruptAlliesOfNature", 214884) -- untested
 
 	self:Log("SPELL_AURA_APPLIED", "EntanglingNightmares", 214505)
@@ -149,14 +149,14 @@ function mod:CreepingNightmares(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount > 11 and amount % 4 == 0 then
-			self:StackMessage(args.spellId, args.destName, stack, "Urgent", "Warning")
+			self:StackMessage(args.spellId, args.destName, amount, "Urgent", "Warning")
 		end
 	end
 end
 
 function mod:CreepingNightmaresRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Positive", "Info", CL.removed(args.spellName))
+		self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
 	end
 end
 
