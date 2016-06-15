@@ -13,7 +13,7 @@ if select(4, GetBuildInfo()) < 70000 then return end -- XXX legion check for liv
 local mod, CL = BigWigs:NewBoss("Trillax", 1088, 1731)
 if not mod then return end
 mod:RegisterEnableMob(104288) -- fix me
---mod.engageId = 1000000
+mod.engageId = 1867
 --mod.respawnTime = 0
 
 --------------------------------------------------------------------------------

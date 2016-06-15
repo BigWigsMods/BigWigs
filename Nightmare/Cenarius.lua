@@ -148,7 +148,7 @@ end
 function mod:CreepingNightmares(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		if amount > 11 and amount % 4 == 0 then
+		if amount > 15 and amount % 4 == 0 then
 			self:StackMessage(args.spellId, args.destName, amount, "Urgent", "Warning")
 		end
 	end
@@ -184,7 +184,7 @@ function mod:ForcesOfNightmare(args)
 	forcesOfNightmareCount = forcesOfNightmareCount + 1
 	self:Bar(210346, 6) -- Dread Thorns
 	self:Bar(212681, 13, self:SpellName(212681)) -- Cleansed Ground
-	self:CDBar(args.spellId, 19, CL.incoming:format(L.forces))
+	--self:CDBar(args.spellId, 19, CL.incoming:format(L.forces))
 	self:Bar(args.spellId, 77.7, CL.count:format(self:SpellName(args.spellId), forcesOfNightmareCount))
 end
 
@@ -234,9 +234,15 @@ function mod:EntanglingNightmares(args)
 end
 
 -- untested
+local prev = 0
 function mod:CorruptAlliesOfNature(args)
-	self:Message(args.spellId, "Attention", "Info", CL.incoming:format(args.spellName))
+	local t = GetTime()
+	if t-prev > 10 then
+		prev = t
+			self:Message(args.spellId, "Attention", "Info", CL.incoming:format(args.spellName))
+	end
 end
+
 
 function mod:SpearOfNightmaresCast(args)
 	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
