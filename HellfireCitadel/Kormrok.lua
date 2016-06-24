@@ -85,6 +85,38 @@ end
 -- Event Handlers
 --
 
+--------------------------------------------------------------------------------
+-- Explosive Burst / Foul Crush fallbacks
+--
+-- If taunted at max range, Kormork is skipping the tank debuffs. To make sure
+-- we have bars for the next cast, we schedule a timer 2 seconds after the cast
+-- should have happend and check if a bar is there. If not, we start one.
+-- see http://www.wowace.com/addons/big-wigs/tickets/782-kormrok-explosive-burst-timers-bug/
+
+local function explosiveBurstFallback(self)
+	if self:BarTimeLeft(181306) == 0 then
+		tankDebuffCount = tankDebuffCount + 1
+		if tankDebuffCount < 4 then
+			self:Bar(181306, (tankDebuffCount == 2 and (38 * enrageMod) or (50 * enrageMod)) - 2)
+		end
+	end
+	if tankDebuffCount < 4 then
+		self:ScheduleTimer(explosiveBurstFallback, (tankDebuffCount == 2 and (38 * enrageMod) or (50 * enrageMod)), self)
+	end
+end
+
+local function foulCrushFallback(self)
+	if self:BarTimeLeft(181307) == 0 then
+		tankDebuffCount = tankDebuffCount + 1
+		if tankDebuffCount < 4 then
+			self:Bar(181307, (tankDebuffCount == 2 and (38 * enrageMod) or (50 * enrageMod)) - 2)
+		end
+	end
+	if tankDebuffCount < 4 then
+		self:ScheduleTimer(foulCrushFallback, (tankDebuffCount == 2 and (38 * enrageMod) or (50 * enrageMod)), self)
+	end
+end
+
 -- Phases
 
 function mod:ShadowEnergy(args)
@@ -128,6 +160,7 @@ function mod:ExplosiveEnergy(args)
 		self:Bar(181299, 51 * enrageMod, foulCount > 0 and 181300) -- Grasping Hands / Dragging Hands
 		self:Bar(181292, 71 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
 		self:CDBar("stages", 133 * enrageMod, 180068) -- Leap
+		self:ScheduleTimer(explosiveBurstFallback, 25 * enrageMod + 2, self) -- see Explosive Burst / Foul Crush fallbacks
 	end
 end
 
@@ -150,6 +183,7 @@ function mod:FoulEnergy(args)
 		self:Bar(181292, 51 * enrageMod, shadowCount > 0 and 181293) -- [Empowered] Fel Outpouring
 		self:Bar(181296, 83 * enrageMod, explosiveCount > 0 and 181297) -- [Empowered] Explosive Runes
 		self:CDBar("stages", 133 * enrageMod, 180068) -- Leap
+		self:ScheduleTimer(foulCrushFallback, 25 * enrageMod + 2, self) -- see Explosive Burst / Foul Crush fallbacks
 	end
 end
 
@@ -165,6 +199,7 @@ function mod:ExplosiveBurst(args)
 		end
 	elseif tankDebuffCount < 4 then
 		self:Bar(args.spellId, tankDebuffCount == 2 and (38 * enrageMod) or (50 * enrageMod))
+		self:ScheduleTimer(explosiveBurstFallback, (tankDebuffCount == 2 and (38 * enrageMod) or (50 * enrageMod)) + 2, self) -- see Explosive Burst / Foul Crush fallbacks
 	end
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:Flash(args.spellId)
@@ -193,6 +228,7 @@ function mod:FoulCrush(args)
 		end
 	elseif tankDebuffCount < 4 then
 		self:Bar(args.spellId, tankDebuffCount == 2 and (50 * enrageMod) or (38 * enrageMod))
+		self:ScheduleTimer(foulCrushFallback, (tankDebuffCount == 2 and (50 * enrageMod) or (38 * enrageMod)) + 2, self) -- see Explosive Burst / Foul Crush fallbacks
 	end
 end
 
@@ -295,4 +331,3 @@ do
 		end
 	end
 end
-
