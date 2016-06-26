@@ -109,11 +109,11 @@ local function foulCrushFallback(self)
 	if self:BarTimeLeft(181307) == 0 then
 		tankDebuffCount = tankDebuffCount + 1
 		if tankDebuffCount < 4 then
-			self:Bar(181307, (tankDebuffCount == 2 and (38 * enrageMod) or (50 * enrageMod)) - 2)
+			self:Bar(181307, (tankDebuffCount == 2 and (50 * enrageMod) or (38 * enrageMod)) - 2)
 		end
 	end
 	if tankDebuffCount < 4 then
-		self:ScheduleTimer(foulCrushFallback, (tankDebuffCount == 2 and (38 * enrageMod) or (50 * enrageMod)), self)
+		self:ScheduleTimer(foulCrushFallback, (tankDebuffCount == 2 and (50 * enrageMod) or (38 * enrageMod)), self)
 	end
 end
 
