@@ -115,11 +115,12 @@ function mod:TimeBomb(args)
 	local remaining = expires-GetTime()
 	self:TargetMessage(args.spellId, args.destName, "Important")
 	self:TargetBar(args.spellId, remaining, args.destName)
-
-	self:Say(args.spellId)
-	self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
-	self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
-	self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
+		self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
+		self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
+	end
 end
 
 do
