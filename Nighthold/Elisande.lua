@@ -157,7 +157,7 @@ function mod:SlowTime(args)
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Long")
 		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 		local t = expires - GetTime()
-		self:TargetBar(args.spellId, args.destName, t)
+		self:TargetBar(args.spellId, t, args.destName)
 	end
 end
 
@@ -171,7 +171,7 @@ function mod:FastTime(args)
 		self:TargetMessage(args.spellId, args.destName, "Positive", "Long")
 		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 		local t = expires - GetTime()
-		self:TargetBar(args.spellId, args.destName, t)
+		self:TargetBar(args.spellId, t, args.destName)
 	end
 end
 
@@ -188,7 +188,7 @@ do
 			self:Say(211259)
 			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 			local t = expires - GetTime()
-			self:TargetBar(211259, args.destName, t)
+			self:TargetBar(211259, t, args.destName)
 		end
 
 		playerList[#playerList+1] = args.destName
@@ -208,7 +208,7 @@ do
 			self:Say(209244)
 			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 			local t = expires - GetTime()
-			self:TargetBar(209244, args.destName, t)
+			self:TargetBar(209244, t, args.destName)
 		end
 
 		playerList[#playerList+1] = args.destName
@@ -255,7 +255,7 @@ do
 			self:Say(209597)
 			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 			local t = expires - GetTime()
-			self:TargetBar(209597, args.destName, t)
+			self:TargetBar(209597, t, args.destName)
 		end
 
 		playerList[#playerList+1] = args.destName

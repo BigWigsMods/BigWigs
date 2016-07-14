@@ -88,7 +88,7 @@ function mod:Sterilize(args)
 	self:TargetMessage(args.spellId, args.destName, "Important")
 	if self:Me(args.destGUID) then
 		self:OpenProximity(args.spellId, 12)
-		self:TargetBar(args.spellId, args.destName, 40)
+		self:TargetBar(args.spellId, 40, args.destName)
 		self:Say(args.spellId)
 	end
 end

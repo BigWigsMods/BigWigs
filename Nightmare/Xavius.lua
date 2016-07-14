@@ -124,7 +124,7 @@ end
 function mod:DreamSimulacrum(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
-		self:TargetBar(args.spellId, args.destName, 180)
+		self:TargetBar(args.spellId, 180, args.destName)
 	end
 end
 
