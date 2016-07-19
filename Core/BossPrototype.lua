@@ -27,9 +27,6 @@ local updateData = function(module)
 	if tree then
 		myRole = GetSpecializationRole(tree)
 		myDamagerRole = nil
-		if not BigWigsLoader.isLegion and IsSpellKnown(152276) and UnitBuff("player", (GetSpellInfo(156291))) then -- Gladiator Stance XXX legion
-			myRole = "DAMAGER"
-		end
 		if myRole == "DAMAGER" then
 			local _, class = UnitClass("player")
 			if
@@ -853,15 +850,6 @@ do
 			-- Nature's Cure (Resto Druid), Remove Corruption (Druid), Purify Spirit (Shaman), Remove Curse (Mage)
 			defDispel = defDispel .. "curse,"
 		end
-		if not BigWigsLoader.isLegion then -- XXX Legion removes glyphs
-			for i = 2, 6, 2 do -- 2/4/6 = major glyphs, NUM_GLYPH_SLOTS = 6
-				local _, _, _, spellId = GetGlyphSocketInfo(i)
-				if spellId == 58375 or spellId == 58631 then
-					-- Glyph of Shield Slam (Warrior), Glyph of Icy Touch (Death Knight)
-					offDispel = offDispel .. "magic,"
-				end
-			end
-		end
 	end
 	function boss:Dispeller(dispelType, isOffensive, key)
 		if key then
@@ -1227,17 +1215,18 @@ function boss:TargetBar(key, length, player, text, icon)
 end
 
 function boss:StopBar(text, player)
+	local msg = type(text) == "number" and spells[text] or text
 	if player then
 		if player == pName then
-			local msg = format(L.you, type(text) == "number" and spells[text] or text)
+			msg = format(L.you, msg)
 			self:SendMessage("BigWigs_StopBar", self, msg)
 			self:SendMessage("BigWigs_StopEmphasize", self, msg)
 		else
-			self:SendMessage("BigWigs_StopBar", self, format(L.other, type(text) == "number" and spells[text] or text, gsub(player, "%-.+", "*")))
+			self:SendMessage("BigWigs_StopBar", self, format(L.other, msg, gsub(player, "%-.+", "*")))
 		end
 	else
-		self:SendMessage("BigWigs_StopBar", self, type(text) == "number" and spells[text] or text)
-		self:SendMessage("BigWigs_StopEmphasize", self, type(text) == "string" and text or spells[text])
+		self:SendMessage("BigWigs_StopBar", self, msg)
+		self:SendMessage("BigWigs_StopEmphasize", self, msg)
 	end
 end
 
@@ -1325,6 +1314,12 @@ end
 function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, customFinalMessage)
 	local name = customBoss or self.displayName
 	local key = "berserk"
+
+	-- Engage warning with no enrage
+	-- if not seconds then
+	-- 	self:Message(key, "Attention", nil, ("% engaged"):format(name), false)
+	-- 	return
+	-- end
 
 	-- There are many Berserks, but we use 26662 because Brutallus uses this one.
 	-- Brutallus is da bomb.

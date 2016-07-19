@@ -1,4 +1,4 @@
-if select(4, GetBuildInfo()) < 70000 then return end -- XXX legion check for live
+if not BigWigsLoader.isLegion then return end -- XXX legion check for live
 
 --------------------------------------------------------------------------------
 -- TODO List:

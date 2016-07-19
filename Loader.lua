@@ -385,13 +385,6 @@ function mod:ADDON_LOADED(addon)
 
 	-- Role Updating
 	bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-	-- XXX LEGION: We can remove all these Gladiator Stance special cases, it's gone in Legion
-	if not isLegion then
-		local _, class = UnitClass("player")
-		if class == "WARRIOR" then -- Handle Gladiator Stance
-			bwFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
-		end
-	end
 	RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
@@ -683,10 +676,6 @@ function mod:ACTIVE_TALENT_GROUP_CHANGED()
 		local tree = GetSpecialization()
 		if not tree then return end -- No spec selected
 
-		local role = GetSpecializationRole(tree)
-		if not isLegion and IsSpellKnown(152276) and UnitBuff("player", (GetSpellInfo(156291))) then -- Gladiator Stance XXX legion
-			role = "DAMAGER"
-		end
 		if UnitGroupRolesAssigned("player") ~= role then
 			if InCombatLockdown() or UnitAffectingCombat("player") then
 				bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
