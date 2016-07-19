@@ -89,7 +89,7 @@ local fakeWorldZones = { -- Fake world zones used for world boss translations an
 	[466]=true, -- Outland
 	[862]=true, -- Pandaria
 	[962]=true, -- Draenor
-	--[000]=isLegion or nil, -- Legion -- XXX LEGION (main continent map area id)
+	--[000]=true, -- Legion -- XXX LEGION (main continent map area id)
 }
 
 do
@@ -98,7 +98,7 @@ do
 	local wotlk = "BigWigs_WrathOfTheLichKing"
 	local cata = "BigWigs_Cataclysm"
 	local mop = "BigWigs_MistsOfPandaria"
-	local wod = isLegion and "BigWigs_WarlordsOfDraenor" -- XXX LEGION
+	local wod = "BigWigs_WarlordsOfDraenor"
 	local lw = "LittleWigs"
 
 	local tbl = {
@@ -685,7 +685,6 @@ function mod:ACTIVE_TALENT_GROUP_CHANGED()
 		end
 	end
 end
-mod.UPDATE_SHAPESHIFT_FORM = mod.ACTIVE_TALENT_GROUP_CHANGED
 
 -- Merged LFG_ProposalTime addon by Freebaser
 do

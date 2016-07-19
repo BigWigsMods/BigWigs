@@ -1,4 +1,3 @@
-if not BigWigsLoader.isLegion then return end -- XXX legion check for live
 
 --------------------------------------------------------------------------------
 -- Module Declaration

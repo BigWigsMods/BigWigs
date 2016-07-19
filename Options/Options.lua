@@ -101,7 +101,7 @@ local acOptions = {
 					end
 				end
 				if not InterfaceOptionsFrame:IsShown() then
-					local panel = loader.isLegion and "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r" or "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r" -- XXX Legion temp
+					local panel = "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(loader.isLegion and 7 or 6) .."|r" -- XXX Legion temp
 					InterfaceOptionsFrame_OpenToCategory(panel)
 					InterfaceOptionsFrame_OpenToCategory(panel)
 				end
@@ -1210,8 +1210,8 @@ do
 		BigWigs_WrathOfTheLichKing = "Big Wigs ".. EJ_GetTierInfo(3),
 		BigWigs_Cataclysm = "Big Wigs ".. EJ_GetTierInfo(4),
 		BigWigs_MistsOfPandaria = "Big Wigs ".. EJ_GetTierInfo(5),
-		BigWigs_WarlordsOfDraenor = not loader.isLegion and "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r" or "Big Wigs ".. EJ_GetTierInfo(6),
-		BigWigs_Legion = loader.isLegion and "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r",
+		BigWigs_WarlordsOfDraenor = loader.isLegion and ("Big Wigs ".. EJ_GetTierInfo(6)) or ("Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r"),
+		BigWigs_Legion = loader.isLegion and ("Big Wigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r") or ("Big Wigs ".. EJ_GetTierInfo(7)),
 		LittleWigs = "Little Wigs",
 	}
 
@@ -1259,7 +1259,7 @@ do
 	function options:GetZonePanel(zoneId)
 		local zoneName = translateZoneID(zoneId)
 		local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
-		local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or loader.isLegion and addonNameToHeader.BigWigs_Legion or addonNameToHeader.BigWigs_WarlordsOfDraenor -- XXX LEGION update this to BigWigs_Legion
+		local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_Legion
 		local panel, justCreated = self:GetPanel(zoneName, parent, zoneId)
 		if justCreated then
 			panel:SetScript("OnShow", onZoneShow)
