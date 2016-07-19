@@ -241,7 +241,7 @@ do
 
 			if cinematicZones[id] then
 				if type(cinematicZones[id]) == "table" then -- For zones with more than 1 cinematic per floor
-					if not BigWigs.db.global.watchedMovies[id] then BigWigs.db.global.watchedMovies[id] = {} end
+					if type(BigWigs.db.global.watchedMovies[id]) ~= "table" then BigWigs.db.global.watchedMovies[id] = {} end
 					for i=#cinematicZones[id], 1, -1 do -- In reverse so for example: we don't trigger off the first boss when at the third boss
 						local _, _, done = C_Scenario.GetCriteriaInfoByStep(1,i)
 						if done == cinematicZones[id][i] then
