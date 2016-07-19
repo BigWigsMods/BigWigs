@@ -1,4 +1,4 @@
-## Interface: 60200
+## Interface: 70000
 
 ## Title: Big Wigs [|cffeda55fHighmaul|r]
 ## Title-deDE: Big Wigs [|cffeda55fHochfels|r]
