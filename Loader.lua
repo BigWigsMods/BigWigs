@@ -372,7 +372,7 @@ do
 
 	local num = tonumber(GetCVar("Sound_NumChannels")) or 0
 	if num < 64 then
-		SetCVar("Sound_NumChannels", 64) -- XXX temp until Blizz stops screwing with us
+		SetCVar("Sound_NumChannels", 64) -- Blizzard keeps screwing with addon sound priority so we force this minimum
 	end
 end
 
@@ -754,7 +754,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	elseif prefix == "BigWigs" then
 		local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
 		sender = Ambiguate(sender, "none")
-		if bwPrefix == "V" or bwPrefix == "Q" or bwPrefix == "VQ" or bwPrefix == "VQA" or bwPrefix == "VR" or bwPrefix == "VRA" then -- XXX temp, remove VQ,VQA,VR,VRA
+		if bwPrefix == "V" or bwPrefix == "Q" then
 			self:VersionCheck(bwPrefix, bwMsg, sender)
 		elseif bwPrefix then
 			if msg == "T:BWPull" or msg == "T:BWBreak" then loadAndEnableCore() end -- Force enable the core when receiving a break/pull timer.
@@ -775,7 +775,6 @@ do
 	local timer = nil
 	local function sendMsg()
 		if IsInGroup() then
-			SendAddonMessage("BigWigs", "VR:13712", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- XXX temp, latest release prior to version change
 			SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 		end
 		timer = nil
@@ -813,7 +812,7 @@ do
 	end
 
 	function mod:VersionCheck(prefix, msg, sender)
-		if prefix == "Q" or prefix == "VQ" or prefix == "VQA" then -- XXX temp, remove VQ and VQA
+		if prefix == "Q" then
 			if timer then timer:Cancel() end
 			timer = CTimerNewTicker(3, sendMsg, 1)
 		end
@@ -827,12 +826,6 @@ do
 				if version > BIGWIGS_VERSION then
 					printOutOfDate(usersVersion)
 				end
-			end
-		elseif prefix == "VQ" or prefix == "VQA" or prefix == "VR" or prefix == "VRA" then -- XXX temp, remove this entire statement
-			local version = tonumber(msg)
-			if version and version ~= 0 and (not usersVersion[sender] or usersVersion[sender] < 5) then -- Don't overwrite v5 users when they send v4 versions
-				usersVersion[sender] = 4
-				usersHash[sender] = version
 			end
 		end
 	end
@@ -1143,7 +1136,7 @@ SlashCmdList.BigWigsVersion = function()
 	for i, player in next, m do
 		local usesBossMod = nil
 		if usersVersion[player] then
-			if usersVersion[player] < highestFoundVersion and usersVersion[player] ~= 4 then -- XXX remove this, don't treat v4 as up-to-date when we tag
+			if usersVersion[player] < highestFoundVersion then
 				ugly[#ugly + 1] = coloredNameVersion(player, usersVersion[player], usersHash[player])
 			else
 				good[#good + 1] = coloredNameVersion(player, usersVersion[player], usersHash[player])
