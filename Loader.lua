@@ -98,7 +98,7 @@ do
 	local wotlk = "BigWigs_WrathOfTheLichKing"
 	local cata = "BigWigs_Cataclysm"
 	local mop = "BigWigs_MistsOfPandaria"
-	local wod = "BigWigs_WarlordsOfDraenor"
+	local wod = isLegion and "BigWigs_WarlordsOfDraenor" -- XXX LEGION
 	local lw = "LittleWigs"
 
 	local tbl = {
