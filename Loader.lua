@@ -98,7 +98,7 @@ do
 	local wotlk = "BigWigs_WrathOfTheLichKing"
 	local cata = "BigWigs_Cataclysm"
 	local mop = "BigWigs_MistsOfPandaria"
-	local wod = isLegion and "BigWigs_WarlordsOfDraenor" -- XXX LEGION
+	local wod = "BigWigs_WarlordsOfDraenor"
 	local lw = "LittleWigs"
 
 	local tbl = {
@@ -941,9 +941,11 @@ do
 		local zoneAddon = public.zoneTbl[id]
 		if zoneAddon and inside and not fakeWorldZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 			warnedThisZone[id] = true
-			local msg = L.missingAddOn:format(zoneAddon)
-			sysprint(msg)
-			RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
+			if zoneAddon ~= "BigWigs_WarlordsOfDraenor" then -- XXX temp Legion
+				local msg = L.missingAddOn:format(zoneAddon)
+				sysprint(msg)
+				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
+			end
 		end
 	end
 end
