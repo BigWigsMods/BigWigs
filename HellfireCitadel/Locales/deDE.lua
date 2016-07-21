@@ -9,13 +9,13 @@ end
 
 L = BigWigs:NewBossLocale("Kilrogg Deadeye", "deDE")
 if L then
-L.add_warnings = "Füge Spawn-Warnungen hinzu"
+L.add_warnings = "Füge Erscheinen-Warnungen hinzu"
 
 end
 
 L = BigWigs:NewBossLocale("Gorefiend", "deDE")
 if L then
-L.fate_root_you = "Geteiltes Schicksal - Du bist verwurzelt!"
+L.fate_root_you = "Geteiltes Schicksal – Du bist verwurzelt!"
 L.fate_you = "Geteiltes Schicksal auf DIR! Wurzel auf %s"
 
 end
@@ -25,10 +25,10 @@ if L then
 L.bindings_removed = "Bindungen entfernt (%d/3)"
 L.custom_off_binding_marker = "Dunkle Bindungen markieren"
 L.custom_off_binding_marker_desc = [=[Markiert die Dunklen Bindungen mit {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, benötigt Leiter oder Assistent.
-|cFFFF0000Nur eine Person im Raid sollte diese Option aktiviert haben, um Markierungskonflikte zu verhindern.|r]=]
+|cFFFF0000Nur eine Person im Schlachtzug sollte diese Option aktiviert haben, um Markierungskonflikte zu verhindern.|r]=]
 L.custom_off_wind_marker = "Imaginäre Winde markieren"
 L.custom_off_wind_marker_desc = [=[Markiert Imaginäre Winde mit {rt1}{rt2}{rt3}{rt4}{rt5}, benötigt Leiter oder Assistent.
-|cFFFF0000Nur eine Person im Raid sollte diese Option aktiviert haben, um Markierungskonflikte zu verhindern.|r]=]
+|cFFFF0000Nur eine Person im Schlachtzug sollte diese Option aktiviert haben, um Markierungskonflikte zu verhindern.|r]=]
 
 end
 

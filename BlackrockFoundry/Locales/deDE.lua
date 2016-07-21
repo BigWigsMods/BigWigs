@@ -7,7 +7,7 @@ end
 
 L = BigWigs:NewBossLocale("Oregorger", "deDE")
 if L then
-L.roll_message = "Rollen %d - %d Erz verbleibend!"
+L.roll_message = "Rollen %d – %d Erz verbleibend!"
 
 end
 
@@ -17,12 +17,12 @@ L.bombs_dropped = "Bomben fallengelassen! (%d)"
 L.bombs_dropped_p2 = "Ingenieur getötet, Bomben fallengelassen!"
 L.custom_off_firecaller_marker = "Feuerrufer markieren"
 L.custom_off_firecaller_marker_desc = [=[Markiert Feuerrufer mit {rt7}{rt6}, benötigt Leiter oder Assistent.
-|cFFFF0000Nur eine Person im Raid sollte diese Option aktiviert haben, um Markierungskonflikte zu verhindern.|r
-|cFFADFF2FTIPP: Wenn der Raid sich dafür entschieden hat, dass du diese Option aktivierst, ist der schnellste Weg mit der Maus über die Mobs zu fahren um sie zu markieren.|r]=]
+|cFFFF0000Nur eine Person im Schlachtzug sollte diese Option aktiviert haben, um Markierungskonflikte zu verhindern.|r
+|cFFADFF2FTIPP: Wenn der Schlachtzug sich dafür entschieden hat, dass du diese Option aktivierst, ist der schnellste Weg mit der Maus über die Mobs zu fahren, um sie zu markieren.|r]=]
 L.custom_on_shieldsdown_marker = "durchbrochene Schilde markieren"
 L.custom_on_shieldsdown_marker_desc = "Markiert eine verwundbare Urelementaristin mit {rt8}, benötigt Leiter- oder Assistentenrechte."
 L.engineer = "Neue Schmelzofeningenieure"
-L.engineer_desc = "Während Phase 1 spawnen wiederholt zwei Schmelzofeningenieure, einer auf jeder Seite des Raumes."
+L.engineer_desc = "Während Phase 1 erscheinen wiederholt zwei Schmelzofeningenieure, einer auf jeder Seite des Raumes."
 L.firecaller = "Neue Feuerrufer"
 L.firecaller_desc = "Während Phase 2 kommen wiederholt zwei Feuerrufer hinzu, einer auf jeder Seite des Raumes."
 L.guard = "Wachposten erscheint"
@@ -49,7 +49,7 @@ L.custom_off_hands_marker = "Klammernde Erde der Tanks markieren"
 L.custom_off_hands_marker_desc = "Markiert die klammernde Erde, die die Tanks greift, mit {rt7}{rt8}, benötigt Leiter oder Assistent."
 L.destroy_pillars = "Säulen zerstören"
 L.prox = "Näheanzeige für Tanks"
-L.prox_desc = "Öffne eine Näheanzeige, die andere Tanks im Abstand von maximal 15 Metern anzeigt, die Anzeige hilft dir mit der Fäuste aus Stein Fähigkeit umzugehen."
+L.prox_desc = "Öffne eine Näheanzeige, die andere Tanks im Abstand von maximal 15 Metern anzeigt, die Anzeige hilft dir mit der Fähigkeit \"Fäuste aus Stein\" umzugehen."
 
 end
 
@@ -57,10 +57,10 @@ L = BigWigs:NewBossLocale("Beastlord Darmac", "deDE")
 if L then
 L.custom_off_conflag_marker = "Großbrand markieren"
 L.custom_off_conflag_marker_desc = [=[Markiert die Ziele von Großbrand mit {rt1}{rt2}{rt3}, benötigt Leiter oder Assistent.
-|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r]=]
+|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Schlachtzug diese Option aktivieren.|r]=]
 L.custom_off_pinned_marker = "Festnageln markieren"
 L.custom_off_pinned_marker_desc = [=[Markiert die festnagelnden Speere mit {rt8}{rt7}{rt6}{rt5}{rt4}, benötigt Leiter oder Assistent.
-|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Raid diese Option aktivieren.|r
+|cFFFF0000Um Konflikte beim Markieren zu vermeiden, sollte lediglich 1 Person im Schlachtzug diese Option aktivieren.|r
 |cFFADFF2FTIPP: Wenn Du diese Option aktivierst, ist die schnellste Methode zum Markieren das zügige Bewegen des Mauszeigers über die Speere.|r]=]
 L.next_mount = "Aufsitzen bald!"
 
@@ -70,7 +70,7 @@ L = BigWigs:NewBossLocale("Operator Thogar", "deDE")
 if L then
 L.adds_train = "Zug mit Adds"
 L.big_add_train = "Zug mit großem Add"
-L.cannon_train = "Kanonen-Zug"
+L.cannon_train = "Kanonenzug"
 L.custom_on_firemender_marker = "Feuerheilerin der Grom'kar markieren"
 L.custom_on_firemender_marker_desc = "Markiert Feuerheilerin der Grom'kar mit {rt7}, benötigt Leiter oder Assistent."
 L.custom_on_manatarms_marker = "Waffenträger der Grom'kar markieren"
