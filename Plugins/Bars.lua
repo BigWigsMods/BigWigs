@@ -241,8 +241,6 @@ do
 		bar.candyBarDuration:SetJustifyH("RIGHT")
 		bar.candyBarDuration:ClearAllPoints()
 		bar.candyBarDuration:SetPoint("RIGHT", bar, "RIGHT", -4, 10)
-
-		bar:SetTexture(media:Fetch("statusbar", "Blizzard"))
 	end
 
 	barStyles.MonoUI = {
