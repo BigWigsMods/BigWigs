@@ -836,7 +836,7 @@ do
 	local queueLoad = {}
 	local warnedThisZone = {}
 	function mod:PLAYER_REGEN_ENABLED()
-		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
+		self:PLAYER_SPECIALIZATION_CHANGED() -- Force role check
 		bwFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
 
 		local shouldPrint = false
@@ -960,7 +960,7 @@ do
 			SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
 			SendAddonMessage("D4", "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			self:ZONE_CHANGED_NEW_AREA()
-			self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
+			self:PLAYER_SPECIALIZATION_CHANGED() -- Force role check
 		elseif grouped and not groupType then
 			grouped = nil
 			wipe(usersVersion)
