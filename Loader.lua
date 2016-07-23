@@ -384,7 +384,7 @@ function mod:ADDON_LOADED(addon)
 	bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
 
 	-- Role Updating
-	bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+	bwFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
 	RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
@@ -669,13 +669,14 @@ bwFrame:RegisterEvent("ADDON_LOADED")
 bwFrame:RegisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
 
 -- Role Updating
-function mod:ACTIVE_TALENT_GROUP_CHANGED()
+function mod:PLAYER_SPECIALIZATION_CHANGED()
 	if IsInGroup() then
 		if IsPartyLFG() then return end
 
 		local tree = GetSpecialization()
 		if not tree then return end -- No spec selected
 
+		local role = GetSpecializationRole(tree)
 		if UnitGroupRolesAssigned("player") ~= role then
 			if InCombatLockdown() or UnitAffectingCombat("player") then
 				bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
