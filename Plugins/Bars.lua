@@ -971,7 +971,6 @@ local function createAnchor(frameName, title)
 	display:SetFrameLevel(20)
 	local bg = display:CreateTexture(nil, "BACKGROUND")
 	bg:SetAllPoints(display)
-	bg:SetBlendMode("BLEND")
 	bg:SetColorTexture(0, 0, 0, 0.3)
 	display.background = bg
 	local header = display:CreateFontString(nil, "ARTWORK", "GameFontNormal")

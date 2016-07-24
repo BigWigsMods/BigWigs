@@ -185,7 +185,6 @@ do
 		display:SetHeight((frameName == "BWEmphasizeCountdownMessageAnchor") and 40 or 20)
 		local bg = display:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints(display)
-		bg:SetBlendMode("BLEND")
 		bg:SetColorTexture(0, 0, 0, 0.3)
 		display.background = bg
 		local header = display:CreateFontString(nil, "ARTWORK", "GameFontNormal")

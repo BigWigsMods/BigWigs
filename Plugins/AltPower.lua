@@ -371,7 +371,6 @@ do
 
 		local bg = display:CreateTexture(nil, "PARENT")
 		bg:SetAllPoints(display)
-		bg:SetBlendMode("BLEND")
 		bg:SetColorTexture(0, 0, 0, 0.3)
 		display.background = bg
 
