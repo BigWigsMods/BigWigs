@@ -709,13 +709,13 @@ do
 			timerBar:Show()
 
 			local spark = timerBar:CreateTexture(nil, "OVERLAY")
-			spark:SetTexture("Interface\\CastingBar\\UI-CastingBar-Spark")
+			spark:SetTexture(130877) --"Interface\\CastingBar\\UI-CastingBar-Spark"
 			spark:SetSize(32, 32)
 			spark:SetBlendMode("ADD")
 			spark:SetPoint("LEFT", timerBar:GetStatusBarTexture(), "RIGHT", -15, 0)
 
 			local border = timerBar:CreateTexture(nil, "ARTWORK")
-			border:SetTexture("Interface\\CastingBar\\UI-CastingBar-Border")
+			border:SetTexture(130874) --"Interface\\CastingBar\\UI-CastingBar-Border"
 			border:SetSize(256, 64)
 			border:SetPoint("TOP", timerBar, 0, 28)
 

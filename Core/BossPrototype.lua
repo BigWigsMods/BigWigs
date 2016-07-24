@@ -85,7 +85,8 @@ local icons = setmetatable({}, {__index =
 					core:Print(format("An invalid spell id (%d) is being used in a bar/message.", key))
 				end
 			elseif key > 0 then
-				value = format("Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d", key)
+				-- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
+				value = key + 137000
 			else
 				local _, _, _, abilityIcon = EJ_GetSectionInfo(-key)
 				value = abilityIcon or false

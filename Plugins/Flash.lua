@@ -58,7 +58,7 @@ do
 		pulseFrame.tex = pulseFrame:CreateTexture(nil, "ARTWORK")
 		pulseFrame.tex:SetTexCoord(0.07, 0.93, 0.07, 0.93)
 		pulseFrame.tex:SetAllPoints(pulseFrame)
-		pulseFrame.tex:SetTexture("Interface\\Icons\\ability_warrior_charge")
+		pulseFrame.tex:SetTexture(132337) --"Interface\\Icons\\ability_warrior_charge"
 
 		pulser = pulseFrame:CreateAnimationGroup()
 		pulser:SetScript("OnFinished", function() pulseFrame:Hide() end)

@@ -526,7 +526,8 @@ local function updateBlipIcons()
 		local blip = blipList[n]
 		local icon = GetRaidTargetIndex(n)
 		if icon and not blip.hasIcon then
-			blip:SetTexture(format("Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d.blp", icon))
+			-- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
+			blip:SetTexture(icon + 137000)
 			blip:SetVertexColor(1,1,1) -- Remove color
 			blip.hasIcon = true
 		elseif not icon and blip.hasIcon then
@@ -745,7 +746,7 @@ do
 
 		local playerDot = proxAnchor:CreateTexture(nil, "OVERLAY")
 		playerDot:SetSize(32, 32)
-		playerDot:SetTexture("Interface\\Minimap\\MinimapArrow")
+		playerDot:SetTexture(136431) --"Interface\\Minimap\\MinimapArrow"
 		playerDot:SetBlendMode("ADD")
 		playerDot:SetPoint("CENTER")
 		proxAnchor.playerDot = playerDot
