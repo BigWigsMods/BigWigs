@@ -186,17 +186,9 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			-- This is an EncounterJournal ID
 			local title, description, _, abilityIcon, displayInfo = EJ_GetSectionInfo(-option)
 			if not title then error(("Invalid option %d in module %s."):format(option, module.name)) end
-			local icon = nil
-			if displayInfo and displayInfo > 0 then
-				-- This is a creature, so there is no texture, just a portrait
-				icon = false
-			elseif abilityIcon and (type(abilityIcon) == "number" or abilityIcon:trim():len() > 0) then -- XXX Legion is returning numbers
-				-- abilityIcon is always set but can be a zero-length string ("")
-				icon = abilityIcon
-			end
 
 			local roleIcon, roleDesc = getRoleStrings(module, option)
-			return option, title..roleIcon, roleDesc..description, icon
+			return option, title..roleIcon, roleDesc..description, abilityIcon or false
 		end
 	end
 end

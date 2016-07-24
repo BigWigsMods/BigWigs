@@ -88,11 +88,7 @@ local icons = setmetatable({}, {__index =
 				value = format("Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d", key)
 			else
 				local _, _, _, abilityIcon = EJ_GetSectionInfo(-key)
-				if abilityIcon and abilityIcon:trim():len() > 0 then
-					value = abilityIcon
-				else
-					value = false
-				end
+				value = abilityIcon or false
 			end
 		else
 			value = "Interface\\Icons\\" .. key
