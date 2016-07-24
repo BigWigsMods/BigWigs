@@ -972,7 +972,7 @@ local function createAnchor(frameName, title)
 	local bg = display:CreateTexture(nil, "BACKGROUND")
 	bg:SetAllPoints(display)
 	bg:SetBlendMode("BLEND")
-	bg:SetTexture(0, 0, 0, 0.3)
+	bg:SetColorTexture(0, 0, 0, 0.3)
 	display.background = bg
 	local header = display:CreateFontString(nil, "ARTWORK", "GameFontNormal")
 	header:SetText(title)
@@ -1132,11 +1132,11 @@ end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
 	if module == self then
-		normalAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
-		emphasizeAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
+		normalAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
+		emphasizeAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
 	else
-		normalAnchor.background:SetTexture(0, 0, 0, 0.3)
-		emphasizeAnchor.background:SetTexture(0, 0, 0, 0.3)
+		normalAnchor.background:SetColorTexture(0, 0, 0, 0.3)
+		emphasizeAnchor.background:SetColorTexture(0, 0, 0, 0.3)
 	end
 end
 

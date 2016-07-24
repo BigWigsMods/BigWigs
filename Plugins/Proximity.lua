@@ -630,7 +630,7 @@ do
 		local bg = proxAnchor:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints(proxAnchor)
 		bg:SetBlendMode("BLEND")
-		bg:SetTexture(0, 0, 0, 0.3)
+		bg:SetColorTexture(0, 0, 0, 0.3)
 		proxAnchor.background = bg
 
 		local close = CreateFrame("Button", nil, proxAnchor)
@@ -847,9 +847,9 @@ end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
 	if module == self then
-		proxAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
+		proxAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
 	else
-		proxAnchor.background:SetTexture(0, 0, 0, 0.3)
+		proxAnchor.background:SetColorTexture(0, 0, 0, 0.3)
 	end
 end
 
@@ -1074,7 +1074,7 @@ function plugin:Close(noReopen)
 	proxTitle:SetFormattedText(L_proximityTitle, 5, 3)
 	proxAnchor.ability:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName)
 	-- Just in case we were the last target of configure mode, reset the background color.
-	proxAnchor.background:SetTexture(0, 0, 0, 0.3)
+	proxAnchor.background:SetColorTexture(0, 0, 0, 0.3)
 	proxPulseIn:Stop()
 	proxPulseOut:Stop()
 	proxAnchor:Hide()

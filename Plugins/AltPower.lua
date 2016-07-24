@@ -372,7 +372,7 @@ do
 		local bg = display:CreateTexture(nil, "PARENT")
 		bg:SetAllPoints(display)
 		bg:SetBlendMode("BLEND")
-		bg:SetTexture(0, 0, 0, 0.3)
+		bg:SetColorTexture(0, 0, 0, 0.3)
 		display.background = bg
 
 		local close = CreateFrame("Button", nil, display)
@@ -476,9 +476,9 @@ end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
 	if module == self then
-		display.background:SetTexture(0.2, 1, 0.2, 0.3)
+		display.background:SetColorTexture(0.2, 1, 0.2, 0.3)
 	else
-		display.background:SetTexture(0, 0, 0, 0.3)
+		display.background:SetColorTexture(0, 0, 0, 0.3)
 	end
 end
 
