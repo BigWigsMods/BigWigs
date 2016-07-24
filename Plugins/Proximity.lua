@@ -630,7 +630,6 @@ do
 
 		local bg = proxAnchor:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints(proxAnchor)
-		bg:SetBlendMode("BLEND")
 		bg:SetColorTexture(0, 0, 0, 0.3)
 		proxAnchor.background = bg
 
@@ -687,7 +686,6 @@ do
 		local rangePulse = proxAnchor:CreateTexture(nil, "ARTWORK")
 		rangePulse:SetPoint("CENTER")
 		rangePulse:SetAtlas("GarrLanding-CircleGlow")
-		rangePulse:SetBlendMode("ADD")
 		rangePulse:Hide()
 		proxAnchor.rangePulse = rangePulse
 
@@ -747,7 +745,6 @@ do
 		local playerDot = proxAnchor:CreateTexture(nil, "OVERLAY")
 		playerDot:SetSize(32, 32)
 		playerDot:SetTexture(136431) --"Interface\\Minimap\\MinimapArrow"
-		playerDot:SetBlendMode("ADD")
 		playerDot:SetPoint("CENTER")
 		proxAnchor.playerDot = playerDot
 
