@@ -126,7 +126,7 @@ function mod:OnEngage()
 	markOfDoomOnMe = nil
 	wrathOfGuldanOnMe = nil
 	if self:Mythic() then -- non-mythic starts after the portals close
-		self:Bar("stages", 15.5, 108508) -- Mannoroth's Fury
+		self:Bar("stages", 15.5, 34391) -- Mannoroth Attacks
 		self:CDBar(181275, 24) -- Curse of the Legion
 		self:CDBar(181557, 30) -- Fel Hellstorm
 		self:CDBar(181354, 43) -- Glaive Combo
