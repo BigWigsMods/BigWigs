@@ -4,7 +4,7 @@
 ## Title-deDE: Big Wigs [|cffeda55fThe Nighthold|r]
 ## Title-esES: Big Wigs [|cffeda55fThe Nighthold|r]
 ## Title-esMX: Big Wigs [|cffeda55fThe Nighthold|r]
-## Title-frFR: Big Wigs [|cffeda55fThe Nighthold|r]
+## Title-frFR: Big Wigs [|cffeda55fPalais Sacrenuit|r]
 ## Title-ruRU: Big Wigs [|cffeda55fThe Nighthold|r]
 ## Title-zhCN: Big Wigs [|cffeda55fThe Nighthold|r]
 ## Title-zhTW: Big Wigs [|cffeda55fThe Nighthold|r]
@@ -15,7 +15,7 @@
 ## Notes-deDE: Big Wigs The Nighthold Modules
 ## Notes-esES: Big Wigs The Nighthold Modules
 ## Notes-esMX: Big Wigs The Nighthold Modules
-## Notes-frFR: Big Wigs The Nighthold Modules
+## Notes-frFR: Modules Big Wigs concernant le Palais Sacrenuit.
 ## Notes-ruRU: Big Wigs The Nighthold Modules
 ## Notes-zhCN: Big Wigs The Nighthold Modules
 ## Notes-zhTW: Big Wigs The Nighthold Modules
