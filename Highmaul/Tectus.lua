@@ -118,6 +118,10 @@ end
 --
 
 function mod:UNIT_TARGETABLE_CHANGED(_, unit)
+	-- Units that should fire:
+	-- UnitExists-true: boss1-5
+	-- UnitExists-false: arena1-3, nameplate1-40
+	-- The maximum amount of units up at one time should be 8 (5 boss units, 3 arena units)
 	if UnitExists(unit) then
 		if self.db.profile.custom_on_shard_marker and self:MobId(UnitGUID(unit)) == 80551 then
 			if not first then
@@ -128,8 +132,6 @@ function mod:UNIT_TARGETABLE_CHANGED(_, unit)
 			end
 		end
 		self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, unit)
-	elseif not unit:find("arena", nil, true) then
-		self:UnregisterUnitEvent("UNIT_POWER_FREQUENT", unit)
 	end
 end
 
