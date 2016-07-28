@@ -23,9 +23,7 @@ local bwUtilityFrame = CreateFrame("Frame")
 local bossCore, pluginCore
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
-local GetCurrentMapAreaID = loader.GetCurrentMapAreaID
-local SetMapToCurrentZone = loader.SetMapToCurrentZone
-local SetMapByID = loader.SetMapByID
+local GetPlayerMapAreaID = loader.GetPlayerMapAreaID
 local SendAddonMessage = loader.SendAddonMessage
 local GetAreaMapInfo = loader.GetAreaMapInfo
 local GetInstanceInfo = loader.GetInstanceInfo
@@ -163,14 +161,8 @@ local function zoneChanged()
 					module:Wipe()
 				end
 			end
-		elseif WorldMapFrame:IsShown() then
-			local prevId = GetCurrentMapAreaID()
-			SetMapToCurrentZone()
-			id = GetCurrentMapAreaID()
-			SetMapByID(prevId)
 		else
-			SetMapToCurrentZone()
-			id = GetCurrentMapAreaID()
+			id = GetPlayerMapAreaID("player")
 		end
 	else
 		local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()

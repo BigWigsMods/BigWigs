@@ -57,13 +57,13 @@ local ldb = nil
 local tooltipFunctions = {}
 local next, tonumber = next, tonumber
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
-local IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone, SetMapByID = IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone, SetMapByID
-local GetAreaMapInfo, GetInstanceInfo = GetAreaMapInfo, GetInstanceInfo
+local IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone = IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone
+local GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID = GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.GetCurrentMapAreaID = GetCurrentMapAreaID
+public.GetPlayerMapAreaID = GetPlayerMapAreaID
 public.SetMapToCurrentZone = SetMapToCurrentZone
-public.SetMapByID = SetMapByID
 public.GetAreaMapInfo = GetAreaMapInfo
 public.GetCurrentMapDungeonLevel = GetCurrentMapDungeonLevel
 public.GetInstanceInfo = GetInstanceInfo
@@ -133,7 +133,7 @@ end
 -- GLOBALS: InterfaceOptionsFrameOkay, IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInRaid, IsLoggedIn, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, message, PlaySoundFile, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, strsplit
 -- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsConnected, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
--- GLOBALS: SLASH_BigWigsVersion1, UnitBuff, wipe, WorldMapFrame
+-- GLOBALS: SLASH_BigWigsVersion1, UnitBuff, wipe
 
 -----------------------------------------------------------------------
 -- Utility
@@ -889,15 +889,7 @@ do
 		local id
 		local inside = IsInInstance()
 		if not inside then
-			if WorldMapFrame:IsShown() then
-				local prevId = GetCurrentMapAreaID()
-				SetMapToCurrentZone()
-				id = GetCurrentMapAreaID()
-				SetMapByID(prevId)
-			else
-				SetMapToCurrentZone()
-				id = GetCurrentMapAreaID()
-			end
+			id = GetPlayerMapAreaID("player")
 		else
 			local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
 			id = instanceId

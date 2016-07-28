@@ -24,7 +24,7 @@ plugin.defaultDB = {
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 plugin.displayName = L.bossBlock
 local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
-local GetCurrentMapAreaID = BigWigsLoader.GetCurrentMapAreaID
+local GetPlayerMapAreaID = BigWigsLoader.GetPlayerMapAreaID
 local GetCurrentMapDungeonLevel = BigWigsLoader.GetCurrentMapDungeonLevel
 
 -------------------------------------------------------------------------------
@@ -235,7 +235,7 @@ do
 	function plugin:CINEMATIC_START()
 		if self.db.profile.blockMovies then
 			SetMapToCurrentZone()
-			local areaId = GetCurrentMapAreaID() or 0
+			local areaId = GetPlayerMapAreaID("player") or 0
 			local areaLevel = GetCurrentMapDungeonLevel() or 0
 			local id = ("%d:%d"):format(areaId, areaLevel)
 
