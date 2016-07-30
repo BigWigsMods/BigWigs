@@ -28,18 +28,13 @@ local updateData = function(module)
 		myRole = GetSpecializationRole(tree)
 		myDamagerRole = nil
 		if myRole == "DAMAGER" then
+			myDamagerRole = "MELEE"
 			local _, class = UnitClass("player")
 			if
-				class == "MAGE" or class == "WARLOCK" or class == "HUNTER" or (class == "DRUID" and tree == 1) or
+				class == "MAGE" or class == "WARLOCK" or (class == "HUNTER" and tree ~= 3) or (class == "DRUID" and tree == 1) or
 				(class == "PRIEST" and tree == 3) or (class == "SHAMAN" and tree == 1)
 			then
 				myDamagerRole = "RANGED"
-			elseif
-				class == "ROGUE" or class == "WARRIOR" or (class == "DEATHKNIGHT" and tree ~= 1) or
-				(class == "PALADIN" and tree == 3) or (class == "DRUID" and tree == 2) or (class == "SHAMAN" and tree == 2) or
-				(class == "MONK" and tree == 3)
-			then
-				myDamagerRole = "MELEE"
 			end
 		end
 	end
@@ -870,9 +865,10 @@ do
 	local canInterrupt = false
 	local spellList = {
 		106839, -- Skull Bash (Druid)
+		78675, -- Solar Beam (Druid-Balance)
 		116705, -- Spear Hand Strike (Monk)
 		147362, -- Counter Shot (Hunter)
-		78675, -- Solar Beam (Druid)
+		187707, -- Muzzle (Hunter-Survival)
 		57994, -- Wind Shear (Shaman)
 		47528, -- Mind Freeze (Death Knight)
 		96231, -- Rebuke (Paladin)
@@ -880,6 +876,8 @@ do
 		2139, -- Counterspell (Mage)
 		1766, -- Kick (Rogue)
 		6552, -- Pummel (Warrior)
+		183752, -- Consume Magic (Demon Hunter)
+		-- XXX warlock?
 	}
 	function UpdateInterruptStatus()
 		canInterrupt = false
