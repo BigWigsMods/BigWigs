@@ -462,7 +462,6 @@ do
 	end
 
 	-- Adding core generic toggles
-	addon:RegisterBossOption("bosskill", "Old", "Remove me") -- XXX temp
 	addon:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, "Interface\\Icons\\spell_shadow_unholyfrenzy")
 	addon:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, "Interface\\Icons\\spell_arcane_invocation")
 	addon:RegisterBossOption("stages", L.stages, L.stages_desc)
