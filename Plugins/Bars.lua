@@ -1468,7 +1468,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	if db.monochrome and db.outline ~= "NONE" then
 		flags = "MONOCHROME," .. db.outline
 	elseif db.monochrome then
-		flags = nil -- "MONOCHROME", XXX monochrome only is disabled for now as it causes a client crash
+		flags = "MONOCHROME"
 	elseif db.outline ~= "NONE" then
 		flags = db.outline
 	end

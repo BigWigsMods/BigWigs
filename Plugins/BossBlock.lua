@@ -104,7 +104,7 @@ function plugin:OnPluginEnable()
 
 	self:RegisterEvent("CINEMATIC_START")
 	self:RegisterEvent("PLAY_MOVIE")
-	self:SiegeOfOrgrimmarCinematics() -- XXX need to do something about this
+	self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
 end
 
 -------------------------------------------------------------------------------

@@ -536,7 +536,7 @@ do
 		if db.monochrome and db.outline ~= "NONE" then
 			flags = "MONOCHROME," .. db.outline
 		elseif db.monochrome then
-			flags = nil -- "MONOCHROME", XXX monochrome only is disabled for now as it causes a client crash
+			flags = "MONOCHROME"
 		elseif db.outline ~= "NONE" then
 			flags = db.outline
 		end
@@ -594,7 +594,7 @@ do
 		if seModule.db.profile.monochrome and seModule.db.profile.outline ~= "NONE" then
 			flags = "MONOCHROME," .. seModule.db.profile.outline
 		elseif seModule.db.profile.monochrome then
-			flags = nil -- "MONOCHROME", XXX monochrome only is disabled for now as it causes a client crash
+			flags = "MONOCHROME"
 		elseif seModule.db.profile.outline ~= "NONE" then
 			flags = seModule.db.profile.outline
 		end
@@ -639,7 +639,7 @@ do
 		if seModule.db.profile.monochrome and seModule.db.profile.outline ~= "NONE" then
 			flags = "MONOCHROME," .. seModule.db.profile.outline
 		elseif seModule.db.profile.monochrome then
-			flags = nil -- "MONOCHROME", XXX monochrome only is disabled for now as it causes a client crash
+			flags = "MONOCHROME"
 		elseif seModule.db.profile.outline ~= "NONE" then
 			flags = seModule.db.profile.outline
 		end

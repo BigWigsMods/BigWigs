@@ -95,7 +95,7 @@ function plugin:RestyleWindow(dirty)
 		if db.monochrome and db.fontOutline ~= "" then
 			newFlags = "MONOCHROME," .. db.fontOutline
 		elseif db.monochrome then
-			newFlags = "" -- "MONOCHROME", XXX monochrome only is disabled for now as it causes a client crash
+			newFlags = "MONOCHROME"
 		else
 			newFlags = db.fontOutline
 		end
