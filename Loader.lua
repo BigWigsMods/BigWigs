@@ -384,7 +384,7 @@ function mod:ADDON_LOADED(addon)
 	bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
 
 	-- Role Updating
-	bwFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+	bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 	RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
@@ -668,21 +668,32 @@ end)
 bwFrame:RegisterEvent("ADDON_LOADED")
 bwFrame:RegisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
 
--- Role Updating
-function mod:PLAYER_SPECIALIZATION_CHANGED()
-	if IsInGroup() then
-		if IsPartyLFG() then return end
+do
+	-- Role Updating
+	local prev = 0
+	function mod:ACTIVE_TALENT_GROUP_CHANGED(player)
+		if IsInGroup() then
+			if IsPartyLFG() then return end
 
-		local tree = GetSpecialization()
-		if not tree then return end -- No spec selected
+			local tree = GetSpecialization()
+			if not tree then return end -- No spec selected
 
-		local role = GetSpecializationRole(tree)
-		if UnitGroupRolesAssigned("player") ~= role then
-			if InCombatLockdown() or UnitAffectingCombat("player") then
-				bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-				return
+			local role = GetSpecializationRole(tree)
+			if role and UnitGroupRolesAssigned("player") ~= role then
+				if InCombatLockdown() or UnitAffectingCombat("player") then
+					bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+					return
+				end
+				-- ACTIVE_TALENT_GROUP_CHANGED fires twice when changing spec, leaving the talent tree, and entering the new tree. We throttle this to prevent a double role chat message.
+				-- It should only fire once when joining a group (triggered from GROUP_ROSTER_UPDATE)
+				-- This will fail when logging in/reloading in a group because GetSpecializationRole is nil since WoW v7 when GROUP_ROSTER_UPDATE fires
+				-- However, your role seems to be saved internally and preserved, so is this really an issue?
+				local t = GetTime()
+				if (t-prev) > 2 then
+					prev = t
+					UnitSetRole("player", role)
+				end
 			end
-			UnitSetRole("player", role)
 		end
 	end
 end
@@ -836,7 +847,7 @@ do
 	local queueLoad = {}
 	local warnedThisZone = {}
 	function mod:PLAYER_REGEN_ENABLED()
-		self:PLAYER_SPECIALIZATION_CHANGED() -- Force role check
+		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		bwFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
 
 		local shouldPrint = false
@@ -952,7 +963,7 @@ do
 			SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
 			SendAddonMessage("D4", "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			self:ZONE_CHANGED_NEW_AREA()
-			self:PLAYER_SPECIALIZATION_CHANGED() -- Force role check
+			self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		elseif grouped and not groupType then
 			grouped = nil
 			wipe(usersVersion)
