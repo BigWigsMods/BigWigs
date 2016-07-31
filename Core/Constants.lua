@@ -85,17 +85,17 @@ function BigWigs:GetRoleOptions()
 	return roleToggles
 end
 
---display role icon/message in the option
+--display role icon/message in the option, texture 337497 = Interface\\EncounterJournal\\UI-EJ-Icons
 local function getRoleStrings(module, key)
 	local option = module.toggleDefaults[key]
 	if band(option, C.TANK_HEALER) == C.TANK_HEALER then
-		return " |TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:0:19:22:41|t|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:20:39:1:20|t", L.tankhealer
+		return " |T337497:16:16:0:0:64:64:0:19:22:41|t|T337497:16:16:0:0:64:64:20:39:1:20|t", L.tankhealer
 	elseif band(option, C.TANK) == C.TANK then
-		return " |TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:0:19:22:41|t", L.tank
+		return " |T337497:16:16:0:0:64:64:0:19:22:41|t", L.tank
 	elseif band(option, C.HEALER) == C.HEALER then
-		return " |TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:20:39:1:20|t", L.healer
+		return " |T337497:16:16:0:0:64:64:20:39:1:20|t", L.healer
 	elseif band(option, C.DISPEL) == C.DISPEL then
-		return " |TInterface\\EncounterJournal\\UI-EJ-Icons.blp:16:16:0:0:255:66:229:247:7:27|t", L.dispeller
+		return " |T337497:16:16:0:0:255:66:229:247:7:27|t", L.dispeller
 	end
 	return "", ""
 end
@@ -153,7 +153,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 					description = gsub(description, "{(%-?%d-)}", replaceIdWithDescription) -- Allow embedding an id in a string.
 					description = gsub(description, "{focus}", CL.focus_only) -- Allow embedding the focus prefix.
 				end
-				description = roleDesc.. gsub(description, "{rt(%d)}", "\124TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%1.blp:15\124t")
+				description = roleDesc.. gsub(description, "{rt(%d)}", "\124T13700%1:15\124t")
 			end
 			local icon = L[option .. "_icon"]
 			if icon == option .. "_icon" then icon = nil end
@@ -161,7 +161,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 				if icon > 8 then
 					icon = GetSpellTexture(icon)
 				elseif icon > 0 then
-					icon = ("Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d"):format(icon)
+					icon = icon + 137000 -- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
 				else
 					local _
 					_, _, _, icon = EJ_GetSectionInfo(-icon)
