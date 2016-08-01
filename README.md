@@ -1,5 +1,8 @@
 # BigWigs Bossmods
 
+## Download
+https://mods.curse.com/addons/wow/big-wigs
+
 ## Introduction
 
 **BigWigs** is a boss encounter add-on. It consists of many individual _encounter scripts_, or _boss modules_; mini add-ons that are designed to trigger alert messages, timer bars, sounds, and so forth, for one specific raid encounter.
