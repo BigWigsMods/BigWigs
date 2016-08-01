@@ -249,18 +249,18 @@ local acOptions = {
 					order = 50,
 					width = "full",
 				},
-				descGitHubTitle = {
+				gitHubTitle = {
 					type = "description",
 					name = "\n\n".. "|cFFFED000Big Wigs is on GitHub:|r" .."  |cFF74BBFBgithub.com/BigWigsMods|r",
 					fontSize = "large",
-					order = 53,
+					order = 51,
 					width = "full",
 				},
-				descGitHub = {
+				gitHubDesc = {
 					type = "description",
 					name = "\nBig Wigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. Big Wigs is as great as it is today largely in part to the great WoW community helping us out.\n\nIf you've committed changes to Big Wigs whilst it was on SVN and would like your GitHub account linked on the Git commit log, contact us.",
 					fontSize = "medium",
-					order = 53,
+					order = 52,
 					width = "full",
 				},
 			},
