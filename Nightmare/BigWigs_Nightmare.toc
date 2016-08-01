@@ -6,8 +6,8 @@
 ## Title-esMX: Big Wigs [|cffeda55fEmerald Nightmare|r]
 ## Title-frFR: Big Wigs [|cffeda55fLe Cauchemar d'émeraude|r]
 ## Title-ruRU: Big Wigs [|cffeda55fEmerald Nightmare|r]
-## Title-zhCN: Big Wigs [|cffeda55fEmerald Nightmare|r]
-## Title-zhTW: Big Wigs [|cffeda55fEmerald Nightmare|r]
+## Title-zhCN: Big Wigs [|cffeda55f翡翠梦魇|r]
+## Title-zhTW: Big Wigs [|cffeda55f翡翠夢魘|r]
 ## Title-itIT: Big Wigs [|cffeda55fEmerald Nightmare|r]
 ## Title-ptBR: Big Wigs [|cffeda55fEmerald Nightmare|r]
 ## Title-koKR: Big Wigs [|cffeda55fEmerald Nightmare|r]
@@ -17,8 +17,8 @@
 ## Notes-esMX: Big Wigs Emerald Nightmare Modules
 ## Notes-frFR: Modules Big Wigs concernant le Cauchemar d'émeraude.
 ## Notes-ruRU: Big Wigs Emerald Nightmare Modules
-## Notes-zhCN: Big Wigs Emerald Nightmare Modules
-## Notes-zhTW: Big Wigs Emerald Nightmare Modules
+## Notes-zhCN: Big Wigs 翡翠梦魇模块。
+## Notes-zhTW: Big Wigs 翡翠夢魘模組。
 ## Notes-itIT: Big Wigs Emerald Nightmare Modules
 ## Notes-ptBR: Big Wigs Emerald Nightmare Modules
 ## Notes-koKR: Big Wigs Emerald Nightmare Modules
