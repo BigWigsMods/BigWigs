@@ -1,12 +1,12 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "deDE")
 if not L then return end
 
-L.getNewRelease = "Dein Big Wigs ist veraltet (/bwv), aber du kannst es mit Hilfe des Curse Client einfach aktualisieren. Alternativ kannst du es auch manuell von curse.com oder wowinterface.com herunterladen und manuell aktualisieren."
-L.warnTwoReleases = "Dein Big Wigs ist 2 Versionen älter als die neueste Version! Deine Version könnte Fehler, fehlende Funktionen oder völlig falsche Zeitmesser beinhalten. Es wird dringend empfohlen, Big Wigs zu aktualisieren."
+L.getNewRelease = "Dein Big Wigs ist veraltet (/bwv), aber du kannst es mit Hilfe des Curse Client einfach aktualisieren. Alternativ kannst du es auch von curse.com oder wowinterface.com herunterladen und manuell aktualisieren."
+L.warnTwoReleases = "Dein Big Wigs ist 2 Versionen älter als die neueste Version! Deine Version könnte Fehler, fehlende Funktionen oder völlig falsche Timer beinhalten. Es wird dringend empfohlen, Big Wigs zu aktualisieren."
 L.warnSeveralReleases = "|cffff0000Dein Big Wigs ist um mehrere Versionen veraltet!! Wir empfehlen dir DRINGEND, Big Wigs zu aktualisieren, um Synchronisationsprobleme zwischen dir und anderen Spielern zu verhindern!|r"
 
 L.gitHubTitle = "Big Wigs ist auf GitHub"
-L.gitHubDesc = "Big Wigs ist Open-Source-Software auf GitHub. Wir sind immer auf der Suche nach neuen Menschen, die uns helfen, und jeder ist willkommen, unseren Code zu inspizieren, Beiträge zu leisten und Fehlerberichte einzureichen. Big Wigs ist hauptsächlich durch die großartige WoW-Gemeinschaft im Laufe der Zeit zu etwas Großem geworden.\n\nFalls du Änderungen an Big Wigs vorgenommen hast, während Big Wigs noch auf SVN war, und Du möchtest, dass dein GitHub-Konto mit Gits Commit-Protokoll verknüpft wird, kontaktiere uns."
+L.gitHubDesc = "Big Wigs ist Open-Source-Software auf GitHub. Wir sind immer auf der Suche nach neuen Menschen, die uns helfen, und jeder ist willkommen, unseren Code zu inspizieren, Beiträge zu leisten und Fehlerberichte einzureichen. Big Wigs ist hauptsächlich durch die großartige WoW-Gemeinschaft im Laufe der Zeit zu etwas Großem geworden.\n\nFalls du Änderungen an Big Wigs vorgenommen hast, während Big Wigs noch SVN verwendet hat, und Du möchtest, dass deine Commits deinem GitHub-Konto zugeordnet werden, kontaktiere uns."
 
 L.about = "Über"
 L.activeBossModules = "Aktive Bossmodule:"
