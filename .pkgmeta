@@ -29,6 +29,7 @@ move-folders:
     BigWigs/Nightmare: BigWigs_Nightmare
 
 ignore:
+  - .travis.yml
   - README.md
   - Sounds/Long.wav
   - Sounds/Alarm.wav
