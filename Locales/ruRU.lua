@@ -5,6 +5,9 @@ L.getNewRelease = "Ваш Big Wigs устарел(/bwv), но вы можете 
 L.warnTwoReleases = "Ваш Big Wigs устарел на две версии! Ваша версию может содержать ошибки, меньше возможностей, а может быть и неправильные таймеры. Крайне рекомендуется обновиться."
 L.warnSeveralReleases = "|cffff0000Ваш Big Wigs устарел на несколько версий!! ОЧЕНЬ рекомендуется обновиться, чтобы предотвратить ошибки синхронизации с другими игроками!|r"
 
+--L.gitHubTitle = "Big Wigs is on GitHub"
+--L.gitHubDesc = "Big Wigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. Big Wigs is as great as it is today largely in part to the great WoW community helping us out.\n\nIf you've committed changes to Big Wigs whilst it was on SVN and would like your GitHub account linked on the Git commit log, contact us."
+
 L.about = "О Big Wigs"
 L.activeBossModules = "Активные модули боссов:"
 L.advanced = "Дополнительные настройки"
