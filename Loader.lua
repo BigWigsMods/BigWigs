@@ -549,7 +549,7 @@ do
 	end
 
 	CTimerAfter(11, function()
-		local _, _, _, _, _, month, year = GetAchievementInfo(10043) -- Mythic Archimonde
+		local _, _, _, _, month, _, year = GetAchievementInfo(10043) -- Mythic Archimonde
 		if year == 15 and month < 10 then
 			sysprint("We're looking for a new end-game raider to join our developer team! See [goo.gl/aajTfo] for more info.")
 		end
