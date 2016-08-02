@@ -1,27 +1,27 @@
 ## Interface: 70000
 
-## Title: Big Wigs [|cffeda55fThe Nighthold|r]
-## Title-deDE: Big Wigs [|cffeda55fThe Nighthold|r]
-## Title-esES: Big Wigs [|cffeda55fThe Nighthold|r]
-## Title-esMX: Big Wigs [|cffeda55fThe Nighthold|r]
-## Title-frFR: Big Wigs [|cffeda55fPalais Sacrenuit|r]
-## Title-ruRU: Big Wigs [|cffeda55fThe Nighthold|r]
-## Title-zhCN: Big Wigs [|cffeda55f暗夜要塞|r]
-## Title-zhTW: Big Wigs [|cffeda55f暗夜堡|r]
-## Title-itIT: Big Wigs [|cffeda55fThe Nighthold|r]
-## Title-ptBR: Big Wigs [|cffeda55fThe Nighthold|r]
-## Title-koKR: Big Wigs [|cffeda55fThe Nighthold|r]
-## Notes: Big Wigs The Nighthold Modules
-## Notes-deDE: Big Wigs The Nighthold Modules
-## Notes-esES: Big Wigs The Nighthold Modules
-## Notes-esMX: Big Wigs The Nighthold Modules
-## Notes-frFR: Modules Big Wigs concernant le Palais Sacrenuit.
-## Notes-ruRU: Big Wigs The Nighthold Modules
-## Notes-zhCN: Big Wigs 暗夜要塞模块。
-## Notes-zhTW: Big Wigs 暗夜堡模組。
-## Notes-itIT: Big Wigs The Nighthold Modules
-## Notes-ptBR: Big Wigs The Nighthold Modules
-## Notes-koKR: Big Wigs The Nighthold Modules
+## Title: BigWigs [|cffeda55fThe Nighthold|r]
+## Title-deDE: BigWigs [|cffeda55fThe Nighthold|r]
+## Title-esES: BigWigs [|cffeda55fThe Nighthold|r]
+## Title-esMX: BigWigs [|cffeda55fThe Nighthold|r]
+## Title-frFR: BigWigs [|cffeda55fPalais Sacrenuit|r]
+## Title-ruRU: BigWigs [|cffeda55fThe Nighthold|r]
+## Title-zhCN: BigWigs [|cffeda55f暗夜要塞|r]
+## Title-zhTW: BigWigs [|cffeda55f暗夜堡|r]
+## Title-itIT: BigWigs [|cffeda55fThe Nighthold|r]
+## Title-ptBR: BigWigs [|cffeda55fThe Nighthold|r]
+## Title-koKR: BigWigs [|cffeda55fThe Nighthold|r]
+## Notes: BigWigs The Nighthold Modules
+## Notes-deDE: BigWigs The Nighthold Modules
+## Notes-esES: BigWigs The Nighthold Modules
+## Notes-esMX: BigWigs The Nighthold Modules
+## Notes-frFR: Modules BigWigs concernant le Palais Sacrenuit.
+## Notes-ruRU: BigWigs The Nighthold Modules
+## Notes-zhCN: BigWigs 暗夜要塞模块。
+## Notes-zhTW: BigWigs 暗夜堡模組。
+## Notes-itIT: BigWigs The Nighthold Modules
+## Notes-ptBR: BigWigs The Nighthold Modules
+## Notes-koKR: BigWigs The Nighthold Modules
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

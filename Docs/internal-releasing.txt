@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------
--- Big Wigs Release Procedure
+-- BigWigs Release Procedure
 --[[
 
 Here's just a list of things the release manager needs to do before

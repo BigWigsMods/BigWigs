@@ -22,7 +22,7 @@ end
 
 local C = BigWigs.C
 
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
+local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
 
 local icon = LibStub("LibDBIcon-1.0", true)
 local acr = LibStub("AceConfigRegistry-3.0")
@@ -42,7 +42,7 @@ local showToggleOptions, getAdvancedToggleOption = nil, nil
 local getOptions
 local acOptions = {
 	type = "group",
-	name = "Big Wigs",
+	name = "BigWigs",
 	get = function(info)
 		return BigWigs.db.profile[info[#info]]
 	end,
@@ -101,7 +101,7 @@ local acOptions = {
 					end
 				end
 				if not InterfaceOptionsFrame:IsShown() then
-					local panel = "Big Wigs |cFF62B1F6".. EJ_GetTierInfo(loader.isLegion and 7 or 6) .."|r" -- XXX Legion temp
+					local panel = "BigWigs |cFF62B1F6".. EJ_GetTierInfo(loader.isLegion and 7 or 6) .."|r" -- XXX Legion temp
 					InterfaceOptionsFrame_OpenToCategory(panel)
 					InterfaceOptionsFrame_OpenToCategory(panel)
 				end
@@ -112,7 +112,7 @@ local acOptions = {
 		general = {
 			order = 20,
 			type = "group",
-			name = "Big Wigs",
+			name = "BigWigs",
 			args = {
 				minimap = {
 					type = "toggle",
@@ -302,14 +302,14 @@ do
 
 		acr:RegisterOptionsTable("BigWigs", getOptions, true)
 		acd:SetDefaultSize("BigWigs", 858, 660)
-		--local mainOpts = acd:AddToBlizOptions("BigWigs", "Big Wigs")
+		--local mainOpts = acd:AddToBlizOptions("BigWigs", "BigWigs")
 		--mainOpts:HookScript("OnShow", function()
 		--	BigWigs:Enable()
-		--	local p = findPanel("Big Wigs")
+		--	local p = findPanel("BigWigs")
 		--	if p and p.element.collapsed then OptionsListButtonToggle_OnClick(p.toggle) end
 		--end)
 		--
-		--local about = self:GetPanel(L.about, "Big Wigs")
+		--local about = self:GetPanel(L.about, "BigWigs")
 		--about:SetScript("OnShow", function(frame)
 		--	local fields = {
 		--		L.developers,
@@ -378,8 +378,8 @@ do
 
 		colorModule = BigWigs:GetPlugin("Colors")
 		soundModule = BigWigs:GetPlugin("Sounds")
-		acr:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
-		acr:RegisterOptionsTable("Big Wigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
+		acr:RegisterOptionsTable("BigWigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
+		acr:RegisterOptionsTable("BigWigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
 
 		f:UnregisterEvent("ADDON_LOADED")
 		-- Wait with nilling, we don't know how many addons will load during this same execution.
@@ -594,13 +594,13 @@ local function advancedTabSelect(widget, callback, tab)
 		group:SetFullWidth(true)
 		widget:AddChild(group)
 		soundModule:SetSoundOptions(module.name, key, module.db.profile[key])
-		acd:Open("Big Wigs: Sounds Override", group)
+		acd:Open("BigWigs: Sounds Override", group)
 	elseif tab == "colors" then
 		local group = AceGUI:Create("SimpleGroup")
 		group:SetFullWidth(true)
 		widget:AddChild(group)
 		colorModule:SetColorOptions(module.name, key, module.toggleDefaults[key])
-		acd:Open("Big Wigs: Colors Override", group)
+		acd:Open("BigWigs: Colors Override", group)
 	end
 	widget:ResumeLayout()
 	widget:GetUserData("scrollFrame"):PerformLayout()
@@ -736,7 +736,7 @@ do
 		local channel = IsInGroup(2) and "INSTANCE_CHAT" or IsInRaid() and "RAID" or IsInGroup() and "PARTY"
 		local abilities = {}
 		local header = nil
-		output(channel, "Big Wigs: ", module.displayName or module.moduleName or module.name)
+		output(channel, "BigWigs: ", module.displayName or module.moduleName or module.name)
 		local currentSize = 0
 		for i, option in next, module.toggleOptions do
 			local o = option
@@ -1219,20 +1219,20 @@ end
 
 do
 	local addonNameToHeader = {
-		BigWigs_Classic = "Big Wigs ".. EJ_GetTierInfo(1),
-		BigWigs_BurningCrusade = "Big Wigs ".. EJ_GetTierInfo(2),
-		BigWigs_WrathOfTheLichKing = "Big Wigs ".. EJ_GetTierInfo(3),
-		BigWigs_Cataclysm = "Big Wigs ".. EJ_GetTierInfo(4),
-		BigWigs_MistsOfPandaria = "Big Wigs ".. EJ_GetTierInfo(5),
-		BigWigs_WarlordsOfDraenor = loader.isLegion and ("Big Wigs ".. EJ_GetTierInfo(6)) or ("Big Wigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r"),
-		BigWigs_Legion = loader.isLegion and ("Big Wigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r") or ("Big Wigs ".. EJ_GetTierInfo(7)),
+		BigWigs_Classic = "BigWigs ".. EJ_GetTierInfo(1),
+		BigWigs_BurningCrusade = "BigWigs ".. EJ_GetTierInfo(2),
+		BigWigs_WrathOfTheLichKing = "BigWigs ".. EJ_GetTierInfo(3),
+		BigWigs_Cataclysm = "BigWigs ".. EJ_GetTierInfo(4),
+		BigWigs_MistsOfPandaria = "BigWigs ".. EJ_GetTierInfo(5),
+		BigWigs_WarlordsOfDraenor = loader.isLegion and ("BigWigs ".. EJ_GetTierInfo(6)) or ("BigWigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r"),
+		BigWigs_Legion = loader.isLegion and ("BigWigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r") or ("BigWigs ".. EJ_GetTierInfo(7)),
 		LittleWigs = "Little Wigs",
 	}
 
 	local panels = {}
 	local noop = function() end
 	function options:GetPanel(zone, parent, zoneId, setScript)
-		if parent and parent ~= "Big Wigs" and not panels[parent] then -- This zone doesn't have a parent panel, create it first
+		if parent and parent ~= "BigWigs" and not panels[parent] then -- This zone doesn't have a parent panel, create it first
 			self:GetPanel(parent, nil, nil, true)
 		end
 		if not panels[zone] then

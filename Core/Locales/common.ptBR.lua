@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "ptBR")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Common", "ptBR")
 if not L then return end
 
 L.add = "Inimigo adicional"

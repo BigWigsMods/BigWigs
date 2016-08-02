@@ -1,6 +1,6 @@
 local C = {}
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs", true)
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common", true)
+local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs", true)
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Common", true)
 local BigWigs = BigWigs
 local names = {}
 local descriptions = {}
@@ -40,7 +40,7 @@ function BigWigs:RegisterOption(key, name, desc)
 	if self.db.global.optionShiftIndexes[key] then
 		local index = self.db.global.optionShiftIndexes[key]
 		if used[index] and used[index] ~= key then
-			error("Bit field shift indexes are not consistent with the stored data. Big Wigs should automatically handle this, but at the moment it does not. Boss options might be completely fubar at the moment. Have fun.")
+			error("Bit field shift indexes are not consistent with the stored data. BigWigs should automatically handle this, but at the moment it does not. Boss options might be completely fubar at the moment. Have fun.")
 		end
 		-- Use the stored shift index
 		C[key] = lshift(1, self.db.global.optionShiftIndexes[key])

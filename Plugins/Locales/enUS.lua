@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Plugins", "enUS", true)
 
 L.general = "General"
 
@@ -25,7 +25,7 @@ L.style = "Style"
 L.bigWigsBarStyleName_Default = "Default"
 
 L.clickableBars = "Clickable Bars"
-L.clickableBarsDesc = "Big Wigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work.|r The bars will intercept any mouse clicks you perform on them.\n"
+L.clickableBarsDesc = "BigWigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work.|r The bars will intercept any mouse clicks you perform on them.\n"
 L.interceptMouseDesc = "Enables bars to receive mouse clicks."
 L.modifier = "Modifier"
 L.modifierDesc = "Hold down the selected modifier key to enable click actions on the timer bars."
@@ -76,8 +76,8 @@ L.pulling = "Pulling!"
 L.pullStarted = "Pull timer started by %s user %s."
 L.pullStopped = "Pull timer cancelled by %s."
 L.pullIn = "Pull in %d sec"
-L.sendPull = "Sending a pull timer to Big Wigs and DBM users."
-L.sendCustomBar = "Sending custom bar '%s' to Big Wigs and DBM users."
+L.sendPull = "Sending a pull timer to BigWigs and DBM users."
+L.sendCustomBar = "Sending custom bar '%s' to BigWigs and DBM users."
 L.requiresLeadOrAssist = "This function requires raid leader or raid assist."
 L.wrongPullFormat = "Must be between 1 and 60 seconds. A correct example is: /pull 5"
 L.wrongCustomBarFormat = "Incorrect format. A correct example is: /raidbar 20 text"
@@ -85,7 +85,7 @@ L.wrongTime = "Invalid time specified. <time> can be either a number in seconds,
 L.encounterRestricted = "This function can't be used during an encounter."
 
 L.wrongBreakFormat = "Must be between 1 and 60 minutes. A correct example is: /break 5"
-L.sendBreak = "Sending a break timer to Big Wigs and DBM users."
+L.sendBreak = "Sending a break timer to BigWigs and DBM users."
 L.breakStarted = "Break timer started by %s user %s."
 L.breakStopped = "Break timer cancelled by %s."
 L.breakBar = "Break time"
@@ -155,11 +155,11 @@ L.countdownAt = "Countdown at... (seconds)"
 -- Messages.lua
 --
 
-L.sinkDescription = "Route output from this addon through the Big Wigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
-L.emphasizedSinkDescription = "Route output from this addon through the Big Wigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
-L.emphasizedCountdownSinkDescription = "Route output from this addon through the Big Wigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
+L.sinkDescription = "Route output from this addon through the BigWigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
+L.emphasizedSinkDescription = "Route output from this addon through the BigWigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
+L.emphasizedCountdownSinkDescription = "Route output from this addon through the BigWigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
 
-L.bwEmphasized = "Big Wigs Emphasized"
+L.bwEmphasized = "BigWigs Emphasized"
 L.messages = "Messages"
 L.normalMessages = "Normal messages"
 L.emphasizedMessages = "Emphasized messages"
@@ -195,7 +195,7 @@ L.customRange = "Custom range indicator"
 L.proximityTitle = "%d yd / %d |4player:players;" -- yd = yards (short)
 L.proximity_name = "Proximity"
 L.soundDelay = "Sound delay"
-L.soundDelayDesc = "Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."
+L.soundDelayDesc = "Specify how long BigWigs should wait between repeating the specified sound when someone is too close to you."
 
 L.proximity = "Proximity display"
 L.proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you."
@@ -225,7 +225,7 @@ L.tooltipDesc = "Shows or hides a spell tooltip if the Proximity display is curr
 --
 
 L.icons = "Icons"
-L.raidIconsDescription = "Some encounters might include elements such as bomb-type abilities targetted on a specific player, a player being chased, or a specific player might be of interest in other ways. Here you can customize which raid icons should be used to mark these players.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, Big Wigs will never change their icon.|r"
+L.raidIconsDescription = "Some encounters might include elements such as bomb-type abilities targetted on a specific player, a player being chased, or a specific player might be of interest in other ways. Here you can customize which raid icons should be used to mark these players.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, BigWigs will never change their icon.|r"
 L.primary = "Primary"
 L.primaryDesc = "The first raid target icon that a encounter script should use."
 L.secondary = "Secondary"
@@ -290,8 +290,8 @@ L.Victory = "Victory"
 L.victoryHeader = "Configure the actions that should be taken after you defeat a boss encounter."
 L.victorySound = "Play a victory sound"
 L.victoryMessages = "Show boss defeat messages"
-L.victoryMessageBigWigs = "Show the Big Wigs message"
-L.victoryMessageBigWigsDesc = "The Big Wigs message is a simple \"boss has been defeated\" message."
+L.victoryMessageBigWigs = "Show the BigWigs message"
+L.victoryMessageBigWigsDesc = "The BigWigs message is a simple \"boss has been defeated\" message."
 L.victoryMessageBlizzard = "Show the Blizzard message"
 L.victoryMessageBlizzardDesc = "The Blizzard message is a very large \"boss has been defeated\" animation in the middle of your screen."
 L.defeated = "%s has been defeated"

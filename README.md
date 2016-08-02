@@ -8,7 +8,7 @@ https://mods.curse.com/addons/wow/big-wigs
 **BigWigs** is a boss encounter add-on. It consists of many individual _encounter scripts_, or _boss modules_; mini add-ons that are designed to trigger alert messages, timer bars, sounds, and so forth, for one specific raid encounter.
 
 Looking for functionality that BigWigs doesn't cover? Try these addons:
-* [LittleWigs](https://mods.curse.com/addons/wow/little-wigs) is a plugin for Big Wigs and covers all forms of 5 man and solo content.
+* [LittleWigs](https://mods.curse.com/addons/wow/little-wigs) is a plugin for BigWigs and covers all forms of 5 man and solo content.
 * [Capping](https://mods.curse.com/addons/wow/capping-bg-timers) covers various battleground and world PvP timers.
 * [oRA3](https://mods.curse.com/addons/wow/ora3) covers all sorts of raid management functionality including raid cooldowns and Battle Res counting.
 * Old content can be installed by [doing a search for BigWigs](https://mods.curse.com/search?search=bigwigs&submit-search=Submit) on Curse and installing the appropriate expansion addon.

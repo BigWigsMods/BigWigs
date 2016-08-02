@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "ptBR")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Plugins", "ptBR")
 if not L then return end
 
 L.abilityName = "Nome da habilidade"
@@ -48,7 +48,7 @@ L.chatMessages = "Conversas"
 L.classColors = "Cores das classes"
 L.classColorsDesc = "Colore nomes de jogadores de acordo com suas classes."
 L.clickableBars = "Barras clicaveis"
-L.clickableBarsDesc = [=[As barras do Big Wigs são clicaveis por padrão. Desta forma você pode mirar em objetos e lançar feitiços AoE atrás deles, trocar o ângulo da câmera, e assim sucessivamente, sem precisar do cursor estar em cima das barras. |cffff4411Se habilitar as barras clicaveis, isto deixará de funcionar.|r as barras interceptarão qualquer clique do mouse que chegar a elas.
+L.clickableBarsDesc = [=[As barras do BigWigs são clicaveis por padrão. Desta forma você pode mirar em objetos e lançar feitiços AoE atrás deles, trocar o ângulo da câmera, e assim sucessivamente, sem precisar do cursor estar em cima das barras. |cffff4411Se habilitar as barras clicaveis, isto deixará de funcionar.|r as barras interceptarão qualquer clique do mouse que chegar a elas.
 ]=]
 L.close = "Fechar"
 L.closeButton = "Botão fechar"
@@ -80,9 +80,9 @@ L.emphasizeAt = "Enfatizar em... (segundos)"
 L.emphasized = "Enfatizado"
 L.emphasizedBars = "Barras enfatizadas"
 L.emphasizedCountdown = "Enfatizar contagem-regressiva."
-L.emphasizedCountdownSinkDescription = "Passa a saída desse add-on pelo display de mensagens da Contagem Regressiva Enfatizada Big Wigs. Este display suporta texto e cores, e só pode exibir uma mensagem por vez."
+L.emphasizedCountdownSinkDescription = "Passa a saída desse add-on pelo display de mensagens da Contagem Regressiva Enfatizada BigWigs. Este display suporta texto e cores, e só pode exibir uma mensagem por vez."
 L.emphasizedMessages = "Mensagens enfatizadas"
-L.emphasizedSinkDescription = "Seguir o padrão de mensagens enfatizadas do Big Wigs. Isto suporta texto e cores, e só podem aparecer uma vez."
+L.emphasizedSinkDescription = "Seguir o padrão de mensagens enfatizadas do BigWigs. Isto suporta texto e cores, e só podem aparecer uma vez."
 L.enable = "Habilitar"
 L.enableStats = "Habilitar estatísticas"
 L.encounterRestricted = "Esta função não pode ser usada durante um encontro."
@@ -150,7 +150,7 @@ L.raidIconsDescription = [=[Elementos de tipo 'bomba' e similares em um jogador 
 
 Só se usa um icone para cada encontro se usará o primario, nunca se usará o mesmo icone para 2 habilidades distintas, para isto esta o icone secundario.
 
-|cffff4411Nota: Se um jogador foi marcado manualmente o Big Wigs nunca trocará seu icone.|r]=]
+|cffff4411Nota: Se um jogador foi marcado manualmente o BigWigs nunca trocará seu icone.|r]=]
 L.recordBestTime = "Gravar recorde"
 L.regularBars = "Barras regulares"
 L.remove = "Remover"
@@ -173,18 +173,18 @@ L.RunAway = "Corra, garotinha! (Lobo Mau)"
 L.scale = "Escala"
 L.secondary = "Secundário"
 L.secondaryDesc = "O segundo objetivo da raide, este icone será usado"
-L.sendBreak = "Enviando temporizador de intervalo para usuários Big Wigs e DBM."
-L.sendCustomBar = "Enviando barra personalizada '%s' para usuários Big Wigs e DBM."
-L.sendPull = "Enviando contador de pull para usuários Big Wigs e DBM."
+L.sendBreak = "Enviando temporizador de intervalo para usuários BigWigs e DBM."
+L.sendCustomBar = "Enviando barra personalizada '%s' para usuários BigWigs e DBM."
+L.sendPull = "Enviando contador de pull para usuários BigWigs e DBM."
 L.showHide = "Mostrar/ocultar"
 -- L.showRespawnBar = "Show respawn bar"
 -- L.showRespawnBarDesc = "Show a bar after you wipe on a boss displaying the time until the boss respawns."
-L.sinkDescription = "Seguir o padrão do addon deixando as mensagens serem mostradas do jeito padrão do Big Wigs. Isto suporta icones, cores e podem mostrar até 4 mensagens na tela de uma vez. Após inserir as mensagens crescerão de tamanho e encolherão de novo rápidamente para notificar o usuario."
+L.sinkDescription = "Seguir o padrão do addon deixando as mensagens serem mostradas do jeito padrão do BigWigs. Isto suporta icones, cores e podem mostrar até 4 mensagens na tela de uma vez. Após inserir as mensagens crescerão de tamanho e encolherão de novo rápidamente para notificar o usuario."
 L.sound = "Som"
 L.soundButton = "Botão de som"
 L.soundButtonDesc = "Mostra/oculta o botão de som"
 L.soundDelay = "Atraso de som"
-L.soundDelayDesc = "Especifique o tempo que Big Wigs deverá esperar entre cada repetição de som quando alguem está muito perto de você."
+L.soundDelayDesc = "Especifique o tempo que BigWigs deverá esperar entre cada repetição de som quando alguem está muito perto de você."
 L.soundDesc = "As mensagens podem chegar com um som. Para algumas pessoas fica mais fácil escutar quando aprendem que tal som aparece com tal mensagem, ao invés de ler a mensagem."
 L.Sounds = "Sons"
 L.style = "Estilo"
@@ -223,8 +223,8 @@ L.useIcons = "Usar icones"
 L.useIconsDesc = "Exibir ícones ao lado das mensagens."
 L.Victory = "Vitória"
 -- L.victoryHeader = "Configure the actions that should be taken after you defeat a boss encounter."
--- L.victoryMessageBigWigs = "Show the Big Wigs message"
--- L.victoryMessageBigWigsDesc = "The Big Wigs message is a simple \"boss has been defeated\" message."
+-- L.victoryMessageBigWigs = "Show the BigWigs message"
+-- L.victoryMessageBigWigsDesc = "The BigWigs message is a simple \"boss has been defeated\" message."
 -- L.victoryMessageBlizzard = "Show the Blizzard message"
 -- L.victoryMessageBlizzardDesc = "The Blizzard message is a very large \"boss has been defeated\" animation in the middle of your screen."
 -- L.victoryMessages = "Show boss defeat messages"

@@ -13,8 +13,8 @@ local GetSpellInfo = GetSpellInfo
 
 local C -- = BigWigs.C, set from Constants.lua
 local AL = LibStub("AceLocale-3.0")
-local L = AL:GetLocale("Big Wigs")
-local CL = AL:GetLocale("Big Wigs: Common")
+local L = AL:GetLocale("BigWigs")
+local CL = AL:GetLocale("BigWigs: Common")
 
 local customBossOptions = {}
 local pName = UnitName("player")
@@ -445,7 +445,7 @@ function addon:EnableModules()
 end
 
 function addon:Print(msg)
-	print("Big Wigs: |cffffff00"..msg.."|r")
+	print("BigWigs: |cffffff00"..msg.."|r")
 end
 
 -------------------------------------------------------------------------------
@@ -488,8 +488,8 @@ end
 --
 
 do
-	local errorDeprecatedNew = "%q is using the deprecated :New() API. Please tell the author to fix it for Big Wigs 3."
-	local errorAlreadyRegistered = "%q already exists as a module in Big Wigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch."
+	local errorDeprecatedNew = "%q is using the deprecated :New() API. Please tell the author to fix it for BigWigs 3."
+	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any BigWigs folders you have and then reinstall it from scratch."
 
 	-- either you get me the hell out of these woods, or you'll know how my
 	-- mother felt after drinking my chocolate milkshake

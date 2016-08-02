@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "koKR")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Common", "koKR")
 if not L then return end
 
 L.add = "하수인 등장"

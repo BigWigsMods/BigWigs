@@ -56,7 +56,7 @@ BigWigs:GetPlugin("Bars"):RegisterBarStyle("MyBigWigsSkin", {
 	GetSpacing = function(bar) return 4 end,
 	ApplyStyle = function(bar) end,
 	BarStopped = function(bar) end,
-	GetStyleName = function() return "My Big Wigs Skin" end,
+	GetStyleName = function() return "My BigWigs Skin" end,
 })
 
 ========================================
@@ -65,7 +65,7 @@ BigWigs:GetPlugin("Bars"):RegisterBarStyle("MyBigWigsSkin", {
 
 ## Interface: 50200
 ## Title: MyBigWigsSkin
-## Notes: My Big Wigs Skin
+## Notes: My BigWigs Skin
 ## Author: Me
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs, BigWigs_Core, BigWigs_Plugins

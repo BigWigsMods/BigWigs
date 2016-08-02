@@ -1,27 +1,27 @@
 ## Interface: 70000
 
-## Title: Big Wigs [|cffeda55fBlackrock Foundry|r]
-## Title-deDE: Big Wigs [|cffeda55fBlackrock Foundry|r]
-## Title-esES: Big Wigs [|cffeda55fBlackrock Foundry|r]
-## Title-esMX: Big Wigs [|cffeda55fBlackrock Foundry|r]
-## Title-frFR: Big Wigs [|cffeda55fFonderie des Rochenoires|r]
-## Title-ruRU: Big Wigs [|cffeda55fЛитейная клана Черной горы|r]
-## Title-zhCN: Big Wigs [|cffeda55f黑石铸造厂|r]
-## Title-zhTW: Big Wigs [|cffeda55f黑石鑄造廠|r]
-## Title-itIT: Big Wigs [|cffeda55fBlackrock Foundry|r]
-## Title-ptBR: Big Wigs [|cffeda55fBlackrock Foundry|r]
-## Title-koKR: Big Wigs [|cffeda55fBlackrock Foundry|r]
-## Notes: Big Wigs Modules for the Blackrock Foundry.
-## Notes-deDE: Big Wigs Modules for the Blackrock Foundry.
-## Notes-esES: Big Wigs Modules for the Blackrock Foundry.
-## Notes-esMX: Big Wigs Modules for the Blackrock Foundry.
-## Notes-frFR: Modules Big Wigs concernant la Fonderie des Rochenoires.
-## Notes-ruRU: Модуль Big Wigs для Литейной клана Черной горы.
-## Notes-zhCN: Big Wigs 黑石铸造厂模块。
-## Notes-zhTW: Big Wigs 黑石鑄造廠模組。
-## Notes-itIT: Big Wigs Modules for the Blackrock Foundry.
-## Notes-ptBR: Big Wigs Modules for the Blackrock Foundry.
-## Notes-koKR: Big Wigs Modules for the Blackrock Foundry.
+## Title: BigWigs [|cffeda55fBlackrock Foundry|r]
+## Title-deDE: BigWigs [|cffeda55fBlackrock Foundry|r]
+## Title-esES: BigWigs [|cffeda55fBlackrock Foundry|r]
+## Title-esMX: BigWigs [|cffeda55fBlackrock Foundry|r]
+## Title-frFR: BigWigs [|cffeda55fFonderie des Rochenoires|r]
+## Title-ruRU: BigWigs [|cffeda55fЛитейная клана Черной горы|r]
+## Title-zhCN: BigWigs [|cffeda55f黑石铸造厂|r]
+## Title-zhTW: BigWigs [|cffeda55f黑石鑄造廠|r]
+## Title-itIT: BigWigs [|cffeda55fBlackrock Foundry|r]
+## Title-ptBR: BigWigs [|cffeda55fBlackrock Foundry|r]
+## Title-koKR: BigWigs [|cffeda55fBlackrock Foundry|r]
+## Notes: BigWigs Modules for the Blackrock Foundry.
+## Notes-deDE: BigWigs Modules for the Blackrock Foundry.
+## Notes-esES: BigWigs Modules for the Blackrock Foundry.
+## Notes-esMX: BigWigs Modules for the Blackrock Foundry.
+## Notes-frFR: Modules BigWigs concernant la Fonderie des Rochenoires.
+## Notes-ruRU: Модуль BigWigs для Литейной клана Черной горы.
+## Notes-zhCN: BigWigs 黑石铸造厂模块。
+## Notes-zhTW: BigWigs 黑石鑄造廠模組。
+## Notes-itIT: BigWigs Modules for the Blackrock Foundry.
+## Notes-ptBR: BigWigs Modules for the Blackrock Foundry.
+## Notes-koKR: BigWigs Modules for the Blackrock Foundry.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

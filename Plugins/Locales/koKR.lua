@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "koKR")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Plugins", "koKR")
 if not L then return end
 
 L.abilityName = "스킬 이름"
@@ -42,14 +42,14 @@ L.breakMinutes = "휴식 시간이 %d |4분:분; 후에 종료됩니다!"
 L.breakSeconds = "휴식 시간이 %d |4초:초; 후에 종료됩니다!"
 L.breakStarted = "휴식 타이머가 %s에 의해 %s에 시작되었습니다."
 L.breakStopped = "휴식 타이머가 %s에 의해 취소되었습니다."
-L.bwEmphasized = "Big Wigs 강조"
+L.bwEmphasized = "BigWigs 강조"
 L.center = "중앙"
 L.chatMessages = "대화 메시지"
 L.classColors = "직업 색상"
 L.classColorsDesc = "플레이어의 이름을 직업 색상으로 표시."
 L.clickableBars = "클릭이 가능한 바"
-L.clickableBarsDesc = [=[Big Wigs 바에 클릭을 통해 기본적인 기능을 가지게 합니다. |cffff4411만약 당신이 클릭이가 능한 바를 사용할경우에는
- Big Wigs를 통해 생성된 바에서는 대상 지정, 카메라 시점등의 불편함도 생길수 있으니 유의하시기 바랍니다.
+L.clickableBarsDesc = [=[BigWigs 바에 클릭을 통해 기본적인 기능을 가지게 합니다. |cffff4411만약 당신이 클릭이가 능한 바를 사용할경우에는
+ BigWigs를 통해 생성된 바에서는 대상 지정, 카메라 시점등의 불편함도 생길수 있으니 유의하시기 바랍니다.
 바의 위에서는 클릭이 가능한 바의 기능이 사용되기 때문입니다.]=]
 L.close = "닫기"
 L.closeButton = "닫기 버튼"
@@ -81,9 +81,9 @@ L.emphasizeAt = "강조... (초)"
 L.emphasized = "강조"
 L.emphasizedBars = "강조 바"
 L.emphasizedCountdown = "강조된 카운트다운"
-L.emphasizedCountdownSinkDescription = "Big Wigs의 강조된 카운트다운 메시지 표시를 통해 이 애드온의 메시지를 출력합니다. 이 디스플레이는 텍스트와 색상을 지원하며, 한번에 단 하나의 메시지를 표시할 수 있습니다."
+L.emphasizedCountdownSinkDescription = "BigWigs의 강조된 카운트다운 메시지 표시를 통해 이 애드온의 메시지를 출력합니다. 이 디스플레이는 텍스트와 색상을 지원하며, 한번에 단 하나의 메시지를 표시할 수 있습니다."
 L.emphasizedMessages = "강조된 메시지"
-L.emphasizedSinkDescription = "Big Wigs의 강조된 메시지 표시를 통해 이 애드온의 메시지를 출력합니다. 이 디스플레이는 텍스트와 색상을 지원하며, 한번에 단 하나의 메시지를 표시할 수 있습니다."
+L.emphasizedSinkDescription = "BigWigs의 강조된 메시지 표시를 통해 이 애드온의 메시지를 출력합니다. 이 디스플레이는 텍스트와 색상을 지원하며, 한번에 단 하나의 메시지를 표시할 수 있습니다."
 L.enable = "사용"
 L.enableStats = "통계 활성화"
 L.encounterRestricted = "이 기능은 보스와의 전투 시엔 사용이 불가합니다."
@@ -149,7 +149,7 @@ L.pullStarted = "%2$s님이 %1$s 풀링 타이머를 시작합니다."
 L.pullStopped = "풀링 타이머가 %s 에 의해 취소되었습니다."
 L.raidIconsDescription = [=[중요한 '폭탄'-유형의 보스 능력을 플레이어에게 사용할 경우 BigWigs에서 공격대 대상 아이콘 지정을 설정합니다. 중요 '폭탄'-유형 기술이 2개일 경우 1개의 기술에 첫번째, 그나머지 기술에 대해서는 두번째 아이콘을 지정하여 사용합니다.
 
-|cffff4411주의: 만약에 플레이어가 이미 수동으로 전술 지정이 되어있다면 Big Wigs 에서는 그것을 변경하지 않습니다.|r]=]
+|cffff4411주의: 만약에 플레이어가 이미 수동으로 전술 지정이 되어있다면 BigWigs 에서는 그것을 변경하지 않습니다.|r]=]
 L.recordBestTime = "최고 기록 저장하기"
 L.regularBars = "일반 바"
 L.remove = "삭제"
@@ -173,13 +173,13 @@ L.RunAway = "도망쳐라 꼬마야 달아나라 (커다란 나쁜 늑대)"
 L.scale = "크기"
 L.secondary = "두번째 아이콘"
 L.secondaryDesc = "두번째 공격대 대상에게 사용할 아이콘을 지정합니다."
-L.sendBreak = "Big Wigs와 DBM 유저들에게 휴식 타이머를 보냅니다."
-L.sendCustomBar = "Big Wigs과 DBM 사용자에게 '%s' 사용자 바를 보냅니다."
-L.sendPull = "Big Wigs과 DBM 사용자에게 풀링 타이머를 보냅니다."
+L.sendBreak = "BigWigs와 DBM 유저들에게 휴식 타이머를 보냅니다."
+L.sendCustomBar = "BigWigs과 DBM 사용자에게 '%s' 사용자 바를 보냅니다."
+L.sendPull = "BigWigs과 DBM 사용자에게 풀링 타이머를 보냅니다."
 L.showHide = "표시/숨김"
 L.showRespawnBar = "재생성 바 표시" -- Needs review
 L.showRespawnBarDesc = "보스를 리셋한 후에 재생성 되기까지 걸리는 시간을 바에 표시합니다." -- Needs review
-L.sinkDescription = "Big Wigs 메세지 표시를 통해 이 애드온의 메세지를 출력합니다. 이것은 디스플레이와 색상, 아이콘을 지원하는 메시지가 화면에 한 번에 최대 4개까지 표시됩니다. 새로운 메시지는 사용자에게 알리기 위해 점점 커지다가 순식간에 사라집니다"
+L.sinkDescription = "BigWigs 메세지 표시를 통해 이 애드온의 메세지를 출력합니다. 이것은 디스플레이와 색상, 아이콘을 지원하는 메시지가 화면에 한 번에 최대 4개까지 표시됩니다. 새로운 메시지는 사용자에게 알리기 위해 점점 커지다가 순식간에 사라집니다"
 L.sound = "효과음"
 L.soundButton = "소리 버튼"
 L.soundButtonDesc = "소리 버튼을 표시하거나 숨깁니다."
@@ -222,8 +222,8 @@ L.useIcons = "아이콘 사용"
 L.useIconsDesc = "메시지 뒤에 아이콘을 표시합니다."
 L.Victory = "승리"
 L.victoryHeader = "보스를 쓰러뜨린 후 수행할 작업들을 설정합니다." -- Needs review
-L.victoryMessageBigWigs = "Big Wigs의 메세지를 보여줍니다." -- Needs review
-L.victoryMessageBigWigsDesc = "Big Wigs 메세지는 단순하게 \"우두머리를 쓰러뜨렸습니다\" 입니다." -- Needs review
+L.victoryMessageBigWigs = "BigWigs의 메세지를 보여줍니다." -- Needs review
+L.victoryMessageBigWigsDesc = "BigWigs 메세지는 단순하게 \"우두머리를 쓰러뜨렸습니다\" 입니다." -- Needs review
 L.victoryMessageBlizzard = "블리자드 메세지를 보여줍니다." -- Needs review
 L.victoryMessageBlizzardDesc = "블리자드 메세지는 화면 중앙에  \"우두머리를 쓰러뜨렸습니다\"는 애니메이션입니다." -- Needs review
 L.victoryMessages = "보스를 쓰러뜨린 메세지를 보여줍니다." -- Needs review

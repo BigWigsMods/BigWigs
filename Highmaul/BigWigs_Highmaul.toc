@@ -1,27 +1,27 @@
 ## Interface: 70000
 
-## Title: Big Wigs [|cffeda55fHighmaul|r]
-## Title-deDE: Big Wigs [|cffeda55fHochfels|r]
-## Title-esES: Big Wigs [|cffeda55fOgrópolis|r]
-## Title-esMX: Big Wigs [|cffeda55fOgrópolis|r]
-## Title-frFR: Big Wigs [|cffeda55fCognefort|r]
-## Title-ruRU: Big Wigs [|cffeda55fВерховный Молот|r]
-## Title-zhCN: Big Wigs [|cffeda55f悬槌堡|r]
-## Title-zhTW: Big Wigs [|cffeda55f天槌|r]
-## Title-itIT: Big Wigs [|cffeda55fAltomaglio|r]
-## Title-ptBR: Big Wigs [|cffeda55fMalho Imponente|r]
-## Title-koKR: Big Wigs [|cffeda55fHighmaul|r]
-## Notes: Big Wigs Modules for Highmaul.
-## Notes-deDE: Big Wigs Modules for Highmaul.
-## Notes-esES: Big Wigs Modules for Highmaul.
-## Notes-esMX: Big Wigs Modules for Highmaul.
-## Notes-frFR: Modules Big Wigs concernant Cognefort.
-## Notes-ruRU: Модуль Big Wigs для Верховного Молота.
-## Notes-zhCN: Big Wigs 悬槌堡模块。
-## Notes-zhTW: Big Wigs 天槌模組。
-## Notes-itIT: Moduli Big Wigs per Altomaglio.
-## Notes-ptBR: Big Wigs Modules for Highmaul.
-## Notes-koKR: Big Wigs Modules for Highmaul.
+## Title: BigWigs [|cffeda55fHighmaul|r]
+## Title-deDE: BigWigs [|cffeda55fHochfels|r]
+## Title-esES: BigWigs [|cffeda55fOgrópolis|r]
+## Title-esMX: BigWigs [|cffeda55fOgrópolis|r]
+## Title-frFR: BigWigs [|cffeda55fCognefort|r]
+## Title-ruRU: BigWigs [|cffeda55fВерховный Молот|r]
+## Title-zhCN: BigWigs [|cffeda55f悬槌堡|r]
+## Title-zhTW: BigWigs [|cffeda55f天槌|r]
+## Title-itIT: BigWigs [|cffeda55fAltomaglio|r]
+## Title-ptBR: BigWigs [|cffeda55fMalho Imponente|r]
+## Title-koKR: BigWigs [|cffeda55fHighmaul|r]
+## Notes: BigWigs Modules for Highmaul.
+## Notes-deDE: BigWigs Modules for Highmaul.
+## Notes-esES: BigWigs Modules for Highmaul.
+## Notes-esMX: BigWigs Modules for Highmaul.
+## Notes-frFR: Modules BigWigs concernant Cognefort.
+## Notes-ruRU: Модуль BigWigs для Верховного Молота.
+## Notes-zhCN: BigWigs 悬槌堡模块。
+## Notes-zhTW: BigWigs 天槌模組。
+## Notes-itIT: Moduli BigWigs per Altomaglio.
+## Notes-ptBR: BigWigs Modules for Highmaul.
+## Notes-koKR: BigWigs Modules for Highmaul.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
