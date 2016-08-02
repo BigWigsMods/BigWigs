@@ -14,11 +14,11 @@
 ## Notes-ptBR: Modular, lightweight, non-intrusive approach to boss encounter warnings.
 ## Author: Funkydude, Nebula169
 ## Version: 6
-## X-Category: Raid
 
+## X-Category: Raid
+## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask us about anything else.
 ## X-Curse-Project-ID: big-wigs
 ## X-WoWI-ID: 5086
-
 ## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibChatAnims, LibDualSpec-1.0
 ## X-Embeds: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibChatAnims, LibDualSpec-1.0
 
