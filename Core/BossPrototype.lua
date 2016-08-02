@@ -2,7 +2,7 @@
 -- Prototype
 --
 
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected
 local EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture, IsSpellKnown = EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture, IsSpellKnown
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned

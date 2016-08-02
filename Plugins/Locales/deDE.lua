@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "deDE")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Plugins", "deDE")
 if not L then return end
 
 L.abilityName = "Fähigkeitsname"
@@ -42,7 +42,7 @@ L.breakMinutes = "Pause endet in %d |4Minute:Minuten;!"
 L.breakSeconds = "Pause endet in %d |4Sekunde:Sekunden;!"
 L.breakStarted = "Pause wurde von %s-Nutzer %s gestartet."
 L.breakStopped = "Pause wurde von %s abgebrochen."
-L.bwEmphasized = "Big Wigs Hervorgehoben"
+L.bwEmphasized = "BigWigs Hervorgehoben"
 L.center = "Mittig"
 L.chatMessages = "Chatnachrichten"
 L.classColors = "Klassenfarben"
@@ -150,7 +150,7 @@ L.raidIconsDescription = [=[Einige Begegnungen schließen Elemente wie 'Bombenf�
 
 Falls nur ein Symbol benötigt wird, wird nur das erste benutzt. Ein Symbol wird niemals für zwei verschiedene Fähigkeiten innerhalb einer Begegnung benutzt.
 
-|cffff4411Beachte, dass ein manuell markierter Spieler von Big Wigs nicht ummarkiert wird.|r]=]
+|cffff4411Beachte, dass ein manuell markierter Spieler von BigWigs nicht ummarkiert wird.|r]=]
 L.recordBestTime = "Bestzeiten speichern"
 L.regularBars = "Normale Leisten"
 L.remove = "Entfernen"
@@ -184,7 +184,7 @@ L.sound = "Sound"
 L.soundButton = "Sound-Button"
 L.soundButtonDesc = "Zeigt oder versteckt den Sound-Button."
 L.soundDelay = "Soundverzögerung"
-L.soundDelayDesc = "Gibt an, wie lange Big Wigs zwischen den Soundwiederholungen wartet, wenn jemand zu nahe steht."
+L.soundDelayDesc = "Gibt an, wie lange BigWigs zwischen den Soundwiederholungen wartet, wenn jemand zu nahe steht."
 L.soundDesc = "Nachrichten können zusammen mit Sounds erscheinen. Manche Leute finden es einfacher, darauf zu hören, welcher Sound mit welcher Nachricht einher geht, anstatt die Nachricht zu lesen."
 L.Sounds = "Sounds"
 L.style = "Stil"
@@ -223,8 +223,8 @@ L.useIcons = "Symbole verwenden"
 L.useIconsDesc = "Zeigt Symbole neben Nachrichten an."
 L.Victory = "Sieg"
 L.victoryHeader = "Konfiguriert die Aktionen, die nach einem erfolgreichen Bosskampf stattfinden."
-L.victoryMessageBigWigs = "Die Mitteilung von Big Wigs anzeigen"
-L.victoryMessageBigWigsDesc = "Die Mitteilung von Big Wigs ist eine einfache Boss-wurde-besiegt-Mitteilung."
+L.victoryMessageBigWigs = "Die Mitteilung von BigWigs anzeigen"
+L.victoryMessageBigWigsDesc = "Die Mitteilung von BigWigs ist eine einfache Boss-wurde-besiegt-Mitteilung."
 L.victoryMessageBlizzard = "Die Blizzard-Mitteilung anzeigen"
 L.victoryMessageBlizzardDesc = "Die Blizzard-Mitteilung ist eine sehr große Boss-wurde-besiegt-Animation in der Mitte deines Bildschirms."
 L.victoryMessages = "Boss-besiegt-Nachrichten zeigen"

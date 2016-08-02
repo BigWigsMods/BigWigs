@@ -1,6 +1,6 @@
 ## Interface: 70000
 
-## Title: Big Wigs
+## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
 ## Notes-deDE: Modulare und einfache Boss Encounter Warnungen.
 ## Notes-ruRU: Простой и удобный помощник в битвах с боссами.

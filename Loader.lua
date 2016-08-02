@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
+local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
 local mod, public = {}, {}
 local bwFrame = CreateFrame("Frame")
 
@@ -145,7 +145,7 @@ local function IsAddOnEnabled(addon)
 end
 
 local function sysprint(msg)
-	print("|cFF33FF99Big Wigs|r: "..msg)
+	print("|cFF33FF99BigWigs|r: "..msg)
 end
 
 local function load(obj, index)
@@ -520,13 +520,13 @@ do
 			for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
 				local meta = select(j, GetAddOnOptionalDependencies(i))
 				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins" or meta == "BigWigs_Options") then
-					delayedMessages[#delayedMessages+1] = "The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!"
+					delayedMessages[#delayedMessages+1] = "The addon '|cffffff00"..name.."|r' is forcing BigWigs to load prematurely, notify the BigWigs authors!"
 				end
 			end
 			for j = 1, select("#", GetAddOnDependencies(i)) do
 				local meta = select(j, GetAddOnDependencies(i))
 				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins" or meta == "BigWigs_Options") then
-					delayedMessages[#delayedMessages+1] = "The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!"
+					delayedMessages[#delayedMessages+1] = "The addon '|cffffff00"..name.."|r' is forcing BigWigs to load prematurely, notify the BigWigs authors!"
 				end
 			end
 		end
@@ -539,13 +539,13 @@ do
 
 	local L = GetLocale()
 	if L == "ptBR" then
-		--delayedMessages[#delayedMessages+1] = "We *really* need help translating Big Wigs! Think you can help us? Please check out our translator website: goo.gl/nwR5cy"
+		--delayedMessages[#delayedMessages+1] = "We *really* need help translating BigWigs! Think you can help us? Please check out our translator website: goo.gl/nwR5cy"
 	elseif L == "zhTW" then
-		--delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Traditional Chinese (zhTW)? Check out our easy translator tool: goo.gl/nwR5cy"
+		--delayedMessages[#delayedMessages+1] = "Think you can translate BigWigs into Traditional Chinese (zhTW)? Check out our easy translator tool: goo.gl/nwR5cy"
 	elseif L == "itIT" then
-		--delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Italian (itIT)? Check out our easy translator tool: goo.gl/nwR5cy"
+		--delayedMessages[#delayedMessages+1] = "Think you can translate BigWigs into Italian (itIT)? Check out our easy translator tool: goo.gl/nwR5cy"
 	elseif L == "koKR" then
-		--delayedMessages[#delayedMessages+1] = "Think you can translate Big Wigs into Korean (koKR)? Check out our easy translator tool: goo.gl/nwR5cy"
+		--delayedMessages[#delayedMessages+1] = "Think you can translate BigWigs into Korean (koKR)? Check out our easy translator tool: goo.gl/nwR5cy"
 	end
 
 	CTimerAfter(11, function()
@@ -745,7 +745,7 @@ do
 				local timeLeft = prev - GetTime()
 				if timeLeft > 0 then
 					f:SetValue(timeLeft)
-					f.text:SetFormattedText("Big Wigs: %.1f", timeLeft)
+					f.text:SetFormattedText("BigWigs: %.1f", timeLeft)
 				end
 			end)
 
@@ -831,7 +831,7 @@ do
 		if prefix == "V" or prefix == "Q" then -- V = version response, Q = version query
 			local verString, hash = msg:match("^(%d+)%-(.+)$")
 			local version = tonumber(verString)
-			if version and version > 0 then -- Allow addons to query Big Wigs versions by using a version of 0, but don't add them to the user list.
+			if version and version > 0 then -- Allow addons to query BigWigs versions by using a version of 0, but don't add them to the user list.
 				usersVersion[sender] = version
 				usersHash[sender] = hash
 				if version > highestFoundVersion then highestFoundVersion = version end
@@ -1043,7 +1043,7 @@ do
 	if ldb11 then
 		ldb = ldb11:NewDataObject("BigWigs", {
 			type = "launcher",
-			label = "Big Wigs",
+			label = "BigWigs",
 			icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled",
 		})
 
@@ -1071,7 +1071,7 @@ do
 		end
 
 		function ldb.OnTooltipShow(tt)
-			tt:AddLine("Big Wigs")
+			tt:AddLine("BigWigs")
 			if BigWigs and BigWigs:IsEnabled() then
 				local added = nil
 				for name, module in BigWigs:IterateBossModules() do

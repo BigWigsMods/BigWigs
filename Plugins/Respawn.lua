@@ -9,7 +9,7 @@ if not plugin then return end
 -- Locals
 --
 
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
+local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
 
 -------------------------------------------------------------------------------
 -- Options

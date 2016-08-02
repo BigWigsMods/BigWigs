@@ -1,27 +1,27 @@
 ## Interface: 70000
 
-## Title: Big Wigs [|cffeda55fEmerald Nightmare|r]
-## Title-deDE: Big Wigs [|cffeda55fEmerald Nightmare|r]
-## Title-esES: Big Wigs [|cffeda55fEmerald Nightmare|r]
-## Title-esMX: Big Wigs [|cffeda55fEmerald Nightmare|r]
-## Title-frFR: Big Wigs [|cffeda55fLe Cauchemar d'émeraude|r]
-## Title-ruRU: Big Wigs [|cffeda55fEmerald Nightmare|r]
-## Title-zhCN: Big Wigs [|cffeda55f翡翠梦魇|r]
-## Title-zhTW: Big Wigs [|cffeda55f翡翠夢魘|r]
-## Title-itIT: Big Wigs [|cffeda55fEmerald Nightmare|r]
-## Title-ptBR: Big Wigs [|cffeda55fEmerald Nightmare|r]
-## Title-koKR: Big Wigs [|cffeda55fEmerald Nightmare|r]
-## Notes: Big Wigs Emerald Nightmare Modules
-## Notes-deDE: Big Wigs Emerald Nightmare Modules
-## Notes-esES: Big Wigs Emerald Nightmare Modules
-## Notes-esMX: Big Wigs Emerald Nightmare Modules
-## Notes-frFR: Modules Big Wigs concernant le Cauchemar d'émeraude.
-## Notes-ruRU: Big Wigs Emerald Nightmare Modules
-## Notes-zhCN: Big Wigs 翡翠梦魇模块。
-## Notes-zhTW: Big Wigs 翡翠夢魘模組。
-## Notes-itIT: Big Wigs Emerald Nightmare Modules
-## Notes-ptBR: Big Wigs Emerald Nightmare Modules
-## Notes-koKR: Big Wigs Emerald Nightmare Modules
+## Title: BigWigs [|cffeda55fEmerald Nightmare|r]
+## Title-deDE: BigWigs [|cffeda55fEmerald Nightmare|r]
+## Title-esES: BigWigs [|cffeda55fEmerald Nightmare|r]
+## Title-esMX: BigWigs [|cffeda55fEmerald Nightmare|r]
+## Title-frFR: BigWigs [|cffeda55fLe Cauchemar d'émeraude|r]
+## Title-ruRU: BigWigs [|cffeda55fEmerald Nightmare|r]
+## Title-zhCN: BigWigs [|cffeda55f翡翠梦魇|r]
+## Title-zhTW: BigWigs [|cffeda55f翡翠夢魘|r]
+## Title-itIT: BigWigs [|cffeda55fEmerald Nightmare|r]
+## Title-ptBR: BigWigs [|cffeda55fEmerald Nightmare|r]
+## Title-koKR: BigWigs [|cffeda55fEmerald Nightmare|r]
+## Notes: BigWigs Emerald Nightmare Modules
+## Notes-deDE: BigWigs Emerald Nightmare Modules
+## Notes-esES: BigWigs Emerald Nightmare Modules
+## Notes-esMX: BigWigs Emerald Nightmare Modules
+## Notes-frFR: Modules BigWigs concernant le Cauchemar d'émeraude.
+## Notes-ruRU: BigWigs Emerald Nightmare Modules
+## Notes-zhCN: BigWigs 翡翠梦魇模块。
+## Notes-zhTW: BigWigs 翡翠夢魘模組。
+## Notes-itIT: BigWigs Emerald Nightmare Modules
+## Notes-ptBR: BigWigs Emerald Nightmare Modules
+## Notes-koKR: BigWigs Emerald Nightmare Modules
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

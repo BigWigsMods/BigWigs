@@ -1,21 +1,21 @@
 ## Interface: 70000
 
-## Title: Big Wigs [|cffeda55fCore|r]
-## Title-deDE: Big Wigs [|cffeda55fKern|r]
-## Title-esES: Big Wigs [|cffeda55fNúcleo|r]
-## Title-ruRU: Big Wigs [|cffeda55fЯдро|r]
-## Title-frFR: Big Wigs [|cffeda55fNoyau|r]
-## Title-zhCN: Big Wigs [|cffeda55f核心|r]
-## Title-zhTW: Big Wigs [|cffeda55f核心|r]
-## Title-itIT: Big Wigs [|cffeda55fBase|r]
-## Notes: Big Wigs Core
-## Notes-deDE: Big Wigs Kern.
-## Notes-esES: Núcleo de Big Wigs.
-## Notes-ruRU: Ядро Big Wigs
-## Notes-frFR: Noyau de Big Wigs.
-## Notes-zhCN: Big Wigs 核心模块
-## Notes-zhTW: Big Wigs 核心模組
-## Notes-itIT: Big Wigs Base
+## Title: BigWigs [|cffeda55fCore|r]
+## Title-deDE: BigWigs [|cffeda55fKern|r]
+## Title-esES: BigWigs [|cffeda55fNúcleo|r]
+## Title-ruRU: BigWigs [|cffeda55fЯдро|r]
+## Title-frFR: BigWigs [|cffeda55fNoyau|r]
+## Title-zhCN: BigWigs [|cffeda55f核心|r]
+## Title-zhTW: BigWigs [|cffeda55f核心|r]
+## Title-itIT: BigWigs [|cffeda55fBase|r]
+## Notes: BigWigs Core
+## Notes-deDE: BigWigs Kern.
+## Notes-esES: Núcleo de BigWigs.
+## Notes-ruRU: Ядро BigWigs
+## Notes-frFR: Noyau de BigWigs.
+## Notes-zhCN: BigWigs 核心模块
+## Notes-zhTW: BigWigs 核心模組
+## Notes-itIT: BigWigs Base
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

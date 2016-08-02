@@ -2,19 +2,19 @@ This document is intended for raid participants.
 
     When the fight begings
 
-Big Wigs automatically senses the nearby presence of a boss and enables the
+BigWigs automatically senses the nearby presence of a boss and enables the
 appropriate bossmod without delay. Normally, you're not required to do anything.
 
 
     Boss Emote Blocking
 
 The BossBlock plugin is the main thing keeping your sanity during boss
-encounters. It blocks any boss emote warnings that Big Wigs generally 
+encounters. It blocks any boss emote warnings that BigWigs generally 
 already alerts you for.
 
     If you get hungry during the raid
 
-Big Wigs comes prepacked with a module for starting custom bars, which is
+BigWigs comes prepacked with a module for starting custom bars, which is
 excellent for when your pizza is in the oven. Just throw that baby in there, run
 back to your computer, and execute /localbar 720 Pizza!. 720 seconds is 12 minutes,
 which you'll obviously want to configure to your liking :)
@@ -24,7 +24,7 @@ This bar is local to your client, and others won't be able to see it.
 
     Moving the bars and messages
 
-The bars and messages plugins for Big Wigs can be moved with an anchor that can
+The bars and messages plugins for BigWigs can be moved with an anchor that can
 be toggled on by clicking the "Toggle Anchors" button in the main menu. After moving them,
 the test function can give you a few bars and messages to test your position
 and if you're fine with it.

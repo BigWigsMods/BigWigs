@@ -1,27 +1,27 @@
 ﻿## Interface: 70000
 
-## Title: Big Wigs [|cffeda55fHellfire Citadel|r]
-## Title-deDE: Big Wigs [|cffeda55fHellfire Citadel|r]
-## Title-esES: Big Wigs [|cffeda55fHellfire Citadel|r]
-## Title-esMX: Big Wigs [|cffeda55fHellfire Citadel|r]
-## Title-frFR: Big Wigs [|cffeda55fCitadelle des Flammes infernales|r]
-## Title-ruRU: Big Wigs [|cffeda55fЦитадель Адского Пламени|r]
-## Title-zhCN: Big Wigs [|cffeda55f地狱火堡垒|r]
-## Title-zhTW: Big Wigs [|cffeda55f地獄火堡壘|r]
-## Title-itIT: Big Wigs [|cffeda55fHellfire Citadel|r]
-## Title-ptBR: Big Wigs [|cffeda55fHellfire Citadel|r]
-## Title-koKR: Big Wigs [|cffeda55fHellfire Citadel|r]
-## Notes: Big Wigs Modules for Hellfire Citadel.
-## Notes-deDE: Big Wigs Modules for Hellfire Citadel.
-## Notes-esES: Big Wigs Modules for Hellfire Citadel.
-## Notes-esMX: Big Wigs Modules for Hellfire Citadel.
-## Notes-frFR: Modules Big Wigs concernant la Citadelle des Flammes infernales.
-## Notes-ruRU: Модуль Big Wigs для Цитадели Адского Пламени.
-## Notes-zhCN: Big Wigs 地狱火堡垒模块。
-## Notes-zhTW: Big Wigs 地獄火堡壘模組。
-## Notes-itIT: Big Wigs Modules for Hellfire Citadel.
-## Notes-ptBR: Big Wigs Modules for Hellfire Citadel.
-## Notes-koKR: Big Wigs Modules for Hellfire Citadel.
+## Title: BigWigs [|cffeda55fHellfire Citadel|r]
+## Title-deDE: BigWigs [|cffeda55fHellfire Citadel|r]
+## Title-esES: BigWigs [|cffeda55fHellfire Citadel|r]
+## Title-esMX: BigWigs [|cffeda55fHellfire Citadel|r]
+## Title-frFR: BigWigs [|cffeda55fCitadelle des Flammes infernales|r]
+## Title-ruRU: BigWigs [|cffeda55fЦитадель Адского Пламени|r]
+## Title-zhCN: BigWigs [|cffeda55f地狱火堡垒|r]
+## Title-zhTW: BigWigs [|cffeda55f地獄火堡壘|r]
+## Title-itIT: BigWigs [|cffeda55fHellfire Citadel|r]
+## Title-ptBR: BigWigs [|cffeda55fHellfire Citadel|r]
+## Title-koKR: BigWigs [|cffeda55fHellfire Citadel|r]
+## Notes: BigWigs Modules for Hellfire Citadel.
+## Notes-deDE: BigWigs Modules for Hellfire Citadel.
+## Notes-esES: BigWigs Modules for Hellfire Citadel.
+## Notes-esMX: BigWigs Modules for Hellfire Citadel.
+## Notes-frFR: Modules BigWigs concernant la Citadelle des Flammes infernales.
+## Notes-ruRU: Модуль BigWigs для Цитадели Адского Пламени.
+## Notes-zhCN: BigWigs 地狱火堡垒模块。
+## Notes-zhTW: BigWigs 地獄火堡壘模組。
+## Notes-itIT: BigWigs Modules for Hellfire Citadel.
+## Notes-ptBR: BigWigs Modules for Hellfire Citadel.
+## Notes-koKR: BigWigs Modules for Hellfire Citadel.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

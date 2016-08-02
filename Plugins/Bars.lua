@@ -27,7 +27,7 @@ do
 	})
 end
 
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
+local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bars
 
 local startBreak -- Break timer function
@@ -1145,8 +1145,8 @@ end
 
 do
 	local currentAPIVersion = 1
-	local errorWrongAPI = "The bar style API version is now %d; the bar style %q needs to be updated for this version of Big Wigs."
-	local errorMismatchedData = "The given style data does not seem to be a Big Wigs bar styler."
+	local errorWrongAPI = "The bar style API version is now %d; the bar style %q needs to be updated for this version of BigWigs."
+	local errorMismatchedData = "The given style data does not seem to be a BigWigs bar styler."
 	local errorAlreadyExist = "Trying to register %q as a bar styler, but it already exists."
 	function plugin:RegisterBarStyle(key, styleData)
 		if type(key) ~= "string" then error(errorMismatchedData) end
@@ -1164,7 +1164,7 @@ do
 end
 
 do
-	local errorNoStyle = "Big Wigs: No style with the ID %q has been registered. Reverting to default style."
+	local errorNoStyle = "BigWigs: No style with the ID %q has been registered. Reverting to default style."
 	local function noop() end
 	function plugin:SetBarStyle(style)
 		if type(style) ~= "string" or not barStyles[style] then
@@ -1583,7 +1583,7 @@ do
 			if type(seconds) ~= "number" or type(barText) ~= "string" or seconds < 0 then
 				return
 			end
-			BigWigs:Print(L.customBarStarted:format(barText, isDBM and "DBM" or "Big Wigs", nick))
+			BigWigs:Print(L.customBarStarted:format(barText, isDBM and "DBM" or "BigWigs", nick))
 		end
 
 		local id = "bwcb" .. nick .. barText
@@ -1639,7 +1639,7 @@ do
 				return
 			end
 		end
-		BigWigs:Print(L.pullStarted:format(isDBM and "DBM" or "Big Wigs", nick))
+		BigWigs:Print(L.pullStarted:format(isDBM and "DBM" or "BigWigs", nick))
 		timer = plugin:ScheduleRepeatingTimer(printPull, 1)
 		plugin:SendMessage("BigWigs_Message", plugin, nil, L.pullIn:format(timeLeft), "Attention")
 		plugin:SendMessage("BigWigs_Sound", plugin, nil, "Long")
@@ -1678,7 +1678,7 @@ do
 			BigWigs3DB.breakTime = {time(), seconds, nick, isDBM}
 		end
 
-		BigWigs:Print(L.breakStarted:format(isDBM and "DBM" or "Big Wigs", nick))
+		BigWigs:Print(L.breakStarted:format(isDBM and "DBM" or "BigWigs", nick))
 
 		timerTbl = {
 			plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", plugin, nil, L.breakSeconds:format(30), "Urgent", "Interface\\Icons\\inv_misc_fork&knife"),

@@ -26,7 +26,7 @@ local db = nil
 
 local floor = math.floor
 
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
+local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
 
 --------------------------------------------------------------------------------
@@ -168,7 +168,7 @@ end
 
 function plugin:OnRegister()
 	self:RegisterSink("BigWigsEmphasized", L.bwEmphasized, L.emphasizedSinkDescription, "EmphasizedPrint")
-	self:RegisterSink("BigWigs", "Big Wigs", L.sinkDescription, "Print")
+	self:RegisterSink("BigWigs", "BigWigs", L.sinkDescription, "Print")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
 end

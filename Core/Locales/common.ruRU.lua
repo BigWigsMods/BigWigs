@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "ruRU")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Common", "ruRU")
 if not L then return end
 
 L.add = "Помощник"
