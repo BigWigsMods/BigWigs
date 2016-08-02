@@ -333,6 +333,7 @@ function mod:AuraOfMalice()
 	end
 	self:StopBar(CL.count:format(self:SpellName(180533), strikeCount)) -- Tainted Shadows
 	self:StopBar(180526) -- Font of Corruption
+	self:CancelDelayedMessage(L.font_removed_soon)
 	phase = 3
 	strikeCount = 0
 	self:Message("stages", "Neutral", nil, "40% - ".. CL.phase:format(phase), false)
@@ -430,4 +431,3 @@ do
 		end
 	end
 end
-
