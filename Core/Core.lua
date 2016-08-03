@@ -162,7 +162,7 @@ local function zoneChanged()
 				end
 			end
 		else
-			id = GetPlayerMapAreaID("player")
+			id = -(GetPlayerMapAreaID("player") or 0)
 		end
 	else
 		local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
