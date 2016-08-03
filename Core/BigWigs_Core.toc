@@ -13,8 +13,8 @@
 ## Notes-esES: Núcleo de BigWigs.
 ## Notes-ruRU: Ядро BigWigs
 ## Notes-frFR: Noyau de BigWigs.
-## Notes-zhCN: BigWigs 核心模块
-## Notes-zhTW: BigWigs 核心模組
+## Notes-zhCN: BigWigs 核心模块。
+## Notes-zhTW: BigWigs 核心模組。
 ## Notes-itIT: BigWigs Base
 
 ## LoadOnDemand: 1
