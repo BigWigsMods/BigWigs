@@ -5,8 +5,8 @@ L.getNewRelease = "你的 BigWigs 已過期（/bwv）但是可以使用 Curse �
 L.warnTwoReleases = "你的 BigWigs 已過期2個發行版！你的版本可能有錯誤，功能缺失或不正確的計時器。所以強烈建議你升級。"
 L.warnSeveralReleases = "|cffff0000你的 BigWigs 已過期多個發行版！！我們*強烈*建議你更新，以防止把問題同步給其他玩家！|r"
 
---L.gitHubTitle = "BigWigs is on GitHub"
---L.gitHubDesc = "BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out.\n\nIf you've committed changes to BigWigs whilst it was on SVN and would like your GitHub account linked on the Git commit log, contact us."
+L.gitHubTitle = "BigWigs 位於 GitHub"
+L.gitHubDesc = "BigWigs 是一個在 GitHub 上的開源軟件。我們一直在尋找新的朋友幫助我們和歡迎任何人檢測我們的代碼，做出貢獻和提交錯誤報告。BigWigs 今天的偉大很大程度上一部分因為偉大的魔獸世界社區幫助我們。\n\n如果你曾經給 BigWigs 使用 SVN 提交過修改並且喜歡使用 GitHub 帳號提交修改記錄，請與我們聯繫。"
 
 L.about = "關於"
 L.activeBossModules = "啟動首領模組："
