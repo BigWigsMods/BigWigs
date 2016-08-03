@@ -123,7 +123,7 @@ do
 		if fakeWorldZones[k] then
 			public.zoneTbl[k] = v
 		else
-			public.zoneTbl[k < 0 and k or GetAreaMapInfo(k)] = v
+			public.zoneTbl[GetAreaMapInfo(k)] = v
 		end
 	end
 end

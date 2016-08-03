@@ -1306,12 +1306,6 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, custo
 	local name = customBoss or self.displayName
 	local key = "berserk"
 
-	-- Engage warning with no enrage
-	-- if not seconds then
-	-- 	self:Message(key, "Attention", nil, ("% engaged"):format(name), false)
-	-- 	return
-	-- end
-
 	-- There are many Berserks, but we use 26662 because Brutallus uses this one.
 	-- Brutallus is da bomb.
 	local icon = 26662
