@@ -502,7 +502,7 @@ do
 	local function new(core, module, zoneId, journalId, ...)
 		if core:GetModule(module, true) then
 			addon:Print(errorAlreadyRegistered:format(module))
-		else --if not zoneId or GetAreaMapInfo(zoneId) then -- Testing check
+		else
 			local m = core:NewModule(module, ...)
 			initModules[#initModules+1] = m
 

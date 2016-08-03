@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Supreme Lord Kazzak", 945, 1452)
+local mod, CL = BigWigs:NewBoss("Supreme Lord Kazzak", -945, 1452)
 if not mod then return end
 mod:RegisterEnableMob(94015)
 mod.otherMenu = 962

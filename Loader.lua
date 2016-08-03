@@ -107,7 +107,7 @@ do
 		[604]=wotlk, [543]=wotlk, [535]=wotlk, [529]=wotlk, [527]=wotlk, [532]=wotlk, [531]=wotlk, [609]=wotlk, [718]=wotlk,
 		[752]=cata, [758]=cata, [754]=cata, [824]=cata, [800]=cata, [773]=cata,
 		[896]=mop, [897]=mop, [886]=mop, [930]=mop, [953]=mop, [862]=mop,
-		[994]=wod, [988]=wod, [1026]=wod, [948]=wod, [949]=wod, [945]=wod, [962]=wod,
+		[994]=wod, [988]=wod, [1026]=wod, [962]=wod,
 
 		[756]=lw, -- Classic
 		[710]=lw, [722]=lw, [723]=lw, [724]=lw, [725]=lw, [726]=lw, [727]=lw, [728]=lw, [729]=lw, [730]=lw, [731]=lw, [732]=lw, [733]=lw, [734]=lw, [797]=lw, [798]=lw, -- TBC
@@ -123,7 +123,7 @@ do
 		if fakeWorldZones[k] then
 			public.zoneTbl[k] = v
 		else
-			public.zoneTbl[GetAreaMapInfo(k)] = v
+			public.zoneTbl[k < 0 and k or GetAreaMapInfo(k)] = v
 		end
 	end
 end
@@ -900,7 +900,7 @@ do
 		local id
 		local inside = IsInInstance()
 		if not inside then
-			id = GetPlayerMapAreaID("player")
+			id = -(GetPlayerMapAreaID("player") or 0)
 		else
 			local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
 			id = instanceId
