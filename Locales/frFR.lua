@@ -5,8 +5,8 @@ L.getNewRelease = "Votre BigWigs est ancien (/bwv), mais vous pouvez facilement 
 L.warnTwoReleases = "Votre BigWigs est obsolète de 2 versions ! Votre version risque de contenir des bugs, des fonctionnalités manquantes, voire même des délais totalement incorrects. Il est recommandé de faire la mise à jour."
 L.warnSeveralReleases = "|cffff0000Votre BigWigs est plusieurs versions derrière la plus récente !! Il est VIVEMENT recommandé d'effectuer la mise à jour afin d'éviter tout problème de synchronisation avec les autres joueurs !|r"
 
---L.gitHubTitle = "BigWigs is on GitHub"
---L.gitHubDesc = "BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out.\n\nIf you've committed changes to BigWigs whilst it was on SVN and would like your GitHub account linked on the Git commit log, contact us."
+L.gitHubTitle = "BigWigs est sur GitHub"
+L.gitHubDesc = "BigWigs est un logiciel open source hébergé sur GitHub. Nous sommes toujours à la recherche de nouvelles personnes pour nous aider et tout le monde est le bienvenu pour inspecter notre code, effectuer des contributions et soumettre des rapports de bogues. BigWigs existe en grande partie grâce à l'aide précieuse de la communauté de WoW.\n\nSi vous avez effectués des changements à BigWigs quand il était sous SVN et que vous souhaitez que votre compte GitHub soit lié au journal des commits de Git, contactez-nous."
 
 L.about = "À propos"
 L.activeBossModules = "Modules de boss actifs :"
