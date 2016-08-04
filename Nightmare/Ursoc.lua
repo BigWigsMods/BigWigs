@@ -1,10 +1,9 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Blood Frenzy not tested yet, only journal data
--- - Only heroic/mythic timers (raid test 15.01.16, 16.04.16)
+-- - LFR (didn't check the logs yet)
 -- - Tuning sounds / message colors
--- - Remove alpha engaged message
+-- - Remove beta engaged message
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -71,13 +70,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Ursoc (Alpha) Engaged (Post Mythic Test Mod v3)", 98204) -- Amani Battle Bear icon
+	self:Message("berserk", "Neutral", nil, "Ursoc Engaged (Beta v4)", 98204) -- Amani Battle Bear icon
 	cacophonyCount = 1
 	rendFleshCount = 1
 	focusedGazeCount = 1
 	self:Bar(197943, 10) -- Overwhelm
-	self:Bar(204859, 15, CL.count:format(self:SpellName(204859), rendFleshCount)) -- Rend Flesh
-	if self.db.profile.custom_on_gaze_assist then
+	self:Bar(204859, 15, CL.count:format(self:SpellName(204859), rendFleshCount)) -- Rend Flesh, time to _applied
+	if self:GetOption("custom_on_gaze_assist") then
 		self:Bar(198006, 19, CL.count_icon:format(self:SpellName(198006), focusedGazeCount, 4)) -- Focused Gaze, green
 	else
 		self:Bar(198006, 19, CL.count:format(self:SpellName(198006), focusedGazeCount)) -- Focused Gaze
@@ -119,13 +118,10 @@ end
 
 function mod:RendFlesh(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", (self:Tank() or self:Healer()) and "Info", CL.count:format(args.spellName, rendFleshCount))
-
-	-- This might be 12s for every difficulty, but we only know heroic and mythic alpha right now
-	local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
-	local t = expires - GetTime()
-	self:TargetBar(args.spellId, t, args.destName, CL.count:format(args.spellName, rendFleshCount))
-
+	self:TargetBar(args.spellId, 12, args.destName, CL.count:format(args.spellName, rendFleshCount))
 	rendFleshCount = rendFleshCount + 1
+
+	 -- might delay that bar after the TargetBar is done so we only have one bar for rend flesh at a time?
 	self:Bar(args.spellId, 20, CL.count:format(args.spellName, rendFleshCount))
 end
 
@@ -134,13 +130,13 @@ function mod:FocusedGaze(args)
 	local countSay = CL.count:format(args.spellName, focusedGazeCount)
 	local countMessage = countSay
 
-	if self.db.profile.custom_on_gaze_assist then
+	if self:GetOption("custom_on_gaze_assist") then
 		countSay = CL.count_rticon:format(args.spellName, focusedGazeCount, icon)
 		countMessage = CL.count_icon:format(args.spellName, focusedGazeCount, icon)
 	end
 
 	if self:Me(args.destGUID) then
-		self:Flash(args.spellId, self.db.profile.custom_on_gaze_assist and icon)
+		self:Flash(args.spellId, self:GetOption("custom_on_gaze_assist") and icon)
 		self:Say(args.spellId, countSay)
 	end
 
