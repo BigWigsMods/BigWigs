@@ -904,6 +904,11 @@ do
 		else
 			local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
 			id = instanceId
+			-- XXX temp LEGION
+			if IsTestBuild() and not self.tmp and (id == 1520 or id == 1530) then
+				self.tmp = true
+				sysprint("We're looking for a new end-game raider to join our developer team! See [goo.gl/aajTfo] for more info.")
+			end
 		end
 
 		-- Module loading
