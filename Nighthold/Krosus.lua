@@ -59,7 +59,7 @@ local beamCount = 1
 local orbCount = 1
 local burningPitchCount = 1
 local slamCount = 1
-local timers = self:Mythic() and mythicTimers or self:Heroic() and heroicTimers or normalTimers
+local timers = mod:Mythic() and mythicTimers or mod:Heroic() and heroicTimers or normalTimers
 
 --------------------------------------------------------------------------------
 -- Localization
