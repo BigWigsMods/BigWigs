@@ -1,7 +1,6 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - LFR (didn't check the logs yet)
 -- - Tuning sounds / message colors
 -- - Remove beta engaged message
 
@@ -40,12 +39,12 @@ end
 
 function mod:GetOptions()
 	return {
-		197969, -- Roaring Cacophony
 		{197943, "TANK"}, -- Overwhelm
 		204859, -- Rend Flesh
 		{198006, "ICON", "FLASH", "PULSE", "SAY"}, -- Focused Gaze
 		"custom_on_gaze_assist",
 		198108, -- Unbalanced
+		197969, -- Roaring Cacophony
 		205611, -- Miasma
 		198388, -- Blood Frenzy
 		"berserk",
@@ -70,7 +69,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Ursoc Engaged (Beta v4)", 98204) -- Amani Battle Bear icon
+	self:Message("berserk", "Neutral", nil, "Ursoc Engaged (Beta v5)", 98204) -- Amani Battle Bear icon
 	cacophonyCount = 1
 	rendFleshCount = 1
 	focusedGazeCount = 1
@@ -81,7 +80,7 @@ function mod:OnEngage()
 	else
 		self:Bar(198006, 19, CL.count:format(self:SpellName(198006), focusedGazeCount)) -- Focused Gaze
 	end
-	self:Bar(197969, 40, CL.count:format(self:SpellName(197969), cacophonyCount)) -- Roaring Cacophony
+	self:Bar(197969, self:LFR() and 45 or 40, CL.count:format(self:SpellName(197969), cacophonyCount)) -- Roaring Cacophony
 	self:Berserk(300)
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
@@ -101,13 +100,13 @@ function mod:RoaringCacophonySuccess(args)
 	end
 	self:Message(args.spellId, "Urgent", "Alarm", text)
 	cacophonyCount = cacophonyCount + 1
-	self:Bar(args.spellId, cacophonyCount % 2 == 0 and 10 or 30, CL.count:format(args.spellName, cacophonyCount))
+	self:Bar(args.spellId, self:LFR() and 40 or cacophonyCount % 2 == 0 and 10 or 30, CL.count:format(args.spellName, cacophonyCount))
 end
 
 function mod:Overwhelm(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 1 and "Warning")
-	self:Bar(args.spellId, 10)
+	self:Bar(args.spellId, self:LFR() and 20 or 10)
 end
 
 function mod:RendFleshCast(args)
@@ -130,13 +129,13 @@ function mod:FocusedGaze(args)
 	local countSay = CL.count:format(args.spellName, focusedGazeCount)
 	local countMessage = countSay
 
-	if self:GetOption("custom_on_gaze_assist") then
+	if not self:LFR() and self:GetOption("custom_on_gaze_assist") then
 		countSay = CL.count_rticon:format(args.spellName, focusedGazeCount, icon)
 		countMessage = CL.count_icon:format(args.spellName, focusedGazeCount, icon)
 	end
 
 	if self:Me(args.destGUID) then
-		self:Flash(args.spellId, self:GetOption("custom_on_gaze_assist") and icon)
+		self:Flash(args.spellId, not self:LFR() and self:GetOption("custom_on_gaze_assist") and icon)
 		self:Say(args.spellId, countSay)
 	end
 
@@ -154,10 +153,8 @@ end
 
 function mod:Unbalanced(args)
 	if self:Me(args.destGUID) then
-		-- This might be 50s for every difficulty, but we only know heroic and mythic alpha right now
-		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
-		local t = expires - GetTime()
-		self:TargetBar(args.spellId, t, args.destName)
+		-- 50s on mythic and heroic, 40s normal, doesn't exist in lfr
+		self:TargetBar(args.spellId, self:Normal() and 40 or 50, args.destName)
 	end
 end
 
