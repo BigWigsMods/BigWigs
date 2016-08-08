@@ -1,7 +1,6 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Respawn time
 -- - Tuning sounds / message colors
 -- - Remove beta engaged message
 -- - We could do some cool positioning stuff on this fight
@@ -17,7 +16,7 @@ local mod, CL = BigWigs:NewBoss("Krosus", 1088, 1713)
 if not mod then return end
 mod:RegisterEnableMob(101002)
 mod.engageId = 1842
---mod.respawnTime = 0
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
