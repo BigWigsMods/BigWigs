@@ -59,8 +59,7 @@ local beamCount = 1
 local orbCount = 1
 local burningPitchCount = 1
 local slamCount = 1
-local timers = nil -- gets set in OnEngage
-local nextBeam = nil -- for lfr & normal
+local timers = self:Mythic() and mythicTimers or self:Heroic() and heroicTimers or normalTimers
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -110,7 +109,6 @@ function mod:OnEngage()
 	burningPitchCount = 1
 	slamCount = 1
 	timers = self:Mythic() and mythicTimers or self:Heroic() and heroicTimers or normalTimers
-	nextBeam = nil
 
 	self:Bar(206677, 15)
 	self:Bar(205862, 33, CL.count:format(self:SpellName(205862), slamCount))
@@ -126,8 +124,7 @@ end
 
 do
 	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, spellGUID, _)
-		local spellId = tonumber(select(5, strsplit("-", spellGUID)), 10) -- new uscs format: 3-[server id]-[instance id]-[zone uid]-[spell id]-[spell uid]
+	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		if spellId == 208203 then -- Isolated Rage
 			local t = GetTime()
 			if t-prev > 2.5 then
@@ -157,8 +154,7 @@ do
 		local t = timers[205368][beamCount]
 		if t then
 			if self:LFR() or self:Normal() then
-				nextBeam = args.spellId == 205370 and L.rightBeam or L.leftBeam -- alternating beams, 205370 is the left beam
-				self:Bar(205368, t, CL.count:format(nextBeam, beamCount))
+				self:Bar(205368, t, CL.count:format(args.spellId == 205370 and L.rightBeam or L.leftBeam, beamCount)) -- alternating beams, 205370 is the left beam
 			else
 				self:Bar(205368, t, CL.count:format(args.spellName, beamCount))
 			end
