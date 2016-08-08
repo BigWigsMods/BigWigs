@@ -12,6 +12,7 @@ if not plugin then return end
 local media = LibStub("LibSharedMedia-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
 plugin.displayName = L.superEmphasize
+local PlaySoundFile = PlaySoundFile
 
 local temporaryEmphasizes = {}
 local voices = {
@@ -357,6 +358,7 @@ end
 
 do
 	local timers = {}
+	local wipe = wipe
 	local function printEmph(num, name, key, text)
 		local voice = plugin.db.profile.Countdown[name] and plugin.db.profile.Countdown[name][key] or plugin.db.profile.voice
 		local sound = voices[voice] and voices[voice][num]
