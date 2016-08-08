@@ -3,11 +3,11 @@
 -- TODO List:
 -- - Respawn time
 -- - Tuning sounds / message colors
--- - Remove alpha engaged message
+-- - Remove beta engaged message
 -- - We could do some cool positioning stuff on this fight
---   - warning when standing left / right side and beam is incomning there
+--   - warning when standing left / right side and beam is incoming there
 --   - warning when bridge is breaking and standing there
--- - isolated rage warning (no one in melee) 208203 UNIT_SPELLCAST_SUCCEEDED throttle!
+-- - Needs to be tested in all difficulties
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -23,17 +23,45 @@ mod.engageId = 1842
 -- Locals
 --
 
-local timers = {
-	--["Left Beam"] = {40.0, 75.0, 32.0, 30.0, 82.0, 31.0, 26.0, 24.0, 18.0},
-	--["Right Beam"] = {11.0, 59.0, 61.0, 30.0, 43.0, 81.0, 26.0, 17.0, 17.0},
-	[205344] = {22.0, 58.0, 23.0, 63.0, 26.0, 25.0, 15.0, 15.0, 15.0, 30.0, 55.0}, -- Orb of Destruction
-	[205420] = {52.0, 84.0, 90.0, 93.0}, -- Burning Pitch
+local normalTimers = { -- and LFR Timers
+	-- Fel Beam (spell id is the right one), _cast_success
+	[205368] = {9.5, 15, 30, 30, 23, 27, 30, 44, 14, 16, 14, 16, 22, 60},
+
+	-- Orb of Destruction, _aura_applied
+	[205344] = {70, 40, 60, 25, 60, 37, 15, 15, 30},
+
+	-- Burning Pitch, _cast_start
+	[205420] = {38, 102, 85, 90},
 }
-local leftBeamCount = 1
-local rightBeamCount = 1
+
+local heroicTimers = {
+	-- Fel Beam (spell id is the right one), _cast_success
+	[205368] = {11, 29, 30, 45, 16, 16, 14, 16, 27, 55, 26, 5, 21, 5, 12, 12, 5, 13},
+
+	-- Orb of Destruction, _aura_applied
+	[205344] = {20, 60, 23, 62, 27, 25, 15, 15, 15, 30, 55},
+
+	-- Burning Pitch, _cast_start
+	[205420] = {50, 85, 90, 94},
+}
+
+local mythicTimers = {
+	-- Fel Beam (spell id is the right one), _cast_success, didnt have enough logs to make sure they are all .0
+	[205368] = {9.0, 16.0, 16.0, 16.0, 14.0, 16.0, 27.0, 54.9, 26.0, 4.8, 21.2, 4.7, 12.3, 12.0, 4.8, 13.3, 18.9, 4.8, 25.3, 4.8, 25.2, 4.9},
+
+	-- Orb of Destruction, _aura_applied
+	[205344] = {13, 62, 27, 25, 15, 15, 15, 30, 55, 38, 30, 12, 18},
+
+	-- Burning Pitch, _cast_start
+	[205420] = {45, 90, 94, 78},
+}
+
+local beamCount = 1
 local orbCount = 1
 local burningPitchCount = 1
 local slamCount = 1
+local timers = nil -- gets set in OnEngage
+local nextBeam = nil -- for lfr & normal
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -41,9 +69,8 @@ local slamCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.left = "Left"
-	L.right = "Right"
-	L.sidebeam = "%s " .. mod:SpellName(205368)
+	L.leftBeam = "Left Beam"
+	L.rightBeam = "Right Beam"
 
 	L.smashingBridge = "Smashing Bridge"
 end
@@ -59,16 +86,17 @@ function mod:GetOptions()
 		{205344, "SAY", "FLASH"}, -- Orb of Destruction
 		205862, -- Slam
 		205420, -- Burning Pitch
+		208203, -- Isolated Rage
 		"berserk",
 	}
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "FelBrand", 206677)
-	self:Log("SPELL_CAST_START", "FelBeamLeftCast", 205370)
-	self:Log("SPELL_CAST_START", "FelBeamRightCast", 205368)
-	self:Log("SPELL_CAST_SUCCESS", "FelBeamLeftSuccess", 205370)
-	self:Log("SPELL_CAST_SUCCESS", "FelBeamRightSuccess", 205368)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "FelBrand", 206677)
+	self:Log("SPELL_CAST_START", "FelBeamCast", 205370, 205368) -- left, right
+	self:Log("SPELL_CAST_SUCCESS", "FelBeamSuccess", 205370, 205368) -- left, right
 	self:Log("SPELL_AURA_APPLIED", "OrbOfDescructionApplied", 205344)
 	self:Log("SPELL_CAST_START", "SlamCast", 205862)
 	self:Log("SPELL_CAST_SUCCESS", "SlamSuccess", 205862)
@@ -76,50 +104,72 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Krosus (Alpha) Engaged (Post Heroic Testing Mod)", 205862)
+	self:Message("berserk", "Neutral", nil, "Krosus Engaged (Beta v2)", 205862)
 
-	leftBeamCount = 1
-	rightBeamCount = 1
+	beamCount = 1
 	orbCount = 1
 	burningPitchCount = 1
 	slamCount = 1
+	timers = self:Mythic() and mythicTimers or self:Heroic() and heroicTimers or normalTimers
+	nextBeam = nil
 
 	self:Bar(206677, 15)
 	self:Bar(205862, 33, CL.count:format(self:SpellName(205862), slamCount))
 	self:Bar(205862, 93, CL.count:format(L.smashingBridge, 1))
-	--self:Bar(205368, timers["Left Beam"][leftBeamCount], L.sidebeam:format(L.left))
-	--self:Bar(205368, timers["Right Beam"][rightBeamCount], L.sidebeam:format(L.right))
-	self:Bar(205344, timers[205344][orbCount])
-	self:Bar(205420, timers[205420][burningPitchCount])
+	self:Bar(205368, timers[205368][beamCount], CL.count:format(self:SpellName(205368), beamCount))
+	self:Bar(205344, timers[205344][orbCount], CL.count:format(self:SpellName(205344), orbCount))
+	self:Bar(205420, timers[205420][burningPitchCount], CL.count:format(self:SpellName(205420), burningPitchCount))
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+do
+	local prev = 0
+	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, spellGUID, _)
+		local spellId = tonumber(select(5, strsplit("-", spellGUID)), 10) -- new uscs format: 3-[server id]-[instance id]-[zone uid]-[spell id]-[spell uid]
+		if spellId == 208203 then -- Isolated Rage
+			local t = GetTime()
+			if t-prev > 2.5 then
+				prev = t
+				self:Message(spellId, "Important", "Alert")
+			end
+		end
+	end
+end
+
 function mod:FelBrand(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
-	self:Bar(args.spellId, 30)
+	local amount = args.amount or 1
+	if amount % 2 == 1 or amount > 4 then -- 1, 3, 5, 6, 7, 8, ...
+		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 4 and "Alarm") -- check taunt amount
+	end
 end
 
-function mod:FelBeamLeftCast(args)
-	self:Message(205368, "Attention", "Info", CL.casting:format(L.sidebeam:format(L.left)))
+function mod:FelBeamCast(args)
+	self:Message(205368, "Attention", "Info", CL.casting:format(args.spellId == 205370 and L.leftBeam or L.rightBeam))
 end
 
-function mod:FelBeamRightCast(args)
-	self:Message(args.spellId, "Attention", "Info", CL.casting:format(L.sidebeam:format(L.right)))
-end
-
-function mod:FelBeamLeftSuccess(args)
-	self:Message(205368, "Attention", nil, L.sidebeam:format(L.left))
-	leftBeamCount = leftBeamCount + 1
-	--self:Bar(205368, timers["Left Beam"][leftBeamCount], L.sidebeam:format(L.left))
-end
-
-function mod:FelBeamRightSuccess(args)
-	self:Message(args.spellId, "Attention", nil, L.sidebeam:format(L.right))
-	rightBeamCount = rightBeamCount + 1
-	--self:Bar(args.spellId, timers["Right Beam"][rightBeamCount], L.sidebeam:format(L.right))
+do
+	local prev = 0
+	function mod:FelBeamSuccess(args)
+		self:Message(205368, "Attention", nil, args.spellId == 205370 and L.leftBeam or L.rightBeam)
+		beamCount = beamCount + 1
+		local t = timers[205368][beamCount]
+		if t then
+			if self:LFR() or self:Normal() then
+				nextBeam = args.spellId == 205370 and L.rightBeam or L.leftBeam -- alternating beams, 205370 is the left beam
+				self:Bar(205368, t, CL.count:format(nextBeam, beamCount))
+			else
+				self:Bar(205368, t, CL.count:format(args.spellName, beamCount))
+			end
+			prev = GetTime()
+		else
+			t = GetTime() - prev
+			print("Unknown BigWigs timer:", self:Difficulty(), args.spellId, args.spellName, beamCount, t)
+			prev = GetTime()
+		end
+	end
 end
 
 do
@@ -135,11 +185,11 @@ do
 
 		local t = timers[args.spellId][orbCount]
 		if t then
-			self:Bar(args.spellId, t)
+			self:Bar(args.spellId, t, CL.count:format(args.spellName, orbCount))
 			prev = GetTime()
 		else
 			t = GetTime() - prev
-			print("Unknown bigwigs timer:", args.spellId, args.spellName, orbCount, t)
+			print("Unknown BigWigs timer:", self:Difficulty(), args.spellId, args.spellName, orbCount, t)
 			prev = GetTime()
 		end
 	end
@@ -168,13 +218,12 @@ do
 
 		local t = timers[args.spellId][burningPitchCount]
 		if t then
-			self:Bar(args.spellId, t)
+			self:Bar(args.spellId, t, CL.count:format(args.spellName, burningPitchCount))
 			prev = GetTime()
 		else
 			t = GetTime() - prev
-			print("Unknown bigwigs timer:", args.spellId, args.spellName, burningPitchCount, t)
+			print("Unknown BigWigs timer:", self:Difficulty(), args.spellId, args.spellName, burningPitchCount, t)
 			prev = GetTime()
 		end
 	end
 end
-
