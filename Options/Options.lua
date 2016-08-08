@@ -1226,7 +1226,7 @@ do
 		BigWigs_MistsOfPandaria = "BigWigs ".. EJ_GetTierInfo(5),
 		BigWigs_WarlordsOfDraenor = loader.isLegion and ("BigWigs ".. EJ_GetTierInfo(6)) or ("BigWigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r"),
 		BigWigs_Legion = loader.isLegion and ("BigWigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r") or ("BigWigs ".. EJ_GetTierInfo(7)),
-		LittleWigs = "Little Wigs",
+		LittleWigs = "LittleWigs",
 	}
 
 	local panels = {}
