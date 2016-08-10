@@ -5,7 +5,7 @@
 ## Title-esES: BigWigs [|cffeda55fEmerald Nightmare|r]
 ## Title-esMX: BigWigs [|cffeda55fEmerald Nightmare|r]
 ## Title-frFR: BigWigs [|cffeda55fLe Cauchemar d'émeraude|r]
-## Title-ruRU: BigWigs [|cffeda55fEmerald Nightmare|r]
+## Title-ruRU: BigWigs [|cffeda55fИзумрудный Кошмар|r]
 ## Title-zhCN: BigWigs [|cffeda55f翡翠梦魇|r]
 ## Title-zhTW: BigWigs [|cffeda55f翡翠夢魘|r]
 ## Title-itIT: BigWigs [|cffeda55fEmerald Nightmare|r]
@@ -16,7 +16,7 @@
 ## Notes-esES: BigWigs Emerald Nightmare Modules
 ## Notes-esMX: BigWigs Emerald Nightmare Modules
 ## Notes-frFR: Modules BigWigs concernant le Cauchemar d'émeraude.
-## Notes-ruRU: BigWigs Emerald Nightmare Modules
+## Notes-ruRU: Модуль BigWigs для Изумрудного Кошмара
 ## Notes-zhCN: BigWigs 翡翠梦魇模块。
 ## Notes-zhTW: BigWigs 翡翠夢魘模組。
 ## Notes-itIT: BigWigs Emerald Nightmare Modules
