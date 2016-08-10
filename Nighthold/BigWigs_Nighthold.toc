@@ -5,7 +5,7 @@
 ## Title-esES: BigWigs [|cffeda55fThe Nighthold|r]
 ## Title-esMX: BigWigs [|cffeda55fThe Nighthold|r]
 ## Title-frFR: BigWigs [|cffeda55fPalais Sacrenuit|r]
-## Title-ruRU: BigWigs [|cffeda55fThe Nighthold|r]
+## Title-ruRU: BigWigs [|cffeda55fЦитадель Ночи|r]
 ## Title-zhCN: BigWigs [|cffeda55f暗夜要塞|r]
 ## Title-zhTW: BigWigs [|cffeda55f暗夜堡|r]
 ## Title-itIT: BigWigs [|cffeda55fThe Nighthold|r]
@@ -16,7 +16,7 @@
 ## Notes-esES: BigWigs The Nighthold Modules
 ## Notes-esMX: BigWigs The Nighthold Modules
 ## Notes-frFR: Modules BigWigs concernant le Palais Sacrenuit.
-## Notes-ruRU: BigWigs The Nighthold Modules
+## Notes-ruRU: Модуль BigWigs для Цитадели Ночи
 ## Notes-zhCN: BigWigs 暗夜要塞模块。
 ## Notes-zhTW: BigWigs 暗夜堡模組。
 ## Notes-itIT: BigWigs The Nighthold Modules

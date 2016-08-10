@@ -5,8 +5,8 @@ L.getNewRelease = "Ваш BigWigs устарел(/bwv), но вы можете �
 L.warnTwoReleases = "Ваш BigWigs устарел на две версии! Ваша версию может содержать ошибки, меньше возможностей, а может быть и неправильные таймеры. Крайне рекомендуется обновиться."
 L.warnSeveralReleases = "|cffff0000Ваш BigWigs устарел на несколько версий!! ОЧЕНЬ рекомендуется обновиться, чтобы предотвратить ошибки синхронизации с другими игроками!|r"
 
---L.gitHubTitle = "BigWigs is on GitHub"
---L.gitHubDesc = "BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out.\n\nIf you've committed changes to BigWigs whilst it was on SVN and would like your GitHub account linked on the Git commit log, contact us."
+L.gitHubTitle = "BigWigs на GitHub"
+L.gitHubDesc = "BigWigs это программное обеспечение с открытым исходным кодом, который размещен на GitHub. Мы всегда ищем новых людей, чтобы помочь нам, и каждый желающий может осмотреть наш код, внести свой вклад и отправить отчеты об ошибках. BigWigs хорош, только благодаря помощи большей части сообщества WoW.\n\nЕсли вы делали изменения для BigWigs пока он был на SVN и хотите делать тоже самое на GitHub, свяжитесь с нами."
 
 L.about = "О BigWigs"
 L.activeBossModules = "Активные модули боссов:"
