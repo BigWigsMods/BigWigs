@@ -92,7 +92,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Elerethe Renferal Engaged (Beta v1)", "inv_spidermount")
+	self:Message("berserk", "Neutral", nil, "Elerethe Renferal Engaged (Beta v2)", "inv_spidermount")
 
 	twistingShadowsCount = 1
 
@@ -211,14 +211,14 @@ end
 
 function mod:TwistingShadowsApplied(args)
 	if self:Me(args.destGUID) then
-		self:Flash(args.spellId)
-		self:Say(args.spellId)
+		self:Flash(210864)
+		self:Say(210864)
 
 		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
 		local remaining = expires-GetTime()
-		--self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)  -- counting from 3 is too much with 4s duration
-		self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
-		self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
+		--self:ScheduleTimer("Say", remaining-3, 210864, 3, true)  -- counting from 3 is too much with 4s duration
+		self:ScheduleTimer("Say", remaining-2, 210864, 2, true)
+		self:ScheduleTimer("Say", remaining-1, 210864, 1, true)
 	end
 end
 
