@@ -4,6 +4,8 @@
 -- - Tuning sounds / message colors
 -- - Remove alpha engaged message
 -- - p1 proximity range: 5
+-- - TouchOfCorruption doesnt stack on normal. Do we need warnings for that?
+-- - Add mouseover / nameplate marking for Deathglare Tentacle
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -26,6 +28,10 @@ local fixateOnMe = nil
 --
 
 local L = mod:GetLocale()
+if L then
+	L.nightmare_horror = -13188 -- Nightmare Horror
+	L.nightmare_horror_icon = 209387 -- Seeping Corruption icon
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -44,9 +50,14 @@ function mod:GetOptions()
 		209471, -- Nightmare Explosion
 
 		-- Nightmare Horror
-		210289, -- Summon Nightmare Horror
-		210984, -- Deathglare
+		"nightmare_horror", -- Nightmare Horror
+		210984, -- Eye of Fate
 
+		-- Corruptor Tentacle
+		208929, -- Spew Corruption
+
+		-- Deathglare Tentacle
+		208697, -- Mind Flay
 
 		--[[ Stage Two ]]--
 		{209915, "COUNTDOWN"}, -- Stuff of Nightmares
@@ -54,6 +65,13 @@ function mod:GetOptions()
 		{215128, "SAY", "FLASH", "PROXIMITY"}, -- Cursed Blood
 
 		"berserk",
+	},{
+		[208689] = -13189, -- Dominator Tentacle
+		[210099] = -13186, -- Nightmare Ichor
+		["nightmare_horror"] = -13188, -- Nightmare Horror (this looks like shit)
+		[208929] = -13191, -- Corruptor Tentacle
+		[209915] = -13192, -- Stage Two
+		["berserk"] = "general",
 	}
 end
 
@@ -72,29 +90,36 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "NightmareExplosion", 209471)
 
 	-- Nightmare Horror
-	self:Log("SPELL_AURA_APPLIED", "IncomingNightmareHorror", 210289) -- applied = summoning
-	self:Log("SPELL_AURA_REMOVED", "SummonNightmareHorror", 210289) -- removed = attackable
-	self:Log("SPELL_AURA_APPLIED", "Deathglare", 210984)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Deathglare", 210984)
+	self:Log("SPELL_AURA_APPLIED", "SummonNightmareHorror", 209387) -- Seeping Corruption, buffed on spawn
+	self:Log("SPELL_AURA_APPLIED", "EyeOfFate", 210984)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "EyeOfFate", 210984)
+
+	-- Corruptor Tentacle
+	self:Log("SPELL_AURA_APPLIED", "SpewCorruption", 208929)
+
+	-- Deathglare Tentacle
+	self:Log("SPELL_CAST_START", "MindFlay", 208697)
 
 	--[[ Stage Two ]]--
 	self:Log("SPELL_AURA_APPLIED", "StuffOfNightmares", 209915)
 	self:Log("SPELL_AURA_REMOVED", "StuffOfNightmaresRemoved", 209915)
 	self:Log("SPELL_CAST_START", "DarkReconstitution", 210781)
-	self:Log("SPELL_AURA_APPLIED", "CursedBlood", 215128)  -- Pre alpha test spellId
-	self:Log("SPELL_AURA_REMOVED", "CursedBloodRemoved", 215128)  -- Pre alpha test spellId
+	self:Log("SPELL_AURA_APPLIED", "CursedBlood", 215128)
+	self:Log("SPELL_AURA_REMOVED", "CursedBloodRemoved", 215128)
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Ilgynoth (Alpha) Engaged (Post Alpha Test Mod)")
+	self:Message("berserk", "Neutral", nil, "Ilgynoth Engaged (Beta v2)", "ability_malkorok_blightofyshaarj_red")
 	fixateOnMe = nil
 	self:CDBar(208689, 11.5) -- Ground Slam
-	self:Bar(210289, 69) -- Summon Nightmare Horror
+	self:Bar("nightmare_horror", 69, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+-- Dominator Tentacle
 function mod:RAID_BOSS_WHISPER(_, msg, sender)
 	if msg:find("208689", nil, true) then -- Ground Slam
 		self:Message(208689, "Personal", "Alarm", CL.you:format(self:SpellName(208689)))
@@ -110,9 +135,10 @@ end
 
 function mod:NightmarishFury(args)
 	self:Message(args.spellId, "Urgent")
-	self:Bar(args.spellId, 11)
+	self:Bar(args.spellId, 10)
 end
 
+-- Nightmare Ichor
 function mod:Fixate(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
@@ -139,21 +165,16 @@ function mod:NightmareExplosion(args)
 	end
 end
 
-function mod:IncomingNightmareHorror(args)
-	if self:Tank() then
-		self:Message(args.spellId, "Important", nil, CL.spawning:format(L.nightmareHorror))
-	end
-end
-
+-- Nightmare Horror
 function mod:SummonNightmareHorror(args)
-	self:Message(args.spellId, "Important", "Info", CL.spawned:format(L.nightmareHorror))
-	self:Bar(args.spellId, 220)
+	self:Message("nightmare_horror", "Important", "Info", CL.spawned:format(self:SpellName(L.nightmare_horror)), L.nightmare_horror_icon)
+	self:Bar("nightmare_horror", 220, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 	if self:Tank() or self:Healer() then
 		self:CDBar(210984, 10) -- Deathglare
 	end
 end
 
-function mod:Deathglare(args)
+function mod:EyeOfFate(args)
 	if self:Tank() or self:Healer() then
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, args.destName, amount, "Important", self:Tank() and amount > 1 and "Warning")
@@ -161,10 +182,33 @@ function mod:Deathglare(args)
 	end
 end
 
+-- Corruptor Tentacle
+do
+	local list = mod:NewTargetList()
+	function mod:SpewCorruption(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Urgent", "Alert")
+		end
+
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+			self:TargetBar(args.spellId, args.destName, 10)
+		end
+	end
+end
+
+-- Deathglare Tentacle
+function mod:MindFlay(args)
+	self:Message(args.spellId, "Attention", self:Interrupter(args.sourceGUID) and "Info")
+end
+
+--[[ Stage Two ]]--
 function mod:StuffOfNightmares(args)
 	self:Message(args.spellId, "Neutral", "Info")
 	self:CDBar(208689, 11.5) -- Ground Slam
-	self:Bar(210289, 99) -- Summon Nightmare Horror
+	self:Bar("nightmare_horror", 99, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 end
 
 function mod:StuffOfNightmaresRemoved(args)
@@ -176,7 +220,6 @@ function mod:DarkReconstitution(args)
 	self:Bar(209915, 50) -- cast after 10s in phase, so only fine tuning StuffOfNightmares bar
 end
 
--- These functions are from pre alpha testing. Please fix them or remove this comment if they are working
 do
 	local playerList, proxList, isOnMe = mod:NewTargetList(), {}, nil
 	function mod:CursedBlood(args)
