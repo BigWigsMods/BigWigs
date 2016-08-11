@@ -7,6 +7,7 @@
 -- - Mythic abilitys
 -- - 212993 Shimmering Feather is not in the combat log (yet)?
 -- - Necrotic Venom is missing stuff from combat log. 1. debuff = run out, 2. debuff = you spawn puddles
+--   we currently only warn on 2. debuff
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -148,12 +149,12 @@ function mod:WebOfPainApplied(args)
 		self:Message(args.spellId, "Personal", "Warning", L.yourLink:format(self:ColorName(args.sourceName)))
 		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
 		local remaining = expires-GetTime()
-		self:Bar(args.spellId, remaining, L.yourLink:format(self:ColorName(args.sourceName)))
+		self:Bar(args.spellId, remaining, L.yourLinkShort:format(self:ColorName(args.sourceName)))
 	elseif self:Me(args.sourceGUID) then
 		self:Message(args.spellId, "Personal", "Warning", L.yourLink:format(self:ColorName(args.destName)))
 		local _, _, _, _, _, _, expires = UnitDebuff(args.sourceName, args.spellName)
 		local remaining = expires-GetTime()
-		self:Bar(args.spellId, remaining, L.yourLink:format(self:ColorName(args.sourceName)))
+		self:Bar(args.spellId, remaining, L.yourLinkShort:format(self:ColorName(args.sourceName)))
 	else
 		self:Message(args.spellId, "Attention", nil, L.isLinkedWith:format(self:ColorName(args.sourceName), self:ColorName(args.destName)))
 	end
