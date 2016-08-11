@@ -43,7 +43,7 @@ function mod:GetOptions()
 		204859, -- Rend Flesh
 		{198006, "ICON", "FLASH", "PULSE", "SAY"}, -- Focused Gaze
 		"custom_on_gaze_assist",
-		198108, -- Unbalanced
+		198108, -- Momentum
 		197969, -- Roaring Cacophony
 		205611, -- Miasma
 		198388, -- Blood Frenzy
@@ -60,7 +60,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "RendFlesh", 204859)
 	self:Log("SPELL_AURA_APPLIED", "FocusedGaze", 198006)
 	self:Log("SPELL_AURA_REMOVED", "FocusedGazeRemoved", 198006)
-	self:Log("SPELL_AURA_APPLIED", "Unbalanced", 198108)
+	self:Log("SPELL_AURA_APPLIED", "Momentum", 198108)
 	self:Log("SPELL_AURA_APPLIED", "MiasmaDamage", 205611)
 	self:Log("SPELL_DAMAGE", "MiasmaDamage", 212238)
 	self:Log("SPELL_MISSED", "MiasmaDamage", 212238)
@@ -151,10 +151,9 @@ function mod:FocusedGazeRemoved(args)
 	self:PrimaryIcon(args.spellId, nil)
 end
 
-function mod:Unbalanced(args)
+function mod:Momentum(args)
 	if self:Me(args.destGUID) then
-		-- 50s on mythic and heroic, 40s normal, doesn't exist in lfr
-		self:TargetBar(args.spellId, self:Normal() and 40 or 50, args.destName)
+		self:TargetBar(args.spellId, 50, args.destName)
 	end
 end
 
