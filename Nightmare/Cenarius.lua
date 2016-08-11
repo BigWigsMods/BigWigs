@@ -4,6 +4,7 @@
 -- - Tuning sounds / message colors
 -- - Remove alpha engaged message
 -- - Fix WaveSpawn and untested funcs if needed
+--   WaveSpawn got broken, figure out a new way to do this
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -306,7 +307,9 @@ do
 	end
 
 	function mod:CleansedGround(args)
-		cleansedGroundCheck = mod:ScheduleTimer(checkForCleansedGround, 1) -- you shouldn't stand in there for too long
+		if self:Me(args.destGUID) then
+			cleansedGroundCheck = mod:ScheduleTimer(checkForCleansedGround, 1) -- you shouldn't stand in there for too long
+		end
 	end
 
 	function mod:CleansedGroundRemoved(args)
