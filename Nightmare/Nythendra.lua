@@ -1,11 +1,9 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - the cd timers really suck on this fight
--- - on mythic testing she started with p2 sometimes. i guess thats a bug, change timers if its intended
--- - i assume that they changed a lot of timers after heroic testing.
---   need some heroic data to verify that they've beed changed there also.
--- - dont show bars for stuff that would happen during HeartOfTheSwarm
+-- - Tuning sounds / message colors
+-- - Remove beta engaged message
+-- - The timers really suck on this fight > only normal testing data (2016-08-11)
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -56,7 +54,8 @@ end
 
 function mod:OnBossEnable()
 	--[[ General ]]--
-	self:Log("SPELL_CAST_START", "InfestedBreath", 202977)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1")
+	--self:Log("SPELL_CAST_START", "InfestedBreath", 202977) -- they removed it from combatlog, delete this if it's not on live
 	self:Log("SPELL_AURA_APPLIED", "Rot", 203096)
 	self:Log("SPELL_AURA_REMOVED", "RotRemoved", 203096)
 	self:Log("SPELL_AURA_APPLIED", "VolatileRot", 204463)
@@ -73,24 +72,32 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Nythendra (Alpha) Engaged (Post Mythic Test Mod v2)", 23074) -- some red dragon icon
+	self:Message("berserk", "Neutral", nil, "Nythendra Engaged (Beta v3)", 23074) -- some red dragon icon
 	rotCount = 1
 	mindControlledPlayers = 0
 	self:Berserk(720) -- 12 minutes on heroic, not kidding
-	self:CDBar(203096, 10.5) -- Rot
-	self:CDBar(204463, 22) -- Volatile Rot
+	self:CDBar(203096, 5.8) -- Rot
+	self:CDBar(204463, 22.8) -- Volatile Rot
 	self:CDBar(202977, 38) -- Infested Breath
-	self:CDBar(203552, 90) -- Heart of the Swarm
+	self:CDBar(203552, 92) -- Heart of the Swarm
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:InfestedBreath(args)
-	self:Message(args.spellId, "Urgent", "Alarm", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 7, CL.cast:format(args.spellName)) -- 2s cast time + 5s channel
-	self:CDBar(args.spellId, 45)  -- alpha mythic timing
+do
+	local prev = 0
+	function mod:UNIT_SPELLCAST_START(unit, spellName, _, _, spellId)
+		if spellId == 202977 then -- Infested Breath
+			self:Message(spellId, "Urgent", "Alarm", CL.casting:format(spellName))
+			self:Bar(spellId, 8, CL.cast:format(spellName)) -- 3s cast time + 5s channel
+
+			if mod:BarTimeLeft(mod:SpellName(203552)) > 37 then -- Heart of the Swarm
+				self:CDBar(spellId, 37)
+			end
+		end
+	end
 end
 
 do
@@ -116,8 +123,10 @@ do
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Alert")
 			rotCount = rotCount + 1
-			--self:CDBar(args.spellId, rotCount == 2 and 34 or 21)  -- alpha heroic timing
-			self:CDBar(args.spellId, 44)  -- mythic testing only had 2 rots per phase
+
+			if mod:BarTimeLeft(mod:SpellName(203552)) > 15.9 then -- Heart of the Swarm
+				self:Bar(args.spellId, 15.9)
+			end
 		end
 	end
 
@@ -129,6 +138,7 @@ do
 		end
 
 		tDeleteItem(proxList, args.destName)
+
 		if not isOnMe then -- Don't change proximity if it's on you and expired on someone else
 			if #proxList == 0 then
 				self:CloseProximity(args.spellId)
@@ -142,7 +152,9 @@ end
 function mod:VolatileRot(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, self:Tank())
 	self:TargetBar(args.spellId, 8, args.destName)
-	self:CDBar(args.spellId, 43) -- alpha mythic timing, cd was a lot less on heroic
+	if mod:BarTimeLeft(mod:SpellName(203552)) > 23 then -- Heart of the Swarm
+		self:CDBar(args.spellId, 23)
+	end
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:Flash(args.spellId)
@@ -153,10 +165,10 @@ function mod:HeartOfTheSwarm(args)
 	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 23.7, CL.cast:format(args.spellName)) -- 3.7s cast time + 20s channel
 	-- This is basically a phase, so start timers for next "normal" phase here
-	self:CDBar(args.spellId, 122) -- alpha mythic timing
-	self:CDBar(203096, 41.2) -- Rot, 23.7 + 17.5, alpha mythic timing
-	self:CDBar(204463, 52.7) -- Volatile Rot, 23.7 + 29, alpha mythic timing
-	self:CDBar(202977, 66.7) -- Infested Breath, 23.7 + 43, alpha mythic timing
+	self:CDBar(args.spellId, 120)
+	self:CDBar(203096, 36.5) -- Rot, 23.7 + 12.8
+	self:CDBar(204463, 56.5) -- Volatile Rot, 23.7 + 32.8
+	self:CDBar(202977, 68) -- Infested Breath, 23.7 + 44.3
 	rotCount = 1
 end
 
