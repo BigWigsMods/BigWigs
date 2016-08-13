@@ -551,7 +551,7 @@ do
 	CTimerAfter(11, function()
 		local _, _, _, _, month, _, year = GetAchievementInfo(10043) -- Mythic Archimonde
 		if year == 15 and month < 10 then
-			sysprint("We're looking for a new end-game raider to join our developer team! See [goo.gl/aajTfo] for more info.")
+			sysprint("We're looking for a new end-game raider to join our developer team! See [goo.gl/aajTfo] for more info: We now have API documented on the GitHub wiki!")
 		end
 		for _, msg in next, delayedMessages do
 			sysprint(msg)
@@ -566,8 +566,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "15086" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "7.0.1" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
+	local DBMdotRevision = "15117" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "7.0.2" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
