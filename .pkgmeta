@@ -31,8 +31,8 @@ move-folders:
 
 ignore:
   - .travis.yml
+  - ldoc.ltp
   - README.md
-  - Docs/ldoc.ltp
   - Sounds/Long.wav
   - Sounds/Alarm.wav
   - Sounds/Alert.wav
