@@ -256,7 +256,7 @@ do
 			end
 		end
 	end
-	--- Register a callback for CHAT_MSG_RAID_BOSS_EMOTE that matches text.
+	--- [DEPRECATED] Register a callback for CHAT_MSG_RAID_BOSS_EMOTE that matches text.
 	-- @param func callback function, passed (module, message, sender, language, channel, target, [standard CHAT_MSG args]...)
 	-- @param ... any number of strings to match
 	function boss:Emote(func, ...)
@@ -280,7 +280,7 @@ do
 			end
 		end
 	end
-	--- Register a callback for CHAT_MSG_MONSTER_YELL that matches text.
+	--- [DEPRECATED] Register a callback for CHAT_MSG_MONSTER_YELL that matches text.
 	-- @param func callback function, passed (module, message, sender, language, channel, target, [standard CHAT_MSG args]...)
 	-- @param ... any number of strings to match
 	function boss:Yell(func, ...)
@@ -335,7 +335,7 @@ do
 			end
 		end
 	end)
-	--- Register a callback for a COMBAT_LOG_EVENT.
+	--- Register a callback for COMBAT_LOG_EVENT.
 	-- @param event COMBAT_LOG_EVENT to fire for
 	-- @param func callback function, passed a keyed table (sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, extraSpellId, extraSpellName, amount)
 	-- @param ... any number of spell ids
@@ -355,7 +355,7 @@ do
 		bossUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		self:SendMessage("BigWigs_OnBossLog", self, event, ...)
 	end
-	--- Remove a callback for a COMBAT_LOG_EVENT.
+	--- Remove a callback for COMBAT_LOG_EVENT.
 	-- @param event COMBAT_LOG_EVENT to register for
 	-- @param ... any number of spell ids
 	function boss:RemoveLog(event, ...)
@@ -365,7 +365,7 @@ do
 			eventMap[self][event][id] = nil
 		end
 	end
-	--- Register a callback for the UNIT_DIED event.
+	--- Register a callback for UNIT_DIED.
 	-- @param func callback function, passed a keyed table (mobId, destGUID, destName, destFlags, destRaidFlags)
 	-- @param ... any number of mob ids
 	function boss:Death(func, ...)
