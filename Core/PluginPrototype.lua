@@ -1,3 +1,7 @@
+-------------------------------------------------------------------------------
+-- Plugin Prototype
+-- @module PluginPrototype
+-- @alias plugin
 
 local core = BigWigs
 
@@ -22,10 +26,17 @@ function plugin:OnDisable()
 	self:SendMessage("BigWigs_OnPluginDisable", self)
 end
 
+--- Module type check.
+-- A module is either from BossPrototype or PluginPrototype.
+-- @return nil
 function plugin:IsBossModule() return end
 
 do
 	local UnitName = UnitName
+	--- Get the full name of a unit.
+	-- @string unit unit token or name
+	-- @bool[opt] trimServer append * instead of the server name
+	-- @return unit name with the server appended if appropriate
 	function plugin:UnitName(unit, trimServer)
 		local name, server = UnitName(unit)
 		if not name then
@@ -44,6 +55,8 @@ do
 		"raid21", "raid22", "raid23", "raid24", "raid25", "raid26", "raid27", "raid28", "raid29", "raid30",
 		"raid31", "raid32", "raid33", "raid34", "raid35", "raid36", "raid37", "raid38", "raid39", "raid40"
 	}
+	--- Get raid group unit tokens.
+	-- @return indexed table of raid unit tokens
 	function plugin:GetRaidList()
 		return raidList
 	end
@@ -51,11 +64,14 @@ end
 
 do
 	local partyList = {"player", "party1", "party2", "party3", "party4"}
+	--- Get party unit tokens.
+	-- @return indexed table of party unit tokens
 	function plugin:GetPartyList()
 		return partyList
 	end
 end
 
+--- Force the options panel to update.
 function plugin:UpdateGUI()
 	local acr = LibStub("AceConfigRegistry-3.0", true)
 	if acr then

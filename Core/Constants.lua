@@ -85,7 +85,7 @@ function BigWigs:GetRoleOptions()
 	return roleToggles
 end
 
---display role icon/message in the option, texture 337497 = Interface\\EncounterJournal\\UI-EJ-Icons
+-- Display role icon/message in the option, texture 337497 = Interface\\EncounterJournal\\UI-EJ-Icons
 local function getRoleStrings(module, key)
 	local option = module.toggleDefaults[key]
 	if band(option, C.TANK_HEALER) == C.TANK_HEALER then

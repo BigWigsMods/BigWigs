@@ -1,0 +1,138 @@
+> local function format_anchor_link(name)
+>   -- make an educated guess at what the id of the function header will be
+>   return name:lower():gsub("%p", ""):gsub("%s", "-")
+> end
+> local function format_see_link(see)
+>   if see.href then return see.href end
+>   return format_anchor_link(see.name)
+> end
+> local escape = ldoc.escape
+> local show_return_and_params = not ldoc.no_return_or_parms
+> local num_kinds = 0 for _ in module.kinds() do num_kinds = num_kinds + 1 end
+> --# $(module.name)
+# $(escape(module.summary))
+
+$(escape(module.description))
+
+>
+> if module.usage then
+
+### Usage:
+>   for usage in ldoc.modules.iter(module.usage) do
+```lua
+$(ldoc.escape(usage))
+```
+
+>   end -- for
+> end -- if usage
+> if module.info then
+
+### Info:
+>   for tag, value in module.info:iter() do
+ - **$(tag)**: $(escape(value)
+>   end
+> end -- if module.info
+
+> -- for simple show a list of kinds, otherwise show tables of items for a kind
+> -- we use html tables for colspan on the header (width is overrided by display:block on github :\)
+> -- and a headerless table for the "simple" list
+> if not ldoc.no_summary then
+>   for kind, items in module.kinds() do
+<table width="100%">
+<tr>
+	<th colspan="2" align="left">$(kind)</th>
+</tr>
+>     for item in items() do
+>       local name = ldoc.display_name(item)
+>       local summary = ldoc.markup(item.summary, item, 'discount') -- inline html and md don't mix, so render out the html (to get stripped away later, probably)
+<tr>
+	<td><a href="#$(format_anchor_link(name))">$(name)</a></td>
+	<td>$(summary)</td>
+</tr>
+>     end -- for items
+</table>
+
+>   end -- for kinds
+> elseif num_kinds > 0 then
+<table>
+>   for kind in module.kinds() do
+<tr>
+	<td><a href="#$(format_anchor_link(kind))">$(kind)</a></td>
+</tr>
+>   end
+</table>
+> end -- if show_summary
+
+> for kind, items in module.kinds() do
+# $(kind)
+
+>   for item in items() do
+### $(ldoc.display_name(item))
+
+$(escape(ldoc.descript(item)))
+
+>     if show_return_and_params and item.params and #item.params > 0 then
+>       local subnames = module.kinds:type_of(item).subnames
+>       if subnames then
+**$(subnames):**
+
+>       end
+>       for parm in ldoc.modules.iter(item.params) do
+>         local param, sublist = item:subparam(parm)
+>         for p in ldoc.modules.iter(param) do
+>           local name, tp = item:display_name_of(p), item:type_of_param(p)
+>           if tp ~= '' then tp = ' ['..tp..']' end
+ - `$(name)`:$(tp) $(escape(item.params.map[p]))
+>           local def = item:default_of_param(p)
+>           if def == true then
+(_optional_)
+>           elseif def then
+(*default*: $(def))
+>           end
+>           if item:readonly(p) then
+**readonly**
+>           end
+>         end -- for p
+>       end -- for parm
+>     end -- if params
+
+>     if show_return_and_params and item.retgroups then
+**Returns:**
+
+>       for _, group in ldoc.ipairs(item.retgroups) do
+>         for r in group:iter() do
+>           local type, ctypes = item:return_type(r)
+>           local rt = ldoc.typename(type)
+ - $(rt) $(escape(r.text))
+
+>         end -- for r
+>       end -- for _
+>     end -- if returns
+>
+>     if item.see then
+**See also:**
+
+>       for see in ldoc.modules.iter(item.see) do
+> -- can't get the full fucking function definition! so the link doesn't work with functions with args
+- [$(see.label)](#$(format_see_link(see)))
+
+>       end -- for
+>     end -- if see
+>
+>     if item.usage then
+**Usage:**
+
+>       for usage in ldoc.modules.iter(item.usage) do
+>         usage = usage:gsub("\n ", "\n") -- strip leading space (adjusting for "-- [code]")
+```lua
+$(usage)
+```
+
+>       end
+>     end
+---
+
+>   end -- for item
+> end -- for kind
+
+Last Updated $(ldoc.updatetime)

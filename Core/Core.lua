@@ -1,3 +1,7 @@
+-------------------------------------------------------------------------------
+-- BigWigs API
+-- @module BigWigs
+-- @alias addon
 
 local addon = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceTimer-3.0")
 addon:SetEnabledState(false)
@@ -674,6 +678,7 @@ end
 -- Module cores
 --
 
+-- @local
 bossCore = addon:NewModule("Bosses")
 bossCore:SetDefaultModuleLibraries("AceTimer-3.0")
 bossCore:SetDefaultModuleState(false)
