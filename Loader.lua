@@ -551,7 +551,7 @@ do
 	CTimerAfter(11, function()
 		local _, _, _, _, month, _, year = GetAchievementInfo(10043) -- Mythic Archimonde
 		if year == 15 and month < 10 then
-			sysprint("We're looking for a new end-game raider to join our developer team! See [goo.gl/aajTfo] for more info: We now have API documented on the GitHub wiki!")
+			sysprint("We're looking for an end-game raider to join our GitHub developer team: goo.gl/aajTfo")
 		end
 		for _, msg in next, delayedMessages do
 			sysprint(msg)
