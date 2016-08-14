@@ -6,7 +6,7 @@ L.warnTwoReleases = "你的 BigWigs 已過期2個發行版！你的版本可能�
 L.warnSeveralReleases = "|cffff0000你的 BigWigs 已過期多個發行版！！我們*強烈*建議你更新，以防止把問題同步給其他玩家！|r"
 
 L.gitHubTitle = "BigWigs 位於 GitHub"
-L.gitHubDesc = "BigWigs 是一個在 GitHub 上的開源軟件。我們一直在尋找新的朋友幫助我們和歡迎任何人檢測我們的代碼，做出貢獻和提交錯誤報告。BigWigs 今天的偉大很大程度上一部分因為偉大的魔獸世界社區幫助我們。\n\n如果你曾經給 BigWigs 使用 SVN 提交過修改並且喜歡使用 GitHub 帳號提交修改記錄，請與我們聯繫。\n\n|cFF33FF99Our API is now documented and freely readable on the GitHub wiki.|r"
+L.gitHubDesc = "BigWigs 是一個在 GitHub 上的開源軟件。我們一直在尋找新的朋友幫助我們和歡迎任何人檢測我們的代碼，做出貢獻和提交錯誤報告。BigWigs 今天的偉大很大程度上一部分因為偉大的魔獸世界社區幫助我們。\n\n如果你曾經給 BigWigs 使用 SVN 提交過修改並且喜歡使用 GitHub 帳號提交修改記錄，請與我們聯繫。\n\n|cFF33FF99我們的 API 現在已在 GitHub 維基記錄並且可以自由讀取。|r"
 
 L.about = "關於"
 L.activeBossModules = "啟動首領模組："
