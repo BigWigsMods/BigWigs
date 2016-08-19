@@ -103,18 +103,18 @@ end
 local function replaceIdWithName(msg)
 	local id = tonumber(msg)
 	if id > 0 then
-		return GetSpellInfo(id)
+		return GetSpellInfo(id) or BigWigs:Print(("No spell name found for boss option using id %d."):format(id))
 	else
-		return EJ_GetSectionInfo(-id)
+		return EJ_GetSectionInfo(-id) or BigWigs:Print(("No journal name found for boss option using id %d."):format(id))
 	end
 end
 local function replaceIdWithDescription(msg)
 	local id = tonumber(msg)
 	if id > 0 then
-		return GetSpellDescription(id)
+		return GetSpellDescription(id) or BigWigs:Print(("No spell description found for boss option using id %d."):format(id))
 	else
 		local _, d = EJ_GetSectionInfo(-id)
-		return d
+		return d or BigWigs:Print(("No journal description found for boss option using id %d."):format(id))
 	end
 end
 
