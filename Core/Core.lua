@@ -492,7 +492,7 @@ end
 --
 
 do
-	local errorDeprecatedNew = "%q is using the deprecated :New() API. Please tell the author to fix it for BigWigs 3."
+	local errorDeprecatedNew = "%q is using the deprecated :New() API. Please tell the author to fix it for the latest BigWigs."
 	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any BigWigs folders you have and then reinstall it from scratch."
 
 	-- either you get me the hell out of these woods, or you'll know how my
@@ -503,11 +503,11 @@ do
 		self:Print(errorDeprecatedNew:format(module))
 	end
 
-	local function new(core, module, zoneId, journalId, ...)
-		if core:GetModule(module, true) then
-			addon:Print(errorAlreadyRegistered:format(module))
+	local function new(core, moduleName, mapId, journalId, ...)
+		if core:GetModule(moduleName, true) then
+			addon:Print(errorAlreadyRegistered:format(moduleName))
 		else
-			local m = core:NewModule(module, ...)
+			local m = core:NewModule(moduleName, ...)
 			initModules[#initModules+1] = m
 
 			-- Embed callback handler
@@ -519,7 +519,7 @@ do
 			m.RegisterEvent = addon.RegisterEvent
 			m.UnregisterEvent = addon.UnregisterEvent
 
-			m.zoneId = zoneId
+			m.zoneId = mapId
 			m.journalId = journalId
 			return m, CL
 		end
@@ -527,11 +527,11 @@ do
 
 	-- A wrapper for :NewModule to present users with more information in the
 	-- case where a module with the same name has already been registered.
-	function addon:NewBoss(module, zoneId, ...)
-		return new(bossCore, module, zoneId, ...)
+	function addon:NewBoss(moduleName, zoneId, ...)
+		return new(bossCore, moduleName, zoneId, ...)
 	end
-	function addon:NewPlugin(module, ...)
-		return new(pluginCore, module, nil, nil, ...)
+	function addon:NewPlugin(moduleName, ...)
+		return new(pluginCore, moduleName, nil, nil, ...)
 	end
 
 	function addon:IterateBossModules() return bossCore:IterateModules() end
