@@ -1,7 +1,22 @@
 -------------------------------------------------------------------------------
 -- Boss Prototype
+-- The API of module created from `BigWigs:NewBoss`.
+--
+-- #### BigWigs:NewBoss (bossName, zoneId, journalId)
+--
+-- **Parameters:**
+--  - `bossName`:  [string] the boss name, used as an identifer
+--  - `zoneId`:  [number] the instance id for where the boss spawns
+--  - `journalId`:  [number] the encounter journal id for the encounter
+--
+--
+-- **Returns:**
+--  - boss module
+--  - [common locale](https://github.com/BigWigsMods/BigWigs/blob/master/Core/Locales/common.enUS.lua) table
+--
 -- @module BossPrototype
 -- @alias boss
+-- @usage local mod, CL = BigWigs:NewBoss("Archimonde", 1026, 1438)
 
 local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected
@@ -114,6 +129,16 @@ local spells = setmetatable({}, {__index =
 
 local boss = {}
 core:GetModule("Bosses"):SetDefaultModulePrototype(boss)
+
+--- The id used for ENCOUNTER_START and ENCOUNTER_END.
+-- @within Enable triggers
+boss.engageId = nil
+
+--- The time in seconds between ENCOUNTER_END and the boss respawning.
+-- Used by the `Respawn` plugin to show a bar for the respawn time.
+-- @within Enable triggers
+boss.respawnTime = nil
+
 --- Module type check.
 -- A module is either from BossPrototype or PluginPrototype.
 -- @return true
