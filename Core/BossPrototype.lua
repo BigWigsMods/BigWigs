@@ -2,17 +2,16 @@
 -- Boss Prototype
 -- The API of module created from `BigWigs:NewBoss`.
 --
--- #### BigWigs:NewBoss (bossName, zoneId, journalId)
+--### BigWigs:NewBoss (bossName, zoneId, journalId)
 --
--- **Parameters:**
+--**Parameters:**
 --  - `bossName`:  [string] the boss name, used as an identifer
---  - `zoneId`:  [number] the instance id for where the boss spawns
---  - `journalId`:  [number] the encounter journal id for the encounter
+--  - `zoneId`:  [number] the instance id for the boss
+--  - `journalId`:  [number] the encounter journal id for the boss
 --
---
--- **Returns:**
+--**Returns:**
 --  - boss module
---  - [common locale](https://github.com/BigWigsMods/BigWigs/blob/master/Core/Locales/common.enUS.lua) table
+--  - [common locale](https://github.com/BigWigsMods/BigWigs/blob/master/Core/Locales/common.enUS.lua) table for the current locale
 --
 -- @module BossPrototype
 -- @alias boss
