@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------
 -- Boss Prototype
--- The API of module created from `BigWigs:NewBoss`.
+-- The API of a module created from `BigWigs:NewBoss`.
 --
 --### BigWigs:NewBoss (bossName, zoneId, journalId)
 --
@@ -129,11 +129,11 @@ local spells = setmetatable({}, {__index =
 local boss = {}
 core:GetModule("Bosses"):SetDefaultModulePrototype(boss)
 
---- The id used for ENCOUNTER_START and ENCOUNTER_END.
+--- The id from ENCOUNTER_START and ENCOUNTER_END.
 -- @within Enable triggers
 boss.engageId = nil
 
---- The time in seconds between ENCOUNTER_END and the boss respawning.
+--- The time in seconds before the boss respawns after a wipe.
 -- Used by the `Respawn` plugin to show a bar for the respawn time.
 -- @within Enable triggers
 boss.respawnTime = nil
