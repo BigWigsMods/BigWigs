@@ -6,7 +6,7 @@
 --
 --**Parameters:**
 --  - `bossName`:  [string] the boss name, used as an identifer
---  - `mapId`:  [number] the map id for the map the boss is located in, negative ids are used to represent a world bosses
+--  - `mapId`:  [number] the map id for the map the boss is located in, negative ids are used to represent world bosses
 --  - `journalId`:  [number] the journal id for the boss, used to translate the boss name(_optional_)
 --
 --**Returns:**
@@ -928,7 +928,7 @@ function boss:Ranged()
 end
 
 --- Check if your talent tree role is TANK.
--- @param[opt="player"] check if the chosen role of another unit is set to TANK, or if that unit is listed in the MAINTANK frames.
+-- @param[opt="player"] unit check if the chosen role of another unit is set to TANK, or if that unit is listed in the MAINTANK frames.
 -- @return boolean
 function boss:Tank(unit)
 	if unit then
@@ -939,7 +939,7 @@ function boss:Tank(unit)
 end
 
 --- Check if your talent tree role is HEALER.
--- @param[opt="player"] check if the chosen role of another unit is set to HEALER.
+-- @param[opt="player"] unit check if the chosen role of another unit is set to HEALER.
 -- @return boolean
 function boss:Healer(unit)
 	if unit then
@@ -950,7 +950,7 @@ function boss:Healer(unit)
 end
 
 --- Check if your talent tree role is DAMAGER.
--- @param[opt="player"] check if the chosen role of another unit is set to DAMAGER.
+-- @param[opt="player"] unit check if the chosen role of another unit is set to DAMAGER.
 -- @return boolean
 function boss:Damager(unit)
 	if unit then
