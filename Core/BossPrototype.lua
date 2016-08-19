@@ -7,7 +7,7 @@
 --**Parameters:**
 --  - `bossName`:  [string] the boss name, used as an identifer
 --  - `mapId`:  [number] the map id for the map the boss is located in, negative ids are used to represent a world bosses
---  - `journalId`:  [opt][number] the journal id for the boss, used to translate the boss name
+--  - `journalId`:  [number] the journal id for the boss, used to translate the boss name(_optional_)
 --
 --**Returns:**
 --  - boss module
@@ -139,12 +139,12 @@ boss.engageId = nil
 -- @within Enable triggers
 boss.respawnTime = nil
 
---- The NPC id of the world boss
+--- The NPC/mob id of the world boss
 -- Used to specify that a module is for a world boss, not an instance boss.
 -- @within Enable triggers
 boss.worldBoss = nil
 
---- The map id the boss should be listed under in the configuration menu.
+--- The map id the boss should be listed under in the configuration menu, generally used for world bosses.
 -- @within Enable triggers
 boss.otherMenu = nil
 
@@ -1553,7 +1553,7 @@ end
 --- Send a message in SAY.
 -- @param key the option key
 -- @param msg the message to say (if nil, key is used)
--- @param[opt] directPrint if true, skip formatting the message
+-- @param[opt] directPrint if true, skip formatting the message and print the string directly to chat.
 function boss:Say(key, msg, directPrint)
 	if not checkFlag(self, key, C.SAY) then return end
 	if directPrint then
