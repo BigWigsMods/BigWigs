@@ -2,12 +2,12 @@
 -- Boss Prototype
 -- The API of a module created from `BigWigs:NewBoss`.
 --
---### BigWigs:NewBoss (bossName, zoneId, journalId)
+--### BigWigs:NewBoss (bossName, zoneId[, journalId])
 --
 --**Parameters:**
 --  - `bossName`:  [string] the boss name, used as an identifer
 --  - `mapId`:  [number] the map id for the map the boss is located in, negative ids are used to represent world bosses
---  - `journalId`:  [number] the journal id for the boss, used to translate the boss name(_optional_)
+--  - `journalId`:  [number] the journal id for the boss, used to translate the boss name (_optional_)
 --
 --**Returns:**
 --  - boss module
