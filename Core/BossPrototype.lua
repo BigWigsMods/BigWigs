@@ -5,7 +5,7 @@
 --### BigWigs:NewBoss (bossName, zoneId[, journalId])
 --
 --**Parameters:**
---  - `bossName`:  [string] the boss name, used as an identifer
+--  - `bossName`:  [string] a unique module name, usually the boss name
 --  - `mapId`:  [number] the map id for the map the boss is located in, negative ids are used to represent world bosses
 --  - `journalId`:  [number] the journal id for the boss, used to translate the boss name (_optional_)
 --
@@ -827,7 +827,7 @@ function boss:MobId(guid)
 	return tonumber(id) or 1
 end
 
---- Get a localized spell name from a spell id.
+--- Get a localized name from an id. Positive ids for spells (GetSpellInfo) and negative ids for journal entries (EJ_GetSectionInfo)
 -- @return spell name
 function boss:SpellName(spellId)
 	return spells[spellId]
