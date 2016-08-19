@@ -6,7 +6,7 @@
 --
 --**Parameters:**
 --  - `bossName`:  [string] the boss name, used as an identifer
---  - `mapId`:  [number] the map id for the map the boss is located in, negative for world bosses
+--  - `mapId`:  [number] the map id for the map the boss is located in, negative ids are used to represent a world bosses
 --  - `journalId`:  [opt][number] the journal id for the boss, used to translate the boss name
 --
 --**Returns:**
