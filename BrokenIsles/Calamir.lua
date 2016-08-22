@@ -87,11 +87,13 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Info", nil, nil, self:Dispeller())
+		end
 		if self:Me(args.destGUID) then
 			self:OpenProximity(args.spellId, 10)
 			self:Say(args.spellId)
 		end
 	end
+
 	function mod:BurningBombRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CloseProximity(args.spellId)
