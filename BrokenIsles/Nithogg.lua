@@ -5,9 +5,8 @@ local mod,CL=BigWigs:NewBoss("Nithogg", -1017, 1749);
 if not mod then return end
 
 mod:RegisterEnableMob(107544)
---mod.otherMenu = 962
+mod.otherMenu = 1007
 mod.worldBoss = 107544
-
 --------------------------------------------------------------------------------
 -- Initialization
 --
