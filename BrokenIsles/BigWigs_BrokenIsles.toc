@@ -9,5 +9,6 @@
 ## X-Category: Raid
 ## X-BigWigs-Menu: 962
 ## X-BigWigs-LoadOn-WorldBoss: -1015, 109331, -1017, 107023
+## X-BigWigs-LoadOn-ZoneId: 1007
 
 modules.xml
