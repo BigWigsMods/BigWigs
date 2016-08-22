@@ -380,6 +380,7 @@ function mod:ADDON_LOADED(addon)
 	if addon ~= "BigWigs" then return end
 
 	bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	bwFrame:RegisterEvent("RAID_INSTANCE_WELCOME")
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 	bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
 
@@ -958,6 +959,7 @@ do
 			end
 		end
 	end
+	mod.RAID_INSTANCE_WELCOME = mod.ZONE_CHANGED_NEW_AREA -- Entirely for Onyxia's Lair loading
 end
 
 do
