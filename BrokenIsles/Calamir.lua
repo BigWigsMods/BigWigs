@@ -7,7 +7,7 @@
 
 -- Module Declaration
 --
-local mod,CL=BigWigs:NewBoss("Calamir", -1015, 1774)
+local mod, CL = BigWigs:NewBoss("Calamir", -1015, 1774)
 if not mod then return end
 
 mod:RegisterEnableMob(109331)
@@ -26,7 +26,7 @@ function mod:GetOptions()
 	return {
 		--FIRE PHASE--
 		217563,	--Ancient Rage Fire
-		{189894, "SAY", "PROXIMITY"}, -- Burning Bomb
+		{217887, "SAY", "PROXIMITY"}, -- Burning Bomb
 		217893, -- Wrathful Flames
 		--ARCANE PHASE--
 		217834, --Ancient Rage Arcane
@@ -35,7 +35,7 @@ function mod:GetOptions()
 		--FROST PHASE--
 		217831, --Ancient Rage Frost
 		217966, -- Howling Gale
-		217925, --Icy Comet 
+		217925, --Icy Comet
 	}
 end
 
@@ -45,9 +45,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ArcaneDesolation", 217986)
 	self:Log("SPELL_CAST_SUCCESS", "WrathfulFlames", 217893)
 	self:Log("SPELL_CAST_SUCCESS", "HowlingGale", 217966)
-	self:Log("SPELL_CAST_SUCCESS", "BurningBombSuccess", 217874)
-	self:Log("SPELL_AURA_APPLIED", "BurningBomb", 217874)
-	self:Log("SPELL_AURA_REMOVED", "BurningBombRemoved", 217874)
+	self:Log("SPELL_CAST_SUCCESS", "BurningBombSuccess", 217887)
+	self:Log("SPELL_AURA_APPLIED", "BurningBomb", 217887)
+	self:Log("SPELL_AURA_REMOVED", "BurningBombRemoved", 217887)
 	self:Log("SPELL_CAST_SUCCESS", "AncientRageFire", 217563)
 	self:Log("SPELL_CAST_SUCCESS", "AncientRageFrost", 217831)
 	self:Log("SPELL_CAST_SUCCESS", "AncientRageArcane", 217834)
@@ -64,14 +64,16 @@ end
 -- Event Handlers
 --
 --[[function mod:SPELL_CAST_SUCCESS(unit, spellName, _, _, spellId)
-	if spellId == 217919 or spellName == Icy Comet then 
+	if spellId == 217919 or spellName == Icy Comet then
 		self:CDBar(217925, 76.7)
 		self:Message(217925, "Attention", nil, CL.incoming:format(spellName))
 	end
 end--]]
 
-function mod:IcyCometApplied(args) 
-	self:Message(217925, "Attention", "Warning", CL.underyou:format(args.spellName))
+function mod:IcyCometApplied(args)
+	if self:Me(args.destGUID) then
+		self:Message(217925, "Attention", "Warning", CL.underyou:format(args.spellName))
+	end
 end
 
 function mod:BurningBombSuccess(args)
@@ -83,7 +85,8 @@ do
 	local list = mod:NewTargetList()
 	function mod:BurningBomb(args)
 		list[#list+1] = args.destName
-		self:TargetMessage(args.spellId, list, "Important", self:Dispeller("magic") and "Alert")
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Info", nil, nil, self:Dispeller())
 		if self:Me(args.destGUID) then
 			self:OpenProximity(args.spellId, 10)
 			self:Say(args.spellId)
