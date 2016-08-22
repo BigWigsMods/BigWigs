@@ -2,7 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Calamir.lua"/>
-
+<Script file="Nithogg.lua"/>
 
 </Ui>
 
