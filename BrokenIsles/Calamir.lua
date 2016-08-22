@@ -54,8 +54,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("BOSS_KILL")
-	self:RegisterUnitEvent("SPELL_CAST_SUCCESS", nil, "Unit") -- SPELL_CAST_SUCCESS event for Icy Comet is missing ,I tried to register event but probably bad implementation
-								--  Marked the event register parts with XXX
+--	self:RegisterUnitEvent("SPELL_CAST_SUCCESS", nil, "Unit")  SPELL_CAST_SUCCESS event for Icy Comet is missing ,I tried to register event but probably bad implementation
 end
 
 function mod:OnEngage()
