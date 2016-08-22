@@ -458,6 +458,7 @@ do
 		BigWigs_Hyjal = "BigWigs_BurningCrusade",
 		BigWigs_Coliseum = "BigWigs_WrathOfTheLichKing",
 		BigWigs_Citadel = "BigWigs_WrathOfTheLichKing",
+		BigWigs_LK_Valkyr_Marker = "BigWigs_WrathOfTheLichKing",
 		BigWigs_BWL = "BigWigs_Classic",
 		BigWigs_BlackTemple = "BigWigs_BurningCrusade",
 		BigWigs_AQ20 = "BigWigs_Classic",
