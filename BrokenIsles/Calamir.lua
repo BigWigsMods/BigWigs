@@ -8,13 +8,11 @@
 -- Module Declaration
 --
 local mod,CL=BigWigs:NewBoss("Calamir", -1015, 1774)
-if not mod then
-	return end
+if not mod then return end
 
 mod:RegisterEnableMob(109331)
---mod.otherMenu = 962
+mod.otherMenu = 1007
 mod.worldBoss = 109331
-
 --------------------------------------------------------------------------------
 -- Locals
 --
@@ -37,8 +35,7 @@ function mod:GetOptions()
 		--FROST PHASE--
 		217831, --Ancient Rage Frost
 		217966, -- Howling Gale
-		217925, --Icy Comet // SPELL_CAST_SUCCESS event for Icy Comet is missing ,I tried to register event but probably bad implementation
-				--             Marked the event register parts with XXX
+		217925, --Icy Comet 
 	}
 end
 
@@ -57,7 +54,8 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("BOSS_KILL")
-	self:RegisterUnitEvent("SPELL_CAST_SUCCESS", nil, "Unit") -- XXX
+	self:RegisterUnitEvent("SPELL_CAST_SUCCESS", nil, "Unit") -- SPELL_CAST_SUCCESS event for Icy Comet is missing ,I tried to register event but probably bad implementation
+								--  Marked the event register parts with XXX
 end
 
 function mod:OnEngage()
@@ -66,14 +64,14 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:SPELL_CAST_SUCCESS(unit, spellName, _, _, spellId)-- XXX
+--[[function mod:SPELL_CAST_SUCCESS(unit, spellName, _, _, spellId)
 	if spellId == 217919 or spellName == Icy Comet then 
 		self:CDBar(217925, 76.7)
 		self:Message(217925, "Attention", nil, CL.incoming:format(spellName))
 	end
-end
+end--]]
 
-function mod:IcyCometApplied(args) -- RegisterEvent
+function mod:IcyCometApplied(args) 
 	self:Message(217925, "Attention", "Warning", CL.underyou:format(args.spellName))
 end
 
@@ -86,7 +84,7 @@ do
 	local list = mod:NewTargetList()
 	function mod:BurningBomb(args)
 		list[#list+1] = args.destName
-		self:TargetMessage(args.spellId, args.destName, "Important", self:Dispeller("magic") and "Alert")
+		self:TargetMessage(args.spellId, list, "Important", self:Dispeller("magic") and "Alert")
 		if self:Me(args.destGUID) then
 			self:OpenProximity(args.spellId, 10)
 			self:Say(args.spellId)
@@ -116,7 +114,6 @@ end
 function mod:HowlingGale(args)
 	self:CDBar(args.spellId, hGale % 2 == 1 and 12.5 or 61.9)
 	hGale = hGale + 1
-
 end
 
 function mod:BOSS_KILL(event, id)
