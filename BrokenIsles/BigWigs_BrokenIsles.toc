@@ -1,0 +1,13 @@
+﻿## Interface: 70000
+
+## Title: BigWigs [|cffeda55fBrokenIsles|r]
+## Notes: BigWigs BrokenIsles Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-Menu: 962
+## X-BigWigs-LoadOn-WorldBoss: -1015, 109331, -1017, 107023
+
+modules.xml
