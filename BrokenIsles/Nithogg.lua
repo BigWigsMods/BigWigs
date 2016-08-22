@@ -6,14 +6,13 @@ if not mod then
 	return end
 	
 	
-mod:RegisterEnableMob(107023)
+mod:RegisterEnableMob(107023) --107544 2 possible ids on wowhead??
 --mod.otherMenu = 962
-mod.worldBoss = 107023
+mod.worldBoss = 107023 --107544
 	
 function mod:GetOptions()
 		return 
 		{
-		
 		212836,--Tail Lash 
 		212852,--Storm Breath 23.7 tanks
 		212867,--Electrical Storm 31.4
@@ -31,7 +30,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CracklingJolt", 212837)
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:Death("Win", 107023)
+	self:Death("Win", 107023) -107544
 end
 
 function mod:OnEngage()
@@ -49,7 +48,7 @@ end
 
 function mod:TailLash(args)
 
-	self:Message(spellId, "Urgent", "Alert")
+	self:Message(args.spellId, "Urgent", "Alert")
 	CDBar(212836,7.8)
 		
 end	
