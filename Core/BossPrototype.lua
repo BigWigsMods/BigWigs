@@ -1,7 +1,21 @@
 -------------------------------------------------------------------------------
 -- Boss Prototype
+-- The API of a module created from `BigWigs:NewBoss`.
+--
+--### BigWigs:NewBoss (moduleName, mapId[, journalId])
+--
+--**Parameters:**
+--  - `moduleName`:  [string] a unique module name, usually the boss name
+--  - `mapId`:  [number] the map id for the map the boss is located in, negative ids are used to represent world bosses
+--  - `journalId`:  [number] the journal id for the boss, used to translate the boss name (_optional_)
+--
+--**Returns:**
+--  - boss module
+--  - [common locale](https://github.com/BigWigsMods/BigWigs/blob/master/Core/Locales/common.enUS.lua) table for the current locale
+--
 -- @module BossPrototype
 -- @alias boss
+-- @usage local mod, CL = BigWigs:NewBoss("Archimonde", 1026, 1438)
 
 local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitDistanceSquared, UnitIsConnected
@@ -114,6 +128,26 @@ local spells = setmetatable({}, {__index =
 
 local boss = {}
 core:GetModule("Bosses"):SetDefaultModulePrototype(boss)
+
+--- The encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
+-- If this is set, no engage or wipe checking is required. The module will use this id and register for ENCOUNTER_START & ENCOUNTER_END.
+-- @within Enable triggers
+boss.engageId = nil
+
+--- The time in seconds before the boss respawns after a wipe.
+-- Used by the `Respawn` plugin to show a bar for the respawn time.
+-- @within Enable triggers
+boss.respawnTime = nil
+
+--- The NPC/mob id of the world boss
+-- Used to specify that a module is for a world boss, not an instance boss.
+-- @within Enable triggers
+boss.worldBoss = nil
+
+--- The map id the boss should be listed under in the configuration menu, generally used for world bosses.
+-- @within Enable triggers
+boss.otherMenu = nil
+
 --- Module type check.
 -- A module is either from BossPrototype or PluginPrototype.
 -- @return true
@@ -460,13 +494,13 @@ do
 	end
 
 	--- Start checking for a wipe.
-	-- Starts a repeating timer checking IsEncounterInProgress().
+	-- Starts a repeating timer checking IsEncounterInProgress() and reboots the module if false.
 	function boss:StartWipeCheck()
 		self:StopWipeCheck()
 		self.isWiping = self:ScheduleRepeatingTimer(wipeCheck, 1, self)
 	end
 	--- Stop checking for a wipe.
-	-- Stops the repeating timer checking IsEncounterInProgress() if running.
+	-- Stops the repeating timer checking IsEncounterInProgress() if it is running.
 	function boss:StopWipeCheck()
 		if self.isWiping then
 			self:CancelTimer(self.isWiping)
@@ -793,7 +827,7 @@ function boss:MobId(guid)
 	return tonumber(id) or 1
 end
 
---- Get a localized spell name from a spell id.
+--- Get a localized name from an id. Positive ids for spells (GetSpellInfo) and negative ids for journal entries (EJ_GetSectionInfo)
 -- @return spell name
 function boss:SpellName(spellId)
 	return spells[spellId]
@@ -881,20 +915,20 @@ end
 -- Role checking
 -- @section role
 
---- Check if your assigned role is TANK or MELEE.
+--- Check if your talent tree role is TANK or MELEE.
 -- @return boolean
 function boss:Melee()
 	return myRole == "TANK" or myDamagerRole == "MELEE"
 end
 
---- Check if your assigned role is HEALER or RANGED.
+--- Check if your talent tree role is HEALER or RANGED.
 -- @return boolean
 function boss:Ranged()
 	return myRole == "HEALER" or myDamagerRole == "RANGED"
 end
 
---- Check if a unit is a MAINTANK or has an assigned role of TANK.
--- @param[opt="player"] unit unit to check
+--- Check if your talent tree role is TANK.
+-- @param[opt="player"] unit check if the chosen role of another unit is set to TANK, or if that unit is listed in the MAINTANK frames.
 -- @return boolean
 function boss:Tank(unit)
 	if unit then
@@ -904,8 +938,8 @@ function boss:Tank(unit)
 	end
 end
 
---- Check if a unit has an assigned role of HEALER.
--- @param[opt="player"] unit unit to check
+--- Check if your talent tree role is HEALER.
+-- @param[opt="player"] unit check if the chosen role of another unit is set to HEALER.
 -- @return boolean
 function boss:Healer(unit)
 	if unit then
@@ -915,8 +949,8 @@ function boss:Healer(unit)
 	end
 end
 
---- Check if a unit has an assigned role of DAMAGER.
--- @param[opt="player"] unit unit to check
+--- Check if your talent tree role is DAMAGER.
+-- @param[opt="player"] unit check if the chosen role of another unit is set to DAMAGER.
 -- @return boolean
 function boss:Damager(unit)
 	if unit then
@@ -952,8 +986,8 @@ do
 		end
 	end
 	--- Check if you can dispel.
-	-- @param dispelType dispel type (enrage, mage, disease, poison, curse)
-	-- @param[opt] isOffensive true if dispelling an enemy, nil if dispelling a friend
+	-- @param dispelType dispel type (magic, disease, poison, curse)
+	-- @param[opt] isOffensive true if dispelling a buff from an enemy (magic), nil if dispelling a friendly
 	-- @param[opt] key module option key to check
 	-- @return boolean
 	function boss:Dispeller(dispelType, isOffensive, key)
@@ -1002,7 +1036,7 @@ do
 		end
 	end
 	--- Check if you can interrupt.
-	-- @param[opt] guid if not nil, will check if your target GUID or focus GUID matches
+	-- @param[opt] guid if not nil, will only return true if the GUID matches your target or focus.
 	-- @return boolean
 	function boss:Interrupter(guid)
 		-- We will probably need to make this smarter
@@ -1519,7 +1553,7 @@ end
 --- Send a message in SAY.
 -- @param key the option key
 -- @param msg the message to say (if nil, key is used)
--- @param[opt] directPrint if true, skip formatting the message
+-- @param[opt] directPrint if true, skip formatting the message and print the string directly to chat.
 function boss:Say(key, msg, directPrint)
 	if not checkFlag(self, key, C.SAY) then return end
 	if directPrint then

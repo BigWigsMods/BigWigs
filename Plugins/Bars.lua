@@ -1639,6 +1639,7 @@ do
 				return
 			end
 		end
+		FlashClientIcon()
 		BigWigs:Print(L.pullStarted:format(isDBM and "DBM" or "BigWigs", nick))
 		timer = plugin:ScheduleRepeatingTimer(printPull, 1)
 		plugin:SendMessage("BigWigs_Message", plugin, nil, L.pullIn:format(timeLeft), "Attention")

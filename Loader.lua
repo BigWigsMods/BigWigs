@@ -380,6 +380,7 @@ function mod:ADDON_LOADED(addon)
 	if addon ~= "BigWigs" then return end
 
 	bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	bwFrame:RegisterEvent("RAID_INSTANCE_WELCOME")
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 	bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
 
@@ -458,6 +459,7 @@ do
 		BigWigs_Hyjal = "BigWigs_BurningCrusade",
 		BigWigs_Coliseum = "BigWigs_WrathOfTheLichKing",
 		BigWigs_Citadel = "BigWigs_WrathOfTheLichKing",
+		BigWigs_LK_Valkyr_Marker = "BigWigs_WrathOfTheLichKing",
 		BigWigs_BWL = "BigWigs_Classic",
 		BigWigs_BlackTemple = "BigWigs_BurningCrusade",
 		BigWigs_AQ20 = "BigWigs_Classic",
@@ -957,6 +959,7 @@ do
 			end
 		end
 	end
+	mod.RAID_INSTANCE_WELCOME = mod.ZONE_CHANGED_NEW_AREA -- Entirely for Onyxia's Lair loading
 end
 
 do

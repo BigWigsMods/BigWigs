@@ -20,7 +20,7 @@ $(escape(module.description))
 ### Usage:
 >   for usage in ldoc.modules.iter(module.usage) do
 ```lua
-$(ldoc.escape(usage))
+$(usage)
 ```
 
 >   end -- for
