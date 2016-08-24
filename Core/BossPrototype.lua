@@ -826,7 +826,7 @@ end
 --- Check if in a Mythic difficulty instance.
 -- @return boolean
 function boss:Mythic()
-	return difficulty == 16
+	return difficulty == 16 or difficulty == 23
 end
 
 --- Get the mob/npc id from a GUID.
