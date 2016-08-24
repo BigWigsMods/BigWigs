@@ -130,7 +130,7 @@ local boss = {}
 core:GetModule("Bosses"):SetDefaultModulePrototype(boss)
 
 --- The encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
--- If this is set, no engage or wipe checking is required. The module will use this id and register for ENCOUNTER_START & ENCOUNTER_END.
+-- If this is set, no engage or wipe checking is required. The module will use this id and all engage/wipe checking will be handled automatically.
 -- @within Enable triggers
 boss.engageId = nil
 
@@ -226,6 +226,9 @@ function boss:OnDisable(isWipe)
 		self:SendMessage("BigWigs_OnBossDisable", self)
 	end
 end
+--- Check if a module option is enabled
+-- This is a wrapper around self.db.profile[key]
+-- @return boolean
 function boss:GetOption(key)
 	return self.db.profile[key]
 end
@@ -265,7 +268,7 @@ boss.NewLocale = boss.GetLocale
 --- Register the module to enable on mob id.
 -- @param ... Any number of mob ids
 function boss:RegisterEnableMob(...) core:RegisterEnableMob(self, ...) end
---- Register the module to enable on mob yell.
+--- [DEPRECATED] Register the module to enable on mob yell.
 -- @param ... Any number of strings
 function boss:RegisterEnableYell(...) core:RegisterEnableYell(self, ...) end
 
