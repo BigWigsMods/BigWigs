@@ -1,6 +1,6 @@
 ﻿## Interface: 70000
 
-## Title: BigWigs [|cffeda55fBrokenIsles|r]
+## Title: BigWigs [|cffeda55fBroken Isles|r]
 ## Notes: BigWigs Broken Isles Modules
 
 ## LoadOnDemand: 1
