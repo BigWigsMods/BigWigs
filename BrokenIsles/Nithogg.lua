@@ -1,26 +1,32 @@
+-- TO DO List 
+-- Combat Testing for timers
+-- Needs onEngage timers
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-local mod, CL = BigWigs:NewBoss("Nithogg", -1017, 1749);
+local mod,CL=BigWigs:NewBoss("Nithogg", -1017, 1749);
 if not mod then return end
 
 mod:RegisterEnableMob(107544)
 mod.otherMenu = 1007
 mod.worldBoss = 107544
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
 function mod:GetOptions()
-		return {
-			212836,--Tail Lash
-			212852,--Storm Breath 23.7 tanks
-			212867,--Electrical Storm 31.4
-			212887,--Static Charge 41
-			212837,--Crackling Jolt -12
-		}
+	return {
+		212836,--Tail Lash
+		212852,--Storm Breath
+		212867,--Electrical Storm
+		212887,--Static Charge
+		212837,--Crackling Jolt
+	}
 end
 
 function mod:OnBossEnable()
+
 	self:Log("SPELL_CAST_SUCCESS", "StormBreath", 212852)
 	self:Log("SPELL_CAST_SUCCESS", "ElectricalStorm", 212867)
 	self:Log("SPELL_CAST_SUCCESS", "StaticCharge", 212887)
@@ -33,6 +39,7 @@ end
 function mod:OnEngage()
 --Gotta do few more tries on boss for initial timers.
 end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
