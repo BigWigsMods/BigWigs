@@ -15,24 +15,32 @@ local difficultyTable = {false, false, "10", "25", "10h", "25h", "lfr", false, f
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 
 --[[
-1. "Normal"
-2. "Heroic"
+1. "Normal" (Dungeons)
+2. "Heroic" (Dungeons)
 3. "10 Player"
 4. "25 Player"
 5. "10 Player (Heroic)"
 6. "25 Player (Heroic)"
-7. "Looking For Raid"
+7. "Looking For Raid" (Legacy LFRs; everything prior to Siege of Orgrimmar)
 8. "Challenge Mode"
 9. "40 Player"
 10. nil
 11. "Heroic Scenario"
 12. "Normal Scenario"
 13. nil
-14. "Flexible" / "Normal Raid" (Warlords of Draenor)
-15. "Heroic Raid" (Warlords of Draenor)
-16. "Mythic Raid" (Warloads of Draenor)
-17. Flexible LFR
-http://wowpedia.org/API_GetDifficultyInfo
+14. "Normal" (Raids)
+15. "Heroic" (Raids)
+16. "Mythic" (Raids)
+17. "Looking For Raid"
+18. "Event"
+19. "Event"
+20. "Event Scenario"
+21. nil
+22. nil
+23. "Mythic" (Dungeons)
+23. "Timewalker"
+24. "PvP Scenario"
+http://wow.gamepedia.com/DifficultyID
 ]]--
 
 -------------------------------------------------------------------------------
