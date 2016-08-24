@@ -4,7 +4,7 @@
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-local mod,CL=BigWigs:NewBoss("Nithogg", -1017, 1749);
+local mod,CL = BigWigs:NewBoss("Nithogg", -1017, 1749);
 if not mod then return end
 
 mod:RegisterEnableMob(107544)
@@ -33,13 +33,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CracklingJolt", 212837)
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:Death("Win", 107544)
 end
 
 function mod:OnEngage()
 --Gotta do few more tries on boss for initial timers.
 end
-
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
