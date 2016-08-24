@@ -62,3 +62,9 @@ function mod:CracklingJolt(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	self:CDBar(args.spellId, 12)
 end
+
+function mod:BOSS_KILL(event, id)
+	if id == 1880 then
+		self:Win()
+	end
+end
