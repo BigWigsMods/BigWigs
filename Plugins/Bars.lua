@@ -882,30 +882,31 @@ do
 			tmp[#tmp + 1] = bar
 		end
 		table.sort(tmp, barSorter)
-		local lastDownBar, lastUpBar = nil, nil
+		local lastBar = nil
 		local up = nil
 		if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
-		for i, bar in next, tmp do
+		for i = 1, #tmp do
+			local bar = tmp[i]
 			local spacing = currentBarStyler.GetSpacing(bar) or 0
 			bar:ClearAllPoints()
 			if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
-				if lastUpBar then -- Growing from a bar
-					bar:SetPoint("BOTTOMLEFT", lastUpBar, "TOPLEFT", 0, spacing)
-					bar:SetPoint("BOTTOMRIGHT", lastUpBar, "TOPRIGHT", 0, spacing)
+				if lastBar then -- Growing from a bar
+					bar:SetPoint("BOTTOMLEFT", lastBar, "TOPLEFT", 0, spacing)
+					bar:SetPoint("BOTTOMRIGHT", lastBar, "TOPRIGHT", 0, spacing)
 				else -- Growing from the anchor
 					bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT", 0, 0)
 					bar:SetPoint("BOTTOMRIGHT", anchor, "BOTTOMRIGHT", 0, 0)
 				end
-				lastUpBar = bar
+				lastBar = bar
 			else
-				if lastDownBar then -- Growing from a bar
-					bar:SetPoint("TOPLEFT", lastDownBar, "BOTTOMLEFT", 0, -spacing)
-					bar:SetPoint("TOPRIGHT", lastDownBar, "BOTTOMRIGHT", 0, -spacing)
+				if lastBar then -- Growing from a bar
+					bar:SetPoint("TOPLEFT", lastBar, "BOTTOMLEFT", 0, -spacing)
+					bar:SetPoint("TOPRIGHT", lastBar, "BOTTOMRIGHT", 0, -spacing)
 				else -- Growing from the anchor
 					bar:SetPoint("TOPLEFT", anchor, "TOPLEFT", 0, 0)
 					bar:SetPoint("TOPRIGHT", anchor, "TOPRIGHT", 0, 0)
 				end
-				lastDownBar = bar
+				lastBar = bar
 			end
 		end
 	end
@@ -946,7 +947,6 @@ local function onDragHandleMouseDown(self) self:GetParent():StartSizing("BOTTOMR
 local function onDragHandleMouseUp(self, button) self:GetParent():StopMovingOrSizing() end
 local function onResize(self, width)
 	db[self.w] = width
-	rearrangeBars(self)
 end
 local function onDragStart(self) self:StartMoving() end
 local function onDragStop(self)
@@ -1246,40 +1246,30 @@ end
 
 function plugin:StopSpecificBar(_, module, text)
 	if not normalAnchor then return end
-	local dirty = nil
 	for k in next, normalAnchor.bars do
 		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			k:Stop()
-			dirty = true
 		end
 	end
-	if dirty then rearrangeBars(normalAnchor) dirty = nil end
 	for k in next, emphasizeAnchor.bars do
 		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			k:Stop()
-			dirty = true
 		end
 	end
-	if dirty then rearrangeBars(emphasizeAnchor) end
 end
 
 function plugin:StopModuleBars(_, module)
 	if not normalAnchor then return end
-	local dirty = nil
 	for k in next, normalAnchor.bars do
 		if k:Get("bigwigs:module") == module then
 			k:Stop()
-			dirty = true
 		end
 	end
-	if dirty then rearrangeBars(normalAnchor) dirty = nil end
 	for k in next, emphasizeAnchor.bars do
 		if k:Get("bigwigs:module") == module then
 			k:Stop()
-			dirty = true
 		end
 	end
-	if dirty then rearrangeBars(emphasizeAnchor) end
 end
 
 --------------------------------------------------------------------------------
@@ -1412,7 +1402,6 @@ clickHandlers.remove = function(bar)
 	local anchor = bar:Get("bigwigs:anchor")
 	plugin:SendMessage("BigWigs_SilenceOption", bar:Get("bigwigs:option"), bar.remaining + 0.3)
 	bar:Stop()
-	rearrangeBars(anchor)
 end
 
 -- Removes all bars EXCEPT the clicked one
@@ -1424,7 +1413,6 @@ clickHandlers.removeOther = function(bar)
 				k:Stop()
 			end
 		end
-		rearrangeBars(normalAnchor)
 	end
 	if emphasizeAnchor then
 		for k in next, emphasizeAnchor.bars do
@@ -1433,7 +1421,6 @@ clickHandlers.removeOther = function(bar)
 				k:Stop()
 			end
 		end
-		rearrangeBars(emphasizeAnchor)
 	end
 end
 
