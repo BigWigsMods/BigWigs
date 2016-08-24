@@ -1,5 +1,5 @@
 -- TO DO List 
--- Combat Testing for timers
+-- Combat Testing req to see timers work correctly
 -- Needs onEngage timers
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -10,11 +10,9 @@ if not mod then return end
 mod:RegisterEnableMob(107544)
 mod.otherMenu = 1007
 mod.worldBoss = 107544
-
 --------------------------------------------------------------------------------
 -- Initialization
 --
-
 function mod:GetOptions()
 	return {
 		212836,--Tail Lash
@@ -26,13 +24,13 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-
 	self:Log("SPELL_CAST_SUCCESS", "StormBreath", 212852)
 	self:Log("SPELL_CAST_SUCCESS", "ElectricalStorm", 212867)
 	self:Log("SPELL_CAST_SUCCESS", "StaticCharge", 212887)
 	self:Log("SPELL_CAST_SUCCESS", "CracklingJolt", 212837)
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("BOSS_KILL")
 end
 
 function mod:OnEngage()
@@ -47,9 +45,8 @@ function mod:StormBreath(args)
 	self:CDBar(args.spellId, 23.7)
 end
 
-function mod:TailLash(args) -- XXX -- Cant figure out TailLash CD so 7.8 is an approx timer ,might be totally random or bound to another condition.
+function mod:TailLash(args) 
 	self:Message(args.spellId, "Urgent", "Alert")
-	self:CDBar(args.spellId, 7.8)
 end
 
 function mod:ElectricalStorm(args)
