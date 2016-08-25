@@ -1,6 +1,7 @@
 -- TO DO List 
 -- Combat Testing req to see timers work correctly
 -- Needs onEngage timers
+-- Crackling Jolt has no SPELL_CAST_SUCCESS event on logs used the ID for unit cast succeed but might need a event register
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
