@@ -130,7 +130,7 @@ local boss = {}
 core:GetModule("Bosses"):SetDefaultModulePrototype(boss)
 
 --- The encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
--- If this is set, no engage or wipe checking is required. The module will use this id and register for ENCOUNTER_START & ENCOUNTER_END.
+-- If this is set, no engage or wipe checking is required. The module will use this id and all engage/wipe checking will be handled automatically.
 -- @within Enable triggers
 boss.engageId = nil
 
@@ -139,7 +139,7 @@ boss.engageId = nil
 -- @within Enable triggers
 boss.respawnTime = nil
 
---- The NPC/mob id of the world boss
+--- The NPC/mob id of the world boss.
 -- Used to specify that a module is for a world boss, not an instance boss.
 -- @within Enable triggers
 boss.worldBoss = nil
@@ -148,10 +148,20 @@ boss.worldBoss = nil
 -- @within Enable triggers
 boss.otherMenu = nil
 
+--- Check if a module option is enabled.
+-- This is a wrapper around the self.db.profile[key] table.
+-- @return boolean
+function boss:GetOption(key)
+	return self.db.profile[key]
+end
+
 --- Module type check.
 -- A module is either from BossPrototype or PluginPrototype.
 -- @return true
-function boss:IsBossModule() return true end
+function boss:IsBossModule()
+	return true
+end
+
 function boss:Initialize() core:RegisterBossModule(self) end
 function boss:OnEnable(isWipe)
 	if debug then dbg(self, isWipe and "OnEnable() via Wipe()" or "OnEnable()") end
@@ -226,9 +236,6 @@ function boss:OnDisable(isWipe)
 		self:SendMessage("BigWigs_OnBossDisable", self)
 	end
 end
-function boss:GetOption(key)
-	return self.db.profile[key]
-end
 function boss:Reboot(isWipe)
 	if debug then dbg(self, ":Reboot()") end
 	-- Reboot covers everything including hard module reboots (clicking the minimap icon)
@@ -265,7 +272,7 @@ boss.NewLocale = boss.GetLocale
 --- Register the module to enable on mob id.
 -- @param ... Any number of mob ids
 function boss:RegisterEnableMob(...) core:RegisterEnableMob(self, ...) end
---- Register the module to enable on mob yell.
+--- [DEPRECATED] Register the module to enable on mob yell.
 -- @param ... Any number of strings
 function boss:RegisterEnableYell(...) core:RegisterEnableYell(self, ...) end
 
@@ -370,7 +377,7 @@ do
 		end
 	end)
 	--- Register a callback for COMBAT_LOG_EVENT.
-	-- @param event COMBAT_LOG_EVENT to fire for
+	-- @param event COMBAT_LOG_EVENT to fire for e.g. SPELL_CAST_START
 	-- @param func callback function, passed a keyed table (sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, extraSpellId, extraSpellName, amount)
 	-- @param ... any number of spell ids
 	function boss:Log(event, func, ...)
@@ -557,6 +564,10 @@ do
 		"target", "targettarget",
 		"mouseover", "mouseovertarget",
 		"focus", "focustarget",
+		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
+		"nameplate11", "nameplate12", "nameplate13", "nameplate14", "nameplate15", "nameplate16", "nameplate17", "nameplate18", "nameplate19", "nameplate20",
+		"nameplate21", "nameplate22", "nameplate23", "nameplate24", "nameplate25", "nameplate26", "nameplate27", "nameplate28", "nameplate29", "nameplate30",
+		"nameplate31", "nameplate32", "nameplate33", "nameplate34", "nameplate35", "nameplate36", "nameplate37", "nameplate38", "nameplate39", "nameplate40",
 		"party1target", "party2target", "party3target", "party4target",
 		"raid1target", "raid2target", "raid3target", "raid4target", "raid5target",
 		"raid6target", "raid7target", "raid8target", "raid9target", "raid10target",
@@ -581,11 +592,11 @@ do
 			end
 		end
 	end
-	--- Check targets for a mob.
-	-- Checks through boss units, your target and target of target, mouseover
-	-- and mouseover target, focus and focustarget, and group member targets.
-	-- @param id GUID or mob id
-	-- @return unit id if found or nil
+	--- Fetches a unit id by scanning available targets.
+	-- Scans through available targets such as bosses, nameplates and player targets
+	-- in an attempt to find a valid unit id to return.
+	-- @param id GUID or mob/npc id
+	-- @return unit id if found, nil otherwise
 	function boss:GetUnitIdByGUID(id) return findTargetByGUID(id) end
 
 	local function unitScanner(self, func, tankCheckExpiry, guid)
@@ -612,8 +623,10 @@ do
 	end
 
 	--- Register a callback to get the first non-tank target of a mob.
+	-- Looks for the unit as defined by the GUID and then returns the target of that unit.
+	-- If the target is a tank, it will keep looking until the designated time has elapsed.
 	-- @param func callback function, passed (module, playerName, playerGUID, timeElapsed)
-	-- @param tankCheckExpiry seconds to wait before returning the tank (max 0.8)
+	-- @param tankCheckExpiry seconds to wait, if a tank is still the target after this time, it will return the tank as the target (max 0.8)
 	-- @param guid GUID of the mob to get the target of
 	function boss:GetUnitTarget(func, tankCheckExpiry, guid)
 		if not self.scheduledScans then
@@ -743,9 +756,11 @@ do
 
 		self.scheduledScansCounter[guid] = elapsed
 	end
-	--- Register a callback to get the first non-tank target of a boss.
+	--- Register a callback to get the first non-tank target of a boss (boss1 - boss5).
+	-- Looks for the boss as defined by the GUID and then returns the target of that boss.
+	-- If the target is a tank, it will keep looking until the designated time has elapsed.
 	-- @param func callback function, passed (module, playerName, playerGUID, timeElapsed)
-	-- @param tankCheckExpiry seconds to wait before returning the tank (max 0.8)
+	-- @param tankCheckExpiry seconds to wait, if a tank is still the target after this time, it will return the tank as the target (max 0.8)
 	-- @param guid GUID of the mob to get the target of
 	function boss:GetBossTarget(func, tankCheckExpiry, guid)
 		if not self.scheduledScans then
@@ -815,11 +830,11 @@ end
 --- Check if in a Mythic difficulty instance.
 -- @return boolean
 function boss:Mythic()
-	return difficulty == 16
+	return difficulty == 16 or difficulty == 23
 end
 
---- Get the mob id from a GUID.
--- @param guid GUID of an mob or npc
+--- Get the mob/npc id from a GUID.
+-- @param guid GUID of a mob/npc
 -- @return mob id
 function boss:MobId(guid)
 	if not guid then return 1 end
@@ -827,7 +842,7 @@ function boss:MobId(guid)
 	return tonumber(id) or 1
 end
 
---- Get a localized name from an id. Positive ids for spells (GetSpellInfo) and negative ids for journal entries (EJ_GetSectionInfo)
+--- Get a localized name from an id. Positive ids for spells (GetSpellInfo) and negative ids for journal entries (EJ_GetSectionInfo).
 -- @return spell name
 function boss:SpellName(spellId)
 	return spells[spellId]
@@ -856,7 +871,8 @@ do
 	end
 end
 
---- Get the distance between two group members.
+--- [IN FLUX] Get the distance between two group members.
+-- Warning, this API will need to change in according to WoW 7.1 range regulations, do not rely on it.
 -- @param player the first player to check
 -- @param[opt="player"] otherPlayer second player to check
 -- @return distance
@@ -874,7 +890,7 @@ function boss:Range(player, otherPlayer)
 	end
 end
 
---- Check if you are alone in an instance.
+--- Check if you're the only person inside an instance, despite being in a group or not.
 -- @return boolean
 function boss:Solo()
 	return solo
@@ -895,7 +911,7 @@ do
 	local partyList = {"player", "party1", "party2", "party3", "party4"}
 	local GetNumGroupMembers, IsInRaid = GetNumGroupMembers, IsInRaid
 	--- Iterate over your group.
-	-- Uses "party" or "raid" tokens depending on your group type.
+	-- Automatically uses "party" or "raid" tokens depending on your group type.
 	-- @return iterator
 	function boss:IterateGroup()
 		local num = GetNumGroupMembers() or 0
