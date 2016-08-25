@@ -1,11 +1,9 @@
--- TO DO List 
--- Combat Testing req to see timers work correctly
+-- TO DO List Needs combat Testing to see how accurate timers actually are
 -- Needs onEngage timers
--- Crackling Jolt has no SPELL_CAST_SUCCESS event on logs used the ID for unit cast succeed but might need a event register
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-local mod,CL = BigWigs:NewBoss("Nithogg", -1017, 1749);
+local mod,CL=BigWigs:NewBoss("Nithogg", -1017, 1749);
 if not mod then return end
 
 mod:RegisterEnableMob(107544)
@@ -15,13 +13,13 @@ mod.worldBoss = 107544
 -- Initialization
 --
 function mod:GetOptions()
-	return {
-		212836,--Tail Lash
-		212852,--Storm Breath
-		212867,--Electrical Storm
-		212887,--Static Charge
-		212837,--Crackling Jolt
-	}
+		return {
+			212836,--Tail Lash
+			212852,--Storm Breath
+			212867,--Electrical Storm
+			212887,--Static Charge
+			212837,--Crackling Jolt
+		}
 end
 
 function mod:OnBossEnable()
@@ -29,6 +27,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ElectricalStorm", 212867)
 	self:Log("SPELL_CAST_SUCCESS", "StaticCharge", 212887)
 	self:Log("SPELL_CAST_SUCCESS", "CracklingJolt", 212837)
+	self:Log("SPELL_CAST_START", "TailLash", 212836)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil)
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("BOSS_KILL")
@@ -46,7 +46,14 @@ function mod:StormBreath(args)
 	self:CDBar(args.spellId, 23.7)
 end
 
-function mod:TailLash(args) 
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, spellGUID, spellId)
+	if spellId == 212837 then -- Crackling Jolt
+		self:Message(args.spellId, "Important", "Alarm")
+		self:CDBar(args.spellId, 12)
+	end
+end
+
+function mod:TailLash(args)
 	self:Message(args.spellId, "Urgent", "Alert")
 end
 
@@ -57,11 +64,6 @@ end
 
 function mod:StaticCharge(args)
 	self:CDBar(args.spellId, 41)
-end
-
-function mod:CracklingJolt(args)
-	self:Message(args.spellId, "Important", "Alarm")
-	self:CDBar(args.spellId, 12)
 end
 
 function mod:BOSS_KILL(event, id)
