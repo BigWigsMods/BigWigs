@@ -1,10 +1,6 @@
 -- TO DO LIST
--- 1)Register Icy Comet cast success event,check getOptions comment for more info
--- 2)Boss has 3 auras cycling on him with 20 second uptime,there is also 5~ ish second downtime between each buff.
--- Since It was kinda challenging to set up timers onEngage due to timers differing on pull Time,I wanted to proc all timers first time
--- boss gains a buff then removeLogs for all 3 Logs to stop timers proccing again everytime a new buff comes up.You can check the ancientRage mods.
--- There is probably a waaay more efficient way to do that though.
-
+-- 1)Check Cast-Succeed Buff Rotation Timers on combat
+-- 2)could potentially add Icy comet Spell id as 3rd else if statement
 -- Module Declaration
 --
 local mod, CL = BigWigs:NewBoss("Calamir", -1015, 1774)
@@ -45,16 +41,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ArcaneDesolation", 217986)
 	self:Log("SPELL_CAST_SUCCESS", "WrathfulFlames", 217893)
 	self:Log("SPELL_CAST_SUCCESS", "HowlingGale", 217966)
-	self:Log("SPELL_CAST_SUCCESS", "BurningBombSuccess", 217887)
+	self:Log("SPELL_CAST_SUCCESS", "BurningBombSuccess", 217874)
 	self:Log("SPELL_AURA_APPLIED", "BurningBomb", 217887)
 	self:Log("SPELL_AURA_REMOVED", "BurningBombRemoved", 217887)
-	self:Log("SPELL_CAST_SUCCESS", "AncientRageFire", 217563)
-	self:Log("SPELL_CAST_SUCCESS", "AncientRageFrost", 217831)
-	self:Log("SPELL_CAST_SUCCESS", "AncientRageArcane", 217834)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil)
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("BOSS_KILL")
---	self:RegisterUnitEvent("SPELL_CAST_SUCCESS", nil, "Unit")  SPELL_CAST_SUCCESS event for Icy Comet is missing ,I tried to register event but probably bad implementation
 end
 
 function mod:OnEngage()
@@ -62,13 +55,32 @@ function mod:OnEngage()
 end
 --------------------------------------------------------------------------------
 -- Event Handlers
---
---[[function mod:SPELL_CAST_SUCCESS(unit, spellName, _, _, spellId)
-	if spellId == 217919 or spellName == Icy Comet then
-		self:CDBar(217925, 76.7)
-		self:Message(217925, "Attention", nil, CL.incoming:format(spellName))
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, spellGUID, spellId)
+	if spellId == 217563 then -- fire
+		self:CDBar(217893, 9)   --WrathfulFlames
+		self:CDBar(217874, 17)  --BurningBomb
+		self:CDBar(217966, 27)  --HowlingGale
+		self:CDBar(217925, 34)  --IcyComet
+		self:CDBar(218012, 51)  --ArcanoPulse
+		self:CDBar(217986, 53)  --ArcaneDesolation
+		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil)
+	elseif spellId == 217831 -- frost
+		self:CDBar(217966, 2)   --HowlingGale
+		self:CDBar(217925, 9)   --IcyComet
+		self:CDBar(218012, 26)  --Arcanopulse
+		self:CDBar(217986, 28)  --ArcaneDesolation
+		self:CDBar(217874, 53)  --BurningBomb
+		self:CDBar(217893, 60)  --WrathfulFlames
+		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil)
+	elseif spellId == 217834 -- arcane
+		self:CDBar(217986, 2)  --ArcaneDesolation
+		self:CDBar(217874, 27)  --BurningBomb
+		self:CDBar(217893, 34) --WrathfulFlames
+		self:CDBar(217966, 53)  --HowlingGale
+		self:CDBar(217925, 59)  --IcyComet
+		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil)
 	end
-end--]]
+end
 
 function mod:IcyCometApplied(args)
 	if self:Me(args.destGUID) then
@@ -124,39 +136,4 @@ function mod:BOSS_KILL(event, id)
 	if id == 1952 then
 		self:Win()
 	end
-end
---
-function mod:AncientRageFire(args)
-	self:CDBar(217893, 9)   --WrathfulFlames
-	self:CDBar(217874, 17)  --BurningBomb
-	self:CDBar(217966, 27)  --HowlingGale
-	self:CDBar(217925, 34)  --IcyComet
-	self:CDBar(218012, 51)  --ArcanoPulse
-	self:CDBar(217986, 53)  --ArcaneDesolation
-	self:RemoveLog("SPELL_CAST_SUCCESS", 217563)
-	self:RemoveLog("SPELL_CAST_SUCCESS", 217831)
-	self:RemoveLog("SPELL_CAST_SUCCESS", 217834)
-end
-
-function mod:AncientRageFrost(args)
-	self:CDBar(217966, 2)   --HowlingGale
-	self:CDBar(217925, 9)   --IcyComet
-	self:CDBar(218012, 26)  --Arcanopulse
-	self:CDBar(217986, 28)  --ArcaneDesolation
-	self:CDBar(217874, 53)  --BurningBomb
-	self:CDBar(217893, 60)  --WrathfulFlames
-	self:RemoveLog("SPELL_CAST_SUCCESS", 217831)
-	self:RemoveLog("SPELL_CAST_SUCCESS", 217563)
-	self:RemoveLog("SPELL_CAST_SUCCESS", 217834)
-end
-
-function mod:AncientRageArcane(args)
-	self:CDBar(217986, 2)  --ArcaneDesolation
-	self:CDBar(217874, 27)  --BurningBomb
-	self:CDBar(217893, 34) --WrathfulFlames
-	self:CDBar(217966, 53)  --HowlingGale
-	self:CDBar(217925, 59)  --IcyComet
-	self:RemoveLog("SPELL_CAST_SUCCESS", 217834)
-	self:RemoveLog("SPELL_CAST_SUCCESS", 217563)
-	self:RemoveLog("SPELL_CAST_SUCCESS", 217831)
 end
