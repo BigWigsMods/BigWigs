@@ -1,12 +1,12 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "esES") or LibStub("AceLocale-3.0"):NewLocale("BigWigs", "esMX")
 if not L then return end
 
---L.getNewRelease = "Your BigWigs is old (/bwv) but you can easily update it using the Curse Client. Alternatively, you can update manually from curse.com or wowinterface.com."
---L.warnTwoReleases = "Your BigWigs is 2 releases out of date! Your version may have bugs, missing features, or completely incorrect timers. It is strongly recommended you update."
---L.warnSeveralReleases = "|cffff0000Your BigWigs is several releases out of date!! We HIGHLY recommend you update to prevent syncing issues with other players!|r"
+L.getNewRelease = "Tu BigWigs está desfasado (/bwv) pero puedes actualizarlo fácilmente con el cliente de Curse. También puedes actualizarlo manualmente desde curse.com o wowinterface.com."
+L.warnTwoReleases = "Tu BigWigs está 2 versiones desfasado! Tu versión puede tener fallos, faltarle características, o temporizadores incorrectos. Es muy recomendable que lo actualices."
+L.warnSeveralReleases = "|cffff0000Tu BigWigs está desfasado varias actualizaciones!! Te recomendamos MUCHÍSIMO que lo actualices cuanto antes para prevenir problemas de sincronización con otros jugadores!|r"
 
---L.gitHubTitle = "BigWigs is on GitHub"
---L.gitHubDesc = "BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out.\n\nIf you've committed changes to BigWigs whilst it was on SVN and would like your GitHub account linked on the Git commit log, contact us.\n\n|cFF33FF99Our API is now documented and freely readable on the GitHub wiki.|r"
+L.gitHubTitle = "BigWigs está en GitHub"
+L.gitHubDesc = "BigWigs es de código abierto alojado en GitHub. Siempre estamos buscando gente para ayudarnos y cualquiera es bienvenido para inspeccionar nuestro código, hacer contribuciones y reportar errores. BigWigs es tan genial a día de hoy en gran parte por la gran comunidad de WoW que nos ayuda.\n\nSi tienes cambios confirmados en BigWigs mientras estaba en SVN y te gustaría que tu cuenta de GitHub sea enlazada en el registro de cambios de Git, contacta con nosotros.\n\n|cFF33FF99Ahora nuestra API está documentada y puede leerla libremente en el wiki de GitHub.|r"
 
 L.about = "Acerca de"
 L.activeBossModules = "Módulos de jefes activos:"
