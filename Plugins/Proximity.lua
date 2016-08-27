@@ -25,7 +25,6 @@ plugin.defaultDB = {
 	disabled = false,
 	proximity = true,
 	font = nil,
-	fontSize = nil,
 }
 
 -------------------------------------------------------------------------------
@@ -572,10 +571,9 @@ local function updateProfile()
 	if not db.font then
 		db.font = media:GetDefault("font")
 	end
-	if not db.fontSize then
-		local _, size = GameFontNormalHuge:GetFont()
-		db.fontSize = size
-	end
+
+	-- XXX temp cleanup [7.0]
+	db.fontSize = nil
 
 	plugin:RestyleWindow()
 end
@@ -895,27 +893,6 @@ do
 				order = 2,
 				disabled = disabled,
 			},
-			--[[
-			font = {
-				type = "select",
-				name = L.font,
-				order = 3,
-				values = media:List("font"),
-				width = "full",
-				itemControl = "DDI-Font",
-				disabled = disabled,
-			},
-			fontSize = {
-				type = "range",
-				name = L.fontSize,
-				order = 4,
-				max = 40,
-				min = 8,
-				step = 1,
-				width = "full",
-				disabled = disabled,
-			},
-			--]]
 			soundName = {
 				type = "select",
 				name = L.sound,
@@ -1236,4 +1213,3 @@ SLASH_BigWigs_Proximity1 = "/proximity"
 SLASH_BigWigs_Proximity2 = "/range"
 SLASH_BigWigs_ProximityTarget1 = "/proximitytarget"
 SLASH_BigWigs_ProximityTarget2 = "/rangetarget"
-
