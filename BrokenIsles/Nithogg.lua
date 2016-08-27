@@ -3,7 +3,7 @@
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-local mod,CL=BigWigs:NewBoss("Nithogg", -1017, 1749);
+local mod, CL = BigWigs:NewBoss("Nithogg", -1017, 1749)
 if not mod then return end
 
 mod:RegisterEnableMob(107544)
@@ -13,13 +13,13 @@ mod.worldBoss = 107544
 -- Initialization
 --
 function mod:GetOptions()
-		return {
-			212836,--Tail Lash
-			212852,--Storm Breath
-			212867,--Electrical Storm
-			212887,--Static Charge
-			212837,--Crackling Jolt
-		}
+	return {
+		212836,--Tail Lash
+		212852,--Storm Breath
+		212867,--Electrical Storm
+		212887,--Static Charge
+		212837,--Crackling Jolt
+	}
 end
 
 function mod:OnBossEnable()
