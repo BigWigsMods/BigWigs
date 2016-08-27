@@ -64,7 +64,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, spellGUID, spellId)
 		self:CDBar(218012, 51)  --ArcanoPulse
 		self:CDBar(217986, 53)  --ArcaneDesolation
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil)
-	elseif spellId == 217831 -- frost
+	elseif spellId == 217831 then -- frost
 		self:CDBar(217966, 2)   --HowlingGale
 		self:CDBar(217925, 9)   --IcyComet
 		self:CDBar(218012, 26)  --Arcanopulse
@@ -72,7 +72,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, spellGUID, spellId)
 		self:CDBar(217874, 53)  --BurningBomb
 		self:CDBar(217893, 60)  --WrathfulFlames
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil)
-	elseif spellId == 217834 -- arcane
+	elseif spellId == 217834 then-- arcane
 		self:CDBar(217986, 2)  --ArcaneDesolation
 		self:CDBar(217874, 27)  --BurningBomb
 		self:CDBar(217893, 34) --WrathfulFlames
