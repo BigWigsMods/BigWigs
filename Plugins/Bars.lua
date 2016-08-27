@@ -581,7 +581,7 @@ do
 						name = L.fontSize,
 						order = 3,
 						max = 200, softMax = 72,
-						min = 6,
+						min = 1,
 						step = 1,
 					},
 					monochrome = {

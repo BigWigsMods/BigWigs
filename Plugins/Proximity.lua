@@ -25,7 +25,6 @@ plugin.defaultDB = {
 	disabled = false,
 	proximity = true,
 	font = nil,
-	fontSize = nil,
 }
 
 -------------------------------------------------------------------------------
@@ -572,10 +571,9 @@ local function updateProfile()
 	if not db.font then
 		db.font = media:GetDefault("font")
 	end
-	if not db.fontSize then
-		local _, size = GameFontNormalHuge:GetFont()
-		db.fontSize = size
-	end
+
+	-- XXX temp cleanup [7.0]
+	db.fontSize = nil
 
 	plugin:RestyleWindow()
 end

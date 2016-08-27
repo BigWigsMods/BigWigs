@@ -401,7 +401,7 @@ do
 				name = L.fontSize,
 				order = 4,
 				max = 200, softMax = 72,
-				min = 8,
+				min = 1,
 				step = 1,
 				width = "full",
 			},

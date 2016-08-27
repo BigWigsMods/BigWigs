@@ -234,7 +234,7 @@ local function createOptions()
 					type = "range",
 					name = L.fontSize,
 					order = 3,
-					softMax = 72, max = 200, min = 8, step = 1,
+					softMax = 72, max = 200, min = 1, step = 1,
 				},
 				upper = {
 					type = "toggle",
