@@ -28,6 +28,7 @@ move-folders:
     BigWigs/Draenor: BigWigs_Draenor
     BigWigs/Nighthold: BigWigs_Nighthold
     BigWigs/Nightmare: BigWigs_Nightmare
+    BigWigs/BrokenIsles: BigWigs_BrokenIsles
 
 ignore:
   - .travis.yml
