@@ -181,8 +181,8 @@ do
 		display:SetClampedToScreen(true)
 		display:SetMovable(true)
 		display:RegisterForDrag("LeftButton")
-		display:SetWidth((frameName == "BWEmphasizeCountdownMessageAnchor") and 40 or 200)
-		display:SetHeight((frameName == "BWEmphasizeCountdownMessageAnchor") and 40 or 20)
+		display:SetWidth((frameName == "BWEmphasizeCountdownMessageAnchor") and 50 or 200)
+		display:SetHeight((frameName == "BWEmphasizeCountdownMessageAnchor") and 50 or 20)
 		local bg = display:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints(display)
 		bg:SetColorTexture(0, 0, 0, 0.3)
@@ -400,8 +400,8 @@ do
 				type = "range",
 				name = L.fontSize,
 				order = 4,
-				max = 40,
-				min = 8,
+				max = 200, softMax = 72,
+				min = 1,
 				step = 1,
 				width = "full",
 			},
@@ -690,4 +690,3 @@ function plugin:BigWigs_Message(event, module, key, text, color, icon)
 		DEFAULT_CHAT_FRAME:AddMessage(text, r, g, b)
 	end
 end
-
