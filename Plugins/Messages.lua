@@ -400,7 +400,7 @@ do
 				type = "range",
 				name = L.fontSize,
 				order = 4,
-				max = 40,
+				max = 200, softMax = 72,
 				min = 8,
 				step = 1,
 				width = "full",
@@ -690,4 +690,3 @@ function plugin:BigWigs_Message(event, module, key, text, color, icon)
 		DEFAULT_CHAT_FRAME:AddMessage(text, r, g, b)
 	end
 end
-

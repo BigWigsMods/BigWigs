@@ -340,7 +340,7 @@ do
 	local E = ElvUI and ElvUI[1]
 	local backdropBorder = {
 		bgFile = "Interface\\Buttons\\WHITE8X8",
-		edgeFile = "Interface\\Buttons\\WHITE8X8", 
+		edgeFile = "Interface\\Buttons\\WHITE8X8",
 		tile = false, tileSize = 0, edgeSize = 1,
 		insets = {left = 0, right = 0, top = 0, bottom = 0}
 	}
@@ -407,7 +407,7 @@ do
 
 			local iconBd = bar.candyBarIconFrameBackdrop
 
-			if E then 
+			if E then
 				iconBd:SetTemplate("Transparent")
 				iconBd:SetOutside(bar.candyBarIconFrame)
 				if not E.PixelMode and iconBd.iborder then
@@ -580,7 +580,7 @@ do
 						type = "range",
 						name = L.fontSize,
 						order = 3,
-						max = 40,
+						max = 200, softMax = 72,
 						min = 6,
 						step = 1,
 					},
@@ -1805,4 +1805,3 @@ SlashCmdList.BIGWIGSBREAK = function(input)
 	end
 end
 SLASH_BIGWIGSBREAK1 = "/break"
-

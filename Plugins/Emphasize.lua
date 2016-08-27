@@ -234,7 +234,7 @@ local function createOptions()
 					type = "range",
 					name = L.fontSize,
 					order = 3,
-					max = 40, min = 8, step = 1,
+					softMax = 72, max = 200, min = 8, step = 1,
 				},
 				upper = {
 					type = "toggle",
@@ -425,4 +425,3 @@ function plugin:BigWigs_PlayCountdownNumber(_, module, num)
 		PlaySoundFile(sound, "Master")
 	end
 end
-
