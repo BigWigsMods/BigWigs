@@ -150,7 +150,7 @@ plugin.defaultDB = {
 	countdown = true,
 	font = nil,
 	outline = "THICKOUTLINE",
-	fontSize = 32,
+	fontSize = 48,
 	fontColor = { r = 1, g = 0, b = 0 },
 	voice = voiceMap[GetLocale()] or "English: Amy",
 	countdownTime = 5,
