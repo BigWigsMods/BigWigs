@@ -88,7 +88,7 @@ local fakeWorldZones = { -- Fake world zones used for world boss translations an
 	[466]=true, -- Outland
 	[862]=true, -- Pandaria
 	[962]=true, -- Draenor
-	--[000]=true, -- Legion -- XXX LEGION (main continent map area id)
+	[1007]=true, -- BrokenIsles
 }
 
 do
