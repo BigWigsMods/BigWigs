@@ -1,6 +1,5 @@
--- TO DO LIST
--- 1)Check Cast-Succeed Buff Rotation Timers on combat
--- 2)could potentially add Icy comet Spell id as 3rd else if statement
+-- TODO LIST
+-- - Timers need to be checked
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -16,9 +15,11 @@ mod.worldBoss = 109331
 -- Locals
 --
 
-local bBomb = 1
-local hGale = 1
-local aDesolation = 1
+local burningBombCount = 1
+local arcaneDesolationCount = 1
+local howlingGaleCount = 1
+local arcanopulseCount = 1
+local castCollector = {} -- for all UNIT casts
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -26,129 +27,160 @@ local aDesolation = 1
 
 function mod:GetOptions()
 	return {
-		--[[ FIRE PHASE ]]--
-		{217887, "SAY", "PROXIMITY"}, -- Burning Bomb
+		--[[ General ]]--
+		"stages",
+		--[[ Ancient Rage: Fire ]]--
+		{217877, "SAY", "PROXIMITY"}, -- Burning Bomb
 		217893, -- Wrathful Flames
-		--[[ ARCANE PHASE  ]]--
-		217986, -- Arcane Desolation
-		{218012, "FLASH"}, -- Arcanopulse
-		--[[ FROST PHASE ]]--
+		--[[ Ancient Rage: Frost ]]--
 		217966, -- Howling Gale
 		217925, -- Icy Comet
+		--[[ Ancient Rage: Arcane  ]]--
+		217986, -- Arcane Desolation
+		{218012, "FLASH"}, -- Arcanopulse, this spell id has the icon, desc - 218005 is the one for the cast
+	},{
+		["stages"] = "general",
+		[217877] = 217563, -- Ancient Rage: Fire
+		[217966] = 217831, -- Ancient Rage: Frost
+		[217986] = 217834, -- Ancient Rage: Arcane
 	}
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "ArcanoPulse", 218012)
-	self:Log("SPELL_AURA_APPLIED", "IcyCometApplied", 217925)
-	self:Log("SPELL_CAST_SUCCESS", "ArcaneDesolation", 217986)
-	self:Log("SPELL_CAST_SUCCESS", "WrathfulFlames", 217893)
-	self:Log("SPELL_CAST_SUCCESS", "HowlingGale", 217966)
-	self:Log("SPELL_CAST_SUCCESS", "BurningBombSuccess", 217874)
-	self:Log("SPELL_AURA_APPLIED", "BurningBomb", 217887)
-	self:Log("SPELL_AURA_REMOVED", "BurningBombRemoved", 217887)
+	--[[ General ]] --
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("BOSS_KILL")
+
+	--[[ Ancient Rage: Fire ]]--
+	self:Log("SPELL_AURA_APPLIED", "BurningBomb", 217877)
+	self:Log("SPELL_AURA_REMOVED", "BurningBombRemoved", 217877)
+	self:Log("SPELL_CAST_SUCCESS", "BurningBombSuccess", 217874)
+	self:Log("SPELL_CAST_SUCCESS", "WrathfulFlames", 217893)
+
+	--[[ Ancient Rage: Frost ]]--
+	self:Log("SPELL_CAST_SUCCESS", "HowlingGale", 217966)
+	self:Log("SPELL_AURA_APPLIED", "IcyCometApplied", 217925)
+
+	--[[ Ancient Rage: Arcane  ]]--
+	self:Log("SPELL_CAST_SUCCESS", "ArcaneDesolation", 217986)
 end
 
 function mod:OnEngage()
-	bBomb = 1
-	hGale = 1
-	aDesolation = 1
+	burningBombCount = 1
+	howlingGaleCount = 1
+	arcaneDesolationCount = 1
+	arcanopulseCount = 1
+	wipe(castCollector)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-do
-	local prev = nil
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, castGUID, spellId)
-		if spellId == 217563 and castGUID ~= prev then -- Fire
-			prev = castGUID
-			self:CDBar(217893, 9) -- Wrathful Flames
-			self:CDBar(217874, 17) -- Burning Bomb
-			self:CDBar(217966, 27) -- Howling Gale
-			self:CDBar(217925, 34) -- Icy Comet
-			self:CDBar(218012, 51) -- Arcanopulse
-			self:CDBar(217986, 53) -- Arcane Desolation
-			self:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-		elseif spellId == 217831 and castGUID ~= prev then -- Frost
-			prev = castGUID
-			self:CDBar(217966, 2) -- Howling Gale
-			self:CDBar(217925, 9) -- Icy Comet
-			self:CDBar(218012, 26) -- Arcanopulse
-			self:CDBar(217986, 28) -- Arcane Desolation
-			self:CDBar(217874, 53) -- Burning Bomb
-			self:CDBar(217893, 60) -- Wrathful Flames
-			self:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-		elseif spellId == 217834 and castGUID ~= prev then -- Arcane
-			prev = castGUID
-			self:CDBar(217986, 2) -- Arcane Desolation
-			self:CDBar(217874, 27) -- Burning Bomb
-			self:CDBar(217893, 34) -- Wrathful Flames
-			self:CDBar(217966, 53) -- Howling Gale
-			self:CDBar(217925, 59) -- Icy Comet
-			self:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+--[[ General ]] --
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, castGUID, spellId)
+	if castCollector[castGUID] then return end -- don't fire twice for the same cast
+
+	if spellId == 217563 then --[[ Ancient Rage: Fire ]]--
+		castCollector[castGUID] = true
+		self:Message("stages", "Neutral", "Info", spellName, spellId)
+		self:Bar("stages", 25.6, self:SpellName(217831), 217831) -- next: Frost
+		burningBombCount = 1
+		self:CDBar(217877, 2) -- Burning Bomb
+		self:CDBar(217893, 8.2) -- Wrathful Flames
+	elseif spellId == 217831 then --[[ Ancient Rage: Frost ]]--
+		castCollector[castGUID] = true
+		self:Message("stages", "Neutral", "Info", spellName, spellId)
+		self:Bar("stages", 25.6, self:SpellName(217834), 217834) -- next: Arcane
+		howlingGaleCount = 1
+		self:CDBar(217966, 2) -- Howling Gale
+		self:CDBar(217925, 8.5) -- Icy Comet
+	elseif spellId == 217834 then --[[ Ancient Rage: Arcane  ]]--
+		castCollector[castGUID] = true
+		self:Message("stages", "Neutral", "Info", spellName, spellId)
+		self:Bar("stages", 25.6, self:SpellName(217563), 217563) -- next: Fire
+		arcanopulseCount = 1
+		arcaneDesolationCount = 1
+		self:CDBar(217986, 2) -- Arcane Desolation
+		-- First Arcanopulse happens directly in the phase, so we start the bar after it
+	elseif spellId == 217919 then -- Icy Comet
+		castCollector[castGUID] = true
+		self:Message(spellId, "Attention", "Long")
+	elseif spellId == 218005 then -- Arcanopulse
+		castCollector[castGUID] = true
+		self:Message(218012, "Attention", "Long")
+		self:Flash(218012)
+		if arcanopulseCount == 2 then -- first one is happening directly after Ancient Rage: Arance
+			self:CDBar(218012, 10.5)
 		end
+		arcanopulseCount = arcanopulseCount + 1
 	end
 end
 
-function mod:IcyCometApplied(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Attention", "Warning", CL.underyou:format(args.spellName))
+function mod:BOSS_KILL(_, id)
+	if id == 1952 then
+		wipe(castCollector)
+		self:Win()
 	end
 end
 
-function mod:BurningBombSuccess(args)
-	self:CDBar(217887, bBomb % 2 == 1 and 12.5 or 63)
-	bBomb = bBomb + 1
-end
-
+--[[ Ancient Rage: Fire ]]--
 do
 	local list = mod:NewTargetList()
 	function mod:BurningBomb(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Info", nil, nil, self:Dispeller())
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alert", nil, nil, self:Dispeller())
 		end
 		if self:Me(args.destGUID) then
 			self:OpenProximity(args.spellId, 10)
 			self:Say(args.spellId)
+			self:TargetBar(args.spellId, 8, args.destName)
 		end
 	end
 
 	function mod:BurningBombRemoved(args)
 		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Positive", "Info", CL.removed(args.spellName))
 			self:CloseProximity(args.spellId)
+			self:StopBar(args.spellId, args.destName)
 		end
 	end
 end
 
+function mod:BurningBombSuccess(args)
+	if burningBombCount == 1 then
+		self:CDBar(217877, 13.4)
+	end
+	burningBombCount = burningBombCount + 1
+end
+
 function mod:WrathfulFlames(args)
-	self:CDBar(args.spellId, 76.4)
+	self:Message(args.spellId, "Important", "Alarm")
 end
 
-function mod:ArcanoPulse(args)
-	self:CDBar(args.spellId, 76.7)
-	self:Flash(args.spellId)
-end
-
-function mod:ArcaneDesolation(args)
-	self:CDBar(args.spellId, aDesolation % 2 == 1 and 12.5 or 61.9)
-	aDesolation = aDesolation + 1
-end
-
+--[[ Ancient Rage: Frost ]]--
 function mod:HowlingGale(args)
-	self:CDBar(args.spellId, hGale % 2 == 1 and 12.5 or 61.9)
-	hGale = hGale + 1
+	self:Message(args.spellId, "Important", "Alarm")
+	if howlingGaleCount == 1 then
+		self:CDBar(args.spellId, 12.5)
+	end
+	howlingGaleCount = howlingGaleCount + 1
 end
 
-function mod:BOSS_KILL(_, id)
-	if id == 1952 then
-		self:Win()
+function mod:IcyCometApplied(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", "Warning", CL.underyou:format(args.spellName))
 	end
 end
 
+--[[ Ancient Rage: Arcane  ]]--
+function mod:ArcaneDesolation(args)
+	self:Message(args.spellId, "Important", "Alarm")
+	if arcaneDesolationCount == 1 then
+		self:CDBar(args.spellId, 12)
+	end
+	arcaneDesolationCount = arcaneDesolationCount + 1
+end
