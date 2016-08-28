@@ -369,11 +369,6 @@ do
 			iterateWorldBosses(index, menu, strsplit(",", zones))
 		end
 	end
-
-	local num = tonumber(GetCVar("Sound_NumChannels")) or 0
-	if num < 64 then
-		SetCVar("Sound_NumChannels", 64) -- Blizzard keeps screwing with addon sound priority so we force this minimum
-	end
 end
 
 function mod:ADDON_LOADED(addon)
@@ -399,8 +394,6 @@ function mod:ADDON_LOADED(addon)
 	end
 
 	if BigWigs3DB then
-		BigWigs3DB.has61reset = nil -- XXX temp cleanup
-
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
 		if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
 			local name = UnitName("player")
@@ -410,6 +403,9 @@ function mod:ADDON_LOADED(addon)
 				if key then
 					self.isFakingDBM = key.fakeDBMVersion
 					self.isShowingZoneMessages = key.showZoneMessages
+				end
+				if BigWigs3DB.namespaces and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles[BigWigs3DB.profileKeys[name.." - "..realm]] then
+					self.isSoundOn = BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles[BigWigs3DB.profileKeys[name.." - "..realm]].sound
 				end
 			end
 		end
@@ -424,6 +420,13 @@ function mod:ADDON_LOADED(addon)
 		end
 	end
 	self:UpdateDBMFaking(nil, "fakeDBMVersion", self.isFakingDBM)
+
+	if self.isSoundOn ~= false then -- Only if sounds are enabled
+		local num = tonumber(GetCVar("Sound_NumChannels")) or 0
+		if num < 64 then
+			SetCVar("Sound_NumChannels", 64) -- Blizzard keeps screwing with addon sound priority so we force this minimum
+		end
+	end
 
 	bwFrame:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
@@ -739,7 +742,8 @@ do
 				prev = GetTime() + 40
 				-- Play in Master for those that have SFX off or very low.
 				-- We can't do PlaySound("ReadyCheck", "Master") as PlaySound is throttled, and Blizz already plays it.
-				PlaySoundFile("Sound\\Interface\\levelup2.ogg", "Master")
+				-- Only play via the "Master" channel if we have sounds turned on
+				PlaySoundFile("Sound\\Interface\\levelup2.ogg", BigWigs and BigWigs:GetPlugin("Sounds") and BigWigs:GetPlugin("Sounds").db.profile.sound and "Master" or self.isSoundOn ~= false and "Master")
 			end
 			self:LFG_PROPOSAL_SHOW()
 
@@ -1009,6 +1013,7 @@ function mod:BigWigs_CoreEnabled()
 	-- Core is loaded, nil these to force checking BigWigs.db.profile.option
 	self.isFakingDBM = nil
 	self.isShowingZoneMessages = nil
+	self.isSoundOn = nil
 end
 
 function mod:BigWigs_CoreDisabled()
