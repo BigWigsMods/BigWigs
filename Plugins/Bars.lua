@@ -191,7 +191,8 @@ do
 		end
 
 		bar.candyBarDuration:ClearAllPoints()
-		bar.candyBarDuration:SetPoint("RIGHT", bar.candyBarBar, "RIGHT", -2, 0)
+		bar.candyBarDuration:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2, 0)
+		bar.candyBarDuration:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2, 0)
 
 		bar.candyBarLabel:ClearAllPoints()
 		bar.candyBarLabel:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2, 0)
@@ -220,7 +221,6 @@ do
 			icon:ClearAllPoints()
 			icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -5, 0)
 			icon:SetSize(16, 16)
-			icon:Show() -- XXX temp
 			bar:Set("bigwigs:restoreicon", tex)
 
 			local iconBd = bar.candyBarIconFrameBackdrop
@@ -234,13 +234,13 @@ do
 			iconBd:Show()
 		end
 
-		bar.candyBarLabel:SetJustifyH("LEFT")
 		bar.candyBarLabel:ClearAllPoints()
-		bar.candyBarLabel:SetPoint("LEFT", bar, "LEFT", 4, 10)
+		bar.candyBarLabel:SetPoint("LEFT", bar.candyBarBar, "LEFT", 2, 10)
+		bar.candyBarLabel:SetPoint("RIGHT", bar.candyBarBar, "RIGHT", -2, 10)
 
-		bar.candyBarDuration:SetJustifyH("RIGHT")
 		bar.candyBarDuration:ClearAllPoints()
-		bar.candyBarDuration:SetPoint("RIGHT", bar, "RIGHT", -4, 10)
+		bar.candyBarDuration:SetPoint("RIGHT", bar.candyBarBar, "RIGHT", -2, 10)
+		bar.candyBarDuration:SetPoint("LEFT", bar.candyBarBar, "LEFT", 2, 10)
 	end
 
 	barStyles.MonoUI = {
@@ -402,7 +402,6 @@ do
 			icon:ClearAllPoints()
 			icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", E and (E.PixelMode and -1 or -5) or -1, 0)
 			icon:SetSize(20, 20)
-			icon:Show() -- XXX temp
 			bar:Set("bigwigs:restoreicon", tex)
 
 			local iconBd = bar.candyBarIconFrameBackdrop
@@ -452,7 +451,8 @@ plugin.defaultDB = {
 	outline = "NONE",
 	growup = true,
 	time = true,
-	align = "LEFT",
+	alignText = "LEFT",
+	alignTime = "RIGHT",
 	icon = true,
 	fill = nil,
 	barStyle = "Default",
@@ -576,65 +576,31 @@ do
 							THICKOUTLINE = L.thick,
 						},
 					},
-					fontSize = {
-						type = "range",
-						name = L.fontSize,
-						order = 3,
-						max = 200, softMax = 72,
-						min = 1,
-						step = 1,
-					},
 					monochrome = {
 						type = "toggle",
 						name = L.monochrome,
 						desc = L.monochromeDesc,
-						order = 3.5,
+						order = 3,
 					},
-					texture = {
-						type = "select",
-						name = L.texture,
+					fontSize = {
+						type = "range",
+						name = L.fontSize,
+						width = "double",
 						order = 4,
-						values = media:List("statusbar"),
-						itemControl = "DDI-Statusbar",
+						max = 200, softMax = 72,
+						min = 1,
+						step = 1,
 					},
-					barStyle = {
-						type = "select",
-						name = L.style,
+					header1 = {
+						type = "header",
+						name = "",
 						order = 5,
-						values = barStyleRegister,
-					},
-					align = {
-						type = "select",
-						name = L.align,
-						values = {
-							LEFT = L.left,
-							CENTER = L.center,
-							RIGHT = L.right,
-						},
-						style = "radio",
-						width = "half",
-						order = 6,
-					},
-					icon = {
-						type = "toggle",
-						name = L.icon,
-						desc = L.iconDesc,
-						order = 7,
-						width = "half",
-					},
-					time = {
-						type = "toggle",
-						name = L.time,
-						desc = L.timeDesc,
-						order = 8,
-						width = "half",
 					},
 					fill = {
 						type = "toggle",
 						name = L.fill,
 						desc = L.fillDesc,
-						order = 9,
-						width = "half",
+						order = 6,
 						set = function(info, value)
 							local key = info[#info]
 							db[key] = value
@@ -646,6 +612,56 @@ do
 								k:SetFill(value)
 							end
 						end,
+					},
+					alignText = {
+						type = "select",
+						name = L.alignText,
+						order = 7,
+						values = {
+							LEFT = L.left,
+							CENTER = L.center,
+							RIGHT = L.right,
+						},
+					},
+					alignTime = {
+						type = "select",
+						name = L.alignTime,
+						order = 8,
+						values = {
+							LEFT = L.left,
+							CENTER = L.center,
+							RIGHT = L.right,
+						},
+					},
+					texture = {
+						type = "select",
+						name = L.texture,
+						order = 9,
+						values = media:List("statusbar"),
+						itemControl = "DDI-Statusbar",
+					},
+					barStyle = {
+						type = "select",
+						name = L.style,
+						order = 10,
+						values = barStyleRegister,
+					},
+					header2 = {
+						type = "header",
+						name = "",
+						order = 11,
+					},
+					icon = {
+						type = "toggle",
+						name = L.icon,
+						desc = L.iconDesc,
+						order = 12,
+					},
+					time = {
+						type = "toggle",
+						name = L.time,
+						desc = L.timeDesc,
+						order = 13,
 					},
 				},
 			},
@@ -1058,6 +1074,8 @@ local function updateProfile()
 		plugin:SetBarStyle(db.barStyle)
 		plugin:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
 	end
+	-- XXX temp cleanup [7.0]
+	db.align = nil
 end
 
 --------------------------------------------------------------------------------
@@ -1317,11 +1335,9 @@ local function barClicked(bar, button)
 end
 
 local function barOnEnter(bar)
-	bar.candyBarLabel:SetJustifyH(db.align == "CENTER" and "LEFT" or "CENTER")
 	bar.candyBarBackground:SetVertexColor(1, 1, 1, 0.8)
 end
 local function barOnLeave(bar)
-	bar.candyBarLabel:SetJustifyH(db.align)
 	local module = bar:Get("bigwigs:module")
 	local key = bar:Get("bigwigs:option")
 	bar.candyBarBackground:SetVertexColor(colors:GetColor("barBackground", module, key))
@@ -1449,7 +1465,8 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	bar:SetColor(colors:GetColor("barColor", module, key))
 	bar:SetTextColor(colors:GetColor("barText", module, key))
 	bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
-	bar.candyBarLabel:SetJustifyH(db.align)
+	bar.candyBarLabel:SetJustifyH(db.alignText)
+	bar.candyBarDuration:SetJustifyH(db.alignTime)
 
 	local flags = nil
 	if db.monochrome and db.outline ~= "NONE" then

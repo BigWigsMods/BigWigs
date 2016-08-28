@@ -1,0 +1,33 @@
+## Interface: 70000
+
+## Title: BigWigs [|cffeda55fBroken Isles|r]
+## Title-deDE: BigWigs [|cffeda55fBroken Isles|r]
+## Title-esES: BigWigs [|cffeda55fBroken Isles|r]
+## Title-esMX: BigWigs [|cffeda55fBroken Isles|r]
+## Title-frFR: BigWigs [|cffeda55fBroken Isles|r]
+## Title-ruRU: BigWigs [|cffeda55fBroken Isles|r]
+## Title-zhCN: BigWigs [|cffeda55fBroken Isles|r]
+## Title-zhTW: BigWigs [|cffeda55fBroken Isles|r]
+## Title-itIT: BigWigs [|cffeda55fBroken Isles|r]
+## Title-ptBR: BigWigs [|cffeda55fBroken Isles|r]
+## Title-koKR: BigWigs [|cffeda55fBroken Isles|r]
+## Notes: BigWigs Broken Isles Modules
+## Notes-deDE: BigWigs Broken Isles Modules
+## Notes-esES: BigWigs Broken Isles Modules
+## Notes-esMX: BigWigs Broken Isles Modules
+## Notes-frFR: BigWigs Broken Isles Modules
+## Notes-ruRU: BigWigs Broken Isles Modules
+## Notes-zhCN: BigWigs Broken Isles Modules
+## Notes-zhTW: BigWigs Broken Isles Modules
+## Notes-itIT: BigWigs Broken Isles Modules
+## Notes-ptBR: BigWigs Broken Isles Modules
+## Notes-koKR: BigWigs Broken Isles Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-Menu: 1007
+## X-BigWigs-LoadOn-WorldBoss: -1015, 109331, -1017, 107023
+
+modules.xml
