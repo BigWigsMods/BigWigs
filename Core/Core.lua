@@ -397,13 +397,6 @@ do
 		db.RegisterCallback(self, "OnProfileReset", profileUpdate)
 		self.db = db
 
-		-- XXX temp cleanup
-		self.db.global.seenmovies = nil
-		self.db.profile.showBlizzardWarnings = nil
-		self.db.profile.blockmovies = nil
-		self.db.profile.sound = nil
-		--
-
 		self.ADDON_LOADED = InitializeModules
 		InitializeModules()
 	end

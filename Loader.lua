@@ -3,14 +3,11 @@ local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
 local mod, public = {}, {}
 local bwFrame = CreateFrame("Frame")
 
-local isLegion = GetExpansionLevel() > 5 -- XXX LEGION
-public.isLegion = isLegion
-
 -----------------------------------------------------------------------
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 7
+local BIGWIGS_VERSION = 8
 local BIGWIGS_RELEASE_STRING = ""
 local versionQueryString, versionResponseString = "Q:%d-%s", "V:%d-%s"
 
@@ -480,12 +477,10 @@ do
 		BigWigs_Pandaria = "BigWigs_MistsOfPandaria",
 		BigWigs_SiegeOfOrgrimmar = "BigWigs_MistsOfPandaria",
 		BigWigs_ThroneOfThunder = "BigWigs_MistsOfPandaria",
-		-- XXX LEGION
-		--BigWigs_Draenor = "BigWigs_WarlordsOfDraenor",
-		--BigWigs_Highmaul = "BigWigs_WarlordsOfDraenor",
-		--BigWigs_BlackrockFoundry = "BigWigs_WarlordsOfDraenor",
-		--BigWigs_HellfireCitadel = "BigWigs_WarlordsOfDraenor",
-		-- XXX LEGION
+		BigWigs_Draenor = "BigWigs_WarlordsOfDraenor",
+		BigWigs_Highmaul = "BigWigs_WarlordsOfDraenor",
+		BigWigs_BlackrockFoundry = "BigWigs_WarlordsOfDraenor",
+		BigWigs_HellfireCitadel = "BigWigs_WarlordsOfDraenor",
 		LittleWigs_ShadoPanMonastery = "LittleWigs",
 		LittleWigs_ScarletHalls = "LittleWigs",
 		LittleWigs_ScarletMonastery = "LittleWigs",
@@ -910,11 +905,6 @@ do
 		else
 			local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
 			id = instanceId
-			-- XXX temp LEGION
-			if IsTestBuild() and not self.tmp and (id == 1520 or id == 1530) then
-				self.tmp = true
-				sysprint("We're looking for a new end-game raider to join our developer team! See [goo.gl/aajTfo] for more info.")
-			end
 		end
 
 		-- Module loading
@@ -956,11 +946,9 @@ do
 		local zoneAddon = public.zoneTbl[id]
 		if zoneAddon and inside and not fakeWorldZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 			warnedThisZone[id] = true
-			if zoneAddon ~= "BigWigs_WarlordsOfDraenor" then -- XXX temp Legion
-				local msg = L.missingAddOn:format(zoneAddon)
-				sysprint(msg)
-				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
-			end
+			local msg = L.missingAddOn:format(zoneAddon)
+			sysprint(msg)
+			RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
 		end
 	end
 	mod.RAID_INSTANCE_WELCOME = mod.ZONE_CHANGED_NEW_AREA -- Entirely for Onyxia's Lair loading

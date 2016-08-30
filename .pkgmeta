@@ -22,10 +22,6 @@ move-folders:
     BigWigs/Core: BigWigs_Core
     BigWigs/Options: BigWigs_Options
     BigWigs/Plugins: BigWigs_Plugins
-    BigWigs/Highmaul: BigWigs_Highmaul
-    BigWigs/BlackrockFoundry: BigWigs_BlackrockFoundry
-    BigWigs/HellfireCitadel: BigWigs_HellfireCitadel
-    BigWigs/Draenor: BigWigs_Draenor
     BigWigs/Nighthold: BigWigs_Nighthold
     BigWigs/Nightmare: BigWigs_Nightmare
     BigWigs/BrokenIsles: BigWigs_BrokenIsles

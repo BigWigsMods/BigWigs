@@ -1,5 +1,6 @@
 -- TODO LIST
 -- - Timers need to be checked
+-- - Tuning sounds / message colors
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -112,7 +113,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, castGUID, spellId)
 		castCollector[castGUID] = true
 		self:Message(218012, "Attention", "Long")
 		self:Flash(218012)
-		if arcanopulseCount == 2 then -- first one is happening directly after Ancient Rage: Arance
+		if arcanopulseCount == 1 then -- first one is happening directly after Ancient Rage: Arance
 			self:CDBar(218012, 10.5)
 		end
 		arcanopulseCount = arcanopulseCount + 1
