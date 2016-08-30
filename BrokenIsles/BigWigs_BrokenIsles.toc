@@ -6,8 +6,8 @@
 ## Title-esMX: BigWigs [|cffeda55fBroken Isles|r]
 ## Title-frFR: BigWigs [|cffeda55fBroken Isles|r]
 ## Title-ruRU: BigWigs [|cffeda55fBroken Isles|r]
-## Title-zhCN: BigWigs [|cffeda55fBroken Isles|r]
-## Title-zhTW: BigWigs [|cffeda55fBroken Isles|r]
+## Title-zhCN: BigWigs [|cffeda55f破碎群岛|r]
+## Title-zhTW: BigWigs [|cffeda55f破碎群島|r]
 ## Title-itIT: BigWigs [|cffeda55fBroken Isles|r]
 ## Title-ptBR: BigWigs [|cffeda55fBroken Isles|r]
 ## Title-koKR: BigWigs [|cffeda55fBroken Isles|r]
@@ -17,8 +17,8 @@
 ## Notes-esMX: BigWigs Broken Isles Modules
 ## Notes-frFR: BigWigs Broken Isles Modules
 ## Notes-ruRU: BigWigs Broken Isles Modules
-## Notes-zhCN: BigWigs Broken Isles Modules
-## Notes-zhTW: BigWigs Broken Isles Modules
+## Notes-zhCN: BigWigs 破碎群岛模块。
+## Notes-zhTW: BigWigs 破碎群島模組。
 ## Notes-itIT: BigWigs Broken Isles Modules
 ## Notes-ptBR: BigWigs Broken Isles Modules
 ## Notes-koKR: BigWigs Broken Isles Modules
