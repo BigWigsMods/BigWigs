@@ -101,7 +101,7 @@ local acOptions = {
 					end
 				end
 				if not InterfaceOptionsFrame:IsShown() then
-					local panel = "BigWigs |cFF62B1F6".. EJ_GetTierInfo(loader.isLegion and 7 or 6) .."|r" -- XXX Legion temp
+					local panel = "BigWigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r"
 					InterfaceOptionsFrame_OpenToCategory(panel)
 					InterfaceOptionsFrame_OpenToCategory(panel)
 				end
@@ -1224,8 +1224,8 @@ do
 		BigWigs_WrathOfTheLichKing = "BigWigs ".. EJ_GetTierInfo(3),
 		BigWigs_Cataclysm = "BigWigs ".. EJ_GetTierInfo(4),
 		BigWigs_MistsOfPandaria = "BigWigs ".. EJ_GetTierInfo(5),
-		BigWigs_WarlordsOfDraenor = loader.isLegion and ("BigWigs ".. EJ_GetTierInfo(6)) or ("BigWigs |cFF62B1F6".. EJ_GetTierInfo(6) .."|r"),
-		BigWigs_Legion = loader.isLegion and ("BigWigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r") or ("BigWigs ".. EJ_GetTierInfo(7)),
+		BigWigs_WarlordsOfDraenor = "BigWigs ".. EJ_GetTierInfo(6),
+		BigWigs_Legion = "BigWigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r",
 		LittleWigs = "LittleWigs",
 	}
 
