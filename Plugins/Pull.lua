@@ -37,20 +37,34 @@ do
 					normal = "Normal",
 					emphasized = "Emphasized",
 				},
+			},
+			desc1 = {
+				type = "description",
+				name = "\n",
+				order = 1.1,
 				width = "full",
 			},
 			combatLog = {
-				type = "select",
-				name = "Automatic Combat logging",
+				type = "toggle",
+				name = "Automatic Combat Logging",
+				desc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends.",
 				order = 2,
 				width = "full",
 			},
-			--gearCheck = {
-			--	type = "toggle",
-			--	name = "Low Gear Check",
-			--	order = 3,
-			--	width = "full",
-			--},
+			desc2 = {
+				type = "description",
+				name = "",
+				order = 2.1,
+				width = "full",
+			},
+			gearCheck = {
+				type = "toggle",
+				name = "Bad Gear Check",
+				desc = "Scan your equipped gear for potentially bad items when starting a pull timer.",
+				disabled = function() return true end,
+				order = 3,
+				width = "full",
+			},
 		},
 	}
 end
