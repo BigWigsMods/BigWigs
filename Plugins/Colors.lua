@@ -28,6 +28,15 @@ plugin.defaultDB = {
 	flash = { ["*"] = { ["*"] = { 0, 0, 1 } } },
 }
 
+local colorWrapper = {
+	red = "Important",
+	blue = "Personal",
+	orange = "Urgent",
+	yellow = "Attention",
+	green = "Positive",
+	cyan = "Neutral",
+}
+
 local function copyTable(to, from)
 	setmetatable(to, nil)
 	for k,v in next, from do
@@ -228,7 +237,7 @@ plugin.pluginOptions.args.resetAll = {
 
 local white = { 1, 1, 1 }
 function plugin:GetColorTable(hint, module, key)
-	if not self.db.profile[hint] then return white end
+	if not self.db.profile[colorWrapper[hint] or hint] then return white end
 	local name
 	if not module or not key then
 		name = plugin.name
