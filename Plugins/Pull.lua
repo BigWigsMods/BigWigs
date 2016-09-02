@@ -94,7 +94,7 @@ do
 			end
 		end
 	end
-	function self:StartPull(seconds, nick, isDBM)
+	function plugin:StartPull(seconds, nick, isDBM)
 		if (not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player")) or (IsEncounterInProgress() and nick ~= COMBAT) then return end
 		seconds = tonumber(seconds)
 		if not seconds or seconds < 0 or seconds > 60 then return end
