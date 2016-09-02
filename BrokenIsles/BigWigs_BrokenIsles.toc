@@ -5,7 +5,7 @@
 ## Title-esES: BigWigs [|cffeda55fIslas Abruptas|r]
 ## Title-esMX: BigWigs [|cffeda55fIslas Abruptas|r]
 ## Title-frFR: BigWigs [|cffeda55fBroken Isles|r]
-## Title-ruRU: BigWigs [|cffeda55fBroken Isles|r]
+## Title-ruRU: BigWigs [|cffeda55fРасколотые острова|r]
 ## Title-zhCN: BigWigs [|cffeda55f破碎群岛|r]
 ## Title-zhTW: BigWigs [|cffeda55f破碎群島|r]
 ## Title-itIT: BigWigs [|cffeda55fBroken Isles|r]
@@ -16,7 +16,7 @@
 ## Notes-esES: BigWigs Módulos para las Islas Abruptas
 ## Notes-esMX: BigWigs Módulos para las Islas Abruptas
 ## Notes-frFR: BigWigs Broken Isles Modules
-## Notes-ruRU: BigWigs Broken Isles Modules
+## Notes-ruRU: BigWigs Модуль для Расколотых островов
 ## Notes-zhCN: BigWigs 破碎群岛模块。
 ## Notes-zhTW: BigWigs 破碎群島模組。
 ## Notes-itIT: BigWigs Broken Isles Modules
