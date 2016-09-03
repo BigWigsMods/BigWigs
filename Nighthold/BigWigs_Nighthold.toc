@@ -1,7 +1,7 @@
 ## Interface: 70000
 
 ## Title: BigWigs [|cffeda55fThe Nighthold|r]
-## Title-deDE: BigWigs [|cffeda55fThe Nighthold|r]
+## Title-deDE: BigWigs [|cffeda55fDie Nachtfestung|r]
 ## Title-esES: BigWigs [|cffeda55fThe Nighthold|r]
 ## Title-esMX: BigWigs [|cffeda55fThe Nighthold|r]
 ## Title-frFR: BigWigs [|cffeda55fPalais Sacrenuit|r]
@@ -12,7 +12,7 @@
 ## Title-ptBR: BigWigs [|cffeda55fThe Nighthold|r]
 ## Title-koKR: BigWigs [|cffeda55fThe Nighthold|r]
 ## Notes: BigWigs The Nighthold Modules
-## Notes-deDE: BigWigs The Nighthold Modules
+## Notes-deDE: BigWigs-Module für die Nachtfestung
 ## Notes-esES: BigWigs The Nighthold Modules
 ## Notes-esMX: BigWigs The Nighthold Modules
 ## Notes-frFR: Modules BigWigs concernant le Palais Sacrenuit.
