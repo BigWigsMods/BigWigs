@@ -237,7 +237,8 @@ plugin.pluginOptions.args.resetAll = {
 
 local white = { 1, 1, 1 }
 function plugin:GetColorTable(hint, module, key)
-	if not self.db.profile[colorWrapper[hint] or hint] then return white end
+	hint = colorWrapper[hint] or hint
+	if not self.db.profile[hint] then return white end
 	local name
 	if not module or not key then
 		name = plugin.name
