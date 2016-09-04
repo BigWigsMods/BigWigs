@@ -223,6 +223,19 @@ L.tooltip = "Tooltip"
 L.tooltipDesc = "Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."
 
 -----------------------------------------------------------------------
+-- Pull.lua
+--
+
+L.pullName = "Pull"
+L.pullCountType = "Countdown Type"
+L.pullNormal = "Normal"
+L.pullEmphasized = "Emphasized"
+L.pullCombatlog = "Automatic Combat Logging"
+L.pullCombatlogDescription = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
+L.pullGearCheck = "Bad Gear Check"
+L.pullGearCheckDescription = "Scan your equipped gear for potentially bad items when starting a pull timer."
+
+-----------------------------------------------------------------------
 -- RaidIcon.lua
 --
 
