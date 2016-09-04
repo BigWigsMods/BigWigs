@@ -19,9 +19,7 @@ local colors = nil
 
 do
 	local function createFrames()
-		flashFrame = CreateFrame("Frame", nil, UIParent)
-		flashFrame:SetFrameStrata("BACKGROUND")
-		flashFrame:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"})
+		flashFrame = UIParent:CreateTexture()
 		flashFrame:SetAllPoints(UIParent)
 		flashFrame:SetAlpha(0)
 		flashFrame:Hide()
@@ -50,15 +48,13 @@ do
 		fade4:SetToAlpha(0)
 		fade4:SetOrder(4)
 
-		pulseFrame = CreateFrame("Frame", nil, UIParent)
+		pulseFrame = UIParent:CreateTexture()
 		pulseFrame:SetPoint("CENTER", UIParent, "CENTER")
 		pulseFrame:SetSize(100,100)
 		pulseFrame:SetAlpha(0.5)
+		pulseFrame:SetTexture(132337) -- Interface\\Icons\\ability_warrior_charge
+		pulseFrame:SetTexCoord(0.07, 0.93, 0.07, 0.93)
 		pulseFrame:Hide()
-		pulseFrame.tex = pulseFrame:CreateTexture(nil, "ARTWORK")
-		pulseFrame.tex:SetTexCoord(0.07, 0.93, 0.07, 0.93)
-		pulseFrame.tex:SetAllPoints(pulseFrame)
-		pulseFrame.tex:SetTexture(132337) --"Interface\\Icons\\ability_warrior_charge"
 
 		pulser = pulseFrame:CreateAnimationGroup()
 		pulser:SetScript("OnFinished", function() pulseFrame:Hide() end)
@@ -77,8 +73,10 @@ do
 	function mod:OnPluginEnable()
 		if createFrames then createFrames() createFrames = nil end
 		colors = BigWigs:GetPlugin("Colors")
-		self:RegisterMessage("BigWigs_Flash")
-		self:RegisterMessage("BigWigs_Pulse")
+		if colors then
+			self:RegisterMessage("BigWigs_Flash")
+			self:RegisterMessage("BigWigs_Pulse")
+		end
 	end
 end
 
@@ -90,16 +88,16 @@ function mod:BigWigs_Flash(event, module, key)
 	if BigWigs.db.profile.flash then
 		flasher:Stop()
 		local r, g, b = colors:GetColor("flash", module, key)
-		flashFrame:SetBackdropColor(r, g, b, 0.8)
+		flashFrame:SetColorTexture(r, g, b, 0.6)
 		flashFrame:SetAlpha(0)
 		flashFrame:Show()
 		flasher:Play()
 	end
 end
 
-function mod:BigWigs_Pulse(event, module, key, icon)
+function mod:BigWigs_Pulse(event, _, _, icon)
 	pulser:Stop()
-	pulseFrame.tex:SetTexture(icon)
+	pulseFrame:SetTexture(icon or 134400) -- Interface\\Icons\\INV_Misc_QuestionMark
 	pulseFrame:Show()
 	pulser:Play()
 end
