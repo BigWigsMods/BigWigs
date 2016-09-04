@@ -1,7 +1,7 @@
 ## Interface: 70000
 
 ## Title: BigWigs [|cffeda55fBroken Isles|r]
-## Title-deDE: BigWigs [|cffeda55fBroken Isles|r]
+## Title-deDE: BigWigs [|cffeda55fVerheerte Inseln|r]
 ## Title-esES: BigWigs [|cffeda55fIslas Abruptas|r]
 ## Title-esMX: BigWigs [|cffeda55fIslas Abruptas|r]
 ## Title-frFR: BigWigs [|cffeda55fÎles Brisées|r]
@@ -12,7 +12,7 @@
 ## Title-ptBR: BigWigs [|cffeda55fBroken Isles|r]
 ## Title-koKR: BigWigs [|cffeda55fBroken Isles|r]
 ## Notes: BigWigs Broken Isles Modules
-## Notes-deDE: BigWigs Broken Isles Modules
+## Notes-deDE: BigWigs-Module für die Verheerten Inseln
 ## Notes-esES: BigWigs Módulos para las Islas Abruptas
 ## Notes-esMX: BigWigs Módulos para las Islas Abruptas
 ## Notes-frFR: BigWigs Modules BigWigs concernant les Îles Brisées
