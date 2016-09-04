@@ -25,7 +25,7 @@ plugin.defaultDB = {
 
 do
 	plugin.pluginOptions = {
-		name = "Pull",
+		name = L.pullName,
 		type = "group",
 		childGroups = "tab",
 		get = function(i) return plugin.db.profile[i[#i]] end,
@@ -33,11 +33,11 @@ do
 		args = {
 			countType = {
 				type = "select",
-				name = "Countdown Type",
+				name = L.pullCountType,
 				order = 1,
 				values = {
-					normal = "Normal",
-					emphasized = "Emphasized",
+					normal = L.pullNormal,
+					emphasized = L.pullEmphasized,
 				},
 			},
 			desc1 = {
@@ -48,8 +48,8 @@ do
 			},
 			combatLog = {
 				type = "toggle",
-				name = "Automatic Combat Logging",
-				desc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends.",
+				name = L.pullCombatlog,
+				desc = L.pullCombatlogDescription,
 				order = 2,
 				width = "full",
 			},
@@ -61,8 +61,8 @@ do
 			},
 			gearCheck = {
 				type = "toggle",
-				name = "Bad Gear Check",
-				desc = "Scan your equipped gear for potentially bad items when starting a pull timer.",
+				name = L.pullGearCheck,
+				desc = L.pullGearCheckDescription,
 				order = 3,
 				width = "full",
 			},
