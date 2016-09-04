@@ -141,7 +141,9 @@ do
 				for i = 1, 18 do
 					-- 0 Poor/Grey, 1 Common/White, 2 Uncommon/Green, 3 Rare/Blue, 4 Epic/Purple, 5 Legendary, 6 Artifact, 7 Heirloom
 					local quality = GetInventoryItemQuality("player", i)
-					if quality and (quality == 7 or quality < 3) then
+					local itemId = GetInventoryItemID("player", i)
+					local _, _, _, iLevel = GetItemInfo(itemId or 0) -- XXX this doesn't compensate for items that drop with multiple item levels
+					if quality and (quality < 2 or iLevel < 300) then
 						local msg = ("Bad Item Equipped: %s"):format(GetInventoryItemLink("player", i))
 						BigWigs:Print(msg)
 						self:SendMessage("BigWigs_Message", self, nil, msg, "Personal")
