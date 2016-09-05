@@ -566,8 +566,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "15117" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "7.0.2" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
+	local DBMdotRevision = "15178" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "7.0.3" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -703,30 +703,28 @@ do
 	local prev
 	function mod:LFG_PROPOSAL_SHOW()
 		if not prev then
-			local BD = {
-				bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
-				tile = true,
-				tileSize = 32,
-				insets = {left = -1, right = -1, top = -1, bottom = -1},
-			}
-
 			local timerBar = CreateFrame("StatusBar", nil, LFGDungeonReadyPopup)
 			timerBar:SetPoint("TOP", LFGDungeonReadyPopup, "BOTTOM", 0, -5)
+			local tex = timerBar:CreateTexture()
+			tex:SetTexture(137012) -- Interface\\TargetingFrame\\UI-StatusBar
+			timerBar:SetStatusBarTexture(tex)
 			timerBar:SetSize(190, 9)
-			timerBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar", "BORDER")
-			timerBar:SetStatusBarColor(1,.1,0)
-			timerBar:SetBackdrop(BD)
+			timerBar:SetStatusBarColor(1, 0.1, 0)
 			timerBar:SetMinMaxValues(0, 40)
 			timerBar:Show()
 
+			local bg = timerBar:CreateTexture(nil, "BACKGROUND")
+			bg:SetAllPoints(timerBar)
+			bg:SetColorTexture(0, 0, 0, 0.7)
+
 			local spark = timerBar:CreateTexture(nil, "OVERLAY")
-			spark:SetTexture(130877) --"Interface\\CastingBar\\UI-CastingBar-Spark"
+			spark:SetTexture(130877) -- Interface\\CastingBar\\UI-CastingBar-Spark
 			spark:SetSize(32, 32)
 			spark:SetBlendMode("ADD")
-			spark:SetPoint("LEFT", timerBar:GetStatusBarTexture(), "RIGHT", -15, 0)
+			spark:SetPoint("LEFT", tex, "RIGHT", -15, 0)
 
-			local border = timerBar:CreateTexture(nil, "ARTWORK")
-			border:SetTexture(130874) --"Interface\\CastingBar\\UI-CastingBar-Border"
+			local border = timerBar:CreateTexture(nil, "OVERLAY")
+			border:SetTexture(130874) -- Interface\\CastingBar\\UI-CastingBar-Border
 			border:SetSize(256, 64)
 			border:SetPoint("TOP", timerBar, 0, 28)
 
