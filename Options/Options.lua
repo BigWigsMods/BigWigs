@@ -970,14 +970,21 @@ do
 		end)
 
 		-- Do we have content for the zone we're in? Then open straight to that zone.
-		local mapId = loader.GetPlayerMapAreaID("player")
-		if not mapId then
+		local id, mapId, parent
+		local inside = IsInInstance()
+		if not inside then
+			id = -(loader.GetPlayerMapAreaID("player") or 0)
+			mapId = loader.zoneTblWorld[id]
+			parent = loader.zoneTbl[mapId] and addonNameToHeader[loader.zoneTbl[mapId]]
+		else
+			local _, _, _, _, _, _, _, instanceId = loader.GetInstanceInfo()
+			id = instanceId
+			parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
 			loader.SetMapToCurrentZone()
-			mapId = loader.GetCurrentMapAreaID() or 0
+			mapId = loader.GetCurrentMapAreaID()
 		end
-		local instanceId = fakeWorldZones[mapId] and mapId or GetAreaMapInfo(mapId)
-		local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_Legion
-		tree:SelectByValue(("%s\001%d"):format(parent, mapId))
+		local moduleList = mapId and loader:GetZoneMenus()[mapId]
+		tree:SelectByValue(moduleList and ("%s\001%d"):format(parent or addonNameToHeader.BigWigs_Legion, mapId) or addonNameToHeader.BigWigs_Legion)
 	end
 end
 

@@ -114,6 +114,12 @@ do
 		[1041]=lw, [1042]=lw, [1045]=lw, [1046]=lw, [1065]=lw, [1066]=lw, [1067]=lw, [1079]=lw, [1081]=lw, [1087]=lw -- Legion
 	}
 
+	public.zoneTblWorld = {
+		[-473] = 466, [-465] = 466, -- Outland
+		[-807] = 862, [-809] = 862, [-928] = 862, [-929] = 862, [-951] = 862, -- Pandaria
+		[-948] = 962, [-949] = 962, [-949] = 962, [-945] = 962, -- Draenor
+		[-1015] = 1007, [-1017] = 1007, -- Broken Isles
+	}
 	public.fakeWorldZones = fakeWorldZones
 	public.zoneTbl = {}
 	for k,v in next, tbl do
