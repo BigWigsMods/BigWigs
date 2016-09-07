@@ -20,7 +20,7 @@ local isLogging = false
 plugin.defaultDB = {
 	countType = "emphasized",
 	combatLog = false,
-	gearCheck = true,
+	--gearCheck = true,
 }
 
 do
@@ -53,19 +53,19 @@ do
 				order = 2,
 				width = "full",
 			},
-			desc2 = {
-				type = "description",
-				name = "",
-				order = 2.1,
-				width = "full",
-			},
-			gearCheck = {
-				type = "toggle",
-				name = "Bad Gear Check",
-				desc = "Scan your equipped gear for potentially bad items when starting a pull timer.",
-				order = 3,
-				width = "full",
-			},
+			--desc2 = {
+			--	type = "description",
+			--	name = "",
+			--	order = 2.1,
+			--	width = "full",
+			--},
+			--gearCheck = {
+			--	type = "toggle",
+			--	name = "Bad Gear Check",
+			--	desc = "Scan your equipped gear for potentially bad items when starting a pull timer.",
+			--	order = 3,
+			--	width = "full",
+			--},
 		},
 	}
 end
@@ -135,22 +135,22 @@ do
 			LoggingCombat(isLogging)
 		end
 
-		if self.db.profile.gearCheck then
-			local _, zoneType = GetInstanceInfo()
-			if zoneType == "raid" and IsInRaid() then
-				for i = 1, 18 do
-					-- 0 Poor/Grey, 1 Common/White, 2 Uncommon/Green, 3 Rare/Blue, 4 Epic/Purple, 5 Legendary, 6 Artifact, 7 Heirloom
-					local quality = GetInventoryItemQuality("player", i)
-					local itemId = GetInventoryItemID("player", i)
-					local _, _, _, iLevel = GetItemInfo(itemId or 0) -- XXX this doesn't compensate for items that drop with multiple item levels
-					if quality and (quality < 2 or iLevel < 300) then
-						local msg = ("Bad Item Equipped: %s"):format(GetInventoryItemLink("player", i))
-						BigWigs:Print(msg)
-						self:SendMessage("BigWigs_Message", self, nil, msg, "Personal")
-					end
-				end
-			end
-		end
+		--if self.db.profile.gearCheck then
+		--	local _, zoneType = GetInstanceInfo()
+		--	if zoneType == "raid" and IsInRaid() then
+		--		for i = 1, 18 do
+		--			-- 0 Poor/Grey, 1 Common/White, 2 Uncommon/Green, 3 Rare/Blue, 4 Epic/Purple, 5 Legendary, 6 Artifact, 7 Heirloom
+		--			local quality = GetInventoryItemQuality("player", i)
+		--			local itemId = GetInventoryItemID("player", i)
+		--			local _, _, _, iLevel = GetItemInfo(itemId or 0) -- XXX this doesn't compensate for items that drop with multiple item levels
+		--			if quality and (quality < 2 or iLevel < 300) then
+		--				local msg = ("Bad Item Equipped: %s"):format(GetInventoryItemLink("player", i))
+		--				BigWigs:Print(msg)
+		--				self:SendMessage("BigWigs_Message", self, nil, msg, "Personal")
+		--			end
+		--		end
+		--	end
+		--end
 
 		self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")
 		self:SendMessage("BigWigs_Sound", self, nil, "Long")
