@@ -52,50 +52,6 @@ local acOptions = {
 		options:SendMessage("BigWigs_CoreOptionToggled", key, value)
 	end,
 	args = {
-		introduction = {
-			type = "description",
-			name = L.introduction,
-			fontSize = "medium",
-			order = 1,
-			width = "full",
-		},
-		anchors = {
-			type = "execute",
-			name = L.toggleAnchorsBtn,
-			desc = L.toggleAnchorsBtn_desc,
-			func = function()
-				if not BigWigs:IsEnabled() then BigWigs:Enable() end
-				if options:InConfigureMode() then
-					options:SendMessage("BigWigs_StopConfigureMode")
-				else
-					options:SendMessage("BigWigs_StartConfigureMode")
-					options:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
-				end
-			end,
-			order = 2,
-			width = "double",
-		},
-		testing = {
-			type = "execute",
-			name = L.testBarsBtn,
-			desc = L.testBarsBtn_desc,
-			func = function()
-				BigWigs:Test()
-			end,
-			order = 3,
-			width = "double",
-		},
-		bosses = {
-			type = "execute",
-			name = L.bosses,
-			descStyle = "", -- kill tooltip
-			func = function()
-				acd:Close("BigWigs")
-				options:OpenBossConfig()
-			end,
-			order = 4,
-			width = "half",
-		},
 		general = {
 			order = 20,
 			type = "group",
@@ -266,16 +222,6 @@ function translateZoneID(id)
 	return name
 end
 
-local function findPanel(name, parent)
-	for i, button in next, InterfaceOptionsFrameAddOns.buttons do
-		if button.element then
-			if name and button.element.name == name then return button
-			elseif parent and button.element.parent == parent then return button
-			end
-		end
-	end
-end
-
 do
 	local addonName = ...
 	local f = CreateFrame("Frame")
@@ -320,7 +266,7 @@ function options:OnEnable()
 end
 
 function options:Open()
-	acd:Open("BigWigs")
+	options:OpenConfig()
 end
 
 -------------------------------------------------------------------------------
@@ -900,129 +846,222 @@ local function onZoneShow(treeWidget, zoneId)
 		end
 	end
 	innerContainer:SetGroup(zoneSort[index])
+	innerContainer:DoLayout() -- One last refresh to adjust height
 end
 
 do
-	local addonNameToHeader = {
-		BigWigs_Classic = 2,
-		BigWigs_BurningCrusade = 3,
-		BigWigs_WrathOfTheLichKing = 4,
-		BigWigs_Cataclysm = 5,
-		BigWigs_MistsOfPandaria = 6,
-		BigWigs_WarlordsOfDraenor = 7,
-		BigWigs_Legion = 8,
-		LittleWigs_Classic = 10,
-		LittleWigs_BurningCrusade = 11,
-		LittleWigs_WrathOfTheLichKing = 12,
-		LittleWigs_Cataclysm = 13,
-		LittleWigs_MistsOfPandaria = 14,
-		LittleWigs_WarlordsOfDraenor = 15,
-		LittleWigs_Legion = 16,
+	local expansionHeader = {
+		"Classic",
+		"BurningCrusade",
+		"WrathOfTheLichKing",
+		"Cataclysm",
+		"MistsOfPandaria",
+		"WarlordsOfDraenor",
+		"Legion",
 	}
-	local indexToAddonName = {}
-	for k, v in next, addonNameToHeader do
-		indexToAddonName[v] = k
-	end
+
 	local statusTable = {}
+	local playerName = nil
 
-	function options:OpenBossConfig()
-		local treeTbl = {
-			[1] = {
-				value = "BigWigs",
-				text = "BigWigs",
-				disabled = true,
-			},
-			[9] = {
-				value = "LittleWigs",
-				text = "LittleWigs",
-				disabled = true,
-			},
-		}
-
-		for i = 1, 7 do
-			local txt = EJ_GetTierInfo(i)
-			treeTbl[i+1] = {
-				value = indexToAddonName[i+1],
-				text = txt,
-			}
-			treeTbl[i+9] = {
-				value = indexToAddonName[i+9],
-				text = txt,
-			}
+	local function toggleAnchors()
+		if not BigWigs:IsEnabled() then BigWigs:Enable() end
+		if options:InConfigureMode() then
+			options:SendMessage("BigWigs_StopConfigureMode")
+		else
+			options:SendMessage("BigWigs_StartConfigureMode")
+			options:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
 		end
+	end
 
-		do
-			local tmp, tmpZone = {}, {}
-			for k in next, loader:GetZoneMenus() do
-				local zone = translateZoneID(k)
-				if zone then
-					tmp[zone] = k
-					tmpZone[#tmpZone+1] = zone
+	local function createTestBar()
+		BigWigs:Test()
+	end
+
+	local function onControlEnter(widget, event)
+		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
+		GameTooltip:SetText(widget.text:GetText(), 1, .82, 0, true)
+		GameTooltip:AddLine(widget:GetUserData("desc"), 1, 1, 1, true)
+		GameTooltip:Show()
+	end
+
+	local function onTreeGroupSelected(widget, event, value)
+		widget:ReleaseChildren()
+		local zoneId = value:match("\001(%d+)$")
+		if zoneId then
+			onZoneShow(widget, tonumber(zoneId))
+		elseif value:match("^BigWigs_") and value ~= "BigWigs_Legion" and GetAddOnEnableState(playerName, value) == 0 then
+				local missing = AceGUI:Create("Label")
+				missing:SetText(("You need |cff436eee%s|r for these zones."):format(value))
+				missing:SetFontObject(GameFontHighlight)
+				missing:SetFullWidth(true)
+				widget:AddChild(missing)
+		elseif value:match("^LittleWigs_") and GetAddOnEnableState(playerName, "LittleWigs") == 0 then
+				local missing = AceGUI:Create("Label")
+				missing:SetText(("You need |cff436eee%s|r for these zones."):format("LittleWigs"))
+				missing:SetFontObject(GameFontHighlight)
+				missing:SetFullWidth(true)
+				widget:AddChild(missing)
+		else
+			statusTable.groups[value] = true
+			widget:RefreshTree()
+		end
+	end
+
+	local function onTabGroupSelected(widget, event, value)
+		widget:ReleaseChildren()
+
+		if value == "options" then
+			-- Embed the AceConfig options in our AceGUI frame
+			local container = AceGUI:Create("SimpleGroup")
+			container.type = "BigWigsOptions" -- we want ACD to create a ScrollFrame, so we change the type to bypass it's group control check
+			container:SetFullHeight(true)
+			container:SetFullWidth(true)
+
+			-- Have to use :Open instead of just :FeedGroup because some widget types (range, color) call :Open to refresh on change
+			acd:Open("BigWigs", container)
+
+			widget:AddChild(container)
+		else
+			local scroll = AceGUI:Create("ScrollFrame")
+			scroll:SetFullWidth(true)
+			scroll:SetFullHeight(true)
+
+			local treeTbl = {}
+			local addonNameToHeader = {}
+			local defaultHeader
+			if value == "bigwigs" then
+				defaultHeader = "BigWigs_Legion"
+				for i = 1, 7 do
+					local value = "BigWigs_" .. expansionHeader[i]
+					treeTbl[i] = {
+						text = EJ_GetTierInfo(i),
+						value = value,
+						enabled = (value == defaultHeader or GetAddOnEnableState(playerName, value) > 0),
+					}
+					addonNameToHeader[value] = i
+				end
+			elseif value == "littlewigs" then
+				defaultHeader = "LittleWigs_Legion"
+				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
+				for i = 1, 7 do
+					local value = "LittleWigs_" .. expansionHeader[i]
+					treeTbl[i] = {
+						text = EJ_GetTierInfo(i),
+						value = value,
+						enabled = enabled,
+					}
+					addonNameToHeader[value] = i
 				end
 			end
-			sort(tmpZone)
-			for i=1, #tmpZone do
-				local zone = tmpZone[i]
-				local zoneId = tmp[zone]
-				local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
-				local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_Legion -- Get expansion number for this zone
-				local treeParent = treeTbl[parent] -- Grab appropriate expansion name
-				if not treeParent.children then treeParent.children = {} end -- Create sub menu table
-				tinsert(treeParent.children, { -- Add new instance/zone sub menu
-					value = zoneId,
-					text = zone,
-				})
+
+			do
+				local tmp, tmpZone = {}, {}
+				for k in next, loader:GetZoneMenus() do
+					local zone = translateZoneID(k)
+					if zone then
+						tmp[zone] = k
+						tmpZone[#tmpZone+1] = zone
+					end
+				end
+				sort(tmpZone)
+				for i = 1, #tmpZone do
+					local zone = tmpZone[i]
+					local zoneId = tmp[zone]
+					local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
+					local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] -- Get expansion number for this zone
+					local treeParent = treeTbl[parent] -- Grab appropriate expansion name
+					if treeParent and treeParent.enabled then -- third-party plugins can add empty zones if you don't have the expansion addon enabled
+						if not treeParent.children then treeParent.children = {} end -- Create sub menu table
+						tinsert(treeParent.children, { -- Add new instance/zone sub menu
+							value = zoneId,
+							text = zone,
+						})
+					end
+				end
 			end
+
+			local tree =  AceGUI:Create("TreeGroup")
+			tree:SetStatusTable(statusTable)
+			tree:SetTree(treeTbl)
+			tree:SetLayout("Fill")
+			tree:SetCallback("OnGroupSelected", onTreeGroupSelected)
+
+			-- Do we have content for the zone we're in? Then open straight to that zone.
+			local mapId, parent
+			if not IsInInstance() then
+				local id = -(loader.GetPlayerMapAreaID("player") or 0)
+				mapId = loader.zoneTblWorld[id]
+				parent = loader.zoneTbl[mapId] and addonNameToHeader[loader.zoneTbl[mapId]]
+			else
+				local _, _, _, _, _, _, _, instanceId = loader.GetInstanceInfo()
+				loader.SetMapToCurrentZone()
+				mapId = loader.GetCurrentMapAreaID()
+				parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]]
+			end
+			if parent then
+				local moduleList = mapId and loader:GetZoneMenus()[mapId]
+				local value = treeTbl[parent].value
+				tree:SelectByValue(moduleList and ("%s\001%d"):format(value, mapId) or value)
+			else
+				tree:SelectByValue(defaultHeader)
+			end
+
+			scroll:AddChild(tree)
+			widget:AddChild(scroll)
 		end
+	end
+
+	function options:OpenConfig()
+		playerName = UnitName("player")
 
 		local bw = AceGUI:Create("Frame")
-		bw:SetTitle(L.bosses)
+		bw:SetTitle("BigWigs")
 		bw:SetWidth(858)
 		bw:SetHeight(660)
-		bw:SetCallback("OnClose", function(widget)
+		bw:SetLayout("Flow")
+		bw:SetCallback("OnClose",function(widget)
 			AceGUI:Release(widget)
 			wipe(statusTable)
 		end)
-		bw:SetLayout("Fill")
 
-		local tree =  AceGUI:Create("TreeGroup")
-		tree:SetStatusTable(statusTable)
-		tree:SetTree(treeTbl)
-		tree:SetLayout("Fill")
-		bw:AddChild(tree)
+		local introduction = AceGUI:Create("Label")
+		introduction:SetText(L.introduction)
+		introduction:SetFontObject(GameFontHighlight)
+		introduction:SetFullWidth(true)
+		bw:AddChild(introduction)
 
-		tree:SetCallback("OnGroupSelected", function(self, _, path)
-			self:ReleaseChildren()
-			local zoneId = path:match("\001(%d+)$")
-			if zoneId then
-				onZoneShow(self, tonumber(zoneId))
-			else
-				statusTable.groups[path] = true
-				self:RefreshTree()
-				-- local children = treeTbl[addonNameToHeader[path]].children
-				-- if children and #children > 0 then
-				-- 	self:SelectByPath(path, children[1].value)
-				-- end
-			end
-		end)
+		local anchors = AceGUI:Create("Button")
+		anchors:SetText(L.toggleAnchorsBtn)
+		anchors:SetUserData("desc", L.toggleAnchorsBtn_desc)
+		anchors:SetRelativeWidth(0.5)
+		anchors:SetCallback("OnClick", toggleAnchors)
+		anchors:SetCallback("OnEnter", onControlEnter)
+		anchors:SetCallback("OnLeave", GameTooltip_Hide)
 
-		-- Do we have content for the zone we're in? Then open straight to that zone.
-		local id, mapId, parent
-		local inside = IsInInstance()
-		if not inside then
-			id = -(loader.GetPlayerMapAreaID("player") or 0)
-			mapId = loader.zoneTblWorld[id]
-			parent = loader.zoneTbl[mapId] and addonNameToHeader[loader.zoneTbl[mapId]]
-		else
-			local _, _, _, _, _, _, _, instanceId = loader.GetInstanceInfo()
-			id = instanceId
-			parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
-			loader.SetMapToCurrentZone()
-			mapId = loader.GetCurrentMapAreaID()
-		end
-		local moduleList = mapId and loader:GetZoneMenus()[mapId]
-		local value = parent and treeTbl[parent].value or treeTbl[addonNameToHeader.BigWigs_Legion].value
-		tree:SelectByValue(moduleList and ("%s\001%d"):format(value, mapId) or value)
+		local testing = AceGUI:Create("Button")
+		testing:SetText(L.testBarsBtn)
+		testing:SetUserData("desc", L.testBarsBtn_desc)
+		testing:SetRelativeWidth(0.5)
+		testing:SetCallback("OnClick", createTestBar)
+		testing:SetCallback("OnEnter", onControlEnter)
+		testing:SetCallback("OnLeave", GameTooltip_Hide)
+
+		bw:AddChildren(anchors, testing)
+
+		local tabs = AceGUI:Create("TabGroup")
+		tabs:SetLayout("Flow")
+		tabs:SetFullWidth(true)
+		tabs:SetFullHeight(true)
+		tabs:SetTabs({
+			{ text = "Options", value = "options" },
+			{ text = "Raid Bosses", value = "bigwigs" },
+			{ text = "Dungeon Bosses", value = "littlewigs" },
+		})
+		tabs:SetCallback("OnGroupSelected", onTabGroupSelected)
+		tabs:SelectTab("options")
+		bw:AddChild(tabs)
+
+		bw:Show()
 	end
 end
 
