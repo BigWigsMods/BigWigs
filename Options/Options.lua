@@ -652,7 +652,7 @@ do
 				if o > 0 then
 					local link = GetSpellLink(o)
 					if not link then
-						BigWigs:Print(("Failed to fetch the link for spell id %d."):format(key))
+						BigWigs:Print(("Failed to fetch the link for spell id %d."):format(o))
 					else
 						if currentSize + #link + 1 > 255 then
 							printList(channel, header, abilities)
