@@ -923,6 +923,7 @@ do
 	for k, v in next, addonNameToHeader do
 		indexToAddonName[v] = k
 	end
+	local statusTable = {}
 
 	function options:OpenBossConfig()
 		local treeTbl = {
@@ -978,10 +979,14 @@ do
 		bw:SetTitle(L.bosses)
 		bw:SetWidth(858)
 		bw:SetHeight(660)
-		bw:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
+		bw:SetCallback("OnClose", function(widget)
+			AceGUI:Release(widget)
+			wipe(statusTable)
+		end)
 		bw:SetLayout("Fill")
 
 		local tree =  AceGUI:Create("TreeGroup")
+		tree:SetStatusTable(statusTable)
 		tree:SetTree(treeTbl)
 		tree:SetLayout("Fill")
 		bw:AddChild(tree)
@@ -992,10 +997,12 @@ do
 			if zoneId then
 				onZoneShow(self, tonumber(zoneId))
 			else
-				local children = treeTbl[addonNameToHeader[path]].children
-				if children and #children > 0 then
-					self:SelectByPath(path, children[1].value)
-				end
+				statusTable.groups[path] = true
+				self:RefreshTree()
+				-- local children = treeTbl[addonNameToHeader[path]].children
+				-- if children and #children > 0 then
+				-- 	self:SelectByPath(path, children[1].value)
+				-- end
 			end
 		end)
 
