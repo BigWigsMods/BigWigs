@@ -1014,16 +1014,16 @@ do
 
 		local anchors = AceGUI:Create("Button")
 		anchors:SetText(L.toggleAnchorsBtn)
-		anchors:SetWidth(170 * 2)
 		anchors:SetUserData("desc", L.toggleAnchorsBtn_desc)
+		anchors:SetRelativeWidth(0.5)
 		anchors:SetCallback("OnClick", toggleAnchors)
 		anchors:SetCallback("OnEnter", onControlEnter)
 		anchors:SetCallback("OnLeave", GameTooltip_Hide)
 
 		local testing = AceGUI:Create("Button")
 		testing:SetText(L.testBarsBtn)
-		testing:SetWidth(170 * 2)
 		testing:SetUserData("desc", L.testBarsBtn_desc)
+		testing:SetRelativeWidth(0.5)
 		testing:SetCallback("OnClick", createTestBar)
 		testing:SetCallback("OnEnter", onControlEnter)
 		testing:SetCallback("OnLeave", GameTooltip_Hide)
