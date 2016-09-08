@@ -905,20 +905,42 @@ end
 
 do
 	local addonNameToHeader = {
-		BigWigs_Classic = "BigWigs ".. EJ_GetTierInfo(1),
-		BigWigs_BurningCrusade = "BigWigs ".. EJ_GetTierInfo(2),
-		BigWigs_WrathOfTheLichKing = "BigWigs ".. EJ_GetTierInfo(3),
-		BigWigs_Cataclysm = "BigWigs ".. EJ_GetTierInfo(4),
-		BigWigs_MistsOfPandaria = "BigWigs ".. EJ_GetTierInfo(5),
-		BigWigs_WarlordsOfDraenor = "BigWigs ".. EJ_GetTierInfo(6),
-		BigWigs_Legion = "BigWigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r",
-		LittleWigs = "LittleWigs",
+		BigWigs_Classic = 2,
+		BigWigs_BurningCrusade = 3,
+		BigWigs_WrathOfTheLichKing = 4,
+		BigWigs_Cataclysm = 5,
+		BigWigs_MistsOfPandaria = 6,
+		BigWigs_WarlordsOfDraenor = 7,
+		BigWigs_Legion = 8,
+		LittleWigs = 9,
 	}
 
 	function options:OpenBossConfig()
-		local treeTbl = {}
+		local treeTbl = {
+			[1] = {
+				value = "BigWigs",
+				text = "BigWigs",
+				disabled = true,
+			},
+			[9] = {
+				value = "LittleWigs",
+				text = "LittleWigs",
+				children = {},
+				--disabled = true,
+			},
+		}
+
+		for i = 1, 7 do
+			local txt = EJ_GetTierInfo(i)
+			treeTbl[i+1] = {
+				value = "BigWigs_"..txt,
+				text = txt,
+				children = {},
+			}
+		end
+
 		do
-			local tmp, tmpZone, tmpParents = {}, {}, {}
+			local tmp, tmpZone = {}, {}
 			for k in next, loader:GetZoneMenus() do
 				local zone = translateZoneID(k)
 				if zone then
@@ -932,16 +954,7 @@ do
 				local zoneId = tmp[zone]
 				local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
 				local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_Legion
-				local treeParent = tmpParents[parent]
-				if not treeParent then
-					treeParent = {
-						value = parent,
-						text = parent,
-						children = {},
-					}
-					table.insert(treeTbl, treeParent)
-					tmpParents[parent] = treeParent
-				end
+				local treeParent = treeTbl[parent]
 				table.insert(treeParent.children, {
 					value = zoneId,
 					text = zone,
@@ -950,7 +963,7 @@ do
 		end
 
 		local bw = AceGUI:Create("Frame")
-		bw:SetTitle("BigWigs Bosses")
+		bw:SetTitle("Bosses")
 		bw:SetWidth(858)
 		bw:SetHeight(660)
 		bw:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
@@ -984,7 +997,8 @@ do
 			mapId = loader.GetCurrentMapAreaID()
 		end
 		local moduleList = mapId and loader:GetZoneMenus()[mapId]
-		tree:SelectByValue(moduleList and ("%s\001%d"):format(parent or addonNameToHeader.BigWigs_Legion, mapId) or addonNameToHeader.BigWigs_Legion)
+		local value = parent and treeTbl[parent].value or treeTbl[addonNameToHeader.BigWigs_Legion].value
+		tree:SelectByValue(moduleList and ("%s\001%d"):format(value, mapId) or value)
 	end
 end
 
