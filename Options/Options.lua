@@ -960,10 +960,10 @@ do
 				local zone = tmpZone[i]
 				local zoneId = tmp[zone]
 				local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
-				local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_Legion
-				local treeParent = treeTbl[parent]
-				if not treeParent.children then treeParent.children = {} end -- Create sub menu
-				tinsert(treeParent.children, {
+				local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_Legion -- Get expansion number for this zone
+				local treeParent = treeTbl[parent] -- Grab appropriate expansion name
+				if not treeParent.children then treeParent.children = {} end -- Create sub menu table
+				tinsert(treeParent.children, { -- Add new instance/zone sub menu
 					value = zoneId,
 					text = zone,
 				})
