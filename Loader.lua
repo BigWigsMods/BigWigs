@@ -95,7 +95,13 @@ do
 	local cata = "BigWigs_Cataclysm"
 	local mop = "BigWigs_MistsOfPandaria"
 	local wod = "BigWigs_WarlordsOfDraenor"
-	local lw = "LittleWigs"
+	local lw_c = "LittleWigs_Classic"
+	local lw_bc = "LittleWigs_BurningCrusade"
+	local lw_wotlk = "LittleWigs_WrathOfTheLichKing"
+	local lw_cata = "LittleWigs_Cataclysm"
+	local lw_mop = "LittleWigs_MistsOfPandaria"
+	local lw_wod = "LittleWigs_WarlordsOfDraenor"
+	local lw_l = "LittleWigs_Legion"
 
 	local tbl = {
 		[696]=c, [755]=c, [766]=c, [717]=c,
@@ -105,13 +111,13 @@ do
 		[896]=mop, [897]=mop, [886]=mop, [930]=mop, [953]=mop, [862]=mop,
 		[994]=wod, [988]=wod, [1026]=wod, [962]=wod,
 
-		[756]=lw, -- Classic
-		[710]=lw, [722]=lw, [723]=lw, [724]=lw, [725]=lw, [726]=lw, [727]=lw, [728]=lw, [729]=lw, [730]=lw, [731]=lw, [732]=lw, [733]=lw, [734]=lw, [797]=lw, [798]=lw, -- TBC
-		[520]=lw, [521]=lw, [522]=lw, [523]=lw, [524]=lw, [525]=lw, [526]=lw, [528]=lw, [530]=lw, [533]=lw, [534]=lw, [536]=lw, [542]=lw, [601]=lw, [602]=lw, [603]=lw, -- WotLK
-		[747]=lw, [757]=lw, [767]=lw, [768]=lw, [769]=lw, [820]=lw, -- Cataclysm
-		[877]=lw, [871]=lw, [874]=lw, [885]=lw, [867]=lw, [919]=lw, -- MoP
-		[964]=lw, [969]=lw, [984]=lw, [987]=lw, [989]=lw, [993]=lw, [995]=lw, [1008]=lw, -- WoD
-		[1041]=lw, [1042]=lw, [1045]=lw, [1046]=lw, [1065]=lw, [1066]=lw, [1067]=lw, [1079]=lw, [1081]=lw, [1087]=lw -- Legion
+		[756]=lw_c, -- Classic
+		[710]=lw_bc, [722]=lw_bc, [723]=lw_bc, [724]=lw_bc, [725]=lw_bc, [726]=lw_bc, [727]=lw_bc, [728]=lw_bc, [729]=lw_bc, [730]=lw_bc, [731]=lw_bc, [732]=lw_bc, [733]=lw_bc, [734]=lw_bc, [797]=lw_bc, [798]=lw_bc, -- TBC
+		[520]=lw_wotlk, [521]=lw_wotlk, [522]=lw_wotlk, [523]=lw_wotlk, [524]=lw_wotlk, [525]=lw_wotlk, [526]=lw_wotlk, [528]=lw_wotlk, [530]=lw_wotlk, [533]=lw_wotlk, [534]=lw_wotlk, [536]=lw_wotlk, [542]=lw_wotlk, [601]=lw_wotlk, [602]=lw_wotlk, [603]=lw_wotlk, -- WotLK
+		[747]=lw_cata, [757]=lw_cata, [767]=lw_cata, [768]=lw_cata, [769]=lw_cata, [820]=lw_cata, -- Cataclysm
+		[877]=lw_mop, [871]=lw_mop, [874]=lw_mop, [885]=lw_mop, [867]=lw_mop, [919]=lw_mop, -- MoP
+		[964]=lw_wod, [969]=lw_wod, [984]=lw_wod, [987]=lw_wod, [989]=lw_wod, [993]=lw_wod, [995]=lw_wod, [1008]=lw_wod, -- WoD
+		[1041]=lw_l, [1042]=lw_l, [1045]=lw_l, [1046]=lw_l, [1065]=lw_l, [1066]=lw_l, [1067]=lw_l, [1079]=lw_l, [1081]=lw_l, [1087]=lw_l -- Legion
 	}
 
 	public.zoneTblWorld = {
@@ -948,11 +954,14 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and inside and not fakeWorldZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
-			warnedThisZone[id] = true
-			local msg = L.missingAddOn:format(zoneAddon)
-			sysprint(msg)
-			RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
+		if zoneAddon then
+			if zoneAddon:find("LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
+			if inside and not fakeWorldZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
+				warnedThisZone[id] = true
+				local msg = L.missingAddOn:format(zoneAddon)
+				sysprint(msg)
+				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
+			end
 		end
 	end
 	mod.RAID_INSTANCE_WELCOME = mod.ZONE_CHANGED_NEW_AREA -- Entirely for Onyxia's Lair loading

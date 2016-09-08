@@ -912,7 +912,13 @@ do
 		BigWigs_MistsOfPandaria = 6,
 		BigWigs_WarlordsOfDraenor = 7,
 		BigWigs_Legion = 8,
-		LittleWigs = 9,
+		LittleWigs_Classic = 10,
+		LittleWigs_BurningCrusade = 11,
+		LittleWigs_WrathOfTheLichKing = 12,
+		LittleWigs_Cataclysm = 13,
+		LittleWigs_MistsOfPandaria = 14,
+		LittleWigs_WarlordsOfDraenor = 15,
+		LittleWigs_Legion = 16,
 	}
 
 	function options:OpenBossConfig()
@@ -925,8 +931,7 @@ do
 			[9] = {
 				value = "LittleWigs",
 				text = "LittleWigs",
-				children = {},
-				--disabled = true,
+				disabled = true,
 			},
 		}
 
@@ -935,7 +940,10 @@ do
 			treeTbl[i+1] = {
 				value = "BigWigs_"..txt,
 				text = txt,
-				children = {},
+			}
+			treeTbl[i+9] = {
+				value = "LittleWigs_"..txt,
+				text = txt,
 			}
 		end
 
@@ -955,7 +963,8 @@ do
 				local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
 				local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_Legion
 				local treeParent = treeTbl[parent]
-				table.insert(treeParent.children, {
+				if not treeParent.children then treeParent.children = {} end -- Create sub menu
+				tinsert(treeParent.children, {
 					value = zoneId,
 					text = zone,
 				})
