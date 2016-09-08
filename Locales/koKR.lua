@@ -8,7 +8,6 @@ if not L then return end
 --L.gitHubTitle = "BigWigs is on GitHub"
 --L.gitHubDesc = "BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out.\n\n|cFF33FF99Our API is now documented and freely readable on the GitHub wiki.|r"
 
-
 L.activeBossModules = "사용 중인 보스 모듈:"
 L.advanced = "고급 옵션"
 L.alphaRelease = "당신은 BigWigs %s (%s) 의 알파 버전을 사용하고 있습니다."
