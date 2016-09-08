@@ -116,20 +116,12 @@ L.COUNTDOWN_desc = "If enabled, a vocal and visual countdown will be added for t
 
 L.advanced = "Advanced options"
 L.back = "<< Back"
+L.bosses = "Bosses"
 
 L.tank = "|cFFFF0000Tank alerts only.|r "
 L.healer = "|cFFFF0000Healer alerts only.|r "
 L.tankhealer = "|cFFFF0000Tank & Healer alerts only.|r "
 L.dispeller = "|cFFFF0000Dispeller alerts only.|r "
-
-L.about = "About"
-L.developers = "Developers"
-L.license = "License"
-L.website = "Website"
-L.contact = "Contact"
-L.allRightsReserved = "All Rights Reserved"
-L.ircChannel = "irc.freenode.net in the #bigwigs channel"
-L.thanks = "Thanks to the following for all their help in various fields of development"
 
 -- Statistics
 L.statistics = "Statistics"

@@ -87,8 +87,7 @@ local acOptions = {
 		},
 		bosses = {
 			type = "execute",
-			name = BOSSES:gsub(":", ""),
-			--desc = "Bosses",
+			name = L.bosses,
 			descStyle = "", -- kill tooltip
 			func = function()
 				acd:Close("BigWigs")
@@ -972,7 +971,7 @@ do
 		end
 
 		local bw = AceGUI:Create("Frame")
-		bw:SetTitle("Bosses")
+		bw:SetTitle(L.bosses)
 		bw:SetWidth(858)
 		bw:SetHeight(660)
 		bw:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
