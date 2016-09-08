@@ -919,6 +919,10 @@ do
 		LittleWigs_WarlordsOfDraenor = 15,
 		LittleWigs_Legion = 16,
 	}
+	local indexToAddonName = {}
+	for k, v in next, addonNameToHeader do
+		indexToAddonName[v] = k
+	end
 
 	function options:OpenBossConfig()
 		local treeTbl = {
@@ -937,11 +941,11 @@ do
 		for i = 1, 7 do
 			local txt = EJ_GetTierInfo(i)
 			treeTbl[i+1] = {
-				value = "BigWigs_"..txt,
+				value = indexToAddonName[i+1],
 				text = txt,
 			}
 			treeTbl[i+9] = {
-				value = "LittleWigs_"..txt,
+				value = indexToAddonName[i+9],
 				text = txt,
 			}
 		end
@@ -987,6 +991,11 @@ do
 			local zoneId = path:match("\001(%d+)$")
 			if zoneId then
 				onZoneShow(self, tonumber(zoneId))
+			else
+				local children = treeTbl[addonNameToHeader[path]].children
+				if children and #children > 0 then
+					self:SelectByPath(path, children[1].value)
+				end
 			end
 		end)
 
@@ -1044,4 +1053,3 @@ do
 end
 
 BigWigsOptions = options -- Set global
-
