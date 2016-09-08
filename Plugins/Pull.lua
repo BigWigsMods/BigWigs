@@ -110,7 +110,10 @@ do
 		end
 	end
 	function plugin:StartPull(seconds, nick, isDBM)
-		if (not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player")) or (IsEncounterInProgress() and nick ~= COMBAT) then return end
+		if (not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player")) or (IsEncounterInProgress() and nick ~= COMBAT) or (IsInGroup(2) and UnitGroupRolesAssigned(nick) ~= "TANK") then
+			return
+		end
+
 		seconds = tonumber(seconds)
 		if not seconds or seconds < 0 or seconds > 60 then return end
 		seconds = floor(seconds)
@@ -185,7 +188,7 @@ end
 SlashCmdList.BIGWIGSPULL = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
-	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then -- Solo or leader/assist
+	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or (IsInGroup(2) and UnitGroupRolesAssigned("player") == "TANK") then -- Solo or leader/assist or tank in LFG
 		local s, respawn = input:match("(%d-) (.*)")
 		if respawn and respawn:lower() == "true" then
 			local bars = BigWigs:GetPlugin("Bars")
