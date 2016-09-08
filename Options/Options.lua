@@ -861,6 +861,7 @@ do
 	}
 
 	local statusTable = {}
+	local playerName = nil
 
 	local function toggleAnchors()
 		if not BigWigs:IsEnabled() then BigWigs:Enable() end
@@ -888,6 +889,18 @@ do
 		local zoneId = value:match("\001(%d+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
+		elseif value:match("^BigWigs_") and value ~= "BigWigs_Legion" and GetAddOnEnableState(playerName, value) == 0 then
+				local missing = AceGUI:Create("Label")
+				missing:SetText(("You need |cff436eee%s|r for these zones."):format(value))
+				missing:SetFontObject(GameFontHighlight)
+				missing:SetFullWidth(true)
+				widget:AddChild(missing)
+		elseif value:match("^LittleWigs_") and GetAddOnEnableState(playerName, "LittleWigs") == 0 then
+				local missing = AceGUI:Create("Label")
+				missing:SetText(("You need |cff436eee%s|r for these zones."):format("LittleWigs"))
+				missing:SetFontObject(GameFontHighlight)
+				missing:SetFullWidth(true)
+				widget:AddChild(missing)
 		else
 			statusTable.groups[value] = true
 			widget:RefreshTree()
@@ -923,16 +936,19 @@ do
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
 						value = value,
+						enabled = (value == defaultHeader or GetAddOnEnableState(playerName, value) > 0),
 					}
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
 				defaultHeader = "LittleWigs_Legion"
+				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
 				for i = 1, 7 do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
 						value = value,
+						enabled = enabled,
 					}
 					addonNameToHeader[value] = i
 				end
@@ -953,8 +969,8 @@ do
 					local zoneId = tmp[zone]
 					local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
 					local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] -- Get expansion number for this zone
-					if parent then
-						local treeParent = treeTbl[parent] -- Grab appropriate expansion name
+					local treeParent = treeTbl[parent] -- Grab appropriate expansion name
+					if treeParent and treeParent.enabled then -- third-party plugins can add empty zones if you don't have the expansion addon enabled
 						if not treeParent.children then treeParent.children = {} end -- Create sub menu table
 						tinsert(treeParent.children, { -- Add new instance/zone sub menu
 							value = zoneId,
@@ -996,6 +1012,8 @@ do
 	end
 
 	function options:OpenConfig()
+		playerName = UnitName("player")
+
 		local bw = AceGUI:Create("Frame")
 		bw:SetTitle("BigWigs")
 		bw:SetWidth(858)
@@ -1037,7 +1055,7 @@ do
 		tabs:SetTabs({
 			{ text = "Options", value = "options" },
 			{ text = "Raid Bosses", value = "bigwigs" },
-			{ text = "Dungeon Bosses", value = "littlewigs", disabled = (GetAddOnEnableState(UnitName("player"), "LittleWigs") == 0) },
+			{ text = "Dungeon Bosses", value = "littlewigs" },
 		})
 		tabs:SetCallback("OnGroupSelected", onTabGroupSelected)
 		tabs:SelectTab("options")
