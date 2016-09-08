@@ -95,6 +95,7 @@ do
 	local cata = "BigWigs_Cataclysm"
 	local mop = "BigWigs_MistsOfPandaria"
 	local wod = "BigWigs_WarlordsOfDraenor"
+	local l = "BigWigs_Legion"
 	local lw_c = "LittleWigs_Classic"
 	local lw_bc = "LittleWigs_BurningCrusade"
 	local lw_wotlk = "LittleWigs_WrathOfTheLichKing"
@@ -110,6 +111,7 @@ do
 		[752]=cata, [758]=cata, [754]=cata, [824]=cata, [800]=cata, [773]=cata,
 		[896]=mop, [897]=mop, [886]=mop, [930]=mop, [953]=mop, [862]=mop,
 		[994]=wod, [988]=wod, [1026]=wod, [962]=wod,
+		[1094]=l, [1088]=l, [1007]=l,
 
 		[756]=lw_c, -- Classic
 		[710]=lw_bc, [722]=lw_bc, [723]=lw_bc, [724]=lw_bc, [725]=lw_bc, [726]=lw_bc, [727]=lw_bc, [728]=lw_bc, [729]=lw_bc, [730]=lw_bc, [731]=lw_bc, [732]=lw_bc, [733]=lw_bc, [734]=lw_bc, [797]=lw_bc, [798]=lw_bc, -- TBC
@@ -954,7 +956,7 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon then
+		if zoneAddon and zoneAddon ~= "BigWigs_Legion" then
 			if zoneAddon:find("LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
 			if inside and not fakeWorldZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
