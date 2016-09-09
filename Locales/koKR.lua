@@ -8,6 +8,10 @@ if not L then return end
 --L.gitHubTitle = "BigWigs is on GitHub"
 --L.gitHubDesc = "BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out.\n\n|cFF33FF99Our API is now documented and freely readable on the GitHub wiki.|r"
 
+--L.options = "Options"
+--L.raidBosses = "Raid Bosses"
+--L.dungeonBosses = "Dungeon Bosses"
+
 L.activeBossModules = "사용 중인 보스 모듈:"
 L.advanced = "고급 옵션"
 L.alphaRelease = "당신은 BigWigs %s (%s) 의 알파 버전을 사용하고 있습니다."
@@ -24,7 +28,6 @@ L.berserk_desc = "보스가 언제 광폭화가 되는지 경고합니다."
 L.best = "최고 기록:"
 L.blizzRestrictionsConfig = "블리자드의 제한으로 인해, 설정 창은 전투에 돌입하기 전, 전투가 아닌 상태에서만 열 수 있습니다."
 L.blizzRestrictionsZone = "블리자드의 제한으로 인해, 전투가 끝날 때 까지 로딩을 기다리는 중입니다."
---L.bosses = "Bosses"
 L.chatMessages = "대화 창 메시지"
 L.chatMessagesDesc = "모든 BigWigs 메시지를 디스플레이 설정과 더불어 추가로 기본 대화창에 출력합니다."
 L.colors = "색상"

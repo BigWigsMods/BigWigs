@@ -43,6 +43,9 @@ L.coreAddonDisabled = "BigWigs won't function properly since the addon %s is dis
 L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
 
 -- Options.lua
+L.options = "Options"
+L.raidBosses = "Raid Bosses"
+L.dungeonBosses = "Dungeon Bosses"
 L.introduction = "Welcome to BigWigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group."
 L.toggleAnchorsBtn = "Toggle Anchors"
 L.toggleAnchorsBtn_desc = "Toggle showing or hiding of all the anchors."
@@ -116,7 +119,6 @@ L.COUNTDOWN_desc = "If enabled, a vocal and visual countdown will be added for t
 
 L.advanced = "Advanced options"
 L.back = "<< Back"
-L.bosses = "Bosses"
 
 L.tank = "|cFFFF0000Tank alerts only.|r "
 L.healer = "|cFFFF0000Healer alerts only.|r "

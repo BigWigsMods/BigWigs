@@ -8,6 +8,10 @@ L.warnSeveralReleases = "|cffff0000你的 BigWigs 已過期多個發行版！！
 L.gitHubTitle = "BigWigs 位於 GitHub"
 L.gitHubDesc = "BigWigs 是一個在 GitHub 上的開源軟件。我們一直在尋找新的朋友幫助我們和歡迎任何人檢測我們的代碼，做出貢獻和提交錯誤報告。BigWigs 今天的偉大很大程度上一部分因為偉大的魔獸世界社區幫助我們。\n\n|cFF33FF99我們的 API 現在已在 GitHub 維基記錄並且可以自由讀取。|r"
 
+--L.options = "Options"
+--L.raidBosses = "Raid Bosses"
+--L.dungeonBosses = "Dungeon Bosses"
+
 L.activeBossModules = "啟動首領模組："
 L.advanced = "進階選項"
 L.alphaRelease = "你所使用的 BigWigs %s 為“α測試版”（%s）"
@@ -24,7 +28,6 @@ L.berserk_desc = "為首領狂暴顯示計時條及警報。"
 L.best = "最快："
 L.blizzRestrictionsConfig = "由於暴雪的限制，要打開選項配置需要離開戰鬥，或是在戰鬥之前。"
 L.blizzRestrictionsZone = "由於暴雪的戰鬥限制需要等待戰鬥結束以完成載入。"
---L.bosses = "Bosses"
 L.chatMessages = "聊天框體訊息"
 L.chatMessagesDesc = "除了顯示設定，輸出所有 BigWigs 訊息到預設聊天框體。"
 L.colors = "顏色"

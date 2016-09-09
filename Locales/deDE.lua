@@ -8,6 +8,10 @@ L.warnSeveralReleases = "|cffff0000Dein BigWigs ist um mehrere Versionen veralte
 L.gitHubTitle = "BigWigs ist auf GitHub"
 L.gitHubDesc = "BigWigs ist Open-Source-Software auf GitHub. Wir sind immer auf der Suche nach neuen Menschen, die uns helfen, und jeder ist willkommen, unseren Code zu inspizieren, Beiträge zu leisten und Fehlerberichte einzureichen. BigWigs ist hauptsächlich durch die großartige WoW-Gemeinschaft im Laufe der Zeit zu etwas Großem geworden.\n\n|cFF33FF99Unsere API ist nun dokumentiert und frei lesbar im Wiki auf GitHub.|r"
 
+--L.options = "Options"
+--L.raidBosses = "Raid Bosses"
+--L.dungeonBosses = "Dungeon Bosses"
+
 L.activeBossModules = "Aktive Bossmodule:"
 L.advanced = "Erweiterte Optionen"
 L.alphaRelease = "Bei dir läuft ein ALPHA RELEASE von BigWigs %s (%s)."
@@ -24,7 +28,6 @@ L.berserk_desc = "Warnt, wenn der Boss zum Berserker wird."
 L.best = "Beste:"
 L.blizzRestrictionsConfig = "Aufgrund der Beschränkungen von Blizzard muss die Konfiguration zuerst ausserhalb des Kampfes geöffnet werden bevor dies im Kampf möglich ist."
 L.blizzRestrictionsZone = "Warte bis zum Ende des Kampfes, um BigWigs vollständig zu Laden. (Blizzards Kampfeinschränkungen)."
-L.bosses = "Bosse"
 L.chatMessages = "Chatfenster-Nachrichten"
 L.chatMessagesDesc = "Gibt alle BigWigs-Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung unter 'Ausgabe'."
 L.colors = "Farben"

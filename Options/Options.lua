@@ -873,13 +873,9 @@ do
 		end
 	end
 
-	local function createTestBar()
-		BigWigs:Test()
-	end
-
 	local function onControlEnter(widget, event)
 		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-		GameTooltip:SetText(widget.text:GetText(), 1, .82, 0, true)
+		GameTooltip:SetText(widget.text:GetText(), 1, 0.82, 0, true)
 		GameTooltip:AddLine(widget:GetUserData("desc"), 1, 1, 1, true)
 		GameTooltip:Show()
 	end
@@ -891,13 +887,13 @@ do
 			onZoneShow(widget, tonumber(zoneId))
 		elseif value:match("^BigWigs_") and value ~= "BigWigs_Legion" and GetAddOnEnableState(playerName, value) == 0 then
 				local missing = AceGUI:Create("Label")
-				missing:SetText(("You need |cff436eee%s|r for these zones."):format(value))
+				missing:SetText(L.missingAddOn:format(value))
 				missing:SetFontObject(GameFontHighlight)
 				missing:SetFullWidth(true)
 				widget:AddChild(missing)
 		elseif value:match("^LittleWigs_") and GetAddOnEnableState(playerName, "LittleWigs") == 0 then
 				local missing = AceGUI:Create("Label")
-				missing:SetText(("You need |cff436eee%s|r for these zones."):format("LittleWigs"))
+				missing:SetText(L.missingAddOn:format("LittleWigs"))
 				missing:SetFontObject(GameFontHighlight)
 				missing:SetFullWidth(true)
 				widget:AddChild(missing)
@@ -913,7 +909,7 @@ do
 		if value == "options" then
 			-- Embed the AceConfig options in our AceGUI frame
 			local container = AceGUI:Create("SimpleGroup")
-			container.type = "BigWigsOptions" -- we want ACD to create a ScrollFrame, so we change the type to bypass it's group control check
+			container.type = "BigWigsOptions" -- We want ACD to create a ScrollFrame, so we change the type to bypass it's group control check
 			container:SetFullHeight(true)
 			container:SetFullWidth(true)
 
@@ -1019,7 +1015,7 @@ do
 		bw:SetWidth(858)
 		bw:SetHeight(660)
 		bw:SetLayout("Flow")
-		bw:SetCallback("OnClose",function(widget)
+		bw:SetCallback("OnClose", function(widget)
 			AceGUI:Release(widget)
 			wipe(statusTable)
 		end)
@@ -1042,7 +1038,7 @@ do
 		testing:SetText(L.testBarsBtn)
 		testing:SetUserData("desc", L.testBarsBtn_desc)
 		testing:SetRelativeWidth(0.5)
-		testing:SetCallback("OnClick", createTestBar)
+		testing:SetCallback("OnClick", BigWigs.Test)
 		testing:SetCallback("OnEnter", onControlEnter)
 		testing:SetCallback("OnLeave", GameTooltip_Hide)
 
@@ -1053,9 +1049,9 @@ do
 		tabs:SetFullWidth(true)
 		tabs:SetFullHeight(true)
 		tabs:SetTabs({
-			{ text = "Options", value = "options" },
-			{ text = "Raid Bosses", value = "bigwigs" },
-			{ text = "Dungeon Bosses", value = "littlewigs" },
+			{ text = L.options, value = "options" },
+			{ text = L.raidBosses, value = "bigwigs" },
+			{ text = L.dungeonBosses, value = "littlewigs" },
 		})
 		tabs:SetCallback("OnGroupSelected", onTabGroupSelected)
 		tabs:SelectTab("options")
