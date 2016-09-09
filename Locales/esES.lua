@@ -83,10 +83,6 @@ L.PROXIMITY = "Ventana de proximidad"
 L.PROXIMITY_desc = "La ventana de proximidad se ajustará especificamente para esa habilidad para que sepas de un vistazo si estás a salvo o no."
 L.PULSE = "Pulso"
 L.PULSE_desc = "Para complementar el flash de pantalla, también puedes tener un icono relacionado con esta habilidad especifica que se mostrará momentáneamente en el medio de la pantalla para tratar de atraer tu atención."
-L.raidIcons = "Iconos de Raid"
-L.raidIconsDesc = [=[Algunos encuentros usan los iconos de raid para marcar jugadores de interés especial para tu grupo. Por ejemplo los efectos tipo 'bomba' y control mental. Si la cambias a desactivado, no marcarás a nadie.
-
-|cffff4411¡Solo aplica las marcas si eres ayudante o lider!|r]=]
 L.removeAddon = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
 L.resetPositions = "Reiniciar posiciones"
 L.SAY = "Decir"

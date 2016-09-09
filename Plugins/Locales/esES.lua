@@ -148,6 +148,9 @@ L.pullIn = "Pull en %d seg"
 L.pulling = "¡Puleando!"
 L.pullStarted = "Cuenta atrás para el Pull lanzada por el jugador %s %s."
 L.pullStopped = "Pull cancelado por %s."
+L.raidIconsDesc = [=[Algunos encuentros usan los iconos de raid para marcar jugadores de interés especial para tu grupo. Por ejemplo los efectos tipo 'bomba' y control mental. Si la cambias a desactivado, no marcarás a nadie.
+
+|cffff4411¡Solo aplica las marcas si eres ayudante o lider!|r]=]
 L.raidIconsDescription = [=[Elementos de tipo 'bomba' y simirales en un jugador pueden ser de interes especial. Aqui puedes configurar como se debería marar con iconos algunos pjs.
 
 Si solo se usa un icono para un encuentro se usará el primario, nunca se usará el mismo icono para 2 habilidades distintas, para eso esta el icono secundario.

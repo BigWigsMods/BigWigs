@@ -148,6 +148,9 @@ L.pullIn = "Pull in %d Sek."
 L.pulling = "Pull!"
 L.pullStarted = "Pull-Timer wurde von %s-Nutzer %s gestartet."
 L.pullStopped = "Pull-Timer von %s abgebrochen."
+L.raidIconsDesc = [=[Einige Bossmodule benutzen Schlachtzugssymbole, um Spieler zu markieren, die von speziellem Interesse für deine Gruppe sind. Beispiele wären Bombeneffekte und Gedankenkontrolle. Wenn du diese Option ausschaltest, markierst du niemanden mehr.
+
+|cffff4411Trifft nur zu, sofern du Schlachtzugsleiter oder Assistent bist.|r]=]
 L.raidIconsDescription = [=[Einige Begegnungen schließen Elemente wie 'Bombenfähigkeiten' ein, die einen bestimmten Spieler zum Ziel haben, ihn verfolgen oder er ist in sonst einer Art und Weise interessant. Hier kannst du bestimmen, welche Schlachtzugs-Symbole benutzt werden sollen, um die Spieler zu markieren.
 
 Falls nur ein Symbol benötigt wird, wird nur das erste benutzt. Ein Symbol wird niemals für zwei verschiedene Fähigkeiten innerhalb einer Begegnung benutzt.

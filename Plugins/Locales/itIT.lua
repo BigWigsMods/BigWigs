@@ -148,7 +148,14 @@ L.pullIn = "Ingaggio tra %d sec"
 L.pulling = "Ingaggio!"
 L.pullStarted = "Timer Ingaggio iniziato da utente %s - %s."
 L.pullStopped = "Barra d'ingaggio cancellata da %s."
-L.raidIconsDescription = "Alcuni combattimenti possono includere elementi come bombe su giocatori specifici, un giocatore inseguito da qualcosa, o un giocatore che può essere fondamentale seguire. Qui puoi personalizzare quali Simboli devono essere applicati sui giocatori.|r"
+L.raidIconsDesc = [=[Alcuni combattimenti richiedono di evidenziare alcuni giocatori di particolare interesse nell'incontro con dei simboli. Per esempio effetti di tipo 'bomba' o 'controllo della mente'. Se disattivi questa opzione, non metterai nessun simbolo.
+
+|cffff4411Si applica solo quando sei il capogruppo della spedizione o sei stato stato promosso!|r]=]
+L.raidIconsDescription = [=[Alcuni combattimenti possono includere elementi come bombe su giocatori specifici, un giocatore inseguito da qualcosa, o un giocatore che può essere fondamentale seguire. Qui puoi personalizzare quali Simboli devono essere applicati sui giocatori
+
+If an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.
+
+|cffff4411Note that if a player has already been marked manually, BigWigs will never change their icon.|r]=]
 L.recordBestTime = "Ricorda Miglior Tempo"
 L.regularBars = "Barre Normali"
 L.remove = "Rimuovi"

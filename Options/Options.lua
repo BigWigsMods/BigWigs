@@ -87,20 +87,6 @@ local acOptions = {
 					desc = L.flashScreenDesc,
 					order = 22,
 				},
-				raidicon = {
-					type = "toggle",
-					name = L.raidIcons,
-					desc = L.raidIconsDesc,
-					set = function(info, value)
-						local key = info[#info]
-						local plugin = BigWigs:GetPlugin("Raid Icons")
-						plugin:Disable()
-						BigWigs.db.profile[key] = value
-						options:SendMessage("BigWigs_CoreOptionToggled", key, value)
-						plugin:Enable()
-					end,
-					order = 24,
-				},
 				chat = {
 					type = "toggle",
 					name = L.chatMessages,

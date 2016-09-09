@@ -83,10 +83,6 @@ L.PROXIMITY = "Monitor di Prossimità"
 L.PROXIMITY_desc = "A volte le abilità richiedono che si stia lontani. Il Monitor di prossimità è nato per questa necessità e ti mette in condizione di capire quando sei al sicuro."
 L.PULSE = "Pulsazione"
 L.PULSE_desc = "In aggiunta al Lampeggio sullo schermo, puoi avere anche un'icona relativa a questa specifica abilità piazzata momentaneamente al centro dello schermo per aiutarti a focalizzare la tua attenzione."
-L.raidIcons = "Icone dell'Incursione"
-L.raidIconsDesc = [=[Alcuni combattimenti richiedono di evidenziare alcuni giocatori di particolare interesse nell'incontro con dei simboli. Per esempio effetti di tipo 'bomba' o 'controllo della mente'. Se disattivi questa opzione, non metterai nessun simbolo.
-
-|cffff4411Si applica solo quando sei il capogruppo della spedizione o sei stato stato promosso!|r]=]
 L.removeAddon = "Per favore rimuovi '|cFF436EEE%s|r' perché è stato rimpiazzato da '|cFF436EEE%s|r'."
 L.resetPositions = "Ripristina le Posizioni"
 L.SAY = "Parla"

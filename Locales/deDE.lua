@@ -83,10 +83,6 @@ L.PROXIMITY = "Näheanzeige"
 L.PROXIMITY_desc = "Fähigkeiten von Begegnungen erfordern manchmal, dass alle Mitspieler auseinander stehen. Die Näheanzeige wird speziell für diese Fähigkeit eingestellt, so dass du auf einen Blick siehst, ob du sicher bist oder nicht."
 L.PULSE = "Impuls"
 L.PULSE_desc = "Zusätzlich zum Aufleuchten des Bildschirms kann für diese bestimmte Fähigkeit kurzzeitig ein Symbol in der Bildschirmmitte angezeigt werden, um deine Aufmerksamkeit zu erlangen."
-L.raidIcons = "Schlachtzugssymbole"
-L.raidIconsDesc = [=[Einige Bossmodule benutzen Schlachtzugssymbole, um Spieler zu markieren, die von speziellem Interesse für deine Gruppe sind. Beispiele wären Bombeneffekte und Gedankenkontrolle. Wenn du diese Option ausschaltest, markierst du niemanden mehr.
-
-|cffff4411Trifft nur zu, sofern du Schlachtzugsleiter oder Assistent bist.|r]=]
 L.removeAddon = "Bitte entferne '|cFF436EEE%s|r', da es durch '|cFF436EEE%s|r' ersetzt wurde."
 L.resetPositions = "Positionen zurücksetzen"
 L.SAY = "Sagen"

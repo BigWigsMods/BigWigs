@@ -83,10 +83,6 @@ L.PROXIMITY = "Janela de aproximação"
 L.PROXIMITY_desc = "Algumas habilidades requerem que você se espalhe, a janela de aproximação será ajustada especificadamente para essas habilidades, então você terá tempo de correr."
 L.PULSE = "Pulsar"
 L.PULSE_desc = "Além de piscar a tela, você pode associar um ícone a esta habilidade específica. Ele será exibido momentaneamente no meio de sua tela para tentar chamar sua atenção."
-L.raidIcons = "Ícones de Raide"
-L.raidIconsDesc = [=[Alguns encontros usam os icones de raide para marcar jogadores que são de interesse especial para seu grupo. Por exemplo, os efeitos tipo 'bomba' e controle mental. Se estiver desativado, não marcará nada.
-
-|cffff4411Somente aplicará as marcas se você for assistente ou lider!|r]=]
 L.removeAddon = "Favor, remover |cFF436EEE%s|r' pois foi substituído por |cFF436EEE%s|r'"
 L.resetPositions = "Reiniciar posições"
 L.SAY = "Dizer"
