@@ -8,9 +8,9 @@ L.warnSeveralReleases = "|cffff0000Ваш BigWigs устарел на неско
 L.gitHubTitle = "BigWigs на GitHub"
 L.gitHubDesc = "BigWigs это программное обеспечение с открытым исходным кодом, который размещен на GitHub. Мы всегда ищем новых людей, чтобы помочь нам, и каждый желающий может осмотреть наш код, внести свой вклад и отправить отчеты об ошибках. BigWigs хорош, только благодаря помощи большей части сообщества WoW.\n\n|cFF33FF99Наше API теперь задокументировано и свободно читается на GitHub wiki.|r"
 
---L.options = "Options"
---L.raidBosses = "Raid Bosses"
---L.dungeonBosses = "Dungeon Bosses"
+L.options = "Настройки"
+L.raidBosses = "Рейдовые боссы"
+L.dungeonBosses = "Боссы подземелий"
 
 L.activeBossModules = "Активные модули боссов:"
 L.advanced = "Дополнительные настройки"
