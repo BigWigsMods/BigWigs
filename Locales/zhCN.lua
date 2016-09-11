@@ -8,9 +8,9 @@ L.warnSeveralReleases = "|cffff0000你的 BigWigs 已过期多个发行版！！
 L.gitHubTitle = "BigWigs 位于 GitHub"
 L.gitHubDesc = "BigWigs 是一个在 GitHub 上的开源软件。我们一直在寻找新的朋友帮助我们和欢迎任何人检测我们的代码，做出贡献和提交错误报告。BigWigs 今天的伟大很大程度上一部分因为伟大的魔兽世界社区帮助我们。\n\n|cFF33FF99我们的 API 现在已在 GitHub 维基记录并且可以自由读取。|r"
 
---L.options = "Options"
---L.raidBosses = "Raid Bosses"
---L.dungeonBosses = "Dungeon Bosses"
+L.options = "选项"
+L.raidBosses = "团队首领"
+L.dungeonBosses = "地下城首领"
 
 L.activeBossModules = "激活首领模块："
 L.advanced = "高级选项"
