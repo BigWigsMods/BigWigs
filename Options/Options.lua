@@ -904,10 +904,6 @@ do
 
 			widget:AddChild(container)
 		else
-			local scroll = AceGUI:Create("ScrollFrame")
-			scroll:SetFullWidth(true)
-			scroll:SetFullHeight(true)
-
 			local treeTbl = {}
 			local addonNameToHeader = {}
 			local defaultHeader
@@ -962,7 +958,9 @@ do
 				end
 			end
 
-			local tree =  AceGUI:Create("TreeGroup")
+			local tree = AceGUI:Create("TreeGroup")
+			tree:SetFullWidth(true)
+			tree:SetFullHeight(true)
 			tree:SetStatusTable(statusTable)
 			tree:SetTree(treeTbl)
 			tree:SetLayout("Fill")
@@ -988,8 +986,7 @@ do
 				tree:SelectByValue(defaultHeader)
 			end
 
-			scroll:AddChild(tree)
-			widget:AddChild(scroll)
+			widget:AddChild(tree)
 		end
 	end
 
