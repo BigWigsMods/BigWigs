@@ -1,8 +1,6 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Tuning sounds / message colors
--- - Remove beta engaged message
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -104,7 +102,7 @@ end
 
 function mod:Overwhelm(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 1 and "Warning")
+	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 1 and "Alert")
 	self:Bar(args.spellId, self:LFR() and 20 or 10)
 end
 
@@ -176,5 +174,5 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 function mod:BloodFrenzy(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "Urgent", "Long")
 end

@@ -1,11 +1,8 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Tuning sounds / message colors
--- - Remove alpha engaged message
--- - p1 proximity range: 5
+-- - p1 proximity range: 5?
 -- - TouchOfCorruption doesnt stack on normal. Do we need warnings for that?
--- - Add mouseover / nameplate marking for Deathglare Tentacle
 
 --------------------------------------------------------------------------------
 -- Module Declaration

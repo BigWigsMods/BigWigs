@@ -1,8 +1,6 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Tuning sounds / message colors
--- - Remove beta engaged message
 -- - All the timers
 -- - Mythic abilitys
 -- - 212993 Shimmering Feather is not in the combat log (yet)?
@@ -167,7 +165,7 @@ do
 	function mod:NecroticVenomApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Urgent", "Alert")
+			self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Urgent", "Warning")
 
 			if timeToTransform() > 26 then -- skips the one before the transformation
 				self:Bar(args.spellId, 22)
@@ -188,7 +186,7 @@ do
 end
 
 function mod:GatheringCloudsStart(args)
-	self:Message(args.spellId, "Attention", "Alarm", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 10.5, CL.cast:format(args.spellName)) -- 2.5s cast + 8s duration = 10.5s total
 end
 
