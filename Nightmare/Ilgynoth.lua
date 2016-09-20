@@ -22,6 +22,8 @@ mod.respawnTime = 30
 --
 
 local fixateOnMe = nil
+local deathglareMarked = {} -- save GUIDs of marked mobs
+local deathglareMarks  = { [6] = true, [5] = true, [4] = true, [3] = true } -- available marks to use
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -31,6 +33,10 @@ local L = mod:GetLocale()
 if L then
 	L.nightmare_horror = -13188 -- Nightmare Horror
 	L.nightmare_horror_icon = 209387 -- Seeping Corruption icon
+
+	L.custom_off_deathglare_marker = "Deathglare Tentacle marker"
+	L.custom_off_deathglare_marker_desc = "Mark Deathglare Tentacles with {rt6}{rt5}{rt4}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the spears is the fastest way to mark them.|r"
+	L.custom_off_deathglare_marker_icon = 6
 end
 
 --------------------------------------------------------------------------------
@@ -58,6 +64,7 @@ function mod:GetOptions()
 
 		-- Deathglare Tentacle
 		208697, -- Mind Flay
+		"custom_off_deathglare_marker",
 
 		--[[ Stage Two ]]--
 		{209915, "COUNTDOWN"}, -- Stuff of Nightmares
@@ -99,6 +106,7 @@ function mod:OnBossEnable()
 
 	-- Deathglare Tentacle
 	self:Log("SPELL_CAST_START", "MindFlay", 208697)
+	self:Death("DeathglareDeath", 105322)
 
 	--[[ Stage Two ]]--
 	self:Log("SPELL_AURA_APPLIED", "StuffOfNightmares", 209915)
@@ -109,15 +117,50 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Ilgynoth Engaged (Beta v2)", "ability_malkorok_blightofyshaarj_red")
 	fixateOnMe = nil
 	self:CDBar(208689, 11.5) -- Ground Slam
 	self:Bar("nightmare_horror", 69, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
+
+	wipe(deathglareMarked)
+	if self:GetOption("custom_off_deathglare_marker") then
+		deathglareMarks = { [6] = true, [5] = true, [4] = true, [3] = true }
+
+		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "DeathglareMark")
+		self:RegisterEvent("UNIT_TARGET", "DeathglareMark")
+		self:RegisterEvent("NAME_PLATE_UNIT_ADDED", "DeathglareMark")
+	end
+end
+
+function mod:OnBossDisable()
+	wipe(deathglareMarked)
+	self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+	self:UnregisterEvent("UNIT_TARGET")
+	self:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:DeathglareMark(event, firedUnit)
+	local unit = event == "NAME_PLATE_UNIT_ADDED" and firedUnit or firedUnit and firedUnit.."target" or "mouseover"
+	local guid = UnitGUID(unit)
+
+	if self:MobId(guid) == 105322 and not deathglareMarked[guid] then
+		local icon = next(deathglareMarks)
+		if icon then -- At least one icon unused
+			SetRaidTarget(unit, icon)
+			deathglareMarks[icon] = nil -- Mark is no longer available
+			deathglareMarked[guid] = icon -- Save the tentacle we marked and the icon we marked it with
+		end
+	end
+end
+
+function mod:DeathglareDeath(args)
+	if deathglareMarked[args.destGUID] then -- Did we mark the Tentacle?
+		deathglareMarks[deathglareMarked[args.destGUID]] = true -- Mark used is available again
+	end
+end
 
 -- Dominator Tentacle
 function mod:RAID_BOSS_WHISPER(_, msg, sender)
