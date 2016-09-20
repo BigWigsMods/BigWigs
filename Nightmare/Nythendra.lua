@@ -1,9 +1,8 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Tuning sounds / message colors
--- - Remove beta engaged message
--- - The timers really suck on this fight > only normal testing data (2016-08-11)
+-- - Get timers for all difficulties on live
+-- - Check if SPELL_CAST_START InfestedBreath (202977) is on live
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -72,7 +71,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Nythendra Engaged (Beta v3)", 23074) -- some red dragon icon
 	rotCount = 1
 	mindControlledPlayers = 0
 	self:Berserk(720) -- 12 minutes on heroic, not kidding
@@ -121,7 +119,7 @@ do
 
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Alert")
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Warning")
 			rotCount = rotCount + 1
 
 			if mod:BarTimeLeft(mod:SpellName(203552)) > 15.9 then -- Heart of the Swarm
@@ -162,7 +160,7 @@ function mod:VolatileRot(args)
 end
 
 function mod:HeartOfTheSwarm(args)
-	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 23.7, CL.cast:format(args.spellName)) -- 3.7s cast time + 20s channel
 	-- This is basically a phase, so start timers for next "normal" phase here
 	self:CDBar(args.spellId, 120)
@@ -201,6 +199,6 @@ end
 
 function mod:SpreadInfestation(args)
 	if not self:Me(args.sourceGUID) and mindControlledPlayers < 4 then -- TODO hardcoded anti spam check (for wipes): only warn if max 3 players are mind controlled
-		self:Message(args.spellId, "Attention", "Alert", CL.other:format(mod:ColorName(args.sourceName), CL.casting:format(args.spellName))) -- Player: Casting Spread Infestation!
+		self:Message(args.spellId, "Attention", "Long", CL.other:format(mod:ColorName(args.sourceName), CL.casting:format(args.spellName))) -- Player: Casting Spread Infestation!
 	end
 end

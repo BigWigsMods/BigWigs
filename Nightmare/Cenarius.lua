@@ -1,10 +1,16 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Tuning sounds / message colors
--- - Remove alpha engaged message
--- - Fix WaveSpawn and untested funcs if needed
---   WaveSpawn got broken, figure out a new way to do this
+-- - Fix untested funcs if needed
+-- - WaveSpawn got broken, figure out a new way to do this
+--     Wave 1:	Wisp, Drake, Treant
+--     Wave 2:	Wisp, Drake, Sister
+--     Wave 3:	2x Sister, Treant
+--     Wave 4:	2x Drake, Wisp
+--     Wave 5:	2x Treant, Sister
+--     Wave 6:	2x Wisp, Sister
+-- - NightmareBrambles: can targetscan for initial target - lets hope that there
+--   is a debuff on live
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -101,11 +107,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SpearOfNightmares", 214529)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SpearOfNightmares", 214529)
 
-	self:Log("SPELL_AURA_APPLIED", "WaveSpawn", 212178) -- Wisps
-	self:Log("SPELL_AURA_APPLIED", "WaveSpawn", 210861) -- Treat
-	self:Log("SPELL_AURA_APPLIED", "WaveSpawn", 212231) -- Drake
-	self:Log("SPELL_AURA_APPLIED", "WaveSpawn", 212241) -- Sister
-
 	--[[ Malfurion Stormrage ]]--
 	self:Log("SPELL_AURA_APPLIED", "CleansedGround", 212681)
 	self:Log("SPELL_AURA_REMOVED", "CleansedGroundRemoved", 212681)
@@ -130,7 +131,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Cenarius (Alpha) Engaged (Post Pre Mythic Test Mod)", false)
 	forcesOfNightmareCount = 1
 	self:CDBar(212726, 10, CL.count:format(self:SpellName(212726), forcesOfNightmareCount)) -- Forces of Nightmare
 	self:Bar(210290, 28) -- Nightmare Brambles
@@ -252,47 +252,6 @@ function mod:SpearOfNightmares(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "Urgent", self:Tank() and "Warning")
 	self:Bar(args.spellId, 15.7)
-end
-
-do
-	local adds = {
-		[212178] = mod:SpellName(-13348), -- Corrupted Wisp
-		[210861] = mod:SpellName(-13350), -- Nightmare Treant
-		[212231] = mod:SpellName(-13354), -- Rotten Drake
-		[212241] = mod:SpellName(-13357), -- Twisted Sister
-	}
-	local spawnString, spawnCount = "", 0
-	local fallbackTimer = nil
-
-	-- XXX TODO this is for mythic testing because i don't know how many adds will
-	-- spawn at the same time. it's 3 each wave for heroic
-	-- ideally WaveSpawn() will get called 3 times and fallbackFunc() will announce
-	-- the wave 0.3 sec after the last call
-	local function fallbackFunc()
-		if fallbackTimer then
-			mod:CancelTimer(fallbackTimer)
-		end
-		mod:Message(212726, "Neutral", "Info", spawnString)
-		spawnCount = 0
-		spawnString = ""
-	end
-
-	function mod:WaveSpawn(args)
-		if fallbackTimer then
-			self:CancelTimer(fallbackTimer)
-		end
-
-		spawnCount = spawnCount + 1
-		spawnString = spawnString .. (spawnCount == 1 and ("Wave %d: "):format(forcesOfNightmareCount - 1) or ", ") .. adds[args.spellId]
-
-		if self:Heroic() and spawnCount == 3 then
-			self:Message(212726, "Neutral", "Info", spawnString)
-			spawnCount = 0
-			spawnString = ""
-		else
-			fallbackTimer = self:ScheduleTimer(fallbackFunc, 0.1)
-		end
-	end
 end
 
 --[[ Malfurion Stormrage ]]--

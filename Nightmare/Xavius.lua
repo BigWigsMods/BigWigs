@@ -1,9 +1,7 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Tuning sounds / message colors
--- - Remove alpha engaged message
--- - Phase 3
+-- - Fix all the timers!
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -62,16 +60,18 @@ function mod:GetOptions()
 		205588, -- Call of Nightmares
 
 		--[[ Stage Three: World of Darkness ]]--
+		226194, -- Writhing Deep
 	},{
 		["berserk"] = "general",
 		[206651] = -12971, -- Stage One: The Decent Into Madness
 		[209034] = -13152, -- Stage Two: From the Shadows
-		--[0] = -13160, -- Stage Three: World of Darkness
+		[226194] = -13160, -- Stage Three: World of Darkness
 	}
 end
 
 function mod:OnBossEnable()
 	--[[ General ]]--
+	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "DecentIntoMadness", 208431)
 	self:Log("SPELL_AURA_APPLIED", "Madness", 207409)
 	self:Log("SPELL_AURA_APPLIED", "DreamSimulacrum", 206005)
@@ -96,10 +96,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CallOfNightmares", 205588)
 
 	--[[ Stage Three: World of Darkness ]]--
+	self:Log("SPELL_CAST_SUCCESS", "WrithingDeep", 226194)
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Xavius (Alpha) Engaged (Post Alpha Test Mod)", 208431)
 	phase = 1
 
 	self:Bar(206651, 7.5) -- Darkening Soul
@@ -112,12 +112,29 @@ end
 --
 
 --[[ General ]]--
+function mod:UNIT_SPELLCAST_START(unit, spellName, _, _, spellId)
+	if spellId == 226193 then -- Xavius Energize Phase 2
+		phase = 2
+		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
+		self:StopBar(206651) -- Darkening Soul
+		self:StopBar(211802) -- Nightmare Blades
+		self:StopBar(210264) -- Manifest Corruption
+		self:Bar(209034, 7.5) -- Bonds of Terror
+		self:Bar(209443, 29) -- Nightmare Infusion
+		self:Bar(205588, 55) -- Call of Nightmares
+	elseif spellId == 226185 then -- Xavius Energize Phase 3
+		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
+		phase = 3
+
+	end
+end
+
 function mod:DecentIntoMadness(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
 end
 
 function mod:Madness(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", nil, nil, true)
 end
 
 function mod:DreamSimulacrum(args)
@@ -220,17 +237,6 @@ do
 end
 
 function mod:BlackeningSoul(args)
-	if phase == 1 then -- yep, there is no phase transition spell. have to do it here
-		phase = 2
-		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
-		self:StopBar(206651) -- Darkening Soul
-		self:StopBar(211802) -- Nightmare Blades
-		self:StopBar(210264) -- Manifest Corruption
-		self:Bar(209034, 7.5) -- Bonds of Terror
-		self:Bar(209443, 29) -- Nightmare Infusion
-		self:Bar(205588, 55) -- Call of Nightmares
-	end
-
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 2 and "Warning")
 	self:Bar(args.spellId, 10)
@@ -247,3 +253,7 @@ function mod:CallOfNightmares(args)
 end
 
 --[[ Stage Three: World of Darkness ]]--
+function mod:WrithingDeep(args)
+	self:Message(args.spellId, "Urgent", "Alert")
+	self:CDBar(args.spellId, 21)
+end
