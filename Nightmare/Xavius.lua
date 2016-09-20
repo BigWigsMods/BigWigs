@@ -99,7 +99,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Xavius (Alpha) Engaged (Post Alpha Test Mod)", 208431)
 	phase = 1
 
 	self:Bar(206651, 7.5) -- Darkening Soul

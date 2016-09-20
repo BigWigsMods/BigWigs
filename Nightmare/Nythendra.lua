@@ -72,7 +72,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Nythendra Engaged (Beta v3)", 23074) -- some red dragon icon
 	rotCount = 1
 	mindControlledPlayers = 0
 	self:Berserk(720) -- 12 minutes on heroic, not kidding

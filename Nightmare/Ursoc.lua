@@ -69,7 +69,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Ursoc Engaged (Beta v5)", 98204) -- Amani Battle Bear icon
 	cacophonyCount = 1
 	rendFleshCount = 1
 	focusedGazeCount = 1

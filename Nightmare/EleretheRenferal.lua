@@ -93,8 +93,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Elerethe Renferal Engaged (Beta v2)", "inv_spidermount")
-
 	twistingShadowsCount = 1
 
 	self:Bar(215300, 6)
