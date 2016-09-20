@@ -134,7 +134,10 @@ do
 		if fakeWorldZones[k] then
 			public.zoneTbl[k] = v
 		else
-			public.zoneTbl[GetAreaMapInfo(k)] = v
+			local instanceId = GetAreaMapInfo(k)
+			if instanceId then -- Protect live client from beta client ids
+				public.zoneTbl[instanceId] = v
+			end
 		end
 	end
 end
