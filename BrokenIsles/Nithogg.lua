@@ -7,9 +7,9 @@
 
 local mod, CL = BigWigs:NewBoss("Nithogg", -1017, 1749)
 if not mod then return end
-mod:RegisterEnableMob(107544)
+mod:RegisterEnableMob(107023)
 mod.otherMenu = 1007
-mod.worldBoss = 107544
+mod.worldBoss = 107023
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -17,11 +17,11 @@ mod.worldBoss = 107544
 
 function mod:GetOptions()
 	return {
+		-13327, -- Crackling Jolt
 		212836, -- Tail Lash
-		212852, -- Storm Breath
 		212867, -- Electrical Storm
+		212852, -- Storm Breath
 		212887, -- Static Charge
-		212837, -- Crackling Jolt
 	}
 end
 
@@ -31,6 +31,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "StaticCharge", 212887)
 	--self:Log("SPELL_CAST_SUCCESS", "CracklingJolt", 212837)
 	self:Log("SPELL_CAST_START", "TailLash", 212836)
+
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -56,8 +57,8 @@ do
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, castGUID, spellId)
 		if spellId == 212837 and castGUID ~= prev then -- Crackling Jolt
 			prev = castGUID
-			self:Message(spellId, "Important", "Alarm")
-			self:CDBar(spellId, 12)
+			self:Message(-13327, "Important", "Alarm")
+			self:CDBar(-13327, 12)
 		end
 	end
 end
