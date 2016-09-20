@@ -10,9 +10,9 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Guarm-TrialOfValor", 1114, 1830)
 if not mod then return end
-mod:RegisterEnableMob(91386, 114344, 114323, 114341, 114343)
---mod.engageId = 0
---mod.respawnTime = 0
+mod:RegisterEnableMob(114323)
+mod.engageId = 1962
+mod.respawnTime = 15
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -35,38 +35,35 @@ end
 
 function mod:GetOptions()
 	return {
-		{228248, "SAY"}, -- Frost Lick
-		{228250, "SAY"}, -- Shadow Lick
-		{228228, "SAY"}, -- Flame Lick
+		228248, -- Frost Lick
+		228253, -- Shadow Lick
+		228228, -- Flame Lick
 		{228187, "FLASH"}, -- Guardian's Breath
 		227514, -- Flashing Fangs
 		227816, -- Headlong Charge
 		227883, -- Roaring Leap
+		"berserk"
 	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Log("SPELL_AURA_APPLIED", "FrostLick", 228248, 228247, 228246)
-	self:Log("SPELL_AURA_REMOVED", "FrostLickRemoved", 228248, 228247, 228246)
-
-	self:Log("SPELL_AURA_APPLIED", "ShadowLick", 228250, 228251, 228253)
-	self:Log("SPELL_AURA_REMOVED", "ShadowLickRemoved", 228250, 228251, 228253)
-
-	self:Log("SPELL_AURA_APPLIED", "FlameLick", 228228, 228226, 228227)
-	self:Log("SPELL_AURA_REMOVED", "FlameLickRemoved", 228228, 228226, 228227)
+	self:Log("SPELL_AURA_APPLIED", "FrostLick", 228248)
+	self:Log("SPELL_AURA_APPLIED", "ShadowLick", 228253)
+	self:Log("SPELL_AURA_APPLIED", "FlameLick", 228228)
 
 	self:Log("SPELL_CAST_START", "GuardiansBreath", 227669, 227658, 227660, 227666, 227673, 227667)
 	self:Log("SPELL_CAST_START", "FlashingFangs", 227514)
 
-	self:Log("SPELL_AURA_APPLIED", "HeadlongCharge", 227816, 227833)
+	self:Log("SPELL_CAST_SUCCESS", "HeadlongCharge", 227816)
 
-	self:Log("SPELL_CAST_SUCCESS", "RoaringLeap", 227883, 227894)
+	self:Log("SPELL_CAST_SUCCESS", "RoaringLeap", 227883)
 end
 
 function mod:OnEngage()
-	
+	self:Berserk(242)
+	self:Bar(228187, 13) -- Guardian's Breath
 end
 
 --------------------------------------------------------------------------------
@@ -74,70 +71,50 @@ end
 --
 
 do
+	local list = mod:NewTargetList()
 	function mod:FrostLick(args)
-		if self:Me(args.destGUID) then
-			self:Say(228248)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.4, args.spellId, list, "Urgent", "Alarm")
 		end
-		self:TargetMessage(228248, args.destName, "Urgent", "Alarm")
-	end
-	function mod:FrostLickRemoved(args)
-		--self:PrimaryIcon(args.spellId)
 	end
 end
 
 do
+	local list = mod:NewTargetList()
 	function mod:ShadowLick(args)
-		if self:Me(args.destGUID) then
-			self:Say(228250)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.4, args.spellId, list, "Urgent", "Alarm")
 		end
-		self:TargetMessage(228250, args.destName, "Urgent", "Alarm")
-	end
-	function mod:ShadowLickRemoved(args)
-		--self:PrimaryIcon(args.spellId)
 	end
 end
 
 do
+	local list = mod:NewTargetList()
 	function mod:FlameLick(args)
-		if self:Me(args.destGUID) then
-			self:Say(228228)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.4, args.spellId, list, "Urgent", "Alarm")
 		end
-		self:TargetMessage(228228, args.destName, "Urgent", "Alarm")
-	end
-	function mod:FlameLickRemoved(args)
-		--self:PrimaryIcon(args.spellId)
 	end
 end
 
-do
-	local prev = 0
-	function mod:GuardiansBreath(args)
-		local t = GetTime()
-		if t-prev > 2 then
-			prev = t
-			self:Message(228187, "Attention", "Warning")
-			self:Bar(228187, 5)
-			self:Flash(228187)
-		end
-	end
+function mod:GuardiansBreath(args)
+	self:Message(228187, "Attention", "Warning")
+	self:Bar(228187, 5, CL.cast:format(args.spellName))
+	self:Flash(228187)
 end
 
 function mod:FlashingFangs(args)
 	self:Message(args.spellId, "Positive", self:Melee() and "Alert")
 end
 
-do
-	local prev = 0
-	function mod:HeadlongCharge(args)
-		local t = GetTime()
-		if t-prev > 2 then
-			prev = t
-			self:Message(227816, "Important", "Long")
-		end
-	end
+function mod:HeadlongCharge(args)
+	self:Message(args.spellId, "Important", "Long")
 end
 
 function mod:RoaringLeap(args)
-	self:Message(227883, "Urgent", "Info")
+	self:Message(args.spellId, "Urgent", "Info")
 end
 
