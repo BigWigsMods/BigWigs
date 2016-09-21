@@ -246,9 +246,11 @@ end
 
 --[[ Stage Two ]]--
 function mod:StuffOfNightmares(args)
-	self:Message(args.spellId, "Neutral", "Info")
-	self:CDBar(208689, 11.5) -- Ground Slam
-	self:Bar("nightmare_horror", 99, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
+	if IsEncounterInProgress() then -- Gets buffed when the boss spawns
+		self:Message(args.spellId, "Neutral", "Info")
+		self:CDBar(208689, 11.5) -- Ground Slam
+		self:Bar("nightmare_horror", 99, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
+	end
 end
 
 function mod:StuffOfNightmaresRemoved(args)
