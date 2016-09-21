@@ -168,7 +168,7 @@ do
 			if UnitDebuff(unit, spellName) then
 				list[#list+1] = UnitName(unit)
 
-				if UnitIsPlayer(unit) then
+				if UnitIsUnit("player", unit) then
 					self:Flash(215443)
 					self:Say(215443)
 
