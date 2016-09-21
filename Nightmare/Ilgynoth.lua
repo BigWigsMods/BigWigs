@@ -234,7 +234,7 @@ do
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
-			self:TargetBar(args.spellId, args.destName, 10)
+			self:TargetBar(args.spellId, 10, args.destName)
 		end
 	end
 end
