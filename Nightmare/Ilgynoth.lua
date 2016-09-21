@@ -89,7 +89,6 @@ function mod:OnBossEnable()
 	-- Nightmare Ichor
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 210099)
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 210099)
-	self:Log("SPELL_AURA_APPLIED", "TouchOfCorruption", 209469)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TouchOfCorruption", 209469)
 	self:Log("SPELL_CAST_START", "NightmareExplosion", 209471)
 
