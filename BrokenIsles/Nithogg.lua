@@ -1,5 +1,3 @@
--- TO DO List Needs combat Testing to see how accurate timers actually are
--- Needs onEngage timers
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -21,25 +19,27 @@ function mod:GetOptions()
 		212836, -- Tail Lash
 		212867, -- Electrical Storm
 		212852, -- Storm Breath
-		212887, -- Static Charge
+		{212887, "SAY"}, -- Static Charge
 	}
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "StormBreath", 212852)
+	self:Log("SPELL_CAST_START", "StormBreath", 212852)
 	self:Log("SPELL_CAST_SUCCESS", "ElectricalStorm", 212867)
 	self:Log("SPELL_CAST_SUCCESS", "StaticCharge", 212887)
-	--self:Log("SPELL_CAST_SUCCESS", "CracklingJolt", 212837)
+	self:Log("SPELL_AURA_APPLIED", "StaticChargeApplied", 212887)
 	self:Log("SPELL_CAST_START", "TailLash", 212836)
 
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:ScheduleTimer("CheckForEngage", 1)
 	self:RegisterEvent("BOSS_KILL")
 end
 
 function mod:OnEngage()
-	--Gotta do few more tries on boss for initial timers.
+	self:CheckForWipe()
+	self:CDBar(212852, 10) -- Storm Breath
+	self:CDBar(212867, 16) -- Electrical Storm
+	self:CDBar(212887, 19) -- Static Charge
 end
 
 --------------------------------------------------------------------------------
@@ -47,33 +47,39 @@ end
 --
 
 function mod:StormBreath(args)
-	self:TargetMessage(args.spellId, args.destName, "Important", self:Tank() and "Warning")
-	self:Message(args.spellId, "Important")
+	self:Message(args.spellId, "Urgent", self:Tank() and "Warning")
 	self:CDBar(args.spellId, 23.7)
 end
 
 do
 	local prev = nil
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, castGUID, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, castGUID, spellId)
 		if spellId == 212837 and castGUID ~= prev then -- Crackling Jolt
 			prev = castGUID
 			self:Message(-13327, "Important", "Alarm")
-			self:CDBar(-13327, 12)
+			self:CDBar(-13327, 11)
 		end
 	end
 end
 
 function mod:TailLash(args)
-	self:Message(args.spellId, "Urgent", "Alert")
+	self:Message(args.spellId, "Attention", self:Melee() and "Alert")
 end
 
 function mod:ElectricalStorm(args)
-	self:Message(args.spellId, "Important", "Alarm")
-	self:CDBar(args.spellId, 31.4)
+	self:Message(args.spellId, "Important", "Info")
+	self:CDBar(args.spellId, 30)
 end
 
 function mod:StaticCharge(args)
-	self:CDBar(args.spellId, 41)
+	self:CDBar(args.spellId, 39)
+end
+
+function mod:StaticChargeApplied(args)
+	self:TargetMessage(args.spellId, args.destName, "Positive", "Warning")
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+	end
 end
 
 function mod:BOSS_KILL(_, id)
