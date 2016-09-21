@@ -160,9 +160,9 @@ end
 do
 	local scheduled, isOnMe = nil, nil
 
-	local function warn(self, spellName)
+	local function warn(self, spellId)
 		if not isOnMe then
-			self:Message(203770, "Attention", self:Dispeller("magic") and "Alert")
+			self:Message(spellId, "Attention", self:Dispeller("magic") and "Alert")
 		end
 		scheduled = nil
 		isOnMe = nil
@@ -170,11 +170,11 @@ do
 
 	function mod:DefiledVines(args)
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellName)
+			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
 		end
 
 		if self:Me(args.destGUID) then
-			self:TargetMessage(203770, args.destName, "Personal", "Alarm")
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
 			self:Say(args.spellId)
 			isOnMe = true
 		end
