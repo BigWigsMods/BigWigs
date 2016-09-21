@@ -241,7 +241,9 @@ end
 
 -- Deathglare Tentacle
 function mod:MindFlay(args)
-	self:Message(args.spellId, "Attention", self:Interrupter(args.sourceGUID) and "Info")
+	if self:Interrupter(args.sourceGUID) then -- avoid spam
+		self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
+	end
 end
 
 --[[ Stage Two ]]--
