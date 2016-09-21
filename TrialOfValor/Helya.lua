@@ -11,7 +11,7 @@ if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Helya-TrialOfValor", 1114, 1829)
 if not mod then return end
 --mod:RegisterEnableMob(0)
---mod.engageId = 0
+--mod.engageId = 2008
 --mod.respawnTime = 0
 
 --------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ if not mod then return end
 
 local L = mod:GetLocale()
 if L then
-	
+
 end
 
 --------------------------------------------------------------------------------
@@ -40,11 +40,11 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	
+
 end
 
 function mod:OnEngage()
-	
+
 end
 
 --------------------------------------------------------------------------------
@@ -52,6 +52,5 @@ end
 --
 
 function mod:Go(args)
-	
-end
 
+end
