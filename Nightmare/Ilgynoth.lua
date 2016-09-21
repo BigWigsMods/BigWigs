@@ -173,9 +173,16 @@ function mod:GroundSlam(args)
 	self:CDBar(args.spellId, 20.5)
 end
 
-function mod:NightmarishFury(args)
-	self:Message(args.spellId, "Urgent")
-	self:Bar(args.spellId, 10)
+do
+	local prev = 0
+	function mod:NightmarishFury(args)
+		local t = GetTime()
+		if t-prev > 1 then
+			prev = t
+			self:Message(args.spellId, "Urgent")
+			self:Bar(args.spellId, 10)
+		end
+	end
 end
 
 -- Nightmare Ichor
@@ -232,9 +239,9 @@ do
 		end
 
 		if self:Me(args.destGUID) then
+			self:TargetBar(args.spellId, 10, args.destName)
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
-			self:TargetBar(args.spellId, 10, args.destName)
 		end
 	end
 end
