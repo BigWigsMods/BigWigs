@@ -89,7 +89,6 @@ function mod:OnBossEnable()
 	-- Nightmare Ichor
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 210099)
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 210099)
-	self:Log("SPELL_AURA_APPLIED", "TouchOfCorruption", 209469)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TouchOfCorruption", 209469)
 	self:Log("SPELL_CAST_START", "NightmareExplosion", 209471)
 
@@ -173,9 +172,16 @@ function mod:GroundSlam(args)
 	self:CDBar(args.spellId, 20.5)
 end
 
-function mod:NightmarishFury(args)
-	self:Message(args.spellId, "Urgent")
-	self:Bar(args.spellId, 10)
+do
+	local prev = 0
+	function mod:NightmarishFury(args)
+		local t = GetTime()
+		if t-prev > 1 then
+			prev = t
+			self:Message(args.spellId, "Urgent")
+			self:Bar(args.spellId, 10)
+		end
+	end
 end
 
 -- Nightmare Ichor
@@ -232,23 +238,27 @@ do
 		end
 
 		if self:Me(args.destGUID) then
+			self:TargetBar(args.spellId, 10, args.destName)
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
-			self:TargetBar(args.spellId, args.destName, 10)
 		end
 	end
 end
 
 -- Deathglare Tentacle
 function mod:MindFlay(args)
-	self:Message(args.spellId, "Attention", self:Interrupter(args.sourceGUID) and "Info")
+	if self:Interrupter(args.sourceGUID) then -- avoid spam
+		self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
+	end
 end
 
 --[[ Stage Two ]]--
 function mod:StuffOfNightmares(args)
-	self:Message(args.spellId, "Neutral", "Info")
-	self:CDBar(208689, 11.5) -- Ground Slam
-	self:Bar("nightmare_horror", 99, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
+	if IsEncounterInProgress() then -- Gets buffed when the boss spawns
+		self:Message(args.spellId, "Neutral", "Info")
+		self:CDBar(208689, 11.5) -- Ground Slam
+		self:Bar("nightmare_horror", 99, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
+	end
 end
 
 function mod:StuffOfNightmaresRemoved(args)

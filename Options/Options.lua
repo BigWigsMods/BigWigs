@@ -995,8 +995,10 @@ do
 
 		local bw = AceGUI:Create("Frame")
 		bw:SetTitle("BigWigs")
+		bw:SetStatusText(" "..BigWigsLoader:GetReleaseString())
 		bw:SetWidth(858)
 		bw:SetHeight(660)
+		bw:EnableResize(false)
 		bw:SetLayout("Flow")
 		bw:SetCallback("OnClose", function(widget)
 			AceGUI:Release(widget)

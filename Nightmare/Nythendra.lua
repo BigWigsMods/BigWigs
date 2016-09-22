@@ -73,7 +73,7 @@ end
 function mod:OnEngage()
 	rotCount = 1
 	mindControlledPlayers = 0
-	self:Berserk(720) -- 12 minutes on heroic, not kidding
+	self:Berserk(485) -- heroic
 	self:CDBar(203096, 5.8) -- Rot
 	self:CDBar(204463, 22.8) -- Volatile Rot
 	self:CDBar(202977, 38) -- Infested Breath

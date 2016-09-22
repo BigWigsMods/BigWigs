@@ -44,6 +44,7 @@ function mod:GetOptions()
 		"berserk",
 		"stages",
 		208431, -- Decent Into Madness
+		207409, -- Madness
 		206005, -- Dream Simulacrum
 
 		--[[ Stage One: The Decent Into Madness ]]--

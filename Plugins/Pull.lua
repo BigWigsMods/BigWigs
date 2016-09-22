@@ -96,7 +96,7 @@ do
 			self:SendMessage("BigWigs_Message", self, nil, L.pulling, "Attention", "Interface\\Icons\\ability_warrior_charge")
 			self:SendMessage("BigWigs_Sound", self, nil, "Alarm")
 		elseif timeLeft > 2 and IsEncounterInProgress() then -- Cancel the pull timer if we ninja pulled
-			startPull(0, COMBAT)
+			self:StartPull(0, COMBAT)
 		elseif timeLeft < 11 then
 			if self.db.profile.countType == "normal" then
 				self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")

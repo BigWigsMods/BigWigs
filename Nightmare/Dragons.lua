@@ -123,7 +123,7 @@ function mod:MarkApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount == 1 or amount > 6 then -- could need fine tuning
-			self:StackMessage(-12809, args.destName, amount, "Important", "Warning")
+			self:StackMessage(-12809, args.destName, amount, "Important", "Warning", args.spellId, args.spellId)
 		end
 
 		if amount > 1 then
@@ -131,13 +131,13 @@ function mod:MarkApplied(args)
 		end
 
 		local _, _, _, _, _, duration = UnitDebuff("player", args.spellName)
-		self:TargetBar(-12809, duration or 35, args.destName, CL.count:format(args.spellName, amount))
+		self:TargetBar(-12809, duration or 35, args.destName, CL.count:format(args.spellName, amount), args.spellId)
 	end
 end
 
 function mod:MarkRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(-12809, "Positive", "Info", CL.removed:format(args.spellName))
+		self:Message(-12809, "Positive", "Info", CL.removed:format(args.spellName), args.spellId)
 	end
 end
 
@@ -153,20 +153,30 @@ end
 
 --[[ Ysondre ]]--
 function mod:CallDefiledSpiritCast(args)
-	self:Message(args.spellId, "Important", nil, CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Important")
 	self:Bar(args.spellId, 33)
 end
 
 do
-	local list = mod:NewTargetList()
+	local scheduled, isOnMe = nil, nil
+
+	local function warn(self, spellId)
+		if not isOnMe then
+			self:Message(spellId, "Attention", self:Dispeller("magic") and "Alert")
+		end
+		scheduled = nil
+		isOnMe = nil
+	end
+
 	function mod:DefiledVines(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alert", nil, nil, self:Dispeller("magic"))
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
 		end
 
 		if self:Me(args.destGUID) then
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
 			self:Say(args.spellId)
+			isOnMe = true
 		end
 	end
 end
