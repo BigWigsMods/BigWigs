@@ -44,7 +44,7 @@ function mod:GetOptions()
 	return {
 		--[[ Stage One ]]--
 		-- Dominator Tentacle
-		208689, -- Ground Slam
+		{208689, "SAY", "FLASH"}, -- Ground Slam
 		{215234, "TANK"}, -- Nightmarish Fury
 
 		-- Nightmare Ichor
@@ -168,7 +168,7 @@ function mod:RAID_BOSS_WHISPER(_, msg, sender)
 end
 
 function mod:GroundSlam(args)
-	-- XXX Do we want a message with the target(s)? They only have 2s to react, personal warning is in RAID_BOSS_WHISPER
+	-- Personal warning is in RAID_BOSS_WHISPER above
 	self:CDBar(args.spellId, 20.5)
 end
 
