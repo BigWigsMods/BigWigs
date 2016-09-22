@@ -59,13 +59,13 @@ L.closeProximityDesc = [=[关闭近距离显示。
 
 要完全禁用此任一功能，需进入相对应首领模块选项关闭“近距离”功能。]=]
 L.colors = "颜色"
--- L.combatLog = "Automatic Combat Logging"
--- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
+L.combatLog = "自动战斗记录"
+L.combatLogDesc = "当拉怪计时器开始到战斗结束时自动开始战斗记录。"
 L.countDefeats = "击杀次数"
 L.countdownAt = "倒数…（秒）"
 L.countdownColor = "倒数颜色"
 L.countdownTest = "测试倒数"
--- L.countdownType = "Countdown Type"
+L.countdownType = "倒数类型"
 L.countdownVoice = "倒数语音"
 L.countWipes = "团灭次数"
 L.createTimeBar = "显示“最快击杀”计时条"

@@ -59,13 +59,13 @@ L.closeProximityDesc = [=[關閉玩家雷達。
 
 要在所有首領戰鬥中停用此功能，你需要到選項的"玩家雷達"中勾選停用。]=]
 L.colors = "顏色"
--- L.combatLog = "Automatic Combat Logging"
--- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
+L.combatLog = "自動戰鬥記錄"
+L.combatLogDesc = "當拉怪計時器開始到戰鬥結束時自動開始戰鬥記錄。"
 L.countDefeats = "擊敗次數"
 L.countdownAt = "倒數... (秒)"
 L.countdownColor = "倒數顏色"
 L.countdownTest = "倒數測試"
--- L.countdownType = "Countdown Type"
+L.countdownType = "倒數類型"
 L.countdownVoice = "倒數音效"
 L.countWipes = "團滅次數"
 L.createTimeBar = "顯示“最快擊敗”計時條"
