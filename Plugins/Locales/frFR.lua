@@ -58,10 +58,13 @@ L.closeButtonDesc = "Affiche ou non le bouton de fermeture."
 L.closeProximityDesc = [=[Ferme l'affichage de proximité.
 Pour le désactiver complètement, rendez-vous dans les options du boss et décochez "Proximité".]=]
 L.colors = "Couleurs"
+-- L.combatLog = "Automatic Combat Logging"
+-- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
 L.countDefeats = "Compter les victoires"
 L.countdownAt = "Compte à rebours à... (secondes)"
 L.countdownColor = "Couleur compte à rebours"
 L.countdownTest = "Test compte à rebours"
+-- L.countdownType = "Countdown Type"
 L.countdownVoice = "Voix du compte à rebours"
 L.countWipes = "Compter les échecs"
 L.createTimeBar = "Afficher la barre 'Meilleur temps'"
@@ -238,4 +241,3 @@ L.wrongBreakFormat = "Doit être compris entre 1 et 60 minutes. Un exemple corre
 L.wrongCustomBarFormat = "Format incorrect. Un exemple correct est le suivant : /raidbar 20 texte"
 L.wrongPullFormat = "Doit être compris entre 1 et 60 secondes. Un exemple correct est le suivant : /pull 5"
 L.wrongTime = "Durée spécifiée incorrecte. <durée> peut être exprimée soit avec un nombre en secondes, avec une paire M:S ou avec Mm. Par exemple 5, 1:20 ou 2m."
-

@@ -60,10 +60,13 @@ L.closeProximityDesc = [=[근접 표시를 닫습니다.
 
 완전히 비활성화기 위해서는 해당 보스 모듈에 있는 옵션의 근접 표시를 끄세요.]=]
 L.colors = "색상"
+-- L.combatLog = "Automatic Combat Logging"
+-- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
 L.countDefeats = "죽임 횟수"
 L.countdownAt = "X초 남았을 때 카운트다운"
 L.countdownColor = "카운트다운 색상"
 L.countdownTest = "카운트다운 테스트"
+-- L.countdownType = "Countdown Type"
 L.countdownVoice = "카운트다운 음성"
 L.countWipes = "전멸 횟수"
 L.createTimeBar = "'최고 기록' 바 보이기"
@@ -238,4 +241,3 @@ L.wrongBreakFormat = "1~60분 사이로 설정하셔야 합니다. 예시: /brea
 L.wrongCustomBarFormat = "잘못된 형식입니다. /raidbar 20 text와 같이 쓰는게 정확한 예입니다."
 L.wrongPullFormat = "1~60초 사이로 설정하셔야 합니다. 예시: /pull 5"
 L.wrongTime = "시간의 표현 방식이 적절하지 않습니다. 초 단위로 표현하거나, 분:초 형식, 아니면 분 단위로 표현해야 합니다. 예를 들자면 5, 1:20 혹은 2m와 같이 써야 합니다."
-

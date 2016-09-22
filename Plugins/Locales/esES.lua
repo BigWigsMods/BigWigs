@@ -59,10 +59,13 @@ L.closeProximityDesc = [=[Cierra la ventana de proximidad.
 
 Para desactivarla completamente para un encuentro, tienes que ir a las opciones para ese encuentro y desactivar la opción de 'Proximidad'.]=]
 L.colors = "Colores"
+-- L.combatLog = "Automatic Combat Logging"
+-- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
 L.countDefeats = "Contar Muertes"
 L.countdownAt = "Cuenta atrás en... (segundos)"
 L.countdownColor = "Color de cuenta atrás"
 L.countdownTest = "Probar cuenta atrás"
+-- L.countdownType = "Countdown Type"
 L.countdownVoice = "Voz de cuenta atrás"
 L.countWipes = "Contar Wipes"
 L.createTimeBar = "Mostrar barra de 'Mejor tiempo' "
@@ -239,4 +242,3 @@ L.wrongBreakFormat = "Debe ser entre 1 y 60 minutos. Por ejemplo: /break 5"
 L.wrongCustomBarFormat = "Formato incorrecto. Un ejemplo seria: /raidbar 20 text"
 L.wrongPullFormat = "Debe ser entre 1 y 60. Un ejemplo sería: /pull 5"
 L.wrongTime = "Tiempo especificado inválido. <time> puede ser bien un número en segundos, un par M:S, o Min. Por ejemplo 5, 1:20 o 2m."
-

@@ -59,10 +59,13 @@ L.closeProximityDesc = [=[Chiude il Monitor di Prossimità.
 
 Per disabilitarlo completamente per tutti gli incontri, devi andare nelle impostazioni dei singoli combattimenti e disabilitare l'opzione 'Prossimità]=]
 L.colors = "Colori"
+-- L.combatLog = "Automatic Combat Logging"
+-- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
 L.countDefeats = "Numero Uccisioni"
 L.countdownAt = "Conto alla rovescia in... (secondi)"
 L.countdownColor = "Colore conto alla rovescia"
 L.countdownTest = "Test conto alla rovescia"
+-- L.countdownType = "Countdown Type"
 L.countdownVoice = "Voce contro alla rovescia"
 L.countWipes = "Numero Fallimenti:"
 L.createTimeBar = "Mostra la barra 'Miglior Tempo'"
@@ -239,4 +242,3 @@ L.wrongBreakFormat = "Deve essere tra 1 e 60 minuti. Un'esempio corretto è /bre
 L.wrongCustomBarFormat = "Formato non corretto. Un'esempio corretto è: /raidbar 20 testo"
 L.wrongPullFormat = "Deve essere tra 1 e 60 secondi. Un'esempio corretto è: /pull 5"
 L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in secondi, una coppia M:S , o Mm. Per esempio 5, 1:20 or 2m."
-
