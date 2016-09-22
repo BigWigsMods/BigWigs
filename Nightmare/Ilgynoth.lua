@@ -1,8 +1,8 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - p1 proximity range: 5?
 -- - TouchOfCorruption doesnt stack on normal. Do we need warnings for that?
+-- - SummonNightmareHorror cd
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -19,6 +19,7 @@ mod.respawnTime = 30
 --
 
 local fixateOnMe = nil
+local insidePhase = 1
 local deathglareMarked = {} -- save GUIDs of marked mobs
 local deathglareMarks  = { [6] = true, [5] = true, [4] = true, [3] = true } -- available marks to use
 
@@ -64,8 +65,9 @@ function mod:GetOptions()
 		"custom_off_deathglare_marker",
 
 		--[[ Stage Two ]]--
-		{209915, "COUNTDOWN"}, -- Stuff of Nightmares
-		-- 210781, -- Dark Reconstitution // using Stuff of Nightmares as P2 bar
+		209915, -- Stuff of Nightmares
+		{210781, "COUNTDOWN"}, -- Dark Reconstitution
+		223121, -- Final Torpor
 		{215128, "SAY", "FLASH", "PROXIMITY"}, -- Cursed Blood
 
 		"berserk",
@@ -108,14 +110,16 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StuffOfNightmares", 209915)
 	self:Log("SPELL_AURA_REMOVED", "StuffOfNightmaresRemoved", 209915)
 	self:Log("SPELL_CAST_START", "DarkReconstitution", 210781)
+	self:Log("SPELL_CAST_START", "FinalTorpor", 223121)
 	self:Log("SPELL_AURA_APPLIED", "CursedBlood", 215128)
 	self:Log("SPELL_AURA_REMOVED", "CursedBloodRemoved", 215128)
 end
 
 function mod:OnEngage()
 	fixateOnMe = nil
+	insidePhase = 1
 	self:CDBar(208689, 11.5) -- Ground Slam
-	self:Bar("nightmare_horror", 69, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
+	self:Bar("nightmare_horror", 85, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 
 	wipe(deathglareMarked)
 	if self:GetOption("custom_off_deathglare_marker") then
@@ -205,16 +209,21 @@ function mod:TouchOfCorruption(args)
 	end
 end
 
-function mod:NightmareExplosion(args)
-	if fixateOnMe then -- Explosion has a small radius, you could only get hit if you are fixated and near the Eye
-		self:Message(args.spellId, "Important", nil, CL.casting:format(args.spellName))
+do
+	local prev = 0
+	function mod:NightmareExplosion(args)
+		local t = GetTime()
+		if fixateOnMe and t-prev > 3 then -- Explosion has a small radius, you could only get hit if you are fixated and near the Eye
+			prev = t
+			self:Message(args.spellId, "Important", nil, CL.casting:format(args.spellName))
+		end
 	end
 end
 
 -- Nightmare Horror
 function mod:SummonNightmareHorror(args)
 	self:Message("nightmare_horror", "Important", "Info", CL.spawned:format(self:SpellName(L.nightmare_horror)), L.nightmare_horror_icon)
-	self:Bar("nightmare_horror", 220, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
+	self:Bar("nightmare_horror", 220, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror < TODO beta timer, need live data
 	if self:Tank() or self:Healer() then
 		self:CDBar(210984, 10) -- Deathglare
 	end
@@ -258,16 +267,32 @@ function mod:StuffOfNightmares(args)
 		self:Message(args.spellId, "Neutral", "Info")
 		self:CDBar(208689, 11.5) -- Ground Slam
 		self:Bar("nightmare_horror", 99, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
+		insidePhase = insidePhase + 1
 	end
 end
 
 function mod:StuffOfNightmaresRemoved(args)
 	self:Message(args.spellId, "Neutral", "Info", CL.removed:format(args.spellName))
-	self:Bar(args.spellId, 60) -- 60s Intermission
+
+	self:StopBar(L.nightmare_horror)
+
+	-- The boss casts the "Intermission ending" spell after 10s in the phase, but
+	-- we want the bars as soon as the phase starts. This requires hard coding the
+	-- spell ids.
+	-- Intermission 1: Dark Reconstitution (210781), 50+10s (heroic)
+	-- Intermission 2: FinalTorpor (223121), 90+10s (heroic)
+	-- In mod:DarkReconstitution() and mod:FinalTorpor() we overwrite the bars
+	-- started here, just to make sure. It's just me being paranoid.
+	local intermissionSpellId = insidePhase == 1 and 210781 or 223121
+	self:Bar(intermissionSpellId, insidePhase == 1 and 60 or 100, CL.cast:format(self:SpellName(intermissionSpellId)))
 end
 
 function mod:DarkReconstitution(args)
-	self:Bar(209915, 50) -- cast after 10s in phase, so only fine tuning StuffOfNightmares bar
+	self:Bar(args.spellId, 50, CL.cast:format(args.spellName)) -- cast after 10s in phase, overwriting bar started in mod:StuffOfNightmaresRemoved()
+end
+
+function mod:FinalTorpor(args)
+	self:Bar(args.spellId, 90, CL.cast:format(args.spellName)) -- cast after 10s in phase, overwriting bar started in mod:StuffOfNightmaresRemoved()
 end
 
 do
