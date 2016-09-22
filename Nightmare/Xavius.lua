@@ -113,7 +113,7 @@ end
 
 function mod:OnEngage()
 	phase = 1
-
+	lurkingEruption = 0
 	self:Bar(206651, 7.5) -- Darkening Soul
 	self:Bar(211802, 19.2) -- Nightmare Blades
 	self:Bar(210264, 59) -- Manifest Corruption

@@ -135,6 +135,7 @@ end
 
 function mod:OnEngage()
 	forcesOfNightmareCount = 1
+	phase = 1
 	self:CDBar(212726, 10, CL.count:format(self:SpellName(212726), forcesOfNightmareCount)) -- Forces of Nightmare
 	self:Bar(210290, 28) -- Nightmare Brambles
 
