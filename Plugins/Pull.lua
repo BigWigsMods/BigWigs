@@ -33,11 +33,11 @@ do
 		args = {
 			countType = {
 				type = "select",
-				name = "Countdown Type",
+				name = L.countdownType,
 				order = 1,
 				values = {
-					normal = "Normal",
-					emphasized = "Emphasized",
+					normal = L.normal,
+					emphasized = L.emphasized,
 				},
 			},
 			desc1 = {
@@ -48,8 +48,8 @@ do
 			},
 			combatLog = {
 				type = "toggle",
-				name = "Automatic Combat Logging",
-				desc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends.",
+				name = L.combatLog,
+				desc = L.combatLogDesc,
 				order = 2,
 				width = "full",
 			},
@@ -215,4 +215,3 @@ SlashCmdList.BIGWIGSPULL = function(input)
 	end
 end
 SLASH_BIGWIGSPULL1 = "/pull"
-

@@ -59,10 +59,13 @@ L.closeProximityDesc = [=[关闭近距离显示。
 
 要完全禁用此任一功能，需进入相对应首领模块选项关闭“近距离”功能。]=]
 L.colors = "颜色"
+-- L.combatLog = "Automatic Combat Logging"
+-- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
 L.countDefeats = "击杀次数"
 L.countdownAt = "倒数…（秒）"
 L.countdownColor = "倒数颜色"
 L.countdownTest = "测试倒数"
+-- L.countdownType = "Countdown Type"
 L.countdownVoice = "倒数语音"
 L.countWipes = "团灭次数"
 L.createTimeBar = "显示“最快击杀”计时条"
@@ -239,4 +242,3 @@ L.wrongBreakFormat = "必须位于1至60分钟之间。正确用法：/break 5"
 L.wrongCustomBarFormat = "错误格式。正确用法：/raidbar 20 文本"
 L.wrongPullFormat = "必须位于1到60秒之间。正确用法：/pull 5"
 L.wrongTime = "指定了无效的时间。 <时间>可以是一个以秒为单位，一个分:秒一对，或分秒。例如，1:20或2M。"
-

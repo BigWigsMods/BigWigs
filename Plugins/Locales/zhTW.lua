@@ -59,10 +59,13 @@ L.closeProximityDesc = [=[關閉玩家雷達。
 
 要在所有首領戰鬥中停用此功能，你需要到選項的"玩家雷達"中勾選停用。]=]
 L.colors = "顏色"
+-- L.combatLog = "Automatic Combat Logging"
+-- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
 L.countDefeats = "擊敗次數"
 L.countdownAt = "倒數... (秒)"
 L.countdownColor = "倒數顏色"
 L.countdownTest = "倒數測試"
+-- L.countdownType = "Countdown Type"
 L.countdownVoice = "倒數音效"
 L.countWipes = "團滅次數"
 L.createTimeBar = "顯示“最快擊敗”計時條"
@@ -239,4 +242,3 @@ L.wrongBreakFormat = "必須介於1至60分鐘之間。正確用法：/break 5"
 L.wrongCustomBarFormat = "不正確的格式。一個正確的範例是: /raidbar 20 文字"
 L.wrongPullFormat = "必須位於1至60秒之間。正確用法：/pull 5"
 L.wrongTime = "指定的時間無效。 <time> 可以為一個秒數，一個 分:秒，或是Mm。例如 5, 1:20 或 2m。"
-
