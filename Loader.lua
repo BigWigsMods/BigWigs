@@ -753,7 +753,9 @@ do
 				-- Play in Master for those that have SFX off or very low.
 				-- We can't do PlaySound("ReadyCheck", "Master") as PlaySound is throttled, and Blizz already plays it.
 				-- Only play via the "Master" channel if we have sounds turned on
-				PlaySoundFile("Sound\\Interface\\levelup2.ogg", BigWigs and BigWigs:GetPlugin("Sounds") and BigWigs:GetPlugin("Sounds").db.profile.sound and "Master" or self.isSoundOn ~= false and "Master")
+				if (BigWigs and BigWigs:GetPlugin("Sounds") and BigWigs:GetPlugin("Sounds").db.profile.sound) or self.isSoundOn ~= false then
+					PlaySoundFile("Sound\\Interface\\levelup2.ogg", "Master")
+				end
 			end
 			self:LFG_PROPOSAL_SHOW()
 
