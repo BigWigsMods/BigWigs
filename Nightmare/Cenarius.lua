@@ -28,6 +28,7 @@ mod.respawnTime = 30
 
 local mobCollector = {}
 local forcesOfNightmareCount = 1
+local phase = 1
 
 
 --------------------------------------------------------------------------------
@@ -46,6 +47,7 @@ end
 function mod:GetOptions()
 	return {
 		--[[ Cenarius ]]--
+		"stages",
 		210279, -- Creeping Nightmares
 		{210290, "ICON", "SAY", "FLASH"}, -- Nightmare Brambles
 		212726, -- Forces of Nightmare
@@ -154,9 +156,14 @@ function mod:UNIT_SPELLCAST_SUCCESS(unit, spellName, _, _, spellId)
 			self:Flash(210290)
 			self:Say(210290)
 		end
-		self:Bar(args.spellId, 30) -- at some point starts casting with 15sec-20sec cd
+		self:Bar(args.spellId, phase == 2 and 20 or 30) -- at some point starts casting with 15sec-20sec cd
 		self:TargetMessage(210290, targetName, "Urgent", "Alarm")
 		self:PrimaryIcon(210290, targetName)
+	elseif spellId == 217368 then -- Phase 2
+		phase = 2
+		self:Bar(210290, 13) -- Nightmare Brambles
+		self:Bar(214529, 23) -- Spear Of Nightmares
+		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
 	end
 end
 function mod:CreepingNightmares(args)
