@@ -47,14 +47,14 @@ function mod:GetOptions()
 	return {
 		--[[ Cenarius ]]--
 		210279, -- Creeping Nightmares
-		{210290, "SAY", "FLASH"}, -- Nightmare Brambles
+		{210290, "ICON", "SAY", "FLASH"}, -- Nightmare Brambles
 		212726, -- Forces of Nightmare
 		210346, -- Dread Thorns
 		214884, -- Corrupt Allies of Nature
 		-- P2
 		214505, -- Entangling Nightmares
 		214529, -- Spear of Nightmares
-
+		
 		--[[ Malfurion Stormrage ]]--
 		212681, -- Cleansed Ground
 
@@ -90,13 +90,14 @@ end
 
 function mod:OnBossEnable()
 	--[[ Cenarius ]]--
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCESS", nil, "boss1")
 	self:Log("SPELL_CAST_START", "ForcesOfNightmare", 212726)
 	self:Log("SPELL_AURA_APPLIED", "CreepingNightmares", 210279)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CreepingNightmares", 210279)
 	self:Log("SPELL_AURA_REMOVED", "CreepingNightmaresRemoved", 210279)
-	self:Log("SPELL_CAST_START", "NightmareBrambles", 210290)
-	self:Log("SPELL_CAST_SUCCES", "NightmareBramblesSuccess", 210290)
-	self:Log("SPELL_AURA_APPLIED", "NightmareBramblesApplied", 210290) -- untested
+	--self:Log("SPELL_CAST_START", "NightmareBrambles", 210290) -- XXX do these actually work?
+	--self:Log("SPELL_CAST_SUCCES", "NightmareBramblesSuccess", 210290) -- XXX do these actually work?
+	--self:Log("SPELL_AURA_APPLIED", "NightmareBramblesApplied", 210290) -- untested, -- XXX do these actually work?
 	self:Log("SPELL_AURA_APPLIED", "DestructiveNightmares", 210617) -- wisp spawn
 	self:Log("SPELL_AURA_APPLIED", "DreadThorns", 210346)
 	self:Log("SPELL_AURA_REMOVED", "DreadThornsRemoved", 210346)
@@ -145,6 +146,19 @@ end
 --
 
 --[[ Cenarius ]]--
+function mod:UNIT_SPELLCAST_SUCCESS(unit, spellName, _, _, spellId)
+	if spellId == 210290 then -- Nightmare Brambles
+		local targetGUID = UnitGUID('boss1target') --selects target 2sec prior to the cast
+		local targetName = UnitName('boss1target')
+		if self:Me(targetGUID) then
+			self:Flash(210290)
+			self:Say(210290)
+		end
+		self:Bar(args.spellId, 30) -- at some point starts casting with 15sec-20sec cd
+		self:TargetMessage(210290, targetName, "Urgent", "Alarm")
+		self:PrimaryIcon(210290, targetName)
+	end
+end
 function mod:CreepingNightmares(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
@@ -158,12 +172,6 @@ function mod:CreepingNightmaresRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
 	end
-end
-
-function mod:NightmareBrambles(args)
-	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 2.5, CL.cast:format(args.spellName))
-	self:Bar(args.spellId, 30)
 end
 
 function mod:NightmareBramblesSuccess(args)
