@@ -31,7 +31,7 @@ end
 L = BigWigs:NewBossLocale("Xavius", "deDE")
 if L then
 	L.custom_off_blade_marker = "Alptraumklingen markieren"
-	L.custom_off_blade_marker_desc = "Markiert die Ziele der Alptraumklingen mit {rt1}{rt2}, benötigt Leiter oder Assistent."
+	L.custom_off_blade_marker_desc = "Markiert die Ziele von Alptraumklingen mit {rt1}{rt2}, benötigt Leiter oder Assistent."
 
 	L.linked = "Schreckensbindungen auf DIR! – Verbunden mit %s!"
 end
