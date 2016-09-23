@@ -1,8 +1,10 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Get timers for all difficulties on live
--- - Check if SPELL_CAST_START InfestedBreath (202977) is on live
+-- - Get/Confirm timers for all difficulties on live
+--   LFR (✘) - Normal (✘) - Heroic (✔) - Mythic (✘)
+--
+-- - Rot: CD is 15.8s - sometimes gets delayed, then its ~24s, no idea why
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -54,7 +56,6 @@ end
 function mod:OnBossEnable()
 	--[[ General ]]--
 	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1")
-	--self:Log("SPELL_CAST_START", "InfestedBreath", 202977) -- they removed it from combatlog, delete this if it's not on live
 	self:Log("SPELL_AURA_APPLIED", "Rot", 203096)
 	self:Log("SPELL_AURA_REMOVED", "RotRemoved", 203096)
 	self:Log("SPELL_AURA_APPLIED", "VolatileRot", 204463)
@@ -76,8 +77,8 @@ function mod:OnEngage()
 	self:Berserk(485) -- heroic
 	self:CDBar(203096, 5.8) -- Rot
 	self:CDBar(204463, 22.8) -- Volatile Rot
-	self:CDBar(202977, 38) -- Infested Breath
-	self:CDBar(203552, 92) -- Heart of the Swarm
+	self:CDBar(202977, 37) -- Infested Breath
+	self:CDBar(203552, 90) -- Heart of the Swarm
 end
 
 --------------------------------------------------------------------------------
@@ -165,7 +166,7 @@ function mod:HeartOfTheSwarm(args)
 	-- This is basically a phase, so start timers for next "normal" phase here
 	self:CDBar(args.spellId, 120)
 	self:CDBar(203096, 36.5) -- Rot, 23.7 + 12.8
-	self:CDBar(204463, 56.5) -- Volatile Rot, 23.7 + 32.8
+	self:CDBar(204463, 52.7) -- Volatile Rot, 23.7 + 29
 	self:CDBar(202977, 68) -- Infested Breath, 23.7 + 44.3
 	rotCount = 1
 end
