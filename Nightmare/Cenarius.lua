@@ -56,7 +56,7 @@ function mod:GetOptions()
 		-- P2
 		214505, -- Entangling Nightmares
 		214529, -- Spear of Nightmares
-		
+
 		--[[ Malfurion Stormrage ]]--
 		212681, -- Cleansed Ground
 
@@ -92,7 +92,7 @@ end
 
 function mod:OnBossEnable()
 	--[[ Cenarius ]]--
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCESS", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_CAST_START", "ForcesOfNightmare", 212726)
 	self:Log("SPELL_AURA_APPLIED", "CreepingNightmares", 210279)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CreepingNightmares", 210279)
@@ -149,7 +149,7 @@ end
 --
 
 --[[ Cenarius ]]--
-function mod:UNIT_SPELLCAST_SUCCESS(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 210290 then -- Nightmare Brambles
 		self:Bar(spellId, phase == 2 and 20 or 30) -- at some point starts casting with 15sec-20sec cd
 		local targetGUID = UnitGUID("boss1target") -- selects target 2sec prior to the cast
