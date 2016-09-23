@@ -20,6 +20,7 @@ mod.respawnTime = 15
 local phase = 1
 local lurkingEruption = 0
 local lastEruption = 0
+local bladeList, bondList = mod:NewTargetList(), mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -56,14 +57,14 @@ function mod:GetOptions()
 
 		--[[ Stage One: The Decent Into Madness ]]--
 		206651, -- Darkening Soul
-		211802, -- Nightmare Blades
+		{211802, "SAY", "FLASH"}, -- Nightmare Blades
 		"custom_off_blade_marker",
 		210264, -- Manifest Corruption
 		205771, -- Tormenting Fixation
 		205741, -- Lurking Eruption
 
 		--[[ Stage Two: From the Shadows ]]--
-		209034, -- Bonds of Terror
+		{209034, "SAY", "FLASH", "PROXIMITY"}, -- Bonds of Terror
 		224508, -- Corruption Meteor
 		209158, -- Blackening Soul
 		{209443, "TANK"}, --Nightmare Infusion
@@ -90,8 +91,8 @@ function mod:OnBossEnable()
 	--[[ Stage One: The Decent Into Madness ]]--
 	self:Log("SPELL_AURA_APPLIED", "DarkeningSoul", 206651)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DarkeningSoul", 206651)
-	self:Log("SPELL_AURA_APPLIED", "NightmareBlade", 211802)
-	self:Log("SPELL_AURA_REMOVED", "NightmareBladeRemoved", 211802)
+	self:Log("SPELL_AURA_APPLIED", "NightmareBlades", 211802)
+	self:Log("SPELL_AURA_REMOVED", "NightmareBladesRemoved", 211802)
 	self:Log("SPELL_CAST_START", "ManifestCorruption", 210264)
 	self:Log("SPELL_AURA_APPLIED", "TormentingFixation", 205771)
 	self:Log("SPELL_SUMMON", "LurkingEruption", 205741) -- Lurking Terror
@@ -116,6 +117,8 @@ end
 function mod:OnEngage()
 	phase = 1
 	lurkingEruption = 0
+	wipe(bladeList)
+	wipe(bondList)
 	self:Bar(206651, 7.5) -- Darkening Soul
 	self:Bar(211802, 19.2) -- Nightmare Blades
 	self:Bar(210264, 59) -- Manifest Corruption
@@ -143,7 +146,6 @@ function mod:UNIT_SPELLCAST_START(unit, spellName, _, _, spellId)
 	elseif spellId == 226185 then -- Xavius Energize Phase 3
 		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
 		phase = 3
-
 	end
 end
 
@@ -197,26 +199,29 @@ function mod:DarkeningSoul(args)
 end
 
 do
-	local playerList = mod:NewTargetList()
-	function mod:NightmareBlade(args)
+	local timer = nil
+	function mod:NightmareBlades(args)
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 		end
 
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:CDBar(args.spellId, 16)
-		else -- applied on both
-			self:TargetMessage(args.spellId, playerList, "Important", "Alert")
+		bladeList[#bladeList+1] = args.destName
+		if self:GetOption("custom_off_blade_marker") then
+			SetRaidTarget(args.destName, #bladeList) -- 1,2
 		end
 
-		if self:GetOption("custom_off_blade_marker") then
-			SetRaidTarget(args.destName, #playerList) -- 1,2
+		if #bladeList == 1 then
+			self:CDBar(args.spellId, 16)
+			timer = self:ScheduleTimer("TargetMessage", 0.5, args.spellId, bladeList, "Important", "Alert")
+		else
+			self:CancelTimer(timer)
+			timer = nil
+			self:TargetMessage(args.spellId, bladeList, "Important", "Alert")
 		end
 	end
 
-	function mod:NightmareBladeRemoved(args)
+	function mod:NightmareBladesRemoved(args)
 		if self:GetOption("custom_off_blade_marker") then
 			SetRaidTarget(args.destName, 0)
 		end
@@ -240,7 +245,7 @@ end
 
 --[[ Stage Two: From the Shadows ]]--
 do
-	local playerList, isOnMe, otherPlayer = mod:NewTargetList(), nil, nil
+	local timer, isOnMe, otherPlayer = nil, nil, nil
 	function mod:BondsOfTerror(args)
 		if self:Me(args.destGUID) then
 			isOnMe = true
@@ -250,16 +255,19 @@ do
 			otherPlayer = args.destName
 		end
 
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
+		bondList[#bondList+1] = args.destName
+		if #bondList == 1 then
 			self:CDBar(209034, 15)
+			timer = self:ScheduleTimer("TargetMessage", 0.3, 209034, bondList, "Important", "Alert")
 		else -- applied on both
 			if isOnMe and otherPlayer then
 				self:Message(209034, "Personal", "Warning", L.linked:format(self:ColorName(otherPlayer)))
 				self:OpenProximity(209034, 3, otherPlayer, true)
-				wipe(playerList)
+				wipe(bondList)
 			else
-				self:TargetMessage(209034, playerList, "Important", "Alert")
+				self:CancelTimer(timer)
+				timer = nil
+				self:TargetMessage(209034, bondList, "Important", "Alert")
 			end
 		end
 	end
@@ -267,6 +275,7 @@ do
 	function mod:BondsOfTerrorRemoved(args)
 		if self:Me(args.destGUID) then
 			isOnMe = nil
+			self:CloseProximity(209034)
 		else
 			otherPlayer = nil
 		end
