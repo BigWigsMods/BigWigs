@@ -48,11 +48,11 @@ function mod:GetOptions()
 		208431, -- Decent Into Madness
 		207409, -- Madness
 		206005, -- Dream Simulacrum
-		
+
 		--[[ Corruption Horror ]]--
-		{205771, "TANK"}, -- Tormenting Swipe
+		{224649, "TANK"}, -- Tormenting Swipe
 		207830, -- Corruption Nova
-		
+
 		--[[ Stage One: The Decent Into Madness ]]--
 		206651, -- Darkening Soul
 		211802, -- Nightmare Blades
@@ -63,6 +63,7 @@ function mod:GetOptions()
 
 		--[[ Stage Two: From the Shadows ]]--
 		209034, -- Bonds of Terror
+		224508, -- Corruption Meteor
 		209158, -- Blackening Soul
 		{209443, "TANK"}, --Nightmare Infusion
 		205588, -- Call of Nightmares
@@ -93,7 +94,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ManifestCorruption", 210264)
 	self:Log("SPELL_AURA_APPLIED", "TormentingFixation", 205771)
 	self:Log("SPELL_SUMMON", "LurkingEruption", 205741) -- Lurking Terror
-	
+
 	--[[ Corruption Horror ]]--
 	self:Log("SPELL_CAST_SUCCESS", "TormentingSwipe", 224649)
 	self:Log("SPELL_CAST_START", "CorruptingNova", 207830)
@@ -220,7 +221,7 @@ do
 end
 
 function mod:ManifestCorruption(args)
-	self:Message(args.spellId, "Attention", "Info", CL.spawned:format(L.horror), false)
+	self:Message(args.spellId, "Attention", "Info", CL.spawned:format(self:SpellName(L.horror)), false)
 	self:Bar(args.spellId, self:Heroic() and 85 or 95)
 	self:Bar(207830, 15) -- Corrupting Nova
 	if self:Tank() then
