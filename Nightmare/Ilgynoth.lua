@@ -3,6 +3,8 @@
 -- TODO List:
 -- - TouchOfCorruption doesnt stack on normal. Do we need warnings for that?
 -- - SummonNightmareHorror cd
+-- - Is the percentage per blob the same (5%) for every difficulty?
+--   LFR (?) - Normal (✔) - Heroic (✔) - Mythic (?)
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -24,24 +26,58 @@ local insidePhase = 1
 local deathglareMarked = {} -- save GUIDs of marked mobs
 local deathglareMarks  = { [6] = true, [5] = true, [4] = true, [3] = true } -- available marks to use
 
+local phaseStartTime = 0
+
+local spawnData = {
+	[1] = { -- Outside Phase 1
+		[-13190] = { -- Deathglare Tentacle, Mind Flay (208697) SPELL_CAST_START
+			{ 26.5, 1}, -- 1x
+			{ 88.0, 2}, -- 2x
+			{183.0, 1}, -- 1x
+		},
+		[-13191] = { -- Corruptor Tentacle, Spew Corruption (208929) SPELL_CAST_START
+			{ 82.0, 2}, -- 2x
+		},
+	},
+	[2] = { -- Outside Phase 2, time after Stuff of Nightmares (209915) applied
+		[-13190] = { -- Deathglare Tentacle, Mind Flay (208697) SPELL_CAST_START
+			{ 21.5, 2}, -- 2x
+			{116.5, 2}, -- 2x
+		},
+		[-13191] = { -- Corruptor Tentacle, Spew Corruption (208929) SPELL_CAST_START
+			{ 45.0, 3}, -- 3x
+			{140.0, 2}, -- 2x
+			{175.0, 4}, -- 4x
+		},
+	}
+}
+local nextCorruptorText = "" -- used to stop the bars
+local nextDeathglareText = "" -- used to stop the bars
+local bloodsRemaining = 20
+
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:GetLocale()
 if L then
+	L.forces = -13187
+	L.forces_icon = "spell_nature_dryaddispelmagic" -- some weird icon, only used in options
+
 	L.nightmare_horror = -13188 -- Nightmare Horror
 	L.nightmare_horror_icon = 209387 -- Seeping Corruption icon
 
-	L.corruptor_tentacle = - -13191
+	L.corruptor_tentacle = - -13191 -- Corruptor Tentacle
 	L.corruptor_tentacle_icon = 208929 -- Spew Corruption icon
 
-	L.deathglare_tentacle = -13190
+	L.deathglare_tentacle = -13190 -- Deathglare Tentacle
 	L.deathglare_tentacle_icon = 208697 -- Mind Flay icon
 
 	L.custom_off_deathglare_marker = "Deathglare Tentacle marker"
 	L.custom_off_deathglare_marker_desc = "Mark Deathglare Tentacles with {rt6}{rt5}{rt4}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the spears is the fastest way to mark them.|r"
 	L.custom_off_deathglare_marker_icon = 6
+
+	L.bloods_remaining = "%d Bloods remaining"
 end
 
 --------------------------------------------------------------------------------
@@ -51,6 +87,8 @@ end
 function mod:GetOptions()
 	return {
 		--[[ Stage One ]]--
+		"forces",
+
 		-- Dominator Tentacle
 		{208689, "SAY", "FLASH"}, -- Ground Slam
 		{215234, "TANK"}, -- Nightmarish Fury
@@ -65,7 +103,7 @@ function mod:GetOptions()
 		210984, -- Eye of Fate
 
 		-- Corruptor Tentacle
-		208929, -- Spew Corruption
+		{208929, "SAY", "FLASH"}, -- Spew Corruption
 
 		-- Deathglare Tentacle
 		208697, -- Mind Flay
@@ -76,16 +114,14 @@ function mod:GetOptions()
 		{210781, "COUNTDOWN"}, -- Dark Reconstitution
 		223121, -- Final Torpor
 		{215128, "SAY", "FLASH", "PROXIMITY"}, -- Cursed Blood
-
-		"berserk",
 	},{
+		["forces"] = -13184, -- Stage One
 		[208689] = -13189, -- Dominator Tentacle
 		[210099] = -13186, -- Nightmare Ichor
 		["nightmare_horror"] = -13188, -- Nightmare Horror (this looks like shit)
 		[208929] = -13191, -- Corruptor Tentacle
 		[208697] = -13190, -- Deathglare Tentacle
 		[209915] = -13192, -- Stage Two
-		["berserk"] = "general",
 	}
 end
 
@@ -95,6 +131,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 	self:Log("SPELL_CAST_START", "GroundSlam", 208689)
 	self:Log("SPELL_AURA_APPLIED", "NightmarishFury", 215234)
+	self:Log("SPELL_DAMAGE", "EyeDamage", 210048) -- Nightmare Explosion, only hits the Eye
 
 	-- Nightmare Ichor
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 210099)
@@ -128,8 +165,14 @@ function mod:OnEngage()
 	wipe(mobCollector)
 	fixateOnMe = nil
 	insidePhase = 1
+	bloodsRemaining = 20
 	self:CDBar(208689, 11.5) -- Ground Slam
-	self:Bar("nightmare_horror", 85, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
+	self:CDBar("nightmare_horror", 65, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
+
+	phaseStartTime = GetTime()
+	self:StartSpawnTimer(-13190, 1)
+	self:StartSpawnTimer(-13191, 1)
+
 
 	wipe(deathglareMarked)
 	if self:GetOption("custom_off_deathglare_marker") then
@@ -151,6 +194,29 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:StartSpawnTimer(addType, count)
+	--local data = self:Mythic() and spawnDataMythic or self:LFR() and spawnDataLFR or spawnData TODO
+	local data = spawnData
+	local info = data and data[insidePhase][addType][count]
+	if not info then
+		-- all out of spawn data
+		return
+	end
+
+	local time, numSpawns = unpack(info)
+	local length = floor(time - (GetTime() - phaseStartTime))
+
+	if addType == -13190 then
+		nextDeathglareText = CL.count:format(self:SpellName(addType), numSpawns)
+		self:Bar("forces", length, nextDeathglareText, L.deathglare_tentacle_icon)
+	else
+		nextCorruptorText = CL.count:format(self:SpellName(addType), numSpawns)
+		self:CDBar("forces", length, nextCorruptorText, L.corruptor_tentacle_icon)
+	end
+
+	self:ScheduleTimer("StartSpawnTimer", length, addType, count+1)
+end
 
 function mod:DeathglareMark(event, firedUnit)
 	local unit = event == "NAME_PLATE_UNIT_ADDED" and firedUnit or firedUnit and firedUnit.."target" or "mouseover"
@@ -196,6 +262,29 @@ do
 			self:Bar(args.spellId, 10)
 		end
 	end
+end
+
+do
+	local scheduled, lastMessage = nil, 0
+
+	local function announceBloodRemaining(self, remaining)
+		self:Message("forces", "Positive", nil, L.bloods_remaining:format(remaining), false)
+		lastMessage = GetTime()
+		scheduled = nil
+	end
+
+	function mod:EyeDamage(args)
+		bloodsRemaining = bloodsRemaining - 1
+
+		if scheduled then
+			self:CancelTimer(scheduled)
+		end
+
+		if lastMessage-GetTime() > 10 then -- Don't delay by more than 10s
+			announceBloodRemaining(self, bloodsRemaining)
+		else
+			scheduled = self:ScheduleTimer(announceBloodRemaining, 3, self, bloodsRemaining)
+		end
 end
 
 -- Nightmare Ichor
@@ -256,7 +345,7 @@ do
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				self:Message(args.spellId, "Neutral", "Info", CL.spawned:format(L.corruptor_tentacle), L.corruptor_tentacle_icon)
+				self:Message(args.spellId, "Neutral", "Info", CL.spawned:format(self:SpellName(L.corruptor_tentacle)), L.corruptor_tentacle_icon)
 			end
 		end
 	end
@@ -287,7 +376,7 @@ do
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				self:Message(args.spellId, "Neutral", "Info", CL.spawned:format(L.deathglare_tentacle), L.deathglare_tentacle_icon)
+				self:Message(args.spellId, "Neutral", "Info", CL.spawned:format(self:SpellName(L.deathglare_tentacle)), L.deathglare_tentacle_icon)
 			end
 		end
 
@@ -301,9 +390,14 @@ end
 function mod:StuffOfNightmares(args)
 	if IsEncounterInProgress() then -- Gets buffed when the boss spawns
 		self:Message(args.spellId, "Neutral", "Info")
-		self:CDBar(208689, 11.5) -- Ground Slam
 		self:Bar("nightmare_horror", 99, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 		insidePhase = insidePhase + 1
+
+		phaseStartTime = GetTime()
+		self:StartSpawnTimer(-13190, 1)
+		self:StartSpawnTimer(-13191, 1)
+
+		bloodsRemaining = 20
 	end
 end
 
@@ -311,6 +405,8 @@ function mod:StuffOfNightmaresRemoved(args)
 	self:Message(args.spellId, "Neutral", "Info", CL.removed:format(args.spellName))
 
 	self:StopBar(L.nightmare_horror)
+	self:StopBar(nextCorruptorText)
+	self:StopBar(nextDeathglareText)
 
 	-- The boss casts the "Intermission ending" spell after 10s in the phase, but
 	-- we want the bars as soon as the phase starts. This requires hard coding the
@@ -332,10 +428,19 @@ function mod:FinalTorpor(args)
 end
 
 do
-	local playerList, proxList, isOnMe = mod:NewTargetList(), {}, nil
+	local proxList, isOnMe, scheduled = {}, nil, nil
+
+	local function warn(self, spellId)
+		if not isOnMe then
+			self:Message(spellId, "Attention", "Alert")
+		end
+		scheduled = nil
+	end
+
 	function mod:CursedBlood(args)
 		if self:Me(args.destGUID) then
 			isOnMe = true
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Alert")
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 			self:TargetBar(args.spellId, 8, args.destName)
@@ -350,9 +455,8 @@ do
 			self:OpenProximity(args.spellId, 11, proxList)
 		end
 
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Alert")
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
 			self:CDBar(args.spellId, 15)
 		end
 	end
