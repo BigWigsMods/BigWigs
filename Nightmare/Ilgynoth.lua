@@ -285,6 +285,7 @@ do
 		else
 			scheduled = self:ScheduleTimer(announceBloodRemaining, 3, self, bloodsRemaining)
 		end
+	end
 end
 
 -- Nightmare Ichor
