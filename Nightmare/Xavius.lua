@@ -45,6 +45,7 @@ function mod:GetOptions()
 		--[[ General ]]--
 		"berserk",
 		"stages",
+		{"altpower", "TANK_HEALER"},
 		208431, -- Decent Into Madness
 		207409, -- Madness
 		206005, -- Dream Simulacrum
@@ -119,6 +120,8 @@ function mod:OnEngage()
 	self:Bar(211802, 19.2) -- Nightmare Blades
 	self:Bar(210264, 59) -- Manifest Corruption
 	self:Bar(205741, 18) -- Lurking Terror
+
+	self:OpenAltPower("altpower", 208931) -- Nightmare Corruption
 end
 
 --------------------------------------------------------------------------------
