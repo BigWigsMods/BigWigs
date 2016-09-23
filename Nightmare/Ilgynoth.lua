@@ -18,6 +18,7 @@ mod.respawnTime = 30
 -- Locals
 --
 
+local mobCollector = {}
 local fixateOnMe = nil
 local insidePhase = 1
 local deathglareMarked = {} -- save GUIDs of marked mobs
@@ -31,6 +32,12 @@ local L = mod:GetLocale()
 if L then
 	L.nightmare_horror = -13188 -- Nightmare Horror
 	L.nightmare_horror_icon = 209387 -- Seeping Corruption icon
+
+	L.corruptor_tentacle = - -13191
+	L.corruptor_tentacle_icon = 208929 -- Spew Corruption icon
+
+	L.deathglare_tentacle = -13190
+	L.deathglare_tentacle_icon = 208697 -- Mind Flay icon
 
 	L.custom_off_deathglare_marker = "Deathglare Tentacle marker"
 	L.custom_off_deathglare_marker_desc = "Mark Deathglare Tentacles with {rt6}{rt5}{rt4}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the spears is the fastest way to mark them.|r"
@@ -76,6 +83,7 @@ function mod:GetOptions()
 		[210099] = -13186, -- Nightmare Ichor
 		["nightmare_horror"] = -13188, -- Nightmare Horror (this looks like shit)
 		[208929] = -13191, -- Corruptor Tentacle
+		[208697] = -13190, -- Deathglare Tentacle
 		[209915] = -13192, -- Stage Two
 		["berserk"] = "general",
 	}
@@ -100,10 +108,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "EyeOfFate", 210984)
 
 	-- Corruptor Tentacle
-	self:Log("SPELL_AURA_APPLIED", "SpewCorruption", 208929)
+	self:Log("SPELL_CAST_START", "CorruptorTentacleSpawn", 208929) -- They start casting Spew Corruption instantly
+	self:Log("SPELL_CAST_SUCCESS", "SpewCorruption", 208929)
 
 	-- Deathglare Tentacle
-	self:Log("SPELL_CAST_START", "MindFlay", 208697)
+	self:Log("SPELL_CAST_START", "MindFlay", 208697) -- Also used for spawn messages
 	self:Death("DeathglareDeath", 105322)
 
 	--[[ Stage Two ]]--
@@ -116,6 +125,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	wipe(mobCollector)
 	fixateOnMe = nil
 	insidePhase = 1
 	self:CDBar(208689, 11.5) -- Ground Slam
@@ -239,11 +249,25 @@ end
 
 -- Corruptor Tentacle
 do
+	local prev = 0
+	function mod:CorruptorTentacleSpawn(args)
+		if not mobCollector[args.sourceGUID] then
+			mobCollector[args.sourceGUID] = true
+			local t = GetTime()
+			if t-prev > 2 then
+				prev = t
+				self:Message(args.spellId, "Neutral", "Info", CL.spawned:format(L.corruptor_tentacle), L.corruptor_tentacle_icon)
+			end
+		end
+	end
+end
+
+do
 	local list = mod:NewTargetList()
 	function mod:SpewCorruption(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Urgent", "Alert")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Urgent", "Alert")
 		end
 
 		if self:Me(args.destGUID) then
@@ -255,9 +279,21 @@ do
 end
 
 -- Deathglare Tentacle
-function mod:MindFlay(args)
-	if self:Interrupter(args.sourceGUID) then -- avoid spam
-		self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
+do
+	local prev = 0
+	function mod:MindFlay(args)
+		if not mobCollector[args.sourceGUID] then
+			mobCollector[args.sourceGUID] = true
+			local t = GetTime()
+			if t-prev > 2 then
+				prev = t
+				self:Message(args.spellId, "Neutral", "Info", CL.spawned:format(L.deathglare_tentacle), L.deathglare_tentacle_icon)
+			end
+		end
+
+		if self:Interrupter(args.sourceGUID) then -- avoid spam
+			self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
+		end
 	end
 end
 
