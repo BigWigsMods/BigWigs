@@ -67,7 +67,7 @@ if L then
 	L.nightmare_horror = -13188 -- Nightmare Horror
 	L.nightmare_horror_icon = 209387 -- Seeping Corruption icon
 
-	L.corruptor_tentacle = - -13191 -- Corruptor Tentacle
+	L.corruptor_tentacle = -13191 -- Corruptor Tentacle
 	L.corruptor_tentacle_icon = 208929 -- Spew Corruption icon
 
 	L.deathglare_tentacle = -13190 -- Deathglare Tentacle
