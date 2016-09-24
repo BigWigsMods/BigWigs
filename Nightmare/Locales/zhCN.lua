@@ -15,6 +15,8 @@ L = BigWigs:NewBossLocale("Il'gynoth", "zhCN")
 if L then
 	L.custom_off_deathglare_marker = "死光触须标记"
 	L.custom_off_deathglare_marker_desc = "使用 {rt6}{rt5}{rt4}{rt3} 标记死光触须，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r\n|cFFADFF2F提示：如果团队选择你打开此选项，鼠标快速指向死光触须是标记他们的最快方式。|r"
+
+	--L.bloods_remaining = "%d Bloods remaining"
 end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "zhCN")

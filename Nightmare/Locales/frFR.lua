@@ -15,6 +15,8 @@ L = BigWigs:NewBossLocale("Il'gynoth", "frFR")
 if L then
 	L.custom_off_deathglare_marker = "Marquage Oeil meurtrier tentaculaire"
 	L.custom_off_deathglare_marker_desc = "Marque les Yeux meurtriers tentaculaires avec {rt6}{rt5}{rt4}{rt3}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement tous les yeux est le moyen le plus rapide de les marquer.|r"
+
+	--L.bloods_remaining = "%d Bloods remaining"
 end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "frFR")

@@ -15,6 +15,8 @@ L = BigWigs:NewBossLocale("Il'gynoth", "deDE")
 if L then
 	L.custom_off_deathglare_marker = "Todesblicktentakel markieren"
 	L.custom_off_deathglare_marker_desc = "Markiert Todesblicktentakel mit {rt6}{rt5}{rt4}{rt3}, benötigt Leiter oder Assistent.\n|cFFFF0000Nur eine Person im Schlachtzug sollte diese Option aktiviert haben, um Markierungskonflikte zu verhindern.|r\n|cFFADFF2FTIP: Wenn der Schlachtzug sich dafür entschieden hat, dass du diese Option aktivierst, ist der schnellste Weg mit der Maus über die Mobs zu fahren, um sie zu markieren.|r"
+
+	--L.bloods_remaining = "%d Bloods remaining"
 end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "deDE")

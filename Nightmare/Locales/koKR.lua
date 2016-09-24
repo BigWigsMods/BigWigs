@@ -15,6 +15,8 @@ L = BigWigs:NewBossLocale("Il'gynoth", "koKR")
 if L then
 	--L.custom_off_deathglare_marker = "Deathglare Tentacle marker"
 	--L.custom_off_deathglare_marker_desc = "Mark Deathglare Tentacles with {rt6}{rt5}{rt4}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the spears is the fastest way to mark them.|r"
+
+	--L.bloods_remaining = "%d Bloods remaining"
 end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "koKR")

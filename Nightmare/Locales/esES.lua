@@ -15,6 +15,8 @@ L = BigWigs:NewBossLocale("Il'gynoth", "esES") or BigWigs:NewBossLocale("Il'gyno
 if L then
 	L.custom_off_deathglare_marker = "Marcador de Tentáculo ojoletal"
 	L.custom_off_deathglare_marker_desc = "Marca los Tentáculos ojoletal con {rt6}{rt5}{rt4}{rt3}, requiere ayudante o líder.\n|cFFFF0000Sólo 1 persona en la raid debería tener activada esta opción para prevenir conflictos con las marcas.|r\n|cFFADFF2FCONSEJO: Si la raid te elige a ti para activarla, teniendo las placas de nombre activadas o moviendo rápidamente el ratón por encima de los adds es la forma más rápida de marcarlos.|r"
+
+	--L.bloods_remaining = "%d Bloods remaining"
 end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "esES") or BigWigs:NewBossLocale("Emerald Nightmare Trash", "esMX")
