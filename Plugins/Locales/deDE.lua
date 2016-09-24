@@ -60,7 +60,7 @@ L.closeProximityDesc = [=[Schließt die Anzeige naher Spieler.
 Falls du die Anzeige für alle Bosse deaktivieren willst, musst du die Option 'Nähe' seperat in den jeweiligen Bossmodulen ausschalten.]=]
 L.colors = "Farben"
 L.combatLog = "Automatische Kampfaufzeichnung"
-L.combatLogDesc = "Startet automatisch die Aufzeichnung des Kampfes, wenn ein Pull-Timer gestartet wurde und beendet die Aufzeichnung, wenn der Bosskampf endet. (WoW-Ordner\Logs\CombatLog.txt)"
+L.combatLogDesc = "Startet automatisch die Aufzeichnung des Kampfes, wenn ein Pull-Timer gestartet wurde und beendet die Aufzeichnung, wenn der Bosskampf endet."
 L.countDefeats = "Siege zählen"
 L.countdownAt = "Countdown ab... (Sekunden)"
 L.countdownColor = "Countdown-Farbe"
