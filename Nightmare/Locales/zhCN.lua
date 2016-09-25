@@ -2,6 +2,7 @@ local L = BigWigs:NewBossLocale("Cenarius", "zhCN")
 if not L then return end
 if L then
 	L.forces = "梦魇大军"
+	--L.bramblesSay = "Brambles near %s"
 end
 
 L = BigWigs:NewBossLocale("Elerethe Renferal", "zhCN")

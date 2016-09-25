@@ -38,6 +38,7 @@ local phase = 1
 local L = mod:GetLocale()
 if L then
 	L.forces = "Forces"
+	L.bramblesSay = "Brambles near %s"
 end
 
 --------------------------------------------------------------------------------
@@ -49,7 +50,7 @@ function mod:GetOptions()
 		--[[ Cenarius ]]--
 		"stages",
 		210279, -- Creeping Nightmares
-		{210290, "ICON", "SAY", "FLASH"}, -- Nightmare Brambles
+		{210290, "SAY", "FLASH"}, -- Nightmare Brambles
 		212726, -- Forces of Nightmare
 		210346, -- Dread Thorns
 		214884, -- Corrupt Allies of Nature
@@ -97,9 +98,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CreepingNightmares", 210279)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CreepingNightmares", 210279)
 	self:Log("SPELL_AURA_REMOVED", "CreepingNightmaresRemoved", 210279)
-	--self:Log("SPELL_CAST_START", "NightmareBrambles", 210290) -- XXX do these actually work?
-	--self:Log("SPELL_CAST_SUCCES", "NightmareBramblesSuccess", 210290) -- XXX do these actually work?
-	--self:Log("SPELL_AURA_APPLIED", "NightmareBramblesApplied", 210290) -- untested, -- XXX do these actually work?
 	self:Log("SPELL_AURA_APPLIED", "DestructiveNightmares", 210617) -- wisp spawn
 	self:Log("SPELL_AURA_APPLIED", "DreadThorns", 210346)
 	self:Log("SPELL_AURA_REMOVED", "DreadThornsRemoved", 210346)
@@ -156,11 +154,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		if targetGUID then
 			if self:Me(targetGUID) then
 				self:Flash(spellId)
-				self:Say(spellId)
+				self:Say(spellId, L.bramblesSay:format(self:UnitName("player")), true)
+				self:RangeMessage(spellId, "Urgent", "Alarm")
+			else
+				self:Message(spellId, "Urgent", "Alarm")
 			end
-			local targetName = self:UnitName("boss1target")
-			self:TargetMessage(spellId, targetName, "Urgent", "Alarm")
-			self:PrimaryIcon(spellId, targetName)
 		end
 	elseif spellId == 217368 then -- Phase 2
 		phase = 2
@@ -181,19 +179,6 @@ end
 function mod:CreepingNightmaresRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
-	end
-end
-
-function mod:NightmareBramblesSuccess(args)
-	self:Message(args.spellId, "Attention", "Info")
-end
-
--- untested
-function mod:NightmareBramblesApplied(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
-	if self:Me(args.destGUID) then
-		self:Flash(args.spellId)
-		self:Say(args.spellId)
 	end
 end
 
