@@ -20,6 +20,7 @@ mod.respawnTime = 15
 local phase = 1
 local lurkingEruption = 0
 local lastEruption = 0
+local isInDream = false
 local bladeList, bondList = mod:NewTargetList(), mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -46,7 +47,7 @@ function mod:GetOptions()
 		--[[ General ]]--
 		"berserk",
 		"stages",
-		{"altpower", "TANK_HEALER"},
+		"altpower",
 		208431, -- Decent Into Madness
 		207409, -- Madness
 		206005, -- Dream Simulacrum
@@ -56,7 +57,7 @@ function mod:GetOptions()
 		207830, -- Corruption Nova
 
 		--[[ Stage One: The Decent Into Madness ]]--
-		206651, -- Darkening Soul
+		{206651, "TANK_HEALER"}, -- Darkening Soul
 		{211802, "SAY", "FLASH"}, -- Nightmare Blades
 		"custom_off_blade_marker",
 		210264, -- Manifest Corruption
@@ -66,7 +67,7 @@ function mod:GetOptions()
 		--[[ Stage Two: From the Shadows ]]--
 		{209034, "SAY", "FLASH", "PROXIMITY"}, -- Bonds of Terror
 		224508, -- Corruption Meteor
-		209158, -- Blackening Soul
+		{209158, "TANK_HEALER"}, -- Blackening Soul
 		{209443, "TANK"}, --Nightmare Infusion
 		205588, -- Call of Nightmares
 
@@ -117,6 +118,7 @@ end
 function mod:OnEngage()
 	phase = 1
 	lurkingEruption = 0
+	isInDream = false
 	wipe(bladeList)
 	wipe(bondList)
 	self:Bar(206651, 7.5) -- Darkening Soul
@@ -159,6 +161,7 @@ end
 
 function mod:DreamSimulacrum(args)
 	if self:Me(args.destGUID) then
+		isInDream = true
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
 		self:TargetBar(args.spellId, 180, args.destName)
 	end
@@ -166,6 +169,7 @@ end
 
 function mod:DreamSimulacrumRemoved(args)
 	if self:Me(args.destGUID) then
+		isInDream = false
 		self:StopBar(args.spellId, args.destName)
 	end
 end
@@ -299,7 +303,7 @@ function mod:CallOfNightmares(args)
 end
 
 function mod:CorruptionMeteor(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Info", isInDream)
 	self:TargetBar(args.spellId, 5, args.destName)
 	self:Bar(args.spellId, 28)
 end
