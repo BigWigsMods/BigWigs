@@ -82,7 +82,7 @@ end
 
 function mod:OnBossEnable()
 	--[[ General ]]--
-	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "DecentIntoMadness", 208431)
 	self:Log("SPELL_AURA_APPLIED", "Madness", 207409)
 	self:Log("SPELL_AURA_APPLIED", "DreamSimulacrum", 206005)
@@ -132,7 +132,7 @@ end
 --
 
 --[[ General ]]--
-function mod:UNIT_SPELLCAST_START(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 226193 then -- Xavius Energize Phase 2
 		phase = 2
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
