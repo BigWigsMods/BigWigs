@@ -186,9 +186,8 @@ function mod:TormentingSwipe(args)
 end
 
 function mod:CorruptingNova(args)
-	self:Bar(args.spellId, 20.7)
+	self:Bar(args.spellId, 23.2)
 	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 2.5, CL.cast:format(args.spellName))
 end
 
 --[[ Stage One: The Decent Into Madness ]]--
@@ -231,7 +230,7 @@ end
 function mod:ManifestCorruption(args)
 	self:Message(args.spellId, "Attention", "Info", CL.spawned:format(self:SpellName(L.horror)), false)
 	self:Bar(args.spellId, self:Heroic() and 85 or 95)
-	self:Bar(207830, 15) -- Corrupting Nova
+	self:Bar(207830, 17) -- Corrupting Nova
 	if self:Tank() then
 		self:CDBar(args.spellId, 10)
 	end
