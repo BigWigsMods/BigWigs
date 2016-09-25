@@ -59,10 +59,13 @@ L.closeProximityDesc = [=[關閉玩家雷達。
 
 要在所有首領戰鬥中停用此功能，你需要到選項的"玩家雷達"中勾選停用。]=]
 L.colors = "顏色"
+L.combatLog = "自動戰鬥記錄"
+L.combatLogDesc = "當拉怪計時器開始到戰鬥結束時自動開始戰鬥記錄。"
 L.countDefeats = "擊敗次數"
 L.countdownAt = "倒數... (秒)"
 L.countdownColor = "倒數顏色"
 L.countdownTest = "倒數測試"
+L.countdownType = "倒數類型"
 L.countdownVoice = "倒數音效"
 L.countWipes = "團滅次數"
 L.createTimeBar = "顯示“最快擊敗”計時條"
@@ -148,6 +151,9 @@ L.pullIn = "%d秒後拉怪"
 L.pulling = "拉怪中!"
 L.pullStarted = "拉怪倒數計時開始於 %s 使用者 %s."
 L.pullStopped = "%s取消了拉怪計時器。"
+L.raidIconsDesc = [=[團隊中有些首領模塊使用團隊標記來為某些中了特定技能的隊員打上標記。例如類似“炸彈”類或心靈控制的技能。如果你關閉此功能，你將不會給隊員打標記。
+
+|cffff4411只有團隊領袖或被提升為助理時才可以這麼做！|r]=]
 L.raidIconsDescription = [=[可能遇到包含例如炸彈類型的技能指向特定的玩家，玩家被追，或是特定玩家可能有興趣在其他方面。這裡可以自訂團隊圖示來標記這些玩家。
 
 如果只遇到一種技能，很好，只有第一個圖示會被使用。在某些戰鬥中一個圖示不被使用在兩個不同的技能上，任何特定技能在下次總是使用相同圖示。
@@ -236,4 +242,3 @@ L.wrongBreakFormat = "必須介於1至60分鐘之間。正確用法：/break 5"
 L.wrongCustomBarFormat = "不正確的格式。一個正確的範例是: /raidbar 20 文字"
 L.wrongPullFormat = "必須位於1至60秒之間。正確用法：/pull 5"
 L.wrongTime = "指定的時間無效。 <time> 可以為一個秒數，一個 分:秒，或是Mm。例如 5, 1:20 或 2m。"
-

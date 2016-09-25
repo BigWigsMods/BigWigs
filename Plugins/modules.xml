@@ -12,6 +12,7 @@
 <Script file="Proximity.lua"/>
 <Script file="Flash.lua"/>
 <Script file="Emphasize.lua"/>
+<Script file="Pull.lua"/>
 <Script file="Respawn.lua"/>
 <Script file="Statistics.lua"/>
 <Script file="Victory.lua"/>

@@ -15,6 +15,9 @@
 <Include file="Nighthold\modules.xml"/>
 <Include file="Nighthold\locales.xml"/>
 
+<Include file="TrialOfValor\modules.xml"/>
+<Include file="TrialOfValor\locales.xml"/>
+
 <Include file="BrokenIsles\modules.xml"/>
 <!--<Include file="BrokenIsles\locales.xml"/>-->
 <!--@end-debug@-->

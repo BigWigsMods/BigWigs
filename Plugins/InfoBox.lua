@@ -145,7 +145,7 @@ do
 		local anim = updater:CreateAnimation()
 		anim:SetDuration(2)
 
-		local bg = display:CreateTexture(nil, "PARENT")
+		local bg = display:CreateTexture()
 		bg:SetAllPoints(display)
 		bg:SetColorTexture(0, 0, 0, 0.3)
 		display.background = bg

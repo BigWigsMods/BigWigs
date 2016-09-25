@@ -59,10 +59,13 @@ L.closeProximityDesc = [=[Fecha a janela de aproximação.
 
 Para desativala completamente para um encontro, tem que ir nas opções deste encontro e desativar a opção de 'Aproximação'.]=]
 L.colors = "Cores"
+-- L.combatLog = "Automatic Combat Logging"
+-- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
 L.countDefeats = "Contador de vitórias "
 L.countdownAt = "Contagem em... (segundos)" -- Needs review
 L.countdownColor = "Cor de Contagem" -- Needs review
 L.countdownTest = "Teste de Contagem" -- Needs review
+-- L.countdownType = "Countdown Type"
 L.countdownVoice = "Voz de Contagem" -- Needs review
 L.countWipes = "Contador de derrotas"
 L.createTimeBar = "Mostrar barra do melhor tempo"
@@ -148,6 +151,9 @@ L.pullIn = "Pull em %d seg"
 L.pulling = "Puxando!"
 L.pullStarted = "Pull iniciado via %s por %s."
 L.pullStopped = "Pull cancelado por %s."
+L.raidIconsDesc = [=[Alguns encontros usam os icones de raide para marcar jogadores que são de interesse especial para seu grupo. Por exemplo, os efeitos tipo 'bomba' e controle mental. Se estiver desativado, não marcará nada.
+
+|cffff4411Somente aplicará as marcas se você for assistente ou lider!|r]=]
 L.raidIconsDescription = [=[Elementos de tipo 'bomba' e similares em um jogador podem ser de interesse especial. Aqui você pode configurar como se deveria marcar com icones algunos personagens.
 
 Só se usa um icone para cada encontro se usará o primario, nunca se usará o mesmo icone para 2 habilidades distintas, para isto esta o icone secundario.
@@ -236,4 +242,3 @@ L.wrongBreakFormat = "Deve estar entre 1 e 60 minutos. Um exemplo seria: /break 
 L.wrongCustomBarFormat = "Formato incorreto. Um exemplo correto seria: /raidbar 20 texto"
 L.wrongPullFormat = "Deve estar entre 1 e 60 segundos. Um exemplo correto seria: /pull 5"
 L.wrongTime = "Tempo especificado inválido. <time> pode ser tanto um número em segundos, um par M:S, ou Mm. Por exemplo: 5, 1:20 ou 2m."
-

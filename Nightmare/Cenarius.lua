@@ -1,10 +1,16 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Tuning sounds / message colors
--- - Remove alpha engaged message
--- - Fix WaveSpawn and untested funcs if needed
---   WaveSpawn got broken, figure out a new way to do this
+-- - Fix untested funcs if needed
+-- - WaveSpawn got broken, figure out a new way to do this
+--     Wave 1:	Wisp, Drake, Treant
+--     Wave 2:	Wisp, Drake, Sister
+--     Wave 3:	2x Sister, Treant
+--     Wave 4:	2x Drake, Wisp
+--     Wave 5:	2x Treant, Sister
+--     Wave 6:	2x Wisp, Sister
+-- - NightmareBrambles: can targetscan for initial target - lets hope that there
+--   is a debuff on live
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -22,6 +28,7 @@ mod.respawnTime = 30
 
 local mobCollector = {}
 local forcesOfNightmareCount = 1
+local phase = 1
 
 
 --------------------------------------------------------------------------------
@@ -40,8 +47,9 @@ end
 function mod:GetOptions()
 	return {
 		--[[ Cenarius ]]--
+		"stages",
 		210279, -- Creeping Nightmares
-		{210290, "SAY", "FLASH"}, -- Nightmare Brambles
+		{210290, "ICON", "SAY", "FLASH"}, -- Nightmare Brambles
 		212726, -- Forces of Nightmare
 		210346, -- Dread Thorns
 		214884, -- Corrupt Allies of Nature
@@ -84,13 +92,14 @@ end
 
 function mod:OnBossEnable()
 	--[[ Cenarius ]]--
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_CAST_START", "ForcesOfNightmare", 212726)
 	self:Log("SPELL_AURA_APPLIED", "CreepingNightmares", 210279)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CreepingNightmares", 210279)
 	self:Log("SPELL_AURA_REMOVED", "CreepingNightmaresRemoved", 210279)
-	self:Log("SPELL_CAST_START", "NightmareBrambles", 210290)
-	self:Log("SPELL_CAST_SUCCES", "NightmareBramblesSuccess", 210290)
-	self:Log("SPELL_AURA_APPLIED", "NightmareBramblesApplied", 210290) -- untested
+	--self:Log("SPELL_CAST_START", "NightmareBrambles", 210290) -- XXX do these actually work?
+	--self:Log("SPELL_CAST_SUCCES", "NightmareBramblesSuccess", 210290) -- XXX do these actually work?
+	--self:Log("SPELL_AURA_APPLIED", "NightmareBramblesApplied", 210290) -- untested, -- XXX do these actually work?
 	self:Log("SPELL_AURA_APPLIED", "DestructiveNightmares", 210617) -- wisp spawn
 	self:Log("SPELL_AURA_APPLIED", "DreadThorns", 210346)
 	self:Log("SPELL_AURA_REMOVED", "DreadThornsRemoved", 210346)
@@ -100,11 +109,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SpearOfNightmaresCast", 214529)
 	self:Log("SPELL_AURA_APPLIED", "SpearOfNightmares", 214529)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SpearOfNightmares", 214529)
-
-	self:Log("SPELL_AURA_APPLIED", "WaveSpawn", 212178) -- Wisps
-	self:Log("SPELL_AURA_APPLIED", "WaveSpawn", 210861) -- Treat
-	self:Log("SPELL_AURA_APPLIED", "WaveSpawn", 212231) -- Drake
-	self:Log("SPELL_AURA_APPLIED", "WaveSpawn", 212241) -- Sister
 
 	--[[ Malfurion Stormrage ]]--
 	self:Log("SPELL_AURA_APPLIED", "CleansedGround", 212681)
@@ -130,8 +134,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Cenarius (Alpha) Engaged (Post Pre Mythic Test Mod)", false)
 	forcesOfNightmareCount = 1
+	phase = 1
 	self:CDBar(212726, 10, CL.count:format(self:SpellName(212726), forcesOfNightmareCount)) -- Forces of Nightmare
 	self:Bar(210290, 28) -- Nightmare Brambles
 
@@ -145,6 +149,26 @@ end
 --
 
 --[[ Cenarius ]]--
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+	if spellId == 210290 then -- Nightmare Brambles
+		self:Bar(spellId, phase == 2 and 20 or 30) -- at some point starts casting with 15sec-20sec cd
+		local targetGUID = UnitGUID("boss1target") -- selects target 2sec prior to the cast
+		if targetGUID then
+			if self:Me(targetGUID) then
+				self:Flash(spellId)
+				self:Say(spellId)
+			end
+			local targetName = self:UnitName("boss1target")
+			self:TargetMessage(spellId, targetName, "Urgent", "Alarm")
+			self:PrimaryIcon(spellId, targetName)
+		end
+	elseif spellId == 217368 then -- Phase 2
+		phase = 2
+		self:Bar(210290, 13) -- Nightmare Brambles
+		self:Bar(214529, 23) -- Spear Of Nightmares
+		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
+	end
+end
 function mod:CreepingNightmares(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
@@ -158,12 +182,6 @@ function mod:CreepingNightmaresRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
 	end
-end
-
-function mod:NightmareBrambles(args)
-	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 2.5, CL.cast:format(args.spellName))
-	self:Bar(args.spellId, 30)
 end
 
 function mod:NightmareBramblesSuccess(args)
@@ -239,7 +257,7 @@ function mod:CorruptAlliesOfNature(args)
 	local t = GetTime()
 	if t-prev > 10 then
 		prev = t
-			self:Message(args.spellId, "Attention", "Info", CL.incoming:format(args.spellName))
+		self:Message(args.spellId, "Attention", "Info", CL.incoming:format(args.spellName))
 	end
 end
 
@@ -252,47 +270,6 @@ function mod:SpearOfNightmares(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "Urgent", self:Tank() and "Warning")
 	self:Bar(args.spellId, 15.7)
-end
-
-do
-	local adds = {
-		[212178] = mod:SpellName(-13348), -- Corrupted Wisp
-		[210861] = mod:SpellName(-13350), -- Nightmare Treant
-		[212231] = mod:SpellName(-13354), -- Rotten Drake
-		[212241] = mod:SpellName(-13357), -- Twisted Sister
-	}
-	local spawnString, spawnCount = "", 0
-	local fallbackTimer = nil
-
-	-- XXX TODO this is for mythic testing because i don't know how many adds will
-	-- spawn at the same time. it's 3 each wave for heroic
-	-- ideally WaveSpawn() will get called 3 times and fallbackFunc() will announce
-	-- the wave 0.3 sec after the last call
-	local function fallbackFunc()
-		if fallbackTimer then
-			mod:CancelTimer(fallbackTimer)
-		end
-		mod:Message(212726, "Neutral", "Info", spawnString)
-		spawnCount = 0
-		spawnString = ""
-	end
-
-	function mod:WaveSpawn(args)
-		if fallbackTimer then
-			self:CancelTimer(fallbackTimer)
-		end
-
-		spawnCount = spawnCount + 1
-		spawnString = spawnString .. (spawnCount == 1 and ("Wave %d: "):format(forcesOfNightmareCount - 1) or ", ") .. adds[args.spellId]
-
-		if self:Heroic() and spawnCount == 3 then
-			self:Message(212726, "Neutral", "Info", spawnString)
-			spawnCount = 0
-			spawnString = ""
-		else
-			fallbackTimer = self:ScheduleTimer(fallbackFunc, 0.1)
-		end
-	end
 end
 
 --[[ Malfurion Stormrage ]]--

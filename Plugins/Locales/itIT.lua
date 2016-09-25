@@ -59,10 +59,13 @@ L.closeProximityDesc = [=[Chiude il Monitor di Prossimità.
 
 Per disabilitarlo completamente per tutti gli incontri, devi andare nelle impostazioni dei singoli combattimenti e disabilitare l'opzione 'Prossimità]=]
 L.colors = "Colori"
+-- L.combatLog = "Automatic Combat Logging"
+-- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
 L.countDefeats = "Numero Uccisioni"
 L.countdownAt = "Conto alla rovescia in... (secondi)"
 L.countdownColor = "Colore conto alla rovescia"
 L.countdownTest = "Test conto alla rovescia"
+-- L.countdownType = "Countdown Type"
 L.countdownVoice = "Voce contro alla rovescia"
 L.countWipes = "Numero Fallimenti:"
 L.createTimeBar = "Mostra la barra 'Miglior Tempo'"
@@ -148,7 +151,14 @@ L.pullIn = "Ingaggio tra %d sec"
 L.pulling = "Ingaggio!"
 L.pullStarted = "Timer Ingaggio iniziato da utente %s - %s."
 L.pullStopped = "Barra d'ingaggio cancellata da %s."
-L.raidIconsDescription = "Alcuni combattimenti possono includere elementi come bombe su giocatori specifici, un giocatore inseguito da qualcosa, o un giocatore che può essere fondamentale seguire. Qui puoi personalizzare quali Simboli devono essere applicati sui giocatori.|r"
+L.raidIconsDesc = [=[Alcuni combattimenti richiedono di evidenziare alcuni giocatori di particolare interesse nell'incontro con dei simboli. Per esempio effetti di tipo 'bomba' o 'controllo della mente'. Se disattivi questa opzione, non metterai nessun simbolo.
+
+|cffff4411Si applica solo quando sei il capogruppo della spedizione o sei stato stato promosso!|r]=]
+L.raidIconsDescription = [=[Alcuni combattimenti possono includere elementi come bombe su giocatori specifici, un giocatore inseguito da qualcosa, o un giocatore che può essere fondamentale seguire. Qui puoi personalizzare quali Simboli devono essere applicati sui giocatori
+
+If an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.
+
+|cffff4411Note that if a player has already been marked manually, BigWigs will never change their icon.|r]=]
 L.recordBestTime = "Ricorda Miglior Tempo"
 L.regularBars = "Barre Normali"
 L.remove = "Rimuovi"
@@ -232,4 +242,3 @@ L.wrongBreakFormat = "Deve essere tra 1 e 60 minuti. Un'esempio corretto è /bre
 L.wrongCustomBarFormat = "Formato non corretto. Un'esempio corretto è: /raidbar 20 testo"
 L.wrongPullFormat = "Deve essere tra 1 e 60 secondi. Un'esempio corretto è: /pull 5"
 L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in secondi, una coppia M:S , o Mm. Per esempio 5, 1:20 or 2m."
-

@@ -52,63 +52,6 @@ local acOptions = {
 		options:SendMessage("BigWigs_CoreOptionToggled", key, value)
 	end,
 	args = {
-		introduction = {
-			type = "description",
-			name = L.introduction,
-			fontSize = "medium",
-			order = 1,
-			width = "full",
-		},
-		anchors = {
-			type = "execute",
-			name = L.toggleAnchorsBtn,
-			desc = L.toggleAnchorsBtn_desc,
-			func = function()
-				if not BigWigs:IsEnabled() then BigWigs:Enable() end
-				if options:InConfigureMode() then
-					options:SendMessage("BigWigs_StopConfigureMode")
-				else
-					options:SendMessage("BigWigs_StartConfigureMode")
-					options:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
-				end
-			end,
-			order = 2,
-			width = "double",
-		},
-		testing = {
-			type = "execute",
-			name = L.testBarsBtn,
-			desc = L.testBarsBtn_desc,
-			func = function()
-				BigWigs:Test()
-			end,
-			order = 3,
-			width = "double",
-		},
-		bosses = {
-			type = "execute",
-			name = BOSSES:gsub(":", ""),
-			--desc = "Bosses",
-			descStyle = "", -- kill tooltip
-			func = function()
-				acd:Close("BigWigs")
-				for name, module in BigWigs:IterateBossModules() do
-					if module:IsEnabled() then
-						local menu = translateZoneID(module.otherMenu) or translateZoneID(module.zoneId)
-						if not menu then return end
-						InterfaceOptionsFrame_OpenToCategory(options:GetZonePanel(module.otherMenu or module.zoneId))
-						InterfaceOptionsFrame_OpenToCategory(options:GetZonePanel(module.otherMenu or module.zoneId))
-					end
-				end
-				if not InterfaceOptionsFrame:IsShown() then
-					local panel = "BigWigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r"
-					InterfaceOptionsFrame_OpenToCategory(panel)
-					InterfaceOptionsFrame_OpenToCategory(panel)
-				end
-			end,
-			order = 4,
-			width = "half",
-		},
 		general = {
 			order = 20,
 			type = "group",
@@ -143,20 +86,6 @@ local acOptions = {
 					name = L.flashScreen,
 					desc = L.flashScreenDesc,
 					order = 22,
-				},
-				raidicon = {
-					type = "toggle",
-					name = L.raidIcons,
-					desc = L.raidIconsDesc,
-					set = function(info, value)
-						local key = info[#info]
-						local plugin = BigWigs:GetPlugin("Raid Icons")
-						plugin:Disable()
-						BigWigs.db.profile[key] = value
-						options:SendMessage("BigWigs_CoreOptionToggled", key, value)
-						plugin:Enable()
-					end,
-					order = 24,
 				},
 				chat = {
 					type = "toggle",
@@ -279,16 +208,6 @@ function translateZoneID(id)
 	return name
 end
 
-local function findPanel(name, parent)
-	for i, button in next, InterfaceOptionsFrameAddOns.buttons do
-		if button.element then
-			if name and button.element.name == name then return button
-			elseif parent and button.element.parent == parent then return button
-			end
-		end
-	end
-end
-
 do
 	local addonName = ...
 	local f = CreateFrame("Frame")
@@ -302,79 +221,6 @@ do
 
 		acr:RegisterOptionsTable("BigWigs", getOptions, true)
 		acd:SetDefaultSize("BigWigs", 858, 660)
-		--local mainOpts = acd:AddToBlizOptions("BigWigs", "BigWigs")
-		--mainOpts:HookScript("OnShow", function()
-		--	BigWigs:Enable()
-		--	local p = findPanel("BigWigs")
-		--	if p and p.element.collapsed then OptionsListButtonToggle_OnClick(p.toggle) end
-		--end)
-		--
-		--local about = self:GetPanel(L.about, "BigWigs")
-		--about:SetScript("OnShow", function(frame)
-		--	local fields = {
-		--		L.developers,
-		--		L.license,
-		--		L.website,
-		--		L.contact,
-		--	}
-		--	local fieldData = {
-		--		"Funkydude, Maat, Nebula169",
-		--		L.allRightsReserved,
-		--		"http://www.wowace.com/addons/big-wigs/",
-		--		L.ircChannel,
-		--	}
-		--	local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-		--	title:SetPoint("TOPLEFT", 16, -16)
-		--	title:SetText(L.about)
-		--
-		--	local subtitle = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-		--	subtitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
-		--	subtitle:SetWidth(frame:GetWidth() - 24)
-		--	subtitle:SetJustifyH("LEFT")
-		--	subtitle:SetJustifyV("TOP")
-		--	local noteKey = "Notes"
-		--	if GetAddOnMetadata("BigWigs", "Notes-" .. GetLocale()) then noteKey = "Notes-" .. GetLocale() end
-		--	local notes = GetAddOnMetadata("BigWigs", noteKey)
-		--	subtitle:SetText(notes .. " |cff44ff44" .. loader:GetReleaseString() .. "|r")
-		--
-		--	local anchor = nil
-		--	for i, field in next, fields do
-		--		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-		--		title:SetWidth(120)
-		--		if not anchor then
-		--			title:SetPoint("TOPLEFT", subtitle, "BOTTOMLEFT", 0, -16)
-		--		else
-		--			title:SetPoint("TOP", anchor, "BOTTOM", 0, -6)
-		--			title:SetPoint("LEFT", subtitle)
-		--		end
-		--		title:SetNonSpaceWrap(true)
-		--		title:SetJustifyH("LEFT")
-		--		title:SetText(field)
-		--		local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-		--		detail:SetPoint("TOPLEFT", title, "TOPRIGHT")
-		--		detail:SetWidth(frame:GetWidth() - 144)
-		--		detail:SetJustifyH("LEFT")
-		--		detail:SetJustifyV("TOP")
-		--		detail:SetText(fieldData[i])
-		--
-		--		anchor = detail
-		--	end
-		--	local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-		--	title:SetPoint("TOP", anchor, "BOTTOM", 0, -16)
-		--	title:SetPoint("LEFT", subtitle)
-		--	title:SetWidth(frame:GetWidth() - 24)
-		--	title:SetJustifyH("LEFT")
-		--	title:SetJustifyV("TOP")
-		--	title:SetText(L.thanks)
-		--	local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-		--	detail:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -4)
-		--	detail:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -24, -24)
-		--	detail:SetJustifyH("LEFT")
-		--	detail:SetJustifyV("TOP")
-		--	detail:SetText(BIGWIGS_AUTHORS)
-		--
-		--	frame:SetScript("OnShow", nil)
-		--end)
 
 		colorModule = BigWigs:GetPlugin("Colors")
 		soundModule = BigWigs:GetPlugin("Sounds")
@@ -402,25 +248,11 @@ function options:OnEnable()
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 
-	local tmp, tmpZone = {}, {}
-	for k in next, loader:GetZoneMenus() do
-		local zone = translateZoneID(k)
-		if zone then
-			tmp[zone] = k
-			tmpZone[#tmpZone+1] = zone
-		end
-	end
-	sort(tmpZone)
-	for i=1, #tmpZone do
-		local zone = tmpZone[i]
-		self:GetZonePanel(tmp[zone])
-	end
-
 	self.OnEnable = nil
 end
 
 function options:Open()
-	acd:Open("BigWigs")
+	options:OpenConfig()
 end
 
 -------------------------------------------------------------------------------
@@ -752,7 +584,7 @@ do
 				if o > 0 then
 					local link = GetSpellLink(o)
 					if not link then
-						BigWigs:Print(("Failed to fetch the link for spell id %d."):format(key))
+						BigWigs:Print(("Failed to fetch the link for spell id %d."):format(o))
 					else
 						if currentSize + #link + 1 > 255 then
 							printList(channel, header, abilities)
@@ -787,12 +619,13 @@ end
 local function populateToggleOptions(widget, module)
 	local scrollFrame = widget:GetUserData("parent")
 	scrollFrame:ReleaseChildren()
+	scrollFrame:PauseLayout()
 
 	local sDB = BigWigsStatisticsDB
 	if module.journalId and module.zoneId and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[module.zoneId] and sDB[module.zoneId][module.journalId] then
 		sDB = sDB[module.zoneId][module.journalId]
 
-		if sDB.LFR or sDB.normal or sDB.heroic or sDB.mythic then -- Create NEW statistics table
+		if sDB.LFR or sDB.normal or sDB.heroic or sDB.mythic then -- Create statistics table
 			local statGroup = AceGUI:Create("InlineGroup")
 			statGroup:SetTitle(L.statistics)
 			statGroup:SetLayout("Flow")
@@ -913,174 +746,7 @@ local function populateToggleOptions(widget, module)
 			statistics:SetWidth(100)
 			statistics:SetText(sDB.mythic and sDB.mythic.best and SecondsToTime(sDB.mythic.best) or "-")
 			statGroup:AddChild(statistics)
-		end -- End NEW statistics table
-
-		---------------------------------------------------------------------------
-		---------------------------------------------------------------------------
-		---------------------------------------------------------------------------
-
-		if sDB["25"] or sDB["25h"] or sDB["10"] or sDB["10h"] or sDB.lfr or sDB.flex then -- Create OLD statistics table
-			local statGroup = AceGUI:Create("InlineGroup")
-			statGroup:SetTitle(L.statistics)
-			statGroup:SetLayout("Flow")
-			statGroup:SetFullWidth(true)
-			scrollFrame:AddChild(statGroup)
-
-			local statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText("")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(L.norm25)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(L.heroic25)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(L.norm10)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(L.heroic10)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(L.lfr)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(L.flex)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetFullWidth(true)
-			statistics:SetText("")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(L.wipes)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB["25"] and sDB["25"].wipes or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB["25h"] and sDB["25h"].wipes or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB["10"] and sDB["10"].wipes or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB["10h"] and sDB["10h"].wipes or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB.lfr and sDB.lfr.wipes or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB.flex and sDB.flex.wipes or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetFullWidth(true)
-			statistics:SetText("")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(L.kills)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB["25"] and sDB["25"].kills or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB["25h"] and sDB["25h"].kills or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB["10"] and sDB["10"].kills or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB["10h"] and sDB["10h"].kills or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB.lfr and sDB.lfr.kills or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB.flex and sDB.flex.kills or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetFullWidth(true)
-			statistics:SetText("")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(L.best)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB["25"] and sDB["25"].best and SecondsToTime(sDB["25"].best) or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB["25h"] and sDB["25h"].best and SecondsToTime(sDB["25h"].best) or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB["10"] and sDB["10"].best and SecondsToTime(sDB["10"].best) or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB["10h"] and sDB["10h"].best and SecondsToTime(sDB["10h"].best) or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB.lfr and sDB.lfr.best and SecondsToTime(sDB.lfr.best) or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(77)
-			statistics:SetText(sDB.flex and sDB.flex.best and SecondsToTime(sDB.flex.best) or "-")
-			statGroup:AddChild(statistics)
-		end -- End OLD statistics table
+		end -- End statistics table
 	end
 
 	if module.SetupOptions then module:SetupOptions() end
@@ -1101,71 +767,45 @@ local function populateToggleOptions(widget, module)
 	list:SetUserData("module", module)
 	list:SetCallback("OnClick", listAbilitiesInChat)
 	scrollFrame:AddChild(list)
+	scrollFrame:ResumeLayout()
 	scrollFrame:PerformLayout()
 end
 
 function showToggleOptions(widget, event, group)
-	if widget:GetUserData("zone") then
-		-- If we don't have any modules registered to the zone then "group" will be nil.
-		-- In this case we skip this step and draw an empty panel.
-		if group then
-			local module = BigWigs:GetBossModule(group)
-			widget:SetUserData("bossIndex", group)
-			populateToggleOptions(widget, module)
-		end
-	else
-		populateToggleOptions(widget, widget:GetUserData("module"))
-	end
+	local module = BigWigs:GetBossModule(group)
+	widget:SetUserData("bossIndex", group)
+	populateToggleOptions(widget, module)
 end
 
-local function onZoneShow(frame)
-	local zoneId = frame.id
-	if zoneId then
-		local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
+local function onZoneShow(treeWidget, zoneId)
+	local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
 
-		-- Make sure all the bosses for this zone are loaded.
-		loader:LoadZone(instanceId)
-	end
+	-- Make sure all the bosses for this zone are loaded.
+	loader:LoadZone(instanceId)
 
-	-- Does this zone have a module list?
+	-- Grab the module list from this zone
 	local moduleList = loader:GetZoneMenus()[zoneId]
-
-	-- This zone has no modules, nor is the panel related to a module.
-	if not moduleList and not frame.module then
-		error(("We wanted to show options for the zone %q, but it does not have any modules registered."):format(tostring(zoneId)))
-		return
-	end
+	if type(moduleList) ~= "table" then return end -- No modules registered
 
 	local zoneList, zoneSort = {}, {}
-	if type(moduleList) == "table" then
-		for i = 1, #moduleList do
-			local module = moduleList[i]
-			zoneList[module.moduleName] = module.displayName
-			zoneSort[i] = module.moduleName
-		end
+	for i = 1, #moduleList do
+		local module = moduleList[i]
+		zoneList[module.moduleName] = module.displayName
+		zoneSort[i] = module.moduleName
 	end
 
 	local outerContainer = AceGUI:Create("SimpleGroup")
-	outerContainer:PauseLayout()
-	outerContainer:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -8)
-	outerContainer:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -8, 8)
+	outerContainer:PauseLayout() -- Stop drawing (improves performance) until we've added everything
 	outerContainer:SetLayout("Fill")
 	outerContainer:SetFullWidth(true)
+	treeWidget:AddChild(outerContainer)
 
-	local innerContainer = nil
-	if moduleList then
-		innerContainer = AceGUI:Create("DropdownGroup")
-		innerContainer:SetTitle(L.selectEncounter)
-		innerContainer:SetLayout("Flow")
-		innerContainer:SetCallback("OnGroupSelected", showToggleOptions)
-		innerContainer:SetUserData("zone", zoneId)
-
-		innerContainer:SetGroupList(zoneList, zoneSort)
-	else
-		innerContainer = AceGUI:Create("SimpleGroup")
-		innerContainer:SetLayout("Fill")
-		innerContainer:SetUserData("module", frame.module)
-	end
+	local innerContainer = AceGUI:Create("DropdownGroup")
+	innerContainer:SetTitle(L.selectEncounter)
+	innerContainer:SetLayout("Flow")
+	innerContainer:SetCallback("OnGroupSelected", showToggleOptions)
+	innerContainer:SetUserData("zone", zoneId)
+	innerContainer:SetGroupList(zoneList, zoneSort)
 
 	-- scroll is where we actually put stuff in case things
 	-- overflow vertically
@@ -1179,107 +819,230 @@ local function onZoneShow(frame)
 	outerContainer:AddChild(innerContainer)
 
 	outerContainer:ResumeLayout()
-	outerContainer:PerformLayout()
+	outerContainer:PerformLayout() -- Everything added, gogo
 
-	-- Need to parent the AceGUI container to the actual
-	-- zone panel frame so that the AceGUI container will
-	-- show at all.
-	outerContainer.frame:SetParent(frame)
-	outerContainer.frame:Show()
-
-	-- Need a reference to the outer container so that we can
-	-- release all children when the zone panel is hidden.
-	frame.container = outerContainer
-
-	if moduleList then
-		-- Find the first enabled module and select that in the
-		-- dropdown if possible.
-		local index = 1
-		for i = 1, #zoneSort do
-			local name = zoneSort[i]
-			local m = BigWigs:GetBossModule(name)
-			if m:IsEnabled() then
-				index = i
-				break
-			end
+	-- Find the first enabled module and select that in the dropdown if possible.
+	local index = 1
+	for i = 1, #zoneSort do
+		local name = zoneSort[i]
+		local m = BigWigs:GetBossModule(name)
+		if m:IsEnabled() and m.journalId then
+			index = i
+			break
 		end
-		innerContainer:SetGroup(zoneSort[index])
-	else
-		populateToggleOptions(innerContainer, frame.module)
 	end
-end
-
-local function onZoneHide(frame)
-	if frame.container then
-		frame.container:ReleaseChildren()
-		frame.container:Release()
-		frame.container = nil
-	end
+	innerContainer:SetGroup(zoneSort[index])
+	innerContainer:DoLayout() -- One last refresh to adjust height
 end
 
 do
-	local addonNameToHeader = {
-		BigWigs_Classic = "BigWigs ".. EJ_GetTierInfo(1),
-		BigWigs_BurningCrusade = "BigWigs ".. EJ_GetTierInfo(2),
-		BigWigs_WrathOfTheLichKing = "BigWigs ".. EJ_GetTierInfo(3),
-		BigWigs_Cataclysm = "BigWigs ".. EJ_GetTierInfo(4),
-		BigWigs_MistsOfPandaria = "BigWigs ".. EJ_GetTierInfo(5),
-		BigWigs_WarlordsOfDraenor = "BigWigs ".. EJ_GetTierInfo(6),
-		BigWigs_Legion = "BigWigs |cFF62B1F6".. EJ_GetTierInfo(7) .."|r",
-		LittleWigs = "LittleWigs",
+	local expansionHeader = {
+		"Classic",
+		"BurningCrusade",
+		"WrathOfTheLichKing",
+		"Cataclysm",
+		"MistsOfPandaria",
+		"WarlordsOfDraenor",
+		"Legion",
 	}
 
-	local panels = {}
-	local noop = function() end
-	function options:GetPanel(zone, parent, zoneId, setScript)
-		if parent and parent ~= "BigWigs" and not panels[parent] then -- This zone doesn't have a parent panel, create it first
-			self:GetPanel(parent, nil, nil, true)
-		end
-		if not panels[zone] then
-			local frame = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
-			frame.name = zone
-			frame.id = zoneId
-			frame.parent = parent
-			frame.addonname = "BigWigs"
-			frame.okay = noop
-			frame.cancel = noop
-			frame.default = noop
-			frame.refresh = noop
-			frame:Hide()
-			InterfaceOptions_AddCategory(frame)
-			if setScript then
-				frame:SetScript("OnShow", function(f)
-					BigWigs:Enable()
-					-- First we need to expand ourselves if collapsed.
-					local p = findPanel(f.name)
-					if p and p.element.collapsed then OptionsListButtonToggle_OnClick(p.toggle) end
-					-- InterfaceOptionsFrameAddOns.buttons has changed here to include the zones
-					-- if we were collapsed.
-					-- So now we need to select the first zone.
-					p = findPanel(nil, f.name)
-					if p then
-						InterfaceOptionsFrame_OpenToCategory(p.element.name)
-						InterfaceOptionsFrame_OpenToCategory(p.element.name)
-					end
-				end)
-			end
+	local statusTable = {}
+	local playerName = nil
 
-			panels[zone] = frame
-			return panels[zone], true
+	local function toggleAnchors()
+		if not BigWigs:IsEnabled() then BigWigs:Enable() end
+		if options:InConfigureMode() then
+			options:SendMessage("BigWigs_StopConfigureMode")
+		else
+			options:SendMessage("BigWigs_StartConfigureMode")
+			options:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
 		end
-		return panels[zone]
 	end
 
-	function options:GetZonePanel(zoneId)
-		local zoneName = translateZoneID(zoneId)
-		local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
-		local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] or addonNameToHeader.BigWigs_Legion
-		local panel, justCreated = self:GetPanel(zoneName, parent, zoneId)
-		if justCreated then
-			panel:SetScript("OnShow", onZoneShow)
-			panel:SetScript("OnHide", onZoneHide)
+	local function onControlEnter(widget, event)
+		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
+		GameTooltip:SetText(widget.text:GetText(), 1, 0.82, 0, true)
+		GameTooltip:AddLine(widget:GetUserData("desc"), 1, 1, 1, true)
+		GameTooltip:Show()
+	end
+
+	local function onTreeGroupSelected(widget, event, value)
+		widget:ReleaseChildren()
+		local zoneId = value:match("\001(%d+)$")
+		if zoneId then
+			onZoneShow(widget, tonumber(zoneId))
+		elseif value:match("^BigWigs_") and value ~= "BigWigs_Legion" and GetAddOnEnableState(playerName, value) == 0 then
+				local missing = AceGUI:Create("Label")
+				missing:SetText(L.missingAddOn:format(value))
+				missing:SetFontObject(GameFontHighlight)
+				missing:SetFullWidth(true)
+				widget:AddChild(missing)
+		elseif value:match("^LittleWigs_") and GetAddOnEnableState(playerName, "LittleWigs") == 0 then
+				local missing = AceGUI:Create("Label")
+				missing:SetText(L.missingAddOn:format("LittleWigs"))
+				missing:SetFontObject(GameFontHighlight)
+				missing:SetFullWidth(true)
+				widget:AddChild(missing)
+		else
+			statusTable.groups[value] = true
+			widget:RefreshTree()
 		end
-		return panel
+	end
+
+	local function onTabGroupSelected(widget, event, value)
+		widget:ReleaseChildren()
+
+		if value == "options" then
+			-- Embed the AceConfig options in our AceGUI frame
+			local container = AceGUI:Create("SimpleGroup")
+			container.type = "BigWigsOptions" -- We want ACD to create a ScrollFrame, so we change the type to bypass it's group control check
+			container:SetFullHeight(true)
+			container:SetFullWidth(true)
+
+			-- Have to use :Open instead of just :FeedGroup because some widget types (range, color) call :Open to refresh on change
+			acd:Open("BigWigs", container)
+
+			widget:AddChild(container)
+		else
+			local treeTbl = {}
+			local addonNameToHeader = {}
+			local defaultHeader
+			if value == "bigwigs" then
+				defaultHeader = "BigWigs_Legion"
+				for i = 1, 7 do
+					local value = "BigWigs_" .. expansionHeader[i]
+					treeTbl[i] = {
+						text = EJ_GetTierInfo(i),
+						value = value,
+						enabled = (value == defaultHeader or GetAddOnEnableState(playerName, value) > 0),
+					}
+					addonNameToHeader[value] = i
+				end
+			elseif value == "littlewigs" then
+				defaultHeader = "LittleWigs_Legion"
+				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
+				for i = 1, 7 do
+					local value = "LittleWigs_" .. expansionHeader[i]
+					treeTbl[i] = {
+						text = EJ_GetTierInfo(i),
+						value = value,
+						enabled = enabled,
+					}
+					addonNameToHeader[value] = i
+				end
+			end
+
+			do
+				local tmp, tmpZone = {}, {}
+				for k in next, loader:GetZoneMenus() do
+					local zone = translateZoneID(k)
+					if zone then
+						tmp[zone] = k
+						tmpZone[#tmpZone+1] = zone
+					end
+				end
+				sort(tmpZone)
+				for i = 1, #tmpZone do
+					local zone = tmpZone[i]
+					local zoneId = tmp[zone]
+					local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
+					local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] -- Get expansion number for this zone
+					local treeParent = treeTbl[parent] -- Grab appropriate expansion name
+					if treeParent and treeParent.enabled then -- third-party plugins can add empty zones if you don't have the expansion addon enabled
+						if not treeParent.children then treeParent.children = {} end -- Create sub menu table
+						tinsert(treeParent.children, { -- Add new instance/zone sub menu
+							value = zoneId,
+							text = zone,
+						})
+					end
+				end
+			end
+
+			local tree = AceGUI:Create("TreeGroup")
+			tree:SetFullWidth(true)
+			tree:SetFullHeight(true)
+			tree:SetStatusTable(statusTable)
+			tree:SetTree(treeTbl)
+			tree:SetLayout("Fill")
+			tree:SetCallback("OnGroupSelected", onTreeGroupSelected)
+
+			-- Do we have content for the zone we're in? Then open straight to that zone.
+			local mapId, parent
+			if not IsInInstance() then
+				local id = -(loader.GetPlayerMapAreaID("player") or 0)
+				mapId = loader.zoneTblWorld[id]
+				parent = loader.zoneTbl[mapId] and addonNameToHeader[loader.zoneTbl[mapId]]
+			else
+				local _, _, _, _, _, _, _, instanceId = loader.GetInstanceInfo()
+				loader.SetMapToCurrentZone()
+				mapId = loader.GetCurrentMapAreaID()
+				parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]]
+			end
+			if parent then
+				local moduleList = mapId and loader:GetZoneMenus()[mapId]
+				local value = treeTbl[parent].value
+				tree:SelectByValue(moduleList and ("%s\001%d"):format(value, mapId) or value)
+			else
+				tree:SelectByValue(defaultHeader)
+			end
+
+			widget:AddChild(tree)
+		end
+	end
+
+	function options:OpenConfig()
+		playerName = UnitName("player")
+
+		local bw = AceGUI:Create("Frame")
+		bw:SetTitle("BigWigs")
+		bw:SetStatusText(" "..BigWigsLoader:GetReleaseString())
+		bw:SetWidth(858)
+		bw:SetHeight(660)
+		bw:EnableResize(false)
+		bw:SetLayout("Flow")
+		bw:SetCallback("OnClose", function(widget)
+			AceGUI:Release(widget)
+			wipe(statusTable)
+		end)
+
+		local introduction = AceGUI:Create("Label")
+		introduction:SetText(L.introduction)
+		introduction:SetFontObject(GameFontHighlight)
+		introduction:SetFullWidth(true)
+		bw:AddChild(introduction)
+
+		local anchors = AceGUI:Create("Button")
+		anchors:SetText(L.toggleAnchorsBtn)
+		anchors:SetUserData("desc", L.toggleAnchorsBtn_desc)
+		anchors:SetRelativeWidth(0.5)
+		anchors:SetCallback("OnClick", toggleAnchors)
+		anchors:SetCallback("OnEnter", onControlEnter)
+		anchors:SetCallback("OnLeave", GameTooltip_Hide)
+
+		local testing = AceGUI:Create("Button")
+		testing:SetText(L.testBarsBtn)
+		testing:SetUserData("desc", L.testBarsBtn_desc)
+		testing:SetRelativeWidth(0.5)
+		testing:SetCallback("OnClick", BigWigs.Test)
+		testing:SetCallback("OnEnter", onControlEnter)
+		testing:SetCallback("OnLeave", GameTooltip_Hide)
+
+		bw:AddChildren(anchors, testing)
+
+		local tabs = AceGUI:Create("TabGroup")
+		tabs:SetLayout("Flow")
+		tabs:SetFullWidth(true)
+		tabs:SetFullHeight(true)
+		tabs:SetTabs({
+			{ text = L.options, value = "options" },
+			{ text = L.raidBosses, value = "bigwigs" },
+			{ text = L.dungeonBosses, value = "littlewigs" },
+		})
+		tabs:SetCallback("OnGroupSelected", onTabGroupSelected)
+		tabs:SelectTab("options")
+		bw:AddChild(tabs)
+
+		bw:Show()
 	end
 end
 
@@ -1317,4 +1080,3 @@ do
 end
 
 BigWigsOptions = options -- Set global
-

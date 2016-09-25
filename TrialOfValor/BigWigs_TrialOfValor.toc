@@ -1,0 +1,33 @@
+## Interface: 70000
+
+## Title: BigWigs [|cffeda55fTrial of Valor|r]
+## Title-deDE: BigWigs [|cffeda55fTrial of Valor|r]
+## Title-esES: BigWigs [|cffeda55fTrial of Valor|r]
+## Title-esMX: BigWigs [|cffeda55fTrial of Valor|r]
+## Title-frFR: BigWigs [|cffeda55fTrial of Valor|r]
+## Title-ruRU: BigWigs [|cffeda55fTrial of Valor|r]
+## Title-zhCN: BigWigs [|cffeda55fTrial of Valor|r]
+## Title-zhTW: BigWigs [|cffeda55fTrial of Valor|r]
+## Title-itIT: BigWigs [|cffeda55fTrial of Valor|r]
+## Title-ptBR: BigWigs [|cffeda55fTrial of Valor|r]
+## Title-koKR: BigWigs [|cffeda55fTrial of Valor|r]
+## Notes: BigWigs Trial of Valor Modules
+## Notes-deDE: Trial of Valor Modules
+## Notes-esES: Trial of Valor Modules
+## Notes-esMX: Trial of Valor Modules
+## Notes-frFR: Trial of Valor Modules
+## Notes-ruRU: Trial of Valor Modules
+## Notes-zhCN: Trial of Valor Modules
+## Notes-zhTW: Trial of Valor Modules
+## Notes-itIT: Trial of Valor Modules
+## Notes-ptBR: Trial of Valor Modules
+## Notes-koKR: Trial of Valor Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-ZoneId: 1114
+
+modules.xml
+locales.xml

@@ -43,6 +43,9 @@ L.coreAddonDisabled = "BigWigs won't function properly since the addon %s is dis
 L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
 
 -- Options.lua
+L.options = "Options"
+L.raidBosses = "Raid Bosses"
+L.dungeonBosses = "Dungeon Bosses"
 L.introduction = "Welcome to BigWigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group."
 L.toggleAnchorsBtn = "Toggle Anchors"
 L.toggleAnchorsBtn_desc = "Toggle showing or hiding of all the anchors."
@@ -51,8 +54,6 @@ L.testBarsBtn_desc = "Creates a bar for you to test your current display setting
 L.sound = "Sound"
 L.flashScreen = "Flash Screen"
 L.flashScreenDesc = "Certain abilities are important enough to need your full attention. When these abilities affect you BigWigs can flash the screen."
-L.raidIcons = "Raid icons"
-L.raidIconsDesc = "Some encounter scripts use raid icons to mark players that are of special interest to your group. For example 'bomb'-type effects and mind control. If you turn this off, you won't mark anyone.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"
 L.minimapIcon = "Minimap icon"
 L.minimapToggle = "Toggle show/hide of the minimap icon."
 L.configure = "Configure"
@@ -79,7 +80,7 @@ L.slashDescVersion = "|cFFFED000/bwv:|r Performs a BigWigs version check."
 L.slashDescConfig = "|cFFFED000/bw:|r Opens the BigWigs configuration."
 
 L.gitHubTitle = "BigWigs is on GitHub"
-L.gitHubDesc = "BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out.\n\nIf you've committed changes to BigWigs whilst it was on SVN and would like your GitHub account linked on the Git commit log, contact us.\n\n|cFF33FF99Our API is now documented and freely readable on the GitHub wiki.|r"
+L.gitHubDesc = "BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out.\n\n|cFF33FF99Our API is now documented and freely readable on the GitHub wiki.|r"
 
 L.BAR = "Bars"
 L.MESSAGE = "Messages"
@@ -121,15 +122,6 @@ L.tank = "|cFFFF0000Tank alerts only.|r "
 L.healer = "|cFFFF0000Healer alerts only.|r "
 L.tankhealer = "|cFFFF0000Tank & Healer alerts only.|r "
 L.dispeller = "|cFFFF0000Dispeller alerts only.|r "
-
-L.about = "About"
-L.developers = "Developers"
-L.license = "License"
-L.website = "Website"
-L.contact = "Contact"
-L.allRightsReserved = "All Rights Reserved"
-L.ircChannel = "irc.freenode.net in the #bigwigs channel"
-L.thanks = "Thanks to the following for all their help in various fields of development"
 
 -- Statistics
 L.statistics = "Statistics"

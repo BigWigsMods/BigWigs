@@ -72,19 +72,12 @@ L.fillDesc = "Fills the bars up instead of draining them."
 L.localTimer = "Local"
 L.timerFinished = "%s: Timer [%s] finished."
 L.customBarStarted = "Custom bar '%s' started by %s user %s."
-
-L.pull = "Pull"
-L.pulling = "Pulling!"
-L.pullStarted = "Pull timer started by %s user %s."
-L.pullStopped = "Pull timer cancelled by %s."
-L.pullIn = "Pull in %d sec"
-L.sendPull = "Sending a pull timer to BigWigs and DBM users."
 L.sendCustomBar = "Sending custom bar '%s' to BigWigs and DBM users."
+
 L.requiresLeadOrAssist = "This function requires raid leader or raid assist."
-L.wrongPullFormat = "Must be between 1 and 60 seconds. A correct example is: /pull 5"
+L.encounterRestricted = "This function can't be used during an encounter."
 L.wrongCustomBarFormat = "Incorrect format. A correct example is: /raidbar 20 text"
 L.wrongTime = "Invalid time specified. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."
-L.encounterRestricted = "This function can't be used during an encounter."
 
 L.wrongBreakFormat = "Must be between 1 and 60 minutes. A correct example is: /break 5"
 L.sendBreak = "Sending a break timer to BigWigs and DBM users."
@@ -223,10 +216,27 @@ L.tooltip = "Tooltip"
 L.tooltipDesc = "Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."
 
 -----------------------------------------------------------------------
+-- Pull.lua
+--
+
+L.countdownType = "Countdown Type"
+L.combatLog = "Automatic Combat Logging"
+L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
+
+L.pull = "Pull"
+L.pulling = "Pulling!"
+L.pullStarted = "Pull timer started by %s user %s."
+L.pullStopped = "Pull timer cancelled by %s."
+L.pullIn = "Pull in %d sec"
+L.sendPull = "Sending a pull timer to BigWigs and DBM users."
+L.wrongPullFormat = "Must be between 1 and 60 seconds. A correct example is: /pull 5"
+
+-----------------------------------------------------------------------
 -- RaidIcon.lua
 --
 
 L.icons = "Icons"
+L.raidIconsDesc = "Some encounter scripts use raid icons to mark players that are of special interest to your group. For example 'bomb'-type effects and mind control. If you turn this off, you won't mark anyone.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"
 L.raidIconsDescription = "Some encounters might include elements such as bomb-type abilities targetted on a specific player, a player being chased, or a specific player might be of interest in other ways. Here you can customize which raid icons should be used to mark these players.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, BigWigs will never change their icon.|r"
 L.primary = "Primary"
 L.primaryDesc = "The first raid target icon that a encounter script should use."
@@ -297,4 +307,3 @@ L.victoryMessageBigWigsDesc = "The BigWigs message is a simple \"boss has been d
 L.victoryMessageBlizzard = "Show the Blizzard message"
 L.victoryMessageBlizzardDesc = "The Blizzard message is a very large \"boss has been defeated\" animation in the middle of your screen."
 L.defeated = "%s has been defeated"
-

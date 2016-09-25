@@ -1,8 +1,6 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Tuning sounds / message colors
--- - Remove beta engaged message
 -- - All the timers
 -- - Mythic abilitys
 -- - 212993 Shimmering Feather is not in the combat log (yet)?
@@ -46,7 +44,7 @@ function mod:GetOptions()
 		215300, -- Web of Pain
 		212364, -- Feeding Time
 		214348, -- Vile Ambush
-		{215460, "SAY", "FLASH"}, -- Necrotic Venom
+		{215443, "SAY", "FLASH"}, -- Necrotic Venom
 
 		--[[ Roc Form ]]--
 		212707, -- Gathering Clouds
@@ -73,8 +71,8 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_SUCCESS", "WebOfPain", 215288) -- i think we can handle everythin with the auras
 	self:Log("SPELL_AURA_APPLIED", "WebOfPainApplied", 215300) -- 215307 is applied to the other player
 	self:Log("SPELL_CAST_SUCCESS", "VileAmbush", 214348)
-	--self:Log("SPELL_CAST_START", "NecroticVenom", 215443) -- i think we can handle everythin with the auras
-	self:Log("SPELL_AURA_APPLIED", "NecroticVenomApplied", 215460)
+	self:Log("SPELL_CAST_SUCCESS", "NecroticVenomSuccess", 215443)
+	--self:Log("SPELL_AURA_APPLIED", "NecroticVenomApplied", 215460) -- this is the "spawning puddles" debuff
 
 	--[[ Roc Form ]]--
 	self:Log("SPELL_CAST_START", "GatheringCloudsStart", 212707)
@@ -93,8 +91,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Elerethe Renferal Engaged (Beta v2)", "inv_spidermount")
-
 	twistingShadowsCount = 1
 
 	self:Bar(215300, 6)
@@ -165,32 +161,46 @@ function mod:VileAmbush(args)
 end
 
 do
-	local list = mod:NewTargetList()
-	function mod:NecroticVenomApplied(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Urgent", "Alert")
+	local scheduled, list, scanCount = nil, mod:NewTargetList(), 0
 
-			if timeToTransform() > 26 then -- skips the one before the transformation
-				self:Bar(args.spellId, 22)
+	local function scanDebuffs(self, spellName)
+		for unit in self:IterateGroup() do
+			if UnitDebuff(unit, spellName) then
+				list[#list+1] = UnitName(unit)
+
+				if UnitIsUnit("player", unit) then
+					self:Flash(215443)
+					self:Say(215443)
+
+					local _, _, _, _, _, _, expires = UnitDebuff(unit, spellName)
+					local remaining = expires-GetTime()
+					self:ScheduleTimer("Say", remaining-3, 215443, 3, true)
+					self:ScheduleTimer("Say", remaining-2, 215443, 2, true)
+					self:ScheduleTimer("Say", remaining-1, 215443, 1, true)
+				end
 			end
 		end
 
-		if self:Me(args.destGUID) then
-			self:Flash(args.spellId)
-			self:Say(args.spellId)
+		scanCount = scanCount + 1
 
-			local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
-			local remaining = expires-GetTime()
-			self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
-			self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
-			self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
+		if #list > 0 then
+			self:TargetMessage(215443, list, "Urgent", "Warning")
+		elseif scanCount < 3 then
+			scheduled = self:ScheduleTimer(scanDebuffs, 0.3, self, spellName)
 		end
+	end
+
+	function mod:NecroticVenomSuccess(args)
+		if timeToTransform() > 26 then -- skips the one before the transformation
+			self:Bar(args.spellId, 22)
+		end
+		scanCount = 0
+		scheduled = self:ScheduleTimer(scanDebuffs, 0.3, self, args.spellName)
 	end
 end
 
 function mod:GatheringCloudsStart(args)
-	self:Message(args.spellId, "Attention", "Alarm", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 10.5, CL.cast:format(args.spellName)) -- 2.5s cast + 8s duration = 10.5s total
 end
 

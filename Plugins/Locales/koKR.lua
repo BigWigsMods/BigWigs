@@ -60,10 +60,13 @@ L.closeProximityDesc = [=[근접 표시를 닫습니다.
 
 완전히 비활성화기 위해서는 해당 보스 모듈에 있는 옵션의 근접 표시를 끄세요.]=]
 L.colors = "색상"
+-- L.combatLog = "Automatic Combat Logging"
+-- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
 L.countDefeats = "죽임 횟수"
 L.countdownAt = "X초 남았을 때 카운트다운"
 L.countdownColor = "카운트다운 색상"
 L.countdownTest = "카운트다운 테스트"
+-- L.countdownType = "Countdown Type"
 L.countdownVoice = "카운트다운 음성"
 L.countWipes = "전멸 횟수"
 L.createTimeBar = "'최고 기록' 바 보이기"
@@ -149,6 +152,9 @@ L.pullIn = "풀링 %d초 전"
 L.pulling = "풀링합니다!"
 L.pullStarted = "%2$s님이 %1$s 풀링 타이머를 시작합니다."
 L.pullStopped = "풀링 타이머가 %s 에 의해 취소되었습니다."
+L.raidIconsDesc = [=['폭탄'류의 스킬이나 정신 지배 같은 능력들의 경고를 하여 공격대원들의 주의를 끌기 위해서, 몇몇 보스 스크립트는 플레이어에게 전술 아이콘을 설정합니다. 이 옵션을 끄면 전술 아이콘을 설정하지 않습니다.
+
+|cffff4411오직 공격대장이나 승급된 사람만이 가능합니다!|r]=]
 L.raidIconsDescription = [=[중요한 '폭탄'-유형의 보스 능력을 플레이어에게 사용할 경우 BigWigs에서 공격대 대상 아이콘 지정을 설정합니다. 중요 '폭탄'-유형 기술이 2개일 경우 1개의 기술에 첫번째, 그나머지 기술에 대해서는 두번째 아이콘을 지정하여 사용합니다.
 
 |cffff4411주의: 만약에 플레이어가 이미 수동으로 전술 지정이 되어있다면 BigWigs 에서는 그것을 변경하지 않습니다.|r]=]
@@ -235,4 +241,3 @@ L.wrongBreakFormat = "1~60분 사이로 설정하셔야 합니다. 예시: /brea
 L.wrongCustomBarFormat = "잘못된 형식입니다. /raidbar 20 text와 같이 쓰는게 정확한 예입니다."
 L.wrongPullFormat = "1~60초 사이로 설정하셔야 합니다. 예시: /pull 5"
 L.wrongTime = "시간의 표현 방식이 적절하지 않습니다. 초 단위로 표현하거나, 분:초 형식, 아니면 분 단위로 표현해야 합니다. 예를 들자면 5, 1:20 혹은 2m와 같이 써야 합니다."
-

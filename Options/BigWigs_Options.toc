@@ -1,22 +1,27 @@
 ## Interface: 70000
 
 ## Title: BigWigs [|cffeda55fOptions|r]
-## Title-deDE: BigWigs [|cffeda55fOptionen|r]
-## Title-esES: BigWigs [|cffeda55fOpciones|r]
-## Title-ruRU: BigWigs [|cffeda55fНастройки|r]
 ## Title-zhCN: BigWigs [|cffeda55f选项|r]
 ## Title-zhTW: BigWigs [|cffeda55f選項|r]
-## Title-koKR: BigWigs [|cffeda55f옵션|r]
+## Title-deDE: BigWigs [|cffeda55fOptionen|r]
+## Title-frFR: BigWigs [|cffeda55fOptions|r]
 ## Title-itIT: BigWigs [|cffeda55fOpzioni|r]
+## Title-koKR: BigWigs [|cffeda55f옵션|r]
+## Title-ruRU: BigWigs [|cffeda55fНастройки|r]
+## Title-ptBR: BigWigs [|cffeda55fOptions|r]
+## Title-esES: BigWigs [|cffeda55fOpciones|r]
+## Title-esMX: BigWigs [|cffeda55fOpciones|r]
 ## Notes: BigWigs Configuration Options
-## Notes-deDE: BigWigs Einstellungsmöglichkeiten.
-## Notes-esES: Opciones de configuración de BigWigs.
-## Notes-ruRU: Модуль настроек BigWigs
 ## Notes-zhCN: BigWigs 配置选项。
 ## Notes-zhTW: BigWigs 配置選項。
+## Notes-deDE: BigWigs Einstellungsmöglichkeiten.
 ## Notes-frFR: Options de configuration de BigWigs.
-## Notes-koKR: BigWigs 구성 옵션
 ## Notes-itIT: Opzioni di configurazione per BigWigs
+## Notes-koKR: BigWigs 구성 옵션
+## Notes-ruRU: Модуль настроек BigWigs
+## Notes-ptBR: BigWigs Configuration Options
+## Notes-esES: Opciones de configuración de BigWigs.
+## Notes-esMX: Opciones de configuración de BigWigs.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs, BigWigs_Core, BigWigs_Plugins

@@ -379,7 +379,6 @@ do
 
 		local defaults = {
 			profile = {
-				raidicon = true,
 				flash = true,
 				showZoneMessages = true,
 				fakeDBMVersion = false,
@@ -396,6 +395,8 @@ do
 		db.RegisterCallback(self, "OnProfileCopied", profileUpdate)
 		db.RegisterCallback(self, "OnProfileReset", profileUpdate)
 		self.db = db
+
+		self.db.profile.raidicon = nil -- XXX temp [v7.0]
 
 		self.ADDON_LOADED = InitializeModules
 		InitializeModules()

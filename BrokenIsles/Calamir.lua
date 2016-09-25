@@ -133,7 +133,7 @@ do
 	function mod:BurningBomb(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alert", nil, nil, self:Dispeller())
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alert", nil, nil, self:Dispeller("magic"))
 		end
 		if self:Me(args.destGUID) then
 			self:OpenProximity(args.spellId, 10)
@@ -144,7 +144,7 @@ do
 
 	function mod:BurningBombRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Positive", "Info", CL.removed(args.spellName))
+			self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
 			self:CloseProximity(args.spellId)
 			self:StopBar(args.spellId, args.destName)
 		end

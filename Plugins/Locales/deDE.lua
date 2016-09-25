@@ -59,10 +59,13 @@ L.closeProximityDesc = [=[Schließt die Anzeige naher Spieler.
 
 Falls du die Anzeige für alle Bosse deaktivieren willst, musst du die Option 'Nähe' seperat in den jeweiligen Bossmodulen ausschalten.]=]
 L.colors = "Farben"
+L.combatLog = "Automatische Kampfaufzeichnung"
+L.combatLogDesc = "Startet automatisch die Aufzeichnung des Kampfes, wenn ein Pull-Timer gestartet wurde und beendet die Aufzeichnung, wenn der Bosskampf endet."
 L.countDefeats = "Siege zählen"
 L.countdownAt = "Countdown ab... (Sekunden)"
 L.countdownColor = "Countdown-Farbe"
 L.countdownTest = "Countdown testen"
+L.countdownType = "Countdowntyp"
 L.countdownVoice = "Countdown-Stimme"
 L.countWipes = "Niederlagen zählen"
 L.createTimeBar = "Bestzeittimer anzeigen"
@@ -148,6 +151,9 @@ L.pullIn = "Pull in %d Sek."
 L.pulling = "Pull!"
 L.pullStarted = "Pull-Timer wurde von %s-Nutzer %s gestartet."
 L.pullStopped = "Pull-Timer von %s abgebrochen."
+L.raidIconsDesc = [=[Einige Bossmodule benutzen Schlachtzugssymbole, um Spieler zu markieren, die von speziellem Interesse für deine Gruppe sind. Beispiele wären Bombeneffekte und Gedankenkontrolle. Wenn du diese Option ausschaltest, markierst du niemanden mehr.
+
+|cffff4411Trifft nur zu, sofern du Schlachtzugsleiter oder Assistent bist.|r]=]
 L.raidIconsDescription = [=[Einige Begegnungen schließen Elemente wie 'Bombenfähigkeiten' ein, die einen bestimmten Spieler zum Ziel haben, ihn verfolgen oder er ist in sonst einer Art und Weise interessant. Hier kannst du bestimmen, welche Schlachtzugs-Symbole benutzt werden sollen, um die Spieler zu markieren.
 
 Falls nur ein Symbol benötigt wird, wird nur das erste benutzt. Ein Symbol wird niemals für zwei verschiedene Fähigkeiten innerhalb einer Begegnung benutzt.
@@ -236,4 +242,3 @@ L.wrongBreakFormat = "Muss zwischen 1 und 60 Minuten liegen. Beispiel: /break 5"
 L.wrongCustomBarFormat = "Ungültiges Format. Beispiel: /raidbar 20 text"
 L.wrongPullFormat = "Muss zwischen 1 und 60 Sekunden liegen. Beispiel: /pull 5"
 L.wrongTime = "Ungültige Zeitangabe. <time> kann eine Zahl in Sekunden, ein M:S paarung, oder Mm sein. Beispiel: 5, 1:20 or 2m."
-

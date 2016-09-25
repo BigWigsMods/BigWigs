@@ -1,9 +1,10 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Tuning sounds / message colors
--- - Remove beta engaged message
--- - The timers really suck on this fight > only normal testing data (2016-08-11)
+-- - Get/Confirm timers for all difficulties on live
+--   LFR (✘) - Normal (✘) - Heroic (✔) - Mythic (✘)
+--
+-- - Rot: CD is 15.8s - sometimes gets delayed, then its ~24s, no idea why
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -55,7 +56,6 @@ end
 function mod:OnBossEnable()
 	--[[ General ]]--
 	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1")
-	--self:Log("SPELL_CAST_START", "InfestedBreath", 202977) -- they removed it from combatlog, delete this if it's not on live
 	self:Log("SPELL_AURA_APPLIED", "Rot", 203096)
 	self:Log("SPELL_AURA_REMOVED", "RotRemoved", 203096)
 	self:Log("SPELL_AURA_APPLIED", "VolatileRot", 204463)
@@ -72,14 +72,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Nythendra Engaged (Beta v3)", 23074) -- some red dragon icon
 	rotCount = 1
 	mindControlledPlayers = 0
-	self:Berserk(720) -- 12 minutes on heroic, not kidding
+	self:Berserk(485) -- heroic
 	self:CDBar(203096, 5.8) -- Rot
 	self:CDBar(204463, 22.8) -- Volatile Rot
-	self:CDBar(202977, 38) -- Infested Breath
-	self:CDBar(203552, 92) -- Heart of the Swarm
+	self:CDBar(202977, 37) -- Infested Breath
+	self:CDBar(203552, 90) -- Heart of the Swarm
 end
 
 --------------------------------------------------------------------------------
@@ -121,7 +120,7 @@ do
 
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Alert")
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Warning")
 			rotCount = rotCount + 1
 
 			if mod:BarTimeLeft(mod:SpellName(203552)) > 15.9 then -- Heart of the Swarm
@@ -162,12 +161,12 @@ function mod:VolatileRot(args)
 end
 
 function mod:HeartOfTheSwarm(args)
-	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 23.7, CL.cast:format(args.spellName)) -- 3.7s cast time + 20s channel
 	-- This is basically a phase, so start timers for next "normal" phase here
 	self:CDBar(args.spellId, 120)
 	self:CDBar(203096, 36.5) -- Rot, 23.7 + 12.8
-	self:CDBar(204463, 56.5) -- Volatile Rot, 23.7 + 32.8
+	self:CDBar(204463, 52.7) -- Volatile Rot, 23.7 + 29
 	self:CDBar(202977, 68) -- Infested Breath, 23.7 + 44.3
 	rotCount = 1
 end
@@ -201,6 +200,6 @@ end
 
 function mod:SpreadInfestation(args)
 	if not self:Me(args.sourceGUID) and mindControlledPlayers < 4 then -- TODO hardcoded anti spam check (for wipes): only warn if max 3 players are mind controlled
-		self:Message(args.spellId, "Attention", "Alert", CL.other:format(mod:ColorName(args.sourceName), CL.casting:format(args.spellName))) -- Player: Casting Spread Infestation!
+		self:Message(args.spellId, "Attention", "Long", CL.other:format(mod:ColorName(args.sourceName), CL.casting:format(args.spellName))) -- Player: Casting Spread Infestation!
 	end
 end

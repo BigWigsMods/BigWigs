@@ -59,10 +59,13 @@ L.closeProximityDesc = [=[关闭近距离显示。
 
 要完全禁用此任一功能，需进入相对应首领模块选项关闭“近距离”功能。]=]
 L.colors = "颜色"
+L.combatLog = "自动战斗记录"
+L.combatLogDesc = "当拉怪计时器开始到战斗结束时自动开始战斗记录。"
 L.countDefeats = "击杀次数"
 L.countdownAt = "倒数…（秒）"
 L.countdownColor = "倒数颜色"
 L.countdownTest = "测试倒数"
+L.countdownType = "倒数类型"
 L.countdownVoice = "倒数语音"
 L.countWipes = "团灭次数"
 L.createTimeBar = "显示“最快击杀”计时条"
@@ -148,6 +151,9 @@ L.pullIn = "%d秒后拉怪"
 L.pulling = "拉怪中！"
 L.pullStarted = "拉怪由%s玩家%s发起的计时器。"
 L.pullStopped = "%s取消了拉怪计时器。"
+L.raidIconsDesc = [=[团队中有些首领模块使用团队标记来为某些中了特定技能的队员打上标记。例如类似“炸弹”类或心灵控制的技能。如果你关闭此功能，你将不会给队员打标记。
+
+|cffff4411只有团队领袖或被提升为助理时才可以这么做！|r]=]
 L.raidIconsDescription = [=[可能遇到包含例如炸弹类型的技能指向特定的玩家，玩家被追，或是特定玩家可能有兴趣在其他方面。这里可以自定义团队标记来标记这些玩家。
 
 如果只遇到一种技能，很好，只有第一个图标会被使用。在某些战斗中一个图标不会使用在两个不同的技能上，任何特定技能在下次总是使用相同图标。
@@ -236,4 +242,3 @@ L.wrongBreakFormat = "必须位于1至60分钟之间。正确用法：/break 5"
 L.wrongCustomBarFormat = "错误格式。正确用法：/raidbar 20 文本"
 L.wrongPullFormat = "必须位于1到60秒之间。正确用法：/pull 5"
 L.wrongTime = "指定了无效的时间。 <时间>可以是一个以秒为单位，一个分:秒一对，或分秒。例如，1:20或2M。"
-

@@ -1,8 +1,6 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Tuning sounds / message colors
--- - Remove beta engaged message
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -19,7 +17,6 @@ mod.respawnTime = 40
 --
 
 local cacophonyCount = 1
-local rendFleshCount = 1
 local focusedGazeCount = 1
 
 --------------------------------------------------------------------------------
@@ -28,9 +25,9 @@ local focusedGazeCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.custom_on_gaze_assist = "Focused Gaze Assist"
-	L.custom_on_gaze_assist_desc = "Show raid icons in bars and messages for Focused Gaze. Using {rt4} for odd, {rt6} for even soaks. Requires promoted or leader."
-	L.custom_on_gaze_assist_icon = 4
+	L.custom_off_gaze_assist = "Focused Gaze Assist"
+	L.custom_off_gaze_assist_desc = "Show raid icons in bars and messages for Focused Gaze. Using {rt4} for odd, {rt6} for even soaks. Requires promoted or leader."
+	L.custom_off_gaze_assist_icon = 4
 end
 
 --------------------------------------------------------------------------------
@@ -40,9 +37,9 @@ end
 function mod:GetOptions()
 	return {
 		{197943, "TANK"}, -- Overwhelm
-		204859, -- Rend Flesh
+		{204859, "TANK_HEALER"}, -- Rend Flesh
 		{198006, "ICON", "FLASH", "PULSE", "SAY"}, -- Focused Gaze
-		"custom_on_gaze_assist",
+		"custom_off_gaze_assist",
 		198108, -- Momentum
 		197969, -- Roaring Cacophony
 		205611, -- Miasma
@@ -69,19 +66,19 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Ursoc Engaged (Beta v5)", 98204) -- Amani Battle Bear icon
 	cacophonyCount = 1
-	rendFleshCount = 1
 	focusedGazeCount = 1
+
 	self:Bar(197943, 10) -- Overwhelm
-	self:Bar(204859, 15, CL.count:format(self:SpellName(204859), rendFleshCount)) -- Rend Flesh, time to _applied
-	if self:GetOption("custom_on_gaze_assist") then
+	self:Bar(204859, 15) -- Rend Flesh, time to _applied
+	if self:GetOption("custom_off_gaze_assist") then
 		self:Bar(198006, 19, CL.count_icon:format(self:SpellName(198006), focusedGazeCount, 4)) -- Focused Gaze, green
 	else
 		self:Bar(198006, 19, CL.count:format(self:SpellName(198006), focusedGazeCount)) -- Focused Gaze
 	end
 	self:Bar(197969, self:LFR() and 45 or 40, CL.count:format(self:SpellName(197969), cacophonyCount)) -- Roaring Cacophony
 	self:Berserk(300)
+
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
@@ -105,23 +102,26 @@ end
 
 function mod:Overwhelm(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 1 and "Warning")
+	self:StackMessage(args.spellId, args.destName, amount, "Important")
+	if amount > 1 then
+		self:PlaySound(args.spellId, self:Me(args.destGUID) and "Alarm" or "Warning") -- Warning = taunt
+	end
 	self:Bar(args.spellId, self:LFR() and 20 or 10)
 end
 
 function mod:RendFleshCast(args)
-	if self:Tank() or self:Healer() then
-		self:Message(204859, "Attention", nil, CL.casting:format(CL.count:format(args.spellName, rendFleshCount)))
+	self:Message(204859, "Attention", nil, CL.casting:format(args.spellName))
+	if self:Tank() and not UnitDetailedThreatSituation("player", "boss1") then
+		local _, _, _, _, _, _, expiration = UnitDebuff("player", self:SpellName(197943)) -- Overwhelm
+		if not expiration or expiration-GetTime() < 2.5 then
+			self:PlaySound(204859, "Warning") -- Warning = taunt
+		end
 	end
 end
 
 function mod:RendFlesh(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", (self:Tank() or self:Healer()) and "Info", CL.count:format(args.spellName, rendFleshCount))
-	self:TargetBar(args.spellId, 12, args.destName, CL.count:format(args.spellName, rendFleshCount))
-	rendFleshCount = rendFleshCount + 1
-
-	 -- might delay that bar after the TargetBar is done so we only have one bar for rend flesh at a time?
-	self:Bar(args.spellId, 20, CL.count:format(args.spellName, rendFleshCount))
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
+	self:Bar(args.spellId, 20)
 end
 
 function mod:FocusedGaze(args)
@@ -129,13 +129,13 @@ function mod:FocusedGaze(args)
 	local countSay = CL.count:format(args.spellName, focusedGazeCount)
 	local countMessage = countSay
 
-	if not self:LFR() and self:GetOption("custom_on_gaze_assist") then
+	if not self:LFR() and self:GetOption("custom_off_gaze_assist") then
 		countSay = CL.count_rticon:format(args.spellName, focusedGazeCount, icon)
 		countMessage = CL.count_icon:format(args.spellName, focusedGazeCount, icon)
 	end
 
 	if self:Me(args.destGUID) then
-		self:Flash(args.spellId, not self:LFR() and self:GetOption("custom_on_gaze_assist") and icon)
+		self:Flash(args.spellId, not self:LFR() and self:GetOption("custom_off_gaze_assist") and icon)
 		self:Say(args.spellId, countSay)
 	end
 
@@ -177,5 +177,5 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 function mod:BloodFrenzy(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "Urgent", "Long")
 end

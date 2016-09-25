@@ -6,8 +6,8 @@ L.abilityNameDesc = "Affiche ou non le nom de la technique au dessus de la fenê
 L.Alarm = "Alarme"
 L.Alert = "Alerte"
 L.align = "Alignement"
---L.alignText = "Align Text"
---L.alignTime = "Align Time"
+L.alignText = "Alignement du texte"
+L.alignTime = "Alignement du temps"
 L.altPowerTitle = "Ressource alternative"
 L.Attention = "Attention"
 L.background = "Arrière-plan"
@@ -58,10 +58,13 @@ L.closeButtonDesc = "Affiche ou non le bouton de fermeture."
 L.closeProximityDesc = [=[Ferme l'affichage de proximité.
 Pour le désactiver complètement, rendez-vous dans les options du boss et décochez "Proximité".]=]
 L.colors = "Couleurs"
+L.combatLog = "Enregistrement auto. des combats"
+L.combatLogDesc = "Lance automatiquement l'enregistrement du combat quand un délai de pull est lancé et l'arrête quand la rencontre prend fin."
 L.countDefeats = "Compter les victoires"
 L.countdownAt = "Compte à rebours à... (secondes)"
 L.countdownColor = "Couleur compte à rebours"
 L.countdownTest = "Test compte à rebours"
+L.countdownType = "Type de compte à rebours"
 L.countdownVoice = "Voix du compte à rebours"
 L.countWipes = "Compter les échecs"
 L.createTimeBar = "Afficher la barre 'Meilleur temps'"
@@ -147,6 +150,9 @@ L.pullIn = "Pull dans %d sec."
 L.pulling = "Pull !"
 L.pullStarted = "Délai de pull lancé par l'utilisateur de %s %s."
 L.pullStopped = "Délai de pull annulé par %s."
+L.raidIconsDesc = [=[Certains scripts de rencontre utilisent des icônes pour marquer les joueurs affectés par des techniques précises. Par exemple, les effets de type "bombe" et les contrôles mentaux. Si vous décochez ceci, vous ne marquerez personne.
+
+|cffff4411Ne fonctionne que si vous êtes soit le chef du groupe (de raid), soit un de ses assistants !|r]=]
 L.raidIconsDescription = [=[Certaines rencontres peuvent comporter des éléments tels que les techniques de type 'bombe' qui affectent un joueur spécifique, un joueur poursuivi ou bien encore un joueur spécifique important pour d'autres raisons. Vous pouvez personnaliser ici les icônes de raid qui seront utilisées pour marquer ces joueurs.
 
 Si une rencontre ne comporte qu'une technique qui requiert de marquer quelqu'un, seule l'icône primaire sera utilisée. Une icône ne sera jamais utilisée pour deux techniques différentes de la même rencontre, et chaque technique utilisera toujours la même icône la prochaine fois qu'elle se produira.
@@ -235,4 +241,3 @@ L.wrongBreakFormat = "Doit être compris entre 1 et 60 minutes. Un exemple corre
 L.wrongCustomBarFormat = "Format incorrect. Un exemple correct est le suivant : /raidbar 20 texte"
 L.wrongPullFormat = "Doit être compris entre 1 et 60 secondes. Un exemple correct est le suivant : /pull 5"
 L.wrongTime = "Durée spécifiée incorrecte. <durée> peut être exprimée soit avec un nombre en secondes, avec une paire M:S ou avec Mm. Par exemple 5, 1:20 ou 2m."
-
