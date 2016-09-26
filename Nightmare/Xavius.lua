@@ -308,7 +308,7 @@ function mod:CallOfNightmares(args)
 end
 
 function mod:CorruptionMeteor(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Info", isInDream)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Info", nil, nil, isInDream)
 	self:TargetBar(args.spellId, 5, args.destName)
 	self:Bar(args.spellId, 28)
 end
