@@ -2,8 +2,6 @@
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - We can be a lot smarter with warnings - check which dragon is in range?
--- - Dragon engage / disengage messages (204720 = Aerial) - stop and start timers
--- - Lethon
 -- - Mythic
 
 --------------------------------------------------------------------------------
@@ -15,7 +13,7 @@ if not mod then return end
 mod:RegisterEnableMob(
 	102679, -- Ysondre
 	102681, -- Taerar
-	102682, -- Lethon < TODO check this
+	102682, -- Lethon
 	102683  -- Emeriss
 )
 mod.engageId = 1854
@@ -24,6 +22,12 @@ mod.engageId = 1854
 --------------------------------------------------------------------------------
 -- Locals
 --
+
+local dragonsOnGround = {
+	[102681] = nil, -- Taerar
+	[102682] = nil, -- Lethon
+	[102683] = nil, -- Emeriss
+}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -54,9 +58,9 @@ function mod:GetOptions()
 		205528, -- Corruption of the Dream
 
 		--[[ Lethon ]]--
-		--???, -- Spihon Spirit
+		203888, -- Spihon Spirit
 		--???, -- Gloom
-		--???, -- Shadow Burst
+		204040, -- Shadow Burst
 
 		--[[ Taerar ]]--
 		204100, -- Shades of Taerar
@@ -73,7 +77,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 
 	--[[ General ]]--
 	self:Log("SPELL_AURA_APPLIED", "MarkApplied", 203102, 203125, 203124, 203121) -- Ysondre, Emeriss, Lethon, Taerar
@@ -92,7 +97,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Corruption", 205300)
 
 	--[[ Lethon ]]--
-
+	self:Log("SPELL_CAST_SUCCESS", "SiphonSpirit", 203888)
+	self:Log("SPELL_AURA_APPLIED", "ShadowBurst", 204040)
 
 	--[[ Taerar ]]--
 	self:Log("SPELL_CAST_START", "ShadesOfTaerar", 204100)
@@ -101,6 +107,11 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	dragonsOnGround = {
+		[102681] = nil, -- Taerar
+		[102682] = nil, -- Lethon
+		[102683] = nil, -- Emeriss
+	}
 	self:Bar(203028, 17) -- Corrupted Breath
 	self:Bar(207573, 30) -- Call Defiled Spirit
 end
@@ -108,9 +119,48 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	for i = 1, 5 do
+		local guid = UnitGUID(("boss%d"):format(i))
+		if guid then
+			local id = self:MobId(guid)
+			if (id == 102681 or id == 102682 or id == 102683) and not dragonsOnGround[id] then
+				dragonsOnGround[id] = true
+
+				if id == 102681 then -- Taerar
+					--self:Bar(204100, ??) -- Shades of Taerar
+				elseif id == 102682 then -- Lethon
+					self:Bar(203888, 25) -- Siphon Spirit
+				elseif id == 102683 then -- Emeriss
+					self:Bar(203787, 20)
+					self:Bar(205298, 29)
+				end
+			end
+		end
+	end
+end
+
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 203147 then -- Ysondre: Nightmare Blast
+	if spellId == 204720 then -- Aerial
+		local id = self:MobId(UnitGUID(unit))
+		local name = UnitName(unit)
+
+		dragonsOnGround[id] = nil
+		self:StopBar(CL.other:format(name, self:SpellName(203028))) -- Corrupted Breath
+
+		if id == 102681 then -- Taerar
+			self:StopBar(204100) -- Shades of Taerar
+			self:StopBar(CL.other:format(self:SpellName(24313), self:SpellName(204767))) -- Shade: Corrupted Breath
+		elseif id == 102682 then -- Lethon
+			self:StopBar(203888) -- Siphon Spirit
+		elseif id == 102683 then  -- Emeriss
+			self:StopBar(203787) -- Volatile Infection
+			self:StopBar(205298) -- Essence of Corruption
+		end
+	elseif spellId == 203147 then -- Ysondre: Nightmare Blast
 		self:Message(spellId, "Important", "Alert")
+		self:CDBar(spellId, 16)
 	elseif spellId == 205331 then -- Taerar: Seeping Fog
 		self:Message(spellId, "Urgent", "Alarm")
 	elseif spellId == 205528 then -- Emeriss: Corruption of the Dream
@@ -224,7 +274,17 @@ do
 end
 
 --[[ Lethon ]]--
+function mod:SiphonSpirit(args)
+	self:Message(args.spellId, "Important", "Alert")
+	self:Bar(args.spellId, 49.5)
+end
 
+function mod:ShadowBurst(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+		self:TargetBar(args.spellId, 10, args.destName)
+	end
+end
 
 --[[ Taerar ]]--
 function mod:ShadesOfTaerar(args)
