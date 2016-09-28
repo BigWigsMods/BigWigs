@@ -130,7 +130,7 @@ do
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Warning")
 			rotCount = rotCount + 1
 
-			if mod:BarTimeLeft(mod:SpellName(203552)) > 15.9 then -- Heart of the Swarm
+			if self:BarTimeLeft(self:SpellName(203552)) > 15.9 then -- Heart of the Swarm
 				self:Bar(args.spellId, 15.9)
 			end
 		end
@@ -158,7 +158,7 @@ end
 function mod:VolatileRot(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, self:Tank())
 	self:TargetBar(args.spellId, 8, args.destName)
-	if mod:BarTimeLeft(mod:SpellName(203552)) > 23 then -- Heart of the Swarm
+	if self:BarTimeLeft(self:SpellName(203552)) > 23 then -- Heart of the Swarm
 		self:CDBar(args.spellId, 23)
 	end
 	if self:Me(args.destGUID) then
@@ -202,7 +202,9 @@ function mod:Infested(args)
 end
 
 function mod:InfestedRemoved(args)
-	myInfestedStacks = 0
+	if self:Me(args.destGUID) then
+		myInfestedStacks = 0
+	end
 end
 
 --[[ This is spammy and probably not useful at all
@@ -233,7 +235,7 @@ function mod:InfestedMindCast(args)
 
 	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
 
-	if mod:BarTimeLeft(mod:SpellName(203552)) > 36 then -- Heart of the Swarm
+	if self:BarTimeLeft(self:SpellName(203552)) > 36 then -- Heart of the Swarm
 		self:CDBar(args.spellId, 36)
 	end
 end
