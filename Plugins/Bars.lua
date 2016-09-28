@@ -1299,15 +1299,16 @@ end
 --
 
 function plugin:GetBarTimeLeft(module, text)
-	if not normalAnchor then return end
-	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
-			return k.remaining
+	if normalAnchor then
+		for k in next, normalAnchor.bars do
+			if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+				return k.remaining
+			end
 		end
-	end
-	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
-			return k.remaining
+		for k in next, emphasizeAnchor.bars do
+			if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+				return k.remaining
+			end
 		end
 	end
 	return 0
