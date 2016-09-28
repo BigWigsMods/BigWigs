@@ -28,6 +28,7 @@ mod.respawnTime = 30
 
 local mobCollector = {}
 local forcesOfNightmareCount = 1
+local phase = 1
 
 
 --------------------------------------------------------------------------------
@@ -37,6 +38,7 @@ local forcesOfNightmareCount = 1
 local L = mod:GetLocale()
 if L then
 	L.forces = "Forces"
+	L.bramblesSay = "Brambles near %s"
 end
 
 --------------------------------------------------------------------------------
@@ -46,6 +48,7 @@ end
 function mod:GetOptions()
 	return {
 		--[[ Cenarius ]]--
+		"stages",
 		210279, -- Creeping Nightmares
 		{210290, "SAY", "FLASH"}, -- Nightmare Brambles
 		212726, -- Forces of Nightmare
@@ -90,13 +93,11 @@ end
 
 function mod:OnBossEnable()
 	--[[ Cenarius ]]--
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_CAST_START", "ForcesOfNightmare", 212726)
 	self:Log("SPELL_AURA_APPLIED", "CreepingNightmares", 210279)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CreepingNightmares", 210279)
 	self:Log("SPELL_AURA_REMOVED", "CreepingNightmaresRemoved", 210279)
-	self:Log("SPELL_CAST_START", "NightmareBrambles", 210290)
-	self:Log("SPELL_CAST_SUCCES", "NightmareBramblesSuccess", 210290)
-	self:Log("SPELL_AURA_APPLIED", "NightmareBramblesApplied", 210290) -- untested
 	self:Log("SPELL_AURA_APPLIED", "DestructiveNightmares", 210617) -- wisp spawn
 	self:Log("SPELL_AURA_APPLIED", "DreadThorns", 210346)
 	self:Log("SPELL_AURA_REMOVED", "DreadThornsRemoved", 210346)
@@ -132,6 +133,7 @@ end
 
 function mod:OnEngage()
 	forcesOfNightmareCount = 1
+	phase = 1
 	self:CDBar(212726, 10, CL.count:format(self:SpellName(212726), forcesOfNightmareCount)) -- Forces of Nightmare
 	self:Bar(210290, 28) -- Nightmare Brambles
 
@@ -145,6 +147,26 @@ end
 --
 
 --[[ Cenarius ]]--
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+	if spellId == 210290 then -- Nightmare Brambles
+		self:Bar(spellId, phase == 2 and 20 or 30) -- at some point starts casting with 15sec-20sec cd
+		local targetGUID = UnitGUID("boss1target") -- selects target 2sec prior to the cast
+		if targetGUID then
+			if self:Me(targetGUID) then
+				self:Flash(spellId)
+				self:Say(spellId, L.bramblesSay:format(self:UnitName("player")), true)
+				self:RangeMessage(spellId, "Urgent", "Alarm")
+			else
+				self:Message(spellId, "Urgent", "Alarm")
+			end
+		end
+	elseif spellId == 217368 then -- Phase 2
+		phase = 2
+		self:Bar(210290, 13) -- Nightmare Brambles
+		self:Bar(214529, 23) -- Spear Of Nightmares
+		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
+	end
+end
 function mod:CreepingNightmares(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
@@ -157,25 +179,6 @@ end
 function mod:CreepingNightmaresRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
-	end
-end
-
-function mod:NightmareBrambles(args)
-	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 2.5, CL.cast:format(args.spellName))
-	self:Bar(args.spellId, 30)
-end
-
-function mod:NightmareBramblesSuccess(args)
-	self:Message(args.spellId, "Attention", "Info")
-end
-
--- untested
-function mod:NightmareBramblesApplied(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
-	if self:Me(args.destGUID) then
-		self:Flash(args.spellId)
-		self:Say(args.spellId)
 	end
 end
 
@@ -239,7 +242,7 @@ function mod:CorruptAlliesOfNature(args)
 	local t = GetTime()
 	if t-prev > 10 then
 		prev = t
-			self:Message(args.spellId, "Attention", "Info", CL.incoming:format(args.spellName))
+		self:Message(args.spellId, "Attention", "Info", CL.incoming:format(args.spellName))
 	end
 end
 

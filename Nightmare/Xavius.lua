@@ -18,6 +18,10 @@ mod.respawnTime = 15
 --
 
 local phase = 1
+local lurkingEruption = 1
+local horrorCount = 0
+local isInDream = false
+local bladeList, bondList = mod:NewTargetList(), mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -43,20 +47,27 @@ function mod:GetOptions()
 		--[[ General ]]--
 		"berserk",
 		"stages",
+		"altpower",
 		208431, -- Decent Into Madness
 		207409, -- Madness
 		206005, -- Dream Simulacrum
 
+		--[[ Corruption Horror ]]--
+		{224649, "TANK"}, -- Tormenting Swipe
+		207830, -- Corruption Nova
+
 		--[[ Stage One: The Decent Into Madness ]]--
-		206651, -- Darkening Soul
-		211802, -- Nightmare Blades
+		{206651, "TANK_HEALER"}, -- Darkening Soul
+		{211802, "SAY", "FLASH"}, -- Nightmare Blades
 		"custom_off_blade_marker",
 		210264, -- Manifest Corruption
 		205771, -- Tormenting Fixation
+		205741, -- Lurking Eruption (Lurking Terror)
 
 		--[[ Stage Two: From the Shadows ]]--
-		209034, -- Bonds of Terror
-		209158, -- Blackening Soul
+		{209034, "SAY", "FLASH", "PROXIMITY"}, -- Bonds of Terror
+		224508, -- Corruption Meteor
+		{209158, "TANK_HEALER"}, -- Blackening Soul
 		{209443, "TANK"}, --Nightmare Infusion
 		205588, -- Call of Nightmares
 
@@ -72,7 +83,7 @@ end
 
 function mod:OnBossEnable()
 	--[[ General ]]--
-	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "DecentIntoMadness", 208431)
 	self:Log("SPELL_AURA_APPLIED", "Madness", 207409)
 	self:Log("SPELL_AURA_APPLIED", "DreamSimulacrum", 206005)
@@ -81,20 +92,24 @@ function mod:OnBossEnable()
 	--[[ Stage One: The Decent Into Madness ]]--
 	self:Log("SPELL_AURA_APPLIED", "DarkeningSoul", 206651)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DarkeningSoul", 206651)
-	self:Log("SPELL_AURA_APPLIED", "NightmareBlade", 211802)
-	self:Log("SPELL_AURA_REMOVED", "NightmareBladeRemoved", 211802)
+	self:Log("SPELL_AURA_APPLIED", "NightmareBlades", 211802)
+	self:Log("SPELL_AURA_REMOVED", "NightmareBladesRemoved", 211802)
 	self:Log("SPELL_CAST_START", "ManifestCorruption", 210264)
-	self:Log("SPELL_SUMMON", "CorruptionHorror", 210264)
 	self:Log("SPELL_AURA_APPLIED", "TormentingFixation", 205771)
+	self:Log("SPELL_SUMMON", "LurkingEruption", 205741) -- Lurking Terror
+
+	--[[ Corruption Horror ]]--
+	self:Log("SPELL_CAST_SUCCESS", "TormentingSwipe", 224649)
+	self:Log("SPELL_CAST_SUCCESS", "CorruptingNova", 207830)
 
 	--[[ Stage Two: From the Shadows ]]--
-	--self:Log("SPELL_AURA_APPLIED", "CorruptionMeteor", TBD) -- no debuff yet
+	self:Log("SPELL_AURA_APPLIED", "CorruptionMeteor", 224508)
 	self:Log("SPELL_AURA_APPLIED", "BondsOfTerror", 209034, 210451) -- 2 debuffs, 1st id could also be used for spellcast events
 	self:Log("SPELL_AURA_REMOVED", "BondsOfTerrorRemoved", 209034, 210451)
 	self:Log("SPELL_AURA_APPLIED", "BlackeningSoul", 209158)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BlackeningSoul", 209158)
 	self:Log("SPELL_AURA_APPLIED", "NightmareInfusion", 209443)
-	self:Log("SPELL_CAST_START", "CallOfNightmares", 205588)
+	self:Log("SPELL_CAST_SUCCESS", "CallOfNightmares", 205588)
 
 	--[[ Stage Three: World of Darkness ]]--
 	self:Log("SPELL_CAST_SUCCESS", "WrithingDeep", 226194)
@@ -102,10 +117,17 @@ end
 
 function mod:OnEngage()
 	phase = 1
-
+	lurkingEruption = 1 -- Purposely init at 1
+	horrorCount = 0
+	isInDream = false
+	wipe(bladeList)
+	wipe(bondList)
 	self:Bar(206651, 7.5) -- Darkening Soul
 	self:Bar(211802, 19.2) -- Nightmare Blades
-	self:Bar(210264, 62) -- Manifest Corruption
+	self:Bar(210264, 59) -- Manifest Corruption
+	self:Bar(205741, 18) -- Lurking Eruption (Lurking Terror)
+
+	self:OpenAltPower("altpower", 208931) -- Nightmare Corruption
 end
 
 --------------------------------------------------------------------------------
@@ -113,20 +135,20 @@ end
 --
 
 --[[ General ]]--
-function mod:UNIT_SPELLCAST_START(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 226193 then -- Xavius Energize Phase 2
 		phase = 2
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
 		self:StopBar(206651) -- Darkening Soul
 		self:StopBar(211802) -- Nightmare Blades
 		self:StopBar(210264) -- Manifest Corruption
+		self:StopBar(205741) -- Lurking Eruption (Lurking Terror)
 		self:Bar(209034, 7.5) -- Bonds of Terror
 		self:Bar(209443, 29) -- Nightmare Infusion
 		self:Bar(205588, 55) -- Call of Nightmares
 	elseif spellId == 226185 then -- Xavius Energize Phase 3
 		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
 		phase = 3
-
 	end
 end
 
@@ -140,6 +162,7 @@ end
 
 function mod:DreamSimulacrum(args)
 	if self:Me(args.destGUID) then
+		isInDream = true
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
 		self:TargetBar(args.spellId, 180, args.destName)
 	end
@@ -147,8 +170,33 @@ end
 
 function mod:DreamSimulacrumRemoved(args)
 	if self:Me(args.destGUID) then
+		isInDream = false
 		self:StopBar(args.spellId, args.destName)
 	end
+end
+
+do
+	local prev = 0
+	function mod:LurkingEruption(args)
+		local t = GetTime()
+		if t-prev > 5 then
+			prev = t
+			lurkingEruption = lurkingEruption + 1
+			if lurkingEruption < 3 then
+				self:Bar(args.spellId, 20.5)
+			end
+		end
+	end
+end
+
+--[[ Corruption Horror ]]--
+function mod:TormentingSwipe(args)
+	self:CDBar(args.spellId, 10)
+end
+
+function mod:CorruptingNova(args)
+	self:Bar(args.spellId, 20.7)
+	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
 end
 
 --[[ Stage One: The Decent Into Madness ]]--
@@ -159,26 +207,29 @@ function mod:DarkeningSoul(args)
 end
 
 do
-	local playerList = mod:NewTargetList()
-	function mod:NightmareBlade(args)
+	local timer = nil
+	function mod:NightmareBlades(args)
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 		end
 
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:CDBar(args.spellId, 16)
-		else -- applied on both
-			self:TargetMessage(args.spellId, playerList, "Important", "Alert")
+		bladeList[#bladeList+1] = args.destName
+		if self:GetOption("custom_off_blade_marker") then
+			SetRaidTarget(args.destName, #bladeList) -- 1,2
 		end
 
-		if self:GetOption("custom_off_blade_marker") then
-			SetRaidTarget(args.destName, #playerList) -- 1,2
+		if #bladeList == 1 then
+			self:CDBar(args.spellId, 16)
+			timer = self:ScheduleTimer("TargetMessage", 0.5, args.spellId, bladeList, "Important", "Alert")
+		else
+			self:CancelTimer(timer)
+			timer = nil
+			self:TargetMessage(args.spellId, bladeList, "Important", "Alert")
 		end
 	end
 
-	function mod:NightmareBladeRemoved(args)
+	function mod:NightmareBladesRemoved(args)
 		if self:GetOption("custom_off_blade_marker") then
 			SetRaidTarget(args.destName, 0)
 		end
@@ -186,14 +237,13 @@ do
 end
 
 function mod:ManifestCorruption(args)
-	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 95)
-end
-
-function mod:CorruptionHorror(args)
-	if self:Tank() then
-		self:Message(args.spellId, "Attention", "Info", CL.spawned:format(L.horror), false)
-	end
+	lurkingEruption = 0
+	horrorCount = 0
+	self:Message(args.spellId, "Attention", "Info", CL.count:format(self:SpellName(L.horror), horrorCount), false)
+	self:Bar(args.spellId, 82.5)
+	self:Bar(207830, 15) -- Corrupting Nova
+	self:CDBar(224649, 10) -- Tormenting Swipe
+	self:Bar(205741, 20.5) -- Lurking Eruption (Lurking Terror)
 end
 
 function mod:TormentingFixation(args)
@@ -204,7 +254,7 @@ end
 
 --[[ Stage Two: From the Shadows ]]--
 do
-	local playerList, isOnMe, otherPlayer = mod:NewTargetList(), nil, nil
+	local timer, isOnMe, otherPlayer = nil, nil, nil
 	function mod:BondsOfTerror(args)
 		if self:Me(args.destGUID) then
 			isOnMe = true
@@ -214,16 +264,19 @@ do
 			otherPlayer = args.destName
 		end
 
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
+		bondList[#bondList+1] = args.destName
+		if #bondList == 1 then
 			self:CDBar(209034, 15)
+			timer = self:ScheduleTimer("TargetMessage", 0.3, 209034, bondList, "Important", "Alert")
 		else -- applied on both
 			if isOnMe and otherPlayer then
 				self:Message(209034, "Personal", "Warning", L.linked:format(self:ColorName(otherPlayer)))
 				self:OpenProximity(209034, 3, otherPlayer, true)
-				wipe(playerList)
+				wipe(bondList)
 			else
-				self:TargetMessage(209034, playerList, "Important", "Alert")
+				self:CancelTimer(timer)
+				timer = nil
+				self:TargetMessage(209034, bondList, "Important", "Alert")
 			end
 		end
 	end
@@ -231,6 +284,7 @@ do
 	function mod:BondsOfTerrorRemoved(args)
 		if self:Me(args.destGUID) then
 			isOnMe = nil
+			self:CloseProximity(209034)
 		else
 			otherPlayer = nil
 		end
@@ -249,8 +303,14 @@ function mod:NightmareInfusion(args)
 end
 
 function mod:CallOfNightmares(args)
-	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
-	self:CDBar(args.spellId, 84)
+	self:Message(args.spellId, "Attention", "Info", args.spellName)
+	self:Bar(args.spellId, 40)
+end
+
+function mod:CorruptionMeteor(args)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Info", nil, nil, isInDream)
+	self:TargetBar(args.spellId, 5, args.destName)
+	self:Bar(args.spellId, 28)
 end
 
 --[[ Stage Three: World of Darkness ]]--

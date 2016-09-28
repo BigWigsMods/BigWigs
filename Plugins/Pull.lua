@@ -177,7 +177,7 @@ end
 function plugin:BigWigs_OnBossWin()
 	if isLogging then
 		isLogging = false
-		LoggingCombat(isLogging)
+		self:ScheduleTimer(LoggingCombat, 1, isLogging) -- Delay to prevent any death events being cut out the log
 	end
 end
 

@@ -1,8 +1,10 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Get timers for all difficulties on live
--- - Check if SPELL_CAST_START InfestedBreath (202977) is on live
+-- - Get/Confirm timers for all difficulties on live
+--   LFR (✘) - Normal (✘) - Heroic (✔) - Mythic (✘)
+--
+-- - Rot: CD is 15.8s - sometimes gets delayed, then its ~24s, no idea why
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -20,6 +22,7 @@ mod.respawnTime = 30
 
 local rotCount = 1
 local mindControlledPlayers = 0
+local myInfestedStacks = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -43,7 +46,7 @@ function mod:GetOptions()
 
 		--[[ Mythic ]]--
 		204504, -- Infested
-		205043, -- Infested Mind
+		{225943, "SAY", "FLASH"}, -- Infested Mind
 		205070, -- Spread Infestation
 	},{
 		[202977] = "general",
@@ -54,7 +57,6 @@ end
 function mod:OnBossEnable()
 	--[[ General ]]--
 	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1")
-	--self:Log("SPELL_CAST_START", "InfestedBreath", 202977) -- they removed it from combatlog, delete this if it's not on live
 	self:Log("SPELL_AURA_APPLIED", "Rot", 203096)
 	self:Log("SPELL_AURA_REMOVED", "RotRemoved", 203096)
 	self:Log("SPELL_AURA_APPLIED", "VolatileRot", 204463)
@@ -65,19 +67,25 @@ function mod:OnBossEnable()
 
 	--[[ Mythic ]]--
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Infested", 204504) -- also on hc, but i don't think it's relevant there
-	self:Log("SPELL_AURA_APPLIED", "InfestedMind", 205043)
-	self:Log("SPELL_AURA_APPLIED", "InfestedMindRemoved", 205043)
-	self:Log("SPELL_CAST_START", "SpreadInfestation", 205070)
+	self:Log("SPELL_AURA_REMOVED", "InfestedRemoved", 204504)
+	--self:Log("SPELL_AURA_APPLIED", "InfestedMind", 205043)
+	--self:Log("SPELL_AURA_APPLIED", "InfestedMindRemoved", 205043)
+	--self:Log("SPELL_CAST_START", "SpreadInfestation", 205070)
+	self:Log("SPELL_CAST_START", "InfestedMindCast", 225943)
 end
 
 function mod:OnEngage()
 	rotCount = 1
 	mindControlledPlayers = 0
-	self:Berserk(485) -- heroic
+	myInfestedStacks = 0
+	self:Berserk(480) -- Can be delayed by a few sec
 	self:CDBar(203096, 5.8) -- Rot
 	self:CDBar(204463, 22.8) -- Volatile Rot
-	self:CDBar(202977, 38) -- Infested Breath
-	self:CDBar(203552, 92) -- Heart of the Swarm
+	self:CDBar(202977, 37) -- Infested Breath
+	self:CDBar(203552, 90) -- Heart of the Swarm
+	if self:Mythic() then
+		self:Bar(225943, 49) -- Infested Mind
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -122,7 +130,7 @@ do
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Warning")
 			rotCount = rotCount + 1
 
-			if mod:BarTimeLeft(mod:SpellName(203552)) > 15.9 then -- Heart of the Swarm
+			if self:BarTimeLeft(self:SpellName(203552)) > 15.9 then -- Heart of the Swarm
 				self:Bar(args.spellId, 15.9)
 			end
 		end
@@ -150,7 +158,7 @@ end
 function mod:VolatileRot(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, self:Tank())
 	self:TargetBar(args.spellId, 8, args.destName)
-	if mod:BarTimeLeft(mod:SpellName(203552)) > 23 then -- Heart of the Swarm
+	if self:BarTimeLeft(self:SpellName(203552)) > 23 then -- Heart of the Swarm
 		self:CDBar(args.spellId, 23)
 	end
 	if self:Me(args.destGUID) then
@@ -160,13 +168,16 @@ function mod:VolatileRot(args)
 end
 
 function mod:HeartOfTheSwarm(args)
-	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Neutral", "Info", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 23.7, CL.cast:format(args.spellName)) -- 3.7s cast time + 20s channel
 	-- This is basically a phase, so start timers for next "normal" phase here
 	self:CDBar(args.spellId, 120)
 	self:CDBar(203096, 36.5) -- Rot, 23.7 + 12.8
-	self:CDBar(204463, 56.5) -- Volatile Rot, 23.7 + 32.8
+	self:CDBar(204463, 52.7) -- Volatile Rot, 23.7 + 29
 	self:CDBar(202977, 68) -- Infested Breath, 23.7 + 44.3
+	if self:Mythic() then
+		self:CDBar(225943, 80) -- Infested Mind
+	end
 	rotCount = 1
 end
 
@@ -182,11 +193,21 @@ do
 end
 
 function mod:Infested(args)
-	if self:Mythic() and self:Me(args.destGUID) and args.amount > 6 then
-		self:StackMessage(args.spellId, args.destName, args.amount, "Personal", "Warning")
+	if self:Mythic() and self:Me(args.destGUID) then
+		if args.amount > 6 and args.amount < 11 then -- be careful at 7-9, at 10 you're getting mc'd
+			self:StackMessage(args.spellId, args.destName, args.amount, "Personal", "Warning")
+		end
+		myInfestedStacks = args.amount
 	end
 end
 
+function mod:InfestedRemoved(args)
+	if self:Me(args.destGUID) then
+		myInfestedStacks = 0
+	end
+end
+
+--[[ This is spammy and probably not useful at all
 function mod:InfestedMind(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
 	mindControlledPlayers = mindControlledPlayers + 1
@@ -196,9 +217,25 @@ function mod:InfestedMindRemoved(args)
 	mindControlledPlayers = mindControlledPlayers - 1
 end
 
-
 function mod:SpreadInfestation(args)
 	if not self:Me(args.sourceGUID) and mindControlledPlayers < 4 then -- TODO hardcoded anti spam check (for wipes): only warn if max 3 players are mind controlled
 		self:Message(args.spellId, "Attention", "Long", CL.other:format(mod:ColorName(args.sourceName), CL.casting:format(args.spellName))) -- Player: Casting Spread Infestation!
+	end
+end
+]]
+
+function mod:InfestedMindCast(args)
+	if myInfestedStacks > 9 then
+		self:Message(args.spellId, "Personal", "Long", CL.you:format(args.spellName))
+		self:Flash(args.spellId)
+		self:Say(args.spellId)
+	else
+		self:Message(args.spellId, "Attention", "Long", CL.incoming:format(args.spellName))
+	end
+
+	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+
+	if self:BarTimeLeft(self:SpellName(203552)) > 36 then -- Heart of the Swarm
+		self:CDBar(args.spellId, 36)
 	end
 end

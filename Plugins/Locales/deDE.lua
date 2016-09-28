@@ -59,13 +59,13 @@ L.closeProximityDesc = [=[Schließt die Anzeige naher Spieler.
 
 Falls du die Anzeige für alle Bosse deaktivieren willst, musst du die Option 'Nähe' seperat in den jeweiligen Bossmodulen ausschalten.]=]
 L.colors = "Farben"
--- L.combatLog = "Automatic Combat Logging"
--- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
+L.combatLog = "Automatische Kampfaufzeichnung"
+L.combatLogDesc = "Startet automatisch die Aufzeichnung des Kampfes, wenn ein Pull-Timer gestartet wurde und beendet die Aufzeichnung, wenn der Bosskampf endet."
 L.countDefeats = "Siege zählen"
 L.countdownAt = "Countdown ab... (Sekunden)"
 L.countdownColor = "Countdown-Farbe"
 L.countdownTest = "Countdown testen"
--- L.countdownType = "Countdown Type"
+L.countdownType = "Countdowntyp"
 L.countdownVoice = "Countdown-Stimme"
 L.countWipes = "Niederlagen zählen"
 L.createTimeBar = "Bestzeittimer anzeigen"
