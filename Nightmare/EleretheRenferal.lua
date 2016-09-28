@@ -3,9 +3,7 @@
 -- TODO List:
 -- - All the timers
 -- - Mythic abilitys
--- - 212993 Shimmering Feather is not in the combat log (yet)?
--- - Necrotic Venom is missing stuff from combat log. 1. debuff = run out, 2. debuff = you spawn puddles
---   we currently only warn on 2. debuff
+-- - 212993 Shimmering Feather is not in the combat log
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -72,14 +70,15 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_SUCCESS", "WebOfPain", 215288) -- i think we can handle everythin with the auras
 	self:Log("SPELL_AURA_APPLIED", "WebOfPainApplied", 215300) -- 215307 is applied to the other player
 	self:Log("SPELL_CAST_SUCCESS", "VileAmbush", 214348)
+	self:Log("SPELL_CAST_START", "NecroticVenomStart", 215443)
 	self:Log("SPELL_CAST_SUCCESS", "NecroticVenomSuccess", 215443)
 	--self:Log("SPELL_AURA_APPLIED", "NecroticVenomApplied", 215460) -- this is the "spawning puddles" debuff
 
 	--[[ Roc Form ]]--
 	self:Log("SPELL_CAST_START", "GatheringCloudsStart", 212707)
 	self:Log("SPELL_CAST_START", "DarkStorm", 210948)
-	self:Log("SPELL_CAST_START", "TwistingShadows", 210864) -- lets see if start or success is better
-	self:Log("SPELL_AURA_APPLIED", "TwistingShadowsApplied", 210850)
+	self:Log("SPELL_CAST_START", "TwistingShadows", 210864)
+	--self:Log("SPELL_AURA_APPLIED", "TwistingShadowsApplied", 210850) -- "caught in whirls" debuff
 	self:Log("SPELL_CAST_START", "RazorWing", 210547)
 	self:Log("SPELL_CAST_START", "RakingTalons", 215582)
 	--self:Log("SPELL_AURA_APPLIED", "RakingTalonsApplied", 215582) -- do we need this?
@@ -107,6 +106,74 @@ end
 local function timeToTransform()
 	local spiderFormIn = mod:BarTimeLeft(mod:SpellName(-13259))
 	return spiderFormIn > 0 and spiderFormIn or mod:BarTimeLeft(mod:SpellName(-13263))
+end
+
+-- Blizzard made us write this awesome function because they forgot to put some
+-- simple SPELL_AURA_APPLIED events in the combatlog.
+do
+	local scheduled, players, list = nil, {}, mod:NewTargetList()
+	local key, spellName = 215443, mod:SpellName(215443)
+
+	function mod:UNIT_AURA(event, unit)
+		if UnitDebuff(unit, spellName) then
+			local guid = UnitGUID(unit)
+			if not players[guid] then
+				players[guid] = true
+				if unit == "player" then
+					self:Flash(key)
+					self:Say(key)
+
+					local _, _, _, _, _, _, expires = UnitDebuff(unit, spellName)
+					local remaining = expires-GetTime()
+					self:Bar(key, remaining, CL.you:format(spellName))
+					self:ScheduleTimer("Say", remaining-3, key, 3, true)
+					self:ScheduleTimer("Say", remaining-2, key, 2, true)
+					self:ScheduleTimer("Say", remaining-1, key, 1, true)
+				else
+					list[#list+1] = UnitName(unit)
+					if scheduled then
+						self:CancelTimer(scheduled)
+						scheduled = nil
+					end
+					if #list == 2 then
+						self:TargetMessage(key, list, "Urgent", "Warning")
+					else
+						scheduled = self:ScheduleTimer("TargetMessage", 0.3, key, list, "Urgent", "Warning")
+					end
+				end
+			end
+		end
+	end
+
+	function mod:NecroticVenomStart(args)
+		wipe(players)
+		key = args.spellId
+		spellName = args.spellName
+		self:RegisterEvent("UNIT_AURA")
+		self:ScheduleTimer("UnregisterEvent", 5, "UNIT_AURA")
+	end
+
+	function mod:NecroticVenomSuccess(args)
+		if timeToTransform() > 26 then -- skips the one before the transformation
+			self:Bar(args.spellId, 22)
+		end
+	end
+
+	function mod:TwistingShadows(args)
+		self:Message(args.spellId, "Urgent", "Alert")
+		twistingShadowsCount = twistingShadowsCount + 1
+
+		wipe(players)
+		key = args.spellId
+		spellName = args.spellName
+		self:RegisterEvent("UNIT_AURA")
+		self:ScheduleTimer("UnregisterEvent", 5, "UNIT_AURA")
+
+		local next = twistingShadowsCount == 2 and 40 or twistingShadowsCount == 4 and 33 or 22
+		if timeToTransform() > next then
+			self:CDBar(args.spellId, next)
+		end
+	end
 end
 
 --[[ Spider Form ]]--
@@ -165,45 +232,6 @@ function mod:VileAmbush(args)
 	self:Message(args.spellId, "Attention", "Alarm")
 end
 
-do
-	local scheduled, list, scanCount = nil, mod:NewTargetList(), 0
-
-	local function scanDebuffs(self, spellName)
-		for unit in self:IterateGroup() do
-			if UnitDebuff(unit, spellName) then
-				list[#list+1] = UnitName(unit)
-
-				if UnitIsUnit("player", unit) then
-					self:Flash(215443)
-					self:Say(215443)
-
-					local _, _, _, _, _, _, expires = UnitDebuff(unit, spellName)
-					local remaining = expires-GetTime()
-					self:ScheduleTimer("Say", remaining-3, 215443, 3, true)
-					self:ScheduleTimer("Say", remaining-2, 215443, 2, true)
-					self:ScheduleTimer("Say", remaining-1, 215443, 1, true)
-				end
-			end
-		end
-
-		scanCount = scanCount + 1
-
-		if #list > 0 then
-			self:TargetMessage(215443, list, "Urgent", "Warning")
-		elseif scanCount < 3 then
-			scheduled = self:ScheduleTimer(scanDebuffs, 0.3, self, spellName)
-		end
-	end
-
-	function mod:NecroticVenomSuccess(args)
-		if timeToTransform() > 26 then -- skips the one before the transformation
-			self:Bar(args.spellId, 22)
-		end
-		scanCount = 0
-		scheduled = self:ScheduleTimer(scanDebuffs, 0.3, self, args.spellName)
-	end
-end
-
 function mod:GatheringCloudsStart(args)
 	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 10.5, CL.cast:format(args.spellName)) -- 2.5s cast + 8s duration = 10.5s total
@@ -215,28 +243,6 @@ function mod:DarkStorm(args)
 	self:Message(args.spellId, "Neutral", "Info")
 end
 
-
-function mod:TwistingShadows(args)
-	self:Message(args.spellId, "Urgent", "Alert")
-	twistingShadowsCount = twistingShadowsCount + 1
-	local next = twistingShadowsCount == 2 and 40 or twistingShadowsCount == 4 and 33 or 22
-	if timeToTransform() > next then
-		self:CDBar(args.spellId, next)
-	end
-end
-
-function mod:TwistingShadowsApplied(args)
-	if self:Me(args.destGUID) then
-		self:Flash(210864)
-		self:Say(210864)
-
-		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
-		local remaining = expires-GetTime()
-		--self:ScheduleTimer("Say", remaining-3, 210864, 3, true)  -- counting from 3 is too much with 4s duration
-		self:ScheduleTimer("Say", remaining-2, 210864, 2, true)
-		self:ScheduleTimer("Say", remaining-1, 210864, 1, true)
-	end
-end
 
 function mod:RazorWing(args)
 	self:Message(args.spellId, "Important", "Alarm")
