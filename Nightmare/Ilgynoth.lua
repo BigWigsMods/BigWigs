@@ -170,8 +170,8 @@ function mod:OnEngage()
 	self:CDBar("nightmare_horror", 65, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 
 	phaseStartTime = GetTime()
-	self:StartSpawnTimer(-13190, 1)
-	self:StartSpawnTimer(-13191, 1)
+	self:StartSpawnTimer(-13190, 1) -- Deathglare Tentacle
+	self:StartSpawnTimer(-13191, 1) -- Corruptor Tentacle
 
 
 	wipe(deathglareMarked)

@@ -68,9 +68,6 @@ function mod:OnBossEnable()
 	--[[ Mythic ]]--
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Infested", 204504) -- also on hc, but i don't think it's relevant there
 	self:Log("SPELL_AURA_REMOVED", "InfestedRemoved", 204504)
-	--self:Log("SPELL_AURA_APPLIED", "InfestedMind", 205043)
-	--self:Log("SPELL_AURA_APPLIED", "InfestedMindRemoved", 205043)
-	--self:Log("SPELL_CAST_START", "SpreadInfestation", 205070)
 	self:Log("SPELL_CAST_START", "InfestedMindCast", 225943)
 end
 
@@ -94,12 +91,12 @@ end
 
 do
 	local prev = 0
-	function mod:UNIT_SPELLCAST_START(unit, spellName, _, _, spellId)
+	function mod:UNIT_SPELLCAST_START(_, spellName, _, _, spellId)
 		if spellId == 202977 then -- Infested Breath
 			self:Message(spellId, "Urgent", "Alarm", CL.casting:format(spellName))
 			self:Bar(spellId, 8, CL.cast:format(spellName)) -- 3s cast time + 5s channel
 
-			if mod:BarTimeLeft(mod:SpellName(203552)) > 37 then -- Heart of the Swarm
+			if self:BarTimeLeft(203552) > 37 then -- Heart of the Swarm
 				self:CDBar(spellId, 37)
 			end
 		end
@@ -130,7 +127,7 @@ do
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Warning")
 			rotCount = rotCount + 1
 
-			if self:BarTimeLeft(self:SpellName(203552)) > 15.9 then -- Heart of the Swarm
+			if self:BarTimeLeft(203552) > 15.9 then -- Heart of the Swarm
 				self:Bar(args.spellId, 15.9)
 			end
 		end
@@ -158,7 +155,7 @@ end
 function mod:VolatileRot(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, self:Tank())
 	self:TargetBar(args.spellId, 8, args.destName)
-	if self:BarTimeLeft(self:SpellName(203552)) > 23 then -- Heart of the Swarm
+	if self:BarTimeLeft(203552) > 23 then -- Heart of the Swarm
 		self:CDBar(args.spellId, 23)
 	end
 	if self:Me(args.destGUID) then
@@ -207,23 +204,6 @@ function mod:InfestedRemoved(args)
 	end
 end
 
---[[ This is spammy and probably not useful at all
-function mod:InfestedMind(args)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
-	mindControlledPlayers = mindControlledPlayers + 1
-end
-
-function mod:InfestedMindRemoved(args)
-	mindControlledPlayers = mindControlledPlayers - 1
-end
-
-function mod:SpreadInfestation(args)
-	if not self:Me(args.sourceGUID) and mindControlledPlayers < 4 then -- TODO hardcoded anti spam check (for wipes): only warn if max 3 players are mind controlled
-		self:Message(args.spellId, "Attention", "Long", CL.other:format(mod:ColorName(args.sourceName), CL.casting:format(args.spellName))) -- Player: Casting Spread Infestation!
-	end
-end
-]]
-
 function mod:InfestedMindCast(args)
 	if myInfestedStacks > 9 then
 		self:Message(args.spellId, "Personal", "Long", CL.you:format(args.spellName))
@@ -235,7 +215,7 @@ function mod:InfestedMindCast(args)
 
 	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
 
-	if self:BarTimeLeft(self:SpellName(203552)) > 36 then -- Heart of the Swarm
+	if self:BarTimeLeft(203552) > 36 then -- Heart of the Swarm
 		self:CDBar(args.spellId, 36)
 	end
 end

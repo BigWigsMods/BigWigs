@@ -135,7 +135,7 @@ end
 --
 
 --[[ General ]]--
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 226193 then -- Xavius Energize Phase 2
 		phase = 2
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)

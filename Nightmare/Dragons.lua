@@ -141,10 +141,10 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, _, _, _, spellId)
 	if spellId == 204720 then -- Aerial
 		local id = self:MobId(UnitGUID(unit))
-		local name = UnitName(unit)
+		local name = self:UnitName(unit)
 
 		dragonsOnGround[id] = nil
 		self:StopBar(CL.other:format(name, self:SpellName(203028))) -- Corrupted Breath

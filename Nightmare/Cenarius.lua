@@ -186,9 +186,9 @@ function mod:ForcesOfNightmare(args)
 	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
 	forcesOfNightmareCount = forcesOfNightmareCount + 1
 	self:Bar(210346, 6) -- Dread Thorns
-	self:Bar(212681, 13, self:SpellName(212681)) -- Cleansed Ground
+	self:Bar(212681, 13) -- Cleansed Ground
 	--self:CDBar(args.spellId, 19, CL.incoming:format(L.forces))
-	self:Bar(args.spellId, 77.7, CL.count:format(self:SpellName(args.spellId), forcesOfNightmareCount))
+	self:Bar(args.spellId, 77.7, CL.count:format(args.spellName, forcesOfNightmareCount))
 end
 
 do
@@ -205,7 +205,7 @@ do
 				mobCollector[guid] = true
 				local id = adds[self:MobId(guid)]
 				if id then
-					self:Message(212726, "Neutral", "Info", self:SpellName(id), false)
+					self:Message(212726, "Neutral", "Info", id, false)
 				end
 			end
 		end
@@ -216,7 +216,7 @@ do
 		local t = GetTime()
 		if t-prev > 10 then
 			prev = t
-			self:Message(212726, "Neutral", "Info", self:SpellName(-13348), false)
+			self:Message(212726, "Neutral", "Info", -13348, false) -- Corrupted Wisp
 		end
 	end
 end
@@ -259,24 +259,26 @@ end
 
 --[[ Malfurion Stormrage ]]--
 do
-	local cleansedGroundCheck, name = nil, mod:SpellName(212681)
+	local cleansedGroundCheck = nil
 
-	local function checkForCleansedGround()
-		if UnitDebuff("player", name) then
-			mod:Message(212681, "Positive", "Alert", CL.underyou:format(name))
-			cleansedGroundCheck = mod:ScheduleTimer(checkForCleansedGround, 1)
+	local function checkForCleansedGround(self, spellId, spellName)
+		if UnitDebuff("player", spellName) then
+			self:Message(spellId, "Positive", "Alert", CL.underyou:format(spellName))
+			cleansedGroundCheck = self:ScheduleTimer(checkForCleansedGround, 1, self, spellId, spellName)
 		end
 	end
 
 	function mod:CleansedGround(args)
 		if self:Me(args.destGUID) then
-			cleansedGroundCheck = mod:ScheduleTimer(checkForCleansedGround, 1) -- you shouldn't stand in there for too long
+			if cleansedGroundCheck then self:CancelTimer(cleansedGroundCheck) end
+			cleansedGroundCheck = self:ScheduleTimer(checkForCleansedGround, 1, self, args.spellId, args.spellName) -- you shouldn't stand in there for too long
 		end
 	end
 
 	function mod:CleansedGroundRemoved(args)
-		if cleansedGroundCheck then
+		if cleansedGroundCheck and self:Me(args.destGUID) then
 			self:CancelTimer(cleansedGroundCheck)
+			cleansedGroundCheck = nil
 		end
 	end
 end
