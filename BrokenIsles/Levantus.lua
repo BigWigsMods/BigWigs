@@ -67,7 +67,7 @@ do
 		whirlCount = whirlCount + 1
 		self:Message(args.spellId, "Urgent", self:Melee() and "Warning", CL.incoming:format(args.spellName))
 		-- This timer has the potential to go way wrong if you release or miss engage but still better than a static timer
-		self:CDBar(args.spellId, timers[whirlCount])
+		self:CDBar(args.spellId, timers[whirlCount] or 66)
 	end
 end
 
@@ -87,6 +87,7 @@ end
 
 function mod:BOSS_KILL(_, id)
 	if id == 1953 then
+		whirlCount = 0
 		self:Win()
 	end
 end
