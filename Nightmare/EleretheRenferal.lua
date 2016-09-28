@@ -15,7 +15,7 @@ local mod, CL = BigWigs:NewBoss("Elerethe Renferal", 1094, 1744)
 if not mod then return end
 mod:RegisterEnableMob(106087)
 mod.engageId = 1876
---mod.respawnTime = 0
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -52,6 +52,7 @@ function mod:GetOptions()
 		{210864, "SAY", "FLASH"}, -- Twisting Shadows
 		210547, -- Razor Wing
 		{215582, "TANK"}, -- Raking Talons
+		218124, -- Violent Winds (mythic)
 
 		--[[ General ]]--
 		"stages",
@@ -82,6 +83,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "RazorWing", 210547)
 	self:Log("SPELL_CAST_START", "RakingTalons", 215582)
 	--self:Log("SPELL_AURA_APPLIED", "RakingTalonsApplied", 215582) -- do we need this?
+	self:Log("SPELL_CAST_START", "ViolentWinds", 218124)
 
 	--[[ General ]]--
 	self:Log("SPELL_AURA_APPLIED", "PoolDamage", 213124, 215489)
@@ -121,8 +123,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		twistingShadowsCount = 1
 		self:CDBar(210864, 8)
 		self:Bar(210948, 27)
-		self:Bar(215582, 53)
-		self:Bar(210547, 60)
+		self:Bar(215582, self:Mythic() and 63 or 53)
+		self:Bar(210547, self:Mythic() and 70 or 60)
+		if self:Mythic() then
+			self:Bar(218124, 53)
+		end
 		self:Bar("stages", 134, self:SpellName(-13259), "inv_spidermount")
 	elseif spellId == 226055 then -- Spider Transform => Spider Form
 		self:Message("stages", "Neutral", "Info", self:SpellName(-13259), "inv_spidermount") -- Spider Form
@@ -248,6 +253,13 @@ function mod:RakingTalons(args)
 	end
 end
 
+function mod:ViolentWinds(args)
+	self:Message(args.spellId, "Urgent", "Info")
+	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
+	if timeToTransform() > 39 then
+		self:Bar(args.spellId, 39)
+	end
+end
 
 --[[ General ]]--
 do
