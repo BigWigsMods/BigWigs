@@ -28,6 +28,6 @@
 
 ## X-Category: Raid
 ## X-BigWigs-Menu: 1007
-## X-BigWigs-LoadOn-WorldBoss: -1015, 109331, -1017, 107023
+## X-BigWigs-LoadOn-WorldBoss: -1015, 108829, -1015, 109331, -1017, 107023
 
 modules.xml
