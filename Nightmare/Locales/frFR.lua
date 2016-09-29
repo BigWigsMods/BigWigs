@@ -22,7 +22,8 @@ end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "frFR")
 if L then
-	L.gelatinizedDecay = "Gelatinized Decay" -- to translate
+	--L.gelatinizedDecay = "Gelatinized Decay" -- to translate
+	L.befouler = "Corrupteur cœur-corrompu"
 end
 
 L = BigWigs:NewBossLocale("Ursoc", "frFR")
