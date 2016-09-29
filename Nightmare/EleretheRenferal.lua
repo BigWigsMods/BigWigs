@@ -70,19 +70,19 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_SUCCESS", "WebOfPain", 215288) -- XXX i think we can handle everythin with the auras
 	self:Log("SPELL_AURA_APPLIED", "WebOfPainApplied", 215300) -- 215307 is applied to the other player
 	self:Log("SPELL_CAST_SUCCESS", "VileAmbush", 214348)
-	self:Log("SPELL_CAST_START", "NecroticVenomStart", 215443)
-	self:Log("SPELL_CAST_SUCCESS", "NecroticVenomSuccess", 215443)
+	self:Log("SPELL_CAST_SUCCESS", "NecroticVenom", 215443)
 
 	--[[ Roc Form ]]--
 	self:Log("SPELL_CAST_START", "GatheringCloudsStart", 212707)
 	self:Log("SPELL_CAST_START", "DarkStorm", 210948)
-	self:Log("SPELL_CAST_START", "TwistingShadows", 210864)
+	self:Log("SPELL_CAST_SUCCESS", "TwistingShadows", 210864)
 	self:Log("SPELL_CAST_START", "RazorWing", 210547)
 	self:Log("SPELL_CAST_START", "RakingTalons", 215582)
 	--self:Log("SPELL_AURA_APPLIED", "RakingTalonsApplied", 215582) -- XXX do we need this?
 	self:Log("SPELL_CAST_START", "ViolentWinds", 218124)
 
 	--[[ General ]]--
+	self:Log("SPELL_CAST_START", "StartDebuffScan", 215443, 210864) -- Necrotic Venom, Twisting Shadows
 	self:Log("SPELL_AURA_APPLIED", "PoolDamage", 213124, 215489)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PoolDamage", 213124, 215489)
 	self:Log("SPELL_PERIODIC_DAMAGE", "PoolDamage", 213124, 215489)
@@ -111,7 +111,7 @@ end
 -- Twisting Shadows: 210864
 do
 	local scheduled, players, list = nil, {}, mod:NewTargetList()
-	local key, spellName = 215443, mod:SpellName(215443)
+	local key, spellName = 0, ""
 
 	function mod:UNIT_AURA(_, unit)
 		if UnitDebuff(unit, spellName) then
@@ -134,40 +134,32 @@ do
 						self:CancelTimer(scheduled)
 						scheduled = nil
 					end
-					if #list == 2 then
+					local count = self:LFR() and key == 210864 and 4 or 2 -- 4 applications of Twisting Shadows on LFR for whatever reason
+					if #list == count then
 						self:TargetMessage(key, list, "Urgent", "Warning")
 					else
-						scheduled = self:ScheduleTimer("TargetMessage", 0.3, key, list, "Urgent", "Warning")
+						scheduled = self:ScheduleTimer("TargetMessage", 0.5, key, list, "Urgent", "Warning")
 					end
 				end
 			end
 		end
 	end
 
-	function mod:NecroticVenomStart(args)
+	function mod:StartDebuffScan(args)
+		key, spellName = args.spellId, args.spellName
 		wipe(players)
-		key = args.spellId
-		spellName = args.spellName
 		self:RegisterEvent("UNIT_AURA")
 		self:ScheduleTimer("UnregisterEvent", 5, "UNIT_AURA")
 	end
 
-	function mod:NecroticVenomSuccess(args)
+	function mod:NecroticVenom(args)
 		if timeToTransform(self) > 26 then -- skips the one before the transformation
 			self:Bar(args.spellId, 22)
 		end
 	end
 
 	function mod:TwistingShadows(args)
-		self:Message(args.spellId, "Urgent", "Alert")
 		twistingShadowsCount = twistingShadowsCount + 1
-
-		wipe(players)
-		key = args.spellId
-		spellName = args.spellName
-		self:RegisterEvent("UNIT_AURA")
-		self:ScheduleTimer("UnregisterEvent", 5, "UNIT_AURA")
-
 		local next = twistingShadowsCount == 2 and 40 or twistingShadowsCount == 4 and 33 or 22
 		if timeToTransform(self) > next then
 			self:CDBar(args.spellId, next)
