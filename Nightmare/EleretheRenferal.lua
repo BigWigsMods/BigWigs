@@ -93,6 +93,7 @@ function mod:OnEngage()
 	twistingShadowsCount = 1
 
 	self:Bar(215300, 6) -- Web of Pain
+	self:Bar(215443, 12) -- Necrotic Venom
 	self:Bar(212364, 16) -- Feeding Time
 	self:Bar("stages", 90, -13263, "inv_ravenlordmount") -- Roc Form
 end
