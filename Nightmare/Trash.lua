@@ -48,7 +48,9 @@ end
 --[[ Gelatinized Decay ]]--
 
 function mod:WaveofDecay(args)
-	self:Message(args.spellId, "Urgent", self:Interrupter(args.sourceGUID) and "Info", CL.casting:format(args.spellName))
+	if not self:LFR() then
+		self:Message(args.spellId, "Urgent", self:Interrupter(args.sourceGUID) and "Info", CL.casting:format(args.spellName))
+	end
 end
 
 function mod:UnstableDecay(args)
