@@ -3,8 +3,6 @@
 -- TODO List:
 -- - TouchOfCorruption doesnt stack on normal. Do we need warnings for that?
 -- - SummonNightmareHorror cd
--- - Is the percentage per blob the same (5%) for every difficulty?
---   LFR (?) - Normal (✔) - Heroic (✔) - Mythic (?)
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -381,7 +379,7 @@ function mod:StuffOfNightmares(args)
 		self:StartSpawnTimer(-13190, 1)
 		self:StartSpawnTimer(-13191, 1)
 
-		bloodsRemaining = 20
+		bloodsRemaining = self:LFR() and 15 or self:Mythic() and 25 or 20
 	end
 end
 
@@ -392,11 +390,10 @@ function mod:StuffOfNightmaresRemoved(args)
 	self:StopBar(nextCorruptorText)
 	self:StopBar(nextDeathglareText)
 
-	-- The boss casts the "Intermission ending" spell after 10s in the phase, but
-	-- we want the bars as soon as the phase starts. This requires hard coding the
-	-- spell ids.
-	-- Intermission 1: Dark Reconstitution (210781), 50+10s (heroic)
-	-- Intermission 2: FinalTorpor (223121), 90+10s (heroic)
+	-- The boss casts the "Intermission ending" spell after 10s in the phase (5s on Mythic), but
+	-- we want the bars as soon as the phase starts. This requires hard coding the spell ids.
+	-- Intermission 1: Dark Reconstitution (210781), 50+10s (heroic), 55s+5s (mythic)
+	-- Intermission 2: FinalTorpor (223121), 90+10s (heroic), ??? (mythic)
 	-- In mod:DarkReconstitution() and mod:FinalTorpor() we overwrite the bars
 	-- started here, just to make sure. It's just me being paranoid.
 	local intermissionSpellId = insidePhase == 1 and 210781 or 223121
@@ -404,7 +401,7 @@ function mod:StuffOfNightmaresRemoved(args)
 end
 
 function mod:DarkReconstitution(args)
-	self:Bar(args.spellId, 50, CL.cast:format(args.spellName)) -- cast after 10s in phase, overwriting bar started in mod:StuffOfNightmaresRemoved()
+	self:Bar(args.spellId, self:Mythic() and 55 or 50, CL.cast:format(args.spellName)) -- cast after 10s in phase (5s in Mythic), overwriting bar started in mod:StuffOfNightmaresRemoved()
 end
 
 function mod:FinalTorpor(args)
