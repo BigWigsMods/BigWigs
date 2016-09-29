@@ -78,7 +78,6 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 
 	--[[ General ]]--
 	self:Log("SPELL_AURA_APPLIED", "MarkApplied", 203102, 203125, 203124, 203121) -- Ysondre, Emeriss, Lethon, Taerar
@@ -112,6 +111,8 @@ function mod:OnEngage()
 		[102682] = nil, -- Lethon
 		[102683] = nil, -- Emeriss
 	}
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+	self:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	self:Bar(203028, 17) -- Corrupted Breath
 	self:Bar(207573, 30) -- Call Defiled Spirit
 end
