@@ -90,5 +90,5 @@ end
 
 --[[ Dire Shaman ]]--
 function mod:CorruptedTotem(args)
-	self:Message(args.spellId, "Important", "Long", nil, L.totem_icon)
+	self:Message("totem", "Important", "Long", nil, L.totem_icon)
 end
