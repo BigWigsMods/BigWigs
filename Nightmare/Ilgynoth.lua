@@ -398,8 +398,9 @@ function mod:DarkReconstitution(args)
 end
 
 function mod:FinalTorpor(args)
-	self:DelayedMessage(args.spellId, 80, "Neutral", CL.custom_sec:format(args.spellName, 10), args.spellId, "Info")
-	self:Bar(args.spellId, 90) -- cast after 10s in phase
+	local timer = self:Mythic() and 55 or 90
+	self:DelayedMessage(args.spellId, timer-10, "Neutral", CL.custom_sec:format(args.spellName, 10), args.spellId, "Info")
+	self:Bar(args.spellId, timer) -- cast after 10s in phase (5s in Mythic)
 end
 
 do
