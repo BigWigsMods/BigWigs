@@ -30,7 +30,6 @@ local mobCollector = {}
 local forcesOfNightmareCount = 1
 local phase = 1
 
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -57,7 +56,7 @@ function mod:GetOptions()
 		-- P2
 		214505, -- Entangling Nightmares
 		214529, -- Spear of Nightmares
-
+		{213162, "TANK"}, -- Nightmare Blast
 		--[[ Malfurion Stormrage ]]--
 		212681, -- Cleansed Ground
 
@@ -117,7 +116,7 @@ function mod:OnBossEnable()
 
 	--[[ Nightmare Treant ]]--
 	self:Log("SPELL_CAST_START", "DesiccatingStomp", 211073)
-
+	self:Log("SPELL_CAST_START", "NightmareBlast", 213162)
 	--[[ Rotten Drake ]]--
 	self:Log("SPELL_CAST_START", "RottenBreath", 211192)
 
@@ -136,7 +135,7 @@ function mod:OnEngage()
 	phase = 1
 	self:CDBar(212726, 10, CL.count:format(self:SpellName(212726), forcesOfNightmareCount)) -- Forces of Nightmare
 	self:Bar(210290, 28) -- Nightmare Brambles
-
+	self:CDBar(213162, 30) -- Nightmare Blast
 	wipe(mobCollector)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
@@ -162,6 +161,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		end
 	elseif spellId == 217368 then -- Phase 2
 		phase = 2
+		self:StopBar(213162)
 		self:Bar(210290, 13) -- Nightmare Brambles
 		self:Bar(214529, 23) -- Spear Of Nightmares
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
@@ -174,6 +174,11 @@ function mod:CreepingNightmares(args)
 			self:StackMessage(args.spellId, args.destName, amount, "Urgent", "Warning")
 		end
 	end
+end
+
+function mod:NightmareBlast(args)
+	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
+	self:CDBar(args.spellId, 32)
 end
 
 function mod:CreepingNightmaresRemoved(args)
