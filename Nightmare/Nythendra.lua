@@ -153,7 +153,7 @@ do
 end
 
 function mod:VolatileRot(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, self:Tank())
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, self:Tank())
 	self:TargetBar(args.spellId, 8, args.destName)
 	if self:BarTimeLeft(203552) > 23 then -- Heart of the Swarm
 		self:CDBar(args.spellId, 23)
