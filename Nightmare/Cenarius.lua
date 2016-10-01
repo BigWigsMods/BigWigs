@@ -12,7 +12,7 @@
 -- - NightmareBrambles: can targetscan for initial target - lets hope that there
 --   is a debuff on live
 
--------------------------------------------------------------------------``-------
+--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -29,7 +29,6 @@ mod.respawnTime = 30
 local mobCollector = {}
 local forcesOfNightmareCount = 1
 local phase = 1
-local nBlast = 1
 
 --------------------------------------------------------------------------------
 -- Localization
