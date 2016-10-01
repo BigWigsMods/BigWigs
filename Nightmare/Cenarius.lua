@@ -135,7 +135,7 @@ function mod:OnEngage()
 	phase = 1
 	self:CDBar(212726, 10, CL.count:format(self:SpellName(212726), forcesOfNightmareCount)) -- Forces of Nightmare
 	self:Bar(210290, 28) -- Nightmare Brambles
-	self:CDBar(213162 ,30) -- Nightmare Blast
+	self:CDBar(213162, 30) -- Nightmare Blast
 	wipe(mobCollector)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
@@ -178,7 +178,7 @@ end
 
 function mod:NightmareBlast(args)
 	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
-	self:CDBar(213162,32)
+	self:CDBar(args.spellId, 32)
 end
 
 function mod:CreepingNightmaresRemoved(args)
