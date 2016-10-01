@@ -17,7 +17,7 @@ if L then
 	L.custom_off_deathglare_marker = "Маркировка Щупалец смертоносного взгляда"
 	L.custom_off_deathglare_marker_desc = "Помечать Щупальца смертоносного взгляда метками {rt6}{rt5}{rt4}{rt3}, требуется быть помощником или лидером рейда.\n|cFFFF0000Только один человек в рейде должен включить данную опцию чтобы избежать конфликтов.|r\n|cFFADFF2FПодсказка: Проведите мышкой над щупальцами, чтобы быстрее отметить их.|r"
 
-	L.bloods_remaining = "%d |4Кровь:Крови; осталось" --huh?
+	L.bloods_remaining = "Крови осталось: %d"
 end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "ruRU")
