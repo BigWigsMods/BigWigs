@@ -17,7 +17,7 @@ mod:RegisterEnableMob(
 	102683  -- Emeriss
 )
 mod.engageId = 1854
---mod.respawnTime = 0
+mod.respawnTime = 40
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -34,6 +34,7 @@ local markStacks = {
 	[203124] = 0, -- Mark of Lethon
 	[203121] = 0, -- Mark of Taerar
 }
+local mythicAdd = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -48,7 +49,7 @@ local L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		--[[ General ]]--
-		203028, -- Corrupted Breath
+		{203028, "TANK"}, -- Corrupted Breath
 		-12809, -- Marks
 		"berserk",
 
@@ -70,15 +71,19 @@ function mod:GetOptions()
 
 		--[[ Taerar ]]--
 		204100, -- Shades of Taerar
-		204767, -- Corrupted Breath (Shades)
+		{204767, "TANK"}, -- Corrupted Breath (Shades)
 		205331, -- Seeping Fog
 		204078, -- Bellowing Roar
+
+		--[[ Mythic ]]--
+		214497, -- Nightmare Souls (Adds spawning in Hinterlands etc)
 	},{
 		[203028] = "general",
 		[207573] = -12768, -- Ysondre
 		[203787] = -12770, -- Emeriss
 		[203888] = -12772, -- Lethon
 		[204100] = -12774, -- Taerar
+		[214497] = "mythic",
 	}
 end
 
@@ -109,6 +114,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ShadesOfTaerar", 204100)
 	self:Log("SPELL_CAST_START", "ShadeCorruptedBreath", 204767)
 	self:Log("SPELL_CAST_START", "BellowingRoar", 204078)
+
+	--[[ Mythic ]]--
+	self:Log("SPELL_AURA_APPLIED", "NightmareSouls", 214497)
 end
 
 function mod:OnEngage()
@@ -123,10 +131,15 @@ function mod:OnEngage()
 		[203124] = 0, -- Mark of Lethon
 		[203121] = 0, -- Mark of Taerar
 	}
+	mythicAdd = 1
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	self:Bar(203028, 17) -- Corrupted Breath
 	self:Bar(207573, 30) -- Call Defiled Spirit
+
+	if self:Mythic() then
+		self:Bar(204078, 51) -- Bellowing Roar
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -325,4 +338,12 @@ function mod:BellowingRoar(args)
 	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
 	self:Bar(args.spellId, 51)
+end
+
+--[[ Mythic ]]--
+function mod:NightmareSouls(args)
+	local spell = mythicAdd == 1 and 214610 or mythicAdd == 2 and 214588 or 214604 -- Dream Essence: Hinterlands / Ashenvale / Feralas
+	local percentage = mythicAdd == 1 and "90% - " or mythicAdd == 2 and "60% - " or "30% - "
+	self:Message(args.spellId, "Neutral", "Long", percentage .. self:SpellName(spell), spell)
+	mythicAdd = mythicAdd + 1
 end
