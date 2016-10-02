@@ -54,7 +54,7 @@ function mod:GetOptions()
 
 		--[[ Corruption Horror ]]--
 		{224649, "TANK"}, -- Tormenting Swipe
-		207830, -- Corruption Nova
+		207830, -- Corrupting Nova
 
 		--[[ Stage One: The Decent Into Madness ]]--
 		{206651, "TANK_HEALER"}, -- Darkening Soul
@@ -94,7 +94,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DarkeningSoul", 206651)
 	self:Log("SPELL_AURA_APPLIED", "NightmareBlades", 211802)
 	self:Log("SPELL_AURA_REMOVED", "NightmareBladesRemoved", 211802)
-	self:Log("SPELL_CAST_START", "ManifestCorruption", 210264)
+	self:Log("SPELL_CAST_SUCCESS", "ManifestCorruption", 210264)
 	self:Log("SPELL_AURA_APPLIED", "TormentingFixation", 205771)
 	self:Log("SPELL_SUMMON", "LurkingEruption", 205741) -- Lurking Terror
 
@@ -135,7 +135,7 @@ end
 --
 
 --[[ General ]]--
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 226193 then -- Xavius Energize Phase 2
 		phase = 2
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
@@ -241,7 +241,7 @@ function mod:ManifestCorruption(args)
 	horrorCount = 0
 	self:Message(args.spellId, "Attention", "Info", CL.count:format(self:SpellName(L.horror), horrorCount), false)
 	self:Bar(args.spellId, 82.5)
-	self:Bar(207830, 15) -- Corrupting Nova
+	self:CDBar(207830, 17) -- Corrupting Nova
 	self:CDBar(224649, 10) -- Tormenting Swipe
 	self:Bar(205741, 20.5) -- Lurking Eruption (Lurking Terror)
 end

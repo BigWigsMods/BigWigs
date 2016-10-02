@@ -3,8 +3,6 @@
 -- TODO List:
 -- - TouchOfCorruption doesnt stack on normal. Do we need warnings for that?
 -- - SummonNightmareHorror cd
--- - Is the percentage per blob the same (5%) for every difficulty?
---   LFR (?) - Normal (✔) - Heroic (✔) - Mythic (?)
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -77,7 +75,7 @@ if L then
 	L.custom_off_deathglare_marker_desc = "Mark Deathglare Tentacles with {rt6}{rt5}{rt4}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the spears is the fastest way to mark them.|r"
 	L.custom_off_deathglare_marker_icon = 6
 
-	L.bloods_remaining = "%d Bloods remaining"
+	L.bloods_remaining = "%d |4Blood:Bloods; remaining"
 end
 
 --------------------------------------------------------------------------------
@@ -86,6 +84,9 @@ end
 
 function mod:GetOptions()
 	return {
+		{"stages", "COUNTDOWN"},
+		223121, -- Final Torpor
+
 		--[[ Stage One ]]--
 		"forces",
 
@@ -110,9 +111,6 @@ function mod:GetOptions()
 		"custom_off_deathglare_marker",
 
 		--[[ Stage Two ]]--
-		209915, -- Stuff of Nightmares
-		{210781, "COUNTDOWN"}, -- Dark Reconstitution
-		223121, -- Final Torpor
 		{215128, "SAY", "FLASH", "PROXIMITY"}, -- Cursed Blood
 	},{
 		["forces"] = -13184, -- Stage One
@@ -121,7 +119,7 @@ function mod:GetOptions()
 		["nightmare_horror"] = -13188, -- Nightmare Horror (this looks like shit)
 		[208929] = -13191, -- Corruptor Tentacle
 		[208697] = -13190, -- Deathglare Tentacle
-		[209915] = -13192, -- Stage Two
+		[215128] = -13192, -- Stage Two
 	}
 end
 
@@ -165,13 +163,13 @@ function mod:OnEngage()
 	wipe(mobCollector)
 	fixateOnMe = nil
 	insidePhase = 1
-	bloodsRemaining = 20
+	bloodsRemaining = self:LFR() and 15 or self:Mythic() and 25 or 20
 	self:CDBar(208689, 11.5) -- Ground Slam
 	self:CDBar("nightmare_horror", 65, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 
 	phaseStartTime = GetTime()
-	self:StartSpawnTimer(-13190, 1)
-	self:StartSpawnTimer(-13191, 1)
+	self:StartSpawnTimer(-13190, 1) -- Deathglare Tentacle
+	self:StartSpawnTimer(-13191, 1) -- Corruptor Tentacle
 
 
 	wipe(deathglareMarked)
@@ -371,9 +369,9 @@ do
 end
 
 --[[ Stage Two ]]--
-function mod:StuffOfNightmares(args)
-	if IsEncounterInProgress() then -- Gets buffed when the boss spawns
-		self:Message(args.spellId, "Neutral", "Info")
+function mod:StuffOfNightmares()
+	if self.isEngaged then -- Gets buffed when the boss spawns
+		self:Message("stages", "Neutral", "Long", CL.stage:format(1), false)
 		self:Bar("nightmare_horror", 99, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 		insidePhase = insidePhase + 1
 
@@ -381,34 +379,28 @@ function mod:StuffOfNightmares(args)
 		self:StartSpawnTimer(-13190, 1)
 		self:StartSpawnTimer(-13191, 1)
 
-		bloodsRemaining = 20
+		bloodsRemaining = self:LFR() and 15 or self:Mythic() and 25 or 20
 	end
 end
 
-function mod:StuffOfNightmaresRemoved(args)
-	self:Message(args.spellId, "Neutral", "Info", CL.removed:format(args.spellName))
-
+function mod:StuffOfNightmaresRemoved()
 	self:StopBar(L.nightmare_horror)
 	self:StopBar(nextCorruptorText)
 	self:StopBar(nextDeathglareText)
 
-	-- The boss casts the "Intermission ending" spell after 10s in the phase, but
-	-- we want the bars as soon as the phase starts. This requires hard coding the
-	-- spell ids.
-	-- Intermission 1: Dark Reconstitution (210781), 50+10s (heroic)
-	-- Intermission 2: FinalTorpor (223121), 90+10s (heroic)
-	-- In mod:DarkReconstitution() and mod:FinalTorpor() we overwrite the bars
-	-- started here, just to make sure. It's just me being paranoid.
-	local intermissionSpellId = insidePhase == 1 and 210781 or 223121
-	self:Bar(intermissionSpellId, insidePhase == 1 and 60 or 100, CL.cast:format(self:SpellName(intermissionSpellId)))
+	self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
 end
 
 function mod:DarkReconstitution(args)
-	self:Bar(args.spellId, 50, CL.cast:format(args.spellName)) -- cast after 10s in phase, overwriting bar started in mod:StuffOfNightmaresRemoved()
+	local timer = self:Mythic() and 55 or 50
+	self:DelayedMessage("stages", timer-10, "Neutral", CL.custom_sec:format(CL.stage:format(1), 10), args.spellId, "Info")
+	self:Bar("stages", timer, CL.stage:format(1), args.spellId) -- cast after 10s in phase (5s in Mythic)
 end
 
 function mod:FinalTorpor(args)
-	self:Bar(args.spellId, 90, CL.cast:format(args.spellName)) -- cast after 10s in phase, overwriting bar started in mod:StuffOfNightmaresRemoved()
+	local timer = self:Mythic() and 55 or 90
+	self:DelayedMessage(args.spellId, timer-10, "Neutral", CL.custom_sec:format(args.spellName, 10), args.spellId, "Info")
+	self:Bar(args.spellId, timer) -- cast after 10s in phase (5s in Mythic)
 end
 
 do

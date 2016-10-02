@@ -28,6 +28,12 @@ local dragonsOnGround = {
 	[102682] = nil, -- Lethon
 	[102683] = nil, -- Emeriss
 }
+local markStacks = {
+	[203102] = 0, -- Mark of Ysondre
+	[203125] = 0, -- Mark of Emeriss
+	[203124] = 0, -- Mark of Lethon
+	[203121] = 0, -- Mark of Taerar
+}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -71,14 +77,13 @@ function mod:GetOptions()
 		[203028] = "general",
 		[207573] = -12768, -- Ysondre
 		[203787] = -12770, -- Emeriss
-		--[0] = -12772, -- Lethon TODO
+		[203888] = -12772, -- Lethon
 		[204100] = -12774, -- Taerar
 	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 
 	--[[ General ]]--
 	self:Log("SPELL_AURA_APPLIED", "MarkApplied", 203102, 203125, 203124, 203121) -- Ysondre, Emeriss, Lethon, Taerar
@@ -112,6 +117,14 @@ function mod:OnEngage()
 		[102682] = nil, -- Lethon
 		[102683] = nil, -- Emeriss
 	}
+	markStacks = {
+		[203102] = 0, -- Mark of Ysondre
+		[203125] = 0, -- Mark of Emeriss
+		[203124] = 0, -- Mark of Lethon
+		[203121] = 0, -- Mark of Taerar
+	}
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+	self:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	self:Bar(203028, 17) -- Corrupted Breath
 	self:Bar(207573, 30) -- Call Defiled Spirit
 end
@@ -130,21 +143,22 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 
 				if id == 102681 then -- Taerar
 					--self:Bar(204100, ??) -- Shades of Taerar
+					self:StopBar(204078) -- Bellowing Roar
 				elseif id == 102682 then -- Lethon
 					self:Bar(203888, 25) -- Siphon Spirit
 				elseif id == 102683 then -- Emeriss
-					self:Bar(203787, 20)
-					self:Bar(205298, 29)
+					self:Bar(203787, 20) -- Volatile Infection
+					self:Bar(205298, 29) -- Essence of Corruption
 				end
 			end
 		end
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, _, _, _, spellId)
 	if spellId == 204720 then -- Aerial
 		local id = self:MobId(UnitGUID(unit))
-		local name = UnitName(unit)
+		local name = self:UnitName(unit)
 
 		dragonsOnGround[id] = nil
 		self:StopBar(CL.other:format(name, self:SpellName(203028))) -- Corrupted Breath
@@ -172,6 +186,7 @@ end
 function mod:MarkApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
+		markStacks[args.spellId] = args.amount
 		if amount == 1 or amount > 6 then -- could need fine tuning
 			self:StackMessage(-12809, args.destName, amount, "Important", "Warning", args.spellId, args.spellId)
 		end
@@ -188,6 +203,8 @@ end
 function mod:MarkRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(-12809, "Positive", "Info", CL.removed:format(args.spellName), args.spellId)
+		self:StopBar(CL.count:format(args.spellName, markStacks[args.spellId]), args.destName)
+		markStacks[args.spellId] = 0
 	end
 end
 
@@ -306,4 +323,6 @@ end
 
 function mod:BellowingRoar(args)
 	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
+	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, 51)
 end

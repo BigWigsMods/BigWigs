@@ -14,10 +14,10 @@
 <Include file="Libs\LibDBIcon-1.0\lib.xml"/>
 <!--@end-no-lib-strip@-->
 
-<!--@debug@-->
+<!--@do-not-package@-->
 <Include file="Core\libs.xml"/>
 <Include file="Plugins\libs.xml"/>
 <Include file="Options\libs.xml"/>
-<!--@end-debug@-->
+<!--@end-do-not-package@-->
 </Ui>
 

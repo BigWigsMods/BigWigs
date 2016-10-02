@@ -30,7 +30,6 @@ local mobCollector = {}
 local forcesOfNightmareCount = 1
 local phase = 1
 
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -57,7 +56,7 @@ function mod:GetOptions()
 		-- P2
 		214505, -- Entangling Nightmares
 		214529, -- Spear of Nightmares
-
+		{213162, "TANK"}, -- Nightmare Blast
 		--[[ Malfurion Stormrage ]]--
 		212681, -- Cleansed Ground
 
@@ -117,7 +116,7 @@ function mod:OnBossEnable()
 
 	--[[ Nightmare Treant ]]--
 	self:Log("SPELL_CAST_START", "DesiccatingStomp", 211073)
-
+	self:Log("SPELL_CAST_START", "NightmareBlast", 213162)
 	--[[ Rotten Drake ]]--
 	self:Log("SPELL_CAST_START", "RottenBreath", 211192)
 
@@ -136,7 +135,7 @@ function mod:OnEngage()
 	phase = 1
 	self:CDBar(212726, 10, CL.count:format(self:SpellName(212726), forcesOfNightmareCount)) -- Forces of Nightmare
 	self:Bar(210290, 28) -- Nightmare Brambles
-
+	self:CDBar(213162, 30) -- Nightmare Blast
 	wipe(mobCollector)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
@@ -162,6 +161,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		end
 	elseif spellId == 217368 then -- Phase 2
 		phase = 2
+		self:StopBar(213162)
 		self:Bar(210290, 13) -- Nightmare Brambles
 		self:Bar(214529, 23) -- Spear Of Nightmares
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
@@ -176,6 +176,11 @@ function mod:CreepingNightmares(args)
 	end
 end
 
+function mod:NightmareBlast(args)
+	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
+	self:CDBar(args.spellId, 32)
+end
+
 function mod:CreepingNightmaresRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
@@ -186,9 +191,9 @@ function mod:ForcesOfNightmare(args)
 	self:Message(args.spellId, "Urgent", nil, CL.casting:format(args.spellName))
 	forcesOfNightmareCount = forcesOfNightmareCount + 1
 	self:Bar(210346, 6) -- Dread Thorns
-	self:Bar(212681, 13, self:SpellName(212681)) -- Cleansed Ground
+	self:Bar(212681, 13) -- Cleansed Ground
 	--self:CDBar(args.spellId, 19, CL.incoming:format(L.forces))
-	self:Bar(args.spellId, 77.7, CL.count:format(self:SpellName(args.spellId), forcesOfNightmareCount))
+	self:Bar(args.spellId, 77.7, CL.count:format(args.spellName, forcesOfNightmareCount))
 end
 
 do
@@ -205,7 +210,7 @@ do
 				mobCollector[guid] = true
 				local id = adds[self:MobId(guid)]
 				if id then
-					self:Message(212726, "Neutral", "Info", self:SpellName(id), false)
+					self:Message(212726, "Neutral", "Info", id, false)
 				end
 			end
 		end
@@ -216,7 +221,7 @@ do
 		local t = GetTime()
 		if t-prev > 10 then
 			prev = t
-			self:Message(212726, "Neutral", "Info", self:SpellName(-13348), false)
+			self:Message(212726, "Neutral", "Info", -13348, false) -- Corrupted Wisp
 		end
 	end
 end
@@ -259,24 +264,26 @@ end
 
 --[[ Malfurion Stormrage ]]--
 do
-	local cleansedGroundCheck, name = nil, mod:SpellName(212681)
+	local cleansedGroundCheck = nil
 
-	local function checkForCleansedGround()
-		if UnitDebuff("player", name) then
-			mod:Message(212681, "Positive", "Alert", CL.underyou:format(name))
-			cleansedGroundCheck = mod:ScheduleTimer(checkForCleansedGround, 1)
+	local function checkForCleansedGround(self, spellId, spellName)
+		if UnitDebuff("player", spellName) then
+			self:Message(spellId, "Positive", "Alert", CL.underyou:format(spellName))
+			cleansedGroundCheck = self:ScheduleTimer(checkForCleansedGround, 1, self, spellId, spellName)
 		end
 	end
 
 	function mod:CleansedGround(args)
 		if self:Me(args.destGUID) then
-			cleansedGroundCheck = mod:ScheduleTimer(checkForCleansedGround, 1) -- you shouldn't stand in there for too long
+			if cleansedGroundCheck then self:CancelTimer(cleansedGroundCheck) end
+			cleansedGroundCheck = self:ScheduleTimer(checkForCleansedGround, 1, self, args.spellId, args.spellName) -- you shouldn't stand in there for too long
 		end
 	end
 
 	function mod:CleansedGroundRemoved(args)
-		if cleansedGroundCheck then
+		if cleansedGroundCheck and self:Me(args.destGUID) then
 			self:CancelTimer(cleansedGroundCheck)
+			cleansedGroundCheck = nil
 		end
 	end
 end
