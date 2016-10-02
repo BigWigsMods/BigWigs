@@ -2,7 +2,7 @@
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - We can be a lot smarter with warnings - check which dragon is in range?
--- - Mythic
+-- - Check Bellowing Roar for P3
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -179,6 +179,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, _, _, _, spellId)
 		if id == 102681 then -- Taerar
 			self:StopBar(204100) -- Shades of Taerar
 			self:StopBar(CL.other:format(self:SpellName(24313), self:SpellName(204767))) -- Shade: Corrupted Breath
+			if self:Mythic() then
+				self:Bar(204078, 40) -- Bellowing Roar, might be wrong
+			end
 		elseif id == 102682 then -- Lethon
 			self:StopBar(203888) -- Siphon Spirit
 		elseif id == 102683 then  -- Emeriss
