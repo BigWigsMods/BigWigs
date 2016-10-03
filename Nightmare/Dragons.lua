@@ -72,7 +72,7 @@ function mod:GetOptions()
 		--[[ Taerar ]]--
 		204100, -- Shades of Taerar
 		{204767, "TANK"}, -- Corrupted Breath (Shades)
-		205331, -- Seeping Fog
+		205341, -- Seeping Fog
 		204078, -- Bellowing Roar
 
 		--[[ Mythic ]]--
@@ -192,7 +192,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, _, _, _, spellId)
 		self:Message(spellId, "Important", "Alert")
 		self:CDBar(spellId, 16)
 	elseif spellId == 205331 then -- Taerar: Seeping Fog
-		self:Message(spellId, "Urgent", "Alarm")
+		self:Message(205341, "Urgent", "Alarm")
 	elseif spellId == 205528 then -- Emeriss: Corruption of the Dream
 		self:Message(spellId, "Attention", "Alarm")
 	end
@@ -204,11 +204,11 @@ function mod:MarkApplied(args)
 		local amount = args.amount or 1
 		markStacks[args.spellId] = args.amount
 		if amount == 1 or amount > 6 then -- could need fine tuning
-			self:StackMessage(-12809, args.destName, amount, "Important", "Warning", args.spellId, args.spellId)
+			self:StackMessage(-12809, args.destName, amount, "Important", "Warning", args.spellName, args.spellId)
 		end
 
 		if amount > 1 then
-			self:StopBar(CL.count:format(args.spellName, args.amount-1), args.destName)
+			self:StopBar(CL.count:format(args.spellName, amount-1), args.destName)
 		end
 
 		local _, _, _, _, _, duration = UnitDebuff("player", args.spellName)
