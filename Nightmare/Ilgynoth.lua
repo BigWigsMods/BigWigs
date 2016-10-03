@@ -63,6 +63,7 @@ local spawnDataMythic = {
 			{185.0, 2}, -- 2x
 			{225.0, 1}, -- 1x
 			{280.0, 2}, -- 2x
+			{300.0, 3}, -- 3x
 		},
 	},
 	[2] = { -- Outside Phase 2, time after Stuff of Nightmares (209915) applied
