@@ -256,7 +256,7 @@ do
 			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
 		end
 
-		if self:Me(args.destGUID) then
+		if not isOnMe and self:Me(args.destGUID) then
 			self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
 			self:Say(args.spellId)
 			isOnMe = true
