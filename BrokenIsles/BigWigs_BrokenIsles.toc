@@ -31,3 +31,4 @@
 ## X-BigWigs-LoadOn-WorldBoss: -1015, 108829, -1015, 109331, -1017, 107023, -1015, 102075
 
 modules.xml
+locales.xml
