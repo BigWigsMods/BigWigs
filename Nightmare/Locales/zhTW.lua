@@ -17,14 +17,14 @@ if L then
 	L.custom_off_deathglare_marker = "死凝觸手標記"
 	L.custom_off_deathglare_marker_desc = "使用 {rt6}{rt5}{rt4}{rt3} 標記死凝觸手，需要權限。\n|cFFFF0000團隊中只需一名玩家啟用此選項以防止衝突。|r\n|cFFADFF2F提示：如果團隊選擇由你開啟此選項，開啟姓名板並滑鼠指向來標記死凝觸手是最快的方式。|r"
 
-	L.bloods_remaining = "剩餘%d黏液"
+	L.bloods_remaining = "還需要%d個黏液"
 end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "zhTW")
 if L then
 	L.gelatinizedDecay = "膠化腐泥怪"
-	--L.befouler = "Taintheart Befouler"
-	--L.shaman = "Dire Shaman"
+	L.befouler = "腐化玷污者"
+	L.shaman = "兇暴薩滿"
 end
 
 L = BigWigs:NewBossLocale("Ursoc", "zhTW")

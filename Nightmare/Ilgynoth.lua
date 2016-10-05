@@ -23,6 +23,7 @@ local fixateOnMe = nil
 local insidePhase = 1
 local deathglareMarked = {} -- save GUIDs of marked mobs
 local deathglareMarks  = { [6] = true, [5] = true, [4] = true, [3] = true } -- available marks to use
+local deathBlossomCount = 1
 
 local phaseStartTime = 0
 
@@ -46,6 +47,31 @@ local spawnData = {
 			{ 45.0, 3}, -- 3x
 			{140.0, 2}, -- 2x
 			{175.0, 4}, -- 4x
+		},
+	}
+}
+local spawnDataMythic = {
+	[1] = { -- Outside Phase 1
+		[-13190] = { -- Deathglare Tentacle, Mind Flay (208697) SPELL_CAST_START
+			{ 21.5, 1}, -- 1x
+			{ 96.5, 2}, -- 2x
+			{181.5, 1}, -- 1x
+			{241.0, 1}, -- 1x
+		},
+		[-13191] = { -- Corruptor Tentacle, Spew Corruption (208929) SPELL_CAST_START
+			{ 90.0, 2}, -- 2x
+			{185.0, 2}, -- 2x
+			{225.0, 1}, -- 1x
+			{280.0, 2}, -- 2x
+			{300.0, 3}, -- 3x
+		},
+	},
+	[2] = { -- Outside Phase 2, time after Stuff of Nightmares (209915) applied
+		[-13190] = { -- Deathglare Tentacle, Mind Flay (208697) SPELL_CAST_START
+			-- No one does that :(
+		},
+		[-13191] = { -- Corruptor Tentacle, Spew Corruption (208929) SPELL_CAST_START
+			-- No one does that :(
 		},
 	}
 }
@@ -86,6 +112,7 @@ function mod:GetOptions()
 	return {
 		{"stages", "COUNTDOWN"},
 		223121, -- Final Torpor
+		212886, -- Nightmare Corruption
 
 		--[[ Stage One ]]--
 		"forces",
@@ -112,7 +139,11 @@ function mod:GetOptions()
 
 		--[[ Stage Two ]]--
 		{215128, "SAY", "FLASH", "PROXIMITY"}, -- Cursed Blood
+
+		--[[ Mythic ]]--
+		218415, -- Death Blossom
 	},{
+		["stages"] = "general",
 		["forces"] = -13184, -- Stage One
 		[208689] = -13189, -- Dominator Tentacle
 		[210099] = -13186, -- Nightmare Ichor
@@ -120,11 +151,17 @@ function mod:GetOptions()
 		[208929] = -13191, -- Corruptor Tentacle
 		[208697] = -13190, -- Deathglare Tentacle
 		[215128] = -13192, -- Stage Two
+		[218415] = "mythic",
 	}
 end
 
 function mod:OnBossEnable()
 	--[[ Stage One ]]--
+	self:Log("SPELL_AURA_APPLIED", "NightmareCorruption", 212886)
+	self:Log("SPELL_ABSORBED", "NightmareCorruption", 212886)
+	self:Log("SPELL_MISSED", "NightmareCorruption", 212886)
+	self:Log("SPELL_PERIODIC_DAMAGE", "NightmareCorruption", 212886)
+
 	-- Dominator Tentacle
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 	self:Log("SPELL_CAST_START", "GroundSlam", 208689)
@@ -157,20 +194,28 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FinalTorpor", 223121)
 	self:Log("SPELL_AURA_APPLIED", "CursedBlood", 215128)
 	self:Log("SPELL_AURA_REMOVED", "CursedBloodRemoved", 215128)
+
+	--[[ Mythic ]]--
+	self:Log("SPELL_CAST_START", "DeathBlossom", 218415)
+	self:Log("SPELL_CAST_SUCCESS", "DeathBlossomSuccess", 218415)
 end
 
 function mod:OnEngage()
 	wipe(mobCollector)
 	fixateOnMe = nil
 	insidePhase = 1
+	deathBlossomCount = 1
 	bloodsRemaining = self:LFR() and 15 or self:Mythic() and 25 or 20
 	self:CDBar(208689, 11.5) -- Ground Slam
 	self:CDBar("nightmare_horror", 65, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 
+	if self:Mythic() then
+		self:Bar(218415, 60) -- Death Blossom
+	end
+
 	phaseStartTime = GetTime()
 	self:StartSpawnTimer(-13190, 1) -- Deathglare Tentacle
 	self:StartSpawnTimer(-13191, 1) -- Corruptor Tentacle
-
 
 	wipe(deathglareMarked)
 	if self:GetOption("custom_off_deathglare_marker") then
@@ -195,7 +240,7 @@ end
 
 function mod:StartSpawnTimer(addType, count)
 	--local data = self:Mythic() and spawnDataMythic or self:LFR() and spawnDataLFR or spawnData TODO
-	local data = spawnData
+	local data = self:Mythic() and spawnDataMythic or spawnData
 	local info = data and data[insidePhase][addType][count]
 	if not info then
 		-- all out of spawn data
@@ -233,6 +278,17 @@ end
 function mod:DeathglareDeath(args)
 	if deathglareMarked[args.destGUID] then -- Did we mark the Tentacle?
 		deathglareMarks[deathglareMarked[args.destGUID]] = true -- Mark used is available again
+	end
+end
+
+do
+	local prev = 0
+	function mod:NightmareCorruption(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(args.spellId, "Personal", "Alert", CL.you:format(args.spellName))
+		end
 	end
 end
 
@@ -453,5 +509,20 @@ do
 				self:OpenProximity(args.spellId, 11, proxList)
 			end
 		end
+	end
+end
+
+--[[ Mythic ]]--
+function mod:DeathBlossom(args)
+	self:Message(args.spellId, "Urgent", "Alarm")
+	self:Bar(args.spellId, 15, CL.cast:format(args.spellName))
+	deathBlossomCount = deathBlossomCount + 1
+end
+
+function mod:DeathBlossomSuccess(args)
+	self:Message(args.spellId, "Positive", "Long", CL.over:format(args.spellName))
+	local time = deathBlossomCount == 2 and 85 or deathBlossomCount == 3 and 20 or 0
+	if time > 0 then
+		self:Bar(args.spellId, time)
 	end
 end

@@ -58,11 +58,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FocusedGaze", 198006)
 	self:Log("SPELL_AURA_REMOVED", "FocusedGazeRemoved", 198006)
 	self:Log("SPELL_AURA_APPLIED", "Momentum", 198108)
+	self:Log("SPELL_AURA_APPLIED", "BloodFrenzy", 198388)
+
 	self:Log("SPELL_AURA_APPLIED", "MiasmaDamage", 205611)
 	self:Log("SPELL_DAMAGE", "MiasmaDamage", 212238)
 	self:Log("SPELL_MISSED", "MiasmaDamage", 212238)
-	self:Log("SPELL_ABSORBED", "MiasmaDamage", 212238)
-	self:Log("SPELL_AURA_APPLIED", "BloodFrenzy", 198388)
 end
 
 function mod:OnEngage()
@@ -175,13 +175,13 @@ do
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unit)
-	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if hp < 35 then -- Blood Frenzy at 30%
+	local hp = UnitHealth(unit) / UnitHealthMax(unit)
+	if hp < 0.35 then -- Blood Frenzy at 30%
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 		self:Message(198388, "Neutral", "Info", CL.soon:format(self:SpellName(198388))) -- Blood Frenzy
 	end
 end
 
 function mod:BloodFrenzy(args)
-	self:Message(args.spellId, "Urgent", "Long")
+	self:Message(args.spellId, "Urgent", "Long", "30% - ".. args.spellName)
 end
