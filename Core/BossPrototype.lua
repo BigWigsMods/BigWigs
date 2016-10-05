@@ -229,6 +229,7 @@ function boss:OnDisable(isWipe)
 	self.scheduledMessages = nil
 	self.scheduledScans = nil
 	self.scheduledScansCounter = nil
+	self.targetEventFunc = nil
 	self.isWiping = nil
 	self.isEngaged = nil
 
@@ -773,6 +774,32 @@ do
 
 		self.scheduledScansCounter[guid] = 0
 		self.scheduledScans[guid] = self:ScheduleRepeatingTimer(bossScanner, 0.05, self, func, solo and 0.1 or tankCheckExpiry, guid) -- Tiny allowance when solo
+	end
+end
+
+do
+	function boss:UPDATE_MOUSEOVER_UNIT(event)
+		self[self.targetEventFunc](self, event, "mouseover")
+	end
+	function boss:UNIT_TARGET(event, unit)
+		self[self.targetEventFunc](self, event, unit.."target")
+	end
+	--- Register a set of events commonly used for raid marking functionality and pass the unit to a designated function.
+	-- UPDATE_MOUSEOVER_UNIT, UNIT_TARGET, NAME_PLATE_UNIT_ADDED.
+	-- @param func callback function, passed (event, unit)
+	function boss:RegisterTargetEvents(func)
+		if self[func] then
+			self.targetEventFunc = func
+			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+			self:RegisterEvent("UNIT_TARGET")
+			self:RegisterEvent("NAME_PLATE_UNIT_ADDED", func)
+		end
+	end
+	--- Unregister the events registered by `RegisterTargetEvents`.
+	function boss:UnregisterTargetEvents()
+		self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+		self:UnregisterEvent("UNIT_TARGET")
+		self:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
 	end
 end
 
