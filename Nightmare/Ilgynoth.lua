@@ -190,6 +190,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SummonNightmareHorror", 209387) -- Seeping Corruption, buffed on spawn
 	self:Log("SPELL_AURA_APPLIED", "EyeOfFate", 210984)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "EyeOfFate", 210984)
+	self:Log("SPELL_CAST_SUCCESS", "EyeOfFateCast", 210984)
 
 	-- Corruptor Tentacle
 	self:Log("SPELL_CAST_START", "CorruptorTentacleSpawn", 208929) -- They start casting Spew Corruption instantly
@@ -375,7 +376,7 @@ function mod:SummonNightmareHorror(args)
 	self:Message("nightmare_horror", "Important", "Info", CL.spawned:format(self:SpellName(L.nightmare_horror)), L.nightmare_horror_icon)
 	self:Bar("nightmare_horror", 220, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror < TODO beta timer, need live data
 	if self:Tank() or self:Healer() then
-		self:CDBar(210984, 10) -- Deathglare
+		self:Bar(210984, 13.8) -- Deathglare
 	end
 end
 
@@ -383,7 +384,12 @@ function mod:EyeOfFate(args)
 	if self:Tank() or self:Healer() then
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, args.destName, amount, "Important", self:Tank() and amount > 1 and "Warning")
-		self:CDBar(args.spellId, 10)
+	end
+end
+
+function mod:EyeOfFateCast(args)
+	if self:Tank() or self:Healer() then
+		self:Bar(args.spellId, 10)
 	end
 end
 
