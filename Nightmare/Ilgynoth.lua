@@ -21,6 +21,7 @@ mod.respawnTime = 30
 local mobCollector = {}
 local fixateOnMe = nil
 local insidePhase = 1
+local outsidePhase = 1
 local deathglareMarked = {} -- save GUIDs of marked mobs
 local deathglareMarks  = { [6] = true, [5] = true, [4] = true, [3] = true } -- available marks to use
 local deathBlossomCount = 1
@@ -68,10 +69,17 @@ local spawnDataMythic = {
 	},
 	[2] = { -- Outside Phase 2, time after Stuff of Nightmares (209915) applied
 		[-13190] = { -- Deathglare Tentacle, Mind Flay (208697) SPELL_CAST_START
-			-- No one does that :(
+			{ 21.5, 1}, -- 1x
+			{ 26.5, 1}, -- 1x
+			{116.5, 2}, -- 2x
+			{231.5, 2}, -- 2x
+			{251.5, 1}, -- 1x
 		},
 		[-13191] = { -- Corruptor Tentacle, Spew Corruption (208929) SPELL_CAST_START
-			-- No one does that :(
+			{ 45.0, 2}, -- 2x
+			{120.0, 2}, -- 2x
+			{235.0, 2}, -- 2x
+			{300.0, 4}, -- 4x
 		},
 	}
 }
@@ -96,6 +104,9 @@ if L then
 
 	L.deathglare_tentacle = -13190 -- Deathglare Tentacle
 	L.deathglare_tentacle_icon = 208697 -- Mind Flay icon
+
+	L.shriveled_eyestalk = -13570 -- Shriveled Eyestalk
+	L.shriveled_eyestalk_icon = 208697 -- Mind Flay icon
 
 	L.custom_off_deathglare_marker = "Deathglare Tentacle marker"
 	L.custom_off_deathglare_marker_desc = "Mark Deathglare Tentacles with {rt6}{rt5}{rt4}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the spears is the fastest way to mark them.|r"
@@ -142,6 +153,7 @@ function mod:GetOptions()
 
 		--[[ Mythic ]]--
 		218415, -- Death Blossom
+		"shriveled_eyestalk",
 	},{
 		["stages"] = "general",
 		["forces"] = -13184, -- Stage One
@@ -204,10 +216,11 @@ function mod:OnEngage()
 	wipe(mobCollector)
 	fixateOnMe = nil
 	insidePhase = 1
+	outsidePhase = 1
 	deathBlossomCount = 1
 	bloodsRemaining = self:LFR() and 15 or self:Mythic() and 21 or 20
 	self:CDBar(208689, 11.5) -- Ground Slam
-	self:CDBar("nightmare_horror", 65, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
+	self:CDBar("nightmare_horror", self:Mythic() and 80 or 65, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 
 	if self:Mythic() then
 		self:Bar(218415, 60) -- Death Blossom
@@ -241,7 +254,7 @@ end
 function mod:StartSpawnTimer(addType, count)
 	--local data = self:Mythic() and spawnDataMythic or self:LFR() and spawnDataLFR or spawnData TODO
 	local data = self:Mythic() and spawnDataMythic or spawnData
-	local info = data and data[insidePhase][addType][count]
+	local info = data and data[outsidePhase][addType][count]
 	if not info then
 		-- all out of spawn data
 		return
@@ -255,7 +268,7 @@ function mod:StartSpawnTimer(addType, count)
 		self:Bar("forces", length, nextDeathglareText, L.deathglare_tentacle_icon)
 	else
 		nextCorruptorText = CL.count:format(self:SpellName(addType), numSpawns)
-		self:CDBar("forces", length, nextCorruptorText, L.corruptor_tentacle_icon)
+		self:Bar("forces", length, nextCorruptorText, L.corruptor_tentacle_icon)
 	end
 
 	self:ScheduleTimer("StartSpawnTimer", length, addType, count+1)
@@ -414,7 +427,11 @@ do
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				self:Message(args.spellId, "Neutral", "Info", CL.spawned:format(self:SpellName(L.deathglare_tentacle)), L.deathglare_tentacle_icon)
+				if self:Mythic() and insidePhase == 2 then
+					self:Message("shriveled_eyestalk", "Neutral", "Info", CL.spawned:format(self:SpellName(L.shriveled_eyestalk)), L.shriveled_eyestalk_icon)
+				else
+					self:Message(args.spellId, "Neutral", "Info", CL.spawned:format(self:SpellName(L.deathglare_tentacle)), L.deathglare_tentacle_icon)
+				end
 			end
 		end
 
@@ -429,11 +446,11 @@ function mod:StuffOfNightmares()
 	if self.isEngaged then -- Gets buffed when the boss spawns
 		self:Message("stages", "Neutral", "Long", CL.stage:format(1), false)
 		self:Bar("nightmare_horror", 99, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
-		insidePhase = insidePhase + 1
+		outsidePhase = outsidePhase + 1
 
 		phaseStartTime = GetTime()
-		self:StartSpawnTimer(-13190, 1)
-		self:StartSpawnTimer(-13191, 1)
+		self:StartSpawnTimer(-13190, 1) -- Deathglare Tentacle
+		self:StartSpawnTimer(-13191, 1) -- Corruptor Tentacle
 
 		bloodsRemaining = self:LFR() and 15 or self:Mythic() and 21 or 20
 	end
@@ -445,6 +462,13 @@ function mod:StuffOfNightmaresRemoved()
 	self:StopBar(nextDeathglareText)
 
 	self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
+
+	if self:Mythic() and insidePhase == 2 then
+		self:Bar("shriveled_eyestalk", 10, L.shriveled_eyestalk, L.shriveled_eyestalk_icon)
+		self:ScheduleTimer("Bar", 10, "shriveled_eyestalk", 20, L.shriveled_eyestalk, L.shriveled_eyestalk_icon)
+	end
+
+	insidePhase = insidePhase + 1
 end
 
 function mod:DarkReconstitution(args)
