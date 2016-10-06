@@ -1083,8 +1083,11 @@ do
 	-- @return boolean
 	function boss:Interrupter(guid)
 		-- We will probably need to make this smarter
-		if canInterrupt and guid and (UnitGUID("target") == guid or UnitGUID("focus") == guid) then
-			return true
+		if guid then
+			if canInterrupt and (UnitGUID("target") == guid or UnitGUID("focus") == guid) then
+				return canInterrupt
+			end
+			return
 		end
 		return canInterrupt
 	end
