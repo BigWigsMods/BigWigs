@@ -20,8 +20,7 @@ mod.respawnTime = 30
 
 local mobCollector = {}
 local fixateOnMe = nil
-local insidePhase = 1
-local outsidePhase = 1
+local phase = 1 -- 1 = Outside, 2 = Boss, 3 = Outside, 4 = Boss
 local deathglareMarked = {} -- save GUIDs of marked mobs
 local deathglareMarks  = { [6] = true, [5] = true, [4] = true, [3] = true } -- available marks to use
 local deathBlossomCount = 1
@@ -39,7 +38,7 @@ local spawnData = {
 			{ 82.0, 2}, -- 2x
 		},
 	},
-	[2] = { -- Outside Phase 2, time after Stuff of Nightmares (209915) applied
+	[3] = { -- Outside Phase 2, time after Stuff of Nightmares (209915) applied
 		[-13190] = { -- Deathglare Tentacle, Mind Flay (208697) SPELL_CAST_START
 			{ 21.5, 2}, -- 2x
 			{116.5, 2}, -- 2x
@@ -67,7 +66,7 @@ local spawnDataMythic = {
 			{300.0, 3}, -- 3x
 		},
 	},
-	[2] = { -- Outside Phase 2, time after Stuff of Nightmares (209915) applied
+	[3] = { -- Outside Phase 2, time after Stuff of Nightmares (209915) applied
 		[-13190] = { -- Deathglare Tentacle, Mind Flay (208697) SPELL_CAST_START
 			{ 21.5, 1}, -- 1x
 			{ 26.5, 1}, -- 1x
@@ -216,8 +215,7 @@ end
 function mod:OnEngage()
 	wipe(mobCollector)
 	fixateOnMe = nil
-	insidePhase = 1
-	outsidePhase = 1
+	phase = 1
 	deathBlossomCount = 1
 	bloodsRemaining = self:LFR() and 15 or self:Mythic() and 21 or 20
 	self:CDBar(208689, 11.5) -- Ground Slam
@@ -253,9 +251,9 @@ end
 --
 
 function mod:StartSpawnTimer(addType, count)
-	--local data = self:Mythic() and spawnDataMythic or self:LFR() and spawnDataLFR or spawnData TODO
+	if phase == 2 or phase == 4 then return end -- No spawns in boss phase
 	local data = self:Mythic() and spawnDataMythic or spawnData
-	local info = data and data[outsidePhase][addType][count]
+	local info = data and data[phase][addType][count]
 	if not info then
 		-- all out of spawn data
 		return
@@ -433,7 +431,7 @@ do
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				if self:Mythic() and insidePhase == 2 then
+				if self:Mythic() and phase == 4 then
 					self:Message("shriveled_eyestalk", "Neutral", "Info", CL.spawned:format(self:SpellName(L.shriveled_eyestalk)), L.shriveled_eyestalk_icon)
 				else
 					self:Message(args.spellId, "Neutral", "Info", CL.spawned:format(self:SpellName(L.deathglare_tentacle)), L.deathglare_tentacle_icon)
@@ -451,14 +449,18 @@ end
 function mod:StuffOfNightmares()
 	if self.isEngaged then -- Gets buffed when the boss spawns
 		self:Message("stages", "Neutral", "Long", CL.stage:format(1), false)
-		self:Bar("nightmare_horror", 99, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
-		outsidePhase = outsidePhase + 1
+		phase = phase + 1
+		bloodsRemaining = self:LFR() and 15 or self:Mythic() and 21 or 20
 
+		self:Bar("nightmare_horror", 99, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 		phaseStartTime = GetTime()
 		self:StartSpawnTimer(-13190, 1) -- Deathglare Tentacle
 		self:StartSpawnTimer(-13191, 1) -- Corruptor Tentacle
 
-		bloodsRemaining = self:LFR() and 15 or self:Mythic() and 21 or 20
+		deathBlossomCount = 1
+		if self:Mythic() then
+			self:Bar(218415, 80) -- Death Blossom
+		end
 	end
 end
 
@@ -466,15 +468,15 @@ function mod:StuffOfNightmaresRemoved()
 	self:StopBar(L.nightmare_horror)
 	self:StopBar(nextCorruptorText)
 	self:StopBar(nextDeathglareText)
+	self:StopBar(218415) -- Death Blossom
 
 	self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
+	phase = phase + 1
 
-	if self:Mythic() and insidePhase == 2 then
+	if self:Mythic() and phase == 4 then
 		self:Bar("shriveled_eyestalk", 10, L.shriveled_eyestalk, L.shriveled_eyestalk_icon)
 		self:ScheduleTimer("Bar", 10, "shriveled_eyestalk", 20, L.shriveled_eyestalk, L.shriveled_eyestalk_icon)
 	end
-
-	insidePhase = insidePhase + 1
 end
 
 function mod:DarkReconstitution(args)
@@ -551,7 +553,10 @@ end
 
 function mod:DeathBlossomSuccess(args)
 	self:Message(args.spellId, "Positive", "Long", CL.over:format(args.spellName))
-	local time = deathBlossomCount == 2 and 85 or deathBlossomCount == 3 and 20 or 0
+	local time = deathBlossomCount == 2 and 90 or deathBlossomCount == 3 and 20 or 0
+	if phase == 3 then
+		time = deathBlossomCount == 2 and 60 or deathBlossomCount == 3 and 100 or 0
+	end
 	if time > 0 then
 		self:Bar(args.spellId, time)
 	end
