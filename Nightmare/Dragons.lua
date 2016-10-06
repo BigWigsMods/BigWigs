@@ -62,7 +62,7 @@ function mod:GetOptions()
 		{203787, "PROXIMITY", "SAY"}, -- Volatile Infection
 		205298, -- Essence of Corruption
 		205300, -- Corruption
-		205528, -- Corruption of the Dream
+		204245, -- Corruption of the Dream
 
 		--[[ Lethon ]]--
 		203888, -- Spihon Spirit
@@ -194,7 +194,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, _, _, _, spellId)
 	elseif spellId == 205331 then -- Taerar: Seeping Fog
 		self:Message(205341, "Urgent", "Alarm")
 	elseif spellId == 205528 then -- Emeriss: Corruption of the Dream
-		self:Message(spellId, "Attention", "Alarm")
+		self:Message(204245, "Attention", "Alarm")
 	end
 end
 
