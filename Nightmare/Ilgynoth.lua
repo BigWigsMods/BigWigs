@@ -138,7 +138,7 @@ function mod:GetOptions()
 
 		-- Nightmare Horror
 		"nightmare_horror", -- Nightmare Horror
-		210984, -- Eye of Fate
+		{210984, "TANK_HEALER"}, -- Eye of Fate
 
 		-- Corruptor Tentacle
 		{208929, "SAY", "FLASH"}, -- Spew Corruption
@@ -373,22 +373,16 @@ end
 function mod:SummonNightmareHorror(args)
 	self:Message("nightmare_horror", "Important", "Info", CL.spawned:format(self:SpellName(L.nightmare_horror)), L.nightmare_horror_icon)
 	self:Bar("nightmare_horror", 220, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror < TODO beta timer, need live data
-	if self:Tank() or self:Healer() then
-		self:Bar(210984, 13.8) -- Deathglare
-	end
+	self:Bar(210984, 13.8) -- Eye of Fate
 end
 
 function mod:EyeOfFate(args)
-	if self:Tank() or self:Healer() then
-		local amount = args.amount or 1
-		self:StackMessage(args.spellId, args.destName, amount, "Important", self:Tank() and amount > 1 and "Warning")
-	end
+	local amount = args.amount or 1
+	self:StackMessage(args.spellId, args.destName, amount, "Important", self:Tank() and amount > 1 and "Warning")
 end
 
 function mod:EyeOfFateCast(args)
-	if self:Tank() or self:Healer() then
-		self:Bar(args.spellId, 10)
-	end
+	self:Bar(args.spellId, 10)
 end
 
 -- Corruptor Tentacle
