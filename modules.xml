@@ -19,6 +19,6 @@
 <Include file="TrialOfValor\locales.xml"/>
 
 <Include file="BrokenIsles\modules.xml"/>
-<!--<Include file="BrokenIsles\locales.xml"/>-->
+<Include file="BrokenIsles\locales.xml"/>
 <!--@end-do-not-package@-->
 </Ui>

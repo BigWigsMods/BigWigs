@@ -205,7 +205,7 @@ function mod:OnEngage()
 	fixateOnMe = nil
 	insidePhase = 1
 	deathBlossomCount = 1
-	bloodsRemaining = self:LFR() and 15 or self:Mythic() and 25 or 20
+	bloodsRemaining = self:LFR() and 15 or self:Mythic() and 21 or 20
 	self:CDBar(208689, 11.5) -- Ground Slam
 	self:CDBar("nightmare_horror", 65, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 
@@ -435,7 +435,7 @@ function mod:StuffOfNightmares()
 		self:StartSpawnTimer(-13190, 1)
 		self:StartSpawnTimer(-13191, 1)
 
-		bloodsRemaining = self:LFR() and 15 or self:Mythic() and 25 or 20
+		bloodsRemaining = self:LFR() and 15 or self:Mythic() and 21 or 20
 	end
 end
 
