@@ -108,7 +108,7 @@ if L then
 	L.shriveled_eyestalk_icon = 208697 -- Mind Flay icon
 
 	L.custom_off_deathglare_marker = "Deathglare Tentacle marker"
-	L.custom_off_deathglare_marker_desc = "Mark Deathglare Tentacles with {rt6}{rt5}{rt4}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the spears is the fastest way to mark them.|r"
+	L.custom_off_deathglare_marker_desc = "Mark Deathglare Tentacles with {rt6}{rt5}{rt4}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the tentacles is the fastest way to mark them.|r"
 	L.custom_off_deathglare_marker_icon = 6
 
 	L.bloods_remaining = "%d |4Blood:Bloods; remaining"
