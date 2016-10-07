@@ -15,7 +15,7 @@ end
 L = BigWigs:NewBossLocale("Il'gynoth", "ptBR")
 if L then
 	L.custom_off_deathglare_marker = "Marcador de Tentáculo Fulgor da Morte"
-	--read all this line --L.custom_off_deathglare_marker_desc = "Marca Tentáculo FUlgor da Morte com {rt6}{rt5}{rt4}{rt3}, requer assistente ou líder.\n|cFFFF0000Apenas 1 pessoa no raide deve ter isto ativado para prevenir conflitos na marcação.|r\n|cFFADFF2FDICA: Se o raide escolheu você para isso, ter placas de identificação ativadas ou passar rapidamente o mouse sobre *******"the spears"(you mean the body of the tentacle?, if yes then you can use "as cabeças")**** é a maneira mais rápida de marcá-las.|r"
+	L.custom_off_deathglare_marker_desc = "Marca Tentáculo Fulgor da Morte com {rt6}{rt5}{rt4}{rt3}, requer assistente ou líder.\n|cFFFF0000Apenas 1 pessoa no raide deve ter isto ativado para prevenir conflitos na marcação.|r\n|cFFADFF2FDICA: Se o raide escolheu você para isso, ter placas de identificação ativadas ou passar rapidamente o mouse sobre os tentáculos é a maneira mais rápida de marcá-los.|r"
 
  	L.bloods_remaining = "%d |4Sangue:Sangues; restando"
 end
@@ -29,8 +29,8 @@ end
 
 L = BigWigs:NewBossLocale("Ursoc", "ptBR")
 if L then
-	--L.custom_off_gaze_assist = "Focused Gaze Assist"
-	--L.custom_off_gaze_assist_desc = "Show raid icons in bars and messages for Focused Gaze. Using {rt4} for odd, {rt6} for even soaks. Requires promoted or leader."
+	L.custom_off_gaze_assist = "Assistente de Olhar Concentrado"
+	L.custom_off_gaze_assist_desc = "Mostra marcadores de alvo nas barras e mensagens para Olhar Concentrado. Marca o alvo com {rt4} em casts ímpares e {rt6} em casts pares. Requer assistente ou líder.
 end
 
 L = BigWigs:NewBossLocale("Xavius", "ptBR")
