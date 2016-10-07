@@ -38,7 +38,7 @@ function mod:GetOptions()
 	return {
 		{197943, "TANK"}, -- Overwhelm
 		{204859, "TANK_HEALER"}, -- Rend Flesh
-		{198006, "ICON", "FLASH", "PULSE", "SAY"}, -- Focused Gaze
+		{198006, "FLASH", "PULSE", "SAY"}, -- Focused Gaze
 		"custom_off_gaze_assist",
 		198108, -- Momentum
 		197969, -- Roaring Cacophony
@@ -140,6 +140,7 @@ function mod:FocusedGaze(args)
 		showingIcons = true
 		countSay = CL.count_rticon:format(args.spellName, focusedGazeCount, icon)
 		countMessage = CL.count_icon:format(args.spellName, focusedGazeCount, icon)
+		SetRaidTarget(args.destName, icon)
 	end
 
 	if self:Me(args.destGUID) then
@@ -147,7 +148,6 @@ function mod:FocusedGaze(args)
 		self:Say(args.spellId, countSay)
 	end
 
-	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Warning", countMessage, args.spellId, true)
 	self:TargetBar(args.spellId, 6, args.destName, countMessage)
 	focusedGazeCount = focusedGazeCount + 1
@@ -160,7 +160,9 @@ end
 
 function mod:FocusedGazeRemoved(args)
 	self:StopBar(args.spellId, args.destName)
-	self:PrimaryIcon(args.spellId, nil)
+	if not self:LFR() and self:GetOption("custom_off_gaze_assist") then
+		SetRaidTarget(args.destName, 0)
+	end
 end
 
 function mod:Momentum(args)
