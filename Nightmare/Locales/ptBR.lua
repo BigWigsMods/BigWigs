@@ -17,7 +17,7 @@ if L then
 	L.custom_off_deathglare_marker = "Marcador de Tentáculo Fulgor da Morte"
 	L.custom_off_deathglare_marker_desc = "Marca Tentáculo Fulgor da Morte com {rt6}{rt5}{rt4}{rt3}, requer assistente ou líder.\n|cFFFF0000Apenas 1 pessoa no raide deve ter isto ativado para prevenir conflitos na marcação.|r\n|cFFADFF2FDICA: Se o raide escolheu você para isso, ter placas de identificação ativadas ou passar rapidamente o mouse sobre os tentáculos é a maneira mais rápida de marcá-los.|r"
 
- 	L.bloods_remaining = "%d |4Sangue:Sangues; restando"
+ 	L.bloods_remaining = "%d |4Sangue:Sangues; faltando"
 end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "ptBR")
