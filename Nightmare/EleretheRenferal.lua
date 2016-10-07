@@ -67,7 +67,6 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	--[[ Spider Form ]]--
-	--self:Log("SPELL_CAST_SUCCESS", "WebOfPain", 215288) -- XXX i think we can handle everythin with the auras
 	self:Log("SPELL_AURA_APPLIED", "WebOfPainApplied", 215300) -- 215307 is applied to the other player
 	self:Log("SPELL_CAST_SUCCESS", "VileAmbush", 214348)
 	self:Log("SPELL_CAST_SUCCESS", "NecroticVenom", 215443)
@@ -197,13 +196,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	end
 end
 
---[[
-function mod:WebOfPain(args)
-	self:Message(args.spellId, "Attention", nil)
-	self:Bar(args.spellId, duration)
-end
---]]
-
 function mod:WebOfPainApplied(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Warning", L.yourLink:format(self:ColorName(args.sourceName)))
@@ -215,7 +207,7 @@ function mod:WebOfPainApplied(args)
 		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 		local remaining = expires-GetTime()
 		self:Bar(args.spellId, remaining, L.yourLinkShort:format(self:ColorName(args.sourceName)))
-	else
+	elseif not self:CheckOption(args.spellId, "ME_ONLY") then
 		self:Message(args.spellId, "Attention", nil, L.isLinkedWith:format(self:ColorName(args.sourceName), self:ColorName(args.destName)))
 	end
 end
