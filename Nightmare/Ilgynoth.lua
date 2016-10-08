@@ -217,7 +217,7 @@ function mod:OnEngage()
 	fixateOnMe = nil
 	phase = 1
 	deathBlossomCount = 1
-	bloodsRemaining = self:LFR() and 15 or self:Mythic() and 21 or 20
+	bloodsRemaining = self:LFR() and 15 or self:Mythic() and 22 or 20
 	self:CDBar(208689, 11.5) -- Ground Slam
 	self:CDBar("nightmare_horror", self:Mythic() and 80 or 65, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 
@@ -444,7 +444,7 @@ function mod:StuffOfNightmares()
 	if self.isEngaged then -- Gets buffed when the boss spawns
 		self:Message("stages", "Neutral", "Long", CL.stage:format(1), false)
 		phase = phase + 1
-		bloodsRemaining = self:LFR() and 15 or self:Mythic() and 21 or 20
+		bloodsRemaining = self:LFR() and 15 or self:Mythic() and 22 or 20
 
 		self:Bar("nightmare_horror", 99, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 		phaseStartTime = GetTime()
