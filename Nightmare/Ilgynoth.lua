@@ -233,17 +233,8 @@ function mod:OnEngage()
 	if self:GetOption("custom_off_deathglare_marker") then
 		deathglareMarks = { [6] = true, [5] = true, [4] = true, [3] = true }
 
-		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "DeathglareMark")
-		self:RegisterEvent("UNIT_TARGET", "DeathglareMark")
-		self:RegisterEvent("NAME_PLATE_UNIT_ADDED", "DeathglareMark")
+		self:RegisterTargetEvents("DeathglareMark")
 	end
-end
-
-function mod:OnBossDisable()
-	wipe(deathglareMarked)
-	self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
-	self:UnregisterEvent("UNIT_TARGET")
-	self:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
 end
 
 --------------------------------------------------------------------------------
@@ -273,10 +264,8 @@ function mod:StartSpawnTimer(addType, count)
 	self:ScheduleTimer("StartSpawnTimer", length, addType, count+1)
 end
 
-function mod:DeathglareMark(event, firedUnit)
-	local unit = event == "NAME_PLATE_UNIT_ADDED" and firedUnit or firedUnit and firedUnit.."target" or "mouseover"
+function mod:DeathglareMark(event, unit)
 	local guid = UnitGUID(unit)
-
 	if self:MobId(guid) == 105322 and not deathglareMarked[guid] then
 		local icon = next(deathglareMarks)
 		if icon then -- At least one icon unused

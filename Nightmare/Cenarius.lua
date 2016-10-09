@@ -154,10 +154,8 @@ end
 -- Event Handlers
 --
 
-function mod:WispMark(event, firedUnit)
-	local unit = (event == "NAME_PLATE_UNIT_ADDED" and firedUnit) or (firedUnit and firedUnit.."target") or "mouseover"
+function mod:WispMark(event, unit)
 	local guid = UnitGUID(unit)
-
 	if self:MobId(guid) == 106659 and UnitIsEnemy("player", unit) and not whispMarked[guid] then
 		local icon = next(whispMarks)
 		if icon then -- At least one icon unused
@@ -226,12 +224,8 @@ function mod:ForcesOfNightmare(args)
 	self:Bar(args.spellId, 77.7, CL.count:format(args.spellName, forcesOfNightmareCount))
 
 	if self:GetOption("custom_off_wisp_marker") then
-		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", "WispMark")
-		self:RegisterEvent("UNIT_TARGET", "WispMark")
-		self:RegisterEvent("NAME_PLATE_UNIT_ADDED", "WispMark")
-		self:ScheduleTimer("UnregisterEvent", 10, "UPDATE_MOUSEOVER_UNIT")
-		self:ScheduleTimer("UnregisterEvent", 10, "UNIT_TARGET")
-		self:ScheduleTimer("UnregisterEvent", 10, "NAME_PLATE_UNIT_ADDED")
+		self:RegisterTargetEvents("WispMark")
+		self:ScheduleTimer("UnregisterTargetEvents", 10)
 	end
 end
 
