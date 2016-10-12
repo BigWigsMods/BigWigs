@@ -381,7 +381,7 @@ end
 do
 	local prev = 0
 	function mod:DesiccatingStomp(args)
-		self:StopBar(CL.count:format(self:SpellName(args.spellName), getMobNumber(105468, args.sourceGUID))) -- Desiccating Stomp
+		self:StopBar(CL.count:format(args.spellName, getMobNumber(105468, args.sourceGUID))) -- Desiccating Stomp
 		self:Message(args.spellId, "Urgent", "Long", CL.casting:format(args.spellName))
 		local t = GetTime()
 		if t-prev > 4 then
