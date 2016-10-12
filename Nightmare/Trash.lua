@@ -97,13 +97,16 @@ end
 --[[ Dire Shaman ]]--
 do
 	local guids = {}
+	local nextIcon = 8
 	function mod:CorruptedTotem(args)
 		self:Message("totem", "Important", "Long", args.spellName, L.totem_icon)
 		if self:GetOption("custom_on_mark_totem") then
 			if not next(guids) then
-				guids[args.destGUID] = 8
+				nextIcon = 8
+				guids[args.destGUID] = nextIcon
 			else
-				guids[args.destGUID] = 7
+				if nextIcon == 8 then nextIcon = 7 else nextIcon = 8 end
+				guids[args.destGUID] = nextIcon
 			end
 			self:RegisterTargetEvents("MarkTotem")
 		end
