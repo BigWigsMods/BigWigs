@@ -25,6 +25,8 @@ if L then
 	L.gelatinizedDecay = "Сгустившаяся гниль"
 	L.befouler = "Скверносерд-осквернитель"
 	L.shaman = "Дикий шаман"
+	--L.custom_on_mark_totem = "Mark the Totems"
+	--L.custom_on_mark_totem_desc = "Mark the Totems with {rt8}{rt7}, requires promoted or leader."
 end
 
 L = BigWigs:NewBossLocale("Ursoc", "ruRU")
