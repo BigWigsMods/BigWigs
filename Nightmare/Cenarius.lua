@@ -26,9 +26,19 @@ mod.respawnTime = 30
 local mobCollector = {}
 local forcesOfNightmareCount = 1
 local phase = 1
-local whispMarks = { [8] = true, [7] = true, [6] = true, [5] = true, [4] = true }
-local whispMarked = {}
-local stompCount = 1
+local wispMarks = { [8] = true, [7] = true, [6] = true, [5] = true, [4] = true }
+local wispMarked = {}
+local mobTable = {
+	[105468] = {}, -- Nightmare Ancient
+	[105494] = {}, -- Rotten Drake
+	[105495] = {}, -- Twisted Sister
+}
+local mobCount = {
+	[105468] = 0, -- Nightmare Ancient
+	[105494] = 0, -- Rotten Drake
+	[105495] = 0, -- Twisted Sister
+}
+local drakeDeaths = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -42,6 +52,9 @@ if L then
 	L.custom_off_wisp_marker = "Corrupted Wisp marker"
 	L.custom_off_wisp_marker_desc = "Mark Corrupted Wisps with {rt8}{rt7}{rt6}{rt5}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the wisps is the fastest way to mark them.|r"
 	L.custom_off_wisp_marker_icon = 8
+
+	L.custom_off_multiple_breath_bar = "Show multiple Rotten Breath bars"
+	L.custom_off_multiple_breath_bar_desc = "Per default BigWigs will only show the Rotten Breath bar of one drake. Enable this option if you want to see the timer for each drake."
 end
 
 --------------------------------------------------------------------------------
@@ -56,7 +69,6 @@ function mod:GetOptions()
 		{210290, "SAY", "FLASH"}, -- Nightmare Brambles
 		212726, -- Forces of Nightmare
 		210346, -- Dread Thorns
-		214884, -- Corrupt Allies of Nature
 		-- P2
 		214505, -- Entangling Nightmares
 		214529, -- Spear of Nightmares
@@ -73,6 +85,7 @@ function mod:GetOptions()
 
 		--[[ Rotten Drake ]]--
 		211192, -- Rotten Breath
+		"custom_off_multiple_breath_bar",
 
 		--[[ Twisted Sister ]]--
 		211368, -- Twisted Touch of Life
@@ -80,6 +93,7 @@ function mod:GetOptions()
 
 		--[[ Mythic ]]--
 		214876, -- Beasts of Nightmare
+		214884, -- Corrupt Allies of Nature
 	},{
 		["stages"] = -13339, -- Cenarius
 		[212681] = -13344, -- Malfurion Stormrage
@@ -95,12 +109,12 @@ function mod:OnBossEnable()
 	--[[ Cenarius ]]--
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_CAST_START", "ForcesOfNightmare", 212726)
+	self:Death("MobDeath", 105468, 105494, 105495) -- Nightmare Ancient, Rotten Drake, Twisted Sister
 	self:Log("SPELL_AURA_APPLIED", "CreepingNightmares", 210279)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CreepingNightmares", 210279)
 	self:Log("SPELL_AURA_REMOVED", "CreepingNightmaresRemoved", 210279)
 	self:Log("SPELL_AURA_APPLIED", "DreadThorns", 210346)
 	self:Log("SPELL_AURA_REMOVED", "DreadThornsRemoved", 210346)
-	self:Log("SPELL_AURA_APPLIED", "CorruptAlliesOfNature", 214884)
 
 	self:Log("SPELL_AURA_APPLIED", "EntanglingNightmares", 214505)
 	self:Log("SPELL_CAST_START", "SpearOfNightmaresCast", 214529)
@@ -116,7 +130,6 @@ function mod:OnBossEnable()
 
 	--[[ Nightmare Treant ]]--
 	self:Log("SPELL_CAST_START", "DesiccatingStomp", 226821)
-	self:Log("SPELL_CAST_SUCCESS", "DesiccatingStompSuccess", 226821)
 	self:Log("SPELL_CAST_START", "NightmareBlast", 213162)
 
 	--[[ Rotten Drake ]]--
@@ -129,51 +142,88 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ScornedTouchRemoved", 211471)
 
 	--[[ Mythic ]]--
-	self:Log("SPELL_CAST_SUCCESS", "BeastsOfNightmare", 214876) -- untested
+	self:Log("SPELL_AURA_APPLIED", "CorruptAlliesOfNature", 214884)
 end
 
 function mod:OnEngage()
 	forcesOfNightmareCount = 1
-	stompCount = 1
 	phase = 1
 	self:CDBar(212726, 10, CL.count:format(self:SpellName(212726), forcesOfNightmareCount)) -- Forces of Nightmare
 	self:Bar(210290, 28) -- Nightmare Brambles
 	self:CDBar(213162, 30) -- Nightmare Blast
 	wipe(mobCollector)
+	mobTable = {
+		[105468] = {}, -- Nightmare Ancient
+		[105494] = {}, -- Rotten Drake
+		[105495] = {}, -- Twisted Sister
+	}
+	mobCount = {
+		[105468] = 0, -- Nightmare Ancient
+		[105494] = 0, -- Rotten Drake
+		[105495] = 0, -- Twisted Sister
+	}
+	drakeDeaths = 0
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-	wipe(whispMarked)
-	whispMarks = { [8] = true, [7] = true, [6] = true, [5] = true, [4] = true }
+	wipe(wispMarked)
+	wispMarks = { [8] = true, [7] = true, [6] = true, [5] = true, [4] = true }
 end
 
 function mod:OnBossDisable()
-	wipe(whispMarked)
+	wipe(wispMarked)
+	wipe(mobCollector)
+end
+
+--------------------------------------------------------------------------------
+-- Local Functions
+--
+
+local function getMobNumber(mobId, guid)
+	if mobTable[mobId][guid] then return mobTable[mobId][guid] end
+	mobCount[mobId] = mobCount[mobId] + 1
+	mobTable[mobId][guid] = mobCount[mobId]
+	return mobCount[mobId]
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function mod:MobDeath(args)
+	local mobId = self:MobId(args.destGUID)
+	local mobText = getMobNumber(mobId, args.destGUID)
+	if mobId == 105468 then -- Nightmare Ancient
+		self:StopBar(CL.count:format(self:SpellName(226821), mobText)) -- Desiccating Stomp
+	elseif mobId == 105494 then  -- Rotten Drake
+		self:StopBar(CL.count:format(self:SpellName(211192), mobText)) -- Rotten Breath
+		self:StopBar(CL.cast:format(CL.count:format(self:SpellName(211192), mobText))) -- <Cast: Rotten Breath>
+		drakeDeaths = drakeDeaths + 1
+	elseif mobId == 105495 then -- Twisted Sister
+		self:StopBar(CL.count:format(self:SpellName(211471), mobText)) -- Scorned Touch
+		self:StopBar(CL.count:format(self:SpellName(211368), mobText)) -- Twisted Touch of Life
+	end
+end
+
 function mod:WispMark(event, unit)
 	local guid = UnitGUID(unit)
-	if self:MobId(guid) == 106659 and UnitIsEnemy("player", unit) and not whispMarked[guid] then
-		local icon = next(whispMarks)
+	if self:MobId(guid) == 106659 and UnitIsEnemy("player", unit) and not wispMarked[guid] then
+		local icon = next(wispMarks)
 		if icon then -- At least one icon unused
 			SetRaidTarget(unit, icon)
-			whispMarks[icon] = nil -- Mark is no longer available
-			whispMarked[guid] = icon -- Save the tentacle we marked and the icon we marked it with
+			wispMarks[icon] = nil -- Mark is no longer available
+			wispMarked[guid] = icon -- Save the wisp we marked and the icon we marked it with
 		end
 	end
 end
 
 function mod:WispDeath(args)
-	if whispMarked[args.destGUID] then -- Did we mark the Tentacle?
-		whispMarks[whispMarked[args.destGUID]] = true -- Mark used is available again
+	if wispMarked[args.destGUID] then -- Did we mark the wisp?
+		wispMarks[wispMarked[args.destGUID]] = true -- Mark used is available again
 	end
 end
 
 --[[ Cenarius ]]--
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 210290 then -- Nightmare Brambles
 		self:Bar(spellId, phase == 2 and 20 or 30) -- at some point starts casting with 15sec-20sec cd
 		local targetGUID = UnitGUID("boss1target") -- selects target 2sec prior to the cast
@@ -193,6 +243,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		self:Bar(214529, 23) -- Spear Of Nightmares
 		self:Bar(214505, 35) -- Entangling Nightmares
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
+	elseif spellId == 214876 then -- Beasts of Nightmare
+		self:Message(spellId, "Important", "Alert", CL.incoming:format(spellName))
+		self:Bar(spellId, 30.3)
 	end
 end
 
@@ -238,20 +291,22 @@ do
 	}
 	function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		for i = 1, 5 do
-			local guid = UnitGUID("boss"..i)
-			if guid and not mobCollector[guid] then
+			local unit = ("boss%d"):format(i)
+			local guid = UnitGUID(unit)
+			if guid and not mobCollector[guid] and UnitIsEnemy("player", unit) then
 				mobCollector[guid] = true
 				local mobId = self:MobId(guid)
 				local id = adds[mobId]
 				if id then
-					self:Message(212726, "Neutral", "Info", id, false)
+					self:Message(212726, "Neutral", "Info", CL.count:format(self:SpellName(id), getMobNumber(mobId, guid)), false)
 				end
 				if mobId == 105468 then -- Nightmare Ancient
-					stompCount = 1
-					self:Bar(226821, 20) -- Desiccating Stomp
+					self:Bar(226821, 20, CL.count:format(self:SpellName(226821), getMobNumber(mobId, guid))) -- Desiccating Stomp
+				elseif mobId == 105494 then -- Rotten Drake
+					self:Bar(211192, 20, CL.count:format(self:SpellName(211192), getMobNumber(mobId, guid))) -- Rotten Breath
 				elseif mobId == 105495 then -- Twisted Sister
-					self:Bar(211471, 6) -- Scorned Touch
-					self:Bar(211368, 7) -- Twisted Touch of Life
+					self:CDBar(211471, 5, CL.count:format(self:SpellName(211471), getMobNumber(mobId, guid))) -- Scorned Touch
+					self:CDBar(211368, 6, CL.count:format(self:SpellName(211368), getMobNumber(mobId, guid))) -- Twisted Touch of Life
 				end
 			end
 		end
@@ -323,26 +378,36 @@ end
 -- give fixate debuff pls blizzard
 
 --[[ Nightmare Treant ]]--
-function mod:DesiccatingStomp(args)
-	self:Message(args.spellId, "Urgent", "Long", CL.casting:format(CL.count:format(args.spellName, stompCount)))
-	stompCount = stompCount + 1
-end
-
-function mod:DesiccatingStompSuccess(args)
-	self:CDBar(args.spellId, stompCount % 2 == 0 and 3 or 27)
+do
+	local prev = 0
+	function mod:DesiccatingStomp(args)
+		self:StopBar(CL.count:format(self:SpellName(args.spellName), getMobNumber(105468, args.sourceGUID))) -- Desiccating Stomp
+		self:Message(args.spellId, "Urgent", "Long", CL.casting:format(args.spellName))
+		local t = GetTime()
+		if t-prev > 4 then
+			prev = t
+			local spellText = CL.count:format(args.spellName, getMobNumber(105468, args.sourceGUID))
+			self:Bar(args.spellId, 6.1, CL.cast:format(spellText))
+			self:ScheduleTimer("Bar", 6.1, args.spellId, 27, spellText)
+		end
+	end
 end
 
 --[[ Rotten Drake ]]--
 function mod:RottenBreath(args)
-	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 5.5, CL.cast:format(args.spellName))
-	self:CDBar(args.spellId, 25)
+	if self:GetOption("custom_off_multiple_breath_bar") or (mobCount[105494]-drakeDeaths == 1) or (drakeDeaths+1 == getMobNumber(105494, args.sourceGUID)) then
+		local spellText = CL.count:format(args.spellName, getMobNumber(105494, args.sourceGUID))
+		self:Message(args.spellId, "Attention", "Alert", CL.casting:format(spellText))
+		self:Bar(args.spellId, 5.5, CL.cast:format(spellText))
+		self:CDBar(args.spellId, 25, spellText)
+	end
 end
 
 --[[ Twisted Sister ]]--
 function mod:TwistedTouchOfLife(args)
-	self:Message(args.spellId, "Important", self:Interrupter() and "Alarm", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 11)
+	local spellText = CL.count:format(args.spellName, getMobNumber(105495, args.sourceGUID))
+	self:Message(args.spellId, "Important", self:Interrupter() and "Alarm", CL.casting:format(spellText))
+	self:Bar(args.spellId, 11, spellText)
 end
 
 function mod:TwistedTouchOfLifeApplied(args)
@@ -352,9 +417,9 @@ end
 do
 	local proxList, isOnMe, scheduled = {}, nil, nil
 
-	local function warn(self, spellId)
+	local function warn(self, spellId, spellName, guid)
 		if not isOnMe then
-			self:Message(spellId, "Important", "Alert")
+			self:Message(spellId, "Important", "Alert", CL.count:format(spellName, getMobNumber(105495, guid)))
 		end
 		scheduled = nil
 	end
@@ -377,7 +442,8 @@ do
 		end
 
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
+			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId, args.spellName, args.sourceGUID)
+			self:Bar(args.spellId, 20.6, CL.count:format(args.spellName, getMobNumber(105495, args.sourceGUID)))
 		end
 	end
 
@@ -389,6 +455,7 @@ do
 		end
 
 		tDeleteItem(proxList, args.destName)
+
 		if not isOnMe then -- Don't change proximity if it's on you and expired on someone else
 			if #proxList == 0 then
 				self:CloseProximity(args.spellId)
@@ -397,9 +464,4 @@ do
 			end
 		end
 	end
-end
-
---[[ Mythic ]]--
-function mod:BeastsOfNightmare(args)
-	self:Message(args.spellId, "Important", "Alert")
 end
