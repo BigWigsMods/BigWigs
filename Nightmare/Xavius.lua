@@ -20,6 +20,7 @@ local phase = 1
 local lurkingEruptionCount = 1
 local horrorCount = 1
 local isInDream = false
+local bladeList, bondList = mod:NewTargetList(), mod:NewTargetList()
 local dreamingCount = 1
 
 --------------------------------------------------------------------------------
@@ -132,6 +133,8 @@ function mod:OnEngage()
 	lurkingEruptionCount = 1
 	horrorCount = 1
 	dreamingCount = 1
+	wipe(bladeList)
+	wipe(bondList)
 	isInDream = false
 	self:Bar(206651, 7.5) -- Darkening Soul
 	self:Bar(205741, 18) -- Lurking Eruption (Lurking Terror)
@@ -251,7 +254,7 @@ function mod:DarkeningSoul(args)
 end
 
 do
-	local bladeList, timer = mod:NewTargetList(), nil
+	local timer = nil
 	function mod:NightmareBlades(args)
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
@@ -302,7 +305,7 @@ end
 
 --[[ Stage Two: From the Shadows ]]--
 do
-	local bondList, timer, isOnMe, otherPlayer = mod:NewTargetList(), nil, nil, nil
+	local timer, isOnMe, otherPlayer = nil, nil, nil
 	function mod:BondsOfTerror(args)
 		if self:Me(args.destGUID) then
 			isOnMe = true
@@ -356,7 +359,7 @@ function mod:CallOfNightmares(args)
 end
 
 function mod:CorruptionMeteor(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Info", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Info", nil, nil, isInDream)
 	self:TargetBar(args.spellId, 5, args.destName)
 	self:Bar(args.spellId, phase == 2 and 28 or 35.3)
 end
