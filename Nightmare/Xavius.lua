@@ -215,7 +215,7 @@ do
 		if t-prev > 5 then
 			prev = t
 			lurkingEruptionCount = lurkingEruptionCount + 1
-			self:Bar(args.spellId, lurkingEruptionCount % 3 == 0 and 41 or 20.5, CL.count(args.spellName, lurkingEruptionCount))
+			self:Bar(args.spellId, lurkingEruptionCount % 3 == 0 and 41 or 20.5, CL.count:format(args.spellName, lurkingEruptionCount))
 		end
 	end
 end
