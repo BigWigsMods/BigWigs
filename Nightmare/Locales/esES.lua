@@ -3,8 +3,8 @@ if not L then return end
 if L then
 	L.forces = "Fuerzas"
 	L.bramblesSay = "Zarzas cerca %s"
-	--L.custom_off_multiple_breath_bar = "Show multiple Rotten Breath bars"
-	--L.custom_off_multiple_breath_bar_desc = "Per default BigWigs will only show the Rotten Breath bar of one drake. Enable this option if you want to see the timer for each drake."
+	L.custom_off_multiple_breath_bar = "Muestra múltiples barras para Aliento podrido"
+	L.custom_off_multiple_breath_bar_desc = "Por defecto BigWigs solo mostrará la barra de Aliento podrido de un draco. Activa esta opción si quieres ver el temporizador para cada draco."
 end
 
 L = BigWigs:NewBossLocale("Elerethe Renferal", "esES") or BigWigs:NewBossLocale("Elerethe Renferal", "esMX")
@@ -27,8 +27,8 @@ if L then
 	L.gelatinizedDecay = "Descomposición gelatinosa"
 	L.befouler = "Infectador Corazón Ruin"
 	L.shaman = "Chamán temible"
-	--L.custom_on_mark_totem = "Mark the Totems"
-	--L.custom_on_mark_totem_desc = "Mark the Totems with {rt8}{rt7}, requires promoted or leader."
+	L.custom_on_mark_totem = "Marcar los Totems"
+	L.custom_on_mark_totem_desc = "Marca los Totems con {rt8}{rt7}, requiere ayudante o líder."
 end
 
 L = BigWigs:NewBossLocale("Ursoc", "esES") or BigWigs:NewBossLocale("Ursoc", "esMX")
