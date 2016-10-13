@@ -33,8 +33,8 @@ end
 
 L = BigWigs:NewBossLocale("Ursoc", "frFR")
 if L then
-	L.custom_off_gaze_assist = "Assistance Regard focalisé"
-	L.custom_off_gaze_assist_desc = "Affiche les icônes de raid dans les barres et les messages de Regard focalisé. {rt4} est utilisé pour les soaks impairs, et {rt6} pour les soaks pairs. Nécessite d'être assistant ou chef de raid."
+	L.custom_on_gaze_assist = "Assistance Regard focalisé"
+	L.custom_on_gaze_assist_desc = "Affiche les icônes de raid dans les barres et les messages de Regard focalisé. {rt4} est utilisé pour les soaks impairs, et {rt6} pour les soaks pairs. Nécessite d'être assistant ou chef de raid."
 end
 
 L = BigWigs:NewBossLocale("Xavius", "frFR")

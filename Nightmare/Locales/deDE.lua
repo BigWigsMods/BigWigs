@@ -33,8 +33,8 @@ end
 
 L = BigWigs:NewBossLocale("Ursoc", "deDE")
 if L then
-	L.custom_off_gaze_assist = "Hilfe für Fokussierter Blick"
-	L.custom_off_gaze_assist_desc = "Zeigt Schlachtzugssymbole in Leisten und Nachrichten für Fokussierter Blick. Verwendet {rt4} für ungerade, {rt6} für gerade Blicke (Blicke werden durchnummeriert). Benötigt Leiter oder Assistent."
+	L.custom_on_gaze_assist = "Hilfe für Fokussierter Blick"
+	L.custom_on_gaze_assist_desc = "Zeigt Schlachtzugssymbole in Leisten und Nachrichten für Fokussierter Blick. Verwendet {rt4} für ungerade, {rt6} für gerade Blicke (Blicke werden durchnummeriert). Benötigt Leiter oder Assistent."
 end
 
 L = BigWigs:NewBossLocale("Xavius", "deDE")
