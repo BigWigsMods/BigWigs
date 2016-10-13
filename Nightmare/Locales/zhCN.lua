@@ -24,7 +24,7 @@ end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "zhCN")
 if L then
-	L.gelatinizedDecay = "胶状腐烂"
+	L.gelatinizedDecay = "腐朽软泥怪"
 	L.befouler = "污心腐蚀者"
 	--L.shaman = "Dire Shaman"
 	--L.custom_on_mark_totem = "Mark the Totems"
