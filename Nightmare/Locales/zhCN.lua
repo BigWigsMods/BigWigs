@@ -26,9 +26,9 @@ L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "zhCN")
 if L then
 	L.gelatinizedDecay = "腐朽软泥怪"
 	L.befouler = "污心腐蚀者"
-	--L.shaman = "Dire Shaman"
-	--L.custom_on_mark_totem = "Mark the Totems"
-	--L.custom_on_mark_totem_desc = "Mark the Totems with {rt8}{rt7}, requires promoted or leader."
+	L.shaman = "可怕的萨满"
+	L.custom_on_mark_totem = "图腾标记"
+	L.custom_on_mark_totem_desc = "使用 {rt8}{rt7} 标记图腾，需要权限。"
 end
 
 L = BigWigs:NewBossLocale("Ursoc", "zhCN")
