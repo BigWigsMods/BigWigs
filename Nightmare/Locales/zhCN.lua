@@ -3,8 +3,8 @@ if not L then return end
 if L then
 	L.forces = "梦魇大军"
 	L.bramblesSay = ">%s< 附近荆棘"
-	--L.custom_off_multiple_breath_bar = "Show multiple Rotten Breath bars"
-	--L.custom_off_multiple_breath_bar_desc = "Per default BigWigs will only show the Rotten Breath bar of one drake. Enable this option if you want to see the timer for each drake."
+	L.custom_off_multiple_breath_bar = "显示多重腐败之息计时条"
+	L.custom_off_multiple_breath_bar_desc = "默认 BigWigs 将只显示一条幼龙的腐败之息。启用此选项将看到每条幼龙的腐败之息。"
 end
 
 L = BigWigs:NewBossLocale("Elerethe Renferal", "zhCN")
