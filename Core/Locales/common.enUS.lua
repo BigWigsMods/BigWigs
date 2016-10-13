@@ -12,7 +12,7 @@ L.cast = "<Cast: %s>"
 L.casting = "Casting %s!"
 L.soon = "%s soon!"
 L.count = "%s (%d)"
-L.count_icon = "%s (%d|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d.blp:0|t)"
+L.count_icon = "%s (%d|T13700%d:0|t)"
 L.count_rticon = "%s (%d{rt%d})"
 L.near = "%s near YOU!"
 

@@ -114,6 +114,8 @@ L.VOICE = "Voice"
 L.VOICE_desc = "If you have a voice plugin installed, this option will enable it to play a sound file that speaks this warning out loud for you."
 L.COUNTDOWN = "Countdown"
 L.COUNTDOWN_desc = "If enabled, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1...\" with a big number in the middle of your screen."
+L.INFOBOX = "Info Box"
+L.INFOBOX_desc = "Information is great."
 
 L.advanced = "Advanced options"
 L.back = "<< Back"

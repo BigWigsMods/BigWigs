@@ -3,6 +3,8 @@ if not L then return end
 if L then
 	--L.forces = "Forces"
 	--L.bramblesSay = "Brambles near %s"
+	--L.custom_off_multiple_breath_bar = "Show multiple Rotten Breath bars"
+	--L.custom_off_multiple_breath_bar_desc = "Per default BigWigs will only show the Rotten Breath bar of one drake. Enable this option if you want to see the timer for each drake."
 end
 
 L = BigWigs:NewBossLocale("Elerethe Renferal", "koKR")
@@ -15,7 +17,7 @@ end
 L = BigWigs:NewBossLocale("Il'gynoth", "koKR")
 if L then
 	--L.custom_off_deathglare_marker = "Deathglare Tentacle marker"
-	--L.custom_off_deathglare_marker_desc = "Mark Deathglare Tentacles with {rt6}{rt5}{rt4}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the spears is the fastest way to mark them.|r"
+	--L.custom_off_deathglare_marker_desc = "Mark Deathglare Tentacles with {rt6}{rt5}{rt4}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the tentacles is the fastest way to mark them.|r"
 
 	--L.bloods_remaining = "%d |4Blood:Bloods; remaining"
 end
@@ -25,6 +27,8 @@ if L then
 	--L.gelatinizedDecay = "Gelatinized Decay"
 	--L.befouler = "Taintheart Befouler"
 	--L.shaman = "Dire Shaman"
+	--L.custom_on_mark_totem = "Mark the Totems"
+	--L.custom_on_mark_totem_desc = "Mark the Totems with {rt8}{rt7}, requires promoted or leader."
 end
 
 L = BigWigs:NewBossLocale("Ursoc", "koKR")

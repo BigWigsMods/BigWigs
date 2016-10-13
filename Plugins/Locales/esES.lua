@@ -59,13 +59,13 @@ L.closeProximityDesc = [=[Cierra la ventana de proximidad.
 
 Para desactivarla completamente para un encuentro, tienes que ir a las opciones para ese encuentro y desactivar la opción de 'Proximidad'.]=]
 L.colors = "Colores"
--- L.combatLog = "Automatic Combat Logging"
--- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
+L.combatLog = "Combatlog automático"
+L.combatLogDesc = "Empieza a guardar automáticamente el Combatlog cuando se lanza un pull y termina cuando acaba el combate."
 L.countDefeats = "Contar Muertes"
 L.countdownAt = "Cuenta atrás en... (segundos)"
 L.countdownColor = "Color de cuenta atrás"
 L.countdownTest = "Probar cuenta atrás"
--- L.countdownType = "Countdown Type"
+L.countdownType = "Tipo de cuenta atrás"
 L.countdownVoice = "Voz de cuenta atrás"
 L.countWipes = "Contar Wipes"
 L.createTimeBar = "Mostrar barra de 'Mejor tiempo' "

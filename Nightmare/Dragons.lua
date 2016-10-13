@@ -62,7 +62,7 @@ function mod:GetOptions()
 		{203787, "PROXIMITY", "SAY"}, -- Volatile Infection
 		205298, -- Essence of Corruption
 		205300, -- Corruption
-		205528, -- Corruption of the Dream
+		204245, -- Corruption of the Dream
 
 		--[[ Lethon ]]--
 		203888, -- Spihon Spirit
@@ -76,14 +76,14 @@ function mod:GetOptions()
 		204078, -- Bellowing Roar
 
 		--[[ Mythic ]]--
-		214497, -- Nightmare Souls (Adds spawning in Hinterlands etc)
+		-13460, -- Lumbering Mindgorger
 	},{
 		[203028] = "general",
 		[207573] = -12768, -- Ysondre
 		[203787] = -12770, -- Emeriss
 		[203888] = -12772, -- Lethon
 		[204100] = -12774, -- Taerar
-		[214497] = "mythic",
+		[-13460] = "mythic",
 	}
 end
 
@@ -116,7 +116,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BellowingRoar", 204078)
 
 	--[[ Mythic ]]--
-	self:Log("SPELL_AURA_APPLIED", "NightmareSouls", 214497)
+	self:Log("SPELL_AURA_APPLIED", "NightmareSouls", 214497) -- Add spawn
 end
 
 function mod:OnEngage()
@@ -194,7 +194,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, _, _, _, spellId)
 	elseif spellId == 205331 then -- Taerar: Seeping Fog
 		self:Message(205341, "Urgent", "Alarm")
 	elseif spellId == 205528 then -- Emeriss: Corruption of the Dream
-		self:Message(spellId, "Attention", "Alarm")
+		self:Message(204245, "Attention", "Alarm")
 	end
 end
 
@@ -347,6 +347,6 @@ end
 function mod:NightmareSouls(args)
 	local spell = mythicAdd == 1 and 214610 or mythicAdd == 2 and 214588 or 214604 -- Dream Essence: Hinterlands / Ashenvale / Feralas
 	local percentage = mythicAdd == 1 and "90% - " or mythicAdd == 2 and "60% - " or "30% - "
-	self:Message(args.spellId, "Neutral", "Long", percentage .. self:SpellName(spell), spell)
+	self:Message(-13460, "Neutral", "Long", percentage .. self:SpellName(spell), spell)
 	mythicAdd = mythicAdd + 1
 end

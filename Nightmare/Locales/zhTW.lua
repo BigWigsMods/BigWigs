@@ -3,6 +3,8 @@ if not L then return end
 if L then
 	L.forces = "夢魘大軍"
 	L.bramblesSay = "荊棘在%s附近"
+	--L.custom_off_multiple_breath_bar = "Show multiple Rotten Breath bars"
+	--L.custom_off_multiple_breath_bar_desc = "Per default BigWigs will only show the Rotten Breath bar of one drake. Enable this option if you want to see the timer for each drake."
 end
 
 L = BigWigs:NewBossLocale("Elerethe Renferal", "zhTW")
@@ -25,6 +27,8 @@ if L then
 	L.gelatinizedDecay = "膠化腐泥怪"
 	L.befouler = "腐化玷污者"
 	L.shaman = "兇暴薩滿"
+	--L.custom_on_mark_totem = "Mark the Totems"
+	--L.custom_on_mark_totem_desc = "Mark the Totems with {rt8}{rt7}, requires promoted or leader."
 end
 
 L = BigWigs:NewBossLocale("Ursoc", "zhTW")

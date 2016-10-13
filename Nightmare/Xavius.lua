@@ -1,7 +1,6 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Fix all the timers!
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -18,10 +17,11 @@ mod.respawnTime = 15
 --
 
 local phase = 1
-local lurkingEruption = 1
-local horrorCount = 0
+local lurkingEruptionCount = 1
+local horrorCount = 1
 local isInDream = false
 local bladeList, bondList = mod:NewTargetList(), mod:NewTargetList()
+local dreamingCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -51,6 +51,7 @@ function mod:GetOptions()
 		208431, -- Decent Into Madness
 		207409, -- Madness
 		206005, -- Dream Simulacrum
+		211634, -- The Infinite Dark
 
 		--[[ Corruption Horror ]]--
 		{224649, "TANK"}, -- Tormenting Swipe
@@ -73,11 +74,15 @@ function mod:GetOptions()
 
 		--[[ Stage Three: World of Darkness ]]--
 		226194, -- Writhing Deep
+
+		--[[ Mythic ]]--
+		205843, -- The Dreaming
 	},{
 		["berserk"] = "general",
 		[206651] = -12971, -- Stage One: The Decent Into Madness
 		[209034] = -13152, -- Stage Two: From the Shadows
 		[226194] = -13160, -- Stage Three: World of Darkness
+		[205843] = "mythic",
 	}
 end
 
@@ -85,9 +90,14 @@ function mod:OnBossEnable()
 	--[[ General ]]--
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "DecentIntoMadness", 208431)
+	self:Log("SPELL_AURA_REMOVED", "DecentIntoMadnessRemoved", 208431)
 	self:Log("SPELL_AURA_APPLIED", "Madness", 207409)
 	self:Log("SPELL_AURA_APPLIED", "DreamSimulacrum", 206005)
 	self:Log("SPELL_AURA_REMOVED", "DreamSimulacrumRemoved", 206005)
+
+	self:Log("SPELL_AURA_APPLIED", "TheInfiniteDark", 211634)
+	self:Log("SPELL_PERIODIC_MISSED", "TheInfiniteDark", 211634)
+	self:Log("SPELL_PERIODIC_DAMAGE", "TheInfiniteDark", 211634)
 
 	--[[ Stage One: The Decent Into Madness ]]--
 	self:Log("SPELL_AURA_APPLIED", "DarkeningSoul", 206651)
@@ -95,12 +105,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "NightmareBlades", 211802)
 	self:Log("SPELL_AURA_REMOVED", "NightmareBladesRemoved", 211802)
 	self:Log("SPELL_CAST_SUCCESS", "ManifestCorruption", 210264)
+	self:Log("SPELL_DAMAGE", "LurkingEruptionUnderYou", 205741)
+	self:Log("SPELL_MISSED", "LurkingEruptionUnderYou", 205741)
 	self:Log("SPELL_AURA_APPLIED", "TormentingFixation", 205771)
 	self:Log("SPELL_SUMMON", "LurkingEruption", 205741) -- Lurking Terror
 
 	--[[ Corruption Horror ]]--
 	self:Log("SPELL_CAST_SUCCESS", "TormentingSwipe", 224649)
 	self:Log("SPELL_CAST_SUCCESS", "CorruptingNova", 207830)
+	self:Death("HorrorDeath", 103695)
 
 	--[[ Stage Two: From the Shadows ]]--
 	self:Log("SPELL_AURA_APPLIED", "CorruptionMeteor", 224508)
@@ -117,15 +130,16 @@ end
 
 function mod:OnEngage()
 	phase = 1
-	lurkingEruption = 1 -- Purposely init at 1
-	horrorCount = 0
-	isInDream = false
+	lurkingEruptionCount = 1
+	horrorCount = 1
+	dreamingCount = 1
 	wipe(bladeList)
 	wipe(bondList)
+	isInDream = false
 	self:Bar(206651, 7.5) -- Darkening Soul
-	self:Bar(211802, 19.2) -- Nightmare Blades
-	self:Bar(210264, 59) -- Manifest Corruption
 	self:Bar(205741, 18) -- Lurking Eruption (Lurking Terror)
+	self:Bar(211802, 19.2) -- Nightmare Blades
+	self:Bar(210264, 59, CL.count:format(self:SpellName(210264), horrorCount)) -- Manifest Corruption
 
 	self:OpenAltPower("altpower", 208931) -- Nightmare Corruption
 end
@@ -135,25 +149,44 @@ end
 --
 
 --[[ General ]]--
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 226193 then -- Xavius Energize Phase 2
 		phase = 2
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
 		self:StopBar(206651) -- Darkening Soul
 		self:StopBar(211802) -- Nightmare Blades
-		self:StopBar(210264) -- Manifest Corruption
-		self:StopBar(205741) -- Lurking Eruption (Lurking Terror)
-		self:Bar(209034, 7.5) -- Bonds of Terror
+		self:StopBar(CL.count:format(self:SpellName(210264), horrorCount)) -- Manifest Corruption
+		self:StopBar(CL.count:format(self:SpellName(205741), lurkingEruptionCount)) -- Lurking Eruption (Lurking Terror)
+		self:Bar(209158, 7) -- Blackening Soul
+		self:Bar(205588, 14.5) -- Call of Nightmares
+		self:Bar(209034, 15.5) -- Bonds of Terror
 		self:Bar(209443, 29) -- Nightmare Infusion
-		self:Bar(205588, 55) -- Call of Nightmares
 	elseif spellId == 226185 then -- Xavius Energize Phase 3
 		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
 		phase = 3
+		self:StopBar(209034) -- Bonds of Terror
+		self:StopBar(205588) -- Call of Nightmares
+		self:Bar(224508, 20.7) -- Corruption Meteor
+		self:Bar(211802, 33) -- Nightmare Blades
+	elseif spellId == 205843 then -- The Dreaming
+		local percentage = dreamingCount == 1 and "97% - " or dreamingCount == 2 and "80% - " or dreamingCount == 3 and "60% - " or "45% - "
+		self:Message(spellId, "Positive", "Long", percentage .. CL.count:format(spellName, dreamingCount))
+		self:Bar(spellId, 6, CL.cast:format(CL.count:format(spellName, dreamingCount)))
+		dreamingCount = dreamingCount + 1
 	end
 end
 
 function mod:DecentIntoMadness(args)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		self:TargetBar(args.spellId, 20, args.destName)
+	end
+end
+
+function mod:DecentIntoMadnessRemoved(args)
+	if self:Me(args.destGUID) then
+		self:StopBar(args.spellId, args.destName)
+	end
 end
 
 function mod:Madness(args)
@@ -181,10 +214,19 @@ do
 		local t = GetTime()
 		if t-prev > 5 then
 			prev = t
-			lurkingEruption = lurkingEruption + 1
-			if lurkingEruption < 3 then
-				self:Bar(args.spellId, 20.5)
-			end
+			lurkingEruptionCount = lurkingEruptionCount + 1
+			self:Bar(args.spellId, lurkingEruptionCount % 3 == 0 and 41 or 20.5, CL.count:format(args.spellName, lurkingEruptionCount))
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:TheInfiniteDark(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(args.spellId, "Personal", "Alert", CL.you:format(args.spellName))
 		end
 	end
 end
@@ -199,11 +241,16 @@ function mod:CorruptingNova(args)
 	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
 end
 
+function mod:HorrorDeath(args)
+	self:StopBar(207830) -- Corrupting Nova
+	self:CDBar(224649) -- Tormenting Swipe
+end
+
 --[[ Stage One: The Decent Into Madness ]]--
 function mod:DarkeningSoul(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 2 and "Warning")
-	self:CDBar(args.spellId, 10) -- ~10 early in the fight, ~13-17 later
+	self:CDBar(args.spellId, self:Mythic() and 8.5 or 10) -- ~10 early in the fight, ~13-17 later
 end
 
 do
@@ -220,7 +267,7 @@ do
 		end
 
 		if #bladeList == 1 then
-			self:CDBar(args.spellId, 16)
+			self:CDBar(args.spellId, phase == 1 and 15.5 or 31)
 			timer = self:ScheduleTimer("TargetMessage", 0.5, args.spellId, bladeList, "Important", "Alert")
 		else
 			self:CancelTimer(timer)
@@ -237,13 +284,17 @@ do
 end
 
 function mod:ManifestCorruption(args)
-	lurkingEruption = 0
-	horrorCount = 0
 	self:Message(args.spellId, "Attention", "Info", CL.count:format(self:SpellName(L.horror), horrorCount), false)
-	self:Bar(args.spellId, 82.5)
+	self:Bar(args.spellId, 82.5, CL.count:format(args.spellName, horrorCount+1))
+	horrorCount = horrorCount + 1
 	self:CDBar(207830, 17) -- Corrupting Nova
 	self:CDBar(224649, 10) -- Tormenting Swipe
-	self:Bar(205741, 20.5) -- Lurking Eruption (Lurking Terror)
+end
+
+function mod:LurkingEruptionUnderYou(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+	end
 end
 
 function mod:TormentingFixation(args)
@@ -266,7 +317,7 @@ do
 
 		bondList[#bondList+1] = args.destName
 		if #bondList == 1 then
-			self:CDBar(209034, 15)
+			self:CDBar(209034, 14.5)
 			timer = self:ScheduleTimer("TargetMessage", 0.3, 209034, bondList, "Important", "Alert")
 		else -- applied on both
 			if isOnMe and otherPlayer then
@@ -294,12 +345,12 @@ end
 function mod:BlackeningSoul(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 2 and "Warning")
-	self:Bar(args.spellId, 10)
+	self:Bar(args.spellId, self:Mythic() and 8.5 or 10)
 end
 
 function mod:NightmareInfusion(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
-	self:Bar(args.spellId, 62)
+	self:Bar(args.spellId, phase == 2 and 62 or 31.6)
 end
 
 function mod:CallOfNightmares(args)
@@ -310,11 +361,11 @@ end
 function mod:CorruptionMeteor(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Info", nil, nil, isInDream)
 	self:TargetBar(args.spellId, 5, args.destName)
-	self:Bar(args.spellId, 28)
+	self:Bar(args.spellId, phase == 2 and 28 or 35.3)
 end
 
 --[[ Stage Three: World of Darkness ]]--
 function mod:WrithingDeep(args)
 	self:Message(args.spellId, "Urgent", "Alert")
-	self:CDBar(args.spellId, 21)
+	self:CDBar(args.spellId, 20.7)
 end

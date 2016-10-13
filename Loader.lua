@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 15
+local BIGWIGS_VERSION = 18
 local BIGWIGS_RELEASE_STRING = ""
 local versionQueryString, versionResponseString = "Q:%d-%s", "V:%d-%s"
 
@@ -556,20 +556,18 @@ do
 
 	local L = GetLocale()
 	if L == "ptBR" then
-		--delayedMessages[#delayedMessages+1] = "We *really* need help translating BigWigs! Think you can help us? Please check out our translator website: goo.gl/nwR5cy"
-	elseif L == "zhTW" then
-		--delayedMessages[#delayedMessages+1] = "Think you can translate BigWigs into Traditional Chinese (zhTW)? Check out our easy translator tool: goo.gl/nwR5cy"
+		delayedMessages[#delayedMessages+1] = "Can you translate BigWigs into Brazilian Portugese (ptBR)? Check out our GitHub page!"
 	elseif L == "itIT" then
-		--delayedMessages[#delayedMessages+1] = "Think you can translate BigWigs into Italian (itIT)? Check out our easy translator tool: goo.gl/nwR5cy"
+		delayedMessages[#delayedMessages+1] = "Can you translate BigWigs into Italian (itIT)? Check out our GitHub page!"
 	elseif L == "koKR" then
-		--delayedMessages[#delayedMessages+1] = "Think you can translate BigWigs into Korean (koKR)? Check out our easy translator tool: goo.gl/nwR5cy"
+		delayedMessages[#delayedMessages+1] = "Can you translate BigWigs into Korean (koKR)? Check out our GitHub page!"
 	end
 
 	CTimerAfter(11, function()
-		local _, _, _, _, month, _, year = GetAchievementInfo(10043) -- Mythic Archimonde
-		if year == 15 and month < 10 then
-			sysprint("We're looking for an end-game raider to join our GitHub developer team: goo.gl/aajTfo")
-		end
+		--local _, _, _, _, month, _, year = GetAchievementInfo(10043) -- Mythic Archimonde
+		--if year == 15 and month < 10 then
+		--	sysprint("We're looking for an end-game raider to join our GitHub developer team: goo.gl/aajTfo")
+		--end
 		for _, msg in next, delayedMessages do
 			sysprint(msg)
 		end

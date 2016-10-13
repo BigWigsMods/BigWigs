@@ -1075,6 +1075,7 @@ do
 			local spell = spellList[i]
 			if IsSpellKnown(spell) then
 				canInterrupt = spell -- XXX check for cooldown also?
+				break
 			end
 		end
 	end
@@ -1083,8 +1084,11 @@ do
 	-- @return boolean
 	function boss:Interrupter(guid)
 		-- We will probably need to make this smarter
-		if canInterrupt and guid and (UnitGUID("target") == guid or UnitGUID("focus") == guid) then
-			return true
+		if guid then
+			if canInterrupt and (UnitGUID("target") == guid or UnitGUID("focus") == guid) then
+				return canInterrupt
+			end
+			return
 		end
 		return canInterrupt
 	end
@@ -1188,6 +1192,29 @@ end
 function boss:CloseAltPower(key)
 	if checkFlag(self, key or "altpower", C.ALTPOWER) then
 		self:SendMessage("BigWigs_HideAltPower", self)
+	end
+end
+
+-------------------------------------------------------------------------------
+-- InfoBox.
+-- @section InfoBox
+--
+
+function boss:SetInfo(key, line, text)
+	if checkFlag(self, key, C.INFOBOX) then
+		self:SendMessage("BigWigs_SetInfoBoxLine", self, line, type(text) == "number" and spells[text] or text)
+	end
+end
+
+function boss:OpenInfo(key)
+	if checkFlag(self, key, C.INFOBOX) then
+		self:SendMessage("BigWigs_ShowInfoBox", self)
+	end
+end
+
+function boss:CloseInfo(key)
+	if checkFlag(self, key, C.INFOBOX) then
+		self:SendMessage("BigWigs_HideInfoBox", self)
 	end
 end
 
