@@ -33,8 +33,8 @@ end
 
 L = BigWigs:NewBossLocale("Ursoc", "itIT")
 if L then
-	--L.custom_off_gaze_assist = "Focused Gaze Assist"
-	--L.custom_off_gaze_assist_desc = "Show raid icons in bars and messages for Focused Gaze. Using {rt4} for odd, {rt6} for even soaks. Requires promoted or leader."
+	--L.custom_on_gaze_assist = "Focused Gaze Assist"
+	--L.custom_on_gaze_assist_desc = "Show raid icons in bars and messages for Focused Gaze. Using {rt4} for odd, {rt6} for even soaks. Requires promoted or leader."
 end
 
 L = BigWigs:NewBossLocale("Xavius", "itIT")

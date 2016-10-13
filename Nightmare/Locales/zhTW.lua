@@ -33,8 +33,8 @@ end
 
 L = BigWigs:NewBossLocale("Ursoc", "zhTW")
 if L then
-	L.custom_off_gaze_assist = "專注凝視助手"
-	L.custom_off_gaze_assist_desc = "在計時條和訊息顯示專注凝視團隊標記。使用 {rt4} 標記奇數輪， {rt6} 標記偶數輪，需要權限。"
+	L.custom_on_gaze_assist = "專注凝視助手"
+	L.custom_on_gaze_assist_desc = "在計時條和訊息顯示專注凝視團隊標記。使用 {rt4} 標記奇數輪， {rt6} 標記偶數輪，需要權限。"
 end
 
 L = BigWigs:NewBossLocale("Xavius", "zhTW")

@@ -33,8 +33,8 @@ end
 
 L = BigWigs:NewBossLocale("Ursoc", "ptBR")
 if L then
-	L.custom_off_gaze_assist = "Assistente de Olhar Concentrado"
-	L.custom_off_gaze_assist_desc = "Mostra ícones marcadores de raide nas barras e mensagens para Olhar Concentrado. Usa {rt4} em casts ímpares e {rt6} em casts pares. Requer assistente ou líder."
+	L.custom_on_gaze_assist = "Assistente de Olhar Concentrado"
+	L.custom_on_gaze_assist_desc = "Mostra ícones marcadores de raide nas barras e mensagens para Olhar Concentrado. Usa {rt4} em casts ímpares e {rt6} em casts pares. Requer assistente ou líder."
 end
 
 L = BigWigs:NewBossLocale("Xavius", "ptBR")
