@@ -923,23 +923,14 @@ do
 	end
 end
 
---- [IN FLUX] Get the distance between two group members.
+--- [DEPRECATED] Get the distance between two group members.
 -- Warning, this API will need to change in according to WoW 7.1 range regulations, do not rely on it.
 -- @param player the first player to check
 -- @param[opt="player"] otherPlayer second player to check
 -- @return distance
 function boss:Range(player, otherPlayer)
-	if not otherPlayer then
-		local distanceSquared = UnitDistanceSquared(player)
-		return distanceSquared == 0 and 200 or distanceSquared ^ 0.5
-	else
-		local ty, tx = UnitPosition(player)
-		local py, px = UnitPosition(otherPlayer)
-		local dx = tx - px
-		local dy = ty - py
-		local distance = (dx * dx + dy * dy) ^ 0.5
-		return distance
-	end
+	BigWigs:Print("The :Range API is deprecated.")
+	return 200
 end
 
 --- Check if you're the only person inside an instance, despite being in a group or not.
