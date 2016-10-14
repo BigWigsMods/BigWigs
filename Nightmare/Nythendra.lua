@@ -25,26 +25,16 @@ local mindControlledPlayers = 0
 local myInfestedStacks = 0
 
 --------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
-if L then
-	L.custom_off_rot_marker = mod:GetMarkerDescription("header", 203096)
-	L.custom_off_rot_marker_desc = mod:GetMarkerDescription("player", 203096, 1, 2, 3, 4, 5)
-	L.custom_off_rot_marker_icon = 1
-end
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 
+local rotMarker = mod:AddMarkerOption(false, "player", 1, 203096, 1, 2, 3, 4, 5)
 function mod:GetOptions()
 	return {
 		--[[ General ]]--
 		202977, -- Infested Breath
 		{203096, "SAY", "FLASH", "PROXIMITY"}, -- Rot
-		"custom_off_rot_marker",
+		rotMarker,
 		{204463, "SAY", "FLASH", "ICON"}, -- Volatile Rot
 		203552, -- Heart of the Swarm
 		203045, -- Infested Ground
@@ -128,7 +118,7 @@ do
 		if not isOnMe then
 			self:OpenProximity(args.spellId, 10, proxList)
 		end
-		if self:GetOption("custom_off_rot_marker") then
+		if self:GetOption(rotMarker) then
 			SetRaidTarget(args.destName, #proxList)
 		end
 
@@ -150,7 +140,7 @@ do
 			self:CloseProximity(args.spellId)
 		end
 
-		if self:GetOption("custom_off_rot_marker") then
+		if self:GetOption(rotMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
 		tDeleteItem(proxList, args.destName)

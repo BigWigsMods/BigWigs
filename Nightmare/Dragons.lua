@@ -35,23 +35,13 @@ local markStacks = {
 	[203121] = 0, -- Mark of Taerar
 }
 local mythicAdd = 1
-local infectionMarker = 1
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
-if L then
-	L.custom_off_infection_marker = mod:GetMarkerDescription("header", 203787)
-	L.custom_off_infection_marker_desc = mod:GetMarkerDescription("player", 203787, 1, 2, 3, 4)
-	L.custom_off_infection_marker_icon = 1
-end
+local infectionMarkerCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local infectionMarker = mod:AddMarkerOption(false, "player", 1, 203787, 1, 2, 3, 4)
 function mod:GetOptions()
 	return {
 		--[[ General ]]--
@@ -66,7 +56,7 @@ function mod:GetOptions()
 
 		--[[ Emeriss ]]--
 		{203787, "PROXIMITY", "SAY"}, -- Volatile Infection
-		"custom_off_infection_marker",
+		infectionMarker,
 		205298, -- Essence of Corruption
 		205300, -- Corruption
 		204245, -- Corruption of the Dream
@@ -139,7 +129,7 @@ function mod:OnEngage()
 		[203121] = 0, -- Mark of Taerar
 	}
 	mythicAdd = 1
-	infectionMarker = 1
+	infectionMarkerCount = 1
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	self:Bar(203028, 17) -- Corrupted Breath
@@ -282,10 +272,10 @@ do
 			self:Bar(args.spellId, 45)
 		end
 
-		if self:GetOption("custom_off_infection_marker") then
-			SetRaidTarget(args.destName, infectionMarker)
-			infectionMarker = infectionMarker + 1
-			if infectionMarker > 4 then infectionMarker = 1 end
+		if self:GetOption(infectionMarker) then
+			SetRaidTarget(args.destName, infectionMarkerCount)
+			infectionMarkerCount = infectionMarkerCount + 1
+			if infectionMarkerCount > 4 then infectionMarkerCount = 1 end
 		end
 
 		if self:Me(args.destGUID) then
@@ -301,7 +291,7 @@ function mod:VolatileInfectionRemoved(args)
 		self:CloseProximity(args.spellId)
 		self:StopBar(args.spellId, args.destName)
 	end
-	if self:GetOption("custom_off_infection_marker") then
+	if self:GetOption(infectionMarker) then
 		SetRaidTarget(args.destName, 0)
 	end
 end

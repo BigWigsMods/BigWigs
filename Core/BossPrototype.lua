@@ -265,27 +265,29 @@ function boss:GetLocale()
 end
 boss.NewLocale = boss.GetLocale
 
---- Get a custom formatted string for a marking option
--- @param markType The type of string to return (header, player, npc)
+--- Create a custom marking option
+-- @param state Boolean value to represent default state
+-- @param markType The type of string to return (player, npc)
+-- @param icon An icon id to be used for the option texture
 -- @param id The spell id or journal id to be translated into a name for the returned string
 -- @param ... a series of raid icons being used by the marker function e.g. (1, 2, 3)
--- @return a formatted string to be used as a description in a custom marking option
-function boss:GetMarkerDescription(markType, id, ...)
-	if markType == "header" then
-		return format(L.marker, type(id) == "string" and id or spells[id])
-	else
-		local str = ""
-		for i = 1, select("#", ...) do
-			local num = select(i, ...)
-			local icon = format("|T13700%d:15|t", num)
-			str = str .. icon
-		end
-		if markType == "player" then
-			return format(L.marker_player_desc, type(id) == "string" and id or spells[id], str)
-		elseif markType == "npc" then
-			return format(L.marker_npc_desc, type(id) == "string" and id or spells[id])
-		end
+-- @return an option string to be used in conjuction with :GetOption
+function boss:AddMarkerOption(state, markType, icon, id, ...)
+	local l = self:GetLocale()
+	local str = ""
+	for i = 1, select("#", ...) do
+		local num = select(i, ...)
+		local icon = format("|T13700%d:15|t", num)
+		str = str .. icon
 	end
+
+	local option = format(state and "custom_on_%d" or "custom_off_%d", id)
+	l[option] = format(L.marker, spells[id])
+	l[option.."_desc"] = format(markType == "player" and L.marker_player_desc or L.marker_npc_desc, spells[id], str)
+	if icon then
+		l[option.."_icon"] = icon
+	end
+	return option
 end
 
 -------------------------------------------------------------------------------
