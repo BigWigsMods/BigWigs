@@ -49,3 +49,7 @@ L.trash = "Трэш"
 L.underyou = "%s под ТОБОЙ!"
 L.you = "%s на ТЕБЕ"
 
+-- Common raid marking locale
+--L.marker = "%s Marker"
+--L.marker_player_desc = "Mark players affected by %s with %s, requires promoted or leader."
+--L.marker_npc_desc = "Mark %s with %s, requires promoted or leader."

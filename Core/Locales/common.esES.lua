@@ -49,3 +49,7 @@ L.trash = "Basura"
 L.underyou = "¡%s debajo de TI!"
 L.you = "%s en TI"
 
+-- Common raid marking locale
+--L.marker = "%s Marker"
+--L.marker_player_desc = "Mark players affected by %s with %s, requires promoted or leader."
+--L.marker_npc_desc = "Mark %s with %s, requires promoted or leader."

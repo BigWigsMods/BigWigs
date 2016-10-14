@@ -153,7 +153,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 					description = gsub(description, "{(%-?%d-)}", replaceIdWithDescription) -- Allow embedding an id in a string.
 					description = gsub(description, "{focus}", CL.focus_only) -- Allow embedding the focus prefix.
 				end
-				description = roleDesc.. gsub(description, "{rt(%d)}", "\124T13700%1:15\124t")
+				description = roleDesc.. gsub(description, "{rt(%d)}", "|T13700%1:15|t")
 			end
 			local icon = L[option .. "_icon"]
 			if icon == option .. "_icon" then icon = nil end

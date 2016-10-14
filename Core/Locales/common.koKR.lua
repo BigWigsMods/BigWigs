@@ -49,3 +49,7 @@ L.trash = "일반 구간"
 L.underyou = "당신의 아래에 %s!"
 L.you = "당신에게 %s!"
 
+-- Common raid marking locale
+--L.marker = "%s Marker"
+--L.marker_player_desc = "Mark players affected by %s with %s, requires promoted or leader."
+--L.marker_npc_desc = "Mark %s with %s, requires promoted or leader."
