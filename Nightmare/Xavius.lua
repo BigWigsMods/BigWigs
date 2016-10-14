@@ -166,7 +166,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		self:Bar(224508, 20.7) -- Corruption Meteor
 		self:Bar(211802, 33) -- Nightmare Blades
 	elseif spellId == 205843 then -- The Dreaming
-		local percentage = dreamingCount == 1 and "97% - " or dreamingCount == 2 and "80% - " or dreamingCount == 3 and "60% - " or "45% - "
+		local percentage = dreamingCount == 1 and "97% - " or "60% - "
+		if self:Mythic() then
+			percentage = dreamingCount == 1 and "97% - " or dreamingCount == 2 and "80% - " or dreamingCount == 3 and "60% - " or "45% - "
+		end
 		self:Message(spellId, "Positive", "Long", percentage .. CL.count:format(spellName, dreamingCount))
 		self:Bar(spellId, 6, CL.cast:format(CL.count:format(spellName, dreamingCount)))
 		dreamingCount = dreamingCount + 1
