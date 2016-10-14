@@ -16,9 +16,6 @@ end
 
 L = BigWigs:NewBossLocale("Il'gynoth", "zhTW")
 if L then
-	L.custom_off_deathglare_marker = "死凝觸手標記"
-	L.custom_off_deathglare_marker_desc = "使用 {rt6}{rt5}{rt4}{rt3} 標記死凝觸手，需要權限。\n|cFFFF0000團隊中只需一名玩家啟用此選項以防止衝突。|r\n|cFFADFF2F提示：如果團隊選擇由你開啟此選項，開啟姓名板並滑鼠指向來標記死凝觸手是最快的方式。|r"
-
 	L.bloods_remaining = "還需要%d個黏液"
 end
 
@@ -27,8 +24,6 @@ if L then
 	L.gelatinizedDecay = "膠化腐泥怪"
 	L.befouler = "腐化玷污者"
 	L.shaman = "兇暴薩滿"
-	--L.custom_on_mark_totem = "Mark the Totems"
-	--L.custom_on_mark_totem_desc = "Mark the Totems with {rt8}{rt7}, requires promoted or leader."
 end
 
 L = BigWigs:NewBossLocale("Ursoc", "zhTW")
@@ -39,8 +34,5 @@ end
 
 L = BigWigs:NewBossLocale("Xavius", "zhTW")
 if L then
-	L.custom_off_blade_marker = "夢魘之刃標記"
-	L.custom_off_blade_marker_desc = "使用 {rt1}{rt2} 標記夢魘之刃的目標，需要權限。"
-
 	L.linked = ">你< 恐懼束縛！- 與 >%s< 相連！"
 end

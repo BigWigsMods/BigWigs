@@ -107,10 +107,6 @@ if L then
 	L.shriveled_eyestalk = -13570 -- Shriveled Eyestalk
 	L.shriveled_eyestalk_icon = 208697 -- Mind Flay icon
 
-	L.custom_off_deathglare_marker = "Deathglare Tentacle marker"
-	L.custom_off_deathglare_marker_desc = "Mark Deathglare Tentacles with {rt6}{rt5}{rt4}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the tentacles is the fastest way to mark them.|r"
-	L.custom_off_deathglare_marker_icon = 6
-
 	L.bloods_remaining = "%d |4Blood:Bloods; remaining"
 end
 
@@ -118,6 +114,7 @@ end
 -- Initialization
 --
 
+local tentacleMarker = mod:AddMarkerOption(false, "npc", 6, L.deathglare_tentacle, 6, 5, 4, 3) -- Deathglare Tentacle
 function mod:GetOptions()
 	return {
 		{"stages", "COUNTDOWN"},
@@ -145,7 +142,7 @@ function mod:GetOptions()
 
 		-- Deathglare Tentacle
 		208697, -- Mind Flay
-		"custom_off_deathglare_marker",
+		tentacleMarker,
 
 		--[[ Stage Two ]]--
 		{215128, "SAY", "FLASH", "PROXIMITY"}, -- Cursed Blood
@@ -230,7 +227,7 @@ function mod:OnEngage()
 	self:StartSpawnTimer(-13191, 1) -- Corruptor Tentacle
 
 	wipe(deathglareMarked)
-	if self:GetOption("custom_off_deathglare_marker") then
+	if self:GetOption(tentacleMarker) then
 		deathglareMarks = { [6] = true, [5] = true, [4] = true, [3] = true }
 
 		self:RegisterTargetEvents("DeathglareMark")

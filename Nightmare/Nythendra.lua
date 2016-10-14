@@ -28,7 +28,7 @@ local myInfestedStacks = 0
 -- Initialization
 --
 
-local rotMarker = mod:AddMarkerOption(false, "player", 1, 203096, 1, 2, 3, 4, 5)
+local rotMarker = mod:AddMarkerOption(false, "player", 1, 203096, 1, 2, 3, 4, 5) -- Rot
 function mod:GetOptions()
 	return {
 		--[[ General ]]--

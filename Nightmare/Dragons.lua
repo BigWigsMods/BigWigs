@@ -41,7 +41,7 @@ local infectionMarkerCount = 1
 -- Initialization
 --
 
-local infectionMarker = mod:AddMarkerOption(false, "player", 1, 203787, 1, 2, 3, 4)
+local infectionMarker = mod:AddMarkerOption(false, "player", 1, 203787, 1, 2, 3, 4) -- Volatile Infection
 function mod:GetOptions()
 	return {
 		--[[ General ]]--

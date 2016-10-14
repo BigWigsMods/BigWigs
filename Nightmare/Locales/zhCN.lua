@@ -16,9 +16,6 @@ end
 
 L = BigWigs:NewBossLocale("Il'gynoth", "zhCN")
 if L then
-	L.custom_off_deathglare_marker = "死光触须标记"
-	L.custom_off_deathglare_marker_desc = "使用 {rt6}{rt5}{rt4}{rt3} 标记死光触须，需要权限。\n|cFFFF0000团队中只有1名应该启用此选项以防止标记冲突。|r\n|cFFADFF2F提示：如果团队选择你打开此选项，鼠标快速指向死光触须是标记他们的最快方式。|r"
-
 	L.bloods_remaining = ">%d< 脓液剩余"
 end
 
@@ -27,8 +24,6 @@ if L then
 	L.gelatinizedDecay = "腐朽软泥怪"
 	L.befouler = "污心腐蚀者"
 	L.shaman = "可怕的萨满"
-	L.custom_on_mark_totem = "图腾标记"
-	L.custom_on_mark_totem_desc = "使用 {rt8}{rt7} 标记图腾，需要权限。"
 end
 
 L = BigWigs:NewBossLocale("Ursoc", "zhCN")
@@ -39,8 +34,5 @@ end
 
 L = BigWigs:NewBossLocale("Xavius", "zhCN")
 if L then
-	L.custom_off_blade_marker = "梦魇之刃标记"
-	L.custom_off_blade_marker_desc = "使用 {rt1}{rt2} 标记梦魇之刃的目标，需要权限。"
-
 	L.linked = ">你< 恐惧连结！- 与 >%s< 相连！"
 end

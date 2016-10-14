@@ -16,9 +16,6 @@ end
 
 L = BigWigs:NewBossLocale("Il'gynoth", "frFR")
 if L then
-	L.custom_off_deathglare_marker = "Marquage Oeil meurtrier tentaculaire"
-	L.custom_off_deathglare_marker_desc = "Marque les Yeux meurtriers tentaculaires avec {rt6}{rt5}{rt4}{rt3}. Nécessite d'être assistant ou chef de raid.\n|cFFFF0000Seule 1 personne du raid doit activer ceci afin d'éviter les conflits de marquage.|r\n|cFFADFF2FASTUCE : si le raid a décidé que c'est vous qui devez l'activer, survoler rapidement tous les yeux est le moyen le plus rapide de les marquer.|r"
-
 	L.bloods_remaining = "Il reste %d |4sang:sangs;"
 end
 
@@ -27,8 +24,6 @@ if L then
 	--L.gelatinizedDecay = "Gelatinized Decay" -- to translate
 	L.befouler = "Corrupteur cœur-corrompu"
 	L.shaman = "Chaman redoutable"
-	L.custom_on_mark_totem = "Marquage des totems"
-	L.custom_on_mark_totem_desc = "Marque les totems avec {rt8}{rt7}. Nécessite d'être assistant ou chef de raid."
 end
 
 L = BigWigs:NewBossLocale("Ursoc", "frFR")
@@ -39,8 +34,5 @@ end
 
 L = BigWigs:NewBossLocale("Xavius", "frFR")
 if L then
-	L.custom_off_blade_marker = "Marquage Lames de cauchemar"
-	L.custom_off_blade_marker_desc = "Marque les cibles de Lames de cauchemar avec {rt1}{rt2}. Nécessite d'être assistant ou chef de raid."
-
 	L.linked = "Liens de terreur sur VOUS ! - Lié(e) à %s !"
 end

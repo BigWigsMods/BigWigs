@@ -49,10 +49,6 @@ if L then
 	L.forces = "Forces"
 	L.bramblesSay = "Brambles near %s"
 
-	L.custom_off_wisp_marker = "Corrupted Wisp marker"
-	L.custom_off_wisp_marker_desc = "Mark Corrupted Wisps with {rt8}{rt7}{rt6}{rt5}{rt4}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the wisps is the fastest way to mark them.|r"
-	L.custom_off_wisp_marker_icon = 8
-
 	L.custom_off_multiple_breath_bar = "Show multiple Rotten Breath bars"
 	L.custom_off_multiple_breath_bar_desc = "Per default BigWigs will only show the Rotten Breath bar of one drake. Enable this option if you want to see the timer for each drake."
 end
@@ -61,6 +57,7 @@ end
 -- Initialization
 --
 
+local wispMarker = mod:AddMarkerOption(false, "npc", 8, -13348, 8, 7, 6, 5, 4) -- Corrupted Wisp
 function mod:GetOptions()
 	return {
 		--[[ Cenarius ]]--
@@ -78,7 +75,7 @@ function mod:GetOptions()
 		212681, -- Cleansed Ground
 
 		--[[ Corrupted Wisp ]]--
-		"custom_off_wisp_marker",
+		wispMarker,
 
 		--[[ Nightmare Treant ]]--
 		226821, -- Desiccating Stomp
@@ -97,7 +94,7 @@ function mod:GetOptions()
 	},{
 		["stages"] = -13339, -- Cenarius
 		[212681] = -13344, -- Malfurion Stormrage
-		["custom_off_wisp_marker"] = -13348, -- Corrupted Wisp
+		[wispMarker] = -13348, -- Corrupted Wisp
 		[226821] = -13350, -- Nightmare Treant
 		[211192] = -13354, -- Rotten Drake
 		[211368] = -13357, -- Twisted Sister
@@ -276,7 +273,7 @@ function mod:ForcesOfNightmare(args)
 	self:Bar(212681, 11) -- Cleansed Ground
 	self:Bar(args.spellId, 77.7, CL.count:format(args.spellName, forcesOfNightmareCount))
 
-	if self:GetOption("custom_off_wisp_marker") then
+	if self:GetOption(wispMarker) then
 		self:RegisterTargetEvents("WispMark")
 		self:ScheduleTimer("UnregisterTargetEvents", 10)
 	end

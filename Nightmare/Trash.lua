@@ -25,15 +25,13 @@ if L then
 	L.totem = 223918 -- Corrupted Totem
 	L.totem_desc = 223923 -- Twisted Nova (cast by the totem)
 	L.totem_icon = "spell_shaman_stormtotem"
-	L.custom_on_mark_totem = "Mark the Totems"
-	L.custom_on_mark_totem_desc = "Mark the Totems with {rt8}{rt7}, requires promoted or leader."
-	L.custom_on_mark_totem_icon = 8
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local totemMarker = mod:AddMarkerOption(true, "npc", 8, L.totem, 8, 7) -- Corrupted Totem
 function mod:GetOptions()
 	return {
 		--[[ Gelatinized Decay ]]--
@@ -43,7 +41,7 @@ function mod:GetOptions()
 		{222719, "SAY"}, -- Befoulment
 		--[[ Dire Shaman ]]--
 		"totem", -- Corrupted Totem
-		"custom_on_mark_totem",
+		totemMarker,
 	}, {
 		[221059] = L.gelatinizedDecay,
 		[222719] = L.befouler,
@@ -100,7 +98,7 @@ do
 	local nextIcon = 8
 	function mod:CorruptedTotem(args)
 		self:Message("totem", "Important", "Long", args.spellName, L.totem_icon)
-		if self:GetOption("custom_on_mark_totem") then
+		if self:GetOption(totemMarker) then
 			if not next(guids) then
 				nextIcon = 8
 				guids[args.destGUID] = nextIcon
