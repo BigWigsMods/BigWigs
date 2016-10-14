@@ -107,7 +107,7 @@ if L then
 	L.shriveled_eyestalk = -13570 -- Shriveled Eyestalk
 	L.shriveled_eyestalk_icon = 208697 -- Mind Flay icon
 
-	L.bloods_remaining = "%d |4Blood:Bloods; remaining"
+	L.blobs_remaining = "%d |4Blob:Blobs; remaining"
 end
 
 --------------------------------------------------------------------------------
@@ -319,7 +319,7 @@ end
 function mod:EyeDamage(args)
 	bloodsRemaining = bloodsRemaining - 1
 	if (bloodsRemaining % 5 == 0 or bloodsRemaining < 5) and bloodsRemaining > 0 then
-		self:Message("forces", "Positive", nil, L.bloods_remaining:format(bloodsRemaining), false)
+		self:Message("forces", "Positive", nil, L.blobs_remaining:format(bloodsRemaining), false)
 	end
 end
 
