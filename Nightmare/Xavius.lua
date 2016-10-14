@@ -243,7 +243,7 @@ end
 
 function mod:HorrorDeath(args)
 	self:StopBar(207830) -- Corrupting Nova
-	self:CDBar(224649) -- Tormenting Swipe
+	self:StopBar(224649) -- Tormenting Swipe
 end
 
 --[[ Stage One: The Decent Into Madness ]]--
