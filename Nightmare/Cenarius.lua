@@ -228,7 +228,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 			if self:Me(targetGUID) then
 				self:Flash(spellId)
 				self:Say(spellId, L.bramblesSay:format(self:UnitName("player")), true)
-				self:RangeMessage(spellId, "Urgent", "Alarm")
+				self:Message(spellId, "Urgent", "Alarm", CL.near:format(spellName))
 			else
 				self:Message(spellId, "Urgent", "Alarm")
 			end

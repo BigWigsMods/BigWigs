@@ -1319,17 +1319,14 @@ function boss:Message(key, color, sound, text, icon)
 	end
 end
 
---- Display a range warning message.
+--- [DEPRECATED] Display a range warning message.
 -- @param key the option key
 -- @param[opt] color the message color category
 -- @param[opt] sound the message sound
 -- @param[opt] text the message text (if nil, key is used)
 -- @param[opt] icon the message icon (spell id or texture name)
 function boss:RangeMessage(key, color, sound, text, icon)
-	if not checkFlag(self, key, C.MESSAGE) then return end
-	local textType = type(text)
-	self:SendMessage("BigWigs_Message", self, key, format(L.near, textType == "string" and text or spells[text or key]), color == nil and "Personal" or color, icon ~= false and icons[icon or textType == "number" and text or key])
-	self:SendMessage("BigWigs_Sound", self, key, sound == nil and "Alarm" or sound)
+	BigWigs:Print("The :RangeMessage API is deprecated.")
 end
 
 do
