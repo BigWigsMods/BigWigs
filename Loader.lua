@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 18
+local BIGWIGS_VERSION = 19
 local BIGWIGS_RELEASE_STRING = ""
 local versionQueryString, versionResponseString = "Q:%d-%s", "V:%d-%s"
 
