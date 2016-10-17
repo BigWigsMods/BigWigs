@@ -50,6 +50,6 @@ L.underyou = ">你<脚下：%s！"
 L.you = ">你< %s！"
 
 -- Common raid marking locale
---L.marker = "%s Marker"
---L.marker_player_desc = "Mark players affected by %s with %s, requires promoted or leader."
---L.marker_npc_desc = "Mark %s with %s, requires promoted or leader."
+L.marker = "%s标记"
+L.marker_player_desc = "标记受到 %s 影响的玩家为 %s，需要权限。"
+L.marker_npc_desc = "标记 %s 为 %s，需要权限。"

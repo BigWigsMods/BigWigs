@@ -6,7 +6,7 @@
 ## Title-esMX: BigWigs [|cffeda55fTrial of Valor|r]
 ## Title-frFR: BigWigs [|cffeda55fTrial of Valor|r]
 ## Title-ruRU: BigWigs [|cffeda55fTrial of Valor|r]
-## Title-zhCN: BigWigs [|cffeda55fTrial of Valor|r]
+## Title-zhCN: BigWigs [|cffeda55f勇气试炼|r]
 ## Title-zhTW: BigWigs [|cffeda55fTrial of Valor|r]
 ## Title-itIT: BigWigs [|cffeda55fTrial of Valor|r]
 ## Title-ptBR: BigWigs [|cffeda55fTrial of Valor|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: Trial of Valor Modules
 ## Notes-frFR: Trial of Valor Modules
 ## Notes-ruRU: Trial of Valor Modules
-## Notes-zhCN: Trial of Valor Modules
+## Notes-zhCN: 勇气试炼模块。
 ## Notes-zhTW: Trial of Valor Modules
 ## Notes-itIT: Trial of Valor Modules
 ## Notes-ptBR: Trial of Valor Modules
