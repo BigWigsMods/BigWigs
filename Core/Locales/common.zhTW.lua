@@ -52,4 +52,4 @@ L.you = ">你< %s！"
 -- Common raid marking locale
 L.marker = "%s標記"
 L.marker_player_desc = "標記受到 %s 影響的玩家為 %s，需要權限。"
-L.marker_npc_desc = "標記 %s 為 %s，需要權限。
+L.marker_npc_desc = "標記 %s 為 %s，需要權限。"
