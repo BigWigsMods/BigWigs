@@ -81,7 +81,7 @@ end
 --
 
 --[[ General ]] --
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, castGUID, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName, _, castGUID, spellId)
 	if castCollector[castGUID] then return end -- don't fire twice for the same cast
 
 	if spellId == 217563 then --[[ Ancient Rage: Fire ]]--
@@ -108,7 +108,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, castGUID, spellId)
 		-- First Arcanopulse happens directly in the phase, so we start the bar after it
 	elseif spellId == 217919 then -- Icy Comet
 		castCollector[castGUID] = true
-		self:Message(spellId, "Attention", "Long")
+		self:Message(217925, "Attention", "Long")
 	elseif spellId == 218005 then -- Arcanopulse
 		castCollector[castGUID] = true
 		self:Message(218012, "Attention", "Long")
@@ -164,7 +164,7 @@ end
 
 --[[ Ancient Rage: Frost ]]--
 function mod:HowlingGale(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "Important", "Warning")
 	if howlingGaleCount == 1 then
 		self:CDBar(args.spellId, 12.5)
 	end
@@ -173,7 +173,7 @@ end
 
 function mod:IcyCometApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Warning", CL.underyou:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 	end
 end
 
