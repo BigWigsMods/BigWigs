@@ -72,7 +72,7 @@ function mod:OnEngage()
 	rotCount = 1
 	mindControlledPlayers = 0
 	myInfestedStacks = 0
-	self:Berserk(480) -- Can be delayed by a few sec
+	self:Berserk(self:Normal() and 600 or 480) -- Can be delayed by 2nd phase
 	self:CDBar(203096, 5.8) -- Rot
 	self:CDBar(204463, 22.8) -- Volatile Rot
 	self:CDBar(202977, 37) -- Infested Breath
