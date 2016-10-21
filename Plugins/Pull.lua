@@ -114,6 +114,12 @@ do
 			return
 		end
 
+		local _, _, _, instanceId = UnitPosition("player")
+		local _, _, _, tarInstanceId = UnitPosition(nick)
+		if instanceId ~= tarInstanceId then -- Don't fire pull timers from people in different zones
+			return
+		end
+
 		seconds = tonumber(seconds)
 		if not seconds or seconds < 0 or seconds > 60 then return end
 		seconds = floor(seconds)
@@ -162,7 +168,7 @@ do
 	end
 end
 
-function plugin:OnDBMSync(_, sender, prefix, seconds, text)
+function plugin:OnDBMSync(_, sender, prefix, seconds)
 	if prefix == "PT" then
 		self:StartPull(seconds, sender, true)
 	end
@@ -200,15 +206,17 @@ SlashCmdList.BIGWIGSPULL = function(input)
 		end
 		local seconds = tonumber(input)
 		if not seconds or seconds < 0 or seconds > 60 then BigWigs:Print(L.wrongPullFormat) return end
-
 		if seconds ~= 0 then
 			BigWigs:Print(L.sendPull)
 		end
+
 		BigWigs:Transmit("BWPull", input)
+		--plugin:Sync("Pull", input) -- XXX 7.1
 
 		if IsInGroup() then
-			local _, _, _, _, _, _, _, mapID = GetInstanceInfo()
-			SendAddonMessage("D4", ("PT\t%s\t%d"):format(input, mapID or 0), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+			local _, _, _, _, _, _, _, id = GetInstanceInfo()
+			local instanceId = tonumber(id) or 0
+			SendAddonMessage("D4", ("PT\t%s\t%d"):format(input, instanceId), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	else
 		BigWigs:Print(L.requiresLeadOrAssist)
