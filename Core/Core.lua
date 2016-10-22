@@ -400,6 +400,7 @@ do
 	-- Adding core generic toggles
 	addon:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, "Interface\\Icons\\spell_shadow_unholyfrenzy")
 	addon:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, "Interface\\Icons\\spell_arcane_invocation")
+	addon:RegisterBossOption("infobox", L.infobox, L.infobox_desc)
 	addon:RegisterBossOption("stages", L.stages, L.stages_desc)
 	addon:RegisterBossOption("warmup", L.warmup, L.warmup_desc)
 end
@@ -484,6 +485,7 @@ do
 				bosskill = C.MESSAGE,
 				proximity = C.PROXIMITY,
 				altpower = C.ALTPOWER,
+				infobox = C.INFOBOX,
 			}, {__index = function(self, key)
 				return C.BAR + C.MESSAGE + (hasVoice and C.VOICE or 0)
 			end})
