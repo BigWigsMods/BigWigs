@@ -262,7 +262,7 @@ end
 -- Communication
 --
 
-local function bossComm(_, sender, msg, extra)
+local function bossComm(_, msg, extra, sender)
 	if msg == "BossEngaged" and extra then
 		local m = addon:GetBossModule(extra, true)
 		if not m or m.isEngaged or m.engageId or not m:IsEnabled() then
