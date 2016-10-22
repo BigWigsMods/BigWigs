@@ -2,9 +2,6 @@
 -- Module Declaration
 --
 
-local LULZ = false
-if not LULZ then return end
-
 local plugin = BigWigs:NewPlugin("InfoBox")
 if not plugin then return end
 
@@ -79,7 +76,7 @@ end
 
 local function resetAnchor()
 	display:ClearAllPoints()
-	display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
+	display:SetPoint("CENTER", UIParent, "CENTER", -300, -80)
 	db.posx = nil
 	db.posy = nil
 end
@@ -96,7 +93,7 @@ local function updateProfile()
 			display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 		else
 			display:ClearAllPoints()
-			display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
+			display:SetPoint("CENTER", UIParent, "CENTER", -300, -80)
 		end
 
 		plugin:RestyleWindow()
