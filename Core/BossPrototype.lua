@@ -1660,7 +1660,7 @@ end
 
 
 do
-	local SendAddonMessage, IsInGroup = loader.SendAddonMessage, IsInGroup
+	local SendAddonMessage, IsInGroup = BigWigsLoader.SendAddonMessage, IsInGroup
 	--- Send an addon sync to other players.
 	-- @param msg the sync message/prefix
 	-- @param[opt] extra other optional value you want to send

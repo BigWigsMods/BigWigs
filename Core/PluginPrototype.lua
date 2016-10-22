@@ -80,7 +80,7 @@ function plugin:UpdateGUI()
 end
 
 do
-	local SendAddonMessage, IsInGroup = loader.SendAddonMessage, IsInGroup
+	local SendAddonMessage, IsInGroup = BigWigsLoader.SendAddonMessage, IsInGroup
 	local pName = UnitName("player")
 	--- Send an addon sync to other players.
 	-- @param msg the sync message/prefix
