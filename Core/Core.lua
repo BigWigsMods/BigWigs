@@ -79,7 +79,6 @@ do
 				end
 			end
 		end
-		addon:ClearSyncListeners(module) -- Also remove sync events
 	end
 	addon:RegisterMessage("BigWigs_OnBossDisable", UnregisterAllEvents)
 	addon:RegisterMessage("BigWigs_OnBossReboot", UnregisterAllEvents)
@@ -263,86 +262,25 @@ end
 -- Communication
 --
 
-local chatMsgAddon
-do
-	local times = {}
-	local registered = {
-		BossEngaged = true,
-		EnableModule = true,
-	}
-
-	function chatMsgAddon(event, prefix, message, nick)
-		if prefix ~= "T" then return end
-		local sync, rest = message:match("(%S+)%s*(.*)$")
-		if sync and registered[sync] then
-			local t = GetTime()
-			if rest == "" then rest = nil end
-			if sync == "BossEngaged" then
-				if rest and (not times[sync] or t > (times[sync] + 2)) then
-					local m = addon:GetBossModule(rest, true)
-					if not m or m.isEngaged or m.engageId or not m:IsEnabled() then
-						-- print(bossEngagedSyncError:format(rest, nick))
-						return
-					end
-					times[sync] = t
-					m:UnregisterEvent("PLAYER_REGEN_DISABLED")
-					-- print("Engaging " .. tostring(rest) .. " based on engage sync from " .. tostring(nick) .. ".")
-					m:Engage()
-				end
-			elseif sync == "EnableModule" then
-				if rest and (not times[sync] or t > (times[sync] + 2)) then
-					local module = addon:GetBossModule(rest, true)
-					if nick ~= pName and module then
-						enableBossModule(module, true)
-					end
-					times[sync] = t
-				end
-			else
-				for module, throttle in next, registered[sync] do
-					if not times[sync] or t >= (times[sync] + throttle) then
-						module:OnSync(sync, rest, nick)
-						times[sync] = t
-					end
-				end
-			end
+local function bossComm(_, sender, msg, extra)
+	if msg == "BossEngaged" and extra then
+		local m = addon:GetBossModule(extra, true)
+		if not m or m.isEngaged or m.engageId or not m:IsEnabled() then
+			return
 		end
-	end
-
-	function addon:ClearSyncListeners(module)
-		for sync, list in next, registered do
-			if type(list) == "table" then
-				registered[sync][module] = nil -- Remove module from listening to this sync event.
-				if not next(registered[sync]) then
-					registered[sync] = nil -- Remove sync event entirely if no modules are registered to it.
-				end
-			end
-		end
-	end
-	function addon:AddSyncListener(module, sync, throttle)
-		if not registered[sync] then registered[sync] = {} end
-		if type(registered[sync]) ~= "table" then return end -- Prevent registering BossEngaged/Death/EnableModule
-		registered[sync][module] = throttle or 5
-	end
-	function addon:Transmit(sync, ...)
-		if sync then
-			local msg = strjoin(" ", sync, ...)
-			chatMsgAddon(nil, "T", msg, pName)
-			if IsInGroup() then
-				SendAddonMessage("BigWigs", "T:"..msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
-			end
+		m:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		m:Engage()
+	elseif msg == "EnableModule" and extra then
+		local m = addon:GetBossModule(extra, true)
+		if m and not m:IsEnabled() and sender ~= pName then
+			enableBossModule(module, true)
 		end
 	end
 end
 
 function addon:RAID_BOSS_WHISPER(_, msg) -- Purely for Transcriptor to assist in logging purposes.
 	if IsInGroup() then
-		local len = msg:len()
-		if len < 230 then -- Safety
-			SendAddonMessage("Transcriptor", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
-		else
-			local id = msg:match("spell:%d+") or ""
-			self:Print(("Detected a boss whisper with %d characters. %s"):format(len, id))
-		end
+		SendAddonMessage("Transcriptor", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 	end
 end
 
@@ -405,7 +343,7 @@ do
 end
 
 function addon:OnEnable()
-	self:RegisterMessage("BigWigs_AddonMessage", chatMsgAddon)
+	self:RegisterMessage("BigWigs_BossComm", bossComm)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
 
 	self:RegisterEvent("ENCOUNTER_START")
@@ -424,7 +362,7 @@ end
 
 function addon:OnDisable()
 	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
-	self:UnregisterMessage("BigWigs_AddonMessage")
+	self:UnregisterMessage("BigWigs_BossComm")
 
 	self:UnregisterEvent("ENCOUNTER_START")
 

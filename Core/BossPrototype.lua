@@ -58,10 +58,10 @@ local updateData = function(module)
 	difficulty = diff
 
 	solo = true
-	local _, _, _, mapId = UnitPosition("player")
+	local _, _, _, instanceId = UnitPosition("player")
 	for unit in module:IterateGroup() do
-		local _, _, _, tarMapId = UnitPosition(unit)
-		if tarMapId == mapId and myGUID ~= UnitGUID(unit) and UnitIsConnected(unit) then
+		local _, _, _, tarInstanceId = UnitPosition(unit)
+		if tarInstanceId == instanceId and myGUID ~= UnitGUID(unit) and UnitIsConnected(unit) then
 			solo = false
 			break
 		end
@@ -1658,19 +1658,26 @@ function boss:PlaySound(key, sound)
 	end
 end
 
---- Send an addon sync to other players.
--- @param ... the sync message/prefix followed by any other values you want to send
--- @usage self:Sync("abilityPrefix", playerName)
--- @usage self:Sync("ability")
--- @within Core module functionality
-function boss:Sync(...) core:Transmit(...) end
 
---- Register for a sync message.
--- @string sync the sync message/prefix
--- @number[opt=5] throttle the time in seconds to throttle the sync
--- @within Core module functionality
-function boss:AddSyncListener(sync, throttle)
-	core:AddSyncListener(self, sync, throttle)
+do
+	local SendAddonMessage, IsInGroup = loader.SendAddonMessage, IsInGroup
+	--- Send an addon sync to other players.
+	-- @param msg the sync message/prefix
+	-- @param[opt] extra other optional value you want to send
+	-- @usage self:Sync("abilityPrefix", data)
+	-- @usage self:Sync("ability")
+	function boss:Sync(msg, extra)
+		if msg then
+			self:SendMessage("BigWigs_BossComm", msg, extra, pName)
+			if IsInGroup() then
+				msg = "B^".. msg
+				if extra then
+					msg = msg .."^".. extra
+				end
+				SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+			end
+		end
+	end
 end
 
 --- Start a "berserk" bar and show an engage message.

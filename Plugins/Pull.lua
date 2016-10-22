@@ -75,8 +75,8 @@ end
 --
 
 function plugin:OnPluginEnable()
-	BigWigs:AddSyncListener(self, "BWPull", 0)
-	self:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
+	self:RegisterMessage("BigWigs_PluginComm")
+	self:RegisterMessage("DBM_AddonMessage")
 
 	self:RegisterMessage("BigWigs_OnBossWin")
 	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
@@ -168,15 +168,15 @@ do
 	end
 end
 
-function plugin:OnDBMSync(_, sender, prefix, seconds)
+function plugin:DBM_AddonMessage(_, sender, prefix, seconds)
 	if prefix == "PT" then
 		self:StartPull(seconds, sender, true)
 	end
 end
 
-function plugin:OnSync(sync, seconds, nick)
-	if seconds and nick then
-		self:StartPull(seconds, nick)
+function plugin:BigWigs_PluginComm(_, msg, seconds, sender)
+	if msg == "Pull" and seconds then
+		self:StartPull(seconds, sender)
 	end
 end
 
@@ -210,8 +210,7 @@ SlashCmdList.BIGWIGSPULL = function(input)
 			BigWigs:Print(L.sendPull)
 		end
 
-		BigWigs:Transmit("BWPull", input)
-		--plugin:Sync("Pull", input) -- XXX 7.1
+		plugin:Sync("Pull", input)
 
 		if IsInGroup() then
 			local _, _, _, _, _, _, _, id = GetInstanceInfo()
