@@ -923,16 +923,6 @@ do
 	end
 end
 
---- [DEPRECATED] Get the distance between two group members.
--- Warning, this API will need to change in according to WoW 7.1 range regulations, do not rely on it.
--- @param player the first player to check
--- @param[opt="player"] otherPlayer second player to check
--- @return distance
-function boss:Range(player, otherPlayer)
-	BigWigs:Print("The :Range API is deprecated.")
-	return 200
-end
-
 --- Check if you're the only person inside an instance, despite being in a group or not.
 -- @return boolean
 function boss:Solo()
@@ -1317,16 +1307,6 @@ function boss:Message(key, color, sound, text, icon)
 			end
 		end
 	end
-end
-
---- [DEPRECATED] Display a range warning message.
--- @param key the option key
--- @param[opt] color the message color category
--- @param[opt] sound the message sound
--- @param[opt] text the message text (if nil, key is used)
--- @param[opt] icon the message icon (spell id or texture name)
-function boss:RangeMessage(key, color, sound, text, icon)
-	BigWigs:Print("The :RangeMessage API is deprecated.")
 end
 
 do
