@@ -1693,7 +1693,7 @@ do
 		if not times[input] or (times[input] and (times[input] + 2) < t) then
 			times[input] = t
 			BigWigs:Print(L.sendCustomBar:format(barText))
-			plugin:Sync("CBar", seconds, barText)
+			plugin:Sync("CBar", input)
 			SendAddonMessage("D4", ("U\t%d\t%s"):format(seconds, barText), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	end
@@ -1709,7 +1709,7 @@ SlashCmdList.BIGWIGSLOCALBAR = function(input)
 	seconds = parseTime(seconds)
 	if not seconds then BigWigs:Print(L.wrongTime) return end
 
-	startCustomBar(seconds, UnitName("player"), barText)
+	startCustomBar(seconds, plugin:UnitName("player"), barText)
 end
 SLASH_BIGWIGSLOCALBAR1 = "/localbar"
 
