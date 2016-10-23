@@ -27,7 +27,7 @@ local type, next, tonumber = type, next, tonumber
 local core = BigWigs
 local C = core.C
 local pName = UnitName("player")
-local hasVoice = GetAddOnEnableState(pName, "BigWigs_Voice") > 0
+local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
 local enabledModules = {}
 local allowedEvents = {}
@@ -37,6 +37,7 @@ local myGUID, myRole, myDamagerRole = nil, nil, nil
 local solo = false
 local updateData = function(module)
 	myGUID = UnitGUID("player")
+	hasVoice = BigWigsAPI:HasVoicePack()
 
 	local tree = GetSpecialization()
 	if tree then
