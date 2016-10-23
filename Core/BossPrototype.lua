@@ -92,7 +92,7 @@ local icons = setmetatable({}, {__index =
 			if key > 8 then
 				value = GetSpellTexture(key)
 				if not value then
-					core:Print(format("An invalid spell id (%d) is being used in a bar/message.", key))
+					core:Print(format("An invalid spell id (%d) is being used in a boss module.", key))
 				end
 			elseif key > 0 then
 				-- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
@@ -128,6 +128,10 @@ local spells = setmetatable({}, {__index =
 
 local boss = {}
 core:GetModule("Bosses"):SetDefaultModulePrototype(boss)
+
+--- Register the module to enable on mob id.
+-- @param ... Any number of mob ids
+function boss:RegisterEnableMob(...) core:RegisterEnableMob(self, ...) end
 
 --- The encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
 -- If this is set, no engage or wipe checking is required. The module will use this id and all engage/wipe checking will be handled automatically.
@@ -289,15 +293,6 @@ function boss:AddMarkerOption(state, markType, icon, id, ...)
 	end
 	return option
 end
-
--------------------------------------------------------------------------------
--- Enable triggers
--- @section enable_triggers
---
-
---- Register the module to enable on mob id.
--- @param ... Any number of mob ids
-function boss:RegisterEnableMob(...) core:RegisterEnableMob(self, ...) end
 
 -------------------------------------------------------------------------------
 -- Combat log functions
