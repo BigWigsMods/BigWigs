@@ -83,10 +83,11 @@ do
 			plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
 		end
 	end)
-	display:SetScript("OnHide", function()
+	display:SetScript("OnHide", function(self)
 		for i = 1, 10 do
-			display.text[i]:SetText("")
+			self.text[i]:SetText("")
 		end
+		self.title:SetText("InfoBox") -- L.infoBox
 	end)
 
 	local bg = display:CreateTexture()
@@ -190,8 +191,9 @@ function plugin:BigWigs_SetConfigureTarget(_, module)
 	end
 end
 
-function plugin:BigWigs_ShowInfoBox(_, module)
+function plugin:BigWigs_ShowInfoBox(_, module, title)
 	opener = module
+	display.title:SetText(title)
 	display:Show()
 end
 
@@ -210,7 +212,6 @@ function plugin:BigWigs_OnBossDisable(_, module)
 end
 
 function plugin:Test()
-	display.title:SetText("InfoBox") -- L.infoBox
 	for i = 1, 10 do
 		display.text[i]:SetText(i)
 	end
