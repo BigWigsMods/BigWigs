@@ -298,9 +298,6 @@ end
 --- Register the module to enable on mob id.
 -- @param ... Any number of mob ids
 function boss:RegisterEnableMob(...) core:RegisterEnableMob(self, ...) end
---- [DEPRECATED] Register the module to enable on mob yell.
--- @param ... Any number of strings
-function boss:RegisterEnableYell(...) core:RegisterEnableYell(self, ...) end
 
 -------------------------------------------------------------------------------
 -- Combat log functions

@@ -104,7 +104,7 @@ end
 -- Target monitoring
 --
 
-local enablezones, enablemobs, enableyells = {}, {}, {}
+local enablezones, enablemobs = {}, {}
 local monitoring = nil
 
 local function enableBossModule(module, noSync)
@@ -142,13 +142,7 @@ local function targetCheck(unit)
 		targetSeen(unit, enablemobs[id], id)
 	end
 end
-local function chatMsgMonsterYell(event, msg)
-	for yell, mod in next, enableyells do
-		if yell == msg or msg:find(yell, nil, true) or msg:find(yell) then -- Preserve backwards compat by leaving in the 3rd check
-			targetSeen("player", mod)
-		end
-	end
-end
+
 local function updateMouseover() targetCheck("mouseover") end
 local function unitTargetChanged(event, target)
 	targetCheck(target .. "target")
@@ -174,7 +168,6 @@ local function zoneChanged()
 	if enablezones[id] then
 		if not monitoring then
 			monitoring = true
-			addon:RegisterEvent("CHAT_MSG_MONSTER_YELL", chatMsgMonsterYell)
 			addon:RegisterEvent("UPDATE_MOUSEOVER_UNIT", updateMouseover)
 			addon:RegisterEvent("UNIT_TARGET", unitTargetChanged)
 			targetCheck("target")
@@ -182,7 +175,6 @@ local function zoneChanged()
 		end
 	elseif monitoring then
 		monitoring = nil
-		addon:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
 		addon:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 		addon:UnregisterEvent("UNIT_TARGET")
 	end
@@ -206,9 +198,7 @@ do
 		end
 	end
 	function addon:RegisterEnableMob(module, ...) add(module.moduleName, enablemobs, ...) end
-	function addon:RegisterEnableYell(module, ...) add(module.moduleName, enableyells, ...) end
 	function addon:GetEnableMobs() return enablemobs end
-	function addon:GetEnableYells() return enableyells end
 end
 
 -------------------------------------------------------------------------------
