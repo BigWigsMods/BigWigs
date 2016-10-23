@@ -78,6 +78,7 @@ do
 	display:SetSize(200, 80)
 	display:SetClampedToScreen(true)
 	display:EnableMouse(true)
+	display:Hide()
 	display:SetScript("OnMouseUp", function(self, button)
 		if inTestMode and button == "LeftButton" then
 			plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
