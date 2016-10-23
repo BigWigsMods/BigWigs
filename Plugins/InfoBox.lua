@@ -75,13 +75,17 @@ end
 
 do
 	display = CreateFrame("Frame", "BigWigsInfoBox", UIParent)
-	display:SetSize(200, 80)
+	display:SetSize(150, 100)
 	display:SetClampedToScreen(true)
 	display:EnableMouse(true)
-	display:Hide()
 	display:SetScript("OnMouseUp", function(self, button)
 		if inTestMode and button == "LeftButton" then
 			plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
+		end
+	end)
+	display:SetScript("OnHide", function()
+		for i = 1, 10 do
+			display.text[i]:SetText("")
 		end
 	end)
 
@@ -100,22 +104,14 @@ do
 		plugin:Close()
 	end)
 
-	local timer = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-	timer:SetPoint("BOTTOMLEFT", display, "TOPLEFT")
-	timer:SetHeight(16)
-	timer:SetWidth(50)
-	timer:SetText("0:00")
-	display.timer = timer
-
 	local header = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-	header:SetPoint("BOTTOM", display, "TOP", 0, 4)
+	header:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
 	display.title = header
 
 	display.text = {}
-	for i = 1, 25 do
+	for i = 1, 10 do
 		local text = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-		text:SetText("")
-		text:SetSize(100, 16)
+		text:SetSize(75, 20)
 		if i == 1 then
 			text:SetPoint("TOPLEFT", display, "TOPLEFT", 5, 0)
 			text:SetJustifyH("LEFT")
@@ -128,6 +124,8 @@ do
 		end
 		display.text[i] = text
 	end
+
+	display:Hide()
 end
 
 -------------------------------------------------------------------------------
@@ -167,10 +165,6 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnBossReboot", "BigWigs_OnBossDisable")
 
-	self:RegisterMessage("BigWigs_OnBossEngage")
-	self:RegisterMessage("BigWigs_OnBossWin")
-	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
-
 	self:RegisterMessage("BigWigs_StartConfigureMode", "Test")
 	self:RegisterMessage("BigWigs_StopConfigureMode", "Close")
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
@@ -196,33 +190,6 @@ function plugin:BigWigs_SetConfigureTarget(_, module)
 	end
 end
 
-do
-	local floor = math.floor
-	local tformat = "%d:%02d"
-	local schedule = nil
-	local elapsed = 0
-	local function updateFunc()
-		elapsed = elapsed + 1
-		local m = floor(elapsed/60)
-		local s = elapsed - (m*60)
-		display.timer:SetFormattedText(tformat, m, s)
-	end
-	function plugin:BigWigs_OnBossEngage(_, module)
-		if module.journalId then
-			if schedule then self:CancelTimer(schedule) end
-			elapsed = 0
-			display.timer:SetText("0:00")
-			schedule = self:ScheduleRepeatingTimer(updateFunc, 1)
-		end
-	end
-	function plugin:BigWigs_OnBossWin(_, module)
-		if module.journalId then
-			self:CancelTimer(schedule)
-			schedule = nil
-		end
-	end
-end
-
 function plugin:BigWigs_ShowInfoBox(_, module)
 	opener = module
 	display:Show()
@@ -244,13 +211,8 @@ end
 
 function plugin:Test()
 	display.title:SetText("InfoBox") -- L.infoBox
-	display.timer:SetText("0:00")
-	display.text[1]:SetText("BigWigs")
-	display.text[2]:SetText("beta")
-	display.text[3]:SetText("test")
-	display.text[4]:SetText("mode")
-	for i = 5, 25 do
-		display.text[i]:SetText("")
+	for i = 1, 10 do
+		display.text[i]:SetText(i)
 	end
 	display:Show()
 end
