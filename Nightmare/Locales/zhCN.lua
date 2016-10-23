@@ -16,7 +16,8 @@ end
 
 L = BigWigs:NewBossLocale("Il'gynoth", "zhCN")
 if L then
-	L.blobs_remaining = ">%d< 脓液剩余"
+	--L.remaining = "Remaining"
+	--L.missed = "Missed"
 end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "zhCN")
