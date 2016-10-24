@@ -16,8 +16,8 @@ end
 
 L = BigWigs:NewBossLocale("Il'gynoth", "zhTW")
 if L then
-	--L.remaining = "Remaining"
-	--L.missed = "Missed"
+	L.remaining = "剩餘"
+	L.missed = "缺少"
 end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "zhTW")
