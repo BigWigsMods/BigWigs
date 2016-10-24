@@ -683,7 +683,7 @@ do
 		local go = scan(self)
 		if go then
 			if debug then dbg(self, "Engage scan found active boss entities, transmitting engage sync.") end
-			self:Sync("BossEngaged", self.moduleName)
+			self:Sync("Engage", self.moduleName)
 		else
 			if debug then dbg(self, "Engage scan did NOT find any active boss entities. Re-scheduling another engage check in 0.5 seconds.") end
 			self:ScheduleTimer("CheckForEngage", .5)
@@ -694,7 +694,7 @@ do
 	-- XXX First of all, the CheckForWipe every 2 seconds would continue scanning.
 	-- XXX Secondly, if the boss module registers for PLAYER_REGEN_DISABLED, it would
 	-- XXX trigger again, and CheckForEngage (possibly) invoked, which results in
-	-- XXX a new BossEngaged sync -> :Engage -> :OnEngage on the module.
+	-- XXX a new Engage sync -> :Engage -> :OnEngage on the module.
 	-- XXX Possibly a concern?
 
 	--- Start a repeating timer checking if your group has left combat with a boss.

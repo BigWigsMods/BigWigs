@@ -792,8 +792,10 @@ local function doCommCompat(msg)
 				return ("P^CBar^%s"):format(rest)
 			elseif sync == "BWPower" then
 				return ("P^AltPower^%s"):format(rest)
-			elseif sync == "EnableModule" or sync == "BossEngaged" then
-				return ("B^%s^%s"):format(sync, rest)
+			elseif sync == "EnableModule" then
+				return ("B^Enable^%s"):format(rest)
+			elseif sync == "BossEngaged" then
+				return ("B^Engage^%s"):format(rest)
 			end
 		end
 	end

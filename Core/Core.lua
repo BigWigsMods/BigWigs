@@ -111,7 +111,7 @@ local function enableBossModule(module, noSync)
 	if not module:IsEnabled() and (not module.lastKill or (GetTime() - module.lastKill) > (module.worldBoss and 5 or 150)) then
 		module:Enable()
 		if not noSync and not module.worldBoss then
-			module:Sync("EnableModule", module:GetName())
+			module:Sync("Enable", module:GetName())
 		end
 	end
 end
@@ -253,14 +253,14 @@ end
 --
 
 local function bossComm(_, msg, extra, sender)
-	if msg == "BossEngaged" and extra then
+	if msg == "Engage" and extra then
 		local m = addon:GetBossModule(extra, true)
 		if not m or m.isEngaged or m.engageId or not m:IsEnabled() then
 			return
 		end
 		m:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		m:Engage()
-	elseif msg == "EnableModule" and extra then
+	elseif msg == "Enable" and extra then
 		local m = addon:GetBossModule(extra, true)
 		if m and not m:IsEnabled() and sender ~= pName then
 			enableBossModule(module, true)
