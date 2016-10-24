@@ -30,6 +30,7 @@ local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 
 local loader = BigWigsLoader
+local API = BigWigsAPI
 local GetAreaMapInfo = loader.GetAreaMapInfo
 local fakeWorldZones = loader.fakeWorldZones
 
@@ -388,6 +389,11 @@ local function advancedToggles(dbKey, module, check)
 				flashGroup:AddChild(pulse)
 
 				advancedOptions[#advancedOptions + 1] = flashGroup
+			elseif key == "VOICE" then
+				if API:HasVoicePack() then
+					local name, desc = BigWigs:GetOptionDetails(key)
+					advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)
+				end
 			else
 				local name, desc = BigWigs:GetOptionDetails(key)
 				advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)

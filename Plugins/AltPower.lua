@@ -438,7 +438,7 @@ do
 		self:Close()
 
 		if sync then
-			BigWigs:AddSyncListener(self, "BWPower", 0)
+			self:RegisterMessage("BigWigs_PluginComm")
 		end
 
 		display:RegisterEvent("GROUP_ROSTER_UPDATE")
@@ -547,7 +547,7 @@ function plugin:Close()
 		updater = nil
 		display:UnregisterEvent("GROUP_ROSTER_UPDATE")
 		display:Hide()
-		BigWigs:ClearSyncListeners(self)
+		self:UnregisterMessage("BigWigs_PluginComm")
 		for i = 1, 25 do
 			display.text[i]:SetText("")
 		end
@@ -569,7 +569,7 @@ do
 		local newPower = UnitPower("player", 10) -- ALTERNATE_POWER_INDEX = 10
 		if newPower ~= power then
 			power = newPower
-			BigWigs:Transmit("BWPower", newPower)
+			plugin:Sync("AltPower", newPower)
 		end
 	end
 
@@ -597,14 +597,16 @@ do
 		end
 	end
 
-	function plugin:OnSync(sync, amount, nick)
-		local curPower = tonumber(amount)
-		if curPower then
-			for i = 1, maxPlayers do
-				local unit = unitList[i]
-				if nick == self:UnitName(unit) then
-					syncPowerList[unit] = curPower
-					break
+	function plugin:BigWigs_PluginComm(_, msg, amount, sender)
+		if msg == "AltPower" then
+			local curPower = tonumber(amount)
+			if curPower then
+				for i = 1, maxPlayers do
+					local unit = unitList[i]
+					if sender == self:UnitName(unit) then
+						syncPowerList[unit] = curPower
+						break
+					end
 				end
 			end
 		end

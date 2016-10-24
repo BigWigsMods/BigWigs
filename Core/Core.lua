@@ -13,8 +13,6 @@ addon.RegisterMessage = loader.RegisterMessage
 addon.UnregisterMessage = loader.UnregisterMessage
 addon.SendMessage = loader.SendMessage
 
-local GetSpellInfo = GetSpellInfo
-
 local C -- = BigWigs.C, set from Constants.lua
 local AL = LibStub("AceLocale-3.0")
 local L = AL:GetLocale("BigWigs")
@@ -79,7 +77,6 @@ do
 				end
 			end
 		end
-		addon:ClearSyncListeners(module) -- Also remove sync events
 	end
 	addon:RegisterMessage("BigWigs_OnBossDisable", UnregisterAllEvents)
 	addon:RegisterMessage("BigWigs_OnBossReboot", UnregisterAllEvents)
@@ -105,54 +102,48 @@ end
 -- Target monitoring
 --
 
-local enablezones, enablemobs, enableyells = {}, {}, {}
+local enablezones, enablemobs = {}, {}
 local monitoring = nil
 
 local function enableBossModule(module, noSync)
 	if not module:IsEnabled() and (not module.lastKill or (GetTime() - module.lastKill) > (module.worldBoss and 5 or 150)) then
 		module:Enable()
 		if not noSync and not module.worldBoss then
-			module:Sync("EnableModule", module:GetName())
+			module:Sync("Enable", module:GetName())
 		end
 	end
 end
 
-local function shouldReallyEnable(unit, moduleName, mobId)
+local function shouldReallyEnable(unit, moduleName, mobId, noSync)
 	local module = bossCore:GetModule(moduleName)
 	if not module or module:IsEnabled() then return end
 	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId)) then
-		enableBossModule(module)
+		enableBossModule(module, noSync)
 	end
 end
 
-local function targetSeen(unit, targetModule, mobId)
+local function targetSeen(unit, targetModule, mobId, noSync)
 	if type(targetModule) == "string" then
-		shouldReallyEnable(unit, targetModule, mobId)
+		shouldReallyEnable(unit, targetModule, mobId, noSync)
 	else
 		for i, module in next, targetModule do
-			shouldReallyEnable(unit, module, mobId)
+			shouldReallyEnable(unit, module, mobId, noSync)
 		end
 	end
 end
 
-local function targetCheck(unit)
+local function targetCheck(unit, noSync)
 	if not UnitName(unit) or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
 	local _, _, _, _, _, mobId = strsplit("-", (UnitGUID(unit)))
 	local id = tonumber(mobId)
 	if id and enablemobs[id] then
-		targetSeen(unit, enablemobs[id], id)
+		targetSeen(unit, enablemobs[id], id, noSync)
 	end
 end
-local function chatMsgMonsterYell(event, msg)
-	for yell, mod in next, enableyells do
-		if yell == msg or msg:find(yell, nil, true) or msg:find(yell) then -- Preserve backwards compat by leaving in the 3rd check
-			targetSeen("player", mod)
-		end
-	end
-end
+
 local function updateMouseover() targetCheck("mouseover") end
 local function unitTargetChanged(event, target)
-	targetCheck(target .. "target")
+	targetCheck(target .. "target", true)
 end
 
 local function zoneChanged()
@@ -175,7 +166,6 @@ local function zoneChanged()
 	if enablezones[id] then
 		if not monitoring then
 			monitoring = true
-			addon:RegisterEvent("CHAT_MSG_MONSTER_YELL", chatMsgMonsterYell)
 			addon:RegisterEvent("UPDATE_MOUSEOVER_UNIT", updateMouseover)
 			addon:RegisterEvent("UNIT_TARGET", unitTargetChanged)
 			targetCheck("target")
@@ -183,7 +173,6 @@ local function zoneChanged()
 		end
 	elseif monitoring then
 		monitoring = nil
-		addon:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
 		addon:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 		addon:UnregisterEvent("UNIT_TARGET")
 	end
@@ -207,9 +196,7 @@ do
 		end
 	end
 	function addon:RegisterEnableMob(module, ...) add(module.moduleName, enablemobs, ...) end
-	function addon:RegisterEnableYell(module, ...) add(module.moduleName, enableyells, ...) end
 	function addon:GetEnableMobs() return enablemobs end
-	function addon:GetEnableYells() return enableyells end
 end
 
 -------------------------------------------------------------------------------
@@ -263,86 +250,25 @@ end
 -- Communication
 --
 
-local chatMsgAddon
-do
-	local times = {}
-	local registered = {
-		BossEngaged = true,
-		EnableModule = true,
-	}
-
-	function chatMsgAddon(event, prefix, message, nick)
-		if prefix ~= "T" then return end
-		local sync, rest = message:match("(%S+)%s*(.*)$")
-		if sync and registered[sync] then
-			local t = GetTime()
-			if rest == "" then rest = nil end
-			if sync == "BossEngaged" then
-				if rest and (not times[sync] or t > (times[sync] + 2)) then
-					local m = addon:GetBossModule(rest, true)
-					if not m or m.isEngaged or m.engageId or not m:IsEnabled() then
-						-- print(bossEngagedSyncError:format(rest, nick))
-						return
-					end
-					times[sync] = t
-					m:UnregisterEvent("PLAYER_REGEN_DISABLED")
-					-- print("Engaging " .. tostring(rest) .. " based on engage sync from " .. tostring(nick) .. ".")
-					m:Engage()
-				end
-			elseif sync == "EnableModule" then
-				if rest and (not times[sync] or t > (times[sync] + 2)) then
-					local module = addon:GetBossModule(rest, true)
-					if nick ~= pName and module then
-						enableBossModule(module, true)
-					end
-					times[sync] = t
-				end
-			else
-				for module, throttle in next, registered[sync] do
-					if not times[sync] or t >= (times[sync] + throttle) then
-						module:OnSync(sync, rest, nick)
-						times[sync] = t
-					end
-				end
-			end
+local function bossComm(_, msg, extra, sender)
+	if msg == "Engage" and extra then
+		local m = addon:GetBossModule(extra, true)
+		if not m or m.isEngaged or m.engageId or not m:IsEnabled() then
+			return
 		end
-	end
-
-	function addon:ClearSyncListeners(module)
-		for sync, list in next, registered do
-			if type(list) == "table" then
-				registered[sync][module] = nil -- Remove module from listening to this sync event.
-				if not next(registered[sync]) then
-					registered[sync] = nil -- Remove sync event entirely if no modules are registered to it.
-				end
-			end
-		end
-	end
-	function addon:AddSyncListener(module, sync, throttle)
-		if not registered[sync] then registered[sync] = {} end
-		if type(registered[sync]) ~= "table" then return end -- Prevent registering BossEngaged/Death/EnableModule
-		registered[sync][module] = throttle or 5
-	end
-	function addon:Transmit(sync, ...)
-		if sync then
-			local msg = strjoin(" ", sync, ...)
-			chatMsgAddon(nil, "T", msg, pName)
-			if IsInGroup() then
-				SendAddonMessage("BigWigs", "T:"..msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
-			end
+		m:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		m:Engage()
+	elseif msg == "Enable" and extra then
+		local m = addon:GetBossModule(extra, true)
+		if m and not m:IsEnabled() and sender ~= pName then
+			enableBossModule(m, true)
 		end
 	end
 end
 
 function addon:RAID_BOSS_WHISPER(_, msg) -- Purely for Transcriptor to assist in logging purposes.
 	if IsInGroup() then
-		local len = msg:len()
-		if len < 230 then -- Safety
-			SendAddonMessage("Transcriptor", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
-		else
-			local id = msg:match("spell:%d+") or ""
-			self:Print(("Detected a boss whisper with %d characters. %s"):format(len, id))
-		end
+		SendAddonMessage("Transcriptor", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 	end
 end
 
@@ -405,7 +331,7 @@ do
 end
 
 function addon:OnEnable()
-	self:RegisterMessage("BigWigs_AddonMessage", chatMsgAddon)
+	self:RegisterMessage("BigWigs_BossComm", bossComm)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
 
 	self:RegisterEvent("ENCOUNTER_START")
@@ -424,7 +350,7 @@ end
 
 function addon:OnDisable()
 	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
-	self:UnregisterMessage("BigWigs_AddonMessage")
+	self:UnregisterMessage("BigWigs_BossComm")
 
 	self:UnregisterEvent("ENCOUNTER_START")
 
@@ -462,6 +388,7 @@ do
 	-- Adding core generic toggles
 	addon:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, "Interface\\Icons\\spell_shadow_unholyfrenzy")
 	addon:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, "Interface\\Icons\\spell_arcane_invocation")
+	addon:RegisterBossOption("infobox", L.infobox, L.infobox_desc)
 	addon:RegisterBossOption("stages", L.stages, L.stages_desc)
 	addon:RegisterBossOption("warmup", L.warmup, L.warmup_desc)
 end
@@ -486,17 +413,9 @@ end
 --
 
 do
-	local errorDeprecatedNew = "%q is using the deprecated :New() API. Please tell the author to fix it for the latest BigWigs."
-	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any BigWigs folders you have and then reinstall it from scratch."
+	local GetSpellInfo, EJ_GetSectionInfo = GetSpellInfo, EJ_GetSectionInfo
 
-	-- either you get me the hell out of these woods, or you'll know how my
-	-- mother felt after drinking my chocolate milkshake
-	-- did she make it for you?
-	-- you're a dead man.
-	function addon:New(module)
-		self:Print(errorDeprecatedNew:format(module))
-	end
-
+	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
 	local function new(core, moduleName, mapId, journalId, ...)
 		if core:GetModule(moduleName, true) then
 			addon:Print(errorAlreadyRegistered:format(moduleName))
@@ -536,8 +455,6 @@ do
 
 	local defaultToggles = nil
 
-	local hasVoice = GetAddOnEnableState(pName, "BigWigs_Voice") > 0
-
 	local function setupOptions(module)
 		if not C then C = addon.C end
 		if not defaultToggles then
@@ -546,8 +463,9 @@ do
 				bosskill = C.MESSAGE,
 				proximity = C.PROXIMITY,
 				altpower = C.ALTPOWER,
+				infobox = C.INFOBOX,
 			}, {__index = function(self, key)
-				return C.BAR + C.MESSAGE + (hasVoice and C.VOICE or 0)
+				return C.BAR + C.MESSAGE + C.VOICE
 			end})
 		end
 
@@ -559,9 +477,13 @@ do
 					end
 				elseif type(v) == "number" then
 					if v > 0 then
-						module.optionHeaders[k] = GetSpellInfo(v)
+						local n = GetSpellInfo(v)
+						if not n then error(("Invalid spell ID %d in the optionHeaders for module %s."):format(v, module.name)) end
+						module.optionHeaders[k] = n
 					else
-						module.optionHeaders[k] = EJ_GetSectionInfo(-v)
+						local n = EJ_GetSectionInfo(-v)
+						if not n then error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
+						module.optionHeaders[k] = n
 					end
 				end
 			end

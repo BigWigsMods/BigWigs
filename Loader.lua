@@ -7,9 +7,9 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 19
+local BIGWIGS_VERSION = 20
 local BIGWIGS_RELEASE_STRING = ""
-local versionQueryString, versionResponseString = "Q:%d-%s", "V:%d-%s"
+local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
 do
 	-- START: MAGIC PACKAGER VOODOO VERSION STUFF
@@ -51,7 +51,7 @@ end
 
 local ldb = nil
 local tooltipFunctions = {}
-local next, tonumber = next, tonumber
+local next, tonumber, strsplit = next, tonumber, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
 local IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone = IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone
 local GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID = GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID
@@ -145,7 +145,7 @@ end
 -- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, CreateFrame, CUSTOM_CLASS_COLORS, error, GetAddOnEnableState, GetAddOnInfo
 -- GLOBALS: GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetSpellInfo, GetTime, GRAY_FONT_COLOR, InCombatLockdown
 -- GLOBALS: InterfaceOptionsFrameOkay, IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInRaid, IsLoggedIn, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
--- GLOBALS: LibStub, LoadAddOn, message, PlaySoundFile, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, strsplit
+-- GLOBALS: LibStub, LoadAddOn, message, PlaySoundFile, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select
 -- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsConnected, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
 -- GLOBALS: SLASH_BigWigsVersion1, UnitBuff, wipe
 
@@ -556,7 +556,7 @@ do
 
 	local L = GetLocale()
 	if L == "ptBR" then
-		delayedMessages[#delayedMessages+1] = "Can you translate BigWigs into Brazilian Portugese (ptBR)? Check out our GitHub page!"
+		--delayedMessages[#delayedMessages+1] = "Can you translate BigWigs into Brazilian Portugese (ptBR)? Check out our GitHub page!"
 	elseif L == "itIT" then
 		delayedMessages[#delayedMessages+1] = "Can you translate BigWigs into Italian (itIT)? Check out our GitHub page!"
 	elseif L == "koKR" then
@@ -581,8 +581,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "15307" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "7.0.11" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
+	local DBMdotRevision = "15369" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "7.0.12" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -776,24 +776,69 @@ do
 end
 
 -- Misc
+local function doCommCompat(msg)
+	local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
+	if bwPrefix then
+		local sync, rest = bwMsg:match("(%S+)%s*(.*)$")
+		if bwPrefix == "V" or bwPrefix == "Q" then
+			local verString, hash = bwMsg:match("^(%d+)%-(.+)$")
+			return ("%s^%s^%s"):format(bwPrefix, verString, hash)
+		else
+			if sync == "BWPull" then
+				return ("P^Pull^%s"):format(rest)
+			elseif sync == "BWBreak" then
+				return ("P^Break^%s"):format(rest)
+			elseif sync == "BWCustomBar" then
+				return ("P^CBar^%s"):format(rest)
+			elseif sync == "BWPower" then
+				return ("P^AltPower^%s"):format(rest)
+			elseif sync == "EnableModule" then
+				return ("B^Enable^%s"):format(rest)
+			elseif sync == "BossEngaged" then
+				return ("B^Engage^%s"):format(rest)
+			end
+		end
+	end
+	return msg
+end
+
 function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	if channel ~= "RAID" and channel ~= "PARTY" and channel ~= "INSTANCE_CHAT" then
 		return
 	elseif prefix == "BigWigs" then
-		local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
+		msg = doCommCompat(msg) -- XXX Remove me at some point in the future (Nighthold?)
+		local bwPrefix, bwMsg, extra = strsplit("^", msg)
 		sender = Ambiguate(sender, "none")
 		if bwPrefix == "V" or bwPrefix == "Q" then
-			self:VersionCheck(bwPrefix, bwMsg, sender)
-		elseif bwPrefix then
-			if msg == "T:BWPull" or msg == "T:BWBreak" then loadAndEnableCore() end -- Force enable the core when receiving a break/pull timer.
-			public:SendMessage("BigWigs_AddonMessage", bwPrefix, bwMsg, sender)
+			self:VersionCheck(bwPrefix, bwMsg, extra, sender)
+		elseif bwPrefix == "B" then
+			public:SendMessage("BigWigs_BossComm", bwMsg, extra, sender)
+		elseif bwPrefix == "P" then
+			if bwMsg == "Pull" then
+				local _, _, _, instanceId = UnitPosition("player")
+				local _, _, _, tarInstanceId = UnitPosition(sender)
+				if instanceId == tarInstanceId then
+					loadAndEnableCore() -- Force enable the core when receiving a pull timer.
+				end
+			elseif bwMsg == "Break" then
+				loadAndEnableCore() -- Force enable the core when receiving a break timer.
+			end
+			public:SendMessage("BigWigs_PluginComm", bwMsg, extra, sender)
 		end
 	elseif prefix == "D4" then
 		local dbmPrefix, arg1, arg2, arg3, arg4 = strsplit("\t", msg)
 		if dbmPrefix == "V" or dbmPrefix == "H" then
 			self:DBM_VersionCheck(dbmPrefix, Ambiguate(sender, "none"), arg1, arg2, arg3)
 		elseif dbmPrefix == "U" or dbmPrefix == "PT" or dbmPrefix == "M" or dbmPrefix == "BT" then
-			if dbmPrefix == "PT" or dbmPrefix == "BT" then loadAndEnableCore() end
+			if dbmPrefix == "PT" then
+				local _, _, _, instanceId = UnitPosition("player")
+				local _, _, _, tarInstanceId = UnitPosition(sender)
+				if instanceId == tarInstanceId then
+					loadAndEnableCore() -- Force enable the core when receiving a pull timer.
+				end
+			elseif dbmPrefix == "BT" then
+				loadAndEnableCore() -- Force enable the core when receiving a break timer.
+			end
 			public:SendMessage("DBM_AddonMessage", Ambiguate(sender, "none"), dbmPrefix, arg1, arg2, arg3, arg4)
 		end
 	end
@@ -839,13 +884,12 @@ do
 		end
 	end
 
-	function mod:VersionCheck(prefix, msg, sender)
+	function mod:VersionCheck(prefix, verString, hash, sender)
 		if prefix == "Q" then
 			if timer then timer:Cancel() end
 			timer = CTimerNewTicker(3, sendMsg, 1)
 		end
 		if prefix == "V" or prefix == "Q" then -- V = version response, Q = version query
-			local verString, hash = msg:match("^(%d+)%-(.+)$")
 			local version = tonumber(verString)
 			if version and version > 0 then -- Allow addons to query BigWigs versions by using a version of 0, but don't add them to the user list.
 				usersVersion[sender] = version

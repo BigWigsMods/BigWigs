@@ -33,7 +33,7 @@ local L = mod:GetLocale()
 if L then
 	L.odyn = -14003
 	L.hymdall = -14005
-	L.hyrja = -14005
+	L.hyrja = -14006
 
 	L[227490] = "|cFF800080Top Right|r (|T1323037:15:15:0:0:64:64:4:60:4:60|t)" -- Boss_OdunRunes_Purple
 	L[227491] = "|cFFFFA500Bottom Right|r (|T1323039:15:15:0:0:64:64:4:60:4:60|t)" -- Boss_OdunRunes_Orange

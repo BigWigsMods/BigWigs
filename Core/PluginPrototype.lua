@@ -79,3 +79,23 @@ function plugin:UpdateGUI()
 	end
 end
 
+do
+	local SendAddonMessage, IsInGroup = BigWigsLoader.SendAddonMessage, IsInGroup
+	local pName = UnitName("player")
+	--- Send an addon sync to other players.
+	-- @param msg the sync message/prefix
+	-- @param[opt] extra other optional value you want to send
+	-- @usage self:Sync("pluginName", data)
+	function plugin:Sync(msg, extra)
+		if msg then
+			self:SendMessage("BigWigs_PluginComm", msg, extra, pName)
+			if IsInGroup() then
+				msg = "P^".. msg
+				if extra then
+					msg = msg .."^".. extra
+				end
+				SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+			end
+		end
+	end
+end

@@ -1135,9 +1135,8 @@ function plugin:OnDelayedEnable()
 	self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
 
 	-- custom bars
-	BigWigs:AddSyncListener(self, "BWCustomBar", 0)
-	BigWigs:AddSyncListener(self, "BWBreak", 0)
-	self:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
+	self:RegisterMessage("BigWigs_PluginComm")
+	self:RegisterMessage("DBM_AddonMessage")
 
 	local tbl = BigWigs3DB.breakTime
 	if tbl then -- Break time present, resume it
@@ -1653,7 +1652,7 @@ do
 	end
 end
 
-function plugin:OnDBMSync(_, sender, prefix, seconds, text)
+function plugin:DBM_AddonMessage(_, sender, prefix, seconds, text)
 	if prefix == "U" then
 		startCustomBar(seconds.." "..text, sender, nil, true)
 	elseif prefix == "BT" then
@@ -1661,12 +1660,12 @@ function plugin:OnDBMSync(_, sender, prefix, seconds, text)
 	end
 end
 
-function plugin:OnSync(sync, seconds, nick)
-	if seconds and nick then
-		if sync == "BWCustomBar" then
-			startCustomBar(seconds, nick)
-		elseif sync == "BWBreak" then
-			startBreak(seconds, nick)
+function plugin:BigWigs_PluginComm(_, msg, seconds, sender)
+	if seconds then
+		if msg == "CBar" then
+			startCustomBar(seconds, sender)
+		elseif msg == "Break" then
+			startBreak(seconds, sender)
 		end
 	end
 end
@@ -1681,7 +1680,7 @@ do
 	SlashCmdList.BIGWIGSRAIDBAR = function(input)
 		if not plugin:IsEnabled() then BigWigs:Enable() end
 
-		if not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player") then BigWigs:Print(L.requiresLeadOrAssist) return end
+		if not IsInGroup() or (not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) then BigWigs:Print(L.requiresLeadOrAssist) return end
 
 		local seconds, barText = input:match("(%S+) (.*)")
 		if not seconds or not barText then BigWigs:Print(L.wrongCustomBarFormat) return end
@@ -1694,7 +1693,7 @@ do
 		if not times[input] or (times[input] and (times[input] + 2) < t) then
 			times[input] = t
 			BigWigs:Print(L.sendCustomBar:format(barText))
-			BigWigs:Transmit("BWCustomBar", seconds, barText)
+			plugin:Sync("CBar", input)
 			SendAddonMessage("D4", ("U\t%d\t%s"):format(seconds, barText), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	end
@@ -1710,7 +1709,7 @@ SlashCmdList.BIGWIGSLOCALBAR = function(input)
 	seconds = parseTime(seconds)
 	if not seconds then BigWigs:Print(L.wrongTime) return end
 
-	startCustomBar(seconds, UnitName("player"), barText)
+	startCustomBar(seconds, plugin:UnitName("player"), barText)
 end
 SLASH_BIGWIGSLOCALBAR1 = "/localbar"
 
@@ -1725,7 +1724,7 @@ SlashCmdList.BIGWIGSBREAK = function(input)
 			BigWigs:Print(L.sendBreak)
 		end
 		local seconds = minutes * 60
-		BigWigs:Transmit("BWBreak", seconds)
+		plugin:Sync("Break", seconds)
 
 		if IsInGroup() then
 			SendAddonMessage("D4", ("BT\t%d"):format(seconds), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
