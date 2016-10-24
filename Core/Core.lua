@@ -13,8 +13,6 @@ addon.RegisterMessage = loader.RegisterMessage
 addon.UnregisterMessage = loader.UnregisterMessage
 addon.SendMessage = loader.SendMessage
 
-local GetSpellInfo = GetSpellInfo
-
 local C -- = BigWigs.C, set from Constants.lua
 local AL = LibStub("AceLocale-3.0")
 local L = AL:GetLocale("BigWigs")
@@ -415,17 +413,9 @@ end
 --
 
 do
-	local errorDeprecatedNew = "%q is using the deprecated :New() API. Please tell the author to fix it for the latest BigWigs."
-	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any BigWigs folders you have and then reinstall it from scratch."
+	local GetSpellInfo, EJ_GetSectionInfo = GetSpellInfo, EJ_GetSectionInfo
 
-	-- either you get me the hell out of these woods, or you'll know how my
-	-- mother felt after drinking my chocolate milkshake
-	-- did she make it for you?
-	-- you're a dead man.
-	function addon:New(module)
-		self:Print(errorDeprecatedNew:format(module))
-	end
-
+	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
 	local function new(core, moduleName, mapId, journalId, ...)
 		if core:GetModule(moduleName, true) then
 			addon:Print(errorAlreadyRegistered:format(moduleName))
@@ -487,9 +477,13 @@ do
 					end
 				elseif type(v) == "number" then
 					if v > 0 then
-						module.optionHeaders[k] = GetSpellInfo(v)
+						local n = GetSpellInfo(v)
+						if not n then error(("Invalid spell ID %d in the optionHeaders for module %s."):format(v, module.name)) end
+						module.optionHeaders[k] = n
 					else
-						module.optionHeaders[k] = EJ_GetSectionInfo(-v)
+						local n = EJ_GetSectionInfo(-v)
+						if not n then error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
+						module.optionHeaders[k] = n
 					end
 				end
 			end
