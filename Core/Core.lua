@@ -263,7 +263,7 @@ local function bossComm(_, msg, extra, sender)
 	elseif msg == "Enable" and extra then
 		local m = addon:GetBossModule(extra, true)
 		if m and not m:IsEnabled() and sender ~= pName then
-			enableBossModule(module, true)
+			enableBossModule(m, true)
 		end
 	end
 end
