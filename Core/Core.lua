@@ -114,36 +114,36 @@ local function enableBossModule(module, noSync)
 	end
 end
 
-local function shouldReallyEnable(unit, moduleName, mobId)
+local function shouldReallyEnable(unit, moduleName, mobId, noSync)
 	local module = bossCore:GetModule(moduleName)
 	if not module or module:IsEnabled() then return end
 	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId)) then
-		enableBossModule(module)
+		enableBossModule(module, noSync)
 	end
 end
 
-local function targetSeen(unit, targetModule, mobId)
+local function targetSeen(unit, targetModule, mobId, noSync)
 	if type(targetModule) == "string" then
-		shouldReallyEnable(unit, targetModule, mobId)
+		shouldReallyEnable(unit, targetModule, mobId, noSync)
 	else
 		for i, module in next, targetModule do
-			shouldReallyEnable(unit, module, mobId)
+			shouldReallyEnable(unit, module, mobId, noSync)
 		end
 	end
 end
 
-local function targetCheck(unit)
+local function targetCheck(unit, noSync)
 	if not UnitName(unit) or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
 	local _, _, _, _, _, mobId = strsplit("-", (UnitGUID(unit)))
 	local id = tonumber(mobId)
 	if id and enablemobs[id] then
-		targetSeen(unit, enablemobs[id], id)
+		targetSeen(unit, enablemobs[id], id, noSync)
 	end
 end
 
 local function updateMouseover() targetCheck("mouseover") end
 local function unitTargetChanged(event, target)
-	targetCheck(target .. "target")
+	targetCheck(target .. "target", true)
 end
 
 local function zoneChanged()
