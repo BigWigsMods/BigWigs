@@ -96,7 +96,11 @@ do
 			self:SendMessage("BigWigs_Message", self, nil, L.pulling, "Attention", "Interface\\Icons\\ability_warrior_charge")
 			self:SendMessage("BigWigs_Sound", self, nil, "Alarm")
 		elseif timeLeft > 2 and IsEncounterInProgress() then -- Cancel the pull timer if we ninja pulled
-			self:StartPull(0, COMBAT)
+			self:CancelTimer(timer)
+			timeLeft = 0
+			BigWigs:Print(L.pullStopped:format(COMBAT))
+			self:SendMessage("BigWigs_StopBar", self, L.pull)
+			self:SendMessage("BigWigs_StopPull", self, COMBAT)
 		elseif timeLeft < 11 then
 			if self.db.profile.countType == "normal" then
 				self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")
@@ -110,61 +114,59 @@ do
 		end
 	end
 	function plugin:StartPull(seconds, nick, isDBM)
-		if (not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player")) or (IsEncounterInProgress() and nick ~= COMBAT) or (IsInGroup(2) and UnitGroupRolesAssigned(nick) ~= "TANK") then
-			return
-		end
-
-		local _, _, _, instanceId = UnitPosition("player")
-		local _, _, _, tarInstanceId = UnitPosition(nick)
-		if instanceId ~= tarInstanceId then -- Don't fire pull timers from people in different zones
-			return
-		end
-
-		seconds = tonumber(seconds)
-		if not seconds or seconds < 0 or seconds > 60 then return end
-		seconds = floor(seconds)
-		if timeLeft == seconds then return end -- Throttle
-		timeLeft = seconds
-		if timer then
-			self:CancelTimer(timer)
-			if seconds == 0 then
-				timeLeft = 0
-				BigWigs:Print(L.pullStopped:format(nick))
-				self:SendMessage("BigWigs_StopBar", self, L.pull)
-				self:SendMessage("BigWigs_StopPull", self, seconds, nick, isDBM)
+		if not IsInGroup() or (IsInGroup(2) and UnitGroupRolesAssigned(nick) == "TANK") or UnitIsGroupLeader(nick) or UnitIsGroupAssistant(nick) then
+			local _, _, _, instanceId = UnitPosition("player")
+			local _, _, _, tarInstanceId = UnitPosition(nick)
+			if instanceId ~= tarInstanceId then -- Don't fire pull timers from people in different zones
 				return
 			end
+
+			seconds = tonumber(seconds)
+			if not seconds or seconds < 0 or seconds > 60 then return end
+			seconds = floor(seconds)
+			if timeLeft == seconds then return end -- Throttle
+			timeLeft = seconds
+			if timer then
+				self:CancelTimer(timer)
+				if seconds == 0 then
+					timeLeft = 0
+					BigWigs:Print(L.pullStopped:format(nick))
+					self:SendMessage("BigWigs_StopBar", self, L.pull)
+					self:SendMessage("BigWigs_StopPull", self, nick, isDBM)
+					return
+				end
+			end
+			FlashClientIcon()
+			BigWigs:Print(L.pullStarted:format(isDBM and "DBM" or "BigWigs", nick))
+			timer = self:ScheduleRepeatingTimer(printPull, 1, self)
+
+			if self.db.profile.combatLog then
+				isLogging = true
+				LoggingCombat(isLogging)
+			end
+
+			--if self.db.profile.gearCheck then
+			--	local _, zoneType = GetInstanceInfo()
+			--	if zoneType == "raid" and IsInRaid() then
+			--		for i = 1, 18 do
+			--			-- 0 Poor/Grey, 1 Common/White, 2 Uncommon/Green, 3 Rare/Blue, 4 Epic/Purple, 5 Legendary, 6 Artifact, 7 Heirloom
+			--			local quality = GetInventoryItemQuality("player", i)
+			--			local itemId = GetInventoryItemID("player", i)
+			--			local _, _, _, iLevel = GetItemInfo(itemId or 0) -- XXX this doesn't compensate for items that drop with multiple item levels
+			--			if quality and (quality < 2 or iLevel < 300) then
+			--				local msg = ("Bad Item Equipped: %s"):format(GetInventoryItemLink("player", i))
+			--				BigWigs:Print(msg)
+			--				self:SendMessage("BigWigs_Message", self, nil, msg, "Personal")
+			--			end
+			--		end
+			--	end
+			--end
+
+			self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")
+			self:SendMessage("BigWigs_Sound", self, nil, "Long")
+			self:SendMessage("BigWigs_StartBar", self, nil, L.pull, seconds, "Interface\\Icons\\ability_warrior_charge")
+			self:SendMessage("BigWigs_StartPull", self, seconds, nick, isDBM)
 		end
-		FlashClientIcon()
-		BigWigs:Print(L.pullStarted:format(isDBM and "DBM" or "BigWigs", nick))
-		timer = self:ScheduleRepeatingTimer(printPull, 1, self)
-
-		if self.db.profile.combatLog then
-			isLogging = true
-			LoggingCombat(isLogging)
-		end
-
-		--if self.db.profile.gearCheck then
-		--	local _, zoneType = GetInstanceInfo()
-		--	if zoneType == "raid" and IsInRaid() then
-		--		for i = 1, 18 do
-		--			-- 0 Poor/Grey, 1 Common/White, 2 Uncommon/Green, 3 Rare/Blue, 4 Epic/Purple, 5 Legendary, 6 Artifact, 7 Heirloom
-		--			local quality = GetInventoryItemQuality("player", i)
-		--			local itemId = GetInventoryItemID("player", i)
-		--			local _, _, _, iLevel = GetItemInfo(itemId or 0) -- XXX this doesn't compensate for items that drop with multiple item levels
-		--			if quality and (quality < 2 or iLevel < 300) then
-		--				local msg = ("Bad Item Equipped: %s"):format(GetInventoryItemLink("player", i))
-		--				BigWigs:Print(msg)
-		--				self:SendMessage("BigWigs_Message", self, nil, msg, "Personal")
-		--			end
-		--		end
-		--	end
-		--end
-
-		self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")
-		self:SendMessage("BigWigs_Sound", self, nil, "Long")
-		self:SendMessage("BigWigs_StartBar", self, nil, L.pull, seconds, "Interface\\Icons\\ability_warrior_charge")
-		self:SendMessage("BigWigs_StartPull", self, seconds, nick, isDBM)
 	end
 end
 
