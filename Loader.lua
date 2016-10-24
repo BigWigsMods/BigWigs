@@ -777,21 +777,27 @@ end
 
 -- Misc
 local function doCommCompat(msg)
-   local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
-   if bwPrefix then
-       local sync, rest = bwMsg:match("(%S+)%s*(.*)$")
-       if bwPrefix == "V" or bwPrefix == "Q" then
-           local verString, hash = bwMsg:match("^(%d+)%-(.+)$")
-           return ("%s^%s^%s"):format(bwPrefix, verString, hash)
-       elseif bwPrefix == "T" then
-           if sync == "BWPull" then
-               return ("P^Pull^%s"):format(rest)
-           elseif sync == "BWBreak" then
-               return ("P^Break^%s"):format(rest)
-           end
-       end
-   end
-   return msg
+	local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
+	if bwPrefix then
+		local sync, rest = bwMsg:match("(%S+)%s*(.*)$")
+		if bwPrefix == "V" or bwPrefix == "Q" then
+			local verString, hash = bwMsg:match("^(%d+)%-(.+)$")
+			return ("%s^%s^%s"):format(bwPrefix, verString, hash)
+		else
+			if sync == "BWPull" then
+				return ("P^Pull^%s"):format(rest)
+			elseif sync == "BWBreak" then
+				return ("P^Break^%s"):format(rest)
+			elseif sync == "BWCustomBar" then
+				return ("P^CBar^%s"):format(rest)
+			elseif sync == "BWPower" then
+				return ("P^AltPower^%s"):format(rest)
+			elseif sync == "EnableModule" or sync == "BossEngaged" then
+				return ("B^%s^%s"):format(sync, rest)
+			end
+		end
+	end
+	return msg
 end
 
 function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
