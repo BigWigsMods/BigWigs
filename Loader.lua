@@ -776,10 +776,29 @@ do
 end
 
 -- Misc
+local function doCommCompat(msg)
+   local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
+   if bwPrefix then
+       local sync, rest = bwMsg:match("(%S+)%s*(.*)$")
+       if bwPrefix == "V" or bwPrefix == "Q" then
+           local verString, hash = bwMsg:match("^(%d+)%-(.+)$")
+           return ("%s^%s^%s"):format(bwPrefix, verString, hash)
+       elseif bwPrefix == "T" then
+           if sync == "BWPull" then
+               return ("P^Pull^%s"):format(rest)
+           elseif sync == "BWBreak" then
+               return ("P^Break^%s"):format(rest)
+           end
+       end
+   end
+   return msg
+end
+
 function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	if channel ~= "RAID" and channel ~= "PARTY" and channel ~= "INSTANCE_CHAT" then
 		return
 	elseif prefix == "BigWigs" then
+		msg = doCommCompat(msg) -- XXX Remove me at some point in the future (Nighthold?)
 		local bwPrefix, bwMsg, extra = strsplit("^", msg)
 		sender = Ambiguate(sender, "none")
 		if bwPrefix == "V" or bwPrefix == "Q" then
