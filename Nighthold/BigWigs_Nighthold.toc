@@ -1,4 +1,4 @@
-## Interface: 70000
+## Interface: 70100
 
 ## Title: BigWigs [|cffeda55fThe Nighthold|r]
 ## Title-deDE: BigWigs [|cffeda55fDie Nachtfestung|r]
