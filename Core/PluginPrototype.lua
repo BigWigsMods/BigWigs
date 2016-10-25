@@ -55,15 +55,30 @@ do
 		"raid21", "raid22", "raid23", "raid24", "raid25", "raid26", "raid27", "raid28", "raid29", "raid30",
 		"raid31", "raid32", "raid33", "raid34", "raid35", "raid36", "raid37", "raid38", "raid39", "raid40"
 	}
+	local partyList = {"player", "party1", "party2", "party3", "party4"}
+	local GetNumGroupMembers, IsInRaid = GetNumGroupMembers, IsInRaid
+	--- Iterate over your group.
+	-- Automatically uses "party" or "raid" tokens depending on your group type.
+	-- @return iterator
+	function plugin:IterateGroup()
+		local num = GetNumGroupMembers() or 0
+		local i = 0
+		local size = num > 0 and num+1 or 2
+		local function iter(t)
+			i = i + 1
+			if i < size then
+				return t[i]
+			end
+		end
+		return iter, IsInRaid() and raidList or partyList
+	end
+
 	--- Get raid group unit tokens.
 	-- @return indexed table of raid unit tokens
 	function plugin:GetRaidList()
 		return raidList
 	end
-end
 
-do
-	local partyList = {"player", "party1", "party2", "party3", "party4"}
 	--- Get party unit tokens.
 	-- @return indexed table of party unit tokens
 	function plugin:GetPartyList()

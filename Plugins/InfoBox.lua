@@ -14,6 +14,7 @@ local media = LibStub("LibSharedMedia-3.0")
 plugin.displayName = "InfoBox"
 
 local opener, display = nil, nil
+local nameList = {}
 
 function plugin:RestyleWindow(dirty)
 	if db.lock then
@@ -88,6 +89,7 @@ do
 			self.text[i]:SetText("")
 		end
 		self.title:SetText("InfoBox") -- L.infoBox
+		nameList = {}
 	end)
 
 	local bg = display:CreateTexture()
@@ -163,6 +165,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ShowInfoBox")
 	self:RegisterMessage("BigWigs_HideInfoBox", "Close")
 	self:RegisterMessage("BigWigs_SetInfoBoxLine")
+	self:RegisterMessage("BigWigs_SetInfoBoxTable")
 	self:RegisterMessage("BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnBossReboot", "BigWigs_OnBossDisable")
 
@@ -193,12 +196,38 @@ end
 
 function plugin:BigWigs_ShowInfoBox(_, module, title)
 	opener = module
+	for unit in self:IterateGroup() do
+		nameList[#nameList+1] = self:UnitName(unit)
+	end
 	display.title:SetText(title)
 	display:Show()
 end
 
-function plugin:BigWigs_SetInfoBoxLine(_, module, line, text)
+function plugin:BigWigs_SetInfoBoxLine(_, _, line, text)
 	display.text[line]:SetText(text)
+end
+
+do
+	local sortingTbl = nil
+	local function sortFunc(x,y)
+		local px, py = sortingTbl[x], sortingTbl[y]
+		if px and py then
+			return px > py
+		end
+	end
+	local tsort = table.sort
+	function plugin:BigWigs_SetInfoBoxTable(_, _, tbl)
+		sortingTbl = tbl
+		tsort(nameList, sortFunc)
+		local line = 1
+		for i = 1, 5 do
+			local n = nameList[i]
+			local result = tbl[n]
+			display.text[line]:SetText(result and n or "")
+			display.text[line+1]:SetText(result or "")
+			line = line + 2
+		end
+	end
 end
 
 function plugin:Close()
