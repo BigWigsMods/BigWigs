@@ -47,7 +47,7 @@ function plugin:RestyleWindow(dirty)
 		end
 
 		display.title:SetFont(curFont, db.fontSize, newFlags)
-		for i = 1, 25 do
+		for i = 1, 10 do
 			display.text[i]:SetFont(curFont, db.fontSize, newFlags)
 		end
 	end
@@ -157,7 +157,7 @@ local function updateProfile()
 			display:SetPoint("CENTER", UIParent, "CENTER", -300, -80)
 		end
 
-		plugin:RestyleWindow()
+		--plugin:RestyleWindow()
 	end
 end
 
