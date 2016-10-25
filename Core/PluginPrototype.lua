@@ -95,6 +95,36 @@ function plugin:UpdateGUI()
 end
 
 do
+	local hexColors = {}
+	local format, gsub = string.format, string.gsub
+	local UnitClass = UnitClass
+	for k, v in next, (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS) do
+		hexColors[k] = format("|cff%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
+	end
+	local coloredNames = setmetatable({}, {__index =
+		function(self, key)
+			if key then
+				local shortKey = gsub(key, "%-.+", "*") -- Replace server names with *
+				local _, class = UnitClass(key)
+				if class then
+					local newKey = hexColors[class] .. shortKey .. "|r"
+					self[key] = newKey
+					return newKey
+				else
+					return shortKey
+				end
+			end
+		end
+	})
+
+	--- Get a table that colors player names based on class.
+	-- @return list of names colored by class with server names trimmed
+	function plugin:GetColoredNameTable()
+		return coloredNames
+	end
+end
+
+do
 	local SendAddonMessage, IsInGroup = BigWigsLoader.SendAddonMessage, IsInGroup
 	local pName = UnitName("player")
 	--- Send an addon sync to other players.

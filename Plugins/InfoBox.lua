@@ -210,12 +210,11 @@ end
 do
 	local sortingTbl = nil
 	local function sortFunc(x,y)
-		local px, py = sortingTbl[x], sortingTbl[y]
-		if px and py then
-			return px > py
-		end
+		local px, py = sortingTbl[x] or 0, sortingTbl[y] or 0
+		return px > py
 	end
 	local tsort = table.sort
+	local colors = plugin:GetColoredNameTable()
 	function plugin:BigWigs_SetInfoBoxTable(_, _, tbl)
 		sortingTbl = tbl
 		tsort(nameList, sortFunc)
@@ -223,7 +222,7 @@ do
 		for i = 1, 5 do
 			local n = nameList[i]
 			local result = tbl[n]
-			display.text[line]:SetText(result and n or "")
+			display.text[line]:SetText(result and colors[n] or "")
 			display.text[line+1]:SetText(result or "")
 			line = line + 2
 		end
