@@ -28,6 +28,7 @@ local forcesOfNightmareCount = 1
 local phase = 1
 local wispMarks = { [8] = true, [7] = true, [6] = true, [5] = true, [4] = true }
 local wispMarked = {}
+local nightmareStacks = {}
 local mobTable = {
 	[105468] = {}, -- Nightmare Ancient
 	[105494] = {}, -- Rotten Drake
@@ -62,7 +63,7 @@ function mod:GetOptions()
 	return {
 		--[[ Cenarius ]]--
 		"stages",
-		210279, -- Creeping Nightmares
+		{210279, "INFOBOX"}, -- Creeping Nightmares
 		{210290, "SAY", "FLASH"}, -- Nightmare Brambles
 		212726, -- Forces of Nightmare
 		210346, -- Dread Thorns
@@ -107,7 +108,6 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_CAST_START", "ForcesOfNightmare", 212726)
 	self:Death("MobDeath", 105468, 105494, 105495) -- Nightmare Ancient, Rotten Drake, Twisted Sister
-	self:Log("SPELL_AURA_APPLIED", "CreepingNightmares", 210279)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CreepingNightmares", 210279)
 	self:Log("SPELL_AURA_REMOVED", "CreepingNightmaresRemoved", 210279)
 	self:Log("SPELL_AURA_APPLIED", "DreadThorns", 210346)
@@ -149,6 +149,7 @@ function mod:OnEngage()
 	self:Bar(210290, 28) -- Nightmare Brambles
 	self:CDBar(213162, 30) -- Nightmare Blast
 	wipe(mobCollector)
+	wipe(nightmareStacks)
 	mobTable = {
 		[105468] = {}, -- Nightmare Ancient
 		[105494] = {}, -- Rotten Drake
@@ -164,6 +165,7 @@ function mod:OnEngage()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	wipe(wispMarked)
 	wispMarks = { [8] = true, [7] = true, [6] = true, [5] = true, [4] = true }
+	self:OpenInfo(210279, self:SpellName(210279)) -- Creeping Nightmares
 end
 
 function mod:OnBossDisable()
@@ -246,24 +248,34 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	end
 end
 
-function mod:CreepingNightmares(args)
-	if self:Me(args.destGUID) then
-		local amount = args.amount or 1
-		if amount > 15 and amount % 4 == 0 then
-			self:StackMessage(args.spellId, args.destName, amount, "Urgent", "Warning")
+do
+	local prev = 0
+	function mod:CreepingNightmares(args)
+		nightmareStacks[args.destName] = args.amount
+		if self:Me(args.destGUID) then
+			local amount = args.amount or 1
+			if amount > 15 and amount % 4 == 0 then
+				self:StackMessage(args.spellId, args.destName, amount, "Urgent", "Warning")
+			end
 		end
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:SetInfoByTable(args.spellId, nightmareStacks)
+		end
+	end
+end
+
+function mod:CreepingNightmaresRemoved(args)
+	nightmareStacks[args.destName] = nil
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
 	end
 end
 
 function mod:NightmareBlast(args)
 	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
 	self:CDBar(args.spellId, 32)
-end
-
-function mod:CreepingNightmaresRemoved(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
-	end
 end
 
 function mod:ForcesOfNightmare(args)
