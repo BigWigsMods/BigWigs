@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Calamir.lua"/>
+<Script file="Drugon.lua"/>
 <Script file="Levantus.lua"/>
 <Script file="Nithogg.lua"/>
 <Script file="WitheredJim.lua"/>
