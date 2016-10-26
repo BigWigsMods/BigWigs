@@ -35,6 +35,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:CheckForWipe()
 	self:CDBar(219493, 19) -- Snow Crash
 end
 
