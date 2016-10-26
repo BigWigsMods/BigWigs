@@ -283,15 +283,7 @@ do
 		if count > 0 then
 			for i = 1, count do
 				local module = initModules[i]
-				if type(module) == "table" and module.Initialize then
-					module:Initialize()
-				else
-					if type(module) == "table" then
-						addon:Print("Encountered a module with no Initialize func, tell a BigWigs author: ".. tostring(module.name) ..", ".. tostring(module.journalId) ..", ".. tostring(module.zoneId))
-					else
-						addon:Print("Encountered a module with no Initialize func, tell a BigWigs author: ".. tostring(module))
-					end
-				end
+				module:Initialize()
 				initModules[i] = nil
 			end
 			-- For LoD users
