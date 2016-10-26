@@ -25,6 +25,8 @@ plugin.defaultDB = {
 	disabled = false,
 	proximity = true,
 	font = nil,
+	fontSize = nil,
+	textMode = true,
 }
 
 -------------------------------------------------------------------------------
@@ -44,6 +46,7 @@ local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 
 local inConfigMode = nil
 local activeRange, activeRangeRadius, activeRangeSquared, activeRangeSquaredTwoFive = 0, 0, 0, 0
+local activeRangeChecker = nil
 local activeSpellID = nil
 local proximityPlayer = nil
 local proximityPlayerTable = {}
@@ -63,12 +66,96 @@ local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetN
 local IsInRaid, IsInGroup, InCombatLockdown = IsInRaid, IsInGroup, InCombatLockdown
 local UnitIsDead, UnitIsUnit, UnitGUID, UnitClass, UnitInPhase = UnitIsDead, UnitIsUnit, UnitGUID, UnitClass, UnitInPhase
 local min, cos, sin, format = math.min, math.cos, math.sin, string.format
+local tinsert, tconcat = table.insert, table.concat
 local next, type, tonumber, wipe = next, type, tonumber, wipe
 local piDoubled = 6.2831853071796
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
 -- GLOBALS: BigWigs CUSTOM_CLASS_COLORS GameTooltip GameFontNormalHuge RAID_CLASS_COLORS SLASH_BigWigs_Proximity1 SLASH_BigWigs_Proximity2 UIParent
+
+--------------------------------------------------------------------------------
+-- Range Checking
+--
+
+local setRange, isInRange
+do
+	local ranges = nil
+
+	local function initRanges()
+		ranges = {}
+
+		local interactDistances
+		local _, r = UnitRace("player")
+		if r == "Tauren" then
+			interactDistances = { [3] = 6, [2] = 7, [4] = 25 }
+		elseif r == "Scourge" then
+			interactDistances = { [3] = 7, [2] = 8, [4] = 27 }
+		else
+			interactDistances = { [3] = 8, [2] = 9, [4] = 28 }
+		end
+		for index, range in next, interactDistances do
+			ranges[range] = function(unit) return CheckInteractDistance(unit, index) end
+		end
+
+		local items	= {
+			[5] = 37727, -- Ruby Acorn
+			[6] = 63427, -- Worgsaw
+			[8] = 33278, -- Burning Torch
+			[10] = 32321, -- Sparrowhawk Net
+			[15] = 133940, -- Silkweave Bandage
+			[20] = 21519, -- Mistletoe
+			[25] = 31463, -- Zezzak's Shard
+			[30] = 34191, -- Handful of Snowflakes
+			[35] = 18904, -- Zorbin's Ultra-Shrinker
+			[40] = 34471, -- Vial of the Sunwell
+			[45] = 32698, -- Wrangling Rope
+			[50] = 116139, -- Haunting Memento
+			[60] = 32825, -- Soul Cannon
+			[70] = 41265, -- Eyesore Blaster
+			[80] = 35278, -- Reinforced Net
+		}
+		for range, item in next, items do
+			if not ranges[range] then
+				ranges[range] = function(unit)
+					return IsItemInRange(item, unit)
+				end
+			end
+		end
+	end
+
+	function setRange(range)
+		if range == 0 then
+			activeRangeChecker = nil
+			return 0
+		end
+
+		if not ranges then
+			initRanges()
+			initRanges = nil
+		end
+
+		if ranges[range] then
+			activeRangeChecker = ranges[range]
+			return range
+		else
+			local closestRange = 80
+			for r in next, ranges do
+				if r > range and r < closestRange then
+					closestRange = r
+				end
+			end
+			activeRangeChecker = ranges[closestRange]
+			return closestRange
+		end
+	end
+
+	function isInRange(unit)
+		if activeRangeChecker then
+			return activeRangeChecker(unit)
+		end
+	end
+end
 
 --------------------------------------------------------------------------------
 -- Options
@@ -82,7 +169,7 @@ end
 -- Display Window
 --
 
-local testDots
+local testDots, testText
 local function onDragStart(self) self:StartMoving() end
 local function onDragStop(self)
 	self:StopMovingOrSizing()
@@ -97,14 +184,16 @@ local function onResize(self, width, height)
 	db.width = width
 	db.height = height
 	proxAnchor.tooltip:SetWidth(width)
-	if inConfigMode then
-		testDots()
-	else
-		local range = activeRange > 0 and activeRange or 10
-		local pixperyard = min(width, height) / (range*3)
-		local size = range*2*pixperyard
-		proxCircle:SetSize(size, size)
-		proxAnchor.rangePulse:SetSize(size, size)
+	if not db.textMode then
+		if inConfigMode then
+			testDots()
+		else
+			local range = activeRange > 0 and activeRange or 10
+			local pixperyard = min(width, height) / (range*3)
+			local size = range*2*pixperyard
+			proxCircle:SetSize(size, size)
+			proxAnchor.rangePulse:SetSize(size, size)
+		end
 	end
 end
 
@@ -158,6 +247,7 @@ function plugin:RestyleWindow()
 			end
 		end
 	end
+	proxAnchor.text:SetFont(media:Fetch("font", db.font), db.fontSize)
 	if db.lock then
 		locked = nil
 		lockDisplay()
@@ -183,6 +273,7 @@ end
 --
 
 local normalProximity, reverseTargetProximity, targetProximity, multiTargetProximity, reverseMultiTargetProximity, reverseProximity
+local normalProximityText, reverseTargetProximityText, targetProximityText, multiTargetProximityText, reverseMultiTargetProximityText, reverseProximityText
 do
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
 
@@ -235,6 +326,27 @@ do
 
 		proxCircle:Show()
 		proxAnchor.playerDot:Show()
+		proxAnchor.rangeCircle:Show()
+		proxAnchor.text:Hide()
+	end
+
+	local tooClose = {}
+	local coloredNames = plugin:GetColoredNameTable()
+
+	local function setText(players)
+		if type(players) == "table" then
+			proxAnchor.text:SetText(tconcat(players, "\n"))
+			wipe(players)
+		else
+			proxAnchor.text:SetText(players)
+		end
+	end
+
+	function testText()
+		proxAnchor.rangeCircle:Hide()
+		proxAnchor.playerDot:Hide()
+		proxAnchor.text:SetText("|cffaad372Legolasftw|r\n|cfff48cbaTirionman|r\n|cfffff468Sneakystab|r\n|cffc69b6dIamconanok|r")
+		proxAnchor.text:Show()
 	end
 
 	--------------------------------------------------------------------------------
@@ -289,6 +401,39 @@ do
 		end
 	end
 
+	function normalProximityText()
+		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
+
+		local anyoneClose = 0
+		local _, _, _, mapId = UnitPosition("player")
+		for i = 1, maxPlayers do
+			local n = unitList[i]
+			local _, _, _, tarMapId = UnitPosition(n)
+			if mapId == tarMapId and isInRange(n) and myGUID ~= UnitGUID(n) and not UnitIsDead(n) and UnitInPhase(n) then
+				anyoneClose = anyoneClose + 1
+				if anyoneClose < 4 then
+					local player = plugin:UnitName(n)
+					tinsert(tooClose, coloredNames[player])
+				end
+			end
+		end
+
+		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
+
+		if anyoneClose == 0 then
+			proxAnchor.text:SetText("|cff777777:-)|r")
+		else
+			setText(tooClose)
+			if not db.sound then return end
+			local t = GetTime()
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName)
+			end
+		end
+	end
+
+
 	--------------------------------------------------------------------------------
 	-- Target Proximity
 	--
@@ -327,6 +472,25 @@ do
 			if proxPulseOut.playing then
 				proxPulseOut:Stop()
 			end
+		end
+	end
+
+	function targetProximityText()
+		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
+
+		if isInRange(proximityPlayer) then
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
+			local player = plugin:UnitName(proximityPlayer)
+			proxAnchor.text:SetText(coloredNames[player])
+			if not db.sound then return end
+			local t = GetTime()
+			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName)
+			end
+		else
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 0)
+			proxAnchor.text:SetText("|cff777777:-)|r")
 		end
 	end
 
@@ -369,6 +533,34 @@ do
 			if not proxPulseOut.playing then
 				proxPulseOut:Play()
 			end
+			if not db.sound then return end
+			local t = GetTime()
+			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName)
+			end
+		end
+	end
+
+	function multiTargetProximityText()
+		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
+
+		local anyoneClose = 0
+		for i = 1, #proximityPlayerTable do
+			local unit = proximityPlayerTable[i]
+			if isInRange(unit) then
+				anyoneClose = anyoneClose + 1
+				local player = plugin:UnitName(unit)
+				tinsert(tooClose, coloredNames[player])
+			end
+		end
+
+		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
+
+		if anyoneClose == 0 then
+			proxAnchor.text:SetText("|cff777777:-)|r")
+		else
+			setText(tooClose)
 			if not db.sound then return end
 			local t = GetTime()
 			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
@@ -430,6 +622,34 @@ do
 		end
 	end
 
+	function reverseProximityText()
+		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
+
+		local anyoneClose = 0
+
+		local _, _, _, mapId = UnitPosition("player")
+		for i = 1, maxPlayers do
+			local n = unitList[i]
+			local _, _, _, tarMapId = UnitPosition(n)
+			if mapId == tarMapId and isInRange(n) and myGUID ~= UnitGUID(n) and not UnitIsDead(n) and UnitInPhase(n) then
+				anyoneClose = anyoneClose + 1
+			end
+		end
+
+		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
+
+		if anyoneClose == 0 then
+			proxAnchor.text:SetText("|cffff0202> STACK <|r") -- XXX localize or remove?
+			if not db.sound then return end
+			local t = GetTime()
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName)
+			end
+		else
+			proxAnchor.text:SetText("|cff777777:-)|r")
+		end
+	end
 	--------------------------------------------------------------------------------
 	-- Reverse Target Proximity
 	--
@@ -467,6 +687,21 @@ do
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName)
 			end
+		end
+	end
+
+	function reverseTargetProximityText()
+		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
+
+		if isInRange(proximityPlayer) then
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
+			proxAnchor.text:SetText("|cff777777:-)|r")
+		else
+			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 0)
+			local player = plugin:UnitName(proximityPlayer)
+			tinsert(tooClose, "|cffff0202> STACK <|r")
+			tinsert(tooClose, coloredNames[player])
+			setText(tooClose)
 		end
 	end
 
@@ -517,6 +752,37 @@ do
 			end
 		end
 	end
+
+	function reverseMultiTargetProximityText()
+		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
+
+		local anyoneClose = 0
+
+		for i = 1, #proximityPlayerTable do
+			local unit = proximityPlayerTable[i]
+			if isInRange(unit) then
+				anyoneClose = anyoneClose + 1
+			else
+				local player = plugin:UnitName(unit)
+				tinsert(tooClose, coloredNames[player])
+			end
+		end
+
+		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
+
+		if anyoneClose == 0 then
+			tinsert(tooClose, 1, "|cffff0202> STACK <|r") -- XXX localize or remove?
+			setText(tooClose)
+			if not db.sound then return end
+			local t = GetTime()
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName)
+			end
+		else
+			proxAnchor.text:SetText("|cff777777:-)|r")
+		end
+	end
 end
 
 local function updateBlipIcons()
@@ -544,10 +810,6 @@ local function updateBlipIcons()
 end
 
 local function updateBlipColors()
-	-- Firstly lets update some things from the GROUP_ROSTER_UPDATE event, or the proximity window opening
-	maxPlayers = GetNumGroupMembers()
-	unitList = IsInRaid() and plugin:GetRaidList() or plugin:GetPartyList()
-
 	-- Move onto updating blip colors
 	for i = 1, maxPlayers do
 		local n = unitList[i]
@@ -565,15 +827,21 @@ local function updateBlipColors()
 	end
 end
 
+local function updateUnits()
+	maxPlayers = GetNumGroupMembers()
+	unitList = IsInRaid() and plugin:GetRaidList() or plugin:GetPartyList()
+end
+
 local function updateProfile()
 	db = plugin.db.profile
 
 	if not db.font then
 		db.font = media:GetDefault("font")
 	end
-
-	-- XXX temp cleanup [7.0]
-	db.fontSize = nil
+	if not db.fontSize then
+		local _, size = GameFontNormalHuge:GetFont()
+		db.fontSize = size
+	end
 
 	plugin:RestyleWindow()
 end
@@ -673,6 +941,11 @@ do
 		abilityName:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName)
 		abilityName:SetPoint("BOTTOM", header, "TOP", 0, 4)
 		proxAnchor.ability = abilityName
+
+		local text = proxAnchor:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+		text:SetText("")
+		text:SetAllPoints(proxAnchor)
+		proxAnchor.text = text
 
 		local rangeCircle = proxAnchor:CreateTexture(nil, "ARTWORK")
 		rangeCircle:SetPoint("CENTER")
@@ -786,7 +1059,10 @@ do
 
 		proxAnchor:SetScript("OnEvent", function(_, event)
 			if event == "GROUP_ROSTER_UPDATE" then
-				updateBlipColors()
+				updateUnits()
+				if not db.textMode then
+					updateBlipColors()
+				end
 			else
 				updateBlipIcons()
 			end
@@ -892,6 +1168,23 @@ do
 				desc = L.lockDesc,
 				order = 2,
 				disabled = disabled,
+			},
+			font = {
+				type = "select",
+				name = L.font,
+				order = 3,
+				values = media:List("font"),
+				width = "full",
+				itemControl = "DDI-Font",
+			},
+			fontSize = {
+				type = "range",
+				name = L.fontSize,
+				order = 4,
+				max = 40,
+				min = 8,
+				step = 1,
+				width = "full",
 			},
 			soundName = {
 				type = "select",
@@ -1041,7 +1334,7 @@ function plugin:Close(noReopen)
 		end
 	end
 
-	activeRange, activeRangeRadius, activeRangeSquared, activeRangeSquaredTwoFive = 0, 0, 0, 0
+	activeRange, activeRangeRadius, activeRangeSquared, activeRangeSquaredTwoFive = setRange(0), 0, 0, 0
 	activeSpellID = nil
 	proximityPlayer = nil
 	wipe(proximityPlayerTable)
@@ -1079,18 +1372,39 @@ do
 		end
 
 		myGUID = UnitGUID("player")
-		activeRange = range
+		activeRange = setRange(range)
 		activeRangeRadius = range * 3 -- activeRange * 3, so we have 3x radius space
 		activeRangeSquared = range*range
 		activeRangeSquaredTwoFive = activeRangeSquared * 2.5
 
 		proxAnchor:RegisterEvent("GROUP_ROSTER_UPDATE")
-		proxAnchor:RegisterEvent("RAID_TARGET_UPDATE")
-		updateBlipColors()
-		updateBlipIcons()
+		updateUnits()
+
+		if db.textMode then
+			proxAnchor.rangeCircle:Hide()
+			proxAnchor.playerDot:Hide()
+			proxAnchor.text:SetText("")
+			proxAnchor.text:Show()
+
+			local size = min(proxAnchor:GetSize())
+			proxAnchor.rangePulse:SetSize(size, size)
+		else
+			proxAnchor.rangeCircle:Show()
+			proxAnchor.playerDot:Show()
+			proxAnchor.text:Hide()
+
+			proxAnchor:RegisterEvent("RAID_TARGET_UPDATE")
+			updateBlipColors()
+			updateBlipIcons()
+
+			local ppy = min(db.width, db.height) / (range * 3)
+			local size = ppy * range * 2
+			proxCircle:SetSize(size, size)
+			proxAnchor.rangePulse:SetSize(size, size)
+		end
 
 		if not player and not isReverse then
-			functionToFire = normalProximity
+			functionToFire = db.textMode and normalProximityText or normalProximity
 		elseif player then
 			if type(player) == "table" then
 				for i = 1, #player do
@@ -1102,32 +1416,32 @@ do
 					end
 				end
 				if isReverse then
-					functionToFire = reverseMultiTargetProximity
+					functionToFire = db.textMode and reverseMultiTargetProximityText or reverseMultiTargetProximity
 				else
-					functionToFire = multiTargetProximity
+					functionToFire = db.textMode and multiTargetProximityText or multiTargetProximity
 				end
 			else
 				for i = 1, GetNumGroupMembers() do
+					-- Only set the function if we found the unit
 					if UnitIsUnit(player, unitList[i]) then
 						proximityPlayer = unitList[i]
-						functionToFire = isReverse and reverseTargetProximity or targetProximity -- Only set the function if we found the unit
+						if db.textMode then
+							functionToFire = isReverse and reverseTargetProximityText or targetProximityText
+						else
+							functionToFire = isReverse and reverseTargetProximity or targetProximity
+						end
 						break
 					end
 				end
 			end
 		elseif isReverse then
-			functionToFire = reverseProximity
+			functionToFire = db.textMode and reverseProximityText or reverseProximity
 		end
 
 		if not functionToFire then
 			self:Close()
 			return
 		end
-
-		local ppy = min(db.width, db.height) / (range * 3)
-		local size = ppy * range * 2
-		proxCircle:SetSize(size, size)
-		proxAnchor.rangePulse:SetSize(size, size)
 
 		if spellName and key > 0 then -- GameTooltip doesn't do "journal" hyperlinks
 			activeSpellID = key
@@ -1144,9 +1458,6 @@ do
 		if type(range) ~= "number" then BigWigs:Print("Proximity range needs to be a number!") return end
 		if not IsInGroup() then return end -- Solo runs of old content
 
-		local y, x = UnitPosition("player")
-		if x == 0 and y == 0 then BigWigs:Print("No player position available for proximity!") return end
-
 		functionToFire = nil -- Kill previous updater
 		self:CancelTimer(updateTimer)
 		updateTimer = self:ScheduleTimer(openProx, 0.1, self, range, module, key, player, isReverse, spellName, spellIcon)
@@ -1158,9 +1469,13 @@ function plugin:Test()
 	if db.lock then
 		proxAnchor:EnableMouse(true) -- Mouse disabled whilst locked, enable it in test mode
 	end
-	testDots()
+	if db.textMode then
+		testText()
+	else
+		testDots()
+	end
 	proxAnchor:Show()
-	proxPulseOut:Play()
+	-- proxPulseOut:Play()
 end
 
 -------------------------------------------------------------------------------
