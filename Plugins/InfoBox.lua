@@ -18,20 +18,9 @@ local nameList = {}
 
 function plugin:RestyleWindow(dirty)
 	if db.lock then
-		display:SetMovable(false)
-		display:RegisterForDrag()
-		display:SetScript("OnDragStart", nil)
-		display:SetScript("OnDragStop", nil)
+		display:EnableMouse(false)
 	else
-		display:SetMovable(true)
-		display:RegisterForDrag("LeftButton")
-		display:SetScript("OnDragStart", function(self) self:StartMoving() end)
-		display:SetScript("OnDragStop", function(self)
-			self:StopMovingOrSizing()
-			local s = self:GetEffectiveScale()
-			db.posx = self:GetLeft() * s
-			db.posy = self:GetTop() * s
-		end)
+		display:EnableMouse(true)
 	end
 
 	local font, size, flags = GameFontNormal:GetFont()
@@ -79,6 +68,15 @@ do
 	display:SetSize(150, 100)
 	display:SetClampedToScreen(true)
 	display:EnableMouse(true)
+	display:SetMovable(true)
+	display:RegisterForDrag("LeftButton")
+	display:SetScript("OnDragStart", function(self) self:StartMoving() end)
+	display:SetScript("OnDragStop", function(self)
+		self:StopMovingOrSizing()
+		local s = self:GetEffectiveScale()
+		db.posx = self:GetLeft() * s
+		db.posy = self:GetTop() * s
+	end)
 	display:SetScript("OnMouseUp", function(self, button)
 		if inTestMode and button == "LeftButton" then
 			plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
