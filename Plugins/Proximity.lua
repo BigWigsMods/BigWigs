@@ -85,41 +85,33 @@ do
 	local function initRanges()
 		ranges = {}
 
-		local interactDistances
-		local _, r = UnitRace("player")
-		if r == "Tauren" then
-			interactDistances = { [3] = 6, [2] = 7, [4] = 25 }
-		elseif r == "Scourge" then
-			interactDistances = { [3] = 7, [2] = 8, [4] = 27 }
-		else
-			interactDistances = { [3] = 8, [2] = 9, [4] = 28 }
-		end
+		local interactDistances = { [2] = 10, [4] = 30 }
 		for index, range in next, interactDistances do
-			ranges[range] = function(unit) return CheckInteractDistance(unit, index) end
+			ranges[range] = function(unit)
+				return CheckInteractDistance(unit, index)
+			end
 		end
 
 		local items	= {
 			[5] = 37727, -- Ruby Acorn
-			[6] = 63427, -- Worgsaw
-			[8] = 33278, -- Burning Torch
-			[10] = 32321, -- Sparrowhawk Net
-			[15] = 133940, -- Silkweave Bandage
-			[20] = 21519, -- Mistletoe
-			[25] = 31463, -- Zezzak's Shard
-			[30] = 34191, -- Handful of Snowflakes
-			[35] = 18904, -- Zorbin's Ultra-Shrinker
-			[40] = 34471, -- Vial of the Sunwell
-			[45] = 32698, -- Wrangling Rope
-			[50] = 116139, -- Haunting Memento
-			[60] = 32825, -- Soul Cannon
-			[70] = 41265, -- Eyesore Blaster
-			[80] = 35278, -- Reinforced Net
+			[8] = 63427, -- Worgsaw
+			[11] = 33278, -- Burning Torch
+			[13] = 32321, -- Sparrowhawk Net
+			[18] = 133940, -- Silkweave Bandage
+			[23] = 21519, -- Mistletoe
+			[28] = 31463, -- Zezzak's Shard
+			[33] = 34191, -- Handful of Snowflakes
+			[38] = 18904, -- Zorbin's Ultra-Shrinker
+			[43] = 34471, -- Vial of the Sunwell
+			[48] = 32698, -- Wrangling Rope
+			[53] = 116139, -- Haunting Memento
+			[63] = 32825, -- Soul Cannon
+			[73] = 41265, -- Eyesore Blaster
+			[83] = 35278, -- Reinforced Net
 		}
 		for range, item in next, items do
-			if not ranges[range] then
-				ranges[range] = function(unit)
-					return IsItemInRange(item, unit)
-				end
+			ranges[range] = function(unit)
+				return IsItemInRange(item, unit)
 			end
 		end
 	end
