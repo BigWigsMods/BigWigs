@@ -205,7 +205,7 @@ function mod:WebOfPainApplied(args)
 		self:Message(args.spellId, "Personal", "Warning", L.yourLink:format(self:ColorName(args.destName)))
 		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 		local remaining = expires-GetTime()
-		self:Bar(args.spellId, remaining, L.yourLinkShort:format(self:ColorName(args.sourceName)))
+		self:Bar(args.spellId, remaining, L.yourLinkShort:format(self:ColorName(args.destName)))
 	elseif not self:CheckOption(args.spellId, "ME_ONLY") then
 		self:Message(args.spellId, "Attention", nil, L.isLinkedWith:format(self:ColorName(args.sourceName), self:ColorName(args.destName)))
 	end
