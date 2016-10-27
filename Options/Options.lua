@@ -306,7 +306,7 @@ local function masterOptionToggled(self, event, value)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
 	if type(key) == "string" and key:find("custom_", nil, true) then
-		module.db.profile[key] = value
+		module.db.profile[key] = value or false
 	else
 		if value then
 			module.db.profile[key] = module.toggleDefaults[key]
