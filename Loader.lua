@@ -581,8 +581,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "15404" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "7.1.0" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
+	local DBMdotRevision = "15418" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "7.1.1" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -827,8 +827,9 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 		end
 	elseif prefix == "D4" then
 		local dbmPrefix, arg1, arg2, arg3, arg4 = strsplit("\t", msg)
+		sender = Ambiguate(sender, "none")
 		if dbmPrefix == "V" or dbmPrefix == "H" then
-			self:DBM_VersionCheck(dbmPrefix, Ambiguate(sender, "none"), arg1, arg2, arg3)
+			self:DBM_VersionCheck(dbmPrefix, sender, arg1, arg2, arg3)
 		elseif dbmPrefix == "U" or dbmPrefix == "PT" or dbmPrefix == "M" or dbmPrefix == "BT" then
 			if dbmPrefix == "PT" then
 				local _, _, _, instanceId = UnitPosition("player")
@@ -839,7 +840,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 			elseif dbmPrefix == "BT" then
 				loadAndEnableCore() -- Force enable the core when receiving a break timer.
 			end
-			public:SendMessage("DBM_AddonMessage", Ambiguate(sender, "none"), dbmPrefix, arg1, arg2, arg3, arg4)
+			public:SendMessage("DBM_AddonMessage", sender, dbmPrefix, arg1, arg2, arg3, arg4)
 		end
 	end
 end
