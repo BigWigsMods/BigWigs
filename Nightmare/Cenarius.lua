@@ -419,10 +419,17 @@ function mod:RottenBreath(args)
 end
 
 --[[ Twisted Sister ]]--
-function mod:TwistedTouchOfLife(args)
-	local spellText = CL.count:format(args.spellName, getMobNumber(105495, args.sourceGUID))
-	self:Message(args.spellId, "Important", self:Interrupter() and "Alarm", CL.casting:format(spellText))
-	self:Bar(args.spellId, 11, spellText)
+do
+	local prev = 0
+	function mod:TwistedTouchOfLife(args)
+		local t = GetTime()
+		if t-prev > 1 then -- only show one message/bar since they cast simultaneously if 2 are up
+			prev = t
+			local spellText = CL.count:format(args.spellName, getMobNumber(105495, args.sourceGUID))
+			self:Message(args.spellId, "Important", self:Interrupter() and "Alarm", CL.casting:format(spellText))
+			self:Bar(args.spellId, 15.5, spellText)
+		end
+	end
 end
 
 function mod:TwistedTouchOfLifeApplied(args)
