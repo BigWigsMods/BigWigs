@@ -427,7 +427,7 @@ do
 			prev = t
 			local spellText = CL.count:format(args.spellName, getMobNumber(105495, args.sourceGUID))
 			self:Message(args.spellId, "Important", self:Interrupter() and "Alarm", CL.casting:format(spellText))
-			self:Bar(args.spellId, 15.5, spellText)
+			self:Bar(args.spellId, self:Mythic() and 11 or 15.5, spellText)
 		end
 	end
 end
