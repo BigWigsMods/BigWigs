@@ -239,7 +239,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		end
 	elseif spellId == 217368 then -- Phase 2
 		phase = 2
-		self:StopBar(213162)
+		self:StopBar(213162) -- Nightmare Blast
+		self:StopBar(212726) -- Forces of Nightmare
+		self:StopBar(210346) -- Dread Thorns
 		self:Bar(210290, 13) -- Nightmare Brambles
 		self:Bar(214529, 23) -- Spear Of Nightmares
 		self:Bar(214505, 35) -- Entangling Nightmares
@@ -331,7 +333,9 @@ end
 
 function mod:DreadThornsRemoved(args)
 	self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
-	self:CDBar(args.spellId, 32.7)
+	if phase == 1 then
+		self:CDBar(args.spellId, 32.7)
+	end
 end
 
 function mod:EntanglingNightmares(args)
