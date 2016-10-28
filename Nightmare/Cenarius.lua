@@ -126,7 +126,7 @@ function mod:OnBossEnable()
 	self:Death("WispDeath", 106659)
 
 	--[[ Nightmare Treant ]]--
-	self:Log("SPELL_CAST_START", "DesiccatingStomp", 226821)
+	self:Log("SPELL_CAST_START", "DesiccatingStomp", 226821, 211073) -- mythic, normal/heroic
 	self:Log("SPELL_CAST_START", "NightmareBlast", 213162)
 
 	--[[ Rotten Drake ]]--
@@ -397,13 +397,13 @@ do
 	local prev = 0
 	function mod:DesiccatingStomp(args)
 		self:StopBar(CL.count:format(args.spellName, getMobNumber(105468, args.sourceGUID))) -- Desiccating Stomp
-		self:Message(args.spellId, "Urgent", "Long", CL.casting:format(args.spellName))
+		self:Message(226821, "Urgent", "Long", CL.casting:format(args.spellName))
 		local t = GetTime()
 		if t-prev > 4 then
 			prev = t
 			local spellText = CL.count:format(args.spellName, getMobNumber(105468, args.sourceGUID))
-			self:Bar(args.spellId, 6.1, CL.cast:format(spellText))
-			self:ScheduleTimer("Bar", 6.1, args.spellId, 27, spellText)
+			self:Bar(226821, 3, CL.cast:format(spellText))
+			self:ScheduleTimer("Bar", 3, 226821, 31, spellText)
 		end
 	end
 end
