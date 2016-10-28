@@ -147,7 +147,9 @@ function mod:OnEngage()
 	phase = 1
 	self:CDBar(212726, 10, CL.count:format(self:SpellName(212726), forcesOfNightmareCount)) -- Forces of Nightmare
 	self:Bar(210290, 28) -- Nightmare Brambles
-	self:CDBar(213162, 30) -- Nightmare Blast
+	if self:Mythic() then
+		self:CDBar(213162, 30) -- Nightmare Blast
+	end
 	wipe(mobCollector)
 	wipe(nightmareStacks)
 	mobTable = {
