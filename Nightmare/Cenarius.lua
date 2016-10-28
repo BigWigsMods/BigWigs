@@ -402,8 +402,8 @@ do
 		if t-prev > 4 then
 			prev = t
 			local spellText = CL.count:format(args.spellName, getMobNumber(105468, args.sourceGUID))
-			self:Bar(226821, 3, CL.cast:format(spellText))
-			self:ScheduleTimer("Bar", 3, 226821, 31, spellText)
+			self:Bar(226821, self:Mythic() and 6.1 or 3, CL.cast:format(spellText))
+			self:ScheduleTimer("Bar", 6.1, 226821, 27, spellText)
 		end
 	end
 end
