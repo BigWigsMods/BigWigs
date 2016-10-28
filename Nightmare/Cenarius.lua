@@ -438,6 +438,7 @@ end
 
 do
 	local proxList, isOnMe, scheduled = {}, nil, nil
+	local prev = 0
 
 	local function warn(self, spellId, spellName, guid)
 		if not isOnMe then
@@ -463,7 +464,9 @@ do
 			self:OpenProximity(args.spellId, 8, proxList)
 		end
 
-		if not scheduled then
+		local t = GetTime()
+		if t-prev > 19 and (not scheduled) then -- prevent debuff spread to reset timer
+			prev = t
 			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId, args.spellName, args.sourceGUID)
 			self:Bar(args.spellId, 20.6, CL.count:format(args.spellName, getMobNumber(105495, args.sourceGUID)))
 		end
