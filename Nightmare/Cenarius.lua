@@ -126,7 +126,7 @@ function mod:OnBossEnable()
 	self:Death("WispDeath", 106659)
 
 	--[[ Nightmare Treant ]]--
-	self:Log("SPELL_CAST_START", "DesiccatingStomp", 226821)
+	self:Log("SPELL_CAST_START", "DesiccatingStomp", 226821, 211073) -- mythic, normal/heroic
 	self:Log("SPELL_CAST_START", "NightmareBlast", 213162)
 
 	--[[ Rotten Drake ]]--
@@ -147,7 +147,9 @@ function mod:OnEngage()
 	phase = 1
 	self:CDBar(212726, 10, CL.count:format(self:SpellName(212726), forcesOfNightmareCount)) -- Forces of Nightmare
 	self:Bar(210290, 28) -- Nightmare Brambles
-	self:CDBar(213162, 30) -- Nightmare Blast
+	if self:Mythic() then
+		self:CDBar(213162, 30) -- Nightmare Blast
+	end
 	wipe(mobCollector)
 	wipe(nightmareStacks)
 	mobTable = {
@@ -237,7 +239,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		end
 	elseif spellId == 217368 then -- Phase 2
 		phase = 2
-		self:StopBar(213162)
+		self:StopBar(213162) -- Nightmare Blast
+		self:StopBar(212726) -- Forces of Nightmare
+		self:StopBar(210346) -- Dread Thorns
 		self:Bar(210290, 13) -- Nightmare Brambles
 		self:Bar(214529, 23) -- Spear Of Nightmares
 		self:Bar(214505, 35) -- Entangling Nightmares
@@ -329,7 +333,9 @@ end
 
 function mod:DreadThornsRemoved(args)
 	self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
-	self:CDBar(args.spellId, 32.7)
+	if phase == 1 then
+		self:CDBar(args.spellId, 32.7)
+	end
 end
 
 function mod:EntanglingNightmares(args)
@@ -391,13 +397,13 @@ do
 	local prev = 0
 	function mod:DesiccatingStomp(args)
 		self:StopBar(CL.count:format(args.spellName, getMobNumber(105468, args.sourceGUID))) -- Desiccating Stomp
-		self:Message(args.spellId, "Urgent", "Long", CL.casting:format(args.spellName))
+		self:Message(226821, "Urgent", "Long", CL.casting:format(args.spellName))
 		local t = GetTime()
 		if t-prev > 4 then
 			prev = t
 			local spellText = CL.count:format(args.spellName, getMobNumber(105468, args.sourceGUID))
-			self:Bar(args.spellId, 6.1, CL.cast:format(spellText))
-			self:ScheduleTimer("Bar", 6.1, args.spellId, 27, spellText)
+			self:Bar(226821, self:Mythic() and 6.1 or 3, CL.cast:format(spellText))
+			self:ScheduleTimer("Bar", 6.1, 226821, 27, spellText)
 		end
 	end
 end
@@ -416,7 +422,7 @@ end
 function mod:TwistedTouchOfLife(args)
 	local spellText = CL.count:format(args.spellName, getMobNumber(105495, args.sourceGUID))
 	self:Message(args.spellId, "Important", self:Interrupter() and "Alarm", CL.casting:format(spellText))
-	self:Bar(args.spellId, 11, spellText)
+	self:Bar(args.spellId, self:Mythic() and 11 or 15.5, spellText)
 end
 
 function mod:TwistedTouchOfLifeApplied(args)
@@ -425,6 +431,7 @@ end
 
 do
 	local proxList, isOnMe, scheduled = {}, nil, nil
+	local prev = 0
 
 	local function warn(self, spellId, spellName, guid)
 		if not isOnMe then
@@ -450,7 +457,9 @@ do
 			self:OpenProximity(args.spellId, 8, proxList)
 		end
 
-		if not scheduled then
+		local t = GetTime()
+		if t-prev > 19 and (not scheduled) then -- prevent debuff spread to reset timer
+			prev = t
 			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId, args.spellName, args.sourceGUID)
 			self:Bar(args.spellId, 20.6, CL.count:format(args.spellName, getMobNumber(105495, args.sourceGUID)))
 		end
