@@ -210,6 +210,9 @@ do
 		["993:4"] = true, -- Grimrail Depot, destroying the train
 		["994:3"] = true, -- Highmaul, Kargath Death
 		["1042:1"] = true, -- Maw of Souls, after Ymiron
+		["1115:4"] = true, -- Karazhan, Maiden death
+		["1115:3"] = true, -- Karazhan, Moroes death
+		["1115:9"] = true, -- Karazhan, Curator death
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
