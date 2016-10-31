@@ -149,7 +149,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 226193 then -- Xavius Energize Phase 2
 		phase = 2
-		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
+		self:Message("stages", "Neutral", "Long", "65% - ".. CL.stage:format(2), false)
 		self:StopBar(206651) -- Darkening Soul
 		self:StopBar(211802) -- Nightmare Blades
 		self:StopBar(CL.count:format(self:SpellName(210264), horrorCount)) -- Manifest Corruption
@@ -159,7 +159,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		self:Bar(209034, 15.5) -- Bonds of Terror
 		self:Bar(209443, 29) -- Nightmare Infusion
 	elseif spellId == 226185 then -- Xavius Energize Phase 3
-		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
+		self:Message("stages", "Neutral", "Long", "30% - ".. CL.stage:format(3), false)
 		phase = 3
 		self:StopBar(209034) -- Bonds of Terror
 		self:StopBar(205588) -- Call of Nightmares
