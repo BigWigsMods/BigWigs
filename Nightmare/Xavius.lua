@@ -21,6 +21,7 @@ local lurkingEruptionCount = 1
 local horrorCount = 1
 local isInDream = false
 local bladeList, bondList = mod:NewTargetList(), mod:NewTargetList()
+local dreamHealers = {}
 local dreamingCount = 1
 
 --------------------------------------------------------------------------------
@@ -32,6 +33,7 @@ if L then
 	L.horror = -12973
 
 	L.linked = "Bonds of Terror on YOU! - Linked with %s!"
+	L.dreamHealers = "Dream Healers"
 end
 
 --------------------------------------------------------------------------------
@@ -47,7 +49,7 @@ function mod:GetOptions()
 		"altpower",
 		208431, -- Decent Into Madness
 		207409, -- Madness
-		206005, -- Dream Simulacrum
+		{206005, "INFOBOX"}, -- Dream Simulacrum
 		211634, -- The Infinite Dark
 
 		--[[ Corruption Horror ]]--
@@ -132,6 +134,7 @@ function mod:OnEngage()
 	dreamingCount = 1
 	wipe(bladeList)
 	wipe(bondList)
+	wipe(dreamHealers)
 	isInDream = false
 	self:Bar(206651, 7.5) -- Darkening Soul
 	self:Bar(205741, 18) -- Lurking Eruption (Lurking Terror)
@@ -139,6 +142,7 @@ function mod:OnEngage()
 	self:Bar(210264, 59, CL.count:format(self:SpellName(210264), horrorCount)) -- Manifest Corruption
 
 	self:OpenAltPower("altpower", 208931) -- Nightmare Corruption
+	self:OpenInfo(206005, L.dreamHealers)
 end
 
 --------------------------------------------------------------------------------
@@ -199,12 +203,20 @@ function mod:DreamSimulacrum(args)
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
 		self:TargetBar(args.spellId, 180, args.destName)
 	end
+	if self:Healer(args.destName) then
+		dreamHealers[args.destName] = 1
+		self:SetInfoByTable(args.spellId, dreamHealers)
+	end
 end
 
 function mod:DreamSimulacrumRemoved(args)
 	if self:Me(args.destGUID) then
 		isInDream = false
 		self:StopBar(args.spellId, args.destName)
+	end
+	if self:Healer(args.destName) then
+		dreamHealers[args.destName] = nil
+		self:SetInfoByTable(args.spellId, dreamHealers)
 	end
 end
 

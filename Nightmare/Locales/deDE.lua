@@ -36,4 +36,5 @@ end
 L = BigWigs:NewBossLocale("Xavius", "deDE")
 if L then
 	L.linked = "Schreckensbindungen auf DIR! – Verbunden mit %s!"
+	--L.dreamHealers = "Dream Healers"
 end

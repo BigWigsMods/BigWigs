@@ -36,4 +36,5 @@ end
 L = BigWigs:NewBossLocale("Xavius", "esES") or BigWigs:NewBossLocale("Xavius", "esMX")
 if L then
 	L.linked = "¡Ataduras de terror en TI! - ¡Enlazado con %s!"
+	--L.dreamHealers = "Dream Healers"
 end

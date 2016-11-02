@@ -36,4 +36,5 @@ end
 L = BigWigs:NewBossLocale("Xavius", "zhTW")
 if L then
 	L.linked = ">你< 恐懼束縛！- 與 >%s< 相連！"
+	--L.dreamHealers = "Dream Healers"
 end
