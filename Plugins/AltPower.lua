@@ -447,7 +447,7 @@ do
 		sortDir = sorting
 		maxPlayers = 0 -- Force an update via GROUP_ROSTER_UPDATE
 		if title then
-			display.title:SetFormattedText("%s: %s", L.altPowerTitle, title)
+			display.title:SetText(title)
 		else
 			display.title:SetText(L.altPowerTitle)
 		end
