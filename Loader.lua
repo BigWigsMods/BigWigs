@@ -119,14 +119,14 @@ do
 		[747]=lw_cata, [757]=lw_cata, [767]=lw_cata, [768]=lw_cata, [769]=lw_cata, [820]=lw_cata, -- Cataclysm
 		[877]=lw_mop, [871]=lw_mop, [874]=lw_mop, [885]=lw_mop, [867]=lw_mop, [919]=lw_mop, -- MoP
 		[964]=lw_wod, [969]=lw_wod, [984]=lw_wod, [987]=lw_wod, [989]=lw_wod, [993]=lw_wod, [995]=lw_wod, [1008]=lw_wod, -- WoD
-		[1041]=lw_l, [1042]=lw_l, [1045]=lw_l, [1046]=lw_l, [1065]=lw_l, [1066]=lw_l, [1067]=lw_l, [1079]=lw_l, [1081]=lw_l, [1087]=lw_l -- Legion
+		[1041]=lw_l, [1042]=lw_l, [1045]=lw_l, [1046]=lw_l, [1065]=lw_l, [1066]=lw_l, [1067]=lw_l, [1079]=lw_l, [1081]=lw_l, [1087]=lw_l, [1115]=lw_l, -- Legion
 	}
 
 	public.zoneTblWorld = {
 		[-473] = 466, [-465] = 466, -- Outland
 		[-807] = 862, [-809] = 862, [-928] = 862, [-929] = 862, [-951] = 862, -- Pandaria
 		[-948] = 962, [-949] = 962, [-949] = 962, [-945] = 962, -- Draenor
-		[-1015] = 1007, [-1017] = 1007, -- Broken Isles
+		[-1015] = 1007, [-1017] = 1007, [-1024] = 1007, -- Broken Isles
 	}
 	public.fakeWorldZones = fakeWorldZones
 	public.zoneTbl = {}
