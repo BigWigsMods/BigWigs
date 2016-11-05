@@ -10,7 +10,7 @@ do
 	local tbl = {}
 	local myRegion = GetLocale()
 	function API:NewLocale(locale, region)
-		if myRegion == region then
+		if region == "enUS" or region == myRegion then
 			if not tbl[locale] then
 				tbl[locale] = {}
 			end
