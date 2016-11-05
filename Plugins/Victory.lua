@@ -23,7 +23,7 @@ media:Register(media.MediaType.SOUND, "BigWigs: Victory Classic", "Interface\\Ad
 plugin.defaultDB = {
 	soundName = "BigWigs: Victory",
 	blizzMsg = true,
-	bigwigsMsg = true,
+	bigwigsMsg = false,
 }
 
 plugin.pluginOptions = {
