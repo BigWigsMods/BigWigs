@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "zhCN")
+local L = BigWigsAPI:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
 L.getNewRelease = "你的 BigWigs 已过期（/bwv）但是可以使用 Curse 客户端简单升级。另外，也可以从 curse.com 或 wowinterface.com 手动升级。"

@@ -9,7 +9,7 @@ if not plugin then return end
 -- Locals
 --
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
+local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local activeDurations = {}
 local difficultyTable = {false, false, "10", "25", "10h", "25h", "lfr", false, false, false, false, false, false, "normal", "heroic", "mythic", "LFR"}
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
@@ -61,7 +61,7 @@ plugin.defaultDB = {
 do
 	local function checkDisabled() return not plugin.db.profile.enabled end
 	plugin.pluginOptions = {
-		name = LibStub("AceLocale-3.0"):GetLocale("BigWigs").statistics,
+		name = BigWigsAPI:GetLocale("BigWigs").statistics,
 		type = "group",
 		childGroups = "tab",
 		get = function(i) return plugin.db.profile[i[#i]] end,

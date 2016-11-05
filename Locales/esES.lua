@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "esES") or LibStub("AceLocale-3.0"):NewLocale("BigWigs", "esMX")
+local L = BigWigsAPI:NewLocale("BigWigs", "esES") or BigWigsAPI:NewLocale("BigWigs", "esMX")
 if not L then return end
 
 L.getNewRelease = "Tu BigWigs está desfasado (/bwv) pero puedes actualizarlo fácilmente con el cliente de Curse. También puedes actualizarlo manualmente desde curse.com o wowinterface.com."

@@ -22,7 +22,7 @@ end
 
 local C = BigWigs.C
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
+local L = BigWigsAPI:GetLocale("BigWigs")
 
 local icon = LibStub("LibDBIcon-1.0", true)
 local acr = LibStub("AceConfigRegistry-3.0")

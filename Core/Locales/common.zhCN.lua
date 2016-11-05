@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Common", "zhCN")
+local L = BigWigsAPI:NewLocale("BigWigs: Common", "zhCN")
 if not L then return end
 
 L.add = "增援"

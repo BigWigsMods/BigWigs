@@ -1,6 +1,6 @@
 local C = {}
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs", true)
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Common", true)
+local L = BigWigsAPI:GetLocale("BigWigs")
+local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 local BigWigs = BigWigs
 local names = {}
 local descriptions = {}

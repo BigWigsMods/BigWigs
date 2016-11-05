@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "deDE")
+local L = BigWigsAPI:NewLocale("BigWigs", "deDE")
 if not L then return end
 
 L.getNewRelease = "Dein BigWigs ist veraltet (/bwv), aber du kannst es mit Hilfe des Curse Client einfach aktualisieren. Alternativ kannst du es auch von curse.com oder wowinterface.com herunterladen und manuell aktualisieren."

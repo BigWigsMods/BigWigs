@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Plugins", "ptBR")
+local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "ptBR")
 if not L then return end
 
 L.abilityName = "Nome da habilidade"

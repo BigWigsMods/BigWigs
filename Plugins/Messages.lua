@@ -26,7 +26,7 @@ local db = nil
 
 local floor = math.floor
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
+local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
 
 --------------------------------------------------------------------------------

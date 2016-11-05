@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "enUS", true, "raw")
+local L = BigWigsAPI:NewLocale("BigWigs", "enUS")
 
 -- Core.lua
 L.berserk = "Berserk"
