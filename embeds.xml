@@ -5,7 +5,6 @@
 <Script file="Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
 
 <!--@no-lib-strip@-->
-<Include file="Libs\AceLocale-3.0\AceLocale-3.0.xml"/>
 <Include file="Libs\AceAddon-3.0\AceAddon-3.0.xml"/>
 <!--@end-no-lib-strip@-->
 
