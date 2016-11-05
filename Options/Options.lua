@@ -943,6 +943,9 @@ do
 				for k in next, loader:GetZoneMenus() do
 					local zone = translateZoneID(k)
 					if zone then
+						if tmp[zone] then
+							zone = zone .. "1" -- When instances exist more than once (Karazhan)
+						end
 						tmp[zone] = k
 						tmpZone[#tmpZone+1] = zone
 					end
@@ -958,7 +961,7 @@ do
 						if not treeParent.children then treeParent.children = {} end -- Create sub menu table
 						tinsert(treeParent.children, { -- Add new instance/zone sub menu
 							value = zoneId,
-							text = zone,
+							text = translateZoneID(zoneId),
 						})
 					end
 				end
