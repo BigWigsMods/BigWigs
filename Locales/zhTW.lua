@@ -12,6 +12,11 @@ L.options = "選項"
 L.raidBosses = "團隊首領"
 L.dungeonBosses = "地城首領"
 
+--L.infobox = "Information Box"
+--L.infobox_desc = "Display a box with information related to the encounter."
+--L.INFOBOX = L.infobox
+--L.INFOBOX_desc = L.infobox_desc
+
 L.activeBossModules = "啟動首領模組："
 L.advanced = "進階選項"
 L.alphaRelease = "你所使用的 BigWigs %s 為“α測試版”（%s）"

@@ -242,3 +242,9 @@ L.wrongBreakFormat = "必须位于1至60分钟之间。正确用法：/break 5"
 L.wrongCustomBarFormat = "错误格式。正确用法：/raidbar 20 文本"
 L.wrongPullFormat = "必须位于1到60秒之间。正确用法：/pull 5"
 L.wrongTime = "指定了无效的时间。 <时间>可以是一个以秒为单位，一个分:秒一对，或分秒。例如，1:20或2M。"
+
+-----------------------------------------------------------------------
+-- InfoBox.lua
+--
+
+--L.infoBox = "InfoBox"

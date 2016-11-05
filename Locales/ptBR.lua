@@ -12,6 +12,11 @@ if not L then return end
 --L.raidBosses = "Chefes de Raid"
 --L.dungeonBosses = "Chefes de Masmorras"
 
+--L.infobox = "Information Box"
+--L.infobox_desc = "Display a box with information related to the encounter."
+--L.INFOBOX = L.infobox
+--L.INFOBOX_desc = L.infobox_desc
+
 -- Core.lua
 L.berserk = "Frenesi"
 L.berserk_desc = "Mostra uma barra e o aviso temporizado para quando o chefe entrar em Frenesi."

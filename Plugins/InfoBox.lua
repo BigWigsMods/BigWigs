@@ -11,7 +11,7 @@ if not plugin then return end
 
 local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
 local media = LibStub("LibSharedMedia-3.0")
-plugin.displayName = "InfoBox"
+plugin.displayName = L.infoBox
 
 local opener, display = nil, nil
 local nameList = {}
@@ -86,7 +86,7 @@ do
 		for i = 1, 10 do
 			self.text[i]:SetText("")
 		end
-		self.title:SetText("InfoBox") -- L.infoBox
+		self.title:SetText(L.infoBox)
 		nameList = {}
 	end)
 

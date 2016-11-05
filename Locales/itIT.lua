@@ -12,6 +12,11 @@ if not L then return end
 --L.raidBosses = "Raid Bosses"
 --L.dungeonBosses = "Dungeon Bosses"
 
+--L.infobox = "Information Box"
+--L.infobox_desc = "Display a box with information related to the encounter."
+--L.INFOBOX = L.infobox
+--L.INFOBOX_desc = L.infobox_desc
+
 L.activeBossModules = "Moduli dei Combattimenti Attivi:"
 L.advanced = "Opzioni Avanzate"
 L.alphaRelease = "Stai usando una VERSIONE ALPHA di BigWigs %s (%s)"

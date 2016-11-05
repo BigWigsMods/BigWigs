@@ -12,6 +12,11 @@ L.options = "Настройки"
 L.raidBosses = "Рейдовые боссы"
 L.dungeonBosses = "Боссы подземелий"
 
+--L.infobox = "Information Box"
+--L.infobox_desc = "Display a box with information related to the encounter."
+--L.INFOBOX = L.infobox
+--L.INFOBOX_desc = L.infobox_desc
+
 L.activeBossModules = "Активные модули боссов:"
 L.advanced = "Дополнительные настройки"
 L.alphaRelease = "Вы используете АЛЬФА-ВЕРСИЮ BigWigs %s (%s)"

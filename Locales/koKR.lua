@@ -12,6 +12,11 @@ if not L then return end
 --L.raidBosses = "Raid Bosses"
 --L.dungeonBosses = "Dungeon Bosses"
 
+--L.infobox = "Information Box"
+--L.infobox_desc = "Display a box with information related to the encounter."
+--L.INFOBOX = L.infobox
+--L.INFOBOX_desc = L.infobox_desc
+
 L.activeBossModules = "사용 중인 보스 모듈:"
 L.advanced = "고급 옵션"
 L.alphaRelease = "당신은 BigWigs %s (%s) 의 알파 버전을 사용하고 있습니다."

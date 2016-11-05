@@ -147,6 +147,12 @@ L.countdownTest = "Test countdown"
 L.countdownAt = "Countdown at... (seconds)"
 
 -----------------------------------------------------------------------
+-- InfoBox.lua
+--
+
+L.infoBox = "InfoBox"
+
+-----------------------------------------------------------------------
 -- Messages.lua
 --
 

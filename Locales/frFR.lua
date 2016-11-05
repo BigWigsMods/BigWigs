@@ -12,6 +12,11 @@ L.options = "Options"
 L.raidBosses = "Boss de raid"
 L.dungeonBosses = "Boss de donjon"
 
+--L.infobox = "Information Box"
+--L.infobox_desc = "Display a box with information related to the encounter."
+--L.INFOBOX = L.infobox
+--L.INFOBOX_desc = L.infobox_desc
+
 L.activeBossModules = "Modules de boss actifs :"
 L.advanced = "Options avancées"
 L.alphaRelease = "Vous utilisez une version ALPHA de BigWigs %s (%s)."

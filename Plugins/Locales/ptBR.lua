@@ -242,3 +242,9 @@ L.wrongBreakFormat = "Deve estar entre 1 e 60 minutos. Um exemplo seria: /break 
 L.wrongCustomBarFormat = "Formato incorreto. Um exemplo correto seria: /raidbar 20 texto"
 L.wrongPullFormat = "Deve estar entre 1 e 60 segundos. Um exemplo correto seria: /pull 5"
 L.wrongTime = "Tempo especificado inválido. <time> pode ser tanto um número em segundos, um par M:S, ou Mm. Por exemplo: 5, 1:20 ou 2m."
+
+-----------------------------------------------------------------------
+-- InfoBox.lua
+--
+
+--L.infoBox = "InfoBox"
