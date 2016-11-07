@@ -5,7 +5,7 @@
 local plugin = BigWigs:NewPlugin("Colors")
 if not plugin then return end
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
+local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 
 --------------------------------------------------------------------------------
 -- Options

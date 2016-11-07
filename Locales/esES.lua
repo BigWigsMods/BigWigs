@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "esES") or LibStub("AceLocale-3.0"):NewLocale("BigWigs", "esMX")
+local L = BigWigsAPI:NewLocale("BigWigs", "esES") or BigWigsAPI:NewLocale("BigWigs", "esMX")
 if not L then return end
 
 L.getNewRelease = "Tu BigWigs está desfasado (/bwv) pero puedes actualizarlo fácilmente con el cliente de Curse. También puedes actualizarlo manualmente desde curse.com o wowinterface.com."
@@ -11,6 +11,11 @@ L.gitHubDesc = "BigWigs es de código abierto alojado en GitHub. Siempre estamos
 L.options = "Opciones"
 L.raidBosses = "Jefes de Raid"
 L.dungeonBosses = "Jefes de Mazmorras"
+
+--L.infobox = "Information Box"
+--L.infobox_desc = "Display a box with information related to the encounter."
+--L.INFOBOX = L.infobox
+--L.INFOBOX_desc = L.infobox_desc
 
 L.activeBossModules = "Módulos de jefes activos:"
 L.advanced = "Opciones avanzadas"

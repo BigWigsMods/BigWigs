@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Plugins", "zhTW")
+local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "zhTW")
 if not L then return end
 
 L.abilityName = "技能名稱"
@@ -242,3 +242,9 @@ L.wrongBreakFormat = "必須介於1至60分鐘之間。正確用法：/break 5"
 L.wrongCustomBarFormat = "不正確的格式。一個正確的範例是: /raidbar 20 文字"
 L.wrongPullFormat = "必須位於1至60秒之間。正確用法：/pull 5"
 L.wrongTime = "指定的時間無效。 <time> 可以為一個秒數，一個 分:秒，或是Mm。例如 5, 1:20 或 2m。"
+
+-----------------------------------------------------------------------
+-- InfoBox.lua
+--
+
+--L.infoBox = "InfoBox"

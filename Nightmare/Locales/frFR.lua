@@ -16,8 +16,8 @@ end
 
 L = BigWigs:NewBossLocale("Il'gynoth", "frFR")
 if L then
-	--L.remaining = "Remaining"
-	--L.missed = "Missed"
+	L.remaining = "Restant(s)"
+	L.missed = "Raté(s)"
 end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "frFR")
@@ -36,4 +36,5 @@ end
 L = BigWigs:NewBossLocale("Xavius", "frFR")
 if L then
 	L.linked = "Liens de terreur sur VOUS ! - Lié(e) à %s !"
+	--L.dreamHealers = "Dream Healers"
 end

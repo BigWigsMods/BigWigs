@@ -55,15 +55,30 @@ do
 		"raid21", "raid22", "raid23", "raid24", "raid25", "raid26", "raid27", "raid28", "raid29", "raid30",
 		"raid31", "raid32", "raid33", "raid34", "raid35", "raid36", "raid37", "raid38", "raid39", "raid40"
 	}
+	local partyList = {"player", "party1", "party2", "party3", "party4"}
+	local GetNumGroupMembers, IsInRaid = GetNumGroupMembers, IsInRaid
+	--- Iterate over your group.
+	-- Automatically uses "party" or "raid" tokens depending on your group type.
+	-- @return iterator
+	function plugin:IterateGroup()
+		local num = GetNumGroupMembers() or 0
+		local i = 0
+		local size = num > 0 and num+1 or 2
+		local function iter(t)
+			i = i + 1
+			if i < size then
+				return t[i]
+			end
+		end
+		return iter, IsInRaid() and raidList or partyList
+	end
+
 	--- Get raid group unit tokens.
 	-- @return indexed table of raid unit tokens
 	function plugin:GetRaidList()
 		return raidList
 	end
-end
 
-do
-	local partyList = {"player", "party1", "party2", "party3", "party4"}
 	--- Get party unit tokens.
 	-- @return indexed table of party unit tokens
 	function plugin:GetPartyList()
@@ -76,6 +91,36 @@ function plugin:UpdateGUI()
 	local acr = LibStub("AceConfigRegistry-3.0", true)
 	if acr then
 		acr:NotifyChange("BigWigs")
+	end
+end
+
+do
+	local hexColors = {}
+	local format, gsub = string.format, string.gsub
+	local UnitClass = UnitClass
+	for k, v in next, (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS) do
+		hexColors[k] = format("|cff%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
+	end
+	local coloredNames = setmetatable({}, {__index =
+		function(self, key)
+			if key then
+				local shortKey = gsub(key, "%-.+", "*") -- Replace server names with *
+				local _, class = UnitClass(key)
+				if class then
+					local newKey = hexColors[class] .. shortKey .. "|r"
+					self[key] = newKey
+					return newKey
+				else
+					return shortKey
+				end
+			end
+		end
+	})
+
+	--- Get a table that colors player names based on class.
+	-- @return list of names colored by class with server names trimmed
+	function plugin:GetColoredNameTable()
+		return coloredNames
 	end
 end
 

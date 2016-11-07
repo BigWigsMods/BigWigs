@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
+local L = BigWigsAPI:GetLocale("BigWigs")
 local mod, public = {}, {}
 local bwFrame = CreateFrame("Frame")
 
@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 20
+local BIGWIGS_VERSION = 22
 local BIGWIGS_RELEASE_STRING = ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -119,14 +119,14 @@ do
 		[747]=lw_cata, [757]=lw_cata, [767]=lw_cata, [768]=lw_cata, [769]=lw_cata, [820]=lw_cata, -- Cataclysm
 		[877]=lw_mop, [871]=lw_mop, [874]=lw_mop, [885]=lw_mop, [867]=lw_mop, [919]=lw_mop, -- MoP
 		[964]=lw_wod, [969]=lw_wod, [984]=lw_wod, [987]=lw_wod, [989]=lw_wod, [993]=lw_wod, [995]=lw_wod, [1008]=lw_wod, -- WoD
-		[1041]=lw_l, [1042]=lw_l, [1045]=lw_l, [1046]=lw_l, [1065]=lw_l, [1066]=lw_l, [1067]=lw_l, [1079]=lw_l, [1081]=lw_l, [1087]=lw_l -- Legion
+		[1041]=lw_l, [1042]=lw_l, [1045]=lw_l, [1046]=lw_l, [1065]=lw_l, [1066]=lw_l, [1067]=lw_l, [1079]=lw_l, [1081]=lw_l, [1087]=lw_l, [1115]=lw_l, -- Legion
 	}
 
 	public.zoneTblWorld = {
 		[-473] = 466, [-465] = 466, -- Outland
 		[-807] = 862, [-809] = 862, [-928] = 862, [-929] = 862, [-951] = 862, -- Pandaria
 		[-948] = 962, [-949] = 962, [-949] = 962, [-945] = 962, -- Draenor
-		[-1015] = 1007, [-1017] = 1007, -- Broken Isles
+		[-1015] = 1007, [-1017] = 1007, [-1024] = 1007, -- Broken Isles
 	}
 	public.fakeWorldZones = fakeWorldZones
 	public.zoneTbl = {}
@@ -581,8 +581,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "15369" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "7.0.12" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
+	local DBMdotRevision = "15418" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "7.1.1" -- Same as above but is changed between alpha and release cycles e.g. "N.N.N" for a release and "N.N.N alpha" for the alpha duration
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -775,38 +775,10 @@ do
 	end
 end
 
--- Misc
-local function doCommCompat(msg)
-	local bwPrefix, bwMsg = msg:match("^(%u-):(.+)")
-	if bwPrefix then
-		local sync, rest = bwMsg:match("(%S+)%s*(.*)$")
-		if bwPrefix == "V" or bwPrefix == "Q" then
-			local verString, hash = bwMsg:match("^(%d+)%-(.+)$")
-			return ("%s^%s^%s"):format(bwPrefix, verString, hash)
-		else
-			if sync == "BWPull" then
-				return ("P^Pull^%s"):format(rest)
-			elseif sync == "BWBreak" then
-				return ("P^Break^%s"):format(rest)
-			elseif sync == "BWCustomBar" then
-				return ("P^CBar^%s"):format(rest)
-			elseif sync == "BWPower" then
-				return ("P^AltPower^%s"):format(rest)
-			elseif sync == "EnableModule" then
-				return ("B^Enable^%s"):format(rest)
-			elseif sync == "BossEngaged" then
-				return ("B^Engage^%s"):format(rest)
-			end
-		end
-	end
-	return msg
-end
-
 function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	if channel ~= "RAID" and channel ~= "PARTY" and channel ~= "INSTANCE_CHAT" then
 		return
 	elseif prefix == "BigWigs" then
-		msg = doCommCompat(msg) -- XXX Remove me at some point in the future (Nighthold?)
 		local bwPrefix, bwMsg, extra = strsplit("^", msg)
 		sender = Ambiguate(sender, "none")
 		if bwPrefix == "V" or bwPrefix == "Q" then
@@ -827,8 +799,9 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 		end
 	elseif prefix == "D4" then
 		local dbmPrefix, arg1, arg2, arg3, arg4 = strsplit("\t", msg)
+		sender = Ambiguate(sender, "none")
 		if dbmPrefix == "V" or dbmPrefix == "H" then
-			self:DBM_VersionCheck(dbmPrefix, Ambiguate(sender, "none"), arg1, arg2, arg3)
+			self:DBM_VersionCheck(dbmPrefix, sender, arg1, arg2, arg3)
 		elseif dbmPrefix == "U" or dbmPrefix == "PT" or dbmPrefix == "M" or dbmPrefix == "BT" then
 			if dbmPrefix == "PT" then
 				local _, _, _, instanceId = UnitPosition("player")
@@ -839,7 +812,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 			elseif dbmPrefix == "BT" then
 				loadAndEnableCore() -- Force enable the core when receiving a break timer.
 			end
-			public:SendMessage("DBM_AddonMessage", Ambiguate(sender, "none"), dbmPrefix, arg1, arg2, arg3, arg4)
+			public:SendMessage("DBM_AddonMessage", sender, dbmPrefix, arg1, arg2, arg3, arg4)
 		end
 	end
 end

@@ -11,7 +11,7 @@ if not plugin then return end
 
 local lastplayer = {}
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
+local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local icons = {
 	RAID_TARGET_1,
 	RAID_TARGET_2,

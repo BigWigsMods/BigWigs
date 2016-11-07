@@ -17,7 +17,7 @@
 -- @alias boss
 -- @usage local mod, CL = BigWigs:NewBoss("Archimonde", 1026, 1438)
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Common")
+local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected
 local EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture, IsSpellKnown = EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture, IsSpellKnown
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
@@ -1205,6 +1205,12 @@ function boss:SetInfo(key, line, text)
 	end
 end
 
+function boss:SetInfoByTable(key, tbl)
+	if checkFlag(self, key, C.INFOBOX) then
+		self:SendMessage("BigWigs_SetInfoBoxTable", self, tbl)
+	end
+end
+
 function boss:OpenInfo(key, title)
 	if checkFlag(self, key, C.INFOBOX) then
 		self:SendMessage("BigWigs_ShowInfoBox", self, title)
@@ -1305,7 +1311,7 @@ end
 do
 	local hexColors = {}
 	for k, v in next, (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS) do
-		hexColors[k] = "|cff" .. format("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
+		hexColors[k] = format("|cff%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
 	end
 	local coloredNames = setmetatable({}, {__index =
 		function(self, key)

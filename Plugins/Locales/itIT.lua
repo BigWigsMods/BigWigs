@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Plugins", "itIT")
+local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "itIT")
 if not L then return end
 
 L.abilityName = "Nome dell'Abilità"
@@ -242,3 +242,9 @@ L.wrongBreakFormat = "Deve essere tra 1 e 60 minuti. Un'esempio corretto è /bre
 L.wrongCustomBarFormat = "Formato non corretto. Un'esempio corretto è: /raidbar 20 testo"
 L.wrongPullFormat = "Deve essere tra 1 e 60 secondi. Un'esempio corretto è: /pull 5"
 L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in secondi, una coppia M:S , o Mm. Per esempio 5, 1:20 or 2m."
+
+-----------------------------------------------------------------------
+-- InfoBox.lua
+--
+
+--L.infoBox = "InfoBox"

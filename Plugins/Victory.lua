@@ -9,7 +9,7 @@ if not plugin then return end
 -- Locals
 --
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
+local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local media = LibStub("LibSharedMedia-3.0")
 
 media:Register(media.MediaType.SOUND, "BigWigs: Victory", "Interface\\AddOns\\BigWigs\\Sounds\\Victory.ogg")
@@ -23,7 +23,7 @@ media:Register(media.MediaType.SOUND, "BigWigs: Victory Classic", "Interface\\Ad
 plugin.defaultDB = {
 	soundName = "BigWigs: Victory",
 	blizzMsg = true,
-	bigwigsMsg = true,
+	bigwigsMsg = false,
 }
 
 plugin.pluginOptions = {

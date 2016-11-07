@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Common", "deDE")
+local L = BigWigsAPI:NewLocale("BigWigs: Common", "deDE")
 if not L then return end
 
 L.add = "Add"
@@ -50,6 +50,6 @@ L.underyou = "%s unter DIR!"
 L.you = "%s auf DIR!"
 
 -- Common raid marking locale
---L.marker = "%s Marker"
---L.marker_player_desc = "Mark players affected by %s with %s, requires promoted or leader."
---L.marker_npc_desc = "Mark %s with %s, requires promoted or leader."
+L.marker = "%s markieren"
+L.marker_player_desc = "Markiert Spieler, die von %s betroffen sind, mit %s, benötigt Leiter oder Assistent."
+L.marker_npc_desc = "Markiert %s mit %s, benötigt Leiter oder Assistent."

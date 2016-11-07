@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "ptBR")
+local L = BigWigsAPI:NewLocale("BigWigs", "ptBR")
 if not L then return end
 
 --L.getNewRelease = "Your BigWigs is old (/bwv) but you can easily update it using the Curse Client. Alternatively, you can update manually from curse.com or wowinterface.com."
@@ -11,6 +11,11 @@ if not L then return end
 --L.options = "Options"
 --L.raidBosses = "Chefes de Raid"
 --L.dungeonBosses = "Chefes de Masmorras"
+
+--L.infobox = "Information Box"
+--L.infobox_desc = "Display a box with information related to the encounter."
+--L.INFOBOX = L.infobox
+--L.INFOBOX_desc = L.infobox_desc
 
 -- Core.lua
 L.berserk = "Frenesi"

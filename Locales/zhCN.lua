@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "zhCN")
+local L = BigWigsAPI:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
 L.getNewRelease = "你的 BigWigs 已过期（/bwv）但是可以使用 Curse 客户端简单升级。另外，也可以从 curse.com 或 wowinterface.com 手动升级。"
@@ -11,6 +11,11 @@ L.gitHubDesc = "BigWigs 是一个在 GitHub 上的开源软件。我们一直在
 L.options = "选项"
 L.raidBosses = "团队首领"
 L.dungeonBosses = "地下城首领"
+
+--L.infobox = "Information Box"
+--L.infobox_desc = "Display a box with information related to the encounter."
+--L.INFOBOX = L.infobox
+--L.INFOBOX_desc = L.infobox_desc
 
 L.activeBossModules = "激活首领模块："
 L.advanced = "高级选项"

@@ -22,7 +22,7 @@ end
 
 local C = BigWigs.C
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
+local L = BigWigsAPI:GetLocale("BigWigs")
 
 local icon = LibStub("LibDBIcon-1.0", true)
 local acr = LibStub("AceConfigRegistry-3.0")
@@ -306,7 +306,7 @@ local function masterOptionToggled(self, event, value)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
 	if type(key) == "string" and key:find("custom_", nil, true) then
-		module.db.profile[key] = value
+		module.db.profile[key] = value or false
 	else
 		if value then
 			module.db.profile[key] = module.toggleDefaults[key]
@@ -943,6 +943,9 @@ do
 				for k in next, loader:GetZoneMenus() do
 					local zone = translateZoneID(k)
 					if zone then
+						if tmp[zone] then
+							zone = zone .. "1" -- When instances exist more than once (Karazhan)
+						end
 						tmp[zone] = k
 						tmpZone[#tmpZone+1] = zone
 					end
@@ -958,7 +961,7 @@ do
 						if not treeParent.children then treeParent.children = {} end -- Create sub menu table
 						tinsert(treeParent.children, { -- Add new instance/zone sub menu
 							value = zoneId,
-							text = zone,
+							text = translateZoneID(zoneId),
 						})
 					end
 				end

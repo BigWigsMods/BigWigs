@@ -9,28 +9,18 @@ if not plugin then return end
 -- Locals
 --
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
+local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local media = LibStub("LibSharedMedia-3.0")
-plugin.displayName = "InfoBox"
+plugin.displayName = L.infoBox
 
 local opener, display = nil, nil
+local nameList = {}
 
 function plugin:RestyleWindow(dirty)
 	if db.lock then
-		display:SetMovable(false)
-		display:RegisterForDrag()
-		display:SetScript("OnDragStart", nil)
-		display:SetScript("OnDragStop", nil)
+		display:EnableMouse(false)
 	else
-		display:SetMovable(true)
-		display:RegisterForDrag("LeftButton")
-		display:SetScript("OnDragStart", function(self) self:StartMoving() end)
-		display:SetScript("OnDragStop", function(self)
-			self:StopMovingOrSizing()
-			local s = self:GetEffectiveScale()
-			db.posx = self:GetLeft() * s
-			db.posy = self:GetTop() * s
-		end)
+		display:EnableMouse(true)
 	end
 
 	local font, size, flags = GameFontNormal:GetFont()
@@ -46,7 +36,7 @@ function plugin:RestyleWindow(dirty)
 		end
 
 		display.title:SetFont(curFont, db.fontSize, newFlags)
-		for i = 1, 25 do
+		for i = 1, 10 do
 			display.text[i]:SetFont(curFont, db.fontSize, newFlags)
 		end
 	end
@@ -78,6 +68,15 @@ do
 	display:SetSize(150, 100)
 	display:SetClampedToScreen(true)
 	display:EnableMouse(true)
+	display:SetMovable(true)
+	display:RegisterForDrag("LeftButton")
+	display:SetScript("OnDragStart", function(self) self:StartMoving() end)
+	display:SetScript("OnDragStop", function(self)
+		self:StopMovingOrSizing()
+		local s = self:GetEffectiveScale()
+		db.posx = self:GetLeft() * s
+		db.posy = self:GetTop() * s
+	end)
 	display:SetScript("OnMouseUp", function(self, button)
 		if inTestMode and button == "LeftButton" then
 			plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
@@ -87,7 +86,8 @@ do
 		for i = 1, 10 do
 			self.text[i]:SetText("")
 		end
-		self.title:SetText("InfoBox") -- L.infoBox
+		self.title:SetText(L.infoBox)
+		nameList = {}
 	end)
 
 	local bg = display:CreateTexture()
@@ -155,7 +155,7 @@ local function updateProfile()
 			display:SetPoint("CENTER", UIParent, "CENTER", -300, -80)
 		end
 
-		plugin:RestyleWindow()
+		--plugin:RestyleWindow()
 	end
 end
 
@@ -163,6 +163,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ShowInfoBox")
 	self:RegisterMessage("BigWigs_HideInfoBox", "Close")
 	self:RegisterMessage("BigWigs_SetInfoBoxLine")
+	self:RegisterMessage("BigWigs_SetInfoBoxTable")
 	self:RegisterMessage("BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnBossReboot", "BigWigs_OnBossDisable")
 
@@ -193,12 +194,37 @@ end
 
 function plugin:BigWigs_ShowInfoBox(_, module, title)
 	opener = module
+	for unit in self:IterateGroup() do
+		nameList[#nameList+1] = self:UnitName(unit)
+	end
 	display.title:SetText(title)
 	display:Show()
 end
 
-function plugin:BigWigs_SetInfoBoxLine(_, module, line, text)
+function plugin:BigWigs_SetInfoBoxLine(_, _, line, text)
 	display.text[line]:SetText(text)
+end
+
+do
+	local sortingTbl = nil
+	local function sortFunc(x,y)
+		local px, py = sortingTbl[x] or 0, sortingTbl[y] or 0
+		return px > py
+	end
+	local tsort = table.sort
+	local colors = plugin:GetColoredNameTable()
+	function plugin:BigWigs_SetInfoBoxTable(_, _, tbl)
+		sortingTbl = tbl
+		tsort(nameList, sortFunc)
+		local line = 1
+		for i = 1, 5 do
+			local n = nameList[i]
+			local result = tbl[n]
+			display.text[line]:SetText(result and colors[n] or "")
+			display.text[line+1]:SetText(result or "")
+			line = line + 2
+		end
+	end
 end
 
 function plugin:Close()

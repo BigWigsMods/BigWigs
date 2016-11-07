@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Common", "esES") or LibStub("AceLocale-3.0"):NewLocale("BigWigs: Common", "esMX")
+local L = BigWigsAPI:NewLocale("BigWigs: Common", "esES") or BigWigsAPI:NewLocale("BigWigs: Common", "esMX")
 if not L then return end
 
 L.add = "Esbirro"

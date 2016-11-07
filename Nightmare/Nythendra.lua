@@ -23,6 +23,7 @@ mod.respawnTime = 30
 local rotCount = 1
 local mindControlledPlayers = 0
 local myInfestedStacks = 0
+local infestedStacks = {}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -41,7 +42,7 @@ function mod:GetOptions()
 		"berserk",
 
 		--[[ Mythic ]]--
-		204504, -- Infested
+		{204504, "INFOBOX"}, -- Infested
 		{225943, "SAY", "FLASH"}, -- Infested Mind
 		205070, -- Spread Infestation
 	},{
@@ -72,12 +73,14 @@ function mod:OnEngage()
 	rotCount = 1
 	mindControlledPlayers = 0
 	myInfestedStacks = 0
+	wipe(infestedStacks)
 	self:Berserk(self:Normal() and 600 or 480) -- Can be delayed by 2nd phase
 	self:CDBar(203096, 5.8) -- Rot
 	self:CDBar(204463, 22.8) -- Volatile Rot
 	self:CDBar(202977, 37) -- Infested Breath
 	self:CDBar(203552, 90) -- Heart of the Swarm
 	if self:Mythic() then
+		self:OpenInfo(204504, self:SpellName(204504)) -- Infested
 		self:Bar(225943, 49) -- Infested Mind
 	end
 end
@@ -197,18 +200,32 @@ do
 	end
 end
 
-function mod:Infested(args)
-	if self:Mythic() and self:Me(args.destGUID) then
-		if args.amount > 6 and args.amount < 11 then -- be careful at 7-9, at 10 you're getting mc'd
-			self:StackMessage(args.spellId, args.destName, args.amount, "Personal", "Warning")
+do
+	local prev = 0
+	function mod:Infested(args)
+		if self:Mythic() then
+			infestedStacks[args.destName] = args.amount
+			if self:Me(args.destGUID) then
+				if args.amount > 6 and args.amount < 11 then -- be careful at 7-9, at 10 you're getting mc'd
+					self:StackMessage(args.spellId, args.destName, args.amount, "Personal", "Warning")
+				end
+				myInfestedStacks = args.amount
+			end
+			local t = GetTime()
+			if t-prev > 2 then
+				prev = t
+				self:SetInfoByTable(args.spellId, infestedStacks)
+			end
 		end
-		myInfestedStacks = args.amount
 	end
 end
 
 function mod:InfestedRemoved(args)
-	if self:Me(args.destGUID) then
-		myInfestedStacks = 0
+	if self:Mythic() then
+		infestedStacks[args.destName] = nil
+		if self:Me(args.destGUID) then
+			myInfestedStacks = 0
+		end
 	end
 end
 

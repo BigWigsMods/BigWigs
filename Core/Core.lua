@@ -14,9 +14,8 @@ addon.UnregisterMessage = loader.UnregisterMessage
 addon.SendMessage = loader.SendMessage
 
 local C -- = BigWigs.C, set from Constants.lua
-local AL = LibStub("AceLocale-3.0")
-local L = AL:GetLocale("BigWigs")
-local CL = AL:GetLocale("BigWigs: Common")
+local L = BigWigsAPI:GetLocale("BigWigs")
+local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 
 local customBossOptions = {}
 local pName = UnitName("player")

@@ -1,4 +1,4 @@
-## Interface: 70000
+## Interface: 70100
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
@@ -24,9 +24,8 @@
 ## SavedVariables: BigWigs3DB, BigWigs3IconDB, BigWigsStatisticsDB
 
 embeds.xml
-locales.xml
-
-Loader.lua
 API.lua
 
+locales.xml
+Loader.lua
 modules.xml

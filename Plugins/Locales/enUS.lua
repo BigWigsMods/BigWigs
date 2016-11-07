@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Plugins", "enUS", true)
+local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "enUS")
 
 L.general = "General"
 
@@ -145,6 +145,12 @@ L.countdownColor = "Countdown color"
 L.countdownVoice = "Countdown voice"
 L.countdownTest = "Test countdown"
 L.countdownAt = "Countdown at... (seconds)"
+
+-----------------------------------------------------------------------
+-- InfoBox.lua
+--
+
+L.infoBox = "InfoBox"
 
 -----------------------------------------------------------------------
 -- Messages.lua

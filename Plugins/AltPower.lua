@@ -21,7 +21,7 @@ plugin.defaultDB = {
 -- Locals
 --
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
+local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local media = LibStub("LibSharedMedia-3.0")
 plugin.displayName = L.altPowerTitle
 
@@ -447,7 +447,7 @@ do
 		sortDir = sorting
 		maxPlayers = 0 -- Force an update via GROUP_ROSTER_UPDATE
 		if title then
-			display.title:SetFormattedText("%s: %s", L.altPowerTitle, title)
+			display.title:SetText(title)
 		else
 			display.title:SetText(L.altPowerTitle)
 		end

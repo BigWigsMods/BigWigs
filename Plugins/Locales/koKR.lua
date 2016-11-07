@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Plugins", "koKR")
+local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "koKR")
 if not L then return end
 
 L.abilityName = "스킬 이름"
@@ -241,3 +241,9 @@ L.wrongBreakFormat = "1~60분 사이로 설정하셔야 합니다. 예시: /brea
 L.wrongCustomBarFormat = "잘못된 형식입니다. /raidbar 20 text와 같이 쓰는게 정확한 예입니다."
 L.wrongPullFormat = "1~60초 사이로 설정하셔야 합니다. 예시: /pull 5"
 L.wrongTime = "시간의 표현 방식이 적절하지 않습니다. 초 단위로 표현하거나, 분:초 형식, 아니면 분 단위로 표현해야 합니다. 예를 들자면 5, 1:20 혹은 2m와 같이 써야 합니다."
+
+-----------------------------------------------------------------------
+-- InfoBox.lua
+--
+
+--L.infoBox = "InfoBox"

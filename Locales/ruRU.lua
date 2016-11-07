@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "ruRU")
+local L = BigWigsAPI:NewLocale("BigWigs", "ruRU")
 if not L then return end
 
 L.getNewRelease = "Ваш BigWigs устарел(/bwv), но вы можете легко его обновить с помощью Curse Client. Также, Вы можете обновиться вручную на сайтах curse.com или wowinterface.com."
@@ -11,6 +11,11 @@ L.gitHubDesc = "BigWigs это программное обеспечение с 
 L.options = "Настройки"
 L.raidBosses = "Рейдовые боссы"
 L.dungeonBosses = "Боссы подземелий"
+
+--L.infobox = "Information Box"
+--L.infobox_desc = "Display a box with information related to the encounter."
+--L.INFOBOX = L.infobox
+--L.INFOBOX_desc = L.infobox_desc
 
 L.activeBossModules = "Активные модули боссов:"
 L.advanced = "Дополнительные настройки"

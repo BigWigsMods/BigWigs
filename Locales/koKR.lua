@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "koKR")
+local L = BigWigsAPI:NewLocale("BigWigs", "koKR")
 if not L then return end
 
 --L.getNewRelease = "Your BigWigs is old (/bwv) but you can easily update it using the Curse Client. Alternatively, you can update manually from curse.com or wowinterface.com."
@@ -11,6 +11,11 @@ if not L then return end
 --L.options = "Options"
 --L.raidBosses = "Raid Bosses"
 --L.dungeonBosses = "Dungeon Bosses"
+
+--L.infobox = "Information Box"
+--L.infobox_desc = "Display a box with information related to the encounter."
+--L.INFOBOX = L.infobox
+--L.INFOBOX_desc = L.infobox_desc
 
 L.activeBossModules = "사용 중인 보스 모듈:"
 L.advanced = "고급 옵션"

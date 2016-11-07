@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Common", "itIT")
+local L = BigWigsAPI:NewLocale("BigWigs: Common", "itIT")
 if not L then return end
 
 L.add = "Add"

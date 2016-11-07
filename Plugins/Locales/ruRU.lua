@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs: Plugins", "ruRU")
+local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "ruRU")
 if not L then return end
 
 L.abilityName = "Название способности"
@@ -242,3 +242,9 @@ L.wrongBreakFormat = "Должно быть между 1 и 60 минутами.
 L.wrongCustomBarFormat = "Неверный формат. Правильно будет: /raidbar 20 текст"
 L.wrongPullFormat = "Должно быть между 1 и 60 секундами. Например: /pull 5"
 L.wrongTime = "Неверно указанное время. <время> может быть числом в секундах, М:С парой, или Mm. Например, 5, 1:20 или 2m."
+
+-----------------------------------------------------------------------
+-- InfoBox.lua
+--
+
+--L.infoBox = "InfoBox"
