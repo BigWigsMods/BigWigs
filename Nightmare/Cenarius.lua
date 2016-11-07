@@ -243,7 +243,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	elseif spellId == 217368 then -- Phase 2
 		phase = 2
 		self:StopBar(213162) -- Nightmare Blast
-		self:StopBar(212726) -- Forces of Nightmare
+		self:StopBar(CL.count:format(self:SpellName(212726), forcesOfNightmareCount)) -- Forces of Nightmare
 		self:StopBar(210346) -- Dread Thorns
 		self:Bar(210290, 13) -- Nightmare Brambles
 		self:Bar(214529, 23) -- Spear Of Nightmares
