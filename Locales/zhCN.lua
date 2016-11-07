@@ -12,10 +12,10 @@ L.options = "选项"
 L.raidBosses = "团队首领"
 L.dungeonBosses = "地下城首领"
 
---L.infobox = "Information Box"
---L.infobox_desc = "Display a box with information related to the encounter."
---L.INFOBOX = L.infobox
---L.INFOBOX_desc = L.infobox_desc
+L.infobox = "信息盒"
+L.infobox_desc = "显示当前战斗相关的信息。"
+L.INFOBOX = L.infobox
+L.INFOBOX_desc = L.infobox_desc
 
 L.activeBossModules = "激活首领模块："
 L.advanced = "高级选项"
