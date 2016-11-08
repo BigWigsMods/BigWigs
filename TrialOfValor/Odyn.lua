@@ -2,6 +2,7 @@
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - P2 -> P3 Transition
+-- - ShieldOfLight, HornOfValor, ExpelLight might have hard coded timings, check on live
 
 
 --------------------------------------------------------------------------------
@@ -18,11 +19,13 @@ mod.respawnTime = 30
 -- Locals
 --
 
+local phase = 1
 local hornCount = 1
 local runesUp = 0
 local myAddGUID = ""
 local isHymdallFighting, isHyrjaFighting = nil, nil
 local revivifyBarTexts = {}
+local addFixates = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -65,7 +68,8 @@ function mod:GetOptions()
 		227503, -- Draw Power
 		227629, -- Unerring Blast
 		{227626, "TANK"}, -- Odyn's Test
-		-14495, -- Runic Brand
+		{-14495, "INFOBOX"}, -- Runic Brand
+		229584, -- Protected
 
 		--[[ Stage Two: The Prime Designate ]]--
 		-14404, -- Test of the Ages
@@ -89,7 +93,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_CAST_START", "UnerringBlast", 227629)
 	self:Log("SPELL_CAST_START", "ShieldOfLight", 228162)
-	self:Log("SPELL_CAST_SUCCESS", "ShieldOfLightEnd", 228162)
+	self:Log("SPELL_CAST_SUCCESS", "ShieldOfLightSuccess", 228162)
 	self:Log("SPELL_CAST_START", "HornOfValor", 228012)
 	self:Log("SPELL_AURA_APPLIED", "StormOfJustice", 227807)
 	self:Log("SPELL_AURA_APPLIED", "ValarjarsBond", 228018, 229529, 228016, 229469) -- XXX
@@ -99,11 +103,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ExpelLightRemoved", 228029)
 	self:Log("SPELL_CAST_START", "Revivify", 228171)
 
-	self:Log("SPELL_AURA_APPLIED", "DrawPower", 227976, 227974, 227961, 227975, 227973) -- Buffs on Odyn when Runes are up
-	self:Log("SPELL_AURA_REMOVED", "DrawPowerRemoved", 227976, 227974, 227961, 227975, 227973) -- Buffs on Odyn when Runes are up
-	self:Log("SPELL_AURA_APPLIED", "Branded", 227491, 227498, 227490, 227500, 227499) -- Debuffs on players
-	self:Log("SPELL_AURA_APPLIED", "BrandedRemoved", 227491, 227498, 227490, 227500, 227499) -- Debuffs on players
+	self:Log("SPELL_AURA_APPLIED", "BrandedFixate", 227490, 227491, 227498, 227499, 227500) -- Add Fixates
+	self:Log("SPELL_AURA_APPLIED", "BrandedFixateRemoved", 227490, 227491, 227498, 227499, 227500) -- Add Fixates
 	self:Log("SPELL_CAST_SUCCESS", "RunicShield", 227594, 227595, 227596, 227597, 227598) -- Add regains shield
+	self:Death("RunebearerDeath", 114996)
+	self:Log("SPELL_AURA_APPLIED", "Branded", 229579, 229580, 229581, 229582, 229583) -- Mythic Debuffs
+	self:Log("SPELL_AURA_APPLIED", "Protected", 229584)
 
 	self:Log("SPELL_AURA_APPLIED", "CleansingFlameDamage", 227475) -- ?
 	self:Log("SPELL_PERIODIC_DAMAGE", "CleansingFlameDamage", 227475) -- ?
@@ -111,25 +116,29 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	phase = 1
 	hornCount = 1
 	runesUp = 0
 	myAddGUID = ""
 	isHymdallFighting = true
 	isHyrjaFighting = true
 	wipe(revivifyBarTexts)
+	wipe(addFixates)
+
 	self:Bar(228012, 8) -- Horn of Valor
-	self:Bar(228162, 24) -- Shield of Light
-	self:Bar(228028, 32) -- Expel Light
-	self:Bar(227503, 40) -- Draw Power
-	self:Bar(227629, 70) -- Unerring Blast
+	self:Bar(228162, 20) -- Shield of Light
+	self:CDBar(228029, 26) -- Expel Light
+	self:Bar(227503, 35) -- Draw Power
+	self:Bar(227629, 68) -- Unerring Blast
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 229168 then -- Test for Players (Phase 1 end)
+		phase = 2
 		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
 		for _,barText in pairs(revivifyBarTexts) do
@@ -142,10 +151,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, _, spellId)
 		self:Bar(-14404, 16, L.hyrja) -- could be percentage based
 		self:Bar(227503, 43) -- Draw Power
 		self:Bar(227629, 73) -- Unerring Blast
+	elseif spellId == 229576 then -- Draw Power
+		runesUp = 5
+		self:Message(227503, "Attention", "Long")
 	end
 end
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	if phase ~= 2 then return end
 	local hymdallFound, hyrjaFound = nil, nil
 	for i = 1, 5 do
 		local unit = ("boss%d"):format(i)
@@ -181,11 +194,18 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	end
 end
 
-function mod:UnerringBlast(args)
-	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
-	self:Bar(227503, 40) -- Draw Power
-	self:Bar(args.spellId, 70)
+do
+	local protected = mod:SpellName(229584)
+	function mod:UnerringBlast(args)
+		self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
+		self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+		self:Bar(227503, 35) -- Draw Power
+		self:Bar(args.spellId, 68)
+
+		if not UnitDebuff("player", protected) then
+			self:Message(args.spellId, "Personal", nil, CL.no:format(protected))
+		end
+	end
 end
 
 do
@@ -200,10 +220,10 @@ do
 
 	function mod:ShieldOfLight(args)
 		self:GetBossTarget(printTarget, 0.4, args.sourceGUID)
-		self:CDBar(args.spellId, 32)
+		self:CDBar(args.spellId, 20)
 	end
 
-	function mod:ShieldOfLightEnd(args)
+	function mod:ShieldOfLightSuccess(args)
 		self:PrimaryIcon(args.spellId)
 	end
 end
@@ -244,6 +264,7 @@ do
 	function mod:ExpelLight(args)
 		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
 		self:PrimaryIcon(args.spellId, args.destName)
+		self:CDBar(args.spellId, 15)
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 		end
@@ -261,38 +282,71 @@ function mod:Revivify(args)
 	self:Bar(args.spellId, 10, text)
 end
 
-do
-	local prev = 0
-	function mod:DrawPower()
-		runesUp = runesUp + 1
-		local t = GetTime()
-		if t-prev > 5 then
-			self:Message(227503, "Attention", "Long")
+local function updateInfoBox()
+	local addsAlive = 0
+	for i,spellId in pairs({227490, 227491, 227498, 227499, 227500}) do
+		mod:SetInfo(-14495, i*2-1, L[spellId])
+		if addFixates[spellId] then
+			mod:SetInfo(-14495, i*2, addFixates[spellId])
+			addsAlive = addsAlive + 1
+		else
+			mod:SetInfo(-14495, i*2, "")
 		end
+	end
+
+	if addsAlive > 0 then
+		mod:OpenInfo(-14495, mod:SpellName(227490))
+	else
+		mod:CloseInfo(-14495)
 	end
 end
 
-function mod:DrawPowerRemoved()
-	runesUp = runesUp - 1
-	self:Message(227503, "Positive", nil, CL.add_remaining:format(runesUp))
-end
-
-function mod:Branded(args)
+function mod:BrandedFixate(args)
 	if self:Me(args.destGUID) then
 		self:Message(-14495, "Personal", "Warning", L[args.spellId], args.spellId)
 		myAddGUID = args.sourceGUID
 	end
+	addFixates[args.spellId] = self:ColorName(args.destName)
+	updateInfoBox()
 end
 
-function mod:BrandedRemoved(args)
+function mod:BrandedFixateRemoved(args)
 	if self:Me(args.destGUID) then
 		myAddGUID = ""
 	end
+	addFixates[args.spellId] = nil
+	updateInfoBox()
 end
 
 function mod:RunicShield(args)
 	if args.sourceGUID == myAddGUID then
 		self:Message(-14495, "Personal", "Warning", CL.on:format(args.spellName, args.sourceName), args.spellId)
+	end
+end
+
+function mod:RunebearerDeath()
+	runesUp = runesUp - 1
+	self:Message(227503, "Positive", nil, CL.add_remaining:format(runesUp))
+end
+
+do
+	local lookupTable = {
+		[229579] = 227490, -- Boss_OdunRunes_Purple
+		[229580] = 227491, -- Boss_OdunRunes_Orange
+		[229581] = 227498, -- Boss_OdunRunes_Yellow
+		[229582] = 227499, -- Boss_OdunRunes_Blue
+		[229583] = 227500, -- Boss_OdunRunes_Green
+	}
+	function mod:Branded(args)
+		if self:Me(args.destGUID) then
+			self:Message(-14495, "Personal", "Warning", L[lookupTable[args.spellId]], lookupTable[args.spellId])
+		end
+	end
+end
+
+function mod:Protected(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Positive", "Info", CL.you:format(args.spellName))
 	end
 end
 
