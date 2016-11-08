@@ -1,7 +1,7 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
-
+-- - Figure out how timers work - Breath and Charge could be on some shared cd?
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -25,7 +25,7 @@ mod.respawnTime = 15
 
 local L = mod:GetLocale()
 if L then
-	
+
 end
 
 --------------------------------------------------------------------------------
@@ -34,14 +34,14 @@ end
 
 function mod:GetOptions()
 	return {
-		228248, -- Frost Lick
-		228253, -- Shadow Lick
-		228228, -- Flame Lick
-		{228187, "FLASH"}, -- Guardian's Breath
+		{228248, "SAY", "FLASH"}, -- Frost Lick
+		{228253, "SAY", "FLASH"}, -- Shadow Lick
+		{228228, "SAY", "FLASH"}, -- Flame Lick
+		{228187}, -- Guardian's Breath
 		227514, -- Flashing Fangs
 		227816, -- Headlong Charge
 		227883, -- Roaring Leap
-		"berserk"
+		"berserk",
 	}
 end
 
@@ -74,6 +74,10 @@ end
 do
 	local list = mod:NewTargetList()
 	function mod:FrostLick(args)
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+		end
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.4, args.spellId, list, "Urgent", "Alarm")
@@ -84,6 +88,10 @@ end
 do
 	local list = mod:NewTargetList()
 	function mod:ShadowLick(args)
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+		end
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.4, args.spellId, list, "Urgent", "Alarm")
@@ -94,6 +102,10 @@ end
 do
 	local list = mod:NewTargetList()
 	function mod:FlameLick(args)
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+		end
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.4, args.spellId, list, "Urgent", "Alarm")
@@ -118,4 +130,3 @@ end
 function mod:RoaringLeap(args)
 	self:Message(args.spellId, "Urgent", "Info")
 end
-
