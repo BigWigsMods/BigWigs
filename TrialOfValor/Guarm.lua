@@ -62,7 +62,7 @@ end
 
 function mod:OnEngage()
 	if not self:LFR() then -- Probably longer on LFR
-		self:Berserk(242)
+		self:Berserk(307)
 	end
 	self:Bar(228187, 13) -- Guardian's Breath
 end
