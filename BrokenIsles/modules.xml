@@ -6,6 +6,7 @@
 <Script file="Flotsam.lua"/>
 <Script file="Levantus.lua"/>
 <Script file="Nithogg.lua"/>
+<Script file="Sharthos.lua"/>
 <Script file="WitheredJim.lua"/>
 
 </Ui>

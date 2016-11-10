@@ -173,9 +173,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		local percentage = dreamingCount == 1 and "97% - " or "60% - "
 		if self:Mythic() then
 			percentage = dreamingCount == 1 and "97% - " or dreamingCount == 2 and "80% - " or dreamingCount == 3 and "60% - " or "45% - "
+			self:Bar(spellId, 6, CL.cast:format(CL.count:format(spellName, dreamingCount)))
 		end
 		self:Message(spellId, "Positive", "Long", percentage .. CL.count:format(spellName, dreamingCount))
-		self:Bar(spellId, 6, CL.cast:format(CL.count:format(spellName, dreamingCount)))
 		dreamingCount = dreamingCount + 1
 	end
 end
