@@ -1,9 +1,10 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - P2 -> P3 Transition
--- - ShieldOfLight, HornOfValor, ExpelLight might have hard coded timings, check on live
-
+-- - Get/Confirm timers for all difficulties on live
+--   LFR (✘) - Normal (✘) - Heroic (✔) - Mythic (✘)
+-- - Draw Power used another spell id on mythic ptr, check if they changed it
+-- - Horn of Valor CD in p2
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -21,6 +22,10 @@ mod.respawnTime = 30
 
 local phase = 1
 local hornCount = 1
+local shieldCount = 1
+local expelCount = 1
+local spearCount = 1
+local stormCount = 1
 local runesUp = 0
 local myAddGUID = ""
 local isHymdallFighting, isHyrjaFighting = nil, nil
@@ -34,8 +39,11 @@ local addFixates = {}
 local L = mod:GetLocale()
 if L then
 	L.odyn = -14003
+	L.odyn_icon = "inv_misc_horn_05" -- inv_misc_horn_05 = Item: Odyn's Horn
 	L.hymdall = -14005
+	L.hymdall_icon = "inv_helm_mail_vrykuldragonrider_b_01" -- 214382 / Follower: Hymdall
 	L.hyrja = -14006
+	L.hyrja_icon = "inv_shield_1h_hyrja_d_01"
 
 	L[227490] = "|cFF800080Top Right|r (|T1323037:15:15:0:0:64:64:4:60:4:60|t)" -- Boss_OdunRunes_Purple
 	L[227491] = "|cFFFFA500Bottom Right|r (|T1323039:15:15:0:0:64:64:4:60:4:60|t)" -- Boss_OdunRunes_Orange
@@ -96,6 +104,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ShieldOfLightSuccess", 228162)
 	self:Log("SPELL_CAST_START", "HornOfValor", 228012)
 	self:Log("SPELL_AURA_APPLIED", "StormOfJustice", 227807)
+	self:Log("SPELL_CAST_SUCCESS", "StormOfJusticeSuccess", 227807)
 	self:Log("SPELL_AURA_APPLIED", "ValarjarsBond", 228018, 229529, 228016, 229469) -- XXX
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OdynsTest", 227626)
 	self:Log("SPELL_AURA_APPLIED", "StormforgedSpear", 228918)
@@ -104,20 +113,24 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Revivify", 228171)
 
 	self:Log("SPELL_AURA_APPLIED", "BrandedFixate", 227490, 227491, 227498, 227499, 227500) -- Add Fixates
-	self:Log("SPELL_AURA_APPLIED", "BrandedFixateRemoved", 227490, 227491, 227498, 227499, 227500) -- Add Fixates
+	self:Log("SPELL_AURA_REMOVED", "BrandedFixateRemoved", 227490, 227491, 227498, 227499, 227500) -- Add Fixates
 	self:Log("SPELL_CAST_SUCCESS", "RunicShield", 227594, 227595, 227596, 227597, 227598) -- Add regains shield
 	self:Death("RunebearerDeath", 114996)
 	self:Log("SPELL_AURA_APPLIED", "Branded", 229579, 229580, 229581, 229582, 229583) -- Mythic Debuffs
 	self:Log("SPELL_AURA_APPLIED", "Protected", 229584)
 
-	self:Log("SPELL_AURA_APPLIED", "CleansingFlameDamage", 227475) -- ?
-	self:Log("SPELL_PERIODIC_DAMAGE", "CleansingFlameDamage", 227475) -- ?
-	self:Log("SPELL_PERIODIC_MISSED", "CleansingFlameDamage", 227475) -- ?
+	self:Log("SPELL_AURA_APPLIED", "CleansingFlameDamage", 227475)
+	self:Log("SPELL_PERIODIC_DAMAGE", "CleansingFlameDamage", 227475)
+	self:Log("SPELL_PERIODIC_MISSED", "CleansingFlameDamage", 227475)
 end
 
 function mod:OnEngage()
 	phase = 1
 	hornCount = 1
+	shieldCount = 1
+	expelCount = 1
+	spearCount = 1
+	stormCount = 1
 	runesUp = 0
 	myAddGUID = ""
 	isHymdallFighting = true
@@ -126,10 +139,10 @@ function mod:OnEngage()
 	wipe(addFixates)
 
 	self:Bar(228012, 8) -- Horn of Valor
-	self:Bar(228162, 20) -- Shield of Light
-	self:CDBar(228029, 26) -- Expel Light
-	self:Bar(227503, 35) -- Draw Power
-	self:Bar(227629, 68) -- Unerring Blast
+	self:Bar(228162, 24) -- Shield of Light
+	self:Bar(228029, 32) -- Expel Light
+	self:Bar(227503, 40) -- Draw Power
+	self:Bar(227629, 73) -- Unerring Blast
 end
 
 --------------------------------------------------------------------------------
@@ -139,19 +152,28 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 229168 then -- Test for Players (Phase 1 end)
 		phase = 2
-		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
 		for _,barText in pairs(revivifyBarTexts) do
 			self:StopBar(barText)
 		end
-		self:Bar("stages", 5.6, self:SpellName(L.odyn))
+		self:Bar("stages", 9.8, self:SpellName(L.odyn), L.odyn_icon)
 		isHymdallFighting = nil
 		isHyrjaFighting = nil
 	elseif spellId == 227882 then -- Leap into Battle (Phase 2 start)
-		self:Bar(-14404, 16, L.hyrja) -- could be percentage based
+		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+		self:Bar(-14404, 16, L.hyrja, L.hyrja_icon)
 		self:Bar(227503, 43) -- Draw Power
 		self:Bar(227629, 73) -- Unerring Blast
-	elseif spellId == 229576 then -- Draw Power
+	elseif spellId == 228740 then
+		phase = 3
+		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
+		self:StopBar(L.hyrja)
+		self:StopBar(L.hymdall)
+		self:StopBar(227503) -- Draw Power
+		self:StopBar(227629) -- Unerring Blast
+		self:Bar(227807, 4) -- Storm of Justice
+		self:Bar(228918, 9) -- Stormforged Spear
+	elseif spellId == 229576 or spellId == 227503 then -- Draw Power, TODO first spellId was mythic PTR, delete if not present on live
 		runesUp = 5
 		self:Message(227503, "Attention", "Long")
 	end
@@ -171,21 +193,23 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 					isHymdallFighting = true
 					self:Message(-14404, "Neutral", "Info", self:SpellName(L.hymdall), false)
 					self:CDBar(228012, 10) -- Horn of Valor
+					self:CDBar(-14404, 69.5, L.hyrja, L.hyrja_icon)
 				end
-			elseif mobId == 114360 then
+			elseif mobId == 114360 then -- Hyrja
 				hyrjaFound = true
 				if not isHyrjaFighting then
 					isHyrjaFighting = true
 					self:Message(-14404, "Neutral", "Info", self:SpellName(L.hyrja), false)
 					self:CDBar(228029, 5) -- Expel Light
 					self:CDBar(228162, 9.5) -- Shield of Light
+					self:CDBar(-14404, 69.5, L.hymdall, L.hymdall_icon)
 				end
 			end
 		end
 	end
 	if not hymdallFound then
 		isHymdallFighting = nil
-		self:StopBar(228012)
+		self:StopBar(228012) -- Horn of Valor
 	end
 	if not hyrjaFound then
 		isHyrjaFighting = nil
@@ -202,7 +226,7 @@ do
 		self:Bar(227503, 35) -- Draw Power
 		self:Bar(args.spellId, 68)
 
-		if not UnitDebuff("player", protected) then
+		if self:Mythic() and not UnitDebuff("player", protected) then
 			self:Message(args.spellId, "Personal", nil, CL.no:format(protected))
 		end
 	end
@@ -220,7 +244,8 @@ do
 
 	function mod:ShieldOfLight(args)
 		self:GetBossTarget(printTarget, 0.4, args.sourceGUID)
-		self:CDBar(args.spellId, 20)
+		shieldCount = shieldCount + 1
+		self:Bar(args.spellId, shieldCount % 2 == 0 and 32 or 38)
 	end
 
 	function mod:ShieldOfLightSuccess(args)
@@ -231,15 +256,20 @@ end
 function mod:HornOfValor(args)
 	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
 	hornCount = hornCount + 1
-	self:CDBar(args.spellId, hornCount % 2 == 0 and 27 or 43)
+	self:Bar(args.spellId, hornCount % 2 == 0 and 27 or 43) -- TODO phase 2 CD
 end
 
 function mod:StormOfJustice(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
-		self:Bar(args.spellId, 5)
+		self:TargetBar(args.spellId, 5, args.destName)
 		self:Say(args.spellId)
 	end
+end
+
+function mod:StormOfJusticeSuccess(args)
+	stormCount = stormCount + 1
+	self:Bar(args.spellId, stormCount % 3 == 0 and 13.5 or 11)
 end
 
 function mod:ValarjarsBond(args)
@@ -255,6 +285,9 @@ end
 
 function mod:StormforgedSpear(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
+	spearCount = spearCount + 1
+	self:TargetBar(args.spellId, 6, args.destName)
+	self:Bar(args.spellId, spearCount % 3 == 0 and 13.5 or 11)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
@@ -264,7 +297,8 @@ do
 	function mod:ExpelLight(args)
 		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
 		self:PrimaryIcon(args.spellId, args.destName)
-		self:CDBar(args.spellId, 15)
+		expelCount = expelCount + 1
+		self:Bar(args.spellId, phase == 2 and 18 or expelCount % 2 == 0 and 32 or 38)
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 		end
