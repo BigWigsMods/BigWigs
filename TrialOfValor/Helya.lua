@@ -6,8 +6,9 @@
 --   Check if it's needed on live.
 -- - Fix double warning for Orb of Corruption (RAID_BOSS_WHISPER & _AURA_APPLIED)
 --   RBW is a little bit faster.
--- - Check if Orb of Corrosion is also on Tank / Healer / DD
--- - P2 and especially P3 need work (bars, etc)
+-- - TentacleDeath doesnt work - they don't die.
+--   They cast 163877 (Tentacle Death) instead, but only in USCS not in CLEU.
+--   Something is damaging her in the phase - find out what spell it is.
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -25,6 +26,7 @@ mod.respawnTime = 5
 
 local taintMarkerCount = 4
 local tentaclesUp = 9
+local phase = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,9 +34,12 @@ local tentaclesUp = 9
 
 local L = mod:GetLocale()
 if L then
-	L.near = "near"
+	L.near = "near" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya!
 	L.tentacle_near = "Tentacle NEAR Helya"
 	L.tentacle_far = "Tentacle FAR from Helya"
+
+	L.grimelord = -14263
+	L.mariner = -14278
 end
 
 --------------------------------------------------------------------------------
@@ -47,7 +52,7 @@ function mod:GetOptions()
 	return {
 		--[[ Helya ]]--
 		"stages",
-		229119, -- Orb of Corruption
+		{229119, "SAY"}, -- Orb of Corruption
 		orbMarker,
 		227967, -- Bilewater Breath
 		227992, -- Bilewater Liquefaction
@@ -58,6 +63,7 @@ function mod:GetOptions()
 
 		--[[ Stage Two: From the Mists ]]--
 		228300, -- Fury of the Maw
+		167910, -- Kvaldir Longboat
 
 		--[[ Grimelord ]]--
 		228390, -- Sludge Nova
@@ -68,7 +74,8 @@ function mod:GetOptions()
 		228619, -- Lantern of Darkness
 
 		--[[ Stage Three: Helheim's Last Stand ]]--
-		230267, -- Orb of Corrosion
+		{230267, "SAY"}, -- Orb of Corrosion
+		228565, -- Corrupted Breath
 	},{
 		["stages"] = -14213, -- Helya
 		[228300] = -14222, -- Stage Two: From the Mists
@@ -99,6 +106,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FuryOfTheMaw", 228300)
 	self:Log("SPELL_AURA_REMOVED", "FuryOfTheMawRemoved", 228300)
 	self:Death("TentacleDeath", 114900)
+	self:Log("SPELL_AURA_REMOVED", "KvaldirLongboat", 167910) -- Add Spawn
 
 	--[[ Grimelord ]]--
 	self:Log("SPELL_CAST_START", "SludgeNova", 228390)
@@ -111,26 +119,40 @@ function mod:OnBossEnable()
 
 	--[[ Stage Three: Helheim's Last Stand ]]--
 	self:Log("SPELL_AURA_APPLIED", "OrbOfCorrosion", 230267)
+	self:Log("SPELL_CAST_START", "CorruptedBreath", 228565)
 end
 
 function mod:OnEngage()
 	taintMarkerCount = 4
 	tentaclesUp = 9
-	self:Bar(228054, 12) -- Taint of the Sea
-	self:Bar(229119, 14.5) -- Orb of Corruption
-	self:Bar(227967, 32) -- Bilewater Breath
+	phase = 1
+	self:Bar(227967, 12) -- Bilewater Breath
+	self:Bar(228054, 19.5) -- Taint of the Sea
+	self:Bar(229119, 31) -- Orb of Corruption
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 34098 then -- ClearAllDebuffs
+		phase = 2
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
 		self:StopBar(229119) -- Orb of Corruption
 		self:StopBar(228054) -- Taint of the Sea
 		self:StopBar(227967) -- Bilewater Breath
+		self:Bar(167910, 14, CL.adds) -- Kvaldir Longboat
+		self:Bar(228300, 50) -- Fury of the Maw
+	elseif spellId == 228546 then -- Helya
+		phase = 3
+		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
+		self:StopBar(228300) -- Fury of the Maw
+		self:StopBar(CL.adds)
+		self:Bar(230267, 11) -- Orb of Corrosion
+		self:CDBar(228054, 17) -- Taint of the Sea
+		self:Bar(228565, 20) -- Corrupted Breath
+		self:CDBar(167910, 38, self:SpellName(L.mariner)) -- Kvaldir Longboat
 	end
 end
 
@@ -151,7 +173,7 @@ function mod:RAID_BOSS_WHISPER(event, msg)
 end
 
 function mod:OrbOfCorruption(args)
-	self:CDBar(229119, 25) -- Orb of Corruption
+	self:Bar(229119, 28) -- Orb of Corruption
 end
 
 do
@@ -192,8 +214,8 @@ end
 function mod:BilewaterBreath(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
-	self:Bar(227992, 22.5, CL.cast:format(self:SpellName(227992))) -- Bilewater Liquefaction
-	self:CDBar(args.spellId, 40)
+	self:Bar(227992, 20.5, CL.cast:format(self:SpellName(227992))) -- Bilewater Liquefaction
+	self:Bar(args.spellId, 52)
 end
 
 do
@@ -202,7 +224,7 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alert", nil, nil, self:Dispeller("magic"))
-			self:CDBar(args.spellId, 16)
+			self:CDBar(args.spellId, phase == 1 and 14.6 or 26)
 		end
 
 		if self:GetOption(taintMarker) then
@@ -220,7 +242,7 @@ end
 function mod:TentacleStrike(args)
 	self:Message(args.spellId, "Urgent", "Long", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
-	self:Bar(args.spellId, 30)
+	self:Bar(args.spellId, 42)
 end
 
 do
@@ -241,7 +263,7 @@ end
 
 function mod:FuryOfTheMawRemoved(args)
 	self:Message(args.spellId, "Important", nil, CL.over:format(args.spellName))
-	self:Bar(args.spellId, 45)
+	self:Bar(args.spellId, 44.5)
 end
 
 function mod:TentacleDeath(args)
@@ -249,9 +271,15 @@ function mod:TentacleDeath(args)
 	self:Message("stages", "Neutral", nil, CL.mob_remaining:format(args.destName, tentaclesUp), false)
 end
 
+function mod:KvaldirLongboat(args)
+	self:Message(167910, "Neutral", "Long", args.destName) -- destName = name of the spawning add
+	self:Bar(167910, 75, CL.adds)
+end
+
 --[[ Grimelord ]]--
 function mod:SludgeNova(args)
 	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
+	self:Bar(args.spellId, 24.3)
 end
 
 function mod:FetidRot(args)
@@ -276,7 +304,7 @@ end
 
 function mod:AnchorSlam(args)
 	self:Message(args.spellId, "Urgent", "Alarm", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 15)
+	self:Bar(args.spellId, 12)
 end
 
 --[[ Night Watch Mariner ]]--
@@ -292,6 +320,7 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Urgent", "Warning")
+			self:Bar(args.spellId, 17)
 		end
 
 		if self:GetOption(orbMarker) then
@@ -308,4 +337,10 @@ do
 			self:Say(args.spellId)
 		end
 	end
+end
+
+function mod:CorruptedBreath(args)
+	self:Message(args.spellId, "Important", "Alarm")
+	self:Bar(args.spellId, 4.5, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, 47)
 end
