@@ -206,7 +206,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+			self:Message(229119, "Personal", "Alarm", CL.you:format(args.spellName))
 		end
 	end
 end
