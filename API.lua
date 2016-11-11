@@ -64,7 +64,20 @@ do
 		end
 	end
 	function API:GetCountdownList()
-		return voices
+		local list = {}
+		for k in next, voices do
+			list[k] = k
+		end
+		return list
+	end
+	function API:HasCountdown(name)
+		return voices[name] and true
+	end
+	function API:PlayCountdownNumber(name, index)
+		local sound = voices[name] and voices[name][index]
+		if sound then
+			PlaySoundFile(sound, "Master")
+		end
 	end
 end
 

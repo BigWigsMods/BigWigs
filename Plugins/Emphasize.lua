@@ -12,25 +12,15 @@ if not plugin then return end
 local media = LibStub("LibSharedMedia-3.0")
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.superEmphasize
-local PlaySoundFile = PlaySoundFile
 
 local temporaryEmphasizes = {}
-local voices = BigWigsAPI:GetCountdownList()
 
 -------------------------------------------------------------------------------
 -- Options
 --
 
-local voiceList -- select values
-do
-	local list = {}
-	function voiceList()
-		wipe(list)
-		for k in next, voices do
-			list[k] = k
-		end
-		return list
-	end
+local function voiceList()  -- select values
+	return BigWigsAPI:GetCountdownList()
 end
 
 local voiceMap = {
@@ -217,12 +207,12 @@ local function updateProfile()
 		plugin.db.profile.font = media:GetDefault("font")
 	end
 	-- Reset invalid voice selections
-	if not voices[plugin.db.profile.voice] then
+	if not BigWigsAPI:HasCountdown(plugin.db.profile.voice) then
 		plugin.db.profile.voice = voiceMap[GetLocale()] or "English: Amy"
 	end
 	for boss, tbl in next, plugin.db.profile.Countdown do
 		for ability, chosenVoice in next, tbl do
-			if not voices[chosenVoice] then
+			if not BigWigsAPI:HasCountdown(chosenVoice) then
 				plugin.db.profile.Countdown[boss][ability] = nil
 			end
 		end
@@ -358,10 +348,7 @@ do
 	local wipe = wipe
 	local function printEmph(num, name, key, text)
 		local voice = plugin.db.profile.Countdown[name] and plugin.db.profile.Countdown[name][key] or plugin.db.profile.voice
-		local sound = voices[voice] and voices[voice][num]
-		if sound then
-			PlaySoundFile(sound, "Master")
-		end
+		BigWigsAPI:PlayCountdownNumber(voice, num)
 		if plugin.db.profile.countdown then
 			plugin:SendMessage("BigWigs_EmphasizedCountdownMessage", num)
 		end
@@ -416,9 +403,5 @@ function plugin:BigWigs_TempSuperEmphasize(_, module, key, text, time)
 end
 
 function plugin:BigWigs_PlayCountdownNumber(_, module, num)
-	local voice = self.db.profile.voice
-	local sound = voices[voice] and voices[voice][num]
-	if sound then
-		PlaySoundFile(sound, "Master")
-	end
+	BigWigsAPI:PlayCountdownNumber(self.db.profile.voice, num)
 end
