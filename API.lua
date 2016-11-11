@@ -63,7 +63,7 @@ do
 			voices[name][i] = data[i]
 		end
 	end
-	function API:GetCountdowns()
+	function API:GetCountdownList()
 		return voices
 	end
 end

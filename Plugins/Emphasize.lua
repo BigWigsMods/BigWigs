@@ -15,7 +15,7 @@ plugin.displayName = L.superEmphasize
 local PlaySoundFile = PlaySoundFile
 
 local temporaryEmphasizes = {}
-local voices = BigWigsAPI:GetCountdowns()
+local voices = BigWigsAPI:GetCountdownList()
 
 -------------------------------------------------------------------------------
 -- Options
