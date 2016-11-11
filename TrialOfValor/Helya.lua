@@ -18,7 +18,7 @@ local mod, CL = BigWigs:NewBoss("Helya-TrialOfValor", 1114, 1829)
 if not mod then return end
 mod:RegisterEnableMob(114537)
 mod.engageId = 2008
-mod.respawnTime = 5
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
