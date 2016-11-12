@@ -73,15 +73,11 @@ do
 	function API:HasCountdown(name)
 		return voices[name] and true
 	end
-	function API:PlayCountdownNumber(name, index)
-		local sound = voices[name] and voices[name][index]
-		if sound then
-			PlaySoundFile(sound, "Master")
-		end
+	function API:GetCountdownSound(name, index)
+		return voices[name] and voices[name][index]
 	end
 end
 
 --------------------------------------------------------------------------------
 -- BarStyles
 --
-

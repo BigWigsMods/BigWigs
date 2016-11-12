@@ -12,6 +12,7 @@ if not plugin then return end
 local media = LibStub("LibSharedMedia-3.0")
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.superEmphasize
+local PlaySoundFile = PlaySoundFile
 
 local temporaryEmphasizes = {}
 
@@ -348,7 +349,10 @@ do
 	local wipe = wipe
 	local function printEmph(num, name, key, text)
 		local voice = plugin.db.profile.Countdown[name] and plugin.db.profile.Countdown[name][key] or plugin.db.profile.voice
-		BigWigsAPI:PlayCountdownNumber(voice, num)
+		local sound = BigWigsAPI:GetCountdownSound(voice, num)
+		if sound then
+			PlaySoundFile(sound, "Master")
+		end
 		if plugin.db.profile.countdown then
 			plugin:SendMessage("BigWigs_EmphasizedCountdownMessage", num)
 		end
@@ -403,5 +407,8 @@ function plugin:BigWigs_TempSuperEmphasize(_, module, key, text, time)
 end
 
 function plugin:BigWigs_PlayCountdownNumber(_, module, num)
-	BigWigsAPI:PlayCountdownNumber(self.db.profile.voice, num)
+	local sound = BigWigsAPI:GetCountdownSound(self.db.profile.voice, num)
+	if sound then
+		PlaySoundFile(sound, "Master")
+	end
 end
