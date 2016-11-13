@@ -52,13 +52,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FrostLick", 228248)
 	self:Log("SPELL_AURA_APPLIED", "ShadowLick", 228253)
 	self:Log("SPELL_AURA_APPLIED", "FlameLick", 228228)
-	
+
 	self:Log("SPELL_CAST_START", "FlashingFangs", 227514)
 
 	self:Log("SPELL_CAST_SUCCESS", "HeadlongCharge", 227816)
 
 	self:Log("SPELL_CAST_SUCCESS", "RoaringLeap", 227883)
-	
+
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 end
 
@@ -66,7 +66,7 @@ function mod:OnEngage()
 	breathCounter = 0
 	fangCounter = 0
 	if not self:LFR() then -- Probably longer on LFR
-		self:Berserk(307)
+		self:Berserk(300)
 	end
 	self:Bar(227514, 5) -- Flashing Fangs
 	self:Bar(228187, 14) -- Guardian's Breath
