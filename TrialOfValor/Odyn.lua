@@ -156,7 +156,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		for _,barText in pairs(revivifyBarTexts) do
 			self:StopBar(barText)
 		end
-		self:Bar("stages", 9.8, self:SpellName(L.odyn), L.odyn_icon)
+		self:StopBar(228162) -- Shield of Light
+		self:StopBar(228029) -- Expel Light
+		self:StopBar(228012) -- Horn of Valor
+		self:CDBar("stages", 8, self:SpellName(L.odyn), L.odyn_icon)
 		isHymdallFighting = nil
 		isHyrjaFighting = nil
 	elseif spellId == 227882 then -- Leap into Battle (Phase 2 start)
