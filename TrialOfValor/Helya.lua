@@ -4,8 +4,6 @@
 -- - Tentacle Strike: Tentacle spawns in the front or in the back. Sadly they
 --   aren't using different spellIds, so we have to use RAID_BOSS_EMOTE.
 --   Check if it's needed on live.
--- - Fix double warning for Orb of Corruption (RAID_BOSS_WHISPER & _AURA_APPLIED)
---   RBW is a little bit faster.
 -- - TentacleDeath doesnt work - they don't die.
 --   They cast 163877 (Tentacle Death) instead, but only in USCS not in CLEU.
 --   Something is damaging her in the phase - find out what spell it is.
@@ -67,7 +65,7 @@ function mod:GetOptions()
 
 		--[[ Grimelord ]]--
 		228390, -- Sludge Nova
-		{193367, "SAY", "FLASH"}, -- Fetid Rot
+		{193367, "SAY", "FLASH", "PROXIMITY"}, -- Fetid Rot
 		228519, -- Anchor Slam
 
 		--[[ Night Watch Mariner ]]--
@@ -98,6 +96,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "OrbDamage", 227930)
 	self:Log("SPELL_MISSED", "OrbDamage", 227930)
 	self:Log("SPELL_AURA_APPLIED", "TaintOfTheSea", 228054)
+	self:Log("SPELL_AURA_REMOVED", "TaintOfTheSeaRemoved", 228054)
 	self:Log("SPELL_CAST_START", "BilewaterBreath", 227967)
 	self:Log("SPELL_CAST_START", "TentacleStrike", 228730)
 	self:Log("SPELL_CAST_START", "CorrossiveNova", 228872)
@@ -129,6 +128,7 @@ function mod:OnEngage()
 	self:Bar(227967, 12) -- Bilewater Breath
 	self:Bar(228054, 19.5) -- Taint of the Sea
 	self:Bar(229119, 31) -- Orb of Corruption
+	self:Bar(228730, 37) -- Tentacle Strike
 end
 
 --------------------------------------------------------------------------------
@@ -142,12 +142,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(229119) -- Orb of Corruption
 		self:StopBar(228054) -- Taint of the Sea
 		self:StopBar(227967) -- Bilewater Breath
+		self:StopBar(228730) -- Tentacle Strike
 		self:Bar(167910, 14, CL.adds) -- Kvaldir Longboat
 		self:Bar(228300, 50) -- Fury of the Maw
 	elseif spellId == 228546 then -- Helya
 		phase = 3
 		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
 		self:StopBar(228300) -- Fury of the Maw
+		self:StopBar(CL.cast:format(self:SpellName(228300))) -- Cast: Fury of the Maw
 		self:StopBar(CL.adds)
 		self:Bar(230267, 11) -- Orb of Corrosion
 		self:CDBar(228054, 17) -- Taint of the Sea
@@ -169,6 +171,7 @@ end
 function mod:RAID_BOSS_WHISPER(event, msg)
 	if msg:find("227920") then
 		self:Message(229119, "Personal", "Warning", CL.you:format(self:SpellName(229119))) -- Orb of Corruption
+		self:Say(229119)
 	end
 end
 
@@ -177,11 +180,20 @@ function mod:OrbOfCorruption(args)
 end
 
 do
-	local list = mod:NewTargetList()
+	local list, isOnMe, scheduled = {}, nil, nil
+
+	local function warn(self, spellId)
+		if not isOnMe then
+			self:TargetMessage(spellId, list, "Urgent", "Warning")
+		end
+		scheduled = nil
+		isOnMe = nil
+	end
+
 	function mod:OrbOfCorruptionApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Urgent", "Warning")
+			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
 		end
 
 		if self:GetOption(orbMarker) then
@@ -194,8 +206,8 @@ do
 			end
 		end
 
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+		if self:Me(args.destGUID) then -- Warning and Say are in RAID_BOSS_WHISPER
+			isOnMe = true
 		end
 	end
 end
@@ -206,7 +218,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
 			prev = t
-			self:Message(229119, "Personal", "Alarm", CL.you:format(args.spellName))
+			self:Message(229119, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -232,8 +244,11 @@ do
 			taintMarkerCount = taintMarkerCount + 1
 			if taintMarkerCount > 6 then taintMarkerCount = 4 end
 		end
+	end
 
+	function mod:TaintOfTheSeaRemoved(args)
 		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Personal", "Warning", CL.underyou:format(args.spellName))
 			self:Say(args.spellId)
 		end
 	end
@@ -271,9 +286,15 @@ function mod:TentacleDeath(args)
 	self:Message("stages", "Neutral", nil, CL.mob_remaining:format(args.destName, tentaclesUp), false)
 end
 
-function mod:KvaldirLongboat(args)
-	self:Message(167910, "Neutral", "Long", args.destName) -- destName = name of the spawning add
-	self:Bar(167910, 75, CL.adds)
+do
+	local prev = 0
+
+	function mod:KvaldirLongboat(args)
+		local t = GetTime()
+		self:Message(args.spellId, "Neutral", t-prev > 1 and "Long", args.destName) -- destName = name of the spawning add
+		prev = t
+		self:Bar(args.spellId, 75, CL.adds)
+	end
 end
 
 --[[ Grimelord ]]--
@@ -282,23 +303,46 @@ function mod:SludgeNova(args)
 	self:Bar(args.spellId, 24.3)
 end
 
-function mod:FetidRot(args)
-	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
-		self:Flash(args.spellId)
-		self:Say(args.spellId)
-		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
-		local t = expires - GetTime()
-		self:TargetBar(args.spellId, t, args.destName)
-		self:ScheduleTimer("Say", t-3, args.spellId, 3, true)
-		self:ScheduleTimer("Say", t-2, args.spellId, 2, true)
-		self:ScheduleTimer("Say", t-1, args.spellId, 1, true)
-	end
-end
+do
+	local proxList, isOnMe = {}, nil
 
-function mod:FetidRotRemoved(args)
-	if self:Me(args.destGUID) then
-		self:StopBar(args.spellId, args.destName)
+	function mod:FetidRot(args)
+		if self:Me(args.destGUID) then
+			isOnMe = true
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+			local t = expires - GetTime()
+			self:TargetBar(args.spellId, t, args.destName)
+			self:ScheduleTimer("Say", t-3, args.spellId, 3, true)
+			self:ScheduleTimer("Say", t-2, args.spellId, 2, true)
+			self:ScheduleTimer("Say", t-1, args.spellId, 1, true)
+			self:OpenProximity(args.spellId, 5)
+		end
+
+		proxList[#proxList+1] = args.destName
+		if not isOnMe then
+			self:OpenProximity(args.spellId, 5, proxList)
+		end
+	end
+
+	function mod:FetidRotRemoved(args)
+		if self:Me(args.destGUID) then
+			isOnMe = nil
+			self:StopBar(args.spellName, args.destName)
+			self:CloseProximity(args.spellId)
+		end
+
+		tDeleteItem(proxList, args.destName)
+
+		if not isOnMe then -- Don't change proximity if it's on you and expired on someone else
+			if #proxList == 0 then
+				self:CloseProximity(args.spellId)
+			else
+				self:OpenProximity(args.spellId, 5, proxList)
+			end
+		end
 	end
 end
 
