@@ -180,7 +180,7 @@ function mod:OrbOfCorruption(args)
 end
 
 do
-	local list, isOnMe, scheduled = {}, nil, nil
+	local list, isOnMe, scheduled = mod:NewTargetList(), nil, nil
 
 	local function warn(self, spellId)
 		if not isOnMe then
