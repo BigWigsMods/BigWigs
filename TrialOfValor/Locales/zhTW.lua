@@ -8,3 +8,11 @@ if L then
 	L[227500] = "|cFF008000上|r (|T1323036:15:15:0:0:64:64:4:60:4:60|t)" -- Boss_OdunRunes_Green
 end
 
+L = BigWigs:NewBossLocale("Helya-TrialOfValor", "zhTW")
+if L then
+	--L.near = "near" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya!
+	--L.tentacle_near = "Tentacle NEAR Helya"
+	--L.tentacle_near_desc = "This option can be used to emphasize or hide the messages when a Striking Tentacle spawns near Helya."
+	--L.tentacle_far = "Tentacle FAR from Helya"
+	--L.tentacle_far_desc = "This option can be used to emphasize or hide the messages when a Striking Tentacle spawns far from Helya."
+end
