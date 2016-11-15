@@ -1,3 +1,12 @@
+local L = BigWigs:NewBossLocale("Helya-TrialOfValor", "zhCN")
+if not L then return end
+if L then
+	L.tentacle_near = "海拉“近点”触须"
+	L.tentacle_near_desc = "此选项可用于醒目或隐藏触须打击信息刷新在海拉近点。"
+	L.tentacle_far = "海拉“远点”触须"
+	L.tentacle_far_desc = "此选项可用于醒目或隐藏触须打击信息刷新在海拉远点。"
+end
+
 local L = BigWigs:NewBossLocale("Odyn-TrialOfValor", "zhCN")
 if not L then return end
 if L then
