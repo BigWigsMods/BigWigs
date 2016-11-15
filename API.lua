@@ -51,7 +51,33 @@ end
 -- Countdown
 --
 
+do
+	local voices = {}
+	function API:RegisterCountdown(name, data)
+		if type(name) ~= "string" then error("Countdown name must be a string.") end
+		if type(data) ~= "table" or #data < 5 or #data > 10 then error("Countdown data must be an indexed table with 5-10 entries.") end
+		if voices[name] then error(("Countdown %q already registered."):format(name)) end
+
+		voices[name] = {}
+		for i = 1, #data do
+			voices[name][i] = data[i]
+		end
+	end
+	function API:GetCountdownList()
+		local list = {}
+		for k in next, voices do
+			list[k] = k
+		end
+		return list
+	end
+	function API:HasCountdown(name)
+		return voices[name] and true
+	end
+	function API:GetCountdownSound(name, index)
+		return voices[name] and voices[name][index]
+	end
+end
+
 --------------------------------------------------------------------------------
 -- BarStyles
 --
-

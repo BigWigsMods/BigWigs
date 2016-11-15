@@ -36,5 +36,5 @@ end
 L = BigWigs:NewBossLocale("Xavius", "frFR")
 if L then
 	L.linked = "Liens de terreur sur VOUS ! - Lié(e) à %s !"
-	--L.dreamHealers = "Dream Healers"
+	L.dreamHealers = "Soigneurs du Rêve"
 end

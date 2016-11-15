@@ -52,13 +52,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FrostLick", 228248)
 	self:Log("SPELL_AURA_APPLIED", "ShadowLick", 228253)
 	self:Log("SPELL_AURA_APPLIED", "FlameLick", 228228)
-	
+
 	self:Log("SPELL_CAST_START", "FlashingFangs", 227514)
 
 	self:Log("SPELL_CAST_SUCCESS", "HeadlongCharge", 227816)
 
 	self:Log("SPELL_CAST_SUCCESS", "RoaringLeap", 227883)
-	
+
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 end
 
@@ -66,7 +66,7 @@ function mod:OnEngage()
 	breathCounter = 0
 	fangCounter = 0
 	if not self:LFR() then -- Probably longer on LFR
-		self:Berserk(307)
+		self:Berserk(300)
 	end
 	self:Bar(227514, 5) -- Flashing Fangs
 	self:Bar(228187, 14) -- Guardian's Breath
@@ -81,12 +81,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 228187 then -- Guardian's Breath (starts casting)
 		breathCounter = breathCounter + 1
-		if breathCounter % 2 == 0 then
-			self:Bar(spellId, 51)
-			self:Bar(227514, 13.4) -- Adjust Flashing Fangs timer
-		else
-			self:Bar(spellId, 20.7)
-		end
+		self:Bar(spellId, (breathCounter % 2 == 0 and 51) or 20.7)
 		self:Message(spellId, "Attention", "Warning")
 		self:Bar(spellId, 5, CL.cast:format(spellName))
 		self:Flash(spellId)
@@ -151,5 +146,10 @@ end
 function mod:RoaringLeap(args)
 	leapCounter = leapCounter + 1
 	self:Message(args.spellId, "Urgent", "Info")
-	self:Bar(args.spellId, (leapCounter % 2 == 0 and 22) or 53)
+	if leapCounter % 2 == 0 then
+		self:Bar(227514, 13.4) -- Adjust Flashing Fangs timer
+		self:Bar(args.spellId, 22)
+	else
+		self:Bar(args.spellId, 53)
+	end
 end

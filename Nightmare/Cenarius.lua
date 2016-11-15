@@ -320,7 +320,9 @@ do
 					self:Bar(226821, 20, CL.count:format(self:SpellName(226821), getMobNumber(mobId, guid))) -- Desiccating Stomp
 				elseif mobId == 105494 then -- Rotten Drake
 					mobCollector[guid] = unit
-					self:Bar(211192, 20, CL.count:format(self:SpellName(211192), getMobNumber(mobId, guid))) -- Rotten Breath
+					if self:GetOption("custom_off_multiple_breath_bar") or (mobCount[105494]-drakeDeaths == 1) or (drakeDeaths+1 == getMobNumber(105494, guid)) then
+						self:Bar(211192, 20, CL.count:format(self:SpellName(211192), getMobNumber(mobId, guid))) -- Rotten Breath
+					end
 					self:ScheduleTimer("RegisterUnitEvent", 15, "UNIT_TARGET", "BreathTarget", unit)
 				elseif mobId == 105495 then -- Twisted Sister
 					self:CDBar(211471, 5, CL.count:format(self:SpellName(211471), getMobNumber(mobId, guid))) -- Scorned Touch
@@ -418,6 +420,7 @@ function mod:RottenBreath(args)
 		self:CDBar(args.spellId, 25, spellText)
 	end
 end
+
 function mod:BreathTarget(unit) -- They love to drop their target after casting
 	local target = unit.."target"
 	local guid = UnitGUID(target)

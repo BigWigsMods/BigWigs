@@ -247,4 +247,4 @@ L.wrongTime = "Неверно указанное время. <время> мож
 -- InfoBox.lua
 --
 
---L.infoBox = "InfoBox"
+L.infoBox = "ИнфоБлок"

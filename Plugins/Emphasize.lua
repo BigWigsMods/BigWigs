@@ -15,122 +15,14 @@ plugin.displayName = L.superEmphasize
 local PlaySoundFile = PlaySoundFile
 
 local temporaryEmphasizes = {}
-local voices = {
-	[L.none] = {
-	},
-	["English: Amy"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\5.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\6.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\7.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\8.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\9.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\10.ogg",
-	},
-	["English: David"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\David\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\David\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\David\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\David\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\David\\5.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\David\\6.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\David\\7.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\David\\8.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\David\\9.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\David\\10.ogg",
-	},
-	["English: Jim"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\5.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\6.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\7.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\8.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\9.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\10.ogg",
-	},
-	["English: Heroes of the Storm"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\5.ogg",
-	},
-	["Deutsch: Heroes of the Storm"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\5.ogg",
-	},
-	["Español: Heroes of the Storm"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\5.ogg",
-	},
-	["Français: Heroes of the Storm"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\5.ogg",
-	},
-	["Русский: Heroes of the Storm"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\5.ogg",
-	},
-	["한국어: Heroes of the Storm"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\5.ogg",
-	},
-	["Italiano: Heroes of the Storm"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\5.ogg",
-	},
-	["Português: Heroes of the Storm"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\5.ogg",
-	},
-	["简体中文: Heroes of the Storm"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\5.ogg",
-	},
-	["繁體中文: Heroes of the Storm"] = {
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\1.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\2.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\3.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\4.ogg",
-		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\5.ogg",
-	},
-}
-local voiceList = {}
-for k in next, voices do voiceList[k] = k end
 
 -------------------------------------------------------------------------------
 -- Options
 --
+
+local function voiceList()  -- select values
+	return BigWigsAPI:GetCountdownList()
+end
 
 local voiceMap = {
 	deDE = "Deutsch: Heroes of the Storm",
@@ -316,12 +208,12 @@ local function updateProfile()
 		plugin.db.profile.font = media:GetDefault("font")
 	end
 	-- Reset invalid voice selections
-	if not voices[plugin.db.profile.voice] then
+	if not BigWigsAPI:HasCountdown(plugin.db.profile.voice) then
 		plugin.db.profile.voice = voiceMap[GetLocale()] or "English: Amy"
 	end
 	for boss, tbl in next, plugin.db.profile.Countdown do
 		for ability, chosenVoice in next, tbl do
-			if not voices[chosenVoice] then
+			if not BigWigsAPI:HasCountdown(chosenVoice) then
 				plugin.db.profile.Countdown[boss][ability] = nil
 			end
 		end
@@ -331,6 +223,116 @@ end
 -------------------------------------------------------------------------------
 -- Initialization
 --
+
+function plugin:OnRegister()
+	BigWigsAPI:RegisterCountdown(L.none, { false, false, false, false, false })
+	BigWigsAPI:RegisterCountdown("English: Amy", {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\5.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\6.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\7.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\8.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\9.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Amy\\10.ogg",
+	})
+	BigWigsAPI:RegisterCountdown("English: David", {
+		"Interface\\AddOns\\BigWigs\\Sounds\\David\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\David\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\David\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\David\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\David\\5.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\David\\6.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\David\\7.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\David\\8.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\David\\9.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\David\\10.ogg",
+	})
+	BigWigsAPI:RegisterCountdown("English: Jim", {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\5.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\6.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\7.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\8.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\9.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Jim\\10.ogg",
+	})
+	BigWigsAPI:RegisterCountdown("English: Heroes of the Storm", {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\enUS\\5.ogg",
+	})
+	BigWigsAPI:RegisterCountdown("Deutsch: Heroes of the Storm", {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\deDE\\5.ogg",
+	})
+	BigWigsAPI:RegisterCountdown("Español: Heroes of the Storm", {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\esES\\5.ogg",
+	})
+	BigWigsAPI:RegisterCountdown("Français: Heroes of the Storm", {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\frFR\\5.ogg",
+	})
+	BigWigsAPI:RegisterCountdown("Русский: Heroes of the Storm", {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ruRU\\5.ogg",
+	})
+	BigWigsAPI:RegisterCountdown("한국어: Heroes of the Storm", {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\koKR\\5.ogg",
+	})
+	BigWigsAPI:RegisterCountdown("Italiano: Heroes of the Storm", {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\itIT\\5.ogg",
+	})
+	BigWigsAPI:RegisterCountdown("Português: Heroes of the Storm", {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\ptBR\\5.ogg",
+	})
+	BigWigsAPI:RegisterCountdown("简体中文: Heroes of the Storm", {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhCN\\5.ogg",
+	})
+	BigWigsAPI:RegisterCountdown("繁體中文: Heroes of the Storm", {
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Sounds\\Heroes\\zhTW\\5.ogg",
+	})
+end
 
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StartEmphasize")
@@ -343,25 +345,11 @@ function plugin:OnPluginEnable()
 end
 
 do
-	local errorBadName = ":RegisterVoice name must be a string."
-	local errorBadTable = ":RegisterVoice data must be a table with 5-10 voice entries."
-	local errorAlreadyExist = "Trying to register %q as a voice, but it already exists."
-	function plugin:RegisterVoice(name, data)
-		if type(name) ~= "string" then error(errorBadName) end
-		if type(data) ~= "table" or #data < 5 or #data > 10 then error(errorBadTable) end
-		if voices[name] then error(errorAlreadyExist:format(name)) end
-		voices[name] = {}
-		for i = 1, #data do voices[name][i] = data[i] end
-		voiceList[name] = name
-	end
-end
-
-do
 	local timers = {}
 	local wipe = wipe
 	local function printEmph(num, name, key, text)
 		local voice = plugin.db.profile.Countdown[name] and plugin.db.profile.Countdown[name][key] or plugin.db.profile.voice
-		local sound = voices[voice] and voices[voice][num]
+		local sound = BigWigsAPI:GetCountdownSound(voice, num)
 		if sound then
 			PlaySoundFile(sound, "Master")
 		end
@@ -419,8 +407,7 @@ function plugin:BigWigs_TempSuperEmphasize(_, module, key, text, time)
 end
 
 function plugin:BigWigs_PlayCountdownNumber(_, module, num)
-	local voice = self.db.profile.voice
-	local sound = voices[voice] and voices[voice][num]
+	local sound = BigWigsAPI:GetCountdownSound(self.db.profile.voice, num)
 	if sound then
 		PlaySoundFile(sound, "Master")
 	end
