@@ -3,8 +3,8 @@ if not L then return end
 if L then
 	L.forces = "Силы кошмара"
 	L.bramblesSay = "Колючки рядом с %s"
-	--L.custom_off_multiple_breath_bar = "Show multiple Rotten Breath bars"
-	--L.custom_off_multiple_breath_bar_desc = "Per default BigWigs will only show the Rotten Breath bar of one drake. Enable this option if you want to see the timer for each drake."
+	L.custom_off_multiple_breath_bar = "Показывать несколько полос Смрадных дыханий"
+	L.custom_off_multiple_breath_bar_desc = "По-умолчанию BigWigs покажет полосу Смрадного дыхания от только одного дракона. Включите данную опцию если вы хотите видеть таймер для каждого дракона."
 end
 
 L = BigWigs:NewBossLocale("Elerethe Renferal", "ruRU")
@@ -16,8 +16,8 @@ end
 
 L = BigWigs:NewBossLocale("Il'gynoth", "ruRU")
 if L then
-	--L.remaining = "Remaining"
-	--L.missed = "Missed"
+	L.remaining = "Осталось"
+	L.missed = "Вне радиуса"
 end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "ruRU")
@@ -36,5 +36,5 @@ end
 L = BigWigs:NewBossLocale("Xavius", "ruRU")
 if L then
 	L.linked = "Узы ужаса на ВАС! - Связаны с %s!"
-	--L.dreamHealers = "Dream Healers"
+	L.dreamHealers = "Целители во сне"
 end
