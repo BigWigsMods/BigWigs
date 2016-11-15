@@ -201,9 +201,9 @@ function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 			local _,s = msg:match("|T(.*)|t%s*(.*)") -- matches the part behind the texture
 			self:Message(228730, "Urgent", "Long", s:format(npcname))
 		elseif msg:find(L.near) then --|TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya!
-			self:Message("tentacle_near", "Urgent", "long", L.tentacle_near)
+			self:Message("tentacle_near", "Urgent", "long", L.tentacle_near, 228730)
 		else -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges far from Helya!
-			self:Message("tentacle_far", "Urgent", "Long", L.tentacle_far)
+			self:Message("tentacle_far", "Urgent", "Long", L.tentacle_far, 228730)
 		end
 	end
 end
@@ -226,7 +226,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 		local tentaclesLeft = floor((hp-40)/2.77)
 		if tentaclesLeft < tentaclesUp then
 			tentaclesUp = tentaclesLeft
-			if tentaclesLeft > 0 then
+			if tentaclesLeft >= 0 then
 				self:Message("stages", "Neutral", nil, CL.mob_remaining:format(self:SpellName(L.gripping_tentacle), tentaclesLeft), false)
 			else
 				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
