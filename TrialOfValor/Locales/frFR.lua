@@ -10,9 +10,9 @@ end
 
 L = BigWigs:NewBossLocale("Helya-TrialOfValor", "frFR")
 if L then
-	--L.near = "near" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya!
-	--L.tentacle_near = "Tentacle NEAR Helya"
-	--L.tentacle_near_desc = "This option can be used to emphasize or hide the messages when a Striking Tentacle spawns near Helya."
-	--L.tentacle_far = "Tentacle FAR from Helya"
-	--L.tentacle_far_desc = "This option can be used to emphasize or hide the messages when a Striking Tentacle spawns far from Helya."
+	L.near = "près" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya!
+	L.tentacle_near = "Tentacule PRÈS d'Helya"
+	L.tentacle_near_desc = "Cette option peut être utilisée pour mettre en évidence ou cacher les messages affichés quand un Tentacule frappeur apparaît près d'Helya."
+	L.tentacle_far = "Tentacule LOIN d'Helya"
+	L.tentacle_far_desc = "Cette option peut être utilisée pour mettre en évidence ou cacher les messages affichés quand un Tentacule frappeur apparaît loin d'Helya."
 end
