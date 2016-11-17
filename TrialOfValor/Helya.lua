@@ -197,15 +197,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 function mod:RAID_BOSS_EMOTE(event, msg, npcname)
-	if msg:find("inv_misc_monsterhorn_03", nil, true) then -- Safety filter, texture used in the message
-		if msg:find(L.nearTrigger) then
-			self:Message("tentacle_near", "Urgent", "Long", L.tentacle_near, 228730)
-		elseif msg:find(L.farTrigger) then
-			self:Message("tentacle_far", "Urgent", "Long", L.tentacle_far, 228730)
-		else -- Fallback for no locale
-			msg = msg:gsub("|T[^|]+|t", "")
-			self:Message(228730, "Urgent", "Long", msg:format(npcname), 228730)
-		end
+	if msg:find(L.nearTrigger) then
+		self:Message("tentacle_near", "Urgent", "Long", L.tentacle_near, 228730)
+	elseif msg:find(L.farTrigger) then
+		self:Message("tentacle_far", "Urgent", "Long", L.tentacle_far, 228730)
+	elseif msg:find("inv_misc_monsterhorn_03", nil, true) then -- Fallback for no locale
+		msg = msg:gsub("|T[^|]+|t", "")
+		self:Message(228730, "Urgent", "Long", msg:format(npcname), 228730)
 	end
 end
 
