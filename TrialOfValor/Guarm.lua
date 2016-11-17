@@ -57,7 +57,7 @@ function mod:OnEngage()
 	breathCounter = 0
 	fangCounter = 0
 	if not self:LFR() then -- Probably longer on LFR
-		self:Berserk(300)
+		self:Berserk(self:Mythic() and 240 or 300)
 	end
 	self:Bar(227514, 5) -- Flashing Fangs
 	self:Bar(228187, 14) -- Guardian's Breath
