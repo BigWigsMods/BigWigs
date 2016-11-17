@@ -56,6 +56,7 @@ function mod:GetOptions()
 		orbMarker,
 		227967, -- Bilewater Breath
 		227992, -- Bilewater Liquefaction
+		{227982, "TANK"}, -- Bilewater Redox
 		228730, -- Tentacle Strike
 		"tentacle_near",
 		"tentacle_far",
@@ -111,6 +112,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "TaintOfTheSea", 228054)
 	self:Log("SPELL_AURA_REMOVED", "TaintOfTheSeaRemoved", 228054)
 	self:Log("SPELL_CAST_START", "BilewaterBreath", 227967)
+	self:Log("SPELL_AURA_APPLIED", "BilewaterRedox", 227982)
 	self:Log("SPELL_CAST_START", "TentacleStrike", 228730)
 	self:Log("SPELL_CAST_START", "CorrossiveNova", 228872)
 
@@ -295,6 +297,13 @@ function mod:BilewaterBreath(args)
 	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
 	self:Bar(227992, self:Normal() and 25.5 or 20.5, CL.cast:format(self:SpellName(227992))) -- Bilewater Liquefaction
 	self:Bar(args.spellId, 52)
+end
+
+function mod:BilewaterRedox(args)
+	if self:Tank(args.destName) then -- others might get hit, only tank is relevant
+		self:TargetMessage(args.spellId, args.destName, "Urgent", not self:Me(args.destGUID) and "Alarm", nil, nil, true)
+		self:TargetBar(args.spellId, 30, args.destName)
+	end
 end
 
 do
@@ -492,8 +501,10 @@ function mod:CorruptedBreath(args)
 end
 
 function mod:DarkHatred(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", not self:Me(args.destGUID) and "Alarm", nil, nil, true)
-	self:TargetBar(args.spellId, 12, args.destName)
+	if self:Tank(args.destName) then -- others might get hit, only tank is relevant
+		self:TargetMessage(args.spellId, args.destName, "Urgent", not self:Me(args.destGUID) and "Alarm", nil, nil, true)
+		self:TargetBar(args.spellId, 12, args.destName)
+	end
 end
 
 do
