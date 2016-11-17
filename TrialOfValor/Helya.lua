@@ -28,7 +28,8 @@ local phase = 1
 
 local L = mod:GetLocale()
 if L then
-	L.near = "near" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya!
+	L.nearTrigger = "near" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya!
+	L.farTrigger = "far" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges far from Helya!
 	L.tentacle_near = "Tentacle NEAR Helya"
 	L.tentacle_near_desc = "This option can be used to emphasize or hide the messages when a Striking Tentacle spawns near Helya."
 	L.tentacle_near_icon = 228730
@@ -196,14 +197,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 function mod:RAID_BOSS_EMOTE(event, msg, npcname)
-	if msg:find("inv_misc_monsterhorn_03") then -- texture used in the message
-		if not (GetLocale() == "enUS" or L.near ~= "near") then -- fallback if L.near isn't translated
-			local _,s = msg:match("|T(.*)|t%s*(.*)") -- matches the part behind the texture
-			self:Message(228730, "Urgent", "Long", s:format(npcname))
-		elseif msg:find(L.near) then --|TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya!
-			self:Message("tentacle_near", "Urgent", "long", L.tentacle_near, 228730)
-		else -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges far from Helya!
+	if msg:find("inv_misc_monsterhorn_03", nil, true) then -- Safety filter, texture used in the message
+		if msg:find(L.nearTrigger) then
+			self:Message("tentacle_near", "Urgent", "Long", L.tentacle_near, 228730)
+		elseif msg:find(L.farTrigger) then
 			self:Message("tentacle_far", "Urgent", "Long", L.tentacle_far, 228730)
+		else -- Fallback for no locale
+			msg = msg:gsub("|T[^|]+|t", "")
+			self:Message(228730, "Urgent", "Long", msg:format(npcname), 228730)
 		end
 	end
 end
