@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Odyn-TrialOfValor", "deDE")
 if not L then return end
 if L then
+	--L.yields = "%s yields" -- used when Hymdall and Helya leave the fight in P2: "Hymdall yields"
 	L[227490] = "|cFF800080Oben Rechts|r (|T1323037:15:15:0:0:64:64:4:60:4:60|t)" -- Boss_OdunRunes_Purple
 	L[227491] = "|cFFFFA500Unten Rechts|r (|T1323039:15:15:0:0:64:64:4:60:4:60|t)" -- Boss_OdunRunes_Orange
 	L[227498] = "|cFFFFFF00Unten Links|r (|T1323038:15:15:0:0:64:64:4:60:4:60|t)" -- Boss_OdunRunes_Yellow
