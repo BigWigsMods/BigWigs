@@ -28,7 +28,8 @@ local phase = 1
 
 local L = mod:GetLocale()
 if L then
-	L.near = "near" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya!
+	L.nearTrigger = "near" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya!
+	L.farTrigger = "far" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges far from Helya!
 	L.tentacle_near = "Tentacle NEAR Helya"
 	L.tentacle_near_desc = "This option can be used to emphasize or hide the messages when a Striking Tentacle spawns near Helya."
 	L.tentacle_near_icon = 228730
@@ -55,6 +56,7 @@ function mod:GetOptions()
 		orbMarker,
 		227967, -- Bilewater Breath
 		227992, -- Bilewater Liquefaction
+		{227982, "TANK"}, -- Bilewater Redox
 		228730, -- Tentacle Strike
 		"tentacle_near",
 		"tentacle_far",
@@ -110,6 +112,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "TaintOfTheSea", 228054)
 	self:Log("SPELL_AURA_REMOVED", "TaintOfTheSeaRemoved", 228054)
 	self:Log("SPELL_CAST_START", "BilewaterBreath", 227967)
+	self:Log("SPELL_AURA_APPLIED", "BilewaterRedox", 227982)
 	self:Log("SPELL_CAST_START", "TentacleStrike", 228730)
 	self:Log("SPELL_CAST_START", "CorrossiveNova", 228872)
 
@@ -196,15 +199,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 function mod:RAID_BOSS_EMOTE(event, msg, npcname)
-	if msg:find("inv_misc_monsterhorn_03") then -- texture used in the message
-		if not (GetLocale() == "enUS" or L.near ~= "near") then -- fallback if L.near isn't translated
-			local _,s = msg:match("|T(.*)|t%s*(.*)") -- matches the part behind the texture
-			self:Message(228730, "Urgent", "Long", s:format(npcname))
-		elseif msg:find(L.near) then --|TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya!
-			self:Message("tentacle_near", "Urgent", "long", L.tentacle_near)
-		else -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges far from Helya!
-			self:Message("tentacle_far", "Urgent", "Long", L.tentacle_far)
-		end
+	if msg:find(L.nearTrigger) then
+		self:Message("tentacle_near", "Urgent", "Long", L.tentacle_near, 228730)
+	elseif msg:find(L.farTrigger) then
+		self:Message("tentacle_far", "Urgent", "Long", L.tentacle_far, 228730)
+	elseif msg:find("inv_misc_monsterhorn_03", nil, true) then -- Fallback for no locale
+		msg = msg:gsub("|T[^|]+|t", "")
+		self:Message(228730, "Urgent", "Long", msg:format(npcname), 228730)
 	end
 end
 
@@ -226,7 +227,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 		local tentaclesLeft = floor((hp-40)/2.77)
 		if tentaclesLeft < tentaclesUp then
 			tentaclesUp = tentaclesLeft
-			if tentaclesLeft > 0 then
+			if tentaclesLeft >= 0 then
 				self:Message("stages", "Neutral", nil, CL.mob_remaining:format(self:SpellName(L.gripping_tentacle), tentaclesLeft), false)
 			else
 				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
@@ -296,6 +297,13 @@ function mod:BilewaterBreath(args)
 	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
 	self:Bar(227992, self:Normal() and 25.5 or 20.5, CL.cast:format(self:SpellName(227992))) -- Bilewater Liquefaction
 	self:Bar(args.spellId, 52)
+end
+
+function mod:BilewaterRedox(args)
+	if self:Tank(args.destName) then -- others might get hit, only tank is relevant
+		self:TargetMessage(args.spellId, args.destName, "Urgent", not self:Me(args.destGUID) and "Alarm", nil, nil, true)
+		self:TargetBar(args.spellId, 30, args.destName)
+	end
 end
 
 do
@@ -493,8 +501,10 @@ function mod:CorruptedBreath(args)
 end
 
 function mod:DarkHatred(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", not self:Me(args.destGUID) and "Alarm", nil, nil, true)
-	self:TargetBar(args.spellId, 12, args.destName)
+	if self:Tank(args.destName) then -- others might get hit, only tank is relevant
+		self:TargetMessage(args.spellId, args.destName, "Urgent", not self:Me(args.destGUID) and "Alarm", nil, nil, true)
+		self:TargetBar(args.spellId, 12, args.destName)
+	end
 end
 
 do

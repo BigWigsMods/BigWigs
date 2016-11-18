@@ -8,3 +8,12 @@ if L then
 	L[227500] = "|cFF008000En haut|r (|T1323036:15:15:0:0:64:64:4:60:4:60|t)" -- Boss_OdunRunes_Green
 end
 
+L = BigWigs:NewBossLocale("Helya-TrialOfValor", "frFR")
+if L then
+	L.nearTrigger = "près" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya! -- Translate this comment with the emote
+	--L.farTrigger = "far" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges far from Helya! -- Translate this comment with the emote
+	L.tentacle_near = "Tentacule PRÈS d'Helya"
+	L.tentacle_near_desc = "Cette option peut être utilisée pour mettre en évidence ou cacher les messages affichés quand un Tentacule frappeur apparaît près d'Helya."
+	L.tentacle_far = "Tentacule LOIN d'Helya"
+	L.tentacle_far_desc = "Cette option peut être utilisée pour mettre en évidence ou cacher les messages affichés quand un Tentacule frappeur apparaît loin d'Helya."
+end
