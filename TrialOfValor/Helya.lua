@@ -244,6 +244,8 @@ do
 	local function warn(self, spellId)
 		if not isOnMe then
 			self:TargetMessage(spellId, list, "Urgent", "Warning")
+		else
+			wipe(list)
 		end
 		scheduled = nil
 		isOnMe = nil
