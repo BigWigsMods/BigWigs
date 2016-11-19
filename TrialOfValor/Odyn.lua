@@ -269,10 +269,10 @@ do
 		self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
 		self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
 		self:Bar(227503, 35) -- Draw Power
-		self:Bar(args.spellId, self:Mythic() and 65 or 68)
+		self:Bar(args.spellId, (self:Mythic() and (phase == 2 and 69 or 68)) or 73)
 
 		if self:Mythic() and not UnitDebuff("player", protected) then
-			self:Message(args.spellId, "Personal", nil, CL.no:format(protected))
+			self:Message(229584, "Personal", nil, CL.no:format(protected))
 		end
 	end
 end
