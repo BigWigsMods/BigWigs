@@ -321,8 +321,8 @@ function mod:StormOfJustice(args)
 end
 
 function mod:StormOfJusticeSuccess(args)
-	stormCount = stormCount + 1
 	self:Bar(args.spellId, stormCount % 3 == 0 and 13.5 or 11)
+	stormCount = stormCount + 1
 end
 
 function mod:ValarjarsBond(args)
@@ -338,12 +338,12 @@ end
 
 function mod:StormforgedSpear(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
-	spearCount = spearCount + 1
 	self:TargetBar(args.spellId, 6, args.destName)
 	self:Bar(args.spellId, spearCount % 3 == 0 and 13.5 or 11)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
+	spearCount = spearCount + 1
 end
 
 function mod:ExpelLightSuccess(args)
