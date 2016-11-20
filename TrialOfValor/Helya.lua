@@ -19,6 +19,7 @@ mod.respawnTime = 30
 --
 
 local taintMarkerCount = 4
+local orbCount = 1
 local tentaclesUp = 9
 local phase = 1
 
@@ -154,11 +155,12 @@ end
 
 function mod:OnEngage()
 	taintMarkerCount = 4
+	orbCount = 1
 	tentaclesUp = 9
 	phase = 1
 	self:Bar(227967, 12) -- Bilewater Breath
 	self:Bar(228054, 19.5) -- Taint of the Sea
-	self:Bar(229119, 31) -- Orb of Corruption
+	self:Bar(229119, 31, CL.count:format(self:SpellName(229119), orbCount)) -- Orb of Corruption
 	self:Bar(228730, 37) -- Tentacle Strike
 end
 
@@ -170,7 +172,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 34098 then -- ClearAllDebuffs
 		phase = 2
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
-		self:StopBar(229119) -- Orb of Corruption
+		self:StopBar(CL.count:format(self:SpellName(229119, orbCount))) -- Orb of Corruption
 		self:StopBar(228054) -- Taint of the Sea
 		self:StopBar(227967) -- Bilewater Breath
 		if self:BarTimeLeft(CL.cast:format(self:SpellName(227967))) > 0 then -- Breath
@@ -185,11 +187,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 228546 then -- Helya
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 		phase = 3
+		orbCount = 1
 		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
 		self:StopBar(228300) -- Fury of the Maw
 		self:StopBar(CL.cast:format(self:SpellName(228300))) -- Cast: Fury of the Maw
 		self:StopBar(CL.adds)
-		self:Bar(230267, 15.5) -- Orb of Corrosion
+		self:Bar(230267, 15.5, CL.count:format(self:SpellName(230267), orbCount)) -- Orb of Corrosion
 		self:Bar(228565, 19.5) -- Corrupted Breath
 		self:Bar(228054, 24.5) -- Taint of the Sea
 		self:Bar(167910, 38, self:SpellName(L.mariner)) -- Kvaldir Longboat
@@ -241,9 +244,9 @@ end
 do
 	local list, isOnMe, scheduled = mod:NewTargetList(), nil, nil
 
-	local function warn(self, spellId)
+	local function warn(self, spellId, spellName)
 		if not isOnMe then
-			self:TargetMessage(spellId, list, "Urgent", "Warning")
+			self:TargetMessage(spellId, list, "Urgent", "Warning", CL.count:format(spellName, orbCount - 1)) -- gets incremented on the cast
 		else
 			wipe(list)
 		end
@@ -254,7 +257,7 @@ do
 	function mod:OrbApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
+			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId, args.spellName)
 		end
 
 		if self:GetOption(orbMarker) then
@@ -280,7 +283,8 @@ do
 end
 
 function mod:OrbOfCorruption(args)
-	self:Bar(229119, 28) -- Orb of Corruption
+	orbCount = orbCount + 1
+	self:Bar(229119, 28, CL.count:format(args.spellName, orbCount)) -- Orb of Corruption
 end
 
 do
@@ -493,7 +497,8 @@ end
 
 --[[ Stage Three: Helheim's Last Stand ]]--
 function mod:OrbOfCorrosion(args)
-	self:Bar(230267, 17) -- Orb of Corrosion
+	orbCount = orbCount + 1
+	self:Bar(230267, 17, CL.count:format(args.spellName, orbCount)) -- Orb of Corrosion
 end
 
 function mod:CorruptedBreath(args)
