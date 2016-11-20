@@ -21,6 +21,8 @@ mod.respawnTime = 30
 local taintMarkerCount = 4
 local tentaclesUp = 9
 local phase = 1
+local OrbOfCorrosionCount = 1
+local OrbOfCorruptionCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -154,11 +156,15 @@ end
 
 function mod:OnEngage()
 	taintMarkerCount = 4
+	OrbOfCorrosionCount = 1
+	OrbOfCorruptionCount = 1
 	tentaclesUp = 9
 	phase = 1
 	self:Bar(227967, 12) -- Bilewater Breath
 	self:Bar(228054, 19.5) -- Taint of the Sea
-	self:Bar(229119, 31) -- Orb of Corruption
+	self:Bar(229119, 31, CL.count:format(self:SpellName(229119), OrbOfCorruptionCount)) -- Focused Gaze
+	OrbOfCorruptionCount = OrbOfCorruptionCount + 1
+	
 	self:Bar(228730, 37) -- Tentacle Strike
 end
 
@@ -189,7 +195,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(228300) -- Fury of the Maw
 		self:StopBar(CL.cast:format(self:SpellName(228300))) -- Cast: Fury of the Maw
 		self:StopBar(CL.adds)
-		self:Bar(230267, 15.5) -- Orb of Corrosion
+		self:Bar(230267, 15.5, CL.count:format(self:SpellName(230267), OrbOfCorrosionCount)) -- Focused Gaze
+		OrbOfCorrosionCount = OrbOfCorrosionCount + 1
+		
 		self:Bar(228565, 19.5) -- Corrupted Breath
 		self:Bar(228054, 24.5) -- Taint of the Sea
 		self:Bar(167910, 38, self:SpellName(L.mariner)) -- Kvaldir Longboat
@@ -280,7 +288,8 @@ do
 end
 
 function mod:OrbOfCorruption(args)
-	self:Bar(229119, 28) -- Orb of Corruption
+	self:Bar(229119, 28, CL.count:format(self:SpellName(229119), OrbOfCorruptionCount)) -- Focused Gaze
+	OrbOfCorruptionCount = OrbOfCorruptionCount + 1
 end
 
 do
@@ -493,7 +502,8 @@ end
 
 --[[ Stage Three: Helheim's Last Stand ]]--
 function mod:OrbOfCorrosion(args)
-	self:Bar(230267, 17) -- Orb of Corrosion
+	self:Bar(230267, 17, CL.count:format(self:SpellName(230267), OrbOfCorrosionCount)) -- Focused Gaze
+	OrbOfCorrosionCount = OrbOfCorrosionCount + 1
 end
 
 function mod:CorruptedBreath(args)
