@@ -93,7 +93,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 228187 then -- Guardian's Breath (starts casting)
 		breathCounter = breathCounter + 1
-		self:Bar(spellId, (breathCounter % 2 == 0 and 51) or 20.7)
+		self:Bar(spellId, (breathCounter % 2 == 0 and 51) or 20.7, CL.count:format(spellName, breathCounter+1))
 		self:Message(spellId, "Attention", "Warning")
 		self:Bar(spellId, 5, CL.cast:format(spellName))
 		self:Flash(spellId)
@@ -152,7 +152,7 @@ function mod:HeadlongCharge(args)
 	self:Message(args.spellId, "Important", "Long")
 	self:Bar(args.spellId, 75.2)
 	self:Bar(args.spellId, 7, CL.cast:format(args.spellName))
-	self:Bar(228187, 30) -- Correct Guardian's Breath timer
+	self:Bar(228187, 30, CL.count:format(self:SpellName(228187), breathCounter+1)) -- Correct Guardian's Breath timer
 	if self:Mythic() then
 		self:Bar(-14535, 29.1, CL.count:format(self:SpellName(-14535), foamCount), 228810) -- Volatile Foam
 	end
