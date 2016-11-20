@@ -11,8 +11,8 @@ end
 
 L = BigWigs:NewBossLocale("Helya-TrialOfValor", "zhCN")
 if L then
-	L.nearTrigger = "近" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t一头%s出现在海拉的附近！
-	L.farTrigger = "远" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t一头%s出现在海拉的远处！
+	L.nearTrigger = "附近" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t一头%s出现在海拉的附近！
+	L.farTrigger = "远处" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t一头%s出现在海拉的远处！
 	L.tentacle_near = "海拉“近点”触须"
 	L.tentacle_near_desc = "此选项可用于醒目或隐藏触须打击信息刷新在海拉近点。"
 	L.tentacle_far = "海拉“远点”触须"
