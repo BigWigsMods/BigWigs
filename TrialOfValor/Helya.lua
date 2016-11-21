@@ -8,6 +8,7 @@
 -- Localize Orb bars better?
 -- (Mythic) Update Lantarn of Darkness initial timer.
 -- (Mythic) Update Fetid Rot timers 
+-- (Mytchi) If marking Orb targets, in p3 there is double dps
 
 --------------------------------------------------------------------------------
 -- Module Declaration
