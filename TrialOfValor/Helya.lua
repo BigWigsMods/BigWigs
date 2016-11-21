@@ -190,7 +190,9 @@ function mod:OnEngage()
 	self:Bar(228054, self:Mythic() and 15.5 or 19.5, CL.count:format(self:SpellName(228054), taintCount)) -- Taint of the Sea
 	self:Bar("orb_ranged", self:Mythic() and 14 or 31, CL.count:format(L.orb_bar:format("Ranged"), orbCounter), 229119) -- Orb of Corruption
 	self:Bar(228730, self:Mythic() and 35.3 or 36.7, CL.count:format(self:SpellName(228730), tentacleCounter)) -- Tentacle Strike
-	self:Mythic() and self:Berserk(660)
+	if self:Mythic() then
+		self:Berserk(660)
+	end
 end
 
 --------------------------------------------------------------------------------
