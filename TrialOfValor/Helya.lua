@@ -3,12 +3,9 @@
 -- TODO List:
 -- Fix/Remove untested mythic funcs:
 -- MistInfusion
--- Update Tentacle Strike to use table (rough edit atm)
--- Update Orb of Corrosion timers p3 into table (rough edit atm)
--- Localize Orb bars better?
 -- (Mythic) Update Lantarn of Darkness initial timer.
 -- (Mythic) Update Fetid Rot timers 
--- (Mytchi) If marking Orb targets, in p3 there is double dps
+-- (Mythic) If marking Orb targets, in p3 there is double dps
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -30,6 +27,10 @@ local phase = 1
 local orbCounter = 0
 local tentacleCounter = 0
 
+local timers = {
+	["Tentacle Strike"] = {35.4, 4.0, 32.0, 0.0, 35.6, 4.0, 31.3, 4.0, 4.0, 27.2, 4.0}, -- furthest data we have
+	["Orb of Corrosion"] = {6, 13.0, 13.0, 27.3, 10.7, 13.0, 25.0, 13.0, 13.0, 25.0, 13.0, 18.5, 19.5, 13.0, 13.0, 12.0, 12.0, 16.8, 8.2}, -- furthest data we have
+}
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -44,15 +45,16 @@ if L then
 	L.tentacle_far = "Tentacle FAR from Helya"
 	L.tentacle_far_desc = "This option can be used to emphasize or hide the messages when a Striking Tentacle spawns far from Helya."
 	L.tentacle_far_icon = 228730
-	
+
 	L.orb_melee = "Orb: Melee timer"
 	L.orb_melee_desc = "Show the timer for the Orbs that spawn on Melee."
-	L.orb_melee_icon = 229119
+	L.orb_melee_icon = 229119	
+	L.orb_melee_bar = "Orb on: Melee"
+	
 	L.orb_ranged = "Orb: Ranged timer"
 	L.orb_ranged_desc = "Show the timer for the Orbs that spawn on Ranged."
 	L.orb_ranged_icon = 229119
-	
-	L.orb_bar = "Orb on: %s"
+	L.orb_ranged_bar = "Orb on: Ranged"
 	
 	L.gripping_tentacle = -14309
 	L.grimelord = -14263
@@ -188,7 +190,7 @@ function mod:OnEngage()
 	
 	self:Bar(227967, self:Mythic() and 10.5 or 12) -- Bilewater Breath
 	self:Bar(228054, self:Mythic() and 15.5 or 19.5, CL.count:format(self:SpellName(228054), taintCount)) -- Taint of the Sea
-	self:Bar("orb_ranged", self:Mythic() and 14 or 31, CL.count:format(L.orb_bar:format("Ranged"), orbCounter), 229119) -- Orb of Corruption
+	self:Bar("orb_ranged", self:Mythic() and 14 or 31, CL.count:format(L.orb_ranged_bar, orbCounter), 229119) -- Orb of Corruption
 	self:Bar(228730, self:Mythic() and 35.3 or 36.7, CL.count:format(self:SpellName(228730), tentacleCounter)) -- Tentacle Strike
 	if self:Mythic() then
 		self:Berserk(660)
@@ -321,9 +323,9 @@ end
 function mod:OrbOfCorruption(args)
 	orbCounter = orbCounter+1
 	if orbCounter % 2 == 0 then
-		self:Bar("orb_melee", self:Mythic() and 24.3 or 28, CL.count:format(L.orb_bar:format("Melee"), orbCounter), 229119) -- Orb of Corruption
+		self:Bar("orb_melee", self:Mythic() and 24.3 or 28, CL.count:format(L.orb_melee_bar, orbCounter), 229119) -- Orb of Corruption
 	else
-		self:Bar("orb_ranged", self:Mythic() and 24.3 or 28, CL.count:format(L.orb_bar:format("Ranged"), orbCounter), 229119) -- Orb of Corruption
+		self:Bar("orb_ranged", self:Mythic() and 24.3 or 28, CL.count:format(L.orb_ranged_bar, orbCounter), 229119) -- Orb of Corruption
 	end
 end
 
@@ -379,35 +381,11 @@ do
 	end
 end
 
--- ["228730-Tentacle Strike"] = "pull:35.4, 4.0, 32.0, 0.0, 35.6, 4.0, 31.3, 4.0, 4.0, 27.2, 4.0",
-
 function mod:TentacleStrike(args)
 	tentacleCounter = tentacleCounter+1
 	-- Message is in RAID_BOSS_EMOTE
 	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
-	if tentacleCounter == 1 and self:Mythic() then
-		self:Bar(args.spellId, 4, CL.count:format(self:SpellName(228730), tentacleCounter))
-	elseif tentacleCounter == 2 and self:Mythic() then
-		self:Bar(args.spellId, 31.2, CL.count:format(self:SpellName(228730), tentacleCounter))
-	elseif tentacleCounter == 3 and self:Mythic() then
-		-- 0 seconds
-	elseif tentacleCounter == 4 and self:Mythic() then
-		self:Bar(args.spellId, 35.6, CL.count:format(self:SpellName(228730), tentacleCounter))
-	elseif tentacleCounter == 5 and self:Mythic() then
-		self:Bar(args.spellId, 4, CL.count:format(self:SpellName(228730), tentacleCounter))
-	elseif tentacleCounter == 6 and self:Mythic() then
-		self:Bar(args.spellId, 31.2, CL.count:format(self:SpellName(228730), tentacleCounter))
-	elseif tentacleCounter == 7 and self:Mythic() then
-		self:Bar(args.spellId, 4, CL.count:format(self:SpellName(228730), tentacleCounter))
-	elseif tentacleCounter == 8 and self:Mythic() then
-		self:Bar(args.spellId, 4, CL.count:format(self:SpellName(228730), tentacleCounter))
-	elseif tentacleCounter == 9 and self:Mythic() then
-		self:Bar(args.spellId, 27, CL.count:format(self:SpellName(228730), tentacleCounter))
-	elseif tentacleCounter == 10 and self:Mythic() then
-		self:Bar(args.spellId, 4, CL.count:format(self:SpellName(228730), tentacleCounter))
-	else
-		self:Bar(args.spellId, self:Mythic() and 35.2 or 42)
-	end
+	self:Bar(args.spellId, self:Mythic() and timers["Tentacle Strike"][tentacleCounter] or 4, CL.count:format(self:SpellName(228730), tentacleCounter))
 end
 
 do
@@ -574,37 +552,13 @@ function mod:MistInfusion(args) -- untested
 end
 
 --[[ Stage Three: Helheim's Last Stand ]]--
---				["228056-Orb of Corrosion"] = "pull:363.0, 13.0, 13.0, 27.3, 10.7, 13.0, 25.0, 13.0, 13.0, 25.0, 13.0, 18.5, 19.5, 13.0, 13.0, 12.0, 12.0, 16.8, 8.2",
+
 function mod:OrbOfCorrosion(args)
 	orbCounter = orbCounter+1
 	if orbCounter % 2 == 0 then
-		if orbCounter == 4 and self:Mythic() then
-			self:Bar("orb_melee", 27, CL.count:format(L.orb_bar:format("Melee"), orbCounter), 230267) -- Orb of Corruption
-		elseif orbCounter == 10 and self:Mythic() then
-			self:Bar("orb_melee", 25, CL.count:format(L.orb_bar:format("Melee"), orbCounter), 230267) -- Orb of Corruption
-		elseif orbCounter == 12 and self:Mythic() then
-			self:Bar("orb_melee", 18.5, CL.count:format(L.orb_bar:format("Melee"), orbCounter), 230267) -- Orb of Corruption
-		elseif orbCounter == 16 and self:Mythic() then
-			self:Bar("orb_melee", 12, CL.count:format(L.orb_bar:format("Melee"), orbCounter), 230267) -- Orb of Corruption
-		elseif orbCounter == 18 and self:Mythic() then
-			self:Bar("orb_melee", 16.8, CL.count:format(L.orb_bar:format("Melee"), orbCounter), 230267) -- Orb of Corruption
-		else
-			self:Bar("orb_melee", self:Mythic() and 13 or 17.0, CL.count:format(L.orb_bar:format("Melee"), orbCounter), 230267) -- Orb of Corruption
-		end
+		self:Bar("orb_melee", self:Mythic() and timers["Orb of Corrosion"][orbCounter] or 17.0, CL.count:format(L.orb_melee_bar, orbCounter), 230267) -- Orb of Corruption
 	else
-		if orbCounter == 5 and self:Mythic() then
-			self:Bar("orb_ranged", 10.9, CL.count:format(L.orb_bar:format("Ranged"), orbCounter), 230267) -- Orb of Corruption
-		elseif orbCounter == 7 and self:Mythic() then
-			self:Bar("orb_ranged", 25, CL.count:format(L.orb_bar:format("Ranged"), orbCounter), 230267) -- Orb of Corruption
-		elseif orbCounter == 13 and self:Mythic() then
-			self:Bar("orb_ranged", 19.5, CL.count:format(L.orb_bar:format("Ranged"), orbCounter), 230267) -- Orb of Corruption
-		elseif orbCounter == 17 and self:Mythic() then
-			self:Bar("orb_ranged", 12, CL.count:format(L.orb_bar:format("Ranged"), orbCounter), 230267) -- Orb of Corruption
-		elseif orbCounter == 19 and self:Mythic() then
-			self:Bar("orb_ranged", 8.2, CL.count:format(L.orb_bar:format("Ranged"), orbCounter), 230267) -- Orb of Corruption
-		else
-			self:Bar("orb_ranged", self:Mythic() and 13 or 17.0, CL.count:format(L.orb_bar:format("Ranged"), orbCounter), 230267) -- Orb of Corruption
-		end
+		self:Bar("orb_ranged", self:Mythic() and timers["Orb of Corrosion"][orbCounter] or 17.0, CL.count:format(L.orb_ranged_bar, orbCounter), 230267) -- Orb of Corruption
 	end
 end
 
