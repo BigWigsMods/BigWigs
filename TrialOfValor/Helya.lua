@@ -72,7 +72,7 @@ function mod:GetOptions()
 	return {
 		--[[ Helya ]]--
 		"stages",
-		"bersek",
+		"berserk",
 		{229119, "SAY", "FLASH"}, -- Orb of Corruption
 		"orb_melee",
 		"orb_ranged",
