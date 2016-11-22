@@ -1,7 +1,7 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Figure out how timers work - Breath and Charge could be on some shared cd?
+-- - Lick timers for lfr, normal, hc
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -20,6 +20,19 @@ local breathCounter = 0
 local fangCounter = 0
 local leapCounter = 0
 local foamCount = 1
+local phaseStartTime = 0
+local lickCount = 1
+local lickTimer = {22, 26, 33, 43, 95, 99, 106, 116, 171, 174, 182, 192}
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.lick = "Lick"
+	L.lick_desc = "Show bars for the different licks." -- For translators: short names of 228248, 228253, 228228
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -38,13 +51,14 @@ function mod:GetOptions()
 		227883, -- Roaring Leap
 
 		--[[ Mythic ]]--
+		"lick", -- Lick
 		-14535, -- Volatile Foam
 		{228810, "SAY", "FLASH"}, -- Briney Volatile Foam
 		{228744, "SAY", "FLASH"}, -- Flaming Volatile Foam
 		{228818, "SAY", "FLASH"}, -- Shadowy Volatile Foam
 	},{
 		["berserk"] = "general",
-		[-14535] = "mythic",
+		["lick"] = "mythic",
 	}
 end
 
@@ -74,6 +88,7 @@ function mod:OnEngage()
 	fangCounter = 0
 	leapCounter = 0
 	foamCount = 1
+	phaseStartTime = GetTime()
 	self:Berserk(self:Mythic() and 244 or self:LFR() and 420 or 300)
 	self:Bar(227514, 6) -- Flashing Fangs
 	self:Bar(228187, 14.5) -- Guardian's Breath
@@ -81,6 +96,7 @@ function mod:OnEngage()
 	self:Bar(227816, 57) -- Headlong Charge
 	if self:Mythic() then
 		self:Bar(-14535, 10.9, CL.count:format(self:SpellName(-14535), foamCount), 228810)
+		self:StartLickTimer(1)
 	end
 end
 
@@ -143,7 +159,7 @@ end
 function mod:FlashingFangs(args)
 	fangCounter = fangCounter + 1
 	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
-	self:CDBar(args.spellId, (fangCounter % 2 == 0 and 52) or 20)
+	self:CDBar(args.spellId, fangCounter == 1 and 23 or fangCounter % 2 == 0 and 52 or 20)
 end
 
 function mod:HeadlongCharge(args)
@@ -195,4 +211,19 @@ function mod:ShadowyFoam(args)
 		self:Say(args.spellId, ("{rt3} %s {rt3}"):format(args.spellName))
 		self:Flash(args.spellId)
 	end
+end
+
+function mod:StartLickTimer(count)
+	local data = self:Mythic() and lickTimer
+	local info = data and data[count]
+	if not info then
+		-- all out of lick data
+		return
+	end
+
+	local length = floor(info - (GetTime() - phaseStartTime))
+
+	self:Bar("lick", length, CL.count:format(L.lick, count), 228253)
+
+	self:ScheduleTimer("StartLickTimer", length, count + 1)
 end
