@@ -11,24 +11,24 @@ end
 
 L = BigWigs:NewBossLocale("Guarm-TrialOfValor", "zhTW")
 if L then
-	--L.lick = "Lick" -- For translators: common name of 228248, 228253, 228228
-	--L.lick_desc = "Show bars for the different licks."
+	L.lick = "舔舐" -- For translators: common name of 228248, 228253, 228228
+	L.lick_desc = "替不同的舔舐顯示計時條"
 end
 
 L = BigWigs:NewBossLocale("Helya-TrialOfValor", "zhTW")
 if L then
 	L.nearTrigger = "附近" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t一個進擊的觸手在黑爾雅附近出現了！
 	L.farTrigger = "較遠" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t一個進擊的觸手在離黑爾雅較遠的地方出現了！
-	L.tentacle_near = "近處觸手提示"
+	L.tentacle_near = "近處觸手"
 	L.tentacle_near_desc = "提示出現在黑爾雅近處的觸手，調整這個選項可以強調或隱蔵。"
-	L.tentacle_far = "遠處觸手提示"
+	L.tentacle_far = "遠處觸手"
 	L.tentacle_far_desc = "提示出現在黑爾雅遠處的觸手，調整這個選項可以強調或隱蔵。"
 
-	--L.orb_melee = "Orb: Melee timer"
-	--L.orb_melee_desc = "Show the timer for the Orbs that spawn on Melee."
-	--L.orb_melee_bar = "Melee Orb"
+	L.orb_melee = "腐化之球：近戰計時器"
+	L.orb_melee_desc = "替生成在近戰的腐化之球顯示計時器。"
+	L.orb_melee_bar = "近戰腐化之球"
 
-	--L.orb_ranged = "Orb: Ranged timer"
-	--L.orb_ranged_desc = "Show the timer for the Orbs that spawn on Ranged."
-	--L.orb_ranged_bar = "Ranged Orb"
+	L.orb_ranged = "腐化之球：遠程計時器"
+	L.orb_ranged_desc = "替生成在遠程的腐化之球顯示計時器。"
+	L.orb_ranged_bar = "遠程腐化之球"
 end
