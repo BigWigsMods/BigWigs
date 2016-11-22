@@ -223,7 +223,7 @@ function mod:StartLickTimer(count)
 
 	local length = floor(info - (GetTime() - phaseStartTime))
 
-	self:Bar("lick", length, CL.count:format(L.lick, count), 228253)
+	self:CDBar("lick", length, CL.count:format(L.lick, count), 228253)
 
 	self:ScheduleTimer("StartLickTimer", length, count + 1)
 end
