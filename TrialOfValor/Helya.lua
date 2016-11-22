@@ -208,7 +208,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 34098 then -- ClearAllDebuffs
 		phase = 2
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
-		self:StopBar(CL.count:format(self:SpellName(229119, orbCount))) -- Orb of Corruption
+		self:StopBar(CL.count:format(L.orb_ranged_bar, orbCount))
+		self:StopBar(CL.count:format(L.orb_melee_bar, orbCount))
 		self:StopBar(CL.count:format(self:SpellName(228054, taintCount))) -- Taint of the Sea
 		self:StopBar(227967) -- Bilewater Breath
 		if self:BarTimeLeft(CL.cast:format(self:SpellName(227967))) > 0 then -- Breath
@@ -228,7 +229,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(228300) -- Fury of the Maw
 		self:StopBar(CL.cast:format(self:SpellName(228300))) -- Cast: Fury of the Maw
 		self:StopBar(CL.adds)
-		self:Bar(230267, self:Mythic() and 6 or 15.5, CL.count:format(L.orb_bar:format("Ranged"), orbCount), 230267) -- Orb of Corruption
+		self:Bar("orb_ranged", self:Mythic() and 6 or 15.5, CL.count:format(L.orb_ranged_bar, orbCount), 230267) -- Orb of Corrosion
 		self:Bar(228565, self:Mythic() and 10 or 19.5) -- Corrupted Breath
 		if not self:Mythic() then -- Taint comes instant in mythic, no need for timer.
 			self:Bar(228054, 24.5) -- Taint of the Sea
