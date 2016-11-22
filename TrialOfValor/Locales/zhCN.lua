@@ -17,4 +17,12 @@ if L then
 	L.tentacle_near_desc = "此选项可用于醒目或隐藏触须打击信息刷新在海拉附近。"
 	L.tentacle_far = "海拉“远处”触须"
 	L.tentacle_far_desc = "此选项可用于醒目或隐藏触须打击信息刷新在海拉远处。"
+
+	--L.orb_melee = "Orb: Melee timer"
+	--L.orb_melee_desc = "Show the timer for the Orbs that spawn on Melee."
+	--L.orb_melee_bar = "Melee Orb"
+
+	--L.orb_ranged = "Orb: Ranged timer"
+	--L.orb_ranged_desc = "Show the timer for the Orbs that spawn on Ranged."
+	--L.orb_ranged_bar = "Ranged Orb"
 end

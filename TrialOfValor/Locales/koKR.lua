@@ -17,4 +17,12 @@ if L then
 	--L.tentacle_near_desc = "This option can be used to emphasize or hide the messages when a Striking Tentacle spawns near Helya."
 	--L.tentacle_far = "Tentacle FAR from Helya"
 	--L.tentacle_far_desc = "This option can be used to emphasize or hide the messages when a Striking Tentacle spawns far from Helya."
+
+	--L.orb_melee = "Orb: Melee timer"
+	--L.orb_melee_desc = "Show the timer for the Orbs that spawn on Melee."
+	--L.orb_melee_bar = "Melee Orb"
+
+	--L.orb_ranged = "Orb: Ranged timer"
+	--L.orb_ranged_desc = "Show the timer for the Orbs that spawn on Ranged."
+	--L.orb_ranged_bar = "Ranged Orb"
 end

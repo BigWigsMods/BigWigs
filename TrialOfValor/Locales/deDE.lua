@@ -17,4 +17,12 @@ if L then
 	L.tentacle_near_desc = "Diese Option kann verwendet werden, um die Nachrichten hervorzuheben oder auszublenden, wenn ein Zuschlagendes Tentakel in der Nähe von Helya erscheint."
 	L.tentacle_far = "Tentakel weit ENTFERNT von Helya"
 	L.tentacle_far_desc = "Diese Option kann verwendet werden, um die Nachrichten hervorzuheben oder auszublenden, wenn ein Zuschlagendes Tentakel weit entfernt von Helya erscheint."
+
+	--L.orb_melee = "Orb: Melee timer"
+	--L.orb_melee_desc = "Show the timer for the Orbs that spawn on Melee."
+	--L.orb_melee_bar = "Melee Orb"
+
+	--L.orb_ranged = "Orb: Ranged timer"
+	--L.orb_ranged_desc = "Show the timer for the Orbs that spawn on Ranged."
+	--L.orb_ranged_bar = "Ranged Orb"
 end

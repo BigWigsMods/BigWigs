@@ -4,7 +4,7 @@
 -- Fix/Remove untested mythic funcs:
 -- MistInfusion
 -- (Mythic) Update Lantarn of Darkness initial timer.
--- (Mythic) Update Fetid Rot timers 
+-- (Mythic) Update Fetid Rot timers
 -- (Mythic) If marking Orb targets, in p3 there is double dps
 
 --------------------------------------------------------------------------------
@@ -48,14 +48,14 @@ if L then
 
 	L.orb_melee = "Orb: Melee timer"
 	L.orb_melee_desc = "Show the timer for the Orbs that spawn on Melee."
-	L.orb_melee_icon = 229119	
-	L.orb_melee_bar = "Orb on: Melee"
-	
+	L.orb_melee_icon = 229119
+	L.orb_melee_bar = "Melee Orb"
+
 	L.orb_ranged = "Orb: Ranged timer"
 	L.orb_ranged_desc = "Show the timer for the Orbs that spawn on Ranged."
 	L.orb_ranged_icon = 229119
-	L.orb_ranged_bar = "Orb on: Ranged"
-	
+	L.orb_ranged_bar = "Ranged Orb"
+
 	L.gripping_tentacle = -14309
 	L.grimelord = -14263
 	L.mariner = -14278
@@ -99,7 +99,7 @@ function mod:GetOptions()
 		228619, -- Lantern of Darkness
 		228633, -- Give No Quarter
 		{228611, "TANK"}, -- Ghostly Rage
-    
+
 		--[[ Decaying Minion ]]--
 		228127, -- Decay
 
@@ -161,11 +161,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "GiveNoQuarter", 228633)
 	self:Log("SPELL_CAST_SUCCESS", "GhostlyRage", 228611)
 	self:Death("MarinerDeath", 114809)
-	
-	--[[ Decaying Minion ]]--	
+
+	--[[ Decaying Minion ]]--
 	self:Log("SPELL_AURA_APPLIED", "DecayDamage", 228127)
 	self:Log("SPELL_PERIODIC_DAMAGE", "DecayDamage", 228127)
-	self:Log("SPELL_PERIODIC_MISSED", "DecayDamage", 228127)	
+	self:Log("SPELL_PERIODIC_MISSED", "DecayDamage", 228127)
 
 	--[[ Helarjer Mistcaller ]]--
 	self:Log("SPELL_CAST_START", "MistInfusion", 228854) -- untested
@@ -187,7 +187,7 @@ function mod:OnEngage()
 	orbCounter = 1
 	phase = 1
 	tentacleCounter = 1
-	
+
 	self:Bar(227967, self:Mythic() and 10.5 or 12) -- Bilewater Breath
 	self:Bar(228054, self:Mythic() and 15.5 or 19.5, CL.count:format(self:SpellName(228054), taintCount)) -- Taint of the Sea
 	self:Bar("orb_ranged", self:Mythic() and 14 or 31, CL.count:format(L.orb_ranged_bar, orbCounter), 229119) -- Orb of Corruption

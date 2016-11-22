@@ -17,4 +17,12 @@ if L then
 	L.tentacle_near_desc = "提示出現在黑爾雅近處的觸手，調整這個選項可以強調或隱蔵。"
 	L.tentacle_far = "遠處觸手提示"
 	L.tentacle_far_desc = "提示出現在黑爾雅遠處的觸手，調整這個選項可以強調或隱蔵。"
+
+	--L.orb_melee = "Orb: Melee timer"
+	--L.orb_melee_desc = "Show the timer for the Orbs that spawn on Melee."
+	--L.orb_melee_bar = "Melee Orb"
+
+	--L.orb_ranged = "Orb: Ranged timer"
+	--L.orb_ranged_desc = "Show the timer for the Orbs that spawn on Ranged."
+	--L.orb_ranged_bar = "Ranged Orb"
 end
