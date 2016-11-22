@@ -24,8 +24,9 @@ mod.respawnTime = 30
 local taintMarkerCount = 4
 local tentaclesUp = 9
 local phase = 1
-local orbCounter = 0
-local tentacleCounter = 0
+local orbCount = 1
+local tentacleCount = 1
+local taintCount = 1
 
 local timers = {
 	["Tentacle Strike"] = {35.4, 4.0, 32.0, 0.0, 35.6, 4.0, 31.3, 4.0, 4.0, 27.2, 4.0}, -- furthest data we have
@@ -184,14 +185,15 @@ end
 function mod:OnEngage()
 	taintMarkerCount = 4
 	tentaclesUp = self:Mythic() and 8 or 9
-	orbCounter = 1
 	phase = 1
-	tentacleCounter = 1
+	orbCount = 1
+	tentacleCount = 1
+	taintCount = 1
 
 	self:Bar(227967, self:Mythic() and 10.5 or 12) -- Bilewater Breath
 	self:Bar(228054, self:Mythic() and 15.5 or 19.5, CL.count:format(self:SpellName(228054), taintCount)) -- Taint of the Sea
-	self:Bar("orb_ranged", self:Mythic() and 14 or 31, CL.count:format(L.orb_ranged_bar, orbCounter), 229119) -- Orb of Corruption
-	self:Bar(228730, self:Mythic() and 35.3 or 36.7, CL.count:format(self:SpellName(228730), tentacleCounter)) -- Tentacle Strike
+	self:Bar("orb_ranged", self:Mythic() and 14 or 31, CL.count:format(L.orb_ranged_bar, orbCount), 229119) -- Orb of Corruption
+	self:Bar(228730, self:Mythic() and 35.3 or 36.7, CL.count:format(self:SpellName(228730), tentacleCount)) -- Tentacle Strike
 	if self:Mythic() then
 		self:Berserk(660)
 	end
@@ -206,7 +208,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		phase = 2
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
 		self:StopBar(CL.count:format(self:SpellName(229119, orbCount))) -- Orb of Corruption
-		self:StopBar(228054) -- Taint of the Sea
+		self:StopBar(CL.count:format(self:SpellName(228054, taintCount))) -- Taint of the Sea
 		self:StopBar(227967) -- Bilewater Breath
 		if self:BarTimeLeft(CL.cast:format(self:SpellName(227967))) > 0 then -- Breath
 			-- if she transitions while casting the breath she won't spawn the blobs
@@ -220,12 +222,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 228546 then -- Helya
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 		phase = 3
-		orbCounter = 1
+		orbCount = 1
 		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
 		self:StopBar(228300) -- Fury of the Maw
 		self:StopBar(CL.cast:format(self:SpellName(228300))) -- Cast: Fury of the Maw
 		self:StopBar(CL.adds)
-		self:Bar(230267, self:Mythic() and 6 or 15.5, CL.count:format(L.orb_bar:format("Ranged"), orbCounter), 230267) -- Orb of Corruption
+		self:Bar(230267, self:Mythic() and 6 or 15.5, CL.count:format(L.orb_bar:format("Ranged"), orbCount), 230267) -- Orb of Corruption
 		self:Bar(228565, self:Mythic() and 10 or 19.5) -- Corrupted Breath
 		if not self:Mythic() then -- Taint comes instant in mythic, no need for timer.
 			self:Bar(228054, 24.5) -- Taint of the Sea
@@ -321,11 +323,11 @@ do
 end
 
 function mod:OrbOfCorruption(args)
-	orbCounter = orbCounter+1
-	if orbCounter % 2 == 0 then
-		self:Bar("orb_melee", self:Mythic() and 24.3 or 28, CL.count:format(L.orb_melee_bar, orbCounter), 229119) -- Orb of Corruption
+	orbCount = orbCount + 1
+	if orbCount % 2 == 0 then
+		self:Bar("orb_melee", self:Mythic() and 24.3 or 28, CL.count:format(L.orb_melee_bar, orbCount), 229119) -- Orb of Corruption
 	else
-		self:Bar("orb_ranged", self:Mythic() and 24.3 or 28, CL.count:format(L.orb_ranged_bar, orbCounter), 229119) -- Orb of Corruption
+		self:Bar("orb_ranged", self:Mythic() and 24.3 or 28, CL.count:format(L.orb_ranged_bar, orbCount), 229119) -- Orb of Corruption
 	end
 end
 
@@ -359,8 +361,9 @@ do
 	function mod:TaintOfTheSea(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alert", nil, nil, self:Dispeller("magic"))
-			self:CDBar(args.spellId, self:Mythic() and phase == 1 and 12.1 or 20 or phase == 1 and 14.6 or 26)
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alert", CL.count:format(args.spellName, taintCount), nil, self:Dispeller("magic"))
+			taintCount = taintCount + 1
+			self:CDBar(args.spellId, (self:Mythic() and (phase == 1 and 12.1 or 20)) or phase == 1 and 14.6 or 26, CL.count:format(args.spellName, taintCount))
 		end
 
 		if self:GetOption(taintMarker) then
@@ -382,10 +385,10 @@ do
 end
 
 function mod:TentacleStrike(args)
-	tentacleCounter = tentacleCounter+1
 	-- Message is in RAID_BOSS_EMOTE
-	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
-	self:Bar(args.spellId, self:Mythic() and timers["Tentacle Strike"][tentacleCounter] or 4, CL.count:format(self:SpellName(228730), tentacleCounter))
+	self:Bar(args.spellId, 6, CL.cast:format(CL.count:format(args.spellName, tentacleCount)))
+	tentacleCount = tentacleCount + 1
+	self:Bar(args.spellId, self:Mythic() and timers["Tentacle Strike"][tentacleCount] or 4, CL.count:format(self:SpellName(228730), tentacleCount))
 end
 
 do
@@ -554,11 +557,11 @@ end
 --[[ Stage Three: Helheim's Last Stand ]]--
 
 function mod:OrbOfCorrosion(args)
-	orbCounter = orbCounter+1
-	if orbCounter % 2 == 0 then
-		self:Bar("orb_melee", self:Mythic() and timers["Orb of Corrosion"][orbCounter] or 17.0, CL.count:format(L.orb_melee_bar, orbCounter), 230267) -- Orb of Corruption
+	orbCount = orbCount + 1
+	if orbCount % 2 == 0 then
+		self:Bar("orb_melee", self:Mythic() and timers["Orb of Corrosion"][orbCount] or 17.0, CL.count:format(L.orb_melee_bar, orbCount), 230267) -- Orb of Corruption
 	else
-		self:Bar("orb_ranged", self:Mythic() and timers["Orb of Corrosion"][orbCounter] or 17.0, CL.count:format(L.orb_ranged_bar, orbCounter), 230267) -- Orb of Corruption
+		self:Bar("orb_ranged", self:Mythic() and timers["Orb of Corrosion"][orbCount] or 17.0, CL.count:format(L.orb_ranged_bar, orbCount), 230267) -- Orb of Corruption
 	end
 end
 
