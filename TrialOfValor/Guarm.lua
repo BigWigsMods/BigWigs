@@ -74,9 +74,7 @@ function mod:OnEngage()
 	fangCounter = 0
 	leapCounter = 0
 	foamCount = 1
-	if not self:LFR() then -- Probably longer on LFR
-		self:Berserk(self:Mythic() and 244 or 300)
-	end
+	self:Berserk(self:Mythic() and 244 or self:LFR() and 420 or 300)
 	self:Bar(227514, 6) -- Flashing Fangs
 	self:Bar(228187, 14.5) -- Guardian's Breath
 	self:Bar(227883, 48.5) -- Roaring Leap
