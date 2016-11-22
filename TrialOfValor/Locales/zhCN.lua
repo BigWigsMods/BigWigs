@@ -11,8 +11,8 @@ end
 
 L = BigWigs:NewBossLocale("Guarm-TrialOfValor", "zhCN")
 if L then
-	--L.lick = "Lick" -- For translators: common name of 228248, 228253, 228228
-	--L.lick_desc = "Show bars for the different licks."
+	L.lick = "舔舐" -- For translators: common name of 228248, 228253, 228228
+	L.lick_desc = "显示不同舔舐的计时条。"
 end
 
 L = BigWigs:NewBossLocale("Helya-TrialOfValor", "zhCN")
@@ -24,11 +24,11 @@ if L then
 	L.tentacle_far = "海拉“远处”触须"
 	L.tentacle_far_desc = "此选项可用于醒目或隐藏触须打击信息刷新在海拉远处。"
 
-	--L.orb_melee = "Orb: Melee timer"
-	--L.orb_melee_desc = "Show the timer for the Orbs that spawn on Melee."
-	--L.orb_melee_bar = "Melee Orb"
+	L.orb_melee = "宝珠：近战计时器"
+	L.orb_melee_desc = "显示腐化宝珠出现在近战的计时器。"
+	L.orb_melee_bar = "近战宝珠"
 
-	--L.orb_ranged = "Orb: Ranged timer"
-	--L.orb_ranged_desc = "Show the timer for the Orbs that spawn on Ranged."
-	--L.orb_ranged_bar = "Ranged Orb"
+	L.orb_ranged = "宝珠：远程计时器"
+	L.orb_ranged_desc = "显示腐化宝珠出现在远程的计时器。"
+	L.orb_ranged_bar = "远程宝珠"
 end
