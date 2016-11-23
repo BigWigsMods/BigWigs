@@ -12,7 +12,7 @@ end
 L = BigWigs:NewBossLocale("Guarm-TrialOfValor", "deDE")
 if L then
 	L.lick = "Schlabbern" -- For translators: common name of 228248, 228253, 228228
-	L.lick_desc = "Zeigt Leisten für die verschiedenen Arten des Schlabberns"
+	L.lick_desc = "Zeigt Leisten für die verschiedenen Arten des Schlabberns."
 end
 
 L = BigWigs:NewBossLocale("Helya-TrialOfValor", "deDE")
