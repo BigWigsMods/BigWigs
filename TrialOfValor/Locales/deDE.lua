@@ -17,8 +17,8 @@ end
 
 L = BigWigs:NewBossLocale("Helya-TrialOfValor", "deDE")
 if L then
-	L.nearTrigger = "Nähe" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya! -- Translate this comment with the emote
-	L.farTrigger = "entfernt" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges far from Helya! -- Translate this comment with the emote
+	L.nearTrigger = "|TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t Ein Zuschlagendes Tentakel erscheint in Helyas Nähe!" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya! -- Translate this comment with the emote
+	L.farTrigger = "|TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t Ein Zuschlagendes Tentakel erscheint weit von Helya entfernt!" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges far from Helya! -- Translate this comment with the emote
 	L.tentacle_near = "Tentakel BEI Helya"
 	L.tentacle_near_desc = "Diese Option kann verwendet werden, um die Nachrichten hervorzuheben oder auszublenden, wenn ein Zuschlagendes Tentakel in der Nähe von Helya erscheint."
 	L.tentacle_far = "Tentakel weit ENTFERNT von Helya"
