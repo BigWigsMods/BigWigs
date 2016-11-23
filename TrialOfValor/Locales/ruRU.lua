@@ -17,8 +17,8 @@ end
 
 L = BigWigs:NewBossLocale("Helya-TrialOfValor", "ruRU")
 if L then
-	--L.nearTrigger = "Возле" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20| Возле Хелии появляется %s! -- Translate this comment with the emote
-	--L.farTrigger = "Вдалеке" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t Вдалеке от Хелии появляется %s! -- Translate this comment with the emote
+	L.nearTrigger = "Возле" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20| Возле Хелии появляется %s!
+	L.farTrigger = "Вдалеке" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t Вдалеке от Хелии появляется %s!
 	L.tentacle_near = "Щупальце РЯДОМ с Хелией"
 	L.tentacle_near_desc = "Эта настройка может использоваться для уведомления или скрытия анонса о щупальцах, появляющихся рядом с Хелией."
 	L.tentacle_far = "Щупальце ВДАЛИ от Хелии"
