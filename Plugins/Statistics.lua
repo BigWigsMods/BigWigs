@@ -173,19 +173,21 @@ end
 --
 
 do
-	local UnitHealth, UnitHealthMax, UnitName = UnitHealth, UnitHealthMax, UnitName
+	local UnitHealth, UnitHealthMax, UnitName, IsEncounterInProgress = UnitHealth, UnitHealthMax, UnitName, IsEncounterInProgress
 	local function StoreHealth(module)
-		for i = 1, 5 do
-			local unit = units[i]
-			local rawHealth = UnitHealth(unit)
-			if rawHealth > 0 then
-				local maxHealth = UnitHealthMax(unit)
-				local health = rawHealth / maxHealth
-				healthPools[module.journalId][unit] = health
-				healthPools[module.journalId].names[unit] = UnitName(unit)
-			elseif healthPools[module.journalId][unit] then
-				healthPools[module.journalId][unit] = nil
-				healthPools[module.journalId].names[unit] = nil
+		if IsEncounterInProgress() then
+			for i = 1, 5 do
+				local unit = units[i]
+				local rawHealth = UnitHealth(unit)
+				if rawHealth > 0 then
+					local maxHealth = UnitHealthMax(unit)
+					local health = rawHealth / maxHealth
+					healthPools[module.journalId][unit] = health
+					healthPools[module.journalId].names[unit] = UnitName(unit)
+				elseif healthPools[module.journalId][unit] then
+					healthPools[module.journalId][unit] = nil
+					healthPools[module.journalId].names[unit] = nil
+				end
 			end
 		end
 	end
