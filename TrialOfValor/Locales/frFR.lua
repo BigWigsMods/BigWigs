@@ -11,8 +11,8 @@ end
 
 L = BigWigs:NewBossLocale("Guarm-TrialOfValor", "frFR")
 if L then
-	--L.lick = "Lick" -- For translators: common name of 228248, 228253, 228228
-	--L.lick_desc = "Show bars for the different licks."
+	L.lick = "Langue"
+	L.lick_desc = "Affiche les barres des différentes langues."
 end
 
 L = BigWigs:NewBossLocale("Helya-TrialOfValor", "frFR")
@@ -24,11 +24,11 @@ if L then
 	L.tentacle_far = "Tentacule LOIN de Helya"
 	L.tentacle_far_desc = "Cette option peut être utilisée pour mettre en évidence ou cacher les messages affichés quand un Tentacule frappeur apparaît loin de Helya."
 
-	--L.orb_melee = "Orb: Melee timer"
-	--L.orb_melee_desc = "Show the timer for the Orbs that spawn on Melee."
-	--L.orb_melee_bar = "Melee Orb"
+	L.orb_melee = "Délai Orbe en mêlée"
+	L.orb_melee_desc = "Affiche le délai des Orbes apparaissant sur les joueurs de mêlée."
+	L.orb_melee_bar = "Orbe en mêlée"
 
-	--L.orb_ranged = "Orb: Ranged timer"
-	--L.orb_ranged_desc = "Show the timer for the Orbs that spawn on Ranged."
-	--L.orb_ranged_bar = "Ranged Orb"
+	L.orb_ranged = "Délai Orbe à distance"
+	L.orb_ranged_desc = "Affiche le delai des Orbes apparaissant sur les joueurs à distance."
+	L.orb_ranged_bar = "Orbe à distance"
 end
