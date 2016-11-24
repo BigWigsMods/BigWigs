@@ -248,3 +248,11 @@ L.wrongTime = "Неверно указанное время. <время> мож
 --
 
 L.infoBox = "ИнфоБлок"
+
+-----------------------------------------------------------------------
+-- Statistics.lua
+--
+
+--L.printHealthOption = "Boss Health"
+--L.healthPrefix = "Health: "
+--L.healthFormat = "%s (%.1f%%)"

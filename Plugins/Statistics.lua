@@ -113,7 +113,7 @@ do
 					},
 					printHealth = {
 						type = "toggle",
-						name = "Print boss health", -- XXX
+						name = L.printHealthOption,
 						order = 4,
 					},
 				},
@@ -268,10 +268,14 @@ function plugin:BigWigs_OnBossWipe(event, module)
 					local unit = units[i]
 					local hp = healthPools[module.journalId][unit]
 					if hp then
-						total = total .. (total == "" and total or ", ") .. ("%s (%.1f%%)"):format(healthPools[module.journalId].names[unit], hp*100)
+						if total == "" then
+							total = L.healthFormat:format(healthPools[module.journalId].names[unit], hp*100)
+						else
+							total = total .. ", " .. L.healthFormat:format(healthPools[module.journalId].names[unit], hp*100)
+						end
 					end
 				end
-				BigWigs:Print("Boss Health: ".. total ..".")
+				BigWigs:Print(L.healthPrefix .. total ..".")
 
 				healthPools[module.journalId] = nil
 			end
