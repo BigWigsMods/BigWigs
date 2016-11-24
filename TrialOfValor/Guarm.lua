@@ -22,7 +22,8 @@ local leapCounter = 0
 local foamCount = 1
 local phaseStartTime = 0
 local lickCount = 1
-local lickTimer = {22, 26, 33, 43, 95, 99, 106, 116, 171, 174, 182, 192}
+local lickTimer = {14.1, 22.7, 26.3, 33.7, 43.3, 95.8, 99.4, 106.8, 116.5, 171.9, 175.4, 182.6, 192.6}
+local foamTargets = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -38,6 +39,7 @@ end
 -- Initialization
 --
 
+local foamMarker = mod:AddMarkerOption(false, "player", 1, -14535, 1, 2, 3)
 function mod:GetOptions()
 	return {
 		--[[ General ]]--
@@ -53,6 +55,7 @@ function mod:GetOptions()
 		--[[ Mythic ]]--
 		"lick", -- Lick
 		-14535, -- Volatile Foam
+		foamMarker,
 		{228810, "SAY", "FLASH"}, -- Briney Volatile Foam
 		{228744, "SAY", "FLASH"}, -- Flaming Volatile Foam
 		{228818, "SAY", "FLASH"}, -- Shadowy Volatile Foam
@@ -89,6 +92,7 @@ function mod:OnEngage()
 	leapCounter = 0
 	foamCount = 1
 	phaseStartTime = GetTime()
+	wipe(foamTargets)
 	self:Berserk(self:Mythic() and 244 or self:LFR() and 420 or 300)
 	self:Bar(227514, 6) -- Flashing Fangs
 	self:Bar(228187, 14.5) -- Guardian's Breath
@@ -97,6 +101,15 @@ function mod:OnEngage()
 	if self:Mythic() then
 		self:Bar(-14535, 10.9, CL.count:format(self:SpellName(-14535), foamCount), 228810)
 		self:StartLickTimer(1)
+	end
+end
+
+function mod:OnBossDisable()
+	if self:GetOption(foamMarker) then
+		for _,name in pairs(foamTargets) do
+			SetRaidTarget(name, 0)
+		end
+		wipe(foamTargets)
 	end
 end
 
@@ -189,27 +202,52 @@ function mod:VolatileFoam(args)
 	self:Bar(-14535, t, CL.count:format(self:SpellName(-14535), foamCount), 228810)
 end
 
-function mod:BrineyFoam(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Neutral", "Alarm", CL.you:format(args.spellName))
-		self:Say(args.spellId, ("{rt6} %s {rt6}"):format(args.spellName))
-		self:Flash(args.spellId)
-	end
-end
+do
+	local scheduled = nil
 
-function mod:FlamingFoam(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Important", "Alert", CL.you:format(args.spellName))
-		self:Say(args.spellId, ("{rt7} %s {rt7}"):format(args.spellName))
-		self:Flash(args.spellId)
+	local function wipeFoamTargets()
+		for _,name in pairs(foamTargets) do
+			SetRaidTarget(name, 0)
+		end
+		wipe(foamTargets)
+		scheduled = nil
 	end
-end
 
-function mod:ShadowyFoam(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Attention", "Warning", CL.you:format(args.spellName)) -- purple message would be appropriate
-		self:Say(args.spellId, ("{rt3} %s {rt3}"):format(args.spellName))
-		self:Flash(args.spellId)
+	local function markFoam(self, destName)
+		if self:GetOption(foamMarker) then
+			foamTargets[#foamTargets+1] = destName
+			SetRaidTarget(destName, #foamTargets)
+			if not scheduled then
+				scheduled = self:ScheduleTimer(wipeFoamTargets, 10)
+			end
+		end
+	end
+
+	function mod:BrineyFoam(args)
+		markFoam(self, args.destName)
+		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Neutral", "Alarm", CL.you:format(args.spellName))
+			self:Say(args.spellId, ("{rt6} %s {rt6}"):format(args.spellName))
+			self:Flash(args.spellId)
+		end
+	end
+
+	function mod:FlamingFoam(args)
+		markFoam(self, args.destName)
+		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Important", "Alert", CL.you:format(args.spellName))
+			self:Say(args.spellId, ("{rt7} %s {rt7}"):format(args.spellName))
+			self:Flash(args.spellId)
+		end
+	end
+
+	function mod:ShadowyFoam(args)
+		markFoam(self, args.destName)
+		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Attention", "Warning", CL.you:format(args.spellName)) -- purple message would be appropriate
+			self:Say(args.spellId, ("{rt3} %s {rt3}"):format(args.spellName))
+			self:Flash(args.spellId)
+		end
 	end
 end
 
