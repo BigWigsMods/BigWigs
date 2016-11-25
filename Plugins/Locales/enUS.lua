@@ -299,6 +299,9 @@ L.countWipes = "Count Wipes"
 L.recordBestTime = "Remember Best Time"
 L.createTimeBar = "Show 'Best Time' bar"
 L.bestTimeBar = "Best Time"
+L.printHealthOption = "Boss Health"
+L.healthPrefix = "Health: "
+L.healthFormat = "%s (%.1f%%)"
 
 -----------------------------------------------------------------------
 -- Victory.lua

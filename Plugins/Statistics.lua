@@ -11,6 +11,8 @@ if not plugin then return end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local activeDurations = {}
+local healthPools = {}
+local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}
 local difficultyTable = {false, false, "10", "25", "10h", "25h", "lfr", false, false, false, false, false, false, "normal", "heroic", "mythic", "LFR"}
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 
@@ -55,6 +57,7 @@ plugin.defaultDB = {
 	printKills = true,
 	printWipes = true,
 	printNewBestKill = true,
+	printHealth = true,
 	showBar = false,
 }
 
@@ -102,10 +105,15 @@ do
 						name = L.printDefeatOption,
 						order = 2,
 					},
+					printHealth = {
+						type = "toggle",
+						name = L.printHealthOption,
+						order = 3,
+					},
 					printNewBestKill = {
 						type = "toggle",
 						name = L.printBestTimeOption,
-						order = 3,
+						order = 4,
 						disabled = function() return not plugin.db.profile.saveBestKill or not plugin.db.profile.enabled end,
 					},
 				},
@@ -164,20 +172,46 @@ end
 -- Event Handlers
 --
 
-function plugin:BigWigs_OnBossEngage(event, module, diff)
-	if module.journalId and module.zoneId and not module.worldBoss then -- Raid restricted for now
-		activeDurations[module.journalId] = GetTime()
+do
+	local UnitHealth, UnitHealthMax, UnitName, IsEncounterInProgress = UnitHealth, UnitHealthMax, UnitName, IsEncounterInProgress
+	local function StoreHealth(module)
+		if IsEncounterInProgress() then
+			for i = 1, 5 do
+				local unit = units[i]
+				local rawHealth = UnitHealth(unit)
+				if rawHealth > 0 then
+					local maxHealth = UnitHealthMax(unit)
+					local health = rawHealth / maxHealth
+					healthPools[module.journalId][unit] = health
+					healthPools[module.journalId].names[unit] = UnitName(unit)
+				elseif healthPools[module.journalId][unit] then
+					healthPools[module.journalId][unit] = nil
+					healthPools[module.journalId].names[unit] = nil
+				end
+			end
+		end
+	end
+	function plugin:BigWigs_OnBossEngage(event, module, diff)
+		if module.journalId and module.zoneId and not module.worldBoss then -- Raid restricted for now
+			activeDurations[module.journalId] = GetTime()
 
-		if diff and difficultyTable[diff] then
-			local sDB = BigWigsStatisticsDB
-			if not sDB[module.zoneId] then sDB[module.zoneId] = {} end
-			if not sDB[module.zoneId][module.journalId] then sDB[module.zoneId][module.journalId] = {} end
-			sDB = sDB[module.zoneId][module.journalId]
-			if not sDB[difficultyTable[diff]] then sDB[difficultyTable[diff]] = {} end
+			if diff and difficultyTable[diff] then
+				local sDB = BigWigsStatisticsDB
+				if not sDB[module.zoneId] then sDB[module.zoneId] = {} end
+				if not sDB[module.zoneId][module.journalId] then sDB[module.zoneId][module.journalId] = {} end
+				sDB = sDB[module.zoneId][module.journalId]
+				if not sDB[difficultyTable[diff]] then sDB[difficultyTable[diff]] = {} end
 
-			local best = sDB[difficultyTable[diff]].best
-			if self.db.profile.showBar and best then
-				self:SendMessage("BigWigs_StartBar", self, nil, L.bestTimeBar, best, "Interface\\Icons\\spell_holy_borrowedtime")
+				local best = sDB[difficultyTable[diff]].best
+				if self.db.profile.showBar and best then
+					self:SendMessage("BigWigs_StartBar", self, nil, L.bestTimeBar, best, "Interface\\Icons\\spell_holy_borrowedtime")
+				end
+			end
+
+			if self.db.profile.printHealth then
+				healthPools[module.journalId] = {}
+				healthPools[module.journalId].names = {}
+				healthPools[module.journalId].timer = self:ScheduleRepeatingTimer(StoreHealth, 3, module)
 			end
 		end
 	end
@@ -224,6 +258,26 @@ function plugin:BigWigs_OnBossWipe(event, module)
 			if difficultyTable[diff] and self.db.profile.saveWipes then
 				local sDB = BigWigsStatisticsDB[module.zoneId][module.journalId][difficultyTable[diff]]
 				sDB.wipes = sDB.wipes and sDB.wipes + 1 or 1
+			end
+
+			if healthPools[module.journalId] then
+				self:CancelTimer(healthPools[module.journalId].timer)
+				local total = ""
+
+				for i = 1, 5 do
+					local unit = units[i]
+					local hp = healthPools[module.journalId][unit]
+					if hp then
+						if total == "" then
+							total = L.healthFormat:format(healthPools[module.journalId].names[unit], hp*100)
+						else
+							total = total .. ", " .. L.healthFormat:format(healthPools[module.journalId].names[unit], hp*100)
+						end
+					end
+				end
+				BigWigs:Print(L.healthPrefix .. total ..".")
+
+				healthPools[module.journalId] = nil
 			end
 		end
 

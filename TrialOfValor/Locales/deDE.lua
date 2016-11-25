@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Odyn-TrialOfValor", "deDE")
 if not L then return end
 if L then
-	--L.yields = "%s yields" -- used when Hymdall and Helya leave the fight in P2: "Hymdall yields"
+	L.yields = "%s gibt auf" -- used when Hymdall and Helya leave the fight in P2: "Hymdall yields"
 	L[227490] = "|cFF800080Oben Rechts|r (|T1323037:15:15:0:0:64:64:4:60:4:60|t)" -- Boss_OdunRunes_Purple
 	L[227491] = "|cFFFFA500Unten Rechts|r (|T1323039:15:15:0:0:64:64:4:60:4:60|t)" -- Boss_OdunRunes_Orange
 	L[227498] = "|cFFFFFF00Unten Links|r (|T1323038:15:15:0:0:64:64:4:60:4:60|t)" -- Boss_OdunRunes_Yellow
@@ -11,24 +11,24 @@ end
 
 L = BigWigs:NewBossLocale("Guarm-TrialOfValor", "deDE")
 if L then
-	--L.lick = "Lick" -- For translators: common name of 228248, 228253, 228228
-	--L.lick_desc = "Show bars for the different licks."
+	L.lick = "Schlabbern" -- For translators: common name of 228248, 228253, 228228
+	L.lick_desc = "Zeigt Leisten für die verschiedenen Arten des Schlabberns."
 end
 
 L = BigWigs:NewBossLocale("Helya-TrialOfValor", "deDE")
 if L then
-	L.nearTrigger = "Nähe" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya! -- Translate this comment with the emote
-	--L.farTrigger = "far" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges far from Helya! -- Translate this comment with the emote
+	L.nearTrigger = "Nähe" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t Ein %s erscheint in Helyas Nähe!
+	L.farTrigger = "entfernt" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t Ein %s erscheint weit von Helya entfernt!
 	L.tentacle_near = "Tentakel BEI Helya"
 	L.tentacle_near_desc = "Diese Option kann verwendet werden, um die Nachrichten hervorzuheben oder auszublenden, wenn ein Zuschlagendes Tentakel in der Nähe von Helya erscheint."
 	L.tentacle_far = "Tentakel weit ENTFERNT von Helya"
 	L.tentacle_far_desc = "Diese Option kann verwendet werden, um die Nachrichten hervorzuheben oder auszublenden, wenn ein Zuschlagendes Tentakel weit entfernt von Helya erscheint."
 
-	--L.orb_melee = "Orb: Melee timer"
-	--L.orb_melee_desc = "Show the timer for the Orbs that spawn on Melee."
-	--L.orb_melee_bar = "Melee Orb"
+	L.orb_melee = "Kugel: Nahkämpfer-Timer"
+	L.orb_melee_desc = "Zeigt den Timer für die Kugeln, die auf Nahkämpfern erscheinen."
+	L.orb_melee_bar = "Nahkämpfer-Kugel"
 
-	--L.orb_ranged = "Orb: Ranged timer"
-	--L.orb_ranged_desc = "Show the timer for the Orbs that spawn on Ranged."
-	--L.orb_ranged_bar = "Ranged Orb"
+	L.orb_ranged = "Kugel: Fernkämpfer-Timer"
+	L.orb_ranged_desc = "Zeigt den Timer für die Kugeln, die auf Fernkämpfern erscheinen."
+	L.orb_ranged_bar = "Fernkämpfer-Kugel"
 end
