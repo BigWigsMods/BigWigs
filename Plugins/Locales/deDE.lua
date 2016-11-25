@@ -254,5 +254,5 @@ L.wrongTime = "Ungültige Zeitangabe. <time> kann eine Zahl in Sekunden, ein M:S
 --
 
 --L.printHealthOption = "Boss Health"
---L.healthPrefix = "Health: "
+--L.healthPrint = "Health: %s."
 --L.healthFormat = "%s (%.1f%%)"

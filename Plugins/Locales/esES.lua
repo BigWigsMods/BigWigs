@@ -254,5 +254,5 @@ L.wrongTime = "Tiempo especificado inválido. <time> puede ser bien un número e
 --
 
 --L.printHealthOption = "Boss Health"
---L.healthPrefix = "Health: "
+--L.healthPrint = "Health: %s."
 --L.healthFormat = "%s (%.1f%%)"

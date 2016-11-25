@@ -254,5 +254,5 @@ L.infoBox = "信息盒"
 --
 
 L.printHealthOption = "首领血量"
-L.healthPrefix = "血量："
+L.healthPrint = "血量：%s。"
 L.healthFormat = "%s （%.1f%%）"

@@ -253,5 +253,5 @@ L.wrongTime = "시간의 표현 방식이 적절하지 않습니다. 초 단위�
 --
 
 --L.printHealthOption = "Boss Health"
---L.healthPrefix = "Health: "
+--L.healthPrint = "Health: %s."
 --L.healthFormat = "%s (%.1f%%)"

@@ -275,7 +275,7 @@ function plugin:BigWigs_OnBossWipe(event, module)
 						end
 					end
 				end
-				BigWigs:Print(L.healthPrefix .. total ..".")
+				BigWigs:Print(L.healthPrint:format(total))
 
 				healthPools[module.journalId] = nil
 			end
