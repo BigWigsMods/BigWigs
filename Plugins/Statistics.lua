@@ -211,7 +211,7 @@ do
 			if self.db.profile.printHealth then
 				healthPools[module.journalId] = {}
 				healthPools[module.journalId].names = {}
-				healthPools[module.journalId].timer = self:ScheduleRepeatingTimer(StoreHealth, 3, module)
+				healthPools[module.journalId].timer = self:ScheduleRepeatingTimer(StoreHealth, 2, module)
 			end
 		end
 	end
