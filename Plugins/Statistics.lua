@@ -105,16 +105,16 @@ do
 						name = L.printDefeatOption,
 						order = 2,
 					},
-					printNewBestKill = {
-						type = "toggle",
-						name = L.printBestTimeOption,
-						order = 3,
-						disabled = function() return not plugin.db.profile.saveBestKill or not plugin.db.profile.enabled end,
-					},
 					printHealth = {
 						type = "toggle",
 						name = L.printHealthOption,
+						order = 3,
+					},
+					printNewBestKill = {
+						type = "toggle",
+						name = L.printBestTimeOption,
 						order = 4,
+						disabled = function() return not plugin.db.profile.saveBestKill or not plugin.db.profile.enabled end,
 					},
 				},
 			},
