@@ -209,8 +209,10 @@ do
 			end
 
 			if self.db.profile.printHealth then
-				healthPools[module.journalId] = {}
-				healthPools[module.journalId].names = {}
+				if not healthPools[module.journalId] then
+					healthPools[module.journalId] = {}
+					healthPools[module.journalId].names = {}
+				end
 				healthPools[module.journalId].timer = self:ScheduleRepeatingTimer(StoreHealth, 2, module)
 			end
 		end
@@ -242,6 +244,11 @@ function plugin:BigWigs_OnBossWin(event, module)
 		end
 
 		activeDurations[module.journalId] = nil
+
+		if healthPools[module.journalId] then
+			self:CancelTimer(healthPools[module.journalId].timer)
+			healthPools[module.journalId] = nil
+		end
 	end
 end
 
@@ -276,8 +283,6 @@ function plugin:BigWigs_OnBossWipe(event, module)
 					end
 				end
 				BigWigs:Print(L.healthPrint:format(total))
-
-				healthPools[module.journalId] = nil
 			end
 		end
 
