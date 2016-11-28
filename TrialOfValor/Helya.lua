@@ -191,10 +191,10 @@ function mod:OnEngage()
 	tentacleCount = 1
 	taintCount = 1
 
-	self:Bar(227967, self:Mythic() and 10.5 or 12) -- Bilewater Breath
-	self:Bar(228054, self:Mythic() and 15.5 or 19.5, CL.count:format(self:SpellName(228054), taintCount)) -- Taint of the Sea
-	self:Bar("orb_ranged", self:Mythic() and 14 or 31, CL.count:format(L.orb_ranged_bar, orbCount), 229119) -- Orb of Corruption
-	self:Bar(228730, self:Mythic() and 35.3 or 36.7, CL.count:format(self:SpellName(228730), tentacleCount)) -- Tentacle Strike
+	self:CDBar(227967, self:Mythic() and 10.5 or self:Heroic() and 12 or 13.3) -- Bilewater Breath
+	self:CDBar(228054, self:Mythic() and 15.5 or self:Heroic() and 19.5 or 12, CL.count:format(self:SpellName(228054), taintCount)) -- Taint of the Sea
+	self:CDBar("orb_ranged", self:Mythic() and 14 or self:Heroic() and 31 or 18, CL.count:format(L.orb_ranged_bar, orbCount), 229119) -- Orb of Corruption
+	self:CDBar(228730, self:Mythic() and 35.3 or self:Heroic() and 36.7 or 53.3, CL.count:format(self:SpellName(228730), tentacleCount)) -- Tentacle Strike
 	if self:Mythic() then
 		self:Berserk(660)
 	end
@@ -217,7 +217,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:StopBar(CL.cast:format(self:SpellName(227992))) -- Bilewater Liquefaction
 		end
 		self:StopBar(CL.cast:format(self:SpellName(227967))) -- Bilewater Breath
-		self:StopBar(228730) -- Tentacle Strike
+		self:StopBar(CL.count:format(self:SpellName(228730), tentacleCount)) -- Tentacle Strike
 		self:Bar(167910, 14, CL.adds) -- Kvaldir Longboat
 		self:Bar(228300, 50) -- Fury of the Maw
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
@@ -242,12 +242,13 @@ end
 
 function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 	if msg:find(L.nearTrigger) then
-		self:Message("tentacle_near", "Urgent", "Long", L.tentacle_near, 228730)
+		self:Message("tentacle_near", "Urgent", "Long", CL.count:format(L.tentacle_near, tentacleCount-1), 228730)
 	elseif msg:find(L.farTrigger) then
-		self:Message("tentacle_far", "Urgent", "Long", L.tentacle_far, 228730)
+		self:Message("tentacle_far", "Urgent", "Long", CL.count:format(L.tentacle_far, tentacleCount-1), 228730)
 	elseif msg:find("inv_misc_monsterhorn_03", nil, true) then -- Fallback for no locale
 		msg = msg:gsub("|T[^|]+|t", "")
 		self:Message(228730, "Urgent", "Long", msg:format(npcname), 228730)
+		BigWigs:Print("Missing translation for tentacle strike.") -- XXX temp
 	end
 end
 
@@ -266,10 +267,7 @@ end
 function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit)*100
 	if phase == 2 then
-		local tentaclesLeft = floor((hp-40)/2.77)
-		if self:Mythic() then
-			tentaclesLeft = floor((hp-45)/2.5)
-		end
+		local tentaclesLeft = self:Mythic() and floor((hp-45)/2.5) or floor((hp-40)/2.77)
 		if tentaclesLeft < tentaclesUp then
 			tentaclesUp = tentaclesLeft
 			if tentaclesLeft >= 0 then
@@ -327,9 +325,9 @@ end
 function mod:OrbOfCorruption(args)
 	orbCount = orbCount + 1
 	if orbCount % 2 == 0 then
-		self:Bar("orb_melee", self:Mythic() and 24.3 or 28, CL.count:format(L.orb_melee_bar, orbCount), 229119) -- Orb of Corruption
+		self:Bar("orb_melee", self:Mythic() and 24.3 or self:Heroic() and 28 or 31.5, CL.count:format(L.orb_melee_bar, orbCount), 229119) -- Orb of Corruption
 	else
-		self:Bar("orb_ranged", self:Mythic() and 24.3 or 28, CL.count:format(L.orb_ranged_bar, orbCount), 229119) -- Orb of Corruption
+		self:Bar("orb_ranged", self:Mythic() and 24.3 or self:Heroic() and 28 or 31.5, CL.count:format(L.orb_ranged_bar, orbCount), 229119) -- Orb of Corruption
 	end
 end
 
@@ -348,7 +346,7 @@ function mod:BilewaterBreath(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
 	self:Bar(227992, self:Normal() and 25.5 or 20.5, CL.cast:format(self:SpellName(227992))) -- Bilewater Liquefaction
-	self:Bar(args.spellId, self:Mythic() and 42.5 or 52)
+	self:CDBar(args.spellId, self:Mythic() and 42.5 or self:Heroic() and 52 or 55.9)
 end
 
 function mod:BilewaterRedox(args)
@@ -365,7 +363,7 @@ do
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alert", CL.count:format(args.spellName, taintCount), nil, self:Dispeller("magic"))
 			taintCount = taintCount + 1
-			self:CDBar(args.spellId, (self:Mythic() and (phase == 1 and 12.1 or 20)) or phase == 1 and 14.6 or 26, CL.count:format(args.spellName, taintCount))
+			self:CDBar(args.spellId, phase == 1 and 12.1 or (self:Mythic() and 20 or 28), CL.count:format(args.spellName, taintCount))
 		end
 
 		if self:GetOption(taintMarker) then
@@ -390,7 +388,7 @@ function mod:TentacleStrike(args)
 	-- Message is in RAID_BOSS_EMOTE
 	self:Bar(args.spellId, 6, CL.cast:format(CL.count:format(args.spellName, tentacleCount)))
 	tentacleCount = tentacleCount + 1
-	self:Bar(args.spellId, self:Mythic() and timers["Tentacle Strike"][tentacleCount] or 4, CL.count:format(self:SpellName(228730), tentacleCount))
+	self:Bar(args.spellId, self:Mythic() and timers["Tentacle Strike"][tentacleCount] or 40, CL.count:format(self:SpellName(228730), tentacleCount))
 end
 
 do
@@ -502,7 +500,7 @@ end
 
 function mod:AnchorSlam(args)
 	self:Message(args.spellId, "Urgent", "Alarm", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 12)
+	self:Bar(args.spellId, self:Easy() and 14.6 or 12)
 end
 
 function mod:GrimelordDeath(args)
@@ -520,7 +518,7 @@ end
 
 function mod:GiveNoQuarter(args)
 	self:Message(args.spellId, "Attention", self:Ranged() and "Alert")
-	self:Bar(args.spellId, 6.1)
+	self:Bar(args.spellId, self:Easy() and 9.3 or 6.1)
 end
 
 function mod:GhostlyRage(args)
@@ -561,16 +559,16 @@ end
 function mod:OrbOfCorrosion(args)
 	orbCount = orbCount + 1
 	if orbCount % 2 == 0 then
-		self:Bar("orb_melee", self:Mythic() and timers["Orb of Corrosion"][orbCount] or 17.0, CL.count:format(L.orb_melee_bar, orbCount), 230267) -- Orb of Corruption
+		self:Bar("orb_melee", self:Mythic() and timers["Orb of Corrosion"][orbCount] or 18, CL.count:format(L.orb_melee_bar, orbCount), 230267) -- Orb of Corruption
 	else
-		self:Bar("orb_ranged", self:Mythic() and timers["Orb of Corrosion"][orbCount] or 17.0, CL.count:format(L.orb_ranged_bar, orbCount), 230267) -- Orb of Corruption
+		self:Bar("orb_ranged", self:Mythic() and timers["Orb of Corrosion"][orbCount] or 18, CL.count:format(L.orb_ranged_bar, orbCount), 230267) -- Orb of Corruption
 	end
 end
 
 function mod:CorruptedBreath(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	self:Bar(args.spellId, 4.5, CL.cast:format(args.spellName))
-	self:Bar(args.spellId, self:Mythic() and 43 or 47)
+	self:Bar(args.spellId, self:Mythic() and 43 or self:Heroic() and 47 or 51)
 end
 
 function mod:DarkHatred(args)
