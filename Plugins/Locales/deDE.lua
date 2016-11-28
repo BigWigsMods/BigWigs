@@ -247,12 +247,12 @@ L.wrongTime = "Ungültige Zeitangabe. <time> kann eine Zahl in Sekunden, ein M:S
 -- InfoBox.lua
 --
 
---L.infoBox = "InfoBox"
+L.infoBox = "InfoBox"
 
 -----------------------------------------------------------------------
 -- Statistics.lua
 --
 
---L.printHealthOption = "Boss Health"
---L.healthPrint = "Health: %s."
---L.healthFormat = "%s (%.1f%%)"
+L.printHealthOption = "Bossgesundheit"
+L.healthPrint = "Gesundheit: %s."
+L.healthFormat = "%s (%.1f%%)"
