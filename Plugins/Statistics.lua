@@ -282,7 +282,9 @@ function plugin:BigWigs_OnBossWipe(event, module)
 						end
 					end
 				end
-				BigWigs:Print(L.healthPrint:format(total))
+				if total ~= "" then
+					BigWigs:Print(L.healthPrint:format(total))
+				end
 			end
 		end
 
