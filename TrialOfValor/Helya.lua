@@ -60,6 +60,9 @@ if L then
 	L.gripping_tentacle = -14309
 	L.grimelord = -14263
 	L.mariner = -14278
+
+	L.orb_say = "Orb"
+	L.taint_say = "Taint"
 end
 
 --------------------------------------------------------------------------------
@@ -255,11 +258,11 @@ end
 function mod:RAID_BOSS_WHISPER(event, msg)
 	if msg:find("227920") then -- P1 Orb of Corruption
 		self:Message(229119, "Personal", "Warning", CL.you:format(self:SpellName(229119))) -- Orb of Corruption
-		self:Say(229119)
+		self:Say(229119, L.orb_say)
 		self:Flash(229119)
 	elseif msg:find("228058") then -- P2 Orb of Corrosion
 		self:Message(230267, "Personal", "Warning", CL.you:format(self:SpellName(230267))) -- Orb of Corrosion
-		self:Say(230267)
+		self:Say(230267, L.orb_say)
 		self:Flash(230267)
 	end
 end
@@ -376,7 +379,7 @@ do
 	function mod:TaintOfTheSeaRemoved(args)
 		if self:Me(args.destGUID) then
 			self:Message(args.spellId, "Personal", "Warning", CL.underyou:format(args.spellName))
-			self:Say(args.spellId)
+			self:Say(args.spellId, L.taint_say)
 		end
 		if self:GetOption(taintMarker) then
 			SetRaidTarget(args.destName, 0)
