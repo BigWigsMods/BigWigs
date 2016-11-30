@@ -286,6 +286,8 @@ function plugin:BigWigs_OnBossWipe(event, module)
 					BigWigs:Print(L.healthPrint:format(total))
 				end
 			end
+		elseif healthPools[module.journalId] then
+			self:CancelTimer(healthPools[module.journalId].timer)
 		end
 
 		activeDurations[module.journalId] = nil
