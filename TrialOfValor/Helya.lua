@@ -26,6 +26,7 @@ local tentaclesUp = 9
 local phase = 1
 local orbCount = 1
 local tentacleCount = 1
+local tentacleMsgCount = 1
 local taintCount = 1
 
 local timers = {
@@ -192,6 +193,7 @@ function mod:OnEngage()
 	phase = 1
 	orbCount = 1
 	tentacleCount = 1
+	tentacleMsgCount = 1
 	taintCount = 1
 
 	self:CDBar(227967, self:Mythic() and 10.5 or self:Heroic() and 12 or 13.3) -- Bilewater Breath
@@ -245,12 +247,15 @@ end
 
 function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 	if msg:find(L.nearTrigger) then
-		self:Message("tentacle_near", "Urgent", "Long", CL.count:format(L.tentacle_near, tentacleCount-1), 228730)
+		self:Message("tentacle_near", "Urgent", "Long", CL.count:format(L.tentacle_near, tentacleMsgCount), 228730)
+		tentacleMsgCount = tentacleMsgCount + 1
 	elseif msg:find(L.farTrigger) then
-		self:Message("tentacle_far", "Urgent", "Long", CL.count:format(L.tentacle_far, tentacleCount-1), 228730)
+		self:Message("tentacle_far", "Urgent", "Long", CL.count:format(L.tentacle_far, tentacleMsgCount), 228730)
+		tentacleMsgCount = tentacleMsgCount + 1
 	elseif msg:find("inv_misc_monsterhorn_03", nil, true) then -- Fallback for no locale
 		msg = msg:gsub("|T[^|]+|t", "")
-		self:Message(228730, "Urgent", "Long", msg:format(npcname), 228730)
+		self:Message(228730, "Urgent", "Long", CL.count:format(msg:format(npcname), tentacleMsgCount), 228730)
+		tentacleMsgCount = tentacleMsgCount + 1
 		BigWigs:Print("Missing translation for tentacle strike.") -- XXX temp
 	end
 end
