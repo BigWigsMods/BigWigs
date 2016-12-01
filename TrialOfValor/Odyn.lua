@@ -104,7 +104,7 @@ function mod:GetOptions()
 		-14404, -- Test of the Ages
 
 		--[[ Stage Three: The Final Test ]]--
-		{228918, "SAY"}, -- Stormforged Spear
+		{228918, "SAY", "ICON"}, -- Stormforged Spear
 		{227807, "SAY"}, -- Storm of Justice
 		227475, -- Cleansing Flame
 		{197961, "PROXIMITY", "SAY", "PULSE"}, -- Runic Brand
@@ -132,6 +132,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ValarjarsBond", 228018, 229529, 228016, 229469) -- XXX
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OdynsTest", 227626)
 	self:Log("SPELL_AURA_APPLIED", "StormforgedSpear", 228918)
+	self:Log("SPELL_AURA_APPLIED", "StormforgedSpearDebuff", 228932) -- Tank got hit
 	self:Log("SPELL_CAST_SUCCESS", "ExpelLightSuccess", 228028)
 	self:Log("SPELL_AURA_APPLIED", "ExpelLightApplied", 228029)
 	self:Log("SPELL_AURA_REMOVED", "ExpelLightRemoved", 228029)
@@ -358,10 +359,16 @@ function mod:StormforgedSpear(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
 	self:TargetBar(args.spellId, 6, args.destName)
 	self:Bar(args.spellId, spearCount % 3 == 0 and 13.5 or 11)
+	self:PrimaryIcon(args.spellId, args.destName)
+	
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
 	spearCount = spearCount + 1
+end
+
+function mod:StormforgedSpearDebuff(args)
+	self:PrimaryIcon(228918)
 end
 
 function mod:ExpelLightSuccess(args)
