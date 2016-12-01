@@ -215,7 +215,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
 		self:StopBar(CL.count:format(L.orb_ranged_bar, orbCount))
 		self:StopBar(CL.count:format(L.orb_melee_bar, orbCount))
-		self:StopBar(CL.count:format(self:SpellName(228054, taintCount))) -- Taint of the Sea
+		self:StopBar(CL.count:format(self:SpellName(228054), taintCount)) -- Taint of the Sea
 		self:StopBar(227967) -- Bilewater Breath
 		if self:BarTimeLeft(CL.cast:format(self:SpellName(227967))) > 0 then -- Breath
 			-- if she transitions while casting the breath she won't spawn the blobs
