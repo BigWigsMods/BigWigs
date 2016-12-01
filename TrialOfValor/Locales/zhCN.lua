@@ -32,6 +32,6 @@ if L then
 	L.orb_ranged_desc = "显示腐化宝珠出现在远程的计时器。"
 	L.orb_ranged_bar = "远程宝珠"
 
-	--L.orb_say = "Orb"
+	L.orb_say = "宝珠"
 	L.taint_say = "海洋污染"
 end
