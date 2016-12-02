@@ -32,6 +32,6 @@ if L then
 	L.orb_ranged_desc = "替生成在遠程的腐化之球顯示計時器。"
 	L.orb_ranged_bar = "遠程腐化之球"
 
-	--L.orb_say = "Orb"
-	--L.taint_say = "Taint"
+	L.orb_say = "腐化之球"
+	L.taint_say = "污穢"
 end
