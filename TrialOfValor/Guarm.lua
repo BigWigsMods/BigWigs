@@ -136,7 +136,7 @@ do
 		end
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.4, args.spellId, list, "Urgent", "Alarm")
+			self:ScheduleTimer("TargetMessage", 0.4, args.spellId, list, "Urgent", "Alarm", nil, nil, self:Dispeller("magic"))
 		end
 	end
 end
