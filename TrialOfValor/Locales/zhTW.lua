@@ -33,5 +33,5 @@ if L then
 	L.orb_ranged_bar = "遠程腐化之球"
 
 	L.orb_say = "腐化之球"
-	L.taint_say = "污穢"
+	L.taint_say = "深海污穢"
 end
