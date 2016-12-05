@@ -25,13 +25,13 @@ if L then
 	L.tentacle_far_desc = "提示出現在黑爾雅遠處的觸手，調整這個選項可以強調或隱蔵。"
 
 	L.orb_melee = "腐化之球：近戰計時器"
-	L.orb_melee_desc = "替生成在近戰的腐化之球顯示計時器。"
+	L.orb_melee_desc = "替生成在近戰的腐化之球和腐蝕之球示計時器。"
 	L.orb_melee_bar = "近戰腐化之球"
 
 	L.orb_ranged = "腐化之球：遠程計時器"
-	L.orb_ranged_desc = "替生成在遠程的腐化之球顯示計時器。"
+	L.orb_ranged_desc = "替生成在遠程的化之球和腐腐蝕之球顯示計時器。"
 	L.orb_ranged_bar = "遠程腐化之球"
 
-	--L.orb_say = "Orb"
-	--L.taint_say = "Taint"
+	L.orb_say = "球"
+	L.taint_say = "深海污穢"
 end
