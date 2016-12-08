@@ -364,7 +364,7 @@ function mod:BlackeningSoul(args)
 end
 
 function mod:NightmareInfusion(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", nil, nil, true)
 	self:Bar(args.spellId, phase == 2 and 62 or 31.6)
 end
 
