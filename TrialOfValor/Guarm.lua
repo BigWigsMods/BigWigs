@@ -90,7 +90,7 @@ end
 local twipe = wipe
 local lastWipe, lastSet = 0, 0
 local function wipe(tbl)
-	last = GetTime()
+	lastWipe = GetTime()
 	twipe(tbl)
 end
 
