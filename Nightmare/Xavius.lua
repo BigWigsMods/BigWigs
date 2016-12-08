@@ -160,7 +160,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		self:StopBar(CL.count:format(self:SpellName(205741), lurkingEruptionCount)) -- Lurking Eruption (Lurking Terror)
 		self:Bar(209158, 7) -- Blackening Soul
 		self:Bar(205588, (100 - UnitPower("boss1")) / 2.5) -- Call of Nightmares
-		self:Bar(209034, 15.5) -- Bonds of Terror
+		if not self:Easy() then
+			self:Bar(209034, 15.5) -- Bonds of Terror
+		end
 		self:Bar(209443, 29) -- Nightmare Infusion
 	elseif spellId == 226185 then -- Xavius Energize Phase 3
 		self:Message("stages", "Neutral", "Long", "30% - ".. CL.stage:format(3), false)
