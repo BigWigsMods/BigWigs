@@ -159,7 +159,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		self:StopBar(CL.count:format(self:SpellName(210264), horrorCount)) -- Manifest Corruption
 		self:StopBar(CL.count:format(self:SpellName(205741), lurkingEruptionCount)) -- Lurking Eruption (Lurking Terror)
 		self:Bar(209158, 7) -- Blackening Soul
-		self:Bar(205588, 14.5) -- Call of Nightmares
+		self:Bar(205588, (100 - UnitPower("boss1")) / 2.5) -- Call of Nightmares
 		self:Bar(209034, 15.5) -- Bonds of Terror
 		self:Bar(209443, 29) -- Nightmare Infusion
 	elseif spellId == 226185 then -- Xavius Energize Phase 3
@@ -169,6 +169,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		self:StopBar(205588) -- Call of Nightmares
 		self:Bar(224508, 20.7) -- Corruption Meteor
 		self:Bar(211802, 33) -- Nightmare Blades
+		self:Bar(226194, (100 - UnitPower("boss1")) / 4.83) -- Writhing Deep
 	elseif spellId == 205843 then -- The Dreaming
 		local percentage = dreamingCount == 1 and "97% - " or "60% - "
 		if self:Mythic() then
