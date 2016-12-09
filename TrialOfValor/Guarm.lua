@@ -86,6 +86,14 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 end
 
+-- XXX temp
+local twipe = wipe
+local lastWipe, lastSet = 0, 0
+local function wipe(tbl)
+	lastWipe = GetTime()
+	twipe(tbl)
+end
+
 function mod:OnEngage()
 	breathCounter = 0
 	fangCounter = 0
@@ -215,10 +223,17 @@ do
 
 	local function markFoam(self, destName)
 		if self:GetOption(foamMarker) then
-			foamTargets[#foamTargets+1] = destName
-			SetRaidTarget(destName, #foamTargets)
-			if not scheduled then
-				scheduled = self:ScheduleTimer(wipeFoamTargets, 10)
+			local c = #foamTargets+1
+			if c > 3 then
+				local t = GetTime()
+				BigWigs:Print(("Attempting to set an out of bounds foam icon: %d, %.2f, %.2f"):format(c, t-lastSet, t-lastWipe))
+			else
+				lastSet = GetTime()
+				foamTargets[c] = destName
+				SetRaidTarget(destName, c)
+				if not scheduled then
+					scheduled = self:ScheduleTimer(wipeFoamTargets, 10)
+				end
 			end
 		end
 	end
