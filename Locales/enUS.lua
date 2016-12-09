@@ -39,6 +39,7 @@ L.finishedLoading = "Combat has ended, BigWigs has now finished loading."
 L.blizzRestrictionsConfig = "Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."
 
 L.missingAddOn = "Please note that this zone requires the |cFF436EEE%s|r plugin for timers to be displayed."
+L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not be shown."
 
 L.coreAddonDisabled = "BigWigs won't function properly since the addon %s is disabled. You can enable it from the addon control panel at the character selection screen."
 

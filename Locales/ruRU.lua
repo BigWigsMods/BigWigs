@@ -17,6 +17,8 @@ L.infobox_desc = "Показ блока с информацией, связан�
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
+--L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not be shown."
+
 L.activeBossModules = "Активные модули боссов:"
 L.advanced = "Дополнительные настройки"
 L.alphaRelease = "Вы используете АЛЬФА-ВЕРСИЮ BigWigs %s (%s)"

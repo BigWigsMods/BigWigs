@@ -17,6 +17,8 @@ if not L then return end
 --L.INFOBOX = L.infobox
 --L.INFOBOX_desc = L.infobox_desc
 
+--L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not be shown."
+
 L.activeBossModules = "Moduli dei Combattimenti Attivi:"
 L.advanced = "Opzioni Avanzate"
 L.alphaRelease = "Stai usando una VERSIONE ALPHA di BigWigs %s (%s)"

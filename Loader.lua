@@ -80,6 +80,7 @@ local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local loadOnSlash = {} -- BigWigs modulepacks that can load from a chat command
 local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
+local disabledZones -- contains the zones in which BigWigs will enable, but the user has disabled the addon
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
 local fakeWorldZones = { -- Fake world zones used for world boss translations and loading
 	[466]=true, -- Outland
@@ -298,6 +299,21 @@ do
 			end
 		elseif reqFuncAddons[name] then
 			sysprint(L.coreAddonDisabled:format(name))
+		else
+			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-ZoneId")
+			if meta then -- Disabled content
+				for j = 1, select("#", strsplit(",", meta)) do
+					local rawId = select(j, strsplit(",", meta))
+					local id = tonumber(rawId:trim())
+					if id and id > 0 then
+						local instanceId = GetAreaMapInfo(id) -- convert map id to instance id
+						if not fakeWorldZones[id] and public.zoneTbl[instanceId] then
+							if not disabledZones then disabledZones = {} end
+							disabledZones[instanceId] = name
+						end
+					end
+				end
+			end
 		end
 
 		if next(loadOnSlash) then
@@ -557,9 +573,11 @@ do
 
 	local L = GetLocale()
 	if L == "ptBR" then
-		--delayedMessages[#delayedMessages+1] = "Can you translate BigWigs into Brazilian Portugese (ptBR)? Check out our GitHub page!"
+		delayedMessages[#delayedMessages+1] = "Can you translate BigWigs into Brazilian Portugese (ptBR)? Check out our GitHub page!"
 	elseif L == "itIT" then
 		delayedMessages[#delayedMessages+1] = "Can you translate BigWigs into Italian (itIT)? Check out our GitHub page!"
+	elseif L == "esES" then
+		delayedMessages[#delayedMessages+1] = "Can you translate BigWigs into Spanish (esES)? Check out our GitHub page!"
 	elseif L == "koKR" then
 		delayedMessages[#delayedMessages+1] = "Can you translate BigWigs into Korean (koKR)? Check out our GitHub page!"
 	end
@@ -971,6 +989,14 @@ do
 			bwFrame:UnregisterEvent("UNIT_TARGET")
 			if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:InConfigureMode()) and (not BigWigs3DB or not BigWigs3DB.breakTime) then
 				BigWigs:Disable() -- Alive in a non-enable zone, disable
+			end
+			if disabledZones and disabledZones[id] then -- We have content for the zone but it is disabled in the addons menu
+				local msg = L.disabledAddOn:format(disabledZones[id])
+				sysprint(msg)
+				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1})
+				-- Only print once
+				warnedThisZone[id] = true
+				disabledZones[id] = nil
 			end
 		end
 
