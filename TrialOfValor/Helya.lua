@@ -33,6 +33,7 @@ local timers = {
 	["Tentacle Strike"] = {35.4, 4.0, 32.0, 0.0, 35.6, 4.0, 31.3, 4.0, 4.0, 27.2, 4.0}, -- furthest data we have
 	["Orb of Corrosion"] = {6, 13.0, 13.0, 27.3, 10.7, 13.0, 25.0, 13.0, 13.0, 25.0, 13.0, 18.5, 19.5, 13.0, 13.0, 12.0, 12.0, 16.8, 8.2}, -- furthest data we have
 }
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -290,7 +291,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 do
-	local list, isOnMe, scheduled = mod:NewTargetList(), nil, nil
+	local list, isOnMe = mod:NewTargetList(), nil
 
 	local function warn(self, spellId, spellName)
 		if not isOnMe then
@@ -298,14 +299,13 @@ do
 		else
 			wipe(list)
 		end
-		scheduled = nil
 		isOnMe = nil
 	end
 
 	function mod:OrbApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId, args.spellName)
+			self:ScheduleTimer(warn, 0.1, self, args.spellId, args.spellName)
 		end
 
 		if self:GetOption(orbMarker) then
@@ -587,8 +587,7 @@ function mod:DarkHatred(args)
 end
 
 do
-
-	local list, isOnMe, scheduled = mod:NewTargetList(), nil, nil
+	local list, isOnMe = mod:NewTargetList(), nil
 
 	local function warn(self, spellId)
 		if not isOnMe then
@@ -598,14 +597,13 @@ do
 				self:Message(spellId, "Attention", "Long")
 			end
 		end
-		scheduled = nil
 		isOnMe = nil
 	end
 
 	function mod:CorruptedAxiom(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId)
+			self:ScheduleTimer(warn, 0.1, self, args.spellId)
 		end
 
 		if self:Me(args.destGUID) then
