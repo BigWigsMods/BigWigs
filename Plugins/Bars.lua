@@ -1446,7 +1446,6 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	if not text then text = "" end
 	self:StopSpecificBar(nil, module, text)
 	local bar = candy:New(media:Fetch("statusbar", db.texture), 200, 14)
-	normalAnchor.bars[bar] = true
 	bar.candyBarBackground:SetVertexColor(colors:GetColor("barBackground", module, key))
 	bar:Set("bigwigs:module", module)
 	bar:Set("bigwigs:anchor", normalAnchor)
@@ -1456,6 +1455,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
 	bar.candyBarLabel:SetJustifyH(db.alignText)
 	bar.candyBarDuration:SetJustifyH(db.alignTime)
+	normalAnchor.bars[bar] = true
 
 	local flags = nil
 	if db.monochrome and db.outline ~= "NONE" then
