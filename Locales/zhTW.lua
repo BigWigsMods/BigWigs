@@ -17,7 +17,7 @@ L.infobox_desc = "顯示當前戰鬥相關的訊息。"
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
---L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not be shown."
+L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，計時器將不被顯示。"
 
 L.activeBossModules = "啟動首領模組："
 L.advanced = "進階選項"
