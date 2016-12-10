@@ -17,7 +17,7 @@ L.infobox_desc = "Affiche une boîte d'information concernant la rencontre."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
---L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not be shown."
+L.disabledAddOn = "L'addon |cFF436EEE%s|r est désactivé, les délais ne seront pas affichés."
 
 L.activeBossModules = "Modules de boss actifs :"
 L.advanced = "Options avancées"
