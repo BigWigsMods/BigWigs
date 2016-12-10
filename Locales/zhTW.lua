@@ -17,6 +17,8 @@ L.infobox_desc = "顯示當前戰鬥相關的訊息。"
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
+--L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not be shown."
+
 L.activeBossModules = "啟動首領模組："
 L.advanced = "進階選項"
 L.alphaRelease = "你所使用的 BigWigs %s 為“α測試版”（%s）"

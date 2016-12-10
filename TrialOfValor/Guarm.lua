@@ -106,10 +106,10 @@ end
 
 function mod:OnBossDisable()
 	if self:GetOption(foamMarker) then
-		for _,name in pairs(foamTargets) do
-			SetRaidTarget(name, 0)
+		for i = 1, #foamTargets do
+			SetRaidTarget(foamTargets[i], 0)
+			foamTargets[i] = nil
 		end
-		wipe(foamTargets)
 	end
 end
 
@@ -203,22 +203,13 @@ function mod:VolatileFoam(args)
 end
 
 do
-	local scheduled = nil
-
-	local function wipeFoamTargets()
-		for _,name in pairs(foamTargets) do
-			SetRaidTarget(name, 0)
-		end
-		wipe(foamTargets)
-		scheduled = nil
-	end
-
 	local function markFoam(self, destName)
 		if self:GetOption(foamMarker) then
-			foamTargets[#foamTargets+1] = destName
-			SetRaidTarget(destName, #foamTargets)
-			if not scheduled then
-				scheduled = self:ScheduleTimer(wipeFoamTargets, 10)
+			local c = #foamTargets+1
+			foamTargets[c] = destName
+			SetRaidTarget(destName, c)
+			if c == 1 then
+				self:ScheduleTimer("OnBossDisable", 10)
 			end
 		end
 	end
