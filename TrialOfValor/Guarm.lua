@@ -190,9 +190,9 @@ function mod:RoaringLeap(args)
 	self:Message(args.spellId, "Urgent", "Info")
 	if leapCounter % 2 == 0 then
 		self:CDBar(227514, 11.2) -- Adjust Flashing Fangs timer
-		self:Bar(args.spellId, 21.8)
-	else
 		self:Bar(args.spellId, 53.2)
+	else
+		self:Bar(args.spellId, 21.8)
 	end
 end
 
