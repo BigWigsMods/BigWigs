@@ -72,7 +72,7 @@ end
 --
 
 local orbMarker = mod:AddMarkerOption(false, "player", 1, 229119, 1, 2, 3) -- Orb of Corruption
-local taintMarker = mod:AddMarkerOption(false, "player", 4, 228054, 4, 5, 6) -- Taint of the Sea
+local taintMarker = mod:AddMarkerOption(false, "player", 4, 228054, 4, 5, 6, 7, 8) -- Taint of the Sea
 function mod:GetOptions()
 	return {
 		--[[ Helya ]]--
@@ -243,6 +243,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(167910, self:Mythic() and 44 or 38, self:SpellName(L.mariner)) -- Kvaldir Longboat
 	elseif spellId == 228838 then -- Fetid Rot (Grimelord)
 		self:Bar(193367, 12.2) -- Fetid Rot
+	elseif spellId == 228088 then -- Taint of the Sea
+		taintCount = taintCount + 1
+		taintMarkerCount = 4
 	end
 end
 
@@ -369,15 +372,15 @@ do
 	function mod:TaintOfTheSea(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alert", CL.count:format(args.spellName, taintCount), nil, self:Dispeller("magic"))
-			taintCount = taintCount + 1
+			-- Counter incremented in UNIT_SPELLCAST_SUCCEEDED (no SPELL_CAST_SUCCESS event)
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alert", CL.count:format(args.spellName, taintCount-1), nil, self:Dispeller("magic"))
 			self:CDBar(args.spellId, phase == 1 and 12.1 or (self:Mythic() and 20 or 28), CL.count:format(args.spellName, taintCount))
 		end
 
 		if self:GetOption(taintMarker) then
 			SetRaidTarget(args.destName, taintMarkerCount)
 			taintMarkerCount = taintMarkerCount + 1
-			if taintMarkerCount > 6 then taintMarkerCount = 4 end
+			if taintMarkerCount > 8 then taintMarkerCount = 4 end
 		end
 	end
 
