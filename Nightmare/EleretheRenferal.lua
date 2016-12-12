@@ -77,7 +77,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "TwistingShadows", 210864)
 	self:Log("SPELL_CAST_START", "RazorWing", 210547)
 	self:Log("SPELL_CAST_START", "RakingTalons", 215582)
-	--self:Log("SPELL_AURA_APPLIED", "RakingTalonsApplied", 215582) -- XXX do we need this?
 	self:Log("SPELL_CAST_START", "ViolentWinds", 218124)
 
 	--[[ General ]]--
@@ -176,21 +175,20 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		end
 	elseif spellId == 226039 then -- Bird Transform => Roc Form
 		self:Message("stages", "Neutral", "Info", -13263, "inv_ravenlordmount") -- Roc Form
-		-- stop some timers
 		twistingShadowsCount = 1
-		self:CDBar(210864, 8)
-		self:Bar(210948, 27)
-		self:Bar(215582, self:Mythic() and 63 or 53)
-		self:Bar(210547, self:Mythic() and 70 or 60)
+		self:CDBar(210864, 8) -- Twisting Shadows
+		self:CDBar(212707, 15.7) -- Gathering Clouds
+		self:Bar(210948, 27) -- Dark Storm
+		self:Bar(215582, self:Mythic() and 63 or 53) -- Raking Talons
+		self:Bar(210547, self:Mythic() and 70 or 60) -- Razor Wing
 		if self:Mythic() then
-			self:Bar(218124, 53)
+			self:Bar(218124, 53) -- Violent Winds
 		end
 		self:Bar("stages", 134, -13259, "inv_spidermount") -- Spider Form
 	elseif spellId == 226055 then -- Spider Transform => Spider Form
 		self:Message("stages", "Neutral", "Info", -13259, "inv_spidermount") -- Spider Form
-		-- stop some timers
-		self:Bar(215300, 6)
-		self:Bar(212364, 16)
+		self:Bar(215300, 6) -- Web of Pain
+		self:Bar(212364, 16) -- Feeding Time
 		self:Bar("stages", 90, -13263, "inv_ravenlordmount") -- Roc Form
 	end
 end
