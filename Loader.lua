@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 27
+local BIGWIGS_VERSION = 28
 local BIGWIGS_RELEASE_STRING = ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -609,7 +609,7 @@ do
 		elseif funcType == "nil" then
 			if not self[msg] then error((":RegisterMessage(message, function) attempted to register the function '%s' but it doesn't exist!"):format(msg)) end
 		elseif funcType ~= "function" then
-			error(":RegisterMessage(message, function) attempted to register invalid function!")
+			error(":RegisterMessage(message, function) attempted to register an invalid function!")
 		end
 		if not callbackMap[msg] then callbackMap[msg] = {} end
 		callbackMap[msg][self] = func or msg
