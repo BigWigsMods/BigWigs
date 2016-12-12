@@ -601,7 +601,7 @@ end
 do
 	local callbackMap = {}
 	function public:RegisterMessage(msg, func)
-		if self == public then error(".RegisterMessage(addon, message, function) attempted to register a function to BigWigsLoader, you might be using : instead of . to register the callback.") end
+		if self == public then print(".RegisterMessage(addon, message, function) attempted to register a function to BigWigsLoader, you might be using : instead of . to register the callback.") end
 		if type(msg) ~= "string" then error(":RegisterMessage(message, function) attempted to register invalid message, must be a string!") end
 		local funcType = type(func)
 		if funcType == "string" then
