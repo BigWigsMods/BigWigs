@@ -1102,7 +1102,7 @@ end
 local silencedOptions = {}
 do
 	bossUtilityFrame:Hide()
-	BigWigsLoader:RegisterMessage("BigWigs_SilenceOption", function(event, key, time)
+	BigWigsLoader.RegisterMessage(silencedOptions, "BigWigs_SilenceOption", function(event, key, time)
 		if key ~= nil then -- custom bars have a nil key
 			silencedOptions[key] = time
 			bossUtilityFrame:Show()
