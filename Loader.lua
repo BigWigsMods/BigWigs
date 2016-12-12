@@ -449,7 +449,7 @@ function mod:ADDON_LOADED(addon)
 			end
 		end
 	end
-	self:UpdateDBMFaking(nil, "fakeDBMVersion", self.isFakingDBM)
+	self:BigWigs_CoreOptionToggled(nil, "fakeDBMVersion", self.isFakingDBM)
 
 	if self.isSoundOn ~= false then -- Only if sounds are enabled
 		local num = tonumber(GetCVar("Sound_NumChannels")) or 0
@@ -595,6 +595,61 @@ do
 end
 
 -----------------------------------------------------------------------
+-- Callback handler
+--
+
+do
+	local callbackMap = {}
+	function public:RegisterMessage(msg, func)
+		if self == public then error(".RegisterMessage(addon, message, function) attempted to register a function to BigWigsLoader, you might be using : instead of . to register the callback.") end
+		if type(msg) ~= "string" then error(":RegisterMessage(message, function) attempted to register invalid message, must be a string!") end
+		local funcType = type(func)
+		if funcType == "string" then
+			if not self[func] then error((":RegisterMessage(message, function) attempted to register the function '%s' but it doesn't exist!"):format(func)) end
+		elseif funcType == "nil" then
+			if not self[msg] then error((":RegisterMessage(message, function) attempted to register the function '%s' but it doesn't exist!"):format(msg)) end
+		elseif funcType ~= "function" then
+			error(":RegisterMessage(message, function) attempted to register invalid function!")
+		end
+		if not callbackMap[msg] then callbackMap[msg] = {} end
+		callbackMap[msg][self] = func or msg
+	end
+	function public:UnregisterMessage(msg)
+		if type(msg) ~= "string" then error(":UnregisterMessage(message) attempted to unregister an invalid message, must be a string!") end
+		if not callbackMap[msg] then return end
+		callbackMap[msg][self] = nil
+		if not next(callbackMap[msg]) then
+			callbackMap[msg] = nil
+		end
+	end
+
+	function public:SendMessage(msg, ...)
+		if callbackMap[msg] then
+			for k,v in next, callbackMap[msg] do
+				if type(v) == "function" then
+					v(msg, ...)
+				else
+					k[v](k, msg, ...)
+				end
+			end
+		end
+	end
+
+	local function UnregisterAllMessages(_, module)
+		for k,v in next, callbackMap do
+			for j in next, v do
+				if j == module then
+					public.UnregisterMessage(module, k)
+				end
+			end
+		end
+	end
+	public.RegisterMessage(mod, "BigWigs_OnBossDisable", UnregisterAllMessages)
+	public.RegisterMessage(mod, "BigWigs_OnBossReboot", UnregisterAllMessages)
+	public.RegisterMessage(mod, "BigWigs_OnPluginDisable", UnregisterAllMessages)
+end
+
+-----------------------------------------------------------------------
 -- DBM version collection & faking
 --
 
@@ -635,61 +690,12 @@ do
 			end
 		end
 	end
-	function mod:UpdateDBMFaking(_, key, value)
+	function mod:BigWigs_CoreOptionToggled(_, key, value)
 		if key == "fakeDBMVersion" and value and IsInGroup() then
 			self:DBM_VersionCheck("H") -- Send addon message if feature is being turned on inside a raid/group.
 		end
 	end
-end
-
------------------------------------------------------------------------
--- Callback handler
---
-
-do
-	local callbackMap = {}
-	function public:RegisterMessage(msg, func)
-		if type(msg) ~= "string" then error(":RegisterMessage(message, function) attempted to register invalid message, must be a string!") end
-		if not callbackMap[msg] then callbackMap[msg] = {} end
-		callbackMap[msg][self] = func or msg
-	end
-	function public:UnregisterMessage(msg)
-		if type(msg) ~= "string" then error(":UnregisterMessage(message) attempted to unregister an invalid message, must be a string!") end
-		if not callbackMap[msg] then return end
-		callbackMap[msg][self] = nil
-		if not next(callbackMap[msg]) then
-			callbackMap[msg] = nil
-		end
-	end
-
-	function public:SendMessage(msg, ...)
-		if callbackMap[msg] then
-			for k,v in next, callbackMap[msg] do
-				if type(v) == "function" then
-					v(msg, ...)
-				else
-					k[v](k, msg, ...)
-				end
-			end
-		end
-	end
-
-	local function UnregisterAllMessages(_, module)
-		for k,v in next, callbackMap do
-			for j in next, v do
-				if j == module then
-					public.UnregisterMessage(module, k)
-				end
-			end
-		end
-	end
-	public.RegisterMessage(mod, "BigWigs_OnBossDisable", UnregisterAllMessages)
-	public.RegisterMessage(mod, "BigWigs_OnBossReboot", UnregisterAllMessages)
-	public.RegisterMessage(mod, "BigWigs_OnPluginDisable", UnregisterAllMessages)
-	public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
-	public.RegisterMessage(mod, "BigWigs_CoreOptionToggled", "UpdateDBMFaking")
-	public.RegisterMessage(mod, "BigWigs_CoreEnabled")
-	public.RegisterMessage(mod, "BigWigs_CoreDisabled")
+	public.RegisterMessage(mod, "BigWigs_CoreOptionToggled")
 end
 
 -----------------------------------------------------------------------
@@ -1047,6 +1053,7 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 	if type(menus[id]) ~= "table" then menus[id] = {} end
 	menus[id][#menus[id]+1] = module
 end
+public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
 
 function mod:BigWigs_CoreEnabled()
 	if ldb then
@@ -1065,12 +1072,14 @@ function mod:BigWigs_CoreEnabled()
 	self.isShowingZoneMessages = nil
 	self.isSoundOn = nil
 end
+public.RegisterMessage(mod, "BigWigs_CoreEnabled")
 
 function mod:BigWigs_CoreDisabled()
 	if ldb then
 		ldb.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled"
 	end
 end
+public.RegisterMessage(mod, "BigWigs_CoreDisabled")
 
 -----------------------------------------------------------------------
 -- API
