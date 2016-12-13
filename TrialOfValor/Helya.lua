@@ -243,9 +243,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(167910, self:Mythic() and 44 or 38, self:SpellName(L.mariner)) -- Kvaldir Longboat
 	elseif spellId == 228838 then -- Fetid Rot (Grimelord)
 		self:Bar(193367, 12.2) -- Fetid Rot
-	elseif spellId == 228088 then -- Taint of the Sea
-		taintCount = taintCount + 1
-		taintMarkerCount = 4
 	end
 end
 
@@ -369,7 +366,15 @@ end
 
 do
 	local list = mod:NewTargetList()
+	local prev = 0
 	function mod:TaintOfTheSea(args)
+		local t = GetTime()
+		if t - prev > 7 then -- No pre-event on mythic, throttle instead
+			prev = t
+			taintCount = taintCount + 1
+			taintMarkerCount = 4
+		end
+
 		list[#list+1] = args.destName
 		if #list == 1 then
 			-- Counter incremented in UNIT_SPELLCAST_SUCCEEDED (no SPELL_CAST_SUCCESS event)
