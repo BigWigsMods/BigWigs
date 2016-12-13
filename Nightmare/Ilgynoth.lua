@@ -11,7 +11,7 @@
 local mod, CL = BigWigs:NewBoss("Il'gynoth", 1094, 1738)
 if not mod then return end
 
-mod:RegisterEnableMob(105906, 105393, 105304, 105721) -- Eye of Il'gynoth, Il'gynoth, Dominator Tentacle, Nightmare Ichor
+mod:RegisterEnableMob(105906, 105393, 105304) -- Eye of Il'gynoth, Il'gynoth, Dominator Tentacle
 mod.engageId = 1873
 mod.respawnTime = 30
 
@@ -109,8 +109,7 @@ if L then
 	L.deathglare_tentacle = -13190 -- Deathglare Tentacle
 	L.deathglare_tentacle_icon = 208697 -- Mind Flay icon
 
-	L.nightmare_ichor = -13186
-	L.nightmare_ichor_icon = 210099 -- Fixate icon
+	L.nightmare_ichor = -13186 -- Nightmare Inchor
 
 	L.shriveled_eyestalk = -13570 -- Shriveled Eyestalk
 	L.shriveled_eyestalk_icon = 208697 -- Mind Flay icon
