@@ -291,7 +291,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 do
-	local list, isOnMe = mod:NewTargetList(), nil
+	local list, isOnMe, timer = mod:NewTargetList(), nil, nil
 
 	local function warn(self, spellId, spellName)
 		if not isOnMe then
@@ -305,7 +305,11 @@ do
 	function mod:OrbApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer(warn, 0.1, self, args.spellId, args.spellName)
+			timer = self:ScheduleTimer(warn, 0.4, self, args.spellId, args.spellName)
+		elseif #list == 3 then -- Max
+			self:CancelTimer(timer)
+			timer = nil
+			warn(self, args.spellId, args.spellName)
 		end
 
 		if self:GetOption(orbMarker) then
@@ -365,21 +369,18 @@ function mod:BilewaterRedox(args)
 end
 
 do
-	local list = mod:NewTargetList()
-	local prev = 0
+	local list, timer = mod:NewTargetList(), nil
 	function mod:TaintOfTheSea(args)
-		local t = GetTime()
-		if t - prev > 7 then -- No pre-event on mythic, throttle instead
-			prev = t
-			taintCount = taintCount + 1
-			taintMarkerCount = 4
-		end
-
 		list[#list+1] = args.destName
 		if #list == 1 then
-			-- Counter incremented in UNIT_SPELLCAST_SUCCEEDED (no SPELL_CAST_SUCCESS event)
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alert", CL.count:format(args.spellName, taintCount-1), nil, self:Dispeller("magic"))
+			taintMarkerCount = 4
+			timer = self:ScheduleTimer("TargetMessage", 0.4, args.spellId, list, "Attention", "Alert", CL.count:format(args.spellName, taintCount), nil, self:Dispeller("magic"))
+			taintCount = taintCount + 1
 			self:CDBar(args.spellId, phase == 1 and 12.1 or (self:Mythic() and 20 or 28), CL.count:format(args.spellName, taintCount))
+		elseif #list == 5 or (#list == 3 and not self:Mythic()) then
+			self:CancelTimer(timer)
+			timer = nil
+			self:TargetMessage(args.spellId, list, "Attention", "Alert", CL.count:format(args.spellName, taintCount-1), nil, self:Dispeller("magic"))
 		end
 
 		if self:GetOption(taintMarker) then
