@@ -295,7 +295,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 do
-	local list, isOnMe, timer = mod:NewTargetList(), nil, nil
+	local list, orbMarked, isOnMe, timer = mod:NewTargetList(), false, false, nil
 
 	local function warn(self, spellId, spellName)
 		if not isOnMe then
@@ -303,12 +303,12 @@ do
 		else
 			wipe(list)
 		end
-		isOnMe = nil
 	end
 
 	function mod:OrbApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
+			orbMarked, isOnMe = false, false
 			timer = self:ScheduleTimer(warn, 0.4, self, args.spellId, args.spellName)
 		elseif #list == 3 or (#list == 2 and self:Easy()) then -- Max
 			self:CancelTimer(timer)
@@ -319,9 +319,10 @@ do
 		if self:GetOption(orbMarker) then
 			if self:Healer(args.destName) then
 				SetRaidTarget(args.destName, 1)
-			elseif self:Tank(args.destName) then
+			elseif self:Tank(args.destName) or (phase == 3 and orbMarked) then
 				SetRaidTarget(args.destName, 2)
 			else -- Damager
+				orbMarked = true
 				SetRaidTarget(args.destName, 3)
 			end
 		end
