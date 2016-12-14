@@ -198,9 +198,11 @@ function mod:OnEngage()
 	taintCount = 1
 
 	self:CDBar(227967, self:Mythic() and 10.5 or self:Heroic() and 12 or 13.3) -- Bilewater Breath
-	self:CDBar(228054, self:Mythic() and 15.5 or self:Heroic() and 19.5 or 12, CL.count:format(self:SpellName(228054), taintCount)) -- Taint of the Sea
-	self:CDBar("orb_ranged", self:Mythic() and 14 or self:Heroic() and 31 or 18, CL.count:format(L.orb_ranged_bar, orbCount), 229119) -- Orb of Corruption
-	self:CDBar(228730, self:Mythic() and 35.3 or self:Heroic() and 36.7 or 53.3, CL.count:format(self:SpellName(228730), tentacleCount)) -- Tentacle Strike
+	self:CDBar(228054, self:Mythic() and 15.5 or self:Heroic() and 19.5 or self:Normal() and 12 or 21.8, CL.count:format(self:SpellName(228054), taintCount)) -- Taint of the Sea
+	self:CDBar("orb_ranged", self:Mythic() and 14 or self:Heroic() and 31 or self:Normal() and 18 or 34, CL.count:format(L.orb_ranged_bar, orbCount), 229119) -- Orb of Corruption
+	if not self:LFR() then
+		self:CDBar(228730, self:Mythic() and 35.3 or self:Heroic() and 36.7 or 53.3, CL.count:format(self:SpellName(228730), tentacleCount)) -- Tentacle Strike
+	end
 	if self:Mythic() then
 		self:Berserk(660)
 	end
@@ -223,7 +225,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:StopBar(CL.cast:format(self:SpellName(227992))) -- Bilewater Liquefaction
 		end
 		self:StopBar(CL.cast:format(self:SpellName(227967))) -- Bilewater Breath
-		self:StopBar(CL.count:format(self:SpellName(228730), tentacleCount)) -- Tentacle Strike
+		if not self:LFR() then
+			self:StopBar(CL.count:format(self:SpellName(228730), tentacleCount)) -- Tentacle Strike
+		end
 		self:Bar(167910, 14, CL.adds) -- Kvaldir Longboat
 		self:Bar(228300, 50) -- Fury of the Maw
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
@@ -242,7 +246,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		end
 		self:Bar(167910, self:Mythic() and 44 or 38, self:SpellName(L.mariner)) -- Kvaldir Longboat
 	elseif spellId == 228838 then -- Fetid Rot (Grimelord)
-		self:Bar(193367, 12.2) -- Fetid Rot
+		self:Bar(193367, self:Easy() and 15.8 or 12.2) -- Fetid Rot
 	end
 end
 
@@ -306,7 +310,7 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			timer = self:ScheduleTimer(warn, 0.4, self, args.spellId, args.spellName)
-		elseif #list == 3 then -- Max
+		elseif #list == 3 or (#list == 2 and self:Easy()) then -- Max
 			self:CancelTimer(timer)
 			timer = nil
 			warn(self, args.spellId, args.spellName)
@@ -336,10 +340,11 @@ end
 
 function mod:OrbOfCorruption(args)
 	orbCount = orbCount + 1
+	local timer = self:Mythic() and 24.3 or self:Heroic() and 28 or self:Normal() and 31.5 or 32.8
 	if orbCount % 2 == 0 then
-		self:Bar("orb_melee", self:Mythic() and 24.3 or self:Heroic() and 28 or 31.5, CL.count:format(L.orb_melee_bar, orbCount), 229119) -- Orb of Corruption
+		self:Bar("orb_melee", timer, CL.count:format(L.orb_melee_bar, orbCount), 229119) -- Orb of Corruption
 	else
-		self:Bar("orb_ranged", self:Mythic() and 24.3 or self:Heroic() and 28 or 31.5, CL.count:format(L.orb_ranged_bar, orbCount), 229119) -- Orb of Corruption
+		self:Bar("orb_ranged", timer, CL.count:format(L.orb_ranged_bar, orbCount), 229119) -- Orb of Corruption
 	end
 end
 
@@ -357,8 +362,8 @@ end
 function mod:BilewaterBreath(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
-	self:Bar(227992, self:Normal() and 25.5 or 20.5, CL.cast:format(self:SpellName(227992))) -- Bilewater Liquefaction
-	self:CDBar(args.spellId, self:Mythic() and 42.5 or self:Heroic() and 52 or 55.9)
+	self:Bar(227992, self:Easy() and 25.5 or 20.5, CL.cast:format(self:SpellName(227992))) -- Bilewater Liquefaction
+	self:CDBar(args.spellId, self:Mythic() and 42.5 or self:Heroic() and 52 or self:Normal() and 55.9 or 60.8)
 end
 
 function mod:BilewaterRedox(args)
@@ -376,7 +381,7 @@ do
 			taintMarkerCount = 4
 			timer = self:ScheduleTimer("TargetMessage", 0.4, args.spellId, list, "Attention", "Alert", CL.count:format(args.spellName, taintCount), nil, self:Dispeller("magic"))
 			taintCount = taintCount + 1
-			self:CDBar(args.spellId, phase == 1 and 12.1 or (self:Mythic() and 20 or 28), CL.count:format(args.spellName, taintCount))
+			self:CDBar(args.spellId, phase == 1 and (self:LFR() and 17 or 12.1) or (self:Mythic() and 20 or 28), CL.count:format(args.spellName, taintCount))
 		elseif #list == 5 or (#list == 3 and not self:Mythic()) then
 			self:CancelTimer(timer)
 			timer = nil
@@ -456,11 +461,15 @@ do
 		if self:MobId(args.destGUID) == 114809 then -- Mariner
 			self:Bar(228633, 7) -- Give No Quarter
 			self:Bar(228611, 10) -- Ghostly Rage
-			self:Bar(228619, phase == 2 and 30 or 35) -- Lantern of Darkness
+			if not self:Easy() then
+				self:Bar(228619, phase == 2 and 30 or 35) -- Lantern of Darkness
+			end
 		elseif self:MobId(args.destGUID) == 114709 then -- Grimelord
 			self:Bar(193367, 7) -- Fetid Rot
-			self:Bar(228519, 12) -- Anchor Slam
-			self:Bar(228390, 14) -- Sludge Nova
+			if not self:LFR() then
+				self:Bar(228519, 12) -- Anchor Slam
+			end
+			self:Bar(228390, self:Easy() and 17 or 14) -- Sludge Nova
 		end
 	end
 end
@@ -517,11 +526,13 @@ end
 
 function mod:AnchorSlam(args)
 	self:Message(args.spellId, "Urgent", "Alarm", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, self:Easy() and 14.6 or 12)
+	self:Bar(args.spellId, self:Normal() and 14.6 or 12)
 end
 
 function mod:GrimelordDeath(args)
-	self:StopBar(228519) -- Anchor Slam
+	if not self:LFR() then
+		self:StopBar(228519) -- Anchor Slam
+	end
 	self:StopBar(228390) -- Sludge Nova
 	self:StopBar(CL.cast:format(self:SpellName(228390))) -- Sludge Nova
 	self:StopBar(193367) -- Fetid Rot
@@ -548,8 +559,10 @@ end
 
 function mod:MarinerDeath(args)
 	self:StopBar(228633) -- Give No Quarter
-	self:StopBar(228619) -- Lantern of Darkness
-	self:StopBar(CL.cast:format(self:SpellName(228619))) -- Lantern of Darkness
+	if not self:Easy() then
+		self:StopBar(228619) -- Lantern of Darkness
+		self:StopBar(CL.cast:format(self:SpellName(228619))) -- Lantern of Darkness
+	end
 	self:StopBar(228611) -- Ghostly Rage
 end
 
