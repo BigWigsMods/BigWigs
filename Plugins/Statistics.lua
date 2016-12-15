@@ -242,13 +242,6 @@ function plugin:BigWigs_OnBossWin(event, module)
 				sDB.best = elapsed
 			end
 		end
-
-		activeDurations[module.journalId] = nil
-
-		if healthPools[module.journalId] then
-			self:CancelTimer(healthPools[module.journalId].timer)
-			healthPools[module.journalId] = nil
-		end
 	end
 end
 
@@ -268,9 +261,7 @@ function plugin:BigWigs_OnBossWipe(event, module)
 			end
 
 			if healthPools[module.journalId] then
-				self:CancelTimer(healthPools[module.journalId].timer)
 				local total = ""
-
 				for i = 1, 5 do
 					local unit = units[i]
 					local hp = healthPools[module.journalId][unit]
@@ -286,15 +277,17 @@ function plugin:BigWigs_OnBossWipe(event, module)
 					BigWigs:Print(L.healthPrint:format(total))
 				end
 			end
-		elseif healthPools[module.journalId] then
-			self:CancelTimer(healthPools[module.journalId].timer)
 		end
-
-		activeDurations[module.journalId] = nil
 	end
 end
 
-function plugin:BigWigs_OnBossDisable()
+function plugin:BigWigs_OnBossDisable(event, module)
+	activeDurations[module.journalId] = nil
+	if healthPools[module.journalId] then
+		self:CancelTimer(healthPools[module.journalId].timer)
+		healthPools[module.journalId] = nil
+	end
+
 	self:SendMessage("BigWigs_StopBar", self, L.bestTimeBar)
 end
 
