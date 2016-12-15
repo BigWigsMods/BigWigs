@@ -207,7 +207,7 @@ local function loadAndEnableCore()
 end
 
 local function loadCoreAndOpenOptions()
-	if not BigWigsOptions and (InCombatLockdown() or UnitAffectingCombat("player")) then
+	if not BigWigsOptions and not IsAltKeyDown() and (InCombatLockdown() or UnitAffectingCombat("player")) then -- Allow combat loading using ALT key.
 		sysprint(L.blizzRestrictionsConfig)
 		return
 	end
