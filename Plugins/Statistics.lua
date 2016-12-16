@@ -282,12 +282,14 @@ function plugin:BigWigs_OnBossWipe(event, module)
 end
 
 function plugin:BigWigs_OnBossDisable(event, module)
-	activeDurations[module.journalId] = nil
-	if healthPools[module.journalId] then
-		self:CancelTimer(healthPools[module.journalId].timer)
-		healthPools[module.journalId] = nil
-	end
+	if module.journalId then
+		activeDurations[module.journalId] = nil
+		if healthPools[module.journalId] then
+			self:CancelTimer(healthPools[module.journalId].timer)
+			healthPools[module.journalId] = nil
+		end
 
-	self:SendMessage("BigWigs_StopBar", self, L.bestTimeBar)
+		self:SendMessage("BigWigs_StopBar", self, L.bestTimeBar)
+	end
 end
 
