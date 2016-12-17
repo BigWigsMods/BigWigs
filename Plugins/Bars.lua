@@ -1072,7 +1072,7 @@ local function updateProfile()
 	if plugin:IsEnabled() then
 		if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 		plugin:SetBarStyle(db.barStyle)
-		plugin:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
+		plugin:RegisterMessage("DBM_AddonMessage")
 	end
 	-- XXX temp cleanup [7.0]
 	db.align = nil
