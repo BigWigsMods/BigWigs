@@ -175,7 +175,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "DecayDamage", 228127)
 
 	--[[ Helarjer Mistcaller ]]--
-	self:Log("SPELL_CAST_START", "MistInfusion", 228854) -- untested
+	self:Log("SPELL_CAST_START", "MistInfusion", 228854)
 
 	--[[ Stage Three: Helheim's Last Stand ]]--
 	self:Log("SPELL_CAST_START", "OrbOfCorrosion", 228056)
@@ -396,10 +396,28 @@ do
 		end
 	end
 
+	local prev, wasOnMe, scheduled = 0, nil, nil
+
+	local function warn(self, spellId, spellName)
+		self:Message(spellId, "Positive", "Warning", wasOnMe and CL.underyou:format(spellName) or CL.near:format(spellName))
+		wasOnMe = nil
+		scheduled = nil
+	end
+
 	function mod:TaintOfTheSeaRemoved(args)
-		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Personal", "Warning", CL.underyou:format(args.spellName))
+		local t = GetTime()
+		if self:Me(args.destGUID) then -- warn always if it got dispelled from us
+			prev = t
+			wasOnMe = true
 			self:Say(args.spellId, L.taint_say)
+			if not scheduled then
+				scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId, args.spellName)
+			end
+		elseif IsItemInRange(33278, args.destName) and t-prev > 2 then -- warn if dispelled in ~8yd range
+			prev = t
+			if not scheduled then
+				scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId, args.spellName)
+			end
 		end
 		if self:GetOption(taintMarker) then
 			SetRaidTarget(args.destName, 0)
@@ -438,7 +456,7 @@ end
 
 function mod:FuryOfTheMaw(args)
 	self:Message(args.spellId, "Important", "Info")
-	self:Bar(args.spellId, 32, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, self:Mythic() and 24 or 32, CL.cast:format(args.spellName))
 end
 
 function mod:FuryOfTheMawRemoved(args)
@@ -451,8 +469,11 @@ do
 
 	function mod:KvaldirLongboat(args)
 		local t = GetTime()
-		self:Message(args.spellId, "Neutral", t-prev > 1 and "Long", args.destName) -- destName = name of the spawning add
-		prev = t
+		if t-prev > 1 then
+			prev = t
+			self:Message(args.spellId, "Neutral", "Long", phase == 2 and CL.adds or args.destName) -- destName = name of the spawning add
+		end
+
 		if phase == 2 then
 			self:Bar(args.spellId, 75, CL.adds)
 		else
@@ -568,7 +589,6 @@ function mod:MarinerDeath(args)
 end
 
 --[[ Decaying Minion ]]--
-
 do
 	local prev = 0
 	function mod:DecayDamage(args)
@@ -581,8 +601,15 @@ do
 end
 
 --[[ Helarjer Mistcaller ]]--
-function mod:MistInfusion(args) -- untested
-	self:Message(args.spellId, "Positive", self:Interrupter(args.sourceGUID) and "Info")
+do
+	local prev = 0
+	function mod:MistInfusion(args)
+		local t = GetTime()
+		if t-prev > 1 then
+			prev = t
+			self:Message(args.spellId, "Positive", self:Interrupter(args.sourceGUID) and "Info")
+		end
+	end
 end
 
 --[[ Stage Three: Helheim's Last Stand ]]--
