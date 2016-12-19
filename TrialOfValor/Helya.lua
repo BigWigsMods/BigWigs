@@ -28,6 +28,7 @@ local orbCount = 1
 local tentacleCount = 1
 local tentacleMsgCount = 1
 local taintCount = 1
+local breathCount = 1
 
 local timers = {
 	["Tentacle Strike"] = {35.4, 4.0, 32.0, 0.0, 35.6, 4.0, 31.3, 4.0, 4.0, 27.2, 4.0}, -- furthest data we have
@@ -196,8 +197,9 @@ function mod:OnEngage()
 	tentacleCount = 1
 	tentacleMsgCount = 1
 	taintCount = 1
+	breathCount = 1
 
-	self:CDBar(227967, self:Mythic() and 10.5 or self:Heroic() and 12 or 13.3) -- Bilewater Breath
+	self:CDBar(227967, self:Mythic() and 10.5 or self:Heroic() and 12 or 13.3, CL.count:format(self:SpellName(227967), breathCount)) -- Bilewater Breath
 	self:CDBar(228054, self:Mythic() and 15.5 or self:Heroic() and 19.5 or self:Normal() and 12 or 21.8, CL.count:format(self:SpellName(228054), taintCount)) -- Taint of the Sea
 	self:CDBar("orb_ranged", self:Mythic() and 14 or self:Heroic() and 31 or self:Normal() and 18 or 34, CL.count:format(L.orb_ranged_bar, orbCount), 229119) -- Orb of Corruption
 	if not self:LFR() then
@@ -219,22 +221,18 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(CL.count:format(L.orb_ranged_bar, orbCount))
 		self:StopBar(CL.count:format(L.orb_melee_bar, orbCount))
 		self:StopBar(CL.count:format(self:SpellName(228054), taintCount)) -- Taint of the Sea
-		self:StopBar(227967) -- Bilewater Breath
-		if self:BarTimeLeft(CL.cast:format(self:SpellName(227967))) > 0 then -- Breath
-			-- if she transitions while casting the breath she won't spawn the blobs
-			self:StopBar(CL.cast:format(self:SpellName(227992))) -- Bilewater Liquefaction
-		end
-		self:StopBar(CL.cast:format(self:SpellName(227967))) -- Bilewater Breath
+		self:StopBar(CL.count:format(self:SpellName(227967), breathCount)) -- Bilewater Breath
 		if not self:LFR() then
 			self:StopBar(CL.count:format(self:SpellName(228730), tentacleCount)) -- Tentacle Strike
 		end
 		self:Bar(167910, 14, CL.adds) -- Kvaldir Longboat
-		self:Bar(228300, 50) -- Fury of the Maw
+		self:Bar(228300, self:Mythic() and 11 or 50) -- Fury of the Maw
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	elseif spellId == 228546 then -- Helya
 		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
 		phase = 3
 		orbCount = 1
+		breathCount = 1
 		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
 		self:StopBar(228300) -- Fury of the Maw
 		self:StopBar(CL.cast:format(self:SpellName(228300))) -- Cast: Fury of the Maw
@@ -361,10 +359,11 @@ do
 end
 
 function mod:BilewaterBreath(args)
-	self:Message(args.spellId, "Important", "Alarm")
-	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+	self:Message(args.spellId, "Important", "Alarm", CL.count:format(args.spellName, breathCount))
+	self:Bar(args.spellId, 3, CL.cast:format(CL.count:format(args.spellName, breathCount)))
 	self:Bar(227992, self:Easy() and 25.5 or 20.5, CL.cast:format(self:SpellName(227992))) -- Bilewater Liquefaction
-	self:CDBar(args.spellId, self:Mythic() and 42.5 or self:Heroic() and 52 or self:Normal() and 55.9 or 60.8)
+	breathCount = breathCount + 1
+	self:CDBar(args.spellId, self:Mythic() and 42.5 or self:Heroic() and 52 or self:Normal() and 55.9 or 60.8, CL.count:format(args.spellName, breathCount))
 end
 
 function mod:BilewaterRedox(args)
@@ -624,9 +623,10 @@ function mod:OrbOfCorrosion(args)
 end
 
 function mod:CorruptedBreath(args)
-	self:Message(args.spellId, "Important", "Alarm")
-	self:Bar(args.spellId, 4.5, CL.cast:format(args.spellName))
-	self:Bar(args.spellId, self:Mythic() and 43 or self:Heroic() and 47 or 51)
+	self:Message(args.spellId, "Important", "Alarm", CL.count:format(args.spellName, breathCount))
+	self:Bar(args.spellId, 4.5, CL.cast:format(CL.count:format(args.spellName, breathCount)))
+	breathCount = breathCount + 1
+	self:Bar(args.spellId, self:Mythic() and 43 or self:Heroic() and 47 or 51, CL.count:format(args.spellName, breathCount))
 end
 
 function mod:DarkHatred(args)
