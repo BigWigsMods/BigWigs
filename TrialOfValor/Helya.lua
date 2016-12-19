@@ -395,11 +395,10 @@ do
 		end
 	end
 
-	local prev, wasOnMe, scheduled = 0, nil, nil
+	local prev, scheduled = 0, nil
 
-	local function warn(self, spellId, spellName)
+	local function warn(self, spellId, spellName, wasOnMe)
 		self:Message(spellId, "Positive", "Warning", wasOnMe and CL.underyou:format(spellName) or CL.near:format(spellName))
-		wasOnMe = nil
 		scheduled = nil
 	end
 
@@ -407,10 +406,9 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) then -- warn always if it got dispelled from us
 			prev = t
-			wasOnMe = true
 			self:Say(args.spellId, L.taint_say)
 			if not scheduled then
-				scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId, args.spellName)
+				scheduled = self:ScheduleTimer(warn, 0.1, self, args.spellId, args.spellName, true)
 			end
 		elseif IsItemInRange(33278, args.destName) and t-prev > 2 then -- warn if dispelled in ~8yd range
 			prev = t
