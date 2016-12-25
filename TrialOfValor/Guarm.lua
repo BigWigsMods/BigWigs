@@ -93,7 +93,7 @@ function mod:OnEngage()
 	foamCount = 1
 	phaseStartTime = GetTime()
 	wipe(foamTargets)
-	self:Berserk(self:Mythic() and 244 or self:LFR() and 420 or 300)
+	self:Berserk(self:Mythic() and 244 or self:Normal() and 360 or self:LFR() and 420 or 300)
 	self:Bar(227514, 6) -- Flashing Fangs
 	self:Bar(228187, 14.5) -- Guardian's Breath
 	self:Bar(227883, 48.5) -- Roaring Leap
@@ -190,9 +190,9 @@ function mod:RoaringLeap(args)
 	self:Message(args.spellId, "Urgent", "Info")
 	if leapCounter % 2 == 0 then
 		self:CDBar(227514, 11.2) -- Adjust Flashing Fangs timer
-		self:Bar(args.spellId, 21.8)
-	else
 		self:Bar(args.spellId, 53.2)
+	else
+		self:Bar(args.spellId, 21.8)
 	end
 end
 

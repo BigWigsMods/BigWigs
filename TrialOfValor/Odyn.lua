@@ -27,6 +27,7 @@ local spearCount = 1
 local stormCount = 1
 local runesUp = 0
 local myAddGUID = ""
+local castingHorn = false
 local addGUIDs = {}
 local isHymdallFighting, isHyrjaFighting = nil, nil
 local revivifyBarTexts = {}
@@ -105,7 +106,7 @@ function mod:GetOptions()
 
 		--[[ Stage Three: The Final Test ]]--
 		{228918, "SAY", "ICON"}, -- Stormforged Spear
-		{227807, "SAY"}, -- Storm of Justice
+		{227807, "SAY", "FLASH"}, -- Storm of Justice
 		227475, -- Cleansing Flame
 		{197961, "PROXIMITY", "SAY", "PULSE"}, -- Runic Brand
 		231350, -- Radiant Smite
@@ -165,6 +166,7 @@ function mod:OnEngage()
 	wipe(addGUIDs)
 	isHymdallFighting = true
 	isHyrjaFighting = true
+	castingHorn = false
 	wipe(revivifyBarTexts)
 	wipe(addFixates)
 	for _,t in pairs(proxLists) do
@@ -254,6 +256,10 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		end
 	end
 	if not hymdallFound and isHymdallFighting then
+		if castingHorn then
+			castingHorn = false
+			self:CloseProximity(228012) -- Horn of Valor
+		end
 		self:Message(-14404, "Positive", "Info", L.yields:format(self:SpellName(L.hymdall)), false)
 		isHymdallFighting = nil
 		self:StopBar(CL.count:format(self:SpellName(228012), hornCount)) -- Horn of Valor
@@ -313,6 +319,7 @@ do
 end
 
 function mod:HornOfValor(args)
+	castingHorn = true
 	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 4.5, CL.cast:format(CL.count:format(args.spellName, hornCount)))
 	hornCount = hornCount + 1
@@ -328,6 +335,7 @@ function mod:HornOfValor(args)
 end
 
 function mod:HornOfValorSuccess(args)
+	castingHorn = false
 	self:CloseProximity(args.spellId)
 end
 
@@ -336,6 +344,7 @@ function mod:StormOfJustice(args)
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
 		self:TargetBar(args.spellId, 5, args.destName)
 		self:Say(args.spellId)
+		self:Flash(args.spellId)
 	end
 end
 
@@ -402,6 +411,10 @@ do
 end
 
 function mod:Revivify(args)
+	if castingHorn and self:MobId(args.sourceGUID) == 114361 then -- Hymdall
+		castingHorn = false
+		self:CloseProximity(228012) -- Horn of Valor
+	end
 	self:TargetMessage(args.spellId, args.sourceName, "Positive", "Long")
 	local text = CL.other:format(args.sourceName, args.spellName)
 	revivifyBarTexts[#revivifyBarTexts+1] = text
