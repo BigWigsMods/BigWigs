@@ -19,7 +19,7 @@
 ## Notes-itIT: Plugins di base per BigWigs
 ## Notes-koKR: BigWigs 플러그인
 ## Notes-ruRU: Модуль BigWigs Плагины
-## Notes-ptBR: BigWigs Core Plugins
+## Notes-ptBR: Plugins principais do BigWigs
 ## Notes-esES: Plugins del núcleo de BigWigs.
 ## Notes-esMX: Plugins del núcleo de BigWigs.
 

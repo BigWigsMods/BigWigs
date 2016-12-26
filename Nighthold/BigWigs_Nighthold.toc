@@ -9,7 +9,7 @@
 ## Title-zhCN: BigWigs [|cffeda55f暗夜要塞|r]
 ## Title-zhTW: BigWigs [|cffeda55f暗夜堡|r]
 ## Title-itIT: BigWigs [|cffeda55fThe Nighthold|r]
-## Title-ptBR: BigWigs [|cffeda55fThe Nighthold|r]
+## Title-ptBR: BigWigs [|cffeda55fBaluarte da Noite|r]
 ## Title-koKR: BigWigs [|cffeda55fThe Nighthold|r]
 ## Notes: BigWigs The Nighthold Modules
 ## Notes-deDE: BigWigs-Module für die Nachtfestung
@@ -20,7 +20,7 @@
 ## Notes-zhCN: BigWigs 暗夜要塞模块。
 ## Notes-zhTW: BigWigs 暗夜堡模組。
 ## Notes-itIT: BigWigs The Nighthold Modules
-## Notes-ptBR: BigWigs The Nighthold Modules
+## Notes-ptBR: Módulo do Baluarte da Noite do BigWigs
 ## Notes-koKR: BigWigs The Nighthold Modules
 
 ## LoadOnDemand: 1
