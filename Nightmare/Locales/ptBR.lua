@@ -3,21 +3,21 @@ if not L then return end
 if L then
 	L.forces = "Forças do pesadelo"
 	L.bramblesSay = "Espinheiras perto de %s"
-	--L.custom_off_multiple_breath_bar = "Show multiple Rotten Breath bars"
-	--L.custom_off_multiple_breath_bar_desc = "Per default BigWigs will only show the Rotten Breath bar of one drake. Enable this option if you want to see the timer for each drake."
+	L.custom_off_multiple_breath_bar = "Exibir várias barras de Sopro Apodrecido"
+	L.custom_off_multiple_breath_bar_desc = "Por padrão BigWigs irá mostrar a barra de Sopro Apodrecido de um Draco Apodrecido. Ative esta opção se você deseja ver os contadores para todos os Dracos Apodrecidos."
 end
 
 L = BigWigs:NewBossLocale("Elerethe Renferal", "ptBR")
 if L then
-	L.isLinkedWith = "%s esta linkado com %s"
-	L.yourLink = "Você esta linkado com %s"
-	L.yourLinkShort = "Linkado com %s"
+	L.isLinkedWith = "%s está vinculado com %s"
+	L.yourLink = "Você está vinculado com %s"
+	L.yourLinkShort = "vinculado com %s"
 end
 
 L = BigWigs:NewBossLocale("Il'gynoth", "ptBR")
 if L then
-	--L.remaining = "Remaining"
-	--L.missed = "Missed"
+	L.remaining = "Restando"
+	L.missed = "Perdido" -- TODO: needs reviewing
 end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "ptBR")
@@ -30,11 +30,11 @@ end
 L = BigWigs:NewBossLocale("Ursoc", "ptBR")
 if L then
 	L.custom_on_gaze_assist = "Assistente de Olhar Concentrado"
-	L.custom_on_gaze_assist_desc = "Mostra ícones marcadores de raide nas barras e mensagens para Olhar Concentrado. Usa {rt4} em casts ímpares e {rt6} em casts pares. Requer assistente ou líder."
+	L.custom_on_gaze_assist_desc = "Mostra ícones de raide nas barras e mensagens para Olhar Concentrado. Usa {rt4} em conjurações ímpares e {rt6} em conjurações pares. Requer assistente ou líder."
 end
 
 L = BigWigs:NewBossLocale("Xavius", "ptBR")
 if L then
-	L.linked = "Vínculos de Terror em VOCÊ! - Linkado com %s!"
-	--L.dreamHealers = "Dream Healers"
+	L.linked = "Vínculos de Terror em VOCÊ! - Vinculado com %s!"
+	L.dreamHealers = "Dream Healers" -- TODO: needs translation
 end

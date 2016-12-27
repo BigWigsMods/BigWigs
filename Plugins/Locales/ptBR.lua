@@ -1,258 +1,321 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "ptBR")
 if not L then return end
 
-L.abilityName = "Nome da habilidade"
-L.abilityNameDesc = "Mostra/oculta o nome da habilidade em cima da janela."
-L.Alarm = "Alarme"
-L.Alert = "Alerta"
-L.align = "Alinhamento"
-L.alignText = "Alinhar Texto"
-L.alignTime = "Alinhar Tempo"
-L.altPowerTitle = "PoderAlt" -- Needs review
-L.Attention = "Atenção"
-L.background = "Fundo"
-L.backgroundDesc = "Mostra/oculta o fundo"
-L.bars = "Barras"
-L.bestTimeBar = "Melhor tempo"
-L.Beware = "Cuidado (Algalon)"
-L.bigWigsBarStyleName_Default = "Padrão"
-L.blockEmotes = "Bloqueia frases no meio da tela"
-L.blockEmotesDesc = [=[Alguns chefes usam frases de efeito para certas habilidades, essas mensagens são muito longas e descritivas. Nós tentamos produzir mensagens menores, mais apropriadas que não interferem com sua jogabilidade, e não te dizem especificamente o que fazer.
-
-Observação: Frases de chefes ainda serão vistas no bate-papo se quiser ler as mesmas.]=]
-L.blockGarrison = "Bloqueia avisos da guarnição"
-L.blockGarrisonDesc = [=[Avisos da guarnição aparecem para algumas coisas, mas principalmente quando uma missão de seguidor é completada.
-
-Esses avisos podem cobrir partes essenciais de sua interface durante uma luta contra um chefe, então recomendamos bloqueá-las.]=]
-L.blockGuildChallenge = "Bloquear avisos de desafios de guilda"
-L.blockGuildChallengeDesc = [=[Avisos de desafio de guilda aparecem por alguns motivos, principalmente quando um grupo em sua guilda completa uma masmorra heroica ou uma masmorra em modo desafio.
-
-Esses avisos podem cobrir partes essenciais de sua interface durante uma luta contra um chefe, então recomendamos bloqueá-los.]=]
-L.blockMovies = "Bloquear vídeos repeditos"
-L.blockMoviesDesc = "Vídeos de encontros com chefes só irão ser reproduzidos uma vez (para que possa assistir cada um) e então serão bloqueados."
-L.blockSpellErrors = "Bloquear mensagens sobre feitiços que falharam."
-L.blockSpellErrorsDesc = "Mensagens do tipo \"O feitiço não está pronto ainda\" que aparecem normalmente no topo da tela serão bloqueados."
-L.bossBlock = "Bloqueio de Chefe"
-L.bossBlockDesc = "Configura diversas coisas que você pode bloquear durante um encontro com um chefe."
-L.bossDefeatDurationPrint = "Derrotou '%s' após '%s'"
-L.bossStatistics = "Estatísticas do chefe."
-L.bossStatsDescription = "Gravar várias estatísticas dos encontros, como o número de vezes que um chefe foi morto, quantas derrotas, tempo total de combate, ou a morte mais rápida. Estas estatísticas podem ser visualizadas na tela de cada chefe, mas estará oculta para chefes que não têm estatísticas gravadas."
-L.bossWipeDurationPrint = "Foi derrotado por '%s' após %s"
-L.breakBar = "Intervalo"
-L.breakFinished = "Intervalo acabou!"
-L.breakMinutes = "Intervalo acaba em %d |4minuto:minutos;!"
-L.breakSeconds = "Intervalo acaba em %d |4segundo:segundos;!"
-L.breakStarted = "Intervalo iniciado via %s por %s."
-L.breakStopped = "Intervalo cancelado por %s."
-L.bwEmphasized = "Enfatizar"
-L.center = "Centro"
-L.chatMessages = "Conversas"
-L.classColors = "Cores das classes"
-L.classColorsDesc = "Colore nomes de jogadores de acordo com suas classes."
-L.clickableBars = "Barras clicaveis"
-L.clickableBarsDesc = [=[As barras do BigWigs são clicaveis por padrão. Desta forma você pode mirar em objetos e lançar feitiços AoE atrás deles, trocar o ângulo da câmera, e assim sucessivamente, sem precisar do cursor estar em cima das barras. |cffff4411Se habilitar as barras clicaveis, isto deixará de funcionar.|r as barras interceptarão qualquer clique do mouse que chegar a elas.
-]=]
-L.close = "Fechar"
-L.closeButton = "Botão fechar"
-L.closeButtonDesc = "Mostra/oculta o botão de fechar"
-L.closeProximityDesc = [=[Fecha a janela de aproximação.
-
-Para desativala completamente para um encontro, tem que ir nas opções deste encontro e desativar a opção de 'Aproximação'.]=]
-L.colors = "Cores"
-L.combatLog = "Registro de Combate Automático"
--- L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
-L.countDefeats = "Contador de vitórias "
-L.countdownAt = "Contagem em... (segundos)"
-L.countdownColor = "Cor da Contagem"
-L.countdownTest = "Teste de Contagem"
-L.countdownType = "Tipo de Contagem"
-L.countdownVoice = "Voz da Contagem"
-L.countWipes = "Contador de derrotas"
-L.createTimeBar = "Mostrar barra do melhor tempo"
-L.customBarStarted = "Barra personalizada '%s' iniciada via %s por %s."
-L.customRange = "Indicador de distância personalizado"
-L.customSoundDesc = "Reproduzir um som personalizado ao invés do padrão"
-L.defeated = "%s foi derrotado"
-L.Destruction = "Destruição (Kil'jaeden)"
-L.disable = "Desativar"
-L.disabled = "Desativado"
-L.disabledDisplayDesc = "Desabilita o display para todos os módulos que usam ele."
-L.disableDesc = "Desativa permanentemente a habilidade de encontro para que não de opção de que reapareça esta barra"
-L.displayTime = "Exibir tempo"
-L.displayTimeDesc = "Tempo para exibir uma mensagem, em segundos"
-L.emphasize = "Enfatizar"
-L.emphasizeAt = "Enfatizar em... (segundos)"
-L.emphasized = "Enfatizado"
-L.emphasizedBars = "Barras enfatizadas"
-L.emphasizedCountdown = "Enfatizar contagem regressiva."
-L.emphasizedCountdownSinkDescription = "Passa a saída desse add-on pelo display de mensagens da Contagem Regressiva Enfatizada BigWigs. Este display suporta texto e cores, e só pode exibir uma mensagem por vez."
-L.emphasizedMessages = "Mensagens enfatizadas"
-L.emphasizedSinkDescription = "Seguir o padrão de mensagens enfatizadas do BigWigs. Isto suporta texto e cores, e só podem aparecer uma vez."
-L.enable = "Habilitar"
-L.enableStats = "Habilitar estatísticas"
-L.encounterRestricted = "Esta função não pode ser usada durante um encontro."
-L.fadeTime = "Tempo até Esmaecer"
-L.fadeTimeDesc = "Tempo para esmaecer uma mensagem, em segundos."
-L.fill = "Completar"
-L.fillDesc = "Completa as barras ao invés de drenar."
-L.FlagTaken = "Bandeira capturada (PvP)"
-L.flash = "Piscar"
-L.font = "Fonte"
-L.fontColor = "Cor do texto"
-L.fontSize = "Tamanho da fonte"
 L.general = "Geral"
-L.growingUpwards = "Aumentar crescentemente"
-L.growingUpwardsDesc = "Alterna crescimento para cima ou para baixo a partir da âncora."
-L.icon = "Icone"
-L.iconDesc = "Mostra ou oculta os icones das barras."
-L.icons = "Icones"
-L.Important = "Importante"
-L.Info = "Info"
-L.interceptMouseDesc = "Ativa as barras para receber cliques do mouse"
-L.left = "Esquerda"
-L.localTimer = "Local"
-L.lock = "Bloquear"
-L.lockDesc = "Trava a janela no lugar, previnindo que se mova e redimensione"
-L.Long = "Longo"
-L.messages = "Mensagens"
-L.modifier = "Modificador"
-L.modifierDesc = "Segure a tecla de modificação selecionada para ativar ações de cliques nas barras de tempo."
-L.modifierKey = "Somente com uma tecla de modificação"
-L.modifierKeyDesc = "Permite que as barras sejam clicaveis se estiver com a tecla de modificação pressionada, deste jeito as ações do mouse descritas abaixo estarão disponíveis."
-L.monochrome = "Monocromo"
-L.monochromeDesc = "Troca o indicador monocromo, removendo qualquer embelezamento das fontes."
-L.move = "Mover"
-L.moveDesc = "Move barras enfatizadas para a âncora de Enfatizar. Se esta opção estiver desligada, barras enfatizadas terão apenas sua cor e tamanho alteradas."
-L.movieBlocked = "Você já viu esta animação anteriormente, prosseguindo."
-L.Neutral = "Neutro"
-L.newBestTime = "Novo recorde!"
-L.none = "Nenhuma"
-L.normal = "Normal"
-L.normalMessages = "Mensagens normais"
-L.outline = "Contorno"
-L.output = "Saida"
-L.Personal = "Pessoal"
-L.positionDesc = "Digite na caixa ou mova o cursor se precisa posicionamento exato desde a âncora."
-L.positionExact = "Posicionamento Exato"
+
 L.positionX = "Posição X"
 L.positionY = "Posição Y"
-L.Positive = "Positivo"
-L.primary = "Primário"
-L.primaryDesc = "O primeiro objetivo da raide, este icone será usado"
-L.printBestTimeOption = "Notificação de melhor tempo"
-L.printDefeatOption = "Tempo de luta"
-L.printWipeOption = "Tempo até ser derrotado"
-L.proximity = "Visualizar aproximação"
-L.proximity_desc = "Mostra a janela de aproximação quando for apropiada para este encontro, lista os jogadores que estão muito pertos de você."
-L.proximity_name = "Proximidade"
-L.proximityTitle = "%d yd / %d |4player:players;"
-L.pull = "Pull"
-L.pullIn = "Pull em %d seg"
-L.pulling = "Puxando!"
-L.pullStarted = "Pull iniciado via %s por %s."
-L.pullStopped = "Pull cancelado por %s."
-L.raidIconsDesc = [=[Alguns encontros usam os icones de raide para marcar jogadores que são de interesse especial para seu grupo. Por exemplo, os efeitos tipo 'bomba' e controle mental. Se estiver desativado, não marcará nada.
+L.positionExact = "Posicionamento Exato"
+L.positionDesc = "Digite na caixa ou mova o cursor se precisa posicionamento exato para a âncora."
 
-|cffff4411Somente aplicará as marcas se você for assistente ou lider!|r]=]
-L.raidIconsDescription = [=[Elementos de tipo 'bomba' e similares em um jogador podem ser de interesse especial. Aqui você pode configurar como se deveria marcar com icones algunos personagens.
+-----------------------------------------------------------------------
+-- AltPower.lua
+--
 
-Só se usa um icone para cada encontro se usará o primario, nunca se usará o mesmo icone para 2 habilidades distintas, para isto esta o icone secundario.
+L.altPowerTitle = "Poder alternativo"
+L.toggleDisplayPrint = "Esta exibição será usada da próxima vez. Para desativá-la completamente para esse encontro, você precisa desativar isto nas opções de encontro."
+L.disabled = "Desativado"
+L.disabledDisplayDesc = "Desativa a exibição para todos os módulos que usam ela."
 
-|cffff4411Nota: Se um jogador foi marcado manualmente o BigWigs nunca trocará seu icone.|r]=]
-L.recordBestTime = "Gravar recorde"
-L.regularBars = "Barras regulares"
-L.remove = "Remover"
-L.removeDesc = "Temporariamente fecha a barra e todas as mensagens associadas"
-L.removeOther = "Remover outro"
-L.removeOtherDesc = "Temporariamente fecha todas as barras (exceto esta) e as mensagens associadas."
-L.report = "Reportar"
-L.reportDesc = "Reporta o status das barras para o grupo ativo; seja em um bate-papo de instância, raide, grupo ou local, como for melhor."
-L.requiresLeadOrAssist = "Esta funcionalidade só pode ser usada por um líder ou assistente de raide."
-L.reset = "Reiniciar"
-L.resetAll = "Reiniciar tudo"
-L.resetAllCustomSound = "Se você personalizou sons para qualquer configuração de encontro, este botão ira redefinir TODAS elas para que os sons definidos aqui sejam utilizados."
-L.resetAllDesc = "Se você personalizou as cores e os ajustes de alguns encontros de chefe, este botão reiniciará TUDO e usará as cores padrões."
-L.resetDesc = "Reinicia as cores padrões"
-L.respawn = "Respawn"
-L.restart = "Reiniciar"
-L.restartDesc = "Reinicia as barras enfatizadas para que comecem desde o principio e conta desde 10."
-L.right = "Direita"
-L.RunAway = "Corra, garotinha! (Lobo Mau)"
-L.scale = "Escala"
-L.secondary = "Secundário"
-L.secondaryDesc = "O segundo objetivo da raide, este icone será usado"
-L.sendBreak = "Enviando temporizador de intervalo para usuários BigWigs e DBM."
-L.sendCustomBar = "Enviando barra personalizada '%s' para usuários BigWigs e DBM."
-L.sendPull = "Enviando contador de pull para usuários BigWigs e DBM."
-L.showHide = "Mostrar/ocultar"
-L.showRespawnBar = "Mostrar barra de respawn"
-L.showRespawnBarDesc = "Mostra uma barra depois de você ser derrotado num chefe informando o tempo até que o chefe renasça."
-L.sinkDescription = "Seguir o padrão do addon deixando as mensagens serem mostradas do jeito padrão do BigWigs. Isto suporta icones, cores e podem mostrar até 4 mensagens na tela de uma vez. Após inserir as mensagens crescerão de tamanho e encolherão de novo rápidamente para notificar o usuario."
-L.sound = "Som"
-L.soundButton = "Botão de som"
-L.soundButtonDesc = "Mostra/oculta o botão de som"
-L.soundDelay = "Atraso de som"
-L.soundDelayDesc = "Especifique o tempo que BigWigs deverá esperar entre cada repetição de som quando alguem está muito perto de você."
-L.soundDesc = "As mensagens podem chegar com um som. Para algumas pessoas fica mais fácil escutar quando aprendem que tal som aparece com tal mensagem, ao invés de ler a mensagem."
-L.Sounds = "Sons"
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+L.bars = "Barras"
 L.style = "Estilo"
-L.superEmphasize = "Super Enfatizar"
-L.superEmphasizeDesc = [=[Da um aviso muito mais facil de se ver as mensagens ou barras relacionadas com uma habilidade de um encontro.
+L.bigWigsBarStyleName_Default = "Padrão"
 
-Aquí você configura exatamente o que deverá ocurrer quando trocar para ativado a opção de Super Enfatizar na sessão avançada para uma habilidade de um encontro de um chefe.
+L.clickableBars = "Barras clicáveis"
+L.clickableBarsDesc = "As barras do BigWigs são clicáveis por padrão. Desta forma você pode mirar em objetos e lançar feitiços AoE através delas, trocar o ângulo da câmera, e assim sucessivamente, sem precisar do cursor estar em cima das barras. |cffff4411Se habilitar as barras clicáveis, isto deixará de funcionar.|r As barras interceptarão qualquer clique do mouse feito nelas."
+L.interceptMouseDesc = "Ativa as barras para receber cliques do mouse."
+L.modifier = "Modificador"
+L.modifierDesc = "Segure a tecla de modificação selecionada para ativar o cliques nas barras de contagem."
+L.modifierKey = "Somente com uma tecla de modificação"
+L.modifierKeyDesc = "Permite que as barras sejam clicáveis se estiver com a tecla de modificação pressionada, deste jeito as ações do mouse descritas abaixo estarão disponíveis."
 
-|cffff4411Nota: Super Enfatizar está desabilitado por padrão para todas as habilidades.|r
-]=]
-L.superEmphasizeDisableDesc = "Desabilita Super Enfatiza para todos os módulos que usam ele."
-L.tempEmphasize = "Temporariamente Super Enfatiza a barra e as mensagens associadas para a duração."
-L.text = "Texto"
-L.textCountdown = "Texto de Contagem"
-L.textCountdownDesc = "Mostrar um contador visual durante uma contagem regressiva."
-L.textShadow = "Sombra do texto"
+L.tempEmphasize = "Temporariamente enfatiza a barra e as mensagens associadas a ela durante sua duração."
+L.report = "Reportar"
+L.reportDesc = "Reporta o status das barras para o chat de grupo ativo; seja em um bate-papo de instância, raide, grupo ou falar, o que for mais adequado."
+L.remove = "Remover"
+L.removeDesc = "Temporariamente remove a barra e todas as mensagens associadas a ela."
+L.removeOther = "Remover outro"
+L.removeOtherDesc = "Temporariamente fecha todas as barras (exceto esta) e as mensagens associadas a elas."
+L.disable = "Desativar"
+L.disableDesc = "Desativa permanentemente a opção da habilidade de encontro do chefe que criou esta barra."
+
+L.emphasizeAt = "Enfatizar em... (segundos)"
+L.scale = "Escala"
+L.growingUpwards = "Crescimento para cima"
+L.growingUpwardsDesc = "Alterna crescimento para cima ou para baixo a partir da âncora."
 L.texture = "Textura"
-L.thick = "Grosso"
-L.thin = "Fino"
+L.emphasize = "Enfatizar"
+L.enable = "Habilitar"
+L.move = "Mover"
+L.moveDesc = "Move barras enfatizadas para a âncora de Enfatizar. Se esta opção estiver desativada, barras enfatizadas terão apenas sua cor e tamanho alterados."
+L.regularBars = "Barras regulares"
+L.emphasizedBars = "Barras enfatizadas"
+L.align = "Alinhamento"
+L.alignText = "Alinhar texto"
+L.alignTime = "Alinhar tempo"
+L.left = "Esquerda"
+L.center = "Centro"
+L.right = "Direita"
 L.time = "Tempo"
-L.timeDesc = "Oculta ou mostra o tempo restante nas barras."
+L.timeDesc = "Mostra ou oculta o tempo restante nas barras."
+L.icon = "ícone"
+L.iconDesc = "Mostra ou oculta os ícones das barras."
+L.font = "Fonte"
+L.restart = "Reiniciar"
+L.restartDesc = "Reinicia as barras enfatizadas para que comecem novamente e conta a partir de 10."
+L.fill = "Completar"
+L.fillDesc = "Completa as barras ao invés de drena-las."
+
+L.localTimer = "Local"
 L.timerFinished = "%s: Contador [%s] terminado."
-L.title = "Título"
-L.titleDesc = "Mostra/oculta o título"
-L.toggleDisplayPrint = "O display será exibido na próxima vez. Para desabilitá-lo completamente para esse encontro, você precisa desligar isto nas opções de encontro."
-L.toggleSound = "Trocar som"
-L.toggleSoundDesc = "Ativada ou não a janela de aproximação, deverá emitir um beep se estiver perto de outro jogador."
-L.tooltip = "Tooltip"
-L.tooltipDesc = "Mostra/oculta o tooltip do feitiço se a janela de aproximação estiver empatada com uma habilidade de chefe."
-L.uppercase = "MAIÚSCULAS"
-L.uppercaseDesc = "Maiúsculas em todas as mensagens relacionadas com a opção super enfatizada."
-L.Urgent = "Urgente"
-L.useColors = "Usar cores"
-L.useColorsDesc = "Mensagens somente de cor branca, ignorando as cores."
-L.useIcons = "Usar icones"
-L.useIconsDesc = "Exibir ícones ao lado das mensagens."
-L.Victory = "Vitória"
-L.victoryHeader = "Configura as ações que devem ser tomadas após vencer um encontro."
-L.victoryMessageBigWigs = "Mostra a mensagem do BigWigs"
-L.victoryMessageBigWigsDesc = "A mensagem do BigWigs é simplesmente \"chefe foi derrotado\"."
-L.victoryMessageBlizzard = "Mostra a mensagem da Blizzard"
-L.victoryMessageBlizzardDesc = "A mensagem da Blizzard é uma animação com \"chefe foi derrotado\" bem grande no meio da tela."
-L.victoryMessages = "Mostrar mensagens de vitória"
-L.victorySound = "Toca um som de vitória"
-L.Warning = "Avisos"
-L.wrongBreakFormat = "Deve estar entre 1 e 60 minutos. Um exemplo seria: /break 5"
+L.customBarStarted = "Barra personalizada '%s' iniciada por %s pelo usuário %s."
+L.sendCustomBar = "Enviando barra personalizada '%s' para usuários BigWigs e DBM."
+
+L.requiresLeadOrAssist = "Esta funcionalidade só pode ser usada por um líder ou assistente de raide."
+L.encounterRestricted = "Esta funcionalidade não pode ser usada durante um encontro."
 L.wrongCustomBarFormat = "Formato incorreto. Um exemplo correto seria: /raidbar 20 texto"
-L.wrongPullFormat = "Deve estar entre 1 e 60 segundos. Um exemplo correto seria: /pull 5"
-L.wrongTime = "Tempo especificado inválido. <time> pode ser tanto um número em segundos, um par M:S, ou Mm. Por exemplo: 5, 1:20 ou 2m."
+L.wrongTime = "Tempo inválido. <time> pode ser tanto um número em segundos, um par M:S, ou Mm. Por exemplo: 5, 1:20 ou 2m."
+
+L.wrongBreakFormat = "Deve estar entre 1 e 60 minutos. Um exemplo seria: /break 5"
+L.sendBreak = "Enviando contador de intervalo para usuários BigWigs e DBM."
+L.breakStarted = "Intervalo iniciado por %s pelo usuário %s."
+L.breakStopped = "Intervalo cancelado por %s."
+L.breakBar = "Intervalo"
+L.breakMinutes = "Intervalo acaba em %d |4minuto:minutos;!"
+L.breakSeconds = "Intervalo acaba em %d |4segundo:segundos;!"
+L.breakFinished = "Intervalo acabou!"
+
+-----------------------------------------------------------------------
+-- BossBlock.lua
+--
+
+L.bossBlock = "Bloqueio de Chefe"
+L.bossBlockDesc = "Configura diversas coisas que você pode bloquear durante um encontro com um chefe."
+L.movieBlocked = "Você já viu esta animação anteriormente, pulando ela."
+L.blockEmotes = "Bloqueia frases no meio da tela"
+L.blockEmotesDesc = "Alguns chefes usam frases de efeito para certas habilidades, essas mensagens são muito longas e descritivas. Nós tentamos produzir mensagens menores, mais apropriadas que não interferem com sua jogabilidade, e não te dizem especificamente o que fazer.\n\nObservação: Frases de chefes ainda serão vistas no bate-papo se quiser lê-las."
+L.blockMovies = "Bloquear vídeos repetidos"
+L.blockMoviesDesc = "Vídeos de encontros com chefes só irão ser reproduzidos uma vez (para que possa assistir cada um) e então serão bloqueados."
+L.blockGarrison = "Bloqueia avisos da guarnição"
+L.blockGarrisonDesc = "Avisos da guarnição aparecem para algumas coisas, mas principalmente quando uma missão de seguidor é completada.\n\nEsses avisos podem cobrir partes essenciais de sua interface durante uma luta contra um chefe, então recomendamos bloqueá-las."
+L.blockGuildChallenge = "Bloquear avisos de desafios de guilda"
+L.blockGuildChallengeDesc = "Avisos de desafio de guilda aparecem por alguns motivos, principalmente quando um grupo em sua guilda completa uma masmorra heroica ou uma masmorra em modo desafio.\n\nEsses avisos podem cobrir partes essenciais de sua interface durante uma luta contra um chefe, então recomendamos bloqueá-los."
+L.blockSpellErrors = "Bloquear mensagens sobre feitiços que falharam."
+L.blockSpellErrorsDesc = "Mensagens do tipo \"O feitiço não está pronto ainda\" que normalmente aparecem no topo da tela serão bloqueados."
+
+-----------------------------------------------------------------------
+-- Colors.lua
+--
+
+L.colors = "Cores"
+
+L.text = "Texto"
+L.textShadow = "Sombra do texto"
+L.flash = "Piscar"
+L.normal = "Normal"
+L.emphasized = "Enfatizado"
+
+L.reset = "Reiniciar"
+L.resetDesc = "Reinicia as cores padrões"
+L.resetAll = "Reiniciar tudo"
+L.resetAllDesc = "Se você personalizou as cores para os ajustes de algum encontro de chefe, este botão reiniciará TODOS ELES e usará as cores padrões."
+
+L.Important = "Importante"
+L.Personal = "Pessoal"
+L.Urgent = "Urgente"
+L.Attention = "Atenção"
+L.Positive = "Positivo"
+L.Neutral = "Neutro"
+
+-----------------------------------------------------------------------
+-- Emphasize.lua
+--
+
+L.superEmphasize = "Super enfatizar"
+L.superEmphasizeDesc = "Melhora as mensagens e barras relacionadas a uma habilidade de encontro de chefe específica.\n\nAqui você configura exatamente o que deverá acontecer quando ativar a opção de super enfatizar na sessão avançada para uma habilidade de encontro de chefe.\n\n|cffff4411Nota: Super enfatizar está desabilitado por padrão para todas as habilidades.|r"
+L.uppercase = "MAIÚSCULAS"
+L.uppercaseDesc = "Maiúsculas em todas as mensagens relacionadas a opção super enfatizada."
+L.superEmphasizeDisableDesc = "Desabilita super enfatizar para todos os módulos que usam ele."
+L.textCountdown = "Texto de contagem regressiva"
+L.textCountdownDesc = "Mostrar um contador visual durante uma contagem regressiva."
+L.countdownColor = "Cor da contagem regressiva"
+L.countdownVoice = "Voz da contagem regressiva"
+L.countdownTest = "Teste de contagem regressiva"
+L.countdownAt = "Contagem regressiva em... (segundos)"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
 --
 
---L.infoBox = "InfoBox"
+L.infoBox = "Caixa de informações"
+
+-----------------------------------------------------------------------
+-- Messages.lua
+--
+
+L.sinkDescription = "Redireciona a saída deste addOn pela exibição de mensagens do BigWigs. Ela dá suporte a ícones, cores e pode mostrar até 4 mensagens na tela de uma vez. Mensagens novas crescerão de tamanho e encolherão de novo rapidamente para notificar o usuário."
+L.emphasizedSinkDescription = "Redireciona a saída deste addOn pela exibição de mensagens enfatizadas do BigWigs. Ele dá suporte a texto e cores, e só exibe uma mensagem por vez."
+L.emphasizedCountdownSinkDescription = "Redireciona a saída deste addOn pela exibição de contagem regressiva enfatizada do BigWigs. Ele dá suporte a texto e cores, e só exibe uma mensagem por vez."
+
+L.bwEmphasized = "BigWigs enfatizado" -- TODO: Needs reviewing
+L.messages = "Mensagens"
+L.normalMessages = "Mensagens normais"
+L.emphasizedMessages = "Mensagens enfatizadas"
+L.output = "Saída"
+L.emphasizedCountdown = "Contagem regressiva enfatizada"
+
+L.useColors = "Usar cores"
+L.useColorsDesc = "Alterna entre mensagens em branco ou coloridas."
+L.useIcons = "Usar ícones"
+L.useIconsDesc = "Exibir ícones ao lado das mensagens."
+L.classColors = "Cores de classe"
+L.classColorsDesc = "Colore nomes de jogadores pela classe deles."
+
+L.fontSize = "Tamanho da fonte"
+L.none = "Nenhum"
+L.thin = "Fino"
+L.thick = "Grosso"
+L.outline = "Contorno"
+L.monochrome = "Monocromático"
+L.monochromeDesc = "Alterna o sinalizador de monocromático, removendo as melhorias das fontes."
+L.fontColor = "Cor do texto"
+
+L.displayTime = "Tempo de exibição"
+L.displayTimeDesc = "Tempo de exibição da mensagem, em segundos"
+L.fadeTime = "Tempo até esmaecer"
+L.fadeTimeDesc = "Tempo até esmaecer a mensagem, em segundos."
+
+-----------------------------------------------------------------------
+-- Proximity.lua
+--
+
+L.customRange = "Indicador de distância personalizado"
+-- The translation keeps values but changes the unit to meters instead of yards, as we are more used to the metric system.
+-- I'm opting to keep it the way the localization of the game uses as it's not possible to measure precisely neither it does any difference as the numbers are the same.
+L.proximityTitle = "%d m / %d |4jogador:jogadores;"
+L.proximity_name = "Proximidade"
+L.soundDelay = "Atraso de som"
+L.soundDelayDesc = "Especifique o tempo que BigWigs deverá esperar para repetir o som de quando alguem está muito perto de você."
+
+L.proximity = "Exibição de proximidade"
+L.proximity_desc = "Mostra a janela de proximidade quando for apropriada para este encontro, listando os jogadores que estão muito pertos de você."
+
+L.close = "Fechar"
+L.closeProximityDesc = "Fecha a janela de aproximação.\n\nPara desativa-la completamente para um encontro, tem que ir nas opções deste encontro e desativar a opção de 'Proximidade'."
+L.lock = "Bloquear"
+L.lockDesc = "Trava a janela no lugar, prevenindo movimento e mudança de tamanho."
+L.title = "Título"
+L.titleDesc = "Mostra ou oculta o título."
+L.background = "Fundo"
+L.backgroundDesc = "Mostra ou oculta o fundo"
+L.toggleSound = "Ativa o som"
+L.toggleSoundDesc = "Alterna se a janela de proximidade deve ou não apitar quando você está muito próximo de outro jogador."
+L.soundButton = "Botão de som"
+L.soundButtonDesc = "Mostra ou oculta o botão de som"
+L.closeButton = "Botão de fechar"
+L.closeButtonDesc = "Mostra ou oculta o botão de fechar"
+L.showHide = "Mostrar/ocultar"
+L.abilityName = "Nome da habilidade"
+L.abilityNameDesc = "Mostra ou oculta o nome da habilidade acima da janela."
+L.tooltip = "Dica de feitiço"
+L.tooltipDesc = "Mostra ou oculta a dica do feitiço se a janela de aproximação estiver associada diretamente a uma habilidade de chefe."
+
+-----------------------------------------------------------------------
+-- Pull.lua
+--
+
+L.countdownType = "Tipo de contagem regressiva"
+L.combatLog = "Registro de combate automático"
+L.combatLogDesc = "Inicia automaticamente o registro de combate quando um contador de pull é iniciado e termina ele quando o encontro termina."
+
+L.pull = "Pull"
+L.pulling = "Puxando!"
+L.pullStarted = "Pull iniciado por %s pelo usuário %s."
+L.pullStopped = "Pull cancelado por %s."
+L.pullIn = "Pull em %d seg"
+L.sendPull = "Enviando contador de pull para usuários BigWigs e DBM."
+L.wrongPullFormat = "Deve estar entre 1 e 60 segundos. Um exemplo correto seria: /pull 5"
+
+-----------------------------------------------------------------------
+-- RaidIcon.lua
+--
+
+L.icons = "Ícones"
+L.raidIconsDesc = "Alguns scripts de encontros usam os ícones de raide para marcar jogadores que são de interesse especial para seu grupo. Por exemplo, os efeitos tipo 'bomba' e controle mental. Se esta opção estiver desativada, não marcará nada.\n\n|cffff4411Somente aplicará as marcas se você for assistente ou líder!|r"
+L.raidIconsDescription = "Alguns encontros podem conter elementos de tipo 'bomba' focando em um jogador em especial, um jogador sendo perseguido, ou um jogador específico sendo de interesse em outros sentidos. Aqui você pode configurar quais ícones de raide devem ser usados para marcar esses jogadores.\n\nSe um encontro tem somente uma habilidade que exige marcação, somente o primeiro ícone será usado. Um ícone nunca será usado para duas habilidades diferentes no mesmo encontro, e uma mesma habilidade usará o mesmo ícone todas as vezes.\n\n|cffff4411Note que se um jogador já foi marcado manualmente o BigWigs não mudará seu ícone.|r"
+L.primary = "Primário"
+L.primaryDesc = "O primeiro ícone de raide que um script usará."
+L.secondary = "Secundário"
+L.secondaryDesc = "O segundo ícone de raide que um script usará."
+
+-----------------------------------------------------------------------
+-- Respawn.lua
+--
+
+L.respawn = "Respawn"
+L.showRespawnBar = "Mostrar barra de respawn"
+L.showRespawnBarDesc = "Mostra uma barra depois de você ser derrotado num chefe informando o tempo até que o chefe renasça."
+
+-----------------------------------------------------------------------
+-- Sound.lua
+--
+
+L.Sounds = "Sons"
+
+L.Alarm = "Alarme"
+L.Info = "Info"
+L.Alert = "Alerta"
+L.Long = "Longo"
+L.Warning = "Aviso"
+
+L.Beware = "Cuidado (Algalon)"
+L.FlagTaken = "Bandeira capturada (JvJ)"
+L.Destruction = "Destruição (Kil'jaeden)"
+L.RunAway = "Corra, garotinha! (Lobo Mau)"
+
+L.sound = "Som"
+L.soundDesc = "As mensagens podem conter um som. Para algumas pessoas fica mais fácil escutar quando aprendem que tal som aparece com tal mensagem, ao invés de ler a mensagem."
+
+L.customSoundDesc = "Reproduzir um som personalizado ao invés do padrão do módulo"
+L.resetAllCustomSound = "Se você personalizou sons para qualquer configuração de encontro, este botão ira redefinir TODOS eles para que os sons definidos aqui sejam utilizados."
 
 -----------------------------------------------------------------------
 -- Statistics.lua
 --
 
---L.printHealthOption = "Boss Health"
---L.healthPrint = "Health: %s."
---L.healthFormat = "%s (%.1f%%)"
+L.bossDefeatDurationPrint = "Derrotou '%s' após '%s'"
+L.bossWipeDurationPrint = "Foi derrotado por '%s' após %s"
+L.newBestTime = "Novo recorde!"
+L.bossStatistics = "Estatísticas do chefe."
+L.bossStatsDescription = "Gravar várias estatísticas dos encontros, como o número de vezes que um chefe foi morto, quantas derrotas, tempo total de combate, ou a morte mais rápida. Estas estatísticas podem ser visualizadas na tela de cada chefe, mas estará oculta para chefes que não têm estatísticas gravadas."
+L.enableStats = "Habilitar estatísticas"
+L.chatMessages = "Conversas"
+L.printBestTimeOption = "Notificação de melhor tempo"
+L.printDefeatOption = "Tempo de luta"
+L.printWipeOption = "Tempo até ser derrotado"
+L.countDefeats = "Contador de vitórias "
+L.countWipes = "Contador de derrotas"
+L.recordBestTime = "Gravar recorde"
+L.createTimeBar = "Mostrar barra do melhor tempo"
+L.bestTimeBar = "Melhor tempo"
+L.printHealthOption = "Vida do chefe"
+L.healthPrint = "Vida: %s."
+L.healthFormat = "%s (%.1f%%)"
+
+-----------------------------------------------------------------------
+-- Victory.lua
+--
+
+L.Victory = "Vitória"
+L.victoryHeader = "Configura as ações que devem ser tomadas após vencer um encontro."
+L.victorySound = "Toca um som de vitória"
+L.victoryMessages = "Mostrar mensagens de vitória"
+L.victoryMessageBigWigs = "Mostra a mensagem do BigWigs"
+L.victoryMessageBigWigsDesc = "A mensagem do BigWigs é uma simples mensagem de \"chefe foi derrotado\"."
+L.victoryMessageBlizzard = "Mostra a mensagem da Blizzard"
+L.victoryMessageBlizzardDesc = "A mensagem da Blizzard é uma animação com \"chefe foi derrotado\" bem grande no meio da tela."
+L.defeated = "%s foi derrotado"
