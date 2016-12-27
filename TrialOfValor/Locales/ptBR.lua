@@ -6,8 +6,8 @@ end
 
 L = BigWigs:NewBossLocale("Helya-TrialOfValor", "ptBR")
 if L then
-	L.nearTrigger = "perto de" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges near Helya! -- Translate this comment with the emote
-	L.farTrigger = "longe de" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t A %s emerges far from Helya! -- Translate this comment with the emote
+	L.nearTrigger = "perto de" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t Um %s surge perto de Helya!
+	L.farTrigger = "longe de" -- |TInterface\\Icons\\inv_misc_monsterhorn_03.blp:20|t Um %s surge longe de Helya!
 	L.tentacle_near = "Tentáculo PERTO DE Helya"
 	L.tentacle_near_desc = "Esta opção pode ser usada para enfatizar ou esconder a mensagem quando uma Batida com Tentáculo aparece perto de Heyla."
 	L.tentacle_far = "Tentáculo LONGE DE Helya"
