@@ -244,12 +244,12 @@ function boss:OnDisable(isWipe)
 end
 function boss:Reboot(isWipe)
 	if debug then dbg(self, ":Reboot()") end
-	-- Reboot covers everything including hard module reboots (clicking the minimap icon)
-	self:SendMessage("BigWigs_OnBossReboot", self)
 	if isWipe then
 		-- Devs, in 99% of cases you'll want to use OnBossWipe
 		self:SendMessage("BigWigs_OnBossWipe", self)
 	end
+	-- Reboot covers everything including hard module reboots (clicking the minimap icon)
+	self:SendMessage("BigWigs_OnBossReboot", self)
 	self:OnDisable(isWipe)
 	self:CancelAllTimers()
 	self:OnEnable(isWipe)
@@ -1102,7 +1102,7 @@ end
 local silencedOptions = {}
 do
 	bossUtilityFrame:Hide()
-	BigWigsLoader:RegisterMessage("BigWigs_SilenceOption", function(event, key, time)
+	BigWigsLoader.RegisterMessage(silencedOptions, "BigWigs_SilenceOption", function(event, key, time)
 		if key ~= nil then -- custom bars have a nil key
 			silencedOptions[key] = time
 			bossUtilityFrame:Show()

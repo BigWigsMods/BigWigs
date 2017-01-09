@@ -17,6 +17,8 @@ L.infobox_desc = "Zeigt eine Box mit Informationen zur Bossbegegnung an"
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
+L.disabledAddOn = "Du hast das Addon |cFF436EEE%s|r deaktiviert, Timer werden nicht angezeigt."
+
 L.activeBossModules = "Aktive Bossmodule:"
 L.advanced = "Erweiterte Optionen"
 L.alphaRelease = "Bei dir läuft ein ALPHA RELEASE von BigWigs %s (%s)."

@@ -7,15 +7,11 @@ local addon = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceTimer-3.0")
 addon:SetEnabledState(false)
 addon:SetDefaultModuleState(false)
 
--- Embed callback handler
-local loader = BigWigsLoader
-addon.RegisterMessage = loader.RegisterMessage
-addon.UnregisterMessage = loader.UnregisterMessage
-addon.SendMessage = loader.SendMessage
-
 local C -- = BigWigs.C, set from Constants.lua
 local L = BigWigsAPI:GetLocale("BigWigs")
 local CL = BigWigsAPI:GetLocale("BigWigs: Common")
+local loader = BigWigsLoader
+addon.SendMessage = loader.SendMessage
 
 local customBossOptions = {}
 local pName = UnitName("player")
@@ -77,9 +73,9 @@ do
 			end
 		end
 	end
-	addon:RegisterMessage("BigWigs_OnBossDisable", UnregisterAllEvents)
-	addon:RegisterMessage("BigWigs_OnBossReboot", UnregisterAllEvents)
-	addon:RegisterMessage("BigWigs_OnPluginDisable", UnregisterAllEvents)
+	loader.RegisterMessage(bwUtilityFrame, "BigWigs_OnBossDisable", UnregisterAllEvents)
+	loader.RegisterMessage(bwUtilityFrame, "BigWigs_OnBossReboot", UnregisterAllEvents)
+	loader.RegisterMessage(bwUtilityFrame, "BigWigs_OnPluginDisable", UnregisterAllEvents)
 end
 
 -------------------------------------------------------------------------------
@@ -330,7 +326,7 @@ do
 end
 
 function addon:OnEnable()
-	self:RegisterMessage("BigWigs_BossComm", bossComm)
+	loader.RegisterMessage(bwUtilityFrame, "BigWigs_BossComm", bossComm)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
 
 	self:RegisterEvent("ENCOUNTER_START")
@@ -349,7 +345,7 @@ end
 
 function addon:OnDisable()
 	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
-	self:UnregisterMessage("BigWigs_BossComm")
+	loader.UnregisterMessage(bwUtilityFrame, "BigWigs_BossComm")
 
 	self:UnregisterEvent("ENCOUNTER_START")
 
@@ -423,9 +419,9 @@ do
 			initModules[#initModules+1] = m
 
 			-- Embed callback handler
-			m.RegisterMessage = addon.RegisterMessage
-			m.UnregisterMessage = addon.UnregisterMessage
-			m.SendMessage = addon.SendMessage
+			m.RegisterMessage = loader.RegisterMessage
+			m.UnregisterMessage = loader.UnregisterMessage
+			m.SendMessage = loader.SendMessage
 
 			-- Embed event handler
 			m.RegisterEvent = addon.RegisterEvent

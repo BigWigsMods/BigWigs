@@ -17,6 +17,8 @@ L.infobox_desc = "显示当前战斗相关的信息。"
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
+L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，计时器将不被显示。"
+
 L.activeBossModules = "激活首领模块："
 L.advanced = "高级选项"
 L.alphaRelease = "你所使用的 BigWigs %s 为“α测试版”（%s）"
