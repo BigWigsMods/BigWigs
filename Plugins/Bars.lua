@@ -1099,11 +1099,6 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
-	-- XXX Temporary workaround for registering barstyles until I redo the style system
-	self:ScheduleTimer("OnDelayedEnable", 0.1)
-end
-
-function plugin:OnDelayedEnable()
 	colors = BigWigs:GetPlugin("Colors")
 
 	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
