@@ -321,7 +321,7 @@ end
 function mod:HornOfValor(args)
 	castingHorn = true
 	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 4.5, CL.cast:format(CL.count:format(args.spellName, hornCount)))
+	self:Bar(args.spellId, self:Easy() and 5 or 4.5, CL.cast:format(CL.count:format(args.spellName, hornCount)))
 	hornCount = hornCount + 1
 
 	local t = 0

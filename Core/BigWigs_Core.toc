@@ -19,7 +19,7 @@
 ## Notes-itIT: BigWigs Base
 ## Notes-koKR: BigWigs Core
 ## Notes-ruRU: Ядро BigWigs
-## Notes-ptBR: BigWigs Core
+## Notes-ptBR: Core do BigWigs
 ## Notes-esES: Núcleo de BigWigs.
 ## Notes-esMX: Núcleo de BigWigs.
 
