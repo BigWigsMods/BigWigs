@@ -117,9 +117,11 @@ do
 end
 
 function mod:ChitinousExoskeletonApplied(args)
-	self:Message(args.spellId, "Neutral", nil)
-	self:CDBar(204471, 7.5)	-- Focused Blast (time to _success)
-	self:CDBar(204372, 8.5)	-- Call of the Scorpid
+	if self.isEngaged then -- also applied when the boss spawns
+		self:Message(args.spellId, "Neutral", nil)
+		self:CDBar(204471, 7.5)	-- Focused Blast (time to _success)
+		self:CDBar(204372, 8.5)	-- Call of the Scorpid
+	end
 end
 
 function mod:ChitinousExoskeletonStacks(args)
