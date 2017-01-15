@@ -1,13 +1,10 @@
 
-
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Fix remaining spellId guesses
 -- - Respawn time
--- - Tuning sounds / message colors
--- - Remove alpha engaged message
--- - check Power Overwhelming duration
--- - fix stages (auras were hidden in the last testing)
+-- - Timers are an absolute nightmare. Each phase is different.
+-- - timeBombCountdown is experimental
+-- - TimeRelease aura could be hidden from cleu now, check on live
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -15,13 +12,20 @@
 
 local mod, CL = BigWigs:NewBoss("Chronomatic Anomaly", 1088, 1725)
 if not mod then return end
-mod:RegisterEnableMob(105248) -- fix me
+mod:RegisterEnableMob(104415)
 mod.engageId = 1865
---mod.respawnTime = 0
+mod.respawnTime = 30 -- could be wrong
 
 --------------------------------------------------------------------------------
 -- Locals
 --
+
+local normalPhase = 1
+local fastPhase = 1
+local slowPhase = 1
+local bombCount = 1
+local releaseCount = 1
+local bombSayTimers = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -37,55 +41,125 @@ function mod:GetOptions()
 	return {
 		"stages", -- Speed: Slow / Normal / Fast
 		{206607, "TANK"}, -- Chronometric Particles
-		206614, -- Burst of Time
 		206609, -- Time Release
 		{206617, "SAY"}, -- Time Bomb
 		207871, -- Vortex (standing in stuff)
 		212099, -- Temporal Charge
-		212115, -- Temporal Smash
 		211927, -- Power Overwhelming
 		207976, -- Full Power (Berserk?)
-		"berserk",
+		-13022, -- Waning Time Particle
+		207228, -- Wrap Nightwell
+	}, {
+		["stages"] = "general",
+		[-13022] = -13022,
 	}
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "Stages", 207011, 207012, 207013) -- Pre alpha test spellId
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "ChronometricParticles", 206607)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ChronometricParticles", 206607)
-	self:Log("SPELL_CAST_SUCCESS", "BurstOfTime", 206614)
 	self:Log("SPELL_AURA_APPLIED", "TimeRelease", 206609)
 	self:Log("SPELL_AURA_REMOVED", "TimeReleaseRemoved", 206609)
+	self:Log("SPELL_CAST_SUCCESS", "TimeReleaseSuccess", 206610)
 	self:Log("SPELL_AURA_APPLIED", "TimeBomb", 206617)
 	self:Log("SPELL_AURA_APPLIED", "VortexDamage", 207871)
 	self:Log("SPELL_PERIODIC_DAMAGE", "VortexDamage", 207871)
 	self:Log("SPELL_PERIODIC_MISSED", "VortexDamage", 207871)
 	self:Log("SPELL_AURA_APPLIED", "TemporalCharge", 212099)
-	self:Log("SPELL_AURA_APPLIED", "TemporalSmash", 212115)
 	self:Log("SPELL_CAST_START", "PowerOverwhelming", 211927)
+	self:Log("SPELL_CAST_START", "WarpNightwell", 207228)
 	self:Log("SPELL_AURA_APPLIED", "FullPower", 207976) -- Pre alpha test spellId
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Chronomatic Anomaly (Alpha) Engaged (Post Alpha Heroic Test Mod)")
-	self:Bar(211927, 60)
+	-- Timers are in UNIT_SPELLCAST_SUCCEEDED
+	normalPhase = 1
+	fastPhase = 1
+	slowPhase = 1
+	bombCount = 1
+	releaseCount = 1
+	wipe(bombSayTimers)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:Stages(args)
-	self:Message("stages", "Neutral", "Info", args.spellName, args.spellId)
+local function timeBombCountdown(self)
+	local name, _, _, _, _, _, expires, _, _, _, _, _, _, _, _, timeMod = UnitDebuff("player", self:SpellName(206617))
+	if not name then return end
+
+	for _,timer in pairs(bombSayTimers) do
+		self:CancelTimer(timer)
+	end
+	wipe(bombSayTimers)
+
+	local remaining = floor((expires - GetTime()) / timeMod)
+	for i = 1, 3 do
+		if remaining-i > 0 then
+			bombSayTimers[#bombSayTimers+1] = self:ScheduleTimer("Say", remaining-i, 206617, i, true)
+		end
+	end
+end
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 207012 then -- Speed: Normal
+		self:Message("stages", "Neutral", "Info", spellName, spellId)
+
+		timeBombCountdown(self)
+		bombCount = 1
+		releaseCount = 1
+
+		if normalPhase == 1 then
+			self:Bar(206609, 5) -- Time Release
+			self:Bar(206617, 31.5) -- Time Bomb
+			self:Bar(-13022, 25, CL.add, 207228) -- Big Add
+		elseif normalPhase == 2 then
+			--self:Bar(206609, ???) -- Time Release < unkown timer
+			self:Bar(206617, 3) -- Time Bomb
+			self:Bar(-13022, 16, CL.add, 207228) -- Big Add
+		end
+
+		normalPhase = normalPhase + 1
+	elseif spellId == 207011 then -- Speed: Slow
+		self:Message("stages", "Neutral", "Info", spellName, spellId)
+
+		timeBombCountdown(self)
+		bombCount = 1
+		releaseCount = 1
+
+		if slowPhase == 1 then
+			self:Bar(206609, 5) -- Time Release
+			self:Bar(206617, 12) -- Time Bomb
+			self:Bar(-13022, 50, CL.add, 207228) -- Big Add
+		end
+
+		slowPhase = slowPhase + 1
+	elseif spellId == 207013 then -- Speed: Fast
+		self:Message("stages", "Neutral", "Info", spellName, spellId)
+
+		timeBombCountdown(self)
+		bombCount = 1
+		releaseCount = 1
+
+		if fastPhase == 1 then
+			self:Bar(206609, 5) -- Time Release
+			self:Bar(206617, 21) -- Time Bomb
+			self:Bar(-13022, 38, CL.add, 207228) -- Big Add
+		end
+
+		fastPhase = fastPhase + 1
+	elseif spellId == 206700 then -- Summon Slow Add
+		self:Message(-13022, "Neutral", "Info", CL.spawning:format(CL.add), false)
+	end
 end
 
 function mod:ChronometricParticles(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 7 and "Warning") -- something bad happens at 10 stacks?!
-end
-
-function mod:BurstOfTime(args)
-	self:Message(args.spellId, "Attention", "Alarm")
+	if amount % 2 == 0 or amount > 6 then -- might be different for each speed
+		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 6 and "Warning")
+	end
 end
 
 do
@@ -107,19 +181,40 @@ do
 end
 
 function mod:TimeReleaseRemoved(args)
-	self:StopBar(args.spellId, args.destName)
+	if self:Me(args.destGUID) then
+		self:StopBar(args.spellId, args.destName)
+	end
 end
 
-function mod:TimeBomb(args)
-	local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
-	local remaining = expires-GetTime()
-	self:TargetMessage(args.spellId, args.destName, "Important")
-	self:TargetBar(args.spellId, remaining, args.destName)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
-		self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
-		self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
+function mod:TimeReleaseSuccess(args)
+	releaseCount = releaseCount + 1
+	if normalPhase == 1 then
+		self:Bar(206609, releaseCount == 3 and 25 or 15)
+	elseif slowPhase == 1 then
+		self:Bar(206609, 25)
+	elseif fastPhase == 1 then
+		self:Bar(206609, releaseCount < 4 and 10 or releaseCount > 5 and 8 or 5)
+	end
+end
+
+do
+	local list = mod:NewTargetList()
+	function mod:TimeBomb(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Important", "Alert")
+			bombCount = bombCount + 1
+			if slowPhase == 1 then
+				self:Bar(args.spellId, bombCount == 3 and 20 or 15)
+			elseif normalPhase == 2 then
+				self:Bar(args.spellId, 10)
+			end
+		end
+
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+			timeBombCountdown(self)
+		end
 	end
 end
 
@@ -135,18 +230,19 @@ do
 end
 
 function mod:TemporalCharge(args)
-	self:TargetMessage(args.spellId, args.destName, "Positive")
-end
-
-function mod:TemporalSmash(args)
-	self:Message(args.spellId, "Positive", "Info")
+	if UnitIsPlayer(args.destName) then
+		self:TargetMessage(args.spellId, args.destName, "Positive", "Info")
+	end
 end
 
 function mod:PowerOverwhelming(args)
 	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 65, CL.cast:format(args.spellName))
+end
+
+function mod:WarpNightwell(args)
+	self:Message(args.spellId, "Urgent", self:Interrupter(args.sourceGUID) and "Alert")
 end
 
 function mod:FullPower(args)
-	self:TargetMessage(args.spellId, args.destName, "Neutral")
+	self:TargetMessage(args.spellId, args.destName, "Neutral", "Long")
 end
