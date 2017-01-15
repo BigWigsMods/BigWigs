@@ -1,10 +1,7 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Figure out how Arcane Tether works (see comment on event handler)
--- - Be a little bit smarter about timers:
--- -- It looks like Shockwave is always cast on CD. This delays the other abilitys though
--- -- We don't know how the vulnerability phase affect timers yet
+-- - Arcane Tether warnings for tanks
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -46,9 +43,8 @@ function mod:GetOptions()
 		204459, -- Exoskeletal Vulnerability
 		204372, -- Call of the Scorpid
 		204471, -- Focused Blast
-		204284, -- Broken Shard
-		-- 204292, -- Crystalline Fragments
-		--{204531, "PROXIMITY"}, -- Arcane Tether
+		{204284, "EMPHASIZE"}, -- Broken Shard
+		--204292, -- Crystalline Fragments
 		"berserk",
 		-13767, -- Chromatic Exoskeleton
 	},{
@@ -64,11 +60,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ChitinousExoskeletonApplied", 204448)
 	self:Log("SPELL_AURA_REMOVED_DOSE", "ChitinousExoskeletonStacks", 204448)
 	self:Log("SPELL_AURA_APPLIED", "ExoskeletalVulnerabilityApplied", 204459)
-	self:Log("SPELL_CAST_SUCCESS", "CallOfTheScorpid", 204372)
+	self:Log("SPELL_CAST_START", "CallOfTheScorpid", 204372)
 	self:Log("SPELL_CAST_START", "FocusedBlast", 204471)
-	--self:Log("SPELL_SUMMON", "CrystallineFragments", 204292, 214662) -- blue, red fragments, don't think spawm messages are useful
-	--self:Log("SPELL_AURA_APPLIED", "ArcaneTether", 204531) -- Pre alpha testing spellId
-	--self:Log("SPELL_AURA_REMOVED", "ArcaneTetherRemoved", 204531) -- Pre alpha testing spellId
+	--self:Log("SPELL_SUMMON", "CrystallineFragments", 204292, 214662) -- blue/red fragments, don't think spawn messages are useful
 	self:Log("SPELL_AURA_APPLIED", "ToxicDamage", 204744)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ToxicDamage", 204744)
 	self:Log("SPELL_PERIODIC_MISSED", "ToxicDamage", 204744)
@@ -77,12 +71,14 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Skorpyron (Alpha) Engaged (Post Alpha Mythic Test Mod)", 123886) -- some scorpion icon
-	self:CDBar(204471, 15)	-- Focused Blast (time to _success)
-	self:Bar(204372, 21)	-- Call of the Scorpid
-	self:Bar(-13767, 35, L.mode:format(L.red), 211801)
+	self:Bar(204471, 17)	-- Focused Blast (time to _success)
+	self:Bar(204372, 21)	-- Call of the Scorpid (time to _start)
 	self:Bar(204316, 60) 	-- Shockwave (time to _success)
 	arcanoslashCount = 1
+
+	if self:Mythic() then
+		self:Bar(-13767, 35, L.mode:format(L.red), 211801)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -109,7 +105,7 @@ do
 	function mod:Shockwave(args)
 		self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
 		self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
-		self:Bar(args.spellId, 60)
+		self:CDBar(args.spellId, 60) -- can be delayed by up to 3s
 		checkForBrokenShard()
 	end
 
@@ -122,6 +118,8 @@ end
 
 function mod:ChitinousExoskeletonApplied(args)
 	self:Message(args.spellId, "Neutral", nil)
+	self:CDBar(204471, 7.5)	-- Focused Blast (time to _success)
+	self:CDBar(204372, 8.5)	-- Call of the Scorpid
 end
 
 function mod:ChitinousExoskeletonStacks(args)
@@ -131,8 +129,8 @@ function mod:ChitinousExoskeletonStacks(args)
 end
 
 function mod:ExoskeletalVulnerabilityApplied(args)
-	self:Message(args.spellId, "Positive", "Info") -- 50% more damage taken is positive
-	self:Bar(args.spellId, 14) -- this was 14s in alpha tests, but 15s in tooltips
+	self:Message(args.spellId, "Positive", "Info")
+	self:Bar(args.spellId, 14) -- this was 14s on ptr, but says 15s in tooltips
 end
 
 function mod:CallOfTheScorpid(args)
@@ -142,36 +140,9 @@ end
 
 function mod:FocusedBlast(args)
 	self:Message(args.spellId, "Urgent", "Alert")
-	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
 	self:CDBar(args.spellId, 30)
 end
-
---[[
-function mod:CrystallineFragments(args)
-	self:Message(args.spellId, "Positive", nil, CL.spawned:format(args.spellName))
-end
-]]
-
---[[
--- TODO: I have no idea how this works yet.
--- Might be a debuff you only get when you are near the tank (like a fail mechanic)
--- I got the debuff with 2 stacks on the hc test, ran away and it disapperead - dunno how, why, ...
-
--- This function is from pre alpha testing. Please fix it or remove this comment if it's working
-function mod:ArcaneTether(args)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Alert")
-	if self:Me(args.destGUID) then
-		self:OpenProximity(args.spellId, 10)
-	end
-end
-
--- This function is from pre alpha testing. Please fix it or remove this comment if it's working
-function mod:ArcaneTetherRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CloseProximity(args.spellId)
-	end
-end
-]]
 
 do
 	local prev = 0
@@ -186,11 +157,8 @@ end
 
 do
 	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, spellGUID, _)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		local t = GetTime()
-		local spellId = tonumber(select(5, strsplit("-", spellGUID)), 10) -- new uscs format: 3-[server id]-[instance id]-[zone uid]-[spell id]-[spell uid]
-
-		print(t, spellId)
 		if spellId == 214800 and t-prev > 1 then -- Red
 			prev = t
 			self:Message(-13767, "Neutral", "Info", L.mode:format(L.red), 211801)
