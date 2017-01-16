@@ -79,7 +79,7 @@ end
 
 function mod:GetOptions()
 	return {
-		{206677, "TANK"}, -- Fel Brand
+		{206677, "TANK"}, -- Searing Brand
 		205368, -- Fel Beam (right)
 		{205344, "SAY", "FLASH"}, -- Orb of Destruction
 		205862, -- Slam
@@ -91,8 +91,8 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-	self:Log("SPELL_AURA_APPLIED", "FelBrand", 206677)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "FelBrand", 206677)
+	self:Log("SPELL_AURA_APPLIED", "SearingBrand", 206677)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "SearingBrand", 206677)
 	self:Log("SPELL_CAST_START", "FelBeamCast", 205370, 205368) -- left, right
 	self:Log("SPELL_CAST_SUCCESS", "FelBeamSuccess", 205370, 205368) -- left, right
 	self:Log("SPELL_AURA_APPLIED", "OrbOfDescructionApplied", 205344)
@@ -102,8 +102,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Krosus Engaged (Beta v2)", 205862)
-
 	beamCount = 1
 	orbCount = 1
 	burningPitchCount = 1
@@ -135,10 +133,10 @@ do
 	end
 end
 
-function mod:FelBrand(args)
+function mod:SearingBrand(args)
 	local amount = args.amount or 1
 	if amount % 2 == 1 or amount > 4 then -- 1, 3, 5, 6, 7, 8, ...
-		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 4 and "Alarm") -- check taunt amount
+		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 3 and "Alarm")
 	end
 end
 
