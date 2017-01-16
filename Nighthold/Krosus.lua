@@ -1,12 +1,7 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Tuning sounds / message colors
--- - Remove beta engaged message
--- - We could do some cool positioning stuff on this fight
---   - warning when standing left / right side and beam is incoming there
---   - warning when bridge is breaking and standing there
--- - Needs to be tested in all difficulties
+-- - Verify live timers on all difficulties
 
 --------------------------------------------------------------------------------
 -- Module Declaration
