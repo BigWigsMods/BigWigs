@@ -1,10 +1,8 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Tuning sounds / message colors
 -- - Check if the marker functions do what they should
 -- - Check if the Call of Night func works
--- - Remove alpha engaged message
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -20,37 +18,29 @@ mod.respawnTime = 7 -- fix me
 -- Locals
 --
 
-local nextPhaseSoon = 0
-local phase = 0
+local nextPhaseSoon = 78
+local phase = 1
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:GetLocale()
-if L then
-	L.custom_off_night_marker = "Call of Night marker"
-	L.custom_off_night_marker_desc = "Mark the targets of Call of Night with {rt1}{rt2}{rt3}{rt4}{rt5}{rt6}, requires promoted or leader."
-	L.custom_off_night_marker_icon = 1
-
-	L.custom_off_fetter_marker = "Parasitic Fetter marker"
-	L.custom_off_fetter_marker_desc = "Mark the last target of Parasitic Fetter with {rt8}, requires promoted or leader."
-	L.custom_off_fetter_marker_icon = 8
-end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local callOfTheNightMarker = mod:AddMarkerOption(false, "player", 1, 218809, 1, 2, 3, 4, 5, 6)
+local fetterMarker = mod:AddMarkerOption(false, "player", 8, 218304, 8)
 function mod:GetOptions()
 	return {
 		--[[ General ]]--
 		"stages",
-		"berserk",
 
 		--[[ Arcanist Tel'arn ]]--
 		{218809, "SAY", "FLASH", "PROXIMITY"}, -- Call of Night
-		"custom_off_night_marker",
+		callOfTheNightMarker,
 		{218503, "TANK"}, -- Recursive Strikes
 		218438, -- Controlled Chaos
 
@@ -62,9 +52,9 @@ function mod:GetOptions()
 		219235, -- Toxic Spores
 		218927, -- Grace of Nature
 		{218304, "SAY"}, -- Parasitic Fetter
-		"custom_off_fetter_marker",
+		fetterMarker,
 		{218342, "FLASH"}, -- Parasitic Fixate
-	} , {
+	}, {
 		["stages"] = "general",
 		[218809] = -13694, -- Arcanist Tel'arn
 		[218148] = -13682, -- Solarist Tel'arn
@@ -100,7 +90,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "High Botanist Tel'arn (Alpha) Engaged (Post Alpha Heroic Test Mod)", "ability_druid_manatree")
 	nextPhaseSoon = 78
 	phase = 1
 	self:Bar(218148, 10) -- Solar Collapse, to _start
@@ -118,7 +107,7 @@ function mod:Nightosis1(args)
 	self:Message("stages", "Neutral", "Info", self:SpellName(-13681), false) -- Stage Two: Nightosis
 	phase = 2
 	self:Bar(218148, 12) -- Solar Collapse, to _start
-	self:Bar(218304, 23.5) -- Parasitic Fetter, to _success
+	self:Bar(218304, 22) -- Parasitic Fetter, to _success
 	self:Bar(218774, 37) -- Summon Plasma Spheres, to _start
 	self:Bar(218438, 57) -- Controlled Chaos, to _start
 end
@@ -127,7 +116,7 @@ function mod:Nightosis2(args)
 	self:Message("stages", "Neutral", "Info", self:SpellName(-13683), false) -- Stage Three: Pure Forms
 	phase = 3
 	self:Bar(218148, 17) -- Solar Collapse, to _start
-	self:Bar(218304, 29) -- Parasitic Fetter, to _success
+	self:Bar(218304, 27) -- Parasitic Fetter, to _success
 	self:Bar(218438, 37) -- Controlled Chaos, to _start
 	self:Bar(218774, 52) -- Summon Plasma Spheres, to _start
 	self:Bar(218809, 64) -- Call of Night, to _success
@@ -175,7 +164,7 @@ do
 			self:Bar(args.spellId, 70)
 		end
 
-		if self:GetOption("custom_off_night_marker") then
+		if self:GetOption(callOfTheNightMarker) then
 			local icon = iconsUnused[1]
 			if icon then -- At least one icon unused
 				SetRaidTarget(args.destName, icon)
@@ -199,7 +188,7 @@ do
 			end
 		end
 
-		if self:GetOption("custom_off_night_marker") then
+		if self:GetOption(callOfTheNightMarker) then
 			local icon = GetRaidTargetIndex(args.destName)
 			if icon > 0 and icon < 7 and not tContains(iconsUnused, icon) then
 				table.insert(iconsUnused, icon)
@@ -264,14 +253,14 @@ function mod:ParasiticFetter(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
-	if self:GetOption("custom_off_fetter_marker") then
+	if self:GetOption(fetterMarker) then
 		SetRaidTarget(args.destName, 8)
 	end
 end
 
 function mod:ParasiticFetterRemoved(args)
 	self:Message(args.spellId, "Attention", self:Damager() and "Alarm", CL.spawned:format(self:SpellName(-13699))) -- Parasitic Lasher
-	if self:GetOption("custom_off_fetter_marker") and GetRaidTargetIndex(args.destName) == 8 then
+	if self:GetOption(fetterMarker) and GetRaidTargetIndex(args.destName) == 8 then
 		SetRaidTarget(args.destName, 0)
 	end
 end
