@@ -45,6 +45,7 @@ function mod:GetOptions()
 		204471, -- Focused Blast
 		{204284, "EMPHASIZE"}, -- Broken Shard
 		--204292, -- Crystalline Fragments
+		204744, -- Toxic Chitin
 		"berserk",
 		-13767, -- Chromatic Exoskeleton
 	},{
