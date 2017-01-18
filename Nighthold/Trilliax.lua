@@ -92,7 +92,7 @@ end
 --
 
 local function timeToNextPhase(self)
-	return phase == 1 and self:BarTimeLeft(206557) or phase == 2 and self:BarTimeLeft(206559) or self:BarTimeLeft(206560)
+	return phase == 1 and mod:BarTimeLeft(206557) or phase == 2 and mod:BarTimeLeft(206559) or mod:BarTimeLeft(206560)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
@@ -194,10 +194,12 @@ do
 		end
 
 		if myPartner then
-			self:Message(args.spellId, "Personal", "Warning", L.yourLink:format(self:ColorName(myPartner)))
+			self:Message(208910, "Personal", "Warning", L.yourLink:format(self:ColorName(myPartner)))
 			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 			local remaining = expires-GetTime()
-			self:Bar(args.spellId, remaining, L.yourLinkShort:format(self:ColorName(myPartner)))
+			self:Bar(208910, remaining, L.yourLinkShort:format(self:ColorName(myPartner)))
+			myPartner = nil
+			myPartnerIsNext = nil
 		end
 	end
 end
