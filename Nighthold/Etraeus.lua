@@ -150,7 +150,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Message("stages", "Neutral", "Long", CL.stage:format(4), false)
 		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 		self:StopBar(CL.count:format(self:SpellName(205649, ejectionCount)))
-		self:StopBar(206517) -- Frigid Nova
+		self:StopBar(206517) -- Fel Nova
 		ejectionCount = 1
 		self:CDBar(214335, 20) -- Gravitational Pull
 		self:CDBar(207439, 42) -- Fel Nova
@@ -202,7 +202,7 @@ end
 
 function mod:IcyEjection(args)
 	ejectionCount = ejectionCount + 1
-	self:CDBar(args.spellId, timers[args.spellId][ejectionCount], CL.count:format(args.spellName, ejectionCount))
+	self:CDBar(args.spellId, timers[args.spellId][ejectionCount] or 30, CL.count:format(args.spellName, ejectionCount))
 end
 
 do
@@ -281,7 +281,7 @@ end
 
 function mod:FelEjection(args)
 	ejectionCount = ejectionCount + 1
-	self:CDBar(args.spellId, timers[args.spellId][ejectionCount], CL.count:format(args.spellName, ejectionCount))
+	self:CDBar(args.spellId, timers[args.spellId][ejectionCount] or 30, CL.count:format(args.spellName, ejectionCount))
 end
 
 do
