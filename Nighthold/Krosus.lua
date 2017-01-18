@@ -66,6 +66,8 @@ if L then
 	L.rightBeam = "Right Beam"
 
 	L.smashingBridge = "Smashing Bridge"
+
+	L.removedFromYou = "%s removed from you" -- "Searing Brand removed from YOU!"
 end
 
 --------------------------------------------------------------------------------
@@ -88,6 +90,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "SearingBrand", 206677)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SearingBrand", 206677)
+	self:Log("SPELL_AURA_REMOVED", "SearingBrandRemoved", 206677)
 	self:Log("SPELL_CAST_START", "FelBeamCast", 205370, 205368) -- left, right
 	self:Log("SPELL_CAST_SUCCESS", "FelBeamSuccess", 205370, 205368) -- left, right
 	self:Log("SPELL_AURA_APPLIED", "OrbOfDescructionApplied", 205344)
@@ -130,8 +133,14 @@ end
 
 function mod:SearingBrand(args)
 	local amount = args.amount or 1
-	if amount % 2 == 1 or amount > 4 then -- 1, 3, 5, 6, 7, 8, ...
-		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 3 and "Alarm")
+	if amount % 2 == 1 or amount > 3 then -- 1, 3, 4, 5, 6, 7, 8, ... < this is hc, might need to change for others
+		self:StackMessage(args.spellId, args.destName, amount, "Urgent")
+	end
+end
+
+function mod:SearingBrandRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Urgent", "Warning", L.removedFromYou:format(args.spellName))
 	end
 end
 
