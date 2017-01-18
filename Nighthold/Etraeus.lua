@@ -89,7 +89,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "IcyEjection", 206936)
 	self:Log("SPELL_AURA_APPLIED", "IcyEjectionApplied", 206936)
 	self:Log("SPELL_AURA_APPLIED", "IcyEjectionRemoved", 206936)
-	self:Log("SPELL_CAST_START", "FrigidNovaStart", 206949)
+	self:Log("SPELL_CAST_START", "FrigidNova", 206949)
 
 	--[[ Stage Three ]]--
 	self:Log("SPELL_AURA_APPLIED", "GravitationalPullP3", 214167)
