@@ -66,8 +66,6 @@ if L then
 	L.rightBeam = "Right Beam"
 
 	L.smashingBridge = "Smashing Bridge"
-
-	L.removedFromYou = "%s removed from you" -- "Searing Brand removed from YOU!"
 end
 
 --------------------------------------------------------------------------------
@@ -140,7 +138,7 @@ end
 
 function mod:SearingBrandRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Urgent", "Warning", L.removedFromYou:format(args.spellName))
+		self:Message(args.spellId, "Urgent", "Warning", CL.removed:format(args.spellName))
 	end
 end
 
