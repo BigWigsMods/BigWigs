@@ -91,10 +91,6 @@ end
 -- Event Handlers
 --
 
-local function timeToNextPhase(self)
-	return phase == 1 and mod:BarTimeLeft(206557) or phase == 2 and mod:BarTimeLeft(206559) or mod:BarTimeLeft(206560)
-end
-
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 207620 then -- Annihilation
 		self:Message(207630, "Important", "Long")
@@ -132,18 +128,25 @@ do
 	end
 end
 
-function mod:ArcaneSlash(args)
-	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 2 and "Warning")
-	if timeToNextPhase() > (phase == 2 and 7.3 or 11) then
-		self:Bar(args.spellId, phase == 2 and 7.3 or 11)
+do
+	local function timeToNextPhase(self)
+		return phase == 1 and self:BarTimeLeft(206557) or phase == 2 and self:BarTimeLeft(206559) or self:BarTimeLeft(206560)
 	end
-end
 
-function mod:ToxicSlice(args)
-	self:Message(args.spellId, "Urgent", "Alarm", CL.incoming:format(args.spellName))
-	if timeToNextPhase() > 26 then
-		self:CDBar(args.spellId, 26)
+	function mod:ArcaneSlash(args)
+		local amount = args.amount or 1
+		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 2 and "Warning")
+		local t = phase == 2 and 7.3 or 11
+		if timeToNextPhase(self) > t then
+			self:Bar(args.spellId, t)
+		end
+	end
+
+	function mod:ToxicSlice(args)
+		self:Message(args.spellId, "Urgent", "Alarm", CL.incoming:format(args.spellName))
+		if timeToNextPhase(self) > 26 then
+			self:CDBar(args.spellId, 26)
+		end
 	end
 end
 
