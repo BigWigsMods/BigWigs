@@ -17,6 +17,7 @@ mod.respawnTime = 30 -- moves into room at 30, ~35 till he is in position
 -- Locals
 --
 
+local engageTime = 0
 local arcanoslashCount = 1
 
 --------------------------------------------------------------------------------
@@ -37,6 +38,7 @@ end
 
 function mod:GetOptions()
 	return {
+		--[[ General ]]--
 		{204275, "TANK"}, -- Arcanoslash
 		204316, -- Shockwave
 		204448, -- Chitinous Exoskeleton
@@ -46,7 +48,8 @@ function mod:GetOptions()
 		{204284, "EMPHASIZE"}, -- Broken Shard
 		--204292, -- Crystalline Fragments
 		204744, -- Toxic Chitin
-		"berserk",
+
+		--[[ Mythic ]]--
 		-13767, -- Chromatic Exoskeleton
 	},{
 		[204275] = "general",
@@ -72,9 +75,11 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(204471, 17)	-- Focused Blast (time to _success)
-	self:Bar(204372, 21)	-- Call of the Scorpid (time to _start)
-	self:Bar(204316, 60) 	-- Shockwave (time to _success)
+	engageTime = GetTime()
+	self:Bar(204275, 6) -- Arcanoslash
+	self:Bar(204471, 16) -- Focused Blast (time to _success)
+	self:Bar(204372, 20) -- Call of the Scorpid (time to _start)
+	self:Bar(204316, 59) -- Shockwave (time to _success)
 	arcanoslashCount = 1
 
 	if self:Mythic() then
@@ -98,15 +103,19 @@ do
 
 	local function checkForBrokenShard()
 		if not UnitDebuff("player", name) then
-			mod:Message(204284, "Personal", "Info", CL.no:format(name))
+			mod:Message(204284, "Personal", "Warning", CL.no:format(name))
 			brokenShardCheck = mod:ScheduleTimer(checkForBrokenShard, 1)
+		else
+			mod:Message(204284, "Positive", nil, CL.you:format(name))
 		end
 	end
 
 	function mod:Shockwave(args)
 		self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
 		self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
-		self:CDBar(args.spellId, 60) -- can be delayed by up to 3s
+		self:CDBar(args.spellId, 58) -- can be delayed by up to 3s
+		self:CDBar(204372, 11) -- Call of the Scorpid (time to _start)
+		self:CDBar(204471, 24) -- Focused Blast (time to _success)
 		checkForBrokenShard()
 	end
 
@@ -118,10 +127,8 @@ do
 end
 
 function mod:ChitinousExoskeletonApplied(args)
-	if self.isEngaged then -- also applied when the boss spawns
+	if self.isEngaged and (GetTime() - engageTime) > 10 then -- also applied when the boss spawns and/or(?) is pulled
 		self:Message(args.spellId, "Neutral", nil)
-		self:CDBar(204471, 7.5)	-- Focused Blast (time to _success)
-		self:CDBar(204372, 8.5)	-- Call of the Scorpid
 	end
 end
 
@@ -133,7 +140,9 @@ end
 
 function mod:ExoskeletalVulnerabilityApplied(args)
 	self:Message(args.spellId, "Positive", "Info")
-	self:Bar(args.spellId, 14) -- this was 14s on ptr, but says 15s in tooltips
+	self:Bar(args.spellId, 14, CL.cast:format(self:SpellName(160734))) -- 160734 = Vulnerability
+	self:CDBar(204471, 21.5) -- Focused Blast (time to _success), 14+7.5
+	self:CDBar(204372, 22.5) -- Call of the Scorpid, 14+8.5
 end
 
 function mod:CallOfTheScorpid(args)
