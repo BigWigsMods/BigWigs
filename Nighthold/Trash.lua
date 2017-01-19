@@ -49,7 +49,7 @@ function mod:GetOptions()
 	return {
 		--[[ Skorpyron to Chronomatic Anomaly ]]--
 		230438, -- Devastating Strike (Torm)
-		231086, -- Bolder Strike (Torm)
+		{231086, "FLASH", "SAY"}, -- Bolder Strike (Torm)
 		230482, -- Rumbling Blow (Torm)
 		230488, -- Rumbling Ground (Torm)
 		221164, -- Fulminate (Fulminant)
@@ -131,8 +131,17 @@ function mod:DevastatingStrike(args)
 	self:CDBar(args.spellId, 7.5)
 end
 
-function mod:BolderStrike(args)
-	self:Message(args.spellId, "Urgent", "Long")
+do
+	local function printTarget(self, player, guid)
+		self:TargetMessage(231086, player, "Urgent", "Long", nil, nil, true)
+		if self:Me(guid) then
+			self:Say(231086)
+			self:Flash(231086)
+		end
+	end
+	function mod:BolderStrike(args)
+		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
+	end
 end
 
 function mod:RumblingBlow(args)
