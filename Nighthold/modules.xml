@@ -11,5 +11,6 @@
 <Script file="Etraeus.lua"/>
 <Script file="Elisande.lua"/>
 <Script file="Guldan.lua"/>
+<Script file="Trash.lua"/>
 
 </Ui>
