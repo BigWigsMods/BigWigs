@@ -47,7 +47,7 @@ function mod:GetOptions()
 		206820, -- Cleansing Rage
 
 		-- Maniac
-		208910, -- Searing Bonds
+		208910, -- Arcing Bonds
 		207630, -- Annihilation
 
 		-- Caretaker
@@ -74,6 +74,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CleansingRage", 206820)
 	self:Log("SPELL_CAST_START", "ArcingBondsCast", 208924)
 	self:Log("SPELL_AURA_APPLIED", "ArcingBonds", 208910, 208915)
+	self:Log("SPELL_AURA_APPLIED", "Annihilation", 207630)
 	self:Log("SPELL_CAST_START", "SucculentFeastCast", 207502)
 	self:Log("SPELL_AURA_APPLIED", "SucculentFeastApplied", 206838)
 	self:Log("SPELL_AURA_REMOVED", "SucculentFeastRemoved", 206838)
@@ -110,6 +111,7 @@ function mod:Phase(args)
 		self:Bar("stages", 40, 206559, 206559) -- The Caretaker
 		self:StopBar(self:SpellName(206788)) -- Toxic Slice
 		self:CDBar(206641, 6) -- Arcane Slash
+		self:Bar(207630, 20.5) -- Annihilation
 	elseif args.spellId == 206559 then -- Caretaker
 		phase = 3
 		self:Bar("stages", 13, 206560, 206560) -- The Cleaner
@@ -205,6 +207,10 @@ do
 			myPartnerIsNext = nil
 		end
 	end
+end
+
+function mod:Annihilation(args)
+	self:Bar(args.spellId, 16, CL.cast:format(args.spellName))
 end
 
 function mod:SucculentFeastCast(args)
