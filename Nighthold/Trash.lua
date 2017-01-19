@@ -57,7 +57,7 @@ function mod:GetOptions()
 		230488, -- Rumbling Ground (Torm)
 		221164, -- Fulminate (Fulminant)
 		221160, -- Compress the Void (Pulsauron)
-		{223655, "SAY", "FLASH", "ICON"}, -- Oozing Rush
+		{223655, "SAY", "FLASH", "ICON"}, -- Oozing Rush (Sludgerax)
 
 		--[[ Trilliax to Aluriel ]]--
 		224510, -- Crackling Slice (Duskwatch Battle-Magus)
@@ -67,7 +67,7 @@ function mod:GetOptions()
 		224572, -- Disrupting Energy (Nighthold Protector)
 
 		--[[ Aluriel to Krosos ]]--
-		{221344, "SAY", "FLASH"}, -- Searing Infernal
+		{221344, "SAY", "FLASH"}, -- Annihilating Orb (Searing Infernal)
 	}, {
 		[230438] = L.torm,
 		[221164] = L.fulminant,
@@ -230,6 +230,7 @@ end
 --[[ Aluriel to Krosos ]]--
 function mod:AnnihilatingOrb(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Warning")
+	self:Bar(args.spellId, 5, args.destName)
 	self:Bar(args.spellId, 35)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
@@ -242,5 +243,5 @@ function mod:AnnihilatingOrbRemoved(args)
 end
 
 function mod:InfernalDeath(args)
-	self:StopBar(221344)
+	self:StopBar(221344) -- Annihilating Orb
 end
