@@ -1,8 +1,6 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Check if the marker functions do what they should
--- - Check if the Call of Night func works
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -18,7 +16,7 @@ mod.respawnTime = 7 -- fix me
 -- Locals
 --
 
-local nextPhaseSoon = 78
+local nextPhaseSoon = 80
 local phase = 1
 
 --------------------------------------------------------------------------------
@@ -106,27 +104,27 @@ end
 function mod:Nightosis1(args)
 	self:Message("stages", "Neutral", "Info", self:SpellName(-13681), false) -- Stage Two: Nightosis
 	phase = 2
-	self:Bar(218148, 12) -- Solar Collapse, to _start
-	self:Bar(218304, 22) -- Parasitic Fetter, to _success
-	self:Bar(218774, 37) -- Summon Plasma Spheres, to _start
-	self:Bar(218438, 57) -- Controlled Chaos, to _start
+	self:Bar(218774, 12) -- Summon Plasma Spheres, to _start
+	self:Bar(218304, 23.5) -- Parasitic Fetter, to _success
+	self:Bar(218148, 32) -- Solar Collapse, to _start
+	self:Bar(218438, 42) -- Controlled Chaos, to _start
 end
 
 function mod:Nightosis2(args)
 	self:Message("stages", "Neutral", "Info", self:SpellName(-13683), false) -- Stage Three: Pure Forms
 	phase = 3
-	self:Bar(218148, 17) -- Solar Collapse, to _start
-	self:Bar(218304, 27) -- Parasitic Fetter, to _success
-	self:Bar(218438, 37) -- Controlled Chaos, to _start
-	self:Bar(218774, 52) -- Summon Plasma Spheres, to _start
-	self:Bar(218809, 64) -- Call of Night, to _success
-	self:Bar(218927, 72) -- Grace of Nature, to _start
+	self:Bar(218927, 10.5) -- Grace of Nature, to _start
+	self:Bar(218809, 20) -- Call of Night, to _success
+	self:Bar(218774, 26) -- Summon Plasma Spheres, to _start
+	self:Bar(218304, 34) -- Parasitic Fetter, to _success
+	self:Bar(218148, 42) -- Solar Collapse, to _start
+	self:Bar(218438, 52) -- Controlled Chaos, to _start
 end
 
 do
 	local phaseMessage = {
-		[78] = mod:SpellName(-13681), -- 75% Stage Two: Nightosis
-		[53] = mod:SpellName(-13683), -- 50% Stage Three: Pure Forms
+		[80] = mod:SpellName(-13681), -- 75% Stage Two: Nightosis
+		[55] = mod:SpellName(-13683), -- 50% Stage Three: Pure Forms
 	}
 	function mod:UNIT_HEALTH_FREQUENT(unit)
 		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
@@ -152,6 +150,7 @@ do
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 			self:OpenProximity(args.spellId, 8, proxList) -- don't stand near others with the debuff
+			self:TargetBar(args.spellId, 45, args.destName)
 		end
 
 		if not isOnMe then
@@ -161,7 +160,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Alert")
-			self:Bar(args.spellId, 70)
+			self:Bar(args.spellId, 50)
 		end
 
 		if self:GetOption(callOfTheNightMarker) then
@@ -177,6 +176,7 @@ do
 		if self:Me(args.destGUID) then
 			isOnMe = nil
 			self:CloseProximity(args.spellId)
+			self:StopBar(args.spellId, args.destName)
 		end
 
 		tDeleteItem(proxList, args.destName)
@@ -207,25 +207,25 @@ end
 
 function mod:ControlledChaos(args)
 	self:Message(args.spellId, "Important", "Alert", CL.incoming:format(args.spellName))
-	self:Bar(args.spellId, phase == 2 and 55 or phase == 3 and 70 or 35)
+	self:Bar(args.spellId, phase == 2 and 40 or phase == 3 and 50 or 35)
 end
 
 --[[ Solarist Tel'arn ]]--
 function mod:SolarCollapse(args)
 	self:Message(args.spellId, "Important", "Long", CL.incoming:format(args.spellName))
-	self:Bar(args.spellId, phase == 2 and 55 or phase == 3 and 70 or 35)
+	self:Bar(args.spellId, phase == 2 and 40 or phase == 3 and 50 or 35)
 end
 
 function mod:SummonPlasmaSpheres(args)
 	self:Message(args.spellId, "Urgent", "Alert")
-	self:Bar(args.spellId, phase == 2 and 55 or 70)
+	self:Bar(args.spellId, phase == 2 and 40 or 50)
 end
 
 --[[ Naturalist Tel'arn ]]--
 function mod:ToxicSpores(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
-		self:TargetBar(args.spellId, 30, args.destName)
+		self:TargetBar(args.spellId, 12, args.destName)
 	end
 end
 
@@ -237,11 +237,18 @@ end
 
 function mod:GraceOfNature(args)
 	self:Message(args.spellId, "Important", "Long", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 70)
+	self:Bar(args.spellId, 50)
 end
 
-function mod:GraceOfNatureAura(args)
-	self:TargetMessage(218927, args.destName, "Urgent", self:Tank() and "Alarm")
+do
+	local prev = 0
+	function mod:GraceOfNatureAura(args)
+		local t = GetTime()
+		if t-prev > 1.5 then
+			prev = t
+			self:TargetMessage(218927, args.destName, "Urgent", self:Tank() and "Alarm")
+		end
+	end
 end
 
 function mod:ParasiticFetterSuccess(args)
