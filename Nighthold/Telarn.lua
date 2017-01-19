@@ -88,7 +88,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	nextPhaseSoon = 78
+	nextPhaseSoon = 80
 	phase = 1
 	self:Bar(218148, 10) -- Solar Collapse, to _start
 	self:Bar(218304, 21.5) -- Parasitic Fetter, to _success
