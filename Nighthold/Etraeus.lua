@@ -15,6 +15,7 @@ mod.respawnTime = 50 -- might be wrong
 
 local phase = 1
 local mobCollector = {}
+local gravPullSayTimers = {}
 local ejectionCount = 1
 local timers = {
 	-- Icy Ejection, SPELL_CAST_SUCCESS, timers vary a lot (+-2s)
@@ -114,6 +115,7 @@ function mod:OnEngage()
 	phase = 1
 	ejectionCount = 1
 	wipe(mobCollector)
+	wipe(gravPullSayTimers)
 	self:Bar(206464, 12.5) -- Coronal Ejection
 	self:Bar(221875, 20) -- Nether Traversal
 end
@@ -135,6 +137,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(205984, 30) -- Gravitational Pull
 		self:Bar(206949, 53) -- Frigid Nova
 
+		for _,timer in pairs(gravPullSayTimers) do
+			self:CancelTimer(timer)
+		end
+		wipe(gravPullSayTimers)
+
 	elseif spellId == 222133 then -- Phase 3 Conversation
 		phase = 3
 		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
@@ -145,6 +152,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(214167, 28) -- Gravitational Pull
 		self:CDBar(206517, 62) -- Fel Nova
 
+		for _,timer in pairs(gravPullSayTimers) do
+			self:CancelTimer(timer)
+		end
+		wipe(gravPullSayTimers)
+
 	elseif spellId == 222134 then -- Phase 4 Conversation
 		phase = 4
 		self:Message("stages", "Neutral", "Long", CL.stage:format(4), false)
@@ -154,6 +166,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		ejectionCount = 1
 		self:CDBar(214335, 20) -- Gravitational Pull
 		self:CDBar(207439, 42) -- Fel Nova
+
+		for _,timer in pairs(gravPullSayTimers) do
+			self:CancelTimer(timer)
+		end
+		wipe(gravPullSayTimers)
 
 	end
 end
@@ -193,10 +210,11 @@ function mod:GravitationalPullP2(args)
 	local remaining = expires-GetTime()
 	self:TargetBar(args.spellId, remaining, args.destName)
 
+	wipe(gravPullSayTimers) -- they will be done either way
 	if self:Me(args.destGUID) then
-		self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
-		self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
-		self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
+		gravPullSayTimers[#gravPullSayTimers+1] = self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
+		gravPullSayTimers[#gravPullSayTimers+1] = self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
+		gravPullSayTimers[#gravPullSayTimers+1] = self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
 	end
 end
 
@@ -258,10 +276,11 @@ function mod:GravitationalPullP3(args)
 	local remaining = expires-GetTime()
 	self:TargetBar(args.spellId, remaining, args.destName)
 
+	wipe(gravPullSayTimers) -- they will be done either way
 	if self:Me(args.destGUID) then
-		self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
-		self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
-		self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
+		gravPullSayTimers[#gravPullSayTimers+1] = self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
+		gravPullSayTimers[#gravPullSayTimers+1] = self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
+		gravPullSayTimers[#gravPullSayTimers+1] = self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
 	end
 end
 
@@ -317,10 +336,11 @@ function mod:GravitationalPullP4(args)
 	local remaining = expires-GetTime()
 	self:TargetBar(args.spellId, remaining, args.destName)
 
+	wipe(gravPullSayTimers) -- they will be done either way
 	if self:Me(args.destGUID) then
-		self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
-		self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
-		self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
+		gravPullSayTimers[#gravPullSayTimers+1] = self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
+		gravPullSayTimers[#gravPullSayTimers+1] = self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
+		gravPullSayTimers[#gravPullSayTimers+1] = self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
 	end
 end
 
