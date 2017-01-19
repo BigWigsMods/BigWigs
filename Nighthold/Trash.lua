@@ -10,7 +10,16 @@ mod:RegisterEnableMob(
 	--[[ Skorpyron to Chronomatic Anomaly ]]--
 	115914, -- Torm the Brute
 	111081, -- Fulminant
-	111072 -- Pulsauron
+	111072, -- Pulsauron
+
+	--[[ Trilliax to Aluriel ]]--
+	112671, -- Duskwatch Battle-Magus
+	112675, -- Duskwatch Sentinel
+	113307, -- Chronowraith
+	112665, -- Nighthold Protector
+
+	--[[ Aluriel to Krosos ]]--
+	111210 -- Searing Infernal
 )
 
 --------------------------------------------------------------------------------
@@ -22,6 +31,15 @@ if L then
 	L.torm = "Torm the Brute"
 	L.fulminant = "Fulminant"
 	L.pulsauron = "Pulsauron"
+
+	--[[ Trilliax to Aluriel ]]--
+	L.battle_magus = "Duskwatch Battle-Magus"
+	L.sentinel = "Duskwatch Sentinel"
+	L.chronowraith = "Chronowraith"
+	L.protector = "Nighthold Protector"
+
+	--[[ Aluriel to Krosos ]]--
+	L.infernal =  "Searing Infernal"
 end
 
 --------------------------------------------------------------------------------
@@ -36,20 +54,38 @@ function mod:GetOptions()
 		230488, -- Rumbling Ground (Torm)
 		221164, -- Fulminate (Fulminant)
 		221160, -- Compress the Void (Pulsauron)
+
+		--[[ Trilliax to Aluriel ]]--
+		224510, -- Crackling Slice (Duskwatch Battle-Magus)
+		225389, -- Protective Shield (Duskwatch Sentinel)
+		225412, -- Mass Siphon (Chronowraith)
+		224568, -- Mass Suppress (Nighthold Protector)
+		224572, -- Disrupting Energy (Nighthold Protector)
+
+		--[[ Aluriel to Krosos ]]--
+		{221344, "SAY", "FLASH"}, -- Searing Infernal
 	}, {
 		[230438] = L.torm,
 		[221164] = L.fulminant,
 		[221160] = L.pulsauron,
+		[224510] = L.battle_magus,
+		[225389] = L.sentinel,
+		[225412] = L.chronowraith,
+		[224568] = L.protector,
+		[221344] = L.infernal,
 	}
 end
 
 function mod:OnBossEnable()
 	--[[ General ]]--
 	self:RegisterMessage("BigWigs_OnBossEngage", "Disable")
-	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 230488) -- Rumbling Ground (Torm)
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 230488)
-	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 230488)
-	--self:Log("SPELL_DAMAGE", "GroundEffectDamage", ) --
+
+	-- Rumbling Ground, Disrupting Energy
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 230488, 224572)
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 230488, 224572)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 230488, 224572)
+	-- NPCName, ...
+	--self:Log("SPELL_DAMAGE", "GroundEffectDamage", ) -- SpellName, ...
 	--self:Log("SPELL_MISSED", "GroundEffectDamage", )
 
 	--[[ Skorpyron to Chronomatic Anomaly ]]--
@@ -59,6 +95,18 @@ function mod:OnBossEnable()
 	self:Death("TormDeath", 115914)
 	self:Log("SPELL_CAST_START", "Fulminate", 221164)
 	self:Log("SPELL_CAST_SUCCESS", "CompressTheVoid", 221160)
+
+	--[[ Trilliax to Aluriel ]]--
+	self:Log("SPELL_CAST_START", "CracklingSlice", 224510)
+	self:Log("SPELL_CAST_SUCCESS", "ProtectiveShield", 225389)
+	self:Log("SPELL_CAST_SUCCESS", "MassSiphon", 225412)
+	self:Death("ChronowraithDeath", 113307)
+	self:Log("SPELL_CAST_START", "MassSuppress", 224568)
+
+	--[[ Aluriel to Krosos ]]--
+	self:Log("SPELL_AURA_APPLIED", "AnnihilatingOrb", 221344)
+	self:Log("SPELL_AURA_REMOVED", "AnnihilatingOrbRemoved", 221344)
+	self:Death("InfernalDeath", 111210)
 end
 
 --------------------------------------------------------------------------------
@@ -117,4 +165,50 @@ do
 			self:Bar(args.spellId, 15)
 		end
 	end
+end
+
+do
+	local prev = 0
+	function mod:CracklingSlice(args)
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:Message(args.spellId, "Attention", "Long")
+		end
+	end
+end
+
+function mod:ProtectiveShield(args)
+	self:Message(args.spellId, "Important", "Alarm")
+end
+
+function mod:MassSiphon(args)
+	self:Message(args.spellId, "Urgent", self:Interrupter(args.sourceGUID) and "Info", CL.casting:format(args.spellName))
+	self:Bar(args.spellId, 15)
+end
+
+function mod:ChronowraithDeath(args)
+	self:StopBar(225412) -- Mass Siphon
+end
+
+function mod:MassSuppress(args)
+	self:Message(args.spellId, "Attention", self:Interrupter(args.sourceGUID) and "Long")
+end
+
+--[[ Aluriel to Krosos ]]--
+function mod:AnnihilatingOrb(args)
+	self:TargetMessage(args.spellId, args.destName, "Important", "Warning")
+	self:Bar(args.spellId, 35)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:Flash(args.spellId)
+	end
+end
+
+function mod:AnnihilatingOrbRemoved(args)
+	self:StopBar(args.spellId, args.destName)
+end
+
+function mod:InfernalDeath(args)
+	self:StopBar(221344)
 end
