@@ -310,7 +310,7 @@ do
 	function mod:SoulSiphon(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Important", "Warning", nil, nil, true)
+			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Important", "Warning", nil, nil, true)
 		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
