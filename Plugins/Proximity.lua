@@ -540,7 +540,7 @@ do
 		local anyoneClose = 0
 		for i = 1, #proximityPlayerTable do
 			local unit = proximityPlayerTable[i]
-			if isInRange(unit) then
+			if isInRange(unit) and myGUID ~= UnitGUID(unit) then
 				anyoneClose = anyoneClose + 1
 				local player = plugin:UnitName(unit)
 				tinsert(tooClose, coloredNames[player])
