@@ -190,7 +190,7 @@ do
 
 		if self:GetOption(callOfTheNightMarker) then
 			local icon = GetRaidTargetIndex(args.destName)
-			if icon > 0 and icon < 7 and not tContains(iconsUnused, icon) then
+			if icon and icon > 0 and icon < 7 and not tContains(iconsUnused, icon) then
 				table.insert(iconsUnused, icon)
 				SetRaidTarget(args.destName, 0)
 			end
@@ -252,23 +252,37 @@ do
 end
 
 function mod:ParasiticFetterSuccess(args)
-	self:Bar(218304, phase == 2 and 55 or phase == 3 and 70 or 35)
+	self:Bar(218304, phase == 2 and 40 or phase == 3 and 50 or 35)
 end
 
-function mod:ParasiticFetter(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", self:Dispeller("magic") and "Alarm")
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-	end
-	if self:GetOption(fetterMarker) then
-		SetRaidTarget(args.destName, 8)
+do
+	local prev = 0
+	function mod:ParasiticFetter(args)
+		local t = GetTime()
+		if t-prev > 5 then
+			prev = t
+			self:TargetMessage(args.spellId, args.destName, "Urgent", self:Dispeller("magic") and "Alarm")
+		end
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+		end
+		if self:GetOption(fetterMarker) then
+			SetRaidTarget(args.destName, 8)
+		end
 	end
 end
 
-function mod:ParasiticFetterRemoved(args)
-	self:Message(args.spellId, "Attention", self:Damager() and "Alarm", CL.spawned:format(self:SpellName(-13699))) -- Parasitic Lasher
-	if self:GetOption(fetterMarker) and GetRaidTargetIndex(args.destName) == 8 then
-		SetRaidTarget(args.destName, 0)
+do
+	local prev = 0
+	function mod:ParasiticFetterRemoved(args)
+		local t = GetTime()
+		if t-prev > 5 then
+			prev = t
+			self:Message(args.spellId, "Attention", self:Damager() and "Alarm", CL.spawned:format(self:SpellName(-13699))) -- Parasitic Lasher
+		end
+		if self:GetOption(fetterMarker) and GetRaidTargetIndex(args.destName) == 8 then
+			SetRaidTarget(args.destName, 0)
+		end
 	end
 end
 
