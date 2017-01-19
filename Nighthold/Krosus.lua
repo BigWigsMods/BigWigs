@@ -66,6 +66,8 @@ if L then
 	L.rightBeam = "Right Beam"
 
 	L.smashingBridge = "Smashing Bridge"
+	L.smashingBridge_desc = "Slams which break the bridge. You can use this option to emphasize or enable countdown."
+	L.smashingBridge_icon = 205862
 
 	L.removedFromYou = "%s removed from you" -- "Searing Brand removed from YOU!"
 end
@@ -80,6 +82,7 @@ function mod:GetOptions()
 		205368, -- Fel Beam (right)
 		{205344, "SAY", "FLASH"}, -- Orb of Destruction
 		205862, -- Slam
+		"smashingBridge",
 		205420, -- Burning Pitch
 		208203, -- Isolated Rage
 		"berserk",
@@ -108,7 +111,7 @@ function mod:OnEngage()
 
 	self:Bar(206677, 15)
 	self:Bar(205862, 33, CL.count:format(self:SpellName(205862), slamCount))
-	self:Bar(205862, 93, CL.count:format(L.smashingBridge, 1))
+	self:Bar("smashingBridge", 93, CL.count:format(L.smashingBridge, 1), L.smashingBridge_icon)
 	self:Bar(205368, timers[205368][beamCount], CL.count:format(self:SpellName(205368), beamCount))
 	self:Bar(205344, timers[205344][orbCount], CL.count:format(self:SpellName(205344), orbCount))
 	self:Bar(205420, timers[205420][burningPitchCount], CL.count:format(self:SpellName(205420), burningPitchCount))
@@ -151,7 +154,7 @@ end
 do
 	local prev = 0
 	function mod:FelBeamSuccess(args)
-		self:Message(205368, "Attention", nil, args.spellId == 205370 and L.leftBeam or L.rightBeam)
+		--self:Message(205368, "Attention", nil, args.spellId == 205370 and L.leftBeam or L.rightBeam)
 		beamCount = beamCount + 1
 		local t = timers[205368][beamCount]
 		if t then
@@ -193,13 +196,17 @@ do
 end
 
 function mod:SlamCast(args)
-	self:Message(args.spellId, "Important", "Alert", CL.casting:format(CL.count:format(args.spellName, slamCount)) .. (slamCount % 3 == 0 and " - "..L.smashingBridge or ""))
+	if slamCount % 3 == 0 then
+		self:Message("smashingBridge", "Important", "Alert", CL.casting:format(CL.count:format(args.spellName, slamCount)) .. " - "..L.smashingBridge, L.smashingBridge_icon)
+	else
+		self:Message(args.spellId, "Important", "Alert", CL.casting:format(CL.count:format(args.spellName, slamCount)))
+	end
 end
 
 function mod:SlamSuccess(args)
 	self:Message(args.spellId, "Important", nil)
 	if slamCount % 3 == 0 and slamCount < 10 then
-		self:Bar(args.spellId, 90, CL.count:format(L.smashingBridge, slamCount/3 + 1))
+		self:Bar("smashingBridge", 90, CL.count:format(L.smashingBridge, slamCount/3 + 1), L.smashingBridge_icon)
 	end
 	slamCount = slamCount + 1
 	if slamCount % 3 ~= 0 and slamCount < 12 then -- would mirror the smashing bridge bar otherwise
