@@ -87,15 +87,18 @@ end
 --
 
 local function timeBombCountdown(self)
+	local me = self:UnitName("player")
 	local name, _, _, _, _, _, expires, _, _, _, _, _, _, _, _, timeMod = UnitDebuff("player", self:SpellName(206617))
-	if not name then return end
-
 	for _,timer in pairs(bombSayTimers) do
 		self:CancelTimer(timer)
 	end
 	wipe(bombSayTimers)
+	self:StopBar(206617, me)
 
-	local remaining = floor((expires - GetTime()) / timeMod)
+	if not name then return end
+	-- TODO experimental, needs work
+	local remaining = floor(expires - GetTime()) -- floor((expires - GetTime()) / timeMod)
+	self:TargetBar(206617, remaining, me)
 	for i = 1, 3 do
 		if remaining-i > 0 then
 			bombSayTimers[#bombSayTimers+1] = self:ScheduleTimer("Say", remaining-i, 206617, i, true)
@@ -130,9 +133,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		releaseCount = 1
 
 		if slowPhase == 1 then
-			self:Bar(206609, 5) -- Time Release
-			self:Bar(206617, 12) -- Time Bomb
-			self:Bar(-13022, 50, CL.add, 207228) -- Big Add
+			self:Bar(206609, 10) -- Time Release
+			self:Bar(206617, 15) -- Time Bomb
+			self:Bar(-13022, 43, CL.add, 207228) -- Big Add
 		end
 
 		slowPhase = slowPhase + 1
@@ -187,13 +190,14 @@ function mod:TimeReleaseRemoved(args)
 end
 
 function mod:TimeReleaseSuccess(args)
+	self:Message(args.spellId, "Attention", "Alarm", CL.incoming:format(args.spellName))
 	releaseCount = releaseCount + 1
-	if normalPhase == 1 then
+	if normalPhase == 1 and releaseCount < 4 then
 		self:Bar(206609, releaseCount == 3 and 25 or 15)
-	elseif slowPhase == 1 then
-		self:Bar(206609, 25)
-	elseif fastPhase == 1 then
-		self:Bar(206609, releaseCount < 4 and 10 or releaseCount > 5 and 8 or 5)
+	elseif slowPhase == 1 and releaseCount < 3 then
+		self:Bar(206609, 20)
+	elseif fastPhase == 1 and releaseCount < 6 then
+		self:Bar(206609, releaseCount == 2 and 7 or releaseCount == 3 and 13 or 5)
 	end
 end
 
@@ -237,6 +241,8 @@ end
 
 function mod:PowerOverwhelming(args)
 	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
+	self:StopBar(206609) -- Time Release
+	self:StopBar(206617) -- Time Bomb
 end
 
 function mod:WarpNightwell(args)
