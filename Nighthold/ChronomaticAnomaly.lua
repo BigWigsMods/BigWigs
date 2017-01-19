@@ -190,7 +190,7 @@ function mod:TimeReleaseRemoved(args)
 end
 
 function mod:TimeReleaseSuccess(args)
-	self:Message(args.spellId, "Attention", "Alarm", CL.incoming:format(args.spellName))
+	self:Message(206609, "Attention", "Alarm", CL.incoming:format(args.spellName))
 	releaseCount = releaseCount + 1
 	if normalPhase == 1 and releaseCount < 4 then
 		self:Bar(206609, releaseCount == 3 and 25 or 15)
