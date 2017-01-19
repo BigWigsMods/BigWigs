@@ -314,9 +314,6 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:TargetBar(args.spellId, 8, args.destName)
-			self:ScheduleTimer("Say", 5, args.spellId, 3, true)
-			self:ScheduleTimer("Say", 6, args.spellId, 2, true)
-			self:ScheduleTimer("Say", 7, args.spellId, 1, true)
 		end
 	end
 end
