@@ -42,7 +42,7 @@ function mod:GetOptions()
 
 		--[[ Master of Frost ]]--
 		{212531, "SAY", "FLASH"}, -- Pre Mark of Frost
-		212587, -- Mark of Frost
+		{212587, "SAY", "FLASH"}, -- Mark of Frost
 		212647, -- Frostbitten
 		212530, -- Replicate: Mark of Frost
 		212735, -- Detonate: Mark of Frost
@@ -152,7 +152,7 @@ do
 			self:Bar(212587, 18) -- Mark of Frost (timer is the "pre" mark of frost aura applied)
 			self:Bar(212530, 41) -- Replicate: Mark of Frost
 			self:Bar(212735, 71) -- Detonate: Mark of Frost
-			self:Bar(213853, 75) -- Animate: Mark of Frost
+			self:Bar(213853, 75, nil, 31687) -- Animate: Mark of Frost, Water Elemental icon
 			self:Bar("stages", 85, self:SpellName(213867), 213867) -- Next: Fiery
 		elseif args.spellId == 213867 then -- Fiery
 			self:Bar(213166, 18) -- Searing Brand (timer is the "pre" mark of frost aura applied)
@@ -184,11 +184,11 @@ do
 	function mod:MarkOfFrostApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Urgent")
+			self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Urgent")
 		end
 
 		local t = GetTime()
-		if t-preDebuffApplied > 5.5 then
+		if self:Me(args.destGUID) and t-preDebuffApplied > 5.5 then
 			self:TargetMessage(args.spellId, args.destName, "Attention", "Alert")
 			self:Say(args.spellId)
 			self:Flash(args.spellId)
@@ -199,12 +199,12 @@ end
 function mod:Frostbitten(args)
 	local amount = args.amount or 1
 	if self:Me(args.destGUID) and amount % 2 == 0 then
-		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 5 and "Warning")
+		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 7 and "Warning")
 	end
 end
 
 function mod:AnimateMarkOfFrost(args)
-	self:Message(args.spellId, "Important", "Info")
+	self:Message(args.spellId, "Important", "Info", nil, 31687) -- Water Elemental icon
 end
 
 function mod:ReplicateMarkOfFrost(args)
@@ -269,6 +269,7 @@ do
 		if t-prev > 1 then -- Throttle because 8 adds cast it simultaneously
 			prev = t
 			self:Message(args.spellId, "Urgent", "Info")
+			self:Bar(args.spellId, 30, CL.text:format(args.spellName))
 		end
 	end
 end
