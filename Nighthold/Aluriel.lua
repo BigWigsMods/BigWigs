@@ -269,7 +269,7 @@ do
 		if t-prev > 1 then -- Throttle because 8 adds cast it simultaneously
 			prev = t
 			self:Message(args.spellId, "Urgent", "Info")
-			self:Bar(args.spellId, 30, CL.text:format(args.spellName))
+			self:Bar(args.spellId, 30, CL.cast:format(args.spellName))
 		end
 	end
 end
