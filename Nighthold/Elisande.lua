@@ -121,6 +121,7 @@ function mod:OnEngage()
 	phase = 1
 	fastElementalCounter = 0
 	slowElementalCounter = 0
+	lookingForMsg = false
 	ringCounter = 0
 	orbCounter = 0
 	self:Bar(211614, 5) -- Summon Time Elemental - Slow
@@ -157,6 +158,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 	if lookingForMsg then
 		orbMsg = msg
+		lookingForMsg = false
 	end
 	if orbMsg == msg then
 		orbCounter = orbCounter + 1
