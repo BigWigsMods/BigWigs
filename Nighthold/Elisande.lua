@@ -151,7 +151,6 @@ function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 		ringCounter = ringCounter + 1
 		self:Bar(208807, ringTimers[ringCounter] or (ringCounter%2==0 and 10 or 40))
 		self:Message(208807, "Attention", "Alarm")
-		self:Bar(208807, 10, CL.incoming:format(self:SpellName(208807)))
 	end
 end
 
