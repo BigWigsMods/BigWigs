@@ -370,17 +370,19 @@ do
 	end
 end
 
-function mod:FlamesOfSargerasSoon(args)
+do
 	local list = mod:NewTargetList()
-	list[#list+1] = args.destName
-	if #list == 1 then
-		self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Important")
-	end
-	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
-		self:Say(args.spellId)
-		self:Flash(args.spellId)
-		self:TargetBar(args.spellId, 6, args.destName)
+	function mod:FlamesOfSargerasSoon(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important")
+		end
+		if self:Me(args.destGUID) then
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+			self:Say(args.spellId)
+			self:Flash(args.spellId)
+			self:TargetBar(args.spellId, 6, args.destName)
+		end
 	end
 end
 
