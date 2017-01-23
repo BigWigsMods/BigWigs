@@ -93,7 +93,9 @@ function mod:OnEngage()
 	self:Bar(218148, 10) -- Solar Collapse, to _start
 	self:Bar(218304, 21.5) -- Parasitic Fetter, to _success
 	self:Bar(218438, 35) -- Controlled Chaos, to_start
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	if not self:Mythic() then
+		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -121,19 +123,13 @@ function mod:Nightosis2(args)
 	self:Bar(218438, 52) -- Controlled Chaos, to _start
 end
 
-do
-	local phaseMessage = {
-		[80] = mod:SpellName(-13681), -- 75% Stage Two: Nightosis
-		[55] = mod:SpellName(-13683), -- 50% Stage Three: Pure Forms
-	}
-	function mod:UNIT_HEALTH_FREQUENT(unit)
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-		if hp < nextPhaseSoon then
-			self:Message("stages", "Neutral", "Info", CL.soon:format(phaseMessage[nextPhaseSoon]), false)
-			nextPhaseSoon = nextPhaseSoon - 25
-			if nextPhaseSoon < 50 then
-				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
-			end
+function mod:UNIT_HEALTH_FREQUENT(unit)
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	if hp < nextPhaseSoon then
+		self:Message("stages", "Neutral", "Info", CL.soon:format(CL.stage:format(phase+1)), false)
+		nextPhaseSoon = nextPhaseSoon - 25
+		if nextPhaseSoon < 50 then
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 		end
 	end
 end
