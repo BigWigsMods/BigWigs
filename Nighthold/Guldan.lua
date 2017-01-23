@@ -11,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Gul'dan", 1088, 1737)
 if not mod then return end
 mod:RegisterEnableMob(104154)
 mod.engageId = 1866
---mod.respawnTime = 0
+mod.respawnTime = 5
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -33,6 +33,9 @@ local L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		--[[ General ]]--
+		"stages",
+
 		--[[ Essence of Aman'Thul ]]--
 		210339, -- Time Dilation
 		{217830, "SAY"}, -- Scattering Field
@@ -72,6 +75,7 @@ function mod:GetOptions()
 		221781, -- Desolate Ground   XXX untested
 		{227556, "TANK"}, -- Fury of the Fel   XXX untested
 	}, {
+		["stages"] = "general",
 		[210339] = -14886, -- Essence of Aman'Thul
 		[206219] = -14885, -- Stage One
 		[207938] = -14897, -- Inquisitor Vethriz
@@ -129,11 +133,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FlamesOfSargerasSoon", 221606) -- XXX untested
 	self:Log("SPELL_AURA_APPLIED", "FlamesOfSargeras", 212686) -- XXX untested
 
-	self:Log("SPELL_AURA_APPLIED", "Damage", 206515, 209518, 211132, 221781) -- Fel Efflux, Eye of Gul'dan, Empowered Eye of Gul'dan, Desolate Ground
-	self:Log("SPELL_PERIODIC_DAMAGE", "Damage", 206515, 209518, 211132, 221781)
-	self:Log("SPELL_PERIODIC_MISSED", "Damage", 206515, 209518, 211132, 221781)
-	self:Log("SPELL_DAMAGE", "Damage", 217770, 209518, 211132, 221781) -- Gaze of Vethriz, Eye of Gul'dan, Empowered Eye of Gul'dan, Desolate Ground
-	self:Log("SPELL_MISSED", "Damage", 217770, 209518, 211132, 221781)
+	self:Log("SPELL_AURA_APPLIED", "Damage", 206515, 221781) -- Fel Efflux, Desolate Ground
+	self:Log("SPELL_PERIODIC_DAMAGE", "Damage", 206515, 221781)
+	self:Log("SPELL_PERIODIC_MISSED", "Damage", 206515, 221781)
+	self:Log("SPELL_DAMAGE", "Damage", 217770, 221781) -- Gaze of Vethriz, Desolate Ground
+	self:Log("SPELL_MISSED", "Damage", 217770, 221781)
 end
 
 function mod:OnEngage()
