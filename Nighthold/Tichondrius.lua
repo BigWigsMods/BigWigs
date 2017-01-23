@@ -200,7 +200,7 @@ end
 
 function mod:EssenceOfNight(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Positive", nil, CL.you:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
 	end
 end
 
