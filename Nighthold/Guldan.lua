@@ -20,6 +20,7 @@ mod.respawnTime = 5
 local phase = 1
 local liquidHellfireCount = 1
 local handOfGuldanCount = 1
+local handOfGuldanTimers = {48.9, 138.9} -- TO DO: Get more data on these
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -88,13 +89,14 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
+	self:RegisterEvent("RAID_BOSS_EMOTE")
 
 	--[[ Essence of Aman'Thul ]]--
 	self:Log("SPELL_AURA_APPLIED", "TimeDilation", 210339)
 	self:Log("SPELL_AURA_APPLIED", "ScatteringField", 217830)
 	self:Log("SPELL_AURA_APPLIED", "ResonantBarrier", 210296)
 
-	self:Log("SPELL_AURA_APPLIED", "EyeOfAmanThul", 206516)
+	self:Log("SPELL_AURA_APPLIED", "EyeOfAmanThul", 206516) 
 	self:Log("SPELL_AURA_REMOVED", "EyeOfAmanThulRemoved", 206516)
 
 	--[[ Stage One ]]--
@@ -118,12 +120,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "TornSoulRemoved", 206896)
 
 	--[[ Stage Two ]]--
-	self:Log("SPELL_CAST_START", "BondsOfFelCast", 206222)
+	self:Log("SPELL_CAST_START", "BondsOfFelCast", 206222, 206221) -- Normal, Empowered
 	self:Log("SPELL_AURA_APPLIED", "BondsOfFel", 209011)
-	self:Log("SPELL_CAST_START", "EyeOfGuldan", 209270)
+	self:Log("SPELL_CAST_START", "EyeOfGuldan", 209270, 211152)
 	self:Log("SPELL_CAST_START", "CarrionWave", 208672)
 
 	--[[ Stage Three ]]--
+	self:Log("SPELL_AURA_APPLIED", "Phase3Start", 227427) --The Eye of Aman'Thul
 	self:Log("SPELL_AURA_APPLIED", "FuryOfTheFel", 227556) -- XXX untested
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FuryOfTheFel", 227556) -- XXX untested
 
@@ -158,6 +161,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(spellId, 23)
 	end
 end
+function mod:RAID_BOSS_EMOTE(event, msg, npcname)
+	if msg:find("206221") then -- Gains Empowered Bonds of Fel
+		self:Bar(209011, self:BarTimeLeft(209011), self:SpellName(206221))
+	end
+end
+
 
 --[[ Essence of Aman'Thul ]]--
 function mod:TimeDilation(args)
@@ -183,25 +192,40 @@ function mod:ResonantBarrier(args)
 	self:Message(args.spellId, "Positive", "Alert")
 	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
 end
-
+function mod:Phase3Start(args) -- Phase 3 start
+	phase = 3
+	self:StopBar(206221) -- Empowered Bonds of Fel
+	self:StopBar(212258) -- Hand of Gul'dan
+	self:StopBar(206220) -- Empowered Liquid Hellfire
+	self:Bar(209270, 40, self:SpellName(211152)) -- Empowered Eye of Gul'dan
+end
 function mod:EyeOfAmanThul(args)
-	phase = 2
-	self:Message("stages", "Neutral", "Long", args.spellName, args.spellId)
+	--phase = 2
+	--self:Message("stages", "Neutral", "Long", args.spellName, args.spellId)
 	self:Bar(206219, 9) -- Liquid Hellfire
 	self:Bar(206515, 9.5) -- Fel Efflux
 end
 
-function mod:EyeOfAmanThulRemoved(args)
-	phase = 3
+function mod:EyeOfAmanThulRemoved(args) -- Phase 2 start
+	phase = 2
+	handOfGuldanCount = 0
+	liquidHellfireCount = 0
 	self:Message("stages", "Neutral", "Long", CL.removed:format(args.spellName), args.spellId)
-	self:Bar(206219, 23.5) -- Liquid Hellfire
+	self:Bar(212258, 9.5) -- Bonds of Fel
+	self:Bar(212258, 14.5) -- Hand of Gul'dan
+	self:Bar(209270, 29) -- Eye of Gul'dan
+	self:Bar(206219, 40) -- Liquid Hellfire
 end
 
 --[[ Stage One ]]--
 function mod:LiquidHellfire(args)
 	self:Message(206219, "Urgent", "Alarm", CL.incoming:format(CL.count:format(args.spellName, liquidHellfireCount)))
 	liquidHellfireCount = liquidHellfireCount + 1
-	self:Bar(206219, phase == 1 and 15 or 25, CL.count:format(args.spellName, liquidHellfireCount)) -- p3 and after cd missing
+	if phase == 1 then
+		self:Bar(206219, phase == 1 and 15 or 25, CL.count:format(args.spellName, liquidHellfireCount)) -- p3 and after cd missing
+	else
+		self:Bar(206219, liquidHellfireCount == 4 and 73.4 or 36.6, args.spellName) -- XXX only saw one with long intervall, im sure its becouse of some other ability but CBA to check it now
+	end
 end
 
 function mod:FelEfflux(args)
@@ -214,6 +238,9 @@ function mod:HandOfGuldan(args)
 	handOfGuldanCount = handOfGuldanCount + 1
 	if phase == 1 and handOfGuldanCount < 4 then
 		self:Bar(args.spellId, handOfGuldanCount == 2 and 14 or 10)
+	elseif phase == 2 then
+		handOfGuldanCount = handOfGuldanCount + 1
+		self:Bar(args.spellId, handOfGuldanTimers[handOfGuldanCount] or 138.9) -- XXX
 	end
 end
 
@@ -264,7 +291,7 @@ end
 --[[ Stage Two ]]--
 function mod:BondsOfFelCast(args)
 	self:Message(209011, "Attention", "Info", CL.casting:format(args.spellName))
-	self:Bar(209011, 50)
+	self:Bar(209011, 44.5, args.spellName)
 end
 
 do
@@ -282,8 +309,13 @@ do
 end
 
 function mod:EyeOfGuldan(args)
-	self:Message(args.spellId, "Urgent", "Alert")
-	self:Bar(args.spellId, 60)
+	self:Message(209270, "Urgent", "Alert")
+	self:Bar(209270, 60)
+	if phase < 3 then
+		self:Bar(209270, 53.3, args.spellName)
+	else
+		self:Bar(209270, 62.5, args.spellName) -- XXX take all the other stuff in to account, but this will do for now (at some point there is only 25sec between the eyes)
+	end
 end
 
 function mod:CarrionWave(args)
