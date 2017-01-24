@@ -1081,6 +1081,7 @@ do
 		self:RegisterMessage("BigWigs_SetConfigureTarget")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 		self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
+		updateProfile()
 	end
 end
 
