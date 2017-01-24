@@ -1427,9 +1427,6 @@ end
 --
 
 function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
-	if not db.alignText then -- XXX temp
-		print("BigWigs bar ERROR:", db == self.db.profile, self.db.profile.alignText)
-	end
 	if createAnchors then createAnchors() end
 	if not text then text = "" end
 	self:StopSpecificBar(nil, module, text)
