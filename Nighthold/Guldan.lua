@@ -204,7 +204,7 @@ function mod:EyeOfAmanThulRemoved(args) -- Phase 2 start
 	handOfGuldanCount = 1
 	liquidHellfireCount = 1
 	self:Message("stages", "Neutral", "Long", CL.stage:format(2), args.spellId)
-	self:Bar(206219, 23.5) -- Liquid Hellfire
+	self:Bar(206219, 23.5, CL.count:format(self:SpellName(206219), liquidHellfireCount)) -- Liquid Hellfire
 	self:Bar(212258, 9.5) -- Bonds of Fel
 	self:Bar(212258, 14.5) -- Hand of Gul'dan
 	self:Bar(209270, 29) -- Eye of Gul'dan
@@ -215,7 +215,7 @@ function mod:Phase3Start(args) -- Phase 3 start
 	self:Message("stages", "Neutral", "Long", CL.stage:format(3), args.spellId)
 	self:StopBar(206221) -- Empowered Bonds of Fel
 	self:StopBar(212258) -- Hand of Gul'dan
-	self:StopBar(CL.count:format(206220, liquidHellfireCount)) -- Liquid Hellfire
+	self:StopBar(CL.count:format(self:SpellName(206220), liquidHellfireCount)) -- Liquid Hellfire
 	self:Bar("stages", 8, args.spellName, args.spellId)
 	self:Bar(211152, 39) -- Eye of Gul'dan
 	self:Bar(206744, 66) -- Black Harvest
@@ -229,7 +229,7 @@ function mod:LiquidHellfire(args)
 	if phase == 1 then
 		self:Bar(206219, liquidHellfireCount == 1 and 15 or 25, CL.count:format(args.spellName, liquidHellfireCount))
 	else
-		self:Bar(206219, liquidHellfireCount == 4 and 73.4 or 36.6, CL.count:format(args.spellName, liquidHellfireCount)) -- gets skipped once
+		self:Bar(206219, liquidHellfireCount == 5 and 73.2 or 36.6, CL.count:format(args.spellName, liquidHellfireCount)) -- gets skipped once
 	end
 end
 
