@@ -18,6 +18,7 @@ mod.respawnTime = 30
 --------------------------------------------------------------------------------
 -- Locals
 --
+local frostbittenStacks = {}
 local timers = {
 	[212492] = {8.0, 45.0, 40.0, 44.0, 38.0, 37.0, 33.0, 47.0, 41.0, 44.0, 38.0, 37.0},
 }
@@ -43,7 +44,7 @@ function mod:GetOptions()
 		--[[ Master of Frost ]]--
 		{212531, "SAY", "FLASH"}, -- Pre Mark of Frost
 		{212587, "SAY", "FLASH"}, -- Mark of Frost
-		212647, -- Frostbitten
+		{212647, "INFOBOX"}, -- Frostbitten
 		212530, -- Replicate: Mark of Frost
 		212735, -- Detonate: Mark of Frost
 		213853, -- Animate: Mark of Frost"
@@ -85,6 +86,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PreMarkOfFrostApplied", 212531)
 	self:Log("SPELL_AURA_APPLIED", "MarkOfFrostApplied", 212587)
 	self:Log("SPELL_AURA_APPLIED", "Frostbitten", 212647)
+	self:Log("SPELL_AURA_REMOVED", "FrostbittenRemoved", 212647)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Frostbitten", 212647)
 	self:Log("SPELL_CAST_START", "ReplicateMarkOfFrost", 212530)
 	self:Log("SPELL_CAST_START", "DetonateMarkOfFrost", 212735)
@@ -112,7 +114,9 @@ end
 
 function mod:OnEngage()
 	annihilateCount = 1
+	wipe(frostbittenStacks)
 	self:Bar(212492, timers[212492][annihilateCount]) -- Annihilate
+	self:OpenInfo(212647, self:SpellName(212647))
 	-- other bars are in mod:Stages()
 end
 
@@ -196,11 +200,23 @@ do
 	end
 end
 
-function mod:Frostbitten(args)
-	local amount = args.amount or 1
-	if self:Me(args.destGUID) and amount % 2 == 0 then
-		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 7 and "Warning")
+do
+	local prev = 0
+	function mod:Frostbitten(args)
+		frostbittenStacks[args.destName] = args.amount
+		if self:Me(args.destGUID) and amount % 2 == 0 then
+			self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 7 and "Warning")
+		end
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:SetInfoByTable(args.spellId, frostbittenStacks)
+		end
 	end
+end
+
+function mod:FrostbittenRemoved(args)
+	frostbittenStacks[args.destName] = nil
 end
 
 function mod:AnimateMarkOfFrost(args)
