@@ -295,6 +295,7 @@ do
 		end
 
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		updateProfile()
 
 		self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
 		self:RegisterMessage("BigWigs_SetConfigureTarget")

@@ -20,12 +20,68 @@ mod.respawnTime = 30 -- could be wrong
 -- Locals
 --
 
-local normalPhase = 1
-local fastPhase = 1
-local slowPhase = 1
+local normalPhase = 0
+local fastPhase = 0
+local slowPhase = 0
 local bombCount = 1
 local releaseCount = 1
+local temporalCount = 1
 local bombSayTimers = {}
+
+local getTimers
+do
+	local heroic = {
+		["normal1"] = {
+			[206609] = {5, 13, 25}, -- Time Release
+			[206617] = {29.5, 5}, -- Time Bomb
+			[219815] = {38} -- Temporal Orb
+		},
+		["normal2"] = {
+			[206609] = {30, 20, 7}, -- Time Release
+			[206617] = {6.5, 10, 10}, -- Time Bomb
+			[219815] = {10, 25, 30} -- Temporal Orb
+		},
+		["slow1"] = {
+			[206609] = {10, 20}, -- Time Release
+			[206617] = {17, 10, 10, 5}, -- Time Bomb
+			[219815] = {20, 18, 7} -- Temporal Orb
+		},
+		["fast1"] = {
+			[206609] = {5, 7, 13, 5, 5, 8}, -- Time Release
+			[206617] = {18}, -- Time Bomb
+			[219815] = {} -- Temporal Orb
+		}
+	}
+	local normal = {
+		["normal1"] = {
+			[206609] = {5, 15}, -- Time Release
+			[206617] = {36.5}, -- Time Bomb
+			[219815] = {48} -- Temporal Orb
+		},
+		["normal2"] = {
+			[206609] = {5, 16}, -- Time Release
+			[206617] = {19.5}, -- Time Bomb
+			[219815] = {13, 23} -- Temporal Orb
+		},
+		["slow1"] = {
+			[206609] = {5, 23}, -- Time Release
+			[206617] = {22.2}, -- Time Bomb
+			[219815] = {30} -- Temporal Orb
+		},
+		["fast1"] = {
+			[206609] = {10, 15, 20, 15}, -- Time Release
+			[206617] = {}, -- Time Bomb
+			[219815] = {15, 25} -- Temporal Orb
+		}
+	}
+
+	function getTimers(self)
+		return self:Easy() and normal or heroic
+	end
+end
+
+local timers = getTimers(mod)
+local currentTimers = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -43,6 +99,7 @@ function mod:GetOptions()
 		{206607, "TANK"}, -- Chronometric Particles
 		206609, -- Time Release
 		{206617, "SAY"}, -- Time Bomb
+		219815, -- Temporal Orb
 		207871, -- Vortex (standing in stuff)
 		212099, -- Temporal Charge
 		211927, -- Power Overwhelming
@@ -63,6 +120,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "TimeReleaseRemoved", 206609)
 	self:Log("SPELL_CAST_SUCCESS", "TimeReleaseSuccess", 206610)
 	self:Log("SPELL_AURA_APPLIED", "TimeBomb", 206617)
+	self:Log("SPELL_CAST_SUCCESS", "TemporalOrb", 219815)
 	self:Log("SPELL_AURA_APPLIED", "VortexDamage", 207871)
 	self:Log("SPELL_PERIODIC_DAMAGE", "VortexDamage", 207871)
 	self:Log("SPELL_PERIODIC_MISSED", "VortexDamage", 207871)
@@ -79,7 +137,10 @@ function mod:OnEngage()
 	slowPhase = 1
 	bombCount = 1
 	releaseCount = 1
+	temporalCount = 1
 	wipe(bombSayTimers)
+	timers = getTimers(self)
+	currentTimers = nil
 end
 
 --------------------------------------------------------------------------------
@@ -113,48 +174,63 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		timeBombCountdown(self)
 		bombCount = 1
 		releaseCount = 1
+		temporalCount = 1
+		normalPhase = normalPhase + 1
 
 		if normalPhase == 1 then
-			self:Bar(206609, 5) -- Time Release
-			self:Bar(206617, 31.5) -- Time Bomb
 			self:Bar(-13022, 25, CL.add, 207228) -- Big Add
 		elseif normalPhase == 2 then
-			--self:Bar(206609, ???) -- Time Release < unkown timer
-			self:Bar(206617, 3) -- Time Bomb
 			self:Bar(-13022, 16, CL.add, 207228) -- Big Add
 		end
 
-		normalPhase = normalPhase + 1
+		currentTimers = timers["normal" .. normalPhase]
 	elseif spellId == 207011 then -- Speed: Slow
 		self:Message("stages", "Neutral", "Info", spellName, spellId)
 
 		timeBombCountdown(self)
 		bombCount = 1
 		releaseCount = 1
+		temporalCount = 1
+		slowPhase = slowPhase + 1
 
 		if slowPhase == 1 then
-			self:Bar(206609, 10) -- Time Release
-			self:Bar(206617, 15) -- Time Bomb
 			self:Bar(-13022, 43, CL.add, 207228) -- Big Add
 		end
 
-		slowPhase = slowPhase + 1
+		currentTimers = timers["slow" .. slowPhase]
 	elseif spellId == 207013 then -- Speed: Fast
 		self:Message("stages", "Neutral", "Info", spellName, spellId)
 
 		timeBombCountdown(self)
 		bombCount = 1
 		releaseCount = 1
+		temporalCount = 1
+		fastPhase = fastPhase + 1
 
 		if fastPhase == 1 then
-			self:Bar(206609, 5) -- Time Release
-			self:Bar(206617, 21) -- Time Bomb
 			self:Bar(-13022, 38, CL.add, 207228) -- Big Add
 		end
 
-		fastPhase = fastPhase + 1
+		currentTimers = timers["fast" .. fastPhase]
 	elseif spellId == 206700 then -- Summon Slow Add
 		self:Message(-13022, "Neutral", "Info", CL.spawning:format(CL.add), false)
+	end
+
+	if spellId == 207012 or spellId == 207011 or spellId == 207013 then
+		local releaseTime = currentTimers and currentTimers[206609][releaseCount]
+		if releaseTime then
+			self:Bar(206609, releaseTime) -- Time Release
+		end
+
+		local bombTime = currentTimers and currentTimers[206617][bombCount]
+		if bombTime then
+			self:Bar(206617, bombTime) -- Time Bomb
+		end
+
+		local temporalTime = currentTimers and currentTimers[219815][temporalCount]
+		if temporalTime then
+			self:Bar(219815, temporalTime) -- Temporal Orb
+		end
 	end
 end
 
@@ -191,13 +267,11 @@ end
 
 function mod:TimeReleaseSuccess(args)
 	self:Message(206609, "Attention", "Alarm", CL.incoming:format(args.spellName))
+
 	releaseCount = releaseCount + 1
-	if normalPhase == 1 and releaseCount < 4 then
-		self:Bar(206609, releaseCount == 3 and 25 or 15)
-	elseif slowPhase == 1 and releaseCount < 3 then
-		self:Bar(206609, 20)
-	elseif fastPhase == 1 and releaseCount < 6 then
-		self:Bar(206609, releaseCount == 2 and 7 or releaseCount == 3 and 13 or 5)
+	local releaseTime = currentTimers and currentTimers[206609][releaseCount]
+	if releaseTime then
+		self:Bar(206609, releaseTime) -- Time Release
 	end
 end
 
@@ -207,11 +281,11 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Important", "Alert")
+
 			bombCount = bombCount + 1
-			if slowPhase == 1 then
-				self:Bar(args.spellId, bombCount == 3 and 20 or 15)
-			elseif normalPhase == 2 then
-				self:Bar(args.spellId, 10)
+			local bombTime = currentTimers and currentTimers[args.spellId][bombCount]
+			if bombTime then
+				self:Bar(args.spellId, bombTime)
 			end
 		end
 
@@ -219,6 +293,16 @@ do
 			self:Say(args.spellId)
 			timeBombCountdown(self)
 		end
+	end
+end
+
+function mod:TemporalOrb(args)
+	self:Message(args.spellId, "Attention", "Alert")
+
+	temporalCount = temporalCount + 1
+	local temporalTime = currentTimers and currentTimers[args.spellId][temporalCount]
+	if temporalTime then
+		self:Bar(args.spellId, temporalTime)
 	end
 end
 

@@ -19,7 +19,7 @@ mod.respawnTime = 30
 
 local normalTimers = { -- and LFR Timers
 	-- Fel Beam (spell id is the right one), _cast_success
-	[205368] = {9.5, 15, 30, 30, 23, 27, 30, 44, 14, 16, 14, 16, 22, 60},
+	[205370] = {9.5, 15, 30, 30, 23, 27, 30, 44, 14, 16, 14, 16, 22, 60},
 
 	-- Orb of Destruction, _aura_applied
 	[205344] = {70, 40, 60, 25, 60, 37, 15, 15, 30},
@@ -30,7 +30,7 @@ local normalTimers = { -- and LFR Timers
 
 local heroicTimers = {
 	-- Fel Beam (spell id is the right one), _cast_success
-	[205368] = {11, 29, 30, 45, 16, 16, 14, 16, 27, 55, 26, 5, 21, 5, 12, 12, 5, 13},
+	[205370] = {11, 29, 30, 45, 16, 16, 14, 16, 27, 55, 26, 5, 21, 5, 12, 12, 5, 13},
 
 	-- Orb of Destruction, _aura_applied
 	[205344] = {20, 60, 23, 62, 27, 25, 15, 15, 15, 30, 55},
@@ -41,7 +41,7 @@ local heroicTimers = {
 
 local mythicTimers = {
 	-- Fel Beam (spell id is the right one), _cast_success, didnt have enough logs to make sure they are all .0
-	[205368] = {9.0, 16.0, 16.0, 16.0, 14.0, 16.0, 27.0, 54.9, 26.0, 4.8, 21.2, 4.7, 12.3, 12.0, 4.8, 13.3, 18.9, 4.8, 25.3, 4.8, 25.2, 4.9},
+	[205370] = {9.0, 16.0, 16.0, 16.0, 14.0, 16.0, 27.0, 54.9, 26.0, 4.8, 21.2, 4.7, 12.3, 12.0, 4.8, 13.3, 18.9, 4.8, 25.3, 4.8, 25.2, 4.9},
 
 	-- Orb of Destruction, _aura_applied
 	[205344] = {13, 62, 27, 25, 15, 15, 15, 30, 55, 38, 30, 12, 18},
@@ -79,7 +79,7 @@ end
 function mod:GetOptions()
 	return {
 		{206677, "TANK"}, -- Searing Brand
-		205368, -- Fel Beam (right)
+		205370, -- Fel Beam
 		{205344, "SAY", "FLASH"}, -- Orb of Destruction
 		205862, -- Slam
 		"smashingBridge",
@@ -94,8 +94,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SearingBrand", 206677)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SearingBrand", 206677)
 	self:Log("SPELL_AURA_REMOVED", "SearingBrandRemoved", 206677)
-	self:Log("SPELL_CAST_START", "FelBeamCast", 205370, 205368) -- left, right
-	self:Log("SPELL_CAST_SUCCESS", "FelBeamSuccess", 205370, 205368) -- left, right
+	self:Log("SPELL_CAST_START", "FelBeamCast", 205370)
+	self:Log("SPELL_CAST_SUCCESS", "FelBeamSuccess", 205370)
 	self:Log("SPELL_AURA_APPLIED", "OrbOfDescructionApplied", 205344)
 	self:Log("SPELL_CAST_START", "SlamCast", 205862)
 	self:Log("SPELL_CAST_SUCCESS", "SlamSuccess", 205862)
@@ -112,7 +112,7 @@ function mod:OnEngage()
 	self:Bar(206677, 15)
 	self:Bar(205862, 33, CL.count:format(self:SpellName(205862), slamCount))
 	self:Bar("smashingBridge", 93, CL.count:format(L.smashingBridge, 1), L.smashingBridge_icon)
-	self:Bar(205368, timers[205368][beamCount], CL.count:format(self:SpellName(205368), beamCount))
+	self:Bar(205370, timers[205370][beamCount], CL.count:format(self:SpellName(205370), beamCount))
 	self:Bar(205344, timers[205344][orbCount], CL.count:format(self:SpellName(205344), orbCount))
 	self:Bar(205420, timers[205420][burningPitchCount], CL.count:format(self:SpellName(205420), burningPitchCount))
 end
@@ -148,21 +148,16 @@ function mod:SearingBrandRemoved(args)
 end
 
 function mod:FelBeamCast(args)
-	self:Message(205368, "Attention", "Info", CL.casting:format(args.spellId == 205370 and L.leftBeam or L.rightBeam))
+	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
 end
 
 do
 	local prev = 0
 	function mod:FelBeamSuccess(args)
-		--self:Message(205368, "Attention", nil, args.spellId == 205370 and L.leftBeam or L.rightBeam)
 		beamCount = beamCount + 1
-		local t = timers[205368][beamCount]
+		local t = timers[args.spellId][beamCount]
 		if t then
-			if self:LFR() or self:Normal() then
-				self:Bar(205368, t, CL.count:format(args.spellId == 205370 and L.rightBeam or L.leftBeam, beamCount)) -- alternating beams, 205370 is the left beam
-			else
-				self:Bar(205368, t, CL.count:format(args.spellName, beamCount))
-			end
+			self:Bar(args.spellId, t, CL.count:format(args.spellName, beamCount))
 			prev = GetTime()
 		else
 			t = GetTime() - prev

@@ -60,6 +60,7 @@ function mod:GetOptions()
 		--[[ Stage Four ]]--
 		{214335, "SAY"}, -- Gravitational Pull
 		207439, -- Void Nova
+		222761, -- Big Bang
 
 		--[[ Thing That Should Not Be ]]--
 		207720, -- Witness the Void
@@ -166,6 +167,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		ejectionCount = 1
 		self:CDBar(214335, 20) -- Gravitational Pull
 		self:CDBar(207439, 42) -- Fel Nova
+		self:Berserk(201.5, true, nil, 222761, 222761) -- Big Bang (end of cast)
 
 		for _,timer in pairs(gravPullSayTimers) do
 			self:CancelTimer(timer)

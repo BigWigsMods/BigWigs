@@ -48,6 +48,7 @@ function mod:GetOptions()
 		{204284, "EMPHASIZE"}, -- Broken Shard
 		--204292, -- Crystalline Fragments
 		204744, -- Toxic Chitin
+		"berserk",
 
 		--[[ Mythic ]]--
 		-13767, -- Chromatic Exoskeleton
@@ -76,11 +77,12 @@ end
 
 function mod:OnEngage()
 	engageTime = GetTime()
+	arcanoslashCount = 1
+	self:Berserk(542) -- Heroic
 	self:Bar(204275, 6) -- Arcanoslash
 	self:Bar(204471, 16) -- Focused Blast (time to _success)
 	self:Bar(204372, 20) -- Call of the Scorpid (time to _start)
 	self:Bar(204316, 59) -- Shockwave (time to _success)
-	arcanoslashCount = 1
 
 	if self:Mythic() then
 		self:Bar(-13767, 35, L.mode:format(L.red), 211801)

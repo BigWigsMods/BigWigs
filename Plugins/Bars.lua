@@ -1100,17 +1100,7 @@ end
 
 function plugin:OnPluginEnable()
 	colors = BigWigs:GetPlugin("Colors")
-
-	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
-	if currentBarStyler and currentBarStyler.GetStyleName then
-		for k, v in next, barStyleRegister do
-			if currentBarStyler.GetStyleName() == v then
-				self:SetBarStyle(k)
-			end
-		end
-	else
-		self:SetBarStyle(db.barStyle)
-	end
+	updateProfile()
 
 	self:RegisterMessage("BigWigs_StartBar")
 	self:RegisterMessage("BigWigs_PauseBar", "PauseBar")

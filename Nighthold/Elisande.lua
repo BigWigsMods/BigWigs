@@ -17,7 +17,16 @@ mod.engageId = 1872
 --------------------------------------------------------------------------------
 -- Locals
 --
-
+local phase = 1
+local fastElementalCounter = 0
+local slowElementalCounter = 0
+local slowElementalTimers = {49,52,60} -- No idea how it continues
+local fastElementalTimers = {88,95,20} -- No idea how it continues
+local ringTimers = {40,10,63,10} -- No idea how it continues
+local ringCounter = 0
+local lookingForMsg = false
+local orbMsg = ''
+local orbCounter = 0
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -32,6 +41,8 @@ function mod:GetOptions()
 	return {
 		--[[ General ]]--
 		208887, -- Summon Time Elementals
+		211616, -- Summon Time Elemental - Fast
+		211614, -- Summon Time Elemental - Slow
 		"stages",
 		"berserk",
 
@@ -71,7 +82,10 @@ end
 function mod:OnBossEnable()
 	--[[ General ]]--
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-
+	self:Log("SPELL_CAST_START", "TimeStop", 208944) -- Phase triggering
+	self:RegisterEvent("RAID_BOSS_EMOTE")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	
 	--[[ Recursive Elemental ]]--
 	self:Log("SPELL_AURA_APPLIED", "ShieldApplied", 221863)
 	self:Log("SPELL_AURA_REMOVED", "ShieldRemoved", 221863)
@@ -104,8 +118,16 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-
-end
+	phase = 1
+	fastElementalCounter = 0
+	slowElementalCounter = 0
+	lookingForMsg = false
+	ringCounter = 0
+	orbCounter = 0
+	self:Bar(211614, 5) -- Summon Time Elemental - Slow
+	self:Bar(211616, 8) -- Summon Time Elemental - Fast
+	self:Bar(208807, 36.3) -- Arcanetic Rings
+end 
 
 --------------------------------------------------------------------------------
 -- Event Handlers
@@ -113,11 +135,51 @@ end
 
 --[[ General ]]--
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 208887 then -- Summon Time Elementals
+	if spellId == 211614 then -- Slow
 		self:Message(spellId, "Neutral", "Info")
-	elseif spellId == 209030 or spellId == 208944 or spellId == 209123 or spellId == 209136 then -- XXX Saw 209030 and 208944 during testing, confirm on live
-		self:Message("stages", "Neutral", "Info", spellName, spellId)
+		slowElementalCounter = slowElementalCounter + 1
+		self:Bar(spellId, slowElementalTimers[slowElementalCounter] or 60) -- Assuming timers cap at 60, which is probably wrong
+	elseif spellId == 211616 then -- Fast
+		self:Message(spellId, "Neutral", "Info")
+		fastElementalCounter = fastElementalCounter + 1
+		self:Bar(spellId, fastElementalTimers[fastElementalCounter] or 20) -- Assuming timers cap at 20, which is probably wrong
 	end
+end
+
+function mod:RAID_BOSS_EMOTE(event, msg, npcname)
+	if msg:find("228877") then -- Arcanetic Rings
+		ringCounter = ringCounter + 1
+		self:Bar(208807, ringTimers[ringCounter] or (ringCounter%2==0 and 10 or 40))
+		self:Message(208807, "Attention", "Alarm")
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
+	if lookingForMsg then
+		orbMsg = msg
+		lookingForMsg = false
+	end
+	if orbMsg == msg then
+		orbCounter = orbCounter + 1
+		self:Bar(210022, orbCounter%2==1 and 76 or 37)
+		self:Message(210022, "Urgent", "Alert", CL.incoming:format(self:SpellName(210022)))
+	end
+end
+
+function mod:TimeStop(args)
+	phase = phase + 1
+	self:Message("stages", "Neutral", "Info", CL.stage:format(phase), false)
+	-- Reset elemental counters
+	fastElementalCounter = 0
+	slowElementalCounter = 0
+	ringCounter = 0
+	orbCounter = 0
+	-- Stop old bars
+	
+	-- Start new bars
+	self:Bar(211614, 15) -- Summon Time Elemental - Slow
+	self:Bar(211616, 18) -- Summon Time Elemental - Fast
+	self:Bar(210022, 28)
 end
 
 --[[ Recursive Elemental ]]--
@@ -160,8 +222,8 @@ end
 
 --[[ Time Layer 1 ]]--
 function mod:ArcaneticRing(args)
-	self:Message(args.spellId, "Urgent", "Alert")
-	self:CDBar(args.spellId, 30)
+	--self:Message(args.spellId, "Urgent", "Alert")
+	--self:CDBar(args.spellId, 30)
 end
 
 function mod:SpanningSingularity(args)
@@ -202,10 +264,12 @@ do
 end
 
 function mod:EpochericOrb(args)
-	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
+	lookingForMsg = true
+	--self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
 end
 
 function mod:AblatingExplosion(args)
+	self:Bar(args.spellId, 20.7)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Long")
 	self:TargetBar(args.spellId, 8, args.destName)
 	self:ScheduleTimer("Bar", 8, args.spellId, 7)

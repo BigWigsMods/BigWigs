@@ -125,7 +125,6 @@ end
 local function shouldDisable() return not plugin.db.profile.sound end
 
 function plugin:OnRegister()
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
 
 	media:Register(mType, "BigWigs: Long", "Interface\\AddOns\\BigWigs\\Sounds\\Long.ogg")
@@ -187,6 +186,8 @@ end
 
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Sound")
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	updateProfile()
 end
 
 -------------------------------------------------------------------------------

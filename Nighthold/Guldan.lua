@@ -1,7 +1,7 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Mod is untested, probably needs a lot of updates
+-- - Ugliest module in BigWigs so far. Clean me up please!
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -11,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Gul'dan", 1088, 1737)
 if not mod then return end
 mod:RegisterEnableMob(104154)
 mod.engageId = 1866
---mod.respawnTime = 0
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -20,6 +20,8 @@ mod.engageId = 1866
 local phase = 1
 local liquidHellfireCount = 1
 local handOfGuldanCount = 1
+local handOfGuldanTimers = {48.9, 138.9} -- TODO: Get more data on these
+local stormCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -33,6 +35,9 @@ local L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		--[[ General ]]--
+		"stages",
+
 		--[[ Essence of Aman'Thul ]]--
 		210339, -- Time Dilation
 		{217830, "SAY"}, -- Scattering Field
@@ -62,16 +67,16 @@ function mod:GetOptions()
 		209270, -- Eye of Gul'dan
 		208672, -- Carrion Wave
 
-		--[[ Stage Three ]]--  XXX untested
-		{221891, "SAY"}, -- Soul Siphon   XXX untested
-		167935, -- Storm of the Destroyer   XXX untested
-		206744, -- Black Harvest   XXX untested
-		221606, -- Flames of Sargeras   XXX untested
-		212686, -- Flames of Sargeras   XXX untested
-		211132, -- Empowered Eye of Gul'dan   XXX untested
-		221781, -- Desolate Ground   XXX untested
+		--[[ Stage Three ]]--
+		221891, -- Soul Siphon
+		167935, -- Storm of the Destroyer
+		206744, -- Black Harvest
+		{221606, "SAY", "FLASH"}, -- Flames of Sargeras
+		211152, -- Empowered Eye of Gul'dan
+		221781, -- Desolate Ground
 		{227556, "TANK"}, -- Fury of the Fel   XXX untested
 	}, {
+		["stages"] = "general",
 		[210339] = -14886, -- Essence of Aman'Thul
 		[206219] = -14885, -- Stage One
 		[207938] = -14897, -- Inquisitor Vethriz
@@ -84,6 +89,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
+	self:RegisterEvent("RAID_BOSS_EMOTE")
 
 	--[[ Essence of Aman'Thul ]]--
 	self:Log("SPELL_AURA_APPLIED", "TimeDilation", 210339)
@@ -114,32 +120,34 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "TornSoulRemoved", 206896)
 
 	--[[ Stage Two ]]--
-	self:Log("SPELL_CAST_START", "BondsOfFelCast", 206222)
-	self:Log("SPELL_AURA_APPLIED", "BondsOfFel", 209011)
-	self:Log("SPELL_CAST_START", "EyeOfGuldan", 209270)
+	self:Log("SPELL_CAST_START", "BondsOfFelCast", 206222, 206221) -- Normal, Empowered
+	self:Log("SPELL_AURA_APPLIED", "BondsOfFel", 209011, 206384) -- Normal, Empowered
+	self:Log("SPELL_CAST_START", "EyeOfGuldan", 209270, 211152) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "CarrionWave", 208672)
 
 	--[[ Stage Three ]]--
+	self:Log("SPELL_AURA_APPLIED", "Phase3Start", 227427) --The Eye of Aman'Thul
 	self:Log("SPELL_AURA_APPLIED", "FuryOfTheFel", 227556) -- XXX untested
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FuryOfTheFel", 227556) -- XXX untested
 
-	self:Log("SPELL_CAST_START", "StormOfTheDestroyer", 167935, 177380) -- XXX untested
-	self:Log("SPELL_AURA_APPLIED", "SoulSiphon", 221891) -- XXX untested
-	self:Log("SPELL_CAST_START", "BlackHarvest", 206744) -- XXX untested
-	self:Log("SPELL_AURA_APPLIED", "FlamesOfSargerasSoon", 221606) -- XXX untested
-	self:Log("SPELL_AURA_APPLIED", "FlamesOfSargeras", 212686) -- XXX untested
+	self:Log("SPELL_CAST_START", "StormOfTheDestroyer", 167819, 167935, 177380, 152987)
+	self:Log("SPELL_AURA_APPLIED", "SoulSiphon", 221891)
+	self:Log("SPELL_CAST_START", "BlackHarvest", 206744)
+	self:Log("SPELL_AURA_APPLIED", "FlamesOfSargerasSoon", 221606)
+	self:Log("SPELL_AURA_APPLIED", "FlamesOfSargeras", 221603)
 
-	self:Log("SPELL_AURA_APPLIED", "Damage", 206515, 209518, 211132, 221781) -- Fel Efflux, Eye of Gul'dan, Empowered Eye of Gul'dan, Desolate Ground
-	self:Log("SPELL_PERIODIC_DAMAGE", "Damage", 206515, 209518, 211132, 221781)
-	self:Log("SPELL_PERIODIC_MISSED", "Damage", 206515, 209518, 211132, 221781)
-	self:Log("SPELL_DAMAGE", "Damage", 217770, 209518, 211132, 221781) -- Gaze of Vethriz, Eye of Gul'dan, Empowered Eye of Gul'dan, Desolate Ground
-	self:Log("SPELL_MISSED", "Damage", 217770, 209518, 211132, 221781)
+	self:Log("SPELL_AURA_APPLIED", "Damage", 206515, 221781) -- Fel Efflux, Desolate Ground
+	self:Log("SPELL_PERIODIC_DAMAGE", "Damage", 206515, 221781)
+	self:Log("SPELL_PERIODIC_MISSED", "Damage", 206515, 221781)
+	self:Log("SPELL_DAMAGE", "Damage", 217770, 221781) -- Gaze of Vethriz, Desolate Ground
+	self:Log("SPELL_MISSED", "Damage", 217770, 221781)
 end
 
 function mod:OnEngage()
 	phase = 1
 	liquidHellfireCount = 1
 	handOfGuldanCount = 1
+	stormCount = 1
 	self:Bar(212258, 7) -- Hand of Gul'dan
 	self:Bar(206515, 11) -- Fel Efflux
 end
@@ -152,6 +160,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 210273 then -- Fel Obelisk
 		self:Message(spellId, "Attention", "Alarm")
 		self:CDBar(spellId, 23)
+	end
+end
+function mod:RAID_BOSS_EMOTE(event, msg, npcname)
+	if msg:find("206221") then -- Gains Empowered Bonds of Fel
+		self:Bar(209011, self:BarTimeLeft(209011), self:SpellName(206221))
 	end
 end
 
@@ -181,28 +194,48 @@ function mod:ResonantBarrier(args)
 end
 
 function mod:EyeOfAmanThul(args)
-	phase = 2
 	self:Message("stages", "Neutral", "Long", args.spellName, args.spellId)
-	self:Bar(206219, 9) -- Liquid Hellfire
-	self:Bar(206515, 9.5) -- Fel Efflux
+	self:Bar(206219, 6) -- Liquid Hellfire
+	self:Bar(206515, 9.8) -- Fel Efflux
 end
 
-function mod:EyeOfAmanThulRemoved(args)
+function mod:EyeOfAmanThulRemoved(args) -- Phase 2 start
+	phase = 2
+	handOfGuldanCount = 1
+	liquidHellfireCount = 1
+	self:Message("stages", "Neutral", "Long", CL.stage:format(2), args.spellId)
+	self:Bar(206219, 23.5, CL.count:format(self:SpellName(206219), liquidHellfireCount)) -- Liquid Hellfire
+	self:Bar(212258, 9.5) -- Bonds of Fel
+	self:Bar(212258, 14.5) -- Hand of Gul'dan
+	self:Bar(209270, 29) -- Eye of Gul'dan
+end
+
+function mod:Phase3Start(args) -- Phase 3 start
 	phase = 3
-	self:Message("stages", "Neutral", "Long", CL.removed:format(args.spellName), args.spellId)
-	self:Bar(206219, 23.5) -- Liquid Hellfire
+	self:Message("stages", "Neutral", "Long", CL.stage:format(3), args.spellId)
+	self:StopBar(206221) -- Empowered Bonds of Fel
+	self:StopBar(212258) -- Hand of Gul'dan
+	self:StopBar(CL.count:format(self:SpellName(206220), liquidHellfireCount)) -- Liquid Hellfire
+	self:Bar("stages", 8, args.spellName, args.spellId)
+	self:Bar(211152, 39) -- Eye of Gul'dan
+	self:Bar(206744, 66) -- Black Harvest
+	self:Bar(167935, 84) -- Storm of the Destroyer
 end
 
 --[[ Stage One ]]--
 function mod:LiquidHellfire(args)
 	self:Message(206219, "Urgent", "Alarm", CL.incoming:format(CL.count:format(args.spellName, liquidHellfireCount)))
 	liquidHellfireCount = liquidHellfireCount + 1
-	self:Bar(206219, phase == 1 and 15 or 25, CL.count:format(args.spellName, liquidHellfireCount)) -- p3 and after cd missing
+	if phase == 1 then
+		self:Bar(206219, liquidHellfireCount == 1 and 15 or 25, CL.count:format(args.spellName, liquidHellfireCount))
+	else
+		self:Bar(206219, liquidHellfireCount == 5 and 73.2 or 36.6, CL.count:format(args.spellName, liquidHellfireCount)) -- gets skipped once
+	end
 end
 
 function mod:FelEfflux(args)
 	self:Message(206515, "Important", "Alert")
-	self:CDBar(206515, phase == 1 and 14 or 12)
+	self:CDBar(206515, 12)
 end
 
 function mod:HandOfGuldan(args)
@@ -210,6 +243,8 @@ function mod:HandOfGuldan(args)
 	handOfGuldanCount = handOfGuldanCount + 1
 	if phase == 1 and handOfGuldanCount < 4 then
 		self:Bar(args.spellId, handOfGuldanCount == 2 and 14 or 10)
+	elseif phase == 2 then
+		self:Bar(args.spellId, handOfGuldanTimers[handOfGuldanCount] or 48.9)
 	end
 end
 
@@ -220,7 +255,7 @@ end
 
 function mod:Drain(args)
 	if self:Dispeller("magic") or self:Me(args.destGUID) then
-		self:TargetMessage("TargetMessage", args.destName, "Urgent", "Alarm")
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
 	end
 end
 
@@ -260,7 +295,7 @@ end
 --[[ Stage Two ]]--
 function mod:BondsOfFelCast(args)
 	self:Message(209011, "Attention", "Info", CL.casting:format(args.spellName))
-	self:Bar(209011, 50)
+	self:Bar(209011, 44.5, args.spellName)
 end
 
 do
@@ -268,18 +303,18 @@ do
 	function mod:BondsOfFel(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Important", "Warning", nil, nil, true)
+			self:ScheduleTimer("TargetMessage", 0.5, 209011, list, "Important", "Warning", nil, nil, true)
 		end
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count:format(args.spellName, #list))
-			self:Flash(args.spellId)
+			self:Say(209011, CL.count:format(args.spellName, #list))
+			self:Flash(209011)
 		end
 	end
 end
 
 function mod:EyeOfGuldan(args)
-	self:Message(args.spellId, "Urgent", "Alert")
-	self:Bar(args.spellId, 60)
+	self:Message(209270, "Urgent", "Alert")
+	self:Bar(209270, phase == 2 and 53.3 or 62.5, args.spellName) -- TODO: P3 timer is 25s at some point
 end
 
 function mod:CarrionWave(args)
@@ -303,6 +338,10 @@ end
 
 function mod:StormOfTheDestroyer(args)
 	self:Message(167935, "Important", "Long")
+	if args.spellId == 167819 then
+		stormCount = stormCount + 1
+		self:Bar(167935, stormCount == 2 and 68 or 61)
+	end
 end
 
 do
@@ -310,16 +349,14 @@ do
 	function mod:SoulSiphon(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Important", "Warning", nil, nil, true)
-		end
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Important")
 		end
 	end
 end
 
 function mod:BlackHarvest(args)
 	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
+	self:CDBar(args.spellId, 72)
 end
 
 do
@@ -333,20 +370,25 @@ do
 	end
 end
 
-function mod:FlamesOfSargerasSoon(args)
-	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning", CL.soon:format(args.spellName))
-		self:Say(args.spellId)
-		self:Flash(args.spellId)
-		self:TargetBar(args.spellId, 7, args.destName)
+do
+	local list = mod:NewTargetList()
+	function mod:FlamesOfSargerasSoon(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important")
+		end
+		if self:Me(args.destGUID) then
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+			self:Say(args.spellId)
+			self:Flash(args.spellId)
+			self:TargetBar(args.spellId, 6, args.destName)
+		end
 	end
 end
 
 function mod:FlamesOfSargeras(args)
-	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
-		self:Say(args.spellId)
-		self:Flash(args.spellId)
-		self:TargetBar(args.spellId, 4, args.destName)
-	end
+	--[[if self:Me(args.destGUID) then
+		self:TargetMessage(221606, args.destName, "Personal", "Warning")
+		self:Flash(221606)
+	end]]
 end
