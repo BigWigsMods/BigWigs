@@ -53,8 +53,8 @@ local function createOptions()
 	local get = function(info) return plugin.db.profile[info[#info]] end
 	local set = function(info, value)
 		plugin.db.profile[info[#info]] = value
-		if plugin.anchorEmphasizedCountdownText then
-			plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline)
+		if BWEmphasizeCountdownMessageAnchor then
+			BWEmphasizeCountdownMessageAnchor.text:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline)
 		end
 	end
 
@@ -86,8 +86,8 @@ local function createOptions()
 					end,
 					set = function(info, r, g, b)
 						plugin.db.profile[info[#info]].r, plugin.db.profile[info[#info]].g, plugin.db.profile[info[#info]].b = r, g, b
-						if plugin.anchorEmphasizedCountdownText then
-							plugin.anchorEmphasizedCountdownText:SetTextColor(r, g, b)
+						if BWEmphasizeCountdownMessageAnchor then
+							BWEmphasizeCountdownMessageAnchor.text:SetTextColor(r, g, b)
 						end
 					end,
 					order = 0.7,
@@ -107,8 +107,8 @@ local function createOptions()
 					set = function(info, value)
 						local list = media:List("font")
 						plugin.db.profile.font = list[value]
-						if plugin.anchorEmphasizedCountdownText then
-							plugin.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline)
+						if BWEmphasizeCountdownMessageAnchor then
+							BWEmphasizeCountdownMessageAnchor.text:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline)
 						end
 					end,
 				},
