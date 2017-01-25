@@ -1,10 +1,8 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Respawn time
--- - Timers are an absolute nightmare. Each phase is different.
--- - timeBombCountdown is experimental
--- - TimeRelease aura could be hidden from cleu now, check on live
+-- - TimeRelease healing remaining InfoBox
+-- - Mythic data!
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -30,53 +28,69 @@ local bombSayTimers = {}
 
 local getTimers
 do
+	local mythic = {
+		["normal1"] = {
+			[206609] = {10, 7}, -- Time Release
+			[206617] = {5}, -- Time Bomb
+			[219815] = {24}, -- Temporal Orb
+			[-13022] = {15}, -- Add
+		},
+	}
 	local heroic = {
 		["normal1"] = {
 			[206609] = {5, 13, 25}, -- Time Release
 			[206617] = {29.5, 5}, -- Time Bomb
-			[219815] = {38} -- Temporal Orb
+			[219815] = {38}, -- Temporal Orb
+			[-13022] = {25}, -- Add
 		},
 		["normal2"] = {
 			[206609] = {30, 20, 7}, -- Time Release
 			[206617] = {6.5, 10, 10}, -- Time Bomb
-			[219815] = {10, 25, 30} -- Temporal Orb
+			[219815] = {10, 25, 30}, -- Temporal Orb
+			[-13022] = {16}, -- Add
 		},
 		["slow1"] = {
 			[206609] = {10, 20}, -- Time Release
 			[206617] = {17, 10, 10, 5}, -- Time Bomb
-			[219815] = {20, 18, 7} -- Temporal Orb
+			[219815] = {20, 18, 7}, -- Temporal Orb
+			[-13022] = {43}, -- Add
 		},
 		["fast1"] = {
 			[206609] = {5, 7, 13, 5, 5, 8}, -- Time Release
 			[206617] = {18}, -- Time Bomb
-			[219815] = {} -- Temporal Orb
+			[219815] = {}, -- Temporal Orb
+			[-13022] = {38}, -- Add
 		}
 	}
 	local normal = {
 		["normal1"] = {
 			[206609] = {5, 15}, -- Time Release
 			[206617] = {36.5}, -- Time Bomb
-			[219815] = {48} -- Temporal Orb
+			[219815] = {48}, -- Temporal Orb
+			[-13022] = {38}, -- Add
 		},
 		["normal2"] = {
 			[206609] = {5, 16}, -- Time Release
 			[206617] = {19.5}, -- Time Bomb
-			[219815] = {13, 23} -- Temporal Orb
+			[219815] = {13, 23}, -- Temporal Orb
+			[-13022] = {}, -- Add
 		},
 		["slow1"] = {
 			[206609] = {5, 23}, -- Time Release
 			[206617] = {22.2}, -- Time Bomb
-			[219815] = {30} -- Temporal Orb
+			[219815] = {30}, -- Temporal Orb
+			[-13022] = {}, -- Add
 		},
 		["fast1"] = {
 			[206609] = {10, 15, 20, 15}, -- Time Release
 			[206617] = {}, -- Time Bomb
-			[219815] = {15, 25} -- Temporal Orb
+			[219815] = {15, 25}, -- Temporal Orb
+			[-13022] = {}, -- Add
 		}
 	}
 
 	function getTimers(self)
-		return self:Easy() and normal or heroic
+		return self:Mythic() and mythic or self:Easy() and normal or heroic
 	end
 end
 
@@ -157,8 +171,8 @@ local function timeBombCountdown(self)
 	self:StopBar(206617, me)
 
 	if not name then return end
-	-- TODO experimental, needs work
-	local remaining = floor(expires - GetTime()) -- floor((expires - GetTime()) / timeMod)
+
+	local remaining = floor(expires - GetTime())
 	self:TargetBar(206617, remaining, me)
 	for i = 1, 3 do
 		if remaining-i > 0 then
@@ -169,54 +183,26 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 207012 then -- Speed: Normal
-		self:Message("stages", "Neutral", "Info", spellName, spellId)
-
-		timeBombCountdown(self)
-		bombCount = 1
-		releaseCount = 1
-		temporalCount = 1
 		normalPhase = normalPhase + 1
-
-		if normalPhase == 1 then
-			self:Bar(-13022, 25, CL.add, 207228) -- Big Add
-		elseif normalPhase == 2 then
-			self:Bar(-13022, 16, CL.add, 207228) -- Big Add
-		end
-
 		currentTimers = timers["normal" .. normalPhase]
 	elseif spellId == 207011 then -- Speed: Slow
-		self:Message("stages", "Neutral", "Info", spellName, spellId)
-
-		timeBombCountdown(self)
-		bombCount = 1
-		releaseCount = 1
-		temporalCount = 1
 		slowPhase = slowPhase + 1
-
-		if slowPhase == 1 then
-			self:Bar(-13022, 43, CL.add, 207228) -- Big Add
-		end
-
 		currentTimers = timers["slow" .. slowPhase]
 	elseif spellId == 207013 then -- Speed: Fast
-		self:Message("stages", "Neutral", "Info", spellName, spellId)
-
-		timeBombCountdown(self)
-		bombCount = 1
-		releaseCount = 1
-		temporalCount = 1
 		fastPhase = fastPhase + 1
-
-		if fastPhase == 1 then
-			self:Bar(-13022, 38, CL.add, 207228) -- Big Add
-		end
-
 		currentTimers = timers["fast" .. fastPhase]
 	elseif spellId == 206700 then -- Summon Slow Add
 		self:Message(-13022, "Neutral", "Info", CL.spawning:format(CL.add), false)
 	end
 
-	if spellId == 207012 or spellId == 207011 or spellId == 207013 then
+	if spellId == 207012 or spellId == 207011 or spellId == 207013 then -- Speed: Normal / Slow / Fast
+		self:Message("stages", "Neutral", "Info", spellName, spellId)
+
+		timeBombCountdown(self)
+		bombCount = 1
+		releaseCount = 1
+		temporalCount = 1
+
 		local releaseTime = currentTimers and currentTimers[206609][releaseCount]
 		if releaseTime then
 			self:Bar(206609, releaseTime) -- Time Release
@@ -230,6 +216,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		local temporalTime = currentTimers and currentTimers[219815][temporalCount]
 		if temporalTime then
 			self:Bar(219815, temporalTime) -- Temporal Orb
+		end
+
+		local addTime = currentTimers and currentTimers[-13022][1] -- One add spawn per Phase
+		if addTime then
+			self:Bar(-13022, addTime, CL.add, 207228) -- Big Add
 		end
 	end
 end
