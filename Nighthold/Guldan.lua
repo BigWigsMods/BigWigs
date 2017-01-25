@@ -2,6 +2,7 @@
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Ugliest module in BigWigs so far. Clean me up please!
+-- - Soul Siphon CD
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -20,7 +21,7 @@ mod.respawnTime = 30
 local phase = 1
 local liquidHellfireCount = 1
 local handOfGuldanCount = 1
-local handOfGuldanTimers = {48.9, 138.9} -- TODO: Get more data on these
+local handOfGuldanTimers = {13.5, 48.9, 138.9} -- TODO: Get more data on these
 local stormCount = 1
 
 --------------------------------------------------------------------------------
@@ -165,6 +166,7 @@ end
 function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 	if msg:find("206221") then -- Gains Empowered Bonds of Fel
 		self:Bar(209011, self:BarTimeLeft(209011), self:SpellName(206221))
+		self:StopBar(209011) -- Bonds of Fel
 	end
 end
 
@@ -206,7 +208,7 @@ function mod:EyeOfAmanThulRemoved(args) -- Phase 2 start
 	self:Message("stages", "Neutral", "Long", CL.stage:format(2), args.spellId)
 	self:Bar(206219, 23.5, CL.count:format(self:SpellName(206219), liquidHellfireCount)) -- Liquid Hellfire
 	self:Bar(212258, 9.5) -- Bonds of Fel
-	self:Bar(212258, 14.5) -- Hand of Gul'dan
+	self:Bar(212258, 13.5, CL.count:format(self:SpellName(212258, handOfGuldanCount))) -- Hand of Gul'dan
 	self:Bar(209270, 29) -- Eye of Gul'dan
 end
 
@@ -242,9 +244,9 @@ function mod:HandOfGuldan(args)
 	self:Message(args.spellId, "Attention", "Info")
 	handOfGuldanCount = handOfGuldanCount + 1
 	if phase == 1 and handOfGuldanCount < 4 then
-		self:Bar(args.spellId, handOfGuldanCount == 2 and 14 or 10)
+		self:Bar(args.spellId, handOfGuldanCount == 2 and 14 or 10, CL.count:format(args.spellName, handOfGuldanCount))
 	elseif phase == 2 then
-		self:Bar(args.spellId, handOfGuldanTimers[handOfGuldanCount] or 48.9)
+		self:Bar(args.spellId, handOfGuldanTimers[handOfGuldanCount] or 48.9, CL.count:format(args.spellName, handOfGuldanCount))
 	end
 end
 
@@ -338,7 +340,7 @@ end
 
 function mod:StormOfTheDestroyer(args)
 	self:Message(167935, "Important", "Long")
-	if args.spellId == 167819 then
+	if args.spellId == 167819 then -- First Storm
 		stormCount = stormCount + 1
 		self:Bar(167935, stormCount == 2 and 68 or 61)
 	end
