@@ -22,9 +22,10 @@ local emphasizeCountdownAnchor = nil
 
 local BWMessageFrame = nil
 
-local db = nil
+local emphasizedText = nil
+local emphasizedCountdownText = nil
 
-local floor = math.floor
+local db = nil
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
@@ -37,13 +38,15 @@ local function showAnchors()
 	normalAnchor:Show()
 	emphasizeAnchor:Show()
 	emphasizeCountdownAnchor:Show()
-	BWEmphasizeCountdownMessageAnchor.text:Show()
+	emphasizedCountdownText:GetParent():Show()
+	emphasizedCountdownText:SetText("5")
 end
 
 local function hideAnchors()
 	normalAnchor:Hide()
 	emphasizeAnchor:Hide()
 	emphasizeCountdownAnchor:Hide()
+	emphasizedCountdownText:GetParent():Hide()
 end
 
 local function resetAnchors()
@@ -109,9 +112,6 @@ do
 		if frameName == "BWEmphasizeCountdownMessageAnchor" then
 			header:SetPoint("BOTTOM", display, "TOP", 0, 5)
 			header:SetJustifyV("TOP")
-			display.text = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-			display.text:SetPoint("CENTER")
-			display.text:SetText("5")
 		else
 			header:SetAllPoints(display)
 			header:SetJustifyV("MIDDLE")
@@ -225,100 +225,6 @@ plugin.pluginOptions.args.output.args.normal.args.Channel = nil
 plugin.pluginOptions.args.output.args.emphasized.args.Channel = nil
 plugin.pluginOptions.args.output.args.normal.args.ChatFrame = nil
 plugin.pluginOptions.args.output.args.emphasized.args.ChatFrame = nil
-
-local function updateProfile()
-	db = plugin.db.profile
-
-	plugin:SetSinkStorage(db)
-	fakeEmphasizeMessageAddon:SetSinkStorage(db.emphasizedMessages)
-	if not db.font then
-		db.font = media:GetDefault("font")
-	end
-	if not db.fontSize then
-		local _, size = GameFontNormalHuge:GetFont()
-		db.fontSize = size
-	end
-
-	if seModule then
-		BWEmphasizeCountdownMessageAnchor.text:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, seModule.db.profile.outline ~= "NONE" and seModule.db.profile.outline)
-		BWEmphasizeCountdownMessageAnchor.text:SetTextColor(seModule.db.profile.fontColor.r, seModule.db.profile.fontColor.g, seModule.db.profile.fontColor.b)
-	end
-
-	-- Kill chat outputs
-	if db.sink20OutputSink == "Channel" or db.sink20OutputSink == "ChatFrame" then
-		db.sink20OutputSink = "BigWigs"
-		db.sink20ScrollArea = nil
-	end
-	if db.emphasizedMessages.sink20OutputSink == "Channel" or db.emphasizedMessages.sink20OutputSink == "ChatFrame" then
-		db.emphasizedMessages.sink20OutputSink = "BigWigsEmphasized"
-		db.emphasizedMessages.sink20ScrollArea = nil
-	end
-
-	normalAnchor:RefixPosition()
-	emphasizeAnchor:RefixPosition()
-	emphasizeCountdownAnchor:RefixPosition()
-	BWMessageFrame:ClearAllPoints()
-	local align = db.align == "CENTER" and "" or db.align
-	if db.growUpwards then
-		BWMessageFrame:SetPoint("BOTTOM"..align, normalAnchor, "TOP"..align)
-	else
-		BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
-	end
-	BWMessageFrame:SetScale(db.scale)
-	BWMessageFrame:SetWidth(UIParent:GetWidth())
-	for i = 1, 4 do
-		local font = labels[i]
-		if font then
-			font.animFade:SetStartDelay(db.displaytime)
-			font.icon.animFade:SetStartDelay(db.displaytime)
-			font.animFade:SetDuration(db.fadetime)
-			font.icon.animFade:SetDuration(db.fadetime)
-		end
-	end
-end
-
--------------------------------------------------------------------------------
--- Initialization
---
-
-function plugin:OnRegister()
-	self:RegisterSink("BigWigsEmphasized", L.bwEmphasized, L.emphasizedSinkDescription, "EmphasizedPrint")
-	self:RegisterSink("BigWigs", "BigWigs", L.sinkDescription, "Print")
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	updateProfile()
-end
-
-function plugin:OnPluginEnable()
-	seModule = BigWigs:GetPlugin("Super Emphasize", true)
-	colorModule = BigWigs:GetPlugin("Colors", true)
-
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	updateProfile()
-
-	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
-	self:RegisterMessage("BigWigs_SetConfigureTarget")
-	self:RegisterMessage("BigWigs_Message")
-	self:RegisterMessage("BigWigs_EmphasizedMessage")
-	self:RegisterMessage("BigWigs_EmphasizedCountdownMessage")
-	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
-	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
-end
-
-function plugin:BigWigs_SetConfigureTarget(event, module)
-	if module == self then
-		normalAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
-		emphasizeAnchor.background:SetColorTexture(0, 0, 0, 0.3)
-		emphasizeCountdownAnchor.background:SetColorTexture(0, 0, 0, 0.3)
-	elseif module == seModule then
-		normalAnchor.background:SetColorTexture(0, 0, 0, 0.3)
-		emphasizeAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
-		emphasizeCountdownAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
-	else
-		normalAnchor.background:SetColorTexture(0, 0, 0, 0.3)
-		emphasizeAnchor.background:SetColorTexture(0, 0, 0, 0.3)
-		emphasizeCountdownAnchor.background:SetColorTexture(0, 0, 0, 0.3)
-	end
-end
 
 do
 	local updateMessageTimers = function(info, value)
@@ -463,11 +369,129 @@ do
 	}
 end
 
+--------------------------------------------------------------------------------
+-- Profile
+--
+
+local function updateProfile()
+	db = plugin.db.profile
+
+	plugin:SetSinkStorage(db)
+	fakeEmphasizeMessageAddon:SetSinkStorage(db.emphasizedMessages)
+	if not db.font then
+		db.font = media:GetDefault("font")
+	end
+	if not db.fontSize then
+		local _, size = GameFontNormalHuge:GetFont()
+		db.fontSize = size
+	end
+
+	if seModule then
+		local flags = nil
+		if seModule.db.profile.monochrome and seModule.db.profile.outline ~= "NONE" then
+			flags = "MONOCHROME," .. seModule.db.profile.outline
+		elseif seModule.db.profile.monochrome then
+			flags = "MONOCHROME"
+		elseif seModule.db.profile.outline ~= "NONE" then
+			flags = seModule.db.profile.outline
+		end
+
+		emphasizedText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, flags)
+
+		emphasizedCountdownText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, flags)
+		emphasizedCountdownText:SetTextColor(seModule.db.profile.fontColor.r, seModule.db.profile.fontColor.g, seModule.db.profile.fontColor.b)
+	end
+
+	-- Kill chat outputs
+	if db.sink20OutputSink == "Channel" or db.sink20OutputSink == "ChatFrame" then
+		db.sink20OutputSink = "BigWigs"
+		db.sink20ScrollArea = nil
+	end
+	if db.emphasizedMessages.sink20OutputSink == "Channel" or db.emphasizedMessages.sink20OutputSink == "ChatFrame" then
+		db.emphasizedMessages.sink20OutputSink = "BigWigsEmphasized"
+		db.emphasizedMessages.sink20ScrollArea = nil
+	end
+
+	normalAnchor:RefixPosition()
+	emphasizeAnchor:RefixPosition()
+	emphasizeCountdownAnchor:RefixPosition()
+	BWMessageFrame:ClearAllPoints()
+	local align = db.align == "CENTER" and "" or db.align
+	if db.growUpwards then
+		BWMessageFrame:SetPoint("BOTTOM"..align, normalAnchor, "TOP"..align)
+	else
+		BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
+	end
+	BWMessageFrame:SetScale(db.scale)
+	BWMessageFrame:SetWidth(UIParent:GetWidth())
+
+	local flags = nil
+	if db.monochrome and db.outline ~= "NONE" then
+		flags = "MONOCHROME," .. db.outline
+	elseif db.monochrome then
+		flags = "MONOCHROME"
+	elseif db.outline ~= "NONE" then
+		flags = db.outline
+	end
+	for i = 1, 4 do
+		local font = labels[i]
+		if font then
+			font.animFade:SetStartDelay(db.displaytime)
+			font.icon.animFade:SetStartDelay(db.displaytime)
+			font.animFade:SetDuration(db.fadetime)
+			font.icon.animFade:SetDuration(db.fadetime)
+
+			font:SetFont(media:Fetch("font", db.font), db.fontSize, flags)
+		end
+	end
+end
+
+-------------------------------------------------------------------------------
+-- Initialization
+--
+
+function plugin:OnRegister()
+	self:RegisterSink("BigWigsEmphasized", L.bwEmphasized, L.emphasizedSinkDescription, "EmphasizedPrint")
+	self:RegisterSink("BigWigs", "BigWigs", L.sinkDescription, "Print")
+end
+
+function plugin:OnPluginEnable()
+	seModule = BigWigs:GetPlugin("Super Emphasize", true)
+	colorModule = BigWigs:GetPlugin("Colors", true)
+
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	updateProfile()
+
+	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
+	self:RegisterMessage("BigWigs_SetConfigureTarget")
+	self:RegisterMessage("BigWigs_Message")
+	self:RegisterMessage("BigWigs_EmphasizedCountdownMessage")
+	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
+	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
+end
+
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function plugin:BigWigs_SetConfigureTarget(event, module)
+	if module == self then
+		normalAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
+		emphasizeAnchor.background:SetColorTexture(0, 0, 0, 0.3)
+		emphasizeCountdownAnchor.background:SetColorTexture(0, 0, 0, 0.3)
+	elseif module == seModule then
+		normalAnchor.background:SetColorTexture(0, 0, 0, 0.3)
+		emphasizeAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
+		emphasizeCountdownAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
+	else
+		normalAnchor.background:SetColorTexture(0, 0, 0, 0.3)
+		emphasizeAnchor.background:SetColorTexture(0, 0, 0, 0.3)
+		emphasizeCountdownAnchor.background:SetColorTexture(0, 0, 0, 0.3)
+	end
+end
+
 do
+	local floor = math.floor
 	local scaleUpTime, scaleDownTime = 0.2, 0.4
 	local function bounceAnimation(anim, elapsed)
 		local self = anim:GetParent()
@@ -524,22 +548,10 @@ do
 		return labels[4]
 	end
 
-	function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
-		BWMessageFrame:SetScale(db.scale or 1)
+	function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
 		BWMessageFrame:Show()
 
 		local slot = db.growUpwards and getNextSlotUp() or getNextSlotDown()
-
-		local flags = nil
-		if db.monochrome and db.outline ~= "NONE" then
-			flags = "MONOCHROME," .. db.outline
-		elseif db.monochrome then
-			flags = "MONOCHROME"
-		elseif db.outline ~= "NONE" then
-			flags = db.outline
-		end
-		slot:SetFont(media:Fetch("font", db.font), db.fontSize, flags)
-
 		slot:SetText(text)
 		slot:SetTextColor(r, g, b, 1)
 		slot:SetHeight(slot:GetStringHeight())
@@ -566,91 +578,59 @@ do
 end
 
 do
-	local emphasizedText, updater, frame = nil, nil, nil
-	function plugin:EmphasizedPrint(addon, text, r, g, b, font, size, _, _, _, icon)
-		if not updater then
-			frame = CreateFrame("Frame", "BWEmphasizeMessageFrame", UIParent)
-			frame:SetFrameStrata("HIGH")
-			frame:SetPoint("TOP", emphasizeAnchor, "BOTTOM")
-			frame:SetWidth(UIParent:GetWidth())
-			frame:SetHeight(80)
+	local frame = CreateFrame("Frame", "BWEmphasizeMessageFrame", UIParent)
+	frame:SetFrameStrata("HIGH")
+	frame:SetPoint("TOP", emphasizeAnchor, "BOTTOM")
+	frame:SetWidth(UIParent:GetWidth())
+	frame:SetHeight(80)
+	frame:Hide()
 
-			emphasizedText = frame:CreateFontString(nil, "OVERLAY", "ZoneTextFont")
-			emphasizedText:SetPoint("TOP")
+	emphasizedText = frame:CreateFontString(nil, "OVERLAY")
+	emphasizedText:SetPoint("TOP")
 
-			updater = frame:CreateAnimationGroup()
-			updater:SetScript("OnFinished", function() frame:Hide() end)
+	local updater = frame:CreateAnimationGroup()
+	updater:SetScript("OnFinished", function() frame:Hide() end)
 
-			local anim = updater:CreateAnimation("Alpha")
-			anim:SetFromAlpha(1)
-			anim:SetToAlpha(0)
-			anim:SetDuration(3.5)
-			anim:SetStartDelay(1.5)
-		end
+	local anim = updater:CreateAnimation("Alpha")
+	anim:SetFromAlpha(1)
+	anim:SetToAlpha(0)
+	anim:SetDuration(3.5)
+	anim:SetStartDelay(1.5)
 
-		local flags = nil
-		if seModule.db.profile.monochrome and seModule.db.profile.outline ~= "NONE" then
-			flags = "MONOCHROME," .. seModule.db.profile.outline
-		elseif seModule.db.profile.monochrome then
-			flags = "MONOCHROME"
-		elseif seModule.db.profile.outline ~= "NONE" then
-			flags = seModule.db.profile.outline
-		end
-
-		emphasizedText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, flags)
+	function plugin:EmphasizedPrint(addon, text, r, g, b)
 		emphasizedText:SetText(text)
 		emphasizedText:SetTextColor(r, g, b)
 		updater:Stop()
 		frame:Show()
 		updater:Play()
 	end
-	function plugin:BigWigs_EmphasizedMessage(event, ...)
-		fakeEmphasizeMessageAddon:Pour(...)
-	end
 end
 
 do
-	local emphasizedCountdownText, updater, frame = nil, nil, nil
-	function plugin:EmphasizedCountdownPrint(text)
-		if not updater then
-			BWEmphasizeCountdownMessageAnchor.text:Hide()
-			frame = CreateFrame("Frame", "BWEmphasizeCountdownMessageFrame", UIParent)
-			frame:SetFrameStrata("HIGH")
-			frame:SetPoint("CENTER", emphasizeCountdownAnchor, "CENTER")
-			frame:SetWidth(80)
-			frame:SetHeight(80)
+	local frame = CreateFrame("Frame", "BWEmphasizeCountdownMessageFrame", UIParent)
+	frame:SetFrameStrata("HIGH")
+	frame:SetPoint("CENTER", emphasizeCountdownAnchor, "CENTER")
+	frame:SetWidth(80)
+	frame:SetHeight(80)
+	frame:Hide()
 
-			emphasizedCountdownText = frame:CreateFontString(nil, "OVERLAY")
-			emphasizedCountdownText:SetPoint("CENTER")
+	emphasizedCountdownText = frame:CreateFontString(nil, "OVERLAY")
+	emphasizedCountdownText:SetPoint("CENTER")
+	emphasizeCountdownAnchor.text = emphasizedCountdownText -- Purely so the Emphasize module can access it
 
-			updater = frame:CreateAnimationGroup()
-			updater:SetScript("OnFinished", function() frame:Hide() end)
+	local updater = frame:CreateAnimationGroup()
+	updater:SetScript("OnFinished", function() frame:Hide() end)
+	local anim = updater:CreateAnimation("Alpha")
+	anim:SetFromAlpha(1)
+	anim:SetToAlpha(0)
+	anim:SetDuration(3.5)
+	anim:SetStartDelay(1.5)
 
-			local anim = updater:CreateAnimation("Alpha")
-			anim:SetFromAlpha(1)
-			anim:SetToAlpha(0)
-			anim:SetDuration(3.5)
-			anim:SetStartDelay(1.5)
-		end
-
-		local flags = nil
-		if seModule.db.profile.monochrome and seModule.db.profile.outline ~= "NONE" then
-			flags = "MONOCHROME," .. seModule.db.profile.outline
-		elseif seModule.db.profile.monochrome then
-			flags = "MONOCHROME"
-		elseif seModule.db.profile.outline ~= "NONE" then
-			flags = seModule.db.profile.outline
-		end
-
-		emphasizedCountdownText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, flags)
+	function plugin:BigWigs_EmphasizedCountdownMessage(event, text)
 		emphasizedCountdownText:SetText(text)
-		emphasizedCountdownText:SetTextColor(seModule.db.profile.fontColor.r, seModule.db.profile.fontColor.g, seModule.db.profile.fontColor.b)
 		updater:Stop()
 		frame:Show()
 		updater:Play()
-	end
-	function plugin:BigWigs_EmphasizedCountdownMessage(event, ...)
-		plugin:EmphasizedCountdownPrint(...)
 	end
 end
 
