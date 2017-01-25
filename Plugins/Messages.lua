@@ -30,28 +30,14 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
 
 --------------------------------------------------------------------------------
--- Anchors
+-- Anchors & Frames
 --
-
-local defaultPositions = {
-	BWMessageAnchor = {"CENTER"},
-	BWEmphasizeMessageAnchor = {"TOP", "RaidWarningFrame", "BOTTOM", 0, 45},
-	BWEmphasizeCountdownMessageAnchor = {"TOP", "RaidWarningFrame", "BOTTOM", 0, -150},
-}
-
-local function onDragStart(self) self:StartMoving() end
-local function onDragStop(self)
-	self:StopMovingOrSizing()
-	local s = self:GetEffectiveScale()
-	db[self.x] = self:GetLeft() * s
-	db[self.y] = self:GetTop() * s
-end
 
 local function showAnchors()
 	normalAnchor:Show()
 	emphasizeAnchor:Show()
 	emphasizeCountdownAnchor:Show()
-	seModule.anchorEmphasizedCountdownText:Show()
+	BWEmphasizeCountdownMessageAnchor.text:Show()
 end
 
 local function hideAnchors()
@@ -66,6 +52,124 @@ local function resetAnchors()
 	emphasizeCountdownAnchor:Reset()
 end
 
+do
+	local defaultPositions = {
+		BWMessageAnchor = {"CENTER"},
+		BWEmphasizeMessageAnchor = {"TOP", "RaidWarningFrame", "BOTTOM", 0, 45},
+		BWEmphasizeCountdownMessageAnchor = {"TOP", "RaidWarningFrame", "BOTTOM", 0, -150},
+	}
+
+	local function OnDragStart(self)
+		self:StartMoving()
+	end
+	local function OnDragStop(self)
+		self:StopMovingOrSizing()
+		local s = self:GetEffectiveScale()
+		db[self.x] = self:GetLeft() * s
+		db[self.y] = self:GetTop() * s
+	end
+	local function OnMouseUp(self, button)
+		if button ~= "LeftButton" then return end
+		if self:GetName() == "BWEmphasizeCountdownMessageAnchor" or self:GetName() == "BWEmphasizeMessageAnchor" then
+			seModule:SendMessage("BigWigs_SetConfigureTarget", seModule)
+		else
+			plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
+		end
+	end
+	local function Reset(self)
+		db[self.x] = nil
+		db[self.y] = nil
+		self:RefixPosition()
+	end
+	local function RefixPosition(self)
+		self:ClearAllPoints()
+		if db[self.x] and db[self.y] then
+			local s = self:GetEffectiveScale()
+			self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db[self.x] / s, db[self.y] / s)
+		else
+			self:SetPoint(unpack(defaultPositions[self:GetName()]))
+		end
+	end
+
+	local function createAnchor(frameName, title)
+		local display = CreateFrame("Frame", frameName, UIParent)
+		display.x, display.y = frameName .. "_x", frameName .. "_y"
+		display:EnableMouse(true)
+		display:SetClampedToScreen(true)
+		display:SetMovable(true)
+		display:RegisterForDrag("LeftButton")
+		display:SetWidth((frameName == "BWEmphasizeCountdownMessageAnchor") and 50 or 200)
+		display:SetHeight((frameName == "BWEmphasizeCountdownMessageAnchor") and 50 or 20)
+		local bg = display:CreateTexture(nil, "BACKGROUND")
+		bg:SetAllPoints(display)
+		bg:SetColorTexture(0, 0, 0, 0.3)
+		display.background = bg
+		local header = display:CreateFontString(nil, nil, "GameFontNormal")
+		header:SetText(title)
+		if frameName == "BWEmphasizeCountdownMessageAnchor" then
+			header:SetPoint("BOTTOM", display, "TOP", 0, 5)
+			header:SetJustifyV("TOP")
+			display.text = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+			display.text:SetPoint("CENTER")
+			display.text:SetText("5")
+		else
+			header:SetAllPoints(display)
+			header:SetJustifyV("MIDDLE")
+		end
+		header:SetJustifyH("CENTER")
+		display:SetScript("OnDragStart", OnDragStart)
+		display:SetScript("OnDragStop", OnDragStop)
+		display:SetScript("OnMouseUp", OnMouseUp)
+		display.Reset = Reset
+		display.RefixPosition = RefixPosition
+		display:SetPoint(unpack(defaultPositions[frameName]))
+		display:Hide()
+		return display
+	end
+
+	normalAnchor = createAnchor("BWMessageAnchor", L.messages)
+	emphasizeAnchor = createAnchor("BWEmphasizeMessageAnchor", L.emphasizedMessages)
+	emphasizeCountdownAnchor = createAnchor("BWEmphasizeCountdownMessageAnchor", L.emphasizedCountdown)
+
+	BWMessageFrame = CreateFrame("Frame", "BWMessageFrame", UIParent)
+	BWMessageFrame:SetWidth(UIParent:GetWidth())
+	BWMessageFrame:SetHeight(80)
+	BWMessageFrame:SetFrameStrata("HIGH")
+	BWMessageFrame:SetToplevel(true)
+	for i = 1, 4 do
+		local fs = BWMessageFrame:CreateFontString()
+		fs:SetWidth(0)
+		fs:SetHeight(0)
+		fs.elapsed = 0
+		fs:Hide()
+
+		fs.anim = fs:CreateAnimationGroup()
+		fs.anim:SetScript("OnFinished", function(self)
+			self:GetParent():Hide()
+			if not labels[1]:IsShown() and not labels[2]:IsShown() and not labels[3]:IsShown() and not labels[4]:IsShown() then
+				BWMessageFrame:Hide()
+			end
+		end)
+		fs.animFade = fs.anim:CreateAnimation("Alpha")
+		fs.animFade:SetFromAlpha(1)
+		fs.animFade:SetToAlpha(0)
+
+		local icon = BWMessageFrame:CreateTexture(nil, "ARTWORK")
+		icon:SetPoint("RIGHT", fs, "LEFT")
+		icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
+		icon:Hide()
+		fs.icon = icon
+
+		icon.anim = icon:CreateAnimationGroup()
+		icon.anim:SetScript("OnFinished", function(self) self:GetParent():Hide() end)
+		icon.animFade = icon.anim:CreateAnimation("Alpha")
+		icon.animFade:SetFromAlpha(1)
+		icon.animFade:SetToAlpha(0)
+
+		labels[i] = fs
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Options
 --
@@ -78,7 +182,7 @@ plugin.defaultDB = {
 	align = "CENTER",
 	fontSize = nil,
 	usecolors = true,
-	scale = 1.0,
+	scale = 1,
 	chat = nil,
 	useicons = true,
 	classcolor = true, -- XXX non-functional
@@ -124,23 +228,7 @@ plugin.pluginOptions.args.output.args.emphasized.args.ChatFrame = nil
 
 local function updateProfile()
 	db = plugin.db.profile
-	if normalAnchor then
-		normalAnchor:RefixPosition()
-		emphasizeAnchor:RefixPosition()
-		emphasizeCountdownAnchor:RefixPosition()
-		BWMessageFrame:ClearAllPoints()
-		local align = db.align == "CENTER" and "" or db.align
-		BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
-		for i = 1, 4 do
-			local font = labels[i]
-			if font then
-				font.animFade:SetStartDelay(db.displaytime)
-				font.icon.animFade:SetStartDelay(db.displaytime)
-				font.animFade:SetDuration(db.fadetime)
-				font.icon.animFade:SetDuration(db.fadetime)
-			end
-		end
-	end
+
 	plugin:SetSinkStorage(db)
 	fakeEmphasizeMessageAddon:SetSinkStorage(db.emphasizedMessages)
 	if not db.font then
@@ -151,6 +239,11 @@ local function updateProfile()
 		db.fontSize = size
 	end
 
+	if seModule then
+		BWEmphasizeCountdownMessageAnchor.text:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, seModule.db.profile.outline ~= "NONE" and seModule.db.profile.outline)
+		BWEmphasizeCountdownMessageAnchor.text:SetTextColor(seModule.db.profile.fontColor.r, seModule.db.profile.fontColor.g, seModule.db.profile.fontColor.b)
+	end
+
 	-- Kill chat outputs
 	if db.sink20OutputSink == "Channel" or db.sink20OutputSink == "ChatFrame" then
 		db.sink20OutputSink = "BigWigs"
@@ -159,6 +252,28 @@ local function updateProfile()
 	if db.emphasizedMessages.sink20OutputSink == "Channel" or db.emphasizedMessages.sink20OutputSink == "ChatFrame" then
 		db.emphasizedMessages.sink20OutputSink = "BigWigsEmphasized"
 		db.emphasizedMessages.sink20ScrollArea = nil
+	end
+
+	normalAnchor:RefixPosition()
+	emphasizeAnchor:RefixPosition()
+	emphasizeCountdownAnchor:RefixPosition()
+	BWMessageFrame:ClearAllPoints()
+	local align = db.align == "CENTER" and "" or db.align
+	if db.growUpwards then
+		BWMessageFrame:SetPoint("BOTTOM"..align, normalAnchor, "TOP"..align)
+	else
+		BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
+	end
+	BWMessageFrame:SetScale(db.scale)
+	BWMessageFrame:SetWidth(UIParent:GetWidth())
+	for i = 1, 4 do
+		local font = labels[i]
+		if font then
+			font.animFade:SetStartDelay(db.displaytime)
+			font.icon.animFade:SetStartDelay(db.displaytime)
+			font.animFade:SetDuration(db.fadetime)
+			font.icon.animFade:SetDuration(db.fadetime)
+		end
 	end
 end
 
@@ -173,138 +288,20 @@ function plugin:OnRegister()
 	updateProfile()
 end
 
-do
-	local function createAnchor(frameName, title)
-		local display = CreateFrame("Frame", frameName, UIParent)
-		display.x, display.y = frameName .. "_x", frameName .. "_y"
-		display:EnableMouse(true)
-		display:SetClampedToScreen(true)
-		display:SetMovable(true)
-		display:RegisterForDrag("LeftButton")
-		display:SetWidth((frameName == "BWEmphasizeCountdownMessageAnchor") and 50 or 200)
-		display:SetHeight((frameName == "BWEmphasizeCountdownMessageAnchor") and 50 or 20)
-		local bg = display:CreateTexture(nil, "BACKGROUND")
-		bg:SetAllPoints(display)
-		bg:SetColorTexture(0, 0, 0, 0.3)
-		display.background = bg
-		local header = display:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-		header:SetText(title)
-		if frameName == "BWEmphasizeCountdownMessageAnchor" then
-			header:SetPoint("BOTTOM", display, "TOP", 0, 5)
-			header:SetJustifyV("TOP")
-			seModule.anchorEmphasizedCountdownText = display:CreateFontString(nil, "OVERLAY")
-			seModule.anchorEmphasizedCountdownText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, seModule.db.profile.outline ~= "NONE" and seModule.db.profile.outline)
-			seModule.anchorEmphasizedCountdownText:SetPoint("CENTER")
-			seModule.anchorEmphasizedCountdownText:SetText("5")
-			seModule.anchorEmphasizedCountdownText:SetTextColor(seModule.db.profile.fontColor.r, seModule.db.profile.fontColor.g, seModule.db.profile.fontColor.b)
-		else
-			header:SetAllPoints(display)
-			header:SetJustifyV("MIDDLE")
-		end
-		header:SetJustifyH("CENTER")
-		display:SetScript("OnDragStart", onDragStart)
-		display:SetScript("OnDragStop", onDragStop)
-		display:SetScript("OnMouseUp", function(self, button)
-			if button ~= "LeftButton" then return end
-			if self:GetName() == "BWEmphasizeCountdownMessageAnchor" or self:GetName() == "BWEmphasizeMessageAnchor" then
-				seModule:SendMessage("BigWigs_SetConfigureTarget", seModule)
-			else
-				plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
-			end
-		end)
-		display.Reset = function(self)
-			db[self.x] = nil
-			db[self.y] = nil
-			self:RefixPosition()
-		end
-		display.RefixPosition = function(self)
-			self:ClearAllPoints()
-			if db[self.x] and db[self.y] then
-				local s = self:GetEffectiveScale()
-				self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db[self.x] / s, db[self.y] / s)
-			else
-				self:SetPoint(unpack(defaultPositions[self:GetName()]))
-			end
-		end
-		display:RefixPosition()
-		display:Hide()
-		return display
-	end
+function plugin:OnPluginEnable()
+	seModule = BigWigs:GetPlugin("Super Emphasize", true)
+	colorModule = BigWigs:GetPlugin("Colors", true)
 
-	local function createSlots()
-		BWMessageFrame = CreateFrame("Frame", "BWMessageFrame", UIParent)
-		BWMessageFrame:SetWidth(UIParent:GetWidth())
-		BWMessageFrame:SetHeight(80)
-		local align = db.align == "CENTER" and "" or db.align
-		if db.growUpwards then
-			BWMessageFrame:SetPoint("BOTTOM"..align, normalAnchor, "TOP"..align)
-		else
-			BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
-		end
-		BWMessageFrame:SetScale(db.scale or 1)
-		BWMessageFrame:SetFrameStrata("HIGH")
-		BWMessageFrame:SetToplevel(true)
-		for i = 1, 4 do
-			local fs = BWMessageFrame:CreateFontString(nil, "ARTWORK")
-			fs:SetWidth(0)
-			fs:SetHeight(0)
-			fs.elapsed = 0
-			fs:Hide()
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	updateProfile()
 
-			fs.anim = fs:CreateAnimationGroup()
-			fs.anim:SetScript("OnFinished", function(self)
-				self:GetParent():Hide()
-				if not labels[1]:IsShown() and not labels[2]:IsShown() and not labels[3]:IsShown() and not labels[4]:IsShown() then
-					BWMessageFrame:Hide()
-				end
-			end)
-			fs.animFade = fs.anim:CreateAnimation("Alpha")
-			fs.animFade:SetFromAlpha(1)
-			fs.animFade:SetToAlpha(0)
-			fs.animFade:SetStartDelay(db.displaytime)
-			fs.animFade:SetDuration(db.fadetime)
-
-			local icon = BWMessageFrame:CreateTexture(nil, "ARTWORK")
-			icon:SetPoint("RIGHT", fs, "LEFT")
-			icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
-			icon:Hide()
-			fs.icon = icon
-
-			icon.anim = icon:CreateAnimationGroup()
-			icon.anim:SetScript("OnFinished", function(self) self:GetParent():Hide() end)
-			icon.animFade = icon.anim:CreateAnimation("Alpha")
-			icon.animFade:SetFromAlpha(1)
-			icon.animFade:SetToAlpha(0)
-			icon.animFade:SetStartDelay(db.displaytime)
-			icon.animFade:SetDuration(db.fadetime)
-
-			labels[i] = fs
-		end
-	end
-
-	function plugin:OnPluginEnable()
-		seModule = BigWigs:GetPlugin("Super Emphasize", true)
-		colorModule = BigWigs:GetPlugin("Colors", true)
-
-		if not normalAnchor then
-			normalAnchor = createAnchor("BWMessageAnchor", L.messages)
-			emphasizeAnchor = createAnchor("BWEmphasizeMessageAnchor", L.emphasizedMessages)
-			emphasizeCountdownAnchor = createAnchor("BWEmphasizeCountdownMessageAnchor", L.emphasizedCountdown)
-			createSlots()
-			createAnchor, createSlots = nil, nil
-		end
-
-		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-		updateProfile()
-
-		self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
-		self:RegisterMessage("BigWigs_SetConfigureTarget")
-		self:RegisterMessage("BigWigs_Message")
-		self:RegisterMessage("BigWigs_EmphasizedMessage")
-		self:RegisterMessage("BigWigs_EmphasizedCountdownMessage")
-		self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
-		self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
-	end
+	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
+	self:RegisterMessage("BigWigs_SetConfigureTarget")
+	self:RegisterMessage("BigWigs_Message")
+	self:RegisterMessage("BigWigs_EmphasizedMessage")
+	self:RegisterMessage("BigWigs_EmphasizedCountdownMessage")
+	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
+	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
 end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
@@ -616,7 +613,7 @@ do
 	local emphasizedCountdownText, updater, frame = nil, nil, nil
 	function plugin:EmphasizedCountdownPrint(text)
 		if not updater then
-			if seModule.anchorEmphasizedCountdownText then seModule.anchorEmphasizedCountdownText:Hide() end
+			BWEmphasizeCountdownMessageAnchor.text:Hide()
 			frame = CreateFrame("Frame", "BWEmphasizeCountdownMessageFrame", UIParent)
 			frame:SetFrameStrata("HIGH")
 			frame:SetPoint("CENTER", emphasizeCountdownAnchor, "CENTER")
