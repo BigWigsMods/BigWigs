@@ -340,7 +340,7 @@ function mod:StormOfTheDestroyer(args)
 	self:Message(167935, "Important", "Long")
 	if args.spellId == 167819 then
 		stormCount = stormCount + 1
-		self:Bar(args.spellId, stormCount == 2 and 68 or 61)
+		self:Bar(167935, stormCount == 2 and 68 or 61)
 	end
 end
 
