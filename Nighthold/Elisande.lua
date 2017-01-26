@@ -85,7 +85,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "TimeStop", 208944) -- Phase triggering
 	self:RegisterEvent("RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	
+
 	--[[ Recursive Elemental ]]--
 	self:Log("SPELL_AURA_APPLIED", "ShieldApplied", 221863)
 	self:Log("SPELL_AURA_REMOVED", "ShieldRemoved", 221863)
@@ -127,7 +127,7 @@ function mod:OnEngage()
 	self:Bar(211614, 5) -- Summon Time Elemental - Slow
 	self:Bar(211616, 8) -- Summon Time Elemental - Fast
 	self:Bar(208807, 36.3) -- Arcanetic Rings
-end 
+end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
@@ -175,7 +175,7 @@ function mod:TimeStop(args)
 	ringCounter = 0
 	orbCounter = 0
 	-- Stop old bars
-	
+
 	-- Start new bars
 	self:Bar(211614, 15) -- Summon Time Elemental - Slow
 	self:Bar(211616, 18) -- Summon Time Elemental - Fast
