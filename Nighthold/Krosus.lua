@@ -171,7 +171,7 @@ do
 	local prev = 0
 	function mod:OrbOfDescructionApplied(args)
 		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", CL.count:format(args.spellName, orbCount))
-		self:TargetBar(args.spellId, 5, args.destName)
+		self:TargetBar(args.spellId, 5, args.destName, 230932) -- Orb
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
