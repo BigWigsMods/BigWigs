@@ -20,6 +20,9 @@ mod:RegisterEnableMob(
 	113307, -- Chronowraith
 	112665, -- Nighthold Protector
 
+	--[[ Aluriel to Etraeus ]]--
+	112803, -- Astrologer Jarin
+
 	--[[ Aluriel to Telarn ]]--
 	112973, -- Duskwatch Weaver
 	112595, -- Shal'dorei Archmage
@@ -47,6 +50,9 @@ if L then
 	L.battle_magus = "Duskwatch Battle-Magus"
 	L.chronowraith = "Chronowraith"
 	L.protector = "Nighthold Protector"
+
+	--[[ Aluriel to Etraeus ]]--
+	L.jarin = "Astrologer Jarin"
 
 	--[[ Aluriel to Telarn ]]--
 	L.weaver = "Duskwatch Weaver"
@@ -79,6 +85,9 @@ function mod:GetOptions()
 		224568, -- Mass Suppress (Nighthold Protector)
 		224572, -- Disrupting Energy (Nighthold Protector)
 
+		--[[ Aluriel to Etraeus ]]--
+		{224632, "SAY", "FLASH"}, -- Heavenly Crash (Astrologer Jarin)
+
 		--[[ Aluriel to Telarn ]]--
 		{225845, "FLASH"}, -- Chosen Fate (Duskwatch Weaver)
 		{225105, "FLASH", "SAY", "PROXIMITY"}, -- Arcanic Release (Shal'dorei Archmage)
@@ -95,6 +104,7 @@ function mod:GetOptions()
 		[224510] = L.battle_magus,
 		[225412] = L.chronowraith,
 		[224568] = L.protector,
+		[224632] = L.jarin,
 		[225845] = L.weaver,
 		[225105] = L.archmage,
 		[225857] = L.manasaber,
@@ -131,6 +141,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "MassSiphon", 225412)
 	self:Death("ChronowraithDeath", 113307)
 	self:Log("SPELL_CAST_START", "MassSuppress", 224568)
+
+	--[[ Aluriel to Etraeus ]]--
+	self:Log("SPELL_AURA_APPLIED", "HeavenlyCrash", 224632)
 
 	--[[ Aluriel to Telarn ]]--
 	self:Log("SPELL_AURA_APPLIED", "ChosenFate", 225845)
@@ -254,6 +267,27 @@ end
 
 function mod:MassSuppress(args)
 	self:Message(args.spellId, "Attention", self:Interrupter(args.sourceGUID) and "Long")
+end
+
+--[[ Aluriel to Etraeus ]]--
+function mod:HeavenlyCrash(args)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
+
+	local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+	local t = expires - GetTime()
+	self:TargetBar(args.spellId, t, args.destName)
+
+	if self:Me(args.destGUID) then
+		self:Flash(args.spellId)
+		self:Say(args.spellId)
+		self:ScheduleTimer("Say", t-3, args.spellId, 3, true)
+		self:ScheduleTimer("Say", t-2, args.spellId, 2, true)
+		self:ScheduleTimer("Say", t-1, args.spellId, 1, true)
+	end
+end
+
+function mod:HeavenlyCrashRemoved(args)
+	self:StopBar(args.spellId, args.destName)
 end
 
 --[[ Aluriel to Telarn ]]--
