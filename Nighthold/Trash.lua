@@ -20,6 +20,11 @@ mod:RegisterEnableMob(
 	113307, -- Chronowraith
 	112665, -- Nighthold Protector
 
+	--[[ Aluriel to Telarn ]]--
+	112973, -- Duskwatch Weaver
+	112595, -- Shal'dorei Archmage
+	111295, -- Domesticated Manasaber
+
 	--[[ Aluriel to Krosos ]]--
 	111210 -- Searing Infernal
 )
@@ -42,6 +47,11 @@ if L then
 	L.battle_magus = "Duskwatch Battle-Magus"
 	L.chronowraith = "Chronowraith"
 	L.protector = "Nighthold Protector"
+
+	--[[ Aluriel to Telarn ]]--
+	L.weaver = "Duskwatch Weaver"
+	L.archmage = "Shal'dorei Archmage"
+	L.manasaber = "Domesticated Manasaber"
 
 	--[[ Aluriel to Krosos ]]--
 	L.infernal = "Searing Infernal"
@@ -69,6 +79,12 @@ function mod:GetOptions()
 		224568, -- Mass Suppress (Nighthold Protector)
 		224572, -- Disrupting Energy (Nighthold Protector)
 
+		--[[ Aluriel to Telarn ]]--
+		{225845, "FLASH"}, -- Chosen Fate (Duskwatch Weaver)
+		{225105, "FLASH", "SAY", "PROXIMITY"}, -- Arcanic Release (Shal'dorei Archmage)
+		225800, -- Greater Time Warp (Shal'dorei Archmage)
+		{225857, "TANK"}, -- Arcane Wound
+
 		--[[ Aluriel to Krosos ]]--
 		{221344, "SAY", "FLASH"}, -- Annihilating Orb (Searing Infernal)
 	}, {
@@ -79,6 +95,9 @@ function mod:GetOptions()
 		[224510] = L.battle_magus,
 		[225412] = L.chronowraith,
 		[224568] = L.protector,
+		[225845] = L.weaver,
+		[225105] = L.archmage,
+		[225857] = L.manasaber,
 		[221344] = L.infernal,
 	}
 end
@@ -112,6 +131,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "MassSiphon", 225412)
 	self:Death("ChronowraithDeath", 113307)
 	self:Log("SPELL_CAST_START", "MassSuppress", 224568)
+
+	--[[ Aluriel to Telarn ]]--
+	self:Log("SPELL_AURA_APPLIED", "ChosenFate", 225845)
+	self:Log("SPELL_AURA_APPLIED", "ArcanicRelease", 225105)
+	self:Log("SPELL_AURA_REMOVED", "ArcanicReleaseRemoved", 225105)
+	self:Log("SPELL_CAST_SUCCESS", "GreaterTimeWarp", 225800)
+	self:Log("SPELL_AURA_APPLIED", "ArcaneWound", 225857)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ArcaneWound", 225857)
 
 	--[[ Aluriel to Krosos ]]--
 	self:Log("SPELL_AURA_APPLIED", "AnnihilatingOrb", 221344)
@@ -166,8 +193,10 @@ do
 	local prev, fulminateCount = 0, 0
 	function mod:Fulminate(args)
 		local t = GetTime()
-		self:Message(args.spellId, "Important", t-prev > 2 and "Alarm")
-		prev = t
+		if t-prev > 2 then
+			prev = t
+			self:Message(args.spellId, "Important", "Alarm")
+		end
 		local pad = strrep(" ", fulminateCount) -- hack so i can have two bars/messages for the same thing up
 		self:Bar(args.spellId, 5, CL.cast:format(args.spellName)..pad)
 		fulminateCount = 1 - fulminateCount
@@ -225,6 +254,54 @@ end
 
 function mod:MassSuppress(args)
 	self:Message(args.spellId, "Attention", self:Interrupter(args.sourceGUID) and "Long")
+end
+
+--[[ Aluriel to Telarn ]]--
+function mod:ChosenFate(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+		self:Flash(args.spellId)
+	end
+end
+
+do
+	local list = mod:NewTargetList()
+	function mod:ArcanicRelease(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Attention", "Alert", nil, nil, true)
+		end
+		self:TargetBar(args.spellId, 6, args.destName)
+		if self:Me(args.destGUID) then
+			self:OpenProximity(args.spellId, 8)
+			self:Say(args.spellId)
+			self:Flash(args.spellId)
+		end
+	end
+
+	function mod:ArcanicReleaseRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CloseProximity(args.spellId)
+			self:StopBar(args.spellId, args.destName)
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:GreaterTimeWarp(args)
+		local t = GetTime()
+		if t-prev > 0.5 then
+			prev = t
+			self:Message(args.spellId, "Important", self:Dispeller("magic", true) and "Info")
+		end
+	end
+end
+
+function mod:ArcaneWound(args)
+	local amount = args.amount or 1
+	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 1 and "Warning") -- check sound amount
+	self:TargetBar(args.spellId, 20, args.destName, CL.count:format(args.spellName, amount))
 end
 
 --[[ Aluriel to Krosos ]]--
