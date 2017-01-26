@@ -23,6 +23,7 @@ local liquidHellfireCount = 1
 local handOfGuldanCount = 1
 local handOfGuldanTimers = {13.5, 48.9, 138.9} -- TODO: Get more data on these
 local stormCount = 1
+local flamesCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -149,6 +150,7 @@ function mod:OnEngage()
 	liquidHellfireCount = 1
 	handOfGuldanCount = 1
 	stormCount = 1
+	flamesCount = 1
 	self:Bar(212258, 7) -- Hand of Gul'dan
 	self:Bar(206515, 11) -- Fel Efflux
 end
@@ -219,6 +221,7 @@ function mod:Phase3Start(args) -- Phase 3 start
 	self:StopBar(212258) -- Hand of Gul'dan
 	self:StopBar(CL.count:format(self:SpellName(206220), liquidHellfireCount)) -- Liquid Hellfire
 	self:Bar("stages", 8, args.spellName, args.spellId)
+	self:Bar(221606, 27.5) -- Flames of Sargeras
 	self:Bar(211152, 39) -- Eye of Gul'dan
 	self:Bar(206744, 66) -- Black Harvest
 	self:Bar(167935, 84) -- Storm of the Destroyer
@@ -385,6 +388,8 @@ do
 			self:Flash(args.spellId)
 			self:TargetBar(args.spellId, 6, args.destName)
 		end
+		flamesCount = flamesCount + 1
+		self:Bar(args.spellId, flamesCount % 3 == 1 and 34.7 or flamesCount % 3 == 0 and 8.8 or 7.8)
 	end
 end
 
