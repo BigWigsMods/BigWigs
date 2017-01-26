@@ -86,7 +86,7 @@ function mod:OnEngage()
 	self:Bar(204316, 59) -- Shockwave (time to _success)
 
 	if self:Mythic() then
-		self:Bar(-13767, 20, L.mode:format(L.red), 211801)
+		self:Bar(-13767, 22, L.mode:format(L.red), 211801)
 	end
 end
 
