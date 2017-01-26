@@ -23,7 +23,7 @@ local timers = {
 	[212492] = {8.0, 45.0, 40.0, 44.0, 38.0, 37.0, 33.0, 47.0, 41.0, 44.0, 38.0, 37.0},
 }
 local annihilateCount = 1
-
+local frostbittenCount = 0
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -86,8 +86,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PreMarkOfFrostApplied", 212531)
 	self:Log("SPELL_AURA_APPLIED", "MarkOfFrostApplied", 212587)
 	self:Log("SPELL_AURA_APPLIED", "Frostbitten", 212647)
-	self:Log("SPELL_AURA_REMOVED", "FrostbittenRemoved", 212647)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Frostbitten", 212647)
+	self:Log("SPELL_AURA_REMOVED", "FrostbittenRemoved", 212647)
 	self:Log("SPELL_CAST_START", "ReplicateMarkOfFrost", 212530)
 	self:Log("SPELL_CAST_START", "DetonateMarkOfFrost", 212735)
 	self:Log("SPELL_CAST_START", "AnimateMarkOfFrost", 213853)
@@ -114,9 +114,9 @@ end
 
 function mod:OnEngage()
 	annihilateCount = 1
+	frostbittenCount = 0
 	wipe(frostbittenStacks)
 	self:Bar(212492, timers[212492][annihilateCount]) -- Annihilate
-	self:OpenInfo(212647, self:SpellName(212647))
 	-- other bars are in mod:Stages()
 end
 
@@ -203,6 +203,8 @@ end
 do
 	local prev = 0
 	function mod:Frostbitten(args)
+		local amount = args.amount or 1
+		frostbittenCount = frostbittenCount + 1
 		frostbittenStacks[args.destName] = args.amount
 		if self:Me(args.destGUID) and amount % 2 == 0 then
 			self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 7 and "Warning")
@@ -212,11 +214,16 @@ do
 			prev = t
 			self:SetInfoByTable(args.spellId, frostbittenStacks)
 		end
+		self:OpenInfo(212647, self:SpellName(212647))
 	end
 end
 
 function mod:FrostbittenRemoved(args)
+	frostbittenCount = frostbittenCount - 1
 	frostbittenStacks[args.destName] = nil
+	if frostbittenCount == 0 then
+		self:CloseInfo(212647)
+	end
 end
 
 function mod:AnimateMarkOfFrost(args)
