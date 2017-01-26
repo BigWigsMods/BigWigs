@@ -71,7 +71,6 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:Log("SPELL_AURA_APPLIED", "Phase", 206557, 206559, 206560)
 	self:Log("SPELL_AURA_APPLIED", "ArcaneSeepageDamage", 206488)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ArcaneSeepageDamage", 206488)
@@ -101,6 +100,7 @@ function mod:OnEngage()
 	self:Bar(206641, 7.5) -- Arcane Slash
 	self:Bar(206788, 11) -- Toxic Slice
 	self:Bar("stages", 45, 206557, 206557) -- The Maniac
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 end
 
 function mod:OnBossDisable()
@@ -125,7 +125,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		if guid and not mobCollector[guid] then
 			mobCollector[guid] = true
 			local id = self:MobId(guid)
-			if id == 108303 then
+			if id == 108303 then -- Imprint
 				self:Message(215066, "Neutral", "Long", UnitName(unit), false)
 				self:Bar(214670, 2.5, CL.other:format(L.imprint, self:SpellName(214670))) -- Energized
 				if imprintCount == 1 then
