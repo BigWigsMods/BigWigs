@@ -244,9 +244,9 @@ end
 
 function mod:OnEngage()
 	-- Timers are in UNIT_SPELLCAST_SUCCEEDED
-	normalPhase = 1
-	fastPhase = 1
-	slowPhase = 1
+	normalPhase = 0
+	fastPhase = 0
+	slowPhase = 0
 	bombCount = 1
 	releaseCount = 1
 	temporalCount = 1
