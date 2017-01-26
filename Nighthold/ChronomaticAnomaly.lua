@@ -170,20 +170,26 @@ do
 		["normal2"] = {
 			[206609] = {5, 16}, -- Time Release
 			[206617] = {19.5}, -- Time Bomb
-			[219815] = {13, 23}, -- Temporal Orb
+			[219815] = {13}, -- Temporal Orb
 			[-13022] = {}, -- Add
 		},
 		["slow1"] = {
 			[206609] = {5, 23}, -- Time Release
 			[206617] = {22.2}, -- Time Bomb
 			[219815] = {30}, -- Temporal Orb
-			[-13022] = {}, -- Add
+			[-13022] = {38}, -- Add
+		},
+		["slow2"] = {
+			[206609] = {28}, -- Time Release
+			[206617] = {}, -- Time Bomb
+			[219815] = {8}, -- Temporal Orb
+			[-13022] = {23}, -- Add
 		},
 		["fast1"] = {
 			[206609] = {10, 15, 20, 15}, -- Time Release
 			[206617] = {}, -- Time Bomb
 			[219815] = {15, 25}, -- Temporal Orb
-			[-13022] = {}, -- Add
+			[-13022] = {32}, -- Add
 		}
 	}
 
