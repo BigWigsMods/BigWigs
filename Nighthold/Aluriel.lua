@@ -184,7 +184,7 @@ do
 	function mod:MarkOfFrostApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Urgent")
+			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Urgent")
 		end
 
 		local t = GetTime()
@@ -198,7 +198,7 @@ end
 
 function mod:Frostbitten(args)
 	local amount = args.amount or 1
-	if self:Me(args.destGUID) and amount % 2 == 0 then
+	if self:Me(args.destGUID) and amount % 2 == 0 and amount > 5 then
 		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 7 and "Warning")
 	end
 end
