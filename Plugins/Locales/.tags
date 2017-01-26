@@ -1,3 +1,0 @@
-!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
-L.encounterRestricted 	/home/spikeh/workspace/BigWigs-spikeh/Plugins/Locales/enUS.lua	/^L.encounterRestricted = "This function can't be used during an encounter."$/;"	f	language:Lua
-L.requiresLeadOrAssist 	/home/spikeh/workspace/BigWigs-spikeh/Plugins/Locales/enUS.lua	/^L.requiresLeadOrAssist = "This function requires raid leader or raid assist."$/;"	f	language:Lua
