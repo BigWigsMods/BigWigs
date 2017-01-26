@@ -114,6 +114,11 @@ function mod:OnEngage()
 	annihilateCount = 1
 	self:Bar(212492, timers[212492][annihilateCount]) -- Annihilate
 	-- other bars are in mod:Stages()
+	if self:Normal() then
+		self:Berserk(645)
+	elseif self:Heroic() then
+		self:Berserk(490)
+	end
 end
 
 --------------------------------------------------------------------------------
