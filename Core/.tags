@@ -1,0 +1,106 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+boss:AddMarkerOption	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:AddMarkerOption(state, markType, icon, id, ...)$/;"	f	language:Lua
+boss:Bar	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Bar(key, length, text, icon)$/;"	f	language:Lua
+boss:BarTimeLeft	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:BarTimeLeft(text)$/;"	f	language:Lua
+boss:Berserk	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, customFinalMessage)$/;"	f	language:Lua
+boss:CancelDelayedMessage	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:CancelDelayedMessage(text)$/;"	f	language:Lua
+boss:CDBar	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:CDBar(key, length, text, icon)$/;"	f	language:Lua
+boss:CHAT_MSG_MONSTER_YELL	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:CHAT_MSG_MONSTER_YELL(event, msg, ...)$/;"	f	language:Lua
+boss:CHAT_MSG_RAID_BOSS_EMOTE	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, ...)$/;"	f	language:Lua
+boss:CheckBossStatus	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:CheckBossStatus()$/;"	f	language:Lua
+boss:CheckForEncounterEngage	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:CheckForEncounterEngage(noEngage)$/;"	f	language:Lua
+boss:CheckForEngage	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:CheckForEngage()$/;"	f	language:Lua
+boss:CheckForWipe	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:CheckForWipe()$/;"	f	language:Lua
+boss:CheckOption	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:CheckOption(key, flag)$/;"	f	language:Lua
+boss:CloseAltPower	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:CloseAltPower(key)$/;"	f	language:Lua
+boss:CloseInfo	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:CloseInfo(key)$/;"	f	language:Lua
+boss:CloseProximity	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:CloseProximity(key)$/;"	f	language:Lua
+boss:ColorName	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:ColorName(player)$/;"	f	language:Lua
+boss:Damager	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Damager(unit)$/;"	f	language:Lua
+boss:Death	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:Death(func, ...)$/;"	f	language:Lua
+boss:DelayedMessage	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:DelayedMessage(key, delay, color, text, icon, sound)$/;"	f	language:Lua
+boss:Difficulty	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Difficulty()$/;"	f	language:Lua
+boss:Dispeller	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:Dispeller(dispelType, isOffensive, key)$/;"	f	language:Lua
+boss:Easy	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Easy()$/;"	f	language:Lua
+boss:Emote	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:Emote(func, ...)$/;"	f	language:Lua
+boss:EncounterEnd	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:EncounterEnd(event, id, name, diff, size, status)$/;"	f	language:Lua
+boss:Engage	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:Engage(noEngage)$/;"	f	language:Lua
+boss:Flash	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Flash(key, icon)$/;"	f	language:Lua
+boss:GetBossTarget	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:GetBossTarget(func, tankCheckExpiry, guid)$/;"	f	language:Lua
+boss:GetLocale	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:GetLocale()$/;"	f	language:Lua
+boss:GetOption	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:GetOption(key)$/;"	f	language:Lua
+boss:GetUnitIdByGUID	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:GetUnitIdByGUID(id) return findTargetByGUID(id) end$/;"	f	language:Lua
+boss:GetUnitTarget	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:GetUnitTarget(func, tankCheckExpiry, guid)$/;"	f	language:Lua
+boss:Healer	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Healer(unit)$/;"	f	language:Lua
+boss:Heroic	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Heroic()$/;"	f	language:Lua
+boss:Initialize	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Initialize() core:RegisterBossModule(self) end$/;"	f	language:Lua
+boss:Interrupter	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:Interrupter(guid)$/;"	f	language:Lua
+boss:IsBossModule	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:IsBossModule()$/;"	f	language:Lua
+boss:IterateGroup	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:IterateGroup()$/;"	f	language:Lua
+boss:LFR	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:LFR()$/;"	f	language:Lua
+boss:Log	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:Log(event, func, ...)$/;"	f	language:Lua
+boss:Me	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Me(guid)$/;"	f	language:Lua
+boss:Melee	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Melee()$/;"	f	language:Lua
+boss:Message	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Message(key, color, sound, text, icon)$/;"	f	language:Lua
+boss:MobId	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:MobId(guid)$/;"	f	language:Lua
+boss:Mythic	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Mythic()$/;"	f	language:Lua
+boss:NewTargetList	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:NewTargetList()$/;"	f	language:Lua
+boss:Normal	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Normal()$/;"	f	language:Lua
+boss:OnDisable	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:OnDisable(isWipe)$/;"	f	language:Lua
+boss:OnEnable	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:OnEnable(isWipe)$/;"	f	language:Lua
+boss:OpenAltPower	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:OpenAltPower(key, title, sorting, sync)$/;"	f	language:Lua
+boss:OpenInfo	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:OpenInfo(key, title)$/;"	f	language:Lua
+boss:OpenProximity	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:OpenProximity(key, range, player, isReverse)$/;"	f	language:Lua
+boss:PauseBar	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:PauseBar(key, text)$/;"	f	language:Lua
+boss:PlaySound	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:PlaySound(key, sound)$/;"	f	language:Lua
+boss:PrimaryIcon	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:PrimaryIcon(key, player)$/;"	f	language:Lua
+boss:Ranged	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Ranged()$/;"	f	language:Lua
+boss:Reboot	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Reboot(isWipe)$/;"	f	language:Lua
+boss:RegisterEnableMob	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:RegisterEnableMob(...) core:RegisterEnableMob(self, ...) end$/;"	f	language:Lua
+boss:RegisterTargetEvents	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:RegisterTargetEvents(func)$/;"	f	language:Lua
+boss:RegisterUnitEvent	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:RegisterUnitEvent(event, func, ...)$/;"	f	language:Lua
+boss:RemoveLog	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:RemoveLog(event, ...)$/;"	f	language:Lua
+boss:ResumeBar	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:ResumeBar(key, text)$/;"	f	language:Lua
+boss:Say	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Say(key, msg, directPrint)$/;"	f	language:Lua
+boss:SecondaryIcon	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:SecondaryIcon(key, player)$/;"	f	language:Lua
+boss:SetInfo	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:SetInfo(key, line, text)$/;"	f	language:Lua
+boss:SetInfoByTable	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:SetInfoByTable(key, tbl)$/;"	f	language:Lua
+boss:Solo	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Solo()$/;"	f	language:Lua
+boss:SpellName	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:SpellName(spellId)$/;"	f	language:Lua
+boss:StackMessage	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:StackMessage(key, player, stack, color, sound, text, icon)$/;"	f	language:Lua
+boss:StartWipeCheck	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:StartWipeCheck()$/;"	f	language:Lua
+boss:StopBar	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:StopBar(text, player)$/;"	f	language:Lua
+boss:StopWipeCheck	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:StopWipeCheck()$/;"	f	language:Lua
+boss:Sync	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:Sync(msg, extra)$/;"	f	language:Lua
+boss:Tank	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:Tank(unit)$/;"	f	language:Lua
+boss:TargetBar	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^function boss:TargetBar(key, length, player, text, icon)$/;"	f	language:Lua
+boss:TargetMessage	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:TargetMessage(key, player, color, sound, text, icon, alwaysPlaySound)$/;"	f	language:Lua
+boss:UnitName	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:UnitName(unit)$/;"	f	language:Lua
+boss:UNIT_TARGET	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:UNIT_TARGET(event, unit)$/;"	f	language:Lua
+boss:UnregisterTargetEvents	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:UnregisterTargetEvents()$/;"	f	language:Lua
+boss:UnregisterUnitEvent	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:UnregisterUnitEvent(event, ...)$/;"	f	language:Lua
+boss:UPDATE_MOUSEOVER_UNIT	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:UPDATE_MOUSEOVER_UNIT(event)$/;"	f	language:Lua
+boss:Win	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:Win()$/;"	f	language:Lua
+boss:Wipe	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:Wipe()$/;"	f	language:Lua
+boss:Yell	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function boss:Yell(func, ...)$/;"	f	language:Lua
+bossScanner	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	local function bossScanner(self, func, tankCheckExpiry, guid)$/;"	f	language:Lua
+checkFlag 	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	checkFlag = function(self, key, flag)$/;"	f	language:Lua
+findTargetByGUID	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	local function findTargetByGUID(id)$/;"	f	language:Lua
+if type(func) 	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^							if type(func) == "function" then$/;"	f	language:Lua
+if type(func) 	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^						if type(func) == "function" then$/;"	f	language:Lua
+if type(func) ~	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end$/;"	f	language:Lua
+if type(func) ~	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end$/;"	f	language:Lua
+if type(self.OnBossDisable) 	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	if type(self.OnBossDisable) == "function" then self:OnBossDisable() end$/;"	f	language:Lua
+if type(self.OnBossEnable) 	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end$/;"	f	language:Lua
+iter	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^		local function iter(t)$/;"	f	language:Lua
+local dbg 	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^local dbg = function(self, msg) print(format("[DBG:%s] %s", self.displayName, msg)) end$/;"	f	language:Lua
+local eventFunc 	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	local eventFunc = function(_, event, unit, ...)$/;"	f	language:Lua
+local metaMap 	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^local metaMap = {__index = function(self, key) self[key] = {} return self[key] end}$/;"	f	language:Lua
+local noFunc 	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	local noFunc = "Module %q tried to register a unit event with the function '%s' which doesn't exist in the module."$/;"	f	language:Lua
+local updateData 	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^local updateData = function(module)$/;"	f	language:Lua
+scan	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	local function scan(self)$/;"	f	language:Lua
+unitScanner	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	local function unitScanner(self, func, tankCheckExpiry, guid)$/;"	f	language:Lua
+UpdateDispelStatus	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function UpdateDispelStatus()$/;"	f	language:Lua
+UpdateInterruptStatus	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	function UpdateInterruptStatus()$/;"	f	language:Lua
+wipeCheck	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^	local function wipeCheck(module)$/;"	f	language:Lua
+__newindex 	/home/spikeh/workspace/BigWigs-spikeh/Core/BossPrototype.lua	/^		__newindex = function(self, key, value)$/;"	f	language:Lua
