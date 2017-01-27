@@ -104,7 +104,7 @@ end
 
 --[[ General ]]--
 function mod:Nightosis1(args)
-	self:Message("stages", "Neutral", "Info", self:SpellName(-13681), false) -- Stage Two: Nightosis
+	self:Message("stages", "Neutral", "Info", "75% - ".. self:SpellName(-13681), false) -- Stage Two: Nightosis
 	phase = 2
 	self:Bar(218774, 12) -- Summon Plasma Spheres, to _start
 	self:Bar(218304, 23.5) -- Parasitic Fetter, to _success
@@ -113,7 +113,7 @@ function mod:Nightosis1(args)
 end
 
 function mod:Nightosis2(args)
-	self:Message("stages", "Neutral", "Info", self:SpellName(-13683), false) -- Stage Three: Pure Forms
+	self:Message("stages", "Neutral", "Info", "50% - ".. self:SpellName(-13683), false) -- Stage Three: Pure Forms
 	phase = 3
 	self:Bar(218927, 10.5) -- Grace of Nature, to _start
 	self:Bar(218809, 20) -- Call of Night, to _success
