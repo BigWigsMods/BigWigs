@@ -341,7 +341,7 @@ end
 --[[ Aluriel to Krosos ]]--
 function mod:AnnihilatingOrb(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Warning")
-	self:TargetBar(args.spellId, 5, args.destName, 230932) -- Orb
+	self:TargetBar(args.spellId, 5, args.destName, 230932, args.spellId) -- Orb
 	self:Bar(args.spellId, 35)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
