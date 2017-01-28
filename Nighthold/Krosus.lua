@@ -1,12 +1,7 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Tuning sounds / message colors
--- - Remove beta engaged message
--- - We could do some cool positioning stuff on this fight
---   - warning when standing left / right side and beam is incoming there
---   - warning when bridge is breaking and standing there
--- - Needs to be tested in all difficulties
+-- - Verify live timers on all difficulties
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -24,7 +19,7 @@ mod.respawnTime = 30
 
 local normalTimers = { -- and LFR Timers
 	-- Fel Beam (spell id is the right one), _cast_success
-	[205368] = {9.5, 15, 30, 30, 23, 27, 30, 44, 14, 16, 14, 16, 22, 60},
+	[205370] = {9.5, 15, 30, 30, 23, 27, 30, 44, 14, 16, 14, 16, 22, 60},
 
 	-- Orb of Destruction, _aura_applied
 	[205344] = {70, 40, 60, 25, 60, 37, 15, 15, 30},
@@ -35,7 +30,7 @@ local normalTimers = { -- and LFR Timers
 
 local heroicTimers = {
 	-- Fel Beam (spell id is the right one), _cast_success
-	[205368] = {11, 29, 30, 45, 16, 16, 14, 16, 27, 55, 26, 5, 21, 5, 12, 12, 5, 13},
+	[205370] = {11, 29, 30, 45, 16, 16, 14, 16, 27, 55, 26, 5, 21, 5, 12, 12, 5, 13},
 
 	-- Orb of Destruction, _aura_applied
 	[205344] = {20, 60, 23, 62, 27, 25, 15, 15, 15, 30, 55},
@@ -46,7 +41,7 @@ local heroicTimers = {
 
 local mythicTimers = {
 	-- Fel Beam (spell id is the right one), _cast_success, didnt have enough logs to make sure they are all .0
-	[205368] = {9.0, 16.0, 16.0, 16.0, 14.0, 16.0, 27.0, 54.9, 26.0, 4.8, 21.2, 4.7, 12.3, 12.0, 4.8, 13.3, 18.9, 4.8, 25.3, 4.8, 25.2, 4.9},
+	[205370] = {9.0, 16.0, 16.0, 16.0, 14.0, 16.0, 27.0, 54.9, 26.0, 4.8, 21.2, 4.7, 12.3, 12.0, 4.8, 13.3, 18.9, 4.8, 25.3, 4.8, 25.2, 4.9},
 
 	-- Orb of Destruction, _aura_applied
 	[205344] = {13, 62, 27, 25, 15, 15, 15, 30, 55, 38, 30, 12, 18},
@@ -71,6 +66,10 @@ if L then
 	L.rightBeam = "Right Beam"
 
 	L.smashingBridge = "Smashing Bridge"
+	L.smashingBridge_desc = "Slams which break the bridge. You can use this option to emphasize or enable countdown."
+	L.smashingBridge_icon = 205862
+
+	L.removedFromYou = "%s removed from you" -- "Searing Brand removed from YOU!"
 end
 
 --------------------------------------------------------------------------------
@@ -79,10 +78,11 @@ end
 
 function mod:GetOptions()
 	return {
-		{206677, "TANK"}, -- Fel Brand
-		205368, -- Fel Beam (right)
+		{206677, "TANK"}, -- Searing Brand
+		205370, -- Fel Beam
 		{205344, "SAY", "FLASH"}, -- Orb of Destruction
 		205862, -- Slam
+		"smashingBridge",
 		205420, -- Burning Pitch
 		208203, -- Isolated Rage
 		"berserk",
@@ -91,10 +91,11 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-	self:Log("SPELL_AURA_APPLIED", "FelBrand", 206677)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "FelBrand", 206677)
-	self:Log("SPELL_CAST_START", "FelBeamCast", 205370, 205368) -- left, right
-	self:Log("SPELL_CAST_SUCCESS", "FelBeamSuccess", 205370, 205368) -- left, right
+	self:Log("SPELL_AURA_APPLIED", "SearingBrand", 206677)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "SearingBrand", 206677)
+	self:Log("SPELL_AURA_REMOVED", "SearingBrandRemoved", 206677)
+	self:Log("SPELL_CAST_START", "FelBeamCast", 205370)
+	self:Log("SPELL_CAST_SUCCESS", "FelBeamSuccess", 205370)
 	self:Log("SPELL_AURA_APPLIED", "OrbOfDescructionApplied", 205344)
 	self:Log("SPELL_CAST_START", "SlamCast", 205862)
 	self:Log("SPELL_CAST_SUCCESS", "SlamSuccess", 205862)
@@ -102,8 +103,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "Neutral", nil, "Krosus Engaged (Beta v2)", 205862)
-
 	beamCount = 1
 	orbCount = 1
 	burningPitchCount = 1
@@ -112,8 +111,8 @@ function mod:OnEngage()
 
 	self:Bar(206677, 15)
 	self:Bar(205862, 33, CL.count:format(self:SpellName(205862), slamCount))
-	self:Bar(205862, 93, CL.count:format(L.smashingBridge, 1))
-	self:Bar(205368, timers[205368][beamCount], CL.count:format(self:SpellName(205368), beamCount))
+	self:Bar("smashingBridge", 93, CL.count:format(L.smashingBridge, 1), L.smashingBridge_icon)
+	self:Bar(205370, timers[205370][beamCount], CL.count:format(self:SpellName(205370), beamCount))
 	self:Bar(205344, timers[205344][orbCount], CL.count:format(self:SpellName(205344), orbCount))
 	self:Bar(205420, timers[205420][burningPitchCount], CL.count:format(self:SpellName(205420), burningPitchCount))
 end
@@ -135,29 +134,30 @@ do
 	end
 end
 
-function mod:FelBrand(args)
+function mod:SearingBrand(args)
 	local amount = args.amount or 1
-	if amount % 2 == 1 or amount > 4 then -- 1, 3, 5, 6, 7, 8, ...
-		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 4 and "Alarm") -- check taunt amount
+	if amount % 2 == 1 or amount > 3 then -- 1, 3, 4, 5, 6, 7, 8, ... < this is hc, might need to change for others
+		self:StackMessage(args.spellId, args.destName, amount, "Urgent")
+	end
+end
+
+function mod:SearingBrandRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Urgent", "Warning", L.removedFromYou:format(args.spellName))
 	end
 end
 
 function mod:FelBeamCast(args)
-	self:Message(205368, "Attention", "Info", CL.casting:format(args.spellId == 205370 and L.leftBeam or L.rightBeam))
+	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
 end
 
 do
 	local prev = 0
 	function mod:FelBeamSuccess(args)
-		self:Message(205368, "Attention", nil, args.spellId == 205370 and L.leftBeam or L.rightBeam)
 		beamCount = beamCount + 1
-		local t = timers[205368][beamCount]
+		local t = timers[args.spellId][beamCount]
 		if t then
-			if self:LFR() or self:Normal() then
-				self:Bar(205368, t, CL.count:format(args.spellId == 205370 and L.rightBeam or L.leftBeam, beamCount)) -- alternating beams, 205370 is the left beam
-			else
-				self:Bar(205368, t, CL.count:format(args.spellName, beamCount))
-			end
+			self:Bar(args.spellId, t, CL.count:format(args.spellName, beamCount))
 			prev = GetTime()
 		else
 			t = GetTime() - prev
@@ -171,7 +171,7 @@ do
 	local prev = 0
 	function mod:OrbOfDescructionApplied(args)
 		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", CL.count:format(args.spellName, orbCount))
-		self:TargetBar(args.spellId, 5, args.destName)
+		self:TargetBar(args.spellId, 5, args.destName, 230932, args.spellId) -- Orb
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
@@ -191,13 +191,17 @@ do
 end
 
 function mod:SlamCast(args)
-	self:Message(args.spellId, "Important", "Alert", CL.casting:format(CL.count:format(args.spellName, slamCount)) .. (slamCount % 3 == 0 and " - "..L.smashingBridge or ""))
+	if slamCount % 3 == 0 then
+		self:Message("smashingBridge", "Important", "Alert", CL.casting:format(CL.count:format(args.spellName, slamCount)) .. " - "..L.smashingBridge, L.smashingBridge_icon)
+	else
+		self:Message(args.spellId, "Important", "Alert", CL.casting:format(CL.count:format(args.spellName, slamCount)))
+	end
 end
 
 function mod:SlamSuccess(args)
 	self:Message(args.spellId, "Important", nil)
 	if slamCount % 3 == 0 and slamCount < 10 then
-		self:Bar(args.spellId, 90, CL.count:format(L.smashingBridge, slamCount/3 + 1))
+		self:Bar("smashingBridge", 90, CL.count:format(L.smashingBridge, slamCount/3 + 1), L.smashingBridge_icon)
 	end
 	slamCount = slamCount + 1
 	if slamCount % 3 ~= 0 and slamCount < 12 then -- would mirror the smashing bridge bar otherwise

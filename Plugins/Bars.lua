@@ -1099,23 +1099,8 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
-	-- XXX Temporary workaround for registering barstyles until I redo the style system
-	self:ScheduleTimer("OnDelayedEnable", 0.1)
-end
-
-function plugin:OnDelayedEnable()
 	colors = BigWigs:GetPlugin("Colors")
-
-	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
-	if currentBarStyler and currentBarStyler.GetStyleName then
-		for k, v in next, barStyleRegister do
-			if currentBarStyler.GetStyleName() == v then
-				self:SetBarStyle(k)
-			end
-		end
-	else
-		self:SetBarStyle(db.barStyle)
-	end
+	updateProfile()
 
 	self:RegisterMessage("BigWigs_StartBar")
 	self:RegisterMessage("BigWigs_PauseBar", "PauseBar")
