@@ -22,13 +22,15 @@ local timers = {
 	[212492] = {8.0, 45.0, 40.0, 44.0, 38.0, 37.0, 33.0, 47.0, 41.0, 44.0, 38.0, 37.0},
 }
 local annihilateCount = 1
-
+local SearingBrandTargets = {}
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:GetLocale()
-
+if L then
+	L.custom_searingbrand_marker = "Seed of Destruction marker"
+end
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -56,7 +58,8 @@ function mod:GetOptions()
 		213275, -- Detonate: Searing Brand
 		213567, -- Animate: Searing Brand
 		213278, -- Burning Ground
-
+		"custom_searingbrand_marker",
+		
 		--[[ Master of the Arcane ]]--
 		213520, -- Arcane Orb
 		213852, -- Replicate: Arcane Orb
@@ -119,8 +122,17 @@ function mod:OnEngage()
 	elseif self:Heroic() then
 		self:Berserk(490)
 	end
+	wipe(SearingBrandTargets)
 end
 
+function mod:OnBossDisable()
+	if self:GetOption("custom_searingbrand_marker") then
+		for i = 1, #SearingBrandTargets do
+			SetRaidTarget(SearingBrandTargets[i], 0)
+			SearingBrandTargets[i] = nil
+		end
+	end
+end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
@@ -226,17 +238,19 @@ function mod:FrozenTempest(args)
 end
 
 --[[ Master of Fire ]]--
-do
-	local list = mod:NewTargetList()
-	function mod:PreSearingBrandApplied(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Urgent")
-		end
 
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-		end
+function mod:PreSearingBrandApplied(args)
+	SearingBrandTargets[#SearingBrandTargets+1] = args.destName
+	if #SearingBrandTargets == 1 then
+		self:ScheduleTimer("TargetMessage", 0.3, args.spellId, SearingBrandTargets, "Urgent")
+	end
+	
+	if self:GetOption("custom_searingbrand_marker") then
+		SetRaidTarget(args.destName, #SearingBrandTargets)
+	end
+		
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
 	end
 end
 
@@ -249,9 +263,15 @@ function mod:SearingBrandApplied(args)
 		end
 	end
 end
-
+	
 function mod:DetonateSearingBrand(args)
 	self:Message(args.spellId, "Important", "Alarm")
+	if self:GetOption("custom_searingbrand_marker") then
+		for i = 1, #SearingBrandTargets do
+			SetRaidTarget(SearingBrandTargets[i], 0)
+			SearingBrandTargets[i] = nil
+		end
+	end
 end
 
 function mod:AnimateSearingBrand(args)
