@@ -25,16 +25,16 @@ local echoesOfTheVoidCount = 1
 local illusionaryNightCount = 1
 local timers = {
 	-- Carrion Plague, SPELL_CAST_SUCCESS for 212997
-	[206480] = {7, 25, 35.5, 24.5, 75, 25.5, 35.5, 27, 75, 25.5, 40.5, 20.5, 53.5, 25.5},
+	[206480] = {7, 25, 35.5, 24.5, 75, 25.5, 35.5, 27, 75, 25.5, 40.5, 20.5},
 
 	-- Seeker Swarm, SPELL_CAST_SUCCESS
-	[213238] = {27, 25, 35, 25, 75, 25.5, 37.5, 25, 75, 25.5, 36, 22.5, 56},
+	[213238] = {27, 25, 35, 25, 75, 25.5, 37.5, 25, 75, 25.5, 36, 22.5},
 
 	-- Brand of Argus, SPELL_CAST_SUCCESS
-	[212794] = {15, 25, 35, 25, 75, 25.5, 32.5, 30, 75, 25.5, 36, 22.5, 56, 25.5},
+	[212794] = {15, 25, 35, 25, 75, 25.5, 32.5, 30, 75, 25.5, 36, 22.5},
 
 	-- Feast of Blood, SPELL_AURA_APPLIED
-	[208230] = {20, 25, 35, 25, 75, 25.5, 37.5, 25, 75, 25.5, 36, 22.5, 56, 25.5},
+	[208230] = {20, 25, 35, 25, 75, 25.5, 37.5, 25, 75, 25.5, 36, 22.5},
 
 	-- Echoes of the Void, SPELL_CAST_SUCCESS
 	[213531] = {57.5, 65, 95.5, 67.5, 100.5, 59.5},
@@ -100,6 +100,7 @@ function mod:OnBossEnable()
 
 	--[[ Sightless Watcher ]]--
 	self:Log("SPELL_AURA_APPLIED", "VolatileWound", 216024)
+	self:Log("SPELL_AURA_REMOVED", "VolatileWoundRemoved", 216024)
 end
 
 function mod:OnEngage()
@@ -117,7 +118,7 @@ function mod:OnEngage()
 	self:Bar(208230, timers[208230][feastOfBloodCount], CL.count:format(self:SpellName(208230), feastOfBloodCount))
 	self:Bar(213531, timers[213531][echoesOfTheVoidCount], CL.count:format(self:SpellName(213531), echoesOfTheVoidCount))
 	self:Bar(206365, 130, CL.count:format(self:SpellName(206365), illusionaryNightCount))
-	if self:Normal() or self:Heroic() then
+	if not self:LFR() then
 		self:Berserk(463)
 	end
 end
@@ -143,13 +144,19 @@ end
 
 function mod:CarrionPlagueSuccess(args)
 	carrionPlagueCount = carrionPlagueCount + 1
-	self:Bar(206480, timers[206480][carrionPlagueCount] or 20, CL.count:format(args.spellName, carrionPlagueCount))
+	local timer = timers[206480][carrionPlagueCount]
+	if timer then
+		self:Bar(206480, timer, CL.count:format(args.spellName, carrionPlagueCount))
+	end
 end
 
 function mod:SeekerSwarm(args)
 	self:Message(args.spellId, "Urgent", "Info", CL.count:format(args.spellName, carrionPlagueCount))
 	seekerSwarmCount = seekerSwarmCount + 1
-	self:Bar(args.spellId, timers[args.spellId][seekerSwarmCount] or 22, CL.count:format(args.spellName, seekerSwarmCount))
+	local timer = timers[args.spellId][seekerSwarmCount]
+	if timer then
+		self:Bar(args.spellId, timer, CL.count:format(args.spellName, seekerSwarmCount))
+	end
 end
 
 do
@@ -168,13 +175,19 @@ end
 
 function mod:BrandOfArgusSuccess(args)
 	brandOfArgusCount = brandOfArgusCount + 1
-	self:Bar(args.spellId, timers[args.spellId][brandOfArgusCount] or 22, CL.count:format(args.spellName, brandOfArgusCount))
+	local timer = timers[args.spellId][brandOfArgusCount]
+	if timer then
+		self:Bar(args.spellId, timer, CL.count:format(args.spellName, brandOfArgusCount))
+	end
 end
 
 function mod:FeastOfBlood(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Long", CL.count:format(args.spellName, feastOfBloodCount), nil, true)
 	feastOfBloodCount = feastOfBloodCount + 1
-	self:Bar(args.spellId, timers[args.spellId][feastOfBloodCount] or 22, CL.count:format(args.spellName, feastOfBloodCount))
+	local timer = timers[args.spellId][feastOfBloodCount]
+	if timer then
+		self:Bar(args.spellId, timer, CL.count:format(args.spellName, feastOfBloodCount))
+	end
 end
 
 function mod:EchoesOfTheVoid(args)
@@ -182,7 +195,10 @@ function mod:EchoesOfTheVoid(args)
 	self:StopBar(CL.count:format(args.spellName, echoesOfTheVoidCount))
 	self:Bar(args.spellId, 10, CL.count:format(args.spellName, echoesOfTheVoidCount))
 	echoesOfTheVoidCount = echoesOfTheVoidCount + 1
-	self:Bar(args.spellId, timers[args.spellId][echoesOfTheVoidCount] or 60, CL.count:format(args.spellName, echoesOfTheVoidCount))
+	local timer = timers[args.spellId][echoesOfTheVoidCount]
+	if timer then
+		self:Bar(args.spellId, timer, CL.count:format(args.spellName, echoesOfTheVoidCount))
+	end
 end
 
 --[[ Stage Two ]]--
@@ -190,7 +206,9 @@ function mod:IllusionaryNight(args)
 	self:Message(args.spellId, "Neutral", "Long", CL.count:format(args.spellName, illusionaryNightCount))
 	self:Bar(args.spellId, 32, CL.cast:format(CL.count:format(args.spellName, illusionaryNightCount)))
 	illusionaryNightCount = illusionaryNightCount + 1
-	self:Bar(args.spellId, 163, CL.count:format(args.spellName, illusionaryNightCount))
+	if illusionaryNightCount < 3 then
+		self:Bar(args.spellId, 163, CL.count:format(args.spellName, illusionaryNightCount))
+	end
 	self:Bar(215988, 8.5, CL.cast:format(self:SpellName(215988))) -- Carrion Nightmare
 end
 
@@ -227,6 +245,14 @@ do
 
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
+			self:TargetBar(args.spellId, 8, args.destName)
+			self:ScheduleTimer("Say", 5, args.spellId, 3, true)
+			self:ScheduleTimer("Say", 6, args.spellId, 2, true)
+			self:ScheduleTimer("Say", 7, args.spellId, 1, true)
 		end
 	end
+end
+
+function mod:VolatileWoundRemoved(args)
+	self:StopBar(args.spellId, args.destName)
 end
