@@ -34,6 +34,8 @@ local annihilateCount = 1
 local felLashCount = 1
 local searingBrandTargets = {}
 local frostbittenStacks = {}
+local mobCollector = {}
+local isInfoOpen = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -46,6 +48,7 @@ local L = mod:GetLocale()
 --
 
 local searingBrandMarker = mod:AddMarkerOption(false, "player", 1, 213166, 1, 2, 3, 4, 5, 6)
+local fieryAddMarker = mod:AddMarkerOption(false, "npc", 1, 213867, 1, 2, 3, 4, 5, 6)
 function mod:GetOptions()
 	return {
 		--[[ General ]]--
@@ -66,9 +69,10 @@ function mod:GetOptions()
 		--[[ Master of Fire ]]--
 		{213148, "SAY"}, -- Pre Searing Brand
 		213166, -- Searing Brand
-		213275, -- Detonate: Searing Brand
-		213567, -- Animate: Searing Brand
 		searingBrandMarker,
+		{213275, "SAY"}, -- Detonate: Searing Brand
+		213567, -- Animate: Searing Brand
+		fieryAddMarker,
 		213278, -- Burning Ground
 
 		--[[ Master of the Arcane ]]--
@@ -81,7 +85,7 @@ function mod:GetOptions()
 
 		--[[ Mythic ]]--
 		230901, -- Fel Soul
-		230504, -- Decimate
+		{230504, "TANK"}, -- Decimate
 		230414, -- Fel Stomp
 		230403, -- Fel Lash
 	}, {
@@ -145,6 +149,8 @@ function mod:OnEngage()
 	annihilateCount = 1
 	wipe(searingBrandTargets)
 	wipe(frostbittenStacks)
+	wipe(mobCollector)
+	isInfoOpen = nil
 
 	timers = self:Mythic() and mythicTimers or heroicTimers
 	self:Bar(212492, timers[212492][annihilateCount]) -- Annihilate
@@ -272,16 +278,20 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
+			if not isInfoOpen then
+				isInfoOpen = true
+				self:OpenInfo(args.spellId, args.spellName)
+			end
 			self:SetInfoByTable(args.spellId, frostbittenStacks)
-			self:OpenInfo(args.spellId, args.spellName)
 		end
 	end
 end
 
 function mod:FrostbittenRemoved(args)
 	frostbittenStacks[args.destName] = nil
-	if not next(frostbittenStacks) then
+	if not next(frostbittenStacks) and isInfoOpen then
 		self:CloseInfo(args.spellId)
+		isInfoOpen = nil
 	end
 end
 
@@ -322,6 +332,11 @@ do
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Urgent")
 		end
 
+		if self:GetOption(searingBrandMarker) then
+			searingBrandTargets[#searingBrandTargets+1] = args.destName
+			SetRaidTarget(args.destName, #searingBrandTargets)
+		end
+
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 		end
@@ -329,11 +344,6 @@ do
 end
 
 function mod:SearingBrandApplied(args)
-	if self:GetOption(searingBrandMarker) then
-		searingBrandTargets[#searingBrandTargets+1] = args.destName
-		SetRaidTarget(args.destName, #searingBrandTargets)
-	end
-
 	if self:Me(args.destGUID) then
 		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 		if expires and expires > 0 then
@@ -356,8 +366,34 @@ function mod:DetonateSearingBrand(args)
 	end
 end
 
-function mod:AnimateSearingBrand(args)
-	self:Message(args.spellId, "Important", "Info")
+do
+	local fieryAddMarks = {}
+	function mod:FieryAddMark(event, unit)
+		local guid = UnitGUID(unit)
+		if self:MobId(guid) == 107285 and not mobCollector[guid] then
+			for i = 1, 6 do
+				if not fieryAddMarks[i] then
+					SetRaidTarget(unit, i)
+					fieryAddMarks[i] = guid
+					mobCollector[guid] = true
+					if i == 6 then
+						self:UnregisterTargetEvents()
+					end
+					return
+				end
+			end
+		end
+	end
+
+	function mod:AnimateSearingBrand(args)
+		self:Message(args.spellId, "Important", "Info")
+
+		if self:GetOption(fieryAddMarker) then
+			wipe(fieryAddMarks)
+			self:RegisterTargetEvents("FieryAddMark")
+			self:ScheduleTimer("UnregisterTargetEvents", 10)
+		end
+	end
 end
 
 --[[ Master of the Arcane ]]--
@@ -383,12 +419,12 @@ end
 
 --[[ Mythic ]]--
 function mod:SeveredSoul(args)
-	self:Message(230901, "Positive", "Info")
+	self:Message(230901, "Positive", "Info", CL.count:format(args.spellName, felLashCount))
 	self:Bar(230901, 45, CL.over:format(self:SpellName(230901))) -- Fel Soul
 	self:CDBar(230504, phase % 3 == 1 and 18 or phase % 3 == 2 and 11 or 10) -- Decimate
 	if phase % 3 == 0 then -- Magic
 		felLashCount = 1
-		self:Bar(230403, timers[args.spellId][felLashCount], CL.count:format(self:SpellName(230403), felLashCount)) -- Fel Lash
+		self:Bar(230403, timers[230403][felLashCount], CL.count:format(self:SpellName(230403), felLashCount)) -- Fel Lash
 	end
 end
 
