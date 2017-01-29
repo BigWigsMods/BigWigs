@@ -33,6 +33,7 @@ local phase = 0 -- will immediately get incremented by mod:Stages()
 local annihilateCount = 1
 local felLashCount = 1
 local searingBrandTargets = {}
+local frostbittenStacks = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -55,7 +56,7 @@ function mod:GetOptions()
 		--[[ Master of Frost ]]--
 		{212531, "SAY", "FLASH"}, -- Pre Mark of Frost
 		{212587, "SAY", "FLASH"}, -- Mark of Frost
-		212647, -- Frostbitten
+		{212647, "INFOBOX"}, -- Frostbitten
 		212530, -- Replicate: Mark of Frost
 		212735, -- Detonate: Mark of Frost
 		213853, -- Animate: Mark of Frost"
@@ -106,6 +107,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "MarkOfFrostApplied", 212587)
 	self:Log("SPELL_AURA_APPLIED", "Frostbitten", 212647)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Frostbitten", 212647)
+	self:Log("SPELL_AURA_REMOVED", "FrostbittenRemoved", 212647)
 	self:Log("SPELL_CAST_START", "ReplicateMarkOfFrost", 212530)
 	self:Log("SPELL_CAST_START", "DetonateMarkOfFrost", 212735)
 	self:Log("SPELL_CAST_START", "AnimateMarkOfFrost", 213853)
@@ -142,6 +144,7 @@ function mod:OnEngage()
 	phase = 0 -- will immediately get incremented by mod:Stages()
 	annihilateCount = 1
 	wipe(searingBrandTargets)
+	wipe(frostbittenStacks)
 
 	timers = self:Mythic() and mythicTimers or heroicTimers
 	self:Bar(212492, timers[212492][annihilateCount]) -- Annihilate
@@ -256,10 +259,29 @@ do
 	end
 end
 
-function mod:Frostbitten(args)
-	local amount = args.amount or 1
-	if self:Me(args.destGUID) and amount % 2 == 0 and amount > 5 then
-		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 7 and "Warning")
+do
+	local prev = 0
+	function mod:Frostbitten(args)
+		local amount = args.amount or 1
+		if self:Me(args.destGUID) and amount % 2 == 0 and amount > 5 then
+			self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 7 and "Warning")
+		end
+
+		frostbittenStacks[args.destName] = amount
+
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:SetInfoByTable(args.spellId, frostbittenStacks)
+			self:OpenInfo(args.spellId, args.spellName)
+		end
+	end
+end
+
+function mod:FrostbittenRemoved(args)
+	frostbittenStacks[args.destName] = nil
+	if not next(frostbittenStacks) then
+		self:CloseInfo(args.spellId)
 	end
 end
 
