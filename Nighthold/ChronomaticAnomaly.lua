@@ -340,9 +340,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			end
 
 			local stageTable = currentTimers and currentTimers["stages"]
-			if stageTable then
-				local spellId, time = unpack(stageTable)
-				self:Bar("stages", time, spellId, spellId)
+			if stageTable and stageTable[1] then
+				self:Bar("stages", stageTable[2], stageTable[1])
 			end
 		end
 	end
