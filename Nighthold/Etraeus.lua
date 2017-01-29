@@ -184,20 +184,21 @@ do
 		[214335] = 62,
 	}
 	function mod:GravitationalPullSuccess(args)
+		-- Only show this once by using the success event
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, self:Tank())
 		self:CDBar(args.spellId, timers[args.spellId])
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+		end
 	end
 end
 
 function mod:GravitationalPull(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, self:Tank())
-
 	local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
 	local remaining = expires-GetTime()
 	self:TargetBar(args.spellId, remaining, args.destName)
 
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		wipe(gravPullSayTimers) -- they will be done either way
 		gravPullSayTimers[1] = self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
 		gravPullSayTimers[2] = self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
 		gravPullSayTimers[3] = self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
