@@ -32,6 +32,7 @@ local timers = mod:Mythic() and mythicTimers or heroicTimers
 local phase = 0 -- will immediately get incremented by mod:Stages()
 local annihilateCount = 1
 local felLashCount = 1
+local searingBrandTargets = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -43,6 +44,7 @@ local L = mod:GetLocale()
 -- Initialization
 --
 
+local searingBrandMarker = mod:AddMarkerOption(false, "player", 1, 213166, 1, 2, 3, 4, 5, 6)
 function mod:GetOptions()
 	return {
 		--[[ General ]]--
@@ -65,6 +67,7 @@ function mod:GetOptions()
 		213166, -- Searing Brand
 		213275, -- Detonate: Searing Brand
 		213567, -- Animate: Searing Brand
+		searingBrandMarker,
 		213278, -- Burning Ground
 
 		--[[ Master of the Arcane ]]--
@@ -112,6 +115,7 @@ function mod:OnBossEnable()
 	--[[ Master of Fire ]]--
 	self:Log("SPELL_AURA_APPLIED", "PreSearingBrandApplied", 213148)
 	self:Log("SPELL_AURA_APPLIED", "SearingBrandApplied", 213166)
+	self:Log("SPELL_AURA_REMOVED", "SearingBrandRemoved", 213166)
 	self:Log("SPELL_CAST_START", "DetonateSearingBrand", 213275)
 	self:Log("SPELL_CAST_START", "AnimateSearingBrand", 213567)
 
@@ -137,6 +141,7 @@ end
 function mod:OnEngage()
 	phase = 0 -- will immediately get incremented by mod:Stages()
 	annihilateCount = 1
+	wipe(searingBrandTargets)
 
 	timers = self:Mythic() and mythicTimers or heroicTimers
 	self:Bar(212492, timers[212492][annihilateCount]) -- Annihilate
@@ -203,6 +208,7 @@ do
 			self:Bar(213853, self:Mythic() and 52 or 75, nil, 31687) -- Animate: Mark of Frost, Water Elemental icon
 			self:Bar("stages", self:Mythic() and 75 or 85, self:SpellName(213867), 213867) -- Next: Fiery
 		elseif args.spellId == 213867 then -- Fiery
+			wipe(searingBrandTargets)
 			if self:Mythic() then -- Fel Soul
 				self:Bar(230901, 18)
 			end
@@ -301,12 +307,23 @@ do
 end
 
 function mod:SearingBrandApplied(args)
+	if self:GetOption(searingBrandMarker) then
+		searingBrandTargets[#searingBrandTargets+1] = args.destName
+		SetRaidTarget(args.destName, #searingBrandTargets)
+	end
+
 	if self:Me(args.destGUID) then
 		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 		if expires and expires > 0 then
 			local timeLeft = expires - GetTime()
 			self:TargetBar(args.spellId, timeLeft, args.destName)
 		end
+	end
+end
+
+function mod:SearingBrandRemoved(args)
+	if self:GetOption(searingBrandMarker) then
+		SetRaidTarget(args.destName, 0)
 	end
 end
 
