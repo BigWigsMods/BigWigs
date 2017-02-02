@@ -193,8 +193,8 @@ do
 end
 
 function mod:ResonantBarrier(args)
-	self:Message(args.spellId, "Positive", "Alert")
-	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
+	self:TargetMessage(args.spellId, args.destName, "Positive")
+	self:TargetBar(args.spellId, 6, args.destName)
 end
 
 function mod:EyeOfAmanThul(args)
@@ -209,7 +209,7 @@ function mod:EyeOfAmanThulRemoved(args) -- Phase 2 start
 	liquidHellfireCount = 1
 	self:Message("stages", "Neutral", "Long", CL.stage:format(2), args.spellId)
 	self:Bar(206219, 23.5, CL.count:format(self:SpellName(206219), liquidHellfireCount)) -- Liquid Hellfire
-	self:Bar(212258, 9.5) -- Bonds of Fel
+	self:Bar(209011, 9.5) -- Bonds of Fel
 	self:Bar(212258, 13.5, CL.count:format(self:SpellName(212258, handOfGuldanCount))) -- Hand of Gul'dan
 	self:Bar(209270, 29) -- Eye of Gul'dan
 end
