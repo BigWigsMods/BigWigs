@@ -129,14 +129,14 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 222130 then -- Phase 2 Conversation
 		phase = 2
-		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
+		self:Message("stages", "Neutral", "Long", "90% - ".. CL.stage:format(2), false)
 		ejectionCount = 1
 		self:CDBar(206936, timers[206936][ejectionCount], CL.count:format(self:SpellName(206936), ejectionCount))
 		self:Bar(205984, 30) -- Gravitational Pull
 		self:Bar(206949, 53) -- Frigid Nova
 	elseif spellId == 222133 then -- Phase 3 Conversation
 		phase = 3
-		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
+		self:Message("stages", "Neutral", "Long", "60% - ".. CL.stage:format(3), false)
 		self:StopBar(CL.count:format(self:SpellName(206936, ejectionCount)))
 		self:StopBar(206949) -- Frigid Nova
 		ejectionCount = 1
@@ -145,7 +145,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(206517, 62) -- Fel Nova
 	elseif spellId == 222134 then -- Phase 4 Conversation
 		phase = 4
-		self:Message("stages", "Neutral", "Long", CL.stage:format(4), false)
+		self:Message("stages", "Neutral", "Long", "30% - ".. CL.stage:format(4), false)
 		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 		self:StopBar(CL.count:format(self:SpellName(205649, ejectionCount)))
 		self:StopBar(206517) -- Fel Nova
