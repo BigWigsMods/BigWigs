@@ -210,7 +210,11 @@ function mod:EyeOfAmanThulRemoved(args) -- Phase 2 start
 	self:Message("stages", "Neutral", "Long", CL.stage:format(2), args.spellId)
 	self:Bar(206219, 23.5, CL.count:format(self:SpellName(206219), liquidHellfireCount)) -- Liquid Hellfire
 	self:Bar(209011, 9.5) -- Bonds of Fel
-	self:Bar(212258, 13.5, CL.count:format(self:SpellName(212258, handOfGuldanCount))) -- Hand of Gul'dan
+	if self:Easy() then
+		self:StopBar(212258) -- Hand of Gul'dan
+	else
+		self:Bar(212258, 13.5, CL.count:format(self:SpellName(212258), handOfGuldanCount)) -- Hand of Gul'dan
+	end
 	self:Bar(209270, 29) -- Eye of Gul'dan
 end
 
