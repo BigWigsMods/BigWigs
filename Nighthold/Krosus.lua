@@ -260,7 +260,7 @@ local function fixBars(self)
 	-- Next Beam
 	local nextBeamText = CL.count:format(self:SpellName(221153), beamCount)
 	local nextBeamTime = self:BarTimeLeft(nextBeamText)
-	if nextBeamTime then
+	if nextBeamTime > 0 then
 		self:StopBar(nextBeamText)
 		self:Bar(205370, nextBeamTime, nextBeamText .. getBeamText(beamCount))
 	end
@@ -268,7 +268,7 @@ local function fixBars(self)
 	-- Next Beam + 1
 	local nextBeamText2 = CL.count:format(self:SpellName(221153), beamCount+1)
 	local nextBeamTime2 = self:BarTimeLeft(nextBeamText2)
-	if nextBeamTime2 then
+	if nextBeamTime2 > 0 then
 		self:StopBar(nextBeamText2)
 		self:Bar(205370, nextBeamTime2, nextBeamText2 .. getBeamText(beamCount+1))
 	end
