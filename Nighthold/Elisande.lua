@@ -58,6 +58,7 @@ function mod:GetOptions()
 		--[[ Time Layer 1 ]]--
 		208807, -- Arcanetic Ring
 		209170, -- Spanning Singularity
+		{209615, "TANK"}, -- Ablation
 
 		--[[ Time Layer 2 ]]--
 		{209244, "SAY", "FLASH"}, -- Delphuric Beam
@@ -102,6 +103,8 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_AURA_APPLIED", "SingularityDamage", 209433)
 	--self:Log("SPELL_PERIODIC_DAMAGE", "SingularityDamage", 209433)
 	--self:Log("SPELL_PERIODIC_MISSED", "SingularityDamage", 209433)
+	self:Log("SPELL_AURA_APPLIED", "Ablation", 209615)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Ablation", 209615)
 
 	--[[ Time Layer 2 ]]--
 	self:Log("SPELL_AURA_APPLIED", "DelphuricBeam", 209244)
@@ -228,6 +231,13 @@ end
 
 function mod:SpanningSingularity(args)
 	self:Message(209170, "Attention", "Info")
+end
+
+function mod:Ablation(args)
+	local amount = args.amount or 1
+	if amount % 2 == 1 or amount > 3 then
+		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 3 and "Warning")
+	end
 end
 
 --[[
