@@ -16,6 +16,7 @@ mod:RegisterEnableMob(
 	112255, -- Sludgerax
 
 	--[[ Trilliax to Aluriel ]]--
+	116008, -- Kar'zun
 	112671, -- Duskwatch Battle-Magus
 	113307, -- Chronowraith
 	112665, -- Nighthold Protector
@@ -29,8 +30,17 @@ mod:RegisterEnableMob(
 	111295, -- Domesticated Manasaber
 
 	--[[ Aluriel to Krosos ]]--
-	111210 -- Searing Infernal
+	111210, -- Searing Infernal
+
+	--[[ Aluriel to Tichondrius ]]--
+	113043 -- Abyss Watcher
 )
+
+--------------------------------------------------------------------------------
+-- Locals
+--
+
+local list = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -47,6 +57,7 @@ if L then
 	L.sludgerax = "Sludgerax"
 
 	--[[ Trilliax to Aluriel ]]--
+	L.karzun = "Kar'zun"
 	L.battle_magus = "Duskwatch Battle-Magus"
 	L.chronowraith = "Chronowraith"
 	L.protector = "Nighthold Protector"
@@ -61,11 +72,16 @@ if L then
 
 	--[[ Aluriel to Krosos ]]--
 	L.infernal = "Searing Infernal"
+
+	--[[ Aluriel to Tichondrius ]]--
+	L.watcher = "Abyss Watcher"
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+local wrapMarker = mod:AddMarkerOption(true, "npc", 8, 230994, 8, 7, 6) -- Shadow Wrap
 function mod:GetOptions()
 	return {
 		--[[ Skorpyron to Chronomatic Anomaly ]]--
@@ -80,6 +96,9 @@ function mod:GetOptions()
 		{223655, "SAY", "FLASH", "ICON"}, -- Oozing Rush (Sludgerax)
 
 		--[[ Trilliax to Aluriel ]]--
+		{230994, "SAY"}, -- Shadow Wrap (Kar'zun)
+		wrapMarker,
+		231005, -- Arcane Emanations (Kar'zun)
 		224510, -- Crackling Slice (Duskwatch Battle-Magus)
 		225412, -- Mass Siphon (Chronowraith)
 		224568, -- Mass Suppress (Nighthold Protector)
@@ -96,11 +115,15 @@ function mod:GetOptions()
 
 		--[[ Aluriel to Krosos ]]--
 		{221344, "SAY", "FLASH"}, -- Annihilating Orb (Searing Infernal)
+
+		--[[ Aluriel to Tichondrius ]]--
+		{224982, "SAY", "FLASH"}, -- Fel Glare (Abyss Watcher)
 	}, {
 		[230438] = L.torm,
 		[221164] = L.fulminant,
 		[221160] = L.pulsauron,
 		[223655] = L.sludgerax,
+		[230994] = L.karzun,
 		[224510] = L.battle_magus,
 		[225412] = L.chronowraith,
 		[224568] = L.protector,
@@ -109,6 +132,7 @@ function mod:GetOptions()
 		[225105] = L.archmage,
 		[225857] = L.manasaber,
 		[221344] = L.infernal,
+		[224982] = L.watcher,
 	}
 end
 
@@ -137,6 +161,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "OozingRushRemoved", 223655)
 
 	--[[ Trilliax to Aluriel ]]--
+	self:Log("SPELL_AURA_APPLIED", "ShadowWrap", 230994)
+	self:Log("SPELL_SUMMON", "ShadowWrapSummon", 230993)
+	self:Log("SPELL_CAST_START", "ArcaneEmanations", 231005)
 	self:Log("SPELL_CAST_START", "CracklingSlice", 224510)
 	self:Log("SPELL_CAST_SUCCESS", "MassSiphon", 225412)
 	self:Death("ChronowraithDeath", 113307)
@@ -157,6 +184,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "AnnihilatingOrb", 221344)
 	self:Log("SPELL_AURA_REMOVED", "AnnihilatingOrbRemoved", 221344)
 	self:Death("InfernalDeath", 111210)
+
+	--[[ Aluriel to Tichondrius ]]--
+	self:Log("SPELL_AURA_APPLIED", "FelGlare", 224982)
 end
 
 --------------------------------------------------------------------------------
@@ -246,6 +276,43 @@ end
 
 --[[ Trilliax to Aluriel ]]--
 do
+	local wraps = {}
+	local wrapCount = 8
+	function mod:MarkShadowWrap(event, unit)
+		local guid = UnitGUID(unit)
+		if wraps[guid] then
+			SetRaidTarget(unit, wraps[guid])
+			wraps[guid] = nil
+		end
+	end
+	function mod:ShadowWrapSummon(args)
+		if self:GetOption(wrapMarker) then
+			wraps[args.destGUID] = wrapCount
+			wrapCount = wrapCount - 1
+		end
+	end
+	function mod:ShadowWrap(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			if self:GetOption(wrapMarker) then
+				wipe(wraps)
+				wrapCount = 8
+				self:RegisterTargetEvents("MarkShadowWrap")
+				self:ScheduleTimer("UnregisterTargetEvents", 10)
+			end
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alert", nil, nil, true)
+		end
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+		end
+	end
+end
+
+function mod:ArcaneEmanations(args)
+	self:Message(args.spellId, "Important", "Long", CL.casting:format(args.spellName))
+end
+
+do
 	local prev = 0
 	function mod:CracklingSlice(args)
 		local t = GetTime()
@@ -298,26 +365,23 @@ function mod:ChosenFate(args)
 	end
 end
 
-do
-	local list = mod:NewTargetList()
-	function mod:ArcanicRelease(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Attention", "Alert", nil, nil, true)
-		end
-		self:TargetBar(args.spellId, 6, args.destName)
-		if self:Me(args.destGUID) then
-			self:OpenProximity(args.spellId, 8)
-			self:Say(args.spellId)
-			self:Flash(args.spellId)
-		end
+function mod:ArcanicRelease(args)
+	list[#list+1] = args.destName
+	if #list == 1 then
+		self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Attention", "Alert", nil, nil, true)
 	end
+	self:TargetBar(args.spellId, 6, args.destName)
+	if self:Me(args.destGUID) then
+		self:OpenProximity(args.spellId, 8)
+		self:Say(args.spellId)
+		self:Flash(args.spellId)
+	end
+end
 
-	function mod:ArcanicReleaseRemoved(args)
-		if self:Me(args.destGUID) then
-			self:CloseProximity(args.spellId)
-			self:StopBar(args.spellId, args.destName)
-		end
+function mod:ArcanicReleaseRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
+		self:StopBar(args.spellId, args.destName)
 	end
 end
 
@@ -355,4 +419,14 @@ end
 
 function mod:InfernalDeath(args)
 	self:StopBar(221344) -- Annihilating Orb
+end
+
+--[[ Aluriel to Tichondrius ]]--
+function mod:FelGlare(args)
+	self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
+	self:TargetBar(args.spellId, 10, args.destName)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:Flash(args.spellId)
+	end
 end
