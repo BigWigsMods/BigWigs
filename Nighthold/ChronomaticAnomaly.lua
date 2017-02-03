@@ -401,7 +401,9 @@ do
 				absorbRemaining = absorbRemaining + t.value
 			end
 
+			self:SetInfo(206609, 1, L.affected)
 			self:SetInfo(206609, 2, #playerTable)
+			self:SetInfo(206609, 3, L.totalAbsorb)
 			self:SetInfo(206609, 4, AbbreviateNumbers(absorbRemaining))
 
 			sort(playerTable, function(a, b) return a.value > b.value end)
