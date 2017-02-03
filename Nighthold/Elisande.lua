@@ -113,8 +113,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ConflexiveBurst", 209597)
 	self:Log("SPELL_AURA_APPLIED", "ConflexiveBurstApplied", 209598)
 	self:Log("SPELL_CAST_START", "AblativePulse", 209971)
-	self:Log("SPELL_AURA_APPLIED", "Ablated", 211887)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Ablated", 211887)
+	self:Log("SPELL_AURA_APPLIED", "Ablated", 211887, 209615)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Ablated", 211887, 209615)
 end
 
 function mod:OnEngage()
@@ -326,5 +326,5 @@ end
 
 function mod:Ablated(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 4 and "Warning")
+	self:StackMessage(211887, args.destName, amount, "Urgent", amount > 4 and "Warning")
 end
