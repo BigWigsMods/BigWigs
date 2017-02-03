@@ -154,7 +154,7 @@ do
 		fs.animFade:SetFromAlpha(1)
 		fs.animFade:SetToAlpha(0)
 
-		local icon = BWMessageFrame:CreateTexture(nil, "ARTWORK")
+		local icon = BWMessageFrame:CreateTexture()
 		icon:SetPoint("RIGHT", fs, "LEFT")
 		icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
 		icon:Hide()
