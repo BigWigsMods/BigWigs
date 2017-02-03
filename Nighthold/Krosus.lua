@@ -1,4 +1,6 @@
 
+-- GLOBALS: BigWigsKrosusFirstBeamWasLeft, print
+
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Verify live timers on all difficulties
@@ -41,7 +43,7 @@ local heroicTimers = {
 
 local mythicTimers = {
 	-- Fel Beam (spell id is the right one), _cast_success, didnt have enough logs to make sure they are all .0
-	[205370] = {9.0, 16.0, 16.0, 16.0, 14.0, 16.0, 27.0, 54.9, 26.0, 4.8, 21.2, 4.7, 12.3, 12.0, 4.8, 13.3, 18.9, 4.8, 25.3, 4.8, 25.2, 4.9},
+	[205370] = {9.0, 16.0, 16.0, 16.0, 14.0, 16.0, 27.0, 55.0, 26.0, 4.8, 21.3, 4.8, 12.3, 12.0, 4.8, 13.3, 19.0, 4.8, 25.3, 4.8, 25.3, 4.8},
 
 	-- Orb of Destruction, _aura_applied
 	[205344] = {13, 62, 27, 25, 15, 15, 15, 30, 55, 38, 30, 12, 18},
@@ -55,6 +57,8 @@ local orbCount = 1
 local burningPitchCount = 1
 local slamCount = 1
 local timers = mod:Mythic() and mythicTimers or mod:Heroic() and heroicTimers or normalTimers
+local firstBeamLeft = true
+local receivedBeamCom = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -64,6 +68,9 @@ local L = mod:GetLocale()
 if L then
 	L.leftBeam = "Left Beam"
 	L.rightBeam = "Right Beam"
+
+	L.goRight = "> GO RIGHT >"
+	L.goLeft = "< GO LEFT <"
 
 	L.smashingBridge = "Smashing Bridge"
 	L.smashingBridge_desc = "Slams which break the bridge. You can use this option to emphasize or enable countdown."
@@ -100,6 +107,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SlamCast", 205862)
 	self:Log("SPELL_CAST_SUCCESS", "SlamSuccess", 205862)
 	self:Log("SPELL_CAST_START", "BurningPitchCast", 205420)
+	self:RegisterMessage("BigWigs_BossComm")
 end
 
 function mod:OnEngage()
@@ -107,12 +115,14 @@ function mod:OnEngage()
 	orbCount = 1
 	burningPitchCount = 1
 	slamCount = 1
+	receivedBeamCom = nil
 	timers = self:Mythic() and mythicTimers or self:Heroic() and heroicTimers or normalTimers
 
 	self:Bar(206677, 15)
 	self:Bar(205862, 33, CL.count:format(self:SpellName(205862), slamCount))
 	self:Bar("smashingBridge", 93, CL.count:format(L.smashingBridge, 1), L.smashingBridge_icon)
-	self:Bar(205370, timers[205370][beamCount], CL.count:format(self:SpellName(205370), beamCount))
+	self:Bar(205370, timers[205370][beamCount], CL.count:format(self:SpellName(221153), beamCount)) -- "Beam"
+	self:Bar(205370, timers[205370][beamCount+1], CL.count:format(self:SpellName(221153), beamCount+1)) -- "Beam"
 	self:Bar(205344, timers[205344][orbCount], CL.count:format(self:SpellName(205344), orbCount))
 	self:Bar(205420, timers[205420][burningPitchCount], CL.count:format(self:SpellName(205420), burningPitchCount))
 end
@@ -120,6 +130,17 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function getBeamText(count)
+	if receivedBeamCom then
+		if count % 2 == 1 then
+			return " " .. (firstBeamLeft and L.goRight or L.goLeft)
+		else
+			return " " .. (firstBeamLeft and L.goLeft or L.goRight)
+		end
+	end
+	return ""
+end
 
 do
 	local prev = 0
@@ -148,21 +169,29 @@ function mod:SearingBrandRemoved(args)
 end
 
 function mod:FelBeamCast(args)
-	self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Attention", "Info", args.spellName)
 end
 
 do
-	local prev = 0
+	local prev, spellName = 0, mod:SpellName(221153) -- "Beam"
 	function mod:FelBeamSuccess(args)
 		beamCount = beamCount + 1
 		local t = timers[args.spellId][beamCount]
 		if t then
-			self:Bar(args.spellId, t, CL.count:format(args.spellName, beamCount))
+			local text = CL.count:format(spellName, beamCount) .. getBeamText(beamCount)
+			self:Bar(args.spellId, t, text)
 			prev = GetTime()
 		else
 			t = GetTime() - prev
 			print("Unknown BigWigs timer:", self:Difficulty(), args.spellId, args.spellName, beamCount, t)
 			prev = GetTime()
+		end
+
+		-- Additional timer to plan movement ahead
+		local t2 = timers[args.spellId][beamCount+1]
+		if t2 then
+			local text = CL.count:format(spellName, beamCount+1) .. getBeamText(beamCount+1)
+			self:Bar(args.spellId, t+t2, text)
 		end
 	end
 end
@@ -224,5 +253,43 @@ do
 			print("Unknown BigWigs timer:", self:Difficulty(), args.spellId, args.spellName, burningPitchCount, t)
 			prev = GetTime()
 		end
+	end
+end
+
+local function fixBars(self)
+	-- Next Beam
+	local nextBeamText = CL.count:format(self:SpellName(221153), beamCount)
+	local nextBeamTime = self:BarTimeLeft(nextBeamText)
+	if nextBeamTime then
+		self:StopBar(nextBeamText)
+		self:Bar(205370, nextBeamTime, nextBeamText .. getBeamText(beamCount))
+	end
+
+	-- Next Beam + 1
+	local nextBeamText2 = CL.count:format(self:SpellName(221153), beamCount+1)
+	local nextBeamTime2 = self:BarTimeLeft(nextBeamText2)
+	if nextBeamTime2 then
+		self:StopBar(nextBeamText2)
+		self:Bar(205370, nextBeamTime2, nextBeamText2 .. getBeamText(beamCount+1))
+	end
+end
+
+function mod:BigWigs_BossComm(_, msg)
+	if msg == "firstBeamWasLeft" then
+		receivedBeamCom = true
+		firstBeamLeft = true
+		fixBars(mod)
+	elseif msg == "firstBeamWasRight" then
+		receivedBeamCom = true
+		firstBeamLeft = false
+		fixBars(mod)
+	end
+end
+
+function BigWigsKrosusFirstBeamWasLeft(wasLeft)
+	if wasLeft then
+		mod:Sync("firstBeamWasLeft")
+	else
+		mod:Sync("firstBeamWasRight")
 	end
 end
