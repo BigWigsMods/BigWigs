@@ -1,4 +1,5 @@
 local L = BigWigs:NewBossLocale("Krosus", "zhTW")
+if not L then return end
 if L then
 	L.leftBeam = "左手光束"
 	L.rightBeam = "右手光束"
