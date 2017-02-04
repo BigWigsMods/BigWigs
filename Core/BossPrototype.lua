@@ -1266,7 +1266,7 @@ end
 --- Stop the aura.
 -- @param spellId the associated spell id
 -- @param playerGUID the affected player GUID
-function boss:AuraRemoved(spellId, player)
+function boss:AuraRemoved(spellId, playerGUID)
 	self:SendMessage("BigWigs_HideNameplateAura", self, playerGUID, icons[spellId])
 end
 
