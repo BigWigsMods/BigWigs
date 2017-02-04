@@ -1259,8 +1259,9 @@ end
 --- Fire aura callbacks. Used for things like nameplates.
 -- @param spellId the associated spell id
 -- @param playerGUID the affected player GUID
-function boss:AuraApplied(spellId, playerGUID)
-	self:SendMessage("BigWigs_ShowNameplateAura", self, playerGUID, icons[spellId])
+-- @param[opt] duration the duration of the aura
+function boss:AuraApplied(spellId, playerGUID, duration)
+	self:SendMessage("BigWigs_ShowNameplateAura", self, playerGUID, icons[spellId], duration)
 end
 
 --- Stop the aura.
