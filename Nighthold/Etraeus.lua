@@ -107,6 +107,9 @@ function mod:OnBossEnable()
 	--[[ Thing That Should Not Be ]]--
 	self:Log("SPELL_CAST_START", "WitnessTheVoid", 207720)
 	self:Death("ThingDeath", 104880) -- Thing That Should Not Be
+
+	-- Experimenting with using callbacks for nameplate addons
+	self:SendMessage("BigWigs_EnableFriendlyNameplates", self)
 end
 
 function mod:OnEngage()
@@ -120,6 +123,7 @@ end
 
 function mod:OnBossDisable()
 	wipe(mobCollector)
+	self:SendMessage("BigWigs_DisableFriendlyNameplates", self)
 end
 
 --------------------------------------------------------------------------------
