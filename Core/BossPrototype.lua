@@ -1252,6 +1252,25 @@ function boss:CloseProximity(key)
 end
 
 -------------------------------------------------------------------------------
+-- Auras.
+-- @section auras
+--
+
+--- Fire aura callbacks. Used for things like nameplates.
+-- @param spellId the associated spell id
+-- @param playerGUID the affected player GUID
+function boss:AuraApplied(spellId, playerGUID)
+	self:SendMessage("BigWigs_ShowNameplateAura", self, playerGUID, icons[spellId])
+end
+
+--- Stop the aura.
+-- @param spellId the associated spell id
+-- @param playerGUID the affected player GUID
+function boss:AuraRemoved(spellId, player)
+	self:SendMessage("BigWigs_HideNameplateAura", self, playerGUID, icons[spellId])
+end
+
+-------------------------------------------------------------------------------
 -- Messages.
 -- @section messages
 --
