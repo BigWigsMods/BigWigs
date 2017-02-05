@@ -39,6 +39,7 @@ function mod:GetOptions()
 	return {
 		--[[ General ]]--
 		"stages",
+		"berserk",
 
 		--[[ Essence of Aman'Thul ]]--
 		210339, -- Time Dilation
@@ -153,6 +154,7 @@ function mod:OnEngage()
 	flamesCount = 1
 	self:Bar(212258, 7) -- Hand of Gul'dan
 	self:Bar(206515, 11) -- Fel Efflux
+	self:Berserk(720)
 end
 
 --------------------------------------------------------------------------------
