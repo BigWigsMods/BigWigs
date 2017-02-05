@@ -178,6 +178,7 @@ do
 		[152] = true, -- Garrosh defeat
 		[294] = true, -- Archimonde portal
 		[295] = true, -- Archimonde kill
+		[549] = true, -- Gul'dan kill
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
