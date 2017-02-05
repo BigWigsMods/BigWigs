@@ -265,26 +265,19 @@ do
 	end
 end
 
-do
-	local prev = 0
-	function mod:Frostbitten(args)
-		local amount = args.amount or 1
-		if self:Me(args.destGUID) and amount % 2 == 0 and amount > 5 then
-			self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 7 and "Warning")
-		end
-
-		frostbittenStacks[args.destName] = amount
-
-		local t = GetTime()
-		if t-prev > 2 then
-			prev = t
-			if not isInfoOpen then
-				isInfoOpen = true
-				self:OpenInfo(args.spellId, args.spellName)
-			end
-			self:SetInfoByTable(args.spellId, frostbittenStacks)
-		end
+function mod:Frostbitten(args)
+	local amount = args.amount or 1
+	if self:Me(args.destGUID) and amount % 2 == 0 and amount > 5 then
+		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 7 and "Warning")
 	end
+
+	frostbittenStacks[args.destName] = amount
+
+	if not isInfoOpen then
+		isInfoOpen = true
+		self:OpenInfo(args.spellId, args.spellName)
+	end
+	self:SetInfoByTable(args.spellId, frostbittenStacks)
 end
 
 function mod:FrostbittenRemoved(args)
