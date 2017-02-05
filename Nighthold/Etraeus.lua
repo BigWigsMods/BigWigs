@@ -24,6 +24,13 @@ local timers = {
 	-- Fel Ejection, SPELL_CAST_SUCCESS
 	[205649] = {17, 4, 4, 2, 10, 3.5, 3.5, 32, 4, 3.5, 3.5, 3.5, 22, 7.5, 17.5, 1, 2, 1.5},
 }
+local grandCounter = 1
+local grandTimers = { -- XXX I think the timers are based on total time in phase instead of cooldowns, but this is good enough for now
+	{15,13.4,14}, -- P1
+	{26,44.9,57.7}, -- P2
+	{60,43.7,41.4}, -- P3
+	{47}, -- P4, i don't have any more data, assuming its 47
+}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -40,6 +47,7 @@ function mod:GetOptions()
 		--[[ General ]]--
 		"stages",
 		221875, -- Nether Traversal
+		205408, -- Grand Conjunction
 
 		--[[ Stage One ]]--
 		206464, -- Coronal Ejection
@@ -61,6 +69,7 @@ function mod:GetOptions()
 		{214335, "SAY"}, -- Gravitational Pull
 		207439, -- Void Nova
 		222761, -- Big Bang
+		216909, -- World-Devouring Force
 
 		--[[ Thing That Should Not Be ]]--
 		207720, -- Witness the Void
@@ -80,6 +89,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "NetherTraversal", 221875)
 	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 206398) -- Felflame
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GroundEffectDamage", 206398) -- Felflame
+	self:Log("SPELL_CAST_START", "GrandConjunction", 205408) -- Grand Conjunction
 
 	--[[ Stage One ]]--
 	self:Log("SPELL_CAST_SUCCESS", "CoronalEjection", 206464)
@@ -103,6 +113,7 @@ function mod:OnBossEnable()
 
 	--[[ Stage Four ]]--
 	self:Log("SPELL_CAST_START", "VoidNova", 207439)
+	self:Log("SPELL_CAST_START", "WorldDevouringForce", 216909)
 
 	--[[ Thing That Should Not Be ]]--
 	self:Log("SPELL_CAST_START", "WitnessTheVoid", 207720)
@@ -115,10 +126,14 @@ end
 function mod:OnEngage()
 	phase = 1
 	ejectionCount = 1
+	grandCounter = 1
 	wipe(mobCollector)
 	wipe(gravPullSayTimers)
 	self:Bar(206464, 12.5) -- Coronal Ejection
 	self:Bar(221875, 20) -- Nether Traversal
+	if self:Mythic() then
+		self:CDBar(205408, 15)
+	end
 end
 
 function mod:OnBossDisable()
@@ -138,6 +153,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(206936, timers[206936][ejectionCount], CL.count:format(self:SpellName(206936), ejectionCount))
 		self:Bar(205984, 30) -- Gravitational Pull
 		self:Bar(206949, 53) -- Frigid Nova
+		if self:Mythic() then
+			grandCounter = 1
+			self:CDBar(205408, 26)
+		end
 	elseif spellId == 222133 then -- Phase 3 Conversation
 		phase = 3
 		self:Message("stages", "Neutral", "Long", "60% - ".. CL.stage:format(3), false)
@@ -147,6 +166,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(205649, timers[205649][ejectionCount], CL.count:format(self:SpellName(205649), ejectionCount))
 		self:CDBar(214167, 28) -- Gravitational Pull
 		self:CDBar(206517, 62) -- Fel Nova
+		if self:Mythic() then
+			grandCounter = 1
+			self:CDBar(205408, 60)
+		end
 	elseif spellId == 222134 then -- Phase 4 Conversation
 		phase = 4
 		self:Message("stages", "Neutral", "Long", "30% - ".. CL.stage:format(4), false)
@@ -157,6 +180,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(214335, 20) -- Gravitational Pull
 		self:CDBar(207439, 42) -- Fel Nova
 		self:Berserk(201.5, true, nil, 222761, 222761) -- Big Bang (end of cast)
+		if self:Mythic() then
+			grandCounter = 1
+			self:CDBar(205408, 47) -- Grand Conjunction
+			self:Bar(216909, 22.7) -- World-Devouring Force
+		end
 	end
 end
 
@@ -173,6 +201,24 @@ do
 			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
+end
+--[[ Mythic: General ]]--
+function mod:GrandConjunction(args)
+	grandCounter = grandCounter + 1
+	self:Message(args.spellId, "Attention", "Info")
+	local timer
+	if grandTimers[phase][grandCounter] then -- Everything else is assumed
+		timer = grandTimers[phase][grandCounter]
+	elseif phase == 1 then
+		timer = 14
+	elseif phase == 2 then
+		timer = 57
+	elseif phase == 3 then
+		timer = 42
+	else
+		timer = 47
+	end
+	self:CDBar(args.spellId, timer)
 end
 
 --[[ Stage One ]]--
@@ -303,6 +349,10 @@ function mod:VoidNova(args)
 	self:CDBar(args.spellId, 75)
 end
 
+function mod:WorldDevouringForce(args)
+	self:Message(args.spellId, "Important", "Alarm")
+	self:Bar(args.spellId, 41.7)
+end
 
 --[[ Thing That Should Not Be ]]--
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
