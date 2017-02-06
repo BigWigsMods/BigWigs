@@ -19,6 +19,7 @@ mod.respawnTime = 30
 local nextPhaseSoon = 80
 local phase = 1
 local collapseSayTimers = {}
+local iconsUnused = {1, 2, 3, 4, 5, 6}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -95,6 +96,7 @@ end
 function mod:OnEngage()
 	nextPhaseSoon = 80
 	phase = 1
+	iconsUnused = {1, 2, 3, 4, 5, 6}
 
 	for _,timer in pairs(collapseSayTimers) do
 		self:CancelTimer(timer)
@@ -150,6 +152,7 @@ function mod:NatureInfusion(args)
 	self:Bar(218774, 25) -- Summon Plasma Spheres, to _start
 	self:Bar(218809, 42) -- Call of Night, to _success
 	self:Bar(218438, 55) -- Controlled Chaos, to _start
+	iconsUnused = {1, 2, 3, 4, 5, 6}
 end
 
 function mod:ArcaneInfusion(args)
@@ -159,6 +162,7 @@ function mod:ArcaneInfusion(args)
 	self:StopBar(218438) -- Controlled Chaos
 	self:Bar(218809, 22) -- Call of Night, to _success
 	self:Bar(218774, 35) -- Summon Plasma Spheres, to _start
+	iconsUnused = {1, 2, 3, 4, 5, 6}
 end
 
 function mod:UNIT_HEALTH_FREQUENT(unit)
@@ -174,7 +178,7 @@ end
 
 --[[ Arcanist Tel'arn ]]--
 do
-	local playerList, proxList, isOnMe, iconsUnused = mod:NewTargetList(), {}, nil, {1,2,3,4,5,6}
+	local playerList, proxList, isOnMe = mod:NewTargetList(), {}, nil
 
 	function mod:CallOfNight(args)
 		proxList[#proxList+1] = args.destName
@@ -295,7 +299,7 @@ end
 
 function mod:GraceOfNature(args)
 	self:Message(args.spellId, "Important", "Long", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 50)
+	self:Bar(args.spellId, (self:Mythic() and (phase == 2 and 55 or phase == 3 and 35 or 65)) or 50)
 end
 
 do
