@@ -115,7 +115,7 @@ function mod:GetOptions()
 		--[[ Time Layer 2 ]]--
 		{209244, "SAY", "FLASH"}, -- Delphuric Beam
 		210022, -- Epocheric Orb
-		{209973 "FLASH", "SAY"}, -- Ablating Explosion
+		{209973, "FLASH", "SAY"}, -- Ablating Explosion
 
 		--[[ Time Layer 3 ]]--
 		{211261, "SAY", "FLASH"}, -- Permeliative Torment
