@@ -24,12 +24,16 @@ local handOfGuldanCount = 1
 local handOfGuldanTimers = {13.5, 48.9, 138.9} -- TODO: Get more data on these
 local stormCount = 1
 local flamesCount = 1
+local eyeCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:GetLocale()
+if L then
+	L[211152] = "(E) ".. mod:SpellName(209270) -- (E) Eye of Gul'dan
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -67,7 +71,7 @@ function mod:GetOptions()
 
 		--[[ Stage Two ]]--
 		{209011, "SAY", "FLASH"}, -- Bonds of Fel
-		209270, -- Eye of Gul'dan
+		{209270, "PROXIMITY"}, -- Eye of Gul'dan
 		208672, -- Carrion Wave
 
 		--[[ Stage Three ]]--
@@ -75,7 +79,7 @@ function mod:GetOptions()
 		167935, -- Storm of the Destroyer
 		206744, -- Black Harvest
 		{221606, "SAY", "FLASH"}, -- Flames of Sargeras
-		211152, -- Empowered Eye of Gul'dan
+		{211152, "PROXIMITY"}, -- Empowered Eye of Gul'dan
 		221781, -- Desolate Ground
 		{227556, "TANK"}, -- Fury of the Fel   XXX untested
 	}, {
@@ -126,6 +130,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BondsOfFelCast", 206222, 206221) -- Normal, Empowered
 	self:Log("SPELL_AURA_APPLIED", "BondsOfFel", 209011, 206384) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "EyeOfGuldan", 209270, 211152) -- Normal, Empowered
+	self:Log("SPELL_AURA_APPLIED", "EyeOfGuldanApplied", 209454, 221728) -- Normal, Empowered
+	self:Log("SPELL_AURA_REMOVED", "EyeOfGuldanRemoved", 209454, 221728) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "CarrionWave", 208672)
 
 	--[[ Stage Three ]]--
@@ -152,6 +158,7 @@ function mod:OnEngage()
 	handOfGuldanCount = 1
 	stormCount = 1
 	flamesCount = 1
+	eyeCount = 1
 	self:Bar(212258, 7) -- Hand of Gul'dan
 	self:Bar(206515, 11) -- Fel Efflux
 	self:Berserk(720)
@@ -167,8 +174,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(spellId, 23)
 	end
 end
-function mod:RAID_BOSS_EMOTE(event, msg, npcname)
-	if msg:find("206221") then -- Gains Empowered Bonds of Fel
+
+function mod:RAID_BOSS_EMOTE(event, msg)
+	if msg:find("206221", nil, true) then -- Gains Empowered Bonds of Fel
 		self:Bar(209011, self:BarTimeLeft(209011), self:SpellName(206221))
 		self:StopBar(209011) -- Bonds of Fel
 	end
@@ -217,18 +225,19 @@ function mod:EyeOfAmanThulRemoved(args) -- Phase 2 start
 	else
 		self:Bar(212258, 13.5, CL.count:format(self:SpellName(212258), handOfGuldanCount)) -- Hand of Gul'dan
 	end
-	self:Bar(209270, 29) -- Eye of Gul'dan
+	self:Bar(209270, self:Easy() and 32.4 or 29) -- Eye of Gul'dan
 end
 
 function mod:Phase3Start(args) -- Phase 3 start
 	phase = 3
+	eyeCount = 1
 	self:Message("stages", "Neutral", "Long", CL.stage:format(3), args.spellId)
 	self:StopBar(206221) -- Empowered Bonds of Fel
 	self:StopBar(212258) -- Hand of Gul'dan
 	self:StopBar(CL.count:format(self:SpellName(206220), liquidHellfireCount)) -- Liquid Hellfire
 	self:Bar("stages", 8, args.spellName, args.spellId)
 	self:Bar(221606, 27.5) -- Flames of Sargeras
-	self:Bar(211152, 39) -- Eye of Gul'dan
+	self:Bar(211152, self:Easy() and 42.6 or 39) -- Empowered Eye of Gul'dan
 	self:Bar(206744, 66) -- Black Harvest
 	self:Bar(167935, 84) -- Storm of the Destroyer
 end
@@ -323,9 +332,27 @@ do
 	end
 end
 
-function mod:EyeOfGuldan(args)
-	self:Message(209270, "Urgent", "Alert")
-	self:Bar(209270, phase == 2 and 53.3 or 62.5, args.spellName) -- TODO: P3 timer is 25s at some point
+do
+	local easyTimes = {71.4, 71.4, 28.6}
+	function mod:EyeOfGuldan(args)
+		self:Message(args.spellId, "Urgent", "Alert", L[args.spellId])
+		self:Bar(args.spellId, phase == 2 and (self:Easy() and 60 or 53.3) or (self:Easy() and easyTimes[eyeCount] or 62.5), L[args.spellId]) -- TODO: P3 timer is 25s at some point
+		eyeCount = eyeCount + 1
+	end
+end
+
+function mod:EyeOfGuldanApplied(args)
+	if self:Me(args.destGUID) then
+		local id = args.spellId == 209454 and 209270 or 211152
+		self:Message(id, "Personal", "Alert", CL.you:format(L[id] or args.spellName))
+		self:OpenProximity(id, 8)
+	end
+end
+
+function mod:EyeOfGuldanRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId == 209454 and 209270 or 211152)
+	end
 end
 
 function mod:CarrionWave(args)
