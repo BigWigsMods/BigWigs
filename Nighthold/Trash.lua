@@ -300,7 +300,7 @@ do
 				self:RegisterTargetEvents("MarkShadowWrap")
 				self:ScheduleTimer("UnregisterTargetEvents", 10)
 			end
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alert", nil, nil, true)
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Warning", nil, nil, true)
 		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
