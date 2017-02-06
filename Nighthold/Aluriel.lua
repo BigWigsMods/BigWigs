@@ -35,7 +35,8 @@ local felLashCount = 1
 local searingBrandTargets = {}
 local frostbittenStacks = {}
 local mobCollector = {}
-local isInfoOpen = nil
+local isInfoOpen = false
+local detonateOnMe = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -58,7 +59,7 @@ function mod:GetOptions()
 
 		--[[ Master of Frost ]]--
 		{212531, "SAY", "FLASH"}, -- Pre Mark of Frost
-		{212587, "SAY", "FLASH"}, -- Mark of Frost
+		{212587, "SAY", "FLASH", "PROXIMITY"}, -- Mark of Frost
 		{212647, "INFOBOX"}, -- Frostbitten
 		212530, -- Replicate: Mark of Frost
 		212735, -- Detonate: Mark of Frost
@@ -68,7 +69,7 @@ function mod:GetOptions()
 
 		--[[ Master of Fire ]]--
 		{213148, "SAY"}, -- Pre Searing Brand
-		213166, -- Searing Brand
+		{213166, "PROXIMITY"}, -- Searing Brand
 		searingBrandMarker,
 		{213275, "SAY"}, -- Detonate: Searing Brand
 		213567, -- Animate: Searing Brand
@@ -109,11 +110,11 @@ function mod:OnBossEnable()
 	--[[ Master of Frost ]]--
 	self:Log("SPELL_AURA_APPLIED", "PreMarkOfFrostApplied", 212531)
 	self:Log("SPELL_AURA_APPLIED", "MarkOfFrostApplied", 212587)
+	self:Log("SPELL_AURA_REMOVED", "MarkOfFrostRemoved", 212587)
 	self:Log("SPELL_AURA_APPLIED", "Frostbitten", 212647)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Frostbitten", 212647)
 	self:Log("SPELL_AURA_REMOVED", "FrostbittenRemoved", 212647)
 	self:Log("SPELL_CAST_START", "ReplicateMarkOfFrost", 212530)
-	self:Log("SPELL_CAST_START", "DetonateMarkOfFrost", 212735)
 	self:Log("SPELL_CAST_START", "AnimateMarkOfFrost", 213853)
 	self:Log("SPELL_CAST_START", "FrozenTempest", 213083)
 	self:Death("IcyEnchantmentDeath", 107237)
@@ -122,7 +123,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PreSearingBrandApplied", 213148)
 	self:Log("SPELL_AURA_APPLIED", "SearingBrandApplied", 213166)
 	self:Log("SPELL_AURA_REMOVED", "SearingBrandRemoved", 213166)
-	self:Log("SPELL_CAST_START", "DetonateSearingBrand", 213275)
+	self:Log("SPELL_CAST_START", "DetonateSearingBrandOrFrost", 213275, 212735) -- Detonate: Searing Brand, Detonate: Mark of Frost
 	self:Log("SPELL_CAST_START", "AnimateSearingBrand", 213567)
 
 	--[[ Master of the Arcane ]]--
@@ -147,10 +148,11 @@ end
 function mod:OnEngage()
 	phase = 0 -- will immediately get incremented by mod:Stages()
 	annihilateCount = 1
+	detonateOnMe = false
+	isInfoOpen = false
 	wipe(searingBrandTargets)
 	wipe(frostbittenStacks)
 	wipe(mobCollector)
-	isInfoOpen = nil
 
 	timers = self:Mythic() and mythicTimers or heroicTimers
 	self:Bar(212492, timers[212492][annihilateCount]) -- Annihilate
@@ -195,6 +197,7 @@ end
 
 do
 	function mod:Stages(args)
+		detonateOnMe = false
 		phase = phase + 1
 		self:Message("stages", "Neutral", "Long", args.spellName, args.spellId)
 
@@ -242,10 +245,13 @@ do
 	local preDebuffApplied = 0
 	function mod:PreMarkOfFrostApplied(args)
 		if self:Me(args.destGUID) then
+			preDebuffApplied = GetTime()
+			if phase % 3 == 1 then
+				detonateOnMe = true
+			end
 			self:TargetMessage(args.spellId, args.destName, "Attention", "Alert")
 			self:Say(args.spellId)
 			self:Flash(args.spellId)
-			preDebuffApplied = GetTime()
 		end
 	end
 
@@ -256,11 +262,22 @@ do
 			self:ScheduleTimer("TargetMessage", 1, args.spellId, list, "Urgent")
 		end
 
-		local t = GetTime()
-		if self:Me(args.destGUID) and t-preDebuffApplied > 5.5 then
-			self:TargetMessage(args.spellId, args.destName, "Attention", "Alert")
-			self:Say(args.spellId)
-			self:Flash(args.spellId)
+		if self:Me(args.destGUID) then
+			if phase % 3 == 1 then
+				detonateOnMe = true
+			end
+			local t = GetTime()
+			if t-preDebuffApplied > 5.5 then
+				self:TargetMessage(args.spellId, args.destName, "Attention", "Alert")
+				self:Say(args.spellId)
+				self:Flash(args.spellId)
+			end
+			self:OpenProximity(args.spellId, 8)
+		end
+	end
+	function mod:MarkOfFrostRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CloseProximity(args.spellId)
 		end
 	end
 end
@@ -284,7 +301,7 @@ function mod:FrostbittenRemoved(args)
 	frostbittenStacks[args.destName] = nil
 	if not next(frostbittenStacks) and isInfoOpen then
 		self:CloseInfo(args.spellId)
-		isInfoOpen = nil
+		isInfoOpen = false
 	end
 end
 
@@ -293,10 +310,6 @@ function mod:AnimateMarkOfFrost(args)
 end
 
 function mod:ReplicateMarkOfFrost(args)
-	self:Message(args.spellId, "Important", "Alarm")
-end
-
-function mod:DetonateMarkOfFrost(args)
 	self:Message(args.spellId, "Important", "Alarm")
 end
 
@@ -338,6 +351,10 @@ end
 
 function mod:SearingBrandApplied(args)
 	if self:Me(args.destGUID) then
+		if phase % 3 == 2 then
+			detonateOnMe = true
+		end
+		self:OpenProximity(args.spellId, 8)
 		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 		if expires and expires > 0 then
 			local timeLeft = expires - GetTime()
@@ -347,15 +364,18 @@ function mod:SearingBrandApplied(args)
 end
 
 function mod:SearingBrandRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
+	end
 	if self:GetOption(searingBrandMarker) then
 		SetRaidTarget(args.destName, 0)
 	end
 end
 
-function mod:DetonateSearingBrand(args)
+function mod:DetonateSearingBrandOrFrost(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	if UnitDebuff("player", self:SpellName(213166)) then -- Searing Brand
-		self:Say(args.spellId, 151913)
+	if detonateOnMe then
+		self:Say(args.spellId, 151913) -- "Detonate"
 	end
 end
 
