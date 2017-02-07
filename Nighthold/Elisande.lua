@@ -476,6 +476,8 @@ do
 		playerList[#playerList+1] = args.destName
 
 		if #playerList == 1 then
+			tormentCount = tormentCount+1
+			self:Bar(args.spellId, self:Mythic() and tormentTimersMythic[tormentCount] or tormentTimers[tormentCount] or 0, CL.count:format(self:SpellName(args.spellId), tormentCount))
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Alarm")
 		end
 	end
