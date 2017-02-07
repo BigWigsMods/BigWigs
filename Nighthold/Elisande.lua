@@ -20,6 +20,7 @@ mod.engageId = 1872
 --
 local phase = 1
 
+local ignoreAdds = nil
 local slowElementalCounter = 0
 local slowElementalTimers = {49,52,60} -- No idea how it continues
 local slowAddTimerMythic = {
@@ -28,6 +29,7 @@ local slowAddTimerMythic = {
 		[3] = {5.0, 54, 55, 30, 0}
 	}
 
+local isfastAddFighting = nil
 local fastElementalCounter = 0
 local fastElementalTimers = {88,95,20} -- No idea how it continues
 local fastAddTimerMythic = {
@@ -134,6 +136,7 @@ end
 
 function mod:OnBossEnable()
 	--[[ General ]]--
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_CAST_START", "TimeStop", 208944) -- Phase triggering
 	self:Log("SPELL_CAST_SUCCESS", "LeavetheNightwell", 208863) -- New phase starting
@@ -182,6 +185,8 @@ function mod:OnEngage()
 	savedOrbCount = 20
 	savedBeamCount = 20
 	singularityCount = 1
+	isfastAddFighting = nil
+	ignoreAdds = nil
 	self:Bar(211614, 5) -- Summon Time Elemental - Slow
 	self:Bar(211616, 8) -- Summon Time Elemental - Fast
 end
@@ -204,6 +209,36 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		singularityCount=singularityCount+1	
 		self:Message(209170, "Attention", "Info", self:SpellName(209170))
 		self:Bar(209170,  self:Mythic() and singularityTimersMythic[singularityCount] or singularityTimers[singularityCount] or 0, CL.count:format(self:SpellName(209170), singularityCount))
+	end
+end
+
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	self:CheckForEncounterEngage()
+	
+	if ignoreAdds then -- Otherwise it triggers in intermission
+		return 
+	end
+
+	local fastAddFound = nil
+	for i = 1, 5 do
+		local unit = ("boss%d"):format(i)
+		local guid = UnitGUID(unit)
+		if guid then
+			local mobId = self:MobId(guid)
+			if mobId == 105301 then -- Fast Add
+				fastAddFound = true
+				if not isfastAddFighting then
+					isfastAddFighting = true
+				end
+			end
+		end
+	end
+	if not fastAddFound then
+		if isfastAddFighting then
+			isfastAddFighting = nil
+			fastBubbleCount = fastBubbleCount + 1
+			self:Bar(209166, 30, CL.count:format("Fast Time Bubble", fastBubbleCount))
+		end
 	end
 end
 
@@ -251,10 +286,11 @@ function mod:TimeStop(args)
 	self:StopBar(CL.count:format(self:SpellName(209170), singularityCount)) -- Singularity
 	self:StopBar(CL.count:format(self:SpellName(209973), ablatingCount)) -- Ablating
 	self:StopBar("Berserk") -- Terminate
-	
+	ignoreAdds = true
 end
 
 function mod:LeavetheNightwell(args)
+	ignoreAdds = nil
 	slowElementalCounter = 1
 	fastElementalCounter = 1
 	phase = phase+1
