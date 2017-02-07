@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Star Augur Etraeus", 1088, 1732)
 if not mod then return end
 mod:RegisterEnableMob(103758)
 mod.engageId = 1863
-mod.respawnTime = 50 -- might be wrong
+mod.respawnTime = 50
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -25,11 +25,11 @@ local timers = {
 	[205649] = {17, 4, 4, 2, 10, 3.5, 3.5, 32, 4, 3.5, 3.5, 3.5, 22, 7.5, 17.5, 1, 2, 1.5},
 }
 local grandCounter = 1
-local grandTimers = { -- XXX I think the timers are based on total time in phase instead of cooldowns, but this is good enough for now
+local grandTimers = {
 	{15,13.4,14}, -- P1
 	{26,44.9,57.7}, -- P2
 	{60,43.7,41.4}, -- P3
-	{47}, -- P4, i don't have any more data, assuming its 47
+	{47.9, 61.3, 51.3}, -- P4
 }
 
 --------------------------------------------------------------------------------
