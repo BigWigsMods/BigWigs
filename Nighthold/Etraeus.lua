@@ -32,6 +32,9 @@ local grandTimers = {
 	{47.9, 61.3, 51.3}, -- P4
 }
 
+ local worldDevouringForceCounter = 1
+ local worldDevouringForceTimers = {22.7, 41.7, 57.6}
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -127,6 +130,7 @@ function mod:OnEngage()
 	phase = 1
 	ejectionCount = 1
 	grandCounter = 1
+ 	worldDevouringForceCounter = 1
 	wipe(mobCollector)
 	wipe(gravPullSayTimers)
 	self:Bar(206464, 12.5) -- Coronal Ejection
@@ -182,8 +186,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Berserk(201.5, true, nil, 222761, 222761) -- Big Bang (end of cast)
 		if self:Mythic() then
 			grandCounter = 1
+			worldDevouringForceCounter = 1
 			self:CDBar(205408, 47) -- Grand Conjunction
-			self:Bar(216909, 22.7) -- World-Devouring Force
+			self:Bar(216909, worldDevouringForceTimers[worldDevouringForceCounter] or 0) -- World-Devouring Force
 		end
 	end
 end
@@ -350,8 +355,9 @@ function mod:VoidNova(args)
 end
 
 function mod:WorldDevouringForce(args)
+	worldDevouringForceCounter = worldDevouringForceCounter + 1
 	self:Message(args.spellId, "Important", "Alarm")
-	self:Bar(args.spellId, 41.7)
+	self:Bar(args.spellId, worldDevouringForceTimers[worldDevouringForceCounter] or 0)
 end
 
 --[[ Thing That Should Not Be ]]--
