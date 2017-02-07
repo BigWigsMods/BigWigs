@@ -24,16 +24,17 @@ local timers = {
 	-- Fel Ejection, SPELL_CAST_SUCCESS
 	[205649] = {17, 4, 4, 2, 10, 3.5, 3.5, 32, 4, 3.5, 3.5, 3.5, 22, 7.5, 17.5, 1, 2, 1.5},
 }
+
 local grandCounter = 1
 local grandTimers = {
-	{15,13.4,14}, -- P1
-	{26,44.9,57.7}, -- P2
-	{60,43.7,41.4}, -- P3
+	{15, 13.4, 14}, -- P1
+	{26, 44.9, 57.7}, -- P2
+	{60, 43.7, 41.4}, -- P3
 	{47.9, 61.3, 51.3}, -- P4
 }
 
- local worldDevouringForceCounter = 1
- local worldDevouringForceTimers = {22.7, 41.7, 57.6}
+local worldDevouringForceCounter = 1
+local worldDevouringForceTimers = {22.7, 41.7, 57.6}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -188,7 +189,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			grandCounter = 1
 			worldDevouringForceCounter = 1
 			self:CDBar(205408, 47) -- Grand Conjunction
-			self:Bar(216909, worldDevouringForceTimers[worldDevouringForceCounter] or 0) -- World-Devouring Force
+			self:Bar(216909, worldDevouringForceTimers[worldDevouringForceCounter]) -- World-Devouring Force
 		end
 	end
 end
@@ -355,9 +356,12 @@ function mod:VoidNova(args)
 end
 
 function mod:WorldDevouringForce(args)
-	worldDevouringForceCounter = worldDevouringForceCounter + 1
 	self:Message(args.spellId, "Important", "Alarm")
-	self:Bar(args.spellId, worldDevouringForceTimers[worldDevouringForceCounter] or 0)
+	worldDevouringForceCounter = worldDevouringForceCounter + 1
+	local t = worldDevouringForceTimers[worldDevouringForceCounter]
+	if t then
+		self:Bar(args.spellId, t)
+	end
 end
 
 --[[ Thing That Should Not Be ]]--
