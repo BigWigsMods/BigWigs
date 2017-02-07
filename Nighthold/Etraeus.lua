@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Star Augur Etraeus", 1088, 1732)
 if not mod then return end
 mod:RegisterEnableMob(103758)
 mod.engageId = 1863
-mod.respawnTime = 50 -- might be wrong
+mod.respawnTime = 50
 
 --------------------------------------------------------------------------------
 -- Locals
