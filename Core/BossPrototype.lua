@@ -1484,6 +1484,8 @@ end
 -- @param[opt] icon the bar icon (spell id or texture name)
 function boss:Bar(key, length, text, icon)
 	local textType = type(text)
+	local bars = core:GetPlugin("Bars")
+	if bars and not bars.db.profile["cast"] and text == L.cast then return end
 	if checkFlag(self, key, C.BAR) then
 		self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key])
 	end

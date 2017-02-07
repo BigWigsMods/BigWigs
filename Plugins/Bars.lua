@@ -451,6 +451,7 @@ plugin.defaultDB = {
 	outline = "NONE",
 	growup = true,
 	time = true,
+	cast = true,
 	alignText = "LEFT",
 	alignTime = "RIGHT",
 	icon = true,
@@ -663,6 +664,12 @@ do
 						desc = L.timeDesc,
 						order = 13,
 					},
+					cast = {
+					    type = "toggle",
+					    name = L.cast,
+					    desc = L.castDesc,
+					    order = 14,
+                    },
 				},
 			},
 			normal = {

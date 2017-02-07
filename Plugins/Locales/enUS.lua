@@ -68,6 +68,8 @@ L.restart = "Restart"
 L.restartDesc = "Restarts emphasized bars so they start from the beginning and count from 10."
 L.fill = "Fill"
 L.fillDesc = "Fills the bars up instead of draining them."
+L.cast = "Cast"
+L.castDesc = "Whether to show or hide cast bars in addition to timer bars."
 
 L.localTimer = "Local"
 L.timerFinished = "%s: Timer [%s] finished."
