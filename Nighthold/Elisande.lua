@@ -201,7 +201,6 @@ end
 function mod:OnBossEnable()
 	--[[ General ]]--
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:Log("SPELL_CAST_START", "TimeStop", 208944) -- Phase triggering
 	self:Log("SPELL_CAST_SUCCESS", "LeavetheNightwell", 208863) -- New phase starting
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -243,7 +242,6 @@ end
 function mod:OnEngage()
 	phase = 0 -- Phase 1 starts upon first Leave the Nightwell cast
 	isPhaseTransition = nil
-	timers = self:Mythic() and mythicTimers or heroicTimers
 
 	slowElementalCount = 1
 	fastElementalCount = 1
@@ -265,6 +263,9 @@ function mod:OnEngage()
 	need_ring_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_msg
 	need_orb_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_msg
 	-- l11n END
+
+	timers = self:Mythic() and mythicTimers or heroicTimers
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 end
 
 --------------------------------------------------------------------------------
@@ -276,32 +277,19 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 211614 then -- Slow
 		self:Message("recursive_elemental", "Neutral", "Info", L.recursive_elemental, L.recursive_elemental_icon)
 		slowElementalCount = slowElementalCount + 1
-		local t = self:Mythic() and timers[spellId][phase][slowElementalCount] or timers[spellId][slowElementalCount]
-		if t then
-			self:Bar("recursive_elemental", t, L.recursive_elemental, L.recursive_elemental_icon)
-		end
-
+		self:Bar("recursive_elemental", self:Mythic() and timers[spellId][phase][slowElementalCount] or timers[spellId][slowElementalCount], L.recursive_elemental, L.recursive_elemental_icon)
 	elseif spellId == 211616 then -- Fast
 		self:Message("expedient_elemental", "Neutral", "Info", L.expedient_elemental, L.expedient_elemental_icon)
 		fastElementalCount = fastElementalCount + 1
-		local t = self:Mythic() and timers[spellId][phase][fastElementalCount] or timers[spellId][fastElementalCount]
-		if t then
-			self:Bar("expedient_elemental", t, L.expedient_elemental, L.expedient_elemental_icon)
-		end
-
+		self:Bar("expedient_elemental", self:Mythic() and timers[spellId][phase][fastElementalCount] or timers[spellId][fastElementalCount], L.expedient_elemental, L.expedient_elemental_icon)
 	elseif spellId == 209170 or spellId == 209171 then -- Spanning Singularity
 		self:Message(209170, "Attention", "Info")
 		singularityCount = singularityCount + 1
-		local t = timers[209170][singularityCount]
-		if t then
-			self:Bar(209170, t, CL.count:format(spellName, singularityCount))
-		end
+		self:Bar(209170, timers[209170][singularityCount], CL.count:format(spellName, singularityCount))
 	end
 end
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	self:CheckForEncounterEngage()
-
 	if isPhaseTransition then -- Otherwise it triggers in intermission
 		return
 	end
@@ -350,20 +338,14 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 		self:Message(208807, "Attention", "Alarm", CL.count:format(self:SpellName(208807), ringCount))
 		ringCount = ringCount + 1
 		if not savedRingCount or ringCount < savedRingCount then
-			local t = timers[208807][ringCount]
-			if t then
-				self:Bar(208807, t, CL.count:format(self:SpellName(208807), ringCount))
-			end
+			self:Bar(208807, timers[208807][ringCount], CL.count:format(self:SpellName(208807), ringCount))
 		end
 
 	elseif msg:find(L.orb_msg) or (localized_orb_msg and msg:find(localized_orb_msg)) then -- Epocheric Orb, l11n
 		self:Message(210022, "Urgent", "Alert", CL.count:format(self:SpellName(210022), orbCount))
 		orbCount = orbCount + 1
 		if not savedOrbCount or orbCount < savedOrbCount then
-			local t = timers[210022][orbCount]
-			if t then
-				self:Bar(210022, t, CL.count:format(self:SpellName(210022), orbCount))
-			end
+			self:Bar(210022, local t = timers[210022][orbCount], CL.count:format(self:SpellName(210022), orbCount))
 		end
 
 	-- Should be in DelphuricBeamCast XXX remove if confirmed
@@ -540,10 +522,7 @@ function mod:DelphuricBeamCast(args)
 	self:Message(209244, "Urgent", "Alert")
 	beamCount = beamCount + 1
 	if not savedBeamCount or beamCount < savedBeamCount then
-		local t = timers[209244][beamCount]
-		if t then
-			self:Bar(209244, t, CL.count:format(self:SpellName(209244), beamCount))
-		end
+		self:Bar(209244, timers[209244][beamCount], CL.count:format(self:SpellName(209244), beamCount))
 	end
 end
 
@@ -573,10 +552,7 @@ function mod:AblatingExplosion(args)
 		self:Say(args.spellId)
 	end
 
-	local t = timers[args.spellId][ablatingCount]
-	if t then
-		self:Bar(args.spellId, t, CL.count:format(args.spellName, ablatingCount))
-	end
+	self:Bar(args.spellId, timers[args.spellId][ablatingCount], CL.count:format(args.spellName, ablatingCount))
 end
 
 --[[ Time Layer 3 ]]--
@@ -594,20 +570,14 @@ do
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Alarm")
 			tormentCount = tormentCount + 1
-			local t = timers[args.spellId][tormentCount]
-			if t then
-				self:Bar(args.spellId, t, CL.count:format(args.spellName, tormentCount))
-			end
+			self:Bar(args.spellId, timers[args.spellId][tormentCount], CL.count:format(args.spellName, tormentCount))
 		end
 	end
 end
 
 function mod:ConflexiveBurst(args)
 	conflexiveBurstCount = conflexiveBurstCount + 1
-	local t = timers[209597][conflexiveBurstCount]
-	if t then
-		self:Bar(209597, t, CL.count:format(args.spellName, conflexiveBurstCount))
-	end
+	self:Bar(209597, timers[209597][conflexiveBurstCount], CL.count:format(args.spellName, conflexiveBurstCount))
 end
 
 do
