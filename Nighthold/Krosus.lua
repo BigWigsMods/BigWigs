@@ -177,15 +177,8 @@ do
 	function mod:FelBeamSuccess(args)
 		beamCount = beamCount + 1
 		local t = timers[args.spellId][beamCount]
-		if t then
-			local text = CL.count:format(spellName, beamCount) .. getBeamText(beamCount)
-			self:Bar(args.spellId, t, text)
-			prev = GetTime()
-		else
-			t = GetTime() - prev
-			print("Unknown BigWigs timer:", self:Difficulty(), args.spellId, args.spellName, beamCount, t)
-			prev = GetTime()
-		end
+		local text = CL.count:format(spellName, beamCount) .. getBeamText(beamCount)
+		self:Bar(args.spellId, t, text)
 
 		-- Additional timer to plan movement ahead
 		local t2 = timers[args.spellId][beamCount+1]
@@ -206,16 +199,7 @@ do
 			self:Say(args.spellId)
 		end
 		orbCount = orbCount + 1
-
-		local t = timers[args.spellId][orbCount]
-		if t then
-			self:Bar(args.spellId, t, CL.count:format(args.spellName, orbCount))
-			prev = GetTime()
-		else
-			t = GetTime() - prev
-			print("Unknown BigWigs timer:", self:Difficulty(), args.spellId, args.spellName, orbCount, t)
-			prev = GetTime()
-		end
+		self:Bar(args.spellId, timers[args.spellId][orbCount], CL.count:format(args.spellName, orbCount))
 	end
 end
 
@@ -243,16 +227,7 @@ do
 	function mod:BurningPitchCast(args)
 		self:Message(args.spellId, "Attention", "Info")
 		burningPitchCount = burningPitchCount + 1
-
-		local t = timers[args.spellId][burningPitchCount]
-		if t then
-			self:Bar(args.spellId, t, CL.count:format(args.spellName, burningPitchCount))
-			prev = GetTime()
-		else
-			t = GetTime() - prev
-			print("Unknown BigWigs timer:", self:Difficulty(), args.spellId, args.spellName, burningPitchCount, t)
-			prev = GetTime()
-		end
+		self:Bar(args.spellId, timers[args.spellId][burningPitchCount], CL.count:format(args.spellName, burningPitchCount))
 	end
 end
 
