@@ -62,7 +62,7 @@ function mod:GetOptions()
 		{212587, "SAY", "FLASH", "PROXIMITY"}, -- Mark of Frost
 		{212647, "INFOBOX"}, -- Frostbitten
 		212530, -- Replicate: Mark of Frost
-		212735, -- Detonate: Mark of Frost
+		{212735, "SAY"}, -- Detonate: Mark of Frost
 		213853, -- Animate: Mark of Frost"
 		213083, -- Frozen Tempest
 		212736, -- Pool of Frost
