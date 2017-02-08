@@ -345,7 +345,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 		self:Message(210022, "Urgent", "Alert", CL.count:format(self:SpellName(210022), orbCount))
 		orbCount = orbCount + 1
 		if not savedOrbCount or orbCount < savedOrbCount then
-			self:Bar(210022, local t = timers[210022][orbCount], CL.count:format(self:SpellName(210022), orbCount))
+			self:Bar(210022, timers[210022][orbCount], CL.count:format(self:SpellName(210022), orbCount))
 		end
 
 	-- Should be in DelphuricBeamCast XXX remove if confirmed
