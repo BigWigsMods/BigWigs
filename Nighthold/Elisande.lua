@@ -2,7 +2,8 @@
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Respawn timer
--- - Mod is untested and PTR logs were old, probably needs a lot of updates
+-- - Localization for the yells, maybe another way to do it?
+-- - Fix any errors/missing timers after merge
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -18,20 +19,74 @@ mod.engageId = 1872
 -- Locals
 --
 local phase = 1
-local fastElementalCounter = 0
+
+local ignoreAdds = nil
 local slowElementalCounter = 0
 local slowElementalTimers = {49,52,60} -- No idea how it continues
+local slowAddTimerMythic = {
+		[1] = {5.0, 39.0, 75.0, 0},
+		[2] = {5.0, 39, 45, 30, 30, 0},
+		[3] = {5.0, 54, 55, 30, 0}
+	}
+
+local isfastAddFighting = nil
+local fastElementalCounter = 0
 local fastElementalTimers = {88,95,20} -- No idea how it continues
-local ringTimers = {40,10,63,10} -- No idea how it continues
+local fastAddTimerMythic = {
+		[1] = {8.0, 81.0, 0},
+		[2] = {8.0, 51, 0},
+		[3] = {8.0, 36, 45, 0}
+	}
+
 local ringCounter = 0
+local savedRingCount = 0
+local ringTimers = {40,10,63,10} -- No idea how it continues
+local ringTimersMythic = {30, 39, 15, 31, 19, 10, 26, 9, 10}
+
 local lookingForMsg = false
 local orbMsg = ''
 local orbCounter = 0
+
+local singularityCount = 1
+local savedSingularityCount = 0
+local singularityScheduleTime = 0
+local singularityTimers = {25, 36.0, 57.0, 65.0}
+local singularityTimersMythic = {56.0, 50.0, 45.0, 0}
+
+-- P2 stuff
+local orbCount = 1
+local savedOrbCount = 0
+local orbTimers = {18, 76.0, 37.0, 70.0, 15.0, 15.0, 30.0, 15.0, 0}
+local orbTimersMythic = {14, 85, 60, 20, 10, 0}
+
+local beamCount = 1
+local savedBeamCount = 0
+local beamTimers = {59, 57.0, 60.0, 70.0}
+local beamTimersMythic = {57.8, 50, 65, 0}
+
+local ablatingCount = 1
+local ablatingTimers = {15.8, 20.7, 20.6, 21.9, 20.7, 25.5, 20.6, 21.9}
+local ablatingTimersMythic = {12.2, 20.6, 20.6, 20.6, 20.6, 20.7, 21.8, 20.6, 20.6, 20.7, 0}
+
+-- Phase 3 Stuff
+local tormentCount = 1
+local tormentTimers = {23, 61.0, 37.0, 60.0}
+local tormentTimersMythic = {63.7, 75, 25, 20, 0}
+
+local conflexiveBurstCount = 1
+local conflexiveBurstTimers = {48, 52.0, 56.0, 65.0, 10.0}
+local conflexiveBurstTimersMythic = {38.7, 90, 45, 30, 0}
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:GetLocale()
+if L then
+	L.ring_msg = "Let the waves of time crash over you!"
+	L.singularity_msg = "I control the battlefield, not you!"
+	L.orb_msg = "You'll find time can be quite volatile."
+	L.beam_msg = "The threads of time answer to me!"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -47,7 +102,6 @@ function mod:GetOptions()
 		"berserk",
 
 		--[[ Recursive Elemental ]]--
-		221863, -- Shield
 		221864, -- Blast
 		209165, -- Slow Time
 
@@ -63,7 +117,7 @@ function mod:GetOptions()
 		--[[ Time Layer 2 ]]--
 		{209244, "SAY", "FLASH"}, -- Delphuric Beam
 		210022, -- Epocheric Orb
-		209973, -- Ablating Explosion
+		{209973, "FLASH", "SAY"}, -- Ablating Explosion
 
 		--[[ Time Layer 3 ]]--
 		{211261, "SAY", "FLASH"}, -- Permeliative Torment
@@ -82,14 +136,14 @@ end
 
 function mod:OnBossEnable()
 	--[[ General ]]--
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_CAST_START", "TimeStop", 208944) -- Phase triggering
+	self:Log("SPELL_CAST_SUCCESS", "LeavetheNightwell", 208863) -- New phase starting
 	self:RegisterEvent("RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	--[[ Recursive Elemental ]]--
-	self:Log("SPELL_AURA_APPLIED", "ShieldApplied", 221863)
-	self:Log("SPELL_AURA_REMOVED", "ShieldRemoved", 221863)
 	self:Log("SPELL_CAST_START", "Blast", 221864)
 	self:Log("SPELL_AURA_APPLIED", "SlowTime", 209165)
 
@@ -99,10 +153,9 @@ function mod:OnBossEnable()
 
 	--[[ Time Layer 1 ]]--
 	self:Log("SPELL_CAST_START", "ArcaneticRing", 208807)
-	self:Log("SPELL_CAST_SUCCESS", "SpanningSingularity", 209170, 233011, 233012)
-	--self:Log("SPELL_AURA_APPLIED", "SingularityDamage", 209433)
-	--self:Log("SPELL_PERIODIC_DAMAGE", "SingularityDamage", 209433)
-	--self:Log("SPELL_PERIODIC_MISSED", "SingularityDamage", 209433)
+	self:Log("SPELL_AURA_APPLIED", "SingularityDamage", 209433)
+	self:Log("SPELL_PERIODIC_DAMAGE", "SingularityDamage", 209433)
+	self:Log("SPELL_PERIODIC_MISSED", "SingularityDamage", 209433)
 	self:Log("SPELL_AURA_APPLIED", "Ablation", 209615)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Ablation", 209615)
 
@@ -121,15 +174,21 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	phase = 1
+	phase = 0 -- Phase 1 starts upon first Leave the Nightwell cast
 	fastElementalCounter = 0
 	slowElementalCounter = 0
 	lookingForMsg = false
 	ringCounter = 0
 	orbCounter = 0
+	savedRingCount = 20
+	savedsingularityCount = 20
+	savedOrbCount = 20
+	savedBeamCount = 20
+	singularityCount = 1
+	isfastAddFighting = nil
+	ignoreAdds = nil
 	self:Bar(211614, 5) -- Summon Time Elemental - Slow
 	self:Bar(211616, 8) -- Summon Time Elemental - Fast
-	self:Bar(208807, 36.3) -- Arcanetic Rings
 end
 
 --------------------------------------------------------------------------------
@@ -146,6 +205,40 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Message(spellId, "Neutral", "Info")
 		fastElementalCounter = fastElementalCounter + 1
 		self:Bar(spellId, fastElementalTimers[fastElementalCounter] or 20) -- Assuming timers cap at 20, which is probably wrong
+	elseif spellId == 209170 or spellId == 209171 then -- SpanningSingularity
+		singularityCount=singularityCount+1	
+		self:Message(209170, "Attention", "Info", self:SpellName(209170))
+		self:Bar(209170,  self:Mythic() and singularityTimersMythic[singularityCount] or singularityTimers[singularityCount] or 0, CL.count:format(self:SpellName(209170), singularityCount))
+	end
+end
+
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	self:CheckForEncounterEngage()
+	
+	if ignoreAdds then -- Otherwise it triggers in intermission
+		return 
+	end
+
+	local fastAddFound = nil
+	for i = 1, 5 do
+		local unit = ("boss%d"):format(i)
+		local guid = UnitGUID(unit)
+		if guid then
+			local mobId = self:MobId(guid)
+			if mobId == 105301 then -- Fast Add
+				fastAddFound = true
+				if not isfastAddFighting then
+					isfastAddFighting = true
+				end
+			end
+		end
+	end
+	if not fastAddFound then
+		if isfastAddFighting then
+			isfastAddFighting = nil
+			fastBubbleCount = fastBubbleCount + 1
+			self:Bar(209166, 30, CL.count:format("Fast Time Bubble", fastBubbleCount))
+		end
 	end
 end
 
@@ -158,42 +251,137 @@ function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
-	if lookingForMsg then
-		orbMsg = msg
-		lookingForMsg = false
-	end
-	if orbMsg == msg then
-		orbCounter = orbCounter + 1
-		self:Bar(210022, orbCounter%2==1 and 76 or 37)
-		self:Message(210022, "Urgent", "Alert", CL.incoming:format(self:SpellName(210022)))
+	if msg:find(L.ring_msg) then
+		ringCount = ringCount+1
+		self:Message(208807, "Urgent", "Alert")
+		if ringCount < savedRingCount then
+			self:Bar(208807, self:Mythic() and ringTimersMythic[ringCount] or ringTimers[ringCount] or 0, CL.count:format(self:SpellName(208807), ringCount))
+		end
+	elseif msg:find(L.orb_msg) then
+		orbCount = orbCount+1
+		self:Message(210022, "Urgent", "Alert", CL.casting:format(self:SpellName(210022)))
+		if orbCount < savedOrbCount then
+			self:Bar(210022, self:Mythic() and orbTimersMythic[orbCount] or orbTimers[orbCount] or 0, CL.count:format(self:SpellName(210022), orbCount))
+		end
+	elseif msg:find(L.beam_msg) then
+		beamCount = beamCount+1
+		self:Message(214278, "Urgent", "Alert", CL.casting:format(self:SpellName(214278)))
+		if beamCount < savedBeamCount then
+			self:Bar(214278, self:Mythic() and  beamTimersMythic[beamCount] or beamTimers[beamCount] or 60, CL.count:format(self:SpellName(214278), beamCount))
+		end
+	elseif msg:find(L.singularity_msg) and phase == 2 or phase == 3 then -- Mythic only, zones apears 2s after the message. 
+		self:ScheduleTimer("Message", 2, 209170, "Attention", "Info", self:SpellName(209170))
 	end
 end
 
 function mod:TimeStop(args)
 	phase = phase + 1
 	self:Message("stages", "Neutral", "Info", CL.stage:format(phase), false)
-	-- Reset elemental counters
-	fastElementalCounter = 0
-	slowElementalCounter = 0
-	ringCounter = 0
-	orbCounter = 0
 	-- Stop old bars
+	self:StopBar(211614)
+	self:StopBar(211616)
+	self:StopBar(CL.count:format(self:SpellName(208807), ringCount)) -- Arcanetic Ring
+	self:StopBar(CL.count:format(self:SpellName(210022), orbCount)) -- Epocheric Orb
+	self:StopBar(CL.count:format(self:SpellName(214278), beamCount)) -- Delphuric Beam
+	self:StopBar(CL.count:format(self:SpellName(209170), singularityCount)) -- Singularity
+	self:StopBar(CL.count:format(self:SpellName(209973), ablatingCount)) -- Ablating
+	self:StopBar("Berserk") -- Terminate
+	ignoreAdds = true
+end
 
-	-- Start new bars
-	self:Bar(211614, 15) -- Summon Time Elemental - Slow
-	self:Bar(211616, 18) -- Summon Time Elemental - Fast
-	self:Bar(210022, 28)
+function mod:LeavetheNightwell(args)
+	ignoreAdds = nil
+	slowElementalCounter = 1
+	fastElementalCounter = 1
+	phase = phase+1
+	fastBubbleCount = 0
+	singularityScheduleTime = 0
+	conflexiveBurstCount = 1
+	
+	if self:Mythic() then 
+		self:Bar("berserk", phase == 3 and 194 or 199, "Berserk") -- Terminate
+	end
+	
+	if phase == 2 then
+		savedRingCount = ringCount
+		savedSingularityCount = singularityCount
+		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
+		singularityCount = 1
+		
+		beamCount = 1
+		orbCount = 1
+		ablatingCount = 1
+		self:Bar(214278, self:Mythic() and beamTimersMythic[beamCount] or beamTimers[beamCount] or 0)
+		self:Bar(210022, self:Mythic() and orbTimersMythic[orbCount] or orbTimers[orbCount] or 0)
+		self:Bar(209973, self:Mythic() and ablatingTimersMythic[ablatingCount] or ablatingTimers[ablatingCount] or 0)
+		if self:Mythic() then 
+			for key, value in pairs(singularityTimersMythic) do
+				if value == 0 then
+					break
+				end
+				singularityScheduleTime = value + singularityScheduleTime
+				singularityCount = singularityCount + 1
+				if singularityCount < savedSingularityCount then
+					self:ScheduleTimer("Bar", singularityScheduleTime, 209170, singularityTimersMythic[singularityCount], CL.count:format(self:SpellName(209170), singularityCount))	
+				end 
+			end
+		else
+			for key, value in pairs(singularityTimers) do
+				singularityScheduleTime = value + singularityScheduleTime
+				singularityCount = singularityCount + 1
+				if singularityCount < savedSingularityCount then
+					self:ScheduleTimer("Bar", singularityScheduleTime, 209170, self:Mythic() and singularityTimersMythic[singularityCount] or singularityTimers[singularityCount] or 0, CL.count:format(self:SpellName(209170), singularityCount))	
+				else 
+					break;
+				end 
+			end
+		end
+	end
+	if phase == 3 then
+		savedOrbCount = orbCount
+		savedBeamCount = beamCount
+		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
+		
+		beamCount = 1
+		orbCount = 1
+		ablatingCount = 1
+		conflexiveBurstCount = 1
+		singularityCount = 1
+		
+		self:Bar(214278, self:Mythic() and beamTimersMythic[beamCount] or beamTimers[beamCount] or 0, CL.count:format(self:SpellName(214278), beamCount))
+		self:Bar(210022, self:Mythic() and orbTimersMythic[orbCount] or orbTimers[orbCount] or 0, CL.count:format(self:SpellName(210022), orbCount))
+		self:Bar(210387, self:Mythic() and tormentTimersMythic[tormentCount] or tormentTimers[tormentCount] or 0)
+		self:Bar(209597, self:Mythic() and conflexiveBurstTimersMythic[conflexiveBurstCount] or conflexiveBurstCount[conflexiveBurstCount] or 0, CL.count:format(self:SpellName(209597), conflexiveBurstCount))
+		if self:Mythic() then 
+			for key, value in pairs(singularityTimersMythic) do
+				singularityScheduleTime = value + singularityScheduleTime
+				singularityCount = singularityCount + 1
+				if singularityCount < savedSingularityCount then
+					self:ScheduleTimer("Bar", singularityScheduleTime, 209170, singularityTimersMythic[singularityCount], CL.count:format(self:SpellName(209170), singularityCount))	
+				else
+					break;
+				end
+			end
+		else
+			for key, value in pairs(singularityTimers) do
+				singularityScheduleTime = value + singularityScheduleTime
+				singularityCount = singularityCount + 1
+				if singularityCount < savedSingularityCount then
+					self:ScheduleTimer("Bar", singularityScheduleTime, 209170, self:Mythic() and singularityTimersMythic[singularityCount] or singularityTimers[singularityCount] or 0, CL.count:format(self:SpellName(209170), singularityCount))	
+				else 
+					break;
+				end 
+			end
+		end
+	end
+	ringCount = 1
+	
+	singularityCount = 1
+	self:Bar(208807, self:Mythic() and ringTimersMythic[ringCount] or ringTimers[ringCount] or 0, CL.count:format(self:SpellName(208807), ringCount)) -- Arcanetic Ring
+	self:Bar(209170, self:Mythic() and singularityTimersMythic[singularityCount] or singularityTimers[singularityCount] or 0, CL.count:format(self:SpellName(209170), singularityCount)) -- Spanning Singularity
 end
 
 --[[ Recursive Elemental ]]--
-function mod:ShieldApplied(args)
-	self:Message(args.spellId, "Attention", "Info", CL.on:format(args.spellName, args.destName))
-end
-
-function mod:ShieldRemoved(args)
-	self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
-end
-
 function mod:Blast(args)
 	if self:Interrupter(args.sourceGUID) then
 		self:Message(args.spellId, "Important", "Alert")
@@ -224,13 +412,15 @@ function mod:FastTime(args)
 end
 
 --[[ Time Layer 1 ]]--
-function mod:ArcaneticRing(args)
-	--self:Message(args.spellId, "Urgent", "Alert")
-	--self:CDBar(args.spellId, 30)
-end
-
-function mod:SpanningSingularity(args)
-	self:Message(209170, "Attention", "Info")
+do
+	local prev = 0
+	function mod:SingularityDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(209170, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
+	end
 end
 
 function mod:Ablation(args)
@@ -239,19 +429,6 @@ function mod:Ablation(args)
 		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 3 and "Warning")
 	end
 end
-
---[[
-do
-	local prev = 0
-	function mod:SingularityDamage(args)
-		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 1.5 then
-			prev = t
-			self:Message(209168, "Personal", "Alert", CL.underyou:format(args.spellName))
-		end
-	end
-end
-]]
 
 --[[ Time Layer 2 ]]--
 do
@@ -273,16 +450,15 @@ do
 	end
 end
 
-function mod:EpochericOrb(args)
-	lookingForMsg = true
-	--self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
-end
-
 function mod:AblatingExplosion(args)
-	self:Bar(args.spellId, 20.7)
+	ablatingCount = ablatingCount+1	
+	if self:Me(args.destGUID) then
+		self:Flash(args.spellId)
+		self:Say(args.spellId)
+	end
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Long")
-	self:TargetBar(args.spellId, 8, args.destName)
-	self:ScheduleTimer("Bar", 8, args.spellId, 7)
+	self:Bar(args.spellId, self:Mythic() and ablatingTimersMythic[ablatingCount] or ablatingTimers[ablatingCount] or 0, CL.count:format(self:SpellName(args.spellId), ablatingCount))
+
 end
 
 --[[ Time Layer 3 ]]--
@@ -300,14 +476,16 @@ do
 		playerList[#playerList+1] = args.destName
 
 		if #playerList == 1 then
+			tormentCount = tormentCount+1
+			self:Bar(args.spellId, self:Mythic() and tormentTimersMythic[tormentCount] or tormentTimers[tormentCount] or 0, CL.count:format(self:SpellName(args.spellId), tormentCount))
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Alarm")
 		end
 	end
 end
 
-
 function mod:ConflexiveBurst(args)
-	--self:Bar(args.spellId, ???)
+	conflexiveBurstCount = conflexiveBurstCount+1
+	self:Bar(209597, self:Mythic() and conflexiveBurstTimersMythic[conflexiveBurstCount] or conflexiveBurstTimers[conflexiveBurstCount] or 0, CL.count:format(self:SpellName(args.spellId), tormentCount))
 end
 
 do
