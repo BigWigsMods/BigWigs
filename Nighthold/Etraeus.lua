@@ -36,11 +36,27 @@ local grandTimers = {
 local worldDevouringForceCounter = 1
 local worldDevouringForceTimers = {22.7, 41.7, 57.6}
 
+local voidCount = 1
+
+--------------------------------------------------------------------------------
+-- Upvalues
+--
+
+local tDeleteItem = tDeleteItem
+
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:GetLocale()
+if L then
+	L.yourSign = "Your sign"
+	L.with = "with"
+	L[205429] = "|T1391538:15:15:0:0:64:64:4:60:4:60|t|cFFFFDD00Crab|r"
+	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000Wolf|r"
+	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00Hunter|r"
+	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFFDragon|r"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -51,7 +67,6 @@ function mod:GetOptions()
 		--[[ General ]]--
 		"stages",
 		221875, -- Nether Traversal
-		205408, -- Grand Conjunction
 
 		--[[ Stage One ]]--
 		206464, -- Coronal Ejection
@@ -77,6 +92,9 @@ function mod:GetOptions()
 
 		--[[ Thing That Should Not Be ]]--
 		207720, -- Witness the Void
+
+		--[[ Mythic ]]--
+		{205408, "INFOBOX", "PROXIMITY"}, -- Grand Conjunction
 	}, {
 		["stages"] = "general",
 		[206464] = -13033, -- Stage One
@@ -93,7 +111,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "NetherTraversal", 221875)
 	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 206398) -- Felflame
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GroundEffectDamage", 206398) -- Felflame
-	self:Log("SPELL_CAST_START", "GrandConjunction", 205408) -- Grand Conjunction
 
 	--[[ Stage One ]]--
 	self:Log("SPELL_CAST_SUCCESS", "CoronalEjection", 206464)
@@ -123,7 +140,16 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "WitnessTheVoid", 207720)
 	self:Death("ThingDeath", 104880) -- Thing That Should Not Be
 
-	self:ShowFriendlyNameplates()
+	--[[ Mythic ]]--
+	self:Log("SPELL_CAST_START", "GrandConjunction", 205408)
+	self:Log("SPELL_CAST_SUCCESS", "GrandConjunctionSuccess", 205408)
+	self:Log("SPELL_AURA_APPLIED", "StarSigns", 205429, 205445, 216345, 216344) -- Star Sign: Crab, Wolf, Hunter, Dragon
+	self:Log("SPELL_AURA_REMOVED", "StarSignsRemoved", 205429, 205445, 216345, 216344)
+
+	if self:Mythic() then
+		-- Experimenting with using callbacks for nameplate addons
+		self:ShowFriendlyNameplates()
+	end
 end
 
 function mod:OnEngage()
@@ -131,12 +157,13 @@ function mod:OnEngage()
 	ejectionCount = 1
 	grandCounter = 1
  	worldDevouringForceCounter = 1
+	voidCount = 1
 	wipe(mobCollector)
 	wipe(gravPullSayTimers)
 	self:Bar(206464, 12.5) -- Coronal Ejection
 	self:Bar(221875, 20) -- Nether Traversal
 	if self:Mythic() then
-		self:CDBar(205408, 15)
+		self:CDBar(205408, 15) -- Grand Conjunction
 	end
 end
 
@@ -206,24 +233,6 @@ do
 			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
-end
---[[ Mythic: General ]]--
-function mod:GrandConjunction(args)
-	grandCounter = grandCounter + 1
-	self:Message(args.spellId, "Attention", "Info")
-	local timer
-	if grandTimers[phase][grandCounter] then -- Everything else is assumed
-		timer = grandTimers[phase][grandCounter]
-	elseif phase == 1 then
-		timer = 14
-	elseif phase == 2 then
-		timer = 57
-	elseif phase == 3 then
-		timer = 42
-	else
-		timer = 47
-	end
-	self:CDBar(args.spellId, timer)
 end
 
 --[[ Stage One ]]--
@@ -371,18 +380,142 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			mobCollector[guid] = true
 			local mobId = self:MobId(guid)
 			if mobId == 104880 then -- Thing That Should Not Be
-				self:Bar(207720, 12) -- Witness the Void
+				voidCount = 1
+				self:CDBar(207720, 14.5, CL.count:format(self:SpellName(207720), voidCount)) -- Witness the Void
 			end
 		end
 	end
 end
 
 function mod:WitnessTheVoid(args)
-	self:Message(args.spellId, "Attention", "Warning", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
-	self:Bar(args.spellId, 15)
+	self:Message(args.spellId, "Attention", "Warning", CL.casting:format(CL.count:format(args.spellName, voidCount)))
+	self:Bar(args.spellId, 4, CL.cast:format(CL.count:format(args.spellName, voidCount)))
+	voidCount = voidCount + 1
+	self:Bar(args.spellId, 14.6, CL.count:format(args.spellName, voidCount))
 end
 
 function mod:ThingDeath(args)
-	self:StopBar(207720) -- Witness the Void
+	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(207720), voidCount-1))) -- Witness the Void Cast
+	self:StopBar(CL.count:format(self:SpellName(207720), voidCount)) -- Witness the Void
+end
+
+--[[ Mythic ]]--
+do
+	local starSignTables = {
+		[205429] = {},
+		[205445] = {},
+		[216345] = {},
+		[216344] = {},
+	}
+	local mySign, scheduled, tryCount = nil, nil, 0
+
+	function mod:GrandConjunction(args)
+		grandCounter = grandCounter + 1
+		self:Message(args.spellId, "Attention", "Info")
+		self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+		self:OpenProximity(args.spellId, 5) -- no idea if this range is reasonable
+
+		local timer = 47 -- assumed p4 cd as default
+		if grandTimers[phase][grandCounter] then -- Everything else is assumed
+			timer = grandTimers[phase][grandCounter]
+		elseif phase == 1 then
+			timer = 14
+		elseif phase == 2 then
+			timer = 57
+		elseif phase == 3 then
+			timer = 42
+		end
+		self:CDBar(args.spellId, timer)
+
+		starSignTables = {
+			[205429] = {},
+			[205445] = {},
+			[216345] = {},
+			[216344] = {},
+		}
+		tryCount = 0
+	end
+
+	function mod:GrandConjunctionSuccess(args)
+		self:CloseProximity(args.spellId)
+	end
+
+	local function warn(self, spellId)
+		tryCount = tryCount + 1
+		if not mySign and tryCount < 5 then
+			-- without counting, it could run endless if the same sign as ours gets
+			-- removed from another player first and then from us
+			scheduled = self:ScheduleTimer(warn, 0.1, self)
+		else
+			local list = mod:NewTargetList()
+			for _,name in pairs(starSignTables[mySign]) do
+				list[#list+1] = name
+			end
+			self:TargetMessage(205408, list, "Personal", "Warning", mySign, mySign)
+			scheduled = nil
+		end
+	end
+
+	local function updateInfoBox(self)
+		if mySign then
+			-- -------------------------
+			-- | 1 Your Sign  *Crab* 2 |
+			-- | 3 with      PlayerA 4 |
+			-- | 5           PlayerB 6 |
+			-- | 7           PlayerC 8 |
+			-- | 9                  10 |
+			-- -------------------------
+
+			self:SetInfo(205408, 1, L.yourSign)
+			self:SetInfo(205408, 2, L[mySign])
+			self:SetInfo(205408, 3, L.with)
+			self:SetInfo(205408, 4, "")
+			self:SetInfo(205408, 6, "")
+			self:SetInfo(205408, 8, "")
+
+			local i = 0
+			for _,name in pairs(starSignTables[mySign]) do
+				if name ~= UnitName("player") then
+					self:SetInfo(205408, 4+2*i, self:ColorName(name))
+					i = i + 1
+				end
+			end
+
+			self:OpenInfo(205408, self:SpellName(mySign))
+		else
+			self:CloseInfo(205408)
+		end
+	end
+
+	function mod:StarSigns(args)
+		self:AddPlate(args.spellId, args.destName, 10)
+		starSignTables[args.spellId][#starSignTables[args.spellId]+1] = args.destName
+
+		if self:Me(args.destGUID) then
+			mySign = args.spellId
+		end
+		if mySign and mySign == args.spellId then
+			updateInfoBox(self)
+		end
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warn, 0.1, self)
+		end
+	end
+
+	function mod:StarSignsRemoved(args)
+		self:RemovePlate(args.spellId, args.destName)
+		tDeleteItem(starSignTables[args.spellId], args.destName)
+
+		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Personal", "Info", CL.removed:format(args.spellName))
+			mySign = nil
+			updateInfoBox(self)
+		end
+		if mySign and mySign == args.spellId then -- Fewer players with our sign
+			updateInfoBox(self)
+			if not scheduled then
+				scheduled = self:ScheduleTimer(warn, 0.1, self)
+			end
+		end
+	end
 end
