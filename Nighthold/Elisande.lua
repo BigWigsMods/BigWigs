@@ -72,7 +72,7 @@ local heroicTimers = {
 
 	--[[ Phase 1 ]]--
 	-- Arcanetic Ring
-	[208807] = {40, 10, 63, 10},
+	[208807] = {35, 40, 10, 63, 10},
 
 	-- Spanning Singularity
 	[209170] = {25, 36, 57, 65},
