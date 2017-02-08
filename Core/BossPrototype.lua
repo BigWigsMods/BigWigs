@@ -1270,8 +1270,9 @@ end
 -- @param spellId the associated spell id
 -- @param playerName the affected player
 -- @param[opt] duration the duration of the aura
-function boss:AddPlate(spellId, playerName, duration)
-	self:SendMessage("BigWigs_ShowNameplateAura", self, playerName, icons[spellId], duration)
+-- @param[opt] desaturate true if the texture should be desaturated
+function boss:AddPlate(spellId, playerName, duration, desaturate)
+	self:SendMessage("BigWigs_ShowNameplateAura", self, playerName, icons[spellId], duration, desaturate)
 end
 
 --- Remove aura from nameplate.
