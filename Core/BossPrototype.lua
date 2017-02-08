@@ -1252,23 +1252,33 @@ function boss:CloseProximity(key)
 end
 
 -------------------------------------------------------------------------------
--- Auras.
--- @section auras
+-- Nameplates.
+-- @section nameplates
 --
 
---- Fire aura callbacks. Used for things like nameplates.
--- @param spellId the associated spell id
--- @param playerGUID the affected player GUID
--- @param[opt] duration the duration of the aura
-function boss:AuraApplied(spellId, playerGUID, duration)
-	self:SendMessage("BigWigs_ShowNameplateAura", self, playerGUID, icons[spellId], duration)
+--- Toggle showing friendly nameplates to the enabled state.
+function boss:ShowFriendlyNameplates()
+	self:SendMessage("BigWigs_EnableFriendlyNameplates", self)
 end
 
---- Stop the aura.
+--- Toggle showing friendly nameplates to the disabled state.
+function boss:HideFriendlyNameplates()
+	self:SendMessage("BigWigs_DisableFriendlyNameplates", self)
+end
+
+--- Add aura to nameplate.
 -- @param spellId the associated spell id
--- @param playerGUID the affected player GUID
-function boss:AuraRemoved(spellId, playerGUID)
-	self:SendMessage("BigWigs_HideNameplateAura", self, playerGUID, icons[spellId])
+-- @param playerName the affected player
+-- @param[opt] duration the duration of the aura
+function boss:AddPlate(spellId, playerName, duration)
+	self:SendMessage("BigWigs_ShowNameplateAura", self, playerName, icons[spellId], duration)
+end
+
+--- Remove aura from nameplate.
+-- @param spellId the associated spell id
+-- @param playerName the affected player
+function boss:RemovePlate(spellId, playerName)
+	self:SendMessage("BigWigs_HideNameplateAura", self, playerName, icons[spellId])
 end
 
 -------------------------------------------------------------------------------
