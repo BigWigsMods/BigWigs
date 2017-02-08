@@ -243,11 +243,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Recursion", 209620)
 	self:Log("SPELL_CAST_START", "Blast", 221864)
 	self:Log("SPELL_AURA_APPLIED", "SlowTime", 209165)
+	self:Log("SPELL_AURA_REMOVED", "TimeAuraRemoved", 209165)
 
 	--[[ Expedient Elemental ]]--
 	self:Log("SPELL_CAST_START", "Expedite", 209617)
 	self:Log("SPELL_AURA_APPLIED", "FastTime", 209166)
-	self:Log("SPELL_AURA_REMOVED", "FastTimeRemoved", 209166)
+	self:Log("SPELL_AURA_REMOVED", "TimeAuraRemoved", 209166)
 
 	--[[ Time Layer 1 ]]--
 	self:Log("SPELL_CAST_START", "ArcaneticRing", 208807) -- l11n
@@ -523,7 +524,7 @@ function mod:FastTime(args)
 	end
 end
 
-function mod:FastTimeRemoved(args)
+function mod:TimeAuraRemoved(args)
 	if self:Me(args.destGUID) then
 		self:StopBar(args.spellId, args.destName)
 	end
