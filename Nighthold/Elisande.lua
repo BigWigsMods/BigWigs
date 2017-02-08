@@ -27,6 +27,40 @@ local phase = 0
 local isPhaseTransition = nil
 local fastElementalCollector = {}
 
+local normalTimers = {
+	-- Timers are after Leave the Nightwell success (208863)
+
+	-- Summon Time Elemental - Slow
+	[211614] = {5, 49, 41}, -- XXX missing data
+
+	-- Summon Time Elemental - Fast
+	[211616] = {8, 71}, -- XXX missing data
+
+	--[[ Phase 1 ]]--
+	-- Arcanetic Ring
+	[208807] = {34, 31, 76, 50},
+
+	-- Spanning Singularity
+	[209170] = {}, -- XXX missing data
+
+	--[[ Phase 2 ]]--
+	-- Epocheric Orb
+	[210022] = {18, 56, 31, 85}, -- then constant 15s after the sequence
+
+	-- Delphuric Beam
+	[209244] = {63, 26, 40, 110},
+
+	-- Ablating Explosion
+	[209973] = {}, -- first 12.1, then between 20.7 and 21.8 (no pattern)
+
+	--[[ Phase 3 ]]--
+	-- Permeliative Torment
+	[211261] = {23, 41, 106},
+
+	-- Conflexive Burst
+	[209597] = {48, 67, 50, 45}, -- then constant 10s after the sequence
+}
+
 local heroicTimers = {
 	-- Timers are after Leave the Nightwell success (208863)
 
@@ -103,7 +137,7 @@ local mythicTimers = {
 	[209597] = {38.7, 90, 45, 30},
 }
 
-local timers = mod:Mythic() and mythicTimers or heroicTimers
+local timers = mod:Mythic() and mythicTimers or mod:Heroic() and heroicTimers or normalTimers
 
 local slowElementalCount = 1
 local fastElementalCount = 1
@@ -264,7 +298,7 @@ function mod:OnEngage()
 	need_orb_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_msg
 	-- l11n END
 
-	timers = self:Mythic() and mythicTimers or heroicTimers
+	timers = self:Mythic() and mythicTimers or mod:Heroic() and heroicTimers or normalTimers
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 end
 
@@ -345,7 +379,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 		self:Message(210022, "Urgent", "Alert", CL.count:format(self:SpellName(210022), orbCount))
 		orbCount = orbCount + 1
 		if not savedOrbCount or orbCount < savedOrbCount then
-			self:Bar(210022, timers[210022][orbCount], CL.count:format(self:SpellName(210022), orbCount))
+			self:Bar(210022, timers[210022][orbCount] or self:Easy() and 15, CL.count:format(self:SpellName(210022), orbCount))
 		end
 
 	-- Should be in DelphuricBeamCast XXX remove if confirmed
@@ -418,21 +452,22 @@ function mod:LeavetheNightwell(args)
 
 		self:Bar(209244, timers[209244][beamCount]) -- Delphuric Beam
 		self:Bar(210022, timers[210022][orbCount]) -- Epocheric Orb
-		self:Bar(209973, timers[209973][ablatingCount]) -- Ablating Explosion
+		self:Bar(209973, self:Easy() and 12.1 or timers[209973][ablatingCount]) -- Ablating Explosion
 	elseif phase == 3 then
 		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
 
 		savedOrbCount = orbCount
 		savedBeamCount = beamCount
 
-		singularityCount = 1
 		beamCount = 1
 		orbCount = 1
 		tormentCount = 1
 		conflexiveBurstCount = 1
 
-		self:Bar(209244, timers[209244][beamCount]) -- Delphuric Beam
-		self:Bar(210022, timers[210022][orbCount]) -- Epocheric Orb
+		if not self:Easy() then
+			self:Bar(209244, timers[209244][beamCount]) -- Delphuric Beam
+			self:Bar(210022, timers[210022][orbCount]) -- Epocheric Orb
+		end
 		self:Bar(211261, timers[211261][tormentCount], CL.count:format(self:SpellName(211261), tormentCount)) -- Permeliative Torment
 		self:Bar(209597, timers[209597][conflexiveBurstCount], CL.count:format(self:SpellName(209597), conflexiveBurstCount)) -- Conflexive Burst
 	end
@@ -445,7 +480,9 @@ function mod:LeavetheNightwell(args)
 
 	self:Bar("recursive_elemental", self:Mythic() and timers[211614][phase][slowElementalCount] or timers[211614][slowElementalCount], L.recursive_elemental, L.recursive_elemental_icon)
 	self:Bar("expedient_elemental", self:Mythic() and timers[211616][phase][fastElementalCount] or timers[211616][fastElementalCount], L.expedient_elemental, L.expedient_elemental_icon)
-	self:Bar(208807, timers[208807][ringCount], CL.count:format(self:SpellName(208807), ringCount)) -- Arcanetic Ring
+	if not (self:Easy() and phase > 1) then
+		self:Bar(208807, timers[208807][ringCount], CL.count:format(self:SpellName(208807), ringCount)) -- Arcanetic Ring
+	end
 	self:Bar(209170, timers[209170][singularityCount], CL.count:format(self:SpellName(209170), singularityCount)) -- Spanning Singularity
 	if phase == 2 or phase == 3 then -- No events in p2/3, so scheduling it is!
 		self:StartSingularityTimer()
@@ -552,7 +589,7 @@ function mod:AblatingExplosion(args)
 		self:Say(args.spellId)
 	end
 
-	self:Bar(args.spellId, timers[args.spellId][ablatingCount], CL.count:format(args.spellName, ablatingCount))
+	self:Bar(args.spellId, self:Easy() and 20.7 or timers[args.spellId][ablatingCount], CL.count:format(args.spellName, ablatingCount))
 end
 
 --[[ Time Layer 3 ]]--
@@ -577,7 +614,7 @@ end
 
 function mod:ConflexiveBurst(args)
 	conflexiveBurstCount = conflexiveBurstCount + 1
-	self:Bar(209597, timers[209597][conflexiveBurstCount], CL.count:format(args.spellName, conflexiveBurstCount))
+	self:Bar(209597, timers[209597][conflexiveBurstCount] or self:Easy() and 10, CL.count:format(args.spellName, conflexiveBurstCount))
 end
 
 do
