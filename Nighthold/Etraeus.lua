@@ -183,7 +183,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		ejectionCount = 1
 		self:CDBar(206936, timers[206936][ejectionCount], CL.count:format(self:SpellName(206936), ejectionCount))
 		self:Bar(205984, 30) -- Gravitational Pull
-		self:Bar(206949, 53) -- Frigid Nova
+		if not self:Easy() then
+			self:Bar(206949, 53) -- Frigid Nova
+		end
 		if self:Mythic() then
 			grandCounter = 1
 			self:CDBar(205408, 26)
@@ -196,7 +198,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		ejectionCount = 1
 		self:CDBar(205649, timers[205649][ejectionCount], CL.count:format(self:SpellName(205649), ejectionCount))
 		self:CDBar(214167, 28) -- Gravitational Pull
-		self:CDBar(206517, 62) -- Fel Nova
+		if not self:Easy() then
+			self:CDBar(206517, 62) -- Fel Nova
+		end
 		if self:Mythic() then
 			grandCounter = 1
 			self:CDBar(205408, 60)
@@ -209,7 +213,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:StopBar(206517) -- Fel Nova
 		ejectionCount = 1
 		self:CDBar(214335, 20) -- Gravitational Pull
-		self:CDBar(207439, 42) -- Fel Nova
+		if not self:Easy() then
+			self:CDBar(207439, 42) -- Void Nova
+		end
 		self:Berserk(201.5, true, nil, 222761, 222761) -- Big Bang (end of cast)
 		if self:Mythic() then
 			grandCounter = 1
