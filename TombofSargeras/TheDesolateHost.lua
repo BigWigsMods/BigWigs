@@ -1,4 +1,4 @@
-
+if not IsTestBuild() then return end -- XXX dont load on live
 --------------------------------------------------------------------------------
 -- TODO List:
 
