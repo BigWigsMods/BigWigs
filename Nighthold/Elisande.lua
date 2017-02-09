@@ -31,24 +31,24 @@ local normalTimers = {
 	-- Timers are after Leave the Nightwell success (208863)
 
 	-- Summon Time Elemental - Slow
-	[211614] = {5, 49, 41}, -- XXX missing data
+	[211614] = {5, 49, 41, 60},
 
 	-- Summon Time Elemental - Fast
-	[211616] = {8, 71}, -- XXX missing data
+	[211616] = {8, 71, 101},
 
 	--[[ Phase 1 ]]--
 	-- Arcanetic Ring
 	[208807] = {34, 31, 76, 50},
 
 	-- Spanning Singularity
-	[209170] = {}, -- XXX missing data
+	[209170] = {23, 36, 46, 65},
 
 	--[[ Phase 2 ]]--
 	-- Epocheric Orb
 	[210022] = {18, 56, 31, 85}, -- then constant 15s after the sequence
 
 	-- Delphuric Beam
-	[209244] = {63, 26, 40, 110},
+	[209244] = {59, 26, 40, 110},
 
 	-- Ablating Explosion
 	[209973] = {}, -- first 12.1, then between 20.7 and 21.8 (no pattern)
@@ -308,19 +308,30 @@ end
 --
 
 --[[ General ]]--
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 211614 then -- Slow
-		self:Message("recursive_elemental", "Neutral", "Info", L.recursive_elemental, L.recursive_elemental_icon)
-		slowElementalCount = slowElementalCount + 1
-		self:Bar("recursive_elemental", self:Mythic() and timers[spellId][phase][slowElementalCount] or timers[spellId][slowElementalCount], L.recursive_elemental, L.recursive_elemental_icon)
-	elseif spellId == 211616 then -- Fast
-		self:Message("expedient_elemental", "Neutral", "Info", L.expedient_elemental, L.expedient_elemental_icon)
-		fastElementalCount = fastElementalCount + 1
-		self:Bar("expedient_elemental", self:Mythic() and timers[spellId][phase][fastElementalCount] or timers[spellId][fastElementalCount], L.expedient_elemental, L.expedient_elemental_icon)
-	elseif spellId == 209170 or spellId == 209171 then -- Spanning Singularity
-		self:Message(209170, "Attention", "Info")
-		singularityCount = singularityCount + 1
-		self:Bar(209170, timers[209170][singularityCount], CL.count:format(spellName, singularityCount))
+do
+	local prev = 0
+	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+		if spellId == 211614 then -- Slow
+			self:Message("recursive_elemental", "Neutral", "Info", L.recursive_elemental, L.recursive_elemental_icon)
+			slowElementalCount = slowElementalCount + 1
+			self:Bar("recursive_elemental", self:Mythic() and timers[spellId][phase][slowElementalCount] or timers[spellId][slowElementalCount], L.recursive_elemental, L.recursive_elemental_icon)
+		elseif spellId == 211616 then -- Fast
+			self:Message("expedient_elemental", "Neutral", "Info", L.expedient_elemental, L.expedient_elemental_icon)
+			fastElementalCount = fastElementalCount + 1
+			self:Bar("expedient_elemental", self:Mythic() and timers[spellId][phase][fastElementalCount] or timers[spellId][fastElementalCount], L.expedient_elemental, L.expedient_elemental_icon)
+		elseif spellId == 209170 or spellId == 209171 then -- Spanning Singularity
+			self:Message(209170, "Attention", "Info")
+			singularityCount = singularityCount + 1
+			self:Bar(209170, timers[209170][singularityCount], CL.count:format(spellName, singularityCount))
+		elseif self:Easy() and (spellId == 209168 or spellId == 233010) then -- Spanning Singularity normal mode
+			local t = GetTime()
+			if t-prev > 1.5 then -- event can fire twice
+				prev = t
+				self:Message(209170, "Attention", "Info")
+				singularityCount = singularityCount + 1
+				self:Bar(209170, timers[209170][singularityCount], CL.count:format(spellName, singularityCount))
+			end
+		end
 	end
 end
 
