@@ -191,7 +191,7 @@ local function updateProximity(self)
 		self:OpenProximity(212587, 8)
 	elseif showBrand and searingBrandOnMe then
 		self:OpenProximity(213166, 10)
-	elseif showMark and showBrand and #proxList > 0 then
+	elseif showMark and showBrand and #markOfFrostTargets > 0 and #searingBrandTargets > 0 then
 		self:OpenProximity(213166, 10, proxList)
 	elseif showMark and #markOfFrostTargets > 0 then
 		self:OpenProximity(212587, 8, markOfFrostTargets)
