@@ -138,6 +138,17 @@ do
 	BWMessageFrame:SetHeight(80)
 	BWMessageFrame:SetFrameStrata("HIGH")
 	BWMessageFrame:SetToplevel(true)
+
+	local function FontFinish(self)
+		self:GetParent():Hide()
+		if not labels[1]:IsShown() and not labels[2]:IsShown() and not labels[3]:IsShown() and not labels[4]:IsShown() then
+			BWMessageFrame:Hide()
+		end
+	end
+	local function IconFinish(self)
+		self:GetParent():Hide()
+	end
+
 	for i = 1, 4 do
 		local fs = BWMessageFrame:CreateFontString()
 		fs:SetWidth(0)
@@ -146,12 +157,7 @@ do
 		fs:Hide()
 
 		fs.anim = fs:CreateAnimationGroup()
-		fs.anim:SetScript("OnFinished", function(self)
-			self:GetParent():Hide()
-			if not labels[1]:IsShown() and not labels[2]:IsShown() and not labels[3]:IsShown() and not labels[4]:IsShown() then
-				BWMessageFrame:Hide()
-			end
-		end)
+		fs.anim:SetScript("OnFinished", FontFinish)
 		fs.animFade = fs.anim:CreateAnimation("Alpha")
 		fs.animFade:SetFromAlpha(1)
 		fs.animFade:SetToAlpha(0)
@@ -163,7 +169,7 @@ do
 		fs.icon = icon
 
 		icon.anim = icon:CreateAnimationGroup()
-		icon.anim:SetScript("OnFinished", function(self) self:GetParent():Hide() end)
+		icon.anim:SetScript("OnFinished", IconFinish)
 		icon.animFade = icon.anim:CreateAnimation("Alpha")
 		icon.animFade:SetFromAlpha(1)
 		icon.animFade:SetToAlpha(0)
