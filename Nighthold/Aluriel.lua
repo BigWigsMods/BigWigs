@@ -460,6 +460,14 @@ function mod:DetonateSearingBrandOrFrost(args)
 	if markOfFrostOnMe or searingBrandOnMe then
 		self:Say(args.spellId, 151913) -- "Detonate"
 	end
+	if args.spellId == 213275 then -- Detonate: Searing Brand
+		-- At this point there will be no more Mark of Frost targets and you no
+		-- longer need to stay away from Searing Brand targets, so wipe everything!
+		wipe(markOfFrostTargets) -- empty anyway
+		wipe(searingBrandTargets)
+		wipe(proxList)
+		self:CloseProximity(213166) -- Searing Brand
+	end
 end
 
 do
