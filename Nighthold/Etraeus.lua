@@ -1,5 +1,9 @@
 
 --------------------------------------------------------------------------------
+-- TODO List:
+-- - XXX Add core options for nameplates so we can remove the custom ones here.
+
+--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -38,6 +42,13 @@ local worldDevouringForceTimers = {22.7, 41.7, 57.6}
 
 local voidCount = 1
 
+local starSignTables = {
+	[205429] = {},
+	[205445] = {},
+	[216345] = {},
+	[216344] = {},
+}
+
 --------------------------------------------------------------------------------
 -- Upvalues
 --
@@ -56,6 +67,21 @@ if L then
 	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000Wolf|r"
 	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00Hunter|r"
 	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFFDragon|r"
+
+	-- XXX replace with core option
+	L.nameplate_requirement = "This feature is currently only supported by KuiNameplates. Mythic only."
+
+	L.custom_off_icy_ejection_nameplates = "Show {206936} on friendly nameplates" -- Icy Ejection
+	L.custom_off_icy_ejection_nameplates_desc = L.nameplate_requirement
+
+	L.custom_on_fel_ejection_nameplates = "Show {205649} on friendly nameplates" -- Fel Ejection
+	L.custom_on_fel_ejection_nameplates_desc = L.nameplate_requirement
+
+	L.custom_on_gravitational_pull_nameplates = "Show {214335} on friendly nameplates" -- Gravitational Pull
+	L.custom_on_gravitational_pull_nameplates_desc = L.nameplate_requirement
+
+	L.custom_on_grand_conjunction_nameplates = "Show {205408} on friendly nameplates" -- Grand Conjunction
+	L.custom_on_grand_conjunction_nameplates_desc = L.nameplate_requirement
 end
 
 --------------------------------------------------------------------------------
@@ -95,6 +121,10 @@ function mod:GetOptions()
 
 		--[[ Mythic ]]--
 		{205408, "INFOBOX", "PROXIMITY"}, -- Grand Conjunction
+		"custom_off_icy_ejection_nameplates",
+		"custom_on_fel_ejection_nameplates",
+		"custom_on_gravitational_pull_nameplates",
+		"custom_on_grand_conjunction_nameplates",
 	}, {
 		["stages"] = "general",
 		[206464] = -13033, -- Stage One
@@ -131,6 +161,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FelNova", 206517)
 	self:Log("SPELL_CAST_SUCCESS", "FelEjection", 205649)
 	self:Log("SPELL_AURA_APPLIED", "FelEjectionApplied", 205649)
+	self:Log("SPELL_AURA_REMOVED", "FelEjectionRemoved", 205649)
 
 	--[[ Stage Four ]]--
 	self:Log("SPELL_CAST_START", "VoidNova", 207439)
@@ -147,8 +178,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "StarSignsRemoved", 205429, 205445, 216345, 216344)
 
 	if self:Mythic() then
-		-- Experimenting with using callbacks for nameplate addons
-		self:ShowFriendlyNameplates()
+		if self:GetOption("custom_off_icy_ejection_nameplates") or -- XXX maybe add these to ShowFriendlyNameplates?
+				self:GetOption("custom_on_fel_ejection_nameplates") or
+				self:GetOption("custom_on_gravitational_pull_nameplates") or
+				self:GetOption("custom_on_grand_conjunction_nameplates") then
+
+			-- Experimenting with using callbacks for nameplate addons
+			self:ShowFriendlyNameplates()
+		end
 	end
 end
 
@@ -161,10 +198,16 @@ function mod:OnEngage()
 	wipe(mobCollector)
 	wipe(gravPullSayTimers)
 	self:Bar(206464, 12.5) -- Coronal Ejection
-	self:Bar(221875, 20) -- Nether Traversal
+	self:Bar(221875, self:Mythic() and 40 or 20) -- Nether Traversal
 	if self:Mythic() then
 		self:CDBar(205408, 15) -- Grand Conjunction
 	end
+	starSignTables = {
+		[205429] = {},
+		[205445] = {},
+		[216345] = {},
+		[216344] = {},
+	}
 end
 
 function mod:OnBossDisable()
@@ -188,7 +231,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		end
 		if self:Mythic() then
 			grandCounter = 1
-			self:CDBar(205408, 26)
+			self:CDBar(205408, 26) -- Grand Conjunction
 		end
 	elseif spellId == 222133 then -- Phase 3 Conversation
 		phase = 3
@@ -203,7 +246,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		end
 		if self:Mythic() then
 			grandCounter = 1
-			self:CDBar(205408, 60)
+			self:CDBar(205408, 60) -- Grand Conjunction
 		end
 	elseif spellId == 222134 then -- Phase 4 Conversation
 		phase = 4
@@ -268,6 +311,10 @@ function mod:GravitationalPull(args)
 	local remaining = expires-GetTime()
 	self:TargetBar(args.spellId, remaining, args.destName)
 
+	if self:GetOption("custom_on_gravitational_pull_nameplates") then
+		self:AddPlate(args.spellId, args.destName, remaining)
+	end
+
 	if self:Me(args.destGUID) then
 		gravPullSayTimers[1] = self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
 		gravPullSayTimers[2] = self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
@@ -276,6 +323,7 @@ function mod:GravitationalPull(args)
 end
 
 function mod:GravitationalPullRemoved(args)
+	self:RemovePlate(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		for i = #gravPullSayTimers, 1, -1 do
 			self:CancelTimer(gravPullSayTimers[i])
@@ -289,26 +337,24 @@ function mod:IcyEjection(args)
 	self:CDBar(args.spellId, timers[args.spellId][ejectionCount] or 30, CL.count:format(args.spellName, ejectionCount))
 end
 
-do
-	local list = mod:NewTargetList()
-	function mod:IcyEjectionApplied(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Warning")
-		end
+function mod:IcyEjectionApplied(args)
+	if self:GetOption("custom_off_icy_ejection_nameplates") then
+		self:AddPlate(args.spellId, args.destName, 10)
+	end
 
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:OpenProximity(args.spellId, 8)
-			self:TargetBar(args.spellId, 10, args.destName)
-			self:ScheduleTimer("Say", 7, args.spellId, 3, true)
-			self:ScheduleTimer("Say", 8, args.spellId, 2, true)
-			self:ScheduleTimer("Say", 9, args.spellId, 1, true)
-		end
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+		self:Say(args.spellId)
+		self:OpenProximity(args.spellId, 8)
+		self:TargetBar(args.spellId, 10, args.destName)
+		self:ScheduleTimer("Say", 7, args.spellId, 3, true)
+		self:ScheduleTimer("Say", 8, args.spellId, 2, true)
+		self:ScheduleTimer("Say", 9, args.spellId, 1, true)
 	end
 end
 
 function mod:IcyEjectionRemoved(args)
+	self:RemovePlate(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
 	end
@@ -341,25 +387,25 @@ function mod:FelNova(args)
 	self:CDBar(args.spellId, 45)
 end
 
-
 function mod:FelEjection(args)
 	ejectionCount = ejectionCount + 1
 	self:CDBar(args.spellId, timers[args.spellId][ejectionCount] or 30, CL.count:format(args.spellName, ejectionCount))
 end
 
-do
-	local list = mod:NewTargetList()
-	function mod:FelEjectionApplied(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Warning")
-		end
-
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:TargetBar(args.spellId, 8, args.destName)
-		end
+function mod:FelEjectionApplied(args)
+	if self:GetOption("custom_on_fel_ejection_nameplates") then
+		self:AddPlate(args.spellId, args.destName, 10)
 	end
+
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+		self:Say(args.spellId)
+		self:TargetBar(args.spellId, 8, args.destName)
+	end
+end
+
+function mod:FelEjectionRemoved(args)
+	self:RemovePlate(args.spellId, args.destName)
 end
 
 --[[ Stage Four ]]--
@@ -387,7 +433,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			local mobId = self:MobId(guid)
 			if mobId == 104880 then -- Thing That Should Not Be
 				voidCount = 1
-				self:CDBar(207720, 14.5, CL.count:format(self:SpellName(207720), voidCount)) -- Witness the Void
+				self:CDBar(207720, self:Mythic() and 13.7 or 14.5, CL.count:format(self:SpellName(207720), voidCount)) -- Witness the Void
 			end
 		end
 	end
@@ -395,9 +441,9 @@ end
 
 function mod:WitnessTheVoid(args)
 	self:Message(args.spellId, "Attention", "Warning", CL.casting:format(CL.count:format(args.spellName, voidCount)))
-	self:Bar(args.spellId, 4, CL.cast:format(CL.count:format(args.spellName, voidCount)))
+	self:Bar(args.spellId, self:Mythic() and 2.8 or 4, CL.cast:format(CL.count:format(args.spellName, voidCount)))
 	voidCount = voidCount + 1
-	self:Bar(args.spellId, 14.6, CL.count:format(args.spellName, voidCount))
+	self:Bar(args.spellId, self:Mythic() and 16.2 or 18.6, CL.count:format(args.spellName, voidCount)) -- m: 13.4 cd + 2.8, hc = 14.6 cd + 4
 end
 
 function mod:ThingDeath(args)
@@ -407,12 +453,6 @@ end
 
 --[[ Mythic ]]--
 do
-	local starSignTables = {
-		[205429] = {},
-		[205445] = {},
-		[216345] = {},
-		[216344] = {},
-	}
 	local mySign, scheduled, tryCount = nil, nil, 0
 
 	function mod:GrandConjunction(args)
@@ -447,11 +487,14 @@ do
 	end
 
 	local function warn(self, spellId)
+		scheduled = nil
 		tryCount = tryCount + 1
-		if not mySign and tryCount < 5 then
-			-- without counting, it could run endless if the same sign as ours gets
-			-- removed from another player first and then from us
-			scheduled = self:ScheduleTimer(warn, 0.1, self)
+		if not mySign then
+			if tryCount < 5  then
+				-- without counting, it could run endless if the same sign as ours gets
+				-- removed from another player first and then from us
+				scheduled = self:ScheduleTimer(warn, 0.1, self)
+			end
 		else
 			local list = mod:NewTargetList()
 			for _,name in pairs(starSignTables[mySign]) do
@@ -494,17 +537,38 @@ do
 	end
 
 	function mod:StarSigns(args)
-		self:AddPlate(args.spellId, args.destName, 10)
-		starSignTables[args.spellId][#starSignTables[args.spellId]+1] = args.destName
+		if self:GetOption("custom_on_grand_conjunction_nameplates") then
+			self:AddPlate(args.spellId, args.destName, 10, mySign and args.spellId ~= mySign)
+		end
 
 		if self:Me(args.destGUID) then
 			mySign = args.spellId
+
+			if self:GetOption("custom_on_grand_conjunction_nameplates") then
+				for spellId,players in pairs(starSignTables) do
+					if spellId ~= mySign then
+						for _,name in pairs(players) do
+							self:AddPlate(spellId, name, 10, true) -- Desaturate existing non matching icon
+						end
+					else
+						for _,name in pairs(players) do
+							self:AddPlate(spellId, name, 10, false) -- Saturate existing matching icons
+						end
+					end
+				end
+			end
+
+			if #starSignTables[mySign] == 4 then
+				warn(self)
+			elseif not scheduled then
+				scheduled = self:ScheduleTimer(warn, 0.1, self)
+			end
 		end
+
+		starSignTables[args.spellId][#starSignTables[args.spellId]+1] = args.destName
+
 		if mySign and mySign == args.spellId then
 			updateInfoBox(self)
-		end
-		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 0.1, self)
 		end
 	end
 
@@ -513,7 +577,7 @@ do
 		tDeleteItem(starSignTables[args.spellId], args.destName)
 
 		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Personal", "Info", CL.removed:format(args.spellName))
+			self:Message(205408, "Personal", "Info", CL.removed:format(args.spellName), args.spellId)
 			mySign = nil
 			updateInfoBox(self)
 		end
