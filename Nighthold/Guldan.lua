@@ -21,10 +21,23 @@ mod.respawnTime = 30
 local phase = 1
 local liquidHellfireCount = 1
 local handOfGuldanCount = 1
-local handOfGuldanTimers = {13.5, 48.9, 138.9} -- TODO: Get more data on these
+local blackHarvestCount = 1
 local stormCount = 1
 local flamesCount = 1
 local eyeCount = 1
+local timers = {
+	-- Hand of Gul'dan P2
+	[212258] = {13.5, 48.9, 138.9, 0}, -- not sure if complete, next is at least over 105s
+
+	-- Storm of the Destroyer (167819 _start), after 227427 _applied
+	[167935] = {84.1, 68.8, 61.2, 76.5, 0}, -- timers should be complete
+
+	-- Black Harvest (206744 _start), after 227427 _applied
+	[206744] = {64.1, 72.5, 87.6, 0}, -- timers should be complete
+
+	-- Empowered Eye of Gul'dan P3 (211152 _start), after 227427 _applied
+	[211152] = {39.1, 62.5, 62.5, 25, 100, 0}, -- timers should be complete
+}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -156,6 +169,7 @@ function mod:OnEngage()
 	phase = 1
 	liquidHellfireCount = 1
 	handOfGuldanCount = 1
+	blackHarvestCount = 1
 	stormCount = 1
 	flamesCount = 1
 	eyeCount = 1
@@ -237,9 +251,9 @@ function mod:Phase3Start(args) -- Phase 3 start
 	self:StopBar(CL.count:format(self:SpellName(206220), liquidHellfireCount)) -- Liquid Hellfire
 	self:Bar("stages", 8, args.spellName, args.spellId)
 	self:Bar(221606, 27.5) -- Flames of Sargeras
-	self:Bar(211152, self:Easy() and 42.6 or 39) -- Empowered Eye of Gul'dan
-	self:Bar(206744, 66) -- Black Harvest
-	self:Bar(167935, 84) -- Storm of the Destroyer
+	self:Bar(211152, self:Easy() and 42.6 or timers[211152][eyeCount]) -- Empowered Eye of Gul'dan
+	self:Bar(206744, timers[206744][blackHarvestCount]) -- Black Harvest
+	self:Bar(167935, timers[167935][stormCount]) -- Storm of the Destroyer
 end
 
 --[[ Stage One ]]--
@@ -264,7 +278,7 @@ function mod:HandOfGuldan(args)
 	if phase == 1 and handOfGuldanCount < 4 then
 		self:Bar(args.spellId, handOfGuldanCount == 2 and 14 or 10, CL.count:format(args.spellName, handOfGuldanCount))
 	elseif phase == 2 then
-		self:Bar(args.spellId, handOfGuldanTimers[handOfGuldanCount] or 48.9, CL.count:format(args.spellName, handOfGuldanCount))
+		self:Bar(args.spellId, timers[args.spellId][handOfGuldanCount], CL.count:format(args.spellName, handOfGuldanCount))
 	end
 end
 
@@ -333,11 +347,12 @@ do
 end
 
 do
-	local easyTimes = {71.4, 71.4, 28.6}
+	local easyTimes = {0, 71.4, 71.4, 28.6} -- initial timer is started in phase transition
 	function mod:EyeOfGuldan(args)
-		self:Message(args.spellId, "Urgent", "Alert", L[args.spellId])
-		self:Bar(args.spellId, phase == 2 and (self:Easy() and 60 or 53.3) or (self:Easy() and easyTimes[eyeCount] or 62.5), L[args.spellId]) -- TODO: P3 timer is 25s at some point
+		local spellName = L[args.spellId] and L[args.spellId] or args.spellName
+		self:Message(args.spellId, "Urgent", "Alert", CL.count:format(spellName, eyeCount))
 		eyeCount = eyeCount + 1
+		self:Bar(args.spellId, (phase == 2 and (self:Easy() and 60 or 53.3)) or (self:Easy() and easyTimes[eyeCount]) or timers[211152][eyeCount], CL.count:format(spellName, eyeCount))
 	end
 end
 
@@ -378,7 +393,7 @@ function mod:StormOfTheDestroyer(args)
 	self:Message(167935, "Important", "Long")
 	if args.spellId == 167819 then -- First Storm
 		stormCount = stormCount + 1
-		self:Bar(167935, stormCount == 2 and 68 or 61)
+		self:Bar(167935, stormCount == 2 and 68 or stormCount == 3 and 61 or stormCount == 4 and 76.5 or 0) -- timers should be complete
 	end
 end
 
@@ -394,7 +409,8 @@ end
 
 function mod:BlackHarvest(args)
 	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
-	self:CDBar(args.spellId, 72)
+	blackHarvestCount = blackHarvestCount + 1
+	self:CDBar(args.spellId, timers[args.spellId][blackHarvestCount])
 end
 
 do
@@ -409,20 +425,22 @@ do
 end
 
 do
-	local list = mod:NewTargetList()
+	local prev = 0
 	function mod:FlamesOfSargerasSoon(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important")
-		end
 		if self:Me(args.destGUID) then
 			self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
 			self:Say(args.spellId)
 			self:Flash(args.spellId)
 			self:TargetBar(args.spellId, 6, args.destName)
+		elseif self:Tank(args.destName) and self:Tank() then -- Tank taunt mechanic in P3
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
 		end
-		flamesCount = flamesCount + 1
-		self:Bar(args.spellId, flamesCount % 3 == 1 and 34.7 or flamesCount % 3 == 0 and 8.8 or 7.8)
+		local t = GetTime()
+		if t-prev > 5 then
+			prev = t
+			flamesCount = flamesCount + 1
+			self:Bar(args.spellId, flamesCount % 3 == 1 and 34.7 or flamesCount % 3 == 0 and 8.8 or 7.8)
+		end
 	end
 end
 
