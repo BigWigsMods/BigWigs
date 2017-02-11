@@ -134,6 +134,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SearingBrandApplied", 213166)
 	self:Log("SPELL_AURA_REMOVED", "SearingBrandRemoved", 213166)
 	self:Log("SPELL_CAST_START", "DetonateSearingBrandOrFrost", 213275, 212735) -- Detonate: Searing Brand, Detonate: Mark of Frost
+	self:Log("SPELL_CAST_SUCCESS", "DetonateSearingBrandSuccess", 213275)
 	self:Log("SPELL_CAST_START", "AnimateSearingBrand", 213567)
 
 	--[[ Master of the Arcane ]]--
@@ -460,14 +461,15 @@ function mod:DetonateSearingBrandOrFrost(args)
 	if markOfFrostOnMe or searingBrandOnMe then
 		self:Say(args.spellId, 151913) -- "Detonate"
 	end
-	if args.spellId == 213275 then -- Detonate: Searing Brand
-		-- At this point there will be no more Mark of Frost targets and you no
-		-- longer need to stay away from Searing Brand targets, so wipe everything!
-		wipe(markOfFrostTargets) -- empty anyway
-		wipe(searingBrandTargets)
-		wipe(proxList)
-		self:CloseProximity(213166) -- Searing Brand
-	end
+end
+
+function mod:DetonateSearingBrandSuccess()
+	-- At this point there will be no more Mark of Frost targets and you no
+	-- longer need to stay away from Searing Brand targets, so wipe everything!
+	wipe(markOfFrostTargets) -- empty anyway
+	wipe(searingBrandTargets)
+	wipe(proxList)
+	self:CloseProximity(213166) -- Searing Brand
 end
 
 do
