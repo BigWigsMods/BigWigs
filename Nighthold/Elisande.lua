@@ -99,17 +99,17 @@ local mythicTimers = {
 	-- Timers are after Leave the Nightwell success (208863)
 
 	-- Summon Time Elemental - Slow
-	[211614] = {
-		[1] = {5, 39, 75},
-		[2] = {5, 39, 45, 30, 30},
-		[3] = {5, 54, 55, 30},
+	[211614] = { -- timers are complete
+		[1] = {5, 39, 75, 0},
+		[2] = {5, 39, 45, 30, 30, 0},
+		[3] = {5, 54, 55, 30, 0},
 	},
 
 	-- Summon Time Elemental - Fast
-	[211616] = {
-		[1] = {8, 81},
-		[2] = {8, 51},
-		[3] = {8, 36, 45},
+	[211616] = { -- timers are complete
+		[1] = {8, 81, 0},
+		[2] = {8, 51, 0},
+		[3] = {8, 36, 45, 0},
 	},
 
 	--[[ Phase 1 ]]--
@@ -117,24 +117,24 @@ local mythicTimers = {
 	[208807] = {30, 39, 15, 31, 19, 10, 26, 9, 10},
 
 	-- Spanning Singularity
-	[209170] = {56, 50, 45},
+	[209170] = {56, 50, 45, 0}, -- timers are complete
 
 	--[[ Phase 2 ]]--
 	-- Epocheric Orb
-	[210022] = {14, 85, 60, 20, 10},
+	[210022] = {14, 85, 60, 20, 10, 0}, -- timers are complete
 
 	-- Delphuric Beam
-	[209244] = {57.8, 50, 65},
+	[209244] = {57.8, 50, 65, 0}, -- timers are complete
 
 	-- Ablating Explosion
-	[209973] = {12.2, 20.6, 20.6, 20.6, 20.6, 20.7, 21.8, 20.6, 20.6, 20.7},
+	[209973] = {12.2, 20.6, 20.6, 20.6, 20.6, 20.7, 21.8, 20.6, 20.6, 20.7, 0}, -- timers are complete
 
 	--[[ Phase 3 ]]--
 	-- Permeliative Torment
-	[211261] = {63.7, 75, 25, 20},
+	[211261] = {63.7, 75, 25, 20, 0}, -- timers are complete
 
 	-- Conflexive Burst
-	[209597] = {38.7, 90, 45, 30},
+	[209597] = {38.7, 90, 45, 30, 0}, -- timers are complete
 }
 
 local timers = mod:Mythic() and mythicTimers or mod:Heroic() and heroicTimers or normalTimers
@@ -162,6 +162,8 @@ local savedBeamCount = nil
 
 local L = mod:GetLocale()
 if L then
+	L.elisande = "Elisande"
+
 	L.ring_msg = "Let the waves of time crash over you!"
 	--L.singularity_msg = "I control the battlefield, not you!" -- unused
 	L.orb_msg = "You'll find time can be quite volatile."
@@ -415,7 +417,7 @@ end
 -- No event, so we are using this scheduling (mythic p2+p3 only)
 function mod:StartSingularityTimer()
 	singularityCount = singularityCount + 1
-	local t = timers[singularityCount]
+	local t = timers[209170][singularityCount]
 	if not t then
 		return
 	end
@@ -431,10 +433,11 @@ function mod:TimeStop(args)
 	isPhaseTransition = true
 	self:Message("stages", "Neutral", "Info", args.spellName, args.spellId)
 	self:Bar("stages", 9.7, CL.stage:format(phase+1), args.spellId)
+	self:Bar("stages", 13.2, L.elisande, "Achievement_thenighthold_grandmagistrixelisande")
 	-- Stop old bars
 	self:StopBar(L.recursive_elemental)
 	self:StopBar(L.expedient_elemental)
-	self:StopBar(CL.count:format(L.fastTimeZone, fastZoneCount))
+	self:StopBar(CL.count:format(L.fastTimeZone, fastZoneCount-1))
 	self:StopBar(CL.count:format(self:SpellName(208807), ringCount)) -- Arcanetic Ring
 	self:StopBar(CL.count:format(self:SpellName(210022), orbCount)) -- Epocheric Orb
 	self:StopBar(CL.count:format(self:SpellName(209244), beamCount)) -- Delphuric Beam
@@ -477,8 +480,10 @@ function mod:LeavetheNightwell(args)
 		conflexiveBurstCount = 1
 
 		if not self:Easy() then
-			self:Bar(209244, timers[209244][beamCount]) -- Delphuric Beam
 			self:Bar(210022, timers[210022][orbCount]) -- Epocheric Orb
+		end
+		if self:Mythic() then
+			self:Bar(209244, timers[209244][beamCount]) -- Delphuric Beam
 		end
 		self:Bar(211261, timers[211261][tormentCount], CL.count:format(self:SpellName(211261), tormentCount)) -- Permeliative Torment
 		self:Bar(209597, timers[209597][conflexiveBurstCount], CL.count:format(self:SpellName(209597), conflexiveBurstCount)) -- Conflexive Burst
@@ -495,8 +500,10 @@ function mod:LeavetheNightwell(args)
 	if not (self:Easy() and phase > 1) then
 		self:Bar(208807, timers[208807][ringCount], CL.count:format(self:SpellName(208807), ringCount)) -- Arcanetic Ring
 	end
-	self:Bar(209170, timers[209170][singularityCount], CL.count:format(self:SpellName(209170), singularityCount)) -- Spanning Singularity
-	if phase == 2 or phase == 3 then -- No events in p2/3, so scheduling it is!
+	if phase == 1 then
+		self:Bar(209170, timers[209170][singularityCount], CL.count:format(self:SpellName(209170), singularityCount)) -- Spanning Singularity
+	elseif not self:Easy() and (phase == 2 or phase == 3) then -- No events in p2/3, so scheduling it is!
+		singularityCount = 0 -- will get incremented in the function
 		self:StartSingularityTimer()
 	end
 end
