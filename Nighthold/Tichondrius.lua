@@ -132,6 +132,9 @@ function mod:OnEngage()
 	addsKilled = 0
 	wipe(essenceTargets)
 	self:Bar("adds", timers["adds"][addWaveCount], CL.count:format(L.adds, addWaveCount))
+	if GetLocale() ~= "enUS" and L.adds_trigger1 == "Underlings! Get in here!" then -- Not translated
+		self:ScheduleTimer("CHAT_MSG_MONSTER_YELL", timers["adds"][addWaveCount], "timer")
+	end
 	self:Bar(206480, timers[206480][carrionPlagueCount], CL.count:format(self:SpellName(206480), carrionPlagueCount))
 	self:Bar(213238, timers[213238][seekerSwarmCount], CL.count:format(self:SpellName(213238), seekerSwarmCount))
 	if not self:Easy() then
@@ -224,11 +227,18 @@ function mod:EchoesOfTheVoid(args)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg == L.adds_trigger1 or msg == L.adds_trigger2 then
+	if event == "timer" or msg == L.adds_trigger1 or msg == L.adds_trigger2 then
 		self:Message("adds", "Neutral", "Alert", CL.count:format(L.adds, addWaveCount))
 		addWaveCount = addWaveCount + 1
-		if addWaveCount < 6 then
-			self:Bar("adds", timers["adds"][addWaveCount], CL.count:format(L.adds, addWaveCount))
+		local timer = timers["adds"][addWaveCount]
+		if timer then
+			self:Bar("adds", timer, CL.count:format(L.adds, addWaveCount))
+			if self:Tank() then
+				self:DelayedMessage("adds", timer-5, "Neutral", CL.custom_sec:format(L.adds, 5))
+			end
+			if event == "timer" then
+				self:ScheduleTimer("CHAT_MSG_MONSTER_YELL", timer, "timer")
+			end
 		end
 	end
 end
