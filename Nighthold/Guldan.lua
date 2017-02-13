@@ -45,8 +45,9 @@ local timers = {
 
 local L = mod:GetLocale()
 if L then
-	L[211152] = "(E) ".. mod:SpellName(209270) -- (E) Eye of Gul'dan
+	L[211152] = "(E) %s" -- (E) Eye of Gul'dan
 end
+L[211152] = L[211152]:format(mod:SpellName(209270))
 
 --------------------------------------------------------------------------------
 -- Initialization

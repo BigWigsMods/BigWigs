@@ -49,12 +49,6 @@ local searingBrandOnMe = nil
 local tDeleteItem, tContains = tDeleteItem, tContains
 
 --------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 
