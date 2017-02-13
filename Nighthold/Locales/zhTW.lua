@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Skorpyron", "frFR")
+local L = BigWigs:NewBossLocale("Skorpyron", "zhTW")
 if not L then return end
 if L then
 	L.blue = "藍色"
@@ -7,20 +7,20 @@ if L then
 	L.mode = "%s模式"
 end
 
-L = BigWigs:NewBossLocale("Chronomatic Anomaly", "frFR")
+L = BigWigs:NewBossLocale("Chronomatic Anomaly", "zhTW")
 if L then
 	--L.affected = "Affected"
 	--L.totalAbsorb = "Total Absorb"
 end
 
-L = BigWigs:NewBossLocale("Trilliax", "frFR")
+L = BigWigs:NewBossLocale("Trilliax", "zhTW")
 if L then
 	--L.yourLink = "You are linked with %s"
 	--L.yourLinkShort = "Linked with %s"
 	--L.imprint = "Imprint"
 end
 
-L = BigWigs:NewBossLocale("Tichondrius", "frFR")
+L = BigWigs:NewBossLocale("Tichondrius", "zhTW")
 if L then
 	--L.addsKilled = "Adds killed"
 	--L.gotEssence = "Got Essence"
@@ -30,7 +30,7 @@ if L then
 	--L.adds_trigger2 = "Show these pretenders how to fight!"
 end
 
-L = BigWigs:NewBossLocale("Krosus", "frFR")
+L = BigWigs:NewBossLocale("Krosus", "zhTW")
 if L then
 	L.leftBeam = "左手光束"
 	L.rightBeam = "右手光束"
@@ -44,7 +44,7 @@ if L then
 	L.removedFromYou = "%s結束了"
 end
 
-L = BigWigs:NewBossLocale("Star Augur Etraeus", "frFR")
+L = BigWigs:NewBossLocale("Star Augur Etraeus", "zhTW")
 if L then
 	--L.yourSign = "Your sign"
 	--L.with = "with"
@@ -68,7 +68,7 @@ if L then
 	--L.custom_on_grand_conjunction_nameplates_desc = L.nameplate_requirement
 end
 
-L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "frFR")
+L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "zhTW")
 if L then
 	--L.elisande = "Elisande"
 
@@ -78,12 +78,12 @@ if L then
 	--L.fastTimeZone = "Fast Time Zone"
 end
 
-L = BigWigs:NewBossLocale("Gul'dan", "frFR")
+L = BigWigs:NewBossLocale("Gul'dan", "zhTW")
 if L then
 	L[211152] = "(E) %s" -- (E) Eye of Gul'dan
 end
 
-L = BigWigs:NewBossLocale("Nighthold Trash", "frFR")
+L = BigWigs:NewBossLocale("Nighthold Trash", "zhTW")
 if L then
 	--[[ Skorpyron to Trilliax ]]--
 	--L.torm = "Torm the Brute"
