@@ -79,8 +79,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ArcaneSlash", 206641)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ArcaneSlash", 206641)
 	self:Log("SPELL_CAST_START", "ToxicSlice", 206788) -- normal/heroic
-	self:Log("SPELL_AURA_APPLIED", "Sterilize", 211615)
-	self:Log("SPELL_AURA_REMOVED", "SterilizeRemoved", 211615)
+	self:Log("SPELL_AURA_APPLIED", "Sterilize", 211615) -- pre-debuff id
+	self:Log("SPELL_AURA_REMOVED", "SterilizeRemoved", 208499)
 	self:Log("SPELL_CAST_START", "CleansingRage", 206820)
 	self:Log("SPELL_CAST_START", "ArcingBondsCast", 208924)
 	self:Log("SPELL_AURA_APPLIED", "ArcingBonds", 208910, 208915)
@@ -211,7 +211,7 @@ end
 
 function mod:SterilizeRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CloseProximity(args.spellId)
+		self:CloseProximity(211615)
 	end
 end
 
