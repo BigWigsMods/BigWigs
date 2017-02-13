@@ -157,6 +157,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CompressTheVoid", 221160)
 
 	--[[ Chronomatic Anomaly to Trilliax ]]--
+	self:Log("SPELL_CAST_START", "OozingRushStart", 223655)
 	self:Log("SPELL_AURA_APPLIED", "OozingRush", 223655)
 	self:Log("SPELL_AURA_REMOVED", "OozingRushRemoved", 223655)
 
@@ -259,19 +260,32 @@ do
 end
 
 --[[ Chronomatic Anomaly to Trilliax ]]--
-function mod:OozingRush(args)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Warning")
-	self:TargetBar(args.spellId, 10, args.destName)
-	self:PrimaryIcon(args.spellId, args.destName)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:Flash(args.spellId)
+do
+	local prev = nil
+	local function printTarget(self, player, guid)
+		prev = player
+		self:TargetMessage(223655, player, "Important", "Warning")
+		self:PrimaryIcon(223655, player)
+		if self:Me(guid) then
+			self:Say(223655)
+			self:Flash(223655)
+		end
 	end
-end
+	function mod:OozingRushStart(args)
+		self:GetUnitTarget(printTarget, 0.5, args.sourceGUID)
+	end
 
-function mod:OozingRushRemoved(args)
-	self:StopBar(args.spellId, args.destName)
-	self:PrimaryIcon(args.spellId)
+	function mod:OozingRush(args)
+		self:TargetBar(args.spellId, 10, args.destName)
+		if prev ~= args.destName then
+			printTarget(self, args.destName, args.destGUID)
+		end
+	end
+
+	function mod:OozingRushRemoved(args)
+		self:StopBar(args.spellId, args.destName)
+		self:PrimaryIcon(args.spellId)
+	end
 end
 
 --[[ Trilliax to Aluriel ]]--
