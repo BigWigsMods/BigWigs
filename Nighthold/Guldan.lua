@@ -19,6 +19,7 @@ mod.respawnTime = 30
 --
 
 local phase = 1
+local bondsCount = 1
 local liquidHellfireCount = 1
 local handOfGuldanCount = 1
 local blackHarvestCount = 1
@@ -189,6 +190,7 @@ end
 function mod:OnEngage()
 	phase = 1
 	timers = self:Mythic() and mythicTimers or heroicTimers
+	bondsCount = 1
 	liquidHellfireCount = 1
 	handOfGuldanCount = 1
 	blackHarvestCount = 1
@@ -198,7 +200,7 @@ function mod:OnEngage()
 	if self:Mythic() then
 		phase = 2 -- Mythic skips the P1 of heroic
 		self:Bar(212258, timers[212258][handOfGuldanCount], CL.count:format(self:SpellName(212258), handOfGuldanCount)) -- Hand of Gul'dan
-		self:Bar(209011, 6.6) -- Bonds of Fel
+		self:Bar(209011, 6.6, CL.count:format(self:SpellName(209011), bondsCount)) -- Bonds of Fel
 		self:Bar(209270, 26.6) -- Eye of Gul'dan
 		self:Bar(206219, 36.6, CL.count:format(self:SpellName(206219), liquidHellfireCount)) -- Liquid Hellfire
 	else
@@ -222,8 +224,9 @@ end
 function mod:RAID_BOSS_EMOTE(event, msg)
 	if msg:find("206221") then -- Gains Empowered Bonds of Fel
 		self:Message(209011, "Neutral", nil, L.gains:format(self:SpellName(206221)))
-		self:Bar(209011, self:BarTimeLeft(209011), self:SpellName(206221))
-		self:StopBar(209011) -- Bonds of Fel
+		local oldText = CL.count:format(self:SpellName(209011), bondsCount)
+		self:Bar(209011, self:BarTimeLeft(oldText), self:SpellName(206221))
+		self:StopBar(oldText) -- Bonds of Fel
 	elseif msg:find("206220") then -- Empowered Liquid Hellfire
 		self:Message(206219, "Neutral", nil, L.gains:format(self:SpellName(206220)))
 		local oldText = CL.count:format(self:SpellName(206219), liquidHellfireCount)
@@ -286,9 +289,9 @@ function mod:Phase3Start(args) -- The Eye of Aman'thul applied (227427)
 	phase = 3
 	eyeCount = 1
 	self:Message("stages", "Neutral", "Long", CL.stage:format(3), args.spellId)
-	self:StopBar(206221) -- Empowered Bonds of Fel
+	self:StopBar(CL.count:format(self:SpellName(206221), bondsCount)) -- Empowered Bonds of Fel
 	self:StopBar(CL.count:format(self:SpellName(212258), handOfGuldanCount)) -- Hand of Gul'dan
-	self:StopBar(CL.count:format(self:SpellName(206220), liquidHellfireCount)) -- Liquid Hellfire
+	self:StopBar(CL.count:format(self:SpellName(206220), liquidHellfireCount)) -- Empowered Liquid Hellfire
 	self:Bar("stages", 8, args.spellName, args.spellId)
 	self:Bar(221606, self:Mythic() and 24.5 or 27.5) -- Flames of Sargeras
 	self:Bar(211152, self:Easy() and 42.6 or timers[211152][eyeCount], L[211152]) -- Empowered Eye of Gul'dan
@@ -373,8 +376,9 @@ end
 
 --[[ Stage Two ]]--
 function mod:BondsOfFelCast(args)
-	self:Message(209011, "Attention", "Info", CL.casting:format(args.spellName))
-	self:Bar(209011, self:Mythic() and 40 or 44.5, args.spellName)
+	self:Message(209011, "Attention", "Info", CL.casting:format(CL.count:format(args.spellName, bondsCount)))
+	bondsCount = bondsCount + 1
+	self:Bar(209011, self:Mythic() and 40 or 44.5, CL.count:format(args.spellName, bondsCount))
 end
 
 do
