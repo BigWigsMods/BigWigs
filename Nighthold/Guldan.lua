@@ -225,7 +225,7 @@ function mod:RAID_BOSS_EMOTE(event, msg)
 		self:Bar(209011, self:BarTimeLeft(209011), self:SpellName(206221))
 		self:StopBar(209011) -- Bonds of Fel
 	elseif msg:find("206220") then -- Empowered Liquid Hellfire
-		self:Message(206220, "Neutral", nil, L.gains:format(self:SpellName(206220)))
+		self:Message(206219, "Neutral", nil, L.gains:format(self:SpellName(206220)))
 		local oldText = CL.count:format(self:SpellName(206219), liquidHellfireCount)
 		self:Bar(206219, self:BarTimeLeft(oldText), CL.count:format(self:SpellName(206220), liquidHellfireCount))
 		self:StopBar(oldText) -- Liquid Hellfire
