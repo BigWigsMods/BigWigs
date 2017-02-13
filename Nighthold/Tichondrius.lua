@@ -23,6 +23,7 @@ local brandOfArgusCount = 1
 local feastOfBloodCount = 1
 local echoesOfTheVoidCount = 1
 local illusionaryNightCount = 1
+local addWaveCount = 1
 local timers = {
 	-- Carrion Plague, SPELL_CAST_SUCCESS for 212997
 	[206480] = {7, 25, 35.5, 24.5, 75, 25.5, 35.5, 27, 75, 25.5, 40.5, 20.5},
@@ -38,6 +39,9 @@ local timers = {
 
 	-- Echoes of the Void, SPELL_CAST_SUCCESS
 	[213531] = {57.5, 65, 95.5, 67.5, 100.5, 59.5},
+
+	-- Adds, CHAT_MSG_MONSTER_YELL
+	["adds"] = {185.7, 47.5, 115, 35.5, 48.5},
 }
 local essenceTargets = {}
 local addsKilled = 0
@@ -50,6 +54,11 @@ local L = mod:GetLocale()
 if L then
 	L.addsKilled = "Adds killed"
 	L.gotEssence = "Got Essence"
+
+	L.adds = CL.adds
+	L.adds_desc = "Timers and warnings for the add spawns."
+	L.adds_trigger1 = "Underlings! Get in here!"
+	L.adds_trigger2 = "Show these pretenders how to fight!"
 end
 
 --------------------------------------------------------------------------------
@@ -64,6 +73,7 @@ function mod:GetOptions()
 		{212794, "SAY"}, -- Brand of Argus
 		208230, -- Feast of Blood
 		213531, -- Echoes of the Void
+		"adds",
 		"berserk",
 
 		--[[ Stage Two ]]--
@@ -93,6 +103,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BrandOfArgusSuccess", 212794)
 	self:Log("SPELL_AURA_APPLIED", "FeastOfBlood", 208230)
 	self:Log("SPELL_CAST_START", "EchoesOfTheVoid", 213531)
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	--[[ Stage Two ]]--
 	self:Log("SPELL_CAST_START", "IllusionaryNight", 206365)
@@ -117,8 +128,10 @@ function mod:OnEngage()
 	feastOfBloodCount = 1
 	echoesOfTheVoidCount = 1
 	illusionaryNightCount = 1
+	addWaveCount = 1
 	addsKilled = 0
 	wipe(essenceTargets)
+	self:Bar("adds", timers["adds"][addWaveCount], CL.count:format(L.adds, addWaveCount))
 	self:Bar(206480, timers[206480][carrionPlagueCount], CL.count:format(self:SpellName(206480), carrionPlagueCount))
 	self:Bar(213238, timers[213238][seekerSwarmCount], CL.count:format(self:SpellName(213238), seekerSwarmCount))
 	if not self:Easy() then
@@ -207,6 +220,16 @@ function mod:EchoesOfTheVoid(args)
 	local timer = timers[args.spellId][echoesOfTheVoidCount]
 	if timer then
 		self:Bar(args.spellId, timer, CL.count:format(args.spellName, echoesOfTheVoidCount))
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
+	if msg == L.adds_trigger1 or msg == L.adds_trigger2 then
+		self:Message("adds", "Neutral", "Alert", CL.count:format(L.adds, addWaveCount))
+		addWaveCount = addWaveCount + 1
+		if addWaveCount < 6 then
+			self:Bar("adds", timers["adds"][addWaveCount], CL.count:format(L.adds, addWaveCount))
+		end
 	end
 end
 
