@@ -2,6 +2,7 @@
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Ugliest module in BigWigs so far. Clean me up please!
+-- - Soul Siphon CD
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -20,14 +21,33 @@ mod.respawnTime = 30
 local phase = 1
 local liquidHellfireCount = 1
 local handOfGuldanCount = 1
-local handOfGuldanTimers = {48.9, 138.9} -- TODO: Get more data on these
+local blackHarvestCount = 1
 local stormCount = 1
+local flamesCount = 1
+local eyeCount = 1
+local timers = {
+	-- Hand of Gul'dan P2
+	[212258] = {13.5, 48.9, 138.9, 0}, -- not sure if complete, next is at least over 105s
+
+	-- Storm of the Destroyer (167819 _start), after 227427 _applied
+	[167935] = {84.1, 68.8, 61.2, 76.5, 0}, -- timers should be complete
+
+	-- Black Harvest (206744 _start), after 227427 _applied
+	[206744] = {64.1, 72.5, 87.6, 0}, -- timers should be complete
+
+	-- Empowered Eye of Gul'dan P3 (211152 _start), after 227427 _applied
+	[211152] = {39.1, 62.5, 62.5, 25, 100, 0}, -- timers should be complete
+}
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:GetLocale()
+if L then
+	L[211152] = "(E) %s" -- (E) Eye of Gul'dan
+end
+L[211152] = L[211152]:format(mod:SpellName(209270))
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -37,6 +57,7 @@ function mod:GetOptions()
 	return {
 		--[[ General ]]--
 		"stages",
+		"berserk",
 
 		--[[ Essence of Aman'Thul ]]--
 		210339, -- Time Dilation
@@ -64,7 +85,7 @@ function mod:GetOptions()
 
 		--[[ Stage Two ]]--
 		{209011, "SAY", "FLASH"}, -- Bonds of Fel
-		209270, -- Eye of Gul'dan
+		{209270, "PROXIMITY"}, -- Eye of Gul'dan
 		208672, -- Carrion Wave
 
 		--[[ Stage Three ]]--
@@ -72,7 +93,7 @@ function mod:GetOptions()
 		167935, -- Storm of the Destroyer
 		206744, -- Black Harvest
 		{221606, "SAY", "FLASH"}, -- Flames of Sargeras
-		211152, -- Empowered Eye of Gul'dan
+		{211152, "PROXIMITY"}, -- Empowered Eye of Gul'dan
 		221781, -- Desolate Ground
 		{227556, "TANK"}, -- Fury of the Fel   XXX untested
 	}, {
@@ -123,6 +144,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BondsOfFelCast", 206222, 206221) -- Normal, Empowered
 	self:Log("SPELL_AURA_APPLIED", "BondsOfFel", 209011, 206384) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "EyeOfGuldan", 209270, 211152) -- Normal, Empowered
+	self:Log("SPELL_AURA_APPLIED", "EyeOfGuldanApplied", 209454, 221728) -- Normal, Empowered
+	self:Log("SPELL_AURA_REMOVED", "EyeOfGuldanRemoved", 209454, 221728) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "CarrionWave", 208672)
 
 	--[[ Stage Three ]]--
@@ -147,9 +170,13 @@ function mod:OnEngage()
 	phase = 1
 	liquidHellfireCount = 1
 	handOfGuldanCount = 1
+	blackHarvestCount = 1
 	stormCount = 1
+	flamesCount = 1
+	eyeCount = 1
 	self:Bar(212258, 7) -- Hand of Gul'dan
 	self:Bar(206515, 11) -- Fel Efflux
+	self:Berserk(720)
 end
 
 --------------------------------------------------------------------------------
@@ -162,9 +189,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(spellId, 23)
 	end
 end
-function mod:RAID_BOSS_EMOTE(event, msg, npcname)
-	if msg:find("206221") then -- Gains Empowered Bonds of Fel
+
+function mod:RAID_BOSS_EMOTE(event, msg)
+	if msg:find("206221", nil, true) then -- Gains Empowered Bonds of Fel
 		self:Bar(209011, self:BarTimeLeft(209011), self:SpellName(206221))
+		self:StopBar(209011) -- Bonds of Fel
 	end
 end
 
@@ -189,8 +218,8 @@ do
 end
 
 function mod:ResonantBarrier(args)
-	self:Message(args.spellId, "Positive", "Alert")
-	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
+	self:TargetMessage(args.spellId, args.destName, "Positive")
+	self:TargetBar(args.spellId, 6, args.destName)
 end
 
 function mod:EyeOfAmanThul(args)
@@ -205,21 +234,27 @@ function mod:EyeOfAmanThulRemoved(args) -- Phase 2 start
 	liquidHellfireCount = 1
 	self:Message("stages", "Neutral", "Long", CL.stage:format(2), args.spellId)
 	self:Bar(206219, 23.5, CL.count:format(self:SpellName(206219), liquidHellfireCount)) -- Liquid Hellfire
-	self:Bar(212258, 9.5) -- Bonds of Fel
-	self:Bar(212258, 14.5) -- Hand of Gul'dan
-	self:Bar(209270, 29) -- Eye of Gul'dan
+	self:Bar(209011, 9.5) -- Bonds of Fel
+	if self:Easy() then
+		self:StopBar(212258) -- Hand of Gul'dan
+	else
+		self:Bar(212258, 13.5, CL.count:format(self:SpellName(212258), handOfGuldanCount)) -- Hand of Gul'dan
+	end
+	self:Bar(209270, self:Easy() and 32.4 or 29) -- Eye of Gul'dan
 end
 
 function mod:Phase3Start(args) -- Phase 3 start
 	phase = 3
+	eyeCount = 1
 	self:Message("stages", "Neutral", "Long", CL.stage:format(3), args.spellId)
 	self:StopBar(206221) -- Empowered Bonds of Fel
 	self:StopBar(212258) -- Hand of Gul'dan
 	self:StopBar(CL.count:format(self:SpellName(206220), liquidHellfireCount)) -- Liquid Hellfire
 	self:Bar("stages", 8, args.spellName, args.spellId)
-	self:Bar(211152, 39) -- Eye of Gul'dan
-	self:Bar(206744, 66) -- Black Harvest
-	self:Bar(167935, 84) -- Storm of the Destroyer
+	self:Bar(221606, 27.5) -- Flames of Sargeras
+	self:Bar(211152, self:Easy() and 42.6 or timers[211152][eyeCount]) -- Empowered Eye of Gul'dan
+	self:Bar(206744, timers[206744][blackHarvestCount]) -- Black Harvest
+	self:Bar(167935, timers[167935][stormCount]) -- Storm of the Destroyer
 end
 
 --[[ Stage One ]]--
@@ -242,9 +277,9 @@ function mod:HandOfGuldan(args)
 	self:Message(args.spellId, "Attention", "Info")
 	handOfGuldanCount = handOfGuldanCount + 1
 	if phase == 1 and handOfGuldanCount < 4 then
-		self:Bar(args.spellId, handOfGuldanCount == 2 and 14 or 10)
+		self:Bar(args.spellId, handOfGuldanCount == 2 and 14 or 10, CL.count:format(args.spellName, handOfGuldanCount))
 	elseif phase == 2 then
-		self:Bar(args.spellId, handOfGuldanTimers[handOfGuldanCount] or 48.9)
+		self:Bar(args.spellId, timers[args.spellId][handOfGuldanCount], CL.count:format(args.spellName, handOfGuldanCount))
 	end
 end
 
@@ -312,9 +347,28 @@ do
 	end
 end
 
-function mod:EyeOfGuldan(args)
-	self:Message(209270, "Urgent", "Alert")
-	self:Bar(209270, phase == 2 and 53.3 or 62.5, args.spellName) -- TODO: P3 timer is 25s at some point
+do
+	local easyTimes = {0, 71.4, 71.4, 28.6} -- initial timer is started in phase transition
+	function mod:EyeOfGuldan(args)
+		local spellName = L[args.spellId] and L[args.spellId] or args.spellName
+		self:Message(args.spellId, "Urgent", "Alert", CL.count:format(spellName, eyeCount))
+		eyeCount = eyeCount + 1
+		self:Bar(args.spellId, (phase == 2 and (self:Easy() and 60 or 53.3)) or (self:Easy() and easyTimes[eyeCount]) or timers[211152][eyeCount], CL.count:format(spellName, eyeCount))
+	end
+end
+
+function mod:EyeOfGuldanApplied(args)
+	if self:Me(args.destGUID) then
+		local id = args.spellId == 209454 and 209270 or 211152
+		self:Message(id, "Personal", "Alert", CL.you:format(L[id] or args.spellName))
+		self:OpenProximity(id, 8)
+	end
+end
+
+function mod:EyeOfGuldanRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId == 209454 and 209270 or 211152)
+	end
 end
 
 function mod:CarrionWave(args)
@@ -338,9 +392,9 @@ end
 
 function mod:StormOfTheDestroyer(args)
 	self:Message(167935, "Important", "Long")
-	if args.spellId == 167819 then
+	if args.spellId == 167819 then -- First Storm
 		stormCount = stormCount + 1
-		self:Bar(167935, stormCount == 2 and 68 or 61)
+		self:Bar(167935, stormCount == 2 and 68 or stormCount == 3 and 61 or stormCount == 4 and 76.5 or 0) -- timers should be complete
 	end
 end
 
@@ -356,7 +410,8 @@ end
 
 function mod:BlackHarvest(args)
 	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
-	self:CDBar(args.spellId, 72)
+	blackHarvestCount = blackHarvestCount + 1
+	self:CDBar(args.spellId, timers[args.spellId][blackHarvestCount])
 end
 
 do
@@ -371,17 +426,21 @@ do
 end
 
 do
-	local list = mod:NewTargetList()
+	local prev = 0
 	function mod:FlamesOfSargerasSoon(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important")
-		end
 		if self:Me(args.destGUID) then
 			self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
 			self:Say(args.spellId)
 			self:Flash(args.spellId)
 			self:TargetBar(args.spellId, 6, args.destName)
+		elseif self:Tank(args.destName) and self:Tank() then -- Tank taunt mechanic in P3
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+		end
+		local t = GetTime()
+		if t-prev > 5 then
+			prev = t
+			flamesCount = flamesCount + 1
+			self:Bar(args.spellId, flamesCount % 3 == 1 and 34.7 or flamesCount % 3 == 0 and 8.8 or 7.8)
 		end
 	end
 end

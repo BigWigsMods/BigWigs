@@ -2,6 +2,7 @@
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Arcane Tether warnings for tanks
+-- - Mythic mode transform cds
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -85,7 +86,7 @@ function mod:OnEngage()
 	self:Bar(204316, 59) -- Shockwave (time to _success)
 
 	if self:Mythic() then
-		self:Bar(-13767, 35, L.mode:format(L.red), 211801)
+		self:Bar(-13767, 22, L.mode:format(L.red), 211801)
 	end
 end
 
@@ -176,15 +177,21 @@ do
 		if spellId == 214800 and t-prev > 1 then -- Red
 			prev = t
 			self:Message(-13767, "Neutral", "Info", L.mode:format(L.red), 211801)
-			self:Bar(-13767, 46, L.mode:format(L.green), 214718)
+			self:Bar(-13767, 45, L.mode:format(L.green), 214718)
+			self:StopBar(L.mode:format(L.red))
+			self:StopBar(L.mode:format(L.blue))
 		elseif spellId == 215042 and t-prev > 1 then -- Green
 			prev = t
 			self:Message(-13767, "Neutral", "Info", L.mode:format(L.green), 214718)
-			self:Bar(-13767, 46, L.mode:format(L.blue), 204292)
+			self:Bar(-13767, 45, L.mode:format(L.blue), 204292)
+			self:StopBar(L.mode:format(L.red))
+			self:StopBar(L.mode:format(L.green))
 		elseif spellId == 215055 and t-prev > 1 then -- Blue
 			prev = t
 			self:Message(-13767, "Neutral", "Info", L.mode:format(L.blue), 204292)
-			self:Bar(-13767, 46, L.mode:format(L.red), 211801)
+			self:Bar(-13767, 45, L.mode:format(L.red), 211801)
+			self:StopBar(L.mode:format(L.green))
+			self:StopBar(L.mode:format(L.blue))
 		end
 	end
 end

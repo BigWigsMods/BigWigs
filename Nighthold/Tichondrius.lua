@@ -11,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Tichondrius", 1088, 1762)
 if not mod then return end
 mod:RegisterEnableMob(103685)
 mod.engageId = 1862
---mod.respawnTime = 0
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -23,28 +23,43 @@ local brandOfArgusCount = 1
 local feastOfBloodCount = 1
 local echoesOfTheVoidCount = 1
 local illusionaryNightCount = 1
+local addWaveCount = 1
 local timers = {
 	-- Carrion Plague, SPELL_CAST_SUCCESS for 212997
-	[206480] = {7, 25, 35.5, 24.5, 75, 25.5, 35.5, 27, 75, 25.5, 40.5, 20.5, 53.5, 25.5},
+	[206480] = {7, 25, 35.5, 24.5, 75, 25.5, 35.5, 27, 75, 25.5, 40.5, 20.5},
 
 	-- Seeker Swarm, SPELL_CAST_SUCCESS
-	[213238] = {27, 25, 35, 25, 75, 25.5, 37.5, 25, 75, 25.5, 36, 22.5, 56},
+	[213238] = {27, 25, 35, 25, 75, 25.5, 37.5, 25, 75, 25.5, 36, 22.5},
 
 	-- Brand of Argus, SPELL_CAST_SUCCESS
-	[212794] = {15, 25, 35, 25, 75, 25.5, 32.5, 30, 75, 25.5, 36, 22.5, 56, 25.5},
+	[212794] = {15, 25, 35, 25, 75, 25.5, 32.5, 30, 75, 25.5, 36, 22.5},
 
 	-- Feast of Blood, SPELL_AURA_APPLIED
-	[208230] = {20, 25, 35, 25, 75, 25.5, 37.5, 25, 75, 25.5, 36, 22.5, 56, 25.5},
+	[208230] = {20, 25, 35, 25, 75, 25.5, 37.5, 25, 75, 25.5, 36, 22.5},
 
 	-- Echoes of the Void, SPELL_CAST_SUCCESS
 	[213531] = {57.5, 65, 95.5, 67.5, 100.5, 59.5},
+
+	-- Adds, CHAT_MSG_MONSTER_YELL
+	["adds"] = {185.7, 47.5, 115, 35.5, 48.5},
 }
+local essenceTargets = {}
+local addsKilled = 0
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:GetLocale()
+if L then
+	L.addsKilled = "Adds killed"
+	L.gotEssence = "Got Essence"
+
+	L.adds = CL.adds
+	L.adds_desc = "Timers and warnings for the add spawns."
+	L.adds_trigger1 = "Underlings! Get in here!"
+	L.adds_trigger2 = "Show these pretenders how to fight!"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -58,12 +73,13 @@ function mod:GetOptions()
 		{212794, "SAY"}, -- Brand of Argus
 		208230, -- Feast of Blood
 		213531, -- Echoes of the Void
+		"adds",
 		"berserk",
 
 		--[[ Stage Two ]]--
 		206365, -- Illusionary Night
 		215988, -- Carrion Nightmare
-		206466, -- Essence of Night
+		{206466, "INFOBOX"}, -- Essence of Night
 
 		--[[ Felsworm Spellguard ]]--
 		216027, -- Nether Zone
@@ -87,11 +103,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BrandOfArgusSuccess", 212794)
 	self:Log("SPELL_AURA_APPLIED", "FeastOfBlood", 208230)
 	self:Log("SPELL_CAST_START", "EchoesOfTheVoid", 213531)
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	--[[ Stage Two ]]--
 	self:Log("SPELL_CAST_START", "IllusionaryNight", 206365)
 	self:Log("SPELL_CAST_SUCCESS", "CarrionNightmare", 215988)
 	self:Log("SPELL_AURA_APPLIED", "EssenceOfNight", 206466)
+	self:Death("AddDeath", 104326)
 
 	--[[ Felsworm Spellguard ]]--
 	self:Log("SPELL_AURA_APPLIED", "NetherZoneDamage", 216027)
@@ -100,6 +118,7 @@ function mod:OnBossEnable()
 
 	--[[ Sightless Watcher ]]--
 	self:Log("SPELL_AURA_APPLIED", "VolatileWound", 216024)
+	self:Log("SPELL_AURA_REMOVED", "VolatileWoundRemoved", 216024)
 end
 
 function mod:OnEngage()
@@ -109,6 +128,10 @@ function mod:OnEngage()
 	feastOfBloodCount = 1
 	echoesOfTheVoidCount = 1
 	illusionaryNightCount = 1
+	addWaveCount = 1
+	addsKilled = 0
+	wipe(essenceTargets)
+	self:Bar("adds", timers["adds"][addWaveCount], CL.count:format(L.adds, addWaveCount))
 	self:Bar(206480, timers[206480][carrionPlagueCount], CL.count:format(self:SpellName(206480), carrionPlagueCount))
 	self:Bar(213238, timers[213238][seekerSwarmCount], CL.count:format(self:SpellName(213238), seekerSwarmCount))
 	if not self:Easy() then
@@ -117,7 +140,7 @@ function mod:OnEngage()
 	self:Bar(208230, timers[208230][feastOfBloodCount], CL.count:format(self:SpellName(208230), feastOfBloodCount))
 	self:Bar(213531, timers[213531][echoesOfTheVoidCount], CL.count:format(self:SpellName(213531), echoesOfTheVoidCount))
 	self:Bar(206365, 130, CL.count:format(self:SpellName(206365), illusionaryNightCount))
-	if self:Normal() or self:Heroic() then
+	if not self:LFR() then
 		self:Berserk(463)
 	end
 end
@@ -143,13 +166,19 @@ end
 
 function mod:CarrionPlagueSuccess(args)
 	carrionPlagueCount = carrionPlagueCount + 1
-	self:Bar(206480, timers[206480][carrionPlagueCount] or 20, CL.count:format(args.spellName, carrionPlagueCount))
+	local timer = timers[206480][carrionPlagueCount]
+	if timer then
+		self:Bar(206480, timer, CL.count:format(args.spellName, carrionPlagueCount))
+	end
 end
 
 function mod:SeekerSwarm(args)
-	self:Message(args.spellId, "Urgent", "Info", CL.count:format(args.spellName, carrionPlagueCount))
+	self:Message(args.spellId, "Urgent", "Info", CL.count:format(args.spellName, seekerSwarmCount))
 	seekerSwarmCount = seekerSwarmCount + 1
-	self:Bar(args.spellId, timers[args.spellId][seekerSwarmCount] or 22, CL.count:format(args.spellName, seekerSwarmCount))
+	local timer = timers[args.spellId][seekerSwarmCount]
+	if timer then
+		self:Bar(args.spellId, timer, CL.count:format(args.spellName, seekerSwarmCount))
+	end
 end
 
 do
@@ -168,13 +197,19 @@ end
 
 function mod:BrandOfArgusSuccess(args)
 	brandOfArgusCount = brandOfArgusCount + 1
-	self:Bar(args.spellId, timers[args.spellId][brandOfArgusCount] or 22, CL.count:format(args.spellName, brandOfArgusCount))
+	local timer = timers[args.spellId][brandOfArgusCount]
+	if timer then
+		self:Bar(args.spellId, timer, CL.count:format(args.spellName, brandOfArgusCount))
+	end
 end
 
 function mod:FeastOfBlood(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Long", CL.count:format(args.spellName, feastOfBloodCount), nil, true)
 	feastOfBloodCount = feastOfBloodCount + 1
-	self:Bar(args.spellId, timers[args.spellId][feastOfBloodCount] or 22, CL.count:format(args.spellName, feastOfBloodCount))
+	local timer = timers[args.spellId][feastOfBloodCount]
+	if timer then
+		self:Bar(args.spellId, timer, CL.count:format(args.spellName, feastOfBloodCount))
+	end
 end
 
 function mod:EchoesOfTheVoid(args)
@@ -182,16 +217,41 @@ function mod:EchoesOfTheVoid(args)
 	self:StopBar(CL.count:format(args.spellName, echoesOfTheVoidCount))
 	self:Bar(args.spellId, 10, CL.count:format(args.spellName, echoesOfTheVoidCount))
 	echoesOfTheVoidCount = echoesOfTheVoidCount + 1
-	self:Bar(args.spellId, timers[args.spellId][echoesOfTheVoidCount] or 60, CL.count:format(args.spellName, echoesOfTheVoidCount))
+	local timer = timers[args.spellId][echoesOfTheVoidCount]
+	if timer then
+		self:Bar(args.spellId, timer, CL.count:format(args.spellName, echoesOfTheVoidCount))
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
+	if msg == L.adds_trigger1 or msg == L.adds_trigger2 then
+		self:Message("adds", "Neutral", "Alert", CL.count:format(L.adds, addWaveCount))
+		addWaveCount = addWaveCount + 1
+		if addWaveCount < 6 then
+			self:Bar("adds", timers["adds"][addWaveCount], CL.count:format(L.adds, addWaveCount))
+		end
+	end
 end
 
 --[[ Stage Two ]]--
 function mod:IllusionaryNight(args)
+	addsKilled = 0
+	wipe(essenceTargets)
 	self:Message(args.spellId, "Neutral", "Long", CL.count:format(args.spellName, illusionaryNightCount))
 	self:Bar(args.spellId, 32, CL.cast:format(CL.count:format(args.spellName, illusionaryNightCount)))
 	illusionaryNightCount = illusionaryNightCount + 1
-	self:Bar(args.spellId, 163, CL.count:format(args.spellName, illusionaryNightCount))
+	if illusionaryNightCount < 3 then
+		self:Bar(args.spellId, 163, CL.count:format(args.spellName, illusionaryNightCount))
+	end
 	self:Bar(215988, 8.5, CL.cast:format(self:SpellName(215988))) -- Carrion Nightmare
+
+	self:SetInfo(206466, 1, L.addsKilled)
+	self:SetInfo(206466, 2, addsKilled)
+	self:SetInfo(206466, 3, L.gotEssence)
+	self:SetInfo(206466, 4, #essenceTargets)
+
+	self:OpenInfo(206466, self:SpellName(206466))
+	self:ScheduleTimer("CloseInfo", 40, 206466) -- some delay to look at the InfoBox after the phase
 end
 
 function mod:CarrionNightmare(args)
@@ -199,8 +259,19 @@ function mod:CarrionNightmare(args)
 end
 
 function mod:EssenceOfNight(args)
+	essenceTargets[#essenceTargets+1] = args.destName
+	self:SetInfo(206466, 4, #essenceTargets)
+
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
+	end
+end
+
+function mod:AddDeath(args)
+	addsKilled = addsKilled + 1
+	self:SetInfo(206466, 2, addsKilled)
+	if self:Mythic() and addsKilled % 5 == 0 then
+		self:Message(206466, "Neutral", nil, CL.mob_killed:format(CL.adds, addsKilled, 20))
 	end
 end
 
@@ -227,6 +298,14 @@ do
 
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
+			self:TargetBar(args.spellId, 8, args.destName)
+			self:ScheduleTimer("Say", 5, args.spellId, 3, true)
+			self:ScheduleTimer("Say", 6, args.spellId, 2, true)
+			self:ScheduleTimer("Say", 7, args.spellId, 1, true)
 		end
 	end
+end
+
+function mod:VolatileWoundRemoved(args)
+	self:StopBar(args.spellId, args.destName)
 end
