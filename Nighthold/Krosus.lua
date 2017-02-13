@@ -177,14 +177,16 @@ do
 	function mod:FelBeamSuccess(args)
 		beamCount = beamCount + 1
 		local t = timers[args.spellId][beamCount]
-		local text = CL.count:format(spellName, beamCount) .. getBeamText(beamCount)
-		self:Bar(args.spellId, t, text)
+		if t then
+			local text = CL.count:format(spellName, beamCount) .. getBeamText(beamCount)
+			self:Bar(args.spellId, t, text)
 
-		-- Additional timer to plan movement ahead
-		local t2 = timers[args.spellId][beamCount+1]
-		if t2 then
-			local text = CL.count:format(spellName, beamCount+1) .. getBeamText(beamCount+1)
-			self:Bar(args.spellId, t+t2, text)
+			-- Additional timer to plan movement ahead
+			local t2 = timers[args.spellId][beamCount+1]
+			if t2 then
+				local text = CL.count:format(spellName, beamCount+1) .. getBeamText(beamCount+1)
+				self:Bar(args.spellId, t+t2, text)
+			end
 		end
 	end
 end
@@ -199,7 +201,10 @@ do
 			self:Say(args.spellId)
 		end
 		orbCount = orbCount + 1
-		self:Bar(args.spellId, timers[args.spellId][orbCount], CL.count:format(args.spellName, orbCount))
+		local t = timers[args.spellId][orbCount]
+		if t then
+			self:Bar(args.spellId, t, CL.count:format(args.spellName, orbCount))
+		end
 	end
 end
 
@@ -227,7 +232,10 @@ do
 	function mod:BurningPitchCast(args)
 		self:Message(args.spellId, "Attention", "Info")
 		burningPitchCount = burningPitchCount + 1
-		self:Bar(args.spellId, timers[args.spellId][burningPitchCount], CL.count:format(args.spellName, burningPitchCount))
+		local t = timers[args.spellId][burningPitchCount]
+		if t then
+			self:Bar(args.spellId, t, CL.count:format(args.spellName, burningPitchCount))
+		end
 	end
 end
 
