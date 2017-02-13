@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Skorpyron", "itIT")
+local L = BigWigs:NewBossLocale("Skorpyron", "ptBR")
 if not L then return end
 if L then
 	L.blue = "Azul"
@@ -7,20 +7,20 @@ if L then
 	L.mode = "Modo %s"
 end
 
-L = BigWigs:NewBossLocale("Chronomatic Anomaly", "itIT")
+L = BigWigs:NewBossLocale("Chronomatic Anomaly", "ptBR")
 if L then
 	--L.affected = "Affected"
 	--L.totalAbsorb = "Total Absorb"
 end
 
-L = BigWigs:NewBossLocale("Trilliax", "itIT")
+L = BigWigs:NewBossLocale("Trilliax", "ptBR")
 if L then
 	--L.yourLink = "You are linked with %s"
 	--L.yourLinkShort = "Linked with %s"
 	--L.imprint = "Imprint"
 end
 
-L = BigWigs:NewBossLocale("Tichondrius", "itIT")
+L = BigWigs:NewBossLocale("Tichondrius", "ptBR")
 if L then
 	--L.addsKilled = "Adds killed"
 	--L.gotEssence = "Got Essence"
@@ -30,7 +30,7 @@ if L then
 	--L.adds_trigger2 = "Show these pretenders how to fight!"
 end
 
-L = BigWigs:NewBossLocale("Krosus", "itIT")
+L = BigWigs:NewBossLocale("Krosus", "ptBR")
 if L then
 	L.leftBeam = "Feixe esquerdo"
 	L.rightBeam = "Feixe direito"
@@ -44,7 +44,7 @@ if L then
 	--L.removedFromYou = "%s removed from you" -- "Searing Brand removed from YOU!"
 end
 
-L = BigWigs:NewBossLocale("Star Augur Etraeus", "itIT")
+L = BigWigs:NewBossLocale("Star Augur Etraeus", "ptBR")
 if L then
 	--L.yourSign = "Your sign"
 	--L.with = "with"
@@ -68,7 +68,7 @@ if L then
 	--L.custom_on_grand_conjunction_nameplates_desc = L.nameplate_requirement
 end
 
-L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "itIT")
+L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "ptBR")
 if L then
 	--L.elisande = "Elisande"
 
@@ -78,12 +78,12 @@ if L then
 	--L.fastTimeZone = "Fast Time Zone"
 end
 
-L = BigWigs:NewBossLocale("Gul'dan", "itIT")
+L = BigWigs:NewBossLocale("Gul'dan", "ptBR")
 if L then
 	L[211152] = "(E) %s" -- (E) Eye of Gul'dan
 end
 
-L = BigWigs:NewBossLocale("Nighthold Trash", "itIT")
+L = BigWigs:NewBossLocale("Nighthold Trash", "ptBR")
 if L then
 	--[[ Skorpyron to Trilliax ]]--
 	--L.torm = "Torm the Brute"
