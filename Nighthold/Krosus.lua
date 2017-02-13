@@ -192,7 +192,7 @@ end
 do
 	local prev = 0
 	function mod:OrbOfDescructionApplied(args)
-		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", CL.count:format(args.spellName, orbCount))
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", CL.count:format(args.spellName, orbCount), nil, self:Ranged())
 		self:TargetBar(args.spellId, 5, args.destName, 230932, args.spellId) -- Orb
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
