@@ -38,7 +38,7 @@ local grandTimers = {
 }
 
 local worldDevouringForceCounter = 1
-local worldDevouringForceTimers = {22.7, 41.7, 57.6}
+local worldDevouringForceTimers = {22.7, 41.7, 57.6, 52.2}
 
 local voidCount = 1
 
