@@ -424,7 +424,7 @@ function mod:StartSingularityTimer()
 
 	if not savedSingularityCount or singularityCount < savedSingularityCount then
 		self:CDBar(209170, t, CL.count:format(self:SpellName(209170), singularityCount))
-		self:DelayedMessage(209170, t, "Attention", "Info") -- Zones appear 2s after yell
+		self:DelayedMessage(209170, t, "Attention", nil, nil, "Info") -- Zones appear 2s after yell
 		self:ScheduleTimer("StartSingularityTimer", t)
 	end
 end
