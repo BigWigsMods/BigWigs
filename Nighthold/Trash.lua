@@ -17,6 +17,7 @@ mod:RegisterEnableMob(
 
 	--[[ Trilliax to Aluriel ]]--
 	116008, -- Kar'zun
+	112712, -- Gilded Guardian
 	112671, -- Duskwatch Battle-Magus
 	113307, -- Chronowraith
 	112665, -- Nighthold Protector
@@ -58,6 +59,7 @@ if L then
 
 	--[[ Trilliax to Aluriel ]]--
 	L.karzun = "Kar'zun"
+	L.guardian = "Gilded Guardian"
 	L.battle_magus = "Duskwatch Battle-Magus"
 	L.chronowraith = "Chronowraith"
 	L.protector = "Nighthold Protector"
@@ -99,6 +101,8 @@ function mod:GetOptions()
 		{230994, "SAY"}, -- Shadow Wrap (Kar'zun)
 		wrapMarker,
 		231005, -- Arcane Emanations (Kar'zun)
+		225927, -- Gravity Well (Gilded Guardian)
+		224440, -- Crushing Stomp (Gilded Guardian)
 		224510, -- Crackling Slice (Duskwatch Battle-Magus)
 		225412, -- Mass Siphon (Chronowraith)
 		224568, -- Mass Suppress (Nighthold Protector)
@@ -124,6 +128,7 @@ function mod:GetOptions()
 		[221160] = L.pulsauron,
 		[223655] = L.sludgerax,
 		[230994] = L.karzun,
+		[225927] = L.guardian,
 		[224510] = L.battle_magus,
 		[225412] = L.chronowraith,
 		[224568] = L.protector,
@@ -165,6 +170,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShadowWrap", 230994)
 	self:Log("SPELL_SUMMON", "ShadowWrapSummon", 230993)
 	self:Log("SPELL_CAST_START", "ArcaneEmanations", 231005)
+	self:Log("SPELL_CAST_START", "GravityWell", 225927)
+	self:Log("SPELL_CAST_START", "CrushingStomp", 224440)
+	self:Death("GuardianDeath", 112712)
 	self:Log("SPELL_CAST_START", "CracklingSlice", 224510)
 	self:Log("SPELL_CAST_SUCCESS", "MassSiphon", 225412)
 	self:Death("ChronowraithDeath", 113307)
@@ -229,7 +237,7 @@ function mod:RumblingBlow(args)
 	self:Message(args.spellId, "Attention", "Info")
 end
 
-function mod:TormDeath(args)
+function mod:TormDeath()
 	self:StopBar(230438) -- Devastating Strike
 end
 
@@ -326,6 +334,21 @@ function mod:ArcaneEmanations(args)
 	self:Message(args.spellId, "Important", "Long", CL.casting:format(args.spellName))
 end
 
+function mod:GravityWell(args)
+	self:Message(args.spellId, "Attention", "Info")
+	self:CDBar(args.spellId, 23)
+end
+
+function mod:CrushingStomp(args)
+	self:Message(args.spellId, "Urgent", "Long")
+	self:CDBar(args.spellId, 23)
+end
+
+function mod:GuardianDeath()
+	self:StopBar(225927) -- Gravity Well
+	self:StopBar(224440) -- Crushing Stomp
+end
+
 do
 	local prev = 0
 	function mod:CracklingSlice(args)
@@ -342,7 +365,7 @@ function mod:MassSiphon(args)
 	self:Bar(args.spellId, 15)
 end
 
-function mod:ChronowraithDeath(args)
+function mod:ChronowraithDeath()
 	self:StopBar(225412) -- Mass Siphon
 end
 
@@ -431,7 +454,7 @@ function mod:AnnihilatingOrbRemoved(args)
 	self:StopBar(230932, args.destName) -- Orb
 end
 
-function mod:InfernalDeath(args)
+function mod:InfernalDeath()
 	self:StopBar(221344) -- Annihilating Orb
 end
 
