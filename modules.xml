@@ -17,6 +17,9 @@
 
 <Include file="TrialOfValor\modules.xml"/>
 <Include file="TrialOfValor\locales.xml"/>
+  
+<Include file="TombOfSargeras\modules.xml"/>
+<Include file="TombOfSargeras\locales.xml"/>
 
 <Include file="BrokenIsles\modules.xml"/>
 <Include file="BrokenIsles\locales.xml"/>
