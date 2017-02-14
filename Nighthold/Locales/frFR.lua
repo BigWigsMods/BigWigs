@@ -26,8 +26,8 @@ if L then
 	--L.gotEssence = "Got Essence"
 
 	L.adds_desc = "Délais et alertes concernant l'apparition des renforts."
-	--L.adds_trigger1 = "Underlings! Get in here!"
-	--L.adds_trigger2 = "Show these pretenders how to fight!"
+	L.adds_trigger1 = "Serviteurs ! Ici, tout de suite !"
+	L.adds_trigger2 = "Montrez-leur comment on se bat !"
 end
 
 L = BigWigs:NewBossLocale("Krosus", "frFR")
@@ -35,7 +35,7 @@ if L then
 	L.leftBeam = "Faisceau de gauche"
 	L.rightBeam = "Faisceau de droite"
 
-	L.goRight = "> ALLEZ A DROITE>"
+	L.goRight = "> ALLEZ À DROITE >"
 	L.goLeft = "< ALLEZ À GAUCHE <"
 
 	L.smashingBridge = "Destruction du pont"
@@ -72,16 +72,16 @@ L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "frFR")
 if L then
 	L.elisande = "Elisande"
 
-	--L.ring_msg = "Let the waves of time crash over you!"
-	--L.orb_msg = "You'll find time can be quite volatile."
+	L.ring_msg = "Que le torrent du temps vous emporte !"
+	L.orb_msg = "Le temps est parfois… explosif."
 
-	--L.fastTimeZone = "Fast Time Zone"
+	L.fastTimeZone = "Zone de temps accéléré"
 end
 
 L = BigWigs:NewBossLocale("Gul'dan", "frFR")
 if L then
 	L[211152] = "(E) %s" -- (E) Eye of Gul'dan
-	--L.gains = "Gul'dan gains %s"
+	L.gains = "Gul'dan obtient %s"
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "frFR")
