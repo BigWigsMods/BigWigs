@@ -9,7 +9,7 @@ if not IsTestBuild() then return end -- XXX dont load on live
 local mod, CL = BigWigs:NewBoss("The Desolate Host", 1147, 1896)
 if not mod then return end
 mod:RegisterEnableMob(118460, 118462, 119072) -- XXX Guestimate
---mod.engageId = 1849
+mod.engageId = 2054
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
