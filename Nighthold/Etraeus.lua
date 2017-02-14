@@ -386,8 +386,8 @@ end
 
 function mod:IcyEjection(args)
 	self:StopBar(CL.count:format(args.spellName, ejectionCount))
-	ejectionCount = ejectionCount + 1
 	if phase == 2 then -- Prevent starting the bar in phase transition
+		ejectionCount = ejectionCount + 1
 		self:CDBar(args.spellId, timers[args.spellId][ejectionCount] or 30, CL.count:format(args.spellName, ejectionCount))
 	end
 end
@@ -446,8 +446,8 @@ end
 
 function mod:FelEjection(args)
 	self:StopBar(CL.count:format(args.spellName, ejectionCount))
-	ejectionCount = ejectionCount + 1
 	if phase == 3 then -- Prevent starting the bar in phase transition
+		ejectionCount = ejectionCount + 1
 		self:CDBar(args.spellId, timers[args.spellId][ejectionCount] or 30, CL.count:format(args.spellName, ejectionCount))
 	end
 end
@@ -500,6 +500,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 end
 
 function mod:WitnessTheVoid(args)
+	self:StopBar(CL.count:format(args.spellName, voidCount)) -- will be replaced by a CL.cast bar
 	self:Message(args.spellId, "Attention", "Warning", CL.casting:format(CL.count:format(args.spellName, voidCount)))
 	self:Bar(args.spellId, self:Mythic() and 2.8 or 4, CL.cast:format(CL.count:format(args.spellName, voidCount)))
 	voidCount = voidCount + 1
