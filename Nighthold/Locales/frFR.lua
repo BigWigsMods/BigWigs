@@ -81,6 +81,7 @@ end
 L = BigWigs:NewBossLocale("Gul'dan", "frFR")
 if L then
 	L[211152] = "(E) %s" -- (E) Eye of Gul'dan
+	--L.gains = "Gul'dan gains %s"
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "frFR")
