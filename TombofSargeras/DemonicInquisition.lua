@@ -9,7 +9,7 @@ if not IsTestBuild() then return end -- XXX dont load on live
 local mod, CL = BigWigs:NewBoss("Demonic Inquisition", 1147, 1867)
 if not mod then return end
 mod:RegisterEnableMob(120996, 116691) -- XXX Guestimate
---mod.engageId = 1234
+mod.engageId = 2048
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
