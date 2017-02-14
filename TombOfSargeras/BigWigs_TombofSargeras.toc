@@ -1,27 +1,27 @@
 ## Interface: 70200
 
-## Title: BigWigs [|cffeda55fTomb Of Sargeras|r]
-## Title-deDE: BigWigs [|cffeda55fTomb Of Sargeras|r]
-## Title-esES: BigWigs [|cffeda55fTomb Of Sargeras|r]
-## Title-esMX: BigWigs [|cffeda55fTomb Of Sargeras|r]
-## Title-frFR: BigWigs [|cffeda55fTomb Of Sargeras|r]
-## Title-ruRU: BigWigs [|cffeda55fTomb Of Sargeras|r]
-## Title-zhCN: BigWigs [|cffeda55fTomb Of Sargeras|r]
-## Title-zhTW: BigWigs [|cffeda55fTomb Of Sargeras|r]
-## Title-itIT: BigWigs [|cffeda55fTomb Of Sargeras|r]
-## Title-ptBR: BigWigs [|cffeda55fTomb Of Sargeras|r]
-## Title-koKR: BigWigs [|cffeda55fTomb Of Sargeras|r]
+## Title: BigWigs [|cffeda55fTomb of Sargeras|r]
+## Title-deDE: BigWigs [|cffeda55fTomb of Sargeras|r]
+## Title-esES: BigWigs [|cffeda55fTomb of Sargeras|r]
+## Title-esMX: BigWigs [|cffeda55fTomb of Sargeras|r]
+## Title-frFR: BigWigs [|cffeda55fTomb of Sargeras|r]
+## Title-ruRU: BigWigs [|cffeda55fTomb of Sargeras|r]
+## Title-zhCN: BigWigs [|cffeda55fTomb of Sargeras|r]
+## Title-zhTW: BigWigs [|cffeda55fTomb of Sargeras|r]
+## Title-itIT: BigWigs [|cffeda55fTomb of Sargeras|r]
+## Title-ptBR: BigWigs [|cffeda55fTomb of Sargeras|r]
+## Title-koKR: BigWigs [|cffeda55fTomb of Sargeras|r]
 ## Notes: BigWigs Tomb of Sargeras Modules
-## Notes-deDE: BigWigs-Module für Tomb Of Sargeras
-## Notes-esES: BigWigs Tomb Of Sargeras Modules
-## Notes-esMX: BigWigs Tomb Of Sargeras Modules
-## Notes-frFR: Modules BigWigs concernant Tomb Of Sargeras.
-## Notes-ruRU: Модуль BigWigs для Цитадели Ночи
-## Notes-zhCN: BigWigs 暗夜Tomb Of Sargeras
-## Notes-zhTW: BigWigs 暗夜Tomb Of Sargeras
-## Notes-itIT: BigWigs Tomb Of Sargeras Modules
-## Notes-ptBR: BigWigs Tomb Of Sargeras Modules
-## Notes-koKR: BigWigs Tomb Of Sargeras Modules
+## Notes-deDE: BigWigs-Module für Tomb of Sargeras
+## Notes-esES: BigWigs Tomb of Sargeras Modules
+## Notes-esMX: BigWigs Tomb of Sargeras Modules
+## Notes-frFR: Modules BigWigs concernant Tomb of Sargeras.
+## Notes-ruRU: Модуль BigWigs для Tomb of Sargeras
+## Notes-zhCN: BigWigs 暗夜Tomb of Sargeras
+## Notes-zhTW: BigWigs 暗夜Tomb of Sargeras
+## Notes-itIT: BigWigs Tomb of Sargeras Modules
+## Notes-ptBR: BigWigs Tomb of Sargeras Modules
+## Notes-koKR: BigWigs Tomb of Sargeras Modules
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
