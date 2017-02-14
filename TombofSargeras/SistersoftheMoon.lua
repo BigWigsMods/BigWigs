@@ -9,7 +9,7 @@ if not IsTestBuild() then return end -- XXX dont load on live
 local mod, CL = BigWigs:NewBoss("Sisters of the Moon", 1147, 1903)
 if not mod then return end
 mod:RegisterEnableMob(118374, 118518, 119205) -- Missing Huntress Naisha XXX Guestimate
---mod.engageId = 1849
+mod.engageId = 2050
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
