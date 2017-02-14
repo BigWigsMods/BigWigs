@@ -85,7 +85,7 @@ function mod:GetOptions()
 		216027, -- Nether Zone
 
 		--[[ Sightless Watcher ]]--
-		{216024, "SAY"}, -- Volatile Wound
+		{216024, "SAY", "ME_ONLY"}, -- Volatile Wound
 	}, {
 		[206480] = -13552, -- Stage One
 		[206365] = -13553, -- Stage Two
@@ -118,6 +118,7 @@ function mod:OnBossEnable()
 
 	--[[ Sightless Watcher ]]--
 	self:Log("SPELL_AURA_APPLIED", "VolatileWound", 216024)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "VolatileWound", 216024)
 	self:Log("SPELL_AURA_REMOVED", "VolatileWoundRemoved", 216024)
 end
 
@@ -131,7 +132,7 @@ function mod:OnEngage()
 	addWaveCount = 1
 	addsKilled = 0
 	wipe(essenceTargets)
-	self:Bar("adds", timers["adds"][addWaveCount], CL.count:format(L.adds, addWaveCount))
+	self:Bar("adds", timers["adds"][addWaveCount], CL.count:format(L.adds, addWaveCount), 212552) -- 212552 = Wraith Walk, inv_helm_plate_raiddeathknight_p_01, id 1100041
 	if GetLocale() ~= "enUS" and L.adds_trigger1 == "Underlings! Get in here!" then -- Not translated
 		self:ScheduleTimer("CHAT_MSG_MONSTER_YELL", timers["adds"][addWaveCount], "timer")
 	end
@@ -228,11 +229,11 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if event == "timer" or msg == L.adds_trigger1 or msg == L.adds_trigger2 then
-		self:Message("adds", "Neutral", "Alert", CL.count:format(L.adds, addWaveCount))
+		self:Message("adds", "Neutral", "Alert", CL.count:format(L.adds, addWaveCount), 212552) -- 212552 = Wraith Walk, inv_helm_plate_raiddeathknight_p_01, id 1100041
 		addWaveCount = addWaveCount + 1
 		local timer = timers["adds"][addWaveCount]
 		if timer then
-			self:Bar("adds", timer, CL.count:format(L.adds, addWaveCount))
+			self:Bar("adds", timer, CL.count:format(L.adds, addWaveCount), 212552) -- 212552 = Wraith Walk, inv_helm_plate_raiddeathknight_p_01, id 1100041
 			if self:Tank() then
 				self:DelayedMessage("adds", timer-5, "Neutral", CL.custom_sec:format(L.adds, 5))
 			end
@@ -299,23 +300,44 @@ end
 
 --[[ Sightless Watcher ]]--
 do
+	local sayTimers = {}
+	local function cancelSay(self)
+		if sayTimers[1] then
+			for i = #sayTimers, 1, -1 do
+				self:CancelTimer(sayTimers[i])
+				sayTimers[i] = nil
+			end
+		end
+	end
+
 	local list = mod:NewTargetList()
 	function mod:VolatileWound(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Urgent", "Alarm", nil, nil, self:Dispeller("magic"))
+		if UnitIsPlayer(args.destName) then
+			if self:Me(args.destGUID) then
+				if not args.amount then
+					self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+				elseif args.amount % 2 == 0 then
+					self:StackMessage(args.spellId, args.destName, args.amount, "Personal", "Alarm")
+				end
+				self:TargetBar(args.spellId, 8, args.destName)
+				cancelSay(self)
+				sayTimers[1] = self:ScheduleTimer("Say", 5, args.spellId, 3, true)
+				sayTimers[2] = self:ScheduleTimer("Say", 6, args.spellId, 2, true)
+				sayTimers[3] = self:ScheduleTimer("Say", 7, args.spellId, 1, true)
+			elseif not args.amount then -- 1 stack
+				list[#list+1] = args.destName
+				if #list == 1 then
+					self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Urgent", "Alarm")
+				end
+			end
 		end
+	end
 
+	function mod:VolatileWoundRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:TargetBar(args.spellId, 8, args.destName)
-			self:ScheduleTimer("Say", 5, args.spellId, 3, true)
-			self:ScheduleTimer("Say", 6, args.spellId, 2, true)
-			self:ScheduleTimer("Say", 7, args.spellId, 1, true)
+			cancelSay(self)
+			self:StopBar(args.spellId, args.destName)
 		end
 	end
 end
 
-function mod:VolatileWoundRemoved(args)
-	self:StopBar(args.spellId, args.destName)
-end
