@@ -387,7 +387,7 @@ function mod:Deaths(args)
 		self:StopBar(CL.cast:format(self:SpellName(206883))) -- Soul Vortex cast
 	elseif args.mobId == 111070 then -- Azzinoth
 		self:StopBar(221336) -- Chaos Seed
-	elseif args.mobId == 111070 and self:Mythic() then -- Guldan
+	elseif args.mobId == 104154 and self:Mythic() then -- Guldan
 		self:StopBar(CL.count:format(self:SpellName(221606), flamesCount % 3 == 0 and 3 or flamesCount % 3)) -- Flames Bar
 		self:StopBar(206744) -- Black Harvest
 		self:StopBar(167935) -- Storm of the Destroyer
