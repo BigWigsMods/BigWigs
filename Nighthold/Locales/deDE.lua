@@ -26,8 +26,8 @@ if L then
 	L.gotEssence = "Erhielt Essenz"
 
 	L.adds_desc = "Timer und Warnungen für das Erscheinen der Adds."
-	L.adds_trigger1 = "Untertanen! Her zu mir!"
-	L.adds_trigger2 = "Zeigt diesen Amateuren, wie man kämpft!"
+	L.adds_yell1 = "Untertanen! Her zu mir!"
+	L.adds_yell2 = "Zeigt diesen Amateuren, wie man kämpft!"
 end
 
 L = BigWigs:NewBossLocale("Krosus", "deDE")
@@ -82,6 +82,11 @@ L = BigWigs:NewBossLocale("Gul'dan", "deDE")
 if L then
 	L[211152] = "(A) %s" -- (E) Eye of Gul'dan
 	L.gains = "Gul'dan erhält %s"
+	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
+
+	L.nightorb_desc = "Beschwört eine Nachtkugel, beim Töten dieser Kugel erscheint eine Zeitzone"
+
+	L.manifest_desc = "Beschwört ein Seelenfragment von Azzinoth, beim Töten des Fragments erscheint eine Dämonische Essenz"
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "deDE")
