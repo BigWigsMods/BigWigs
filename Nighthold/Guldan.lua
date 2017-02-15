@@ -75,7 +75,7 @@ local L = mod:GetLocale()
 if L then
 	L[211152] = "(E) %s" -- (E) Eye of Gul'dan
 	L.gains = "Gul'dan gains %s"
-	L.p4_mythic_start = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
+	L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
 
 	L.nightorb = "{227283}"
 	L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone"
@@ -270,7 +270,7 @@ end
 -- Event Handlers
 --
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
-	if msg == L.p4_mythic_start and self:Mythic() then -- Mythic Stage 4
+	if msg == L.p4_mythic_start_yell and self:Mythic() then -- Mythic Stage 4
 		phase = 4
 		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
 		self:Bar(211439, 39) -- Will of the Demon Within
