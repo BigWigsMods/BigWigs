@@ -283,17 +283,17 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 227035 then -- Parasitic Wound
 		self:Bar(206847, 36.0)
 	elseif spellId == 221149 or spellId == 227277 then -- Manifest Azzinoth
-		self:Message("manifest", "Attention", "Alert", 221149, "inv_weapon_glave_01")
+		self:Message("manifest", "Attention", "Alert", 221149, L.manifest_icon)
 		self:CDBar(221408, 15.0) -- Bulwark of Azzinoth
-		self:Bar("manifest", 41.0, 221149, "inv_weapon_glave_01") -- Glaive Icon
+		self:Bar("manifest", 41.0, 221149, L.manifest_icon) -- Glaive Icon
 	elseif spellId == 227071 then -- Flame Crash
 		crashCounter = crashCounter + 1
 		self:Bar(227071, crashCounter == 5 and 50 or crashCounter == 8 and 50 or 20, CL.count:format(self:SpellName(227071), crashCounter))
 	elseif spellId == 227283 then -- Nightorb
 		orbCounter = orbCounter + 1
-		self:Message("nightorb", "Attention", "Alert", 227283, "inv_icon_shadowcouncilorb_purple")
+		self:Message("nightorb", "Attention", "Alert", 227283, L.nightorb_icon)
 		if orbCounter ~= 5 then
-			self:Bar("nightorb", orbCounter == 3 and 60 or orbCounter == 4 and 40 or 45, CL.count:format(self:SpellName(227283), orbCounter), "inv_icon_shadowcouncilorb_purple")
+			self:Bar("nightorb", orbCounter == 3 and 60 or orbCounter == 4 and 40 or 45, CL.count:format(self:SpellName(227283), orbCounter), L.nightorb_icon)
 		end
 	end
 end
@@ -415,8 +415,9 @@ function mod:HandOfGuldan(args)
 	if phase == 1 and handOfGuldanCount < 4 then
 		self:Bar(args.spellId, handOfGuldanCount == 2 and 14 or 10, CL.count:format(args.spellName, handOfGuldanCount))
 	elseif phase == 2 then
-		if timers[args.spellId][handOfGuldanCount] then
-			self:Bar(args.spellId, timers[args.spellId][handOfGuldanCount], CL.count:format(args.spellName, handOfGuldanCount))
+		local timer = timers[args.spellId][handOfGuldanCount]
+		if timer then
+			self:Bar(args.spellId, timer, CL.count:format(args.spellName, handOfGuldanCount))
 		end
 	end
 end
@@ -485,17 +486,16 @@ do
 	local easyTimes = {0, 71.4, 71.4, 28.6} -- initial timer is started in phase transition
 	function mod:EyeOfGuldan(args)
 		local spellName = L[args.spellId] and L[args.spellId] or args.spellName
-		local t = nil
 		self:Message(args.spellId, "Urgent", "Alert", CL.count:format(spellName, eyeCount))
-		eyeCount = eyeCount + 1
-		-- TODO Should probably clean up that line below
+		eyeCount = eyeCount + 1				
+		local timer = nil		
 		if phase == 2 then
-			t = self:Easy() and 60 or (self:Mythic() and (eyeCount == 7 and 80 or 48)) or 53.3
+			timer = self:Easy() and 60 or (self:Mythic() and (eyeCount == 7 and 80 or 48)) or 53.3
 		else
-			t = self:Easy() and easyTimes[eyeCount] or timers[211152][eyeCount]
+			timer = self:Easy() and easyTimes[eyeCount] or timers[211152][eyeCount]
 		end
-		if t then
-			self:Bar(args.spellId, t, CL.count:format(spellName, eyeCount))
+		if timer then
+			self:Bar(args.spellId, timer, CL.count:format(spellName, eyeCount))
 		end
 	end
 end
@@ -537,8 +537,9 @@ function mod:StormOfTheDestroyer(args)
 	self:Message(167935, "Important", "Long")
 	if args.spellId == 167819 then -- First Storm
 		stormCount = stormCount + 1
-		if timers[167935][stormCount] then
-			self:Bar(167935, timers[167935][stormCount]) -- timers should be complete
+		local timer = timers[167935][stormCount]
+		if timer then
+			self:Bar(167935, timer) -- timers should be complete
 		end
 	end
 end
@@ -563,8 +564,9 @@ end
 function mod:BlackHarvest(args)
 	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
 	blackHarvestCount = blackHarvestCount + 1
-	if timers[args.spellId][blackHarvestCount] then
-		self:CDBar(args.spellId, timers[args.spellId][blackHarvestCount])
+	local timer = timers[args.spellId][blackHarvestCount]
+	if timer then
+		self:CDBar(args.spellId, timer)
 	end
 end
 
@@ -594,8 +596,9 @@ do
 		if t-prev > 5 then
 			prev = t
 			flamesCount = flamesCount + 1
-			if timers[args.spellId][flamesCount] then
-				self:Bar(args.spellId, timers[args.spellId][flamesCount], CL.count:format(args.spellName, flamesCount % 3 == 0 and 3 or flamesCount % 3))
+			local timer = timers[args.spellId][flamesCount]
+			if timer then
+				self:Bar(args.spellId, timer, CL.count:format(args.spellName, flamesCount % 3 == 0 and 3 or flamesCount % 3))
 			end
 		end
 	end
@@ -617,9 +620,9 @@ function mod:WilloftheDemonWithin(args)
 	visionCounter = 1
 	self:Bar(206847, 8.6) -- Parasitic Wound
 	self:Bar(220957, 19.6, CL.count:format(self:SpellName(220957), severCount)) -- Soulsever	
-	self:Bar("manifest", 26.6, 221149, "inv_weapon_glave_01") -- Manifest Azzinoth
+	self:Bar("manifest", 26.6, 221149, L.manifest_icon) -- Manifest Azzinoth
 	self:Bar(227071, 29.6, CL.count:format(self:SpellName(227071), crashCounter)) -- Flame Crash
-	self:Bar("nightorb", 39.6, CL.count:format(self:SpellName(227283), orbCounter), "inv_icon_shadowcouncilorb_purple") -- Summon Nightorb	
+	self:Bar("nightorb", 39.6, CL.count:format(self:SpellName(227283), orbCounter), L.nightorb_icon) -- Summon Nightorb	
 	self:Bar(227008, 96.2, CL.count:format(self:SpellName(227008), visionCounter)) -- Visions of the Dark Titan		
 end
 
