@@ -579,6 +579,11 @@ end
 
 -- Mythic Stuff
 function mod:WilloftheDemonWithin(args)
+	if not phase == 4 then
+		phase = 4
+		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
+	end
+	
 	self:Message(args.spellId, "Attention", "Warning")
 	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
 	
