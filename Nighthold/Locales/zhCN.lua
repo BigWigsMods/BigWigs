@@ -26,8 +26,8 @@ if L then
 	L.gotEssence = "获得精华"
 
 	L.adds_desc = "增援刷新计时器和警报。"
-	--L.adds_trigger1 = "Underlings! Get in here!"
-	--L.adds_trigger2 = "Show these pretenders how to fight!"
+	--L.adds_yell1 = "Underlings! Get in here!"
+	--L.adds_yell2 = "Show these pretenders how to fight!"
 end
 
 L = BigWigs:NewBossLocale("Krosus", "zhCN")
