@@ -619,10 +619,19 @@ do
 	end
 end
 
+		if #list == 1 then -- First Fixate
+			first = args.destName
+			list[#list+1] = args.destName
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Important", "Info")
+		end
+
 do
-	local playerList = mod:NewTargetList()
+	local playerList, first = mod:NewTargetList(), ""
 	function mod:ShadowyGaze(args)
-		playerList[#playerList+1] = args.destName
+		if args.destName ~= first and #list < 2 then -- First fixate\
+			first = args.destName
+			playerList[#playerList+1] = args.destName
+		end
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Info")
 		end
