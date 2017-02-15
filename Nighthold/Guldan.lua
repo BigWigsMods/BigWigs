@@ -31,6 +31,7 @@ local severCount = 1
 local crashCounter = 1
 local orbCounter = 1
 local visionCounter = 1
+local timeStopCheck = nil
 local heroicTimers = {
 	-- Hand of Gul'dan P2
 	[212258] = {13.5, 48.9, 138.9}, -- not sure if complete, next is at least over 105s
@@ -43,7 +44,7 @@ local heroicTimers = {
 
 	-- Empowered Eye of Gul'dan P3 (211152 _start), after 227427 _applied
 	[211152] = {39.1, 62.5, 62.5, 25, 100}, -- timers should be complete
-	
+
 	-- Flames of Sargeras (When applied).
 	[221606] = {27.6, 7.8, 8.8, 34.7, 7.8, 8.8, 34.7, 7.8, 8.7, 34.8, 7.7, 8.8, 36.0, 7.7, 8.8}
 }
@@ -59,7 +60,7 @@ local mythicTimers = {
 
 	-- Empowered Eye of Gul'dan P3 (211152 _start), after 227427 _applied
 	[211152] = {35.1, 52.6, 53.3, 20.4, 84.2, 52.6},
-	
+
 	-- Flames of Sargeras (When applied).
 	[221606] = {25.7, 6.4, 7.4, 29.4, 6.4, 7.4, 29.4, 6.4, 7.4, 29.4, 6.4, 7.4, 29.5, 7.4, 7.4, 28.4, 6.4, 7.4, 28.4, 6.4, 7.4}
 }
@@ -75,11 +76,11 @@ if L then
 	L[211152] = "(E) %s" -- (E) Eye of Gul'dan
 	L.gains = "Gul'dan gains %s"
 	L.p4_mythic_start = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
-	
+
 	L.nightorb = "{227283}"
 	L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone"
 	L.nightorb_icon = "inv_icon_shadowcouncilorb_purple"
-	
+
 	L.manifest = "{221149}"
 	L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence"
 	L.manifest_icon = "inv_weapon_glave_01"
@@ -135,8 +136,8 @@ function mod:GetOptions()
 		{211152, "PROXIMITY"}, -- Empowered Eye of Gul'dan
 		221781, -- Desolate Ground
 		{227556, "TANK"}, -- Fury of the Fel   XXX untested
-		
-		--[[ Mythic ]] --		
+
+		--[[ Mythic ]] --
 		211439, -- Will of the Demon Within
 		220957, -- Soulsever
 		227071, -- Flame Crash
@@ -165,7 +166,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")	
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("RAID_BOSS_EMOTE")
 
 	--[[ Essence of Aman'Thul ]]--
@@ -222,27 +223,26 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "Damage", 217770, 221781) -- Gaze of Vethriz, Desolate Ground
 	self:Log("SPELL_MISSED", "Damage", 217770, 221781)
 	self:Death("Deaths", 104537, 104534, 111070, 104154) -- Fel Lord Kuraz'mal, D'zorykx the Trapper, Fragment of Azzinoth, Gul'dan
-	
+
 	-- Mythic
 	self:Log("SPELL_CAST_START", "WilloftheDemonWithin", 211439)
 	self:Log("SPELL_AURA_APPLIED", "ParasiticWound", 206847)
 	self:Log("SPELL_AURA_APPLIED", "ShadowyGaze", 206983)
 	self:Log("SPELL_AURA_APPLIED", "ShearedSoul", 206458)
 	self:Log("SPELL_AURA_APPLIED", "Wounded", 227009)
-	self:Log("SPELL_CAST_START", "Soulsever", 220957)	
-	self:Log("SPELL_CAST_START", "VisionsoftheDarkTitan", 227008)	
-	self:Log("SPELL_CAST_SUCCESS", "VisionsoftheDarkTitanSuccess", 227008)	
-		
+	self:Log("SPELL_CAST_START", "Soulsever", 220957)
+	self:Log("SPELL_CAST_START", "VisionsoftheDarkTitan", 227008)
+	self:Log("SPELL_CAST_SUCCESS", "VisionsoftheDarkTitanSuccess", 227008)
+
 	-- Shard of Azzinoth
 	self:Log("SPELL_CAST_SUCCESS", "ChaosSeed", 221336)
-	self:Log("SPELL_CAST_START", "BulwarkofAzzinoth", 221408)	
-	self:Log("SPELL_CAST_START", "PurifiedEssence", 221486)	
-	self:Log("SPELL_CAST_SUCCESS", "PurifiedEssenceSuccess", 221486)	
+	self:Log("SPELL_CAST_START", "BulwarkofAzzinoth", 221408)
+	self:Log("SPELL_CAST_START", "PurifiedEssence", 221486)
+	self:Log("SPELL_CAST_SUCCESS", "PurifiedEssenceSuccess", 221486)
 end
 
 function mod:OnEngage()
 	phase = 1
-	timers = self:Mythic() and mythicTimers or heroicTimers
 	bondsCount = 1
 	liquidHellfireCount = 1
 	handOfGuldanCount = 1
@@ -251,6 +251,8 @@ function mod:OnEngage()
 	flamesCount = 1
 	eyeCount = 1
 	obeliskCounter = 1
+	timeStopCheck = nil
+	timers = self:Mythic() and mythicTimers or heroicTimers
 	if self:Mythic() then
 		phase = 2 -- Mythic skips the P1 of heroic
 		self:Bar(212258, timers[212258][handOfGuldanCount], CL.count:format(self:SpellName(212258), handOfGuldanCount)) -- Hand of Gul'dan
@@ -271,7 +273,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 	if msg == L.p4_mythic_start and self:Mythic() then -- Mythic Stage 4
 		phase = 4
 		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
-		self:Bar(211439, 39) -- Will of the Demon Within	
+		self:Bar(211439, 39) -- Will of the Demon Within
 	end
 end
 
@@ -389,7 +391,7 @@ function mod:Deaths(args)
 		self:StopBar(CL.count:format(self:SpellName(221606), flamesCount % 3 == 0 and 3 or flamesCount % 3)) -- Flames Bar
 		self:StopBar(206744) -- Black Harvest
 		self:StopBar(167935) -- Storm of the Destroyer
-		self:StopBar(CL.count:format(self:SpellName(211152), eyeCount)) -- Eye of Guldan	
+		self:StopBar(CL.count:format(self:SpellName(211152), eyeCount)) -- Eye of Guldan
 	end
 end
 
@@ -473,7 +475,7 @@ do
 	function mod:BondsOfFel(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.5, 209011, list, "Important", "Warning", CL.count:format(self:SpellName(209011), (bondsCount-1)), nil, true) -- Have the bonds number in the list warning also
+			self:ScheduleTimer("TargetMessage", 0.5, 209011, list, "Important", "Warning", CL.count:format(self:SpellName(209011), bondsCount-1), nil, true) -- Have the bonds number in the list warning also
 		end
 		if self:Me(args.destGUID) then
 			self:Say(209011, CL.count:format(args.spellName, #list))
@@ -487,8 +489,8 @@ do
 	function mod:EyeOfGuldan(args)
 		local spellName = L[args.spellId] and L[args.spellId] or args.spellName
 		self:Message(args.spellId, "Urgent", "Alert", CL.count:format(spellName, eyeCount))
-		eyeCount = eyeCount + 1				
-		local timer = nil		
+		eyeCount = eyeCount + 1
+		local timer = nil
 		if phase == 2 then
 			timer = self:Easy() and 60 or (self:Mythic() and (eyeCount == 7 and 80 or 48)) or 53.3
 		else
@@ -604,26 +606,26 @@ do
 	end
 end
 
--- Mythic Stuff
+-- Mythic Only
 function mod:WilloftheDemonWithin(args)
-	if phase ~= 4 then -- Fallback incase Yell for transition is missed
+	if phase ~= 4 then -- Fallback for missing the p4 yell
 		phase = 4
 		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
 	end
-	
+
 	self:Message(args.spellId, "Attention", "Warning")
 	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
-	
+
 	severCount = 1
 	crashCounter = 1
 	orbCounter = 1
 	visionCounter = 1
 	self:Bar(206847, 8.6) -- Parasitic Wound
-	self:Bar(220957, 19.6, CL.count:format(self:SpellName(220957), severCount)) -- Soulsever	
+	self:Bar(220957, 19.6, CL.count:format(self:SpellName(220957), severCount)) -- Soulsever
 	self:Bar("manifest", 26.6, 221149, L.manifest_icon) -- Manifest Azzinoth
 	self:Bar(227071, 29.6, CL.count:format(self:SpellName(227071), crashCounter)) -- Flame Crash
-	self:Bar("nightorb", 39.6, CL.count:format(self:SpellName(227283), orbCounter), L.nightorb_icon) -- Summon Nightorb	
-	self:Bar(227008, 96.2, CL.count:format(self:SpellName(227008), visionCounter)) -- Visions of the Dark Titan		
+	self:Bar("nightorb", 39.6, CL.count:format(self:SpellName(227283), orbCounter), L.nightorb_icon) -- Summon Nightorb
+	self:Bar(227008, 96.2, CL.count:format(self:SpellName(227008), visionCounter)) -- Visions of the Dark Titan
 end
 
 do
@@ -675,34 +677,35 @@ function mod:ShearedSoul(args)
 end
 
 do
-	local timeStopCheck, name = nil, mod:SpellName(206310)
+	local timeStop = mod:SpellName(206310)
 	local prev = 0
-	
-	local function checkForTimeStop()
+
+	local function checkForTimeStop(self)
 		if UnitIsDead("player") then
-			-- Nothing		
-		elseif not UnitDebuff("player", name) then
-			mod:Message(206310, "Personal", "Warning", CL.no:format(name))
-			timeStopCheck = mod:ScheduleTimer(checkForTimeStop, 1)
+			-- Nothing
+		elseif not UnitDebuff("player", timeStop) then
+			self:Message(206310, "Personal", "Warning", CL.no:format(timeStop))
+			timeStopCheck = self:ScheduleTimer(checkForTimeStop, 1, self)
 		else
-			mod:Message(206310, "Positive", nil, CL.you:format(name))
+			self:Message(206310, "Positive", nil, CL.you:format(timeStop))
 		end
 	end
-	
+
 	function mod:PurifiedEssence(args)
 		self:Message(args.spellId, "Important", "Alarm", CL.cast:format(args.spellName))
 		self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
 		if not timeStopCheck then
-			checkForTimeStop()
+			checkForTimeStop(self)
 		end
 	end
-	
+
 	function mod:PurifiedEssenceSuccess(args)
 		if timeStopCheck then
 			self:CancelTimer(timeStopCheck)
+			timeStopCheck = nil
 		end
 	end
-	
+
 	function mod:VisionsoftheDarkTitan(args)
 		visionCounter = visionCounter+1
 		self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
@@ -711,21 +714,22 @@ do
 			self:Bar(args.spellId, visionCounter == 3 and 150 or 90, CL.count:format(args.spellName, visionCounter))
 		end
 		if not timeStopCheck then
-			checkForTimeStop()
+			checkForTimeStop(self)
 		end
 	end
-	
+
 	function mod:VisionsoftheDarkTitanSuccess(args)
 		if timeStopCheck then
 			self:CancelTimer(timeStopCheck)
+			timeStopCheck = nil
 		end
 	end
 end
 
 function mod:Wounded(args)
-	self:Message(args.spellId, "Neutral", "Long", args.spellId)
+	self:Message(args.spellId, "Neutral", "Long")
 	self:Bar(args.spellId, 15)
-	self:StopBar(CL.cast:format(self:SpellName(227008)))
+	self:StopBar(CL.cast:format(self:SpellName(227008))) -- Visions of the Dark Titan
 end
 
 -- Shard of Azzinoth
