@@ -57,8 +57,8 @@ if L then
 
 	L.adds = CL.adds
 	L.adds_desc = "Timers and warnings for the add spawns."
-	L.adds_trigger1 = "Underlings! Get in here!"
-	L.adds_trigger2 = "Show these pretenders how to fight!"
+	L.adds_yell1 = "Underlings! Get in here!"
+	L.adds_yell2 = "Show these pretenders how to fight!"
 end
 
 --------------------------------------------------------------------------------
@@ -133,7 +133,7 @@ function mod:OnEngage()
 	addsKilled = 0
 	wipe(essenceTargets)
 	self:Bar("adds", timers["adds"][addWaveCount], CL.count:format(L.adds, addWaveCount), 212552) -- 212552 = Wraith Walk, inv_helm_plate_raiddeathknight_p_01, id 1100041
-	if GetLocale() ~= "enUS" and L.adds_trigger1 == "Underlings! Get in here!" then -- Not translated
+	if GetLocale() ~= "enUS" and L.adds_yell1 == "Underlings! Get in here!" then -- Not translated
 		self:ScheduleTimer("CHAT_MSG_MONSTER_YELL", timers["adds"][addWaveCount], "timer")
 	end
 	self:Bar(206480, timers[206480][carrionPlagueCount], CL.count:format(self:SpellName(206480), carrionPlagueCount))
@@ -228,7 +228,7 @@ function mod:EchoesOfTheVoid(args)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if event == "timer" or msg == L.adds_trigger1 or msg == L.adds_trigger2 then
+	if event == "timer" or msg == L.adds_yell1 or msg == L.adds_yell2 then
 		self:Message("adds", "Neutral", "Alert", CL.count:format(L.adds, addWaveCount), 212552) -- 212552 = Wraith Walk, inv_helm_plate_raiddeathknight_p_01, id 1100041
 		addWaveCount = addWaveCount + 1
 		local timer = timers["adds"][addWaveCount]

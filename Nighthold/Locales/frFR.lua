@@ -26,8 +26,8 @@ if L then
 	--L.gotEssence = "Got Essence"
 
 	L.adds_desc = "Délais et alertes concernant l'apparition des renforts."
-	L.adds_trigger1 = "Serviteurs ! Ici, tout de suite !"
-	L.adds_trigger2 = "Montrez-leur comment on se bat !"
+	L.adds_yell1 = "Serviteurs ! Ici, tout de suite !"
+	L.adds_yell2 = "Montrez-leur comment on se bat !"
 end
 
 L = BigWigs:NewBossLocale("Krosus", "frFR")

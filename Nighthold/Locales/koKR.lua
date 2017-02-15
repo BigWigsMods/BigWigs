@@ -26,8 +26,8 @@ if L then
 	--L.gotEssence = "Got Essence"
 
 	--L.adds_desc = "Timers and warnings for the add spawns."
-	--L.adds_trigger1 = "Underlings! Get in here!"
-	--L.adds_trigger2 = "Show these pretenders how to fight!"
+	--L.adds_yell1 = "Underlings! Get in here!"
+	--L.adds_yell2 = "Show these pretenders how to fight!"
 end
 
 L = BigWigs:NewBossLocale("Krosus", "koKR")
