@@ -78,11 +78,11 @@ if L then
 	L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
 
 	L.nightorb = "{227283}"
-	L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone"
+	L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone."
 	L.nightorb_icon = "inv_icon_shadowcouncilorb_purple"
 
 	L.manifest = "{221149}"
-	L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence"
+	L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence."
 	L.manifest_icon = "inv_weapon_glave_01"
 end
 
