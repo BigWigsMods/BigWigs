@@ -33,32 +33,32 @@ local orbCounter = 1
 local visionCounter = 1
 local heroicTimers = {
 	-- Hand of Gul'dan P2
-	[212258] = {13.5, 48.9, 138.9, 0}, -- not sure if complete, next is at least over 105s
+	[212258] = {13.5, 48.9, 138.9}, -- not sure if complete, next is at least over 105s
 
 	-- Storm of the Destroyer (167819 _start), after 227427 _applied
-	[167935] = {84.1, 68.8, 61.2, 76.5, 0}, -- timers should be complete
+	[167935] = {84.1, 68.8, 61.2, 76.5}, -- timers should be complete
 
 	-- Black Harvest (206744 _start), after 227427 _applied
-	[206744] = {64.1, 72.5, 87.6, 0}, -- timers should be complete
+	[206744] = {64.1, 72.5, 87.6}, -- timers should be complete
 
 	-- Empowered Eye of Gul'dan P3 (211152 _start), after 227427 _applied
-	[211152] = {39.1, 62.5, 62.5, 25, 100, 0}, -- timers should be complete
+	[211152] = {39.1, 62.5, 62.5, 25, 100}, -- timers should be complete
 	
 	-- Flames of Sargeras (When applied).
 	[221606] = {27.6, 7.8, 8.8, 34.7, 7.8, 8.8, 34.7, 7.8, 8.7, 34.8, 7.7, 8.8, 36.0, 7.7, 8.8}
 }
 local mythicTimers = {
 	-- Hand of Gul'dan "P2"
-	[212258] = {16.6, 181.6, 0},
+	[212258] = {16.6, 181.6},
 
 	-- Storm of the Destroyer (167819 _start), after 227427 _applied
-	[167935] = {72.6, 57.9, 51.6, 64.7, 57.4, 0},
+	[167935] = {72.6, 57.9, 51.6, 64.7, 57.4},
 
 	-- Black Harvest (206744 _start), after 227427 _applied
-	[206744] = {55.7, 61.0, 75.3, 86.8, 0},
+	[206744] = {55.7, 61.0, 75.3, 86.8},
 
 	-- Empowered Eye of Gul'dan P3 (211152 _start), after 227427 _applied
-	[211152] = {35.1, 52.6, 53.3, 20.4, 84.2, 52.6, 0},
+	[211152] = {35.1, 52.6, 53.3, 20.4, 84.2, 52.6},
 	
 	-- Flames of Sargeras (When applied).
 	[221606] = {25.7, 6.4, 7.4, 29.4, 6.4, 7.4, 29.4, 6.4, 7.4, 29.4, 6.4, 7.4, 29.5, 7.4, 7.4, 28.4, 6.4, 7.4, 28.4, 6.4, 7.4}
@@ -292,7 +292,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 227283 then -- Nightorb
 		orbCounter = orbCounter + 1
 		self:Message("nightorb", "Attention", "Alert", 227283, "inv_icon_shadowcouncilorb_purple")
-		if not orbCounter == 5 then
+		if orbCounter ~= 5 then
 			self:Bar("nightorb", orbCounter == 3 and 60 or orbCounter == 4 and 40 or 45, CL.count:format(self:SpellName(227283), orbCounter), "inv_icon_shadowcouncilorb_purple")
 		end
 	end
@@ -415,7 +415,9 @@ function mod:HandOfGuldan(args)
 	if phase == 1 and handOfGuldanCount < 4 then
 		self:Bar(args.spellId, handOfGuldanCount == 2 and 14 or 10, CL.count:format(args.spellName, handOfGuldanCount))
 	elseif phase == 2 then
-		self:Bar(args.spellId, timers[args.spellId][handOfGuldanCount], CL.count:format(args.spellName, handOfGuldanCount))
+		if timers[args.spellId][handOfGuldanCount] then
+			self:Bar(args.spellId, timers[args.spellId][handOfGuldanCount], CL.count:format(args.spellName, handOfGuldanCount))
+		end
 	end
 end
 
@@ -481,12 +483,20 @@ end
 
 do
 	local easyTimes = {0, 71.4, 71.4, 28.6} -- initial timer is started in phase transition
+	local t = nil
 	function mod:EyeOfGuldan(args)
 		local spellName = L[args.spellId] and L[args.spellId] or args.spellName
 		self:Message(args.spellId, "Urgent", "Alert", CL.count:format(spellName, eyeCount))
 		eyeCount = eyeCount + 1
 		-- TODO Should probably clean up that line below
-		self:Bar(args.spellId, (phase == 2 and (self:Easy() and 60 or self:Mythic() and (eyeCount == 7 and 80 or 48) or 53.3)) or (self:Easy() and easyTimes[eyeCount]) or timers[211152][eyeCount], CL.count:format(spellName, eyeCount))
+		if phase == 2 then
+			t = self:Easy() and 60 or (self:Mythic() and (eyeCount == 7 and 80 or 48)) or 53.3
+		else
+			t = self:Easy() and easyTimes[eyeCount] or timers[211152][eyeCount]
+		end
+		if t then
+			self:Bar(args.spellId, t, CL.count:format(spellName, eyeCount))
+		end
 	end
 end
 
@@ -527,7 +537,9 @@ function mod:StormOfTheDestroyer(args)
 	self:Message(167935, "Important", "Long")
 	if args.spellId == 167819 then -- First Storm
 		stormCount = stormCount + 1
-		self:Bar(167935, timers[167935][stormCount]) -- timers should be complete
+		if timers[167935][stormCount] then
+			self:Bar(167935, timers[167935][stormCount]) -- timers should be complete
+		end
 	end
 end
 
@@ -551,7 +563,9 @@ end
 function mod:BlackHarvest(args)
 	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
 	blackHarvestCount = blackHarvestCount + 1
-	self:CDBar(args.spellId, timers[args.spellId][blackHarvestCount])
+	if timers[args.spellId][blackHarvestCount] then
+		self:CDBar(args.spellId, timers[args.spellId][blackHarvestCount])
+	end
 end
 
 do
@@ -580,14 +594,16 @@ do
 		if t-prev > 5 then
 			prev = t
 			flamesCount = flamesCount + 1
-			self:Bar(args.spellId, timers[args.spellId][flamesCount], CL.count:format(args.spellName, flamesCount % 3 == 0 and 3 or flamesCount % 3))
+			if timers[args.spellId][flamesCount] then
+				self:Bar(args.spellId, timers[args.spellId][flamesCount], CL.count:format(args.spellName, flamesCount % 3 == 0 and 3 or flamesCount % 3))
+			end
 		end
 	end
 end
 
 -- Mythic Stuff
 function mod:WilloftheDemonWithin(args)
-	if not phase == 4 then
+	if phase ~= 4 then -- Fallback incase Yell for transition is missed
 		phase = 4
 		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
 	end
@@ -688,7 +704,7 @@ do
 		visionCounter = visionCounter+1
 		self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
 		self:Bar(args.spellId, 9, CL.cast:format(args.spellName))
-		if not visionCounter == 4 then
+		if visionCounter ~= 4 then
 			self:Bar(args.spellId, visionCounter == 3 and 150 or 90, CL.count:format(args.spellName, visionCounter))
 		end
 		if not timeStopCheck then
