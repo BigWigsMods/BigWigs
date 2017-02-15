@@ -75,7 +75,16 @@ if L then
 	L[211152] = "(E) %s" -- (E) Eye of Gul'dan
 	L.gains = "Gul'dan gains %s"
 	L.p4_mythic_start = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
+	
+	L.nightorb = "{227283}"
+	L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone"
+	L.nightorb_icon = "inv_icon_shadowcouncilorb_purple"
+	
+	L.manifest = "{221149}"
+	L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence"
+	L.manifest_icon = "inv_weapon_glave_01"
 end
+
 L[211152] = L[211152]:format(mod:SpellName(209270))
 
 --------------------------------------------------------------------------------
@@ -133,11 +142,11 @@ function mod:GetOptions()
 		227071, -- Flame Crash
 		{206847, "FLASH", "SAY"}, -- Parasitic Wound
 		{206983, "FLASH", "SAY"}, -- Shadowy Gaze
-		221149, -- Manifest Azzinoth
+		"manifest", -- Manifest Azzinoth
 		221336, -- Chaos Seed
 		221408, -- Bulwark of Azzinoth
 		221486, -- Purify Essence
-		227283, -- Summon Nightorb
+		"nightorb", -- Summon Nightorb
 		227008, -- Visions of the Dark Titan
 		227009, -- Wounded
 		{206310, "EMPHASIZE"}, -- Time Stop
@@ -274,17 +283,17 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 227035 then -- Parasitic Wound
 		self:Bar(206847, 36.0)
 	elseif spellId == 221149 or spellId == 227277 then -- Manifest Azzinoth
-		self:Message(221149, "Attention", "Alert", 221149, "inv_weapon_glave_01")
+		self:Message("manifest", "Attention", "Alert", 221149, "inv_weapon_glave_01")
 		self:CDBar(221408, 15.0) -- Bulwark of Azzinoth
-		self:Bar(221149, 41.0, 221149, "inv_weapon_glave_01") -- Glaive Icon
+		self:Bar("manifest", 41.0, 221149, "inv_weapon_glave_01") -- Glaive Icon
 	elseif spellId == 227071 then -- Flame Crash
 		crashCounter = crashCounter + 1
 		self:Bar(227071, crashCounter == 5 and 50 or crashCounter == 8 and 50 or 20, CL.count:format(self:SpellName(227071), crashCounter))
 	elseif spellId == 227283 then -- Nightorb
 		orbCounter = orbCounter + 1
-		self:Message(227283, "Attention", "Alert", 227283, "inv_icon_shadowcouncilorb_purple")
+		self:Message("nightorb", "Attention", "Alert", 227283, "inv_icon_shadowcouncilorb_purple")
 		if not orbCounter == 5 then
-			self:Bar(227283, orbCounter == 3 and 60 or orbCounter == 4 and 40 or 45, CL.count:format(self:SpellName(227283), orbCounter), "inv_icon_shadowcouncilorb_purple")
+			self:Bar("nightorb", orbCounter == 3 and 60 or orbCounter == 4 and 40 or 45, CL.count:format(self:SpellName(227283), orbCounter), "inv_icon_shadowcouncilorb_purple")
 		end
 	end
 end
@@ -592,9 +601,9 @@ function mod:WilloftheDemonWithin(args)
 	visionCounter = 1
 	self:Bar(206847, 8.6) -- Parasitic Wound
 	self:Bar(220957, 19.6, CL.count:format(self:SpellName(220957), severCount)) -- Soulsever	
-	self:Bar(221149, 26.6, 221149, "inv_weapon_glave_01") -- Manifest Azzinoth
+	self:Bar("manifest", 26.6, 221149, "inv_weapon_glave_01") -- Manifest Azzinoth
 	self:Bar(227071, 29.6, CL.count:format(self:SpellName(227071), crashCounter)) -- Flame Crash
-	self:Bar(227283, 39.6, CL.count:format(self:SpellName(227283), orbCounter), "inv_icon_shadowcouncilorb_purple") -- Summon Nightorb	
+	self:Bar("nightorb", 39.6, CL.count:format(self:SpellName(227283), orbCounter), "inv_icon_shadowcouncilorb_purple") -- Summon Nightorb	
 	self:Bar(227008, 96.2, CL.count:format(self:SpellName(227008), visionCounter)) -- Visions of the Dark Titan		
 end
 
