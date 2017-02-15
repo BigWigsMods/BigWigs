@@ -483,9 +483,9 @@ end
 
 do
 	local easyTimes = {0, 71.4, 71.4, 28.6} -- initial timer is started in phase transition
-	local t = nil
 	function mod:EyeOfGuldan(args)
 		local spellName = L[args.spellId] and L[args.spellId] or args.spellName
+		local t = nil
 		self:Message(args.spellId, "Urgent", "Alert", CL.count:format(spellName, eyeCount))
 		eyeCount = eyeCount + 1
 		-- TODO Should probably clean up that line below
