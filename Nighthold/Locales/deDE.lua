@@ -72,8 +72,8 @@ L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "deDE")
 if L then
 	--L.elisande = "Elisande"
 
-	--L.ring_msg = "Let the waves of time crash over you!"
-	--L.orb_msg = "You'll find time can be quite volatile."
+	--L.ring_yell = "Let the waves of time crash over you!"
+	--L.orb_yell = "You'll find time can be quite volatile."
 
 	--L.fastTimeZone = "Fast Time Zone"
 end
