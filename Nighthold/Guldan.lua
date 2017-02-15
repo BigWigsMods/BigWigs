@@ -271,7 +271,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 210273 then -- Fel Obelisk
 		obeliskCounter = obeliskCounter+1
 		self:Message(spellId, "Attention", "Alarm")
-		self:Bar(229945, self:Mythic() and ((obeliskCount % 2 == 0) and 5 or 16) or 23) -- Fel Obelisk
+		self:Bar(229945, self:Mythic() and ((obeliskCounter % 2 == 0) and 5 or 16) or 23) -- Fel Obelisk
 	elseif spellId == 227035 then -- Parasitic Wound
 		self:Bar(206847, 36.0)
 	elseif spellId == 221149 or spellId == 227277 then -- Manifest Azzinoth
