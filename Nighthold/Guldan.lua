@@ -222,7 +222,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Wounded", 227009)
 	self:Log("SPELL_CAST_START", "Soulsever", 220957)	
 	self:Log("SPELL_CAST_START", "VisionsoftheDarkTitan", 227008)	
-	self:Log("UNIT_SPELLCAST_STOP", "VisionsoftheDarkTitanStopped", 227008)	
 	self:Log("SPELL_CAST_SUCCESS", "VisionsoftheDarkTitanSuccess", 227008)	
 		
 	-- Shard of Azzinoth
@@ -680,12 +679,6 @@ do
 		end
 		if not timeStopCheck then
 			checkForTimeStop()
-		end
-	end
-
-	function mod:VisionsoftheDarkTitanStopped(args)
-		if timeStopCheck then
-			self:CancelTimer(timeStopCheck)
 		end
 	end
 	
