@@ -276,7 +276,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(206847, 36.0)
 	elseif spellId == 221149 or spellId == 227277 then -- Manifest Azzinoth
 		self:Message(221149, "Attention", "Alert", 221149, "inv_weapon_glave_01")
-		self:CDBar(221408, 15.0)
+		self:CDBar(221408, 15.0) -- Bulwark of Azzinoth
 		self:Bar(221149, 41.0, 221149, "inv_weapon_glave_01") -- Glaive Icon
 	elseif spellId == 227071 then -- Flame Crash
 		crashCounter = crashCounter + 1
