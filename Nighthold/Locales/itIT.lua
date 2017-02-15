@@ -82,6 +82,11 @@ L = BigWigs:NewBossLocale("Gul'dan", "itIT")
 if L then
 	--L[211152] = "(E) %s" -- (E) Eye of Gul'dan
 	--L.gains = "Gul'dan gains %s"
+	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
+
+	--L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone"
+
+	--L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence"
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "itIT")
