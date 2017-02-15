@@ -101,7 +101,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SeekerSwarm", 213238)
 	self:Log("SPELL_AURA_APPLIED", "BrandOfArgus", 212794)
 	self:Log("SPELL_CAST_SUCCESS", "BrandOfArgusSuccess", 212794)
-	self:Log("SPELL_AURA_APPLIED", "FeastOfBlood", 208230)
+	self:Log("SPELL_CAST_SUCCESS", "FeastOfBlood", 208230)
 	self:Log("SPELL_CAST_START", "EchoesOfTheVoid", 213531)
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
@@ -340,4 +340,3 @@ do
 		end
 	end
 end
-
