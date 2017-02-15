@@ -633,7 +633,7 @@ end
 function mod:Soulsever(args)
 	severCount = severCount + 1
 	self:Message(args.spellId, "Urgent", self:Tank() and "Warning", args.spellName)
-	self:Bar(args.spellId, severCount == 5 and 50 or severCount == 8 and 50 or 20, CL.count:format(self:SpellName(args.spellId), severCount))
+	self:Bar(args.spellId, severCount == 5 and 50 or severCount == 8 and 50 or 20, CL.count:format(args.spellName, severCount))
 end
 
 function mod:ShearedSoul(args)
@@ -676,7 +676,7 @@ do
 		self:Message(args.spellId, "Important", "Alarm", CL.cast:format(args.spellName))
 		self:Bar(args.spellId, 9, CL.cast:format(args.spellName))
 		if not visionCounter == 4 then
-			self:Bar(args.spellId, visionCounter == 3 and 150 or 90, CL.count:format(self:SpellName(args.spellId), visionCounter))
+			self:Bar(args.spellId, visionCounter == 3 and 150 or 90, CL.count:format(args.spellName, visionCounter))
 		end
 		if not timeStopCheck then
 			checkForTimeStop()
@@ -708,5 +708,5 @@ function mod:ChaosSeed(args)
 end
 
 function mod:BulwarkofAzzinoth(args)
-	self:Message(args.spellId, "Urgent", "Alert", args.spellName)
+	self:Message(args.spellId, "Urgent", "Alert")
 end
