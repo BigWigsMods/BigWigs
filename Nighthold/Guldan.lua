@@ -620,14 +620,16 @@ do
 end
 
 do
+	-- 4 Fixates, 2 players, avoid double names in list.
 	local playerList, first = mod:NewTargetList(), ""
 	function mod:ShadowyGaze(args)
-		if args.destName ~= first and #playerList < 2 then -- First fixate\
+		if #playerList == 0 then -- First fixate
 			first = args.destName
 			playerList[#playerList+1] = args.destName
-		end
-		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Info")
+		end
+		if args.destName ~= first and #playerList < 2 then -- Second Fixate
+			playerList[#playerList+1] = args.destName
 		end
 	end
 end
@@ -675,7 +677,7 @@ do
 	
 	function mod:VisionsoftheDarkTitan(args)
 		visionCounter = visionCounter+1
-		self:Message(args.spellId, "Important", "Alarm", CL.cast:format(args.spellName))
+		self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
 		self:Bar(args.spellId, 9, CL.cast:format(args.spellName))
 		if not visionCounter == 4 then
 			self:Bar(args.spellId, visionCounter == 3 and 150 or 90, CL.count:format(args.spellName, visionCounter))
