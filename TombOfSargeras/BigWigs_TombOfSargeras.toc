@@ -30,3 +30,4 @@
 ## X-BigWigs-LoadOn-ZoneId: 1147
 
 modules.xml
+locales.xml
