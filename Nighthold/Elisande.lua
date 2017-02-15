@@ -164,9 +164,9 @@ local L = mod:GetLocale()
 if L then
 	L.elisande = "Elisande"
 
-	L.ring_msg = "Let the waves of time crash over you!"
+	L.ring_yell = "Let the waves of time crash over you!"
 	--L.singularity_msg = "I control the battlefield, not you!" -- unused
-	L.orb_msg = "You'll find time can be quite volatile."
+	L.orb_yell = "You'll find time can be quite volatile."
 	--L.beam_msg = "The threads of time answer to me!" -- unused
 
 	L.recursive_elemental = -13226
@@ -180,8 +180,8 @@ end
 -- Localization fallback (l11n)
 local english_ring_msg = "Let the waves of time crash over you!"
 local english_orb_msg = "You'll find time can be quite volatile."
-local need_ring_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_msg
-local need_orb_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_msg
+local need_ring_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_yell
+local need_orb_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_yell
 local ring_msg_is_next = nil
 local orb_msg_is_next = nil
 local localized_ring_msg = nil
@@ -297,8 +297,8 @@ function mod:OnEngage()
 	savedBeamCount = nil
 
 	-- l11n START
-	need_ring_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_msg
-	need_orb_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_msg
+	need_ring_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_yell
+	need_orb_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_yell
 	-- l11n END
 
 	timers = self:Mythic() and mythicTimers or mod:Heroic() and heroicTimers or normalTimers
@@ -382,14 +382,14 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 	end
 	-- l11n END
 
-	if msg:find(L.ring_msg) or (localized_ring_msg and msg:find(localized_ring_msg)) then -- Arcanetic Ring, l11n
+	if msg == L.ring_yell or (localized_ring_msg and msg:find(localized_ring_msg)) then -- Arcanetic Ring, l11n
 		self:Message(208807, "Attention", "Alarm", CL.count:format(self:SpellName(208807), ringCount))
 		ringCount = ringCount + 1
 		if not savedRingCount or ringCount < savedRingCount then
 			self:Bar(208807, timers[208807][ringCount], CL.count:format(self:SpellName(208807), ringCount))
 		end
 
-	elseif msg:find(L.orb_msg) or (localized_orb_msg and msg:find(localized_orb_msg)) then -- Epocheric Orb, l11n
+	elseif msg == L.orb_yell or (localized_orb_msg and msg:find(localized_orb_msg)) then -- Epocheric Orb, l11n
 		self:Message(210022, "Urgent", "Alert", CL.count:format(self:SpellName(210022), orbCount))
 		orbCount = orbCount + 1
 		if not savedOrbCount or orbCount < savedOrbCount then
