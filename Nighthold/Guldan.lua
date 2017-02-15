@@ -45,7 +45,7 @@ local heroicTimers = {
 	[211152] = {39.1, 62.5, 62.5, 25, 100, 0}, -- timers should be complete
 	
 	-- Flames of Sargeras (When applied).
-	[221606] = {27.6, 7.8, 8.8, 34.7, 7.8, 8.8,  34.7, 7.8, 8.7, 34.8, 7.7, 8.8, 36.0, 7.7, 8.8}
+	[221606] = {27.6, 7.8, 8.8, 34.7, 7.8, 8.8, 34.7, 7.8, 8.7, 34.8, 7.7, 8.8, 36.0, 7.7, 8.8}
 }
 local mythicTimers = {
 	-- Hand of Gul'dan "P2"
