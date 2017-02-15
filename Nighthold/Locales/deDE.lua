@@ -84,9 +84,9 @@ if L then
 	L.gains = "Gul'dan erhält %s"
 	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
 
-	L.nightorb_desc = "Beschwört eine Nachtkugel, beim Töten dieser Kugel erscheint eine Zeitzone"
+	L.nightorb_desc = "Beschwört eine Nachtkugel, beim Töten dieser Kugel erscheint eine Zeitzone."
 
-	L.manifest_desc = "Beschwört ein Seelenfragment von Azzinoth, beim Töten des Fragments erscheint eine Dämonische Essenz"
+	L.manifest_desc = "Beschwört ein Seelenfragment von Azzinoth, beim Töten des Fragments erscheint eine Dämonische Essenz."
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "deDE")

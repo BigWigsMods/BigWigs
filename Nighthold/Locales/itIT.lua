@@ -84,9 +84,9 @@ if L then
 	--L.gains = "Gul'dan gains %s"
 	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
 
-	--L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone"
+	--L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone."
 
-	--L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence"
+	--L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence."
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "itIT")
