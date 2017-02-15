@@ -408,7 +408,7 @@ do
 
 			sort(playerTable, function(a, b) return a.value > b.value end)
 
-			for i = 1, math.min(3, #playerTable) do
+			for i = 1, 3 do
 				if playerTable[i] then
 					self:SetInfo(206609, 3+i*2, self:ColorName(playerTable[i].name))
 					self:SetInfo(206609, 4+i*2, AbbreviateNumbers(playerTable[i].value))

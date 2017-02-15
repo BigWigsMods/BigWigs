@@ -1276,10 +1276,10 @@ function boss:AddPlate(spellId, playerName, duration, desaturate)
 end
 
 --- Remove aura from nameplate.
--- @param spellId the associated spell id
+-- @param spellId the associated spell id, passing nil removes all icons
 -- @param playerName the affected player
 function boss:RemovePlate(spellId, playerName)
-	self:SendMessage("BigWigs_HideNameplateAura", self, playerName, icons[spellId])
+	self:SendMessage("BigWigs_HideNameplateAura", self, playerName, spellId and icons[spellId])
 end
 
 -------------------------------------------------------------------------------

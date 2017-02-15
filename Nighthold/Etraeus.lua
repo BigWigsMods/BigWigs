@@ -21,12 +21,14 @@ local phase = 1
 local mobCollector = {}
 local gravPullSayTimers = {}
 local ejectionCount = 1
+local novaCount = 1
 local timers = {
-	-- Icy Ejection, SPELL_CAST_SUCCESS, timers vary a lot (+-2s)
-	[206936] = {25, 35, 6, 6, 48, 2, 2},
+	-- Icy Ejection, SPELL_CAST_SUCCESS, timers vary sometimes (+-2s)
+	[206936] = {25, 35.2, 6.6, 4.8, 51.2, 2.1, 3.0, 24.2, 2.1, 2.2},
 
-	-- Fel Ejection, SPELL_CAST_SUCCESS
-	[205649] = {17, 4, 4, 2, 10, 3.5, 3.5, 32, 4, 3.5, 3.5, 3.5, 22, 7.5, 17.5, 1, 2, 1.5},
+	-- Fel Ejection, SPELL_CAST_SUCCESS, timers vary sometimes (+-2s)
+	[205649] = {17, 3.9, 2.9, 2.6, 9.7, 2.1, 1.5, 32.7, 1.8, 2.0, 13.7, 3.2, 1.9, 21.8, 7.3, 11.1, 2.9, 2.1, 23.3, 2.0, 2.0}
+
 }
 
 local grandCounter = 1
@@ -38,7 +40,7 @@ local grandTimers = {
 }
 
 local worldDevouringForceCounter = 1
-local worldDevouringForceTimers = {22.7, 41.7, 57.6}
+local worldDevouringForceTimers = {22.7, 41.7, 57.6, 52.2}
 
 local voidCount = 1
 
@@ -48,6 +50,24 @@ local starSignTables = {
 	[216345] = {},
 	[216344] = {},
 }
+
+local defaultIcons = {
+	[205429] = 205429,
+	[205445] = 205445,
+	[216345] = 216345,
+	[216344] = 216344,
+}
+local icons = defaultIcons
+
+local replacementIcons = {
+	[205429] = 227498, -- Yellow/Orange
+	[205445] = 227491, -- Red
+	[216345] = 227500, -- Green
+	[216344] = 227499, -- Blue
+}
+
+local redIcon = 189030
+local greenIcon = 189032
 
 --------------------------------------------------------------------------------
 -- Upvalues
@@ -82,6 +102,24 @@ if L then
 
 	L.custom_on_grand_conjunction_nameplates = "Show {205408} on friendly nameplates" -- Grand Conjunction
 	L.custom_on_grand_conjunction_nameplates_desc = L.nameplate_requirement
+
+	-- Do no replace this options below
+	L.custom_off_gc_replacement_icons = "Use brighter icons for {205408}"
+	L.custom_off_gc_replacement_icons_desc = "Replace the nameplate icons used by Grand Conjunction for better visibility:"
+
+	L.custom_off_gc_redgreen_icons = "Only use red and green icons for {205408}"
+	L.custom_off_gc_redgreen_icons_desc = "Change the nameplate icons for matching star signs to |T876914:15:15:0:0:64:64:4:60:4:60|t and non matching star signs to |T876915:15:15:0:0:64:64:4:60:4:60|t."
+end
+
+do -- Create the description string for the replacement icons
+	local s = ""
+	local tex = "|T%s:15:15:0:0:64:64:4:60:4:60|t"
+	for k,v in pairs(replacementIcons) do
+		local _,_,kicon = GetSpellInfo(k)
+		local _,_,vicon = GetSpellInfo(v)
+		s = s .. "\n" .. tex:format(kicon) .. " => ".. tex:format(vicon)
+	end
+	L.custom_off_gc_replacement_icons_desc = L.custom_off_gc_replacement_icons_desc .. s
 end
 
 --------------------------------------------------------------------------------
@@ -125,6 +163,8 @@ function mod:GetOptions()
 		"custom_on_fel_ejection_nameplates",
 		"custom_on_gravitational_pull_nameplates",
 		"custom_on_grand_conjunction_nameplates",
+		"custom_off_gc_replacement_icons",
+		"custom_off_gc_redgreen_icons",
 	}, {
 		["stages"] = "general",
 		[206464] = -13033, -- Stage One
@@ -185,6 +225,7 @@ function mod:OnBossEnable()
 
 			-- Experimenting with using callbacks for nameplate addons
 			self:ShowFriendlyNameplates()
+			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED") -- see comment above the function for explanation
 		end
 	end
 end
@@ -193,14 +234,16 @@ function mod:OnEngage()
 	phase = 1
 	ejectionCount = 1
 	grandCounter = 1
- 	worldDevouringForceCounter = 1
+	novaCount = 1
+	worldDevouringForceCounter = 1
 	voidCount = 1
 	wipe(mobCollector)
 	wipe(gravPullSayTimers)
 	self:Bar(206464, 12.5) -- Coronal Ejection
-	self:Bar(221875, self:Mythic() and 40 or 20) -- Nether Traversal
 	if self:Mythic() then
 		self:CDBar(205408, 15) -- Grand Conjunction
+	else
+		self:Bar(221875, 20) -- Nether Traversal
 	end
 	starSignTables = {
 		[205429] = {},
@@ -208,6 +251,9 @@ function mod:OnEngage()
 		[216345] = {},
 		[216344] = {},
 	}
+	if self:GetOption("custom_off_gc_replacement_icons") then
+		icons = replacementIcons
+	end
 end
 
 function mod:OnBossDisable()
@@ -224,47 +270,53 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		phase = 2
 		self:Message("stages", "Neutral", "Long", "90% - ".. CL.stage:format(2), false)
 		ejectionCount = 1
+		novaCount = 1
 		self:CDBar(206936, timers[206936][ejectionCount], CL.count:format(self:SpellName(206936), ejectionCount))
 		self:Bar(205984, 30) -- Gravitational Pull
 		if not self:Easy() then
-			self:Bar(206949, 53) -- Frigid Nova
+			self:Bar(206949, self:Mythic() and 49 or 53, CL.count:format(self:SpellName(206949), novaCount)) -- Frigid Nova
 		end
 		if self:Mythic() then
+			self:StopBar(CL.count:format(self:SpellName(205408), grandCounter)) -- Grand Conjunction
 			grandCounter = 1
-			self:CDBar(205408, 26) -- Grand Conjunction
+			self:CDBar(205408, 26, CL.count:format(self:SpellName(205408), grandCounter)) -- Grand Conjunction
 		end
 	elseif spellId == 222133 then -- Phase 3 Conversation
 		phase = 3
 		self:Message("stages", "Neutral", "Long", "60% - ".. CL.stage:format(3), false)
-		self:StopBar(CL.count:format(self:SpellName(206936, ejectionCount)))
-		self:StopBar(206949) -- Frigid Nova
+		self:StopBar(CL.count:format(self:SpellName(206936, ejectionCount))) -- Icy Ejection
+		self:StopBar(CL.count:format(self:SpellName(206949), novaCount)) -- Frigid Nova
 		ejectionCount = 1
+		novaCount = 1
 		self:CDBar(205649, timers[205649][ejectionCount], CL.count:format(self:SpellName(205649), ejectionCount))
 		self:CDBar(214167, 28) -- Gravitational Pull
 		if not self:Easy() then
-			self:CDBar(206517, 62) -- Fel Nova
+			self:CDBar(206517, self:Mythic() and 52 or 62, CL.count:format(self:SpellName(206517), novaCount)) -- Fel Nova
 		end
 		if self:Mythic() then
+			self:StopBar(CL.count:format(self:SpellName(205408), grandCounter)) -- Grand Conjunction
 			grandCounter = 1
-			self:CDBar(205408, 60) -- Grand Conjunction
+			self:CDBar(205408, 60, CL.count:format(self:SpellName(205408), grandCounter)) -- Grand Conjunction
 		end
 	elseif spellId == 222134 then -- Phase 4 Conversation
 		phase = 4
 		self:Message("stages", "Neutral", "Long", "30% - ".. CL.stage:format(4), false)
 		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-		self:StopBar(CL.count:format(self:SpellName(205649, ejectionCount)))
-		self:StopBar(206517) -- Fel Nova
+		self:StopBar(CL.count:format(self:SpellName(205649), ejectionCount)) -- Fel Ejection
+		self:StopBar(CL.count:format(self:SpellName(206517), novaCount)) -- Fel Nova
 		ejectionCount = 1
+		novaCount = 1
 		self:CDBar(214335, 20) -- Gravitational Pull
 		if not self:Easy() then
-			self:CDBar(207439, 42) -- Void Nova
+			self:CDBar(207439, 42, CL.count:format(self:SpellName(207439), novaCount)) -- Void Nova
 		end
 		self:Berserk(201.5, true, nil, 222761, 222761) -- Big Bang (end of cast)
 		if self:Mythic() then
+			self:StopBar(CL.count:format(self:SpellName(205408), grandCounter)) -- Grand Conjunction
 			grandCounter = 1
 			worldDevouringForceCounter = 1
-			self:CDBar(205408, 47) -- Grand Conjunction
-			self:Bar(216909, worldDevouringForceTimers[worldDevouringForceCounter]) -- World-Devouring Force
+			self:CDBar(205408, 47, CL.count:format(self:SpellName(205408), grandCounter)) -- Grand Conjunction
+			self:Bar(216909, worldDevouringForceTimers[worldDevouringForceCounter], CL.count:format(self:SpellName(216909), worldDevouringForceCounter)) -- World-Devouring Force
 		end
 	end
 end
@@ -286,7 +338,7 @@ end
 
 --[[ Stage One ]]--
 function mod:CoronalEjection(args)
-	self:Message(args.spellId, "Attention", "Info")
+	self:Message(args.spellId, "Attention")
 end
 
 --[[ Stage Two ]]--
@@ -333,13 +385,16 @@ function mod:GravitationalPullRemoved(args)
 end
 
 function mod:IcyEjection(args)
-	ejectionCount = ejectionCount + 1
-	self:CDBar(args.spellId, timers[args.spellId][ejectionCount] or 30, CL.count:format(args.spellName, ejectionCount))
+	self:StopBar(CL.count:format(args.spellName, ejectionCount))
+	if phase == 2 then -- Prevent starting the bar in phase transition
+		ejectionCount = ejectionCount + 1
+		self:CDBar(args.spellId, timers[args.spellId][ejectionCount] or 30, CL.count:format(args.spellName, ejectionCount))
+	end
 end
 
 function mod:IcyEjectionApplied(args)
 	if self:GetOption("custom_off_icy_ejection_nameplates") then
-		self:AddPlate(args.spellId, args.destName, 10)
+		self:AddPlate(args.spellId, args.destName, 8)
 	end
 
 	if self:Me(args.destGUID) then
@@ -363,7 +418,8 @@ end
 function mod:FrigidNova(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
-	self:CDBar(args.spellId, 60)
+	novaCount = novaCount + 1
+	self:CDBar(args.spellId, 61, CL.count:format(args.spellName, novaCount))
 end
 
 function mod:Chilled(args)
@@ -384,17 +440,21 @@ end
 function mod:FelNova(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
-	self:CDBar(args.spellId, 45)
+	novaCount = novaCount + 1
+	self:Bar(args.spellId, (self:Mythic() and (novaCount == 2 and 48.5 or 51)) or 45, CL.count:format(args.spellName, novaCount))
 end
 
 function mod:FelEjection(args)
-	ejectionCount = ejectionCount + 1
-	self:CDBar(args.spellId, timers[args.spellId][ejectionCount] or 30, CL.count:format(args.spellName, ejectionCount))
+	self:StopBar(CL.count:format(args.spellName, ejectionCount))
+	if phase == 3 then -- Prevent starting the bar in phase transition
+		ejectionCount = ejectionCount + 1
+		self:CDBar(args.spellId, timers[args.spellId][ejectionCount] or 30, CL.count:format(args.spellName, ejectionCount))
+	end
 end
 
 function mod:FelEjectionApplied(args)
 	if self:GetOption("custom_on_fel_ejection_nameplates") then
-		self:AddPlate(args.spellId, args.destName, 10)
+		self:AddPlate(args.spellId, args.destName, 8)
 	end
 
 	if self:Me(args.destGUID) then
@@ -420,7 +480,7 @@ function mod:WorldDevouringForce(args)
 	worldDevouringForceCounter = worldDevouringForceCounter + 1
 	local t = worldDevouringForceTimers[worldDevouringForceCounter]
 	if t then
-		self:Bar(args.spellId, t)
+		self:Bar(args.spellId, t, CL.count:format(args.spellName, worldDevouringForceCounter))
 	end
 end
 
@@ -440,6 +500,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 end
 
 function mod:WitnessTheVoid(args)
+	self:StopBar(CL.count:format(args.spellName, voidCount)) -- will be replaced by a CL.cast bar
 	self:Message(args.spellId, "Attention", "Warning", CL.casting:format(CL.count:format(args.spellName, voidCount)))
 	self:Bar(args.spellId, self:Mythic() and 2.8 or 4, CL.cast:format(CL.count:format(args.spellName, voidCount)))
 	voidCount = voidCount + 1
@@ -456,8 +517,8 @@ do
 	local mySign, scheduled, tryCount = nil, nil, 0
 
 	function mod:GrandConjunction(args)
+		self:Message(args.spellId, "Attention", "Info", CL.count:format(args.spellName, grandCounter))
 		grandCounter = grandCounter + 1
-		self:Message(args.spellId, "Attention", "Info")
 		self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
 		self:OpenProximity(args.spellId, 5) -- no idea if this range is reasonable
 
@@ -471,7 +532,7 @@ do
 		elseif phase == 3 then
 			timer = 42
 		end
-		self:CDBar(args.spellId, timer)
+		self:CDBar(args.spellId, timer, CL.count:format(args.spellName, grandCounter))
 
 		starSignTables = {
 			[205429] = {},
@@ -480,6 +541,7 @@ do
 			[216344] = {},
 		}
 		tryCount = 0
+		mySign = nil
 	end
 
 	function mod:GrandConjunctionSuccess(args)
@@ -500,7 +562,8 @@ do
 			for _,name in pairs(starSignTables[mySign]) do
 				list[#list+1] = name
 			end
-			self:TargetMessage(205408, list, "Personal", "Warning", mySign, mySign)
+			local color = mySign == 205429 and "Attention" or mySign == 205445 and "Important" or mySign == 216345 and "Positive" or "Personal"
+			self:TargetMessage(205408, list, color, "Warning", mySign, mySign)
 			scheduled = nil
 		end
 	end
@@ -521,6 +584,7 @@ do
 			self:SetInfo(205408, 4, "")
 			self:SetInfo(205408, 6, "")
 			self:SetInfo(205408, 8, "")
+			self:SetInfo(205408, 10, "")
 
 			local i = 0
 			for _,name in pairs(starSignTables[mySign]) do
@@ -538,7 +602,15 @@ do
 
 	function mod:StarSigns(args)
 		if self:GetOption("custom_on_grand_conjunction_nameplates") then
-			self:AddPlate(args.spellId, args.destName, 10, mySign and args.spellId ~= mySign)
+			if not self:GetOption("custom_off_gc_redgreen_icons") then
+				self:AddPlate(icons[args.spellId], args.destName, 10, mySign and args.spellId ~= mySign)
+			elseif mySign then
+				if mySign == args.spellId then -- matching
+					self:AddPlate(greenIcon, args.destName, 10)
+				else -- non matching
+					self:AddPlate(redIcon, args.destName, 10)
+				end
+			end
 		end
 
 		if self:Me(args.destGUID) then
@@ -546,13 +618,21 @@ do
 
 			if self:GetOption("custom_on_grand_conjunction_nameplates") then
 				for spellId,players in pairs(starSignTables) do
-					if spellId ~= mySign then
+					if spellId ~= mySign then -- non matching
 						for _,name in pairs(players) do
-							self:AddPlate(spellId, name, 10, true) -- Desaturate existing non matching icon
+							if self:GetOption("custom_off_gc_redgreen_icons") then
+								self:AddPlate(redIcon, name, 10)
+							else
+								self:AddPlate(icons[spellId], name, 10, true) -- Desaturate existing non matching icon
+							end
 						end
-					else
+					else -- matching
 						for _,name in pairs(players) do
-							self:AddPlate(spellId, name, 10, false) -- Saturate existing matching icons
+							if self:GetOption("custom_off_gc_redgreen_icons") then
+								self:AddPlate(greenIcon, name, 10)
+							else
+								self:AddPlate(icons[spellId], name, 10, false) -- Saturate existing matching icons
+							end
 						end
 					end
 				end
@@ -573,7 +653,13 @@ do
 	end
 
 	function mod:StarSignsRemoved(args)
-		self:RemovePlate(args.spellId, args.destName)
+		if self:GetOption("custom_off_gc_redgreen_icons") then
+			-- we instantly forget our sign, so just remove both possible icons
+			self:RemovePlate(redIcon, args.destName)
+			self:RemovePlate(greenIcon, args.destName)
+		else
+			self:RemovePlate(icons[args.spellId], args.destName)
+		end
 		tDeleteItem(starSignTables[args.spellId], args.destName)
 
 		if self:Me(args.destGUID) then
@@ -586,6 +672,19 @@ do
 			if not scheduled then
 				scheduled = self:ScheduleTimer(warn, 0.1, self)
 			end
+		end
+	end
+
+	-- If a player dies while he has a Star Sign, it will not get removed. This
+	-- is intented behaviour, so players with matching signs can still clear theirs
+	-- with the corpse.
+	-- If the player gets combat rezzed however, the star sign will be removed
+	-- without a SPELL_AURA_REMOVED event. This will result in auras being "stuck"
+	-- on the nameplates of said player.
+	-- So if a player dies, we will just remove every aura from his nameplate.
+	function mod:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, _, _, _, _, _, destName)
+		if event == "UNIT_DIED" and UnitIsPlayer(destName) then
+			self:RemovePlate(nil, destName) -- Clear all icons from the nameplate
 		end
 	end
 end
