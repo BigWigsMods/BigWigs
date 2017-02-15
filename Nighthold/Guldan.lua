@@ -260,7 +260,7 @@ end
 -- Event Handlers
 --
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
-	if msg:find(L.p4_mythic_start) and self:Mythic() then -- Mythic Stage 4
+	if msg == L.p4_mythic_start and self:Mythic() then -- Mythic Stage 4
 		phase = 4
 		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
 		self:Bar(211439, 39) -- Will of the Demon Within	
