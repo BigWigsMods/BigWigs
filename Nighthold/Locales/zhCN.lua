@@ -90,9 +90,9 @@ if L then
 	L.gains = "古尔丹获得 >%s<"
 	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
 
-	--L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone."
+	L.nightorb_desc = "召唤夜之球，击杀后将出现时间区域。"
 
-	--L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence."
+	L.manifest_desc = "召唤埃辛诺斯灵魂碎片，击杀后将出现恶魔精华。"
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "zhCN")
