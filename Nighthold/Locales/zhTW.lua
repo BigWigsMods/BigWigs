@@ -97,17 +97,17 @@ if L then
 	--L.pulsauron = "Pulsauron"
 
 	--[[ Chronomatic Anomaly to Trilliax ]]--
-	--L.sludgerax = "Sludgerax"
+	L.sludgerax = "淤泥雷克斯"
 
 	--[[ Trilliax to Aluriel ]]--
 	--L.karzun = "Kar'zun"
-	--L.guardian = "Gilded Guardian"
+	L.guardian = "金輝守護者"
 	--L.battle_magus = "Duskwatch Battle-Magus"
 	--L.chronowraith = "Chronowraith"
 	--L.protector = "Nighthold Protector"
 
 	--[[ Aluriel to Etraeus ]]--
-	--L.jarin = "Astrologer Jarin"
+	L.jarin = "占星師賈倫"
 
 	--[[ Aluriel to Telarn ]]--
 	--L.weaver = "Duskwatch Weaver"
