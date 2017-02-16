@@ -103,7 +103,7 @@ if L then
 	--L.karzun = "Kar'zun"
 	L.guardian = "金輝守護者"
 	--L.battle_magus = "Duskwatch Battle-Magus"
-	--L.chronowraith = "Chronowraith"
+	L.chronowraith = "時光怨靈"
 	--L.protector = "Nighthold Protector"
 
 	--[[ Aluriel to Etraeus ]]--
@@ -111,8 +111,8 @@ if L then
 
 	--[[ Aluriel to Telarn ]]--
 	--L.weaver = "Duskwatch Weaver"
-	--L.archmage = "Shal'dorei Archmage"
-	--L.manasaber = "Domesticated Manasaber"
+	L.archmage = "夏多雷大法師"
+	L.manasaber = "被馴養的法力刃豹"
 
 	--[[ Aluriel to Krosos ]]--
 	--L.infernal = "Searing Infernal"
