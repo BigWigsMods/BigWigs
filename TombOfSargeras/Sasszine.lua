@@ -29,18 +29,18 @@ local L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-	230143, -- Hydra Shot
-	{230201, "TANK", "FLASH"}, -- Burden of Pain
-	230227, -- From the Abyss
-	232732, -- Slicing Tornado
-	230358, -- Thundering Shock
-	230384, -- Consuming Hunger
-	232746, -- Beckon Sarukel
-	234621, -- Devouring Maw
-	232756, -- Summon Ossunet
-	232913, -- Befouling Ink
-	232757, -- Call Vellius
-	232827, -- Crashing Wave
+		230143, -- Hydra Shot
+		{230201, "TANK", "FLASH"}, -- Burden of Pain
+		230227, -- From the Abyss
+		232732, -- Slicing Tornado
+		230358, -- Thundering Shock
+		230384, -- Consuming Hunger
+		232746, -- Beckon Sarukel
+		234621, -- Devouring Maw
+		232756, -- Summon Ossunet
+		232913, -- Befouling Ink
+		232757, -- Call Vellius
+		232827, -- Crashing Wave
 	},{
 		[230143] = "general",
 		[232732] = -14591,
