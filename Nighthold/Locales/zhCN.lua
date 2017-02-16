@@ -26,8 +26,8 @@ if L then
 	L.gotEssence = "获得精华"
 
 	L.adds_desc = "增援刷新计时器和警报。"
-	--L.adds_yell1 = "Underlings! Get in here!"
-	--L.adds_yell2 = "Show these pretenders how to fight!"
+	L.adds_yell1 = "我的部下们！进来！"
+	L.adds_yell2 = "让这些僭越者看看应该怎么战斗！"
 end
 
 L = BigWigs:NewBossLocale("Krosus", "zhCN")
@@ -51,7 +51,7 @@ if L then
 	L[205429] = "|T1391538:15:15:0:0:64:64:4:60:4:60|t|cFFFFDD00巨蟹|r"
 	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000天狼|r"
 	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00猎户|r"
-	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFF飞龙|r"
+	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFF天龙|r"
 
 	L.nameplate_requirement = "此功能当前只支持 KuiNameplates。只限史诗难度。"
 
@@ -78,8 +78,8 @@ L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "zhCN")
 if L then
 	L.elisande = "艾利桑德"
 
-	--L.ring_yell = "Let the waves of time crash over you!"
-	--L.orb_yell = "You'll find time can be quite volatile."
+	L.ring_yell = "让时间的浪潮碾碎你们！"
+	L.orb_yell = "你们会发现，时间极不稳定。"
 
 	L.fastTimeZone = "时间加速区域"
 end
