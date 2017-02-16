@@ -10,14 +10,14 @@ end
 L = BigWigs:NewBossLocale("Chronomatic Anomaly", "zhCN")
 if L then
 	L.affected = "已影响"
-	L.totalAbsorb = "全部吸收"
+	L.totalAbsorb = "总共吸收"
 end
 
 L = BigWigs:NewBossLocale("Trilliax", "zhCN")
 if L then
 	L.yourLink = ">%s< 与你相连"
 	L.yourLinkShort = "相连 %s"
-	L.imprint = "烙印"
+	L.imprint = "印记"
 end
 
 L = BigWigs:NewBossLocale("Tichondrius", "zhCN")
@@ -26,8 +26,8 @@ if L then
 	L.gotEssence = "获得精华"
 
 	L.adds_desc = "增援刷新计时器和警报。"
-	--L.adds_yell1 = "Underlings! Get in here!"
-	--L.adds_yell2 = "Show these pretenders how to fight!"
+	L.adds_yell1 = "我的部下们！进来！"
+	L.adds_yell2 = "让这些僭越者看看应该怎么战斗！"
 end
 
 L = BigWigs:NewBossLocale("Krosus", "zhCN")
@@ -46,12 +46,12 @@ end
 
 L = BigWigs:NewBossLocale("Star Augur Etraeus", "zhCN")
 if L then
-	L.yourSign = "标记"
+	L.yourSign = "星座"
 	L.with = "与"
-	L[205429] = "|T1391538:15:15:0:0:64:64:4:60:4:60|t|cFFFFDD00螃蟹|r"
-	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000狼|r"
-	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00猎人|r"
-	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFF龙|r"
+	L[205429] = "|T1391538:15:15:0:0:64:64:4:60:4:60|t|cFFFFDD00巨蟹|r"
+	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000天狼|r"
+	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00猎户|r"
+	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFF天龙|r"
 
 	L.nameplate_requirement = "此功能当前只支持 KuiNameplates。只限史诗难度。"
 
@@ -78,8 +78,8 @@ L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "zhCN")
 if L then
 	L.elisande = "艾利桑德"
 
-	--L.ring_yell = "Let the waves of time crash over you!"
-	--L.orb_yell = "You'll find time can be quite volatile."
+	L.ring_yell = "让时间的浪潮碾碎你们！"
+	L.orb_yell = "你们会发现，时间极不稳定。"
 
 	L.fastTimeZone = "时间加速区域"
 end
@@ -90,40 +90,40 @@ if L then
 	L.gains = "古尔丹获得 >%s<"
 	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
 
-	--L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone."
+	L.nightorb_desc = "召唤夜之球，击杀后将出现时间区域。"
 
-	--L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence."
+	L.manifest_desc = "召唤埃辛诺斯灵魂碎片，击杀后将出现恶魔精华。"
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "zhCN")
 if L then
 	--[[ Skorpyron to Trilliax ]]--
-	--L.torm = "Torm the Brute"
-	--L.fulminant = "Fulminant"
-	--L.pulsauron = "Pulsauron"
+	L.torm = "野蛮的托姆"
+	L.fulminant = "弗米纳特"
+	L.pulsauron = "普尔萨隆"
 
 	--[[ Chronomatic Anomaly to Trilliax ]]--
-	--L.sludgerax = "Sludgerax"
+	L.sludgerax = "斯拉吉拉克斯"
 
 	--[[ Trilliax to Aluriel ]]--
-	--L.karzun = "Kar'zun"
-	--L.guardian = "Gilded Guardian"
-	--L.battle_magus = "Duskwatch Battle-Magus"
-	--L.chronowraith = "Chronowraith"
-	--L.protector = "Nighthold Protector"
+	L.karzun = "卡祖恩"
+	L.guardian = "鎏金守卫"
+	L.battle_magus = "暮色卫队战斗魔导师"
+	L.chronowraith = "时光怨灵"
+	L.protector = "暗夜要塞防御者"
 
 	--[[ Aluriel to Etraeus ]]--
-	--L.jarin = "Astrologer Jarin"
+	L.jarin = "占星家贾林"
 
 	--[[ Aluriel to Telarn ]]--
-	--L.weaver = "Duskwatch Weaver"
-	--L.archmage = "Shal'dorei Archmage"
-	--L.manasaber = "Domesticated Manasaber"
+	L.weaver = "暮色卫队织法者"
+	L.archmage = "夏多雷大法师"
+	L.manasaber = "驯养的魔刃豹"
 
 	--[[ Aluriel to Krosos ]]--
-	--L.infernal = "Searing Infernal"
+	L.infernal = "灼热的地狱火"
 
 	--[[ Aluriel to Tichondrius ]]--
-	--L.watcher = "Abyss Watcher"
+	L.watcher = "深渊守护者"
 end
 
