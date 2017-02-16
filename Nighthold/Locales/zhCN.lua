@@ -46,7 +46,7 @@ end
 
 L = BigWigs:NewBossLocale("Star Augur Etraeus", "zhCN")
 if L then
-	L.yourSign = "标记"
+	L.yourSign = "星座"
 	L.with = "与"
 	L[205429] = "|T1391538:15:15:0:0:64:64:4:60:4:60|t|cFFFFDD00巨蟹|r"
 	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000天狼|r"
