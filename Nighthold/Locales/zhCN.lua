@@ -97,6 +97,7 @@ end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "zhCN")
 if L then
+-	--[[ Skorpyron to Trilliax ]]--
 	L.torm = "野蛮的托姆"
 	L.fulminant = "弗米纳特"
 	L.pulsauron = "普尔萨隆"
