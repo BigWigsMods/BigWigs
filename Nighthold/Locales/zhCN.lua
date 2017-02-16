@@ -97,33 +97,32 @@ end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "zhCN")
 if L then
-	--[[ Skorpyron to Trilliax ]]--
-	--L.torm = "Torm the Brute"
-	--L.fulminant = "Fulminant"
-	--L.pulsauron = "Pulsauron"
+	L.torm = "野蛮的托姆"
+	L.fulminant = "弗米纳特"
+	L.pulsauron = "普尔萨隆"
 
 	--[[ Chronomatic Anomaly to Trilliax ]]--
-	--L.sludgerax = "Sludgerax"
+	L.sludgerax = "斯拉吉拉克斯"
 
 	--[[ Trilliax to Aluriel ]]--
-	--L.karzun = "Kar'zun"
-	--L.guardian = "Gilded Guardian"
-	--L.battle_magus = "Duskwatch Battle-Magus"
-	--L.chronowraith = "Chronowraith"
-	--L.protector = "Nighthold Protector"
+	L.karzun = "卡祖恩"
+	L.guardian = "鎏金守卫"
+	L.battle_magus = "暮色卫队战斗魔导师"
+	L.chronowraith = "时光怨灵"
+	L.protector = "暗夜要塞防御者"
 
 	--[[ Aluriel to Etraeus ]]--
-	--L.jarin = "Astrologer Jarin"
+	L.jarin = "占星家贾林"
 
 	--[[ Aluriel to Telarn ]]--
-	--L.weaver = "Duskwatch Weaver"
-	--L.archmage = "Shal'dorei Archmage"
-	--L.manasaber = "Domesticated Manasaber"
+	L.weaver = "暮色卫队织法者"
+	L.archmage = "夏多雷大法师"
+	L.manasaber = "驯养的魔刃豹"
 
 	--[[ Aluriel to Krosos ]]--
-	--L.infernal = "Searing Infernal"
+	L.infernal = "灼热的地狱火"
 
 	--[[ Aluriel to Tichondrius ]]--
-	--L.watcher = "Abyss Watcher"
+	L.watcher = "深渊守护者"
 end
 
