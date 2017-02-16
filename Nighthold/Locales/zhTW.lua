@@ -9,25 +9,25 @@ end
 
 L = BigWigs:NewBossLocale("Chronomatic Anomaly", "zhTW")
 if L then
-	--L.affected = "Affected"
-	--L.totalAbsorb = "Total Absorb"
+	L.affected = "被影響"
+	L.totalAbsorb = "總吸收"
 end
 
 L = BigWigs:NewBossLocale("Trilliax", "zhTW")
 if L then
-	--L.yourLink = "You are linked with %s"
-	--L.yourLinkShort = "Linked with %s"
-	--L.imprint = "Imprint"
+	L.yourLink = "你和%s相連"
+	L.yourLinkShort = "和%s相連"
+	L.imprint = "印記"
 end
 
 L = BigWigs:NewBossLocale("Tichondrius", "zhTW")
 if L then
-	--L.addsKilled = "Adds killed"
-	--L.gotEssence = "Got Essence"
+	L.addsKilled = "援軍擊殺"
+	L.gotEssence = "獲得精華"
 
-	--L.adds_desc = "Timers and warnings for the add spawns."
-	--L.adds_yell1 = "Underlings! Get in here!"
-	--L.adds_yell2 = "Show these pretenders how to fight!"
+	L.adds_desc = "援軍刷新計時器和警報。"
+	L.adds_yell1 = "手下們！都進來！"
+	L.adds_yell2 = "讓這些笨蛋見識真正的戰鬥！"
 end
 
 L = BigWigs:NewBossLocale("Krosus", "zhTW")
@@ -46,36 +46,36 @@ end
 
 L = BigWigs:NewBossLocale("Star Augur Etraeus", "zhTW")
 if L then
-	--L.yourSign = "Your sign"
-	--L.with = "with"
-	--L[205429] = "|T1391538:15:15:0:0:64:64:4:60:4:60|t|cFFFFDD00Crab|r"
-	--L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000Wolf|r"
-	--L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00Hunter|r"
-	--L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFFDragon|r"
+	L.yourSign = "你的星座"
+	L.with = "和"
+	L[205429] = "|T1391538:15:15:0:0:64:64:4:60:4:60|t|cFFFFDD00巨蟹|r"
+	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000貪狼|r"
+	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00獵戶|r"
+	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFF飛龍|r"
 
-	--L.nameplate_requirement = "This feature is currently only supported by KuiNameplates. Mythic only."
+	L.nameplate_requirement = "這個功能目前只有KuiNameplates支援。傳奇難度限定。"
 
-	--L.custom_off_icy_ejection_nameplates = "Show {206936} on friendly nameplates" -- Icy Ejection
-	--L.custom_off_icy_ejection_nameplates_desc = L.nameplate_requirement
+	L.custom_off_icy_ejection_nameplates = "在友方姓名板顯示 {206936} " -- Icy Ejection
+	L.custom_off_icy_ejection_nameplates_desc = L.nameplate_requirement
 
-	--L.custom_on_fel_ejection_nameplates = "Show {205649} on friendly nameplates" -- Fel Ejection
-	--L.custom_on_fel_ejection_nameplates_desc = L.nameplate_requirement
+	L.custom_on_fel_ejection_nameplates = "在友方姓名板顯示 {205649} " -- Fel Ejection
+	L.custom_on_fel_ejection_nameplates_desc = L.nameplate_requirement
 
-	--L.custom_on_gravitational_pull_nameplates = "Show {214335} on friendly nameplates" -- Gravitational Pull
-	--L.custom_on_gravitational_pull_nameplates_desc = L.nameplate_requirement
+	L.custom_on_gravitational_pull_nameplates = "在友方姓名板顯示 {214335} " -- Gravitational Pull
+	L.custom_on_gravitational_pull_nameplates_desc = L.nameplate_requirement
 
-	--L.custom_on_grand_conjunction_nameplates = "Show {205408} on friendly nameplates" -- Grand Conjunction
-	--L.custom_on_grand_conjunction_nameplates_desc = L.nameplate_requirement
+	L.custom_on_grand_conjunction_nameplates = "在友方姓名板顯示 {205408} " -- Grand Conjunction
+	L.custom_on_grand_conjunction_nameplates_desc = L.nameplate_requirement
 end
 
 L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "zhTW")
 if L then
-	--L.elisande = "Elisande"
+	L.elisande = "艾莉珊德"
 
-	--L.ring_yell = "Let the waves of time crash over you!"
-	--L.orb_yell = "You'll find time can be quite volatile."
+	L.ring_msg = "時間的浪潮會粉碎你！"
+	--L.orb_msg = "You'll find time can be quite volatile."
 
-	--L.fastTimeZone = "Fast Time Zone"
+	L.fastTimeZone = "加速區域"
 end
 
 L = BigWigs:NewBossLocale("Gul'dan", "zhTW")
