@@ -215,7 +215,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SoulCorrosion", 208802)
 	self:Log("SPELL_CAST_START", "BlackHarvest", 206744)
 	self:Log("SPELL_AURA_APPLIED", "FlamesOfSargerasSoon", 221606)
-	--self:Log("SPELL_AURA_APPLIED", "FlamesOfSargeras", 221603)
 
 	self:Log("SPELL_AURA_APPLIED", "Damage", 206515, 221781) -- Fel Efflux, Desolate Ground
 	self:Log("SPELL_PERIODIC_DAMAGE", "Damage", 206515, 221781)
