@@ -10,7 +10,7 @@ if not IsTestBuild() then return end -- XXX dont load on live
 local mod, CL = BigWigs:NewBoss("Mistress Sassz'ine", 1147, 1861)
 if not mod then return end
 mod:RegisterEnableMob(115767) -- XXX Guestimate
-mod.engageId = 2037 
+mod.engageId = 2037
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
@@ -50,22 +50,22 @@ end
 
 function mod:OnBossEnable()
 	-- General
-	self:Log("SPELL_AURA_APPLIED", "HydraShot", 230143)	
-	self:Log("SPELL_CAST_SUCCESS", "BurdenofPain", 230201)	
-	self:Log("SPELL_CAST_SUCCESS", "FromtheAbyss", 230227)	
+	self:Log("SPELL_AURA_APPLIED", "HydraShot", 230143)
+	self:Log("SPELL_CAST_SUCCESS", "BurdenofPain", 230201)
+	self:Log("SPELL_CAST_SUCCESS", "FromtheAbyss", 230227)
 	
 	-- Stage One: Ten Thousand Fangs
 	self:Log("SPELL_CAST_SUCCESS", "SlicingTornado", 232732)
 	self:Log("SPELL_CAST_START", "ThunderingShock", 230358)
-	self:Log("SPELL_CAST_START", "ConsumingHunger", 230384)	
+	self:Log("SPELL_CAST_START", "ConsumingHunger", 230384)
 	
 	-- Stage Two: Terrors of the Deep
-	self:Log("SPELL_CAST_START", "BeckonSarukel", 232746)	
-	self:Log("SPELL_CAST_SUCCESS", "DevouringMaw", 234621)	
+	self:Log("SPELL_CAST_START", "BeckonSarukel", 232746)
+	self:Log("SPELL_CAST_SUCCESS", "DevouringMaw", 234621)
 	self:Log("SPELL_CAST_START", "SummonOssunet", 232756)
-	self:Log("SPELL_CAST_SUCCESS", "BefoulingInk", 232913)			
-	self:Log("SPELL_CAST_START", "CallVellius", 232757)			
-	self:Log("SPELL_CAST_START", "CrashingWave", 232827)			
+	self:Log("SPELL_CAST_SUCCESS", "BefoulingInk", 232913)
+	self:Log("SPELL_CAST_START", "CallVellius", 232757)
+	self:Log("SPELL_CAST_START", "CrashingWave", 232827)
 end
 
 function mod:OnEngage()
@@ -80,8 +80,8 @@ do
 	function mod:HydraShot(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alert")	
-			self:Bar(args.spellId, 6, CL.casting:format(args.spellName))	
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alert")
+			self:Bar(args.spellId, 6, CL.casting:format(args.spellName))
 			--self:Bar(args.spellId, 10)
 		end
 	end
