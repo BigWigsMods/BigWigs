@@ -17,7 +17,7 @@ L = BigWigs:NewBossLocale("Trilliax", "zhCN")
 if L then
 	L.yourLink = ">%s< 与你相连"
 	L.yourLinkShort = "相连 %s"
-	L.imprint = "烙印"
+	L.imprint = "印记"
 end
 
 L = BigWigs:NewBossLocale("Tichondrius", "zhCN")
@@ -97,7 +97,7 @@ end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "zhCN")
 if L then
--	--[[ Skorpyron to Trilliax ]]--
+	--[[ Skorpyron to Trilliax ]]--
 	L.torm = "野蛮的托姆"
 	L.fulminant = "弗米纳特"
 	L.pulsauron = "普尔萨隆"
