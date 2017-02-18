@@ -64,6 +64,9 @@ local mythicTimers = {
 
 	-- Flames of Sargeras (When applied).
 	[221606] = {25.7, 6.4, 7.4, 29.4, 6.4, 7.4, 29.4, 6.4, 7.4, 29.4, 6.4, 7.4, 29.5, 7.4, 7.4, 28.4, 6.4, 7.4, 28.4, 6.4, 7.4}
+	
+	-- Violent Winds
+	[218144] = {11.5, 57.8, 66.3, 75.8}
 }
 
 local timers = mod:Mythic() and mythicTimers or heroicTimers
@@ -85,6 +88,10 @@ if L then
 	L.manifest = "{221149}"
 	L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence."
 	L.manifest_icon = "inv_weapon_glave_01"
+
+	L.winds = "{218144}" -- Violent Winds
+	L.winds_desc = "Guldan summons Violent Winds to push the players off the platform"
+	L.winds_icon = 218144
 end
 
 L[211152] = L[211152]:format(mod:SpellName(209270))
@@ -139,6 +146,7 @@ function mod:GetOptions()
 		{227556, "TANK"}, -- Fury of the Fel   XXX untested
 
 		--[[ Mythic ]] --
+		"winds", -- Violent Winds
 		211439, -- Will of the Demon Within
 		220957, -- Soulsever
 		227071, -- Flame Crash
@@ -161,7 +169,7 @@ function mod:GetOptions()
 		[208545] = -14902, -- D'zorykx the Trapper
 		[206339] = -14062, -- Stage Two
 		[221891] = -14090, -- Stage Three
-		[211439] = "mythic",
+		["winds"] = "mythic",
 	}
 end
 
@@ -374,6 +382,9 @@ function mod:Phase3Start(args) -- The Eye of Aman'thul applied (227427)
 	self:StopBar(CL.count:format(self:SpellName(212258), handOfGuldanCount)) -- Hand of Gul'dan
 	self:StopBar(CL.count:format(self:SpellName(206220), liquidHellfireCount)) -- Empowered Liquid Hellfire
 	self:Bar("stages", 8, args.spellName, args.spellId)
+	if self:Mythic() then
+		self:CDBar("winds", timers[218144][blackHarvestCount], CL.count:format(self:SpellName(218144), blackHarvestCount)) -- Violent Winds, using blackHarvestCount
+	end
 	self:Bar(221606, self:Mythic() and 24.5 or 27.5) -- Flames of Sargeras
 	self:Bar(211152, self:Easy() and 42.6 or timers[211152][eyeCount], L[211152]) -- Empowered Eye of Gul'dan
 	self:Bar(206744, timers[206744][blackHarvestCount]) -- Black Harvest
@@ -575,6 +586,13 @@ function mod:BlackHarvest(args)
 	local timer = timers[args.spellId][blackHarvestCount]
 	if timer then
 		self:CDBar(args.spellId, timer)
+	end
+	-- Violet Winds timers
+	if self:Mythic() then
+		local windsTimer = timers[218144][blackHarvestCount]
+		if windsTimer then
+			self:Bar("winds", windsTimer, CL.count:format(self:SpellName(218144), blackHarvestCount), 218144)
+		end
 	end
 end
 
