@@ -115,7 +115,7 @@ function mod:GetOptions()
 
 		--[[ Fel Lord Kuraz'mal ]]--
 		{206675, "TANK"}, -- Shatter Essence
-		210273, -- Fel Obelisk
+		229945, -- Fel Obelisk
 
 		--[[ D'zorykx the Trapper ]]--
 		208545, -- Anguished Spirits
@@ -279,7 +279,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 210273 then -- Fel Obelisk
 		obeliskCounter = obeliskCounter+1
-		self:Message(spellId, "Attention", "Alarm")
+		self:Message(229945, "Attention", "Alarm")
 		self:Bar(229945, self:Mythic() and ((obeliskCounter % 2 == 0) and 5 or 16) or 23) -- Fel Obelisk
 	elseif spellId == 227035 then -- Parasitic Wound
 		self:Bar(206847, 36.0)
@@ -380,7 +380,7 @@ end
 function mod:Deaths(args)
 	if args.mobId == 104537 then --fel lord kuraz'mal
 		self:StopBar(206675) -- Shatter Essence
-		self:StopBar(210273) -- Fel Obelisk
+		self:StopBar(229945) -- Fel Obelisk
 	elseif args.mobId == 104534 then --d'zorykx the trapper
 		self:StopBar(206883) -- Soul Vortex
 		self:StopBar(CL.cast:format(self:SpellName(206883))) -- Soul Vortex cast
