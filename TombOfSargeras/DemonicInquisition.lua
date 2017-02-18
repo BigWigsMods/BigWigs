@@ -105,7 +105,7 @@ end
 function mod:BoneSaw(args)
 	self:Message(args.spellId, "Important", "Warning", args.spellName)
 	self:Bar(args.spellId, 15, CL.casting:format(args.spellName))
-	--self:Bar(args.spellId, 10) XXX
+	self:Bar(args.spellId, 63)
 end
 
 function mod:ShadowBoltVolley(args) -- Interuptable
