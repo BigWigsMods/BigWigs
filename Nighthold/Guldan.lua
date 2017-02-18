@@ -32,6 +32,7 @@ local crashCounter = 1
 local orbCounter = 1
 local visionCounter = 1
 local timeStopCheck = nil
+local liquidHellfireEmpowered = false
 local heroicTimers = {
 	-- Hand of Gul'dan P2
 	[212258] = {13.5, 48.9, 138.9}, -- not sure if complete, next is at least over 105s
@@ -251,6 +252,7 @@ function mod:OnEngage()
 	eyeCount = 1
 	obeliskCounter = 1
 	timeStopCheck = nil
+	liquidHellfireEmpowered = false
 	timers = self:Mythic() and mythicTimers or heroicTimers
 	if self:Mythic() then
 		phase = 2 -- Mythic skips the P1 of heroic
@@ -305,7 +307,8 @@ function mod:RAID_BOSS_EMOTE(event, msg)
 		local oldText = CL.count:format(self:SpellName(209011), bondsCount)
 		self:Bar(209011, self:BarTimeLeft(oldText), CL.count:format(self:SpellName(206221), bondsCount))
 		self:StopBar(oldText) -- Bonds of Fel
-	elseif msg:find("206220") then -- Empowered Liquid Hellfire
+	elseif msg:find("206220") and not liquidHellfireEmpowered then -- Empowered Liquid Hellfire
+		liquidHellfireEmpowered = true -- Fires every cast, not just on gaining empowered
 		self:Message(206219, "Neutral", nil, L.gains:format(self:SpellName(206220)))
 		local oldText = CL.count:format(self:SpellName(206219), liquidHellfireCount)
 		self:Bar(206219, self:BarTimeLeft(oldText), CL.count:format(self:SpellName(206220), liquidHellfireCount))
