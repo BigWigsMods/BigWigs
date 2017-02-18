@@ -20,6 +20,8 @@ mod.engageId = 2037
 -- Locals
 --
 
+local phase = 1
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -64,7 +66,7 @@ function mod:OnBossEnable()
 
 	-- Stage Two: Terrors of the Deep
 	self:Log("SPELL_CAST_START", "BeckonSarukel", 232746)
-	self:Log("SPELL_CAST_SUCCESS", "DevouringMaw", 234621)
+	self:Log("SPELL_CAST_SUCCESS", "DevouringMaw", 232745)
 	self:Log("SPELL_CAST_START", "SummonOssunet", 232756)
 	self:Log("SPELL_CAST_SUCCESS", "BefoulingInk", 232913)
 	self:Log("SPELL_CAST_START", "CallVellius", 232757)
@@ -72,6 +74,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	phase = 1
 	self:Bar(230358, 10.5) -- Thundering Shock
 	self:Bar(230201, 18) -- Burden of Pain
 	self:Bar(230384, 20.2) -- Consuming Hunger
@@ -131,13 +134,22 @@ function mod:BeckonSarukel(args)
 end
 
 function mod:DevouringMaw(args)
-	self:Message(args.spellId, "Important", "Warning", args.spellName)
-	self:Bar(args.spellId, 10)
+	self:Message(234621, "Important", "Warning", args.spellName)
+	--self:Bar(234621, 10)
 end
 
 function mod:SummonOssunet(args)
+	if phase < 2 then 
+		phase = 2
+		self:StopBar(232722) -- Slicing Tornado
+		self:StopBar(230358) -- Thundering Shock
+		self:StopBar(230384) -- Consuming Hunger
+		
+		self:Bar(232757, 19.4) -- Call Vellius
+		self:Bar(232746, 29.1) -- Beckon Sarukel		
+	end
 	self:Message(args.spellId, "Attention", "Info", args.spellName)
-	--self:Bar(args.spellId, 10)
+	self:Bar(args.spellId, 42.5)
 end
 
 function mod:BefoulingInk(args)
@@ -149,7 +161,6 @@ function mod:CallVellius(args)
 	self:Message(args.spellId, "Attention", "Info", args.spellName)
 	--self:Bar(args.spellId, 10)
 end
-
 
 function mod:CrashingWave(args)
 	self:Message(args.spellId, "Important", "Warning", args.spellName)
