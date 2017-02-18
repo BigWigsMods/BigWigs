@@ -302,18 +302,18 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 function mod:RAID_BOSS_EMOTE(event, msg)
-	if msg:find("206221") then -- Gains Empowered Bonds of Fel
+	if msg:find("206221", nil, true) then -- Gains Empowered Bonds of Fel
 		self:Message(209011, "Neutral", nil, L.gains:format(self:SpellName(206221)))
 		local oldText = CL.count:format(self:SpellName(209011), bondsCount)
 		self:Bar(209011, self:BarTimeLeft(oldText), CL.count:format(self:SpellName(206221), bondsCount))
 		self:StopBar(oldText) -- Bonds of Fel
-	elseif msg:find("206220") and not liquidHellfireEmpowered then -- Empowered Liquid Hellfire
+	elseif msg:find("206220", nil, true) and not liquidHellfireEmpowered then -- Empowered Liquid Hellfire
 		liquidHellfireEmpowered = true -- Fires every cast, not just on gaining empowered
 		self:Message(206219, "Neutral", nil, L.gains:format(self:SpellName(206220)))
 		local oldText = CL.count:format(self:SpellName(206219), liquidHellfireCount)
 		self:Bar(206219, self:BarTimeLeft(oldText), CL.count:format(self:SpellName(206220), liquidHellfireCount))
 		self:StopBar(oldText) -- Liquid Hellfire
-	elseif msg:find("211152") then -- Empowered Eye of Gul'dan
+	elseif msg:find("211152", nil, true) then -- Empowered Eye of Gul'dan
 		self:Message(211152, "Neutral", nil, L.gains:format(self:SpellName(211152)))
 		self:Bar(211152, self:BarTimeLeft(209270), L[211152])
 		self:StopBar(209270) -- Eye of Gul'dan
@@ -401,11 +401,15 @@ end
 function mod:LiquidHellfire(args)
 	self:Message(206219, "Urgent", "Alarm", CL.incoming:format(CL.count:format(args.spellName, liquidHellfireCount)))
 	liquidHellfireCount = liquidHellfireCount + 1
+	local t = 0
 	if phase == 1 then
-		self:Bar(206219, liquidHellfireCount == 1 and 15 or 25, CL.count:format(args.spellName, liquidHellfireCount))
+		t = liquidHellfireCount == 1 and 15 or 25
+	elseif self:Mythic() then
+		t = (liquidHellfireCount == 5 or liquidHellfireCount == 7) and 66 or 33
 	else
-		self:Bar(206219, (self:Mythic() and ((liquidHellfireCount == 5 or liquidHellfireCount == 7) and 66 or 33)) or (liquidHellfireCount == 5 and 73.2 or 36.6), CL.count:format(args.spellName, liquidHellfireCount)) -- gets skipped once
+		t = liquidHellfireCount == 5 and 73.2 or 36.6
 	end
+	self:Bar(206219, t, CL.count:format(args.spellName, liquidHellfireCount)) -- gets skipped once
 end
 
 function mod:FelEfflux(args)
