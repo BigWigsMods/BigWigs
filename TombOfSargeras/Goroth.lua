@@ -2,24 +2,26 @@ if not IsTestBuild() then return end -- XXX dont load on live
 
 --------------------------------------------------------------------------------
 -- TODO List:
-
+-- - Infernal Spike and Crashing Comet timers look like they are somehow connected (alternating, swapping timers and whatnot)
+--
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Goroth", 1147, 1862) 
+local mod, CL = BigWigs:NewBoss("Goroth", 1147, 1862)
 if not mod then return end
 mod:RegisterEnableMob(115844)
-mod.engageId = 2032 
+mod.engageId = 2032
 mod.respawnTime = 15
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local burningCount = 1
-local shatteringCount = 1
-local shatteringTimers = {24, 60, 60, 50}
+local burningCounter = 1
+
+local shatteringCounter = 1
+local shatteringTimers = {24.0, 60.0, 60.0, 50.0}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -33,7 +35,7 @@ local L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{231363, "SAY"}, -- Burning Armor
+		{231363, "TANK", "SAY"}, -- Burning Armor
 		{230345, "SAY"}, -- Crashing Comet
 		233021, -- Infernal Spike
 		{233279, "FLASH", "SAY"}, -- Shattering Star
@@ -47,76 +49,56 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "BurningArmor", 231363)		
-	self:Log("SPELL_CAST_SUCCESS", "CrashingComent", 230345)
-	self:Log("SPELL_AURA_APPLIED", "CrashingCometDebuff", 232249)	
-	self:Log("SPELL_CAST_SUCCESS", "InfernalSpike", 233021)	
-	--self:Log("SPELL_CAST_SUCCESS", "ShatteringStar", 233279)
-	self:Log("SPELL_AURA_APPLIED", "ShatteringStarDebuff", 233272)	
-	self:Log("SPELL_CAST_START", "InfernalBurning", 233062)	
-	
-	self:Log("SPELL_AURA_APPLIED", "FelPool", 230348) -- Fel Pool
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+
+	self:Log("SPELL_AURA_APPLIED", "BurningArmor", 231363)
+	self:Log("SPELL_AURA_APPLIED", "ShatteringStarDebuff", 233272)
+	self:Log("SPELL_CAST_START", "InfernalBurning", 233062)
+
+	-- Fel Pool
+	self:Log("SPELL_AURA_APPLIED", "FelPool", 230348)
 	self:Log("SPELL_PERIODIC_DAMAGE", "FelPool", 230348)
 	self:Log("SPELL_PERIODIC_MISSED", "FelPool", 230348)
-	
+
 	-- Mythic
-	self:Log("SPELL_CAST_SUCCESS", "RainofBrimstone", 238588)	
+	self:Log("SPELL_CAST_SUCCESS", "RainofBrimstone", 238588)
 end
 
 function mod:OnEngage()
-	burningCount = 1
-	shatteringCount = 1
-	
-	self:Bar(231363, 10) -- Burning Armor
-	self:Bar(233279, shatteringTimers[shatteringCount]) -- Shattering Star
+	burningCounter = 1
+	shatteringCounter = 1
+
+	self:Bar(231363, 11) -- Burning Armor
+	self:Bar(233279, shatteringTimers[shatteringCounter]) -- Shattering Star
 	self:Bar(233062, 54) -- Infernal Burning
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 233050 then --Infernal Spike
+		self:Message(233021, "Important", "Alert", CL.casting:format(args.spellName))
+		--self:Bar(233021, 16) -- XXX Need more data, very random on PTR.
+	elseif spellId == 232249 then -- Crashing Comet
+		self:Message(230345, "Urgent", "Warning", CL.casting:format(args.spellName))
+		--self:Bar(230345, 16) -- XXX Need more data, very random on PTR.
+	end
+end
 
 function mod:BurningArmor(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Alert")
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
-	self:Bar(args.spellId, 24)
+	self:Bar(args.spellId, 24.3)
 end
-
-function mod:CrashingComent(args)
-	--self:Message(args.spellId, "Neutral", "Long")
-	--self:Bar(args.spellId, 10)
-end
-
-do
-	local list = mod:NewTargetList()
-	function mod:CrashingCometDebuff(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, 230345, list, "Important", "Warning", nil, nil, true)
-		end
-		if self:Me(args.destGUID) then
-			self:Say(230345)
-		end
-	end
-end
-
-function mod:InfernalSpike(args)
-	self:Message(args.spellId, "Neutral", "Info")
-	--self:Bar(args.spellId, 10)
-end
-
---function mod:ShatteringStar(args)
-	--self:Message(args.spellId, "Attention", "Warning")
-	--self:Bar(args.spellId, 10)
---end
 
 function mod:ShatteringStarDebuff(args)
-	shatteringCount = shatteringCount + 1
+	shatteringCounter = shatteringCounter + 1
 	self:TargetMessage(233279, args.destName, "Attention", "Alarm")
 	self:Bar(233279, 6, 233283) -- Shattering Nova
-	self:Bar(233279, shatteringTimers[shatteringCount] or shatteringCount % 2 == 1 and 20 or 40, 233283) -- Shattering Nova
+	self:Bar(233279, shatteringTimers[shatteringCounter] or shatteringCounter % 2 == 1 and 20 or 40) -- Shattering Star
 	if self:Me(args.destGUID) then
 		self:Say(233279)
 		self:Flash(233279)
@@ -124,10 +106,10 @@ function mod:ShatteringStarDebuff(args)
 end
 
 function mod:InfernalBurning(args)
-	burningCount = burningCount + 1
+	burningCounter = burningCounter + 1
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 6, CL.casting:format(args.spellName))
-	self:Bar(args.spellId, burningCount <= 3 and 60 or 64)
+	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, burningCounter <= 3 and 60 or 64)
 end
 
 do
@@ -136,13 +118,12 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(234346, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end
 
 -- Mythic
 function mod:RainofBrimstone(args)
-	self:Message(args.spellId, "Attention", "Alert")
-	--self:Bar(args.spellId, 10)
+	self:Message(args.spellId, "Urgent", "Warning")
 end
