@@ -42,6 +42,7 @@ local hydraShotMarker = mod:AddMarkerOption(false, "player", 1, 230139, 1, 2, 3,
 function mod:GetOptions()
 	return {
 		"stages",
+		"berserk",
 		230139, -- Hydra Shot
 		hydraShotMarker,
 		{230201, "FLASH"}, -- Burden of Pain
@@ -88,6 +89,7 @@ function mod:OnEngage()
 	self:Bar(230384, 20.2) -- Consuming Hunger
 	self:Bar(230139, 25) -- Hydra Shot
 	self:Bar(232722, 30.3) -- Slicing Tornado
+	self:Berserk(480) -- Normal mode testing - Slicing Tornado spam
 end
 
 --------------------------------------------------------------------------------
