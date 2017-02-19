@@ -90,7 +90,7 @@ if L then
 	L.manifest_icon = "inv_weapon_glave_01"
 
 	L.winds = "{218144}" -- Violent Winds
-	L.winds_desc = "Guldan summons Violent Winds to push the players off the platform"
+	L.winds_desc = "Gul'dan summons Violent Winds to push the players off the platform."
 	L.winds_icon = 218144
 end
 
@@ -382,9 +382,7 @@ function mod:Phase3Start(args) -- The Eye of Aman'thul applied (227427)
 	self:StopBar(CL.count:format(self:SpellName(212258), handOfGuldanCount)) -- Hand of Gul'dan
 	self:StopBar(CL.count:format(self:SpellName(206220), liquidHellfireCount)) -- Empowered Liquid Hellfire
 	self:Bar("stages", 8, args.spellName, args.spellId)
-	if self:Mythic() then
-		self:CDBar("winds", timers[218144][blackHarvestCount], CL.count:format(self:SpellName(218144), blackHarvestCount), 218144) -- Violent Winds, using blackHarvestCount
-	end
+	self:CDBar("winds", 11.5, CL.count:format(self:SpellName(218144), blackHarvestCount), 218144) -- Violent Winds, using blackHarvestCount, only once below Mythic.
 	self:Bar(221606, self:Mythic() and 24.5 or 27.5) -- Flames of Sargeras
 	self:Bar(211152, self:Easy() and 42.6 or timers[211152][eyeCount], L[211152]) -- Empowered Eye of Gul'dan
 	self:Bar(206744, timers[206744][blackHarvestCount]) -- Black Harvest
