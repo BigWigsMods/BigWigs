@@ -66,7 +66,7 @@ local mythicTimers = {
 	[221606] = {25.7, 6.4, 7.4, 29.4, 6.4, 7.4, 29.4, 6.4, 7.4, 29.4, 6.4, 7.4, 29.5, 7.4, 7.4, 28.4, 6.4, 7.4, 28.4, 6.4, 7.4},
 	
 	-- Violent Winds
-	[218144] = {11.5, 57.8, 66.3, 75.8}
+	[218144] = {11.5, 44, 66.3, 75.8}
 }
 
 local timers = mod:Mythic() and mythicTimers or heroicTimers
@@ -383,7 +383,7 @@ function mod:Phase3Start(args) -- The Eye of Aman'thul applied (227427)
 	self:StopBar(CL.count:format(self:SpellName(206220), liquidHellfireCount)) -- Empowered Liquid Hellfire
 	self:Bar("stages", 8, args.spellName, args.spellId)
 	if self:Mythic() then
-		self:CDBar("winds", timers[218144][blackHarvestCount], CL.count:format(self:SpellName(218144), blackHarvestCount)) -- Violent Winds, using blackHarvestCount
+		self:CDBar("winds", timers[218144][blackHarvestCount], CL.count:format(self:SpellName(218144), blackHarvestCount), 218144) -- Violent Winds, using blackHarvestCount
 	end
 	self:Bar(221606, self:Mythic() and 24.5 or 27.5) -- Flames of Sargeras
 	self:Bar(211152, self:Easy() and 42.6 or timers[211152][eyeCount], L[211152]) -- Empowered Eye of Gul'dan
