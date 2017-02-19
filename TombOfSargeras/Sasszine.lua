@@ -50,7 +50,6 @@ function mod:GetOptions()
 		230384, -- Consuming Hunger
 		232745, -- Devouring Maw
 		232913, -- Befouling Ink
-		232757, -- Call Vellius
 		232827, -- Crashing Wave
 	},{
 		["stages"] = "general",
