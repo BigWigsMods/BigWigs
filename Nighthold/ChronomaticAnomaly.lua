@@ -153,6 +153,12 @@ do
 			[206617] = {18}, -- Time Bomb
 			[219815] = {}, -- Temporal Orb
 			[-13022] = {38}, -- Add
+		},
+		["fast2"] = {
+			[206609] = {40}, -- Time Release
+			[206617] = {31}, -- Time Bomb
+			[219815] = {10, 15, 20}, -- Temporal Orb
+			[-13022] = {}, -- Add
 		}
 	}
 	local normal = {
