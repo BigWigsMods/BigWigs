@@ -23,7 +23,7 @@ end
 L = BigWigs:NewBossLocale("Tichondrius", "ruRU")
 if L then
 	L.addsKilled = "Аддов убито"
-	L.gotEssence = "Получено эссенций"
+	L.gotEssence = "Взято эссенций"
 
 	L.adds_desc = "Таймеры и предупреждения о появлении аддов."
 	--L.adds_yell1 = "Underlings! Get in here!"
@@ -35,8 +35,8 @@ if L then
 	L.leftBeam = "Левый луч"
 	L.rightBeam = "Правый луч"
 
-	L.goRight = "> БЕЖАТЬ НАПРАВО >"
-	L.goLeft = "< БЕЖАТЬ НАЛЕВО <"
+	L.goRight = "> НАПРАВО >"
+	L.goLeft = "< НАЛЕВО <"
 
 	L.smashingBridge = "Уничтожение моста"
 	L.smashingBridge_desc = "Удар, который сломает мост. Вы можете использовать данную опцию для настройки отсчёта или увеличения."
@@ -92,32 +92,32 @@ end
 L = BigWigs:NewBossLocale("Nighthold Trash", "ruRU")
 if L then
 	--[[ Skorpyron to Trilliax ]]--
-	--L.torm = "Torm the Brute"
-	--L.fulminant = "Fulminant"
-	--L.pulsauron = "Pulsauron"
+	L.torm = "Торм Громила"
+	L.fulminant = "Молниеносец"
+	L.pulsauron = "Пульсарон"
 
 	--[[ Chronomatic Anomaly to Trilliax ]]--
-	--L.sludgerax = "Sludgerax"
+	L.sludgerax = "Слизерон"
 
 	--[[ Trilliax to Aluriel ]]--
 	--L.karzun = "Kar'zun"
-	--L.guardian = "Gilded Guardian"
-	--L.battle_magus = "Duskwatch Battle-Magus"
-	--L.chronowraith = "Chronowraith"
-	--L.protector = "Nighthold Protector"
+	L.guardian = "Золоченый страж"
+	L.battle_magus = "Боевой маг из Сумеречной стражи"
+	L.chronowraith = "Призрак времени"
+	L.protector = "Заступник Цитадели Ночи"
 
 	--[[ Aluriel to Etraeus ]]--
-	--L.jarin = "Astrologer Jarin"
+	L.jarin = "Астролог Джарин"
 
 	--[[ Aluriel to Telarn ]]--
-	--L.weaver = "Duskwatch Weaver"
-	--L.archmage = "Shal'dorei Archmage"
-	--L.manasaber = "Domesticated Manasaber"
+	L.weaver = "Заклинатель из Сумеречной стражи"
+	L.archmage = "Шал'дорай - верховный маг"
+	L.manasaber = "Прирученный манопард"
 
 	--[[ Aluriel to Krosos ]]--
-	--L.infernal = "Searing Infernal"
+	L.infernal = "Опаляющий инфернал"
 
 	--[[ Aluriel to Tichondrius ]]--
-	--L.watcher = "Abyss Watcher"
+	L.watcher = "Дозорный из бездны"
 end
 
