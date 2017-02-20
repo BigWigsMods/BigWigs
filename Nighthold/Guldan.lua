@@ -66,7 +66,7 @@ local mythicTimers = {
 
 	-- Flames of Sargeras (When applied).
 	[221606] = {25.7, 6.4, 7.4, 29.4, 6.4, 7.4, 29.4, 6.4, 7.4, 29.4, 6.4, 7.4, 29.5, 7.4, 7.4, 28.4, 6.4, 7.4, 28.4, 6.4, 7.4},
-	
+
 	-- Violent Winds
 	[218144] = {11.5, 43.4, 66, 75.4}
 }
@@ -367,13 +367,13 @@ end
 function mod:EyeOfAmanThulRemoved(args) -- Phase 2 start
 	self:StopBar(CL.count:format(self:SpellName(206219), liquidHellfireCount)) -- Liquid Hellfire
 	self:StopBar(CL.count:format(self:SpellName(212258), handOfGuldanCount)) -- Hand of Gul'dan
-	
+
 	phase = 2
 	handOfGuldanCount = 1
 	liquidHellfireCount = 1
 	bondsCount = 1
 	eyeCount = 1
-	
+
 	self:Message("stages", "Neutral", "Long", CL.stage:format(2), args.spellId)
 	self:Bar(209011, 9.5, CL.count:format(self:SpellName(209011), bondsCount)) -- Bonds of Fel
 	if not self:Easy() then
@@ -388,10 +388,10 @@ function mod:Phase3Start(args) -- The Eye of Aman'thul applied (227427)
 	self:StopBar(CL.count:format(L.empowered:format(self:SpellName(209011)), bondsCount)) -- Empowered Bonds of Fel
 	self:StopBar(CL.count:format(L.empowered:format(self:SpellName(206219)), liquidHellfireCount)) -- Empowered Liquid Hellfire
 	self:StopBar(CL.count:format(L.empowered:format(self:SpellName(209270)), eyeCount)) -- Empowered Liquid Hellfire
-	
+
 	eyeCount = 1
 	phase = 3
-	self:Message("stages", "Neutral", "Long", CL.stage:format(3), args.spellId)	
+	self:Message("stages", "Neutral", "Long", CL.stage:format(3), args.spellId)
 	self:Bar("stages", 8, args.spellName, args.spellId)
 	self:CDBar("winds", 11.5, CL.count:format(self:SpellName(218144), blackHarvestCount), 218144) -- Violent Winds, using blackHarvestCount, only once below Mythic.
 	self:Bar(221606, self:Mythic() and 24.5 or 27.5) -- Flames of Sargeras
@@ -422,7 +422,7 @@ function mod:LiquidHellfire(args)
 	local spellName = args.spellName
 	if liquidHellfireEmpowered then
 		spellName = L.empowered:format(args.spellName)
-	end		
+	end
 	self:Message(206219, "Urgent", "Alarm", CL.incoming:format(CL.count:format(spellName, liquidHellfireCount)))
 	liquidHellfireCount = liquidHellfireCount + 1
 	local t = 0
@@ -432,7 +432,7 @@ function mod:LiquidHellfire(args)
 		t = (liquidHellfireCount == 5 or liquidHellfireCount == 7) and 66 or 33
 	else
 		t = liquidHellfireCount == 5 and 73.2 or 36.6
-	end	
+	end
 	self:Bar(206219, t, CL.count:format(spellName, liquidHellfireCount)) -- gets skipped once
 end
 
@@ -498,7 +498,7 @@ function mod:BondsOfFelCast(args)
 	local spellName = self:SpellName(209011)
 	if bondsEmpowered then
 		spellName = L.empowered:format(spellName)
-	end	
+	end
 	self:Message(209011, "Attention", "Info", CL.casting:format(CL.count:format(spellName, bondsCount)))
 	bondsCount = bondsCount + 1
 	self:Bar(209011, self:Mythic() and 40 or 44.5, CL.count:format(spellName, bondsCount))
@@ -524,7 +524,7 @@ do
 		local spellName = self:SpellName(209270)
 		if bondsEmpowered then
 			spellName = L.empowered:format(spellName)
-		end	
+		end
 		self:Message(args.spellId, "Urgent", "Alert", CL.count:format(spellName, eyeCount))
 		eyeCount = eyeCount + 1
 		local timer = nil
