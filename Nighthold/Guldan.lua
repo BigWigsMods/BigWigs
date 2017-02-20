@@ -419,7 +419,7 @@ end
 
 --[[ Stage One ]]--
 function mod:LiquidHellfire(args)
-	local spellName = args.spellName
+	local spellName = self:SpellName(206219)
 	self:Message(206219, "Urgent", "Alarm", CL.incoming:format(CL.count:format(spellName, liquidHellfireCount)))
 	liquidHellfireCount = liquidHellfireCount + 1
 	if self:Mythic() and liquidHellfireCount == 4 then -- Empowered spells are set in Mythic
