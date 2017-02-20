@@ -420,11 +420,14 @@ end
 --[[ Stage One ]]--
 function mod:LiquidHellfire(args)
 	local spellName = args.spellName
+	self:Message(206219, "Urgent", "Alarm", CL.incoming:format(CL.count:format(spellName, liquidHellfireCount)))
+	liquidHellfireCount = liquidHellfireCount + 1
+	if self:Mythic() and liquidHellfireCount == 4 then -- Empowered spells are set in Mythic
+		liquidHellfireEmpowered = true
+	end
 	if liquidHellfireEmpowered then
 		spellName = L.empowered:format(args.spellName)
 	end
-	self:Message(206219, "Urgent", "Alarm", CL.incoming:format(CL.count:format(spellName, liquidHellfireCount)))
-	liquidHellfireCount = liquidHellfireCount + 1
 	local t = 0
 	if phase == 1 then
 		t = liquidHellfireCount == 1 and 15 or 25
@@ -496,11 +499,14 @@ end
 --[[ Stage Two ]]--
 function mod:BondsOfFelCast(args)
 	local spellName = self:SpellName(209011)
+	self:Message(209011, "Attention", "Info", CL.casting:format(CL.count:format(spellName, bondsCount)))
+	bondsCount = bondsCount + 1
+	if self:Mythic() then -- Only the first cast is not empowered
+		bondsEmpowered = true
+	end
 	if bondsEmpowered then
 		spellName = L.empowered:format(spellName)
 	end
-	self:Message(209011, "Attention", "Info", CL.casting:format(CL.count:format(spellName, bondsCount)))
-	bondsCount = bondsCount + 1
 	self:Bar(209011, self:Mythic() and 40 or 44.5, CL.count:format(spellName, bondsCount))
 end
 
@@ -522,11 +528,14 @@ do
 	local easyTimes = {0, 71.4, 71.4, 28.6} -- initial timer is started in phase transition
 	function mod:EyeOfGuldan(args)
 		local spellName = self:SpellName(209270)
-		if bondsEmpowered then
-			spellName = L.empowered:format(spellName)
-		end
 		self:Message(args.spellId, "Urgent", "Alert", CL.count:format(spellName, eyeCount))
 		eyeCount = eyeCount + 1
+		if self:Mythic() and eyeCount == 6 then -- Empowered Eye next in Mythic
+			eyeEmpowered = true
+		end
+		if eyeEmpowered then
+			spellName = L.empowered:format(spellName)
+		end
 		local timer = nil
 		if phase == 2 then
 			timer = self:Easy() and 60 or (self:Mythic() and (eyeCount == 7 and 80 or 48)) or 53.3
