@@ -420,7 +420,7 @@ end
 --[[ Stage One ]]--
 function mod:LiquidHellfire(args)
 	local spellName = self:SpellName(206219)
-	self:Message(206219, "Urgent", "Alarm", CL.incoming:format(CL.count:format(spellName, liquidHellfireCount)))
+	self:Message(206219, "Urgent", "Alarm", CL.incoming:format(CL.count:format(args.spellName, liquidHellfireCount)))
 	liquidHellfireCount = liquidHellfireCount + 1
 	if self:Mythic() and liquidHellfireCount == 4 then -- Empowered spells are set in Mythic
 		liquidHellfireEmpowered = true
@@ -499,7 +499,7 @@ end
 --[[ Stage Two ]]--
 function mod:BondsOfFelCast(args)
 	local spellName = self:SpellName(209011)
-	self:Message(209011, "Attention", "Info", CL.casting:format(CL.count:format(spellName, bondsCount)))
+	self:Message(209011, "Attention", "Info", CL.casting:format(CL.count:format(args.spellName, bondsCount)))
 	bondsCount = bondsCount + 1
 	if self:Mythic() then -- Only the first cast is not empowered
 		bondsEmpowered = true
@@ -528,7 +528,7 @@ do
 	local easyTimes = {0, 71.4, 71.4, 28.6} -- initial timer is started in phase transition
 	function mod:EyeOfGuldan(args)
 		local spellName = self:SpellName(209270)
-		self:Message(args.spellId, "Urgent", "Alert", CL.count:format(spellName, eyeCount))
+		self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, eyeCount))
 		eyeCount = eyeCount + 1
 		if self:Mythic() and eyeCount == 6 then -- Empowered Eye next in Mythic
 			eyeEmpowered = true
