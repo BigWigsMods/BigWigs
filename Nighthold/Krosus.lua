@@ -121,8 +121,9 @@ function mod:OnEngage()
 	self:Bar(206677, 15)
 	self:Bar(205862, 33, CL.count:format(self:SpellName(205862), slamCount))
 	self:Bar("smashingBridge", 93, CL.count:format(L.smashingBridge, 1), L.smashingBridge_icon)
-	self:Bar(205370, timers[205370][beamCount], CL.count:format(self:SpellName(221153), beamCount)) -- "Beam"
-	self:Bar(205370, timers[205370][beamCount+1], CL.count:format(self:SpellName(221153), beamCount+1)) -- "Beam"
+	local firstBeam = timers[205370][beamCount]
+	self:Bar(205370, firstBeam, CL.count:format(self:SpellName(221153), beamCount)) -- "Beam"
+	self:Bar(205370, timers[205370][beamCount+1] + firstBeam, CL.count:format(self:SpellName(221153), beamCount+1)) -- "Beam"
 	self:Bar(205344, timers[205344][orbCount], CL.count:format(self:SpellName(205344), orbCount))
 	self:Bar(205420, timers[205420][burningPitchCount], CL.count:format(self:SpellName(205420), burningPitchCount))
 end
