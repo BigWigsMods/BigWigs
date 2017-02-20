@@ -109,7 +109,7 @@ function mod:InfernalBurning(args)
 	burningCounter = burningCounter + 1
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
-	self:Bar(args.spellId, burningCounter <= 3 and 60 or 64)
+	self:Bar(args.spellId, burningCounter == 4 and 64 or 60)
 end
 
 do
