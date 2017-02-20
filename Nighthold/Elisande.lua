@@ -38,7 +38,7 @@ local normalTimers = {
 
 	--[[ Phase 1 ]]--
 	-- Arcanetic Ring
-	[208807] = {34, 31, 76, 50},
+	[208807] = {34, 31, 76, 50, 40, 15, 30},
 
 	-- Spanning Singularity
 	[209170] = {23, 36, 46, 65},
