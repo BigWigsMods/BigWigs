@@ -53,12 +53,12 @@ end
 function mod:OnBossEnable()
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "BelacsPrisoner", 236283)
-	
+
 	-- Atrigan
 	self:Log("SPELL_CAST_START", "ScytheSweep", 233426)
 	self:Log("SPELL_CAST_SUCCESS", "CalcifiedQuills", 233431)
 	self:Log("SPELL_CAST_START", "BoneSaw", 233441)
-	
+
 	-- Belac
 	self:Log("SPELL_CAST_START", "ShadowBoltVolley", 239401)
 	self:Log("SPELL_CAST_START", "EchoingAnguish", 233983)
@@ -72,18 +72,18 @@ end
 function mod:OnEngage()
 	shadowBoltCounter = 1
 	self:OpenAltPower("altpower", 233104) -- Torment
-	
+
 	-- Atrigan
 	self:Bar(233426, 6) -- Scythe Sweep
 	self:Bar(233431, 11) -- Calcified Quills
 	self:Bar(233441, 61.5) -- Bone Saw
-	
+
 	-- Belac
 	--self:Bar(234015, 13.2) -- Tormenting Burst XXX Discrepency between pulls too high
 	--self:Bar(233983, 15.7) -- Echoing Anguish XXX Discrepency between pulls too high
 	--self:Bar(233895, 20) -- Suffocating Dark XXX Discrepency between pulls too high
 	self:Bar(235230, 31.5) -- Fel Squall
-	
+
 end
 
 --------------------------------------------------------------------------------
@@ -101,21 +101,30 @@ function mod:ScytheSweep(args)
 	self:Bar(args.spellId, 23)
 end
 
-function mod:CalcifiedQuills(args)
-	self:Message(args.spellId, "Urgent", "Alert", args.spellName)
-	self:Bar(args.spellId, 21.5)
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage(233431, name, "Attention", "Info", self:SpellName(233431), nil, nil, true)
+		if self:Me(guid) then
+			self:Say(233431)
+		end
+	end
+	function mod:CalcifiedQuills(args)
+		self:GetBossTarget(printTarget, 0.7, args.sourceGUID)
+		self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+		self:Bar(args.spellId, 21.5)
+	end
 end
 
 function mod:BoneSaw(args)
 	self:Message(args.spellId, "Important", "Warning", args.spellName)
 	self:Bar(args.spellId, 15, CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 63) 
+	self:Bar(args.spellId, 63)
 end
 
 function mod:ShadowBoltVolley(args) -- Interuptable
 	shadowBoltCounter = shadowBoltCounter + 1
 	if shadowBoltCounter == 4 then
-		shadowBoltCounter = 1 
+		shadowBoltCounter = 1
 	end
 	if self:Interrupter(args.sourceGUID) then
 		self:Message(args.spellId, "Important", "Alert")
@@ -133,12 +142,12 @@ do
 
 	function mod:EchoingAnguishApplied(args)
 		proxList[#proxList+1] = args.destName
-		
+
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 		end
-		
+
 		self:OpenProximity(args.spellId, 8, proxList) -- Don't stand near others if they have the debuff
 
 		playerList[#playerList+1] = args.destName
