@@ -253,6 +253,6 @@ L.infoBox = "ИнфоБлок"
 -- Statistics.lua
 --
 
---L.printHealthOption = "Boss Health"
---L.healthPrint = "Health: %s."
---L.healthFormat = "%s (%.1f%%)"
+L.printHealthOption = "Здоровье босса"
+L.healthPrint = "Здоровье: %s."
+L.healthFormat = "%s (%.1f%%)"
