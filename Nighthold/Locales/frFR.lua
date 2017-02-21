@@ -80,13 +80,15 @@ end
 
 L = BigWigs:NewBossLocale("Gul'dan", "frFR")
 if L then
-	L[211152] = "(E) %s" -- (E) Eye of Gul'dan
+	L.empowered = "(E) %s" -- (E) Eye of Gul'dan
 	L.gains = "Gul'dan obtient %s"
 	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
 
 	L.nightorb_desc = "Invoque un orbe de nuit, faisant apparaître une zone temporelle une fois détruit."
 
 	L.manifest_desc = "Invoque un fragment d'âme d'Azzinoth, faisant apparaître une Essence démononiaque une fois détruit."
+
+	--L.winds_desc = "Gul'dan summons Violent Winds to push the players off the platform."
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "frFR")
