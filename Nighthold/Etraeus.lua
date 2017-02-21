@@ -363,25 +363,25 @@ function mod:GravitationalPull(args)
 	local remaining = expires-GetTime()
 	self:TargetBar(args.spellId, remaining, args.destName)
 
-	if self:GetOption("custom_on_gravitational_pull_nameplates") then
-		self:AddPlate(args.spellId, args.destName, remaining)
-	end
-
 	if self:Me(args.destGUID) then
 		gravPullSayTimers[1] = self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
 		gravPullSayTimers[2] = self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
 		gravPullSayTimers[3] = self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
 	end
+
+	if self:GetOption("custom_on_gravitational_pull_nameplates") then
+		self:AddPlate(args.spellId, args.destName, remaining)
+	end
 end
 
 function mod:GravitationalPullRemoved(args)
-	self:RemovePlate(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		for i = #gravPullSayTimers, 1, -1 do
 			self:CancelTimer(gravPullSayTimers[i])
 			gravPullSayTimers[i] = nil
 		end
 	end
+	self:RemovePlate(args.spellId, args.destName)
 end
 
 function mod:IcyEjection(args)
@@ -393,26 +393,28 @@ function mod:IcyEjection(args)
 end
 
 function mod:IcyEjectionApplied(args)
-	if self:GetOption("custom_off_icy_ejection_nameplates") then
-		self:AddPlate(args.spellId, args.destName, 8)
-	end
-
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
 		self:Say(args.spellId)
 		self:OpenProximity(args.spellId, 8)
 		self:TargetBar(args.spellId, 10, args.destName)
-		self:ScheduleTimer("Say", 7, args.spellId, 3, true)
-		self:ScheduleTimer("Say", 8, args.spellId, 2, true)
-		self:ScheduleTimer("Say", 9, args.spellId, 1, true)
+		if not self:LFR() then
+			self:ScheduleTimer("Say", 7, args.spellId, 3, true)
+			self:ScheduleTimer("Say", 8, args.spellId, 2, true)
+			self:ScheduleTimer("Say", 9, args.spellId, 1, true)
+		end
+	end
+
+	if self:GetOption("custom_off_icy_ejection_nameplates") then
+		self:AddPlate(args.spellId, args.destName, 8)
 	end
 end
 
 function mod:IcyEjectionRemoved(args)
-	self:RemovePlate(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
 	end
+	self:RemovePlate(args.spellId, args.destName)
 end
 
 function mod:FrigidNova(args)
@@ -453,14 +455,14 @@ function mod:FelEjection(args)
 end
 
 function mod:FelEjectionApplied(args)
-	if self:GetOption("custom_on_fel_ejection_nameplates") then
-		self:AddPlate(args.spellId, args.destName, 8)
-	end
-
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
 		self:Say(args.spellId)
 		self:TargetBar(args.spellId, 8, args.destName)
+	end
+
+	if self:GetOption("custom_on_fel_ejection_nameplates") then
+		self:AddPlate(args.spellId, args.destName, 8)
 	end
 end
 
@@ -515,8 +517,19 @@ end
 --[[ Mythic ]]--
 do
 	local mySign, scheduled, tryCount = nil, nil, 0
+	local playerList = mod:NewTargetList()
 
 	function mod:GrandConjunction(args)
+		starSignTables = {
+			[205429] = {},
+			[205445] = {},
+			[216345] = {},
+			[216344] = {},
+		}
+		tryCount = 0
+		mySign = nil
+		scheduled = nil
+
 		self:Message(args.spellId, "Attention", "Info", CL.count:format(args.spellName, grandCounter))
 		grandCounter = grandCounter + 1
 		self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
@@ -533,22 +546,13 @@ do
 			timer = 42
 		end
 		self:CDBar(args.spellId, timer, CL.count:format(args.spellName, grandCounter))
-
-		starSignTables = {
-			[205429] = {},
-			[205445] = {},
-			[216345] = {},
-			[216344] = {},
-		}
-		tryCount = 0
-		mySign = nil
 	end
 
 	function mod:GrandConjunctionSuccess(args)
 		self:CloseProximity(args.spellId)
 	end
 
-	local function warn(self, spellId)
+	local function warn(self)
 		scheduled = nil
 		tryCount = tryCount + 1
 		if not mySign then
@@ -558,13 +562,11 @@ do
 				scheduled = self:ScheduleTimer(warn, 0.1, self)
 			end
 		else
-			local list = mod:NewTargetList()
-			for _,name in pairs(starSignTables[mySign]) do
-				list[#list+1] = name
+			for i = 1, #starSignTables[mySign] do
+				playerList[#playerList+1] = starSignTables[mySign][i]
 			end
 			local color = mySign == 205429 and "Attention" or mySign == 205445 and "Important" or mySign == 216345 and "Positive" or "Personal"
-			self:TargetMessage(205408, list, color, "Warning", mySign, mySign)
-			scheduled = nil
+			self:TargetMessage(205408, playerList, color, "Warning", mySign, mySign)
 		end
 	end
 
@@ -587,10 +589,11 @@ do
 			self:SetInfo(205408, 10, "")
 
 			local i = 0
-			for _,name in pairs(starSignTables[mySign]) do
-				if name ~= UnitName("player") then
-					self:SetInfo(205408, 4+2*i, self:ColorName(name))
-					i = i + 1
+			for i = 1, #starSignTables[mySign] do
+				local name = starSignTables[mySign][i]
+				if name ~= self:UnitName("player") then
+					local c = i - 1
+					self:SetInfo(205408, 4+2*c, self:ColorName(name))
 				end
 			end
 
@@ -653,13 +656,6 @@ do
 	end
 
 	function mod:StarSignsRemoved(args)
-		if self:GetOption("custom_off_gc_redgreen_icons") then
-			-- we instantly forget our sign, so just remove both possible icons
-			self:RemovePlate(redIcon, args.destName)
-			self:RemovePlate(greenIcon, args.destName)
-		else
-			self:RemovePlate(icons[args.spellId], args.destName)
-		end
 		tDeleteItem(starSignTables[args.spellId], args.destName)
 
 		if self:Me(args.destGUID) then
@@ -672,6 +668,14 @@ do
 			if not scheduled then
 				scheduled = self:ScheduleTimer(warn, 0.1, self)
 			end
+		end
+
+		if self:GetOption("custom_off_gc_redgreen_icons") then
+			-- we instantly forget our sign, so just remove both possible icons
+			self:RemovePlate(redIcon, args.destName)
+			self:RemovePlate(greenIcon, args.destName)
+		else
+			self:RemovePlate(icons[args.spellId], args.destName)
 		end
 	end
 
