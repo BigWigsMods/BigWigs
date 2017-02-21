@@ -235,6 +235,7 @@ function boss:OnDisable(isWipe)
 	self.scheduledScans = nil
 	self.scheduledScansCounter = nil
 	self.targetEventFunc = nil
+	self.missing = nil
 	self.isWiping = nil
 	self.isEngaged = nil
 
@@ -1489,7 +1490,9 @@ end
 --
 
 do
-	local msg = "Attempted to start bar %q without a valid time."
+	local badBar = "Attempted to start bar '%q' without a valid time."
+	local badTargetBar = "Attempted to start target bar '%q' without a valid time."
+	local newBar = "New bar discovered for '%q' with a placement of %d and a timer of %.2f, tell the authors."
 
 	--- Display a bar.
 	-- @param key the option key
@@ -1497,7 +1500,23 @@ do
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:Bar(key, length, text, icon)
-		if type(length) ~= "number" then core:Print(format(msg,key)) return end
+		if not length then
+			if not self.missing then self.missing = {} end
+			if not self.missing[key] then
+				self.missing[key] = {GetTime()}
+			else
+				local t, c = GetTime(), #self.missing[key]
+				local new = t - self.missing[key][c]
+				core:Print(format(newBar, key, c, new))
+				self.missing[key][c+1] = t
+			end
+		elseif type(length) ~= "number" then
+			core:Print(format(badBar, key))
+			return
+		elseif length == 0 then
+			return
+		end
+
 		local textType = type(text)
 		if checkFlag(self, key, C.BAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key])
@@ -1514,7 +1533,23 @@ do
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:CDBar(key, length, text, icon)
-		if type(length) ~= "number" then core:Print(format(msg,key)) return end
+		if not length then
+			if not self.missing then self.missing = {} end
+			if not self.missing[key] then
+				self.missing[key] = {GetTime()}
+			else
+				local t, c = GetTime(), #self.missing[key]
+				local new = t - self.missing[key][c]
+				core:Print(format(newBar, key, c, new))
+				self.missing[key][c+1] = t
+			end
+		elseif type(length) ~= "number" then
+			core:Print(format(badBar, key))
+			return
+		elseif length == 0 then
+			return
+		end
+
 		local textType = type(text)
 		if checkFlag(self, key, C.BAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key], true)
@@ -1531,7 +1566,11 @@ do
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:TargetBar(key, length, player, text, icon)
-		if type(length) ~= "number" then core:Print(format(msg,key)) return end
+		if type(length) ~= "number" or length == 0 then
+			core:Print(format(badTargetBar, key))
+			return
+		end
+
 		local textType = type(text)
 		if not player and checkFlag(self, key, C.BAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), length, icons[icon or textType == "number" and text or key])
