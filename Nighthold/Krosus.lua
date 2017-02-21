@@ -118,7 +118,6 @@ function mod:OnEngage()
 	receivedBeamCom = nil
 	timers = self:Mythic() and mythicTimers or self:Heroic() and heroicTimers or normalTimers
 
-	self:Bar(206677, 15)
 	self:Bar(205862, 33, CL.count:format(self:SpellName(205862), slamCount))
 	self:Bar("smashingBridge", 93, CL.count:format(L.smashingBridge, 1), L.smashingBridge_icon)
 	local firstBeam = timers[205370][beamCount]
