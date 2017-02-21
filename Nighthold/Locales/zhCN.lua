@@ -88,13 +88,13 @@ L = BigWigs:NewBossLocale("Gul'dan", "zhCN")
 if L then
 	L.empowered = "（强化）%s"
 	L.gains = "古尔丹获得 >%s<"
-	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
+	L.p4_mythic_start_yell = "该让这个恶魔猎手的灵魂回到躯体中……防止军团之王占据它了！"
 
-	L.nightorb_desc = "召唤夜之球，击杀后将出现时间区域。"
+	L.nightorb_desc = "召唤暗夜宝珠，击杀后将出现时间停止力场。"
 
 	L.manifest_desc = "召唤埃辛诺斯灵魂碎片，击杀后将出现恶魔精华。"
 
-	--L.winds_desc = "Gul'dan summons Violent Winds to push the players off the platform."
+	L.winds_desc = "古尔丹召唤暴虐之风将玩家吹离平台。"
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "zhCN")
