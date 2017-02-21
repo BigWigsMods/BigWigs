@@ -63,6 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "AqueousBurst", 231729)
 	self:Log("SPELL_CAST_START", "TendWounds", 231904)
 	self:Log("SPELL_AURA_APPLIED", "DrivenAssault", 234016)
+	self:Log("SPELL_AURA_REMOVED", "DrivenAssaultRemoved", 234016)
 
 	-- Mythic
 	self:Log("SPELL_CAST_START", "Hatching", 240319)
@@ -140,9 +141,10 @@ function mod:TendWounds(args)
 end
 
 do
-	local playerList = mod:NewTargetList()
+	local playerList = mod:NewTargetList(), nil
 	function mod:DrivenAssault(args)
 		if self:Me(args.destGUID) then
+			self:AddPlate(234128, args.sourceGUID, 10) -- Show the target that is fixating on you more clear
 			self:Flash(234128)
 			self:Say(234128)
 		end
@@ -151,6 +153,11 @@ do
 
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, 234128, playerList, "Important", "Alarm")
+		end
+	end
+	function mod:DrivenAssaultRemoved(args)
+		if self:Me(args.destGUID) then
+			self:RemovePlate(234128, args.sourceGUID) -- Clear fixate plate incase it's removed early
 		end
 	end
 end
