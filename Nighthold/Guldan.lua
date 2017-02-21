@@ -432,7 +432,7 @@ function mod:LiquidHellfire(args)
 		liquidHellfireEmpowered = true
 	end
 	if liquidHellfireEmpowered then
-		spellName = L.empowered:format(args.spellName)
+		spellName = L.empowered:format(spellName)
 	end
 	local t = 0
 	if phase == 1 then
