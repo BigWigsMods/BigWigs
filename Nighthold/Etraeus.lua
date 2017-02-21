@@ -603,7 +603,7 @@ do
 	function mod:StarSigns(args)
 		if self:GetOption("custom_on_grand_conjunction_nameplates") then
 			if not self:GetOption("custom_off_gc_redgreen_icons") then
-				self:AddPlate(icons[args.spellId], args.destName, 10, mySign and args.spellId ~= mySign)
+				self:AddPlate(icons[args.spellId], args.destName, 10, false, mySign and args.spellId ~= mySign)
 			elseif mySign then
 				if mySign == args.spellId then -- matching
 					self:AddPlate(greenIcon, args.destName, 10)
@@ -623,7 +623,7 @@ do
 							if self:GetOption("custom_off_gc_redgreen_icons") then
 								self:AddPlate(redIcon, name, 10)
 							else
-								self:AddPlate(icons[spellId], name, 10, true) -- Desaturate existing non matching icon
+								self:AddPlate(icons[spellId], name, 10, false, true) -- Desaturate existing non matching icon
 							end
 						end
 					else -- matching
@@ -631,7 +631,7 @@ do
 							if self:GetOption("custom_off_gc_redgreen_icons") then
 								self:AddPlate(greenIcon, name, 10)
 							else
-								self:AddPlate(icons[spellId], name, 10, false) -- Saturate existing matching icons
+								self:AddPlate(icons[spellId], name, 10, false, false) -- Saturate existing matching icons
 							end
 						end
 					end
