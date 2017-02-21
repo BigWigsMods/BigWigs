@@ -80,13 +80,15 @@ end
 
 L = BigWigs:NewBossLocale("Gul'dan", "zhTW")
 if L then
-	L[211152] = "(強化) %s" -- (E) Eye of Gul'dan
+	L.empowered = "(強化) %s" -- (E) Eye of Gul'dan
 	L.gains = "古爾丹獲得%s"
 	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
 
 	L.nightorb_desc = "召喚一個夜之球，擊殺它會生成一個時間區域。"
 
 	L.manifest_desc = "召喚一個埃辛諾斯靈魂碎片，擊殺它會生成一個惡魔精華。"
+
+	--L.winds_desc = "Gul'dan summons Violent Winds to push the players off the platform."
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "zhTW")

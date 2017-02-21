@@ -7,20 +7,20 @@ if L then
 	--L.mode = "%s Mode"
 end
 
-L = BigWigs:NewBossLocale("Chronomatic Anomaly", "esES") or BigWigs:NewBossLocale("Skorpyron", "esMX")
+L = BigWigs:NewBossLocale("Chronomatic Anomaly", "esES") or BigWigs:NewBossLocale("Chronomatic Anomaly", "esMX")
 if L then
 	--L.affected = "Affected"
 	--L.totalAbsorb = "Total Absorb"
 end
 
-L = BigWigs:NewBossLocale("Trilliax", "esES") or BigWigs:NewBossLocale("Skorpyron", "esMX")
+L = BigWigs:NewBossLocale("Trilliax", "esES") or BigWigs:NewBossLocale("Trilliax", "esMX")
 if L then
 	--L.yourLink = "You are linked with %s"
 	--L.yourLinkShort = "Linked with %s"
 	--L.imprint = "Imprint"
 end
 
-L = BigWigs:NewBossLocale("Tichondrius", "esES") or BigWigs:NewBossLocale("Skorpyron", "esMX")
+L = BigWigs:NewBossLocale("Tichondrius", "esES") or BigWigs:NewBossLocale("Tichondrius", "esMX")
 if L then
 	--L.addsKilled = "Adds killed"
 	--L.gotEssence = "Got Essence"
@@ -30,7 +30,7 @@ if L then
 	--L.adds_yell2 = "Show these pretenders how to fight!"
 end
 
-L = BigWigs:NewBossLocale("Krosus", "esES") or BigWigs:NewBossLocale("Skorpyron", "esMX")
+L = BigWigs:NewBossLocale("Krosus", "esES") or BigWigs:NewBossLocale("Krosus", "esMX")
 if L then
 	--L.leftBeam = "Left Beam"
 	--L.rightBeam = "Right Beam"
@@ -44,7 +44,7 @@ if L then
 	--L.removedFromYou = "%s removed from you" -- "Searing Brand removed from YOU!"
 end
 
-L = BigWigs:NewBossLocale("Star Augur Etraeus", "esES") or BigWigs:NewBossLocale("Skorpyron", "esMX")
+L = BigWigs:NewBossLocale("Star Augur Etraeus", "esES") or BigWigs:NewBossLocale("Star Augur Etraeus", "esMX")
 if L then
 	--L.yourSign = "Your sign"
 	--L.with = "with"
@@ -68,7 +68,7 @@ if L then
 	--L.custom_on_grand_conjunction_nameplates_desc = L.nameplate_requirement
 end
 
-L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "esES") or BigWigs:NewBossLocale("Skorpyron", "esMX")
+L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "esES") or BigWigs:NewBossLocale("Grand Magistrix Elisande", "esMX")
 if L then
 	--L.elisande = "Elisande"
 
@@ -78,18 +78,20 @@ if L then
 	--L.fastTimeZone = "Fast Time Zone"
 end
 
-L = BigWigs:NewBossLocale("Gul'dan", "esES") or BigWigs:NewBossLocale("Skorpyron", "esMX")
+L = BigWigs:NewBossLocale("Gul'dan", "esES") or BigWigs:NewBossLocale("Gul'dan", "esMX")
 if L then
-	--L[211152] = "(E) %s" -- (E) Eye of Gul'dan
+	--L.empowered = "(E) %s" -- (E) Eye of Gul'dan
 	--L.gains = "Gul'dan gains %s"
 	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
 
 	--L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone."
 
 	--L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence."
+
+	--L.winds_desc = "Gul'dan summons Violent Winds to push the players off the platform."
 end
 
-L = BigWigs:NewBossLocale("Nighthold Trash", "esES") or BigWigs:NewBossLocale("Skorpyron", "esMX")
+L = BigWigs:NewBossLocale("Nighthold Trash", "esES") or BigWigs:NewBossLocale("Nighthold Trash", "esMX")
 if L then
 	--[[ Skorpyron to Trilliax ]]--
 	--L.torm = "Torm the Brute"
