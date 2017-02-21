@@ -175,6 +175,11 @@ if L then
 	L.expedient_elemental = -13229
 	L.expedient_elemental_icon = 209166 -- Fast Time
 	L.fastTimeZone = "Fast Time Zone"
+	
+	L.boss_active = "Elisande Active"
+	L.boss_active_desc = "Time until Elisande is active after clearing the trash event."
+	L.boss_active_icon = "achievement_thenighthold_grandmagistrixelisande"
+	L.elisande_trigger = "I foresaw your coming, of course. The threads of fate that led you to this place. Your desperate attempt to stop the Legion."
 end
 
 -- Localization fallback (l11n)
@@ -195,6 +200,7 @@ local localized_orb_msg = nil
 function mod:GetOptions()
 	return {
 		--[[ General ]]--
+		"boss_active",
 		"stages",
 		229889, -- Terminate (Berserk)
 
@@ -225,7 +231,7 @@ function mod:GetOptions()
 		209971, -- Ablative Pulse
 		{211887, "TANK"}, -- Ablated
 	},{
-		["stages"] = "general",
+		["boss_active"] = "general",
 		["recursive_elemental"] = -13226, -- Recursive Elemental
 		["expedient_elemental"] = -13229, -- Expedient Elemental
 		[208807] = -13222, -- Time Layer 1
@@ -240,6 +246,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "TimeStop", 208944) -- Phase triggering
 	self:Log("SPELL_CAST_SUCCESS", "LeavetheNightwell", 208863) -- New phase starting
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_MONSTER_SAY", "Warmup")
 
 	--[[ Recursive Elemental ]]--
 	self:Log("SPELL_CAST_START", "Recursion", 209620)
@@ -308,6 +315,12 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Warmup(_, msg)
+	if msg == L.elisande_trigger then 
+		self:Bar("boss_active", 65, L.boss_active, L.boss_active_icon)
+	end
+end
 
 --[[ General ]]--
 do
