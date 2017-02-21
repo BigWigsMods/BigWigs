@@ -1267,20 +1267,32 @@ function boss:HideFriendlyNameplates()
 	self:SendMessage("BigWigs_DisableFriendlyNameplates", self)
 end
 
+--- Toggle showing friendly nameplates to the enabled state.
+function boss:ShowHostileNameplates()
+	self:SendMessage("BigWigs_EnableHostileNameplates", self)
+end
+
+--- Toggle showing friendly nameplates to the disabled state.
+function boss:HideHostileNameplates()
+	self:SendMessage("BigWigs_DisableHostileNameplates", self)
+end
+
 --- Add aura to nameplate.
 -- @param spellId the associated spell id
 -- @param playerName the affected player
 -- @param[opt] duration the duration of the aura
+-- @param[opt] isHostile if the unit is a hostile nameplate, in which case playerName should be treated as a GUID
 -- @param[opt] desaturate true if the texture should be desaturated
-function boss:AddPlate(spellId, playerName, duration, desaturate)
-	self:SendMessage("BigWigs_ShowNameplateAura", self, playerName, icons[spellId], duration, desaturate)
+function boss:AddPlate(spellId, playerName, duration, isHostile, desaturate)
+	self:SendMessage("BigWigs_ShowNameplateAura", self, playerName, icons[spellId], duration, desaturate, isHostile)
 end
 
 --- Remove aura from nameplate.
 -- @param spellId the associated spell id, passing nil removes all icons
 -- @param playerName the affected player
-function boss:RemovePlate(spellId, playerName)
-	self:SendMessage("BigWigs_HideNameplateAura", self, playerName, spellId and icons[spellId])
+-- @param[opt] isHostile if the unit is a hostile nameplate, in which case playerName should be treated as a GUID
+function boss:RemovePlate(spellId, playerName, isHostile)
+	self:SendMessage("BigWigs_HideNameplateAura", self, playerName, spellId and icons[spellId], isHostile)
 end
 
 -------------------------------------------------------------------------------
