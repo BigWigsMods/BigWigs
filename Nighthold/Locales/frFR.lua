@@ -76,6 +76,10 @@ if L then
 	L.orb_yell = "Le temps est parfois… explosif."
 
 	L.fastTimeZone = "Zone de temps accéléré"
+
+	--L.boss_active = "Elisande Active"
+	--L.boss_active_desc = "Time until Elisande is active after clearing the trash event."
+	--L.elisande_trigger = "I foresaw your coming, of course. The threads of fate that led you to this place. Your desperate attempt to stop the Legion."
 end
 
 L = BigWigs:NewBossLocale("Gul'dan", "frFR")
