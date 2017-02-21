@@ -323,7 +323,7 @@ function mod:RAID_BOSS_EMOTE(event, msg)
 		self:Message(206219, "Neutral", nil, L.gains:format(self:SpellName(206220)))
 		local oldText = CL.count:format(self:SpellName(206219), liquidHellfireCount)
 		self:Bar(206219, self:BarTimeLeft(oldText), CL.count:format(L.empowered:format(self:SpellName(206219)), liquidHellfireCount)) -- (E) Liquid Hellfire
-		self:StopBar(oldText) -- Eye of Gul'dan
+		self:StopBar(oldText) -- Liquid Hellfire
 	elseif msg:find("211152", nil, true) and not eyeEmpowered then -- Empowered Eye of Gul'dan
 		eyeEmpowered = true
 		self:Message(211152, "Neutral", nil, L.gains:format(self:SpellName(211152)))
