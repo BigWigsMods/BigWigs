@@ -144,7 +144,7 @@ do
 	local playerList = mod:NewTargetList(), nil
 	function mod:DrivenAssault(args)
 		if self:Me(args.destGUID) then
-			self:AddPlate(234128, args.sourceGUID, 10) -- Show the target that is fixating on you more clear
+			self:AddPlate(234128, args.sourceGUID, 10, true) -- Show the target that is fixating on you more clear
 			self:Flash(234128)
 			self:Say(234128)
 		end
@@ -157,7 +157,7 @@ do
 	end
 	function mod:DrivenAssaultRemoved(args)
 		if self:Me(args.destGUID) then
-			self:RemovePlate(234128, args.sourceGUID) -- Clear fixate plate incase it's removed early
+			self:RemovePlate(234128, args.sourceGUID, true) -- Clear fixate plate incase it's removed early
 		end
 	end
 end
