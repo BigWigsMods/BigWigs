@@ -432,7 +432,7 @@ function mod:LiquidHellfire(args)
 		liquidHellfireEmpowered = true
 	end
 	if liquidHellfireEmpowered then
-		spellName = L.empowered:format(args.spellName)
+		spellName = L.empowered:format(spellName)
 	end
 	local t = 0
 	if phase == 1 then
@@ -523,7 +523,7 @@ do
 	function mod:BondsOfFel(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.5, 209011, list, "Important", "Warning", CL.count:format(self:SpellName(209011), bondsCount-1), nil, true) -- Have the bonds number in the list warning also
+			self:ScheduleTimer("TargetMessage", 1, 209011, list, "Important", "Warning", CL.count:format(self:SpellName(209011), bondsCount-1), nil, true) -- Have the bonds number in the list warning also
 		end
 		if self:Me(args.destGUID) then
 			self:Say(209011, CL.count:format(args.spellName, #list))

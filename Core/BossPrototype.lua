@@ -1504,7 +1504,7 @@ end
 do
 	local badBar = "Attempted to start bar '%q' without a valid time."
 	local badTargetBar = "Attempted to start target bar '%q' without a valid time."
-	local newBar = "New bar discovered for '%q' with a placement of %d and a timer of %.2f, tell the authors."
+	local newBar = "New bar discovered for '%q' with a placement of %d and a timer of %.2f on %d, tell the authors."
 
 	--- Display a bar.
 	-- @param key the option key
@@ -1519,9 +1519,10 @@ do
 			else
 				local t, c = GetTime(), #self.missing[key]
 				local new = t - self.missing[key][c]
-				core:Print(format(newBar, key, c, new))
+				core:Print(format(newBar, key, c, new, self:Difficulty()))
 				self.missing[key][c+1] = t
 			end
+			return
 		elseif type(length) ~= "number" then
 			core:Print(format(badBar, key))
 			return
@@ -1552,9 +1553,10 @@ do
 			else
 				local t, c = GetTime(), #self.missing[key]
 				local new = t - self.missing[key][c]
-				core:Print(format(newBar, key, c, new))
+				core:Print(format(newBar, key, c, new, self:Difficulty()))
 				self.missing[key][c+1] = t
 			end
+			return
 		elseif type(length) ~= "number" then
 			core:Print(format(badBar, key))
 			return

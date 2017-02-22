@@ -23,7 +23,7 @@ end
 L = BigWigs:NewBossLocale("Tichondrius", "frFR")
 if L then
 	L.addsKilled = "Adds tués"
-	--L.gotEssence = "Got Essence"
+	L.gotEssence = "Sous Essence"
 
 	L.adds_desc = "Délais et alertes concernant l'apparition des renforts."
 	L.adds_yell1 = "Serviteurs ! Ici, tout de suite !"
@@ -41,7 +41,7 @@ if L then
 	L.smashingBridge = "Destruction du pont"
 	L.smashingBridge_desc = "Heurtoirs détruisant le pont. Vous pouvez utiliser cette option comme mise en évidence ou pour activer un compte à rebours."
 
-	--L.removedFromYou = "%s removed from you" -- "Searing Brand removed from YOU!"
+	L.removedFromYou = "%s n'est plus sur vous" -- "Searing Brand removed from YOU!"
 end
 
 L = BigWigs:NewBossLocale("Star Augur Etraeus", "frFR")
@@ -76,6 +76,10 @@ if L then
 	L.orb_yell = "Le temps est parfois… explosif."
 
 	L.fastTimeZone = "Zone de temps accéléré"
+
+	--L.boss_active = "Elisande Active"
+	--L.boss_active_desc = "Time until Elisande is active after clearing the trash event."
+	--L.elisande_trigger = "I foresaw your coming, of course. The threads of fate that led you to this place. Your desperate attempt to stop the Legion."
 end
 
 L = BigWigs:NewBossLocale("Gul'dan", "frFR")
@@ -88,7 +92,7 @@ if L then
 
 	L.manifest_desc = "Invoque un fragment d'âme d'Azzinoth, faisant apparaître une Essence démononiaque une fois détruit."
 
-	--L.winds_desc = "Gul'dan summons Violent Winds to push the players off the platform."
+	L.winds_desc = "Gul'dan invoque des Vents violents pour pousser les joueurs hors de la platforme."
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "frFR")
