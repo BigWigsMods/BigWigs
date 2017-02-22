@@ -318,7 +318,7 @@ end
 
 function mod:Warmup(_, msg)
 	if msg == L.elisande_trigger then 
-		self:Bar("boss_active", 65, L.boss_active, L.boss_active_icon)
+		self:Bar("boss_active", 68, L.boss_active, L.boss_active_icon)
 	end
 end
 
