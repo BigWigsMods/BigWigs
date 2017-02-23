@@ -70,6 +70,7 @@ function mod:OnBossEnable()
 
 	-- Captain Yathae Moonstrike
 	self:Log("SPELL_AURA_APPLIED", "IncorporealShotApplied", 236305) -- Incorporeal Shot
+	self:Log("SPELL_AURA_APPLIED", "IncorporealShotRemoved", 236305) -- Incorporeal Shot
 	--self:Log("SPELL_CAST_SUCCESS", "TwilightVolley", 236516) -- Twilight Volley
 	--self:Log("SPELL_CAST_SUCCESS", "ShadowShot", 237630) -- Shadow Shot
 	-- Stage Two: Bow of the Night
@@ -126,9 +127,13 @@ function mod:IncorporealShotApplied(args)
 	--self:CDBar(args.spellId, 30)
 end
 
+function mod:IncorporealShotRemoved(args)
+	self:PrimaryIcon(args.spellId)
+end
+
 function mod:CallMoontalon(args)
 	screechCount = 0
-	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(self:spellName(-15499))) -- XXX Moontalon from DJ, Incorrect ATM
+	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(self:spellName(-15064))) -- Moontalon
 	--self:CDBar(args.spellId, 30)
 end
 
