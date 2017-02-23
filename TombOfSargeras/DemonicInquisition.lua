@@ -12,14 +12,15 @@ if not IsTestBuild() then return end -- XXX dont load on live
 
 local mod, CL = BigWigs:NewBoss("Demonic Inquisition", 1147, 1867)
 if not mod then return end
-mod:RegisterEnableMob(120996, 116691) -- XXX Guestimate
+mod:RegisterEnableMob(116689, 116691)
 mod.engageId = 2048
---mod.respawnTime = 30
+mod.respawnTime = 15
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
+local shadowBoltCounter = 1
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -33,6 +34,7 @@ local L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		236283, -- Belac's Prisoner
+		"altpower",
 		233426, -- Scythe Sweep
 		233431, -- Calcified Quills
 		233441, -- Bone Saw
@@ -51,35 +53,37 @@ end
 function mod:OnBossEnable()
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "BelacsPrisoner", 236283)
-	
+
 	-- Atrigan
 	self:Log("SPELL_CAST_START", "ScytheSweep", 233426)
 	self:Log("SPELL_CAST_SUCCESS", "CalcifiedQuills", 233431)
 	self:Log("SPELL_CAST_START", "BoneSaw", 233441)
-	
+
 	-- Belac
 	self:Log("SPELL_CAST_START", "ShadowBoltVolley", 239401)
 	self:Log("SPELL_CAST_START", "EchoingAnguish", 233983)
-	self:Log("SPELL_AURA_APPLIED", "EchoingAnguish", 233983)
-	self:Log("SPELL_AURA_REMOVED", "EchoingAnguish", 233983)
+	self:Log("SPELL_AURA_APPLIED", "EchoingAnguishApplied", 233983)
+	self:Log("SPELL_AURA_REMOVED", "EchoingAnguishRemoved", 233983)
 	self:Log("SPELL_AURA_APPLIED", "SuffocatingDark", 233895)
 	self:Log("SPELL_CAST_START", "TormentingBurst", 234015)
 	self:Log("SPELL_CAST_SUCCESS", "FelSquall", 235230)
 end
 
 function mod:OnEngage()
+	shadowBoltCounter = 1
+	self:OpenAltPower("altpower", 233104) -- Torment
 
 	-- Atrigan
 	self:Bar(233426, 6) -- Scythe Sweep
 	self:Bar(233431, 11) -- Calcified Quills
 	self:Bar(233441, 61.5) -- Bone Saw
-	
+
 	-- Belac
 	--self:Bar(234015, 13.2) -- Tormenting Burst XXX Discrepency between pulls too high
 	--self:Bar(233983, 15.7) -- Echoing Anguish XXX Discrepency between pulls too high
 	--self:Bar(233895, 20) -- Suffocating Dark XXX Discrepency between pulls too high
 	self:Bar(235230, 31.5) -- Fel Squall
-	
+
 end
 
 --------------------------------------------------------------------------------
@@ -97,9 +101,18 @@ function mod:ScytheSweep(args)
 	self:Bar(args.spellId, 23)
 end
 
-function mod:CalcifiedQuills(args)
-	self:Message(args.spellId, "Urgent", "Alert", args.spellName)
-	self:Bar(args.spellId, 21.5)
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage(233431, name, "Urgent", "Alert", nil, nil, true)
+		if self:Me(guid) then
+			self:Say(233431)
+		end
+	end
+	function mod:CalcifiedQuills(args)
+		self:GetBossTarget(printTarget, 0.7, args.sourceGUID)
+		self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+		self:Bar(args.spellId, 21.5)
+	end
 end
 
 function mod:BoneSaw(args)
@@ -109,9 +122,14 @@ function mod:BoneSaw(args)
 end
 
 function mod:ShadowBoltVolley(args) -- Interuptable
+	shadowBoltCounter = shadowBoltCounter + 1
+	if shadowBoltCounter == 4 then
+		shadowBoltCounter = 1
+	end
 	if self:Interrupter(args.sourceGUID) then
 		self:Message(args.spellId, "Important", "Alert")
 	end
+	self:Bar(args.spellId, 5, CL.count:format(args.spellName, shadowBoltCounter)) -- 1,2,3 for Interupts
 end
 
 function mod:EchoingAnguish(args)
@@ -119,17 +137,17 @@ function mod:EchoingAnguish(args)
 	self:OpenProximity(args.spellId, 8) -- Open proximity a bit before
 end
 
-do 
+do
 	local playerList, proxList = mod:NewTargetList(), {}
 
 	function mod:EchoingAnguishApplied(args)
 		proxList[#proxList+1] = args.destName
-		
+
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 		end
-		
+
 		self:OpenProximity(args.spellId, 8, proxList) -- Don't stand near others if they have the debuff
 
 		playerList[#playerList+1] = args.destName
