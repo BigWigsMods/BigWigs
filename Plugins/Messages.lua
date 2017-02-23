@@ -30,6 +30,8 @@ local db = nil
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
 
+local tempPrint = true -- XXX temp
+
 --------------------------------------------------------------------------------
 -- Anchors & Frames
 --
@@ -136,6 +138,17 @@ do
 	BWMessageFrame:SetHeight(80)
 	BWMessageFrame:SetFrameStrata("HIGH")
 	BWMessageFrame:SetToplevel(true)
+
+	local function FontFinish(self)
+		self:GetParent():Hide()
+		if not labels[1]:IsShown() and not labels[2]:IsShown() and not labels[3]:IsShown() and not labels[4]:IsShown() then
+			BWMessageFrame:Hide()
+		end
+	end
+	local function IconFinish(self)
+		self:GetParent():Hide()
+	end
+
 	for i = 1, 4 do
 		local fs = BWMessageFrame:CreateFontString()
 		fs:SetWidth(0)
@@ -144,12 +157,7 @@ do
 		fs:Hide()
 
 		fs.anim = fs:CreateAnimationGroup()
-		fs.anim:SetScript("OnFinished", function(self)
-			self:GetParent():Hide()
-			if not labels[1]:IsShown() and not labels[2]:IsShown() and not labels[3]:IsShown() and not labels[4]:IsShown() then
-				BWMessageFrame:Hide()
-			end
-		end)
+		fs.anim:SetScript("OnFinished", FontFinish)
 		fs.animFade = fs.anim:CreateAnimation("Alpha")
 		fs.animFade:SetFromAlpha(1)
 		fs.animFade:SetToAlpha(0)
@@ -161,7 +169,7 @@ do
 		fs.icon = icon
 
 		icon.anim = icon:CreateAnimationGroup()
-		icon.anim:SetScript("OnFinished", function(self) self:GetParent():Hide() end)
+		icon.anim:SetScript("OnFinished", IconFinish)
 		icon.animFade = icon.anim:CreateAnimation("Alpha")
 		icon.animFade:SetFromAlpha(1)
 		icon.animFade:SetToAlpha(0)
@@ -231,12 +239,10 @@ do
 		plugin.db.profile[info[#info]] = value
 		for i = 1, 4 do
 			local font = labels[i]
-			if font then
-				font.animFade:SetStartDelay(db.displaytime)
-				font.icon.animFade:SetStartDelay(db.displaytime)
-				font.animFade:SetDuration(db.fadetime)
-				font.icon.animFade:SetDuration(db.fadetime)
-			end
+			font.animFade:SetStartDelay(db.displaytime)
+			font.icon.animFade:SetStartDelay(db.displaytime)
+			font.animFade:SetDuration(db.fadetime)
+			font.icon.animFade:SetDuration(db.fadetime)
 		end
 	end
 	local updateAnchor = function(info, value)
@@ -435,14 +441,12 @@ local function updateProfile()
 	end
 	for i = 1, 4 do
 		local font = labels[i]
-		if font then
-			font.animFade:SetStartDelay(db.displaytime)
-			font.icon.animFade:SetStartDelay(db.displaytime)
-			font.animFade:SetDuration(db.fadetime)
-			font.icon.animFade:SetDuration(db.fadetime)
-
-			font:SetFont(media:Fetch("font", db.font), db.fontSize, flags)
-		end
+		font.animFade:SetStartDelay(db.displaytime)
+		font.icon.animFade:SetStartDelay(db.displaytime)
+		font.animFade:SetDuration(db.fadetime)
+		font.icon.animFade:SetDuration(db.fadetime)
+		font:SetFont(media:Fetch("font", db.font), db.fontSize, flags)
+		tempPrint = false
 	end
 end
 
@@ -549,6 +553,7 @@ do
 	end
 
 	function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
+		if tempPrint then print("BigWigs: We are printing a message before initialization has finished somehow.") end
 		BWMessageFrame:Show()
 
 		local slot = db.growUpwards and getNextSlotUp() or getNextSlotDown()

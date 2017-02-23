@@ -153,6 +153,12 @@ do
 			[206617] = {18}, -- Time Bomb
 			[219815] = {}, -- Temporal Orb
 			[-13022] = {38}, -- Add
+		},
+		["fast2"] = {
+			[206609] = {40}, -- Time Release
+			[206617] = {31}, -- Time Bomb
+			[219815] = {10, 15, 20}, -- Temporal Orb
+			[-13022] = {}, -- Add
 		}
 	}
 	local normal = {
@@ -408,7 +414,7 @@ do
 
 			sort(playerTable, function(a, b) return a.value > b.value end)
 
-			for i = 1, math.min(3, #playerTable) do
+			for i = 1, 3 do
 				if playerTable[i] then
 					self:SetInfo(206609, 3+i*2, self:ColorName(playerTable[i].name))
 					self:SetInfo(206609, 4+i*2, AbbreviateNumbers(playerTable[i].value))

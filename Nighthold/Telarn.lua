@@ -22,12 +22,6 @@ local collapseSayTimers = {}
 local iconsUnused = {1, 2, 3, 4, 5, 6}
 
 --------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -104,9 +98,9 @@ function mod:OnEngage()
 	wipe(collapseSayTimers)
 
 	if not self:Mythic() then
-		self:Bar(218148, 10) -- Solar Collapse, to _start
-		self:Bar(218304, 21.5) -- Parasitic Fetter, to _success
-		self:Bar(218438, 35) -- Controlled Chaos, to_start
+		self:Bar(218148, self:Easy() and 14.3 or 10) -- Solar Collapse, to _start
+		self:Bar(218304, self:Easy() and 30 or 21.5) -- Parasitic Fetter, to _success
+		self:Bar(218438, self:Easy() and 50 or 35) -- Controlled Chaos, to_start
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 	else
 		self:Bar(218148, 5) -- Solar Collapse, to _start
@@ -126,21 +120,21 @@ end
 function mod:Nightosis1(args)
 	self:Message("stages", "Neutral", "Info", "75% - ".. self:SpellName(-13681), false) -- Stage Two: Nightosis
 	phase = 2
-	self:Bar(218774, 12) -- Summon Plasma Spheres, to _start
-	self:Bar(218304, 23.5) -- Parasitic Fetter, to _success
-	self:Bar(218148, 32) -- Solar Collapse, to _start
-	self:Bar(218438, 42) -- Controlled Chaos, to _start
+	self:Bar(218774, self:Easy() and 16.3 or 12) -- Summon Plasma Spheres, to _start
+	self:Bar(218304, self:Easy() and 32.1 or 23.5) -- Parasitic Fetter, to _success
+	self:Bar(218148, self:Easy() and 45.2 or 32) -- Solar Collapse, to _start
+	self:Bar(218438, self:Easy() and 59.1 or 42) -- Controlled Chaos, to _start
 end
 
 function mod:Nightosis2(args)
 	self:Message("stages", "Neutral", "Info", "50% - ".. self:SpellName(-13683), false) -- Stage Three: Pure Forms
 	phase = 3
-	self:Bar(218927, 10.5) -- Grace of Nature, to _start
-	self:Bar(218809, 20) -- Call of Night, to _success
-	self:Bar(218774, 26) -- Summon Plasma Spheres, to _start
-	self:Bar(218304, 34) -- Parasitic Fetter, to _success
-	self:Bar(218148, 42) -- Solar Collapse, to _start
-	self:Bar(218438, 52) -- Controlled Chaos, to _start
+	self:Bar(218927, self:Easy() and 13.4 or 10.5) -- Grace of Nature, to _start
+	self:Bar(218809, self:Easy() and 26.8 or 20) -- Call of Night, to _success
+	self:Bar(218774, self:Easy() and 36.2 or 26) -- Summon Plasma Spheres, to _start
+	self:Bar(218304, self:Easy() and 49.2 or 34) -- Parasitic Fetter, to _success
+	self:Bar(218148, self:Easy() and 59.2 or 42) -- Solar Collapse, to _start
+	self:Bar(218438, self:Easy() and 73.4 or 52) -- Controlled Chaos, to _start
 end
 
 function mod:NatureInfusion(args)
@@ -206,7 +200,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Alert")
-			self:Bar(args.spellId, (self:Mythic() and (phase == 2 and 55 or phase == 3 and 35 or 65)) or 50)
+			self:Bar(args.spellId, (self:Mythic() and (phase == 2 and 55 or phase == 3 and 35 or 65)) or self:Easy() and 71.5 or 50)
 		end
 
 		if self:GetOption(callOfTheNightMarker) then
@@ -258,18 +252,30 @@ end
 
 function mod:ControlledChaos(args)
 	self:Message(args.spellId, "Important", "Alert", CL.incoming:format(args.spellName))
-	self:Bar(args.spellId, (self:Mythic() and (phase == 2 and 55 or phase == 3 and 35 or 65)) or phase == 2 and 40 or phase == 3 and 50 or 35)
+	if self:Easy() then
+		self:Bar(args.spellId, phase == 2 and 57.1 or phase == 3 and 71.4 or 50)
+	else
+		self:Bar(args.spellId, (self:Mythic() and (phase == 2 and 55 or phase == 3 and 35 or 65)) or phase == 2 and 40 or phase == 3 and 50 or 35)
+	end
 end
 
 --[[ Solarist Tel'arn ]]--
 function mod:SolarCollapse(args)
 	self:Message(args.spellId, "Important", "Long", CL.incoming:format(args.spellName))
-	self:Bar(args.spellId, (self:Mythic() and (phase == 2 and 55 or phase == 3 and 35 or 65)) or phase == 2 and 40 or phase == 3 and 50 or 35)
+	if self:Easy() then
+		self:Bar(args.spellId, phase == 2 and 56.8 or phase == 3 and 71.4 or 50)
+	else
+		self:Bar(args.spellId, (self:Mythic() and (phase == 2 and 55 or phase == 3 and 35 or 65)) or phase == 2 and 40 or phase == 3 and 50 or 35)
+	end
 end
 
 function mod:SummonPlasmaSpheres(args)
 	self:Message(args.spellId, "Urgent", "Alert")
-	self:Bar(args.spellId, (self:Mythic() and (phase == 2 and 55 or phase == 3 and 35 or 65)) or phase == 2 and 40 or 50)
+	if self:Easy() then
+		self:Bar(args.spellId, phase == 2 and 57.1 or 71.4)
+	else
+		self:Bar(args.spellId, (self:Mythic() and (phase == 2 and 55 or phase == 3 and 35 or 65)) or phase == 2 and 40 or 50)
+	end
 end
 
 do
@@ -299,7 +305,7 @@ end
 
 function mod:GraceOfNature(args)
 	self:Message(args.spellId, "Important", "Long", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, (self:Mythic() and (phase == 2 and 55 or phase == 3 and 35 or 65)) or 50)
+	self:Bar(args.spellId, (self:Mythic() and (phase == 2 and 55 or phase == 3 and 35 or 65)) or self:Easy() and 71.4 or 50)
 end
 
 do
@@ -314,7 +320,11 @@ do
 end
 
 function mod:ParasiticFetterSuccess(args)
-	self:Bar(218304, (self:Mythic() and (phase == 2 and 55 or phase == 3 and 35 or 65)) or phase == 2 and 40 or phase == 3 and 50 or 35)
+	if self:Easy() then
+		self:Bar(218304, phase == 2 and 57.2 or phase == 3 and 71.4 or 50)
+	else
+		self:Bar(218304, (self:Mythic() and (phase == 2 and 55 or phase == 3 and 35 or 65)) or phase == 2 and 40 or phase == 3 and 50 or 35)
+	end
 end
 
 do

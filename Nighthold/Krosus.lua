@@ -118,11 +118,11 @@ function mod:OnEngage()
 	receivedBeamCom = nil
 	timers = self:Mythic() and mythicTimers or self:Heroic() and heroicTimers or normalTimers
 
-	self:Bar(206677, 15)
 	self:Bar(205862, 33, CL.count:format(self:SpellName(205862), slamCount))
 	self:Bar("smashingBridge", 93, CL.count:format(L.smashingBridge, 1), L.smashingBridge_icon)
-	self:Bar(205370, timers[205370][beamCount], CL.count:format(self:SpellName(221153), beamCount)) -- "Beam"
-	self:Bar(205370, timers[205370][beamCount+1], CL.count:format(self:SpellName(221153), beamCount+1)) -- "Beam"
+	local firstBeam = timers[205370][beamCount]
+	self:Bar(205370, firstBeam, CL.count:format(self:SpellName(221153), beamCount)) -- "Beam"
+	self:Bar(205370, timers[205370][beamCount+1] + firstBeam, CL.count:format(self:SpellName(221153), beamCount+1)) -- "Beam"
 	self:Bar(205344, timers[205344][orbCount], CL.count:format(self:SpellName(205344), orbCount))
 	self:Bar(205420, timers[205420][burningPitchCount], CL.count:format(self:SpellName(205420), burningPitchCount))
 end
@@ -180,18 +180,13 @@ do
 		if t then
 			local text = CL.count:format(spellName, beamCount) .. getBeamText(beamCount)
 			self:Bar(args.spellId, t, text)
-			prev = GetTime()
-		else
-			t = GetTime() - prev
-			print("Unknown BigWigs timer:", self:Difficulty(), args.spellId, args.spellName, beamCount, t)
-			prev = GetTime()
-		end
 
-		-- Additional timer to plan movement ahead
-		local t2 = timers[args.spellId][beamCount+1]
-		if t2 then
-			local text = CL.count:format(spellName, beamCount+1) .. getBeamText(beamCount+1)
-			self:Bar(args.spellId, t+t2, text)
+			-- Additional timer to plan movement ahead
+			local t2 = timers[args.spellId][beamCount+1]
+			if t2 then
+				local text = CL.count:format(spellName, beamCount+1) .. getBeamText(beamCount+1)
+				self:Bar(args.spellId, t+t2, text)
+			end
 		end
 	end
 end
@@ -199,22 +194,16 @@ end
 do
 	local prev = 0
 	function mod:OrbOfDescructionApplied(args)
-		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", CL.count:format(args.spellName, orbCount))
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", CL.count:format(args.spellName, orbCount), nil, self:Ranged())
 		self:TargetBar(args.spellId, 5, args.destName, 230932, args.spellId) -- Orb
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 		end
 		orbCount = orbCount + 1
-
 		local t = timers[args.spellId][orbCount]
 		if t then
 			self:Bar(args.spellId, t, CL.count:format(args.spellName, orbCount))
-			prev = GetTime()
-		else
-			t = GetTime() - prev
-			print("Unknown BigWigs timer:", self:Difficulty(), args.spellId, args.spellName, orbCount, t)
-			prev = GetTime()
 		end
 	end
 end
@@ -243,15 +232,9 @@ do
 	function mod:BurningPitchCast(args)
 		self:Message(args.spellId, "Attention", "Info")
 		burningPitchCount = burningPitchCount + 1
-
 		local t = timers[args.spellId][burningPitchCount]
 		if t then
 			self:Bar(args.spellId, t, CL.count:format(args.spellName, burningPitchCount))
-			prev = GetTime()
-		else
-			t = GetTime() - prev
-			print("Unknown BigWigs timer:", self:Difficulty(), args.spellId, args.spellName, burningPitchCount, t)
-			prev = GetTime()
 		end
 	end
 end

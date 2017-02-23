@@ -235,6 +235,7 @@ function boss:OnDisable(isWipe)
 	self.scheduledScans = nil
 	self.scheduledScansCounter = nil
 	self.targetEventFunc = nil
+	self.missing = nil
 	self.isWiping = nil
 	self.isEngaged = nil
 
@@ -1252,23 +1253,46 @@ function boss:CloseProximity(key)
 end
 
 -------------------------------------------------------------------------------
--- Auras.
--- @section auras
+-- Nameplates.
+-- @section nameplates
 --
 
---- Fire aura callbacks. Used for things like nameplates.
--- @param spellId the associated spell id
--- @param playerGUID the affected player GUID
--- @param[opt] duration the duration of the aura
-function boss:AuraApplied(spellId, playerGUID, duration)
-	self:SendMessage("BigWigs_ShowNameplateAura", self, playerGUID, icons[spellId], duration)
+--- Toggle showing friendly nameplates to the enabled state.
+function boss:ShowFriendlyNameplates()
+	self:SendMessage("BigWigs_EnableFriendlyNameplates", self)
 end
 
---- Stop the aura.
+--- Toggle showing friendly nameplates to the disabled state.
+function boss:HideFriendlyNameplates()
+	self:SendMessage("BigWigs_DisableFriendlyNameplates", self)
+end
+
+--- Toggle showing friendly nameplates to the enabled state.
+function boss:ShowHostileNameplates()
+	self:SendMessage("BigWigs_EnableHostileNameplates", self)
+end
+
+--- Toggle showing friendly nameplates to the disabled state.
+function boss:HideHostileNameplates()
+	self:SendMessage("BigWigs_DisableHostileNameplates", self)
+end
+
+--- Add aura to nameplate.
 -- @param spellId the associated spell id
--- @param playerGUID the affected player GUID
-function boss:AuraRemoved(spellId, playerGUID)
-	self:SendMessage("BigWigs_HideNameplateAura", self, playerGUID, icons[spellId])
+-- @param playerName the affected player
+-- @param[opt] duration the duration of the aura
+-- @param[opt] isHostile if the unit is a hostile nameplate, in which case playerName should be treated as a GUID
+-- @param[opt] desaturate true if the texture should be desaturated
+function boss:AddPlate(spellId, playerName, duration, isHostile, desaturate)
+	self:SendMessage("BigWigs_ShowNameplateAura", self, playerName, icons[spellId], duration, desaturate, isHostile)
+end
+
+--- Remove aura from nameplate.
+-- @param spellId the associated spell id, passing nil removes all icons
+-- @param playerName the affected player
+-- @param[opt] isHostile if the unit is a hostile nameplate, in which case playerName should be treated as a GUID
+function boss:RemovePlate(spellId, playerName, isHostile)
+	self:SendMessage("BigWigs_HideNameplateAura", self, playerName, spellId and icons[spellId], isHostile)
 end
 
 -------------------------------------------------------------------------------
@@ -1314,7 +1338,7 @@ function boss:Message(key, color, sound, text, icon)
 
 		local temp = (icon == false and 0) or (icon ~= false and icon) or (textType == "number" and text) or key
 		if temp == key and type(key) == "string" then
-			BigWigs:Print(("Message '%s' doesn't have an icon set."):format(textType == "string" and text or spells[text or key])) -- XXX temp
+			core:Print(("Message '%s' doesn't have an icon set."):format(textType == "string" and text or spells[text or key])) -- XXX temp
 		end
 
 		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, icon ~= false and icons[icon or textType == "number" and text or key])
@@ -1477,59 +1501,106 @@ end
 -- @section bars
 --
 
---- Display a bar.
--- @param key the option key
--- @param length the bar duration in seconds
--- @param[opt] text the bar text (if nil, key is used)
--- @param[opt] icon the bar icon (spell id or texture name)
-function boss:Bar(key, length, text, icon)
-	local textType = type(text)
-	if checkFlag(self, key, C.BAR) then
-		self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key])
-	end
-	if checkFlag(self, key, C.COUNTDOWN) then
-		self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
-	end
-end
+do
+	local badBar = "Attempted to start bar '%q' without a valid time."
+	local badTargetBar = "Attempted to start target bar '%q' without a valid time."
+	local newBar = "New bar discovered for '%q' with a placement of %d and a timer of %.2f on %d, tell the authors."
 
---- Display a cooldown bar.
--- Indicates an unreliable duration by prefixing the time with "~"
--- @param key the option key
--- @param length the bar duration in seconds
--- @param[opt] text the bar text (if nil, key is used)
--- @param[opt] icon the bar icon (spell id or texture name)
-function boss:CDBar(key, length, text, icon)
-	local textType = type(text)
-	if checkFlag(self, key, C.BAR) then
-		self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key], true)
-	end
-	if checkFlag(self, key, C.COUNTDOWN) then
-		self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
-	end
-end
+	--- Display a bar.
+	-- @param key the option key
+	-- @param length the bar duration in seconds
+	-- @param[opt] text the bar text (if nil, key is used)
+	-- @param[opt] icon the bar icon (spell id or texture name)
+	function boss:Bar(key, length, text, icon)
+		if not length then
+			if not self.missing then self.missing = {} end
+			if not self.missing[key] then
+				self.missing[key] = {GetTime()}
+			else
+				local t, c = GetTime(), #self.missing[key]
+				local new = t - self.missing[key][c]
+				core:Print(format(newBar, key, c, new, self:Difficulty()))
+				self.missing[key][c+1] = t
+			end
+			return
+		elseif type(length) ~= "number" then
+			core:Print(format(badBar, key))
+			return
+		elseif length == 0 then
+			return
+		end
 
---- Display a target bar.
--- @param key the option key
--- @param length the bar duration in seconds
--- @param player the player name to show on the bar
--- @param[opt] text the bar text (if nil, key is used)
--- @param[opt] icon the bar icon (spell id or texture name)
-function boss:TargetBar(key, length, player, text, icon)
-	local textType = type(text)
-	if not player and checkFlag(self, key, C.BAR) then
-		self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), length, icons[icon or textType == "number" and text or key])
-		return
-	end
-	if player == pName then
-		local msg = format(L.you, textType == "string" and text or spells[text or key])
+		local textType = type(text)
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key])
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
-			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+			self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
 		end
-	elseif not checkFlag(self, key, C.ME_ONLY) and checkFlag(self, key, C.BAR) then
-		self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], gsub(player, "%-.+", "*")), length, icons[icon or textType == "number" and text or key])
+	end
+
+	--- Display a cooldown bar.
+	-- Indicates an unreliable duration by prefixing the time with "~"
+	-- @param key the option key
+	-- @param length the bar duration in seconds
+	-- @param[opt] text the bar text (if nil, key is used)
+	-- @param[opt] icon the bar icon (spell id or texture name)
+	function boss:CDBar(key, length, text, icon)
+		if not length then
+			if not self.missing then self.missing = {} end
+			if not self.missing[key] then
+				self.missing[key] = {GetTime()}
+			else
+				local t, c = GetTime(), #self.missing[key]
+				local new = t - self.missing[key][c]
+				core:Print(format(newBar, key, c, new, self:Difficulty()))
+				self.missing[key][c+1] = t
+			end
+			return
+		elseif type(length) ~= "number" then
+			core:Print(format(badBar, key))
+			return
+		elseif length == 0 then
+			return
+		end
+
+		local textType = type(text)
+		if checkFlag(self, key, C.BAR) then
+			self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key], true)
+		end
+		if checkFlag(self, key, C.COUNTDOWN) then
+			self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
+		end
+	end
+
+	--- Display a target bar.
+	-- @param key the option key
+	-- @param length the bar duration in seconds
+	-- @param player the player name to show on the bar
+	-- @param[opt] text the bar text (if nil, key is used)
+	-- @param[opt] icon the bar icon (spell id or texture name)
+	function boss:TargetBar(key, length, player, text, icon)
+		if type(length) ~= "number" or length == 0 then
+			core:Print(format(badTargetBar, key))
+			return
+		end
+
+		local textType = type(text)
+		if not player and checkFlag(self, key, C.BAR) then
+			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), length, icons[icon or textType == "number" and text or key])
+			return
+		end
+		if player == pName then
+			local msg = format(L.you, textType == "string" and text or spells[text or key])
+			if checkFlag(self, key, C.BAR) then
+				self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
+			end
+			if checkFlag(self, key, C.COUNTDOWN) then
+				self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+			end
+		elseif not checkFlag(self, key, C.ME_ONLY) and checkFlag(self, key, C.BAR) then
+			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], gsub(player, "%-.+", "*")), length, icons[icon or textType == "number" and text or key])
+		end
 	end
 end
 

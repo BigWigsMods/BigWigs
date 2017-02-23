@@ -23,6 +23,7 @@ local brandOfArgusCount = 1
 local feastOfBloodCount = 1
 local echoesOfTheVoidCount = 1
 local illusionaryNightCount = 1
+local addWaveCount = 1
 local timers = {
 	-- Carrion Plague, SPELL_CAST_SUCCESS for 212997
 	[206480] = {7, 25, 35.5, 24.5, 75, 25.5, 35.5, 27, 75, 25.5, 40.5, 20.5},
@@ -38,6 +39,9 @@ local timers = {
 
 	-- Echoes of the Void, SPELL_CAST_SUCCESS
 	[213531] = {57.5, 65, 95.5, 67.5, 100.5, 59.5},
+
+	-- Adds, CHAT_MSG_MONSTER_YELL
+	["adds"] = {185.7, 47.5, 115, 35.5, 48.5},
 }
 local essenceTargets = {}
 local addsKilled = 0
@@ -50,6 +54,11 @@ local L = mod:GetLocale()
 if L then
 	L.addsKilled = "Adds killed"
 	L.gotEssence = "Got Essence"
+
+	L.adds = CL.adds
+	L.adds_desc = "Timers and warnings for the add spawns."
+	L.adds_yell1 = "Underlings! Get in here!"
+	L.adds_yell2 = "Show these pretenders how to fight!"
 end
 
 --------------------------------------------------------------------------------
@@ -64,6 +73,7 @@ function mod:GetOptions()
 		{212794, "SAY"}, -- Brand of Argus
 		208230, -- Feast of Blood
 		213531, -- Echoes of the Void
+		"adds",
 		"berserk",
 
 		--[[ Stage Two ]]--
@@ -75,7 +85,7 @@ function mod:GetOptions()
 		216027, -- Nether Zone
 
 		--[[ Sightless Watcher ]]--
-		{216024, "SAY"}, -- Volatile Wound
+		{216024, "SAY", "ME_ONLY"}, -- Volatile Wound
 	}, {
 		[206480] = -13552, -- Stage One
 		[206365] = -13553, -- Stage Two
@@ -91,12 +101,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SeekerSwarm", 213238)
 	self:Log("SPELL_AURA_APPLIED", "BrandOfArgus", 212794)
 	self:Log("SPELL_CAST_SUCCESS", "BrandOfArgusSuccess", 212794)
-	self:Log("SPELL_AURA_APPLIED", "FeastOfBlood", 208230)
+	self:Log("SPELL_CAST_SUCCESS", "FeastOfBlood", 208230)
 	self:Log("SPELL_CAST_START", "EchoesOfTheVoid", 213531)
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	--[[ Stage Two ]]--
 	self:Log("SPELL_CAST_START", "IllusionaryNight", 206365)
-	self:Log("SPELL_AURA_REMOVED", "IllusionaryNightRemoved", 206311)
 	self:Log("SPELL_CAST_SUCCESS", "CarrionNightmare", 215988)
 	self:Log("SPELL_AURA_APPLIED", "EssenceOfNight", 206466)
 	self:Death("AddDeath", 104326)
@@ -108,6 +118,7 @@ function mod:OnBossEnable()
 
 	--[[ Sightless Watcher ]]--
 	self:Log("SPELL_AURA_APPLIED", "VolatileWound", 216024)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "VolatileWound", 216024)
 	self:Log("SPELL_AURA_REMOVED", "VolatileWoundRemoved", 216024)
 end
 
@@ -118,8 +129,13 @@ function mod:OnEngage()
 	feastOfBloodCount = 1
 	echoesOfTheVoidCount = 1
 	illusionaryNightCount = 1
+	addWaveCount = 1
 	addsKilled = 0
 	wipe(essenceTargets)
+	self:Bar("adds", timers["adds"][addWaveCount], CL.count:format(L.adds, addWaveCount), 212552) -- 212552 = Wraith Walk, inv_helm_plate_raiddeathknight_p_01, id 1100041
+	if GetLocale() ~= "enUS" and L.adds_yell1 == "Underlings! Get in here!" then -- Not translated
+		self:ScheduleTimer("CHAT_MSG_MONSTER_YELL", timers["adds"][addWaveCount], "timer")
+	end
 	self:Bar(206480, timers[206480][carrionPlagueCount], CL.count:format(self:SpellName(206480), carrionPlagueCount))
 	self:Bar(213238, timers[213238][seekerSwarmCount], CL.count:format(self:SpellName(213238), seekerSwarmCount))
 	if not self:Easy() then
@@ -161,7 +177,7 @@ function mod:CarrionPlagueSuccess(args)
 end
 
 function mod:SeekerSwarm(args)
-	self:Message(args.spellId, "Urgent", "Info", CL.count:format(args.spellName, carrionPlagueCount))
+	self:Message(args.spellId, "Urgent", "Info", CL.count:format(args.spellName, seekerSwarmCount))
 	seekerSwarmCount = seekerSwarmCount + 1
 	local timer = timers[args.spellId][seekerSwarmCount]
 	if timer then
@@ -211,6 +227,23 @@ function mod:EchoesOfTheVoid(args)
 	end
 end
 
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
+	if event == "timer" or msg == L.adds_yell1 or msg == L.adds_yell2 then
+		self:Message("adds", "Neutral", "Alert", CL.count:format(L.adds, addWaveCount), 212552) -- 212552 = Wraith Walk, inv_helm_plate_raiddeathknight_p_01, id 1100041
+		addWaveCount = addWaveCount + 1
+		local timer = timers["adds"][addWaveCount]
+		if timer then
+			self:Bar("adds", timer, CL.count:format(L.adds, addWaveCount), 212552) -- 212552 = Wraith Walk, inv_helm_plate_raiddeathknight_p_01, id 1100041
+			if self:Tank() then
+				self:DelayedMessage("adds", timer-5, "Neutral", CL.custom_sec:format(L.adds, 5))
+			end
+			if event == "timer" then
+				self:ScheduleTimer("CHAT_MSG_MONSTER_YELL", timer, "timer")
+			end
+		end
+	end
+end
+
 --[[ Stage Two ]]--
 function mod:IllusionaryNight(args)
 	addsKilled = 0
@@ -229,10 +262,7 @@ function mod:IllusionaryNight(args)
 	self:SetInfo(206466, 4, #essenceTargets)
 
 	self:OpenInfo(206466, self:SpellName(206466))
-end
-
-function mod:IllusionaryNightRemoved(args)
-	self:ScheduleTimer("CloseInfo", 10, 206466) -- some delay to look at the InfoBox after the phase
+	self:ScheduleTimer("CloseInfo", 40, 206466) -- some delay to look at the InfoBox after the phase
 end
 
 function mod:CarrionNightmare(args)
@@ -252,7 +282,7 @@ function mod:AddDeath(args)
 	addsKilled = addsKilled + 1
 	self:SetInfo(206466, 2, addsKilled)
 	if self:Mythic() and addsKilled % 5 == 0 then
-		self:Message(206466, "Neutral", nil, CL.add_killed:format(addsKilled, 20))
+		self:Message(206466, "Neutral", nil, CL.mob_killed:format(CL.adds, addsKilled, 20))
 	end
 end
 
@@ -270,23 +300,43 @@ end
 
 --[[ Sightless Watcher ]]--
 do
-	local list = mod:NewTargetList()
-	function mod:VolatileWound(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Urgent", "Alarm", nil, nil, self:Dispeller("magic"))
-		end
-
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:TargetBar(args.spellId, 8, args.destName)
-			self:ScheduleTimer("Say", 5, args.spellId, 3, true)
-			self:ScheduleTimer("Say", 6, args.spellId, 2, true)
-			self:ScheduleTimer("Say", 7, args.spellId, 1, true)
+	local sayTimers = {}
+	local function cancelSay(self)
+		if sayTimers[1] then
+			for i = #sayTimers, 1, -1 do
+				self:CancelTimer(sayTimers[i])
+				sayTimers[i] = nil
+			end
 		end
 	end
-end
 
-function mod:VolatileWoundRemoved(args)
-	self:StopBar(args.spellId, args.destName)
+	local list = mod:NewTargetList()
+	function mod:VolatileWound(args)
+		if UnitIsPlayer(args.destName) then
+			if self:Me(args.destGUID) then
+				if not args.amount then
+					self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+				elseif args.amount % 2 == 0 then
+					self:StackMessage(args.spellId, args.destName, args.amount, "Personal", "Alarm")
+				end
+				self:TargetBar(args.spellId, 8, args.destName)
+				cancelSay(self)
+				sayTimers[1] = self:ScheduleTimer("Say", 5, args.spellId, 3, true)
+				sayTimers[2] = self:ScheduleTimer("Say", 6, args.spellId, 2, true)
+				sayTimers[3] = self:ScheduleTimer("Say", 7, args.spellId, 1, true)
+			elseif not args.amount then -- 1 stack
+				list[#list+1] = args.destName
+				if #list == 1 then
+					self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Urgent", "Alarm")
+				end
+			end
+		end
+	end
+
+	function mod:VolatileWoundRemoved(args)
+		if self:Me(args.destGUID) then
+			cancelSay(self)
+			self:StopBar(args.spellId, args.destName)
+		end
+	end
 end
