@@ -93,9 +93,6 @@ function mod:OnEngage()
 	self:OpenProximity(239006, 8) -- Dissonance
 end
 
-function mod:OnBossDisable()
-	self:CloseProximity(239006) -- Dissonance
-end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
