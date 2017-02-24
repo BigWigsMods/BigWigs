@@ -77,8 +77,8 @@ if L then
 
 	L.fastTimeZone = "加速區域"
 
-	L.boss_active = "艾莉珊德進入戰鬥"
-	--L.boss_active_desc = "Time until Elisande is active after clearing the trash event."
+	L.boss_active = "艾莉珊德備戰"
+	L.boss_active_desc = "為清光小怪後的劇情事件提供計時，直到艾莉珊德可被攻擊。"
 	--L.elisande_trigger = "I foresaw your coming, of course. The threads of fate that led you to this place. Your desperate attempt to stop the Legion."
 end
 
