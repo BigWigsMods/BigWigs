@@ -54,7 +54,7 @@ end
 function mod:OnBossEnable()
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "UnstableSoul", 240209) -- Unstable Soul
-	self:Log("SPELL_AURA_REMOVED", "AegwynnsWardApplied", 236420) -- Aegwynn's Ward
+	self:Log("SPELL_AURA_APPLIED", "AegwynnsWardApplied", 236420) -- Aegwynn's Ward
 	self:Log("SPELL_AURA_REMOVED", "AegwynnsWardRemoved", 236420) -- Aegwynn's Ward
 
 	-- Stage One: Divide and Conquer
@@ -73,7 +73,6 @@ function mod:OnBossEnable()
 
 	if 	self:GetOption("custom_on_infusion_plates") then
 		self:ShowFriendlyNameplates()
-		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED") -- see comment above the function for explanation
 	end
 end
 
@@ -147,12 +146,6 @@ do
 			self:RemovePlate(args.spellId, args.destName)
 		end
 		tDeleteItem(lightList, args.destName)
-	end
-
-	function mod:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, _, _, _, _, _, destName)
-		if event == "UNIT_DIED" and UnitIsPlayer(destName) then
-			self:RemovePlate(nil, destName) -- Clear all icons from the nameplate
-		end
 	end
 end
 
