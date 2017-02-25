@@ -123,11 +123,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 234057 then -- Unbound Chaos
 		unboundChaosCounter = unboundChaosCounter + 1
 		self:Message(234059, "Attention", "Alert", spellName)
-		self:Bar(234059, timers[234057][unboundChaosCounter])
+		self:Bar(234059, timers[spellId][unboundChaosCounter])
 	elseif spellId == 236573 then -- Shadowy Blades
 		shadowyBladesCounter = shadowyBladesCounter + 1
 		self:Message(236604, "Attention", "Alert", spellName)
-		self:Bar(236604, timers[236573][shadowyBladesCounter])
+		self:Bar(236604, timers[spellId][shadowyBladesCounter])
 	elseif spellId == 235597 then -- Annihilation // Stage 2
 		phase = 2
 		self:Message("stages", "Positive", "Long", self:SpellName(-14719)) -- Stage Two: An Avatar Awakened
