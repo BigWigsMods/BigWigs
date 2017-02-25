@@ -132,7 +132,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 235885 then -- Collapsing Fissure
 		self:Message(235907, "Attention", "Alert", spellName)
 		local t = phase == 2 and 15.8 or 30.5
-		if not phase == 2 and self:BarTimeLeft(238570) < 30.5 and not self:BarTimeLeft(238570) == 0 then -- Tormented Cries
+		if not phase == 2 and self:BarTimeLeft(238570) < 30.5 and self:BarTimeLeft(238570) > 0 then -- Tormented Cries
 			t = 65 + self:BarTimeLeft(238570) -- Time Left + 60s channel + 5s~ cooldown
 		end
 		self:Bar(235907, t)
