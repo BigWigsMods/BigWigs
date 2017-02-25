@@ -135,7 +135,7 @@ function mod:Infusion(args)
 	self:Message(args.spellId, "Neutral", "Info", CL.casting:format(args.spellName))
 	if infusionCounter == 2 then
 		infusionCounter = 1
-		self:Bar(spellId, 38.0)
+		self:Bar(args.spellId, 38.0)
 	end
 end
 
@@ -145,26 +145,26 @@ do
 	function mod:FelInfusion(args)
 		felList[#felList+1] = args.destName
 		tDeleteItem(lightList, args.destName)
-		if 	self:GetOption("custom_on_infusion_plates") then
-			self:RemovePlate(nil, args.destName) -- Can only have 1 debuff
-			self:AddPlate(args.spellId, args.destName)
-		end
 		if self:Me(args.destGUID) then
 			self:TargetMessage(235271, args.destName, "Personal", "Warning", args.spellName, args.spellId)
 			self:OpenProximity(235271, 5, lightList) -- Avoid people with Light debuff
+		end
+		if self:GetOption("custom_on_infusion_plates") then
+			self:RemovePlate(nil, args.destName) -- Can only have 1 debuff
+			self:AddPlate(args.spellId, args.destName)
 		end
 	end
 
 	function mod:LightInfusion(args)
 		lightList[#lightList+1] = args.destName
 		tDeleteItem(felList, args.destName)
-		if 	self:GetOption("custom_on_infusion_plates") then
-			self:RemovePlate(nil, args.destName) -- Can only have 1 debuff
-			self:AddPlate(args.spellId, args.destName)
-		end
 		if self:Me(args.destGUID) then
 			self:TargetMessage(235271, args.destName, "Personal", "Warning", args.spellName, args.spellId)
 			self:OpenProximity(235271, 5, felList) -- Avoid people with Fel debuff
+		end
+		if self:GetOption("custom_on_infusion_plates") then
+			self:RemovePlate(nil, args.destName) -- Can only have 1 debuff
+			self:AddPlate(args.spellId, args.destName)
 		end
 	end
 end
