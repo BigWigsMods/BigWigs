@@ -1,9 +1,9 @@
 if not IsTestBuild() then return end -- XXX dont load on live
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Proximity: List of players in each realm, filter by realm.
--- - Soulbind: Able to see who is linked with who?
--- - Shattering Scream: Find target before debuffs?
+-- - Proximity: See if it works Xphase
+-- - Shattering Scream: Find target before debuffs, without spamming? (current method allows for kicks before warnings)
+-- - Add wave timers (no spell info)
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -13,34 +13,43 @@ local mod, CL = BigWigs:NewBoss("The Desolate Host", 1147, 1896)
 if not mod then return end
 mod:RegisterEnableMob(118460, 118462, 119072) -- Engine of Souls, Soul Queen Dejahna, The Desolate Host
 mod.engageId = 2054
---mod.respawnTime = 30
+mod.respawnTime = 40
 
 --------------------------------------------------------------------------------
 -- Locals
 --
+
+local phasedList = {}
+local unphasedList = {}
+local phasedCheckList = {}
+local phase = 1
+local tormentedCriesCounter = 1
+local wailingSoulsCounter = 1
+local boneArmorCounter = 0
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:GetLocale()
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local soulBindMarker = mod:AddMarkerOption(false, "player", 3, 236459, 3,4)
 function mod:GetOptions()
 	return {
 		{239006, "PROXIMITY"}, -- Dissonance
 		236507, -- Quietus
-		{235933, "SAY"}, -- Spear of Anguish
+		{235924, "SAY"}, -- Spear of Anguish
 		235907, -- Collapsing Fissure
-		{235989, "SAY"}, -- Tormented Cries
-		235956, -- Rupturing Slam
-		235968, -- Grasping Darkness
-		236513, -- Bonecage Armor
-		236340, -- Crush Mind
+		{238570, "SAY"}, -- Tormented Cries
+		235927, -- Rupturing Slam
+		{236513, "INFOBOX"}, -- Bonecage Armor
 		236131, -- Wither
-		236449, -- Soulbind
+		236459, -- Soulbind
+		soulBindMarker,
 		236075, -- Wailing Souls
 		236515, -- Shattering Scream
 		236361, -- Spirit Chains
@@ -50,7 +59,7 @@ function mod:GetOptions()
 	},{
 		[239006] = "general",
 		[235933] = -14856,-- Corporeal Realm
-		[235956] = CL.adds,-- Adds
+		[235927] = CL.adds,-- Adds
 		[236340] = -14857,-- Spirit Realm
 		[236515] = CL.adds,-- Adds
 		[236542] = -14970, -- Tormented Souls
@@ -59,24 +68,22 @@ end
 
 function mod:OnBossEnable()
 	-- General
-	--self:Log("SPELL_CAST_SUCCESS", "Dissonance", 239006) -- Dissonance
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
 	self:Log("SPELL_CAST_SUCCESS", "Quietus", 236507) -- Quietus
 
 	-- Corporeal Realm
-	self:Log("SPELL_AURA_APPLIED", "SpearofAnguish", 235933, 242796) -- Spear of Anguish
-	self:Log("SPELL_CAST_SUCCESS", "CollapsingFissure", 235907) -- Collapsing Fissure
+	self:Log("SPELL_AURA_APPLIED", "SpearofAnguish", 235924) -- Spear of Anguish
+	self:Log("SPELL_CAST_START", "TormentedCries", 238570) -- Tormented Cries
 	self:Log("SPELL_AURA_APPLIED", "TormentedCriesApplied", 238018) -- Tormented Cries (Debuff)
 	-- Adds
-	self:Log("SPELL_CAST_SUCCESS", "RupturingSlam", 235956) -- Rupturing Slam
-	self:Log("SPELL_CAST_START", "GraspingDarkness", 235968) -- Grasping Darkness
+	self:Log("SPELL_CAST_START", "RupturingSlam", 235927) -- Rupturing Slam
 	self:Log("SPELL_AURA_APPLIED", "BonecageArmor", 236513) -- Bonecage Armor
 	self:Log("SPELL_AURA_REMOVED", "BonecageArmorRemoved", 236513) -- Bonecage Armor
 
 	-- Spirit Realm
-	self:Log("SPELL_CAST_START", "CrushMind", 236340) -- Crush Mind
-	self:Log("SPELL_AURA_APPLIED", "Wither", 236131) -- Wither
-	self:Log("SPELL_AURA_APPLIED", "Soulbind", 236449) -- Soulbind
-	self:Log("SPELL_AURA_REMOVED", "SoulbindRemoved", 236449) -- Soulbind
+	self:Log("SPELL_AURA_APPLIED", "Wither", 236131, 236138) -- Wither
+	self:Log("SPELL_AURA_APPLIED", "Soulbind", 236459) -- Soulbind
+	self:Log("SPELL_AURA_REMOVED", "SoulbindRemoved", 236459) -- Soulbind
 	self:Log("SPELL_CAST_SUCCESS", "WailingSouls", 236075) -- Wailing Souls
 	-- Adds
 	self:Log("SPELL_AURA_APPLIED", "ShatteringScream", 236515) -- Shattering Scream
@@ -90,69 +97,147 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:OpenProximity(239006, 8) -- Dissonance
+	-- Dissonance Handling
+	wipe(phasedList)
+	wipe(unphasedList)
+	wipe(phasedCheckList)
+	self:RegisterEvent("UNIT_AURA") -- Spirit Realm Tracking
+	for unit in self:IterateGroup() do
+		local n = self:UnitName(unit)
+		phasedCheckList[n] = true -- Make sure we check all
+		self:UNIT_AURA(nil, unit)
+	end
+
+	phase = 1
+	boneArmorCounter = 0
+	tormentedCriesCounter = 1
+	wailingSoulsCounter = 1
+
+	self:OpenInfo(236513)
+	self:SetInfo(236513, 1, self:SpellName(236513))
+	self:SetInfo(236513, 2, boneArmorCounter)
+
+	self:Bar(235907, 7.3) -- Collapsing Fissure
+	self:Bar(236459, 15.5) -- Soulbind
+	self:Bar(235924, 22) -- Spear of Anguish
+	self:Bar(236072, 60) -- Wailing Souls
+	self:Bar(238570, 120) -- Tormented Cries
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 235885 then -- Collapsing Fissure
+		self:Message(235907, "Attention", "Alert", spellName)
+		local t = phase == 2 and 15.8 or 30.5
+		if not phase == 2 and self:BarTimeLeft(238570) < 30.5 and self:BarTimeLeft(238570) > 0 then -- Tormented Cries
+			t = 65 + self:BarTimeLeft(238570) -- Time Left + 60s channel + 5s~ cooldown
+		end
+		self:Bar(235907, t)
+	elseif spellId == 239978 then -- Soul Palour // Phase 2
+		phase = 2
+
+		self:CDBar(236542, 8) -- Sundering Doom
+		self:CDBar(236544, 19) -- Doomed Sundering
+	end
+end
+
+function mod:UNIT_AURA(event, unit)
+	local name = UnitDebuff(unit, self:SpellName(235621)) -- Spirit Realm
+	local n = self:UnitName(unit)
+	if phasedCheckList[n] and not name then -- Not in Spirit Realm
+		local guid = UnitGUID(unit)
+		phasedCheckList[n] = nil
+		unphasedList[#unphasedList+1] = n
+		tDeleteItem(phasedList, n)
+		if self:Me(guid) then
+			self:Message(239006, "Neutral", "Info", self:SpellName(-14856), false) -- Corporeal Realm
+			self:OpenProximity(239006, 8, phasedList) -- Avoid people in Spirit Realm
+		end
+	elseif name and not phasedCheckList[n] then -- In Spirit Realm
+		local guid = UnitGUID(unit)
+		phasedList[#phasedList+1] = n
+		tDeleteItem(unphasedList, n)
+		if self:Me(guid) then
+			self:Message(239006, "Neutral", "Info", self:SpellName(-14857), false) -- Spirit Realm
+			self:OpenProximity(239006, 8, unphasedList) -- Avoid people not in Spirit Realm
+		end
+		phasedCheckList[n] = true
+	end
+end
+
 function mod:Quietus(args)
 	self:Message(args.spellId, "Important", "Warning")
-	--self:CDBar(args.spellId, 30)
 end
 
 function mod:SpearofAnguish(args)
-	self:TargetMessage(235933, args.destName, "Urgent", "Alarm", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", nil, nil, true)
 	if self:Me(args.destGUID) then
-		self:Say(235933)
+		self:Say(args.spellId)
 	end
-	--self:CDBar(235933, 30)
+	local t = 20.5 -- XXX Need more P2 Data
+	if self:BarTimeLeft(238570) < 20.5 and self:BarTimeLeft(238570) > 0 then -- Tormented Cries
+		t = 80.5 + self:BarTimeLeft(238570) -- Time Left + 60s channel + 20.5s cooldown
+	end
+	self:Bar(args.spellId, t)
 end
 
-function mod:CollapsingFissure(args)
-	self:Message(args.spellId, "Attention", "Alert")
-	--self:CDBar(args.spellId, 30)
+function mod:TormentedCries(args)
+	tormentedCriesCounter = tormentedCriesCounter + 1
+	self:Message(args.spellId, "Attention", "Info", CL.incoming:format(args.SpellName))
+	if tormentedCriesCounter <= 2 then -- XXX Need data for cast 3+
+		self:Bar(args.spellId, 120)
+	end
+	self:Bar(args.spellId, 60, CL.cast:format(args.spellName))
 end
 
 function mod:TormentedCriesApplied(args)
-	self:TargetMessage(235989, args.destName, "Urgent", "Alarm")
+	self:TargetMessage(238570, args.destName, "Urgent", "Alarm")
 	if self:Me(args.destGUID) then
-		self:Say(235989)
+		self:Say(238570)
 	end
-	--self:CDBar(235989, 30)
 end
 
 function mod:RupturingSlam(args)
-	self:Message(args.spellId, "Attention", "Alert")
-	--self:CDBar(args.spellId, 30)
-end
-
-function mod:GraspingDarkness(args)
-	self:Message(args.spellId, "Attention", "Alert")
-	--self:CDBar(args.spellId, 30)
+	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.SpellName))
 end
 
 function mod:BonecageArmor(args)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm", nil, nil, true)
+	boneArmorCounter = boneArmorCounter + 1
+	self:SetInfo(236513, 2, boneArmorCounter)
+	self:Message(args.spellId, "Important", "Alert", CL.count:format(args.SpellName, boneArmorCounter))
 end
 
 function mod:BonecageArmorRemoved(args)
-	self:TargetMessage(args.spellId, args.destName, "Positive", "Info", nil, nil, true)
+	boneArmorCounter = boneArmorCounter - 1
+	self:SetInfo(236513, 2, boneArmorCounter)
+	self:Message(args.spellId, "Positive", "Info", CL.count:format(CL.removed:format(args.SpellName), boneArmorCounter))
 end
 
-function mod:CrushMind(args)
-	if self:Interrupter(args.sourceGUID) then
-		self:Message(args.spellId, "Attention", "Alert")
+function mod:Wither(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
 	end
-	--self:CDBar(args.spellId, 30)
 end
 
 do
 	local list = mod:NewTargetList()
 	function mod:Soulbind(args)
 		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Personal", "Warning")
+		if #list == 2 then -- Announce at 2
+			if self:GetOption(soulBindMarker) then
+				SetRaidTarget(args.destName, 4)
+			end
+			self:TargetMessage(args.spellId, list, "Positive", "Warning")
+			local t = phase == 2 and 17 or 24.3
+			if not phase == 2 and self:BarTimeLeft(236072) < 24.3 and self:BarTimeLeft(236072) > 0 then -- Wailing Souls
+				t = 74.5 + self:BarTimeLeft(236072) -- Time Left + 60s channel + 14.5s cooldown
+			end
+			self:Bar(args.spellId, t)
+		elseif self:GetOption(soulBindMarker) then
+			SetRaidTarget(args.destName, 3)
 		end
 	end
 
@@ -160,25 +245,23 @@ do
 		if self:Me(args.destGUID) then
 			self:TargetMessage(args.spellId, args.destName, "Positive", "Long", CL.removed:format(args.spellName))
 		end
+		if self:GetOption(soulBindMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
 	end
 end
 
 function mod:WailingSouls(args)
+	wailingSoulsCounter = wailingSoulsCounter + 1
 	self:Message(args.spellId, "Important", "Warning")
-	--self:CDBar(args.spellId, 30)
+	if wailingSoulsCounter <= 2 then -- XXX Need data for cast 3+
+		self:Bar(args.spellId, 120)
+	end
+	self:Bar(args.spellId, 60, CL.cast:format(args.spellName))
 end
 
 function mod:ShatteringScream(args)
-	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
-		self:TargetBar(args.spellId, 6, args.destName)
-		self:Say(args.spellId)
-		self:ScheduleTimer("Say", 3, args.spellId, 3, true)
-		self:ScheduleTimer("Say", 4, args.spellId, 2, true)
-		self:ScheduleTimer("Say", 5, args.spellId, 1, true)
-	else
-		self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
-	end
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
 end
 
 function mod:SpiritChains(args)
@@ -189,15 +272,23 @@ end
 
 function mod:SunderingDoom(args)
 	self:Message(args.spellId, "Important", "Warning")
-	--self:CDBar(args.spellId, 30)
+	self:Bar(args.spellId, 23.1)
+	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
 end
 
 function mod:DoomedSundering(args)
 	self:Message(args.spellId, "Important", "Warning")
-	--self:CDBar(args.spellId, 30)
+	self:Bar(args.spellId, 23.1)
+	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
 end
 
-function mod:Torment(args)
-	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Attention", "Info")
+do
+	local prev = 0
+	function mod:Torment(args)
+		local t = GetTime()
+		if t-prev > 1 then
+			local amount = args.amount or 1
+			self:StackMessage(args.spellId, args.destName, amount, "Attention", "Info")
+		end
+	end
 end
