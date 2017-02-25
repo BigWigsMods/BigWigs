@@ -110,7 +110,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 235267 then -- Mass Instability
 		massInstabilityCounter = massInstabilityCounter + 1
-		self:Message(spellId, "Attention", "Alert", spellName)
+		self:Message(spellId, "Attention", "Alert")
 		if massInstabilityCounter == 2 then
 			massInstabilityCounter = 1
 			self:Bar(spellId, 36.0)
@@ -171,7 +171,7 @@ end
 
 function mod:HammerofCreation(args)
 	hammerofCreationCounter = hammerofCreationCounter + 1
-	self:Message(args.spellId, "Urgent", "Alert", args.spellName)
+	self:Message(args.spellId, "Urgent", "Alert")
 	if hammerofCreationCounter == 2 then
 		self:Bar(args.spellId, 36)
 	end
@@ -179,7 +179,7 @@ end
 
 function mod:HammerofObliteration(args)
 	hammerofObliterationCounter = hammerofObliterationCounter + 1
-	self:Message(args.spellId, "Urgent", "Alert", args.spellName)
+	self:Message(args.spellId, "Urgent", "Alert")
 	if hammerofObliterationCounter == 2 then
 		self:Bar(args.spellId, 36)
 	end
@@ -187,7 +187,7 @@ end
 
 function mod:Blowback(args)
 	phase = 2
-	self:Message(args.spellId, "Important", "Warning", args.spellName)
+	self:Message(args.spellId, "Important", "Warning")
 end
 
 function mod:TitanicBulwarkApplied(args)
