@@ -205,21 +205,46 @@ end
 
 function plugin:BigWigs_SetInfoBoxLine(_, _, line, text, align)
 	display.text[line]:SetText(text)
-	if line % 2 == 1 then
-		display.text[line]:SetSize(infoboxWidth, infoboxHeight/5)
-		display.text[line+1]:SetSize(0, infoboxHeight/5)
-		local textWidth = display.text[line]:GetStringWidth() <= (infoboxWidth-5) and (display.text[line]:GetStringWidth()+5) or infoboxWidth
-		display.text[line]:SetSize(textWidth, infoboxHeight/5) -- Left 
-		display.text[line+1]:SetSize((infoboxWidth-(textWidth)), infoboxHeight/5) -- Right
-	else
-		local textWidth = display.text[line-1]:GetStringWidth()
-		if textWidth < 0 and textWidth > (infoboxWidth-5) then 
-			display.text[line-1]:SetSize((5+textWidth), infoboxHeight/5) -- Left 
-			display.text[line]:SetSize((infoboxWidth-(textWidth-5)), infoboxHeight/5) -- Right
-		end 
-	end
 	if align then
 		display.text[line]:SetJustifyH(align)
+	end
+	if line % 2 == 1 then
+		local row = line
+	else
+		row = line-1
+	end
+	plugin:BigWigs_ResizeInfoBoxRow(row)
+end
+
+function plugin:BigWigs_ResizeInfoBoxRow(row)
+	local rowWidth = infoboxWidth-5 -- Adjust for margin right
+	-- Get text width [left]
+	display.text[row]:SetSize(rowWidth, infoboxHeight/5)
+	display.text[row+1]:SetSize(0, infoboxHeight/5)		
+	local leftTextWidth = display.text[row]:GetStringWidth()
+	-- Get text width [right]
+	display.text[row]:SetSize(0, infoboxHeight/5)
+	display.text[row+1]:SetSize(rowWidth, infoboxHeight/5)		
+	local rightTextWidth = display.text[row+1]:GetStringWidth()
+	
+	-- Size accordingly	
+	if leftTextWidth + rightTextWidth > rowWidth then -- Too much info: Prune something
+		if leftTextWidth > rowWidth and rightTextWidth > rowWidth then -- 50%/50% - Both too big
+			display.text[row]:SetSize((rowWidth/2), infoboxHeight/5)
+			display.text[row+1]:SetSize((rowWidth/2), infoboxHeight/5)
+		elseif leftTextWidth > 0  and rightTextWidth > rowWidth*0.80 then -- Show most of right text
+			display.text[row]:SetSize(rowWidth*0.20, infoboxHeight/5)
+			display.text[row+1]:SetSize((rowWidth*0.80), infoboxHeight/5)
+		elseif leftTextWidth > 0 then -- Show all of right text, partially left
+			display.text[row]:SetSize(rowWidth-rightTextWidth, infoboxHeight/5)
+			display.text[row+1]:SetSize(rightTextWidth, infoboxHeight/5)
+		else-- show all of right text, no left text
+			display.text[row]:SetSize(0, infoboxHeight/5)
+			display.text[row+1]:SetSize(rowWidth, infoboxHeight/5)
+		end
+	elseif leftTextWidth + rightTextWidth <= rowWidth then -- Fits, yay!
+		display.text[row]:SetSize(leftTextWidth, infoboxHeight/5)
+		display.text[row+1]:SetSize(rowWidth-leftTextWidth, infoboxHeight/5)
 	end
 end
 
