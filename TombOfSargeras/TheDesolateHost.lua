@@ -50,7 +50,7 @@ function mod:GetOptions()
 		236131, -- Wither
 		236459, -- Soulbind
 		soulBindMarker,
-		236075, -- Wailing Souls
+		236072, -- Wailing Souls
 		236515, -- Shattering Scream
 		236361, -- Spirit Chains
 		236542, -- Sundering Doom
@@ -84,7 +84,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Wither", 236131, 236138) -- Wither
 	self:Log("SPELL_AURA_APPLIED", "Soulbind", 236459) -- Soulbind
 	self:Log("SPELL_AURA_REMOVED", "SoulbindRemoved", 236459) -- Soulbind
-	self:Log("SPELL_CAST_SUCCESS", "WailingSouls", 236075) -- Wailing Souls
+	self:Log("SPELL_CAST_SUCCESS", "WailingSouls", 236072) -- Wailing Souls
 	-- Adds
 	self:Log("SPELL_AURA_APPLIED", "ShatteringScream", 236515) -- Shattering Scream
 	self:Log("SPELL_AURA_APPLIED", "SpiritChains", 236361) -- Spirit Chains
@@ -114,12 +114,14 @@ function mod:OnEngage()
 	wailingSoulsCounter = 1
 
 	self:OpenInfo(236513)
-	self:SetInfo(236513, 1, self:SpellName(236513))
+	self:SetInfo(236513, 1, self:SpellName(55336)) -- Bone Armor (Shorter Text)
 	self:SetInfo(236513, 2, boneArmorCounter)
 
 	self:Bar(235907, 7.3) -- Collapsing Fissure
 	self:Bar(236459, 15.5) -- Soulbind
-	self:Bar(235924, 22) -- Spear of Anguish
+	if self:Heroic() or self:Mythic() then -- Heroic+ only
+		self:Bar(235924, 22) -- Spear of Anguish
+	end
 	self:Bar(236072, 60) -- Wailing Souls
 	self:Bar(238570, 120) -- Tormented Cries
 end
@@ -132,7 +134,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 235885 then -- Collapsing Fissure
 		self:Message(235907, "Attention", "Alert", spellName)
 		local t = phase == 2 and 15.8 or 30.5
-		if not phase == 2 and self:BarTimeLeft(238570) < 30.5 and self:BarTimeLeft(238570) > 0 then -- Tormented Cries
+		if not phase == 2 and self:BarTimeLeft(238570) < 30.5 and not self:BarTimeLeft(238570) == 0 then -- Tormented Cries
 			t = 65 + self:BarTimeLeft(238570) -- Time Left + 60s channel + 5s~ cooldown
 		end
 		self:Bar(235907, t)
@@ -178,7 +180,7 @@ function mod:SpearofAnguish(args)
 		self:Say(args.spellId)
 	end
 	local t = 20.5 -- XXX Need more P2 Data
-	if self:BarTimeLeft(238570) < 20.5 and self:BarTimeLeft(238570) > 0 then -- Tormented Cries
+	if self:BarTimeLeft(238570) < 20.5 and not self:BarTimeLeft(238570) == 0 then -- Tormented Cries
 		t = 80.5 + self:BarTimeLeft(238570) -- Time Left + 60s channel + 20.5s cooldown
 	end
 	self:Bar(args.spellId, t)
@@ -206,14 +208,14 @@ end
 
 function mod:BonecageArmor(args)
 	boneArmorCounter = boneArmorCounter + 1
-	self:SetInfo(236513, 2, boneArmorCounter)
 	self:Message(args.spellId, "Important", "Alert", CL.count:format(args.SpellName, boneArmorCounter))
+	self:SetInfo(236513, 2, boneArmorCounter)
 end
 
 function mod:BonecageArmorRemoved(args)
 	boneArmorCounter = boneArmorCounter - 1
-	self:SetInfo(236513, 2, boneArmorCounter)
 	self:Message(args.spellId, "Positive", "Info", CL.count:format(CL.removed:format(args.SpellName), boneArmorCounter))
+	self:SetInfo(236513, 2, boneArmorCounter)
 end
 
 function mod:Wither(args)
@@ -232,7 +234,7 @@ do
 			end
 			self:TargetMessage(args.spellId, list, "Positive", "Warning")
 			local t = phase == 2 and 17 or 24.3
-			if not phase == 2 and self:BarTimeLeft(236072) < 24.3 and self:BarTimeLeft(236072) > 0 then -- Wailing Souls
+			if not phase == 2 and self:BarTimeLeft(236072) < 24.3 and not self:BarTimeLeft(236072) == 0 then -- Wailing Souls
 				t = 74.5 + self:BarTimeLeft(236072) -- Time Left + 60s channel + 14.5s cooldown
 			end
 			self:Bar(args.spellId, t)
