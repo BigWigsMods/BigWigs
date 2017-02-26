@@ -1202,7 +1202,7 @@ end
 
 function boss:SetInfo(key, line, text)
 	if checkFlag(self, key, C.INFOBOX) then
-		self:SendMessage("BigWigs_SetInfoBoxLine", self, line, text)
+		self:SendMessage("BigWigs_SetInfoBoxLine", self, line, text, align)
 	end
 end
 
