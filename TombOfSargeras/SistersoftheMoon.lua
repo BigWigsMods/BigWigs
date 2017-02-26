@@ -1,7 +1,7 @@
 if not IsTestBuild() then return end -- XXX dont load on live
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Deadly Screech was not on PTR
+-- - Deadly Screech Timers
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -189,6 +189,11 @@ function mod:IncorporealShotRemoved(args)
 	self:PrimaryIcon(args.spellId)
 end
 
+function mod:TwilightVolley(args)
+	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
+	self:Bar(args.spellId, 19.5) -- XXX P2 timers
+end
+
 function mod:CallMoontalon(args)
 	screechCount = 0
 	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(self:SpellName(-15064))) -- Moontalon
@@ -224,13 +229,16 @@ function mod:EmbraceoftheEclipseRemoved(args)
 end
 
 function mod:MoonBurn(args)
-	self:Message(236519, "Attention", "Alert", args.spellName)
 	self:Bar(236519, phase == 3 and 17 or 24.3) -- XXX Need more P3 data/timers
 end
 
-function mod:MoonBurnApplied(args)
-	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+do
+	local playerList = mod:NewTargetList()
+	function mod:MoonBurnApplied(args)
+		playerList[#playerList+1] = args.destName
+		if #playerList == 1 then
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Attention", "Alert")
+		end
 	end
 end
 
