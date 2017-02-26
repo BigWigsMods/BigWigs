@@ -127,7 +127,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 236573 then -- Shadowy Blades
 		shadowyBladesCounter = shadowyBladesCounter + 1
 		self:Message(236604, "Attention", "Alert", spellName)
-		self:Bar(236604, timers[spellId][shadowyBladesCounter])
+		self:CDBar(236604, timers[spellId][shadowyBladesCounter])
 	elseif spellId == 235597 then -- Annihilation // Stage 2
 		phase = 2
 		self:Message("stages", "Positive", "Long", self:SpellName(-14719)) -- Stage Two: An Avatar Awakened
@@ -145,7 +145,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 
 		self:CDBar(236494, 17.3) -- Desolate
 		self:CDBar(239739, 19.8) -- Dark Mark
-		self:CDBar(242017, 23.4) -- Black Winds
+		if self:Heroic() or self:Mythic() then
+			self:CDBar(242017, 23.4) -- Black Winds
+		end
 		self:CDBar(235572, 33.4) -- Rupture Realities (P2)
 
 	elseif spellId == 239417 then -- Black Winds
@@ -207,7 +209,7 @@ end
 
 function mod:Malfunction(args)
 	self:Message(233856, "Positive", "Info", CL.removed:format(self:SpellName(233856)))
-	self:StopBar(CL.cast:format(233856))
+	self:StopBar(CL.cast:format(self:SpellName(233856)))
 end
 
 function mod:CorruptedMatrix(args)
@@ -249,4 +251,3 @@ end
 --	self:Message(args.spellId, "Important", "Warning")
 	--self:Bar(args.spellId, 10)
 --end
-
