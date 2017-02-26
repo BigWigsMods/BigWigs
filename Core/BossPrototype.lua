@@ -1200,7 +1200,7 @@ end
 -- @section InfoBox
 --
 
-function boss:SetInfo(key, line, text)
+function boss:SetInfo(key, line, text, align)
 	if checkFlag(self, key, C.INFOBOX) then
 		self:SendMessage("BigWigs_SetInfoBoxLine", self, line, text, align)
 	end
