@@ -120,7 +120,7 @@ do
 			text:SetPoint("LEFT", display.text[i-1], "RIGHT", -5, 0)
 			text:SetJustifyH("RIGHT")
 		else
-			text:SetPoint("TOP", display.text[i-2], "BOTTOM")
+			text:SetPoint("TOPLEFT", display.text[i-2], "BOTTOMLEFT")
 			text:SetJustifyH("LEFT")
 		end
 		display.text[i] = text
@@ -203,6 +203,19 @@ end
 
 function plugin:BigWigs_SetInfoBoxLine(_, _, line, text, align)
 	display.text[line]:SetText(text)
+	if line % 2 == 1 then
+		display.text[line]:SetSize(150, 20) -- GetStringWidth() only works with the space text uses, if the frame is too small it will not grab the text outside the frame 
+		display.text[line+1]:SetSize(0, 20) -- Set right to 0 so we keep it fit
+		local textWidth = display.text[line]:GetStringWidth() <= 145 and (display.text[line]:GetStringWidth()+5) or 150 -- 5px margin incase left/right touch eachother
+		display.text[line]:SetSize(textWidth, 20) -- Left 
+		display.text[line+1]:SetSize((150-(textWidth)), 20) -- Right
+	else
+		local textWidth = display.text[line-1]:GetStringWidth()
+		if textWidth < 0 and textWidth > 145 then 
+			display.text[line-1]:SetSize((5+textWidth), 20) -- Left 
+			display.text[line]:SetSize((150-(textWidth-5)), 20) -- Right
+		end 
+	end
 	if align then
 		display.text[line]:SetJustifyH(align)
 	end
