@@ -15,6 +15,8 @@ plugin.displayName = L.infoBox
 
 local opener, display = nil, nil
 local nameList = {}
+local infoboxWidth = 150
+local infoboxHeight = 100
 
 function plugin:RestyleWindow(dirty)
 	if db.lock then
@@ -65,7 +67,7 @@ end
 
 do
 	display = CreateFrame("Frame", "BigWigsInfoBox", UIParent)
-	display:SetSize(150, 100)
+	display:SetSize(infoboxWidth, infoboxHeight)
 	display:SetClampedToScreen(true)
 	display:EnableMouse(true)
 	display:SetMovable(true)
@@ -112,7 +114,7 @@ do
 	display.text = {}
 	for i = 1, 10 do
 		local text = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-		text:SetSize(75, 20)
+		text:SetSize(infoboxWidth/2, infoboxHeight/5)
 		if i == 1 then
 			text:SetPoint("TOPLEFT", display, "TOPLEFT", 5, 0)
 			text:SetJustifyH("LEFT")
@@ -204,16 +206,16 @@ end
 function plugin:BigWigs_SetInfoBoxLine(_, _, line, text, align)
 	display.text[line]:SetText(text)
 	if line % 2 == 1 then
-		display.text[line]:SetSize(150, 20) -- GetStringWidth() only works with the space text uses, if the frame is too small it will not grab the text outside the frame 
-		display.text[line+1]:SetSize(0, 20) -- Set right to 0 so we keep it fit
-		local textWidth = display.text[line]:GetStringWidth() <= 145 and (display.text[line]:GetStringWidth()+5) or 150 -- 5px margin incase left/right touch eachother
-		display.text[line]:SetSize(textWidth, 20) -- Left 
-		display.text[line+1]:SetSize((150-(textWidth)), 20) -- Right
+		display.text[line]:SetSize(infoboxWidth, infoboxHeight/5)
+		display.text[line+1]:SetSize(0, infoboxHeight/5)
+		local textWidth = display.text[line]:GetStringWidth() <= (infoboxWidth-5) and (display.text[line]:GetStringWidth()+5) or infoboxWidth
+		display.text[line]:SetSize(textWidth, infoboxHeight/5) -- Left 
+		display.text[line+1]:SetSize((infoboxWidth-(textWidth)), infoboxHeight/5) -- Right
 	else
 		local textWidth = display.text[line-1]:GetStringWidth()
-		if textWidth < 0 and textWidth > 145 then 
-			display.text[line-1]:SetSize((5+textWidth), 20) -- Left 
-			display.text[line]:SetSize((150-(textWidth-5)), 20) -- Right
+		if textWidth < 0 and textWidth > (infoboxWidth-5) then 
+			display.text[line-1]:SetSize((5+textWidth), infoboxHeight/5) -- Left 
+			display.text[line]:SetSize((infoboxWidth-(textWidth-5)), infoboxHeight/5) -- Right
 		end 
 	end
 	if align then
