@@ -31,6 +31,7 @@ local timers = {
 
 }
 
+local grandCast = nil
 local grandCounter = 1
 local grandTimers = {
 	{15, 13.4, 14}, -- P1
@@ -237,6 +238,7 @@ function mod:OnEngage()
 	novaCount = 1
 	worldDevouringForceCounter = 1
 	voidCount = 1
+	grandCast = nil
 	wipe(mobCollector)
 	wipe(gravPullSayTimers)
 	self:Bar(206464, 12.5) -- Coronal Ejection
@@ -322,6 +324,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 function mod:NetherTraversal(args)
+	if grandCast == true then 
+		grandCast = nil
+		self:StopBar(CL.cast:format(205408))
+		self:CloseProximity(205408)
+	end
 	self:Bar(args.spellId, 8.5, CL.cast:format(args.spellName))
 end
 
@@ -529,7 +536,8 @@ do
 		tryCount = 0
 		mySign = nil
 		scheduled = nil
-
+		grandCast = true
+		
 		self:Message(args.spellId, "Attention", "Info", CL.count:format(args.spellName, grandCounter))
 		grandCounter = grandCounter + 1
 		self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
@@ -549,6 +557,7 @@ do
 	end
 
 	function mod:GrandConjunctionSuccess(args)
+		grandCast = nil
 		self:CloseProximity(args.spellId)
 	end
 
