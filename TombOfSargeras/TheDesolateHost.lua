@@ -19,6 +19,7 @@ mod.respawnTime = 40
 -- Locals
 --
 
+local myRealm = 0 -- 1 = Spirit Realm, 0 = Corporeal Realm
 local phasedList = {}
 local unphasedList = {}
 local phasedCheckList = {}
@@ -32,7 +33,9 @@ local boneArmorCounter = 0
 --
 
 local L = mod:GetLocale()
-
+if L then 
+	L.infobox_players = "Players"
+end
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -40,6 +43,7 @@ local L = mod:GetLocale()
 local soulBindMarker = mod:AddMarkerOption(false, "player", 3, 236459, 3,4)
 function mod:GetOptions()
 	return {
+		"infobox",
 		{239006, "PROXIMITY"}, -- Dissonance
 		236507, -- Quietus
 		{235924, "SAY"}, -- Spear of Anguish
@@ -57,7 +61,7 @@ function mod:GetOptions()
 		236544, -- Doomed Sundering
 		236548, -- Torment
 	},{
-		[239006] = "general",
+		["infobox"] = "general",
 		[235933] = -14856,-- Corporeal Realm
 		[235927] = CL.adds,-- Adds
 		[236340] = -14857,-- Spirit Realm
@@ -104,7 +108,8 @@ function mod:OnEngage()
 	self:RegisterEvent("UNIT_AURA") -- Spirit Realm Tracking
 	for unit in self:IterateGroup() do
 		local n = self:UnitName(unit)
-		phasedCheckList[n] = true -- Make sure we check all
+		unphasedList[#unphasedList+1] = n
+		phasedCheckList[n] = true -- Assume everyone is unphased
 		self:UNIT_AURA(nil, unit)
 	end
 
@@ -112,10 +117,16 @@ function mod:OnEngage()
 	boneArmorCounter = 0
 	tormentedCriesCounter = 1
 	wailingSoulsCounter = 1
-
-	self:OpenInfo(236513)
-	self:SetInfo(236513, 1, self:SpellName(55336)) -- Bone Armor (Shorter Text)
-	self:SetInfo(236513, 2, boneArmorCounter)
+		
+	self:OpenInfo("infobox")
+	self:SetInfo("infobox", 1, self:SpellName(55336)) -- Bone Armor (Shorter Text)
+	self:SetInfo("infobox", 2, boneArmorCounter)
+	self:SetInfo("infobox", 6, L.infobox_players)
+	self:SetInfo("infobox", 7, self:SpellName(-14857)) -- Spirit Realm
+	self:SetInfo("infobox", 8, #phasedList)
+	self:SetInfo("infobox", 9, self:SpellName(-14856)) -- Corporeal Realm
+	self:SetInfo("infobox", 10, #unphasedList)
+	
 
 	self:Bar(235907, 7.3) -- Collapsing Fissure
 	self:Bar(236459, 15.5) -- Soulbind
@@ -149,24 +160,38 @@ end
 function mod:UNIT_AURA(event, unit)
 	local name = UnitDebuff(unit, self:SpellName(235621)) -- Spirit Realm
 	local n = self:UnitName(unit)
-	if phasedCheckList[n] and not name then -- Not in Spirit Realm
+	if not phasedCheckList[n] and not name then -- Not in Spirit Realm
 		local guid = UnitGUID(unit)
-		phasedCheckList[n] = nil
+		phasedCheckList[n] = true
 		unphasedList[#unphasedList+1] = n
 		tDeleteItem(phasedList, n)
 		if self:Me(guid) then
+			myRealm = 0 -- Corporeal Realm
 			self:Message(239006, "Neutral", "Info", self:SpellName(-14856), false) -- Corporeal Realm
-			self:OpenProximity(239006, 8, phasedList) -- Avoid people in Spirit Realm
 		end
-	elseif name and not phasedCheckList[n] then -- In Spirit Realm
+		if myRealm == 0 then -- Corporeal Realm
+			self:OpenProximity(239006, 8, phasedList) -- Avoid people in Spirit Realm
+		else
+			self:OpenProximity(239006, 8, unphasedList) -- Avoid people not in Spirit Realm
+		end
+		self:SetInfo("infobox", 8, #phasedList)
+		self:SetInfo("infobox", 10, #unphasedList)
+	elseif name and phasedCheckList[n] then -- In Spirit Realm
 		local guid = UnitGUID(unit)
 		phasedList[#phasedList+1] = n
 		tDeleteItem(unphasedList, n)
 		if self:Me(guid) then
+			myRealm = 1
 			self:Message(239006, "Neutral", "Info", self:SpellName(-14857), false) -- Spirit Realm
-			self:OpenProximity(239006, 8, unphasedList) -- Avoid people not in Spirit Realm
 		end
-		phasedCheckList[n] = true
+		if myRealm == 1 then -- Spirit Realm
+			self:OpenProximity(239006, 8, unphasedList) -- Avoid people not in Spirit Realm
+		else
+			self:OpenProximity(239006, 8, phasedList) -- Avoid people in Spirit Realm
+		end
+		phasedCheckList[n] = nil
+		self:SetInfo("infobox", 8, #phasedList)
+		self:SetInfo("infobox", 10, #unphasedList)
 	end
 end
 
@@ -209,13 +234,13 @@ end
 function mod:BonecageArmor(args)
 	boneArmorCounter = boneArmorCounter + 1
 	self:Message(args.spellId, "Important", "Alert", CL.count:format(args.SpellName, boneArmorCounter))
-	self:SetInfo(236513, 2, boneArmorCounter)
+	self:SetInfo("infobox", 2, boneArmorCounter)
 end
 
 function mod:BonecageArmorRemoved(args)
 	boneArmorCounter = boneArmorCounter - 1
 	self:Message(args.spellId, "Positive", "Info", CL.count:format(CL.removed:format(args.SpellName), boneArmorCounter))
-	self:SetInfo(236513, 2, boneArmorCounter)
+	self:SetInfo("infobox", 2, boneArmorCounter)
 end
 
 function mod:Wither(args)
