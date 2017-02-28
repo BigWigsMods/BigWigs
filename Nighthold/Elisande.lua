@@ -329,11 +329,15 @@ do
 		if spellId == 211614 then -- Slow
 			self:Message("recursive_elemental", "Neutral", "Info", L.recursive_elemental, L.recursive_elemental_icon)
 			slowElementalCount = slowElementalCount + 1
-			self:Bar("recursive_elemental", self:Mythic() and timers[spellId][phase][slowElementalCount] or timers[spellId][slowElementalCount], L.recursive_elemental, L.recursive_elemental_icon)
+			if not isPhaseTransition then
+				self:Bar("recursive_elemental", self:Mythic() and timers[spellId][phase][slowElementalCount] or timers[spellId][slowElementalCount], L.recursive_elemental, L.recursive_elemental_icon)
+			end
 		elseif spellId == 211616 then -- Fast
 			self:Message("expedient_elemental", "Neutral", "Info", L.expedient_elemental, L.expedient_elemental_icon)
 			fastElementalCount = fastElementalCount + 1
-			self:Bar("expedient_elemental", self:Mythic() and timers[spellId][phase][fastElementalCount] or timers[spellId][fastElementalCount], L.expedient_elemental, L.expedient_elemental_icon)
+			if not isPhaseTransition then
+				self:Bar("expedient_elemental", self:Mythic() and timers[spellId][phase][fastElementalCount] or timers[spellId][fastElementalCount], L.expedient_elemental, L.expedient_elemental_icon)
+			end
 		elseif spellId == 209170 or spellId == 209171 then -- Spanning Singularity
 			self:Message(209170, "Attention", "Info")
 			singularityCount = singularityCount + 1
@@ -443,8 +447,6 @@ function mod:StartSingularityTimer()
 end
 
 function mod:TimeStop(args)
-	slowElementalCount = 1
-	fastElementalCount = 1
 	isPhaseTransition = true
 	self:Message("stages", "Neutral", "Info", args.spellName, args.spellId)
 	self:Bar("stages", 9.7, CL.stage:format(phase+1), args.spellId)
