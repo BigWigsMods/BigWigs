@@ -443,6 +443,8 @@ function mod:StartSingularityTimer()
 end
 
 function mod:TimeStop(args)
+	slowElementalCount = 1
+	fastElementalCount = 1
 	isPhaseTransition = true
 	self:Message("stages", "Neutral", "Info", args.spellName, args.spellId)
 	self:Bar("stages", 9.7, CL.stage:format(phase+1), args.spellId)
