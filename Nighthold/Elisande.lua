@@ -575,9 +575,9 @@ function mod:LeavetheNightwell(args)
 	if not (self:Easy() and phase > 1) then
 		self:Bar(208807, timers[208807][ringCount], CL.count:format(self:SpellName(208807), ringCount)) -- Arcanetic Ring
 	end
-	if phase == 1 then
+	if phase == 1 or self:Easy() then
 		self:Bar(209170, timers[209170][singularityCount], CL.count:format(self:SpellName(209170), singularityCount)) -- Spanning Singularity
-	elseif (phase == 2 or phase == 3) then -- No events in p2/3, so scheduling it is!
+	elseif phase == 2 or phase == 3 then -- No events in p2/3 for heroic / mythic, so scheduling it is!
 		singularityCount = 0 -- will get incremented in the function
 		self:StartSingularityTimer()
 	end
