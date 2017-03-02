@@ -23,8 +23,8 @@ mod.respawnTime = 30
 
 local L = mod:GetLocale()
 if L then
-	L.custom_on_fixate_plates = "Driven Assault icon on Enemy Nameplate"
-	L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is casting on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
+	L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
 	L.custom_on_fixate_plates_icon = 234128
 end
 
@@ -45,6 +45,7 @@ function mod:GetOptions()
 		{234128, "SAY", "FLASH"}, -- Driven Assault
 		"custom_on_fixate_plates",
 		240319, -- Hatching
+		241600, -- Sickly Fixate
 	},{
 		[231998] = "general",
 		[231729] = -14555,
@@ -73,6 +74,8 @@ function mod:OnBossEnable()
 
 	-- Mythic
 	self:Log("SPELL_CAST_START", "Hatching", 240319)
+	self:Log("SPELL_AURA_APPLIED", "SicklyFixate", 241600)
+	self:Log("SPELL_AURA_REMOVED", "SicklyFixateRemoved", 241600)
 
 	if self:GetOption("custom_on_fixate_plates") then
 		self:ShowPlates()
@@ -80,7 +83,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(232192, 17.5) -- Commanding Roar
+	self:Bar(232192, 17.5)	-- Commanding Roar
 	self:Bar(231854, 21) -- Unchecked Rage
 	self:Bar(232061, 60) -- Draw In
 end
@@ -174,7 +177,7 @@ do
 	end
 
 	function mod:DrivenAssaultRemoved(args)
-		if self:Me(args.destGUID) and self:GetOption("custom_on_fixate_plates") then
+		if self:GetOption("custom_on_fixate_plates") and self:Me(args.destGUID) then
 			self:RemovePlateIcon(234128, args.sourceGUID) -- Clear fixate plate incase it's removed early
 		end
 	end
@@ -182,4 +185,28 @@ end
 
 function mod:Hatching(args)
 	self:Message(args.spellId, "Important", "Long")
+end
+
+do
+	local playerList = mod:NewTargetList(), nil
+	function mod:SicklyFixate(args)
+		playerList[#playerList+1] = args.destName
+		if #playerList == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Alarm")
+		end
+
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+			if self:GetOption("custom_on_fixate_plates") then
+				self:AddPlateIcon(args.spellId, args.sourceGUID, 10) -- Show the target that is fixating on you more clear
+			end
+		end
+	end
+
+	function mod:SicklyFixateRemoved(args)
+		if self:GetOption("custom_on_fixate_plates") and self:Me(args.destGUID) then
+			self:RemovePlateIcon(args.spellId, args.sourceGUID) -- Clear fixate plate incase it's removed early
+		end
+	end
 end
