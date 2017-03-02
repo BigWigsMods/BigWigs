@@ -84,6 +84,12 @@ function mod:OnEngage()
 	self:Bar(232061, 60) -- Draw In
 end
 
+function mod:OnBossDisable()
+	if self:GetOption("custom_on_fixate_plates") then
+		self:HidePlates()
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
@@ -161,7 +167,7 @@ do
 			self:Flash(234128)
 			self:Say(234128)
 			if self:GetOption("custom_on_fixate_plates") then
-			self:AddPlateIcon(234128, args.sourceGUID, 10) -- Show the target that is fixating on you more clear
+				self:AddPlateIcon(234128, args.sourceGUID, 10) -- Show the target that is fixating on you more clear
 			end
 		end
 	end
