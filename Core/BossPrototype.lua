@@ -804,7 +804,7 @@ do
 		self[self.targetEventFunc](self, event, unit.."target")
 	end
 	--- Register a set of events commonly used for raid marking functionality and pass the unit to a designated function.
-	-- UPDATE_MOUSEOVER_UNIT, UNIT_TARGET, NAME_PLATE_UNIT_ADDED.
+	-- UPDATE_MOUSEOVER_UNIT, UNIT_TARGET, NAME_PLATE_UNIT_ADDED, FORBIDDEN_NAME_PLATE_UNIT_ADDED.
 	-- @param func callback function, passed (event, unit)
 	function boss:RegisterTargetEvents(func)
 		if self[func] then
@@ -812,6 +812,7 @@ do
 			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 			self:RegisterEvent("UNIT_TARGET")
 			self:RegisterEvent("NAME_PLATE_UNIT_ADDED", func)
+			self:RegisterEvent("FORBIDDEN_NAME_PLATE_UNIT_ADDED", func)
 		end
 	end
 	--- Unregister the events registered by `RegisterTargetEvents`.
@@ -819,6 +820,7 @@ do
 		self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 		self:UnregisterEvent("UNIT_TARGET")
 		self:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
+		self:UnregisterEvent("FORBIDDEN_NAME_PLATE_UNIT_ADDED")
 	end
 end
 
