@@ -29,9 +29,7 @@ local infusionCounter = 0
 
 local L = mod:GetLocale()
 if L then
-	L.custom_on_infusion_plates = "Display Infusion debuffs on friendly nameplates"
-	L.custom_on_infusion_plates_desc = "This feature is currently only supported by KuiNameplates."
-	L.custom_on_infusion_plates_icon = 235271
+
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -42,7 +40,6 @@ function mod:GetOptions()
 		240209, -- Unstable Soul
 		241593, -- Aegwynn's Ward
 		{235271, "PROXIMITY"}, -- Infusion
-		"custom_on_infusion_plates",
 		241635, -- Hammer of Creation
 		241636, -- Hammer of Obliteration
 		235267, -- Mass Instability
@@ -78,9 +75,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "WrathoftheCreatorsApplied", 237339) -- Wrath of the Creators
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WrathoftheCreatorsApplied", 237339) -- Wrath of the Creators
 	self:Log("SPELL_AURA_REMOVED", "WrathoftheCreatorsInterrupted", 234891) -- Wrath of the Creators
-	if 	self:GetOption("custom_on_infusion_plates") then
-		self:ShowFriendlyNameplates()
-	end
 end
 
 function mod:OnEngage()
@@ -100,9 +94,6 @@ function mod:OnEngage()
 	self:Bar(234891, 43.5) -- Wrath of the Creators
 end
 
-function mod:OnBossDisable()
-	self:HideFriendlyNameplates()
-end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
@@ -149,10 +140,6 @@ do
 			self:TargetMessage(235271, args.destName, "Personal", "Warning", args.spellName, args.spellId)
 			self:OpenProximity(235271, 5, lightList) -- Avoid people with Light debuff
 		end
-		if self:GetOption("custom_on_infusion_plates") then
-			self:RemovePlate(nil, args.destName) -- Can only have 1 debuff
-			self:AddPlate(args.spellId, args.destName)
-		end
 	end
 
 	function mod:LightInfusion(args)
@@ -161,10 +148,6 @@ do
 		if self:Me(args.destGUID) then
 			self:TargetMessage(235271, args.destName, "Personal", "Warning", args.spellName, args.spellId)
 			self:OpenProximity(235271, 5, felList) -- Avoid people with Fel debuff
-		end
-		if self:GetOption("custom_on_infusion_plates") then
-			self:RemovePlate(nil, args.destName) -- Can only have 1 debuff
-			self:AddPlate(args.spellId, args.destName)
 		end
 	end
 end
