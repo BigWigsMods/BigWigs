@@ -46,10 +46,12 @@ function mod:GetOptions()
 		237722, -- Blowback
 		235028, -- Titanic Bulwark
 		234891, -- Wrath of the Creators
+		239153, -- Spontaneous Fragmentation
 	},{
 		[240209] = "general",
 		[235271] = -14974, -- Stage One: Divide and Conquer
 		[237722] = -14975, -- Stage Two: Watcher's Wrath
+		[239153] = "mythic",
 	}
 end
 
@@ -75,6 +77,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "WrathoftheCreatorsApplied", 237339) -- Wrath of the Creators
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WrathoftheCreatorsApplied", 237339) -- Wrath of the Creators
 	self:Log("SPELL_AURA_REMOVED", "WrathoftheCreatorsInterrupted", 234891) -- Wrath of the Creators
+
+	-- Mythic
+	self:Log("SPELL_CAST_SUCCESS", "SpontaneousFragmentation", 239153) -- Hammer of Creation
 end
 
 function mod:OnEngage()
@@ -206,4 +211,8 @@ function mod:WrathoftheCreatorsInterrupted(args)
 	self:Bar(241636, 32.0) -- Hammer of Obliteration
 	self:Bar(237722, 81) -- Blowback
 	self:Bar(234891, 83.5) -- Wrath of the Creators
+end
+
+function mod:SpontaneousFragmentation(args)
+	self:Message(args.spellId, "Important", "Alarm")
 end
