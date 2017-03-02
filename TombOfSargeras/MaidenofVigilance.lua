@@ -62,7 +62,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "UnstableSoul", 240209) -- Unstable Soul
 	self:Log("SPELL_AURA_APPLIED", "AegwynnsWardApplied", 241593) -- Aegwynn's Ward
 
-	-- Stage One: Divide and Conquer	
+	-- Stage One: Divide and Conquer
 	self:Log("SPELL_CAST_START", "Infusion", 235271) -- Infusion
 	self:Log("SPELL_AURA_APPLIED", "FelInfusion", 235240) -- Fel Infusion
 	self:Log("SPELL_AURA_APPLIED", "LightInfusion", 235213) -- Light Infusion
@@ -86,12 +86,12 @@ end
 function mod:OnEngage()
 	phase = 1
 	shieldActive = false
-	
+
 	massInstabilityCounter = 0
 	hammerofCreationCounter = 0
 	hammerofObliterationCounter = 0
 	infusionCounter = 0
-	
+
 	self:Bar(235271, 2.0) -- Infusion
 	self:Bar(241635, 14.0) -- Hammer of Creation
 	self:Bar(235267, 22.0) -- Mass Instability
@@ -141,7 +141,7 @@ end
 
 do
 	local lightList, felList = {}, {}
-	
+
 	function mod:FelInfusion(args)
 		felList[#felList+1] = args.destName
 		tDeleteItem(lightList, args.destName)
@@ -208,15 +208,15 @@ function mod:WrathoftheCreatorsApplied(args)
 		self:Message(234891, "Important", "Warning", args.spellName)
 	end
 end
-	
+
 function mod:WrathoftheCreatorsInterrupted(args)
-	phase = 1 
+	phase = 1
 	self:Message(args.spellId, "Positive", "Long", CL.interrupted:format(args.spellName))
 	massInstabilityCounter = 1
 	hammerofCreationCounter = 1
 	hammerofObliterationCounter = 1
 	infusionCounter = 1
-	
+
 	self:Bar(235271, 2.0) -- Infusion
 	self:Bar(241635, 14.0) -- Hammer of Creation
 	self:Bar(235267, 22.0) -- Mass Instability
