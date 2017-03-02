@@ -52,10 +52,13 @@ function mod:GetOptions()
 		232745, -- Devouring Maw
 		232913, -- Befouling Ink
 		232827, -- Crashing Wave
+		239436, -- Dread Shark
+		239362, -- Delicious Bufferfish
 	},{
 		["stages"] = "general",
 		[232722] = -14591,
 		[232746] = -14605,
+		[239436] = "mythic",
 	}
 end
 
@@ -75,6 +78,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DevouringMaw", 232745)
 	self:Log("SPELL_CAST_START", "BefoulingInk", 232756) -- Summon Ossunet = Befouling Ink incoming
 	self:Log("SPELL_CAST_START", "CrashingWave", 232827)
+
+	-- Mythic
+	self:Log("SPELL_CAST_SUCCESS", "DreadShark", 239436)
+	self:Log("SPELL_AURA_APPLIED", "DeliciousBufferfish", 239362, 239375)
+	self:Log("SPELL_AURA_REMOVED", "DeliciousBufferfishRemoved", 239362, 239375)
 end
 
 function mod:OnEngage()
@@ -204,4 +212,20 @@ function mod:CrashingWave(args)
 	self:Message(args.spellId, "Important", "Warning", args.spellName)
 	self:Bar(args.spellId, 4, CL.casting:format(args.spellName))
 	self:Bar(args.spellId, phase == 3 and (waveCounter == 2 and 55.5 or 42) or 42) -- XXX need more data in p3
+end
+
+function mod:DreadShark(args)
+	self:Message(args.spellId, "Attention", "Info")
+end
+
+function mod:DeliciousBufferfish(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Positive")
+	end
+end
+
+function mod:DeliciousBufferfishRemoved(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Alert", CL.removed:format(args.spellName))
+	end
 end
