@@ -24,9 +24,10 @@ mod.respawnTime = 30
 local L = mod:GetLocale()
 if L then
 	L.custom_on_fixate_plates = "Driven Assault icon on Enemy Nameplate"
-	L.custom_on_fixate_plates_desc = "Will show an icon on the target that is casting on you. Requires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is casting on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
 	L.custom_on_fixate_plates_icon = 234128
 end
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -79,7 +80,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(232192, 17.5)	-- Commanding Roar
+	self:Bar(232192, 17.5) -- Commanding Roar
 	self:Bar(231854, 21) -- Unchecked Rage
 	self:Bar(232061, 60) -- Draw In
 end
@@ -173,7 +174,7 @@ do
 	end
 
 	function mod:DrivenAssaultRemoved(args)
-		if self:GetOption("custom_on_fixate_plates") and self:Me(args.destGUID) then
+		if self:Me(args.destGUID) and self:GetOption("custom_on_fixate_plates") then
 			self:RemovePlateIcon(234128, args.sourceGUID) -- Clear fixate plate incase it's removed early
 		end
 	end
