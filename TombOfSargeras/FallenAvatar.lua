@@ -57,14 +57,16 @@ function mod:GetOptions()
 		235572, -- Rupture Realities
 		242017, -- Black Winds
 		236684, -- Fel Infusion
-		--234418, -- Rain of the Destroyer
+		240623, -- Tainted Matrix
+		240728, -- Tainted Essence
+		234418, -- Rain of the Destroyer
 	},{
 		["stages"] = "general",
 		[239058] = -14709, -- Stage One: A Slumber Disturbed
 		[233856] = -14713, -- Maiden of Valor
 		[233556] = -15123, -- Containment Pylon
 		[239739] = -14719, -- Stage Two: An Avatar Awakened
-		--[234418] = "mythic",
+		[240623] = "mythic",
 	}
 end
 
@@ -96,7 +98,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FelInfusion", 236684) -- Dark Mark
 
 	-- Mythic
-	--self:Log("SPELL_CAST_SUCCESS", "RainoftheDestroyer", 234418) -- Rain of the Destroyer
+	self:Log("SPELL_CAST_START", "TaintedMatrix", 240623) -- Corrupted Matrix
+	self:Log("SPELL_AURA_APPLIED", "TaintedEssence", 240728) -- Desolate
+	self:Log("SPELL_AURA_APPLIED_DOSE", "TaintedEssence", 240728) -- Desolate
+	self:Log("SPELL_CAST_SUCCESS", "RainoftheDestroyer", 234418) -- Rain of the Destroyer
 end
 
 function mod:OnEngage()
@@ -247,7 +252,18 @@ function mod:FelInfusion(args)
 	end
 end
 
---function mod:RainoftheDestroyer(args)
---	self:Message(args.spellId, "Important", "Warning")
-	--self:Bar(args.spellId, 10)
---end
+function mod:TaintedMatrix(args)
+	self:Message(args.spellId, "Important", "Warning", CL.incoming:format(args.spellName))
+	self:Bar(args.spellId, 10, CL.cast:format(args.spellName))
+end
+
+function mod:TaintedEssence(args)
+	local amount = args.amount or 1
+	if self:Me(args.destGUID) and amount > 4 then
+		self:StackMessage(args.spellId, args.destName, amount, "Urgent", "Warning")
+	end
+end
+
+function mod:RainoftheDestroyer(args)
+	self:Message(args.spellId, "Important", "Warning")
+end
