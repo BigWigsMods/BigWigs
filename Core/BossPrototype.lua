@@ -1259,27 +1259,33 @@ end
 -- @section nameplates
 --
 
---- Toggle showing friendly nameplates to the enabled state.
-function boss:ShowFriendlyNameplates()
-	self:SendMessage("BigWigs_EnableFriendlyNameplates", self)
-end
-
---- Toggle showing friendly nameplates to the disabled state.
-function boss:HideFriendlyNameplates()
-	self:SendMessage("BigWigs_DisableFriendlyNameplates", self)
-end
-
---- Toggle showing friendly nameplates to the enabled state.
-function boss:ShowHostileNameplates()
+--- Toggle showing hostile nameplates to the enabled state.
+function boss:ShowPlates()
 	self:SendMessage("BigWigs_EnableHostileNameplates", self)
 end
 
---- Toggle showing friendly nameplates to the disabled state.
-function boss:HideHostileNameplates()
+--- Toggle showing hostile nameplates to the disabled state.
+function boss:HidePlates()
 	self:SendMessage("BigWigs_DisableHostileNameplates", self)
 end
 
---- Add aura to nameplate.
+--- Add icon to hostile nameplate.
+-- @param spellId the associated spell id
+-- @param guid the hostile unit guid
+-- @param[opt] duration the duration of the aura
+-- @param[opt] desaturate true if the texture should be desaturated
+function boss:AddPlateIcon(spellId, guid, duration, desaturate)
+	self:SendMessage("BigWigs_AddNameplateIcon", self, guid, icons[spellId], duration, desaturate)
+end
+
+--- Remove icon from hostile nameplate.
+-- @param spellId the associated spell id, passing nil removes all icons
+-- @param guid the hostile unit guid
+function boss:RemovePlateIcon(spellId, guid)
+	self:SendMessage("BigWigs_RemoveNameplateIcon", self, guid, spellId and icons[spellId])
+end
+
+--- Add aura to nameplate. [DEPRECATED, removed in 7.2]
 -- @param spellId the associated spell id
 -- @param playerName the affected player
 -- @param[opt] duration the duration of the aura
@@ -1289,7 +1295,7 @@ function boss:AddPlate(spellId, playerName, duration, isHostile, desaturate)
 	self:SendMessage("BigWigs_ShowNameplateAura", self, playerName, icons[spellId], duration, desaturate, isHostile)
 end
 
---- Remove aura from nameplate.
+--- Remove aura from nameplate. [DEPRECATED, removed in 7.2]
 -- @param spellId the associated spell id, passing nil removes all icons
 -- @param playerName the affected player
 -- @param[opt] isHostile if the unit is a hostile nameplate, in which case playerName should be treated as a GUID
