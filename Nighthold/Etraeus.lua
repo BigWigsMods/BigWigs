@@ -218,6 +218,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StarSigns", 205429, 205445, 216345, 216344) -- Star Sign: Crab, Wolf, Hunter, Dragon
 	self:Log("SPELL_AURA_REMOVED", "StarSignsRemoved", 205429, 205445, 216345, 216344)
 
+	-- XXX remove in 7.2
 	if self:Mythic() then
 		if self:GetOption("custom_off_icy_ejection_nameplates") or -- XXX maybe add these to ShowFriendlyNameplates?
 				self:GetOption("custom_on_fel_ejection_nameplates") or
@@ -225,7 +226,7 @@ function mod:OnBossEnable()
 				self:GetOption("custom_on_grand_conjunction_nameplates") then
 
 			-- Experimenting with using callbacks for nameplate addons
-			self:ShowFriendlyNameplates()
+			self:SendMessage("BigWigs_EnableFriendlyNameplates", self)
 			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED") -- see comment above the function for explanation
 		end
 	end
@@ -260,7 +261,7 @@ end
 
 function mod:OnBossDisable()
 	wipe(mobCollector)
-	self:HideFriendlyNameplates()
+	self:SendMessage("BigWigs_DisableFriendlyNameplates", self) -- XXX remove in 7.2
 end
 
 --------------------------------------------------------------------------------
@@ -688,6 +689,7 @@ do
 		end
 	end
 
+	-- XXX remove in 7.2
 	-- If a player dies while he has a Star Sign, it will not get removed. This
 	-- is intented behaviour, so players with matching signs can still clear theirs
 	-- with the corpse.
