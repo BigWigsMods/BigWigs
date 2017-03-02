@@ -209,7 +209,7 @@ if L then
 	L.expedient_elemental = -13229
 	L.expedient_elemental_icon = 209166 -- Fast Time
 	L.fastTimeZone = "Fast Time Zone"
-	
+
 	L.boss_active = "Elisande Active"
 	L.boss_active_desc = "Time until Elisande is active after clearing the trash event."
 	L.boss_active_icon = "achievement_thenighthold_grandmagistrixelisande"
@@ -351,7 +351,7 @@ end
 --
 
 function mod:Warmup(_, msg)
-	if msg == L.elisande_trigger then 
+	if msg == L.elisande_trigger then
 		self:Bar("boss_active", 68, L.boss_active, L.boss_active_icon)
 	end
 end
@@ -366,7 +366,7 @@ do
 			local timer = self:Mythic() and timers[spellId][phase][slowElementalCount] or timers[spellId][slowElementalCount]
 			if self:LFR() then -- XXX Unsure if timers are complete
 				self:Bar("recursive_elemental", timer, L.recursive_elemental, L.recursive_elemental_icon)
-			elseif timer then 
+			elseif timer then
 				self:Bar("recursive_elemental", timer, L.recursive_elemental, L.recursive_elemental_icon)
 			end
 		elseif spellId == 211616 then -- Fast
@@ -375,14 +375,14 @@ do
 			local timer = self:Mythic() and timers[spellId][phase][fastElementalCount] or timers[spellId][fastElementalCount]
 			if self:LFR() then -- XXX Unsure if timers are complete
 				self:Bar("expedient_elemental", timer, L.expedient_elemental, L.expedient_elemental_icon)
-			elseif timer then 
+			elseif timer then
 				self:Bar("expedient_elemental", timer, L.expedient_elemental, L.expedient_elemental_icon)
 			end
 		elseif spellId == 209170 or spellId == 209171 then -- Spanning Singularity heroic / mythic
 			self:Message(209170, "Attention", "Info")
 			singularityCount = singularityCount + 1
 			local timer = timers[209170][singularityCount]
-			if timer then 
+			if timer then
 				self:Bar(209170, timer, CL.count:format(spellName, singularityCount))
 			end
 		elseif self:Easy() and (spellId == 209168 or spellId == 233010) then -- Spanning Singularity normal mode / LFR
@@ -394,7 +394,7 @@ do
 				local timer = timers[209170][singularityCount]
 				if self:LFR() then -- XXX Unsure if timers are complete
 					self:Bar(209170, timer, CL.count:format(spellName, singularityCount))
-				elseif timer then 
+				elseif timer then
 					self:Bar(209170, timer, CL.count:format(spellName, singularityCount))
 				end
 			end
@@ -535,7 +535,7 @@ function mod:LeavetheNightwell(args)
 		beamCount = 1
 		orbCount = 1
 		ablatingCount = 1
-		
+
 		if not self:LFR() then -- Beams not in LFR
 			self:Bar(209244, timers[209244][beamCount]) -- Delphuric Beam
 		end
@@ -686,7 +686,7 @@ function mod:AblatingExplosion(args)
 		self:Say(args.spellId)
 	end
 	local timer = self:Easy() and 20.7 or timers[args.spellId][ablatingCount]
-	if timer then 
+	if timer then
 		self:Bar(args.spellId, timer, CL.count:format(args.spellName, ablatingCount))
 	end
 end

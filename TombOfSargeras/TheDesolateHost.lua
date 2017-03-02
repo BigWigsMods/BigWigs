@@ -33,7 +33,7 @@ local boneArmorCounter = 0
 --
 
 local L = mod:GetLocale()
-if L then 
+if L then
 	L.infobox_players = "Players"
 end
 --------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ function mod:OnEngage()
 	boneArmorCounter = 0
 	tormentedCriesCounter = 1
 	wailingSoulsCounter = 1
-		
+
 	self:OpenInfo("infobox")
 	self:SetInfo("infobox", 1, self:SpellName(55336)) -- Bone Armor (Shorter Text)
 	self:SetInfo("infobox", 2, boneArmorCounter)
@@ -126,7 +126,7 @@ function mod:OnEngage()
 	self:SetInfo("infobox", 8, #phasedList)
 	self:SetInfo("infobox", 9, self:SpellName(-14856)) -- Corporeal Realm
 	self:SetInfo("infobox", 10, #unphasedList)
-	
+
 
 	self:Bar(235907, 7.3) -- Collapsing Fissure
 	self:Bar(236459, 15.5) -- Soulbind

@@ -91,9 +91,9 @@ function mod:OnBossEnable()
 
 	-- Stage Two: An Avatar Awakened
 	self:Log("SPELL_AURA_APPLIED", "DarkMark", 239739) -- Dark Mark
-	self:Log("SPELL_CAST_START", "RuptureRealitiesP2", 235572) -- Rupture Realities	
+	self:Log("SPELL_CAST_START", "RuptureRealitiesP2", 235572) -- Rupture Realities
 	self:Log("SPELL_AURA_APPLIED", "FelInfusion", 236684) -- Dark Mark
-	self:Log("SPELL_AURA_APPLIED_DOSE", "FelInfusion", 236684) -- Dark Mark	
+	self:Log("SPELL_AURA_APPLIED_DOSE", "FelInfusion", 236684) -- Dark Mark
 
 	-- Mythic
 	--self:Log("SPELL_CAST_SUCCESS", "RainoftheDestroyer", 234418) -- Rain of the Destroyer
@@ -242,7 +242,7 @@ end
 
 function mod:FelInfusion(args)
 	local amount = args.amount or 1
-	if amount % 3 == 0 then 
+	if amount % 3 == 0 then
 		self:Message(args.spellId, "Attention", "Info", CL.count:format(args.spellName, amount), nil, false)
 	end
 end
