@@ -22,7 +22,11 @@ mod.respawnTime = 30
 --
 
 local L = mod:GetLocale()
-
+if L then
+	L.custom_on_fixate_plates = "Driven Assault icon on Enemy Nameplate"
+	L.custom_on_fixate_plates_desc = "Will show an icon on the target that is casting on you. Requires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates_icon = 234128
+end
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -38,6 +42,7 @@ function mod:GetOptions()
 		{231729, "SAY", "FLASH"}, -- Aqueous Burst
 		231904, -- Tend Wounds
 		{234128, "SAY", "FLASH"}, -- Driven Assault
+		"custom_on_fixate_plates",
 		240319, -- Hatching
 	},{
 		[231998] = "general",
@@ -67,6 +72,10 @@ function mod:OnBossEnable()
 
 	-- Mythic
 	self:Log("SPELL_CAST_START", "Hatching", 240319)
+
+	if self:GetOption("custom_on_fixate_plates") then
+		self:ShowPlates()
+	end
 end
 
 function mod:OnEngage()
@@ -143,21 +152,23 @@ end
 do
 	local playerList = mod:NewTargetList(), nil
 	function mod:DrivenAssault(args)
-		if self:Me(args.destGUID) then
-			self:AddPlate(234128, args.sourceGUID, 10, true) -- Show the target that is fixating on you more clear
-			self:Flash(234128)
-			self:Say(234128)
-		end
-
 		playerList[#playerList+1] = args.destName
-
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, 234128, playerList, "Important", "Alarm")
 		end
-	end
-	function mod:DrivenAssaultRemoved(args)
+
 		if self:Me(args.destGUID) then
-			self:RemovePlate(234128, args.sourceGUID, true) -- Clear fixate plate incase it's removed early
+			self:Flash(234128)
+			self:Say(234128)
+			if self:GetOption("custom_on_fixate_plates") then
+			self:AddPlateIcon(234128, args.sourceGUID, 10) -- Show the target that is fixating on you more clear
+			end
+		end
+	end
+
+	function mod:DrivenAssaultRemoved(args)
+		if self:GetOption("custom_on_fixate_plates") and self:Me(args.destGUID) then
+			self:RemovePlateIcon(234128, args.sourceGUID) -- Clear fixate plate incase it's removed early
 		end
 	end
 end
