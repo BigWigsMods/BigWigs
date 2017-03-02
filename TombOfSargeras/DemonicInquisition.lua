@@ -38,7 +38,7 @@ function mod:GetOptions()
 		233426, -- Scythe Sweep
 		233431, -- Calcified Quills
 		233441, -- Bone Saw
-		239401, -- Shadow Bolt Volley
+		239401, -- Pangs of Guilt
 		{233983, "FLASH", "SAY", "PROXIMITY"}, -- Echoing Anguish
 		233895, -- Suffocating Dark
 		234015, -- Tormenting Burst
@@ -60,7 +60,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BoneSaw", 233441)
 
 	-- Belac
-	self:Log("SPELL_CAST_START", "ShadowBoltVolley", 239401)
+	self:Log("SPELL_CAST_START", "PangsofGuilt", 239401)
 	self:Log("SPELL_CAST_START", "EchoingAnguish", 233983)
 	self:Log("SPELL_AURA_APPLIED", "EchoingAnguishApplied", 233983)
 	self:Log("SPELL_AURA_REMOVED", "EchoingAnguishRemoved", 233983)
@@ -121,7 +121,7 @@ function mod:BoneSaw(args)
 	self:Bar(args.spellId, 63)
 end
 
-function mod:ShadowBoltVolley(args) -- Interuptable
+function mod:PangsofGuilt(args) -- Interuptable
 	shadowBoltCounter = shadowBoltCounter + 1
 	if shadowBoltCounter == 4 then
 		shadowBoltCounter = 1
