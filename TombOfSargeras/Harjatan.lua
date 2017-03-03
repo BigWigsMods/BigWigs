@@ -17,6 +17,9 @@ mod.respawnTime = 30
 -- Locals
 --
 
+local dischargeComing = nil
+local drawInCasting = nil
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -26,6 +29,10 @@ if L then
 	L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
 	L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
 	L.custom_on_fixate_plates_icon = 234128
+
+	L.darkscale_taskmaster = "Darkscale Taskmaster (Heroic, Mythic)"
+	L.darkscale_taskmaster_desc = "Summons a Darkscale Taskmaster from the throne."
+	L.darkscale_taskmaster_icon = 233951
 end
 
 --------------------------------------------------------------------------------
@@ -40,12 +47,12 @@ function mod:GetOptions()
 		232061, -- Draw In
 		233429, -- Frigid Blows
 		232174, -- Frosty Discharge
+		"darkscale_taskmaster", -- Darkscale Taskmaster
 		{231729, "SAY", "FLASH"}, -- Aqueous Burst
-		231904, -- Tend Wounds
 		{234128, "SAY", "FLASH"}, -- Driven Assault
 		"custom_on_fixate_plates",
 		240319, -- Hatching
-		241600, -- Sickly Fixate
+		{241600, "SAY", "FLASH"} -- Sickly Fixate
 	},{
 		[231998] = "general",
 		[231729] = -14555,
@@ -57,23 +64,24 @@ end
 function mod:OnBossEnable()
 	-- General
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
+	self:RegisterEvent("RAID_BOSS_WHISPER")
 
 	-- Boss
 	self:Log("SPELL_AURA_APPLIED", "JaggedAbrasion", 231998)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "JaggedAbrasion", 231998)
 	self:Log("SPELL_CAST_START", "UncheckedRage", 231854)
-	self:Log("SPELL_CAST_SUCCESS", "DrawIn", 232061)
+	self:Log("SPELL_AURA_APPLIED", "DrawIn", 232061)
+	self:Log("SPELL_AURA_REMOVED", "DrawInSuccess", 232061)
+	self:Log("SPELL_AURA_APPLIED", "FrigidBlowsApplied", 232061)
 	self:Log("SPELL_AURA_REMOVED_DOSE", "FrigidBlows", 233429)
 	self:Log("SPELL_CAST_START", "FrostyDischarge", 232174)
 
 	-- Adds
 	self:Log("SPELL_AURA_APPLIED", "AqueousBurst", 231729)
-	self:Log("SPELL_CAST_START", "TendWounds", 231904)
 	self:Log("SPELL_AURA_APPLIED", "DrivenAssault", 234016)
 	self:Log("SPELL_AURA_REMOVED", "DrivenAssaultRemoved", 234016)
 
 	-- Mythic
-	self:Log("SPELL_CAST_START", "Hatching", 240319)
 	self:Log("SPELL_AURA_APPLIED", "SicklyFixate", 241600)
 	self:Log("SPELL_AURA_REMOVED", "SicklyFixateRemoved", 241600)
 
@@ -83,9 +91,15 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(232192, 17.5)	-- Commanding Roar
+	self:Bar(232192, 17.5) -- Commanding Roar
 	self:Bar(231854, 21) -- Unchecked Rage
 	self:Bar(232061, 60) -- Draw In
+	if self:Heroic() or self:Mythic() then
+		self:Bar("darkscale_taskmaster", 41.6, self:SpellName(-14725), L.darkscale_taskmaster_icon) -- Darkscale Taskmaster
+	end
+	if self:Mythic() then
+		self:Bar(240319, 30) -- Hatching
+	end
 end
 
 function mod:OnBossDisable()
@@ -100,27 +114,52 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 232192 then -- Commanding Roar
 		self:Message(spellId, "Important", "Alert", spellName)
-		if self:BarTimeLeft(232061) > 32.8 then -- Draw In
-			self:Bar(spellId, 32.8)
-		end
+		self:Bar(spellId, 32.8)
+	elseif spellId == 241736 then -- Darkscale Taskmaster
+		self:Message("darkscale_taskmaster", "Attention", "Alert", CL.incoming:format(self:SpellName(-14725)), L.darkscale_taskmaster_icon)
+		self:Bar("darkscale_taskmaster", 60.5, self:SpellName(-14725), L.darkscale_taskmaster_icon) -- Darkscale Taskmaster
+	end
+end
+
+function mod:RAID_BOSS_WHISPER(event, msg)
+	if msg:find("240319", nil, true) then -- Hatching
+		self:Message(240319, "Important", "Warning")
+		self:Bar(240319, 41.5)
 	end
 end
 
 function mod:JaggedAbrasion(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 4 and "Warning") -- Swap on 4
+	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 4 and "Warning") -- Swap on 4~5
 end
 
 function mod:UncheckedRage(args)
 	self:Message(args.spellId, "Attention", "Warning")
-	if self:BarTimeLeft(232061) > 20.5 then -- Draw In
-		self:Bar(args.spellId, 20.5)
-	end
+	self:Bar(args.spellId, 20.5)
 end
 
 function mod:DrawIn(args)
+	drawInCasting = true
 	self:Message(args.spellId, "Important", "Alert", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 10, CL.casting:format(args.spellName))
+	self:Bar(args.spellId, 10, CL.cast:format(args.spellName))
+end
+
+function mod:DrawInSuccess(args)
+	if not dischargeComing then
+		self:Bar(args.spellId, 50.5)
+	end
+	dischargeComing = nil
+	drawInCasting = nil
+end
+
+function mod:FrigidBlowsApplied(args)
+	if drawInCasting then
+		dischargeComing = true
+		-- Cooldowns resetting after Frost Discharge now
+		self:StopBar(232192) -- Commanding Roar
+		self:StopBar(231854) -- Unchecked Rage
+		self:StopBar(240319) -- Hatching
+	end
 end
 
 function mod:FrigidBlows(args)
@@ -134,6 +173,9 @@ function mod:FrostyDischarge(args)
 	self:Message(args.spellId, "Urgent", "Warning", args.spellName)
 	self:Bar(232192, 18.2)	-- Commanding Roar
 	self:Bar(231854, 21.4) -- Unchecked Rage
+	if self:Mythic() then
+		self:Bar(240319, 32) -- Hatching
+	end
 	self:Bar(232061, 60) -- Draw In
 end
 
@@ -153,60 +195,34 @@ do
 	end
 end
 
-function mod:TendWounds(args)
-	if self:Interrupter(args.sourceGUID) then
-		self:Message(args.spellId, "Important", "Warning")
-	end
-end
-
-do
-	local playerList = mod:NewTargetList(), nil
-	function mod:DrivenAssault(args)
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, 234128, playerList, "Important", "Alarm")
-		end
-
-		if self:Me(args.destGUID) then
-			self:Flash(234128)
-			self:Say(234128)
-			if self:GetOption("custom_on_fixate_plates") then
-				self:AddPlateIcon(234128, args.sourceGUID, 10) -- Show the target that is fixating on you more clear
-			end
-		end
-	end
-
-	function mod:DrivenAssaultRemoved(args)
-		if self:GetOption("custom_on_fixate_plates") and self:Me(args.destGUID) then
-			self:RemovePlateIcon(234128, args.sourceGUID) -- Clear fixate plate incase it's removed early
+function mod:DrivenAssault(args)
+	if self:Me(args.destGUID) then
+		self:Flash(234128)
+		self:Say(234128)
+		if self:GetOption("custom_on_fixate_plates") then
+			self:AddPlateIcon(234128, args.sourceGUID, 10) -- Show the target that is fixating on you more clear
 		end
 	end
 end
 
-function mod:Hatching(args)
-	self:Message(args.spellId, "Important", "Long")
+function mod:DrivenAssaultRemoved(args)
+	if self:GetOption("custom_on_fixate_plates") and self:Me(args.destGUID) then
+		self:RemovePlateIcon(234128, args.sourceGUID) -- Clear fixate plate incase it's removed early
+	end
 end
 
-do
-	local playerList = mod:NewTargetList(), nil
-	function mod:SicklyFixate(args)
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Alarm")
-		end
-
-		if self:Me(args.destGUID) then
-			self:Flash(args.spellId)
-			self:Say(args.spellId)
-			if self:GetOption("custom_on_fixate_plates") then
-				self:AddPlateIcon(args.spellId, args.sourceGUID, 10) -- Show the target that is fixating on you more clear
-			end
+function mod:SicklyFixate(args)
+	if self:Me(args.destGUID) then
+		self:Flash(args.spellId)
+		self:Say(args.spellId)
+		if self:GetOption("custom_on_fixate_plates") then
+			self:AddPlateIcon(args.spellId, args.sourceGUID, 10) -- Show the target that is fixating on you more clear
 		end
 	end
+end
 
-	function mod:SicklyFixateRemoved(args)
-		if self:GetOption("custom_on_fixate_plates") and self:Me(args.destGUID) then
-			self:RemovePlateIcon(args.spellId, args.sourceGUID) -- Clear fixate plate incase it's removed early
-		end
+function mod:SicklyFixateRemoved(args)
+	if self:GetOption("custom_on_fixate_plates") and self:Me(args.destGUID) then
+		self:RemovePlateIcon(args.spellId, args.sourceGUID) -- Clear fixate plate incase it's removed early
 	end
 end
