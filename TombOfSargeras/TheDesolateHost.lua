@@ -213,7 +213,7 @@ end
 
 function mod:TormentedCries(args)
 	tormentedCriesCounter = tormentedCriesCounter + 1
-	self:Message(args.spellId, "Attention", "Info", CL.incoming:format(args.SpellName))
+	self:Message(args.spellId, "Attention", "Info", CL.incoming:format(args.spellName))
 	if tormentedCriesCounter <= 2 then -- XXX Need data for cast 3+
 		self:Bar(args.spellId, 120)
 	end
@@ -228,18 +228,18 @@ function mod:TormentedCriesApplied(args)
 end
 
 function mod:RupturingSlam(args)
-	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.SpellName))
+	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
 end
 
 function mod:BonecageArmor(args)
 	boneArmorCounter = boneArmorCounter + 1
-	self:Message(args.spellId, "Important", "Alert", CL.count:format(args.SpellName, boneArmorCounter))
+	self:Message(args.spellId, "Important", "Alert", CL.count:format(args.spellName, boneArmorCounter))
 	self:SetInfo("infobox", 2, boneArmorCounter)
 end
 
 function mod:BonecageArmorRemoved(args)
 	boneArmorCounter = boneArmorCounter - 1
-	self:Message(args.spellId, "Positive", "Info", CL.count:format(CL.removed:format(args.SpellName), boneArmorCounter))
+	self:Message(args.spellId, "Positive", "Info", CL.count:format(CL.removed:format(args.spellName), boneArmorCounter))
 	self:SetInfo("infobox", 2, boneArmorCounter)
 end
 
@@ -263,7 +263,7 @@ do
 				t = 74.5 + self:BarTimeLeft(236072) -- Time Left + 60s channel + 14.5s cooldown
 			end
 			self:Bar(args.spellId, t)
-		elseif self:GetOption(soulBindMarker) then
+		elseif #list ==  1 and self:GetOption(soulBindMarker) then
 			SetRaidTarget(args.destName, 3)
 		end
 	end
