@@ -23,7 +23,7 @@ local phase = 1
 local consumingHungerCounter = 1
 local slicingTornadoCounter = 1
 local waveCounter = 1
-
+local dreadSharkCounter = 1
 local inkCounter = 1
 local timersBefoulingInkP3 = {12.4, 31.6, 31.6, 37.6, 31.6, 34.1}
 
@@ -80,7 +80,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CrashingWave", 232827)
 
 	-- Mythic
-	self:Log("SPELL_CAST_SUCCESS", "DreadShark", 239436)
 	self:Log("SPELL_AURA_APPLIED", "DeliciousBufferfish", 239362, 239375)
 	self:Log("SPELL_AURA_REMOVED", "DeliciousBufferfishRemoved", 239362, 239375)
 end
@@ -91,6 +90,7 @@ function mod:OnEngage()
 	slicingTornadoCounter = 1
 	inkCounter = 1
 	waveCounter = 1
+	dreadSharkCounter = 1
 
 	self:Bar(230358, 10.5) -- Thundering Shock
 	self:Bar(230201, 17.9) -- Burden of Pain
@@ -105,7 +105,20 @@ end
 --
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 239423 then -- Dread Shark // Stage 2 + Stage 3 // Alternative for Stage 3: 240435
-		phase = phase + 1
+		dreadSharkCounter = dreadSharkCounter + 1
+		if not self:Mythic() then
+			phase = dreadSharkCounter
+		elseif dreadSharkCounter == 2 then
+			self:Message(239436, "Urgent", "Warning")
+			phase = 2
+		elseif dreadSharkCounter == 4 then
+			self:Message(239436, "Urgent", "Warning")
+			phase = 3
+		else
+			self:Message(239436, "Urgent", "Warning")
+			return -- No phase change yet
+		end
+
 		consumingHungerCounter = 1
 		slicingTornadoCounter = 1
 		inkCounter = 1
@@ -212,10 +225,6 @@ function mod:CrashingWave(args)
 	self:Message(args.spellId, "Important", "Warning", args.spellName)
 	self:Bar(args.spellId, 4, CL.casting:format(args.spellName))
 	self:Bar(args.spellId, phase == 3 and (waveCounter == 2 and 55.5 or 42) or 42) -- XXX need more data in p3
-end
-
-function mod:DreadShark(args)
-	self:Message(args.spellId, "Attention", "Info")
 end
 
 function mod:DeliciousBufferfish(args)
