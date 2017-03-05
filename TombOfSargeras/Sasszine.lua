@@ -216,7 +216,7 @@ end
 
 function mod:BefoulingInk(args)
 	inkCounter = inkCounter + 1
-	self:Message(232913, "Attention", "Info", L.incoming:format(self:SpellName(232913))) -- Befouling Ink incoming!
+	self:Message(232913, "Attention", "Info", CL.incoming:format(self:SpellName(232913))) -- Befouling Ink incoming!
 	self:Bar(232913, phase == 3 and timersBefoulingInkP3[inkCounter] or 42) -- XXX need more data in p3
 end
 
