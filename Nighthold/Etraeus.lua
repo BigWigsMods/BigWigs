@@ -464,7 +464,7 @@ end
 
 function mod:FelEjectionApplied(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
 		self:Say(args.spellId)
 		self:TargetBar(args.spellId, 8, args.destName)
 	end
@@ -475,6 +475,7 @@ function mod:FelEjectionApplied(args)
 end
 
 function mod:FelEjectionRemoved(args)
+	self:Message(args.spellId, "Personal", nil, CL.removed:format(args.spellName))
 	self:RemovePlate(args.spellId, args.destName)
 end
 
