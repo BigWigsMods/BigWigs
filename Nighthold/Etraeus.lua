@@ -325,7 +325,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 function mod:NetherTraversal(args)
-	if grandCast == true then 
+	if grandCast == true then
 		grandCast = nil
 		self:StopBar(CL.cast:format(205408))
 		self:CloseProximity(205408)
@@ -475,7 +475,9 @@ function mod:FelEjectionApplied(args)
 end
 
 function mod:FelEjectionRemoved(args)
-	self:Message(args.spellId, "Personal", nil, CL.removed:format(args.spellName))
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", nil, CL.removed:format(args.spellName))
+	end
 	self:RemovePlate(args.spellId, args.destName)
 end
 
@@ -539,7 +541,7 @@ do
 		mySign = nil
 		scheduled = nil
 		grandCast = true
-		
+
 		self:Message(args.spellId, "Attention", "Info", CL.count:format(args.spellName, grandCounter))
 		grandCounter = grandCounter + 1
 		self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
