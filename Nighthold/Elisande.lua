@@ -1,7 +1,6 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Fix any errors/missing timers after merge
 -- - Localization:
 --   - Sadly we need to rely on yells if we don't want to schedule more timers
 --   - I've coded a fallback mechanism (search for l11n), to automatically get
@@ -584,7 +583,7 @@ function mod:LeavetheNightwell(args)
 	self:Bar("recursive_elemental", self:Mythic() and timers[211614][phase][slowElementalCount] or timers[211614][slowElementalCount], L.recursive_elemental, L.recursive_elemental_icon)
 	self:Bar("expedient_elemental", self:Mythic() and timers[211616][phase][fastElementalCount] or timers[211616][fastElementalCount], L.expedient_elemental, L.expedient_elemental_icon)
 	if not (self:Easy() and phase > 1) then
-		self:Bar(208807, timers[208807][ringCount], CL.count:format(self:SpellName(208807), ringCount)) -- Arcanetic Ring
+		self:Bar(208807, timers[208807][ringCount] + (phase > 1 and 2 or 0), CL.count:format(self:SpellName(208807), ringCount)) -- Arcanetic Ring
 	end
 	if phase == 1 or self:Normal() then
 		self:Bar(209170, timers[209170][singularityCount], CL.count:format(self:SpellName(209170), singularityCount)) -- Spanning Singularity
