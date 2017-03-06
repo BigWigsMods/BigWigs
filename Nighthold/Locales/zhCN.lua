@@ -81,6 +81,7 @@ if L then
 	L.ring_yell = "让时间的浪潮碾碎你们！"
 	L.orb_yell = "你们会发现，时间极不稳定。"
 
+	--L.slowTimeZone = "Slow Time Zone"
 	L.fastTimeZone = "时间加速区域"
 
 	L.boss_active = "艾利桑德激活"
@@ -125,6 +126,7 @@ if L then
 	L.weaver = "暮色卫队织法者"
 	L.archmage = "夏多雷大法师"
 	L.manasaber = "驯养的魔刃豹"
+	--L.naturalist = "Shal'dorei Naturalist"
 
 	--[[ Aluriel to Krosos ]]--
 	L.infernal = "灼热的地狱火"

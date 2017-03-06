@@ -75,6 +75,7 @@ if L then
 	L.ring_yell = "Die Wellen der Zeit spülen Euch fort!"
 	L.orb_yell = "Ihr seht, die Zeit kann recht flüchtig sein."
 
+	--L.slowTimeZone = "Slow Time Zone"
 	L.fastTimeZone = "Zone Schnelle Zeit"
 
 	--L.boss_active = "Elisande Active"
@@ -119,6 +120,7 @@ if L then
 	L.weaver = "Weber der Dämmerwache"
 	L.archmage = "Erzmagierin der Shal'dorei"
 	L.manasaber = "Zahmer Manasäbler"
+	L.naturalist = "Naturalist der Shal'dorei"
 
 	--[[ Aluriel to Krosos ]]--
 	L.infernal = "Sengende Höllenbestie"
