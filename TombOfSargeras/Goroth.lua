@@ -2,6 +2,7 @@ if not IsTestBuild() then return end -- XXX dont load on live
 
 --------------------------------------------------------------------------------
 -- TODO List:
+-- - Double check LFR timers on live
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -22,9 +23,11 @@ local rainCounter = 1
 
 local shatteringCounter = 1
 local shatteringTimers = {24.0, 60.0, 60.0, 50.0}
+local shatteringTimersMythic = {24.0, 60.0, 60.0, 46.1}
 
 local cometSpikeCounter = 1
-local cometSpikeTimers = {4, 6, 12, 12, 12, 6, 12, 6, 12, 12, 12, 6, 12, 6, 12, 12, 12, 6, 10} -- Alternates every 7.5s after this
+local cometSpikeTimersLFR = {4, 10, 6, 14, 8, 8, 14, 10, 6, 14, 8, 8, 14, 10, 6, 14, 8, 8, 14} -- 8, 8, 8, 10, 8, 8, 10 Repeating
+local cometSpikeTimers = {4, 6, 12, 12, 12, 6, 12, 6, 12, 12, 12, 6, 12, 6, 12, 12, 12, 6, 10} -- 7.5 Repeating
 local cometWarned = {}
 
 --------------------------------------------------------------------------------
@@ -77,7 +80,7 @@ function mod:OnEngage()
 	cometSpikeCounter = 1
 	wipe(cometWarned)
 
-	self:Bar("cometSpike", cometSpikeTimers[cometSpikeCounter], L.cometSpike_bar)
+	self:Bar("cometSpike", self:LFR() and cometSpikeTimersLFR[cometSpikeCounter] or cometSpikeTimers[cometSpikeCounter], L.cometSpike_bar, L.cometSpike_icon)
 	self:Bar(231363, 11) -- Burning Armor
 	self:Bar(233279, shatteringTimers[shatteringCounter]) -- Shattering Star
 	self:Bar(233062, 54) -- Infernal Burning
@@ -92,12 +95,27 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 233050 then --Infernal Spike
 		cometSpikeCounter = cometSpikeCounter + 1
-		self:Message("cometSpike", "Important", "Alert", CL.casting:format(args.spellName))
-		self:Bar("cometSpike", cometSpikeTimers[cometSpikeCounter] or 7.5, L.cometSpike_bar, L.cometSpike_icon)
+		self:Message("cometSpike", "Important", "Alert", CL.casting:format(args.spellName), L.cometSpike_icon)
+		local timer = nil
+		if self:LFR() then
+			timer = cometSpikeTimersLFR[cometSpikeCounter] or (cometSpikeCounter % 7 == 2 and 10 or cometSpikeCounter % 7 == 5 and 10 or 8)
+		else
+			timer = cometSpikeTimers[cometSpikeCounter] or 7.5
+		end
+		if timer then
+			self:Bar("cometSpike", timer or 7.5, L.cometSpike_bar, L.cometSpike_icon)
+		end
 	elseif spellId == 232249 then -- Crashing Comet
 		cometSpikeCounter = cometSpikeCounter + 1
-		--self:Message("cometSpike", "Urgent", "Warning", CL.casting:format(args.spellName)) -- XXX Needed with Aura Scan warnings?
-		self:Bar("cometSpike", cometSpikeTimers[cometSpikeCounter] or 7.5, L.cometSpike_bar, L.cometSpike_icon)
+		local timer = nil
+		if self:LFR() then
+			timer = cometSpikeTimersLFR[cometSpikeCounter] or (cometSpikeCounter % 7 == 2 and 10 or cometSpikeCounter % 7 == 5 and 10 or 8)
+		else
+			timer = cometSpikeTimers[cometSpikeCounter] or 7.5
+		end
+		if timer then
+			self:Bar("cometSpike", timer, L.cometSpike_bar, L.cometSpike_icon)
+		end
 	elseif spellId == 233285 then -- Raun of Brimstone
 		rainCounter = rainCounter + 1
 		self:Message(238588, "Urgent", "Warning", CL.incoming:format(spellName))
@@ -139,8 +157,8 @@ end
 function mod:ShatteringStarDebuff(args)
 	shatteringCounter = shatteringCounter + 1
 	self:TargetMessage(233279, args.destName, "Attention", "Alarm")
-	self:Bar(233279, 6, CL.cast:format(args.spellName))
-	self:Bar(233279, shatteringTimers[shatteringCounter] or shatteringCounter % 2 == 1 and 20 or 40) -- Shattering Star
+	self:Bar(233279, 6, CL.cast:format(args.spellName)) -- <cast: Shattering Star>
+	self:Bar(233279, (self:Mythic() and shatteringTimersMythic[shatteringCounter] or shatteringTimers[shatteringCounter]) or (self:Mythic() and 30 or (shatteringCounter % 2 == 1 and 20 or 40))) -- Shattering Star
 	if self:Me(args.destGUID) then
 		self:Say(233279)
 		self:Flash(233279)
