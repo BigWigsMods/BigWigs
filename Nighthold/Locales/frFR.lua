@@ -75,6 +75,7 @@ if L then
 	L.ring_yell = "Que le torrent du temps vous emporte !"
 	L.orb_yell = "Le temps est parfois… explosif."
 
+	--L.slowTimeZone = "Slow Time Zone"
 	L.fastTimeZone = "Zone de temps accéléré"
 
 	--L.boss_active = "Elisande Active"
@@ -119,6 +120,7 @@ if L then
 	L.weaver = "Tisserand de la Garde crépusculaire"
 	L.archmage = "Archimage shal’dorei"
 	L.manasaber = "Sabre-de-mana domestiqué"
+	L.naturalist = "Naturaliste shal’dorei"
 
 	--[[ Aluriel to Krosos ]]--
 	L.infernal = "Infernal incendiaire"

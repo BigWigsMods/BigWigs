@@ -75,6 +75,7 @@ if L then
 	L.ring_msg = "時間的浪潮會粉碎你！"
 	L.orb_msg = "你會發現時光有時很不穩定。"
 
+	--L.slowTimeZone = "Slow Time Zone"
 	L.fastTimeZone = "加速區域"
 
 	L.boss_active = "艾莉珊德備戰"
@@ -119,6 +120,7 @@ if L then
 	L.weaver = "暮衛編織者"
 	L.archmage = "夏多雷大法師"
 	L.manasaber = "被馴養的法力刃豹"
+	--L.naturalist = "Shal'dorei Naturalist"
 
 	--[[ Aluriel to Krosos ]]--
 	L.infernal = "灼熱的煉獄火"
