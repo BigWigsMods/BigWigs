@@ -294,7 +294,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(205649, timers[205649][ejectionCount], CL.count:format(self:SpellName(205649), ejectionCount))
 		self:CDBar(214167, 28) -- Gravitational Pull
 		if not self:Easy() then
-			self:CDBar(206517, self:Mythic() and 52 or 62, CL.count:format(self:SpellName(206517), novaCount)) -- Fel Nova
+			self:CDBar(206517, self:Mythic() and 52 or 58.6, CL.count:format(self:SpellName(206517), novaCount)) -- Fel Nova
 		end
 		if self:Mythic() then
 			self:StopBar(CL.count:format(self:SpellName(205408), grandCounter)) -- Grand Conjunction
