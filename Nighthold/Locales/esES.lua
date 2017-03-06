@@ -75,6 +75,7 @@ if L then
 	--L.ring_yell = "Let the waves of time crash over you!"
 	--L.orb_yell = "You'll find time can be quite volatile."
 
+	--L.slowTimeZone = "Slow Time Zone"
 	--L.fastTimeZone = "Fast Time Zone"
 
 	--L.boss_active = "Elisande Active"
@@ -119,6 +120,7 @@ if L then
 	--L.weaver = "Duskwatch Weaver"
 	--L.archmage = "Shal'dorei Archmage"
 	--L.manasaber = "Domesticated Manasaber"
+	L.naturalist = "Naturalista shal'dorei"
 
 	--[[ Aluriel to Krosos ]]--
 	--L.infernal = "Searing Infernal"

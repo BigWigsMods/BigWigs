@@ -31,6 +31,7 @@ local timers = {
 
 }
 
+local grandCast = nil
 local grandCounter = 1
 local grandTimers = {
 	{15, 13.4, 14}, -- P1
@@ -217,6 +218,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StarSigns", 205429, 205445, 216345, 216344) -- Star Sign: Crab, Wolf, Hunter, Dragon
 	self:Log("SPELL_AURA_REMOVED", "StarSignsRemoved", 205429, 205445, 216345, 216344)
 
+	-- XXX remove in 7.2
 	if self:Mythic() then
 		if self:GetOption("custom_off_icy_ejection_nameplates") or -- XXX maybe add these to ShowFriendlyNameplates?
 				self:GetOption("custom_on_fel_ejection_nameplates") or
@@ -224,7 +226,7 @@ function mod:OnBossEnable()
 				self:GetOption("custom_on_grand_conjunction_nameplates") then
 
 			-- Experimenting with using callbacks for nameplate addons
-			self:ShowFriendlyNameplates()
+			self:SendMessage("BigWigs_EnableFriendlyNameplates", self)
 			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED") -- see comment above the function for explanation
 		end
 	end
@@ -237,6 +239,7 @@ function mod:OnEngage()
 	novaCount = 1
 	worldDevouringForceCounter = 1
 	voidCount = 1
+	grandCast = nil
 	wipe(mobCollector)
 	wipe(gravPullSayTimers)
 	self:Bar(206464, 12.5) -- Coronal Ejection
@@ -258,7 +261,7 @@ end
 
 function mod:OnBossDisable()
 	wipe(mobCollector)
-	self:HideFriendlyNameplates()
+	self:SendMessage("BigWigs_DisableFriendlyNameplates", self) -- XXX remove in 7.2
 end
 
 --------------------------------------------------------------------------------
@@ -284,14 +287,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 222133 then -- Phase 3 Conversation
 		phase = 3
 		self:Message("stages", "Neutral", "Long", "60% - ".. CL.stage:format(3), false)
-		self:StopBar(CL.count:format(self:SpellName(206936, ejectionCount))) -- Icy Ejection
+		self:StopBar(CL.count:format(self:SpellName(206936), ejectionCount)) -- Icy Ejection
 		self:StopBar(CL.count:format(self:SpellName(206949), novaCount)) -- Frigid Nova
 		ejectionCount = 1
 		novaCount = 1
 		self:CDBar(205649, timers[205649][ejectionCount], CL.count:format(self:SpellName(205649), ejectionCount))
 		self:CDBar(214167, 28) -- Gravitational Pull
 		if not self:Easy() then
-			self:CDBar(206517, self:Mythic() and 52 or 62, CL.count:format(self:SpellName(206517), novaCount)) -- Fel Nova
+			self:CDBar(206517, self:Mythic() and 52 or 58.6, CL.count:format(self:SpellName(206517), novaCount)) -- Fel Nova
 		end
 		if self:Mythic() then
 			self:StopBar(CL.count:format(self:SpellName(205408), grandCounter)) -- Grand Conjunction
@@ -322,6 +325,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 function mod:NetherTraversal(args)
+	if grandCast == true then
+		grandCast = nil
+		self:StopBar(CL.cast:format(205408))
+		self:CloseProximity(205408)
+	end
 	self:Bar(args.spellId, 8.5, CL.cast:format(args.spellName))
 end
 
@@ -456,7 +464,7 @@ end
 
 function mod:FelEjectionApplied(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
 		self:Say(args.spellId)
 		self:TargetBar(args.spellId, 8, args.destName)
 	end
@@ -467,6 +475,9 @@ function mod:FelEjectionApplied(args)
 end
 
 function mod:FelEjectionRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", nil, CL.removed:format(args.spellName))
+	end
 	self:RemovePlate(args.spellId, args.destName)
 end
 
@@ -529,6 +540,7 @@ do
 		tryCount = 0
 		mySign = nil
 		scheduled = nil
+		grandCast = true
 
 		self:Message(args.spellId, "Attention", "Info", CL.count:format(args.spellName, grandCounter))
 		grandCounter = grandCounter + 1
@@ -549,6 +561,7 @@ do
 	end
 
 	function mod:GrandConjunctionSuccess(args)
+		grandCast = nil
 		self:CloseProximity(args.spellId)
 	end
 
@@ -679,6 +692,7 @@ do
 		end
 	end
 
+	-- XXX remove in 7.2
 	-- If a player dies while he has a Star Sign, it will not get removed. This
 	-- is intented behaviour, so players with matching signs can still clear theirs
 	-- with the corpse.

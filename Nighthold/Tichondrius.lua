@@ -82,15 +82,16 @@ function mod:GetOptions()
 		{206466, "INFOBOX"}, -- Essence of Night
 
 		--[[ Felsworm Spellguard ]]--
+		{216024, "SAY", "ME_ONLY"}, -- Volatile Wound
 		216027, -- Nether Zone
 
 		--[[ Sightless Watcher ]]--
-		{216024, "SAY", "ME_ONLY"}, -- Volatile Wound
+		{216040, "SAY", "PROXIMITY"}, -- Burning Soul
 	}, {
 		[206480] = -13552, -- Stage One
 		[206365] = -13553, -- Stage Two
-		[216027] = -13515, -- Felsworm Spellguard
-		[216024] = -13525, -- Sightless Watcher
+		[216024] = -13515, -- Felsworm Spellguard
+		[216040] = -13525, -- Sightless Watcher
 	}
 end
 
@@ -112,14 +113,16 @@ function mod:OnBossEnable()
 	self:Death("AddDeath", 104326)
 
 	--[[ Felsworm Spellguard ]]--
+	self:Log("SPELL_AURA_APPLIED", "VolatileWound", 216024)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "VolatileWound", 216024)
+	self:Log("SPELL_AURA_REMOVED", "VolatileWoundRemoved", 216024)
 	self:Log("SPELL_AURA_APPLIED", "NetherZoneDamage", 216027)
 	self:Log("SPELL_PERIODIC_DAMAGE", "NetherZoneDamage", 216027)
 	self:Log("SPELL_PERIODIC_MISSED", "NetherZoneDamage", 216027)
 
 	--[[ Sightless Watcher ]]--
-	self:Log("SPELL_AURA_APPLIED", "VolatileWound", 216024)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "VolatileWound", 216024)
-	self:Log("SPELL_AURA_REMOVED", "VolatileWoundRemoved", 216024)
+	self:Log("SPELL_AURA_APPLIED", "BurningSoul", 216040)
+	self:Log("SPELL_AURA_REMOVED", "BurningSoulRemoved", 216040)
 end
 
 function mod:OnEngage()
@@ -288,18 +291,6 @@ end
 
 --[[ Felsworm Spellguard ]]--
 do
-	local prev = 0
-	function mod:NetherZoneDamage(args)
-		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 1.5 then
-			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
-		end
-	end
-end
-
---[[ Sightless Watcher ]]--
-do
 	local sayTimers = {}
 	local function cancelSay(self)
 		if sayTimers[1] then
@@ -340,3 +331,33 @@ do
 		end
 	end
 end
+
+do
+	local prev = 0
+	function mod:NetherZoneDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
+	end
+end
+
+--[[ Sightless Watcher ]]--
+do
+	local list = mod:NewTargetList()
+	function mod:BurningSoul(args)
+		self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+			self:OpenProximity(args.spellId, 8)
+		end
+	end
+
+	function mod:BurningSoulRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CloseProximity(args.spellId)
+		end
+	end
+end
+

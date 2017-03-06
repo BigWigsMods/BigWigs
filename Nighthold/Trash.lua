@@ -29,6 +29,7 @@ mod:RegisterEnableMob(
 	112973, -- Duskwatch Weaver
 	112595, -- Shal'dorei Archmage
 	111295, -- Domesticated Manasaber
+	112678, -- Shal'dorei Naturalist
 
 	--[[ Aluriel to Krosos ]]--
 	111210, -- Searing Infernal
@@ -71,6 +72,7 @@ if L then
 	L.weaver = "Duskwatch Weaver"
 	L.archmage = "Shal'dorei Archmage"
 	L.manasaber = "Domesticated Manasaber"
+	L.naturalist = "Shal'dorei Naturalist"
 
 	--[[ Aluriel to Krosos ]]--
 	L.infernal = "Searing Infernal"
@@ -115,7 +117,8 @@ function mod:GetOptions()
 		{225845, "FLASH"}, -- Chosen Fate (Duskwatch Weaver)
 		{225105, "FLASH", "SAY", "PROXIMITY"}, -- Arcanic Release (Shal'dorei Archmage)
 		225800, -- Greater Time Warp (Shal'dorei Archmage)
-		{225857, "TANK"}, -- Arcane Wound
+		{225857, "TANK"}, -- Arcane Wound (Domesticated Manasaber)
+		225856, -- Poison Brambles (Shal'dorei Naturalist)
 
 		--[[ Aluriel to Krosos ]]--
 		{221344, "SAY", "FLASH"}, -- Annihilating Orb (Searing Infernal)
@@ -136,6 +139,7 @@ function mod:GetOptions()
 		[225845] = L.weaver,
 		[225105] = L.archmage,
 		[225857] = L.manasaber,
+		[225856] = L.naturalist,
 		[221344] = L.infernal,
 		[224982] = L.watcher,
 	}
@@ -145,13 +149,10 @@ function mod:OnBossEnable()
 	--[[ General ]]--
 	self:RegisterMessage("BigWigs_OnBossEngage", "Disable")
 
-	-- Rumbling Ground, Disrupting Energy
-	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 230488, 224572)
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 230488, 224572)
-	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 230488, 224572)
-	-- NPCName, ...
-	--self:Log("SPELL_DAMAGE", "GroundEffectDamage", ) -- SpellName, ...
-	--self:Log("SPELL_MISSED", "GroundEffectDamage", )
+	-- Rumbling Ground, Disrupting Energy, Poison Brambles
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 230488, 224572, 225856)
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 230488, 224572, 225856)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 230488, 224572, 225856)
 
 	--[[ Skorpyron to Chronomatic Anomaly ]]--
 	self:Log("SPELL_CAST_START", "DevastatingStrike", 230438)

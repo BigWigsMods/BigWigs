@@ -1,6 +1,3 @@
--- TODO LIST
--- - Timers need to be checked
--- - Tuning sounds / message colors
 
 --------------------------------------------------------------------------------
 -- Module Declaration

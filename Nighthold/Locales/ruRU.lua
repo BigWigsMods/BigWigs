@@ -75,6 +75,7 @@ if L then
 	--L.ring_yell = "Let the waves of time crash over you!"
 	--L.orb_yell = "You'll find time can be quite volatile."
 
+	--L.slowTimeZone = "Slow Time Zone"
 	L.fastTimeZone = "Зона ускорения времени"
 
 	--L.boss_active = "Elisande Active"
@@ -119,6 +120,7 @@ if L then
 	L.weaver = "Заклинатель из Сумеречной стражи"
 	L.archmage = "Шал'дорай - верховный маг"
 	L.manasaber = "Прирученный манопард"
+	L.naturalist = "Шал'дорай-натуралист"
 
 	--[[ Aluriel to Krosos ]]--
 	L.infernal = "Опаляющий инфернал"

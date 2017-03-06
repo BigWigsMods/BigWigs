@@ -93,7 +93,7 @@ do
 		if timeLeft == 0 then
 			self:CancelTimer(timer)
 			timer = nil
-			self:SendMessage("BigWigs_Message", self, nil, L.pulling, "Attention", "Interface\\Icons\\ability_warrior_charge")
+			self:SendMessage("BigWigs_Message", self, nil, L.pulling, "Attention", 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
 			self:SendMessage("BigWigs_Sound", self, nil, "Alarm")
 		elseif timeLeft > 2 and IsEncounterInProgress() then -- Cancel the pull timer if we ninja pulled
 			self:CancelTimer(timer)
@@ -164,7 +164,7 @@ do
 
 			self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")
 			self:SendMessage("BigWigs_Sound", self, nil, "Long")
-			self:SendMessage("BigWigs_StartBar", self, nil, L.pull, seconds, "Interface\\Icons\\ability_warrior_charge")
+			self:SendMessage("BigWigs_StartBar", self, nil, L.pull, seconds, 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
 			self:SendMessage("BigWigs_StartPull", self, seconds, nick, isDBM)
 		end
 	end

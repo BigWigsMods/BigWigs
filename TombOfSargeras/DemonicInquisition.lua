@@ -2,9 +2,7 @@ if not IsTestBuild() then return end -- XXX dont load on live
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Confirm all timers
--- - Find priority after the big channel for spells and set timers when their big channel starts.
--- - (Cooldowns seem to continue, so cast in a certain order if off CD)
+-- - Add more timers, if they are more reliable in the future
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -12,13 +10,15 @@ if not IsTestBuild() then return end -- XXX dont load on live
 
 local mod, CL = BigWigs:NewBoss("Demonic Inquisition", 1147, 1867)
 if not mod then return end
-mod:RegisterEnableMob(120996, 116691) -- XXX Guestimate
+mod:RegisterEnableMob(116689, 116691)
 mod.engageId = 2048
---mod.respawnTime = 30
+mod.respawnTime = 15
 
 --------------------------------------------------------------------------------
 -- Locals
 --
+
+local pangsofGuiltCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -33,10 +33,11 @@ local L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		236283, -- Belac's Prisoner
+		"altpower",
 		233426, -- Scythe Sweep
-		233431, -- Calcified Quills
+		{233431, "SAY"}, -- Calcified Quills
 		233441, -- Bone Saw
-		239401, -- Shadow Bolt Volley
+		239401, -- Pangs of Guilt
 		{233983, "FLASH", "SAY", "PROXIMITY"}, -- Echoing Anguish
 		233895, -- Suffocating Dark
 		234015, -- Tormenting Burst
@@ -50,41 +51,45 @@ end
 
 function mod:OnBossEnable()
 	-- General
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
 	self:Log("SPELL_AURA_APPLIED", "BelacsPrisoner", 236283)
-	
+
 	-- Atrigan
 	self:Log("SPELL_CAST_START", "ScytheSweep", 233426)
 	self:Log("SPELL_CAST_SUCCESS", "CalcifiedQuills", 233431)
 	self:Log("SPELL_CAST_START", "BoneSaw", 233441)
-	
+
 	-- Belac
-	self:Log("SPELL_CAST_START", "ShadowBoltVolley", 239401)
+	self:Log("SPELL_CAST_START", "PangsofGuilt", 239401)
 	self:Log("SPELL_CAST_START", "EchoingAnguish", 233983)
-	self:Log("SPELL_AURA_APPLIED", "EchoingAnguish", 233983)
-	self:Log("SPELL_AURA_REMOVED", "EchoingAnguish", 233983)
-	self:Log("SPELL_AURA_APPLIED", "SuffocatingDark", 233895)
+	self:Log("SPELL_AURA_APPLIED", "EchoingAnguishApplied", 233983)
+	self:Log("SPELL_AURA_REMOVED", "EchoingAnguishRemoved", 233983)
 	self:Log("SPELL_CAST_START", "TormentingBurst", 234015)
 	self:Log("SPELL_CAST_SUCCESS", "FelSquall", 235230)
 end
 
 function mod:OnEngage()
+	pangsofGuiltCounter = 1
+	self:OpenAltPower("altpower", 233104, nil, true) -- Torment, Sync for those far away
 
 	-- Atrigan
 	self:Bar(233426, 6) -- Scythe Sweep
 	self:Bar(233431, 11) -- Calcified Quills
 	self:Bar(233441, 61.5) -- Bone Saw
-	
+
 	-- Belac
-	--self:Bar(234015, 13.2) -- Tormenting Burst XXX Discrepency between pulls too high
-	--self:Bar(233983, 15.7) -- Echoing Anguish XXX Discrepency between pulls too high
-	--self:Bar(233895, 20) -- Suffocating Dark XXX Discrepency between pulls too high
 	self:Bar(235230, 31.5) -- Fel Squall
-	
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 233895 then -- Suffocating Dark
+		self:Message(spellId, "Attention", "Info")
+	end
+end
 
 function mod:BelacsPrisoner(args)
 	if self:Me(args.destGUID)then
@@ -93,79 +98,71 @@ function mod:BelacsPrisoner(args)
 end
 
 function mod:ScytheSweep(args)
-	self:Message(args.spellId, "Attention", "Info", args.spellName)
-	self:Bar(args.spellId, 23)
+	self:Message(args.spellId, "Attention", "Info")
+	self:CDBar(args.spellId, 23)
 end
 
-function mod:CalcifiedQuills(args)
-	self:Message(args.spellId, "Urgent", "Alert", args.spellName)
-	self:Bar(args.spellId, 21.5)
-end
-
-function mod:BoneSaw(args)
-	self:Message(args.spellId, "Important", "Warning", args.spellName)
-	self:Bar(args.spellId, 15, CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 63)
-end
-
-function mod:ShadowBoltVolley(args) -- Interuptable
-	if self:Interrupter(args.sourceGUID) then
-		self:Message(args.spellId, "Important", "Alert")
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage(233431, name, "Urgent", "Alert", nil, nil, true)
+		if self:Me(guid) then
+			self:Say(233431)
+		end
+	end
+	function mod:CalcifiedQuills(args)
+		self:GetBossTarget(printTarget, 0.7, args.sourceGUID)
+		self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+		self:Bar(args.spellId, 21.5)
 	end
 end
 
+function mod:BoneSaw(args)
+	self:Message(args.spellId, "Important", "Warning")
+	self:Bar(args.spellId, 15, CL.cast:format(args.spellName))
+	self:Bar(args.spellId, 60.5)
+end
+
+function mod:PangsofGuilt(args) -- Interuptable
+	pangsofGuiltCounter = pangsofGuiltCounter + 1
+	if pangsofGuiltCounter == 4 then -- 1, 2, 3 counter
+		pangsofGuiltCounter = 1
+	end
+	self:Message(args.spellId, "Important", "Alert", CL.casting:format(CL.count:format(args.spellName, pangsofGuiltCounter)))
+end
+
 function mod:EchoingAnguish(args)
-	self:Message(args.spellId, "Important", "Alert", args.spellName)
+	self:Message(args.spellId, "Important", "Alert")
 	self:OpenProximity(args.spellId, 8) -- Open proximity a bit before
 end
 
-do 
-	local playerList, proxList = mod:NewTargetList(), {}
+do
+	local proxList = {}
 
 	function mod:EchoingAnguishApplied(args)
 		proxList[#proxList+1] = args.destName
-		
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 		end
-		
 		self:OpenProximity(args.spellId, 8, proxList) -- Don't stand near others if they have the debuff
-
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			--self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Alert") -- XXX Too many targets get the debuff atm
-			--self:Bar(args.spellId, 10) -- XXX Too much variance
-		end
 	end
 
 	function mod:EchoingAnguishRemoved(args)
 		tDeleteItem(proxList, args.destName)
 		if #proxList == 0 then -- If there are no debuffs left, close proximity
 			self:CloseProximity(args.spellId)
-		end
-	end
-end
-
-do
-	local list = mod:NewTargetList()
-	function mod:SuffocatingDark(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:Message(args.spellId, "Important", "Alert", args.spellName)
-			--self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alert") -- XXX Too many targets get the debuff atm
-			--self:Bar(args.spellId, 10) -- XXX Too much variance
+		else
+			self:OpenProximity(args.spellId, 8, proxList) -- Refresh list
 		end
 	end
 end
 
 function mod:TormentingBurst(args)
-	self:Message(args.spellId, "Attention", "Info", args.spellName)
-	self:Bar(args.spellId, 18) -- XXX Estimate, still some variance.
+	self:Message(args.spellId, "Attention", "Info")
 end
 
 function mod:FelSquall(args)
-	self:Message(args.spellId, "Important", "Warning", args.spellName)
-	self:Bar(args.spellId, 15, CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Important", "Warning")
+	self:Bar(args.spellId, 15, CL.cast:format(args.spellName))
 	self:Bar(args.spellId, 60.5)
 end

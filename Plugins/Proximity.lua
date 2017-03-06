@@ -854,7 +854,7 @@ end
 --
 
 function plugin:OnRegister()
-	BigWigs:RegisterBossOption("proximity", L.proximity, L.proximity_desc, OnOptionToggled, "Interface\\Icons\\ability_hunter_pathfinding")
+	BigWigs:RegisterBossOption("proximity", L.proximity, L.proximity_desc, OnOptionToggled, 132181) -- 132181 = "Interface\\Icons\\ability_hunter_pathfinding"
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
 end
@@ -930,7 +930,7 @@ do
 		proxTitle = header
 
 		local abilityName = proxAnchor:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-		abilityName:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName)
+		abilityName:SetFormattedText("|T136015:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName) -- Interface\\Icons\\spell_nature_chainlightning
 		abilityName:SetPoint("BOTTOM", header, "TOP", 0, 4)
 		proxAnchor.ability = abilityName
 
@@ -1333,7 +1333,7 @@ function plugin:Close(noReopen)
 	wipe(proximityPlayerTable)
 
 	proxTitle:SetFormattedText(L_proximityTitle, 5, 3)
-	proxAnchor.ability:SetFormattedText("|TInterface\\Icons\\spell_nature_chainlightning:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName)
+	proxAnchor.ability:SetFormattedText("|T136015:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName) -- Interface\\Icons\\spell_nature_chainlightning
 	-- Just in case we were the last target of configure mode, reset the background color.
 	proxAnchor.background:SetColorTexture(0, 0, 0, 0.3)
 	proxPulseIn:Stop()
