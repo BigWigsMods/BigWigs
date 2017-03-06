@@ -330,9 +330,11 @@ function mod:MarkOfFrostRemoved(args)
 
 	-- Mark of Frost is removed immediately, Frostbitten waits until the debuff expires, use the former for a clearer infobox.
 	frostbittenStacks[args.destName] = nil
-	if not next(frostbittenStacks) and isInfoOpen then
-		self:CloseInfo(212647) -- Frostbitten
+	if next(frostbittenStacks) then
+		self:SetInfoByTable(212647, frostbittenStacks)
+	elseif isInfoOpen then
 		isInfoOpen = false
+		self:CloseInfo(212647)
 	end
 end
 
