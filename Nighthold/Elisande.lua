@@ -25,7 +25,7 @@ mod.respawnTime = 30
 
 local phase = 0
 local isPhaseTransition = nil
-local fastElementalCollector = {}
+local elementalCollector = {}
 
 local lfrTimers = {
 	-- Timers are after Leave the Nightwell success (208863)
@@ -174,6 +174,7 @@ local mythicTimers = {
 local timers = mod:Mythic() and mythicTimers or mod:Heroic() and heroicTimers or mod:Normal() and normalTimers or lfrTimers
 
 local slowElementalCount = 1
+local slowZoneCount = 1
 local fastElementalCount = 1
 local fastZoneCount = 1
 local ringCount = 1
@@ -205,6 +206,7 @@ if L then
 
 	L.recursive_elemental = -13226
 	L.recursive_elemental_icon = 209165 -- Slow Time
+	L.slowTimeZone = "Slow Time Zone"
 
 	L.expedient_elemental = -13229
 	L.expedient_elemental_icon = 209166 -- Fast Time
@@ -322,6 +324,7 @@ function mod:OnEngage()
 	isPhaseTransition = nil
 
 	slowElementalCount = 1
+	slowZoneCount = 1
 	fastElementalCount = 1
 	fastZoneCount = 1
 	ringCount = 1
@@ -407,29 +410,34 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		return
 	end
 
-	local fastAddsFound = {}
+	local addsFound = {}
 
 	for i = 1, 5 do
 		local guid = UnitGUID(("boss%d"):format(i))
 		if guid then
 			local mobId = self:MobId(guid)
-			if mobId == 105301 then -- Fast Elemental
-				if not fastElementalCollector[guid] then
-					fastElementalCollector[guid] = true
+			if mobId == 105301 or mobId == 105299 then -- Fast Elemental, Slow Elemental
+				if not elementalCollector[guid] then
+					elementalCollector[guid] = true
 				end
-				fastAddsFound[guid] = true
+				addsFound[guid] = true
 			end
 		end
 	end
 
-	for guid,_ in pairs(fastElementalCollector) do
-		if not fastAddsFound[guid] then -- add died
-			fastElementalCollector[guid] = nil
-			self:Bar(209166, 30, CL.count:format(L.fastTimeZone, fastZoneCount))
-			fastZoneCount = fastZoneCount + 1
+	for guid,_ in pairs(elementalCollector) do
+		if not addsFound[guid] then -- add died
+			elementalCollector[guid] = nil
+			local mobId = self:MobId(guid)
+			if mobId == 105301 then -- Fast Elemental
+				self:Bar(209166, 30, CL.count:format(L.fastTimeZone, fastZoneCount))
+				fastZoneCount = fastZoneCount + 1
+			elseif mobId == 105299 then -- Slow Elemental
+				self:Bar(209165, 60, CL.count:format(L.slowTimeZone, slowZoneCount))
+				slowZoneCount = slowZoneCount + 1
+			end
 		end
 	end
-
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
@@ -509,12 +517,14 @@ function mod:TimeStop(args)
 	self:StopBar(L.recursive_elemental)
 	self:StopBar(L.expedient_elemental)
 	self:StopBar(CL.count:format(L.fastTimeZone, fastZoneCount-1))
+	self:StopBar(CL.count:format(L.slowTimeZone, slowZoneCount-1))
 	self:StopBar(CL.count:format(self:SpellName(208807), ringCount)) -- Arcanetic Ring
 	self:StopBar(CL.count:format(self:SpellName(210022), orbCount)) -- Epocheric Orb
 	self:StopBar(CL.count:format(self:SpellName(209244), beamCount)) -- Delphuric Beam
 	self:StopBar(CL.count:format(self:SpellName(209170), singularityCount)) -- Singularity
 	self:StopBar(CL.count:format(self:SpellName(209973), ablatingCount)) -- Ablating
 	self:StopBar(229889) -- Terminate (Berserk)
+	wipe(elementalCollector) -- This prevents starting wrong time zone bars at the start of the next phase
 	-- New bars will be started in LeavetheNightwell
 end
 
@@ -565,6 +575,7 @@ function mod:LeavetheNightwell(args)
 	end
 
 	slowElementalCount = 1
+	slowZoneCount = 1
 	fastElementalCount = 1
 	fastZoneCount = 1
 	ringCount = 1
