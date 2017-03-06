@@ -117,7 +117,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "MarkOfFrostRemoved", 212587)
 	self:Log("SPELL_AURA_APPLIED", "Frostbitten", 212647)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Frostbitten", 212647)
-	self:Log("SPELL_AURA_REMOVED", "FrostbittenRemoved", 212647)
 	self:Log("SPELL_CAST_START", "ReplicateMarkOfFrost", 212530)
 	self:Log("SPELL_CAST_START", "AnimateMarkOfFrost", 213853)
 	self:Log("SPELL_CAST_START", "FrozenTempest", 213083)
@@ -328,6 +327,13 @@ function mod:MarkOfFrostRemoved(args)
 	end
 
 	updateProximity(self)
+
+	-- Mark of Frost is removed immediately, Frostbitten waits until the debuff expires, use the former for a clearer infobox.
+	frostbittenStacks[args.destName] = nil
+	if not next(frostbittenStacks) and isInfoOpen then
+		self:CloseInfo(212647) -- Frostbitten
+		isInfoOpen = false
+	end
 end
 
 function mod:Frostbitten(args)
@@ -344,14 +350,6 @@ function mod:Frostbitten(args)
 	end
 
 	self:SetInfoByTable(args.spellId, frostbittenStacks)
-end
-
-function mod:FrostbittenRemoved(args)
-	frostbittenStacks[args.destName] = nil
-	if not next(frostbittenStacks) and isInfoOpen then
-		self:CloseInfo(args.spellId)
-		isInfoOpen = false
-	end
 end
 
 function mod:AnimateMarkOfFrost(args)
