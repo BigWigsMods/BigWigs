@@ -39,7 +39,7 @@ local normalTimers = {
 	[206744] = {71.2, 82.8, 100}, -- not sure if complete
 
 	-- Empowered Eye of Gul'dan P3 (211152 _start), after 227427 _applied
-	[211152] = {42.7, 71.4, 71.4, 28.6}, -- not sure if complete
+	[211152] = {42.7, 71.4, 71.4, 28.6, 114.3}, -- not sure if complete
 }
 local heroicTimers = {
 	-- Hand of Gul'dan P2
