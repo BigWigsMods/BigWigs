@@ -30,7 +30,7 @@ local lfrTimers = {
 	-- Timers are after Leave the Nightwell success (208863)
 
 	-- Summon Time Elemental - Slow
-	[211614] = {8, 62, 40},
+	[211614] = {8, 62, 40, 55},
 
 	-- Summon Time Elemental - Fast
 	[211616] = {65},
@@ -47,7 +47,7 @@ local lfrTimers = {
 	[210022] = {40, 37},
 
 	-- Delphuric Beam
-	[209244] = {35}, -- in Phase 3 for LFR
+	[209244] = {35, 77}, -- in Phase 3 for LFR
 
 	-- Ablating Explosion
 	[209973] = {}, -- first 12.1, then between 20.7 and 21.8 (no pattern)
