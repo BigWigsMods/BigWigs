@@ -550,7 +550,7 @@ function mod:EyeOfGuldan(args)
 	end
 	local timer = nil
 	if phase == 2 then
-		timer = self:Easy() and 60 or (self:Mythic() and (eyeCount == 7 and 80 or 48)) or 53.3
+		timer = self:LFR() and 64 or self:Normal() and 60 or (self:Mythic() and (eyeCount == 7 and 80 or 48)) or 53.3
 	else
 		timer = timers[211152][eyeCount]
 	end
