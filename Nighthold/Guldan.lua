@@ -34,6 +34,7 @@ local timeStopCheck = nil
 local liquidHellfireEmpowered = false
 local eyeEmpowered = false
 local bondsEmpowered = false
+local expectedBonds = mod:Mythic() and 4 or 3
 local normalTimers = {
 	-- Black Harvest (206744 _start), after 227427 _applied
 	[206744] = {71.2, 82.8, 100}, -- not sure if complete
@@ -269,6 +270,7 @@ function mod:OnEngage()
 	liquidHellfireEmpowered = false
 	bondsEmpowered = false
 	eyeEmpowered = false
+	expectedBonds = self:Mythic() and 4 or 3
 	timers = self:Mythic() and mythicTimers or self:Heroic() and heroicTimers or normalTimers
 	if self:Mythic() then
 		phase = 2 -- Mythic skips the P1 of heroic
@@ -428,7 +430,7 @@ function mod:LiquidHellfire(args)
 	local spellName = self:SpellName(206219)
 	self:Message(206219, "Urgent", "Alarm", CL.incoming:format(CL.count:format(args.spellName, liquidHellfireCount)))
 	liquidHellfireCount = liquidHellfireCount + 1
-	if self:Mythic() and liquidHellfireCount == 4 then -- Empowered spells are set in Mythic
+	if self:Mythic() and liquidHellfireCount == 3 then -- Empowered spells are set in Mythic
 		liquidHellfireEmpowered = true
 	end
 	if liquidHellfireEmpowered then
@@ -519,15 +521,19 @@ function mod:BondsOfFelCast(args)
 end
 
 do
-	local list = mod:NewTargetList()
+	local list, scheduled = mod:NewTargetList(), nil
 	function mod:BondsOfFel(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 1, 209011, list, "Important", "Warning", CL.count:format(self:SpellName(209011), bondsCount-1), nil, true) -- Have the bonds number in the list warning also
+			scheduled = self:ScheduleTimer("TargetMessage", 1, 209011, list, "Important", "Warning", CL.count:format(self:SpellName(209011), bondsCount-1), nil, true) -- Have the bonds number in the list warning also
 		end
 		if self:Me(args.destGUID) then
 			self:Say(209011, CL.count:format(args.spellName, #list))
 			self:Flash(209011)
+		end
+		if #list == expectedBonds then
+			self:CancelTimer(scheduled)
+			self:TargetMessage(209011, list, "Important", "Warning", CL.count:format(self:SpellName(209011), bondsCount-1), nil, true) -- Have the bonds number in the list warning also
 		end
 	end
 end
