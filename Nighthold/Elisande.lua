@@ -30,7 +30,7 @@ local lfrTimers = {
 	-- Timers are after Leave the Nightwell success (208863)
 
 	-- Summon Time Elemental - Slow
-	[211614] = {8, 62, 40, 55},
+	[211614] = {5, 62, 40, 55},
 
 	-- Summon Time Elemental - Fast
 	[211616] = {65},
@@ -366,18 +366,14 @@ do
 			self:Message("recursive_elemental", "Neutral", "Info", L.recursive_elemental, L.recursive_elemental_icon)
 			slowElementalCount = slowElementalCount + 1
 			local timer = self:Mythic() and timers[spellId][phase][slowElementalCount] or timers[spellId][slowElementalCount]
-			if self:LFR() then -- XXX Unsure if timers are complete
-				self:Bar("recursive_elemental", timer, L.recursive_elemental, L.recursive_elemental_icon)
-			elseif timer then
+			if timer then
 				self:Bar("recursive_elemental", timer, L.recursive_elemental, L.recursive_elemental_icon)
 			end
 		elseif spellId == 211616 then -- Fast
 			self:Message("expedient_elemental", "Neutral", "Info", L.expedient_elemental, L.expedient_elemental_icon)
 			fastElementalCount = fastElementalCount + 1
 			local timer = self:Mythic() and timers[spellId][phase][fastElementalCount] or timers[spellId][fastElementalCount]
-			if self:LFR() then -- XXX Unsure if timers are complete
-				self:Bar("expedient_elemental", timer, L.expedient_elemental, L.expedient_elemental_icon)
-			elseif timer then
+			if timer then
 				self:Bar("expedient_elemental", timer, L.expedient_elemental, L.expedient_elemental_icon)
 			end
 		elseif spellId == 209170 or spellId == 209171 then -- Spanning Singularity heroic / mythic
