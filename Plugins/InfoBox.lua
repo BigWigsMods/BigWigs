@@ -208,9 +208,8 @@ function plugin:BigWigs_SetInfoBoxLine(_, _, line, text, align)
 	if align then
 		display.text[line]:SetJustifyH(align)
 	end
-	if line % 2 == 1 then
-		local row = line
-	else
+	local row = line
+	if line % 2 == 0 then
 		row = line-1
 	end
 	plugin:BigWigs_ResizeInfoBoxRow(row)
@@ -220,14 +219,14 @@ function plugin:BigWigs_ResizeInfoBoxRow(row)
 	local rowWidth = infoboxWidth-5 -- Adjust for margin right
 	-- Get text width [left]
 	display.text[row]:SetSize(rowWidth, infoboxHeight/5)
-	display.text[row+1]:SetSize(0, infoboxHeight/5)		
+	display.text[row+1]:SetSize(0, infoboxHeight/5)
 	local leftTextWidth = display.text[row]:GetStringWidth()
 	-- Get text width [right]
 	display.text[row]:SetSize(0, infoboxHeight/5)
-	display.text[row+1]:SetSize(rowWidth, infoboxHeight/5)		
+	display.text[row+1]:SetSize(rowWidth, infoboxHeight/5)
 	local rightTextWidth = display.text[row+1]:GetStringWidth()
-	
-	-- Size accordingly	
+
+	-- Size accordingly
 	if leftTextWidth + rightTextWidth > rowWidth then -- Too much info: Prune something
 		if leftTextWidth > rowWidth and rightTextWidth > rowWidth then -- 50%/50% - Both too big
 			display.text[row]:SetSize((rowWidth/2), infoboxHeight/5)
