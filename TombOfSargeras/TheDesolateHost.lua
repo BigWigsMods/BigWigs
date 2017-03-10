@@ -107,6 +107,7 @@ function mod:OnEngage()
 	wipe(phasedCheckList)
 	self:RegisterEvent("UNIT_AURA") -- Spirit Realm Tracking
 	for unit in self:IterateGroup() do
+		if not unit:match("raid%d+$") then return end
 		local n = self:UnitName(unit)
 		unphasedList[#unphasedList+1] = n
 		phasedCheckList[n] = true -- Assume everyone is unphased
@@ -158,6 +159,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 function mod:UNIT_AURA(event, unit)
+	if not unit:match("raid%d+$") then return end
 	local name = UnitDebuff(unit, self:SpellName(235621)) -- Spirit Realm
 	local n = self:UnitName(unit)
 	if not phasedCheckList[n] and not name then -- Not in Spirit Realm
