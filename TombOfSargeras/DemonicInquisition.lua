@@ -57,7 +57,7 @@ function mod:OnBossEnable()
 	-- Atrigan
 	self:Log("SPELL_CAST_START", "ScytheSweep", 233426)
 	self:Log("SPELL_CAST_SUCCESS", "CalcifiedQuills", 233431)
-	self:Log("SPELL_CAST_START", "BoneSaw", 233441)
+	self:Log("SPELL_CAST_SUCCESS", "BoneSaw", 233441)
 
 	-- Belac
 	self:Log("SPELL_CAST_START", "PangsofGuilt", 239401)
