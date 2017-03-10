@@ -203,11 +203,8 @@ function plugin:BigWigs_ShowInfoBox(_, module, title)
 	display:Show()
 end
 
-function plugin:BigWigs_SetInfoBoxLine(_, _, line, text, align)
+function plugin:BigWigs_SetInfoBoxLine(_, _, line, text)
 	display.text[line]:SetText(text)
-	if align then
-		display.text[line]:SetJustifyH(align)
-	end
 	local row = line
 	if line % 2 == 0 then
 		row = line-1
