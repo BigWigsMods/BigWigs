@@ -1,7 +1,7 @@
 if not IsTestBuild() then return end -- XXX dont load on live
 --------------------------------------------------------------------------------
 -- TODO List:
--- - More p2 timers
+-- - Re-check phase 1 timers on live
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -20,7 +20,7 @@ mod.respawnTime = 25
 local timers = {
 	[234057] = {7, 40, 35.2, 47.3, 40, 35}, -- Unbound Chaos
 	[239207] = {15, 42.6, 59.5, 60, 42.5, 42.4}, -- Touch of Sargeras
-	[236573] = {28, 42.5, 40, 30.3, 34.1, 36.5, 36.5}, -- Shadowy Blades
+	[236573] = {28, 42.5, 40, 30.3, 49, 36.5, 36.5}, -- Shadowy Blades
 	[239132] = {34.3, 60.8, 60.8, 62.1}, -- Rupture Realities
 }
 
@@ -31,6 +31,8 @@ local unboundChaosCounter = 1
 local shadowyBladesCounter = 1
 local touchofSargerasCounter = 1
 local desolateCounter = 1
+local darkMarkCounter = 1
+local taintedMatrixCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -112,10 +114,12 @@ function mod:OnEngage()
 	touchofSargerasCounter = 1
 	shadowyBladesCounter = 1
 	ruptureRealitiesCounter = 1
+	darkMarkCounter = 1
+	taintedMatrixCounter = 1
 
 	self:Bar(236494, 12) -- Desolate
 	self:Bar(234059, timers[234057][unboundChaosCounter]) -- Unbound Chaos
-	self:Bar(239207, timers[239207][touchofSargerasCounter]) -- Touch of Sargeras
+	self:Bar(239207, timers[239207][touchofSargerasCounter], CL.count:format(self:SpellName(239207), touchofSargerasCounter)) -- Touch of Sargeras
 	self:Bar(236604, timers[236573][shadowyBladesCounter]) -- Shadowy Blades
 	self:Bar(239132, timers[239132][ruptureRealitiesCounter]) -- Rupture Realities (P1)
 end
@@ -135,7 +139,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(236604, timers[spellId][shadowyBladesCounter])
 	elseif spellId == 235597 then -- Annihilation // Stage 2
 		phase = 2
-		self:Message("stages", "Positive", "Long", self:SpellName(-14719)) -- Stage Two: An Avatar Awakened
+		self:Message("stages", "Positive", "Long", self:SpellName(-14719), false) -- Stage Two: An Avatar Awakened
 
 		self:StopBar(233556) -- Corrupted Matrix
 		self:StopBar(CL.cast:format(233556)) -- Corrupted Matrix (cast)
@@ -147,13 +151,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 
 		ruptureRealitiesCounter = 1
 		desolateCounter = 1
+		darkMarkCounter = 1
 
 		self:CDBar(236494, 17.3) -- Desolate
 		self:CDBar(239739, 19.8) -- Dark Mark
 		if self:Heroic() or self:Mythic() then
 			self:CDBar(242017, 23.4) -- Black Winds
 		end
-		self:CDBar(235572, 33.4) -- Rupture Realities (P2)
+		self:CDBar(235572, 33.4, CL.count:format(self:SpellName(235572), ruptureRealitiesCounter)) -- Rupture Realities (P2)
 
 	elseif spellId == 239417 then -- Black Winds
 		self:Message(242017, "Attention", "Alert", spellName)
@@ -171,8 +176,8 @@ end
 
 function mod:TouchofSargeras(args)
 	touchofSargerasCounter = touchofSargerasCounter + 1
-	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
-	self:Bar(args.spellId, timers[args.spellId][touchofSargerasCounter])
+	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName), CL.count:format(args.spellName, (touchofSargerasCounter-1)))
+	self:Bar(args.spellId, timers[args.spellId][touchofSargerasCounter], CL.count:format(args.spellName, touchofSargerasCounter))
 end
 
 function mod:RuptureRealities(args)
@@ -190,7 +195,7 @@ end
 function mod:Desolate(args)
 	desolateCounter = desolateCounter + 1
 	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
-	self:CDBar(args.spellId, phase == 2 and 12 or (desolateCounter % 4 == 3 and 24.3 or 11.5)) -- XXX Need more p2 data
+	self:CDBar(args.spellId, phase == 2 and (desolateCounter == 2 and 19 or desolateCounter == 6 and 19 or 12) or (desolateCounter % 4 == 3 and 24.3 or 11.5))
 end
 
 function mod:DesolateApplied(args)
@@ -220,41 +225,49 @@ end
 function mod:CorruptedMatrix(args)
 	corruptedMatrixCounter = corruptedMatrixCounter + 1
 	self:Message(args.spellId, "Important", "Warning", CL.incoming:format(args.spellName))
-	self:CDBar(args.spellId, corruptedMatrixCounter == 2 and 51 or 60) -- 55-65 after 2nd cast
-	self:Bar(args.spellId, 10, CL.cast:format(args.spellName))
+	self:CDBar(args.spellId, self:Mythic() and 20 or (corruptedMatrixCounter == 2 and 51 or 60))
+	self:Bar(args.spellId, self:Mythic() and 5 or 10, CL.cast:format(args.spellName))
 end
 
 do
 	local list = mod:NewTargetList()
 	function mod:DarkMark(args)
 		list[#list+1] = args.destName
-		if self:Me(args.destGUID) then
+		if self:Me(args.destGUID) then	
 			self:Flash(args.spellId)
 			self:Say(args.spellId, CL.count:format(args.spellName, #list)) -- Announce which mark you have
+			
+			local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+			local remaining = expires-GetTime()		
+			self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
+			self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
+			self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
 		end
 		if #list == 1 then
+			darkMarkCounter = darkMarkCounter + 1
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alarm")
-			self:Bar(args.spellId, 20) -- XXX Need more P2 data
+			self:Bar(args.spellId, darkMarkCounter = 3 and 27 or 23, CL.count:format(args.spellName, darkMarkCounter))
 		end
 	end
 end
 
 function mod:RuptureRealitiesP2(args)
 	ruptureRealitiesCounter = ruptureRealitiesCounter + 1
-	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 30)
+	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(CL.count:format(args.spellName, ruptureRealitiesCounter)))
+	self:Bar(args.spellId, 7.5, CL.cast:format(args.spellName, (ruptureRealitiesCounter-1)))
+	self:Bar(args.spellId, 28, CL.count:format(args.spellName, ruptureRealitiesCounter))
 end
 
 function mod:FelInfusion(args)
 	local amount = args.amount or 1
-	if amount % 3 == 0 then
+	if amount % 2 == 0 then
 		self:Message(args.spellId, "Attention", "Info", CL.count:format(args.spellName, amount), nil, false)
 	end
 end
 
 function mod:TaintedMatrix(args)
+	taintedMatrixCounter = taintedMatrixCounter + 1
 	self:Message(args.spellId, "Important", "Warning", CL.incoming:format(args.spellName))
-	self:Bar(args.spellId, 10, CL.cast:format(args.spellName))
 end
 
 function mod:TaintedEssence(args)
