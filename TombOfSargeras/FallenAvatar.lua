@@ -233,12 +233,12 @@ do
 	local list = mod:NewTargetList()
 	function mod:DarkMark(args)
 		list[#list+1] = args.destName
-		if self:Me(args.destGUID) then	
+		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId, CL.count:format(args.spellName, #list)) -- Announce which mark you have
-			
+
 			local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
-			local remaining = expires-GetTime()		
+			local remaining = expires-GetTime()
 			self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
 			self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
 			self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
@@ -246,7 +246,7 @@ do
 		if #list == 1 then
 			darkMarkCounter = darkMarkCounter + 1
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alarm")
-			self:Bar(args.spellId, darkMarkCounter = 3 and 27 or 23, CL.count:format(args.spellName, darkMarkCounter))
+			self:Bar(args.spellId, darkMarkCounter == 3 and 27 or 23, CL.count:format(args.spellName, darkMarkCounter))
 		end
 	end
 end
