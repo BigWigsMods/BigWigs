@@ -1,7 +1,6 @@
 if not IsTestBuild() then return end -- XXX dont load on live
 --------------------------------------------------------------------------------
 -- TODO List:
--- - Proximity: See if it works Xphase
 -- - Shattering Scream: Find target before debuffs, without spamming? (current method allows for kicks before warnings)
 -- - Add wave timers (no spell info)
 
@@ -74,6 +73,8 @@ function mod:OnBossEnable()
 	-- General
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
 	self:Log("SPELL_CAST_SUCCESS", "Quietus", 236507) -- Quietus
+	self:Log("SPELL_AURA_APPLIED", "SpiritualBarrier", 235732) -- SpiritualB arrier
+	self:Log("SPELL_AURA_REMOVED", "SpiritualBarrierRemoved", 235732) -- Spiritual Barrier
 
 	-- Corporeal Realm
 	self:Log("SPELL_AURA_APPLIED", "SpearofAnguish", 235924) -- Spear of Anguish
@@ -104,15 +105,23 @@ function mod:OnEngage()
 	-- Dissonance Handling
 	wipe(phasedList)
 	wipe(unphasedList)
-	wipe(phasedCheckList)
-	self:RegisterEvent("UNIT_AURA") -- Spirit Realm Tracking
 	for unit in self:IterateGroup() do
-		if not unit:match("raid%d+$") then return end
-		local n = self:UnitName(unit)
-		unphasedList[#unphasedList+1] = n
-		phasedCheckList[n] = true -- Assume everyone is unphased
-		self:UNIT_AURA(nil, unit)
+		local buffCheck = UnitBuff(unit, self:SpellName(235732)) -- Spiritual Barrier
+		if buffCheck then
+			phasedList[#phasedList+1] = args.destName
+		else
+			unphasedList[#unphasedList+1] = args.destName
+		end
 	end
+	-- XXX Delete if not needed on Live
+	--wipe(phasedCheckList)
+	--self:RegisterEvent("UNIT_AURA") -- Spirit Realm Tracking
+	--for unit in self:IterateGroup() do
+	--	local n = self:UnitName(unit)
+	--	unphasedList[#unphasedList+1] = n
+	--	phasedCheckList[n] = true -- Assume everyone is unphased
+	--	self:UNIT_AURA(nil, unit)
+	--end
 
 	phase = 1
 	boneArmorCounter = 0
@@ -158,43 +167,78 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	end
 end
 
-function mod:UNIT_AURA(event, unit)
-	if not unit:match("raid%d+$") then return end
-	local name = UnitDebuff(unit, self:SpellName(235621)) -- Spirit Realm
-	local n = self:UnitName(unit)
-	if not phasedCheckList[n] and not name then -- Not in Spirit Realm
-		local guid = UnitGUID(unit)
-		phasedCheckList[n] = true
-		unphasedList[#unphasedList+1] = n
-		tDeleteItem(phasedList, n)
-		if self:Me(guid) then
-			myRealm = 0 -- Corporeal Realm
-			self:Message(239006, "Neutral", "Info", self:SpellName(-14856), false) -- Corporeal Realm
-		end
-		if myRealm == 0 then -- Corporeal Realm
-			self:OpenProximity(239006, 8, phasedList) -- Avoid people in Spirit Realm
-		else
-			self:OpenProximity(239006, 8, unphasedList) -- Avoid people not in Spirit Realm
-		end
-		self:SetInfo("infobox", 8, #phasedList)
-		self:SetInfo("infobox", 10, #unphasedList)
-	elseif name and phasedCheckList[n] then -- In Spirit Realm
-		local guid = UnitGUID(unit)
-		phasedList[#phasedList+1] = n
-		tDeleteItem(unphasedList, n)
-		if self:Me(guid) then
-			myRealm = 1
-			self:Message(239006, "Neutral", "Info", self:SpellName(-14857), false) -- Spirit Realm
-		end
-		if myRealm == 1 then -- Spirit Realm
-			self:OpenProximity(239006, 8, unphasedList) -- Avoid people not in Spirit Realm
-		else
-			self:OpenProximity(239006, 8, phasedList) -- Avoid people in Spirit Realm
-		end
-		phasedCheckList[n] = nil
-		self:SetInfo("infobox", 8, #phasedList)
-		self:SetInfo("infobox", 10, #unphasedList)
+-- XXX Delete if not needed on Live
+--function mod:UNIT_AURA(event, unit)
+--	if not unit:match("raid%d+$") then return end
+--	local name = UnitDebuff(unit, self:SpellName(235621)) -- Spirit Realm
+--	local n = self:UnitName(unit)
+--	if not phasedCheckList[n] and not name then -- Not in Spirit Realm
+--		local guid = UnitGUID(unit)
+--		phasedCheckList[n] = true
+--		unphasedList[#unphasedList+1] = n
+--		tDeleteItem(phasedList, n)
+--		if self:Me(guid) then
+--			myRealm = 0 -- Corporeal Realm
+--			self:Message(239006, "Neutral", "Info", self:SpellName(-14856), false) -- Corporeal Realm
+--		end
+--		if myRealm == 0 then -- Corporeal Realm
+--			self:OpenProximity(239006, 8, phasedList) -- Avoid people in Spirit Realm
+--		else
+--			self:OpenProximity(239006, 8, unphasedList) -- Avoid people not in Spirit Realm
+--		end
+--		self:SetInfo("infobox", 8, #phasedList)
+--		self:SetInfo("infobox", 10, #unphasedList)
+--	elseif name and phasedCheckList[n] then -- In Spirit Realm
+--		local guid = UnitGUID(unit)
+--		phasedList[#phasedList+1] = n
+--		tDeleteItem(unphasedList, n)
+--		if self:Me(guid) then
+--			myRealm = 1
+--		end
+--		if myRealm == 1 then -- Spirit Realm
+--			self:OpenProximity(239006, 8, unphasedList) -- Avoid people not in Spirit Realm
+--		else
+--			self:OpenProximity(239006, 8, phasedList) -- Avoid people in Spirit Realm
+--		end
+--		phasedCheckList[n] = nil
+--		self:SetInfo("infobox", 8, #phasedList)
+--		self:SetInfo("infobox", 10, #unphasedList)
+--	end
+--end
+
+function mod:SpiritualBarrier(args)
+	phasedList[#phasedList+1] = args.destName
+	tDeleteItem(unphasedList, args.destName)
+	if self:Me(guid) then
+		myRealm = 1
+		self:Message(239006, "Neutral", "Info", self:SpellName(-14857), false) -- Dissonance // Spirit Realm
 	end
+	updateProximity(self)
+	updateInfoBox()
+end
+
+function mod:SpiritualBarrierRemoved(args)
+	unphasedList[#unphasedList+1] = args.destName
+	tDeleteItem(phasedList, args.destName)
+	if self:Me(guid) then
+		myRealm = 0 -- Corporeal Realm
+		self:Message(239006, "Neutral", "Info", self:SpellName(-14856), false) -- Dissonance // Corporeal Realm
+	end
+	updateProximity(self)
+	updateInfoBox()
+end
+
+local function updateProximity(self)
+	if myRealm == 0 then -- Corporeal Realm
+		self:OpenProximity(239006, 8, phasedList) -- Avoid people in Spirit Realm
+	else
+		self:OpenProximity(239006, 8, unphasedList) -- Avoid people not in Spirit Realm
+	end
+end
+
+local function updateInfoBox()
+	mod:SetInfo("infobox", 8, #phasedList)
+	mod:SetInfo("infobox", 10, #unphasedList)
 end
 
 function mod:Quietus(args)
