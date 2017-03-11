@@ -26,6 +26,7 @@ local phase = 1
 local tormentedCriesCounter = 1
 local wailingSoulsCounter = 1
 local boneArmorCounter = 0
+local updateProximity = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -107,12 +108,21 @@ function mod:OnEngage()
 	wipe(unphasedList)
 	for unit in self:IterateGroup() do
 		local buffCheck = UnitBuff(unit, self:SpellName(235732)) -- Spiritual Barrier
+		local guid = UnitGUID(unit)
 		if buffCheck then
-			phasedList[#phasedList+1] = args.destName
+			phasedList[#phasedList+1] = self:UnitName(unit)
+			if self:Me(guid) then
+				myRealm = 1 -- Spirit Realm
+			end
 		else
-			unphasedList[#unphasedList+1] = args.destName
+			unphasedList[#unphasedList+1] = self:UnitName(unit)
+			if self:Me(guid) then
+				myRealm = 0 -- Corporeal Realm
+			end
 		end
 	end
+	updateProximity(self)
+
 	-- XXX Delete if not needed on Live
 	--wipe(phasedCheckList)
 	--self:RegisterEvent("UNIT_AURA") -- Spirit Realm Tracking
@@ -206,29 +216,7 @@ end
 --	end
 --end
 
-function mod:SpiritualBarrier(args)
-	phasedList[#phasedList+1] = args.destName
-	tDeleteItem(unphasedList, args.destName)
-	if self:Me(guid) then
-		myRealm = 1
-		self:Message(239006, "Neutral", "Info", self:SpellName(-14857), false) -- Dissonance // Spirit Realm
-	end
-	updateProximity(self)
-	updateInfoBox()
-end
-
-function mod:SpiritualBarrierRemoved(args)
-	unphasedList[#unphasedList+1] = args.destName
-	tDeleteItem(phasedList, args.destName)
-	if self:Me(guid) then
-		myRealm = 0 -- Corporeal Realm
-		self:Message(239006, "Neutral", "Info", self:SpellName(-14856), false) -- Dissonance // Corporeal Realm
-	end
-	updateProximity(self)
-	updateInfoBox()
-end
-
-local function updateProximity(self)
+function updateProximity(self)
 	if myRealm == 0 then -- Corporeal Realm
 		self:OpenProximity(239006, 8, phasedList) -- Avoid people in Spirit Realm
 	else
@@ -236,9 +224,33 @@ local function updateProximity(self)
 	end
 end
 
-local function updateInfoBox()
-	mod:SetInfo("infobox", 8, #phasedList)
-	mod:SetInfo("infobox", 10, #unphasedList)
+do
+	local function updateInfoBox()
+		mod:SetInfo("infobox", 8, #phasedList)
+		mod:SetInfo("infobox", 10, #unphasedList)
+	end
+
+	function mod:SpiritualBarrier(args)
+		phasedList[#phasedList+1] = args.destName
+		tDeleteItem(unphasedList, args.destName)
+		if self:Me(args.destGUID) then
+			myRealm = 1
+			self:Message(239006, "Neutral", "Info", self:SpellName(-14857), false) -- Dissonance // Spirit Realm
+		end
+		updateProximity(self)
+		updateInfoBox()
+	end
+
+	function mod:SpiritualBarrierRemoved(args)
+		unphasedList[#unphasedList+1] = args.destName
+		tDeleteItem(phasedList, args.destName)
+		if self:Me(args.destGUID) then
+			myRealm = 0 -- Corporeal Realm
+			self:Message(239006, "Neutral", "Info", self:SpellName(-14856), false) -- Dissonance // Corporeal Realm
+		end
+		updateProximity(self)
+		updateInfoBox()
+	end
 end
 
 function mod:Quietus(args)
