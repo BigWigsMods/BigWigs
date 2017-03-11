@@ -72,7 +72,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "UncheckedRage", 231854)
 	self:Log("SPELL_AURA_APPLIED", "DrawIn", 232061)
 	self:Log("SPELL_AURA_REMOVED", "DrawInSuccess", 232061)
-	self:Log("SPELL_AURA_APPLIED", "FrigidBlowsApplied", 232061)
+	self:Log("SPELL_AURA_APPLIED", "FrigidBlowsApplied", 233429)
 	self:Log("SPELL_AURA_REMOVED_DOSE", "FrigidBlows", 233429)
 	self:Log("SPELL_CAST_START", "FrostyDischarge", 232174)
 
@@ -134,7 +134,7 @@ function mod:JaggedAbrasion(args)
 end
 
 function mod:UncheckedRage(args)
-	self:Message(args.spellId, "Attention", "Warning")
+	self:Message(args.spellId, "Urgent", "Warning")
 	self:Bar(args.spellId, 20.5)
 end
 
