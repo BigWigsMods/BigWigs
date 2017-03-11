@@ -843,6 +843,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	end
 end
 
+local resetVersionWarnings
 do
 	local timer = nil
 	local function sendMsg()
@@ -853,6 +854,10 @@ do
 	end
 
 	local hasWarned, hasReallyWarned, hasExtremelyWarned = nil, nil, nil
+	function resetVersionWarnings()
+		hasWarned, hasReallyWarned, hasExtremelyWarned = nil, nil, nil
+	end
+
 	local function printOutOfDate(tbl)
 		if hasExtremelyWarned then return end
 		local warnedOutOfDate, warnedReallyOutOfDate, warnedExtremelyOutOfDate = 0, 0, 0
@@ -1035,6 +1040,7 @@ do
 			self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		elseif grouped and not groupType then
 			grouped = nil
+			resetVersionWarnings()
 			wipe(usersVersion)
 			wipe(usersHash)
 			self:ZONE_CHANGED_NEW_AREA()
