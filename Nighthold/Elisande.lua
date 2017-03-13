@@ -631,7 +631,9 @@ end
 
 --[[ Time Layer 1 ]]--
 function mod:ArcaneticRing(args) -- l11n
-	if need_ring_msg then
+	if self:LFR() and ringCount == 1 then -- For some reason Elisande forgets to yell on the first rings in LFR
+		self:CHAT_MSG_MONSTER_YELL("", L.ring_yell, "")
+	elseif need_ring_msg then
 		ring_msg_is_next = true
 	end
 end
