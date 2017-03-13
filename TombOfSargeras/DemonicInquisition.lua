@@ -69,7 +69,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	pangsofGuiltCounter = 1
+	pangsofGuiltCounter = 0
 	self:OpenAltPower("altpower", 233104, nil, true) -- Torment, Sync for those far away
 
 	-- Atrigan
