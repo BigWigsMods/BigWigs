@@ -46,7 +46,7 @@ function mod:GetOptions()
 		{236550, "TANK"}, -- Discorporate
 		236480,	-- Glaive Storm
 		{236305, "SAY", "ICON"}, -- Incorporeal Shot
-		236442, -- Twilight Volley
+		{236442, "SAY"}, -- Twilight Volley
 		236694, -- Call Moontalon
 		236697, -- Deadly Screech
 		236603, -- Rapid Shot
@@ -192,9 +192,21 @@ function mod:IncorporealShotRemoved(args)
 	self:PrimaryIcon(args.spellId)
 end
 
-function mod:TwilightVolley(args)
-	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
-	self:Bar(args.spellId, 19.5)
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage(236442, name, "Attention", "Alert", nil, nil, true)
+		if self:Me(guid) then
+			self:Say(236442)
+		end
+	end
+	function mod:TwilightVolley(args)
+		if phase == 2 then
+			self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
+		else -- Can only find target in P2
+			self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
+		end
+		self:Bar(args.spellId, 19.5)
+	end
 end
 
 do
