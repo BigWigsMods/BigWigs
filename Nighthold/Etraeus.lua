@@ -313,7 +313,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		if not self:Easy() then
 			self:CDBar(207439, 42, CL.count:format(self:SpellName(207439), novaCount)) -- Void Nova
 		end
-		self:Berserk(201.5, true, nil, 222761, 222761) -- Big Bang (end of cast)
+		self:Berserk(self:Mythic() and 201.5 or 231.5, true, nil, 222761, 222761) -- Big Bang (end of cast)
 		if self:Mythic() then
 			self:StopBar(CL.count:format(self:SpellName(205408), grandCounter)) -- Grand Conjunction
 			grandCounter = 1
