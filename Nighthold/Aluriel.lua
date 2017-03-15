@@ -118,6 +118,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Frostbitten", 212647)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Frostbitten", 212647)
 	self:Log("SPELL_CAST_START", "ReplicateMarkOfFrost", 212530)
+	self:Log("SPELL_CAST_START", "DetonateMarkOfFrost", 212735) -- Detonate: Mark of Frost
 	self:Log("SPELL_CAST_START", "AnimateMarkOfFrost", 213853)
 	self:Log("SPELL_CAST_START", "FrozenTempest", 213083)
 	self:Death("IcyEnchantmentDeath", 107237)
@@ -126,7 +127,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PreSearingBrandApplied", 213148)
 	self:Log("SPELL_AURA_APPLIED", "SearingBrandApplied", 213166)
 	self:Log("SPELL_AURA_REMOVED", "SearingBrandRemoved", 213166)
-	self:Log("SPELL_CAST_START", "DetonateSearingBrandOrFrost", 213275, 212735) -- Detonate: Searing Brand, Detonate: Mark of Frost
+	self:Log("SPELL_CAST_START", "DetonateSearingBrand", 213275) -- Detonate: Searing Brand
 	self:Log("SPELL_CAST_SUCCESS", "DetonateSearingBrandSuccess", 213275)
 	self:Log("SPELL_CAST_START", "AnimateSearingBrand", 213567)
 
@@ -354,6 +355,13 @@ function mod:Frostbitten(args)
 	self:SetInfoByTable(args.spellId, frostbittenStacks)
 end
 
+function mod:DetonateMarkOfFrost(args)
+	self:Message(args.spellId, "Important", "Alarm")
+	if markOfFrostOnMe then
+		self:Say(args.spellId, 151913) -- "Detonate"
+	end
+end
+
 function mod:AnimateMarkOfFrost(args)
 	self:Message(args.spellId, "Important", "Info", nil, 31687) -- Water Elemental icon
 end
@@ -450,9 +458,9 @@ function mod:SearingBrandRemoved(args)
 	updateProximity(self)
 end
 
-function mod:DetonateSearingBrandOrFrost(args)
+function mod:DetonateSearingBrand(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	if markOfFrostOnMe or searingBrandOnMe then
+	if searingBrandOnMe then
 		self:Say(args.spellId, 151913) -- "Detonate"
 	end
 end
