@@ -122,7 +122,7 @@ if L then
 	L.manasaber = "Прирученный манопард"
 	L.naturalist = "Шал'дорай-натуралист"
 
-	--[[ Aluriel to Krosos ]]--
+	--[[ Aluriel to Krosus ]]--
 	L.infernal = "Опаляющий инфернал"
 
 	--[[ Aluriel to Tichondrius ]]--

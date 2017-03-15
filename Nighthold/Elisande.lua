@@ -1,6 +1,6 @@
 
 --------------------------------------------------------------------------------
--- TODO List:
+-- Notes:
 -- - Localization:
 --   - Sadly we need to rely on yells if we don't want to schedule more timers
 --   - I've coded a fallback mechanism (search for l11n), to automatically get

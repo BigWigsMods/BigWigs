@@ -1,10 +1,5 @@
 
 --------------------------------------------------------------------------------
--- Notes:
--- - The "pre" and actual debuffs for Mark of Frost and Searing Brand are separate
---   because of customization (emphasize and stuff).
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -266,6 +261,8 @@ end
 --[[ Master of Frost ]]--
 do
 	local preDebuffApplied = 0
+	-- The "pre" and actual debuffs for Mark of Frost and Searing Brand are separate
+	-- because of customization (emphasize and stuff).
 	function mod:PreMarkOfFrostApplied(args)
 		if self:Me(args.destGUID) then
 			preDebuffApplied = GetTime()

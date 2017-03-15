@@ -1,9 +1,5 @@
 
 --------------------------------------------------------------------------------
--- TODO List:
--- - XXX Add core options for nameplates so we can remove the custom ones here.
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
