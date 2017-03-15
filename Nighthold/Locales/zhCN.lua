@@ -128,7 +128,7 @@ if L then
 	L.manasaber = "驯养的魔刃豹"
 	L.naturalist = "夏多雷自然学家"
 
-	--[[ Aluriel to Krosos ]]--
+	--[[ Aluriel to Krosus ]]--
 	L.infernal = "灼热的地狱火"
 
 	--[[ Aluriel to Tichondrius ]]--

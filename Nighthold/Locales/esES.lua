@@ -122,7 +122,7 @@ if L then
 	--L.manasaber = "Domesticated Manasaber"
 	L.naturalist = "Naturalista shal'dorei"
 
-	--[[ Aluriel to Krosos ]]--
+	--[[ Aluriel to Krosus ]]--
 	--L.infernal = "Searing Infernal"
 
 	--[[ Aluriel to Tichondrius ]]--

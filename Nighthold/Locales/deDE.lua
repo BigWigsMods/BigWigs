@@ -122,7 +122,7 @@ if L then
 	L.manasaber = "Zahmer Manasäbler"
 	L.naturalist = "Naturalist der Shal'dorei"
 
-	--[[ Aluriel to Krosos ]]--
+	--[[ Aluriel to Krosus ]]--
 	L.infernal = "Sengende Höllenbestie"
 
 	--[[ Aluriel to Tichondrius ]]--

@@ -31,7 +31,7 @@ mod:RegisterEnableMob(
 	111295, -- Domesticated Manasaber
 	112678, -- Shal'dorei Naturalist
 
-	--[[ Aluriel to Krosos ]]--
+	--[[ Aluriel to Krosus ]]--
 	111210, -- Searing Infernal
 
 	--[[ Aluriel to Tichondrius ]]--
