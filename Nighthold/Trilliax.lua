@@ -271,8 +271,10 @@ function mod:SucculentFeastRemoved(args)
 end
 
 function mod:Energized(args)
-	self:Message(args.spellId, "Important", self:Dispeller("magic", true) and "Alert", CL.on:format(args.spellName, args.destName))
-	self:Bar(args.spellId, 20.5, CL.other:format(L.imprint, self:SpellName(214670))) -- Energized
+	if not UnitIsPlayer(args.destName) then
+		self:Message(args.spellId, "Important", self:Dispeller("magic", true) and "Alert", CL.on:format(args.spellName, args.destName))
+		self:Bar(args.spellId, 20.5, CL.other:format(L.imprint, self:SpellName(214670))) -- Energized
+	end
 end
 
 function mod:ToxicSliceImprint(args)
