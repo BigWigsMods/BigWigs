@@ -17,7 +17,7 @@ L = BigWigs:NewBossLocale("Trilliax", "koKR")
 if L then
 	L.yourLink = "당신은 %s|1과;와; 연결됨"
 	L.yourLinkShort = "%s|1과;와; 연결됨"
-	L.imprint = "피조물"
+	L.imprint = "인격"
 end
 
 L = BigWigs:NewBossLocale("Tichondrius", "koKR")
@@ -53,7 +53,7 @@ if L then
 	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00사냥꾼|r"
 	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFF용|r"
 
-	L.nameplate_requirement = "이 기능은 현재 KuiNameplates만 지원됩니다. 신화 난이도만."
+	L.nameplate_requirement = "이 기능은 현재 KuiNameplates만 지원됩니다. 신화 난이도만 ."
 
 	L.custom_off_icy_ejection_nameplates = "아군 이름표에 {206936} 표시" -- Icy Ejection
 	L.custom_off_icy_ejection_nameplates_desc = L.nameplate_requirement
@@ -101,30 +101,30 @@ if L then
 	--[[ Skorpyron to Trilliax ]]--
 	L.torm = "육중한 토름"
 	L.fulminant = "전격폭풍"
-	L.pulsauron = "펄사우론n"
+	L.pulsauron = "펄사우론"
 
 	--[[ Chronomatic Anomaly to Trilliax ]]--
 	L.sludgerax = "슬러지락스"
 
 	--[[ Trilliax to Aluriel ]]--
-	--L.karzun = "Kar'zun"
-	--L.guardian = "Gilded Guardian"
-	--L.battle_magus = "Duskwatch Battle-Magus"
-	--L.chronowraith = "Chronowraith"
-	--L.protector = "Nighthold Protector"
+	L.karzun = "카르준"
+	--L.guardian = "Gilded Guardian" -- World Quest Objective
+	L.battle_magus = "황혼감시대 전투마법사"
+	L.chronowraith = "시간격노"
+	L.protector = "밤의 요새 수호자"
 
 	--[[ Aluriel to Etraeus ]]--
-	--L.jarin = "Astrologer Jarin"
+	L.jarin = "점성술사 자린"
 
 	--[[ Aluriel to Telarn ]]--
-	--L.weaver = "Duskwatch Weaver"
-	--L.archmage = "Shal'dorei Archmage"
-	--L.manasaber = "Domesticated Manasaber"
-	--L.naturalist = "Shal'dorei Naturalist"
+	L.weaver = "황혼감시대 역술사"
+        L.archmage = "샬도레이 대마법사"
+        L.manasaber = "길들인 마나호랑이"
+        L.naturalist = "샬도레이 박물학자"
 
 	--[[ Aluriel to Krosus ]]--
-	--L.infernal = "Searing Infernal"
+	L.infernal = "불타는 지옥불정령"
 
 	--[[ Aluriel to Tichondrius ]]--
-	--L.watcher = "Abyss Watcher"
+	L.watcher = "심연 감시자"
 end
