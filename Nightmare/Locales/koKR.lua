@@ -22,8 +22,8 @@ end
 
 L = BigWigs:NewBossLocale("Emerald Nightmare Trash", "koKR")
 if L then
-	--L.gelatinizedDecay = "Gelatinized Decay"
-	--L.befouler = "Taintheart Befouler"
+	L.gelatinizedDecay = "아교질 부패"
+	L.befouler = "타락심장 암흑오염자"
 	L.shaman = "광포한 주술사"
 end
 
