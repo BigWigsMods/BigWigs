@@ -65,8 +65,8 @@ L.timeDesc = "바에 남은 시간을 표시하거나 숨깁니다."
 L.icon = "아이콘"
 L.iconDesc = "바 아이콘을 표시하거나 숨깁니다."
 L.font = "글꼴"
-L.restart = "Restart"
-L.restartDesc = "강조된 바를 10부터 세기 시작하도록 재시작합니다."
+L.restart = "다시 시작"
+L.restartDesc = "강조된 바를 10부터 다시 셉니다."
 L.fill = "채우기"
 L.fillDesc = "바를 비우는 대신 채워나갑니다."
 
@@ -93,10 +93,10 @@ L.breakFinished = "휴식 시간이 끝났습니다!"
 -- BossBlock.lua
 --
 
-L.bossBlock = "우두머리 차단"
-L.bossBlockDesc = "우두머리 전투 중 차단할 수 있는 다양한 것들을 설정합니다."
-L.movieBlocked = "이 동영상을 본적이 있습니다, 건너뜁니다."
-L.blockEmotes = "화면 가운에 감정표현 차단"
+L.bossBlock = "우두머리 기능 차단"
+L.bossBlockDesc = "우두머리 전투 중 차단할 수 있는 다양한 기능들을 설정합니다."
+L.movieBlocked = "이 동영상을 본적이 있으므로 건너뜁니다."
+L.blockEmotes = "화면 중앙의 감정표현 차단"
 L.blockEmotesDesc = "몇몇 우두머리는 특정 능력에 감정표현을 표시합니다, 이 메시지는 너무 길고 설명적입니다. 우리는 게임 플레이를 방해하지 않으면서 당신이 특별한 행동을 하지 않아도 되는, 작고 더 알맞은 메시지를 만들려고 노력합니다.\n\n참고하세요: 우두머리 감정표현를 읽고 싶다면 여전히 대화에서 확인할 수 있습니다."
 L.blockMovies = "반복되는 동영상 차단"
 L.blockMoviesDesc = "우두머리 전투 동영상이 한번만 재생되도록 허용합니다 (각 한번씩 볼수 있도록) 그 후엔 차단됩니다."
@@ -105,7 +105,7 @@ L.blockGarrisonDesc = "주둔지 알림은 여러가지를 표시하지만 주�
 L.blockGuildChallenge = "길드 도전 알림 차단"
 L.blockGuildChallengeDesc = "길드 도전 알림은 여러가지를 표시하지만 주로 당신의 길드 파티의 영웅 던전이나 도전 모드 던전 완료를 표시합니다.\n\n이 알림들은 우두머리 전투 중 UI를 치명적으로 가릴 수 있습니다, 따라서 차단을 권장합니다."
 L.blockSpellErrors = "주문 실패 메시지 차단"
-L.blockSpellErrorsDesc = "일반적으로 화면 상단에 표시되는 \"주문이 아직 준비되지 않았습니다\" 같은 메시지를 차단합니다."
+L.blockSpellErrorsDesc = "일반적으로 화면 상단에 표시되는 \"마법이 아직 준비되지 않았습니다\" 같은 메시지를 차단합니다."
 
 -----------------------------------------------------------------------
 -- Colors.lua
@@ -135,7 +135,7 @@ L.Neutral = "중립"
 -- Emphasize.lua
 --
 
-L.superEmphasize = "Super Emphasize"
+L.superEmphasize = "특수 강조"
 L.superEmphasizeDesc = "특정 우두머리 전투 능력의 관련 메시지나 바를 증폭시킵니다.\n\n우두머리 전투 능력의 고급 옵션에서 강조 옵션을 사용할 때 여기에 수행해야 될 작업을 정확히 구성하세요.\n\n|cffff4411기본값으로 모든 능력에 강조는 꺼져있다는 걸 참고하세요.|r\n"
 L.uppercase = "대문자"
 L.uppercaseDesc = "강조 옵션에 관련된 모든 메시지를 대문자로 표시합니다."
@@ -169,7 +169,7 @@ L.output = "출력"
 L.emphasizedCountdown = "강조 초읽기"
 
 L.useColors = "색상 사용"
-L.useColorsDesc = "색상을 무시하는 흰색 메시지만 출력 사용 전환합니다."
+L.useColorsDesc = "색상을 무시하도록 메시지에 색상 사용을 전환합니다."
 L.useIcons = "아이콘 사용"
 L.useIconsDesc = "메시지 옆에 아이콘을 표시합니다."
 L.classColors = "직업 색상"
@@ -285,8 +285,8 @@ L.resetAllCustomSound = "어떤 우두머리 전투 설정에 사용자 설정�
 -- Statistics.lua
 --
 
-L.bossDefeatDurationPrint = "%2$s 후에 '%1$s' 처치했습니다."
-L.bossWipeDurationPrint = "%2$s 후에 '%1$s'에서 전멸했습니다."
+L.bossDefeatDurationPrint = "전투 시작 %2$s만에 '%1$s'|1을;를; 처치했습니다."
+L.bossWipeDurationPrint = "전투 시작 %2$s 후에 '%1$s'에서 전멸했습니다."
 L.newBestTime = "새로운 최고 기록!"
 L.bossStatistics = "우두머리 통계"
 L.bossStatsDescription = "우두머리를 처치하는 데 걸린 시간, 전멸 횟수, 지속된 총 전투 시간, 또는 가장 빠른 우두머리 처치와 같은 여러가지 우두머리 관련 통계 기록입니다. 이 통계들은 각 우두머리의 설정 화면에서 볼수 있지만, 기록된 통계가 없는 우두머리는 숨겨집니다."
