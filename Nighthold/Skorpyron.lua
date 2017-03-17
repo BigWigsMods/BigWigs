@@ -12,7 +12,7 @@ local mod, CL = BigWigs:NewBoss("Skorpyron", 1088, 1706)
 if not mod then return end
 mod:RegisterEnableMob(102263)
 mod.engageId = 1849
-mod.respawnTime = 30 -- moves into room at 30, ~35 till he is in position
+mod.respawnTime = 40 -- moves into room at 30, ~40 until he's attackable
 
 --------------------------------------------------------------------------------
 -- Locals
