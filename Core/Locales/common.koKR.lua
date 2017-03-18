@@ -19,10 +19,10 @@ L.near = "당신 근처에 %s!"
 
 L.phase = "%d단계"
 L.stage = "%d단계"
-L.normal = "일반 모드"
-L.heroic = "영웅 모드"
-L.hard = "도전 모드"
-L.mythic = "신화 모드"
+L.normal = "일반 난이도"
+L.heroic = "영웅 난이도"
+L.hard = "강화 난이도"
+L.mythic = "신화 난이도"
 L.general = "일반" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 
 L.duration = "%s %s초 남음"
@@ -34,16 +34,16 @@ L.no = "%s 없음!"
 L.intermission = "사잇단계"
 
 -- Add related
-L.add_spawned = "쫄 생성!"
+L.add_spawned = "추가 몹 생성!"
 L.spawned = "%s 생성"
 L.spawning = "%s 생성 중!"
-L.next_add = "다음 쫄"
-L.add_killed = "쫄 처치! (%d/%d)"
-L.add_remaining = "쫄 처치, %d 남음"
-L.add = "하수인 등장"
-L.adds = "병력 등장"
+L.next_add = "다음 몹 추가"
+L.add_killed = "추가 몹 처치! (%d/%d)"
+L.add_remaining = "추가 몹 처치, %d 남음"
+L.add = "추가 몹"
+L.adds = "추가 몹들"
 L.big_add = "큰 쫄"
-L.small_adds = "작은 쫄"
+L.small_adds = "작은 쫄들"
 
 -- Mob related
 L.mob_killed = "%s 처치! (%d/%d)"
@@ -57,7 +57,7 @@ L.custom_end = "%s - %s!"
 L.custom_min = "%2$d분 후 %1$s"
 L.custom_sec = "%2$d초 후 %1$s!"
 
-L.focus_only = "|cffff0000주시 대상 경보만.|r "
+L.focus_only = "|cffff0000대상 경보만 집중합니다.|r "
 L.trash = "일반몹"
 
 -- Common raid marking locale
