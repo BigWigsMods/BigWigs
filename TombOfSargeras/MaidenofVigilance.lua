@@ -57,7 +57,6 @@ end
 
 function mod:OnBossEnable()
 	-- General
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "UnstableSoul", 240209) -- Unstable Soul
 	self:Log("SPELL_AURA_APPLIED", "AegwynnsWardApplied", 241593) -- Aegwynn's Ward
 
@@ -67,6 +66,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LightInfusion", 235213, 240218) -- Light Infusion
 	self:Log("SPELL_CAST_SUCCESS", "HammerofCreation", 241635) -- Hammer of Creation
 	self:Log("SPELL_CAST_SUCCESS", "HammerofObliteration", 241636) -- Hammer of Obliteration
+	self:Log("SPELL_CAST_START", "MassInstability", 235267) -- Mass Instability
 
 	-- Stage Two: Watcher's Wrath
 	self:Log("SPELL_CAST_SUCCESS", "Blowback", 237722) -- Blowback
@@ -92,7 +92,7 @@ function mod:OnEngage()
 
 	self:Bar(235271, 2.0) -- Infusion
 	self:Bar(241635, 14.0) -- Hammer of Creation
-	self:Bar(235267, 22.0) -- Mass Instability
+	self:Bar(235267, 24.0) -- Mass Instability
 	self:Bar(241636, 32.0) -- Hammer of Obliteration
 	self:Bar(237722, 41.0) -- Blowback
 	self:Bar(234891, 43.5) -- Wrath of the Creators
@@ -101,17 +101,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 235267 then -- Mass Instability
-		massInstabilityCounter = massInstabilityCounter + 1
-		self:Message(spellId, "Attention", "Alert")
-		if massInstabilityCounter == 2 then
-			massInstabilityCounter = 1
-			self:Bar(spellId, 36.0)
-		end
-	end
-end
 
 function mod:UnstableSoul(args)
 	if self:Me(args.destGUID) then
@@ -169,6 +158,15 @@ function mod:HammerofObliteration(args)
 	self:Message(args.spellId, "Urgent", "Alert")
 	if hammerofObliterationCounter == 2 then
 		self:Bar(args.spellId, 36)
+	end
+end
+
+function mod:MassInstability(args)
+	massInstabilityCounter = massInstabilityCounter + 1
+	self:Message(args.spellId, "Attention", "Alert")
+	if massInstabilityCounter == 2 then
+		massInstabilityCounter = 1
+		self:Bar(args.spellId, 36.0)
 	end
 end
 
