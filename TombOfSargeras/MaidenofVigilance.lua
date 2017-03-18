@@ -63,16 +63,15 @@ function mod:OnBossEnable()
 
 	-- Stage One: Divide and Conquer
 	self:Log("SPELL_CAST_START", "Infusion", 235271) -- Infusion
-	self:Log("SPELL_AURA_APPLIED", "FelInfusion", 235240) -- Fel Infusion
-	self:Log("SPELL_AURA_APPLIED", "LightInfusion", 235213) -- Light Infusion
+	self:Log("SPELL_AURA_APPLIED", "FelInfusion", 235240, 240219) -- Fel Infusion
+	self:Log("SPELL_AURA_APPLIED", "LightInfusion", 235213, 240218) -- Light Infusion
 	self:Log("SPELL_CAST_SUCCESS", "HammerofCreation", 241635) -- Hammer of Creation
 	self:Log("SPELL_CAST_SUCCESS", "HammerofObliteration", 241636) -- Hammer of Obliteration
 
 	-- Stage Two: Watcher's Wrath
 	self:Log("SPELL_CAST_SUCCESS", "Blowback", 237722) -- Blowback
-	self:Log("SPELL_CAST_START", "TitanicBulwark", 235028) -- Titanic Bulwark
-	self:Log("SPELL_AURA_APPLIED", "TitanicBulwarkApplied", 235028) -- Light Infusion
-	self:Log("SPELL_AURA_REMOVED", "TitanicBulwarkRemoved", 235028) -- Light Infusion
+	self:Log("SPELL_AURA_APPLIED", "TitanicBulwarkApplied", 235028) -- Titanic Bulwark
+	self:Log("SPELL_AURA_REMOVED", "TitanicBulwarkRemoved", 235028) -- Titanic Bulwark
 	self:Log("SPELL_CAST_SUCCESS", "WrathoftheCreators", 234891) -- Wrath of the Creators
 	self:Log("SPELL_AURA_APPLIED", "WrathoftheCreatorsApplied", 237339) -- Wrath of the Creators
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WrathoftheCreatorsApplied", 237339) -- Wrath of the Creators
