@@ -3,7 +3,7 @@ if not L then return end
 
 -- Core.lua
 L.berserk = "광폭화"
-L.berserk_desc = "우두머리의 광폭화 시기에 대한 바와 시간 경고를 표시합니다."
+L.berserk_desc = "우두머리가 언제 광폭화되는지 바와 시간 경고를 표시합니다."
 L.altpower = "보조 자원 표시"
 L.altpower_desc = "보조 자원 창을 표시합니다, 자신의 파티/공격대원의 보조 자원 양을 표시합니다."
 L.infobox = "정보 상자"
@@ -37,12 +37,12 @@ L.offline = "접속 종료"
 
 L.blizzRestrictionsZone = "블리자드 전투 제한때문에 불러오기를 완료하기 위해 전투가 끝날 때까지 기다립니다."
 L.finishedLoading = "전투가 종료됐습니다, BigWigs가 불러오기를 완료했습니다."
-L.blizzRestrictionsConfig = "블리자드 제한으로 인해 전투 중에 설정을 처리하려면 전투 중이 아닐 때 설정을 반드시 한번은 열어야 합니다."
+L.blizzRestrictionsConfig = "블리자드 제한으로 인해 전투 중에 설정을 처리하려면 먼저 전투 중이 아닐 때 설정을 열어야 합니다."
 
-L.missingAddOn = "이 지역은 타이머를 표시하려면 |cFF436EEE%s|r 플러그인이 필요합니다."
-L.disabledAddOn = "|cFF436EEE%s|r 애드온이 비활성화 상태입니다, 타이머는 표시되지 않습니다."
+L.missingAddOn = "이 지역에서 타이머를 표시하려면 |cFF436EEE%s|r 플러그인이 필요합니다."
+L.disabledAddOn = "|cFF436EEE%s|r 애드온이 비활성화 중이므로 타이머를 표시할 수 없습니다."
 
-L.coreAddonDisabled = "%s 애드온이 비활성화된 이후 BigWigs가 정상적으로 기능할 수 없습니다. 캐릭터 선택 화면에서 애드온 설정 창을 통해 활성화할 수 있습니다."
+L.coreAddonDisabled = "%s 애드온이 비활성화되어 있어서 BigWigs가 제대로 작동하지 않습니다. 캐릭터 선택 화면의 애드온 설정 창을 통해 활성화할 수 있습니다."
 
 L.removeAddon = "'|cFF436EEE%s|r'|1이;가; '|cFF436EEE%s|r'|1으로;로; 대체되었으므로 제거해주세요."
 
@@ -72,7 +72,7 @@ L.dbmFakerDesc = "DBM 사용자가 DBM의 버전을 확인하여 누가 DBM을 �
 L.chatMessages = "대화 창 메시지"
 L.chatMessagesDesc = "모든 BigWigs 메시지를 표시 설정과 더불어 기본 대화 창에도 출력합니다."
 L.zoneMessages = "지역 메시지 표시"
-L.zoneMessagesDesc = "비활성화하면 BigWigs 타이머가 있는 지역이지만 설치하지 않은 지역에 입장했을 때 메시지 표시를 중단합니다. 새로운 지역에 대한 타이머를 갑자기 만들었을 때 당신이 받을 수 있는 유일한 알림이기 때문에 이 것을 켜진 상태로 두는 걸 권장합니다."
+L.zoneMessagesDesc = "비활성하면 설치하지 않았지만 BigWigs에 타이머가 있는 지역에 입장했을 때 메시지 표시를 중지합니다. 당신이 유용하다고 느끼는 새로운 지역에 대한 타이머를 우리가 갑자기 만들었을 때 받을 수 있는 유일한 알림이기 때문에 이 기능을 사용하는 걸 권장합니다."
 
 L.slashDescTitle = "|cFFFED000대화 명령어:|r"
 L.slashDescPull = "|cFFFED000/pull:|r 공격대에 전투 예정 초읽기를 보냅니다."
@@ -84,7 +84,7 @@ L.slashDescVersion = "|cFFFED000/bwv:|r BigWigs 버전 확인을 수행합니다
 L.slashDescConfig = "|cFFFED000/bw:|r BigWigs 구성을 엽니다."
 
 L.gitHubTitle = "BigWigs는 GitHub에 있습니다"
-L.gitHubDesc = "BigWigs는 GitHub에 호스트되는 오픈 소스 소프트웨어입니다. 우리는 우리를 도와줄 새로운 사람들을 항상 찾고 있으며 우리의 코드를 누구나 살펴보는 것을 환영합니다, 기고를 만들고 오류 보고를 제출하세요. BigWigs는 현재 WoW 커뮤니티로부터 큰 도움을 받고 있습니다.\n\n|cFF33FF99우리의 API는 이제 문서화되었으며 GitHub 위키에서 자유롭게 읽을 수 있습니다.|r"
+L.gitHubDesc = "BigWigs는 GitHub에 호스트되는 오픈 소스 소프트웨어입니다. 우리는 우리를 도와줄 새로운 사람들을 항상 찾고 있으며 우리의 코드를 누구나 살펴보는 것을 환영합니다, 기고를 만들고 오류 보고를 제출하세요. BigWigs는 현재 WoW 커뮤니티로부터 큰 도움을 받고 있습니다.\n\n|cFF33FF99이제 문서화된 우리의 API를 GitHub 위키에서 자유롭게 읽을 수 있습니다.|r"
 
 L.BAR = "바"
 L.MESSAGE = "메시지"
@@ -117,7 +117,7 @@ L.DISPEL_desc = "이 능력에 대한 경고를 무효화할 수 없을때라도
 L.VOICE = "음성"
 L.VOICE_desc = "음성 플러그인을 설치하고, 이 옵션을 활성화하면 이 경고를 소리내어 말해주는 소리 파일을 재생합니다."
 L.COUNTDOWN = "초읽기"
-L.COUNTDOWN_desc = "활성화하면, 마지막 5초에 음성과 시각적 초읽기가 추가됩니다. 화면 중앙에 큰 숫자로 \"5... 4... 3... 2... 1...\"을 누군가 초읽기해주는 걸 상상하세요."
+L.COUNTDOWN_desc = "활성화하면, 마지막 5초에 음성과 시각적 초읽기가 추가됩니다. 화면 가운데에 \"5... 4... 3... 2... 1...\"의 큰 숫자와 함께 초읽기를 해줍니다."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
