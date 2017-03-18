@@ -47,7 +47,7 @@ local lfrTimers = {
 	[210022] = {40, 37},
 
 	-- Delphuric Beam
-	[209244] = {35, 77}, -- in Phase 3 for LFR
+	[209244] = {35, 77, 25}, -- in Phase 3 for LFR
 
 	-- Ablating Explosion
 	[209973] = {}, -- first 12.1, then between 20.7 and 21.8 (no pattern)
