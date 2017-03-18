@@ -66,7 +66,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LightInfusion", 235213, 240218) -- Light Infusion
 	self:Log("SPELL_CAST_SUCCESS", "HammerofCreation", 241635) -- Hammer of Creation
 	self:Log("SPELL_CAST_SUCCESS", "HammerofObliteration", 241636) -- Hammer of Obliteration
-	self:Log("SPELL_CAST_START", "MassInstability", 235267) -- Mass Instability
+	self:Log("SPELL_CAST_SUCCESS", "MassInstability", 235267) -- Mass Instability
 
 	-- Stage Two: Watcher's Wrath
 	self:Log("SPELL_CAST_SUCCESS", "Blowback", 237722) -- Blowback
@@ -118,7 +118,6 @@ function mod:Infusion(args)
 	infusionCounter = infusionCounter + 1
 	self:Message(args.spellId, "Neutral", "Info", CL.casting:format(args.spellName))
 	if infusionCounter == 2 then
-		infusionCounter = 1
 		self:Bar(args.spellId, 38.0)
 	end
 end
@@ -165,7 +164,6 @@ function mod:MassInstability(args)
 	massInstabilityCounter = massInstabilityCounter + 1
 	self:Message(args.spellId, "Attention", "Alert")
 	if massInstabilityCounter == 2 then
-		massInstabilityCounter = 1
 		self:Bar(args.spellId, 36.0)
 	end
 end
