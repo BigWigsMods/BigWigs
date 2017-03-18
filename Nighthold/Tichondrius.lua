@@ -149,7 +149,7 @@ function mod:OnEngage()
 	self:Bar(213531, timers[213531][echoesOfTheVoidCount], CL.count:format(self:SpellName(213531), echoesOfTheVoidCount))
 	self:Bar(206365, 130, CL.count:format(self:SpellName(206365), illusionaryNightCount))
 	if not self:LFR() then
-		self:Berserk(463)
+		self:Berserk(self:Normal() and 523 or 463)
 	end
 end
 
