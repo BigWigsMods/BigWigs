@@ -192,7 +192,6 @@ end
 do
 	local list = mod:NewTargetList()
 	function mod:BrandOfArgus(args)
-		SendAddonMessage("Transcriptor", args.destName, "RAID") -- XXX removeme
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Positive", "Alarm", CL.count:format(args.spellName, brandOfArgusCount-1))
