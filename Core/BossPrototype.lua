@@ -1536,6 +1536,8 @@ do
 			return
 		elseif length == 0 then
 			return
+		elseif self.missing and self.missing[key] then
+			self.missing[key] = nil
 		end
 
 		local textType = type(text)
@@ -1570,6 +1572,8 @@ do
 			return
 		elseif length == 0 then
 			return
+		elseif self.missing and self.missing[key] then
+			self.missing[key] = nil
 		end
 
 		local textType = type(text)
