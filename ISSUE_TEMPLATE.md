@@ -3,11 +3,10 @@
 2.  
 3.  
 
-### What version of BigWigs are you using?
+### What version of BigWigs are you using? (Stating 'latest' is not useful)
 
 
 ### Do you have an error log of what happened?
 
 
-### Please provide any additional information below. (example: localization of your client if not enUS or enGB)
-
+### Any additional information? (example: WoW language if not English) (Attach screenshots here if available, do not link externally)
