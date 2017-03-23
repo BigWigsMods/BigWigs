@@ -3,7 +3,7 @@ if not L then return end
 
 -- Prototype.lua common words
 L.you = "당신에게 %s!"
-L.underyou = "당신 밑에 %s!"
+L.underyou = "%s - 피하세요!"
 L.other = "%s: %s"
 L.onboss = "우두머리에게 %s!"
 L.on = "%2$s에게 %1$s"
@@ -62,5 +62,5 @@ L.trash = "일반몹"
 
 -- Common raid marking locale
 L.marker = "%s 징표"
-L.marker_player_desc = "%s에 영향받는 플레이어에 %s|1을;를; 표시합니다, 부공격대장 또는 공격대장 권한이 필요합니다."
-L.marker_npc_desc = "%s|1을;를; %s|1으로;로; 표시합니다, 부공격대장 또는 공격대장 권한이 필요합니다."
+L.marker_player_desc = "%s에 영향받는 플레이어에 %s|1을;를; 표시합니다, 부공격대장 이상의 권한이 필요합니다."
+L.marker_npc_desc = "%s|1을;를; %s|1으로;로; 표시합니다, 부공격대장 이상의 권한이 필요합니다."
