@@ -1,4 +1,5 @@
-if not IsTestBuild() then return end -- XXX dont load on live
+if select(4, GetBuildInfo()) < 70200 then return end -- XXX dont load on live
+
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Shattering Scream: Find target before debuffs, without spamming? (current method allows for kicks before warnings)

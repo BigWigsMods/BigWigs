@@ -1,4 +1,5 @@
-if not IsTestBuild() then return end -- XXX dont load on live
+if select(4, GetBuildInfo()) < 70200 then return end -- XXX dont load on live
+
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Re-check phase 1 timers on live
