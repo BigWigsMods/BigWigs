@@ -365,10 +365,11 @@ do
 		if spellId == 211614 then -- Slow
 			self:Message("recursive_elemental", "Neutral", "Info", L.recursive_elemental, L.recursive_elemental_icon)
 			slowElementalCount = slowElementalCount + 1
+			local timer = nil
 			if self:Mythic() then
-				local timer = timers[spellId][phase][slowElementalCount]
+				timer = timers[spellId][phase][slowElementalCount]
 			else
-				local timer = timers[spellId][slowElementalCount]
+				timer = timers[spellId][slowElementalCount]
 			end
 			if timer then
 				self:Bar("recursive_elemental", timer, L.recursive_elemental, L.recursive_elemental_icon)
@@ -376,10 +377,11 @@ do
 		elseif spellId == 211616 then -- Fast
 			self:Message("expedient_elemental", "Neutral", "Info", L.expedient_elemental, L.expedient_elemental_icon)
 			fastElementalCount = fastElementalCount + 1
+			local timer = nil
 			if self:Mythic() then
-				local timer = timers[spellId][phase][fastElementalCount]
+				timer = timers[spellId][phase][fastElementalCount]
 			else
-				local timer = timers[spellId][fastElementalCount]
+				timer = timers[spellId][fastElementalCount]
 			end
 			if timer then
 				self:Bar("expedient_elemental", timer, L.expedient_elemental, L.expedient_elemental_icon)
