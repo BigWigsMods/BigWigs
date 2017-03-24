@@ -485,7 +485,7 @@ end
 --[[ Fel Lord Kuraz'mal ]]--
 function mod:ShatterEssence(args)
 	self:Message(args.spellId, "Important", "Warning", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 3)
 	self:Bar(args.spellId, self:Mythic() and 21 or 52)
 end
 
@@ -496,7 +496,7 @@ end
 
 function mod:SoulVortex(args)
 	self:Message(args.spellId, "Urgent", "Long")
-	self:Bar(args.spellId, 9, CL.cast:format(args.spellName)) -- actual cast + pull in
+	self:CastBar(args.spellId, 9) -- actual cast + pull in
 	self:Bar(args.spellId, 21.1)
 end
 
@@ -684,7 +684,7 @@ function mod:WilloftheDemonWithin(args)
 	end
 
 	self:Message(args.spellId, "Attention", "Warning")
-	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 4)
 
 	severCount = 1
 	crashCounter = 1
@@ -797,7 +797,7 @@ do
 
 	function mod:PurifiedEssence(args)
 		self:Message(args.spellId, "Important", "Alarm", CL.cast:format(args.spellName))
-		self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+		self:CastBar(args.spellId, 4)
 		if not timeStopCheck then
 			checkForTimeStop(self)
 		end
@@ -813,7 +813,7 @@ do
 	function mod:VisionsoftheDarkTitan(args)
 		visionCounter = visionCounter+1
 		self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
-		self:Bar(args.spellId, 9, CL.cast:format(args.spellName))
+		self:CastBar(args.spellId, 9)
 		if visionCounter ~= 4 then
 			self:Bar(args.spellId, visionCounter == 3 and 150 or 90, CL.count:format(args.spellName, visionCounter))
 		end

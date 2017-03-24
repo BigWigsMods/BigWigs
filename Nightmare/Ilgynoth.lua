@@ -534,7 +534,7 @@ end
 --[[ Mythic ]]--
 function mod:DeathBlossom(args)
 	self:Message(args.spellId, "Urgent", "Alarm")
-	self:Bar(args.spellId, 15, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 15)
 	deathBlossomCount = deathBlossomCount + 1
 end
 

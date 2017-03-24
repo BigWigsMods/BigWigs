@@ -360,8 +360,8 @@ end
 
 function mod:BilewaterBreath(args)
 	self:Message(args.spellId, "Important", "Alarm", CL.count:format(args.spellName, breathCount))
-	self:Bar(args.spellId, 3, CL.cast:format(CL.count:format(args.spellName, breathCount)))
-	self:Bar(227992, self:Easy() and 25.5 or 20.5, CL.cast:format(self:SpellName(227992))) -- Bilewater Liquefaction
+	self:CastBar(args.spellId, 3, CL.count:format(args.spellName, breathCount))
+	self:CastBar(227992, self:Easy() and 25.5 or 20.5) -- Bilewater Liquefaction
 	breathCount = breathCount + 1
 	self:CDBar(args.spellId, self:Mythic() and 42.5 or self:Heroic() and 52 or self:Normal() and 55.9 or 60.8, CL.count:format(args.spellName, breathCount))
 end
@@ -426,7 +426,7 @@ end
 
 function mod:TentacleStrike(args)
 	-- Message is in RAID_BOSS_EMOTE
-	self:Bar(args.spellId, 6, CL.cast:format(CL.count:format(args.spellName, tentacleCount)))
+	self:CastBar(args.spellId, 6,CL.count:format(args.spellName, tentacleCount))
 	tentacleCount = tentacleCount + 1
 	self:Bar(args.spellId, self:Mythic() and timers["Tentacle Strike"][tentacleCount] or 40, CL.count:format(self:SpellName(228730), tentacleCount))
 end
@@ -455,7 +455,7 @@ end
 
 function mod:FuryOfTheMaw(args)
 	self:Message(args.spellId, "Important", "Info")
-	self:Bar(args.spellId, self:Mythic() and 24 or 32, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, self:Mythic() and 24 or 32)
 end
 
 function mod:FuryOfTheMawRemoved(args)
@@ -498,7 +498,7 @@ end
 --[[ Grimelord ]]--
 function mod:SludgeNova(args)
 	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 3)
 	self:Bar(args.spellId, 24.3)
 end
 
@@ -562,7 +562,7 @@ end
 --[[ Night Watch Mariner ]]--
 function mod:LanternOfDarkness(args)
 	self:Message(args.spellId, "Important", "Long")
-	self:Bar(args.spellId, 7, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 7)
 end
 
 function mod:GiveNoQuarter(args)
@@ -624,7 +624,7 @@ end
 
 function mod:CorruptedBreath(args)
 	self:Message(args.spellId, "Important", "Alarm", CL.count:format(args.spellName, breathCount))
-	self:Bar(args.spellId, 4.5, CL.cast:format(CL.count:format(args.spellName, breathCount)))
+	self:CastBar(args.spellId, 4.5, CL.count:format(args.spellName, breathCount))
 	breathCount = breathCount + 1
 	self:Bar(args.spellId, self:Mythic() and 43 or self:Heroic() and 47 or 51, CL.count:format(args.spellName, breathCount))
 end

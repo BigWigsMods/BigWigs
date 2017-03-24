@@ -251,7 +251,7 @@ do
 end
 
 function mod:Annihilation(args)
-	self:Bar(args.spellId, 16, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 16)
 end
 
 function mod:SucculentFeastCast(args)
