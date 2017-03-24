@@ -38,6 +38,7 @@ end
 
 function mod:GetOptions()
 	return {
+		"berserk",
 		240209, -- Unstable Soul
 		241593, -- Aegwynn's Ward
 		{235271, "PROXIMITY"}, -- Infusion
@@ -49,7 +50,7 @@ function mod:GetOptions()
 		234891, -- Wrath of the Creators
 		239153, -- Spontaneous Fragmentation
 	},{
-		[240209] = "general",
+		["berserk"] = "general",
 		[235271] = -14974, -- Stage One: Divide and Conquer
 		[237722] = -14975, -- Stage Two: Watcher's Wrath
 		[239153] = "mythic",
@@ -97,6 +98,7 @@ function mod:OnEngage()
 	self:Bar(241636, 32.0) -- Hammer of Obliteration
 	self:Bar(237722, 41.0) -- Blowback
 	self:Bar(234891, 43.5) -- Wrath of the Creators
+	self:Berserk(480) -- Confirmed Heroic
 end
 
 --------------------------------------------------------------------------------
