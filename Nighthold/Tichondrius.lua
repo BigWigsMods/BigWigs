@@ -275,12 +275,12 @@ function mod:IllusionaryNight(args)
 	addsKilled = 0
 	wipe(essenceTargets)
 	self:Message(args.spellId, "Neutral", "Long", CL.count:format(args.spellName, illusionaryNightCount))
-	self:Bar(args.spellId, 32, CL.cast:format(CL.count:format(args.spellName, illusionaryNightCount)))
+	self:CastBar(args.spellId, 32, CL.count:format(args.spellName, illusionaryNightCount))
 	illusionaryNightCount = illusionaryNightCount + 1
 	if illusionaryNightCount < 3 then
 		self:Bar(args.spellId, 163, CL.count:format(args.spellName, illusionaryNightCount))
 	end
-	self:Bar(215988, 8.5, CL.cast:format(self:SpellName(215988))) -- Carrion Nightmare
+	self:CastBar(215988, 8.5) -- Carrion Nightmare
 
 	self:SetInfo(206466, 1, L.addsKilled)
 	self:SetInfo(206466, 2, addsKilled)
@@ -292,7 +292,7 @@ function mod:IllusionaryNight(args)
 end
 
 function mod:CarrionNightmare(args)
-	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 4)
 end
 
 function mod:EssenceOfNight(args)

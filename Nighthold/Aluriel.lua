@@ -202,7 +202,7 @@ end
 function mod:AnnihilateCast(args)
 	self:Message(args.spellId, "Important", self:Tank() and "Alarm", CL.casting:format(CL.count:format(args.spellName, annihilateCount)))
 	self:StopBar(CL.count:format(args.spellName, annihilateCount))
-	self:Bar(args.spellId, 7, CL.cast:format(CL.count:format(args.spellName, annihilateCount)))
+	self:CastBar(args.spellId, 7, CL.count:format(args.spellName, annihilateCount))
 	annihilateCount = annihilateCount + 1
 	self:Bar(args.spellId, timers[args.spellId][annihilateCount] or 37, CL.count:format(args.spellName, annihilateCount))
 end
@@ -368,17 +368,16 @@ function mod:ReplicateMarkOfFrost(args)
 end
 
 do
-	local guid, text = "", ""
+	local guid = ""
 	function mod:FrozenTempest(args)
 		guid = args.sourceGUID
 		self:Message(args.spellId, "Important")
-		text = CL.cast:format(args.spellName)
-		self:Bar(args.spellId, self:Mythic() and 10 or 12, text)
+		self:CastBar(args.spellId, self:Mythic() and 10 or 12)
 	end
 
 	function mod:IcyEnchantmentDeath(args)
 		if args.destGUID == guid then
-			self:StopBar(text)
+			self:StopBar(CL.cast:format(self:SpellName(213083))) -- Frozen Tempest
 		end
 	end
 end
@@ -517,7 +516,7 @@ do
 		if t-prev > 1 then -- Throttle because 8 adds cast it simultaneously
 			prev = t
 			self:Message(args.spellId, "Urgent", "Info")
-			self:Bar(args.spellId, self:Mythic() and 15 or 30, CL.cast:format(args.spellName))
+			self:CastBar(args.spellId, self:Mythic() and 15 or 30)
 		end
 	end
 end

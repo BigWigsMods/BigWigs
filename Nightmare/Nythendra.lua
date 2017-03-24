@@ -94,7 +94,7 @@ do
 	function mod:UNIT_SPELLCAST_START(_, spellName, _, _, spellId)
 		if spellId == 202977 then -- Infested Breath
 			self:Message(spellId, "Urgent", "Alarm", CL.casting:format(spellName))
-			self:Bar(spellId, 8, CL.cast:format(spellName)) -- 3s cast time + 5s channel
+			self:CastBar(spellId, 8) -- 3s cast time + 5s channel
 
 			if self:BarTimeLeft(203552) > 37 then -- Heart of the Swarm
 				self:CDBar(spellId, 37)
@@ -177,7 +177,7 @@ end
 
 function mod:HeartOfTheSwarm(args)
 	self:Message(args.spellId, "Neutral", "Info", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 23.7, CL.cast:format(args.spellName)) -- 3.7s cast time + 20s channel
+	self:CastBar(args.spellId, 23.7) -- 3.7s cast time + 20s channel
 	-- This is basically a phase, so start timers for next "normal" phase here
 	self:CDBar(args.spellId, 120)
 	self:CDBar(203096, 36.5) -- Rot, 23.7 + 12.8
@@ -238,7 +238,7 @@ function mod:InfestedMindCast(args)
 		self:Message(args.spellId, "Attention", "Long", CL.incoming:format(args.spellName))
 	end
 
-	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 3)
 
 	if self:BarTimeLeft(203552) > 36 then -- Heart of the Swarm
 		self:CDBar(args.spellId, 36)

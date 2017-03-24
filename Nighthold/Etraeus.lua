@@ -326,7 +326,7 @@ function mod:NetherTraversal(args)
 		self:StopBar(CL.cast:format(205408))
 		self:CloseProximity(205408)
 	end
-	self:Bar(args.spellId, 8.5, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 8.5)
 end
 
 do
@@ -423,7 +423,7 @@ end
 
 function mod:FrigidNova(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 4)
 	novaCount = novaCount + 1
 	self:CDBar(args.spellId, 61, CL.count:format(args.spellName, novaCount))
 end
@@ -445,7 +445,7 @@ end
 
 function mod:FelNova(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 4)
 	novaCount = novaCount + 1
 	self:Bar(args.spellId, (self:Mythic() and (novaCount == 2 and 48.5 or 51)) or 45, CL.count:format(args.spellName, novaCount))
 end
@@ -480,7 +480,7 @@ end
 --[[ Stage Four ]]--
 function mod:VoidNova(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 4)
 	self:CDBar(args.spellId, 75)
 end
 
@@ -511,7 +511,7 @@ end
 function mod:WitnessTheVoid(args)
 	self:StopBar(CL.count:format(args.spellName, voidCount)) -- will be replaced by a CL.cast bar
 	self:Message(args.spellId, "Attention", "Warning", CL.casting:format(CL.count:format(args.spellName, voidCount)))
-	self:Bar(args.spellId, self:Mythic() and 2.8 or 4, CL.cast:format(CL.count:format(args.spellName, voidCount)))
+	self:CastBar(args.spellId, self:Mythic() and 2.8 or 4, CL.count:format(args.spellName, voidCount))
 	voidCount = voidCount + 1
 	self:Bar(args.spellId, self:Mythic() and 16.2 or 18.6, CL.count:format(args.spellName, voidCount)) -- m: 13.4 cd + 2.8, hc = 14.6 cd + 4
 end
@@ -540,7 +540,7 @@ do
 
 		self:Message(args.spellId, "Attention", "Info", CL.count:format(args.spellName, grandCounter))
 		grandCounter = grandCounter + 1
-		self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+		self:CastBar(args.spellId, 4)
 		self:OpenProximity(args.spellId, 5) -- no idea if this range is reasonable
 
 		local timer = 47 -- assumed p4 cd as default
