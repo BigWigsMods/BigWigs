@@ -276,7 +276,7 @@ function mod:TormentedCries(args)
 	if tormentedCriesCounter <= 2 then -- XXX Need data for cast 3+
 		self:Bar(args.spellId, 120)
 	end
-	self:Bar(args.spellId, 60, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 60)
 end
 
 function mod:TormentedCriesApplied(args)
@@ -343,7 +343,7 @@ function mod:WailingSouls(args)
 	if wailingSoulsCounter <= 2 then -- XXX Need data for cast 3+
 		self:Bar(args.spellId, 120)
 	end
-	self:Bar(args.spellId, 60, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 60)
 end
 
 function mod:ShatteringScream(args)
@@ -359,13 +359,13 @@ end
 function mod:SunderingDoom(args)
 	self:Message(args.spellId, "Important", "Warning")
 	self:Bar(args.spellId, 23.1)
-	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 4)
 end
 
 function mod:DoomedSundering(args)
 	self:Message(args.spellId, "Important", "Warning")
 	self:Bar(args.spellId, 23.1)
-	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 4)
 end
 
 do

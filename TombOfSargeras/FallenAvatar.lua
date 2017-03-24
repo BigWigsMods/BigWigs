@@ -215,7 +215,7 @@ end
 
 function mod:CleansingProtocol(args)
 	self:Message(args.spellId, "Urgent", "Alarm", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 18, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 18)
 end
 
 function mod:Malfunction(args)
@@ -254,8 +254,8 @@ end
 
 function mod:RuptureRealitiesP2(args)
 	ruptureRealitiesCounter = ruptureRealitiesCounter + 1
-	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(CL.count:format(args.spellName, ruptureRealitiesCounter)))
-	self:Bar(args.spellId, 7.5, CL.cast:format(args.spellName, (ruptureRealitiesCounter-1)))
+	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(CL.count:format(args.spellName, (ruptureRealitiesCounter-1))))
+	self:CastBar(args.spellId, 7.5, CL.count:format(args.spellName, (ruptureRealitiesCounter-1)))
 	self:Bar(args.spellId, 28, CL.count:format(args.spellName, ruptureRealitiesCounter))
 end
 

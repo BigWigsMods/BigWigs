@@ -64,7 +64,7 @@ function mod:OnBossEnable()
 	-- General
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
 	self:Log("SPELL_AURA_APPLIED", "HydraShot", 230139)
-	self:Log("SPELL_AURA_REMOVED", "HydraShotRemoved", 230139)	
+	self:Log("SPELL_AURA_REMOVED", "HydraShotRemoved", 230139)
 	self:Log("SPELL_CAST_START", "BurdenofPainCast", 230201)
 	self:Log("SPELL_CAST_SUCCESS", "BurdenofPain", 230201)
 
@@ -132,7 +132,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 
 			self:Bar(232913, 11) -- Befouling Ink
 			if not self:LFR() then
-				self:Bar(230139, 25.5) -- Hydra Shot 
+				self:Bar(230139, 25.5) -- Hydra Shot
 			end
 			self:Bar(230201, 25.6) -- Burden of Pain
 			self:Bar(232827, 30.4) -- Crashing Wave
@@ -160,7 +160,7 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Important", "Warning", nil, nil, true)
-			self:Bar(args.spellId, 6, CL.casting:format(args.spellName))
+			self:CastBar(args.spellId, 6)
 			self:Bar(args.spellId, phase == 2 and 30 or 40)
 		end
 		if self:GetOption(hydraShotMarker) then
@@ -225,7 +225,7 @@ end
 function mod:CrashingWave(args)
 	waveCounter = waveCounter + 1
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 4, CL.casting:format(args.spellName))
+	self:CastBar(args.spellId, 4)
 	self:Bar(args.spellId, phase == 3 and (waveCounter == 2 and 55.5 or 42) or 42) -- XXX need more data in p3
 end
 
