@@ -116,11 +116,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		if timer then
 			self:Bar("cometSpike", timer, L.cometSpike_bar, L.cometSpike_icon)
 		end
-	elseif spellId == 233285 then -- Raun of Brimstone
+	elseif spellId == 233285 then -- Rain of Brimstone
 		rainCounter = rainCounter + 1
 		self:Message(238588, "Urgent", "Warning", CL.incoming:format(spellName))
 		self:Bar(238588, raincounter < 7 and (rainCounter % 2 == 0 and 24 or 36) or raincounter > 7 and 60 or 47, CL.count:format(spellName, rainCounter))
-		self:Bar(238588, 8, CL.cast:format(spellName))
+		self:CastBar(args.spellId, 8) -- XXX Maybe a "meteor landing" text would be more clear?
 	end
 end
 
@@ -157,7 +157,7 @@ end
 function mod:ShatteringStarDebuff(args)
 	shatteringCounter = shatteringCounter + 1
 	self:TargetMessage(233279, args.destName, "Attention", "Alarm")
-	self:Bar(233279, 6, CL.cast:format(args.spellName)) -- <cast: Shattering Star>
+	self:CastBar(233279, 6, args.spellName) -- <cast: Shattering Star>
 	self:Bar(233279, (self:Mythic() and shatteringTimersMythic[shatteringCounter] or shatteringTimers[shatteringCounter]) or (self:Mythic() and 30 or (shatteringCounter % 2 == 1 and 20 or 40))) -- Shattering Star
 	if self:Me(args.destGUID) then
 		self:Say(233279)
@@ -168,7 +168,7 @@ end
 function mod:InfernalBurning(args)
 	burningCounter = burningCounter + 1
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 6)
 	self:Bar(args.spellId, burningCounter == 4 and 64 or 60)
 end
 

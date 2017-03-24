@@ -111,14 +111,14 @@ do
 	end
 	function mod:CalcifiedQuills(args)
 		self:GetBossTarget(printTarget, 0.7, args.sourceGUID)
-		self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+		self:CastBar(args.spellId, 3)
 		self:Bar(args.spellId, 21.5)
 	end
 end
 
 function mod:BoneSaw(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 15, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 15)
 	self:Bar(args.spellId, 60.5)
 end
 
@@ -163,6 +163,6 @@ end
 
 function mod:FelSquall(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 15, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 15)
 	self:Bar(args.spellId, 60.5)
 end

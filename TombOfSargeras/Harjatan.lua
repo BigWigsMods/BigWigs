@@ -141,7 +141,7 @@ end
 function mod:DrawIn(args)
 	drawInCasting = true
 	self:Message(args.spellId, "Important", "Alert", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 10, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 10)
 end
 
 function mod:DrawInSuccess(args)
