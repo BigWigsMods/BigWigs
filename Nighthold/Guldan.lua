@@ -35,6 +35,7 @@ local liquidHellfireEmpowered = false
 local eyeEmpowered = false
 local bondsEmpowered = false
 local expectedBonds = mod:Mythic() and 4 or 3
+local parasiteSayTimers = {}
 local normalTimers = {
 	-- Black Harvest (206744 _start), after 227427 _applied
 	[206744] = {71.2, 82.8, 100}, -- not sure if complete
@@ -242,10 +243,13 @@ function mod:OnBossEnable()
 	-- Mythic
 	self:Log("SPELL_CAST_START", "WilloftheDemonWithin", 211439)
 	self:Log("SPELL_AURA_APPLIED", "ParasiticWound", 206847)
+	self:Log("SPELL_AURA_REMOVED", "ParasiticWoundRemoved", 206847)
 	self:Log("SPELL_AURA_APPLIED", "ShadowyGaze", 206983)
 	self:Log("SPELL_AURA_APPLIED", "ShearedSoul", 206458)
 	self:Log("SPELL_AURA_APPLIED", "Wounded", 227009)
 	self:Log("SPELL_CAST_START", "Soulsever", 220957)
+	self:Log("SPELL_AURA_APPLIED", "TimeStop", 206310)
+	self:Log("SPELL_AURA_REMOVED", "TimeStopRemoved", 206310)
 	self:Log("SPELL_CAST_START", "VisionsoftheDarkTitan", 227008)
 	self:Log("SPELL_CAST_SUCCESS", "VisionsoftheDarkTitanSuccess", 227008)
 
@@ -702,15 +706,49 @@ do
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
-			self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
-			self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
-			self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
+			for i = 1, 3 do
+				if remaining-i > 0 then
+					parasiteSayTimers[#parasiteSayTimers+1] = self:ScheduleTimer("Say", remaining-i, 206847, i, true)
+				end
+			end
 		end
 
 		playerList[#playerList+1] = args.destName
 
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Urgent", "Alarm", nil, nil, true)
+		end
+	end
+end
+
+function mod:ParasiticWoundRemoved(args) -- Stop Parasite Say Messages
+	if self:Me(args.destGUID) then
+		for _,timer in pairs(parasiteSayTimers) do
+			self:CancelTimer(timer)
+		end
+		wipe(parasiteSayTimers)
+	end
+end
+
+function mod:TimeStop(args) -- Stop Parasite Say Messages
+	if self:Me(args.destGUID) then
+		for _,timer in pairs(parasiteSayTimers) do
+			self:CancelTimer(timer)
+		end
+		wipe(parasiteSayTimers)
+	end
+end
+
+function mod:TimeStopRemoved(args) -- Resume Parasite Say Messages
+	if self:Me(args.destGUID) then
+		local debuff, _, _, _, _, _, expires = UnitDebuff("player", self:SpellName(206847))
+		if not debuff then return end
+		local remaining = floor(expires - GetTime())
+
+		for i = 1, 3 do
+			if remaining-i > 0 then
+				parasiteSayTimers[#parasiteSayTimers+1] = self:ScheduleTimer("Say", remaining-i, 206847, i, true)
+			end
 		end
 	end
 end
