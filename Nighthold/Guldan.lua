@@ -26,6 +26,7 @@ local blackHarvestCount = 1
 local stormCount = 1
 local flamesCount = 1
 local eyeCount = 1
+local eyeOnMe = false
 local severCount = 1
 local crashCounter = 1
 local orbCounter = 1
@@ -219,6 +220,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EyeOfGuldan", 209270, 211152) -- Normal, Empowered
 	self:Log("SPELL_AURA_APPLIED", "EyeOfGuldanApplied", 209454, 221728) -- Normal, Empowered
 	self:Log("SPELL_AURA_REMOVED", "EyeOfGuldanRemoved", 209454, 221728) -- Normal, Empowered
+	self:Log("SPELL_DAMAGE", "EyeofGuldandDamage", 209518, 211132) -- Normal, Empowered
+	self:Log("SPELL_MISSED", "EyeofGuldandDamage", 209518, 211132) -- Normal, Empowered
 	self:Log("SPELL_CAST_START", "CarrionWave", 208672)
 
 	--[[ Stage Three ]]--
@@ -269,6 +272,7 @@ function mod:OnEngage()
 	stormCount = 1
 	flamesCount = 1
 	eyeCount = 1
+	eyeOnMe = false
 	obeliskCounter = 1
 	timeStopCheck = nil
 	liquidHellfireEmpowered = false
@@ -565,15 +569,35 @@ end
 
 function mod:EyeOfGuldanApplied(args)
 	if self:Me(args.destGUID) then
+		eyeOnMe = true
 		local id = args.spellId == 209454 and 209270 or 211152
-		self:Message(id, "Personal", "Alert", CL.you:format(L[id] or args.spellName))
+		local spellName = args.spellId == 209518 and args.spellName or L.empowered:format(args.spellName)
+		self:Message(id, "Personal", "Alert", CL.you:format(spellName))
 		self:OpenProximity(id, 8)
 	end
 end
 
 function mod:EyeOfGuldanRemoved(args)
 	if self:Me(args.destGUID) then
+		eyeOnMe = false
 		self:CloseProximity(args.spellId == 209454 and 209270 or 211152)
+	end
+end
+
+do
+	local prev = 0
+	function mod:EyeofGuldandDamage(args)
+		if self:Me(args.destGUID) then
+			local id = args.spellId == 209518 and 209270 or 211152
+			local spellName = args.spellId == 209518 and args.spellName or L.empowered:format(args.spellName)
+			local t = GetTime()
+			if t-prev < 0.5 then -- Warn if you take more than one tick
+				self:Message(id, "Personal", "Alert", CL.underyou:format(spellName))
+			elseif eyeOnMe == false then -- Always warn if you arn't fixated
+				self:Message(id, "Personal", "Alert", CL.underyou:format(spellName))
+			end
+			prev = t
+		end
 	end
 end
 
