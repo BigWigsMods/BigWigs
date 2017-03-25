@@ -11,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Trilliax", 1088, 1731)
 if not mod then return end
 mod:RegisterEnableMob(104288)
 mod.engageId = 1867
-mod.respawnTime = 30 -- might be wrong
+mod.respawnTime = 15
 
 --------------------------------------------------------------------------------
 -- Locals
