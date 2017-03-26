@@ -412,7 +412,7 @@ function mod:Phase3Start(args) -- The Eye of Aman'thul applied (227427)
 	self:CDBar("winds", 11.5, CL.count:format(self:SpellName(218144), blackHarvestCount), 218144) -- Violent Winds, using blackHarvestCount, only once below Mythic.
 	self:Bar(221606, self:Mythic() and 24.5 or self:Heroic() and 27.5 or 29.3) -- Flames of Sargeras
 	self:Bar(211152, timers[211152][eyeCount], CL.count:format(L.empowered:format(self:SpellName(209270)), eyeCount)) -- Empowered Eye of Gul'dan
-	self:Bar(206744, timers[206744][blackHarvestCount]) -- Black Harvest
+	self:Bar(206744, timers[206744][blackHarvestCount], CL.count:format(self:SpellName(206744), blackHarvestCount)) -- Black Harvest
 	self:Bar(167935, self:Easy() and 94 or timers[167935][stormCount]) -- Storm of the Destroyer
 end
 
@@ -647,11 +647,11 @@ function mod:SoulCorrosion(args)
 end
 
 function mod:BlackHarvest(args)
-	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(args.spellName))
+	self:Message(args.spellId, "Urgent", "Alert", CL.count:format(args.spellName, blackHarvestCount))
 	blackHarvestCount = blackHarvestCount + 1
 	local timer = timers[args.spellId][blackHarvestCount]
 	if timer or self:Easy() then -- message for incomplete easy timers
-		self:CDBar(args.spellId, timer)
+		self:CDBar(args.spellId, timer, CL.count:format(args.spellName, blackHarvestCount))
 	end
 	-- Violet Winds timers
 	if self:Mythic() then
