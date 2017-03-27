@@ -571,7 +571,7 @@ function mod:EyeOfGuldanApplied(args)
 	if self:Me(args.destGUID) then
 		eyeOnMe = true
 		local id = args.spellId == 209454 and 209270 or 211152
-		local spellName = args.spellId == 209518 and args.spellName or L.empowered:format(args.spellName)
+		local spellName = args.spellId == 209454 and args.spellName or L.empowered:format(args.spellName)
 		self:Message(id, "Personal", "Alert", CL.you:format(spellName))
 		self:OpenProximity(id, 8)
 	end
