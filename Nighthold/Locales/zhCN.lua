@@ -52,26 +52,6 @@ if L then
 	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000天狼|r"
 	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00猎户|r"
 	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFF天龙|r"
-
-	L.nameplate_requirement = "此功能当前只支持 KuiNameplates。只限史诗难度。"
-
-	L.custom_off_icy_ejection_nameplates = "显示 {206936} 到友方姓名板。" -- Icy Ejection
-	L.custom_off_icy_ejection_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_fel_ejection_nameplates = "显示 {205649} 到友方姓名板。" -- Fel Ejection
-	L.custom_on_fel_ejection_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_gravitational_pull_nameplates = "显示 {214335} 到友方姓名板。" -- Gravitational Pull
-	L.custom_on_gravitational_pull_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_grand_conjunction_nameplates = "显示 {205408} 到友方姓名板。" -- Grand Conjunction
-	L.custom_on_grand_conjunction_nameplates_desc = L.nameplate_requirement
-
-	L.custom_off_gc_replacement_icons = "{205408} 使用更明亮些的图标"
-	L.custom_off_gc_replacement_icons_desc = "替换姓名板上强力联结图标获得更加的视觉效果："
-
-	L.custom_off_gc_redgreen_icons = "{205408} 只使用红色和绿色"
-	L.custom_off_gc_redgreen_icons_desc = "更改姓名板匹配星座标记图标为 |T876914:15:15:0:0:64:64:4:60:4:60|t 不匹配星座标记为 |T876915:15:15:0:0:64:64:4:60:4:60|t。"
 end
 
 L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "zhCN")
