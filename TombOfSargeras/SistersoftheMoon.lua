@@ -1,4 +1,3 @@
-if select(4, GetBuildInfo()) < 70200 then return end -- XXX dont load on live
 
 --------------------------------------------------------------------------------
 -- TODO List:
