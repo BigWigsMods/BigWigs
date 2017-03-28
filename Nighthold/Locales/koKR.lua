@@ -52,20 +52,6 @@ if L then
 	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000늑대|r"
 	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00사냥꾼|r"
 	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFF용|r"
-
-	L.nameplate_requirement = "이 기능은 현재 KuiNameplates만 지원됩니다. 신화 난이도만 ."
-
-	L.custom_off_icy_ejection_nameplates = "아군 이름표에 {206936} 표시" -- Icy Ejection
-	L.custom_off_icy_ejection_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_fel_ejection_nameplates = "아군 이름표에 {205649} 표시" -- Fel Ejection
-	L.custom_on_fel_ejection_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_gravitational_pull_nameplates = "아군 이름표에 {214335} 표시" -- Gravitational Pull
-	L.custom_on_gravitational_pull_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_grand_conjunction_nameplates = "아군 이름표에 {205408} 표시" -- Grand Conjunction
-	L.custom_on_grand_conjunction_nameplates_desc = L.nameplate_requirement
 end
 
 L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "koKR")
