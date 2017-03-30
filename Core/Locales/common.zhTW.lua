@@ -19,7 +19,7 @@ L.custom_start = "%1$s參戰 - %3$d分後>%2$s<！"
 L.custom_start_s = "%1$s參戰 - %3$d秒後>%2$s<！"
 L.duration = ">%s< 持續%s秒"
 L.focus_only = "只限專注目標 "
-L.general = "通用"
+L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.hard = "困難模式"
 L.heroic = "英雄模式"
 L.incoming = "即將>%s<！"
@@ -48,6 +48,8 @@ L.stage = "階段 %d"
 L.trash = "小怪"
 L.underyou = ">你<腳下：%s！"
 L.you = ">你< %s！"
+
+--L.active = "Active" -- When a boss becomes active, after speech finishes
 
 -- Common raid marking locale
 L.marker = "%s標記"
