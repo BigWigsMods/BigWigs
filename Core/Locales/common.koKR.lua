@@ -23,6 +23,7 @@ L.normal = "일반 난이도"
 L.heroic = "영웅 난이도"
 L.hard = "강화 난이도"
 L.mythic = "신화 난이도"
+--L.active = "Active" -- When a boss becomes active, after speech finishes
 L.general = "일반" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 
 L.duration = "%s %s초 남음"

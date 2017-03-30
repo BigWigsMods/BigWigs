@@ -19,7 +19,7 @@ L.custom_start = "%1$s激活 - %3$d分后>%2$s<！"
 L.custom_start_s = "%1$s激活 - %3$d秒后>%2$s<！"
 L.duration = ">%s< 持续%s秒"
 L.focus_only = "|cffff0000只警报焦点目标。|r"
-L.general = "通用"
+L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.hard = "困难模式"
 L.heroic = "英雄模式"
 L.incoming = "即将>%s<！"
@@ -48,6 +48,8 @@ L.stage = "阶段 %d"
 L.trash = "小怪"
 L.underyou = ">你<脚下：%s！"
 L.you = ">你< %s！"
+
+--L.active = "Active" -- When a boss becomes active, after speech finishes
 
 -- Common raid marking locale
 L.marker = "%s标记"

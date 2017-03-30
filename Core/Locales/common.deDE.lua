@@ -19,7 +19,7 @@ L.custom_start = "%s angegriffen – %s in %d Min"
 L.custom_start_s = "%s angegriffen – %s in %d Sek"
 L.duration = "%s für %s sec"
 L.focus_only = "|cffff0000Warnungen nur für Fokusziel.|r "
-L.general = "Allgemein"
+L.general = "Allgemein" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.hard = "Hard Mode"
 L.heroic = "Heroischer Modus"
 L.incoming = "%s bevorstehend!"
@@ -48,6 +48,8 @@ L.stage = "Phase %d"
 L.trash = "Trash"
 L.underyou = "%s unter DIR!"
 L.you = "%s auf DIR!"
+
+--L.active = "Active" -- When a boss becomes active, after speech finishes
 
 -- Common raid marking locale
 L.marker = "%s markieren"
