@@ -76,6 +76,7 @@ if L then
 	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
 
 	L.nightorb_desc = "Invoque un orbe de nuit, faisant apparaître une zone temporelle une fois détruit."
+	--L.timeStopZone = "Time Stop Zone"
 
 	L.manifest_desc = "Invoque un fragment d'âme d'Azzinoth, faisant apparaître une Essence démononiaque une fois détruit."
 
@@ -114,4 +115,3 @@ if L then
 	--[[ Aluriel to Tichondrius ]]--
 	L.watcher = "Guetteur des abîmes"
 end
-

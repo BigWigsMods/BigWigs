@@ -76,6 +76,7 @@ if L then
 	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
 
 	L.nightorb_desc = "召喚一個夜之球，擊殺它會生成一個時間停止力場。"
+	--L.timeStopZone = "Time Stop Zone"
 
 	L.manifest_desc = "召喚一個埃辛諾斯靈魂碎片，擊殺它會生成一個惡魔精華。"
 
@@ -114,4 +115,3 @@ if L then
 	--[[ Aluriel to Tichondrius ]]--
 	L.watcher = "暮衛哨兵"
 end
-
