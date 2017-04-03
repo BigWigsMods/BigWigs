@@ -31,6 +31,7 @@ local severCount = 1
 local crashCounter = 1
 local orbCounter = 1
 local visionCounter = 1
+local essenceCount = 1
 local timeStopCheck = nil
 local liquidHellfireEmpowered = false
 local eyeEmpowered = false
@@ -95,6 +96,7 @@ if L then
 	L.nightorb = "{227283}"
 	L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone."
 	L.nightorb_icon = "inv_icon_shadowcouncilorb_purple"
+	L.timeStopZone = "Time Stop Zone"
 
 	L.manifest = "{221149}"
 	L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence."
@@ -261,6 +263,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BulwarkofAzzinoth", 221408)
 	self:Log("SPELL_CAST_START", "PurifiedEssence", 221486)
 	self:Log("SPELL_CAST_SUCCESS", "PurifiedEssenceSuccess", 221486)
+
+	self:Death("NightorbDeath", 111054)
 end
 
 function mod:OnEngage()
@@ -274,6 +278,7 @@ function mod:OnEngage()
 	eyeCount = 1
 	eyeOnMe = false
 	obeliskCounter = 1
+	essenceCount = 1
 	timeStopCheck = nil
 	liquidHellfireEmpowered = false
 	bondsEmpowered = false
@@ -813,15 +818,16 @@ do
 			-- Nothing
 		elseif not UnitDebuff("player", timeStop) then
 			self:Message(206310, "Personal", "Warning", CL.no:format(timeStop))
-			timeStopCheck = self:ScheduleTimer(checkForTimeStop, 1, self)
+			timeStopCheck = self:ScheduleTimer(checkForTimeStop, 1.5, self)
 		else
 			self:Message(206310, "Positive", nil, CL.you:format(timeStop))
 		end
 	end
 
 	function mod:PurifiedEssence(args)
-		self:Message(args.spellId, "Important", "Alarm", CL.cast:format(args.spellName))
-		self:CastBar(args.spellId, 4)
+		self:Message(args.spellId, "Important", "Alarm", CL.cast:format(CL.count:format(args.spellName, essenceCount)))
+		essenceCount = essenceCount + 1
+		self:CastBar(args.spellId, 4, CL.count:format(args.spellName, essenceCount))
 		if not timeStopCheck then
 			checkForTimeStop(self)
 		end
@@ -867,4 +873,8 @@ end
 
 function mod:BulwarkofAzzinoth(args)
 	self:Message(args.spellId, "Urgent", "Alert")
+end
+
+function mod:NightorbDeath(args)
+	self:Bar(206310, 10, CL.count:format(L.timeStopZone, orbCounter-1))
 end
