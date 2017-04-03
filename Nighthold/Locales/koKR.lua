@@ -76,7 +76,7 @@ if L then
 	L.p4_mythic_start_yell = "악마사냥꾼의 영혼을 육신으로 돌려보내야 할 때요... 군단의 주인을 거부해야 하오!"
 
 	L.nightorb_desc = "밤의 보주를 소환합니다, 처치하면 시간 지역이 생성됩니다."
-	--L.timeStopZone = "Time Stop Zone"
+	L.timeStopZone = "시간 정지 지역"
 
 	L.manifest_desc = "아지노스의 영혼 파편을 소환합니다, 처치하면 악마의 정수가 생성됩니다."
 
