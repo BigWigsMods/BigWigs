@@ -76,6 +76,7 @@ if L then
 	L.p4_mythic_start_yell = "악마사냥꾼의 영혼을 육신으로 돌려보내야 할 때요... 군단의 주인을 거부해야 하오!"
 
 	L.nightorb_desc = "밤의 보주를 소환합니다, 처치하면 시간 지역이 생성됩니다."
+	--L.timeStopZone = "Time Stop Zone"
 
 	L.manifest_desc = "아지노스의 영혼 파편을 소환합니다, 처치하면 악마의 정수가 생성됩니다."
 
@@ -104,9 +105,9 @@ if L then
 
 	--[[ Aluriel to Telarn ]]--
 	L.weaver = "황혼감시대 역술사"
-        L.archmage = "샬도레이 대마법사"
-        L.manasaber = "길들인 마나호랑이"
-        L.naturalist = "샬도레이 박물학자"
+	L.archmage = "샬도레이 대마법사"
+	L.manasaber = "길들인 마나호랑이"
+	L.naturalist = "샬도레이 박물학자"
 
 	--[[ Aluriel to Krosus ]]--
 	L.infernal = "불타는 지옥불정령"

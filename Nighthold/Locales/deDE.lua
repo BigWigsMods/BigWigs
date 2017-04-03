@@ -76,6 +76,7 @@ if L then
 	L.p4_mythic_start_yell = "Zeit, die Seele des Dämonenjägers seinem Körper zurückzugeben... und der Legion einen Wirt zu nehmen!"
 
 	L.nightorb_desc = "Beschwört eine Nachtkugel, beim Töten dieser Kugel erscheint eine Zeitzone."
+	--L.timeStopZone = "Time Stop Zone"
 
 	L.manifest_desc = "Beschwört ein Seelenfragment von Azzinoth, beim Töten des Fragments erscheint eine Dämonische Essenz."
 
@@ -114,4 +115,3 @@ if L then
 	--[[ Aluriel to Tichondrius ]]--
 	L.watcher = "Abgrundbeobachter"
 end
-
