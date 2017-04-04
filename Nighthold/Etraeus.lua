@@ -1,9 +1,5 @@
 
 --------------------------------------------------------------------------------
--- TODO List:
--- - XXX Add core options for nameplates so we can remove the custom ones here.
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -88,39 +84,6 @@ if L then
 	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000Wolf|r"
 	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00Hunter|r"
 	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFFDragon|r"
-
-	-- XXX replace with core option
-	L.nameplate_requirement = "This feature is currently only supported by KuiNameplates. Mythic only."
-
-	L.custom_off_icy_ejection_nameplates = "Show {206936} on friendly nameplates" -- Icy Ejection
-	L.custom_off_icy_ejection_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_fel_ejection_nameplates = "Show {205649} on friendly nameplates" -- Fel Ejection
-	L.custom_on_fel_ejection_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_gravitational_pull_nameplates = "Show {214335} on friendly nameplates" -- Gravitational Pull
-	L.custom_on_gravitational_pull_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_grand_conjunction_nameplates = "Show {205408} on friendly nameplates" -- Grand Conjunction
-	L.custom_on_grand_conjunction_nameplates_desc = L.nameplate_requirement
-
-	-- Do no replace this options below
-	L.custom_off_gc_replacement_icons = "Use brighter icons for {205408}"
-	L.custom_off_gc_replacement_icons_desc = "Replace the nameplate icons used by Grand Conjunction for better visibility:"
-
-	L.custom_off_gc_redgreen_icons = "Only use red and green icons for {205408}"
-	L.custom_off_gc_redgreen_icons_desc = "Change the nameplate icons for matching star signs to |T876914:15:15:0:0:64:64:4:60:4:60|t and non matching star signs to |T876915:15:15:0:0:64:64:4:60:4:60|t."
-end
-
-do -- Create the description string for the replacement icons
-	local s = ""
-	local tex = "|T%s:15:15:0:0:64:64:4:60:4:60|t"
-	for k,v in pairs(replacementIcons) do
-		local _,_,kicon = GetSpellInfo(k)
-		local _,_,vicon = GetSpellInfo(v)
-		s = s .. "\n" .. tex:format(kicon) .. " => ".. tex:format(vicon)
-	end
-	L.custom_off_gc_replacement_icons_desc = L.custom_off_gc_replacement_icons_desc .. s
 end
 
 --------------------------------------------------------------------------------
@@ -160,12 +123,6 @@ function mod:GetOptions()
 
 		--[[ Mythic ]]--
 		{205408, "INFOBOX", "PROXIMITY"}, -- Grand Conjunction
-		"custom_off_icy_ejection_nameplates",
-		"custom_on_fel_ejection_nameplates",
-		"custom_on_gravitational_pull_nameplates",
-		"custom_on_grand_conjunction_nameplates",
-		"custom_off_gc_replacement_icons",
-		"custom_off_gc_redgreen_icons",
 	}, {
 		["stages"] = "general",
 		[206464] = -13033, -- Stage One
@@ -217,19 +174,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "GrandConjunctionSuccess", 205408)
 	self:Log("SPELL_AURA_APPLIED", "StarSigns", 205429, 205445, 216345, 216344) -- Star Sign: Crab, Wolf, Hunter, Dragon
 	self:Log("SPELL_AURA_REMOVED", "StarSignsRemoved", 205429, 205445, 216345, 216344)
-
-	-- XXX remove in 7.2
-	if self:Mythic() then
-		if self:GetOption("custom_off_icy_ejection_nameplates") or -- XXX maybe add these to ShowFriendlyNameplates?
-				self:GetOption("custom_on_fel_ejection_nameplates") or
-				self:GetOption("custom_on_gravitational_pull_nameplates") or
-				self:GetOption("custom_on_grand_conjunction_nameplates") then
-
-			-- Experimenting with using callbacks for nameplate addons
-			self:SendMessage("BigWigs_EnableFriendlyNameplates", self)
-			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED") -- see comment above the function for explanation
-		end
-	end
 end
 
 function mod:OnEngage()
@@ -261,7 +205,6 @@ end
 
 function mod:OnBossDisable()
 	wipe(mobCollector)
-	self:SendMessage("BigWigs_DisableFriendlyNameplates", self) -- XXX remove in 7.2
 end
 
 --------------------------------------------------------------------------------
@@ -313,7 +256,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		if not self:Easy() then
 			self:CDBar(207439, 42, CL.count:format(self:SpellName(207439), novaCount)) -- Void Nova
 		end
-		self:Berserk(201.5, true, nil, 222761, 222761) -- Big Bang (end of cast)
+		self:Berserk(self:Mythic() and 201.5 or 231.5, true, nil, 222761, 222761) -- Big Bang (end of cast)
 		if self:Mythic() then
 			self:StopBar(CL.count:format(self:SpellName(205408), grandCounter)) -- Grand Conjunction
 			grandCounter = 1
@@ -330,7 +273,7 @@ function mod:NetherTraversal(args)
 		self:StopBar(CL.cast:format(205408))
 		self:CloseProximity(205408)
 	end
-	self:Bar(args.spellId, 8.5, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 8.5)
 end
 
 do
@@ -376,10 +319,6 @@ function mod:GravitationalPull(args)
 		gravPullSayTimers[2] = self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
 		gravPullSayTimers[3] = self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
 	end
-
-	if self:GetOption("custom_on_gravitational_pull_nameplates") then
-		self:AddPlate(args.spellId, args.destName, remaining)
-	end
 end
 
 function mod:GravitationalPullRemoved(args)
@@ -389,7 +328,6 @@ function mod:GravitationalPullRemoved(args)
 			gravPullSayTimers[i] = nil
 		end
 	end
-	self:RemovePlate(args.spellId, args.destName)
 end
 
 function mod:IcyEjection(args)
@@ -412,22 +350,17 @@ function mod:IcyEjectionApplied(args)
 			self:ScheduleTimer("Say", 9, args.spellId, 1, true)
 		end
 	end
-
-	if self:GetOption("custom_off_icy_ejection_nameplates") then
-		self:AddPlate(args.spellId, args.destName, 8)
-	end
 end
 
 function mod:IcyEjectionRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
 	end
-	self:RemovePlate(args.spellId, args.destName)
 end
 
 function mod:FrigidNova(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 4)
 	novaCount = novaCount + 1
 	self:CDBar(args.spellId, 61, CL.count:format(args.spellName, novaCount))
 end
@@ -449,7 +382,7 @@ end
 
 function mod:FelNova(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 4)
 	novaCount = novaCount + 1
 	self:Bar(args.spellId, (self:Mythic() and (novaCount == 2 and 48.5 or 51)) or 45, CL.count:format(args.spellName, novaCount))
 end
@@ -468,23 +401,18 @@ function mod:FelEjectionApplied(args)
 		self:Say(args.spellId)
 		self:TargetBar(args.spellId, 8, args.destName)
 	end
-
-	if self:GetOption("custom_on_fel_ejection_nameplates") then
-		self:AddPlate(args.spellId, args.destName, 8)
-	end
 end
 
 function mod:FelEjectionRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", nil, CL.removed:format(args.spellName))
 	end
-	self:RemovePlate(args.spellId, args.destName)
 end
 
 --[[ Stage Four ]]--
 function mod:VoidNova(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 4)
 	self:CDBar(args.spellId, 75)
 end
 
@@ -515,7 +443,7 @@ end
 function mod:WitnessTheVoid(args)
 	self:StopBar(CL.count:format(args.spellName, voidCount)) -- will be replaced by a CL.cast bar
 	self:Message(args.spellId, "Attention", "Warning", CL.casting:format(CL.count:format(args.spellName, voidCount)))
-	self:Bar(args.spellId, self:Mythic() and 2.8 or 4, CL.cast:format(CL.count:format(args.spellName, voidCount)))
+	self:CastBar(args.spellId, self:Mythic() and 2.8 or 4, CL.count:format(args.spellName, voidCount))
 	voidCount = voidCount + 1
 	self:Bar(args.spellId, self:Mythic() and 16.2 or 18.6, CL.count:format(args.spellName, voidCount)) -- m: 13.4 cd + 2.8, hc = 14.6 cd + 4
 end
@@ -544,7 +472,7 @@ do
 
 		self:Message(args.spellId, "Attention", "Info", CL.count:format(args.spellName, grandCounter))
 		grandCounter = grandCounter + 1
-		self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+		self:CastBar(args.spellId, 4)
 		self:OpenProximity(args.spellId, 5) -- no idea if this range is reasonable
 
 		local timer = 47 -- assumed p4 cd as default
@@ -617,42 +545,8 @@ do
 	end
 
 	function mod:StarSigns(args)
-		if self:GetOption("custom_on_grand_conjunction_nameplates") then
-			if not self:GetOption("custom_off_gc_redgreen_icons") then
-				self:AddPlate(icons[args.spellId], args.destName, 10, false, mySign and args.spellId ~= mySign)
-			elseif mySign then
-				if mySign == args.spellId then -- matching
-					self:AddPlate(greenIcon, args.destName, 10)
-				else -- non matching
-					self:AddPlate(redIcon, args.destName, 10)
-				end
-			end
-		end
-
 		if self:Me(args.destGUID) then
 			mySign = args.spellId
-
-			if self:GetOption("custom_on_grand_conjunction_nameplates") then
-				for spellId,players in pairs(starSignTables) do
-					if spellId ~= mySign then -- non matching
-						for _,name in pairs(players) do
-							if self:GetOption("custom_off_gc_redgreen_icons") then
-								self:AddPlate(redIcon, name, 10)
-							else
-								self:AddPlate(icons[spellId], name, 10, false, true) -- Desaturate existing non matching icon
-							end
-						end
-					else -- matching
-						for _,name in pairs(players) do
-							if self:GetOption("custom_off_gc_redgreen_icons") then
-								self:AddPlate(greenIcon, name, 10)
-							else
-								self:AddPlate(icons[spellId], name, 10, false, false) -- Saturate existing matching icons
-							end
-						end
-					end
-				end
-			end
 
 			if #starSignTables[mySign] == 4 then
 				warn(self)
@@ -681,28 +575,6 @@ do
 			if not scheduled then
 				scheduled = self:ScheduleTimer(warn, 0.1, self)
 			end
-		end
-
-		if self:GetOption("custom_off_gc_redgreen_icons") then
-			-- we instantly forget our sign, so just remove both possible icons
-			self:RemovePlate(redIcon, args.destName)
-			self:RemovePlate(greenIcon, args.destName)
-		else
-			self:RemovePlate(icons[args.spellId], args.destName)
-		end
-	end
-
-	-- XXX remove in 7.2
-	-- If a player dies while he has a Star Sign, it will not get removed. This
-	-- is intented behaviour, so players with matching signs can still clear theirs
-	-- with the corpse.
-	-- If the player gets combat rezzed however, the star sign will be removed
-	-- without a SPELL_AURA_REMOVED event. This will result in auras being "stuck"
-	-- on the nameplates of said player.
-	-- So if a player dies, we will just remove every aura from his nameplate.
-	function mod:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, _, _, _, _, _, destName)
-		if event == "UNIT_DIED" and UnitIsPlayer(destName) then
-			self:RemovePlate(nil, destName) -- Clear all icons from the nameplate
 		end
 	end
 end

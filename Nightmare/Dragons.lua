@@ -346,7 +346,7 @@ end
 
 function mod:BellowingRoar(args)
 	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 6)
 	self:Bar(args.spellId, 51)
 end
 

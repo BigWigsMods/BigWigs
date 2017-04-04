@@ -52,20 +52,6 @@ if L then
 	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000Волк|r"
 	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00Охотник|r"
 	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFFДракон|r"
-
-	L.nameplate_requirement = "Эта функция пока лишь поддерживается аддоном KuiNameplates. Только эпохальная сложность."
-
-	L.custom_off_icy_ejection_nameplates = "Показывать {206936} на дружелюбных неймплейтах" -- Icy Ejection
-	L.custom_off_icy_ejection_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_fel_ejection_nameplates = "Показывать {205649} на дружелюбных неймплейтах" -- Fel Ejection
-	L.custom_on_fel_ejection_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_gravitational_pull_nameplates = "Показывать {214335} на дружелюбных неймплейтах" -- Gravitational Pull
-	L.custom_on_gravitational_pull_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_grand_conjunction_nameplates = "Показывать {205408} на дружелюбных неймплейтах" -- Grand Conjunction
-	L.custom_on_grand_conjunction_nameplates_desc = L.nameplate_requirement
 end
 
 L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "ruRU")
@@ -90,6 +76,7 @@ if L then
 	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
 
 	--L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone."
+	--L.timeStopZone = "Time Stop Zone"
 
 	--L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence."
 
@@ -122,10 +109,9 @@ if L then
 	L.manasaber = "Прирученный манопард"
 	L.naturalist = "Шал'дорай-натуралист"
 
-	--[[ Aluriel to Krosos ]]--
+	--[[ Aluriel to Krosus ]]--
 	L.infernal = "Опаляющий инфернал"
 
 	--[[ Aluriel to Tichondrius ]]--
 	L.watcher = "Дозорный из бездны"
 end
-

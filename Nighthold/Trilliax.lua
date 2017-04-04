@@ -11,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Trilliax", 1088, 1731)
 if not mod then return end
 mod:RegisterEnableMob(104288)
 mod.engageId = 1867
-mod.respawnTime = 30 -- might be wrong
+mod.respawnTime = 15
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -251,7 +251,7 @@ do
 end
 
 function mod:Annihilation(args)
-	self:Bar(args.spellId, 16, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 16)
 end
 
 function mod:SucculentFeastCast(args)
@@ -271,8 +271,10 @@ function mod:SucculentFeastRemoved(args)
 end
 
 function mod:Energized(args)
-	self:Message(args.spellId, "Important", self:Dispeller("magic", true) and "Alert", CL.on:format(args.spellName, args.destName))
-	self:Bar(args.spellId, 20.5, CL.other:format(L.imprint, self:SpellName(214670))) -- Energized
+	if not UnitIsPlayer(args.destName) then
+		self:Message(args.spellId, "Important", self:Dispeller("magic", true) and "Alert", CL.on:format(args.spellName, args.destName))
+		self:Bar(args.spellId, 20.5, CL.other:format(L.imprint, self:SpellName(214670))) -- Energized
+	end
 end
 
 function mod:ToxicSliceImprint(args)

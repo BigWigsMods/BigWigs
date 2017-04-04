@@ -1,4 +1,3 @@
-if not IsTestBuild() then return end -- XXX dont load on live
 
 --------------------------------------------------------------------------------
 -- TODO List:
@@ -72,7 +71,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "UncheckedRage", 231854)
 	self:Log("SPELL_AURA_APPLIED", "DrawIn", 232061)
 	self:Log("SPELL_AURA_REMOVED", "DrawInSuccess", 232061)
-	self:Log("SPELL_AURA_APPLIED", "FrigidBlowsApplied", 232061)
+	self:Log("SPELL_AURA_APPLIED", "FrigidBlowsApplied", 233429)
 	self:Log("SPELL_AURA_REMOVED_DOSE", "FrigidBlows", 233429)
 	self:Log("SPELL_CAST_START", "FrostyDischarge", 232174)
 
@@ -134,14 +133,14 @@ function mod:JaggedAbrasion(args)
 end
 
 function mod:UncheckedRage(args)
-	self:Message(args.spellId, "Attention", "Warning")
+	self:Message(args.spellId, "Urgent", "Warning")
 	self:Bar(args.spellId, 20.5)
 end
 
 function mod:DrawIn(args)
 	drawInCasting = true
 	self:Message(args.spellId, "Important", "Alert", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 10, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 10)
 end
 
 function mod:DrawInSuccess(args)

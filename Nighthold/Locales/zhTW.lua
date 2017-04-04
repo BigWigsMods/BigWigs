@@ -52,20 +52,6 @@ if L then
 	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000貪狼|r"
 	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00獵戶|r"
 	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFF飛龍|r"
-
-	L.nameplate_requirement = "這個功能目前只有KuiNameplates支援。傳奇難度限定。"
-
-	L.custom_off_icy_ejection_nameplates = "在友方姓名板顯示 {206936} " -- Icy Ejection
-	L.custom_off_icy_ejection_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_fel_ejection_nameplates = "在友方姓名板顯示 {205649} " -- Fel Ejection
-	L.custom_on_fel_ejection_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_gravitational_pull_nameplates = "在友方姓名板顯示 {214335} " -- Gravitational Pull
-	L.custom_on_gravitational_pull_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_grand_conjunction_nameplates = "在友方姓名板顯示 {205408} " -- Grand Conjunction
-	L.custom_on_grand_conjunction_nameplates_desc = L.nameplate_requirement
 end
 
 L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "zhTW")
@@ -90,6 +76,7 @@ if L then
 	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
 
 	L.nightorb_desc = "召喚一個夜之球，擊殺它會生成一個時間停止力場。"
+	--L.timeStopZone = "Time Stop Zone"
 
 	L.manifest_desc = "召喚一個埃辛諾斯靈魂碎片，擊殺它會生成一個惡魔精華。"
 
@@ -122,10 +109,9 @@ if L then
 	L.manasaber = "被馴養的法力刃豹"
 	--L.naturalist = "Shal'dorei Naturalist"
 
-	--[[ Aluriel to Krosos ]]--
+	--[[ Aluriel to Krosus ]]--
 	L.infernal = "灼熱的煉獄火"
 
 	--[[ Aluriel to Tichondrius ]]--
 	L.watcher = "暮衛哨兵"
 end
-

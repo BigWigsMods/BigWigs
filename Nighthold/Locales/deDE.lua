@@ -52,20 +52,6 @@ if L then
 	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000Wolf|r"
 	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00Jäger|r"
 	L[216344] = "|T1391535:15:15:0:0:64:64:4:60:4:60|t|cFF00DDFFDrache|r"
-
-	L.nameplate_requirement = "Diese Funktion wird momentan nur von KuiNameplates unterstützt. Nur für mythisch."
-
-	L.custom_off_icy_ejection_nameplates = "{206936} auf Namensplaketten Verbündeter zeigen" -- Icy Ejection
-	L.custom_off_icy_ejection_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_fel_ejection_nameplates = "{205649} auf Namensplaketten Verbündeter zeigen" -- Fel Ejection
-	L.custom_on_fel_ejection_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_gravitational_pull_nameplates = "{214335} auf Namensplaketten Verbündeter zeigen" -- Gravitational Pull
-	L.custom_on_gravitational_pull_nameplates_desc = L.nameplate_requirement
-
-	L.custom_on_grand_conjunction_nameplates = "{205408} auf Namensplaketten Verbündeter zeigen" -- Grand Conjunction
-	L.custom_on_grand_conjunction_nameplates_desc = L.nameplate_requirement
 end
 
 L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "deDE")
@@ -75,25 +61,26 @@ if L then
 	L.ring_yell = "Die Wellen der Zeit spülen Euch fort!"
 	L.orb_yell = "Ihr seht, die Zeit kann recht flüchtig sein."
 
-	--L.slowTimeZone = "Slow Time Zone"
+	L.slowTimeZone = "Zone Langsame Zeit"
 	L.fastTimeZone = "Zone Schnelle Zeit"
 
-	--L.boss_active = "Elisande Active"
-	--L.boss_active_desc = "Time until Elisande is active after clearing the trash event."
-	--L.elisande_trigger = "I foresaw your coming, of course. The threads of fate that led you to this place. Your desperate attempt to stop the Legion."
+	L.boss_active = "Elisande Aktiv"
+	L.boss_active_desc = "Zeit bis Elisande aktiv wird, nachdem die Trash-Phase abgeschlossen wurde."
+	L.elisande_trigger = "Natürlich habe ich Eure Ankunft vorausgesehen. Das Schicksal, das Euch hierherführt. Euren verzweifelten Kampf gegen die Legion."
 end
 
 L = BigWigs:NewBossLocale("Gul'dan", "deDE")
 if L then
 	L.empowered = "(A) %s" -- (E) Eye of Gul'dan
 	L.gains = "Gul'dan erhält %s"
-	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
+	L.p4_mythic_start_yell = "Zeit, die Seele des Dämonenjägers seinem Körper zurückzugeben... und der Legion einen Wirt zu nehmen!"
 
 	L.nightorb_desc = "Beschwört eine Nachtkugel, beim Töten dieser Kugel erscheint eine Zeitzone."
+	--L.timeStopZone = "Time Stop Zone"
 
 	L.manifest_desc = "Beschwört ein Seelenfragment von Azzinoth, beim Töten des Fragments erscheint eine Dämonische Essenz."
 
-	--L.winds_desc = "Gul'dan summons Violent Winds to push the players off the platform."
+	L.winds_desc = "Gul'dan beschwört Verheerende Winde, um die Spieler von der Plattform zu drücken."
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "deDE")
@@ -122,10 +109,9 @@ if L then
 	L.manasaber = "Zahmer Manasäbler"
 	L.naturalist = "Naturalist der Shal'dorei"
 
-	--[[ Aluriel to Krosos ]]--
+	--[[ Aluriel to Krosus ]]--
 	L.infernal = "Sengende Höllenbestie"
 
 	--[[ Aluriel to Tichondrius ]]--
 	L.watcher = "Abgrundbeobachter"
 end
-

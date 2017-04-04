@@ -1536,6 +1536,8 @@ do
 			return
 		elseif length == 0 then
 			return
+		elseif self.missing and self.missing[key] then
+			self.missing[key] = nil
 		end
 
 		local textType = type(text)
@@ -1570,6 +1572,8 @@ do
 			return
 		elseif length == 0 then
 			return
+		elseif self.missing and self.missing[key] then
+			self.missing[key] = nil
 		end
 
 		local textType = type(text)
@@ -1608,6 +1612,26 @@ do
 			end
 		elseif not checkFlag(self, key, C.ME_ONLY) and checkFlag(self, key, C.BAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], gsub(player, "%-.+", "*")), length, icons[icon or textType == "number" and text or key])
+		end
+	end
+
+	--- Display a cast bar.
+	-- @param key the option key
+	-- @param length the bar duration in seconds
+	-- @param[opt] text the bar text (if nil, key is used)
+	-- @param[opt] icon the bar icon (spell id or texture name)
+	function boss:CastBar(key, length, text, icon)
+		if type(length) ~= "number" or length == 0 then
+			core:Print(format(badBar, key))
+			return
+		end
+
+		local textType = type(text)
+		if checkFlag(self, key, C.BAR) then
+			self:SendMessage("BigWigs_StartBar", self, key, format(L.cast, textType == "string" and text or spells[text or key]), length, icons[icon or textType == "number" and text or key])
+		end
+		if checkFlag(self, key, C.COUNTDOWN) then
+			self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
 		end
 	end
 end

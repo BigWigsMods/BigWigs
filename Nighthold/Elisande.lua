@@ -1,6 +1,6 @@
 
 --------------------------------------------------------------------------------
--- TODO List:
+-- Notes:
 -- - Localization:
 --   - Sadly we need to rely on yells if we don't want to schedule more timers
 --   - I've coded a fallback mechanism (search for l11n), to automatically get
@@ -30,14 +30,14 @@ local lfrTimers = {
 	-- Timers are after Leave the Nightwell success (208863)
 
 	-- Summon Time Elemental - Slow
-	[211614] = {8, 62, 40},
+	[211614] = {5, 62, 40, 55},
 
 	-- Summon Time Elemental - Fast
 	[211616] = {65},
 
 	--[[ Phase 1 ]]--
 	-- Arcanetic Ring
-	[208807] = {21, 30, 37, 35},
+	[208807] = {21, 30, 37, 35, 35},
 
 	-- Spanning Singularity
 	[209170] = {17, 57, 30},
@@ -47,7 +47,7 @@ local lfrTimers = {
 	[210022] = {40, 37},
 
 	-- Delphuric Beam
-	[209244] = {35}, -- in Phase 3 for LFR
+	[209244] = {35, 77, 25}, -- in Phase 3 for LFR
 
 	-- Ablating Explosion
 	[209973] = {}, -- first 12.1, then between 20.7 and 21.8 (no pattern)
@@ -365,19 +365,25 @@ do
 		if spellId == 211614 then -- Slow
 			self:Message("recursive_elemental", "Neutral", "Info", L.recursive_elemental, L.recursive_elemental_icon)
 			slowElementalCount = slowElementalCount + 1
-			local timer = self:Mythic() and timers[spellId][phase][slowElementalCount] or timers[spellId][slowElementalCount]
-			if self:LFR() then -- XXX Unsure if timers are complete
-				self:Bar("recursive_elemental", timer, L.recursive_elemental, L.recursive_elemental_icon)
-			elseif timer then
+			local timer = nil
+			if self:Mythic() then
+				timer = timers[spellId][phase][slowElementalCount]
+			else
+				timer = timers[spellId][slowElementalCount]
+			end
+			if timer then
 				self:Bar("recursive_elemental", timer, L.recursive_elemental, L.recursive_elemental_icon)
 			end
 		elseif spellId == 211616 then -- Fast
 			self:Message("expedient_elemental", "Neutral", "Info", L.expedient_elemental, L.expedient_elemental_icon)
 			fastElementalCount = fastElementalCount + 1
-			local timer = self:Mythic() and timers[spellId][phase][fastElementalCount] or timers[spellId][fastElementalCount]
-			if self:LFR() then -- XXX Unsure if timers are complete
-				self:Bar("expedient_elemental", timer, L.expedient_elemental, L.expedient_elemental_icon)
-			elseif timer then
+			local timer = nil
+			if self:Mythic() then
+				timer = timers[spellId][phase][fastElementalCount]
+			else
+				timer = timers[spellId][fastElementalCount]
+			end
+			if timer then
 				self:Bar("expedient_elemental", timer, L.expedient_elemental, L.expedient_elemental_icon)
 			end
 		elseif spellId == 209170 or spellId == 209171 then -- Spanning Singularity heroic / mythic
@@ -635,7 +641,9 @@ end
 
 --[[ Time Layer 1 ]]--
 function mod:ArcaneticRing(args) -- l11n
-	if need_ring_msg then
+	if self:LFR() and ringCount == 1 then -- For some reason Elisande forgets to yell on the first rings in LFR
+		self:CHAT_MSG_MONSTER_YELL("", L.ring_yell, "")
+	elseif need_ring_msg then
 		ring_msg_is_next = true
 	end
 end

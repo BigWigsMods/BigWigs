@@ -1,10 +1,5 @@
 
 --------------------------------------------------------------------------------
--- Notes:
--- - The "pre" and actual debuffs for Mark of Frost and Searing Brand are separate
---   because of customization (emphasize and stuff).
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -118,6 +113,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Frostbitten", 212647)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Frostbitten", 212647)
 	self:Log("SPELL_CAST_START", "ReplicateMarkOfFrost", 212530)
+	self:Log("SPELL_CAST_START", "DetonateMarkOfFrost", 212735) -- Detonate: Mark of Frost
 	self:Log("SPELL_CAST_START", "AnimateMarkOfFrost", 213853)
 	self:Log("SPELL_CAST_START", "FrozenTempest", 213083)
 	self:Death("IcyEnchantmentDeath", 107237)
@@ -126,7 +122,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PreSearingBrandApplied", 213148)
 	self:Log("SPELL_AURA_APPLIED", "SearingBrandApplied", 213166)
 	self:Log("SPELL_AURA_REMOVED", "SearingBrandRemoved", 213166)
-	self:Log("SPELL_CAST_START", "DetonateSearingBrandOrFrost", 213275, 212735) -- Detonate: Searing Brand, Detonate: Mark of Frost
+	self:Log("SPELL_CAST_START", "DetonateSearingBrand", 213275) -- Detonate: Searing Brand
 	self:Log("SPELL_CAST_SUCCESS", "DetonateSearingBrandSuccess", 213275)
 	self:Log("SPELL_CAST_START", "AnimateSearingBrand", 213567)
 
@@ -206,7 +202,7 @@ end
 function mod:AnnihilateCast(args)
 	self:Message(args.spellId, "Important", self:Tank() and "Alarm", CL.casting:format(CL.count:format(args.spellName, annihilateCount)))
 	self:StopBar(CL.count:format(args.spellName, annihilateCount))
-	self:Bar(args.spellId, 7, CL.cast:format(CL.count:format(args.spellName, annihilateCount)))
+	self:CastBar(args.spellId, 7, CL.count:format(args.spellName, annihilateCount))
 	annihilateCount = annihilateCount + 1
 	self:Bar(args.spellId, timers[args.spellId][annihilateCount] or 37, CL.count:format(args.spellName, annihilateCount))
 end
@@ -265,6 +261,8 @@ end
 --[[ Master of Frost ]]--
 do
 	local preDebuffApplied = 0
+	-- The "pre" and actual debuffs for Mark of Frost and Searing Brand are separate
+	-- because of customization (emphasize and stuff).
 	function mod:PreMarkOfFrostApplied(args)
 		if self:Me(args.destGUID) then
 			preDebuffApplied = GetTime()
@@ -354,6 +352,13 @@ function mod:Frostbitten(args)
 	self:SetInfoByTable(args.spellId, frostbittenStacks)
 end
 
+function mod:DetonateMarkOfFrost(args)
+	self:Message(args.spellId, "Important", "Alarm")
+	if markOfFrostOnMe then
+		self:Say(args.spellId, 151913) -- "Detonate"
+	end
+end
+
 function mod:AnimateMarkOfFrost(args)
 	self:Message(args.spellId, "Important", "Info", nil, 31687) -- Water Elemental icon
 end
@@ -363,17 +368,16 @@ function mod:ReplicateMarkOfFrost(args)
 end
 
 do
-	local guid, text = "", ""
+	local guid = ""
 	function mod:FrozenTempest(args)
 		guid = args.sourceGUID
 		self:Message(args.spellId, "Important")
-		text = CL.cast:format(args.spellName)
-		self:Bar(args.spellId, self:Mythic() and 10 or 12, text)
+		self:CastBar(args.spellId, self:Mythic() and 10 or 12)
 	end
 
 	function mod:IcyEnchantmentDeath(args)
 		if args.destGUID == guid then
-			self:StopBar(text)
+			self:StopBar(CL.cast:format(self:SpellName(213083))) -- Frozen Tempest
 		end
 	end
 end
@@ -450,9 +454,9 @@ function mod:SearingBrandRemoved(args)
 	updateProximity(self)
 end
 
-function mod:DetonateSearingBrandOrFrost(args)
+function mod:DetonateSearingBrand(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	if markOfFrostOnMe or searingBrandOnMe then
+	if searingBrandOnMe then
 		self:Say(args.spellId, 151913) -- "Detonate"
 	end
 end
@@ -512,7 +516,7 @@ do
 		if t-prev > 1 then -- Throttle because 8 adds cast it simultaneously
 			prev = t
 			self:Message(args.spellId, "Urgent", "Info")
-			self:Bar(args.spellId, self:Mythic() and 15 or 30, CL.cast:format(args.spellName))
+			self:CastBar(args.spellId, self:Mythic() and 15 or 30)
 		end
 	end
 end

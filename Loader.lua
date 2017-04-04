@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 48
+local BIGWIGS_VERSION = 50
 local BIGWIGS_RELEASE_STRING = ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -578,8 +578,6 @@ do
 		delayedMessages[#delayedMessages+1] = "BigWigs needs translations. Can you translate BigWigs into Italian (itIT)? Check out our GitHub page!"
 	elseif L == "esES" then
 		delayedMessages[#delayedMessages+1] = "BigWigs needs translations. Can you translate BigWigs into Spanish (esES)? Check out our GitHub page!"
-	elseif L == "koKR" then
-		delayedMessages[#delayedMessages+1] = "BigWigs needs translations. Can you translate BigWigs into Korean (koKR)? Check out our GitHub page!"
 	end
 
 	CTimerAfter(11, function()
@@ -656,8 +654,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "15993" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "7.1.16" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotRevision = "16096" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "7.2.0" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -843,6 +841,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	end
 end
 
+local resetVersionWarnings
 do
 	local timer = nil
 	local function sendMsg()
@@ -853,6 +852,10 @@ do
 	end
 
 	local hasWarned, hasReallyWarned, hasExtremelyWarned = nil, nil, nil
+	function resetVersionWarnings()
+		hasWarned, hasReallyWarned, hasExtremelyWarned = nil, nil, nil
+	end
+
 	local function printOutOfDate(tbl)
 		if hasExtremelyWarned then return end
 		local warnedOutOfDate, warnedReallyOutOfDate, warnedExtremelyOutOfDate = 0, 0, 0
@@ -1035,6 +1038,7 @@ do
 			self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		elseif grouped and not groupType then
 			grouped = nil
+			resetVersionWarnings()
 			wipe(usersVersion)
 			wipe(usersHash)
 			self:ZONE_CHANGED_NEW_AREA()

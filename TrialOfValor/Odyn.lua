@@ -276,7 +276,7 @@ do
 	local protected = mod:SpellName(229584)
 	function mod:UnerringBlast(args)
 		self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
-		self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+		self:CastBar(args.spellId, 3)
 		self:Bar(227503, self:Easy() and 45 or 35) -- Draw Power
 		self:Bar(args.spellId, self:Easy() and 78 or (self:Mythic() and (phase == 2 and 69 or 68)) or 73)
 
@@ -321,7 +321,7 @@ end
 function mod:HornOfValor(args)
 	castingHorn = true
 	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, self:Easy() and 5 or 4.5, CL.cast:format(CL.count:format(args.spellName, hornCount)))
+	self:CastBar(args.spellId, self:Easy() and 5 or 4.5, CL.count:format(args.spellName, hornCount))
 	hornCount = hornCount + 1
 
 	local t = 0

@@ -19,7 +19,7 @@ L.custom_start = "%s вступает в бой - %s через %d мин"
 L.custom_start_s = "%s вступает в бой - %s через %d сек"
 L.duration = "%s для %s сек"
 L.focus_only = "|cffff0000Оповещения только для фокуса.|r "
-L.general = "Общее"
+L.general = "Общее" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.hard = "Сложный режим"
 L.heroic = "Героический режим"
 L.incoming = "%s на подходе!"
@@ -48,6 +48,8 @@ L.stage = "Этап %d"
 L.trash = "Трэш"
 L.underyou = "%s под ТОБОЙ!"
 L.you = "%s на ТЕБЕ"
+
+--L.active = "Active" -- When a boss becomes active, after speech finishes
 
 -- Common raid marking locale
 L.marker = "метка %s"

@@ -1,4 +1,3 @@
-if not IsTestBuild() then return end -- XXX dont load on live
 
 --------------------------------------------------------------------------------
 -- TODO List:
@@ -57,7 +56,7 @@ function mod:OnBossEnable()
 	-- Atrigan
 	self:Log("SPELL_CAST_START", "ScytheSweep", 233426)
 	self:Log("SPELL_CAST_SUCCESS", "CalcifiedQuills", 233431)
-	self:Log("SPELL_CAST_START", "BoneSaw", 233441)
+	self:Log("SPELL_CAST_SUCCESS", "BoneSaw", 233441)
 
 	-- Belac
 	self:Log("SPELL_CAST_START", "PangsofGuilt", 239401)
@@ -69,7 +68,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	pangsofGuiltCounter = 1
+	pangsofGuiltCounter = 0
 	self:OpenAltPower("altpower", 233104, nil, true) -- Torment, Sync for those far away
 
 	-- Atrigan
@@ -111,14 +110,14 @@ do
 	end
 	function mod:CalcifiedQuills(args)
 		self:GetBossTarget(printTarget, 0.7, args.sourceGUID)
-		self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+		self:CastBar(args.spellId, 3)
 		self:Bar(args.spellId, 21.5)
 	end
 end
 
 function mod:BoneSaw(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 15, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 15)
 	self:Bar(args.spellId, 60.5)
 end
 
@@ -163,6 +162,6 @@ end
 
 function mod:FelSquall(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 15, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 15)
 	self:Bar(args.spellId, 60.5)
 end

@@ -254,7 +254,7 @@ end
 
 function mod:GatheringCloudsStart(args)
 	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 10.5, CL.cast:format(args.spellName)) -- 2.5s cast + 8s duration = 10.5s total
+	self:CastBar(args.spellId, 10.5) -- 2.5s cast + 8s duration = 10.5s total
 end
 
 --[[ Roc Form ]]--
@@ -266,7 +266,7 @@ end
 
 function mod:RazorWing(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	self:Bar(args.spellId, 4.5, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 4.5)
 	if timeToTransform(self) > 32.9 then
 		self:Bar(args.spellId, 32.9)
 	end
@@ -281,7 +281,7 @@ end
 
 function mod:ViolentWinds(args)
 	self:Message(args.spellId, "Urgent", "Info")
-	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 6)
 	if timeToTransform(self) > 39 then
 		self:Bar(args.spellId, 39)
 	end

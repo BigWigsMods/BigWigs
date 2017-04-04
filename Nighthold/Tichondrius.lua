@@ -1,9 +1,5 @@
 
 --------------------------------------------------------------------------------
--- TODO List:
--- - Add Marker for BrandOfArgus targets
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -45,6 +41,7 @@ local timers = {
 }
 local essenceTargets = {}
 local addsKilled = 0
+local argusMarks = {false, false, false, false, false, false}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -65,12 +62,14 @@ end
 -- Initialization
 --
 
+local argusMarker = mod:AddMarkerOption(false, "player", 1, 212794, 1, 2, 3, 4, 5, 6)
 function mod:GetOptions()
 	return {
 		--[[ Stage One ]]--
 		{206480, "SAY"}, -- Carrion Plague
 		213238, -- Seeker Swarm
 		{212794, "SAY"}, -- Brand of Argus
+		argusMarker,
 		208230, -- Feast of Blood
 		213531, -- Echoes of the Void
 		"adds",
@@ -101,6 +100,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CarrionPlagueSuccess", 212997)
 	self:Log("SPELL_CAST_SUCCESS", "SeekerSwarm", 213238)
 	self:Log("SPELL_AURA_APPLIED", "BrandOfArgus", 212794)
+	self:Log("SPELL_AURA_REMOVED", "BrandOfArgusRemoved", 212794)
 	self:Log("SPELL_CAST_SUCCESS", "BrandOfArgusSuccess", 212794)
 	self:Log("SPELL_CAST_SUCCESS", "FeastOfBlood", 208230)
 	self:Log("SPELL_CAST_START", "EchoesOfTheVoid", 213531)
@@ -134,6 +134,7 @@ function mod:OnEngage()
 	illusionaryNightCount = 1
 	addWaveCount = 1
 	addsKilled = 0
+	argusMarks = {false, false, false, false, false, false}
 	wipe(essenceTargets)
 	self:Bar("adds", timers["adds"][addWaveCount], CL.count:format(L.adds, addWaveCount), 212552) -- 212552 = Wraith Walk, inv_helm_plate_raiddeathknight_p_01, id 1100041
 	if GetLocale() ~= "enUS" and L.adds_yell1 == "Underlings! Get in here!" then -- Not translated
@@ -148,7 +149,7 @@ function mod:OnEngage()
 	self:Bar(213531, timers[213531][echoesOfTheVoidCount], CL.count:format(self:SpellName(213531), echoesOfTheVoidCount))
 	self:Bar(206365, 130, CL.count:format(self:SpellName(206365), illusionaryNightCount))
 	if not self:LFR() then
-		self:Berserk(463)
+		self:Berserk(self:Normal() and 523 or 463)
 	end
 end
 
@@ -198,6 +199,28 @@ do
 
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
+		end
+
+		if self:GetOption(argusMarker) then
+			for i = 1, 6 do
+				if not argusMarks[i] then
+					argusMarks[i] = args.destName
+					SetRaidTarget(args.destName, i)
+					break
+				end
+			end
+		end
+	end
+
+	function mod:BrandOfArgusRemoved(args)
+		if self:GetOption(argusMarker) then
+			for i = 1, 6 do
+				if argusMarks[i] == args.destName then
+					argusMarks[i] = false
+					SetRaidTarget(args.destName, 0)
+					break
+				end
+			end
 		end
 	end
 end
@@ -252,12 +275,12 @@ function mod:IllusionaryNight(args)
 	addsKilled = 0
 	wipe(essenceTargets)
 	self:Message(args.spellId, "Neutral", "Long", CL.count:format(args.spellName, illusionaryNightCount))
-	self:Bar(args.spellId, 32, CL.cast:format(CL.count:format(args.spellName, illusionaryNightCount)))
+	self:CastBar(args.spellId, 32, CL.count:format(args.spellName, illusionaryNightCount))
 	illusionaryNightCount = illusionaryNightCount + 1
 	if illusionaryNightCount < 3 then
 		self:Bar(args.spellId, 163, CL.count:format(args.spellName, illusionaryNightCount))
 	end
-	self:Bar(215988, 8.5, CL.cast:format(self:SpellName(215988))) -- Carrion Nightmare
+	self:CastBar(215988, 8.5) -- Carrion Nightmare
 
 	self:SetInfo(206466, 1, L.addsKilled)
 	self:SetInfo(206466, 2, addsKilled)
@@ -269,7 +292,7 @@ function mod:IllusionaryNight(args)
 end
 
 function mod:CarrionNightmare(args)
-	self:Bar(args.spellId, 4, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 4)
 end
 
 function mod:EssenceOfNight(args)

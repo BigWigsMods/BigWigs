@@ -1,4 +1,4 @@
-if not IsTestBuild() then return end -- XXX dont load on live
+
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Deadly Screech Timers
@@ -46,7 +46,7 @@ function mod:GetOptions()
 		{236550, "TANK"}, -- Discorporate
 		236480,	-- Glaive Storm
 		{236305, "SAY", "ICON"}, -- Incorporeal Shot
-		236442, -- Twilight Volley
+		{236442, "SAY"}, -- Twilight Volley
 		236694, -- Call Moontalon
 		236697, -- Deadly Screech
 		236603, -- Rapid Shot
@@ -78,6 +78,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "IncorporealShotApplied", 236305) -- Incorporeal Shot
 	self:Log("SPELL_AURA_REMOVED", "IncorporealShotRemoved", 236305) -- Incorporeal Shot
 	self:Log("SPELL_CAST_START", "TwilightVolley", 236442) -- Twilight Volley
+	self:Log("SPELL_AURA_APPLIED", "TwilightVolleyDamage", 236516) -- Twilight Volley
+	self:Log("SPELL_PERIODIC_DAMAGE", "TwilightVolleyDamage", 236516) -- Twilight Volley
+	self:Log("SPELL_PERIODIC_MISSED", "TwilightVolleyDamage", 236516) -- Twilight Volley
 	-- Stage Two: Bow of the Night
 	self:Log("SPELL_CAST_START", "CallMoontalon", 236694) -- Call Moontalon
 	self:Log("SPELL_CAST_SUCCESS", "DeadlyScreech", 236697) -- Deadly Screech
@@ -189,9 +192,32 @@ function mod:IncorporealShotRemoved(args)
 	self:PrimaryIcon(args.spellId)
 end
 
-function mod:TwilightVolley(args)
-	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
-	self:Bar(args.spellId, 19.5) -- XXX P2 timers
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage(236442, name, "Attention", "Alert", nil, nil, true)
+		if self:Me(guid) then
+			self:Say(236442)
+		end
+	end
+	function mod:TwilightVolley(args)
+		if phase == 2 then
+			self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
+		else -- Can only find target in P2
+			self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
+		end
+		self:Bar(args.spellId, 19.5)
+	end
+end
+
+do
+	local prev = 0
+	function mod:TwilightVolleyDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(236442, "Personal", "Alarm", CL.underyou:format(args.spellName))
+		end
+	end
 end
 
 function mod:CallMoontalon(args)
@@ -270,10 +296,10 @@ do
 		lunarFireCounter = lunarFireCounter + 1
 		local amount = args.amount or 1
 		local t = GetTime()
-		prev = t
-		if prev > 20 or lunarFireCounter == 5 then -- Either 3rd or 4th is >20s, after that every 4th is.
+		if t-prev > 20 or lunarFireCounter == 5 then -- Either 3rd or 4th is >20s, after that every 4th is.
 		 lunarFireCounter = 1
 		end
+		prev = t
 		self:Bar(args.spellId, lunarBeaconCounter % 4 == 0 and 23.1 or 10.9)
 	end
 end

@@ -2,10 +2,6 @@
 -- GLOBALS: BigWigsKrosusFirstBeamWasLeft, print
 
 --------------------------------------------------------------------------------
--- TODO List:
--- - Verify live timers on all difficulties
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
