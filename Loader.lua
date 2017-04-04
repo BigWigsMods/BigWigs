@@ -77,6 +77,7 @@ local highestFoundVersion = BIGWIGS_VERSION
 -- Loading
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
+local loadOnSubMenu = {} -- BigWigs modulepack that should load on a specific zone and display inside a specific menu
 local loadOnSlash = {} -- BigWigs modulepacks that can load from a chat command
 local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
@@ -87,6 +88,7 @@ local fakeWorldZones = { -- Fake world zones used for world boss translations an
 	[862]=true, -- Pandaria
 	[962]=true, -- Draenor
 	[1007]=true, -- Broken Isles
+	[1021]=true, -- Broken Shore
 }
 
 do
@@ -121,7 +123,7 @@ do
 		[877]=lw_mop, [871]=lw_mop, [874]=lw_mop, [885]=lw_mop, [867]=lw_mop, [919]=lw_mop, -- MoP
 		[964]=lw_wod, [969]=lw_wod, [984]=lw_wod, [987]=lw_wod, [989]=lw_wod, [993]=lw_wod, [995]=lw_wod, [1008]=lw_wod, -- WoD
 		[1041]=lw_l, [1042]=lw_l, [1045]=lw_l, [1046]=lw_l, [1065]=lw_l, [1066]=lw_l, [1067]=lw_l, [1079]=lw_l, [1081]=lw_l, [1087]=lw_l, [1115]=lw_l, [1146]=lw_l, -- Legion
-		[1129]=lw_l, -- Legion Scenarios
+		[1021]=lw_l, [1129]=lw_l, -- Legion Scenarios
 	}
 
 	public.zoneTblWorld = {
@@ -268,6 +270,10 @@ do
 			if meta then
 				loadOnWorldBoss[#loadOnWorldBoss + 1] = i
 			end
+			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-SubMenu")
+			if meta then
+				loadOnSubMenu[#loadOnSubMenu + 1] = i
+			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Slash")
 			if meta then
 				loadOnSlash[i] = {}
@@ -377,6 +383,31 @@ do
 		end
 	end
 
+	local function iterateSubMenus(addon, override, ...)
+		for i = 1, select("#", ...) do
+			local rawZone = select(i, ...)
+			local menu = tonumber(override:trim())
+			local zone = tonumber(rawZone:trim())
+			if zone then
+				-- register the zone for enabling.
+				local instanceId = fakeWorldZones[zone] and zone or zone < 0 and -zone or GetAreaMapInfo(zone)
+				if instanceId then -- Protect live client from beta client ids
+					enableZones[instanceId] = true
+
+					if not loadOnZone[instanceId] then loadOnZone[instanceId] = {} end
+					loadOnZone[instanceId][#loadOnZone[instanceId] + 1] = addon
+
+					if not loadOnZone[menu] then loadOnZone[menu] = {} end
+					if not menus[menu] then menus[menu] = true end
+					loadOnZone[menu][#loadOnZone[menu] + 1] = addon
+				end
+			else
+				local name = GetAddOnInfo(addon)
+				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZone), name))
+			end
+		end
+	end
+
 	for _, index in next, loadOnZoneAddons do
 		local menu = tonumber(GetAddOnMetadata(index, "X-BigWigs-Menu"))
 		if menu then
@@ -398,6 +429,13 @@ do
 		local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-WorldBoss")
 		if zones then
 			iterateWorldBosses(index, menu, strsplit(",", zones))
+		end
+	end
+
+	for _, index in next, loadOnSubMenu do
+		local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-SubMenu")
+		if zones then
+			iterateSubMenus(index, strsplit(",", zones))
 		end
 	end
 end
@@ -1052,7 +1090,7 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		enableZones[module.zoneId] = "world"
 		worldBosses[module.worldBoss] = module.zoneId
 	else
-		enableZones[GetAreaMapInfo(module.zoneId)] = true
+		enableZones[module.instanceId or GetAreaMapInfo(module.zoneId)] = true
 	end
 
 	local id = module.otherMenu or module.zoneId
