@@ -413,7 +413,7 @@ do
 		if core:GetModule(moduleName, true) then
 			addon:Print(errorAlreadyRegistered:format(moduleName))
 		else
-			local m = core:NewModule(moduleName, ...)
+			local m = core:NewModule(moduleName)
 			initModules[#initModules+1] = m
 
 			-- Embed callback handler
