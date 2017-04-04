@@ -317,8 +317,6 @@ do
 		db.RegisterCallback(self, "OnProfileReset", profileUpdate)
 		self.db = db
 
-		self.db.profile.raidicon = nil -- XXX temp [v7.0]
-
 		self.ADDON_LOADED = InitializeModules
 		InitializeModules()
 	end
@@ -411,7 +409,7 @@ do
 	local GetSpellInfo, EJ_GetSectionInfo = GetSpellInfo, EJ_GetSectionInfo
 
 	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
-	local function new(core, moduleName, mapId, journalId, ...)
+	local function new(core, moduleName, mapId, journalId, instanceId)
 		if core:GetModule(moduleName, true) then
 			addon:Print(errorAlreadyRegistered:format(moduleName))
 		else
@@ -429,17 +427,18 @@ do
 
 			m.zoneId = mapId
 			m.journalId = journalId
+			m.instanceId = instanceId
 			return m, CL
 		end
 	end
 
 	-- A wrapper for :NewModule to present users with more information in the
 	-- case where a module with the same name has already been registered.
-	function addon:NewBoss(moduleName, zoneId, ...)
-		return new(bossCore, moduleName, zoneId, ...)
+	function addon:NewBoss(moduleName, zoneId, journalId, instanceId)
+		return new(bossCore, moduleName, zoneId, journalId, instanceId)
 	end
-	function addon:NewPlugin(moduleName, ...)
-		return new(pluginCore, moduleName, nil, nil, ...)
+	function addon:NewPlugin(moduleName)
+		return new(pluginCore, moduleName)
 	end
 
 	function addon:IterateBossModules() return bossCore:IterateModules() end
@@ -559,7 +558,7 @@ do
 
 		self:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 
-		local id = module.worldBoss and module.zoneId or GetAreaMapInfo(module.zoneId)
+		local id = module.worldBoss and module.zoneId or module.instanceId or GetAreaMapInfo(module.zoneId)
 		if not enablezones[id] then
 			enablezones[id] = true
 		end
