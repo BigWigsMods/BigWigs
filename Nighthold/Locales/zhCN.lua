@@ -76,7 +76,7 @@ if L then
 	L.p4_mythic_start_yell = "该让这个恶魔猎手的灵魂回到躯体中……防止军团之王占据它了！"
 
 	L.nightorb_desc = "召唤暗夜宝珠，击杀后将出现时间停止力场。"
-	--L.timeStopZone = "Time Stop Zone"
+	L.timeStopZone = "时间停止区域"
 
 	L.manifest_desc = "召唤埃辛诺斯灵魂碎片，击杀后将出现恶魔精华。"
 
