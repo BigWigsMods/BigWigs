@@ -66,7 +66,7 @@ if L then
 
 	L.boss_active = "艾利桑德激活"
 	L.boss_active_desc = "清理小怪事件到艾利桑德激活计时。"
-	L.elisande_trigger = "我早就预见了你们的到来，命运指引你们来到此地。为了阻止军团，你们想背水一战。"
+	L.elisande_trigger = "我早就预见了你们的到来。命运指引你们来到此地。为了阻止军团，你们想背水一战。"
 end
 
 L = BigWigs:NewBossLocale("Gul'dan", "zhCN")
