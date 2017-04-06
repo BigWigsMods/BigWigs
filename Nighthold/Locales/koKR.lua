@@ -95,7 +95,7 @@ if L then
 
 	--[[ Trilliax to Aluriel ]]--
 	L.karzun = "카르준"
-	--L.guardian = "Gilded Guardian" -- World Quest Objective
+	L.guardian = "도금된 수호자"
 	L.battle_magus = "황혼감시대 전투마법사"
 	L.chronowraith = "시간격노"
 	L.protector = "밤의 요새 수호자"
