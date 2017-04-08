@@ -47,7 +47,7 @@ end
 L = BigWigs:NewBossLocale("Star Augur Etraeus", "koKR")
 if L then
 	L.yourSign = "당신의 별자리"
-	L.with = "같은"
+	L.with = ":"
 	L[205429] = "|T1391538:15:15:0:0:64:64:4:60:4:60|t|cFFFFDD00게|r"
 	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000늑대|r"
 	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00사냥꾼|r"
@@ -95,7 +95,7 @@ if L then
 
 	--[[ Trilliax to Aluriel ]]--
 	L.karzun = "카르준"
-	L.guardian = "도금된 수호자"
+	L.guardian = "금박 수호자"
 	L.battle_magus = "황혼감시대 전투마법사"
 	L.chronowraith = "시간격노"
 	L.protector = "밤의 요새 수호자"
