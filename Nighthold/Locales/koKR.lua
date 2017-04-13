@@ -47,7 +47,7 @@ end
 L = BigWigs:NewBossLocale("Star Augur Etraeus", "koKR")
 if L then
 	L.yourSign = "당신의 별자리"
-	L.with = ":"
+	L.with = "with"
 	L[205429] = "|T1391538:15:15:0:0:64:64:4:60:4:60|t|cFFFFDD00게|r"
 	L[205445] = "|T1391537:15:15:0:0:64:64:4:60:4:60|t|cFFFF0000늑대|r"
 	L[216345] = "|T1391536:15:15:0:0:64:64:4:60:4:60|t|cFF00FF00사냥꾼|r"
