@@ -63,7 +63,7 @@ local heroicTimers = {
 }
 local mythicTimers = {
 	-- Hand of Gul'dan "P2"
-	[212258] = {16.6, 181.6},
+	[212258] = {16.6, 165},
 
 	-- Storm of the Destroyer (167819 _start), after 227427 _applied
 	[167935] = {72.6, 57.9, 51.6, 64.7, 57.4},
