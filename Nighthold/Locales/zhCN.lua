@@ -71,6 +71,8 @@ end
 
 L = BigWigs:NewBossLocale("Gul'dan", "zhCN")
 if L then
+	--L.warmup_trigger = "Have you forgotten" -- Have you forgotten your humiliation on the Broken Shore? How your precious high king was bent and broken before me? Will you beg for your lives as he did, whimpering like some worthless dog?
+
 	L.empowered = "（强化）%s"
 	L.gains = "古尔丹获得 >%s<"
 	L.p4_mythic_start_yell = "该让这个恶魔猎手的灵魂回到躯体中……防止军团之王占据它了！"

@@ -71,6 +71,8 @@ end
 
 L = BigWigs:NewBossLocale("Gul'dan", "deDE")
 if L then
+	--L.warmup_trigger = "Have you forgotten" -- Have you forgotten your humiliation on the Broken Shore? How your precious high king was bent and broken before me? Will you beg for your lives as he did, whimpering like some worthless dog?
+
 	L.empowered = "(A) %s" -- (E) Eye of Gul'dan
 	L.gains = "Gul'dan erhält %s"
 	L.p4_mythic_start_yell = "Zeit, die Seele des Dämonenjägers seinem Körper zurückzugeben... und der Legion einen Wirt zu nehmen!"
