@@ -106,6 +106,7 @@ if L then
 	--L.jarin = "Astrologer Jarin"
 
 	--[[ Aluriel to Telarn ]]--
+	L.acolyte = "Acólita celestial"
 	--L.weaver = "Duskwatch Weaver"
 	--L.archmage = "Shal'dorei Archmage"
 	--L.manasaber = "Domesticated Manasaber"
