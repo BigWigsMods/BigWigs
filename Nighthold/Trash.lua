@@ -106,7 +106,7 @@ function mod:GetOptions()
 		wrapMarker,
 		231005, -- Arcane Emanations (Kar'zun)
 		225927, -- Gravity Well (Gilded Guardian)
-		224440, -- Crushing Stomp (Gilded Guardian)
+		{224440, "FLASH"}, -- Crushing Stomp (Gilded Guardian)
 		224510, -- Crackling Slice (Duskwatch Battle-Magus)
 		225412, -- Mass Siphon (Chronowraith)
 		224568, -- Mass Suppress (Nighthold Protector)
@@ -345,8 +345,9 @@ function mod:GravityWell(args)
 end
 
 function mod:CrushingStomp(args)
-	self:Message(args.spellId, "Urgent", "Long")
+	self:Message(args.spellId, "Urgent", "Warning")
 	self:CDBar(args.spellId, 23)
+	self:Flash(args.spellId)
 end
 
 function mod:GuardianDeath()
