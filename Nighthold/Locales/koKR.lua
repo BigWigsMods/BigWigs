@@ -71,6 +71,8 @@ end
 
 L = BigWigs:NewBossLocale("Gul'dan", "koKR")
 if L then
+	--L.warmup_trigger = "Have you forgotten" -- Have you forgotten your humiliation on the Broken Shore? How your precious high king was bent and broken before me? Will you beg for your lives as he did, whimpering like some worthless dog?
+
 	L.empowered = "(강화) %s" -- (E) Eye of Gul'dan
 	L.gains = "굴단 %s 획득"
 	L.p4_mythic_start_yell = "악마사냥꾼의 영혼을 육신으로 돌려보내야 할 때요... 군단의 주인을 거부해야 하오!"
@@ -95,7 +97,7 @@ if L then
 
 	--[[ Trilliax to Aluriel ]]--
 	L.karzun = "카르준"
-	--L.guardian = "Gilded Guardian" -- World Quest Objective
+	L.guardian = "도금된 수호자"
 	L.battle_magus = "황혼감시대 전투마법사"
 	L.chronowraith = "시간격노"
 	L.protector = "밤의 요새 수호자"
@@ -104,6 +106,7 @@ if L then
 	L.jarin = "점성술사 자린"
 
 	--[[ Aluriel to Telarn ]]--
+	--L.acolyte = "Celestial Acolyte"
 	L.weaver = "황혼감시대 역술사"
 	L.archmage = "샬도레이 대마법사"
 	L.manasaber = "길들인 마나호랑이"

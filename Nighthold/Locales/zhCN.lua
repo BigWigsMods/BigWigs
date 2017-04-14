@@ -71,6 +71,8 @@ end
 
 L = BigWigs:NewBossLocale("Gul'dan", "zhCN")
 if L then
+	--L.warmup_trigger = "Have you forgotten" -- Have you forgotten your humiliation on the Broken Shore? How your precious high king was bent and broken before me? Will you beg for your lives as he did, whimpering like some worthless dog?
+
 	L.empowered = "（强化）%s"
 	L.gains = "古尔丹获得 >%s<"
 	L.p4_mythic_start_yell = "该让这个恶魔猎手的灵魂回到躯体中……防止军团之王占据它了！"
@@ -104,6 +106,7 @@ if L then
 	L.jarin = "占星家贾林"
 
 	--[[ Aluriel to Telarn ]]--
+	--L.acolyte = "Celestial Acolyte"
 	L.weaver = "暮色卫队织法者"
 	L.archmage = "夏多雷大法师"
 	L.manasaber = "驯养的魔刃豹"

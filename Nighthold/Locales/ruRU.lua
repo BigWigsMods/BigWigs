@@ -71,6 +71,8 @@ end
 
 L = BigWigs:NewBossLocale("Gul'dan", "ruRU")
 if L then
+	--L.warmup_trigger = "Have you forgotten" -- Have you forgotten your humiliation on the Broken Shore? How your precious high king was bent and broken before me? Will you beg for your lives as he did, whimpering like some worthless dog?
+
 	--L.empowered = "(E) %s" -- (E) Eye of Gul'dan
 	L.gains = "Гул'дан получает %s"
 	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
@@ -104,6 +106,7 @@ if L then
 	L.jarin = "Астролог Джарин"
 
 	--[[ Aluriel to Telarn ]]--
+	L.acolyte = "Небесная послушница"
 	L.weaver = "Заклинатель из Сумеречной стражи"
 	L.archmage = "Шал'дорай - верховный маг"
 	L.manasaber = "Прирученный манопард"

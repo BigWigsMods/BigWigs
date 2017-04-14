@@ -6,6 +6,7 @@
 >   if see.href then return see.href end
 >   return format_anchor_link(see.name)
 > end
+> local function trim(s) return s:match('^%s*(.*%S)') or '' end
 > local escape = ldoc.escape
 > local show_return_and_params = not ldoc.no_return_or_parms
 > local num_kinds = 0 for _ in module.kinds() do num_kinds = num_kinds + 1 end
@@ -25,11 +26,9 @@ $(usage)
 
 >   end -- for
 > end -- if usage
-> if module.info then
-
-### Info:
+> if module.info then -- copyright, author, license, release
 >   for tag, value in module.info:iter() do
- - **$(tag)**: $(escape(value)
+ - **$(tag)**: $(escape(value))
 >   end
 > end -- if module.info
 
@@ -40,7 +39,7 @@ $(usage)
 >   for kind, items in module.kinds() do
 <table width="100%">
 <tr>
-	<th colspan="2" align="left">$(kind)</th>
+	<th colspan="2" align="left">$(trim(kind))</th>
 </tr>
 >     for item in items() do
 >       local name = ldoc.display_name(item)

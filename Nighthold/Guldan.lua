@@ -63,7 +63,7 @@ local heroicTimers = {
 }
 local mythicTimers = {
 	-- Hand of Gul'dan "P2"
-	[212258] = {16.6, 181.6},
+	[212258] = {16.6, 165},
 
 	-- Storm of the Destroyer (167819 _start), after 227427 _applied
 	[167935] = {72.6, 57.9, 51.6, 64.7, 57.4},
@@ -89,6 +89,8 @@ local timers = mod:Mythic() and mythicTimers or mod:Heroic() and heroicTimers or
 
 local L = mod:GetLocale()
 if L then
+	L.warmup_trigger = "Have you forgotten" -- Have you forgotten your humiliation on the Broken Shore? How your precious high king was bent and broken before me? Will you beg for your lives as he did, whimpering like some worthless dog?
+
 	L.empowered = "(E) %s" -- (E) Eye of Gul'dan
 	L.gains = "Gul'dan gains %s"
 	L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
@@ -114,6 +116,7 @@ end
 function mod:GetOptions()
 	return {
 		--[[ General ]]--
+		"warmup",
 		"stages",
 		"berserk",
 
@@ -172,7 +175,7 @@ function mod:GetOptions()
 		227009, -- Wounded
 		{206310, "EMPHASIZE"}, -- Time Stop
 	}, {
-		["stages"] = "general",
+		["warmup"] = "general",
 		[210339] = -14886, -- Essence of Aman'Thul
 		[206219] = -14885, -- Stage One
 		[207938] = -14897, -- Inquisitor Vethriz
@@ -306,6 +309,8 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 		phase = 4
 		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
 		self:Bar(211439, 39) -- Will of the Demon Within
+	elseif msg:find(L.warmup_trigger, nil, true) then
+		self:Bar("warmup", 62, CL.active, "achievement_thenighthold_guldan")
 	end
 end
 
