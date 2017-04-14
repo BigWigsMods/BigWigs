@@ -71,6 +71,8 @@ end
 
 L = BigWigs:NewBossLocale("Gul'dan", "koKR")
 if L then
+	L.warmup_trigger = "부서진 해변에서의 치욕을 잊었느냐?"
+	
 	L.empowered = "(강화) %s" -- (E) Eye of Gul'dan
 	L.gains = "굴단 %s 획득"
 	L.p4_mythic_start_yell = "악마사냥꾼의 영혼을 육신으로 돌려보내야 할 때요... 군단의 주인을 거부해야 하오!"
@@ -104,6 +106,7 @@ if L then
 	L.jarin = "점성술사 자린"
 
 	--[[ Aluriel to Telarn ]]--
+	L.acolyte = "천공의 수행사제"
 	L.weaver = "황혼감시대 역술사"
 	L.archmage = "샬도레이 대마법사"
 	L.manasaber = "길들인 마나호랑이"
