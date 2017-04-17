@@ -26,6 +26,7 @@ mod:RegisterEnableMob(
 	112803, -- Astrologer Jarin
 
 	--[[ Aluriel to Telarn ]]--
+	112655, -- Celestial Acolyte
 	112973, -- Duskwatch Weaver
 	112595, -- Shal'dorei Archmage
 	111295, -- Domesticated Manasaber
@@ -69,6 +70,7 @@ if L then
 	L.jarin = "Astrologer Jarin"
 
 	--[[ Aluriel to Telarn ]]--
+	L.acolyte = "Celestial Acolyte"
 	L.weaver = "Duskwatch Weaver"
 	L.archmage = "Shal'dorei Archmage"
 	L.manasaber = "Domesticated Manasaber"
@@ -104,7 +106,7 @@ function mod:GetOptions()
 		wrapMarker,
 		231005, -- Arcane Emanations (Kar'zun)
 		225927, -- Gravity Well (Gilded Guardian)
-		224440, -- Crushing Stomp (Gilded Guardian)
+		{224440, "FLASH"}, -- Crushing Stomp (Gilded Guardian)
 		224510, -- Crackling Slice (Duskwatch Battle-Magus)
 		225412, -- Mass Siphon (Chronowraith)
 		224568, -- Mass Suppress (Nighthold Protector)
@@ -114,6 +116,7 @@ function mod:GetOptions()
 		{224632, "SAY", "FLASH"}, -- Heavenly Crash (Astrologer Jarin)
 
 		--[[ Aluriel to Telarn ]]--
+		225390, -- Stellar Dust (Celestial Acolyte)
 		{225845, "FLASH"}, -- Chosen Fate (Duskwatch Weaver)
 		{225105, "FLASH", "SAY", "PROXIMITY"}, -- Arcanic Release (Shal'dorei Archmage)
 		225800, -- Greater Time Warp (Shal'dorei Archmage)
@@ -136,6 +139,7 @@ function mod:GetOptions()
 		[225412] = L.chronowraith,
 		[224568] = L.protector,
 		[224632] = L.jarin,
+		[225390] = L.acolyte,
 		[225845] = L.weaver,
 		[225105] = L.archmage,
 		[225857] = L.manasaber,
@@ -149,10 +153,10 @@ function mod:OnBossEnable()
 	--[[ General ]]--
 	self:RegisterMessage("BigWigs_OnBossEngage", "Disable")
 
-	-- Rumbling Ground, Disrupting Energy, Poison Brambles
-	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 230488, 224572, 225856)
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 230488, 224572, 225856)
-	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 230488, 224572, 225856)
+	-- Rumbling Ground, Disrupting Energy, Poison Brambles, Stellar Dust
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 230488, 224572, 225856, 225390)
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 230488, 224572, 225856, 225390)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 230488, 224572, 225856, 225390)
 
 	--[[ Skorpyron to Chronomatic Anomaly ]]--
 	self:Log("SPELL_CAST_START", "DevastatingStrike", 230438)
@@ -341,8 +345,9 @@ function mod:GravityWell(args)
 end
 
 function mod:CrushingStomp(args)
-	self:Message(args.spellId, "Urgent", "Long")
+	self:Message(args.spellId, "Urgent", "Warning")
 	self:CDBar(args.spellId, 23)
+	self:Flash(args.spellId)
 end
 
 function mod:GuardianDeath()
