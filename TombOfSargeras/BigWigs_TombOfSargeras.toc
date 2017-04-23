@@ -1,7 +1,7 @@
 ## Interface: 70200
 
 ## Title: BigWigs [|cffeda55fTomb of Sargeras|r]
-## Title-deDE: BigWigs [|cffeda55fTomb of Sargeras|r]
+## Title-deDE: BigWigs [|cffeda55fDas Grabmal des Sargeras|r]
 ## Title-esES: BigWigs [|cffeda55fTomb of Sargeras|r]
 ## Title-esMX: BigWigs [|cffeda55fTomb of Sargeras|r]
 ## Title-frFR: BigWigs [|cffeda55fTomb of Sargeras|r]
@@ -12,7 +12,7 @@
 ## Title-ptBR: BigWigs [|cffeda55fTomb of Sargeras|r]
 ## Title-koKR: BigWigs [|cffeda55fTomb of Sargeras|r]
 ## Notes: BigWigs Tomb of Sargeras Modules
-## Notes-deDE: BigWigs-Module für Tomb of Sargeras
+## Notes-deDE: BigWigs-Module für das Grabmal des Sargeras
 ## Notes-esES: BigWigs Tomb of Sargeras Modules
 ## Notes-esMX: BigWigs Tomb of Sargeras Modules
 ## Notes-frFR: Modules BigWigs concernant Tomb of Sargeras.
