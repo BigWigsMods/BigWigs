@@ -106,7 +106,7 @@ if L then
 	L.jarin = "Astrologe Jarin"
 
 	--[[ Aluriel to Telarn ]]--
-	L.acolyte = "Akolythin der Erhabenen"
+	L.defender = "Astralverteidiger"
 	L.weaver = "Weber der Dämmerwache"
 	L.archmage = "Erzmagierin der Shal'dorei"
 	L.manasaber = "Zahmer Manasäbler"
