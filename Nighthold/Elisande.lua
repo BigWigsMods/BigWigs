@@ -14,7 +14,7 @@
 
 local mod, CL = BigWigs:NewBoss("Grand Magistrix Elisande", 1088, 1743)
 if not mod then return end
-mod:RegisterEnableMob(106643)
+mod:RegisterEnableMob(106643, 111151) -- Elisande, Midnight Siphoner
 mod.engageId = 1872
 mod.respawnTime = 30
 
