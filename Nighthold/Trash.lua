@@ -26,7 +26,7 @@ mod:RegisterEnableMob(
 	112803, -- Astrologer Jarin
 
 	--[[ Aluriel to Telarn ]]--
-	112655, -- Celestial Acolyte
+	112638, -- Astral Defender
 	112973, -- Duskwatch Weaver
 	112595, -- Shal'dorei Archmage
 	111295, -- Domesticated Manasaber
@@ -70,7 +70,7 @@ if L then
 	L.jarin = "Astrologer Jarin"
 
 	--[[ Aluriel to Telarn ]]--
-	L.acolyte = "Celestial Acolyte"
+	L.defender = "Astral Defender"
 	L.weaver = "Duskwatch Weaver"
 	L.archmage = "Shal'dorei Archmage"
 	L.manasaber = "Domesticated Manasaber"
@@ -116,7 +116,7 @@ function mod:GetOptions()
 		{224632, "SAY", "FLASH"}, -- Heavenly Crash (Astrologer Jarin)
 
 		--[[ Aluriel to Telarn ]]--
-		225390, -- Stellar Dust (Celestial Acolyte)
+		225390, -- Stellar Dust (Astral Defender)
 		{225845, "FLASH"}, -- Chosen Fate (Duskwatch Weaver)
 		{225105, "FLASH", "SAY", "PROXIMITY"}, -- Arcanic Release (Shal'dorei Archmage)
 		225800, -- Greater Time Warp (Shal'dorei Archmage)
@@ -139,7 +139,7 @@ function mod:GetOptions()
 		[225412] = L.chronowraith,
 		[224568] = L.protector,
 		[224632] = L.jarin,
-		[225390] = L.acolyte,
+		[225390] = L.defender,
 		[225845] = L.weaver,
 		[225105] = L.archmage,
 		[225857] = L.manasaber,

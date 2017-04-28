@@ -106,7 +106,7 @@ if L then
 	L.jarin = "占星家贾林"
 
 	--[[ Aluriel to Telarn ]]--
-	L.acolyte = "星界助祭"
+	--L.defender = "Astral Defender"
 	L.weaver = "暮色卫队织法者"
 	L.archmage = "夏多雷大法师"
 	L.manasaber = "驯养的魔刃豹"

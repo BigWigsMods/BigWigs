@@ -108,7 +108,7 @@ if L then
 	L.jarin = "점성술사 자린"
 
 	--[[ Aluriel to Telarn ]]--
-	L.acolyte = "천공의 수행사제"
+	--L.defender = "Astral Defender"
 	L.weaver = "황혼감시대 역술사"
 	L.archmage = "샬도레이 대마법사"
 	L.manasaber = "길들인 마나호랑이"
