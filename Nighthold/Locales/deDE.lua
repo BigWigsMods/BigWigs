@@ -116,5 +116,6 @@ if L then
 	L.infernal = "Sengende Höllenbestie"
 
 	--[[ Aluriel to Tichondrius ]]--
+	L.chaosmage = "Chaosmagier des Dämonenpakts"
 	L.watcher = "Abgrundbeobachter"
 end

@@ -116,5 +116,6 @@ if L then
 	L.infernal = "Infernal incendiaire"
 
 	--[[ Aluriel to Tichondrius ]]--
+	L.chaosmage = "Mage du chaos gangrelige"
 	L.watcher = "Guetteur des abîmes"
 end

@@ -116,5 +116,6 @@ if L then
 	L.infernal = "灼熱的煉獄火"
 
 	--[[ Aluriel to Tichondrius ]]--
+	--L.chaosmage = "Felsworn Chaos-Mage"
 	L.watcher = "暮衛哨兵"
 end

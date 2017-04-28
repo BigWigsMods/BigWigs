@@ -36,6 +36,7 @@ mod:RegisterEnableMob(
 	111210, -- Searing Infernal
 
 	--[[ Aluriel to Tichondrius ]]--
+	113012, -- Felsworn Chaos-Mage
 	113043 -- Abyss Watcher
 )
 
@@ -80,7 +81,12 @@ if L then
 	L.infernal = "Searing Infernal"
 
 	--[[ Aluriel to Tichondrius ]]--
+	L.chaosmage = "Felsworn Chaos-Mage"
 	L.watcher = "Abyss Watcher"
+
+	L.fear = "{224944} ({5782})"
+	L.fear_desc = 224944
+	L.fear_icon = 224944
 end
 
 --------------------------------------------------------------------------------
@@ -127,6 +133,7 @@ function mod:GetOptions()
 		{221344, "SAY", "FLASH"}, -- Annihilating Orb (Searing Infernal)
 
 		--[[ Aluriel to Tichondrius ]]--
+		{"fear", "SAY", "FLASH"}, -- Will of the Legion (Felsworn Chaos-Mage)
 		{224982, "SAY", "FLASH"}, -- Fel Glare (Abyss Watcher)
 	}, {
 		[230438] = L.torm,
@@ -145,6 +152,7 @@ function mod:GetOptions()
 		[225857] = L.manasaber,
 		[225856] = L.naturalist,
 		[221344] = L.infernal,
+		["fear"] = L.chaosmage,
 		[224982] = L.watcher,
 	}
 end
@@ -200,6 +208,8 @@ function mod:OnBossEnable()
 	self:Death("InfernalDeath", 111210)
 
 	--[[ Aluriel to Tichondrius ]]--
+	self:Log("SPELL_AURA_APPLIED", "WillOfTheLegion", 224944)
+	self:Log("SPELL_AURA_REMOVED", "WillOfTheLegionRemoved", 224944)
 	self:Log("SPELL_AURA_APPLIED", "FelGlare", 224982)
 end
 
@@ -465,6 +475,21 @@ function mod:InfernalDeath()
 end
 
 --[[ Aluriel to Tichondrius ]]--
+function mod:WillOfTheLegion(args)
+	local fear = self:SpellName(5782) -- "Fear"
+	self:TargetMessage("fear", args.destName, "Important", "Long", fear, args.spellId, true)
+	self:TargetBar("fear", 10, args.destName, fear, args.spellId)
+	if self:Me(args.destGUID) then
+		self:Say("fear", fear)
+	elseif self:Dispeller("magic") then
+		self:Flash("fear", args.spellId)
+	end
+end
+
+function mod:WillOfTheLegionRemoved(args)
+	self:StopBar(5782, args.destName) -- "Fear"
+end
+
 function mod:FelGlare(args)
 	self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
 	self:TargetBar(args.spellId, 10, args.destName)

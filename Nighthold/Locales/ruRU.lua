@@ -116,5 +116,6 @@ if L then
 	L.infernal = "Опаляющий инфернал"
 
 	--[[ Aluriel to Tichondrius ]]--
+	L.chaosmage = "Скверноподданный маг Хаоса"
 	L.watcher = "Дозорный из бездны"
 end

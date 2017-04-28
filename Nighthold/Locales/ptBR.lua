@@ -116,5 +116,6 @@ if L then
 	--L.infernal = "Searing Infernal"
 
 	--[[ Aluriel to Tichondrius ]]--
+	L.chaosmage = "Mago do Caos Devoto Vil"
 	--L.watcher = "Abyss Watcher"
 end
