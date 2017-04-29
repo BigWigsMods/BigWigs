@@ -49,7 +49,7 @@ L.trash = "小怪"
 L.underyou = ">你<脚下：%s！"
 L.you = ">你< %s！"
 
---L.active = "Active" -- When a boss becomes active, after speech finishes
+L.active = "激活" -- When a boss becomes active, after speech finishes
 
 -- Common raid marking locale
 L.marker = "%s标记"
