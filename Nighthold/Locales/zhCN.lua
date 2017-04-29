@@ -71,7 +71,7 @@ end
 
 L = BigWigs:NewBossLocale("Gul'dan", "zhCN")
 if L then
-	--L.warmup_trigger = "Have you forgotten" -- Have you forgotten your humiliation on the Broken Shore? How your precious high king was bent and broken before me? Will you beg for your lives as he did, whimpering like some worthless dog?
+	L.warmup_trigger = "你们忘了破碎海滩的耻辱了吗？" -- 你们忘了破碎海滩的耻辱了吗？你们的宝贝国王是怎么在我面前卑躬屈膝，支离破碎的？你们也想像他一样，像条狗一样呜咽求饶吗？
 
 	L.empowered = "（强化）%s"
 	L.gains = "古尔丹获得 >%s<"
