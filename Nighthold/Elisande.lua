@@ -435,10 +435,10 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			elementalCollector[guid] = nil
 			local mobId = self:MobId(guid)
 			if mobId == 105301 then -- Fast Elemental
-				self:Bar(209166, 30, CL.count:format(L.fastTimeZone, fastZoneCount))
+				self:Bar(209166, 35, CL.count:format(L.fastTimeZone, fastZoneCount))
 				fastZoneCount = fastZoneCount + 1
 			elseif mobId == 105299 then -- Slow Elemental
-				self:Bar(209165, 60, CL.count:format(L.slowTimeZone, slowZoneCount))
+				self:Bar(209165, 70, CL.count:format(L.slowTimeZone, slowZoneCount))
 				slowZoneCount = slowZoneCount + 1
 			end
 		end
