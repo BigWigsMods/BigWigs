@@ -10,6 +10,7 @@
 
 local mod, CL = BigWigs:NewBoss("Il'gynoth", 1094, 1738)
 if not mod then return end
+
 mod:RegisterEnableMob(105906, 105393, 105304) -- Eye of Il'gynoth, Il'gynoth, Dominator Tentacle
 mod.engageId = 1873
 mod.respawnTime = 30
@@ -23,6 +24,9 @@ local fixateOnMe = nil
 local phase = 1 -- 1 = Outside, 2 = Boss, 3 = Outside, 4 = Boss
 local deathglareMarked = {} -- save GUIDs of marked mobs
 local deathglareMarks  = { [6] = true, [5] = true, [4] = true, [3] = true } -- available marks to use
+local ichorMarked = {}
+local ichorMarks = { [8] = true, [7] = true, [6] = true, [5] = true, [4] = true, [3] = true, [2] = true, [1] = true }
+
 local deathBlossomCount = 1
 
 local phaseStartTime = 0
@@ -105,6 +109,8 @@ if L then
 	L.deathglare_tentacle = -13190 -- Deathglare Tentacle
 	L.deathglare_tentacle_icon = 208697 -- Mind Flay icon
 
+	L.nightmare_ichor = -13186 -- Nightmare Inchor
+
 	L.shriveled_eyestalk = -13570 -- Shriveled Eyestalk
 	L.shriveled_eyestalk_icon = 208697 -- Mind Flay icon
 
@@ -116,6 +122,7 @@ end
 -- Initialization
 --
 
+local ichorMarker = mod:AddMarkerOption(false, "npc", 8, L.nightmare_ichor, 8, 7, 6, 5, 4, 3, 2, 1) -- Nightmare Ichor
 local tentacleMarker = mod:AddMarkerOption(false, "npc", 6, L.deathglare_tentacle, 6, 5, 4, 3) -- Deathglare Tentacle
 function mod:GetOptions()
 	return {
@@ -134,6 +141,7 @@ function mod:GetOptions()
 		-- Nightmare Ichor
 		210099, -- Fixate
 		209469, -- Touch of Corruption
+		ichorMarker,
 
 		-- Nightmare Horror
 		"nightmare_horror", -- Nightmare Horror
@@ -183,6 +191,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 210099)
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 210099)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TouchOfCorruption", 209469)
+	self:Death("IchorDeath", 105721)
 
 	-- Nightmare Horror
 	self:Log("SPELL_AURA_APPLIED", "SummonNightmareHorror", 209387) -- Seeping Corruption, buffed on spawn
@@ -240,6 +249,13 @@ function mod:OnEngage()
 
 		self:RegisterTargetEvents("DeathglareMark")
 	end
+
+	wipe(ichorMarked)
+	if self:GetOption(ichorMarker) then
+		ichorMarks = { [8] = true, [7] = true, [6] = true, [5] = true, [4] = true, [3] = true, [2] = true, [1] = true }
+
+		self:RegisterTargetEvents("IchorMark")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -267,6 +283,24 @@ function mod:StartSpawnTimer(addType, count)
 	end
 
 	self:ScheduleTimer("StartSpawnTimer", length, addType, count+1)
+end
+
+function mod:IchorMark(event, unit)
+	local guid = UnitGUID(unit)
+	if self:MobId(guid) == 105721 and not ichorMarked[guid] then
+		local icon = next(ichorMarks)
+		if icon then -- At least one icon unused
+			SetRaidTarget(unit, icon)
+			ichorMarks[icon] = nil -- Mark is no longer available
+			ichorMarked[guid] = icon -- Save the tentacle we marked and the icon we marked it with
+		end
+	end
+end
+
+function mod:IchorDeath(args)
+	if ichorMarked[args.destGUID] then -- Did we mark the Ichor?
+		ichorMarks[ichorMarked[args.destGUID]] = true -- Mark used is available again
+	end
 end
 
 function mod:DeathglareMark(event, unit)
