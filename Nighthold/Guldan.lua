@@ -89,7 +89,9 @@ local timers = mod:Mythic() and mythicTimers or mod:Heroic() and heroicTimers or
 
 local L = mod:GetLocale()
 if L then
-	L.warmup_trigger = "Have you forgotten" -- Have you forgotten your humiliation on the Broken Shore? How your precious high king was bent and broken before me? Will you beg for your lives as he did, whimpering like some worthless dog?
+	-- HORDE: Have you forgotten your humiliation on the Broken Shore? How your mighty warchief was stuck in the belly like a helpless piglet? Will you die slowly as he did, consumed by fel corruption and squealing for a merciful end?
+	-- ALLIANCE: Have you forgotten your humiliation on the Broken Shore? How your precious high king was bent and broken before me? Will you beg for your lives as he did, whimpering like some worthless dog?
+	L.warmup_trigger = "Have you forgotten"
 
 	L.empowered = "(E) %s" -- (E) Eye of Gul'dan
 	L.gains = "Gul'dan gains %s"
@@ -310,7 +312,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
 		self:Bar(211439, 39) -- Will of the Demon Within
 	elseif msg:find(L.warmup_trigger, nil, true) then
-		self:Bar("warmup", 62, CL.active, "achievement_thenighthold_guldan")
+		self:Bar("warmup", UnitFactionGroup("player") == "Alliance" and 62 or 66, CL.active, "achievement_thenighthold_guldan")
 	end
 end
 
