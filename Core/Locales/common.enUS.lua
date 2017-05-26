@@ -28,6 +28,7 @@ L.general = "General" -- General settings, i.e. things that apply to normal, her
 L.duration = "%s for %s sec"
 L.over = "%s Over!"
 L.removed = "%s Removed"
+L.removed_from = "%s Removed From %s"
 L.incoming = "%s Incoming!"
 L.interrupted = "%s Interrupted"
 L.no = "No %s!"
