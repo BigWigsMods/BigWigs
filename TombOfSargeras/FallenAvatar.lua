@@ -34,6 +34,11 @@ local desolateCounter = 1
 local darkMarkCounter = 1
 local taintedMatrixCounter = 1
 
+--- DELETE AFTER PTR --- XXX
+local tempContainmentID = -15565
+if not IsTestBuild() then tempContainmentID = -15123 end
+--- DELETE AFTER PTR --- XXX
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -66,7 +71,7 @@ function mod:GetOptions()
 		["stages"] = "general",
 		[239058] = -14709, -- Stage One: A Slumber Disturbed
 		[233856] = -14713, -- Maiden of Valor
-		[233556] = -15123, -- Containment Pylon
+		[233556] = tempContainmentID, -- Containment Pylon
 		[239739] = -14719, -- Stage Two: An Avatar Awakened
 		[240623] = "mythic",
 	}
