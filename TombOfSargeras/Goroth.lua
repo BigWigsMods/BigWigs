@@ -94,7 +94,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 233050 then --Infernal Spike
 		cometSpikeCounter = cometSpikeCounter + 1
-		self:Message("cometSpike", "Important", "Alert", CL.casting:format(args.spellName), L.cometSpike_icon)
+		self:Message("cometSpike", "Important", "Alert", CL.casting:format(spellName), L.cometSpike_icon)
 		local timer = nil
 		if self:LFR() then
 			timer = cometSpikeTimersLFR[cometSpikeCounter] or (cometSpikeCounter % 7 == 2 and 10 or cometSpikeCounter % 7 == 5 and 10 or 8)
@@ -118,8 +118,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 233285 then -- Rain of Brimstone
 		rainCounter = rainCounter + 1
 		self:Message(238588, "Urgent", "Warning", CL.incoming:format(spellName))
-		self:Bar(238588, raincounter < 7 and (rainCounter % 2 == 0 and 24 or 36) or raincounter > 7 and 60 or 47, CL.count:format(spellName, rainCounter))
-		self:CastBar(args.spellId, 8) -- XXX Maybe a "meteor landing" text would be more clear?
+		self:Bar(238588, rainCounter == 5 and 68 or 60, CL.count:format(spellName, rainCounter))
+		self:Bar(238588, 8, self:SpellName(182580), 238588) -- Meteor Impact
 	end
 end
 
@@ -168,7 +168,7 @@ function mod:InfernalBurning(args)
 	burningCounter = burningCounter + 1
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 6)
-	self:Bar(args.spellId, burningCounter == 4 and 64 or 60)
+	self:Bar(args.spellId, 60)
 end
 
 do
