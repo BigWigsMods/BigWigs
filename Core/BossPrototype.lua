@@ -715,9 +715,6 @@ do
 		-- Engage
 		self.isEngaged = true
 
-		-- Prevent rare combat log bug
-		CombatLogClearEntries()
-
 		if debug then dbg(self, ":Engage") end
 
 		if not noEngage or noEngage ~= "NoEngage" then

@@ -14,7 +14,7 @@
 
 local mod, CL = BigWigs:NewBoss("Grand Magistrix Elisande", 1088, 1743)
 if not mod then return end
-mod:RegisterEnableMob(106643)
+mod:RegisterEnableMob(106643, 111151) -- Elisande, Midnight Siphoner
 mod.engageId = 1872
 mod.respawnTime = 30
 
@@ -37,7 +37,7 @@ local lfrTimers = {
 
 	--[[ Phase 1 ]]--
 	-- Arcanetic Ring
-	[208807] = {21, 30, 37, 35, 35},
+	[228877] = {21, 30, 37, 35, 35},
 
 	-- Spanning Singularity
 	[209170] = {17, 57, 30},
@@ -71,7 +71,7 @@ local normalTimers = {
 
 	--[[ Phase 1 ]]--
 	-- Arcanetic Ring
-	[208807] = {34, 31, 76, 50, 40, 15, 30},
+	[228877] = {34, 31, 76, 50, 40, 15, 30},
 
 	-- Spanning Singularity
 	[209170] = {23, 36, 46, 65},
@@ -105,7 +105,7 @@ local heroicTimers = {
 
 	--[[ Phase 1 ]]--
 	-- Arcanetic Ring
-	[208807] = {35, 40, 10, 63, 10},
+	[228877] = {35, 40, 10, 63, 10},
 
 	-- Spanning Singularity
 	[209170] = {25, 36, 57, 65},
@@ -147,7 +147,7 @@ local mythicTimers = {
 
 	--[[ Phase 1 ]]--
 	-- Arcanetic Ring
-	[208807] = {30, 39, 15, 31, 19, 10, 26, 9, 10},
+	[228877] = {30, 39, 15, 31, 19, 10, 26, 9, 10},
 
 	-- Spanning Singularity
 	[209170] = {56, 50, 45}, -- timers are complete
@@ -251,7 +251,7 @@ function mod:GetOptions()
 		209166, -- Fast Time
 
 		--[[ Time Layer 1 ]]--
-		208807, -- Arcanetic Ring
+		228877, -- Arcanetic Ring
 		209170, -- Spanning Singularity
 		{209615, "TANK"}, -- Ablation
 
@@ -269,7 +269,7 @@ function mod:GetOptions()
 		["boss_active"] = "general",
 		["recursive_elemental"] = -13226, -- Recursive Elemental
 		["expedient_elemental"] = -13229, -- Expedient Elemental
-		[208807] = -13222, -- Time Layer 1
+		[228877] = -13222, -- Time Layer 1
 		[209244] = -13235, -- Time Layer 2
 		[211261] = -13232, -- Time Layer 3
 	}
@@ -295,7 +295,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "TimeAuraRemoved", 209166)
 
 	--[[ Time Layer 1 ]]--
-	self:Log("SPELL_CAST_START", "ArcaneticRing", 208807) -- l11n
+	self:Log("SPELL_CAST_START", "ArcaneticRing", 228877) -- l11n
 	self:Log("SPELL_AURA_APPLIED", "SingularityDamage", 209433)
 	self:Log("SPELL_PERIODIC_DAMAGE", "SingularityDamage", 209433)
 	self:Log("SPELL_PERIODIC_MISSED", "SingularityDamage", 209433)
@@ -435,10 +435,10 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			elementalCollector[guid] = nil
 			local mobId = self:MobId(guid)
 			if mobId == 105301 then -- Fast Elemental
-				self:Bar(209166, 30, CL.count:format(L.fastTimeZone, fastZoneCount))
+				self:Bar(209166, 35, CL.count:format(L.fastTimeZone, fastZoneCount))
 				fastZoneCount = fastZoneCount + 1
 			elseif mobId == 105299 then -- Slow Elemental
-				self:Bar(209165, 60, CL.count:format(L.slowTimeZone, slowZoneCount))
+				self:Bar(209165, 70, CL.count:format(L.slowTimeZone, slowZoneCount))
 				slowZoneCount = slowZoneCount + 1
 			end
 		end
@@ -461,13 +461,13 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 	-- l11n END
 
 	if msg == L.ring_yell or (localized_ring_msg and msg:find(localized_ring_msg)) then -- Arcanetic Ring, l11n
-		self:Message(208807, "Attention", "Alarm", CL.count:format(self:SpellName(208807), ringCount))
+		self:Message(228877, "Attention", "Alarm", CL.count:format(self:SpellName(228877), ringCount))
 		ringCount = ringCount + 1
-		local timer = timers[208807][ringCount]
+		local timer = timers[228877][ringCount]
 		if self:LFR() then -- XXX Unsure if timers are complete
-			self:Bar(208807, timer, CL.count:format(self:SpellName(208807), ringCount))
+			self:Bar(228877, timer, CL.count:format(self:SpellName(228877), ringCount))
 		elseif timer and (not savedRingCount or ringCount < savedRingCount) then
-			self:Bar(208807, timer, CL.count:format(self:SpellName(208807), ringCount))
+			self:Bar(228877, timer, CL.count:format(self:SpellName(228877), ringCount))
 		end
 
 	elseif msg == L.orb_yell or (localized_orb_msg and msg:find(localized_orb_msg)) then -- Epocheric Orb, l11n
@@ -523,7 +523,7 @@ function mod:TimeStop(args)
 	self:StopBar(L.expedient_elemental)
 	self:StopBar(CL.count:format(L.fastTimeZone, fastZoneCount-1))
 	self:StopBar(CL.count:format(L.slowTimeZone, slowZoneCount-1))
-	self:StopBar(CL.count:format(self:SpellName(208807), ringCount)) -- Arcanetic Ring
+	self:StopBar(CL.count:format(self:SpellName(228877), ringCount)) -- Arcanetic Ring
 	self:StopBar(CL.count:format(self:SpellName(210022), orbCount)) -- Epocheric Orb
 	self:StopBar(CL.count:format(self:SpellName(209244), beamCount)) -- Delphuric Beam
 	self:StopBar(CL.count:format(self:SpellName(209170), singularityCount)) -- Singularity
@@ -589,7 +589,7 @@ function mod:LeavetheNightwell(args)
 	self:Bar("recursive_elemental", self:Mythic() and timers[211614][phase][slowElementalCount] or timers[211614][slowElementalCount], L.recursive_elemental, L.recursive_elemental_icon)
 	self:Bar("expedient_elemental", self:Mythic() and timers[211616][phase][fastElementalCount] or timers[211616][fastElementalCount], L.expedient_elemental, L.expedient_elemental_icon)
 	if not (self:Easy() and phase > 1) then
-		self:Bar(208807, timers[208807][ringCount] + (phase > 1 and 2 or 0), CL.count:format(self:SpellName(208807), ringCount)) -- Arcanetic Ring
+		self:Bar(228877, timers[228877][ringCount] + (phase > 1 and 2 or 0), CL.count:format(self:SpellName(228877), ringCount)) -- Arcanetic Ring
 	end
 	if phase == 1 or self:Normal() then
 		self:Bar(209170, timers[209170][singularityCount], CL.count:format(self:SpellName(209170), singularityCount)) -- Spanning Singularity

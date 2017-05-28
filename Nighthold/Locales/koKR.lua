@@ -72,8 +72,8 @@ end
 L = BigWigs:NewBossLocale("Gul'dan", "koKR")
 if L then
 	L.warmup_trigger = "부서진 해변에서의 치욕을 잊었느냐?"
-  -- Horde : 부서진 해변에서의 치욕을 잊었느냐? 너희의 그 잘난 족장이 나약한 돼지 새끼처럼 배를 찔린 것을 잊었나? 그자처럼, 너희도 지옥의 타락에 물든 채 제발 죽여 달라고 빌며 서서히 죽어 갈 작정이냐?
-  -- Alliance : 부서진 해변에서의 치욕을 잊었느냐? 너희의 그 소중한 왕이 내 앞에서 부서지고 망가진 모습을 잊었나? 그자가 그랬듯, 개처럼 낑낑대며 목숨을 구걸할 작정이냐?
+        --    Horde : 부서진 해변에서의 치욕을 잊었느냐? 너희의 그 잘난 족장이 나약한 돼지 새끼처럼 배를 찔린 것을 잊었나? 그자처럼, 너희도 지옥의 타락에 물든 채 제발 죽여 달라고 빌며 서서히 죽어 갈 작정이냐?
+        -- Alliance : 부서진 해변에서의 치욕을 잊었느냐? 너희의 그 소중한 왕이 내 앞에서 부서지고 망가진 모습을 잊었나? 그자가 그랬듯, 개처럼 낑낑대며 목숨을 구걸할 작정이냐?
 
 	L.empowered = "(강화) %s" -- (E) Eye of Gul'dan
 	L.gains = "굴단 %s 획득"
@@ -108,7 +108,7 @@ if L then
 	L.jarin = "점성술사 자린"
 
 	--[[ Aluriel to Telarn ]]--
-	L.acolyte = "천공의 수행사제"
+	L.defender = "별의 수호병"
 	L.weaver = "황혼감시대 역술사"
 	L.archmage = "샬도레이 대마법사"
 	L.manasaber = "길들인 마나호랑이"
@@ -118,5 +118,6 @@ if L then
 	L.infernal = "불타는 지옥불정령"
 
 	--[[ Aluriel to Tichondrius ]]--
+	L.chaosmage = "지옥서약 혼돈마법사"
 	L.watcher = "심연 감시자"
 end

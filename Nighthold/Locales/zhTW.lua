@@ -106,7 +106,7 @@ if L then
 	L.jarin = "占星師賈倫"
 
 	--[[ Aluriel to Telarn ]]--
-	--L.acolyte = "Celestial Acolyte"
+	--L.defender = "Astral Defender"
 	L.weaver = "暮衛編織者"
 	L.archmage = "夏多雷大法師"
 	L.manasaber = "被馴養的法力刃豹"
@@ -116,5 +116,6 @@ if L then
 	L.infernal = "灼熱的煉獄火"
 
 	--[[ Aluriel to Tichondrius ]]--
+	--L.chaosmage = "Felsworn Chaos-Mage"
 	L.watcher = "暮衛哨兵"
 end

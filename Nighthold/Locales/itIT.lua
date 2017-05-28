@@ -106,7 +106,7 @@ if L then
 	--L.jarin = "Astrologer Jarin"
 
 	--[[ Aluriel to Telarn ]]--
-	L.acolyte = "Accolita Celestiale"
+	L.defender = "Difensore Astrale"
 	--L.weaver = "Duskwatch Weaver"
 	--L.archmage = "Shal'dorei Archmage"
 	--L.manasaber = "Domesticated Manasaber"
@@ -116,5 +116,6 @@ if L then
 	--L.infernal = "Searing Infernal"
 
 	--[[ Aluriel to Tichondrius ]]--
+	L.chaosmage = "Mago del Caos Vilfedele"
 	--L.watcher = "Abyss Watcher"
 end

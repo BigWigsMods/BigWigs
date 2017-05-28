@@ -106,7 +106,7 @@ if L then
 	L.jarin = "Астролог Джарин"
 
 	--[[ Aluriel to Telarn ]]--
-	L.acolyte = "Небесная послушница"
+	L.defender = "Астральный защитник"
 	L.weaver = "Заклинатель из Сумеречной стражи"
 	L.archmage = "Шал'дорай - верховный маг"
 	L.manasaber = "Прирученный манопард"
@@ -116,5 +116,6 @@ if L then
 	L.infernal = "Опаляющий инфернал"
 
 	--[[ Aluriel to Tichondrius ]]--
+	L.chaosmage = "Скверноподданный маг Хаоса"
 	L.watcher = "Дозорный из бездны"
 end

@@ -29,6 +29,7 @@ L.general = "Geral" -- General settings, i.e. things that apply to normal, heroi
 L.duration = "%s durante %s seg"
 L.over = "%s Acabou!"
 L.removed = "%s Removido"
+--L.removed_from = "%s Removed From %s"
 L.incoming = "%s Chegando!"
 L.interrupted = "%s Interrompido"
 L.no = "Sem %s!"

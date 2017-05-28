@@ -29,6 +29,7 @@ L.general = "일반" -- General settings, i.e. things that apply to normal, hero
 L.duration = "%s %s초 남음"
 L.over = "%s 종료!"
 L.removed = "%s 사라짐"
+L.removed_from = "%2$s의 %1$s 사라짐"
 L.incoming = "곧 %s!"
 L.interrupted = "%s 시전 방해됨"
 L.no = "%s 없음!"

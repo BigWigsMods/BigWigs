@@ -106,7 +106,7 @@ if L then
 	L.jarin = "Astrologe Jarin"
 
 	--[[ Aluriel to Telarn ]]--
-	L.acolyte = "Akolythin der Erhabenen"
+	L.defender = "Astralverteidiger"
 	L.weaver = "Weber der Dämmerwache"
 	L.archmage = "Erzmagierin der Shal'dorei"
 	L.manasaber = "Zahmer Manasäbler"
@@ -116,5 +116,6 @@ if L then
 	L.infernal = "Sengende Höllenbestie"
 
 	--[[ Aluriel to Tichondrius ]]--
+	L.chaosmage = "Chaosmagier des Dämonenpakts"
 	L.watcher = "Abgrundbeobachter"
 end
