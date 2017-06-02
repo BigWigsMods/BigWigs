@@ -53,28 +53,29 @@ end
 
 do
 	local voices = {}
-	function API:RegisterCountdown(name, data)
-		if type(name) ~= "string" then error("Countdown name must be a string.") end
+	function API:RegisterCountdown(id, name, data)
+		if not data then data, name = name, id end
+		if type(id) ~= "string" then error("Countdown name must be a string.") end
 		if type(data) ~= "table" or #data < 5 or #data > 10 then error("Countdown data must be an indexed table with 5-10 entries.") end
-		if voices[name] then error(("Countdown %q already registered."):format(name)) end
+		if voices[id] then error(("Countdown %q already registered."):format(id)) end
 
-		voices[name] = {}
+		voices[id] = { name = name }
 		for i = 1, #data do
-			voices[name][i] = data[i]
+			voices[id][i] = data[i]
 		end
 	end
 	function API:GetCountdownList()
 		local list = {}
-		for k in next, voices do
-			list[k] = k
+		for k, v in next, voices do
+			list[k] = v.name
 		end
 		return list
 	end
-	function API:HasCountdown(name)
-		return voices[name] and true
+	function API:HasCountdown(id)
+		return voices[id] and true
 	end
-	function API:GetCountdownSound(name, index)
-		return voices[name] and voices[name][index]
+	function API:GetCountdownSound(id, index)
+		return voices[id] and voices[id][index]
 	end
 end
 
