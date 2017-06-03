@@ -17,7 +17,7 @@ mod.respawnTime = 25
 -- Locals
 --
 
-local timers = {
+local timersHeroic = {
 	[234057] = {7, 40, 35.2, 47.3, 40, 35}, -- Unbound Chaos
 	[239207] = {15, 42.6, 59.5, 60, 42.5, 42.4}, -- Touch of Sargeras
 	[236573] = {28, 42.5, 40, 30.3, 49, 36.5, 36.5}, -- Shadowy Blades
@@ -39,6 +39,7 @@ local tempContainmentID = -15565
 if not IsTestBuild() then tempContainmentID = -15123 end
 --- DELETE AFTER PTR --- XXX
 
+local timers = timersHeroic
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -80,6 +81,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
 	self:RegisterEvent("RAID_BOSS_WHISPER")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	-- Stage One: A Slumber Disturbed
 	self:Log("SPELL_CAST_START", "TouchofSargeras", 239207) -- Touch of Sargeras
@@ -105,7 +107,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FelInfusion", 236684) -- Dark Mark
 
 	-- Mythic
-	self:Log("SPELL_CAST_START", "TaintedMatrix", 240623) -- Corrupted Matrix
+	self:Log("SPELL_CAST_START", "TaintedMatrix", 240623) -- Tainted Matrix
 	self:Log("SPELL_AURA_APPLIED", "TaintedEssence", 240728) -- Desolate
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TaintedEssence", 240728) -- Desolate
 	self:Log("SPELL_CAST_SUCCESS", "RainoftheDestroyer", 234418) -- Rain of the Destroyer
@@ -142,17 +144,21 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		shadowyBladesCounter = shadowyBladesCounter + 1
 		self:Message(236604, "Attention", "Alert", spellName)
 		self:CDBar(236604, timers[spellId][shadowyBladesCounter])
+		self:CastBar(236604, 5)
 	elseif spellId == 235597 then -- Annihilation // Stage 2
 		phase = 2
 		self:Message("stages", "Positive", "Long", self:SpellName(-14719), false) -- Stage Two: An Avatar Awakened
 
 		self:StopBar(233556) -- Corrupted Matrix
-		self:StopBar(CL.cast:format(233556)) -- Corrupted Matrix (cast)
+		self:StopBar(CL.cast:format(self:SpellName(233556))) -- Corrupted Matrix (cast)
 		self:StopBar(236494) -- Desolate
 		self:StopBar(234059) -- Unbound Chaos
-		self:StopBar(239207) -- Touch of Sargeras
+		self:StopBar(CL.count:format(self:SpellName(239207), touchofSargerasCounter)) -- Touch of Sargeras
+		self:StopBar(CL.cast:format(CL.count:format(self:SpellName(239207), touchofSargerasCounter))) -- Touch of Sargeras (cast)
 		self:StopBar(236604) -- Shadowy Blades
 		self:StopBar(239132) -- Rupture Realities (P1)
+		self:StopBar(240623) -- Tainted Matrix
+		self:StopBar(CL.cast:format(self:SpellName(240623))) -- Tainted Matrix (cast)
 
 		ruptureRealitiesCounter = 1
 		desolateCounter = 1
@@ -160,14 +166,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 
 		self:CDBar(236494, 17.3) -- Desolate
 		self:CDBar(239739, 19.8) -- Dark Mark
-		if self:Heroic() or self:Mythic() then
-			self:CDBar(242017, 23.4) -- Black Winds
+		--if self:Heroic() or self:Mythic() then -- XXX Black Winds always active last mythic test
+		--	self:CDBar(242017, 23.4) -- Black Winds
 		end
 		self:CDBar(235572, 33.4, CL.count:format(self:SpellName(235572), ruptureRealitiesCounter)) -- Rupture Realities (P2)
 
-	elseif spellId == 239417 then -- Black Winds
-		self:Message(242017, "Attention", "Alert", spellName)
-		self:Bar(242017, 25.5)
+	--elseif spellId == 239417 then -- Black Winds
+	--	self:Message(242017, "Attention", "Alert", spellName)
+	--	self:Bar(242017, 25.5)
 	end
 end
 
@@ -179,16 +185,24 @@ function mod:RAID_BOSS_WHISPER(_, msg, sender)
 	end
 end
 
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
+	if msg:find("234418") then -- Rain of the Destroyer
+		self:Message(234418, "Important", "Alarm")
+	end
+end
+
 function mod:TouchofSargeras(args)
 	touchofSargerasCounter = touchofSargerasCounter + 1
-	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName), CL.count:format(args.spellName, (touchofSargerasCounter-1)))
+	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(CL.count:format(args.spellName, (touchofSargerasCounter-1))))
 	self:Bar(args.spellId, timers[args.spellId][touchofSargerasCounter], CL.count:format(args.spellName, touchofSargerasCounter))
+	self:CastBar(args.spellId, 10.5, CL.count:format(args.spellName, (touchofSargerasCounter-1)))
 end
 
 function mod:RuptureRealities(args)
 	ruptureRealitiesCounter = ruptureRealitiesCounter + 1
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, timers[args.spellId][ruptureRealitiesCounter])
+	self:CastBar(args.spellId, 7.5)
 end
 
 function mod:UnboundChaos(args)
@@ -210,7 +224,7 @@ end
 
 function mod:Consume(args)
 	self:Message("stages", "Neutral", "Info", args.spellName, args.spellId)
-	self:StopBar(CL.cast:format(233856)) -- Malfunction
+	self:StopBar(CL.cast:format(self:SpellName(233856))) -- Malfunction
 end
 
 function mod:RippleofDarkness(args)
@@ -231,7 +245,7 @@ function mod:CorruptedMatrix(args)
 	corruptedMatrixCounter = corruptedMatrixCounter + 1
 	self:Message(args.spellId, "Important", "Warning", CL.incoming:format(args.spellName))
 	self:CDBar(args.spellId, self:Mythic() and 20 or (corruptedMatrixCounter == 2 and 51 or 60))
-	self:Bar(args.spellId, self:Mythic() and 5 or 10, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, self:Mythic() and 5 or 10)
 end
 
 do
@@ -280,8 +294,4 @@ function mod:TaintedEssence(args)
 	if self:Me(args.destGUID) and amount > 4 then
 		self:StackMessage(args.spellId, args.destName, amount, "Urgent", "Warning")
 	end
-end
-
-function mod:RainoftheDestroyer(args)
-	self:Message(args.spellId, "Important", "Warning")
 end
