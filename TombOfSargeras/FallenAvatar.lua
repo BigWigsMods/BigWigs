@@ -168,7 +168,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:CDBar(239739, 19.8) -- Dark Mark
 		--if self:Heroic() or self:Mythic() then -- XXX Black Winds always active last mythic test
 		--	self:CDBar(242017, 23.4) -- Black Winds
-		end
+		--end
 		self:CDBar(235572, 33.4, CL.count:format(self:SpellName(235572), ruptureRealitiesCounter)) -- Rupture Realities (P2)
 
 	--elseif spellId == 239417 then -- Black Winds
