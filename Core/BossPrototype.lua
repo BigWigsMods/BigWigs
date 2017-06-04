@@ -1538,11 +1538,12 @@ do
 		end
 
 		local textType = type(text)
+		local msg = textType == "string" and text or spells[text or key]
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
-			self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
+			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
 		end
 	end
 
@@ -1574,11 +1575,12 @@ do
 		end
 
 		local textType = type(text)
+		local msg = textType == "string" and text or spells[text or key]
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, textType == "string" and text or spells[text or key], length, icons[icon or textType == "number" and text or key], true)
+			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key], true)
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
-			self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
+			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
 		end
 	end
 
@@ -1624,11 +1626,12 @@ do
 		end
 
 		local textType = type(text)
+		local msg = format(L.cast, textType == "string" and text or spells[text or key])
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L.cast, textType == "string" and text or spells[text or key]), length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
-			self:SendMessage("BigWigs_StartEmphasize", self, key, textType == "string" and text or spells[text or key], length)
+			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
 		end
 	end
 end
