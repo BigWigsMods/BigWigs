@@ -436,7 +436,7 @@ end
 function mod:EyeOfAmanThul(args)
 	self:Message("stages", "Neutral", "Long", args.spellName, args.spellId)
 	if self:Easy() then
-		self:Bar(206515, 9.8) -- Fel Efflux
+		self:Bar(206514, 9.8) -- Fel Efflux
 	end
 end
 
@@ -504,9 +504,9 @@ end
 
 function mod:FelEfflux(args)
 	effluxCount=effluxCount+1
-	self:Message(206515, "Important", "Alert")
+	self:Message(args.spellId, "Important", "Alert")
 	if self:Easy() then
-		self:CDBar(206515, 15.6) -- easy: pull, 11, 14, EyeOfAmanThul, 10, 15.6, 16.8, 15.6,...
+		self:CDBar(args.spellId, 15.6) -- easy: pull, 11, 14, EyeOfAmanThul, 10, 15.6, 16.8, 15.6,...
 	else
 		self:Bar(args.spellId, effluxTimers[effluxCount] or 12)
 	end
