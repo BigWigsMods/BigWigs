@@ -365,6 +365,11 @@ function addon:Print(msg)
 	print("BigWigs: |cffffff00"..msg.."|r")
 end
 
+function addon:Error(msg)
+	self:Print(msg)
+	geterrorhandler()(msg)
+end
+
 -------------------------------------------------------------------------------
 -- API - if anything else is exposed on the BigWigs object, that's a mistake!
 -- Well .. except the module API, obviously.
@@ -472,12 +477,12 @@ do
 				elseif type(v) == "number" then
 					if v > 0 then
 						local n = GetSpellInfo(v)
-						if not n then error(("Invalid spell ID %d in the optionHeaders for module %s."):format(v, module.name)) end
-						module.optionHeaders[k] = n
+						if not n then addon:Error(("Invalid spell ID %d in the optionHeaders for module %s."):format(v, module.name)) end
+						module.optionHeaders[k] = n or v
 					else
 						local n = EJ_GetSectionInfo(-v)
-						if not n then error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
-						module.optionHeaders[k] = n
+						if not n then addon:Error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
+						module.optionHeaders[k] = n or v
 					end
 				end
 			end
@@ -518,11 +523,11 @@ do
 				elseif t == "number" then
 					if v > 0 then
 						local n = GetSpellInfo(v)
-						if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
+						if not n then addon:Error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
 						module.toggleDefaults[v] = bitflags
 					else
 						local n = EJ_GetSectionInfo(-v)
-						if not n then error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
+						if not n then addon:Error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
 						module.toggleDefaults[v] = bitflags
 					end
 				end
