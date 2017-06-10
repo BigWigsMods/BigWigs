@@ -16,8 +16,8 @@ mod.respawnTime = 30
 -- Locals
 --
 
-local dischargeComing = nil
-local drawInCasting = nil
+local rageCounter = 0
+local roarCounter = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -85,12 +85,16 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	roarCounter = 1
+	rageCounter = 1
+
 	self:Bar(232192, 17.5) -- Commanding Roar
 	self:Bar(231854, 21) -- Unchecked Rage
 	self:Bar(232061, 60) -- Draw In
 	if self:Mythic() then
 		self:Bar(240319, 30) -- Hatching
 	end
+	self:Berserk(360) -- Confirmed Mythic
 end
 
 function mod:OnBossDisable()
@@ -104,15 +108,17 @@ end
 --
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 232192 then -- Commanding Roar
+		roarCounter = roarCounter + 1
 		self:Message(spellId, "Important", "Alert", spellName)
-		self:Bar(spellId, 32.8)
+		if roarCounter == 2 then
+			self:Bar(spellId, 32.8)
+		end
 	end
 end
 
 function mod:RAID_BOSS_WHISPER(event, msg)
 	if msg:find("240319", nil, true) then -- Hatching
 		self:Message(240319, "Important", "Warning")
-		self:Bar(240319, 41.5)
 	end
 end
 
@@ -122,32 +128,16 @@ function mod:JaggedAbrasion(args)
 end
 
 function mod:UncheckedRage(args)
+	rageCounter = rageCounter + 1
 	self:Message(args.spellId, "Urgent", "Warning")
-	self:Bar(args.spellId, 20.5)
+	if rageCounter <= 3 then
+		self:Bar(args.spellId, 20.5)
+	end
 end
 
 function mod:DrawIn(args)
-	drawInCasting = true
 	self:Message(args.spellId, "Important", "Alert", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 10)
-end
-
-function mod:DrawInSuccess(args)
-	if not dischargeComing then
-		self:Bar(args.spellId, 50.5)
-	end
-	dischargeComing = nil
-	drawInCasting = nil
-end
-
-function mod:FrigidBlowsApplied(args)
-	if drawInCasting then
-		dischargeComing = true
-		-- Cooldowns resetting after Frost Discharge now
-		self:StopBar(232192) -- Commanding Roar
-		self:StopBar(231854) -- Unchecked Rage
-		self:StopBar(240319) -- Hatching
-	end
 end
 
 function mod:FrigidBlows(args)
@@ -158,6 +148,8 @@ function mod:FrigidBlows(args)
 end
 
 function mod:FrostyDischarge(args)
+	roarCounter = 1
+	rageCounter = 1
 	self:Message(args.spellId, "Urgent", "Warning", args.spellName)
 	self:Bar(232192, 18.2)	-- Commanding Roar
 	self:Bar(231854, 21.4) -- Unchecked Rage
