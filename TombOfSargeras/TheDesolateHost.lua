@@ -107,7 +107,7 @@ function mod:OnEngage()
 	wipe(phasedList)
 	wipe(unphasedList)
 	for unit in self:IterateGroup() do
-		local buffCheck = UnitBuff(unit, self:SpellName(235732)) -- Spiritual Barrier
+		local buffCheck = UnitDebuff(unit, self:SpellName(235732)) -- Spiritual Barrier
 		local guid = UnitGUID(unit)
 		if buffCheck then
 			phasedList[#phasedList+1] = self:UnitName(unit)
@@ -149,7 +149,7 @@ function mod:OnEngage()
 
 
 	self:Bar(235907, 7.3) -- Collapsing Fissure
-	self:Bar(236459, 15.5) -- Soulbind
+	self:Bar(236459, 14.5) -- Soulbind
 	if self:Heroic() or self:Mythic() then -- Heroic+ only
 		self:Bar(235924, 22) -- Spear of Anguish
 	end
@@ -308,21 +308,25 @@ function mod:Wither(args)
 end
 
 do
-	local list = mod:NewTargetList()
+	local list, scheduled = mod:NewTargetList(), nil
 	function mod:Soulbind(args)
 		list[#list+1] = args.destName
 		if #list == 2 then -- Announce at 2
 			if self:GetOption(soulBindMarker) then
 				SetRaidTarget(args.destName, 4)
 			end
+			self:CancelTimer(scheduled)
 			self:TargetMessage(args.spellId, list, "Positive", "Warning")
+		elseif #list ==  1 then
+			scheduled = self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Positive", "Warning")
 			local t = phase == 2 and 17 or 24.3
 			if not phase == 2 and self:BarTimeLeft(236072) < 24.3 and self:BarTimeLeft(236072) > 0 then -- Wailing Souls
 				t = 74.5 + self:BarTimeLeft(236072) -- Time Left + 60s channel + 14.5s cooldown
 			end
 			self:Bar(args.spellId, t)
-		elseif #list ==  1 and self:GetOption(soulBindMarker) then
-			SetRaidTarget(args.destName, 3)
+			if self:GetOption(soulBindMarker) then
+				SetRaidTarget(args.destName, 3)
+			end
 		end
 	end
 
