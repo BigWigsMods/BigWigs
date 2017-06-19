@@ -27,6 +27,7 @@ plugin.displayName = L.bossBlock
 local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
 local GetCurrentMapAreaID = BigWigsLoader.GetCurrentMapAreaID
 local GetCurrentMapDungeonLevel = BigWigsLoader.GetCurrentMapDungeonLevel
+local questTrackingValue = 1 -- default 1 after dc
 
 -------------------------------------------------------------------------------
 -- Options
@@ -113,6 +114,14 @@ function plugin:OnPluginEnable()
 	self:RegisterEvent("CINEMATIC_START")
 	self:RegisterEvent("PLAY_MOVIE")
 	self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
+	questTrackingValue = GetCVar("showQuestTrackingTooltips")
+end
+
+
+function plugin:OnPluginDisable()
+	if self.db.profile.blockQuestTrackingTooltips then
+		SetCVar("showQuestTrackingTooltips", questTrackingValue)
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -120,8 +129,6 @@ end
 --
 
 do
-	local questTrackingValue = 1 -- default 1 after dc
-
 	local unregisteredEvents = {}
 	local function KillEvent(frame, event)
 		-- The user might be running an addon that permanently unregisters one of these events.
@@ -156,7 +163,6 @@ do
 			KillEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
 		if self.db.profile.blockQuestTrackingTooltips then
-			questTrackingValue = GetCVar("showQuestTrackingTooltips")
 			SetCVar("showQuestTrackingTooltips", 0)
 		end
 	end
