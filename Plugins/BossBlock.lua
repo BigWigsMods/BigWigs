@@ -120,7 +120,8 @@ end
 --
 
 do
-	local questTrackingValue = nil
+	local questTrackingValue = 1 -- default 1 after dc
+
 	local unregisteredEvents = {}
 	local function KillEvent(frame, event)
 		-- The user might be running an addon that permanently unregisters one of these events.
@@ -178,7 +179,7 @@ do
 			RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
 		if self.db.profile.blockQuestTrackingTooltips then
-			SetCVar("showQuestTrackingTooltips", questTrackingValue == nil and 1 or questTrackingValue) -- default 1 after dc
+			SetCVar("showQuestTrackingTooltips", questTrackingValue)
 		end
 	end
 end
