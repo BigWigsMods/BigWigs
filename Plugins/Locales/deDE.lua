@@ -18,6 +18,8 @@ L.Beware = "Hütet Euch (Algalon)"
 L.bigWigsBarStyleName_Default = "Standard"
 L.blockEmotes = "Hinweise in der Bildschirmmitte blockieren"
 L.blockEmotesDesc = [=[Einige Bosse zeigen sehr lange und ungenaue Hinweise für spezielle Fähigkeiten an. BigWigs versucht kürzere und passendere Mitteilungen zu erstellen, die den Spielfluss weniger beeinflussen.
+--L.blockQuestTrackingTooltips = "Hide quest objectives in tooltips"
+--L.blockQuestTrackingTooltipsDesc = "Quest objectives can take up a lot of space in tooltips when a lot of players in your group are on a quest for an encounter. This will stop these objectives from showing while in encounter combat."
 
 Hinweis: Bossmitteilungen werden weiterhin im Chat sichtbar sein und können dort gelesen werden.]=]
 L.blockGarrison = "Popups der Garnison blockieren"
