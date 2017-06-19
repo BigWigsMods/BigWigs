@@ -559,9 +559,11 @@ function mod:SoulVortex(args)
 end
 
 function mod:TornSoul(args)
-	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 1 and "Warning") -- check sound amount
-	self:TargetBar(args.spellId, 30, args.destName)
+	if self:Tank(args.destName) then
+		local amount = args.amount or 1
+		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 1 and "Warning") -- check sound amount
+		self:TargetBar(args.spellId, 30, args.destName)
+	end
 end
 
 function mod:TornSoulRemoved(args)
