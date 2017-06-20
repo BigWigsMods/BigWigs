@@ -108,17 +108,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		if timer then
 			self:Bar("cometSpike", timer or 7.5, L.cometSpike_bar, L.cometSpike_icon)
 		end
-	elseif spellId == 232249 then -- Crashing Comet
-		cometSpikeCounter = cometSpikeCounter + 1
-		local timer = nil
-		if self:LFR() then
-			timer = cometSpikeTimersLFR[cometSpikeCounter] or (cometSpikeCounter % 7 == 2 and 10 or cometSpikeCounter % 7 == 5 and 10 or 8)
-		else
-			timer = cometSpikeTimers[cometSpikeCounter] or 7.5
-		end
-		if timer then
-			self:Bar("cometSpike", timer, L.cometSpike_bar, L.cometSpike_icon)
-		end
 	elseif spellId == 233285 then -- Rain of Brimstone
 		rainCounter = rainCounter + 1
 		self:Message(238588, "Urgent", "Warning", CL.incoming:format(spellName))
@@ -141,7 +130,17 @@ do
 	function mod:CrashingComet(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
+			cometSpikeCounter = cometSpikeCounter + 1
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Important", "Warning")
+			local timer = nil
+			if self:LFR() then
+				timer = cometSpikeTimersLFR[cometSpikeCounter] or (cometSpikeCounter % 7 == 2 and 10 or cometSpikeCounter % 7 == 5 and 10 or 8)
+			else
+				timer = cometSpikeTimers[cometSpikeCounter] or 7.5
+			end
+			if timer then
+				self:Bar("cometSpike", timer, L.cometSpike_bar, L.cometSpike_icon)
+			end
 		end
 
 		if self:Me(args.destGUID) then
