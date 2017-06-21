@@ -27,6 +27,7 @@ local twilightGlaiveCounter = 1
 local screechCounter = 0
 local rapidShotCounter = 1
 local lunarFireCounter = 1
+local lunarBeaconCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -102,10 +103,11 @@ end
 
 function mod:OnEngage()
 	phase = 1
-	screechCount = 0
+	screechCounter = 0
 	moonGlaiveCounter = 1
 	twilightGlaiveCounter = 1
 	rapidShotCounter = 1
+	lunarBeaconCounter = 1
 
 	self:Message("stages", "Neutral", "Long", stageOne, false)
 	self:Bar(236519, 9.4) -- Moon Burn
@@ -158,7 +160,7 @@ end
 function mod:TwilightGlaiveApplied(args)
 	twilightGlaiveCounter = twilightGlaiveCounter + 1
 	self:TargetMessage(236541, args.destName, "Attention", "Warning")
-	if self:Me(guid) then
+	if self:Me(args.destGUID) then
 		self:Say(236541)
 	end
 	self:SecondaryIcon(236541, args.destName)
@@ -181,7 +183,7 @@ end
 function mod:IncorporealShotApplied(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
 	self:TargetBar(args.spellId, 6, args.destName)
-	if self:Me(guid) then
+	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
 	self:PrimaryIcon(args.spellId, args.destName)
@@ -221,7 +223,7 @@ do
 end
 
 function mod:CallMoontalon(args)
-	screechCount = 0
+	screechCounter = 0
 	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(self:SpellName(-15064))) -- Moontalon
 	self:Bar(args.spellId, 146.9)
 end
@@ -294,10 +296,9 @@ do
 	local prev = 0
 	function mod:LunarFire(args)
 		lunarFireCounter = lunarFireCounter + 1
-		local amount = args.amount or 1
 		local t = GetTime()
 		if t-prev > 20 or lunarFireCounter == 5 then -- Either 3rd or 4th is >20s, after that every 4th is.
-		 lunarFireCounter = 1
+			lunarFireCounter = 1
 		end
 		prev = t
 		self:Bar(args.spellId, lunarBeaconCounter % 4 == 0 and 23.1 or 10.9)
@@ -305,5 +306,6 @@ do
 end
 
 function mod:LunarFireApplied(args)
+	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 1 and "Warning")
 end
