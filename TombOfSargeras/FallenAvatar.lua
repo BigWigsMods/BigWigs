@@ -106,7 +106,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "TaintedMatrix", 240623) -- Tainted Matrix
 	self:Log("SPELL_AURA_APPLIED", "TaintedEssence", 240728) -- Desolate
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TaintedEssence", 240728) -- Desolate
-	self:Log("SPELL_CAST_SUCCESS", "RainoftheDestroyer", 234418) -- Rain of the Destroyer
 end
 
 function mod:OnEngage()
