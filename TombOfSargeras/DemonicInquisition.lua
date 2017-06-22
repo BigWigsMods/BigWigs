@@ -1,4 +1,6 @@
 
+-- GLOBALS: SPELL_POWER_ALTERNATE_POWER, tDeleteItem, string
+
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Add more timers, if they are more reliable in the future
@@ -20,6 +22,7 @@ mod.respawnTime = 15
 local pangsofGuiltCounter = 1
 local sweepCounter = 1
 local boneSawCounter = 1
+local nextAltPowerWarning = 20
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -35,6 +38,7 @@ function mod:GetOptions()
 	return {
 		236283, -- Belac's Prisoner
 		"altpower",
+		233104, -- Torment
 		233426, -- Scythe Sweep
 		{233431, "SAY"}, -- Calcified Quills
 		233441, -- Bone Saw
@@ -81,6 +85,7 @@ function mod:OnEngage()
 	pangsofGuiltCounter = 1
 	sweepCounter = 1
 	boneSawCounter = 1
+	nextAltPowerWarning = 20
 	self:OpenAltPower("altpower", 233104, nil, true) -- Torment, Sync for those far away
 
 	-- Atrigan
@@ -90,6 +95,8 @@ function mod:OnEngage()
 
 	-- Belac
 	self:Bar(235230, 31.5) -- Fel Squall
+
+	self:RegisterEvent("UNIT_POWER")
 end
 
 --------------------------------------------------------------------------------
@@ -102,6 +109,24 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	end
 end
 
+do
+	local lastPower, prev = 0, 0
+	function mod:UNIT_POWER(_, unit, type)
+		if unit ~= "player" then return end
+		local power = UnitPower("player", SPELL_POWER_ALTERNATE_POWER)
+		if power < lastPower or power >= nextAltPowerWarning then
+			self:StackMessage(233104, UnitName("player"), power, "Personal")
+			local t = GetTime()
+			if t-prev > 1.5 then
+				self:PlaySound(233104, "Info")
+				prev = t
+			end
+			nextAltPowerWarning = tonumber(string.format("%d", power/20))*20+20 -- every 20 power
+		end
+		lastPower = power
+	end
+end
+
 function mod:BelacsPrisoner(args)
 	if self:Me(args.destGUID)then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Alert")
@@ -109,7 +134,7 @@ function mod:BelacsPrisoner(args)
 end
 
 function mod:ScytheSweep(args)
-	self:Message(args.spellId, "Attention", "Info")
+	self:Message(args.spellId, "Attention", self:Tank() and "Alert")
 	sweepCounter = sweepCounter + 1
 	self:CDBar(args.spellId, sweepCounter > 4 and sweepCounter % 2 == 1 and 35 or 24)
 end
@@ -136,7 +161,7 @@ function mod:BoneSaw(args)
 end
 
 function mod:PangsofGuilt(args) -- Interuptable
-	self:Message(args.spellId, "Important", "Alert", CL.casting:format(CL.count:format(args.spellName, pangsofGuiltCounter)))
+	self:Message(args.spellId, "Important", self:Interrupter(args.sourceGUID) and "Alarm", CL.casting:format(CL.count:format(args.spellName, pangsofGuiltCounter)))
 	pangsofGuiltCounter = (pangsofGuiltCounter % 3) + 1
 end
 
@@ -168,7 +193,7 @@ do
 end
 
 function mod:TormentingBurst(args)
-	self:Message(args.spellId, "Attention", "Info")
+	self:Message(args.spellId, "Attention", self:Healer() and "Long")
 end
 
 function mod:FelSquall(args)
