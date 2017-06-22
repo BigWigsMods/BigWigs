@@ -180,8 +180,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(235924, 6) -- Spear of Anguish
 		self:Bar(236459, 10.2) -- Soulbind
 
-		self:CDBar(236542, 17.1) -- Sundering Doom
-		self:CDBar(236544, 28.5) -- Doomed Sundering
+		self:CDBar(236542, 17) -- Sundering Doom
+		self:CDBar(236544, 28) -- Doomed Sundering
 	end
 end
 
@@ -346,13 +346,13 @@ end
 
 function mod:SunderingDoom(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 25)
+	self:Bar(args.spellId, self:Easy() and 26.5 or 25)
 	self:CastBar(args.spellId, 4)
 end
 
 function mod:DoomedSundering(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 25)
+	self:Bar(args.spellId, self:Easy() and 26.5 or 25)
 	self:CastBar(args.spellId, 4)
 end
 
