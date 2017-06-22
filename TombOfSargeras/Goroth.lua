@@ -63,9 +63,9 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+	self:RegisterEvent("UNIT_AURA")
 
 	self:Log("SPELL_AURA_APPLIED", "BurningArmor", 231363)
-	self:Log("SPELL_AURA_APPLIED", "CrashingComet", 230345)
 	self:Log("SPELL_AURA_APPLIED", "ShatteringStarDebuff", 233272)
 	self:Log("SPELL_CAST_START", "InfernalBurning", 233062)
 
@@ -126,37 +126,46 @@ function mod:BurningArmor(args)
 end
 
 do
+	local function wipeTbl()
+		wipe(cometWarned)
+	end
+
 	local list = mod:NewTargetList()
-	function mod:CrashingComet(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
-			cometSpikeCounter = cometSpikeCounter + 1
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Important", "Warning")
-			local timer = nil
-			if self:LFR() then
-				timer = cometSpikeTimersLFR[cometSpikeCounter] or (cometSpikeCounter % 7 == 2 and 10 or cometSpikeCounter % 7 == 5 and 10 or 8)
-			else
-				timer = cometSpikeTimers[cometSpikeCounter] or 7.5
-			end
-			if timer then
-				self:Bar("cometSpike", timer, L.cometSpike_bar, L.cometSpike_icon)
-			end
-		end
+	function mod:UNIT_AURA(event, unit)
+		local name, _, _, _, _, _, expires = UnitDebuff(unit, self:SpellName(232249)) -- Crashing Comet debuff ID
+		local n = self:UnitName(unit)
+		if name and not cometWarned[n] then
+			local guid = UnitGUID(n)
+			list[#list+1] = n
+			if #list == 1 then
+				self:ScheduleTimer(wipeTbl, 10)
+				self:ScheduleTimer("TargetMessage", 0.2, 230345, list, "Important", "Warning")
 
-		if self:Me(args.destGUID) then
-			self:TargetMessage(args.spellId, args.destName, "Important", "Warning")
-			self:Say(args.spellId)
-			self:Flash(args.spellId)
+				cometSpikeCounter = cometSpikeCounter + 1
+				local timer = nil
+				if self:LFR() then
+					timer = cometSpikeTimersLFR[cometSpikeCounter] or (cometSpikeCounter % 7 == 2 and 10 or cometSpikeCounter % 7 == 5 and 10 or 8)
+				else
+					timer = cometSpikeTimers[cometSpikeCounter] or 7.5
+				end
+				if timer then
+					self:Bar(230345, timer, L.cometSpike_bar, L.cometSpike_icon)
+				end
+			end
 
-			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
-			local remaining = expires-GetTime()
-			self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
-			self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
-			self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
+			if self:Me(guid) then
+				self:Say(230345)
+				self:Flash(230345)
+
+				local remaining = expires-GetTime()
+				self:ScheduleTimer("Say", remaining-3, 230345, 3, true)
+				self:ScheduleTimer("Say", remaining-2, 230345, 2, true)
+				self:ScheduleTimer("Say", remaining-1, 230345, 1, true)
+			end
+			cometWarned[n] = true
 		end
 	end
 end
-
 
 function mod:ShatteringStarDebuff(args)
 	self:TargetMessage(233279, args.destName, "Attention", "Alarm", CL.count:format(args.spellName, shatteringCounter))
