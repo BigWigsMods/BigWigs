@@ -250,8 +250,15 @@ function mod:TormentedCriesApplied(args)
 	end
 end
 
-function mod:RupturingSlam(args)
-	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
+do
+	local prev = 0
+	function mod:RupturingSlam(args)
+		local t = GetTime()
+		if t-prev > 3 then
+			prev = t
+			self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
+		end
+	end
 end
 
 function mod:BonecageArmor(args)
