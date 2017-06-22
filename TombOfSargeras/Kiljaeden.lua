@@ -1,7 +1,6 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
--- Change p3 start to UNIT_TARGETABLE_CHANGED
 -- Change Bursting Dreadflame to SPELL_CAST_SUCCESS warnings instead of RAID_BOSS_WHISPER
 
 --------------------------------------------------------------------------------
@@ -32,9 +31,6 @@ local focusWarned = {}
 --
 
 local L = mod:GetLocale()
-if L then
-	L.p3_start = "Somehow you survived! No matter. Look upon our wonders, you mortals, and despair! Behold the world that shall be your tomb!"
-end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -42,6 +38,7 @@ end
 
 function mod:GetOptions()
 	return {
+		"stages",
 		{239932, "TANK"}, -- Felclaws
 		235059, -- Rupturing Singularity
 		240910, -- Armageddon
@@ -57,6 +54,7 @@ function mod:GetOptions()
 		244856, -- Flaming Orb
 		{237590, "SAY", "FLASH"}, -- Shadow Reflection: Hopeless
 	},{
+		["stages"] = "general",
 		[239932] = -14921, -- Stage One: The Betrayer
 		[238429] = -15221, -- Intermission: Eternal Flame
 		[236378] = -15229, -- Stage Two: Reflected Souls
@@ -71,7 +69,6 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	-- Stage One: The Betrayer
 	self:Log("SPELL_CAST_START", "Felclaws", 239932)
@@ -92,6 +89,7 @@ function mod:OnBossEnable()
 	-- Intermission: Deceiver's Veil
 	self:Log("SPELL_CAST_START", "DeceiversVeilCast", 241983) -- Deceiver's Veil Cast
 	self:Log("SPELL_AURA_APPLIED", "IllidansSightlessGaze", 241721) -- Illidan's Sightless Gaze
+	self:Log("SPELL_AURA_REMOVED", "DeceiversVeilRemoved", 241983) -- Deceiver's Veil Over
 
 	-- Stage Three: Darkness of A Thousand Souls
 	self:Log("SPELL_CAST_START", "DarknessofaThousandSouls", 238999) -- Darkness of a Thousand Souls
@@ -144,26 +142,6 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, sender, _, _, target)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
-	if msg:find(L.p3_start) and not self:Mythic() then -- Stage Three: Darkness of A Thousand Souls
-		phase = 3
-
-		self:Bar(238999, 2) -- Darkness of a Thousand Souls
-		self:Bar(239932, 11) -- Felclaws
-		self:Bar(243982, 15) -- Tear Rift
-		self:Bar(244856, 30) -- Flaming Orb
-		self:Bar(238429, 42) -- Bursting Dreadflame
-		self:Bar(238502, 80) -- Focused Dreadflame
-	end
-end
---			"<360.59 23:44:45> [CHAT_MSG_MONSTER_YELL] Somehow you survived! No matter. Look upon our wonders, you mortals, and despair! Behold the world that shall be your tomb!#Kil'jaeden###Kil'jaeden##0#0##0#3001#nil#0#false#false#false#false", -- [12661]
---			"<362.48 23:44:47> [CLEU] SPELL_CAST_START#Creature-0-3135-1676-16505-117269-000049F80D#Kil'jaeden##nil#238999#Darkness of a Thousand Souls#nil#nil", -- [12752]
---			"<371.51 23:44:56> [CLEU] SPELL_CAST_START#Creature-0-3135-1676-16505-117269-000049F80D#Kil'jaeden##nil#239932#Felclaws#nil#nil", -- [13161]
---			"<375.39 23:45:00> [CLEU] SPELL_CAST_START#Creature-0-3135-1676-16505-117269-000049F80D#Kil'jaeden##nil#243982#Tear Rift#nil#nil", -- [13399]
---			"<390.42 23:45:15> [UNIT_SPELLCAST_SUCCEEDED] Kil'jaeden(Sense) [[boss1:Flaming Orb::3-3135-1676-16505-244856-0027C9F9D9:244856]]", -- [241]
---			"<402.41 23:45:27> [CLEU] SPELL_CAST_SUCCESS#Creature-0-3135-1676-16505-117269-000049F80D#Kil'jaeden##nil#238429#Bursting Dreadflame#nil#nil", -- [14327]
---			"<440.43 23:46:05> [CLEU] SPELL_CAST_START#Creature-0-3135-1676-16505-117269-000049F80D#Kil'jaeden##nil#238502#Focused Dreadflame#nil#nil", -- [15598]
-
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 244856 then -- Flaming Orb
 		self:Message(spellId, "Attention", "Alert")
@@ -171,6 +149,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		self:Bar(spellId, flamingOrbCount % 2 == 0 and 30 or 64)
 	end
 end
+
 -- Stage One: The Betrayer
 function mod:Felclaws(args)
 	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
@@ -268,6 +247,7 @@ end
 function mod:NetherGaleRemoved(args)
 	intermissionPhase = nil
 	phase = 2
+	self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
 	focusedDreadflameCount = 1
 	singularityCount = 1
 	felclawsCount = 0 -- Start at 0 to get timers correct
@@ -278,13 +258,6 @@ function mod:NetherGaleRemoved(args)
 	self:Bar(240910, 50.4) -- Armageddon
 	self:Bar(235059, 73.5) -- Rupturing Singularity
 end
-
---			"<133.87 23:40:58> [CLEU] SPELL_AURA_REMOVED#Creature-0-3135-1676-16505-117269-000049F80D#Kil'jaeden#Creature-0-3135-1676-16505-117269-000049F80D#Kil'jaeden#244834#Nether Gale#BUFF#nil", -- [3090]
---			"<144.31 23:41:09> [CLEU] SPELL_CAST_START#Creature-0-3135-1676-16505-117269-000049F80D#Kil'jaeden##nil#239932#Felclaws#nil#nil", -- [3295]
---			"<146.27 23:41:11> [CLEU] SPELL_CAST_START#Creature-0-3135-1676-16505-117269-000049F80D#Kil'jaeden##nil#236710#Shadow Reflection: Erupting#nil#nil", -- [3357]
---			"<182.28 23:41:47> [CLEU] SPELL_CAST_START#Creature-0-3135-1676-16505-117269-000049F80D#Kil'jaeden##nil#236378#Shadow Reflection: Wailing#nil#nil", -- [4697]
---			"<184.29 23:41:49> [CLEU] SPELL_CAST_START#Creature-0-3135-1676-16505-117269-000049F80D#Kil'jaeden##nil#240910#Armageddon#nil#nil", -- [4721]
---			"<207.37 23:42:12> [RAID_BOSS_EMOTE] |TInterface\\Icons\\Ability_Socererking_arcanemines:20|t%s creates a |cFFFF0000|Hspell:235059|h[Rupturing Singularity]|h|r!#Kil'jaeden#4#false", -- [5165]
 
 -- Stage Two: Reflected Souls
 do
@@ -321,6 +294,18 @@ function mod:DeceiversVeilCast(args)
 	self:StopBar(235059) -- Rupturing Singularity
 end
 
+function mod:DeceiversVeilRemoved(args)
+	phase = 3
+	self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
+	self:Bar(238999, 2) -- Darkness of a Thousand Souls
+	self:Bar(239932, 11) -- Felclaws
+	self:Bar(243982, 15) -- Tear Rift
+	self:Bar(244856, 30) -- Flaming Orb
+	self:Bar(238429, 42) -- Bursting Dreadflame
+	self:Bar(238502, 80) -- Focused Dreadflame
+end
+
+
 function mod:IllidansSightlessGaze(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Long")
@@ -333,11 +318,6 @@ function mod:DarknessofaThousandSouls(args)
 	self:Bar(args.spellId, 90)
 	self:CastBar(args.spellId, 9)
 end
-
---function mod:DemonicObelisk(args)
---	self:Message(args.spellId, "Attention", "Warning")
---	self:Bar(args.spellId, 90)
---end
 
 function mod:TearRift(args)
 	self:Message(args.spellId, "Important", "Alarm")
