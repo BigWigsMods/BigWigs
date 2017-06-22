@@ -1,12 +1,5 @@
-local L = BigWigs:NewBossLocale("Goroth", "esES") or BigWigs:NewBossLocale("Goroth", "esMX")
-if not L then return end
-if L then
-	--L.cometSpike = "Crashing Comet & Infernal Spike [Bars and Warnings]"
-	--L.cometSpike_desc = "Display a bar showing when either Crashing Comet or Infernal Spike is about to be cast."
-	--L.cometSpike_bar = "Comet / Spike" -- Crashing Comet / Infernal Spike -- Short
-end
-
 L = BigWigs:NewBossLocale("Harjatan the Bludger", "esES") or BigWigs:NewBossLocale("Harjatan the Bludger", "esMX")
+if not L then return end
 if L then
 	--L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
 	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."

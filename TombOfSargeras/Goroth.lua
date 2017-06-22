@@ -25,9 +25,8 @@ local shatteringCounter = 1
 local shatteringTimers = {24.0, 60.0, 60.0, 60.0, 47.0}
 local shatteringTimersMythic = {24.0, 60.0, 60.0, 46.1}
 
-local cometSpikeCounter = 1
-local cometSpikeTimersLFR = {4, 10, 6, 14, 8, 8, 14, 10, 6, 14, 8, 8, 14, 10, 6, 14, 8, 8, 14} -- 8, 8, 8, 10, 8, 8, 10 Repeating
-local cometSpikeTimers = {4, 6, 12, 12, 12, 6, 12, 6, 12, 12, 12, 6, 12, 6, 12, 12, 12, 6, 10} -- 7.5 Repeating
+local spikeCounter = 1
+local cometCounter = 1
 local cometWarned = {}
 
 --------------------------------------------------------------------------------
@@ -35,12 +34,6 @@ local cometWarned = {}
 --
 
 local L = mod:GetLocale()
-if L then
-	L.cometSpike = "Crashing Comet & Infernal Spike [Bars and Warnings]"
-	L.cometSpike_desc = "Display a bar showing when either Crashing Comet or Infernal Spike is about to be cast."
-	L.cometSpike_icon = 233021
-	L.cometSpike_bar = "Comet / Spike" -- Crashing Comet / Infernal Spike -- Short
-end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -49,7 +42,7 @@ end
 function mod:GetOptions()
 	return {
 		{231363, "TANK", "SAY"}, -- Burning Armor
-		"cometSpike", -- Crashing Comet / Infernal Spike
+		233514, -- Infernal Spike
 		{230345, "FLASH", "SAY"}, -- Crashing Comet
 		{233279, "FLASH", "SAY"}, -- Shattering Star
 		233062, -- Infernal Burning
@@ -80,10 +73,12 @@ function mod:OnEngage()
 	shatteringCounter = 1
 	armorCounter = 1
 	rainCounter = 1
-	cometSpikeCounter = 1
+	spikeCounter = 1
+	cometCounter = 1
 	wipe(cometWarned)
 
-	self:Bar("cometSpike", self:LFR() and cometSpikeTimersLFR[cometSpikeCounter] or cometSpikeTimers[cometSpikeCounter], L.cometSpike_bar, L.cometSpike_icon)
+	self:Bar(233514, 4.8) -- Infernal Spike
+	self:Bar(230345, 8.5) -- Crashing Comet
 	self:Bar(231363, 11) -- Burning Armor
 	self:Bar(233279, shatteringTimers[shatteringCounter], CL.count:format(self:SpellName(233279), 1)) -- Shattering Star
 	self:Bar(233062, 54) -- Infernal Burning
@@ -97,29 +92,13 @@ end
 --
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 233050 then --Infernal Spike
-		cometSpikeCounter = cometSpikeCounter + 1
-		self:Message("cometSpike", "Important", "Alert", CL.casting:format(spellName), L.cometSpike_icon)
-		local timer = nil
-		if self:LFR() then
-			timer = cometSpikeTimersLFR[cometSpikeCounter] or (cometSpikeCounter % 7 == 2 and 10 or cometSpikeCounter % 7 == 5 and 10 or 8)
-		else
-			timer = cometSpikeTimers[cometSpikeCounter] or 7.5
-		end
-		if timer then
-			self:Bar("cometSpike", timer or 7.5, L.cometSpike_bar, L.cometSpike_icon)
-		end
+		self:Message(233514, "Important", "Alert", CL.casting:format(spellName))
+		spikeCounter = spikeCounter + 1
+		self:Bar(233514, spikeCounter == 4 and 22 or spikeCounter == 11 and 19.5 or 17)
 	elseif spellId == 232249 then -- Crashing Comet
-		cometSpikeCounter = cometSpikeCounter + 1
+		cometCounter = cometCounter + 1
 		wipe(cometWarned)
-		local timer = nil
-		if self:LFR() then
-			timer = cometSpikeTimersLFR[cometSpikeCounter] or (cometSpikeCounter % 7 == 2 and 10 or cometSpikeCounter % 7 == 5 and 10 or 8)
-		else
-			timer = cometSpikeTimers[cometSpikeCounter] or 7.5
-		end
-		if timer then
-			self:Bar(230345, timer, L.cometSpike_bar, L.cometSpike_icon)
-		end
+		self:Bar(230345, cometCounter == 7 and 20 or cometCounter == 10 and 25 or 18.3)
 	elseif spellId == 233285 then -- Rain of Brimstone
 		rainCounter = rainCounter + 1
 		self:Message(238588, "Urgent", "Warning", CL.incoming:format(spellName))
