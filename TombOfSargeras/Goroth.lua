@@ -108,6 +108,18 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		if timer then
 			self:Bar("cometSpike", timer or 7.5, L.cometSpike_bar, L.cometSpike_icon)
 		end
+	elseif spellId == 232249 then -- Crashing Comet
+		cometSpikeCounter = cometSpikeCounter + 1
+		wipe(cometWarned)
+		local timer = nil
+		if self:LFR() then
+			timer = cometSpikeTimersLFR[cometSpikeCounter] or (cometSpikeCounter % 7 == 2 and 10 or cometSpikeCounter % 7 == 5 and 10 or 8)
+		else
+			timer = cometSpikeTimers[cometSpikeCounter] or 7.5
+		end
+		if timer then
+			self:Bar(230345, timer, L.cometSpike_bar, L.cometSpike_icon)
+		end
 	elseif spellId == 233285 then -- Rain of Brimstone
 		rainCounter = rainCounter + 1
 		self:Message(238588, "Urgent", "Warning", CL.incoming:format(spellName))
@@ -126,34 +138,19 @@ function mod:BurningArmor(args)
 end
 
 do
-	local function wipeTbl()
-		wipe(cometWarned)
-	end
-
 	local list = mod:NewTargetList()
 	function mod:UNIT_AURA(event, unit)
+		-- There are 2 debuffs. The first has no CLEU, the second does.
 		local name, _, _, _, _, _, expires = UnitDebuff(unit, self:SpellName(232249)) -- Crashing Comet debuff ID
 		local n = self:UnitName(unit)
 		if name and not cometWarned[n] then
-			local guid = UnitGUID(n)
 			list[#list+1] = n
+			cometWarned[n] = true
 			if #list == 1 then
-				self:ScheduleTimer(wipeTbl, 10)
 				self:ScheduleTimer("TargetMessage", 0.2, 230345, list, "Important", "Warning")
-
-				cometSpikeCounter = cometSpikeCounter + 1
-				local timer = nil
-				if self:LFR() then
-					timer = cometSpikeTimersLFR[cometSpikeCounter] or (cometSpikeCounter % 7 == 2 and 10 or cometSpikeCounter % 7 == 5 and 10 or 8)
-				else
-					timer = cometSpikeTimers[cometSpikeCounter] or 7.5
-				end
-				if timer then
-					self:Bar(230345, timer, L.cometSpike_bar, L.cometSpike_icon)
-				end
 			end
 
-			if self:Me(guid) then
+			if unit == "player" then
 				self:Say(230345)
 				self:Flash(230345)
 
@@ -162,7 +159,6 @@ do
 				self:ScheduleTimer("Say", remaining-2, 230345, 2, true)
 				self:ScheduleTimer("Say", remaining-1, 230345, 1, true)
 			end
-			cometWarned[n] = true
 		end
 	end
 end
