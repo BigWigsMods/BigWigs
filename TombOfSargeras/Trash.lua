@@ -1,11 +1,5 @@
 
 --------------------------------------------------------------------------------
--- TODO: REMEMBER TO UNCOMMENT THE MODULE IN modules.xml!
--- TODO: REMEMBER TO UNCOMMENT THE MODULE IN modules.xml!
--- TODO: REMEMBER TO UNCOMMENT THE MODULE IN modules.xml!
---
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -14,16 +8,20 @@ if not mod then return end
 mod.displayName = CL.trash
 mod:RegisterEnableMob(
 	--[[ Pre Goroth ]]--
+	118022, -- Infernal Chaosbringer
 
 	--[[ Goroth -> Demonic Inquisition ]]--
+	121003, -- Rez the Tombwatcher
 
 	--[[ Goroth -> Harjatan ]]--
 
 	--[[ Goroth -> Sisters of the Moon ]]--
 
 	--[[ Harjatan -> Mistress Sassz'ine ]]--
+	120463, -- Undersea Custodian
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
+	120777 -- Guardian Sentry
 
 	--[[ Pre Maiden of Vigilance ]]--
 
@@ -39,7 +37,10 @@ mod:RegisterEnableMob(
 
 local L = mod:GetLocale()
 if L then
-	--
+	L.chaosbringer = "Infernal Chaosbringer"
+	L.rez = "Rez the Tombwatcher"
+	L.custodian = "Undersea Custodian"
+	L.sentry = "Guardian Sentry"
 end
 
 --------------------------------------------------------------------------------
@@ -48,16 +49,21 @@ end
 function mod:GetOptions()
 	return {
 		--[[ Pre Goroth ]]--
+		242909, -- Massive Eruption
 
 		--[[ Goroth -> Demonic Inquisition ]]--
+		241262, -- Felburn
 
 		--[[ Goroth -> Harjatan ]]--
 
 		--[[ Goroth -> Sisters of the Moon ]]--
 
 		--[[ Harjatan -> Mistress Sassz'ine ]]--
+		240169, -- Electric Shock
+		240176, -- Lightning Stork
 
 		--[[ Sisters of the Moon -> The Desolate Host ]]--
+		{240735, "SAY"}, -- Polymorph Bomb
 
 		--[[ Pre Maiden of Vigilance ]]--
 
@@ -66,21 +72,24 @@ function mod:GetOptions()
 		--[[ Fallen Avatar -> Kil'jaeden ]]--
 
 	}, {
-		--[] = ,
+		[242909] = L.chaosbringer,
+		[241262] = L.rez,
+		[240169] = L.custodian,
+		[240735] = L.sentry,
 	}
 end
 
 function mod:OnBossEnable()
 	--[[ General ]]--
 	self:RegisterMessage("BigWigs_OnBossEngage", "Disable")
-	--self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", ) --
-	--self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", )
-	--self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", )
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 241262, 240176) -- Felburn, Lightning Storm
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 241262, 240176)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 241262, 240176)
 	--self:Log("SPELL_DAMAGE", "GroundEffectDamage", ) --
 	--self:Log("SPELL_MISSED", "GroundEffectDamage", )
 
 	--[[ Pre Goroth ]]--
-
+	self:Log("SPELL_CAST_START", "MassiveEruption", 242909)
 
 	--[[ Goroth -> Demonic Inquisition ]]--
 
@@ -92,10 +101,11 @@ function mod:OnBossEnable()
 
 
 	--[[ Harjatan -> Mistress Sassz'ine ]]--
+	self:Log("SPELL_CAST_SUCCESS", "ElectricShock", 240169)
 
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
-
+	self:Log("SPELL_AURA_APPLIED", "PolymorphBomb", 240735)
 
 	--[[ Pre Maiden of Vigilance ]]--
 
@@ -124,7 +134,15 @@ do
 end
 
 --[[ Pre Goroth ]]--
-
+do
+	local prev = 0
+	function mod:MassiveEruption(args)
+		local t = GetTime()
+		if t-prev > 3 then
+			self:Message(args.spellId, "Urgent", "Long")
+		end
+	end
+end
 
 --[[ Goroth -> Demonic Inquisition ]]--
 
@@ -136,10 +154,25 @@ end
 
 
 --[[ Harjatan -> Mistress Sassz'ine ]]--
-
+function mod:ElectricShock(args)
+	self:Message(args.spellId, "Important", "Alarm")
+end
 
 --[[ Sisters of the Moon -> The Desolate Host ]]--
+function mod:PolymorphBomb(args)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
 
+	local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+	local t = expires - GetTime()
+	self:TargetBar(args.spellId, t, args.destName)
+
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:ScheduleTimer("Say", t-3, args.spellId, 3, true)
+		self:ScheduleTimer("Say", t-2, args.spellId, 2, true)
+		self:ScheduleTimer("Say", t-1, args.spellId, 1, true)
+	end
+end
 
 --[[ Pre Maiden of Vigilance ]]--
 
