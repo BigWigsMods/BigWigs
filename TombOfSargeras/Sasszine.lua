@@ -163,6 +163,7 @@ do
 			self:Bar(args.spellId, phase == 2 and 30 or 40)
 		end
 		if self:GetOption(hydraShotMarker) then
+			sort(iconsUnused)
 			local icon = iconsUnused[1]
 			if icon then
 				SetRaidTarget(args.destName, icon)
@@ -202,7 +203,7 @@ end
 
 function mod:ThunderingShock(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 32.8)
+	self:Bar(args.spellId, 36) -- was 32.8, not confirmed
 end
 
 function mod:ConsumingHunger(args)
@@ -213,7 +214,7 @@ end
 
 function mod:DevouringMaw(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 42)
+	self:Bar(args.spellId, 41.5)
 end
 
 function mod:BefoulingInk(args)
