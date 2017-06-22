@@ -1,4 +1,4 @@
-L = BigWigs:NewBossLocale("Harjatan the Bludger", "itIT")
+local L = BigWigs:NewBossLocale("Harjatan the Bludger", "itIT")
 if not L then return end
 if L then
 	--L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
