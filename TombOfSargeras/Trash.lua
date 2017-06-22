@@ -101,7 +101,7 @@ function mod:OnBossEnable()
 
 
 	--[[ Harjatan -> Mistress Sassz'ine ]]--
-	self:Log("SPELL_CAST_SUCCESS", "ElectricShock", 240169)
+	self:Log("SPELL_CAST_START", "ElectricShock", 240169)
 
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
@@ -156,6 +156,7 @@ end
 --[[ Harjatan -> Mistress Sassz'ine ]]--
 function mod:ElectricShock(args)
 	self:Message(args.spellId, "Important", "Alarm")
+	self:CastBar(args.spellId, 4)
 end
 
 --[[ Sisters of the Moon -> The Desolate Host ]]--
