@@ -43,7 +43,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		{236541, "SAY", "ICON"}, -- Twilight Glaive
-		236547, -- Moon Glaive
+		{236547, "TANK"}, -- Moon Glaive
 		{236550, "TANK"}, -- Discorporate
 		236480,	-- Glaive Storm
 		{236305, "SAY", "ICON"}, -- Incorporeal Shot
@@ -71,6 +71,7 @@ function mod:OnBossEnable()
 	-- Huntress Kasparian
 	self:Log("SPELL_AURA_APPLIED", "TwilightGlaiveApplied", 237561) -- Twilight Glaive
 	self:Log("SPELL_AURA_REMOVED", "TwilightGlaiveRemoved", 237561) -- Twilight Glaive
+	self:Log("SPELL_CAST_START", "MoonGlaive", 236547) -- Glaive Storm
 	self:Log("SPELL_AURA_APPLIED", "Discorporate", 236550) -- Discorporate
 	-- Stage Two: Bow of the Night
 	self:Log("SPELL_CAST_START", "GlaiveStorm", 239379) -- Glaive Storm
@@ -79,6 +80,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "IncorporealShotApplied", 236305) -- Incorporeal Shot
 	self:Log("SPELL_AURA_REMOVED", "IncorporealShotRemoved", 236305) -- Incorporeal Shot
 	self:Log("SPELL_CAST_START", "TwilightVolley", 236442) -- Twilight Volley
+	self:Log("SPELL_CAST_SUCCESS", "TwilightVolleySuccess", 236442) -- Twilight Volley
 	self:Log("SPELL_AURA_APPLIED", "TwilightVolleyDamage", 236516) -- Twilight Volley
 	self:Log("SPELL_PERIODIC_DAMAGE", "TwilightVolleyDamage", 236516) -- Twilight Volley
 	self:Log("SPELL_PERIODIC_MISSED", "TwilightVolleyDamage", 236516) -- Twilight Volley
@@ -113,7 +115,7 @@ function mod:OnEngage()
 	self:Bar(236519, 9.4) -- Moon Burn
 	self:Bar(236547, 14.2) -- Moon Glaive
 	self:Bar(236442, 16.6) -- Twilight Volley
-	self:Bar(236541, 19.1) -- Twilight Glaive
+	self:Bar(236541, 18.1) -- Twilight Glaive
 	self:Bar(236305, 48.3) -- Incorporeal Shot
 	self:Bar(233263, 48.3) -- Embrace of the Eclipse
 end
@@ -123,10 +125,7 @@ end
 --
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 236547 then -- Moon Glaive
-		moonGlaiveCounter = moonGlaiveCounter + 1
-		self:Bar(spellId, moonGlaiveCounter == 4 and 27.6 or 14.6) -- XXX Had a pull where the 3rd cast was delayed instead.
-	elseif spellId == 235268 then -- Lunar Ghost (Transition) XXX Need to confirm
+	if spellId == 235268 then -- Lunar Ghost (Transition)
 		phase = phase + 1
 		if phase == 2 then
 			self:Message("stages", "Neutral", "Long", stageTwo, false)
@@ -135,11 +134,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:StopBar(236541) -- Twilight Glaive
 			self:StopBar(236305) -- Incorporeal Shot
 
-			self:Bar(236694, 5.7) -- Call Moontalon
-			self:Bar(236541, 7) -- Twilight Glaive
+			self:Bar(236541, 6) -- Twilight Glaive
+			self:Bar(236694, 7.3) -- Call Moontalon
 			self:Bar(236442, 11) -- Twilight Volley
-			self:Bar(236603, 17.1) -- Rapid Shot
-			self:Bar(236480, 42.6) -- Glaive Storm
+			self:Bar(236603, 15.8) -- Rapid Shot
+			self:Bar(236480, 36.5) -- Glaive Storm
 		elseif phase == 3 then
 			self:Message("stages", "Neutral", "Long", stageThree, false)
 			self:StopBar(233263) -- Embrace of the Eclipse
@@ -148,11 +147,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:StopBar(236603) -- Rapid Shot
 			self:StopBar(236442) -- Twilight Volley
 
-			self:Bar(239264, 6.8) -- Lunar Fire
-			self:Bar(236519, 9.5) -- Moon Burn
+			self:Bar(236519, 10) -- Moon Burn
+			self:Bar(239264, 11) -- Lunar Fire
 			self:Bar(236442, 15.8) -- Twilight Volley
-			self:Bar(239264, 18.2) -- Lunar Beacon
-			self:Bar(236305, 35.2) -- Incorporeal Shot
+			self:Bar(236712, 18.2) -- Lunar Beacon
+			self:Bar(236305, 41.4) -- Incorporeal Shot
 		end
 	end
 end
@@ -169,6 +168,12 @@ end
 
 function mod:TwilightGlaiveRemoved(args)
 	self:SecondaryIcon(236541)
+end
+
+function mod:MoonGlaive(args)
+	self:Message(args.spellId, "Important", "Warning")
+	moonGlaiveCounter = moonGlaiveCounter + 1
+	self:Bar(args.spellId, moonGlaiveCounter == 4 and 27.6 or 14.6) -- XXX Had a pull where the 3rd cast was delayed instead.
 end
 
 function mod:Discorporate(args)
@@ -207,8 +212,11 @@ do
 		else -- Can only find target in P2
 			self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
 		end
-		self:Bar(args.spellId, 19.5)
 	end
+end
+
+function mod:TwilightVolleySuccess(args) -- Cast can be interupted (fd/vanish), will recast if it happens.
+	self:Bar(args.spellId, 19.5)
 end
 
 do
@@ -223,20 +231,20 @@ do
 end
 
 function mod:CallMoontalon(args)
-	screechCounter = 0
 	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(self:SpellName(-15064))) -- Moontalon
+	screechCounter = 1
 	self:Bar(args.spellId, 146.9)
 end
 
 function mod:DeadlyScreech(args)
-	screechCounter = screechCounter + 1
 	self:Message(args.spellId, "Attention", "Alert", CL.count:format(args.spellName, screechCounter))
+	screechCounter = screechCounter + 1
 end
 
 function mod:RapidShotApplied(args)
-	rapidShotCounter = rapidShotCounter + 1
 	self:TargetMessage(236603, args.destName, "Attention", "Warning")
-	self:Bar(236603, rapidShotCounter % 2 == 0 and 19.4 or 31.6)
+	rapidShotCounter = rapidShotCounter + 1
+	self:Bar(236603, rapidShotCounter % 2 == 0 and 18.5 or 30.5)
 end
 
 function mod:EmbraceoftheEclipse(args)
@@ -257,7 +265,7 @@ function mod:EmbraceoftheEclipseRemoved(args)
 end
 
 function mod:MoonBurn(args)
-	self:Bar(236519, phase == 3 and 17 or 24.3) -- XXX Need more P3 data/timers
+	self:Bar(236519, phase == 3 and 18.3 or 24.3) -- XXX Need more P3 data/timers
 end
 
 do
@@ -278,14 +286,14 @@ do
 		end
 	end
 	function mod:LunarBeacon(args)
-		lunarBeaconCounter = lunarBeaconCounter + 1
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID) -- Faster than waiting for debuff/cast end
-		self:Bar(args.spellId, lunarBeaconCounter % 2 == 0 and 35.3 or 21.9)
+		lunarBeaconCounter = lunarBeaconCounter + 1
+		self:Bar(args.spellId, lunarBeaconCounter == 2 and 21.9 or 35) -- XXX Need Data longer than 4 casts
 	end
 end
 
 function mod:LunarBeaconApplied(args)
-	if self:Me(args.destGUID) then
+	if self:Me(args.destGUID) then -- XXX Get debuff Duration
 		self:ScheduleTimer("Say", 3, args.spellId, 3, true)
 		self:ScheduleTimer("Say", 4, args.spellId, 2, true)
 		self:ScheduleTimer("Say", 5, args.spellId, 1, true)
