@@ -205,8 +205,8 @@ end
 
 function mod:ConsumingHunger(args)
 	consumingHungerCounter = consumingHungerCounter + 1
-	self:Message(args.spellId, "Attention", "Alert")
-	self:Bar(args.spellId, phase == 3 and (consumingHungerCounter == 2 and 47 or 42) or 34) -- XXX Need more p3 data.
+	self:Message(230384, "Attention", "Alert")
+	self:Bar(230384, phase == 3 and (consumingHungerCounter == 2 and 47 or 42) or 34) -- XXX Need more p3 data.
 end
 
 function mod:DevouringMaw(args)
