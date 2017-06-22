@@ -125,7 +125,10 @@ function mod:OnEngage()
 			end
 		end
 	end
-	updateProximity(self)
+
+	if not self:Easy() then -- No Dissonance in LFR/Normal
+		updateProximity(self)
+	end
 
 	phase = 1
 	boneArmorCounter = 0
@@ -202,7 +205,9 @@ do
 			myRealm = 1
 			self:Message(239006, "Neutral", "Info", self:SpellName(-14857), false) -- Dissonance // Spirit Realm
 		end
-		updateProximity(self)
+		if not self:Easy() then -- No Dissonance in LFR/Normal
+			updateProximity(self)
+		end
 		updateInfoBox()
 	end
 
@@ -213,7 +218,9 @@ do
 			myRealm = 0 -- Corporeal Realm
 			self:Message(239006, "Neutral", "Info", self:SpellName(-14856), false) -- Dissonance // Corporeal Realm
 		end
-		updateProximity(self)
+		if not self:Easy() then -- No Dissonance in LFR/Normal
+			updateProximity(self)
+		end
 		updateInfoBox()
 	end
 end
