@@ -619,6 +619,8 @@ do
 		delayedMessages[#delayedMessages+1] = "BigWigs needs translations. Can you translate BigWigs into Spanish (esES)? Check out our GitHub page!"
 	end
 
+	delayedMessages[#delayedMessages+1] = "We are now on Discord: https://discord.gg/jGveg85"
+
 	CTimerAfter(11, function()
 		--local _, _, _, _, month, _, year = GetAchievementInfo(10043) -- Mythic Archimonde
 		--if year == 15 and month < 10 then

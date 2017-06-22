@@ -178,7 +178,7 @@ local acOptions = {
 				},
 				gitHubTitle = {
 					type = "description",
-					name = "\n\n|cFFFED000".. L.gitHubTitle ..":|r  |cFF74BBFBgithub.com/BigWigsMods|r",
+					name = "\n\n|cFFFED000GitHub:|r  |cFF74BBFBgithub.com/BigWigsMods|r  |cFFFED000Discord:|r  |cFF74BBFBdiscord.gg/jGveg85|r",
 					fontSize = "large",
 					order = 51,
 					width = "full",
