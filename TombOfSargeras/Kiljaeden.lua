@@ -44,7 +44,7 @@ function mod:GetOptions()
 		235059, -- Rupturing Singularity
 		240910, -- Armageddon
 		{236710, "SAY", "FLASH"}, -- Shadow Reflection: Erupting
-		{238429, "SAY", "FLASH"}, -- Bursting Dreadflame
+		{238430, "SAY", "FLASH"}, -- Bursting Dreadflame
 		{238505, "SAY"}, -- Focused Dreadflame
 		{236378, "SAY", "FLASH"}, -- Shadow Reflection: Wailing
 		236555, -- Deceiver's Veil
@@ -57,7 +57,7 @@ function mod:GetOptions()
 	},{
 		["stages"] = "general",
 		[239932] = -14921, -- Stage One: The Betrayer
-		[238429] = -15221, -- Intermission: Eternal Flame
+		[238430] = -15221, -- Intermission: Eternal Flame
 		[236378] = -15229, -- Stage Two: Reflected Souls
 		[236555] = -15394, -- Intermission: Deceiver's Veil
 		[238999] = -15255, -- Stage Three: Darkness of A Thousand Souls
@@ -68,7 +68,6 @@ end
 function mod:OnBossEnable()
 	-- General
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
-	self:RegisterEvent("RAID_BOSS_WHISPER")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	-- Stage One: The Betrayer
@@ -81,7 +80,7 @@ function mod:OnBossEnable()
 	-- Intermission: Eternal Flame
 	self:Log("SPELL_AURA_APPLIED", "NetherGale", 244834) -- Intermission Start
 	self:Log("SPELL_CAST_START", "FocusedDreadflame", 238502) -- Focused Dreadflame
-	self:Log("SPELL_CAST_SUCCESS", "BurstingDreadflame", 238429) -- Bursting Dreadflame
+	self:Log("SPELL_CAST_SUCCESS", "BurstingDreadflame", 238430) -- Bursting Dreadflame
 	self:Log("SPELL_AURA_REMOVED", "NetherGaleRemoved", 244834) -- Intermission End
 
 	-- Stage Two: Reflected Souls
@@ -121,21 +120,14 @@ end
 -- Event Handlers
 --
 -- General
-function mod:RAID_BOSS_WHISPER(_, msg)
-	if msg:find("238430") then -- Bursting Dreadflame
-		self:Message(238430, "Personal", "Alarm", CL.you:format(self:SpellName(238430)))
-		self:Flash(238430)
-		self:Say(238430)
-	end
-end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, sender, _, _, target)
 	if msg:find("238502") then -- Focused Dreadflame Target
-		self:TargetMessage(238505, target, "Attention", "Warning")
+		self:TargetMessage(238505, target, "Attention", "Alarm")
 		self:TargetBar(238505, 5, target)
 	elseif msg:find("235059") then -- Rupturing Singularity
 		singularityCount = singularityCount + 1
-		self:Message(235059, "Personal", "Alarm", CL.you:format(self:SpellName(235059)))
+		self:Message(235059, "Urgent", "Warning")
 		if intermissionPhase and singularityCount == 2 then
 			self:Bar(235059, 30)
 		else
@@ -234,15 +226,27 @@ function mod:FocusedDreadflame(args)
 	end
 end
 
-function mod:BurstingDreadflame(args)
-	self:Message(args.spellId, "Important", "Warning")
-	burstingDreadflameCount = burstingDreadflameCount + 1
-	if phase == 1 and burstingDreadflameCount == 2 then
-		self:Bar(238505, 45)
-	elseif phase == 2 then
-		self:Bar(238505, 46)
-	elseif phase == 3 then
-		self:Bar(238505, burstingDreadflameCount % 2 == 0 and 25 or 70)
+do
+	local playerList = mod:NewTargetList()
+	function mod:BurstingDreadflame(args)
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+		end
+
+		playerList[#playerList+1] = args.destName
+
+		if #playerList == 1 then
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, playerList, "Important", "Warning")
+			burstingDreadflameCount = burstingDreadflameCount + 1
+			if phase == 1 and burstingDreadflameCount == 2 then -- XXX Unkown timer for 3rd and beyond
+				self:Bar(args.spellId, 45)
+			elseif phase == 2 then
+				self:Bar(args.spellId, 46)
+			elseif phase == 3 then
+				self:Bar(args.spellId, burstingDreadflameCount % 2 == 0 and 25 or 70)
+			end
+		end
 	end
 end
 
