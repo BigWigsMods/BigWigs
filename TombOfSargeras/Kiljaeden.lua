@@ -22,6 +22,7 @@ local intermissionPhase = nil
 local singularityCount = 1
 local ArmageddonCount = 1
 local focusedDreadflameCount = 1
+local burstingDreadflameCount = 1
 local felclawsCount = 1
 local flamingOrbCount = 1
 local focusWarned = {}
@@ -44,7 +45,7 @@ function mod:GetOptions()
 		240910, -- Armageddon
 		{236710, "SAY", "FLASH"}, -- Shadow Reflection: Erupting
 		{238429, "SAY", "FLASH"}, -- Bursting Dreadflame
-		{238502, "SAY"}, -- Focused Dreadflame
+		{238505, "SAY"}, -- Focused Dreadflame
 		{236378, "SAY", "FLASH"}, -- Shadow Reflection: Wailing
 		236555, -- Deceiver's Veil
 		241721, -- Illidan's Sightless Gaze
@@ -104,6 +105,7 @@ function mod:OnEngage()
 	intermissionPhase = nil
 	singularityCount = 1
 	focusedDreadflameCount = 1
+	burstingDreadflameCount = 1
 	ArmageddonCount = 1
 	felclawsCount = 1
 	flamingOrbCount = 1
@@ -217,7 +219,7 @@ function mod:NetherGale(args)
 	self:Bar(240910, 6.1) -- Armageddon
 	self:Bar(238429, 7.7) -- Bursting Dreadflame
 	self:Bar(235059, 13.3) -- Rupturing Singularity
-	self:Bar(238502, 23.5) -- Focused Dreadflame
+	self:Bar(238505, 23.5) -- Focused Dreadflame
 
 end
 
@@ -290,7 +292,7 @@ function mod:DeceiversVeilCast(args)
 	self:StopBar(236378) -- Shadow Reflection: Wailing
 	self:StopBar(239932) -- Fel Claws
 	self:StopBar(238429) -- Bursting Dreadflame
-	self:StopBar(238502) -- Focused Dreadflame
+	self:StopBar(238505) -- Focused Dreadflame
 	self:StopBar(235059) -- Rupturing Singularity
 end
 
@@ -302,7 +304,7 @@ function mod:DeceiversVeilRemoved(args)
 	self:Bar(243982, 15) -- Tear Rift
 	self:Bar(244856, 30) -- Flaming Orb
 	self:Bar(238429, 42) -- Bursting Dreadflame
-	self:Bar(238502, 80) -- Focused Dreadflame
+	self:Bar(238505, 80) -- Focused Dreadflame
 end
 
 
