@@ -46,7 +46,7 @@ function mod:GetOptions()
 		{234128, "SAY", "FLASH"}, -- Driven Assault
 		"custom_on_fixate_plates",
 		240319, -- Hatching
-		{241600, "SAY", "FLASH"} -- Sickly Fixate
+		{241600, "SAY", "FLASH"}, -- Sickly Fixate
 		"berserk",
 	},{
 		[231998] = "general",
@@ -66,8 +66,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "JaggedAbrasion", 231998)
 	self:Log("SPELL_CAST_START", "UncheckedRage", 231854)
 	self:Log("SPELL_AURA_APPLIED", "DrawIn", 232061)
-	self:Log("SPELL_AURA_REMOVED", "DrawInSuccess", 232061)
-	self:Log("SPELL_AURA_APPLIED", "FrigidBlowsApplied", 233429)
+	--self:Log("SPELL_AURA_REMOVED", "DrawInSuccess", 232061)
+	--self:Log("SPELL_AURA_APPLIED", "FrigidBlowsApplied", 233429)
 	self:Log("SPELL_AURA_REMOVED_DOSE", "FrigidBlows", 233429)
 	self:Log("SPELL_CAST_START", "FrostyDischarge", 232174)
 
