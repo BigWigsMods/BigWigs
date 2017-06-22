@@ -18,6 +18,14 @@ if L then
 	--L.armor_remaining = "%s Remaining (%d)" -- Bonecage Armor Remaining (#)
 end
 
+L = BigWigs:NewBossLocale("Maiden of Vigilance", "deDE")
+if L then
+	--L.infusionChanged = "Infusion CHANGED: %s"
+	--L.sameInfusion = "Same Infusion: %s"
+	--L.fel = "Fel"
+	--L.light = "Light"
+end
+
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "deDE")
 if L then
 	--L.chaosbringer = "Infernal Chaosbringer"

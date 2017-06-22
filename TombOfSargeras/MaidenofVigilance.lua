@@ -33,8 +33,8 @@ local lightList, felList = {}, {}
 
 local L = mod:GetLocale()
 if L then
-	L.infusionChanged = "Infusion CHANGED"
-	L.sameInfusion = "Same Infusion"
+	L.infusionChanged = "Infusion CHANGED: %s"
+	L.sameInfusion = "Same Infusion: %s"
 	L.fel = "Fel"
 	L.light = "Light"
 end
@@ -70,8 +70,8 @@ function mod:OnBossEnable()
 
 	-- Stage One: Divide and Conquer
 	self:Log("SPELL_CAST_START", "Infusion", 235271) -- Infusion
-	self:Log("SPELL_AURA_APPLIED", "FelInfusion", 235240, 240219) -- Fel Infusion
-	self:Log("SPELL_AURA_APPLIED", "LightInfusion", 235213, 240218) -- Light Infusion
+	self:Log("SPELL_AURA_APPLIED", "FelInfusion", 235240, 240219) -- Heroic, Normal
+	self:Log("SPELL_AURA_APPLIED", "LightInfusion", 235213, 240218) -- Heroic, Normal
 	self:Log("SPELL_CAST_START", "HammerofCreation", 241635) -- Hammer of Creation
 	self:Log("SPELL_CAST_START", "HammerofObliteration", 241636) -- Hammer of Obliteration
 	self:Log("SPELL_CAST_START", "MassInstability", 235267) -- Mass Instability
@@ -138,10 +138,10 @@ do
 	local function checkSide(self, newSide)
 		local sideString = (newSide == 235240 or newSide == 240219) and L.fel or L.light
 		if mySide ~= newSide then
-			self:Message(235271, "Important", "Warning", ("%s: %s"):format(L.infusionChanged, sideString), newSide)
+			self:Message(235271, "Important", "Warning", L.infusionChanged:format(sideString), newSide)
 			self:Flash(235271)
 		else
-			self:Message(235271, "Important", "Info", ("%s: %s"):format(L.sameInfusion, sideString), newSide)
+			self:Message(235271, "Important", "Info", L.sameInfusion:format(sideString), newSide)
 		end
 		mySide = newSide
 	end
