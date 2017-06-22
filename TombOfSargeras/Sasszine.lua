@@ -45,7 +45,7 @@ function mod:GetOptions()
 		232722, -- Slicing Tornado
 		230358, -- Thundering Shock
 		230384, -- Consuming Hunger
-		232745, -- Devouring Maw
+		234621, -- Devouring Maw
 		232913, -- Befouling Ink
 		232827, -- Crashing Wave
 		239436, -- Dread Shark
@@ -131,11 +131,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			end
 			self:Bar(230201, 25.6) -- Burden of Pain
 			self:Bar(232827, 32.5) -- Crashing Wave
-			self:Bar(232745, 42.2) -- Devouring Maw
+			self:Bar(234621, 42.2) -- Devouring Maw
 		elseif phase == 3 then
 			self:StopBar(232913) -- Befouling Ink
 			self:StopBar(232827) -- Crashing Wave
-			self:StopBar(232745) -- Devouring Maw
+			self:StopBar(234621) -- Devouring Maw
 
 			self:CDBar(232913, 11) -- Befouling Ink
 			self:Bar(230201, 25.6) -- Burden of Pain
@@ -210,8 +210,8 @@ function mod:ConsumingHunger(args)
 end
 
 function mod:DevouringMaw(args)
-	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 41.5)
+	self:Message(234621, "Important", "Warning")
+	self:Bar(234621, 41.5)
 end
 
 function mod:BefoulingInk(args)
