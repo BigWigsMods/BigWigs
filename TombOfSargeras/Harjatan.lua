@@ -47,6 +47,7 @@ function mod:GetOptions()
 		"custom_on_fixate_plates",
 		240319, -- Hatching
 		{241600, "SAY", "FLASH"} -- Sickly Fixate
+		"berserk",
 	},{
 		[231998] = "general",
 		[231729] = -14555,
