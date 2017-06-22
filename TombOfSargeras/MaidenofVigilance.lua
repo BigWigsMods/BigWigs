@@ -10,7 +10,7 @@ local mod, CL = BigWigs:NewBoss("Maiden of Vigilance", 1147, 1897)
 if not mod then return end
 mod:RegisterEnableMob(118289) -- Maiden of Vigilance
 mod.engageId = 2052
-mod.respawnTime = 30 -- XXX Unconfirmed
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -65,9 +65,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Infusion", 235271) -- Infusion
 	self:Log("SPELL_AURA_APPLIED", "FelInfusion", 235240, 240219) -- Fel Infusion
 	self:Log("SPELL_AURA_APPLIED", "LightInfusion", 235213, 240218) -- Light Infusion
-	self:Log("SPELL_CAST_SUCCESS", "HammerofCreation", 241635) -- Hammer of Creation
-	self:Log("SPELL_CAST_SUCCESS", "HammerofObliteration", 241636) -- Hammer of Obliteration
-	self:Log("SPELL_CAST_SUCCESS", "MassInstability", 235267) -- Mass Instability
+	self:Log("SPELL_CAST_START", "HammerofCreation", 241635) -- Hammer of Creation
+	self:Log("SPELL_CAST_START", "HammerofObliteration", 241636) -- Hammer of Obliteration
+	self:Log("SPELL_CAST_START", "MassInstability", 235267) -- Mass Instability
 
 	-- Stage Two: Watcher's Wrath
 	self:Log("SPELL_CAST_SUCCESS", "Blowback", 237722) -- Blowback
@@ -93,9 +93,9 @@ function mod:OnEngage()
 
 	self:Bar(235271, 2.0) -- Infusion
 	self:Bar(241635, 14.0) -- Hammer of Creation
-	self:Bar(235267, 24.0) -- Mass Instability
+	self:Bar(235267, 22.0) -- Mass Instability
 	self:Bar(241636, 32.0) -- Hammer of Obliteration
-	self:Bar(237722, 41.0) -- Blowback
+	self:Bar(237722, 42.5) -- Blowback
 	self:Bar(234891, 43.5) -- Wrath of the Creators
 	self:Berserk(480) -- Confirmed Heroic
 end
@@ -117,8 +117,8 @@ function mod:AegwynnsWardApplied(args)
 end
 
 function mod:Infusion(args)
-	infusionCounter = infusionCounter + 1
 	self:Message(args.spellId, "Neutral", "Info", CL.casting:format(args.spellName))
+	infusionCounter = infusionCounter + 1
 	if infusionCounter == 2 then
 		self:Bar(args.spellId, 38.0)
 	end
@@ -147,26 +147,26 @@ do
 end
 
 function mod:HammerofCreation(args)
-	hammerofCreationCounter = hammerofCreationCounter + 1
 	self:Message(args.spellId, "Urgent", "Alert")
+	hammerofCreationCounter = hammerofCreationCounter + 1
 	if hammerofCreationCounter == 2 then
 		self:Bar(args.spellId, 36)
 	end
 end
 
 function mod:HammerofObliteration(args)
-	hammerofObliterationCounter = hammerofObliterationCounter + 1
 	self:Message(args.spellId, "Urgent", "Alert")
+	hammerofObliterationCounter = hammerofObliterationCounter + 1
 	if hammerofObliterationCounter == 2 then
 		self:Bar(args.spellId, 36)
 	end
 end
 
 function mod:MassInstability(args)
-	massInstabilityCounter = massInstabilityCounter + 1
 	self:Message(args.spellId, "Attention", "Alert")
+	massInstabilityCounter = massInstabilityCounter + 1
 	if massInstabilityCounter == 2 then
-		self:Bar(args.spellId, 36.0)
+		self:Bar(args.spellId, 36)
 	end
 end
 
@@ -202,10 +202,10 @@ function mod:WrathoftheCreatorsInterrupted(args)
 	hammerofObliterationCounter = 1
 	infusionCounter = 1
 
-	self:Bar(235271, 2.0) -- Infusion
-	self:Bar(241635, 14.0) -- Hammer of Creation
-	self:Bar(235267, 22.0) -- Mass Instability
-	self:Bar(241636, 32.0) -- Hammer of Obliteration
+	self:Bar(235271, 2) -- Infusion
+	self:Bar(241635, 14) -- Hammer of Creation
+	self:Bar(235267, 22) -- Mass Instability
+	self:Bar(241636, 32) -- Hammer of Obliteration
 	self:Bar(237722, 81) -- Blowback
 	self:Bar(234891, 83.5) -- Wrath of the Creators
 end
