@@ -111,7 +111,7 @@ function mod:OnEngage()
 	wipe(phasedList)
 	wipe(unphasedList)
 	for unit in self:IterateGroup() do
-		local buffCheck = UnitDebuff(unit, self:SpellName(235732)) -- Spiritual Barrier
+		local buffCheck = UnitDebuff(unit, self:SpellName(235621)) -- Spirit Realm
 		local guid = UnitGUID(unit)
 		if buffCheck then
 			phasedList[#phasedList+1] = self:UnitName(unit)
