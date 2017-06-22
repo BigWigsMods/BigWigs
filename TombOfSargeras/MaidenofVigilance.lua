@@ -22,6 +22,8 @@ local massInstabilityCounter = 0
 local hammerofCreationCounter = 0
 local hammerofObliterationCounter = 0
 local infusionCounter = 0
+local mySide = 0
+local lightList, felList = {}, {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -29,7 +31,10 @@ local infusionCounter = 0
 
 local L = mod:GetLocale()
 if L then
-
+	L.infusionChanged = "Infusion CHANGED"
+	L.sameInfusion = "Same Infusion"
+	L.fel = "Fel"
+	L.light = "Light"
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -40,7 +45,7 @@ function mod:GetOptions()
 		"berserk",
 		240209, -- Unstable Soul
 		241593, -- Aegwynn's Ward
-		{235271, "PROXIMITY"}, -- Infusion
+		{235271, "PROXIMITY", "FLASH"}, -- Infusion
 		241635, -- Hammer of Creation
 		241636, -- Hammer of Obliteration
 		235267, -- Mass Instability
@@ -85,6 +90,9 @@ end
 function mod:OnEngage()
 	phase = 1
 	shieldActive = false
+	mySide = 0
+	wipe(lightList)
+	wipe(felList)
 
 	massInstabilityCounter = 0
 	hammerofCreationCounter = 0
@@ -117,7 +125,7 @@ function mod:AegwynnsWardApplied(args)
 end
 
 function mod:Infusion(args)
-	self:Message(args.spellId, "Neutral", "Info", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Neutral", nil, CL.casting:format(args.spellName))
 	infusionCounter = infusionCounter + 1
 	if infusionCounter == 2 then
 		self:Bar(args.spellId, 38.0)
@@ -125,23 +133,36 @@ function mod:Infusion(args)
 end
 
 do
-	local lightList, felList = {}, {}
+	local function checkSide(self, newSide)
+		local sideString = (newSide == 235240 or newSide == 240219) and L.fel or L.light
+		if mySide ~= newSide then
+			self:Message(235271, "Important", "Warning", ("%s: %s"):format(L.infusionChanged, sideString), newSide)
+			self:Flash(235271)
+		else
+			self:Message(235271, "Important", "Info", ("%s: %s"):format(L.sameInfusion, sideString), newSide)
+		end
+		mySide = newSide
+	end
 
 	function mod:FelInfusion(args)
-		felList[#felList+1] = args.destName
+		if not tContains(felList, args.destName) then
+			felList[#felList+1] = args.destName
+		end
 		tDeleteItem(lightList, args.destName)
 		if self:Me(args.destGUID) then
-			self:TargetMessage(235271, args.destName, "Personal", "Warning", args.spellName, args.spellId)
 			self:OpenProximity(235271, 5, lightList) -- Avoid people with Light debuff
+			checkSide(self, args.spellId)
 		end
 	end
 
 	function mod:LightInfusion(args)
-		lightList[#lightList+1] = args.destName
+		if not tContains(lightList, args.destName) then
+			lightList[#lightList+1] = args.destName
+		end
 		tDeleteItem(felList, args.destName)
 		if self:Me(args.destGUID) then
-			self:TargetMessage(235271, args.destName, "Personal", "Warning", args.spellName, args.spellId)
 			self:OpenProximity(235271, 5, felList) -- Avoid people with Fel debuff
+			checkSide(self, args.spellId)
 		end
 	end
 end
