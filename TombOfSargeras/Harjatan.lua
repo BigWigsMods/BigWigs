@@ -129,7 +129,7 @@ end
 function mod:UncheckedRage(args)
 	rageCounter = rageCounter + 1
 	self:Message(args.spellId, "Urgent", "Warning")
-	if rageCounter <= 3 then
+	if rageCounter <= 2 then
 		self:Bar(args.spellId, 20.5)
 	end
 end
