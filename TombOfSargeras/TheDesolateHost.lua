@@ -288,7 +288,7 @@ end
 
 function mod:Wither(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		self:TargetMessage(236131, args.destName, "Personal", "Alarm")
 	end
 end
 
