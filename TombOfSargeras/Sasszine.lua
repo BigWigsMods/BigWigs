@@ -151,7 +151,16 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 do
-	local list, iconsUnused = mod:NewTargetList(), {1,2,3,4} -- Targets: LFR: 0, 1 Normal, 3 Heroic, 4 Mythic
+	local list mod:NewTargetList()
+	local iconsUnused = {}
+	-- Targets: LFR: 0, 1 Normal, 3 Heroic, 4 Mythic
+	if self:Normal() then
+		iconsUnused = {1}
+	elseif self:Heroic() then
+		iconsUnused = {1,2,3}
+	elseif self:Mythic() then
+		iconsUnused = {1,2,3,4}
+	end
 	function mod:HydraShot(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
