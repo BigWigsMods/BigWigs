@@ -209,7 +209,7 @@ function mod:NetherGale(args)
 
 	-- First Intermission
 	self:Bar(240910, 6.1) -- Armageddon
-	self:Bar(238429, 7.7) -- Bursting Dreadflame
+	self:Bar(238430, 7.7) -- Bursting Dreadflame
 	self:Bar(235059, 13.3) -- Rupturing Singularity
 	self:Bar(238505, 23.5) -- Focused Dreadflame
 
@@ -295,7 +295,7 @@ function mod:DeceiversVeilCast(args)
 	self:StopBar(236710) -- Shadow Reflection: Erupting
 	self:StopBar(236378) -- Shadow Reflection: Wailing
 	self:StopBar(239932) -- Fel Claws
-	self:StopBar(238429) -- Bursting Dreadflame
+	self:StopBar(238430) -- Bursting Dreadflame
 	self:StopBar(238505) -- Focused Dreadflame
 	self:StopBar(235059) -- Rupturing Singularity
 end
@@ -307,7 +307,7 @@ function mod:DeceiversVeilRemoved(args)
 	self:Bar(239932, 11) -- Felclaws
 	self:Bar(243982, 15) -- Tear Rift
 	self:Bar(244856, 30) -- Flaming Orb
-	self:Bar(238429, 42) -- Bursting Dreadflame
+	self:Bar(238430, 42) -- Bursting Dreadflame
 	self:Bar(238505, 80) -- Focused Dreadflame
 end
 
