@@ -108,7 +108,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 function mod:BurningArmor(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning", nil, nil, true)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
