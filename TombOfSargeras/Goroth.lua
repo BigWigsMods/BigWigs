@@ -22,8 +22,8 @@ local rainCounter = 1
 local armorCounter = 1
 
 local shatteringCounter = 1
-local shatteringTimers = {24.0, 60.0, 60.0, 60.0, 47.0}
-local shatteringTimersMythic = {24.0, 60.0, 60.0, 46.1}
+local shatteringTimers = {24, 60, 60, 60, 47, 19}
+local shatteringTimersMythic = {24, 60, 60, 46.1}
 
 local spikeCounter = 1
 local cometCounter = 1
@@ -79,7 +79,7 @@ function mod:OnEngage()
 
 	self:Bar(233514, 4.8) -- Infernal Spike
 	self:Bar(230345, 8.5) -- Crashing Comet
-	self:Bar(231363, 11) -- Burning Armor
+	self:Bar(231363, 10) -- Burning Armor
 	self:Bar(233279, shatteringTimers[shatteringCounter], CL.count:format(self:SpellName(233279), 1)) -- Shattering Star
 	self:Bar(233062, 54) -- Infernal Burning
 	if self:Mythic() then
@@ -113,7 +113,7 @@ function mod:BurningArmor(args)
 		self:Say(args.spellId)
 	end
 	armorCounter = armorCounter + 1
-	self:CDBar(args.spellId, (armorCounter > 3 and armorCounter % 2 == 0 and 35) or 24.2)
+	self:CDBar(args.spellId, (armorCounter > 3 and armorCounter % 2 ~= 0 and 35) or (self:Easy() and 25 or 24))
 end
 
 do
@@ -158,7 +158,7 @@ function mod:InfernalBurning(args)
 	burningCounter = burningCounter + 1
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 6)
-	self:Bar(args.spellId, 60)
+	self:Bar(args.spellId, 60.5)
 end
 
 do
