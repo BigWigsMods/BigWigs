@@ -90,7 +90,9 @@ function mod:OnEngage()
 
 	-- Atrigan
 	self:Bar(233426, 6) -- Scythe Sweep
-	self:Bar(233431, 11) -- Calcified Quills
+	if not self:Easy() then
+		self:Bar(233431, 11) -- Calcified Quills
+	end
 	self:Bar(233441, 60) -- Bone Saw
 
 	-- Belac
@@ -155,7 +157,7 @@ end
 
 function mod:BoneSaw(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:CastBar(args.spellId, 15)
+	self:CastBar(args.spellId, 16)
 	boneSawCounter = boneSawCounter + 1
 	self:Bar(args.spellId, boneSawCounter < 4 and 63 or 60.5)
 end
@@ -198,7 +200,7 @@ end
 
 function mod:FelSquall(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:CastBar(args.spellId, 15)
+	self:CastBar(args.spellId, 16)
 	self:Bar(args.spellId, 60.5)
 end
 
