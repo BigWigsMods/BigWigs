@@ -32,6 +32,9 @@ local focusWarned = {}
 --
 
 local L = mod:GetLocale()
+if L then
+	L.singularityImpact = "Singularity Impact"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -128,6 +131,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, sender, _, _, target)
 	elseif msg:find("235059") then -- Rupturing Singularity
 		singularityCount = singularityCount + 1
 		self:Message(235059, "Urgent", "Warning")
+		self:Bar(235059, 9.85, L.singularityImpact)
 		if intermissionPhase and singularityCount == 2 then
 			self:Bar(235059, 30)
 		else
@@ -306,7 +310,9 @@ function mod:DeceiversVeilRemoved(args)
 	self:Bar(238999, 2) -- Darkness of a Thousand Souls
 	self:Bar(239932, 11) -- Felclaws
 	self:Bar(243982, 15) -- Tear Rift
-	self:Bar(244856, 30) -- Flaming Orb
+	if not self:Easy() then
+		self:Bar(244856, 30) -- Flaming Orb
+	end
 	self:Bar(238430, 42) -- Bursting Dreadflame
 	self:Bar(238505, 80) -- Focused Dreadflame
 end
