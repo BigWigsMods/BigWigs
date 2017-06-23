@@ -116,7 +116,7 @@ do
 		if power < lastPower or power >= nextAltPowerWarning then
 			self:StackMessage(233104, self:UnitName(unit), power, "Personal")
 			local t = GetTime()
-			if t-prev > 1.5 then
+			if (power >= 80 or power < lastPower) and t-prev > 1.5 then
 				self:PlaySound(233104, "Info")
 				prev = t
 			end
