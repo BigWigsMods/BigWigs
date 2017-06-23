@@ -1,28 +1,28 @@
 local L = BigWigs:NewBossLocale("Harjatan the Bludger", "zhCN")
 if not L then return end
 if L then
-	--L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
-	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates = "敌对姓名板固定图标"
+	L.custom_on_fixate_plates_desc = "在目标姓名板上显示一个图标。\n需要使用敌对姓名板。此功能当前只支持 KuiNameplates。"
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "zhCN")
 if L then
-	--L.infobox_players = "Players"
-	--L.armor_remaining = "%s Remaining (%d)" -- Bonecage Armor Remaining (#)
+	L.infobox_players = "玩家"
+	L.armor_remaining = "%s 剩余（%d）" -- Bonecage Armor Remaining (#)
 end
 
 L = BigWigs:NewBossLocale("Maiden of Vigilance", "zhCN")
 if L then
-	--L.infusionChanged = "Infusion CHANGED: %s"
-	--L.sameInfusion = "Same Infusion: %s"
-	--L.fel = "Fel"
-	--L.light = "Light"
+	L.infusionChanged = "灌注>改变<：%s"
+	L.sameInfusion = "相同灌注：%s"
+	L.fel = "邪能"
+	L.light = "光明"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhCN")
 if L then
-	--L.chaosbringer = "Infernal Chaosbringer"
-	--L.rez = "Rez the Tombwatcher"
-	--L.custodian = "Undersea Custodian"
-	--L.sentry = "Guardian Sentry"
+	L.chaosbringer = "地狱火混沌使者"
+	L.rez = "守墓人瑞兹"
+	L.custodian = "海底监察者"
+	L.sentry = "守护者哨兵"
 end
