@@ -1,5 +1,5 @@
 
--- GLOBALS: SPELL_POWER_ALTERNATE_POWER, tDeleteItem, string
+-- GLOBALS: tDeleteItem, string
 
 --------------------------------------------------------------------------------
 -- TODO List:
@@ -96,7 +96,7 @@ function mod:OnEngage()
 	-- Belac
 	self:CDBar(235230, 35) -- Fel Squall
 
-	self:RegisterEvent("UNIT_POWER")
+	self:RegisterUnitEvent("UNIT_POWER", nil, "player")
 end
 
 --------------------------------------------------------------------------------
@@ -111,11 +111,10 @@ end
 
 do
 	local lastPower, prev = 0, 0
-	function mod:UNIT_POWER(_, unit, type)
-		if unit ~= "player" then return end
-		local power = UnitPower("player", SPELL_POWER_ALTERNATE_POWER)
+	function mod:UNIT_POWER(unit, type)
+		local power = UnitPower(unit, 10) -- SPELL_POWER_ALTERNATE_POWER = 10
 		if power < lastPower or power >= nextAltPowerWarning then
-			self:StackMessage(233104, UnitName("player"), power, "Personal")
+			self:StackMessage(233104, self:UnitName(unit), power, "Personal")
 			local t = GetTime()
 			if t-prev > 1.5 then
 				self:PlaySound(233104, "Info")
