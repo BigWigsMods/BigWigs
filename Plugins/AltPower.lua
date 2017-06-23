@@ -350,7 +350,7 @@ do
 				local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
 				roleColoredList[unit] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
 			end
-			updater = plugin:ScheduleRepeatingTimer(UpdateDisplay, 2)
+			updater = plugin:ScheduleRepeatingTimer(UpdateDisplay, 1)
 		end
 
 		if repeatSync then
