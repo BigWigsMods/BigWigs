@@ -66,8 +66,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "JaggedAbrasion", 231998)
 	self:Log("SPELL_CAST_START", "UncheckedRage", 231854)
 	self:Log("SPELL_AURA_APPLIED", "DrawIn", 232061)
-	--self:Log("SPELL_AURA_REMOVED", "DrawInSuccess", 232061)
-	--self:Log("SPELL_AURA_APPLIED", "FrigidBlowsApplied", 233429)
 	self:Log("SPELL_AURA_REMOVED_DOSE", "FrigidBlows", 233429)
 	self:Log("SPELL_CAST_START", "FrostyDischarge", 232174)
 
@@ -90,8 +88,8 @@ function mod:OnEngage()
 	rageCounter = 1
 
 	self:Bar(232192, 17.5) -- Commanding Roar
-	self:Bar(231854, 21) -- Unchecked Rage
-	self:Bar(232061, 60) -- Draw In
+	self:CDBar(231854, 20.7) -- Unchecked Rage
+	self:CDBar(232061, 58) -- Draw In
 	if self:Mythic() then
 		self:Bar(240319, 30) -- Hatching
 	end
@@ -152,12 +150,12 @@ function mod:FrostyDischarge(args)
 	roarCounter = 1
 	rageCounter = 1
 	self:Message(args.spellId, "Urgent", "Warning", args.spellName)
-	self:Bar(232192, 18.2)	-- Commanding Roar
-	self:Bar(231854, 21.4) -- Unchecked Rage
+	self:CDBar(232192, 17) -- Commanding Roar
+	self:CDBar(231854, 21.4) -- Unchecked Rage
 	if self:Mythic() then
 		self:Bar(240319, 32) -- Hatching
 	end
-	self:Bar(232061, 60) -- Draw In
+	self:CDBar(232061, 59.1) -- Draw In
 end
 
 do
