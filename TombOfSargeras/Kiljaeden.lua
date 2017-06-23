@@ -222,7 +222,7 @@ function mod:FocusedDreadflame(args)
 	elseif phase == 2 then
 		self:Bar(238505, focusedDreadflameCount % 2 == 0 and 46 or 53)
 	elseif phase == 3 then
-		--self:Bar(238505, 95)
+		self:Bar(238505, 95)
 	end
 end
 
