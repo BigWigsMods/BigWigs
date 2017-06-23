@@ -82,7 +82,6 @@ L.slashDescRange = "|cFFFED000/range:|r Opens the range indicator."
 L.slashDescVersion = "|cFFFED000/bwv:|r Performs a BigWigs version check."
 L.slashDescConfig = "|cFFFED000/bw:|r Opens the BigWigs configuration."
 
-L.gitHubTitle = "BigWigs is on GitHub"
 L.gitHubDesc = "BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out.\n\n|cFF33FF99Our API is now documented and freely readable on the GitHub wiki.|r"
 
 L.BAR = "Bars"

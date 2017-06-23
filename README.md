@@ -14,7 +14,7 @@ Looking for functionality that BigWigs doesn't cover? Try these addons:
 * Old content can be installed by [doing a search for BigWigs](https://mods.curse.com/search?search=bigwigs&submit-search=Submit) on Curse and installing the appropriate expansion addon.
 
 ## Feedback
-Please remember that we are always interested in hearing directly from you. About anything you want to share or ask. You may [file tickets from our project page](https://github.com/BigWigsMods/BigWigs/issues) about anything or contact us on IRC in the #bigwigs channel on the irc.freenode.net server.
+Please remember that we are always interested in hearing directly from you. About anything you want to share or ask. You can [report issues on GitHub](https://github.com/BigWigsMods/BigWigs/issues) or [contact us on Discord](https://discord.gg/jGveg85).
 
 ## Our goals
 When raiding, a high framerate is important. We understand that every extra frame matters, so BigWigs aims to be as efficient as possible. The memory/second and CPU/second footprint of BigWigs is the lowest of all boss mod addons.

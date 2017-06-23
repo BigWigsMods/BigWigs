@@ -179,6 +179,7 @@ do
 		[294] = true, -- Archimonde portal
 		[295] = true, -- Archimonde kill
 		[549] = true, -- Gul'dan kill
+		[656] = true, -- Kil'jaeden kill
 	}
 
 	function plugin:PLAY_MOVIE(_, id)

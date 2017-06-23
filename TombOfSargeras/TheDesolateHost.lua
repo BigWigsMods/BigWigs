@@ -3,6 +3,9 @@
 -- TODO List:
 -- - Shattering Scream: Find target before debuffs, without spamming? (current method allows for kicks before warnings)
 -- - Add wave timers (no spell info)
+-- - Make sure phase check count works properly on pull XXX
+-- - Stop Bars when initial bosses die (Spear/Bind/Collapsing Fissure)
+-- - Add warnings when standing in stuff (Collapsing Fissure, Tormented Cries)
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -35,6 +38,7 @@ local updateProximity = nil
 local L = mod:GetLocale()
 if L then
 	L.infobox_players = "Players"
+	L.armor_remaining = "%s Remaining (%d)" -- Bonecage Armor Remaining (#)
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -48,7 +52,7 @@ function mod:GetOptions()
 		236507, -- Quietus
 		{235924, "SAY"}, -- Spear of Anguish
 		235907, -- Collapsing Fissure
-		{238570, "SAY"}, -- Tormented Cries
+		{238570, "SAY", "ICON"}, -- Tormented Cries
 		235927, -- Rupturing Slam
 		{236513, "INFOBOX"}, -- Bonecage Armor
 		236131, -- Wither
@@ -81,6 +85,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SpearofAnguish", 235924) -- Spear of Anguish
 	self:Log("SPELL_CAST_START", "TormentedCries", 238570) -- Tormented Cries
 	self:Log("SPELL_AURA_APPLIED", "TormentedCriesApplied", 238018) -- Tormented Cries (Debuff)
+	self:Log("SPELL_AURA_REMOVED", "TormentedCriesRemoved", 238018) -- Tormented Cries (Debuff)
 	-- Adds
 	self:Log("SPELL_CAST_START", "RupturingSlam", 235927) -- Rupturing Slam
 	self:Log("SPELL_AURA_APPLIED", "BonecageArmor", 236513) -- Bonecage Armor
@@ -107,7 +112,7 @@ function mod:OnEngage()
 	wipe(phasedList)
 	wipe(unphasedList)
 	for unit in self:IterateGroup() do
-		local buffCheck = UnitBuff(unit, self:SpellName(235732)) -- Spiritual Barrier
+		local buffCheck = UnitDebuff(unit, self:SpellName(235621)) -- Spirit Realm
 		local guid = UnitGUID(unit)
 		if buffCheck then
 			phasedList[#phasedList+1] = self:UnitName(unit)
@@ -121,17 +126,10 @@ function mod:OnEngage()
 			end
 		end
 	end
-	updateProximity(self)
 
-	-- XXX Delete if not needed on Live
-	--wipe(phasedCheckList)
-	--self:RegisterEvent("UNIT_AURA") -- Spirit Realm Tracking
-	--for unit in self:IterateGroup() do
-	--	local n = self:UnitName(unit)
-	--	unphasedList[#unphasedList+1] = n
-	--	phasedCheckList[n] = true -- Assume everyone is unphased
-	--	self:UNIT_AURA(nil, unit)
-	--end
+	if not self:Easy() then -- No Dissonance in LFR/Normal
+		updateProximity(self)
+	end
 
 	phase = 1
 	boneArmorCounter = 0
@@ -148,10 +146,10 @@ function mod:OnEngage()
 	self:SetInfo("infobox", 10, #unphasedList)
 
 
-	self:Bar(235907, 7.3) -- Collapsing Fissure
-	self:Bar(236459, 15.5) -- Soulbind
+	self:Bar(235907, 6) -- Collapsing Fissure
+	self:Bar(236459, 13) -- Soulbind
 	if self:Heroic() or self:Mythic() then -- Heroic+ only
-		self:Bar(235924, 22) -- Spear of Anguish
+		self:Bar(235924, 20) -- Spear of Anguish
 	end
 	self:Bar(236072, 60) -- Wailing Souls
 	self:Bar(238570, 120) -- Tormented Cries
@@ -172,49 +170,20 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 239978 then -- Soul Palour // Phase 2
 		phase = 2
 
-		self:CDBar(236542, 8) -- Sundering Doom
-		self:CDBar(236544, 19) -- Doomed Sundering
+		self:StopBar(236072) -- Wailing Souls
+		self:StopBar(238570) -- Tormented Cries
+		self:StopBar(CL.cast:format(self:SpellName(236072))) -- <cast: Wailing Souls>
+		self:StopBar(CL.cast:format(self:SpellName(238570))) -- <cast: Tormented Cries>
+
+		-- Assumed that other timers reset upon p2 start XXX Double Check
+		self:Bar(235907, 5) -- Collapsing Fissure
+		self:Bar(235924, 6) -- Spear of Anguish
+		self:Bar(236459, 10.2) -- Soulbind
+
+		self:CDBar(236542, 17) -- Sundering Doom
+		self:CDBar(236544, 28) -- Doomed Sundering
 	end
 end
-
--- XXX Delete if not needed on Live
---function mod:UNIT_AURA(event, unit)
---	if not unit:match("raid%d+$") then return end
---	local name = UnitDebuff(unit, self:SpellName(235621)) -- Spirit Realm
---	local n = self:UnitName(unit)
---	if not phasedCheckList[n] and not name then -- Not in Spirit Realm
---		local guid = UnitGUID(unit)
---		phasedCheckList[n] = true
---		unphasedList[#unphasedList+1] = n
---		tDeleteItem(phasedList, n)
---		if self:Me(guid) then
---			myRealm = 0 -- Corporeal Realm
---			self:Message(239006, "Neutral", "Info", self:SpellName(-14856), false) -- Corporeal Realm
---		end
---		if myRealm == 0 then -- Corporeal Realm
---			self:OpenProximity(239006, 8, phasedList) -- Avoid people in Spirit Realm
---		else
---			self:OpenProximity(239006, 8, unphasedList) -- Avoid people not in Spirit Realm
---		end
---		self:SetInfo("infobox", 8, #phasedList)
---		self:SetInfo("infobox", 10, #unphasedList)
---	elseif name and phasedCheckList[n] then -- In Spirit Realm
---		local guid = UnitGUID(unit)
---		phasedList[#phasedList+1] = n
---		tDeleteItem(unphasedList, n)
---		if self:Me(guid) then
---			myRealm = 1
---		end
---		if myRealm == 1 then -- Spirit Realm
---			self:OpenProximity(239006, 8, unphasedList) -- Avoid people not in Spirit Realm
---		else
---			self:OpenProximity(239006, 8, phasedList) -- Avoid people in Spirit Realm
---		end
---		phasedCheckList[n] = nil
---		self:SetInfo("infobox", 8, #phasedList)
---		self:SetInfo("infobox", 10, #unphasedList)
---	end
---end
 
 function updateProximity(self)
 	if myRealm == 0 then -- Corporeal Realm
@@ -237,7 +206,9 @@ do
 			myRealm = 1
 			self:Message(239006, "Neutral", "Info", self:SpellName(-14857), false) -- Dissonance // Spirit Realm
 		end
-		updateProximity(self)
+		if not self:Easy() then -- No Dissonance in LFR/Normal
+			updateProximity(self)
+		end
 		updateInfoBox()
 	end
 
@@ -248,7 +219,9 @@ do
 			myRealm = 0 -- Corporeal Realm
 			self:Message(239006, "Neutral", "Info", self:SpellName(-14856), false) -- Dissonance // Corporeal Realm
 		end
-		updateProximity(self)
+		if not self:Easy() then -- No Dissonance in LFR/Normal
+			updateProximity(self)
+		end
 		updateInfoBox()
 	end
 end
@@ -262,7 +235,7 @@ function mod:SpearofAnguish(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
-	local t = 20.5 -- XXX Need more P2 Data
+	local t = 21
 	if self:BarTimeLeft(238570) < 20.5 and self:BarTimeLeft(238570) > 0 then -- Tormented Cries
 		t = 80.5 + self:BarTimeLeft(238570) -- Time Left + 60s channel + 20.5s cooldown
 	end
@@ -270,9 +243,9 @@ function mod:SpearofAnguish(args)
 end
 
 function mod:TormentedCries(args)
-	tormentedCriesCounter = tormentedCriesCounter + 1
 	self:Message(args.spellId, "Attention", "Info", CL.incoming:format(args.spellName))
-	if tormentedCriesCounter <= 2 then -- XXX Need data for cast 3+
+	tormentedCriesCounter = tormentedCriesCounter + 1
+	if tormentedCriesCounter <= 2 then -- Does a 3rd cast exist?
 		self:Bar(args.spellId, 120)
 	end
 	self:CastBar(args.spellId, 60)
@@ -283,10 +256,22 @@ function mod:TormentedCriesApplied(args)
 	if self:Me(args.destGUID) then
 		self:Say(238570)
 	end
+	self:PrimaryIcon(238570, args.destName)
 end
 
-function mod:RupturingSlam(args)
-	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
+function mod:TormentedCriesRemoved(args)
+	self:PrimaryIcon(238570)
+end
+
+do
+	local prev = 0
+	function mod:RupturingSlam(args)
+		local t = GetTime()
+		if t-prev > 3 then
+			prev = t
+			self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
+		end
+	end
 end
 
 function mod:BonecageArmor(args)
@@ -297,7 +282,7 @@ end
 
 function mod:BonecageArmorRemoved(args)
 	boneArmorCounter = boneArmorCounter - 1
-	self:Message(args.spellId, "Positive", "Info", CL.count:format(CL.removed:format(args.spellName), boneArmorCounter))
+	self:Message(args.spellId, "Positive", "Info", L.armor_remaining:format(args.spellName, boneArmorCounter))
 	self:SetInfo("infobox", 2, boneArmorCounter)
 end
 
@@ -308,21 +293,25 @@ function mod:Wither(args)
 end
 
 do
-	local list = mod:NewTargetList()
+	local list, scheduled = mod:NewTargetList(), nil
 	function mod:Soulbind(args)
 		list[#list+1] = args.destName
 		if #list == 2 then -- Announce at 2
 			if self:GetOption(soulBindMarker) then
 				SetRaidTarget(args.destName, 4)
 			end
+			self:CancelTimer(scheduled)
 			self:TargetMessage(args.spellId, list, "Positive", "Warning")
-			local t = phase == 2 and 17 or 24.3
+		elseif #list ==  1 then
+			scheduled = self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Positive", "Warning")
+			local t = phase == 2 and 20 or 24.3
 			if not phase == 2 and self:BarTimeLeft(236072) < 24.3 and self:BarTimeLeft(236072) > 0 then -- Wailing Souls
 				t = 74.5 + self:BarTimeLeft(236072) -- Time Left + 60s channel + 14.5s cooldown
 			end
 			self:Bar(args.spellId, t)
-		elseif #list ==  1 and self:GetOption(soulBindMarker) then
-			SetRaidTarget(args.destName, 3)
+			if self:GetOption(soulBindMarker) then
+				SetRaidTarget(args.destName, 3)
+			end
 		end
 	end
 
@@ -337,9 +326,9 @@ do
 end
 
 function mod:WailingSouls(args)
-	wailingSoulsCounter = wailingSoulsCounter + 1
 	self:Message(args.spellId, "Important", "Warning")
-	if wailingSoulsCounter <= 2 then -- XXX Need data for cast 3+
+	wailingSoulsCounter = wailingSoulsCounter + 1
+	if wailingSoulsCounter <= 2 then -- XXX Does a 3rd cast exist?
 		self:Bar(args.spellId, 120)
 	end
 	self:CastBar(args.spellId, 60)
@@ -357,13 +346,13 @@ end
 
 function mod:SunderingDoom(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 23.1)
+	self:Bar(args.spellId, self:Easy() and 26.5 or 25)
 	self:CastBar(args.spellId, 4)
 end
 
 function mod:DoomedSundering(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 23.1)
+	self:Bar(args.spellId, self:Easy() and 26.5 or 25)
 	self:CastBar(args.spellId, 4)
 end
 

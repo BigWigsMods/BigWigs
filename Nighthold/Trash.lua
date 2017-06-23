@@ -450,9 +450,12 @@ do
 end
 
 function mod:ArcaneWound(args)
-	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 1 and "Warning") -- check sound amount
-	self:TargetBar(args.spellId, 20, args.destName, CL.count:format(args.spellName, amount))
+	if self:Tank(args.destName) then
+		local amount = args.amount or 1
+		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 3 and "Warning")
+		self:StopBar(CL.count:format(args.spellName, amount-1), args.destName)
+		self:TargetBar(args.spellId, 20, args.destName, CL.count:format(args.spellName, amount))
+	end
 end
 
 --[[ Aluriel to Krosos ]]--

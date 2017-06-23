@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("High Botanist Tel'arn", 1088, 1761)
 if not mod then return end
 mod:RegisterEnableMob(104528, 109038, 109040, 109041) -- heroic, 3x mythic
 mod.engageId = 1886
-mod.respawnTime = 30
+mod.respawnTime = 29.3
 
 --------------------------------------------------------------------------------
 -- Locals

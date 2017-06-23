@@ -496,7 +496,8 @@ do
 	function UpdateDisplay()
 		for i = 1, maxPlayers do
 			local unit = unitList[i]
-			powerList[unit] = syncPowerList and (syncPowerList[unit] or -1) or UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
+			-- If we don't have sync data (players not using BigWigs) use whatever (potentially incorrect) data Blizz gives us.
+			powerList[unit] = syncPowerList and syncPowerList[unit] or UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
 		end
 		tsort(sortedUnitList, sortTbl)
 		for i = 1, db.expanded and 25 or 10 do

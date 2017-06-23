@@ -83,7 +83,6 @@ L.slashDescRange = "|cFFFED000/range:|r 거리 지시기를 엽니다."
 L.slashDescVersion = "|cFFFED000/bwv:|r BigWigs 버전 확인을 수행합니다."
 L.slashDescConfig = "|cFFFED000/bw:|r BigWigs 구성을 엽니다."
 
-L.gitHubTitle = "BigWigs는 GitHub에 있습니다"
 L.gitHubDesc = "BigWigs는 GitHub에 호스트되는 오픈 소스 소프트웨어입니다. 우리는 우리를 도와줄 새로운 사람들을 항상 찾고 있으며 우리의 코드를 누구나 살펴보는 것을 환영합니다, 기고를 만들고 오류 보고를 제출하세요. BigWigs는 현재 WoW 커뮤니티로부터 큰 도움을 받고 있습니다.\n\n|cFF33FF99이제 문서화된 우리의 API를 GitHub 위키에서 자유롭게 읽을 수 있습니다.|r"
 
 L.BAR = "바"

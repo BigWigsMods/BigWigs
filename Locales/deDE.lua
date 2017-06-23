@@ -5,7 +5,6 @@ L.getNewRelease = "Dein BigWigs ist veraltet (/bwv), aber du kannst es mit Hilfe
 L.warnTwoReleases = "Dein BigWigs ist 2 Versionen älter als die neueste Version! Deine Version könnte Fehler, fehlende Funktionen oder völlig falsche Timer beinhalten. Es wird dringend empfohlen, BigWigs zu aktualisieren."
 L.warnSeveralReleases = "|cffff0000Dein BigWigs ist um mehrere Versionen veraltet!! Wir empfehlen dir DRINGEND, BigWigs zu aktualisieren, um Synchronisationsprobleme zwischen dir und anderen Spielern zu verhindern!|r"
 
-L.gitHubTitle = "BigWigs ist auf GitHub"
 L.gitHubDesc = "BigWigs ist Open-Source-Software auf GitHub. Wir sind immer auf der Suche nach neuen Menschen, die uns helfen, und jeder ist willkommen, unseren Code zu inspizieren, Beiträge zu leisten und Fehlerberichte einzureichen. BigWigs ist hauptsächlich durch die großartige WoW-Gemeinschaft im Laufe der Zeit zu etwas Großem geworden.\n\n|cFF33FF99Unsere API ist nun dokumentiert und frei lesbar im Wiki auf GitHub.|r"
 
 L.options = "Optionen"

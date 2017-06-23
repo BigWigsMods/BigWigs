@@ -10,5 +10,6 @@
 <Script file="MaidenofVigilance.lua"/>
 <Script file="FallenAvatar.lua"/>
 <Script file="Kiljaeden.lua"/>
+<Script file="Trash.lua"/>
 
 </Ui>
