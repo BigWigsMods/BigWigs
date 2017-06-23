@@ -77,34 +77,34 @@ end
 function mod:OnBossEnable()
 	-- General
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
-	self:Log("SPELL_CAST_SUCCESS", "Quietus", 236507) -- Quietus
-	self:Log("SPELL_AURA_APPLIED", "SpiritualBarrier", 235732) -- SpiritualB arrier
-	self:Log("SPELL_AURA_REMOVED", "SpiritualBarrierRemoved", 235732) -- Spiritual Barrier
+	self:Log("SPELL_CAST_SUCCESS", "Quietus", 236507)
+	self:Log("SPELL_AURA_APPLIED", "SpiritualBarrier", 235732)
+	self:Log("SPELL_AURA_REMOVED", "SpiritualBarrierRemoved", 235732)
 
 	-- Corporeal Realm
-	self:Log("SPELL_AURA_APPLIED", "SpearofAnguish", 235924) -- Spear of Anguish
+	self:Log("SPELL_AURA_APPLIED", "SpearofAnguish", 235924)
 	self:Log("SPELL_CAST_START", "TormentedCries", 238570) -- Tormented Cries
 	self:Log("SPELL_AURA_APPLIED", "TormentedCriesApplied", 238018) -- Tormented Cries (Debuff)
 	self:Log("SPELL_AURA_REMOVED", "TormentedCriesRemoved", 238018) -- Tormented Cries (Debuff)
 	-- Adds
-	self:Log("SPELL_CAST_START", "RupturingSlam", 235927) -- Rupturing Slam
-	self:Log("SPELL_AURA_APPLIED", "BonecageArmor", 236513) -- Bonecage Armor
-	self:Log("SPELL_AURA_REMOVED", "BonecageArmorRemoved", 236513) -- Bonecage Armor
+	self:Log("SPELL_CAST_START", "RupturingSlam", 235927)
+	self:Log("SPELL_AURA_APPLIED", "BonecageArmor", 236513)
+	self:Log("SPELL_AURA_REMOVED", "BonecageArmorRemoved", 236513)
 
 	-- Spirit Realm
-	self:Log("SPELL_AURA_APPLIED", "Wither", 236131, 236138) -- Wither
-	self:Log("SPELL_AURA_APPLIED", "Soulbind", 236459) -- Soulbind
-	self:Log("SPELL_AURA_REMOVED", "SoulbindRemoved", 236459) -- Soulbind
-	self:Log("SPELL_CAST_SUCCESS", "WailingSouls", 236072) -- Wailing Souls
+	self:Log("SPELL_AURA_APPLIED", "Wither", 236131, 236138) -- Both ids are used
+	self:Log("SPELL_AURA_APPLIED", "Soulbind", 236459)
+	self:Log("SPELL_AURA_REMOVED", "SoulbindRemoved", 236459)
+	self:Log("SPELL_CAST_SUCCESS", "WailingSouls", 236072)
 	-- Adds
-	self:Log("SPELL_AURA_APPLIED", "ShatteringScream", 236515) -- Shattering Scream
-	self:Log("SPELL_AURA_APPLIED", "SpiritChains", 236361) -- Spirit Chains
+	self:Log("SPELL_AURA_APPLIED", "ShatteringScream", 236515)
+	self:Log("SPELL_AURA_APPLIED", "SpiritChains", 236361)
 
 	-- Tormented Souls
-	self:Log("SPELL_CAST_START", "SunderingDoom", 236542) -- Sundering Doom
-	self:Log("SPELL_CAST_START", "DoomedSundering", 236544) -- Doomed Sundering
-	self:Log("SPELL_AURA_APPLIED", "Torment", 236548) -- Torment
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Torment", 236548) -- Torment
+	self:Log("SPELL_CAST_START", "SunderingDoom", 236542)
+	self:Log("SPELL_CAST_START", "DoomedSundering", 236544)
+	self:Log("SPELL_AURA_APPLIED", "Torment", 236548)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Torment", 236548)
 end
 
 function mod:OnEngage()
@@ -146,13 +146,13 @@ function mod:OnEngage()
 	self:SetInfo("infobox", 10, #unphasedList)
 
 
-	self:Bar(235907, 6) -- Collapsing Fissure
-	self:Bar(236459, 13) -- Soulbind
-	if self:Heroic() or self:Mythic() then -- Heroic+ only
-		self:Bar(235924, 20) -- Spear of Anguish
+	self:CDBar(235907, 6) -- Collapsing Fissure
+	self:CDBar(236459, 16) -- Soulbind
+	if not self:Easy() then -- Heroic+ only
+		self:CDBar(235924, 20) -- Spear of Anguish
 	end
-	self:Bar(236072, 60) -- Wailing Souls
-	self:Bar(238570, 120) -- Tormented Cries
+	self:CDBar(236072, 60) -- Wailing Souls
+	self:CDBar(238570, 120) -- Tormented Cries
 end
 
 --------------------------------------------------------------------------------
@@ -178,7 +178,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		-- Assumed that other timers reset upon p2 start XXX Double Check
 		self:Bar(235907, 5) -- Collapsing Fissure
 		self:Bar(235924, 6) -- Spear of Anguish
-		self:Bar(236459, 10.2) -- Soulbind
+		self:Bar(236459, 10) -- Soulbind
 
 		self:CDBar(236542, 17) -- Sundering Doom
 		self:CDBar(236544, 28) -- Doomed Sundering
@@ -302,9 +302,14 @@ do
 			end
 			self:CancelTimer(scheduled)
 			self:TargetMessage(args.spellId, list, "Positive", "Warning")
-		elseif #list ==  1 then
+		elseif #list == 1 then
 			scheduled = self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Positive", "Warning")
-			local t = phase == 2 and 20 or 24.3
+			local t = 0
+			if self:Easy() then
+				t = phase == 2 and 24 or 34
+			else
+				t = phase == 2 and 20 or 25
+			end
 			if not phase == 2 and self:BarTimeLeft(236072) < 24.3 and self:BarTimeLeft(236072) > 0 then -- Wailing Souls
 				t = 74.5 + self:BarTimeLeft(236072) -- Time Left + 60s channel + 14.5s cooldown
 			end
