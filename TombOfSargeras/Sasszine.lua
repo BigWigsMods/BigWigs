@@ -41,7 +41,7 @@ function mod:GetOptions()
 		"berserk",
 		230139, -- Hydra Shot
 		hydraShotMarker,
-		{230201, "FLASH"}, -- Burden of Pain
+		{230201, "TANK", "FLASH"}, -- Burden of Pain
 		232722, -- Slicing Tornado
 		230358, -- Thundering Shock
 		230384, -- Consuming Hunger
@@ -181,11 +181,11 @@ do
 end
 
 function mod:BurdenofPainCast(args)
-	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Attention", "Warning", CL.casting:format(args.spellName))
 end
 
 function mod:BurdenofPain(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning")
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", nil, nil, true)
 	self:Bar(args.spellId, 25.5) -- Timer until cast_start
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
