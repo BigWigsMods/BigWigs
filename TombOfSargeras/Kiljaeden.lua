@@ -139,7 +139,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, sender, _, _, target)
 		self:TargetBar(238505, 5, target)
 		self:PrimaryIcon(238505, target)
 		local guid = UnitGUID(target)
-		if self:Me(args.destGUID) then
+		if self:Me(guid) then
 			self:Say(238505)
 			self:ScheduleTimer("Say", 2, 238505, 3, true)
 			self:ScheduleTimer("Say", 3, 238505, 2, true)
