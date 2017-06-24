@@ -21,24 +21,24 @@ end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "koKR")
 if L then
-	--L.touch_impact = "Touch Impact" -- Touch of Sargeras Impact (short)
+	L.touch_impact = "손길 분출" -- Touch of Sargeras Impact (short)
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "koKR")
 if L then
-	--L.singularityImpact = "Singularity Impact"
-	--L.obeliskExplosion = "Obelisk Explosion"
+	L.singularityImpact = "특이점 충돌"
+	L.obeliskExplosion = "방첨탑 폭발"
 
-	--L.darkness = "Darkness" -- Shorter name for Darkness of a Thousand Souls (238999)
-	--L.reflectionErupting = "Reflection: Erupting" -- Shorter name for Shadow Reflection: Erupting (236710)
-	--L.reflectionWailing = "Reflection: Wailing" -- Shorter name for Shadow Reflection: Wailing (236378)
-	--L.reflectionHopeless = "Reflection: Hopeless" -- Shorter name for Shadow Reflection: Hopeless (237590)
+	L.darkness = "어둠" -- Shorter name for Darkness of a Thousand Souls (238999)
+	L.reflectionErupting = "반영: 분출" -- Shorter name for Shadow Reflection: Erupting (236710)
+	L.reflectionWailing = "반영: 통곡" -- Shorter name for Shadow Reflection: Wailing (236378)
+	L.reflectionHopeless = "반영: 절망" -- Shorter name for Shadow Reflection: Hopeless (237590)
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "koKR")
 if L then
-	L.chaosbringer = "Infernal Chaosbringer"
-	L.rez = "Rez the Tombwatcher"
-	L.custodian = "Undersea Custodian"
-	L.sentry = "Guardian Sentry"
+	L.chaosbringer = "지옥불 혼돈인도자"
+	L.rez = "무덤감시자 레즈"
+	L.custodian = "깊은바다 관리인"
+	L.sentry = "수호의 감시자"
 end
