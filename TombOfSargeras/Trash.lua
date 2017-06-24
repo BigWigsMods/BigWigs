@@ -32,6 +32,12 @@ mod:RegisterEnableMob(
 )
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local sheepBombSayTimers = {}
+
+--------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -106,6 +112,7 @@ function mod:OnBossEnable()
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
 	self:Log("SPELL_AURA_APPLIED", "PolymorphBomb", 240735)
+	self:Log("SPELL_AURA_REMOVED", "PolymorphBombRemoved", 240735)
 
 	--[[ Pre Maiden of Vigilance ]]--
 
@@ -169,9 +176,19 @@ function mod:PolymorphBomb(args)
 
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
-		self:ScheduleTimer("Say", t-3, args.spellId, 3, true)
-		self:ScheduleTimer("Say", t-2, args.spellId, 2, true)
-		self:ScheduleTimer("Say", t-1, args.spellId, 1, true)
+		sheepBombSayTimers[1] = self:ScheduleTimer("Say", t-3, args.spellId, 3, true)
+		sheepBombSayTimers[2] = self:ScheduleTimer("Say", t-2, args.spellId, 2, true)
+		sheepBombSayTimers[3] = self:ScheduleTimer("Say", t-1, args.spellId, 1, true)
+	end
+end
+
+function mod:PolymorphBombRemoved(args)
+	self:StopBar(args.spellId, args.destName)
+	if self:Me(args.destGUID) then
+		for i = #sheepBombSayTimers, 1, -1 do
+			self:CancelTimer(sheepBombSayTimers[i])
+			sheepBombSayTimers[i] = nil
+		end
 	end
 end
 
