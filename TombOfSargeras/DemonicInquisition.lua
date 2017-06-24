@@ -1,5 +1,5 @@
 
--- GLOBALS: SPELL_POWER_ALTERNATE_POWER, tDeleteItem, string
+-- GLOBALS: tDeleteItem, string
 
 --------------------------------------------------------------------------------
 -- TODO List:
@@ -21,7 +21,6 @@ mod.respawnTime = 15
 
 local pangsofGuiltCounter = 1
 local sweepCounter = 1
-local boneSawCounter = 1
 local nextAltPowerWarning = 20
 
 --------------------------------------------------------------------------------
@@ -84,19 +83,20 @@ end
 function mod:OnEngage()
 	pangsofGuiltCounter = 1
 	sweepCounter = 1
-	boneSawCounter = 1
 	nextAltPowerWarning = 20
 	self:OpenAltPower("altpower", 233104, nil, true) -- Torment, Sync for those far away
 
 	-- Atrigan
-	self:Bar(233426, 6) -- Scythe Sweep
-	self:Bar(233431, 11) -- Calcified Quills
-	self:Bar(233441, 60) -- Bone Saw
+	self:CDBar(233426, 5.8) -- Scythe Sweep
+	if not self:Easy() then
+		self:CDBar(233431, 11) -- Calcified Quills
+	end
+	self:CDBar(233441, 60.5) -- Bone Saw
 
 	-- Belac
-	self:Bar(235230, 31.5) -- Fel Squall
+	self:CDBar(235230, 35) -- Fel Squall
 
-	self:RegisterEvent("UNIT_POWER")
+	self:RegisterUnitEvent("UNIT_POWER", nil, "player")
 end
 
 --------------------------------------------------------------------------------
@@ -111,13 +111,12 @@ end
 
 do
 	local lastPower, prev = 0, 0
-	function mod:UNIT_POWER(_, unit, type)
-		if unit ~= "player" then return end
-		local power = UnitPower("player", SPELL_POWER_ALTERNATE_POWER)
+	function mod:UNIT_POWER(unit, type)
+		local power = UnitPower(unit, 10) -- SPELL_POWER_ALTERNATE_POWER = 10
 		if power < lastPower or power >= nextAltPowerWarning then
-			self:StackMessage(233104, UnitName("player"), power, "Personal")
+			self:StackMessage(233104, self:UnitName(unit), power, "Personal")
 			local t = GetTime()
-			if t-prev > 1.5 then
+			if (power >= 80 or power < lastPower) and t-prev > 1.5 then
 				self:PlaySound(233104, "Info")
 				prev = t
 			end
@@ -136,7 +135,7 @@ end
 function mod:ScytheSweep(args)
 	self:Message(args.spellId, "Attention", self:Tank() and "Alert")
 	sweepCounter = sweepCounter + 1
-	self:CDBar(args.spellId, sweepCounter > 4 and sweepCounter % 2 == 1 and 35 or 24)
+	self:CDBar(args.spellId, sweepCounter > 4 and sweepCounter % 2 == 0 and 35 or 24)
 end
 
 do
@@ -155,9 +154,12 @@ end
 
 function mod:BoneSaw(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:CastBar(args.spellId, 15)
-	boneSawCounter = boneSawCounter + 1
-	self:Bar(args.spellId, boneSawCounter < 4 and 63 or 60.5)
+	self:CastBar(args.spellId, 16)
+	if self:Easy() then
+		self:Bar(args.spellId, 60.5)
+	else
+		self:CDBar(args.spellId, 61) -- 61-63
+	end
 end
 
 function mod:PangsofGuilt(args) -- Interuptable
@@ -198,7 +200,7 @@ end
 
 function mod:FelSquall(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:CastBar(args.spellId, 15)
+	self:CastBar(args.spellId, 16)
 	self:Bar(args.spellId, 60.5)
 end
 
