@@ -58,6 +58,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:RegisterEvent("UNIT_AURA")
 
+	self:Log("SPELL_CAST_SUCCESS", "BurningArmorSuccess", 231363)
 	self:Log("SPELL_AURA_APPLIED", "BurningArmor", 231363)
 	self:Log("SPELL_AURA_APPLIED", "ShatteringStarDebuff", 233272)
 	self:Log("SPELL_CAST_START", "InfernalBurning", 233062)
@@ -107,13 +108,16 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	end
 end
 
+function mod:BurningArmorSuccess(args)
+	armorCounter = armorCounter + 1
+	self:CDBar(args.spellId, (armorCounter > 3 and armorCounter % 2 ~= 0 and 35) or (self:Easy() and 25 or 24))
+end
+
 function mod:BurningArmor(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning", nil, nil, true)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
-	armorCounter = armorCounter + 1
-	self:CDBar(args.spellId, (armorCounter > 3 and armorCounter % 2 ~= 0 and 35) or (self:Easy() and 25 or 24))
 end
 
 do
