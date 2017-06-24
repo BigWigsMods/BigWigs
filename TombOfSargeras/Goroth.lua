@@ -124,9 +124,9 @@ do
 	local list = mod:NewTargetList()
 	function mod:UNIT_AURA(event, unit)
 		-- There are 2 debuffs. The first has no CLEU, the second does.
-		local name, _, _, _, _, _, expires = UnitDebuff(unit, self:SpellName(232249)) -- Crashing Comet debuff ID
+		local name, _, _, _, _, _, expires, _, _, _, spellId = UnitDebuff(unit, self:SpellName(232249)) -- Crashing Comet debuff ID
 		local n = self:UnitName(unit)
-		if name and not cometWarned[n] then
+		if name and not cometWarned[n] and spellId == 232249 then
 			list[#list+1] = n
 			cometWarned[n] = true
 			if #list == 1 then
