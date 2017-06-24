@@ -25,6 +25,7 @@ local focusedDreadflameCount = 1
 local burstingDreadflameCount = 1
 local felclawsCount = 1
 local flamingOrbCount = 1
+local obeliskCount = 1
 local focusWarned = {}
 
 --------------------------------------------------------------------------------
@@ -34,6 +35,8 @@ local focusWarned = {}
 local L = mod:GetLocale()
 if L then
 	L.singularityImpact = "Singularity Impact"
+
+	L.obeliskExplosion = "Obelisk Explosion"
 end
 
 --------------------------------------------------------------------------------
@@ -53,7 +56,7 @@ function mod:GetOptions()
 		236555, -- Deceiver's Veil
 		241721, -- Illidan's Sightless Gaze
 		238999, -- Darkness of a Thousand Souls
-		239785, -- Demonic Obelisk
+		-15543, -- Demonic Obelisk
 		243982, -- Tear Rift
 		244856, -- Flaming Orb
 		{237590, "SAY", "FLASH"}, -- Shadow Reflection: Hopeless
@@ -111,6 +114,7 @@ function mod:OnEngage()
 	ArmageddonCount = 1
 	felclawsCount = 1
 	flamingOrbCount = 1
+	obeliskCount = 1
 	wipe(focusWarned)
 
 	self:Bar(240910, 10) -- Armageddon
@@ -329,6 +333,17 @@ function mod:DarknessofaThousandSouls(args)
 	self:Message(args.spellId, "Urgent", "Long", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 90)
 	self:CastBar(args.spellId, 9)
+	self:StartObeliskTimer(obeliskCount == 1 and 24 or 28)
+end
+
+function mod:StartObeliskTimer(t)
+	self:Bar(-15543, t)
+	self:ScheduleTimer("Message", t, -15543, "Attention", "Info", CL.spawned:format(self:SpellName(-15543)))
+	self:ScheduleTimer("Bar", t, -15543, 13, L.obeliskExplosion)
+	obeliskCount = obeliskCount + 1
+	if obeliskCount % 2 == 0 then
+		self:ScheduleTimer("StartObeliskTimer", t, 36)
+	end
 end
 
 function mod:TearRift(args)
