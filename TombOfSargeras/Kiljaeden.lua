@@ -55,7 +55,7 @@ function mod:GetOptions()
 		240910, -- Armageddon
 		{236710, "SAY", "FLASH"}, -- Shadow Reflection: Erupting
 		{238430, "SAY", "FLASH"}, -- Bursting Dreadflame
-		{238505, "SAY"}, -- Focused Dreadflame
+		{238505, "SAY", "ICON"}, -- Focused Dreadflame
 		{236378, "SAY", "FLASH"}, -- Shadow Reflection: Wailing
 		236555, -- Deceiver's Veil
 		241721, -- Illidan's Sightless Gaze
@@ -90,6 +90,7 @@ function mod:OnBossEnable()
 	-- Intermission: Eternal Flame
 	self:Log("SPELL_AURA_APPLIED", "NetherGale", 244834) -- Intermission Start
 	self:Log("SPELL_CAST_START", "FocusedDreadflame", 238502) -- Focused Dreadflame
+	self:Log("SPELL_CAST_SUCCESS", "FocusedDreadflameSuccess", 238502) -- Focused Dreadflame
 	self:Log("SPELL_CAST_SUCCESS", "BurstingDreadflame", 238430) -- Bursting Dreadflame
 	self:Log("SPELL_AURA_REMOVED", "NetherGaleRemoved", 244834) -- Intermission End
 
@@ -136,6 +137,14 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, sender, _, _, target)
 	if msg:find("238502") then -- Focused Dreadflame Target
 		self:TargetMessage(238505, target, "Attention", "Alarm")
 		self:TargetBar(238505, 5, target)
+		self:PrimaryIcon(238505, target)
+		local guid = UnitGUID(target)
+		if self:Me(args.destGUID) then
+			self:Say(238505)
+			self:ScheduleTimer("Say", 2, 238505, 3, true)
+			self:ScheduleTimer("Say", 3, 238505, 2, true)
+			self:ScheduleTimer("Say", 4, 238505, 1, true)
+		end
 	elseif msg:find("235059") then -- Rupturing Singularity
 		singularityCount = singularityCount + 1
 		self:Message(235059, "Urgent", "Warning")
@@ -236,6 +245,10 @@ function mod:FocusedDreadflame(args)
 	elseif phase == 3 then
 		self:Bar(238505, 95)
 	end
+end
+
+function mod:FocusedDreadflameSuccess(args)
+	self:PrimaryIcon(238505)
 end
 
 do
