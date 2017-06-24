@@ -353,7 +353,7 @@ function mod:DarknessofaThousandSouls(args)
 	self:Message(args.spellId, "Urgent", "Long", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, 90, L.darkness)
 	self:CastBar(args.spellId, 9, L.darkness)
-	self:StartObeliskTimer(obeliskCount == 1 and 24 or 28)
+	self:StartObeliskTimer(obeliskCount == 1 and 25 or 28)
 end
 
 function mod:StartObeliskTimer(t)
