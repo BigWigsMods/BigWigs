@@ -268,7 +268,7 @@ do
 			if phase == 1 and burstingDreadflameCount == 2 then -- Inside Intermission
 				self:Bar(args.spellId, 46)
 			elseif phase == 2 then
-				self:Bar(args.spellId, burstingDreadflameCount == 2 and 48 or burstingDreadflameCount == 2 and 55) -- XXX Unkown timer for 3rd and beyond, leave it like this so a warning pops if more are cast
+				self:Bar(args.spellId, burstingDreadflameCount == 2 and 48 or burstingDreadflameCount == 3 and 55 or 50)
 			elseif phase == 3 then
 				self:Bar(args.spellId, burstingDreadflameCount % 2 == 0 and 25 or 70)
 			end
