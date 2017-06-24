@@ -19,6 +19,11 @@ if L then
 	L.light = "光明"
 end
 
+L = BigWigs:NewBossLocale("Kil'jaeden", "zhCN")
+if L then
+	L.singularityImpact = "奇点冲击"
+end
+
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhCN")
 if L then
 	L.chaosbringer = "地狱火混沌使者"

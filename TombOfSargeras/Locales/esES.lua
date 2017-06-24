@@ -11,12 +11,17 @@ if L then
 	--L.armor_remaining = "%s Remaining (%d)" -- Bonecage Armor Remaining (#)
 end
 
-L = BigWigs:NewBossLocale("Maiden of Vigilance", "esES") or BigWigs:NewBossLocale("Maiden of Vigilance", "esES")
+L = BigWigs:NewBossLocale("Maiden of Vigilance", "esES") or BigWigs:NewBossLocale("Maiden of Vigilance", "esMX")
 if L then
 	--L.infusionChanged = "Infusion CHANGED: %s"
 	--L.sameInfusion = "Same Infusion: %s"
 	--L.fel = "Fel"
 	--L.light = "Light"
+end
+
+L = BigWigs:NewBossLocale("Kil'jaeden", "esES") or BigWigs:NewBossLocale("Kil'jaeden", "esMX")
+if L then
+	--L.singularityImpact = "Singularity Impact"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "esES") or BigWigs:NewBossLocale("Tomb of Sargeras Trash", "esMX")

@@ -19,6 +19,11 @@ if L then
 	--L.light = "Light"
 end
 
+L = BigWigs:NewBossLocale("Kil'jaeden", "ruRU")
+if L then
+	--L.singularityImpact = "Singularity Impact"
+end
+
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "ruRU")
 if L then
 	--L.chaosbringer = "Infernal Chaosbringer"
