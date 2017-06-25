@@ -144,7 +144,7 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, sender, _, _, target)
 	if msg:find("238502") then -- Focused Dreadflame Target
-		self:TargetMessage(238505, target, "Attention", "Alarm", nil, true)
+		self:TargetMessage(238505, target, "Attention", "Alarm", nil, nil, true)
 		self:TargetBar(238505, 5, target)
 		self:PrimaryIcon(238505, target)
 		local guid = UnitGUID(target)
