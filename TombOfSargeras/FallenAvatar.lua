@@ -45,6 +45,9 @@ local timers = timersHeroic
 local L = mod:GetLocale()
 if L then
 	L.touch_impact = "Touch Impact" -- Touch of Sargeras Impact (short)
+
+	L.custom_on_stop_timers = "Always show ability bars"
+	L.custom_on_stop_timers_desc = "Fallen Avatar randomizes which off-cooldown ability he uses next. When this option is enabled, the bars for those abilities will stay on your screen."
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -54,6 +57,7 @@ local darkMarkIcons = mod:AddMarkerOption(false, "player", 6, 239739, 6, 4, 3)
 function mod:GetOptions()
 	return {
 		"stages",
+		"custom_on_stop_timers",
 		239207, -- Touch of Sargeras
 		239132, -- Rupture Realities
 		234059, -- Unbound Chaos
@@ -113,6 +117,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "TaintedMatrix", 240623) -- Tainted Matrix
 	self:Log("SPELL_AURA_APPLIED", "TaintedEssence", 240728) -- Desolate
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TaintedEssence", 240728) -- Desolate
+
+	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 end
 
 function mod:OnEngage()
@@ -138,6 +144,32 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local abilitysToPause = {
+		[234059] = true, -- Unbound Chaos
+		[239207] = true, -- Touch of Sargeras
+		[236604] = true, -- Shadowy Blades
+		[239132] = true, -- Rupture Realities (P1)
+	}
+
+	local castPattern = CL.cast:gsub("%%s", ".+")
+
+	local function stopAtZeroSec(bar)
+		if bar.remaining < 0.15 then -- Pause at 0.0
+			bar:SetDuration(0.01) -- Make the bar look full
+			bar:Start()
+			bar:Pause()
+			bar:SetTimeVisibility(false)
+		end
+	end
+
+	function mod:BarCreated(_, _, bar, module, key, text, time, icon, isApprox)
+		if self:GetOption("custom_on_stop_timers") and abilitysToPause[key] and not text:match(castPattern) and text ~= L.touch_impact then
+			bar:AddUpdateFunction(stopAtZeroSec)
+		end
+	end
+end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 234057 then -- Unbound Chaos
