@@ -21,18 +21,18 @@ end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "zhCN")
 if L then
-	--L.touch_impact = "Touch Impact" -- Touch of Sargeras Impact (short)
+	L.touch_impact = "萨格拉斯之触冲击" -- Touch of Sargeras Impact (short)
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "zhCN")
 if L then
 	L.singularityImpact = "奇点冲击"
-	--L.obeliskExplosion = "Obelisk Explosion"
+	L.obeliskExplosion = "方尖碑爆炸"
 
-	--L.darkness = "Darkness" -- Shorter name for Darkness of a Thousand Souls (238999)
-	--L.reflectionErupting = "Reflection: Erupting" -- Shorter name for Shadow Reflection: Erupting (236710)
-	--L.reflectionWailing = "Reflection: Wailing" -- Shorter name for Shadow Reflection: Wailing (236378)
-	--L.reflectionHopeless = "Reflection: Hopeless" -- Shorter name for Shadow Reflection: Hopeless (237590)
+	L.darkness = "千魂" -- Shorter name for Darkness of a Thousand Souls (238999)
+	L.reflectionErupting = "映像：爆发" -- Shorter name for Shadow Reflection: Erupting (236710)
+	L.reflectionWailing = "映像：哀嚎" -- Shorter name for Shadow Reflection: Wailing (236378)
+	L.reflectionHopeless = "映像：绝望" -- Shorter name for Shadow Reflection: Hopeless (237590)
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhCN")
