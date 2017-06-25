@@ -37,6 +37,8 @@ if L then
 	L.sameInfusion = "Same Infusion: %s"
 	L.fel = "Fel"
 	L.light = "Light"
+	L.felHammer = "Fel Hammer"
+	L.lightHammer = "Light Hammer"
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -103,9 +105,9 @@ function mod:OnEngage()
 	infusionCounter = 0
 
 	self:Bar(235271, 2.0) -- Infusion
-	self:Bar(241635, 14.0) -- Hammer of Creation
+	self:Bar(241635, 14.0, L.lightHammer) -- Hammer of Creation
 	self:Bar(235267, 22.0) -- Mass Instability
-	self:Bar(241636, 32.0) -- Hammer of Obliteration
+	self:Bar(241636, 32.0, L.felHammer) -- Hammer of Obliteration
 	self:Bar(248812, 42.5) -- Blowback
 	self:Bar(234891, 43.5) -- Wrath of the Creators
 	self:Berserk(480) -- Confirmed Heroic
@@ -180,18 +182,18 @@ do
 end
 
 function mod:HammerofCreation(args)
-	self:Message(args.spellId, "Urgent", "Alert")
+	self:Message(args.spellId, "Urgent", "Alert", L.lightHammer)
 	hammerofCreationCounter = hammerofCreationCounter + 1
 	if hammerofCreationCounter == 2 then
-		self:Bar(args.spellId, 36)
+		self:Bar(args.spellId, 36, L.lightHammer)
 	end
 end
 
 function mod:HammerofObliteration(args)
-	self:Message(args.spellId, "Urgent", "Alert")
+	self:Message(args.spellId, "Urgent", "Alert", L.felHammer)
 	hammerofObliterationCounter = hammerofObliterationCounter + 1
 	if hammerofObliterationCounter == 2 then
-		self:Bar(args.spellId, 36)
+		self:Bar(args.spellId, 36, L.felHammer)
 	end
 end
 
@@ -236,9 +238,9 @@ function mod:WrathoftheCreatorsInterrupted(args)
 	infusionCounter = 1
 
 	self:Bar(235271, 2) -- Infusion
-	self:Bar(241635, 14) -- Hammer of Creation
+	self:Bar(241635, 14, L.lightHammer) -- Hammer of Creation
 	self:Bar(235267, 22) -- Mass Instability
-	self:Bar(241636, 32) -- Hammer of Obliteration
+	self:Bar(241636, 32, L.felHammer) -- Hammer of Obliteration
 	self:Bar(248812, 81) -- Blowback
 	self:Bar(234891, 83.5) -- Wrath of the Creators
 end
