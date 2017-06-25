@@ -45,7 +45,7 @@ end
 function mod:GetOptions()
 	return {
 		"berserk",
-		235117, -- Unstable Soul
+		{235117, "COUNTDOWN"}, -- Unstable Soul
 		241593, -- Aegwynn's Ward
 		{235271, "PROXIMITY", "FLASH"}, -- Infusion
 		241635, -- Hammer of Creation
