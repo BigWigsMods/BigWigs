@@ -128,7 +128,9 @@ function mod:OnEngage()
 
 	self:Bar(236494, 12) -- Desolate
 	self:Bar(234059, timers[234057][unboundChaosCounter]) -- Unbound Chaos
-	self:Bar(239207, timers[239207][touchofSargerasCounter], CL.count:format(self:SpellName(239207), touchofSargerasCounter)) -- Touch of Sargeras
+	if not self:Easy() then
+		self:Bar(239207, timers[239207][touchofSargerasCounter], CL.count:format(self:SpellName(239207), touchofSargerasCounter)) -- Touch of Sargeras
+	end
 	self:Bar(236604, timers[236573][shadowyBladesCounter]) -- Shadowy Blades
 	self:Bar(239132, timers[239132][ruptureRealitiesCounter]) -- Rupture Realities (P1)
 end
