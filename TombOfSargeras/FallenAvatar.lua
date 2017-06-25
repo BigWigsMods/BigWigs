@@ -173,7 +173,9 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 234057 then -- Unbound Chaos
-		self:Message(234059, "Attention", "Alert", spellName)
+		if self:Tank() then
+			self:Message(234059, "Attention", "Alert")
+		end
 		unboundChaosCounter = unboundChaosCounter + 1
 		self:Bar(234059, timers[spellId][unboundChaosCounter])
 	elseif spellId == 236573 then -- Shadowy Blades
