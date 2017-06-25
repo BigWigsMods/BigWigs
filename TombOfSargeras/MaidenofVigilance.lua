@@ -67,7 +67,7 @@ function mod:OnBossEnable()
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "UnstableSoul", 235117) -- Unstable Soul
 	self:Log("SPELL_AURA_REMOVED", "UnstableSoulRemoved", 235117) -- Unstable Soul
-	self:Log("SPELL_AURA_APPLIED", "AegwynnsWardApplied", 241593) -- Aegwynn's Ward
+	self:Log("SPELL_AURA_APPLIED", "AegwynnsWardApplied", 241593, 236420) -- Aegwynn's Ward, Heroic, Normal
 
 	-- Stage One: Divide and Conquer
 	self:Log("SPELL_CAST_START", "Infusion", 235271) -- Infusion
