@@ -29,8 +29,6 @@ local rapidShotCounter = 1
 local lunarFireCounter = 1
 local lunarBeaconCounter = 1
 
-local nextUltimate = 0
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -113,17 +111,13 @@ function mod:OnEngage()
 	rapidShotCounter = 1
 	lunarBeaconCounter = 1
 
-	nextUltimate = GetTime() + 48.3
-
 	self:Message("stages", "Neutral", "Long", stageOne, false)
 	self:Bar(236519, 9.4) -- Moon Burn
 	self:Bar(236547, 14.2) -- Moon Glaive
 	self:Bar(236442, 16.6) -- Twilight Volley
 	self:Bar(236541, 18.1) -- Twilight Glaive
 	self:Bar(236305, 48.3) -- Incorporeal Shot
-	if not self:Easy() then
-		self:Bar(233263, 48.3) -- Embrace of the Eclipse
-	end
+	self:Bar(233263, 48.3) -- Embrace of the Eclipse
 end
 
 --------------------------------------------------------------------------------
@@ -133,7 +127,6 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 235268 then -- Lunar Ghost (Transition)
 		phase = phase + 1
-		local nextUltimateTimer = nextUltimate - GetTime()
 		if phase == 2 then
 			self:Message("stages", "Neutral", "Long", stageTwo, false)
 			self:StopBar(236547) -- Moon Glaive
@@ -145,12 +138,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:Bar(236694, 7.3) -- Call Moontalon
 			self:Bar(236442, 11) -- Twilight Volley
 			self:Bar(236603, 15.8) -- Rapid Shot
-			
-			if self:Easy() and nextUltimateTimer > 0 then
-				self:Bar(233263, nextUltimateTimer) -- Embrace of the Eclipse
-			elseif nextUltimateTimer > 0 then
-				self:Bar(236480, nextUltimateTimer) -- Glaive Storm
-			end
+			self:Bar(236480, 36.5) -- Glaive Storm
 		elseif phase == 3 then
 			self:Message("stages", "Neutral", "Long", stageThree, false)
 			self:StopBar(233263) -- Embrace of the Eclipse
@@ -163,12 +151,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:Bar(239264, 11) -- Lunar Fire
 			self:Bar(236442, 15.8) -- Twilight Volley
 			self:Bar(236712, 18.2) -- Lunar Beacon
-			
-			if self:Easy() and nextUltimateTimer > 0 then
-				self:Bar(236480, nextUltimateTimer) -- Glaive Storm
-			elseif nextUltimateTimer > 0 then
-				self:Bar(236305, nextUltimateTimer) -- Incorporeal Shot
-			end
+			self:Bar(236305, 41.4) -- Incorporeal Shot
 		end
 	end
 end
@@ -200,7 +183,6 @@ end
 function mod:GlaiveStorm(args)
 	self:Message(236480, "Important", "Warning", CL.incoming:format(args.spellName))
 	self:Bar(236480, 54.7)
-	nextUltimate = GetTime() + 54.7
 end
 
 function mod:IncorporealShotApplied(args)
@@ -211,7 +193,6 @@ function mod:IncorporealShotApplied(args)
 	end
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:CDBar(args.spellId, 54.7)
-	nextUltimate = GetTime() + 54.7
 end
 
 function mod:IncorporealShotRemoved(args)
@@ -269,7 +250,6 @@ end
 function mod:EmbraceoftheEclipse(args)
 	self:Message(args.spellId, "Attention", "Alarm", args.spellName)
 	self:Bar(args.spellId, 54.7)
-	nextUltimate = GetTime() + 54.7
 end
 
 function mod:EmbraceoftheEclipseApplied(args)

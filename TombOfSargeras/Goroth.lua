@@ -58,7 +58,6 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:RegisterEvent("UNIT_AURA")
 
-	self:Log("SPELL_CAST_SUCCESS", "BurningArmorSuccess", 231363)
 	self:Log("SPELL_AURA_APPLIED", "BurningArmor", 231363)
 	self:Log("SPELL_AURA_APPLIED", "ShatteringStarDebuff", 233272)
 	self:Log("SPELL_CAST_START", "InfernalBurning", 233062)
@@ -108,25 +107,22 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	end
 end
 
-function mod:BurningArmorSuccess(args)
-	armorCounter = armorCounter + 1
-	self:CDBar(args.spellId, (armorCounter > 3 and armorCounter % 2 ~= 0 and 35) or (self:Easy() and 25 or 24))
-end
-
 function mod:BurningArmor(args)
 	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning", nil, nil, true)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
+	armorCounter = armorCounter + 1
+	self:CDBar(args.spellId, (armorCounter > 3 and armorCounter % 2 ~= 0 and 35) or (self:Easy() and 25 or 24))
 end
 
 do
 	local list = mod:NewTargetList()
 	function mod:UNIT_AURA(event, unit)
 		-- There are 2 debuffs. The first has no CLEU, the second does.
-		local name, _, _, _, _, _, expires, _, _, _, spellId = UnitDebuff(unit, self:SpellName(232249)) -- Crashing Comet debuff ID
+		local name, _, _, _, _, _, expires = UnitDebuff(unit, self:SpellName(232249)) -- Crashing Comet debuff ID
 		local n = self:UnitName(unit)
-		if name and not cometWarned[n] and spellId == 232249 then
+		if name and not cometWarned[n] then
 			list[#list+1] = n
 			cometWarned[n] = true
 			if #list == 1 then

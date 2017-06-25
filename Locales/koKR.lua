@@ -3,7 +3,7 @@ if not L then return end
 
 -- Core.lua
 L.berserk = "광폭화"
-L.berserk_desc = "우두머리가 언제 광폭화하는지 바와 시간 경고를 표시합니다."
+L.berserk_desc = "우두머리가 언제 광폭화되는지 바와 시간 경고를 표시합니다."
 L.altpower = "보조 자원 표시"
 L.altpower_desc = "보조 자원 창을 표시합니다, 자신의 파티/공격대원의 보조 자원 양을 표시합니다."
 L.infobox = "정보 상자"
@@ -123,10 +123,10 @@ L.INFOBOX_desc = L.infobox_desc
 L.advanced = "고급 옵션"
 L.back = "<< 뒤로"
 
-L.tank = "|cFFFF0000방어 전담만 경보합니다.|r "
-L.healer = "|cFFFF0000치유 전담만 경보합니다.|r "
-L.tankhealer = "|cFFFF0000방어 & 치유 전담만 경보합니다.|r "
-L.dispeller = "|cFFFF0000무효화 시전자만 경보합니다.|r "
+L.tank = "|cFFFF0000방어 전담 경보만.|r "
+L.healer = "|cFFFF0000치유 전담 경보만.|r "
+L.tankhealer = "|cFFFF0000방어 & 치유 전담 경보만.|r "
+L.dispeller = "|cFFFF0000무효화 시전자 경보만.|r "
 
 -- Statistics
 L.statistics = "통계"

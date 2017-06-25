@@ -43,9 +43,7 @@ local timers = timersHeroic
 --
 
 local L = mod:GetLocale()
-if L then
-	L.touch_impact = "Touch Impact" -- Touch of Sargeras Impact (short)
-end
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -188,7 +186,7 @@ end
 
 function mod:TouchofSargeras(args)
 	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(CL.count:format(args.spellName, touchofSargerasCounter)))
-	self:Bar(args.spellId, 10.5, L.touch_impact)
+	self:CastBar(args.spellId, 10.5, CL.count:format(args.spellName, touchofSargerasCounter))
 	touchofSargerasCounter = touchofSargerasCounter + 1
 	self:Bar(args.spellId, timers[args.spellId][touchofSargerasCounter], CL.count:format(args.spellName, touchofSargerasCounter))
 end
