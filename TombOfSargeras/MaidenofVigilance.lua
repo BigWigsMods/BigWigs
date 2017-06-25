@@ -66,6 +66,7 @@ end
 function mod:OnBossEnable()
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "UnstableSoul", 235117) -- Unstable Soul
+	self:Log("SPELL_AURA_REMOVED", "UnstableSoulRemoved", 235117) -- Unstable Soul
 	self:Log("SPELL_AURA_APPLIED", "AegwynnsWardApplied", 241593) -- Aegwynn's Ward
 
 	-- Stage One: Divide and Conquer
@@ -117,6 +118,15 @@ end
 function mod:UnstableSoul(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+		local remaining = expires-GetTime()
+		self:TargetBar(args.spellId, remaining, args.destName)
+	end
+end
+
+function mod:UnstableSoulRemoved(args)
+	if self:Me(args.destGUID) then
+		self:StopBar(args.spellId, args.destName)
 	end
 end
 
