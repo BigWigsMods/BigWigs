@@ -56,6 +56,7 @@ function mod:GetOptions()
 		{233263, "PROXIMITY"}, -- Embrace of the Eclipse
 		236519, -- Moon Burn
 		236712, -- Lunar Beacon
+		237351, -- Lunar Barrage
 		{239264, "TANK"}, -- Lunar Fire
 	},{
 		["stages"] = "general",
@@ -100,6 +101,9 @@ function mod:OnBossEnable()
 	-- Stage Three: Wrath of Elune
 	self:Log("SPELL_CAST_START", "LunarBeacon", 236712) -- Lunar Beacon
 	self:Log("SPELL_AURA_APPLIED", "LunarBeaconApplied", 236712) -- Lunar Beacon (Debuff)
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 237351) -- Lunar Barrage
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 237351)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 237351)
 	self:Log("SPELL_CAST_SUCCESS", "LunarFire", 239264) -- Lunar Fire
 	self:Log("SPELL_AURA_APPLIED", "LunarFireApplied", 239264) -- Lunar Fire
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LunarFireApplied", 239264) -- Lunar Fire
@@ -145,7 +149,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:Bar(236694, 7.3) -- Call Moontalon
 			self:Bar(236442, 11) -- Twilight Volley
 			self:Bar(236603, 15.8) -- Rapid Shot
-			
+
 			if self:Easy() and nextUltimateTimer > 0 then
 				self:Bar(233263, nextUltimateTimer) -- Embrace of the Eclipse
 			elseif nextUltimateTimer > 0 then
@@ -163,7 +167,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:Bar(239264, 11) -- Lunar Fire
 			self:Bar(236442, 15.8) -- Twilight Volley
 			self:Bar(236712, 18.2) -- Lunar Beacon
-			
+
 			if self:Easy() and nextUltimateTimer > 0 then
 				self:Bar(236480, nextUltimateTimer) -- Glaive Storm
 			elseif nextUltimateTimer > 0 then
@@ -317,6 +321,17 @@ function mod:LunarBeaconApplied(args)
 		self:ScheduleTimer("Say", 3, args.spellId, 3, true)
 		self:ScheduleTimer("Say", 4, args.spellId, 2, true)
 		self:ScheduleTimer("Say", 5, args.spellId, 1, true)
+	end
+end
+
+do
+	local prev = 0
+	function mod:GroundEffectDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
 	end
 end
 
