@@ -115,7 +115,7 @@ function mod:OnEngage()
 	self:Bar(241636, 32.0, L.felHammer) -- Hammer of Obliteration
 	self:Bar(248812, 42.5) -- Blowback
 	self:Bar(234891, 43.5) -- Wrath of the Creators
-	self:Berserk(480) -- Confirmed Heroic
+	self:Berserk(self:Easy() and 525 or 480)
 end
 
 --------------------------------------------------------------------------------
