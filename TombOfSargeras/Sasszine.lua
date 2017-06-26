@@ -166,22 +166,13 @@ do
 			self:Bar(args.spellId, phase == 2 and 30 or 40)
 		end
 		if self:GetOption(hydraShotMarker) then
-			sort(iconsUnused)
-			local icon = iconsUnused[1]
-			if icon then
-				SetRaidTarget(args.destName, icon)
-				tDeleteItem(iconsUnused, icon)
-			end
+			SetRaidTarget(args.destName, #list)
 		end
 	end
 
 	function mod:HydraShotRemoved(args)
 		if self:GetOption(hydraShotMarker) then
-			local icon = GetRaidTargetIndex(args.destName)
-			if icon > 0 and icon < 5 and not tContains(iconsUnused, icon) then
-				table.insert(iconsUnused, icon)
-				SetRaidTarget(args.destName, 0)
-			end
+			SetRaidTarget(args.destName, 0)
 		end
 	end
 end
@@ -230,7 +221,7 @@ do
 	function mod:ConsumingHungerApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, 230384, list, "Attention", "Alert", nil, nil, true)
+			self:ScheduleTimer("TargetMessage", 0.3, 230384, list, "Attention", "Alert", nil, nil, true)
 		end
 	end
 end
