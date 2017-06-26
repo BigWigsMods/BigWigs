@@ -239,7 +239,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			local spellId = args.spellId == 236011 or args.spellId == 238018 and 238570 or args.spellId -- Tormented Cries
+			local spellId = (args.spellId == 236011 or args.spellId == 238018) and 238570 or args.spellId -- Tormented Cries
 			self:Message(spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
