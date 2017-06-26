@@ -35,7 +35,7 @@ mod:RegisterEnableMob(
 -- Locals
 --
 
-local sheepBombSayTimers = {}
+
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -170,25 +170,18 @@ end
 function mod:PolymorphBomb(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
 
-	local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
-	local t = expires - GetTime()
-	self:TargetBar(args.spellId, t, args.destName)
+	self:TargetBar(args.spellId, 10, args.destName)
 
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
-		sheepBombSayTimers[1] = self:ScheduleTimer("Say", t-3, args.spellId, 3, true)
-		sheepBombSayTimers[2] = self:ScheduleTimer("Say", t-2, args.spellId, 2, true)
-		sheepBombSayTimers[3] = self:ScheduleTimer("Say", t-1, args.spellId, 1, true)
+		self:SayCountdown(args.spellId, 10)
 	end
 end
 
 function mod:PolymorphBombRemoved(args)
 	self:StopBar(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
-		for i = #sheepBombSayTimers, 1, -1 do
-			self:CancelTimer(sheepBombSayTimers[i])
-			sheepBombSayTimers[i] = nil
-		end
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 

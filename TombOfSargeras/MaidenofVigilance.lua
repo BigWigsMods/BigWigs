@@ -125,9 +125,7 @@ end
 function mod:UnstableSoul(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
-		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
-		local remaining = expires-GetTime()
-		self:TargetBar(args.spellId, remaining, args.destName)
+		self:TargetBar(args.spellId, 8, args.destName)
 	end
 end
 

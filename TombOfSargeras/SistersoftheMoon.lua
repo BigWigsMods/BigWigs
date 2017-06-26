@@ -101,6 +101,7 @@ function mod:OnBossEnable()
 	-- Stage Three: Wrath of Elune
 	self:Log("SPELL_CAST_START", "LunarBeacon", 236712) -- Lunar Beacon
 	self:Log("SPELL_AURA_APPLIED", "LunarBeaconApplied", 236712) -- Lunar Beacon (Debuff)
+	self:Log("SPELL_AURA_REMOVED", "LunarBeaconRemoved", 236712) -- Lunar Beacon (Debuff)
 	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 237351) -- Lunar Barrage
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 237351)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 237351)
@@ -316,11 +317,16 @@ do
 	end
 end
 
-function mod:LunarBeaconApplied(args)
-	if self:Me(args.destGUID) then -- XXX Get debuff Duration
-		self:ScheduleTimer("Say", 3, args.spellId, 3, true)
-		self:ScheduleTimer("Say", 4, args.spellId, 2, true)
-		self:ScheduleTimer("Say", 5, args.spellId, 1, true)
+do
+	function mod:LunarBeaconApplied(args)
+		if self:Me(args.destGUID) then
+			self:SayCountdown(args.spellId, 6)
+		end
+	end
+	function mod:LunarBeaconRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+		end
 	end
 end
 

@@ -138,9 +138,7 @@ do
 				self:Flash(230345)
 
 				local remaining = expires-GetTime()
-				self:ScheduleTimer("Say", remaining-3, 230345, 3, true)
-				self:ScheduleTimer("Say", remaining-2, 230345, 2, true)
-				self:ScheduleTimer("Say", remaining-1, 230345, 1, true)
+				self:SayCountdown(230345, remaining)
 			end
 		end
 	end
