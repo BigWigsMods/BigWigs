@@ -62,6 +62,7 @@ function mod:GetOptions()
 		239132, -- Rupture Realities
 		234059, -- Unbound Chaos
 		{236604, "SAY", "FLASH"}, -- Shadowy Blades
+		239212, -- Lingering Darkness
 		{236494, "TANK"}, -- Desolate
 		236528, -- Ripple of Darkness
 		233856, -- Cleansing Protocol
@@ -88,6 +89,10 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 239212) -- Lingering Darkness
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 239212)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 239212)
 
 	-- Stage One: A Slumber Disturbed
 	self:Log("SPELL_CAST_START", "TouchofSargeras", 239207) -- Touch of Sargeras
@@ -219,6 +224,17 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find("234418") then -- Rain of the Destroyer
 		self:Message(234418, "Important", "Alarm")
+	end
+end
+
+do
+	local prev = 0
+	function mod:GroundEffectDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
 	end
 end
 
