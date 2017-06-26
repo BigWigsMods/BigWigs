@@ -4,6 +4,10 @@
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Add more timers, if they are more reliable in the future
+-- - Could add bar stopping for:
+--   - EchoingAnguish
+--   - TormentingBurst
+--   - Suffocating Dark
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -105,6 +109,8 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 233895 then -- Suffocating Dark
+		-- ["233895-Suffocating Dark"] = "pull:12.0, 42.8, 25.6, 36.5, 25.6, 31.3, 28.5, 35.4, 28.1, 32.6",
+		-- ["233895-Suffocating Dark"] = "pull:12.1, 49.9, 33.0, 29.2, 25.6, 29.2, 24.3, 34.1, 25.6",
 		self:Message(spellId, "Attention", "Info")
 	end
 end
