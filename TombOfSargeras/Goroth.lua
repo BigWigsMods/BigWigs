@@ -130,7 +130,7 @@ do
 			list[#list+1] = n
 			cometWarned[n] = true
 			if #list == 1 then
-				self:ScheduleTimer("TargetMessage", 0.2, 230345, list, "Important", "Warning")
+				self:ScheduleTimer("TargetMessage", 0.3, 230345, list, "Important", "Warning")
 			end
 
 			if unit == "player" then

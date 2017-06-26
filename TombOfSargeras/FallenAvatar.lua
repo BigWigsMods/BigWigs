@@ -310,7 +310,7 @@ do
 			self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
 		end
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alarm")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alarm")
 			darkMarkCounter = darkMarkCounter + 1
 			self:Bar(args.spellId, 34, CL.count:format(args.spellName, darkMarkCounter))
 		end
