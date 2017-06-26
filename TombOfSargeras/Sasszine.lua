@@ -42,6 +42,7 @@ function mod:GetOptions()
 		230139, -- Hydra Shot
 		hydraShotMarker,
 		{230201, "TANK", "FLASH"}, -- Burden of Pain
+		230959, -- Concealing Murk
 		232722, -- Slicing Tornado
 		230358, -- Thundering Shock
 		230384, -- Consuming Hunger
@@ -65,6 +66,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "HydraShotRemoved", 230139)
 	self:Log("SPELL_CAST_START", "BurdenofPainCast", 230201)
 	self:Log("SPELL_CAST_SUCCESS", "BurdenofPain", 230201)
+
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 230959) -- Concealing Murk
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 230959)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 230959)
 
 	-- Stage One: Ten Thousand Fangs
 	self:Log("SPELL_CAST_START", "SlicingTornado", 232722)
@@ -190,6 +195,17 @@ function mod:BurdenofPain(args)
 	self:Bar(args.spellId, 25.5) -- Timer until cast_start
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
+	end
+end
+
+do
+	local prev = 0
+	function mod:GroundEffectDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
 	end
 end
 
