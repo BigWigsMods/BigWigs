@@ -51,7 +51,9 @@ function mod:GetOptions()
 		241593, -- Aegwynn's Ward
 		{235271, "PROXIMITY", "FLASH"}, -- Infusion
 		241635, -- Hammer of Creation
+		238028, -- Light Remanence
 		241636, -- Hammer of Obliteration
+		238408, -- Fel Remanence
 		235267, -- Mass Instability
 		248812, -- Blowback
 		235028, -- Titanic Bulwark
@@ -70,6 +72,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "UnstableSoul", 235117) -- Unstable Soul
 	self:Log("SPELL_AURA_REMOVED", "UnstableSoulRemoved", 235117) -- Unstable Soul
 	self:Log("SPELL_AURA_APPLIED", "AegwynnsWardApplied", 241593, 236420) -- Aegwynn's Ward, Heroic, Normal
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 238028, 238408) -- Light Remanence, Fel Remanence
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 238028, 238408)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 238028, 238408)
 
 	-- Stage One: Divide and Conquer
 	self:Log("SPELL_CAST_START", "Infusion", 235271) -- Infusion
@@ -135,6 +140,17 @@ end
 function mod:AegwynnsWardApplied(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Neutral", "Info")
+	end
+end
+
+do
+	local prev = 0
+	function mod:GroundEffectDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
 	end
 end
 
