@@ -1752,14 +1752,13 @@ end
 
 --- Start a countdown using say messages.
 -- @param key the option key
--- @param targetTime the time the countdown should expire at
+-- @param seconds the amount of time in seconds until the countdown expires
 -- @param[opt] startAt When to start sending messages in say, default value is at 3 seconds remaining
-function boss:SayCountdown(key, targetTime, startAt)
+function boss:SayCountdown(key, seconds, startAt)
 	if not checkFlag(self, key, C.SAY) then return end -- XXX implement a dedicated option for 7.3
-	local remaining = targetTime - GetTime()
 	local tbl = {}
 	for i = 1, (startAt or 3) do
-		tbl[i] = self:ScheduleTimer(SendChatMessage, remaining-i, i, "SAY")
+		tbl[i] = self:ScheduleTimer(SendChatMessage, seconds-i, i, "SAY")
 	end
 	self.sayCountdowns[key] = tbl
 end
