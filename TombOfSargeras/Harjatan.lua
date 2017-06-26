@@ -43,6 +43,7 @@ function mod:GetOptions()
 		233429, -- Frigid Blows
 		232174, -- Frosty Discharge
 		{231729, "SAY", "FLASH"}, -- Aqueous Burst
+		231768, -- Drenching Waters
 		{234128, "SAY", "FLASH"}, -- Driven Assault
 		"custom_on_fixate_plates",
 		240319, -- Hatching
@@ -60,6 +61,10 @@ function mod:OnBossEnable()
 	-- General
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
 	self:RegisterEvent("RAID_BOSS_WHISPER")
+
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 231768) -- Drenching Waters
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 231768)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 231768)
 
 	-- Boss
 	self:Log("SPELL_AURA_APPLIED", "JaggedAbrasion", 231998)
@@ -118,6 +123,17 @@ end
 function mod:RAID_BOSS_WHISPER(event, msg)
 	if msg:find("240319", nil, true) then -- Hatching
 		self:Message(240319, "Important", "Warning")
+	end
+end
+
+do
+	local prev = 0
+	function mod:GroundEffectDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
 	end
 end
 
