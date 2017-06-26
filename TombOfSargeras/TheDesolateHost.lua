@@ -1,4 +1,6 @@
 
+-- GLOBALS: tDeleteItem
+
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Shattering Scream: Find target before debuffs, without spamming? (current method allows for kicks before warnings)
@@ -80,6 +82,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Quietus", 236507)
 	self:Log("SPELL_AURA_APPLIED", "SpiritualBarrier", 235732)
 	self:Log("SPELL_AURA_REMOVED", "SpiritualBarrierRemoved", 235732)
+
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 236011, 238018, 235907) -- Tormented Cries (x2), Collapsing Fissure
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 236011, 238018, 235907) -- Tormented Cries (x2), Collapsing Fissure
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 236011, 238018, 235907) -- Tormented Cries (x2), Collapsing Fissure
+
 
 	-- Corporeal Realm
 	self:Log("SPELL_AURA_APPLIED", "SpearofAnguish", 235924)
@@ -223,6 +230,18 @@ do
 			updateProximity(self)
 		end
 		updateInfoBox()
+	end
+end
+
+do
+	local prev = 0
+	function mod:GroundEffectDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			local spellId = args.spellId == 236011 or args.spellId == 238018 and 238570 or args.spellId -- Tormented Cries
+			self:Message(spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
 	end
 end
 
