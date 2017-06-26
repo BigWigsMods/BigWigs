@@ -71,6 +71,7 @@ function mod:GetOptions()
 		-15543, -- Demonic Obelisk
 		243982, -- Tear Rift
 		244856, -- Flaming Orb
+		240262, -- Burning
 		{237590, "SAY", "FLASH"}, -- Shadow Reflection: Hopeless
 	},{
 		["stages"] = "general",
@@ -87,6 +88,10 @@ function mod:OnBossEnable()
 	-- General
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 240262) -- Burning (Flaming Orb)
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 240262)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 240262)
 
 	-- Stage One: The Betrayer
 	self:Log("SPELL_CAST_START", "Felclaws", 239932)
@@ -167,6 +172,17 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, sender, _, _, target)
 			timer = phaseTwoTimers[235059][singularityCount]
 		end
 		self:Bar(235059, timer, CL.count:format(self:SpellName(235059), singularityCount))
+	end
+end
+
+do
+	local prev = 0
+	function mod:GroundEffectDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
 	end
 end
 
