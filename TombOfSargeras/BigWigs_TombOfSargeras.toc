@@ -18,7 +18,7 @@
 ## Notes-frFR: Modules BigWigs concernant la Tombe de Sargeras.
 ## Notes-ruRU: Модуль BigWigs для Гробницы Саргераса
 ## Notes-zhCN: BigWigs 萨格拉斯之墓
-## Notes-zhTW: BigWigs Tomb of Sargeras
+## Notes-zhTW: BigWigs 薩格拉斯之墓
 ## Notes-itIT: BigWigs Tomb of Sargeras Modules
 ## Notes-ptBR: BigWigs Tomb of Sargeras Modules
 ## Notes-koKR: BigWigs Tomb of Sargeras Modules
