@@ -167,7 +167,7 @@ do
 			self:Message(235271, "Important", "Warning", L.infusionChanged:format(sideString), newSide)
 			self:Flash(235271)
 		else
-			self:Message(235271, "Important", "Info", L.sameInfusion:format(sideString), newSide)
+			self:Message(235271, "Positive", "Info", L.sameInfusion:format(sideString), newSide)
 		end
 		mySide = newSide
 	end
