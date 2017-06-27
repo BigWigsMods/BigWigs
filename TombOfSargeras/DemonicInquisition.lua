@@ -26,12 +26,18 @@ mod.respawnTime = 15
 local pangsofGuiltCounter = 1
 local sweepCounter = 1
 local nextAltPowerWarning = 20
+local suffocatingDarkCounter = 1
+local jailList = {}
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:GetLocale()
+if L then
+	L.custom_on_stop_timers = "Always show ability bars"
+	L.custom_on_stop_timers_desc = "Demonic Inquisition has some spells which are delayed by interupts/other casts. When this option is enabled, the bars for those abilities will stay on your screen."
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -39,8 +45,9 @@ local L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		236283, -- Belac's Prisoner
+		{236283, "INFOBOX"}, -- Belac's Prisoner
 		"altpower",
+		"custom_on_stop_timers",
 		233104, -- Torment
 		233426, -- Scythe Sweep
 		{233431, "SAY"}, -- Calcified Quills
@@ -62,7 +69,10 @@ end
 function mod:OnBossEnable()
 	-- General
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
+	self:RegisterMessage("BigWigs_PluginComm")
+	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 	self:Log("SPELL_AURA_APPLIED", "BelacsPrisoner", 236283)
+	self:Log("SPELL_AURA_REMOVED", "BelacsPrisonerRemoved", 236283)
 
 	-- Atrigan
 	self:Log("SPELL_CAST_START", "ScytheSweep", 233426)
@@ -85,8 +95,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	-- Jail Infobox
+	wipe(jailList)
+	self:OpenInfo(236283, self:SpellName(236283))
+
 	pangsofGuiltCounter = 1
 	sweepCounter = 1
+	suffocatingDarkCounter = 1
 	nextAltPowerWarning = 20
 	self:OpenAltPower("altpower", 233104, nil, true) -- Torment, Sync for those far away
 
@@ -107,11 +122,48 @@ end
 -- Event Handlers
 --
 
+do
+	local abilitysToPause = {
+		[233983] = true, -- Echoing Anguish
+		[234015] = true, -- Tormenting Burst
+		[233895] = true, -- Suffocating Dark
+	}
+
+	local castPattern = CL.cast:gsub("%%s", ".+")
+
+	local function stopAtZeroSec(bar)
+		if bar.remaining < 0.15 then -- Pause at 0.0
+			bar:SetDuration(0.01) -- Make the bar look full
+			bar:Start()
+			bar:Pause()
+			bar:SetTimeVisibility(false)
+		end
+	end
+
+	function mod:BarCreated(_, _, bar, module, key, text, time, icon, isApprox)
+		if self:GetOption("custom_on_stop_timers") and abilitysToPause[key] and not text:match(castPattern) then
+			bar:AddUpdateFunction(stopAtZeroSec)
+		end
+	end
+end
+
+function mod:BigWigs_PluginComm(_, msg, amount, sender)
+	if msg == "AltPower" then
+		if jailList[sender] then
+			--print(sender)
+			--print(amount)
+			local energy = tonumber(amount)
+			jailList[sender] = energy
+			self:SetInfoByTable(236283, jailList)
+		end
+	end
+end
+
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 233895 then -- Suffocating Dark
-		-- ["233895-Suffocating Dark"] = "pull:12.0, 42.8, 25.6, 36.5, 25.6, 31.3, 28.5, 35.4, 28.1, 32.6",
-		-- ["233895-Suffocating Dark"] = "pull:12.1, 49.9, 33.0, 29.2, 25.6, 29.2, 24.3, 34.1, 25.6",
 		self:Message(spellId, "Attention", "Info")
+		suffocatingDarkCounter = suffocatingDarkCounter + 1
+		self:CDBar(spellId, suffocatingDarkCounter == 2 and 42 or 25)
 	end
 end
 
@@ -136,6 +188,16 @@ function mod:BelacsPrisoner(args)
 	if self:Me(args.destGUID)then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Alert")
 	end
+
+	-- Add person to InfoBox
+	jailList[args.destName] = UnitPower(args.destName, 10) or 1 -- Incase we can't grab unitpower
+	self:SetInfoByTable(args.spellId, jailList)
+end
+
+function mod:BelacsPrisonerRemoved(args)
+	-- Remove from InfoBox
+	jailList[args.destName] = nil
+	self:SetInfoByTable(args.spellId, jailList)
 end
 
 function mod:ScytheSweep(args)
@@ -176,6 +238,7 @@ end
 function mod:EchoingAnguish(args)
 	self:Message(args.spellId, "Important", "Alert")
 	self:OpenProximity(args.spellId, 8) -- Open proximity a bit before
+	self:CDBar(args.spellId, 22)
 end
 
 do
@@ -202,6 +265,7 @@ end
 
 function mod:TormentingBurst(args)
 	self:Message(args.spellId, "Attention", self:Healer() and "Long")
+	self:CDBar(args.spellId, 17.1)
 end
 
 function mod:FelSquall(args)
