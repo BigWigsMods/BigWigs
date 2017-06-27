@@ -7,7 +7,7 @@
 ## Title-frFR: BigWigs [|cffeda55fTrial of Valor|r]
 ## Title-ruRU: BigWigs [|cffeda55fTrial of Valor|r]
 ## Title-zhCN: BigWigs [|cffeda55f勇气试炼|r]
-## Title-zhTW: BigWigs [|cffeda55fTrial of Valor|r]
+## Title-zhTW: BigWigs [|cffeda55f勇氣試煉|r]
 ## Title-itIT: BigWigs [|cffeda55fTrial of Valor|r]
 ## Title-ptBR: BigWigs [|cffeda55fProvação da Bravura|r]
 ## Title-koKR: BigWigs [|cffeda55fTrial of Valor|r]
@@ -18,7 +18,7 @@
 ## Notes-frFR: Trial of Valor Modules
 ## Notes-ruRU: Trial of Valor Modules
 ## Notes-zhCN: 勇气试炼模块。
-## Notes-zhTW: Trial of Valor Modules
+## Notes-zhTW: 勇氣試煉模組。
 ## Notes-itIT: Trial of Valor Modules
 ## Notes-ptBR: Módulo da Provação da Bravura do BigWigs
 ## Notes-koKR: Trial of Valor Modules
