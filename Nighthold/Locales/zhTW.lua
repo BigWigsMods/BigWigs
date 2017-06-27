@@ -61,12 +61,12 @@ if L then
 	L.ring_msg = "時間的浪潮會粉碎你！"
 	L.orb_msg = "你會發現時光有時很不穩定。"
 
-	--L.slowTimeZone = "Slow Time Zone"
+	L.slowTimeZone = "減速區域"
 	L.fastTimeZone = "加速區域"
 
 	L.boss_active = "艾莉珊德備戰"
 	L.boss_active_desc = "為清光小怪後的劇情事件提供計時，直到艾莉珊德可被攻擊。"
-	--L.elisande_trigger = "I foresaw your coming, of course. The threads of fate that led you to this place. Your desperate attempt to stop the Legion."
+	L.elisande_trigger = "艾莉珊德說：我預見了你的到來。命運的絲線帶你來到這裡。你竭盡全力，想阻止燃燒軍團。"
 end
 
 L = BigWigs:NewBossLocale("Gul'dan", "zhTW")
@@ -75,10 +75,10 @@ if L then
 
 	L.empowered = "(強化) %s" -- (E) Eye of Gul'dan
 	L.gains = "古爾丹獲得%s"
-	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
+	L.p4_mythic_start_yell = "把靈魂送回惡魔獵人的體內…別讓燃燒軍團的主宰佔用！"
 
 	L.nightorb_desc = "召喚一個夜之球，擊殺它會生成一個時間停止力場。"
-	--L.timeStopZone = "Time Stop Zone"
+	L.timeStopZone = "時間停止區域"
 
 	L.manifest_desc = "召喚一個埃辛諾斯靈魂碎片，擊殺它會生成一個惡魔精華。"
 
@@ -106,16 +106,16 @@ if L then
 	L.jarin = "占星師賈倫"
 
 	--[[ Aluriel to Telarn ]]--
-	--L.defender = "Astral Defender"
+	L.defender = "星界保衛者"
 	L.weaver = "暮衛編織者"
 	L.archmage = "夏多雷大法師"
 	L.manasaber = "被馴養的法力刃豹"
-	--L.naturalist = "Shal'dorei Naturalist"
+	L.naturalist = "夏多雷自然學家"
 
 	--[[ Aluriel to Krosus ]]--
 	L.infernal = "灼熱的煉獄火"
 
 	--[[ Aluriel to Tichondrius ]]--
-	--L.chaosmage = "Felsworn Chaos-Mage"
+	L.chaosmage = "魔誓混沌法師"
 	L.watcher = "暮衛哨兵"
 end
