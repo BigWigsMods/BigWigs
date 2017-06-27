@@ -1,44 +1,44 @@
 local L = BigWigs:NewBossLocale("Harjatan the Bludger", "ruRU")
 if not L then return end
 if L then
-	--L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
-	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates = "Иконка фиксации на вражеских неймплейтах"
+	L.custom_on_fixate_plates_desc = "Показывать иконку цели, которая на вас навелась.\nТребуется чтобы вражеские неймплейты были включены. Эта функция пока поддерживается только аддоном KuiNameplates."
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "ruRU")
 if L then
-	--L.infobox_players = "Players"
-	--L.armor_remaining = "%s Remaining (%d)" -- Bonecage Armor Remaining (#)
+	L.infobox_players = "Игроки"
+	L.armor_remaining = "%s осталось (%d)" -- Bonecage Armor Remaining (#)
 end
 
 L = BigWigs:NewBossLocale("Maiden of Vigilance", "ruRU")
 if L then
-	--L.infusionChanged = "Infusion CHANGED: %s"
-	--L.sameInfusion = "Same Infusion: %s"
-	--L.fel = "Fel"
-	--L.light = "Light"
+	L.infusionChanged = "Насыщение ИЗМЕНИЛОСЬ: %s"
+	L.sameInfusion = "Насыщение: %s"
+	L.fel = "Скверна"
+	L.light = "Свет"
 end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "ruRU")
 if L then
-	--L.touch_impact = "Touch Impact" -- Touch of Sargeras Impact (short)
+	L.touch_impact = "Взрыв касания" -- Touch of Sargeras Impact (short)
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "ruRU")
 if L then
-	--L.singularityImpact = "Singularity Impact"
-	--L.obeliskExplosion = "Obelisk Explosion"
+	L.singularityImpact = "Взрыв сингулярности"
+	L.obeliskExplosion = "Взрыв обелисков"
 
-	--L.darkness = "Darkness" -- Shorter name for Darkness of a Thousand Souls (238999)
-	--L.reflectionErupting = "Reflection: Erupting" -- Shorter name for Shadow Reflection: Erupting (236710)
-	--L.reflectionWailing = "Reflection: Wailing" -- Shorter name for Shadow Reflection: Wailing (236378)
-	--L.reflectionHopeless = "Reflection: Hopeless" -- Shorter name for Shadow Reflection: Hopeless (237590)
+	L.darkness = "Тьма" -- Shorter name for Darkness of a Thousand Souls (238999)
+	L.reflectionErupting = "Отражение: взрывное" -- Shorter name for Shadow Reflection: Erupting (236710)
+	L.reflectionWailing = "Отражение: жалобное" -- Shorter name for Shadow Reflection: Wailing (236378)
+	L.reflectionHopeless = "Отражение: обречённое" -- Shorter name for Shadow Reflection: Hopeless (237590)
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "ruRU")
 if L then
-	--L.chaosbringer = "Infernal Chaosbringer"
-	--L.rez = "Rez the Tombwatcher"
-	--L.custodian = "Undersea Custodian"
-	--L.sentry = "Guardian Sentry"
+	L.chaosbringer = "Инфернал - вестник хаоса"
+	L.rez = "Смотритель гробницы Рез"
+	L.custodian = "Подводный надзиратель"
+	L.sentry = "Страж Хранительницы"
 end
