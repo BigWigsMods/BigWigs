@@ -7,7 +7,7 @@
 ## Title-frFR: BigWigs [|cffeda55fTombe de Sargeras|r]
 ## Title-ruRU: BigWigs [|cffeda55fГробница Саргераса|r]
 ## Title-zhCN: BigWigs [|cffeda55f萨格拉斯之墓|r]
-## Title-zhTW: BigWigs [|cffeda55fTomb of Sargeras|r]
+## Title-zhTW: BigWigs [|cffeda55f薩格拉斯之墓|r]
 ## Title-itIT: BigWigs [|cffeda55fTomb of Sargeras|r]
 ## Title-ptBR: BigWigs [|cffeda55fTomb of Sargeras|r]
 ## Title-koKR: BigWigs [|cffeda55fTomb of Sargeras|r]
@@ -18,7 +18,7 @@
 ## Notes-frFR: Modules BigWigs concernant la Tombe de Sargeras.
 ## Notes-ruRU: Модуль BigWigs для Гробницы Саргераса
 ## Notes-zhCN: BigWigs 萨格拉斯之墓
-## Notes-zhTW: BigWigs 暗夜Tomb of Sargeras
+## Notes-zhTW: BigWigs 薩格拉斯之墓
 ## Notes-itIT: BigWigs Tomb of Sargeras Modules
 ## Notes-ptBR: BigWigs Tomb of Sargeras Modules
 ## Notes-koKR: BigWigs Tomb of Sargeras Modules
