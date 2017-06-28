@@ -15,7 +15,7 @@ L = BigWigs:NewBossLocale("The Desolate Host", "zhTW")
 if L then
 	L.infobox_players = "玩家"
 	L.armor_remaining = "剩餘%s（%d）" -- Bonecage Armor Remaining (#)
-	--L.tormentingCriesSay = "Cries" -- Tormenting Cries (short say)
+	L.tormentingCriesSay = "號哭" -- Tormenting Cries (short say)
 end
 
 L = BigWigs:NewBossLocale("Maiden of Vigilance", "zhTW")
@@ -24,8 +24,8 @@ if L then
 	L.sameInfusion = "相同注入：%s"
 	L.fel = "魔化"
 	L.light = "聖光"
-	--L.felHammer = "Fel Hammer" -- Better name for "Hammer of Obliteration"
-	--L.lightHammer = "Light Hammer" -- Better name for "Hammer of Creation"
+	L.felHammer = "魔化錘" -- Better name for "Hammer of Obliteration"
+	L.lightHammer = "聖光錘" -- Better name for "Hammer of Creation"
 end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "zhTW")
