@@ -1522,7 +1522,8 @@ do
 		if not length then
 			if not self.missing then self.missing = {} end
 			if not self.missing[key] then
-				self.missing[key] = {GetTime()}
+				local t = GetTime()
+				self.missing[key] = {t}
 			else
 				local t, c = GetTime(), #self.missing[key]
 				local new = t - self.missing[key][c]
@@ -1559,7 +1560,8 @@ do
 		if not length then
 			if not self.missing then self.missing = {} end
 			if not self.missing[key] then
-				self.missing[key] = {GetTime()}
+				local t = GetTime()
+				self.missing[key] = {t}
 			else
 				local t, c = GetTime(), #self.missing[key]
 				local new = t - self.missing[key][c]
