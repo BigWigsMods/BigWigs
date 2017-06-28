@@ -41,6 +41,7 @@ local L = mod:GetLocale()
 if L then
 	L.infobox_players = "Players"
 	L.armor_remaining = "%s Remaining (%d)" -- Bonecage Armor Remaining (#)
+	L.tormentingCriesSay = "Cries" -- Tormenting Cries (short say)
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -273,13 +274,15 @@ end
 function mod:TormentedCriesApplied(args)
 	self:TargetMessage(238570, args.destName, "Urgent", "Alarm")
 	if self:Me(args.destGUID) then
-		self:Say(238570)
+		self:Say(238570, L.tormentingCriesSay)			
+		self:SayCountdown(238570, 4)
 	end
 	self:PrimaryIcon(238570, args.destName)
 end
 
 function mod:TormentedCriesRemoved(args)
 	self:PrimaryIcon(238570)
+	self:CancelSayCountdown(238570)
 end
 
 do
@@ -364,7 +367,9 @@ end
 
 function mod:SpiritChains(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alert")
+		self:TargetMessage(args.spe
+		
+		llId, args.destName, "Personal", "Alert")
 	end
 end
 
