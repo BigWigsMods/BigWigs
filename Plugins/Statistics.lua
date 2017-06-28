@@ -13,36 +13,44 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local activeDurations = {}
 local healthPools = {}
 local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}
-local difficultyTable = {false, false, "10", "25", "10h", "25h", "lfr", false, false, false, false, false, false, "normal", "heroic", "mythic", "LFR"}
+local difficultyTable = {[14] = "normal", [15] = "heroic", [16] = "mythic", [17] = "LFR"}
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 
 --[[
-1. "Normal" (Dungeons)
-2. "Heroic" (Dungeons)
-3. "10 Player"
-4. "25 Player"
-5. "10 Player (Heroic)"
-6. "25 Player (Heroic)"
-7. "Looking For Raid" (Legacy LFRs; everything prior to Siege of Orgrimmar)
-8. "Challenge Mode"
-9. "40 Player"
+1. Normal
+2. Heroic
+3. 10 Player
+4. 25 Player
+5. 10 Player (Heroic)
+6. 25 Player (Heroic)
+7. Looking For Raid
+8. Mythic Keystone
+9. 40 Player
 10. nil
-11. "Heroic Scenario"
-12. "Normal Scenario"
+11. Heroic Scenario
+12. Normal Scenario
 13. nil
-14. "Normal" (Raids)
-15. "Heroic" (Raids)
-16. "Mythic" (Raids)
-17. "Looking For Raid"
-18. "Event"
-19. "Event"
-20. "Event Scenario"
+14. Normal
+15. Heroic
+16. Mythic
+17. Looking For Raid
+18. Event
+19. Event
+20. Event Scenario
 21. nil
 22. nil
-23. "Mythic" (Dungeons)
-23. "Timewalker"
-24. "PvP Scenario"
-http://wow.gamepedia.com/DifficultyID
+23. Mythic
+24. Timewalking
+25. World PvP Scenario
+26. nil
+27. nil
+28. nil
+29. PvEvP Scenario
+30. Event
+31. nil
+32. World PvP Scenario
+33. Timewalking
+/run for i=1, 40 do print(i..".", (GetDifficultyInfo(i))) end
 ]]--
 
 -------------------------------------------------------------------------------
