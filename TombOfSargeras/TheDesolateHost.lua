@@ -282,7 +282,9 @@ end
 
 function mod:TormentedCriesRemoved(args)
 	self:PrimaryIcon(238570)
-	self:CancelSayCountdown(238570)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(238570)
+	end
 end
 
 do
