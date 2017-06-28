@@ -3,8 +3,8 @@ if not L then return end
 if L then
 	L.forces = "夢魘大軍"
 	L.bramblesSay = "荊棘在%s附近"
-	--L.custom_off_multiple_breath_bar = "Show multiple Rotten Breath bars"
-	--L.custom_off_multiple_breath_bar_desc = "Per default BigWigs will only show the Rotten Breath bar of one drake. Enable this option if you want to see the timer for each drake."
+	L.custom_off_multiple_breath_bar = "顯示多重腐臭之息計時條"
+	L.custom_off_multiple_breath_bar_desc = "預設 BigWigs 只顯示一條腐化飛龍的腐臭之息。啟用此選項將可以看到每條腐化飛龍的腐臭之息。"
 end
 
 L = BigWigs:NewBossLocale("Elerethe Renferal", "zhTW")
@@ -36,5 +36,5 @@ end
 L = BigWigs:NewBossLocale("Xavius", "zhTW")
 if L then
 	L.linked = ">你< 恐懼束縛！- 與 >%s< 相連！"
-	--L.dreamHealers = "Dream Healers"
+	L.dreamHealers = "夢境治療者"
 end
