@@ -7,8 +7,8 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "zhTW")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Demonic Inquisition has some spells which are delayed by interupts/other casts. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "總是顯示技能條"
+	L.custom_on_stop_timers_desc = "惡魔審判官的部份技能會被斷法或其他技能的法術詠唱推遲。啟用此選項後，這些技能的計時條會保持顯示。"
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "zhTW")
@@ -32,8 +32,8 @@ L = BigWigs:NewBossLocale("Fallen Avatar", "zhTW")
 if L then
 	L.touch_impact = "薩格拉斯之觸衝擊" -- Touch of Sargeras Impact (short)
 
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Fallen Avatar randomizes which off-cooldown ability he uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "總是顯示技能條"
+	L.custom_on_stop_timers_desc = "墮落化身會在下一次施放技能時隨機施放已經冷卻完畢的技能，啟用此選項後，這些技能的計時條會保持顯示。"
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "zhTW")
