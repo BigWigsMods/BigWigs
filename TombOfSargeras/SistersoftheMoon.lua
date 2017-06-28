@@ -55,7 +55,7 @@ function mod:GetOptions()
 		236603, -- Rapid Shot
 		{233263, "PROXIMITY"}, -- Embrace of the Eclipse
 		236519, -- Moon Burn
-		236712, -- Lunar Beacon
+		{236712, "SAY"}, -- Lunar Beacon
 		237351, -- Lunar Barrage
 		{239264, "TANK"}, -- Lunar Fire
 	},{
@@ -306,6 +306,7 @@ end
 do
 	function mod:LunarBeaconApplied(args)
 		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 6)
 		end
 	end
