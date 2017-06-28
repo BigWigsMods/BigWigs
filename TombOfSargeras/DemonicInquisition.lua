@@ -283,8 +283,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			local spellId = (args.spellId == 233901 and 233895) or args.spellId
-			self:Message(spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(233895, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
