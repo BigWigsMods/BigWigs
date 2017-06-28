@@ -69,8 +69,8 @@ end
 
 function mod:OnBossEnable()
 	-- General
-	self:Log("SPELL_AURA_APPLIED", "UnstableSoul", 235117) -- Unstable Soul
-	self:Log("SPELL_AURA_REMOVED", "UnstableSoulRemoved", 235117) -- Unstable Soul
+	self:Log("SPELL_AURA_APPLIED", "UnstableSoul", 243276, 235117) -- Mythic, Others
+	self:Log("SPELL_AURA_REMOVED", "UnstableSoulRemoved", 243276, 235117) -- Mythic, Others
 	self:Log("SPELL_AURA_APPLIED", "AegwynnsWardApplied", 241593, 236420) -- Aegwynn's Ward, Heroic, Normal
 	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 238028, 238408) -- Light Remanence, Fel Remanence
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 238028, 238408)
@@ -124,14 +124,14 @@ end
 
 function mod:UnstableSoul(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
-		self:TargetBar(args.spellId, 8, args.destName)
+		self:TargetMessage(235117, args.destName, "Personal", "Alarm")
+		self:TargetBar(235117, 8, args.destName)
 	end
 end
 
 function mod:UnstableSoulRemoved(args)
 	if self:Me(args.destGUID) then
-		self:StopBar(args.spellId, args.destName)
+		self:StopBar(args.spellName, args.destName)
 	end
 end
 
