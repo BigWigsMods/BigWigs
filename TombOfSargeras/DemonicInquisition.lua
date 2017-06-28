@@ -49,6 +49,7 @@ function mod:GetOptions()
 		"altpower",
 		"custom_on_stop_timers",
 		233104, -- Torment
+		248671, -- Unbridled Torment (Berserk)
 		233426, -- Scythe Sweep
 		{233431, "SAY"}, -- Calcified Quills
 		233441, -- Bone Saw
@@ -116,6 +117,8 @@ function mod:OnEngage()
 	self:CDBar(235230, 35) -- Fel Squall
 
 	self:RegisterUnitEvent("UNIT_POWER", nil, "player")
+
+	self:Berserk(480, true, nil, 248671, 248671) -- confirmed for nm/hc/my - 248671 has a nice description, 248669 is the aura applied
 end
 
 --------------------------------------------------------------------------------
