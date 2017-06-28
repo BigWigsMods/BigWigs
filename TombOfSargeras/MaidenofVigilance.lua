@@ -37,8 +37,8 @@ if L then
 	L.sameInfusion = "Same Infusion: %s"
 	L.fel = "Fel"
 	L.light = "Light"
-	L.felHammer = "Fel Hammer"
-	L.lightHammer = "Light Hammer"
+	L.felHammer = "Fel Hammer" -- Better name for "Hammer of Obliteration"
+	L.lightHammer = "Light Hammer" -- Better name for "Hammer of Creation"
 end
 --------------------------------------------------------------------------------
 -- Initialization

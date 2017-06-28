@@ -5,10 +5,17 @@ if L then
 	L.custom_on_fixate_plates_desc = "당신에게 시선을 고정한 대상 이름표에 아이콘을 표시합니다.\n적 이름표를 사용해야 합니다. 이 기능은 현재 KuiNameplates만 지원합니다."
 end
 
+L = BigWigs:NewBossLocale("Demonic Inquisition", "koKR")
+if L then
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Demonic Inquisition has some spells which are delayed by interupts/other casts. When this option is enabled, the bars for those abilities will stay on your screen."
+end
+
 L = BigWigs:NewBossLocale("The Desolate Host", "koKR")
 if L then
 	L.infobox_players = "플레이어"
 	L.armor_remaining = "%s 남음 (%d)" -- Bonecage Armor Remaining (#)
+	--L.tormentingCriesSay = "Cries" -- Tormenting Cries (short say)
 end
 
 L = BigWigs:NewBossLocale("Maiden of Vigilance", "koKR")
@@ -17,11 +24,16 @@ if L then
 	L.sameInfusion = "같은 주입: %s"
 	L.fel = "지옥"
 	L.light = "빛"
+	--L.felHammer = "Fel Hammer" -- Better name for "Hammer of Obliteration"
+	--L.lightHammer = "Light Hammer" -- Better name for "Hammer of Creation"
 end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "koKR")
 if L then
 	L.touch_impact = "손길 분출" -- Touch of Sargeras Impact (short)
+
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Fallen Avatar randomizes which off-cooldown ability he uses next. When this option is enabled, the bars for those abilities will stay on your screen."
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "koKR")

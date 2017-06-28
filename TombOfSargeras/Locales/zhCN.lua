@@ -5,10 +5,17 @@ if L then
 	L.custom_on_fixate_plates_desc = "当你被凝视时在目标姓名板上显示一个图标。\n需要使用敌对姓名板。此功能当前只支持 KuiNameplates。"
 end
 
+L = BigWigs:NewBossLocale("Demonic Inquisition", "zhCN")
+if L then
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Demonic Inquisition has some spells which are delayed by interupts/other casts. When this option is enabled, the bars for those abilities will stay on your screen."
+end
+
 L = BigWigs:NewBossLocale("The Desolate Host", "zhCN")
 if L then
 	L.infobox_players = "玩家"
 	L.armor_remaining = "%s 剩余（%d）" -- Bonecage Armor Remaining (#)
+	--L.tormentingCriesSay = "Cries" -- Tormenting Cries (short say)
 end
 
 L = BigWigs:NewBossLocale("Maiden of Vigilance", "zhCN")
@@ -17,11 +24,16 @@ if L then
 	L.sameInfusion = "相同灌注：%s"
 	L.fel = "邪能"
 	L.light = "光明"
+	--L.felHammer = "Fel Hammer" -- Better name for "Hammer of Obliteration"
+	--L.lightHammer = "Light Hammer" -- Better name for "Hammer of Creation"
 end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "zhCN")
 if L then
 	L.touch_impact = "萨格拉斯之触冲击" -- Touch of Sargeras Impact (short)
+
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Fallen Avatar randomizes which off-cooldown ability he uses next. When this option is enabled, the bars for those abilities will stay on your screen."
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "zhCN")
