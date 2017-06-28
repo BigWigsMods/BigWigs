@@ -274,7 +274,7 @@ end
 function mod:TormentedCriesApplied(args)
 	self:TargetMessage(238570, args.destName, "Urgent", "Alarm")
 	if self:Me(args.destGUID) then
-		self:Say(238570, L.tormentingCriesSay)			
+		self:Say(238570, L.tormentingCriesSay)
 		self:SayCountdown(238570, 4)
 	end
 	self:PrimaryIcon(238570, args.destName)
@@ -367,9 +367,7 @@ end
 
 function mod:SpiritChains(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spe
-		
-		llId, args.destName, "Personal", "Alert")
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Alert")
 	end
 end
 
