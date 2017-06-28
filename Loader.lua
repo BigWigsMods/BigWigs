@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 60
+local BIGWIGS_VERSION = 61
 local BIGWIGS_RELEASE_STRING = ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -615,7 +615,9 @@ do
 		delayedMessages[#delayedMessages+1] = "BigWigs needs translations. Can you translate BigWigs into Brazilian Portugese (ptBR)? Check out our GitHub page!"
 	elseif L == "itIT" then
 		delayedMessages[#delayedMessages+1] = "BigWigs needs translations. Can you translate BigWigs into Italian (itIT)? Check out our GitHub page!"
-	elseif L == "esES" then
+	elseif L == "frFR" then
+		delayedMessages[#delayedMessages+1] = "BigWigs needs translations. Can you translate BigWigs into French (frFR)? Check out our GitHub page!"
+	elseif L == "esES" or L == "esMX" then
 		delayedMessages[#delayedMessages+1] = "BigWigs needs translations. Can you translate BigWigs into Spanish (esES)? Check out our GitHub page!"
 	end
 
