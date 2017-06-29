@@ -118,6 +118,8 @@ function mod:BurningArmorSuccess(args)
 	armorCounter = armorCounter + 1
 	if self:LFR() then
 		self:CDBar(args.spellId, armorCounter == 3 and 33 or armorCounter == 8 and 29 or 24.3)
+	elseif self:Mythic() then
+		self:CDBar(args.spellId, 24.5)
 	else
 		self:CDBar(args.spellId, (armorCounter > 3 and armorCounter % 2 ~= 0 and 35) or (self:Normal() and 25 or 24))
 	end
