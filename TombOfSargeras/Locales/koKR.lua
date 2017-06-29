@@ -7,15 +7,15 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "koKR")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Demonic Inquisition has some spells which are delayed by interupts/other casts. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "능력 바 항상 표시"
+	L.custom_on_stop_timers_desc = "악마 심문관은 시전 방해/다른 시전에 의해 시전이 지연되는 주문을 사용합니다. 이 옵션을 사용하면 이 능력들의 바가 화면에 유지됩니다."
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "koKR")
 if L then
 	L.infobox_players = "플레이어"
 	L.armor_remaining = "%s 남음 (%d)" -- Bonecage Armor Remaining (#)
-	--L.tormentingCriesSay = "Cries" -- Tormenting Cries (short say)
+	L.tormentingCriesSay = "외침" -- Tormenting Cries (short say)
 end
 
 L = BigWigs:NewBossLocale("Maiden of Vigilance", "koKR")
@@ -24,16 +24,16 @@ if L then
 	L.sameInfusion = "같은 주입: %s"
 	L.fel = "지옥"
 	L.light = "빛"
-	--L.felHammer = "Fel Hammer" -- Better name for "Hammer of Obliteration"
-	--L.lightHammer = "Light Hammer" -- Better name for "Hammer of Creation"
+	L.felHammer = "지옥 망치" -- Better name for "Hammer of Obliteration"
+	L.lightHammer = "빛 망치" -- Better name for "Hammer of Creation"
 end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "koKR")
 if L then
 	L.touch_impact = "손길 분출" -- Touch of Sargeras Impact (short)
 
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Fallen Avatar randomizes which off-cooldown ability he uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "능력 바 항상 표시"
+	L.custom_on_stop_timers_desc = "몰락한 화신은 재사용 대기시간이 끝난 능력 중 하나를 무작위로 다음에 사용합니다. 이 옵션을 사용하면 이 능력들의 바가 화면에 유지됩니다."
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "koKR")
