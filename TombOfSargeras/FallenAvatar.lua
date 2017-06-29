@@ -182,11 +182,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:Message(234059, "Attention", "Alert")
 		end
 		unboundChaosCounter = unboundChaosCounter + 1
-		self:Bar(234059, timers[spellId][unboundChaosCounter])
+		self:Bar(234059, timers[spellId][unboundChaosCounter] or 35)
 	elseif spellId == 236573 then -- Shadowy Blades
 		self:Message(236604, "Attention", "Alert", spellName)
 		shadowyBladesCounter = shadowyBladesCounter + 1
-		self:CDBar(236604, timers[spellId][shadowyBladesCounter])
+		self:CDBar(236604, timers[spellId][shadowyBladesCounter] or 30)
 		self:CastBar(236604, 5)
 	elseif spellId == 235597 then -- Annihilation // Stage 2
 		phase = 2
@@ -243,13 +243,13 @@ function mod:TouchofSargeras(args)
 	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(CL.count:format(args.spellName, touchofSargerasCounter)))
 	self:Bar(args.spellId, 10.5, L.touch_impact)
 	touchofSargerasCounter = touchofSargerasCounter + 1
-	self:Bar(args.spellId, timers[args.spellId][touchofSargerasCounter], CL.count:format(args.spellName, touchofSargerasCounter))
+	self:Bar(args.spellId, timers[args.spellId][touchofSargerasCounter] or 42, CL.count:format(args.spellName, touchofSargerasCounter))
 end
 
 function mod:RuptureRealities(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	ruptureRealitiesCounter = ruptureRealitiesCounter + 1
-	self:Bar(args.spellId, timers[args.spellId][ruptureRealitiesCounter])
+	self:Bar(args.spellId, timers[args.spellId][ruptureRealitiesCounter] or 60)
 	self:CastBar(args.spellId, 7.5)
 end
 
