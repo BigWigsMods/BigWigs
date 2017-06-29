@@ -303,7 +303,9 @@ do
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId, CL.count:format(args.spellName, #list)) -- Announce which mark you have
-			self:SayCountdown(args.spellId, 6)
+			local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName) -- random duration
+			local remaining = expires-GetTime()
+			self:SayCountdown(args.spellId, remaining)
 		end
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alarm")
