@@ -94,8 +94,8 @@ function mod:OnEngage()
 	waveCounter = 1
 	dreadSharkCounter = 1
 
-	self:Bar(230358, 10.5) -- Thundering Shock
-	self:Bar(230201, 15.5) -- Burden of Pain
+	self:CDBar(230358, 10.5) -- Thundering Shock
+	self:CDBar(230201, 15.5) -- Burden of Pain
 	self:Bar(230384, 20.5) -- Consuming Hunger
 	if not self:LFR() then
 		self:Bar(230139, 25) -- Hydra Shot

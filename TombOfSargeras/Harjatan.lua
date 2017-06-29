@@ -92,7 +92,7 @@ function mod:OnEngage()
 	roarCounter = 1
 	rageCounter = 1
 
-	self:Bar(232192, 17.5) -- Commanding Roar
+	self:CDBar(232192, 17.5) -- Commanding Roar
 	self:CDBar(231854, 20.7) -- Unchecked Rage
 	self:CDBar(232061, 58) -- Draw In
 	if self:Mythic() then
