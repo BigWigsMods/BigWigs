@@ -7,15 +7,15 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "zhCN")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Demonic Inquisition has some spells which are delayed by interupts/other casts. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "总是显示技能条"
+	L.custom_on_stop_timers_desc = "恶魔审判庭一些技能会因为施放或被打断其它技能而延迟。当启用此选项，这些技能条将总是显示在屏幕上。"
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "zhCN")
 if L then
 	L.infobox_players = "玩家"
 	L.armor_remaining = "%s 剩余（%d）" -- Bonecage Armor Remaining (#)
-	--L.tormentingCriesSay = "Cries" -- Tormenting Cries (short say)
+	L.tormentingCriesSay = "哀嚎" -- Tormenting Cries (short say)
 end
 
 L = BigWigs:NewBossLocale("Maiden of Vigilance", "zhCN")
@@ -24,16 +24,16 @@ if L then
 	L.sameInfusion = "相同灌注：%s"
 	L.fel = "邪能"
 	L.light = "光明"
-	--L.felHammer = "Fel Hammer" -- Better name for "Hammer of Obliteration"
-	--L.lightHammer = "Light Hammer" -- Better name for "Hammer of Creation"
+	L.felHammer = "邪能锤" -- Better name for "Hammer of Obliteration"
+	L.lightHammer = "圣光锤" -- Better name for "Hammer of Creation"
 end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "zhCN")
 if L then
 	L.touch_impact = "萨格拉斯之触冲击" -- Touch of Sargeras Impact (short)
 
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Fallen Avatar randomizes which off-cooldown ability he uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "总是显示技能条"
+	L.custom_on_stop_timers_desc = "堕落的化身下次会随机施放冷却完毕的技能。当启用此选项，这些技能条将总是显示在屏幕上。"
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "zhCN")
