@@ -23,6 +23,8 @@ local consumingHungerCounter = 1
 local slicingTornadoCounter = 1
 local waveCounter = 1
 local dreadSharkCounter = 1
+local burdenCounter = 1
+local slicingTimersP3 = {0, 39.0, 34.1, 42.6}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -93,9 +95,10 @@ function mod:OnEngage()
 	slicingTornadoCounter = 1
 	waveCounter = 1
 	dreadSharkCounter = 1
-
-	self:CDBar(230358, 10.5) -- Thundering Shock
-	self:CDBar(230201, 15.5) -- Burden of Pain
+	burdenCounter = 1
+	
+	self:Bar(230358, 10.5) -- Thundering Shock
+	self:Bar(230201, 15.5, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
 	self:Bar(230384, 20.5) -- Consuming Hunger
 	if not self:LFR() then
 		self:Bar(230139, 25) -- Hydra Shot
@@ -112,7 +115,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		dreadSharkCounter = dreadSharkCounter + 1
 		if not self:Mythic() then
 			phase = dreadSharkCounter
-		elseif dreadSharkCounter == 2 or dreadSharkCounter == 4 then
+		elseif dreadSharkCounter == 3 or dreadSharkCounter == 5 then
 			self:Message(239436, "Urgent", "Warning")
 			phase = phase+1
 		else
@@ -123,6 +126,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		consumingHungerCounter = 1
 		slicingTornadoCounter = 1
 		waveCounter = 1
+		burdenCounter = 1
 
 		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
 
@@ -135,7 +139,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			if not self:LFR() then
 				self:Bar(230139, 15.9) -- Hydra Shot
 			end
-			self:Bar(230201, 25.6) -- Burden of Pain
+			self:Bar(230201, 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
 			self:Bar(232827, 32.5) -- Crashing Wave
 			self:Bar(234621, 42.2) -- Devouring Maw
 		elseif phase == 3 then
@@ -144,7 +148,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			self:StopBar(234621) -- Devouring Maw
 
 			self:CDBar(232913, 11) -- Befouling Ink
-			self:Bar(230201, 25.6) -- Burden of Pain
+			self:Bar(230201, 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
 			self:Bar(232827, 32.5) -- Crashing Wave
 			if not self:LFR() then
 				self:Bar(230139, 31.6) -- Hydra Shot
@@ -182,8 +186,9 @@ function mod:BurdenofPainCast(args)
 end
 
 function mod:BurdenofPain(args)
+	burdenCounter = burdenCounter + 1
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", nil, nil, true)
-	self:Bar(args.spellId, 25.5) -- Timer until cast_start
+	self:Bar(args.spellId, 25.5, CL.count:format(args.spellName, burdenCounter)) -- Timer until cast_start
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 	end
@@ -203,7 +208,11 @@ end
 function mod:SlicingTornado(args)
 	slicingTornadoCounter = slicingTornadoCounter + 1
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, phase == 3 and (slicingTornadoCounter % 2 == 0 and 45 or 52) or 45) -- -- XXX Need more p3 data.
+	if self:Mythic() then
+		self:Bar(args.spellId, phase == 3 and slicingTimersP3[slicingTornadoCounter] or 45) -- -- XXX Need more p3 data.
+	else
+		self:Bar(args.spellId, phase == 3 and (slicingTornadoCounter % 2 == 0 and 45 or 52) or 45) -- -- XXX Need more p3 data.
+	end
 end
 
 function mod:ThunderingShock(args)
