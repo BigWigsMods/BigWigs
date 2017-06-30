@@ -161,7 +161,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 end
 
 do
-	local list, iconsUnused = mod:NewTargetList(), {1,2,3,4} -- Targets: LFR: 0, 1 Normal, 3 Heroic, 4 Mythic
+	local list = mod:NewTargetList()
 	function mod:HydraShot(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
@@ -169,7 +169,7 @@ do
 			self:CastBar(args.spellId, 6)
 			self:Bar(args.spellId, phase == 2 and 30 or 40)
 		end
-		if self:GetOption(hydraShotMarker) then
+		if self:GetOption(hydraShotMarker) then -- Targets: LFR: 0, 1 Normal, 3 Heroic, 4 Mythic
 			SetRaidTarget(args.destName, #list)
 		end
 	end
