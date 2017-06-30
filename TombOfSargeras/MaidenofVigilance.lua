@@ -71,7 +71,7 @@ function mod:OnBossEnable()
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "UnstableSoul", 243276, 235117) -- Mythic, Others
 	self:Log("SPELL_AURA_REMOVED", "UnstableSoulRemoved", 243276, 235117) -- Mythic, Others
-	self:Log("SPELL_AURA_APPLIED", "AegwynnsWardApplied", 241593, 236420) -- Aegwynn's Ward, Heroic, Normal
+	self:Log("SPELL_AURA_APPLIED", "AegwynnsWardApplied", 241593, 236420) -- Heroic, Normal
 	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 238028, 238408) -- Light Remanence, Fel Remanence
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 238028, 238408)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 238028, 238408)
@@ -137,7 +137,7 @@ end
 
 function mod:AegwynnsWardApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Neutral", "Info")
+		self:Message(241593, "Neutral", "Info")
 	end
 end
 
