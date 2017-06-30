@@ -28,14 +28,21 @@ local felclawsCount = 1
 local flamingOrbCount = 1
 local obeliskCount = 1
 local focusWarned = {}
+
 local phaseTwoTimersHeroic = {
 	-- Rupturing Singularity
 	[235059] = {73.5, 26, 55, 44}, -- Incomplete
 	-- Armageddon
 	[240910] = {50.4, 76, 35, 31}, -- Incomplete
 }
+local phaseTwoTimersEasy = {
+	-- Rupturing Singularity
+	[235059] = {73.5, 81},
+	-- Armageddon
+	[240910] = {50.4, 45, 31, 35, 30.8},
+}
 
-local phaseTwoTimers = phaseTwoTimersHeroic
+local phaseTwoTimers = mod:Easy() and phaseTwoTimersEasy or phaseTwoTimersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -138,6 +145,7 @@ function mod:OnEngage()
 	flamingOrbCount = 1
 	obeliskCount = 1
 	wipe(focusWarned)
+	phaseTwoTimers = self:Easy() and phaseTwoTimersEasy or phaseTwoTimersHeroic
 
 	self:Message("stages", "Positive", "Long", self:SpellName(-14921), false) -- Stage One: The Betrayer
 	self:Bar(240910, 10, CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
@@ -166,13 +174,19 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, sender, _, _, target)
 		self:Message(235059, "Urgent", "Warning", CL.count:format(self:SpellName(235059), singularityCount))
 		self:Bar(235059, 9.85, CL.count:format(L.singularityImpact, singularityCount))
 		singularityCount = singularityCount + 1
-		local timer = nil
-		if intermissionPhase and singularityCount == 2 then -- Intermission Timers
-			 timer = 30
-		elseif phase == 1 and not intermissionPhase then -- Phase 1 Cooldown
-			 timer = 56
-		elseif phase == 2 then -- Phase 2 Timers
-			timer = phaseTwoTimers[235059][singularityCount]
+		local timer = 0
+		if intermissionPhase then -- Intermission timer
+			if self:Easy() or singularityCount > 2 then
+				return -- Only time for 2 during intermission, and only on Heroic +
+			else
+				timer = 30
+			end
+		else
+			if phase == 1 then -- Phase 1 cooldown
+				timer = 56
+			else -- Phase 2 timers
+				timer = phaseTwoTimers[235059][singularityCount]
+			end
 		end
 		self:Bar(235059, timer, CL.count:format(self:SpellName(235059), singularityCount))
 	end
@@ -217,13 +231,19 @@ function mod:Armageddon(args)
 	self:Message(args.spellId, "Important", "Warning", CL.count:format(args.spellName, armageddonCount))
 	self:Bar(args.spellId, 9, CL.count:format(self:SpellName(182580), armageddonCount), args.spellId) -- Meteor Impact
 	armageddonCount = armageddonCount + 1
-	local timer = nil
-	if intermissionPhase and armageddonCount == 2 then -- Intermission timer
-		timer = 29.4
-	elseif phase == 1 and not intermissionPhase then -- Phase 1 cooldown
-		timer = 64
-	elseif phase == 2 then -- Phase 2 timers
-		timer = phaseTwoTimers[args.spellId][armageddonCount]
+	local timer = 0
+	if intermissionPhase then -- Intermission timer
+		if armageddonCount == 2 then
+			timer = 29.4
+		else
+			return -- Only time for 2 during intermission
+		end
+	else
+		if phase == 1 then -- Phase 1 cooldown
+			timer = 64
+		else -- Phase 2 timers
+			timer = phaseTwoTimers[args.spellId][armageddonCount]
+		end
 	end
 	self:Bar(args.spellId, timer, CL.count:format(args.spellName, armageddonCount))
 end
@@ -269,7 +289,9 @@ function mod:NetherGale(args)
 	-- First Intermission
 	self:Bar(240910, 6.1, CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
 	self:Bar(238430, 7.7) -- Bursting Dreadflame
-	self:Bar(235059, 13.3, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
+	if not self:Easy() then -- During intermission only on Heroic +
+		self:Bar(235059, 13.3, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
+	end
 	self:Bar(238505, 23.5) -- Focused Dreadflame
 	self:Bar("stages", 60.2, args.spellName, args.spellId) -- Intermission Duration
 end
