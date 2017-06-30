@@ -43,6 +43,7 @@ end
 -- Initialization
 --
 
+local anguishMarker = mod:AddMarkerOption(false, "player", 1, 233983, 1, 2, 3, 4)
 function mod:GetOptions()
 	return {
 		{236283, "INFOBOX"}, -- Belac's Prisoner
@@ -55,6 +56,7 @@ function mod:GetOptions()
 		233441, -- Bone Saw
 		239401, -- Pangs of Guilt
 		{233983, "FLASH", "SAY", "PROXIMITY"}, -- Echoing Anguish
+		anguishMarker,
 		233895, -- Suffocating Dark
 		234015, -- Tormenting Burst
 		235230, -- Fel Squall
@@ -246,20 +248,31 @@ end
 
 do
 	local proxList = {}
-
+	local list = mod:NewTargetList(), {1,2,3} -- Targets: LFR: ?, 3 Normal, 3 Heroic, ? Mythic
 	function mod:EchoingAnguishApplied(args)
 		proxList[#proxList+1] = args.destName
+		list[#list+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 		end
+
 		self:OpenProximity(args.spellId, 8, proxList) -- Don't stand near others if they have the debuff
+
+		if self:GetOption(anguishMarker) then
+			SetRaidTarget(args.destName, #list)
+		end
 	end
 
 	function mod:EchoingAnguishRemoved(args)
 		tDeleteItem(proxList, args.destName)
+		if self:GetOption(anguishMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
 		if #proxList == 0 then -- If there are no debuffs left, close proximity
 			self:CloseProximity(args.spellId)
+			list = {} -- clear icon list when there are no debuffs left (stops icons cycling)
+
 		else
 			self:OpenProximity(args.spellId, 8, proxList) -- Refresh list
 		end
