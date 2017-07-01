@@ -43,7 +43,6 @@ if L then
 	L.light = "Light"
 	L.felHammer = "Fel Hammer" -- Better name for "Hammer of Obliteration"
 	L.lightHammer = "Light Hammer" -- Better name for "Hammer of Creation"
-	L.orb = "Orb"
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -121,7 +120,7 @@ function mod:OnEngage()
 	self:Bar(248812, 42.5) -- Blowback
 	self:Bar(234891, 43.5) -- Wrath of the Creators
 	if self:Mythic() then
-		self:Bar(239153, 8, CL.count:format(L.orb, orbCounter))
+		self:Bar(239153, 8, CL.count:format(self:SpellName(230932), orbCounter))
 	end
 	self:Berserk(self:Easy() and 525 or 480)
 end
@@ -132,12 +131,12 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 239153 then -- Spontaneous Fragmentation
-		self:Message(spellId, "Attention", "Alert", L.orb)
+		self:Message(spellId, "Attention", "Alert", self:SpellName(230932))
 		orbCounter = orbCounter + 1
 		if orbCounter <= 4 and initialOrbs then
-			self:Bar(spellId, 8, CL.count:format(L.orb, orbCounter))
+			self:Bar(spellId, 8, CL.count:format(self:SpellName(230932), orbCounter))
 		elseif not initialOrbs then
-			self:Bar(spellId, orbTimers[orbCounter], CL.count:format(L.orb, orbCounter))
+			self:Bar(spellId, orbTimers[orbCounter], CL.count:format(self:SpellName(230932), orbCounter))
 		end
 	end
 end
@@ -275,7 +274,7 @@ function mod:WrathoftheCreatorsInterrupted(args)
 
 	self:Bar(235271, 2) -- Infusion
 	if self:Mythic() then
-		self:Bar(239153, 8, CL.count:format(L.orb, orbCounter))
+		self:Bar(239153, 8, CL.count:format(self:SpellName(230932), orbCounter))
 	end
 	self:Bar(241635, 14, L.lightHammer) -- Hammer of Creation
 	self:Bar(235267, 22) -- Mass Instability
