@@ -1482,20 +1482,24 @@ do
 			if player == pName then
 				if checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then
 					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
-					if hasVoice and checkFlag(self, key, C.VOICE) then
-						self:SendMessage("BigWigs_Voice", self, key, sound, true)
-					else
-						self:SendMessage("BigWigs_Sound", self, key, sound)
+					if sound then
+						if hasVoice and checkFlag(self, key, C.VOICE) then
+							self:SendMessage("BigWigs_Voice", self, key, sound, true)
+						else
+							self:SendMessage("BigWigs_Sound", self, key, sound)
+						end
 					end
 				end
 			else
 				if checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
 					-- Change color and remove sound (if not alwaysPlaySound) when warning about effects on other players
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color == "Personal" and "Important" or color, texture)
-					if alwaysPlaySound and hasVoice and checkFlag(self, key, C.VOICE) then
-						self:SendMessage("BigWigs_Voice", self, key, sound)
-					elseif alwaysPlaySound then
-						self:SendMessage("BigWigs_Sound", self, key, sound)
+					if sound then
+						if alwaysPlaySound and hasVoice and checkFlag(self, key, C.VOICE) then
+							self:SendMessage("BigWigs_Voice", self, key, sound)
+						elseif alwaysPlaySound then
+							self:SendMessage("BigWigs_Sound", self, key, sound)
+						end
 					end
 				end
 			end
