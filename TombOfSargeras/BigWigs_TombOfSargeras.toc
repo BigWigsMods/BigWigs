@@ -10,7 +10,7 @@
 ## Title-zhTW: BigWigs [|cffeda55f薩格拉斯之墓|r]
 ## Title-itIT: BigWigs [|cffeda55fTomb of Sargeras|r]
 ## Title-ptBR: BigWigs [|cffeda55fTomb of Sargeras|r]
-## Title-koKR: BigWigs [|cffeda55fTomb of Sargeras|r]
+## Title-koKR: BigWigs [|cffeda55f살게라스의 무덤|r]
 ## Notes: BigWigs Tomb of Sargeras Modules
 ## Notes-deDE: BigWigs-Module für das Grabmal des Sargeras
 ## Notes-esES: BigWigs Tomb of Sargeras Modules
@@ -21,7 +21,7 @@
 ## Notes-zhTW: BigWigs 薩格拉斯之墓
 ## Notes-itIT: BigWigs Tomb of Sargeras Modules
 ## Notes-ptBR: BigWigs Tomb of Sargeras Modules
-## Notes-koKR: BigWigs Tomb of Sargeras Modules
+## Notes-koKR: BigWigs 살게라스의 무덤 모듈
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
