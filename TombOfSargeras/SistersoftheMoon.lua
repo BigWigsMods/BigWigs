@@ -180,9 +180,12 @@ end
 
 function mod:TwilightGlaiveApplied(args)
 	twilightGlaiveCounter = twilightGlaiveCounter + 1
-	self:TargetMessage(236541, args.destName, "Attention", "Warning")
+	self:TargetMessage(236541, args.destName, "Attention")
 	if self:Me(args.destGUID) then
+		self:PlaySound(236541, "Warning")
 		self:Say(236541)
+	else
+		self:PlaySound(236541, "Info")
 	end
 	self:SecondaryIcon(236541, args.destName)
 	self:Bar(236541, phase ~= 1 and 20.5 or (twilightGlaiveCounter % 2 == 1 and 30 or 19))
