@@ -10,7 +10,7 @@
 ## Title-zhTW: BigWigs [|cffeda55f翡翠夢魘|r]
 ## Title-itIT: BigWigs [|cffeda55fEmerald Nightmare|r]
 ## Title-ptBR: BigWigs [|cffeda55fO Pesadelo Esmeralda|r]
-## Title-koKR: BigWigs [|cffeda55fEmerald Nightmare|r]
+## Title-koKR: BigWigs [|cffeda55f에메랄드의 악몽|r]
 ## Notes: BigWigs Emerald Nightmare Modules
 ## Notes-deDE: BigWigs-Module für den smaragdgrünen Alptraum
 ## Notes-esES: BigWigs Módulos para Pesadilla Esmeralda
@@ -21,7 +21,7 @@
 ## Notes-zhTW: BigWigs 翡翠夢魘模組。
 ## Notes-itIT: BigWigs Emerald Nightmare Modules
 ## Notes-ptBR: Módulo do Pesadelo Esmeralda do BigWigs
-## Notes-koKR: BigWigs Emerald Nightmare Modules
+## Notes-koKR: BigWigs 에메랄드의 악몽 모듈
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
