@@ -894,13 +894,16 @@ do
 		timer = nil
 	end
 
-	local hasWarned = nil
+	local hasWarned = 0
+	local verTimer = nil
 	function ResetVersionWarning()
-		hasWarned = nil
+		hasWarned = 0
+		if verTimer then verTimer:Cancel() end -- We may have left the group whilst a warning is about to show
+		verTimer = nil
 	end
 
 	local function printOutOfDate(tbl)
-		if hasWarned then return end
+		if hasWarned == 3 then return end
 		local warnedOutOfDate, warnedReallyOutOfDate, warnedExtremelyOutOfDate = 0, 0, 0
 		for k,v in next, tbl do
 			if v > BIGWIGS_VERSION then
@@ -914,19 +917,31 @@ do
 			end
 		end
 		if warnedExtremelyOutOfDate > 1 then
-			hasWarned = true
-			local diff = highestFoundVersion - BIGWIGS_VERSION
-			local msg = L.warnSeveralReleases:format(diff)
-			sysprint(msg)
-			message(msg)
-			RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 20)
-		elseif warnedReallyOutOfDate > 1 then
-			hasWarned = true
-			sysprint(L.warnTwoReleases)
-			RaidNotice_AddMessage(RaidWarningFrame, L.warnTwoReleases, {r=1,g=1,b=1}, 20)
-		elseif warnedOutOfDate > 1 then
-			hasWarned = true
-			sysprint(L.getNewRelease)
+			if verTimer then verTimer:Cancel() end
+			verTimer = CTimerNewTicker(3, function()
+				hasWarned = 3
+				verTimer = nil
+				local diff = highestFoundVersion - BIGWIGS_VERSION
+				local msg = L.warnSeveralReleases:format(diff)
+				sysprint(msg)
+				message(msg)
+				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 20)
+			end, 1)
+		elseif warnedReallyOutOfDate > 1 and hasWarned < 2 then
+			if verTimer then verTimer:Cancel() end
+			verTimer = CTimerNewTicker(3, function()
+				hasWarned = 2
+				verTimer = nil
+				sysprint(L.warnTwoReleases)
+				RaidNotice_AddMessage(RaidWarningFrame, L.warnTwoReleases, {r=1,g=1,b=1}, 20)
+			end, 1)
+		elseif warnedOutOfDate > 1 and hasWarned < 1 then
+			if verTimer then verTimer:Cancel() end
+			verTimer = CTimerNewTicker(3, function()
+				hasWarned = 1
+				verTimer = nil
+				sysprint(L.getNewRelease)
+			end, 1)
 		end
 	end
 
