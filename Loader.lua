@@ -884,7 +884,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	end
 end
 
-local resetVersionWarnings
+local ResetVersionWarning
 do
 	local timer = nil
 	local function sendMsg()
@@ -894,38 +894,39 @@ do
 		timer = nil
 	end
 
-	local hasWarned, hasReallyWarned, hasExtremelyWarned = nil, nil, nil
-	function resetVersionWarnings()
-		hasWarned, hasReallyWarned, hasExtremelyWarned = nil, nil, nil
+	local hasWarned = nil
+	function ResetVersionWarning()
+		hasWarned = nil
 	end
 
 	local function printOutOfDate(tbl)
-		if hasExtremelyWarned then return end
+		if hasWarned then return end
 		local warnedOutOfDate, warnedReallyOutOfDate, warnedExtremelyOutOfDate = 0, 0, 0
 		for k,v in next, tbl do
 			if v > BIGWIGS_VERSION then
 				warnedOutOfDate = warnedOutOfDate + 1
-				if warnedOutOfDate > 1 and not hasWarned then
-					hasWarned = true
-					sysprint(L.getNewRelease)
-				end
 				if (v - 1) > BIGWIGS_VERSION then -- 2+ releases
 					warnedReallyOutOfDate = warnedReallyOutOfDate + 1
-					if warnedReallyOutOfDate > 1 and not hasReallyWarned then
-						hasReallyWarned = true
-						sysprint(L.warnTwoReleases)
-						RaidNotice_AddMessage(RaidWarningFrame, L.warnTwoReleases, {r=1,g=1,b=1})
-					end
-					if (v - 2) > BIGWIGS_VERSION then -- Currently at 3+ releases since it's a quiet period, always adjust this higher for busy periods.
+					if (v - 2) > BIGWIGS_VERSION then -- 3+ releases
 						warnedExtremelyOutOfDate = warnedExtremelyOutOfDate + 1
-						if warnedExtremelyOutOfDate > 1 and not hasExtremelyWarned then
-							hasExtremelyWarned = true
-							sysprint(L.warnSeveralReleases)
-							message(L.warnSeveralReleases)
-						end
 					end
 				end
 			end
+		end
+		if warnedExtremelyOutOfDate > 1 then
+			hasWarned = true
+			local diff = highestFoundVersion - BIGWIGS_VERSION
+			local msg = L.warnSeveralReleases:format(diff)
+			sysprint(msg)
+			message(msg)
+			RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 20)
+		elseif warnedReallyOutOfDate > 1 then
+			hasWarned = true
+			sysprint(L.warnTwoReleases)
+			RaidNotice_AddMessage(RaidWarningFrame, L.warnTwoReleases, {r=1,g=1,b=1}, 20)
+		elseif warnedOutOfDate > 1 then
+			hasWarned = true
+			sysprint(L.getNewRelease)
 		end
 	end
 
@@ -1081,7 +1082,7 @@ do
 			self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		elseif grouped and not groupType then
 			grouped = nil
-			resetVersionWarnings()
+			ResetVersionWarning()
 			wipe(usersVersion)
 			wipe(usersHash)
 			self:ZONE_CHANGED_NEW_AREA()
