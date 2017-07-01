@@ -95,33 +95,34 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 239212)
 
 	-- Stage One: A Slumber Disturbed
-	self:Log("SPELL_CAST_START", "TouchofSargeras", 239207) -- Touch of Sargeras
-	self:Log("SPELL_CAST_START", "RuptureRealities", 239132) -- Rupture Realities
-	self:Log("SPELL_AURA_APPLIED", "UnboundChaos", 234059) -- Unbound Chaos
-	self:Log("SPELL_CAST_START", "Desolate", 236494) -- Desolate
-	self:Log("SPELL_AURA_APPLIED", "DesolateApplied", 236494) -- Desolate
-	self:Log("SPELL_AURA_APPLIED_DOSE", "DesolateApplied", 236494) -- Desolate
-	self:Log("SPELL_CAST_SUCCESS", "Consume", 240594) -- Consume
-	self:Log("SPELL_CAST_SUCCESS", "RippleofDarkness", 236528) -- Ripple of Darkness
+	self:Log("SPELL_CAST_START", "TouchofSargeras", 239207)
+	self:Log("SPELL_CAST_START", "RuptureRealities", 239132)
+	self:Log("SPELL_AURA_APPLIED", "UnboundChaos", 234059)
+	self:Log("SPELL_CAST_START", "Desolate", 236494)
+	self:Log("SPELL_AURA_APPLIED", "DesolateApplied", 236494)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "DesolateApplied", 236494)
+	self:Log("SPELL_CAST_SUCCESS", "Consume", 240594)
+	self:Log("SPELL_CAST_SUCCESS", "RippleofDarkness", 236528)
 
 	-- Maiden of Valor
-	self:Log("SPELL_CAST_START", "CleansingProtocol", 233856) -- Cleansing Protocol
-	self:Log("SPELL_AURA_APPLIED", "Malfunction", 233739) -- Malfunction
+	self:Log("SPELL_CAST_START", "CleansingProtocol", 233856)
+	self:Log("SPELL_AURA_APPLIED", "Malfunction", 233739)
 
 	-- Containment Pylon
-	self:Log("SPELL_CAST_START", "CorruptedMatrix", 233556) -- Corrupted Matrix
+	self:Log("SPELL_CAST_START", "CorruptedMatrix", 233556)
 
 	-- Stage Two: An Avatar Awakened
-	self:Log("SPELL_AURA_APPLIED", "DarkMark", 239739) -- Dark Mark
-	self:Log("SPELL_AURA_REMOVED", "DarkMarkRemoved", 239739) -- Dark Mark
-	self:Log("SPELL_CAST_START", "RuptureRealitiesP2", 235572) -- Rupture Realities
-	self:Log("SPELL_AURA_APPLIED", "FelInfusion", 236684) -- Dark Mark
-	self:Log("SPELL_AURA_APPLIED_DOSE", "FelInfusion", 236684) -- Dark Mark
+	self:Log("SPELL_CAST_SUCCESS", "Annihilation", 235597) -- Stage 2 cast
+	self:Log("SPELL_AURA_APPLIED", "DarkMark", 239739)
+	self:Log("SPELL_AURA_REMOVED", "DarkMarkRemoved", 239739)
+	self:Log("SPELL_CAST_START", "RuptureRealitiesP2", 235572)
+	self:Log("SPELL_AURA_APPLIED", "FelInfusion", 236684)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "FelInfusion", 236684)
 
 	-- Mythic
-	self:Log("SPELL_CAST_START", "TaintedMatrix", 240623) -- Tainted Matrix
-	self:Log("SPELL_AURA_APPLIED", "TaintedEssence", 240728) -- Desolate
-	self:Log("SPELL_AURA_APPLIED_DOSE", "TaintedEssence", 240728) -- Desolate
+	self:Log("SPELL_CAST_START", "TaintedMatrix", 240623)
+	self:Log("SPELL_AURA_APPLIED", "TaintedEssence", 240728)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "TaintedEssence", 240728)
 
 	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 end
@@ -188,28 +189,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		shadowyBladesCounter = shadowyBladesCounter + 1
 		self:CDBar(236604, timers[spellId][shadowyBladesCounter] or 30)
 		self:CastBar(236604, 5)
-	elseif spellId == 235597 then -- Annihilation // Stage 2
-		phase = 2
-		self:Message("stages", "Positive", "Long", self:SpellName(-14719), false) -- Stage Two: An Avatar Awakened
-
-		self:StopBar(233556) -- Corrupted Matrix
-		self:StopBar(CL.cast:format(self:SpellName(233556))) -- Corrupted Matrix (cast)
-		self:StopBar(236494) -- Desolate
-		self:StopBar(234059) -- Unbound Chaos
-		self:StopBar(CL.count:format(self:SpellName(239207), touchofSargerasCounter)) -- Touch of Sargeras
-		self:StopBar(CL.cast:format(CL.count:format(self:SpellName(239207), touchofSargerasCounter))) -- Touch of Sargeras (cast)
-		self:StopBar(236604) -- Shadowy Blades
-		self:StopBar(239132) -- Rupture Realities (P1)
-		self:StopBar(240623) -- Tainted Matrix
-		self:StopBar(CL.cast:format(self:SpellName(240623))) -- Tainted Matrix (cast)
-
-		ruptureRealitiesCounter = 1
-		desolateCounter = 1
-		darkMarkCounter = 1
-
-		self:CDBar(236494, 20) -- Desolate
-		self:CDBar(239739, 21.5) -- Dark Mark
-		self:CDBar(235572, 38, CL.count:format(self:SpellName(235572), ruptureRealitiesCounter)) -- Rupture Realities (P2)
 	end
 end
 
@@ -294,6 +273,30 @@ function mod:CorruptedMatrix(args)
 	corruptedMatrixCounter = corruptedMatrixCounter + 1
 	self:CDBar(args.spellId, self:Mythic() and 20 or 50)
 	self:CastBar(args.spellId, self:Mythic() and 5 or 10)
+end
+
+function mod:Annihilation() -- Stage 2
+	phase = 2
+	self:Message("stages", "Positive", "Long", self:SpellName(-14719), false) -- Stage Two: An Avatar Awakened
+
+	self:StopBar(233556) -- Corrupted Matrix
+	self:StopBar(CL.cast:format(self:SpellName(233556))) -- Corrupted Matrix (cast)
+	self:StopBar(236494) -- Desolate
+	self:StopBar(234059) -- Unbound Chaos
+	self:StopBar(CL.count:format(self:SpellName(239207), touchofSargerasCounter)) -- Touch of Sargeras
+	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(239207), touchofSargerasCounter))) -- Touch of Sargeras (cast)
+	self:StopBar(236604) -- Shadowy Blades
+	self:StopBar(239132) -- Rupture Realities (P1)
+	self:StopBar(240623) -- Tainted Matrix
+	self:StopBar(CL.cast:format(self:SpellName(240623))) -- Tainted Matrix (cast)
+
+	ruptureRealitiesCounter = 1
+	desolateCounter = 1
+	darkMarkCounter = 1
+
+	self:CDBar(236494, 20) -- Desolate
+	self:CDBar(239739, 21.5) -- Dark Mark
+	self:CDBar(235572, 38, CL.count:format(self:SpellName(235572), ruptureRealitiesCounter)) -- Rupture Realities (P2)
 end
 
 do
