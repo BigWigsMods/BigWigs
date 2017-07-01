@@ -3,6 +3,7 @@
 
 --------------------------------------------------------------------------------
 -- TODO List:
+-- Orbs alternate colour, maybe something like Krosus Assist?
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -24,8 +25,11 @@ local massInstabilityCounter = 0
 local hammerofCreationCounter = 0
 local hammerofObliterationCounter = 0
 local infusionCounter = 0
+local orbCounter = 1
 local mySide = 0
 local lightList, felList = {}, {}
+local initialOrbs = nil
+local orbTimers = {8, 8.5, 7.5, 10.5, 11.5, 8.0, 8.0, 10.0}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -39,6 +43,7 @@ if L then
 	L.light = "Light"
 	L.felHammer = "Fel Hammer" -- Better name for "Hammer of Obliteration"
 	L.lightHammer = "Light Hammer" -- Better name for "Hammer of Creation"
+	L.orb = "Orb"
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -69,6 +74,7 @@ end
 
 function mod:OnBossEnable()
 	-- General
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "UnstableSoul", 243276, 235117) -- Mythic, Others
 	self:Log("SPELL_AURA_REMOVED", "UnstableSoulRemoved", 243276, 235117) -- Mythic, Others
 	self:Log("SPELL_AURA_APPLIED", "AegwynnsWardApplied", 241593, 236420) -- Heroic, Normal
@@ -92,9 +98,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "WrathoftheCreatorsApplied", 237339) -- Wrath of the Creators
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WrathoftheCreatorsApplied", 237339) -- Wrath of the Creators
 	self:Log("SPELL_AURA_REMOVED", "WrathoftheCreatorsInterrupted", 234891) -- Wrath of the Creators
-
-	-- Mythic
-	self:Log("SPELL_CAST_SUCCESS", "SpontaneousFragmentation", 239153) -- Hammer of Creation
 end
 
 function mod:OnEngage()
@@ -108,6 +111,8 @@ function mod:OnEngage()
 	hammerofCreationCounter = 0
 	hammerofObliterationCounter = 0
 	infusionCounter = 0
+	orbCounter = 1
+	initialOrbs = true
 
 	self:Bar(235271, 2.0) -- Infusion
 	self:Bar(241635, 14.0, L.lightHammer) -- Hammer of Creation
@@ -115,12 +120,27 @@ function mod:OnEngage()
 	self:Bar(241636, 32.0, L.felHammer) -- Hammer of Obliteration
 	self:Bar(248812, 42.5) -- Blowback
 	self:Bar(234891, 43.5) -- Wrath of the Creators
+	if self:Mythic() then
+		self:Bar(239153, 8, CL.count:format(L.orb, orbCounter))
+	end
 	self:Berserk(self:Easy() and 525 or 480)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	if spellId == 239153 then -- Spontaneous Fragmentation
+		self:Message(spellId, "Attention", "Alert", L.orb)
+		orbCounter = orbCounter + 1
+		if orbCounter <= 4 and initialOrbs then
+			self:Bar(spellId, 8, CL.count:format(L.orb, orbCounter))
+		elseif not initialOrbs then
+			self:Bar(spellId, orbTimers[orbCounter], CL.count:format(L.orb, orbCounter))
+		end
+	end
+end
 
 function mod:UnstableSoul(args)
 	if self:Me(args.destGUID) then
@@ -131,7 +151,7 @@ end
 
 function mod:UnstableSoulRemoved(args)
 	if self:Me(args.destGUID) then
-		self:StopBar(args.spellName, args.destName)
+		self:StopBar(235117, args.destName)
 	end
 end
 
@@ -250,15 +270,16 @@ function mod:WrathoftheCreatorsInterrupted(args)
 	hammerofCreationCounter = 1
 	hammerofObliterationCounter = 1
 	infusionCounter = 1
+	orbCounter = 1
+	initialOrbs = nil
 
 	self:Bar(235271, 2) -- Infusion
+	if self:Mythic() then
+		self:Bar(239153, 8, CL.count:format(L.orb, orbCounter))
+	end
 	self:Bar(241635, 14, L.lightHammer) -- Hammer of Creation
 	self:Bar(235267, 22) -- Mass Instability
 	self:Bar(241636, 32, L.felHammer) -- Hammer of Obliteration
 	self:Bar(248812, 81) -- Blowback
 	self:Bar(234891, 83.5) -- Wrath of the Creators
-end
-
-function mod:SpontaneousFragmentation(args)
-	self:Message(args.spellId, "Important", "Alarm")
 end
