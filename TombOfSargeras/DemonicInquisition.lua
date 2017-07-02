@@ -291,7 +291,7 @@ do
 	local prev = 0
 	function mod:SuffocatingDarkDamage(args)
 		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 1.5 then
+		if self:Me(args.destGUID) and t-prev > 3 then
 			prev = t
 			self:Message(233895, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
