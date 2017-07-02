@@ -147,7 +147,6 @@ function mod:OnEngage()
 	wipe(focusWarned)
 	phaseTwoTimers = self:Easy() and phaseTwoTimersEasy or phaseTwoTimersHeroic
 
-	self:Message("stages", "Positive", "Long", self:SpellName(-14921), false) -- Stage One: The Betrayer
 	self:Bar(240910, 10, CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
 	self:Bar(236710, 20, L.reflectionErupting) -- Shadow Reflection: Erupting
 	self:Bar(239932, 25) -- Fel Claws
@@ -293,7 +292,7 @@ function mod:NetherGale(args)
 		self:Bar(235059, 13.3, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 	end
 	self:Bar(238505, 23.5) -- Focused Dreadflame
-	self:Bar("stages", 60.2, args.spellName, args.spellId) -- Intermission Duration
+	self:Bar("stages", 60.2, CL.intermission, args.spellId) -- Intermission Duration
 end
 
 function mod:FocusedDreadflame(args)
