@@ -106,6 +106,22 @@ local function getRoleStrings(module, key)
 	return "", ""
 end
 
+local getExtraOptionsString
+do
+	local extraToggles = { "EMPHASIZE", "ME_ONLY", "COUNTDOWN", "FLASH", "PULSE", "ICON", "SAY", "PROXIMITY", "INFOBOX" }
+	local texture = " |TInterface\\AddOns\\BigWigs\\Textures\\options\\%s:16|t"
+	function getExtraOptionsString(module, key)
+		local extras = ""
+		local option = module.toggleDefaults[key]
+		for _, toggle in next, extraToggles do
+			if band(option, C[toggle]) == C[toggle] then
+				extras = extras .. texture:format(toggle)
+			end
+		end
+		return " "..extras
+	end
+end
+
 local function replaceIdWithName(msg)
 	local id = tonumber(msg)
 	if id > 0 then
@@ -143,11 +159,12 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 		if customBossOptions[option] then
 			return option, customBossOptions[option][1], customBossOptions[option][2], customBossOptions[option][4]
 		else
-			local roleIcon, roleDesc
+			local roleIcon, roleDesc, extraIcons
 			if option:find("^custom_") then
-				roleIcon, roleDesc = "", ""
+				roleIcon, roleDesc, extraIcons = "", "", ""
 			else
 				roleIcon, roleDesc = getRoleStrings(module, option)
+				extraIcons = getExtraOptionsString(module, option)
 			end
 
 			local L = module:GetLocale(true)
@@ -159,7 +176,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 				else
 					title = gsub(title, "{(%-?%d-)}", replaceIdWithName) -- Allow embedding an id in a string.
 				end
-				title = title..roleIcon
+				title = title..roleIcon..extraIcons
 			end
 			if description then
 				if type(description) == "number" then
@@ -202,7 +219,8 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 				desc = option
 			end
 			local roleIcon, roleDesc = getRoleStrings(module, option)
-			return option, spellName..roleIcon, roleDesc..desc, icon
+			local extraIcons = getExtraOptionsString(module, option)
+			return option, spellName..roleIcon..extraIcons, roleDesc..desc, icon
 		else
 			-- This is an EncounterJournal ID
 			local tbl = C_EncounterJournal_GetSectionInfo(-option)
@@ -216,10 +234,10 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			end
 
 			local roleIcon, roleDesc = getRoleStrings(module, option)
-			return option, title..roleIcon, roleDesc..description, abilityIcon or false
+			local extraIcons = getExtraOptionsString(module, option)
+			return option, title..roleIcon..extraIcons, roleDesc..description, abilityIcon or false
 		end
 	end
 end
 
 BigWigs.C = C
-
