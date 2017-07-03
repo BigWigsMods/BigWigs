@@ -41,7 +41,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		"berserk",
-		230139, -- Hydra Shot
+		{230139, "SAY"}, -- Hydra Shot
 		hydraShotMarker,
 		{230201, "TANK", "FLASH"}, -- Burden of Pain
 		230959, -- Concealing Murk
@@ -164,6 +164,11 @@ do
 	local list = mod:NewTargetList()
 	function mod:HydraShot(args)
 		list[#list+1] = args.destName
+
+		if self:Me(args.destGUID)then
+			self:Say(args.spellId, not self:Easy() and CL.count_rticon:format(args.spellName, #list, #list))
+		end
+
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important", "Warning", nil, nil, true)
 			self:CastBar(args.spellId, 6)
