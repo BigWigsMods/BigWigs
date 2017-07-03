@@ -363,8 +363,14 @@ function mod:WailingSouls(args)
 	self:CastBar(args.spellId, 60)
 end
 
-function mod:ShatteringScream(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+do
+	local list = mod:NewTargetList()
+	function mod:ShatteringScream(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Attention", "Warning")
+		end
+	end
 end
 
 function mod:SpiritChains(args)
