@@ -148,7 +148,9 @@ function mod:OnEngage()
 	phaseTwoTimers = self:Easy() and phaseTwoTimersEasy or phaseTwoTimersHeroic
 
 	self:Bar(240910, 10, CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
-	self:Bar(236710, 20, L.reflectionErupting) -- Shadow Reflection: Erupting
+	if not self:Easy() then
+		self:Bar(236710, 20, L.reflectionErupting) -- Shadow Reflection: Erupting
+	end
 	self:Bar(239932, 25) -- Fel Claws
 	self:Bar(235059, 58, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 	self:Berserk(600)
@@ -223,7 +225,7 @@ function mod:FelclawsApplied(args)
 	else
 		self:Bar(args.spellId, 24)
 	end
-	self:TargetBar(args.spellId, 11, args.destName)
+	self:TargetBar(args.spellId, 11.5, args.destName)
 end
 
 function mod:Armageddon(args)
@@ -291,7 +293,7 @@ function mod:NetherGale(args)
 	if not self:Easy() then -- During intermission only on Heroic +
 		self:Bar(235059, 13.3, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 	end
-	self:Bar(238505, 23.5) -- Focused Dreadflame
+	self:Bar(238505, 24.6) -- Focused Dreadflame
 	self:Bar("stages", 60.2, CL.intermission, args.spellId) -- Intermission Duration
 end
 
@@ -300,7 +302,7 @@ function mod:FocusedDreadflame(args)
 	if phase == 1 and focusedDreadflameCount == 2 then
 		self:Bar(238505, 13.4)
 	elseif phase == 2 then
-		self:Bar(238505, focusedDreadflameCount % 2 == 0 and 46 or 53)
+		self:Bar(238505, self:Easy() and 99 or focusedDreadflameCount % 2 == 0 and 46 or 53)
 	elseif phase == 3 then
 		self:Bar(238505, 95)
 	end
@@ -344,8 +346,10 @@ function mod:NetherGaleRemoved(args)
 
 	self:Bar(239932, 10.4) -- Felclaws
 	self:Bar(236710, 13.9, L.reflectionErupting) -- Shadow Reflection: Erupting
-	self:Bar(238505, 30.4) -- Focused Dreadflame
-	self:Bar(236378, 48.4, L.reflectionWailing) -- Shadow Reflection: Wailing
+	self:Bar(238505, self:Easy() and 76.4 or 30.4) -- Focused Dreadflame
+	if not self:Easy() then
+		self:Bar(236378, 48.4, L.reflectionWailing) -- Shadow Reflection: Wailing
+	end
 	self:Bar(240910, phaseTwoTimers[240910][armageddonCount]) -- Armageddon
 	self:Bar(238430, 52.4) -- Bursting Dreadflame
 	self:Bar(235059, phaseTwoTimers[235059][singularityCount], CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
