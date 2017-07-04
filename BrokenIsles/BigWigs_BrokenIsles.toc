@@ -10,7 +10,7 @@
 ## Title-zhTW: BigWigs [|cffeda55f破碎群島|r]
 ## Title-itIT: BigWigs [|cffeda55fBroken Isles|r]
 ## Title-ptBR: BigWigs [|cffeda55fIlhas Partidas|r]
-## Title-koKR: BigWigs [|cffeda55fBroken Isles|r]
+## Title-koKR: BigWigs [|cffeda55f부서진 섬|r]
 ## Notes: BigWigs Broken Isles Modules
 ## Notes-deDE: BigWigs-Module für die Verheerten Inseln
 ## Notes-esES: BigWigs Módulos para las Islas Abruptas
@@ -21,7 +21,7 @@
 ## Notes-zhTW: BigWigs 破碎群島模組。
 ## Notes-itIT: BigWigs Broken Isles Modules
 ## Notes-ptBR: Módulo das Ilhas Partidas do BigWigs
-## Notes-koKR: BigWigs Broken Isles Modules
+## Notes-koKR: BigWigs 부서진 섬 모듈
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

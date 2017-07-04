@@ -208,7 +208,7 @@ end
 do
 	local sortingTbl = nil
 	local function sortFunc(x,y)
-		local px, py = sortingTbl[x] or 0, sortingTbl[y] or 0
+		local px, py = sortingTbl[x] or -1, sortingTbl[y] or -1
 		return px > py
 	end
 	local tsort = table.sort
