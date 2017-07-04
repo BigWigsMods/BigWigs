@@ -7,15 +7,15 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "ruRU")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Demonic Inquisition has some spells which are delayed by interupts/other casts. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "Всегда показывать полосы для способностей"
+	L.custom_on_stop_timers_desc = "Демоническая инквизиция имеет некоторые способности, которые задерживаются прерываниями/другими заклинаниями. Когда эта опция включена, полосы для этих способностей останутся на вашем экране."
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "ruRU")
 if L then
 	L.infobox_players = "Игроки"
 	L.armor_remaining = "%s осталось (%d)" -- Bonecage Armor Remaining (#)
-	--L.tormentingCriesSay = "Cries" -- Tormenting Cries (short say)
+	L.tormentingCriesSay = "Стон" -- Tormenting Cries (short say)
 end
 
 L = BigWigs:NewBossLocale("Maiden of Vigilance", "ruRU")
@@ -24,16 +24,16 @@ if L then
 	L.sameInfusion = "Насыщение: %s"
 	L.fel = "Скверна"
 	L.light = "Свет"
-	--L.felHammer = "Fel Hammer" -- Better name for "Hammer of Obliteration"
-	--L.lightHammer = "Light Hammer" -- Better name for "Hammer of Creation"
+	L.felHammer = "Молот Скверны" -- Better name for "Hammer of Obliteration"
+	L.lightHammer = "Молот Света" -- Better name for "Hammer of Creation"
 end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "ruRU")
 if L then
 	L.touch_impact = "Взрыв касания" -- Touch of Sargeras Impact (short)
 
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Fallen Avatar randomizes which off-cooldown ability he uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "Всегда показывать полосы для способностей"
+	L.custom_on_stop_timers_desc = "Аватара Падшего использует свои способности случайным образом. Когда эта опция включена, полосы для этих способностей останутся на вашем экране."
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "ruRU")
