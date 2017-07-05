@@ -259,12 +259,12 @@ end
 
 function mod:DeliciousBufferfish(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Positive")
+		self:TargetMessage(239362, args.destName, "Personal", "Positive")
 	end
 end
 
 function mod:DeliciousBufferfishRemoved(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alert", CL.removed:format(args.spellName))
+		self:TargetMessage(239362, args.destName, "Personal", "Alert", CL.removed:format(args.spellName))
 	end
 end
