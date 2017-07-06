@@ -96,7 +96,7 @@ function mod:OnEngage()
 	waveCounter = 1
 	dreadSharkCounter = 1
 	burdenCounter = 1
-	
+
 	self:Bar(230358, 10.5) -- Thundering Shock
 	self:Bar(230201, 15.5, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
 	self:Bar(230384, 20.5) -- Consuming Hunger
@@ -172,7 +172,7 @@ do
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important", "Warning", nil, nil, true)
 			self:CastBar(args.spellId, 6)
-			self:Bar(args.spellId, phase == 2 and 30 or 40)
+			self:Bar(args.spellId, self:Mythic() and 30.5 or phase == 2 and 30 or 40)
 		end
 		if self:GetOption(hydraShotMarker) then -- Targets: LFR: 0, 1 Normal, 3 Heroic, 4 Mythic
 			SetRaidTarget(args.destName, #list)
@@ -253,7 +253,7 @@ end
 function mod:CrashingWave(args)
 	waveCounter = waveCounter + 1
 	self:Message(args.spellId, "Important", "Warning")
-	self:CastBar(args.spellId, 5)
+	self:CastBar(args.spellId, self:Mythic() and 4 or 5)
 	self:Bar(args.spellId, phase == 3 and (waveCounter == 3 and 49) or 42) -- XXX need more data in p3
 end
 
