@@ -38,7 +38,7 @@ L.other = "%s : %s"
 L.over = "%s terminé !"
 L.phase = "Phase %d"
 L.removed = "%s enlevé"
---L.removed_from = "%s Removed From %s"
+L.removed_from = "%s enlevé de %s"
 L.small_adds = "Petits adds"
 L.soon = "%s bientôt !"
 L.spawned = "%s apparu"
@@ -50,7 +50,7 @@ L.trash = "Trash"
 L.underyou = "%s en dessous de VOUS !"
 L.you = "%s sur VOUS !"
 
---L.active = "Active" -- When a boss becomes active, after speech finishes
+L.active = "Actif" -- When a boss becomes active, after speech finishes
 
 -- Common raid marking locale
 L.marker = "Marquage %s"
