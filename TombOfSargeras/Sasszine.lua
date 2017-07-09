@@ -25,6 +25,7 @@ local waveCounter = 1
 local dreadSharkCounter = 1
 local burdenCounter = 1
 local slicingTimersP3 = {0, 39.0, 34.1, 42.6}
+local hydraShotCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -96,12 +97,13 @@ function mod:OnEngage()
 	waveCounter = 1
 	dreadSharkCounter = 1
 	burdenCounter = 1
+	hydraShotCounter = 1
 
 	self:Bar(230358, 10.5) -- Thundering Shock
 	self:Bar(230201, 15.5, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
 	self:Bar(230384, 20.5) -- Consuming Hunger
 	if not self:LFR() then
-		self:Bar(230139, 25) -- Hydra Shot
+		self:Bar(230139, 25, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
 	end
 	self:Bar(232722, 30.3) -- Slicing Tornado
 	self:Berserk(self:LFR() and 540 or 480)
@@ -123,30 +125,31 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 			return -- No phase change yet
 		end
 
+		self:StopBar(232722) -- Slicing Tornado
+		self:StopBar(230358) -- Thundering Shock
+		self:StopBar(230384) -- Consuming Hunger
+		self:StopBar(232913) -- Befouling Ink
+		self:StopBar(232827) -- Crashing Wave
+		self:StopBar(234621) -- Devouring Maw
+		self:StopBar(CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
+		self:StopBar(CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
+
 		consumingHungerCounter = 1
 		slicingTornadoCounter = 1
 		waveCounter = 1
 		burdenCounter = 1
+		hydraShotCounter = 1
 
 		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
-
 		if phase == 2 then
-			self:StopBar(232722) -- Slicing Tornado
-			self:StopBar(230358) -- Thundering Shock
-			self:StopBar(230384) -- Consuming Hunger
-
 			self:Bar(232913, 11) -- Befouling Ink
 			if not self:LFR() then
-				self:Bar(230139, 15.9) -- Hydra Shot
+				self:Bar(230139, 15.9, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
 			end
 			self:Bar(230201, 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
 			self:Bar(232827, 32.5) -- Crashing Wave
 			self:Bar(234621, 42.2) -- Devouring Maw
 		elseif phase == 3 then
-			self:StopBar(232913) -- Befouling Ink
-			self:StopBar(232827) -- Crashing Wave
-			self:StopBar(234621) -- Devouring Maw
-
 			self:CDBar(232913, 11) -- Befouling Ink
 			self:Bar(230201, 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
 			self:Bar(232827, 32.5) -- Crashing Wave
@@ -170,9 +173,10 @@ do
 		end
 
 		if #list == 1 then
+			self:CastBar(args.spellId, 6, CL.count:format(args.spellName, hydraShotCounter))
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important", "Warning", nil, nil, true)
-			self:CastBar(args.spellId, 6)
-			self:Bar(args.spellId, self:Mythic() and 30.5 or phase == 2 and 30 or 40)
+			hydraShotCounter = hydraShotCounter + 1
+			self:Bar(args.spellId, self:Mythic() and 30.5 or phase == 2 and 30 or 40, CL.count:format(args.spellName, hydraShotCounter))
 		end
 		if self:GetOption(hydraShotMarker) then -- Targets: LFR: 0, 1 Normal, 3 Heroic, 4 Mythic
 			SetRaidTarget(args.destName, #list)
