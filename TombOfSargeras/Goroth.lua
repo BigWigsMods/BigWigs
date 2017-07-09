@@ -138,9 +138,22 @@ do
 		-- There are 2 debuffs. The first has no CLEU, the second does.
 		local _, _, _, _, _, _, expires, _, _, _, spellId = UnitDebuff(unit, self:SpellName(232249)) -- Crashing Comet debuff ID
 
-		if spellId == 232249 then
+		if spellId == 232249 or spellId == 230345 then
 			local n = self:UnitName(unit)
-			if not cometWarned[n] then
+
+			local hasBoth = false
+			if spellId == 230345 then
+				for i = 1, 40 do
+					_, _, _, _, _, _, expires, _, _, _, spellId = UnitDebuff(unit, i)
+					if spellId == 232249 and not cometWarned[n] then
+						hasBoth = true
+						break
+					end
+					if not spellId then break end
+				end
+			end
+
+			if hasBoth or (spellId == 232249 and not cometWarned[n]) then
 				cometWarned[n] = true
 				list[#list+1] = n
 				if #list == 1 then
