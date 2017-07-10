@@ -34,6 +34,10 @@ if L then
 
 	L.custom_on_stop_timers = "总是显示技能条"
 	L.custom_on_stop_timers_desc = "堕落的化身下次会随机施放冷却完毕的技能。当启用此选项，这些技能条将总是显示在屏幕上。"
+
+	L.energy_leak = "能量泄漏"
+	L.energy_leak_desc = "当第一阶段首领能量泄漏时显示警报。"
+	L.energy_leak_msg = "能量泄漏！（%d）"
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "zhCN")
