@@ -587,6 +587,11 @@ end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, bossOption)
+	local function toggleOnEnter(widget)
+		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
+		GameTooltip:SetText(widget:GetUserData("tooltipText"), 1, 1, 1, true)
+		GameTooltip:Show()
+	end
 
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(colorize[name])
@@ -600,6 +605,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	check:SetCallback("OnValueChanged", masterOptionToggled)
 	check:SetValue(getMasterOption(check))
 	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
+	local extraToggles = { "EMPHASIZE", "ME_ONLY", "COUNTDOWN", "FLASH", "PULSE", "ICON", "SAY", "PROXIMITY", "INFOBOX" }
 
 	local spellId = nil
 	if type(dbKey) == "number" then
@@ -630,16 +636,35 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	if type(dbKey) == "string" and dbKey:find("^custom_") then
 		return check
 	else
+
+		local group = AceGUI:Create("SimpleGroup")
+		group:SetRelativeWidth(0.85)
+		group:SetLayout("Flow")
+		group:AddChild(check)
+
+		for i, key in next, extraToggles do
+			local flag = C[key]
+			if bit.band(module.toggleDefaults[dbKey], flag) == flag then
+				local toggle = AceGUI:Create("Icon")
+				toggle:SetImage("Interface\\AddOns\\BigWigs\\Textures\\options\\"..key)
+				toggle:SetImageSize(16, 16)
+				toggle:SetUserData("tooltipText", key)
+				toggle:SetCallback("OnEnter", toggleOnEnter)
+				toggle:SetCallback("OnLeave", GameTooltip_Hide)
+				group:AddChild(toggle)
+			end
+		end
+
 		local button = AceGUI:Create("Button")
 		button:SetText(">>")
 		button:SetRelativeWidth(0.15)
-		-- userdata baby
 		button:SetUserData("scrollFrame", scrollFrame)
 		button:SetUserData("dropdown", dropdown)
 		button:SetUserData("module", module)
 		button:SetUserData("bossOption", bossOption)
 		button:SetCallback("OnClick", buttonClicked)
-		return check, button
+
+		return group, button
 	end
 end
 
