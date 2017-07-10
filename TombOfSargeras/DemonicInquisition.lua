@@ -28,6 +28,7 @@ local sweepCounter = 1
 local nextAltPowerWarning = 20
 local suffocatingDarkCounter = 1
 local jailList = {}
+local jailTimer = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -72,7 +73,6 @@ end
 function mod:OnBossEnable()
 	-- General
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
-	self:RegisterMessage("BigWigs_PluginComm")
 	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 	self:Log("SPELL_AURA_APPLIED", "BelacsPrisoner", 236283)
 	self:Log("SPELL_AURA_REMOVED", "BelacsPrisonerRemoved", 236283)
@@ -98,15 +98,16 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	-- Jail Infobox
-	wipe(jailList)
-	self:OpenInfo(236283, self:SpellName(236283))
-
 	pangsofGuiltCounter = 1
 	sweepCounter = 1
 	suffocatingDarkCounter = 1
 	nextAltPowerWarning = 20
-	self:OpenAltPower("altpower", 233104, nil, true) -- Torment, Sync for those far away
+	jailTimer = nil
+	wipe(jailList)
+
+	-- Jail Infobox
+	self:OpenInfo(236283, self:SpellName(236283))
+	self:OpenAltPower("altpower", 233104) -- Torment
 
 	-- Atrigan
 	self:CDBar(233426, 5.8) -- Scythe Sweep
@@ -152,18 +153,6 @@ do
 	end
 end
 
-function mod:BigWigs_PluginComm(_, msg, amount, sender)
-	if msg == "AltPower" then
-		if jailList[sender] then
-			--print(sender)
-			--print(amount)
-			local energy = tonumber(amount)
-			jailList[sender] = energy
-			self:SetInfoByTable(236283, jailList)
-		end
-	end
-end
-
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 233895 then -- Suffocating Dark
 		self:Message(spellId, "Attention", "Info")
@@ -189,19 +178,35 @@ do
 	end
 end
 
-function mod:BelacsPrisoner(args)
-	if self:Me(args.destGUID)then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alert")
+do
+	local function updatePower(self, id)
+		for k in next, jailList do
+			jailList[k] = UnitPower(k, 10) or 1
+		end
+		self:SetInfoByTable(id, jailList)
 	end
 
-	-- Add person to InfoBox
-	jailList[args.destName] = UnitPower(args.destName, 10) or 1 -- Incase we can't grab unitpower
-	self:SetInfoByTable(args.spellId, jailList)
+	function mod:BelacsPrisoner(args)
+		if self:Me(args.destGUID)then
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Alert")
+		end
+
+		-- Add person to InfoBox
+		jailList[args.destName] = UnitPower(args.destName, 10) or 1 -- Incase we can't grab unitpower
+		self:SetInfoByTable(args.spellId, jailList)
+		if not jailTimer then
+			jailTimer = self:ScheduleRepeatingTimer(updatePower, 1, self, args.spellId)
+		end
+	end
 end
 
 function mod:BelacsPrisonerRemoved(args)
 	-- Remove from InfoBox
 	jailList[args.destName] = nil
+	if not next(jailList) then
+		self:CancelTimer(jailTimer)
+		jailTimer = nil
+	end
 	self:SetInfoByTable(args.spellId, jailList)
 end
 

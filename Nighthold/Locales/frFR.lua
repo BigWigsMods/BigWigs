@@ -61,10 +61,10 @@ if L then
 	L.ring_yell = "Que le torrent du temps vous emporte !"
 	L.orb_yell = "Le temps est parfois… explosif."
 
-	--L.slowTimeZone = "Slow Time Zone"
+	L.slowTimeZone = "Zone de temps ralenti"
 	L.fastTimeZone = "Zone de temps accéléré"
 
-	--L.boss_active = "Elisande Active"
+	L.boss_active = "Elisande active"
 	--L.boss_active_desc = "Time until Elisande is active after clearing the trash event."
 	--L.elisande_trigger = "I foresaw your coming, of course. The threads of fate that led you to this place. Your desperate attempt to stop the Legion."
 end
