@@ -1,4 +1,6 @@
 
+-- GLOBALS: math
+
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Keep updating the timers if any new timers shorter than current are found
@@ -43,6 +45,7 @@ local touchofSargerasCounter = 1
 local desolateCounter = 1
 local darkMarkCounter = 1
 local taintedMatrixCounter = 1
+local energyLeakCheck = nil
 
 local timers = mod:Mythic() and timersMythic or timersHeroic
 --------------------------------------------------------------------------------
@@ -162,8 +165,10 @@ function mod:OnEngage()
 	self:Bar(236604, timers[236573][shadowyBladesCounter]) -- Shadowy Blades
 	self:Bar(239132, timers[239132][ruptureRealitiesCounter]) -- Rupture Realities (P1)
 
-	self:InitCheckUnitPower()
-	self:ScheduleRepeatingTimer("CheckUnitPower", 1)
+	if not self:LFR() then
+		self:InitCheckUnitPower()
+		energyLeakCheck = self:ScheduleRepeatingTimer("CheckUnitPower", 1)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -180,27 +185,25 @@ do
 	end
 
 	function mod:CheckUnitPower()
-		if phase ~= 2 then
-			local power = UnitPower("boss1")
-			table[checks%5 + 1] = math.max(power-(last or 0), 0)
+		local power = UnitPower("boss1")
+		table[checks%5 + 1] = math.max(power-(last or 0), 0)
 
-			local sum = 0
-			for _,v in pairs(table) do
-				sum = sum + v
-			end
+		local sum = 0
+		for _,v in pairs(table) do
+			sum = sum + v
+		end
 
-			if sum >= 5 then -- Check power gained
-				local t = GetTime()
-				if last and power > last and t-prev > 2 then -- Skip first message, only if power is bigger than before
-					self:Message("energy_leak", "Attention", "Info", L.energy_leak_msg:format(sum), false)
-					self:InitCheckUnitPower()
-					prev = t
-				end
+		if sum >= 5 then -- Check power gained
+			local t = GetTime()
+			if last and power > last and t-prev > 2 then -- Skip first message, only if power is bigger than before
+				self:Message("energy_leak", "Attention", "Info", L.energy_leak_msg:format(sum), false)
+				self:InitCheckUnitPower()
+				prev = t
 			end
+		end
 
-			last = power
-			checks = checks + 1
-			end
+		last = power
+		checks = checks + 1
 	end
 end
 
@@ -352,6 +355,11 @@ function mod:Annihilation() -- Stage 2
 	ruptureRealitiesCounter = 1
 	desolateCounter = 1
 	darkMarkCounter = 1
+
+	if energyLeakCheck then
+		self:CancelTimer(energyLeakCheck)
+		energyLeakCheck = nil
+	end
 
 	self:CDBar(236494, 20) -- Desolate
 	self:CDBar(239739, self:Mythic() and 31.1 or 21.5) -- Dark Mark
