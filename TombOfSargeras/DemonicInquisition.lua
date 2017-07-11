@@ -164,8 +164,8 @@ end
 do
 	local lastPower, prev = 0, 0
 	function mod:UNIT_POWER(unit, pType)
-		if pType == 10 then -- Enum.PowerType.Alternate = 10
-			local power = UnitPower(unit, pType)
+		if pType == "ALTERNATE" then
+			local power = UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
 			if power < lastPower or power >= nextAltPowerWarning then
 				self:StackMessage(233104, self:UnitName(unit), power, "Personal")
 				local t = GetTime()
