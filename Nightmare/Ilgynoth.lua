@@ -19,7 +19,6 @@ mod.respawnTime = 30
 --
 
 local mobCollector = {}
-local fixateOnMe = nil
 local phase = 1 -- 1 = Outside, 2 = Boss, 3 = Outside, 4 = Boss
 local deathglareMarked = {} -- save GUIDs of marked mobs
 local deathglareMarks  = { [6] = true, [5] = true, [4] = true, [3] = true } -- available marks to use
@@ -181,7 +180,6 @@ function mod:OnBossEnable()
 
 	-- Nightmare Ichor
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 210099)
-	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 210099)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TouchOfCorruption", 209469)
 
 	-- Nightmare Horror
@@ -213,7 +211,6 @@ end
 
 function mod:OnEngage()
 	wipe(mobCollector)
-	fixateOnMe = nil
 	phase = 1
 	deathBlossomCount = 1
 	blobsRemaining = self:LFR() and 15 or self:Mythic() and 22 or 20
@@ -299,7 +296,7 @@ do
 end
 
 -- Dominator Tentacle
-function mod:RAID_BOSS_WHISPER(_, msg, sender)
+function mod:RAID_BOSS_WHISPER(_, msg)
 	if msg:find("208689", nil, true) then -- Ground Slam
 		self:Message(208689, "Personal", "Alarm", CL.you:format(self:SpellName(208689)))
 		self:Flash(208689)
@@ -342,13 +339,6 @@ end
 function mod:Fixate(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
-		fixateOnMe = true
-	end
-end
-
-function mod:FixateRemoved(args)
-	if self:Me(args.destGUID) then
-		fixateOnMe = nil
 	end
 end
 

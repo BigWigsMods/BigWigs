@@ -129,7 +129,7 @@ do
 	public.zoneTblWorld = {
 		[-473] = 466, [-465] = 466, -- Outland
 		[-807] = 862, [-809] = 862, [-928] = 862, [-929] = 862, [-951] = 862, -- Pandaria
-		[-948] = 962, [-949] = 962, [-949] = 962, [-945] = 962, -- Draenor
+		[-948] = 962, [-949] = 962, [-945] = 962, -- Draenor
 		[-1015] = 1007, [-1017] = 1007, [-1018] = 1007, [-1024] = 1007, [-1033] = 1007, -- Broken Isles
 	}
 	public.fakeWorldZones = fakeWorldZones
@@ -227,7 +227,7 @@ end
 
 tooltipFunctions[#tooltipFunctions+1] = function(tt)
 	local add, i = nil, 0
-	for player, version in next, usersVersion do
+	for _, version in next, usersVersion do
 		i = i + 1
 		if version < highestFoundVersion then
 			add = true
@@ -742,7 +742,7 @@ end
 -- Events
 --
 
-bwFrame:SetScript("OnEvent", function(frame, event, ...)
+bwFrame:SetScript("OnEvent", function(_, event, ...)
 	mod[event](mod, ...)
 end)
 bwFrame:RegisterEvent("ADDON_LOADED")
@@ -751,7 +751,7 @@ bwFrame:RegisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
 do
 	-- Role Updating
 	local prev = 0
-	function mod:ACTIVE_TALENT_GROUP_CHANGED(player)
+	function mod:ACTIVE_TALENT_GROUP_CHANGED()
 		if IsInGroup() then
 			if IsPartyLFG() then return end
 
@@ -1148,8 +1148,8 @@ public.RegisterMessage(mod, "BigWigs_CoreDisabled")
 --
 
 function public:RegisterTooltipInfo(func)
-	for i, v in next, tooltipFunctions do
-		if v == func then
+	for i = 1, #tooltipFunctions do
+		if tooltipFunctions[i] == func then
 			error(("The function %q has already been registered."):format(func))
 		end
 	end
@@ -1218,8 +1218,8 @@ do
 					end
 				end
 			end
-			for i, v in next, tooltipFunctions do
-				v(tt)
+			for i = 1, #tooltipFunctions do
+				tooltipFunctions[i](tt)
 			end
 			tt:AddLine(L.tooltipHint, 0.2, 1, 0.2, 1)
 		end
@@ -1254,10 +1254,10 @@ SlashCmdList.BigWigsVersion = function()
 		return ("|cFF%02x%02x%02x%s|r%s"):format(tbl.r*255, tbl.g*255, tbl.b*255, name, version)
 	end
 
-	local m = {}
+	local list = {}
 	local unit
 	if not IsInRaid() then
-		m[1] = UnitName("player")
+		list[1] = UnitName("player")
 		unit = "party%d"
 	else
 		unit = "raid%d"
@@ -1265,7 +1265,7 @@ SlashCmdList.BigWigsVersion = function()
 	for i = 1, GetNumGroupMembers() do
 		local n, s = UnitName((unit):format(i))
 		if n and s and s ~= "" then n = n.."-"..s end
-		if n then m[#m+1] = n end
+		if n then list[#list+1] = n end
 	end
 
 	local good = {} -- highest release users
@@ -1273,7 +1273,8 @@ SlashCmdList.BigWigsVersion = function()
 	local bad = {} -- no boss mod
 	local crazy = {} -- DBM users
 
-	for i, player in next, m do
+	for i = 1, #list do
+		local player = list[i]
 		local usesBossMod = nil
 		if usersVersion[player] then
 			if usersVersion[player] < highestFoundVersion then

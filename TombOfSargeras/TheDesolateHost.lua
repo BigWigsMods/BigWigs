@@ -26,7 +26,6 @@ mod.respawnTime = 40
 local myRealm = 0 -- 1 = Spirit Realm, 0 = Corporeal Realm
 local phasedList = {}
 local unphasedList = {}
-local phasedCheckList = {}
 local phase = 1
 local tormentedCriesCounter = 1
 local wailingSoulsCounter = 1

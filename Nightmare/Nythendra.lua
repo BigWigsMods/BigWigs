@@ -21,7 +21,6 @@ mod.respawnTime = 30
 --
 
 local rotCount = 1
-local mindControlledPlayers = 0
 local myInfestedStacks = 0
 local infestedStacks = {}
 
@@ -71,7 +70,6 @@ end
 
 function mod:OnEngage()
 	rotCount = 1
-	mindControlledPlayers = 0
 	myInfestedStacks = 0
 	wipe(infestedStacks)
 	self:Berserk(self:Normal() and 600 or 480) -- Can be delayed by 2nd phase
@@ -89,16 +87,13 @@ end
 -- Event Handlers
 --
 
-do
-	local prev = 0
-	function mod:UNIT_SPELLCAST_START(_, spellName, _, _, spellId)
-		if spellId == 202977 then -- Infested Breath
-			self:Message(spellId, "Urgent", "Alarm", CL.casting:format(spellName))
-			self:CastBar(spellId, 8) -- 3s cast time + 5s channel
+function mod:UNIT_SPELLCAST_START(_, spellName, _, _, spellId)
+	if spellId == 202977 then -- Infested Breath
+		self:Message(spellId, "Urgent", "Alarm", CL.casting:format(spellName))
+		self:CastBar(spellId, 8) -- 3s cast time + 5s channel
 
-			if self:BarTimeLeft(203552) > 37 then -- Heart of the Swarm
-				self:CDBar(spellId, 37)
-			end
+		if self:BarTimeLeft(203552) > 37 then -- Heart of the Swarm
+			self:CDBar(spellId, 37)
 		end
 	end
 end

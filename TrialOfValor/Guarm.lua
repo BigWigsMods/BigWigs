@@ -21,7 +21,6 @@ local fangCounter = 0
 local leapCounter = 0
 local foamCount = 1
 local phaseStartTime = 0
-local lickCount = 1
 local lickTimer = {14.1, 22.7, 26.3, 33.7, 43.3, 95.8, 99.4, 106.8, 116.5, 171.9, 175.4, 182.6, 192.6}
 local foamTargets = {}
 

@@ -20,7 +20,6 @@ mod.respawnTime = 30
 --
 
 local twistingShadowsCount = 1
-local phase = 1
 local webOfPainTargets = {}
 
 --------------------------------------------------------------------------------
@@ -98,7 +97,6 @@ end
 
 function mod:OnEngage()
 	twistingShadowsCount = 1
-	phase = 1
 
 	self:Bar(215300, 6) -- Web of Pain
 	self:Bar(212364, 16) -- Feeding Time

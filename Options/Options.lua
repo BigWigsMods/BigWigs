@@ -264,7 +264,7 @@ end
 do
 	local configMode = nil
 	function options:InConfigureMode() return configMode end
-	function options:BigWigs_StartConfigureMode(event, hideFrame)
+	function options:BigWigs_StartConfigureMode()
 		configMode = true
 	end
 	function options:BigWigs_StopConfigureMode()

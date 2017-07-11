@@ -226,7 +226,7 @@ function boss:OnDisable(isWipe)
 	wipe(allowedEvents)
 
 	-- Re-add allowed events if more than one module is enabled
-	for a, b in next, eventMap do
+	for _, b in next, eventMap do
 		for k in next, b do
 			allowedEvents[k] = true
 		end

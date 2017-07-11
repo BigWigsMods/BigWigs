@@ -171,7 +171,7 @@ local function onDragStop(self)
 	plugin:UpdateGUI() -- Update X/Y if GUI is open.
 end
 local function OnDragHandleMouseDown(self) self.frame:StartSizing("BOTTOMRIGHT") end
-local function OnDragHandleMouseUp(self, button) self.frame:StopMovingOrSizing() end
+local function OnDragHandleMouseUp(self) self.frame:StopMovingOrSizing() end
 local function onResize(self, width, height)
 	db.width = width
 	db.height = height

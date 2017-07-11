@@ -221,7 +221,7 @@ end
 local english_ring_msg = "Let the waves of time crash over you!"
 local english_orb_msg = "You'll find time can be quite volatile."
 local need_ring_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_yell
-local need_orb_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_yell
+local need_orb_msg = GetLocale() ~= "enUS" and english_orb_msg == L.orb_yell
 local ring_msg_is_next = nil
 local orb_msg_is_next = nil
 local localized_ring_msg = nil
@@ -341,7 +341,7 @@ function mod:OnEngage()
 
 	-- l11n START
 	need_ring_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_yell
-	need_orb_msg = GetLocale() ~= "enUS" and english_ring_msg == L.ring_yell
+	need_orb_msg = GetLocale() ~= "enUS" and english_orb_msg == L.orb_yell
 	-- l11n END
 
 	timers = self:Mythic() and mythicTimers or mod:Heroic() and heroicTimers or mod:Normal() and normalTimers or lfrTimers
@@ -445,7 +445,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	-- l11n START
 	-- XXX maybe add a print to tell the user to tell us?
 	if orb_msg_is_next then

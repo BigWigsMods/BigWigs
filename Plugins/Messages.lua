@@ -31,8 +31,6 @@ local db = nil
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
 
-local tempPrint = true -- XXX temp
-
 --------------------------------------------------------------------------------
 -- Anchors & Frames
 --
@@ -447,7 +445,6 @@ local function updateProfile()
 		font.animFade:SetDuration(db.fadetime)
 		font.icon.animFade:SetDuration(db.fadetime)
 		font:SetFont(media:Fetch("font", db.font), db.fontSize, flags)
-		tempPrint = false
 	end
 end
 
@@ -553,8 +550,7 @@ do
 		return labels[4]
 	end
 
-	function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
-		if tempPrint then print("BigWigs: We are printing a message before initialization has finished somehow.") end
+	function plugin:Print(_, text, r, g, b, _, _, _, _, _, icon)
 		BWMessageFrame:Show()
 
 		local slot = db.growUpwards and getNextSlotUp() or getNextSlotDown()
@@ -603,7 +599,7 @@ do
 	anim:SetDuration(3.5)
 	anim:SetStartDelay(1.5)
 
-	function plugin:EmphasizedPrint(addon, text, r, g, b)
+	function plugin:EmphasizedPrint(_, text, r, g, b)
 		emphasizedText:SetText(text)
 		emphasizedText:SetTextColor(r, g, b)
 		updater:Stop()

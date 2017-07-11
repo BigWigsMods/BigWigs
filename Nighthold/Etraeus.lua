@@ -49,24 +49,6 @@ local starSignTables = {
 	[216344] = {},
 }
 
-local defaultIcons = {
-	[205429] = 205429,
-	[205445] = 205445,
-	[216345] = 216345,
-	[216344] = 216344,
-}
-local icons = defaultIcons
-
-local replacementIcons = {
-	[205429] = 227498, -- Yellow/Orange
-	[205445] = 227491, -- Red
-	[216345] = 227500, -- Green
-	[216344] = 227499, -- Blue
-}
-
-local redIcon = 189030
-local greenIcon = 189032
-
 --------------------------------------------------------------------------------
 -- Upvalues
 --
@@ -200,9 +182,6 @@ function mod:OnEngage()
 		[216345] = {},
 		[216344] = {},
 	}
-	if self:GetOption("custom_off_gc_replacement_icons") then
-		icons = replacementIcons
-	end
 end
 
 function mod:OnBossDisable()

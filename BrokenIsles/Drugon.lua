@@ -44,7 +44,7 @@ end
 --
 
 do
-	local function printTarget(self, player, guid)
+	local function printTarget(self, player)
 		self:TargetMessage(219803, player, "Positive")
 	end
 	function mod:IceHurl(args)

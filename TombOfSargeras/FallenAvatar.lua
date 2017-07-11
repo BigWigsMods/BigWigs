@@ -35,7 +35,6 @@ local timersMythic = {
 	[239132] = {34.5, 64.5, 63, 63}, -- Rupture Realities
 }
 
-local timers = nil
 local phase = 1
 local corruptedMatrixCounter = 1
 local ruptureRealitiesCounter = 1
@@ -48,6 +47,7 @@ local taintedMatrixCounter = 1
 local energyLeakCheck = nil
 
 local timers = mod:Mythic() and timersMythic or timersHeroic
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -226,7 +226,7 @@ do
 		end
 	end
 
-	function mod:BarCreated(_, _, bar, module, key, text, time, icon, isApprox)
+	function mod:BarCreated(_, _, bar, _, key, text)
 		if self:GetOption("custom_on_stop_timers") and abilitysToPause[key] and not text:match(castPattern) and text ~= L.touch_impact then
 			bar:AddUpdateFunction(stopAtZeroSec)
 		end
@@ -248,7 +248,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	end
 end
 
-function mod:RAID_BOSS_WHISPER(_, msg, sender)
+function mod:RAID_BOSS_WHISPER(_, msg)
 	if msg:find("236604", nil, true) then -- Shadowy Blades
 		self:Message(236604, "Personal", "Alarm", CL.you:format(self:SpellName(236604)))
 		self:Flash(236604)

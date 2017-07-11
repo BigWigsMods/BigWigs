@@ -309,7 +309,7 @@ end
 -- Event Handlers
 --
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L.p2_start) and not self:Mythic() then -- Stage Two: The Ritual of Aman'Thul Start
 		self:StopBar(CL.count:format(self:SpellName(206219), liquidHellfireCount)) -- Liquid Hellfire
 		self:StopBar(206514) -- Fel Efflux
@@ -901,7 +901,6 @@ end
 
 do
 	local timeStop = mod:SpellName(206310)
-	local prev = 0
 
 	local function checkForTimeStop(self)
 		if UnitIsDead("player") then

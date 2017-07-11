@@ -147,7 +147,7 @@ function plugin:OnRegister()
 
 	soundList = media:List(mType)
 
-	for k, s in next, sounds do
+	for k in next, sounds do
 		local n = L[k] or k
 		self.pluginOptions.args[k] = {
 			type = "select",
