@@ -38,7 +38,7 @@ end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "koKR")
 if L then
-	L.singularityImpact = "특이점 충돌"
+	L.singularityImpact = "특이점 파열"
 	L.obeliskExplosion = "방첨탑 폭발"
 
 	L.darkness = "어둠" -- Shorter name for Darkness of a Thousand Souls (238999)
