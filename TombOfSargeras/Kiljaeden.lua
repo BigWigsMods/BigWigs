@@ -72,7 +72,7 @@ function mod:GetOptions()
 		240910, -- Armageddon
 		{236710, "SAY", "FLASH"}, -- Shadow Reflection: Erupting
 		{238430, "SAY", "FLASH"}, -- Bursting Dreadflame
-		{238505, "SAY", "ICON"}, -- Focused Dreadflame
+		{238505, "SAY", "ICON", "PROXIMITY"}, -- Focused Dreadflame
 		{236378, "SAY", "FLASH"}, -- Shadow Reflection: Wailing
 		241721, -- Illidan's Sightless Gaze
 		238999, -- Darkness of a Thousand Souls
@@ -170,6 +170,9 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, target)
 		if self:Me(guid) then
 			self:Say(238505)
 			self:SayCountdown(238505, 5)
+		end
+		if not self:Easy() then
+			self:OpenProximity(238505, 5)
 		end
 	elseif msg:find("235059") then -- Rupturing Singularity
 		self:Message(235059, "Urgent", "Warning", CL.count:format(self:SpellName(235059), singularityCount))
@@ -310,6 +313,7 @@ end
 
 function mod:FocusedDreadflameSuccess()
 	self:PrimaryIcon(238505)
+	self:CloseProximity(238505)
 end
 
 do
