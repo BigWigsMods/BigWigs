@@ -129,7 +129,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 235268 then -- Lunar Ghost (Transition)
 		phase = phase + 1
 		local nextUltimateTimer = nextUltimate - GetTime()
@@ -185,7 +185,7 @@ function mod:TwilightGlaiveApplied(args)
 	self:Bar(236541, phase ~= 1 and 20.5 or (twilightGlaiveCounter % 2 == 1 and 30 or 19))
 end
 
-function mod:TwilightGlaiveRemoved(args)
+function mod:TwilightGlaiveRemoved()
 	self:SecondaryIcon(236541)
 end
 
@@ -286,7 +286,7 @@ function mod:EmbraceoftheEclipseRemoved(args)
 	end
 end
 
-function mod:MoonBurn(args)
+function mod:MoonBurn()
 	self:Bar(236519, phase == 3 and 18.3 or 24.3) -- XXX Need more P3 data/timers
 end
 

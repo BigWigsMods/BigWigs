@@ -106,7 +106,7 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 239423 then -- Dread Shark // Stage 2 + Stage 3
 		dreadSharkCounter = dreadSharkCounter + 1
 		if not self:Mythic() then
@@ -223,7 +223,7 @@ function mod:ThunderingShock(args)
 	self:Bar(args.spellId, 36) -- was 32.8, not confirmed
 end
 
-function mod:ConsumingHunger(args)
+function mod:ConsumingHunger()
 	consumingHungerCounter = consumingHungerCounter + 1
 	self:Bar(230384, phase == 3 and (consumingHungerCounter == 2 and 47 or 42) or 34) -- XXX Need more p3 data.
 end
@@ -238,12 +238,12 @@ do
 	end
 end
 
-function mod:DevouringMaw(args)
+function mod:DevouringMaw()
 	self:Message(234621, "Important", "Warning")
 	self:Bar(234621, 41.5)
 end
 
-function mod:BefoulingInk(args)
+function mod:BefoulingInk()
 	self:Message(232913, "Attention", "Info", CL.incoming:format(self:SpellName(232913))) -- Befouling Ink incoming!
 	self:CDBar(232913, phase == 3 and 32 or 41.5) -- XXX 32-34 in P3
 end
@@ -257,12 +257,12 @@ end
 
 function mod:DeliciousBufferfish(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(239362, args.destName, "Personal", "Positive")
+		self:TargetMessage(239362, args.destName, "Personal", "Alert")
 	end
 end
 
 function mod:DeliciousBufferfishRemoved(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(239362, args.destName, "Personal", "Alert", CL.removed:format(args.spellName))
+		self:Message(239362, "Personal", "Alert", CL.removed:format(args.spellName))
 	end
 end

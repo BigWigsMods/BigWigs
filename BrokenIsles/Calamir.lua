@@ -147,7 +147,7 @@ do
 	end
 end
 
-function mod:BurningBombSuccess(args)
+function mod:BurningBombSuccess()
 	if burningBombCount == 1 then
 		self:CDBar(217877, 13.4)
 	end

@@ -114,7 +114,7 @@ end
 --
 
 --[[ General ]]--
-function mod:Nightosis1(args)
+function mod:Nightosis1()
 	self:Message("stages", "Neutral", "Info", "75% - ".. self:SpellName(-13681), false) -- Stage Two: Nightosis
 	phase = 2
 	self:Bar(218774, self:Easy() and 16.3 or 12) -- Summon Plasma Spheres, to _start
@@ -123,7 +123,7 @@ function mod:Nightosis1(args)
 	self:Bar(218438, self:Easy() and 59.1 or 42) -- Controlled Chaos, to _start
 end
 
-function mod:Nightosis2(args)
+function mod:Nightosis2()
 	self:Message("stages", "Neutral", "Info", "50% - ".. self:SpellName(-13683), false) -- Stage Three: Pure Forms
 	phase = 3
 	self:Bar(218927, self:Easy() and 13.4 or 10.5) -- Grace of Nature, to _start
@@ -134,7 +134,7 @@ function mod:Nightosis2(args)
 	self:Bar(218438, self:Easy() and 73.4 or 52) -- Controlled Chaos, to _start
 end
 
-function mod:NatureInfusion(args)
+function mod:NatureInfusion()
 	self:Message("stages", "Neutral", "Info", CL.stage:format(2), false)
 	phase = 2
 	self:StopBar(218927) -- Grace of Nature
@@ -146,7 +146,7 @@ function mod:NatureInfusion(args)
 	iconsUnused = {1, 2, 3, 4, 5, 6}
 end
 
-function mod:ArcaneInfusion(args)
+function mod:ArcaneInfusion()
 	self:Message("stages", "Neutral", "Info", CL.stage:format(3), false)
 	phase = 3
 	self:StopBar(218148) -- Solar Collapse
@@ -277,7 +277,7 @@ end
 
 do
 	local prev = 0
-	function mod:PlasmaExplosion(args)
+	function mod:PlasmaExplosion()
 		local t = GetTime()
 		if self:Mythic() and phase == 2 and t-prev > 5 then
 			prev = t
@@ -316,7 +316,7 @@ do
 	end
 end
 
-function mod:ParasiticFetterSuccess(args)
+function mod:ParasiticFetterSuccess()
 	if self:Easy() then
 		self:Bar(218304, phase == 2 and 57.2 or phase == 3 and 71.4 or 50)
 	else

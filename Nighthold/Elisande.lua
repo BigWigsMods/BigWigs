@@ -361,7 +361,7 @@ end
 --[[ General ]]--
 do
 	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		if spellId == 211614 then -- Slow
 			self:Message("recursive_elemental", "Neutral", "Info", L.recursive_elemental, L.recursive_elemental_icon)
 			slowElementalCount = slowElementalCount + 1
@@ -533,7 +533,7 @@ function mod:TimeStop(args)
 	-- New bars will be started in LeavetheNightwell
 end
 
-function mod:LeavetheNightwell(args)
+function mod:LeavetheNightwell()
 	phase = phase + 1
 	isPhaseTransition = nil
 
@@ -640,7 +640,7 @@ function mod:TimeAuraRemoved(args)
 end
 
 --[[ Time Layer 1 ]]--
-function mod:ArcaneticRing(args) -- l11n
+function mod:ArcaneticRing() -- l11n
 	if self:LFR() and ringCount == 1 then -- For some reason Elisande forgets to yell on the first rings in LFR
 		self:CHAT_MSG_MONSTER_YELL("", L.ring_yell, "")
 	elseif need_ring_msg then
@@ -667,7 +667,7 @@ function mod:Ablation(args)
 end
 
 --[[ Time Layer 2 ]]--
-function mod:DelphuricBeamCast(args)
+function mod:DelphuricBeamCast()
 	self:Message(209244, "Urgent", "Alert")
 	beamCount = beamCount + 1
 	local timer = timers[209244][beamCount]
@@ -689,7 +689,7 @@ function mod:DelphuricBeam(args)
 	end
 end
 
-function mod:EpochericOrb(args) -- l11n
+function mod:EpochericOrb() -- l11n
 	if need_orb_msg then
 		orb_msg_is_next = true
 	end

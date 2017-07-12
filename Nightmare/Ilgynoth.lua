@@ -321,14 +321,14 @@ do
 	end
 end
 
-function mod:EyeDamageCast(args)
+function mod:EyeDamageCast()
 	if blobsRemaining > 0 then -- Don't count blobs killed after the eye dies as missed
 		blobsMissed = blobsMissed + 1
 		self:SetInfo("infobox", 4, blobsMissed)
 	end
 end
 
-function mod:EyeDamage(args)
+function mod:EyeDamage()
 	blobsRemaining = blobsRemaining - 1
 	blobsMissed = blobsMissed - 1
 	self:SetInfo("infobox", 2, blobsRemaining)
@@ -350,7 +350,7 @@ function mod:TouchOfCorruption(args)
 end
 
 -- Nightmare Horror
-function mod:SummonNightmareHorror(args)
+function mod:SummonNightmareHorror()
 	self:Message("nightmare_horror", "Important", "Info", CL.spawned:format(self:SpellName(L.nightmare_horror)), L.nightmare_horror_icon)
 	self:Bar("nightmare_horror", 220, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror < TODO beta timer, need live data
 	self:Bar(210984, 13.8) -- Eye of Fate

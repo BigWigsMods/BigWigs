@@ -295,7 +295,7 @@ local function timeBombCountdown(self)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 207012 then -- Speed: Normal
 		normalPhase = normalPhase + 1
 		currentTimers = timers["normal" .. normalPhase]

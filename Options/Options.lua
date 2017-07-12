@@ -61,7 +61,7 @@ local acOptions = {
 					desc = L.minimapToggle,
 					order = 13,
 					get = function() return not BigWigs3IconDB.hide end,
-					set = function(info, v)
+					set = function(_, v)
 						if v then
 							BigWigs3IconDB.hide = nil
 							icon:Show("BigWigs")

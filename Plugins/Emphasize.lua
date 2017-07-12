@@ -103,7 +103,7 @@ local function createOptions()
 							if v == plugin.db.profile.font then return i end
 						end
 					end,
-					set = function(info, value)
+					set = function(_, value)
 						local list = media:List("font")
 						plugin.db.profile.font = list[value]
 						mModule.updateProfile()
@@ -406,7 +406,7 @@ function plugin:BigWigs_TempSuperEmphasize(_, module, key, text, time)
 	self:BigWigs_StartEmphasize(nil, module, key, text, time)
 end
 
-function plugin:BigWigs_PlayCountdownNumber(_, module, num)
+function plugin:BigWigs_PlayCountdownNumber(_, _, num)
 	local sound = BigWigsAPI:GetCountdownSound(self.db.profile.voice, num)
 	if sound then
 		PlaySoundFile(sound, "Master")

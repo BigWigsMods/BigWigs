@@ -149,7 +149,7 @@ do
 						if v == db.font then return i end
 					end
 				end,
-				set = function(info, value)
+				set = function(_, value)
 					db.font = media:List("font")[value]
 					plugin:RestyleWindow(true)
 				end,

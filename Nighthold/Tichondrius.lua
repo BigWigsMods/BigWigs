@@ -304,7 +304,7 @@ function mod:EssenceOfNight(args)
 	end
 end
 
-function mod:AddDeath(args)
+function mod:AddDeath()
 	addsKilled = addsKilled + 1
 	self:SetInfo(206466, 2, addsKilled)
 	if self:Mythic() and addsKilled % 5 == 0 then

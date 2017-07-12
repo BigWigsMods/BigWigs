@@ -195,7 +195,7 @@ function mod:RoaringLeap(args)
 	end
 end
 
-function mod:VolatileFoam(args)
+function mod:VolatileFoam()
 	foamCount = foamCount + 1
 	local t = foamCount == 2 and 19.4 or foamCount % 3 == 1 and 17 or foamCount % 3 == 2 and 15 or 42
 	self:Bar(-14535, t, CL.count:format(self:SpellName(-14535), foamCount), 228810)

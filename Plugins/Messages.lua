@@ -329,7 +329,7 @@ plugin.pluginOptions.args.more = {
 					if v == plugin.db.profile.font then return i end
 				end
 			end,
-			set = function(info, value)
+			set = function(_, value)
 				local list = media:List("font")
 				plugin.db.profile.font = list[value]
 			end,

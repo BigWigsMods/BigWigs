@@ -87,7 +87,7 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 233050 then --Infernal Spike
 		self:Message(233514, "Important", "Alert", CL.casting:format(spellName))
 		spikeCounter = spikeCounter + 1
@@ -99,7 +99,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 232249 then -- Crashing Comet
 		cometCounter = cometCounter + 1
 		wipe(cometWarned)
-		self:Bar(232249, cometCounter == 7 and 20 or cometCounter == 10 and 25 or 18.3)
+		self:Bar(spellId, cometCounter == 7 and 20 or cometCounter == 10 and 25 or 18.3)
 	elseif spellId == 233285 then -- Rain of Brimstone
 		rainCounter = rainCounter + 1
 		self:Message(238588, "Urgent", "Warning", CL.incoming:format(spellName))

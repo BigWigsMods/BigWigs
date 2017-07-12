@@ -184,7 +184,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 229168 then -- Test for Players (Phase 1 end)
 		phase = 2
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
@@ -353,7 +353,7 @@ function mod:StormOfJusticeSuccess(args)
 	stormCount = stormCount + 1
 end
 
-function mod:ValarjarsBond(args)
+function mod:ValarjarsBond()
 	self:TargetMessage(228018, "Positive", "Long")
 end
 
@@ -369,18 +369,18 @@ function mod:StormforgedSpear(args)
 	self:TargetBar(args.spellId, 6, args.destName)
 	self:Bar(args.spellId, spearCount % 3 == 0 and 13.5 or 11)
 	self:PrimaryIcon(args.spellId, args.destName)
-	
+
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
 	spearCount = spearCount + 1
 end
 
-function mod:StormforgedSpearDebuff(args)
+function mod:StormforgedSpearDebuff()
 	self:PrimaryIcon(228918)
 end
 
-function mod:ExpelLightSuccess(args)
+function mod:ExpelLightSuccess()
 	expelCount = expelCount + 1
 
 	local t = 0

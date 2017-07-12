@@ -114,7 +114,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 207620 then -- Annihilation
 		self:Message(207630, "Important", "Long")
 	end
@@ -219,7 +219,7 @@ function mod:CleansingRage(args)
 	self:Message(args.spellId, "Attention", "Alarm")
 end
 
-function mod:ArcingBondsCast(args)
+function mod:ArcingBondsCast()
 	wipe(bondTable)
 end
 
@@ -282,7 +282,7 @@ function mod:ToxicSliceImprint(args)
 	self:Bar(args.spellId, 17, CL.other:format(L.imprint, args.spellName)) -- Toxic Slice
 end
 
-function mod:ImprintDeath(args)
+function mod:ImprintDeath()
 	self:StopBar(CL.other:format(L.imprint, self:SpellName(214670))) -- Energized
 	self:StopBar(CL.other:format(L.imprint, self:SpellName(215062))) -- Toxic Slice
 end
