@@ -23,7 +23,7 @@ local armorCounter = 1
 
 local shatteringCounter = 1
 local shatteringTimers = {24, 60, 60, 60, 47}
-local shatteringTimersMythic = {34, 60, 60, 46.1}
+local shatteringTimersMythic = {34, 60, 60, 60, 32}
 
 local spikeCounter = 1
 local cometCounter = 1
@@ -170,7 +170,7 @@ function mod:ShatteringStarDebuff(args)
 	self:TargetMessage(233279, args.destName, "Attention", "Alarm", CL.count:format(args.spellName, shatteringCounter))
 	self:CastBar(233279, 6, CL.count:format(args.spellName, shatteringCounter)) -- <cast: Shattering Star>
 	shatteringCounter = shatteringCounter + 1
-	local t = (self:Mythic() and shatteringTimersMythic[shatteringCounter] or shatteringTimers[shatteringCounter]) or (self:Mythic() and 30 or (shatteringCounter % 2 == 0 and 19 or 41))
+	local t = (self:Mythic() and shatteringTimersMythic[shatteringCounter] or shatteringTimers[shatteringCounter]) or (self:Mythic() and 29 or (shatteringCounter % 2 == 0 and 19 or 41))
 	self:Bar(233279, t, CL.count:format(args.spellName, shatteringCounter)) -- Shattering Star
 	if self:Me(args.destGUID) then
 		self:Say(233279)
