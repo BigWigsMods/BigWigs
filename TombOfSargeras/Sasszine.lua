@@ -163,8 +163,12 @@ do
 		list[#list+1] = args.destName
 
 		if self:Me(args.destGUID)then
-			self:Say(args.spellId, not self:Easy() and CL.count_rticon:format(args.spellName, #list, #list))
-			self:SayCountdown(args.spellId, 6, #list, 4)
+			if self:Easy() then
+				self:Say(args.spellId)
+			else
+				self:Say(args.spellId, CL.count_rticon:format(args.spellName, #list, #list))
+				self:SayCountdown(args.spellId, 6, #list, 4)
+			end
 		end
 
 		if #list == 1 then
@@ -182,7 +186,7 @@ do
 		if self:GetOption(hydraShotMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
-		if self:Me(args.destGUID) then
+		if self:Me(args.destGUID) and not self:Easy() then
 			self:CancelSayCountdown(args.spellId)
 		end
 	end
