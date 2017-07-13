@@ -354,7 +354,7 @@ function mod:NetherGaleRemoved() -- Stage 2
 	if not self:Easy() then
 		self:Bar(236378, 48.4, L.reflectionWailing) -- Shadow Reflection: Wailing
 	end
-	self:Bar(240910, phaseTwoTimers[240910][armageddonCount]) -- Armageddon
+	self:Bar(240910, phaseTwoTimers[240910][armageddonCount], CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
 	self:Bar(238430, 52.4) -- Bursting Dreadflame
 	self:Bar(235059, phaseTwoTimers[235059][singularityCount], CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 end
