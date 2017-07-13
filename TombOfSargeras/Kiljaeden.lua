@@ -281,6 +281,7 @@ function mod:NetherGale(args)
 	self:Message("stages", "Positive", "Long", self:SpellName(-15221), false) -- Intermission: Eternal Flame
 
 	self:StopBar(CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
+	self:StopBar(CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 	self:StopBar(L.reflectionErupting) -- Shadow Reflection: Erupting
 	self:StopBar(239932) -- Fel Claws
 
