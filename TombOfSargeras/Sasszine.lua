@@ -160,25 +160,26 @@ end
 do
 	local list = mod:NewTargetList()
 	function mod:HydraShot(args)
-		list[#list+1] = args.destName
+		local count = #list+1
+		list[count] = args.destName
 
 		if self:Me(args.destGUID)then
 			if self:Easy() then
 				self:Say(args.spellId)
 			else
-				self:Say(args.spellId, CL.count_rticon:format(args.spellName, #list, #list))
-				self:SayCountdown(args.spellId, 6, #list, 4)
+				self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
+				self:SayCountdown(args.spellId, 6, count, 4)
 			end
 		end
 
-		if #list == 1 then
+		if count == 1 then
 			self:CastBar(args.spellId, 6, CL.count:format(args.spellName, hydraShotCounter))
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important", "Warning", nil, nil, true)
 			hydraShotCounter = hydraShotCounter + 1
 			self:Bar(args.spellId, self:Mythic() and 30.5 or phase == 2 and 30 or 40, CL.count:format(args.spellName, hydraShotCounter))
 		end
 		if self:GetOption(hydraShotMarker) then -- Targets: LFR: 0, 1 Normal, 3 Heroic, 4 Mythic
-			SetRaidTarget(args.destName, #list)
+			SetRaidTarget(args.destName, count)
 		end
 	end
 
