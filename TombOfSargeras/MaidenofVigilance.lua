@@ -120,7 +120,7 @@ function mod:OnEngage()
 	if self:Mythic() then
 		self:Bar(239153, 8, CL.count:format(self:SpellName(230932), orbCounter))
 	end
-	self:Berserk(self:Easy() and 525 or 480)
+	self:Berserk(480)
 end
 
 --------------------------------------------------------------------------------
