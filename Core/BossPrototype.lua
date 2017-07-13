@@ -1213,7 +1213,7 @@ end
 
 --- Set the "Info Box" display to show a list of players and their assigned values in ascending order.
 -- @param key the option key to check
--- @tab a table in the format of {player = number}
+-- @tab tbl a table in the format of {player = number}
 function boss:SetInfoByTable(key, tbl)
 	if checkFlag(self, key, C.INFOBOX) then
 		self:SendMessage("BigWigs_SetInfoBoxTable", self, tbl)
