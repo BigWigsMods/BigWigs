@@ -1758,13 +1758,15 @@ end
 
 --- Start a countdown using say messages.
 -- @param key the option key
--- @param seconds the amount of time in seconds until the countdown expires
--- @param[opt] startAt When to start sending messages in say, default value is at 3 seconds remaining
-function boss:SayCountdown(key, seconds, startAt)
+-- @number seconds the amount of time in seconds until the countdown expires
+-- @number[opt] icon Add the designated raid icon to the countdown
+-- @number[opt] startAt When to start sending messages in say, default value is at 3 seconds remaining
+function boss:SayCountdown(key, seconds, icon, startAt)
 	if not checkFlag(self, key, C.SAY) then return end -- XXX implement a dedicated option for 7.3
 	local tbl = {}
 	for i = 1, (startAt or 3) do
-		tbl[i] = self:ScheduleTimer(SendChatMessage, seconds-i, i, "SAY")
+		local msg = icon and format("{rt%d} %d", icon, icon) or i
+		tbl[i] = self:ScheduleTimer(SendChatMessage, seconds-i, msg, "SAY")
 	end
 	self.sayCountdowns[key] = tbl
 end
