@@ -1296,24 +1296,6 @@ function boss:RemovePlateIcon(spellId, guid)
 	self:SendMessage("BigWigs_RemoveNameplateIcon", self, guid, spellId and icons[spellId])
 end
 
---- Add aura to nameplate. [DEPRECATED, removed in 7.2]
--- @param spellId the associated spell id
--- @param playerName the affected player
--- @param[opt] duration the duration of the aura
--- @param[opt] isHostile if the unit is a hostile nameplate, in which case playerName should be treated as a GUID
--- @param[opt] desaturate true if the texture should be desaturated
-function boss:AddPlate(spellId, playerName, duration, isHostile, desaturate)
-	self:SendMessage("BigWigs_ShowNameplateAura", self, playerName, icons[spellId], duration, desaturate, isHostile)
-end
-
---- Remove aura from nameplate. [DEPRECATED, removed in 7.2]
--- @param spellId the associated spell id, passing nil removes all icons
--- @param playerName the affected player
--- @param[opt] isHostile if the unit is a hostile nameplate, in which case playerName should be treated as a GUID
-function boss:RemovePlate(spellId, playerName, isHostile)
-	self:SendMessage("BigWigs_HideNameplateAura", self, playerName, spellId and icons[spellId], isHostile)
-end
-
 -------------------------------------------------------------------------------
 -- Messages.
 -- @section messages
