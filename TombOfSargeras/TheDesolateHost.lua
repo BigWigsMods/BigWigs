@@ -184,7 +184,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 
 		-- Assumed that other timers reset upon p2 start XXX Double Check
 		self:Bar(235907, 5) -- Collapsing Fissure
-		self:Bar(235924, 6) -- Spear of Anguish
+		if not self:Easy() then
+			self:Bar(235924, 6) -- Spear of Anguish
+		end
 		self:Bar(236459, 10) -- Soulbind
 
 		self:CDBar(236542, 17) -- Sundering Doom
@@ -333,7 +335,7 @@ do
 			else
 				t = phase == 2 and 20 or 25
 			end
-			if not phase == 2 and self:BarTimeLeft(236072) < 24.3 and self:BarTimeLeft(236072) > 0 then -- Wailing Souls
+			if phase ~= 2 and self:BarTimeLeft(236072) < 24.3 and self:BarTimeLeft(236072) > 0 then -- Wailing Souls
 				t = 74.5 + self:BarTimeLeft(236072) -- Time Left + 60s channel + 14.5s cooldown
 			end
 			self:Bar(args.spellId, t)
