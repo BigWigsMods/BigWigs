@@ -1759,7 +1759,7 @@ function boss:SayCountdown(key, seconds, icon, startAt)
 	if not checkFlag(self, key, C.SAY) then return end -- XXX implement a dedicated option for 7.3
 	local tbl = {}
 	for i = 1, (startAt or 3) do
-		local msg = icon and format("{rt%d} %d", icon, icon) or i
+		local msg = icon and format("{rt%d} %d", icon, i) or i
 		tbl[i] = self:ScheduleTimer(SendChatMessage, seconds-i, msg, "SAY")
 	end
 	self.sayCountdowns[key] = tbl
