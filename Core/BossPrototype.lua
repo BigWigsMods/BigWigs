@@ -131,7 +131,7 @@ local boss = {}
 core:GetModule("Bosses"):SetDefaultModulePrototype(boss)
 
 --- Register the module to enable on mob id.
--- @param ... Any number of mob ids
+-- @number ... Any number of mob ids
 function boss:RegisterEnableMob(...) core:RegisterEnableMob(self, ...) end
 
 --- The encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
@@ -274,11 +274,11 @@ end
 boss.NewLocale = boss.GetLocale
 
 --- Create a custom marking option
--- @param state Boolean value to represent default state
--- @param markType The type of string to return (player, npc)
--- @param icon An icon id to be used for the option texture
--- @param id The spell id or journal id to be translated into a name for the returned string
--- @param ... a series of raid icons being used by the marker function e.g. (1, 2, 3)
+-- @bool state Boolean value to represent default state
+-- @string markType The type of string to return (player, npc)
+-- @number icon An icon id to be used for the option texture
+-- @number id The spell id or journal id to be translated into a name for the returned string
+-- @number ... a series of raid icons being used by the marker function e.g. (1, 2, 3)
 -- @return an option string to be used in conjuction with :GetOption
 function boss:AddMarkerOption(state, markType, icon, id, ...)
 	local l = self:GetLocale()
@@ -399,9 +399,9 @@ do
 		end
 	end)
 	--- Register a callback for COMBAT_LOG_EVENT.
-	-- @param event COMBAT_LOG_EVENT to fire for e.g. SPELL_CAST_START
+	-- @string event COMBAT_LOG_EVENT to fire for e.g. SPELL_CAST_START
 	-- @param func callback function, passed a keyed table (sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, extraSpellId, extraSpellName, amount)
-	-- @param ... any number of spell ids
+	-- @number ... any number of spell ids
 	function boss:Log(event, func, ...)
 		if not event or not func then core:Print(format(missingArgument, self.moduleName)) return end
 		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
@@ -419,8 +419,8 @@ do
 		self:SendMessage("BigWigs_OnBossLog", self, event, ...)
 	end
 	--- Remove a callback for COMBAT_LOG_EVENT.
-	-- @param event COMBAT_LOG_EVENT to register for
-	-- @param ... any number of spell ids
+	-- @string event COMBAT_LOG_EVENT to register for
+	-- @number ... any number of spell ids
 	function boss:RemoveLog(event, ...)
 		if not event then core:Print(format(missingArgument, self.moduleName)) return end
 		for i = 1, select("#", ...) do
@@ -430,7 +430,7 @@ do
 	end
 	--- Register a callback for UNIT_DIED.
 	-- @param func callback function, passed a keyed table (mobId, destGUID, destName, destFlags, destRaidFlags)
-	-- @param ... any number of mob ids
+	-- @number ... any number of mob ids
 	function boss:Death(func, ...)
 		if not func then core:Print(format(missingArgument, self.moduleName)) return end
 		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
@@ -465,9 +465,9 @@ do
 	end
 
 	--- Register a callback for a UNIT_* event for the specified units.
-	-- @param event the event to register for
+	-- @string event the event to register for
 	-- @param func callback function, passed (unit, eventargs...)
-	-- @param ... Any number of unit tokens
+	-- @string ... Any number of unit tokens
 	function boss:RegisterUnitEvent(event, func, ...)
 		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
 		if not ... then core:Print(format(noUnit, self.moduleName)) return end
@@ -485,8 +485,8 @@ do
 		end
 	end
 	--- Unregister a callback for unit bound events.
-	-- @param event the event register for
-	-- @param ... Any number of unit tokens
+	-- @string event the event register for
+	-- @string ... Any number of unit tokens
 	function boss:UnregisterUnitEvent(event, ...)
 		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
 		if not ... then core:Print(format(noUnit, self.moduleName)) return end
@@ -540,7 +540,7 @@ do
 	--- Update module engage status from querying boss units.
 	-- Engages modules if boss1-boss5 matches an registered enabled mob,
 	-- disables the module if set as engaged but has no boss match.
-	-- @param noEngage if set to "NoEngage", the module is prevented from engaging if enabling during a boss fight (after a DC)
+	-- @string noEngage if set to "NoEngage", the module is prevented from engaging if enabling during a boss fight (after a DC)
 	function boss:CheckForEncounterEngage(noEngage)
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
 		if not self.isEngaged and hasBoss then
@@ -648,8 +648,8 @@ do
 	-- Looks for the unit as defined by the GUID and then returns the target of that unit.
 	-- If the target is a tank, it will keep looking until the designated time has elapsed.
 	-- @param func callback function, passed (module, playerName, playerGUID, timeElapsed)
-	-- @param tankCheckExpiry seconds to wait, if a tank is still the target after this time, it will return the tank as the target (max 0.8)
-	-- @param guid GUID of the mob to get the target of
+	-- @number tankCheckExpiry seconds to wait, if a tank is still the target after this time, it will return the tank as the target (max 0.8)
+	-- @string guid GUID of the mob to get the target of
 	function boss:GetUnitTarget(func, tankCheckExpiry, guid)
 		if not self.scheduledScans then
 			self.scheduledScans, self.scheduledScansCounter = {}, {}
@@ -693,12 +693,12 @@ do
 		end
 	end
 
-	-- XXX What if we die and then get battleressed?
-	-- XXX First of all, the CheckForWipe every 2 seconds would continue scanning.
-	-- XXX Secondly, if the boss module registers for PLAYER_REGEN_DISABLED, it would
-	-- XXX trigger again, and CheckForEngage (possibly) invoked, which results in
-	-- XXX a new Engage sync -> :Engage -> :OnEngage on the module.
-	-- XXX Possibly a concern?
+	-- What if we die and then get battleressed?
+	-- First of all, the CheckForWipe every 2 seconds would continue scanning.
+	-- Secondly, if the boss module registers for PLAYER_REGEN_DISABLED, it would
+	-- trigger again, and CheckForEngage (possibly) invoked, which results in
+	-- a new Engage sync -> :Engage -> :OnEngage on the module.
+	-- Possibly a concern?
 
 	--- Start a repeating timer checking if your group has left combat with a boss.
 	function boss:CheckForWipe()
@@ -779,8 +779,8 @@ do
 	-- Looks for the boss as defined by the GUID and then returns the target of that boss.
 	-- If the target is a tank, it will keep looking until the designated time has elapsed.
 	-- @param func callback function, passed (module, playerName, playerGUID, timeElapsed)
-	-- @param tankCheckExpiry seconds to wait, if a tank is still the target after this time, it will return the tank as the target (max 0.8)
-	-- @param guid GUID of the mob to get the target of
+	-- @number tankCheckExpiry seconds to wait, if a tank is still the target after this time, it will return the tank as the target (max 0.8)
+	-- @string guid GUID of the mob to get the target of
 	function boss:GetBossTarget(func, tankCheckExpiry, guid)
 		if not self.scheduledScans then
 			self.scheduledScans, self.scheduledScansCounter = {}, {}
@@ -881,7 +881,7 @@ function boss:Mythic()
 end
 
 --- Get the mob/npc id from a GUID.
--- @param guid GUID of a mob/npc
+-- @string guid GUID of a mob/npc
 -- @return mob id
 function boss:MobId(guid)
 	if not guid then return 1 end
@@ -896,7 +896,7 @@ function boss:SpellName(spellId)
 end
 
 --- Check if a GUID is you.
--- @param guid player GUID
+-- @string guid player GUID
 -- @return boolean
 function boss:Me(guid)
 	return myGUID == guid
@@ -905,7 +905,7 @@ end
 do
 	local UnitName = UnitName
 	--- Get the full name of a unit.
-	-- @param unit unit token or name
+	-- @string unit unit token or name
 	-- @return unit name with the server appended if appropriate
 	function boss:UnitName(unit)
 		local name, server = UnitName(unit)
@@ -972,7 +972,7 @@ function boss:Ranged()
 end
 
 --- Check if your talent tree role is TANK.
--- @param[opt="player"] unit check if the chosen role of another unit is set to TANK, or if that unit is listed in the MAINTANK frames.
+-- @string[opt="player"] unit check if the chosen role of another unit is set to TANK, or if that unit is listed in the MAINTANK frames.
 -- @return boolean
 function boss:Tank(unit)
 	if unit then
@@ -983,7 +983,7 @@ function boss:Tank(unit)
 end
 
 --- Check if your talent tree role is HEALER.
--- @param[opt="player"] unit check if the chosen role of another unit is set to HEALER.
+-- @string[opt="player"] unit check if the chosen role of another unit is set to HEALER.
 -- @return boolean
 function boss:Healer(unit)
 	if unit then
@@ -994,7 +994,7 @@ function boss:Healer(unit)
 end
 
 --- Check if your talent tree role is DAMAGER.
--- @param[opt="player"] unit check if the chosen role of another unit is set to DAMAGER.
+-- @string[opt="player"] unit check if the chosen role of another unit is set to DAMAGER.
 -- @return boolean
 function boss:Damager(unit)
 	if unit then
@@ -1030,8 +1030,8 @@ do
 		end
 	end
 	--- Check if you can dispel.
-	-- @param dispelType dispel type (magic, disease, poison, curse)
-	-- @param[opt] isOffensive true if dispelling a buff from an enemy (magic), nil if dispelling a friendly
+	-- @string dispelType dispel type (magic, disease, poison, curse)
+	-- @bool[opt] isOffensive true if dispelling a buff from an enemy (magic), nil if dispelling a friendly
 	-- @param[opt] key module option key to check
 	-- @return boolean
 	function boss:Dispeller(dispelType, isOffensive, key)
@@ -1081,7 +1081,7 @@ do
 		end
 	end
 	--- Check if you can interrupt.
-	-- @param[opt] guid if not nil, will only return true if the GUID matches your target or focus.
+	-- @string[opt] guid if not nil, will only return true if the GUID matches your target or focus.
 	-- @return boolean
 	function boss:Interrupter(guid)
 		-- We will probably need to make this smarter
@@ -1163,7 +1163,7 @@ do
 	end
 	--- Check if an option has a flag set.
 	-- @param key the option key
-	-- @param flag the option flag
+	-- @string flag the option flag
 	function boss:CheckOption(key, flag)
 		return checkFlag(self, key, C[flag])
 	end
@@ -1177,8 +1177,8 @@ end
 --- Open the "Alternate Power" display.
 -- @param key the option key to check
 -- @param title the title of the window, either a spell id or string
--- @param[opt] sorting "ZA" for descending sort, "AZ" or nil for ascending sort
--- @param[opt] sync if true, queries values from other players (for use if phasing prevents reliable updates)
+-- @string[opt] sorting "ZA" for descending sort, "AZ" or nil for ascending sort
+-- @bool[opt] sync if true, queries values from other players (for use if phasing prevents reliable updates)
 function boss:OpenAltPower(key, title, sorting, sync)
 	if checkFlag(self, key, C.ALTPOWER) then
 		self:SendMessage("BigWigs_ShowAltPower", self, type(title) == "number" and spells[title] or title, sorting == "ZA" and sorting or "AZ", sync)
@@ -1201,24 +1201,36 @@ end
 -- @section InfoBox
 --
 
+--- Update a specific line on the "Info Box" display.
+-- @param key the option key to check
+-- @number line the line to update
+-- @string text the new text to show
 function boss:SetInfo(key, line, text)
 	if checkFlag(self, key, C.INFOBOX) then
 		self:SendMessage("BigWigs_SetInfoBoxLine", self, line, text)
 	end
 end
 
+--- Set the "Info Box" display to show a list of players and their assigned values in ascending order.
+-- @param key the option key to check
+-- @tab a table in the format of {player = number}
 function boss:SetInfoByTable(key, tbl)
 	if checkFlag(self, key, C.INFOBOX) then
 		self:SendMessage("BigWigs_SetInfoBoxTable", self, tbl)
 	end
 end
 
+--- Open the "Info Box" display.
+-- @param key the option key to check
+-- @param title the title of the window, either a spell id or string
 function boss:OpenInfo(key, title)
 	if checkFlag(self, key, C.INFOBOX) then
 		self:SendMessage("BigWigs_ShowInfoBox", self, title)
 	end
 end
 
+--- Close the "Info Box" display.
+-- @param key the option key to check
 function boss:CloseInfo(key)
 	if checkFlag(self, key, C.INFOBOX) then
 		self:SendMessage("BigWigs_HideInfoBox", self)
@@ -1232,9 +1244,9 @@ end
 
 --- Open the proximity display.
 -- @param key the option key to check
--- @param range the distance to check
--- @param[opt] player the player name for a target proximity
--- @param[opt] isReverse if true, reverse the logic to warn if not within range
+-- @number range the distance to check
+-- @param[opt] player the player name for a target proximity or a table containing multiple players
+-- @bool[opt] isReverse if true, reverse the logic to warn if not within range
 function boss:OpenProximity(key, range, player, isReverse)
 	if not solo and checkFlag(self, key, C.PROXIMITY) then
 		if type(key) == "number" then
@@ -1269,17 +1281,17 @@ function boss:HidePlates()
 end
 
 --- Add icon to hostile nameplate.
--- @param spellId the associated spell id
--- @param guid the hostile unit guid
--- @param[opt] duration the duration of the aura
--- @param[opt] desaturate true if the texture should be desaturated
+-- @number spellId the associated spell id
+-- @string guid the hostile unit guid
+-- @number[opt] duration the duration of the aura
+-- @bool[opt] desaturate true if the texture should be desaturated
 function boss:AddPlateIcon(spellId, guid, duration, desaturate)
 	self:SendMessage("BigWigs_AddNameplateIcon", self, guid, icons[spellId], duration, desaturate)
 end
 
 --- Remove icon from hostile nameplate.
--- @param spellId the associated spell id, passing nil removes all icons
--- @param guid the hostile unit guid
+-- @number spellId the associated spell id, passing nil removes all icons
+-- @string guid the hostile unit guid
 function boss:RemovePlateIcon(spellId, guid)
 	self:SendMessage("BigWigs_RemoveNameplateIcon", self, guid, spellId and icons[spellId])
 end
@@ -1308,7 +1320,7 @@ end
 --
 
 --- Cancel a delayed message.
--- @param text the text of the message to cancel
+-- @string text the text of the message to cancel
 function boss:CancelDelayedMessage(text)
 	if self.scheduledMessages and self.scheduledMessages[text] then
 		self:CancelTimer(self.scheduledMessages[text])
@@ -1320,11 +1332,11 @@ end
 -- The messages are keyed by their text, so scheduling the same message will
 -- overwrite the previous message's delay.
 -- @param key the option key
--- @param delay the delay in seconds
--- @param color the message color category
+-- @number delay the delay in seconds
+-- @string color the message color category
 -- @param[opt] text the message text (if nil, key is used)
 -- @param[opt] icon the message icon (spell id or texture name)
--- @param[opt] sound the message sound
+-- @string[opt] sound the message sound
 function boss:DelayedMessage(key, delay, color, text, icon, sound)
 	if checkFlag(self, key, C.MESSAGE) then
 		self:CancelDelayedMessage(text or key)
@@ -1335,8 +1347,8 @@ end
 
 --- Display a colored message.
 -- @param key the option key
--- @param color the message color category
--- @param[opt] sound the message sound
+-- @string color the message color category
+-- @string[opt] sound the message sound
 -- @param[opt] text the message text (if nil, key is used)
 -- @param[opt] icon the message icon (spell id or texture name)
 function boss:Message(key, color, sound, text, icon)
@@ -1393,8 +1405,8 @@ do
 
 	local tmp = {}
 	--- Color a player name based on class.
-	-- @param player the player name
-	-- @return colored player name
+	-- @param player the player name, or a table containing a list of names
+	-- @return colored player name, or table containing colored names
 	function boss:ColorName(player)
 		if type(player) == "table" then
 			wipe(tmp)
@@ -1409,10 +1421,10 @@ do
 
 	--- Display a buff/debuff stack warning message.
 	-- @param key the option key
-	-- @param player the player to display
-	-- @param stack the stack count
-	-- @param color the message color category
-	-- @param[opt] sound the message sound
+	-- @string player the player to display
+	-- @number stack the stack count
+	-- @string color the message color category
+	-- @string[opt] sound the message sound
 	-- @param[opt] text the message text (if nil, key is used)
 	-- @param[opt] icon the message icon (spell id or texture name)
 	function boss:StackMessage(key, player, stack, color, sound, text, icon)
@@ -1435,12 +1447,12 @@ do
 
 	--- Display a target message.
 	-- @param key the option key
-	-- @param player the player to display
-	-- @param color the message color category
-	-- @param[opt] sound the message sound
+	-- @string player the player to display
+	-- @string color the message color category
+	-- @string[opt] sound the message sound
 	-- @param[opt] text the message text (if nil, key is used)
 	-- @param[opt] icon the message icon (spell id or texture name)
-	-- @param[opt] alwaysPlaySound if true, play the sound even if player is not you
+	-- @bool[opt] alwaysPlaySound if true, play the sound even if player is not you
 	function boss:TargetMessage(key, player, color, sound, text, icon, alwaysPlaySound)
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
@@ -1519,7 +1531,7 @@ do
 
 	--- Display a bar.
 	-- @param key the option key
-	-- @param length the bar duration in seconds
+	-- @number length the bar duration in seconds
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:Bar(key, length, text, icon)
@@ -1557,7 +1569,7 @@ do
 	--- Display a cooldown bar.
 	-- Indicates an unreliable duration by prefixing the time with "~"
 	-- @param key the option key
-	-- @param length the bar duration in seconds
+	-- @number length the bar duration in seconds
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:CDBar(key, length, text, icon)
@@ -1594,8 +1606,8 @@ do
 
 	--- Display a target bar.
 	-- @param key the option key
-	-- @param length the bar duration in seconds
-	-- @param player the player name to show on the bar
+	-- @number length the bar duration in seconds
+	-- @string player the player name to show on the bar
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:TargetBar(key, length, player, text, icon)
@@ -1624,7 +1636,7 @@ do
 
 	--- Display a cast bar.
 	-- @param key the option key
-	-- @param length the bar duration in seconds
+	-- @number length the bar duration in seconds
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:CastBar(key, length, text, icon)
@@ -1645,8 +1657,8 @@ do
 end
 
 --- Stop a bar.
--- @param text the bar text
--- @param[opt] player the player name if stopping a target bar
+-- @param text the bar text, or a spellId which is converted into the spell name and used
+-- @string[opt] player the player name if stopping a target bar
 function boss:StopBar(text, player)
 	local msg = type(text) == "number" and spells[text] or text
 	if player then
@@ -1704,7 +1716,7 @@ end
 
 --- Set the primary (skull by default) raid target icon.
 -- @param key the option key
--- @param[opt] player the player to mark (if nil, the icon is removed)
+-- @string[opt] player the player to mark (if nil, the icon is removed)
 function boss:PrimaryIcon(key, player)
 	if key and not checkFlag(self, key, C.ICON) then return end
 	if not player then
@@ -1716,7 +1728,7 @@ end
 
 --- Set the secondary (cross by default) raid target icon.
 -- @param key the option key
--- @param[opt] player the player to mark (if nil, the icon is removed)
+-- @string[opt] player the player to mark (if nil, the icon is removed)
 function boss:SecondaryIcon(key, player)
 	if key and not checkFlag(self, key, C.ICON) then return end
 	if not player then
@@ -1746,7 +1758,7 @@ end
 --- Send a message in SAY.
 -- @param key the option key
 -- @param msg the message to say (if nil, key is used)
--- @param[opt] directPrint if true, skip formatting the message and print the string directly to chat.
+-- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
 function boss:Say(key, msg, directPrint)
 	if not checkFlag(self, key, C.SAY) then return end
 	if directPrint then
@@ -1785,7 +1797,7 @@ end
 
 --- Play a sound.
 -- @param key the option key
--- @param sound the sound to play
+-- @string sound the sound to play
 function boss:PlaySound(key, sound)
 	if not checkFlag(self, key, C.MESSAGE) then return end
 	if hasVoice and checkFlag(self, key, C.VOICE) then
