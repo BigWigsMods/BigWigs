@@ -55,6 +55,8 @@ L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhTW")
 if L then
 	L.chaosbringer = "煉獄火混亂使者"
 	L.rez = "守墓者瑞茲"
+	--L.seacaller = "Tidescale Seacaller"
 	L.custodian = "深海守衛"
+	--L.dresanoth = "Dresanoth",
 	L.sentry = "守護者哨衛"
 end
