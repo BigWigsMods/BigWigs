@@ -126,6 +126,7 @@ function mod:OnBossEnable()
 	-- Maiden of Valor
 	self:Log("SPELL_CAST_START", "CleansingProtocol", 233856)
 	self:Log("SPELL_AURA_APPLIED", "Malfunction", 233739)
+	self:Death("MaidenDeath", 117264)
 
 	-- Containment Pylon
 	self:Log("SPELL_CAST_START", "CorruptedMatrix", 233556)
@@ -331,6 +332,13 @@ end
 function mod:Malfunction()
 	self:Message(233856, "Positive", "Info", CL.removed:format(self:SpellName(233856)))
 	self:StopBar(CL.cast:format(self:SpellName(233856)))
+end
+
+function mod:MaidenDeath()
+	if energyLeakCheck then
+		self:CancelTimer(energyLeakCheck)
+		energyLeakCheck = nil
+	end
 end
 
 function mod:CorruptedMatrix(args)
