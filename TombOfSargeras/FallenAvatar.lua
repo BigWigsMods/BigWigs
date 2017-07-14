@@ -174,6 +174,8 @@ function mod:OnEngage()
 		self:InitCheckUnitPower()
 		energyLeakCheck = self:ScheduleRepeatingTimer("CheckUnitPower", 1)
 	end
+
+	self:RegisterUnitEvent("UNIT_POWER", nil, "boss2")
 end
 
 --------------------------------------------------------------------------------
@@ -269,6 +271,14 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	end
 end
 
+function mod:UNIT_POWER(unit)
+	local power = UnitPower(unit)
+	if power >= 85 then
+		self:Message(233856, "Attention", self:Damager() and "Info", CL.soon:format(self:SpellName(233856))) -- Cleansing Protocol
+		self:UnregisterUnitEvent("UNIT_POWER", unit)
+	end
+end
+
 do
 	local prev = 0
 	function mod:GroundEffectDamage(args)
@@ -330,8 +340,9 @@ function mod:CleansingProtocol(args)
 end
 
 function mod:Malfunction()
-	self:Message(233856, "Positive", "Info", CL.removed:format(self:SpellName(233856)))
-	self:StopBar(CL.cast:format(self:SpellName(233856)))
+	self:Message(233856, "Positive", "Info", CL.removed:format(self:SpellName(233856))) -- Cleansing Protocol
+	self:StopBar(CL.cast:format(self:SpellName(233856))) -- Cleansing Protocol
+	self:RegisterUnitEvent("UNIT_POWER", nil, "boss2")
 end
 
 function mod:MaidenDeath()
@@ -372,6 +383,8 @@ function mod:Annihilation() -- Stage 2
 		self:CancelTimer(energyLeakCheck)
 		energyLeakCheck = nil
 	end
+
+	self:UnregisterUnitEvent("UNIT_POWER", "boss2")
 
 	self:CDBar(236494, 20) -- Desolate
 	self:CDBar(239739, self:Mythic() and 31.1 or 21.5) -- Dark Mark
