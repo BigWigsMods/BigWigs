@@ -57,6 +57,6 @@ if L then
 	L.rez = "Rez le Garde-Tombe"
 	L.seacaller = "Mande-mers marécaille"
 	L.custodian = "Gardien des fonds marins"
-	L.dresanoth = "Dresanoth",
+	L.dresanoth = "Dresanoth"
 	L.sentry = "Factionnaire gardien"
 end

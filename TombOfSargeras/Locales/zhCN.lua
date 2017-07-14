@@ -57,6 +57,6 @@ if L then
 	L.rez = "守墓人瑞兹"
 	--L.seacaller = "Tidescale Seacaller"
 	L.custodian = "海底监察者"
-	--L.dresanoth = "Dresanoth",
+	--L.dresanoth = "Dresanoth"
 	L.sentry = "守护者哨兵"
 end

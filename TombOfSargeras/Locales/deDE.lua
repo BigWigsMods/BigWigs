@@ -57,6 +57,6 @@ if L then
 	L.rez = "Rez das Grabauge"
 	L.seacaller = "Seeruferin der Gezeitenschuppen"
 	L.custodian = "Unterwasserverwalter"
-	L.dresanoth = "Dresanoth",
+	L.dresanoth = "Dresanoth"
 	L.sentry = "Wachposten"
 end

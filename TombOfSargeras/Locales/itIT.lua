@@ -57,6 +57,6 @@ if L then
 	L.rez = "Rez il Guardiano della Tomba"
 	L.seacaller = "Invocatrice del Mare Scagliamarea"
 	L.custodian = "Custode Sottomarino"
-	L.dresanoth = "Dresanoth",
+	L.dresanoth = "Dresanoth"
 	L.sentry = "Sentinella Guardiana"
 end

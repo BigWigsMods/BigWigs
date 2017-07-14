@@ -58,7 +58,7 @@ if L then
 	--[[ Harjatan -> Mistress Sassz'ine ]]--
 	L.seacaller = "Tidescale Seacaller"
 	L.custodian = "Undersea Custodian"
-	L.dresanoth = "Dresanoth",
+	L.dresanoth = "Dresanoth"
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
 	L.sentry = "Guardian Sentry"

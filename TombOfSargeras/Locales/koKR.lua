@@ -57,6 +57,6 @@ if L then
 	L.rez = "무덤감시자 레즈"
 	--L.seacaller = "Tidescale Seacaller"
 	L.custodian = "깊은바다 관리인"
-	--L.dresanoth = "Dresanoth",
+	--L.dresanoth = "Dresanoth"
 	L.sentry = "수호의 감시자"
 end
