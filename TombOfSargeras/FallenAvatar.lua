@@ -411,10 +411,10 @@ do
 		list[count] = args.destName
 
 		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName) -- random duration
-		local remaining = expires-GetTime()
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId, CL.count:format(args.spellName, count)) -- Announce which mark you have
+			local remaining = expires-GetTime()
 			self:SayCountdown(args.spellId, remaining)
 		end
 
@@ -455,11 +455,7 @@ do
 			self:SetInfo(args.spellId, infoBoxList[args.destName].pos-1, "")
 			infoBoxList[args.destName] = nil
 		end
-		local tableEmpty = true
-		for _ in pairs(infoBoxList) do
-			tableEmpty = false
-		end
-		if tableEmpty then
+		if not next(infoBoxList) then
 			self:CloseInfo(args.spellId)
 			if timer then
 				self:CancelTimer(timer)
