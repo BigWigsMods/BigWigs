@@ -34,6 +34,10 @@ if L then
 
 	L.custom_on_stop_timers = "능력 바 항상 표시"
 	L.custom_on_stop_timers_desc = "몰락한 화신은 재사용 대기시간이 끝난 능력 중 하나를 무작위로 다음에 사용합니다. 이 옵션을 사용하면 이 능력들의 바가 화면에 유지됩니다."
+
+	--L.energy_leak = "Energy Leak"
+	--L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in phase 1."
+	--L.energy_leak_msg = "Energy Leak! (%d)"
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "koKR")
