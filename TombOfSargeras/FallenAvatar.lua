@@ -350,6 +350,7 @@ function mod:MaidenDeath()
 		self:CancelTimer(energyLeakCheck)
 		energyLeakCheck = nil
 	end
+	self:UnregisterUnitEvent("UNIT_POWER", "boss2")
 end
 
 function mod:CorruptedMatrix(args)
