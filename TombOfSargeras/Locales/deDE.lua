@@ -35,9 +35,9 @@ if L then
 	L.custom_on_stop_timers = "Fähigkeitsleisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Gefallener Avatar wählt seine nächste nicht-abklingende Fähigkeit zufällig aus. Wenn diese Option aktiviert ist, bleiben die Leisten dieser Fähigkeiten auf deinem Bildschirm."
 
-	--L.energy_leak = "Energy Leak"
-	--L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in phase 1."
-	--L.energy_leak_msg = "Energy Leak! (%d)"
+	L.energy_leak = "Energieleck"
+	L.energy_leak_desc = "Zeigt eine Warnung, wenn Energie auf den Boss in Phase 1 zuströmt."
+	L.energy_leak_msg = "Energieleck! (%d)"
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "deDE")
