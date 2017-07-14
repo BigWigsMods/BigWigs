@@ -36,7 +36,7 @@ if L then
 	L.custom_on_stop_timers_desc = "L'Avatar déchu décide aléatoirement quel capacité hors cooldown il utilise ensuite. Quand cette option est activée, les barres de ces capacités resteront à l'écran."
 
 	--L.energy_leak = "Energy Leak"
-	--L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in phase 1."
+	--L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in stage 1."
 	--L.energy_leak_msg = "Energy Leak! (%d)"
 end
 

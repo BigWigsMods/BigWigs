@@ -35,7 +35,7 @@ local timersMythic = {
 	[239132] = {34.5, 64.5, 63, 63}, -- Rupture Realities
 }
 
-local phase = 1
+local stage = 1
 local corruptedMatrixCounter = 1
 local ruptureRealitiesCounter = 1
 local unboundChaosCounter = 1
@@ -60,7 +60,7 @@ if L then
 	L.custom_on_stop_timers_desc = "Fallen Avatar randomizes which off-cooldown ability he uses next. When this option is enabled, the bars for those abilities will stay on your screen."
 
 	L.energy_leak = "Energy Leak"
-	L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in phase 1."
+	L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in stage 1."
 	L.energy_leak_msg = "Energy Leak! (%d)"
 end
 --------------------------------------------------------------------------------
@@ -145,7 +145,7 @@ end
 
 function mod:OnEngage()
 	timers = self:Mythic() and timersMythic or timersHeroic
-	phase = 1
+	stage = 1
 	corruptedMatrixCounter = 1
 	desolateCounter = 1
 	unboundChaosCounter = 1
@@ -310,7 +310,7 @@ end
 function mod:Desolate(args)
 	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
 	desolateCounter = desolateCounter + 1
-	self:CDBar(args.spellId, phase == 2 and (desolateCounter % 2 == 0 and 12 or 23) or (desolateCounter % 4 == 3 and 24.3 or 11.5))
+	self:CDBar(args.spellId, stage == 2 and (desolateCounter % 2 == 0 and 12 or 23) or (desolateCounter % 4 == 3 and 24.3 or 11.5))
 end
 
 function mod:DesolateApplied(args)
@@ -357,8 +357,8 @@ function mod:CorruptedMatrix(args)
 end
 
 function mod:Annihilation() -- Stage 2
-	phase = 2
-	self:Message("stages", "Positive", "Long", self:SpellName(-14719), false) -- Stage Two: An Avatar Awakened
+	stage = 2
+	self:Message("stages", "Positive", "Long", CL.stage:format(2), false)
 
 	self:StopBar(233556) -- Corrupted Matrix
 	self:StopBar(CL.cast:format(self:SpellName(233556))) -- Corrupted Matrix (cast)

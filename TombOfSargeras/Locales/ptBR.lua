@@ -36,7 +36,7 @@ if L then
 	--L.custom_on_stop_timers_desc = "Fallen Avatar randomizes which off-cooldown ability he uses next. When this option is enabled, the bars for those abilities will stay on your screen."
 
 	--L.energy_leak = "Energy Leak"
-	--L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in phase 1."
+	--L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in stage 1."
 	--L.energy_leak_msg = "Energy Leak! (%d)"
 end
 
