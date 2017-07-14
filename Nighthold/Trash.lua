@@ -432,9 +432,9 @@ function mod:ArcanicRelease(args)
 end
 
 function mod:ArcanicReleaseRemoved(args)
+	self:StopBar(args.spellName, args.destName)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
-		self:StopBar(args.spellId, args.destName)
 	end
 end
 
