@@ -62,6 +62,10 @@ if L then
 	L.energy_leak = "Energy Leak"
 	L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in phase 1."
 	L.energy_leak_msg = "Energy Leak! (%d)"
+
+	L.first = "|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.png:0|t %.1f"
+	L.second = "|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.png:0|t %.1f"
+	L.third = "|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.png:0|t %.1f"
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -82,7 +86,7 @@ function mod:GetOptions()
 		236528, -- Ripple of Darkness
 		233856, -- Cleansing Protocol
 		233556, -- Corrupted Matrix
-		{239739, "FLASH", "SAY"}, -- Dark Mark
+		{239739, "FLASH", "SAY", "INFOBOX"}, -- Dark Mark
 		darkMarkIcons,
 		235572, -- Rupture Realities
 		242017, -- Black Winds
@@ -370,24 +374,46 @@ function mod:Annihilation() -- Stage 2
 end
 
 do
-	local list = mod:NewTargetList()
+	local list, infoBoxList, timer = mod:NewTargetList(), {}, nil
+
+	local function updateInfoBox(self)
+		for _,debuff in pairs(infoBoxList) do
+			local pos = debuff.pos-1
+			self:SetInfo(239739, pos, (pos == 1 and L.first or pos == 3 and L.second or L.third):format(debuff.expires-GetTime()))
+		end
+	end
+
 	function mod:DarkMark(args)
-		list[#list+1] = args.destName
+		local count = #list+1
+		list[count] = args.destName
+
+		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName) -- random duration
+		local remaining = expires-GetTime()
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
-			self:Say(args.spellId, CL.count:format(args.spellName, #list)) -- Announce which mark you have
-			local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName) -- random duration
-			local remaining = expires-GetTime()
+			self:Say(args.spellId, CL.count:format(args.spellName, count)) -- Announce which mark you have
 			self:SayCountdown(args.spellId, remaining)
 		end
-		if #list == 1 then
+
+		if count == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Attention", "Alarm")
 			darkMarkCounter = darkMarkCounter + 1
 			self:Bar(args.spellId, self:Mythic() and (darkMarkCounter == 2 and 25.5 or 30.5) or 34, CL.count:format(args.spellName, darkMarkCounter))
+			self:OpenInfo(args.spellId, args.spellName)
+			self:SetInfo(args.spellId, 1, L.first:format(6))
+			self:SetInfo(args.spellId, 3, L.second:format(8))
+			if not self:Easy() then
+				self:SetInfo(args.spellId, 5, L.third:format(10))
+			end
+			wipe(infoBoxList)
+			timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
 		end
 
+		infoBoxList[args.destName] = {pos = count*2, expires = expires}
+		self:SetInfo(args.spellId, count*2, self:ColorName(args.destName))
+
 		if self:GetOption(darkMarkIcons) then
-			local icon = #list == 1 and 6 or #list == 2 and 4 or #list == 3 and 3 -- (Blue -> Green -> Purple) in order of exploding/application
+			local icon = count == 1 and 6 or count == 2 and 4 or count == 3 and 3 -- (Blue -> Green -> Purple) in order of exploding/application
 			if icon then
 				SetRaidTarget(args.destName, icon)
 			end
@@ -400,6 +426,22 @@ do
 		end
 		if self:GetOption(darkMarkIcons) then
 			SetRaidTarget(args.destName, 0)
+		end
+		if infoBoxList[args.destName] then
+			self:SetInfo(args.spellId, infoBoxList[args.destName].pos, "")
+			self:SetInfo(args.spellId, infoBoxList[args.destName].pos-1, "")
+			infoBoxList[args.destName] = nil
+		end
+		local tableEmpty = true
+		for _ in pairs(infoBoxList) do
+			tableEmpty = false
+		end
+		if tableEmpty then
+			self:CloseInfo(args.spellId)
+			if timer then
+				self:CancelTimer(timer)
+				timer = nil
+			end
 		end
 	end
 end
