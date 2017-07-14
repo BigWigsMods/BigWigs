@@ -62,10 +62,6 @@ if L then
 	L.energy_leak = "Energy Leak"
 	L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in phase 1."
 	L.energy_leak_msg = "Energy Leak! (%d)"
-
-	L.first = "|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.png:0|t %.1f"
-	L.second = "|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.png:0|t %.1f"
-	L.third = "|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.png:0|t %.1f"
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -397,11 +393,16 @@ end
 
 do
 	local list, infoBoxList, timer = mod:NewTargetList(), {}, nil
+	local infoBoxText = {
+		[1] = "|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.png:0|t %.1f",
+		[3] = "|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.png:0|t %.1f",
+		[5] = "|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.png:0|t %.1f",
+	}
 
 	local function updateInfoBox(self)
 		for _,debuff in pairs(infoBoxList) do
 			local pos = debuff.pos-1
-			self:SetInfo(239739, pos, (pos == 1 and L.first or pos == 3 and L.second or L.third):format(debuff.expires-GetTime()))
+			self:SetInfo(239739, pos, (infoBoxText[pos]):format(debuff.expires-GetTime()))
 		end
 	end
 
@@ -422,10 +423,10 @@ do
 			darkMarkCounter = darkMarkCounter + 1
 			self:Bar(args.spellId, self:Mythic() and (darkMarkCounter == 2 and 25.5 or 30.5) or 34, CL.count:format(args.spellName, darkMarkCounter))
 			self:OpenInfo(args.spellId, args.spellName)
-			self:SetInfo(args.spellId, 1, L.first:format(6))
-			self:SetInfo(args.spellId, 3, L.second:format(8))
+			self:SetInfo(args.spellId, 1, infoBoxText[1]:format(6))
+			self:SetInfo(args.spellId, 3, infoBoxText[3]:format(8))
 			if not self:Easy() then
-				self:SetInfo(args.spellId, 5, L.third:format(10))
+				self:SetInfo(args.spellId, 5, infoBoxText[5]:format(10))
 			end
 			wipe(infoBoxList)
 			timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
