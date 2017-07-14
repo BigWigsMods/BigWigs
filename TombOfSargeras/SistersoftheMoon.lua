@@ -17,11 +17,7 @@ mod.respawnTime = 15
 -- Locals
 --
 
-local stageOne = mod:SpellName(-15498)
-local stageTwo = mod:SpellName(-15510)
-local stageThree = mod:SpellName(-15519)
-
-local phase = 1
+local stage = 1
 local moonGlaiveCounter = 1
 local twilightGlaiveCounter = 1
 local screechCounter = 0
@@ -55,11 +51,11 @@ function mod:GetOptions()
 	},{
 		["stages"] = "general",
 		[236547] = -15499, -- Huntress Kasparian
-		[236480] = stageTwo, -- Stage Two: Bow of the Night
+		[236480] = -15510, -- Stage Two: Bow of the Night
 		[236305] = -15502, -- Captain Yathae Moonstrike
-		[236694] = stageTwo, -- Stage Two: Bow of the Night
+		[236694] = -15510, -- Stage Two: Bow of the Night
 		[233263] = -15506, -- Priestess Lunaspyre
-		[236712] = stageThree, -- Stage Three: Wrath of Elune
+		[236712] = -15519, -- Stage Three: Wrath of Elune
 	}
 end
 
@@ -105,7 +101,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	phase = 1
+	stage = 1
 	screechCounter = 0
 	moonGlaiveCounter = 1
 	twilightGlaiveCounter = 1
@@ -114,7 +110,7 @@ function mod:OnEngage()
 
 	nextUltimate = GetTime() + 48.3
 
-	self:Message("stages", "Neutral", "Long", stageOne, false)
+	self:Message("stages", "Neutral", "Long", CL.stage:format(stage), false)
 	self:Bar(236519, 9.4) -- Moon Burn
 	self:Bar(236547, 14.2) -- Moon Glaive
 	self:Bar(236442, 16.6) -- Twilight Volley
@@ -131,10 +127,10 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 235268 then -- Lunar Ghost (Transition)
-		phase = phase + 1
+		stage = stage + 1
 		local nextUltimateTimer = nextUltimate - GetTime()
-		if phase == 2 then
-			self:Message("stages", "Neutral", "Long", stageTwo, false)
+		self:Message("stages", "Neutral", "Long", CL.stage:format(stage), false)
+		if stage == 2 then
 			self:StopBar(236547) -- Moon Glaive
 			self:StopBar(236442) -- Twilight Volley
 			self:StopBar(236541) -- Twilight Glaive
@@ -150,8 +146,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 			elseif nextUltimateTimer > 0 then
 				self:Bar(236480, nextUltimateTimer) -- Glaive Storm
 			end
-		elseif phase == 3 then
-			self:Message("stages", "Neutral", "Long", stageThree, false)
+		elseif stage == 3 then
 			self:StopBar(233263) -- Embrace of the Eclipse
 			self:StopBar(236519) -- Moon Burn
 			self:StopBar(236694) -- Call Moontalon
@@ -182,7 +177,7 @@ function mod:TwilightGlaiveApplied(args)
 		self:PlaySound(236541, "Info")
 	end
 	self:SecondaryIcon(236541, args.destName)
-	self:Bar(236541, phase ~= 1 and 20.5 or (twilightGlaiveCounter % 2 == 1 and 30 or 19))
+	self:Bar(236541, stage > 1 and 20.5 or (twilightGlaiveCounter % 2 == 1 and 30 or 19))
 end
 
 function mod:TwilightGlaiveRemoved()
@@ -228,7 +223,7 @@ do
 		end
 	end
 	function mod:TwilightVolley(args)
-		if phase == 2 then
+		if stage == 2 then
 			self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
 		else -- Can only find target in P2
 			self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
@@ -287,7 +282,7 @@ function mod:EmbraceoftheEclipseRemoved(args)
 end
 
 function mod:MoonBurn()
-	self:Bar(236519, phase == 3 and 18.3 or 24.3) -- XXX Need more P3 data/timers
+	self:Bar(236519, stage == 3 and 18.3 or 24.3) -- XXX Need more P3 data/timers
 end
 
 do

@@ -26,7 +26,7 @@ mod.respawnTime = 40
 local myRealm = 0 -- 1 = Spirit Realm, 0 = Corporeal Realm
 local phasedList = {}
 local unphasedList = {}
-local phase = 1
+local stage = 1
 local tormentedCriesCounter = 1
 local wailingSoulsCounter = 1
 local boneArmorCounter = 0
@@ -138,7 +138,7 @@ function mod:OnEngage()
 		updateProximity(self)
 	end
 
-	phase = 1
+	stage = 1
 	boneArmorCounter = 0
 	tormentedCriesCounter = 1
 	wailingSoulsCounter = 1
@@ -169,13 +169,13 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 235885 then -- Collapsing Fissure
 		self:Message(235907, "Attention", "Alert", spellName)
-		local t = phase == 2 and 15.8 or 30.5
-		if not phase == 2 and self:BarTimeLeft(238570) < 30.5 and self:BarTimeLeft(238570) > 0 then -- Tormented Cries
+		local t = stage == 2 and 15.8 or 30.5
+		if not stage == 2 and self:BarTimeLeft(238570) < 30.5 and self:BarTimeLeft(238570) > 0 then -- Tormented Cries
 			t = 65 + self:BarTimeLeft(238570) -- Time Left + 60s channel + 5s~ cooldown
 		end
 		self:Bar(235907, t)
-	elseif spellId == 239978 then -- Soul Palour // Phase 2
-		phase = 2
+	elseif spellId == 239978 then -- Soul Palour // Stage 2
+		stage = 2
 
 		self:StopBar(236072) -- Wailing Souls
 		self:StopBar(238570) -- Tormented Cries
@@ -331,11 +331,11 @@ do
 			scheduled = self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Positive", "Warning")
 			local t = 0
 			if self:Easy() then
-				t = phase == 2 and 24 or 34
+				t = stage == 2 and 24 or 34
 			else
-				t = phase == 2 and 20 or 25
+				t = stage == 2 and 20 or 25
 			end
-			if phase ~= 2 and self:BarTimeLeft(236072) < 24.3 and self:BarTimeLeft(236072) > 0 then -- Wailing Souls
+			if stage ~= 2 and self:BarTimeLeft(236072) < 24.3 and self:BarTimeLeft(236072) > 0 then -- Wailing Souls
 				t = 74.5 + self:BarTimeLeft(236072) -- Time Left + 60s channel + 14.5s cooldown
 			end
 			self:Bar(args.spellId, t)

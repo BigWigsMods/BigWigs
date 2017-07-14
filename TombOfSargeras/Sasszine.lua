@@ -18,7 +18,7 @@ mod.respawnTime = 40
 -- Locals
 --
 
-local phase = 1
+local stage = 1
 local consumingHungerCounter = 1
 local slicingTornadoCounter = 1
 local waveCounter = 1
@@ -85,7 +85,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	phase = 1
+	stage = 1
 	consumingHungerCounter = 1
 	slicingTornadoCounter = 1
 	waveCounter = 1
@@ -110,13 +110,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 239423 then -- Dread Shark // Stage 2 + Stage 3
 		dreadSharkCounter = dreadSharkCounter + 1
 		if not self:Mythic() then
-			phase = dreadSharkCounter
+			stage = dreadSharkCounter
 		elseif dreadSharkCounter == 3 or dreadSharkCounter == 5 then
 			self:Message(239436, "Urgent", "Warning")
-			phase = phase+1
+			stage = stage+1
 		else
 			self:Message(239436, "Urgent", "Warning")
-			return -- No phase change yet
+			return -- No stage change yet
 		end
 
 		self:StopBar(232722) -- Slicing Tornado
@@ -134,8 +134,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		burdenCounter = 1
 		hydraShotCounter = 1
 
-		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
-		if phase == 2 then
+		self:Message("stages", "Neutral", "Long", CL.stage:format(stage), false)
+		if stage == 2 then
 			self:Bar(232913, 11) -- Befouling Ink
 			if not self:LFR() then
 				self:Bar(230139, 15.9, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
@@ -143,7 +143,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 			self:Bar(230201, 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
 			self:Bar(232827, 32.5) -- Crashing Wave
 			self:Bar(234621, 42.2) -- Devouring Maw
-		elseif phase == 3 then
+		elseif stage == 3 then
 			self:CDBar(232913, 11) -- Befouling Ink
 			self:Bar(230201, 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
 			self:Bar(232827, 32.5) -- Crashing Wave
@@ -176,7 +176,7 @@ do
 			self:CastBar(args.spellId, 6, CL.count:format(args.spellName, hydraShotCounter))
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important", "Warning", nil, nil, true)
 			hydraShotCounter = hydraShotCounter + 1
-			self:Bar(args.spellId, self:Mythic() and 30.5 or phase == 2 and 30 or 40, CL.count:format(args.spellName, hydraShotCounter))
+			self:Bar(args.spellId, self:Mythic() and 30.5 or stage == 2 and 30 or 40, CL.count:format(args.spellName, hydraShotCounter))
 		end
 		if self:GetOption(hydraShotMarker) then -- Targets: LFR: 0, 1 Normal, 3 Heroic, 4 Mythic
 			SetRaidTarget(args.destName, count)
@@ -221,9 +221,9 @@ function mod:SlicingTornado(args)
 	slicingTornadoCounter = slicingTornadoCounter + 1
 	self:Message(args.spellId, "Important", "Warning")
 	if self:Mythic() then
-		self:Bar(args.spellId, phase == 3 and slicingTimersP3[slicingTornadoCounter] or 45) -- -- XXX Need more p3 data.
+		self:Bar(args.spellId, stage == 3 and slicingTimersP3[slicingTornadoCounter] or 45) -- -- XXX Need more p3 data.
 	else
-		self:Bar(args.spellId, phase == 3 and (slicingTornadoCounter % 2 == 0 and 45 or 52) or 45) -- -- XXX Need more p3 data.
+		self:Bar(args.spellId, stage == 3 and (slicingTornadoCounter % 2 == 0 and 45 or 52) or 45) -- -- XXX Need more p3 data.
 	end
 end
 
@@ -234,7 +234,7 @@ end
 
 function mod:ConsumingHunger()
 	consumingHungerCounter = consumingHungerCounter + 1
-	self:Bar(230384, phase == 3 and (consumingHungerCounter == 2 and 47 or 42) or 34) -- XXX Need more p3 data.
+	self:Bar(230384, stage == 3 and (consumingHungerCounter == 2 and 47 or 42) or 34) -- XXX Need more p3 data.
 end
 
 do
@@ -254,14 +254,14 @@ end
 
 function mod:BefoulingInk()
 	self:Message(232913, "Attention", "Info", CL.incoming:format(self:SpellName(232913))) -- Befouling Ink incoming!
-	self:CDBar(232913, phase == 3 and 32 or 41.5) -- XXX 32-34 in P3
+	self:CDBar(232913, stage == 3 and 32 or 41.5) -- XXX 32-34 in P3
 end
 
 function mod:CrashingWave(args)
 	waveCounter = waveCounter + 1
 	self:Message(args.spellId, "Important", "Warning")
 	self:CastBar(args.spellId, self:Mythic() and 4 or 5)
-	self:Bar(args.spellId, phase == 3 and (waveCounter == 3 and 49) or 42) -- XXX need more data in p3
+	self:Bar(args.spellId, stage == 3 and (waveCounter == 3 and 49) or 42) -- XXX need more data in p3
 end
 
 function mod:DeliciousBufferfish(args)

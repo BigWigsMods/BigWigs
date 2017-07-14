@@ -358,7 +358,7 @@ end
 
 function mod:Annihilation() -- Stage 2
 	stage = 2
-	self:Message("stages", "Positive", "Long", CL.stage:format(2), false)
+	self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
 
 	self:StopBar(233556) -- Corrupted Matrix
 	self:StopBar(CL.cast:format(self:SpellName(233556))) -- Corrupted Matrix (cast)
