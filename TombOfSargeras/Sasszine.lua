@@ -94,12 +94,12 @@ function mod:OnEngage()
 	hydraShotCounter = 1
 
 	self:Bar(230358, 10.5) -- Thundering Shock
-	self:Bar(230201, 15.5, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
+	self:Bar(230201, self:Easy() and 18 or 15.5, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain, Timer until cast_start
 	self:Bar(230384, 20.5) -- Consuming Hunger
 	if not self:LFR() then
-		self:Bar(230139, 25, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
+		self:Bar(230139, self:Normal() and 28 or 25, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
 	end
-	self:Bar(232722, 30.3) -- Slicing Tornado
+	self:Bar(232722, self:Easy() and 36 or 30.3) -- Slicing Tornado
 	self:Berserk(self:LFR() and 540 or 480)
 end
 
@@ -138,21 +138,21 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		if stage == 2 then
 			self:Bar(232913, 11) -- Befouling Ink
 			if not self:LFR() then
-				self:Bar(230139, 15.9, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
+				self:Bar(230139, self:Normal() and 18.2 or 15.9, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
 			end
-			self:Bar(230201, 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
-			self:Bar(232827, 32.5) -- Crashing Wave
-			self:Bar(234621, 42.2) -- Devouring Maw
+			self:Bar(230201, self:Easy() and 28 or 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain, Timer until cast_start
+			self:Bar(232827, self:Easy() and 39.6 or 32.5) -- Crashing Wave
+			self:Bar(234621, self:Easy() and 46.5 or 42.2) -- Devouring Maw
 		elseif stage == 3 then
 			self:CDBar(232913, 11) -- Befouling Ink
-			self:Bar(230201, 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
-			self:Bar(232827, 32.5) -- Crashing Wave
+			self:Bar(230201, self:Easy() and 28 or 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain, Timer until cast_start
+			self:Bar(232827, self:Easy() and 38.5 or 32.5) -- Crashing Wave
 			if not self:LFR() then
-				self:Bar(230139, 31.6) -- Hydra Shot
+				self:Bar(230139, self:Normal() and 18.2 or 31.6) -- Hydra Shot
 			end
 
 			self:Bar(230384, 40.1) -- Consuming Hunger
-			self:Bar(232722, 57.2) -- Slicing Tornado
+			self:Bar(232722, self:Easy() and 51.1 or 57.2) -- Slicing Tornado
 		end
 	end
 end
