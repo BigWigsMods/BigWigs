@@ -146,14 +146,14 @@ do
 		end
 	end
 
-	function mod:BarCreated(_, _, bar, module, key, text, time, icon, isApprox)
+	function mod:BarCreated(_, _, bar, _, key, text)
 		if self:GetOption("custom_on_stop_timers") and abilitysToPause[key] and not text:match(castPattern) then
 			bar:AddUpdateFunction(stopAtZeroSec)
 		end
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 233895 then -- Suffocating Dark
 		self:Message(spellId, "Attention", "Info")
 		suffocatingDarkCounter = suffocatingDarkCounter + 1
@@ -163,18 +163,20 @@ end
 
 do
 	local lastPower, prev = 0, 0
-	function mod:UNIT_POWER(unit, type)
-		local power = UnitPower(unit, 10) -- SPELL_POWER_ALTERNATE_POWER = 10
-		if power < lastPower or power >= nextAltPowerWarning then
-			self:StackMessage(233104, self:UnitName(unit), power, "Personal")
-			local t = GetTime()
-			if (power >= 80 or power < lastPower) and t-prev > 1.5 then
-				self:PlaySound(233104, "Info")
-				prev = t
+	function mod:UNIT_POWER(unit, pType)
+		if pType == "ALTERNATE" then
+			local power = UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
+			if power < lastPower or power >= nextAltPowerWarning then
+				self:StackMessage(233104, self:UnitName(unit), power, "Personal")
+				local t = GetTime()
+				if (power >= 80 or power < lastPower) and t-prev > 1.5 then
+					self:PlaySound(233104, "Info")
+					prev = t
+				end
+				nextAltPowerWarning = tonumber(string.format("%d", power/20))*20+20 -- every 20 power
 			end
-			nextAltPowerWarning = tonumber(string.format("%d", power/20))*20+20 -- every 20 power
+			lastPower = power
 		end
-		lastPower = power
 	end
 end
 

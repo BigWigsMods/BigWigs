@@ -256,7 +256,7 @@ function mod:CorruptingNova(args)
 	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
 end
 
-function mod:HorrorDeath(args)
+function mod:HorrorDeath()
 	self:StopBar(207830) -- Corrupting Nova
 	self:StopBar(224649) -- Tormenting Swipe
 end

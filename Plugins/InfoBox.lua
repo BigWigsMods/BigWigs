@@ -16,6 +16,9 @@ plugin.displayName = L.infoBox
 local opener, display = nil, nil
 local nameList = {}
 
+local db = nil
+local inTestMode = false
+
 function plugin:RestyleWindow(dirty)
 	if db.lock then
 		display:EnableMouse(false)
@@ -228,6 +231,7 @@ do
 end
 
 function plugin:Close()
+	inTestMode = false
 	display:Hide()
 end
 
@@ -238,6 +242,7 @@ function plugin:BigWigs_OnBossDisable(_, module)
 end
 
 function plugin:Test()
+	inTestMode = true
 	for i = 1, 10 do
 		display.text[i]:SetText(i)
 	end

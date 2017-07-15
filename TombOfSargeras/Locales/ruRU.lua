@@ -34,6 +34,10 @@ if L then
 
 	L.custom_on_stop_timers = "Всегда показывать полосы для способностей"
 	L.custom_on_stop_timers_desc = "Аватара Падшего использует свои способности случайным образом. Когда эта опция включена, полосы для этих способностей останутся на вашем экране."
+
+	--L.energy_leak = "Energy Leak"
+	--L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in stage 1."
+	--L.energy_leak_msg = "Energy Leak! (%d)"
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "ruRU")
@@ -51,6 +55,8 @@ L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "ruRU")
 if L then
 	L.chaosbringer = "Инфернал - вестник хаоса"
 	L.rez = "Смотритель гробницы Рез"
+	L.seacaller = "Зовущая море из клана Волнистой Чешуи"
 	L.custodian = "Подводный надзиратель"
+	L.dresanoth = "Кресанот"
 	L.sentry = "Страж Хранительницы"
 end

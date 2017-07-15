@@ -18,7 +18,7 @@ mod.respawnTime = 40
 -- Locals
 --
 
-local phase = 1
+local stage = 1
 local consumingHungerCounter = 1
 local slicingTornadoCounter = 1
 local waveCounter = 1
@@ -26,12 +26,6 @@ local dreadSharkCounter = 1
 local burdenCounter = 1
 local slicingTimersP3 = {0, 39.0, 34.1, 42.6}
 local hydraShotCounter = 1
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -91,7 +85,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	phase = 1
+	stage = 1
 	consumingHungerCounter = 1
 	slicingTornadoCounter = 1
 	waveCounter = 1
@@ -100,29 +94,29 @@ function mod:OnEngage()
 	hydraShotCounter = 1
 
 	self:Bar(230358, 10.5) -- Thundering Shock
-	self:Bar(230201, 15.5, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
+	self:Bar(230201, self:Easy() and 18 or 15.5, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain, Timer until cast_start
 	self:Bar(230384, 20.5) -- Consuming Hunger
 	if not self:LFR() then
-		self:Bar(230139, 25, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
+		self:Bar(230139, self:Normal() and 28 or 25, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
 	end
-	self:Bar(232722, 30.3) -- Slicing Tornado
+	self:Bar(232722, self:Easy() and 36 or 30.3) -- Slicing Tornado
 	self:Berserk(self:LFR() and 540 or 480)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 239423 then -- Dread Shark // Stage 2 + Stage 3
 		dreadSharkCounter = dreadSharkCounter + 1
 		if not self:Mythic() then
-			phase = dreadSharkCounter
+			stage = dreadSharkCounter
 		elseif dreadSharkCounter == 3 or dreadSharkCounter == 5 then
 			self:Message(239436, "Urgent", "Warning")
-			phase = phase+1
+			stage = stage+1
 		else
 			self:Message(239436, "Urgent", "Warning")
-			return -- No phase change yet
+			return -- No stage change yet
 		end
 
 		self:StopBar(232722) -- Slicing Tornado
@@ -140,25 +134,25 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		burdenCounter = 1
 		hydraShotCounter = 1
 
-		self:Message("stages", "Neutral", "Long", CL.stage:format(phase), false)
-		if phase == 2 then
+		self:Message("stages", "Neutral", "Long", CL.stage:format(stage), false)
+		if stage == 2 then
 			self:Bar(232913, 11) -- Befouling Ink
 			if not self:LFR() then
-				self:Bar(230139, 15.9, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
+				self:Bar(230139, self:Normal() and 18.2 or 15.9, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
 			end
-			self:Bar(230201, 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
-			self:Bar(232827, 32.5) -- Crashing Wave
-			self:Bar(234621, 42.2) -- Devouring Maw
-		elseif phase == 3 then
+			self:Bar(230201, self:Easy() and 28 or 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain, Timer until cast_start
+			self:Bar(232827, self:Easy() and 39.6 or 32.5) -- Crashing Wave
+			self:Bar(234621, self:Easy() and 46.5 or 42.2) -- Devouring Maw
+		elseif stage == 3 then
 			self:CDBar(232913, 11) -- Befouling Ink
-			self:Bar(230201, 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
-			self:Bar(232827, 32.5) -- Crashing Wave
+			self:Bar(230201, self:Easy() and 28 or 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain, Timer until cast_start
+			self:Bar(232827, self:Easy() and 38.5 or 32.5) -- Crashing Wave
 			if not self:LFR() then
-				self:Bar(230139, 31.6) -- Hydra Shot
+				self:Bar(230139, self:Normal() and 18.2 or 31.6) -- Hydra Shot
 			end
 
 			self:Bar(230384, 40.1) -- Consuming Hunger
-			self:Bar(232722, 57.2) -- Slicing Tornado
+			self:Bar(232722, self:Easy() and 51.1 or 57.2) -- Slicing Tornado
 		end
 	end
 end
@@ -166,26 +160,35 @@ end
 do
 	local list = mod:NewTargetList()
 	function mod:HydraShot(args)
-		list[#list+1] = args.destName
+		local count = #list+1
+		list[count] = args.destName
 
 		if self:Me(args.destGUID)then
-			self:Say(args.spellId, not self:Easy() and CL.count_rticon:format(args.spellName, #list, #list))
+			if self:Easy() then
+				self:Say(args.spellId)
+			else
+				self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
+				self:SayCountdown(args.spellId, 6, count, 4)
+			end
 		end
 
-		if #list == 1 then
+		if count == 1 then
 			self:CastBar(args.spellId, 6, CL.count:format(args.spellName, hydraShotCounter))
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important", "Warning", nil, nil, true)
 			hydraShotCounter = hydraShotCounter + 1
-			self:Bar(args.spellId, self:Mythic() and 30.5 or phase == 2 and 30 or 40, CL.count:format(args.spellName, hydraShotCounter))
+			self:Bar(args.spellId, self:Mythic() and 30.5 or stage == 2 and 30 or 40, CL.count:format(args.spellName, hydraShotCounter))
 		end
 		if self:GetOption(hydraShotMarker) then -- Targets: LFR: 0, 1 Normal, 3 Heroic, 4 Mythic
-			SetRaidTarget(args.destName, #list)
+			SetRaidTarget(args.destName, count)
 		end
 	end
 
 	function mod:HydraShotRemoved(args)
 		if self:GetOption(hydraShotMarker) then
 			SetRaidTarget(args.destName, 0)
+		end
+		if self:Me(args.destGUID) and not self:Easy() then
+			self:CancelSayCountdown(args.spellId)
 		end
 	end
 end
@@ -218,9 +221,9 @@ function mod:SlicingTornado(args)
 	slicingTornadoCounter = slicingTornadoCounter + 1
 	self:Message(args.spellId, "Important", "Warning")
 	if self:Mythic() then
-		self:Bar(args.spellId, phase == 3 and slicingTimersP3[slicingTornadoCounter] or 45) -- -- XXX Need more p3 data.
+		self:Bar(args.spellId, stage == 3 and slicingTimersP3[slicingTornadoCounter] or 45) -- -- XXX Need more p3 data.
 	else
-		self:Bar(args.spellId, phase == 3 and (slicingTornadoCounter % 2 == 0 and 45 or 52) or 45) -- -- XXX Need more p3 data.
+		self:Bar(args.spellId, stage == 3 and (slicingTornadoCounter % 2 == 0 and 45 or 52) or 45) -- -- XXX Need more p3 data.
 	end
 end
 
@@ -229,9 +232,9 @@ function mod:ThunderingShock(args)
 	self:Bar(args.spellId, 36) -- was 32.8, not confirmed
 end
 
-function mod:ConsumingHunger(args)
+function mod:ConsumingHunger()
 	consumingHungerCounter = consumingHungerCounter + 1
-	self:Bar(230384, phase == 3 and (consumingHungerCounter == 2 and 47 or 42) or 34) -- XXX Need more p3 data.
+	self:Bar(230384, stage == 3 and (consumingHungerCounter == 2 and 47 or 42) or 34) -- XXX Need more p3 data.
 end
 
 do
@@ -244,31 +247,31 @@ do
 	end
 end
 
-function mod:DevouringMaw(args)
+function mod:DevouringMaw()
 	self:Message(234621, "Important", "Warning")
 	self:Bar(234621, 41.5)
 end
 
-function mod:BefoulingInk(args)
+function mod:BefoulingInk()
 	self:Message(232913, "Attention", "Info", CL.incoming:format(self:SpellName(232913))) -- Befouling Ink incoming!
-	self:CDBar(232913, phase == 3 and 32 or 41.5) -- XXX 32-34 in P3
+	self:CDBar(232913, stage == 3 and 32 or 41.5) -- XXX 32-34 in P3
 end
 
 function mod:CrashingWave(args)
 	waveCounter = waveCounter + 1
 	self:Message(args.spellId, "Important", "Warning")
 	self:CastBar(args.spellId, self:Mythic() and 4 or 5)
-	self:Bar(args.spellId, phase == 3 and (waveCounter == 3 and 49) or 42) -- XXX need more data in p3
+	self:Bar(args.spellId, stage == 3 and (waveCounter == 3 and 49) or 42) -- XXX need more data in p3
 end
 
 function mod:DeliciousBufferfish(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(239362, args.destName, "Personal", "Positive")
+		self:TargetMessage(239362, args.destName, "Personal", "Alert")
 	end
 end
 
 function mod:DeliciousBufferfishRemoved(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(239362, args.destName, "Personal", "Alert", CL.removed:format(args.spellName))
+		self:Message(239362, "Personal", "Alert", CL.removed:format(args.spellName))
 	end
 end

@@ -190,7 +190,7 @@ local function updateProximity(self)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 215455 then -- Arcane Orb
 		self:Message(213520, "Important")
 	elseif spellId == 213390 then -- Detonate: Arcane Orb
@@ -522,7 +522,7 @@ do
 end
 
 --[[ Mythic ]]--
-function mod:SeveredSoul(args)
+function mod:SeveredSoul()
 	self:Message(230901, "Positive", "Info")
 	self:Bar(230901, 45, CL.over:format(self:SpellName(230901))) -- Fel Soul
 	self:CDBar(230504, phase % 3 == 1 and 18 or phase % 3 == 2 and 11 or 10) -- Decimate
@@ -532,7 +532,7 @@ function mod:SeveredSoul(args)
 	end
 end
 
-function mod:SeveredSoulRemoved(args)
+function mod:SeveredSoulRemoved()
 	self:StopBar(230504)
 	self:StopBar(CL.count:format(self:SpellName(230403), felLashCount))
 end

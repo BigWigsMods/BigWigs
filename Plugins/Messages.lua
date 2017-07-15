@@ -31,7 +31,8 @@ local db = nil
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
 
-local tempPrint = true -- XXX temp
+local fakeEmphasizeMessageAddon = {}
+LibStub("LibSink-2.0"):Embed(fakeEmphasizeMessageAddon)
 
 --------------------------------------------------------------------------------
 -- Anchors & Frames
@@ -180,7 +181,7 @@ do
 end
 
 --------------------------------------------------------------------------------
--- Options
+-- Profile
 --
 
 plugin.defaultDB = {
@@ -202,183 +203,6 @@ plugin.defaultDB = {
 	displaytime = 3,
 	fadetime = 2,
 }
-
-local fakeEmphasizeMessageAddon = {}
-LibStub("LibSink-2.0"):Embed(fakeEmphasizeMessageAddon)
-
-plugin.pluginOptions = {
-	type = "group",
-	name = L.messages,
-	childGroups = "tab",
-	args = {
-		output = {
-			type = "group",
-			name = L.output,
-			order = 2,
-			childGroups = "tab",
-			args = {
-				normal = plugin:GetSinkAce3OptionsDataTable(),
-				emphasized = fakeEmphasizeMessageAddon:GetSinkAce3OptionsDataTable(),
-			},
-		}
-	},
-}
-plugin.pluginOptions.args.output.args.normal.name = L.normalMessages
-plugin.pluginOptions.args.output.args.normal.order = 1
-plugin.pluginOptions.args.output.args.normal.disabled = nil
-plugin.pluginOptions.args.output.args.emphasized.name = L.emphasizedMessages
-plugin.pluginOptions.args.output.args.emphasized.order = 2
-plugin.pluginOptions.args.output.args.emphasized.disabled = nil
--- Kill chat outputs
-plugin.pluginOptions.args.output.args.normal.args.Channel = nil
-plugin.pluginOptions.args.output.args.emphasized.args.Channel = nil
-plugin.pluginOptions.args.output.args.normal.args.ChatFrame = nil
-plugin.pluginOptions.args.output.args.emphasized.args.ChatFrame = nil
-
-do
-	local updateMessageTimers = function(info, value)
-		plugin.db.profile[info[#info]] = value
-		for i = 1, 4 do
-			local font = labels[i]
-			font.animFade:SetStartDelay(db.displaytime)
-			font.icon.animFade:SetStartDelay(db.displaytime)
-			font.animFade:SetDuration(db.fadetime)
-			font.icon.animFade:SetDuration(db.fadetime)
-		end
-	end
-	local updateAnchor = function(info, value)
-		plugin.db.profile[info[#info]] = value
-		BWMessageFrame:ClearAllPoints()
-		local align = plugin.db.profile.align == "CENTER" and "" or db.align
-		if plugin.db.profile.growUpwards then
-			BWMessageFrame:SetPoint("BOTTOM"..align, normalAnchor, "TOP"..align)
-		else
-			BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
-		end
-		for i = 1, 4 do
-			local font = labels[i]
-			font:ClearAllPoints()
-		end
-	end
-
-	plugin.pluginOptions.args.more = {
-		type = "group",
-		name = L.general,
-		order = 1,
-		get = function(info) return plugin.db.profile[info[#info]] end,
-		set = function(info, value) plugin.db.profile[info[#info]] = value end,
-		args = {
-			font = {
-				type = "select",
-				name = L.font,
-				order = 1,
-				values = media:List("font"),
-				itemControl = "DDI-Font",
-				get = function()
-					for i, v in next, media:List("font") do
-						if v == plugin.db.profile.font then return i end
-					end
-				end,
-				set = function(info, value)
-					local list = media:List("font")
-					plugin.db.profile.font = list[value]
-				end,
-			},
-			outline = {
-				type = "select",
-				name = L.outline,
-				order = 2,
-				values = {
-					NONE = L.none,
-					OUTLINE = L.thin,
-					THICKOUTLINE = L.thick,
-				},
-			},
-			align = {
-				type = "select",
-				name = L.align,
-				values = {
-					LEFT = L.left,
-					CENTER = L.center,
-					RIGHT = L.right,
-				},
-				width = "half",
-				style = "radio",
-				order = 3,
-				set = updateAnchor,
-			},
-			fontSize = {
-				type = "range",
-				name = L.fontSize,
-				order = 4,
-				max = 200, softMax = 72,
-				min = 1,
-				step = 1,
-				width = "full",
-			},
-			usecolors = {
-				type = "toggle",
-				name = L.useColors,
-				desc = L.useColorsDesc,
-				order = 5,
-			},
-			useicons = {
-				type = "toggle",
-				name = L.useIcons,
-				desc = L.useIconsDesc,
-				order = 6,
-			},
-			growUpwards = {
-				type = "toggle",
-				name = L.growingUpwards,
-				desc = L.growingUpwardsDesc,
-				order = 7,
-				set = updateAnchor,
-			},
-			monochrome = {
-				type = "toggle",
-				name = L.monochrome,
-				desc = L.monochromeDesc,
-				order = 8,
-			},
-		--	classcolor = {
-		--		type = "toggle",
-		--		name = L.classColors,
-		--		desc = L.classColorsDesc,
-		--		order = 9,
-		--	},
-			newline1 = {
-				type = "description",
-				name = "\n",
-				order = 10,
-			},
-			displaytime = {
-				type = "range",
-				name = L.displayTime,
-				desc = L.displayTimeDesc,
-				min = 1,
-				max = 30,
-				step = 0.5,
-				order = 11,
-				set = updateMessageTimers,
-			},
-			fadetime = {
-				type = "range",
-				name = L.fadeTime,
-				desc = L.fadeTimeDesc,
-				min = 1,
-				max = 30,
-				step = 0.5,
-				order = 12,
-				set = updateMessageTimers,
-			},
-		},
-	}
-end
-
---------------------------------------------------------------------------------
--- Profile
---
 
 local function updateProfile()
 	db = plugin.db.profile
@@ -447,9 +271,155 @@ local function updateProfile()
 		font.animFade:SetDuration(db.fadetime)
 		font.icon.animFade:SetDuration(db.fadetime)
 		font:SetFont(media:Fetch("font", db.font), db.fontSize, flags)
-		tempPrint = false
 	end
 end
+plugin.updateProfile = updateProfile -- XXX temp until the emphasize module is refactored
+
+--------------------------------------------------------------------------------
+-- Options
+--
+
+plugin.pluginOptions = {
+	type = "group",
+	name = L.messages,
+	childGroups = "tab",
+	args = {
+		output = {
+			type = "group",
+			name = L.output,
+			order = 2,
+			childGroups = "tab",
+			args = {
+				normal = plugin:GetSinkAce3OptionsDataTable(),
+				emphasized = fakeEmphasizeMessageAddon:GetSinkAce3OptionsDataTable(),
+			},
+		}
+	},
+}
+plugin.pluginOptions.args.output.args.normal.name = L.normalMessages
+plugin.pluginOptions.args.output.args.normal.order = 1
+plugin.pluginOptions.args.output.args.normal.disabled = nil
+plugin.pluginOptions.args.output.args.emphasized.name = L.emphasizedMessages
+plugin.pluginOptions.args.output.args.emphasized.order = 2
+plugin.pluginOptions.args.output.args.emphasized.disabled = nil
+-- Kill chat outputs
+plugin.pluginOptions.args.output.args.normal.args.Channel = nil
+plugin.pluginOptions.args.output.args.emphasized.args.Channel = nil
+plugin.pluginOptions.args.output.args.normal.args.ChatFrame = nil
+plugin.pluginOptions.args.output.args.emphasized.args.ChatFrame = nil
+
+plugin.pluginOptions.args.more = {
+	type = "group",
+	name = L.general,
+	order = 1,
+	get = function(info) return plugin.db.profile[info[#info]] end,
+	set = function(info, value)
+		plugin.db.profile[info[#info]] = value
+		updateProfile()
+	end,
+	args = {
+		font = {
+			type = "select",
+			name = L.font,
+			order = 1,
+			values = media:List("font"),
+			itemControl = "DDI-Font",
+			get = function()
+				for i, v in next, media:List("font") do
+					if v == plugin.db.profile.font then return i end
+				end
+			end,
+			set = function(_, value)
+				local list = media:List("font")
+				plugin.db.profile.font = list[value]
+			end,
+		},
+		outline = {
+			type = "select",
+			name = L.outline,
+			order = 2,
+			values = {
+				NONE = L.none,
+				OUTLINE = L.thin,
+				THICKOUTLINE = L.thick,
+			},
+		},
+		align = {
+			type = "select",
+			name = L.align,
+			values = {
+				LEFT = L.left,
+				CENTER = L.center,
+				RIGHT = L.right,
+			},
+			width = "half",
+			style = "radio",
+			order = 3,
+		},
+		fontSize = {
+			type = "range",
+			name = L.fontSize,
+			order = 4,
+			max = 200, softMax = 72,
+			min = 1,
+			step = 1,
+			width = "full",
+		},
+		usecolors = {
+			type = "toggle",
+			name = L.useColors,
+			desc = L.useColorsDesc,
+			order = 5,
+		},
+		useicons = {
+			type = "toggle",
+			name = L.useIcons,
+			desc = L.useIconsDesc,
+			order = 6,
+		},
+		growUpwards = {
+			type = "toggle",
+			name = L.growingUpwards,
+			desc = L.growingUpwardsDesc,
+			order = 7,
+		},
+		monochrome = {
+			type = "toggle",
+			name = L.monochrome,
+			desc = L.monochromeDesc,
+			order = 8,
+		},
+	--	classcolor = {
+	--		type = "toggle",
+	--		name = L.classColors,
+	--		desc = L.classColorsDesc,
+	--		order = 9,
+	--	},
+		newline1 = {
+			type = "description",
+			name = "\n",
+			order = 10,
+		},
+		displaytime = {
+			type = "range",
+			name = L.displayTime,
+			desc = L.displayTimeDesc,
+			min = 1,
+			max = 30,
+			step = 0.5,
+			order = 11,
+		},
+		fadetime = {
+			type = "range",
+			name = L.fadeTime,
+			desc = L.fadeTimeDesc,
+			min = 1,
+			max = 30,
+			step = 0.5,
+			order = 12,
+		},
+	},
+}
 
 -------------------------------------------------------------------------------
 -- Initialization
@@ -553,8 +523,7 @@ do
 		return labels[4]
 	end
 
-	function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
-		if tempPrint then print("BigWigs: We are printing a message before initialization has finished somehow.") end
+	function plugin:Print(_, text, r, g, b, _, _, _, _, _, icon)
 		BWMessageFrame:Show()
 
 		local slot = db.growUpwards and getNextSlotUp() or getNextSlotDown()
@@ -603,7 +572,7 @@ do
 	anim:SetDuration(3.5)
 	anim:SetStartDelay(1.5)
 
-	function plugin:EmphasizedPrint(addon, text, r, g, b)
+	function plugin:EmphasizedPrint(_, text, r, g, b)
 		emphasizedText:SetText(text)
 		emphasizedText:SetTextColor(r, g, b)
 		updater:Stop()
@@ -622,7 +591,6 @@ do
 
 	emphasizedCountdownText = frame:CreateFontString(nil, "OVERLAY")
 	emphasizedCountdownText:SetPoint("CENTER")
-	emphasizeCountdownAnchor.text = emphasizedCountdownText -- Purely so the Emphasize module can access it
 
 	local updater = frame:CreateAnimationGroup()
 	updater:SetScript("OnFinished", function() frame:Hide() end)

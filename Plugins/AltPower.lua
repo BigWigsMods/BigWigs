@@ -149,7 +149,7 @@ do
 						if v == db.font then return i end
 					end
 				end,
-				set = function(info, value)
+				set = function(_, value)
 					db.font = media:List("font")[value]
 					plugin:RestyleWindow(true)
 				end,
@@ -497,7 +497,7 @@ do
 		for i = 1, maxPlayers do
 			local unit = unitList[i]
 			-- If we don't have sync data (players not using BigWigs) use whatever (potentially incorrect) data Blizz gives us.
-			powerList[unit] = syncPowerList and syncPowerList[unit] or UnitPower(unit, 10) -- ALTERNATE_POWER_INDEX = 10
+			powerList[unit] = syncPowerList and syncPowerList[unit] or UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
 		end
 		tsort(sortedUnitList, sortTbl)
 		for i = 1, db.expanded and 25 or 10 do
@@ -567,7 +567,7 @@ end
 do
 	local power = -1
 	local function sendPower()
-		local newPower = UnitPower("player", 10) -- ALTERNATE_POWER_INDEX = 10
+		local newPower = UnitPower("player", 10) -- Enum.PowerType.Alternate = 10
 		if newPower ~= power then
 			power = newPower
 			plugin:Sync("AltPower", newPower)

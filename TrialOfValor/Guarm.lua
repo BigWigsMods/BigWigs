@@ -21,7 +21,6 @@ local fangCounter = 0
 local leapCounter = 0
 local foamCount = 1
 local phaseStartTime = 0
-local lickCount = 1
 local lickTimer = {14.1, 22.7, 26.3, 33.7, 43.3, 95.8, 99.4, 106.8, 116.5, 171.9, 175.4, 182.6, 192.6}
 local foamTargets = {}
 
@@ -196,7 +195,7 @@ function mod:RoaringLeap(args)
 	end
 end
 
-function mod:VolatileFoam(args)
+function mod:VolatileFoam()
 	foamCount = foamCount + 1
 	local t = foamCount == 2 and 19.4 or foamCount % 3 == 1 and 17 or foamCount % 3 == 2 and 15 or 42
 	self:Bar(-14535, t, CL.count:format(self:SpellName(-14535), foamCount), 228810)

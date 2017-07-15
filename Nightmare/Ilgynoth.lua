@@ -19,7 +19,6 @@ mod.respawnTime = 30
 --
 
 local mobCollector = {}
-local fixateOnMe = nil
 local phase = 1 -- 1 = Outside, 2 = Boss, 3 = Outside, 4 = Boss
 local deathglareMarked = {} -- save GUIDs of marked mobs
 local deathglareMarks  = { [6] = true, [5] = true, [4] = true, [3] = true } -- available marks to use
@@ -181,7 +180,6 @@ function mod:OnBossEnable()
 
 	-- Nightmare Ichor
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 210099)
-	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 210099)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TouchOfCorruption", 209469)
 
 	-- Nightmare Horror
@@ -213,7 +211,6 @@ end
 
 function mod:OnEngage()
 	wipe(mobCollector)
-	fixateOnMe = nil
 	phase = 1
 	deathBlossomCount = 1
 	blobsRemaining = self:LFR() and 15 or self:Mythic() and 22 or 20
@@ -299,7 +296,7 @@ do
 end
 
 -- Dominator Tentacle
-function mod:RAID_BOSS_WHISPER(_, msg, sender)
+function mod:RAID_BOSS_WHISPER(_, msg)
 	if msg:find("208689", nil, true) then -- Ground Slam
 		self:Message(208689, "Personal", "Alarm", CL.you:format(self:SpellName(208689)))
 		self:Flash(208689)
@@ -324,14 +321,14 @@ do
 	end
 end
 
-function mod:EyeDamageCast(args)
+function mod:EyeDamageCast()
 	if blobsRemaining > 0 then -- Don't count blobs killed after the eye dies as missed
 		blobsMissed = blobsMissed + 1
 		self:SetInfo("infobox", 4, blobsMissed)
 	end
 end
 
-function mod:EyeDamage(args)
+function mod:EyeDamage()
 	blobsRemaining = blobsRemaining - 1
 	blobsMissed = blobsMissed - 1
 	self:SetInfo("infobox", 2, blobsRemaining)
@@ -342,13 +339,6 @@ end
 function mod:Fixate(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
-		fixateOnMe = true
-	end
-end
-
-function mod:FixateRemoved(args)
-	if self:Me(args.destGUID) then
-		fixateOnMe = nil
 	end
 end
 
@@ -360,7 +350,7 @@ function mod:TouchOfCorruption(args)
 end
 
 -- Nightmare Horror
-function mod:SummonNightmareHorror(args)
+function mod:SummonNightmareHorror()
 	self:Message("nightmare_horror", "Important", "Info", CL.spawned:format(self:SpellName(L.nightmare_horror)), L.nightmare_horror_icon)
 	self:Bar("nightmare_horror", 220, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror < TODO beta timer, need live data
 	self:Bar(210984, 13.8) -- Eye of Fate

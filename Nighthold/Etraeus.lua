@@ -49,24 +49,6 @@ local starSignTables = {
 	[216344] = {},
 }
 
-local defaultIcons = {
-	[205429] = 205429,
-	[205445] = 205445,
-	[216345] = 216345,
-	[216344] = 216344,
-}
-local icons = defaultIcons
-
-local replacementIcons = {
-	[205429] = 227498, -- Yellow/Orange
-	[205445] = 227491, -- Red
-	[216345] = 227500, -- Green
-	[216344] = 227499, -- Blue
-}
-
-local redIcon = 189030
-local greenIcon = 189032
-
 --------------------------------------------------------------------------------
 -- Upvalues
 --
@@ -200,9 +182,6 @@ function mod:OnEngage()
 		[216345] = {},
 		[216344] = {},
 	}
-	if self:GetOption("custom_off_gc_replacement_icons") then
-		icons = replacementIcons
-	end
 end
 
 function mod:OnBossDisable()
@@ -213,7 +192,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 222130 then -- Phase 2 Conversation
 		phase = 2
 		self:Message("stages", "Neutral", "Long", "90% - ".. CL.stage:format(2), false)
@@ -454,7 +433,7 @@ function mod:WitnessTheVoid(args)
 	self:Bar(args.spellId, self:Mythic() and 16.2 or 18.6, CL.count:format(args.spellName, voidCount)) -- m: 13.4 cd + 2.8, hc = 14.6 cd + 4
 end
 
-function mod:ThingDeath(args)
+function mod:ThingDeath()
 	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(207720), voidCount-1))) -- Witness the Void Cast
 	self:StopBar(CL.count:format(self:SpellName(207720), voidCount)) -- Witness the Void
 end
@@ -535,7 +514,6 @@ do
 			self:SetInfo(205408, 8, "")
 			self:SetInfo(205408, 10, "")
 
-			local i = 0
 			for i = 1, #starSignTables[mySign] do
 				local name = starSignTables[mySign][i]
 				if name ~= self:UnitName("player") then

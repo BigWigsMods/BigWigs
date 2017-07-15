@@ -34,6 +34,10 @@ if L then
 
 	--L.custom_on_stop_timers = "Always show ability bars"
 	--L.custom_on_stop_timers_desc = "Fallen Avatar randomizes which off-cooldown ability he uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+
+	--L.energy_leak = "Energy Leak"
+	--L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in stage 1."
+	--L.energy_leak_msg = "Energy Leak! (%d)"
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "itIT")
@@ -49,8 +53,10 @@ end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "itIT")
 if L then
-	--L.chaosbringer = "Infernal Chaosbringer"
-	--L.rez = "Rez the Tombwatcher"
-	--L.custodian = "Undersea Custodian"
-	--L.sentry = "Guardian Sentry"
+	L.chaosbringer = "Infernale Portatore del Caos"
+	L.rez = "Rez il Guardiano della Tomba"
+	L.seacaller = "Invocatrice del Mare Scagliamarea"
+	L.custodian = "Custode Sottomarino"
+	L.dresanoth = "Dresanoth"
+	L.sentry = "Sentinella Guardiana"
 end

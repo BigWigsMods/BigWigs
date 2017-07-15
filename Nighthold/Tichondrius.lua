@@ -304,7 +304,7 @@ function mod:EssenceOfNight(args)
 	end
 end
 
-function mod:AddDeath(args)
+function mod:AddDeath()
 	addsKilled = addsKilled + 1
 	self:SetInfo(206466, 2, addsKilled)
 	if self:Mythic() and addsKilled % 5 == 0 then
@@ -367,20 +367,17 @@ do
 end
 
 --[[ Sightless Watcher ]]--
-do
-	local list = mod:NewTargetList()
-	function mod:BurningSoul(args)
-		self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:OpenProximity(args.spellId, 8)
-		end
+function mod:BurningSoul(args)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:OpenProximity(args.spellId, 8)
 	end
+end
 
-	function mod:BurningSoulRemoved(args)
-		if self:Me(args.destGUID) then
-			self:CloseProximity(args.spellId)
-		end
+function mod:BurningSoulRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
 	end
 end
 

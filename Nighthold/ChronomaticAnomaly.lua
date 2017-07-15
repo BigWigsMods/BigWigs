@@ -277,7 +277,7 @@ end
 
 local function timeBombCountdown(self)
 	local me = self:UnitName("player")
-	local name, _, _, _, _, _, expires, _, _, _, _, _, _, _, _, timeMod = UnitDebuff("player", self:SpellName(206617))
+	local name, _, _, _, _, _, expires = UnitDebuff("player", self:SpellName(206617))
 	for _,timer in pairs(bombSayTimers) do
 		self:CancelTimer(timer)
 	end
@@ -295,7 +295,7 @@ local function timeBombCountdown(self)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 207012 then -- Speed: Normal
 		normalPhase = normalPhase + 1
 		currentTimers = timers["normal" .. normalPhase]
@@ -392,7 +392,7 @@ do
 		scheduled = nil
 		local playerTable = {}
 		for unit in self:IterateGroup() do
-			local name, _, _, _, _, _, _, _, _, _, spellID, _, _, _, _, _, value, _, _ = UnitDebuff(unit, debuffName)
+			local name, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, value = UnitDebuff(unit, debuffName)
 			if name then
 				playerTable[#playerTable+1] = {name = self:UnitName(unit), value = value}
 			end

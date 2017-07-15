@@ -23,17 +23,11 @@ local armorCounter = 1
 
 local shatteringCounter = 1
 local shatteringTimers = {24, 60, 60, 60, 47}
-local shatteringTimersMythic = {34, 60, 60, 46.1}
+local shatteringTimersMythic = {34, 60, 60, 60, 32}
 
 local spikeCounter = 1
 local cometCounter = 1
 local cometWarned = {}
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -93,7 +87,7 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 233050 then --Infernal Spike
 		self:Message(233514, "Important", "Alert", CL.casting:format(spellName))
 		spikeCounter = spikeCounter + 1
@@ -105,7 +99,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	elseif spellId == 232249 then -- Crashing Comet
 		cometCounter = cometCounter + 1
 		wipe(cometWarned)
-		self:Bar(232249, cometCounter == 7 and 20 or cometCounter == 10 and 25 or 18.3)
+		self:Bar(spellId, cometCounter == 7 and 20 or cometCounter == 10 and 25 or 18.3)
 	elseif spellId == 233285 then -- Rain of Brimstone
 		rainCounter = rainCounter + 1
 		self:Message(238588, "Urgent", "Warning", CL.incoming:format(spellName))
@@ -176,7 +170,7 @@ function mod:ShatteringStarDebuff(args)
 	self:TargetMessage(233279, args.destName, "Attention", "Alarm", CL.count:format(args.spellName, shatteringCounter))
 	self:CastBar(233279, 6, CL.count:format(args.spellName, shatteringCounter)) -- <cast: Shattering Star>
 	shatteringCounter = shatteringCounter + 1
-	local t = (self:Mythic() and shatteringTimersMythic[shatteringCounter] or shatteringTimers[shatteringCounter]) or (self:Mythic() and 30 or (shatteringCounter % 2 == 0 and 19 or 41))
+	local t = (self:Mythic() and shatteringTimersMythic[shatteringCounter] or shatteringTimers[shatteringCounter]) or (self:Mythic() and 29 or (shatteringCounter % 2 == 0 and 19 or 41))
 	self:Bar(233279, t, CL.count:format(args.spellName, shatteringCounter)) -- Shattering Star
 	if self:Me(args.destGUID) then
 		self:Say(233279)

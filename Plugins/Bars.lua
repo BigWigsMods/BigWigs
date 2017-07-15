@@ -159,8 +159,8 @@ do
 	barStyles.BeautyCase = {
 		apiVersion = 1,
 		version = 1,
-		GetSpacing = function(bar) return 10 end,
-		ApplyStyle = styleBar, -- function(bar) return end
+		GetSpacing = function() return 10 end,
+		ApplyStyle = styleBar,
 		BarStopped = freeStyle,
 		GetStyleName = function() return "!Beautycase" end,
 	}
@@ -246,7 +246,7 @@ do
 	barStyles.MonoUI = {
 		apiVersion = 1,
 		version = 2,
-		GetSpacing = function(bar) return 15 end,
+		GetSpacing = function() return 15 end,
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "MonoUI" end,
@@ -328,7 +328,7 @@ do
 	barStyles.TukUI = {
 		apiVersion = 1,
 		version = 3,
-		GetSpacing = function(bar) return 7 end,
+		GetSpacing = function() return 7 end,
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "TukUI" end,
@@ -431,7 +431,7 @@ do
 	barStyles.ElvUI = {
 		apiVersion = 1,
 		version = 2,
-		GetSpacing = function(bar) return E and (E.PixelMode and 4 or 8) or 4 end,
+		GetSpacing = function() return E and (E.PixelMode and 4 or 8) or 4 end,
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "ElvUI" end,
@@ -788,7 +788,6 @@ do
 						},
 					},
 				},
-				order = 3,
 			},
 			clicking = {
 				name = L.clickableBars,
@@ -937,19 +936,6 @@ local function barStopped(event, bar)
 	end
 end
 
-local function findBar(module, key)
-	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:Get("bigwigs:option") == key then
-			return k
-		end
-	end
-	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:Get("bigwigs:option") == key then
-			return k
-		end
-	end
-end
-
 --------------------------------------------------------------------------------
 -- Anchors
 --
@@ -960,7 +946,7 @@ local defaultPositions = {
 }
 
 local function onDragHandleMouseDown(self) self:GetParent():StartSizing("BOTTOMRIGHT") end
-local function onDragHandleMouseUp(self, button) self:GetParent():StopMovingOrSizing() end
+local function onDragHandleMouseUp(self) self:GetParent():StopMovingOrSizing() end
 local function onResize(self, width)
 	db[self.w] = width
 end
@@ -1389,7 +1375,6 @@ end
 
 -- Removes the clicked bar
 clickHandlers.remove = function(bar)
-	local anchor = bar:Get("bigwigs:anchor")
 	plugin:SendMessage("BigWigs_SilenceOption", bar:Get("bigwigs:option"), bar.remaining + 0.3)
 	bar:Stop()
 end

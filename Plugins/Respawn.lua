@@ -51,7 +51,7 @@ end
 -- Event Handlers
 --
 
-function plugin:BigWigs_EncounterEnd(event, module, id, name, difficulty, size, status)
+function plugin:BigWigs_EncounterEnd(_, module, _, _, _, _, status)
 	if status == 0 and module.respawnTime and self.db.profile.respawnBar then
 		self:SendMessage("BigWigs_StartBar", self, nil, L.respawn, module.respawnTime, 236372) -- 236372 = "Interface\\Icons\\achievement_bg_returnxflags_def_wsg"
 	end

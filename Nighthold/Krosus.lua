@@ -140,7 +140,7 @@ end
 
 do
 	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		if spellId == 208203 then -- Isolated Rage
 			local t = GetTime()
 			if t-prev > 2.5 then
@@ -169,7 +169,7 @@ function mod:FelBeamCast(args)
 end
 
 do
-	local prev, spellName = 0, mod:SpellName(221153) -- "Beam"
+	local spellName = mod:SpellName(221153) -- "Beam"
 	function mod:FelBeamSuccess(args)
 		beamCount = beamCount + 1
 		local t = timers[args.spellId][beamCount]
@@ -187,20 +187,17 @@ do
 	end
 end
 
-do
-	local prev = 0
-	function mod:OrbOfDescructionApplied(args)
-		self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", CL.count:format(args.spellName, orbCount), nil, self:Ranged())
-		self:TargetBar(args.spellId, 5, args.destName, 230932, args.spellId) -- Orb
-		if self:Me(args.destGUID) then
-			self:Flash(args.spellId)
-			self:Say(args.spellId)
-		end
-		orbCount = orbCount + 1
-		local t = timers[args.spellId][orbCount]
-		if t then
-			self:Bar(args.spellId, t, CL.count:format(args.spellName, orbCount))
-		end
+function mod:OrbOfDescructionApplied(args)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", CL.count:format(args.spellName, orbCount), nil, self:Ranged())
+	self:TargetBar(args.spellId, 5, args.destName, 230932, args.spellId) -- Orb
+	if self:Me(args.destGUID) then
+		self:Flash(args.spellId)
+		self:Say(args.spellId)
+	end
+	orbCount = orbCount + 1
+	local t = timers[args.spellId][orbCount]
+	if t then
+		self:Bar(args.spellId, t, CL.count:format(args.spellName, orbCount))
 	end
 end
 
@@ -223,15 +220,12 @@ function mod:SlamSuccess(args)
 	end
 end
 
-do
-	local prev = 0
-	function mod:BurningPitchCast(args)
-		self:Message(args.spellId, "Attention", "Info")
-		burningPitchCount = burningPitchCount + 1
-		local t = timers[args.spellId][burningPitchCount]
-		if t then
-			self:Bar(args.spellId, t, CL.count:format(args.spellName, burningPitchCount))
-		end
+function mod:BurningPitchCast(args)
+	self:Message(args.spellId, "Attention", "Info")
+	burningPitchCount = burningPitchCount + 1
+	local t = timers[args.spellId][burningPitchCount]
+	if t then
+		self:Bar(args.spellId, t, CL.count:format(args.spellName, burningPitchCount))
 	end
 end
 

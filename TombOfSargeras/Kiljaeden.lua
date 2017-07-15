@@ -18,8 +18,8 @@ mod.respawnTime = 30 -- XXX Unconfirmed
 -- Locals
 --
 
-local phase = 1
-local intermissionPhase = nil
+local stage = 1
+local inIntermission = nil
 local singularityCount = 1
 local armageddonCount = 1
 local focusedDreadflameCount = 1
@@ -29,20 +29,20 @@ local flamingOrbCount = 1
 local obeliskCount = 1
 local focusWarned = {}
 
-local phaseTwoTimersHeroic = {
+local stageTwoTimersHeroic = {
 	-- Rupturing Singularity
 	[235059] = {73.5, 26, 55, 44}, -- Incomplete
 	-- Armageddon
 	[240910] = {50.4, 76, 35, 31}, -- Incomplete
 }
-local phaseTwoTimersEasy = {
+local stageTwoTimersEasy = {
 	-- Rupturing Singularity
 	[235059] = {73.5, 81},
 	-- Armageddon
 	[240910] = {50.4, 45, 31, 35, 30.8},
 }
 
-local phaseTwoTimers = mod:Easy() and phaseTwoTimersEasy or phaseTwoTimersHeroic
+local stageTwoTimers = mod:Easy() and stageTwoTimersEasy or stageTwoTimersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -72,7 +72,7 @@ function mod:GetOptions()
 		240910, -- Armageddon
 		{236710, "SAY", "FLASH"}, -- Shadow Reflection: Erupting
 		{238430, "SAY", "FLASH"}, -- Bursting Dreadflame
-		{238505, "SAY", "ICON"}, -- Focused Dreadflame
+		{238505, "SAY", "ICON", "PROXIMITY"}, -- Focused Dreadflame
 		{236378, "SAY", "FLASH"}, -- Shadow Reflection: Wailing
 		241721, -- Illidan's Sightless Gaze
 		238999, -- Darkness of a Thousand Souls
@@ -135,8 +135,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	phase = 1
-	intermissionPhase = nil
+	stage = 1
+	inIntermission = nil
 	singularityCount = 1
 	focusedDreadflameCount = 1
 	burstingDreadflameCount = 1
@@ -145,7 +145,7 @@ function mod:OnEngage()
 	flamingOrbCount = 1
 	obeliskCount = 1
 	wipe(focusWarned)
-	phaseTwoTimers = self:Easy() and phaseTwoTimersEasy or phaseTwoTimersHeroic
+	stageTwoTimers = self:Easy() and stageTwoTimersEasy or stageTwoTimersHeroic
 
 	self:Bar(240910, 10, CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
 	if not self:Easy() then
@@ -161,7 +161,7 @@ end
 --
 -- General
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, sender, _, _, target)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, target)
 	if msg:find("238502") then -- Focused Dreadflame Target
 		self:TargetMessage(238505, target, "Attention", "Alarm", nil, nil, true)
 		self:TargetBar(238505, 5, target)
@@ -171,22 +171,25 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, sender, _, _, target)
 			self:Say(238505)
 			self:SayCountdown(238505, 5)
 		end
+		if not self:Easy() then
+			self:OpenProximity(238505, 5)
+		end
 	elseif msg:find("235059") then -- Rupturing Singularity
 		self:Message(235059, "Urgent", "Warning", CL.count:format(self:SpellName(235059), singularityCount))
 		self:Bar(235059, 9.85, CL.count:format(L.singularityImpact, singularityCount))
 		singularityCount = singularityCount + 1
 		local timer = 0
-		if intermissionPhase then -- Intermission timer
+		if inIntermission then -- Intermission timer
 			if self:Easy() or singularityCount > 2 then
 				return -- Only time for 2 during intermission, and only on Heroic +
 			else
 				timer = 30
 			end
 		else
-			if phase == 1 then -- Phase 1 cooldown
+			if stage == 1 then -- Stage 1 cooldown
 				timer = 56
-			else -- Phase 2 timers
-				timer = phaseTwoTimers[235059][singularityCount]
+			else -- Stage 2 timers
+				timer = stageTwoTimers[235059][singularityCount]
 			end
 		end
 		self:Bar(235059, timer, CL.count:format(self:SpellName(235059), singularityCount))
@@ -204,7 +207,7 @@ do
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 244856 then -- Flaming Orb
 		self:Message(spellId, "Attention", "Alert")
 		flamingOrbCount = flamingOrbCount + 1
@@ -220,7 +223,7 @@ end
 function mod:FelclawsApplied(args)
 	self:Message(args.spellId, "Important", "Info")
 	felclawsCount = felclawsCount + 1
-	if phase == 3 and felclawsCount % 4 == 0 then
+	if stage == 3 and felclawsCount % 4 == 0 then
 		self:Bar(args.spellId, 20)
 	else
 		self:Bar(args.spellId, 24)
@@ -233,17 +236,17 @@ function mod:Armageddon(args)
 	self:Bar(args.spellId, 9, CL.count:format(self:SpellName(182580), armageddonCount), args.spellId) -- Meteor Impact
 	armageddonCount = armageddonCount + 1
 	local timer = 0
-	if intermissionPhase then -- Intermission timer
+	if inIntermission then -- Intermission timer
 		if armageddonCount == 2 then
 			timer = 29.4
 		else
 			return -- Only time for 2 during intermission
 		end
 	else
-		if phase == 1 then -- Phase 1 cooldown
+		if stage == 1 then -- Stage 1 cooldown
 			timer = 64
-		else -- Phase 2 timers
-			timer = phaseTwoTimers[args.spellId][armageddonCount]
+		else -- Stage 2 timers
+			timer = stageTwoTimers[args.spellId][armageddonCount]
 		end
 	end
 	self:Bar(args.spellId, timer, CL.count:format(args.spellName, armageddonCount))
@@ -260,7 +263,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:Bar(args.spellId, 8, CL.adds)
-			if phase == 2 then
+			if stage == 2 then
 				self:Bar(args.spellId, 112, L.reflectionErupting)
 			end
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Alert", L.reflectionErupting)
@@ -275,13 +278,14 @@ end
 
 -- Intermission: Eternal Flame
 function mod:NetherGale(args)
-	self:Message("stages", "Positive", "Long", self:SpellName(-15221), false) -- Intermission: Eternal Flame
+	self:Message("stages", "Positive", "Long", CL.intermission, false)
 
 	self:StopBar(CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
+	self:StopBar(CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 	self:StopBar(L.reflectionErupting) -- Shadow Reflection: Erupting
 	self:StopBar(239932) -- Fel Claws
 
-	intermissionPhase = true
+	inIntermission = true
 	singularityCount = 1
 	armageddonCount = 1
 	focusedDreadflameCount = 1
@@ -297,19 +301,20 @@ function mod:NetherGale(args)
 	self:Bar("stages", 60.2, CL.intermission, args.spellId) -- Intermission Duration
 end
 
-function mod:FocusedDreadflame(args)
+function mod:FocusedDreadflame()
 	focusedDreadflameCount = focusedDreadflameCount + 1
-	if phase == 1 and focusedDreadflameCount == 2 then
+	if stage == 1 and focusedDreadflameCount == 2 then
 		self:Bar(238505, 13.4)
-	elseif phase == 2 then
+	elseif stage == 2 then
 		self:Bar(238505, self:Easy() and 99 or focusedDreadflameCount % 2 == 0 and 46 or 53)
-	elseif phase == 3 then
+	elseif stage == 3 then
 		self:Bar(238505, 95)
 	end
 end
 
-function mod:FocusedDreadflameSuccess(args)
+function mod:FocusedDreadflameSuccess()
 	self:PrimaryIcon(238505)
+	self:CloseProximity(238505)
 end
 
 do
@@ -323,21 +328,21 @@ do
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Warning")
 			burstingDreadflameCount = burstingDreadflameCount + 1
-			if phase == 1 and burstingDreadflameCount == 2 then -- Inside Intermission
+			if stage == 1 and burstingDreadflameCount == 2 then -- Inside Intermission
 				self:Bar(args.spellId, 46)
-			elseif phase == 2 then
+			elseif stage == 2 then
 				self:Bar(args.spellId, burstingDreadflameCount == 2 and 48 or burstingDreadflameCount == 3 and 55 or 50)
-			elseif phase == 3 then
+			elseif stage == 3 then
 				self:Bar(args.spellId, burstingDreadflameCount % 2 == 0 and 25 or 70)
 			end
 		end
 	end
 end
 
-function mod:NetherGaleRemoved(args)
-	intermissionPhase = nil
-	phase = 2
-	self:Message("stages", "Positive", "Long", self:SpellName(-15229), false) -- Stage Two: Reflected Souls
+function mod:NetherGaleRemoved() -- Stage 2
+	inIntermission = nil
+	stage = 2
+	self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
 	focusedDreadflameCount = 1
 	burstingDreadflameCount = 1
 	singularityCount = 1
@@ -350,9 +355,9 @@ function mod:NetherGaleRemoved(args)
 	if not self:Easy() then
 		self:Bar(236378, 48.4, L.reflectionWailing) -- Shadow Reflection: Wailing
 	end
-	self:Bar(240910, phaseTwoTimers[240910][armageddonCount]) -- Armageddon
+	self:Bar(240910, stageTwoTimers[240910][armageddonCount], CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
 	self:Bar(238430, 52.4) -- Bursting Dreadflame
-	self:Bar(235059, phaseTwoTimers[235059][singularityCount], CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
+	self:Bar(235059, stageTwoTimers[235059][singularityCount], CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 end
 
 -- Stage Two: Reflected Souls
@@ -379,8 +384,8 @@ do
 end
 
 -- Intermission: Deceiver's Veil
-function mod:DeceiversVeilCast(args)
-	self:Message("stages", "Positive", "Long", self:SpellName(-15394), false) -- Intermission: Deceiver's Veil
+function mod:DeceiversVeilCast()
+	self:Message("stages", "Positive", "Long", CL.intermission, false)
 	self:StopBar(CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
 	self:StopBar(L.reflectionErupting) -- Shadow Reflection: Erupting
 	self:StopBar(L.reflectionWailing) -- Shadow Reflection: Wailing
@@ -390,10 +395,10 @@ function mod:DeceiversVeilCast(args)
 	self:StopBar(CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 end
 
-function mod:DeceiversVeilRemoved(args)
-	phase = 3
+function mod:DeceiversVeilRemoved() -- Stage 3
+	stage = 3
 	burstingDreadflameCount = 1
-	self:Message("stages", "Positive", "Long", self:SpellName(-15255), false) -- Stage Three: Darkness of A Thousand Souls
+	self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
 	self:Bar(238999, 2, L.darkness) -- Darkness of a Thousand Souls
 	self:Bar(239932, 11) -- Felclaws
 	self:Bar(243982, 15) -- Tear Rift

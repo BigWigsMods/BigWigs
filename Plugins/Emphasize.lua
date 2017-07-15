@@ -53,13 +53,14 @@ local function createOptions()
 	local get = function(info) return plugin.db.profile[info[#info]] end
 	local set = function(info, value)
 		plugin.db.profile[info[#info]] = value
-		if BWEmphasizeCountdownMessageAnchor then
-			BWEmphasizeCountdownMessageAnchor.text:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline)
-		end
 	end
 
 	local mModule = BigWigs:GetPlugin("Messages", true)
 	if mModule then
+		local tempSet = function(info, value)
+			set(info, value)
+			mModule.updateProfile()
+		end
 		mModule.pluginOptions.args.emphasize = {
 			type = "group",
 			name = L.emphasizedMessages,
@@ -86,9 +87,7 @@ local function createOptions()
 					end,
 					set = function(info, r, g, b)
 						plugin.db.profile[info[#info]].r, plugin.db.profile[info[#info]].g, plugin.db.profile[info[#info]].b = r, g, b
-						if BWEmphasizeCountdownMessageAnchor then
-							BWEmphasizeCountdownMessageAnchor.text:SetTextColor(r, g, b)
-						end
+						mModule.updateProfile()
 					end,
 					order = 0.7,
 					disabled = function() return not plugin.db.profile.countdown end,
@@ -104,12 +103,10 @@ local function createOptions()
 							if v == plugin.db.profile.font then return i end
 						end
 					end,
-					set = function(info, value)
+					set = function(_, value)
 						local list = media:List("font")
 						plugin.db.profile.font = list[value]
-						if BWEmphasizeCountdownMessageAnchor then
-							BWEmphasizeCountdownMessageAnchor.text:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline)
-						end
+						mModule.updateProfile()
 					end,
 				},
 				outline = {
@@ -121,12 +118,14 @@ local function createOptions()
 						OUTLINE = L.thin,
 						THICKOUTLINE = L.thick,
 					},
+					set = tempSet,
 				},
 				fontSize = {
 					type = "range",
 					name = L.fontSize,
 					order = 3,
 					softMax = 72, max = 200, min = 1, step = 1,
+					set = tempSet,
 				},
 				upper = {
 					type = "toggle",
@@ -139,6 +138,7 @@ local function createOptions()
 					name = L.monochrome,
 					desc = L.monochromeDesc,
 					order = 5,
+					set = tempSet,
 				},
 			},
 		}
@@ -406,7 +406,7 @@ function plugin:BigWigs_TempSuperEmphasize(_, module, key, text, time)
 	self:BigWigs_StartEmphasize(nil, module, key, text, time)
 end
 
-function plugin:BigWigs_PlayCountdownNumber(_, module, num)
+function plugin:BigWigs_PlayCountdownNumber(_, _, num)
 	local sound = BigWigsAPI:GetCountdownSound(self.db.profile.voice, num)
 	if sound then
 		PlaySoundFile(sound, "Master")

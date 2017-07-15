@@ -61,7 +61,7 @@ local acOptions = {
 					desc = L.minimapToggle,
 					order = 13,
 					get = function() return not BigWigs3IconDB.hide end,
-					set = function(info, v)
+					set = function(_, v)
 						if v then
 							BigWigs3IconDB.hide = nil
 							icon:Show("BigWigs")
@@ -264,7 +264,7 @@ end
 do
 	local configMode = nil
 	function options:InConfigureMode() return configMode end
-	function options:BigWigs_StartConfigureMode(event, hideFrame)
+	function options:BigWigs_StartConfigureMode()
 		configMode = true
 	end
 	function options:BigWigs_StopConfigureMode()

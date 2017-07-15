@@ -122,7 +122,7 @@ do
 		checkForBrokenShard()
 	end
 
-	function mod:ShockwaveSuccess(args)
+	function mod:ShockwaveSuccess()
 		if brokenShardCheck then
 			self:CancelTimer(brokenShardCheck)
 		end
@@ -172,7 +172,7 @@ end
 
 do
 	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		local t = GetTime()
 		if spellId == 214800 and t-prev > 1 then -- Red
 			prev = t

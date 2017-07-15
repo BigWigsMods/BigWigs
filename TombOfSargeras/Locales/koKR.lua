@@ -34,11 +34,15 @@ if L then
 
 	L.custom_on_stop_timers = "능력 바 항상 표시"
 	L.custom_on_stop_timers_desc = "몰락한 화신은 재사용 대기시간이 끝난 능력 중 하나를 무작위로 다음에 사용합니다. 이 옵션을 사용하면 이 능력들의 바가 화면에 유지됩니다."
+
+	L.energy_leak = "마력 누출"
+	L.energy_leak_desc = "1단계에서 우두머리에게 마력이 누출되면 경보를 표시합니다."
+	L.energy_leak_msg = "마력 누출! (%d)"
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "koKR")
 if L then
-	L.singularityImpact = "특이점 충돌"
+	L.singularityImpact = "특이점 파열"
 	L.obeliskExplosion = "방첨탑 폭발"
 
 	L.darkness = "어둠" -- Shorter name for Darkness of a Thousand Souls (238999)
@@ -51,6 +55,8 @@ L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "koKR")
 if L then
 	L.chaosbringer = "지옥불 혼돈인도자"
 	L.rez = "무덤감시자 레즈"
+	L.seacaller = "물결비늘 바다소환사"
 	L.custodian = "깊은바다 관리인"
+	L.dresanoth = "드레사노스"
 	L.sentry = "수호의 감시자"
 end

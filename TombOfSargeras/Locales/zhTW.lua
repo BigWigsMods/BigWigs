@@ -34,6 +34,10 @@ if L then
 
 	L.custom_on_stop_timers = "總是顯示技能條"
 	L.custom_on_stop_timers_desc = "墮落化身會在下一次施放技能時隨機施放已經冷卻完畢的技能，啟用此選項後，這些技能的計時條會保持顯示。"
+
+	L.energy_leak = "能量外泄"
+	L.energy_leak_desc = "第一階段的能量外泄至墮落化身身上时發送警報。"
+	L.energy_leak_msg = "能量外泄！（%d）"
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "zhTW")
@@ -51,6 +55,8 @@ L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhTW")
 if L then
 	L.chaosbringer = "煉獄火混亂使者"
 	L.rez = "守墓者瑞茲"
+	--L.seacaller = "Tidescale Seacaller"
 	L.custodian = "深海守衛"
+	--L.dresanoth = "Dresanoth"
 	L.sentry = "守護者哨衛"
 end

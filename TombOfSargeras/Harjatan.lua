@@ -110,7 +110,7 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 232192 then -- Commanding Roar
 		roarCounter = roarCounter + 1
 		self:Message(spellId, "Important", "Alert", spellName)

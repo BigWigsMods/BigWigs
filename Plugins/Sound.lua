@@ -77,7 +77,7 @@ plugin.pluginOptions = {
 			name = L.sound,
 			desc = L.soundDesc,
 			get = function() return db.sound end,
-			set = function(info, v) db.sound = v end,
+			set = function(_, v) db.sound = v end,
 			order = 1,
 			width = "full",
 			descStyle = "inline",
@@ -147,7 +147,7 @@ function plugin:OnRegister()
 
 	soundList = media:List(mType)
 
-	for k, s in next, sounds do
+	for k in next, sounds do
 		local n = L[k] or k
 		self.pluginOptions.args[k] = {
 			type = "select",
