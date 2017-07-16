@@ -27,6 +27,7 @@ local burstingDreadflameCount = 1
 local felclawsCount = 1
 local flamingOrbCount = 1
 local obeliskCount = 1
+local wailingCounter = 1
 local focusWarned = {}
 
 local stageTwoTimersHeroic = {
@@ -41,6 +42,12 @@ local stageTwoTimersEasy = {
 	-- Armageddon
 	[240910] = {50.4, 45, 31, 35, 30.8},
 }
+local stageOneTimersMythic = {
+	-- Rupturing Singularity
+	[235059] = {55, 25, 25, 28}, -- Incomplete
+	-- Armageddon
+	[240910] = {11.0, 54.0, 38}, -- Incomplete
+}
 
 local stageTwoTimers = mod:Easy() and stageTwoTimersEasy or stageTwoTimersHeroic
 
@@ -52,31 +59,41 @@ local L = mod:GetLocale()
 if L then
 	L.singularityImpact = "Singularity Impact"
 	L.obeliskExplosion = "Obelisk Explosion"
+	L.obeliskExplosion_desc = "Timer for the Obelisk Explosion"
+	L.obeliskExplosion_icon = -15543
 
 	L.darkness = "Darkness" -- Shorter name for Darkness of a Thousand Souls (238999)
 	L.reflectionErupting = "Reflection: Erupting" -- Shorter name for Shadow Reflection: Erupting (236710)
 	L.reflectionWailing = "Reflection: Wailing" -- Shorter name for Shadow Reflection: Wailing (236378)
 	L.reflectionHopeless = "Reflection: Hopeless" -- Shorter name for Shadow Reflection: Hopeless (237590)
+
+	L.rupturingKnock = "Rupturing Singularity Knockback"
+	L.rupturingKnock_desc = "Show a timer for the knockback"
+	L.rupturingKnock_icon = 235059
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local eruptingMarker = mod:AddMarkerOption(false, "player", 1, 236710, 1, 2, 3)
 function mod:GetOptions()
 	return {
 		"stages",
 		"berserk",
 		{239932, "TANK"}, -- Felclaws
 		235059, -- Rupturing Singularity
+		"rupturingKnock",
 		240910, -- Armageddon
 		{236710, "SAY", "FLASH"}, -- Shadow Reflection: Erupting
+		eruptingMarker,
 		{238430, "SAY", "FLASH"}, -- Bursting Dreadflame
 		{238505, "SAY", "ICON", "PROXIMITY"}, -- Focused Dreadflame
 		{236378, "SAY", "FLASH"}, -- Shadow Reflection: Wailing
 		241721, -- Illidan's Sightless Gaze
 		238999, -- Darkness of a Thousand Souls
 		-15543, -- Demonic Obelisk
+		"obeliskExplosion",
 		243982, -- Tear Rift
 		244856, -- Flaming Orb
 		240262, -- Burning
@@ -105,9 +122,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Felclaws", 239932)
 	self:Log("SPELL_AURA_APPLIED", "FelclawsApplied", 239932)
 	self:Log("SPELL_CAST_START", "Armageddon", 240910)
+	self:Log("SPELL_CAST_SUCCESS", "ArmageddonSuccess", 240910)
 
 	self:Log("SPELL_AURA_APPLIED", "ShadowReflectionErupting", 236710) -- Shadow Reflection: Erupting
 	self:Log("SPELL_AURA_REMOVED", "ShadowReflectionEruptingRemoved", 236710) -- Shadow Reflection: Erupting
+	self:Log("SPELL_AURA_REMOVED", "LingeringEruptionRemoved", 243536) -- Lingering Eruption, Mythic, Remove marks later than the normal debuff
 
 	-- Intermission: Eternal Flame
 	self:Log("SPELL_AURA_APPLIED", "NetherGale", 244834) -- Intermission Start
@@ -119,7 +138,7 @@ function mod:OnBossEnable()
 	-- Stage Two: Reflected Souls
 	self:Log("SPELL_AURA_APPLIED", "ShadowReflectionWailing", 236378) -- Shadow Reflection: Wailing
 	self:Log("SPELL_AURA_REMOVED", "ShadowReflectionWailingRemoved", 236378) -- Shadow Reflection: Wailing
-
+	self:Log("SPELL_CAST_SUCCESS", "SorrowfulWail", 241564) -- Sorrowful Wail
 	-- Intermission: Deceiver's Veil
 	self:Log("SPELL_CAST_START", "DeceiversVeilCast", 241983) -- Deceiver's Veil Cast
 	self:Log("SPELL_AURA_APPLIED", "IllidansSightlessGaze", 241721) -- Illidan's Sightless Gaze
@@ -128,7 +147,7 @@ function mod:OnBossEnable()
 	-- Stage Three: Darkness of A Thousand Souls
 	self:Log("SPELL_CAST_START", "DarknessofaThousandSouls", 238999) -- Darkness of a Thousand Souls
 	self:Log("SPELL_CAST_START", "TearRift", 243982) -- Tear Rift
-
+	self:Log("SPELL_CAST_SUCCESS", "DemonicObelisk", 239785) -- Demonic Obelisk
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "ShadowReflectionHopeless", 237590) -- Shadow Reflection: Hopeless
 	self:Log("SPELL_AURA_REMOVED", "ShadowReflectionHopelessRemoved", 237590) -- Shadow Reflection: Hopeless
@@ -144,16 +163,21 @@ function mod:OnEngage()
 	felclawsCount = 1
 	flamingOrbCount = 1
 	obeliskCount = 1
+	wailingCounter = 1
 	wipe(focusWarned)
 	stageTwoTimers = self:Easy() and stageTwoTimersEasy or stageTwoTimersHeroic
 
 	self:Bar(240910, 10, CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
 	if not self:Easy() then
-		self:Bar(236710, 20, L.reflectionErupting) -- Shadow Reflection: Erupting
+		self:Bar(236710, self:Mythic() and 18.5 or 20, L.reflectionErupting) -- Shadow Reflection: Erupting
 	end
 	self:Bar(239932, 25) -- Fel Claws
-	self:Bar(235059, 58, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
-	self:Berserk(600)
+	self:Bar(235059, self:Mythic() and 55 or 58, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
+	if self:Mythic() then
+		self:Bar(236378, 55, CL.count:format(L.reflectionWailing, wailingCounter)) -- Shadow Reflection: Wailing
+	else
+		self:Berserk(600)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -180,14 +204,14 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, target)
 		singularityCount = singularityCount + 1
 		local timer = 0
 		if inIntermission then -- Intermission timer
-			if self:Easy() or singularityCount > 2 then
-				return -- Only time for 2 during intermission, and only on Heroic +
+			if self:Easy() or singularityCount > 2 or self:Mythic() then
+				return -- Only time for 2 during intermission, and only on Heroic +  -- They happen in Mythic but do not all trigger a raid warning
 			else
 				timer = 30
 			end
 		else
 			if stage == 1 then -- Stage 1 cooldown
-				timer = 56
+				timer = self:Mythic() and mythicPhaseOneTimers[235059][singularityCount] or 56
 			else -- Stage 2 timers
 				timer = stageTwoTimers[235059][singularityCount]
 			end
@@ -233,23 +257,26 @@ end
 
 function mod:Armageddon(args)
 	self:Message(args.spellId, "Important", "Warning", CL.count:format(args.spellName, armageddonCount))
-	self:Bar(args.spellId, 9, CL.count:format(self:SpellName(182580), armageddonCount), args.spellId) -- Meteor Impact
 	armageddonCount = armageddonCount + 1
 	local timer = 0
 	if inIntermission then -- Intermission timer
 		if armageddonCount == 2 then
-			timer = 29.4
+			timer = self:Mythic() and 58.9 or 29.4
 		else
 			return -- Only time for 2 during intermission
 		end
 	else
 		if stage == 1 then -- Stage 1 cooldown
-			timer = 64
+			timer = self:Mythic() and mythicPhaseOneTimers[args.spellId][armageddonCount] or 64
 		else -- Stage 2 timers
 			timer = stageTwoTimers[args.spellId][armageddonCount]
 		end
 	end
 	self:Bar(args.spellId, timer, CL.count:format(args.spellName, armageddonCount))
+end
+
+function mod:ArmageddonSuccess(args)
+	self:Bar("meteorImpact", 8, CL.count:format(self:SpellName(182580), armageddonCount-1), args.spellId) -- Meteor Impact
 end
 
 do
@@ -265,13 +292,29 @@ do
 			self:Bar(args.spellId, 8, CL.adds)
 			if stage == 2 then
 				self:Bar(args.spellId, 112, L.reflectionErupting)
+			elseif self:Mythic() and stage == 1 then
+				self:Bar(args.spellId, 109, L.reflectionErupting)
 			end
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Alert", L.reflectionErupting)
 		end
+
+		if self:GetOption(eruptingMarker) then
+			SetRaidTarget(args.destName, #playerList)
+		end
 	end
+
 	function mod:ShadowReflectionEruptingRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
+		end
+		if self:GetOption(eruptingMarker) and not self:Mythic() then -- Don't remove it in Mythic yet
+			SetRaidTarget(args.destName, 0)
+		end
+	end
+
+	function mod:LingeringEruptionRemoved(args) -- Remove Marks after this debuff instead
+		if self:GetOption(eruptingMarker) then
+			SetRaidTarget(args.destName, 0)
 		end
 	end
 end
@@ -284,27 +327,29 @@ function mod:NetherGale(args)
 	self:StopBar(CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 	self:StopBar(L.reflectionErupting) -- Shadow Reflection: Erupting
 	self:StopBar(239932) -- Fel Claws
+	self:StopBar(CL.count:format(L.reflectionWailing, wailingCounter)) -- Shadow Reflection: Wailing
 
 	inIntermission = true
 	singularityCount = 1
 	armageddonCount = 1
 	focusedDreadflameCount = 1
 	felclawsCount = 1
+	wailingCounter = 1
 
 	-- First Intermission
-	self:Bar(240910, 6.1, CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
-	self:Bar(238430, 7.7) -- Bursting Dreadflame
+	self:Bar(240910, self:Mythic() and 6.5 or 6.1, CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
+	self:Bar(238430, self:Mythic() and 10.1 or 7.7) -- Bursting Dreadflame
 	if not self:Easy() then -- During intermission only on Heroic +
-		self:Bar(235059, 13.3, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
+		self:Bar(235059, self:Mythic() and 14 or 13.3, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 	end
-	self:Bar(238505, 24.6) -- Focused Dreadflame
-	self:Bar("stages", 60.2, CL.intermission, args.spellId) -- Intermission Duration
+	self:Bar(238505, self:Mythic() and 28.7 or 24.6) -- Focused Dreadflame
+	self:Bar("stages", self:Mythic() and 94.8 or 60.2, CL.intermission, args.spellId) -- Intermission Duration
 end
 
 function mod:FocusedDreadflame()
 	focusedDreadflameCount = focusedDreadflameCount + 1
 	if stage == 1 and focusedDreadflameCount == 2 then
-		self:Bar(238505, 13.4)
+		self:Bar(238505, self:Mythic() and 39.3 or 13.4)
 	elseif stage == 2 then
 		self:Bar(238505, self:Easy() and 99 or focusedDreadflameCount % 2 == 0 and 46 or 53)
 	elseif stage == 3 then
@@ -323,13 +368,14 @@ do
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 5)
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Warning")
 			burstingDreadflameCount = burstingDreadflameCount + 1
 			if stage == 1 and burstingDreadflameCount == 2 then -- Inside Intermission
-				self:Bar(args.spellId, 46)
+				self:Bar(args.spellId, self:Mythic() and 79 or 46)
 			elseif stage == 2 then
 				self:Bar(args.spellId, burstingDreadflameCount == 2 and 48 or burstingDreadflameCount == 3 and 55 or 50)
 			elseif stage == 3 then
@@ -361,25 +407,34 @@ function mod:NetherGaleRemoved() -- Stage 2
 end
 
 -- Stage Two: Reflected Souls
+
 do
-	local playerList = mod:NewTargetList()
 	function mod:ShadowReflectionWailing(args)
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert", CL.count:format(L.reflectionWailing, wailingCounter), nil, true)
+		self:TargetBar(args.spellId, 7, args.destName)
+		wailingCounter = wailingCounter + 1
+		self:Bar(args.spellId, 114, CL.count:format(L.reflectionWailing, wailingCounter)) -- Not seen 2nd add in P1
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
-			self:Say(args.spellId, L.reflectionWailing)
+			self:Say(args.spellId, L.reflectionWailingSay)
 			self:SayCountdown(args.spellId, 7)
 		end
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:Bar(args.spellId, 7, CL.add)
-			self:Bar(args.spellId, 114, L.reflectionWailing)
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Alert", L.reflectionWailing)
-		end
 	end
+
 	function mod:ShadowReflectionWailingRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
 		end
+		self:Bar(241564, 15.8) -- Sorrowful Wail cast
+	end
+
+	function mod:SorrowfulWail(args)
+		self:Message(args.spellId, "Attention", "Alarm")
+		self:Bar(args.spellId, 15.8)
+	end
+
+	function mod:WailingReflectionDeath(args)
+		self:StopBar(241564) -- Sorrowful Wail
 	end
 end
 
@@ -424,10 +479,20 @@ function mod:DarknessofaThousandSouls(args)
 	self:StartObeliskTimer(obeliskCount == 1 and 25 or 28)
 end
 
+do
+	local prev = 0
+	function mod:DemonicObelisk(args)
+		local t = GetTime()
+		if t-prev > 1.5 then
+			self:CastBar("obeliskExplosion", 5, L.obeliskExplosion, -15543)
+		end
+	end
+end
+
 function mod:StartObeliskTimer(t)
 	self:Bar(-15543, t)
 	self:ScheduleTimer("Message", t, -15543, "Attention", "Info", CL.spawned:format(self:SpellName(-15543)))
-	self:ScheduleTimer("Bar", t, -15543, 13, L.obeliskExplosion)
+	--self:ScheduleTimer("Bar", t, -15543, 13, L.obeliskExplosion)
 	obeliskCount = obeliskCount + 1
 	if obeliskCount % 2 == 0 then
 		self:ScheduleTimer("StartObeliskTimer", t, 36)
