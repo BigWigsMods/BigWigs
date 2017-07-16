@@ -139,6 +139,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShadowReflectionWailing", 236378) -- Shadow Reflection: Wailing
 	self:Log("SPELL_AURA_REMOVED", "ShadowReflectionWailingRemoved", 236378) -- Shadow Reflection: Wailing
 	self:Log("SPELL_CAST_SUCCESS", "SorrowfulWail", 241564) -- Sorrowful Wail
+	self:Death("WailingReflectionDeath", 119107) -- Wailing Add
+
 	-- Intermission: Deceiver's Veil
 	self:Log("SPELL_CAST_START", "DeceiversVeilCast", 241983) -- Deceiver's Veil Cast
 	self:Log("SPELL_AURA_APPLIED", "IllidansSightlessGaze", 241721) -- Illidan's Sightless Gaze
@@ -416,7 +418,7 @@ do
 		self:Bar(args.spellId, 114, CL.count:format(L.reflectionWailing, wailingCounter)) -- Not seen 2nd add in P1
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
-			self:Say(args.spellId, L.reflectionWailingSay)
+			self:Say(args.spellId, L.reflectionWailing)
 			self:SayCountdown(args.spellId, 7)
 		end
 	end
