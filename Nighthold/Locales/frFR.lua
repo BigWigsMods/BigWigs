@@ -61,11 +61,11 @@ if L then
 	L.ring_yell = "Que le torrent du temps vous emporte !"
 	L.orb_yell = "Le temps est parfois… explosif."
 
-	L.slowTimeZone = "Zone de temps ralenti"
-	L.fastTimeZone = "Zone de temps accéléré"
+	L.slowTimeZone = "Zone de Temps ralenti"
+	L.fastTimeZone = "Zone de Temps accéléré"
 
 	L.boss_active = "Elisande active"
-	--L.boss_active_desc = "Time until Elisande is active after clearing the trash event."
+	L.boss_active_desc = "Délai avant que Elisande ne soit active après avoir nettoyé les trashs."
 	--L.elisande_trigger = "I foresaw your coming, of course. The threads of fate that led you to this place. Your desperate attempt to stop the Legion."
 end
 
@@ -75,10 +75,10 @@ if L then
 
 	L.empowered = "(E) %s" -- (E) Eye of Gul'dan
 	L.gains = "Gul'dan obtient %s"
-	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
+	L.p4_mythic_start_yell = "Il est temps de réunir son âme et son corps.... et de priver ainsi le maître de la Légion de son hôte !" -- à vérifier
 
 	L.nightorb_desc = "Invoque un orbe de nuit, faisant apparaître une zone temporelle une fois détruit."
-	--L.timeStopZone = "Time Stop Zone"
+	L.timeStopZone = "Zone d'Arrêt du temps"
 
 	L.manifest_desc = "Invoque un fragment d'âme d'Azzinoth, faisant apparaître une Essence démononiaque une fois détruit."
 
