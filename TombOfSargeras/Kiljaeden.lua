@@ -71,7 +71,7 @@ if L then
 	L.rupturingKnock_desc = "Show a timer for the knockback"
 	L.rupturingKnock_icon = 235059
 
-	L.meteorImpact = self:SpellName(182580)
+	L.meteorImpact = mod:SpellName(182580)
 	L.meteorImpact_desc = "Show a timer for the Meteors landing"
 	L.meteorImpact_icon = 240910
 end
