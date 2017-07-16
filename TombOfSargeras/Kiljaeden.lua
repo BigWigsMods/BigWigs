@@ -70,6 +70,10 @@ if L then
 	L.rupturingKnock = "Rupturing Singularity Knockback"
 	L.rupturingKnock_desc = "Show a timer for the knockback"
 	L.rupturingKnock_icon = 235059
+
+	L.meteorImpact = self:SpellName(182580)
+	L.meteorImpact_desc = "Show a timer for the Meteors landing"
+	L.meteorImpact_icon = 240910
 end
 
 --------------------------------------------------------------------------------
@@ -85,6 +89,7 @@ function mod:GetOptions()
 		235059, -- Rupturing Singularity
 		"rupturingKnock",
 		240910, -- Armageddon
+		"meteorImpact",
 		{236710, "SAY", "FLASH"}, -- Shadow Reflection: Erupting
 		eruptingMarker,
 		{238430, "SAY", "FLASH"}, -- Bursting Dreadflame
@@ -278,7 +283,7 @@ function mod:Armageddon(args)
 end
 
 function mod:ArmageddonSuccess(args)
-	self:Bar("meteorImpact", 8, CL.count:format(self:SpellName(182580), armageddonCount-1), args.spellId) -- Meteor Impact
+	self:Bar("meteorImpact", 8, CL.count:format(L.meteorImpact, armageddonCount-1), args.spellId) -- Meteor Impact
 end
 
 do
@@ -309,12 +314,12 @@ do
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
 		end
-		if self:GetOption(eruptingMarker) and not self:Mythic() then -- Don't remove it in Mythic yet
+		if self:GetOption(eruptingMarker) and not self:Mythic() then -- Don't remove icons in Mythic
 			SetRaidTarget(args.destName, 0)
 		end
 	end
 
-	function mod:LingeringEruptionRemoved(args) -- Remove Marks after this debuff instead
+	function mod:LingeringEruptionRemoved(args) -- Mythic only, Remove icons after this debuff instead
 		if self:GetOption(eruptingMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
