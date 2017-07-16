@@ -110,8 +110,7 @@ do
 		end
 	end
 
-	function mod:MarkTotem(event, unit)
-		local guid = UnitGUID(unit)
+	function mod:MarkTotem(event, unit, guid)
 		local icon = guids[guid]
 		if icon and icon > 0 then
 			local mobId = self:MobId(guid)

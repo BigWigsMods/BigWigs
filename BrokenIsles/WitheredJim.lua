@@ -56,8 +56,7 @@ end
 -- Event Handlers
 --
 
-function mod:MarkBoss(event, unit)
-	local guid = UnitGUID(unit)
+function mod:MarkBoss(event, unit, guid)
 	local mobId = self:MobId(guid)
 	if mobId == 102075 then
 		SetRaidTarget(unit, 8)

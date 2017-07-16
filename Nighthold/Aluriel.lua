@@ -472,8 +472,7 @@ end
 
 do
 	local fieryAddMarks = {}
-	function mod:FieryAddMark(event, unit)
-		local guid = UnitGUID(unit)
+	function mod:FieryAddMark(event, unit, guid)
 		if self:MobId(guid) == 107285 and not mobCollector[guid] then
 			for i = 1, 6 do
 				if not fieryAddMarks[i] then

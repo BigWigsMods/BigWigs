@@ -208,8 +208,7 @@ function mod:MobDeath(args)
 	end
 end
 
-function mod:WispMark(event, unit)
-	local guid = UnitGUID(unit)
+function mod:WispMark(event, unit, guid)
 	if self:MobId(guid) == 106659 and UnitIsEnemy("player", unit) and not wispMarked[guid] then
 		local icon = next(wispMarks)
 		if icon then -- At least one icon unused

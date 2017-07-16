@@ -57,8 +57,7 @@ end
 -- Event Handlers
 --
 
-function mod:MarkWebWrap(event, unit)
-	local guid = UnitGUID(unit)
+function mod:MarkWebWrap(event, unit, guid)
 	if wraps[guid] then
 		SetRaidTarget(unit, wraps[guid])
 		wraps[guid] = nil
