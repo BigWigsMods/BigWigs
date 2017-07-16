@@ -80,7 +80,7 @@ end
 -- Initialization
 --
 
-local eruptingMarker = mod:AddMarkerOption(false, "player", 1, 236710, 1, 2, 3)
+local eruptingMarker = mod:AddMarkerOption(false, "player", 3, 236710, 3, 4, 5)
 function mod:GetOptions()
 	return {
 		"stages",
@@ -306,7 +306,7 @@ do
 		end
 
 		if self:GetOption(eruptingMarker) then
-			SetRaidTarget(args.destName, #playerList)
+			SetRaidTarget(args.destName, #playerList+2)
 		end
 	end
 
