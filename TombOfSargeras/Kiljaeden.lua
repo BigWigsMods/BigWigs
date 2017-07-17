@@ -499,7 +499,7 @@ end
 function mod:StartObeliskTimer(t)
 	self:Bar(-15543, t)
 	self:ScheduleTimer("Message", t, -15543, "Attention", "Info", CL.spawned:format(self:SpellName(-15543)))
-	--self:ScheduleTimer("Bar", t, -15543, 13, L.obeliskExplosion)
+	self:ScheduleTimer("CastBar", t, "obeliskExplosion", 13, L.obeliskExplosion, -15543) -- will get readjusted in :DemonicObelisk()
 	obeliskCount = obeliskCount + 1
 	if obeliskCount % 2 == 0 then
 		self:ScheduleTimer("StartObeliskTimer", t, 36)
