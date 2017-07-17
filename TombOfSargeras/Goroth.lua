@@ -30,15 +30,6 @@ local cometCounter = 1
 local cometWarned = {}
 
 --------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
-if L then
-	L.removedFromYou = "%s removed from you"
-end
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -138,7 +129,7 @@ end
 
 function mod:MeltedArmorRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Urgent", "Warning", L.removedFromYou:format(args.spellName))
+		self:Message(args.spellId, "Urgent", "Warning", CL.removed:format(args.spellName))
 	end
 end
 

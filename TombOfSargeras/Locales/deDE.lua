@@ -1,10 +1,5 @@
-local L = BigWigs:NewBossLocale("Goroth", "deDE")
+local L = BigWigs:NewBossLocale("Harjatan the Bludger", "deDE")
 if not L then return end
-if L then
-	L.removedFromYou = "%s wurde von dir entfernt"
-end
-
-L = BigWigs:NewBossLocale("Harjatan the Bludger", "deDE")
 if L then
 	L.custom_on_fixate_plates = "Fixiert-Symbol auf Gegnerischen Namensplaketten"
 	L.custom_on_fixate_plates_desc = "Zeigt ein Symbol auf der Namensplakette des Gegerns, der sich auf dich fixiert hat.\nErfordert die Verwendung von Gegnerischen Namensplaketten. Diese Funktion wird derzeit nur von KuiNameplates unterstützt."
