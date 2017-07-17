@@ -130,7 +130,7 @@ function mod:BurningArmorSuccess(args)
 end
 
 function mod:BurningArmor(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", not UnitDebuff("player", self:SpellName(234264)) and "Warning", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "Attention", not UnitDebuff("player", self:SpellName(234264)) and "Warning" or "Alarm", nil, nil, true)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
