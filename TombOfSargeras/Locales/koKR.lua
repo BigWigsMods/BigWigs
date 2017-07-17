@@ -1,5 +1,10 @@
-local L = BigWigs:NewBossLocale("Harjatan the Bludger", "koKR")
+local L = BigWigs:NewBossLocale("Goroth", "koKR")
 if not L then return end
+if L then
+	L.removedFromYou = "당신에게서 %s 사라짐"
+end
+
+L = BigWigs:NewBossLocale("Harjatan the Bludger", "koKR")
 if L then
 	L.custom_on_fixate_plates = "적 이름표에 시선 고정 아이콘"
 	L.custom_on_fixate_plates_desc = "당신에게 시선을 고정한 대상 이름표에 아이콘을 표시합니다.\n적 이름표를 사용해야 합니다. 이 기능은 현재 KuiNameplates만 지원합니다."

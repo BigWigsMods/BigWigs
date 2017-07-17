@@ -30,6 +30,15 @@ local cometCounter = 1
 local cometWarned = {}
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.removedFromYou = "%s removed from you"
+end
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -54,6 +63,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_SUCCESS", "BurningArmorSuccess", 231363)
 	self:Log("SPELL_AURA_APPLIED", "BurningArmor", 231363)
+	self:Log("SPELL_AURA_REMOVED", "MeltedArmorRemoved", 234264)
 	self:Log("SPELL_AURA_APPLIED", "ShatteringStarDebuff", 233272)
 	self:Log("SPELL_CAST_START", "InfernalBurning", 233062)
 
@@ -120,9 +130,15 @@ function mod:BurningArmorSuccess(args)
 end
 
 function mod:BurningArmor(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "Attention", not UnitDebuff("player", self:SpellName(234264)) and "Warning", nil, nil, true)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
+	end
+end
+
+function mod:MeltedArmorRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Urgent", "Warning", L.removedFromYou:format(args.spellName))
 	end
 end
 

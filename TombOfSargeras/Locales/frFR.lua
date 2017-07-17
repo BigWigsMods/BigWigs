@@ -1,5 +1,10 @@
-local L = BigWigs:NewBossLocale("Harjatan the Bludger", "frFR")
+local L = BigWigs:NewBossLocale("Goroth", "frFR")
 if not L then return end
+if L then
+	L.removedFromYou = "%s n'est plus sur vous"
+end
+
+L = BigWigs:NewBossLocale("Harjatan the Bludger", "frFR")
 if L then
 	L.custom_on_fixate_plates = "Icône Fixer sur les barres d'info des ennemis"
 	L.custom_on_fixate_plates_desc = "Affiche une icône sur la barre d'info de la cible qui est fixée sur vous.\nNécessite l'utlisation des barres d'info des ennemis. Cette fonctionnalité est actuellement uniquement supportée par KuiNameplates."

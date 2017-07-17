@@ -1,5 +1,10 @@
-local L = BigWigs:NewBossLocale("Harjatan the Bludger", "zhTW")
+local L = BigWigs:NewBossLocale("Goroth", "zhTW")
 if not L then return end
+if L then
+	L.removedFromYou = "%s結束了"
+end
+
+L = BigWigs:NewBossLocale("Harjatan the Bludger", "zhTW")
 if L then
 	L.custom_on_fixate_plates = "在敵方姓名板顯示追擊圖示"
 	L.custom_on_fixate_plates_desc = "當你被凝視時，在敵方姓名板上顯示一個圖示。\n需要啟用敵方姓名板，此功能目前只支援KuiNameplates。"

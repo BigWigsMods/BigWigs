@@ -1,5 +1,10 @@
-local L = BigWigs:NewBossLocale("Harjatan the Bludger", "ruRU")
+local L = BigWigs:NewBossLocale("Goroth", "ruRU")
 if not L then return end
+if L then
+	L.removedFromYou = "%s спало с вас"
+end
+
+L = BigWigs:NewBossLocale("Harjatan the Bludger", "ruRU")
 if L then
 	L.custom_on_fixate_plates = "Иконка фиксации на вражеских неймплейтах"
 	L.custom_on_fixate_plates_desc = "Показывать иконку цели, которая на вас навелась.\nТребуется чтобы вражеские неймплейты были включены. Эта функция пока поддерживается только аддоном KuiNameplates."
