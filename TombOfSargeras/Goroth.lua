@@ -78,7 +78,7 @@ function mod:OnEngage()
 		self:Bar(232249, 8.5) -- Crashing Comet
 	end
 	self:CDBar(231363, 10) -- Burning Armor
-	self:Bar(233279, shatteringTimers[shatteringCounter], CL.count:format(self:SpellName(233279), 1)) -- Shattering Star
+	self:Bar(233279, self:Mythic() and shatteringTimersMythic[shatteringCounter] or shatteringTimers[shatteringCounter], CL.count:format(self:SpellName(233279), 1)) -- Shattering Star
 	self:Bar(233062, 54) -- Infernal Burning
 	if self:Mythic() then
 		self:CDBar(238588, 12) -- Rain of Brimstone
