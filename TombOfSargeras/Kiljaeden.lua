@@ -80,7 +80,7 @@ end
 -- Initialization
 --
 
-local eruptingMarker = mod:AddMarkerOption(false, "player", 3, 236710, 3, 4, 5)
+local eruptingMarker = mod:AddMarkerOption(false, "player", 3, 236710, 3, 4, 5) -- Skip marks 1 + 2 for visibility
 function mod:GetOptions()
 	return {
 		"stages",
@@ -306,7 +306,7 @@ do
 		end
 
 		if self:GetOption(eruptingMarker) then
-			SetRaidTarget(args.destName, #playerList+2)
+			SetRaidTarget(args.destName, #playerList+2)  -- Skip marks 1 + 2 for visibility
 		end
 	end
 

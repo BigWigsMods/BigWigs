@@ -71,7 +71,7 @@ function mod:OnBossEnable()
 	-- Stage One: Ten Thousand Fangs
 	self:Log("SPELL_CAST_START", "SlicingTornado", 232722)
 	self:Log("SPELL_CAST_START", "ThunderingShock", 230358)
-	self:Log("SPELL_AURA_APPLIED", "ConsumingHungerApplied", 230384, 234661)
+	self:Log("SPELL_AURA_APPLIED", "ConsumingHungerApplied", 230384, 234661) -- Stage 1, Stage 3
 
 	-- Stage Two: Terrors of the Deep
 	self:Log("SPELL_CAST_SUCCESS", "DevouringMaw", 232745)
