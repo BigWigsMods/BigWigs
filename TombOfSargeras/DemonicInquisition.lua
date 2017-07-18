@@ -57,7 +57,7 @@ function mod:GetOptions()
 		"custom_on_stop_timers",
 		233104, -- Torment
 		248671, -- Unbridled Torment (Berserk)
-		233426, -- Scythe Sweep
+		{233426, "TANK"}, -- Scythe Sweep
 		{233431, "SAY"}, -- Calcified Quills
 		233441, -- Bone Saw
 		239401, -- Pangs of Guilt
