@@ -207,7 +207,7 @@ function mod:IncorporealShotApplied(args)
 		self:Say(args.spellId)
 	end
 	self:PrimaryIcon(args.spellId, args.destName)
-	self:CDBar(args.spellId, 54.7)
+	self:Bar(args.spellId, 54.7)
 	nextUltimate = GetTime() + 54.7
 end
 
