@@ -44,11 +44,17 @@ L = BigWigs:NewBossLocale("Kil'jaeden", "zhCN")
 if L then
 	L.singularityImpact = "奇点冲击"
 	L.obeliskExplosion = "方尖碑爆炸"
+	L.obeliskExplosion_desc = "方尖碑爆炸计时器"
 
 	L.darkness = "千魂" -- Shorter name for Darkness of a Thousand Souls (238999)
 	L.reflectionErupting = "映像：爆发" -- Shorter name for Shadow Reflection: Erupting (236710)
 	L.reflectionWailing = "映像：哀嚎" -- Shorter name for Shadow Reflection: Wailing (236378)
 	L.reflectionHopeless = "映像：绝望" -- Shorter name for Shadow Reflection: Hopeless (237590)
+
+	L.rupturingKnock = "断裂奇点击退"
+	L.rupturingKnock_desc = "显示击退计时器"
+
+	L.meteorImpact_desc = "陨石雨降落计时器"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhCN")
