@@ -315,8 +315,7 @@ end
 do
 	local wraps = {}
 	local wrapCount = 8
-	function mod:MarkShadowWrap(event, unit)
-		local guid = UnitGUID(unit)
+	function mod:MarkShadowWrap(event, unit, guid)
 		if wraps[guid] then
 			SetRaidTarget(unit, wraps[guid])
 			wraps[guid] = nil

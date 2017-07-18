@@ -34,6 +34,7 @@ local allowedEvents = {}
 local difficulty = 0
 local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
 local myGUID, myRole, myDamagerRole = nil, nil, nil
+local myGroupGUIDs = {}
 local solo = false
 local updateData = function(module)
 	myGUID = UnitGUID("player")
@@ -59,12 +60,14 @@ local updateData = function(module)
 	difficulty = diff
 
 	solo = true
+	myGroupGUIDs = {}
 	local _, _, _, instanceId = UnitPosition("player")
 	for unit in module:IterateGroup() do
 		local _, _, _, tarInstanceId = UnitPosition(unit)
-		if tarInstanceId == instanceId and myGUID ~= UnitGUID(unit) and UnitIsConnected(unit) then
+		local guid = UnitGUID(unit)
+		myGroupGUIDs[guid] = true
+		if solo and tarInstanceId == instanceId and myGUID ~= guid and UnitIsConnected(unit) then
 			solo = false
-			break
 		end
 	end
 
@@ -797,10 +800,30 @@ end
 
 do
 	function boss:UPDATE_MOUSEOVER_UNIT(event)
-		self[self.targetEventFunc](self, event, "mouseover")
+		local guid = UnitGUID("mouseover")
+		if not myGroupGUIDs[guid] then
+			self[self.targetEventFunc](self, event, "mouseover", guid)
+		end
 	end
 	function boss:UNIT_TARGET(event, unit)
-		self[self.targetEventFunc](self, event, unit.."target")
+		local unitTarget = unit.."target"
+		local guid = UnitGUID(unitTarget)
+		if not myGroupGUIDs[guid] then
+			self[self.targetEventFunc](self, event, unitTarget, guid)
+		end
+
+		if self.targetEventFunc then -- Event is still registered, continue
+			local guid = UnitGUID(unit)
+			if not myGroupGUIDs[guid] then
+				self[self.targetEventFunc](self, event, unit, guid)
+			end
+		end
+	end
+	function boss:NAME_PLATE_UNIT_ADDED(event, unit)
+		local guid = UnitGUID(unit)
+		if not myGroupGUIDs[guid] then
+			self[self.targetEventFunc](self, event, unit, guid)
+		end
 	end
 	--- Register a set of events commonly used for raid marking functionality and pass the unit to a designated function.
 	-- UPDATE_MOUSEOVER_UNIT, UNIT_TARGET, NAME_PLATE_UNIT_ADDED, FORBIDDEN_NAME_PLATE_UNIT_ADDED.
@@ -810,12 +833,13 @@ do
 			self.targetEventFunc = func
 			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 			self:RegisterEvent("UNIT_TARGET")
-			self:RegisterEvent("NAME_PLATE_UNIT_ADDED", func)
-			self:RegisterEvent("FORBIDDEN_NAME_PLATE_UNIT_ADDED", func)
+			self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+			self:RegisterEvent("FORBIDDEN_NAME_PLATE_UNIT_ADDED", "NAME_PLATE_UNIT_ADDED")
 		end
 	end
 	--- Unregister the events registered by `RegisterTargetEvents`.
 	function boss:UnregisterTargetEvents()
+		self.targetEventFunc = nil
 		self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 		self:UnregisterEvent("UNIT_TARGET")
 		self:UnregisterEvent("NAME_PLATE_UNIT_ADDED")

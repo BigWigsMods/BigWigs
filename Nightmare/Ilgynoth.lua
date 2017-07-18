@@ -266,8 +266,7 @@ function mod:StartSpawnTimer(addType, count)
 	self:ScheduleTimer("StartSpawnTimer", length, addType, count+1)
 end
 
-function mod:DeathglareMark(event, unit)
-	local guid = UnitGUID(unit)
+function mod:DeathglareMark(event, unit, guid)
 	if self:MobId(guid) == 105322 and not deathglareMarked[guid] then
 		local icon = next(deathglareMarks)
 		if icon then -- At least one icon unused

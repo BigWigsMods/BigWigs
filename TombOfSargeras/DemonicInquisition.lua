@@ -29,6 +29,7 @@ local nextAltPowerWarning = 20
 local suffocatingDarkCounter = 1
 local jailList = {}
 local jailTimer = nil
+local fixateList = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -36,6 +37,10 @@ local jailTimer = nil
 
 local L = mod:GetLocale()
 if L then
+	L.fixate = "{-15307} ({41951})"
+	L.fixate_desc = -15307
+	L.fixate_icon = 41951
+
 	L.custom_on_stop_timers = "Always show ability bars"
 	L.custom_on_stop_timers_desc = "Demonic Inquisition has some spells which are delayed by interupts/other casts. When this option is enabled, the bars for those abilities will stay on your screen."
 end
@@ -52,7 +57,7 @@ function mod:GetOptions()
 		"custom_on_stop_timers",
 		233104, -- Torment
 		248671, -- Unbridled Torment (Berserk)
-		233426, -- Scythe Sweep
+		{233426, "TANK"}, -- Scythe Sweep
 		{233431, "SAY"}, -- Calcified Quills
 		233441, -- Bone Saw
 		239401, -- Pangs of Guilt
@@ -62,11 +67,13 @@ function mod:GetOptions()
 		234015, -- Tormenting Burst
 		235230, -- Fel Squall
 		248713, -- Soul Corruption
+		{"fixate", "FLASH"},
 	},{
 		[236283] = "general",
 		[233426] = -14645, -- Atrigan
 		[239401] = -14646, -- Belac
 		[248713] = -15550, -- Tormented Soul
+		["fixate"] = "mythic",
 	}
 end
 
@@ -104,6 +111,7 @@ function mod:OnEngage()
 	nextAltPowerWarning = 20
 	jailTimer = nil
 	wipe(jailList)
+	wipe(fixateList)
 
 	-- Jail Infobox
 	self:OpenInfo(236283, self:SpellName(236283))
@@ -122,11 +130,24 @@ function mod:OnEngage()
 	self:RegisterUnitEvent("UNIT_POWER", nil, "player")
 
 	self:Berserk(480, true, nil, 248671, 248671) -- confirmed for nm/hc/my - 248671 has a nice description, 248669 is the aura applied
+
+	if self:Mythic() and (self:CheckOption("fixate", "MESSAGE") or self:CheckOption("fixate", "FLASH")) then
+		self:RegisterTargetEvents("CheckForFixate")
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:CheckForFixate(_, unit, guid)
+	local mobId = self:MobId(guid)
+	if mobId == 23498 and not fixateList[guid] and self:Me(UnitGUID(unit.."target")) then -- Tormented Fragment
+		fixateList[guid] = true
+		self:Flash("fixate", 41951)
+		self:Message("fixate", "Personal", "Long", CL.you:format(self:SpellName(41951)), 41951) -- 41951 = "Fixate"
+	end
+end
 
 do
 	local abilitysToPause = {

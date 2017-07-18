@@ -42,7 +42,7 @@ function mod:GetOptions()
 		230959, -- Concealing Murk
 		232722, -- Slicing Tornado
 		230358, -- Thundering Shock
-		230384, -- Consuming Hunger
+		{230384, "ME_ONLY"}, -- Consuming Hunger
 		234621, -- Devouring Maw
 		232913, -- Befouling Ink
 		232827, -- Crashing Wave
@@ -71,8 +71,7 @@ function mod:OnBossEnable()
 	-- Stage One: Ten Thousand Fangs
 	self:Log("SPELL_CAST_START", "SlicingTornado", 232722)
 	self:Log("SPELL_CAST_START", "ThunderingShock", 230358)
-	self:Log("SPELL_CAST_START", "ConsumingHunger", 230384, 234661) -- Stage 1 id + Stage 3 id
-	self:Log("SPELL_AURA_APPLIED", "ConsumingHungerApplied", 230384, 234661)
+	self:Log("SPELL_AURA_APPLIED", "ConsumingHungerApplied", 230384, 234661) -- Stage 1, Stage 3
 
 	-- Stage Two: Terrors of the Deep
 	self:Log("SPELL_CAST_SUCCESS", "DevouringMaw", 232745)
@@ -230,11 +229,6 @@ end
 function mod:ThunderingShock(args)
 	self:Message(args.spellId, "Important", "Warning")
 	self:Bar(args.spellId, 36) -- was 32.8, not confirmed
-end
-
-function mod:ConsumingHunger()
-	consumingHungerCounter = consumingHungerCounter + 1
-	self:Bar(230384, stage == 3 and (consumingHungerCounter == 2 and 47 or 42) or 34) -- XXX Need more p3 data.
 end
 
 do
