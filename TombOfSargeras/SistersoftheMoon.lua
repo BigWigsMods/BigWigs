@@ -282,7 +282,7 @@ function mod:EmbraceoftheEclipseRemoved(args)
 end
 
 function mod:MoonBurn()
-	self:Bar(236519, stage == 3 and 18.3 or 24.3) -- XXX Need more P3 data/timers
+	self:CDBar(236519, stage == 3 and 18.3 or 24.3)
 end
 
 do
