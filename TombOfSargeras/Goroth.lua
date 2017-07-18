@@ -129,7 +129,7 @@ end
 
 function mod:MeltedArmorRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Urgent", "Warning", CL.removed:format(args.spellName))
+		self:Message(231363, "Urgent", "Warning", CL.removed:format(args.spellName))
 	end
 end
 
