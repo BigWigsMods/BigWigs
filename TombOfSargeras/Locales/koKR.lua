@@ -44,11 +44,17 @@ L = BigWigs:NewBossLocale("Kil'jaeden", "koKR")
 if L then
 	L.singularityImpact = "특이점 파열"
 	L.obeliskExplosion = "방첨탑 폭발"
+	L.obeliskExplosion_desc = "방첨탑 폭발의 타이머입니다"
 
 	L.darkness = "어둠" -- Shorter name for Darkness of a Thousand Souls (238999)
 	L.reflectionErupting = "반영: 분출" -- Shorter name for Shadow Reflection: Erupting (236710)
 	L.reflectionWailing = "반영: 통곡" -- Shorter name for Shadow Reflection: Wailing (236378)
 	L.reflectionHopeless = "반영: 절망" -- Shorter name for Shadow Reflection: Hopeless (237590)
+	
+	L.rupturingKnock = "특이점 파열 밀쳐내기"
+	L.rupturingKnock_desc = "밀쳐내기 타이머를 표시합니다"
+
+	L.meteorImpact_desc = "유성 충돌 타이머를 표시합니다"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "koKR")
