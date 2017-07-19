@@ -50,7 +50,7 @@ if L then
 	L.reflectionErupting = "반영: 분출" -- Shorter name for Shadow Reflection: Erupting (236710)
 	L.reflectionWailing = "반영: 통곡" -- Shorter name for Shadow Reflection: Wailing (236378)
 	L.reflectionHopeless = "반영: 절망" -- Shorter name for Shadow Reflection: Hopeless (237590)
-	
+
 	L.rupturingKnock = "특이점 파열 밀쳐내기"
 	L.rupturingKnock_desc = "밀쳐내기 타이머를 표시합니다"
 

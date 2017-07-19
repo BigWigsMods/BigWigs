@@ -50,9 +50,10 @@ if L then
 	L.reflectionErupting = "分身：爆發" -- Shorter name for Shadow Reflection: Erupting (236710)
 	L.reflectionWailing = "分身：哀號" -- Shorter name for Shadow Reflection: Wailing (236378)
 	L.reflectionHopeless = "分身：絕望" -- Shorter name for Shadow Reflection: Hopeless (237590)
-	
+
 	L.rupturingKnock = "破裂奇異點擊退"
 	L.rupturingKnock_desc = "顯示擊退計時器"
+
 	L.meteorImpact_desc = "顯示隕石雨降落計時器"
 end
 
