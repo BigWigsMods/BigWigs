@@ -218,7 +218,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, target)
 			end
 		else
 			if stage == 1 then -- Stage 1 cooldown
-				timer = self:Mythic() and mythicPhaseOneTimers[235059][singularityCount] or 56
+				timer = self:Mythic() and stageOneTimersMythic[235059][singularityCount] or 56
 			else -- Stage 2 timers
 				timer = stageTwoTimers[235059][singularityCount]
 			end
@@ -274,7 +274,7 @@ function mod:Armageddon(args)
 		end
 	else
 		if stage == 1 then -- Stage 1 cooldown
-			timer = self:Mythic() and mythicPhaseOneTimers[args.spellId][armageddonCount] or 64
+			timer = self:Mythic() and stageOneTimersMythic[args.spellId][armageddonCount] or 64
 		else -- Stage 2 timers
 			timer = stageTwoTimers[args.spellId][armageddonCount]
 		end
