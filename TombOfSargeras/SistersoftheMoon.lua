@@ -207,7 +207,7 @@ function mod:IncorporealShotApplied(args)
 		self:Say(args.spellId)
 	end
 	self:PrimaryIcon(args.spellId, args.destName)
-	self:CDBar(args.spellId, 54.7)
+	self:Bar(args.spellId, 54.7)
 	nextUltimate = GetTime() + 54.7
 end
 
@@ -314,7 +314,7 @@ do
 		end
 	end
 	function mod:LunarBeacon(args)
-		self:GetBossTarget(printTarget, 0.5, args.sourceGUID) -- Faster than waiting for debuff/cast end
+		self:GetBossTarget(printTarget, 1.5, args.sourceGUID) -- Faster than waiting for debuff/cast end, sometimes takes really long
 		lunarBeaconCounter = lunarBeaconCounter + 1
 		self:Bar(args.spellId, lunarBeaconCounter == 2 and 21.9 or 35) -- XXX Need Data longer than 4 casts
 	end

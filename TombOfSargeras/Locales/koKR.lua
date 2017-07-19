@@ -46,7 +46,7 @@ if L then
 	L.obeliskExplosion = "방첨탑 폭발"
 	L.obeliskExplosion_desc = "방첨탑 폭발의 타이머입니다"
 
-	L.darkness = "어둠" -- Shorter name for Darkness of a Thousand Souls (238999)
+	L.darkness = "어둠 영혼" -- Shorter name for Darkness of a Thousand Souls (238999)
 	L.reflectionErupting = "반영: 분출" -- Shorter name for Shadow Reflection: Erupting (236710)
 	L.reflectionWailing = "반영: 통곡" -- Shorter name for Shadow Reflection: Wailing (236378)
 	L.reflectionHopeless = "반영: 절망" -- Shorter name for Shadow Reflection: Hopeless (237590)
