@@ -44,19 +44,24 @@ L = BigWigs:NewBossLocale("Kil'jaeden", "zhTW")
 if L then
 	L.singularityImpact = "奇異點衝擊"
 	L.obeliskExplosion = "石碑爆炸"
+	L.obeliskExplosion_desc = "石碑爆炸計時器"
 
 	L.darkness = "千魂之暗" -- Shorter name for Darkness of a Thousand Souls (238999)
 	L.reflectionErupting = "分身：爆發" -- Shorter name for Shadow Reflection: Erupting (236710)
 	L.reflectionWailing = "分身：哀號" -- Shorter name for Shadow Reflection: Wailing (236378)
 	L.reflectionHopeless = "分身：絕望" -- Shorter name for Shadow Reflection: Hopeless (237590)
+	
+	L.rupturingKnock = "破裂奇異點擊退"
+	L.rupturingKnock_desc = "顯示擊退計時器"
+	L.meteorImpact_desc = "顯示隕石雨降落計時器"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhTW")
 if L then
 	L.chaosbringer = "煉獄火混亂使者"
 	L.rez = "守墓者瑞茲"
-	--L.seacaller = "Tidescale Seacaller"
+	L.seacaller = "潮鱗喚海者"
 	L.custodian = "深海守衛"
-	--L.dresanoth = "Dresanoth"
+	L.dresanoth = "卓薩諾斯"
 	L.sentry = "守護者哨衛"
 end
