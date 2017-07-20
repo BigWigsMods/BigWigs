@@ -13,8 +13,8 @@ end
 
 L = BigWigs:NewBossLocale("Mistress Sassz'ine", "koKR")
 if L then
-	--L.inks_fed_count = "Inks fed (%d/%d)"
-	--L.inks_fed = "Inks fed: %s" -- %s = List of players
+	L.inks_fed_count = "먹물 먹이기 (%d/%d)"
+	L.inks_fed = "먹물 먹이기: %s" -- %s = List of players
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "koKR")
