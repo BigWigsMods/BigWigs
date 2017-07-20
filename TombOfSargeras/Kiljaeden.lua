@@ -95,6 +95,7 @@ function mod:GetOptions()
 		{238430, "SAY", "FLASH"}, -- Bursting Dreadflame
 		{238505, "SAY", "ICON", "PROXIMITY"}, -- Focused Dreadflame
 		{236378, "SAY", "FLASH"}, -- Shadow Reflection: Wailing
+		241564, -- Sorrowful Wail
 		241721, -- Illidan's Sightless Gaze
 		238999, -- Darkness of a Thousand Souls
 		-15543, -- Demonic Obelisk
