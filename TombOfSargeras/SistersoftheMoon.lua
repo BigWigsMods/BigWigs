@@ -223,11 +223,7 @@ do
 		end
 	end
 	function mod:TwilightVolley(args)
-		if stage == 2 then
-			self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
-		else -- Can only find target in P2
-			self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
-		end
+		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
 	end
 end
 
