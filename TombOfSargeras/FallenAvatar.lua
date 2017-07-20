@@ -236,26 +236,34 @@ do
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
-	if spellId == 234057 then -- Unbound Chaos
-		if self:Tank() then
-			self:Message(234059, "Attention", "Alert")
-		end
-		unboundChaosCounter = unboundChaosCounter + 1
-		self:Bar(234059, timers[spellId][unboundChaosCounter] or 35)
-	elseif spellId == 236573 then -- Shadowy Blades
-		self:Message(236604, "Attention", "Alert", spellName)
-		shadowyBladesCounter = shadowyBladesCounter + 1
-		self:CDBar(236604, timers[spellId][shadowyBladesCounter] or 30)
-		self:CastBar(236604, 5)
-	end
-end
+do
+	local bladeTimer = nil
 
-function mod:RAID_BOSS_WHISPER(_, msg)
-	if msg:find("236604", nil, true) then -- Shadowy Blades
-		self:Message(236604, "Personal", "Alarm", CL.you:format(self:SpellName(236604)))
-		self:Flash(236604)
-		self:Say(236604)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+		if spellId == 234057 then -- Unbound Chaos
+			if self:Tank() then
+				self:Message(234059, "Attention", "Alert")
+			end
+			unboundChaosCounter = unboundChaosCounter + 1
+			self:Bar(234059, timers[spellId][unboundChaosCounter] or 35)
+		elseif spellId == 236573 then -- Shadowy Blades
+			bladeTimer = self:ScheduleTimer("Message", 0.3, 236604, "Attention", "Alert")
+			shadowyBladesCounter = shadowyBladesCounter + 1
+			self:CDBar(236604, timers[spellId][shadowyBladesCounter] or 30)
+			self:CastBar(236604, 5)
+		end
+	end
+
+	function mod:RAID_BOSS_WHISPER(_, msg)
+		if msg:find("236604", nil, true) then -- Shadowy Blades
+			if bladeTimer then
+				self:CancelTimer(bladeTimer)
+				bladeTimer = nil
+			end
+			self:Message(236604, "Personal", "Alarm", CL.you:format(self:SpellName(236604)))
+			self:Flash(236604)
+			self:Say(236604)
+		end
 	end
 end
 
