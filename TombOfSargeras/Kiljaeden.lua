@@ -208,7 +208,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, target)
 		end
 	elseif msg:find("235059") then -- Rupturing Singularity
 		self:Message(235059, "Urgent", "Warning", CL.count:format(self:SpellName(235059), singularityCount))
-		self:Bar("rupturingKnock", 9.85, CL.count:format(L.singularityImpact, singularityCount))
+		self:Bar("rupturingKnock", 9.85, CL.count:format(L.singularityImpact, singularityCount), 235059)
 		singularityCount = singularityCount + 1
 		local timer = 0
 		if inIntermission then -- Intermission timer
