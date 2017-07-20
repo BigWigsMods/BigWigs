@@ -11,6 +11,12 @@ if L then
 	--L.custom_on_stop_timers_desc = "Demonic Inquisition has some spells which are delayed by interupts/other casts. When this option is enabled, the bars for those abilities will stay on your screen."
 end
 
+L = BigWigs:NewBossLocale("Mistress Sassz'ine", "itIT")
+if L then
+	--L.inks_fed_count = "Inks fed (%d/%d)"
+	--L.inks_fed = "Inks fed: %s" -- %s = List of players
+end
+
 L = BigWigs:NewBossLocale("The Desolate Host", "itIT")
 if L then
 	--L.infobox_players = "Players"

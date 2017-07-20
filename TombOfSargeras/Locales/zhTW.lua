@@ -11,6 +11,12 @@ if L then
 	L.custom_on_stop_timers_desc = "惡魔審判官的部份技能會被斷法或其他技能的法術詠唱推遲。啟用此選項後，這些技能的計時條會保持顯示。"
 end
 
+L = BigWigs:NewBossLocale("Mistress Sassz'ine", "zhTW")
+if L then
+	--L.inks_fed_count = "Inks fed (%d/%d)"
+	--L.inks_fed = "Inks fed: %s" -- %s = List of players
+end
+
 L = BigWigs:NewBossLocale("The Desolate Host", "zhTW")
 if L then
 	L.infobox_players = "玩家"

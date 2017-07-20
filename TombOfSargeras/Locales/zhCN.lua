@@ -11,6 +11,12 @@ if L then
 	L.custom_on_stop_timers_desc = "恶魔审判庭一些技能会因为施放或被打断其它技能而延迟。当启用此选项，这些技能条将总是显示在屏幕上。"
 end
 
+L = BigWigs:NewBossLocale("Mistress Sassz'ine", "zhCN")
+if L then
+	--L.inks_fed_count = "Inks fed (%d/%d)"
+	--L.inks_fed = "Inks fed: %s" -- %s = List of players
+end
+
 L = BigWigs:NewBossLocale("The Desolate Host", "zhCN")
 if L then
 	L.infobox_players = "玩家"

@@ -11,6 +11,12 @@ if L then
 	L.custom_on_stop_timers_desc = "Демоническая инквизиция имеет некоторые способности, которые задерживаются прерываниями/другими заклинаниями. Когда эта опция включена, полосы для этих способностей останутся на вашем экране."
 end
 
+L = BigWigs:NewBossLocale("Mistress Sassz'ine", "ruRU")
+if L then
+	--L.inks_fed_count = "Inks fed (%d/%d)"
+	--L.inks_fed = "Inks fed: %s" -- %s = List of players
+end
+
 L = BigWigs:NewBossLocale("The Desolate Host", "ruRU")
 if L then
 	L.infobox_players = "Игроки"

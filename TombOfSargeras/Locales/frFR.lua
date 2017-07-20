@@ -11,6 +11,12 @@ if L then
 	L.custom_on_stop_timers_desc = "L'Inquisition démoniaque a certains sorts qui sont retardés par les interruptions/les autres incantations. Quand cette option est activée, les barres de ces capacités resteront à l'écran."
 end
 
+L = BigWigs:NewBossLocale("Mistress Sassz'ine", "frFR")
+if L then
+	--L.inks_fed_count = "Inks fed (%d/%d)"
+	--L.inks_fed = "Inks fed: %s" -- %s = List of players
+end
+
 L = BigWigs:NewBossLocale("The Desolate Host", "frFR")
 if L then
 	L.infobox_players = "Joueurs"
