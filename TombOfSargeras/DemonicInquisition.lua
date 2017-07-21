@@ -41,6 +41,8 @@ if L then
 	L.fixate_desc = -15307
 	L.fixate_icon = 41951
 
+	L.infobox_title_prisoners = "Prisoners"
+
 	L.custom_on_stop_timers = "Always show ability bars"
 	L.custom_on_stop_timers_desc = "Demonic Inquisition has some spells which are delayed by interupts/other casts. When this option is enabled, the bars for those abilities will stay on your screen."
 end
@@ -114,7 +116,7 @@ function mod:OnEngage()
 	wipe(fixateList)
 
 	-- Jail Infobox
-	self:OpenInfo(236283, self:SpellName(236283))
+	self:OpenInfo(236283, L.infobox_title_prisoners)
 	self:OpenAltPower("altpower", 233104) -- Torment
 
 	-- Atrigan

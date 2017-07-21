@@ -7,6 +7,8 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "ruRU")
 if L then
+	--L.infobox_title_prisoners = "Prisoners"
+
 	L.custom_on_stop_timers = "Всегда показывать полосы для способностей"
 	L.custom_on_stop_timers_desc = "Демоническая инквизиция имеет некоторые способности, которые задерживаются прерываниями/другими заклинаниями. Когда эта опция включена, полосы для этих способностей останутся на вашем экране."
 end

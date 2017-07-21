@@ -7,6 +7,8 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "deDE")
 if L then
+	--L.infobox_title_prisoners = "Prisoners"
+
 	L.custom_on_stop_timers = "Fähigkeitsleisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Dämonische Inquisition beherrst Zauber, welche von Unterbrechungen und anderen Zauberwirkungen verzögert werden. Wenn diese Option aktiviert ist, bleiben die Leisten dieser Fähigkeiten auf deinem Bildschirm."
 end

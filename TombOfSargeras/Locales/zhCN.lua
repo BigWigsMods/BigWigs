@@ -7,6 +7,8 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "zhCN")
 if L then
+	--L.infobox_title_prisoners = "Prisoners"
+
 	L.custom_on_stop_timers = "总是显示技能条"
 	L.custom_on_stop_timers_desc = "恶魔审判庭一些技能会因为施放或被打断其它技能而延迟。当启用此选项，这些技能条将总是显示在屏幕上。"
 end
