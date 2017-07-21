@@ -1,10 +1,5 @@
 
 --------------------------------------------------------------------------------
--- TODO List:
--- - Timers for heroic+mythic (using normal atm)
--- - Tune which markers are used, depending on Mythic targets
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -111,7 +106,7 @@ function mod:OnEngage()
 	self:Bar(230201, self:Easy() and 18 or 15.5, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain, Timer until cast_start
 	self:Bar(230384, 20.5) -- Consuming Hunger
 	if not self:LFR() then
-		self:Bar(230139, self:Normal() and 28 or 25, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
+		self:CDBar(230139, self:Normal() and 27 or 25, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
 	end
 	self:Bar(232722, self:Easy() and 36 or 30.3) -- Slicing Tornado
 	self:Berserk(self:LFR() and 540 or 480)
@@ -190,7 +185,7 @@ do
 			self:CastBar(args.spellId, 6, CL.count:format(args.spellName, hydraShotCounter))
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important", "Warning", nil, nil, true)
 			hydraShotCounter = hydraShotCounter + 1
-			self:Bar(args.spellId, self:Mythic() and 30.5 or stage == 2 and 30 or 40, CL.count:format(args.spellName, hydraShotCounter))
+			self:CDBar(args.spellId, self:Mythic() and 30.5 or stage == 2 and 30 or (self:Normal() and stage == 3 and 51) or 40, CL.count:format(args.spellName, hydraShotCounter))
 		end
 		if self:GetOption(hydraShotMarker) then -- Targets: LFR: 0, 1 Normal, 3 Heroic, 4 Mythic
 			SetRaidTarget(args.destName, count)
