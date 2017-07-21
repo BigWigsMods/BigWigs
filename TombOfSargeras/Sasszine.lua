@@ -162,7 +162,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 			self:Bar(230201, self:Easy() and 28 or 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain, Timer until cast_start
 			self:Bar(232827, self:Easy() and 38.5 or 32.5) -- Crashing Wave
 			if not self:LFR() then
-				self:Bar(230139, self:Normal() and 18.2 or 31.6) -- Hydra Shot
+				self:Bar(230139, self:Normal() and 18.2 or 15.5, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
 			end
 
 			self:Bar(230384, 40.1) -- Consuming Hunger
