@@ -34,7 +34,7 @@ local abs = math.abs
 
 local L = mod:GetLocale()
 if L then
-	L.inks_fed_count = "Inks fed (%d/%d)"
+	L.inks_fed_count = "Ink (%d/%d)"
 	L.inks_fed = "Inks fed: %s" -- %s = List of players
 end
 
@@ -315,7 +315,7 @@ do
 			if abs > 0.1 then -- removed early, probably fed the fish
 				fedTable[name] = (fedTable[name] or 0) + 1
 				fedCount = fedCount + 1
-				self:OpenInfo(234621, L.inks_fed_count:format(fedCount, fedsNeeded))
+				self:SetInfoTitle(234621, L.inks_fed_count:format(fedCount, fedsNeeded))
 				self:SetInfoByTable(234621, fedTable)
 			end
 			debuffs[name] = nil

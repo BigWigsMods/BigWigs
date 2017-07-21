@@ -13,7 +13,7 @@ end
 
 L = BigWigs:NewBossLocale("Mistress Sassz'ine", "esES") or BigWigs:NewBossLocale("Mistress Sassz'ine", "esMX")
 if L then
-	--L.inks_fed_count = "Inks fed (%d/%d)"
+	--L.inks_fed_count = "Ink (%d/%d)"
 	--L.inks_fed = "Inks fed: %s" -- %s = List of players
 end
 
